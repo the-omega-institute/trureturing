@@ -28,6 +28,12 @@ CANDIDATE_ROOT="$(cd "$CANDIDATE_ROOT" && pwd -P)"
 INSPECTOR="$(dirname "$PRODUCER")/Inspector.lean"
 [[ -f "$INSPECTOR" ]] || { echo 'lean-report-pair: producer Inspector.lean is absent' >&2; exit 2; }
 
+# Validate the candidate's compatibility contract before staging or cache writes.
+address_output="$("$INPUT_HELPER" address --repository "$CANDIDATE_ROOT")" || exit 2
+address_pattern='^([0-9a-f]{64} ){3}[0-9a-f]{64}$'
+[[ "$address_output" =~ $address_pattern ]] || { echo 'lean-report-pair: repository input address is malformed' >&2; exit 2; }
+read -r repository_sha256 producer_sha256 sources_sha256 config_sha256 <<< "$address_output"
+
 # Keep staging on the candidate filesystem but outside .lake: a cold producer
 # must be able to seed or switch the entire cache before creating report output.
 STAGING="$(mktemp -d "$CANDIDATE_ROOT/.lean-report-bundle.XXXXXXXX")"
@@ -41,10 +47,6 @@ OUTPUT="$STAGING/$(basename "$CANDIDATE_OUTPUT")"
 LOG_DIR="${STRATALINT_LEAN_REPORT_LOG_DIR:-$OUTPUT.logs}"
 [[ "$LOG_DIR" == /* ]] || { echo 'lean-report-pair: log directory must be absolute' >&2; exit 2; }
 
-address_output="$("$INPUT_HELPER" address --repository "$CANDIDATE_ROOT" --producer "$PRODUCER" --inspector "$INSPECTOR")" || exit 2
-address_pattern='^([0-9a-f]{64} ){3}[0-9a-f]{64}$'
-[[ "$address_output" =~ $address_pattern ]] || { echo 'lean-report-pair: repository input address is malformed' >&2; exit 2; }
-read -r repository_sha256 producer_sha256 sources_sha256 config_sha256 <<< "$address_output"
 input_address="$(python3 - "$producer_sha256" "$sources_sha256" "$config_sha256" <<'PY'
 import hashlib, sys
 producer, sources, config = sys.argv[1:]
@@ -80,8 +82,7 @@ fi
 python3 "$CACHE_HELPER" bind --repository "$CANDIDATE_ROOT" --report "$OUTPUT" \
   --input-address "$input_address" --repository-sha "$repository_sha256" \
   --producer-sha "$producer_sha256" --sources-sha "$sources_sha256" --config-sha "$config_sha256"
-"$INPUT_HELPER" verify --repository "$CANDIDATE_ROOT" --report "$OUTPUT" \
-  --producer "$PRODUCER" --inspector "$INSPECTOR"
+"$INPUT_HELPER" verify --repository "$CANDIDATE_ROOT" --report "$OUTPUT"
 python3 "$CACHE_HELPER" publish --repository "$CANDIDATE_ROOT" --report "$OUTPUT" --output "$CANDIDATE_OUTPUT"
 printf 'LEAN_REPORT_PROVENANCE side=candidate mode=produced source_side=candidate input_address=sha256:%s attestation=%s\n' \
   "$input_address" "${CANDIDATE_OUTPUT}.provenance.json"

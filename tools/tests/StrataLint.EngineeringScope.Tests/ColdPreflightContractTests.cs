@@ -146,7 +146,8 @@ public sealed class ColdPreflightContractTests
 
     internal static void Configure(ResourceRouteTests.ResourceFixture fixture)
     {
-        foreach (var path in new[] { "tools/scripts/preflight.sh", "tools/scripts/ci-stage.sh" })
+        foreach (var path in new[] { "tools/scripts/preflight.sh", "tools/scripts/ci-stage.sh",
+                     "tools/scripts/lib/resource-observation-lib.sh" })
             fixture.Write(path, File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), path)));
         // Explicit external adapters: empty seed preparation, supervisor pass-through,
         // and the bootstrap runner location. None supplies a build acceptance receipt.

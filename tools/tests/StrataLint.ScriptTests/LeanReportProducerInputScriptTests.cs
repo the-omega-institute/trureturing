@@ -13,7 +13,7 @@ public sealed class LeanReportProducerInputScriptTests
     [InlineData("conflicting-namespace")]
     [InlineData("unowned-exception")]
     [InlineData("missing-rule-inputs")]
-    public void MissingOrConflictingComposedRegistrationFailsBeforeAddressing(string defect)
+    public void MissingOrConflictingComposedRegistrationFailsBeforeEnumeratingInputs(string defect)
     {
         using var fixture = new ProducerInputFixture();
         fixture.EditRegistry(registry =>
@@ -25,13 +25,16 @@ public sealed class LeanReportProducerInputScriptTests
             else if (defect == "missing-rule-inputs") registry.Remove("rule_build_inputs");
             else registry["projects"]![0]!.AsObject().Remove(defect);
         });
-        AssertRegistrationFailure(fixture.Run("address"), ProducerInputFixture.ProjectRegistrationPath);
+        AssertRegistrationFailure(fixture.Run("producer-paths"), ProducerInputFixture.ProjectRegistrationPath);
     }
 
     [Fact]
     public void ComposedNamespaceRegistrationIsAcceptedByProducer()
     {
         using var fixture = new ProducerInputFixture();
+        var paths = fixture.Run("producer-paths");
+        Assert.True(paths.ExitCode == 0, Encoding.UTF8.GetString(paths.StandardError));
+        Assert.Contains("tools/StrataLint.Cli/Fixture.cs", Lines(paths));
         Assert.Equal(fixture.ExpectedAddressBytes(), fixture.Run("address").StandardOutput);
     }
 
@@ -69,10 +72,12 @@ public sealed class LeanReportProducerInputScriptTests
     [InlineData("metadata", 0)]
     [InlineData("unrelated-row", 0)]
     [InlineData("blueprint", 0)]
-    [InlineData("producer", 2)]
-    [InlineData("dependency", 2)]
-    [InlineData("configuration", 2)]
+    [InlineData("producer", 0)]
+    [InlineData("dependency", 0)]
+    [InlineData("configuration", 0)]
     [InlineData("source", 2)]
+    [InlineData("version", 2)]
+    [InlineData("lean-options", 2)]
     public void RegisteredInputsDriveRealPlannerInvalidation(string change, int expectedRechecks)
     {
         using var fixture = new ProducerInputFixture();
@@ -87,12 +92,14 @@ public sealed class LeanReportProducerInputScriptTests
             case "dependency": fixture.Append("tools/Trureturing.Truth/Fixture.cs", "// dependency changed"); break;
             case "configuration": fixture.Append("producer.props", "<!-- changed configuration -->"); break;
             case "source": fixture.Append("D5/Probe.lean", "-- changed source"); break;
+            case "version": fixture.Write("Meta/lean-report.toml", "compatibility_version = 2\nsource_patterns = [\"Trureturing.lean\", \"D5/**/*.lean\"]\n"); break;
+            case "lean-options": fixture.Write("lakefile.toml", "[leanOptions]\nmaxRecDepth = 2000\n"); break;
         }
         var plan = fixture.Plan(before, fixture.Address());
 
         Assert.Equal(expectedRechecks, plan["recheck"]!.AsArray().Count);
         Assert.Equal(expectedRechecks == 0 ? "reuse" : "delta", plan["status"]!.GetValue<string>());
-        Assert.Equal(change is "producer" or "dependency" or "configuration", plan["semantic_changed"]!.GetValue<bool>());
+        Assert.Equal(change is "version" or "lean-options", plan["semantic_changed"]!.GetValue<bool>());
         var evidence = Environment.GetEnvironmentVariable("JUDGE_SEED_EVIDENCE");
         if (!string.IsNullOrEmpty(evidence))
         {
@@ -157,19 +164,20 @@ public sealed class LeanReportProducerInputScriptTests
     }
 
     [Fact]
-    public void RegisteredProjectContributesWithoutEntrypointMention()
+    public void RegisteredProjectIsSelectedWithoutEntrypointMention()
     {
         using var fixture = new ProducerInputFixture();
         fixture.Write("tools/lean-inspector/inspect.sh", "#!/bin/bash\n");
         var before = fixture.Address();
+        Assert.Contains("tools/StrataLint.Cli/Fixture.cs", Lines(fixture.Run("producer-paths")));
 
         fixture.Append("tools/StrataLint.Cli/Fixture.cs", "// changed producer\n");
 
-        Assert.NotEqual(before[1], fixture.Address()[1]);
+        Assert.Equal(before, fixture.Address());
     }
 
     [Fact]
-    public void DeclaredBytesAndRegistrationBytesChangeProducerDigest()
+    public void DeclaredBytesAndRegistrationBytesPreserveCompatibilityToken()
     {
         using var fixture = new ProducerInputFixture();
         const string dependency = "tools/scripts/worktree/declared.py";
@@ -177,12 +185,13 @@ public sealed class LeanReportProducerInputScriptTests
         var original = fixture.Address();
         fixture.RegisterScripts(dependency);
         var registered = fixture.Address();
-        Assert.NotEqual(original[1], registered[1]);
+        Assert.Equal(original, registered);
+        Assert.Contains(dependency, Lines(fixture.Run("producer-paths")));
         fixture.Append(dependency, "VALUE = 2\n");
         var changed = fixture.Address();
-        Assert.NotEqual(registered[1], changed[1]);
+        Assert.Equal(registered, changed);
         fixture.Append(ProducerInputFixture.LeanRegistrationPath, "\n");
-        Assert.NotEqual(changed[1], fixture.Address()[1]);
+        Assert.Equal(changed, fixture.Address());
         Assert.Equal(original[2..], changed[2..]);
     }
 
@@ -210,7 +219,7 @@ public sealed class LeanReportProducerInputScriptTests
         using var fixture = new ProducerInputFixture();
         fixture.Write(ProducerInputFixture.LeanRegistrationPath, contents);
 
-        AssertRegistrationFailure(fixture.Run("address"), ProducerInputFixture.LeanRegistrationPath);
+        AssertRegistrationFailure(fixture.Run("producer-paths"), ProducerInputFixture.LeanRegistrationPath);
     }
 
     [Theory]
@@ -223,7 +232,7 @@ public sealed class LeanReportProducerInputScriptTests
             field == "scripts" ? [ProducerInputFixture.FetcherPath, ProducerInputFixture.FetcherPath] : [ProducerInputFixture.FetcherPath],
             field == "projects" ? [ProducerInputFixture.CliProjectPath, ProducerInputFixture.CliProjectPath] : [ProducerInputFixture.CliProjectPath]);
 
-        var result = fixture.Run("address");
+        var result = fixture.Run("producer-paths");
 
         AssertRegistrationFailure(result, ProducerInputFixture.LeanRegistrationPath);
         Assert.Contains("duplicate", Encoding.UTF8.GetString(result.StandardError));
@@ -243,7 +252,7 @@ public sealed class LeanReportProducerInputScriptTests
         using var fixture = new ProducerInputFixture();
         fixture.WriteRegistration(ProducerInputFixture.LeanRegistrationPath, [path], [ProducerInputFixture.CliProjectPath]);
 
-        AssertRegistrationFailure(fixture.Run("address"), ProducerInputFixture.LeanRegistrationPath);
+        AssertRegistrationFailure(fixture.Run("producer-paths"), ProducerInputFixture.LeanRegistrationPath);
     }
 
     [Theory]
@@ -255,7 +264,7 @@ public sealed class LeanReportProducerInputScriptTests
     {
         using var fixture = new ProducerInputFixture();
         fixture.Remove(source);
-        var result = fixture.Run("address");
+        var result = fixture.Run("producer-paths");
 
         Assert.Equal(2, result.ExitCode);
         Assert.Empty(result.StandardOutput);
@@ -267,7 +276,7 @@ public sealed class LeanReportProducerInputScriptTests
     {
         using var fixture = new ProducerInputFixture();
         fixture.RemoveInspectorRoot();
-        var result = fixture.Run("address");
+        var result = fixture.Run("producer-paths");
 
         AssertRegistrationFailure(result, ProducerInputFixture.LeanRegistrationPath);
         Assert.Contains("tools/lean-inspector/", Encoding.UTF8.GetString(result.StandardError));
@@ -319,7 +328,7 @@ public sealed class LeanReportProducerInputScriptTests
     }
 
     [Fact]
-    public void CacheFetcherBytesChangeProducerWithoutChangingLeanInputs()
+    public void CacheFetcherBytesPreserveReportCompatibility()
     {
         using var fixture = new ProducerInputFixture();
         var before = fixture.Address();
@@ -327,9 +336,7 @@ public sealed class LeanReportProducerInputScriptTests
         fixture.Append(ProducerInputFixture.FetcherPath, "# fetch acceptance changed\n");
         var after = fixture.Address();
 
-        Assert.NotEqual(before[0], after[0]);
-        Assert.NotEqual(before[1], after[1]);
-        Assert.Equal(before[2..], after[2..]);
+        Assert.Equal(before, after);
     }
 
     [Fact]
@@ -346,15 +353,17 @@ public sealed class LeanReportProducerInputScriptTests
     }
 
     [Fact]
-    public void AddressConsumesRegisteredBytesWithoutInvokingSdkEvaluation()
+    public void AddressDoesNotReadProjectFilesOrInvokeSdkEvaluation()
     {
         using var fixture = new ProducerInputFixture();
+        var before = fixture.Run("address");
         fixture.Append(ProducerInputFixture.CliProjectPath, "<");
         fixture.Write("global.json", ProducerInputFixture.UnavailableSdk);
 
         var result = fixture.Run("address");
 
         Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
+        Assert.Equal(before.StandardOutput, result.StandardOutput);
     }
 
     [Theory]
@@ -366,7 +375,7 @@ public sealed class LeanReportProducerInputScriptTests
     [InlineData("version")]
     [InlineData("cycle")]
     [InlineData("missing-reference-file")]
-    public void InvalidProjectRegistrationBlocksAddress(string defect)
+    public void InvalidProjectRegistrationBlocksInputEnumeration(string defect)
     {
         using var fixture = new ProducerInputFixture();
         if (defect == "missing") fixture.Remove(ProducerInputFixture.ProjectRegistrationPath);
@@ -382,7 +391,7 @@ public sealed class LeanReportProducerInputScriptTests
             if (defect == "cycle") rows[4]!["references"]!.AsArray().Add(ProducerInputFixture.CliProjectPath);
         });
 
-        AssertRegistrationFailure(fixture.Run("address"), ProducerInputFixture.ProjectRegistrationPath);
+        AssertRegistrationFailure(fixture.Run("producer-paths"), ProducerInputFixture.ProjectRegistrationPath);
     }
 
     [Fact]
@@ -414,10 +423,10 @@ public sealed class LeanReportProducerInputScriptTests
             registry["projects"]![0]!["exclude"] = new JsonArray();
         });
         Assert.Contains("tools/StrataLint.Cli/Neighbor.cs", Lines(fixture.Run("producer-paths")));
-        Assert.NotEqual(before[1], fixture.Address()[1]);
+        Assert.Equal(before, fixture.Address());
         before = fixture.Address();
         fixture.Append("tools/Trureturing.Truth/Fixture.cs", "// transitive dependency mutation");
-        Assert.NotEqual(before[1], fixture.Address()[1]);
+        Assert.Equal(before, fixture.Address());
     }
 
     [Fact]

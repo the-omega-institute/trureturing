@@ -22,6 +22,7 @@ public sealed partial class FrozenSurfaceRuleTests
 
     public static TheoryData<string> LeanReportProducerInputCategories => new()
     {
+        "Meta/lean-report.toml",
         "tools/StrataLint.Cli/Program.cs",
         "tools/StrataLint.Engine/Rules/RepositoryRules.FrozenState.cs",
         "tools/StrataLint.Scribe/ScribeEmitter.cs",
@@ -46,6 +47,7 @@ public sealed partial class FrozenSurfaceRuleTests
 
     public static TheoryData<string> IndependentlyWakingLeanReportProducerInputs => new()
     {
+        "Meta/lean-report.toml",
         "tools/StrataLint.Cli/Program.cs",
         "tools/StrataLint.Scribe/ScribeEmitter.cs",
         "tools/Trureturing.Truth/Truth.cs",
@@ -65,6 +67,7 @@ public sealed partial class FrozenSurfaceRuleTests
 
     public static TheoryData<string> CatalogProducerWakeupInputs => new()
     {
+        "Meta/lean-report.toml",
         "lean-toolchain",
         ".github/workflows/ci-push.yml",
         "tools/StrataLint.Cli/Program.cs",

@@ -24,6 +24,13 @@ public sealed partial class LeanInspectorScriptTests
     [Fact]
     public void DeltaReinspectionPreservesDependencyAndMaterialContracts() => LeanSeedProcessContract.Run("DeltaTests");
 
+    [Theory]
+    [InlineData("test_registration_evidence_survives_incremental_reuse")]
+    [InlineData("test_malformed_registration_evidence_is_not_a_reuse_seed")]
+    [InlineData("test_unknown_module_fields_are_not_a_reuse_seed")]
+    public void InformationRegistrationEvidenceMatchesIncrementalReportContract(string behavior) =>
+        LeanSeedProcessContract.Run("RegistrationEvidenceTests." + behavior);
+
     [Fact]
     public void ReportStagingDoesNotPreemptColdCacheProvisioning() =>
         LeanSeedProcessContract.Run("InspectorTests.test_report_staging_does_not_preempt_cold_cache_provisioning");
@@ -81,6 +88,7 @@ public sealed partial class LeanInspectorScriptTests
         var root = TestRepositoryLayout.FindRoot();
         Write(repository, "Trureturing.lean", "import D5.Probe\n");
         Write(repository, "D5/Probe.lean", "def probe : Nat := 1\n");
+        LeanReportInputScriptTests.InstallReportConfiguration(repository);
         foreach (var relative in new[]
             { InspectorScript, InspectorSource, MaterialCompactor, InputScript, ResourceObservationLibrary,
                 "tools/scripts/worktree/lean-cache-input.sh", "tools/scripts/worktree/lean_cache.py",

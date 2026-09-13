@@ -7,33 +7,22 @@ COMMAND="${1:-}"
 if [[ -n "$COMMAND" ]]; then shift; fi
 REPOSITORY=""
 REPORT=""
-PRODUCER_OVERRIDE=""
-INSPECTOR_OVERRIDE=""
 while [[ $# -gt 0 ]]; do
+  [[ $# -ge 2 ]] || { echo "lean-report-input: missing argument value" >&2; exit 2; }
   case "$1" in
     --repository) REPOSITORY="$2"; shift 2 ;;
     --report) REPORT="$2"; shift 2 ;;
-    --producer) PRODUCER_OVERRIDE="$2"; shift 2 ;;
-    --inspector) INSPECTOR_OVERRIDE="$2"; shift 2 ;;
     *) echo "lean-report-input: unknown argument '$1'" >&2; exit 2 ;;
   esac
 done
 
 [[ "$COMMAND" == "address" || "$COMMAND" == "verify" || "$COMMAND" == "modules" \
+  || "$COMMAND" == "compatibility-token" \
   || "$COMMAND" == "producer-paths" || "$COMMAND" == "scribe-producer-paths" ]] \
-  || { echo "usage: lean-report-input.sh address|verify|modules|producer-paths|scribe-producer-paths --repository DIR [--report FILE] [--producer FILE] [--inspector FILE]" >&2; exit 2; }
+  || { echo "usage: lean-report-input.sh address|verify|modules|compatibility-token|producer-paths|scribe-producer-paths --repository DIR [--report FILE]" >&2; exit 2; }
 [[ -n "$REPOSITORY" && "$REPOSITORY" == /* && -d "$REPOSITORY" ]] \
   || { echo "lean-report-input: --repository requires an absolute directory" >&2; exit 2; }
-[[ -z "$PRODUCER_OVERRIDE" || ( "$PRODUCER_OVERRIDE" == /* && -f "$PRODUCER_OVERRIDE" ) ]] \
-  || { echo "lean-report-input: --producer requires an absolute file" >&2; exit 2; }
-[[ -z "$INSPECTOR_OVERRIDE" || ( "$INSPECTOR_OVERRIDE" == /* && -f "$INSPECTOR_OVERRIDE" ) ]] \
-  || { echo "lean-report-input: --inspector requires an absolute file" >&2; exit 2; }
 REPOSITORY="$(cd "$REPOSITORY" && pwd -P)"
-if [[ "$COMMAND" == "verify" ]]; then
-  [[ -n "$REPORT" && "$REPORT" == /* && -s "$REPORT" ]] \
-    || { echo "lean-report-input: raw Lean report is missing; run make lean-report first" >&2; exit 2; }
-fi
-
 TMP_ROOT="$(mktemp -d "${TMPDIR:-/tmp}/stratalint-report-input.XXXXXXXX")"
 cleanup() { rm -rf -- "$TMP_ROOT"; }
 trap cleanup EXIT
@@ -41,78 +30,117 @@ trap cleanup EXIT
 SCRIPT_DIRECTORY="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 source "$SCRIPT_DIRECTORY/../worktree/lean-cache-input.sh"
 
-append_producer_manifest_entry() {
-  local manifest="$1"
-  local relative="$2"
-  local path="$REPOSITORY/$relative"
-  if [[ "$relative" == "tools/lean-inspector/inspect.sh" && -n "$PRODUCER_OVERRIDE" ]]; then
-    path="$PRODUCER_OVERRIDE"
-  elif [[ "$relative" == "tools/lean-inspector/Inspector.lean" && -n "$INSPECTOR_OVERRIDE" ]]; then
-    path="$INSPECTOR_OVERRIDE"
-  fi
-  [[ -f "$path" ]] \
-    || { echo "lean-report-input: repository input is absent: $path" >&2; return 2; }
-  printf '%s\0%s\0' "$relative" "$path" >> "${manifest}.requests"
-}
+# Producer enumeration is an explicit registry interface for engineering/cache
+# consumers. Its source bytes do not define report compatibility.
+if [[ "$COMMAND" == "producer-paths" || "$COMMAND" == "scribe-producer-paths" ]]; then
+  scope=lean-report
+  [[ "$COMMAND" != "scribe-producer-paths" ]] || scope=scribe-content
+  python3 "$SCRIPT_DIRECTORY/producer_paths.py" "$REPOSITORY" "$scope" "$TMP_ROOT/producer-semantics" \
+    || { echo "lean-report-input: registered producer inputs are unavailable" >&2; exit 2; }
+  exit 0
+fi
 
-registered_producer_paths() {
-  python3 "$SCRIPT_DIRECTORY/producer_paths.py" "$REPOSITORY" "$1" "$TMP_ROOT/producer-semantics"
-}
+# One canonical, dependency-free reader for the registered manifest. The closed
+# TOML subset is documented in the report contract; no SDK/MSBuild evaluation or
+# executable-byte discovery participates in report compatibility.
+python3 - "$REPOSITORY" "$COMMAND" "$TMP_ROOT" <<'PY' || exit 2
+import hashlib
+import json
+import pathlib
+import re
+import sys
 
-complete_producer_paths() {
-  registered_producer_paths lean-report
-}
+root = pathlib.Path(sys.argv[1])
+command = sys.argv[2]
+scratch = pathlib.Path(sys.argv[3])
+manifest = "Meta/lean-report.toml"
 
-complete_scribe_producer_paths() {
-  registered_producer_paths scribe-content
-}
+try:
+    text = (root / manifest).read_bytes().decode("utf-8")
+    # Selectors cannot contain '#'; comments and whitespace have no identity.
+    text = re.sub(r"#[^\n]*", "", text)
+    values = {}
+    decoder = json.JSONDecoder()
+    while text.strip():
+        match = re.match(r"\s*([a-z_]+)[ \t]*=[ \t]*", text)
+        if match is None:
+            raise ValueError("invalid assignment")
+        key = match[1]
+        if key not in {"compatibility_version", "source_patterns"} or key in values:
+            raise ValueError(f"unknown or duplicate key: {key}")
+        value_text = text[match.end():]
+        value, end = decoder.raw_decode(value_text)
+        if key == "compatibility_version" and not re.fullmatch(r"[1-9][0-9]*", value_text[:end]):
+            raise ValueError("compatibility_version must be a positive decimal integer")
+        values[key] = value
+        text = value_text[end:]
+        if text and not re.match(r"[ \t]*\r?\n", text):
+            raise ValueError(f"unexpected bytes after {key}")
+    version = values.get("compatibility_version")
+    if type(version) is not int or version <= 0:
+        raise ValueError("compatibility_version is missing or is not a positive integer")
 
-producer_sha256() {
-  local manifest="$1"
-  local relative
-  : > "$manifest"
-  : > "${manifest}.unsorted"
-  : > "${manifest}.unsorted.requests"
-  local producer_paths="$TMP_ROOT/producer-paths"
-  complete_producer_paths > "$producer_paths" \
-    || { echo "lean-report-input: producer closure is unavailable" >&2; return 2; }
-  while IFS= read -r relative; do
-    append_producer_manifest_entry "${manifest}.unsorted" "$relative" || return 2
-  done < "$producer_paths"
-  materialize_manifest "${manifest}.unsorted" || return 2
-  cat "$TMP_ROOT/producer-semantics" >> "${manifest}.unsorted" || return 2
-  sort "${manifest}.unsorted" > "$manifest" || return 2
-  rm -f -- "${manifest}.unsorted"
-  hash_file "$manifest"
-}
+    def patterns(key):
+        items = values.get(key)
+        if (not isinstance(items, list) or not items
+                or any(not isinstance(item, str) or not item
+                       or not re.fullmatch(r"[A-Za-z0-9_./*?-]+", item)
+                       or item.startswith("/") or ".." in item.split("/")
+                       or "." in item.split("/") or "//" in item for item in items)
+                or len(items) != len(set(items))):
+            raise ValueError(f"{key} must register unique relative path patterns")
+        return items
 
-managed_modules() {
-  [[ -f "$REPOSITORY/Trureturing.lean" && -d "$REPOSITORY/D5" ]] \
-    || { echo "lean-report-input: managed Lean roots are absent" >&2; return 2; }
-  printf 'Trureturing\tTrureturing.lean\n'
-  find "$REPOSITORY/D5" -type f -name '*.lean' -print \
-    | sed "s#^$REPOSITORY/##" \
-    | sort \
-    | while IFS= read -r path; do
-        module="${path%.lean}"
-        printf '%s\t%s\n' "${module//\//.}" "$path"
-      done
-}
+    sources = patterns("source_patterns")
+    token = hashlib.sha256(
+        f"schema=stratalint-lean-report-compatibility\nversion={version}\n".encode("utf-8")
+    ).hexdigest()
+    (scratch / "compatibility").write_text(token + "\n", encoding="ascii")
+    if command == "compatibility-token":
+        print(token)
+    else:
+        paths = []
+        for pattern in sources:
+            selected = sorted((path for path in root.glob(pattern)
+                               if path.is_file() and not path.is_symlink()),
+                              key=lambda path: path.as_posix().encode("utf-8"))
+            if not selected and not any(char in pattern for char in "*?"):
+                raise ValueError(f"registered report source is absent: {pattern}")
+            paths.extend(path.relative_to(root).as_posix() for path in selected)
+        if len(paths) != len(set(paths)):
+            raise ValueError("overlapping source_patterns")
+        if not paths or any(not path.endswith(".lean") or "\t" in path or "\n" in path for path in paths):
+            raise ValueError("source_patterns must select Lean module paths")
+        (scratch / "modules").write_text("".join(
+            path[:-5].replace("/", ".") + "\t" + path + "\n" for path in paths), encoding="utf-8")
+except (OSError, UnicodeError, ValueError) as error:
+    print(f"lean-report-input: {manifest} compatibility_version/config invalid: {error}", file=sys.stderr)
+    sys.exit(2)
+PY
 
-# Repository address preimage v1 hashes the resident inspector producer,
-# Trureturing.lean + D5/**/*.lean + tools/lean-inspector/**/*.lean sources,
-# and parsed semantic Lean configuration as three named SHA-256 fields.
+if [[ "$COMMAND" == "verify" ]]; then
+  [[ -n "$REPORT" && "$REPORT" == /* && -s "$REPORT" ]] \
+    || { echo "lean-report-input: raw Lean report is missing; run make lean-report first" >&2; exit 2; }
+fi
+
+# Digest-shaped producer/resident fields are the same version-derived token.
+# Report sources exclude Inspector; the Lean config preimage is shared with the
+# compiled-cache helper: metadata-only changes do not invalidate module results.
 repository_address() {
-  local resident_manifest="$TMP_ROOT/resident-inspector.manifest"
   local preimage="$TMP_ROOT/repository-input.preimage"
-  local resident_sha256 sources_sha256 config_sha256 lean_input
+  local sources_manifest="$TMP_ROOT/report-sources.manifest"
+  local resident_sha256 sources_sha256 config_sha256 module path
 
+  resident_sha256="$(cat "$TMP_ROOT/compatibility")" || return 2
   prepare_memo
-  resident_sha256="$(producer_sha256 "$resident_manifest")" || return 2
-  lean_input="$(lean_cache_address)" || return 2
-  [[ "$lean_input" =~ ^[0-9a-f]{64}\ [0-9a-f]{64}$ ]] \
-    || { echo "lean-report-input: Lean input address is malformed" >&2; return 2; }
-  read -r sources_sha256 config_sha256 <<< "$lean_input"
+  : > "${sources_manifest}.requests"
+  while IFS=$'\t' read -r module path; do
+    append_manifest_entry "$sources_manifest" "$path" || return 2
+  done < "$TMP_ROOT/modules"
+  materialize_manifest "$sources_manifest" || return 2
+  sources_sha256="$(hash_file "$sources_manifest")" || return 2
+  lean_semantic_config > "$TMP_ROOT/config.manifest" || return 2
+  config_sha256="$(hash_file "$TMP_ROOT/config.manifest")" || return 2
 
   {
     printf '%s\n' "schema=stratalint-lean-report-repository-input-v1"
@@ -146,15 +174,10 @@ case "$COMMAND" in
     repository_address
     ;;
   modules)
-    managed_modules
+    cat "$TMP_ROOT/modules"
     ;;
-  producer-paths)
-    complete_producer_paths \
-      || { echo "lean-report-input: producer compile closure is unavailable" >&2; exit 2; }
-    ;;
-  scribe-producer-paths)
-    complete_scribe_producer_paths \
-      || { echo "lean-report-input: Scribe producer closure is unavailable" >&2; exit 2; }
+  compatibility-token)
+    # Already emitted by the canonical manifest reader above.
     ;;
   verify)
     verify_report_sha

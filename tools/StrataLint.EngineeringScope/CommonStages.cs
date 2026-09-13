@@ -313,7 +313,9 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
     private string Step(string name, string executable, string[] arguments, Func<int, string, bool>? proof = null,
         bool allowAnnotation = false, TimeSpan? defaultTimeout = null)
     {
-        var result = Capture(executable, arguments, defaultTimeout);
+        output.WriteLine("STAGE_STEP " + JsonSerializer.Serialize(new { stage, name, status = "started" }));
+        output.Flush();
+        var result = Capture(executable, arguments, defaultTimeout, streamOutput: true);
         var log = $"{CommonExecutionEvidence.RootPath}/logs/{stage}/{name}{(steps.Any(step => step.Name == name) ? "-" + steps.Count : "")}.log";
         var full = Path.Combine(root, log);
         Directory.CreateDirectory(Path.GetDirectoryName(full)!);
@@ -321,12 +323,12 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
         var exit = proof is null ? Normalize(result.Exit, allowAnnotation)
             : result.Exit is not (0 or 1) ? 2 : proof(result.Exit, result.Text) ? 0 : 1;
         steps.Add(new(name, result.Exit, exit, exit == 0 ? "executed" : "failed", log));
-        output.WriteLine(result.Text);
         if (exit != 0) throw new StageFailure(exit, $"{name} failed: raw_exit={result.Exit}; log={log}");
         return result.Text;
     }
 
-    private (int Exit, string Text) Capture(string executable, string[] arguments, TimeSpan? defaultTimeout = null)
+    private (int Exit, string Text) Capture(string executable, string[] arguments, TimeSpan? defaultTimeout = null,
+        bool streamOutput = false)
     {
         var clock = timeProvider ?? TimeProvider.System;
         if (deadlineCancellation.IsCancellationRequested) throw new TimeoutException("PREFLIGHT_BUDGET_EXHAUSTED owner=outer-deadline");
@@ -358,6 +360,7 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
         using var stderrReader = process.StandardError;
         var stdoutText = new StringBuilder();
         var stderrText = new StringBuilder();
+        var liveOutput = streamOutput ? TextWriter.Synchronized(output) : null;
         var phase = "child-exit";
         var outcome = "faulted";
         string? cancelledPhase = null;
@@ -374,9 +377,9 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
             if (childExit.code is null)
                 childExit = new { code = (int?)process.ExitCode, phase = waitPhase, elapsed_ms = (double?)Elapsed() };
         }
-        var stdout = Drain(stdoutReader, stdoutText, drainCancellation.Token,
+        var stdout = Drain(stdoutReader, stdoutText, liveOutput, drainCancellation.Token,
             status => stdoutObservation = new { status, elapsed_ms = (double?)Elapsed() });
-        var stderr = Drain(stderrReader, stderrText, drainCancellation.Token,
+        var stderr = Drain(stderrReader, stderrText, liveOutput, drainCancellation.Token,
             status => stderrObservation = new { status, elapsed_ms = (double?)Elapsed() });
         var drains = Task.WhenAll(stdout, stderr);
         try
@@ -408,8 +411,10 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
                 Task.WhenAll(drains, WaitForExit(drainCancellation.Token)).GetAwaiter().GetResult();
             }
             catch (OperationCanceledException) { }
-            return (124, Captured(stdoutText) + Captured(stderrText)
-                + "\nstage deadline exceeded: " + executable + "\n");
+            var diagnostic = "\nstage deadline exceeded: " + executable + "\n";
+            liveOutput?.Write(diagnostic);
+            liveOutput?.Flush();
+            return (124, Captured(stdoutText) + Captured(stderrText) + diagnostic);
         }
         finally
         {
@@ -420,6 +425,9 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
             catch (OperationCanceledException) { }
             finally
             {
+                // A child may finish without a newline. Keep the observation on
+                // its own line without changing the retained predicate text.
+                liveOutput?.WriteLine();
                 output.WriteLine("STAGE_PROCESS " + JsonSerializer.Serialize(new
                 {
                     stage, command = executable, arguments, process_id = process.Id, phase, outcome,
@@ -429,11 +437,13 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
                     deadline_cancelled = deadlineCancelled, timeout_cancelled = timeoutCancelled,
                     child_exit = childExit, stdout = stdoutObservation, stderr = stderrObservation,
                 }));
+                output.Flush();
             }
         }
     }
 
-    private static async Task Drain(StreamReader reader, StringBuilder text, CancellationToken cancellation, Action<string> observed)
+    private static async Task Drain(StreamReader reader, StringBuilder text, TextWriter? output,
+        CancellationToken cancellation, Action<string> observed)
     {
         var status = "faulted";
         try
@@ -443,6 +453,14 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
             while ((count = await reader.ReadAsync(buffer.AsMemory(), cancellation).ConfigureAwait(false)) != 0)
             {
                 lock (text) text.Append(buffer, 0, count);
+                if (output is not null)
+                {
+                    lock (output)
+                    {
+                        output.Write(buffer, 0, count);
+                        output.Flush();
+                    }
+                }
             }
             status = "eof";
         }

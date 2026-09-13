@@ -15,15 +15,16 @@ from lean_seed_support import DELTA, INPUT, OTHER, PUBLISH, REV, ROOT, Partition
 from lean_seed_transport import FAKE_GH, ReleaseTransportCases
 
 
-class DeltaTests(unittest.TestCase):
+class DeltaFixture:
     def setUp(self):
         self.temporary = tempfile.TemporaryDirectory()
         self.addCleanup(self.temporary.cleanup)
         self.root = pathlib.Path(self.temporary.name)
         self.cache = self.root / "cache"
-        self.address = "a" * 64
         self.producer = "b" * 64
         self.config = "c" * 64
+        self.sources = "e" * 64
+        self.repository_address, self.address = self.input_addresses(self.producer, self.config)
         self.entry = self.cache / self.address
         self.report = self.entry / "raw-lean-report.json"
         self.modules = []
@@ -35,16 +36,24 @@ class DeltaTests(unittest.TestCase):
                 "imports": imports, "declarations": []})
         self.store()
 
+    def input_addresses(self, producer, config):
+        fields = (f"repository_inspector_sha256={producer}\n"
+                  + f"lean_sources_sha256={self.sources}\nlean_config_sha256={config}\n")
+        repository = digest(("schema=stratalint-lean-report-repository-input-v1\n" + fields).encode())
+        report_input = digest(("schema=stratalint-lean-report-input-v1\n"
+                               + f"producer_sha256={producer}\n" + fields).encode())
+        return repository, report_input
+
     def store(self):
         write(self.report, json.dumps({"modules": self.modules, "schema": "stratalint-raw-lean-report-v2"}, sort_keys=True) + "\n")
         report_sha = digest(self.report.read_bytes())
         write(pathlib.Path(str(self.report) + ".sha256"), report_sha + "  raw-lean-report.json\n")
-        write(pathlib.Path(str(self.report) + ".input.attestation"), "schema=stratalint-lean-report-input-attestation-v1\nrepository_input_sha256=" + "d"*64 + "\nproducer_sha256=" + self.producer + "\nreport_sha256=" + report_sha + "\n")
+        write(pathlib.Path(str(self.report) + ".input.attestation"), "schema=stratalint-lean-report-input-attestation-v1\nrepository_input_sha256=" + self.repository_address + "\nproducer_sha256=" + self.producer + "\nreport_sha256=" + report_sha + "\n")
         write(pathlib.Path(str(self.report) + ".provenance.json"), json.dumps({
             "schema": "stratalint-lean-report-provenance-v1", "side": "candidate", "mode": "produced",
             "source_side": "candidate", "input_address": "sha256:" + self.address,
             "producer_sha256": self.producer, "repository_inspector_sha256": self.producer,
-            "lean_sources_sha256": "e"*64, "lean_config_sha256": self.config, "report_sha256": report_sha}))
+            "lean_sources_sha256": self.sources, "lean_config_sha256": self.config, "report_sha256": report_sha}))
         with zipfile.ZipFile(str(self.report) + ".materials.zip", "w") as archive:
             for name, material in sorted(self.materials.items()):
                 archive.writestr(name, material)
@@ -70,12 +79,14 @@ class DeltaTests(unittest.TestCase):
         table = self.root / "modules.tsv"
         write(table, "".join(name + "\t" + name + ".lean\n" for name in names))
         plan = self.root / "plan.json"
+        _, current_address = self.input_addresses(producer or self.producer, config or self.config)
         result = subprocess.run([sys.executable, str(DELTA), "plan", str(self.root), str(self.cache),
-            self.address, producer or self.producer, producer or self.producer, config or self.config,
+            current_address, producer or self.producer, producer or self.producer, config or self.config,
             str(table), str(plan), *extra], text=True, capture_output=True)
         self.assertEqual(0, result.returncode, result.stderr)
         return json.loads(plan.read_text())
 
+class DeltaTests(DeltaFixture, unittest.TestCase):
     def test_exact_seed_enters_incremental_reuse(self):
         result = self.plan()
         self.assertEqual("reuse", result["status"])
@@ -141,6 +152,36 @@ class DeltaTests(unittest.TestCase):
         self.assertEqual("fallback", self.plan()["status"])
 
 
+class RegistrationEvidenceTests(DeltaFixture, unittest.TestCase):
+    def test_registration_evidence_survives_incremental_reuse(self):
+        for errors in ([], ["alpha diagnostic", "beta diagnostic"]):
+            with self.subTest(errors=errors):
+                self.modules[0]["information_registration_errors"] = errors
+                self.store()
+                plan = self.plan()
+                self.assertEqual("reuse", plan["status"])
+                self.assertEqual([], plan["recheck"])
+                merged = self.root / "merged.json"
+                result = subprocess.run([sys.executable, str(DELTA), "merge",
+                    str(self.root / "plan.json"), str(self.root / "empty-subset.json"), str(merged)],
+                    text=True, capture_output=True)
+                self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+                self.assertEqual(self.report.read_bytes(), merged.read_bytes())
+                self.assertEqual(errors, json.loads(merged.read_text())["modules"][0]["information_registration_errors"])
+
+    def test_malformed_registration_evidence_is_not_a_reuse_seed(self):
+        for errors in (None, "diagnostic", {}, [1], ["duplicate", "duplicate"], ["z", "a"]):
+            with self.subTest(errors=errors):
+                self.modules[0]["information_registration_errors"] = errors
+                self.store()
+                self.assertEqual("fallback", self.plan()["status"])
+
+    def test_unknown_module_fields_are_not_a_reuse_seed(self):
+        self.modules[0]["unregistered_field"] = []
+        self.store()
+        self.assertEqual("fallback", self.plan()["status"])
+
+
 class TransportTests(ReleaseTransportCases, unittest.TestCase):
     """Release transport cases exposed under their existing test identity."""
 
@@ -180,6 +221,8 @@ class PairFixture(PartitionFixture):
         shutil.copytree(ROOT / "tools/scripts", self.root / "tools/scripts",
                         ignore=shutil.ignore_patterns("bin", "obj", "__pycache__"))
         shutil.copytree(ROOT / "tools/lean-inspector", self.root / "tools/lean-inspector")
+        write(self.root / "Meta/lean-report.toml",
+              'compatibility_version = 1\nsource_patterns = ["Trureturing.lean", "D5/**/*.lean"]\n')
         self.producer = self.root / "tools/lean-inspector/inspect.sh"
         write(self.producer, PAIR_PRODUCER)
         self.producer.chmod(0o755)

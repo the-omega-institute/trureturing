@@ -62,6 +62,7 @@ internal static class FileMapPolicy
             ["FrozenStateRecordLoader"] = FrozenStateRecordLoaderPath,
             ["GateAuthorityRootCatalogLoader"] = GateAuthorityRootCatalogLoaderPath,
             ["LibraryNoteCatalog"] = LibraryNoteCatalogPath,
+            ["LeanReportInput"] = "tools/scripts/report/lean-report-input.sh",
             ["PackageMaterialRegistry"] = "tools/StrataLint.EngineeringScope/PackageMaterialRegistry.cs",
             ["ProblemCandidateCatalog"] = ProblemCandidateCatalogPath,
             ["RegistryLoader"] = RegistryLoaderPath,

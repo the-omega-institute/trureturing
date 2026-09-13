@@ -44,10 +44,15 @@ theorem refute : Not (1 = (2 : Nat)) := by decide
         self.source("Unrelated", "def unrelated : Nat := 7\n")
         self.run_command("git", "init", "-q")
         self.cache = self.root / "build/cache"
-        self.baseline = self.cache / ("a" * 64) / "raw-lean-report.json"
         # These identities hold the fixture's producer/configuration fixed; the
-        # registered producer mutations are exercised by native report input tests.
+        # compatibility-version and Lean-option changes have separate input tests.
         self.identity = "b" * 64
+        fields = (f"repository_inspector_sha256={self.identity}\n"
+                  + f"lean_sources_sha256={self.identity}\nlean_config_sha256={self.identity}\n")
+        self.repository_address = digest(("schema=stratalint-lean-report-repository-input-v1\n" + fields).encode())
+        self.input_address = digest(("schema=stratalint-lean-report-input-v1\n"
+                                     + f"producer_sha256={self.identity}\n" + fields).encode())
+        self.baseline = self.cache / self.input_address / "raw-lean-report.json"
 
     def source(self, name, text):
         write(self.root / self.paths["D5.S0.Carrier." + name], text)
@@ -82,11 +87,11 @@ theorem refute : Not (1 = (2 : Nat)) := by decide
         report_sha = digest(self.baseline.read_bytes())
         write(pathlib.Path(str(self.baseline) + ".sha256"), report_sha + "  raw-lean-report.json\n")
         write(pathlib.Path(str(self.baseline) + ".input.attestation"),
-              "schema=stratalint-lean-report-input-attestation-v1\nrepository_input_sha256=" + self.identity
+              "schema=stratalint-lean-report-input-attestation-v1\nrepository_input_sha256=" + self.repository_address
               + "\nproducer_sha256=" + self.identity + "\nreport_sha256=" + report_sha + "\n")
         write(pathlib.Path(str(self.baseline) + ".provenance.json"), json.dumps({
             "schema": "stratalint-lean-report-provenance-v1", "side": "candidate", "mode": "produced",
-            "source_side": "candidate", "input_address": "sha256:" + self.identity,
+            "source_side": "candidate", "input_address": "sha256:" + self.input_address,
             "producer_sha256": self.identity, "repository_inspector_sha256": self.identity,
             "lean_sources_sha256": self.identity, "lean_config_sha256": self.identity,
             "report_sha256": report_sha}))
@@ -97,7 +102,7 @@ theorem refute : Not (1 = (2 : Nat)) := by decide
                             if (self.root / path).is_file()))
         plan = self.root / "build/plan.json"
         self.run_command(sys.executable, str(DELTA), "plan", str(self.root), str(self.cache),
-                         *([self.identity] * 4), str(table), str(plan))
+                         self.input_address, *([self.identity] * 3), str(table), str(plan))
         value = json.loads(plan.read_text())
         self.assertIn(value["status"], ("reuse", "delta"))
         return plan, value["recheck"]

@@ -250,7 +250,8 @@
     "tools/StrataLint.Lean/packages.lock.json",
     "tools/StrataLint.Engine/packages.lock.json",
     "tools/Trureturing.Truth/packages.lock.json",
-    ".editorconfig"
+    ".editorconfig",
+    "Meta/lean-report.toml"
   ],
   "runtime": {
     "lean": [

@@ -37,6 +37,13 @@ production round before downstream use. Cache seeds are optional inputs to those
 validators and producers; cache hits do not issue a passing verdict. PR runs do
 not publish cache snapshots.
 
+Report producer compatibility is the explicit version in `Meta/lean-report.toml`.
+Implementation edits retain that token; a deliberate version bump invalidates old
+report results. The manifest also selects report sources. Source hashes, parsed
+Lean options, registered runtime materials, and complete report provenance still
+control incremental reuse. These checks do not change the remote cache partition,
+which remains the resolved mathlib revision plus binary platform.
+
 PR required checks are `push / engineering`, `push / current`, and `delta`;
 push required checks are `engineering` and `current`. The shared build job is a
 prerequisite of its selected consumers. Truth release selects the two successful

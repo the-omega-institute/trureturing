@@ -169,6 +169,14 @@ golden-ledger/
 
 本条仍 `open(F4[2]-REAL-PIN-BUMP-E2E)`:当前 dev `a965c9737` 语料实测 `Supersede=0`,`Revoke=0`,所以合成正负例**尚无真实 pin bump 的端到端收据**,不得表述为「已在真实语料验证」;建议另开新单并在正文引用 #1947,不得复活该已卡死工单。以下两项只作 `ASSUMED-UNVERIFIED`,不冒领为结论:① candidate `payload.AxiomClosure` 与新环境独立重算结果之间的不可伪造性尚缺真实重算/绑定收据;②所有 pin/material 变更路径是否都到达该门尚缺全路径枚举与生产运行收据。治理级反例亦保留:若同时修改 `StandardAxioms` 与 `TruthDagTests.StandardAxiomAlphabetIsPinned` 的期望值,单元钉子不能拦住,只能由 τ=0 评审约束。
 
+**A14.9 Lean-report producer compatibility.** `Meta/lean-report.toml` is the FILEMAP-registered judge configuration. Its single `compatibility_version` is a developer-controlled positive decimal integer. `tools/scripts/report/lean-report-input.sh` is the only runtime reader; missing, malformed, duplicate or unknown configuration fails with exit 2 and a diagnostic naming the manifest and compatibility field. There is no default, code-hash fallback, or automatic requirement to bump after implementation edits. Pair production and direct inspector invocation validate the version before cache/build work, including when `STRATALINT_REPORT_*` identities are supplied. A supplied producer/resident token from a different version causes the inspector to resolve the current tuple again.
+
+The retained transport fields `producer_sha256` and `repository_inspector_sha256` are identical compatibility tokens: `SHA256(UTF8("schema=stratalint-lean-report-compatibility\nversion=<canonical decimal>\n"))`. The fixed domain separator is not another configurable version. These fields do not attest executable bytes. Comments, whitespace, C# sources, scripts, Inspector Lean, unused fixtures, .NET SDK/package/build metadata and unrelated CI changes do not change producer compatibility. Developers bump the version when old complete reports and incremental baselines must be rejected.
+
+The same manifest's `source_patterns` selects report sources and module enumeration, currently root `Trureturing.lean` followed by sorted `D5/**/*.lean`. Their path/content manifest is hashed separately from the compatibility token. The compiled Lean cache keeps its existing broader source scope, including Inspector Lean; both consumers share the parsed semantic `lean_config_sha256` from the registered Lean configuration. Configuration comments and formatting do not change it. Source changes, additions and deletions still drive the existing reverse-import/refutation-claim delta closure. Report/sidecar/provenance/material validation and C# source/path/symlink/UTF-8 validation retain their existing consumers and failure boundaries. CI report addressing and provenance use report-source/config outputs; compiled-cache outputs only address the compiled cache.
+
+The manifest uses a closed, dependency-free TOML subset: unique top-level assignments to `compatibility_version` and `source_patterns`; the integer uses `[1-9][0-9]*`, arrays use JSON-compatible double-quoted relative path patterns without trailing commas, and whitespace and `#` comments are allowed. Unknown keys and duplicate or escaping patterns fail. `source_patterns` uses recursive path globs and rejects overlapping selected files. CI resource selection is owned by FILEMAP and the selected Scribe stage runs `projections --check`, `describe-report --check` and the selected Markdown check without reading base. Its inputs remain in the registered `Meta/ReportProducers/scribe-content.json` manifest. These registration bytes do not enter report compatibility. The reader exposes `address`, `verify`, `modules` and `compatibility-token`; producer material inventories remain explicit registrations for downstream check evidence, without producer-closure discovery or executable-byte compatibility hashing.
+
 **A15 提交与 PR 文法** `COMMIT := <官>"("<GID>"): "<动词短语>`;PR 模板 = 四段判词(立了什么/依赖什么/试了什么死了什么/账平声明勾选:无既有 closed 被推翻)。
 
 
@@ -282,7 +290,7 @@ engineering 与 Scribe 不按 base 选测。当前项目与检查义务由候选
 
 保留定时 Release 缓存发布;仅在 Actions 无可用种子时取**同分区成功快照**,删除 exact/config-prefix/same-toolchain 多级选择,不得跨分区借种。donor/stamp 使用同一分区;同 mathlib 的 metadata 改动不得删除 `.lake`。缺缓存、损坏、传输或保存失败须可诊断地降级为正常生产;真实 restore/build/Lean/测试/规则失败仍阻断。登记判为不需要缓存的资源不做缓存运输。
 
-需要 Lean/report 的路由在命中后仍进入各自增量入口,缓存只提供起点。报告增量器保留模块增删、source hash、反向依赖闭包与材料完整性失效检查;这是增量生产验证,不作为 CI 归属或输入的动态发现器。显式登记的 producer 输入、Lean 选项或实际语义环境变化在增量器内触发必要重算,不得进入远端兼容分区。相同 mathlib 下源码变化只重算受影响闭包;不影响登记语义输入的 metadata 变化为零 Lean 模块重编、零报告模块重检;同环境增量结果必须等于干净生产。
+需要 Lean/report 的路由在命中后仍进入各自增量入口,缓存只提供起点。报告增量器保留模块增删、source hash、反向依赖闭包与材料完整性失效检查;这是增量生产验证,不作为 CI 归属或输入的动态发现器。producer 兼容性只取 A14.9 的显式版本 token；代码字节变化不自动改变该 token。版本、Lean 选项或显式登记的实际语义环境变化在增量器内触发必要重算,不得进入远端兼容分区。相同 mathlib 下源码变化只重算受影响闭包;不影响登记语义输入的 metadata 变化为零 Lean 模块重编、零报告模块重检;同环境增量结果必须等于干净生产。
 
 **验收矩阵。** 程序行为先测后改,不新增 workflow 文本形状测试。至少覆盖下列放行与阻断边界,以实际义务、判词与材料验证,不只比较退出码:
 

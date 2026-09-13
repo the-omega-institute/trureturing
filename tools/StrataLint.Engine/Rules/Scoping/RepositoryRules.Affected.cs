@@ -47,7 +47,8 @@ internal static partial class RepositoryRules
         context.Changes.Paths.Any(path => predicate(path.Value));
 
     internal static bool IsLeanReportProducerInput(string path, IReadOnlySet<string> registeredInputs) =>
-        path.StartsWith("tools/", StringComparison.Ordinal)
+        path == "Meta/lean-report.toml"
+        || path.StartsWith("tools/", StringComparison.Ordinal)
             && !path.StartsWith("tools/tests/", StringComparison.Ordinal)
         || StrataLintEngineBuildInputs.Contains(path, registeredInputs)
         || path.StartsWith(".github/workflows/", StringComparison.Ordinal)

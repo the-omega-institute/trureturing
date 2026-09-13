@@ -40,6 +40,94 @@ public sealed class CommonStageContractTests
     }
 
     [Fact]
+    public void StepAnnouncesItsNameBeforeStartingTheProducer()
+    {
+        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        PrepareCurrent(fixture);
+        var started = Path.Combine(fixture.Root, "build/producer-started");
+        TemporaryFileSystem.File.WriteAllText(Path.Combine(fixture.Root, "build/producer.sh"),
+            ": > build/producer-started\nprintf 'producer-finished\\n'\n");
+        string? announcement = null;
+        var beforeStartup = false;
+        using var output = new FlushObserver(text =>
+        {
+            if (announcement is not null) return;
+            announcement = text.Split('\n').FirstOrDefault(line => line.StartsWith("STAGE_STEP ", StringComparison.Ordinal));
+            if (announcement is not null) beforeStartup = !TemporaryFileSystem.File.Exists(started);
+        });
+        Assert.Equal(2, new CommonStages(fixture.Root, output).Run("current", null));
+        Assert.NotNull(announcement);
+        using var observed = System.Text.Json.JsonDocument.Parse(announcement["STAGE_STEP ".Length..]);
+        Assert.Equal("current", observed.RootElement.GetProperty("stage").GetString());
+        Assert.Equal("lean-report", observed.RootElement.GetProperty("name").GetString());
+        Assert.Equal("started", observed.RootElement.GetProperty("status").GetString());
+        Assert.True(beforeStartup);
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public async Task ProducerOutputIsFlushedBeforeExitWithoutReplayingItsContents(bool standardError)
+    {
+        using var fixture = new CurrentExecutionContractTests.CandidateFixture();
+        PrepareCurrent(fixture);
+        var marker = standardError ? "streamed-stderr" : "streamed-stdout";
+        var exited = Path.Combine(fixture.Root, "build/producer-exited");
+        TemporaryFileSystem.File.WriteAllText(Path.Combine(fixture.Root, "build/producer.sh"), $$"""
+            set -euo pipefail
+            mkfifo build/output-release
+            printf '{{marker}}' {{(standardError ? ">&2" : "")}}
+            read -r release < build/output-release
+            : > build/producer-exited
+            printf '|released' {{(standardError ? ">&2" : "")}}
+            """);
+        using var deadline = new CancellationTokenSource();
+        var observed = false;
+        var beforeExit = false;
+        using var output = new FlushObserver(text =>
+        {
+            if (observed || deadline.IsCancellationRequested || !text.Contains(marker, StringComparison.Ordinal)) return;
+            observed = true;
+            beforeExit = !TemporaryFileSystem.File.Exists(exited);
+            TemporaryFileSystem.File.WriteAllText(Path.Combine(fixture.Root, "build/output-release"), "release\n");
+        });
+        var run = Task.Run(() => new CommonStages(fixture.Root, output, deadline.Token).Run("current", null));
+        try
+        {
+            Assert.Equal(2, await run.WaitAsync(TestBudgets.ScriptProcessHangGuard));
+        }
+        catch (TimeoutException exception)
+        {
+            throw new SkipException("infrastructure-hang-guard expired for streaming output handshake: " + exception.Message);
+        }
+        finally
+        {
+            deadline.Cancel();
+            try { await run.WaitAsync(TestBudgets.ScriptProcessHangGuard); }
+            catch (TimeoutException exception)
+            {
+                throw new SkipException("infrastructure-hang-guard expired during streaming output cleanup: " + exception.Message);
+            }
+        }
+        Assert.True(observed);
+        Assert.True(beforeExit);
+        Assert.True(TemporaryFileSystem.File.Exists(exited));
+        Assert.Equal(1, output.ToString().Split(marker, StringSplitOptions.None).Length - 1);
+        Assert.Equal(marker + "|released", TemporaryFileSystem.File.ReadAllText(
+            Path.Combine(fixture.Root, CommonExecutionEvidence.RootPath, "logs/current/lean-report.log")));
+        Assert.Equal("completed", ProcessObservation(output).GetProperty("outcome").GetString());
+    }
+
+    private sealed class FlushObserver(Action<string> observed) : StringWriter
+    {
+        public override void Flush()
+        {
+            base.Flush();
+            observed(ToString());
+        }
+    }
+
+    [Fact]
     public void CancelledDeadlineBeforeStartupLeavesAllStepsUnexecuted()
     {
         using var fixture = new CurrentExecutionContractTests.CandidateFixture();

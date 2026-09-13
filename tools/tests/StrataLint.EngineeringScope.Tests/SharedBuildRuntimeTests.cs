@@ -33,7 +33,8 @@ public sealed class SharedBuildRuntimeTests
                 "xunit.assert/2.9.3", "xunit.core/2.9.3", "xunit.extensibility.core/2.9.3", "xunit.extensibility.execution/2.9.3",
                 "xunit.runner.visualstudio/3.1.4" }.Order(StringComparer.Ordinal).Select(package => new {
                     packagePath = package, include = new[] { "**/*" }, exclude = new[] { "**/*.nupkg", "**/*.snupkg" } }) }));
-        foreach (var path in new[] { "tools/scripts/ci-stage.sh", "tools/scripts/report/dotnet_producer.py",
+        foreach (var path in new[] { "tools/scripts/ci-stage.sh", "tools/scripts/lib/resource-observation-lib.sh",
+                     "tools/scripts/report/dotnet_producer.py",
                      "tools/scripts/workflow/ci.py", "tools/scripts/workflow/ci_plan.py",
                      "tools/scripts/report/JudgeSeedTask.cs", "tools/scripts/report/JudgeSeedTask.csproj",
                      "tools/scripts/report/JudgeSeed.targets",

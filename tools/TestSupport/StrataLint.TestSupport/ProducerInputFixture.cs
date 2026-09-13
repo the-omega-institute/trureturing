@@ -30,13 +30,14 @@ internal sealed class ProducerInputFixture : IDisposable
     private readonly TemporaryDirectory temporary = new();
     private readonly string repository;
     private readonly string physicalRepository;
+    private string? seedCacheAddress;
     internal const string ProjectRegistrationPath = "Meta/engineering-projects.json";
     internal const string EngineProjectPath = "tools/StrataLint.Engine/StrataLint.Engine.csproj";
     internal const string TruthProjectPath = "tools/Trureturing.Truth/Trureturing.Truth.csproj";
     private static readonly string[] ProjectNames =
         ["StrataLint.Cli", "StrataLint.Engine", "StrataLint.Scribe", "StrataLint.Scribe.Documents", "Trureturing.Truth"];
 
-    // Alphabetical fields give an independent canonical preimage for the script API.
+    // Producer path enumeration uses this explicit engineering registration.
     private static object Row(string name) => new
     {
         assembly = name, ci = false, exclude = Array.Empty<string>(),
@@ -97,6 +98,7 @@ internal sealed class ProducerInputFixture : IDisposable
         Write("lean-toolchain", "leanprover/lean4:v4.33.0\n");
         Write("lakefile.toml", "name = \"fixture\"\n");
         Write("lake-manifest.json", "{\"packages\":[{\"name\":\"mathlib\",\"rev\":\"" + Revision + "\"}]}\n");
+        Write("Meta/lean-report.toml", "compatibility_version = 1\nsource_patterns = [\"Trureturing.lean\", \"D5/**/*.lean\"]\n");
         RegisterScripts();
         Write(".gitignore", "build/\n**/bin/\n**/obj/\n**/__pycache__/\n");
         Git("init", "--quiet");
@@ -178,28 +180,9 @@ internal sealed class ProducerInputFixture : IDisposable
 
     internal byte[] ExpectedAddressBytes()
     {
-        string[] producerPaths =
-        [
-            LeanRegistrationPath, CliProjectPath, "tools/StrataLint.Cli/Fixture.cs", "producer.props", "global.json",
-            EngineProjectPath, "tools/StrataLint.Engine/Fixture.cs", TruthProjectPath, "tools/Trureturing.Truth/Fixture.cs",
-            "tools/lean-inspector/inspect.sh", "tools/lean-inspector/Inspector.lean",
-            "tools/lean-inspector/delta.py", "tools/lean-inspector/materials.py",
-            "tools/lean-inspector/report_cache.py", "tools/lean-inspector/runtime_identity.py",
-            InputHelperPath, "tools/scripts/report/producer_paths.py", "tools/scripts/report/dotnet_producer.py",
-            "tools/scripts/lean-report-pair.sh", FetcherPath,
-            "tools/scripts/worktree/lean-cache-input.sh", "tools/scripts/worktree/lean_cache.py",
-        ];
-        var semantics = JsonSerializer.Serialize(new[] { "StrataLint.Cli", "StrataLint.Engine", "Trureturing.Truth" }.Select(name => new
-        {
-            assembly = name, exclude = Array.Empty<string>(), include = new[] { $"tools/{name}/Fixture.cs" },
-            path = $"tools/{name}/{name}.csproj", references = name == "StrataLint.Cli" ? new[] { EngineProjectPath }
-                : name == "StrataLint.Engine" ? new[] { TruthProjectPath } : [],
-        }));
-        var manifest = producerPaths.Select(path => HashFile(path) + "  " + path + "\n")
-            .Append(Hash(semantics) + "  @engineering-projects\n").Order(StringComparer.Ordinal);
-        var producer = Hash(string.Concat(manifest));
+        var producer = Hash("schema=stratalint-lean-report-compatibility\nversion=1\n");
         var sources = Hash(string.Concat(new[]
-            { "Trureturing.lean", "D5/Probe.lean", "tools/lean-inspector/Inspector.lean" }
+            { "Trureturing.lean", "D5/Probe.lean" }
             .Select(path => HashFile(path) + "  " + path + "\n")));
         var config = Hash("{\"lean\":{\"libraries\":[]},\"packages\":[{\"name\":\"mathlib\",\"rev\":\"" + Revision
             + "\"}],\"schema\":\"lean-semantic-config-v1\",\"toolchain\":\"leanprover/lean4:v4.33.0\"}\n");
@@ -210,6 +193,7 @@ internal sealed class ProducerInputFixture : IDisposable
 
     internal JsonObject Plan(string[] seedAddress, string[] currentAddress)
     {
+        seedCacheAddress ??= CacheAddress(seedAddress);
         var cache = Path.Combine(repository, "build", "report-seeds");
         var report = SeedReportPath;
         if (!File.Exists(report))
@@ -233,7 +217,7 @@ internal sealed class ProducerInputFixture : IDisposable
             File.WriteAllText(report + ".provenance.json", JsonSerializer.Serialize(new
             {
                 schema = "stratalint-lean-report-provenance-v1", side = "candidate", source_side = "candidate", mode = "produced",
-                input_address = "sha256:" + seedAddress[0], producer_sha256 = seedAddress[1], repository_inspector_sha256 = seedAddress[1],
+                input_address = "sha256:" + CacheAddress(seedAddress), producer_sha256 = seedAddress[1], repository_inspector_sha256 = seedAddress[1],
                 lean_sources_sha256 = seedAddress[2], lean_config_sha256 = seedAddress[3], report_sha256 = reportHash,
             }));
         }
@@ -242,13 +226,18 @@ internal sealed class ProducerInputFixture : IDisposable
         var plan = Path.Combine(repository, "build", "plan.json");
         var result = TestProcessRunner.Run("python3",
             [Path.Combine(TestRepositoryLayout.FindRoot(), "tools/lean-inspector/delta.py"), "plan", repository,
-                cache, currentAddress[0], currentAddress[1], currentAddress[1], currentAddress[3], table, plan],
+                cache, CacheAddress(currentAddress), currentAddress[1], currentAddress[1], currentAddress[3], table, plan],
             repository, TestBudgets.WorkflowProcessHangGuard, 1024 * 1024);
         Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
         return JsonNode.Parse(File.ReadAllText(plan))!.AsObject();
     }
 
-    internal string SeedReportPath => Path.Combine(repository, "build", "report-seeds", new string('a', 64), "raw-lean-report.json");
+    internal string SeedReportPath => Path.Combine(repository, "build", "report-seeds",
+        seedCacheAddress ?? throw new InvalidOperationException("Plan must create the seed first."), "raw-lean-report.json");
+
+    private static string CacheAddress(string[] fields) => Hash("schema=stratalint-lean-report-input-v1\n"
+        + $"producer_sha256={fields[1]}\nrepository_inspector_sha256={fields[1]}\n"
+        + $"lean_sources_sha256={fields[2]}\nlean_config_sha256={fields[3]}\n");
 
     internal ProcessOutput VerifySeed() => TestProcessRunner.Run("/bin/bash",
         [Path.Combine(repository, InputHelperPath), "verify", "--repository", repository, "--report",
@@ -342,7 +331,7 @@ internal sealed class ProducerInputFixture : IDisposable
         TemporaryFileSystem.File.WriteAllText(report + ".provenance.json", JsonSerializer.Serialize(new
         {
             schema = "stratalint-lean-report-provenance-v1", side = "candidate", source_side = "candidate", mode = "produced",
-            input_address = "sha256:" + fields[0], producer_sha256 = fields[1], repository_inspector_sha256 = fields[1],
+            input_address = "sha256:" + CacheAddress(fields), producer_sha256 = fields[1], repository_inspector_sha256 = fields[1],
             lean_sources_sha256 = fields[2], lean_config_sha256 = fields[3], report_sha256 = hash,
         }) + "\n");
         TemporaryFileSystem.File.WriteAllText(report + ".input.attestation",

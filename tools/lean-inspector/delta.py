@@ -76,6 +76,9 @@ def parse_json_modules(report: pathlib.Path) -> tuple[dict[str, dict], str]:
         if not isinstance(item, dict):
             raise ValueError("module record is not an object")
         module_keys = {"module", "source_path", "source_sha256", "imports", "declarations"}
+        if "information_registration_errors" in item:
+            module_keys.add("information_registration_errors")
+            require_sorted_strings(item["information_registration_errors"], "cached information registration errors")
         if "utility_refutation" in item:
             module_keys.add("utility_refutation")
         require_keys(item, module_keys, "cached module")
@@ -155,6 +158,53 @@ def validate_materials(report: pathlib.Path) -> None:
             raise ValueError("statement material archive does not match report")
 
 
+def baseline_identity(report: pathlib.Path) -> dict:
+    """Bind both input addresses to the declared provenance tuple.
+
+    This detects identity skew, not an arbitrarily rewritten self-consistent
+    report. Baselines still rely on the existing trusted cache/producer boundary.
+    Read these small sidecars before opening the report or using its import graph.
+    """
+    value = json.loads(pathlib.Path(str(report) + ".provenance.json").read_text(encoding="utf-8"))
+    digest_fields = (
+        "producer_sha256", "repository_inspector_sha256", "lean_sources_sha256",
+        "lean_config_sha256", "report_sha256",
+    )
+    if (not isinstance(value, dict)
+            or set(value) != {"schema", "side", "mode", "source_side", "input_address", *digest_fields}
+            or value["schema"] != "stratalint-lean-report-provenance-v1"
+            or value["side"] != "candidate"
+            or value["source_side"] != "candidate"
+            or value["mode"] not in ("produced", "cached")
+            or any(not isinstance(value[field], str) or not HEX64.fullmatch(value[field])
+                   for field in digest_fields)):
+        raise ValueError("baseline provenance is malformed")
+
+    # Exact LF-terminated preimages from lean-report-input.sh and lean-report-pair.sh.
+    repository_fields = "".join(f"{field}={value[field]}\n" for field in (
+        "repository_inspector_sha256", "lean_sources_sha256", "lean_config_sha256"))
+    repository_sha = hashlib.sha256((
+        "schema=stratalint-lean-report-repository-input-v1\n" + repository_fields
+    ).encode("ascii")).hexdigest()
+    input_sha = hashlib.sha256((
+        "schema=stratalint-lean-report-input-v1\n"
+        + f"producer_sha256={value['producer_sha256']}\n" + repository_fields
+    ).encode("ascii")).hexdigest()
+    if value["input_address"] != "sha256:" + input_sha:
+        raise ValueError("baseline cache address does not match provenance")
+
+    attestation = pathlib.Path(str(report) + ".input.attestation").read_text(encoding="ascii").splitlines()
+    if (len(attestation) != 4
+            or attestation[0] != "schema=stratalint-lean-report-input-attestation-v1"
+            or not re.fullmatch(r"repository_input_sha256=[0-9a-f]{64}", attestation[1])
+            or attestation[2] != "producer_sha256=" + value["producer_sha256"]
+            or attestation[3] != "report_sha256=" + value["report_sha256"]):
+        raise ValueError("baseline attestation is malformed or inconsistent")
+    if attestation[1] != "repository_input_sha256=" + repository_sha:
+        raise ValueError("baseline repository address does not match provenance")
+    return value
+
+
 def valid_bundle(report: pathlib.Path, partition: str = "", allow_logs: bool = False) -> tuple[dict[str, dict], str] | None:
     logs = pathlib.Path(str(report) + ".logs")
     if not allow_logs and (logs.exists() or logs.is_symlink()):
@@ -166,29 +216,9 @@ def valid_bundle(report: pathlib.Path, partition: str = "", allow_logs: bool = F
             and attestation.is_file() and provenance.is_file()):
         return None
     try:
+        value = baseline_identity(report)
         modules, report_sha = parse_json_modules(report)
-        attestation_lines = attestation.read_text(encoding="ascii").splitlines()
-        if (len(attestation_lines) != 4
-                or attestation_lines[0] != "schema=stratalint-lean-report-input-attestation-v1"
-                or not re.fullmatch(r"repository_input_sha256=[0-9a-f]{64}", attestation_lines[1])
-                or not re.fullmatch(r"producer_sha256=[0-9a-f]{64}", attestation_lines[2])
-                or attestation_lines[3] != "report_sha256=" + report_sha):
-            return None
-        value = json.loads(provenance.read_text(encoding="utf-8"))
-        if (set(value) != {
-                    "schema", "side", "mode", "source_side", "input_address",
-                    "producer_sha256", "repository_inspector_sha256",
-                    "lean_sources_sha256", "lean_config_sha256", "report_sha256"}
-                or value.get("schema") != "stratalint-lean-report-provenance-v1"
-                or value.get("side") != "candidate"
-                or value.get("source_side") != "candidate"
-                or value.get("mode") not in ("produced", "cached")
-                or not SHA_FIELD.fullmatch(value.get("input_address", ""))
-                or attestation_lines[2] != "producer_sha256=" + value.get("producer_sha256", "")
-                or value.get("report_sha256") != report_sha):
-            return None
-        if any(not HEX64.fullmatch(value.get(field, "")) for field in (
-                "producer_sha256", "repository_inspector_sha256", "lean_sources_sha256", "lean_config_sha256")):
+        if value["report_sha256"] != report_sha:
             return None
         if partition:
             seed = json.loads(pathlib.Path(str(report) + ".seed.json").read_text(encoding="utf-8"))
@@ -223,17 +253,7 @@ def plan(args: argparse.Namespace) -> int:
     entries.sort(reverse=True, key=lambda value: value[0])
     best: tuple[int, pathlib.Path, dict[str, dict], str] | None = None
     for stamp, entry in entries:
-        provenance = entry / "raw-lean-report.json.provenance.json"
-        try:
-            value = json.loads(provenance.read_text(encoding="utf-8"))
-            if (value.get("schema") != "stratalint-lean-report-provenance-v1"
-                    or value.get("side") != "candidate"
-                    or value.get("source_side") != "candidate"
-                    or value.get("mode") not in ("produced", "cached")
-                    or not SHA_FIELD.fullmatch(value.get("input_address", ""))):
-                continue
-        except (OSError, UnicodeError, ValueError, json.JSONDecodeError):
-            continue
+        # Bundle validation checks the small identity sidecars before the report.
         candidate = valid_bundle(entry / "raw-lean-report.json", args.partition)
         if candidate is not None:
             best = (stamp, entry, candidate[0], candidate[1])

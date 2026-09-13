@@ -41,13 +41,20 @@ done
 [[ -d "$REPOSITORY" ]] || { echo "inspect.sh: repository '$REPOSITORY' is absent" >&2; exit 2; }
 
 REPOSITORY="$(cd "$REPOSITORY" && pwd -P)"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
+INPUT_HELPER="$SCRIPT_DIR/../scripts/report/lean-report-input.sh"
+[[ -x "$INPUT_HELPER" ]] || { echo "inspect.sh: module enumerator is absent: $INPUT_HELPER" >&2; exit 2; }
+# Environment hints cannot bypass the candidate manifest or retain an older
+# compatibility version. Validate before changing outputs or invoking Lake.
+compatibility_token="$("$INPUT_HELPER" compatibility-token --repository "$REPOSITORY")" || exit 2
+[[ "$compatibility_token" =~ ^[0-9a-f]{64}$ ]] \
+  || { echo "inspect.sh: compatibility token is malformed" >&2; exit 2; }
 if [[ "$OUTPUT" != /* ]]; then OUTPUT="$REPOSITORY/$OUTPUT"; fi
 if [[ -z "$LOG_DIR" ]]; then LOG_DIR="${OUTPUT}.logs"; fi
 if [[ "$LOG_DIR" != /* ]]; then LOG_DIR="$REPOSITORY/$LOG_DIR"; fi
 mkdir -p "$(dirname "$OUTPUT")" "$LOG_DIR"
 rm -rf -- "$OUTPUT" "${OUTPUT}.sha256" "${OUTPUT}.materials" "${OUTPUT}.materials.zip" "${OUTPUT}.seed.json"
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 source "$SCRIPT_DIR/../scripts/lib/resource-observation-lib.sh"
 INSPECTOR="$SCRIPT_DIR/Inspector.lean"
 [[ -f "$INSPECTOR" ]] || { echo "inspect.sh: Lean producer is absent: $INSPECTOR" >&2; exit 2; }
@@ -107,11 +114,13 @@ run_phase() {
     printf '\n'
   } > "$command_log"
 
+  printf 'LEAN_INSPECTOR_PHASE phase=%s status=started\n' "$phase"
   set +e
   (cd "$REPOSITORY" && "$@") > "$stdout_log" 2> "$stderr_log"
   local status=$?
   set -e
   printf '%s\n' "$status" > "$exit_log"
+  printf 'LEAN_INSPECTOR_PHASE phase=%s status=finished exit=%s\n' "$phase" "$status"
   if [[ "$status" -ne 0 ]]; then
     printf 'LEAN_INSPECTOR_FAILED phase=%s exit=%s\n' "$phase" "$status" >&2
     printf '%s\n' '--- command ---' >&2
@@ -130,8 +139,6 @@ run_phase() {
 run_phase build "$CACHE_RUN" "$LAKE" build
 
 INSPECTOR_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
-INPUT_HELPER="$INSPECTOR_DIR/../scripts/report/lean-report-input.sh"
-[[ -x "$INPUT_HELPER" ]] || { echo "inspect.sh: module enumerator is absent: $INPUT_HELPER" >&2; exit 2; }
 MODULE_TABLE="$(mktemp "${TMPDIR:-/tmp}/stratalint-modules.XXXXXXXX")"
 "$INPUT_HELPER" modules --repository "$REPOSITORY" > "$MODULE_TABLE"
 
@@ -202,9 +209,10 @@ if [[ ! "$current_input_address" =~ ^[0-9a-f]{64}$ \
    || ! "$current_repository_sha256" =~ ^[0-9a-f]{64}$ \
    || ! "$current_producer_sha256" =~ ^[0-9a-f]{64}$ \
    || ! "$current_resident_sha256" =~ ^[0-9a-f]{64}$ \
+   || "$current_producer_sha256" != "$compatibility_token" \
+   || "$current_resident_sha256" != "$compatibility_token" \
    || ! "$current_config_sha256" =~ ^[0-9a-f]{64}$ ]]; then
-  input_address_output="$("$INPUT_HELPER" address --repository "$REPOSITORY" \
-    --producer "$INSPECTOR_DIR/inspect.sh" --inspector "$INSPECTOR")" \
+  input_address_output="$("$INPUT_HELPER" address --repository "$REPOSITORY")" \
     || { echo "inspect.sh: repository input address is unavailable" >&2; exit 2; }
   address_pattern='^([0-9a-f]{64} ){3}[0-9a-f]{64}$'
   [[ "$input_address_output" =~ $address_pattern ]] \

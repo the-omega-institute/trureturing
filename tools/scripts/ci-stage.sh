@@ -64,7 +64,9 @@ case "$stage" in
     ;;
   current)
     [[ -f "$runner" ]] || exit 2
-    dotnet "$runner" current --repository "$ROOT" ${stage_options[@]+"${stage_options[@]}"} ${seed_options[@]+"${seed_options[@]}"}
+    source tools/scripts/lib/resource-observation-lib.sh
+    # Keep the stage's cancellation traps outside the sampler's signal scope.
+    (resource_observe_run_periodic dotnet "$runner" current --repository "$ROOT" ${stage_options[@]+"${stage_options[@]}"} ${seed_options[@]+"${seed_options[@]}"})
     ;;
   delta)
     [[ -f "$runner" ]] || exit 2

@@ -75,7 +75,7 @@ public sealed partial class LeanInspectorScriptTests
     }
 
     [Fact]
-    public void DeclaredRuntimeAndProducerChangesReinspectInsideSamePartitionWhileMetadataReuses()
+    public void DeclaredRuntimeAndCompatibilityChangesReinspectWhileFixedVersionImplementationReuses()
     {
         using var fixture = new RuntimeFixture();
         fixture.Pair("full-fallback", 2);
@@ -94,9 +94,12 @@ public sealed partial class LeanInspectorScriptTests
         fixture.Write("lakefile.toml", "name = \"renamed\"\n[leanOptions]\nmaxRecDepth = 2000\n");
         fixture.Pair("delta", 2);
         fixture.Write("tools/lean-inspector/Inspector.lean", "-- changed producer\n");
+        fixture.Pair("reuse", 0);
+        fixture.Write(LeanReportInputScriptTests.CompatibilityPath,
+            "compatibility_version = 2\n" + LeanReportInputScriptTests.SourcePatterns);
         fixture.Pair("delta", 2);
         Assert.Equal(seed.Partition, fixture.SeedIdentity().Partition);
-        Assert.Equal(6, fixture.Commands.Split('\n').Count(line => line == "build"));
+        Assert.Equal(7, fixture.Commands.Split('\n').Count(line => line == "build"));
         Assert.Equal(4, fixture.Commands.Split('\n').Count(line => line.Contains("--run", StringComparison.Ordinal)));
     }
 

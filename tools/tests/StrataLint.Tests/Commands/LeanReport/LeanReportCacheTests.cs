@@ -29,21 +29,26 @@ public sealed class LeanReportCacheTests
         var producer = Path.Combine(TestRepositoryLayout.FindRoot(), "tools/lean-inspector");
         const string partition = "0123456789abcdef0123456789abcdef01234567/linux-x64";
         var identity = new string('a', 64);
+        var sources = new string('b', 64);
+        var config = new string('c', 64);
+        var repositoryFields = $"repository_inspector_sha256={identity}\nlean_sources_sha256={sources}\nlean_config_sha256={config}\n";
+        var repositoryAddress = Hash(Encoding.UTF8.GetBytes("schema=stratalint-lean-report-repository-input-v1\n" + repositoryFields));
+        var cacheAddress = Hash(Encoding.UTF8.GetBytes($"schema=stratalint-lean-report-input-v1\nproducer_sha256={identity}\n" + repositoryFields));
         var cache = Path.Combine(root, "cache", partition);
-        var baseline = Path.Combine(cache, identity, "raw-lean-report.json");
+        var baseline = Path.Combine(cache, cacheAddress, "raw-lean-report.json");
         string[] names = ["Claim", "ClaimDependency", "Consumer", "Result", "Unrelated"];
         foreach (var name in names) Write(name + ".lean", "def value := 1\n");
         Compact(baseline, names);
         var reportHash = Hash(File.ReadAllBytes(baseline));
         Write(baseline + ".sha256", reportHash + "  raw-lean-report.json\n");
         Write(baseline + ".input.attestation", "schema=stratalint-lean-report-input-attestation-v1\n"
-            + $"repository_input_sha256={identity}\nproducer_sha256={identity}\nreport_sha256={reportHash}\n");
+            + $"repository_input_sha256={repositoryAddress}\nproducer_sha256={identity}\nreport_sha256={reportHash}\n");
         Write(baseline + ".provenance.json", JsonSerializer.Serialize(new
         {
             schema = "stratalint-lean-report-provenance-v1", side = "candidate", source_side = "candidate",
-            mode = "produced", input_address = "sha256:" + identity, producer_sha256 = identity,
-            repository_inspector_sha256 = identity, lean_sources_sha256 = identity,
-            lean_config_sha256 = identity, report_sha256 = reportHash,
+            mode = "produced", input_address = "sha256:" + cacheAddress, producer_sha256 = identity,
+            repository_inspector_sha256 = identity, lean_sources_sha256 = sources,
+            lean_config_sha256 = config, report_sha256 = reportHash,
         }));
         Write(baseline + ".seed.json", JsonSerializer.Serialize(new
         {
@@ -59,7 +64,7 @@ public sealed class LeanReportCacheTests
         var current = names.Where(name => File.Exists(Path.Combine(root, name + ".lean"))).ToArray();
         Write("modules.tsv", string.Concat(current.Select(name => name + "\t" + name + ".lean\n")));
         var plan = Path.Combine(root, "plan.json");
-        Run("delta.py", "plan", root, cache, identity, identity, identity, identity,
+        Run("delta.py", "plan", root, cache, cacheAddress, identity, identity, config,
             Path.Combine(root, "modules.tsv"), plan, "--runtime-sha", identity, "--partition", partition);
         using var planned = JsonDocument.Parse(File.ReadAllText(plan));
         Assert.Equal(change == "unchanged" ? "reuse" : "delta", planned.RootElement.GetProperty("status").GetString());
