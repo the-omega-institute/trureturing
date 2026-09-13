@@ -39,6 +39,16 @@ internal static class DigestionAtomContextProjection
     internal static DigestionAtomContext Resolve(
         RepositorySnapshot snapshot, BackfillInventoryDocument ledger, string atomId)
     {
+        var occurrences = ResolveOccurrences(snapshot, ledger, atomId);
+        if (occurrences.Length != 1)
+            throw new DigestionAtomContextException(DigestionAtomContextError.OCCURRENCE_AMBIGUOUS,
+                $"atom_id={atomId} occurrences={occurrences.Length}");
+        return occurrences[0];
+    }
+
+    internal static ImmutableArray<DigestionAtomContext> ResolveOccurrences(
+        RepositorySnapshot snapshot, BackfillInventoryDocument ledger, string atomId)
+    {
         ArgumentNullException.ThrowIfNull(snapshot);
         ArgumentNullException.ThrowIfNull(ledger);
         if (string.IsNullOrWhiteSpace(atomId) || !DigestionFingerprint.IsCanonicalSha256("sha256:" + atomId))
@@ -74,15 +84,14 @@ internal static class DigestionAtomContextProjection
             if (matches.Length == 0)
                 throw new DigestionAtomContextException(DigestionAtomContextError.OCCURRENCE_MISSING,
                     $"atom_id={atomId} source_id={source.SourceId}");
-            if (matches.Length > 1)
-                throw new DigestionAtomContextException(DigestionAtomContextError.OCCURRENCE_AMBIGUOUS,
-                    $"atom_id={atomId} occurrences={matches.Length}");
-            var position = matches[0];
-            return new DigestionAtomContext(target,
-                position == 0 ? null : Neighbor(stream[position - 1], byHash),
-                Neighbor(stream[position], byHash),
-                position + 1 == stream.Length ? null : Neighbor(stream[position + 1], byHash),
-                position + 1, stream.Length, source.SourceId, source.SourcePath, source.Atomizer);
+            var contexts = ImmutableArray.CreateBuilder<DigestionAtomContext>(matches.Length);
+            foreach (var position in matches)
+                contexts.Add(new DigestionAtomContext(target,
+                    position == 0 ? null : Neighbor(stream[position - 1], byHash),
+                    Neighbor(stream[position], byHash),
+                    position + 1 == stream.Length ? null : Neighbor(stream[position + 1], byHash),
+                    position + 1, stream.Length, source.SourceId, source.SourcePath, source.Atomizer));
+            return contexts.ToImmutable();
         }
         catch (Exception error) when (error is FormatException or InvalidOperationException or ArgumentException)
         {
