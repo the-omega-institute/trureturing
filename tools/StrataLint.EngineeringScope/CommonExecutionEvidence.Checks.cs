@@ -175,14 +175,14 @@ internal static partial class CommonExecutionEvidence
     }
 
     internal static CommonCheckRecord ValidateChecks(string root, string stage, CommonStageRecord build, string[]? selectedIds = null)
-        => ValidateChecks(root, stage, build, selectedIds, new ValidationScope(Snapshot(root)));
+        => ValidateChecks(root, stage, build, selectedIds, ValidationScope.Create(root));
 
     private static CommonCheckRecord ValidateChecks(string root, string stage, CommonStageRecord build, string[]? selectedIds, ValidationScope validation)
     {
         var record = Read<CommonCheckRecord>(root, ChecksPath(stage));
         if (record.Stage != stage) throw new InvalidDataException("common check stage mismatch");
         var snapshot = validation.Snapshot;
-        var ids = selectedIds ?? CheckIds(stage, ReadCheckManifest(snapshot));
+        var ids = selectedIds ?? CheckIds(stage, validation.CheckManifest());
         // Transport validates the retained execution. Local reuse separately requires
         // this consumer's environment, including OS/architecture binary isolation.
         ValidateCheckRecord(root, record, snapshot, null, build.Candidate, build.Round, ids, validation);
@@ -205,7 +205,7 @@ internal static partial class CommonExecutionEvidence
                     selectedIds: expected, executionEnvironment: unit.ExecutionEnvironment, validation: validation));
             ValidateCheckUnit(root, root, snapshot, unit, (inputs ?? originalInputs[unit.ExecutionEnvironment])[unit.Id], candidate, round, validation);
         }
-        foreach (var check in ReadCheckManifest(snapshot).Where(check => expected.Contains(check.Id) && UsesScribe(check)))
+        foreach (var check in validation.CheckManifest().Where(check => expected.Contains(check.Id) && UsesScribe(check)))
             if (record.Stage == "current" && !SameScribeMaterial(root, record.Units.Single(unit => unit.Id == check.Id),
                 record.Units.Single(unit => unit.Id == "scribe-describe")))
                 throw new InvalidDataException("predicate Scribe material differs from current producer: " + check.Id);
@@ -218,7 +218,7 @@ internal static partial class CommonExecutionEvidence
         if (unit.Operations is null || unit.Materials is null || unit.Operations.Any(operation => operation is null || operation.Log is null)
             || unit.Materials.Any(material => material is null || material.Path is null))
             throw new InvalidDataException("missing common unit materials: " + unit.Id);
-        var registration = ReadCheckManifest(snapshot).Single(check => check.Id == unit.Id);
+        var registration = validation.CheckManifest().Single(check => check.Id == unit.Id);
         if ((registration.ReportInputs.Length != 0) != (unit.Report is not null))
             throw new InvalidDataException("common report declaration/material mismatch: " + unit.Id);
         if (unit.Result != (unit.Id == "selftest-pair" ? "equal" : "passed") || unit.InputFingerprint != fingerprint || unit.Status is not ("executed" or "reused")

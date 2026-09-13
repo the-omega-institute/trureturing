@@ -10,7 +10,15 @@ internal static partial class CommonExecutionEvidence
     {
         private readonly Dictionary<string, string> hashes = new(StringComparer.Ordinal);
         private readonly HashSet<(string Report, string Archive)> reports = [];
+        private IReadOnlyList<RegisteredCommonCheck>? checks;
         internal RepositorySnapshot Snapshot { get; } = snapshot;
+
+        internal static ValidationScope Create(string root) => new(CommonExecutionEvidence.Snapshot(root));
+
+        internal IReadOnlyList<RegisteredCommonCheck> CheckManifest() => CheckManifest(null);
+
+        internal IReadOnlyList<RegisteredCommonCheck> CheckManifest(EngineeringProjectRegistry? registry) =>
+            checks ??= ReadCheckManifest(Snapshot, registry);
 
         internal string Hash(string path)
         {
