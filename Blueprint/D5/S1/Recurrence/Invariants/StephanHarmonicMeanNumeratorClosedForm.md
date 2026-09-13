@@ -22,6 +22,10 @@ $$\forall m \in \mathrm{Nat},\; 1 \le m \Rightarrow (\operatorname{a}\left(3 \cd
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/StephanHarmonicMeanNumeratorClosedForm.stephan_a107928` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a107928-harmonic-mean-numerator-closed-form` (proved) by `D5/S1/Recurrence/Invariants/StephanHarmonicMeanNumeratorClosedForm.stephan_a107928`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a107928-harmonic-mean-numerator-closed-form","declaration_gid":"D5/S1/Recurrence/Invariants/StephanHarmonicMeanNumeratorClosedForm.stephan_a107928","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Ralf Stephan (2010). *OEIS A107928, a(n) is the numerator of harmonic mean of a(n-1) and a(n-2)*. URL: <https://oeis.org/A107928>.
