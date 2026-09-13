@@ -2,6 +2,7 @@
 set -euo pipefail
 export LC_ALL=C
 
+
 # The report consumer also sources the shared manifest and memo primitives.
 if [[ "${BASH_SOURCE[0]}" == "$0" ]]; then
   COMMAND="${1:-}"
@@ -13,8 +14,9 @@ if [[ "${BASH_SOURCE[0]}" == "$0" ]]; then
       *) echo "lean-cache-input: unknown argument '$1'" >&2; exit 2 ;;
     esac
   done
-  [[ "$COMMAND" == "address" || "$COMMAND" == "dependency-address" ]] \
-    || { echo "usage: lean-cache-input.sh address|dependency-address --repository DIR" >&2; exit 2; }
+  [[ "$COMMAND" == "address" || "$COMMAND" == "dependency-address" \
+    || "$COMMAND" == "partition" || "$COMMAND" == "partition-path" ]] \
+    || { echo "usage: lean-cache-input.sh address|dependency-address|partition|partition-path --repository DIR" >&2; exit 2; }
   [[ -n "$REPOSITORY" && "$REPOSITORY" == /* && -d "$REPOSITORY" ]] \
     || { echo "lean-cache-input: --repository requires an absolute directory" >&2; exit 2; }
   REPOSITORY="$(cd "$REPOSITORY" && pwd -P)"
@@ -22,6 +24,24 @@ if [[ "${BASH_SOURCE[0]}" == "$0" ]]; then
   cleanup() { rm -rf -- "$TMP_ROOT"; }
   trap cleanup EXIT
 fi
+
+lean_partition_helper() {
+  local helper
+  helper="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)/lean_cache.py"
+  python3 "$helper" "$@" --repository "$REPOSITORY"
+}
+
+lean_semantic_config() {
+  local python
+  for python in python3 python3.14 python3.13 python3.12 python3.11; do
+    if command -v "$python" >/dev/null 2>&1 && "$python" -c 'import tomllib' 2>/dev/null; then
+      "$python" "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)/lean_cache.py" config --repository "$REPOSITORY"
+      return "$?"
+    fi
+  done
+  echo "lean-cache-input: Python 3.11 or newer is required for structured TOML inputs" >&2
+  return 2
+}
 
 hash_file() {
   if command -v sha256sum >/dev/null 2>&1; then
@@ -314,36 +334,27 @@ append_manifest_entry() {
   printf '%s\0%s\0' "$relative" "$path" >> "${manifest}.requests"
 }
 
-# The report inspector is a Lean program too. Keep its source closure owned by
-# this compiled-cache helper. Report compatibility deliberately excludes these
-# supporting sources and is owned by Meta/lean-report.toml.
+# Inspector program inputs are literal registrations, not directory discovery.
 lean_inspector_source_paths() {
-  local path
-  [[ -d "$REPOSITORY/tools/lean-inspector" ]] || return 0
-  find "$REPOSITORY/tools/lean-inspector" -type f -name '*.lean' -print \
-    | while IFS= read -r path; do
-        printf '%s\n' "${path#"$REPOSITORY/"}"
-      done \
-    | sort
+  python3 - "$REPOSITORY" <<'PY'
+import pathlib
+import sys
+sys.dont_write_bytecode = True
+root = pathlib.Path(sys.argv[1]).resolve()
+sys.path.insert(0, str(root / "tools/scripts/report"))
+from producer_paths import load_scope, required_path
+_, scope = load_scope(root, "lean-report")
+for value in sorted(scope["scripts"]):
+    if pathlib.PurePosixPath(value).suffix == ".lean":
+        print(required_path(root, value).as_posix())
+PY
 }
 
-# Dependency preimage uses the same manifest form, with only the pinned inputs.
-lean_dependency_sha256() {
-  local manifest="$TMP_ROOT/dependency.manifest"
-  : > "${manifest}.requests"
-  append_manifest_entry "$manifest" "lean-toolchain" || return 2
-  append_manifest_entry "$manifest" "lake-manifest.json" || return 2
-  materialize_manifest "$manifest" || return 2
-  hash_file "$manifest"
-}
-
-# Lean input preimage v1: root, sorted D5 sources, sorted inspector Lean
-# sources; then toolchain, manifest, and lakefiles in their declared order.
-lean_cache_address() {
+# Shared source preimage: root, sorted D5 sources, sorted inspector Lean sources.
+lean_sources_sha256() {
   local sources_manifest="$TMP_ROOT/sources.manifest"
   local sources_list="$TMP_ROOT/sources.list"
   local inspector_sources_list="$TMP_ROOT/inspector-sources.list"
-  local sources_sha256 config_sha256
 
   : > "$sources_manifest"
   : > "${sources_manifest}.requests"
@@ -361,39 +372,26 @@ lean_cache_address() {
     done < "$inspector_sources_list"
   fi
   materialize_manifest "$sources_manifest" || return 2
-  sources_sha256="$(hash_file "$sources_manifest")" || return 2
+  hash_file "$sources_manifest"
+}
 
-  config_sha256="$(lean_config_sha256)" || return 2
+# Report validation stays semantic; these inputs never select seed partitions.
+lean_cache_address() {
+  local config_manifest="$TMP_ROOT/config.manifest"
+  local sources_sha256 config_sha256
+  sources_sha256="$(lean_sources_sha256)" || return 2
+  lean_semantic_config > "$config_manifest" || return 2
+  config_sha256="$(hash_file "$config_manifest")" || return 2
 
   printf '%s %s\n' "$sources_sha256" "$config_sha256"
 }
 
-# Shared unchanged Lean toolchain/lake configuration preimage.
-lean_config_sha256() {
-  local config_manifest="$TMP_ROOT/config.manifest"
-  local lakefile_count=0 lakefile
-  : > "$config_manifest"
-  : > "${config_manifest}.requests"
-  append_manifest_entry "$config_manifest" "lean-toolchain" || return 2
-  append_manifest_entry "$config_manifest" "lake-manifest.json" || return 2
-  for lakefile in lakefile.toml lakefile.lean; do
-    if [[ -f "$REPOSITORY/$lakefile" ]]; then
-      append_manifest_entry "$config_manifest" "$lakefile" || return 2
-      lakefile_count=$((lakefile_count + 1))
-    fi
-  done
-  [[ "$lakefile_count" -gt 0 ]] \
-    || { echo "lean-cache-input: repository has no lakefile" >&2; return 2; }
-  materialize_manifest "$config_manifest" || return 2
-  hash_file "$config_manifest"
-}
-
 if [[ "${BASH_SOURCE[0]}" == "$0" ]]; then
-  prepare_memo
-  if [[ "$COMMAND" == "dependency-address" ]]; then
-    lean_dependency_sha256
-  else
+  if [[ "$COMMAND" == "address" ]]; then
+    prepare_memo
     lean_cache_address
+    store_memo_updates
+  else
+    lean_partition_helper "$COMMAND"
   fi
-  store_memo_updates
 fi

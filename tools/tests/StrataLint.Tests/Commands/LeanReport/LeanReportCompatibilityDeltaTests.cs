@@ -11,10 +11,10 @@ namespace StrataLint.Tests;
 public sealed class LeanReportCompatibilityDeltaTests
 {
     [Theory]
-    [InlineData("implementation", "delta")]
-    [InlineData("version", "fallback")]
-    [InlineData("config", "fallback")]
-    public void CanonicalTupleControlsBaselineCompatibilityAndSourceClosure(string change, string mode)
+    [InlineData("implementation", false)]
+    [InlineData("version", true)]
+    [InlineData("lean-options", true)]
+    public void CanonicalTupleControlsBaselineCompatibilityAndSourceClosure(string change, bool semanticChanged)
     {
         if (OperatingSystem.IsWindows()) return;
         using var temporary = new TemporaryDirectory();
@@ -22,7 +22,7 @@ public sealed class LeanReportCompatibilityDeltaTests
         LeanReportInputScriptTests.InstallReportConfiguration(root);
         Write("lean-toolchain", "leanprover/lean4:fixture\n");
         Write("lakefile.toml", "name = \"fixture\"\n");
-        Write("lake-manifest.json", "{}\n");
+        Write("lake-manifest.json", "{\"packages\":[{\"name\":\"mathlib\",\"rev\":\"0123456789abcdef0123456789abcdef01234567\"}]}\n");
         Write("Trureturing.lean", "import D5.B\n");
         Write("D5/A.lean", "-- claim\n");
         Write("D5/B.lean", "import D5.A\n");
@@ -50,12 +50,18 @@ public sealed class LeanReportCompatibilityDeltaTests
         }
         modules[3]!["utility_refutation"] = new JsonObject
         {
+            ["claim_gid"] = "D5/A.claim", ["result_gid"] = "D5/C.result", ["is_closed_negation"] = true,
             ["claim_source_path"] = "D5/A.lean", ["claim_source_sha256"] = modules[1]!["source_sha256"]!.DeepClone(),
         };
         var oldAddress = CacheAddress(fields);
         var cache = Path.Combine(root, "cache");
         var report = $"cache/{oldAddress}/raw-lean-report.json";
-        Write(report, new JsonObject { ["modules"] = modules, ["schema"] = "stratalint-raw-lean-report-v2" }.ToJsonString());
+        Write(report, new JsonObject
+        {
+            ["modules"] = new JsonArray(modules.OrderBy(module => module!["module"]!.GetValue<string>(), StringComparer.Ordinal)
+                .Select(module => module!.DeepClone()).ToArray()),
+            ["schema"] = "stratalint-raw-lean-report-v2",
+        }.ToJsonString());
         var reportHash = Hash(File.ReadAllBytes(Path.Combine(root, report)));
         Write(report + ".sha256", $"{reportHash}  raw-lean-report.json\n");
         using (ZipFile.Open(Path.Combine(root, report + ".materials.zip"), ZipArchiveMode.Create)) { }
@@ -73,7 +79,7 @@ public sealed class LeanReportCompatibilityDeltaTests
         File.Delete(Path.Combine(root, "D5/Removed.lean"));
         if (change == "version") Write(LeanReportInputScriptTests.CompatibilityPath,
             "compatibility_version = 2\n" + LeanReportInputScriptTests.SourcePatterns);
-        else if (change == "config") Write("lakefile.toml", "name = \"changed\"\n");
+        else if (change == "lean-options") Write("lakefile.toml", "[leanOptions]\nmaxRecDepth = 2000\n");
         else
         {
             Write("tools/StrataLint.Engine/Producer.cs", "// changed C#\n");
@@ -88,17 +94,21 @@ public sealed class LeanReportCompatibilityDeltaTests
         var result = TestProcessRunner.Run("python3",
             [Path.Combine(TestRepositoryLayout.FindRoot(), "tools/lean-inspector/delta.py"), "plan",
                 root, cache, CacheAddress(fields), fields[1], fields[1], fields[3], table, plan], root,
-            BoundedProcessRunner.HangDetectionBudget, 1024 * 1024);
+            TestBudgets.WorkflowProcessHangGuard, 1024 * 1024);
         Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
         using var document = JsonDocument.Parse(File.ReadAllBytes(plan));
-        Assert.Equal(mode, document.RootElement.GetProperty("status").GetString());
-        if (mode == "delta")
+        Assert.Equal("delta", document.RootElement.GetProperty("status").GetString());
+        Assert.Equal(semanticChanged, document.RootElement.GetProperty("semantic_changed").GetBoolean());
+        if (!semanticChanged)
         {
             Assert.Equal(new[] { "D5.A" }, Names("changed"));
             Assert.Equal(new[] { "D5.Added" }, Names("added"));
             Assert.Equal(new[] { "D5.Removed" }, Names("removed"));
             Assert.Equal(new[] { "D5.A", "D5.Added", "D5.B", "D5.C", "D5.Dependent", "D5.E", "Trureturing" }, Names("recheck"));
         }
+
+        else
+            Assert.Equal(new[] { "D5.A", "D5.Added", "D5.B", "D5.C", "D5.Dependent", "D5.E", "D5.Unrelated", "Trureturing" }, Names("recheck"));
 
         string[] Names(string key) => document.RootElement.GetProperty(key).EnumerateArray().Select(x => x.GetString()!).ToArray();
         string[] Address() => Encoding.UTF8.GetString(Helper("address").StandardOutput).Trim().Split(' ');
@@ -107,7 +117,7 @@ public sealed class LeanReportCompatibilityDeltaTests
             var result = TestProcessRunner.Run("env",
                 [$"STRATALINT_LEAN_INPUT_MEMO_ROOT={Path.Combine(root, "memo")}", "bash",
                     Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/report/lean-report-input.sh"),
-                    command, "--repository", root], root, BoundedProcessRunner.HangDetectionBudget, 1024 * 1024);
+                    command, "--repository", root], root, TestBudgets.WorkflowProcessHangGuard, 1024 * 1024);
             Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
             return result;
         }

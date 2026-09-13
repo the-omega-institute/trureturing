@@ -206,6 +206,60 @@ resource_observation_process_values() {
   '
 }
 
+resource_observation_lean_inputs() {
+  local sequence="$1" phase="$2" remaining="$3"
+  local proc_root="${RESOURCE_OBSERVATION_PROC_ROOT:-/proc}"
+  local row="" pid="" executable="" argument="" first=1
+  local sources=()
+  if [[ ! -d "$proc_root" ]]; then
+    printf 'RESOURCE_LEAN_INPUT sequence=%s phase=%s pid=UNAVAILABLE status=UNAVAILABLE reason=proc-unavailable\n' "$sequence" "$phase"
+    return 0
+  fi
+  if [[ -z "$remaining" || "$remaining" == UNAVAILABLE ]]; then
+    printf 'RESOURCE_LEAN_INPUT sequence=%s phase=%s pid=UNAVAILABLE status=UNAVAILABLE reason=process-unavailable\n' "$sequence" "$phase"
+    return 0
+  fi
+  # Consume only the already selected descendants. Linux exposes NUL-delimited
+  # argv; other platforms without procfs have no equivalent observation here.
+  while [[ -n "$remaining" ]]; do
+    row="${remaining%%;*}"
+    if [[ "$remaining" == *';'* ]]; then remaining="${remaining#*;}"; else remaining=""; fi
+    pid="${row#pid:}"
+    pid="${pid%%,*}"
+    [[ "$pid" =~ ^[0-9]+$ ]] || continue
+    executable="$(readlink "$proc_root/$pid/exe" 2>/dev/null || true)"
+    if [[ -z "$executable" ]]; then
+      printf 'RESOURCE_LEAN_INPUT sequence=%s phase=%s pid=%s status=UNAVAILABLE reason=executable-unavailable\n' "$sequence" "$phase" "$pid"
+      continue
+    fi
+    [[ "${executable##*/}" == lean ]] || continue
+    if [[ ! -f "$proc_root/$pid/cmdline" || ! -r "$proc_root/$pid/cmdline" ]]; then
+      printf 'RESOURCE_LEAN_INPUT sequence=%s phase=%s pid=%s status=UNAVAILABLE reason=cmdline-unavailable\n' "$sequence" "$phase" "$pid"
+      continue
+    fi
+    sources=()
+    first=1
+    if ! {
+      while IFS= read -r -d '' argument; do
+        if [[ "$first" -eq 1 ]]; then first=0
+        elif [[ "$argument" != -* && "$argument" == *.lean ]]; then sources+=("$argument")
+        fi
+      done
+    } 2>/dev/null < "$proc_root/$pid/cmdline"; then
+      printf 'RESOURCE_LEAN_INPUT sequence=%s phase=%s pid=%s status=UNAVAILABLE reason=cmdline-unavailable\n' "$sequence" "$phase" "$pid"
+      continue
+    fi
+    if [[ "${#sources[@]}" -eq 0 ]]; then
+      printf 'RESOURCE_LEAN_INPUT sequence=%s phase=%s pid=%s status=UNAVAILABLE reason=source-unavailable\n' "$sequence" "$phase" "$pid"
+      continue
+    fi
+    for argument in "${sources[@]}"; do
+      printf 'RESOURCE_LEAN_INPUT sequence=%s phase=%s pid=%s status=OBSERVED source=%q\n' "$sequence" "$phase" "$pid" "$argument"
+    done
+  done
+  return 0
+}
+
 resource_observe_sample() {
   local sequence="$1"
   local root_pid="$2"
@@ -273,6 +327,10 @@ resource_observe_sample() {
     "$workspace_mount" "$workspace_blocks" "$workspace_inodes" \
     "$runner_temp_mount" "$runner_temp_blocks" "$runner_temp_inodes" \
     "$tmp_mount" "$tmp_blocks" "$tmp_inodes" "$process_count" "$process_cpu_seconds" "$process_tree"
+
+  # Optional Lean input diagnostics do not participate in sample completeness,
+  # resource classification, or the wrapped command's exit status.
+  resource_observation_lean_inputs "$sequence" "$phase" "$process_tree" || true
 
   local value=""
   for value in \

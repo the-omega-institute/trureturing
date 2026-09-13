@@ -1,0 +1,248 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Project>
+  <!-- Fixed .NET SDK 10.0.103 hook. Parameter bindings are registered here, never discovered from an installed SDK. Compiler execution remains the SDK Csc task. -->
+  <UsingTask TaskName="StrataLint.JudgeSeed.JudgeSeedInputs" AssemblyFile="$(JudgeSeedTaskAssembly)" />
+  <UsingTask TaskName="StrataLint.JudgeSeed.JudgeSeedCopies" AssemblyFile="$(JudgeSeedTaskAssembly)" />
+  <Target Name="_JudgeSeedRegistration" BeforeTargets="PrepareForBuild">
+    <Error Code="JUDGE_SEED_REGISTRATION" Condition="'$(NETCoreSdkVersion)' != '10.0.103' Or '$(JudgeSeedSdkVersion)' != '10.0.103' Or '$(TargetFramework)' != '$(JudgeSeedTargetFramework)' Or '$(TargetFrameworks)' != ''" Text="SDK/framework is inconsistent with the registered judge seed hook." />
+    <PropertyGroup>
+      <_JudgeSeedCoreTargetsPath>$([MSBuild]::NormalizePath('$(CSharpCoreTargetsPath)'))</_JudgeSeedCoreTargetsPath>
+    </PropertyGroup>
+    <Error Code="JUDGE_SEED_REGISTRATION" Condition="'$(_JudgeSeedCoreTargetsPath)' != '$(JudgeSeedSdkPath)/Roslyn/Microsoft.CSharp.Core.targets'" Text="Unregistered CSharpCoreTargetsPath." />
+  </Target>
+  <Target Name="CoreCompile" DependsOnTargets="$(CoreCompileDependsOn);_BeforeVBCSCoreCompile" Returns="@(CscCommandLineArgs)">
+    <CallTarget Targets="_JudgeSdkCoreCompile">
+      <Output TaskParameter="TargetOutputs" ItemName="CscCommandLineArgs" />
+    </CallTarget>
+  </Target>
+  <Target Name="_JudgeSeedCapture">
+    <PropertyGroup Condition="('$(TargetFrameworkVersion)' != 'v1.0') and ('$(TargetFrameworkVersion)' != 'v1.1')">
+      <NoWarn>$(NoWarn);1701;1702</NoWarn>
+    </PropertyGroup>
+    <PropertyGroup>
+      <NoWarn Condition="'$(BuildingInsideVisualStudio)' == 'true' AND '$(VisualStudioVersion)' != '' AND '$(VisualStudioVersion)' &gt; '10.0'">$(NoWarn);2008</NoWarn>
+    </PropertyGroup>
+    <PropertyGroup>
+      <AppConfigForCompiler Condition="'$(AppConfigForCompiler)' == '' AND '$(UseAppConfigForCompiler)' == 'true'">$(AppConfig)</AppConfigForCompiler>
+      <PdbFile Condition="'$(PdbFile)' == '' AND '$(OutputType)' == 'winmdobj' AND '$(_DebugSymbolsProduced)' == 'true'">$(IntermediateOutputPath)$(TargetName).compile.pdb</PdbFile>
+    </PropertyGroup>
+    <PropertyGroup>
+      <_JudgeSeedCaptureFile>$([MSBuild]::NormalizePath('$(MSBuildProjectDirectory)', '$(IntermediateOutputPath)', 'judge-seed-inputs.xml'))</_JudgeSeedCaptureFile>
+    </PropertyGroup>
+    <JudgeSeedInputs Condition="'%(_CoreCompileResourceInputs.WithCulture)' != 'true'"
+      AdditionalLibPaths="$(AdditionalLibPaths)"
+      AddModules="@(AddModules)"
+      AdditionalFiles="@(AdditionalFiles)"
+      AllowUnsafeBlocks="$(AllowUnsafeBlocks)"
+      AnalyzerConfigFiles="@(EditorConfigFiles)"
+      Analyzers="@(Analyzer)"
+      ApplicationConfiguration="$(AppConfigForCompiler)"
+      BaseAddress="$(BaseAddress)"
+      CheckForOverflowUnderflow="$(CheckForOverflowUnderflow)"
+      ChecksumAlgorithm="$(ChecksumAlgorithm)"
+      CodeAnalysisRuleSet="$(ResolvedCodeAnalysisRuleSet)"
+      CodePage="$(CodePage)"
+      DebugType="$(DebugType)"
+      DefineConstants="$(DefineConstants)"
+      DelaySign="$(DelaySign)"
+      DisabledWarnings="$(NoWarn)"
+      DisableSdkPath="$(DisableSdkPath)"
+      DocumentationFile="@(DocFileItem)"
+      EmbedAllSources="$(EmbedAllSources)"
+      EmbeddedFiles="@(EmbeddedFiles)"
+      EmitDebugInformation="$(DebugSymbols)"
+      EnvironmentVariables="$(CscEnvironment)"
+      ErrorEndLocation="$(ErrorEndLocation)"
+      ErrorLog="$(ErrorLog)"
+      ErrorReport="$(ErrorReport)"
+      Features="$(Features)"
+      InterceptorsNamespaces="$(InterceptorsNamespaces)"
+      InterceptorsPreviewNamespaces="$(InterceptorsPreviewNamespaces)"
+      FileAlignment="$(FileAlignment)"
+      GeneratedFilesOutputPath="$(CompilerGeneratedFilesOutputPath)"
+      GenerateFullPaths="$(GenerateFullPaths)"
+      HighEntropyVA="$(HighEntropyVA)"
+      Instrument="$(Instrument)"
+      KeyContainer="$(KeyContainerName)"
+      KeyFile="$(KeyOriginatorFile)"
+      LangVersion="$(LangVersion)"
+      LinkResources="@(LinkResource)"
+      MainEntryPoint="$(StartupObject)"
+      ModuleAssemblyName="$(ModuleAssemblyName)"
+      NoConfig="true"
+      NoLogo="$(NoLogo)"
+      NoStandardLib="$(NoCompilerStandardLib)"
+      NoWin32Manifest="$(NoWin32Manifest)"
+      Nullable="$(Nullable)"
+      Optimize="$(Optimize)"
+      Deterministic="$(Deterministic)"
+      PublicSign="$(PublicSign)"
+      OutputAssembly="@(IntermediateAssembly)"
+      OutputRefAssembly="@(IntermediateRefAssembly)"
+      PdbFile="$(PdbFile)"
+      Platform="$(PlatformTarget)"
+      Prefer32Bit="$(Prefer32Bit)"
+      PreferredUILang="$(PreferredUILang)"
+      ProjectName="$(MSBuildProjectName)"
+      ProvideCommandLineArgs="$(ProvideCommandLineArgs)"
+      References="@(ReferencePathWithRefAssemblies)"
+      RefOnly="$(ProduceOnlyReferenceAssembly)"
+      ReportAnalyzer="$(ReportAnalyzer)"
+      ReportIVTs="$(ReportIVTs)"
+      Resources="@(_CoreCompileResourceInputs);@(CompiledLicenseFile)"
+      ResponseFiles="$(CompilerResponseFile)"
+      RuntimeMetadataVersion="$(RuntimeMetadataVersion)"
+      SharedCompilationId="$(SharedCompilationId)"
+      SkipAnalyzers="$(_SkipAnalyzers)"
+      SkipCompilerExecution="$(SkipCompilerExecution)"
+      Sources="@(Compile)"
+      SubsystemVersion="$(SubsystemVersion)"
+      TargetType="$(OutputType)"
+      TargetFramework="$(TargetFramework)"
+      ToolExe="$(CscToolExe)"
+      ToolPath="$(CscToolPath)"
+      TreatWarningsAsErrors="$(TreatWarningsAsErrors)"
+      UseHostCompilerIfAvailable="$(UseHostCompilerIfAvailable)"
+      UseSharedCompilation="$(UseSharedCompilation)"
+      Utf8Output="$(Utf8Output)"
+      VsSessionGuid="$(VsSessionGuid)"
+      WarningLevel="$(WarningLevel)"
+      WarningsAsErrors="$(WarningsAsErrors)"
+      WarningsNotAsErrors="$(WarningsNotAsErrors)"
+      Win32Icon="$(ApplicationIcon)"
+      Win32Manifest="$(Win32Manifest)"
+      Win32Resource="$(Win32Resource)"
+      PathMap="$(PathMap)"
+      SourceLink="$(SourceLink)"
+      JudgeRoot="$(JudgeSeedRoot)"
+      JudgeProject="$(MSBuildProjectFullPath)"
+      JudgeCapture="$(_JudgeSeedCaptureFile)"
+      JudgeIntermediate="$(BaseIntermediateOutputPath)"
+      JudgeOutput="$(BaseOutputPath)"
+      JudgeCompilerOverrides="$(CscToolPath)$(CscToolExe)$(CompilerResponseFile)"
+      JudgeOutputs="@(DocFileItem);                    @(IntermediateAssembly);                    @(IntermediateRefAssembly);                    @(_DebugSymbolsIntermediatePath);                    $(NonExistentFile);                    @(CustomAdditionalCompileOutputs)"
+      JudgeInputs="$(MSBuildProjectFullPath);@(Compile);@(_CoreCompileResourceInputs);@(CompiledLicenseFile);@(ReferencePathWithRefAssemblies);@(AdditionalFiles);@(EmbeddedFiles);@(Analyzer);@(EditorConfigFiles);@(AddModules);@(LinkResource);$(AppConfigForCompiler);$(ResolvedCodeAnalysisRuleSet);$(KeyOriginatorFile);$(ApplicationIcon);$(Win32Manifest);$(Win32Resource);$(SourceLink);@(CustomAdditionalCompileInputs);@(_JudgeSeedRegisteredMaterial);$(JudgeSeedRoot)/build/judge-seed/compiler.json;$(JudgeSeedOwner);$(JudgeSeedHook)">
+      <Output TaskParameter="JudgeCaptured" PropertyName="_JudgeSeedCaptured" />
+      <Output TaskParameter="JudgeRegistrationError" PropertyName="_JudgeSeedRegistrationError" />
+    </JudgeSeedInputs>
+    <Error Code="JUDGE_SEED_REGISTRATION" Condition="'$(_JudgeSeedRegistrationError)' != ''" Text="$(_JudgeSeedRegistrationError)" />
+    <Exec Condition="'$(_JudgeSeedCaptured)' == 'true'" Command="python3 &quot;$(JudgeSeedOwner)&quot; reconcile &quot;$(_JudgeSeedCaptureFile)&quot;" IgnoreExitCode="true" IgnoreStandardErrorWarningFormat="true">
+      <Output TaskParameter="ExitCode" PropertyName="_JudgeSeedExit" />
+    </Exec>
+    <PropertyGroup Condition="'$(_JudgeSeedCaptured)' != 'true' Or '$(_JudgeSeedExit)' != '0'">
+      <NonExistentFile>$(IntermediateOutputPath)judge-seed-missing-output</NonExistentFile>
+    </PropertyGroup>
+  </Target>
+  <Target Name="_JudgeSdkCoreCompile" Inputs="$(MSBuildAllProjects);                   @(Compile);                   @(_CoreCompileResourceInputs);                   $(ApplicationIcon);                   $(KeyOriginatorFile);                   @(ReferencePathWithRefAssemblies);                   @(CompiledLicenseFile);                   @(LinkResource);                   @(EmbeddedDocumentation);                   $(Win32Resource);                   $(Win32Manifest);                   @(CustomAdditionalCompileInputs);                   $(ResolvedCodeAnalysisRuleSet);                   @(AdditionalFiles);                   @(EmbeddedFiles);                   @(Analyzer);                   @(EditorConfigFiles);                   $(SourceLink)" Outputs="@(DocFileItem);                    @(IntermediateAssembly);                    @(IntermediateRefAssembly);                    @(_DebugSymbolsIntermediatePath);                    $(NonExistentFile);                    @(CustomAdditionalCompileOutputs)" Returns="@(CscCommandLineArgs)" DependsOnTargets="_JudgeSeedCapture">
+    <Csc Condition="'%(_CoreCompileResourceInputs.WithCulture)' != 'true'"
+      AdditionalLibPaths="$(AdditionalLibPaths)"
+      AddModules="@(AddModules)"
+      AdditionalFiles="@(AdditionalFiles)"
+      AllowUnsafeBlocks="$(AllowUnsafeBlocks)"
+      AnalyzerConfigFiles="@(EditorConfigFiles)"
+      Analyzers="@(Analyzer)"
+      ApplicationConfiguration="$(AppConfigForCompiler)"
+      BaseAddress="$(BaseAddress)"
+      CheckForOverflowUnderflow="$(CheckForOverflowUnderflow)"
+      ChecksumAlgorithm="$(ChecksumAlgorithm)"
+      CodeAnalysisRuleSet="$(ResolvedCodeAnalysisRuleSet)"
+      CodePage="$(CodePage)"
+      DebugType="$(DebugType)"
+      DefineConstants="$(DefineConstants)"
+      DelaySign="$(DelaySign)"
+      DisabledWarnings="$(NoWarn)"
+      DisableSdkPath="$(DisableSdkPath)"
+      DocumentationFile="@(DocFileItem)"
+      EmbedAllSources="$(EmbedAllSources)"
+      EmbeddedFiles="@(EmbeddedFiles)"
+      EmitDebugInformation="$(DebugSymbols)"
+      EnvironmentVariables="$(CscEnvironment)"
+      ErrorEndLocation="$(ErrorEndLocation)"
+      ErrorLog="$(ErrorLog)"
+      ErrorReport="$(ErrorReport)"
+      Features="$(Features)"
+      InterceptorsNamespaces="$(InterceptorsNamespaces)"
+      InterceptorsPreviewNamespaces="$(InterceptorsPreviewNamespaces)"
+      FileAlignment="$(FileAlignment)"
+      GeneratedFilesOutputPath="$(CompilerGeneratedFilesOutputPath)"
+      GenerateFullPaths="$(GenerateFullPaths)"
+      HighEntropyVA="$(HighEntropyVA)"
+      Instrument="$(Instrument)"
+      KeyContainer="$(KeyContainerName)"
+      KeyFile="$(KeyOriginatorFile)"
+      LangVersion="$(LangVersion)"
+      LinkResources="@(LinkResource)"
+      MainEntryPoint="$(StartupObject)"
+      ModuleAssemblyName="$(ModuleAssemblyName)"
+      NoConfig="true"
+      NoLogo="$(NoLogo)"
+      NoStandardLib="$(NoCompilerStandardLib)"
+      NoWin32Manifest="$(NoWin32Manifest)"
+      Nullable="$(Nullable)"
+      Optimize="$(Optimize)"
+      Deterministic="$(Deterministic)"
+      PublicSign="$(PublicSign)"
+      OutputAssembly="@(IntermediateAssembly)"
+      OutputRefAssembly="@(IntermediateRefAssembly)"
+      PdbFile="$(PdbFile)"
+      Platform="$(PlatformTarget)"
+      Prefer32Bit="$(Prefer32Bit)"
+      PreferredUILang="$(PreferredUILang)"
+      ProjectName="$(MSBuildProjectName)"
+      ProvideCommandLineArgs="$(ProvideCommandLineArgs)"
+      References="@(ReferencePathWithRefAssemblies)"
+      RefOnly="$(ProduceOnlyReferenceAssembly)"
+      ReportAnalyzer="$(ReportAnalyzer)"
+      ReportIVTs="$(ReportIVTs)"
+      Resources="@(_CoreCompileResourceInputs);@(CompiledLicenseFile)"
+      ResponseFiles="$(CompilerResponseFile)"
+      RuntimeMetadataVersion="$(RuntimeMetadataVersion)"
+      SharedCompilationId="$(SharedCompilationId)"
+      SkipAnalyzers="$(_SkipAnalyzers)"
+      SkipCompilerExecution="$(SkipCompilerExecution)"
+      Sources="@(Compile)"
+      SubsystemVersion="$(SubsystemVersion)"
+      TargetType="$(OutputType)"
+      TargetFramework="$(TargetFramework)"
+      ToolExe="$(CscToolExe)"
+      ToolPath="$(CscToolPath)"
+      TreatWarningsAsErrors="$(TreatWarningsAsErrors)"
+      UseHostCompilerIfAvailable="$(UseHostCompilerIfAvailable)"
+      UseSharedCompilation="$(UseSharedCompilation)"
+      Utf8Output="$(Utf8Output)"
+      VsSessionGuid="$(VsSessionGuid)"
+      WarningLevel="$(WarningLevel)"
+      WarningsAsErrors="$(WarningsAsErrors)"
+      WarningsNotAsErrors="$(WarningsNotAsErrors)"
+      Win32Icon="$(ApplicationIcon)"
+      Win32Manifest="$(Win32Manifest)"
+      Win32Resource="$(Win32Resource)"
+      PathMap="$(PathMap)"
+      SourceLink="$(SourceLink)">
+      <Output TaskParameter="CommandLineArgs" ItemName="CscCommandLineArgs" />
+    </Csc>
+    <ItemGroup>
+      <_CoreCompileResourceInputs Remove="@(_CoreCompileResourceInputs)" />
+    </ItemGroup>
+    <CallTarget Targets="$(TargetsTriggeredByCompilation)" Condition="'$(TargetsTriggeredByCompilation)' != ''" />
+  </Target>
+  <Target Name="_JudgeSeedSeal" AfterTargets="Build" Condition="'$(_JudgeSeedCaptured)' == 'true' And Exists('$(_JudgeSeedCaptureFile)')">
+    <Exec Command="python3 &quot;$(JudgeSeedOwner)&quot; seal &quot;$(_JudgeSeedCaptureFile)&quot;" IgnoreExitCode="true" IgnoreStandardErrorWarningFormat="true" />
+  </Target>
+  <Target Name="_Judge_CopyFilesMarkedCopyLocal" BeforeTargets="_CopyFilesMarkedCopyLocal">
+    <JudgeSeedCopies SourceFiles="@(ReferenceCopyLocalPaths)" DestinationFiles="@(ReferenceCopyLocalPaths-&gt;'$(OutDir)%(DestinationSubDirectory)%(Filename)%(Extension)')" Condition="'$(UseCommonOutputDirectory)' != 'true'" />
+  </Target>
+  <Target Name="_Judge_CopyOutOfDateSourceItemsToOutputDirectory" BeforeTargets="_CopyOutOfDateSourceItemsToOutputDirectory">
+    <JudgeSeedCopies SourceFiles="@(_SourceItemsToCopyToOutputDirectory)" DestinationFiles="@(_SourceItemsToCopyToOutputDirectory-&gt;'$(OutDir)%(TargetPath)')" />
+  </Target>
+  <Target Name="_JudgeCopyFilesToOutputDirectory" BeforeTargets="CopyFilesToOutputDirectory">
+    <JudgeSeedCopies SourceFiles="@(IntermediateAssembly)" DestinationFolder="$(OutDir)" Condition="'$(CopyBuildOutputToOutputDirectory)' == 'true' and '$(SkipCopyBuildProduct)' != 'true'" />
+    <JudgeSeedCopies SourceFiles="@(AddModules)" DestinationFolder="$(OutDir)" Condition="'@(AddModules)' != ''" />
+    <JudgeSeedCopies SourceFiles="$(IntermediateOutputPath)$(_SGenDllName)" DestinationFiles="$(OutDir)$(_SGenDllName)" Condition="'$(_SGenDllCreated)'=='true'" />
+    <JudgeSeedCopies SourceFiles="@(_DebugSymbolsIntermediatePath)" DestinationFiles="@(_DebugSymbolsOutputPath)" Condition="'$(_DebugSymbolsProduced)'=='true' and '$(SkipCopyingSymbolsToOutputDirectory)' != 'true' and '$(CopyOutputSymbolsToOutputDirectory)'=='true'" />
+    <JudgeSeedCopies SourceFiles="@(DocFileItem)" DestinationFiles="@(FinalDocFile)" Condition="'$(_DocumentationFileProduced)'=='true' and '$(CopyDocumentationFileToOutputDirectory)'=='true'" />
+    <JudgeSeedCopies SourceFiles="@(IntermediateSatelliteAssembliesWithTargetPath)" DestinationFiles="@(IntermediateSatelliteAssembliesWithTargetPath-&gt;'$(OutDir)%(Culture)\$(TargetName).resources.dll')" Condition="'@(IntermediateSatelliteAssembliesWithTargetPath)' != ''" />
+    <JudgeSeedCopies SourceFiles="@(ReferenceComWrappersToCopyLocal); @(ResolvedIsolatedComModules); @(_DeploymentLooseManifestFile); @(NativeReferenceFile)" DestinationFolder="$(OutDir)" Condition="'@(ReferenceComWrappersToCopyLocal)' != '' or '@(ResolvedIsolatedComModules)' != '' or '@(_DeploymentLooseManifestFile)' != '' or '@(NativeReferenceFile)' != '' " />
+    <JudgeSeedCopies SourceFiles="@(WinMDExpArtifacts)" DestinationFolder="$(OutDir)" Condition="'$(SkipCopyWinMDArtifact)' != 'true' and '@(WinMDExpArtifacts)' != ''" />
+  </Target>
+</Project>
