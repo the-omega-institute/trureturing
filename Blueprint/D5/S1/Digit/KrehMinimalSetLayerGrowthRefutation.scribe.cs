@@ -78,7 +78,10 @@ internal sealed class KrehMinimalSetLayerGrowthRefutationDocument
                     + "1, 2, 1, 1, and then 1 forever. The countability sentence of "
                     + "Conjecture 18 is not asserted here.",
                 DescribeRole.Theorem,
-                AssessedProvenance.FromRepo(Source)))));
+                AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("kreh-2015-minimal-sets-conjecture-18"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(
         string id,
@@ -87,14 +90,16 @@ internal sealed class KrehMinimalSetLayerGrowthRefutationDocument
         Formula formula,
         string prose,
         DescribeRole role,
-        AssessedProvenance provenance) => Describe.Lean(
+        AssessedProvenance provenance,
+        OpenProblemResolutionClaim? claim = null) => Describe.Lean(
             DescribeId.Create(id),
             DeclarationHandle.Create(Prefix + declaration),
             H(title),
             StatementSource.FromAuthor(formula),
             provenance,
             Blocks(Paragraph(Text(prose))),
-            role);
+            role,
+            claim);
 
     private static Formula DigitSubseqFormula()
     {

@@ -70,6 +70,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Digit/KrehMinimalSetLayerGrowthRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/kreh-2015-minimal-sets-conjecture-18` (refuted) by `D5/S1/Digit/KrehMinimalSetLayerGrowthRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kreh-2015-minimal-sets-conjecture-18","declaration_gid":"D5/S1/Digit/KrehMinimalSetLayerGrowthRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Martin Kreh (2015). *Minimal Sets, Journal of Integer Sequences 18 (2015), Article 15.5.3*. URL: <https://cs.uwaterloo.ca/journals/JIS/VOL18/Kreh/kreh2.pdf>.
