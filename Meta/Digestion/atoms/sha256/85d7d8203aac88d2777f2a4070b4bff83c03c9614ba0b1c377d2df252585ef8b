@@ -1,0 +1,6 @@
+**定义 355.1。** 对 $r\in\mathbb Q^\omega$ 和 $c\in\mathbb R$，定义有限状态水平
+$$
+\mathcal L_{A,r,c}=\{u\in B_A^{\rm cap}:L_r(u)=c\}.
+$$
+这里 $L_r(u)$ 通过通常包含 $\mathbb Q\hookrightarrow\mathbb R$ 与 $c$ 比较。对正整数 $m$，$r/m$ 表示实际有理系数行 $(r_n/m)_{n\in\omega}\in\mathbb Q^\omega$，不是对 $\rho(r)$ 或已求出的相位作除法。
+

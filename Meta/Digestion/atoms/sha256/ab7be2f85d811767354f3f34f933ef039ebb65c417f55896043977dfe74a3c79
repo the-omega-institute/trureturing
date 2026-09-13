@@ -1,0 +1,15 @@
+**定理 328.2。** 第 313 条的核等式、商同构、真饱和性及每个有限坐标投影满性给出
+$$
+\overline{\Psi_{\rm reg}[H_{\rm dy}]}^{\mathsf X_{\rm reg}}
+\cap\Psi_{\rm reg}[\mathsf V_{\rm reg}]
+=\Psi_{\rm reg}[\mathsf V_{\rm reg}]
+\supsetneq\Psi_{\rm reg}[H_{\rm dy}].
+$$
+更明确地，对每个固定 $u\in\mathsf V_{\rm reg}$ 和所有充分大的 $N$，
+$$
+h_N(u)=u-2^N\ell_{\rm dy}(u)\varepsilon_N\in H_{\rm dy},\qquad
+\Psi_{\rm reg}(h_N(u))\longrightarrow\Psi_{\rm reg}(u).
+$$
+
+**证明。** 第 313 条已证明 $H_{\rm dy}=\ker\ell_{\rm dy}$、$\mathsf V_{\rm reg}/H_{\rm dy}\cong\mathbb Z_o[1/2]$、真饱和性及所有有限投影满性，直接复用这些事实。对 $N$ 不小于 $u$ 支撑的全部指标，$2^N\ell_{\rm dy}(u)$ 为整数；该条的望远镜恒等式直接给 $h_N(u)\in H_{\rm dy}$。零状态也取任意 $N$。此向量只在坐标 $N$ 处可能偏离 $u$；对每个固定有限 $I$，取 $N$ 同时大于 $I$ 及原支撑的全部指标，则相位在 $I$ 上完全相等。每个乘积开邻域含一个这样的有限柱集，故得显示的收敛，并使每个精确相位状态落在环境闭包中。于是迹为整个精确像。$\varepsilon_0\notin H_{\rm dy}$ 由第 313 条给出，再用第 307 条单射性得严格包含。这里既未另证望远镜恒等式，也不需要重新描述全部环境闭包。证毕。
+

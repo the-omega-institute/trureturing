@@ -1,0 +1,4 @@
+**证明。** $J$ 的两个分支互斥，且负分支排除零。按 $z$ 的正、负、零分类，直接得到 $v^{-1}v=\operatorname{id}_J$、$vv^{-1}=\operatorname{id}_{\mathbb Z_o}$。复合第 113–114 条的两个逆式得到 $b$ 的双逆。对前三个算术式取 $\operatorname{ival}$，两侧分别成为通常整数的同一和、积、负值，再用其单射性。序式是序的定义；两数最大值由全序的两种大小情形得出，后继由加法式得出。有限和对有限索引集归纳，空集用零式，加入一个新索引用加法式；最值用有限非空归纳及二元最大、最小的交换。
+
+第 69 条的零数字是空函数，其图为 $\varnothing$。第 71 条的每个有效码都是 Kuratowski 对，而每个 Kuratowski 对都非空，故空数字不是有效码。每个非零 $\operatorname{scode}(z)$ 是一个 Kuratowski 对，其每个成员为非空集合，因此不含 $\varnothing$；但每个正有限序数都含 $\varnothing$，零序数自身为空。这证明非零带符号数字不是自然序数，特别是 $\operatorname{scode}(1)\ne1$。第 72 条的单射性及 $\operatorname{NatZ}(n)=\operatorname{Enc}(n)$ 给出第二个不等式及交集式。$(0,0)=\{\{\varnothing\}\}$ 非空，故不是零序数，再用单射性得第三个不等式。$\mathrm e(0_S)=\operatorname{NatZ}(0)$，而 $\chi(0_S)=\operatorname{Enc}(0_J)$，恰显示数字零与原整数零对象的差别。第 74 条的配对只在有效码上定义；即使给 $\operatorname{Dec}$ 域外另取默认值，也没有扩大该配对的声明域。原点的三个原始零数字因此不能作其三个有效参数。证毕。
+

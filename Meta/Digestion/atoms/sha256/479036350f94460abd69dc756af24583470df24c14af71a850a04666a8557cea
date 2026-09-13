@@ -1,0 +1,13 @@
+**定理 152（全局 Zeckendorf 码与局部寄存器码的互逆）。** 对每个 \(a\in S(P,A)\) 和 \(c\in\mathsf G(P,A)\)，有
+\[
+\operatorname{Axis}_{P,A}(\mathsf G_{P,A}(a))
+ =\operatorname{dig}_{P,A}(a),
+\tag{Z-AXIS-DEC}
+\]
+\[
+\widehat\Pi_Z(\operatorname{Reg}_Z(P),
+ \operatorname{Axis}_{P,A}(c))=c.
+\tag{Z-AXIS-ENC}
+\]
+因此，在固定寄存器标签和容量的条件下，全局 Zeckendorf 数字与局部指数表是双射；全局数位本身不携带寄存器轴，但由唯一素因子分解可以恢复该轴。
+

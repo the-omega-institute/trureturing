@@ -1,0 +1,14 @@
+**定理 180（单位容量轴增多时的全局稀疏化）。** 令 \(p_1<\cdots<p_k\) 为前 \(k\) 个素数，置 \(P_k=\{p_1,\ldots,p_k\}\)，并令 \(A_k(p_i)=1\)。则
+\[
+Q_k=2^k,\qquad M_k=\prod_{i=1}^kp_i,\qquad
+\delta_{\rm loc}^{Z}(P_k,A_k)=1,
+\]
+并且
+\[
+0<\delta_{\rm glob}^{Z}(P_k,A_k)
+ \le \frac{2^k}{M_k+1}
+ \le \frac{2^k}{(k+1)!}\xrightarrow[k\to\infty]{}0.
+\tag{Z-SPARSE-LIMIT}
+\]
+故局部每轴一位的规范窗口可以始终满占，而把这些轴指数化为一个全局 Zeckendorf 标量会使规范窗口密度趋于零。
+

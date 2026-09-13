@@ -1,0 +1,28 @@
+**定理 201（时间历史到终端寄存器的短正合列）。** 有
+\[
+0\longrightarrow\mathsf K_P
+\longrightarrow\mathsf J_P
+\xrightarrow{\ \Sigma_P\ }\mathbb Z^P
+\longrightarrow0,
+\tag{Z-TEMPORAL-EXACT}
+\]
+且 \(\Sigma_P\circ\iota_P=\operatorname{id}_{\mathbb Z^P}\)。每个 \(c\in\mathsf J_P\) 有唯一分解
+\[
+c=\iota_P(\Sigma_Pc)+c^{\circ},
+\qquad c^{\circ}\in\mathsf K_P.
+\tag{Z-TEMPORAL-SPLIT}
+\]
+令
+\[
+\mathfrak T_P:\mathcal H_P\longrightarrow\mathbb Z^P,
+\qquad
+\mathfrak T_P([X])=\mathbf a_X^\infty.
+\]
+则 \(\mathfrak T_P\) 是满射同态，其核与 \(\mathsf K_P\) 同构，并且定理 194 的终端商给出满射
+\[
+\mathcal H_P\xrightarrow{\ [X]_{\equiv_P^{\rm pf}}\mapsto[X]_{\equiv_P}\ }
+\mathcal C_P^{\rm tb}/\equiv_P
+\xrightarrow{\ \Theta_P\ }\mathbb Z^P
+\]
+其复合正是 \(\mathfrak T_P\)。因此前缀历史商是终端寄存器群的一个分裂扩张，终端观察遗忘的恰好是零总和时间循环 \(\mathsf K_P\)。
+

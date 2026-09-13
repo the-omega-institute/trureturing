@@ -1,0 +1,6 @@
+**定理 347.1。** 若存在 $n_0\in\omega$ 使
+$$
+A_n=G_n-1\quad(n\ge n_0),
+$$
+而 $n<n_0$ 的各容量是任意有限非负整数，则 $\mathsf U_F(A)$ 以 $\epsilon=1/2$ 成立。因此 $\mathsf{Fill}_F(A)$、定理 346.1 的全部有理闭包式、$M_F(A)=+\infty$、$\ell_F$ 处处不连续及 $S_F[X_A^{\rm cap}]=[0,+\infty]$ 都成立。每个 $n\ge n_0$ 的坐标有恰好 $G_n$ 个允许值，经 $\zeta$ 和补零对应完整的 $n$ 位置窗口。
+

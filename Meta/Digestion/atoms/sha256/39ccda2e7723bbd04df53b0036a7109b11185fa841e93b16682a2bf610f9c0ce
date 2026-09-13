@@ -1,0 +1,20 @@
+**定理 209（全素数寄存器的唯一性与有限容量盒的并）。** \(\Pi_{\rm Pr}\) 是交换幺半群同构
+\[
+\Pi_{\rm Pr}:\mathsf E_{\rm Pr}\xrightarrow{\ \cong\ }\mathbb N_{>0},
+\tag{Z-UNIVERSAL-REGISTERS}
+\]
+且 \(\operatorname{dig}_{\rm Pr}\) 是 \(\mathsf E_{\rm Pr}\) 与有限支撑局部 Zeckendorf 表
+\[
+\mathsf W_Z^{(\operatorname{Pr})}
+=\{d:\operatorname{Pr}\to\mathsf W_Z:
+\operatorname{supp}(d)\text{ 有限}\}
+\]
+之间的幺半群同构。每个 \(a\in\mathsf E_{\rm Pr}\) 都存在有限容量对 \((P,A)\) 使 \(a\) 是 \(S(P,A)\) 的零扩展像中的元素，并且
+\[
+\mathsf E_{\rm Pr}
+=\bigcup_{(P,A)\in\mathfrak B}
+\jmath_{(P,A)}^{\rm Pr}[S(P,A)]
+\tag{Z-BOX-COVER}
+\]
+在所有零扩展嵌入下相容。于是，有限寄存器盒的并不是另一种算术，而是全素数寄存器算术的有限子结构。
+

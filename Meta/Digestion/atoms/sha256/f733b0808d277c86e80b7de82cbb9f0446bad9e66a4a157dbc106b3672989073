@@ -1,0 +1,84 @@
+**定义 289。** 固定有限 $P\subseteq\operatorname{Pr}$，复用第 3 条的 $\lambda(p,j)=(p,j,0)$。在《情境时空算术》定义 22 的联合电荷群
+$$
+\mathcal L=\mathbb Z^{(\mathbb Z\times\mathbb Z^3)}
+$$
+上定义限制公式
+$$
+(\rho_Pc)(t,p,j)=c(t,\lambda(p,j)).
+$$
+对该文定义 3 的原平衡载体 $\mathcal B$，记
+$$
+R_P(X)=q_{X,P}=\rho_P(Z_X),\qquad
+w_{X,P}=\rho_P(W_X),
+$$
+$$
+\mathcal B_P^{\rm sel}
+=\{X\in\mathcal B:Z_X(t,y)=0
+\text{ 对全部 }t\in\mathbb Z,\ y\notin\lambda[P\times\omega]\}.
+$$
+这里 $A_X$ 是当前选择集，$Z_X$ 是它的联合时间—空间电荷，$W_X$ 是当前区域的背景电荷。$\mathcal B_P^{\rm sel}$ 只限制净选择电荷的支撑，允许槽外存在相互抵消的事件。限制公式的有限支撑性质在第 290 条证明。
+
+复用第 196、200、206 条的有限支撑群及映射：
+$$
+\mathsf Q_P=\mathbb Z^{(\mathbb Z\times P\times\omega)},\qquad
+\mathsf J_P=\mathbb Z^{(\mathbb Z\times P)},
+$$
+$$
+\mathsf V_P(q)(t,p)=\sum_jG_jq(t,p,j),\qquad
+\mathsf U_P(q)(t,p)=\sum_jq(t,p,j),\qquad
+\Sigma_P(c)(p)=\sum_tc(t,p),\qquad
+\mathsf C_P=\Sigma_P\circ\mathsf V_P.
+$$
+所有和只在非零支撑上求值。对 $X\in\mathcal B$ 定义
+$$
+E_{X,P}^{T}(p)=\sum_{t\le T}\mathsf V_P(q_{X,P})(t,p)\quad(T\in\mathbb Z),
+\qquad
+E_{X,P}^{\infty}=\mathsf C_P(q_{X,P})\in\mathbb Z^P.
+$$
+第 227 条的 $q_X,\delta_X^G,\mathbf a_X^{G,T},\mathbf a_X^{G,\infty}$ 仍只用于它们原有的域 $\mathcal C_P^{\rm tb}$。
+
+符号约定：第 210、221 条的槽级素数乘法字符仍为
+$$
+\chi_P:\mathsf Q_P\longrightarrow\mathbb Q_{>0},\qquad
+\chi_P(q)=\prod_{p\in P}p^{\mathsf C_P(q)(p)}.
+$$
+终端圆周相位与点时圆周相位分别记为 $\varpi_P$ 与 $\widehat\varpi_P$，定义为：
+$$
+\varpi_P:\mathbb Z^P\longrightarrow\mathbb T^P,
+\qquad \varpi_P(e)_p=[\phi e_p],
+$$
+$$
+\widehat\varpi_P:\mathsf J_P\longrightarrow\mathbb T^{(\mathbb Z\times P)},
+\qquad \widehat\varpi_P(c)(t,p)=[\phi c(t,p)].
+$$
+当 $P=\varnothing$ 时，$\mathsf Q_\varnothing$、$\mathbb Z^\varnothing$ 与 $\mathsf J_\varnothing$ 的唯一元素均为同一个空函数 $\varnothing$。按空乘积与空元组约定，
+$$
+\chi_\varnothing(\varnothing)=1,\qquad
+\varpi_\varnothing(\varnothing)=(),\qquad
+\widehat\varpi_\varnothing(\varnothing)=().
+$$
+这里 $()$ 表示相应空指标集上的空元组，即空函数。
+
+圆周值函数上的括号上标也表示有限非零支撑。令
+$$
+\widehat\Psi_P=\widehat\varpi_P\circ\mathsf V_P:
+\mathsf Q_P\longrightarrow\mathbb T^{(\mathbb Z\times P)},
+\qquad
+\Psi_P=\varpi_P\circ\mathsf C_P:
+\mathsf Q_P\longrightarrow\mathbb T^P.
+$$
+前缀相位为 $\varpi_P(E_{X,P}^{T})$。$\mathsf V_P(q)$ 的类型是时间表，不能直接作为 $\varpi_P$ 的自变量；$q(X)\in\mathbb Z$、$q_{X,P}\in\mathsf Q_P$、$\mathsf V_P(q_{X,P})\in\mathsf J_P$ 与 $E_{X,P}^{\infty}\in\mathbb Z^P$ 是四个不同的对象。
+
+有限数值字段沿第 69–70、113–114 条编码。具体地，$q\in\mathsf Q_P$ 的有限记录可取非零支撑上的元组集
+$$
+\{(\operatorname{scode}(t),\operatorname{NatZ}(p),
+\operatorname{NatZ}(j),\operatorname{scode}(q(t,p,j))):q(t,p,j)\ne0\},
+$$
+并规定未列槽的值为零；要保留显式零标签时另附 $P$ 字段。总函数 $q$ 的集合图与这份有限记录不同，总图沿第 71–79 条的 $\operatorname{Enc},\operatorname{Dec},\in_Z$ 解释。下文只复用该解释的记号：对集合 $S$、函数 $f:S\to Y$ 及 $S$ 上拓扑 $\tau$，记
+$$
+S^*=\operatorname{Enc}[S],\qquad
+f^{\rm ext}=\operatorname{Enc}|_Y\circ f\circ\operatorname{Dec}|_{S^*},\qquad
+\tau^*=\{\operatorname{Enc}[U]:U\in\tau\}.
+$$
+$S^*$ 是码的外部集合，$\operatorname{Enc}(S)$ 是以 $S^*$ 为语义成员集的码对象。
+

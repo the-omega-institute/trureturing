@@ -1,0 +1,12 @@
+**证明。** 对 \(a,b\in\mathsf E(P)\)，有限乘积中逐个使用
+\(p^{a(p)+b(p)}=p^{a(p)}p^{b(p)}\)，得到同态等式。若两个指数向量的标量相等，唯一素因子分解给出每个 \(a(p)=b(p)\)，故单射；\(\mathsf M(P)\) 的定义给出满射，遂为幺半群同构。
+
+定理 70 的 \(\operatorname{val}\) 与 \(\zeta\) 互逆，并且定义 133 的每一行规范加法满足
+\[
+\operatorname{val}\bigl(d(p)\boxplus_Z e(p)\bigr)
+ =\operatorname{val}(d(p))+\operatorname{val}(e(p)).
+\]
+逐坐标应用该等式给出 \(\operatorname{dig}^{\infty}_P\) 的双射和同态性。
+
+最后，\(\jmath_A(a)\boxplus_P\jmath_A(b)\) 落在像中，当且仅当每个坐标和不超过 \(A(p)\)，这正是 \(\operatorname{Dom}_{P,A}\) 的定义。定理 120 与 134 分别给出有界标量乘法和局部 Zeckendorf 规范加法的交换式。证毕。
+

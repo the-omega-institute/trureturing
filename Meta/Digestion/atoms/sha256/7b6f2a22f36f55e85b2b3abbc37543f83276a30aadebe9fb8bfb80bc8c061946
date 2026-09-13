@@ -1,0 +1,25 @@
+**定理 156（字长下界与 5040 的局部—全局差异）。** 对任意有限配置，令 \(Q=|S(P,A)|\)，则
+\[
+\left\lceil\log_2Q\right\rceil
+\le \Lambda_{\rm loc}(P,A),
+\qquad
+\left\lceil\log_2Q\right\rceil
+\le \Lambda_{\rm glob}(P,A).
+\tag{Z-WIDTH-LOWER}
+\]
+对
+\[
+(P,A)=((2,3,5,7),(4,2,1,1))
+\]
+有
+\[
+Q=60,qquad
+\Lambda_{\rm loc}=\ell_Z(4)+\ell_Z(2)+2\ell_Z(1)=3+2+1+1=7,
+\]
+\[
+M=5040=G_2+G_5+G_{11}+G_{13}+G_{17},qquad
+\Lambda_{\rm glob}=18,qquad
+\Delta_Z=11.
+\]
+所以对该配置，局部指数码窗口比全局乘积码窗口短十一位；两者都不是六位状态枚举下界的同一编码。
+

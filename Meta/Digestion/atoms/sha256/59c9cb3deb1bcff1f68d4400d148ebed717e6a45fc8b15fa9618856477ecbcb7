@@ -1,0 +1,22 @@
+**定理 221（槽指令的三级作用）。** 对所有 \(q\in\mathsf Q_P\)，有
+\[
+\mathsf V_P(\mathsf I_{t,p,j}^{\pm}(q))
+=\mathsf R_{t,p,j}^{\pm}(\mathsf V_P(q)),
+\qquad
+\mathsf C_P(\mathsf I_{t,p,j}^{\pm}(q))
+=\mathsf C_P(q)\pm G_j e_p,
+\tag{Z-INSTRUCTION-LEVELS}
+\]
+以及
+\[
+\chi_P(\mathsf I_{t,p,j}^{\pm}(q))
+=\chi_P(q)\,p^{\pm G_j}.
+\tag{Z-INSTRUCTION-CHARACTER}
+\]
+特别地，\(j\) 不是独立的素数指数；它通过 \(G_j\) 产生指数增量 \(G_j\)，而寄存器标签 \(p\) 决定乘法字符 \(p^{G_j}\)。在 5040 的容量角分解中，五个局部槽指令的字符为
+\[
+\bigl(2^{G_2},\,2^{G_0},\,3^{G_1},\,5^{G_0},\,7^{G_0}\bigr)
+=(8,2,9,5,7),
+\]
+其乘积为 \(5040\)。
+

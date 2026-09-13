@@ -1,0 +1,29 @@
+**定理 310。** 对 $H\le\mathsf V_{\rm reg}$、$x\in\mathsf X_{\rm reg}$，有
+$$
+x\in\mathcal K_{\rm reg}(H)
+\iff
+\operatorname{res}^{\mathbb T}_Ix\in C_I(H_I)
+\text{ 对每个有限 }I\subseteq\omega.
+$$
+上式及 $L_{\rm fin}(H)$ 的定义条件都等价于只检查 $I_m=\{0,\ldots,m\}$、$m\in\omega$。对状态 $u\in\mathsf V_{\rm reg}$，相应条件还等价于
+$$
+\forall I\subseteq\omega\text{ 有限}\quad
+\exists m_I\in\mathbb Z_o\ (m_I>0)\quad\exists h^{(I)}\in H:\quad
+\operatorname{res}^{\mathbb Z}_I(m_Iu)=\operatorname{res}^{\mathbb Z}_Ih^{(I)}.
+$$
+于是
+$$
+\mathcal K_{\rm reg}(H)\cap\Psi_{\rm reg}(\mathsf V_{\rm reg})
+=\Psi_{\rm reg}(L_{\rm fin}(H)),\qquad
+\overline H^{\tau_\Psi}=L_{\rm fin}(H).
+$$
+每个 $H_I$ 有限生成。若 $H=\langle\mathcal S\rangle_{\mathbb Z}$，则对每个固定有限 $I$，存在 $\mathcal S$ 的有限子集，其投影生成 $H_I$；这不提供对全部 $I$ 同时有效的一个有限子集、寻找它的程序或词长界。
+
+**证明。** 若 $x$ 属于环境闭包，取任一有限限制点的开邻域，其连续逆像为 $x$ 的开邻域，必与 $\Psi_{\rm reg}(H)$ 相交，故限制点属于 $C_I(H_I)$。反向，$x$ 的每个开邻域包含一个含 $x$ 的基本柱集 $(\operatorname{res}^{\mathbb T}_I)^{-1}(O)$，其中 $I$ 有限、$O\subseteq\mathbb T^I$ 开。有限闭包条件使 $O$ 与 $\Psi_I(H_I)$ 相交；其交点来自某个 $h\in H$ 的限制，第 307 条交换式使 $\Psi_{\rm reg}(h)$ 落入该柱集。因此每个邻域均与相位子群相交，得到反向。空 $I$ 的非空柱集为全积，由 $0\in H$ 命中。
+
+每个有限 $I$ 包含于某个 $I_m$。进一步限制是连续映射，故 $I_m$ 上的闭包条件推出 $I$ 上条件；有理线性组合进一步限制仍为相应投影元素的有理组合，故饱和条件也向下限制。反向因 $I_m$ 本身有限而成立。
+
+代入 $x=\Psi_{\rm reg}(u)$，第 307 条交换式和第 309 条精确相位交集使每个条件恰等价于 $u|_I\in\operatorname{Sat}(H_I)$。在有限有理表达中清去公共正分母，得到 $m_Iu|_I\in H_I$，再按投影像定义提升为某个 $h^{(I)}\in H$。反向将显示等式除以 $m_I$ 即为有理表达。见证均可依赖 $I$；不能交换成一个全局倍数和一个全局状态。这证明局部倍数条件和环境交集式的两个方向。子空间中闭包等于环境闭包与子空间的交，由第 307 条同胚拉回，就得状态闭包公式。
+
+第 309 条给 $H_I$ 的有限基。将这些基元分别提升到 $H$，每个提升是 $\mathcal S$ 中有限多个元素的整数线性组合；所用元素的有限并仍有限，其投影生成群既包含该基又包含于 $H_I$，故等于 $H_I$。这是对每个 $I$ 分别成立的存在证明。柱集基、邻域及诱导拓扑属于经典乘积拓扑；基本术语可参见 [Stacks Project，拓扑基本概念，004E](https://stacks.math.columbia.edu/tag/004E)，这里所需的柱集闭包判据已在两方向直接证明。证毕。
+

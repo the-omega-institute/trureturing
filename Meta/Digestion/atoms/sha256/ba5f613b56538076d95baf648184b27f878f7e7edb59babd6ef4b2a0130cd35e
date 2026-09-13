@@ -1,0 +1,16 @@
+**定理 173（数位索引、寄存器指数与素数指数的三层分离）。** 对固定 \(P\) 及局部行族 \((u_p)_{p\in P}\)，全局标量码可写为
+\[
+\widehat\Pi_Z(\operatorname{Reg}_Z(P),(u_p)_{p\in P})
+ =\operatorname{NatZ}\left(
+   \prod_{p\in P}p^{\operatorname{ev}_G(F_{u_p})}
+  \right).
+\tag{Z-THREE-LAYERS}
+\]
+其中：\(j\) 只决定一个 Fibonacci 基位置 \(G_j\)；\(\operatorname{ev}_G(F_{u_p})\) 是寄存器 \(p\) 的整数指数；外层幂 \(p^{\operatorname{ev}_G(F_{u_p})}\) 才是素数的通常指数运算。若对两个局部行逐行相加并规范化，则
+\[
+p^{\operatorname{ev}_G(F_{u_p}+F_{v_p})}
+ =p^{\operatorname{ev}_G(F_{u_p})}
+  p^{\operatorname{ev}_G(F_{v_p})}.
+\]
+因此“指数由 Zeckendorf 组成”表示指数的表示方式改变；它不把 Fibonacci 位置指标本身变成素数幂指数，也不把位置相加替代数值评价。
+

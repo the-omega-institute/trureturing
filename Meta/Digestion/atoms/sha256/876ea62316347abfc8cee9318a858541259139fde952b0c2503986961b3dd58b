@@ -1,0 +1,33 @@
+**定理 296。** 对第 295 条的数据及任意起点 $x\in\mathbb Z^P$，词 $w$ 的终点为 $x+B\eta(w)$。有符号词的全部端点恰为 $x+H$，正词的全部端点恰为 $x+B[\mathbb N^r]$；同一起点的两个有符号词终点相等，当且仅当其计数差属于 $K_B^{\mathbb Z}$。
+
+存在整系数可逆矩阵 $U\in\operatorname{GL}_d(\mathbb Z)$、$V\in\operatorname{GL}_r(\mathbb Z)$，满足
+$$
+UBV=D,
+$$
+其中矩形矩阵 $D$ 仅在 $1\le i\le k$ 有非零对角项 $D_{ii}=d_i>0$，且 $d_i\mid d_{i+1}$。在此同一约定下，
+$$
+\begin{aligned}
+H&=U^{-1}(d_1\mathbb Z\times\cdots\times d_k\mathbb Z\times0^{d-k}),\\
+L_{\rm sat}&=U^{-1}(\mathbb Z^k\times0^{d-k}),\\
+K_B^{\mathbb Z}&=V(0^k\times\mathbb Z^{r-k}),\\
+R_B&=U^{\mathsf T}(0^k\times\mathbb Z^{d-k}),\\
+L_{\rm sat}&=\{z\in\mathbb Z^P:m\cdot z=0\text{ 对全部 }m\in R_B\}.
+\end{aligned}
+$$
+因而 $h\in\mathbb Z^P$ 属于 $H$ 当且仅当
+$$
+d_i\mid(Uh)_i\ (i\le k),\qquad (Uh)_j=0\ (j>k),
+$$
+并且
+$$
+L_{\rm sat}/H\cong\bigoplus_{i=1}^k\mathbb Z/d_i\mathbb Z,\qquad
+\mathbb Z^P/H\cong\mathbb Z^{d-k}\oplus\bigoplus_{i=1}^k\mathbb Z/d_i\mathbb Z.
+$$
+故 $[L_{\rm sat}:H]=\prod_{i=1}^k d_i$；$[\mathbb Z^P:H]$ 有限当且仅当 $k=d$，此时等于同一乘积。满秩时 $H=\mathbb Z^P$ 当且仅当全部 $d_i=1$。
+
+令 $\Delta_0=1$，对 $1\le j\le k$ 令 $\Delta_j$ 为 $B$ 的全部 $j$ 阶子式的正最大公因数。则
+$$
+\Delta_j=d_1\cdots d_j,\qquad d_j=\Delta_j/\Delta_{j-1}.
+$$
+$H$ 的一组基为 $U^{-1}d_i e_i$（$1\le i\le k$），其最少抽象生成元数为 $k$。这不保证给定列中有 $k$ 列生成 $H$：矩阵 $[2\ 3]$ 的整数像为 $\mathbb Z$，任一单列都不生成它，而正半群为 $\{0,2,3,4,\ldots\}$。当 $k=0$ 时，$H=L_{\rm sat}=0$、$K_B^{\mathbb Z}=\mathbb Z^r$、$R_B=\mathbb Z^P$，亦包括任一维数为空的情形。这里 $e_i$ 是相应有限坐标中的单位向量；$D,d_i$ 是本条的矩阵记号。
+

@@ -1,0 +1,21 @@
+**定理 310。** 对 $H\le\mathsf V_{\rm reg}$、$x\in\mathsf X_{\rm reg}$，有
+$$
+x\in\mathcal K_{\rm reg}(H)
+\iff
+\operatorname{res}^{\mathbb T}_Ix\in C_I(H_I)
+\text{ 对每个有限 }I\subseteq\omega.
+$$
+上式及 $L_{\rm fin}(H)$ 的定义条件都等价于只检查 $I_m=\{0,\ldots,m\}$、$m\in\omega$。对状态 $u\in\mathsf V_{\rm reg}$，相应条件还等价于
+$$
+\forall I\subseteq\omega\text{ 有限}\quad
+\exists m_I\in\mathbb Z_o\ (m_I>0)\quad\exists h^{(I)}\in H:\quad
+\operatorname{res}^{\mathbb Z}_I(m_Iu)=\operatorname{res}^{\mathbb Z}_Ih^{(I)}.
+$$
+于是
+$$
+\mathcal K_{\rm reg}(H)\cap\Psi_{\rm reg}(\mathsf V_{\rm reg})
+=\Psi_{\rm reg}(L_{\rm fin}(H)),\qquad
+\overline H^{\tau_\Psi}=L_{\rm fin}(H).
+$$
+每个 $H_I$ 有限生成。若 $H=\langle\mathcal S\rangle_{\mathbb Z}$，则对每个固定有限 $I$，存在 $\mathcal S$ 的有限子集，其投影生成 $H_I$；这不提供对全部 $I$ 同时有效的一个有限子集、寻找它的程序或词长界。
+

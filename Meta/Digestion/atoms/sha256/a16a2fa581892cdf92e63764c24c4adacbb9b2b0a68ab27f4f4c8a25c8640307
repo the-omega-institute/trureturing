@@ -1,0 +1,26 @@
+**定义 341.1。** 对有限 $I\subseteq\omega$，置
+$$
+P_I=\{p_i:i\in I\},\qquad A_I(p_i)=A_i,\qquad
+B_{A,I}^{\rm cap}=\{u\in B_A^{\rm cap}:\operatorname{supp}(u)\subseteq I\}.
+$$
+定义 $R_{A,I}:B_{A,I}^{\rm cap}\to S(P_I,A_I)$ 为 $R_{A,I}(u)(p_i)=u_i$；其反向映射 $Z_{A,I}$ 在指标 $i\in I$ 处取所给素数值，在 $I$ 外补零。自然数值与非负整数值仍按定义 337.1 识别。
+
+只在 $B_A^{\rm cap}\subseteq\mathsf V_{\rm reg}$ 上使用第 316–317 条的两个映射，记精确像为
+$$
+\mathsf{Rec}_A^{\rm cap}=\operatorname{rec}_{\rm reg}[B_A^{\rm cap}],\qquad
+\mathsf{Dig}_A^{\rm cap}=\operatorname{dig}_{\rm reg}[B_A^{\rm cap}].
+$$
+两像的逆分别取 $\operatorname{unrec}_{\rm reg}|_{\mathsf{Rec}_A^{\rm cap}}$ 与 $\operatorname{undig}_{\rm reg}|_{\mathsf{Dig}_A^{\rm cap}}$。
+
+对以下任一指定集合载体 $Y$ 及其指定拓扑 $\tau$，仅复用第 318–320、336 条的完整集合解释：
+$$
+Y^*=\operatorname{Enc}[Y]=\operatorname{El}(\operatorname{Enc}(Y)),\qquad
+\operatorname{enc}_Y=\operatorname{Enc}|_Y:Y\to Y^*,\qquad
+\tau^*=\{\operatorname{Enc}[U]:U\in\tau\}.
+$$
+这里的载体包括容量层的 $X_A^{\rm cap},B_A^{\rm cap}$、它们的有限配置与记录像、通常实直线、圆周及所列完整观察乘积；对 $B_A^{\rm cap}$ 分别使用已相等的坐标与黄金拓扑，或明确另取 $\tau_{+,A}$。有理序列、容量函数及扩展总和的图也作为完整集合取 $\operatorname{Enc}$，不要求存在有限记录。对已给函数 $f:Y\to Z$ 记
+$$
+f^*=\operatorname{enc}_Z\circ f\circ\operatorname{enc}_Y^{-1}:Y^*\to Z^*.
+$$
+部分域 $D\subseteq Y$ 时，精确共轭域相应为 $\operatorname{Enc}[D]$。
+

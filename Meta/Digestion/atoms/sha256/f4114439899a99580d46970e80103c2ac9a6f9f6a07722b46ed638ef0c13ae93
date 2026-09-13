@@ -1,0 +1,54 @@
+**定理 267（筛选、配对及参数域的交换）。** 对每种 $R$、全部合法输入及第 266 条各自类型的全部参数，以下操作与字段运输交换，并且联合合法域保持且反映。为消除相同记号的参数歧义，各选择条件分别为：空间 $F_{S_0}$ 取 $e\in A$ 且 $x(e)\in S_0$；时间 $F_I$ 取 $t(e)\in I$；来源 $F_L$ 取 $\rho(e)\in L$；联合 $F_{B_0}$ 取 $(t(e),x(e))\in B_0$；身份过去 $F_{\downarrow D_0}$ 取 $\exists d\in D_0\ (e=d\lor e\prec d)$。时间筛选是联合柱集 $F_{I\times J^3}$ 的特化。它们均只改选择，故
+$$
+\begin{gathered}
+R(F_{S_0}X)=F_{S_0^R}^R(RX),\quad
+R(F_IX)=F_{I^R}^R(RX),\quad
+R(F_LX)=F_{L^R}^R(RX),\\
+R(F_{B_0}X)=F_{B_0^R}^R(RX),\qquad
+R(F_{\downarrow D_0}X)=F_{\downarrow D_0}^R(RX).
+\end{gathered}
+$$
+前四式的联合域分别是历史载体与对应全幂集的积；第五式还要求 $D_0\subseteq E_X$。直接出现查询 $H_{e_0}(C,A)=(C,A\cap\{e_0\})$ 对每个 $e_0\in HF$ 总定义，亦满足 $R(H_{e_0}X)=H_{e_0}^R(RX)$。
+
+对 $e\in\Omega_X$ 记 $\alpha_X(e)=(x(e),\sigma(e),\rho(e))$、$\alpha_t^X(e)=(x(e),\sigma(e),\rho(e),t(e))$，并采用 CSA 定义 25–26 的当前后继属性集。则
+$$
+U_{RX}(e)=a[U_X(e)],\qquad U_t^{RX}(e)=a_t[U_t^X(e)].
+$$
+因此对任意 $Q\subseteq\mathrm{Attr}$、$Q_t\subseteq\mathrm{Attr}_t$，
+$$
+R(F_{\downarrow Q}X)=F_{\downarrow Q^R}^R(RX),\qquad
+R(F_{\downarrow Q_t}X)=F_{\downarrow Q_t^R}^R(RX).
+$$
+这些因果筛选中见证始终为 $d\in\Omega_X$，条件分别为 $\alpha_X(d)\in Q$、$\alpha_t^X(d)\in Q_t$，均附 $e\preceq d$；既不把见证域换成 $A_X$，也不换成 $E_X$。若只取事件自身属性的成员谓词，其集合像同样由 $a,a_t$ 运输，但不据此扩大任何既有签名。
+
+关系限制、空间父对、联合父对与含时属性父对分别只在完整乘积中把选择改成
+$$
+\begin{aligned}
+&\{p_{ef}:e\in A_X,f\in A_Y,(e,f)\in R_0\},\\
+&\{p_{ef}:e\in A_X,f\in A_Y,(x_X(e),x_Y(f))\in P_{\rm sp}\},\\
+&\{p_{ef}:e\in A_X,f\in A_Y,((t_X(e),x_X(e)),(t_Y(f),x_Y(f)))\in P_0\},\\
+&\{p_{ef}:e\in A_X,f\in A_Y,(\alpha_t^X(e),\alpha_t^Y(f))\in P_t\}.
+\end{aligned}
+$$
+其符号分别为 $\boxtimes_{R_0},M_{P_{\rm sp}},M_{P_0},\widehat M_{P_t}$，参数类型区分同名符号。除第一种的 $R_0\subseteq\Omega_X\times\Omega_Y$ 依赖域外，其余对全部历史输入和全部所列固定参数总定义。每种操作都满足 $R(O(X,Y))=O^R(RX,RY)$，目标参数分别为 $R_0,P_{\rm sp}^R,P_0^R,P_t^R$；完整背景不带选择掩码。同档案因果配对也满足
+$$
+R(D_\prec X)=D_\prec^R(RX),\qquad
+D_\prec X=X\boxtimes_{R_X}X,\quad
+R_X=\{(e,f)\in\Omega_X^2:e\prec_Xf\}.
+$$
+这是一元原语自身的交换，不把其两个相同输入解释成单孔上下文。
+
+参考点及仿射参数满足
+$$
+\begin{gathered}
+b_3(x+_Jy-_Jo)=b_3(x)\oplus_Z^{(3)}b_3(y)\ominus_Z^{(3)}b_3(o),\\
+F^R\circ b_3=b_3\circ F,\qquad
+R(X\boxtimes_oY)=RX\boxtimes_{b_3(o)}^RRY.
+\end{gathered}
+$$
+最后一式在带参考点记录的共同纤维内解释，参考点不相同则两侧均无定义。整数仿射变换 $F$ 对所有整数矩阵均有正向字段运输，并满足
+$$
+F(x+y-o)=F(x)+F(y)-F(o).
+$$
+整数格点上的全域双向运输恰在 $v[L]\in GL_3(\mathbb Z_o)$ 时成立；非单射情形只保留正向及逆像筛选公式，不合并事件。
+

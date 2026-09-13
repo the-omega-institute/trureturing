@@ -1,0 +1,22 @@
+**定理 187（补集的逐槽负号定理）。** 令 \(X=(C,A)\) 为定义 185 的情境，记补集为 \(\mathsf cX=(C,\Omega\setminus A)\)。则对任意 \(T\)
+\[
+r_{\mathsf cX}^T(p,j)=B_X^T(p,j)-r_X^T(p,j),
+\tag{Z-COMP-PREFIX}
+\]
+并且在终端处
+\[
+r_{\mathsf cX}(p,j)=B_X(p,j)-r_X(p,j).
+\tag{Z-COMP-TERM}
+\]
+若 \(X\) 前缀逐槽平衡，则
+\[
+r_{\mathsf cX}^T=-r_X^T,\qquad
+\operatorname{sdig}_P(r_{\mathsf cX}^T)
+ =\ominus_Z^{P}\operatorname{sdig}_P(r_X^T),
+\qquad
+\operatorname{Rat}_P(r_{\mathsf cX}^T)
+ =\operatorname{Rat}_P(r_X^T)^{-1}.
+\tag{Z-COMP-SIGNED}
+\]
+若仅有终端逐槽平衡，则上述三式只在终端总表成立。只有全局平衡而没有逐槽平衡时，补集一般不等于各寄存器指数的逐坐标负号。
+

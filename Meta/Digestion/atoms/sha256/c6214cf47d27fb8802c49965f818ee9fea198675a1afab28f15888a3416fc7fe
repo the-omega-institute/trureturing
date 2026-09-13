@@ -1,0 +1,19 @@
+**定理 190（正指数系统的 Grothendieck 群与有理素数幂）。** \(\mathsf{Gr}(P)\) 在定义 189 的运算下是交换群，且
+\[
+\Gamma_P:\mathsf{Gr}(P)\xrightarrow{\ \cong\ }\mathbb Z^P
+\]
+是群同构。映射
+\[
+\operatorname{Rat}^{\rm gp}_P:\mathsf{Gr}(P)
+\xrightarrow{\ \cong\ }
+\left\{\prod_{p\in P}p^{z(p)}:z\in\mathbb Z^P\right\}
+\subseteq\mathbb Q_{>0}
+\]
+也是群同构；并且 \(\operatorname{sdig}^{\rm gp}_P\) 将其运输为 \((\mathsf Z_{\mathbb Z})^P\) 上的逐坐标带符号 Zeckendorf 加法。每个带符号指数向量 \(z\in\mathbb Z^P\) 都有正指数表示
+\[
+z=\Gamma_P([z^+,z^-]),
+\qquad
+z^+(p)=\max(z(p),0),\quad
+z^-(p)=\max(-z(p),0).
+\]
+

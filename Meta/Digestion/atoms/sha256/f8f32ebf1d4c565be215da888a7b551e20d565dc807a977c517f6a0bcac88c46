@@ -1,0 +1,20 @@
+**证明。** 第 333 条使
+$$
+\operatorname{dom}(s)=\lambda_{\rm reg}[\operatorname{supp}(u)],\qquad
+\operatorname{dom}(c)=\lambda_{\rm reg}[\operatorname{dom}(a)].
+$$
+标签单射保持并反映包含，故两个联合域条件等价；状态与有限系数的双逆同时给出联合域上的两个复合恒等式。特别地，这个守卫依赖两个输入，不能只以“$c$ 是有限合法记录”替代。
+
+每个 $b_k>0$，因此 $B_{s,c}>0$，且 $B_{s,c}/b_k$ 是整数。$z_k$ 可为负，仍有 $A_{s,c}\in\mathbb Z_o$。由取整定义，$0\le r_{s,c}<B_{s,c}$；$d_{s,c}\ge1$ 同时整除余数及分母。约分后最大公因数为一，因为其任一公因数乘 $d_{s,c}$ 都整除原两数，而原最大公因数为 $d_{s,c}$。因此 $r_{s,c}/d_{s,c}$ 为非负整数，严格小于正整数 $B_{s,c}/d_{s,c}$，输出确为独立合法相位字段。当 $r_{s,c}=0$ 时 $d_{s,c}=B_{s,c}$，输出精确为 $0/1$；当 $s$ 为空时 $B_{s,c}=1,A_{s,c}=r_{s,c}=0,d_{s,c}=1$，也得同一成功零值。
+
+在 $\mathsf D_{\rm rat}$ 中，标签重索引与通分给
+$$
+E_{\rm fin}(u,a)
+=\left[\sum_{k\in\operatorname{dom}(s)}\frac{z_ka_k}{b_k}\right]_{\rm rat}
+=[A_{s,c}/B_{s,c}]_{\rm rat}
+=[r_{s,c}/B_{s,c}]_{\rm rat}.
+$$
+第 332 条的代表及既约式唯一性证明输出等于该类的 $\operatorname{penc}$。$c$ 中多于 $\operatorname{dom}(s)$ 的边不参与此和，但仍属于它的原有限域；其中的零边同样保留。对总 $t$，限制到 $\operatorname{dom}(s)$ 总有定义，且是合法有限记录。其逆系数域恰为 $\operatorname{supp}(\operatorname{unrec}_{\rm reg}(s))$，各值与总探针相同，所以同一有限和证明总求值公式。
+
+按第 259–260 条，$E_{\rm fin}$ 在 $D_{\rm fin}$ 之外没有值，$E_{\rm fin}^{d}$ 在 $D_{\rm fin}^{d}$ 之外没有值。若分别严格总化，原侧的成功零为 $\operatorname{ok}(0_{\mathsf D_{\rm rat}})$，数字侧的成功零为 $\operatorname{ok}(T_2(0_Z,\zeta(1)))$；各自域外取相应不交和中的 $\bot$，均与成功零不同。值式只需有限采样，不能据它构造任意子群分离所需的总探针，也不给任意子群的成员算法。证毕。
+

@@ -1,0 +1,7 @@
+**定理 340.2。** $\rho$ 为满射，且 $E_A^{\rm cap}$ 的初始拓扑恰为 $\tau_{+,A}$。有
+$$
+\tau_{\rm coord,A}^{B}\subseteq\tau_{+,A},\qquad
+\tau_{\rm coord,A}^{B}=\tau_{+,A}\iff J_A\text{ 有限}.
+$$
+若只保留 $r\in\mathbb Q^\omega$ 中有限支撑的系数序列，连同相同黄金首分量所诱导的初始拓扑对每个 $A$ 都等于 $\tau_{\rm coord,A}^{B}$。
+

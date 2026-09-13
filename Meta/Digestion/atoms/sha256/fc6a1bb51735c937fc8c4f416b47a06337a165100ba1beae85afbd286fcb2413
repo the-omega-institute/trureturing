@@ -1,0 +1,49 @@
+**定理 279（自然叶的环境秩及语义秩保持）。** 令 $\ell_Z(n)$ 如第 98 条。自然叶的环境秩准确为
+$$
+\operatorname{rk}(\operatorname{NatZ}(n))
+ =\begin{cases}
+ 2,&n=0,\\
+ 6,&n=1,\\
+ \ell_Z(n)+4,&n\ge2.
+ \end{cases}
+$$
+对任意 $x\notin\omega$，有序数等式
+$$
+\operatorname{rk}(\operatorname{Enc}(x))
+ =\left(\sup_{y\in x}\bigl(\operatorname{rk}(\operatorname{Enc}(y))+1\bigr)\right)+2.
+$$
+特别地，
+$$
+\operatorname{rk}(\operatorname{Enc}(\omega))=\omega+2,\qquad
+\operatorname{Rank}_Z(\operatorname{Enc}(\omega))=\operatorname{Enc}(\omega).
+$$
+环境成员与语义成员已有有限反例：
+$$
+\operatorname{Enc}(1)\notin\operatorname{Enc}(2),\qquad
+\operatorname{Enc}(1)\in_Z\operatorname{Enc}(2).
+$$
+
+**证明。** 先把第 98 条的窗口宽度与第 69 条的定义域对接。令 $d=\operatorname{dom}(\zeta(n))\in\omega$。补零把 $\zeta(n)$ 放进第 10 条的 $d$ 位窗口，故 $n<G_d$，从而 $\ell_Z(n)\le d$。反向，$n<G_{\ell_Z(n)}$ 给出该窗口中的唯一表示；补零后由全局唯一性等于 $s(n)$，截尾长度遂不超过 $\ell_Z(n)$。因此 $d=\ell_Z(n)$。特别地 $n=0$ 时长度为零，$n=1$ 时为一；因 $G_1=2$，$n\ge2$ 时长度至少为二。
+
+由秩的递归定义，单点集和无序对的秩分别为
+$$
+\operatorname{rk}(\{a\})=\operatorname{rk}(a)+1,\qquad
+\operatorname{rk}(\{a,b\})=\max(\operatorname{rk}(a),\operatorname{rk}(b))+1.
+$$
+将 $\langle a,b\rangle=\{\{a\},\{a,b\}\}$ 展开，两个成员的秩取最大后再加一，得到
+$$
+\operatorname{rk}(\langle a,b\rangle)
+ =\max(\operatorname{rk}(a),\operatorname{rk}(b))+2.
+$$
+零数字为空函数，故 $\operatorname{NatZ}(0)=\langle0,\varnothing\rangle$ 的秩为二。$n=1$ 时，$\zeta(1)=\{\langle0,1\rangle\}$ 的秩为四，再加外层配对得到六。
+
+若 $n\ge2$，置 $\ell=\ell_Z(n)\ge2$。有限数字 $\zeta(n)$ 的定义域为 $\ell$，末位为一。图中最高索引的边 $\langle\ell-1,1\rangle$ 的秩为 $\ell+1$，其余边的秩不超过此值，所以图的秩为 $\ell+2$，自然叶再增加二，得到 $\ell+4$。
+
+若 $x\notin\omega$，则 $x\ne\varnothing$。置 $B=\operatorname{Enc}[x]$，有
+$$
+\operatorname{rk}(B)=\sup_{y\in x}\bigl(\operatorname{rk}(\operatorname{Enc}(y))+1\bigr).
+$$
+$B$ 非空且成员是有效有序对，故其秩大于一；将 $\operatorname{Enc}(x)=\langle1,B\rangle$ 代入配对秩式，得到显示的序数公式。这里先取上确界再加二，不将它改为各项先加二后取上确界。
+
+对每个有限 $m$，取 $n=G_m$ 就有 $\ell_Z(n)>m$，所以这些字长是无界的有限自然数。自然叶的秩由刚证公式也有限而无界，因此在 $x=\omega$ 时上述上确界为 $\omega$，得到环境秩 $\omega+2$。通常 $\operatorname{rk}(\omega)=\omega$，第 278 条给出语义秩式。最后，两个自然叶 $\operatorname{Enc}(1),\operatorname{Enc}(2)$ 的环境秩均为六；环境成员严格降低秩，所以前者不属于后者。原成员式 $1\in2$ 经第 72 条则给出语义成员式。证毕。
+

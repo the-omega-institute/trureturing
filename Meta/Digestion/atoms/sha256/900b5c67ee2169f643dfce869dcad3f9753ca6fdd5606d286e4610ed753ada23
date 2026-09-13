@@ -1,0 +1,15 @@
+**定义 115（素数寄存器的全 Zeckendorf 码）。** 令 \(P\subseteq\operatorname{Pr}\) 为有限集，令 \(A:P\to\omega\) 为容量函数，并令
+\[
+S(P,A)=\prod_{p\in P}\{0,\ldots,A(p)\},\qquad a\in S(P,A).
+\]
+记 \(a_A^{\max}:P\to\omega\) 为 \(a_A^{\max}(p)=A(p)\) 的容量角。
+对任意 \(f:P\to\omega\) 定义
+\[
+\begin{aligned}
+\operatorname{Reg}_Z(P)&=\operatorname{Pack}\{\operatorname{NatZ}(p):p\in P\},\\
+\operatorname{Tab}_Z(P,f)&=\operatorname{Pack}\{\langle\operatorname{NatZ}(p),\operatorname{NatZ}(f(p))\rangle_Z:p\in P\},\\
+\operatorname{Cfg}_Z(P,A,a)&=\langle\operatorname{Reg}_Z(P),\operatorname{Tab}_Z(P,A),\operatorname{Tab}_Z(P,a)\rangle_Z.
+\end{aligned}
+\]
+其中 \(\operatorname{NatZ}(p)\) 是素数标签的自然数字码，\(\operatorname{NatZ}(f(p))\) 是该寄存器内容或容量的自然数字码；二者处于有序对的不同坐标。\(P,A,a\) 满足定义 91 的有限性和容量条件时，称 \(\operatorname{Cfg}_Z(P,A,a)\) 为有效配置码。
+

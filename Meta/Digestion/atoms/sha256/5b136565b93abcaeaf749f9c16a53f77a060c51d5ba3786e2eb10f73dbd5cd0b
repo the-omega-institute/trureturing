@@ -1,0 +1,19 @@
+**定理 339.1。** 设 $M_A=+\infty$。对每个 $c\in\mathbb D_+$，有
+$$
+\overline{L_{A,c}}^{X_A^{\rm cap}}
+=\{x\in X_A^{\rm cap}:S_A(x)\le c\},\qquad
+\overline{L_{A,c}}^{B_A^{\rm cap}}
+=\{u\in B_A^{\rm cap}:\ell_A(u)\le c\}.
+$$
+若 $c\in\mathbb R\setminus\mathbb D_+$，则 $L_{A,c}$ 及其两个闭包均为空。对任意 $A$，
+$$
+L_{A,0}=F_{A,0}=\{0\},\qquad
+\{x\in X_A^{\rm cap}:S_A(x)\le0\}=\{0\}.
+$$
+在发散情形，每个正二进有理水平 $L_{A,c}$ 非空，并在两个载体中都不闭。因此对所有 $A$ 和实数 $c$，
+$$
+L_{A,c}\text{ 在 }B_A^{\rm cap}\text{ 中闭}
+\iff M_A<+\infty\ \text{ 或 }\ c\notin\mathbb D_+\setminus\{0\}.
+$$
+这些公式允许任意长的零容量间隔，不要求 $J_A$ 最终包含全部指标，也不要求容量有共同上界。
+

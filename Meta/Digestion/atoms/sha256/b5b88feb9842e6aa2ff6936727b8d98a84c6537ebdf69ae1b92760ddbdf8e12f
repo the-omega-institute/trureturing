@@ -1,0 +1,37 @@
+**定理 320。** 上述状态载体、函数图、子群、有限支撑整数零化子集合、有理张成、群商及拓扑均为 ZFC 中的集合。对其中任意集合 $A$、已指定拓扑 $\tau$ 和 $B\subseteq A$，第 318 条的 $\tau^*$ 是 $A^*$ 上的拓扑，$\operatorname{enc}_A$ 为同胚，其逆为 $\operatorname{Dec}|_{A^*}$，且
+$$
+\operatorname{El}(\operatorname{Enc}(\tau))=\operatorname{Enc}[\tau],\qquad
+\tau^*=\{\operatorname{El}(c):c\in\operatorname{El}(\operatorname{Enc}(\tau))\},
+$$
+$$
+\overline{B^*}^{\tau^*}=\operatorname{Enc}[\overline B^{\tau}].
+$$
+在所列载体上，收敛、连续及不连续均经相应同胚保持并反映。第 317 条的记录、总数字双射分别是从 $\tau_\Psi$ 到 $\tau_{\rm rec},\tau_{\rm dig}$ 的同胚，补零为这两个目标空间之间的同胚。将三种状态拓扑分别沿同一双射运输时，第 315 条的两个严格包含也仍严格。
+
+令 $\tau_{\mathsf X}$ 为 $\mathsf X_{\rm reg}$ 的乘积拓扑，$\mathsf X_{\rm reg}^*$ 取 $(\tau_{\mathsf X})^*$，$\mathsf V_{\rm reg}^*$ 取 $\tau_\Psi^*$，并置
+$$
+\Psi_{\rm reg}^*
+=\operatorname{enc}_{\mathsf X_{\rm reg}}\circ\Psi_{\rm reg}\circ
+\operatorname{enc}_{\mathsf V_{\rm reg}}^{-1}.
+$$
+对每个 $H\le\mathsf V_{\rm reg}$，修正闭包迹准确运输为
+$$
+\overline{\Psi_{\rm reg}^*(H^*)}^{(\tau_{\mathsf X})^*}
+\cap\Psi_{\rm reg}^*(\mathsf V_{\rm reg}^*)
+=\Psi_{\rm reg}^*(L_{\rm fin}(H)^*),
+\qquad L_{\rm fin}(H)^*=\operatorname{Enc}[L_{\rm fin}(H)].
+$$
+在原始记录上，记 $\Psi_{\rm rec}=\Psi_{\rm reg}\circ\operatorname{unrec}_{\rm reg}$，则
+$$
+\overline{\Psi_{\rm rec}(\operatorname{rec}_{\rm reg}[H])}^{\mathsf X_{\rm reg}}
+\cap\Psi_{\rm rec}(\mathsf{Rec}_{\rm reg})
+=\Psi_{\rm rec}(\operatorname{rec}_{\rm reg}[L_{\rm fin}(H)]),
+$$
+$$
+\overline{\operatorname{rec}_{\rm reg}[H]}^{\tau_{\rm rec}}
+=\operatorname{rec}_{\rm reg}[L_{\rm fin}(H)].
+$$
+将记录及其双逆换成总数字及其双逆，得到相同的两式。第 319 条输出有效码的记录相位，正是这些环境相位式再经 $\operatorname{enc}_{\mathsf X_{\rm reg}}$ 的运输。
+
+对每个固定有限的一阶集合论公式，先展开本附录的定义，再按第 75 条翻译，等号、成员及全部量词仍双向保持，包括对任意子群及全部有限坐标集的量化。该结论使用第 78 条的定义性保守解释；给定模型的比较始终以该模型满足 ZFC 为条件。不把任意集合或实数表示为有限字，不给无条件 $\operatorname{Con}(\mathrm{ZFC})$、模型存在、有效成员算法或无限指令族成本最优的结论。
+

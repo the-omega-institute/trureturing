@@ -1,0 +1,29 @@
+**定义 270（完整配置码到历史的确定实现）。** 令 $\mathcal C$ 为第 115 条全部有限有效三元配置 $(P,A,a)$ 的集合，$\mathcal C_Z$ 为其 $\operatorname{Cfg}_Z$ 像。用第 116 条唯一解码映射 $\operatorname{cfgdec}:\mathcal C_Z\to\mathcal C$。若配置三元组的原括号为 $T_3^{\rm cfg}$，则
+$$
+\operatorname{cfgdec}(c)=T_3^{\rm cfg}(P,A,a),\qquad
+\kappa_3(\operatorname{cfgdec}(c))=T_3(P,A,a).
+$$
+第一式中的 $P,A,a$ 由第 115 条三个语义字段恢复；不从任意历史猜出配置。
+
+两条配置实现路径均使用第 130、253 条的同一事件身份：第 253 条原括号下的 $(p,j,0)$、$(p,j,1)$ 分别记为 $e_{p,j}^{+},e_{p,j}^{-}$。在全部配置中该括号与标签规则固定。置 $\ell_p=\ell_Z(A(p))$，$d_a(p,j)=\operatorname{pad}(\zeta(a(p)))(j)$，对 $p\in P,j<\ell_p$ 取这两个事件。原表示 $j_{P,A}(a)=X_{P,A}(a)$ 严格沿用第 130 条；时间零与位置 $\lambda(p,j)$ 在其 CSA 整数实现 $J,J^3$ 中解释。定义
+$$
+H_Z(c)=R_{\rm all}(j_{P,A}(a))\quad
+\text{其中 }(P,A,a)=\operatorname{cfgdec}(c),\qquad
+H_{Z,\rm num}(c)=R_{\rm num}(j_{P,A}(a)).
+$$
+显式地，$H_Z(c)$ 的 $E=\Omega$ 为上述事件集，偏序为空，选择为 $\{e_{p,j}^{+}:d_a(p,j)=1\}$，且
+$$
+\begin{aligned}
+t'(e_{p,j}^{\pm})&=0_S,&x'(e_{p,j}^{\pm})&=b_3(\lambda(p,j)),\\
+\sigma(e_{p,j}^{\pm})&=\pm,&
+\rho'(e_{p,j}^{\pm})&=\operatorname{leaf}_Z(\operatorname{NatZ}(\pi(p,j))).
+\end{aligned}
+$$
+这里 $\pi(p,j)$ 是第 130 条的自然数配对函数；数值版来源为原 $\operatorname{leaf}(\pi(p,j))$。有限的素数标签、索引、容量、状态及配对数值以第 69–70、115 条的 $\zeta$ 或 $\operatorname{NatZ}$ 表示；事件身份本身仍为原有有限集合，需要其集合呈现时取整体 $\operatorname{Enc}$。
+
+跨配置保留外部记录 $K(c)=\langle c,H_Z(c)\rangle$ 及其整体码 $\operatorname{Enc}(K(c))$。另可保留语义记录
+$$
+K_{\rm sem}(c)=\langle c,\operatorname{Enc}(H_Z(c))\rangle_Z.
+$$
+该式两个参数均有效。它所指的是 $\langle\operatorname{Dec}(c),H_Z(c)\rangle$，而 $\operatorname{Enc}(K(c))$ 所指的是 $\langle c,H_Z(c)\rangle$；不把原始历史直接塞进语义配对输入，也不合并这两个不同的记录层。
+

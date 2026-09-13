@@ -1,0 +1,30 @@
+**定理 219（终端规范截面的幂等性与完备性）。** 对任意 \(q,q'\in\mathsf Q_P\)，
+\[
+\mathsf C_P(\operatorname{Can}_P(q))=\mathsf C_P(q),
+\qquad
+\chi_P(\operatorname{Can}_P(q))=\chi_P(q),
+\tag{Z-CANONICAL-SECTION}
+\]
+\[
+\operatorname{Can}_P(\operatorname{Can}_P(q))=\operatorname{Can}_P(q),
+\]
+以及
+\[
+\operatorname{Can}_P(q)=\operatorname{Can}_P(q')
+\iff
+\mathsf C_P(q)=\mathsf C_P(q')
+\iff
+\chi_P(q)=\chi_P(q').
+\tag{Z-CANONICAL-COMPLETE}
+\]
+\(\operatorname{Can}_P\) 的像恰为 \(\mathsf Q_P^{0,0}\)，并且
+\[
+\mathsf Q_P/\ker\mathsf C_P
+\xrightarrow{\ \cong\ }\mathsf Q_P^{0,0}
+\]
+由 \([q]\mapsto\operatorname{Can}_P(q)\) 给出。
+
+**证明。** \(\operatorname{Can}_P(q)\) 在唯一的 \((t,j)=(0,0)\) 层放置 \(\mathsf C_P(q)(p)\)，所以再次应用 \(\mathsf C_P\) 只取 \(G_0=1\) 并恢复同一向量，得到第一式和幂等性；定义 210 随后给出 \(\chi_P\) 不变。
+
+若两个规范截面相等，则在 \((0,p,0)\) 处比较系数得到 \(\mathsf C_P(q)=\mathsf C_P(q')\)。反向由构造立即成立。由定理 211，终端指数向量相等当且仅当有理素数幂相等，故得到 (Z-CANONICAL-COMPLETE)。每个 \(\mathsf Q_P^{0,0}\) 元素显然是某个 \(\operatorname{Can}_P(q)\) 的像；商映射的核正是 \(\ker\mathsf C_P\)，故第一同构定理给出最后的同构。证毕。
+

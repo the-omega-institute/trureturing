@@ -1,0 +1,11 @@
+**定义 117（寄存器与 Zeckendorf 数位的直积）。** 对有限 \(P,A\) 定义数位状态集
+\[
+\mathsf D(P,A)=\{d:P\to\mathsf W_Z:\forall p\in P,\operatorname{val}(d(p))\le A(p)\}.
+\]
+定义
+\[
+\operatorname{dig}_{P,A}:S(P,A)\longrightarrow\mathsf D(P,A),\qquad
+\operatorname{dig}_{P,A}(a)(p)=\zeta(a(p)).
+\]
+若 \(u\in\mathsf W_Z\)，则 \(u(j)\) 表示同一寄存器内的第 \(j\) 个 Zeckendorf 数位；因此 \((p,j)\) 是二重索引，\(p\) 与 \(j\) 不在同一索引轴上。
+

@@ -1,0 +1,62 @@
+**定义 275（规范来源树、目标零表与参考点乘法）。** 为给第 261 条的固定来源树构造一个明确实例，取互异的有限标签 $\tau_0=\langle2,0\rangle$、$\tau_1=\langle2,1\rangle$，并定义
+$$
+\begin{aligned}
+\operatorname{leaf}^{*}(n)&=\langle\tau_0,n\rangle,&
+\operatorname{pair}^{*}(r,s)&=\langle\tau_1,\langle r,s\rangle\rangle,\\
+\operatorname{leaf}^{*}_Z(c)&=\langle\tau_0,c\rangle,&
+\operatorname{pair}^{*}_Z(r',s')&=\langle\tau_1,\langle r',s'\rangle\rangle.
+\end{aligned}
+$$
+叶参数分别为 $n\in\omega$、$c\in\mathsf N_Z$。用自然层递归定义
+$$
+\begin{aligned}
+\mathsf Q_0&=\{\operatorname{leaf}^{*}(n):n\in\omega\},&
+\mathsf Q'_0&=\{\operatorname{leaf}^{*}_Z(c):c\in\mathsf N_Z\},\\
+\mathsf Q_{m+1}&=\mathsf Q_m\cup\{\operatorname{pair}^{*}(r,s):r,s\in\mathsf Q_m\},&
+\mathsf Q'_{m+1}&=\mathsf Q'_m\cup\{\operatorname{pair}^{*}_Z(r',s'):r',s'\in\mathsf Q'_m\},\\
+\mathsf{Tree}^{*}&=\bigcup_{m\in\omega}\mathsf Q_m,&
+\mathsf{Tree}^{*}_Z&=\bigcup_{m\in\omega}\mathsf Q'_m.
+\end{aligned}
+$$
+配对构造器的参数分别取自 $(\mathsf{Tree}^{*})^2$、$(\mathsf{Tree}^{*}_Z)^2$，输出仍在相应树载体。此为第 261 条自由条件的一种固定实例；原来源树若使用另一种固定实现，仍使用该条在相应实现之间的递归双射，不将不同实现规定为同一个字面集合。
+
+固定第 261 条的一种 $R$。第 268 条的 $\mathcal R_R=S^{(S^3)}$ 是全部非零支撑有限的全函数 $S^3\to S$ 的集合。定义全域零函数 $\mathbf0_R:S^3\to S$、二元运算 $\oplus_R,\ominus_R:\mathcal R_R^2\to\mathcal R_R$ 及一元运算 $\ominus_R:\mathcal R_R\to\mathcal R_R$，其中一元与二元负号按元数区分：
+$$
+\begin{aligned}
+\mathbf0_R(p')&=0_S,\\
+(C'\oplus_R D')(p')&=C'(p')\oplus_ZD'(p'),\\
+(\ominus_R C')(p')&=\ominus_ZC'(p'),\\
+C'\ominus_R D'&=C'\oplus_R(\ominus_R D')
+\end{aligned}
+\qquad(p'\in S^3).
+$$
+这里 $C',D'\in\mathcal R_R$。有限支撑只限制非零位置，完整函数图保留全部零位置；特别地，$\mathbf0_R$ 是图 $\{\langle p',0_S\rangle:p'\in S^3\}$，不是空函数图。
+
+在 $S^2$ 上置 $u'\le_Sn'$ 当且仅当 $u'<_Sn'$ 或 $u'=n'$，并定义前驱函数 $S\to S$ 为 $n'\mapsto n'\ominus_S1_S=n'\oplus_Z(\ominus_Z1_S)$。第 268 条 $\mathcal A_R$ 的尾部零值严格指 $\mathbf0_R$。对 $C'\in\mathcal A_R$，差分是联合域 $K_R=S\times S^3$ 上的函数，定义为
+$$
+(\Delta^RC')(n',p')
+ =C'(n')(p')\oplus_Z\ominus_Z\bigl(C'(n'\ominus_S1_S)(p')\bigr)
+ \qquad(n'\in S,\ p'\in S^3).
+$$
+它的目标类型为 $\Delta^R:\mathcal A_R\to\mathcal L_R=S^{(S\times S^3)}$。记 $(\Delta^RC')(n')$ 时只表示联合函数的时间切片 $p'\mapsto(\Delta^RC')(n',p')$，该切片等于 $C'(n')\ominus_R C'(n'\ominus_S1_S)$，不把切片族的图与联合图作字面认同。
+
+向量加减 $\oplus_Z^{(3)},\ominus_Z^{(3)}:S^3\times S^3\to S^3$ 按第 257 条的固定投影逐坐标定义为
+$$
+(u'\oplus_Z^{(3)}v')_j=u'_j\oplus_Zv'_j,\qquad
+(u'\ominus_Z^{(3)}v')_j=u'_j\oplus_Z(\ominus_Zv'_j).
+$$
+
+对每个目标参考点 $o'\in S^3$，令
+$$
+\mathcal B_{R,o'}=\{(o',Y):Y\in\mathcal B_R\}.
+$$
+在两个共同参考点记录上定义 $\boxtimes^R_{o'}$：底层记录的事件、时间、符号、来源、偏序、当前整体及选择沿第 264 条，唯一改动为
+$$
+x'(p_{ef})=x'_0(e)\oplus_Z^{(3)}x'_1(f)\ominus_Z^{(3)}o'.
+$$
+输出保留参考点 $o'$。固定参考点时，运算类型为 $\boxtimes^R_{o'}:\mathcal B_{R,o'}^2\to\mathcal B_{R,o'}$。在 $\mathcal B_{R,*}=\{(o',Y):o'\in S^3,\ Y\in\mathcal B_R\}$ 上，其联合域恰为
+$$
+\{((o'_0,Y_0),(o'_1,Y_1))\in\mathcal B_{R,*}^2:o'_0=o'_1\}.
+$$
+不同参考点的两个记录不在此域中。省略共同参考点标记时，$Y_0\boxtimes^R_{o'}Y_1$ 只表示输出的底层记录。
+

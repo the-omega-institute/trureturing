@@ -1,0 +1,29 @@
+**证明。** 先对 $d$ 归纳证明有限基存在。零维子群为零，基为空。整数群的非零子群有最小正元 $m$；将任一元素除以 $m$，余数仍在子群且位于 $[0,m)$，故为零，子群为 $m\mathbb Z_o$。对 $d$ 维子群投影到最后一坐标，其核是 $d-1$ 维整数群的子群，有归纳给出的基。若投影为零，该基已生成原子群；否则选最后坐标为投影正生成元 $m$ 的一个元素。任意元素减去其适当整数倍即落入核，故添加这一元素就生成全群。一个关系先读最后坐标，使新元素系数为零，再用核基独立性使其余系数为零。因而得到至多 $d$ 元的整数基；清分母也证明这些列有理独立。
+
+现在只使用第 296、298 条的有限矩阵结论。具体取第 295 条的有限素数集 $P=\{p_i:i\in I\}$，按 $i$ 递增排序；该条的列数取本条 $r$，矩阵取
+$$
+B_{p_i,j}=(\lambda_j)_i\qquad(i\in I,\ 1\le j\le r).
+$$
+重标 $i\leftrightarrow p_i$ 将本条 $\mathbb Z_o^I,\mathbb T^I,\Lambda,\operatorname{Sat}(\Lambda),\operatorname{Ann}_I(\Lambda)$ 分别对应到那两条的 $\mathbb Z^P,\mathbb T^P,H,L_{\rm sat},R_B$；有理秩 $k=r$。同一重标将 $\Psi_I$ 对应到 $\vartheta_P$，$\mathbf M_{\Lambda,I,\mathbb T}$ 对应到 $B_{\mathbb T}$。它们的整数、实数和圆周坐标运算及通常有限积拓扑都逐项对应。因此第 298 条给相位闭包、圆周共同零点集和精确相位交集，第 296 条给整数共同零点集。
+
+对 $z\in\mathbb Z_o^r$，两种列和逐坐标相同，故 $\mathbf M_{\Lambda,I,\mathbb R}(z)=\mathbf M_{\Lambda,I}(z)$，此等式中输入与输出的整数坐标均按通常嵌入解释为实数。对 $t\in\mathbb R^r$ 及 $i\in I$，有
+$$
+\bigl(\operatorname{quot}_I(\mathbf M_{\Lambda,I,\mathbb R}(t))\bigr)_i
+=\left[\sum_{j=1}^r t_j(\lambda_j)_i\right]
+=\sum_{j=1}^r(\lambda_j)_i[t_j]
+=\bigl(\mathbf M_{\Lambda,I,\mathbb T}(([t_j])_{j=1}^r)\bigr)_i.
+$$
+若把 $t$ 换成 $t+z$、$z\in\mathbb Z_o^r$，实像之差为 $\mathbf M_{\Lambda,I}(z)\in\mathbb Z_o^I$，所以所得圆周像与代表选择无关。每个环面参数都有逐坐标实提升，每个实参数又给一个环面参数，故上式给出环面像与实像取商的两个包含。实像的每个元素是基向量的有限实线性组合，因而属于 $W_{\Lambda,I}$；反向，每个 $\Lambda$ 元素都是这些基的整数线性组合，将任一有限实线性组合展开并合并各基的系数，就得到 $\mathbf M_{\Lambda,I,\mathbb R}$ 的一个实输入。因此
+$$
+\mathbf M_{\Lambda,I,\mathbb T}(\mathbb T^r)
+=\operatorname{quot}_I(\mathbf M_{\Lambda,I,\mathbb R}[\mathbb R^r])
+=\operatorname{quot}_I(W_{\Lambda,I}),
+$$
+补上显示式中的实子空间描述。这里没有对无限矩阵应用 Smith 归约。
+
+环面参数商的自然映射为连续双射，其定义域为紧空间的商，目标为 Hausdorff 空间的子空间。紧空间的闭子集仍紧，连续像在 Hausdorff 空间内闭，故此双射为闭映射，逆连续。对实子空间商，第 296 条的同一整数可逆 $U$ 将 $W_{\Lambda,I}$ 及其整数交分别送到 $\mathbb R^r\times0$、$\mathbb Z_o^r\times0$，且 $U$ 与其逆均连续，因而诱导商空间同胚。逐坐标映射 $\mathbb R^r\to\mathbb T^r$ 是开映射：单坐标开集之像的逆像是它的全部整数平移之并，有限积再用矩形开集基。它遂将 $\mathbb R^r/\mathbb Z_o^r$ 同胚到 $\mathbb T^r$，再由 $U^{-1}$ 得所述像。
+
+两个闭包相等时，与 $\Psi_I(\mathbb Z_o^I)$ 相交，并用第 307 条单射性，得饱和相等。反向，子群包含于其饱和，而每个饱和元素为原子群的有限有理组合，故相同饱和给相同实张成，再用像公式得闭包相等。第 298 条的 $U_{\mathbb T}^{-1}(\mathbb T^r\times0)$ 描述给满环面当且仅当 $r=d$。空维及零秩时所有相关像、实子空间及商都是相应零单点。
+
+有限秩自由阿贝尔群的子群结构与整数矩阵结构属于经典有限代数，可参见 [Stacks Project，主理想整环上的模结构，0ASL](https://stacks.math.columbia.edu/tag/0ASL) 的有限模结构背景；此处子群有限生成已由归纳证明，矩阵结论严格采用第 296、298 条。商拓扑及紧到 Hausdorff 的论证是通常有限维拓扑，上述证明不需要无限维分类定理。证毕。
+

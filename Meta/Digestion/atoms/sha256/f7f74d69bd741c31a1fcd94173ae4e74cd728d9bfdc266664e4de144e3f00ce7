@@ -1,0 +1,32 @@
+**定义 261（独立合法目标与全字段编解码）。** 沿用第 162 条独立的自由有限有序来源树递归。精确地，$\mathsf{Tree}$ 的构造器 $\operatorname{leaf}:\omega\to\mathsf{Tree}$ 与 $\operatorname{pair}:\mathsf{Tree}^2\to\mathsf{Tree}$ 单射、像互斥，每棵树恰由有限次这两种构造得到；$\operatorname{pair}(r,s)=\operatorname{pair}(r',s')$ 当且仅当 $r=r',s=s'$。$\mathsf{Tree}_Z$ 用相同自由条件，叶参数域换为 $\mathsf N_Z=\operatorname{NatZ}[\omega]$。两种树的构造器均指已固定的有限标签集合构造；以下结论对每种满足这些条件的构造分别成立，不从自由条件推断唯一的字面集合实现。外部树构造器 $\operatorname{pair}_Z$ 与第 74 条的语义配对 $\langle\ ,\ \rangle_Z$ 分属不同函数。定义
+$$
+\begin{aligned}
+\tau_Z(\operatorname{leaf}(n))&=\operatorname{leaf}_Z(\operatorname{NatZ}(n)),\\
+\tau_Z(\operatorname{pair}(r,s))&=\operatorname{pair}_Z(\tau_Z(r),\tau_Z(s)),\\
+\tau_Z^{-1}(\operatorname{leaf}_Z(c))&=\operatorname{leaf}(\operatorname{Dec}(c))\quad(c\in\mathsf N_Z),\\
+\tau_Z^{-1}(\operatorname{pair}_Z(r',s'))&=\operatorname{pair}(\tau_Z^{-1}(r'),\tau_Z^{-1}(s')).
+\end{aligned}
+$$
+这些是第 162 条的树递归，独立于该条的旧档案公式。令 $\mathcal H$ 为 CSA 定义 1 的全部有限表示，时间域为 $J$，空间域为 $J^3$，来源域为 $\mathsf{Tree}$，符号标签集记为 $\Sigma_\pm$。标签到整数电荷的映射记为 $\epsilon_J:\Sigma_\pm\to J$，正、负标签分别取 $1_J,-_J1_J$。
+
+独立定义 $\mathcal H_{\rm all}$ 为所有记录
+$$
+Y=((E,\prec,t',x',\sigma,\rho',\Omega),A)
+$$
+组成的集合，其中 $E\subset HF$ 有限，$\prec$ 是 $E$ 上的严格偏序，$A\subseteq\Omega\subseteq E$，全部字段为总函数，且
+$$
+t':E\to S,\quad x':E\to S^3,\quad
+\sigma:E\to\Sigma_\pm,\quad\rho':E\to\mathsf{Tree}_Z,
+\qquad e\prec f\Longrightarrow t'(e)<_St'(f).
+$$
+该定义不以“是某编码的像”作为条件。$\mathcal H_{\rm num}$ 用相同条件但令 $\rho':E\to\mathsf{Tree}$。记录括号使用原 CSA 括号，与第 257 条装配比较时用该条 $\kappa_r$。定义
+$$
+\begin{aligned}
+R_{\rm all}((E,\prec,t,x,\sigma,\rho,\Omega),A)
+ &=((E,\prec,b\circ t,b_3\circ x,\sigma,\tau_Z\circ\rho,\Omega),A),\\
+D_{\rm all}((E,\prec,t',x',\sigma,\rho',\Omega),A)
+ &=((E,\prec,b^{-1}\circ t',b_3^{-1}\circ x',\sigma,\tau_Z^{-1}\circ\rho',\Omega),A).
+\end{aligned}
+$$
+$R_{\rm num},D_{\rm num}$ 将这两式中的来源映射都换成 $\operatorname{id}_{\mathsf{Tree}}$。对不含选择的情境 $C$，$R(C)$ 简记同一七字段映射，因此 $R(C,A)=(R(C),A)$；$D_R(C')$ 同理。为统一量词，以下 $R$ 可取 $R_{\rm num}$ 或 $R_{\rm all}$，相应来源双射记为 $\theta$，来源域记为 $T_R$，相应树配对记为 $\operatorname{pair}_R$；两种情形分别取 $(\theta,T_R,\operatorname{pair}_R)=(\operatorname{id},\mathsf{Tree},\operatorname{pair})$ 与 $(\tau_Z,\mathsf{Tree}_Z,\operatorname{pair}_Z)$。
+

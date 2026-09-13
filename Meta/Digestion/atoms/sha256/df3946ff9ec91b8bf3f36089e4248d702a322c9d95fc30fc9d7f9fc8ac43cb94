@@ -1,0 +1,15 @@
+**命题 348.1。** 定义容量
+$$
+A^{\rm odd}_n=
+\begin{cases}
+1,&n=1,\\
+G_n-1,&n\ne1\text{ 且 }G_n\text{ 为奇数},\\
+0,&\text{其余情形}.
+\end{cases}
+$$
+则 $M_F(A^{\rm odd})=+\infty$，每个非零容量坐标均为其完整窗口，但
+$$
+L^F_{A^{\rm odd},1/2}=\{\varepsilon_1\}.
+$$
+该水平在 $X_{A^{\rm odd}}^{\rm cap}$ 和 $B_{A^{\rm odd}}^{\rm cap}$ 中均为闭单点，零不在其闭包；任何截止指标 $N\ge1$ 之后都不能有限填出 $1/2$。因此 $\mathsf{Fill}_F(A^{\rm odd})$ 和 $\mathsf U_F(A^{\rm odd})$ 均为假。
+

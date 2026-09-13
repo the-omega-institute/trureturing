@@ -1,0 +1,83 @@
+**定理 268（完整观察函数图与有限推送）。** 对每种 $R$，全部 CSA 定义 12、18、20、22、25–26 的观察以及来源双剖面，均有完整函数图的双射运输。明确地，对任意索引双射 $a_I:I\to I_R$，定义系数函数的运输
+$$
+\mathscr T_{a_I}(c)(a_I(i))=b(c(i))\quad(i\in I),\qquad
+\mathscr T_{a_I}:J^I\longrightarrow S^{I_R}.
+$$
+其逆逐点用 $a_I^{-1},b^{-1}$，有限支撑子集恰映到有限支撑子集；完整图为
+$$
+G_{\mathscr T_{a_I}(c)}=\{\langle a_I(i),b(c(i))\rangle:i\in I\}.
+$$
+对空间 $w_X,z_X$ 取 $a_I=b_3$；对联合 $W_X,Z_X$ 取 $a_I=k$；对来源 $w_X^\rho,z_X^\rho$ 取
+$$
+a_I(p,r)=(b_3p,\theta r).
+$$
+对 $\Gamma_c,\Gamma_t$ 的索引分别取
+$$
+\begin{aligned}
+a_{\Gamma,c}(a_0,\eta,U)&=(a(a_0),\zeta(\eta),a[U]),\\
+a_{\Gamma,t}(a_0,\eta,U)&=(a_t(a_0),\zeta(\eta),a_t[U]),
+\end{aligned}
+$$
+其中 $\eta\in\{0,1\}$，$U$ 遍历相应属性域的全部有限子集。目标选择位因此属于 $\zeta[\{0,1\}]$。对上述每个系数观察 $c_X$ 及全部原索引 $i$，数字字段上按相同事件条件定义的观察满足
+$$
+c^R_{RX}(a_I(i))=b(c_X(i)).
+$$
+$\pi$、来源双剖面是两个这种函数的外部元组，$\Theta,\Xi$ 再附第 265 条的端点；其元组码用第 258 条装配。未选事件的 $\eta=0$ 行以及全索引域上值为零的位置均属于完整函数图，不能把该图等同于非零支撑集合。
+
+对有限集合 $B_0$、全部函数 $f:\Omega_X\to B_0$，数字粗观察使用 $B_0^*=\operatorname{Enc}[B_0]$ 和 $f^R(e)=\operatorname{Enc}(f(e))$。则
+$$
+w^R(\operatorname{Enc}(u))=b(w(u)),\qquad
+z^R(\operatorname{Enc}(u))=b(z(u))\quad(u\in B_0).
+$$
+不要求 $f$ 满射。一般地，给定集合 $I_0,I_1$、索引双射 $a_i:I_i\to I_i'$、函数 $g:I_0\to I_1$ 和有限支撑 $c:I_0\to J$，令 $g^R=a_1\circ g\circ a_0^{-1}$，则有限推送满足
+$$
+\mathscr T_{a_1}(g_*c)=g_*^R(\mathscr T_{a_0}(c)),\qquad
+(g_*c)(j)=\sum_{i\in\operatorname{supp}(c),\ g(i)=j}^{J}c(i).
+$$
+目标和用 $\oplus_Z$。这包含 CSA 定义 12 的有限粗化、空间投影、来源投影、属性格推送以及命题 36 的仿射空间推送；粗化的 bin 也以 $\operatorname{Enc}$ 运输。
+
+令 $\mathcal R=J^{(J^3)}$、$\mathcal R_R=S^{(S^3)}$，$\mathcal L=J^{(K)}$、$\mathcal L_R=S^{(K_R)}$。对 CSA 定义 31–33 的累积、差分、辅助乘法、平移与固定因子图，分别使用上述空间及联合索引桥。若 $\mathscr C(C)(b(n))=\mathscr T_{b_3}(C(n))$，则
+$$
+\begin{gathered}
+\mathscr C(Pc)=P^R(\mathscr T_kc),\qquad
+\mathscr T_k(\Delta C)=\Delta^R(\mathscr C C),\\
+\mathscr T_k(c\diamond d)=(\mathscr T_kc)\diamond^R(\mathscr T_kd),\qquad
+\mathscr T_k(c\odot d)=(\mathscr T_kc)\odot^R(\mathscr T_kd),\\
+\mathscr T_k(\tau_hc)=\tau_{b(h)}^R(\mathscr T_kc),\qquad
+\mathscr T_k(L_d(c))=L_{\mathscr T_kd}^R(\mathscr T_kc).
+\end{gathered}
+$$
+这些式子分别对全部 $c,d\in\mathcal L$、$h\in J$、$C\in\mathcal A(\mathcal R)$ 成立，$\Delta C(n)=C(n)-C(n-1_J)$。数字累积目标严格为
+$$
+\mathcal A_R=\{C':S\to\mathcal R_R:
+\exists\ell',u'\in S\ \exists B'\in\mathcal R_R
+\forall n'\in S,
+\ (n'<_S\ell'\Rightarrow C'(n')=0)\land
+ (u'\le_Sn'\Rightarrow C'(n')=B')\}.
+$$
+因此保留左尾零、右尾最终常值，右尾可以非零。辅助 $\diamond^R$ 使用 $\max_S$，延迟 $\odot^R$ 使用 $\max_S\oplus_Z1_S$，二者不混同。$\alpha=\tau_{1_J}$ 相应运输到 $\tau_{1_S}^R$。对全部 $d$，固定因子图是
+$$
+\{\langle\mathscr T_kc,\mathscr T_k(L_d(c))\rangle:c\in\mathcal L\}
+=G_{L_{\mathscr T_kd}^R}.
+$$
+支撑限制 $\mathcal L_{\ge h}$ 恰映为在 $n'<_Sb(h)$ 时逐时间为零的子群；本条只给这些图的交换，不另断言新的核、像分类。
+
+**证明。** $a_I,b$ 的双逆给 $\mathscr T_{a_I}$ 双逆；$c(i)=0_J$ 当且仅当 $b(c(i))=0_S$，故支撑恰为原支撑的 $a_I$ 像。各观察逐项比较如下。空间系数在 $x(e)=p$ 的当前或所选事件上求和，此条件与 $x'(e)=b_3p$ 等价；联合系数再加 $t(e)=n$，与 $k(n,p)$ 等价；来源系数再加 $\rho(e)=r$，与 $\theta r$ 等价。$\Gamma_c$ 的三项条件依次由 $\alpha_{RX}=a\circ\alpha_X$、选择集不变和第 267 条的 $U$ 像式保持反映；$\Gamma_t$ 用含时版本。每一种情况都在两侧对完全相同的事件求和，符号贡献逐个用 $b\epsilon_J$，第 256 条的有限和式给系数等式。包括无贡献索引时的空和，故得到全域函数图等式。格系数本身已经含符号；父格推送时用两个系数之积，不能再乘一次两个属性中的符号。
+
+端点以第 265 条运输。为明确乘积端点，令 $\gamma(s,t)=-\infty$ 当任一参数为 $-\infty$，其余情形令 $\gamma(s,t)=\max_J(s,t)+_J1_J$。新当前区域非空时，全部父对使最高生成时刻恰为 $\gamma(s_X,s_Y)$；为空时两侧均取哨兵。两旧档案都保留，而生成时间晚于各自父事件，故
+$$
+\begin{aligned}
+(m,M,s)_{X\boxtimes Y}
+ &=\bigl(\min(m_X,m_Y),\max(M_X,M_Y,\gamma(s_X,s_Y)),\gamma(s_X,s_Y)\bigr),\\
+(m,M,s)_{X\boxplus Y}
+ &=\bigl(\min(m_X,m_Y),\max(M_X,M_Y),\max(s_X,s_Y)\bigr).
+\end{aligned}
+$$
+合法时间复合有第二式；补集及选择筛选不改端点；时移对有限端点加平移量，对哨兵恒等。$\bar b$ 的全序双射与后继式使每个端点更新逐项交换，故没有用电荷抵消后的支撑替代全档案或当前区域。
+
+粗观察中的 $f(e)=u$ 与 $f^R(e)=\operatorname{Enc}(u)$ 由编码单射等价，每个 bin 包括空 bin 都用同一有限事件和。一般推送中，$i\mapsto a_0(i)$ 是支撑之间的双射，且 $g(i)=j$ 当且仅当 $g^R(a_0i)=a_1j$，有限和重索引即得推送式。连续推送的两种分组都对同一有限集合每项恰计一次。用于属性格时，补集把选择位变为 $\zeta(1-\eta)$，筛选把它变为 $\zeta(\eta\mathbf1_{\text{相应条件}})$；条件由第 267 条对应。并行时格系数相加；时间复合时左当前后继集增添全部右当前属性，集合并与双射像交换；乘法时当前新事件无出边，其后继属性集为自身单点。新属性的坐标、时间、符号、有序来源由第 265 条对应，未选父对留在零选择位行。这些逐事件事实和有限推送式给出实际格更新的交换。
+
+累积在每个 $n\in J$ 只对 $c$ 的有限时间支撑中满足 $t\le_Jn$ 的项求和；序双射把这个条件恰送到 $b(t)\le_Sb(n)$，得累积式。若 $C$ 的左、右尾见证为 $\ell,u,B$，则目标见证为 $b(\ell),b(u),\mathscr T_{b_3}(B)$；反向用各逆，故目标恰为 $\mathcal A_R$。中间整数区间有限，尾部条件保证差分只有有限个非零时间分量，每个空间分量有限支撑，故差分类型正确。$b(n-1_J)=b(n)\oplus_Z\ominus_Z1_S$ 给差分交换。
+
+两个剖面乘法均对有限父支撑对求系数积；位置条件由 $b_3$ 加法式，时间条件分别由最大值式、最大值加后继式保持反映，故有限双和逐项对应。剖面平移由减法式对应，特别是 $\alpha$ 的一格平移。固定 $d$ 后的图式就是延迟乘法式对全部 $c$ 的图集合；固定因子及支撑下界也作为第 259 条的参数槽运输。左侧时间阈值条件经序反映给所述受限域。所有完整观察图及固定因子图的 $\operatorname{Enc}$ 呈现最后用第 260 条，不能以一张有限支撑表替换它们作为集合的完整图。证毕。
+

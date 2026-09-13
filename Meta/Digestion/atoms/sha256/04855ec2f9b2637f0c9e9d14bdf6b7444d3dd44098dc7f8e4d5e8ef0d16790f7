@@ -1,0 +1,54 @@
+**定理 341.2。** $R_{A,I}$ 与 $Z_{A,I}$ 互逆，包括空 $I$。因此该有限域经第 91–92、95–96、115–116、304–305 条与相应有限配置、素数标签数字及配置码准确对应，并有
+$$
+|B_{A,I}^{\rm cap}|=\prod_{i\in I}(A_i+1).
+$$
+在固定标签、容量和解释函数下，第 98 条的有限状态位数结论适用于这个有限配置。两映射的限制分别为到 $\mathsf{Rec}_A^{\rm cap}$ 和 $\mathsf{Dig}_A^{\rm cap}$ 的双射，所列逆在各自像上与它们双向复合为恒等。
+
+对定义 341.1 的每个拓扑载体，$\operatorname{enc}_Y$ 为同胚，逆恰为 $\operatorname{Dec}|_{Y^*}$，且对每个 $E\subseteq Y$ 有
+$$
+\overline{\operatorname{Enc}[E]}^{\tau^*}
+=\operatorname{Enc}[\overline E^{\tau}],\qquad
+\tau^*=\{\operatorname{El}(c):c\in\operatorname{El}(\operatorname{Enc}(\tau))\}.
+$$
+指定源、目标拓扑后，$f$ 连续当且仅当 $f^*$ 连续；收敛及不连续同样保持并反映。特别当 $M_A<+\infty$ 时，唯一连续实延拓运输为
+$$
+S_A^*:(X_A^{\rm cap})^*\longrightarrow\mathbb R^*,\qquad
+S_A^*(\operatorname{Enc}(x))=\operatorname{Enc}(S_A(x)),
+$$
+目标是通常实拓扑的运输，不将每个输出改为有限有理字段。第 337–340 节的全部等式、成员、闭包和连续性断言均在相应载体与拓扑上运输，保持每个固定有限集合论公式的双向比较。
+
+**证明。** 限制并重索引后，每个 $p_i$ 恰取得一个介于零和 $A_i$ 之间的值，所以 $R_{A,I}$ 的值在第 91 条的完整有限盒内。零扩展保留这些界，并在 $I$ 外为零，故 $Z_{A,I}$ 的值在 $B_{A,I}^{\rm cap}$。在每个指标或素数标签处取值，两个复合各自还原原函数；$I=\varnothing$ 时原配置是空函数，扩展为总零函数，反向限制仍为空。有限积计数给大小，素数唯一分解使这个配置的标量像是 $\prod_{i\in I}p_i^{A_i}$ 的全部正约数，零容量标签仍须由 $P_I$ 保留。第 95–96 条使用原始标签 $\zeta(p_i)$，第 115–116 条的配置码使用自然叶 $\operatorname{NatZ}(p_i)$ 及分开的容量、内容表，第 304–305 条的配置双逆因而在恰此域上适用。
+
+具体地，复合 $\gamma_{P_I,A_I}\circ R_{A,I}$ 的像恰为 $\mathcal C_{P_I,A_I,Z}$，逆为 $Z_{A,I}\circ\delta_{P_I,A_I}$；代入两对双逆就得到两个恒等式。若 $Q_I=\prod_{i\in I}(A_i+1)$，单射二进状态码须有 $2^b\ge Q_I$ 个字，枚举这个有限集合又以 $\lceil\log_2 Q_I\rceil$ 位达到下界。这是第 98 条的相同有限状态结论；其独立字段及字面 Zeckendorf 窗口结论亦取同一 $P_I,A_I$，并保留该条关于标签、容量、边界及解释函数已给定的条件，不把这些位数用于任意全乘积对象。
+
+第 317 条的双逆在全部 $\mathsf V_{\rm reg}$ 及其独立目标上成立。限制一个双射到子集时，其逆限制到子集的像就仍互逆：若 $r=\operatorname{rec}_{\rm reg}(u)$ 且 $u\in B_A^{\rm cap}$，逆还原的正是这个 $u$；反向每个像元素都有这样的原像。对总数字图同理。这给精确逆域，无须扩张任一旧记录映射。进一步，若在两个像上分别使用 $\{\operatorname{rec}_{\rm reg}[U]:U\in\tau\}$、$\{\operatorname{dig}_{\rm reg}[U]:U\in\tau\}$，两个限制都是同胚；取 $\tau=\tau_{\Psi,A}^{B}$ 时恰为第 318 条记录拓扑和总数字拓扑的子空间限制，取 $\tau=\tau_{+,A}$ 时则是另一个明确运输的拓扑。
+
+核对全集合解释的条件：容量函数属于 $\omega^\omega$，容量状态由 $\mathbb Z_o^\omega$ 上的界条件分离，有限支撑载体再由分离得到。有理序列及全部观察环境是所列函数集，圆周和有理剩余类是集合商。非负扩展实数可用实数非负部分另加一个固定标签构造；部分和的图由有限求和给出，上确界存在唯一使 $S_A$ 的图及各水平由替代、分离得到。拓扑是载体幂集的子集，全部有限柱集及其任意并均构成集合。这正满足第 71–78、320、336 条及 [CSA 第十一节命题 14–15](CONTEXTUAL_SPACETIME_ARITHMETIC.md) 的集合条件。这里只限制旧的可定义类函数 $\operatorname{Enc}$，没有收集全部集合为一个集合。
+
+第 72 条给 $\operatorname{enc}_Y$ 的双射及所列逆。双射直接像保持任意并、空集、全集及有限交，后一项的反向包含由单射性保证，因此 $\tau^*$ 是拓扑，两个方向的开集完全对应。点 $\operatorname{Enc}(y)$ 的开邻域恰为某个含 $y$ 的开集 $U$ 的像；它遇到 $\operatorname{Enc}[E]$ 当且仅当 $U$ 遇到 $E$，所以闭包的邻域判据给显示的两个方向。这是第 305、320 条的同一运输，直接应用到本条已经核对的载体。对拓扑这个集合，第 72 条先给 $\operatorname{El}(\operatorname{Enc}(\tau))=\{\operatorname{Enc}(U):U\in\tau\}$，再逐个展开开集码的成员才得到 $\tau^*$；单个拓扑码不充当外部开集族。
+
+对函数 $f:Y\to Z$ 和目标开集 $O$，有
+$$
+(f^*)^{-1}(\operatorname{Enc}[O])=\operatorname{Enc}[f^{-1}(O)].
+$$
+所以双向开集对应给连续性等价，其否定也等价；同一邻域对应给固定指标序列或网的收敛等价。部分函数仅在 $D$ 的子空间上使用这个论证，域运输为 $\operatorname{Enc}[D]$，不增加域外值。第 319 条的原图码仍为
+$$
+\operatorname{Enc}(G_f)
+=\operatorname{Pack}\{\langle\operatorname{Enc}(x),\operatorname{Enc}(f(x))\rangle_Z:x\in D\},
+$$
+语义域是单个码 $\operatorname{Enc}(D)$，外部共轭域却为成员像 $\operatorname{Enc}[D]$；外部共轭的普通图用普通有序对。特别 $S_A$ 在可和情形的输出用 $\operatorname{Enc}(S_A(x))$，在一般情形则作为扩展值图使用相同全编码。若 $u\in B_A^{\rm cap}$，从其有限记录得到实读数的共轭为
+$$
+r\longmapsto\operatorname{Enc}(\ell_A(\operatorname{unrec}_{\rm reg}(r)))
+\quad(r\in\mathsf{Rec}_A^{\rm cap}).
+$$
+它不为 $X_A^{\rm cap}\setminus B_A^{\rm cap}$ 引入记录。
+
+同胚运输把稠密性、闭包式、严格拓扑包含及所有具体反例带到各自像上。唯一实延拓也保持唯一：若 $\widetilde S:(X_A^{\rm cap})^*\to\mathbb R^*$ 是运输侧的连续延拓，则 $\operatorname{Dec}|_{\mathbb R^*}\circ\widetilde S\circ\operatorname{enc}_{X_A^{\rm cap}}$ 是定理 338.2 的原连续实延拓，故只能是 $S_A$；再作正向共轭即得 $\widetilde S=S_A^*$。
+
+最后对任意集合 $x,y$，第 72 条给
+$$
+\operatorname{Enc}(x)=\operatorname{Enc}(y)\iff x=y,\qquad
+\operatorname{Enc}(x)\in_Z\operatorname{Enc}(y)\iff x\in y.
+$$
+固定一个有限集合论公式，展开本层全部定义，保留包括 $A$、二进权、所有源与目标、拓扑在内的全部参数，再应用第 75–78 条：等号、成员由上式，布尔联结词由等价保持，存在见证由编码正向传递、有效码由解码反向传递，全称量词也分别对任意集合编码和对任意有效码解码。这给每个固定公式的双向比较，量词包括所有容量函数、全乘积点、实输出及完整有理系数序列。有限证明中的新定义逐一消去、定理行用其普通证明替代，仍是既有定义性保守扩展。证毕。
+

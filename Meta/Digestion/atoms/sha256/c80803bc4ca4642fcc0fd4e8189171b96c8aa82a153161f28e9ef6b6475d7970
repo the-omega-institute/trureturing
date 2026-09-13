@@ -1,0 +1,19 @@
+**命题 352.2。** 第 335 条的黄金字段给
+$$
+\operatorname{cenc}_\phi(\phi/G_n)
+=T_2(\zeta(0),\operatorname{qenc}(1/G_n))\in\mathsf{Coeff}_\phi,
+$$
+$$
+\operatorname{genc}_\phi([\phi/G_n])
+=T_2(\zeta(1),\operatorname{qenc}(1/G_n))\in\mathsf{Phase}_\phi,
+$$
+$$
+\operatorname{genc}_\phi(g_F(u_{5040}))
+=T_2(\zeta(1),\operatorname{qenc}(83/15)).
+$$
+系数侧与相位侧各在其整个独立字段域及整个值域 $L_\phi,C_\phi$ 上互为双逆，两个带标签字段域不交。对每个 $n\ge1$，$\phi/G_n\notin\mathbb Z_o[\phi]$；$n=0$ 时 $\phi/G_0=\phi\in\mathbb Z_o[\phi]$。
+
+**证明。** 定理 335.2 可直接用于每个有理乘数 $1/G_n$ 以及 $L_F(u_{5040})=83/15$，给全部字段式及双逆。其唯一性条件在当前域不变：$\phi\ne0$ 使实提升 $q\mapsto\phi q$ 单射；$[\phi q]=[\phi q']$ 使 $\phi(q-q')$ 为整数，无理性使 $q=q'$。再用定理 332.2 恢复每个有理字段，两个标签 $\zeta(0)\ne\zeta(1)$ 使字段类型不交，即使解码值为零也如此。
+
+若 $n\ge1$ 且 $\phi/G_n=a+b\phi$、$a,b\in\mathbb Z_o$，则 $(1/G_n-b)\phi=a$。由于 $0<1/G_n<1$ 而 $b$ 为整数，括号是非零有理数，于是 $\phi$ 为有理数，矛盾。这按 [GICT 定义 1.2](GICT.md) 的整系数环取域。$n=0$ 的式子以 $a=0,b=1$ 成立。各数字分量均编码有理乘数及有限标签，没有对无理数直接使用 $\zeta$，也没有在已经模一的有理类上定义乘 $\phi$。证毕。
+

@@ -1,0 +1,16 @@
+**定义 241（标量、局部窗口与正轴数的联合容量）。** 复用定义 91、148、153、155，对有限配置 $(P,A)$ 记
+$$
+Q(P,A)=\prod_{p\in P}(A(p)+1),\quad
+M(P,A)=\prod_{p\in P}p^{A(p)},\quad
+B(P,A)=\Lambda_{\rm loc}(P,A),\quad k(P,A)=|P^+|.
+$$
+其中 $A(p)$ 是最大允许内容，$A(p)+1$ 是该轴的状态数。$M$ 仅为容量角的标量读数，$B$ 仅为独立局部窗口的总宽度，不含标签和容量元数据。对整数 $N\ge1$、$b,K\ge0$ 定义
+$$
+\mathcal J(N,b,K)=
+\max\{Q(P,A):M(P,A)\le N,\ B(P,A)\le b,\ k(P,A)\le K\}.
+$$
+令 $p_1=2<p_2=3<\cdots$ 为依次排列的素数。规范配置指空配置，或标签为 $p_1,\ldots,p_k$ 且正容量为 $e_1\ge\cdots\ge e_k\ge1$ 的配置。记
+$$
+a_N=\max\{a\in\mathbb N:2^a\le N\}.
+$$
+

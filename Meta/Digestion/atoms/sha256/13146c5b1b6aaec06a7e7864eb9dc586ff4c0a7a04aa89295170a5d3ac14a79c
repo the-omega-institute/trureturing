@@ -1,0 +1,6 @@
+**定理 360.2。** 对每个 $A$ 及至多可数 $\mathcal C$，$\tau_{\mathcal C,A}$ 可度量，并且
+$$
+\tau_{\rm coord,A}^{B}\subseteq\tau_{\mathcal C,A}\subseteq\tau_{+,A}.
+$$
+若 $J_A$ 无限，则每点在 $\tau_{\mathcal C,A}$ 中非孤立，且 $\tau_{\mathcal C,A}\subsetneq\tau_{+,A}$。若 $J_A$ 有限，则三个拓扑相等，均为有限离散拓扑。
+

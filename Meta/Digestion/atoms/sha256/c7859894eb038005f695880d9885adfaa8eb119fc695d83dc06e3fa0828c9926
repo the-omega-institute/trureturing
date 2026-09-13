@@ -1,0 +1,34 @@
+**定理 203（时间群、平移与全 Zeckendorf 运输）。** \(\operatorname{TCode}_P\) 与 \(\operatorname{TDec}_P\) 互为逆，并且
+\[
+\operatorname{TCode}_P(c+c')
+ =\operatorname{TCode}_P(c)\boxplus_Z^{\rm pt}\operatorname{TCode}_P(c'),
+\qquad
+\operatorname{TCode}_P(-c)=\ominus_Z^{\rm pt}\operatorname{TCode}_P(c).
+\tag{Z-TEMPORAL-TRANSPORT}
+\]
+对 \(h\in\mathbb Z\) 定义时间平移
+\[
+(\tau_hc)(t,p)=c(t-h,p).
+\]
+则 \(\tau_h\) 是 \(\mathsf J_P\) 的群自同构，满足
+\[
+\Sigma_P(\tau_hc)=\Sigma_P(c),
+\qquad
+\mathsf I_P(\tau_hc)(T,p)=\mathsf I_P(c)(T-h,p).
+\tag{Z-TEMPORAL-SHIFT}
+\]
+其 Zeckendorf 呈现满足
+\[
+\operatorname{TCode}_P(\tau_hc)(\operatorname{scode}(t),\operatorname{NatZ}(p))
+ =\operatorname{TCode}_P(c)(\operatorname{scode}(t-h),\operatorname{NatZ}(p)).
+\]
+终端化在 Zeckendorf 侧由有限次 \(\oplus_Z\) 与 \(\operatorname{scode}\) 给出，故短正合列 (Z-TEMPORAL-EXACT) 在该呈现下保持。
+
+**证明。** 定理 113–114 给出 \(\operatorname{scode}\) 与 \(\operatorname{ival}\) 的互逆性。时间码 \(\operatorname{scode}(t)\) 与寄存器码 \(\operatorname{NatZ}(p)\) 均为单射，故 \(\operatorname{TCode}_P\) 的每个位置唯一，且有限支撑相互保持；逐点应用
+\[
+\operatorname{scode}(m+n)=\operatorname{scode}(m)\oplus_Z\operatorname{scode}(n)
+\]
+得到两式及双射性。
+
+平移只重排有限支撑的时间坐标，故保持有限支撑、加法及逆元。对终端和作变量替换 \(s=t-h\) 得第一式；对前缀和作同一替换得第二式。把 \(c(t-h,p)\) 代入 (Z-TEMPORAL-CODE) 即得编码侧平移公式。终端化只对有限非零时间项求和，定理 114 把该有限整数和运输为带符号 Zeckendorf 加法；因此 \(\Sigma_P\)、\(\iota_P\) 及其核、像和分裂关系全部保持。证毕。
+

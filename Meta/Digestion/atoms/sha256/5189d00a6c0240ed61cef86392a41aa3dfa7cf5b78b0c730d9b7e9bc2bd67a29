@@ -1,0 +1,16 @@
+**定义 354.1。** 在 ZFC 中，固定定义 337.1 的容量函数 $A:\omega\to\omega$，沿用其 $D_n,J_A,X_A^{\rm cap},B_A^{\rm cap}$、两种坐标拓扑及黄金映射 $\Psi_A$，并沿用定义 340.1 的 $\chi_r^{\rm cap},E_A^{\rm cap},\tau_{+,A}$。每个 $D_n$ 有限；$B_A^{\rm cap}$ 中的状态是定义域恰为 $\omega$ 的有限支撑总函数。相减只在 $\mathsf V_{\rm reg}$ 中进行，$B_A^{\rm cap}$ 不作为群。第 299 条的有限域 $X_A$ 保持原义。
+
+通常圆周的距离记为
+$$
+d_{\mathbb T}([s],[t])=\min_{z\in\mathbb Z_o}|s-t-z|.
+$$
+更换实代表只重索引整数 $z$，故此距离良定义；它诱导通常圆周拓扑。对 $u\in B_A^{\rm cap}$、有限 $I\subseteq\omega$、$m\in\omega$、$r^1,\ldots,r^m\in\mathbb Q^\omega$ 及正有理数 $\epsilon_1,\ldots,\epsilon_m$，置
+$$
+\mathcal N_A(u;I;(r^a,\epsilon_a)_{a=1}^m)
+=\left\{v\in B_A^{\rm cap}:
+ v_i=u_i\ (i\in I),\quad
+ d_{\mathbb T}(\chi_{r^a}^{\rm cap}(v),\chi_{r^a}^{\rm cap}(u))<\epsilon_a\ (1\le a\le m)
+\right\}.
+$$
+$I=\varnothing$ 时没有坐标条件，$m=0$ 时没有有理特征条件。第 330.1 条的 $L_r:\mathsf V_{\rm reg}\to\mathbb Q$ 仍为有限支撑求值，故在上述载体上 $\chi_r^{\rm cap}(u)=[L_r(u)]$；并未在任意 $X_A^{\rm cap}$ 点上定义 $L_r$。
+

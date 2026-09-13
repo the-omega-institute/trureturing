@@ -1,0 +1,24 @@
+**定理 245（语义边界、单调性及窗口上界的标量阈值）。** $D$ 对 $a,N,b,K$ 各自非减，对 $i$ 非增；且
+$$
+D(i,a,N,b,K)=1
+\iff a=0\ \lor\ b=0\ \lor\ K=0\ \lor\ N<p_i.
+$$
+$\mathcal J$ 对 $N,b,K$ 各自非减，且
+$$
+\mathcal J(N,b,K)=1\iff N=1\ \lor\ b=0\ \lor\ K=0,
+\qquad \mathcal J(N,b,K)\le\min\{N,2^b\}.
+$$
+对 $K\ge1$ 还有 $\mathcal J(N,b,K)\le\mathcal C_K(b)$。令
+$$
+\mu_K^{\rm sat}(b)=
+\begin{cases}
+\displaystyle\prod_{j=1}^{b}p_j,&0\le b\le K,\\
+\displaystyle 2^{G_{b-K+1}-1}\prod_{j=2}^{K}p_j,&b\ge K,
+\end{cases}
+$$
+其中空积为一，两式在 $b=K$ 一致。则
+$$
+\mathcal J(N,b,K)=\mathcal C_K(b)
+\iff N\ge\mu_K^{\rm sat}(b).
+$$
+

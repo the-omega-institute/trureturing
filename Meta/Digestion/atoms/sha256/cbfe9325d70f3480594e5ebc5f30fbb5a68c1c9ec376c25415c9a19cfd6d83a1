@@ -1,0 +1,7 @@
+**定理 357.1。** 对任意容量函数 $A$、$u\in B_A^{\rm cap}$ 及序列 $(u_k)_{k\in\omega}\in(B_A^{\rm cap})^\omega$，有
+$$
+u_k\longrightarrow u\text{ 在 }\tau_{+,A}\text{ 中}
+\iff\exists K\in\omega\ \forall k\ge K\ (u_k=u).
+$$
+此结论不要求 $J_A$ 有限，也不要求 $M_A$ 有限。
+

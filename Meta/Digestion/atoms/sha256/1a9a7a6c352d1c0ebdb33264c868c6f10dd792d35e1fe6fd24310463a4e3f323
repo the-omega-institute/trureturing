@@ -1,0 +1,44 @@
+**证明。** $A\in\omega^\omega$，$X_A^{\rm cap}$ 是 $\mathbb Z_o^\omega$ 的界条件子集，$B_A^{\rm cap}$ 再以有限支撑条件分离。$\mathbb Q^\omega$、$\mathbb T^{\mathbb Q^\omega}$ 及至多可数行族所在的幂集都是集合。有限求和图、所选序列与检测行的图由替代给出，水平、有限邻域族、所有开集族由分离、幂集和并集取得；拓扑是 $\mathcal P(B_A^{\rm cap})$ 的子集。紧性与局部基的定义量化于相应幂集，不需普遍集合。这与第 318–320、336、341 条及 CSA 第十一节命题 14–15 的集合构造、定义消去具有相同条件。
+
+对任一总整数状态 $u:\omega\to\mathbb Z_o$，无论其支撑是否有限，将第 74 条的配对比较逐边用于其总图，得到与第 319 条同形的公式
+$$
+\operatorname{Enc}(u)
+=\operatorname{Pack}\{\langle\operatorname{NatZ}(n),\operatorname{Enc}(u_n)\rangle_Z:n\in\omega\}.
+$$
+每个零坐标边也包含在内。容量的原自然值图及有理行的图分别为
+$$
+\operatorname{Enc}(A)
+=\operatorname{Pack}\{\langle\operatorname{NatZ}(n),\operatorname{NatZ}(A_n)\rangle_Z:n\in\omega\},
+$$
+$$
+\operatorname{Enc}(r)
+=\operatorname{Pack}\{\langle\operatorname{NatZ}(n),\operatorname{Enc}(r_n)\rangle_Z:n\in\omega\}.
+$$
+这些是完整集合码，不是有限系数列表。对拓扑自身，成员展开给
+$$
+\operatorname{El}(\operatorname{Enc}(\sigma))=\operatorname{Enc}[\sigma],\qquad
+\sigma^*=\{\operatorname{El}(c):c\in\operatorname{El}(\operatorname{Enc}(\sigma))\}.
+$$
+所以单个拓扑码、开集码成员像及外部开集族各有其显示的类型。
+
+完整子集与函数的往返还可逐项核对。对任意集合 $Y$，
+$$
+\mathcal P(Y^*)=\{\operatorname{Enc}[U]:U\subseteq Y\}.
+$$
+正向包含由直接像的域得到，反向任意 $H\subseteq Y^*$ 的原像为 $\operatorname{Dec}[H]\subseteq Y$，双逆给 $\operatorname{Enc}[\operatorname{Dec}[H]]=H$；同样 $\operatorname{Dec}[\operatorname{Enc}[U]]=U$。对任意集合 $Y,Z$，
+$$
+(Z^*)^{Y^*}=\{f^*:f\in Z^Y\}.
+$$
+反向的任意函数 $g:Y^*\to Z^*$ 拉回为 $y\mapsto\operatorname{Dec}(g(\operatorname{Enc}(y)))$，图为集合，再共轭即恢复 $g$。空域和空目标按实际函数存在条件也满足这两个等式。因此全部子集和全部函数都在双向比较中，未缩小载体。
+
+原子公式使用第 72 条的
+$$
+\operatorname{Enc}(x)=\operatorname{Enc}(y)\iff x=y,\qquad
+\operatorname{Enc}(x)\in_Z\operatorname{Enc}(y)\iff x\in y.
+$$
+固定一个有限公式并保留全部参数，先把新函数符号展开为其实际定义域上的唯一值图，再作公式结构归纳。布尔联结词保持两向等价；存在量词的原见证编码为有效见证，反向有效见证解码为原见证；全称量词正向对任意有效码解码，反向对任意原集合编码。无界量词按第 75 条限制到有效码类谓词 $\mathfrak V_Z$，不把这个类收集为集合。于是集合、成员及旧命题在该解释下完整保留。把有限证明中的新定义逐一消去、定理步骤换成上述普通证明，仍得到原 ZFC 推导，故是第 78 条的定义性保守解释。
+
+若外部给定 $\mathfrak M\models\mathrm{ZFC}$，相同构造在其内部的有限性、幂集与函数集意义下成立；比较针对每个外部标准有限公式，不将内部子集族等同于全部外部子集。此条件命题不构造模型，不给无条件一致性证明，也不产生一个同时判定全部公式的内部真理谓词。
+
+最后，有限支撑总函数也有无限多条零边，故其全图不因非零记录有限而成为有限图。无限 $J_A$ 时，任意二值序列可放到其递增活跃指标上，给 $\{0,1\}^\omega\hookrightarrow X_A^{\rm cap}$；Cantor 对角论证使此域不可数，而有限字母表上的有限字可数，故不能用有限字单射表示全部乘积点。完整 $\operatorname{Enc}$ 的上述双逆不提出这种有限字要求，也不把任意集合或任意实值函数限制为有限字段。证毕。
+

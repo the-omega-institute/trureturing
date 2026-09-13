@@ -1,0 +1,7 @@
+**定理 335.2。** 两解码器分别双射到 $L_\phi$ 和 $C_\phi$，其逆精确为
+$$
+\operatorname{cenc}_\phi(\phi q)=T_2(\zeta(0),\operatorname{qenc}(q)),\qquad
+\operatorname{genc}_\phi([\phi q])=T_2(\zeta(1),\operatorname{qenc}(q)).
+$$
+它们满足各自值域侧及字段侧的全部复合恒等式，且两字段域不交。每个 $\phi/2^n$ 以及第 330–331 条的全部黄金输出都有相应有限字段。对 $n>0$，$\phi/2^n$ 不属于 [GICT 定义 1.2](GICT.md) 的整系数环 $\mathbb Z_o[\phi]$。
+

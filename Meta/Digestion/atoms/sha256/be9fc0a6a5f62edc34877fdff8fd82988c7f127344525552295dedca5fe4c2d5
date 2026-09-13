@@ -1,0 +1,26 @@
+**定理 203（时间群、平移与全 Zeckendorf 运输）。** \(\operatorname{TCode}_P\) 与 \(\operatorname{TDec}_P\) 互为逆，并且
+\[
+\operatorname{TCode}_P(c+c')
+ =\operatorname{TCode}_P(c)\boxplus_Z^{\rm pt}\operatorname{TCode}_P(c'),
+\qquad
+\operatorname{TCode}_P(-c)=\ominus_Z^{\rm pt}\operatorname{TCode}_P(c).
+\tag{Z-TEMPORAL-TRANSPORT}
+\]
+对 \(h\in\mathbb Z\) 定义时间平移
+\[
+(\tau_hc)(t,p)=c(t-h,p).
+\]
+则 \(\tau_h\) 是 \(\mathsf J_P\) 的群自同构，满足
+\[
+\Sigma_P(\tau_hc)=\Sigma_P(c),
+\qquad
+\mathsf I_P(\tau_hc)(T,p)=\mathsf I_P(c)(T-h,p).
+\tag{Z-TEMPORAL-SHIFT}
+\]
+其 Zeckendorf 呈现满足
+\[
+\operatorname{TCode}_P(\tau_hc)(\operatorname{scode}(t),\operatorname{NatZ}(p))
+ =\operatorname{TCode}_P(c)(\operatorname{scode}(t-h),\operatorname{NatZ}(p)).
+\]
+终端化在 Zeckendorf 侧由有限次 \(\oplus_Z\) 与 \(\operatorname{scode}\) 给出，故短正合列 (Z-TEMPORAL-EXACT) 在该呈现下保持。
+

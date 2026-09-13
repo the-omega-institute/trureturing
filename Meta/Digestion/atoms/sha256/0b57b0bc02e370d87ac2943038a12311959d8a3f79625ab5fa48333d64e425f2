@@ -1,0 +1,25 @@
+**定理 279（自然叶的环境秩及语义秩保持）。** 令 $\ell_Z(n)$ 如第 98 条。自然叶的环境秩准确为
+$$
+\operatorname{rk}(\operatorname{NatZ}(n))
+ =\begin{cases}
+ 2,&n=0,\\
+ 6,&n=1,\\
+ \ell_Z(n)+4,&n\ge2.
+ \end{cases}
+$$
+对任意 $x\notin\omega$，有序数等式
+$$
+\operatorname{rk}(\operatorname{Enc}(x))
+ =\left(\sup_{y\in x}\bigl(\operatorname{rk}(\operatorname{Enc}(y))+1\bigr)\right)+2.
+$$
+特别地，
+$$
+\operatorname{rk}(\operatorname{Enc}(\omega))=\omega+2,\qquad
+\operatorname{Rank}_Z(\operatorname{Enc}(\omega))=\operatorname{Enc}(\omega).
+$$
+环境成员与语义成员已有有限反例：
+$$
+\operatorname{Enc}(1)\notin\operatorname{Enc}(2),\qquad
+\operatorname{Enc}(1)\in_Z\operatorname{Enc}(2).
+$$
+

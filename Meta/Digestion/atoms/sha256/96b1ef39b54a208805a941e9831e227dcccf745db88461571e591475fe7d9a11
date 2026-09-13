@@ -1,0 +1,12 @@
+**定义 181（局部重量—秩生成函数与全局重量生成函数）。** 对有限容量配置 \((P,A)\) 定义
+\[
+\mathcal W_{P,A}(X,Y)
+ =\sum_{a\in S(P,A)}
+    X^{r_P(a)}Y^{\omega_Z(a)},
+\qquad
+\mathcal H_{P,A}(Y)
+ =\sum_{a\in S(P,A)}
+    Y^{w_Z(\Pi_P(a))}.
+\]
+\(\mathcal W_{P,A}\) 同时记录配置格秩和各寄存器局部 Zeckendorf 重量；\(\mathcal H_{P,A}\) 只记录全局素数乘积的 Zeckendorf 重量。
+

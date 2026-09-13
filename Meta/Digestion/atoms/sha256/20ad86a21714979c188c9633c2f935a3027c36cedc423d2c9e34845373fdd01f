@@ -1,0 +1,17 @@
+**定理 186（带符号 Zeckendorf 槽表的群同态）。** 对任意 \(r,s\in\mathcal R_{P,\mathbb Z}\)，有
+\[
+V_P^{\mathbb Z}(r+s)=V_P^{\mathbb Z}(r)+V_P^{\mathbb Z}(s),
+\qquad
+\operatorname{sdig}_P(r+s)(p)
+ =\operatorname{scode}\!\left(
+  V_P^{\mathbb Z}(r)(p)+V_P^{\mathbb Z}(s)(p)\right),
+\]
+\[
+\operatorname{Rat}_P(r+s)
+ =\operatorname{Rat}_P(r)\operatorname{Rat}_P(s),
+\qquad
+\operatorname{Rat}_P(-r)=\operatorname{Rat}_P(r)^{-1}.
+\tag{Z-SIGNED-GROUP}
+\]
+若 \(r,s\) 的每一行已经是唯一的带符号 Zeckendorf 行，则 \(\operatorname{sdig}_P\) 将逐行加法运输为 \((\mathsf Z_{\mathbb Z})^P\) 上的坐标加法；其逆由逐行 \(\operatorname{ival}\) 给出。对非规范原始槽表，\(\operatorname{sdig}_P\) 一般不单射。
+

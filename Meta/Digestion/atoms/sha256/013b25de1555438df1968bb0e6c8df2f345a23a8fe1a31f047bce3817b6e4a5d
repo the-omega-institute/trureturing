@@ -1,0 +1,2 @@
+**定义 322.1。** 设 $A$ 是由序列 $(g_n)_{n\in\omega}$ 生成的阿贝尔群，$B\le A$，$f:B\to\mathsf D_{\rm rat}$ 为同态。这里只要求正整数可除性：对 $d\ge1$ 和 $[r]_{\rm rat}$，取一个有理代表 $r$，则 $d[r/d]_{\rm rat}=[r]_{\rm rat}$。经典来源为 [Stacks Project §15.55，Lemma 15.55.1](https://stacks.math.columbia.edu/tag/01D6) 的可除阿贝尔群单射性，以及 [§15.56，Lemma 15.56.7](https://stacks.math.columbia.edu/tag/01D8) 的评价单射性；以下给出它们在可数生成域上的完整构造。
+
