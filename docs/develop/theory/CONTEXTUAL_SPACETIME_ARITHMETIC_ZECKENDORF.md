@@ -9566,3 +9566,661 @@ $$
 若 $J_A$ 无限，按其递增枚举 $(n_k)$，将任意 $b\in\{0,1\}^\omega$ 送到 $x_{n_k}=b_k$、其余坐标为零的容量点，给 $\{0,1\}^\omega$ 到 $X_A^{\rm cap}$ 的单射。此二进序列集不可数：任何枚举 $(b^{(k)})$ 都遗漏序列 $b_k=1-b^{(k)}_k$。而有限字母表的每个固定长度字集有限，其可数并可数。因此不存在将全部 $X_A^{\rm cap}$ 点单射表示为有限字的方式，这是第 79 条的 Cantor 障碍在当前容量域上的应用。完整 $\operatorname{Enc}$ 保留集合语义，不声称提供这种有限字编码。
 
 若外部给定 $\mathfrak M\models\mathrm{ZFC}$，以上集合与定义按其内部有限性、幂集和函数集解释，第 78 条的双逆及每个外部标准有限公式的比较适用。这个条件比较没有构造 $\mathfrak M$，没有证明无条件 $\operatorname{Con}(\mathrm{ZFC})$，也没有定义任意集合的有效成员算法或同时判定全部公式的内部真理谓词：使用的分别是集合存在与唯一性以及逐个固定公式的归纳方案。证毕。
+## 342. 倒 Fibonacci 权的容量载体与两种总和
+
+**定义 342.1。** 在 ZFC 中，沿用第 3、9–10、69–70 条的 $G_0=1,G_1=2,G_{n+2}=G_{n+1}+G_n$、完整窗口 $\mathcal W_n$ 及有限自然数字 $\zeta$。固定任意 $A:\omega\to\omega$，使用定义 337.1 的
+$$
+X_A^{\rm cap}=\prod_{n\in\omega}D_n,\qquad
+D_n=\{k\in\mathbb Z_o:0\le k\le A_n\},\qquad
+B_A^{\rm cap}=X_A^{\rm cap}\cap\mathsf V_{\rm reg}.
+$$
+每个 $A_n$ 有限；两个载体中的点均为定义域恰为 $\omega$ 的总函数，只有 $B_A^{\rm cap}$ 要求有限支撑。第 299 条的有限配置 $X_A=S(P,A)$ 保持其原域。定义新的总有理系数行及第 330 条的特化
+$$
+r^F_n=\frac1{G_n},\qquad r^F\in\mathbb Q^\omega,\qquad
+L_F=L_{r^F}:\mathsf V_{\rm reg}\to\mathbb Q.
+$$
+记 $\iota_{\mathbb Q}:\mathbb Q\hookrightarrow\mathbb R$ 为通常包含，目标实直线取通常拓扑。有限容量状态的实读数、实部分和与扩展总和为
+$$
+\ell_F=\iota_{\mathbb Q}\circ(L_F|_{B_A^{\rm cap}}),\qquad
+P^F_N(x)=\iota_{\mathbb Q}\left(\sum_{n=0}^{N}\frac{x_n}{G_n}\right),
+$$
+$$
+S_F(x)=\sup_{N\in\omega}P^F_N(x)\in[0,+\infty],\qquad
+M_F(A)=S_F(A)=\sup_{N\in\omega}\sum_{n=0}^{N}\frac{A_n}{G_n}.
+$$
+这里 $x\in X_A^{\rm cap}$，容量角按定义 337.1 作逐点整数包含；非负有理数在实不等式中均经 $\iota_{\mathbb Q}$ 识别。无有限上界的上确界取 $+\infty$，此扩展值域暂不指定拓扑。对每个有限实数 $c$，分别定义
+$$
+L^F_{A,c}=\{u\in B_A^{\rm cap}:\ell_F(u)=c\},\qquad
+T^F_{A,c}=\{x\in X_A^{\rm cap}:S_F(x)=c\}.
+$$
+$L^F_{A,c}$ 即使置于 $X_A^{\rm cap}$ 中仍只含有限支撑状态。以上符号不改变第 338 条的 $P_N,S_A,M_A,\ell_A,L_{A,c},F_{A,c}$。
+
+**命题 342.2。** 每个 $G_n$ 为正整数，且 $G_{n+1}>G_n$。有限状态的 $L_F$ 值为有理数，在 $B_A^{\rm cap}$ 上非负，并有
+$$
+S_F|_{B_A^{\rm cap}}=\ell_F,\qquad
+0\le S_F(x)\le M_F(A)\quad(x\in X_A^{\rm cap}).
+$$
+本节的坐标拓扑和黄金拓扑精确为定理 337.2 的
+$$
+\tau_{\rm coord,A}^{X}=\tau_{\Psi,A}^{X},\qquad
+\tau_{\rm coord,A}^{B}=\tau_{\Psi,A}^{B},
+$$
+其中全乘积上的黄金映射是 $\Psi_A(x)_n=[\phi x_n]$。$B_A^{\rm cap}$ 在 $X_A^{\rm cap}$ 中稠密。
+
+**证明。** 初值为正整数且 $2>1$；递推在每一步保持整数性、正性，并由 $G_{n+2}=G_{n+1}+G_n>G_{n+1}$ 给严格增长。因此所有分母合法。有限支撑只需有限求和，非负容量再给各项非负。部分和递增且逐项不超过容量部分和，上确界给所列界；包含有限支撑的前缀之后，部分和恒等于 $\ell_F(u)$。
+
+这里每个因子恰为定义 337.1 的有限 $D_n$，拓扑、目标圆周及 $\Psi_A$ 也均为该定义的对象，所以直接应用定理 337.2。其关键条件是 $\phi$ 无理使 $k\mapsto[\phi k]$ 在 $D_n$ 上单射，有限 Hausdorff 像离散；这不要求容量具有共同上界。该定理的截断 $x^{(N)}$ 属于 $B_A^{\rm cap}$，并最终与 $x$ 在任意有限坐标集上一致，给稠密性。$\Psi_{\rm reg}$ 仅在有限支撑域上的限制用于这一比较；这里没有给它增加全乘积定义域。证毕。
+
+## 343. 完整窗口与任意模数的共尾整除
+
+**定理 343.1。** 对每个 $n\in\omega$，第 9 条的 $n$ 个可用位置的补零窗口 $\mathcal W_n$ 经 $V$ 双射到 $\{0,\ldots,G_n-1\}$。这些值的规范有限字长至多为 $n$；零的规范字为空。
+
+**证明。** 这是定理 10 在同一位置约定下的应用。其归纳把可用宽度和规范字长分别处理：零位置只有空字，值为零；一位置的两字给零和一。若 $n\ge1$，在 $n+1$ 个位置中按第 $n$ 位分类。该位为零时，下面 $n$ 位的值恰为 $0,\ldots,G_n-1$；该位为一时，第 $n-1$ 位必须为零，下面 $n-1$ 位给
+$$
+G_n+\{0,\ldots,G_{n-1}-1\}
+=\{G_n,\ldots,G_{n+1}-1\}.
+$$
+两段不交且各自唯一，证明窗口双射。删去高位补零保留值，得到定义 69 的规范字；反向把该字补零到宽度 $n$ 恢复窗口字。定理 70 的双逆保证这一对应唯一，但不使每个规范字都长为 $n$。证毕。
+
+**定理 343.2。** 对每个整数 $d\ge1$ 和每个 $N\in\omega$，存在 $n>N$ 使 $d\mid G_n$。此外
+$$
+G_{n+3}=2G_{n+1}+G_n,\qquad G_{n+3}\equiv G_n\pmod2,
+$$
+所以奇偶性按奇、偶、奇循环。本条使用经典模 Fibonacci 周期性，参见 [D. D. Wall, Fibonacci Series Modulo m](https://doi.org/10.2307/2309169) 与 [Pisano Period](https://mathworld.wolfram.com/PisanoPeriod.html)。
+
+**证明。** 令标准 Fibonacci 数满足 $F_0=0,F_1=1,F_{m+2}=F_{m+1}+F_m$。初值和递推归纳给 $G_n=F_{n+2}$。在有限集合 $(\mathbb Z/d\mathbb Z)^2$ 上取
+$$
+T(a,b)=(b,a+b),\qquad T^{-1}(a,b)=(b-a,a).
+$$
+两个复合直接为恒等，故 $T$ 是置换。轨道中有 $a<b$ 使 $T^a(0,1)=T^b(0,1)$；应用 $T^{-a}$，得到某个正整数 $t=b-a$ 满足 $T^t(0,1)=(0,1)$。归纳给
+$$
+T^m(0,1)=(F_m,F_{m+1})\pmod d,\qquad
+F_{kt}\equiv0\pmod d\quad(k\ge1).
+$$
+选 $k$ 使 $kt>N+2$，置 $n=kt-2$，便有 $n>N$ 及 $d\mid G_n$。$d=1$ 时状态集为单点，可以取 $t=1$，同一选择成立。每个新的截止指标都能重复应用此论证，故这些指标任意晚。最后直接展开两次递推得三步恒等式；初始三项 $1,2,3$ 的奇偶性和模二三步周期给全部奇偶断言。证毕。
+
+## 344. 任意容量下倒 Fibonacci 读数的连续性
+
+**定理 344.1。** 对每个 $A:\omega\to\omega$，以下四项等价：
+$$
+M_F(A)<+\infty
+\iff \ell_F\text{ 在零处连续}
+\iff \ell_F:B_A^{\rm cap}\to\mathbb R\text{ 连续}
+\iff \ell_F\text{ 有到 }X_A^{\rm cap}\text{ 的连续实值延拓}.
+$$
+源拓扑为第 342 条相等的坐标、黄金拓扑，目标为通常实拓扑。有限质量时唯一延拓是 $S_F$，且置
+$$
+R^F_N=M_F(A)-P^F_N(A)=\sum_{n>N}\frac{A_n}{G_n}
+$$
+便有
+$$
+R^F_N\longrightarrow0,\qquad
+0\le S_F(x)-P^F_N(x)\le R^F_N\quad(x\in X_A^{\rm cap}),
+$$
+$$
+\sup_{x\in X_A^{\rm cap}}|S_F(x)-P^F_N(x)|=R^F_N.
+$$
+若 $x,y$ 在 $0,\ldots,N$ 上一致，则 $|S_F(x)-S_F(y)|\le R^F_N$。若 $M_F(A)=+\infty$，$\ell_F$ 在 $B_A^{\rm cap}$ 的每一点均不连续。
+
+**证明。** 每个 $P^F_N$ 只依赖有限个离散坐标，故连续。设 $M_F(A)$ 有限。单调容量部分和趋向它的上确界，故 $R^F_N\to0$；所有 $S_F(x)$ 都是有限实数。对 $K\ge N$，
+$$
+0\le P^F_K(x)-P^F_N(x)
+\le\sum_{n=N+1}^{K}\frac{A_n}{G_n}.
+$$
+对 $K$ 取上确界得尾界；$x=A$ 取得该上界，所以还得到显示的精确上确界及一致收敛。这个估计是连续函数级数的经典一致尾界，亦即 [Weierstrass 判别法](https://en.wikipedia.org/wiki/Weierstrass_M-test)在当前控制项 $A_n/G_n$ 上的应用。
+
+若两点有共同前缀和 $a$，其总和同在 $[a,a+R^F_N]$，故得到差界。任给点 $x$ 和实数 $\delta>0$，选 $N$ 使 $R^F_N<\delta$；固定此前缀的柱集内，所有读数与 $S_F(x)$ 相差小于 $\delta$。这直接证明实值 $S_F$ 连续，其限制为 $\ell_F$，并在零处连续。若两个连续实延拓在稠密的 $B_A^{\rm cap}$ 上相等，其等值集因 $\mathbb R$ Hausdorff 而闭，故为全空间，证明唯一性。
+
+反向设 $M_F(A)=+\infty$。固定任意 $u\in B_A^{\rm cap}$ 及其任意邻域 $U$。由柱集基取有限 $I$ 使
+$$
+u\in C_I(u)\cap B_A^{\rm cap}\subseteq U.
+$$
+选 $N$ 同时包含 $I$ 及 $\operatorname{supp}(u)$，空集合也允许。删去这个有限前缀只删去有限质量，故存在 $K>N$ 使 $\sum_{N<n\le K}A_n/G_n\ge1$。定义 $v$ 在 $n\le N$ 时等于 $u_n$，在 $N<n\le K$ 时等于 $A_n$，在 $n>K$ 时为零。因 $u_n=0$ 对所有 $n>N$，这是真正在空尾上作的合法非负添加；$v$ 满足全部容量界、支撑有限且属于 $U$。然而
+$$
+\ell_F(v)-\ell_F(u)=\sum_{N<n\le K}\frac{A_n}{G_n}\ge1.
+$$
+于是任何 $u$ 的邻域都不能映入 $(\ell_F(u)-1/2,\ell_F(u)+1/2)$，证明处处不连续。连续实延拓的限制必连续，而处处连续必在零处连续，故四项等价。这里既未在容量盒上使用群平移，也未给无限质量的扩展实值 $S_F$ 声明连续性。证毕。
+
+**推论 344.2。** 任意有限个初始容量的改变不影响 $M_F(A)$ 是否有限。全零容量给单点零载体；有限个非零容量给有限离散盒。在有限质量时，每个 $L^F_{A,c}$ 在 $B_A^{\rm cap}$ 中闭，每个 $T^F_{A,c}$ 在 $X_A^{\rm cap}$ 中闭。对任意容量及每个有限实数 $c$，子水平集 $\{x\in X_A^{\rm cap}:S_F(x)\le c\}$ 都闭。
+
+**证明。** 有限个容量质量的和有限，删去或替换这些项不改变非负级数是否有有限上界。前两个载体断言直接使用定理 337.2。有限质量的等值集是定理 344.1 中连续实函数的闭单点逆像。一般情形则有
+$$
+\{x:S_F(x)\le c\}=\bigcap_{N\in\omega}\{x:P^F_N(x)\le c\};
+$$
+每个右侧集合闭，任意交仍闭，负 $c$ 时两边均为空。证毕。
+
+## 345. 固定阈值的共尾条件与有理尾填充
+
+**定义 345.1。** 对容量 $A$ 定义两个谓词
+$$
+\mathsf U_F(A)\iff
+\exists\epsilon\in\mathbb R_{>0}\
+\forall d\in\omega\setminus\{0\}\
+\forall N\in\omega\
+\exists n>N,\quad
+d\mid G_n\ \land\ \frac{A_n}{G_n}\ge\epsilon,
+$$
+$$
+\mathsf{Fill}_F(A)\iff
+\forall q\in\mathbb Q_{\ge0}\ \forall N\in\omega\
+\exists u\in B_A^{\rm cap},\quad
+\operatorname{supp}(u)\subseteq\{n:n>N\}\ \land\
+\ell_F(u)=\iota_{\mathbb Q}(q).
+$$
+$\mathsf U_F(A)$ 中只选一次 $\epsilon$，且两个条件必须在同一个 $n$ 上成立。每条尾的容量质量记为非负扩展和 $\sum_{n>N}A_n/G_n$。
+
+**定理 345.2。** $\mathsf U_F(A)$ 蕴含 $\mathsf{Fill}_F(A)$，并使每条尾的容量质量为 $+\infty$。单独的 $\mathsf{Fill}_F(A)$ 也使每条尾的容量质量为 $+\infty$。
+
+**证明。** 固定满足 $\mathsf U_F(A)$ 的同一个 $\epsilon>0$。给定 $q\in\mathbb Q_{\ge0}$ 和截止指标 $N$，$q=0$ 时取总零函数。若 $q>0$，选整数 $k\ge1$ 使 $q/k\le\epsilon$，并把 $q/k$ 写成既约正分数 $a/b$。从 $N$ 开始，反复以同一分母 $b$ 及上一次选中的指标为新截止指标，得到
+$$
+N<n_1<\cdots<n_k,\qquad
+b\mid G_{n_j},\qquad \frac{A_{n_j}}{G_{n_j}}\ge\epsilon.
+$$
+只作这 $k$ 次选择。令
+$$
+u_{n_j}=a(G_{n_j}/b)\quad(1\le j\le k),\qquad
+u_n=0\quad(n\notin\{n_1,\ldots,n_k\}).
+$$
+整除保证每个所填值为整数，并有
+$$
+0<u_{n_j}=(q/k)G_{n_j}\le\epsilon G_{n_j}\le A_{n_j}.
+$$
+因此全部容量界成立，支撑有限且在 $N$ 之后，而 $\ell_F(u)=k(q/k)=q$。这证明填充。
+
+在任意尾上，以 $d=1$ 重复选取 $h$ 个严格增加的指标，其总容量质量至少为 $h\epsilon$。任意给定实上界都被充分大的 $h$ 超过，所以每条尾质量无有限上界。若只假设 $\mathsf{Fill}_F(A)$，对任意正整数 $h$ 在该尾填出值 $h$；其有限支撑质量不超过该尾容量质量。让 $h$ 任意大同样证明发散。证毕。
+
+**命题 345.3。** 完整窗口的首次容量越界不保证精确有理填充所需的整数末坐标。把 $\mathsf U_F(A)$ 的固定正阈值换成逐指标的正性也不足以推出 $\mathsf{Fill}_F(A)$。
+
+**证明。** 取 $A_n=G_n-1$，在截止指标 $1$ 之后尝试填充 $1/2$。第一个尾坐标 $n=2$ 的容量质量是 $2/3$，已经超过 $1/2$；若只在此坐标完成首次越界填充，就必须填 $G_2/2=3/2$，不是整数。因此这种越界步骤不能作为一般有理填充证明，定理 345.2 的同指标整除条件不可由大小关系代替。
+
+再取 $A_n=1$ 对每个 $n$。定理 343.2 仍给每个分母的共尾整除，且每个 $A_n/G_n>0$。但 $G_{n+2}\ge2G_n$，归纳得到
+$$
+G_{2j}\ge2^j,\qquad G_{2j+1}\ge2^{j+1}.
+$$
+故
+$$
+\sum_{n\ge0}\frac1{G_n}
+\le\sum_{j\ge0}2^{-j}+\sum_{j\ge0}2^{-j-1}=3,
+\qquad
+\sum_{n\ge2j}\frac1{G_n}\le3\,2^{-j}.
+$$
+特别截止指标 $3$ 之后的容量质量至多 $3/4<1$，任何该尾上的有限状态均不能取值一。因此 $\mathsf{Fill}_F(A)$ 为假，固定 $\epsilon$ 的条件也为假。证毕。
+
+## 346. 有限有理水平的锐闭包与全乘积实值
+
+**定理 346.1。** 若 $\mathsf{Fill}_F(A)$，则对每个 $c\in\mathbb Q_{\ge0}$，
+$$
+\overline{L^F_{A,c}}^{X_A^{\rm cap}}
+=\{x\in X_A^{\rm cap}:S_F(x)\le c\},\qquad
+\overline{L^F_{A,c}}^{B_A^{\rm cap}}
+=\{u\in B_A^{\rm cap}:\ell_F(u)\le c\}.
+$$
+闭包使用第 342 条的坐标拓扑，等价地使用相同的有界黄金拓扑。每个正有理水平非空，并在两个所列载体中都不闭。对任意 $A$ 都有
+$$
+L^F_{A,0}=T^F_{A,0}=\{0\}.
+$$
+若有限实数 $c<0$ 或 $c\notin\mathbb Q$，$L^F_{A,c}$ 及其两个闭包均为空。
+
+**证明。** 固定非负有理数 $c$。若 $S_F(x)>c$，包括取值 $+\infty$，上确界定义给 $N$ 使 $P^F_N(x)>c$。固定 $0,\ldots,N$ 的柱集内，所有非负状态的总和至少为该部分和，故此柱集不交 $L^F_{A,c}$。这证明闭包到子水平集的包含。
+
+反向设 $S_F(x)\le c$，并取 $x$ 的任意邻域。取其中的精确柱集 $C_I(x)$，再选 $N$ 包含有限 $I$；$I=\varnothing$ 时任取 $N$。前缀质量 $a=P^F_N(x)$ 是有理数且 $a\le c$。以 $\mathsf{Fill}_F(A)$ 在 $N$ 后填出有理缺额 $c-a$，所得状态记为 $w$。令 $u_n=x_n$ 对 $n\le N$，$u_n=w_n$ 对 $n>N$。前后段不交且分别满足各自容量界，支撑为两个有限集合之并，故 $u\in B_A^{\rm cap}$。其前缀满足柱集全部约束，且 $\ell_F(u)=a+(c-a)=c$。包括零缺额在内，每个邻域都遇到水平，得到反向包含。
+
+对 $E\subseteq B\subseteq X$，子空间邻域与 $E$ 相交恰当原环境邻域与 $E$ 相交，所以 $\overline E^B=B\cap\overline E^X$。用于当前水平，并代入 $S_F|_{B_A^{\rm cap}}=\ell_F$，得到相对闭包式。非负项和正权使总和为零当且仅当所有坐标为零，故两个零水平为同一单点。正有理 $c$ 可在任一尾填出，因此水平非空；零属于所列两个子水平集，却不在该水平中，故它在两个载体中均不闭。
+
+有限非负有理项的有限和仍为非负有理数，这证明负数及无理数的有限水平为空；空集的两个闭包也为空。因此无理 $c>0$ 时不能使用显示的有理闭包公式，因为其右侧仍含零。证毕。
+
+**定理 346.2。** 若 $\mathsf{Fill}_F(A)$，则 $S_F$ 取到每个有限非负实数，并取到 $+\infty$：
+$$
+S_F[X_A^{\rm cap}]=[0,+\infty].
+$$
+特别 $T^F_{A,t}$ 对每个有限实数 $t\ge0$ 非空，包括无理数；$t<0$ 时为空。若另定义有限支撑的 $+\infty$ 水平，它为空。
+
+**证明。** 对 $t=0$ 取零。对有限 $t>0$，置 $a_0=0$，并对 $j\ge1$ 置
+$$
+a_j=\frac{\lfloor2^jt\rfloor}{2^j}.
+$$
+它们为非负有理数。由 $\lfloor2z\rfloor\ge2\lfloor z\rfloor$，$a_{j+1}\ge a_j$；且 $0\le t-a_j<2^{-j}$，所以 $a_j\to t$。从 $N_0=0$ 开始，在 $N_{j-1}$ 之后填出有理增量 $a_j-a_{j-1}$，得到有限状态 $w^{(j)}$，再选择
+$$
+N_j\ge N_{j-1}+1,\qquad
+\operatorname{supp}(w^{(j)})\subseteq\{0,\ldots,N_j\}.
+$$
+增量为零时取零状态，仍使 $N_j>N_{j-1}$。因此各非零支撑落在有序不交的有限区段 $(N_{j-1},N_j]$ 内。定义总函数 $x$ 在这些支撑上取相应 $w^{(j)}$ 的值，其余坐标为零。没有坐标重复填充，故 $x\in X_A^{\rm cap}$。未来的块都在 $N_j$ 之后，因此
+$$
+P^F_{N_j}(x)=\sum_{i=1}^{j}(a_i-a_{i-1})=a_j.
+$$
+$N_j\to\infty$，任一部分和都不超过某个 $a_j\le t$，而其上确界至少为 $\sup_j a_j=t$，故 $S_F(x)=t$。
+
+定理 345.2 已使 $M_F(A)=+\infty$，容量角 $x=A$ 便取到 $+\infty$。这是扩展值图中的另一种值，不是任何有限实数水平。非负性排除负值，有限支撑排除无限值。整个构造允许所得 $x$ 有无限支撑，未将其当作 $L^F_{A,t}$ 的元素。证毕。
+
+**命题 346.3。** 对任意 $A$ 及正有理数 $c$，零不在 $L^F_{A,c}$ 的 $\tau_{+,A}$ 闭包中。因而在 $\mathsf{Fill}_F(A)$ 下，定理 346.1 的两个有界黄金、坐标闭包结论不能替换为该更细观察拓扑下的同一断言。
+
+**证明。** 选整数 $m>c$，$m\ge1$，取第 340 条允许的总有理序列
+$$
+r_n=\frac1{mG_n}.
+$$
+其有限状态特征 $\chi_r^{\rm cap}$ 在 $\tau_{+,A}$ 下连续，且
+$$
+\chi_r^{\rm cap}(u)=[\ell_F(u)/m],\qquad
+\chi_r^{\rm cap}(0)=0_{\mathbb T}.
+$$
+在整个 $L^F_{A,c}$ 上该值恒为 $[c/m]\ne0_{\mathbb T}$，因为 $0<c/m<1$。通常圆周中取含零而不含此点的开集，其逆像与 $B_A^{\rm cap}$ 的交是 $\tau_{+,A}$ 零邻域，并与水平不交。这是直接的邻域分离；该拓扑本身只在 $B_A^{\rm cap}$ 上按定义 340.1 使用。证毕。
+
+## 347. 允许任意有限前缀的最终完整窗口
+
+**定理 347.1。** 若存在 $n_0\in\omega$ 使
+$$
+A_n=G_n-1\quad(n\ge n_0),
+$$
+而 $n<n_0$ 的各容量是任意有限非负整数，则 $\mathsf U_F(A)$ 以 $\epsilon=1/2$ 成立。因此 $\mathsf{Fill}_F(A)$、定理 346.1 的全部有理闭包式、$M_F(A)=+\infty$、$\ell_F$ 处处不连续及 $S_F[X_A^{\rm cap}]=[0,+\infty]$ 都成立。每个 $n\ge n_0$ 的坐标有恰好 $G_n$ 个允许值，经 $\zeta$ 和补零对应完整的 $n$ 位置窗口。
+
+**证明。** 给定 $d\ge1,N\in\omega$，用定理 343.2 在 $\max(N,n_0,0)$ 之后选择 $n$ 使 $d\mid G_n$。此时 $n\ge1$ 且 $G_n\ge2$，所以同一个指标满足
+$$
+\frac{A_n}{G_n}=1-\frac1{G_n}\ge\frac12.
+$$
+这正是同一个固定阈值的全部量词。有限前缀不参与选择，故其中可有零容量，也可有不是完整窗口端点的容量。各结论分别由定理 345.2、346.1、344.1、346.2 得到。
+
+在未例外的坐标上，允许值恰为 $0,\ldots,G_n-1$，定理 343.1 给窗口和计数。若完整公式也用于 $n=0$，则 $A_0=0$，只有空字；$n=1$ 时 $A_1=1$，有零和一。窗口宽度只限制状态内容字，规范字仍可更短。证毕。
+
+## 348. 发散质量不足以填充的奇分母窗口
+
+**命题 348.1。** 定义容量
+$$
+A^{\rm odd}_n=
+\begin{cases}
+1,&n=1,\\
+G_n-1,&n\ne1\text{ 且 }G_n\text{ 为奇数},\\
+0,&\text{其余情形}.
+\end{cases}
+$$
+则 $M_F(A^{\rm odd})=+\infty$，每个非零容量坐标均为其完整窗口，但
+$$
+L^F_{A^{\rm odd},1/2}=\{\varepsilon_1\}.
+$$
+该水平在 $X_{A^{\rm odd}}^{\rm cap}$ 和 $B_{A^{\rm odd}}^{\rm cap}$ 中均为闭单点，零不在其闭包；任何截止指标 $N\ge1$ 之后都不能有限填出 $1/2$。因此 $\mathsf{Fill}_F(A^{\rm odd})$ 和 $\mathsf U_F(A^{\rm odd})$ 均为假。
+
+**证明。** 定理 343.2 的奇偶周期给无穷多个奇数 $G_n\ge3$，对应质量 $1-1/G_n\ge2/3$。任取足够多个这样的指标就超过任意有限质量上界，所以总质量发散。$n=1$ 的容量也是 $G_1-1=1$；其它非零容量按定义为 $G_n-1$，故每个活跃坐标完整。
+
+若有限状态 $u$ 的 $u_1=0$，其非零贡献全部以奇数 $G_n$ 为分母。取这些分母的有限积 $D$，空支撑时取 $D=1$。$D$ 为奇数，且通分后 $\ell_F(u)=a/D$，$a$ 为非负整数。等于 $1/2$ 会给 $2a=D$，与奇偶性矛盾。若 $u_1=1$，这一项已贡献 $1/2$，所有其它贡献非负且权为正，所以总和等于 $1/2$ 当且仅当其它坐标全部为零。由于 $u_1$ 只能取零或一，水平恰为所列单点。
+
+定理 337.2 的 Hausdorff 性及其子空间性质使单点在两载体中都闭；$\varepsilon_1\ne0$，故零不在闭包。在 $1$ 后的尾状态满足 $u_1=0$，刚才的奇分母论证排除填充。对 $d=2,N=1$，任何满足 $2\mid G_n$ 的后续指标容量都是零，所以没有正阈值可成立。这里的奇分母通分只对有限支撑和使用；没有以它限制全乘积的无穷和分母。发散仍按定理 344.1 导致处处不连续，但不强迫每个非空水平都不闭。证毕。
+
+## 349. 同一 Fibonacci 权下阶乘块的非必要性
+
+**定义 349.1。** 递归选择有限非空指标集 $I_j$，$j\ge1$，满足
+$$
+|I_j|=j\,j!,\qquad j!\mid G_n\ (n\in I_j),\qquad
+\max I_j<\min I_{j+1}.
+$$
+例如 $I_1$ 从指标 $0$ 之后选取，随后每次按递增次序取截止指标之后最小的 $j\,j!$ 个满足整除的指标。定理 343.2 保证每个有限选择都能完成。各 $I_j$ 是彼此分隔的有限集，不要求是连续整数区间。定义
+$$
+A^{!}_n=
+\begin{cases}
+G_n/j!,&n\in I_j,\\
+0,&n\notin\bigcup_{j\ge1}I_j.
+\end{cases}
+$$
+
+**定理 349.2。** $A^{!}:\omega\to\omega$ 的每个容量有限，满足 $\mathsf{Fill}_F(A^{!})$，但不满足 $\mathsf U_F(A^{!})$。每条尾的容量质量均发散，且定理 346.1 的锐闭包、定理 346.2 的全实值结论及定理 344.1 的处处不连续均适用。因此固定阈值的共尾条件对精确有理尾填充充分而非必要；权仍恰为 $1/G_n$。
+
+**证明。** 块间分隔使每个指标至多落在一块中，整除使活跃容量 $G_n/j!$ 为正整数；每个值都是有限整数。块内的归一化质量恰为
+$$
+\frac{A^{!}_n}{G_n}=\frac1{j!}\quad(n\in I_j),\qquad
+\sum_{n\in I_j}\frac{A^{!}_n}{G_n}=j.
+$$
+因 $j!\ge2^{j-1}$，$1/j!\to0$。给定任意固定 $\epsilon>0$，只有有限多个 $j$ 可能满足 $1/j!\ge\epsilon$；这些块各自有限，其并也有限。在包含它们的截止指标之后，每个坐标质量都小于 $\epsilon$，块外则为零。因此 $\mathsf U_F(A^{!})$ 已在 $d=1$ 的量词上失败。
+
+另一方面，给定 $q=a/d\ge0$，$a\in\omega,d\ge1$，以及 $N\in\omega$。有序非空块的最小指标严格增加，所以趋于无穷。可选 $j$ 同时满足
+$$
+j\ge d,\qquad j\ge q,\qquad \min I_j>N.
+$$
+因 $d$ 是 $1,\ldots,j$ 中的一个因子，$d\mid j!$。因此
+$$
+m=\frac{a\,j!}{d}=qj!\in\omega,\qquad 0\le m\le j\,j!=|I_j|.
+$$
+在 $I_j$ 中任取恰好 $m$ 个指标，填到各自容量，其余全部取零。每个坐标合法，支撑有限且在 $N$ 之后，读数精确为 $m/j!=q$。$q=0$ 时 $m=0$，取空支撑即可。故 $\mathsf{Fill}_F(A^{!})$ 成立。
+
+每条尾之后都有整块 $I_j$，其质量为任意大的 $j$，故尾质量无有限上界；亦可直接用定理 345.2。现在逐项应用已证的闭包、实值和连续性定理，即得其余断言。证毕。
+
+## 350. 带符号有理值域与两种核
+
+**定义 350.1。** 在第 306、330 条的带符号有限支撑总函数群 $\mathsf V_{\rm reg}$ 上，置
+$$
+H_F=\ker L_F,\qquad g_F(u)=[\phi L_F(u)]\in C_\phi,\qquad
+\theta^F_n=[1/G_n]_{\rm rat}\in\mathsf D_{\rm rat}.
+$$
+$\theta^F\in\Theta_{\rm rat}$ 是定义域为全部 $\omega$ 的有理相位探针，其特征为第 321–323 条的
+$$
+\chi^{\rm rat}_{\theta^F}(u)=\sum_nu_n\theta^F_n=[L_F(u)]_{\rm rat}.
+$$
+
+**定理 350.2。** 在所列带符号域上，
+$$
+L_F[\mathsf V_{\rm reg}]=\mathbb Q,\qquad
+\mathsf V_{\rm reg}/H_F\cong\mathbb Q,
+$$
+$$
+H_F\text{ 饱和},\qquad \ker g_F=H_F,
+\qquad \ker\chi^{\rm rat}_{\theta^F}=L_F^{-1}(\mathbb Z_o)\supsetneq H_F.
+$$
+在 $B_A^{\rm cap}$ 上的实值限制是定义 342.1 的 $\ell_F$；有理满射断言不附加任何容量盒约束。
+
+**证明。** 有限支撑给有理有限和及加法线性。任取 $q=a/d\in\mathbb Q$，$a\in\mathbb Z_o,d\ge1$。定理 343.2 给一个 $d\mid G_n$ 的指标，因而
+$$
+u=a(G_n/d)\varepsilon_n\in\mathsf V_{\rm reg},\qquad
+L_F(u)=\frac{a(G_n/d)}{G_n}=q.
+$$
+这个构造允许负整数坐标，且只需一个支撑点；$a=0$ 时给零。商映射 $u+H_F\mapsto L_F(u)$ 因核定义而良定义并保持加法。两个像相等当且仅当差在 $H_F$，故单射；刚才的构造给满射，得到同构。
+
+将定理 330.2 直接用于总有理行 $r^F$，得到饱和性及黄金核式。具体地，非零整数 $k$ 若使 $ku\in H_F$，则 $kL_F(u)=0$，有理加法群无扭，故 $u\in H_F$；这就是饱和性。若 $[\phi L_F(u)]=0$ 而 $L_F(u)\ne0$，则某个整数除以非零有理数等于 $\phi$，违反无理性，所以黄金核恰为 $H_F$。
+
+有理模一值为零恰当未约去的 $L_F(u)$ 为整数。因 $G_0=1$，$L_F(\varepsilon_0)=1$，故 $\varepsilon_0$ 属于有理相位核而不属于 $H_F$，给严格包含。这个见证属于带符号群；在容量盒中它还须满足 $A_0\ge1$。最后 $[0]_{\rm rat}=[1]_{\rm rat}$，但 $[0]\ne[\phi]$，所以通过任取有理模一代表再乘 $\phi$ 不能定义一个相位函数。$g_F$ 使用的是未丢失整数部分的 $L_F$，其值域和核按第 330 条解释。证毕。
+
+## 351. 六十态的 5040 盒及其尾扩张
+
+**命题 351.1。** 保留有序素数标签 $(p_0,p_1,p_2,p_3)=(2,3,5,7)$ 和
+$$
+u_{5040}=(4,2,1,1,0,\ldots),\qquad
+A^{5040}=(4,2,1,1,0,\ldots).
+$$
+则
+$$
+\operatorname{scal}_{\rm reg}(u_{5040})=5040,\qquad
+L_F(u_{5040})=\frac{83}{15},\qquad
+\ell_{\rm dy}(u_{5040})=\frac{43}{8},
+$$
+$$
+|B_{A^{5040}}^{\rm cap}|=|X_{A^{5040}}^{\rm cap}|=60,\qquad
+M_F(A^{5040})=\frac{83}{15},\qquad
+L^F_{A^{5040},83/15}=T^F_{A^{5040},83/15}=\{u_{5040}\}.
+$$
+这是该有限盒内唯一的最大读数状态。指数绝对值的低位到高位规范字为 $(101,01,1,1)$，标量 $5040$ 的规范字占据位置 $\{2,5,11,13,17\}$。新读数的既约分子、分母字分别为
+$$
+\zeta(83)=010100101,\qquad \zeta(15)=010001.
+$$
+
+**证明。** 第 341.3–341.4 条给相同的素数标签、状态和标量域。直接计算
+$$
+2^4\cdot3^2\cdot5\cdot7=5040,\qquad
+4+\frac22+\frac13+\frac15=\frac{83}{15},\qquad
+4+\frac22+\frac14+\frac18=\frac{43}{8}.
+$$
+定理 337.2 的有限积计数给 $5\cdot3\cdot2\cdot2=60$，该载体经素数分解对应 $5040$ 的全部正约数。所有尾容量为零，所以全乘积和有限支撑载体相等。对其中任意 $u$，
+$$
+\frac{83}{15}-\ell_F(u)
+=\sum_{n=0}^{3}\frac{A^{5040}_n-u_n}{G_n}\ge0.
+$$
+每项非负且权正，和为零恰当每个 $u_n=A^{5040}_n$；尾坐标已经全为零。这同时证明质量、唯一最大点及两个水平的断言。
+
+指数字和标量位置按命题 341.4 的同一分解复用。对新分数，
+$$
+83=55+21+5+2=G_8+G_6+G_3+G_1,\qquad
+15=13+2=G_5+G_1.
+$$
+各位置互不相邻，故第 70 条的唯一性给显示的两个规范字。欧几里得算法 $83=5\cdot15+8$、$15=8+7$、$8=7+1$ 给 $\gcd(83,15)=1$，有理相位为 $[8/15]_{\rm rat}$。
+
+第 341.4 条及 [GICT 定义 1.4、1.7](GICT.md) 的标量观察仍为 $\Gamma_+(5040)=(\lfloor\log_\phi5040\rfloor,\zeta(5040),[\phi5040])$。它的输入是乘法标量；$\Psi_A(u_{5040})$ 逐坐标读整数指数，而 $\ell_F$ 和 $\ell_{\rm dy}$ 使用两条不同的系数行。素数标签 $p_n$、指数内容中位置 $j$ 的权 $G_j$、以及新观察中按素数索引 $n$ 取的倒数权 $1/G_n$ 各按所列公式取值。上述等式不将这些函数或其参数识别为同一个坐标。证毕。
+
+**命题 351.2。** 若 $A_0=4,A_1=2,A_2=A_3=1$，其后容量任意有限，且最终满足 $A_n=G_n-1$，则 $u_{5040}\in L^F_{A,83/15}$，这个水平不是单点，$83/15$ 不是该载体的最大读数，并有
+$$
+\overline{L^F_{A,83/15}}^{X_A^{\rm cap}}
+=\{x\in X_A^{\rm cap}:S_F(x)\le83/15\},\qquad
+\overline{L^F_{A,83/15}}^{B_A^{\rm cap}}
+=\{u\in B_A^{\rm cap}:\ell_F(u)\le83/15\}.
+$$
+
+**证明。** 四个前缀容量恰好容纳 $u_{5040}$，其余零坐标不需要额外界。定理 347.1 允许这些前缀例外，并给 $\mathsf{Fill}_F(A)$。在截止指标 $3$ 后填出 $83/15$，得到前四坐标全零的 $w\ne u_{5040}$，却有同一读数。在同一截止指标之后另填出一，所得 $v$ 与 $u_{5040}$ 支撑不交，故 $u_{5040}+v$ 仍满足逐坐标容量界，并有
+$$
+\ell_F(u_{5040}+v)=\frac{83}{15}+1=\frac{98}{15}>\frac{83}{15}.
+$$
+这给非单点和非最大性的两个见证；两个闭包式由定理 346.1 得到。前四个容量不需等于 $G_n-1$，而命题 351.1 的唯一最大性只在尾容量全零的盒中成立。证毕。
+
+## 352. 倒 Fibonacci 系数的有限字段与精确求值域
+
+**命题 352.1。** 在第 332 条的独立字段域中，
+$$
+\operatorname{qenc}(1/G_n)
+=T_2(\operatorname{scode}(1),\zeta(G_n))\in\mathsf{RatFld},
+$$
+$$
+\operatorname{penc}(\theta^F_n)=
+\begin{cases}
+T_2(0_Z,\zeta(1)),&n=0,\\
+T_2(\zeta(1),\zeta(G_n)),&n\ge1.
+\end{cases}
+$$
+分母字 $\zeta(G_n)$ 的唯一占据位置为 $n$，规范字长为 $n+1$；它不是被限制在 $n$ 位置窗口中的状态内容字。值字段与相位字段分别使用定理 332.2 的双逆。
+
+对任意 $u\in\mathsf V_{\rm reg}$，置 $I=\operatorname{supp}(u)$，并定义
+$$
+D=\prod_{n\in I}G_n,\qquad
+ a=\sum_{n\in I}u_n(D/G_n),\qquad
+ h=\gcd(|a|,D),
+$$
+$$
+s=a-D\lfloor a/D\rfloor,\qquad k=\gcd(s,D).
+$$
+空积为一、空和为零。则
+$$
+L_F(u)=a/D,\qquad
+\operatorname{qenc}(L_F(u))
+=T_2(\operatorname{scode}(a/h),\zeta(D/h)),
+$$
+$$
+\operatorname{penc}([L_F(u)]_{\rm rat})
+=T_2(\zeta(s/k),\zeta(D/k)).
+$$
+
+**证明。** 正整数 $G_n$ 与一互素，故第一式满足正分母、既约及有符号分子的值字段谓词。$n=0$ 时值是一而相位为零；相位零的既约正分母只能为一。$n\ge1$ 时 $G_n>1$，故 $0<1<G_n$，满足相位字段的独立谓词。只在位置 $n$ 置一的字没有相邻一且值为 $G_n$，第 70 条唯一性给分母字及其长度。完整状态窗口取的值却是 $0,\ldots,G_n-1$，所以两种长度要求分属不同对象。
+
+有限积 $D$ 为正整数，并被每个支撑分母 $G_n$ 整除；因而 $a\in\mathbb Z_o$，通分给 $L_F(u)=a/D$。$h\ge1$，约分后的正分母分数既约，定理 332.2 给第一字段式及两方向复合恒等。取整保证 $0\le s<D$，$s/D$ 与 $a/D$ 同模一类；以 $k$ 约分给第二式及相位双逆。负 $a$ 也满足该余数不等式。若 $a=0$，则 $h=D$；若 $s=0$，则 $k=D$，分别得到相应的 $0/1$ 字段。特别空支撑使 $D=h=k=1,a=s=0$，两式同取 $T_2(0_Z,\zeta(1))$。故这两个有理字段域并非不交域。
+
+对命题 351.1 的状态，值字段为 $\operatorname{qenc}(83/15)$，有理相位字段为 $\operatorname{penc}([8/15]_{\rm rat})=T_2(\zeta(8),\zeta(15))$，前者的分子是有符号的 $\operatorname{scode}(83)$。证毕。
+
+**命题 352.2。** 第 335 条的黄金字段给
+$$
+\operatorname{cenc}_\phi(\phi/G_n)
+=T_2(\zeta(0),\operatorname{qenc}(1/G_n))\in\mathsf{Coeff}_\phi,
+$$
+$$
+\operatorname{genc}_\phi([\phi/G_n])
+=T_2(\zeta(1),\operatorname{qenc}(1/G_n))\in\mathsf{Phase}_\phi,
+$$
+$$
+\operatorname{genc}_\phi(g_F(u_{5040}))
+=T_2(\zeta(1),\operatorname{qenc}(83/15)).
+$$
+系数侧与相位侧各在其整个独立字段域及整个值域 $L_\phi,C_\phi$ 上互为双逆，两个带标签字段域不交。对每个 $n\ge1$，$\phi/G_n\notin\mathbb Z_o[\phi]$；$n=0$ 时 $\phi/G_0=\phi\in\mathbb Z_o[\phi]$。
+
+**证明。** 定理 335.2 可直接用于每个有理乘数 $1/G_n$ 以及 $L_F(u_{5040})=83/15$，给全部字段式及双逆。其唯一性条件在当前域不变：$\phi\ne0$ 使实提升 $q\mapsto\phi q$ 单射；$[\phi q]=[\phi q']$ 使 $\phi(q-q')$ 为整数，无理性使 $q=q'$。再用定理 332.2 恢复每个有理字段，两个标签 $\zeta(0)\ne\zeta(1)$ 使字段类型不交，即使解码值为零也如此。
+
+若 $n\ge1$ 且 $\phi/G_n=a+b\phi$、$a,b\in\mathbb Z_o$，则 $(1/G_n-b)\phi=a$。由于 $0<1/G_n<1$ 而 $b$ 为整数，括号是非零有理数，于是 $\phi$ 为有理数，矛盾。这按 [GICT 定义 1.2](GICT.md) 的整系数环取域。$n=0$ 的式子以 $a=0,b=1$ 成立。各数字分量均编码有理乘数及有限标签，没有对无理数直接使用 $\zeta$，也没有在已经模一的有理类上定义乘 $\phi$。证毕。
+
+**命题 352.3。** 对 $u\in\mathsf V_{\rm reg}$ 取第 316–317 条的 $s_u=\operatorname{rec}_{\rm reg}(u)\in\mathsf{Rec}_{\rm reg}$，对总探针 $\theta^F$ 取第 333 条的
+$$
+t_F=\operatorname{prec}_{\rm rat}(\theta^F)\in\mathsf{ProbeRec},\qquad
+t_F(\lambda_{\rm reg}(n))=\operatorname{penc}(\theta^F_n),\qquad
+\lambda_{\rm reg}(n)=\zeta(p_n).
+$$
+对每个有限 $F\subseteq\omega$，置 $a_F=\theta^F|_F\in\mathsf{FinCoef}$、$c_F=\operatorname{fprec}_{\rm rat}(a_F)$。则
+$$
+\operatorname{dom}(s_u)=\lambda_{\rm reg}[\operatorname{supp}(u)],\qquad
+\operatorname{dom}(c_F)=\lambda_{\rm reg}[F],\qquad
+c_F=t_F|_{\lambda_{\rm reg}[F]}.
+$$
+定理 334.2 的精确联合域特化为
+$$
+T_2(u,a_F)\in D_{\rm fin}
+\iff \operatorname{supp}(u)\subseteq F
+\iff \operatorname{dom}(s_u)\subseteq\operatorname{dom}(c_F)
+\iff T_2(s_u,c_F)\in D_{\rm fin}^{d}.
+$$
+在且仅在这些条件成立时，有限求值有定义且
+$$
+E_{\rm fin}^{d}(s_u,c_F)
+=\operatorname{penc}(E_{\rm fin}(u,a_F))
+=\operatorname{penc}([L_F(u)]_{\rm rat});
+$$
+总求值则对每个 $u$ 满足 $E_d(s_u,t_F)=\operatorname{penc}([L_F(u)]_{\rm rat})$。
+
+**证明。** 第 317 条在独立目标 $\mathsf{Rec}_{\rm reg}$ 上给 $\operatorname{unrec}_{\rm reg}$ 的双逆，解码非零边并在其余指标补零，恢复整个总函数。第 333 条的 $\lambda_{\rm reg},\operatorname{idx}_{\rm reg}$ 双逆给显示的域等式和有限限制式；逐边使用 $\operatorname{penc},\operatorname{pdec}$ 双逆，得到总探针和有限探针两侧的全部复合恒等。这里 $\operatorname{val}(\lambda_{\rm reg}(n))=p_n$，逆索引是 $\operatorname{idx}_{\rm reg}(\lambda_{\rm reg}(n))=n$，不是将标签的值当作索引。
+
+标签单射保持并反映两个域的包含，因此联合域恰为所列四个等价条件。域内各相位项是 $[u_n/G_n]_{\rm rat}$，有限求和给 $[L_F(u)]_{\rm rat}$；定理 334.2 再给数字式。它的通分、取余数及约分公式允许负状态值，空积为一。总探针包含全部标签，故其限制到 $\operatorname{dom}(s_u)$ 自动满足域条件，给总求值。
+
+特别取 $u=\varepsilon_0,F=\{0\}$。状态边为 $s_u(\zeta(2))=\operatorname{scode}(1)$，系数边为 $c_F(\zeta(2))=T_2(0_Z,\zeta(1))$；后者相位虽为零，标签仍在其域中。因此联合域成立，输出是成功的零字段。删去该唯一系数边后，其域为空而状态域非空，联合域失败。第 259–260、334 条的严格总化于是取 $\bot$，而不是 $\operatorname{ok}(T_2(0_Z,\zeta(1)))$。相反，空状态记录与空系数记录满足包含关系，空和产生成功的 $0/1$；非空系数记录中未被状态域使用的额外边仍被保留，但不进入求和。由此零边、缺边和额外边具有精确不同的域效果。
+
+$\theta^F$ 与 $r^F$ 都是定义域为 $\omega$ 的总函数，$t_F$ 的域是全部无限的 $\mathsf{Pr}_Z$；它们的整张图均无限。有限状态记录 $s_u$ 只保存非零边，状态总图仍有每个指标的一条边。有限采样的逆恢复的是 $a_F$，不是任意总探针。证毕。
+
+**命题 352.4。** 未取模一的有理值及黄金相位在状态记录上的求值分别为
+$$
+s\longmapsto\operatorname{qenc}(L_F(\operatorname{unrec}_{\rm reg}(s)))
+\quad(\mathsf{Rec}_{\rm reg}\to\mathsf{RatFld}),
+$$
+$$
+s\longmapsto T_2(\zeta(1),\operatorname{qenc}(L_F(\operatorname{unrec}_{\rm reg}(s))))
+\quad(\mathsf{Rec}_{\rm reg}\to\mathsf{Phase}_\phi).
+$$
+对容量 $A$ 的限制域恰为第 341 条的 $\mathsf{Rec}_A^{\rm cap}=\operatorname{rec}_{\rm reg}[B_A^{\rm cap}]$。第一式解码再经 $\iota_{\mathbb Q}$ 给 $\ell_F$；第二式为第 336 条固定 $r=r^F$ 的黄金求值。第 332 条的 CSA 桥仍在且仅在既约丰富截面像上互逆。
+
+**证明。** $\operatorname{unrec}_{\rm reg}$ 在全部独立状态记录域上恢复唯一有限支撑带符号总函数，$L_F$ 给有理数，定理 332.2 和 335.2 给两个合法输出及解码恒等。由双射的子集限制，容量记录域的逆恰恢复 $B_A^{\rm cap}$，这正是定理 341.2 的限制。命题 352.3 的有限系数记录存储有理相位；例如 $\varepsilon_0$ 与零的相位求值相等，但未取模一的读数分别为一和零。所以该相位输出不能替代第一式所需的有理值。
+
+对既约 $q=a/b$，$a\in\mathbb Z_o,b\ge1$，定理 332.2 的桥给
+$$
+\sigma_{\rm CSA}(q)
+=(\mathbf i(v^{-1}(a)),\mathbf i(v^{-1}(b))),\qquad
+\operatorname{qval}_{\rm CSA}(\sigma_{\rm CSA}(q))=q.
+$$
+这里使用 [CSA 定义 8–9、命题 5](CONTEXTUAL_SPACETIME_ARITHMETIC.md) 的实际 $J$ 对象与丰富截面。恒等式 $q(\mathbf i(z))=z$ 逐槽恢复 $v^{-1}(a),v^{-1}(b)$；$b>0$ 保证分母非零，再用 $v$ 双逆得到所列读数。于是
+$$
+\sigma_{\rm CSA}\circ\operatorname{qdec}:
+\mathsf{RatFld}\longrightarrow\sigma_{\rm CSA}[\mathbb Q]
+$$
+是双射，逆在这个精确像上为 $\operatorname{qenc}\circ\operatorname{qval}_{\rm CSA}$。一个复合由读数恒等和字段双逆给出，另一个把像点写成唯一的 $\sigma_{\rm CSA}(q)$ 后同样还原。它不从任意丰富输入重建其被读数遗忘的历史。证毕。
+
+## 353. 完整集合、函数图、拓扑与逐公式运输
+
+**命题 353.1。** 本层的容量函数、$r^F,\theta^F$、$X_A^{\rm cap},B_A^{\rm cap}$、各有限字段与记录域、部分和图、$S_F$ 的扩展值图、$M_F$ 的容量函数图、各水平与各指定拓扑均为 ZFC 中的集合。它们使用第 71–79、318–320、336 条的同一个 $\operatorname{Enc}$，其中有限字段表示与全对象表示分别按其原域解释。
+
+**证明。** 容量属于函数集 $\omega^\omega$，$r^F\in\mathbb Q^\omega$，$\theta^F\in\mathsf D_{\rm rat}^{\omega}$；正整数递推和替代给这些特定函数。$X_A^{\rm cap}$ 由 $\mathbb Z_o^\omega$ 上的逐坐标界条件分离，$B_A^{\rm cap}$ 再由有限支撑谓词分离。有限字段及记录类型由已声明函数集和有限部分函数集上的谓词分离，仍用原独立域。有限和与其唯一值由自然数递归构造，替代给 $L_F$ 和所有部分和的图，包括 $(N,x)\mapsto P^F_N(x)$ 的联合图。
+
+扩展非负实数可取非负实数集合另加一个固定的无限标签。每个非负部分和集合若有有限上界，实数完备性给唯一上确界；若没有则取该标签。这个定义在每个 $x\in X_A^{\rm cap}$ 上存在唯一，故替代给 $S_F$ 的完整图。同样在所有 $A\in\omega^\omega$ 上定义 $M_F(A)$，替代给其图。分离得到有限水平、全乘积水平及子水平集。每个拓扑为载体幂集的子集；有限柱集是集合，它们的任意并也组成集合。较细观察拓扑的探针参数域亦为集合函数空间，故其初始开集族是集合。
+
+这些正是第 341.2 条及 [CSA 命题 14–15](CONTEXTUAL_SPACETIME_ARITHMETIC.md) 所用集合构造的相同条件。$\operatorname{Enc}$ 保持为可定义类函数，限制在任何一个所列集合上的图与像由替代得到；并未把全部集合收为一个普遍集合。实值 $\ell_F(u)$、可能无理的 $S_F(x)$ 及扩展标签都可作全对象编码，只有落在已声明有理或黄金值域的输出才使用第 352 条相应有限字段。证毕。
+
+**定理 353.2。** 对上述任一集合 $X$，记
+$$
+X^*=\operatorname{Enc}[X]=\operatorname{El}(\operatorname{Enc}(X)),\qquad
+\operatorname{enc}_X=\operatorname{Enc}|_X.
+$$
+它是 $X\to X^*$ 的双射，逆恰为 $\operatorname{Dec}|_{X^*}$。若 $f:D\to Y$ 为所列任一函数或精确部分域上的函数，$G_f$ 为其普通图，则外部共轭和原图码分别为
+$$
+f^*=\operatorname{enc}_Y\circ f\circ\operatorname{enc}_D^{-1}:D^*\to Y^*,
+$$
+$$
+G_{f^*}=\{\langle\operatorname{Enc}(x),\operatorname{Enc}(f(x))\rangle:x\in D\},
+$$
+$$
+\operatorname{Enc}(G_f)
+=\operatorname{Pack}\{\langle\operatorname{Enc}(x),\operatorname{Enc}(f(x))\rangle_Z:x\in D\}.
+$$
+外部共轭的域为 $\operatorname{Enc}[D]$，原图码的语义域为单个 $\operatorname{Enc}(D)$。
+
+若另有指定双射 $b_D:D\to C_D,b_Y:Y\to C_Y$，令 $f^d=b_Y\circ f\circ b_D^{-1}$，并按定义 336.1 取
+$$
+h_D(c)=\operatorname{Enc}(b_D^{-1}(c)),\qquad
+h_Y(d)=\operatorname{Enc}(b_Y^{-1}(d)).
+$$
+则两个图码恰为
+$$
+\operatorname{Enc}(G_f)
+=\operatorname{Pack}\{\langle h_D(c),h_Y(d)\rangle_Z:
+\langle c,d\rangle\in G_{f^d}\},
+$$
+$$
+\operatorname{Enc}(G_{f^d})
+=\operatorname{Pack}\{\langle\operatorname{Enc}(c),\operatorname{Enc}(d)\rangle_Z:
+\langle c,d\rangle\in G_{f^d}\}.
+$$
+原对象提升 $h_D$ 的像恰为 $D^*$，逆在这个像上为 $b_D\circ\operatorname{Dec}$；数字对象提升 $e_D(c)=\operatorname{Enc}(c)$ 的像恰为 $\operatorname{Enc}[C_D]$，逆在这个像上为 $\operatorname{Dec}$。输出槽有相同的两个精确逆域。
+
+**证明。** 定理 72 直接给 $\operatorname{enc}_X$ 的双逆及成员像式。对 $c\in C_D$，解码 $h_D(c)$ 得 $b_D^{-1}(c)$，再用 $b_D$ 得 $c$；反向对 $z\in D^*$，$b_D(\operatorname{Dec}(z))\in C_D$，其 $h_D$ 像是 $z$。数字提升则直接使用 $\operatorname{Enc},\operatorname{Dec}$ 在 $C_D$ 及其像上的双逆。输出域的证明相同。这些是不同对象的提升，角色不同不蕴含所有特殊输入的像不交。
+
+对 $x\in D$，外部共轭在 $\operatorname{Enc}(x)$ 处取唯一值 $\operatorname{Enc}(f(x))$，给普通有序对的外部图。定理 74 使每个语义对为 $\operatorname{Enc}(\langle x,f(x)\rangle)$，定理 73 的 $\operatorname{Pack}$ 因而恢复整个原图码。逐边存在与唯一性给所列语义域及
+$$
+\operatorname{ev}_Z(\operatorname{Enc}(G_f),\operatorname{Enc}(x))
+=\operatorname{Enc}(f(x))\quad(x\in D).
+$$
+对任意数字边 $\langle c,d\rangle\in G_{f^d}$，唯一原输入是 $b_D^{-1}(c)$，唯一原输出是 $b_Y^{-1}(d)=f(b_D^{-1}(c))$；反向每条原边由双射产生唯一数字边。用这一双向逐边对应和语义配对恒等式得到第一数字图式。直接编码数字边本身则给第二式，其语义域是 $\operatorname{Enc}(C_D)$。因此单个图码、它的外部语义成员像与普通外部图具有分别指定的配对和域。
+
+对多输入函数，使用第 257–260、336 条固定元数的 $T_k$ 和对应 $T_k^Z$。若原联合域 $D\subseteq T_k[X_1,\ldots,X_k]$，输入双射逐槽作用后得到精确数字联合域 $C_D$；原对象输入提升满足
+$$
+H_{\rm in}(T_k(c_1,\ldots,c_k))
+=T_k^Z(h_1(c_1),\ldots,h_k(c_k))
+=\operatorname{Enc}(T_k(b_1^{-1}(c_1),\ldots,b_k^{-1}(c_k))).
+$$
+把这个等式代入两图式即保留整个联合域，不能以各槽分别合法代替联合谓词。特别命题 352.3 的有限求值使用恰好 $D_{\rm fin}$ 与 $D_{\rm fin}^{d}$，语义域分别为它们的单个码；缺少所需零边的输入在两侧均无值。严格总化按域内与域外两类运输，前者给相应的 $\operatorname{ok}$ 值，后者给相应 $\bot$，成功零和失败仍不相等。所有语义元组的参数先经合法提升；原始零字 $\varnothing\notin\mathfrak V_Z$，语义空集是 $\operatorname{NatZ}(0)$。
+
+取 $b_D=\operatorname{rec}_{\rm reg}$、$b_Y=\operatorname{qenc}$ 或 $\operatorname{genc}_\phi$，便得到命题 352.4 的值和黄金求值图。限制输入到 $B_A^{\rm cap}$ 时，数字域恰为 $\mathsf{Rec}_A^{\rm cap}$。若输出取通常实数全编码，则记录上的式子为
+$$
+s\longmapsto\operatorname{Enc}(\ell_F(\operatorname{unrec}_{\rm reg}(s)))
+\quad(s\in\mathsf{Rec}_A^{\rm cap}).
+$$
+$S_F$ 在整个 $X_A^{\rm cap}$ 上使用 $x\mapsto\operatorname{Enc}(S_F(x))$ 的图式，不能以此有限非零记录域替代其全乘积输入。证毕。
+
+**定理 353.3。** 对 $X=X_A^{\rm cap}$ 或 $X=B_A^{\rm cap}$，取第 342 条在该域上相等的坐标、黄金拓扑 $\tau$，定义外部拓扑
+$$
+\tau^*=\{\operatorname{Enc}[U]:U\in\tau\}.
+$$
+则 $\operatorname{enc}_X:(X,\tau)\to(X^*,\tau^*)$ 是同胚，对每个 $L\subseteq X$ 有
+$$
+\overline{\operatorname{Enc}[L]}^{(X^*,\tau^*)}
+=\operatorname{Enc}[\overline L^{(X,\tau)}].
+$$
+这将定理 346.1 的两个锐闭包分别运输到其各自载体上，也将定理 344.1 的全部连续性等价、唯一实延拓及处处不连续运输到对应实值共轭。单个拓扑码、开集码族和外部拓扑的关系为
+$$
+\operatorname{El}(\operatorname{Enc}(\tau))=\operatorname{Enc}[\tau],\qquad
+\tau^*=\{\operatorname{El}(c):c\in\operatorname{Enc}[\tau]\}.
+$$
+
+**证明。** 双射直接像保持任意并、空集、全集和有限交；交的反向包含使用单射性使同一像点的原像相等。因此 $\tau^*$ 满足拓扑公理，且两方向开集完全对应，得到同胚。点 $\operatorname{Enc}(x)$ 的每个开邻域都为某个含 $x$ 的 $U$ 的像，该邻域遇到 $\operatorname{Enc}[L]$ 当且仅当 $U$ 遇到 $L$。这给闭包式的两个方向。取 $L=L^F_{A,c}$，并分别取 $X_A^{\rm cap}$、$B_A^{\rm cap}$，即得所述运输；例如在 $\mathsf{Fill}_F(A)$ 及 $c\in\mathbb Q_{\ge0}$ 下，全乘积侧为
+$$
+\overline{\operatorname{Enc}[L^F_{A,c}]}^{(X_A^{\rm cap})^*}
+=\operatorname{Enc}[\{x\in X_A^{\rm cap}:S_F(x)\le c\}].
+$$
+上标载体取刚定义的外部拓扑。$\tau_{+,A}$ 仍只在原 $B_A^{\rm cap}$ 的相应观察定义下使用；若运输它，就须另取它的开集像族。命题 346.3 的分离邻域随该同胚运输，不将它的闭包换成坐标闭包。
+
+将通常实拓扑同样运输到 $\mathbb R^*$。对 $f:X\to\mathbb R$ 及每个实开集 $O$，
+$$
+(f^*)^{-1}(\operatorname{Enc}[O])=\operatorname{Enc}[f^{-1}(O)].
+$$
+开集双向对应给连续性等价；同一邻域对应给逐点连续性等价，因而也保留处处不连续。有限质量时 $S_F^*$ 是连续实延拓。任何另一运输侧连续延拓经解码拉回都成为定理 344.1 的原延拓，只能等于 $S_F$；再编码即恢复 $S_F^*$，证明唯一性。无限质量时只运输 $S_F$ 的扩展值图，不由此给它另加连续性断言。最后，定理 72 的成员像式先给开集码族，再逐个用 $\operatorname{El}$ 给外部开集族，证明两个拓扑对象式。证毕。
+
+**定理 353.4。** 展开第 342–353 条的新定义后，对每个固定有限集合论公式 $\varphi(x_1,\ldots,x_r)$ 及任意集合参数，第 75 条的翻译保留
+$$
+\varphi(x_1,\ldots,x_r)
+\iff\varphi^Z(\operatorname{Enc}(x_1),\ldots,\operatorname{Enc}(x_r)).
+$$
+量词包括全部容量、全乘积点、实输出、所有子集及全函数空间；特别使用第 74 条已定义的
+$$
+\mathcal P_Z(\operatorname{Enc}(X))=\operatorname{Enc}(\mathcal P(X)),\qquad
+\operatorname{Fun}_Z(\operatorname{Enc}(X),\operatorname{Enc}(Y))
+=\operatorname{Enc}(Y^X).
+$$
+这些定义及已证性质给原集合论语言的定义性保守扩展，并保留第 72、78–79、98、341 条的遗传有限性、有限状态数及给定模型的精确边界。
+
+**证明。** 命题 353.1 及各函数的定义和证明给总图的存在唯一性或部分图的精确域。将函数符号换为这些图，全部命题成为普通集合论公式。等号原子由 $\operatorname{Enc}$ 单射保持反映，成员原子由
+$$
+\operatorname{Enc}(x)\in_Z\operatorname{Enc}(y)\iff x\in y
+$$
+保持反映。对固定公式作结构归纳：否定及各布尔联结词保持两方向等价；存在量词的原见证编码成有效见证，反向把有效见证解码；全称量词正向对任意有效码解码，反向对任意原集合编码。归纳中保留全部参数，量词限制使用类谓词 $c\in\mathfrak V_Z$，不假设该类为集合。这正是定理 75–76 的全部适用条件。
+
+对全部子集的量词，可逐项核对：$U\subseteq X$ 产生 $\operatorname{Enc}[U]\subseteq X^*$；反向每个 $B\subseteq X^*$ 都解码为 $\operatorname{Dec}[B]\subseteq X$，两个操作互逆。定理 73 的 $\operatorname{Pack}$ 将这样的外部成员集变为子集码，故得到整个语义幂集，没有限制为可定义或有限子集。对每个外部函数 $g:X^*\to Y^*$，拉回
+$$
+x\longmapsto\operatorname{Dec}(g(\operatorname{Enc}(x)))
+$$
+得到 $Y^X$ 中的函数，再共轭回去还原 $g$。定理 74 的配对比较保留逐输入存在唯一输出的图谓词，所以全部函数空间的显示等式也成立，包括全部容量函数和全实值函数。
+
+对任何只使用这些定义和已证性质的有限证明，逐一展开新符号，并把新定理行替换为上述普通证明；每个分离或替代实例展开后仍是原 ZFC 的对应实例。定理 78 的定义消去于是给所称保守性，而不是增加一个新的编码理论。
+
+定理 72 仍精确给 $\operatorname{Enc}(x)\in HF\iff x\in HF$。有限支撑状态的非零记录有限，但其定义域为 $\omega$ 的总图无限，即使状态为零也有无限多条不同输入边；其全对象码不能由“支撑有限”推出遗传有限。有限坐标集 $I$ 上的容量盒仍有 $Q_I=\prod_{i\in I}(A_i+1)$ 个状态，定理 341.2 与第 98 条在已给标签、容量及解释函数的条件下给所需二进位数 $\lceil\log_2Q_I\rceil$，连同原有独立字段及 Zeckendorf 窗口结论保持在同一有限域上。若活跃指标无限，定理 341.4 的二进序列嵌入和 Cantor 对角论证使 $X_A^{\rm cap}$ 不可数，而有限字集可数，故不能把其全部点单射表示为有限字；定理 79 对任意集合的相同障碍也保持。
+
+若外部给定 $\mathfrak M\models\mathrm{ZFC}$，在其中解释同一图定义，定理 78 给 $\operatorname{Enc}^{\mathfrak M}$ 与内部有效码类之间的外部双射，以及每个外部标准有限公式的同构比较。内部有限性、幂集和函数集按 $\mathfrak M$ 的原义解释，不与外部有限性或全部外部子集、函数集识别。这个断言以已有模型为条件，不构造模型，不推出无条件 $\operatorname{Con}(\mathrm{ZFC})$；逐公式归纳也不定义同时判定全部公式的统一内部真理谓词。证毕。
