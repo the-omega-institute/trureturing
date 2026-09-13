@@ -1,0 +1,23 @@
+**命题 378.9。** 第 332、335 条的四对字段双射保持精确的原域：
+$$
+\operatorname{qenc}:\mathbb Q\leftrightarrow\mathsf{RatFld}:\operatorname{qdec},\qquad
+\operatorname{penc}:\mathbb Q/\mathbb Z\leftrightarrow\mathsf{RatPhaseFld}:\operatorname{pdec},
+$$
+$$
+\operatorname{cenc}_\phi:\phi\mathbb Q\leftrightarrow\mathsf{Coeff}_\phi:\operatorname{cdec}_\phi,\qquad
+\operatorname{genc}_\phi:C_\phi\leftrightarrow\mathsf{Phase}_\phi:\operatorname{gdec}_\phi,
+\qquad C_\phi=\{[\phi q']:q'\in\mathbb Q\}.
+$$
+这里 $\mathbb Q/\mathbb Z$ 为第 332 条的 $\mathsf D_{\rm rat}$，每个箭头的逆都只在所列另一端使用。每个有限 $\gamma(n)$ 可用 $\operatorname{genc}_\phi$；但
+$$
+F_{\rm infdig}(z_{\rm infdig}(1))=\phi-2\notin\phi\mathbb Q,\qquad
+[1/2]\notin C_\phi.
+$$
+全体 $F_{\rm infdig}$、$H_{\rm infdig}$ 的输出分别使用完整实数及完整圆周解释。$K_{\rm infdig}$ 不可数，不存在将其全部点单射表示为有限字的函数。
+
+**证明。** 所列四对双逆分别直接使用第 332.2、335.2 条在各自完整独立字段域上的定理，未扩大任一编码器的定义域。$n\in\omega\subseteq\mathbb Q$，故 $\gamma(n)=[\phi n]\in C_\phi$。$z_{\rm infdig}(1)$ 仅第零位为一，其实值为 $-\alpha^2=\phi-2$；若等于 $\phi q'$、$q'\in\mathbb Q$，则 $(1-q')\phi=2$，$q'=1$ 不可能，$q'\ne1$ 则迫使 $\phi$ 有理，矛盾。
+
+若 $[1/2]=[\phi q']$，则 $\phi q'-1/2\in\mathbb Z$。$q'=0$ 时不成立，$q'\ne0$ 时又迫使 $\phi$ 有理，故不存在这样的有理乘数。第 372.4 条已证 $H_{\rm infdig}$ 满射到整个圆周，所以其一般值域不能缩为 $C_\phi$；完整实数域也容纳刚给的 $F_{\rm infdig}$ 值。全对象编码不要求这些值有上述有限字段。
+
+将任意二进序列 $b':\omega\to\{0,1\}$ 送到 $x_{2j}=b'_j,x_{2j+1}=0$，得到 $K_{\rm infdig}$ 中的点，且此映射单射。二进序列集不可数：任何序列枚举 $b'^{(0)},b'^{(1)},\ldots$ 都遗漏 $d_j=1-b'^{(j)}_j$。每个固定有限长度的二进字集有限，全部有限字是这些有限集的可数并，故可数。因此不存在所述有限字单射；完整 $\operatorname{Enc}$ 仍按全集合定义作用于每一点。证毕。
+

@@ -1,0 +1,4 @@
+**定理 464.2。**存在 $\kappa_t>0$，使对全部整数 $d\ge2$ 有 $a_d\ge\kappa_t\lambda_t^d$；对全部 $u\ge1,v-u\ge2$，
+$$
+w_t(v)\ge\kappa_t\lambda_t^{v-u}w_t(u).
+$$

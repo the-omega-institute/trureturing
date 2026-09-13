@@ -1,0 +1,9 @@
+**定理 442.2（无进位增长与布尔约数格）。** $K(P_{k+1})$ 由 $K(P_k)$ 在新的素数行添一个底槽一得到，无需进位。映射 $S\mapsto\prod_{i\in S}p_i$ 双射于 $\mathcal P(\{1,\ldots,k\})$ 与 $\operatorname{Div}(P_k)$，保包含与整除，并且
+$$
+\Theta_k=\log P_k,\quad
+E_k=\sum_{d\mid P_k}\frac{\mu(d)}d=\frac{\Phi(P_k)}{P_k},\quad
+\sum_{d\mid P_k}\mu(d)=\begin{cases}1,&k=0,\\0,&k\ge1.\end{cases}
+$$
+
+**证明。** 新素数的旧估值为零，乘它后恰变为一，其余估值不动，给无进位式。唯一素因子分解给子集映射的两个方向以及格关系；子集 $S$ 的 Möbius 值为 $(-1)^{|S|}$。展开有限积 $\prod_i(1-p_i^{-1})$ 给带权和。对 $1\le a\le P_k$ 按各素数整除条件容斥，互素者恰有 $P_k\prod_i(1-p_i^{-1})$ 个，给 Euler 比值；有限乘积取对数给 $\Theta_k$。将带权积中的 $p_i^{-1}$ 全换为一，得最后两种情况。空素数集也逐式合法。证毕。
+

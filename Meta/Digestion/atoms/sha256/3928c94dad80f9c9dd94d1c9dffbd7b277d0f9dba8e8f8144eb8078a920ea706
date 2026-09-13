@@ -1,0 +1,6 @@
+**证明。** 称子集族为 $\lambda$ 系统，若含 $X$、对相对补集及两两不交的可数并封闭。它也对嵌套差封闭：$A\subseteq B$ 且两者在族中时，$B\setminus A$ 是不交并 $A\cup(X\setminus B)$ 的补集。令 $\mathcal D$ 是包含 $\mathcal P$ 的最小 $\lambda$ 系统，它由全部这样的系统取交得到。
+
+固定 $A\in\mathcal P$，令 $\mathcal D_A=\{B\in\mathcal D:A\cap B\in\mathcal D\}$。它含 $X$；若含 $B$，则 $A\cap(X\setminus B)=A\setminus(A\cap B)$，由嵌套差仍在 $\mathcal D$，所以含 $X\setminus B$；不交可数并与交 $A$ 交换，所以也封闭。$\mathcal P$ 对交封闭，故 $\mathcal P\subseteq\mathcal D_A$，最小性给 $\mathcal D_A=\mathcal D$。再固定任意 $B\in\mathcal D$，对族 $\{A\in\mathcal D:A\cap B\in\mathcal D\}$ 作相同论证；刚才的结论保证它含 $\mathcal P$，故也等于 $\mathcal D$。于是 $\mathcal D$ 对交封闭。取补得有限并，把一般可数并逐项去掉此前的有限并，便转为不交可数并，所以 $\mathcal D$ 为 $\sigma$ 代数，等于 $\sigma(\mathcal P)$。
+
+两个有限测度相等的集合族包含 $X$；总质量相同使相对补集的测度也相同，可数可加性使不交可数并的测度相同。因此该族是包含 $\mathcal P$ 的 $\lambda$ 系统，必包含 $\mathcal D=\sigma(\mathcal P)$。证毕。
+

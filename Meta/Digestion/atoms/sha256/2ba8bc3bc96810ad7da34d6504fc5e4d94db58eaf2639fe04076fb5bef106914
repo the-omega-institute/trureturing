@@ -1,0 +1,8 @@
+**定理 460.4。**任意 P2 操作词给仿射函数 $x\mapsto a_\gamma x+b_\gamma$，其中
+$$
+a_\gamma=\prod_{\text{乘法位置 }i}q_i,\qquad
+b_\gamma=\sum_{\text{加法位置 }i}q_i
+\prod_{\substack{\text{乘法位置 }j\\j>i}}q_j.
+$$
+空词给 $(1,0)$。
+

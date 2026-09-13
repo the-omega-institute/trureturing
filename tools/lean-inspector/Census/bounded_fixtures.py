@@ -86,7 +86,8 @@ def two_batches(repository, directory):
         headers.append({k: row[k] for k in ["module", "part", "imports"]})
     imports = {k[0]: [COMMAND, k[0]] for k in keys}
     bound = max(len(closure(graph, value)) for value in imports.values())
-    batches = candidate_batches(keys, imports, graph, bound)
+    batches, skipped = candidate_batches(keys, imports, graph, bound)
+    assert not skipped, "streamTwoBatchBound"
     assert len(batches) == 2, "streamTwoBatchBound"
     names = sorted(graph)
     indices = {name: i for i, name in enumerate(names)}
@@ -111,8 +112,34 @@ def two_batches(repository, directory):
                                 shutil.which("lean", path=env["PATH"]))
     assert len(result["entries"]) == 2 and len(record["executions"]) == 2, "streamTwoBatchBound"
     assert all(e["receipt"]["environment_modules"] <= bound for e in record["executions"]), "streamTwoBatchBound"
+    # Previously cached assessments are still incomplete when the same real
+    # Environment cannot fit a stricter limit. Exercise the Lean row accountant.
+    skipped_folder = folder / "over-bound"
+    skipped_folder.mkdir()
+    for name in ["domain.json", "olean-hashes.json"]:
+        shutil.copyfile(directory / name, skipped_folder / name)
+    skipped_bound = min(len(closure(graph, value)) for value in imports.values()) - 1
+    skipped_plan = prepare(repository, skipped_folder, metadata, request,
+                           bound=skipped_bound, cache=folder / "cache")
+    assert not skipped_plan["execute"] and not skipped_plan["hits"], "streamOverBoundOwnerAccounting"
+    skipped_result, skipped_record = run_batches(repository, skipped_folder, metadata, request,
+                                                skipped_plan, step, shutil.which("lean", path=env["PATH"]))
+    assert len(skipped_record["receipt"]["skipped"]) == 2, "streamOverBoundOwnerAccounting"
+    rows = skipped_folder / "rows.jsonl"
+    rows.write_bytes(b"".join(canonical(row) for row in skipped_result["entries"]))
+    write(skipped_folder / "input.json", {"head": "fixture-head", "rows_file": str(rows)})
+    projection = skipped_folder / "projection.json"
+    step([shutil.which("lean", path=env["PATH"]), "--run",
+          str(repository / "tools/lean-inspector/Census/project.lean"),
+          str(skipped_folder / "input.json"), str(projection)], "skipped_accounting")
+    counts = read(projection)["counts"]
+    assert counts["accounted"] == counts["observed_query_incomplete"] == 2, "streamOverBoundOwnerAccounting"
+    assert counts["certified"] == 0, "streamOverBoundOwnerAccounting"
     return {"name": "two_candidate_batches", "check": "streamTwoBatchBound", "status": "passed",
-            "bound": bound, "count": 2, "environment_modules": [e["receipt"]["environment_modules"] for e in record["executions"]]}
+            "bound": bound, "count": 2, "environment_modules": [e["receipt"]["environment_modules"] for e in record["executions"]],
+            "peak_rss_bytes": [e["peak_rss_bytes"] for e in record["executions"]],
+            "over_bound": {"check": "streamOverBoundOwnerAccounting", "bound": skipped_bound,
+                           "skipped": skipped_record["receipt"]["skipped"], "counts": counts}}
 
 
 if __name__ == "__main__":

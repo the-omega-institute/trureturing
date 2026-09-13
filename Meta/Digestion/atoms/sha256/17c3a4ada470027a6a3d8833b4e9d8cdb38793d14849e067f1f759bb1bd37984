@@ -1,0 +1,6 @@
+**定义 475.2（全部严格整除链及长度核）。** 对 $n>1$，记 $n=\prod_pp^{a_p}$、$r=\Omega(n)=\sum_pa_p$。$c_k(n)$ 是全部链
+$$
+1=d_0\mid d_1\mid\cdots\mid d_k=n,\qquad d_{i-1}<d_i
+$$
+的条数，允许任意严格跳步。令 $F_n(0)=0$、$F_n(j)=\prod_{p\mid n}\binom{a_p+j-1}{a_p}$（$j\ge1$），并令 $K_n(z)=\sum_{k=1}^r(-z)^kc_k(n)$。$n=1$ 单独取唯一平凡链，$c_0(1)=1$、$K_1(z)=1$，其余链数为零。
+

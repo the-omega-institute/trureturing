@@ -1,0 +1,2 @@
+**命题 8.2（形式无记的账平标签范围）**〔引 FPP 4.8〕。承 FPP 定理 4.8，若 $P\in F^0(L)$、$P\in\operatorname{dom}(U)$ 且 $\operatorname{Balanced}(U,L)$，则 $\operatorname{last}_U(P)$ 只能是 $\mathsf{open}$ 或 $\mathsf{unverified}$；“唯一处置”在这里只能指这个允许范围，不能把其中两个标签说成唯一单值答案。
+

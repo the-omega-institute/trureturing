@@ -1,0 +1,35 @@
+**定理 407.1。** 关系 $\mathcal F_{n,{\rm ext}}$、$\mathcal G_{n,{\rm ext}}$ 为递增的 Borel 等价关系，其类大小分别至多为 $L_n$、$2L_n$，且
+$$
+\bigcup_{n\in\omega}\mathcal F_{n,{\rm ext}}=E_{R,{\rm ext}},
+\qquad
+\bigcup_{n\in\omega}\mathcal G_{n,{\rm ext}}=E_{T,{\rm ext}}.
+$$
+对任意拓扑集合 $X$ 上的等价关系 $Q$，$Q$ 超有限当且仅当 $Q_{\rm ext}$ 超有限；此处两个方向都量化全部可能的近似族。
+
+若 $\mathcal A:\omega\to\mathcal P(X\times X)$ 是任意族，$\mathcal A(n)=Q_n$，则其整个图码为
+$$
+\operatorname{Enc}(\mathcal A)=
+\operatorname{Pack}\{
+\langle\operatorname{NatZ}(n),\operatorname{Enc}(Q_n)\rangle_Z:n\in\omega\}.
+$$
+在外部载体上的关系值族 $\operatorname{NatZ}(n)\mapsto Q_{n,{\rm ext}}$ 与集合码值族 $\operatorname{NatZ}(n)\mapsto\operatorname{Enc}(Q_n)$ 通过双射
+$$
+\mathcal P(X^*\times X^*)\longrightarrow
+\operatorname{Enc}[\mathcal P(X\times X)],\qquad
+B\longmapsto\operatorname{Pack}(\chi_{X,X}[B])
+$$
+相接。截面运输为 $s^*=e_Kse_{\mathbb T}^{-1}$，它 Borel 且 $H^*s^*=\operatorname{id}_{\mathbb T^*}$。Borel 轨道横截集的存在与否也保持并反映。
+
+**证明。** 等价关系公理逐点经双射保持，Borel 性由第 405.1 条的乘积比较保持，类大小由第 406.1 条保持。双射的逐对像保持包含和任意并，故第 394.1 条给显示的递增、界及穷尽式。其标记也精确为 $e_{\mathbb T}[U_n]$，一条外部边的源点在这个集合中当且仅当其原源点在 $U_n$；因此同一删边方向、所有整数时刻和两个时间方向的界都保留。
+
+任取外部载体上一个以整个 $\omega$ 为指标域的有限类 Borel 等价关系序列，逐项由 $(e_X\times e_X)^{-1}$ 拉回。替代保证拉回序列是一个集合函数，上述公理、Borel 性、有限类、包含及并集比较在反向也成立。因此任意假设存在的近似族都给原族，正向也对任意原族成立，证明整个存在量词的双向比较。
+
+族 $\mathcal A$ 是原输入为 $n$、原输出为关系集合 $Q_n$ 的总函数。第 404.1 条逐边得到其显示的完整图码；其外部共轭的输出对象是 $\operatorname{Enc}(Q_n)$。另一个族的输出是由普通对组成的 $Q_{n,{\rm ext}}$。对任意 $B\subseteq X^*\times X^*$，第 403.1 条给
+$$
+\operatorname{Pack}(\chi_{X,X}[B])
+=\operatorname{Enc}((e_X\times e_X)^{-1}[B]).
+$$
+逐对拉回和 $\operatorname{Enc}$ 都是相应载体间的双射，所以这就是全部子集上的双射，逆将 $\operatorname{Enc}(A)$ 送到 $(e_X\times e_X)[A]$。每个 $\operatorname{NatZ}(n)$ 唯一对应 $n$；逐指标应用这个值比较，便把上述两个族相接。任意外部关系值族同样逐项解码得到 $\mathcal A$，无论其中有多少空关系，也无论尾部如何。所有指标及图边都在，零值边若出现也由第 404.1 条保留。
+
+第 400.1 条给总 Borel 截面及 $Hs=\operatorname{id}$；共轭和第 405.1 条给 $s^*$ 的相同性质。它仍选相位纤维中的点，$e_K(z(0))$ 和 $e_K(z(1))$ 仍同时在其像中而异步等价。一般地，一个子集 $C\subseteq X$ 与每个 $Q$ 类恰交一点，当且仅当 $e_X[C]$ 与每个对应类恰交一点；第 405.1 条又双向保持 Borel 子集。因此横截集的存在和不存在也准确运输。证毕。
+

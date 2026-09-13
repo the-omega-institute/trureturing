@@ -1,0 +1,19 @@
+**定理 378.6。** 对任意普通实值度量空间 $(X,d)$，在 $X^*$ 上定义外部实值距离
+$$
+d_{\rm ext}(c,c')=d(\operatorname{Dec}(c),\operatorname{Dec}(c')).
+$$
+它是度量，$\operatorname{enc}_X$ 为等距双射。对每个 $\varepsilon>0$，
+$$
+\{(c,c'):d_{\rm ext}(c,c')<\varepsilon\}
+=(\operatorname{enc}_X\times\operatorname{enc}_X)
+[\{(x,x'):d(x,x')<\varepsilon\}].
+$$
+一致结构、一致连续性、Cauchy 序列与度量完备化在这项比较下均保持并反映。分别用于 $d_K,\rho,d_{\rm digit},d_{\rm phase}$ 时，保留第 373.2 条的两个不同一致结构及其各自完备化。
+
+完整编码的距离为
+$$
+d^*:(X\times X)^*\to\mathbb R^*,\qquad
+d^*(\chi_{X,X}(c,c'))=\operatorname{Enc}(d_{\rm ext}(c,c')).
+$$
+其零、加法及序均取实数结构的运输；解码后才是上述普通实值度量。
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:5b63887fe0898395dde746d236406f9493e8d59a37837244962eba491c4b71c4
+  normalized_sha256: sha256:5b63887fe0898395dde746d236406f9493e8d59a37837244962eba491c4b71c4
+cas_ref: sha256:5b63887fe0898395dde746d236406f9493e8d59a37837244962eba491c4b71c4
+coverage_gids:
+  - gid: D5/S0/Conventions/WDigits.wEncoding
+    target_statement_id: sha256:a21cdbccd79847d85c30d61e2928a0de9f1170e1dbb4ed768dfa3068a8e70ea9
+receipts:
+  unresolved_subitems: []

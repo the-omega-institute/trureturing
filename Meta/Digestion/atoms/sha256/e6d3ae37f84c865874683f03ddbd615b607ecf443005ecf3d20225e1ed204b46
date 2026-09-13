@@ -1,0 +1,5 @@
+**定理 128（状态、数位与路径历史的严格区分）。** 若 \(w\in\operatorname{Path}_{P,A}(a,b)\)，则
+\[
+b(p)-a(p)=\eta_p(w),\qquad
+\Pi_P(b)=\Pi_P(a)\prod_{p\in P}p^{\eta_p(w)}.
+\]

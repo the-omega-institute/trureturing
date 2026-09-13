@@ -1,0 +1,44 @@
+**证明。** 在 $J=[0,1)$ 上取代数 $\mathcal A$，其元素为有限个两两不交半开区间 $[a,b)$ 的并，其中 $0\le a<b\le1$，并允许空集。定义 $m_0$ 为这些区间长度之和。任意两种表示都可按全部有限端点共同细分，因而长度和相同；同一细分证明有限可加性及有限覆盖的长度次可加性。
+
+若 $A\in\mathcal A$ 被 $A_i\in\mathcal A$、$i\in\omega$ 覆盖，则
+$$
+m_0(A)\le\sum_{i\in\omega}m_0(A_i).
+$$
+若右侧无限，结论直接成立。否则给定 $\varepsilon>0$，将 $A$ 的每个非空分量稍向内缩为闭区间，使所得有限闭区间并 $C\subseteq A$ 的总长度至少为 $m_0(A)-\varepsilon$。把 $A_i$ 的全部分量在实直线中稍扩大为开区间，使每个 $i$ 的总长度增加少于 $\varepsilon2^{-i-1}$。这些开区间覆盖紧集 $C$，所以有限多个已经覆盖 $C$。按有限端点分割，各小段被覆盖至少一次，给 $C$ 的长度不超过这有限个开区间的总长度，进而不超过 $\sum_im_0(A_i)+\varepsilon$。故 $m_0(A)\le\sum_im_0(A_i)+2\varepsilon$，令 $\varepsilon\downarrow0$ 得式。空分量不影响论证。
+
+对每个子集 $E\subseteq J$ 定义
+$$
+m^*(E)=\inf\left\{\sum_{i\in\omega}m_0(A_i):
+A_i\in\mathcal A,\ E\subseteq\bigcup_iA_i\right\}.
+$$
+全集本身给有限覆盖，故这个非负下确界存在。空集有零值，包含关系给单调性。分别为 $E_i$ 取总长度小于 $m^*(E_i)+\varepsilon2^{-i-1}$ 的覆盖并合并之，得可数次可加性；若右侧无限则不需选择近似覆盖。由已证的代数覆盖不等式及用 $A$ 自身覆盖 $A$，有 $m^*(A)=m_0(A)$。
+
+令 $\mathcal M$ 为全部满足
+$$
+\forall E\subseteq J\quad
+m^*(E)=m^*(E\cap A)+m^*(E\setminus A)
+$$
+的集合 $A\subseteq J$。对 $A\in\mathcal A$，将任意覆盖的各项按 $A$ 与其补集分割，有限可加性使两边覆盖长度总和相同，取下确界给显示等式的“$\ge$”；次可加性给“$\le$”。所以 $\mathcal A\subseteq\mathcal M$。
+
+现证明 $\mathcal M$ 是 $\sigma$ 代数。空集及补集性质直接来自等式。若 $A,B\in\mathcal M$，先按 $A$ 分割，再把 $E\setminus A$ 按 $B$ 分割，得
+$$
+m^*(E)=m^*(E\cap A)+m^*((E\setminus A)\cap B)
++m^*(E\setminus(A\cup B)).
+$$
+前两项之和不小于 $m^*(E\cap(A\cup B))$，故得 $A\cup B$ 的分割不等式；反向仍由次可加性给出。因此对有限并封闭，也对差封闭。若 $A_i\in\mathcal M$ 两两不交，反复有限分割及单调性给
+$$
+m^*(E)\ge\sum_{i=0}^Nm^*(E\cap A_i)
++m^*\left(E\setminus\bigcup_{i\in\omega}A_i\right).
+$$
+取 $N$ 的上确界，再用可数次可加性使级数不小于 $m^*(E\cap\bigcup_iA_i)$，得到并集的分割不等式；反向仍直接成立。因此不交可数并在 $\mathcal M$ 中，一般可数并由去掉此前有限并转化为不交并。对 $E=\bigcup_iA_i$ 使用相同有限分割和次可加性，得到 $m^*$ 在 $\mathcal M$ 上的可数可加性。
+
+$\mathcal A$ 生成 $J$ 的相对 Borel $\sigma$ 代数：其区间都是 Borel，而每个相对开集是有理端点小区间及必要边界区间的可数并，每个这样的小开区间又是半开区间的可数并。故将 $m^*$ 限制到 $\mathscr B_J$ 得概率 $m$，且 $m(J)=m_0(J)=1$。
+
+映射 $b:J\to\mathbb T$、$b(t)=[t]$ 为双射。圆周开集的原像相对开，故 $b$ Borel；半开区间的像是 Borel 半开弧，整个 $J$ 的像为圆周，故由区间生成性，其逆也 Borel。定义
+$$
+\lambda(B)=m(b^{-1}[B])\qquad(B\in\mathscr B_{\mathbb T}).
+$$
+这给所需 Borel 概率及半开弧的长度。一条半开弧平移或逆平移后，在 $[0,1)$ 坐标中是一条半开区间或两条不交半开区间，总长度保持。对任意平移 $\tau_u(t)=t+u$，概率 $B\mapsto\lambda(\tau_u^{-1}B)$ 与 $\lambda$ 因而在由坐标半开区间构成的交封闭生成族上相同；该族包含圆周和空集。命题 395.2 使两者在全部 Borel 集上相同。
+
+任一单点包含于任意小正长度的弧内，所以由单调性其测度为零。可数单点并由可数次可加性为零。后文所用有限测度的从上、从下连续性也直接由可数可加性得到：递增族分解为首项及逐次不交差，递减族对补集使用此结论；有限总质量保证可以作减法。证毕。
+

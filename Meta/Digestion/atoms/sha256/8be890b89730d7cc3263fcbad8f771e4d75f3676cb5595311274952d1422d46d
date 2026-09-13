@@ -1,0 +1,2 @@
+**假设 2.3（许可集一致）**〔semantic〕。不存在命题 $P$ 使 $\mathrm{Proved}(P)$ 与 $\mathrm{Proved}(\neg P)$ 同时成立（承 FPP 假设 1.4）。本卷凡涉及三态互斥与终态保持，均以此为前件。
+

@@ -1,0 +1,5 @@
+**命题 378.11。** 对第 91、115–116 条的有限配置，取有限素数集 $P$、单独给定的容量函数 $C_{\rm cap}:P\to\omega$，以及当前内容
+$$
+S(P,C_{\rm cap})=\{e:P\to\omega:\forall p\in P,\ e(p)\le C_{\rm cap}(p)\},\qquad
+N_P(e)=\prod_{p\in P}p^{e(p)}.
+$$

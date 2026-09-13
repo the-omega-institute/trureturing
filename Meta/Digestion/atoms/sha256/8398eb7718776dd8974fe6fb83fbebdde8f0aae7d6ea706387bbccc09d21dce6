@@ -1,0 +1,17 @@
+**定理 378.8。** 若另外给定字段双射 $b_D:D\to C_D$、$b_Y:Y\to C_Y$，置
+$$
+f^d=b_Y\circ f\circ b_D^{-1},\qquad
+h_D(c)=\operatorname{Enc}(b_D^{-1}(c)),\qquad e_D(c)=\operatorname{Enc}(c),
+$$
+并在输出槽相应置 $h_Y,e_Y$。则 $h_D$ 的像为 $D^*$，其逆在该像上为 $b_D\circ\operatorname{Dec}$；$e_D$ 的像为 $\operatorname{Enc}[C_D]$，其逆在该像上为 $\operatorname{Dec}$。输出槽有对应的两个精确逆域，且
+$$
+\operatorname{Enc}(G_f)
+=\operatorname{Pack}\{\langle h_D(c),h_Y(d)\rangle_Z:\langle c,d\rangle\in G_{f^d}\},
+$$
+$$
+\operatorname{Enc}(G_{f^d})
+=\operatorname{Pack}\{\langle\operatorname{Enc}(c),\operatorname{Enc}(d)\rangle_Z:
+\langle c,d\rangle\in G_{f^d}\}.
+$$
+这些式子分别编码原对象图与数字对象图，包括 $d$ 自身已经是某个码的情形。
+

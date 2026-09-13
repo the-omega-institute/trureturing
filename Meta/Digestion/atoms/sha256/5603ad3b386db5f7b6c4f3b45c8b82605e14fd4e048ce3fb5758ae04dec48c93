@@ -1,0 +1,12 @@
+**定理 445.2（完整纤维、支撑与非零部分）。** 若 $g>0$ 的某个估值不属于 $\{G_L-1:L\ge0\}$，则 $G_{\rm obs}^{-1}(g)=\varnothing$。否则唯一写 $v_p(g)=G_{L_p}-1$，其中除有限多个外 $L_p=0$，则完整纤维恰为
+$$
+G_{\rm obs}^{-1}(g)=\left\{\prod_pp^{a_p}:G_{L_p}-1\le a_p\le G_{L_p+1}-2\text{ 对全部 }p\right\},
+$$
+其基数为 $\prod_p(G_{L_p+1}-G_{L_p})$。此外
+$$
+\operatorname{rad}(G_{\rm obs}(n))=\operatorname{rad}(n),\quad
+\mu(G_{\rm obs}(n))=\mu(n),\quad
+\frac{\Phi(G_{\rm obs}(n))}{G_{\rm obs}(n)}=\frac{\Phi(n)}n.
+$$
+每个平方自由正整数 $n$ 的完整纤维为 $\{n\}$；因此 $\mu\ne0$ 的部分没有发生此观察压缩。
+

@@ -1,0 +1,1 @@
+且对任一谓词 $Q$:若 $\forall v\in N,\ (\forall u\in\mathrm{pred}_E(v),Q(u))\to Q(v)$,则 $\forall v\in N,Q(v)$。

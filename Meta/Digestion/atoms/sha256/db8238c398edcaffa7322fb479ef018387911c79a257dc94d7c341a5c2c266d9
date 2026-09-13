@@ -1,0 +1,6 @@
+**定理 5.7（三态寂静刻画）**〔引 FPP 1.15、2.4〕。在假设 2.2、2.3、2.5 下，
+$$
+\operatorname{Quiet}(P,L)\ \Longleftrightarrow\ P\in N_L\ \lor\ \neg P\in N_L\ \lor\bigl(\neg\mathrm{Proved}(P)\land\neg\mathrm{Proved}(\neg P)\bigr).
+$$
+承 FPP 定理 1.15 和定义 2.4，三态读数恒定等价于 $P$、$\neg P$ 两个成员指标同时恒定；分别应用该定理的成员指标刻画，利用一致性排除正反同时可证，即得上式，这一重组不另算新的证明内容。最后一支不要求 $P\in O$；只有加上登记条件才属于 $F^0(L)$。
+

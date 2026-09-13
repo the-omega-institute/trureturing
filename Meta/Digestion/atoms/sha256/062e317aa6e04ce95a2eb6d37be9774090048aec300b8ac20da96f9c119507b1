@@ -1,0 +1,2 @@
+**必要数学引用。** 素数计数和初始素数积上界使用 mathlib 版本 $db584cd6d46c92f209a44c0f1c829460d327499d$ 的 `Mathlib/NumberTheory/Chebyshev.lean` 中 `eventually_primeCounting_le`、`Mathlib/NumberTheory/Primorial.lean` 中 `primorial_le_four_pow`。有限分部求和亦见同版本 `Mathlib/Algebra/BigOperators/Module.lean`。素数定理使用 D. Zagier，〈Newman's Short Proof of the Prime Number Theorem〉，*American Mathematical Monthly* **104** (1997)，705–708。Z 卷第 443.2 的有符号支持等式、第 443.5 与 443.11 的计数估计始终在其原条件下使用。
+

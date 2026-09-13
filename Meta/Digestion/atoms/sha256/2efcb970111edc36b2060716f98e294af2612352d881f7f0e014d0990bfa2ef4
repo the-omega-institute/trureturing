@@ -1,0 +1,8 @@
+**定义 472.1（约数阶梯与误差系数）。** 沿用第 443.1–443.14 条的 $B_Q,U_Q,W_Q,C_Q,S_Q,e_Q,\rho_Q,c_Q,\alpha_Q,D_Q$。特别地，$B_Q(u)$ 的截断包含 $a\le u$；$U_Q(N)$ 的外层为 $1\le d\le N,(d,Q)=1$，$W_Q(N)$ 的外层另要求 $d$ 平方自由。对平方自由整数 $Q\ge1$，令 $k=\omega(Q)$、$t=2^k$，将全部约数排列为 $1=a_1<\cdots<a_t=Q$，置
+$$
+b_0=0,\qquad b_i=\sum_{j\le i}\mu(a_j),\qquad
+\varepsilon_i=|b_i|-|b_{i-1}|,\qquad
+E_Q=(2^k+2)\prod_{p\mid Q}(1+p^{-1/2}).
+$$
+$Q=1$ 时只有 $a_1=1$，$\varepsilon_1=1$、$E_1=3$；原分支为 $U_1(N)=N$、$W_1(N)=S_1(N)$、$c_1=1$、$\alpha_1=1/\zeta_R(2)$。原 $D_Q$ 只在 $Q>1$ 使用。
+

@@ -1,0 +1,10 @@
+Define T_i e_r=e_(r-e_i) when r_i>0 and0 otherwise.
+For u_0=0 the recurrence gives the sesquilinear identity
+
+    u^* B u = sum_i (T_i u)^* B(T_i u).
+
+PSD therefore implies T_i u in ker B whenever u in ker B and u_0=0.
+The invertible coefficient map J(e_r)=x^r/product_i(r_i!) intertwines T_i with
+partial_i. Hence L=J(ker B) contains no nonzero constant and has conditional
+derivative closure: p in L and p(0)=0 imply partial_i p in L.
+

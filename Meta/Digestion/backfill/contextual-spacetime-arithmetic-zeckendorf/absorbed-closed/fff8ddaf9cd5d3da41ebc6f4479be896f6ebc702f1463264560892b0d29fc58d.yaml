@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:fff8ddaf9cd5d3da41ebc6f4479be896f6ebc702f1463264560892b0d29fc58d
+  normalized_sha256: sha256:fff8ddaf9cd5d3da41ebc6f4479be896f6ebc702f1463264560892b0d29fc58d
+cas_ref: sha256:fff8ddaf9cd5d3da41ebc6f4479be896f6ebc702f1463264560892b0d29fc58d
+coverage_gids:
+  - gid: D5/S3/Arith/GoldenResource/GoldenDivisorLanguage.Gobs_5040_fixed
+    target_statement_id: sha256:0313b34651416d3a1c40cf920d10d741dc4ba33a8fa1bd4ed90cf14c6f04e130
+  - gid: D5/S3/Arith/GoldenResource/GoldenDivisorLanguage.Gobs_factorization
+    target_statement_id: sha256:1dc1b37558d0febfd76df234d31a84f9d1103a7424230e618761f963bf489284
+  - gid: D5/S3/Arith/GoldenResource/GoldenDivisorLanguage.golden_fiber_5040
+    target_statement_id: sha256:83f3aafe965b44d60e14345256744785d36cf08d3783626670fbedb9e91102b7
+receipts:
+  unresolved_subitems: []

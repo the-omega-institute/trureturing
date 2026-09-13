@@ -1,0 +1,47 @@
+**定理 418.7（整数、有理数与全部丰富实数）。** 原整数 $J$、自然嵌入、原有理数构造及《情境时空算术》定义 10 的全实数构造均按其实际集合图运输。特别
+$$
+\operatorname{Enc}(\langle0,n\rangle)
+=\langle\operatorname{NatZ}(0),\operatorname{NatZ}(n)\rangle_Z
+\ne\operatorname{NatZ}(n)\quad(n\in\omega).
+$$
+整数零、实数零、有限零字与自然零叶各按原类型解释。自然嵌入的实际图为 $\iota_\omega:\omega\to J$、$\iota_\omega(n)=\langle0,n\rangle$。原固定整数截面 $\mathbf i:J\to\mathcal B$ 对 $n\in J$ 取 $m=|n|$ 及
+$$
+E_n=\Omega_n=\{\langle i,\epsilon\rangle:i<m,\ \epsilon\in\{+1,-1\}\}.
+$$
+其偏序为空；每个出现的时间与位置均为原整数零及原空间零，符号为 $\epsilon$，来源为 $\operatorname{leaf}(i)$。$n>0$ 时选全部正出现，$n<0$ 时选全部负出现，$n=0$ 时全部数据为空。于是 $u(C_n)=0$ 且 $q(\mathbf i(n))=n$。整数精确除法的域仍为 $q(Y)\ne0$ 且 $q(Y)\mid q(X)$，输出为唯一整数商的固定代表。
+
+全部丰富有理数及原运算为
+$$
+\mathcal Q^{\rm rich}=\{(X,Y)\in\mathcal B^2:q(Y)\ne0\},\qquad
+v(X,Y)=q(X)/q(Y),
+$$
+$$
+\begin{aligned}
+(X,Y)\boxplus_{\mathbb Q}(Z,W)&=((X\boxtimes W)\boxplus(Z\boxtimes Y),Y\boxtimes W),\\
+(X,Y)\boxtimes_{\mathbb Q}(Z,W)&=(X\boxtimes Z,Y\boxtimes W),\\
+N_{\mathbb Q}(X,Y)&=(N(X),Y),\\
+(X,Y)^{-1}_{\mathbb Q}&=(Y,X)\quad(q(X)\ne0),\\
+(X,Y)\div_{\mathbb Q}(Z,W)&=(X\boxtimes W,Y\boxtimes Z)\quad(q(Z)\ne0).
+\end{aligned}
+$$
+等价关系仍为 $q(X)q(Y')=q(X')q(Y)$。固定有理截面 $s_{\mathbb Q}(a/b)=(\mathbf i(a),\mathbf i(b))$ 使用唯一既约形式 $b>0$，零为 $0/1$。整数到实数的原嵌入为 $\iota_J(n)=[(s_{\mathbb Q}(n/1))_{k\in\omega}]$，方括号是以下原零差等价类；经《情境时空算术》命题 6 的同构比较到通常实数，自然到实数的嵌入是 $\iota_J\circ\iota_\omega$。
+
+丰富实数空间为全函数空间 $(\mathcal Q^{\rm rich})^\omega$ 中满足
+$$
+\forall\varepsilon\in\mathbb Q_{>0}\ \exists N\in\omega\ \forall m,n\in\omega\quad
+(m,n\ge N\Longrightarrow|v(R_m)-v(R_n)|<\varepsilon)
+$$
+的全部序列，零差关系仍为 $v(R_n)-v(S_n)\to0$。若 $a_n=v(R_n)$，实逆的准确域与完整分支为
+$$
+[(a_n)]\ne0\quad\Longleftrightarrow\quad
+\exists\eta\in\mathbb Q_{>0}\ \exists N\in\omega\ \forall n\ge N\quad |a_n|\ge\eta,
+$$
+$$
+(\operatorname{Inv}R)_n=
+\begin{cases}
+(R_n)^{-1}_{\mathbb Q},&a_n\ne0,\\
+R_n\boxplus_{\mathbb Q}N_{\mathbb Q}(R_n),&a_n=0.
+\end{cases}
+$$
+实除法只要求除数实数类非零，有限前缀的零分支完整保留。上述所有域、关系、图、商和读数均保持并反映，包括所有非可计算序列。
+

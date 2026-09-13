@@ -33,26 +33,25 @@ public sealed class LeanInspectorScriptTests
     }
 
     [Theory]
-    [InlineData(false)]
-    [InlineData(true)]
-    public void InspectorRejectsProducerClosureFailureWithoutPublishingReport(bool injectedDotnetFailure)
+    [InlineData(false, null)]
+    [InlineData(true, null)]
+    [InlineData(false, "compatibility_version = 0\n")]
+    [InlineData(true, "compatibility_version = \"1\"\n")]
+    public void InspectorRejectsInvalidVersionBeforeBuildEvenWithPrecomputedIdentity(bool precomputed, string? version)
     {
         if (OperatingSystem.IsWindows()) return;
         using var temporary = new TemporaryDirectory();
         var repository = CreateRepository(temporary.Path);
-        if (!injectedDotnetFailure)
-            File.AppendAllText(Path.Combine(repository, "tools", "StrataLint.Cli", "StrataLint.Cli.csproj"), "<");
-        var bin = Path.Combine(temporary.Path, "bin");
-        Directory.CreateDirectory(bin);
-        var dotnet = Path.Combine(bin, "dotnet");
-        File.WriteAllText(dotnet, "#!/usr/bin/env bash\nexit 71\n");
-        File.SetUnixFileMode(dotnet, UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+        var manifest = Path.Combine(repository, LeanReportInputScriptTests.CompatibilityPath);
+        if (version is null) File.Delete(manifest);
+        else File.WriteAllText(manifest, version + LeanReportInputScriptTests.SourcePatterns);
 
-        var result = RunInspector(temporary.Path, repository, injectedDotnetFailure ? bin : "");
+        var result = RunInspector(temporary.Path, repository, "", precomputed);
 
         Assert.Equal(2, result.ExitCode);
-        Assert.Contains("producer closure is unavailable", Encoding.UTF8.GetString(result.StandardError));
+        Assert.Contains("compatibility_version", Encoding.UTF8.GetString(result.StandardError));
         AssertNoReport(temporary.Path, result);
+        Assert.False(File.Exists(Path.Combine(temporary.Path, "lake.log")), "invalid version reached the build/cache producer");
     }
 
     [Theory]
@@ -75,13 +74,15 @@ public sealed class LeanInspectorScriptTests
             _ => throw new InvalidOperationException(malformed),
         };
         Write(repository, InputScript,
-            "#!/usr/bin/env bash\nif [[ $1 == modules ]]; then printf 'Trureturing\\tTrureturing.lean\\n'; "
+            $"#!/usr/bin/env bash\nif [[ $1 == compatibility-token ]]; then printf '%s\\n' '{digest}'; "
+            + "elif [[ $1 == modules ]]; then printf 'Trureturing\\tTrureturing.lean\\n'; "
             + $"else printf '%s\\n' '{output}'; fi\n");
 
         var result = RunInspector(temporary.Path, repository, "");
 
         Assert.Equal(2, result.ExitCode);
-        Assert.Contains("malformed", Encoding.UTF8.GetString(result.StandardError));
+        Assert.Contains("repository input address is malformed", Encoding.UTF8.GetString(result.StandardError));
+        Assert.False(File.Exists(Path.Combine(temporary.Path, "lake.log")));
         AssertNoReport(temporary.Path, result);
     }
 
@@ -139,6 +140,7 @@ public sealed class LeanInspectorScriptTests
 
     private static void InstallProducerInputs(string repository)
     {
+        LeanReportInputScriptTests.InstallReportConfiguration(repository);
         foreach (var project in new[] { "StrataLint.Cli", "StrataLint.Engine", "Trureturing.Truth" })
         {
             Write(repository, $"tools/{project}/{project}.csproj", "<Project Sdk=\"Microsoft.NET.Sdk\" />\n");
@@ -158,7 +160,7 @@ public sealed class LeanInspectorScriptTests
         Write(repository, "lake-manifest.json", "{\"version\":\"1.1.0\"}\n");
     }
 
-    private static ProcessOutput RunInspector(string temporary, string repository, string bin)
+    private static ProcessOutput RunInspector(string temporary, string repository, string bin, bool precomputed = false)
     {
         if (OperatingSystem.IsWindows()) throw new PlatformNotSupportedException();
         var lake = Path.Combine(temporary, "lake");
@@ -175,9 +177,11 @@ public sealed class LeanInspectorScriptTests
             """ + "\n");
         File.SetUnixFileMode(lake, UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
         return Run("/bin/bash", ["-c",
-            "PATH=\"$1:$PATH\" LAKE_BIN=\"$2\" STUB_LOG=\"$3\" exec \"$4\" --repository \"$5\" --output \"$6\"",
+            (precomputed ? "export STRATALINT_REPORT_INPUT_ADDRESS=$7 STRATALINT_REPORT_REPOSITORY_SHA256=$7 "
+                + "STRATALINT_REPORT_PRODUCER_SHA256=$7 STRATALINT_REPORT_RESIDENT_SHA256=$7 STRATALINT_REPORT_CONFIG_SHA256=$7; " : "")
+            + "PATH=\"$1:$PATH\" LAKE_BIN=\"$2\" STUB_LOG=\"$3\" exec \"$4\" --repository \"$5\" --output \"$6\"",
             "inspect-failure", bin, lake, Path.Combine(temporary, "lake.log"),
-            Path.Combine(repository, InspectorScript), repository, Path.Combine(temporary, "report.json")], repository);
+            Path.Combine(repository, InspectorScript), repository, Path.Combine(temporary, "report.json"), new string('a', 64)], repository);
     }
 
     private static void AssertNoReport(string temporary, ProcessOutput result)
@@ -185,7 +189,7 @@ public sealed class LeanInspectorScriptTests
         Assert.DoesNotContain("RAW_LEAN_REPORT", Encoding.UTF8.GetString(result.StandardOutput));
         foreach (var suffix in new[] { "", ".sha256", ".materials.zip" })
             Assert.False(File.Exists(Path.Combine(temporary, "report.json") + suffix));
-        Assert.Equal(["build"], File.ReadAllLines(Path.Combine(temporary, "lake.log")));
+
     }
 
     private static void Write(string root, string relative, string contents)

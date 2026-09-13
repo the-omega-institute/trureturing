@@ -1,0 +1,8 @@
+**定理 470.27（普通加法的完整容量守卫）。** 写 $s=n(a)+n(b)>0$，则
+$$
+(a,b)\in D_+\iff
+\bigl[\forall q\in\operatorname{Pr}\setminus P,\ \nu_q(s)=0\bigr]
+\land\bigl[\forall p\in P,\ \nu_p(s)\le A_p\bigr].
+$$
+成功输出恰为 $(\nu_p(s))_{p\in P}$。仅检验 $s\le M$，或只检验已有 $P$ 坐标的上界，均不足以代替这个完整守卫。若 $P=\varnothing$，或所有容量为零，则 $D_+=\varnothing$。
+

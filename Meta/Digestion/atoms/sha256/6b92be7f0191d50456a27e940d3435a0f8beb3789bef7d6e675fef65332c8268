@@ -1,0 +1,10 @@
+**定理 431.6（预测十三·每个公式、全部参数及条件模型）。** 对每个固定有限原公式 $\theta(x_1,\ldots,x_r)$，均有通常证明
+$$
+\forall x_1\cdots\forall x_r\quad
+\theta(x_1,\ldots,x_r)\iff
+\theta^Z(\operatorname{Enc}(x_1),\ldots,\operatorname{Enc}(x_r)).
+$$
+这里每个参数遍历全部集合；存在、全称、全部子集及全部函数的量词均不收缩。所有 $\mathrm{ZFC}$ 公理及分离、替代的每个固定公式实例在此解释中成立。本篇增加的定义及其已证性质对原集合论语言构成定义性保守扩张。
+
+若外部给定 $\mathfrak M\models\mathrm{ZFC}$，使用 $\mathfrak M$ 内部的同一递归图及其逆，得到其对象到内部有效码的外部双射，保持并反映成员关系及每个外部标准有限公式。$\mathfrak M$ 中的自然数、有限字、幂集、函数空间、拓扑和行为集均保持其内部含义。
+
