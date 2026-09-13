@@ -6,6 +6,15 @@ open Lean
 def provenanceConstantFuel : Nat := 4096
 def provenanceExpressionFuel : Nat := 524288
 
+-- policy-override, G1b-2, owner: governance lane, 2026-09-13. Raw Lean
+-- allocation heartbeats per definitional comparison; exhaustion is unknown.
+-- Revisit when the supported readout corpus or the pinned Lean version changes.
+def provenanceDefEqHeartbeats : Nat := 20000
+
+register_option provenanceDefEqLimit : Nat := {
+  defValue := provenanceDefEqHeartbeats
+  descr := "Maximum raw heartbeats for a readout type/defeq query; zero fails closed" }
+
 def provenanceJudgeAPIs : Array Name := #[
   `LeanInformationAudit.InformationRegistry.entries,
   `LeanInformationAudit.InformationRegistry.find?,
@@ -118,10 +127,6 @@ private def stripMData : Expr → Expr
   | .mdata _ e => stripMData e
   | e => e
 
-private def eraseLevels (e : Expr) : Expr :=
-  let params := (collectLevelParams {} e).params.toList
-  stripMData (e.instantiateLevelParams params (params.map fun _ => .zero))
-
 private def closed (e : Expr) : Bool := !e.hasLooseBVars && !e.hasFVar && !e.hasMVar
 
 private def telescopeResult : Expr → Expr
@@ -207,7 +212,7 @@ private inductive Position where | dataPos | proofPos | typePos
 -- membership is recomputed by a linear fold without walking Expr trees again.
 private structure SyntaxNode where
   expr : Expr
-  canonical : Expr
+  context : Array Expr
   position : Position
   children : Array Nat
   prop : Bool
@@ -224,12 +229,13 @@ private structure Summary where
 
 private structure SummaryBuild where
   summary : Summary := {}
-  indices : Std.HashMap (Expr × Position) Nat := {}
+  indices : Std.HashMap (Expr × Position × Array Expr) Nat := {}
   fuel : Nat
 
 private abbrev SummaryM := StateRefT SummaryBuild CoreM
 
-private partial def summariseExpr (env : Environment) (pos : Position) (raw : Expr) :
+private partial def summariseExpr (env : Environment) (pos : Position) (raw : Expr)
+    (context : Array Expr := #[]) :
     SummaryM (Option Nat) := do
   let s ← get
   if s.fuel == 0 then
@@ -238,16 +244,17 @@ private partial def summariseExpr (env : Environment) (pos : Position) (raw : Ex
   if s.summary.visits % 256 == 0 then Core.checkMaxHeartbeats "readout provenance"
   modify fun s => { s with fuel := s.fuel - 1, summary.visits := s.summary.visits + 1 }
   let e := stripMData raw
-  if let some i := (← get).indices[(e, pos)]? then return some i
-  let inputs : Array (Position × Expr) := match e with
-    | .app f a => #[(pos, f), (pos, a)]
-    | .lam _ t b _ | .forallE _ t b _ => #[(.typePos, t), (pos, b)]
-    | .letE _ t v b _ => #[(.typePos, t), (pos, v), (pos, b)]
-    | .proj _ _ b => #[(pos, b)]
+  let keyContext := if e.hasLooseBVars then context else #[]
+  if let some i := (← get).indices[(e, pos, keyContext)]? then return some i
+  let inputs : Array (Position × Expr × Array Expr) := match e with
+    | .app f a => #[(pos, f, context), (pos, a, context)]
+    | .lam _ t b _ | .forallE _ t b _ => #[(.typePos, t, context), (pos, b, context.push e)]
+    | .letE _ t v b _ => #[(.typePos, t, context), (pos, v, context), (pos, b, context.push e)]
+    | .proj _ _ b => #[(pos, b, context)]
     | _ => #[]
   let mut children := #[]
-  for (childPos, child) in inputs do
-    if let some i ← summariseExpr env childPos child then children := children.push i
+  for (childPos, child, childContext) in inputs do
+    if let some i ← summariseExpr env childPos child childContext then children := children.push i
   let ownContent := match e with
     | .const n _ => inProtected env n && !env.isProjectionFn n &&
         (env.find? n).any (fun info => match info with
@@ -256,11 +263,11 @@ private partial def summariseExpr (env : Environment) (pos : Position) (raw : Ex
     | _ => false
   let nodes := (← get).summary.nodes
   let pContent := ownContent || children.any (fun i => nodes[i]!.pContent)
-  let declaredType := e.constName?.bind (fun n => (env.find? n).map (fun i => eraseLevels i.type))
-  let node : SyntaxNode := ⟨e, eraseLevels e, pos, children, ← propLooking env e, pContent, declaredType⟩
+  let declaredType := e.constName?.bind (fun n => (env.find? n).map (·.type))
+  let node : SyntaxNode := ⟨e, keyContext, pos, children, ← propLooking env e, pContent, declaredType⟩
   modify fun s => { s with
     summary.nodes := s.summary.nodes.push node
-    indices := s.indices.insert (e, pos) nodes.size }
+    indices := s.indices.insert (e, pos, keyContext) nodes.size }
   return some nodes.size
 
 private def summarise (env : Environment) (inputs : Array (Position × Expr)) (fuel : Nat) :
@@ -302,17 +309,21 @@ private structure WalkState where
   decision : Expr
   summaries : Std.HashMap Name Summary := {}
   counters : ProvenanceCounters := {}
-  visited : Std.HashSet (Expr × Position) := {}
+  visited : Std.HashSet (Expr × Position × Array Expr) := {}
   walked : NameHashSet := {}
   queued : NameHashSet := {}
   pending : List (Name × Position × Name) := []
+  typeObligations : List (Expr × Array Expr × Bool × Bool × Name × Name) := []
+  appObligations : List (Expr × Array Expr × Bool × Name) := []
+  comparisons : Std.HashMap (Expr × Expr) Bool := {}
+  typeChecks : Std.HashMap (Expr × Array Expr × Bool) (Bool × Bool × Bool) := {}
   forbidden : Bool := false
   unclassified : Option Unclassified := none
   incomplete : Bool := false
   exprFuel : Nat := provenanceExpressionFuel
   constFuel : Nat := provenanceConstantFuel
 
-private abbrev WalkM := StateRefT WalkState CoreM
+private abbrev WalkM := StateRefT WalkState MetaM
 
 -- Every pass over a summary is charged to the same per-query expression fuel
 -- as syntax construction.  In particular, a cache hit must not make the
@@ -337,19 +348,210 @@ private def queue (n : Name) (pos : Position) (site : Name) : WalkM Unit := do
   if s.constFuel == 0 then modify fun s => { s with incomplete := true } else
     modify fun s => { s with queued := s.queued.insert n, pending := List.cons (n, pos, site) s.pending, constFuel := s.constFuel - 1 }
 
-private def compareCanonical (a b : Expr) : Bool := eraseLevels a == eraseLevels b
+-- No failed or exhausted Meta query can supply a positive allowlist verdict.
+-- Open subterms are checked structurally below, without inventing a context
+-- for their loose bound variables. Closed aliases use Lean's defeq relation.
+private def compareCanonical (a b : Expr) : WalkM Bool := do
+  unless ← chargeSummaryWork (fun c => { c with canonicalizations := c.canonicalizations + 1 }) do
+    return false
+  if let some result := (← get).comparisons[(a, b)]? then return result
+  if a.hasLooseBVars || b.hasLooseBVars then return false
+  let budget := min provenanceDefEqHeartbeats (provenanceDefEqLimit.get (← getOptions))
+  if budget == 0 then
+    noteUnclassified ⟨"defeq_budget", `defeq, "unclassified", `defeq⟩
+    return false
+  let result ← (tryCatchRuntimeEx (do
+    let start ← IO.getNumHeartbeats
+    controlAt CoreM fun runInBase => withReader (fun ctx : Core.Context =>
+      { ctx with initHeartbeats := start, maxHeartbeats := budget }) do
+      -- Defeq is a typed relation. Comparing a large data computation directly
+      -- with a proposition needlessly reduces the data before rejecting it.
+      let result ← runInBase do
+        unless ← Meta.isDefEq (← Meta.inferType a) (← Meta.inferType b) do return false
+        Meta.isDefEq a b
+      Core.checkMaxHeartbeats "readout definitional comparison"
+      pure (some result)) (fun _ => pure none) : MetaM (Option Bool))
+  match result with
+  | some result =>
+    modify fun s => { s with comparisons := s.comparisons.insert (a, b) result }
+    return result
+  | none =>
+    noteUnclassified ⟨"defeq_budget", `defeq, "unclassified", `defeq⟩
+    return false
+
+-- Preserve constant provenance before reduction, including constants discovered
+-- only in a constructor field's type. Direct forbidden sources take precedence.
+private def directConstant (env : Environment) (n : Name) : WalkM Unit := do
+  let payload := (env.find? n).any judgePayload ||
+    ((env.getProjectionFnInfo? n).bind (fun p => env.find? p.ctorName)).any judgePayload
+  if n == (← get).theoremName || provenanceJudgeAPIs.contains n || generatedAddress n || payload then
+    modify fun s => { s with forbidden := true, walked := s.walked.insert n }
+
+private def directProjection (env : Environment) (n : Name) : WalkM Unit := do
+  if provenanceJudgeAPIs.contains n || generatedAddress n || judgePayloadType n then
+    modify fun s => { s with forbidden := true, walked := s.walked.insert n }
+
+private def typeConstant (env : Environment) (n : Name) : WalkM Unit := do
+  directConstant env n
+  if let some info := env.find? n then
+    if (← compareCanonical info.type (← get).statement) ||
+        (← compareCanonical info.type (← get).decision) then
+      modify fun s => { s with forbidden := true, walked := s.walked.insert n }
+    if inProtected env n then queue n .typePos n
+  else modify fun s => { s with incomplete := true }
+
+-- Positive policies for instance types whose parameters are still checked by
+-- the same structural fold. An unfamiliar class never inherits external-leaf
+-- status from its module. In particular proof-carrying user classes are unknown.
+private def listedTypeClasses : Array Name := #[
+  ``Decidable, ``OfNat, ``Inhabited, ``Subsingleton, ``BEq, ``LawfulBEq,
+  `Fintype, `Finite, `NeZero,
+  -- Scalar operator interfaces: their actual type parameters are checked too.
+  ``Zero, ``One, ``Add, ``HAdd, ``Mul, ``HMul, ``Sub, ``HSub, ``Div, ``HDiv,
+  ``Neg, ``Inv, ``Pow, ``HPow, ``Mod, ``HMod, ``LT, ``LE]
+
+-- These families expose their proof fields in type-valued arguments. Exists
+-- is intentionally classified through its constructor and predicate application.
+private def listedPropositions : Array Name := #[
+  ``Eq, ``HEq, ``True, ``False, ``And, ``Or, ``Iff, ``Nat.le]
+
+private def boundedMeta (action : MetaM α) : WalkM (Option α) := do
+  unless ← chargeSummaryWork (fun c => { c with canonicalizations := c.canonicalizations + 1 }) do
+    return none
+  let budget := min provenanceDefEqHeartbeats (provenanceDefEqLimit.get (← getOptions))
+  if budget == 0 then
+    noteUnclassified ⟨"defeq_budget", `defeq, "unclassified", `defeq⟩
+    return none
+  let result ← (tryCatchRuntimeEx (do
+    let start ← IO.getNumHeartbeats
+    controlAt CoreM fun runInBase => withReader (fun ctx : Core.Context =>
+      { ctx with initHeartbeats := start, maxHeartbeats := budget }) do
+      let result ← runInBase action
+      Core.checkMaxHeartbeats "readout type classification"
+      pure (some result)) (fun _ => pure none) : MetaM (Option α))
+  if result.isNone then
+    noteUnclassified ⟨"defeq_budget", `defeq, "unclassified", `defeq⟩
+  return result
+
+private def appliedValueType (e : Expr) : WalkM (Option Expr) := do
+  let some type ← boundedMeta (Meta.inferType e) | return none
+  if (← compareCanonical type (← get).statement) || (← compareCanonical type (← get).decision) then
+    modify fun s => { s with forbidden := true }
+  return some type
+
+private partial def inBinderContext (context : Array Expr) (k : Array Expr → WalkM α)
+    (index : Nat := 0) (locals : Array Expr := #[]) : WalkM α := do
+  if h : index < context.size then
+    let next := fun locals => inBinderContext context k (index + 1) locals
+    match context[index] with
+    | .lam n t _ bi | .forallE n t _ bi =>
+      Meta.withLocalDecl n bi (t.instantiateRev locals) fun x => next (locals.push x)
+    | .letE n t v _ nd =>
+      Meta.withLetDecl n (t.instantiateRev locals) (v.instantiateRev locals)
+        (fun x => next (locals.push x)) (nondep := nd)
+    | _ => k locals
+  else k locals
+
+-- The syntax scan checks TERM occurrences inside types. They are not themselves
+-- assumed to be types (e.g. Classical constants on either side of an equality).
+private partial def typeMentions (env : Environment) (e : Expr) : WalkM Bool := do
+  unless ← chargeSummaryWork (fun c => { c with recheckedNodes := c.recheckedNodes + 1 }) do
+    return false
+  if ← compareCanonical e (← get).statement then return true
+  match e with
+  | .const n _ => typeConstant env n; return false
+  | .app f a =>
+    let _ ← appliedValueType e
+    return (← typeMentions env f) || (← typeMentions env a)
+  | .lam n t b bi | .forallE n t b bi =>
+    let domain ← typeMentions env t
+    let body ← Meta.withLocalDecl n bi t fun x => typeMentions env (b.instantiate1 x)
+    return domain || body
+  | .letE n t v b nd =>
+    let domain ← typeMentions env t
+    let value ← typeMentions env v
+    let body ← Meta.withLetDecl n t v (fun x => typeMentions env (b.instantiate1 x)) (nondep := nd)
+    return domain || value || body
+  | .mdata _ b => typeMentions env b
+  | .proj n _ b => directProjection env n; typeMentions env b
+  | _ => return false
+
+-- No provisional verdict is cached. A regular recursive field closes only its
+-- active, identical obligation; changing an index on a recursive edge is unknown.
+private partial def inputType (env : Environment) (type : Expr)
+    (active : Array Expr := #[]) (checkResult : Bool := true) : WalkM (Bool × Bool) := do
+  unless ← chargeSummaryWork (fun c => { c with recheckedNodes := c.recheckedNodes + 1 }) do
+    return (false, true)
+  let mut mentions ← typeMentions env type
+  if ← compareCanonical type (← get).decision then mentions := true
+  let some reduced ← boundedMeta (Meta.whnf type) | return (mentions, true)
+  if reduced != type then mentions := (← typeMentions env reduced) || mentions
+  match reduced with
+  | .forallE n domain body bi =>
+    let (dm, du) ← inputType env domain active
+    let (bm, bu) ← Meta.withLocalDecl n bi domain fun x =>
+      inputType env (body.instantiate1 x) active checkResult
+    return (mentions || dm || bm, du || bu)
+  | _ =>
+    if !checkResult then return (mentions, false)
+    if reduced.isSort then return (mentions, false)
+    let head := reduced.getAppFn
+    let args := reduced.getAppArgs
+    let mut unknown := false
+    for arg in args do
+      let some isType ← boundedMeta (Meta.isType arg) | return (mentions, true)
+      if isType then
+        let (am, au) ← inputType env arg active
+        mentions := mentions || am
+        unknown := unknown || au
+    -- A neutral type family is allowed with its actual local binder context.
+    if head.isFVar then return (mentions, unknown)
+    let .const name levels := head | return (mentions, true)
+    if Lean.isClass env name then
+      return (mentions, unknown || !listedTypeClasses.contains name)
+    if listedPropositions.contains name then return (mentions, unknown)
+    let some (.inductInfo info) := env.find? name | return (mentions, true)
+    if active.contains reduced then return (mentions, unknown)
+    if active.any (fun e => e.getAppFn == head) then return (mentions, true)
+    for ctorName in info.ctors do
+      let some ctor := env.find? ctorName | return (mentions, true)
+      let mut ctorType := ctor.type.instantiateLevelParams ctor.levelParams levels
+      for arg in args[:info.numParams] do
+        let .forallE _ _ body _ := ctorType | return (mentions, true)
+        ctorType := body.instantiate1 arg
+      let (cm, cu) ← inputType env ctorType (active.push reduced) false
+      mentions := mentions || cm
+      unknown := unknown || cu
+    return (mentions, unknown)
+
+-- Declared types and value binders share this contextual classifier. Constructor
+-- results are scanned nominally; their input types require a positive verdict.
+private def classifyType (env : Environment) (type : Expr) (context : Array Expr)
+    (checkResult : Bool) : WalkM (Bool × Bool × Bool) := do
+  let context := if type.hasLooseBVars then context else #[]
+  let key := (type, context, checkResult)
+  if let some cached := (← get).typeChecks[key]? then return cached
+  let verdict ← inBinderContext context fun locals => do
+    let type := type.instantiateRev locals
+    let exact ← compareCanonical type (← get).statement
+    let decision ← compareCanonical type (← get).decision
+    let (mentions, unknown) ← inputType env type #[] checkResult
+    return (exact || decision, mentions, unknown)
+  modify fun s => { s with typeChecks := s.typeChecks.insert key verdict }
+  return verdict
 
 private def visitSummary (env : Environment) (origin : Name) (summary : Summary) : WalkM Unit := do
+  for node in summary.nodes do
+    if let .const n _ := node.expr then directConstant env n
+    if let .proj n _ _ := node.expr then directProjection env n
+  if (← get).forbidden then return
   let statement := (← get).statement
   let mut containsStatement : Array Bool := #[]
   for node in summary.nodes do
     unless ← chargeSummaryWork (fun counters =>
       { counters with recheckedNodes := counters.recheckedNodes + 1 }) do
       return
-    unless ← chargeSummaryWork (fun counters =>
-      { counters with canonicalizations := counters.canonicalizations + 1 }) do
-      return
-    let mut mentions := node.canonical == statement
+    let mut mentions ← compareCanonical node.expr statement
     for child in node.children do
       unless ← chargeSummaryWork (fun counters =>
         { counters with spineArguments := counters.spineArguments + 1 }) do
@@ -367,7 +569,7 @@ private def visitSummary (env : Environment) (origin : Name) (summary : Summary)
     modify fun s => { s with exprFuel := s.exprFuel - 1 }
     let node := summary.nodes[index]!
     let e := node.expr
-    let occurrence := (e, node.position)
+    let occurrence := (e, node.position, node.context)
     if (← get).visited.contains occurrence then continue
     modify fun s => { s with visited := s.visited.insert occurrence }
     let dataPos := node.position == .dataPos
@@ -376,7 +578,7 @@ private def visitSummary (env : Environment) (origin : Name) (summary : Summary)
         noteUnclassified (Unclassified.mk "closed_decision"
           (x.expr.getAppFn.constName?.getD `closed_decision)
           (namespaceLabel env (x.expr.getAppFn.constName?.getD origin)) origin)
-    if dataPos && closed e && containsStatement[index]! && node.canonical != statement then
+    if dataPos && closed e && containsStatement[index]! && !(← compareCanonical e statement) then
       noteUnclassified (Unclassified.mk "statement_subterm"
         (e.getAppFn.constName?.getD `statement_subterm)
         (namespaceLabel env (e.getAppFn.constName?.getD origin)) origin)
@@ -385,9 +587,7 @@ private def visitSummary (env : Environment) (origin : Name) (summary : Summary)
     | .const n _ =>
       let info := env.find? n
       modify fun s => { s with walked := s.walked.insert n }
-      if n == (← get).theoremName then modify fun s => { s with forbidden := true }
-      if provenanceJudgeAPIs.contains n || generatedAddress n || info.any judgePayload then
-        modify fun s => { s with forbidden := true }
+      directConstant env n
       if dataPos && n.getRoot == `Classical then
         noteUnclassified (Unclassified.mk "classical_choice" n (namespaceLabel env n) origin)
       if dataPos && !inProtected env n then
@@ -397,31 +597,27 @@ private def visitSummary (env : Environment) (origin : Name) (summary : Summary)
               if decisionFamily.contains h && !listedProducers.contains n then
                 noteUnclassified (Unclassified.mk "unlisted_decision_producer" n (namespaceLabel env n) origin)
       if let some type := node.declaredType then
-        if type == (← get).statement || type == (← get).decision then
+        if (← compareCanonical type statement) || (← compareCanonical type (← get).decision) then
           modify fun s => { s with forbidden := true }
-        else if (type.find? (fun e => stripMData e == statement)).isSome then
-          noteUnclassified (Unclassified.mk "statement_mentioning_type"
-            n (namespaceLabel env n) origin)
+        modify fun s => { s with typeObligations :=
+          (type, #[], false, info.any (fun i => i.value?.isNone), n, origin) :: s.typeObligations }
         if inProtected env n && !(← get).queued.contains n then queue n node.position origin
       else modify fun s => { s with incomplete := true }
     | .app _ _ =>
+      -- Check instantiated domains after scanning constant dependencies, so a
+      -- large type cannot hide a known forbidden API behind budget exhaustion.
+      let full := (e.getAppFn.constName?.bind (env.find? ·)).any (fun info => info.value?.isNone)
+      modify fun s => { s with appObligations := (e, node.context, full, origin) :: s.appObligations }
       let args := e.getAppArgs
       if let .const head _ := e.getAppFn then
         if (head == ``Decidable.isTrue || head == ``Decidable.isFalse) && args.size > 0 then
-          if compareCanonical args[0]! (← get).statement then modify fun s => { s with forbidden := true }
+          if ← compareCanonical args[0]! (← get).statement then
+            modify fun s => { s with forbidden := true }
     | .lam _ t _ _ | .forallE _ t _ _ | .letE _ t _ _ _ =>
-      let exactType := compareCanonical t (← get).statement || compareCanonical t (← get).decision
-      if exactType then
-        modify fun s => { s with forbidden := true }
-      if let some typeIndex := node.children[0]? then
-        if !exactType && containsStatement[typeIndex]! then
-          noteUnclassified (Unclassified.mk "statement_mentioning_type"
-            (t.getAppFn.constName?.getD `statement_mentioning_type)
-            (namespaceLabel env (t.getAppFn.constName?.getD origin)) origin)
+      modify fun s => { s with typeObligations :=
+        (t, node.context, true, true, t.getAppFn.constName?.getD origin, origin) :: s.typeObligations }
       if let some typeIndex := node.children[0]? then checkU summary.nodes[typeIndex]!
-    | .proj n _ _ =>
-      if provenanceJudgeAPIs.contains n || generatedAddress n || judgePayloadType n then
-        modify fun s => { s with forbidden := true }
+    | .proj n _ _ => directProjection env n
     | .mvar _ => modify fun s => { s with incomplete := true }
     | _ => pure ()
     pending := node.children.toList ++ pending
@@ -433,8 +629,26 @@ private def visit (env : Environment) (pos : Position) (origin : Name) (e : Expr
 
 private def process (env : Environment) : WalkM Unit := do
   while !(← get).forbidden do
-    let some (n, _, _) := (← get).pending.head? | break
-    modify fun s => { s with pending := s.pending.tail! }
+    let some (n, _, _) := (← get).pending.head? | do
+      if let some (type, context, full, rejectUnknown, first, origin) := (← get).typeObligations.head? then
+        modify fun s => { s with typeObligations := s.typeObligations.tail! }
+        let (exact, mentions, unknown) ← classifyType env type context full
+        if exact then modify fun s => { s with forbidden := true }
+        else if mentions || rejectUnknown && unknown then
+          noteUnclassified ⟨if mentions then "statement_mentioning_type" else "unclassified_argument_type",
+            first, namespaceLabel env first, origin⟩
+        continue
+      if let some (e, context, full, origin) := (← get).appObligations.head? then
+        modify fun s => { s with appObligations := s.appObligations.tail! }
+        inBinderContext context fun locals => do
+          if let some type ← appliedValueType (e.instantiateRev locals) then
+            if !full then return
+            let (_, mentions, unknown) ← classifyType env type #[] false
+            if mentions || unknown then
+              noteUnclassified ⟨"unclassified_argument_type", origin, namespaceLabel env origin, origin⟩
+        continue
+      break
+    modify fun s => { s with pending := s.pending.tail!, walked := s.walked.insert n }
     if (← get).exprFuel == 0 then
       modify fun s => { s with incomplete := true }
       break
@@ -469,12 +683,12 @@ private def collectReadout (env : Environment) (theoremName address : Name) (rea
   let env := moduleScopeCache.setState env (some scope)
   modifyEnv (moduleScopeCache.setState · (some scope))
   let some theoremInfo := env.find? theoremName | return { forbidden := false, unclassified := none, incomplete := true, walked := #[] }
-  let statement := eraseLevels theoremInfo.type
+  let statement := theoremInfo.type
   let decision := mkApp (mkConst ``Decidable) statement
   let computation : WalkM Unit := do
     visit env .dataPos address readout
     process env
-  let (_, state) ← computation.run {
+  let (_, state) ← Meta.MetaM.run' <| computation.run {
     theoremName, statement, decision, summaries := summaryCache.getState env }
   let counters := { state.counters with chargedVisits := provenanceExpressionFuel - state.exprFuel }
   modifyEnv (summaryCache.setState · state.summaries)

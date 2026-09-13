@@ -4,6 +4,7 @@ import LeanInformationAudit.StructuralRealization
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
 import Mathlib.Logic.Equiv.Defs
 import LeanInformationAuditAnalysis.Tests.AllowlistSources
+import LeanInformationAuditAnalysis.Tests.ExternalAllowlistTypes
 
 open Lean LeanInformationAudit.RegistrationGates
 open D5.S3.ConceptDynamics.InformationEscape
@@ -265,5 +266,230 @@ run_cmd Elab.Command.liftCoreM do
       throwError "expected statement_mentioning_type, got {payload}"
     logInfo m!"[PASS] {label}"
   catch ex => logError m!"[FAIL] {label}: {ex.toMessageData}"
+
+class StatementEvidence (p : Prop) : Type where
+  proof : p
+instance {p : Prop} : Subsingleton (StatementEvidence p) :=
+  ⟨fun a b => by cases a; cases b; rfl⟩
+
+def statementAlias : Prop := (137 : Nat) = 137
+inductive AliasInstanceBox where
+  | mk [StatementEvidence statementAlias] (bit : Bool) : AliasInstanceBox
+def aliasSignature : LeanInformationAudit.StructuralPrimitiveSignature where
+  Index := StatementEvidence statementAlias
+  indexFintype := Fintype.ofSubsingleton ⟨rfl⟩
+  Output := fun _ => AliasInstanceBox
+def aliasRealization : LeanInformationAudit.StructuralPrimitiveRealization
+    ⟨Bool⟩ aliasSignature := ⟨@AliasInstanceBox.mk⟩
+def etaReadout (evidence : StatementEvidence ((137 : Nat) = 137))
+    (bit : Bool) : AliasInstanceBox := @AliasInstanceBox.mk evidence bit
+
+protected def hiddenStatement : Prop := (137 : Nat) = 137
+structure Box where
+  evidence : PLift AllowlistRules.hiddenStatement
+  bit : Bool
+def hiddenSignature : LeanInformationAudit.StructuralPrimitiveSignature where
+  Index := PLift AllowlistRules.hiddenStatement
+  indexFintype := Fintype.ofSubsingleton ⟨rfl⟩
+  Output := fun _ => Box
+def hiddenRealization : LeanInformationAudit.StructuralPrimitiveRealization
+    ⟨Bool⟩ hiddenSignature := ⟨Box.mk⟩
+
+inductive DecidableAliasBox where
+  | mk [Decidable statementAlias] (bit : Bool) : DecidableAliasBox
+def decidableAliasSignature : LeanInformationAudit.StructuralPrimitiveSignature where
+  Index := Decidable statementAlias
+  indexFintype := Fintype.ofSubsingleton (.isTrue rfl)
+  Output := fun _ => DecidableAliasBox
+def decidableAliasRealization : LeanInformationAudit.StructuralPrimitiveRealization
+    ⟨Bool⟩ decidableAliasSignature := ⟨@DecidableAliasBox.mk⟩
+
+structure EvidenceBox : Type where
+  evidence : (137 : Nat) = 137
+instance : Subsingleton EvidenceBox := ⟨fun a b => by cases a; cases b; rfl⟩
+inductive NestedBox where
+  | mk (evidence : EvidenceBox) (bit : Bool) : NestedBox
+def nestedSignature : LeanInformationAudit.StructuralPrimitiveSignature where
+  Index := EvidenceBox
+  indexFintype := Fintype.ofSubsingleton ⟨rfl⟩
+  Output := fun _ => NestedBox
+def nestedRealization : LeanInformationAudit.StructuralPrimitiveRealization
+    ⟨Bool⟩ nestedSignature := ⟨NestedBox.mk⟩
+
+inductive GenericBox (α : Type) where
+  | mk (evidence : α) (bit : Bool) : GenericBox α
+def genericSignature : LeanInformationAudit.StructuralPrimitiveSignature where
+  Index := EvidenceBox
+  indexFintype := Fintype.ofSubsingleton ⟨rfl⟩
+  Output := fun _ => GenericBox EvidenceBox
+-- Inline specialization: a named readout would expose its instantiated type.
+def genericRealization : LeanInformationAudit.StructuralPrimitiveRealization
+    ⟨Bool⟩ genericSignature := ⟨@GenericBox.mk EvidenceBox⟩
+
+abbrev EvidenceAlias : Type := ULift (PLift statementAlias)
+inductive TypeAliasBox where
+  | mk (evidence : EvidenceAlias) (bit : Bool) : TypeAliasBox
+def typeAliasSignature : LeanInformationAudit.StructuralPrimitiveSignature where
+  Index := EvidenceAlias
+  indexFintype := Fintype.ofSubsingleton ⟨⟨rfl⟩⟩
+  Output := fun _ => TypeAliasBox
+def typeAliasRealization : LeanInformationAudit.StructuralPrimitiveRealization
+    ⟨Bool⟩ typeAliasSignature := ⟨TypeAliasBox.mk⟩
+
+abbrev UnknownAlias : Type := StatementEvidence ((138 : Nat) = 138)
+inductive UnknownAliasBox where
+  | mk [UnknownAlias] (bit : Bool) : UnknownAliasBox
+def unknownAliasSignature : LeanInformationAudit.StructuralPrimitiveSignature where
+  Index := UnknownAlias
+  indexFintype := Fintype.ofSubsingleton ⟨rfl⟩
+  Output := fun _ => UnknownAliasBox
+def unknownAliasRealization : LeanInformationAudit.StructuralPrimitiveRealization
+    ⟨Bool⟩ unknownAliasSignature := ⟨@UnknownAliasBox.mk⟩
+
+def Ghost : Type := let _ := independentProof; Unit
+structure GhostRecord : Type where
+  ghost : Ghost
+instance : Subsingleton GhostRecord := ⟨fun ⟨a⟩ ⟨b⟩ => by
+  have h : a = b := @Subsingleton.elim Unit inferInstance a b
+  cases h
+  rfl⟩
+inductive GhostBox where
+  | mk (evidence : GhostRecord) (bit : Bool) : GhostBox
+def ghostSignature : LeanInformationAudit.StructuralPrimitiveSignature where
+  Index := GhostRecord
+  indexFintype := Fintype.ofSubsingleton ⟨()⟩
+  Output := fun _ => GhostBox
+def ghostRealization : LeanInformationAudit.StructuralPrimitiveRealization
+    ⟨Bool⟩ ghostSignature := ⟨GhostBox.mk⟩
+
+def externalValuedSignature : LeanInformationAudit.StructuralPrimitiveSignature where
+  Index := PLift ((137 : Nat) = 137)
+  indexFintype := Fintype.ofSubsingleton ⟨rfl⟩
+  Output := fun _ => Bool
+def externalValuedRealization : LeanInformationAudit.StructuralPrimitiveRealization
+    ⟨Bool⟩ externalValuedSignature := ⟨ExternalAllowlistTypes.typedRead⟩
+instance : Subsingleton ExternalAllowlistTypes.PredicateRecord :=
+  ⟨fun ⟨⟨a⟩⟩ ⟨⟨b⟩⟩ => rfl⟩
+def externalPredicateSignature : LeanInformationAudit.StructuralPrimitiveSignature where
+  Index := ExternalAllowlistTypes.PredicateRecord
+  indexFintype := Fintype.ofSubsingleton ⟨⟨⟨(), rfl⟩⟩⟩
+  Output := fun _ => ExternalAllowlistTypes.PredicateBox
+def externalPredicateRealization : LeanInformationAudit.StructuralPrimitiveRealization
+    ⟨Bool⟩ externalPredicateSignature := ⟨ExternalAllowlistTypes.PredicateBox.mk⟩
+
+def proofIndexedSignature : LeanInformationAudit.StructuralPrimitiveSignature where
+  Index := Unit
+  indexFintype := inferInstance
+  Output := fun _ => ExternalAllowlistTypes.ProofIndexed rfl
+def proofIndexedRealization : LeanInformationAudit.StructuralPrimitiveRealization
+    ⟨Bool⟩ proofIndexedSignature := ⟨ExternalAllowlistTypes.ProofIndexed.mk⟩
+
+elab "raw_payload_name" value:term : term => do
+  let value ← Elab.Term.elabTerm value (some (mkConst ``LeanInformationAudit.SealedOccurrenceState))
+  let some projection := (← getEnv).getProjectionFnInfo? ``LeanInformationAudit.SealedOccurrenceState.theoremName
+    | throwError "missing payload projection"
+  return .proj ``LeanInformationAudit.SealedOccurrenceState projection.i value
+
+def tagCarrier (_ : Name) : Type := Unit
+structure SyntheticProjectionField : Type where
+  tag : ∀ payload : LeanInformationAudit.SealedOccurrenceState, tagCarrier (raw_payload_name payload)
+instance : Subsingleton SyntheticProjectionField := ⟨fun ⟨a⟩ ⟨b⟩ => by
+  have h : a = b := funext (fun _ => @Subsingleton.elim Unit inferInstance _ _)
+  cases h
+  rfl⟩
+inductive SyntheticProjectionBox where
+  | mk (evidence : SyntheticProjectionField) (bit : Bool) : SyntheticProjectionBox
+def syntheticProjectionSignature : LeanInformationAudit.StructuralPrimitiveSignature where
+  Index := SyntheticProjectionField
+  indexFintype := Fintype.ofSubsingleton ⟨fun _ => ()⟩
+  Output := fun _ => SyntheticProjectionBox
+def syntheticProjectionRealization : LeanInformationAudit.StructuralPrimitiveRealization
+    ⟨Bool⟩ syntheticProjectionSignature := ⟨SyntheticProjectionBox.mk⟩
+
+structure PlainPayload where
+  index : Unit
+  bit : Bool
+def plainSignature : LeanInformationAudit.StructuralPrimitiveSignature where
+  Index := Unit
+  indexFintype := inferInstance
+  Output := fun _ => PlainPayload
+def plainRealization : LeanInformationAudit.StructuralPrimitiveRealization
+    ⟨Bool⟩ plainSignature := ⟨PlainPayload.mk⟩
+def plainProjectionRead (_ : Unit) (x : Bool) : Bool :=
+  let payload : PlainPayload := ⟨(), x⟩
+  let aliased := payload
+  aliased.bit
+noncomputable def classicalTypeOnlyRead (_ : Unit) (x : Bool) : Bool :=
+  let _ := fun (_ : Classical.propDecidable = Classical.propDecidable) => x
+  x
+
+run_cmd Elab.Command.liftTermElabM do
+  let targetType := (← getConstInfo ``target).type
+  unless ← Meta.isDefEq (mkConst ``statementAlias) targetType do
+    throwError "[FAIL] AliasDeclaredTypeShape: alias differs from statement"
+  unless ← Meta.isDefEq (mkConst ``etaReadout) (mkConst ``AliasInstanceBox.mk) do
+    throwError "[FAIL] AliasDeclaredTypeShape: eta readout differs from constructor"
+  for name in [``AliasInstanceBox.mk, ``Box.mk, ``DecidableAliasBox.mk] do
+    unless (← getConstInfo name).value?.isNone do
+      throwError "[FAIL] AliasDeclaredTypeShape: {name} has a value"
+  logInfo "[PASS] AliasDeclaredTypeShape"
+  for (label, holder) in [
+      ("InstanceTypeThroughAlias", ``aliasRealization),
+      ("ProtectedPLiftDeclaredType", ``hiddenRealization),
+      ("DecidableTypeThroughAlias", ``decidableAliasRealization),
+      ("NestedValuelessRecordType", ``nestedRealization),
+      ("InlineGenericConstructorType", ``genericRealization),
+      ("TypeAliasThroughULift", ``typeAliasRealization),
+      ("UnknownClassTypeAlias", ``unknownAliasRealization),
+      ("NestedTypeAliasProvenance", ``ghostRealization),
+      ("ExternalValuedDeclaredType", ``externalValuedRealization),
+      ("ExternalPredicateConstructorDomain", ``externalPredicateRealization),
+      ("SyntheticProjectionType", ``syntheticProjectionRealization),
+      ("ExternalProofIndexType", ``proofIndexedRealization)] do
+    let actual ← provenanceErrorCurrent (← getEnv).header.mainModule `catalog ``target holder
+    match actual with
+    | some message =>
+      if message.startsWith "IE-C050 ClosedTruthReadout " &&
+          #["reason=unclassified_form", "reason=forbidden_dependency"].contains
+            ((message.splitOn " ")[4]?.getD "") then
+        logInfo m!"[PASS] {label}: {message}"
+      else logError m!"[FAIL] {label}: unexpected diagnostic {message}"
+    | none => logError m!"[FAIL] {label}: false admission; missing IE-C050"
+
+run_cmd Elab.Command.liftTermElabM do
+  -- Preserve ordinary projection-function application in the actual Expr.
+  -- No Expr.proj or payload constructor can mask the constant dispatch guard.
+  let getter := mkLambda `payload .default (mkConst ``LeanInformationAudit.SealedOccurrenceState)
+    (mkApp (mkConst ``LeanInformationAudit.SealedOccurrenceState.theoremName) (.bvar 0))
+  let readout := mkLambda `index .default (mkConst ``Unit)
+    (mkLambda `state .default (mkConst ``Bool)
+      (Expr.letE `getter (← Meta.inferType getter) getter (.bvar 1) true))
+  Meta.check readout
+  unless (readout.find? (fun e => match e with | .proj .. => true | _ => false)).isNone do
+    throwError "[FAIL] ProjectionFunctionShape: unexpected Expr.proj"
+  logInfo "[PASS] ProjectionFunctionShape: ordinary const application; well typed"
+  let readoutName := `AllowlistRules.explicitProjectionRead
+  addDecl <| .defnDecl {
+    name := readoutName, levelParams := [], type := ← Meta.inferType readout
+    value := readout, hints := .abbrev, safety := .safe }
+  try check "JudgeProjectionFunctionApplication" readoutName ``target "forbidden_dependency"
+  catch ex => logError m!"[FAIL] JudgeProjectionFunctionApplication: {ex.toMessageData}"
+
+run_cmd Elab.Command.liftCoreM do
+  let actual ← provenanceErrorCurrent (← getEnv).header.mainModule `catalog
+    ``target ``plainRealization
+  if actual.isNone then logInfo "[PASS] ValuelessCleanCounterpart"
+  else logError m!"[FAIL] ValuelessCleanCounterpart: {actual}"
+  for (label, readout) in [
+      ("ClassicalTypeOnlyCounterpart", ``classicalTypeOnlyRead),
+      ("PlainProjectionCounterpart", ``plainProjectionRead)] do
+    try check label readout ``target "clean"
+    catch ex => logError m!"[FAIL] {label}: {ex.toMessageData}"
+
+run_cmd Elab.Command.liftCoreM do
+  try
+    withOptions (·.set `provenanceDefEqLimit (0 : Nat)) <|
+      check "DefeqBudgetExhaustion" ``cleanRead ``target "unclassified_form" "defeq_budget"
+  catch ex => logError m!"[FAIL] DefeqBudgetExhaustion: {ex.toMessageData}"
 
 end AllowlistRules
