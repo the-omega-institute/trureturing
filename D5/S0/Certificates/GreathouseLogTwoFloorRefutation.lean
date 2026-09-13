@@ -35,6 +35,20 @@ noncomputable def a (n : ℕ) : ℕ :=
 def claim : Prop :=
   ∀ n : ℕ, 1 ≤ n → a n = ⌊((n : ℝ) + 1 / 2) * Real.log 2⌋₊
 
+example :
+    (∑ k ∈ Finset.range 36,
+        (2 : ℝ) * (1 / (2 * k + 1)) * (1 / 3) ^ (2 * k + 1)) ≤ Real.log 2 := by
+  let f : ℕ → ℝ := fun k =>
+    2 * (1 / (2 * k + 1)) * (1 / 3) ^ (2 * k + 1)
+  have hlog : HasSum f (Real.log 2) := by
+    convert! Real.hasSum_log_one_add_inv (a := (1 : ℝ)) (by norm_num) using 1 <;>
+      norm_num [f]
+  have hpartial := hlog.summable.sum_le_tsum (Finset.range 36) (fun k _ => by
+    dsimp [f]
+    positivity)
+  rw [hlog.tsum_eq] at hpartial
+  exact hpartial
+
 #print axioms a
 #print axioms claim
 
