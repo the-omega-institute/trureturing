@@ -1,0 +1,15 @@
+**证明。** 因为 $\varphi=1+\alpha$，
+
+$$
+S(n)=n+\lfloor(n+1)\alpha\rfloor.
+$$
+
+代回定义便得到 GS10。正实嵌入满足
+
+$$
+(S(n)-n)+n\varphi=S(n)+n\alpha=S(n)-n\psi
+=\beta_{\mathbb R}(n),
+$$
+
+内部嵌入则由定义直接得到。
+

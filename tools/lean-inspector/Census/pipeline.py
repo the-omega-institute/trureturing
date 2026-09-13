@@ -218,7 +218,12 @@ def execute(options):
         membership = read(directory / "membership.json")
         from validation import prepare as prepare_validation, run_batches
         plan = prepare_validation(repository, directory, membership, request)
+        state["batches"] = {"bound": plan["bound"], "key_bound": plan["key_bound"],
+                            "count": len(plan["planned"]), "skipped": plan["skipped"]}
+        save()
         candidates, validation = run_batches(repository, directory, membership, request, plan, step, lean_binary)
+        state["batches"]["executed"] = len(validation["executions"])
+        save()
         with (directory / "accounting-input.jsonl").open("wb") as out:
             with (directory / "membership.json.rows.jsonl").open("rb") as observations:
                 shutil.copyfileobj(observations, out, 1024 * 1024)
@@ -245,10 +250,6 @@ def execute(options):
                      membership_cache=read(directory / "membership-cache.json"),
                      emission_cache=read(directory / "emission-cache.json"),
                      validation_cache={k: validation[k] for k in ["hits", "misses", "revalidated_keys"]},
-                     batches={"bound": validation["receipt"]["bound"],
-                              "key_bound": validation["receipt"]["key_bound"],
-                              "count": len(validation["receipt"]["batches"]),
-                              "executed": len(validation["executions"])},
                      collisions={"total": len(membership["collisions"]),
                          "resolved_by_statement": sum(c["resolved_by_statement"] for c in membership["collisions"]),
                          "remaining": sum(not c["resolved_by_statement"] for c in membership["collisions"])})

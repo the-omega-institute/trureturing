@@ -1,0 +1,21 @@
+**定义 483.2（原净仿射观察及其有限纤维）。** 直接使用第 460.4、467.9 条的净仿射读数，在有理数上取值于通常的函数群
+$$
+\operatorname{Aff}_+(\mathbb Q)
+=\{x\longmapsto ax+b:a\in\mathbb Q_{>0},\ b\in\mathbb Q\}.
+$$
+群运算为函数复合，$x\mapsto ax+b$ 的逆为 $x\mapsto a^{-1}x-a^{-1}b$。原 $A_q,M_q$ 分别读作 $x\mapsto x+q$、$x\mapsto qx$，所得函数记为 $\rho(\gamma)$；$\rho(\epsilon)=\operatorname{id}$，先执行 $u$ 再执行 $v$ 时 $\rho(uv)=\rho(v)\circ\rho(u)$。这里只使用包含原观察像的群，原正向词的像不被认作一个子群，也不向原图添加逆算术边。
+
+令
+$$
+\mathcal F_{10}
+=\{\gamma\in\mathcal E_X:\rho(\gamma)(x)=x+10
+\text{ 对全部 }x\in\mathbb Q\}.
+$$
+令 $c_\gamma(\tau,q)$ 为带类型字母 $(\tau,q)$ 的出现次数，其中 $\tau\in\{A,M\}$、$q$ 遍历全部素数；$c_\gamma$ 是这个完整字母域上的有限支撑计数函数，$|\gamma|=\sum_{\tau,q}c_\gamma(\tau,q)$。分别记观察
+$$
+O_0(\gamma)=\rho(\gamma),\qquad
+O_\ell(\gamma)=(\rho(\gamma),|\gamma|),\qquad
+O_c(\gamma)=(\rho(\gamma),c_\gamma).
+$$
+在 $O_c$ 中再加词长不增加信息。$\operatorname{Adm}_{\mathscr G}(\gamma)$ 取值于 $\{0,1\}$，表示该原输入在实际图 $\mathscr G$ 中是否存在合法完整提升。
+

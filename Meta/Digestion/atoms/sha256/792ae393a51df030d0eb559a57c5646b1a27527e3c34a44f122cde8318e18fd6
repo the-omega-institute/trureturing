@@ -1,0 +1,48 @@
+## 21.6 任意采样位置的边界对残差
+
+**定义。** 给定观察位置 $A\subseteq\mathbb Z$，令
+
+$$
+D(A)=\{m:m-1\in A\ \text{或}\ m\in A\}=A\cup(A+1).
+$$
+
+对目标位置 $B\subseteq\mathbb Z$，定义同一边界的两侧轨迹对的目标残差
+
+$$
+R(A;B)=\{m:\ell_m|_A=u_m|_A,\ \ell_m|_B\ne u_m|_B\}.
+$$
+
+**定理。** 对任意 $A,B,C\subseteq\mathbb Z$，
+
+$$
+\boxed{R(A;B)=D(B)\setminus D(A),}
+\qquad
+\boxed{[\forall m,\ \ell_m|_A=u_m|_A\Rightarrow\ell_m|_B=u_m|_B]
+\iff D(B)\subseteq D(A),}
+$$
+$$
+R(A\cup C;B)=R(A;B)\setminus D(C).
+$$
+
+**证明。** 第 21.4 节给出 $\ell_m|_A=u_m|_A\iff m\notin D(A)$，以及 $\ell_m|_B\ne u_m|_B\iff m\in D(B)$。交集即为差集；残差为空当且仅当所示包含成立。最后 $D(A\cup C)=D(A)\cup D(C)$，对差集取补即得更新式。
+
+**定理。** 对自然数 $J,M$，取 $A=\{t\in\mathbb Z:t<J\}$、$B=\{t\in\mathbb Z:0\le t<M\}$，则
+
+$$
+R(A;B)=\{m:J<m\le M\}.
+$$
+
+且 $|R(A;B)|=(M-J)_+:=\max(M-J,0)$，包括 $M=0$ 的情形。
+
+**证明。** $D(A)=\{m:m\le J\}$，当 $M>0$ 时 $D(B)=\{1,\ldots,M\}$，空目标时 $D(B)=\varnothing$。取差集并计数即得。若 $J>0$，所有起点 $t\le0$ 的长度 $J$ 窗口采样位置的并集恰为 $\{t:t<J\}$；若 $J=0$，该并集为空，不能等同于此处的 $A$。
+
+**定理。** 若有限采样集合 $S$ 区分某个有限边界指标集合 $R_0$ 中的每一对 $(\ell_m,u_m)$，则
+
+$$
+R_0\subseteq S\cup(S+1),\qquad |R_0|\le2|S|,
+$$
+
+从而 $|S|\ge\lceil|R_0|/2\rceil$。
+
+**证明。** 每个 $m\in R_0$ 必在 $S$ 上呈现两侧分歧，所以 $m\in D(S)=S\cup(S+1)$。有限并集的基数至多为 $|S|+|S+1|=2|S|$，再取整数上整。
+

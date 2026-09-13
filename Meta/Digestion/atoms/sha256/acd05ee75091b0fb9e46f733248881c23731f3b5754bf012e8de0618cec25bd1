@@ -1,0 +1,8 @@
+标准局部有限公式在各自端点窗内直接给
+$$
+M(N)=\sum_{n=1}^N\ \sum_{\gamma:1\rightsquigarrow n}(-1)^{|\gamma|},\qquad
+E_k=\sum_{d\mid P_k}\frac1d\sum_{\gamma:1\rightsquigarrow d}(-1)^{|\gamma|}.
+\tag{475.3b}
+$$
+第一式保留完整整数初段，第二式保留原第 442.1 条初始素数积的约数窗及 $1/d$ 权；空素数积包含平凡链。这些有限公式不解除 $H_{\rm Nic}$ 或其它解析假设。
+

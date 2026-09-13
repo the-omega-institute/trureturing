@@ -1,0 +1,30 @@
+## 21.4 双侧边界轨迹的分歧与平移
+
+**定义。** 对整数 $m,t$ 定义双向机械轨迹
+
+$$
+\ell_m(t)=\lfloor(t+1-m)\alpha\rfloor-\lfloor(t-m)\alpha\rfloor,
+$$
+$$
+u_m(t)=\lceil(t+1-m)\alpha\rceil-\lceil(t-m)\alpha\rceil.
+$$
+
+**定理。** 它们均为二值轨迹，且
+
+$$
+\ell_m(t)\ne u_m(t)\iff t\in\{m-1,m\}.
+$$
+
+**证明。** 当整数 $k\ne0$，$k\alpha$ 非整数，故 $\lceil k\alpha\rceil=\lfloor k\alpha\rfloor+1$。在 $t\notin\{m-1,m\}$ 时两个修正相消。在另外两个时刻，分别直接得到
+
+$$
+(\ell_m(m-1),\ell_m(m))=(1,0),\qquad
+(u_m(m-1),u_m(m))=(0,1).
+$$
+
+普通 floor 增量不等式给出下机械轨迹二值性，上轨迹由两点交换得到。
+
+**定理。** 对所有 $m,t\in\mathbb Z$，$\ell_m(t+1)=\ell_{m-1}(t)$ 且 $u_m(t+1)=u_{m-1}(t)$。
+
+**证明。** 将两侧定义中的 $t+1-m$ 改写为 $t-(m-1)$，其余项同理。
+
