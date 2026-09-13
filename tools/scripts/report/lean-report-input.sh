@@ -59,18 +59,6 @@ trap cleanup EXIT
 SCRIPT_DIRECTORY="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 source "$SCRIPT_DIRECTORY/../worktree/lean-cache-input.sh"
 
-append_producer_manifest_entry() {
-  local manifest="$1"
-  local relative="$2"
-  local path="$REPOSITORY/$relative"
-  if [[ "$relative" == "lean-report-inputs.json" ]]; then
-    path="$TMP_ROOT/selection-policy.json"
-  fi
-  [[ -f "$path" ]] \
-    || { echo "lean-report-input: repository input is absent: $path" >&2; return 2; }
-  printf '%s\0%s\0' "$relative" "$path" >> "${manifest}.requests"
-}
-
 # The registered policy is validated before any command exposes inputs.
 SELECTION="$SCRIPT_DIRECTORY/lean-report-selection.py"
 [[ -r "$SELECTION" ]] || { echo "lean-report-input: selection loader is absent: $SELECTION" >&2; exit 2; }
@@ -81,22 +69,6 @@ case "$COMMAND" in
     ;;
 esac
 python3 "$SELECTION" snapshot --repository "$REPOSITORY" --output "$TMP_ROOT" || exit 2
-
-producer_sha256() {
-  local manifest="$1"
-  local relative
-  : > "$manifest"
-  : > "${manifest}.unsorted"
-  : > "${manifest}.unsorted.requests"
-  local producer_paths="$TMP_ROOT/producer-paths"
-  while IFS= read -r relative; do
-    append_producer_manifest_entry "${manifest}.unsorted" "$relative" || return 2
-  done < "$producer_paths"
-  materialize_manifest "${manifest}.unsorted" || return 2
-  sort "${manifest}.unsorted" > "$manifest" || return 2
-  rm -f -- "${manifest}.unsorted"
-  hash_file "$manifest"
-}
 
 registered_input_hash() {
   local kind="$1" relative
@@ -109,15 +81,14 @@ registered_input_hash() {
   hash_file "$manifest"
 }
 
-# Repository address preimage v1 hashes the resident inspector producer,
-# Trureturing.lean + D5/**/*.lean + tools/lean-inspector/**/*.lean sources,
-# and the Lean toolchain/lake configuration as three named SHA-256 fields.
+# The legacy producer/resident coordinate fields carry the manual semantic
+# compatibility token, never executable-byte evidence. Source/config inputs
+# remain selected by the single registered manifest.
 repository_address() {
-  local resident_manifest="$TMP_ROOT/resident-inspector.manifest"
   local resident_sha256 sources_sha256 config_sha256
 
   prepare_memo
-  resident_sha256="$(producer_sha256 "$resident_manifest")" || return 2
+  resident_sha256="$(cat "$TMP_ROOT/compatibility")" || return 2
   sources_sha256="$(registered_input_hash sources)" || return 2
   config_sha256="$(registered_input_hash config)" || return 2
 

@@ -35,7 +35,7 @@ public sealed partial class LeanReportInputScriptTests
     }
 
     [Fact]
-    public void CacheFetcherBytesChangeProducerWithoutChangingLeanInputs()
+    public void CompatibleCacheFetcherEditPreservesReportInputs()
     {
         using var fixture = new LeanReportInputFixture();
         var before = fixture.RunCommand("address");
@@ -45,8 +45,8 @@ public sealed partial class LeanReportInputScriptTests
         var after = fixture.RunCommand("address");
 
         Assert.Equal(0, after.ExitCode);
-        Assert.NotEqual(Fields(before)[0], Fields(after)[0]);
-        Assert.NotEqual(Fields(before)[1], Fields(after)[1]);
+        Assert.Equal(Fields(before)[0], Fields(after)[0]);
+        Assert.Equal(Fields(before)[1], Fields(after)[1]);
         Assert.Equal(Fields(before)[2..], Fields(after)[2..]);
     }
 
@@ -78,7 +78,7 @@ public sealed partial class LeanReportInputScriptTests
     }
 
     [Fact]
-    public void AddressFromRepositoryMatchesIndependentPrechangeBytes()
+    public void AddressFromRepositoryMatchesIndependentSemanticPreimage()
     {
         using var fixture = new LeanReportInputFixture();
 
@@ -113,29 +113,9 @@ public sealed partial class LeanReportInputScriptTests
         internal byte[] ExpectedAddressBytes()
         {
             // The synthetic fixture's inputs are independent of the helper's output.
-            string[] producerPaths =
-            [
-                "tools/StrataLint.Cli/Commands/FixtureProbe.cs",
-                RawReportPath, CanonicalWriterPath, LeanModelsPath,
-                CliProjectPath, EngineProjectPath, TruthProjectPath,
-                "Directory.Build.props", "Directory.Packages.props", "global.json",
-                inspectorScriptPath, inspectorSourcePath, InputHelperPath,
-                PairScriptPath, SupervisorScriptPath, NativeProducerPath,
-                "tools/lean-inspector/publication.py",
-                CacheEnsureScriptPath, CachePublishScriptPath,
-                "tools/scripts/worktree/lean-cache-input.sh",
-                ResourceObservationLibraryPath, ToolchainInstallerPath,
-                JudgeContentAddressPath,
-                LeanReportRegistrationFixture.ManifestPath, LeanReportRegistrationFixture.LoaderPath,
-                EngineLockPath, CliLockPath, TruthLockPath,
-            ];
-            var producerManifest = string.Concat(producerPaths.Select(path =>
-                $"{Convert.ToHexStringLower(SHA256.HashData(path == LeanReportRegistrationFixture.ManifestPath
-                    ? Encoding.ASCII.GetBytes(LeanReportRegistrationFixture.LeanProjection + "\n")
-                    : File.ReadAllBytes(Path.Combine(repository, path))))}  {path}\n")
-                .Order(StringComparer.Ordinal));
-            var producer = Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(producerManifest)));
-            var sources = ManifestHash("Trureturing.lean", "D5/Probe.lean", inspectorSourcePath);
+            var producer = Convert.ToHexStringLower(SHA256.HashData(Encoding.ASCII.GetBytes(
+                "schema=stratalint-lean-report-compatibility\nversion=1\n")));
+            var sources = ManifestHash("Trureturing.lean", "D5/Probe.lean");
             var config = ManifestHash("lean-toolchain", "lake-manifest.json", "lakefile.toml");
             var preimage = "schema=stratalint-lean-report-repository-input-v1\n"
                 + $"repository_inspector_sha256={producer}\n"

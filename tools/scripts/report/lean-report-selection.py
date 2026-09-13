@@ -4,6 +4,7 @@
 Lake owns compilation. This reader only expands authored path sets; Lake owns dependency and invalidation semantics.
 """
 import argparse
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -83,21 +84,28 @@ class Selection:
                                    object_pairs_hook=unique_object)
         except (OSError, UnicodeError, ValueError) as error:
             fail('declaration', str(error))
-        fields(self.data, ('schema_version', 'report_modules', 'inspector_sources',
+        fields(self.data, ('schema_version', 'report_semantic_version', 'report_modules', 'inspector_sources',
                           'config_inputs', 'producer_scopes'), 'declaration')
         if type(self.data['schema_version']) is not int or self.data['schema_version'] != 1:
             fail('schema_version', 'unsupported version')
+        if type(self.data['report_semantic_version']) is not int or self.data['report_semantic_version'] <= 0:
+            fail('report_semantic_version', 'must be a positive integer')
         for name in ('report_modules', 'inspector_sources', 'config_inputs'):
             path_set(self.data[name], name)
         fields(self.data['producer_scopes'], SCOPES, 'producer_scopes')
         for scope, value in self.data['producer_scopes'].items():
             path_set(value, 'producer_scopes.' + scope)
-        # These two inputs bind policy and reader changes to compatibility.
+        # These required inputs keep policy and reader in the provenance/scope inventory.
         required = self.data['producer_scopes']['lean-report']['include']
         for anchor in (MANIFEST, LOADER):
             if dict(pattern=anchor, optional=False) not in required:
                 fail('producer_scopes.lean-report', f'missing required registration {anchor}')
         self.modules()
+
+    def compatibility(self):
+        return hashlib.sha256(
+            f"schema=stratalint-lean-report-compatibility\nversion={self.data['report_semantic_version']}\n".encode('ascii')
+        ).hexdigest()
 
     def safe_file(self, relative):
         compile_glob(relative, 'path')
@@ -219,11 +227,10 @@ def main():
                 fail('snapshot', '--output is required')
             output = Path(args.output)
             for name, paths_value in (
-                    ('producer-paths', selection.producer_paths('lean-report')),
-                    ('sources-paths', list(dict.fromkeys(selection.expand('report_modules') + selection.expand('inspector_sources')))),
+                    ('sources-paths', selection.expand('report_modules')),
                     ('config-paths', selection.expand('config_inputs'))):
                 (output / name).write_text(''.join(p + '\n' for p in paths_value), encoding='utf-8')
-            (output / 'selection-policy.json').write_text(selection.projection('lean-report'), encoding='ascii')
+            (output / 'compatibility').write_text(selection.compatibility() + '\n', encoding='ascii')
         return 0
     except (OSError, UnicodeError, ValueError) as error:
         print(f'lean-report-selection: {error}', file=sys.stderr)

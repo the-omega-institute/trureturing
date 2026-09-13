@@ -61,13 +61,13 @@ private def readJson (path : FilePath) : IO Json := do
 private def strings (json : Json) (key : String) : IO (Array String) :=
   IO.ofExcept (json.getObjValAs? (Array String) key)
 
-/-- Hash the shared producer/config input bytes once in Lake's job graph. -/
+/-- Trace semantic compatibility and registered content configuration.
+Producer compilation remains a separate native obligation. -/
 package_facet reportProducer (pkg : Package) : Unit := withCurrPackage pkg do
   let config ← readJson (← (← fetch <| pkg.facet `reportInputs).await)
-  let producers ← strings config "producers"
   let configs ← strings config "configs"
-  let mut deps := Job.nil
-  for path in producers ++ configs do
+  let mut deps := Job.nil.mix (← inputBinFile (pkg.buildDir / "lean-inspector" / "compatibility"))
+  for path in configs do
     deps := deps.mix (← inputBinFile (pkg.dir / path))
   return deps
 
@@ -106,8 +106,9 @@ module_facet report (mod : Module) : FilePath := withCurrPackage mod.pkg do
     let some claim := (← getWorkspace).findModule? name.toName
       | error s!"utility claim module is not in the Lake workspace: {name}"
     exports := exports.push (← claim.exportInfo.fetch)
+  -- Await without mixing: recompilation must succeed, but its implementation
+  -- identity is not a report-semantic dependency.
   let inspector ← reportInspector.fetch
-  deps := deps.mix inspector
   let workspace ← getWorkspace
   let env := #[ ("LEAN_PATH", some workspace.leanPath.toString) ]
   let file := pkg.buildDir / "lean-inspector" / "modules" / s!"{mod.name}.zip"

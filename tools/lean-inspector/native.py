@@ -16,7 +16,7 @@ import materials
 import publication as public
 
 selection = public.selection
-ROW_SUFFIXES = ('', '.materials.zip')
+ROW_SUFFIXES = ('', '.materials.zip', '.provenance.json')
 UTILITY_FIELDS = {'modulePath', 'claimGid', 'claimModule', 'claimSelector', 'claimSourcePath',
                   'claimSourceSha256', 'resultGid', 'resultModule', 'resultSelector'}
 
@@ -70,10 +70,11 @@ def prepare(root):
         utility = [by_path[path]] if path in by_path else []
         write_if_changed(state(root) / 'inputs' / (name + '.json'), materials.canonical_json({
             'utilities': utility, 'claims': sorted({u['claimModule'] for u in utility}), 'source_path': path}))
-    # Membership and public input coordinates affect aggregation only. Every
-    # module separately consumes raw producer/config/source and utility bytes.
+    write_if_changed(state(root) / 'compatibility', (inputs.compatibility() + '\n').encode('ascii'))
+    # Membership and public input coordinates affect aggregation only. Each
+    # module traces compatibility, config, source, compiler and utility inputs.
     write_if_changed(state(root) / 'inputs.json', materials.canonical_json({
-        'modules': sorted(modules), 'producers': inputs.expand('lean-report'),
+        'modules': sorted(modules),
         'configs': inputs.expand('config_inputs'), 'coordinates': public.coordinates(root)}))
 
 
@@ -115,6 +116,7 @@ def module(root, name, source, utility_path, executable, output):
         rows = public.validate_rows(report, public.member(report, '.materials.zip'))
         row_binding(rows, root, name, utility_path)
         artifact = directory / 'module.zip'
+        public.write_origin(report, name, public.production_origin(root, executable))
         public.zip_files(artifact, [(public.RAW + suffix, public.member(report, suffix)) for suffix in ROW_SUFFIXES])
         os.replace(artifact, output)
         activity('extract', 1)
@@ -125,6 +127,7 @@ def produce_batch(requests):
     requests = sorted(requests, key=lambda row: row[1])
     root = Path(requests[0][0])
     executable = requests[0][4]
+    origin = public.production_origin(root, executable)
     if any(Path(row[0]) != root or row[4] != executable for row in requests):
         raise ValueError('mixed native batch owners')
     with tempfile.TemporaryDirectory(prefix='.inspection.', dir=state(root)) as directory:
@@ -169,6 +172,7 @@ def produce_batch(requests):
             row_binding(rows, root, name, utility_path)
             output.parent.mkdir(parents=True, exist_ok=True)
             artifact = row_dir / 'module.zip'
+            public.write_origin(report, name, origin)
             public.zip_files(artifact, [(public.RAW + suffix, public.member(report, suffix)) for suffix in ROW_SUFFIXES])
             os.replace(artifact, output)
         if list(spool.iterdir()):
@@ -209,11 +213,13 @@ def aggregate(root, output, artifacts):
         material_dir = directory / 'sha256'
         material_dir.mkdir()
         rows = []
+        origins = {}
         for name, artifact in zip(config['modules'], artifacts):
             with tempfile.TemporaryDirectory(prefix='row.', dir=directory) as row_dir:
                 report = public.unpack(artifact, row_dir, ROW_SUFFIXES)
                 current = public.validate_rows(report, public.member(report, '.materials.zip'))
                 row_binding(current, root, name, state(root) / 'inputs' / (name + '.json'))
+                origins[name] = public.validate_origin(report, current, config['coordinates']['producer'])
                 rows.extend(current)
                 with zipfile.ZipFile(public.member(report, '.materials.zip')) as archive:
                     for entry in archive.infolist():
@@ -236,7 +242,7 @@ def aggregate(root, output, artifacts):
                 info.external_attr = (stat.S_IFREG | 0o644) << 16
                 with source.open('rb') as reader, archive.open(info, 'w') as writer:
                     shutil.copyfileobj(reader, writer, materials.BUFFER_BYTES)
-        public.write_sidecars(report, config['coordinates'])
+        public.write_sidecars(report, config['coordinates'], origins)
         public.validate_bundle(report, config['coordinates'])
         artifact = directory / 'report.zip'
         public.zip_files(artifact, [(public.RAW + suffix, public.member(report, suffix)) for suffix in public.SUFFIXES])
@@ -252,6 +258,11 @@ def validate(kind, root, *args):
             report = public.unpack(artifact, directory, ROW_SUFFIXES)
             rows = public.validate_rows(report, public.member(report, '.materials.zip'))
             row_binding(rows, root, name, utility)
+            # prepare validated the manifest before any facet could accept an
+            # artifact. Read its small derived token, not the full module scope
+            # again for each row in a large validation batch.
+            compatibility = (state(root) / 'compatibility').read_text(encoding='ascii').strip()
+            public.validate_origin(report, rows, compatibility)
         elif kind == 'report':
             report = public.unpack(args[0], directory)
             config = public.read_json((state(root) / 'inputs.json').read_bytes())
@@ -273,7 +284,7 @@ def publish(root, destination):
         if activity_file:
             records = [public.read_json(line) for line in Path(activity_file).read_text().splitlines()]
             mode = 'produced' if records else 'cached'
-            public.write_sidecars(report, inputs, mode)
+            public.set_publication_mode(report, mode)
             print(f'LEAN_INSPECTOR_WORK extracted_modules={sum(row["count"] for row in records if row["kind"] == "extract")} aggregates={sum(row["count"] for row in records if row["kind"] == "aggregate")}')
         public.publish(report, Path(destination), inputs, root)
     print(f'RAW_LEAN_REPORT path={destination} sha256={public.digest(destination)}')

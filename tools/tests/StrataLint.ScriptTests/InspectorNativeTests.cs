@@ -8,6 +8,8 @@ public sealed class InspectorNativeTests
     [InlineData("test_streaming")]
     [InlineData("test_native.NativeTests.test_native_invalidation")]
     [InlineData("test_native.NativeTests.test_native_producer_inputs")]
+    [InlineData("test_native.NativeTests.test_native_semantic_version_and_config")]
+    [InlineData("test_native.NativeTests.test_native_invalid_semantic_versions")]
     [InlineData("test_native.NativeTests.test_native_recovery_and_required_failures")]
     [InlineData("test_native.NativeTests.test_native_pack_unpack_reuses_complete_rows")]
     [InlineData("test_native.NativeTests.test_snapshot_generation_preserves_lean_address")]

@@ -26,7 +26,7 @@ def paths(*patterns):
 
 
 def declaration():
-    return dict(schema_version=1,
+    return dict(schema_version=1, report_semantic_version=1,
         report_modules=dict(include=[spec('Trureturing.lean'), spec('D5/**/*.lean', True)], exclude=[]),
         inspector_sources=dict(include=[spec('tools/lean-inspector/**/*.lean', True)], exclude=[]),
         config_inputs=paths('lean-toolchain', 'lake-manifest.json', 'lakefile.toml'),
@@ -145,11 +145,15 @@ class Contract(unittest.TestCase):
         self.assertEqual(renamed, self.address())
         self.policy['producer_scopes']['lean-report']['include'].append(spec('Extra.py', True))
         policy = self.address()
-        self.assertNotEqual(renamed[1], policy[1])
+        self.assertEqual(renamed, policy)
         self.assertEqual(renamed[2:], policy[2:])
         self.write('Engine/Main.cs', '// producer changed')
         producer = self.address()
-        self.assertNotEqual(policy[1], producer[1])
+        self.assertEqual(policy, producer)
+        self.policy['report_semantic_version'] = 2
+        bumped = self.address()
+        self.assertNotEqual(producer[1], bumped[1])
+        self.assertEqual(producer[2:], bumped[2:])
         self.write('lean-toolchain', 'changed pin')
         config = self.address()
         self.assertNotEqual(producer[3], config[3])

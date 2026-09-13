@@ -1,5 +1,6 @@
 {
   "schema_version": 1,
+  "report_semantic_version": 1,
   "report_modules": {"include": [{"pattern": "Trureturing.lean", "optional": false}, {"pattern": "D5/**/*.lean", "optional": true}], "exclude": []},
   "inspector_sources": {"include": [{"pattern": "tools/lean-inspector/**/*.lean", "optional": true}], "exclude": ["**/.lake/**"]},
   "config_inputs": {"include": [{"pattern": "lean-toolchain", "optional": false}, {"pattern": "lake-manifest.json", "optional": false}, {"pattern": "lakefile.toml", "optional": false}, {"pattern": "lakefile.lean", "optional": true}], "exclude": []},

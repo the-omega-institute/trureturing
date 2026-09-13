@@ -88,7 +88,7 @@ class PublicationTests(unittest.TestCase):
             claim = root / 'Claim.lean'
             claim.write_text('def claim : Prop := False\n')
             paths = lambda *names: dict(include=[dict(pattern=n, optional=False) for n in names], exclude=[])
-            (root / 'lean-report-inputs.json').write_text(json.dumps(dict(schema_version=1,
+            (root / 'lean-report-inputs.json').write_text(json.dumps(dict(schema_version=1, report_semantic_version=1,
                 report_modules=paths('X.lean'), inspector_sources=paths(), config_inputs=paths(),
                 producer_scopes={'lean-report': paths('lean-report-inputs.json',
                     'tools/scripts/report/lean-report-selection.py'), 'scribe-content': paths()})))
@@ -114,7 +114,8 @@ class PublicationTests(unittest.TestCase):
         import zipfile
         for damage in ['material', 'missing', 'duplicate', 'unreferenced', 'nonobject-provenance',
                        'provenance', 'attestation', 'declaration-identity', 'noncanonical',
-                       'report-symlink', 'materials-symlink', 'missing-sidecar']:
+                       'report-symlink', 'materials-symlink', 'missing-sidecar', 'missing-origin',
+                       'origin-compatibility', 'origin-report', 'origin-executable', 'legacy-provenance']:
             with self.subTest(damage=damage), tempfile.TemporaryDirectory() as directory:
                 directory = Path(directory)
                 spool = directory / 'spool'
@@ -131,7 +132,9 @@ class PublicationTests(unittest.TestCase):
                 helper = Path(publication.__file__).resolve().parent.parent / 'scripts/report/lean-report-input.sh'
                 pair, repository = subprocess.check_output([str(helper), 'coordinates', 'b'*64, 'b'*64, 'c'*64, 'd'*64], text=True).split()
                 coordinates = dict(repository=repository, producer='b'*64, sources='c'*64, config='d'*64, input=pair)
-                publication.write_sidecars(report, coordinates)
+                origins = {'X': dict(module='X', report_sha256=publication.digest(report),
+                    compatibility_sha256='b'*64, producer_sources_sha256='e'*64, inspector_executable_sha256='f'*64)}
+                publication.write_sidecars(report, coordinates, origins)
                 live = directory / 'live.json'
                 publication.publish(report, live, coordinates)
                 before = {suffix: publication.member(live, suffix).read_bytes() for suffix in publication.SUFFIXES}
@@ -151,16 +154,26 @@ class PublicationTests(unittest.TestCase):
                     value = json.loads(publication.member(report, '.provenance.json').read_text())
                     value['producer_sha256'] = 'f'*64
                     publication.member(report, '.provenance.json').write_text(json.dumps(value))
+                elif damage in ['missing-origin', 'origin-compatibility', 'origin-report', 'origin-executable', 'legacy-provenance']:
+                    path = publication.member(report, '.provenance.json')
+                    value = json.loads(path.read_text())
+                    if damage == 'missing-origin': value['module_origins'].clear()
+                    elif damage == 'legacy-provenance': value['schema'] = 'stratalint-lean-report-provenance-v1'
+                    else:
+                        field = {'origin-compatibility': 'compatibility_sha256', 'origin-report': 'report_sha256',
+                                 'origin-executable': 'inspector_executable_sha256'}[damage]
+                        value['module_origins']['X'][field] = 'bad' if damage == 'origin-executable' else '0' * 64
+                    path.write_text(json.dumps(value))
                 elif damage == 'attestation':
                     publication.member(report, '.input.attestation').write_text('malformed\n')
                 elif damage == 'declaration-identity':
                     value = json.loads(report.read_text())
                     value['modules'][0]['declarations'][0]['statement_id'] = 'sha256:' + 'f'*64
                     report.write_bytes(materials.canonical_json(value))
-                    publication.write_sidecars(report, coordinates)
+                    publication.write_sidecars(report, coordinates, origins)
                 elif damage == 'noncanonical':
                     report.write_text(json.dumps(json.loads(report.read_text())))
-                    publication.write_sidecars(report, coordinates)
+                    publication.write_sidecars(report, coordinates, origins)
                 elif damage == 'missing-sidecar':
                     publication.member(report, '.provenance.json').unlink()
                 else:
@@ -191,7 +204,7 @@ class EntryPointTests(unittest.TestCase):
                     write(name, (repository / name).read_text())
                 write('Trureturing.lean', 'def x : Nat := 1\n')
                 paths = lambda *names: dict(include=[dict(pattern=n, optional=False) for n in names], exclude=[])
-                write('lean-report-inputs.json', json.dumps(dict(schema_version=1,
+                write('lean-report-inputs.json', json.dumps(dict(schema_version=1, report_semantic_version=1,
                     report_modules=paths('Trureturing.lean'), inspector_sources=paths(), config_inputs=paths(),
                     producer_scopes={'lean-report': paths('lean-report-inputs.json',
                         'tools/scripts/report/lean-report-selection.py'), 'scribe-content': paths()})))

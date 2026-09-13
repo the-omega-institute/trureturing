@@ -56,11 +56,11 @@ defaultFacets = ["static"]
                      'tools/scripts/worktree/lean-cache-input.sh', 'lean-toolchain',
                      'tools/StrataLint.Cli/Commands/LeanUtilityInputCommand.cs']:
             self.copy(name)
-        self.write('bin/dotnet', '#!/usr/bin/env python3\nfrom pathlib import Path\nprint(Path("utility.json").read_text())\n')
+        self.write('bin/dotnet', '#!/usr/bin/env python3\nfrom pathlib import Path\nwith Path("utility-calls").open("a") as out: out.write("call\\n")\nprint(Path("utility.json").read_text())\n')
         (self.root / 'bin/dotnet').chmod(0o755)
         self.utility()
         paths = lambda *names: dict(include=[dict(pattern=n, optional=False) for n in names], exclude=[])
-        policy = dict(schema_version=1, report_modules=paths('Fixture.lean', 'D5/**/*.lean'),
+        policy = dict(schema_version=1, report_semantic_version=1, report_modules=paths('Fixture.lean', 'D5/**/*.lean'),
             inspector_sources=paths('tools/lean-inspector/Inspector.lean', 'tools/lean-inspector/lakefile.lean'),
             config_inputs=paths('lean-toolchain', 'lakefile.toml', 'lake-manifest.json'),
             producer_scopes={'lean-report': paths('lean-report-inputs.json', 'tools/scripts/report/lean-report-selection.py',
@@ -158,33 +158,118 @@ defaultFacets = ["static"]
         self.write('Audit.lean', 'def audit : Nat := 2\n')
         changed([])
 
+    def origins(self):
+        with zipfile.ZipFile(self.root / '.lake/build/lean-inspector/report.zip') as archive:
+            return json.loads(archive.read(publication.RAW + '.provenance.json'))['module_origins']
+
+    def publish(self):
+        result = subprocess.run([sys.executable, str(self.root / 'tools/lean-inspector/native.py'),
+            'publish', str(self.root), str(self.root / 'public.json')], env=self.env,
+            text=True, capture_output=True, timeout=120)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        publication.validate_bundle(self.root / 'public.json', publication.coordinates(self.root), self.root)
+        result = subprocess.run(['bash', str(self.root / 'tools/scripts/report/lean-report-input.sh'),
+            'verify', '--repository', str(self.root), '--report', str(self.root / 'public.json')],
+            env=self.env, text=True, capture_output=True, timeout=120)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
     def test_native_producer_inputs(self):
         self.build()
         before = self.stamps()
-
-        def changed(expected):
-            nonlocal before
-            self.build()
-            after = self.stamps()
-            self.assertEqual({name for name in after if after[name] != before.get(name)}, set(expected))
-            before = after
-            records = [json.loads(line) for line in (self.root / 'activity.jsonl').read_text().splitlines()]
-            self.assertEqual(sum(r['count'] for r in records if r['kind'] == 'extract'), len(expected))
-
-        # These are copies of the actual producers, not synthetic version tokens.
-        for producer, comment in [('tools/lean-inspector/Inspector.lean', '--'),
-                                  ('tools/lean-inspector/materials.py', '#'),
+        origins = self.origins()
+        aggregate = self.root / '.lake/build/lean-inspector/report.zip'
+        aggregate_before = (aggregate.stat().st_mtime_ns, publication.digest(aggregate))
+        executable = self.root / '.lake/build/lean-inspector/producer/bin/reportInspector'
+        executable_before = publication.digest(executable)
+        inspector = self.root / 'tools/lean-inspector/Inspector.lean'
+        # A real implementation edit changes executable bytes while preserving
+        # valid report semantics. Compilation must still succeed.
+        inspector.write_text(inspector.read_text().replace('expected bodies or names', 'expected census bodies or names'))
+        self.build()
+        self.assertNotEqual(executable_before, publication.digest(executable))
+        self.assertEqual(before, self.stamps())
+        self.assertEqual(origins, self.origins())
+        self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
+        self.publish()
+        published = publication.read_json(publication.member(self.root / 'public.json', '.provenance.json').read_bytes())
+        self.assertEqual(published['module_origins'], origins)
+        self.assertEqual(published['mode'], 'cached')
+        for producer, comment in [('tools/lean-inspector/materials.py', '#'),
+                                  ('tools/lean-inspector/native.py', '#'),
+                                  ('tools/lean-inspector/lakefile.lean', '--'),
                                   ('tools/scripts/report/lean-report-input.sh', '#'),
                                   ('tools/StrataLint.Cli/Commands/LeanUtilityInputCommand.cs', '//')]:
             with self.subTest(producer=producer):
-                self.write(producer, (self.root / producer).read_text() + '\n' + comment + ' producer bytes\n')
-                changed(before)
-                changed([])
+                calls = (self.root / 'utility-calls').read_text().splitlines()
+                implementation = (self.root / producer).read_text()
+                if producer.endswith('materials.py'):
+                    implementation = implementation.replace('BUFFER_BYTES = 64 * 1024', 'BUFFER_BYTES = 32 * 1024')
+                self.write(producer, implementation + '\n' + comment + ' compatible producer bytes\n')
+                self.build()
+                self.assertEqual(before, self.stamps())
+                self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
+                self.assertEqual(len((self.root / 'utility-calls').read_text().splitlines()), len(calls) + 1)
+                self.assertEqual(origins, self.origins())
         self.write('lean-report-inputs.json', (self.root / 'lean-report-inputs.json').read_text() + '\n')
-        changed(before)
-        changed([])
+        self.build()
+        self.assertEqual(before, self.stamps())
+        self.assertEqual(aggregate_before, (aggregate.stat().st_mtime_ns, publication.digest(aggregate)))
+        # Subsequent content changes assemble mixed actual production origins.
+        self.write('D5/Alone.lean', (self.root / 'D5/Alone.lean').read_text() + '-- content input\n')
+        self.build()
+        self.assertEqual({n for n, value in self.stamps().items() if value != before[n]}, {'D5.Alone'})
+        mixed = self.origins()
+        for name in origins:
+            if name == 'D5.Alone':
+                self.assertNotEqual(origins[name]['producer_sources_sha256'], mixed[name]['producer_sources_sha256'])
+                self.assertNotEqual(origins[name]['inspector_executable_sha256'], mixed[name]['inspector_executable_sha256'])
+            else:
+                self.assertEqual(origins[name], mixed[name])
+        self.publish()
+        self.build()
+        self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
+        self.assertEqual(mixed, self.origins())
+        self.publish()
+
+    def test_native_semantic_version_and_config(self):
+        self.build()
+        before = self.stamps()
+        original = self.report()[1:]
+        origins = self.origins()
+        policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
+        policy['report_semantic_version'] = 2
+        self.write('lean-report-inputs.json', json.dumps(policy))
+        self.build()
+        self.assertEqual({name for name, value in self.stamps().items() if value != before[name]}, set(before))
+        records = [json.loads(line) for line in (self.root / 'activity.jsonl').read_text().splitlines()]
+        self.assertEqual(sum(r['count'] for r in records if r['kind'] == 'extract'), len(before))
+        self.assertEqual(original, self.report()[1:])
+        self.assertNotEqual(origins['Fixture']['compatibility_sha256'], self.origins()['Fixture']['compatibility_sha256'])
+        self.publish()
+        self.build()
+        self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
+        before = self.stamps()
         self.write('lakefile.toml', (self.root / 'lakefile.toml').read_text() + '\n# config bytes\n')
-        changed(before)
+        self.build()
+        self.assertEqual({name for name, value in self.stamps().items() if value != before[name]}, set(before))
+
+    def test_native_invalid_semantic_versions(self):
+        self.build()
+        before = self.stamps()
+        original = (self.root / 'lean-report-inputs.json').read_text()
+        for value in ['0', '-1', 'true', 'null', '"1"', '1.0', '1e0']:
+            self.write('lean-report-inputs.json', original.replace('"report_semantic_version": 1', '"report_semantic_version": ' + value))
+            result = self.build(success=False)
+            self.assertIn('report_semantic_version', result.stdout + result.stderr)
+            self.assertEqual(before, self.stamps())
+            self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
+        for invalid in [original.replace('"report_semantic_version": 1, ', ''),
+                        original.replace('"report_semantic_version": 1', '"report_semantic_version": 1, "report_semantic_version": 1')]:
+            self.write('lean-report-inputs.json', invalid)
+            result = self.build(success=False)
+            self.assertIn('report_semantic_version', result.stdout + result.stderr)
+            self.assertEqual(before, self.stamps())
+            self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
 
     def test_native_recovery_and_required_failures(self):
         self.build()
@@ -194,8 +279,10 @@ defaultFacets = ["static"]
             # Replace, never edit a hard link into Lake's artifact cache.
             path.unlink()
             path.write_bytes(b'corrupt optional artifact')
-            self.build()
+            recovered = self.build()
+            self.assertIn('inspector artifact rejected; rebuilding privately', recovered.stdout + recovered.stderr)
             self.assertEqual(path.read_bytes(), expected)
+            self.assertEqual(path.stat().st_nlink, 1, 'private reconstruction must not alias the native cache')
             path.unlink()
             self.build()
             self.assertEqual(path.read_bytes(), expected)
@@ -222,6 +309,10 @@ defaultFacets = ["static"]
         self.build(success=False)
         self.write('External.lean', 'import ClaimSupport\ndef claim : Prop := claimSupport\n')
         self.utility()
+        inspector = self.root / 'tools/lean-inspector/Inspector.lean'
+        inspector.write_text(inspector.read_text() + '\ndef invalidProducer : False := True.intro\n')
+        self.build(success=False)
+        self.copy('tools/lean-inspector/Inspector.lean')
         (self.root / 'tools/lean-inspector/materials.py').unlink()
         self.build(success=False)
 
@@ -237,6 +328,15 @@ defaultFacets = ["static"]
         self.build()
         self.assertEqual(before, self.stamps())
         self.assertEqual(expected, self.report()[1:])
+        before = self.stamps()
+        self.write('D5/Alone.lean', 'def alone : Nat := 9\n')
+        result = self.run_lake('build', 'D5.Alone:report')
+        self.assertIn('LEAN_INSPECTOR_EXTRACT module=D5.Alone', result.stdout + result.stderr)
+        self.assertEqual({n for n, value in self.stamps().items() if value != before[n]}, {'D5.Alone'})
+        self.build()
+        self.assertEqual(sum(json.loads(line)['count'] for line in (self.root / 'activity.jsonl').read_text().splitlines()
+                             if json.loads(line)['kind'] == 'extract'), 0)
+        self.publish()
 
     def test_snapshot_generation_preserves_lean_address(self):
         self.write('Trureturing.lean', 'import Fixture\n')
@@ -247,6 +347,11 @@ defaultFacets = ["static"]
                 cwd=self.root, env=self.env, text=True, timeout=120)
         lean_before, snapshot_before = address('address'), address('build-snapshot-address')
         self.write('tools/lean-inspector/materials.py', '# changed producer bytes\n')
+        self.assertEqual(lean_before, address('address'))
+        self.assertEqual(snapshot_before, address('build-snapshot-address'))
+        policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
+        policy['report_semantic_version'] = 2
+        self.write('lean-report-inputs.json', json.dumps(policy))
         self.assertEqual(lean_before, address('address'))
         self.assertNotEqual(snapshot_before, address('build-snapshot-address'))
         (self.root / 'tools/lean-inspector/materials.py').unlink()

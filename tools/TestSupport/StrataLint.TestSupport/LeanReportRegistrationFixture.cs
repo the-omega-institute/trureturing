@@ -219,13 +219,10 @@ public static class LeanReportRegistrationFixture
               }
             ]
           },
+          "report_semantic_version": 1,
           "schema_version": 1
         }
         """;
-    public const string LeanProjection = """
-        {"config_inputs":{"exclude":[],"include":[{"optional":false,"pattern":"lean-toolchain"},{"optional":false,"pattern":"lake-manifest.json"},{"optional":false,"pattern":"lakefile.toml"},{"optional":true,"pattern":"lakefile.lean"}]},"inspector_sources":{"exclude":[],"include":[{"optional":true,"pattern":"tools/lean-inspector/**/*.lean"}]},"producer_scopes":{"lean-report":{"exclude":["**/bin/**","**/obj/**"],"include":[{"optional":false,"pattern":"lean-report-inputs.json"},{"optional":false,"pattern":"tools/scripts/report/lean-report-selection.py"},{"optional":false,"pattern":"tools/scripts/worktree/lean-cache-publish.sh"},{"optional":true,"pattern":"tools/StrataLint.Cli/**/*.cs"},{"optional":true,"pattern":"tools/StrataLint.Engine/**/*.cs"},{"optional":true,"pattern":"tools/Trureturing.Truth/**/*.cs"},{"optional":true,"pattern":"tools/StrataLint.Cli/StrataLint.Cli.csproj"},{"optional":true,"pattern":"tools/StrataLint.Engine/StrataLint.Engine.csproj"},{"optional":true,"pattern":"tools/Trureturing.Truth/Trureturing.Truth.csproj"},{"optional":true,"pattern":"tools/StrataLint.Cli/packages.lock.json"},{"optional":true,"pattern":"tools/StrataLint.Engine/packages.lock.json"},{"optional":true,"pattern":"tools/Trureturing.Truth/packages.lock.json"},{"optional":true,"pattern":"Directory.Build.props"},{"optional":true,"pattern":"Directory.Packages.props"},{"optional":true,"pattern":"Directory.Build.targets"},{"optional":true,"pattern":"global.json"},{"optional":true,"pattern":"tools/lean-inspector/inspect.sh"},{"optional":true,"pattern":"tools/lean-inspector/**/*.py"},{"optional":true,"pattern":"tools/scripts/report/lean-report.sh"},{"optional":true,"pattern":"tools/scripts/report/lean-report-input.sh"},{"optional":true,"pattern":"tools/scripts/report/report-consumer.sh"},{"optional":true,"pattern":"tools/scripts/report/report-supervisor.sh"},{"optional":true,"pattern":"tools/scripts/lean-report-pair.sh"},{"optional":true,"pattern":"tools/scripts/worktree/lean-cache-input.sh"},{"optional":true,"pattern":"tools/scripts/worktree/lean-cache-ensure.sh"},{"optional":true,"pattern":"tools/scripts/worktree/lean-cache-run.sh"},{"optional":true,"pattern":"tools/scripts/lib/resource-observation-lib.sh"},{"optional":true,"pattern":"tools/scripts/workflow/install-lean-toolchain.sh"},{"optional":true,"pattern":"tools/scripts/workflow/judge-content-address.sh"}]}},"report_modules":{"exclude":[],"include":[{"optional":false,"pattern":"Trureturing.lean"},{"optional":true,"pattern":"D5/**/*.lean"}]},"schema_version":1}
-        """;
-
     public static void Install(string repository)
     {
         var loader = Path.Combine(repository, LoaderPath);

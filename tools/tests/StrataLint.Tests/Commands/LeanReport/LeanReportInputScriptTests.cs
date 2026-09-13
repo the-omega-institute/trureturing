@@ -52,14 +52,14 @@ public sealed partial class LeanReportInputScriptTests
         '/', "tools", "Trureturing.Truth", "packages.lock.json");
 
     [Fact]
-    public void ProductionSourceClosureChangesProducer()
+    public void CompatibleProductionSourceEditPreservesSemanticCompatibility()
     {
         using var fixture = new LeanReportInputFixture();
         var producerBefore = fixture.Producer();
 
         fixture.Append(LeanModelsPath, "// mutation\n");
 
-        Assert.NotEqual(producerBefore, fixture.Producer());
+        Assert.Equal(producerBefore, fixture.Producer());
     }
 
     [Fact]
@@ -85,14 +85,14 @@ public sealed partial class LeanReportInputScriptTests
     }
 
     [Fact]
-    public void DirectoryBuildPropsChangesProducer()
+    public void CompatibleBuildPropsEditPreservesSemanticCompatibility()
     {
         using var fixture = new LeanReportInputFixture();
         var before = fixture.Producer();
 
         fixture.Append("Directory.Build.props", "<!-- mutation -->\n");
 
-        Assert.NotEqual(before, fixture.Producer());
+        Assert.Equal(before, fixture.Producer());
     }
 
     // Retain existing engineering test identities while replacing the removed
@@ -300,7 +300,7 @@ public sealed partial class LeanReportInputScriptTests
     [Theory]
     [InlineData("repository")]
     [InlineData("repository[cache]")]
-    public void JudgeLibraryLeanSourceChangesAddressButUnrelatedFileDoesNot(string repositoryName)
+    public void CompatibleInspectorLibraryEditPreservesReportAddress(string repositoryName)
     {
         using var fixture = new LeanReportInputFixture(repositoryName);
         const string judgeSource =
@@ -315,8 +315,8 @@ public sealed partial class LeanReportInputScriptTests
         Assert.Equal(before, fixture.Address());
 
         fixture.Append(judgeSource, "x");
-        Assert.NotEqual(producerBefore, fixture.Producer());
-        Assert.NotEqual(before, fixture.Address());
+        Assert.Equal(producerBefore, fixture.Producer());
+        Assert.Equal(before, fixture.Address());
     }
 
     [Fact]
@@ -349,17 +349,17 @@ public sealed partial class LeanReportInputScriptTests
     }
 
     [Theory]
-    [InlineData("source")]
-    [InlineData("toolchain")]
-    [InlineData("lakefile")]
-    [InlineData("manifest")]
-    [InlineData("inspector")]
-    [InlineData("inspector-script")]
-    [InlineData("input-helper")]
-    [InlineData("raw-report")]
-    [InlineData("canonical-writer")]
-    [InlineData("cache-fetcher")]
-    public void RepositoryInputDriftMakesAnExistingReportStale(string mutation)
+    [InlineData("source", true)]
+    [InlineData("toolchain", true)]
+    [InlineData("lakefile", true)]
+    [InlineData("manifest", true)]
+    [InlineData("inspector", false)]
+    [InlineData("inspector-script", false)]
+    [InlineData("input-helper", false)]
+    [InlineData("raw-report", false)]
+    [InlineData("canonical-writer", false)]
+    [InlineData("cache-fetcher", false)]
+    public void RepositoryInputDriftRespectsSemanticCompatibility(string mutation, bool invalidates)
     {
         using var fixture = new LeanReportInputFixture();
         Assert.Equal(0, fixture.CaptureProductionInput().ExitCode);
@@ -368,11 +368,9 @@ public sealed partial class LeanReportInputScriptTests
         fixture.Mutate(mutation);
 
         var result = fixture.Verify();
-        Assert.Equal(2, result.ExitCode);
-        Assert.Contains(
-            "stale",
-            Encoding.UTF8.GetString(result.StandardError),
-            StringComparison.OrdinalIgnoreCase);
+        Assert.Equal(invalidates ? 2 : 0, result.ExitCode);
+        if (invalidates)
+            Assert.Contains("stale", Encoding.UTF8.GetString(result.StandardError), StringComparison.OrdinalIgnoreCase);
     }
 
     private sealed partial class LeanReportInputFixture : IDisposable
