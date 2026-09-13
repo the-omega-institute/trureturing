@@ -703,8 +703,13 @@ private partial def inputType (env : Environment) (type : Expr)
         if let some (am, au) ← typeFamilyArgument env arg argType active then
           mentions := mentions || am
           unclassified := unclassified || au
-      -- A neutral type family is allowed with its actual local binder context.
-      if head.isFVar then return (mentions, unclassified)
+      -- A local type-family head is allowed only after its inferred type has
+      -- itself passed the funnel.  This keeps local neutral syntax from being
+      -- an unknown-tolerant escape hatch.
+      if head.isFVar then
+        let some neutralType ← appliedValueType reduced | return (mentions, true)
+        let (fm, fu) ← inputType env neutralType active
+        return (mentions || fm, unclassified || fu)
       if let .proj _ _ receiver := head then
         -- Projection heads have no level list in their syntax.  Classify both
         -- the actual receiver type and the projection's instantiated declared
