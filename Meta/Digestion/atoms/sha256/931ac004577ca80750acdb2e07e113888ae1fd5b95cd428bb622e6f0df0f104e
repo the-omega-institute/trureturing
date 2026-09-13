@@ -1,0 +1,14 @@
+**定理 481.4（正费用域内的准确绝对扰动半径）。** 假设 $\mathbf c$ 满足(481.2)，记
+$$
+\rho_{\rm abs}=\min\left\{\frac{2a-b}{3},\frac{2b-a-z}{4},\frac{2u-v}{3}\right\},\qquad
+d_+=\min\{a,b,z,u,v,z_5,z_7\}.
+$$
+固定其它槽成本。对任意 $\varepsilon\ge0$，所有满足
+$$
+\mathbf c'\in\mathbb R_{>0}^7,\qquad
+\|\mathbf c'-\mathbf c\|_\infty\le\varepsilon
+$$
+的参数都保持全部60目标的规范表示最小性，当且仅当 $\varepsilon\le\rho_{\rm abs}$；所有这些参数都保持各自唯一性，当且仅当 $\varepsilon<\rho_{\rm abs}$。因此弱最优在闭边界保持，保证唯一性须处于严格内部。
+
+若量词改为整个 $\mathbb R^7$ 中的闭扰动球，并要求球内每点首先仍为正费用，则额外且准确的条件是 $\varepsilon<d_+$。故整个闭球同时保持正性与弱最优，恰要求 $\varepsilon<d_+$ 且 $\varepsilon\le\rho_{\rm abs}$；同时保持正性与唯一最优，恰要求 $\varepsilon<\min(d_+,\rho_{\rm abs})$。在原三式全严格时，$\min(d_+,\rho_{\rm abs})$ 是到“非正费用或不全体唯一最优”集合的最大坐标距离。
+
