@@ -1333,3 +1333,204 @@ $$
 [P6] FLock.io company announcement, retrieved 13 September 2026. https://cn.linkedin.com/company/flock-io 。公告列出 *Transition Path Diffusion for Protein Reactive Trajectories* 和 *Timescale-Disentangled Generative Models of Protein Dynamics*；本补编没有获得对应完整方法文本，不采用其百万倍加速等数字作为数学前提或已核验实验结论。
 
 [P7] C. Cheigh et al. *Towards the Gaussianity of Random Zeckendorf Games*. arXiv:2210.11038; DOI:10.1007/978-3-031-65064-2_4. https://arxiv.org/abs/2210.11038 。仓内已登记目标为 `Problems/random-zeckendorf-game-gaussianity.md`；精确随机规则、测度和统一混合界均不能被确定性规范化的已证内容替代。
+
+---
+
+# 补编 MF：隐藏初态、历史反馈与反事实的区别
+
+## MF.1 固定实际轨迹，不把其他可能世界当作驱动力
+
+在一个已指定的线性状态空间中固定实际轨迹 $x_{n+1}=Tx_n$，令 $P^2=P$，$Q=I-P$。则 $x_n=Px_n+Qx_n$。两项都是同一个实际状态的分量；$Qx_n$ 不是“所有非此实际状态”的集合，也不是已经发生过的完整历史。逻辑补集 $X\setminus\{x_n\}$、观察纤维 $\{z:Pz=Px_n\}=x_n+\ker P$、隐藏分量 $Qx_n$ 属于不同数学对象。
+
+投影的补 $Q$ 满足 $Q^2=Q$，而不是一般意义的双重否定 $Q^2=I$。在线性实空间里，若需要保留可见部分、翻转隐藏方向的真正对合，可以取 $S=2P-I$。展开得到 $S^2=I$、$PS=P$、$QS=-Q$，并有
+
+$$
+PT^n x-PT^n Sx=2PT^n Qx.
+$$
+
+这是比较两个初态的反事实响应，不是说未实现的 $Sx$ 对实际 $x$ 施加了作用。在约束状态域中还须检查 $Sx$ 可容许；本补编使用的三态概率模型里 $S$ 恰好交换前两个坐标，因此保存非负性与总质量。上述对合代数是定义展开的普通推导，不另立通用 Lean 包装定理。
+
+Mori–Zwanzig 中 $P$ 常作用于观察函数，而非直接作用于物理状态；将其与下面的状态坐标块模型连接，需要指定坐标观察或相应线性表示。本补编不把观察函数向量、概率分布向量与单个物理微观状态无条件混同。[MF1, MF2]
+
+## MF.2 精确消元：初始隐藏影响与记忆核是两项
+
+令可见变量为 $y_n\in V$，隐藏变量为 $h_n\in H$，实际一步更新为
+
+$$
+y_{n+1}=Ay_n+Bh_n,\qquad h_{n+1}=Cy_n+Dh_n.
+$$
+
+这里 $A:V\to V$、$B:H\to V$、$C:V\to H$、$D:H\to H$ 都是线性映射。对于由投影给出的直接分解，它们是 $PTP$、$PTQ$、$QTP$、$QTQ$ 在对应子空间的限制。不给每一步重新选择隐藏代表。
+
+**定理 MF1（全时间离散记忆消元）。** 对全部初态与 $n\ge0$，
+
+$$
+h_n=D^nh_0+\sum_{i=0}^{n-1}D^{n-1-i}Cy_i,
+$$
+
+因此
+
+$$
+\boxed{y_{n+1}=Ay_n+BD^nh_0+\sum_{i=0}^{n-1}BD^{n-1-i}Cy_i.}
+$$
+
+**证明。** $n=0$ 的和为空。将 $h_n$ 的表达式代入 $h_{n+1}=Cy_n+Dh_n$，把每个幂次增加一，再将 $Cy_n$ 加入求和末项，得到 $n+1$ 的表达式。线性映射 $B$ 分配到有限和后，代入可见更新即可。证毕。
+
+源码 `DiscreteMemoryElimination.exact_memory_equation` 在实际递归定义的 `evolve` 上给出这个结论，量词覆盖任意环上的两个模，不要求有限维、随机性或可逆性。它的两项不能合并命名为“想象”：
+
+$$
+\eta_n=BD^nh_0,\qquad M_j=BD^jC.
+$$
+
+$\eta_n$ 是初始隐藏条件的影响。固定 $h_0$ 后，它完全确定；只有另行引入初始分布时才成为随机量。$M_j$ 是与初态无关的反馈算子，记录可见量经 $C$ 进入隐藏通道、在其中传播 $j$ 次、再经 $B$ 返回的效果。卷积和才是以历史可见值表达的记忆项。连续时间对应的 $Be^{tD}h_0$ 与 $Be^{tD}C$ 见 [MF1]；本次 Lean 源不声称已经证明连续时间半群或非线性 Mori–Zwanzig 定理。
+
+## MF.3 记忆并非全部隐藏方向：与既有 eventualKernel 的连接
+
+dev 的 `ZeroMemoryCriterion` 已定义 $\mathcal N_\infty(C,T)=\bigcap_{n\ge0}\ker(CT^n)$，以及当前核对全未来核的记忆商。本补编复用该真源。
+
+**定理 MF2（隐藏通道的准确静默子空间）。** 在 MF1 的实际耦合系统中，从 $(0,h)$ 出发的全部可见量恒为零，当且仅当
+
+$$
+\boxed{h\in\mathcal N_H:=\bigcap_{n\ge0}\ker(BD^n).}
+$$
+
+**证明。** 若可见量一直为零，则隐藏更新退化为 $h_n=D^nh$；下一步可见量为零给出 $BD^nh=0$。反之，若全部 $BD^nh=0$，归纳可得实际耦合轨迹正是 $(0,D^nh)$。证毕。源码为 `zero_visible_iff_eventual_kernel`，结论直接使用已有的 `eventualKernel B D`。
+
+线性相减后，具有相同初始可见量的两个状态 $(y,h)$、$(y,h')$ 给出相同全部可见未来，当且仅当 $h-h'\in\mathcal N_H$。因此目标相关的隐藏信息是 $H/\mathcal N_H$，而不是整个 $H$。通过 $\ker P\simeq H$ 的直接分解，该商与已有 `memoryQuotient P T` 对应；没有新建另一个同名记忆本体。已有人可见/不可见维数公式仍由 `MemoryDimensionFormula` 承担。
+
+进一步，全部反馈核为零等价于 $\operatorname{range}C\subseteq\mathcal N_H$。这个条件只控制由可见历史注入的隐藏方向，未必覆盖全部隐藏初态。例如
+
+$$
+y_{n+1}=y_n+h_n,\qquad h_{n+1}=h_n
+$$
+
+具有 $A=B=D=1,C=0$，所以 $M_j=0$ 对所有 $j$ 成立，但 $y_n=y_0+nh_0$，只知道 $y_0$ 仍无法确定未来。相反，$B=0$ 时，无论隐藏状态自身怎样运动，都没有任何返回可见层面的影响。
+
+所以“反馈核为零”“当前读数对任意初态充分”“隐藏变量不存在”是三个不同命题。前一补编的自伴 Gram 定理使用额外的 $B=C^*$ 关系来排除相应的不对称情形，不能丢掉这个条件。
+
+## MF.4 同一三态模型的全部记忆系数
+
+继续使用 PT.5 的 $K_{a,b}$ 与合并前两态的 $P$，令 $Q=I-P$。在其实际隐藏方向 $(1,-1,0)$ 上，
+
+$$
+\lambda=1-2a-b/2,\quad D=QK_{a,b}Q,\quad C=QK_{a,b}P,\quad B=PK_{a,b}Q.
+$$
+
+这里 $\lambda$ 是隐藏块上的传播因子，不能称为完整 $K_{a,b}$ 的特征值。
+
+**定理 MF3（实际三态模型的全滞后核）。** 对所有实参数和自然数 $j$，
+
+$$
+\boxed{M_j=BD^jC=\lambda^j\Delta_2,\qquad
+\Delta_2=PK_{a,b}^2P-(PK_{a,b}P)^2.}
+$$
+
+**证明。** 在给定三态矩阵上直接算出 $DC=\lambda C$；归纳给出 $D^jC=\lambda^jC$。由 $Q^2=Q$，$BC=PK_{a,b}QK_{a,b}P=\Delta_2$，其中末式复用原有缺陷定理。证毕。源码为 `ThreeStateMemoryKernel.feedback_geometric`。
+
+沿用既有 `exact_memory_entry`，可读取
+
+$$
+(M_j)_{22}=\frac{b^2}{2}\lambda^j.
+$$
+
+对有效随机参数 $a\ge0,b>0,a+b\le1$，有 $-1<\lambda<1$：上界来自 $b>0$，下界由 $a\le1-b$ 得到 $\lambda\ge-1+3b/2$。因此若 $\lambda\ne0$，每个滞后都有非零系数，但其幅度衰减；若 $\lambda=0$，只有 $j=0$ 项保留；若 $b=0$，全部反馈为零，即便隐藏块没有衰减。由绝对收敛几何级数，对 $m\ge0$ 得到该矩阵项的精确尾质量
+
+$$
+\sum_{j=m}^{\infty}|(M_j)_{22}|=
+\frac{b^2|\lambda|^m}{2(1-|\lambda|)}.
+$$
+
+此尾质量是指定核矩阵项的和，不是全路径总变差距离、首次到达时间误差或任何神经模型的泛化界。将它用于长时间目标，还需控制输入序列、迭代放大与相应事件灵敏度。
+
+## MF.5 记忆核无限长，不意味着最小状态无限大
+
+将实际向量写成
+
+$$
+x_n=(s_n+h_n,s_n-h_n,r_n),\qquad y_n=(s_n,r_n).
+$$
+
+展开同一个 $K_{a,b}$ 得到
+
+$$
+y_{n+1}=A_vy_n+B_vh_n,\qquad h_{n+1}=C_vy_n+\lambda h_n,
+$$
+
+其中
+
+$$
+A_v=\begin{pmatrix}1-b/2&b/2\\b&1-b\end{pmatrix},\quad
+B_v=\begin{pmatrix}b/2\\-b\end{pmatrix},\quad
+C_v=\begin{pmatrix}b/2&-b/2\end{pmatrix}.
+$$
+
+这里只有一个隐藏标量。MF1 给出历史卷积；而直接使用 $B_vh_n=y_{n+1}-A_vy_n$，可另写成有限两滞后递推
+
+$$
+\boxed{y_{n+2}=(A_v+\lambda I)y_{n+1}+(B_vC_v-\lambda A_v)y_n.}
+$$
+
+所以同一个系统可以同时具有一个无限支撑的 Mori–Zwanzig 核、一个额外标量的一阶状态实现，以及一个仅用可见向量的二阶递推。这三种表述在各自所需初值给定后兼容。不能从核支撑无限就宣称有限阶递推不可能。这里的向量演化也不自动决定单条随机粗粒轨迹的 Markov 阶数。
+
+回到 #6881 的实际黄金整数，乘以 $\varphi$ 将 $a+e\varphi$ 变成 $e+(a+e)\varphi$。令可见量 $y=e$、隐藏量 $h=a$，则块系数恰为 $A=B=C=1,D=0$。因此 $\eta_0=a_0$、$\eta_n=0$（$n>0$），$M_0=1$、$M_j=0$（$j>0$）；消去隐藏量后，$y_{n+1}=y_n+y_{n-1}$（$n\ge1$）。一次实际移位读数恢复 $a_0=y_1-y_0$，这与本 PR 已有 `ShiftReadout.reconstruct_beta` 及 `shiftedValue_recurrence` 对齐。它是黄金乘法／原始位置移位的准确实例，不是 `carryPass` 的动力学；全部原始构造仍可能在黄金求值中合并。
+
+这说明“过去被编码在现在”应理解为目标相关的充分摘要，而非历史逐帧全保留。某一向量同时对应多条可见历史，不妨碍其成为特定更新方程的充分初值。若目标改成实际进位规则的合法性，RD/PT 中的原始数位反例仍要求另一组观察；同一摘要不能跨操作族无条件复用。
+
+## MF.6 精确可恢复，不代表有限精度下稳定可恢复
+
+当 $b\ne0$ 时，从已知 $s_0,r_0$ 与下一第三坐标 $r_1$ 可恢复
+
+$$
+h_0=\frac{b s_0+(1-b)r_0-r_1}{b}.
+$$
+
+固定准确的当前观察时，下一读数的误差被放大 $1/|b|$。这不是把一个较弱算法的病态性误当成结构障碍；可以直接用两组实际概率向量给出统一逆模不存在的见证。
+
+**定理 MF4（退化耦合附近没有统一稳定恢复）。** 对任意 $C_0>0$，取
+
+$$
+a=1/4,\qquad b=\frac1{4(C_0+1)},\qquad
+x=(1/2,0,1/2),\quad z=(0,1/2,1/2).
+$$
+
+两向量非负、质量为一，参数满足严格随机条件，而且
+
+$$
+Px=Pz,\qquad |(x_0-x_1)-(z_0-z_1)|=1.
+$$
+
+实际完整下一投影之差是
+
+$$
+PK_{a,b}x-PK_{a,b}z=(b/4,b/4,-b/2),
+$$
+
+因而其 $\ell^1$ 大小为 $b$，满足 $C_0b<1$，第三坐标差还严格非零。证毕。源码 `no_uniform_hidden_recovery` 保留实际投影、完整三个下一读数、全部概率约束和任意 $C_0$ 的量词。
+
+该族说明隐藏对比保持固定时，两次观察可以任意接近，因此没有覆盖整个有效参数域、且在零误差处趋零的统一逆误差模。固定 $b\ne0$ 时的精确可辨识性并未被否定。此处使用的是投影后读数，不能改成 $Kx-Kz$ 的全状态差；后者保留了本来未被观察的坐标。
+
+同样，难以稳定恢复隐藏量，不自动表示指定可见预测误差很大。当耦合很小时，目标对隐藏量本身也可能不敏感。状态恢复误差与目标预测误差需分别建立界。
+
+## MF.7 反事实补全与“想象”的有限数学解释
+
+固定观察序列 $y_0,\ldots,y_n$ 后，集合
+
+$$
+\mathcal F_n=\{x_0:PT^kx_0=y_k\text{ 对 }0\le k\le n\}
+$$
+
+记录所有相容初态，后续候选为 $\{PT^{n+j}x_0:x_0\in\mathcal F_n\}$。增加观察是在与实际约束作交集；从中选一个候选构造未来，可以被非正式地称为反事实补全或模型想象。但这个集合不是 $X\setminus\{x_{\mathrm{actual}}\}$：在模型准确且数据无误时，它包含实际初态，同时排除了不相容的其他状态。候选数量也不自动给出概率，概率必须来自另行指定的先验与路径律。
+
+因而不能从 MF1–MF4 推出“记忆就是现实的逻辑否定”或“物理记忆等于心理想象”。可以严格保留的是：实际隐藏自由度通过动力学产生反馈；部分观察下的推断需要在相容纤维里工作；足够的预测摘要只须区分导致不同目标未来的纤维类。按相同未来条件分布合并历史的思想在因果状态理论中已有系统研究 [MF3]，但将其应用到某个随机过程仍需指定路径概率，不能把确定性集合分类直接当作概率定理。
+
+## MF.8 下一条数学义务与来源
+
+MF1–MF4 的普通证明分别由两个新 Lean 模块及同名 Scribe 承载。补编其余等式是从所列更新、已有范数/投影代数与几何级数直接推导的解释，不另立绑定包装。新源码尚需实际 elaboration、kernel 与 Scribe 核验；源码存在不等于这些检查已执行。
+
+当前具体的剩余问题是：在含有限精度观察与明确时间范围的真实动态上，求目标相关的最小记忆实现及其最优误差模。MF2 先剔除永远静默的方向；MF3 明确算出记忆尾；MF4 则排除把精确单射性当作统一稳定恢复。对于 #6881 的原始进位关系，还必须把依赖局部守卫的转移对齐到这种可见/隐藏框架，不能把线性位移或分布向量的结果冒充任意进位历史的闭合。对于随机 Zeckendorf 游戏的既有目标，合法动作与选定路径测度仍是前置义务，本补编不主张已经得到混合界或高斯极限。
+
+[MF1] F. Wang, P. Benner, J. Heiland. *Partial Observation of Linear Systems with the Mori-Zwanzig Formalism*. arXiv:2606.23341v1, 22 June 2026. https://arxiv.org/html/2606.23341v1 。第3节分别识别初始隐藏项和历史反馈项；线性消元机制是已有数学，不声明为新发现。
+
+[MF2] Y.-T. Lin, Y. Tian, M. Anghel, D. Livescu. *Data-driven learning for the Mori-Zwanzig formalism: a generalization of the Koopman learning framework*. arXiv:2101.05873. https://arxiv.org/abs/2101.05873 。用于投影空间、Koopman 观察与记忆核学习的定位，不将其数据拟合结论变成当前模型的假设。
+
+[MF3] C. R. Shalizi, J. P. Crutchfield. *Computational Mechanics: Pattern and Prediction, Structure and Simplicity*. Journal of Statistical Physics 104 (2001), 817–879; arXiv:cond-mat/9907176. https://arxiv.org/abs/cond-mat/9907176 。未来条件分布相同的历史等价与最小预测表示；不作为心理学中“记忆等于想象”的依据。
