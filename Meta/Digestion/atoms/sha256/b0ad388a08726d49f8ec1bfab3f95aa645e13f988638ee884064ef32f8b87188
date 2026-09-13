@@ -1,0 +1,4 @@
+**证明。** 钉版 mathlib 的 `eventually_primeCounting_le` 给固定 $\delta>0$ 时最终的 $\pi(x)\le(\log4+\delta)x/\log x$，故得到 $k_N$ 的界。其 `primorial_le_four_pow` 给 $Q_N\le4^{y_N}$，所以 $\log Q_N\le(2+\eta\log N)\log4=O_\eta(\log N)$。于是 $k_N=o(\log N)$；在 (472.2c)–(472.2d) 中代入即得两项误差上界。
+
+第 474.7–474.8 条对任意整数截止 $m\ge2$ 给出的完整表约定和逐位构造只使用 (472.2a)–(472.2b)，不以本推论为前提。在那里取 $m=y_N$、$b=1+\lceil\log_2Q_N\rceil$，表长 $O(2^{k_N}b)$、生成核对费 $O(2^{k_N}k_Nb^2+y_N^3)$ 均为 $N^{o(1)}$。两个有理系数的分子分母位长均为 $O(b)$，亦已包括。它们的构造不求值 $S_{Q_N}(N/a_i)$、$W_{Q_N}(N)$ 或 $M(N)$。证毕。
+

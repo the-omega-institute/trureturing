@@ -17,6 +17,11 @@ WT="${1:?worktree path}"; MOD="${2:?module path without .lean}"; BR="${3:?branch
 TITLE="${4:?commit title}"; TRAILER="${5:-}"
 cd "$WT" || { echo "LAND_FAIL_CD $WT"; exit 9; }
 
+# A report run on a worktree of a second clone builds a cache that is never shared with the
+# base, and nothing downstream reports the cost. Refuse before producing one.
+bash "$(dirname "$0")/op-require-base.sh" "$WT" "${OP_BASE_GIT:-$HOME/Desktop/omega/trureturing/.git}" \
+  || { echo "LAND_ABORT_FOREIGN_CLONE"; exit 7; }
+
 PROJECT="tools/StrataLint.Cli/StrataLint.Cli.csproj"
 REPORT=".lake/build/stratalint/raw-lean-report.json"
 STATE="Golden/Frozen/state/$MOD.lean.json"

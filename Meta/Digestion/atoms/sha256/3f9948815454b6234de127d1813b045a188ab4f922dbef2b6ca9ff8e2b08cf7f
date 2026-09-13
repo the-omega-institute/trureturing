@@ -1,0 +1,10 @@
+**定义 474.1（光滑集合与初始素数积）。** 对 $n\ge2$，$P^+(n)$ 为其最大素因子，规定 $P^+(1)=1$。对实数 $x\ge0,y\ge2$，令
+$$
+\mathcal S(x,y)=\{n\in\mathbb N_{>0}:n\le x,\ P^+(n)\le y\},\qquad
+\Psi(x,y)=|\mathcal S(x,y)|,
+$$
+$$
+\mathcal P(y)=\prod_{p\le y}p,\qquad e_y=e_{\mathcal P(y)}.
+$$
+沿用第 442.1 条的 $p_1=2<p_2<\cdots$、$P_j=\prod_{i=1}^jp_i$，故 $\mathcal P(y)=P_{\pi(y)}$。$\mathcal P$ 与最大素因子函数 $P^+$ 不同；截止点始终包含 $p\le y$。
+
