@@ -21,6 +21,11 @@ if [[ -n "$PUSH_BEFORE" || -n "$PUSH_HEAD" ]]; then
   [[ -z "$BASE" ]] || { echo "scribe-content-checks: push range and protected base are distinct modes" >&2; exit 2; }
 else
   # The retained PR/local comparison interface supplies a pinned B; it is not guessed.
+  if ! comparison_base="$(git -C "$REPO_ROOT" rev-parse --verify --end-of-options "${BASE}^{commit}" 2>/dev/null)" \
+    || [[ "$comparison_base" != "$BASE" ]]; then
+    echo "PUSH_RANGE_INVALID scribe-content-checks: comparison base must be an exact available commit" >&2
+    exit 2
+  fi
   PUSH_BEFORE="$BASE"
   PUSH_HEAD="$(git -C "$REPO_ROOT" rev-parse --verify HEAD)" || exit 2
 fi
