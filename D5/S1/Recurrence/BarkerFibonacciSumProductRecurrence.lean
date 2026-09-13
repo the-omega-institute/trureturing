@@ -310,4 +310,71 @@ private theorem candidate_strictMono : StrictMono candidate := by
       show 3 * m + 8 + 1 = 3 * (m + 1) + 6 by omega,
       show m + 4 + 1 = m + 1 + 4 by omega] using h
 
+private theorem candidate_eq_nth (n : ℕ) : candidate n = Nat.nth mem n := by
+  have hmaps (i : ℕ) : mem (candidate i) := by
+    apply (mem_iff_family _).2
+    by_cases hi : i < 6
+    · interval_cases i
+      · exact ⟨0, Or.inl (by decide)⟩
+      · exact ⟨1, Or.inl (by decide)⟩
+      · exact ⟨3, Or.inl (by decide)⟩
+      · exact ⟨4, Or.inl (by decide)⟩
+      · exact ⟨3, Or.inr (Or.inl (by decide))⟩
+      · exact ⟨5, Or.inl (by decide)⟩
+    · let m := (i - 6) / 3
+      let rem := (i - 6) % 3
+      have hrem : rem < 3 := Nat.mod_lt _ (by decide)
+      have hdecomp : i = 3 * m + 6 + rem := by dsimp [m, rem]; omega
+      rcases (by omega : rem = 0 ∨ rem = 1 ∨ rem = 2) with hr | hr | hr
+      · refine ⟨m + 4, Or.inr (Or.inl ?_)⟩
+        rw [hdecomp, hr, add_zero, candidate_zero]
+      · refine ⟨m + 6, Or.inl ?_⟩
+        rw [hdecomp, hr, show 3 * m + 6 + 1 = 3 * m + 7 by omega,
+          candidate_one]
+      · refine ⟨m + 4, Or.inr (Or.inr ?_)⟩
+        rw [hdecomp, hr, show 3 * m + 6 + 2 = 3 * m + 8 by omega,
+          candidate_two]
+  have hsurj (x : ℕ) (hx : mem x) : ∃ i, candidate i = x := by
+    rcases (mem_iff_family x).1 hx with ⟨k, hf | hf | hf⟩
+    · by_cases hk : k < 6
+      · interval_cases k
+        · exact ⟨0, by simpa [candidate, Nat.fib] using hf.symm⟩
+        · exact ⟨1, by simpa [candidate, Nat.fib] using hf.symm⟩
+        · exact ⟨1, by simpa [candidate, Nat.fib] using hf.symm⟩
+        · exact ⟨2, by simpa [candidate, Nat.fib] using hf.symm⟩
+        · exact ⟨3, by simpa [candidate, Nat.fib] using hf.symm⟩
+        · exact ⟨5, by simpa [candidate, Nat.fib] using hf.symm⟩
+      · refine ⟨3 * (k - 6) + 7, ?_⟩
+        simpa only [candidate_one, show k - 6 + 6 = k by omega] using hf.symm
+    · by_cases hk : k < 4
+      · interval_cases k
+        · exact ⟨0, by simpa [candidate, Nat.fib] using hf.symm⟩
+        · exact ⟨2, by simpa [candidate, Nat.fib] using hf.symm⟩
+        · exact ⟨2, by simpa [candidate, Nat.fib] using hf.symm⟩
+        · exact ⟨4, by simpa [candidate, Nat.fib] using hf.symm⟩
+      · refine ⟨3 * (k - 4) + 6, ?_⟩
+        simpa only [candidate_zero, show k - 4 + 4 = k by omega] using hf.symm
+    · by_cases hk : k < 4
+      · interval_cases k
+        · exact ⟨0, by simpa [candidate, Nat.fib] using hf.symm⟩
+        · exact ⟨3, by simpa [candidate, Nat.fib] using hf.symm⟩
+        · exact ⟨3, by simpa [candidate, Nat.fib] using hf.symm⟩
+        · exact ⟨6, by simpa [candidate, Nat.fib] using hf.symm⟩
+      · refine ⟨3 * (k - 4) + 8, ?_⟩
+        simpa only [candidate_two, show k - 4 + 4 = k by omega] using hf.symm
+  have hinfinite : (Set.ofPred mem).Infinite := by
+    apply (Set.infinite_range_of_injective candidate_strictMono.injective).mono
+    rintro x ⟨i, rfl⟩
+    exact hmaps i
+  have hfull : ∀ hf : (Set.ofPred mem).Finite, n < hf.toFinset.card := by
+    intro hf
+    exact (hinfinite hf).elim
+  exact Nat.eq_nth_of_strictMonoOn_of_mapsTo_of_surjOn candidate
+    (by
+      intro x hx
+      rcases hsurj x hx with ⟨i, rfl⟩
+      exact ⟨i, by intro hf; exact (hinfinite hf).elim, rfl⟩)
+    (by intro i hi; exact hmaps i)
+    (candidate_strictMono.strictMonoOn _) hfull
+
 end D5.S1.Recurrence.BarkerFibonacciSumProductRecurrence
