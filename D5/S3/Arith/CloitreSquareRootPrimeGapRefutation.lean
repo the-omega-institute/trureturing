@@ -161,6 +161,89 @@ private theorem sqrt_prime_quadratic_linear
             simpa only [L] using hstep
       _ ≤ B * (↑(m + 1) : ℝ) := by push_cast; nlinarith [ih, hLB]
 
+/-- Refutation of the eventual positive square-root lower bound proposed in
+OEIS A079063. The contradiction holds on arbitrarily large quadratic blocks,
+not at a finite exceptional index. -/
+theorem result : ¬ claim := by
+  rintro ⟨c, hc, N, hclaim⟩
+  obtain ⟨r, hr0⟩ := exists_nat_gt (1 / c)
+  have hr : 1 < c * (r : ℝ) := by
+    have := (div_lt_iff₀ hc).mp hr0
+    nlinarith
+  obtain ⟨B, hB, hlinear⟩ := sqrt_prime_quadratic_linear c N r hc hclaim hr
+  let ε : ℝ := 1 / (2 * B ^ 2)
+  have hε : 0 < ε := by dsimp [ε]; positivity
+  have hev : ∀ᶠ x : ℝ in Filter.atTop,
+      (Nat.primeCounting ⌊x⌋₊ : ℝ) ≤ ε * x := by
+    filter_upwards [Chebyshev.eventually_primeCounting_le (show (0 : ℝ) < 1 by norm_num),
+      Real.tendsto_log_atTop.eventually_ge_atTop ((log 4 + 1) / ε),
+      Filter.eventually_gt_atTop (1 : ℝ)] with x hpi hlog hx
+    have hx0 : 0 ≤ x := le_trans (by norm_num : (0 : ℝ) ≤ 1) hx.le
+    have hlogpos : 0 < log x := Real.log_pos hx
+    have hb : log 4 + 1 ≤ ε * log x := by
+      have := (div_le_iff₀ hε).mp hlog
+      nlinarith
+    have hbound : (log 4 + 1) * x / log x ≤ ε * x := by
+      apply (div_le_iff₀ hlogpos).2
+      nlinarith [mul_le_mul_of_nonneg_right hb hx0]
+    exact hpi.trans hbound
+  obtain ⟨T, hT⟩ := Filter.eventually_atTop.1 hev
+  obtain ⟨K, hK⟩ := exists_nat_gt T
+  let m := N + K + 2
+  have hm : N + 1 ≤ m := by dsimp [m]; omega
+  have hmpos : 1 ≤ m := by omega
+  have hr1 : 1 ≤ r := by
+    by_contra h
+    have hzero : r = 0 := by omega
+    simp [hzero] at hr
+    linarith
+  have hindex : m ≤ (r * m) ^ 2 := by
+    have hrm : m ≤ r * m := by
+      calc
+        m = 1 * m := by omega
+        _ ≤ r * m := Nat.mul_le_mul_right m hr1
+    have hx : 1 ≤ r * m := by omega
+    have hpow : r * m ≤ (r * m) ^ 2 := by
+      nlinarith [Nat.mul_le_mul_left (r * m) hx]
+    exact hrm.trans hpow
+  let q := Nat.nth Nat.Prime ((r * m) ^ 2)
+  have hmq : m ≤ q :=
+    hindex.trans ((Nat.le_add_right _ _).trans (Nat.add_two_le_nth_prime _))
+  have hTq : T ≤ (q : ℝ) := by
+    have hKm : K ≤ m := by dsimp [m]; omega
+    have hKq : (K : ℝ) ≤ q := by exact_mod_cast hKm.trans hmq
+    exact hK.le.trans hKq
+  have hsmall : (Nat.primeCounting q : ℝ) ≤ ε * q := by
+    simpa only [Nat.floor_natCast] using hT (q : ℝ) hTq
+  have hcount : ((r * m) ^ 2 : ℕ) ≤ Nat.primeCounting q := by
+    have hmono := Nat.monotone_primeCounting' (Nat.le_succ q)
+    simpa only [q, Nat.primeCounting, Nat.primeCounting'_nth_eq] using hmono
+  have hlin : sqrt (q : ℝ) ≤ B * m := hlinear m hm
+  have hq : (q : ℝ) ≤ B ^ 2 * (m : ℝ) ^ 2 := by
+    have hsq : (sqrt (q : ℝ)) ^ 2 = q := Real.sq_sqrt (by positivity)
+    nlinarith [mul_nonneg (sub_nonneg.mpr hlin)
+      (add_nonneg (sqrt_nonneg (q : ℝ)) (by positivity : 0 ≤ B * (m : ℝ)))]
+  have hcountRCast : (((r * m) ^ 2 : ℕ) : ℝ) ≤ (Nat.primeCounting q : ℝ) := by
+    exact_mod_cast hcount
+  have hcountR : (((r * m) ^ 2 : ℕ) : ℝ) ≤ ε * q :=
+    hcountRCast.trans hsmall
+  have hmR : (0 : ℝ) < m := by exact_mod_cast hmpos
+  have hrR : (1 : ℝ) ≤ r := by exact_mod_cast hr1
+  have hεB : ε * B ^ 2 = 1 / 2 := by
+    dsimp [ε]
+    field_simp
+  have hsmallR : (((r * m) ^ 2 : ℕ) : ℝ) ≤ (m : ℝ) ^ 2 / 2 := by
+    calc
+      (((r * m) ^ 2 : ℕ) : ℝ) ≤ ε * (q : ℝ) := hcountR
+      _ ≤ ε * (B ^ 2 * (m : ℝ) ^ 2) := mul_le_mul_of_nonneg_left hq hε.le
+      _ = (m : ℝ) ^ 2 / 2 := by rw [← mul_assoc, hεB]; ring
+  have hr2 : (1 : ℝ) ≤ (r : ℝ) ^ 2 := by nlinarith [sq_nonneg ((r : ℝ) - 1)]
+  have hm2 : 0 < (m : ℝ) ^ 2 := sq_pos_of_pos hmR
+  have hbound : (m : ℝ) ^ 2 ≤ ((r : ℝ) * m) ^ 2 := by
+    nlinarith [mul_nonneg (sub_nonneg.mpr hr2) hm2.le]
+  push_cast at hsmallR
+  nlinarith [hbound, hm2]
+
 end
 
 end D5.S3.Arith.CloitreSquareRootPrimeGapRefutation
