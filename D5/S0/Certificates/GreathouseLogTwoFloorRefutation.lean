@@ -114,6 +114,24 @@ example :
   dsimp
   norm_num [Finset.sum_range_succ]
 
+example :
+    (∑ k ∈ Finset.range 2,
+        (2 : ℝ) * (1 / (2 * k + 1)) *
+          (1 / (2 * 1121626023352383 + 1)) ^ (2 * k + 1)) ≤
+      Real.log (1 + 1 / (1121626023352383 : ℝ)) := by
+  let f : ℕ → ℝ := fun k =>
+    2 * (1 / (2 * k + 1)) *
+      (1 / (2 * 1121626023352383 + 1)) ^ (2 * k + 1)
+  have hlog : HasSum f (Real.log (1 + 1 / (1121626023352383 : ℝ))) := by
+    convert! Real.hasSum_log_one_add_inv
+      (a := (1121626023352383 : ℝ)) (by norm_num) using 1 <;>
+        norm_num [f]
+  have hpartial := hlog.summable.sum_le_tsum (Finset.range 2) (fun k _ => by
+    dsimp [f]
+    positivity)
+  rw [hlog.tsum_eq] at hpartial
+  exact hpartial
+
 #print axioms a
 #print axioms claim
 
