@@ -7,6 +7,9 @@
    digest: Infinite active capacities make every finite state non-isolated in the rational probe topology. -/
 import D5.S3.Analytic.WeightedCapacity.DyadicTailFilling
 import D5.S3.Analytic.WeightedCapacity.ProbeTopologySequences
+import Mathlib.Analysis.Normed.Group.AddCircle
+import Mathlib.Data.Fintype.Pigeonhole
+import Mathlib.Algebra.BigOperators.Intervals
 
 set_option autoImplicit false
 
@@ -14,6 +17,12 @@ namespace D5.S3.Analytic.WeightedCapacity.InfiniteActiveNonIsolation
 
 open DyadicTailFilling ProbeTopologySequences Set Filter TopologicalSpace
 open scoped Topology BigOperators
+
+/-- Finite coordinate constraints and rational character balls centered at a finite state. -/
+def basicNhd (A : ℕ → ℕ) (u : B A) (I : Finset ℕ) {m : ℕ}
+    (rs : Fin m → ℕ → ℚ) (eps : Fin m → ℚ) : Set (B A) :=
+  {w | (∀ n ∈ I, w.val n = u.val n) ∧
+    ∀ a, dist (chi (rs a) w) (chi (rs a) u) < (eps a : ℝ)}
 
 /-- If infinitely many coordinates have positive capacity, every neighborhood of every finite
 state in the rational probe topology contains a different finite state. -/
