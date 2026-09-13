@@ -4,25 +4,21 @@
    mirror-E: none(waiver:actual-shear-forcing-and-uniform-space-bound)
    anchors: []
    utility: none
-   digest: The OpenAI viscous bound certifies attraction to actual stationary forced shears, with a uniform-in-space perturbation tube. -/
+   digest: Independently proved dissipative comparison certifies attraction to actual stationary forced shears. -/
 
-import D5.S3.FluidDynamics.Stability.OpenAIViscousAttraction
+import D5.S3.FluidDynamics.Stability.DissipativeAttraction
+import D5.S3.FluidDynamics.Fourier.ToralIsogenyShearNS
 
 /-!
-An actual consumer of the OpenAI-derived estimate, on the previously defined
-2*pi-periodic Euclidean shear family. Forcing has the same divergence-free
-spatial profile. This allows an arbitrary continuous amplitude error r(t),
-not only the previously explicit homogeneous exponential.
+An actual consumer of the mathlib-only dissipative energy estimate on the
+previously defined 2*pi-periodic Euclidean shear family. Forcing has the
+same divergence-free spatial profile and may have a continuous amplitude
+error r(t). The stationary forcing is gamma*c*profile and the actual target
+field c*profile solves that equation. Perturbations remain in this family.
 
-The stationary forcing is fixed as gamma*c*profile. The target field c*profile
-is verified to solve that forced NS equation. Perturbations remain within
-this invariant family. No assertion about transverse perturbations, general
-3D stationary solutions, or a global attracting flow for all forces is made.
-
-Every equation uses the predecessor's ordinary derivative definitions and
-full nsResidual. No new symbol is declared to satisfy a PDE by definition.
-The final bound controls the actual fields uniformly over both spatial
-coordinates and both velocity components. No L2 normalization is inferred.
+Every equation uses the predecessor's ordinary derivatives and nsResidual.
+The final field error bound is uniform in space and both components. No
+L2 normalization, general existence or transverse PDE stability is inferred.
 -/
 
 set_option autoImplicit false
@@ -32,7 +28,7 @@ open Set
 
 namespace D5.S3.FluidDynamics.Stability.ForcedShearFixedPoint
 
-open D5.S3.FluidDynamics.Stability.OpenAIViscousAttraction
+open D5.S3.FluidDynamics.Stability.DissipativeAttraction
 open D5.S3.FluidDynamics.Fourier.ToralIsogenyShearNS
 open private wave amplitude wave_dx wave_dy wave_dxx wave_dxy wave_dyy
   from D5.S3.FluidDynamics.Fourier.ToralIsogenyShearNS
@@ -90,8 +86,7 @@ private theorem time_formula (k : ℕ) (a : ℝ → ℝ) (t da x y : ℝ) (i : F
     dt (field k a) t x y i = da * profile k x y i :=
   (ha.mul_const (profile k x y i)).deriv
 
-/-- Direct ordinary differentiation identifies the exact PDE residual for
-an arbitrary differentiable amplitude; both nonlinear terms cancel. -/
+/-- The exact PDE residual for an arbitrary differentiable amplitude. -/
 theorem field_equation (k : ℕ) (nu : ℝ) (a : ℝ → ℝ) (t da x y : ℝ)
     (i : Fin 2) (ha : HasDerivAt a da t) :
     divergence (field k a) t x y = 0 ∧
@@ -131,9 +126,7 @@ private theorem profile_bound (k : ℕ) (x y : ℝ) (i : Fin 2) :
     have h := mul_le_mul_of_nonneg_left hcos hk
     nlinarith
 
-/-- A bounded forcing perturbation around one genuine stationary forced NS
-shear yields a uniform-in-space tube. The forcing is (gamma*c+r(t))*profile.
-The positive margin gamma is derived from nu and the actual frequency. -/
+/-- The same actual PDE and spatial tube, now using the independent proof. -/
 theorem forced_shear_attraction {T nu c ρ : ℝ} (k : ℕ) {a r : ℝ → ℝ}
     (hnu : 0 < nu) (ha : ContinuousOn a (Icc 0 T)) (hr : Continuous r)
     (hode : ∀ t ∈ Icc 0 T,
@@ -167,9 +160,6 @@ theorem forced_shear_attraction {T nu c ρ : ℝ} (k : ℕ) {a r : ℝ → ℝ}
       _ ≤ E * (1 + (k : ℝ)) := mul_le_mul_of_nonneg_left (profile_bound k x y i) hE0
       _ = _ := by dsimp [E]; ring
 
-#print axioms norm_le_exponential_tube
-#print axioms unforced_norm_contraction
-#print axioms scalar_equilibrium_tube
 #print axioms field_equation
 #print axioms stationary_forced_solution
 #print axioms amplitude_readout
