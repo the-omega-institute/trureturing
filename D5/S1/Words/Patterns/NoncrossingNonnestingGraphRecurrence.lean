@@ -513,4 +513,47 @@ private theorem Z_succ (n : ℕ) : Z (n + 1) + 2 * X n = 2 * Y n + 4 * Z n := by
     _ = 2 * Y n + 4 * Z n := by
       rw [Y, Z, Finset.mul_sum, Finset.mul_sum, ← Finset.sum_add_distrib]
 
+private theorem X_recurrence (n : ℕ) :
+    X (n + 3) + 8 * X (n + 1) = 6 * X (n + 2) + 4 * X n := by
+  have hx0 : (X (n + 1) : ℤ) = Z n := by exact_mod_cast X_succ n
+  have hx1 : (X (n + 2) : ℤ) = Z (n + 1) := by
+    exact_mod_cast X_succ (n + 1)
+  have hx2 : (X (n + 3) : ℤ) = Z (n + 2) := by
+    exact_mod_cast X_succ (n + 2)
+  have hy0 : (Y (n + 1) : ℤ) = 2 * Y n + Z n := by exact_mod_cast Y_succ n
+  have hz0 : (Z (n + 1) : ℤ) + 2 * X n = 2 * Y n + 4 * Z n := by
+    exact_mod_cast Z_succ n
+  have hz1 : (Z (n + 2) : ℤ) + 2 * X (n + 1) =
+      2 * Y (n + 1) + 4 * Z (n + 1) := by
+    exact_mod_cast Z_succ (n + 1)
+  have hrecZ : (X (n + 3) : ℤ) + 8 * X (n + 1) =
+      6 * X (n + 2) + 4 * X n := by
+    omega
+  exact_mod_cast hrecZ
+
+/-- Barker's conjectured third-order recurrence for OEIS A326244. -/
+theorem barker_a326244 : ∀ n, 2 < n →
+    (a n : ℤ) = 6 * a (n - 1) - 8 * a (n - 2) + 4 * a (n - 3) := by
+  have ha (k : ℕ) : a k = X k := by
+    calc
+      a k = Fintype.card {E : Finset (Fin k × Fin k) // IsAvoiding E} := by
+        rw [a, Fintype.card_subtype]
+      _ = Fintype.card (GoodGraph k) :=
+        (Fintype.card_congr (goodGraphEquivAvoiding k)).symm
+      _ = X k := rfl
+  intro n hn
+  obtain ⟨m, rfl⟩ : ∃ m, n = m + 3 := by
+    exact ⟨n - 3, by omega⟩
+  have h1 : m + 3 - 1 = m + 2 := by omega
+  have h2 : m + 3 - 2 = m + 1 := by omega
+  have h3 : m + 3 - 3 = m := by omega
+  rw [h1, h2, h3, ha, ha, ha, ha]
+  have hrec := X_recurrence m
+  have hrecZ :
+      (X (m + 3) : ℤ) + 8 * X (m + 1) = 6 * X (m + 2) + 4 * X m := by
+    exact_mod_cast hrec
+  omega
+
+#print axioms barker_a326244
+
 end D5.S1.Words.Patterns.NoncrossingNonnestingGraphRecurrence
