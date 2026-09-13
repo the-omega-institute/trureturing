@@ -217,3 +217,4 @@ theorem legal_golden_first_order_collision :
 #print axioms legal_golden_first_order_collision
 
 end D5.S1.Words.GoldenRecovery.GoldenFactorSecondOrderBinomialRigidity
+-- Disposable manual-version integration trigger: source comment only.
