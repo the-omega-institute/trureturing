@@ -76,6 +76,61 @@ private theorem even_divisor_count_two_pow_mul_three_pow (a b : ℕ) :
     simp [hodd]
   rw [hprod, Finset.card_product, card_even_divisors_two_pow, card_divisors_three_pow]
 
+theorem gerasimov_a187941 : ∀ n : ℕ, 1 ≤ n → a n = 2 ^ n → Nat.Prime n ∨ n = 1 := by
+  intro n hn hpow
+  by_cases hn1 : n = 1
+  · exact Or.inr hn1
+  have hn2 : 2 ≤ n := by omega
+  by_contra hnot
+  have hnp : ¬Nat.Prime n := by
+    intro hp
+    exact hnot (Or.inl hp)
+  let d := n.minFac
+  let e := n / n.minFac
+  have hd : 2 ≤ d := by
+    dsimp [d]
+    exact (Nat.minFac_prime (by omega : n ≠ 1)).two_le
+  have he : 2 ≤ e := by
+    dsimp [e]
+    exact le_trans hd (Nat.minFac_le_div (by omega) hnp)
+  have hde : d * e = n := by
+    dsimp [d, e]
+    exact Nat.mul_div_cancel' (Nat.minFac_dvd n)
+  let m := 2 ^ d * 3 ^ (e - 1)
+  have hEm : E m = n := by
+    dsimp [m]
+    rw [even_divisor_count_two_pow_mul_three_pow]
+    rw [Nat.sub_add_cancel (by omega : 1 ≤ e), hde]
+  have hm : m ∈ {m : ℕ | 0 < m ∧ E m = n} := by
+    refine ⟨?_, hEm⟩
+    dsimp [m]
+    positivity
+  have hle : a n ≤ m := Nat.sInf_le hm
+  have hthree : 3 ^ (e - 1) < 4 ^ (e - 1) := by
+    apply Nat.pow_lt_pow_left (by norm_num)
+    omega
+  have hfour : 4 ^ (e - 1) = 2 ^ (2 * (e - 1)) := by
+    rw [show (4 : ℕ) = 2 ^ 2 by norm_num, pow_mul]
+  have hexp : 2 * (e - 1) ≤ d * (e - 1) := by
+    exact Nat.mul_le_mul_right (e - 1) hd
+  have hpowle : 2 ^ (2 * (e - 1)) ≤ 2 ^ (d * (e - 1)) := by
+    exact Nat.pow_le_pow_right (by norm_num) hexp
+  have hprod : m < 2 ^ d * 2 ^ (d * (e - 1)) := by
+    dsimp [m]
+    exact Nat.mul_lt_mul_of_pos_left (hthree.trans_le (hfour ▸ hpowle)) (by positivity)
+  have hlt : m < 2 ^ n := by
+    calc
+      m < 2 ^ d * 2 ^ (d * (e - 1)) := hprod
+      _ = 2 ^ (d * e) := by
+        rw [← pow_add]
+        congr 1
+        rw [Nat.mul_sub_left_distrib, Nat.mul_one]
+        exact Nat.add_sub_of_le (Nat.le_mul_of_pos_right d (by omega : 0 < e))
+      _ = 2 ^ n := by rw [hde]
+  have : a n < 2 ^ n := lt_of_le_of_lt hle hlt
+  rw [hpow] at this
+  exact (Nat.lt_irrefl _ this).elim
+
 theorem result : ¬ claim := by
   intro h
   have hbad : Nat.Prime 0 ∨ (0 : ℕ) = 1 := h 0 (by simp [a_zero_eq_one])
