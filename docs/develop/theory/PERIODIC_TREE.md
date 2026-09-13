@@ -26,7 +26,7 @@
 牌一(**平四律国籍检验**):组合荷非勾股(Jordan–von Neumann 判定出界),不得冒充度量荷。牌二(**反例层**):无 D1-长度者(拟同态层)为树之边界批注,非节点。牌三(**王虹条款**):逐尺度归纳为普适问法;结构涌现带维数/测度前提。**墓志铭**:本树周期律多为已证之"是什么";"为什么恰是 12、−2、Pell"之壳层理论未知——残核统计案(基本性频率)为其第一考题。
 
 ## 6. 空格册(候认领)
-残核统计律;混居城真偶精判;$G$ 全群;$j$-密度;$d$-平方退化员;Markov 树层际字典(W-树3);Herglotz 虚姊妹;scl-刺客。
+残核统计律;混居城真偶精判;$G$ 全群;$j$-密度;$d$-平方退化员;Markov 树层際字典(W-树3);Herglotz 虚姊妹;scl-刺客。
 
 ## 7. 施工日志(v1.0 首期)
 注册域 $m\le3000$;**141 类节点**(真偶 136、奇核 5);素性位:141/141 本原(城册按类去重后天然本原);$\Psi{=}0$ 节点 12;城色谱 $\{0{:}30,\ 3{:}45,\ 12{:}45,\ 27{:}21\}$——恰为定理 B 可实现残类 $\{0,3,12,27\}$ 之谱(其余残类 $8,23,32,35$ 于此域未现,与实现性条件一致)。注册表:PERIODIC_TREE_registry.jsonl(逐行 JSON,四标签全字段)。
@@ -193,3 +193,121 @@ $$[x]\longmapsto[Mx]\quad\text{从}\quad M^{-1}\mathbb Z^2/\mathbb Z^2\quad\text
 随后可以保留返回自同构及覆盖层间的作用，研究具有真正 R-module 标记的广义 BF 系统。TR2 已有的完备性定理应作为复用目标，其作用域和相似性前提必须保留。对实际三维映射环面，还需先构造基本群与同调接口，不能从某个整数矩阵的非共轭直接跳到一般三维几何结论。
 
 外部未闭合方向维持 TR5 的高亏格映射类群 CSP 与曲线轨道合同控制。今后若尝试具体受限情形，必须增加非阿贝尔基本群的有限特征商、真实曲线轨道及已知 CSP 组合定理。这里已经证明的二维线性例子用于测量观察数据的不足及修复，尚未构成该高亏格猜想的一个证明步骤。研究推进应以能实际消费的定理依赖为依据，不以共同名称或主题相似性计数。
+
+
+### TR.10 实际环面固定点与返回商的同构
+
+本节继续同一 PR，读取的 dev 为 f8af3f0e43fce8d5cdba1e72d2cbe0cffda120d4。新增 `ToralFixedPointCokernel.lean` 与同名 Scribe。以下具有完整普通数学证明及候选 Lean 证明脚本，本轮未执行 Lean 内核或 Scribe 编译，不能从依赖的源码存在推断其已获本轮机器认证。
+
+取 V=R²，令 j:Z²→V 为逐坐标的整数实嵌入，L=im(j)。实际状态空间为 T=V/L，使用商拓扑。整数矩阵 A 的实作用满足 A_R j(z)=j(Az)，因而保持 L；通过 Submodule.mapQ 得到实际商作用 f_A。商映射判据证明 f_A 连续，矩阵乘法与商映射复合相容，归纳得到 f_(A^n)=f_A^n。
+
+定义 K(A,n)=ker(f_(A^n-I))。源码证明
+
+$$z\in K(A,n)\quad\Longleftrightarrow\quad f_A^n(z)=z.$$
+
+这里统计的是周期整除 n 的点，包括最小周期更小的点，不能将其误称为最小周期恰为 n 的点。当前结论只需要连续商作用；没有借此宣称已构造整个光滑流形或全部同胚分类接口。
+
+设 M=A^n-I 且 det(M)≠0。用实际二阶伴随矩阵除以实行列式构造 M_R^{-1}，证明两侧逆关系。定义
+
+$$b_M:\mathbb Z^2\longrightarrow\ker f_M,\qquad z\longmapsto[M_R^{-1}j(z)].$$
+
+若 [x]∈ker f_M，则 M_R x∈L，故存在 z 使 M_R x=j(z)，从而 b_M(z)=[x]，证明满射。另一方面，b_M(z)=0 当且仅当 M_R^{-1}j(z) 是整数嵌入 j(w)，当且仅当 z=Mw。因此 ker(b_M)=im(M:Z²→Z²)。由第一同构定理得到
+
+$$R(A,n)\simeq K(A,n).$$
+
+其逆即 TR.9 提出的 [x]↦[Mx]。所有对象和映射均由原矩阵与真实实商构造；没有另给“固定点基数等于行列式”的前提。一般桥保留 det(M)≠0 的必要条件；代入原 C_k,D_k 时，正 k、正 n 的非零性直接由前驱的迹界消去。
+
+于是 `equal_actual_periodic_cardinalities` 把 TR.3 的全部正时间基数结论提升到真实环面固定点群；`actual_fixed_groups_not_isomorphic` 把 TR.7 的一步加法群区别传到同一环面上。没有把这种固定点群非同构升级成尚未构造的映射环面奇异同调或三维不同胚定理。
+
+主要声明：`torusAction_continuous`、`torusAction_pow_apply`、`mem_periodicGroup_iff`、`integerToTorusKernel_ker`、`returnModuleEquivPeriodicGroup`、`equal_actual_periodic_cardinalities`、`actual_fixed_groups_not_isomorphic`。同构是实际加法/整数线性同构；本节没有声称额外构造了 Homeomorph。
+
+### TR.11 NS 连接必须保存的对象
+
+NS 在空间环面上演化的是速度场。环面上的一个整数自同构、光滑速度的粒子流以及速度场本身的时间更新，是三种不同映射。仅有 C_k P_k=P_k D_k 不能推出任意一种 NS 方程交织。
+
+一个额外的普通拓扑检验如下，尚未提交相应 Lean：若光滑、全局定义、随时间变化的速度场在固定环面上产生粒子流 Phi_t，t∈[0,T]，则 Phi_0=id，t↦Phi_t 给出到恒等映射的同痕，故 Phi_T 在一阶同调上作用为恒等。双曲整数环面自同构的同调作用是非恒等矩阵 A，因而不能直接等于这种同一固定环面上的粒子时间 T 映射。该论证不排除高维悬挂的截面返回映射、带孔或移动区域，也不把任意弱解自动视为光滑粒子流。
+
+对黎曼几何版本的 NS，还需明确度量、黏性算子、压力消去和边界条件。本文选择常系数平坦度量，Christoffel 符号为零；零压力时只需实际坐标导数与逆度量 h^{ab}。这避免了曲率背景下不同向量 Laplacian 的选择问题。[TR7]
+
+### TR.12 从原格同源得到一个真实 NS 解、障碍与修复
+
+新增 `D5/S3/FluidDynamics/Fourier/ToralIsogenyShearNS.lean` 及对应 Scribe。它复用原 `bridge k`，并联读现役 `ReversalWaveSynthesis`、`AugmentedReadoutRecovery`。后者已完成的瞬时幅度恢复没有重复包装成本轮成果。新文件直接定义普通 deriv、混合二阶导数、散度及完整对流扩散残差；没有把 Fourier 乘子表或 PDE 解条件作为输入。
+
+空间使用 2pi 周期。整数矩阵依然保持该周期格，但不能将它与前节周期一的坐标不加缩放地混用黏性常数。令 nu>0，取基础无外力、零压力剪切
+
+$$u(t,X,Y)=(e^{-\nu t}\cos Y,0).$$
+
+直接求导给出 div(u)=0、(u·grad)u=0、partial_t u=nu Delta u。原矩阵和实切向逆为
+
+$$P_k=\begin{pmatrix}1&0\\-2k&2\end{pmatrix},\qquad
+Q_k=P_k^{-1}=\begin{pmatrix}1&0\\k&1/2\end{pmatrix}.$$
+
+向量场的实际拉回为 v(t,x,y)=Q_k u(t,P_k(x,y))，源码证明它等于
+
+$$v(t,x,y)=(1,k)e^{-\nu t}\cos(-2kx+2y).$$
+
+P_k 在环面上是有限覆盖，Q_k 在此作用于实切向量，不能被解释为环面上的全局逆映射，也没有建立任意速度场空间间的双射。
+
+同步拉回度量 G_k=P_k^T P_k，逆度量为
+
+$$H_k=Q_kQ_k^T=\begin{pmatrix}1&k\\k&k^2+1/4\end{pmatrix}.$$
+
+源码证明所有两侧逆矩阵关系；正性由
+
+$$(r,s)H_k(r,s)^T=(r+ks)^2+s^2/4>0\quad((r,s)\ne(0,0))$$
+
+直接给出。对任意实 rate 和逆度量系数 h00,h01,h11，定义实际时空函数
+
+$$v_{\lambda}(t,x,y)=(1,k)e^{-\nu\lambda t}\cos(-2kx+2y).$$
+
+联合光滑性与两个方向的 2pi 周期性均有证明脚本。令 ell=(-2k,2)、a=(1,k)，则 ell·a=0，所以散度与两项完整非线性对流严格消失。普通导数进一步给出
+
+$$\mathcal R_H(v_\lambda)
+=\partial_t v_\lambda+(v_\lambda\cdot\nabla)v_\lambda
+ -\nu(h00\partial_{xx}+2h01\partial_{xy}+h11\partial_{yy})v_\lambda
+=\nu(4h00k^2-8h01k+4h11-\lambda)v_\lambda.$$
+
+三个结论同时来自这一普通导数恒等式：
+
+1. 保留 lambda=1，使用实际 H_k，残差为零。这是 `pulled_metric_solution`。
+2. 保留同一被拉回的 v，却使用欧氏逆度量 I，得到 `pulled_euclidean_defect`：
+
+$$\mathcal R_I(v)=\nu(4k^2+3)v.$$
+
+在 t=x=y=0 的首分量，残差为 nu(4k²+3)>0；该不等式由 `pulled_euclidean_defect_positive` 对任意 k 和正 nu 证明。
+
+3. 保留欧氏度量，将速率改为 lambda=4(k²+1)，得到另一个准确无外力 NS 解
+
+$$w(t,x,y)=(1,k)e^{-4\nu(k^2+1)t}\cos(-2kx+2y).$$
+
+`euclidean_shear_solution` 与 `euclidean_and_pulled_same_initial` 证明其方程及 w(0)=v(0)。两个演化属于不同度量方程，不能将同初值不同演化误报为同一 NS 方程不唯一。
+
+单个剪切模式只约束 ell^T H ell=1，不唯一确定整个正定 H。上述结果证明一个规范的度量修复及原欧氏度量的失败，没有证明只有 H_k 才允许该模式。
+
+这给出本项目的严格连接：原算术桥确实作用于一个真实 NS 剪切解；方程输运必须同时处理向量与度量。仅保留周期拓扑和矩阵交织不足以保持欧氏黏性演化。该结论是完整可计算族上的构造与诊断，使用经典几何协变机制，不主张新的 NS 存在性或正则性发现。
+
+### TR.13 精确输运之后的分析障碍与下一项定理
+
+新的剪切族具有特殊的非线性消去，不能据此推断一般扰动稳定，更不能从二维周期恒等式得到一般三维正则性或爆破结论。原有 NS 理论文档 `NS_OBSERVER_DYNAMICS_RH_THEORY.md` 的全模式/低模式区别依然适用；实际非共线扰动会恢复卷积、压力与导数损失。
+
+本轮恒等式还推出一个普通数学的非一致性结论，暂未提交 Lean：H_k 的最小特征值没有对全部 k 的统一正下界。取 (r,s)=(-k,1)，上式等于 1/4，而欧氏长度平方为 k²+1，所以
+
+$$\lambda_{\min}(H_k)\leq\frac1{4(k^2+1)}\longrightarrow0.$$
+
+因此，即使每个 k 的变度量方程都有精确对应，也不能隐去依赖 k 的范数比较常数。这直接限制“跨所有分辨率得到统一控制”的推理。
+
+下一项优先目标是在真实有限 Fourier 族上，给出完整的常度量 NS 输运公式，明确变换后的频率 P^T ell、向量 Q a、Leray 投影、双线性卷积及保持的频率子格。由于 P 的行列式为 2，其转置像是指数 2 的子格；任意频率截断并不自动在该变换下保持。需要给出相容截断，随后证明常数依赖 P、P^{-1}、波数截止与背景范数的稳定界。有限截断闭合之后，只有具有真实一致估计和极限识别，才能继续传递到 PDE。
+
+另一个独立分支是噪声环面映射的输运耗散。Fannjiang-Wolowski 已把噪声扰动下的耗散时间与算术优化、环面映射的熵联系起来。[TR6] 其对象是离散映射加噪声，不是本文证明了一个光滑 NS 粒子时间映射。可复用其真实模型作为输运-扩散研究入口，不把已有渐近结果重新标记为开放问题。
+
+外部开放目标仍需逐项确认当前版本与实际定理依赖。本文新增结果未解决高亏格 CSP，也未解决一般三维 NS 问题；未新增开放问题解决计数。关于带外力与无外力、平坦与曲率背景、强解与弱解的结论不得相互替代。后续价值应落在可被原问题消费的非线性估计、识别与一致极限上。
+
+### TR.14 本轮来源和核验范围
+
+[TR6] A. Fannjiang; L. Wolowski. *Noise induced dissipation in Lebesgue-measure preserving maps on d-dimensional torus*. arXiv:math/0209231v3，2003-05-07. https://arxiv.org/abs/math/0209231 。本轮核读原始摘要及可访问正文；PDF 图像工具未成功，未声称完成图像核验。只用于噪声映射/输运扩散的研究定位，不作为上述剪切恒等式的证明或新颖性来源。
+
+[TR7] M. Arnaudon; A. B. Cruzeiro; S. Fang. *Generalized stochastic Lagrangian paths for the Navier-Stokes equation*. arXiv:1509.03491v2，2016-02-23. https://arxiv.org/abs/1509.03491 。该文明确以 Ebin-Marsden Laplacian 讨论紧黎曼流形上的 NS 与随机拉格朗日路径。本文仅使用其度量/算子选择背景，不声称形式化了随机流或一般曲率算子。
+
+[TR2] 的 principal BF R-module 结论在本轮重新核对原始摘要，其“similar hyperbolic”和“R-module”限定均保留。固定点与格商之间的经典同构由本轮实际构造证明，没有将该文的更强完整性结论作为未注明前提。
+
+本轮实际执行的有限诊断：2160 项有理数逆提升/格平移检验；28 个完整有理环面网格共 41280 个候选点，独立检查实际固定点计数及一步湮灭性质；32 项直接对指数三角函数求导的符号恒等式；101 个参数的逆度量/波矢诊断。另做新 Scribe 词法括号检查与源码占位扫描。这些是有限计算或符号代数核查，均不替代 Lean 内核、Scribe 编译或独立评审。暂存诊断脚本和 JSON 不提交。完成文件逐次写回同一 PR，理论只追加本节及 TR.10–TR.13。
