@@ -253,4 +253,61 @@ private theorem family_interleave (k : ℕ) (hk : 4 ≤ k) :
       (Nat.fib_add_two (n := k + 1))
   omega
 
+private def candidate (n : ℕ) : ℕ :=
+  if n < 6 then n
+  else if n % 3 = 0 then 2 * Nat.fib (n / 3 + 2)
+  else if n % 3 = 1 then Nat.fib (n / 3 + 4)
+  else 3 * Nat.fib (n / 3 + 2)
+
+private theorem candidate_zero (m : ℕ) :
+    candidate (3 * m + 6) = 2 * Nat.fib (m + 4) := by
+  simp only [candidate, if_neg (show ¬ 3 * m + 6 < 6 by omega),
+    if_pos (show (3 * m + 6) % 3 = 0 by omega),
+    show (3 * m + 6) / 3 + 2 = m + 4 by omega]
+
+private theorem candidate_one (m : ℕ) :
+    candidate (3 * m + 7) = Nat.fib (m + 6) := by
+  simp only [candidate, if_neg (show ¬ 3 * m + 7 < 6 by omega),
+    if_neg (show (3 * m + 7) % 3 ≠ 0 by omega),
+    if_pos (show (3 * m + 7) % 3 = 1 by omega),
+    show (3 * m + 7) / 3 + 4 = m + 6 by omega]
+
+private theorem candidate_two (m : ℕ) :
+    candidate (3 * m + 8) = 3 * Nat.fib (m + 4) := by
+  simp only [candidate, if_neg (show ¬ 3 * m + 8 < 6 by omega),
+    if_neg (show (3 * m + 8) % 3 ≠ 0 by omega),
+    if_neg (show (3 * m + 8) % 3 ≠ 1 by omega),
+    show (3 * m + 8) / 3 + 2 = m + 4 by omega]
+
+private theorem candidate_strictMono : StrictMono candidate := by
+  refine strictMono_nat_of_lt_succ fun n => ?_
+  by_cases hn : n < 5
+  · have hn' : n + 1 < 6 := by omega
+    simp only [candidate, if_pos (by omega : n < 6), if_pos hn']
+    omega
+  by_cases hn5 : n = 5
+  · subst n
+    decide
+  have hn6 : 6 ≤ n := by omega
+  let m := (n - 6) / 3
+  let rem := (n - 6) % 3
+  have hrem : rem < 3 := Nat.mod_lt _ (by decide)
+  have hdecomp : n = 3 * m + 6 + rem := by dsimp [m, rem]; omega
+  rcases (by omega : rem = 0 ∨ rem = 1 ∨ rem = 2) with hr | hr | hr
+  · rw [hdecomp, hr]
+    simpa only [add_zero, show 3 * m + 6 + 1 = 3 * m + 7 by omega,
+      candidate_zero, candidate_one] using
+      (family_interleave (m + 4) (by omega)).1
+  · rw [hdecomp, hr]
+    simpa only [show 3 * m + 6 + 1 = 3 * m + 7 by omega,
+      show 3 * m + 6 + 1 + 1 = 3 * m + 8 by omega,
+      candidate_one, candidate_two] using
+      (family_interleave (m + 4) (by omega)).2.1
+  · rw [hdecomp, hr]
+    have h := (family_interleave (m + 4) (by omega)).2.2.1
+    simpa only [show 3 * m + 6 + 2 = 3 * m + 8 by omega,
+      candidate_two, candidate_zero,
+      show 3 * m + 8 + 1 = 3 * (m + 1) + 6 by omega,
+      show m + 4 + 1 = m + 1 + 4 by omega] using h
+
 end D5.S1.Recurrence.BarkerFibonacciSumProductRecurrence
