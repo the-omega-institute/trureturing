@@ -1,12 +1,11 @@
 /- GID: D5/S3/Arith/Congruence/GerasimovTwinPrimeMeanNoSuperdivisor
    generality: G
    mirror-B: D5/B/S3/Arith/Congruence/GerasimovTwinPrimeMeanNoSuperdivisor
-   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [mathlib/module/Mathlib.Data.Nat.Prime.Basic, mathlib/module/Mathlib.Data.ZMod.Basic, mathlib/module/Mathlib.Tactic.NormNum]
+   mirror-E: none(waiver:unbounded-symbolic-proof)
+   anchors: [mathlib/module/Mathlib.Data.ZMod.Basic, mathlib/module/Mathlib.Tactic.NormNum]
    utility: none
    digest: The average of a twin prime pair has no superdivisor. -/
 
-import Mathlib.Data.Nat.Prime.Basic
 import Mathlib.Data.ZMod.Basic
 import Mathlib.Tactic.NormNum
 
