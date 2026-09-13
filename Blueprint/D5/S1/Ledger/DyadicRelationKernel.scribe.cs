@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S1.Ledger;
 internal sealed class DyadicRelationKernelDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Adjacent dyadic rows telescope to a single endpoint difference.",
+        "The adjacent dyadic relations generate exactly the vectors with zero dyadic evaluation.",
         H("Dyadic Relation Kernel"),
         Blocks(
             Describe.Lean(
@@ -29,8 +29,21 @@ internal sealed class DyadicRelationKernelDocument : IScribeDocumentDefinition
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "A finitely supported vector whose support lies below m is the sum of "
+                    "A finitely supported vector whose support lies at or below m is the sum of "
                     + "its lower coordinate coefficients times the telescoping rows to m, "
                     + "together with the weighted endpoint coefficient at m."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("dyadic-evaluation-kernel"),
+                DeclarationHandle.Create("D5/S1/Ledger/DyadicRelationKernel.mem_H_iff_eval_eq_zero"),
+                H("The adjacent-row span is the evaluation kernel"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "An integer vector with finite support belongs to the adjacent-row span "
+                    + "if and only if the sum of its coordinates divided by the corresponding "
+                    + "powers of two is zero. Each adjacent relation has zero evaluation. "
+                    + "Conversely, the finite decomposition reduces a vector to its endpoint "
+                    + "coefficient, and zero evaluation forces that coefficient to vanish."))),
                 DescribeRole.Theorem))));
 }
