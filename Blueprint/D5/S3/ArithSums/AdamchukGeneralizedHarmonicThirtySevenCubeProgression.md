@@ -22,6 +22,10 @@ $$\forall k \in \mathbb{N},\; (37^{3}: \mathbb{Z}) \mid num\left(H\left(3 + 36 \
 
 *Proof.* Machine-checked in Lean as `D5/S3/ArithSums/AdamchukGeneralizedHarmonicThirtySevenCubeProgression.adamchuk_a116184` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a116184-generalized-harmonic-thirty-seven-cube-progression` (proved) by `D5/S3/ArithSums/AdamchukGeneralizedHarmonicThirtySevenCubeProgression.adamchuk_a116184`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a116184-generalized-harmonic-thirty-seven-cube-progression","declaration_gid":"D5/S3/ArithSums/AdamchukGeneralizedHarmonicThirtySevenCubeProgression.adamchuk_a116184","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*
