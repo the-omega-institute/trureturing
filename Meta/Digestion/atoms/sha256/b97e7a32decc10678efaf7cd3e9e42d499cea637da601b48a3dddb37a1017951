@@ -1,0 +1,11 @@
+**定理。** 对全部 $t\ge0$，
+
+$$
+\boxed{
+Q^t=
+\begin{pmatrix}
+F_{t+1}&F_t\\F_t&F_{t+1}-F_t
+\end{pmatrix}.}
+\tag{R1}
+$$
+

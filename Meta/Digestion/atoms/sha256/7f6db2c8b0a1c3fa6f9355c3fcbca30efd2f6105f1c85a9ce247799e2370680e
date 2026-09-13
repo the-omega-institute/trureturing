@@ -1,0 +1,17 @@
+### R.9 等幂的归一化系数输运
+
+**定理。** 设 $p>0$，$x,y\in\mathcal O$，$k,l\ge0$，且
+$x_b=pA$、$y_b=pB$、$x^k=y^l$。则在 $\mathbb Z/p\mathbb Z$ 中有
+
+$$
+\boxed{
+kx_a^{k-1}A=ly_a^{l-1}B.
+}
+\tag{R15}
+$$
+
+**证明。** 将 $x,y$ 降到 $\mathcal O/p^2\mathcal O$。因
+$x_b^2=y_b^2=0$，R.8 给出等幂两侧的 $\varphi$ 系数分别为
+$pkx_a^{k-1}A$ 与 $ply_a^{l-1}B$。它们模 $p^2$ 相等，所以对应整数之差
+被 $p^2$ 整除；在整数整除等式中约去 $p$，再降模 $p$，即得 R15。
+
