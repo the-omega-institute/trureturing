@@ -60,6 +60,95 @@ theorem simic_h655_ii (s : Finset ℕ) (hs : 2 ≤ s.card)
               push_cast
               rw [pow_succ]
               ring
+  have hsne : s.Nonempty := Finset.card_pos.mp (by omega)
+  let c := s.max' hsne
+  have hc_mem : c ∈ s := by
+    exact Finset.max'_mem s hsne
+  have hlt_of_mem_erase {i : ℕ} (hi : i ∈ s.erase c) : i < c := by
+    have hi' := Finset.mem_erase.mp hi
+    exact lt_of_le_of_ne (Finset.le_max' s i hi'.2) hi'.1
+  have herase_nonempty : (s.erase c).Nonempty := by
+    obtain ⟨a, ha, b, hb, hab⟩ := Finset.one_lt_card.mp (by omega : 1 < s.card)
+    by_cases hac : a = c
+    · refine ⟨b, Finset.mem_erase.mpr ⟨?_, hb⟩⟩
+      intro hbc
+      exact hab (hac.trans hbc.symm)
+    · exact ⟨a, Finset.mem_erase.mpr ⟨hac, ha⟩⟩
+  have hq_rat : (2 : ℚ) ≤ q := by exact_mod_cast hq
+  have h_adjusted_nonneg {i : ℕ} (hi : i < c) :
+      0 ≤ (((q : ℚ) - 1) * ((c - i : ℕ) : ℚ) - 1) * (q : ℚ) ^ i := by
+    have hci : (1 : ℚ) ≤ (c - i : ℕ) := by
+      exact_mod_cast (by omega : 1 ≤ c - i)
+    have hcoeff : (0 : ℚ) ≤ ((q : ℚ) - 1) * (c - i : ℕ) - 1 := by
+      nlinarith
+    exact mul_nonneg hcoeff (by positivity)
+  have h_adjusted_le :
+      (∑ i ∈ s.erase c,
+          (((q : ℚ) - 1) * ((c - i : ℕ) : ℚ) - 1) * (q : ℚ) ^ i) ≤
+        ∑ i ∈ Finset.range c,
+          (((q : ℚ) - 1) * ((c - i : ℕ) : ℚ) - 1) * (q : ℚ) ^ i := by
+    apply Finset.sum_le_sum_of_subset_of_nonneg
+    · intro i hi
+      exact Finset.mem_range.mpr (hlt_of_mem_erase hi)
+    · intro i hi _
+      exact h_adjusted_nonneg (Finset.mem_range.mp hi)
+  have h_adjusted_lt :
+      (∑ i ∈ s.erase c,
+          (((q : ℚ) - 1) * ((c - i : ℕ) : ℚ) - 1) * (q : ℚ) ^ i) <
+        (q : ℚ) ^ c := by
+    rw [tail_sum_identity c] at h_adjusted_le
+    have hc_pos : (0 : ℚ) < (c + 1 : ℕ) := by
+      exact_mod_cast Nat.succ_pos c
+    linarith
+  have hgap_pos :
+      0 < ((q : ℚ) - 1) *
+        (∑ i ∈ s, ((c - i : ℕ) : ℚ) * (q : ℚ) ^ i) := by
+    have hsum_pos :
+        0 < ∑ i ∈ s.erase c, ((c - i : ℕ) : ℚ) * (q : ℚ) ^ i := by
+      apply Finset.sum_pos
+      · intro i hi
+        have hi' := hlt_of_mem_erase hi
+        have : (0 : ℚ) < (c - i : ℕ) := by
+          exact_mod_cast (by omega : 0 < c - i)
+        positivity
+      · exact herase_nonempty
+    have hsum_eq :
+        (∑ i ∈ s.erase c, ((c - i : ℕ) : ℚ) * (q : ℚ) ^ i) =
+          ∑ i ∈ s, ((c - i : ℕ) : ℚ) * (q : ℚ) ^ i := by
+      apply Finset.sum_erase
+      simp
+    rw [hsum_eq] at hsum_pos
+    exact mul_pos (by linarith) hsum_pos
+  have hgap_lt_den :
+      ((q : ℚ) - 1) *
+          (∑ i ∈ s, ((c - i : ℕ) : ℚ) * (q : ℚ) ^ i) <
+        ∑ i ∈ s, (q : ℚ) ^ i := by
+    have hgap_eq :
+        ((q : ℚ) - 1) *
+            (∑ i ∈ s, ((c - i : ℕ) : ℚ) * (q : ℚ) ^ i) =
+          (∑ i ∈ s.erase c,
+            (((q : ℚ) - 1) * ((c - i : ℕ) : ℚ) - 1) * (q : ℚ) ^ i) +
+          (∑ i ∈ s.erase c, (q : ℚ) ^ i) := by
+      rw [Finset.mul_sum]
+      calc
+        (∑ i ∈ s,
+            ((q : ℚ) - 1) * (((c - i : ℕ) : ℚ) * (q : ℚ) ^ i)) =
+            ∑ i ∈ s.erase c,
+              ((q : ℚ) - 1) * (((c - i : ℕ) : ℚ) * (q : ℚ) ^ i) := by
+                rw [Finset.sum_erase]
+                simp
+        _ = _ := by
+          rw [← Finset.sum_add_distrib]
+          apply Finset.sum_congr rfl
+          intro i _
+          ring
+    have hden_eq :
+        (∑ i ∈ s, (q : ℚ) ^ i) =
+          (q : ℚ) ^ c + ∑ i ∈ s.erase c, (q : ℚ) ^ i := by
+      rw [← Finset.sum_erase_add _ _ hc_mem]
+      ring
+    rw [hgap_eq, hden_eq]
+    linarith
   sorry
 
 #print axioms simic_h655_ii
