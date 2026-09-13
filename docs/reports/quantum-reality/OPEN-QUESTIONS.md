@@ -46,10 +46,17 @@ Quantum 模块 253    已冻结 240    未冻结 13(全部在 Tomography/MUB/)
 
 按 第 1.3 条,只有冻结才进真值 DAG;未冻结模块对本线地形图零贡献——
 既进不了 `TERRAIN-MAP` 第一节,也当不了下一层的前置。
-**故本线下一步的正解不是找靶,是把已写好的冻掉**:
-其中 11 个(`utility: none`,不缺头)已在一条批量补冻 lane 内;
-`ComplexHadamardCocycleGauge` 与 `MUBCompletionRelativeGramEquivalence` 是该 lane 切出后才落 dev 的,须补一轮。
-补冻合入前,「11 个将被冻结」是计划不是事实,不得计入。
+**该瓶颈已清除(dev `458e4e4f79` 复算)**:
+
+```
+Quantum 模块 253    未冻结 0
+```
+
+两步:PR 7195 补冻 31 个模块(含这 13 个里的 11 个),PR 7199 补掉该 lane 切出后才落 dev 的最后 2 个
+(`ComplexHadamardCocycleGauge`、`MUBCompletionRelativeGramEquivalence`)。
+
+⟹ **本线不再有「冻结欠账」这条可干的活**;全部产出能力都指向第三节那四条物理输入,
+而它们一条都不是机器能自选的(第 3.6 条)。`253 / 0` 是冻结态陈述,不蕴含该面任何 atom 已消化。
 
 ---
 
