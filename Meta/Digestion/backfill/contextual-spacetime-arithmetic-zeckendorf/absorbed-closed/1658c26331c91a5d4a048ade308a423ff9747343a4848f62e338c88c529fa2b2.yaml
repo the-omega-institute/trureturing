@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:1658c26331c91a5d4a048ade308a423ff9747343a4848f62e338c88c529fa2b2
+  normalized_sha256: sha256:1658c26331c91a5d4a048ade308a423ff9747343a4848f62e338c88c529fa2b2
+cas_ref: sha256:1658c26331c91a5d4a048ade308a423ff9747343a4848f62e338c88c529fa2b2
+coverage_gids:
+  - gid: D5/S1/Deficit/ChargedCarryPath.betaDigits_sub_chargedReduces
+    target_statement_id: sha256:704a1a057a9a52f8af86b0f01f0e03610b3339aa1a228a670dfc02ae8bec67d0
+  - gid: D5/S1/Digit/PrimeAxis/ChargedTableNormalization.tablePath_project
+    target_statement_id: sha256:f2ec5327de8756afee635434f2fb5317cc8e2cd8bed731c041c8e5f4a7ced140
+  - gid: D5/S1/Digit/PrimeAxisEncoding.primeAxisEncoding
+    target_statement_id: sha256:6269035f14e166bcf156403561751185bdd5b7f7d73767f6bf8d194aa0587409
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 72107af583f26b6cc60d8e47c9dcd3e9a31a2aa61f4c298c8e140962672691f5
+    - 5f14b46f704352ee0ceecf4b7a8ee2e6b6e26eca0aa015a51fc5bac1208bda48
