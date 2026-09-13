@@ -24,5 +24,7 @@ floor((n + 1/2) log 2).
 - URL: https://oeis.org/A175406
 - Locator: FORMULA, "Conjecture: a(n) = floor((n + 1/2) log 2). - _Charles R Greathouse IV_, Apr 03 2012"
 
-The conjecture holds for all n <= 10^4 in the b-file and fails first-known at
-n₀ = 1121626023352383; minimality is not claimed.
+The conjecture holds for all n <= 10^4 in the b-file and fails at
+n₀ = 1121626023352383, the counterexample certified here; no earlier published
+counterexample was found in the searched surfaces (bounded search) and neither
+priority nor minimality is claimed.

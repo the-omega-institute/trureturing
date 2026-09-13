@@ -51,8 +51,9 @@ The bounded search found 0 arXiv results, 0 results for OEIS Open arXiv:2608.119
 and LeanOpenProblems, 0 in formal-conjectures, 0 on MathOverflow, and 0 across
 DataCite / OpenAIRE. OpenAlex returned HTTP 429 and is
 `ASSUMED-UNVERIFIED`. Heuristically equidistribution suggests that the floor
-conjecture must fail somewhere, but no explicit counterexample was recorded
-before this witness.
+conjecture must fail somewhere, and no explicit counterexample was found in the
+surfaces listed above (bounded search; OpenAlex unverified) before this witness;
+no priority claim is made.
 
 ## Route
 
