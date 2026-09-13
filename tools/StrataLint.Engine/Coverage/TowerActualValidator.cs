@@ -130,7 +130,7 @@ internal static class TowerActualValidator
         if (push?.RunsOnBranch("push", "dev") == true)
         {
             var nested = push.HasEvent("workflow_call")
-                && pr?.RunsOnBranch("pull_request_target", "dev") == true
+                && pr?.RunsOnBranch("pull_request", "dev") == true
                 && pr.Jobs.Values.Count(job => job.Name == CiWorkflowDocument.PushCallName
                     && job.Uses == "./" + RepositoryPathPolicy.PushWorkflowPath) == 1;
             foreach (var name in TruthReleaseManifestReader.RequiredCheckNames)

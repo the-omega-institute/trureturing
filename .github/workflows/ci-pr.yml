@@ -1,7 +1,7 @@
 name: CI pull request
 
 on:
-  pull_request_target:
+  pull_request:
     branches: [dev, 'integration-**']
     types: [opened, synchronize, reopened]
 

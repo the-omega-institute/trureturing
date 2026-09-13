@@ -203,7 +203,7 @@ public sealed class CoverageCommandTests
         var files = new Dictionary<string, string>(StringComparer.Ordinal)
         {
             [RuleFixture.WorkflowPath] = """
-                on: {pull_request_target: {branches: [dev]}}
+                on: {pull_request: {branches: [dev]}}
                 jobs:
                   delta:
                     name: delta
