@@ -323,7 +323,84 @@ private theorem F_prime_two_step_lt (p : ℕ) (hp : p.Prime) (hp11 : 11 ≤ p) :
 
 /-- Ianakiev's A008474 iteration conjecture. -/
 theorem ianakiev_a008474 : ∀ m : ℕ, 4 < m → ∃ t : ℕ, F^[t] m = 5 := by
-  sorry
+  have hpow : ∀ p e : ℕ, p.Prime → 0 < e → F (p ^ e) = p + e := by
+    intro p e hp he
+    rw [F, Nat.primeFactors_pow p he.ne', hp.primeFactors, hp.factorization_pow]
+    simp
+  have hmul : ∀ a b : ℕ, a.Coprime b → 1 < a → 1 < b →
+      F (a * b) = F a + F b := by
+    intro a b hab ha hb
+    rw [F, F, F, hab.primeFactors_mul,
+      Nat.factorization_mul (by omega) (by omega)]
+    rw [Finset.sum_union hab.disjoint_primeFactors]
+    apply congrArg₂ (fun x y => x + y)
+    · apply Finset.sum_congr rfl
+      intro p hp
+      simp only [Finsupp.add_apply]
+      have hnot : ¬p ∣ b := fun hpb =>
+        (Nat.prime_of_mem_primeFactors hp).ne_one
+          (Nat.eq_one_of_dvd_coprimes hab (Nat.dvd_of_mem_primeFactors hp) hpb)
+      rw [Nat.factorization_eq_zero_of_not_dvd hnot, add_zero]
+    · apply Finset.sum_congr rfl
+      intro p hp
+      simp only [Finsupp.add_apply]
+      have hnot : ¬p ∣ a := fun hpa =>
+        (Nat.prime_of_mem_primeFactors hp).ne_one
+          (Nat.eq_one_of_dvd_coprimes hab hpa (Nat.dvd_of_mem_primeFactors hp))
+      rw [Nat.factorization_eq_zero_of_not_dvd hnot, zero_add]
+  have hF6 : F 6 = 7 := by
+    calc
+      F 6 = F (2 * 3) := by norm_num
+      _ = F 2 + F 3 := hmul 2 3 (by decide) (by norm_num) (by norm_num)
+      _ = 7 := by rw [show F 2 = 3 by simpa using hpow 2 1 Nat.prime_two (by norm_num),
+        show F 3 = 4 by simpa using hpow 3 1 Nat.prime_three (by norm_num)]
+  have hF7 : F 7 = 8 := by
+    simpa using hpow 7 1 (by decide) (by norm_num)
+  have hF8 : F 8 = 5 := by
+    simpa using hpow 2 3 Nat.prime_two (by norm_num)
+  intro m hm
+  induction m using Nat.strong_induction_on with
+  | h m ih =>
+      by_cases hm5 : m = 5
+      · subst m
+        exact ⟨0, rfl⟩
+      by_cases hm6 : m = 6
+      · subst m
+        refine ⟨3, ?_⟩
+        simp only [Function.iterate_succ_apply', Function.iterate_zero_apply,
+          hF6, hF7, hF8]
+      have hm7 : 7 ≤ m := by omega
+      by_cases hp : m.Prime
+      · by_cases hp11 : 11 ≤ m
+        · have hdesc := F_prime_two_step_lt m hp hp11
+          have hFm5 := F_lower m (by omega)
+          have hFFm5 := F_lower (F m) hFm5
+          obtain ⟨t, ht⟩ := ih (F (F m)) hdesc (by omega)
+          refine ⟨t + 2, ?_⟩
+          rw [Function.iterate_add_apply]
+          simpa only [Function.iterate_succ_apply', Function.iterate_zero_apply] using ht
+        · have hm8 : m ≠ 8 := by
+            intro h
+            subst m
+            exact (by decide : ¬Nat.Prime 8) hp
+          have hm9 : m ≠ 9 := by
+            intro h
+            subst m
+            exact (by decide : ¬Nat.Prime 9) hp
+          have hm10 : m ≠ 10 := by
+            intro h
+            subst m
+            exact (by decide : ¬Nat.Prime 10) hp
+          have hmEq : m = 7 := by omega
+          subst m
+          refine ⟨2, ?_⟩
+          simp only [Function.iterate_succ_apply', Function.iterate_zero_apply, hF7, hF8]
+      · have hdesc := F_composite_lt m hm hp hm6
+        have hFm5 := F_lower m (by omega)
+        obtain ⟨t, ht⟩ := ih (F m) hdesc (by omega)
+        refine ⟨t + 1, ?_⟩
+        rw [Function.iterate_add_apply]
+        simpa only [Function.iterate_succ_apply', Function.iterate_zero_apply] using ht
 
 #print axioms ianakiev_a008474
 
