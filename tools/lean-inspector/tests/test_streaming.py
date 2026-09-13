@@ -124,7 +124,8 @@ class PublicationTests(unittest.TestCase):
         for damage in ['material', 'missing', 'duplicate', 'unreferenced', 'nonobject-provenance',
                        'provenance', 'attestation', 'declaration-identity', 'noncanonical',
                        'report-symlink', 'materials-symlink', 'missing-sidecar', 'missing-origin',
-                       'origin-compatibility', 'origin-report', 'origin-executable', 'legacy-provenance']:
+                       'origin-compatibility', 'origin-report', 'origin-executable', 'legacy-provenance',
+                       'bad-sha256', 'illegal-mode']:
             with self.subTest(damage=damage), tempfile.TemporaryDirectory() as directory:
                 directory = Path(directory)
                 spool = directory / 'spool'
@@ -185,13 +186,20 @@ class PublicationTests(unittest.TestCase):
                     publication.write_sidecars(report, coordinates, origins)
                 elif damage == 'missing-sidecar':
                     publication.member(report, '.provenance.json').unlink()
+                elif damage == 'bad-sha256':
+                    publication.member(report, '.sha256').write_text('0' * 64 + '  report.json\n')
+                elif damage == 'illegal-mode':
+                    path = publication.member(report, '.provenance.json')
+                    value = json.loads(path.read_text())
+                    value['mode'] = 'illegal'
+                    path.write_text(json.dumps(value))
                 else:
                     path = report if damage == 'report-symlink' else publication.member(report, '.materials.zip')
                     regular = path.with_name(path.name + '.regular')
                     path.rename(regular)
                     path.symlink_to(regular.name)
                 with self.assertRaises((ValueError, TypeError)):
-                    publication.publish(report, live, coordinates)
+                    publication.publish(report, live, coordinates, mode='cached')
                 self.assertEqual(before, {suffix: publication.member(live, suffix).read_bytes() for suffix in publication.SUFFIXES})
 
 

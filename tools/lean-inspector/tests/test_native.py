@@ -11,6 +11,7 @@ import sys
 import tempfile
 import time
 import unittest
+from unittest.mock import patch
 import zipfile
 import zlib
 
@@ -19,6 +20,7 @@ ROOT = HERE.parents[1]
 sys.path.insert(0, str(HERE))
 import publication
 import materials
+import native
 
 
 class NativeTests(unittest.TestCase):
@@ -176,6 +178,139 @@ defaultFacets = ["static"]
             env=self.env, text=True, capture_output=True, timeout=120)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
 
+    def test_publication_validates_material_identities_once(self):
+        self.build()
+        rows, raw, material_bytes = self.report()
+        declarations = sum(len(row['declarations']) for row in rows)
+        self.assertEqual(declarations, 6)
+        destination = self.root / 'public.json'
+        with patch.dict(os.environ, self.env), patch.object(materials, 'material_identities',
+                wraps=materials.material_identities) as identities:
+            native.publish(self.root, destination)
+            self.assertEqual(identities.call_count, declarations)
+        self.assertEqual(destination.read_bytes(), raw)
+        self.assertEqual(publication.member(destination, '.materials.zip').read_bytes(), material_bytes)
+        staged = self.root / 'stage' / publication.RAW
+        with patch.object(materials, 'material_identities', wraps=materials.material_identities) as identities:
+            publication.publish(destination, staged, publication.coordinates(self.root), self.root)
+            self.assertEqual(identities.call_count, declarations)
+        publication.validate_bundle(staged, publication.coordinates(self.root), self.root)
+        self.assertEqual(staged.read_bytes(), raw)
+        self.assertEqual(publication.member(staged, '.materials.zip').read_bytes(), material_bytes)
+        result = subprocess.run([sys.executable, str(HERE / 'publication.py'), 'stage',
+            '--bundle', str(destination), '--staging-directory', str(self.root / 'cli-stage'),
+            '--repository', str(self.root)], env=self.env, text=True, capture_output=True, timeout=120)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertEqual((self.root / 'cli-stage' / publication.RAW).read_bytes(), raw)
+
+    def test_native_publication_rejects_incoming_damage_before_normalization(self):
+        self.build()
+        self.publish()
+        destination = self.root / 'public.json'
+        before = {suffix: publication.member(destination, suffix).read_bytes() for suffix in publication.SUFFIXES}
+        artifact = self.root / '.lake/build/lean-inspector/report.zip'
+        with zipfile.ZipFile(artifact) as archive:
+            original = [(info, archive.read(info)) for info in archive.infolist()]
+        for damage in ['sha256', 'mode', 'provenance', 'identity', 'source']:
+            with self.subTest(damage=damage):
+                entries = []
+                for info, data in original:
+                    if damage == 'sha256' and info.filename.endswith('.sha256'):
+                        data = b'0' * 64 + b'  raw-lean-report.json\n'
+                    elif damage in ['mode', 'provenance'] and info.filename.endswith('.provenance.json'):
+                        value = json.loads(data)
+                        if damage == 'mode': value['mode'] = 'illegal'
+                        else: value.pop('module_origins')
+                        data = json.dumps(value).encode()
+                    elif damage == 'identity' and info.filename.endswith('.materials.zip'):
+                        output = io.BytesIO()
+                        with zipfile.ZipFile(io.BytesIO(data)) as materials_zip, zipfile.ZipFile(output, 'w') as changed:
+                            for index, entry in enumerate(materials_zip.infolist()):
+                                changed.writestr(entry, b'corrupt material' if index == 0 else materials_zip.read(entry))
+                        data = output.getvalue()
+                    entries.append((info, data))
+                if damage == 'source':
+                    # Keep every sidecar and origin consistent with the forged
+                    # report, so only the current source check can reject it.
+                    payloads = {info.filename: data for info, data in entries}
+                    value = json.loads(payloads[publication.RAW])
+                    row = value['modules'][0]
+                    row['source_sha256'] = 'sha256:' + '0' * 64
+                    raw = materials.canonical_json(value)
+                    sha = hashlib.sha256(raw).hexdigest()
+                    provenance = json.loads(payloads[publication.RAW + '.provenance.json'])
+                    provenance['report_sha256'] = sha
+                    provenance['module_origins'][row['module']]['report_sha256'] = hashlib.sha256(
+                        materials.canonical_json(dict(schema=materials.REPORT_SCHEMA, modules=[row]))).hexdigest()
+                    payloads[publication.RAW] = raw
+                    payloads[publication.RAW + '.provenance.json'] = json.dumps(provenance).encode()
+                    payloads[publication.RAW + '.sha256'] = f'{sha}  {publication.RAW}\n'.encode()
+                    attestation = payloads[publication.RAW + '.input.attestation'].decode().splitlines()
+                    attestation[-1] = 'report_sha256=' + sha
+                    payloads[publication.RAW + '.input.attestation'] = ('\n'.join(attestation) + '\n').encode()
+                    entries = [(info, payloads[info.filename]) for info, _ in entries]
+                artifact.unlink()
+                with zipfile.ZipFile(artifact, 'w') as archive:
+                    for info, data in entries: archive.writestr(info, data)
+                for activity in ['', '{"kind":"extract","count":1}\n']:
+                    self.write('activity.jsonl', activity)
+                    result = subprocess.run([sys.executable, str(self.root / 'tools/lean-inspector/native.py'),
+                        'publish', str(self.root), str(destination)], env=self.env,
+                        text=True, capture_output=True, timeout=120)
+                    self.assertNotEqual(result.returncode, 0, result.stdout + result.stderr)
+                    if damage == 'source': self.assertIn('source binding mismatch', result.stderr)
+                    self.assertEqual(before, {suffix: publication.member(destination, suffix).read_bytes()
+                                             for suffix in publication.SUFFIXES})
+
+    def test_publication_snapshot_integrity_and_replace_failure(self):
+        self.build()
+        self.publish()
+        destination = self.root / 'public.json'
+        before = {suffix: publication.member(destination, suffix).read_bytes() for suffix in publication.SUFFIXES}
+        self.write('D5/Alone.lean', (self.root / 'D5/Alone.lean').read_text() + '-- changed publication input\n')
+        self.build()
+        coordinates = publication.coordinates(self.root)
+        with tempfile.TemporaryDirectory(dir=self.root) as directory:
+            report = publication.unpack(self.root / '.lake/build/lean-inspector/report.zip', directory)
+            validate = publication.validate_bundle
+            def corrupt_validated_snapshot(*args, **kwargs):
+                result = validate(*args, **kwargs)
+                publication.member(args[0], '.materials.zip').write_bytes(b'changed after validation')
+                return result
+            with patch.object(publication, 'validate_bundle', side_effect=corrupt_validated_snapshot):
+                with self.assertRaisesRegex(ValueError, 'snapshot changed'):
+                    publication.publish(report, destination, coordinates, self.root)
+            self.assertEqual(before, {suffix: publication.member(destination, suffix).read_bytes()
+                                     for suffix in publication.SUFFIXES})
+
+            write_bytes = Path.write_bytes
+            def damage_publication_update(path, data):
+                if path.name.endswith('.sha256') and path.parent.name == 'bundle':
+                    data += b'damaged after normalization'
+                return write_bytes(path, data)
+            with patch.object(Path, 'write_bytes', damage_publication_update):
+                with self.assertRaisesRegex(ValueError, 'snapshot changed after validation'):
+                    publication.publish(report, destination, coordinates, self.root, mode='cached')
+            self.assertEqual(before, {suffix: publication.member(destination, suffix).read_bytes()
+                                     for suffix in publication.SUFFIXES})
+
+            for failed_suffix in (*publication.SUFFIXES[1:], ''):
+                with self.subTest(failed_suffix=failed_suffix):
+                    replace = os.replace
+                    failed = False
+                    def fail_one_replace(source, target):
+                        nonlocal failed
+                        if Path(target) == publication.member(destination, failed_suffix) and not failed:
+                            failed = True
+                            raise OSError('injected publication replacement failure')
+                        return replace(source, target)
+                    with patch.object(publication.os, 'replace', side_effect=fail_one_replace):
+                        with self.assertRaisesRegex(OSError, 'replacement failure'):
+                            publication.publish(report, destination, coordinates, self.root, mode='cached')
+                    self.assertTrue(failed)
+                    self.assertEqual(before, {suffix: publication.member(destination, suffix).read_bytes()
+                                             for suffix in publication.SUFFIXES})
+
     def test_native_producer_inputs(self):
         self.build()
         before = self.stamps()
@@ -232,6 +367,21 @@ defaultFacets = ["static"]
         self.build()
         self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
         self.assertEqual(mixed, self.origins())
+        self.publish()
+        before = self.stamps()
+        damaged = self.root / '.lake/build/lean-inspector/modules/D5.B.zip'
+        damaged.unlink()
+        damaged.write_bytes(b'corrupt row after compatible producer changes')
+        self.write('activity.jsonl', '')
+        self.run_lake('build', 'D5.B:report', ':report')
+        records = [json.loads(line) for line in (self.root / 'activity.jsonl').read_text().splitlines()]
+        self.assertEqual(sum(row['count'] for row in records if row['kind'] == 'extract'), 1)
+        self.assertEqual(sum(row['count'] for row in records if row['kind'] == 'aggregate'), 1)
+        self.assertEqual({name for name, stamp in self.stamps().items() if stamp != before[name]}, {'D5.B'})
+        recovered = self.origins()
+        self.assertNotEqual(mixed['D5.B']['producer_sources_sha256'], recovered['D5.B']['producer_sources_sha256'])
+        for name in mixed:
+            if name != 'D5.B': self.assertEqual(mixed[name], recovered[name])
         self.publish()
 
     def test_native_semantic_version_and_config(self):
@@ -379,6 +529,50 @@ defaultFacets = ["static"]
         self.copy('tools/lean-inspector/Inspector.lean')
         (self.root / 'tools/lean-inspector/materials.py').unlink()
         self.build(success=False)
+
+    def test_public_module_validates_and_private_job_is_not_a_target(self):
+        self.build()
+        path = self.root / '.lake/build/lean-inspector/modules/D5.Alone.zip'
+        expected = path.read_bytes()
+        before = self.stamps()
+        path.unlink()
+        path.write_bytes(b'corrupt optional artifact')
+        self.write('activity.jsonl', '')
+        result = self.run_lake('build', 'D5.Alone:report')
+        self.assertIn('inspector artifact rejected; rebuilding privately', result.stdout + result.stderr)
+        self.assertEqual(path.read_bytes(), expected)
+        self.assertEqual(path.stat().st_nlink, 1)
+        self.assertEqual({name for name, stamp in self.stamps().items() if stamp != before[name]}, {'D5.Alone'})
+        self.assertEqual([json.loads(line) for line in (self.root / 'activity.jsonl').read_text().splitlines()],
+                         [dict(kind='extract', count=1)])
+        result = self.run_lake('build', 'D5.Alone:inspectorUnvalidatedReport', success=False)
+        self.assertIn('unknown module facet', result.stdout + result.stderr)
+        for targets in [(':report', 'D5.Alone:report'), ('D5.Alone:report', ':report')]:
+            with self.subTest(targets=targets):
+                path.unlink()
+                path.write_bytes(b'corrupt optional artifact')
+                self.write('activity.jsonl', '')
+                self.run_lake('build', *targets)
+                self.assertEqual(path.read_bytes(), expected)
+                records = [json.loads(line) for line in (self.root / 'activity.jsonl').read_text().splitlines()]
+                self.assertEqual(sum(row['count'] for row in records if row['kind'] == 'extract'), 1)
+
+        # A bad optional row may trigger production, but a required producer
+        # failure must fail both public module and package entrypoints.
+        producer = self.root / 'tools/lean-inspector/native.py'
+        producer.write_text(producer.read_text().replace(
+            'def module(root, name, source, utility_path, executable, output):',
+            'def module(root, name, source, utility_path, executable, output):\n'
+            '    raise ValueError("required fixture producer failure")').replace(
+            'def produce_batch(requests):',
+            'def produce_batch(requests):\n    raise ValueError("required fixture producer failure")'))
+        path.unlink()
+        path.write_bytes(b'corrupt optional artifact')
+        result = self.run_lake('build', 'D5.Alone:report', success=False)
+        self.assertIn('required fixture producer failure', result.stdout + result.stderr)
+        self.write('D5/Alone.lean', (self.root / 'D5/Alone.lean').read_text() + '-- require a new native artifact\n')
+        result = self.build(success=False)
+        self.assertIn('required fixture producer failure', result.stdout + result.stderr)
 
     def test_native_pack_unpack_reuses_complete_rows(self):
         self.build()

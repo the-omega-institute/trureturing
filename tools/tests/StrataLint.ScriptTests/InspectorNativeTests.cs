@@ -6,6 +6,10 @@ public sealed class InspectorNativeTests
 {
     [Theory]
     [InlineData("test_streaming")]
+    [InlineData("test_native.NativeTests.test_publication_validates_material_identities_once")]
+    [InlineData("test_native.NativeTests.test_native_publication_rejects_incoming_damage_before_normalization")]
+    [InlineData("test_native.NativeTests.test_publication_snapshot_integrity_and_replace_failure")]
+    [InlineData("test_native.NativeTests.test_public_module_validates_and_private_job_is_not_a_target")]
     [InlineData("test_native.NativeTests.test_native_invalidation")]
     [InlineData("test_native.NativeTests.test_native_producer_inputs")]
     [InlineData("test_native.NativeTests.test_native_semantic_version_and_config")]

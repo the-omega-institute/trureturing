@@ -281,14 +281,13 @@ def publish(root, destination):
     inputs = public.coordinates(root)
     with tempfile.TemporaryDirectory(prefix='.publish.', dir=state(root)) as directory:
         report = public.unpack(state(root) / 'report.zip', directory)
-        public.validate_bundle(report, inputs)
         activity_file = os.environ.get('STRATALINT_INSPECTOR_ACTIVITY')
+        mode = None
         if activity_file:
             records = [public.read_json(line) for line in Path(activity_file).read_text().splitlines()]
             mode = 'produced' if records else 'cached'
-            public.set_publication_mode(report, mode)
             print(f'LEAN_INSPECTOR_WORK extracted_modules={sum(row["count"] for row in records if row["kind"] == "extract")} aggregates={sum(row["count"] for row in records if row["kind"] == "aggregate")}')
-        public.publish(report, Path(destination), inputs, root)
+        public.publish(report, Path(destination), inputs, root, mode=mode)
     print(f'RAW_LEAN_REPORT path={destination} sha256={public.digest(destination)}')
 
 

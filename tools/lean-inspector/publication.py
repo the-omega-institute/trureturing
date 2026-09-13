@@ -109,15 +109,6 @@ def validate_origin(report, rows, compatibility):
     return origin
 
 
-def set_publication_mode(report, mode):
-    # Reuse preserves every original production fingerprint, including mixed
-    # origins in an incrementally assembled aggregate.
-    path = member(report, '.provenance.json')
-    provenance = read_json(path.read_bytes())
-    provenance['mode'] = mode
-    path.write_text(json.dumps(provenance, separators=(',', ':')) + '\n', encoding='utf-8')
-
-
 def write_sidecars(report, inputs, origins, mode='produced'):
     sha = digest(report)
     member(report, '.sha256').write_text(f'{sha}  {report.name}\n', encoding='ascii')
@@ -207,12 +198,16 @@ def validate_sources(rows, repository):
             raise ValueError('report claim source binding mismatch')
 
 
-def validate_bundle(report, expected=None, repository=None):
-    report = Path(report)
+def _require_bundle_files(report):
     for suffix in SUFFIXES:
         path = member(report, suffix)
         if path.is_symlink() or not path.is_file() or not path.stat().st_size:
             raise ValueError(f'missing bundle member: {path.name}')
+
+
+def validate_bundle(report, expected=None, repository=None):
+    report = Path(report)
+    _require_bundle_files(report)
     sha = digest(report)
     if member(report, '.sha256').read_text(encoding='ascii') != f'{sha}  {report.name}\n':
         raise ValueError('report SHA mismatch')
@@ -276,20 +271,62 @@ def unpack(artifact, directory, suffixes=SUFFIXES):
     return Path(directory) / RAW
 
 
-def publish(report, destination, expected, repository=None):
-    destination = Path(destination)
+def publish(report, destination, expected, repository=None, *, mode=None):
+    report, destination = Path(report), Path(destination)
     destination.parent.mkdir(parents=True, exist_ok=True)
-    validate_bundle(report, expected, repository)
+    _require_bundle_files(report)
     with tempfile.TemporaryDirectory(prefix='.lean-report.', dir=destination.parent) as directory:
-        staged = Path(directory) / destination.name
+        # Keep the incoming basename and every sidecar byte until the complete
+        # private snapshot has passed canonical and current repository checks.
+        staged = Path(directory) / 'bundle' / report.name
+        staged.parent.mkdir()
         for suffix in SUFFIXES:
             shutil.copyfile(member(report, suffix), member(staged, suffix))
-        member(staged, '.sha256').write_text(f'{digest(staged)}  {staged.name}\n', encoding='ascii')
-        validate_bundle(staged, expected)
+        accepted = {suffix: digest(member(staged, suffix)) for suffix in SUFFIXES}
+        validate_bundle(staged, expected, repository)
+        if any(digest(member(staged, suffix)) != sha for suffix, sha in accepted.items()):
+            raise ValueError('publication snapshot changed during validation')
+
+        updates = {'.sha256': f'{accepted[""]}  {destination.name}\n'.encode('ascii')}
+        if mode is not None:
+            if mode not in ('produced', 'cached'):
+                raise ValueError('invalid publication mode')
+            # Only the publication mode changes; actual module origins survive
+            # reuse, including aggregates with mixed production fingerprints.
+            provenance = read_json(member(staged, '.provenance.json').read_bytes())
+            provenance['mode'] = mode
+            updates['.provenance.json'] = (json.dumps(provenance, separators=(',', ':')) + '\n').encode('utf-8')
+        for suffix, data in updates.items():
+            member(staged, suffix).write_bytes(data)
+            accepted[suffix] = hashlib.sha256(data).hexdigest()
+        _require_bundle_files(staged)
+        if any(digest(member(staged, suffix)) != sha for suffix, sha in accepted.items()):
+            raise ValueError('publication snapshot changed after validation')
+        previous = Path(directory) / 'previous'
+        previous.mkdir()
+        backups = {}
+        for suffix in SUFFIXES:
+            path = member(destination, suffix)
+            backup = previous / (destination.name + suffix)
+            if os.path.lexists(path):
+                # Replacements never write through these links. Keep the old
+                # bytes available without copying a second material archive.
+                os.link(path, backup, follow_symlinks=False)
+                backups[suffix] = backup
         # Publish the validated report last. Concurrent readers fail closed on a
         # transitional sidecar mismatch; they can never accept a mixed bundle.
-        for suffix in (*SUFFIXES[1:], ''):
-            os.replace(member(staged, suffix), member(destination, suffix))
+        replaced = []
+        try:
+            for suffix in (*SUFFIXES[1:], ''):
+                os.replace(member(staged, suffix), member(destination, suffix))
+                replaced.append(suffix)
+        except BaseException:
+            for suffix in reversed(replaced):
+                if suffix in backups:
+                    os.replace(backups[suffix], member(destination, suffix))
+                else:
+                    member(destination, suffix).unlink()
+            raise
 
 
 def main():
