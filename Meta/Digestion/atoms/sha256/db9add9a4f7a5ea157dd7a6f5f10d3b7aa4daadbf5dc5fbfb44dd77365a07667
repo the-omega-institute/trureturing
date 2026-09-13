@@ -1,0 +1,20 @@
+**定义。** 对 $\rho\in\mathbb R$ 与 $n\in\mathbb Z$，定义
+
+$$
+q_\rho(n)=\lfloor n\alpha+\rho\rfloor,
+\qquad s_\rho(n)=q_\rho(n)+n\varphi,
+\qquad r_\rho(n)=n\alpha-q_\rho(n).
+$$
+
+若 $u=a_u+b_u\varphi$，再定义
+
+$$
+P_u^\rho(n)=\pi(u s_\rho(n)),
+$$
+
+并在写成 $u s_\rho(n)=A+P_u^\rho(n)\varphi$ 后定义
+
+$$
+c_u^\rho(n)=q_\rho(P_u^\rho(n))-A.
+$$
+

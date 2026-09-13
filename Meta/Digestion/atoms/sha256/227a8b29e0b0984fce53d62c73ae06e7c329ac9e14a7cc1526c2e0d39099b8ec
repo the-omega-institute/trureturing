@@ -1,0 +1,7 @@
+**定理。** 若 $r\in\mathbb N$ 且 $r>0$，则不存在 $t\in\mathbb R$ 同时满足
+
+$$
+\mu_L+t=-\mu_L,\qquad
+\mu_{L+r}+t=-\mu_{L+r}.
+$$
+

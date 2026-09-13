@@ -1,0 +1,8 @@
+**定义。** 对 $z,w\in\mathbb C$ 定义交叉系数
+$\mathcal C(z,w)=z\overline w$。令
+
+$$
+z_t=e^{-i\omega t}z,\qquad w_t=e^{-i\omega t}w,\qquad
+z^{\mathrm{mir}}=\overline z,\qquad w^{\mathrm{mir}}=\overline w.
+$$
+
