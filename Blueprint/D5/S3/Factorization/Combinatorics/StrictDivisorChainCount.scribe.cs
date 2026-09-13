@@ -7,10 +7,18 @@ internal sealed class StrictDivisorChainCountDocument : IScribeDocumentDefinitio
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Strict Divisor Chains.",
         H("Strict Divisor Chains"),
-        Blocks(Paragraph(Text(
-            "A strict divisor chain starts at one, ends at a prescribed natural number, "
-            + "and increases at every divisibility step. Weak chains allow repeated endpoints. "
-            + "All endpoints are bounded by the final endpoint, so both chain types are finite. "
-            + "The prime-exponent counting function is the product of the binomial composition "
-            + "counts at positive lengths and is zero at length zero.")))));
+        Blocks(
+            Describe.Lean(
+                DescribeId.Create("strictdivisorchaincount-weak-chain-count"),
+                DeclarationHandle.Create("D5/S3/Factorization/Combinatorics/StrictDivisorChainCount.weak_chain_count"),
+                H("Counting weak divisor chains"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every endpoint greater than one and every natural length, the number of "
+                    + "weak divisor chains is the product of the prime-exponent composition counts, "
+                    + "with zero chains at length zero. Successive quotients identify chains with "
+                    + "positive factor tuples, and factorization identifies these tuples with "
+                    + "independent weak compositions of the prime exponents."))),
+                DescribeRole.Theorem))));
 }
