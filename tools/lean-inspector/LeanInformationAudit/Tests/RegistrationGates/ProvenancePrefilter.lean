@@ -3,10 +3,10 @@ import LeanInformationAudit.Tests.RegistrationGates.ProvenanceTypes
 open Lean LeanInformationAudit
 namespace RegistrationProvenance
 
--- The named Classical producer is rejected without definitional equality.
+-- The proposition is definitionally equal to the registered statement.
 noncomputable def sharedConstantDecision (_ : Unit) (x : Bool) : Bool :=
   if @decide decisionProposition (Classical.propDecidable _) then x else false
-check_provenance "SharedConstantDecision" using sharedConstantDecision expects "unclassified_form" for specificTruth
+check_provenance "SharedConstantDecision" using sharedConstantDecision expects "forbidden_dependency" for specificTruth
 
 -- External constants are leaves; unfolding Unit would add PUnit here.
 run_cmd Elab.Command.liftCoreM do
