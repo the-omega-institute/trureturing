@@ -18,13 +18,21 @@ open FibonacciReturnSpectrum FibonacciLiftTrace GoldenModReturnBridge GoldenFirs
 
 local instance : Fact (Nat.Prime 5) := ⟨Nat.prime_five⟩
 
-/-- mathlib writes (p/5) as legendreSym 5 p. For odd p this equals (5/p). -/
+/-- mathlib writes (p/5) as legendreSym 5 p. -/
 abbrev epsilon (p : ℕ) : ℤ := legendreSym 5 p
+
+/-- Quadratic reciprocity proves agreement with the standard symbol (5/p).
+The convention is an equality of the actual library symbols, not a prose identification. -/
+theorem epsilon_eq_standard (p : ℕ) [Fact p.Prime] (hp2 : p ≠ 2) :
+    epsilon p = legendreSym p (5 : ℤ) := by
+  exact (legendreSym.quadratic_reciprocity_one_mod_four
+    (p := 5) (q := p) (by decide) hp2).symm
 
 /-- Keep the SIGN. In the inert case this is p+1, not p-1. -/
 def frobeniusIndex (p : ℕ) : ℕ := ((p : ℤ) - epsilon p).toNat
 
-def quotientMod (p n : ℕ) : ZMod p := (Nat.fib n / p : ZMod p)
+/-- Divide in the natural numbers FIRST, then reduce. No division by zero in ZMod p. -/
+def quotientMod (p n : ℕ) : ZMod p := ((Nat.fib n / p : ℕ) : ZMod p)
 
 lemma epsilon_cases {p : ℕ} (hp : p.Prime) (hp5 : p ≠ 5) :
     epsilon p = 1 ∨ epsilon p = -1 := by
@@ -167,8 +175,7 @@ theorem quotient_period_eq_frobenius {p : ℕ}
   have hez : (epsilon p : ZMod p) ≠ 0 := by
     rcases epsilon_cases hp hp5 with he | he <;> simp [he]
   apply mul_left_cancel₀ hez
-  change (epsilon p : ZMod p) * (Nat.fib (period p) / p : ZMod p) = _
-  dsimp [quotientMod]
+  unfold quotientMod
   push_cast at hc
   linear_combination -hc
 
@@ -187,6 +194,11 @@ theorem wall_iff_standard_quotient {p : ℕ}
       ← ZMod.natCast_eq_zero_iff]
   change quotientMod p (period p) = 0 ↔ _
   rw [quotient_period_eq_frobenius hp hp2 hp5]
-  exact mul_eq_zero.trans (or_iff_right (neg_ne_zero.mpr (period_residue_ne_zero hp hp2 hp5)))
+  constructor
+  · intro h
+    exact (mul_eq_zero.mp h).resolve_left
+      (neg_ne_zero.mpr (period_residue_ne_zero hp hp2 hp5))
+  · intro h
+    rw [h, mul_zero]
 
 end D5.S1.Recurrence.FibonacciFrobeniusQuotientBridge
