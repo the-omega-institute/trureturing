@@ -225,7 +225,7 @@ public sealed partial class MakeWorkflowTests
                 "PREFLIGHT_ADMISSION_RC=\"$1\" PREFLIGHT_CANDIDATE_ROOT=\"$2\" "
                 + "PREFLIGHT_GATE=\"$3\" PREFLIGHT_LOCAL_GATE=\"$4\" "
                 + $"HOME=\"$5\" BASE={GateForkSha} BEFORE={GateForkSha} PATH=\"$6:/usr/bin:/bin\" "
-                + "exec /bin/bash \"$7\"",
+                + $"PREFLIGHT_EXPECTED_GATE_BASE={GateForkSha} exec /bin/bash \"$7\"",
                 "preflight-harness-gate-chain",
                 admissionExitCode.ToString(System.Globalization.CultureInfo.InvariantCulture),
                 candidateRoot,
@@ -648,10 +648,8 @@ public sealed partial class MakeWorkflowTests
             esac
             if [[ "${2:-}" == selftest ]]; then printf 'selftest\n'; exit 0; fi
             if [[ "${2:-}" == check ]]; then
-              if [[ -n "${BEFORE:-}" ]]; then
-                [[ "$*" == *" --push-before $BEFORE "* && "$*" == *" --push-head "* ]] || exit 94
-                [[ "$*" != *" --protected-base "* ]] || exit 94
-              elif [[ -n "${PREFLIGHT_EXPECTED_GATE_BASE:-}" && "$*" != *" --protected-base $PREFLIGHT_EXPECTED_GATE_BASE "* ]]; then exit 94; fi
+              [[ "$*" == *" --protected-base ${PREFLIGHT_EXPECTED_GATE_BASE:?} "* ]] || exit 94
+              [[ "$*" != *" --push-before "* && "$*" != *" --push-head "* ]] || exit 94
               exit "$PREFLIGHT_ADMISSION_RC"
             fi
             if [[ "${2:-}" == filemap-conform ]]; then exit 0; fi
@@ -679,7 +677,7 @@ public sealed partial class MakeWorkflowTests
             if [[ "$target" == engineering-tests ]]; then
               [[ -z "${STRATALINT_PUSH_BEFORE:-}${STRATALINT_PUSH_HEAD:-}${STRATALINT_SOURCE_BASE:-}${STRATALINT_SCRIBE_BASE:-}" ]] || exit 96
             fi
-            if [[ ( "$target" == lean-report || "$target" == gate ) && -n "${BEFORE:-}" ]]; then
+            if [[ "$target" == lean-report && -n "${BEFORE:-}" ]]; then
               [[ "${STRATALINT_PUSH_BEFORE:-}" == "$BEFORE" && -n "${STRATALINT_PUSH_HEAD:-}" ]] || exit 96
               [[ -z "${STRATALINT_SOURCE_BASE:-}${STRATALINT_SCRIBE_BASE:-}" ]] || exit 96
             fi
@@ -690,13 +688,14 @@ public sealed partial class MakeWorkflowTests
               exit 0
             fi
             [[ "$target" == gate ]] || exit 0
+            [[ -z "${STRATALINT_PUSH_BEFORE:-}${STRATALINT_PUSH_HEAD:-}${STRATALINT_SOURCE_BASE:-}${STRATALINT_SCRIBE_BASE:-}" ]] || exit 96
             [[ "$gate_args" == --skip-engineering ]] || exit 92
             if [[ -n "${PREFLIGHT_EXPECTED_GATE_BASE:-}" ]]; then
               [[ "$gate_base" == "$PREFLIGHT_EXPECTED_GATE_BASE" ]] || exit 93
             fi
             "$PREFLIGHT_LOCAL_GATE" \
               --candidate "$PREFLIGHT_CANDIDATE_ROOT" \
-              --base 0000000000000000000000000000000000000001 \
+              --base "$gate_base" \
               --skip-engineering
             """);
 

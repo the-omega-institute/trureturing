@@ -90,6 +90,9 @@ case "$ancestor_rc" in
 esac
 CANDIDATE_SHA="$(git rev-parse HEAD)"
 validate_push_range
+# B is retained for admission below. Push phases receive only their fixed P/H;
+# recursive Make command-line assignments must not re-export the admission BASE.
+unset BASE MAKEFLAGS MFLAGS MAKEOVERRIDES
 unset STRATALINT_PUSH_BEFORE STRATALINT_PUSH_HEAD STRATALINT_SOURCE_BASE STRATALINT_SCRIBE_BASE
 source "$ROOT/tools/scripts/lib/resource-observation-lib.sh"
 
@@ -199,9 +202,7 @@ if gate_remaining="$(remaining_deadline_seconds)"; then
 fi
 
 set +e
-STRATALINT_PUSH_BEFORE="$ENGINEERING_BEFORE" STRATALINT_PUSH_HEAD="$CANDIDATE_SHA" \
-  STRATALINT_SOURCE_BASE="" STRATALINT_SCRIBE_BASE="" \
-  make gate BASE="$BASE_SHA" GATE_ARGS="--skip-engineering"
+make gate BASE="$BASE_SHA" GATE_ARGS="--skip-engineering"
 gate_rc=$?
 set -e
 record_timing gate
