@@ -29,41 +29,27 @@ liminf; it does not assert the existence of either proposed limit. -/
 def claim : Prop :=
   ∃ c : ℝ, 0 < c ∧ ∃ N : ℕ, ∀ n : ℕ, N ≤ n → c * sqrt n < a n
 
-private theorem sqrt_nth_prime_add_le_of_lt_a (t k : ℕ)
-    (hk : 0 < k) (hka : k < a (t + 1)) :
-    sqrt (Nat.nth Nat.Prime (t + k)) ≤ sqrt (Nat.nth Nat.Prime t) + 1 := by
-  by_contra h
-  have hdiff : 1 < sqrt (Nat.nth Nat.Prime (t + k)) -
-      sqrt (Nat.nth Nat.Prime t) := by
-    push Not at h
+private theorem a_witness_nonempty (n : ℕ) (hn : 0 < n) :
+    {k : ℕ | 0 < k ∧
+      1 < sqrt (Nat.nth Nat.Prime (n + k - 1)) -
+        sqrt (Nat.nth Nat.Prime (n - 1))}.Nonempty := by
+  obtain ⟨k, hk⟩ := exists_nat_gt
+    ((sqrt (Nat.nth Nat.Prime (n - 1) : ℝ) + 1) ^ 2)
+  have hq : (k : ℝ) ≤ Nat.nth Nat.Prime (n + k) := by
+    exact_mod_cast (show k ≤ Nat.nth Nat.Prime (n + k) by
+      have := Nat.add_two_le_nth_prime (n + k)
+      omega)
+  have hs : (sqrt (Nat.nth Nat.Prime (n - 1) : ℝ) + 1) ^ 2 <
+      (Nat.nth Nat.Prime (n + k) : ℝ) := hk.trans_le hq
+  have hroot : sqrt (Nat.nth Nat.Prime (n - 1) : ℝ) + 1 <
+      sqrt (Nat.nth Nat.Prime (n + k) : ℝ) := Real.lt_sqrt_of_sq_lt hs
+  refine ⟨k + 1, ?_⟩
+  simp only [Set.mem_ofPred_eq]
+  constructor
+  · omega
+  · have hidx : n + (k + 1) - 1 = n + k := by omega
+    rw [hidx]
     linarith
-  have hmem : k ∈ {j : ℕ | 0 < j ∧
-      1 < sqrt (Nat.nth Nat.Prime (t + 1 + j - 1)) -
-        sqrt (Nat.nth Nat.Prime (t + 1 - 1))} := by
-    simp only [Set.mem_ofPred_eq]
-    constructor
-    · exact hk
-    · simpa only [show t + 1 + k - 1 = t + k by omega,
-        show t + 1 - 1 = t by omega] using hdiff
-  exact (not_lt_of_ge (Nat.sInf_le hmem)) hka
-
-private theorem sqrt_nth_prime_step_of_claim
-    (c : ℝ) (N r m t : ℕ) (hc : 0 < c)
-    (hclaim : ∀ n : ℕ, N ≤ n → c * sqrt n < (a n : ℝ))
-    (hr : 1 < c * r) (hm : 0 < m) (hN : N ≤ t)
-    (ht : (r * m) ^ 2 ≤ t) :
-    sqrt (Nat.nth Nat.Prime (t + m)) ≤ sqrt (Nat.nth Nat.Prime t) + 1 := by
-  have hroot : (↑(r * m) : ℝ) ≤ sqrt (↑(t + 1) : ℝ) := by
-    apply Real.le_sqrt_of_sq_le
-    exact_mod_cast (ht.trans (Nat.le_succ t))
-  have hmreal : (0 : ℝ) < m := by exact_mod_cast hm
-  have hmc : (m : ℝ) < c * (↑(r * m) : ℝ) := by
-    have hmul := mul_lt_mul_of_pos_right hr hmreal
-    simpa only [one_mul, Nat.cast_mul, mul_assoc] using hmul
-  have hca : (m : ℝ) < (a (t + 1) : ℝ) :=
-    (hmc.trans_le (mul_le_mul_of_nonneg_left hroot hc.le)).trans
-      (hclaim (t + 1) (by omega))
-  exact sqrt_nth_prime_add_le_of_lt_a t m hm (by exact_mod_cast hca)
 
 private theorem sqrt_prime_quadratic_step
     (c : ℝ) (N r m : ℕ) (hc : 0 < c)
@@ -73,19 +59,40 @@ private theorem sqrt_prime_quadratic_step
       sqrt (Nat.nth Nat.Prime ((r * m) ^ 2)) + (3 * r * r : ℕ) := by
   let t0 := (r * m) ^ 2
   let L := 3 * r * r
+  have hlocal (t : ℕ) (ht : t0 ≤ t) :
+      sqrt (Nat.nth Nat.Prime (t + m)) ≤ sqrt (Nat.nth Nat.Prime t) + 1 := by
+    have hroot : (↑(r * m) : ℝ) ≤ sqrt (↑(t + 1) : ℝ) := by
+      apply Real.le_sqrt_of_sq_le
+      exact_mod_cast (ht.trans (Nat.le_succ t))
+    have hmreal : (0 : ℝ) < m := by exact_mod_cast hm
+    have hmc : (m : ℝ) < c * (↑(r * m) : ℝ) := by
+      have hmul := mul_lt_mul_of_pos_right hr hmreal
+      simpa only [one_mul, Nat.cast_mul, mul_assoc] using hmul
+    have hca : (m : ℝ) < (a (t + 1) : ℝ) :=
+      (hmc.trans_le (mul_le_mul_of_nonneg_left hroot hc.le)).trans
+        (hclaim (t + 1) (by omega))
+    by_contra h
+    have hdiff : 1 < sqrt (Nat.nth Nat.Prime (t + m)) -
+        sqrt (Nat.nth Nat.Prime t) := by
+      push Not at h
+      linarith
+    have hmem : m ∈ {j : ℕ | 0 < j ∧
+        1 < sqrt (Nat.nth Nat.Prime (t + 1 + j - 1)) -
+          sqrt (Nat.nth Nat.Prime (t + 1 - 1))} := by
+      simp only [Set.mem_ofPred_eq]
+      constructor
+      · omega
+      · simpa only [show t + 1 + m - 1 = t + m by omega,
+          show t + 1 - 1 = t by omega] using hdiff
+    have hma : m < a (t + 1) := by exact_mod_cast hca
+    exact (not_lt_of_ge (Nat.sInf_le hmem)) hma
   have hchain (i : ℕ) :
       sqrt (Nat.nth Nat.Prime (t0 + i * m)) ≤
         sqrt (Nat.nth Nat.Prime t0) + i := by
     induction i with
     | zero => simp
     | succ i ih =>
-      have hstep := sqrt_nth_prime_step_of_claim c N r m (t0 + i * m) hc
-        hclaim hr (by omega : 0 < m)
-        (by
-          calc
-            N ≤ t0 := by simpa only [t0] using hN
-            _ ≤ t0 + i * m := Nat.le_add_right _ _)
-        (by dsimp [t0]; omega)
+      have hstep := hlocal (t0 + i * m) (Nat.le_add_right _ _)
       calc
         sqrt (Nat.nth Nat.Prime (t0 + (i + 1) * m)) =
             sqrt (Nat.nth Nat.Prime ((t0 + i * m) + m)) := by
