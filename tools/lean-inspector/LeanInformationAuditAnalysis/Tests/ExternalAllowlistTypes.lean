@@ -222,3 +222,19 @@ def propositionRead (_ : Unit) (bit : Bool) : PropositionUnique :=
     intro h
     exact Eq.mp h ⟨137, rfl⟩) (.cons (by simp) .nil), bit⟩
 end ListMetadataFixtures
+
+namespace ListMetadataFixtures
+def mapProofRead {α β : Type} (f : α → β) (l : List α)
+    (_ : (l.map f).Nodup) (_ : Unit) (bit : Bool) : Bool := bit
+inductive TypeIndexed : Type → Type 1 where
+  | mk (proof : propositionList.Nodup) (bit : Bool) : TypeIndexed Prop
+def indexedRead (α : Type) (h : α = Prop) (_ : Unit) (bit : Bool) : TypeIndexed α :=
+  h.symm ▸ TypeIndexed.mk (propositionRead () bit).proof bit
+structure LetPropositionUnique where
+  proof : (let carrier : Type := Prop
+           let xs : List carrier := propositionList
+           List.Pairwise (fun a b : carrier => a ≠ b) xs)
+  bit : Bool
+def letPropositionRead (_ : Unit) (bit : Bool) : LetPropositionUnique :=
+  ⟨(propositionRead () bit).proof, bit⟩
+end ListMetadataFixtures

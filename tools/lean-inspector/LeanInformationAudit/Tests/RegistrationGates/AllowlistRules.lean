@@ -1299,3 +1299,33 @@ run_cmd Elab.Command.liftCoreM do
   if result.isSome then logInfo "[PASS] PropositionNodupPayload"
   else logError "[FAIL] PropositionNodupPayload: list element hides the registered proposition"
 end ListMetadataFixtures
+
+namespace ListMetadataFixtures
+def polymorphicSignature : StructuralPrimitiveSignature where
+  Index := Unit
+  indexFintype := inferInstance
+  Output := fun _ => Bool
+def polymorphicRealization : StructuralPrimitiveRealization ⟨Bool⟩ polymorphicSignature :=
+  ⟨fun i bit => mapProofRead (fun n : Nat => n) [] .nil i bit⟩
+def indexedSignature : StructuralPrimitiveSignature where
+  Index := Unit
+  indexFintype := inferInstance
+  Output := fun _ => TypeIndexed Prop
+def indexedRealization : StructuralPrimitiveRealization ⟨Bool⟩ indexedSignature :=
+  ⟨indexedRead Prop rfl⟩
+def letPropositionSignature : StructuralPrimitiveSignature where
+  Index := Unit
+  indexFintype := inferInstance
+  Output := fun _ => LetPropositionUnique
+def letPropositionRealization : StructuralPrimitiveRealization ⟨Bool⟩ letPropositionSignature :=
+  ⟨letPropositionRead⟩
+run_cmd Elab.Command.liftCoreM do
+  for (label, statement, holder, clean) in [
+      ("PolymorphicNodupExistsClean", ``existsTarget, ``polymorphicRealization, true),
+      ("PolymorphicNodupNegExistsClean", ``notExistsTarget, ``polymorphicRealization, true),
+      ("IndexedPropositionNodupPayload", ``existsTarget, ``indexedRealization, false),
+      ("LetPropositionNodupPayload", ``existsTarget, ``letPropositionRealization, false)] do
+    let result ← provenanceErrorCurrent (← getEnv).header.mainModule `catalog statement holder
+    if clean == result.isNone then logInfo m!"[PASS] {label}"
+    else logError m!"[FAIL] {label}: {result}"
+end ListMetadataFixtures
