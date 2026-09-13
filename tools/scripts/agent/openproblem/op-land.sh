@@ -63,7 +63,12 @@ dotnet test tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj \
 echo "SCRIBE_TEST_EXIT=$?"
 grep -E "Passed!|Failed!" /tmp/op-land-scribe-$$.log | tail -1
 
-bash tools/scripts/agent/header-check.sh "$MOD.lean"; echo "HEADER_EXIT=$?"
+bash tools/scripts/agent/header-check.sh "$MOD.lean"; HDR=$?
+echo "HEADER_EXIT=$HDR"
+# The header check is a gate, not an announcement. Its own output ends with
+# "不要 deposit", and a chain that prints that and commits anyway has turned a
+# check into a log line. Refuse before anything is committed.
+[ "$HDR" -eq 0 ] || { echo "LAND_ABORT_HEADER"; exit 6; }
 
 git status --short
 git add -A
