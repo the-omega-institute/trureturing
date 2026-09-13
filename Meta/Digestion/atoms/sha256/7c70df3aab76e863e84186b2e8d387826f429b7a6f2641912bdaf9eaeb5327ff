@@ -1,0 +1,12 @@
+**证明。** 令 $x=\varphi^n$。由
+$x\overline x=-1$ 可知 $x^{-1}=-\overline x\in\mathcal O$。
+若 $E_n=qy$，则 T1 给出
+
+$$
+L_n-1=qyx^{-1}.
+$$
+
+写 $yx^{-1}=a+b\varphi$。比较 $\{1,\varphi\}$ 中的整数坐标可得
+$b=0$ 及 $L_n-1=qa$。反之，若 $L_n-1=qa$，则
+$E_n=q(a\varphi^n)$。上述论证也适用于 $q=0$。
+

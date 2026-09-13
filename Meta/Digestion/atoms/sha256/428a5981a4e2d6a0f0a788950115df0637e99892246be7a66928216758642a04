@@ -1,0 +1,18 @@
+**定理。** 对每个奇素数 $p$，
+
+$$
+\boxed{
+p^2\mid\mathcal P_p(\varphi)\text{ 于 }\mathcal O
+\iff p^2\mid L_p-1\text{ 于 }\mathbb Z.
+}
+$$
+
+并且
+
+$$
+\operatorname N(\mathcal P_p(\varphi))=-(L_p-1)^2.
+$$
+
+若 $p\ne5$，上述条件还等价于
+$\ell_p=0$，也等价于 $q_p=0$。
+
