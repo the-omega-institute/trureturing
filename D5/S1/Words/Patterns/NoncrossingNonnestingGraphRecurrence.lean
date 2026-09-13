@@ -208,4 +208,107 @@ private theorem goodEdges_extend_iff (E : Finset (Edge n)) (S : Finset (Fin n)) 
             subst y
             simp [Crossing, Nesting, edgeSuccEquiv]
 
+private theorem castSucc_mem_allowedEdges_extend_iff
+    (E : Finset (Edge n)) (S : Finset (Fin n)) (d : Fin n) :
+    d.castSucc ∈ allowedEdges (extendEdges E S) ↔
+      d ∈ allowedEdges E ∧ S ⊆ {d} := by
+  constructor
+  · intro hd
+    simp only [allowedEdges, Finset.mem_filter, Finset.mem_univ, true_and] at hd ⊢
+    constructor
+    · intro e he hde
+      have hincident := hd ((edgeSuccEquiv n).symm (Sum.inl e)) (by
+        simpa [extendEdges, splitEdges] using he) (by
+        simpa [edgeSuccEquiv] using hde)
+      simpa [edgeSuccEquiv] using hincident
+    · intro c hc
+      have hincident := hd ((edgeSuccEquiv n).symm (Sum.inr c)) (by
+        simpa [extendEdges, splitEdges] using hc) (Fin.castSucc_lt_last d)
+      have hcd : c = d := by
+        simpa [edgeSuccEquiv] using hincident.resolve_right
+          (fun h => Fin.castSucc_ne_last d h.symm)
+      simpa using hcd
+  · rintro ⟨hd, hsingle⟩
+    simp only [allowedEdges, Finset.mem_filter, Finset.mem_univ, true_and] at hd ⊢
+    intro x hx hdx
+    cases hxcase : edgeSuccEquiv n x with
+    | inl e =>
+        have hxform : x = (edgeSuccEquiv n).symm (Sum.inl e) := by
+          apply (edgeSuccEquiv n).injective
+          simpa using hxcase
+        subst x
+        have he : e ∈ E := by
+          simpa [extendEdges, splitEdges] using hx
+        have hincident := hd e he (by simpa [edgeSuccEquiv] using hdx)
+        simpa [edgeSuccEquiv] using hincident
+    | inr c =>
+        have hxform : x = (edgeSuccEquiv n).symm (Sum.inr c) := by
+          apply (edgeSuccEquiv n).injective
+          simpa using hxcase
+        subst x
+        have hc : c ∈ S := by
+          simpa [extendEdges, splitEdges] using hx
+        have hcd : c = d := by simpa using hsingle hc
+        exact Or.inl (by simp [edgeSuccEquiv, hcd])
+
+private theorem last_mem_allowedEdges_extend (E : Finset (Edge n)) (S : Finset (Fin n)) :
+    Fin.last n ∈ allowedEdges (extendEdges E S) := by
+  simp only [allowedEdges, Finset.mem_filter, Finset.mem_univ, true_and]
+  intro e _ hlast
+  exact (not_lt_of_ge (Fin.le_last e.1.2) hlast).elim
+
+private theorem card_allowedEdges_extend (E : Finset (Edge n)) (S : Finset (Fin n))
+    (hallowed : S ⊆ allowedEdges E) :
+    (allowedEdges (extendEdges E S)).card =
+      if S = ∅ then (allowedEdges E).card + 1 else if S.card = 1 then 2 else 1 := by
+  by_cases hempty : S = ∅
+  · have hset : allowedEdges (extendEdges E S) =
+        insert (Fin.last n) ((allowedEdges E).map Fin.castSuccEmb) := by
+      ext x
+      cases x using Fin.lastCases with
+      | last => simp [last_mem_allowedEdges_extend]
+      | cast d =>
+          rw [castSucc_mem_allowedEdges_extend_iff]
+          simp [hempty]
+    rw [hset, if_pos hempty, Finset.card_insert_of_notMem]
+    · simp
+    · simp
+  · by_cases hone : S.card = 1
+    · obtain ⟨c, rfl⟩ := Finset.card_eq_one.mp hone
+      have hcAllowed : c ∈ allowedEdges E := hallowed (by simp)
+      have hset : allowedEdges (extendEdges E {c}) =
+          {c.castSucc, Fin.last n} := by
+        ext x
+        cases x using Fin.lastCases with
+        | last => simp [last_mem_allowedEdges_extend]
+        | cast d =>
+            rw [castSucc_mem_allowedEdges_extend_iff]
+            simp only [Finset.singleton_subset_iff, Finset.mem_singleton,
+              Finset.mem_insert, Fin.castSucc_inj, Fin.castSucc_ne_last, or_false]
+            constructor
+            · rintro ⟨_, hcd⟩
+              exact hcd.symm
+            · intro hdc
+              subst d
+              exact ⟨hcAllowed, by simp⟩
+      rw [hset]
+      simp
+    · have hset : allowedEdges (extendEdges E S) = {Fin.last n} := by
+        ext x
+        cases x using Fin.lastCases with
+        | last => simp [last_mem_allowedEdges_extend]
+        | cast d =>
+            rw [castSucc_mem_allowedEdges_extend_iff]
+            simp only [Finset.mem_singleton]
+            constructor
+            · rintro ⟨_, hsubset⟩
+              have hcard : S.card ≤ 1 := by
+                simpa using Finset.card_le_card hsubset
+              exact (hone (Nat.le_antisymm hcard (Nat.one_le_iff_ne_zero.mpr
+                (Finset.card_ne_zero.mpr (Finset.nonempty_iff_ne_empty.mpr hempty))))).elim
+            · intro h
+              exact (Fin.castSucc_ne_last d h).elim
+      rw [hset, if_neg hempty, if_neg hone]
+      simp
+
 end D5.S1.Words.Patterns.NoncrossingNonnestingGraphRecurrence
