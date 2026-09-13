@@ -107,4 +107,60 @@ theorem full_lift_of_firstQuotient_nonzero (p : ℕ) (hp : p.Prime) (hp2 : p ≠
     exact (h ((ZMod.natCast_eq_zero_iff _ p).mpr ha)).elim
   · exact he
 
+/-- The normalized first-lift matrix, reduced modulo p after exact integer division. -/
+def normalizedDefect (p : ℕ) : Matrix (Fin 2) (Fin 2) (ZMod p) :=
+  let a : ZMod p := firstQuotient p (period p)
+  let b : ZMod p := secondQuotient p (period p)
+  !![b, a; a, b - a]
+
+/-- The discriminant-five direction is fixed; only one scalar varies with the prime. -/
+theorem twice_normalizedDefect (p : ℕ) (hp : p.Prime) (hp2 : p ≠ 2) :
+    (2 : ZMod p) • normalizedDefect p =
+      (firstQuotient p (period p) : ZMod p) • !![1, 2; 2, -1] := by
+  have ht := quotient_trace_zero p hp hp2
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp [normalizedDefect] <;> linear_combination ht
+
+/-- The scaled defect squares to a scalar operator with coefficient five. -/
+theorem scaled_defect_square (p : ℕ) (hp : p.Prime) (hp2 : p ≠ 2) :
+    ((2 : ZMod p) • normalizedDefect p) * ((2 : ZMod p) • normalizedDefect p) =
+      (5 * (firstQuotient p (period p) : ZMod p) ^ 2) •
+        (1 : Matrix (Fin 2) (Fin 2) (ZMod p)) := by
+  rw [twice_normalizedDefect p hp hp2]
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp [Matrix.mul_apply, Fin.sum_univ_two] <;> ring
+
+/-- Away from 2 and 5, a nonzero scalar defect distinguishes every nonzero residue state.
+The restriction at 5 is structural: the displayed discriminant operator degenerates there. -/
+theorem normalizedDefect_kernel_zero (p : ℕ) (hp : p.Prime)
+    (hp2 : p ≠ 2) (hp5 : p ≠ 5)
+    (ha : (firstQuotient p (period p) : ZMod p) ≠ 0)
+    (v : Fin 2 → ZMod p) (hv : normalizedDefect p *ᵥ v = 0) : v = 0 := by
+  letI : Fact p.Prime := ⟨hp⟩
+  have hx := congrFun hv (0 : Fin 2)
+  have hy := congrFun hv (1 : Fin 2)
+  simp only [normalizedDefect, Matrix.mulVec, dotProduct, Fin.sum_univ_two,
+    Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_fin_one,
+    Matrix.of_apply, Pi.zero_apply] at hx hy
+  have ht := quotient_trace_zero p hp hp2
+  have hax : (firstQuotient p (period p) : ZMod p) * (v 0 + 2 * v 1) = 0 := by
+    linear_combination 2 * hx - v 0 * ht
+  have hay : (firstQuotient p (period p) : ZMod p) * (2 * v 0 - v 1) = 0 := by
+    linear_combination 2 * hy - v 1 * ht
+  have h0 := (mul_eq_zero.mp hax).resolve_left ha
+  have h1 := (mul_eq_zero.mp hay).resolve_left ha
+  have h5x : (5 : ZMod p) * v 0 = 0 := by linear_combination h0 + 2 * h1
+  have hfive : (5 : ZMod p) ≠ 0 := by
+    intro hz
+    have hd := (ZMod.natCast_eq_zero_iff 5 p).mp hz
+    exact hp5 ((Nat.prime_dvd_prime_iff_eq hp Nat.prime_five).mp hd)
+  have hv0 : v 0 = 0 := (mul_eq_zero.mp h5x).resolve_left hfive
+  have hv1 : v 1 = 0 := by simpa only [hv0, mul_zero, zero_sub, neg_eq_zero] using h1
+  ext i
+  fin_cases i
+  · exact hv0
+  · exact hv1
+
 end D5.S1.Recurrence.FibonacciLiftTrace
