@@ -1746,3 +1746,297 @@ $$
 [SM3] T. Hobbes. *Leviathan*, Part I, Chapters II–III, 1651. Project Gutenberg eBook 3207. https://www.gutenberg.org/files/3207/3207-h/3207-h.htm 。残留运动、想象与记忆的用语区分，以及新感觉对旧印象的遮蔽；仅作原文解释，不当作现代模型的经验验证。
 
 [SM4] F. Wang, P. Benner, J. Heiland. *Partial Observation of Linear Systems with the Mori-Zwanzig Formalism*. arXiv:2606.23341v1, 2026. https://arxiv.org/html/2606.23341v1 。实际线性系统的隐藏消元与初态/反馈分离。SM2 对已有递归的因果逆识别不是对 Mori–Zwanzig 机制的首次性主张。
+
+---
+
+# 补编 FM：有限矩阵元恢复、有限精度与 Bala 的整除猜想
+
+## FM.1 从恢复障碍转向实际可恢复数据
+
+SM1 已经给出全部带群插入迹仍不足以恢复固定观察记忆的实际两副本例子；SM2 则证明完整可见响应足够。本补编完成两者之间的一组具体观察，并给出有限时间、有限精度的定理。另选取一条外部仍以 conjecture 登记的精确算术陈述，直接证明其全称整除结论；不把两项不同的数学贡献拼成一个未经证明的 Monster 本体论。
+
+本补编有四个新 Lean/Scribe 对应：`ThreeMomentMemoryRecovery`、`ThreeMomentMemoryStability`、`FiniteHorizonMemoryStability`，以及 `BalaChebyshevThreeDivisibility`。它们分别承载实际三观测恢复、无耦合下界的误差界、非交换有限滞后误差传播、以及完整的阶乘整除陈述。新源码尚待实际 Lean elaboration、kernel 及 Scribe 检查；普通证明的完整性与机器认证状态分别报告。
+
+## FM.2 给定群表示下的矩阵元族
+
+先在普通数学层面固定有限群的已知有限维复酉表示，并选定其酉等型分解
+
+$$
+\mathcal H=\bigoplus_\lambda(\mathbb C^{m_\lambda}\otimes W_\lambda),\qquad
+\rho(g)=\bigoplus_\lambda(I_{m_\lambda}\otimes\rho_\lambda(g)).
+$$
+
+假设实际线性演化 $K$ 为收缩，固定观察 $P$ 为正交投影，二者均与所有 $\rho(g)$ 交换。由复表示的 Schur 引理，两者分别有 $K_\lambda\otimes I$ 和 $P_\lambda\otimes I$ 的块形。对重数空间再次酉换基，可令 $P_\lambda=\operatorname{diag}(I_{r_\lambda},0)$。这是同时运输坐标中的算子与观察，不是擅自替换观察。
+
+在每个 $W_\lambda$ 中固定一个单位向量 $e_\lambda$。只测量
+
+$$
+s_{\lambda ab}(t)=\langle e_a\otimes e_\lambda,
+ K^t(e_b\otimes e_\lambda)\rangle,
+\quad 1\le a,b\le r_\lambda,
+\quad 1\le t\le H+2.
+$$
+
+**定理 FM1（对称约化后的有限矩阵元充分性，普通证明）。** 上述矩阵元确定全部观察记忆 $M_j$（$0\le j\le H$）；每个时刻只需 $\sum_\lambda r_\lambda^2$ 个复矩阵元。
+
+**证明。** 所列矩阵元恰好是约化可见响应 $R_\lambda(t)=P_\lambda K_\lambda^tP_\lambda$ 在其像上的全部条目。不同不可约块之间不存在交叉项。同一不可约空间内的其他方向因张量恒等因子给出同样响应，故不需要逐一查询。将这些小矩阵代入 SM2 的有序因果恢复，逐项得到 $M_{\lambda j}$，再还原 $\bigoplus_\lambda M_{\lambda j}\otimes I_{W_\lambda}$。证毕。
+
+这是一组充分数据，不声称在所有表示、所有先验下均达到最少样本数；也没有把等型分解本身当作新增发现。必须已知表示及观察的实际嵌入。只有字符而没有 $P$ 的位置时，SM1 的障碍仍成立。对实不可约表示，交换子代数可能不是实数，不能直接照搬上述复数分解；下面的实际两副本实模型不要求不可约，另由 Kronecker 结构给出全部证明。当前源码形式化了该显式载体和一般范数估计，没有声称构造了任意表示的全部 Schur 分解或具体 Monster 表示。
+
+## FM.3 非交换因果恢复的有限时间误差
+
+沿用实际块演化的 $R_n$、$M_n$，在可见空间的端同态环中有
+
+$$
+M_n=R_{n+2}-R_1R_{n+1}-\sum_{i=0}^{n-1}M_{n-1-i}R_{i+1}.
+$$
+
+用 $\widehat R$ 代替 $R$ 执行同一个三角递推，得到 $\widehat M$。
+
+**定理 FM2。** 假设在 $1\le t\le H+2$ 上有 $\|R_t\|,\|\widehat R_t\|\le1$、$\|\widehat R_t-R_t\|\le\eta$，并在 $0\le j\le H$ 上有 $\|M_j\|\le1$。则
+
+$$
+\boxed{\|\widehat M_j-M_j\|\le(2^{j+2}-1)\eta\qquad(0\le j\le H).}
+$$
+
+**证明。** 保留乘法次序，用
+
+$$
+\|ab-cd\|\le\|a-c\|\,\|b\|+\|c\|\,\|b-d\|
+$$
+
+逐项比较两个递推。记 $E_j=\|\widehat M_j-M_j\|$，得到
+
+$$
+E_n\le3\eta+\sum_{j=0}^{n-1}(E_j+\eta).
+$$
+
+强归纳代入 $E_j\le(2^{j+2}-1)\eta$，右侧为
+$3\eta+4\eta(2^n-1)=(2^{n+2}-1)\eta$。证毕。`FiniteHorizonMemoryStability.finite_horizon_error_bound` 在任意范数环中实现这个估计，允许非交换乘法；其精确递推前提由既有 SM2 在真实块系统上履行，而不是隐藏地假设待证的误差界。
+
+FM1 的收缩条件保证真实 $R$ 和 $M$ 的范数上界。若每个被测复矩阵元的误差至多 $\epsilon$，一个 $r_\lambda\times r_\lambda$ 块的算子误差不超过其 Frobenius 范数，因而至多 $r_\lambda\epsilon$。对测得矩阵作径向归一化 $Z\mapsto Z/\max(1,\|Z\|)$，得到范数至多一的矩阵，且对任意 $\|R\|\le1$，
+
+$$
+\left\|\frac{Z}{\max(1,\|Z\|)}-R\right\|\le2\|Z-R\|.
+$$
+
+当 $\|Z\|>1$ 时，$\|Z-Z/\|Z\|\|=\|Z\|-1\le\|Z-R\|$，三角不等式给出该式；另一情形直接成立。因此令 $r_*=\max_\lambda r_\lambda$，得到明确的矩阵元误差推论
+
+$$
+\boxed{\max_{0\le j\le H}\|\widehat M_j-M_j\|
+\le2r_*(2^{H+2}-1)\epsilon.}
+$$
+
+这不是无限时间一致有界结论。它将采样数、观测时间、误差幅度和目标滞后全部写明；不假设先稳定恢复隐藏坐标。径向归一化和表示分解的推论在本节给出普通证明，未另增仅作绑定的包装声明。
+
+## FM.4 实际两副本：三个固定标量恢复全部滞后
+
+取任意非零有限维实表示 $\rho:G\to GL(W)$。在 $W\oplus W$ 上固定群作用 $I_2\otimes\rho(g)$、固定第一副本观察
+
+$$
+P=\begin{pmatrix}1&0\\0&0\end{pmatrix}\otimes I_W,
+$$
+
+实际动力学为
+
+$$
+K=\begin{pmatrix}u&v\\v&w\end{pmatrix}\otimes I_W.
+$$
+
+群、动力学和观察的联合定义已经给定，不把只有相同基数的对象当作表示。对第一副本的一个固定单位坐标 $e$，只取
+
+$$
+s_t=\langle e,K^te\rangle,\qquad t=1,2,3.
+$$
+
+**定理 FM3。** 三个读数为
+
+$$
+s_1=u,\quad s_2=u^2+v^2,\quad
+s_3=u^3+2uv^2+v^2w.
+$$
+
+令
+
+$$
+g=s_2-s_1^2,\qquad z=s_3-2s_1s_2+s_1^3.
+$$
+
+则 $g=v^2,z=gw$，且全部反馈核为
+
+$$
+\boxed{M_j=v^2w^jP
+=\begin{cases}0,&g=0,\\g(z/g)^jP,&g>0.\end{cases}}
+$$
+
+**证明。** 计算真实块的二次、三次幂得到三个读数。在隐藏块中直接得到 $DC=wC$，归纳得 $D^jC=w^jC$；再乘回 $B$ 得 $BD^jC=v^2w^jI$。$g=0$ 时核恒为零，不执行除零；$g>0$ 时恢复 $w=z/g$。Kronecker 乘法同时证明 $K$、$P$ 与给定群作用交换。证毕。
+
+对应 `ThreeMomentMemoryRecovery.three_moments_recover_all_lags`。它使用时间 1、2、3 的同一固定矩阵元，不读隐藏矩阵元，也不将迹冒充响应。即使 $W$ 很大，这个具体重数二族仍只需要三个标量。
+
+若只允许前缀时刻 1、2、3，第三个读数在这个无额外谱信息的族中确实必要：取 $u=0,v=1/4$，分别令 $w=0$ 和 $w=1/2$。两矩阵均为实对称收缩，前两个读数都是 $(0,1/16)$，但 $M_1$ 分别为 0 和 $P/32$。这里不声称任何形式的两次特殊实验均不可能，也不声称给定额外特征值后仍需三个数；例如已知 $u+w$ 可以提供另一条信息。
+
+## FM.5 有限精度：目标核稳定而隐藏参数可以病态
+
+假设 $|u|,|w|\le1$、$|u^2+v^2|\le1$，三个真实读数各有不超过 $\epsilon\ge0$ 的误差。先将前两个测量值截断到 $[-1,1]$；由于真实值在该区间，这不增加误差。记截断后的前两值和第三值为 $\widehat s_1,\widehat s_2,\widehat s_3$，置
+
+$$
+\widehat g=\widehat s_2-\widehat s_1^2,\qquad
+\widehat z=\widehat s_3-2\widehat s_1\widehat s_2+\widehat s_1^3,
+$$
+
+$$
+\widehat m_j=
+\begin{cases}
+0,&\widehat g\le0,\\
+\widehat g\,[\operatorname{clip}_{[-1,1]}(\widehat z/\widehat g)]^j,&\widehat g>0.
+\end{cases}
+$$
+
+**定理 FM4。** 对全部 $j\ge0$，
+
+$$
+\boxed{|\widehat m_j-v^2w^j|\le(3+11j)\epsilon.}
+$$
+
+没有 $v^2\ge\gamma>0$ 的假设，界对退化耦合也成立。
+
+**证明。** 在单位区间上，$|x^k-y^k|\le k|x-y|$，由因式分解或归纳得到。于是
+
+$$
+|\widehat g-g|\le3\epsilon,
+\qquad |\widehat z-gw|\le8\epsilon.
+$$
+
+第二式由第三矩误差 $\epsilon$、乘积误差的两倍 $4\epsilon$、立方误差 $3\epsilon$ 组成。若 $\widehat g\le0$，则 $0\le g\le3\epsilon$，结论直接成立。若 $\widehat g>0$，令 $\widehat w=\operatorname{clip}_{[-1,1]}(\widehat z/\widehat g)$。截断不增加到真实 $w$ 的距离，故
+
+$$
+\widehat g|\widehat w-w|
+\le|\widehat z-\widehat g w|
+\le8\epsilon+3\epsilon|w|\le11\epsilon.
+$$
+
+注意控制的是加权差，不是把一个可能很小的 $\widehat g$ 放在最终分母。最后
+
+$$
+|\widehat g\widehat w^j-gw^j|
+\le\widehat g|\widehat w^j-w^j|+|\widehat g-g|\,|w|^j
+\le11j\epsilon+3\epsilon.
+$$
+
+证毕。对应 `ThreeMomentMemoryStability.three_moment_error_bound`。由于 $P$ 是非零正交投影，标量界同时是 $\|\widehat m_jP-M_j\|$ 的算子范数界。对全部 $j\le H$ 使用 $(3+11H)\epsilon$。本定理恢复目标核，不恢复耦合的符号，也不承诺对 $w$ 的统一稳定反演。它与 MF4 的隐藏坐标病态性相容，正是目标恢复与全状态恢复的区别。
+
+**进一步普通推论。** 若额外已知 $|w|\le\theta<1$，且 $0<\theta$，将最后的截断区间改成 $[-\theta,\theta]$，同一论证给出
+
+$$
+|\widehat m_j-gw^j|
+\le3\epsilon\theta^j+11\epsilon j\theta^{j-1}
+$$
+
+（$j=0$ 的第二项取零），从而全滞后绝对误差和不超过
+
+$$
+\epsilon\left(\frac3{1-\theta}+\frac{11}{(1-\theta)^2}\right).
+$$
+
+这项推论明确使用额外的严格收缩余量；当前新 Lean 的正式陈述是 FM4 的有限滞后界，没有把此推论冒称已编译结果。推广到多个隐藏模态时，目标权重是否同样消除小分母，是下一项具体研究问题。既有有限噪声 Markov 参数识别研究提供比较背景 [FM4]，不能将其中的具体假设或算法保证直接套用到本模型。
+
+## FM.6 外部猜想：准确区分 A211417 的不同条款
+
+取 Chebyshev 阶乘比
+
+$$
+A(n)=\frac{(30n)!\,n!}{(15n)!\,(10n)!\,(6n)!}.
+$$
+
+Peter Bala 于 2025-08-28 在 OEIS A211417 提出包括 $A(n)/(3n+1)$ 为整数在内的四条具体整性猜想。核对的 OEIS 版本为 #94（2026-08-26）；页面仍以 conjecture 列出本条，但另外记录 $(30n-1)\mid A(n)$ 已于 2026-06-30 获得证明。读取其链接的 AlphaProof 文件末尾类型，目标确为 $30n-1$，不是 $3n+1$。[FM1,FM2]
+
+本次检索没有找到本条 $3n+1$ 的既有证明；这是一项检索范围结论，不是对全世界文献的穷尽性或优先权保证。以下给出独立普通数学证明，并以未编译 Lean 源码提交其完整全称陈述，而非把 OEIS 标签当作已经确认的全球开放状态。
+
+该序列有真实群论背景：其超几何生成函数的单值化群为 $W(E_8)$，是例外根系的 Weyl 群。[FM1,FM3] 它不是 Monster。近期 A131853 的二进制 Gaussian 求值使用四阶根与模 5 约束，也不能因涉及群或特殊整数就变成 Monster 定理。当前联系应按实际对象分别标识：有限群表示与矩阵元、阶乘比的素数赋值，以及已有 Monster 二元 Möbius 恢复的条件命题。本证明只用素数赋值，不假设 $E_8$ 或 Monster 作用。
+
+## FM.7 定理：Bala 的 3n+1 整性条款
+
+**定理 FM5。** 对每个自然数 $n$，
+
+$$
+\boxed{(3n+1)(15n)!(10n)!(6n)!\mid(30n)!n!.}
+$$
+
+它同时保证通常有理阶乘比有整数值，并且可被 $3n+1$ 整除；不借助自然数除法截断定义。$n=0$ 为 $1\mid1$。下设 $n>0$。
+
+定义每个正整数模数的局部差
+
+$$
+f(n,q)=\left\lfloor\frac{30n}q\right\rfloor+\left\lfloor\frac nq\right\rfloor
+-\left\lfloor\frac{15n}q\right\rfloor-\left\lfloor\frac{10n}q\right\rfloor-\left\lfloor\frac{6n}q\right\rfloor.
+$$
+
+**第一步：所有局部差非负。** 令 $r=n\bmod q$、$k=\lfloor30r/q\rfloor\in\{0,\ldots,29\}$。由 $30+1=15+10+6$，整部抵消，并有
+
+$$
+f(n,q)=k-\lfloor k/2\rfloor-\lfloor k/3\rfloor-\lfloor k/5\rfloor\ge0.
+$$
+
+最后的不等式是 30 个余数类上的精确整数事实，Lean 在局部界 $k<30$ 下用常数整除的 Presburger 推理履行它；这一步不是有界验证全部 $n$。
+
+**第二步：除数提供局部单位贡献。** 若 $q\mid3n+1$，则 $3r+1=tq$，其中 $t=1$ 或 $2$。当 $q\ge10$ 时，四个商 $(\lfloor30r/q\rfloor,\lfloor15r/q\rfloor,\lfloor10r/q\rfloor,\lfloor6r/q\rfloor)$ 分别为
+
+$$
+t=1:(9,4,3,1),\qquad t=2:(19,9,6,3),
+$$
+
+故 $f(n,q)=1$。当 $q=7$ 时 $r=2$，商为 $(8,4,2,1)$，结论仍成立。没有宣称小模数 2、4、5、8 都具有这个性质。
+
+**第三步：素数 $p\ge7$。** Legendre 公式给出
+
+$$
+v_p(A(n))=\sum_{j\ge1} f(n,p^j).
+$$
+
+该和实际有限。对每个 $1\le j\le v_p(3n+1)$，模数 $p^j$ 为 7 或至少 10，第二步提供一个单位贡献；其他项由第一步非负。因此 $v_p(A(n))\ge v_p(3n+1)$。素数 3 不整除 $3n+1$。
+
+**第四步：素数 2。** 由 $v_p((pm)!)=v_p(m!)+m$ 反复化简，得到完整和恒等式
+
+$$
+v_2(A(n))=v_2\binom{8n}{3n}.
+$$
+
+若 $2\mid3n+1$，则 $n$ 为奇数，$5n$ 也为奇数。二项式恒等式
+
+$$
+(3n+1)\binom{8n}{3n+1}=5n\binom{8n}{3n}
+$$
+
+的两边取 $v_2$，因左侧另一个因子的赋值非负，得到所需不等式。若 2 不整除 $3n+1$，第一步即可。
+
+**第五步：素数 5。** 同样有
+
+$$
+v_5(A(n))=v_5\binom{5n}{3n}.
+$$
+
+当 $5\mid3n+1$，$5\nmid2n$，使用
+
+$$
+(3n+1)\binom{5n}{3n+1}=2n\binom{5n}{3n}
+$$
+
+得到 $v_5(A(n))\ge v_5(3n+1)$。否则由非负性处理。至此所有素数的赋值不等式成立，正整数的唯一分解推出 FM5。证毕。
+
+这里小素数不是无关紧要的边界：逐局部项强行索取一个单位贡献会失败，必须保留整个赋值和，再通过不同的二项式表达恢复所需信息。对应 Lean 主声明为 `D5.S3.Arith.FactorialRatio.BalaChebyshevThreeDivisibility.bala_three_integrality`。其证明只调用 Mathlib 的素数分解、Legendre、阶乘缩放和二项式恒等式；没有借用 $30n-1$ 结论，也没有留下数值前提。
+
+本结果只解决所列 $3n+1$ 条款的普通证明，不解决同页的 $5n+1$、乘积或一般移位族条款。新 Lean 仍待实际编译与内核验证；不把源码存在等同于机器真值，也不据此声明已经建立新的 Moonshine 定理。
+
+## FM.8 来源、范围与下一项承重问题
+
+当前两条研究线分别交付了一个外部精确猜想的普通证明，以及一个实际表示/动力学/观察族的有限数据恢复定理及稳定性。阶乘比的 $E_8$ 背景不充当记忆定理的前提；记忆核恢复也不用于冒领阶乘整性的证明。二者真正共同使用的方法是：固定原对象、明确哪些观察足够、识别局部投影掩盖的条件，再通过可核验恒等式或估计完成结论。
+
+进一步的问题可以严格落在多隐藏模态的重数空间上：保持实际 $P,K,\rho$，从有限约化矩阵元恢复 $BD^jC$，在谱收缩或可辨识条件下减少 FM2 的指数误差放大，同时保留 FM4 在小耦合处的目标稳定性。不能先给隐藏坐标假设一个正奇异值下界，再把这个条件未经说明地删掉。对具体 Monster 的实例，仍须明确实际表示、动力学和观察的联合定义；对原始 Zeckendorf 进位，合法动作与实际概率律仍需要另一条载体桥。
+
+[FM1] OEIS Foundation / Peter Bala. A211417, version 94, 2026-08-26; conjecture dated 2025-08-28, separate settlement comment 2026-06-30. https://oeis.org/A211417 and https://github.com/oeis/oeisdata/blob/main/seq/A211/A211417.seq . Source blob inspected: `d0f348463c143fc227c5e0cbafaa2b49732312bb`. Exact formula and separate clause statuses were checked.
+
+[FM2] Google DeepMind. AlphaProof Nexus, `APNOutputs/OEIS/oeis_a211417_conjecture_specific.lean`, source blob `9c3046f90c554c4964436241e275071c7e28f518`. https://github.com/google-deepmind/alphaproof-nexus-results/blob/main/APNOutputs/OEIS/oeis_a211417_conjecture_specific.lean . The terminal type proves the $30n-1$ clause. No code from that file is imported; the present target and its exceptional-prime argument differ.
+
+[FM3] J. W. Bober. *Factorial ratios, hypergeometric series, and a family of step functions*. Journal of the London Mathematical Society 79(2) (2009), 422–444; arXiv:0709.1977. https://arxiv.org/abs/0709.1977 . Classical factorial-ratio, monodromy and step-function context, not a priority claim for the newer $3n+1$ clause.
+
+[FM4] J. Li, Y. Mo. *Markov Parameter Identification via Chebyshev Approximation*. IFAC-PapersOnLine 56(2) (2023), 1686–1691; arXiv:2304.03024; DOI:10.1016/j.ifacol.2023.10.1874. https://arxiv.org/abs/2304.03024 . Finite noisy response recovery is an existing research problem; this source is not asserted to prove the particular coupling-uniform constant in FM4.
