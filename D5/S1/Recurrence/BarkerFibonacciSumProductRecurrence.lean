@@ -223,4 +223,34 @@ private theorem mem_iff_family (x : ℕ) :
       · exact hk.trans hsum.symm
       · simpa only [show Nat.fib 4 = 3 by decide] using hk
 
+private theorem family_interleave (k : ℕ) (hk : 4 ≤ k) :
+    2 * Nat.fib k < Nat.fib (k + 2) ∧
+      Nat.fib (k + 2) < 3 * Nat.fib k ∧
+        3 * Nat.fib k < 2 * Nat.fib (k + 1) ∧
+          2 * Nat.fib (k + 1) < Nat.fib (k + 3) := by
+  have hprev : Nat.fib (k - 2) < Nat.fib (k - 1) := by
+    simpa only [show k - 2 + 1 = k - 1 by omega] using
+      (Nat.fib_lt_fib_succ (n := k - 2) (by omega))
+  have hcur : Nat.fib (k - 1) < Nat.fib k := by
+    simpa only [show k - 1 + 1 = k by omega] using
+      (Nat.fib_lt_fib_succ (n := k - 1) (by omega))
+  have hnext : Nat.fib k < Nat.fib (k + 1) :=
+    Nat.fib_lt_fib_succ (by omega)
+  have hnext2 : Nat.fib (k + 1) < Nat.fib (k + 2) :=
+    Nat.fib_lt_fib_succ (by omega)
+  have hf0 : Nat.fib k = Nat.fib (k - 2) + Nat.fib (k - 1) := by
+    simpa only [show k - 2 + 2 = k by omega,
+      show k - 2 + 1 = k - 1 by omega] using
+        (Nat.fib_add_two (n := k - 2))
+  have hf1 : Nat.fib (k + 1) = Nat.fib (k - 1) + Nat.fib k := by
+    simpa only [show k - 1 + 2 = k + 1 by omega,
+      show k - 1 + 1 = k by omega] using
+        (Nat.fib_add_two (n := k - 1))
+  have hf2 : Nat.fib (k + 2) = Nat.fib k + Nat.fib (k + 1) :=
+    Nat.fib_add_two
+  have hf3 : Nat.fib (k + 3) = Nat.fib (k + 1) + Nat.fib (k + 2) := by
+    simpa only [show k + 1 + 2 = k + 3 by omega] using
+      (Nat.fib_add_two (n := k + 1))
+  omega
+
 end D5.S1.Recurrence.BarkerFibonacciSumProductRecurrence
