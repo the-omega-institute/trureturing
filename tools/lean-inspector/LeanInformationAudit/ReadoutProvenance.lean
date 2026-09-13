@@ -913,30 +913,35 @@ private partial def inputType (env : Environment) (type : Expr)
             noteFamilyAssumption depth
             return (mentions, unclassified)
           -- Different parameters are a fresh obligation, as in nested products.
+      let callerContext ← getLCtx
       let some branches ← caseFields reduced | return (mentions, true)
       unless ← chargeTraversal (active.size + 1) do return (mentions, true)
       let nextActive := active.push reduced
       for (lctx, instances, subst, fields) in branches do
+        unless ← chargeTraversal do return (mentions, true)
+        if fields.isEmpty then continue
         let mut replacements : Std.HashMap FVarId Expr := {}
         for (id, value) in subst.map do
-          unless ← chargeTraversal 3 do return (mentions, true)
-          if !replacements.contains id then replacements := replacements.insert id value
-        let mut branchActive := #[]
-        for family in nextActive do
-          unless ← chargeTraversal (branchActive.size + 1) do return (mentions, true)
-          -- FVarSubst.apply is identity for either condition (pinned Lean).
-          if subst.isEmpty || !family.hasFVar then
-            branchActive := branchActive.push family
-          else
-            let some size ← expressionWeight family true | return (mentions, true)
-            unless ← chargeTraversal (2 * size) do return (mentions, true)
-            -- Closed subtrees contain no substitution target. Stop there;
-            -- like FVarSubst.apply, never recurse into a replacement value.
-            let some family ← boundedMeta (pure (family.replace fun part =>
-              if !part.hasFVar then some part else match part with
-              | .fvar id => replacements[id]?
-              | _ => none)) | return (mentions, true)
-            branchActive := branchActive.push family
+          unless ← chargeTraversal 4 do return (mentions, true)
+          -- Active expressions predate fresh case IDs; retain caller keys.
+          if callerContext.contains id && !replacements.contains id then
+            replacements := replacements.insert id value
+        let mut branchActive := nextActive
+        if !replacements.isEmpty then
+          branchActive := #[]
+          for family in nextActive do
+            unless ← chargeTraversal (branchActive.size + 1) do return (mentions, true)
+            if !family.hasFVar then
+              branchActive := branchActive.push family
+            else
+              let some size ← expressionWeight family true | return (mentions, true)
+              unless ← chargeTraversal (2 * size) do return (mentions, true)
+              -- Stop at closed subtrees and never revisit replacement values.
+              let some family ← boundedMeta (pure (family.replace fun part =>
+                if !part.hasFVar then some part else match part with
+                | .fvar id => replacements[id]?
+                | _ => none)) | return (mentions, true)
+              branchActive := branchActive.push family
         for field in fields do
           unless ← chargeTraversal do return (mentions, true)
           let (fm, fu) ← Meta.withLCtx lctx instances do
