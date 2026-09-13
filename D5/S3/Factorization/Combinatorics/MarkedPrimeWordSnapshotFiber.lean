@@ -31,7 +31,7 @@ def SnapshotFiber (n k : ℕ) (d : Fin (k + 1) → ℕ) :=
 quotients, and every mark is the total prime multiplicity of its observed prefix. -/
 theorem snapshot_fiber_equiv_and_forced_marks
     (n k : ℕ) (d : Fin (k + 1) → ℕ)
-    (hn : 1 < n) (hk : 1 ≤ k) (hfirst : d 0 = 1) (hlast : d (Fin.last k) = n)
+    (_hn : 1 < n) (_hk : 1 ≤ k) (hfirst : d 0 = 1) (hlast : d (Fin.last k) = n)
     (hchain : ∀ i : Fin k, d i.castSucc ∣ d i.succ ∧ d i.castSucc < d i.succ) :
     (Nonempty (SnapshotFiber n k d ≃ (∀ i : Fin k, PrimeWord (d i.succ / d i.castSucc)))) ∧
       ∀ z : SnapshotFiber n k d, ∀ i : Fin (k + 1),
@@ -99,7 +99,7 @@ theorem snapshot_fiber_equiv_and_forced_marks
     intro v
     let L : List (List ℕ) := List.ofFn fun i : Fin k => (v i).val
     have hlen : L.length = k := List.length_ofFn
-    have hget (i : Fin k) : L[i.val]'(by simpa [hlen] using i.isLt) = (v i).val := by
+    have hget (i : Fin k) : L[i.val]'(by simp [hlen]) = (v i).val := by
       simp [L]
     have hprime : ∀ p ∈ L.flatten, Nat.Prime p := by
       intro p hp
@@ -111,8 +111,7 @@ theorem snapshot_fiber_equiv_and_forced_marks
     have hmlast : m (Fin.last k) = L.flatten.length := by
       simp [m, ← hlen, ← List.map_take, List.length_flatten]
     have hstep (i : Fin k) : m i.succ = m i.castSucc + (v i).val.length := by
-      simpa [m, L] using List.sum_take_succ (L.map List.length) i.val
-        (by simpa [hlen] using i.isLt)
+      simp [m, L]
     have hnonempty (i : Fin k) : 0 < (v i).val.length := by
       apply List.length_pos_of_prod_ne_one
       rw [(v i).property.2]
@@ -132,7 +131,7 @@ theorem snapshot_fiber_equiv_and_forced_marks
       | zero => simpa using hfirst.symm
       | succ i ih =>
         change (L.take i.val).flatten.prod = d i.castSucc at ih
-        have ht := List.take_concat_get' L i.val (by simpa [hlen] using i.isLt)
+        have ht := List.take_concat_get' L i.val (by simp [hlen])
         change (L.take (i.val + 1)).flatten.prod = d i.succ
         rw [← ht, List.flatten_append, List.prod_append]
         simp only [List.flatten_cons, List.flatten_nil, List.append_nil,
@@ -150,7 +149,7 @@ theorem snapshot_fiber_equiv_and_forced_marks
     apply Subtype.ext
     change (L.flatten.take ((L.map List.length).take (i.val + 1)).sum).drop
       ((L.map List.length).take i.val).sum = (v i).val
-    rw [List.drop_take_succ_flatten_eq_getElem L i.val (by simpa [hlen] using i.isLt)]
+    rw [List.drop_take_succ_flatten_eq_getElem L i.val (by simp [hlen])]
     exact hget i
   exact ⟨⟨Equiv.ofBijective split ⟨hinj, hsurj⟩⟩, hmarks⟩
 
