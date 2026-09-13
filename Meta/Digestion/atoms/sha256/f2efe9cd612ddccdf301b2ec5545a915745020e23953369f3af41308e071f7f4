@@ -1,0 +1,20 @@
+**定理 488.2（原正系数的同阶上下界）。** 有 $1/2\le I\le H<\infty$，且对每个实数 $y\ge2$，
+$$
+e_y I_y\le c_{\mathcal P(y)}
+\le e_y I_y+\frac K{\log y}
+\le e_y I+\frac K{\log y}
+\le\frac C{\log y}.
+\tag{488.2a}
+$$
+令 $\gamma$ 为 Euler 常数，固定
+$$
+a=\frac{e^{-\gamma}}{4z}>0.
+$$
+存在同一个实数 $Y\ge2$，使全部实数 $y\ge Y$ 满足
+$$
+\frac a{\log y}\le\alpha_{\mathcal P(y)}
+\le c_{\mathcal P(y)}\le\frac C{\log y}.
+\tag{488.2b}
+$$
+因此两个原系数都是 $\Theta(1/\log y)$；这里没有断言 $c_{\mathcal P(y)}\log y$ 或 $\alpha_{\mathcal P(y)}\log y$ 有极限。
+
