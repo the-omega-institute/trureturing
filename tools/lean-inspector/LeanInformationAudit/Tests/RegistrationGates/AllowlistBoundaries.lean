@@ -9,10 +9,15 @@ namespace AllowlistBoundaries
 
 theorem target : (137 : Nat) = 137 := rfl
 theorem harmless : (2 : Nat) ∣ 4 := by norm_num
+def aliasedStatement : Prop := (137 : Nat) = 137
+theorem aliasTarget : aliasedStatement := rfl
+def aliasedNumber : Nat := 137
+theorem aliasedProof : aliasedNumber = aliasedNumber := rfl
 theorem alternative : (2 : Nat) ∣ 4 := ⟨2, rfl⟩
 def keep {p : Prop} (_ : p) (x : Bool) : Bool := x
 def plain (_ : Unit) (state : Bool) : Bool := state
 def proofArgument (_ : Unit) (state : Bool) : Bool := keep harmless state
+def aliasedArgument (_ : Unit) (state : Bool) : Bool := keep aliasedProof state
 def alternativeArgument (_ : Unit) (state : Bool) : Bool := keep alternative state
 structure CertifiedBit where
   bit : Bool
@@ -75,6 +80,7 @@ run_cmd Elab.Command.liftCoreM do
       ("ProofArgumentBoundary", ``proofArgument, "clean"),
       ("AlternativeProofBoundary", ``alternativeArgument, "clean"),
       ("ProofFieldBoundary", ``proofField, "clean"),
+      ("NumericAliasProofBoundary", ``aliasedArgument, "reject"),
       ("TargetProofBoundary", ``forbiddenArgument, "forbidden_dependency"),
       ("CompanionProofBoundary", ``forbiddenCompanion, "forbidden_dependency"),
       ("HiddenStatementBoundary", ``hiddenPayload, "reject"),
@@ -98,13 +104,52 @@ run_cmd Elab.Command.liftCoreM do
     logInfo m!"[PASS] NativeExhaustionRouting: {actual}"
   else logError m!"[FAIL] NativeExhaustionRouting: {actual}; closure={closure}"
 
--- This guard is intentionally scoped to the production classifier. Bounded
--- native inference may implement reduction internally; admission must never
--- invoke semantic comparison or normalization as a separate decision procedure.
+run_cmd Elab.Command.liftCoreM do
+  let env ← getEnv
+  let aliasResult ← readoutClosure env ``aliasTarget (mkConst ``forbiddenArgument)
+  if aliasResult.1 then logInfo "[PASS] RegisteredStatementAlias"
+  else logError m!"[FAIL] RegisteredStatementAlias: {aliasResult}"
+  let (_, first) ← readoutClosure env ``target (mkConst ``proofArgument)
+  let (_, second) ← readoutClosure env ``target (mkConst ``alternativeArgument)
+  let eraseRoot := fun names => names.filter fun n =>
+    n != toString ``proofArgument && n != toString ``alternativeArgument
+  if first.map eraseRoot == second.map eraseRoot && first.isSome then
+    logInfo "[PASS] ProofImplementationInvariance"
+  else logError m!"[FAIL] ProofImplementationInvariance: {first}; {second}"
+
+run_cmd Elab.Command.liftCoreM do
+  let mut body := mkConst ``Bool.true
+  for _ in [:256] do
+    body := .letE `retained (mkConst ``Bool) (mkConst ``Bool.false) body true
+  let value := mkLambda `index .default (mkConst ``Unit)
+    (mkLambda `state .default (mkConst ``Bool) body)
+  let start := (← getTraces).size
+  let actual ← withOptions (fun o => (o.set `provenanceDefEqLimit (1 : Nat)).set
+      `trace.InformationProvenance.check true) <| readoutClosure (← getEnv) ``target value
+  let mut site := false
+  for entry in (← getTraces).toArray[start:] do
+    let message ← entry.msg.toString
+    if message.contains "cause=heartbeat_exhaustion" && message.contains "operation=infer_type" &&
+        message.contains "first=readout site=readout" then site := true
+  if actual == (false, none) && site then logInfo "[PASS] ActualHeartbeatOperationSite"
+  else logError m!"[FAIL] ActualHeartbeatOperationSite: {actual}; site={site}"
+
+-- Inspect elaborated references in the classifier module. String literals,
+-- comments, counters and unrelated modules are outside this admission API guard.
+-- Native inference internals are not traversed: the owner permits bounded inference.
 run_cmd do
-  let source ← IO.FS.readFile "tools/lean-inspector/LeanInformationAudit/ReadoutProvenance.lean"
-  for operation in ["Meta.isDefEq", "Meta.whnf", "Meta.unfoldDefinition?", ".mvarId!.cases"] do
-    if source.contains operation then logError m!"[FAIL] NoSemanticNormalization: {operation}"
-  if !["Meta.isDefEq", "Meta.whnf", "Meta.unfoldDefinition?", ".mvarId!.cases"].any (fun operation => source.contains operation) then
-    logInfo "[PASS] NoSemanticNormalization"
+  let env := (← getEnv).setExporting false
+  let some index := env.getModuleIdx? `LeanInformationAudit.ReadoutProvenance
+    | throwError "[FAIL] NoSemanticNormalization: missing classifier module"
+  let forbidden := #[`Lean.Meta.isDefEq, `Lean.Meta.whnf,
+    `Lean.Meta.unfoldDefinition?, `Lean.MVarId.cases]
+  let mut found := false
+  for name in env.header.moduleData[index]!.constNames do
+    let some info := env.find? name | continue
+    let some value := info.value? (allowOpaque := true) | continue
+    for dependency in value.getUsedConstants do
+      if forbidden.contains dependency then
+        found := true
+        logError m!"[FAIL] NoSemanticNormalization: {name} references {dependency}"
+  unless found do logInfo "[PASS] NoSemanticNormalization"
 end AllowlistBoundaries

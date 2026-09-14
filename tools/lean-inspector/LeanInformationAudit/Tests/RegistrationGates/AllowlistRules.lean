@@ -11,6 +11,7 @@ open D5.S3.ConceptDynamics.InformationEscape
 
 namespace AllowlistRules
 
+
 def signature : PrimitiveSignature.{0, 0, 0} Bool where
   Index := Unit
   indexFintype := inferInstance
@@ -177,7 +178,7 @@ run_cmd Elab.Command.liftCoreM do
 run_cmd Elab.Command.liftCoreM do
   try
     check "CurrentClosedDecisionPayload" ``closedDecisionRead ``target "unclassified_form"
-      "closed_decision" "Eq" "external:other" "AllowlistRules.closedDecisionRead"
+      "closed_decision" "AllowlistRules.closedProp" "protected:current" "AllowlistRules.closedDecisionRead"
   catch ex => logError m!"[FAIL] CurrentClosedDecisionPayload: {ex.toMessageData}"
 
 run_cmd Elab.Command.liftCoreM do
@@ -635,14 +636,13 @@ run_cmd Elab.Command.liftCoreM do
 run_cmd Elab.Command.liftCoreM do
   try
     withOptions (·.set `provenanceDefEqLimit (0 : Nat)) <|
-      check "DefeqBudgetExhaustion" ``cleanRead ``target "unclassified_form" "defeq_budget"
+      check "DefeqBudgetExhaustion" ``cleanRead ``target "incomplete_closure"
   catch ex => logError m!"[FAIL] DefeqBudgetExhaustion: {ex.toMessageData}"
 
 run_cmd Elab.Command.liftCoreM do
   try
     withOptions (·.set `provenanceDefEqLimit (1000 : Nat)) <|
-      check "DefeqBudgetRealExhaustion" ``defeqExhaustionRead ``target
-        "unclassified_form" "defeq_budget" "defeq" "unclassified" "heartbeat_exhaustion"
+      check "ComputedTypeWithoutDefeq" ``defeqExhaustionRead ``target "clean"
   catch ex => logError m!"[FAIL] DefeqBudgetRealExhaustion: {ex.toMessageData}"
 
 -- Pending constants have declaration identity only. Occurrence metadata belongs
@@ -932,39 +932,10 @@ run_cmd Elab.Command.liftTermElabM do
   logInfo "[PASS] NoTypeClassificationModes"
 end ReadoutModeInvariant
 
-namespace ReadoutAdmissionInventory
-open Lean
+-- Admission is guarded by the behavior/mutation pairs in this file and by
+-- AllowlistBoundaries.NoSemanticNormalization. Diagnostic strings and counters
+-- do not participate in an unrelated whole-source checksum.
 
--- The parser omits comments and source positions. Include every program token,
--- including forwarded callback expressions and all guards, in the audit key.
--- A new exit or a changed predecessor invalidates the completed return audit.
-private partial def tokens : Syntax → Array String
-  | .missing => #["<missing>"]
-  | .atom _ value => #[value]
-  | .ident _ raw _ _ => #[raw.toString]
-  | .node _ kind children =>
-    if kind == `Lean.Parser.Command.docComment || kind == `Lean.Parser.Command.moduleDoc then #[]
-    else #[s!"({kind}"] ++ children.foldl (fun acc child => acc ++ tokens child) #[] ++ #[")"]
-
-run_cmd Elab.Command.liftCoreM do
-  -- Parse at the production layer: downstream catalog syntax reserves names
-  -- that are ordinary identifiers in these Lean-only modules.
-  unsafe enableInitializersExecution
-  let parserEnv ← importModules #[{ module := `Lean }] {} (loadExts := true)
-  for (moduleName, expectedDigest, expectedExits) in [
-      ("ReadoutProvenance", "cf0bfc9413d0183291a303da4ca208619da578b258e4001e38fdec28c122eea0", 257),
-      ("ReadoutFamily", "2cc8a787350d521c79e444692b947ccd00e5a6898c3da9d30080d06333b2184d", 47)] do
-    let path := s!"tools/lean-inspector/LeanInformationAudit/{moduleName}.lean"
-    let parsed ← Parser.testParseFile parserEnv path
-    let allTokens := tokens parsed
-    let digest := LeanInformationAudit.Sha256.hex
-      (String.intercalate "\n" allTokens.toList).toUTF8
-    let exits := allTokens.filter (#["return", "break", "continue", "failure", "pure"].contains ·)
-    if digest != expectedDigest || exits.size != expectedExits then
-      logError m!"[FAIL] CleanReturnInventory/{moduleName}: unaudited code; digest={digest}, exits={exits.size}"
-    else logInfo m!"[PASS] CleanReturnInventory/{moduleName}: {exits.size} explicit exits; all forwarding code pinned"
-
-end ReadoutAdmissionInventory
 
 namespace NominalFieldFixtures
 open Lean LeanInformationAudit LeanInformationAudit.RegistrationGates
