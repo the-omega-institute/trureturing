@@ -1,26 +1,27 @@
-using System.Security.Cryptography;
-using System.Text;
+using System.Text.Json.Nodes;
 
 namespace StrataLint.Tests;
 
 public sealed class LeanCacheChunkScriptTests
 {
     [Theory]
-    [InlineData("default")]
-    [InlineData("8")]
-    [InlineData("9")]
-    public void SmallArchivePublishesAndFetchesAsOneAsset(string chunkBytes)
+    [InlineData(-1)]
+    [InlineData(0)]
+    [InlineData(1)]
+    public void SmallArchivePublishesAndFetchesAsOneAsset(int thresholdOffset)
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new LeanCacheChunkFixture("01234567");
 
-        fixture.AssertSuccess(fixture.Publish(chunkBytes));
+        fixture.AssertSuccess(fixture.Publish(thresholdOffset < 0 ? null : fixture.ArchiveBytes.Length + thresholdOffset));
 
-        Assert.Equal(new[] { "lean-build.tgz", "manifest.txt" }, fixture.Assets(fixture.Tag));
-        Assert.Contains("parts=1\n", fixture.Manifest(fixture.Tag), StringComparison.Ordinal);
+        Assert.Equal(new[] { "lean-build.tgz", "manifest.json" }, fixture.Assets(fixture.Tag));
+        Assert.Single(fixture.Manifest(fixture.Tag)["parts"]!.AsArray());
+        Assert.Equal(fixture.ArchiveBytes, fixture.ReadAsset(fixture.Tag, "lean-build.tgz"));
         fixture.AssertSuccess(fixture.Fetch());
         Assert.Equal("01234567", fixture.Unpacked);
-        Assert.Equal(new[] { "manifest.txt", "lean-build.tgz" }, fixture.DownloadPatterns);
+        Assert.Equal("report-seed", fixture.UnpackedReport);
+        Assert.Equal(new[] { "manifest.json", "lean-build.tgz" }, fixture.DownloadPatterns);
     }
 
     [Theory]
@@ -29,81 +30,93 @@ public sealed class LeanCacheChunkScriptTests
     public void PublishingIgnoresChunkSizeEnvironment(string chunkEnvironment)
     {
         if (OperatingSystem.IsWindows()) return;
-        using var fixture = new LeanCacheChunkFixture(new string('a', 102));
+        using var fixture = new LeanCacheChunkFixture();
 
-        fixture.AssertSuccess(fixture.Publish("default", chunkEnvironment));
+        fixture.AssertSuccess(fixture.Publish(chunkEnvironment: chunkEnvironment));
 
-        Assert.Equal(new[] { "lean-build.tgz", "manifest.txt" }, fixture.Assets(fixture.Tag));
-        Assert.Contains("parts=1\n", fixture.Manifest(fixture.Tag), StringComparison.Ordinal);
+        Assert.Equal(new[] { "lean-build.tgz", "manifest.json" }, fixture.Assets(fixture.Tag));
+        Assert.Single(fixture.Manifest(fixture.Tag)["parts"]!.AsArray());
     }
 
     [Fact]
     public void ArchiveExceedingSuffixCapacityFailsBeforePublishing()
     {
         if (OperatingSystem.IsWindows()) return;
-        using var fixture = new LeanCacheChunkFixture(new string('a', 101));
+        using var fixture = new LeanCacheChunkFixture();
 
-        var result = fixture.Publish("1");
+        var result = fixture.Publish(1);
 
-        Assert.NotEqual(0, result.ExitCode);
+        Assert.Equal(0, result.ExitCode);
+        Assert.Contains("\"status\":\"failed\"", result.Text, StringComparison.Ordinal);
+        Assert.Contains("100 parts", result.Text, StringComparison.Ordinal);
         Assert.False(fixture.HasRelease);
+        Assert.Empty(fixture.GhCalls);
     }
 
     [Fact]
     public void ThreePartPublishFetchRoundTripPreservesBytesAndDigests()
     {
         if (OperatingSystem.IsWindows()) return;
-        using var fixture = new LeanCacheChunkFixture("0123456789abcdefgh");
+        using var fixture = new LeanCacheChunkFixture();
+        var chunkBytes = (fixture.ArchiveBytes.Length + 2) / 3;
 
-        fixture.AssertSuccess(fixture.Publish("8"));
+        fixture.AssertSuccess(fixture.Publish(chunkBytes));
 
-        Assert.Equal(new[] { "lean-build.tgz.part-00", "lean-build.tgz.part-01", "lean-build.tgz.part-02", "manifest.txt" }, fixture.Assets(fixture.Tag));
+        var names = new[] { "lean-build.tgz.part-00", "lean-build.tgz.part-01", "lean-build.tgz.part-02" };
+        Assert.Equal([.. names, "manifest.json"], fixture.Assets(fixture.Tag));
         var manifest = fixture.Manifest(fixture.Tag);
-        Assert.Contains("parts=3\n", manifest, StringComparison.Ordinal);
-        foreach (var (index, bytes) in new[] { (0, "01234567"), (1, "89abcdef"), (2, "gh") })
+        Assert.Equal("lean-release-seed-v3", manifest["schema"]!.GetValue<string>());
+        Assert.Equal(3, manifest["parts"]!.AsArray().Count);
+        for (var i = 0; i < names.Length; i++)
         {
-            Assert.Equal(bytes, fixture.ReadAsset(fixture.Tag, $"lean-build.tgz.part-{index:D2}"));
-            Assert.Contains($"part_sha256_{index}={Digest(bytes)}\n", manifest, StringComparison.Ordinal);
+            var bytes = fixture.ArchiveBytes.Skip(i * chunkBytes).Take(chunkBytes).ToArray();
+            var part = manifest["parts"]![i]!;
+            Assert.Equal(names[i], part["name"]!.GetValue<string>());
+            Assert.Equal(bytes, fixture.ReadAsset(fixture.Tag, names[i]));
+            Assert.Equal(LeanCacheChunkFixture.Digest(bytes), part["sha256"]!.GetValue<string>());
+            Assert.Equal(bytes.Length, part["bytes"]!.GetValue<int>());
         }
-        Assert.Contains($"archive_sha256={Digest("0123456789abcdefgh")}\n", manifest, StringComparison.Ordinal);
+        Assert.Equal(LeanCacheChunkFixture.Digest(fixture.ArchiveBytes), manifest["archive_sha256"]!.GetValue<string>());
+        Assert.Equal(fixture.ArchiveBytes.Length, manifest["archive_bytes"]!.GetValue<int>());
+        var create = Assert.Single(fixture.GhCalls, args => args[1] == "create");
+        Assert.Equal(LeanCacheChunkFixture.ProducerSha, create[Array.IndexOf(create, "--target") + 1]);
+        Assert.Equal(LeanCacheChunkFixture.ProducerSha, manifest["producer_commit_sha"]!.GetValue<string>());
+        Assert.Equal("4242", manifest["workflow_run_id"]!.GetValue<string>());
+        Assert.Equal("1", manifest["workflow_run_attempt"]!.GetValue<string>());
+
         fixture.AssertSuccess(fixture.Fetch());
-        Assert.Equal("0123456789abcdefgh", fixture.Unpacked);
-        Assert.Equal(new[] { "manifest.txt", "lean-build.tgz.part-*" }, fixture.DownloadPatterns);
+
+        Assert.Equal(LeanCacheChunkFixture.Archive, fixture.Unpacked);
+        Assert.Equal("report-seed", fixture.UnpackedReport);
+        Assert.Equal(["manifest.json", .. names], fixture.DownloadPatterns);
     }
 
     [Fact]
     public void PartNamesRemainInByteOrderBeyondNineParts()
     {
         if (OperatingSystem.IsWindows()) return;
-        using var fixture = new LeanCacheChunkFixture("0123456789a");
-
-        fixture.AssertSuccess(fixture.Publish("1"));
-        Assert.Contains("parts=11\n", fixture.Manifest(fixture.Tag), StringComparison.Ordinal);
-        Assert.Equal("a", fixture.ReadAsset(fixture.Tag, "lean-build.tgz.part-10"));
-        fixture.AssertSuccess(fixture.Fetch());
-        Assert.Equal("0123456789a", fixture.Unpacked);
-    }
-
-    [Fact]
-    public void FetchReadsOldSingleAssetReleaseWithoutPartsField()
-    {
-        if (OperatingSystem.IsWindows()) return;
         using var fixture = new LeanCacheChunkFixture();
-        fixture.AddRelease(fixture.Tag, chunked: false, oldManifest: true);
+        var chunkBytes = (fixture.ArchiveBytes.Length + 10) / 11;
 
+        fixture.AssertSuccess(fixture.Publish(chunkBytes));
+
+        Assert.Equal(11, fixture.Manifest(fixture.Tag)["parts"]!.AsArray().Count);
+        Assert.Equal(fixture.ArchiveBytes.Skip(10 * chunkBytes), fixture.ReadAsset(fixture.Tag, "lean-build.tgz.part-10"));
         fixture.AssertSuccess(fixture.Fetch());
-
         Assert.Equal(LeanCacheChunkFixture.Archive, fixture.Unpacked);
-        Assert.Equal(new[] { "manifest.txt", "lean-build.tgz" }, fixture.DownloadPatterns);
     }
 
     [Theory]
-    [InlineData("missing-part", "missing part")]
-    [InlineData("bad-part", "part checksum mismatch")]
-    [InlineData("missing-part-digest", "part checksum mismatch")]
-    [InlineData("bad-whole", "digest mismatch")]
-    [InlineData("invalid-parts", "invalid parts count")]
-    [InlineData("empty-parts", "invalid parts count")]
+    [InlineData("missing-part", "asset set")]
+    [InlineData("bad-part", "part checksum or size mismatch")]
+    [InlineData("missing-part-digest", "invalid archive parts")]
+    [InlineData("bad-whole", "archive checksum or size mismatch")]
+    [InlineData("bad-part-size", "archive byte count")]
+    [InlineData("bad-whole-size", "archive byte count")]
+    [InlineData("invalid-parts", "invalid archive parts")]
+    [InlineData("empty-parts", "invalid archive parts")]
+    [InlineData("missing-parts", "invalid archive parts")]
+    [InlineData("old-schema", "snapshot partition or source attribution mismatch")]
     public void CorruptChunkedCandidateFailsClosed(string deviation, string reason)
     {
         if (OperatingSystem.IsWindows()) return;
@@ -112,16 +125,21 @@ public sealed class LeanCacheChunkScriptTests
 
         var result = fixture.Fetch();
 
-        Assert.Equal(1, result.ExitCode);
-        Assert.Contains("\"status\":\"miss\"", result.Text, StringComparison.Ordinal);
-        Assert.Contains(reason, result.Text.Split('\n').Last(line => line.StartsWith("LEAN_CACHE_FETCH ", StringComparison.Ordinal)), StringComparison.Ordinal);
+        AssertMiss(result, reason);
         Assert.Null(fixture.Unpacked);
+        Assert.Null(fixture.UnpackedReport);
     }
 
     [Theory]
-    [InlineData("bad-github-part-digest", "do not match the digest GitHub recorded")]
-    [InlineData("extra-asset", "assets, expected exactly 4")]
-    public void ChunkedReleaseRetainsGithubDigestAndInventoryChecks(string deviation, string reason)
+    [InlineData("bad-github-part-digest", "transferred asset digest mismatch")]
+    [InlineData("bad-github-manifest-digest", "transferred asset digest mismatch")]
+    [InlineData("extra-asset", "asset set")]
+    [InlineData("no-producer", "snapshot partition or source attribution mismatch")]
+    [InlineData("no-run-id", "snapshot partition or source attribution mismatch")]
+    [InlineData("no-attempt", "snapshot partition or source attribution mismatch")]
+    [InlineData("wrong-target", "snapshot partition or source attribution mismatch")]
+    [InlineData("wrong-partition", "snapshot partition or source attribution mismatch")]
+    public void ChunkedReleaseRetainsDigestInventoryAndAttributionChecks(string deviation, string reason)
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new LeanCacheChunkFixture();
@@ -129,72 +147,139 @@ public sealed class LeanCacheChunkScriptTests
 
         var result = fixture.Fetch();
 
-        Assert.Equal(1, result.ExitCode);
-        Assert.Contains(reason, result.Text.Split('\n').Last(line => line.StartsWith("LEAN_CACHE_FETCH ", StringComparison.Ordinal)), StringComparison.Ordinal);
+        AssertMiss(result, reason);
         Assert.Null(fixture.Unpacked);
+        Assert.Null(fixture.UnpackedReport);
     }
 
     [Theory]
-    [InlineData("exact", "missing-part")]
-    [InlineData("exact", "bad-part")]
-    [InlineData("exact", "bad-whole")]
-    [InlineData("prefix", "missing-part")]
-    [InlineData("prefix", "bad-part")]
-    [InlineData("prefix", "bad-whole")]
-    [InlineData("seed", "missing-part")]
-    [InlineData("seed", "bad-part")]
-    [InlineData("seed", "bad-whole")]
-    public void FetchContinuesToNextCandidateAfterCorruption(string mode, string deviation)
+    [InlineData("missing-part", false)]
+    [InlineData("bad-part", false)]
+    [InlineData("bad-whole", false)]
+    [InlineData("missing-part", true)]
+    [InlineData("bad-part", true)]
+    [InlineData("bad-whole", true)]
+    [InlineData("download-failure", true)]
+    [InlineData("draft", true)]
+    public void FetchContinuesToNextSamePartitionCandidate(string deviation, bool multipartFallback)
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new LeanCacheChunkFixture();
-        var config = mode == "seed" ? '5' : '4';
-        var corrupt = mode == "exact" ? fixture.Tag : fixture.CandidateTag(config, 'a');
-        var valid = fixture.CandidateTag(config, 'b');
-        fixture.AddRelease(corrupt, deviation: deviation);
-        fixture.AddRelease(valid, chunked: false);
-        fixture.ListReleases(corrupt, valid);
+        var valid = fixture.CandidateTag(4241);
+        fixture.AddRelease(fixture.Tag, deviation: deviation);
+        fixture.AddRelease(valid, chunked: multipartFallback);
+        fixture.ListReleases(fixture.Tag, valid);
 
-        var result = fixture.Fetch(allowSeed: mode == "seed");
+        var result = fixture.Fetch();
 
         fixture.AssertSuccess(result);
-        Assert.Contains("\"status\":\"miss\"", result.Text, StringComparison.Ordinal);
+        if (deviation != "draft") Assert.Contains("\"status\":\"miss\"", result.Text, StringComparison.Ordinal);
         Assert.Contains($"\"resolved\":\"{valid}\"", result.Text, StringComparison.Ordinal);
-        Assert.Contains($"\"mode\":\"{(mode == "exact" ? "prefix" : mode)}\"", result.Text, StringComparison.Ordinal);
+        Assert.Contains("\"mode\":\"partition\"", result.Text, StringComparison.Ordinal);
+        Assert.Contains("\"workflow_run_id\":\"4241\"", result.Text, StringComparison.Ordinal);
+        Assert.Contains($"\"producer_commit_sha\":\"{LeanCacheChunkFixture.ProducerSha}\"", result.Text, StringComparison.Ordinal);
         Assert.Equal(LeanCacheChunkFixture.Archive, fixture.Unpacked);
+        Assert.Equal("report-seed", fixture.UnpackedReport);
+        Assert.DoesNotContain(fixture.Tag, fixture.DownloadTags.TakeLast(2));
     }
 
-    [Fact]
-    public void PrefixCandidatesTakePriorityOverNewerSeeds()
+    [Theory]
+    [InlineData("mathlib")]
+    [InlineData("os")]
+    [InlineData("arch")]
+    public void FetchSelectsOnlyTheSameResolvedPartition(string mismatch)
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new LeanCacheChunkFixture();
-        var seed = fixture.CandidateTag('5', 'a');
-        var prefix = fixture.CandidateTag('4', 'b');
-        fixture.AddRelease(seed);
-        fixture.AddRelease(prefix);
-        fixture.ListReleases(seed, prefix);
+        var partition = mismatch switch
+        {
+            "mathlib" => "f" + fixture.Partition[1..],
+            "os" => fixture.Partition[..41] + "otheros-" + fixture.Partition.Split('-')[^1],
+            _ => fixture.Partition[..fixture.Partition.LastIndexOf('-')] + "-otherarch",
+        };
+        var other = fixture.CandidateTag(4243, partition);
+        fixture.AddRelease(other, partition: partition);
 
-        var result = fixture.Fetch(allowSeed: true);
-
-        fixture.AssertSuccess(result);
-        Assert.Contains($"\"resolved\":\"{prefix}\"", result.Text, StringComparison.Ordinal);
-        Assert.DoesNotContain(seed, fixture.DownloadTags);
-    }
-
-    [Fact]
-    public void SeedRequiresExplicitOptIn()
-    {
-        if (OperatingSystem.IsWindows()) return;
-        using var fixture = new LeanCacheChunkFixture();
-        var seed = fixture.CandidateTag('5', 'a');
-        fixture.AddRelease(seed);
-        fixture.ListReleases(seed);
-
-        Assert.Equal(1, fixture.Fetch().ExitCode);
+        AssertMiss(fixture.Fetch(allowSeed: true), "no published snapshot in this partition");
         Assert.Null(fixture.Unpacked);
-        Assert.DoesNotContain(seed, fixture.DownloadTags);
+        Assert.Null(fixture.UnpackedReport);
+        Assert.DoesNotContain(other, fixture.DownloadTags);
+
+        fixture.AddRelease(fixture.Tag);
+        fixture.ListReleases(other, fixture.Tag);
+        fixture.AssertSuccess(fixture.Fetch());
+        Assert.Equal(LeanCacheChunkFixture.Archive, fixture.Unpacked);
+        Assert.DoesNotContain(other, fixture.DownloadTags);
     }
 
-    private static string Digest(string value) => Convert.ToHexStringLower(SHA256.HashData(Encoding.ASCII.GetBytes(value)));
+    [Theory]
+    [InlineData(null, "4242")]
+    [InlineData("nothex", "4242")]
+    [InlineData(LeanCacheChunkFixture.ProducerSha, "")]
+    public void PublishRefusesUnattributedSnapshotsAfterBuilding(string? commit, string runId)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new LeanCacheChunkFixture();
+
+        var result = fixture.Publish(commit: commit, runId: runId);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Contains("\"status\":\"failed\"", result.Text, StringComparison.Ordinal);
+        Assert.Contains("requires commit, run ID and attempt attribution", result.Text, StringComparison.Ordinal);
+        Assert.False(fixture.HasRelease);
+        Assert.Equal(new[] { "lean" }, fixture.BuildRuns);
+    }
+
+    [Fact]
+    public void FailedMultipartUploadCannotBeFetched()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new LeanCacheChunkFixture();
+
+        var result = fixture.Publish((fixture.ArchiveBytes.Length + 2) / 3, failure: "upload");
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Contains("\"status\":\"failed\"", result.Text, StringComparison.Ordinal);
+        Assert.True(fixture.Metadata(fixture.Tag)["draft"]!.GetValue<bool>());
+        Assert.Single(fixture.Assets(fixture.Tag));
+        AssertMiss(fixture.Fetch(), "no published snapshot in this partition");
+        Assert.Null(fixture.Unpacked);
+        Assert.Null(fixture.UnpackedReport);
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public async Task ConcurrentMultipartPublishersNeverClobberSnapshots(bool sameRun)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new LeanCacheChunkFixture();
+        fixture.SetChunkBytes((fixture.ArchiveBytes.Length + 2) / 3);
+        var otherRun = sameRun ? 4242 : 4243;
+
+        var results = await Task.WhenAll(Task.Run(() => fixture.Publish()),
+            Task.Run(() => fixture.Publish(run: otherRun)));
+
+        Assert.All(results, fixture.AssertSuccess);
+        Assert.Equal(sameRun ? 1 : 2, results.Count(result => result.Text.Contains("\"status\":\"published\"", StringComparison.Ordinal)));
+        Assert.Equal(sameRun ? 1 : 0, results.Count(result => result.Text.Contains("\"status\":\"failed\"", StringComparison.Ordinal)));
+        foreach (var tag in new[] { fixture.Tag, fixture.CandidateTag(otherRun) }.Distinct())
+        {
+            Assert.False(fixture.Metadata(tag)["draft"]!.GetValue<bool>());
+            Assert.Equal(4, fixture.Assets(tag).Length);
+            Assert.Equal(3, fixture.Manifest(tag)["parts"]!.AsArray().Count);
+        }
+        fixture.AssertSuccess(fixture.Fetch());
+        Assert.Equal(LeanCacheChunkFixture.Archive, fixture.Unpacked);
+        Assert.Equal("report-seed", fixture.UnpackedReport);
+    }
+
+    private static void AssertMiss(LeanCacheChunkFixture.Attempt result, string reason)
+    {
+        Assert.Equal(1, result.ExitCode);
+        var line = result.Text.Split('\n').Last(value => value.StartsWith("LEAN_CACHE_FETCH ", StringComparison.Ordinal));
+        var receipt = JsonNode.Parse(line["LEAN_CACHE_FETCH ".Length..])!;
+        Assert.Equal("miss", receipt["status"]!.GetValue<string>());
+        Assert.Contains(reason, receipt["reason"]!.GetValue<string>(), StringComparison.Ordinal);
+    }
 }

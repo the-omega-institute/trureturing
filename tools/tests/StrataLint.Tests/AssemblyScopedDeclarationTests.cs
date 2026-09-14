@@ -20,20 +20,5 @@ public sealed class AssemblyScopedDeclarationTests
         Assert.Equal(typeof(Xunit.SkippableTheoryAttribute), typeof(TheoryAttribute));
     }
 
-    // 这里曾有第二颗钉子,用 `Assembly.GetCustomAttributesData()` 断言
-    // `[assembly: TestFramework(...)]` 仍在本程序集。**已撤销,不是遗漏。**
-    //
-    // SL-003 判它 `conservative unknown test method introduced after protected baseline`
-    // (判词见 PR #5420 的 admission 判官日志)。根因在
-    // ScribeTestSymbolBinder:`IsReflectionDispatch(...) && CompileTimeInputUniverses.Count == 0`
-    // ⟹ `TestMapUnknownReason.Other`。**该分类是对的** —— 反射的输入域在编译期无界,
-    // 而「属性是否还在本程序集」这件事**只能靠反射观察**,故不存在既守得住又 known 的写法
-    // (`[CompileTimeInputUniverse]` 是给仓库**路径**域用的,套在程序集属性上是误用)。
-    //
-    // 真正的修法是结构性的、且已在本 PR 落地:该属性从 TestScratchRoot.cs 迁进
-    // AssemblyInfo.cs 之后,它不再住在任何会被迁走的助手文件里 —— 失效模式本身消失,
-    // 不是被检测捕获。为一颗补充性的钉子去欠 unknown 债不划算。
-    //
-    // 残留风险如实记 `open`:若有人把该属性再搬出 AssemblyInfo.cs,当前无机器发现;
-    // 症状是 TestScratchRoot 不再被收尾释放(临时目录泄漏),**静默**。
+    // AssemblyInfo.cs owns the test framework attribute. Its placement is not tested here.
 }
