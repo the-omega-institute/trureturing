@@ -45,14 +45,18 @@ internal sealed class StephanA005590ZeroSetCharacterizationDocument : IScribeDoc
                     + "proves the equivalence for every natural n. This establishes only "
                     + "the zero-set equivalence; no growth-rate formula or further partial "
                     + "recurrence is asserted.",
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a005590-zero-set-fibbinary-characterization"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(
         string name,
         string title,
         Formula formula,
         string prose,
-        DescribeRole role) => Describe.Lean(
+        DescribeRole role,
+        OpenProblemResolutionClaim? claim = null) => Describe.Lean(
         DescribeId.Create("a005590-" + name.Replace('_', '-').ToLowerInvariant()),
         DeclarationHandle.Create(Prefix + name),
         H(title),
@@ -61,7 +65,8 @@ internal sealed class StephanA005590ZeroSetCharacterizationDocument : IScribeDoc
             ? AssessedProvenance.FromLiterature(Source)
             : AssessedProvenance.FromRepo(),
         Blocks(Paragraph(Text(prose))),
-        role);
+        role,
+        claim);
 
     private static Formula SequenceFormula()
     {

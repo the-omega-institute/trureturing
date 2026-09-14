@@ -36,6 +36,10 @@ $$\forall n \in \mathbb{N},\; \operatorname{r}\left(3 \cdot n\right) = 0 \Leftri
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/StephanA005590ZeroSetCharacterization.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a005590-zero-set-fibbinary-characterization` (proved) by `D5/S1/Recurrence/StephanA005590ZeroSetCharacterization.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a005590-zero-set-fibbinary-characterization","declaration_gid":"D5/S1/Recurrence/StephanA005590ZeroSetCharacterization.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*
