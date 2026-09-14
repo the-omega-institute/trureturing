@@ -161,6 +161,45 @@ internal sealed class JudgeSeedFixture : IDisposable
         Run("dotnet", args[0] is "restore" or "build" ? [..args, "-nr:false"] : args, success);
     internal Invocation Build(string name, int expected, params string[] properties) => BuildProject(name, "tools/StrataLint.sln", expected, properties);
     internal void BuildHelper(string name, int expected) => BuildProject(name, "tools/scripts/report/JudgeSeedTask.csproj", expected, []);
+
+    internal Invocation[] BuildRegisteredProjects(string name)
+    {
+        var results = new List<Invocation>();
+        var observation = CompilerObservation();
+        foreach (var project in projectFiles)
+        {
+            Dotnet(["restore", project, "--locked-mode"]);
+            var result = Dotnet(["build", project, "--no-restore", "--configuration", "Release",
+                "--warnaserror", "-v:diag", .. observation], false);
+            Record(name + "-" + Path.GetFileName(project), result,
+                Regex.Matches(result.Text, "Task \"Csc\"(?: \\(TaskId:\\d+\\))?").Count);
+            Assert.True(result.ExitCode == 0, Tail(result.Text));
+            results.Add(result);
+        }
+        Write("build/ci/build.json", JsonSerializer.Serialize(new { version = 2, projects = projectFiles }));
+        return results.ToArray();
+    }
+
+    internal void RenewGeneratedNuGetImportTimes()
+    {
+        foreach (var project in projectFiles)
+        {
+            var path = PathOf(Path.GetDirectoryName(project) + "/obj/" + Path.GetFileName(project) + ".nuget.g.props");
+            var bytes = File.ReadAllBytes(path);
+            var output = PathOf(Path.GetDirectoryName(project) + "/obj/Release/net10.0/"
+                + Path.GetFileNameWithoutExtension(project) + ".dll");
+            var stamp = File.GetLastWriteTimeUtc(output).AddMilliseconds(1);
+            File.SetLastWriteTimeUtc(path, stamp);
+            Assert.Equal(bytes, File.ReadAllBytes(path));
+            Assert.True(File.GetLastWriteTimeUtc(path) > File.GetLastWriteTimeUtc(output));
+            Record("renew-import-" + Path.GetFileName(project), new Invocation(0, JsonSerializer.Serialize(new
+            {
+                path, sha256 = Convert.ToHexStringLower(SHA256.HashData(bytes)),
+                import_time = File.GetLastWriteTimeUtc(path), output_time = File.GetLastWriteTimeUtc(output),
+            })), null);
+        }
+    }
+
     private Invocation BuildProject(string name, string project, int expected, string[] properties)
     {
         Dotnet(["restore", project, "--locked-mode"]);
