@@ -82,10 +82,19 @@ public sealed class ReleaseConsumerContractTests
     [InlineData("missing-required", 0, false)]
     [InlineData("corrupt-required", 0, false)]
     [InlineData("assembly-failure", 2, false)]
+    [InlineData("verify-exact", 0, false)]
+    [InlineData("verify-unprotected", 2, false)]
+    [InlineData("verify-diverged", 2, false)]
+    [InlineData("verify-wrong-branch", 2, false)]
+    [InlineData("verify-wrong-attempt", 2, false)]
+    [InlineData("verify-report-free", 2, false)]
+    [InlineData("verify-missing-required", 2, false)]
+    [InlineData("verify-corrupt-required", 2, false)]
+    [InlineData("prepare-exact", 0, true)]
     public void ReleasePrepareConsumesValidatedReportRequirement(string scenario, int exit, bool ready)
     {
         using var first = new ResourceRouteTests.ResourceFixture(["filemap"], "Evidence/D5/Fixture.result.json");
-        using var next = new ResourceRouteTests.ResourceFixture(scenario == "all-report-free" ? ["filemap"] : ["filemap", "lean-report"]);
+        using var next = new ResourceRouteTests.ResourceFixture(scenario is "all-report-free" or "verify-report-free" ? ["filemap"] : ["filemap", "lean-report"]);
         Produce(first); Produce(next);
         var firstArchive = Pack(first, 18);
         var nextArchive = Pack(next, 17);
@@ -100,17 +109,29 @@ public sealed class ReleaseConsumerContractTests
             commit1, commit2, native, scenario = sys.argv[7:]
             sys.path.insert(0, str(source / 'tools/scripts/workflow'))
             import truth_release as owner
+            verification = scenario.startswith('verify-')
+            exact = verification or scenario == 'prepare-exact'
+            branch = 'integration-truth-source' if verification else 'dev'
             workflow = dict(id=7, path='.github/workflows/ci-push.yml')
             commits = [commit1, commit2]
             cases = {commit1: (18, first, archive1), commit2: (17, second, archive2)}
-            responses = {'branches/dev': dict(protected=True), 'actions/workflows/ci-push.yml': workflow,
+            responses = {'branches/'+branch: dict(name=branch, protected=scenario != 'verify-unprotected', commit=dict(sha=commit1)),
+                         'actions/workflows/ci-push.yml': workflow,
                          'commits?sha=dev&per_page=40': [dict(sha=c) for c in commits]}
+            if exact:
+                # The explicit commit is outside the history scan. Only API boundary
+                # evidence is synthetic; selected material and transport stay real.
+                del responses['commits?sha=dev&per_page=40']
+                responses[f'compare/{commit2}...{commit1}'] = dict(
+                    status='diverged' if scenario == 'verify-diverged' else 'ahead', merge_base_commit=dict(sha=commit2))
             for commit, (runid, root, archive) in cases.items():
                 run = dict(id=runid, run_attempt=1, workflow_id=7, path=workflow['path'], event='push',
-                           head_branch='dev', head_sha=commit, status='completed', conclusion='success')
+                           head_branch='dev' if scenario == 'verify-wrong-branch' else branch,
+                           head_sha=commit, status='completed', conclusion='success')
                 responses['actions/workflows/ci-push.yml/runs?event=push&head_sha='+commit+'&per_page=100'] = [dict(workflow_runs=[run])]
                 responses[f'actions/runs/{runid}/attempts/1/jobs?per_page=100'] = [dict(jobs=[dict(name=n,
-                    run_id=runid, run_attempt=1, head_sha=commit, status='completed', conclusion='success') for n in ('engineering','current')])]
+                    run_id=runid, run_attempt=2 if scenario == 'verify-wrong-attempt' and n == 'current' else 1,
+                    head_sha=commit, status='completed', conclusion='success') for n in ('engineering','current')])]
                 responses[f'actions/runs/{runid}/artifacts?per_page=100'] = [dict(artifacts=[dict(id=runid*10,
                     name=f'ci-current-{runid}-1', expired=False, workflow_run=dict(id=runid, head_sha=commit))])]
             real = subprocess.run
@@ -127,8 +148,8 @@ public sealed class ReleaseConsumerContractTests
                     # Same candidate-source native verifier, only its location is injected.
                     if command[2] == 'transport-verify' and str(kw['cwd']).endswith('candidate-17-1'):
                         report = pathlib.Path(kw['cwd']) / '.lake/build/stratalint/raw-lean-report.json'
-                        if scenario == 'missing-required': report.unlink()
-                        if scenario == 'corrupt-required': report.write_text('corrupt')
+                        if scenario.endswith('missing-required'): report.unlink()
+                        if scenario.endswith('corrupt-required'): report.write_text('corrupt')
                     return real([native, *command[2:]], **kw)
                 if command[:3] == ['git', 'clone', '--quiet']:
                     command = [*command[:-2], str(cases[commit2][1] if command[-1].endswith('candidate-17-1') else first), command[-1]]
@@ -148,6 +169,9 @@ public sealed class ReleaseConsumerContractTests
                 return real(command, **kw)
             subprocess.run = external
             sys.argv = ['truth_release.py','prepare','--repository',str(first),'--output',str(area)]
+            if exact:
+                sys.argv.extend(['--source-ref','refs/heads/'+branch,'--source-commit',commit2])
+            if verification: sys.argv[1] = 'verify-source'
             raise SystemExit(owner.main())
             """, TestRepositoryLayout.FindRoot(), first.Root, next.Root, area, firstArchive, nextArchive,
             first.Commit, next.Commit, NativeRunner, scenario], new Dictionary<string, string> {
@@ -160,6 +184,20 @@ public sealed class ReleaseConsumerContractTests
         if (exit == 0)
             Assert.Contains("publish_ready=" + (ready ? "true" : "false"), File.ReadAllText(Path.Combine(area, "outputs")), StringComparison.Ordinal);
         else Assert.Contains("TRUTH_RELEASE_FAILED", result.Text, StringComparison.Ordinal);
+        if (scenario.StartsWith("verify-", StringComparison.Ordinal))
+        {
+            Assert.DoesNotContain("ASSEMBLY_ATTEMPT", result.Text, StringComparison.Ordinal);
+            if (scenario == "verify-exact")
+            {
+                var outputs = File.ReadAllText(Path.Combine(area, "outputs"));
+                Assert.Contains("source_verified=true", outputs, StringComparison.Ordinal);
+                Assert.Contains("source_ref=refs/heads/integration-truth-source", outputs, StringComparison.Ordinal);
+                Assert.Contains("source_commit=" + next.Commit, outputs, StringComparison.Ordinal);
+                Assert.Contains("run_id=17", outputs, StringComparison.Ordinal);
+                Assert.Contains("run_attempt=1", outputs, StringComparison.Ordinal);
+                Assert.Contains("artifact_id=170", outputs, StringComparison.Ordinal);
+            }
+        }
         if (scenario.Contains("required", StringComparison.Ordinal))
         {
             Assert.Contains("TRUTH_RELEASE_INPUT_UNAVAILABLE", result.Text, StringComparison.Ordinal);

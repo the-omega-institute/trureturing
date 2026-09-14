@@ -46,6 +46,31 @@ public sealed class TruthReleaseSelectionTests
         Assert.False(result.RootElement.GetProperty("publish_ready").GetBoolean());
     }
 
+    [Theory]
+    [InlineData("refs/heads/integration-ci", "integration-ci", true)]
+    [InlineData("refs/heads/integration-ci", "dev", false)]
+    [InlineData("refs/heads/integration-ci", "integration-other", false)]
+    [InlineData("refs/heads/dev", "integration-ci", false)]
+    public void ExplicitSourcePreservesItsRealBranchIdentity(string sourceRef, string runBranch, bool selected)
+    {
+        var (exit, text) = Select(Artifact(22, 2), sourceRef: sourceRef, runBranch: runBranch);
+        Assert.Equal(0, exit);
+        using var result = JsonDocument.Parse(text);
+        Assert.Equal(selected, result.RootElement.GetProperty("publish_ready").GetBoolean());
+        if (selected) Assert.Equal(sourceRef, result.RootElement.GetProperty("source_ref").GetString());
+    }
+
+    [Theory]
+    [InlineData(null)]
+    [InlineData("")]
+    [InlineData("dev")]
+    [InlineData("refs/heads/")]
+    public void MalformedExplicitSourceIsAnInputFailure(string? sourceRef)
+    {
+        var (exit, _) = Select(Artifact(22, 2), sourceRef: sourceRef);
+        Assert.Equal(2, exit);
+    }
+
     private static object? Artifact(long run, int attempt, string defect = "") => defect == "missing" ? null : new
     {
         id = defect == "malformed-id" ? (object)"invalid" : run * 10,
@@ -54,13 +79,14 @@ public sealed class TruthReleaseSelectionTests
         workflow_run = new { id = defect == "wrong-run" ? run + 1 : run, head_sha = defect == "wrong-commit" ? new string('b', 40) : Commit },
     };
 
-    private static (int Exit, string Output) Select(object? artifact, bool fallback = false)
+    private static (int Exit, string Output) Select(object? artifact, bool fallback = false,
+        string? sourceRef = "refs/heads/dev", string runBranch = "dev")
     {
         using var directory = new CurrentExecutionContractTests.CandidateFixture();
         object Run(long id, int attempt) => new
         {
             id, run_attempt = attempt, workflow_id = 7, path = ".github/workflows/ci-push.yml",
-            @event = "push", head_branch = "dev", head_sha = Commit, status = "completed", conclusion = "success",
+            @event = "push", head_branch = runBranch, head_sha = Commit, status = "completed", conclusion = "success",
         };
         object[] Jobs(long id, int attempt) => new[] { "engineering", "current" }.Select(name => (object)new
         {
@@ -70,6 +96,7 @@ public sealed class TruthReleaseSelectionTests
         TemporaryFileSystem.File.WriteAllText(input, JsonSerializer.Serialize(new
         {
             source_commit = Commit,
+            source_ref = sourceRef,
             workflow = new { id = 7, path = ".github/workflows/ci-push.yml" },
             runs = fallback ? new[] { Run(22, 2), Run(21, 1) } : new[] { Run(22, 2) },
             jobs = new Dictionary<string, object[]> { ["22/2"] = Jobs(22, 2), ["21/1"] = Jobs(21, 1) },
