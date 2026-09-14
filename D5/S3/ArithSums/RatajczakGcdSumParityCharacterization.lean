@@ -279,6 +279,10 @@ theorem result : ∀ m : ℕ, 1 < m → ((Even (G m) ∧ Even (L m)) ↔ 8 ∣ m
     exact ⟨(even_iff_cast_zero (G m)).mpr hG0,
       (even_iff_cast_zero (L m)).mpr hL0⟩
 
+#print axioms gcd2
+#print axioms lcd2
+#print axioms G
+#print axioms L
 #print axioms result
 
 end D5.S3.ArithSums.RatajczakGcdSumParityCharacterization
