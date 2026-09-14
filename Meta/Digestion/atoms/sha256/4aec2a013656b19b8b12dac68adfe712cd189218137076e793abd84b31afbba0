@@ -1,0 +1,2 @@
+**证明。** 直接计算得 $DC=\lambda C$，归纳得 $D^jC=\lambda^jC$。又因 $Q^2=Q$，$BC=PK_{a,b}QK_{a,b}P=\Delta_2$。证毕。
+

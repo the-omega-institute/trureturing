@@ -1,0 +1,6 @@
+**定理。** 对每个 $L\in\mathbb N$ 与 $m\in\mathbb Z$，
+
+$$
+\boxed{T_L(m)=B_L\lfloor m\varphi\rfloor+C_Lm.}
+$$
+

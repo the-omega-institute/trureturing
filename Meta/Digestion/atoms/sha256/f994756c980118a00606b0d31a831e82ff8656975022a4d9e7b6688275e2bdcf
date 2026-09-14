@@ -1,0 +1,10 @@
+**命题。** 对首字母 $b$ 的位移 $\varepsilon_b\in\{-1,1\}$，有
+
+$$
+\begin{aligned}
+d(bw)&=\varepsilon_b+d(w),\\
+m(bw)&=\min(0,\varepsilon_b+m(w)),\\
+M(bw)&=\max(0,\varepsilon_b+M(w)).
+\end{aligned}
+$$
+

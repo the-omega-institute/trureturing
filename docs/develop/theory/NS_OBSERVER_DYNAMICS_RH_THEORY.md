@@ -264,3 +264,477 @@ LowModeReversalWitness -> ReversalWaveSynthesis
 [4] The Omega Institute. `D5/S3/Weil/HolonomyBridge/OffLineOrbitParityDecomposition.lean`, `off_line_orbit_parity_decomposition`。读取 blob `299a01acdde3e62892738ff790779729715e8938`。新桥保留该定理全部离线、非自共轭和重数条件。
 
 [5] The Omega Institute. PR #6172, `CanonicalLiLocalExpansion`。本轮读取为已合并状态，列作后续 Li 路线的已有源对象，不是本组直接依赖。
+
+## 11. 耗散误差管与受迫剪切不动点
+
+### 11.3 实 Hilbert 空间中的指数误差管
+
+**假设。** 设 $H$ 为实 Hilbert 空间，$T>0$，轨迹 $w:[0,T]\to H$ 连续并在 $[0,T)$ 上可右微；对每个 $t$，$A(t):H\to H$ 为线性算子，且
+
+\[
+w'(t)=A(t)w(t)+r(t).
+\]
+
+**假设。** 存在常数 $\gamma>0$ 与 $\rho\geq 0$，使每个 $t\in[0,T)$ 及 $z\in H$ 都满足
+
+\[
+\langle z,A(t)z\rangle\leq-\gamma\|z\|^2,
+\qquad \|r(t)\|\leq\rho.
+\]
+
+**定理。** 在上述假设下，对每个 $t\in[0,T]$ 都有指数误差管
+
+\[
+\boxed{\|w(t)\|\leq e^{-\gamma t}\|w(0)\|
++\frac{\rho}{\gamma}(1-e^{-\gamma t}).}
+\tag{11.1}
+\]
+
+**证明。** 在 $w(t)\neq0$ 时，范数的右导数满足
+
+\[
+\frac{d^+}{dt}\|w(t)\|
+=\frac{\langle w(t),w'(t)\rangle}{\|w(t)\|}
+\leq-\gamma\|w(t)\|+\rho.
+\]
+
+**证明。** 在 $w(t)=0$ 时，相同上界由范数的右上导数得到。乘以 $e^{\gamma t}$ 并在 $[0,t]$ 上积分，便有
+
+\[
+e^{\gamma t}\|w(t)\|-\|w(0)\|
+\leq\rho\int_0^t e^{\gamma s}\,ds
+=\frac{\rho}{\gamma}(e^{\gamma t}-1),
+\]
+
+**证明。** 这与式 (11.1) 等价。
+
+**命题。** 若 $\rho=0$，则 $\|w(t)\|\leq e^{-\gamma t}\|w(0)\|$。若标量轨迹满足 $a'=-\gamma(a-c)+r$ 且 $|r|\leq\rho$，则
+
+\[
+|a(t)-c|\leq e^{-\gamma t}|a(0)-c|
++\frac{\rho}{\gamma}(1-e^{-\gamma t}).
+\]
+
+**证明。** 第一式是在式 (11.1) 中取 $\rho=0$；第二式对误差 $w=a-c$ 应用同一定理。
+
+### 11.4 受迫剪切流的残差、不动点与吸引界
+
+**定义。** 在二维环面 $\mathbb T^2=(\mathbb R/2\pi\mathbb Z)^2$ 上，取 $T>0$、$k\in\mathbb N$、$\nu>0$ 以及可微函数 $a:[0,T]\to\mathbb R$，并定义
+
+\[
+\Phi_k(x,y)=(1,k)\cos(-2kx+2y),\qquad
+\Gamma_k=4\nu(k^2+1),\qquad
+u_a(t,x,y)=a(t)\Phi_k(x,y).
+\]
+
+**命题。** 场 $u_a$ 无散度，并满足零压力 Navier--Stokes 残差恒等式
+
+\[
+\partial_tu_a+(u_a\cdot\nabla)u_a-\nu\Delta u_a
+=(a'(t)+\Gamma_k a(t))\Phi_k.
+\tag{11.2}
+\]
+
+**证明。** 速度方向 $(1,k)$ 与波矢 $(-2k,2)$ 的内积为 $-2k+2k=0$，故 $\nabla\cdot u_a=0$ 且 $(u_a\cdot\nabla)u_a=0$。又有
+
+\[
+\Delta\Phi_k=-4(k^2+1)\Phi_k,
+\qquad \partial_tu_a=a'(t)\Phi_k,
+\]
+
+**证明。** 代入即得式 (11.2)。
+
+**定义。** 固定 $c\in\mathbb R$，令
+
+\[
+u_*(x,y)=c\Phi_k(x,y),\qquad
+f_*(x,y)=\Gamma_kc\Phi_k(x,y).
+\]
+
+**定理。** 场 $u_*$ 是外力 $f_*$ 下的定常零压力解。
+
+**假设。** 设外力为 $f_*+r(t)\Phi_k$，其中 $|r(t)|\leq\rho$，并设幅度满足
+
+\[
+a'(t)=-\Gamma_k(a(t)-c)+r(t),
+\]
+
+**定理。** 在上述外力和幅度方程的假设下，对 $i\in\{1,2\}$、$t\in[0,T]$ 及 $(x,y)\in\mathbb T^2$，
+
+\[
+|u_{a,i}(t,x,y)-u_{*,i}(x,y)|\leq
+(1+k)\left[e^{-\Gamma_k t}|a(0)-c|
++\frac{\rho}{\Gamma_k}(1-e^{-\Gamma_k t})\right].
+\tag{11.3}
+\]
+
+**证明。** 对常幅 $a=c$ 使用式 (11.2)，得到残差 $\Gamma_kc\Phi_k=f_*$。对一般 $a$，式 (11.2) 与幅度方程给出残差 $(\Gamma_kc+r)\Phi_k=f_*+r\Phi_k$。由于 $\Gamma_k>0$，式 (11.1) 作用于 $a-c$；再由 $|\Phi_{k,i}(x,y)|\leq1+k$ 得式 (11.3)。
+
+**命题。** 对每个 $t$ 都有 $a(t)=u_{a,1}(t,0,0)$。当 $r=0$ 时，
+
+\[
+a(t)=c+(a(0)-c)e^{-\Gamma_k t},
+\]
+
+**命题。** 若 $r=0$ 且 $a$ 的定义域为 $[0,\infty)$，则同一剪切不变族内的解全局趋近 $u_*$。
+
+**证明。** 因为 $\Phi_{k,1}(0,0)=1$，第一式成立。第二式是线性方程 $a'=-\Gamma_k(a-c)$ 的解；$\Gamma_k>0$ 蕴含指数项趋于零。
+
+### 11.5 周期 Navier--Stokes 稳态的扰动能量恒等式
+
+**假设。** 设 $u$ 与 $u_*$ 是光滑周期无散度向量场，$u$ 满足带外力 $f+r$ 的 Navier--Stokes 方程，$u_*$ 满足带外力 $f$ 的定常方程。令 $w=u-u_*$，并假设周期分部积分以及压力与无散度场的 $L^2$ 正交性成立。
+
+**命题。** 扰动 $w$ 满足
+
+\[
+\frac12\frac{d}{dt}\|w\|_{L^2}^2
++\nu\|\nabla w\|_{L^2}^2
+=-\int_{\mathbb T^d}w\cdot((w\cdot\nabla)u_*)
++\int_{\mathbb T^d}w\cdot r.
+\tag{11.4}
+\]
+
+**证明。** 两个方程相减后，对 $w$ 作 $L^2$ 配对。周期边界与无散度条件使
+
+\[
+\int w\cdot((u_*\cdot\nabla)w)=0,
+\qquad
+\int w\cdot((w\cdot\nabla)w)=0,
+\]
+
+**证明。** 压力项也为零，而黏性项经分部积分成为 $\nu\|\nabla w\|_{L^2}^2$，余项即为式 (11.4)。
+
+**假设。** 再假设 $w$ 属于零均值子空间，并满足 Poincare 不等式
+
+\[
+\|\nabla w\|_{L^2}^2\geq\lambda_1\|w\|_{L^2}^2
+\]
+
+**假设。** 同时假设
+
+\[
+-\int_{\mathbb T^d}w\cdot((w\cdot\nabla)u_*)
+\leq G\|w\|_{L^2}^2,
+\qquad
+\gamma=\nu\lambda_1-G>0.
+\]
+
+**定理。** 若 $\|r(t)\|_{L^2}\leq\rho$，则 $\|w(t)\|_{L^2}$ 满足式 (11.1) 的指数误差管。
+
+**证明。** 由式 (11.4)、Poincare 不等式和 Cauchy--Schwarz 不等式，
+
+\[
+\frac12\frac{d}{dt}\|w\|_{L^2}^2
+\leq-\gamma\|w\|_{L^2}^2+\rho\|w\|_{L^2}.
+\]
+
+**证明。** 对 $\|w\|_{L^2}$ 应用第 11.3 节的比较论证即得结论。
+
+## 12. 正则化能量、二次平衡证书与记忆消元
+
+### 12.2 零范数处的正则化能量比较
+
+**假设。** 设 $H$ 为实 Hilbert 空间，轨迹 $u:[0,T]\to H$ 连续并在 $[0,T)$ 上有强右导数 $u'$。设 $\gamma>0$、$\rho\geq0$，且
+
+\[
+\langle u(t),u'(t)\rangle
+\leq-\gamma\|u(t)\|^2+\rho\|u(t)\|.
+\tag{12.1}
+\]
+
+**定义。** 对 $\delta>0$，定义正则化范数
+
+\[
+z_\delta(t)=\sqrt{\|u(t)\|^2+\delta^2}.
+\]
+
+**定理。** 在上述假设下，对每个 $t\in[0,T]$，
+
+\[
+\|u(t)\|\leq e^{-\gamma t}\|u(0)\|
++\frac{\rho}{\gamma}(1-e^{-\gamma t}).
+\tag{12.2}
+\]
+
+**证明。** 记 $n=\|u(t)\|$、$z=z_\delta(t)$。由于 $z>0$，链式法则在 $u(t)=0$ 时仍可使用。恒等式
+
+\[
+(-\gamma z+\rho+\gamma\delta)z-(-\gamma n^2+\rho n)
+=\rho(z-n)+\gamma\delta(z-\delta)
+-\gamma(z^2-n^2-\delta^2)
+\]
+
+**证明。** 上式的末项为零，其余两项非负。因此式 (12.1) 给出
+
+\[
+z_\delta'(t)
+=\frac{\langle u(t),u'(t)\rangle}{z_\delta(t)}
+\leq-\gamma z_\delta(t)+\rho+\gamma\delta.
+\]
+
+**证明。** 标量比较于是得到
+
+\[
+z_\delta(t)\leq e^{-\gamma t}z_\delta(0)
++\left(\frac{\rho}{\gamma}+\delta\right)(1-e^{-\gamma t}).
+\]
+
+**证明。** 令 $\delta\downarrow0$，利用 $z_\delta(t)\to\|u(t)\|$，即得式 (12.2)。
+
+### 12.3 同一正裕量的动态与静态结论
+
+**定义。** 设 $H$ 为实 Hilbert 空间，$L:H\to H$ 为线性映射，$B:H\times H\to H$ 为双线性映射，$f\in H$，并定义
+
+\[
+F(x)=Lx-B(x,x)+f.
+\]
+
+**假设。** 对所有 $p,q\in H$，假设
+
+\[
+\langle q,B(p,q)\rangle=0.
+\tag{12.3}
+\]
+
+**假设。** 再设 $v\in H$ 满足 $F(v)=0$。假设存在 $\mu,G\in\mathbb R$，使每个 $w\in H$ 都满足
+
+\[
+\langle w,Lw\rangle\leq-\mu\|w\|^2,
+\qquad
+-\langle w,B(w,v)\rangle\leq G\|w\|^2,
+\qquad
+\gamma=\mu-G>0.
+\tag{12.4}
+\]
+
+**命题。** 对每个 $w\in H$，有差能量恒等式
+
+\[
+\langle w,F(v+w)-F(v)\rangle
+=\langle w,Lw\rangle-\langle w,B(w,v)\rangle.
+\tag{12.5}
+\]
+
+**证明。** 双线性展开给出
+
+\[
+B(v+w,v+w)=B(v,v)+B(v,w)+B(w,v)+B(w,w).
+\]
+
+**证明。** 由式 (12.3)，$B(v,w)$ 与 $B(w,w)$ 对 $w$ 的配对均为零，故只余式 (12.5) 的两项。
+
+**定理。** 若轨迹 $u:[0,T]\to H$ 连续并在 $[0,T)$ 上有强右导数，且满足 $u'=F(u)+r$ 与 $\|r(t)\|\leq\rho$，则同一个正裕量 $\gamma$ 给出
+
+\[
+\|u(t)-v\|\leq e^{-\gamma t}\|u(0)-v\|
++\frac{\rho}{\gamma}(1-e^{-\gamma t}).
+\tag{12.6}
+\]
+
+**定理。** 对每个 $x\in H$，同一个 $\gamma$ 还给出静态残差界
+
+\[
+\boxed{\|x-v\|\leq\frac{\|F(x)\|}{\gamma}.}
+\tag{12.7}
+\]
+
+**定理。** 特别地，$v$ 是 $F$ 的唯一零点。
+
+**证明。** 令 $w=u-v$。由式 (12.4)--(12.5)，
+
+\[
+\langle w,w'\rangle
+\leq-\gamma\|w\|^2+\rho\|w\|,
+\]
+
+**证明。** 故式 (12.2) 给出式 (12.6)。对静态点令 $w=x-v$，则
+
+\[
+\gamma\|w\|^2
+\leq-\langle w,F(x)\rangle
+\leq\|w\|\,\|F(x)\|.
+\]
+
+**证明。** $w=0$ 时结论显然；$w\neq0$ 时约去 $\|w\|$ 得式 (12.7)。若 $F(x)=0$，式 (12.7) 强制 $x=v$。
+
+### 12.4 耗散稳定与瞬时恢复的条件分离
+
+**定义。** 设 $T>0$、$a,b,d\in\mathbb R$，并考虑可微的可见状态 $x:[0,T]\to\mathbb R$ 与隐藏状态 $y:[0,T]\to\mathbb R$ 构成的系统
+
+\[
+x'=-ax+by,
+\qquad
+y'=-bx-dy.
+\tag{12.8}
+\]
+
+**命题。** 平方能量 $E=x^2+y^2$ 满足
+
+\[
+E'=-2ax^2-2dy^2.
+\tag{12.9}
+\]
+
+**命题。** 若 $a,d\geq\gamma>0$，则对任意耦合 $b$，
+
+\[
+E(t)\leq E(0)e^{-2\gamma t}.
+\tag{12.10}
+\]
+
+**证明。** 对 $E$ 求导并代入式 (12.8)，两个交叉项 $2bxy$ 与 $-2bxy$ 抵消，得到式 (12.9)。再由 $E'\leq-2\gamma E$ 积分即得式 (12.10)。
+
+**定理。** 若 $b\neq0$，则隐藏状态由可见状态及其导数精确恢复为
+
+\[
+y=\frac{x'+ax}{b}.
+\tag{12.11}
+\]
+
+**假设。** 若观测量 $\widehat x,\widehat v$ 满足
+
+\[
+|\widehat x-x|\leq\varepsilon_x,
+\qquad
+|\widehat v-x'|\leq\varepsilon_v,
+\]
+
+**定理。** 在上述误差假设下，令 $\widehat y=(\widehat v+a\widehat x)/b$，则
+
+\[
+|\widehat y-y|
+\leq\frac{\varepsilon_v+|a|\varepsilon_x}{|b|}.
+\tag{12.12}
+\]
+
+**证明。** 式 (12.11) 由式 (12.8) 的第一式移项并除以 $b$ 得到。两种恢复式相减后应用三角不等式，即得式 (12.12)。
+
+**命题。** 固定满足 $a,d\geq\gamma>0$ 的 $a,d$ 时，能量衰减率式 (12.10) 与 $b$ 无关，而恢复的误差放大系数 $1/|b|$ 随 $|b|\downarrow0$ 发散；当 $\varepsilon_v+|a|\varepsilon_x>0$ 固定时，式 (12.12) 的右端也随之发散。当 $b=0$ 时，$x'=-ax$ 与隐藏初值无关，因而 $x$ 及 $x'$ 不能确定 $y$；同时 $y'=-dy$ 仍使隐藏状态指数衰减。
+
+**证明。** 第一项直接来自式 (12.10) 与式 (12.12)。当 $b=0$ 时，任取两个不同隐藏初值而保持同一可见初值，所得可见轨迹相同，隐藏轨迹却不同；又有 $y(t)=e^{-dt}y(0)$。
+
+### 12.5 精确记忆方程与有限历史误差界
+
+**假设。** 设 $d>0$，且可微函数 $x,y$ 满足式 (12.8)。
+
+**定理。** 隐藏状态具有精确历史表示
+
+\[
+y(t)=e^{-dt}\left(y(0)-b\int_0^t e^{ds}x(s)\,ds\right).
+\tag{12.13}
+\]
+
+**定理。** 因此可见状态满足精确 Volterra 方程
+
+\[
+x'(t)=-ax(t)+be^{-dt}y(0)
++\int_0^tK(t-s)x(s)\,ds,
+\qquad
+\boxed{K(\tau)=-b^2e^{-d\tau}.}
+\tag{12.14}
+\]
+
+**证明。** 由隐藏方程，
+
+\[
+\frac{d}{dt}\bigl(e^{dt}y(t)\bigr)=-be^{dt}x(t).
+\]
+
+**证明。** 在 $[0,t]$ 上积分并乘以 $e^{-dt}$ 得式 (12.13)。将其代入 $x'=-ax+by$，并使用 $e^{-dt}e^{ds}=e^{-d(t-s)}$，即得式 (12.14)。
+
+**假设。** 给定同一个可见输入 $x$，设 $y$ 与 $z$ 分别满足
+
+\[
+y'=-bx-dy,
+\qquad
+z'=-bx-dz,
+\]
+
+**定理。** 则对任意 $0\leq s\leq t$，
+
+\[
+|b(y(t)-z(t))|
+\leq |b|e^{-d(t-s)}|y(s)-z(s)|.
+\tag{12.15}
+\]
+
+**假设。** 再设 $|y(s)-z(s)|\leq Y$、$|b|Y>\eta>0$，并且窗口长度满足
+
+\[
+t-s\geq\frac1d\log\frac{|b|Y}{\eta}
+\tag{12.16}
+\]
+
+**定理。** 在上述窗口假设下，$|b(y(t)-z(t))|\leq\eta$。
+
+**证明。** 差 $h=y-z$ 满足 $h'=-dh$，故 $h(t)=e^{-d(t-s)}h(s)$，从而式 (12.15) 成立。把 $|h(s)|\leq Y$ 代入式 (12.15)，再对指数不等式取对数，即得式 (12.16) 的充分性。
+
+**命题。** 在静态隐藏约束 $0=-bx-dy$ 且 $d\neq0$ 下，
+
+\[
+y=-\frac bd x,
+\qquad
+-ax+by=-\left(a+\frac{b^2}{d}\right)x.
+\tag{12.17}
+\]
+
+**证明。** 第一式由静态隐藏约束直接解出，代入可见方程右端即得第二式。
+
+### 12.6 有限维块系统的耗散与记忆核
+
+**定义。** 设 $T>0$，$X,Y$ 为有限维实 Hilbert 空间，$A:X\to X$、$D:Y\to Y$、$B:X\to Y$ 为线性映射，$B^*:Y\to X$ 为 $B$ 的伴随。考虑可微轨迹 $x:[0,T]\to X$、$y:[0,T]\to Y$ 满足的块系统
+
+\[
+\dot x=-Ax+B^*y,
+\qquad
+\dot y=-Bx-Dy.
+\tag{12.18}
+\]
+
+**命题。** 系统 (12.18) 的总能量满足
+
+\[
+\frac{d}{dt}\bigl(\|x\|^2+\|y\|^2\bigr)
+=-2\langle x,Ax\rangle-2\langle y,Dy\rangle.
+\tag{12.19}
+\]
+
+**命题。** 若对所有 $\xi\in X$、$\eta\in Y$ 都有 $\langle \xi,A\xi\rangle\geq\alpha\|\xi\|^2$ 与 $\langle \eta,D\eta\rangle\geq\delta\|\eta\|^2$，其中 $\alpha,\delta>0$，则
+
+\[
+\|x(t)\|^2+\|y(t)\|^2
+\leq e^{-2\min\{\alpha,\delta\}t}
+\bigl(\|x(0)\|^2+\|y(0)\|^2\bigr).
+\]
+
+**证明。** 对总能量求导。由伴随关系，交叉项
+
+\[
+2\langle x,B^*y\rangle-2\langle y,Bx\rangle
+\]
+
+**证明。** 上述交叉项恰好抵消，得到式 (12.19)；下界随即给出
+
+\[
+\frac{d}{dt}\bigl(\|x\|^2+\|y\|^2\bigr)
+\leq-2\min\{\alpha,\delta\}
+\bigl(\|x\|^2+\|y\|^2\bigr).
+\]
+
+**命题。** 消去隐藏状态后，
+
+\[
+y(t)=e^{-tD}y(0)-\int_0^t e^{-(t-s)D}Bx(s)\,ds,
+\]
+
+**命题。** 将上述隐藏状态表示代入可见方程，则
+
+\[
+\dot x(t)=-Ax(t)+B^*e^{-tD}y(0)
++\int_0^tK(t-s)x(s)\,ds,
+\qquad
+K(\tau)=-B^*e^{-\tau D}B.
+\tag{12.20}
+\]
+
+**证明。** 对隐藏方程应用常系数线性方程的变参数公式，得到 $y(t)$ 的表示；将该表示代回可见方程，积分项的算子系数即为式 (12.20) 中的 $K$。

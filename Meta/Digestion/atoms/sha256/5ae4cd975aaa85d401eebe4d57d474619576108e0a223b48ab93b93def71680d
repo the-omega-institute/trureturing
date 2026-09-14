@@ -1,0 +1,6 @@
+**定理。** 不存在谓词 $H:(\mathbb N\to\mathbb N)\to\mathrm{Prop}$ 使得
+
+$$
+\forall r,\quad r\text{ 规范}\iff H((v_k(r))_{k\ge0}).
+$$
+

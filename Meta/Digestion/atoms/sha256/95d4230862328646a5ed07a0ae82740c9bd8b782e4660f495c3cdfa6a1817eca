@@ -1,0 +1,8 @@
+**命题。** 对每个 $w\in H$，有差能量恒等式
+
+\[
+\langle w,F(v+w)-F(v)\rangle
+=\langle w,Lw\rangle-\langle w,B(w,v)\rangle.
+\tag{12.5}
+\]
+

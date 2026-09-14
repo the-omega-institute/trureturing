@@ -1,0 +1,6 @@
+**证明。** 由 GS4，
+$s_\rho(P_v^\rho(n))=v s_\rho(n)+c_v^\rho(n)$。
+两边乘以 $u$ 后取 $\varphi$ 坐标，注意普通整数
+$c_v^\rho(n)$ 乘以 $u$ 所贡献的 $\varphi$ 坐标为
+$b_uc_v^\rho(n)$，便得到 GS5。交换 $u,v$，再用 $uv=vu$ 相减，得到 GS6。
+

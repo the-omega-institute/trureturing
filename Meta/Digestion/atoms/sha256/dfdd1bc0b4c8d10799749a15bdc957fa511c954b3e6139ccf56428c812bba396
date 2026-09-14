@@ -1,0 +1,8 @@
+**定理。** 对任意词 $w$，若
+
+$$
+\operatorname{low}=m(w),\qquad
+\operatorname{high}=M(w),\qquad
+d=d(w),
+$$
+

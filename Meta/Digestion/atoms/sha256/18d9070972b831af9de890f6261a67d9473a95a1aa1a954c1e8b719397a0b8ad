@@ -1,0 +1,9 @@
+**定理 SM2。** 递归定义
+
+$$
+\boxed{\widehat M_n=R_{n+2}-R_1\circ R_{n+1}
+-\sum_{i=0}^{n-1}\widehat M_{n-1-i}\circ R_{i+1},}
+$$
+
+则对任意环上的模、任意分块映射和全部 $n\ge0$，有 $\widehat M_n=BD^nC$。
+

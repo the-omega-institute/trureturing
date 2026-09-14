@@ -1,0 +1,8 @@
+**定义。** 在二维环面 $\mathbb T^2=(\mathbb R/2\pi\mathbb Z)^2$ 上，取 $T>0$、$k\in\mathbb N$、$\nu>0$ 以及可微函数 $a:[0,T]\to\mathbb R$，并定义
+
+\[
+\Phi_k(x,y)=(1,k)\cos(-2kx+2y),\qquad
+\Gamma_k=4\nu(k^2+1),\qquad
+u_a(t,x,y)=a(t)\Phi_k(x,y).
+\]
+
