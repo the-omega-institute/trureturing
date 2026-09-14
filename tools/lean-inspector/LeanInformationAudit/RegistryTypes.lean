@@ -128,7 +128,8 @@ structure BindingRecord where
 structure TemplateBindingClaim where
   key : TemplateOccurrenceKey
   arena : Expr
-  descriptor : Expr
+  descriptor : Option Expr
+  resolutionDiagnostic : Option String := none
   owner : Name
   deriving Inhabited
 

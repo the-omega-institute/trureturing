@@ -1174,11 +1174,25 @@ end LeanInformationAudit.TemplateAudit
 namespace LeanInformationAudit.TemplateAudit
 open Lean Meta
 
+/-- Abstract one local at its actual binder depth without substituting (and
+therefore decrementing) already abstracted outer variables. -/
+private partial def abstractLocal (e x : Expr) (depth : Nat) : Expr :=
+  if e == x then .bvar depth else
+  match e with
+  | .app f a => .app (abstractLocal f x depth) (abstractLocal a x depth)
+  | .lam n t b bi => .lam n (abstractLocal t x depth) (abstractLocal b x (depth + 1)) bi
+  | .forallE n t b bi => .forallE n (abstractLocal t x depth) (abstractLocal b x (depth + 1)) bi
+  | .letE n t v b nd => .letE n (abstractLocal t x depth) (abstractLocal v x depth)
+      (abstractLocal b x (depth + 1)) nd
+  | .mdata m b => .mdata m (abstractLocal b x depth)
+  | .proj n i b => .proj n i (abstractLocal b x depth)
+  | _ => e
+
 private def PlanNode.abstractAt (x : Expr) (depth : Nat := 0) : PlanNode → PlanNode
-  | .atom e => .atom (e.replaceFVar x (.bvar depth))
-  | .supplied e => .supplied (e.replaceFVar x (.bvar depth))
-  | .expanded raw checked => .expanded (raw.replaceFVar x (.bvar depth)) (checked.abstractAt x depth)
-  | .proofLeaf t e => .proofLeaf (t.replaceFVar x (.bvar depth)) (e.replaceFVar x (.bvar depth))
+  | .atom e => .atom (abstractLocal e x depth)
+  | .supplied e => .supplied (abstractLocal e x depth)
+  | .expanded raw checked => .expanded (abstractLocal raw x depth) (checked.abstractAt x depth)
+  | .proofLeaf t e => .proofLeaf (abstractLocal t x depth) (abstractLocal e x depth)
   | .app f a => .app (f.abstractAt x depth) (a.abstractAt x depth)
   | .lam t b bi => .lam (t.abstractAt x depth) (b.abstractAt x (depth + 1)) bi
   | .forallE t b bi => .forallE (t.abstractAt x depth) (b.abstractAt x (depth + 1)) bi
@@ -1454,12 +1468,11 @@ private partial def checkTelescope (type : Expr) (depth : Nat := 0) : CompileM (
       | .sort (.succ _) => pure SlotKind.carrier
       | .sort _ => throwError "unclassified_form:E1.carrier_universe"
       | _ =>
-        if dictionaryTypes.contains domain.getAppFn.constName!.getPrefix ||
-            dictionaryTypes.contains domain.getAppFn.constName! then
+        if dictionaryTypes.contains (domain.getAppFn.constName?.getD .anonymous) then
           if domain.isAppOf `Decidable && !domain.hasFVar then
             throwError "unclassified_form:E1.closed_decision_slot"
           pure .dictionary
-        else if interfaceTypes.contains domain.getAppFn.constName! then pure .interface
+        else if interfaceTypes.contains (domain.getAppFn.constName?.getD .anonymous) then pure .interface
         else if domain.isForall then
           let predicate ← forallTelescope domain fun _ result => pure (result == mkSort .zero)
           pure (if predicate then .predicate else .function)
@@ -1468,7 +1481,7 @@ private partial def checkTelescope (type : Expr) (depth : Nat := 0) : CompileM (
     binder n bi domain fun x => do
       let tail ← checkTelescope (body.instantiate1 x) (depth + 1)
       -- Stored domains use de Bruijn indices relative to earlier slots.
-      let tail := tail.map fun slot => { slot with type := slot.type.abstract #[x] }
+      let tail := tail.mapIdx fun index slot => { slot with type := abstractLocal slot.type x index }
       return #[{ kind, binderInfo := bi, type := domain }] ++ tail
   | _ =>
     let name := type.getAppFn.constName?.getD .anonymous
@@ -1724,7 +1737,7 @@ private partial def matchesPlan (plan : PlanNode) (actual : Expr) (depth : Nat :
 
 private def isRealizationType (type : Expr) : Bool :=
   #[`D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization,
-    `LeanInformationAudit.StructuralPrimitiveRealization].contains type.getAppFn.constName!
+    `LeanInformationAudit.StructuralPrimitiveRealization].contains (type.getAppFn.constName?.getD .anonymous)
 
 private def extract (name : Name) : MetaM Expr := do
   let info ← getConstInfo name
@@ -1818,13 +1831,16 @@ def assess (event : TemplateOccurrenceEvent) (claim : Option TemplateBindingClai
         options.set `maxHeartbeats (if configured == 0 then 100000 else min 100000 configured)) do
         unless claim.key == event.key && claim.arena.equal event.arena do
           throwError "unclassified_form:dtr.claim_occurrence"
-        pure <| TemplateBindingResult.declaredValidated (← validate event claim.descriptor))
+        if let some diagnostic := claim.resolutionDiagnostic then throwError diagnostic
+        let some descriptor := claim.descriptor
+          | throwError "unclassified_form:dtr.missing_template"
+        pure <| TemplateBindingResult.declaredValidated (← validate event descriptor))
       (fun error => do
         let message ← error.toMessageData.toString
         let reason := if message.startsWith "unclassified_form:" || message.startsWith "forbidden_dependency:"
             || message.startsWith "incomplete_closure:" then message else "incomplete_closure:E8.assessment:" ++ message
         return .declaredUnresolved s!"IE-C050 ClosedTruthReadout key={event.key.root}/{event.key.catalog}/{event.key.theoremName} {TemplateAudit.diagnosticFields reason}")
-    return { occurrence := event, descriptor := some claim.descriptor, bindingOwner := some claim.owner, result }
+    return { occurrence := event, descriptor := claim.descriptor, bindingOwner := some claim.owner, result }
 
 private initialize occurrenceInventory : SimplePersistentEnvExtension TemplateOccurrenceEvent (Array TemplateOccurrenceEvent) ←
   registerSimplePersistentEnvExtension { addEntryFn := Array.push, addImportedFn := fun arrays => arrays.foldl (· ++ ·) #[] }
@@ -1832,6 +1848,25 @@ private initialize bindingRecords : SimplePersistentEnvExtension BindingRecord (
   registerSimplePersistentEnvExtension { addEntryFn := Array.push, addImportedFn := fun arrays => arrays.foldl (· ++ ·) #[] }
 private initialize bindingClaims : SimplePersistentEnvExtension TemplateBindingClaim (Array TemplateBindingClaim) ←
   registerSimplePersistentEnvExtension { addEntryFn := Array.push, addImportedFn := fun arrays => arrays.foldl (· ++ ·) #[] }
+
+structure ResolvedDeclaration where
+  theoremName : Name
+  arena : Name
+  descriptor : Option Expr
+  diagnostic : Option String := none
+
+private initialize pendingDeclaration : EnvExtension (Option ResolvedDeclaration) ←
+  registerEnvExtension (pure none)
+
+/-- Scoped syntax input, never enrollment or certification authority. The
+registration transaction owns rollback; the inner scope always clears itself. -/
+def withDeclaration (declaration : ResolvedDeclaration)
+    (action : Elab.Command.CommandElabM Unit) : Elab.Command.CommandElabM Unit := do
+  let previous := pendingDeclaration.getState (← getEnv)
+  if previous.isSome then throwError "unclassified_form:dtr.nested_declaration"
+  modifyEnv (pendingDeclaration.setState · (some declaration))
+  try action
+  finally modifyEnv (pendingDeclaration.setState · previous)
 
 def inventory (env : Environment) : Array TemplateOccurrenceEvent := occurrenceInventory.getState env
 def records (env : Environment) : Array BindingRecord := bindingRecords.getState env
@@ -1857,8 +1892,50 @@ def publishRegistration (entry : InformationRegistryEntry) : Elab.Command.Comman
     statement := info.type, levelParams := info.levelParams, statementIdentity,
     arena := mkConst entry.canonicalObjectArenaName,
     registrationSource := path, registrationSourceIdentity := sourceIdentity }
-  let record ← Elab.Command.liftTermElabM <| assess event none
+  let claim ← match pendingDeclaration.getState (← getEnv) with
+    | none => pure none
+    | some declaration =>
+      unless declaration.theoremName == event.key.theoremName && declaration.arena == event.key.objectArena do
+        throwError "unclassified_form:dtr.inline_occurrence"
+      pure <| some {
+        key := event.key, arena := event.arena, descriptor := declaration.descriptor,
+        resolutionDiagnostic := declaration.diagnostic, owner := (← getEnv).header.mainModule : TemplateBindingClaim }
+  let record ← Elab.Command.liftTermElabM <| assess event claim
   modifyEnv fun current => bindingRecords.addEntry (occurrenceInventory.addEntry current event) record
+  if let some claim := claim then modifyEnv (bindingClaims.addEntry · claim)
+  if let .declaredUnresolved diagnostic := record.result then logWarning diagnostic
+
+/-- Claims join by their exact occurrence identity before authoritative assessment.
+An overlay retains the original registration owner and cannot replace an inline claim. -/
+def declareSidecar (theoremName arena : Name) (catalog : Option Name)
+    (descriptor : Option Expr) (resolutionDiagnostic : Option String) : Elab.Command.CommandElabM Unit := do
+  let env ← getEnv
+  let matching := (inventory env).filter fun event => event.key.theoremName == theoremName &&
+    event.key.objectArena == arena && (catalog.isNone || catalog == some event.key.catalog)
+  unless matching.size == 1 do throwError "unclassified_form:dtr.sidecar_occurrence"
+  let event := matching[0]!
+  if (bindingClaims.getState env).any (·.key == event.key) then
+    throwError "unclassified_form:dtr.duplicate_claim"
+  let claim : TemplateBindingClaim := {
+    key := event.key, arena := event.arena, descriptor, resolutionDiagnostic,
+    owner := env.header.mainModule }
+  let record ← Elab.Command.liftTermElabM <| assess event (some claim)
+  modifyEnv fun current => bindingRecords.addEntry (bindingClaims.addEntry current claim) record
+  if let .declaredUnresolved diagnostic := record.result then logWarning diagnostic
+
+/-- Shared final assessment after the full imported claim set has been joined.
+Callers must establish complete governed sidecar inputs before claiming coverage. -/
+def assessJoined : MetaM (Array BindingRecord) := do
+  let env ← getEnv
+  let events := inventory env
+  let claims := bindingClaims.getState env
+  for claim in claims do
+    unless (events.filter (·.key == claim.key)).size == 1 do
+      throwError "unclassified_form:dtr.dangling_claim"
+  events.mapM fun event => do
+    let selected := claims.filter (·.key == event.key)
+    if selected.size > 1 then throwError "unclassified_form:dtr.duplicate_claim"
+    assess event selected[0]?
 
 end LeanInformationAudit.TemplateBinding
 
