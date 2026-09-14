@@ -1,0 +1,5 @@
+$$
+\operatorname{El}(\operatorname{Enc}(\tau_X))=\operatorname{Enc}[\tau_X],\qquad
+\tau_X^*=\{\operatorname{El}(c):c\in\operatorname{Enc}[\tau_X]\}.
+$$
+

@@ -1,0 +1,4 @@
+对第 379–384 条的每个函数 $f:D\to Y$，其普通共轭图与原图码分别为
+$$
+G_{f^*}=\{\langle\operatorname{Enc}(x),\operatorname{Enc}(f(x))\rangle:x\in D\},
+$$

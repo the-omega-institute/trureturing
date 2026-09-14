@@ -1,0 +1,5 @@
+\operatorname{ev}_Z(\operatorname{Enc}(G_f),\operatorname{Enc}(x))
+=\operatorname{Enc}(f(x))\quad(x\in D).
+$$
+域外无图边，空域仍使用同样公式。
+
