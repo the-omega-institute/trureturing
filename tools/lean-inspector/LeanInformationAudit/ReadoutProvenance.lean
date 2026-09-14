@@ -392,6 +392,7 @@ inductive ProvenanceAllowRule where
   | quotientType | recursorType | enumRecursorType | aliasType | recursiveFamily | nominalFields
   | ordinaryData | typeFamily | scalarCarrier | rigidCarrier | functionCarrier
   | containerCarrier | subtypeCarrier | nullaryCarrier | nominalCarrier
+  | fieldProposition | fieldConcrete | fieldParameter | fieldFunction | fieldAlias | fieldAudited
   | statementHeadApart | statementLiteralApart | statementDomainApart
   | statementBodyApart | statementArgumentApart | statementRigidApart | statementMetadataApart
   | proofBoundary | propositionBoundary | externalLeaf | syntaxLeaf
@@ -683,17 +684,6 @@ private def checkedType (rule : ProvenanceAllowRule) (type : Expr)
   -- admission-exit: checkedType.1 rule=retained-witness.rule
   return .allowlisted (witness rule type)
 
--- Only scan an explicit telescope. A failed reservation supplies no carrier
--- evidence. This does not reduce or evaluate a computed carrier.
-private def carrierValuedField (type : Expr) : WalkM Bool := do
-  let mut current := type
-  repeat
-    unless ← chargeTraversal do return true
-    match current with
-    | .forallE _ _ body _ | .mdata _ body => current := body
-    | .sort _ => return true
-    | _ => return false
-
 private def queue (name : Name) (levels : List Level) : WalkM Unit := do
   let n := (name, levels)
   let s ← get
@@ -928,6 +918,59 @@ private partial def representationType (type : Expr) : WalkM (Option Expr) := do
     let some value := (← id.getDecl).value? (allowNondep := true) | return some type
     representationType value
   | _ => return some type
+
+-- A field role needs a positive spelling: kind alone cannot distinguish a
+-- carrier slot from an ordinary value. Explicit aliases are followed before
+-- deciding the role; no recursor or opaque carrier is evaluated. These witnesses
+-- discharge only the role check. observedType still checks all parameters,
+-- proof identities and nominal fields of the recognized value type.
+private partial def nominalFieldShape (env : Environment) (type : Expr)
+    (parameters : Array Expr) : WalkM (Option ProvenanceAdmissionWitness) := do
+  let some concrete ← representationType type | return none
+  let some kind ← occurrenceType concrete | return none
+  if kind == .sort .zero then
+    -- admission-exit: nominalFieldShape.1 rule=fieldProposition
+    return some (witness .fieldProposition concrete)
+  match concrete with
+  | .sort _ => return none
+  | .forallE n domain body bi =>
+    let result ← Meta.withLocalDecl n bi domain fun x => do
+      let some body ← substitute body #[x] | return none
+      -- admission-exit: nominalFieldShape.forward.1 rule=retained-witness.rule
+      nominalFieldShape env body parameters
+    if result.isNone then return none
+    -- admission-exit: nominalFieldShape.2 rule=fieldFunction
+    return some (witness .fieldFunction concrete)
+  | .letE _ _ value body _ =>
+    let some body ← substitute body #[value] | return none
+    let some _ ← nominalFieldShape env body parameters | return none
+    -- admission-exit: nominalFieldShape.3 rule=fieldAlias
+    return some (witness .fieldAlias concrete)
+  | _ =>
+    let some (head, args) ← applicationParts concrete | return none
+    unless ← chargeTraversal parameters.size do return none
+    if head.isFVar && parameters.contains head then
+      -- admission-exit: nominalFieldShape.4 rule=fieldParameter
+      return some (witness .fieldParameter concrete)
+    if let .lam .. := head then
+      let some body ← aliasBody head args | return none
+      let some _ ← nominalFieldShape env body parameters | return none
+      -- admission-exit: nominalFieldShape.5 rule=fieldAlias
+      return some (witness .fieldAlias concrete)
+    let .const name levels := head | return none
+    let some declaration := env.find? name | return none
+    match declaration with
+    | .inductInfo _ | .quotInfo _ =>
+      -- admission-exit: nominalFieldShape.6 rule=fieldConcrete
+      return some (witness .fieldConcrete concrete)
+    | .defnInfo _ =>
+      let value ← Core.instantiateValueLevelParams declaration levels (allowOpaque := false)
+      let some body ← aliasBody value args | return none
+      if body == concrete then return none
+      let some _ ← nominalFieldShape env body parameters | return none
+      -- admission-exit: nominalFieldShape.7 rule=fieldAlias
+      return some (witness .fieldAlias concrete)
+    | _ => return none
 
 -- Decode only an explicit record projection. The receiver must expose a
 -- constructor of the projection's own structure; computed recursors stay opaque.
@@ -1777,7 +1820,11 @@ private partial def inputType (env : Environment) (type : Expr)
                   match declaration with
                   | .ctorInfo ctor => ctor.induct == name
                   | _ => false
-            let carrierValued ← if auditedFamily then pure false else carrierValuedField concrete
+            let fieldEvidence ← if auditedFamily then do
+              -- admission-exit: inputType.field.1 rule=fieldAudited
+              pure (some (witness .fieldAudited concrete))
+            else nominalFieldShape env concrete (args.extract 0 info.numParams)
+            let carrierValued := fieldEvidence.isNone
             if carrierValued ||
                 (concrete.isFVar && !parameter && !auditedFamily) then
               trace[InformationProvenance.check] "unclassified_abstract_carrier family={name} field_type={concrete} first={(← get).currentFirst}"

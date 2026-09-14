@@ -206,6 +206,19 @@ def specification(label, original):
         replacement='            if false && (carrierValued ||\n                (concrete.isFVar && !parameter && !auditedFamily)) then'
         predicted=['PackedCarrierHidden','PackedCarrierOpaqueClean','PackedCarrierHiddenDiagnostic','PackedCarrierOpaqueCleanDiagnostic']
         description='Default-admit nominal carrier-valued and abstract fields by their kind, recreating the round-7 unaudited external carrier boundary.'
+    elif kind=='alias-carrier-default-shape':
+        TARGET='LeanInformationAudit.Tests.RegistrationGates.AliasSortCarrierBoundaries'
+        needle='''    | .defnInfo _ =>
+      let value ← Core.instantiateValueLevelParams declaration levels (allowOpaque := false)
+      let some body ← aliasBody value args | return none
+      if body == concrete then return none
+      let some _ ← nominalFieldShape env body parameters | return none
+      -- admission-exit: nominalFieldShape.7 rule=fieldAlias
+      return some (witness .fieldAlias concrete)'''
+        replacement='''    | .defnInfo _ =>
+      return some (witness .fieldConcrete concrete)'''
+        predicted=['AliasTypeHidden','AliasTypeClean','AliasPropHidden','AliasPropClean','AliasFamilyHidden','AliasFamilyClean']
+        description='Treat an explicit nominal field type alias as an ordinary concrete shape without following its body. The six opaque carrier-slot fixtures must be admitted incorrectly; ordinary and proof aliases stay admitted.'
     elif kind=='nested-default-apart':
         TARGET='LeanInformationAudit.Tests.RegistrationGates.NestedStatementIdentity'
         needle='private def checkedStatementType (env : Environment) (type : Expr) :\n    WalkM (Option ProvenanceAdmissionWitness) := do'

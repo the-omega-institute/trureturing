@@ -61,7 +61,7 @@ def check(source, manifest):
             rejection = line.endswith('mentions true') or line.endswith('(mentions || rm) true')
             constructor = re.search(r'(?:return|pure).*\.(?:allowlisted|recognized|data)\b', line)
             constructor = constructor or re.search(r'=> \.(?:allowlisted|recognized|data)\b', line)
-            tail = re.match(r'^(inputType|statementOuter|listStatementBoundary|dataCarrier|typeFamilyArgument) env ', line)
+            tail = re.match(r'^(inputType|statementOuter|listStatementBoundary|dataCarrier|typeFamilyArgument|nominalFieldShape) env ', line)
             if ((positive and not rejection) or tail or constructor) and (name, line) not in expected:
                 failures.append('CleanReturnInventory.Unregistered.' + name)
             if re.search(r'\b(?:return|pure)\s+(?:clean|defaultAdmit)\b', line):

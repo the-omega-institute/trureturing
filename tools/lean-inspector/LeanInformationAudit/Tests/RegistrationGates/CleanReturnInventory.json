@@ -9,7 +9,7 @@
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
       "source": "| .allowlisted _ => (false, false)",
-      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
     },
     {
       "id": "TypeClassification.witness?.forward.1",
@@ -17,7 +17,7 @@
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
       "source": "| .allowlisted witness => some witness",
-      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
     },
     {
       "id": "reuseWitness.1",
@@ -25,7 +25,7 @@
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
       "source": "return found",
-      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
     },
     {
       "id": "bindWitnessSource.forward.1",
@@ -33,7 +33,7 @@
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
       "source": "| .allowlisted evidence => .allowlisted { evidence with sourceDependency := source }",
-      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
     },
     {
       "id": "checkedType.1",
@@ -45,7 +45,64 @@
         "if mentions then return .statementMention",
         "if unknown then return \u2190 unknownType type"
       ],
-      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
+    },
+    {
+      "id": "nominalFieldShape.1",
+      "function": "nominalFieldShape",
+      "rule_id": "fieldProposition",
+      "kind": "production",
+      "source": "return some (witness .fieldProposition concrete)"
+    },
+    {
+      "id": "nominalFieldShape.forward.1",
+      "function": "nominalFieldShape",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "nominalFieldShape env body parameters",
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
+    },
+    {
+      "id": "nominalFieldShape.2",
+      "function": "nominalFieldShape",
+      "rule_id": "fieldFunction",
+      "kind": "production",
+      "source": "return some (witness .fieldFunction concrete)"
+    },
+    {
+      "id": "nominalFieldShape.3",
+      "function": "nominalFieldShape",
+      "rule_id": "fieldAlias",
+      "kind": "production",
+      "source": "return some (witness .fieldAlias concrete)"
+    },
+    {
+      "id": "nominalFieldShape.4",
+      "function": "nominalFieldShape",
+      "rule_id": "fieldParameter",
+      "kind": "production",
+      "source": "return some (witness .fieldParameter concrete)"
+    },
+    {
+      "id": "nominalFieldShape.5",
+      "function": "nominalFieldShape",
+      "rule_id": "fieldAlias",
+      "kind": "production",
+      "source": "return some (witness .fieldAlias concrete)"
+    },
+    {
+      "id": "nominalFieldShape.6",
+      "function": "nominalFieldShape",
+      "rule_id": "fieldConcrete",
+      "kind": "production",
+      "source": "return some (witness .fieldConcrete concrete)"
+    },
+    {
+      "id": "nominalFieldShape.7",
+      "function": "nominalFieldShape",
+      "rule_id": "fieldAlias",
+      "kind": "production",
+      "source": "return some (witness .fieldAlias concrete)"
     },
     {
       "id": "statementStep.1",
@@ -74,7 +131,7 @@
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
       "source": "| .recognized evidence => return some evidence",
-      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
     },
     {
       "id": "statementOuter.forward.1",
@@ -82,7 +139,7 @@
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
       "source": "statementOuter env next",
-      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
     },
     {
       "id": "listStatementBoundary.1",
@@ -104,7 +161,7 @@
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
       "source": "listStatementBoundary env body (binders + 1)",
-      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
     },
     {
       "id": "listStatementBoundary.3",
@@ -133,7 +190,7 @@
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
       "source": "dataCarrier env field active",
-      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
     },
     {
       "id": "dataCarrier.forward.2",
@@ -141,7 +198,7 @@
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
       "source": "dataCarrier env body active",
-      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
     },
     {
       "id": "dataCarrier.3",
@@ -156,7 +213,7 @@
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
       "source": "return \u2190 dataCarrier env args[0]! active",
-      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
     },
     {
       "id": "dataCarrier.5",
@@ -164,7 +221,7 @@
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
       "source": "return \u2190 dataCarrier env args[0]! active",
-      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
     },
     {
       "id": "dataCarrier.6",
@@ -172,7 +229,7 @@
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
       "source": "return \u2190 dataCarrier env body (active.push type)",
-      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
     },
     {
       "id": "dataCarrier.forward.3",
@@ -180,7 +237,7 @@
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
       "source": "dataCarrier env fieldType (active.push type)",
-      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
     },
     {
       "id": "dataCarrier.7",
@@ -195,7 +252,7 @@
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
       "source": "return (\u2190 get).recognizedStatement",
-      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
     },
     {
       "id": "statementApart.1",
@@ -315,7 +372,7 @@
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
       "source": "if let some evidence := (\u2190 get).apartPropositions[type]? then return some evidence",
-      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
     },
     {
       "id": "checkedStatementType.2",
@@ -323,7 +380,7 @@
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
       "source": "return evidence",
-      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
     },
     {
       "id": "observedType.1",
@@ -334,7 +391,7 @@
       "requires": [
         "unless (\u2190 checkedStatementType env type).isSome do"
       ],
-      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
     },
     {
       "id": "inputType.1",
@@ -345,7 +402,7 @@
       "requires": [
         "unless (\u2190 checkedStatementType env type).isSome do"
       ],
-      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
     },
     {
       "id": "inputType.2",
@@ -356,7 +413,7 @@
       "requires": [
         "unless (\u2190 checkedStatementType env type).isSome do"
       ],
-      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
     },
     {
       "id": "inputType.forward.1",
@@ -367,7 +424,7 @@
       "requires": [
         "unless (\u2190 checkedStatementType env type).isSome do"
       ],
-      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
     },
     {
       "id": "inputType.3",
@@ -398,7 +455,7 @@
       "requires": [
         "unless (\u2190 checkedStatementType env type).isSome do"
       ],
-      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
     },
     {
       "id": "inputType.5",
@@ -419,7 +476,7 @@
       "requires": [
         "unless (\u2190 checkedStatementType env type).isSome do"
       ],
-      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
     },
     {
       "id": "inputType.6",
@@ -440,7 +497,7 @@
       "requires": [
         "unless (\u2190 checkedStatementType env type).isSome do"
       ],
-      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
     },
     {
       "id": "inputType.7",
@@ -613,6 +670,13 @@
       ]
     },
     {
+      "id": "inputType.field.1",
+      "function": "inputType",
+      "rule_id": "fieldAudited",
+      "kind": "production",
+      "source": "pure (some (witness .fieldAudited concrete))"
+    },
+    {
       "id": "inputType.forward.5",
       "function": "inputType",
       "rule_id": "retained-witness.rule",
@@ -621,7 +685,7 @@
       "requires": [
         "unless (\u2190 checkedStatementType env type).isSome do"
       ],
-      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
     },
     {
       "id": "inputType.24",
@@ -642,7 +706,7 @@
       "requires": [
         "unless (\u2190 checkedStatementType env type).isSome do"
       ],
-      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
     },
     {
       "id": "typeFamilyArgument.1",
@@ -650,7 +714,7 @@
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
       "source": "if let some cached \u2190 reuseWitness (\u2190 get).dataFunctionTypes type then return .data cached",
-      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
     },
     {
       "id": "typeFamilyArgument.2",
@@ -658,7 +722,7 @@
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
       "source": "return .family (.allowlisted cached)",
-      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
     },
     {
       "id": "typeFamilyArgument.forward.1",
@@ -666,7 +730,7 @@
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
       "source": "typeFamilyArgument env (mkApp value x) body active",
-      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
     },
     {
       "id": "typeFamilyArgument.3",
@@ -674,7 +738,7 @@
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
       "source": "let .family verdict := result | return result",
-      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
     },
     {
       "id": "typeFamilyArgument.4",
@@ -689,7 +753,7 @@
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
       "source": "| .allowlisted evidence => return .data evidence",
-      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
     },
     {
       "id": "typeFamilyArgument.forward.2",
@@ -697,7 +761,7 @@
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
       "source": "| .data evidence => .data { evidence with sourceDependency := state.assumedProducer }",
-      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
     },
     {
       "id": "typeFamilyArgument.6",
@@ -705,7 +769,7 @@
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
       "source": "return result",
-      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
     },
     {
       "id": "classifyOccurrence.1",
@@ -713,7 +777,7 @@
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
       "source": "if let some cached := (\u2190 get).typeChecks[key]? then return cached",
-      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
     },
     {
       "id": "classifyOccurrence.2",
@@ -721,7 +785,7 @@
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
       "source": "return classification",
-      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
     },
     {
       "id": "classifyOccurrence.3",
@@ -729,7 +793,7 @@
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
       "source": "return verdict",
-      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
     },
     {
       "id": "visitOccurrence.1",
@@ -737,7 +801,7 @@
       "rule_id": "retained-witness.rule",
       "kind": "checked-occurrence-boundary",
       "source": "if decoded == some true then return",
-      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
     },
     {
       "id": "visitOccurrence.2",
@@ -745,7 +809,7 @@
       "rule_id": "retained-witness.rule",
       "kind": "checked-occurrence-boundary",
       "source": "if (\u2190 get).visited.contains key then return",
-      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
     },
     {
       "id": "visitOccurrence.forward.1",
@@ -753,7 +817,7 @@
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
       "source": "| .allowlisted _ => pure ()",
-      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
     },
     {
       "id": "visitOccurrence.3",
@@ -761,7 +825,7 @@
       "rule_id": "retained-witness.rule",
       "kind": "checked-occurrence-boundary",
       "source": "if proof == some true then return",
-      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
     },
     {
       "id": "visitOccurrence.4",
@@ -769,7 +833,7 @@
       "rule_id": "retained-witness.rule",
       "kind": "checked-occurrence-boundary",
       "source": "else if inProtected env n then queue n levels",
-      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
     },
     {
       "id": "visitOccurrence.5",
@@ -777,7 +841,7 @@
       "rule_id": "retained-witness.rule",
       "kind": "checked-occurrence-boundary",
       "source": "| .allowlisted _ => pure () -- syntaxLeaf: already inferred in its real binder context",
-      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
     },
     {
       "id": "readoutClosureCurrent.1",
@@ -785,7 +849,7 @@
       "rule_id": "retained-witness.rule",
       "kind": "guarded-admission",
       "source": "if r.admission.isSome then return (false, some r.walked)",
-      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
     },
     {
       "id": "provenanceErrorCurrent.1",
@@ -793,7 +857,7 @@
       "rule_id": "retained-witness.rule",
       "kind": "guarded-admission",
       "source": "if result.admission.isSome && !result.forbidden && result.unclassified.isNone && !result.incomplete then return none",
-      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
+      "rule_resolution": "Retains the concrete ProvenanceAdmissionWitness.rule from the successful child or cached verdict."
     }
   ]
 }
