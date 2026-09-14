@@ -65,6 +65,38 @@ public sealed class InformationTemplateEvidenceTests
     public void registration_owner_uses_lean_source_root(string path, string module) =>
         Assert.Equal(module, InformationTemplateEvidence.ModuleForSource(path));
 
+    private static LeanAxiomReport RawReport(int compatibility = 4)
+    {
+        var wire = JsonSerializer.SerializeToElement(new
+        {
+            schema = "stratalint-raw-lean-report-v2",
+            modules = new[] { new
+            {
+                module = ModuleA,
+                source_path = PathA,
+                source_sha256 = "sha256:" + Hash(TextA),
+                imports = System.Array.Empty<string>(),
+                declarations = System.Array.Empty<object>(),
+                information_templates = Wire(compatibility: compatibility),
+            } },
+        });
+        return RawLeanReportArtifact.Read(Trureturing.Truth.StructuredCanonicalWriter.WriteJson(wire.GetRawText()).AsSpan(),
+            Snapshot((PathA, TextA)));
+    }
+
+    [Fact]
+    public void complete_producer_loader_accepted() => Assert.Single(RawReport().Files);
+
+    [Fact]
+    public void raw_report_retains_binding_inventory()
+    {
+        var module = RawReport().Files[RepoPath.CreateKnown(PathA)];
+        Assert.Equal(Key, Assert.Single(Assert.IsType<InformationTemplateModuleEvidence>(module.InformationTemplates).Records).Key);
+    }
+
+    [Fact]
+    public void binding_loader_required() => Assert.Throws<FormatException>(() => RawReport(compatibility: 3));
+
     [Fact]
     public void fresh_imported_record_accepted()
     {
