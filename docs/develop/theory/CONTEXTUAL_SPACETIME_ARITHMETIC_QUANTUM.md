@@ -19758,3 +19758,203 @@ $$
 这里的 Zeckendorf 结构提供合法标签及一个明确的等距嵌入。仪器由所写投影指定；没有从 Fibonacci 权重推导自然能谱、实验耦合、普适几何或经典性，也没有改变支撑内的一次查询存储界。
 
 ## 追加锚（新终端）
+
+## 79. 可见算子系统、可编码子系统与 Zeckendorf 记忆成本
+
+### 79.1 预测闭合不等于代数闭合
+
+第 78 节中的 $X/Z$ 任务给出一个最小反例。其所有有限词效果都落在
+
+$$
+V_{XZ}=\operatorname{span}_{\mathbb R}\{I,X,Z\},
+$$
+
+并且 $Y$ 方向不会回流到这些读数。因而 $V_{XZ}$ 对这组仪器是预测闭合的。然而
+
+$$
+XZ=iY\notin V_{XZ}.
+$$
+
+所以 $V_{XZ}$ 不是复矩阵代数，也不是一个可以直接当作独立量子系统的乘法闭子空间。
+
+这一区分可以写成两个不同的要求。先取一个已经固定的、单一的 Heisenberg 更新 $H$ 和初始效果族 $S$，令
+
+$$
+V_0=\operatorname{span}_{\mathbb R}(\{I\}\cup S),
+\qquad
+V_{n+1}=V_n+H(V_n).
+$$
+
+**预测闭合**是在某个 $N$ 后满足
+
+$$
+V_N=V_{N+1},
+$$
+
+这时已有的 `operator_system_tower_once_stable_permanently`（其前提是一个明确给定的幺正完全正 Heisenberg 映射）保证后续塔保持不变。多个设置或自适应协议需要先给出打包后的单一通道，或另证族版本；不能由该定理直接推出。**代数闭合**则要求在复化后还满足
+
+$$
+V_{\mathbb C}V_{\mathbb C}\subseteq V_{\mathbb C},
+\qquad
+V_{\mathbb C}^{\ast}=V_{\mathbb C}.
+$$
+
+前者保证指定实验的未来统计可由当前坐标预测；后者只说明存在一个有限维含单位的 $*$-子代数候选载体。要把它解释成独立的 $C^*$ 子系统，仍需另给编码、恢复和动力学交换图。前者不推出后者。
+
+证明 $V_{XZ}$ 的失败只需计算 $XZ=iY$。这也解释了第 78 节正投影 $\Pi$ 的地位：它可以在实 Hermitian 读数上保持全部指定统计，却不能直接当作完全正的量子通道。若要求一个物理编码，必须额外提供完全正的嵌入、压缩和其相容的动力学；仅有线性正投影不足以完成这一步。
+
+### 79.2 物理编码的最小接口
+
+设 $\mathcal H_S$ 是完整系统，$\mathcal H_R$ 是候选记忆空间。下面把一个“可独立访问的量子记忆”作为额外的强假设，定义为一对映射
+
+$$
+\iota:\mathcal B(\mathcal H_R)\longrightarrow\mathcal B(\mathcal H_S),
+\qquad
+\mathcal R:\mathcal B(\mathcal H_S)\longrightarrow\mathcal B(\mathcal H_R),
+$$
+
+其中 $\iota$ 要求为 Heisenberg 意义下的幺正 $*$-单同态（若只给 UCP 映射，则还须另加 complete-order embedding 假设），$\mathcal R$ 是幺正完全正压缩，并满足
+
+$$
+\mathcal R\circ\iota=\operatorname{id}_{\mathcal B(\mathcal H_R)}.
+$$
+
+若只要求把完整演化商到记忆上，要求某个记忆演化 $H_R$ 满足
+
+$$
+\mathcal R\circ H=H_R\circ\mathcal R.
+$$
+
+这三条分别保证代数嵌入、Heisenberg 商的可定义性和预测闭合；它们是定义中的额外条件，不是由 operator system 自动得到的。若要求记忆内部作为完整子系统演化，还要加强为
+
+$$
+H\circ\iota=\iota\circ H_R.
+$$
+
+在 Schrödinger 对偶方向，这些 UCP 条件对应相应的 CPTP 编码与解码条件。它们比“$V$ 是一个稳定实向量空间”严格得多。
+
+在有限维情形，若只要求任务效果而非整个矩阵代数，则可以把 $\mathcal R$ 的像限制为一个含单位的 Hermitian operator system；这正是第 77--78 节可见空间的适用范围。若要求任意后续量子操作都能在记忆内实现，则必须进一步验证乘法闭合或给出一个更大的代数载体。因而“对象”至少有两层：
+
+$$
+\text{任务对象}=\text{对指定实验闭合的 operator system},
+$$
+
+$$
+\text{量子子系统}=\text{带完全正编码与回收的代数对象}.
+$$
+
+把第一层直接称为第二层，会把预测充分性误报成物理可实现性。
+
+### 79.3 共享经典存储的成本不是只数当前标签
+
+设 $N$ 个历史在目标实验族中要求精确区分，并且它们必须被一次性写入一个 $d$ 维量子记忆。仓库的 `finite_memory_history_capacity` 在明确假设“$N$ 个密度态由同一个 POVM 一次性完美区分”时给出
+
+$$
+N\le d.
+$$
+
+若记忆由 $b$ 个量子比特组成，则 $d=2^b$，因此
+
+$$
+ b\ge \lceil\log_2N\rceil.
+$$
+
+对长度为 $L$、禁止相邻两个 $1$ 的 Zeckendorf 合法构型，
+
+$$
+|\mathcal W_L|=F_{L+2}.
+$$
+
+若每个合法构型先被编码成记忆 Hilbert 空间中的一个密度态，且任务要求同一个 POVM 一次性完美区分所有这些态，便得到必要条件
+
+$$
+ b\ge \left\lceil\log_2 F_{L+2}\right\rceil.
+$$
+
+这只是完美区分的下界。若只需预测一个目标族，历史可以按未来响应合并，所需维数由响应等价类数量决定，而不由原始构型总数决定。反过来，若两个当前标签在当前测量下相同、但在后续实验中可分开，则把它们合并会破坏闭合，即使当前标签数已经很小。
+
+因此记忆预算应写成三元组，而不是一个整数：
+
+$$
+(\text{响应类数},\ \text{闭合误差},\ \text{可回收关联}).
+$$
+
+第一项控制需要多少可区分记录，第二项控制有限预测视界内的近似程度，第三项控制暂时不可见的相干是否可能重新出现。
+
+### 79.4 Zeckendorf 约束改变的是载体维数，不是动力学
+
+令
+
+$$
+\mathcal W_L=\{w\in\{0,1\}^L:w_jw_{j+1}=0\},
+\qquad
+\mathcal H_{Z,L}=\operatorname{span}\{|w\rangle:w\in\mathcal W_L\}.
+$$
+
+对 $L\ge2$，并取 $\mathcal W_0=\{\epsilon\}$、$\mathcal W_1=\{0,1\}$，分解首位可得
+
+$$
+\mathcal W_L=0\mathcal W_{L-1}\sqcup10\mathcal W_{L-2},
+$$
+
+从而
+
+$$
+\dim\mathcal H_{Z,L}=F_{L+2}.
+$$
+
+这一步只决定允许的基态数量。若 $P_Z$ 是投影到该空间的投影，实际 Hamiltonian $H$ 还必须满足
+
+$$
+[H,P_Z]=0
+$$
+
+才能保证合法构型空间在连续演化下保持不变；离散更新则需要
+
+$$
+UP_Z=P_ZUP_Z.
+$$
+
+否则，Zeckendorf 只是对初始构型的编号，演化会产生不在该刻度内的状态。仓库已有的 `prime_diagonal_saturation` 说明了相近但不同的边界：当可见观测属于素数占据生成的对角代数时，完全对角 pinching 不改变这些观测的迹配对；该结论没有把对角代数之外的相干宣称为不存在，也没有给出任意 Hamiltonian 的不变性。
+
+对 $L=2$，合法字串为 $00,01,10$。可把 $|01\rangle,|10\rangle$ 嵌入一个量子比特的两个基态，并把 $|00\rangle$ 作为剩余结果 $R$。这是一种任务特定的编码；它不等于把三维合法空间整体识别成二维量子比特。若后续操作能区分 $|00\rangle$ 与其余两态，$R$ 必须继续保留，否则该信息会在下一步回流中丢失。
+
+### 79.5 可检验的“稳定经典现实”条件
+
+结合前面各节，可以把一个有限任务上的稳定对象**提议**定义为四元组
+
+$$
+\mathfrak O=(V,\mathfrak T,H,\varepsilon),
+$$
+
+其中 $V$ 是含单位的可见 operator system，$\mathfrak T$ 是允许的实验族，$H$ 是预测视界，$\varepsilon$ 是允许误差。其候选精度条件应写成：对所有密度矩阵 $\rho,\sigma$，若
+
+$$
+\forall A\in V,\quad \operatorname{tr}(\rho A)=\operatorname{tr}(\sigma A),
+$$
+
+则要求
+
+$$
+\sup_{T\in\mathfrak T,\,|w|\le H}
+\operatorname{TV}\bigl(p_T(w\mid\rho),p_T(w\mid\sigma)\bigr)
+\le\varepsilon.
+$$
+
+实验族 $\mathfrak T$ 应包含所允许的设置选择、记录和自适应停止规则。记录通道与动力学的闭合缺陷还须另行定义并纳入同一预算；这里的条件是研究接口，不是仓库现有的一个单独 Lean 判据。若再要求一个真正的量子子系统，则追加完全正的 $\iota,\mathcal R$ 及交换图条件。
+
+因此问题“保留多少历史才得到经典现实”没有独立于任务的答案。精确形式是：寻找最小的 $V$，使其在给定 $\mathfrak T$、$H$ 和 $\varepsilon$ 下闭合，同时满足所需的物理编码条件。在明确给出成本函数和闭合缺陷定义后，才可把它写成如下研究中的受约束优化问题：
+
+$$
+\min_V\ \operatorname{cost}(V)
+\quad\text{subject to}\quad
+\operatorname{closure\_defect}(V;\mathfrak T,H)\le\varepsilon,
+$$
+
+这里的 $\operatorname{cost}$ 和 $\operatorname{closure\_defect}$ 都是待定义的研究量；物理版本还须追加“存在完全正编码、恢复和交换图”的约束，不能把它替换成尚未定义的标量等式。
+
+这把“相对性”限制在明确的实验族、时间范围和误差预算内：换实验族会改变最小 $V$，增加预测视界会暴露原先隐藏的方向，要求物理可编码又会排除只有线性闭合而没有完全正回收的候选空间。
+
+本节使用的永久稳定、可见维数、有限记忆容量和对角饱和均来自现有 Lean 模块；`FutureStatisticsEquivalence` 还把“所有未来读数相同”精确连接到差态对无限 Heisenberg 生成 operator system 的湮灭。$X/Z$ 的非代数例子、完全正编码接口和 Zeckendorf 投影不变条件是对这些结果的组合解释。它们给出可形式化的后续目标，但不宣称仓库已经证明任意 operator system 都有物理回收映射，也不把任务特定的二维嵌入提升为普遍量子存储定理。
+
+## 追加锚（新终端）
