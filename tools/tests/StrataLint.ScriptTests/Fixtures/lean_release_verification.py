@@ -91,7 +91,7 @@ class ReleaseVerificationCases:
     def test_verification_roundtrip_uses_isolated_exact_tag_and_never_prunes(self):
         self.verification_fixture()
         self.assertEqual(0, self.transport("publish", "999").returncode)
-        published = self.verification("publish")
+        published = self.verification("publish", **self.installation_probe())
         self.assertEqual(0, published.returncode, published.stdout + published.stderr)
         receipt = json.loads(next(line.partition(" ")[2] for line in published.stdout.splitlines()
                                   if line.startswith("LEAN_CACHE_PUBLISH ")))
@@ -99,6 +99,7 @@ class ReleaseVerificationCases:
         self.assertTrue(tag.startswith("lean-cache-verify-v1-"))
         self.assertTrue(tag.endswith("-123-1"))
         self.assertEqual("published", receipt["status"])
+        self.assertFalse(any(event["operation"] == "copytree" for event in self.installation_events()))
         self.assertEqual(2, len(list(self.remote.iterdir())))
         self.assertFalse(any(call[:2] in (["release", "list"], ["release", "delete"])
                              for call in self.verification_calls()))

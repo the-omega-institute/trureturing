@@ -81,6 +81,131 @@ subprocess.run = run
     def gh_budgets(self):
         return [json.loads(line) for line in (self.root / "gh-budgets").read_text().splitlines()]
 
+    def installation_probe(self, failure=""):
+        # A runner can hold one unpacked build but not a second whole-tree copy.
+        # Track file identities and inject filesystem errors in the real restorer.
+        write(self.bin / "sitecustomize.py", '''
+import errno, json, os, pathlib, shutil, tarfile
+def record(**event):
+    with pathlib.Path(os.environ["FAKE_INSTALL_LOG"]).open("a") as log:
+        log.write(json.dumps(event) + "\\n")
+def copytree(source, target, *args, **kwargs):
+    record(operation="copytree", source=str(source), target=str(target))
+    raise OSError(errno.ENOSPC, "no space for a duplicate unpacked tree")
+original_extract, original_rename = tarfile.TarFile.extractall, pathlib.Path.rename
+def extract(archive, path, *args, **kwargs):
+    record(operation="extract", path=str(path))
+    result = original_extract(archive, path, *args, **kwargs)
+    for member in archive.getmembers():
+        if member.isfile():
+            status = (pathlib.Path(path) / member.name).stat()
+            record(operation="material", name=member.name, device=status.st_dev, inode=status.st_ino)
+    if os.environ["FAKE_INSTALL_FAILURE"] == "extract":
+        raise OSError(errno.ENOSPC, "injected extraction failure")
+    return result
+def rename(source, target):
+    record(operation="rename", source=str(source), target=str(target))
+    if os.environ["FAKE_INSTALL_FAILURE"] == "rename":
+        raise OSError(errno.EIO, "injected rename failure")
+    return original_rename(source, target)
+shutil.copytree, tarfile.TarFile.extractall, pathlib.Path.rename = copytree, extract, rename
+''')
+        (self.root / "install-events").unlink(missing_ok=True)
+        return {"PYTHONPATH": str(self.bin), "FAKE_INSTALL_LOG": str(self.root / "install-events"),
+                "FAKE_INSTALL_FAILURE": failure}
+
+    def installation_events(self):
+        return [json.loads(line) for line in (self.root / "install-events").read_text().splitlines()]
+
+    def test_restore_installs_each_extracted_file_once_on_the_target_filesystem(self):
+        partition = json.loads(self.transport("address").stdout)["partition"]
+        write(self.root / ".lake/report-cache" / partition / "seed.json", "report material")
+        self.assertEqual(0, self.transport("publish").returncode)
+        shutil.rmtree(self.root / ".lake")
+        result = self.transport("fetch", **self.installation_probe())
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertIn('"status":"unpacked"', result.stdout)
+        events = self.installation_events()
+        self.assertFalse(any(event["operation"] == "copytree" for event in events))
+        extracted = next(event for event in events if event["operation"] == "extract")
+        self.assertEqual((self.root / ".lake").resolve(), pathlib.Path(extracted["path"]).parent.resolve())
+        materials = [event for event in events if event["operation"] == "material"]
+        self.assertEqual(2, len(materials))
+        for material in materials:
+            status = (self.root / ".lake" / material["name"]).stat()
+            self.assertEqual((material["device"], material["inode"]), (status.st_dev, status.st_ino))
+        self.assertEqual({"build", "report-cache"}, {path.name for path in (self.root / ".lake").iterdir()})
+
+    def test_restore_cleans_its_staging_on_extraction_and_installation_failure(self):
+        self.assertEqual(0, self.transport("publish").returncode)
+        shutil.rmtree(self.root / ".lake/build")
+        write(self.root / ".lake/keep.txt", "existing private material")
+        for failure, reason in (("extract", "injected extraction failure"), ("rename", "injected rename failure")):
+            with self.subTest(failure=failure):
+                result = self.transport("fetch", **self.installation_probe(failure))
+                self.assertEqual(1, result.returncode, result.stdout + result.stderr)
+                self.assertIn(reason, result.stdout)
+                self.assertEqual(["keep.txt"], [path.name for path in (self.root / ".lake").iterdir()])
+                self.assertEqual("existing private material", (self.root / ".lake/keep.txt").read_text())
+
+    def test_restore_preserves_nonempty_file_and_symlink_targets(self):
+        self.assertEqual(0, self.transport("publish").returncode)
+        build = self.root / ".lake/build"
+        shutil.rmtree(build)
+        write(self.root / "private-build/keep.txt", "private material")
+        for kind in ("directory", "file", "symlink"):
+            with self.subTest(kind=kind):
+                if kind == "directory":
+                    write(build / "keep.txt", "private material")
+                elif kind == "file":
+                    write(build, "private material")
+                else:
+                    build.symlink_to(self.root / "private-build", target_is_directory=True)
+                try:
+                    result = self.transport("fetch", **self.installation_probe())
+                    self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+                    self.assertIn('"status":"skipped"', result.stdout)
+                    self.assertEqual(kind == "symlink", build.is_symlink())
+                    self.assertEqual("private material", (build if kind == "file" else build / "keep.txt").read_text())
+                    self.assertEqual(["build"], [path.name for path in build.parent.iterdir()])
+                finally:
+                    if kind == "directory": shutil.rmtree(build)
+                    else: build.unlink()
+
+    def test_restore_rejects_shared_lake_without_writing_to_its_target(self):
+        self.assertEqual(0, self.transport("publish").returncode)
+        lake, shared = self.root / ".lake", self.root / "shared-lake"
+        lake.rename(shared)
+        lake.symlink_to(shared, target_is_directory=True)
+        result = self.transport("fetch", **self.installation_probe())
+        self.assertEqual(1, result.returncode, result.stdout + result.stderr)
+        self.assertIn("shared cache target is forbidden", result.stdout)
+        self.assertFalse((self.root / "install-events").exists(), "shared target reached extraction")
+        self.assertEqual(["build"], [path.name for path in shared.iterdir()])
+        self.assertEqual("locally-produced-olean", (shared / "build/lib/lean/D5/A.olean").read_text())
+
+    def test_restore_member_rejection_and_missing_build_leave_no_staging(self):
+        self.assertEqual(0, self.transport("publish").returncode)
+        shutil.rmtree(self.root / ".lake/build")
+        snapshot = next(self.remote.iterdir())
+        for name, kind in (("../outside", tarfile.DIRTYPE), ("/outside", tarfile.DIRTYPE),
+                           ("outside", tarfile.DIRTYPE), ("build/link", tarfile.SYMTYPE),
+                           ("build/link", tarfile.LNKTYPE), ("report-cache", tarfile.DIRTYPE)):
+            with self.subTest(name=name, kind=kind):
+                with tarfile.open(snapshot / "lean-build.tgz", "w:gz") as archive:
+                    member = tarfile.TarInfo(name)
+                    member.type, member.linkname = kind, "outside" if kind in (tarfile.SYMTYPE, tarfile.LNKTYPE) else ""
+                    archive.addfile(member)
+                packed = (snapshot / "lean-build.tgz").read_bytes()
+                manifest = json.loads((snapshot / "manifest.json").read_text())
+                manifest.update(archive_sha256=digest(packed), archive_bytes=len(packed),
+                    parts=[{"name": "lean-build.tgz", "sha256": digest(packed), "bytes": len(packed)}])
+                write(snapshot / "manifest.json", json.dumps(manifest))
+                result = self.transport("fetch")
+                self.assertEqual(1, result.returncode, result.stdout + result.stderr)
+                self.assertIn("no project build" if name == "report-cache" else "invalid cache member", result.stdout)
+                self.assertEqual([], list((self.root / ".lake").iterdir()))
+
     def preparation_deadline_probe(self, phase):
         # Small incompressible material reaches archive hashing and multipart
         # splitting without allocating a production-sized Release asset.

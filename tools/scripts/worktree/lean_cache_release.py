@@ -8,7 +8,6 @@ import json
 import os
 import pathlib
 import re
-import secrets
 import shutil
 import subprocess
 import sys
@@ -313,8 +312,10 @@ def restore_snapshot(root, partition, tag, stage, deadline, verification=None):
     if (manifest.get("archive_sha256") != sha(stage / ASSET)
             or manifest.get("archive_bytes") != (stage / ASSET).stat().st_size):
         raise ValueError("archive checksum or size mismatch")
-    unpacked = stage / "unpacked"
-    unpacked.mkdir()
+    lake = root / ".lake"
+    if lake.is_symlink():
+        raise ValueError("shared cache target is forbidden")
+    installed = []
     with tarfile.open(stage / ASSET) as archive:
         members = archive.getmembers()
         for member in members:
@@ -323,31 +324,26 @@ def restore_snapshot(root, partition, tag, stage, deadline, verification=None):
                     or path.parts[0] not in ("build", "report-cache")
                     or not (member.isfile() or member.isdir())):
                 raise ValueError("archive contains an invalid cache member")
-        # A truncated archive or corrupt transfer cannot reach the live cache.
-        archive.extractall(unpacked, members=members)
-    if not (unpacked / "build").is_dir():
-        raise ValueError("archive has no project build")
-    remaining(deadline)
-    lake = root / ".lake"
-    if lake.is_symlink():
-        raise ValueError("shared cache target is forbidden")
-    lake.mkdir(exist_ok=True)
-    installed = []
-    for name in ("build", "report-cache"):
-        source, target = unpacked / name, lake / name
-        if not source.is_dir() or target.is_symlink():
-            continue
-        if target.exists() and (not target.is_dir() or any(target.iterdir())):
-            continue
-        staged = lake / (".release-" + secrets.token_hex(12))
-        try:
-            shutil.copytree(source, staged)
-            if target.is_dir():
-                target.rmdir()
-            staged.rename(target)
-            installed.append(name)
-        finally:
-            shutil.rmtree(staged, ignore_errors=True)
+        lake.mkdir(exist_ok=True)
+        # Stage on the destination filesystem so installation only renames the
+        # verified directories, without allocating a second unpacked build.
+        with tempfile.TemporaryDirectory(prefix=".release-", dir=lake) as temporary:
+            unpacked = pathlib.Path(temporary)
+            # A truncated archive cannot reach the installed cache directories.
+            archive.extractall(unpacked, members=members)
+            if not (unpacked / "build").is_dir():
+                raise ValueError("archive has no project build")
+            remaining(deadline)
+            for name in ("build", "report-cache"):
+                source, target = unpacked / name, lake / name
+                if not source.is_dir() or target.is_symlink():
+                    continue
+                if target.exists() and (not target.is_dir() or any(target.iterdir())):
+                    continue
+                if target.is_dir():
+                    target.rmdir()
+                source.rename(target)
+                installed.append(name)
     receipt("fetch", "unpacked" if installed else "skipped",
             mode="verification" if verification is not None else "partition", resolved=tag,
             installed=installed,
