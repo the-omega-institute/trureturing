@@ -1,0 +1,38 @@
+### 80.4 近似乘法闭包与历史预算
+
+对一个有限维预测截断 $V\subseteq V_\infty$，先选定矩阵范数，并令距离取该范数到子空间的距离；定义乘法缺陷
+
+$$
+\eta(V)
+=
+\sup_{\substack{A,B\in V\\\|A\|,\|B\|\le1}}
+\operatorname{dist}(AB,V+iV).
+$$
+
+这里 $V+iV$ 是 $V$ 的复化；有限维保证该子空间闭合。若 $\eta(V)=0$，则所有单位范数以内的可见乘积都落在复化空间中，因而该截断对这些乘积精确闭合。若 $\eta(V)>0$，至少有一对当前可见关系的组合产生了新的方向。这个量是研究定义，不是已冻结的物理误差；研究上有两种不同处理：
+
+$$
+\begin{aligned}
+&\text{扩大记录，加入产生该乘积的历史关系；}\\
+&\text{固定允许误差，把 }\eta(V)\text{ 纳入预测误差预算。}
+\end{aligned}
+$$
+
+$\eta(V)$ 只量化一步的乘法缺口，不自动给出任意多步实验的误差界。多步控制、参考系统和有记忆环境仍需使用联合通道距离或相应的序列误差界；本节没有把 $\eta$ 宣称为一个已冻结的物理误差定理。
+
+因此，对“保留多少历史才能得到稳定经典现实”的问题，三层结构可以写成
+
+$$
+\boxed{
+\begin{gathered}
+\text{只预测指定未来读数：保留 }V_\infty;\\
+\text{允许可组合后续操作：保留 }\mathcal A_\infty;\\
+\text{只读取稳定经典标签：保留 }Z(\mathcal A_\infty);\\
+\text{存在量子块时：还要保留每个中心块的内部自由度。}
+\end{gathered}}
+$$
+
+Zeckendorf 约束可以决定中心标签的自然组织和数量 $F_{L+2}$，但不能替代 Heisenberg 演化、乘法闭包或块内量子动力学。所谓稳定经典现实不是一个脱离任务的单独刻度，而是相对于实验族和后续操作选择的三层对象：预测算子系统、可组合代数以及其中心记录。只有明确当前实验使用哪一层，才知道哪些历史可以安全丢弃，哪些历史会在下一次组合操作中重新显现。
+
+本节复用 `operator_system_tower_once_stable_permanently`、`future_statistics_iff_annihilates_infinite_system`、`prediction_closure_minimal_dynamical_repair`、`record_fixed_center_eq_block_scalars` 和 `finite_memory_history_capacity` 的现有结果。中心维数、块内自由度、乘法缺陷 $\eta(V)$ 与 Zeckendorf 分块的组合是本节的开放研究桥接，不冒充已有 Lean 定理。
+

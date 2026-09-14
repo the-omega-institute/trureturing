@@ -1,0 +1,46 @@
+### 80.3 Zeckendorf 标签只决定中心数量的特殊情形
+
+取禁止相邻 $11$ 的合法集合
+
+$$
+\mathcal W_L
+=\{w\in\{0,1\}^L:w_jw_{j+1}=0\},
+\qquad
+|\mathcal W_L|=F_{L+2}.
+$$
+
+若每个合法字串只对应一个一维块，则得到纯经典代数
+
+$$
+\mathcal A_Z
+=\bigoplus_{w\in\mathcal W_L}\mathbb C,
+$$
+
+其中心维数、代数维数和标签数都等于 $F_{L+2}$。这正是 Zeckendorf 刻度与经典记录完全吻合的特殊情况。
+
+若每个标签后面仍保留大小为 $n_w$ 的块，则
+
+$$
+\mathcal A_Z^{\mathrm{block}}
+=\bigoplus_{w\in\mathcal W_L}M_{n_w}(\mathbb C),
+$$
+
+并且
+
+$$
+\dim_{\mathbb C}Z(\mathcal A_Z^{\mathrm{block}})=F_{L+2},
+\qquad
+\dim_{\mathbb C}\mathcal A_Z^{\mathrm{block}}
+=\sum_{w\in\mathcal W_L}n_w^2.
+$$
+
+若物理 Hilbert 空间是一个有限维表示，并在第 $w$ 个块上含有重数 $m_w$（且这些重数满足所选表示的忠实性要求），其载体维数则为
+
+$$
+\dim\mathcal H=\sum_{w\in\mathcal W_L}m_wn_w.
+$$
+
+这三个数分别回答三个问题：合法标签有多少，可组合的算子有多少，实际联合载体有多少。因此不能从 $F_{L+2}$ 单独推出量子记忆维数、可见算子维数或未来统计的 Hankel 秩。
+
+第 78 节的三构型嵌入已经展示了同一组合法字串在加入补空间后会出现额外记录方向；这里的块分解把“标签之外仍有内部状态”写成了统一公式。若后续实验只访问中心，块内状态可以暂时隐藏；若允许块内操作，隐藏部分必须继续保留在模型中。
+
