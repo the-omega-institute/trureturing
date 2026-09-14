@@ -1,0 +1,42 @@
+### 86.3 未来误差是两个残差的相关
+
+对一个有限效果塔，令 $\mathcal V_m$ 为当前深度可见的 trace-zero 空间，$\mathcal R_m=\mathcal V_m^\perp$ 为隐藏残差空间。对密度态 $\rho$，记其中心化 trace-zero 坐标为 $s_\rho$；未来效果 $F$ 也指 Heisenberg 回拉得到的中心化 Hermitian 方向。`future_probability_residual_correlation` 给出：以可见投影构造线性预测代表后，预测误差满足
+
+$$
+\boxed{
+\operatorname{error}
+=\left\langle
+\Pi_{\mathcal R_m}(s_\rho),
+\Pi_{\mathcal R_m}(F)
+\right\rangle,
+}
+$$
+
+并有 Cauchy--Schwarz 界
+
+$$
+|\operatorname{error}|
+\le
+\sqrt{\operatorname{residualMass}(\mathcal V_m,s_\rho)}
+\,\left\|\Pi_{\mathcal R_m}(F)\right\|.
+$$
+
+因此未来误差不是一个只由“隐藏维数”决定的常数。它同时取决于两件事：当前状态在隐藏方向上有多少分量，以及未来目标本身有多少分量会探测这些方向。隐藏空间很大但目标完全正交时，误差仍可为零；隐藏空间很小但未来目标正好对准它时，误差可以达到该界的量级。
+
+同一个隐藏残差还控制压缩动力学本身的不自然性。若环境动力学在 trace-zero 载体上是 $L$-Lipschitz，`residual_controls_naturality` 给出
+
+$$
+\Delta_m(X)
+\le L\,\left\|\Pi_{\mathcal R_m}X\right\|,
+$$
+
+其中 $\Delta_m$ 是“先完整演化再投影”和“先投影再演化”的距离差。在密度态的中心化坐标上，进一步有
+
+$$
+\Delta_m(s_\rho)\le L\sqrt{\operatorname{residualMass}(\mathcal V_m,s_\rho)}.
+$$
+
+所以同一个 $\sqrt{M_m}$ 同时出现在未来观测误差和动力学压缩缺陷的上界中；前者还乘以未来目标的残差敏感度，后者还乘以动力学的 Lipschitz 常数。两者是共同受残差控制的两个不同量，不是同一个误差的恒等改写。
+
+这个定理还包含一个必要警告：把状态的可见投影加回单位部分得到的线性预测代表，未必是正半定矩阵。因此“用当前记录预测未来”首先是一个 observable 期望的线性近似，不能自动解释成一个新的物理密度态。若需要物理态级别的预测，必须另加正性、完全正性或误差通道的证明。
+
