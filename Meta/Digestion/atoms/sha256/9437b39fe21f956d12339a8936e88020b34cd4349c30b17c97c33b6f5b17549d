@@ -1,0 +1,11 @@
+**命题 31.4（动作间隔下的唯一性保持）。** 令
+$$
+\gamma_s(h,q)=\min_{a\ne a_s(\phi(h,q),q)}
+\bigl(r_s(a\mid h,q)-r_s(a_s(\phi(h,q),q)\mid h,q)\bigr),
+$$
+其中 $|A|\ge2$，动作集有限且该最小值为正。若
+$$
+2M\delta(h,q)<\gamma_s(h,q),
+$$
+则 $a_s(\phi(h,q),q)$ 是目标条件风险的唯一最小化动作。
+

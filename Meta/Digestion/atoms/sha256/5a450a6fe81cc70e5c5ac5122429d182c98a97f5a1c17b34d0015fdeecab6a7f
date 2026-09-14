@@ -1,0 +1,18 @@
+**定义 33.5（共同模型族下的鲁棒更新）。** 令 $\mathcal{M}$ 是一族已知的标签通道，$K(y\mid s,x)$ 是其中一个通道。对 $\mathcal{F}$、动作 $x$ 和观察 $y$，定义可行后验集合
+$$
+\mathsf U_{\mathcal{M}}(\mathcal{F},x,y)=
+\left\{
+\frac{\mu(s)K(y\mid s,x)}{\sum_{s'}\mu(s')K(y\mid s',x)}
+:
+\mu\in\mathcal{F}, K\in\mathcal{M},
+\sum_{s'}\mu(s')K(y\mid s',x)>0
+\right\}.
+$$
+若控制器、预算和公开历史的更新只读取 $(\mathcal{F},\kappa,b,g,x,y)$，并且下一步的风险、费用与停止规则只读取同一组变量，则
+$$
+z_t=(\mathcal{F}_t,\kappa_t,b_t,g_t)
+$$
+是该固定有限协议的候选鲁棒状态。
+
+这里的“候选”是有条件的：要证明闭合，还必须证明 $\mathcal{M}$ 的更新规则、动作核和允许的停止规则在每一步都能由这组变量计算。若模型族随未记录的历史改变，或者隐藏控制器状态与 $s$ 相关，必须把它们并入联合信念；单独记录 $\mathcal{F}_t$ 会重新产生第32.4节的后继歧义。
+

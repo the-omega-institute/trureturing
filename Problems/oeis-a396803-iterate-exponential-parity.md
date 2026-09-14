@@ -26,11 +26,10 @@ In this entry `A^3(x)` denotes the 3-fold COMPOSITIONAL ITERATE of `A`, not
 the 3-th power; the entry's formula field states that convention explicitly.
 The offset is 1 and the first terms are 1, 2, 21, 472, 17165, 885696, 60160723.
 
-This lane settles ONLY the parity conjecture. The remaining
-conjecture quoted above,
-on residues modulo three,
-is NOT proved, is not claimed,
-and does not appear in the module in any form.
+This dossier concerns the parity conjecture. The modulo-three conjecture
+is proved separately by `IterateExponentialModThree.result`; see
+[the modulo-three dossier](oeis-a396803-iterate-exponential-mod-three.md).
+It is not a theorem of the parity module.
 
 ## Motivation
 
@@ -105,9 +104,9 @@ the same vanishing constant coefficient would falsify `fixed_unique`.
 
 ## Triage
 
-`theorem`. One universal conjecture of this entry is settled, for a sequence
-proved to satisfy the entry's defining equation. The residue
-conjecture remains open.
+`theorem`. The parity conjecture is settled for a sequence proved to satisfy
+the entry's defining equation. The modulo-three assertion is settled by the
+separate result identified above.
 
 ## ASSUMED-UNVERIFIED
 
