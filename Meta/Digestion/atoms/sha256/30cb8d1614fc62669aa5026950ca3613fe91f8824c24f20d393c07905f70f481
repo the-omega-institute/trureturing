@@ -1,0 +1,4 @@
+对每个集合 $X$ 上的等价关系 $R$，
+$$
+[\operatorname{Enc}(x)]_{R^*}=\operatorname{Enc}[[x]_R],
+$$

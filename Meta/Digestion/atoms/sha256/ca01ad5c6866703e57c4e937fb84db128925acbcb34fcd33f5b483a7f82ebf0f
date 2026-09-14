@@ -1,0 +1,43 @@
+**命题 52.3（中间去相干会改变后续记录）。** 对一个量子比特，取计算基去相干通道
+
+$$
+\mathcal E_Z(X)=P_0XP_0+P_1XP_1,
+\qquad P_j=|j\rangle\langle j|,
+$$
+
+以及 Hadamard 幺正通道
+
+$$
+\Phi(X)=H X H,\qquad
+H=\frac1{\sqrt2}\begin{pmatrix}1&1\\1&-1\end{pmatrix}.
+$$
+
+对初态 $\rho=P_0$ 和两步演化，
+
+$$
+\mathcal E_Z\Phi^2(P_0)=P_0,
+\qquad
+(\mathcal E_Z\Phi)^2(P_0)=\frac I2.
+$$
+
+因此末端读取与逐步记录的通道一般不同。在这个模型中，定义 52.2 的一步缺陷为 $\delta=1/2$，而末端记录与闭合预测的两步误差恰为 $1/2$。
+
+证明。$H^2=I$，所以第一式成立。另一方面，$\Phi(P_0)=|+\rangle\langle+|$，去相干后为 $I/2$；后者在 $\Phi$ 和 $\mathcal E_Z$ 下都不变，得到第二式。
+
+为计算一步缺陷，把任意态写成 Bloch 形式
+
+$$
+\omega=\frac12(I+xX+yY+zZ),
+\qquad x^2+y^2+z^2\le1.
+$$
+
+Hadamard 共轭将 $X$ 与 $Z$ 互换。于是
+
+$$
+\mathcal E_Z\Phi(\omega)=\frac12(I+xZ),
+\qquad
+\mathcal E_Z\Phi\mathcal E_Z(\omega)=\frac I2.
+$$
+
+两者迹距离为 $|x|/2$，其最大值 $1/2$ 由 $|+\rangle$ 达到。记录更新 $K$ 把所有计算基对角态映为 $I/2$，所以 $T^2\mathcal E_Z(P_0)=I/2$。末端误差为 $D(P_0,I/2)=1/2$；它符合定理 52.2，却不等同于逐步通道之间的误差。证毕。
+
