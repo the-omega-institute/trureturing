@@ -1,0 +1,58 @@
+### 12.6 有限维块系统的耗散与记忆核
+
+**定义。** 设 $T>0$，$X,Y$ 为有限维实 Hilbert 空间，$A:X\to X$、$D:Y\to Y$、$B:X\to Y$ 为线性映射，$B^*:Y\to X$ 为 $B$ 的伴随。考虑可微轨迹 $x:[0,T]\to X$、$y:[0,T]\to Y$ 满足的块系统
+
+\[
+\dot x=-Ax+B^*y,
+\qquad
+\dot y=-Bx-Dy.
+\tag{12.18}
+\]
+
+**命题。** 系统 (12.18) 的总能量满足
+
+\[
+\frac{d}{dt}\bigl(\|x\|^2+\|y\|^2\bigr)
+=-2\langle x,Ax\rangle-2\langle y,Dy\rangle.
+\tag{12.19}
+\]
+
+**命题。** 若对所有 $\xi\in X$、$\eta\in Y$ 都有 $\langle \xi,A\xi\rangle\geq\alpha\|\xi\|^2$ 与 $\langle \eta,D\eta\rangle\geq\delta\|\eta\|^2$，其中 $\alpha,\delta>0$，则
+
+\[
+\|x(t)\|^2+\|y(t)\|^2
+\leq e^{-2\min\{\alpha,\delta\}t}
+\bigl(\|x(0)\|^2+\|y(0)\|^2\bigr).
+\]
+
+**证明。** 对总能量求导。由伴随关系，交叉项
+
+\[
+2\langle x,B^*y\rangle-2\langle y,Bx\rangle
+\]
+
+**证明。** 上述交叉项恰好抵消，得到式 (12.19)；下界随即给出
+
+\[
+\frac{d}{dt}\bigl(\|x\|^2+\|y\|^2\bigr)
+\leq-2\min\{\alpha,\delta\}
+\bigl(\|x\|^2+\|y\|^2\bigr).
+\]
+
+**命题。** 消去隐藏状态后，
+
+\[
+y(t)=e^{-tD}y(0)-\int_0^t e^{-(t-s)D}Bx(s)\,ds,
+\]
+
+**命题。** 将上述隐藏状态表示代入可见方程，则
+
+\[
+\dot x(t)=-Ax(t)+B^*e^{-tD}y(0)
++\int_0^tK(t-s)x(s)\,ds,
+\qquad
+K(\tau)=-B^*e^{-\tau D}B.
+\tag{12.20}
+\]
+
+**证明。** 对隐藏方程应用常系数线性方程的变参数公式，得到 $y(t)$ 的表示；将该表示代回可见方程，积分项的算子系数即为式 (12.20) 中的 $K$。

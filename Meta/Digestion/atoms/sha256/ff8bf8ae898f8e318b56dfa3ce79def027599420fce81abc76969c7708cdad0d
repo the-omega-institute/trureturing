@@ -1,0 +1,8 @@
+**命题。** Fibonacci 矩阵满足
+
+$$
+Q^2=
+\begin{pmatrix}1&1\\0&1\end{pmatrix}
+\begin{pmatrix}1&0\\1&1\end{pmatrix}.
+$$
+

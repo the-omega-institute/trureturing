@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:c2e3fdbf5c95ede933e0ccaa7c92b44c86189a1d27abc1b4ae4f990a129637e8
+  normalized_sha256: sha256:c2e3fdbf5c95ede933e0ccaa7c92b44c86189a1d27abc1b4ae4f990a129637e8
+cas_ref: sha256:c2e3fdbf5c95ede933e0ccaa7c92b44c86189a1d27abc1b4ae4f990a129637e8
+coverage_gids:
+  - gid: D5/S0/Rewriting/Quotients/RelativeIdentityRefinement.relative_identity_refinement
+    target_statement_id: sha256:7ca0acc269a24023306a9952b705197c65a065f5861ea7ffbb399df1a34c9c80
+receipts:
+  unresolved_subitems: []

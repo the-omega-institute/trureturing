@@ -1,0 +1,29 @@
+**定理 474.6（同一增长截止的系数、误差与重叠）。** 固定实数 $0<\theta<1/2$。对全部整数 $N\ge1$，同时对所有满足 $\omega(Q)\le\theta\log_2N$ 的平方自由 $Q\ge1$，
+$$
+\left|\frac{U_Q(N)}N-c_Q\right|\le N^{2\theta-1},\qquad
+\left|\frac{W_Q(N)}N-\alpha_Q\right|
+\le3N^{\theta-1/2}\exp(2\sqrt{\theta\log_2N}).
+\tag{474.6a}
+$$
+在 $m_N=\lfloor\theta\log_2N\rfloor\ge2$ 的整数 $N$ 上，取
+$Q_N=\mathcal P(m_N)$、$k_N=\pi(m_N)$，则
+$$
+\frac{|M(N)|}N\le\frac{U_{Q_N}(N)}N
+\le F_K(m_N)+N^{2\theta-1}\longrightarrow0,
+\tag{474.6b}
+$$
+$$
+\frac{|M(N)|}N\le\frac{W_{Q_N}(N)}N
+\le F_K(m_N)+(N^\theta+2)N^{-1/2}e^{2\sqrt{\theta\log_2N}}
+\longrightarrow0,
+\tag{474.6c}
+$$
+$$
+\left|\frac{\mathcal L_{k_N}(N)}N-\frac1{6\zeta_R(2)}\right|
+\le\frac{F_K(m_N)}2+
+\frac{E_2+(N^\theta+2)e^{2\sqrt{\theta\log_2N}}}{2\sqrt N}
+\longrightarrow0.
+\tag{474.6d}
+$$
+其中 $F_K(m_N)=O_{K,\theta}((1+\log\log\log N)/\log\log N)$。这个选择在充分大 $N$ 时仍遗漏不超过 $N$ 的素数，故不是定理 472.5 的全素数截止。
+

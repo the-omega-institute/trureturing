@@ -1,0 +1,8 @@
+**文献定理 474.2（光滑 Möbius 和的全域界）。** 存在同一个绝对常数 $K\ge1$，使全部实数 $x\ge y\ge2$ 满足
+$$
+\left|\sum_{n\in\mathcal S(x,y)}\mu(n)\right|
+\le K\frac{\Psi(x,y)}{\log y}.
+\tag{474.2}
+$$
+此处直接引用 A. Hildebrand、G. Tenenbaum，〈Integers without large prime factors〉，*Journal de Théorie des Nombres de Bordeaux* **5**(2) (1993)，411–484，§7 印刷第470页 $f(n)=\mu(n)$ 段的无编号全域估计。原文将其归于 Alladi (1982) 与 Hildebrand (1987)；光滑集合及 $P^+(1)=1$ 的约定见第412、469页，控制常数约定见第412–413页。原式明确在 $x\ge y\ge2$ 一致成立，没有额外 $\epsilon$ 参数；其后关于 $u=\log x/\log y\to\infty$ 的更强估计不改变此式的域。$K$ 取存在的常数，不指定数值，也不另加 RH 前提。
+

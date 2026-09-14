@@ -1,0 +1,53 @@
+## FM.3 非交换因果恢复的有限时间误差
+
+**定义。** 令真实响应与记忆满足
+
+$$
+M_n=R_{n+2}-R_1R_{n+1}-\sum_{i=0}^{n-1}M_{n-1-i}R_{i+1},
+$$
+
+并用 $\widehat R$ 执行同一有序递推得到 $\widehat M$。
+
+**定理 FM2。** 假设在 $1\le t\le H+2$ 上
+
+$$
+\|R_t\|,\|\widehat R_t\|\le1,qquad
+\|\widehat R_t-R_t\|\le\eta,
+$$
+
+且在 $0\le j\le H$ 上 $\|M_j\|\le1$。则
+
+$$
+\boxed{\|\widehat M_j-M_j\|\le(2^{j+2}-1)\eta
+\qquad(0\le j\le H).}
+$$
+
+**证明。** 保留乘法次序，用
+
+$$
+\|ab-cd\|\le\|a-c\|\,\|b\|+\|c\|\,\|b-d\|
+$$
+
+逐项比较两个递推。记 $E_j=\|\widehat M_j-M_j\|$，得到
+
+$$
+E_n\le3\eta+\sum_{j=0}^{n-1}(E_j+\eta).
+$$
+
+强归纳代入 $E_j\le(2^{j+2}-1)\eta$，右侧为 $3\eta+4\eta(2^n-1)=(2^{n+2}-1)\eta$。证毕。
+
+**命题。** 若 FM1 的每个被测复矩阵元误差至多 $\epsilon$，令 $r_*=\max_\lambda r_\lambda$，则径向归一化后
+
+$$
+\boxed{\max_{0\le j\le H}\|\widehat M_j-M_j\|
+\le2r_*(2^{H+2}-1)\epsilon.}
+$$
+
+**证明。** 一个 $r_\lambda\times r_\lambda$ 误差矩阵的算子范数不超过 Frobenius 范数，因而不超过 $r_\lambda\epsilon$。对 $\|R\|\le1$，径向归一化满足
+
+$$
+\left\|\frac Z{\max(1,\|Z\|)}-R\right\|\le2\|Z-R\|.
+$$
+
+当 $\|Z\|>1$ 时，$\|Z-Z/\|Z\|\|=\|Z\|-1\le\|Z-R\|$；另一情形为恒等映射。以 $\eta=2r_*\epsilon$ 应用 FM2。证毕。
+

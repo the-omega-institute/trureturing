@@ -1,0 +1,6 @@
+**定理。** 对每个奇数 $n$，
+
+$$
+\boxed{\operatorname N(E_n)=-(L_n-1)^2.}\tag{T4}
+$$
+

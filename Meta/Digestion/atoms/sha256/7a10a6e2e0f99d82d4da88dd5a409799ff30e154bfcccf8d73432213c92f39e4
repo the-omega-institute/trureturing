@@ -1,0 +1,16 @@
+**推论 472.3（按素数值截止的次幂级完整表）。** 固定实数 $\eta>0$，对整数 $N\ge1$ 令
+$$
+y_N=\max(2,\lfloor\eta\log N\rfloor),\qquad Q_N=\prod_{p\le y_N}p,\qquad k_N=\pi(y_N).
+$$
+则 $k_N=O_\eta(\log N/\log\log N)$、$\log Q_N=O_\eta(\log N)$，因而
+$$
+2^{k_N}=N^{o(1)},\qquad
+|U_{Q_N}(N)-c_{Q_N}N|\le N^{o(1)},\qquad
+|W_{Q_N}(N)-\alpha_{Q_N}N|\le N^{1/2+o(1)}.
+$$
+包含全部约数、Möbius 符号、部分和、跳变、素数标签、必要首部和精确有理系数 $c_{Q_N},\zeta_R(2)\alpha_{Q_N}$ 的表，其长度及生成、排序、完整核对的位运算均为 $N^{o(1)}$。这里 $N^{o(1)}$ 的上界意为对每个固定 $\delta>0$，充分大 $N$ 时不超过 $N^\delta$；阈值可依赖 $\eta,\delta$。算法输入为整数 $y_N$，不把从任意实参数 $\eta$ 精确计算该 floor 计为免费步骤。
+
+**证明。** 钉版 mathlib 的 `eventually_primeCounting_le` 给固定 $\delta>0$ 时最终的 $\pi(x)\le(\log4+\delta)x/\log x$，故得到 $k_N$ 的界。其 `primorial_le_four_pow` 给 $Q_N\le4^{y_N}$，所以 $\log Q_N\le(2+\eta\log N)\log4=O_\eta(\log N)$。于是 $k_N=o(\log N)$；在 (472.2c)–(472.2d) 中代入即得两项误差上界。
+
+第 474.7–474.8 条对任意整数截止 $m\ge2$ 给出的完整表约定和逐位构造只使用 (472.2a)–(472.2b)，不以本推论为前提。在那里取 $m=y_N$、$b=1+\lceil\log_2Q_N\rceil$，表长 $O(2^{k_N}b)$、生成核对费 $O(2^{k_N}k_Nb^2+y_N^3)$ 均为 $N^{o(1)}$。两个有理系数的分子分母位长均为 $O(b)$，亦已包括。它们的构造不求值 $S_{Q_N}(N/a_i)$、$W_{Q_N}(N)$ 或 $M(N)$。证毕。
+

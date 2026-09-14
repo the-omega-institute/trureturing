@@ -1,0 +1,8 @@
+**定理。** 在上述误差假设下，令 $\widehat y=(\widehat v+a\widehat x)/b$，则
+
+\[
+|\widehat y-y|
+\leq\frac{\varepsilon_v+|a|\varepsilon_x}{|b|}.
+\tag{12.12}
+\]
+

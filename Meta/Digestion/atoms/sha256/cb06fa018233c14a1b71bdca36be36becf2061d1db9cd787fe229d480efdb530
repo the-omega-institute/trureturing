@@ -1,0 +1,6 @@
+**定理 460.5。**这个估计独立给每个固定 $h\in\mathbb Z\setminus\{0\}$ 的黄金相位界 $|\widehat\mu_X(h)|=O_h(X^{-1/5}(\log X)^4)$。
+
+**证明。**P8 的整数范数证明给 $\|n\alpha\|>1/(3n)$。对 $\theta=h\alpha$，取 $Q=\lfloor\sqrt X\rfloor$，Dirichlet 抽屉逼近给既约 $a/q$，$1\le q\le Q$ 且 $|q\theta-a|\le Q^{-1}$。范数下界使 $q>Q/(3|h|)$，且逼近误差至多 $1/(qQ)\le q^{-2}$。代入分析估计得 $O_h(X^{4/5}(\log X)^3)$，除以 $\pi(X)\sim X/\log X$ 即得。抽屉逼近由 $Q+1$ 个分数部分落入 $Q$ 个等长区间时两点之差得到；约分只减小分母及 $|q\theta-a|$。这里 $h$ 固定，未给增长 Fourier 频率的一致常数；一般固定无理参数仍用前一分析论证。证毕。
+
+
+

@@ -68,6 +68,16 @@ elaborate 失败时 Lean 自插 `sorryAx`。2026-09-11 实测:一份 125 行、`
 - **`utility:` 的 `kind` 只有四类计算性内容或 `none`**,没有 `bridge` 之类自造值;
   文法去仓里抄真实例子。
 
+## 长门命令的输出不进对话:重定向到文件,只回显退出码
+
+    make preflight BASE="$B" > "$LOG" 2>&1; echo "PREFLIGHT_EXIT=$?"; tail -5 "$LOG"
+
+`make preflight` / `make gate` / `make lean-report` / `make deposit-uncovered` / `scribe-content-checks.sh`
+会打印数千行 `OPEN` / `OBSERVE`。2026-09-14 实测:实施席把 preflight 的整条流当作命令输出回显,
+载体上游把这份 tool result 判为违规并杀掉整个 turn(`turn.failed: Invalid prompt … usage policy`),
+席位在交付全部落树、只差 push/PR 时死去,无信封。**长门命令一律重定向到文件**,
+只回显退出码与 `tail -5`;判词用 `grep` 在文件里找(`^RED`、`DESCRIBE_STATUS`、`PREFLIGHT_EXIT=`)。
+
 ## 每个可编译单元即时 commit
 
 席位常在约 40 分钟处被载体收走,作业也可能被宿主低内存守卫杀掉。

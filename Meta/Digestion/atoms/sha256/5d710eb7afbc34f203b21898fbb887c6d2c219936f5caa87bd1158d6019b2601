@@ -1,0 +1,28 @@
+### 9.7 加法截面的乘法不变性阻碍
+
+**定理。** 设 $s:\mathbb Z\to\mathcal O$ 是加法同态，且
+
+$$
+\pi(s(n))=n\qquad(n\in\mathbb Z).
+$$
+
+若 $u=c+d\varphi$ 且 $d\ne0$，则
+
+$$
+\boxed{
+\neg\,\forall n\in\mathbb Z,
+\quad u s(n)=s(\pi(u s(n))).
+}\tag{GS14}
+$$
+
+**证明。** 由截面条件可写 $s(1)=a+\varphi$，其中 $a\in\mathbb Z$。
+加法性给出 $s(n)=n(a+\varphi)$。若所述不变性成立，将 $n=1$ 代入，
+并比较 $u(a+\varphi)$ 与 $s(\pi(u(a+\varphi)))$ 的两个整数坐标，得到
+
+$$
+d(a^2+a-1)=0.
+$$
+
+因 $d\ne0$，必有 $a(a+1)=1$；但两个相邻整数之积为偶数，不可能等于
+$1$，矛盾。
+

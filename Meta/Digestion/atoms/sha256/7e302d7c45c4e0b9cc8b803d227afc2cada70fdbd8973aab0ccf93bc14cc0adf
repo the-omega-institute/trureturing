@@ -1,0 +1,59 @@
+**定理 488.5（系数、支撑和必要输出的容差关系）。** 固定 (488.2) 的 $a,C,Y$ 及 (488.4b) 的 $A$。置
+$$
+A_\pi=\frac{\log2}{2},\quad B_\pi=\log4+1,\quad
+d_0=\frac{(\log2)^2}{4},\quad D_0=(\log4+1)\log2+1.
+$$
+可以固定一个整数 $M_0\ge\max(12,Y)$，使每个整数 $m\ge M_0$ 满足
+$$
+A_\pi\frac m{\log m}\le\pi(m)\le B_\pi\frac m{\log m},\qquad
+\frac m2\le b\le3m,
+\tag{488.5a}
+$$
+$$
+d_0\frac m{\log m}\le\log S\le D_0\frac m{\log m}
+\quad\bigl(S=S_{\min}(m)\text{ 或 }S_0(m)\bigr).
+\tag{488.5b}
+$$
+每张其它合法完整表仍满足 (488.5b) 的下界。特别地，对所列两种长度，
+$$
+\log\log S=\log m-\log\log m+O(1)\sim\log m,
+\qquad c_{\mathcal P(m)},\alpha_{\mathcal P(m)}
+=\Theta\left(\frac1{\log\log S}\right).
+\tag{488.5c}
+$$
+这里的系数与长度来自同一个 $m$。
+
+具体地，可固定
+$$
+\eta_0=\min\left\{\frac12,\frac a{2\log M_0},
+\frac12\min_{2\le m<M_0}c_{\mathcal P(m)}\right\}>0.
+$$
+对全部实数 $0<\eta\le\eta_0$，
+$$
+\exp(a/\eta)\le m_*(\eta)\le X_+(\eta):=\lceil\exp(C/\eta)\rceil.
+\tag{488.5d}
+$$
+每个可用截止都必须至少为左端；所示 $X_+$ 是一个充分的可用截止。在最小截止处，还可同时取
+$$
+A_\pi\frac\eta a e^{a/\eta}\le\pi(m_*)
+\le2B_\pi\frac\eta C e^{C/\eta},\qquad
+\frac12 e^{a/\eta}\le b(m_*)\le6e^{C/\eta}.
+\tag{488.5e}
+$$
+左侧的必要下界适用于每个可用截止，右侧的充分支撑预算也适用于 $X_+$。最短可用输出满足
+$$
+\frac a\eta-\log\frac a\eta+\log d_0
+\le\log\log S_*(\eta)
+\le\frac C\eta-\log\frac C\eta+\log(2D_0).
+\tag{488.5f}
+$$
+因此存在固定 $0<\eta_1\le\eta_0$，使每个 $0<\eta\le\eta_1$ 都有
+$$
+\exp\!\left(\exp\frac a{2\eta}\right)
+\le S_*(\eta)
+\le\exp\!\left(\exp\frac{2C}\eta\right),
+\qquad \log\log S_*(\eta)=\Theta(1/\eta).
+\tag{488.5g}
+$$
+这些阈值是具有所列量词的存在阈值，并非由未知数值的 $K,Y$ 给出的数值停止证书。
+

@@ -1,0 +1,9 @@
+**定理。** 若 $B_Lc_K-B_Kc_L\ne0$，则不存在单射
+$f:\mathbb Z\to\mathbb Z$ 同时满足
+
+$$
+f\circ T_K=U_K\circ f,
+\qquad
+f\circ T_L=U_L\circ f.
+$$
+

@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:4ecd8c46228b7a2023f31f94d922c53d9c323a4cc03935a59b308b0a85bf0d9e
+  normalized_sha256: sha256:4ecd8c46228b7a2023f31f94d922c53d9c323a4cc03935a59b308b0a85bf0d9e
+cas_ref: sha256:4ecd8c46228b7a2023f31f94d922c53d9c323a4cc03935a59b308b0a85bf0d9e
+coverage_gids:
+  - gid: D5/S0/Rewriting/GuardedBoxPathAttainment.exists_shortest_word
+    target_statement_id: sha256:2781dc1386e6e55e6496ada4d07675bf78779517818f1b5070bc01f17396e214
+  - gid: D5/S0/Rewriting/GuardedBoxPaths.endpoint_counts
+    target_statement_id: sha256:a6cd61a151941e0ba5dfe64d01db3fc7d89ce48093315043111af5b12ac087ba
+  - gid: D5/S0/Rewriting/QuotientInvariantCoordinate.quotient_invariant_coordinate_injective
+    target_statement_id: sha256:d04a5e574d5bae8fb19c74dae6cc963f1d2a965fe5074e6b509bab6588d70b16
+receipts:
+  unresolved_subitems: []

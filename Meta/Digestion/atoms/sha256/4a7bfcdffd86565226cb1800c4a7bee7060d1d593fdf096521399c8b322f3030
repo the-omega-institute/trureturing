@@ -1,0 +1,9 @@
+**命题。** 在静态隐藏约束 $0=-bx-dy$ 且 $d\neq0$ 下，
+
+\[
+y=-\frac bd x,
+\qquad
+-ax+by=-\left(a+\frac{b^2}{d}\right)x.
+\tag{12.17}
+\]
+

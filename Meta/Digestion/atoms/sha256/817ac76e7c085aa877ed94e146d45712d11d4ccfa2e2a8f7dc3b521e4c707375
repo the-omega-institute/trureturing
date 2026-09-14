@@ -1,0 +1,8 @@
+**定理。** 有 $\epsilon_p\in\{1,-1\}$、$n_p>0$，并且
+
+$$
+p\mid F_{n_p},\qquad
+\varphi^{n_p}=\epsilon_p\pmod p,\qquad
+r_p\mid2n_p,\qquad p\nmid r_p.
+$$
+

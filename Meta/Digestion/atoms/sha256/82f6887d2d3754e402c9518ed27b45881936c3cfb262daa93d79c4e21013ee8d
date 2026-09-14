@@ -1,0 +1,6 @@
+其有理素数幂读数为
+\[
+\operatorname{Rat}_P(r_{X_r})
+ =\operatorname{Rat}_P(r)
+ =\prod_{p\in P}p^{V_P^{\mathbb Z}(r)(p)}.
+\]

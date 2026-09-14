@@ -1,0 +1,8 @@
+**命题。** 对黄金乘法 $a+e\varphi\mapsto e+(a+e)\varphi$，取可见量 $y=e$、隐藏量 $h=a$，则 $A=B=C=1,D=0$，从而
+
+$$
+\eta_0=a_0,\quad \eta_n=0\ (n>0),\quad M_0=1,\quad M_j=0\ (j>0),
+$$
+
+并且 $y_{n+1}=y_n+y_{n-1}$（$n\ge1$），$a_0=y_1-y_0$。
+

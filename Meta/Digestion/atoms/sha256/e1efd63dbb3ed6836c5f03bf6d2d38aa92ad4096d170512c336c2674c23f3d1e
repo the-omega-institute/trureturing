@@ -1,0 +1,48 @@
+**定理 475.7（首次平方分布、转换窗口与费用分量）。** 对全部 $d\mid b$，
+$$
+S(\gamma)=T(\gamma),\qquad
+h(d)=|\mathcal H_+(d)|=\frac{r!}{\prod_i a_i!},\qquad
+D_j(d)=\frac{j!(r-j)!}{\prod_i a_i!}e_j(a),
+$$
+$$
+\#\{T=s\}=D_{s-1}(d)-D_s(d)\quad(1\le s\le r),\qquad
+\#\{T=r+1\}=D_r(d).
+$$
+空指数积取一。$d=5040$ 时，
+$$
+(D_0,D_1,D_2,D_3,D_4,D_5,\ldots,D_8)=(840,840,630,330,96,0,0,0,0),
+$$
+$$
+\begin{array}{c|rrrr}
+s&2&3&4&5\\\hline
+\#\{T=s\}&210&300&234&96
+\end{array},\qquad \mathbb E_{\rm uniform}T=\frac{114}{35}.
+\tag{475.7a}
+$$
+转换窗口一项限定在 $\mathcal T_{5040}$，即 $d\mid5040$：对这些词的 $0\le j\le r$，原 $5040\leftrightarrow30030$ 数值转换域成立当且仅当 $j<T$。这是数值守卫的充要式；实际转换还须有带身份边并通过全部附加守卫。首次平方之后，继续单位乘法及保持整数值的转换都不能使该词进入平方自由容量30030。
+
+在第 445.4 条的费用实例中，对每个原增长前缀取
+$$
+o(n)=o_0+\lambda\mathbf1_{\{\mu(n)\ne0\}},\qquad o_0,\lambda\ge0,
+$$
+包括 $j=0$ 的观察。额外观察、初态、实际边、终态、转换、存储及全档案仍逐项收费。固定同一个标量化，对每条完整合法执行 $\eta$，令原词为 $\gamma$，将上述每个原前缀的 $\lambda$ 门控项以外的全部费用记为 $R_C(\eta)$，则
+$$
+J_C(\eta)=R_C(\eta)+\lambda T(\gamma).
+\tag{475.7b}
+$$
+$\lambda>0$ 时这个分量在5040终点纤维上不常值，不能因此排除其它收费对总差的抵消。
+
+若另给完整余费 $R_C(\eta)=K$ 为同一个有限常数，且实际条件概率在终点5040的词边缘为840词均匀分布，则对 $\beta>0$，
+$$
+F^{\rm cond}=K-\frac1\beta\log\left(
+\frac{210e^{-2\beta\lambda}+300e^{-3\beta\lambda}
++234e^{-4\beta\lambda}+96e^{-5\beta\lambda}}{840}\right).
+\tag{475.7c}
+$$
+$\lambda>0$ 时，
+$$
+K+2\lambda<F^{\rm cond}<K+\frac{114}{35}\lambda,\qquad
+\lim_{\beta\to\infty}F^{\rm cond}=K+2\lambda.
+$$
+两端分别是同一条件概率下的最小值和平均值。若5040输入在整个共同任务的质量为 $m_{5040}>0$，未条件化纤维有效费用须再加 $-\beta^{-1}\log m_{5040}$。
+
