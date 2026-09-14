@@ -6325,3 +6325,389 @@ $$
 与等号所需 $B(P,Q)=s$ 矛盾。没有策略达到 $U(E,f)$，而原任务的最优值确实达到，所以 $T_N<U(E,f)$。参数域已经穷尽，得到所述分类。证毕。
 
 ## 追加锚（新终端）
+
+## 23. 惰性参考的实参数归约与记忆权限分离
+
+**定理 23.1（两步惰性参考任务的有限实参数最大值）。** 在定义 21.1 的两步任务中，令 $e=\beta_1,f=\beta_2\in[0,1]$。任意有限参考维数、共同混合输入及复系统酉控制的上确界，可以由一个参考量子比特、实系数纯输入、第一控制恒等及两个实正交末次控制达到。
+
+更明确地，定义紧参数域
+
+$$
+\mathcal D_{\mathbb R}^+
+=\left\{
+\rho(t,w)=\begin{pmatrix}t&w\\w&1-t\end{pmatrix}:
+0\le t\le1,\quad 0\le w\le\sqrt{t(1-t)}
+\right\}.
+$$
+
+记第一步的实际 Kraus 算子为
+
+$$
+K_i=\sqrt{1-e}\,P_i+\sqrt e\,P_{1-i},
+\qquad i\in\{0,1\}.
+$$
+
+对每个第一结果 $i$，独立取 $u_i\in[0,1]$ 及 $\eta_i\in\{-1,1\}$，并定义互补实秩一投影
+
+$$
+Q_{i0}=
+\begin{pmatrix}
+u_i&\eta_i\sqrt{u_i(1-u_i)}\\
+\eta_i\sqrt{u_i(1-u_i)}&1-u_i
+\end{pmatrix},
+\qquad Q_{i1}=I_2-Q_{i0}.
+$$
+
+两个实验对应的初始系统差效应为
+
+$$
+M_{ij}=K_i\bigl[fI_2+(1-2f)Q_{ij}\bigr]K_i-P_iQ_{ij}P_i.
+$$
+
+对二阶 Hermitian 矩阵 $M$ 和任意二阶密度矩阵 $\rho$，定义
+
+$$
+\mathfrak n_\rho(M)=
+\begin{cases}
+\sqrt{[\operatorname{tr}(\rho M)]^2-4\det(\rho)\det(M)},&\det(M)<0,\\
+|\operatorname{tr}(\rho M)|,&\det(M)\ge0.
+\end{cases}
+$$
+
+则精确最优值为
+
+$$
+T_2^{\mathrm{ref}}(e,f)
+=\frac12
+\max_{\substack{\rho\in\mathcal D_{\mathbb R}^+\\
+u_0,u_1\in[0,1],\ \eta_0,\eta_1\in\{-1,1\}}}
+\sum_{i,j=0}^1\mathfrak n_\rho(M_{ij}).
+$$
+
+该式仍是四个连续实参数及两个符号的有限最大化，并未把 $T_2^{\mathrm{ref}}$ 求成参数 $e,f$ 的显式函数。实控制充分性在本条仅针对两步、末端丢弃活动系统的参考任务；不将其外推到任意长度的参考反馈协议。
+
+证明。固定控制表时，最终差算子的迹范数关于共同输入密度矩阵是凸函数。将任意混合输入分解成纯态，其中至少一个纯态分量的值不小于该混合输入。因此优化纯输入足够。活动系统为二维，每个纯输入的 Schmidt 秩不超过二；参考全程不被操作，其 Schmidt 支撑可等距压缩进 $\mathbb C^2$，且输出迹范数不变。秩一支撑补一个零坐标即可使用同一参考空间。
+
+将第一共同酉吸收到自由选择的输入中，第一控制可取恒等。归一化两比特纯态的单位球面与两张末次酉矩阵的 $U(2)^2$ 均紧，输出迹范数连续，故任意有限参考的上确界已在这个有限参数空间达到。
+
+令 $\rho$ 为纯输入的系统边缘态。具有相同 $\rho$ 的纯化之间只差参考上的等距，因而给出相同输出迹范数。可以选取规范纯化
+
+$$
+|\Psi_\rho\rangle
+=\sum_{a,b=0}^1(\sqrt\rho)_{ab}|a\rangle_S|b\rangle_R.
+$$
+
+对初始系统效应 $E$，对应的参考输出为
+
+$$
+\bigl(\sqrt\rho\,E\sqrt\rho\bigr)^{\mathsf T}.
+$$
+
+这是从纯化系数求部分迹所得；转置保持迹范数。因此，对任意共同末次酉 $U_i$，令 $Q_{ij}=U_i^\dagger P_jU_i$，并按陈述定义 $M_{ij}$，最终差异为
+
+$$
+\frac12\sum_{i,j}
+\left\|\sqrt\rho\,M_{ij}\sqrt\rho\right\|_1.
+$$
+
+该表达式仅依赖末次酉的两个互补测量效应。原因是末端已丢弃活动系统，参考块只取决于结果效应；末次系统向量的额外相位不再进入输出。
+
+对任意二阶 Hermitian $M$，矩阵 $A=\sqrt\rho M\sqrt\rho$ 的迹和行列式分别是 $\operatorname{tr}(\rho M)$ 和 $\det(\rho)\det(M)$。若 $\det(M)<0$ 且 $\rho$ 满秩，$A$ 两特征值异号，迹范数为特征值间距，即 $\mathfrak n_\rho(M)$ 的第一式。若此时 $\rho$ 秩亏，$A$ 至多秩一，同一公式退为 $|\operatorname{tr}A|$。若 $\det(M)\ge0$，二阶 Hermitian 矩阵 $M$ 为半正定或半负定，合同变换保持这一性质，故迹范数为绝对迹。于是全部退化情形也满足
+
+$$
+\left\|\sqrt\rho\,M\sqrt\rho\right\|_1
+=\mathfrak n_\rho(M).
+$$
+
+由于 $K_i$ 和 $P_i$ 都是对角矩阵，可以同时作
+
+$$
+\rho\longmapsto D\rho D^\dagger,
+\qquad Q_{ij}\longmapsto DQ_{ij}D^\dagger,
+$$
+
+其中 $D$ 为任意对角酉。这时 $M_{ij}\mapsto DM_{ij}D^\dagger$，合同矩阵的迹范数不变。选择一个 $D$，可使系统边缘态的非对角元为非负实数；原非对角元为零时无需选择相位。因此可以限制 $\rho\in\mathcal D_{\mathbb R}^+$。
+
+固定这样的 $\rho$，再固定第一结果 $i$ 及末次第零投影的对角元 $u$。其一般复形式为
+
+$$
+Q_{i0}(\phi)=
+\begin{pmatrix}
+u&\sqrt{u(1-u)}e^{-i\phi}\\
+\sqrt{u(1-u)}e^{i\phi}&1-u
+\end{pmatrix},
+\qquad Q_{i1}(\phi)=I_2-Q_{i0}(\phi).
+$$
+
+当 $u=0$ 或 $u=1$ 时已经是实矩阵。对任意 $u\in[0,1]$，每个差效应 $M_{ij}(\phi)$ 的对角元都不依赖 $\phi$，非对角元则是一个固定实系数乘以 $e^{\pm i\phi}$。因此 $\det M_{ij}(\phi)$ 不随 $\phi$ 改变，而
+
+$$
+\operatorname{tr}\bigl(\rho M_{ij}(\phi)\bigr)
+=A_{ij}+B_{ij}\cos\phi
+$$
+
+具有固定实系数 $A_{ij},B_{ij}$。
+
+若该固定行列式为负，令 $c_{ij}=-4\det(\rho)\det(M_{ij})\ge0$，相应迹范数作为 $x=\cos\phi$ 的函数为
+
+$$
+\sqrt{(A_{ij}+B_{ij}x)^2+c_{ij}}.
+$$
+
+它是二维向量 $(A_{ij}+B_{ij}x,\sqrt{c_{ij}})$ 的 Euclidean 范数，故为凸函数。若行列式非负，迹范数为 $|A_{ij}+B_{ij}x|$，也为凸函数。因此固定 $i$ 的两个结果范数之和在 $[-1,1]$ 上为凸函数，至少一个端点 $x=1$ 或 $x=-1$ 的值不小于任何给定内部点。取 $\phi=0$ 或 $\phi=\pi$ 即可将该分支替换为实投影而不降低总目标。
+
+两个第一结果的末次控制可以独立选择，所以对 $i=0,1$ 分别替换即可。陈述中的实投影由下面的实正交矩阵实现：
+
+$$
+U_i=
+\begin{pmatrix}
+\sqrt{u_i}&\eta_i\sqrt{1-u_i}\\
+-\eta_i\sqrt{1-u_i}&\sqrt{u_i}
+\end{pmatrix},
+\qquad U_i^{\mathsf T}P_jU_i=Q_{ij}.
+$$
+
+实对称正半定 $\rho$ 的正平方根也为实矩阵，故所选规范纯化具有实系数。由此，每个复策略均有值不小于它的实参数策略。反方向，所列参数都定义合法输入与共同控制。两类上确界相同，而右侧紧参数域上的目标等于连续的迹范数之和，确有最大值。这证明了所述归约与精确有限最大化式。证毕。
+
+**定理 23.2（惰性参考与可操作记忆的严格分离）。** 沿用定义 21.1 的惰性参考任务和定义 22.1 的可操作记忆任务。对任意 $0<e,f<1$，有
+
+$$
+T_2^{\mathrm{ref}}(e,f)
+<T_2^{\mathrm{mem}}(e,f)
+=U(e,f)
+=\frac{f+\sqrt{f^2+4(1-f)e}}2.
+$$
+
+在完整参数域 $(e,f)\in[0,1]^2$ 上，两种最优值相等的条件恰为
+
+$$
+T_2^{\mathrm{ref}}(e,f)=T_2^{\mathrm{mem}}(e,f)
+\quad\Longleftrightarrow\quad
+\bigl[e\in\{0,1\}\ \text{或}\ f\in\{0,1\}\bigr].
+$$
+
+这是两个访问范围各自优化后的严格分离及等号分类，不给出内域 $T_2^{\mathrm{ref}}(e,f)$ 的精确公式，也不提供显式的正差距常数。
+
+证明。 第 23.1 条已经将惰性参考优化归约到参考量子比特上的纯联合输入及紧的有限控制参数域，并证明最优值达到。第一共同系统酉可以吸收入自由选择的联合初态。下面的严格性论证允许任意复纯输入和两个末次共同酉 $U_0,U_1\in U(2)$，不另外假设控制或输入为实。
+
+固定 $0<e,f<1$，记
+
+$$
+a=1-f,
+\qquad \alpha=\sqrt{1-e}>0,
+\qquad b=\sqrt e>0.
+$$
+
+若纯联合初态的系统边缘态秩为一，则该初态为乘积态。由于过程内不操作参考，参考在每个历史上保持同一个固定张量因子；最终迹距离等于一个合法无参考协议的经典总变差。定理 22.3 在 $\beta_1=e$、$\beta_2=f$ 均严格介于零和一之间时给出 $T_2(e,f)<U(e,f)$，故秩一初态不能达到可操作记忆的最优值。
+
+剩下处理系统边缘态满秩的纯初态。写成
+
+$$
+|\Psi\rangle_{SR}
+=|0\rangle\otimes x+|1\rangle\otimes y,
+\qquad \|x\|^2+\|y\|^2=1,
+$$
+
+其中参考向量 $x,y\in\mathbb C^2$ 线性无关。令 $r_0=x$、$r_1=y$，以及 $q_i=\|r_i\|^2$，则 $0<q_i<1$。
+
+实际第一步在结果 $i$ 上的算子是 $K_{1,i}=\alpha P_i+bP_{1-i}$，理想算子是 $P_i$。令实际首支向量为
+
+$$
+\xi_i=(K_{1,i}\otimes I_R)|\Psi\rangle
+=\alpha|i\rangle\otimes r_i
++b|1-i\rangle\otimes r_{1-i},
+\qquad
+p_i=\|\xi_i\|^2=\alpha^2q_i+b^2(1-q_i).
+$$
+
+于是 $p_0+p_1=1$。在第一历史 $i$ 上、尚未执行最后控制时，加权实际与理想的 $SR$ 差块是
+
+$$
+Z_i=a|\xi_i\rangle\langle\xi_i|
+-|i\rangle\langle i|\otimes|r_i\rangle\langle r_i|.
+$$
+
+理想未归一化向量 $|i\rangle\otimes r_i$ 与 $\xi_i$ 的内积为 $\alpha q_i$，所以秩一差值公式给出
+
+$$
+L_i:=\|Z_i\|_1
+=\sqrt{(ap_i+q_i)^2-4a\alpha^2q_i^2}.
+$$
+
+实二维向量 $(L_i,2\sqrt a\,\alpha q_i)$ 的欧氏范数是 $ap_i+q_i$。对这两个向量使用三角不等式，有
+
+$$
+(L_0+L_1)^2+4a\alpha^2(q_0+q_1)^2
+\le\bigl[a(p_0+p_1)+q_0+q_1\bigr]^2.
+$$
+
+代入两种总权重均为一及 $\alpha^2=1-e$，得到
+
+$$
+L_0+L_1\le\sqrt{(a+1)^2-4a(1-e)}.
+$$
+
+固定第一结果 $i$，在其末次控制 $U_i$ 之后定义两个参考向量
+
+$$
+v_j=(\langle j|U_i\otimes I_R)\xi_i,
+\qquad j\in\{0,1\}.
+$$
+
+因为 $x,y$ 线性无关、$\alpha,b>0$ 且 $U_i$ 可逆，$v_0,v_1$ 也线性无关。逆酉关系给出
+
+$$
+\alpha r_i=\sum_{j=0}^1\overline{(U_i)_{ji}}\,v_j.
+$$
+
+分别改变 $v_j$ 的代表相位，不改变其秩一投影。可据此把上式写成
+
+$$
+r'_i:=\alpha r_i=c_0v_0+c_1v_1,
+\qquad c_j=|(U_i)_{ji}|\ge0,
+\qquad c_0^2+c_1^2=1.
+$$
+
+这只是向量代表的选择，不是对参考施加操作。在这些代表中，理想最终参考块为 $(c_j^2/\alpha^2)|r'_i\rangle\langle r'_i|$，实际最终参考块为
+
+$$
+a|v_j\rangle\langle v_j|
++f|v_{1-j}\rangle\langle v_{1-j}|.
+$$
+
+记
+
+$$
+B_{ij}=a|v_j\rangle\langle v_j|
+-\frac{c_j^2}{\alpha^2}|r'_i\rangle\langle r'_i|,
+\qquad
+F_{ij}=B_{ij}+f|v_{1-j}\rangle\langle v_{1-j}|.
+$$
+
+$F_{ij}$ 正是最终历史 $ij$ 上的实际减理想参考差块。$B_{ij}$ 则由 $Z_i$ 经过共同末次系统酉、完美指针读取以及丢弃系统得到，故迹范数收缩给出
+
+$$
+\sum_j\|B_{ij}\|_1\le L_i.
+$$
+
+对实际末次噪声项使用三角不等式，得到
+
+$$
+\|F_{ij}\|_1
+\le\|B_{ij}\|_1+f\|v_{1-j}\|^2.
+$$
+
+每个 $i$ 上都有 $\|v_0\|^2+\|v_1\|^2=p_i$，而 $p_0+p_1=1$，所以对全部历史求和可得
+
+$$
+\begin{aligned}
+\sum_{i,j}\|F_{ij}\|_1
+&\le\sum_{i,j}\|B_{ij}\|_1+f\\
+&\le L_0+L_1+f\\
+&\le\sqrt{(a+1)^2-4a(1-e)}+f=2U(e,f).
+\end{aligned}
+$$
+
+只需证明对满秩初态，这条链至少有一步严格。以下只考察第一历史 $i=0$ 就足够。
+
+若该历史的末次控制满足 $c_0c_1=0$，将两个末次结果互换后可记为 $c_0=1,c_1=0$。这时 $v_0=\alpha r_i$，另一个向量 $v_1$ 与 $b r_{1-i}$ 只差一个整体相位。令 $q=q_i$，有
+
+$$
+B_{i0}=(a\alpha^2-1)|r_i\rangle\langle r_i|,
+\qquad
+B_{i1}=ab^2|r_{1-i}\rangle\langle r_{1-i}|.
+$$
+
+记 $A_*=a\alpha^2q$、$B_*=ab^2(1-q)$。由于 $a\alpha^2<1$，完美读取后的加权块迹范数之和为
+
+$$
+J_i:=\|B_{i0}\|_1+\|B_{i1}\|_1
+=q-A_*+B_*.
+$$
+
+此时 $L_i^2=(A_*+B_*+q)^2-4A_*q$，直接相减得到
+
+$$
+L_i^2-J_i^2
+=4A_*B_*
+=4a^2(1-e)e\,q(1-q)>0.
+$$
+
+因此 $J_i<L_i$，这个历史上的迹范数收缩已经严格，整体最终值也严格小于 $U(e,f)$。
+
+现在设 $c=c_0>0$、$d=c_1>0$，并简记 $r=r'_i=cv_0+dv_1$。两个比较矩阵为
+
+$$
+B_0=a|v_0\rangle\langle v_0|
+-\frac{c^2}{\alpha^2}|r\rangle\langle r|,
+\qquad
+B_1=a|v_1\rangle\langle v_1|
+-\frac{d^2}{\alpha^2}|r\rangle\langle r|.
+$$
+
+令
+
+$$
+A=\|v_0\|^2,
+\qquad B=\|v_1\|^2,
+\qquad C=\langle v_0,v_1\rangle.
+$$
+
+线性无关性给出 $AB-|C|^2>0$，并且
+
+$$
+\det B_0=\det B_1
+=-\frac{a}{\alpha^2}c^2d^2(AB-|C|^2)<0.
+$$
+
+因此 $B_0,B_1$ 都是可逆不定 Hermitian 矩阵。
+
+下面使用迹范数三角等号的一条直接后果。设 $D$ 是可逆不定的二阶 Hermitian 矩阵，$\kappa>0$。若
+
+$$
+\|D+\kappa|v\rangle\langle v|\|_1
+=\|D\|_1+\kappa\|v\|^2,
+$$
+
+则 $v$ 必须属于 $D$ 的正谱子空间。为核对这一点，取实现左端迹范数对偶最大值的 Hermitian 收缩算子 $S$，即 $-I\le S\le I$。等号要求
+
+$$
+\operatorname{tr}(SD)=\|D\|_1,
+\qquad
+\langle v,Sv\rangle=\|v\|^2.
+$$
+
+在 $D$ 的特征基中，非零正、负特征值迫使 $S$ 的两个对角元分别为 $1,-1$，收缩条件再迫使非对角元为零。因此 $S=\operatorname{sign}(D)$，而第二个等号表示 $v$ 的负谱投影为零。这里没有使用迹范数的严格凸性。
+
+假设同一第一历史中的两个三角不等式都取等。因为 $f>0$，上述后果分别要求
+
+$$
+B_0v_1=\lambda_0v_1,
+\qquad
+B_1v_0=\lambda_1v_0,
+\qquad \lambda_0,\lambda_1>0.
+$$
+
+在独立基 $v_0,v_1$ 中展开。第一式沿 $v_1$ 的系数、第二式沿 $v_0$ 的系数分别为
+
+$$
+\lambda_0=-\frac{c^2d}{\alpha^2}(cC+dB),
+\qquad
+\lambda_1=-\frac{cd^2}{\alpha^2}(cA+d\overline C).
+$$
+
+这些系数为实且非负，迫使 $C$ 为实数，并且
+
+$$
+C\le-\frac dcB,
+\qquad
+C\le-\frac cdA.
+$$
+
+所以 $|C|^2\ge AB$，与独立向量的严格 Cauchy--Schwarz 不等式矛盾。两个末次结果的三角不等式不能同时取等，因而这个第一历史已经给出严格损失，最终值仍严格小于 $U(e,f)$。
+
+每个纯两比特初态的系统边缘态秩只能是一或二。秩一情形由无参考严格界排除；满秩情形的末次控制则被上述 $c_0c_1=0$ 与 $c_0c_1>0$ 两类穷尽。因此每个纯初态及控制表的值都严格小于 $U(e,f)$。再使用第 23.1 条的最优值达到性，便得到优化后的 $T_2^{\mathrm{ref}}(e,f)<U(e,f)$。定理 22.2 已给出 $T_2^{\mathrm{mem}}=U$，从而得到两个访问范围在参数方形内域的严格分离。
+
+最后核对四条边界。若 $e=0$，指针初态与恒等控制给出实际全零历史概率 $1-f$、理想全零历史概率一，所以无参考差异达到 $f=U(0,f)$。若 $f=0$，命题 18.3 的末次完美读取构造达到 $\sqrt e=U(e,0)$。若 $e=1$ 或 $f=1$，指针初态与恒等控制使两种经典历史支撑不交，达到 $1=U(e,f)$。这些方案都不需要参考或可操作记忆，结合定理 22.2 的统一上界，四条边界上的两个最优值相等。参数域被内域与四条边界穷尽，得到所述充要分类。证毕。
+
+## 追加锚（新终端）
