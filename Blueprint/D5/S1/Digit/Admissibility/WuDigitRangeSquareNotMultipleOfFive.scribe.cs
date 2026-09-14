@@ -35,7 +35,11 @@ internal sealed class WuDigitRangeSquareNotMultipleOfFiveDocument
                     + "is present in the square and contradicts its minimum digit 5.",
                 "result",
                 DescribeRole.Theorem,
-                AssessedProvenance.FromRepo(Source)))));
+                AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "oeis-a254074-wu-digit-range-square-not-multiple-of-five"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(
         string id,

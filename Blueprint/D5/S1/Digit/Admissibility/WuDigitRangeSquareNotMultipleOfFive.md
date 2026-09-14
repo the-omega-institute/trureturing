@@ -22,6 +22,10 @@ $$\forall k \in \mathbb{N},\; (k > 0) \Rightarrow \left((DigitRangeFiveNine\left
 
 *Proof.* Machine-checked in Lean as `D5/S1/Digit/Admissibility/WuDigitRangeSquareNotMultipleOfFive.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a254074-wu-digit-range-square-not-multiple-of-five` (proved) by `D5/S1/Digit/Admissibility/WuDigitRangeSquareNotMultipleOfFive.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a254074-wu-digit-range-square-not-multiple-of-five","declaration_gid":"D5/S1/Digit/Admissibility/WuDigitRangeSquareNotMultipleOfFive.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Felix Fröhlich; Chai Wah Wu (2017). *OEIS A254074, Numbers k such that the decimal expansions of both k and k^2 have 5 as the digit with the smallest value and 9 as the digit with the largest value*. URL: <https://oeis.org/A254074>.
