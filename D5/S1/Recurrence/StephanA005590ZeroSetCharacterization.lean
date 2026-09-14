@@ -2,11 +2,10 @@
    generality: I
    mirror-B: D5/B/S1/Recurrence/StephanA005590ZeroSetCharacterization
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [mathlib/module/Mathlib.Data.Nat.Bits, mathlib/module/Mathlib.Tactic.Linarith]
+   anchors: [mathlib/module/Mathlib.Tactic.Linarith]
    utility: none
    digest: Stephan's A005590 zeros are exactly the binary words without adjacent ones. -/
 
-import Mathlib.Data.Nat.Bits
 import Mathlib.Tactic.Linarith
 
 namespace D5.S1.Recurrence.StephanA005590ZeroSetCharacterization
