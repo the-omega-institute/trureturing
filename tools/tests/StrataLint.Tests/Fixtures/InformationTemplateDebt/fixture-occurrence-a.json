@@ -1,0 +1,54 @@
+{
+  "fixture_version": 1,
+  "purpose": "Strict loader/path/immutable-input fixture; statement/inventory reader is an explicit synthetic test double. No Lean acceptance is claimed. First-lane real elaboration control is separately required.",
+  "proposed_repository_fixture_path": "tools/tests/StrataLint.Tests/Fixtures/InformationTemplateDebt/fixture-occurrence-a.json",
+  "virtual_production_path": "Golden/InformationTemplateDebt/1a49292654bc35592997b07d5fab4dbc7527947ec8c534fefdf5a4ff34d07daa.json",
+  "immutable_base": {
+    "commit_oid": "d37c6134f47ae7f6faa9bf5d5cd0532b59c4d475",
+    "commit_body_utf8": "tree bd7d9bb6c609c163a7c431ba2d1659b1a975db04\nauthor Fixture <fixture@example.invalid> 0 +0000\ncommitter Fixture <fixture@example.invalid> 0 +0000\n\nImmutable synthetic loader fixture\n",
+    "tree_oid": "bd7d9bb6c609c163a7c431ba2d1659b1a975db04",
+    "tree_body_hex": "31303036343420526567697374726174696f6e2e6c65616e004f0d0dd5a725b4d8fb2b52459481d767d140873d",
+    "files": [
+      {
+        "path": "Registration.lean",
+        "git_blob_oid": "4f0d0dd5a725b4d8fb2b52459481d767d140873d",
+        "utf8": "import LeanInformationAudit.Syntax\n-- Fixture.Registration: loader fixture occurrence A\n"
+      }
+    ]
+  },
+  "source_bound_fixture_inventory": [
+    {
+      "key": {
+        "root": "Fixture.Root",
+        "registration_module": "Fixture.Registration",
+        "theorem": "Fixture.theorem_a",
+        "object_arena": "Fixture.arena",
+        "catalog": "canonical"
+      },
+      "statement_identity_input_utf8": "fixture-only producer statement identity: occurrence A",
+      "statement_identity": "c7601acced7b5f6af7aa33f628dea763c75550049f2fe0b83a7e489eb2c6c151",
+      "declaration": "undeclared"
+    }
+  ],
+  "row": {
+    "schema_version": 1,
+    "key": {
+      "root": "Fixture.Root",
+      "registration_module": "Fixture.Registration",
+      "theorem": "Fixture.theorem_a",
+      "object_arena": "Fixture.arena",
+      "catalog": "canonical"
+    },
+    "seed_base": "d37c6134f47ae7f6faa9bf5d5cd0532b59c4d475",
+    "base_statement_identity": "c7601acced7b5f6af7aa33f628dea763c75550049f2fe0b83a7e489eb2c6c151",
+    "base_registration_source_sha256": "8b1a59ca0701832dce71a44850507e702d9e3399af64d43523d4d50da818189a",
+    "base_content_inputs": [
+      {
+        "path": "Registration.lean",
+        "sha256": "8b1a59ca0701832dce71a44850507e702d9e3399af64d43523d4d50da818189a"
+      }
+    ],
+    "reason": "undeclared"
+  },
+  "canonical_row_utf8": "{\"base_content_inputs\":[{\"path\":\"Registration.lean\",\"sha256\":\"8b1a59ca0701832dce71a44850507e702d9e3399af64d43523d4d50da818189a\"}],\"base_registration_source_sha256\":\"8b1a59ca0701832dce71a44850507e702d9e3399af64d43523d4d50da818189a\",\"base_statement_identity\":\"c7601acced7b5f6af7aa33f628dea763c75550049f2fe0b83a7e489eb2c6c151\",\"key\":{\"catalog\":\"canonical\",\"object_arena\":\"Fixture.arena\",\"registration_module\":\"Fixture.Registration\",\"root\":\"Fixture.Root\",\"theorem\":\"Fixture.theorem_a\"},\"reason\":\"undeclared\",\"schema_version\":1,\"seed_base\":\"d37c6134f47ae7f6faa9bf5d5cd0532b59c4d475\"}\n"
+}
