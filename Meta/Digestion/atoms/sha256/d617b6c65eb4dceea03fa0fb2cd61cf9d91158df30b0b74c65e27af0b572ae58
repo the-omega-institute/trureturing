@@ -1,0 +1,51 @@
+### 10.1 粗标签、预测通道与读取误差
+
+取有限维空间$\mathcal H$和$m\ge2$个非零正交投影
+$$
+Q_aQ_b=\delta_{ab}Q_a,\qquad \sum_{a=1}^{m}Q_a=I.
+$$
+定义粗标签分布、粗块代数和粗块去相干映射
+$$
+C_Q(\rho)_a=\operatorname{tr}(Q_a\rho),
+\qquad
+\mathcal A_Q=\operatorname{span}_{\mathbb C}\{Q_1,\ldots,Q_m\},
+\qquad
+B_Q(X)=\sum_aQ_aXQ_a.
+$$
+$C_Q$只保留粗标签概率，$B_Q$还保留每个粗块内部的量子态。因此$B_Q(\rho)=\rho$不表示$C_Q(\rho)$已经决定$\rho$。
+
+固定有限时刻$0=\tau_0<\tau_1<\cdots<\tau_N=\tau_*<\infty$和CPTP通道$\mathcal E_k$，令
+$$
+\rho_k=\mathcal E_k(\rho_{k-1}),
+\qquad p_k=C_Q(\rho_k).
+$$
+用列随机矩阵$K_k$表示目标经典比较动力学：
+$$
+K_k(b\mid a)\ge0,
+\qquad \sum_bK_k(b\mid a)=1.
+$$
+预测$ p_k\approx K_k\cdots K_1p_0$和保持$ p_k\approx p_0$是两个不同要求；精确可预测的动力学可以是确定翻转。
+
+记录写入取有限等距映射
+$$
+W\psi=\sum_aQ_a\psi\otimes E_a,
+\qquad \|E_a\|=1,
+\qquad E_a\in\mathcal H_F\otimes\mathcal H_B,
+$$
+其中只有$F$可读取，$B$不可访问。令
+$$
+\sigma_a^F=\operatorname{tr}_B|E_a\rangle\langle E_a|,
+$$
+并定义可读取记录的最坏标签错误
+$$
+\beta_F=\min_{\substack{M_a\ge0\\\sum_aM_a=I_F}}
+\max_a\left[1-\operatorname{tr}(M_a\sigma_a^F)\right].
+$$
+若某个解码器的逐标签错误至多为$\beta$，则其输出分布$\widehat p_0$满足
+$$
+\operatorname{TV}(\widehat p_0,p_0)\le\beta,
+\qquad
+\operatorname{TV}(p,q)=\frac12\sum_a|p_a-q_a|.
+$$
+这是记录边缘上的经典通道误差，不把一次解码结果当作完整隐藏历史。
+
