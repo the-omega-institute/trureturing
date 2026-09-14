@@ -1,0 +1,50 @@
+### 11.3 实 Hilbert 空间中的指数误差管
+
+**假设。** 设 $H$ 为实 Hilbert 空间，$T>0$，轨迹 $w:[0,T]\to H$ 连续并在 $[0,T)$ 上可右微；对每个 $t$，$A(t):H\to H$ 为线性算子，且
+
+\[
+w'(t)=A(t)w(t)+r(t).
+\]
+
+**假设。** 存在常数 $\gamma>0$ 与 $\rho\geq 0$，使每个 $t\in[0,T)$ 及 $z\in H$ 都满足
+
+\[
+\langle z,A(t)z\rangle\leq-\gamma\|z\|^2,
+\qquad \|r(t)\|\leq\rho.
+\]
+
+**定理。** 在上述假设下，对每个 $t\in[0,T]$ 都有指数误差管
+
+\[
+\boxed{\|w(t)\|\leq e^{-\gamma t}\|w(0)\|
++\frac{\rho}{\gamma}(1-e^{-\gamma t}).}
+\tag{11.1}
+\]
+
+**证明。** 在 $w(t)\neq0$ 时，范数的右导数满足
+
+\[
+\frac{d^+}{dt}\|w(t)\|
+=\frac{\langle w(t),w'(t)\rangle}{\|w(t)\|}
+\leq-\gamma\|w(t)\|+\rho.
+\]
+
+**证明。** 在 $w(t)=0$ 时，相同上界由范数的右上导数得到。乘以 $e^{\gamma t}$ 并在 $[0,t]$ 上积分，便有
+
+\[
+e^{\gamma t}\|w(t)\|-\|w(0)\|
+\leq\rho\int_0^t e^{\gamma s}\,ds
+=\frac{\rho}{\gamma}(e^{\gamma t}-1),
+\]
+
+**证明。** 这与式 (11.1) 等价。
+
+**命题。** 若 $\rho=0$，则 $\|w(t)\|\leq e^{-\gamma t}\|w(0)\|$。若标量轨迹满足 $a'=-\gamma(a-c)+r$ 且 $|r|\leq\rho$，则
+
+\[
+|a(t)-c|\leq e^{-\gamma t}|a(0)-c|
++\frac{\rho}{\gamma}(1-e^{-\gamma t}).
+\]
+
+**证明。** 第一式是在式 (11.1) 中取 $\rho=0$；第二式对误差 $w=a-c$ 应用同一定理。
+

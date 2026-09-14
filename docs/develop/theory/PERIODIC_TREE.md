@@ -1784,3 +1784,715 @@ $$
 **证明。** 令 $d=s_p+\nu_p(k)$。由 R21，$p^d\mid C_{r_pk}$，而
 $p^{d+1}\nmid C_{r_pk}$。又因 $r_pk>0$，有 $F_{r_pk}>0$，从而
 $C_{r_pk}>0$；按 $p$-进赋值的定义即得 R22。
+## TR. 环面返回模、有限观察与耗散结构
+
+### TR.1 返回模与列向量约定
+
+**定义。** 对整数二阶矩阵 $A$ 与自然数 $n$，采用列向量约定，定义返回模
+
+$$
+R(A,n)=\mathbb Z^2/(A^n-I)\mathbb Z^2,
+$$
+
+其中分母是同态 $A^n-I:\mathbb Z^2\to\mathbb Z^2$ 的像。
+
+**定义。** 对自然数 $q$，记 $\mathbb Z/(q)=\mathbb Z/q\mathbb Z$；特别约定 $\mathbb Z/(0)=\mathbb Z$。
+
+### TR.2 行列式为二的校准族
+
+**定义。** 对任意自然数 $k$，定义 companion 族、balanced 族及其整数交织子
+
+$$
+C_k=\begin{pmatrix}4k+1&1\\4k&1\end{pmatrix},\qquad
+D_k=\begin{pmatrix}2k+1&2\\2k(k+1)&2k+1\end{pmatrix},\qquad
+P_k=\begin{pmatrix}1&0\\-2k&2\end{pmatrix}.
+$$
+
+**定理。** 对每个 $k\geq0$，有
+
+$$
+\det C_k=\det D_k=1,\qquad
+\operatorname{tr}C_k=\operatorname{tr}D_k=4k+2,
+$$
+
+以及
+
+$$
+C_kP_k=P_kD_k,\qquad \det P_k=2.
+$$
+
+对每个 $n\geq0$，还有
+
+$$
+(C_k^n-I)P_k=P_k(D_k^n-I),
+\qquad
+\det(C_k^n-I)=\det(D_k^n-I).
+$$
+
+**证明。** 前两组等式由二阶行列式、迹和矩阵乘法直接计算。由 $C_kP_k=P_kD_k$ 对 $n$ 归纳，得 $C_k^nP_k=P_kD_k^n$，减去 $P_k$ 即得交织恒等式。两边取行列式后得到
+
+$$
+2\det(C_k^n-I)=2\det(D_k^n-I),
+$$
+
+在整数中约去 $2$ 即得最后一式。
+
+**定理。** $P_k$ 在 $\mathbb Z^2$ 上单射，其像的指数为 $2$，因而诱导一个度数为 $2$ 的格同源；它不是整数基变换。
+
+**证明。** 若 $P_k(p,q)=0$，则第一坐标给出 $p=0$，第二坐标再给出 $q=0$，故 $P_k$ 单射。其像恰为第二坐标为偶数的整数向量集合：正向由 $P_k(p,q)=(p,-2kp+2q)$，反向对 $(x,2y)$ 取 $(p,q)=(x,y+kx)$。因此像的指数为 $2$。整数基变换的行列式只能是 $\pm1$。
+
+**定理。** $C_k$ 与 $D_k$ 的共同特征多项式的判别式为
+
+$$
+(4k+2)^2-4=16k(k+1).
+$$
+
+当 $k=1$ 时，其特征值生成的二次域是 $\mathbb Q(\sqrt2)$。
+
+**证明。** 两个矩阵的行列式均为 $1$、迹均为 $4k+2$，故特征多项式为 $X^2-(4k+2)X+1$，判别式即所示。$k=1$ 时，判别式为 $32=(4\sqrt2)^2$，其平方根生成 $\mathbb Q(\sqrt2)$。
+
+### TR.3 返回模的有限基数
+
+**定理。** 若 $k>0$ 且 $n>0$，则
+
+$$
+\det(C_k^n-I)=2-\operatorname{tr}(C_k^n)<0,
+$$
+
+从而 $C_k^n-I$ 与 $D_k^n-I$ 都非奇异。
+
+**证明。** $C_k$ 的所有矩阵元非负。对 $m$ 归纳可得 $C_k^m$ 的所有矩阵元非负，且两个对角元至少为 $1$。写 $n=m+1$，则
+
+$$
+\operatorname{tr}(C_k^{m+1})
+=(4k+1)(C_k^m)_{00}+4k(C_k^m)_{01}
++(C_k^m)_{10}+(C_k^m)_{11}>2.
+$$
+
+又因 $\det(C_k^n)=1$，二阶恒等式 $\det(M-I)=\det M-\operatorname{tr}M+1$ 给出所述负号。TR.2 的行列式恒等式随即给出 $D_k^n-I$ 的非奇异性。
+
+**定理。** 对任意非奇异整数二阶矩阵 $M$，商群 $\mathbb Z^2/M\mathbb Z^2$ 有限，且
+
+$$
+\#(\mathbb Z^2/M\mathbb Z^2)=|\det M|.
+$$
+
+**证明。** 对 $M$ 作整数初等行、列变换，得到 Smith 标准形 $\operatorname{diag}(d_1,d_2)$。这些变换在定义域和陪域上都是整系数可逆变换，因而不改变商群的基数。标准形的商群为 $\mathbb Z/(d_1)\times\mathbb Z/(d_2)$，其基数是 $|d_1d_2|=|\det M|$。
+
+**定理。** 对所有 $k>0$、$n>0$，$R(C_k,n)$ 与 $R(D_k,n)$ 都是有限群，并且
+
+$$
+\#R(C_k,n)=\#R(D_k,n)=|\det(C_k^n-I)|.
+$$
+
+**证明。** 应用前一定理及 TR.2、TR.3。若 $n=0$，则 $R(A,0)=\mathbb Z^2$，故该有限性结论不适用。
+
+### TR.4 整数交织子的偶性障碍
+
+**定理。** 设 $k\geq0$，并设
+
+$$
+U=\begin{pmatrix}a&b\\c&d\end{pmatrix}\in M_2(\mathbb Z).
+$$
+
+若 $C_kU=UD_k$，则
+
+$$
+c=2k((k+1)b-a),\qquad d=2(a-kb),
+$$
+
+且
+
+$$
+\det U=2\bigl(a^2-k(k+1)b^2\bigr).
+$$
+
+特别地，$\det U$ 为偶数，不存在 $\det U=\pm1$ 的整数交织子，所以 $C_k$ 与 $D_k$ 不在 $GL_2(\mathbb Z)$ 中共轭。
+
+**证明。** 比较 $C_kU=UD_k$ 的第一行两个矩阵元，依次解得 $c$ 与 $d$。将它们代入 $ad-bc$ 并展开，得到行列式公式。可逆整数矩阵的行列式只能是 $\pm1$，与偶性矛盾。
+
+**定理。** 在整数二阶矩阵中，全部正时间返回模的基数序列不能确定整数共轭类。
+
+**证明。** 任取 $k>0$。TR.3 给出 $C_k$ 与 $D_k$ 在每个正时间的相同返回模基数，TR.4 则证明二者不整数共轭。
+
+### TR.5 companion 与 balanced 族的像核恒等式
+
+**定义。** 对 $k\geq0$ 定义群同态
+
+$$
+\pi_C:\mathbb Z^2\to\mathbb Z/(4k),qquad
+\pi_C(x,y)=y\pmod{4k},
+$$
+
+以及
+
+$$
+\pi_D:\mathbb Z^2\to\mathbb Z/(2)\times\mathbb Z/(2k),qquad
+\pi_D(x,y)=\bigl(x\pmod2,\ y-kx\pmod{2k}\bigr).
+$$
+
+**定理。** $\pi_C$ 满射，并且
+
+$$
+\ker\pi_C=(C_k-I)\mathbb Z^2.
+$$
+
+**证明。** 任意剩余类由 $(0,y)$ 映到，故 $\pi_C$ 满射。又
+
+$$
+(C_k-I)\binom pq=\binom{4kp+q}{4kp},
+$$
+
+所以其像包含于 $\ker\pi_C$。反之，若 $\pi_C(x,y)=0$，则 $y=4ka$；于是
+
+$$
+\binom xy=(C_k-I)\binom{a}{x-4ka}.
+$$
+
+**定理。** $\pi_D$ 满射，并且
+
+$$
+\ker\pi_D=(D_k-I)\mathbb Z^2.
+$$
+
+**证明。** 给定两个剩余类，取整数代表 $a,b$，则 $(a,b+ka)$ 映到它们。又
+
+$$
+(D_k-I)\binom pq
+=\binom{2kp+2q}{2k(k+1)p+2kq},
+$$
+
+其第一坐标为偶数，且第二坐标减去第一坐标的 $k$ 倍等于 $2kp$，故像包含于核。反之，若 $(x,y)$ 位于核，写 $x=2a$、$y-kx=2kb$，则
+
+$$
+\binom xy=(D_k-I)\binom{b}{a-kb}.
+$$
+
+### TR.6 一步返回模的结构分离
+
+**定理。** 对每个 $k\geq0$，有加法群同构
+
+$$
+R(C_k,1)\cong\mathbb Z/(4k),qquad
+R(D_k,1)\cong\mathbb Z/(2)\times\mathbb Z/(2k).
+$$
+
+当 $k=0$ 时，这两式分别为 $R(C_0,1)\cong\mathbb Z$ 与 $R(D_0,1)\cong\mathbb Z/(2)\times\mathbb Z$。
+
+**证明。** 分别对 TR.5 的满射应用第一同构定理，并以其中的像核恒等式识别分母。
+
+**定理。** 若 $k>0$，则 $R(D_k,1)$ 的每个元素都被 $2k$ 湮灭，而 $R(C_k,1)$ 中存在不被 $2k$ 湮灭的元素。因此
+
+$$
+R(C_k,1)\not\cong R(D_k,1).
+$$
+
+**证明。** 在 $\mathbb Z/(2)\times\mathbb Z/(2k)$ 中，乘以 $2k$ 后两个分量都为零。在 $\mathbb Z/(4k)$ 中，剩余类 $1$ 不被 $2k$ 湮灭，否则 $4k$ 整除 $2k$，与 $k>0$ 矛盾。TR.6 的同构将这两个性质传回实际返回模。
+
+**定理。** 对每个 $k>0$，$C_k$ 与 $D_k$ 的全部正时间返回模基数相同，但一步返回模的加法群不同构。
+
+**证明。** 第一部分由 TR.3，第二部分由前一定理。
+
+### TR.7 返回模结构与标量观察
+
+**命题。** 在校准族 $C_k,D_k$ 中，标量序列
+
+$$
+n\longmapsto\#R(A,n),\qquad n>0,
+$$
+
+不决定一步返回模的群结构，而一步返回模的湮灭阶能够区分 $C_k$ 与 $D_k$。
+
+**证明。** TR.6 同时给出相同标量序列和不同的 $2k$-湮灭性质。
+
+### TR.8 交织子范数与模共轭判据
+
+**定理。** 设 $S$ 为交换环，$k\geq0$。矩阵 $U\in M_2(S)$ 满足 $C_kU=UD_k$ 当且仅当存在 $a,b\in S$ 使
+
+$$
+U=U(a,b)=
+\begin{pmatrix}
+a&b\\
+2k((k+1)b-a)&2(a-kb)
+\end{pmatrix}.
+$$
+
+此时
+
+$$
+\det U(a,b)=2\bigl(a^2-k(k+1)b^2\bigr).
+$$
+
+**证明。** 正向由交织等式第一行的两个分量依次求出第二行；整个推导没有除法。反向把所示矩阵代入四个矩阵元，四式均成立。行列式公式由展开得到。
+
+**定义。** 对自然数 $m$，称 $C_k$ 与 $D_k$ 在 $\mathbb Z/(m)$ 上共轭，如果存在 $P,Q\in M_2(\mathbb Z/(m))$ 满足
+
+$$
+PQ=QP=I,qquad C_kP=PD_k.
+$$
+
+**定理。** 对所有自然数 $k,m$，
+
+$$
+C_k\text{ 与 }D_k\text{ 在 }\mathbb Z/(m)\text{ 上共轭}
+\quad\Longleftrightarrow\quad m\text{ 为奇数}.
+$$
+
+**证明。** 若 $m=2r+1$，在 $\mathbb Z/(m)$ 中令 $u=-r$，则 $2u=1$。取
+
+$$
+P=\begin{pmatrix}1&0\\-2k&2\end{pmatrix},qquad
+Q=\begin{pmatrix}1&0\\k&u\end{pmatrix}.
+$$
+
+直接乘法给出 $PQ=QP=I$ 与 $C_kP=PD_k$。反之，若 $m$ 为正偶数，则存在环同态 $\mathbb Z/(m)\to\mathbb Z/(2)$。任何可逆交织子都满足 $\det(P)\det(Q)=1$；TR.8 的行列式公式在 $\mathbb Z/(2)$ 中却使左边为 $0$，矛盾。若 $m=0$，系数环为 $\mathbb Z$，TR.4 排除可逆交织子。$m=1$ 为零环，且属于奇数情形。
+
+### TR.9 环面作用与周期群
+
+**定义。** 令 $V=\mathbb R^2$，令 $j:\mathbb Z^2\to V$ 为逐坐标嵌入，$L=j(\mathbb Z^2)$，并令
+
+$$
+\mathbb T^2=V/L.
+$$
+
+对整数矩阵 $A$，其实线性延拓保持 $L$，故诱导连续群同态
+
+$$
+f_A:\mathbb T^2\to\mathbb T^2,qquad [x]\longmapsto[Ax].
+$$
+
+**定义。** 对自然数 $n$，定义周期整除 $n$ 的固定点群
+
+$$
+K(A,n)=\ker f_{A^n-I}.
+$$
+
+**定理。** 对整数矩阵 $A,B$ 与自然数 $n$，
+
+$$
+f_A\circ f_B=f_{AB},qquad f_A^n=f_{A^n},qquad
+z\in K(A,n)\Longleftrightarrow f_A^n(z)=z.
+$$
+
+**证明。** 每个等式在代表元上分别化为 $A(Bx)=(AB)x$、矩阵幂的归纳以及 $(A^n-I)x=A^nx-x$。由于整数矩阵保持格 $L$，这些代表元计算均良定义。
+
+### TR.10 环面固定点与返回商
+
+**定理。** 设 $M=A^n-I$ 且 $\det M\ne0$。则存在加法群同构
+
+$$
+R(A,n)\cong K(A,n).
+$$
+
+其逆可写为
+
+$$
+[x]\longmapsto[Mx]
+\quad\text{从}\quad
+M_{\mathbb R}^{-1}\mathbb Z^2/\mathbb Z^2
+\quad\text{到}\quad
+\mathbb Z^2/M\mathbb Z^2.
+$$
+
+**证明。** 由 $\det M\ne0$，实线性映射 $M_{\mathbb R}$ 可逆。定义
+
+$$
+b_M:\mathbb Z^2\to\ker f_M,qquad
+z\longmapsto[M_{\mathbb R}^{-1}j(z)].
+$$
+
+若 $[x]\in\ker f_M$，则 $M_{\mathbb R}x\in L$，故存在 $z\in\mathbb Z^2$ 使 $M_{\mathbb R}x=j(z)$，从而 $b_M(z)=[x]$；所以 $b_M$ 满射。另一方面，$b_M(z)=0$ 当且仅当存在 $w\in\mathbb Z^2$ 使 $M_{\mathbb R}^{-1}j(z)=j(w)$，也即 $z=Mw$。因此 $\ker b_M=M\mathbb Z^2$，第一同构定理给出结论。所写逆映射由同一计算得出。
+
+**定理。** 对 $k>0$、$n>0$，$f_{C_k}$ 与 $f_{D_k}$ 的周期整除 $n$ 的固定点群具有相同有限基数；在 $n=1$ 时，这两个固定点群不同构。
+
+**证明。** TR.3 保证相关行列式非零，TR.10 把固定点群分别同构到返回模，再应用 TR.3 与 TR.6。
+
+### TR.11 粒子流与环面自同构的同痕障碍
+
+**假设。** 设 $T\geq0$，$\Phi:[0,T]\times\mathbb T^2\to\mathbb T^2$ 连续，且 $\Phi_0=\operatorname{id}_{\mathbb T^2}$；对每个 $t$，记 $\Phi_t(x)=\Phi(t,x)$。
+
+**定理。** $\Phi_T$ 与恒等映射同痕，因而 $\Phi_T$ 在一阶同调群上的诱导映射是恒等。若整数环面自同构 $f_A$ 在一阶同调上的作用为非恒等矩阵 $A$，则 $\Phi_T\ne f_A$。
+
+**证明。** 映射 $(s,x)\mapsto\Phi_{sT}(x)$ 是从恒等映射到 $\Phi_T$ 的同痕。同调的同痕不变性给出第一项。若 $\Phi_T=f_A$，则二者在一阶同调上的作用相同，迫使 $A=I$，矛盾。
+
+**定义。** 对常系数对称逆度量
+
+$$
+H=\begin{pmatrix}h_{00}&h_{01}\\h_{01}&h_{11}\end{pmatrix}
+$$
+
+和黏性 $\nu$，定义平坦二维零压力、零外力的 Navier--Stokes 残差
+
+$$
+\mathcal R_H(v)=\partial_tv+(v\cdot\nabla)v
+-\nu\bigl(h_{00}\partial_{xx}+2h_{01}\partial_{xy}+h_{11}\partial_{yy}\bigr)v.
+$$
+
+### TR.12 格同源下的剪切解与度量输运
+
+**定义。** 在两个空间坐标均以 $2\pi$ 为周期的平坦环面上，令
+
+$$
+u(t,X,Y)=(e^{-\nu t}\cos Y,0),qquad
+Q_k=P_k^{-1}=\begin{pmatrix}1&0\\k&1/2\end{pmatrix},
+$$
+
+并定义
+
+$$
+v(t,x,y)=Q_ku(t,P_k(x,y))
+=(1,k)e^{-\nu t}\cos(-2kx+2y).
+$$
+
+**定理。** $u$ 光滑、无散度，且满足欧氏度量下的无外力、零压力 Navier--Stokes 方程
+
+$$
+\partial_tu+(u\cdot\nabla)u-\nu\Delta u=0.
+$$
+
+**证明。** 直接求导得 $\operatorname{div}u=0$、$(u\cdot\nabla)u=0$、$\partial_tu=\nu\Delta u$。
+
+**定理。** 令
+
+$$
+G_k=P_k^{\mathsf T}P_k,qquad
+H_k=Q_kQ_k^{\mathsf T}
+=\begin{pmatrix}1&k\\k&k^2+1/4\end{pmatrix}.
+$$
+
+则 $G_kH_k=H_kG_k=I$，且 $H_k$ 正定。具体地，对 $(r,s)\ne(0,0)$，
+
+$$
+(r,s)H_k(r,s)^{\mathsf T}=(r+ks)^2+s^2/4>0.
+$$
+
+**证明。** 由 $P_kQ_k=Q_kP_k=I$ 直接得到两侧逆关系。二次型恒等式由展开得到；若 $s\ne0$，第二项为正，若 $s=0$，则 $r\ne0$ 且第一项为正。
+
+**定义。** 对实数 $\lambda$，令
+
+$$
+v_\lambda(t,x,y)=(1,k)e^{-\nu\lambda t}\cos(-2kx+2y).
+$$
+
+**定理。** $v_\lambda$ 关于时空变量光滑，并在两个空间方向上均为 $2\pi$ 周期；它无散度，且
+
+$$
+\mathcal R_H(v_\lambda)
+=\nu\bigl(4h_{00}k^2-8h_{01}k+4h_{11}-\lambda\bigr)v_\lambda.
+$$
+
+**证明。** 光滑性与周期性由指数函数、余弦函数及整数频率直接得到。令 $\ell=(-2k,2)$、$a=(1,k)$，则 $\ell\cdot a=0$，所以散度及完整对流项消失。再用
+
+$$
+\partial_tv_\lambda=-\nu\lambda v_\lambda,\qquad
+\partial_{xx}v_\lambda=-4k^2v_\lambda,\qquad
+\partial_{xy}v_\lambda=4kv_\lambda,\qquad
+\partial_{yy}v_\lambda=-4v_\lambda
+$$
+
+代入 TR.11 的残差定义，即得公式。
+
+**定理。** $v_1=v$ 满足逆度量 $H_k$ 下的方程；在欧氏逆度量下则有
+
+$$
+\mathcal R_I(v)=\nu(4k^2+3)v.
+$$
+
+若 $\nu>0$，该残差在 $(t,x,y)=(0,0,0)$ 的第一分量严格为正。另一方面，
+
+$$
+w(t,x,y)=(1,k)e^{-4\nu(k^2+1)t}\cos(-2kx+2y)
+$$
+
+满足欧氏度量下的无外力方程，并且 $w(0,x,y)=v(0,x,y)$。
+
+**证明。** 在残差公式中依次代入 $(h_{00},h_{01},h_{11},\lambda)=(1,k,k^2+1/4,1)$、$(1,0,1,1)$ 与 $(1,0,1,4(k^2+1))$。第一组和第三组的系数为零，第二组的系数为 $4k^2+3$。初值等式由令 $t=0$ 得到。
+
+**定理。** $H_k$ 的最小特征值没有与 $k$ 无关的正下界，并且
+
+$$
+\lambda_{\min}(H_k)\leq\frac{1}{4(k^2+1)}\longrightarrow0.
+$$
+
+**证明。** 在 Rayleigh 商中取非零向量 $(-k,1)$。TR.12 的二次型等于 $1/4$，而该向量的欧氏长度平方为 $k^2+1$。
+
+### TR.13 Hilbert 空间的耗散管与二次李雅普诺夫证书
+
+**假设。** 设 $H$ 为实内积空间，$u:[0,T]\to H$ 连续，并在 $[0,T)$ 具有右导数 $\dot u$。设 $\gamma>0$、$\rho\geq0$，且
+
+$$
+\langle u(t),\dot u(t)\rangle
+\leq-\gamma\|u(t)\|^2+\rho\|u(t)\|.
+$$
+
+**定理。** 对每个 $t\in[0,T]$，
+
+$$
+\|u(t)\|\leq e^{-\gamma t}\|u(0)\|
++\frac{\rho}{\gamma}\bigl(1-e^{-\gamma t}\bigr).
+$$
+
+特别地，当 $\rho=0$ 时，$\|u(t)\|\leq e^{-\gamma t}\|u(0)\|$。
+
+**证明。** 对 $\delta>0$ 定义
+
+$$
+z_\delta(t)=\sqrt{\|u(t)\|^2+\delta^2}.
+$$
+
+被开方数严格为正，故在 $u(t)=0$ 时链式法则仍适用。记 $n=\|u(t)\|$、$z=z_\delta(t)$，则 $z\geq n$、$z\geq\delta$，并且
+
+$$
+z_\delta'(t)=\frac{\langle u(t),\dot u(t)\rangle}{z_\delta(t)}
+\leq-\gamma z_\delta(t)+\rho+\gamma\delta.
+$$
+
+最后一个不等式可在乘以正数 $z$ 后由恒等式
+
+$$
+(-\gamma z+\rho+\gamma\delta)z-(-\gamma n^2+\rho n)
+=\rho(z-n)+\gamma\delta(z-\delta)
+$$
+
+得到。标量 Gronwall 比较给出
+
+$$
+z_\delta(t)\leq e^{-\gamma t}z_\delta(0)
++\frac{\rho+\gamma\delta}{\gamma}\bigl(1-e^{-\gamma t}\bigr).
+$$
+
+由 $\|u(t)\|\leq z_\delta(t)$，再令 $\delta\downarrow0$，利用平方根与指数函数的连续性即得结论。
+
+**定理。** 设 $\gamma>0$、$\rho\geq0$，$u:[0,T]\to H$ 连续且在 $[0,T)$ 具有右导数。设 $A(t):H\to H$ 为有界线性算子，$f:[0,T]\to H$ 连续，并且
+
+$$
+u'(t)=A(t)u(t)+f(t),\qquad
+\langle x,A(t)x\rangle\leq-\gamma\|x\|^2,qquad
+\|f(t)\|\leq\rho.
+$$
+
+则 $u$ 满足前一定理的同一指数管估计。
+
+**证明。** 由 Cauchy--Schwarz 不等式，
+
+$$
+\langle u,u'\rangle
+=\langle u,A(t)u\rangle+\langle u,f\rangle
+\leq-\gamma\|u\|^2+\rho\|u\|.
+$$
+
+应用前一定理。
+
+**定义。** 设 $L:H\to H$ 线性，$B:H\times H\to H$ 双线性，$f\in H$，定义
+
+$$
+F(x)=Lx-B(x,x)+f.
+$$
+
+**假设。** 对所有 $a,b,w\in H$，设
+
+$$
+\langle b,B(a,b)\rangle=0,qquad
+\langle w,Lw\rangle\leq-\mu\|w\|^2,qquad
+-\langle w,B(w,v)\rangle\leq G\|w\|^2,
+$$
+
+并设 $G<\mu$、$F(v)=0$。
+
+**定理。** 对所有 $w,x\in H$，
+
+$$
+\langle w,F(v+w)-F(v)\rangle
+=\langle w,Lw\rangle-\langle w,B(w,v)\rangle,
+$$
+
+以及
+
+$$
+\langle x-v,F(x)-F(v)\rangle
+\leq-(\mu-G)\|x-v\|^2.
+$$
+
+**证明。** 展开 $B(v+w,v+w)$。由假设，$\langle w,B(v,w)\rangle=0$ 与 $\langle w,B(w,w)\rangle=0$，只留下 $B(w,v)$。再代入关于 $L$ 与 $B(w,v)$ 的两个二次型上界。
+
+**定理。** 在上述假设下，对每个 $x\in H$，
+
+$$
+\|x-v\|\leq\frac{\|F(x)\|}{\mu-G}.
+$$
+
+并且 $v$ 是 $F$ 的唯一零点。
+
+**证明。** 若 $x=v$，结论显然。否则将前一定理与 $F(v)=0$ 合并，取相反数后用 Cauchy--Schwarz 不等式，得到
+
+$$
+(\mu-G)\|x-v\|^2
+\leq\|x-v\|\,\|F(x)\|.
+$$
+
+约去正数 $\|x-v\|$ 即得距离界。若再有 $F(x)=0$，右边为零，故 $x=v$。
+
+**定理。** 设 $\rho\geq0$，且 $u:[0,T]\to H$ 连续并在 $[0,T)$ 具有右导数。若轨迹满足
+
+$$
+u'(t)=F(u(t))+r(t),\qquad \|r(t)\|\leq\rho,
+$$
+
+则对 $t\in[0,T]$，
+
+$$
+\|u(t)-v\|\leq e^{-(\mu-G)t}\|u(0)-v\|
++\frac{\rho}{\mu-G}\bigl(1-e^{-(\mu-G)t}\bigr).
+$$
+
+**证明。** 令 $e=u-v$。前述负裕量和 Cauchy--Schwarz 不等式给出
+
+$$
+\langle e,e'\rangle
+\leq-(\mu-G)\|e\|^2+\rho\|e\|.
+$$
+
+应用 TR.13 的耗散管定理。
+
+### TR.14 受迫剪切不动点与耗散记忆
+
+**定义。** 对 $k\geq0$、$\nu>0$，令
+
+$$
+\Phi_k(x,y)=(1,k)\cos(-2kx+2y),qquad
+\Gamma_k=4\nu(k^2+1),qquad
+u_a(t,x,y)=a(t)\Phi_k(x,y).
+$$
+
+**定理。** 若 $a$ 可微，则 $u_a$ 无散度，且欧氏零压力残差满足
+
+$$
+\partial_tu_a+(u_a\cdot\nabla)u_a-\nu\Delta u_a
+=(a'+\Gamma_ka)\Phi_k.
+$$
+
+此外，$a(t)=u_a(t,0,0)_1$，其中下标 $1$ 表示第一坐标分量。
+
+**证明。** 波矢 $(-2k,2)$ 与幅向量 $(1,k)$ 正交，故散度和对流项消失。坐标二阶导数之和为 $-4(k^2+1)u_a$，从而得到残差公式。在 $(x,y)=(0,0)$ 处，第一坐标分量的幅值为 $1$，故得到读数恒等式。
+
+**定理。** 对常数 $c$，时间不变场
+
+$$
+u_*(x,y)=c\Phi_k(x,y)
+$$
+
+是外力 $f_*=\Gamma_kc\Phi_k$ 下的稳态解。若 $\rho\geq0$ 且
+
+$$
+a'=-\Gamma_k(a-c)+r,qquad |r(t)|\leq\rho,
+$$
+
+则对所有 $t\in[0,T]$、$(x,y)$ 及两个坐标分量 $i$，
+
+$$
+|u_{a,i}(t,x,y)-u_{*,i}(x,y)|
+\leq(1+k)\left[
+e^{-\Gamma_kt}|a(0)-c|
++\frac{\rho}{\Gamma_k}(1-e^{-\Gamma_kt})
+\right].
+$$
+
+**证明。** 取 $a\equiv c$ 代入前一定理即得稳态方程。对 $a-c$ 应用 TR.13 的标量情形，再用
+
+$$
+|\Phi_{k,i}(x,y)|\leq1+k
+$$
+
+即可得到一致空间界。
+
+**定义。** 对实常数 $a,b,d$，考虑二状态系统
+
+$$
+x'=-ax+by,qquad y'=-bx-dy,
+$$
+
+并定义能量 $E=x^2+y^2$。
+
+**定理。** 该系统满足精确能量恒等式
+
+$$
+E'=-2ax^2-2dy^2.
+$$
+
+若 $a,d\geq\gamma>0$，则对 $t\in[0,T]$，
+
+$$
+E(t)\leq E(0)e^{-2\gamma t},
+$$
+
+且该估计与耦合常数 $b$ 无关。
+
+**证明。** 对 $x^2+y^2$ 求导，两个交叉项 $2bxy$ 与 $-2bxy$ 相消。于是 $E'\leq-2\gamma E$，标量 Gronwall 比较给出结论。
+
+**定理。** 若 $b\ne0$，则隐藏状态由可见状态及其导数精确恢复：
+
+$$
+y=\frac{x'+ax}{b}.
+$$
+
+若观测值满足 $|\widehat x-x|\leq\varepsilon_x$ 与 $|\widehat v-x'|\leq\varepsilon_v$，则
+
+$$
+\left|\frac{\widehat v+a\widehat x}{b}-y\right|
+\leq\frac{\varepsilon_v+|a|\varepsilon_x}{|b|}.
+$$
+
+**证明。** 第一式由 $x'=-ax+by$ 解出 $y$。第二式将重建误差写成
+
+$$
+\frac{(\widehat v-x')+a(\widehat x-x)}{b}
+$$
+
+并应用三角不等式。
+
+**定理。** 若 $t\geq0$，$x$ 在 $[0,t]$ 上连续且 $y$ 在该区间满足隐藏方程，则
+
+$$
+y(t)=e^{-dt}\left(y(0)-b\int_0^t e^{ds}x(s)\,ds\right).
+$$
+
+因此可见变量满足精确 Volterra 方程
+
+$$
+x'(t)=-ax(t)+be^{-dt}y(0)
++\int_0^tK(t-s)x(s)\,ds,
+\qquad
+K(\tau)=-b^2e^{-d\tau}.
+$$
+
+**证明。** 对 $e^{dt}y(t)$ 求导，得
+
+$$
+\frac{d}{dt}\bigl(e^{dt}y(t)\bigr)=-be^{dt}x(t).
+$$
+
+在 $[0,t]$ 上积分并乘以 $e^{-dt}$ 得隐藏历史公式。将其代入 $x'=-ax+by$，再用
+
+$$
+e^{-dt}e^{ds}=e^{-d(t-s)}
+$$
+
+即得卷积形式及核 $K$。
+
+**定理。** 对相同可见输入 $x$，若 $y,z$ 是两个隐藏解且 $d>0$，则
+
+$$
+|b(y(t)-z(t))|
+\leq |b|e^{-dt}|y(0)-z(0)|.
+$$
+
+**证明。** 差 $q=y-z$ 满足 $q'=-dq$，故 $q(t)=e^{-dt}q(0)$；取绝对值并乘以 $|b|$。
+
+**定理。** 若 $d\ne0$ 且隐藏方程处于稳态，即 $-bx-dy=0$，则
+
+$$
+y=-\frac{b}{d}x,qquad
+-ax+by=-\left(a+\frac{b^2}{d}\right)x.
+$$
+
+**证明。** 第一式由稳态方程除以 $d$ 得到；代入可见方程右端并整理即得第二式。

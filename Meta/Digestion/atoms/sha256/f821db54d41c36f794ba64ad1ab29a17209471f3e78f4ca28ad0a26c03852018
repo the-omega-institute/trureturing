@@ -1,0 +1,9 @@
+**证明。** 令 $e=u-v$。前述负裕量和 Cauchy--Schwarz 不等式给出
+
+$$
+\langle e,e'\rangle
+\leq-(\mu-G)\|e\|^2+\rho\|e\|.
+$$
+
+应用 TR.13 的耗散管定理。
+

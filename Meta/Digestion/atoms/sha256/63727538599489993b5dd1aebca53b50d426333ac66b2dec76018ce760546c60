@@ -1,0 +1,8 @@
+**假设。** 设 $H$ 为实 Hilbert 空间，轨迹 $u:[0,T]\to H$ 连续并在 $[0,T)$ 上有强右导数 $u'$。设 $\gamma>0$、$\rho\geq0$，且
+
+\[
+\langle u(t),u'(t)\rangle
+\leq-\gamma\|u(t)\|^2+\rho\|u(t)\|.
+\tag{12.1}
+\]
+

@@ -1,0 +1,9 @@
+**定理。** 对每个 $t\in[0,T]$，
+
+$$
+\|u(t)\|\leq e^{-\gamma t}\|u(0)\|
++\frac{\rho}{\gamma}\bigl(1-e^{-\gamma t}\bigr).
+$$
+
+特别地，当 $\rho=0$ 时，$\|u(t)\|\leq e^{-\gamma t}\|u(0)\|$。
+

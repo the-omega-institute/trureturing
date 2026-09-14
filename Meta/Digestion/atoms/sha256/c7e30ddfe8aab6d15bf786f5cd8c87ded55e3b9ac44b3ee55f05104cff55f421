@@ -1,0 +1,6 @@
+**定义。** 对自然数 $m$，称 $C_k$ 与 $D_k$ 在 $\mathbb Z/(m)$ 上共轭，如果存在 $P,Q\in M_2(\mathbb Z/(m))$ 满足
+
+$$
+PQ=QP=I,qquad C_kP=PD_k.
+$$
+

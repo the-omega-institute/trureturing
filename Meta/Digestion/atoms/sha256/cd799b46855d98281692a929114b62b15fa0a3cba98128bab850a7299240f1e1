@@ -1,0 +1,8 @@
+**证明。** 在 $w(t)=0$ 时，相同上界由范数的右上导数得到。乘以 $e^{\gamma t}$ 并在 $[0,t]$ 上积分，便有
+
+\[
+e^{\gamma t}\|w(t)\|-\|w(0)\|
+\leq\rho\int_0^t e^{\gamma s}\,ds
+=\frac{\rho}{\gamma}(e^{\gamma t}-1),
+\]
+

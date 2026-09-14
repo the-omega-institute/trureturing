@@ -1,0 +1,2 @@
+**证明。** 直接求导得 $\operatorname{div}u=0$、$(u\cdot\nabla)u=0$、$\partial_tu=\nu\Delta u$。
+

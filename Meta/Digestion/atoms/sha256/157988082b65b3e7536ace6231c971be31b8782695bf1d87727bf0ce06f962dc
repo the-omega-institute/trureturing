@@ -1,0 +1,6 @@
+**证明。** 对总能量求导。由伴随关系，交叉项
+
+\[
+2\langle x,B^*y\rangle-2\langle y,Bx\rangle
+\]
+

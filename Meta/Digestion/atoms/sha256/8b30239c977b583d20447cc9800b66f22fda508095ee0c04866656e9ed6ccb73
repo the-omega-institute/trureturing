@@ -1,0 +1,7 @@
+**证明。** 速度方向 $(1,k)$ 与波矢 $(-2k,2)$ 的内积为 $-2k+2k=0$，故 $\nabla\cdot u_a=0$ 且 $(u_a\cdot\nabla)u_a=0$。又有
+
+\[
+\Delta\Phi_k=-4(k^2+1)\Phi_k,
+\qquad \partial_tu_a=a'(t)\Phi_k,
+\]
+
