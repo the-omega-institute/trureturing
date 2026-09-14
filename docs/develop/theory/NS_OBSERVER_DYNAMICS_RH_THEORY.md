@@ -448,7 +448,7 @@ a(t)=c+(a(0)-c)e^{-\Gamma_k t},
 z_\delta(t)=\sqrt{\|u(t)\|^2+\delta^2}.
 \]
 
-**定理。** 在上述假设下，对每个 $t\in[0,T]$，
+**定理。** 在上述假设下，对每个 $t\in[0,T]$ 都有
 
 \[
 \|u(t)\|\leq e^{-\gamma t}\|u(0)\|
@@ -738,3 +738,244 @@ K(\tau)=-B^*e^{-\tau D}B.
 \]
 
 **证明。** 对隐藏方程应用常系数线性方程的变参数公式，得到 $y(t)$ 的表示；将该表示代回可见方程，积分项的算子系数即为式 (12.20) 中的 $K$。
+
+## 13. 正 Laplace 观察的低能质量、尖锐噪声界与观察覆盖
+
+### 13.1 研究问题与对象边界
+
+本节承接第 12 节对耗散、隐藏状态与恢复条件的区分。问题是：一个关联函数呈现指数衰减，究竟能排除多少低能质量；若要把这个观察结论提升成完整算子的谱结论，还需要哪些条件？
+
+研究输入包括 Axabra Yang–Mills Lean 文件中的 `exponential_clustering_implies_spectral_gap_core`。该输入用任意函数 `massBelow` 及其低能下界作为前提；本节从真实正测度的积分证明相应下界，并进一步处理有限时间、绝对噪声和观察覆盖。上传文件名为 `b6f669bd-7947-4501-acd2-255e9208becf.lean`，SHA-256 为 `6e7460b7d93409df992818756fcdaf5b4be6b133468570ccd4bacb02de101d25`。这里只记录研究来源，不把它的离散谱定义识别为量子场论哈密顿量。
+
+固定有限正 Borel 测度 $\mu$，能量空间取 $[0,\infty)$。Lean 使用 `Measure ℝ≥0` 与 `IsFiniteMeasure`。定义
+
+\[
+C_\mu(t)=\int_{[0,\infty)}e^{-tE}\,\mu(dE),\qquad
+M_\mu(r)=\mu([0,r]).
+\tag{13.1}
+\]
+
+在 $t\geq0$ 时，积分核连续且位于 $(0,1]$，因此由有限性得到可积性。源码中的实值质量是 `μ.real (Set.Iic r)`，有限性保证它与扩展非负实值测度相互转换时不会把无穷质量误写成零。
+
+$C_\mu$ 此处是实际 Laplace 积分。把它识别为 $\langle\psi,e^{-tH}\psi\rangle$，需要另外给出具体自伴算子及其谱测度。涉及质量隙时，还须明确去除真空分量或限制在真空正交补；含有真空原子的原始关联函数一般不会衰减到零。[13-A]
+
+### 13.2 一个时刻的观察给出的质量上界
+
+**定理。** 对任意 $r\geq0$、$t\geq0$，有
+
+\[
+M_\mu(r)e^{-rt}\leq C_\mu(t).
+\tag{13.2}
+\]
+
+**证明。** 在 $E\leq r$ 上，$e^{-tE}\geq e^{-tr}$。对该区间积分，再利用区间外积分非负，得到式 (13.2)。Lean 中复用 Mathlib 已有的 `mul_meas_ge_le_integral_of_nonneg`，先证明相应集合包含关系，再应用测度单调性；没有把式 (13.2) 作为假设输入。[13-B]
+
+**定理。** 如果在某个 $t\geq0$ 有
+
+\[
+C_\mu(t)\leq Ke^{-\Delta t}+\varepsilon,
+\]
+
+则
+
+\[
+\boxed{M_\mu(r)\leq
+Ke^{-(\Delta-r)t}+\varepsilon e^{rt}.}
+\tag{13.3}
+\]
+
+**证明。** 将式 (13.2) 与观察上界串联，乘以正数 $e^{rt}$。两个指数相加后即得式 (13.3)。对应公开定理为 `PositiveLaplaceGap.low_energy_mass_le`。
+
+式 (13.3) 是单时刻结论，也适用于只给定一组采样时刻的情形。在有限窗口内只能在实际拥有上界的时刻间优化。若测得 $\widehat C$ 且 $|\widehat C-C_\mu|\leq\delta$，同时拟合上包络为 $\widehat C\leq Ke^{-\Delta t}+\eta$，这里应使用 $\varepsilon=\delta+\eta$，不能漏掉任一误差。
+
+### 13.3 任意上包络的精确单原子极值归约
+
+**定理。** 给定 $r,m\geq0$、时间集合 $S\subseteq[0,\infty)$ 和任意实函数 $U$。下列条件等价：
+
+\[
+\begin{split}
+&\exists\mu\text{ 有限正测度},\quad
+M_\mu(r)=m,\quad C_\mu(t)\leq U(t)\ (t\in S);\\
+& m e^{-rt}\leq U(t)\quad(t\in S).
+\end{split}
+\tag{13.4}
+\]
+
+**证明。** 正向由式 (13.2) 得到。反向取实际测度 $\mu=m\delta_r$，其低能质量为 $m$，Laplace 积分恰好为 $me^{-rt}$。对应公开定理为 `PositiveLaplaceGap.low_mass_feasible_iff_single_atom`；原子积分由 `laplace_smul_dirac` 给出。
+
+因此，在 $S\neq\varnothing$ 且 $U(t)\geq0$ 的情况下，若
+
+\[
+m_*:=\inf_{t\in S} U(t)e^{rt}
+\]
+
+是有限实数，则所有有限正测度中可行的最大低能质量恰好为 $m_*$，并由 $m_*\delta_r$ 取得。下确界不必在某个时间点取得，因为对每个 $t\in S$ 仍有 $m_*\leq U(t)e^{rt}$。若 $S$ 为空则没有上界约束；若上包络为负则可能根本没有可行测度。这些退化情形不应通过下确界的默认值混为一谈。
+
+式 (13.4) 已写成 Lean 证明。上面的下确界重述是其普通数学推论，本轮未另加一个形式化下确界接口。极值类不规定总质量等于一；规定总质量的约束需单独加入。
+
+### 13.4 有限噪声的尖锐半隙界
+
+**定理。** 设 $r>0$、$0<b\leq a$，并对所有 $t\geq0$ 有
+
+\[
+C_\mu(t)\leq a^2e^{-2rt}+b^2.
+\]
+
+则
+
+\[
+\boxed{M_\mu(r)\leq2ab.}
+\tag{13.5}
+\]
+
+**证明。** 令 $t_*=\log(a/b)/r\geq0$。式 (13.3) 的右侧为
+
+\[
+a^2e^{-rt_*}+b^2e^{rt_*}
+=a^2\frac ba+b^2\frac ab=2ab.
+\]
+
+公开定理 `PositiveLaplaceGap.sharp_half_gap_upper` 使用这个实际时间值完成证明。
+
+**尖锐性。** 取 $\mu_*=2ab\,\delta_r$。它的低能质量为 $2ab$，而
+
+\[
+a^2e^{-2rt}+b^2-C_{\mu_*}(t)
+=(ae^{-rt}-b)^2\geq0
+\]
+
+对每个实时间成立。公开定理 `PositiveLaplaceGap.half_gap_extremizer` 验证了这个真实测度及全时间上包络。因此常数二在有限正测度类中无法降低。
+
+等价地，若 $K\geq\varepsilon>0$、$\Delta>0$，则
+
+\[
+C_\mu(t)\leq Ke^{-\Delta t}+\varepsilon\quad(t\geq0)
+\quad\Longrightarrow\quad
+\mu([0,\Delta/2])\leq2\sqrt{K\varepsilon}.
+\tag{13.6}
+\]
+
+观察时间为 $t_*=\log(K/\varepsilon)/\Delta$。有限观测窗口只有覆盖该时间时，才能直接使用此最优值。特别是 $K=\varepsilon$ 时 $t_*=0$，结论退化为初始总质量界；这仍被形式化定理覆盖。该尖锐性没有同时施加概率归一化。
+
+**进一步的普通数学结论。** 对 $0<r<\Delta$、$K,\varepsilon>0$、$T\geq0$，定义
+
+\[
+F(t)=Ke^{-(\Delta-r)t}+\varepsilon e^{rt},\qquad
+\tau=\frac1\Delta\log\frac{K(\Delta-r)}{\varepsilon r},
+\qquad t_{\rm opt}=\min\{T,\max\{0,\tau\}\}.
+\]
+
+在整个窗口 $[0,T]$ 上给定该包络时，最大可行低能质量精确等于 $F(t_{\rm opt})$。证明为 $F''>0$、$F'$ 唯一零点为 $\tau$，再调用式 (13.4)。当窗口为 $[0,\infty)$ 且 $\tau\geq0$ 时，令 $\theta=r/\Delta$，最优值为
+
+\[
+\frac{K^\theta\varepsilon^{1-\theta}}
+{\theta^\theta(1-\theta)^{1-\theta}}.
+\tag{13.7}
+\]
+
+该一般实幂优化式及截断时间公式在本节给出完整普通证明，Lean 当前专门完成式 (13.5) 的半隙情形以及式 (13.4) 的任意包络极值归约。
+
+### 13.5 零噪声排除与全谱所需的观察覆盖
+
+**定理。** 若 $K\geq0$、$r<\Delta$，并且 $C_\mu(t)\leq Ke^{-\Delta t}$ 对所有 $t\geq0$ 成立，则 $\mu([0,r])=0$。
+
+**证明。** 设 $m=M_\mu(r)>0$、$d=\Delta-r>0$。式 (13.3) 给出 $me^{dt}\leq K$。在 $t=(K/m+1)/d$ 使用 $e^x\geq1+x$，左侧至少为 $K+2m$，矛盾。源码 `PositiveLaplaceGap.subthreshold_mass_eq_zero` 使用这个有限见证时间，因此无需额外假设极限交换或谱原子性。
+
+对所有 $r<\Delta$ 使用该结果，再由可数递增区间覆盖，可以在普通测度论中推出 $\mu([0,\Delta))=0$。本轮 Lean 公开结论保留逐个严格次阈值闭区间的形式。
+
+**观察覆盖定理。** 设 $P:E\to F$ 为实赋范空间间的连续线性映射，观察族 $v_i$ 的实线性张成在 $E$ 中稠密。假设给定真实有限正测度 $\mu_i$，且
+
+\[
+\mu_i([0,r])=\|Pv_i\|^2,\qquad
+C_{\mu_i}(t)\leq K_i e^{-\Delta t},\quad K_i\geq0,\quad\Delta>r
+\]
+
+对所有 $i$ 和 $t\geq0$ 成立。则 $P=0$。
+
+**证明。** 前述零噪声结论给出每个 $\mu_i([0,r])=0$，故 $Pv_i=0$。线性性使 $P$ 在观察族的线性张成上为零，连续性使其零集闭，从而由稠密性在整个 $E$ 上为零。对应公开定理为 `SpectralObservationCoverage.total_observations_kill_low_map`。
+
+这个结果不需要不同 $K_i$ 有统一上界，但衰减指数必须具有共同严格裕量 $\Delta-r>0$。用于谱理论时，$P$ 可取实际低能谱投影在真空正交补上的限制；具体投影的构造和质量等式必须另外证明。单独把变量命名为谱投影不会满足这项识别义务。
+
+### 13.6 已知总质量仍无法消除绝对噪声下的分类障碍
+
+**定理。** 设 $0\leq\ell\leq r<h$、$0<\eta\leq1$。取概率测度
+
+\[
+\mu_0=\delta_h,\qquad
+\mu_1=\eta\delta_\ell+(1-\eta)\delta_h.
+\tag{13.8}
+\]
+
+则 $M_{\mu_0}(r)=0$、$M_{\mu_1}(r)=\eta$，且
+
+\[
+0\leq C_{\mu_1}(t)-C_{\mu_0}(t)
+=\eta(e^{-\ell t}-e^{-ht})\leq\eta\qquad(t\geq0).
+\tag{13.9}
+\]
+
+**证明。** 两个指数均在 $(0,1]$，且 $\ell<h$ 保证其顺序。低能质量由原子所在区间直接计算。源码 `SpectralObservationCoverage.normalized_hidden_atom` 复用 Mathlib 的 `ProbabilityTheory.bernoulliMeasure`，从既有积分及概率实例推出式 (13.9)，没有另外发明一个概率分布接口。[13-B]
+
+**定理。** 即使算法得到所有非负时间的观测值，也不存在对所有概率测度都正确的判据，能在统一绝对误差 $\eta/2$ 下决定 $\mu([0,r])=0$。
+
+**证明。** 令
+
+\[
+y(t)=\frac{C_{\mu_0}(t)+C_{\mu_1}(t)}2.
+\]
+
+式 (13.9) 保证它与两种真实关联函数的误差均不超过 $\eta/2$。同一个输入 $y$ 在第一种模型中要求回答零质量，在第二种模型中要求回答非零质量，矛盾。公开定理 `SpectralObservationCoverage.no_uniform_noisy_gap_classifier` 对任意函数型谓词量化，不限制算法的连续性、计算能力或模型类别。
+
+这个结论针对给定阈值以下的质量是否严格为零。它不否定有额外先验时的定量估计，也不宣称每个谱模型都无法认证。对任何给定正误差预算 $\delta$，可选 $0<\eta\leq\min\{1,2\delta\}$，因此障碍适用于任意正的统一绝对误差。使用相对误差、非消失的低能权重下界或额外干预观察，会改变问题。
+
+### 13.7 噪声障碍在共同循环观察下的普通算子实例
+
+上一节反例来自归一化谱测度。进一步可以排除“只要观察向量循环，绝对噪声就不再有问题”这一更强猜想。
+
+**命题。** 取 $0<\ell\leq r<h<H$、$0<\eta<1$。在同一个二维复 Hilbert 空间上定义
+
+\[
+A_0=\operatorname{diag}(h,H),\qquad
+A_1=\operatorname{diag}(\ell,H),\qquad
+\psi=(\sqrt\eta,\sqrt{1-\eta}).
+\tag{13.10}
+\]
+
+两个算子均正自伴，$\|\psi\|=1$，且同一个 $\psi$ 对每个算子都是循环向量。它们在 $[0,r]$ 中的谱质量分别为零和 $\eta$，而全时间关联函数之差仍不超过 $\eta$。
+
+**证明。** 对角矩阵直接给出自伴性、正性与关联函数
+
+\[
+\langle\psi,e^{-tA_0}\psi\rangle
+=\eta e^{-ht}+(1-\eta)e^{-Ht},\qquad
+\langle\psi,e^{-tA_1}\psi\rangle
+=\eta e^{-\ell t}+(1-\eta)e^{-Ht}.
+\]
+
+相减得到式 (13.9) 的同一个差。两个谱点不同，且 $\psi$ 的两个分量均非零，所以 $\psi,A_j\psi$ 张成全空间；其行列式的绝对值为 $\sqrt{\eta(1-\eta)}$ 乘以相应谱点之差，因此非零。加入共同的一维零能真空块不改变这个激发子空间上的结论。
+
+这说明循环性支持零噪声的识别，却没有提供与噪声无关的定量观察下界。式 (13.10) 及循环性证明属于本轮完成的普通数学推进，当前两份 Lean 源码没有形式化该矩阵实例；不能把它算入内核验证产出。
+
+### 13.8 与既有研究的关系、交付边界及下一项证明义务
+
+Laplace 反演的严重不适定性有成熟研究背景。[13-C] 本节使用的 Markov 型积分估计、正测度单调性与闭子空间稠密性论证都是已有数学。这里的工作是把它们连接成具体观察模型的完整证明，给出可取等的噪声界，并明确概率归一化下的统一分类障碍；没有宣称解决外部命名开放问题或证明世界首次结果。
+
+当前源码与开放 PR 的限定检索包括 Laplace、spectral、clustering、Yang 及正测度恢复。PR #7780 研究离散正收缩矩下完整记忆序列的误差，PR #7720 研究有限模态外推；本节的目标是连续 Laplace 观察下的阈值质量与分类。已有 `PositiveCayleyScaleTransport` 处理真实测度的尺度推送，`QuadraticObservationClosure` 处理投影动力的隐藏项。这里的证明直接复用 Mathlib 的积分和概率测度 API，不把相邻主题写成不存在的 Lean import 依赖。
+
+2025 年 Lucia、Pérez-García、Pérez-Hernández 的研究在具体格点量子系统中，把空间混合条件与构造出的 canonical purified Hamiltonian 联系起来。[13-D] 它与本节的时间 Laplace 积分问题不同，但说明算子构造、观察量和衰减条件必须共同指定。该论文这里只用作路线对照，不引用其定理来填补本节的物理识别。
+
+本轮公开声明为一项定义、九项定理，分别位于 `D5/S3/Analytic/PositiveLaplaceGap.lean` 和 `D5/S3/Analytic/SpectralObservationCoverage.lean`，并各有同路径对应的 Blueprint Scribe。任意包络归约、半隙尖锐界、真实测度次阈值排除、稠密观察消费者、归一化原子反例及全时间分类障碍均有完整候选证明项。一般阈值的实幂闭式优化、可数区间并集、式 (13.10) 的矩阵实现仍只有本节所列普通证明。
+
+验证边界：固定读取基线为 `bae09d242b9f2afcdfced14e0fdabf447e92f693`，Mathlib 为 `db584cd6d46c92f209a44c0f1c829460d327499d`。已审查普通证明与所用固定版本 API。作者环境没有 Lean/Lake，工具链下载未成功；没有执行 elaboration、Lean 内核检查、`#print axioms` 或 Scribe 编译。候选源无显式 `sorry`、`admit`、新公理或 `native_decide`，这一词法检查不能替代编译，也不冒充独立模型审稿。PR 保持草稿，不修改 CI 或冻结账本。
+
+下一项承重义务是从一个明确的实际自伴算子构造上述测度与低能投影恒等式，并给出观察覆盖的定量下界。可先完成式 (13.10) 的循环矩阵实例，再研究可观测权重下界或 frame 下界如何改善含噪认证。本节没有建立原始 Navier–Stokes 的全局正则性，也没有构造四维量子 Yang–Mills 理论；这些目标不由选定的一串能级或单个观察的衰减自动推出。[13-A]
+
+### 13.9 来源
+
+[13-A] Arthur Jaffe and Edward Witten. *Quantum Yang–Mills Theory*, Clay Mathematics Institute problem statement, Section 4, printed page 6. https://www.claymath.org/wp-content/uploads/2022/06/yangmills.pdf . 用于固定四维量子理论、真空及质量隙的目标语义，不作为本节测度不等式的证明。
+
+[13-B] Mathlib 4, commit `db584cd6d46c92f209a44c0f1c829460d327499d`. `Mathlib/MeasureTheory/Integral/Bochner/Basic.lean` 中 `mul_meas_ge_le_integral_of_nonneg`；`Mathlib/MeasureTheory/Measure/Real.lean`；`Mathlib/Probability/Distributions/Bernoulli.lean` 中概率实例、原子质量及积分公式。https://github.com/leanprover-community/mathlib4/tree/db584cd6d46c92f209a44c0f1c829460d327499d . 这些是本轮实际使用的形式化基础。
+
+[13-C] Charles L. Epstein and John Schotland. *The Bad Truth about Laplace's Transform*. SIAM Review 50(3), 504–520, 2008. DOI: 10.1137/060657273. https://epubs.siam.org/doi/10.1137/060657273 . 已核对摘要与出版信息，用于 Laplace 反问题背景；不把本节的精确常数或归一化分类命题归属于该文。
+
+[13-D] Angelo Lucia, David Pérez-García, Antonio Pérez-Hernández. *Spectral Gap Bounds for Quantum Markov Semigroups via Correlation Decay*. arXiv:2505.08991, 2025. https://arxiv.org/abs/2505.08991 . 已核对摘要，用于说明具体空间混合与算子识别路线的对照，未将其结果移用于本节的时间相关函数。
