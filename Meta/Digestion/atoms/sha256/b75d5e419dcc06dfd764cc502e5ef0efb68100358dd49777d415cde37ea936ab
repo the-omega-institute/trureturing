@@ -1,0 +1,1 @@
+每个固定 $h\in\omega$ 的迭代 $T_{\rm infdig}^h$ 是 $z_{\rm infdig}(n)\mapsto z_{\rm infdig}(n+h)$ 的唯一连续延拓，包括 $h=0$。
