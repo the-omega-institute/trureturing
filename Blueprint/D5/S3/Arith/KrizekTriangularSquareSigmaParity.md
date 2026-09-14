@@ -16,6 +16,8 @@ $$\forall n \in \mathbb{N},\; (n > 0) \Rightarrow ((IsSquare\left((n \cdot (n + 
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* N. J. A. Sloane; Jaroslav Krizek (2016). *OEIS A001108, a(n)-th triangular number is a square*. URL: <https://oeis.org/A001108>.
+
 *Commentary.*
 
 The classical divisor-sum parity characterization reduces each odd divisor sum to a square-or-twice-square alternative. A coprime-product split for consecutive integers proves the forward direction, and a twice-square exclusion for triangular numbers proves the reverse direction. At n=0 the triangular number is zero and square, while its divisor sum is even, so positivity excludes that boundary.
