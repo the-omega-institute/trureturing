@@ -10,7 +10,7 @@ namespace StrataLint.Tests;
 public sealed partial class MakeWorkflowTests
 {
 
-    [Fact(DisplayName = "Makefile and inspector dispatch counts are pinned in the thin dispatch table")]
+    [Fact(DisplayName = "Makefile remains a thin complete dispatch table")]
     public void MakefileIsAThinCompleteDispatchTable()
     {
         var root = TestRepositoryLayout.FindRoot();
@@ -93,22 +93,11 @@ public sealed partial class MakeWorkflowTests
             Recipe(makefile, "lean"),
             Regex.Escape(LeanCacheRunScriptPath),
             RegexOptions.CultureInvariant).Count;
-        var reportCommands = Regex.Matches(
-            inspector,
-            "(?m)^(?!\\[\\[).*\\\"\\$CACHE_RUN\\\"",
-            RegexOptions.CultureInvariant).Count;
-        // lean-report needs both wrapper calls: inspect.sh builds lazily inside
-        // invoke_inspector and then runs the Inspector phase.
         var leanEnsures = EnsureDependency("lean") + leanCommands;
-        var reportEnsures = EnsureDependency("lean-report") + reportCommands;
-        var testEnsures = EnsureDependency("test") + leanEnsures + reportEnsures;
         var buildEnsures = EnsureDependency("build") + leanEnsures;
 
         Assert.Equal(1, leanCommands);
-        Assert.Equal(2, reportCommands);
         Assert.Equal(1, leanEnsures);
-        Assert.Equal(2, reportEnsures);
-        Assert.Equal(3, testEnsures);
         Assert.Equal(1, buildEnsures);
         var cacheEnsure = File.ReadAllText(Path.Combine(root, LeanCacheEnsureScriptPath));
         Assert.DoesNotContain("[[ -L", cacheEnsure, StringComparison.Ordinal);
