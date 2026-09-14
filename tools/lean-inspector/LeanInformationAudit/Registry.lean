@@ -2000,6 +2000,28 @@ private partial def matchesPlan (context : MatchContext) (plan : PlanNode) (actu
                 unless ← child fields[i]! projection.parameters[i]! do parametersMatch := false
               if parametersMatch then
                 return ← child plan fields[info.numParams + projection.index]!.toExpr
+      else if let .const ctor universeArgs := base.getAppFn then
+        if let some (.ctorInfo info) := (← getEnv).find? ctor then
+          let fields := base.getAppArgs
+          if info.induct == projection.typeName && fields.size == info.numParams + info.numFields &&
+              projection.index < info.numFields &&
+              (projection.parameters.isEmpty || projection.parameters.size == info.numParams) &&
+              (projection.universeArgs.isNone || projection.universeArgs == some universeArgs) then
+            -- Audit the entire literal receiver before selecting a field. An
+            -- unused anchor or signature parameter is still an extraction input.
+            let (names, work) ← match ← RegistrationGates.templateArgumentsCurrent
+                context.theoremName (fields ++ projection.parameters) (← get).remaining with
+              | .ok result => pure result
+              | .error diagnostic => throwError diagnostic
+            debit work
+            modify fun state =>
+              let extracted := names.foldl (fun found name => found.insert name)
+                (state.extractionNames.insert ctor)
+              { state with extractionNames := extracted }
+            let mut parametersMatch := true
+            for i in [:projection.parameters.size] do
+              unless ← equalRaw fields[i]! projection.parameters[i]! do parametersMatch := false
+            if parametersMatch then return ← child plan fields[info.numParams + projection.index]!
   match plan with
   | .expanded raw body =>
     if ← equalRaw raw actual then return true
@@ -2038,7 +2060,10 @@ private def extract (name : Name) : MetaM Expr := do
   if isRealizationType info.type then
     match info with
     | .defnInfo defn =>
-      if defn.safety != .safe then throwError "unclassified_form:dtr.extraction_kind"
+      if defn.safety != .safe || (← isRecursiveDefinition name) || defn.all.length > 1 ||
+          (Compiler.getImplementedBy? (← getEnv) name).isSome ||
+          (getExternAttrData? (← getEnv) name).isSome then
+        throwError "unclassified_form:dtr.extraction_kind"
       return defn.value
     | _ => throwError "unclassified_form:dtr.extraction_kind"
   throwError "unclassified_form:dtr.extraction_interface"
