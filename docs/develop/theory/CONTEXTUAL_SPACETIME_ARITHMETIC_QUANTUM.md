@@ -11413,3 +11413,263 @@ $$
 所用标量依赖扰动与 D'Ariano、Lo Presti、Perinotti，*Classical randomness in quantum measurements*，[推论 7 及其证明](https://arxiv.org/abs/quant-ph/0408115) 中的标准 POVM 方法一致；本节利用目标的正齐次性选择不降方向，同时保持各效应的秩上界。Bluhm、Rauber、Wolf，*Quantum compression relative to a set of measurements*，[引理 5.2、引理 5.3 与定理 5.1](https://arxiv.org/abs/1708.04898) 也通过限制经典辅助规模与紧性证明压缩维数的稳定性，但其 $D^4$ 标签界用于在保持给定复合通道不变的条件下重构压缩与解压缩映射。本节只优化所列有限范数总分，允许更换存储仪器并在权重揭示后分别选择最终判别；$D^2$ 界不承担保持原复合通道或共同解压缩映射的要求。证毕。
 
 ## 追加锚（新终端）
+
+## 43. 奇异加权差的交叉支撑判据与经典无损存储
+
+**定理 43.1（有序权重的正负支撑判据）。** 设 $A,J$ 为 $\mathbb C^D$ 上的密度矩阵，$D\ge1$，预先给定有限权重表
+
+$$
+m\ge1,\qquad 0<c_1<\cdots<c_m,\qquad D_j=c_jA-J.
+$$
+
+允许 $D_j$ 奇异、定号或为零。分别记正谱、负谱及零谱投影为
+
+$$
+P_j^+=\mathbf1_{(0,\infty)}(D_j),\qquad
+P_j^-=\mathbf1_{(-\infty,0)}(D_j),\qquad
+Z_j=I_D-P_j^+-P_j^-.
+$$
+
+存在一个有限经典输出 CPTP 通道，在实际权重揭示前固定，并满足
+
+$$
+\|\Phi(D_j)\|_1=\|D_j\|_1
+\qquad(1\le j\le m),
+$$
+
+当且仅当
+
+$$
+\boxed{
+P_i^+P_j^-=0\qquad\text{对全部 }1\le i<j\le m.
+}
+$$
+
+条件成立时，令
+
+$$
+\mathcal S_j=\operatorname{span}
+\{\operatorname{ran}P_i^+:1\le i\le j\},
+\qquad Q_j=\operatorname{proj}_{\mathcal S_j},
+\qquad Q_0=0,\quad Q_{m+1}=I_D.
+$$
+
+这些投影满足
+
+$$
+Q_0\le Q_1\le\cdots\le Q_m\le Q_{m+1},
+\qquad P_j^+\le Q_j\le I_D-P_j^-.
+$$
+
+因此
+
+$$
+M_k=Q_{k+1}-Q_k,\qquad 0\le k\le m,
+$$
+
+是一组共同投影测量；删去零效应后，至多 $\min\{D,m+1\}$ 个经典标签足以同时无损。这里给出的是达到该任务的标签上界，没有断言每个输入都需要这么多标签。
+
+证明。先确定奇异加权差的全部最优效应。对任意 Hermitian 矩阵 $H$，写其 Jordan 分解为
+
+$$
+H=H_+-H_-,\qquad H_+,H_-\ge0,\qquad H_+H_-=0.
+$$
+
+令 $P^+,P^-,Z$ 为相应的正、负、零谱投影。对效应 $0\le F\le I_D$，有
+
+$$
+\operatorname{tr}H_+-\operatorname{tr}(FH)
+=\operatorname{tr}((I_D-F)H_+)+\operatorname{tr}(FH_-)
+\ge0.
+$$
+
+两项均非负。正矩阵乘积的迹为零，等价于它们的正平方根乘积为零。因此等号成立，当且仅当 $F$ 在 $\operatorname{ran}P^+$ 上为恒等、在 $\operatorname{ran}P^-$ 上为零。由于 $F$ 自伴，这两个子空间与其正交补之间的非对角块也为零；于是全部最优效应精确写成
+
+$$
+\boxed{
+F=P^++R,\qquad 0\le R\le Z,
+}
+$$
+
+等价地，$P^+\le F\le I_D-P^-$。它们都满足二元判别的变分等式
+
+$$
+2\operatorname{tr}(FH)-\operatorname{tr}H=\|H\|_1.
+$$
+
+这里 $0\le R\le Z$ 已保证 $R$ 支撑在零特征子空间。若 $H$ 可逆，该自由消失，最优效应唯一；若 $H=0$，整个效应区间都最优。
+
+对加权密度矩阵差，这个完整最优效应区间是量子 Neyman–Pearson 引理的标准形式，见 Jenčová，*Reversibility conditions for quantum operations*，[引理 7](https://arxiv.org/abs/1107.0453)。在该引理中取 $\sigma=A$、$\rho=J$、$t=1/c_j$，则 $\sigma-t\rho=D_j/c_j$；因为 $c_j>0$，正、负、零谱子空间以及最优效应集合均不改变。
+
+现设存在逐项无损的有限经典存储。它由某个有限 POVM $(E_\ell)_\ell$ 给出，输出第 $\ell$ 个标签的概率为 $\operatorname{tr}(E_\ell\rho)$。定义
+
+$$
+a_\ell=\operatorname{tr}(E_\ell A)\ge0,\qquad
+b_\ell=\operatorname{tr}(E_\ell J)\ge0,
+$$
+
+以及输入效应
+
+$$
+F_j=\sum_{\ell:\,c_ja_\ell-b_\ell>0}E_\ell.
+$$
+
+由经典范数的逐标签绝对值表达，
+
+$$
+2\operatorname{tr}(F_jD_j)-\operatorname{tr}D_j
+=\sum_\ell|c_ja_\ell-b_\ell|
+=\|\Phi(D_j)\|_1
+=\|D_j\|_1.
+$$
+
+因此每个 $F_j$ 都是对应加权差的最优效应。因为 $a_\ell\ge0$，每个 $c_ja_\ell-b_\ell$ 随 $j$ 不减，正号标签集合随之嵌套，所以
+
+$$
+F_i\le F_j\qquad(i<j).
+$$
+
+定义直接使用严格正号，不需要除以 $a_\ell$。当 $a_\ell=0$ 时，由 $b_\ell\ge0$，该标签永不入选；读数恰为零时也排除，不影响上述等式与嵌套性。
+
+固定 $i<j$。最优效应条件给出
+
+$$
+P_i^+\le F_i\le F_j\le I_D-P_j^-.
+$$
+
+对任意 $v\in\operatorname{ran}P_j^-$，夹取此不等式得到 $\langle v,P_i^+v\rangle=0$，故 $P_i^+v=0$。于是 $P_i^+P_j^-=0$，证明必要性。这里没有将一般 $F_j$ 假定为投影，也没有从两效应的共同来源直接断言它们对易。
+
+反过来，设所有交叉支撑条件成立。对 $i\le j$，$\operatorname{ran}P_i^+$ 与 $\operatorname{ran}P_j^-$ 正交；$i=j$ 的情形由谱分解自动成立。因此陈述中的 $\mathcal S_j$ 包含 $\operatorname{ran}P_j^+$，并且与 $\operatorname{ran}P_j^-$ 正交，给出
+
+$$
+P_j^+\le Q_j\le I_D-P_j^-.
+$$
+
+子空间 $\mathcal S_j$ 递增，所以 $Q_j$ 是嵌套的最优投影扩展。相邻投影差 $M_k=Q_{k+1}-Q_k$ 均为正交投影，彼此正交，且总和为 $I_D$。用这组 PVM 作经典存储，并在权重 $c_j$ 揭示后把 $k<j$ 的标签归为第一种判别结果，则其输入效应为
+
+$$
+\sum_{k=0}^{j-1}M_k=Q_j.
+$$
+
+这个效应达到 $D_j$ 的二元最优值。存储后范数至少为该决策给出的 $\|D_j\|_1$，迹范数收缩性又给出反向不等式，因而逐项无损。投影总数为 $m+1$，非零项又是两两正交的非零子空间投影，所以非零数不超过 $D$。全部标签均保留，没有后选择。
+
+一般有限组判别问题的正确条件，是能够从各自的最优效应集合中选出彼此兼容的二元测量；兼容指它们都是某一共同 POVM 的经典后处理。对任意 Hermitian 差，上述计算把每个最优集合具体写成 $P_j^++[0,Z_j]$。兼容的一组选取产生共同经典存储，反向则由存储后的最优决策得到这样的选取。最优效应不唯一时，只需存在一组兼容选取；这一一般原则见 Carmeli、Heinosaari、Toigo，*State discrimination with post-measurement information and incompatibility of quantum measurements*，[定理 1 及其后的说明](https://arxiv.org/html/1804.09693)。对本节的 $D_j=c_jA-J$，第 37 节的系综归一化同样适用。
+
+本节在同一候选对与递增正权重的条件下，利用逐标签读数的单调性，把兼容性进一步化为所列交叉支撑判据，并明确构造嵌套的投影扩展。若所有 $D_j$ 可逆，则 $I_D-P_j^-=P_j^+$，交叉条件退化为 $P_i^+\le P_j^+$，与第 38 节在有序权重下得到的嵌套判据一致。奇异情形保留了零特征子空间的选择自由，不能直接要求原始正谱投影彼此对易。证毕。
+
+**命题 43.2（严格正定候选的奇异不定反例）。** 在 $\mathbb C^3$ 的标准基 $e_1,e_2,e_3$ 下取
+
+$$
+A=\frac18\begin{pmatrix}
+2&3&0\\3&5&0\\0&0&1
+\end{pmatrix},\qquad
+J=\frac1{27}\begin{pmatrix}
+5&9&0\\9&17&0\\0&0&5
+\end{pmatrix},
+\qquad c=\frac89,\quad d=\frac{32}{27}.
+$$
+
+这两个候选都是严格正定密度矩阵，$c<d$。令 $D_t=tA-J$，则
+
+$$
+D_c=\frac1{27}\begin{pmatrix}
+1&0&0\\0&-2&0\\0&0&-2
+\end{pmatrix},\qquad
+D_d=\frac1{27}\begin{pmatrix}
+3&3&0\\3&3&0\\0&0&-1
+\end{pmatrix}.
+$$
+
+两个差都不定，$D_c$ 可逆而 $D_d$ 奇异。它们的正谱投影不对易，但标准三结果 PVM 同时保留
+
+$$
+\|D_c\|_1=\frac5{27},\qquad
+\|D_d\|_1=\frac7{27}.
+$$
+
+对这两个任务，最少经典标签数和最小完整量子输出维数均为三；若经典标签免费，所需量子寄存器维数为一。
+
+证明。$A,J$ 的迹均为一。它们的顺序主子式分别为
+
+$$
+\left(\frac14,\frac1{64},\frac1{512}\right),\qquad
+\left(\frac5{27},\frac4{729},\frac{20}{19683}\right),
+$$
+
+全部严格为正，故二者严格正定。代入两个权重得到陈述中的加权差。$D_c$ 的特征值为 $1/27,-2/27,-2/27$；$D_d$ 的特征值为 $6/27,0,-1/27$，因此二者均含有严格正、负特征值，范数也是所列值。
+
+令
+
+$$
+u=\frac{e_1+e_2}{\sqrt2},\qquad
+w=\frac{e_1-e_2}{\sqrt2}.
+$$
+
+相应投影为
+
+$$
+P_c^+=|e_1\rangle\langle e_1|,\qquad
+P_d^+=|u\rangle\langle u|,\qquad
+P_d^-=|e_3\rangle\langle e_3|,\qquad
+Z_d=|w\rangle\langle w|.
+$$
+
+直接计算得
+
+$$
+[P_c^+,P_d^+]
+=\frac12\begin{pmatrix}0&1&0\\-1&0&0\\0&0&0\end{pmatrix}\ne0.
+$$
+
+但 $P_c^+P_d^-=0$，所以满足定理 43.1 的交叉支撑条件。其嵌套最优投影是
+
+$$
+Q_c=|e_1\rangle\langle e_1|,\qquad
+Q_d=|e_1\rangle\langle e_1|+|e_2\rangle\langle e_2|
+=P_d^++Z_d.
+$$
+
+对应 PVM 恰为三个标准基投影。测量两个差得到的未归一化对角读数分别为
+
+$$
+\frac1{27}(1,-2,-2),\qquad
+\frac1{27}(3,3,-1).
+$$
+
+绝对值之和分别为 $5/27$ 与 $7/27$，直接验证共同经典测量无损。
+
+现在证明整个输出至少需要三维。设任意有限维 CPTP 通道 $\Phi(X)=\sum_a K_aXK_a^\dagger$ 对这两项无损，并令
+
+$$
+\mathcal R_r=\operatorname{span}_a\{K_ae_r\},
+\qquad r=1,2,3.
+$$
+
+由迹保持，$\sum_a\|K_ae_r\|^2=1$，所以每个 $\mathcal R_r$ 都非零。对正矩阵 $B,C$，$\|B-C\|_1=\operatorname{tr}B+\operatorname{tr}C$ 当且仅当其支撑正交：取 $B-C$ 的最优正谱投影 $F$，等号要求 $\operatorname{tr}((I-F)B)=\operatorname{tr}(FC)=0$，分别将两个支撑置于 $F$ 的值域与核中；反向由正交分块成立。
+
+将这一条件用于 $D_c$ 的正负部分，无损性给出
+
+$$
+\mathcal R_1\perp\mathcal R_2,\qquad
+\mathcal R_1\perp\mathcal R_3.
+$$
+
+再用于 $D_d=(6|u\rangle\langle u|-|e_3\rangle\langle e_3|)/27$，得到对所有 $a,b$ 都有
+
+$$
+\langle K_a(e_1+e_2),K_be_3\rangle=0.
+$$
+
+其中 $\langle K_ae_1,K_be_3\rangle=0$ 已由第一项确定，相减可得 $\langle K_ae_2,K_be_3\rangle=0$。所以三个非零子空间 $\mathcal R_1,\mathcal R_2,\mathcal R_3$ 两两正交，整个输出空间至少三维。标准三标签通道达到该下界，也证明两个经典标签不够。免费标签的口径下，同一实现为纯经典输出，故最小量子寄存器维数为一。
+
+最后核对第 41 节公式的适用边界。此例的标准正谱投影生成
+
+$$
+C^*(I_3,P_c^+,P_d^+)=M_2(\mathbb C)\oplus\mathbb C.
+$$
+
+事实上，上面对易子的平方为 $-(I_2\oplus0)/4$，故两个中央分区投影都在生成代数中；在前二维内，两个不对易秩一投影生成全部 $M_2(\mathbb C)$，末尾为标量块。因此若删去第 41 节的可逆性前提而直接使用其最大块公式，会给出量子寄存器维数二，与这里已达到且最小的维数一矛盾。其完整输出公式在此恰好仍给出三，不能据这个例子声称该数值也失效。
+
+此例的经典无损并不来自某一项半正定而自动保范数：两项都不定，保留它们的最优判别仍需要三个输出维数。改变判据的是 $D_d$ 的零特征子空间；把它加入正谱投影后，最优效应成为能与第一项共同读取的 $Q_d$。证毕。
+
+## 追加锚（新终端）
