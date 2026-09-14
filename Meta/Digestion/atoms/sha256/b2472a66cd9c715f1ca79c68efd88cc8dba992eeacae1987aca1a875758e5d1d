@@ -1,0 +1,7 @@
+**命题。** 若 $\rho=0$，则 $\|w(t)\|\leq e^{-\gamma t}\|w(0)\|$。若标量轨迹满足 $a'=-\gamma(a-c)+r$ 且 $|r|\leq\rho$，则
+
+\[
+|a(t)-c|\leq e^{-\gamma t}|a(0)-c|
++\frac{\rho}{\gamma}(1-e^{-\gamma t}).
+\]
+

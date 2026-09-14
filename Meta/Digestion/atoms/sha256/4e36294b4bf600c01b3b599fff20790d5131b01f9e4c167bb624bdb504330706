@@ -1,0 +1,42 @@
+### TR.8 交织子范数与模共轭判据
+
+**定理。** 设 $S$ 为交换环，$k\geq0$。矩阵 $U\in M_2(S)$ 满足 $C_kU=UD_k$ 当且仅当存在 $a,b\in S$ 使
+
+$$
+U=U(a,b)=
+\begin{pmatrix}
+a&b\\
+2k((k+1)b-a)&2(a-kb)
+\end{pmatrix}.
+$$
+
+此时
+
+$$
+\det U(a,b)=2\bigl(a^2-k(k+1)b^2\bigr).
+$$
+
+**证明。** 正向由交织等式第一行的两个分量依次求出第二行；整个推导没有除法。反向把所示矩阵代入四个矩阵元，四式均成立。行列式公式由展开得到。
+
+**定义。** 对自然数 $m$，称 $C_k$ 与 $D_k$ 在 $\mathbb Z/(m)$ 上共轭，如果存在 $P,Q\in M_2(\mathbb Z/(m))$ 满足
+
+$$
+PQ=QP=I,qquad C_kP=PD_k.
+$$
+
+**定理。** 对所有自然数 $k,m$，
+
+$$
+C_k\text{ 与 }D_k\text{ 在 }\mathbb Z/(m)\text{ 上共轭}
+\quad\Longleftrightarrow\quad m\text{ 为奇数}.
+$$
+
+**证明。** 若 $m=2r+1$，在 $\mathbb Z/(m)$ 中令 $u=-r$，则 $2u=1$。取
+
+$$
+P=\begin{pmatrix}1&0\\-2k&2\end{pmatrix},qquad
+Q=\begin{pmatrix}1&0\\k&u\end{pmatrix}.
+$$
+
+直接乘法给出 $PQ=QP=I$ 与 $C_kP=PD_k$。反之，若 $m$ 为正偶数，则存在环同态 $\mathbb Z/(m)\to\mathbb Z/(2)$。任何可逆交织子都满足 $\det(P)\det(Q)=1$；TR.8 的行列式公式在 $\mathbb Z/(2)$ 中却使左边为 $0$，矛盾。若 $m=0$，系数环为 $\mathbb Z$，TR.4 排除可逆交织子。$m=1$ 为零环，且属于奇数情形。
+

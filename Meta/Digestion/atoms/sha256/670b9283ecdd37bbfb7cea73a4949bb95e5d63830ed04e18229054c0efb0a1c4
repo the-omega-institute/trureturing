@@ -1,0 +1,8 @@
+**命题。** 若对所有 $\xi\in X$、$\eta\in Y$ 都有 $\langle \xi,A\xi\rangle\geq\alpha\|\xi\|^2$ 与 $\langle \eta,D\eta\rangle\geq\delta\|\eta\|^2$，其中 $\alpha,\delta>0$，则
+
+\[
+\|x(t)\|^2+\|y(t)\|^2
+\leq e^{-2\min\{\alpha,\delta\}t}
+\bigl(\|x(0)\|^2+\|y(0)\|^2\bigr).
+\]
+

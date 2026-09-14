@@ -1,0 +1,8 @@
+**定义。** 对 $k\geq0$、$\nu>0$，令
+
+$$
+\Phi_k(x,y)=(1,k)\cos(-2kx+2y),qquad
+\Gamma_k=4\nu(k^2+1),qquad
+u_a(t,x,y)=a(t)\Phi_k(x,y).
+$$
+
