@@ -276,6 +276,8 @@ engineering 与 Scribe 不按 base 选测。当前项目与检查义务由候选
 
 共享 build 的预期项目集合为工程登记中除 `compile-fail-proof` 外的项目（含 `ci=false` 的正常构建项目）。逐项读取 `build/ci/build-outputs/<仓根相对项目路径>.outputs`,缺失即失败;收据声明的项目路径和 PE 程序集身份必须匹配登记。邻近未选中收据不参与运输。编译器 FileWrites、TargetPath 与 ref 输出只验证已声明项目的产物。收据第四行 `packages=$(NuGetPackageRoot)` 提供同一绝对包根;`Meta/package-materials.json` 只展开一次,不以 assets.json 的包或文件清单发现运输材料。
 
+共享 bootstrap 与主 build 通过现有 JudgeSeedTask helper 观察实际 `Csc` 任务启动次数,按项目输出及构建结束汇总;helper 自身的准备编译不在该计数范围。观测只消费本轮 seed.targets 的显式程序集地址,不改变登记输入、选工或构建退出码;缺失、失败或未完成的观测报告 unavailable/count=null,不得以缓存命中或未观测冒领零编译。
+
 **产物、退出与摘要属主。** producer 将报告、候选 DLL、TRX 与工程证据交给下游,每份产物须能核对候选身份、原执行来源与材料完整性。DLL 只可在确认符合候选登记源码与构建输入后执行;无法接受的种子由生产阶段正常构建。报告生产入口拥有增量生产与校验,消费者只校验和消费交接结果;必需报告或本轮证据缺失、格式错误、候选身份不符即失败,不得在下游静默重跑或把未执行记成成功。候选绑定与材料指纹用于接受证据和增量失效,不得变成远端缓存兼容分区。
 
 共享程序入口拥有输入/报告验证、退出归一与摘要,包括早退出口;YAML 与 preflight 只编排并传递结果。摘要区分 `executed`、经校验的 `reused`、`not-required`、未执行与失败,列明候选身份、检查/测试结果和产物位置,保留原始失败原因。raw `0` 为成功,`1` 为候选检查失败或 merge 冲突,`2` 为输入/基础设施失败,`3` 只表示 SL-022 保护面变更标注。只有其它必需义务全部通过时才可将标注归一为阶段成功;标注不豁免任何检查,也不触发第二次 Lean/current。make 只承诺成功/配方失败,不得把其折叠后的 `2` 当作原始失败分类。缓存状态、缺失证据或未知结果都不是通过判词。
@@ -291,6 +293,10 @@ engineering 与 Scribe 不按 base 选测。当前项目与检查义务由候选
 `truth-release-select --input FILE` 的既有 JSON 输入新增 `source_ref`（缺省 `refs/heads/dev`）；它仅限定 push run 的真实 `head_branch`，不自行宣称分支受保护。成功选择输出保留 `source_ref/source_commit/run_id/run_attempt/artifact_id/artifact_name/required_checks`。验证入口与发布共用 collect、selector、restore 及候选 transport verifier，要求同 run/attempt/head 的 engineering/current 成功、完整材料和实际需要的 Lean report；无合格证据以退出码 2 失败，不重产报告。成功验证输出 `source_verified=true,publish_ready=false` 及上述真实来源身份、`source_tree`，止于验证，不调用 assembly、不使用 `--commit-on-protected-dev true`、不产出或发布 truth 资产。`prepare` 仍默认选择受保护 dev 的最近 40 个提交中的合格来源；显式 `--source-commit` 只验证该 dev SHA，禁止替换为其它提交，非 dev 来源不得进入 prepare。
 
 **缓存与增量报告。** 结构化读取 `lake-manifest.json` 中 mathlib 的 **resolved revision**。Lean 依赖、项目构建与报告缓存共用该逻辑分区,二进制另按 OS/arch 隔离;tag、请求的 ref、完整配置/源码指纹与 commit SHA 均不得筛选兼容种子,`elan` 安装缓存独立。Actions 以 run ID/attempt 区分不可覆盖的快照实例,后缀不参与兼容判定。PR 只 restore,dev push 仅在对应产出成功后 save,并发 run 不覆盖彼此快照。判官构建、测试与检查证据按登记材料接受并增量复用,缓存运输状态不代替其验证。
+
+**集成发布验证。** `ci-publication-verify.yml` 仅由 `integration-ci-*-tests` 原生 push 的发布程序、配置和 workflow 路径触发,独立于 required CI;普通内容与 no-resource 文档不增加发布作业。路径过滤只选择该验证事件,不代替 required CI 的完整 FILEMAP 规划。两个作业使用生产对应 runner 和时限,truth 只读,cache 仅为隔离测试发布申请 contents-write,二者以 actions-read 查询真实运行身份。truth 调上述显式来源验证入口;源 push 尚未成功时须拒绝,在同 SHA 的 required push 成功后原生 rerun 验证,不得改写事件或借其它提交通过。
+
+缓存验证用既有 `make lean-cache-to-github-without-mathlib` 的 `LEAN_CACHE_MODE=verification LEAN_CACHE_SOURCE_REF=<ref> LEAN_CACHE_SOURCE_COMMIT=<sha>` 参数,只接受真实 integration push 与干净 HEAD,核对 API 的仓库、受保护来源、run/attempt/ref/SHA。它复用生产 build、归档、manifest、分片、上传及恢复实现,标签固定为独立的 `lean-cache-verify-v1-<partition>-<run>-<attempt>`;上传后必须向空的私有目标完整下载、核验并安装,才能报告 published。对应 fetch 参数仅消费本轮精确标签,不受 Actions 命中短路,不替换已有 warm 目标。验证不覆盖生产标签、不执行生产 prune,生产 fallback 不选择验证标签。它证明集成事件下的发布运输与来源消费,不冒领 schedule/dev、生产 prune、truth assembly 或 OCI 发布已验证;这些边界仍须在相应真实事件核验。
 
 保留定时 Release 缓存发布;仅在 Actions 无可用种子时取**同分区成功快照**,删除 exact/config-prefix/same-toolchain 多级选择,不得跨分区借种。donor/stamp 使用同一分区;同 mathlib 的 metadata 改动不得删除 `.lake`。缺缓存、损坏、传输或保存失败须可诊断地降级为正常生产;真实 restore/build/Lean/测试/规则失败仍阻断。登记判为不需要缓存的资源不做缓存运输。
 
