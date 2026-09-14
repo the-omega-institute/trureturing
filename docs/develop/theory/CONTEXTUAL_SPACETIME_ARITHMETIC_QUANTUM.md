@@ -19290,3 +19290,471 @@ $$
 本节复用 `unified_sequential_kernel`、`target_prediction_sufficiency`、`finite_time_observer_monotonicity` 和 `incomplete_observer_physical_counterexample` 的现有冻结声明，并把它们接到第 75、76 节的下降与有限关系塔。上述声明均在标准项目公理闭包下通过定向构建；本节没有新增 Lean 定理，也没有把线性 effect 结果提升为 CPTP、trace-distance 或 diamond 等价。
 
 ## 追加锚（新终端）
+
+## 78. 精确预测闭合与后揭测量的共同经典存储障碍
+
+### 78.1 序列统计、目标充分性与下降的适用条件
+
+**定义 78.1（按设置归一化的序列任务）。** 设 $d\ge1$，$\operatorname{Herm}_d$ 为 $d$ 阶 Hermitian 矩阵的实向量空间，内积为 $\langle A,B\rangle=\operatorname{tr}(AB)$。物理输入取密度矩阵 $\rho\ge0$、$\operatorname{tr}\rho=1$。对每个可选设置 $b$，分别给定有限个复线性、完全正且迹不增的分支 $\mathcal J_{b,s}$，并要求
+
+$$
+\sum_s\mathcal J_{b,s}\quad\text{对每个固定的 }b\text{ 都迹保持。}
+$$
+
+令 $\mathcal J_{b,s}^*$ 为 Hilbert--Schmidt 伴随。按时间顺序记录词 $w=((b_1,s_1),\ldots,(b_n,s_n))$，定义
+
+$$
+E_\varnothing=I_d,\qquad
+E_w=\mathcal J_{b_1,s_1}^*\cdots\mathcal J_{b_n,s_n}^*(I_d),
+\qquad
+p_\rho(w)=\operatorname{tr}(\rho E_w).
+$$
+
+设置是外部选择；若设置也随机化，其概率由另行指定的归一化策略给出，不把不同设置的全部分支直接合成一个仪器。
+
+**命题 78.2（第 77 节线性接口的物理限定）。** 第 77.1 节的签名核等价只需实 Hermitian 线性作用；把其中的响应解释为物理序列概率，须另加定义 78.1 的输入和仪器假设。第 77.2 节的目标充分性适用于 $d\ge1$ 及含单位方向的空间
+
+$$
+V=\operatorname{span}_{\mathbb R}\bigl(\{I_d\}\cup\{E_i\}_i\bigr),
+\qquad 0\le E_i\le I_d.
+$$
+
+其中加入 $I_d$ 是利用已知的迹一约束，不要求额外测量单位算子；对任何标量目标 $aI_d$，期望已经恒等于 $a$。若 $A\notin V$，则有对所有 $E_i$ 同读数、对 $A$ 异读数的两个密度矩阵。
+
+证明。Hermitian 矩阵满足
+
+$$
+\overline{\operatorname{tr}(AB)}
+=\operatorname{tr}((AB)^\dagger)
+=\operatorname{tr}(BA)=\operatorname{tr}(AB),
+$$
+
+故所写内积为实数。对任何实线性词效果族，所有配对相等当且仅当状态差正交于这些效果的实张成空间；这就是第 77.1 节 `unified_sequential_kernel` 的线性内容，它不包含密度输入、完全正性或归一化假设。在定义 78.1 下，分支复合把正输入送到正矩阵，其迹给出非负分支概率；对每个已经选定的设置，将该步的结果求和保持输入迹。逐步求和即得每个有限策略树的概率归一化。一般实线性作用没有这些保证，例如作用 $A\mapsto2A$ 从单位效果产生 $2I_d$，对迹一输入的响应为二。
+
+若 $A=aI_d+\sum_i a_iE_i$，其中只有有限个 $a_i$ 非零，则
+
+$$
+\operatorname{tr}(\rho A)=a+\sum_i a_i\operatorname{tr}(\rho E_i),
+$$
+
+直接给出充分性。反向令 $D=A-\operatorname{proj}_V A$。于是 $D\ne0$、$D\perp V$、$\operatorname{tr}D=0$，且
+
+$$
+\operatorname{tr}(DA)=\operatorname{tr}(D^2)>0.
+$$
+
+取 $0<\varepsilon<1/(d\|D\|_{\rm op})$，则 $\rho_\pm=I_d/d\pm\varepsilon D$ 的最小特征值至少为 $1/d-\varepsilon\|D\|_{\rm op}>0$，迹为一。正交性给出相同的 $E_i$ 读数，而两态的 $A$ 读数相差 $2\varepsilon\operatorname{tr}(D^2)>0$。这也是第 77.2 节 `target_prediction_sufficiency` 中正维数假设和单位方向的作用；原节关于标量部分的说明应以迹一约束所给的上述公式为准。证毕。
+
+**命题 78.3（全自由词稳定性与确定下降的限定）。** 对任意实线性生成作用 $(L_a)_a$，令 $E_\varnothing=I_d$、$E_{aw}=L_aE_w$，并用全部长度不超过 $H$ 的词定义 $V_H=\operatorname{span}_{\mathbb R}\{E_w:|w|\le H\}$。若 $V_H=V_{H+1}$，则每个生成作用都保持 $V_H$，且 $V_m=V_H$ 对所有 $m\ge H$ 成立。任意前缀闭合的允许子集，或把词族固定截断后得到的相邻相等，不具有这一推论。
+
+第 77.3 节引用的受驱下降等式具有如下精确形式。给定线性映射 $A,B,P,J,C$，令
+
+$$
+\widetilde A=PAJ,\quad\widetilde B=PB,\quad\widetilde C=CJ,
+\qquad PA=\widetilde A P,
+$$
+
+$$
+x_0=0,\quad x_{n+1}=Ax_n+Bu_n,
+\qquad
+\widetilde x_0=0,\quad\widetilde x_{n+1}=\widetilde A\widetilde x_n+\widetilde B u_n.
+$$
+
+则 $Px_n=\widetilde x_n$；若另有 $C=\widetilde C P$，则 $Cx_n=\widetilde C\widetilde x_n$。这些是零初态的受驱响应等式；任意密度制备并非它们的初态假设。
+
+证明。对 $|w|\le H$，有 $L_aE_w=E_{aw}\in V_{H+1}=V_H$。线性性把这个包含推广到整个 $V_H$，再对词长归纳，所有词效果都在 $V_H$ 中。与 $V_H\subseteq V_m$ 合用即得永久稳定。这是第 77.3 节所涉及的 `sequential_visible_space_once_stable_permanently` 的生成元不变性论证；不需要在全自由词假设之外再加一条前缀条件。若 $T_a^*=L_a$，同一论证还给出
+
+$$
+\langle T_ak,v\rangle=\langle k,L_av\rangle=0
+\quad(k\in V_H^\perp,\ v\in V_H),
+$$
+
+故 $T_a(V_H^\perp)\subseteq V_H^\perp$。对于删去某些扩展的允许子集，上述 $aw$ 未必被允许，不能作这一步推导；命题 78.5 给出一个物理分支反例。
+
+受驱响应在 $n=0$ 时满足 $Px_0=0=\widetilde x_0$。若第 $n$ 步等式成立，则
+
+$$
+Px_{n+1}=PAx_n+PBu_n
+=\widetilde A\widetilde x_n+\widetilde B u_n
+=\widetilde x_{n+1}.
+$$
+
+输出等式由 $C=\widetilde C P$ 代入。这正是 `ProjectedExactDescent` 中 `projectedState_eq_of_descent` 与 `outputs_eq_of_descent` 所用的零初态 `drivenState` 和全局下降条件。对另行指定的非零初态，相同归纳还需要 $\widetilde x_0=Px_0$；它不是任意两个初态之间的结论。证毕。
+
+第 77.4 节接用第 76 节的有限商预算时，增广后的载体必须实际为有限集，更新必须是该集上的同一个时间齐次确定映射。把任意长历史、无界时钟或随机结果添作坐标，本身不满足这一假设：前两者可以产生无限多坐标值，后者仍需给定确定的更新规则。只有明确构造出有限且封闭的确定增广系统，才可使用第 76 节的有限类数和稳定深度界。第 77.5 节的三项条件在这些限定内给出所选任务的精确预测接口；它们不能作为“稳定经典现实”或一个可物理取得的共同经典记录的充分条件。以下同一模型同时满足预测闭合与共同经典存储不可能性。
+
+### 78.2 两个 Lüders 设置的精确可见闭合
+
+**定义 78.4（量子比特任务及未归一化坐标）。** 在计算基 $|0\rangle=(1,0)^T$、$|1\rangle=(0,1)^T$ 中取
+
+$$
+I=\begin{pmatrix}1&0\\0&1\end{pmatrix},\quad
+X=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+Y=\begin{pmatrix}0&-i\\i&0\end{pmatrix},\quad
+Z=\begin{pmatrix}1&0\\0&-1\end{pmatrix}.
+$$
+
+对 $b\in\{X,Z\}$、$s\in\{+1,-1\}$，定义
+
+$$
+P_s^b=\frac{I+sb}{2},\qquad
+\mathcal J_{b,s}(A)=P_s^bAP_s^b.
+$$
+
+任意 Hermitian $A$ 唯一写为
+
+$$
+A=\frac{tI+xX+yY+zZ}{2},
+\qquad (t,x,y,z)\in\mathbb R^4,
+\qquad t=\operatorname{tr}A.
+$$
+
+允许的操作只有这些分支；有限策略可以依赖已记录的设置和结果选择下一设置或停止，并可使用与输入独立的经典随机数。策略不插入任意旋转、不补充新的量子输入，也不测量外部参考系统。
+
+**命题 78.5（分支递推与所有有限词的闭合）。** 每个固定 $b$ 的二分支族是 Lüders 仪器。分支在可见坐标 $(t,x,z)$ 上的作用恰为
+
+$$
+\mathcal J_{X,s}:\ (t,x,z)\longmapsto
+\left(\frac{t+sx}{2},\frac{st+x}{2},0\right),
+$$
+
+$$
+\mathcal J_{Z,s}:\ (t,x,z)\longmapsto
+\left(\frac{t+sz}{2},0,\frac{st+z}{2}\right).
+$$
+
+密度输入恰满足 $t=1$、$x^2+y^2+z^2\le1$。对全部长度不超过 $H$ 的词效果，其实可见空间与稳定正交残差为
+
+$$
+V_0=\operatorname{span}_{\mathbb R}\{I\},\qquad
+V_H=V=\operatorname{span}_{\mathbb R}\{I,X,Z\}\quad(H\ge1),
+\qquad K=V^\perp=\operatorname{span}_{\mathbb R}\{Y\}.
+$$
+
+这些递推精确决定定义 78.4 内全部有限策略的记录概率。
+
+证明。矩阵相乘给出 $X^2=Y^2=Z^2=I$，不同 Pauli 矩阵反对易，且 $I,X,Y,Z$ 两两 Hilbert--Schmidt 正交、平方范数均为二。这证明坐标表示的唯一性。无迹部分满足
+
+$$
+(xX+yY+zZ)^2=(x^2+y^2+z^2)I,
+$$
+
+故 $A$ 的特征值为 $(t\pm\sqrt{x^2+y^2+z^2})/2$，得到所述密度条件。
+
+每个 $P_s^b$ 都是迹一的正交投影，且 $P_+^b+P_-^b=I$。若 $P=|v\rangle\langle v|$、$\|v\|=1$，则对任意矩阵 $A$，
+
+$$
+PAP=\langle v,Av\rangle P=\operatorname{tr}(AP)P.
+$$
+
+因此
+
+$$
+\mathcal J_{X,s}(A)=\frac{t+sx}{2}P_s^X,
+\qquad
+\mathcal J_{Z,s}(A)=\frac{t+sz}{2}P_s^Z,
+$$
+
+展开投影即得坐标递推，并且分支后的 $y$ 坐标为零。对任意辅助空间和任意正矩阵 $B$，
+
+$$
+(\mathcal J_{b,s}\otimes\mathrm{id})(B)
+=(P_s^b\otimes I)B(P_s^b\otimes I)\ge0,
+$$
+
+所以分支完全正。对 $A\ge0$，其迹为 $\operatorname{tr}(AP_s^b)\in[0,\operatorname{tr}A]$；固定 $b$ 后对 $s$ 求和等于 $\operatorname{tr}A$。这证明每个设置的仪器性质。反之，将两个设置的四个分支不加权相加，输出迹为 $2\operatorname{tr}A$，并非归一化仪器。
+
+这些分支关于 Hilbert--Schmidt 配对自伴随。对非空词 $w=(a_1,\ldots,a_n)$，写 $P_j=P_{s_j}^{b_j}$。秩一压缩逐次给出
+
+$$
+E_w=
+\left(\prod_{j=1}^{n-1}\operatorname{tr}(P_jP_{j+1})\right)P_1,
+$$
+
+其中空积为一。事实上 $E_{(a_n)}=P_n$；若后缀效果为 $cP_{j+1}$，则 $P_j(cP_{j+1})P_j=c\operatorname{tr}(P_jP_{j+1})P_j$，倒序归纳即得公式。同一设置的相邻投影重叠为 $\delta_{s_j,s_{j+1}}$，不同设置的重叠为 $1/2$，因为
+
+$$
+\operatorname{tr}(P_s^bP_u^c)
+=\frac{1+su\,\delta_{b,c}}2.
+$$
+
+故所有词效果在 $V$ 内，长度一的效果已通过 $P_+^X-P_-^X=X$、$P_+^Z-P_-^Z=Z$ 张成 $V$，空词给出 $I$。Pauli 正交性给出 $K$。特别地，每个分支都消去 $Y$，所以隐藏方向不会回流到可见坐标。
+
+这也提供命题 78.3 所需的子集反例：只允许全部 $X$ 设置的词，是整个 $X,Z$ 字母表中的前缀闭合子集；其长度一及长度二的可见空间均为 $\operatorname{span}_{\mathbb R}\{I,X\}$，但 $\mathcal J_{Z,+}^*(I)=(I+Z)/2$ 不在其中。只保留这些词的长度一截断，仍有同样的相邻相等和失败。
+
+最后，对一条终止记录 $h$，令 $q_h$ 是沿记录各次设置选择及终止决定的策略概率的乘积；确定策略时它等于零或一。因策略只依赖已有记录，$q_h$ 不依赖隐藏的输入坐标。该记录的概率是 $q_h\operatorname{tr}(\rho E_h)$，而各节点的分支迹按已证的递推求出。有限树上的求和及停止记录均因此精确确定。全程保存未归一化的 $t$；零迹的正分支必为零矩阵，继续递推仍为零，不在零概率记录上除以 $t$。证毕。
+
+这里的精确经典数值预测以输入的精确 $x,z$ 已作为数值资料给定为前提；它没有提供从一份未知量子态中取得这两个数值的测量方法。
+
+### 78.3 可见正投影的完全正性障碍
+
+**命题 78.6（正而非完全正的预测投影）。** 在全复矩阵空间 $M_2(\mathbb C)$ 上，以计算基转置定义复线性映射
+
+$$
+\Pi(A)=\frac{A+A^T}{2}.
+$$
+
+它正、迹保持、保单位且幂等。在实 Hermitian 空间上，它是到 $V$ 的 Hilbert--Schmidt 正交投影；在全复矩阵空间上的像则为 $\operatorname{span}_{\mathbb C}\{I,X,Z\}$。它保持定义 78.4 的全部有限策略统计，却不是完全正映射。
+
+证明。$I^T=I$、$X^T=X$、$Y^T=-Y$、$Z^T=Z$，故 $\Pi$ 恰好删去 $Y$ 坐标。实 Hermitian 限制上的正交性由 Pauli 正交基给出；一般复矩阵也有唯一的复 Pauli 展开，因此其复像是所写复张成空间，不能与实空间 $V$ 等同。
+
+若 $A\ge0$，则 $A^T=\overline A$，且对任意复向量 $v$，
+
+$$
+v^\dagger A^T v
+=\overline{\overline v^{\,\dagger}A\overline v}\ge0.
+$$
+
+右边被共轭的数本来就是非负实数，所以转置保持正性，平均映射 $\Pi$ 也正。记转置作用为 $T(A)=A^T$；它保持迹和单位，且 $T^2=\mathrm{id}$，因此
+
+$$
+\operatorname{tr}\Pi(A)=\operatorname{tr}A,\qquad
+\Pi(I)=I,\qquad
+\Pi^2=\tfrac14(\mathrm{id}+2T+T^2)=\Pi.
+$$
+
+又因 $A-\Pi(A)$ 在 Hermitian 空间上属于 $K$，命题 78.5 的所有词效果对该差配对为零，所有允许策略统计都被保持。
+
+令
+
+$$
+|\Phi\rangle=\frac{|00\rangle+|11\rangle}{\sqrt2},\quad
+\rho_\Phi=|\Phi\rangle\langle\Phi|,\quad
+F=\sum_{i,j=0}^1|ij\rangle\langle ji|.
+$$
+
+由 $\rho_\Phi=\tfrac12\sum_{i,j}|i\rangle\langle j|\otimes|i\rangle\langle j|$ 得到
+
+$$
+(T\otimes\mathrm{id})(\rho_\Phi)=\frac F2,\qquad
+(\Pi\otimes\mathrm{id})(\rho_\Phi)=\frac{\rho_\Phi}{2}+\frac F4.
+$$
+
+归一化反对称向量 $|\Psi^-\rangle=(|01\rangle-|10\rangle)/\sqrt2$ 与 $|\Phi\rangle$ 正交，并满足 $F|\Psi^-\rangle=-|\Psi^-\rangle$，所以
+
+$$
+\langle\Psi^-|(\Pi\otimes\mathrm{id})(\rho_\Phi)|\Psi^-\rangle=-\frac14.
+$$
+
+因此 $\Pi\otimes\mathrm{id}$ 不保持正性，$\Pi$ 非完全正。完全正性、Choi 正性及 Kraus 表示的标准等价见 John Watrous，*The Theory of Quantum Information*，Cambridge University Press，2018，[Theorem 2.22](https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf)；这里的归一化 Bell 见证直接算出了负期望。证毕。
+
+这个见证排除的是把 $\Pi$ 本身当作量子通道；它没有排除其他编码。参考系统在这里用于检验完全正性，并未成为定义 78.4 的可查询对象。任意共同经典编码的障碍由下一命题单独证明。
+
+### 78.4 后揭设置前不存在精确共同经典存储
+
+**定义 78.7（单份输入的后揭二元查询）。** 存储者收到一份未知量子比特密度矩阵 $\rho$，在请求的设置 $b\in\{X,Z\}$ 揭示之前，固定使用任意有限父 POVM
+
+$$
+M_\lambda\ge0,\qquad\sum_{\lambda\in\Lambda}M_\lambda=I,
+$$
+
+只保留经典结果 $\lambda$。设置揭示后只允许归一化随机译码
+
+$$
+k_b(s\mid\lambda)\ge0,\qquad\sum_{s=\pm1}k_b(s\mid\lambda)=1.
+$$
+
+其有效效应与输出概率为
+
+$$
+E_s^b=\sum_\lambda k_b(s\mid\lambda)M_\lambda,
+\qquad p_{M,k}(s\mid\rho,b)=\operatorname{tr}(\rho E_s^b).
+$$
+
+同一 $M,k$ 必须对所有密度输入和两个设置适用。任务只有一个后揭查询，不允许保留量子输出、再次取得输入副本或依输入改变存储方案。
+
+**命题 78.8（任意有限父 POVM 的精确存储不可能性）。** 定义 78.7 中不存在满足
+
+$$
+\operatorname{tr}(\rho E_s^b)=\operatorname{tr}(\rho P_s^b)
+\quad\text{对全部 }\rho,b,s
+$$
+
+的存储和译码方案。
+
+证明。对任意这样的方案，定义四个正效应
+
+$$
+G_{su}=\sum_\lambda k_X(s\mid\lambda)k_Z(u\mid\lambda)M_\lambda.
+$$
+
+由两个译码核的归一化，
+
+$$
+\sum_{s,u}G_{su}=I,\qquad
+\sum_uG_{su}=E_s^X,\qquad
+\sum_sG_{su}=E_u^Z.
+$$
+
+这是构造联合边缘的数学乘积耦合，不要求同时运行两次实际查询。若假设中的全部密度态读数相等，则 $E_s^b=P_s^b$：Hermitian 差若非零，其某个非零特征值的单位本征向量所定义的纯态就给出非零读数，矛盾。因此
+
+$$
+0\le G_{su}\le P_s^X,\qquad0\le G_{su}\le P_u^Z.
+$$
+
+沿用第 38 节的正效应支撑论证：若 $0\le G\le P$ 且 $P$ 是正交投影，对 $v\in\ker P$ 有
+
+$$
+0\le\langle v,Gv\rangle\le\langle v,Pv\rangle=0.
+$$
+
+因 $\langle v,Gv\rangle=\|G^{1/2}v\|^2$，有 $Gv=0$。再由自伴随性，$\operatorname{ran}G\subseteq(\ker P)^\perp=\operatorname{ran}P$。这里 $P_s^X$ 的值域由 $(|0\rangle+s|1\rangle)/\sqrt2$ 张成，而 $P_u^Z$ 的值域由 $|0\rangle$ 或 $|1\rangle$ 张成；它们的交为零。故每个 $G_{su}=0$，与 $\sum_{s,u}G_{su}=I$ 矛盾。
+
+这一支撑原则也是 Heinosaari、Reitzner、Stano，*Notes on Joint Measurability of Quantum Observables*，[arXiv:0811.0783，附录 Proposition 8](https://arxiv.org/abs/0811.0783) 中处理任意联合 POVM 的关键：一个锐边缘已强制相容性。此处直接使用值域交为零的量子比特特例，不以“联合测量本身也是锐测量”为前提。证毕。
+
+**命题 78.9（首次实际查询后的有限标签模拟）。** 若第一次设置已经揭示并实际执行其 Lüders 测量，则每个正概率结果 $(b,s)$ 后的归一化状态恰为 $P_s^b$。此后定义 78.4 的任意有限策略，可把量子状态替换为四个标签 $(X,+1),(X,-1),(Z,+1),(Z,-1)$ 并作经典随机更新，精确模拟后续记录。策略控制仍可使用已记录的完整经典历史；四个标签只替代量子状态，不声称压缩策略自身的记忆。
+
+证明。秩一压缩给出 $\mathcal J_{b,s}(\rho)=\operatorname{tr}(\rho P_s^b)P_s^b$；只在该系数为正时归一化。若当前标签为 $(b,s)$，下一设置为 $c$，结果 $u$ 的概率为
+
+$$
+\operatorname{tr}(P_s^bP_u^c)=\frac{1+su\,\delta_{b,c}}2,
+$$
+
+发生后把标签改为 $(c,u)$。与已记录历史所决定的策略选择结合，对步骤数归纳即得整个后续记录分布。标签是在首次实际查询之后取得，不是定义 78.7 要求的设置揭示之前的共同存储。证毕。
+
+### 78.5 共同经典存储的精确极小极大代价
+
+**定理 78.10（后揭 $X,Z$ 查询的二元总变差最优值）。** 对定义 78.7 的任意有限父 POVM 和随机译码，定义
+
+$$
+e(M,k)=\sup_{\rho,\,b\in\{X,Z\}}
+\frac12\sum_{s=\pm1}
+\left|\operatorname{tr}(\rho P_s^b)-\operatorname{tr}(\rho E_s^b)\right|.
+$$
+
+则在所有这类方案上，
+
+$$
+\inf_{M,k}e(M,k)=e_*=
+\frac{1-1/\sqrt2}{2},
+$$
+
+且下确界由一个四结果 POVM 达到。下界不要求边缘无偏，也不预设父 POVM 的结果数。
+
+证明。固定任意方案，记 $e=e(M,k)$，并使用命题 78.8 的乘积耦合 $G_{su}$。取四个等概率测试输入 $P_s^X,P_u^Z$，在存储后揭示其所属设置。在输入 $P_s^b$ 上，理想二元输出确定为 $s$，故总变差恰为 $1-\operatorname{tr}(P_s^bE_s^b)$。因此每个正确标签概率至少为 $1-e$，平均成功率满足
+
+$$
+\begin{aligned}
+1-e\le S
+&=\frac14\sum_s\operatorname{tr}(P_s^XE_s^X)
++\frac14\sum_u\operatorname{tr}(P_u^ZE_u^Z)\\
+&=\sum_{s,u}\operatorname{tr}(G_{su}R_{su}),
+\qquad R_{su}=\frac{P_s^X+P_u^Z}{4}.
+\end{aligned}
+$$
+
+采用第 40 节的谱奖励上界方法。因为 $XZ+ZX=0$，
+
+$$
+(sX+uZ)^2=2I,\qquad
+R_{su}=\frac I4+\frac{sX+uZ}{8}.
+$$
+
+$sX+uZ$ 无迹、Hermitian，故特征值为 $\pm\sqrt2$，从而
+
+$$
+R_{su}\le cI,\qquad
+c=\frac{1+1/\sqrt2}{4}.
+$$
+
+正性给出 $\operatorname{tr}(G_{su}(cI-R_{su}))\ge0$；这也可写成正矩阵 $G_{su}^{1/2}(cI-R_{su})G_{su}^{1/2}$ 的迹。因此，对所有有限父 POVM 与随机译码，
+
+$$
+S\le c\sum_{s,u}\operatorname{tr}G_{su}
+=c\operatorname{tr}I=2c,
+\qquad
+ e\ge1-2c=e_*.
+$$
+
+为证明达到该界，取父 POVM
+
+$$
+G_{su}^{\rm opt}=\frac14\left(I+\frac{sX+uZ}{\sqrt2}\right),
+\qquad s,u\in\{+1,-1\}.
+$$
+
+由同一平方恒等式，其特征值为零和 $1/2$，故各项正；对四个符号求和，非单位项相消，得到 $\sum_{s,u}G_{su}^{\rm opt}=I$。请求 $X$ 时输出 $s$，请求 $Z$ 时输出 $u$，其边缘恰为
+
+$$
+E_s^b=\frac{I+sb/\sqrt2}{2}.
+$$
+
+对任意密度输入，两个结果的概率差符号相反，故实际二元总变差为
+
+$$
+\frac12\sum_{s=\pm1}
+\left|\operatorname{tr}\!\left(\rho\frac{s(1-1/\sqrt2)b}{2}\right)\right|
+=e_*|\operatorname{tr}(\rho b)|\le e_*.
+$$
+
+最后一个不等式来自 $b$ 的谱为 $\{+1,-1\}$；在 $b$ 的任一本征态上取等号。因此该方案的上确界为 $e_*$，与下界相同。误差是对所有态统一有界，并非每个态都等于 $e_*$；例如 $\rho=I/2$ 时为零。证毕。
+
+Heinosaari、Reitzner、Stano 的上述论文 Proposition 1、式 (5) 给出无偏二元量子比特效应的判据 $\|a+b\|+\|a-b\|\le2$；取两个正交方向及共同收缩系数 $\eta\ge0$，它化为 $2\sqrt2\eta\le2$，与构造中的 $\eta=1/\sqrt2$ 一致。该无偏判据并不代替上面对任意有偏译码的下界。Carmeli、Heinosaari、Toigo，*State discrimination with post-measurement information and incompatibility of quantum measurements*，[arXiv:1804.09693，§V.2，式 (27)](https://arxiv.org/abs/1804.09693) 给出两个等概率量子比特本征基的平均后测量信息成功率
+
+$$
+\frac12\left(1+\sqrt{\frac{1+|\cos\theta|}{2}}\right).
+$$
+
+在 $\theta=\pi/2$ 时，该值为 $2c=1-e_*$。本定理从四态测试得到极小极大下界，再用构造的逐态误差得到一致上界，补足平均成功率与最坏态代价之间的桥接。$e_*$ 只是在定义 78.7 资源约束下的一次后揭查询最优值，不是可见闭合缺陷、退相干速率或跨任务的普适阈值。
+
+### 78.6 三个 Zeckendorf 标签中的等距嵌入
+
+**命题 78.11（合法窗口内的支撑转移及全载体可见空间）。** 沿用本卷定义 1.1 及 Zeckendorf 扩展的开放窗口约定，
+
+$$
+\mathcal W_2=\{00,01,10\},\qquad
+\mathcal H_{\mathcal W_2}=\operatorname{span}_{\mathbb C}\{|00\rangle,|01\rangle,|10\rangle\}.
+$$
+
+定义等距嵌入 $U:\mathbb C^2\to\mathcal H_{\mathcal W_2}$ 为 $U|0\rangle=|00\rangle$、$U|1\rangle=|01\rangle$，并令
+
+$$
+Q=UU^\dagger=|00\rangle\langle00|+|01\rangle\langle01|,
+\quad R=I_3-Q=|10\rangle\langle10|,
+\quad\widehat X=UXU^\dagger,\quad\widehat Z=UZU^\dagger.
+$$
+
+每个设置 $b\in\{X,Z\}$ 使用三个投影
+
+$$
+\widehat P_s^b=\frac{Q+s\widehat b}{2}\quad(s=\pm1),
+\qquad R,
+$$
+
+及相应的压缩分支 $A\mapsto\widehat P_s^b A\widehat P_s^b$、$A\mapsto RAR$。对支撑在 $Q$ 的输入，命题 78.5 的序列统计、命题 78.8 的精确存储不可能性及定理 78.10 的二元代价 $e_*$ 全部原值转移。对整个三维载体和含补空间结果的全部词族，长度至少一的实可见空间为
+
+$$
+\widehat V_H=\operatorname{span}_{\mathbb R}\{Q,R,\widehat X,\widehat Z\}
+\quad(H\ge1),
+$$
+
+而长度零的空间为 $\operatorname{span}_{\mathbb R}\{I_3\}$。
+
+证明。两位二进制词中，开放相邻约束只排除 $11$，故合法词恰为上述三个。所选基向量正交，给出 $U^\dagger U=I$、$UU^\dagger=Q$、$RU=0$。因此
+
+$$
+\widehat X^2=\widehat Z^2=Q,\qquad
+\widehat X\widehat Z+\widehat Z\widehat X=0,\qquad
+\widehat P_s^b=UP_s^bU^\dagger.
+$$
+
+于是 $\widehat P_+^b,\widehat P_-^b,R$ 两两正交、各自幂等、自伴随，且和为 $I_3$。命题 78.5 的单 Kraus 正性与迹求和论证逐项适用，证明每个设置分别归一化。
+
+支撑在 $Q$ 的密度矩阵唯一为 $\widehat\rho=U\rho U^\dagger$，其中 $\rho=U^\dagger\widehat\rho U$ 是量子比特密度矩阵。直接计算
+
+$$
+\widehat P_s^b\widehat\rho\widehat P_s^b
+=U(P_s^b\rho P_s^b)U^\dagger,
+\qquad R\widehat\rho R=0,
+\qquad
+\operatorname{tr}(\widehat\rho\widehat P_s^b)
+=\operatorname{tr}(\rho P_s^b).
+$$
+
+因此全部支撑内序列递推相同。若三维父 POVM 为 $(M_\lambda)_\lambda$，则 $(U^\dagger M_\lambda U)_\lambda$ 是量子比特父 POVM，保留同一译码后，在所有支撑内输入上的二元概率完全相同；故精确不可能性和 $e_*$ 下界都转移。反向把最优量子比特父 POVM 扩为 $(UG_{su}^{\rm opt}U^\dagger)_{s,u}$ 加上 $R$，并在结果 $R$ 上任选归一化二元译码。支撑内输入对 $R$ 的概率为零，故上界也原值转移。这一二元比较的输入域严格限定在 $Q$ 上。
+
+在整个载体上，长度一的效果含 $\widehat P_\pm^X,\widehat P_\pm^Z,R$；它们的和与差给出 $Q,\widehat X,\widehat Z,R$。四者实线性独立：限制到 $Q$ 后由 $I,X,Z$ 独立性得前三个系数为零，限制到 $R$ 得最后系数为零。所有这些投影均秩一，命题 78.5 的压缩归纳仍使每个非空词效果为首个投影的标量倍数，故更长词不增加方向。空词效果 $I_3=Q+R$ 也在该空间内。这证明完整可见空间的等式，不能把它写成只有三个实方向的量子比特空间。证毕。
+
+这里的 Zeckendorf 结构提供合法标签及一个明确的等距嵌入。仪器由所写投影指定；没有从 Fibonacci 权重推导自然能谱、实验耦合、普适几何或经典性，也没有改变支撑内的一次查询存储界。
+
+## 追加锚（新终端）
