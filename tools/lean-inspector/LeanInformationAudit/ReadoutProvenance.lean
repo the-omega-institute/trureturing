@@ -516,6 +516,11 @@ private structure WalkState where
 
 private abbrev WalkM := StateRefT WalkState MetaM
 
+private def noteIncomplete (cause operation : Name) : WalkM Unit := do
+  modify fun s => { s with incomplete := true }
+  trace[InformationProvenance.check]
+    "incomplete cause={cause} operation={operation} first={(← get).currentFirst} site={(← get).currentOrigin}"
+
 -- Every pass over a summary is charged to the same per-query expression fuel
 -- as syntax construction.  In particular, a cache hit must not make the
 -- statement fold free: otherwise a large cached summary could be replayed
@@ -983,7 +988,7 @@ private partial def statementOuter (env : Environment) (type : Expr) :
   -- admission-exit: statementOuter.2 rule=retained-witness.rule
   | .recognized evidence => return some evidence
   | .unclassified _ => return none
-  | .incomplete => modify fun s => { s with incomplete := true }; return none
+  | .incomplete => noteIncomplete `incomplete_classification `type_classification; return none
   | .next next =>
     if next == type then return none
     -- admission-exit: statementOuter.forward.1 rule=retained-witness.rule
@@ -1114,7 +1119,7 @@ private def statementAliases (env : Environment) : WalkM Unit := do
   repeat
     unless ← chargeTraversal do return
     if seen.contains (hash current) then
-      modify fun s => { s with incomplete := true }
+      noteIncomplete `alias_cycle `statement_aliases
       return
     seen := seen.insert (hash current)
     modify fun s => { s with statementForms := s.statementForms.push current }
@@ -1124,7 +1129,7 @@ private def statementAliases (env : Environment) : WalkM Unit := do
       modify fun s => { s with recognizedStatement := some evidence }
       return
     | .unclassified site => noteUnclassified site; return
-    | .incomplete => modify fun s => { s with incomplete := true }; return
+    | .incomplete => noteIncomplete `incomplete_classification `type_classification; return
 
 -- The final supported outer spelling is used for structural family fences.
 -- Computed operands remain untouched and cannot establish non-mention.
@@ -1744,7 +1749,7 @@ private partial def visitOccurrence (env : Environment) (pos : Position)
   | .forbidden => modify fun s => { s with forbidden := true }; return
   | .statementMention => noteUnclassified ⟨"statement_mentioning_type", first, namespaceLabel env first, origin⟩
   | .unclassified site => noteUnclassified site
-  | .incomplete => modify fun s => { s with incomplete := true }; return
+  | .incomplete => noteIncomplete `incomplete_classification `type_classification; return
   -- admission-exit: visitOccurrence.forward.1 rule=retained-witness.rule
   | .allowlisted _ => pure ()
   let actualContext := if e.hasLooseBVars then context else #[]
@@ -1781,7 +1786,7 @@ private partial def visitOccurrence (env : Environment) (pos : Position)
         if let some h ← resultHead type then
           if decisionFamily.contains h && !listedProducers.contains n then
             noteUnclassified ⟨"unlisted_decision_producer", n, namespaceLabel env n, origin⟩
-    if (env.find? n).isNone then modify fun s => { s with incomplete := true }
+    if (env.find? n).isNone then noteIncomplete `missing_constant `occurrence_lookup
     -- admission-exit: visitOccurrence.4 rule=retained-witness.rule
     else if inProtected env n then queue n levels
   | .app f a =>
@@ -1809,7 +1814,7 @@ private partial def visitOccurrence (env : Environment) (pos : Position)
     child body (context.push e)
   | .proj _ _ receiver => child receiver context
   | .mdata _ body => child body context
-  | .mvar _ => modify fun s => { s with incomplete := true }
+  | .mvar _ => noteIncomplete `unresolved_metavariable `occurrence_traversal
   | .lit _ | .sort _ | .fvar _ | .bvar _ =>
     match verdict with
     -- admission-exit: visitOccurrence.5 rule=retained-witness.rule
@@ -1817,7 +1822,7 @@ private partial def visitOccurrence (env : Environment) (pos : Position)
     | _ => noteUnclassified ⟨"unclassified_syntax_leaf", first, namespaceLabel env first, origin⟩
 
 private def visitSummary (env : Environment) (origin : Name) (summary : Summary) : WalkM Unit := do
-  if summary.incomplete then modify fun s => { s with incomplete := true }
+  if summary.incomplete then noteIncomplete `incomplete_summary `summary_traversal
   for index in summary.roots do
     let node := summary.nodes[index]!
     visitOccurrence env node.position origin node.expr
@@ -1834,9 +1839,9 @@ private def process (env : Environment) : WalkM Unit := do
     let some n := (← get).pending.head? | break
     modify fun s => { s with pending := s.pending.tail!, walked := s.walked.insert n.1, currentFirst := n.1, currentOrigin := n.1 }
     if (← get).exprFuel == 0 then
-      modify fun s => { s with incomplete := true }
+      noteIncomplete `expression_budget `constant_dispatch
       break
-    let some info := env.find? n.1 | modify fun s => { s with incomplete := true }; continue
+    let some info := env.find? n.1 | noteIncomplete `missing_constant `constant_dispatch; continue
     let summary ← if let some cached := (← get).summaries[n]? then do
         modify fun s => { s with counters.memoHits := s.counters.memoHits + 1 }
         pure cached
@@ -1872,14 +1877,17 @@ private def collectReadout (env : Environment) (theoremName address : Name) (rea
   let scope := (moduleScopeCache.getState env).getD (classifyModules env)
   let env := moduleScopeCache.setState env (some scope)
   modifyEnv (moduleScopeCache.setState · (some scope))
-  let some theoremInfo := env.find? theoremName | return { forbidden := false, unclassified := none, incomplete := true, walked := #[] }
+  let some theoremInfo := env.find? theoremName | do
+    trace[InformationProvenance.check]
+      "incomplete cause=missing_constant operation=registered_statement first={theoremName} site={address}"
+    return { forbidden := false, unclassified := none, incomplete := true, walked := #[] }
   let statement ← Meta.MetaM.run' <| Meta.inferType
     (mkConst theoremName (theoremInfo.levelParams.map Level.param))
   let decision := mkApp (mkConst ``Decidable) statement
   let computation : WalkM Unit := do
     unless ← chargeTraversal extractionWork do return
     if extractionFailed then
-      modify fun s => { s with incomplete := true }
+      noteIncomplete `extraction_failure `readout_extraction
       return
     statementAliases env
     visit env .dataPos address readout
@@ -1906,7 +1914,7 @@ private def safeCollect (env : Environment) (theoremName address : Name) (readou
     (extractionWork : Nat := 0) (extractionFailed : Bool := false) : CoreM WalkResult :=
   tryCatchRuntimeEx (collectReadout env theoremName address readout extractionWork extractionFailed)
     (fun ex => do
-      trace[InformationProvenance.check] "collection_failure: {ex.toMessageData}"
+      trace[InformationProvenance.check] "incomplete cause=collection_failure operation=collect_readout first={address} site={address}: {ex.toMessageData}"
       pure { forbidden := false, unclassified := none, incomplete := true, walked := #[] })
 
 /-- Query in the current environment, retaining only reusable syntax summaries. -/
