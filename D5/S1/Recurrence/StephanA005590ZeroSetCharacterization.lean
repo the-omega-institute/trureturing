@@ -2,11 +2,11 @@
    generality: I
    mirror-B: D5/B/S1/Recurrence/StephanA005590ZeroSetCharacterization
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [mathlib/module/Mathlib.Data.Nat.Bitwise, mathlib/module/Mathlib.Tactic.Linarith]
+   anchors: [mathlib/module/Mathlib.Data.Nat.Bits, mathlib/module/Mathlib.Tactic.Linarith]
    utility: none
    digest: Stephan's A005590 zeros are exactly the binary words without adjacent ones. -/
 
-import Mathlib.Data.Nat.Bitwise
+import Mathlib.Data.Nat.Bits
 import Mathlib.Tactic.Linarith
 
 namespace D5.S1.Recurrence.StephanA005590ZeroSetCharacterization
@@ -50,7 +50,7 @@ decreasing_by all_goals omega
       rw [hdiv]
 
 /-- Binary representations with no two adjacent one bits. -/
-def No11 (n : ℕ) : Prop := n &&& (n >>> 1) = 0
+def No11 (n : ℕ) : Prop := ∀ j : ℕ, (n >>> j) % 4 ≠ 3
 
 private theorem invariant (n : ℕ) :
     (r n, r (n + 1)) ≠ (0, 0) ∧ 0 ≤ r n * (r n - r (n + 1)) := by
@@ -95,45 +95,50 @@ private theorem invariant (n : ℕ) :
             · nlinarith
 
 theorem result : ∀ n : ℕ, r (3 * n) = 0 ↔ No11 n := by
-  have no11_bits (n : ℕ) :
-      No11 n ↔ ∀ i, (n.testBit i && n.testBit (i + 1)) = false := by
-    constructor
-    · intro h i
-      have he := congrArg (fun k ↦ Nat.testBit k i) h
-      simpa only [No11, Nat.testBit_land, Nat.testBit_shiftRight,
-        Nat.zero_testBit, Nat.add_comm 1 i] using he
-    · intro h
-      apply Nat.zero_of_testBit_eq_false
-      intro i
-      simpa only [No11, Nat.testBit_land, Nat.testBit_shiftRight,
-        Nat.add_comm 1 i] using h i
   have no11_bit (b : Bool) (n : ℕ) :
-      No11 (Nat.bit b n) ↔ (b && n.testBit 0) = false ∧ No11 n := by
-    rw [no11_bits, no11_bits]
+      No11 (Nat.bit b n) ↔ (Nat.bit b n) % 4 ≠ 3 ∧ No11 n := by
+    simp only [No11]
     constructor
     · intro h
-      refine ⟨?_, fun i ↦ ?_⟩
-      · simpa only [Nat.testBit_bit_zero, Nat.testBit_bit_succ] using h 0
-      · simpa only [Nat.testBit_bit_succ] using h (i + 1)
-    · rintro ⟨hz, hs⟩ i
-      cases i with
-      | zero => simpa only [Nat.testBit_bit_zero, Nat.testBit_bit_succ] using hz
-      | succ i => simpa only [Nat.testBit_bit_succ] using hs i
+      refine ⟨by simpa using h 0, fun j ↦ ?_⟩
+      simpa only [show j + 1 = 1 + j by omega, Nat.shiftRight_add,
+        Nat.bit_shiftRight_one] using h (j + 1)
+    · rintro ⟨hlow, htail⟩ j
+      cases j with
+      | zero => simpa using hlow
+      | succ j =>
+          simpa only [show j + 1 = 1 + j by omega, Nat.shiftRight_add,
+            Nat.bit_shiftRight_one] using htail j
   have no11_even (n : ℕ) : No11 (2 * n) ↔ No11 n := by
-    simpa only [Nat.bit_false, two_mul, Bool.false_and, true_and] using
-      no11_bit false n
+    rw [show 2 * n = Nat.bit false n by rfl, no11_bit]
+    constructor
+    · exact fun h ↦ h.2
+    · intro h
+      refine ⟨?_, h⟩
+      simp [Nat.bit]
+      omega
   have no11_one (n : ℕ) : No11 (4 * n + 1) ↔ No11 n := by
     have he : 4 * n + 1 = Nat.bit true (Nat.bit false n) := by
       simp [Nat.bit]
       omega
-    simp only [he, no11_bit, Nat.testBit_bit_zero, Bool.true_and,
-      Bool.false_and, true_and]
+    rw [he, no11_bit, no11_bit]
+    constructor
+    · exact fun h ↦ h.2.2
+    · intro h
+      refine ⟨?_, ?_, h⟩
+      · simp [Nat.bit]
+        omega
+      · simp [Nat.bit]
+        omega
   have no11_three (n : ℕ) : ¬ No11 (4 * n + 3) := by
     have he : 4 * n + 3 = Nat.bit true (Nat.bit true n) := by
       simp [Nat.bit]
       omega
-    rw [he, no11_bit, Nat.testBit_bit_zero]
-    simp
+    intro h
+    have hlow := (no11_bit true (Nat.bit true n)).1 (he ▸ h) |>.1
+    apply hlow
+    simp [Nat.bit]
+    omega
   have zero_even (n : ℕ) : r (3 * (2 * n)) = 0 ↔ r (3 * n) = 0 := by
     rw [show 3 * (2 * n) = 2 * (3 * n) by omega, r_two_mul]
   have zero_one (n : ℕ) : r (3 * (4 * n + 1)) = 0 ↔ r (3 * n) = 0 := by
