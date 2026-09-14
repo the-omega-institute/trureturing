@@ -51,6 +51,32 @@ def remaining(deadline):
     return seconds
 
 
+class ArchiveOutput:
+    """Check the publication budget at each bounded tar/gzip output write."""
+    def __init__(self, output, deadline):
+        self.output, self.deadline = output, deadline
+
+    def __getattr__(self, name):
+        return getattr(self.output, name)
+
+    def write(self, block):
+        remaining(self.deadline)
+        count = self.output.write(block)
+        remaining(self.deadline)
+        return count
+
+
+def archive_sha(path, deadline):
+    value = hashlib.sha256()
+    with path.open("rb") as source:
+        while True:
+            remaining(deadline)
+            block = source.read(1024 * 1024)
+            if not block:
+                return value.hexdigest()
+            value.update(block)
+
+
 def gh(deadline, *args):
     return subprocess.run(["gh", *args], check=True, capture_output=True, text=True,
                           timeout=remaining(deadline)).stdout
@@ -95,7 +121,7 @@ def verification_identity(root, source_ref, source_commit, deadline):
             "workflow_run_attempt": attempt, "source_ref": source_ref}
 
 
-def archive_parts(stage):
+def archive_parts(stage, deadline):
     archive = stage / ASSET
     size = archive.stat().st_size
     count = (size + CHUNK_BYTES - 1) // CHUNK_BYTES
@@ -107,16 +133,17 @@ def archive_parts(stage):
         with archive.open("rb") as source:
             for index in range(count):
                 path = stage / f"{ASSET}.part-{index:02d}"
-                remaining = min(CHUNK_BYTES, size - index * CHUNK_BYTES)
+                bytes_left = min(CHUNK_BYTES, size - index * CHUNK_BYTES)
                 with path.open("wb") as target:
-                    while remaining:
-                        block = source.read(min(remaining, 1024 * 1024))
+                    while bytes_left:
+                        remaining(deadline)
+                        block = source.read(min(bytes_left, 1024 * 1024))
                         if not block:
                             raise ValueError("archive ended before its declared size")
                         target.write(block)
-                        remaining -= len(block)
+                        bytes_left -= len(block)
                 paths.append(path)
-    return [{"name": path.name, "sha256": sha(path), "bytes": path.stat().st_size} for path in paths]
+    return [{"name": path.name, "sha256": archive_sha(path, deadline), "bytes": path.stat().st_size} for path in paths]
 
 
 def declared_parts(manifest):
@@ -199,15 +226,19 @@ def publish(root, partition, verification=None):
             with cache_guard(root, shared=True):
                 if (root / ".lake").is_symlink() or not (root / ".lake/build").is_dir():
                     raise ValueError("no private project build to publish")
-                with tarfile.open(stage / ASSET, "w:gz") as archive:
-                    archive.add(root / ".lake/build", arcname="build")
-                    reports = root / ".lake/report-cache" / partition
-                    if reports.is_dir():
-                        archive.add(reports, arcname="report-cache/" + partition)
+                # This archive is a replaceable seed: level 1 keeps the existing
+                # gzip protocol without spending the transport window on level 9.
+                with (stage / ASSET).open("wb") as output:
+                    with tarfile.open(stage / ASSET, "w:gz", compresslevel=1,
+                                      fileobj=ArchiveOutput(output, deadline)) as archive:
+                        archive.add(root / ".lake/build", arcname="build")
+                        reports = root / ".lake/report-cache" / partition
+                        if reports.is_dir():
+                            archive.add(reports, arcname="report-cache/" + partition)
             metadata = {"schema": "lean-release-seed-v3", "partition": partition,
                 "producer_commit_sha": commit, "workflow_run_id": run, "workflow_run_attempt": attempt,
-                "archive_sha256": sha(stage / ASSET), "archive_bytes": (stage / ASSET).stat().st_size,
-                "parts": archive_parts(stage)}
+                "archive_sha256": archive_sha(stage / ASSET, deadline), "archive_bytes": (stage / ASSET).stat().st_size,
+                "parts": archive_parts(stage, deadline)}
             if verification is not None:
                 metadata.update(verification)
             (stage / MANIFEST).write_text(json.dumps(metadata, sort_keys=True) + "\n")
