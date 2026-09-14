@@ -1,0 +1,6 @@
+对每个 $n\in\omega$，
+$$
+F_{\rm infdig}(z_{\rm infdig}(n))
+=n\alpha-f(n)=n\phi-(n+f(n))\in(a,b),\qquad
+H_{\rm infdig}(z_{\rm infdig}(n))=\gamma(n).
+$$
