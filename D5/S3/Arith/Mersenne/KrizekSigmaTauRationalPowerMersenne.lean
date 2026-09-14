@@ -2,16 +2,13 @@
    generality: I
    mirror-B: D5/B/S3/Arith/Mersenne/KrizekSigmaTauRationalPowerMersenne
    mirror-E: none(waiver:symbolic-proof-no-numeric-artifact)
-   anchors: [mathlib/module/Mathlib.FieldTheory.Finite.Basic, mathlib/module/Mathlib.NumberTheory.ArithmeticFunction.Misc, mathlib/module/Mathlib.NumberTheory.Multiplicity, mathlib/module/Mathlib.Tactic.NormNum, mathlib/module/Mathlib.Tactic.Ring]
+   anchors: [mathlib/module/Mathlib.FieldTheory.Finite.Basic, mathlib/module/Mathlib.NumberTheory.ArithmeticFunction.Misc, mathlib/module/Mathlib.NumberTheory.Multiplicity]
    utility: none
    digest: Krizek's sigma-tau rational powers are exactly squarefree Mersenne-prime products. -/
 
 import Mathlib.FieldTheory.Finite.Basic
 import Mathlib.NumberTheory.ArithmeticFunction.Misc
 import Mathlib.NumberTheory.Multiplicity
-import Mathlib.Tactic.NormNum
-import Lean.Elab.Tactic.Omega
-import Mathlib.Tactic.Ring
 
 namespace D5.S3.Arith.Mersenne.KrizekSigmaTauRationalPowerMersenne
 
