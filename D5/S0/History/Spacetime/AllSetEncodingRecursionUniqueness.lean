@@ -24,7 +24,24 @@ attribute [local instance] Classical.allZFSetDefinable Classical.propDecidable
 theorem enc_unique (f : ZFSet.{u} → ZFSet.{u})
     (hf : ∀ x, f x = if x ∈ ZFSet.omega then NatZ (natIndex x)
       else ZFSet.pair (natOrd 1) (ZFSet.image f x)) : f = Enc := by
-  sorry
+  funext x
+  induction x using ZFSet.mem_wf.induction with
+  | h x ih =>
+    rw [hf x, show Enc x = encStep x (fun y _ => Enc y) from
+      WellFounded.fix_eq ZFSet.mem_wf encStep x]
+    unfold encStep
+    by_cases hx : x ∈ ZFSet.omega
+    · simp only [if_pos hx]
+    · simp only [if_neg hx]
+      apply congrArg (ZFSet.pair (natOrd 1))
+      apply ZFSet.ext
+      intro z
+      simp only [ZFSet.mem_image]
+      constructor
+      · rintro ⟨y, hy, he⟩
+        exact ⟨y, hy, by simpa only [dif_pos hy, ← ih y hy] using he⟩
+      · rintro ⟨y, hy, he⟩
+        exact ⟨y, hy, by simpa only [ih y hy, dif_pos hy] using he⟩
 
 end
 
