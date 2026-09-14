@@ -14560,3 +14560,415 @@ $$
 这些定理不声称任意开放量子系统都有给定的有限维 Heisenberg 对偶，也不声称所有连续控制已被枚举；它们只在文件中明确的有限维、线性、指定 effect/channel 假设下成立。本节新增理论叙述应标记为 `repo-derived/open`；不新增 Lean 声明，也不把解释层的“客体”表述升级为普适物理定律。
 
 ## 追加锚（新终端）
+## 58. Zeckendorf 黄金读数的误差预算与预测响应接口
+
+第 54--56 节已经把对象、响应和记忆视界分开：第 54 节按指定实验族取预测等价类，第 55 节区分独立新记录与相干复用，第 56 节用输入端口、隐藏演化和输出端口定义记忆尾项。本节补上 Zeckendorf 刻度与这三个量之间的一个有限、可检验接口。
+
+关键限制先写明。Zeckendorf 规范化给出离散整数的唯一表示；黄金读数给出一个实数嵌入。它的误差界只适用于已经规范的有限 Zeckendorf 行。对含有重复槽位的原始行，不能把同一个界直接套到未规范的字面系数上。规范化也不自动保留历史：不同原始表可能有同一个规范整数，而第 54 节的后续实验仍能将它们分开。
+
+### 定义 58.1（规范黄金读数与刻度残差）
+
+令
+
+$$
+\phi=\frac{1+\sqrt5}{2},\qquad
+G_j=F_{j+2},
+$$
+
+并令 $s(n)$ 是低位到高位的规范 Zeckendorf 行。置
+
+$$
+\Lambda_Z(s(n))
+=
+\sum_{j\ge0}\phi^{j+2}s(n)_j,
+\qquad
+\gamma_Z(n)
+=
+\frac{\Lambda_Z(s(n))}{\sqrt5},
+$$
+
+其中和因 $s(n)$ 有限支撑而有限；这正是 Z 卷定义 19 的黄金值 $\beta$ 在单行规范数字上的限制。定义刻度残差
+
+$$
+\eta_Z(n)=\gamma_Z(n)-n.
+$$
+
+这里的 $\gamma_Z$ 是一个读数坐标，不是新的整数运算，也不是物理能量或 Hamiltonian 的定义。
+
+### 命题 58.2（黄金读数的统一误差界）
+
+对所有 $n\in\mathbb N$，
+
+$$
+\left|\eta_Z(n)\right|<\frac1{\sqrt5}.
+$$
+
+因而在任意有限窗口 $0\le n<G_L$ 上，误差上界相同；窗口长度只限制可出现的规范构型数，不会把这个读数误差自动改成零。
+
+证明。Binet 恒等式在本索引约定下为
+
+$$
+\phi^{j+2}
+=
+\sqrt5\,G_j+(-\phi^{-1})^{j+2}.
+$$
+
+将 $s(n)$ 代入并除以 $\sqrt5$，得到
+
+$$
+\eta_Z(n)
+=
+\frac1{\sqrt5}
+\sum_{j\ge0}s(n)_j(-\phi^{-1})^{j+2}.
+$$
+
+规范行只有有限个非零位，所以
+
+$$
+\left|\sum_{j\ge0}s(n)_j(-\phi^{-1})^{j+2}\right|
+<
+\sum_{j\ge0}\phi^{-(j+2)}
+=1.
+$$
+
+最后一个严格不等式来自有限支撑；故得到所列界。这个证明只使用规范行和有限支撑，未把原始重复槽位当作规范数字。证毕。
+
+### 定义 58.3（任务响应的刻度 Lipschitz 条件）
+
+固定有限历史集合 $R$、规范化后的整数读数
+
+$$
+N:R\longrightarrow\mathbb N
+$$
+
+以及有限实验族 $\mathfrak T=\{\tau_i:1\le i\le m\}$。对每个实验，设输出分布为 $p_i(\,\cdot\mid r)$。若存在定义在包含所有 $N(r)$ 与 $\gamma_Z(N(r))$ 的实区间上的映射
+
+$$
+\kappa_i:\mathbb R\longrightarrow\Delta(Y_i)
+$$
+
+满足
+
+$$
+p_i(\,\cdot\mid r)=\kappa_i(N(r))
+$$
+
+以及某个 $L_i<\infty$ 使
+
+$$
+\operatorname{TV}\!\left(\kappa_i(x),\kappa_i(y)\right)
+\le L_i|x-y|,
+$$
+
+则称该实验在这组历史上满足 $L_i$-刻度 Lipschitz 条件。它要求响应确实经由 $N$ 因子化；若不同原始历史具有同一个 $N$ 却有不同后续响应，该条件不成立。
+
+用黄金坐标构造预测器
+
+$$
+\widehat p_i(\,\cdot\mid r)
+=
+\kappa_i\!\left(\gamma_Z(N(r))\right).
+$$
+
+### 定理 58.4（刻度误差到有限预测误差的传输）
+
+在定义 58.3 的条件下，对所有 $r\in R$ 和 $i$，
+
+$$
+\operatorname{TV}\!\left(
+p_i(\,\cdot\mid r),
+\widehat p_i(\,\cdot\mid r)
+\right)
+<
+\frac{L_i}{\sqrt5}.
+$$
+
+令 $L_{\mathfrak T}=\max_iL_i$，则全部实验输出的最坏总变差误差满足
+
+$$
+\max_{r\in R,\,i\le m}
+\operatorname{TV}\left(
+p_i(\,\cdot\mid r),\widehat p_i(\,\cdot\mid r)
+\right)
+<
+\frac{L_{\mathfrak T}}{\sqrt5}.
+$$
+
+证明。对每个 $i,r$ 使用 Lipschitz 条件和命题 58.2：
+
+$$
+\operatorname{TV}\!\left(
+\kappa_i(N(r)),
+\kappa_i(\gamma_Z(N(r)))
+\right)
+\le
+L_i\left|N(r)-\gamma_Z(N(r))\right|
+<
+\frac{L_i}{\sqrt5}.
+$$
+
+对 $i$ 取最大值即得。证毕。
+
+这个定理只控制“同一个规范整数的实数刻度近似”。它不控制规范化纤维内部的历史差异，也不证明 $\gamma_Z$ 是一个足够状态。
+
+### 定义 58.5（规范化纤维缺陷）
+
+不假设响应经由 $N$ 因子化。对每个实验定义规范化纤维缺陷
+
+$$
+\varepsilon_{\mathrm{fib},i}
+=
+\sup_{\substack{r,r'\in R\\N(r)=N(r')}}
+\operatorname{TV}\!\left(
+p_i(\,\cdot\mid r),
+p_i(\,\cdot\mid r')
+\right),
+$$
+
+并令
+
+$$
+\varepsilon_{\mathrm{fib}}
+=
+\max_i\varepsilon_{\mathrm{fib},i}.
+$$
+
+它是第 54 节预测伪距离在规范化纤维上的直径；当纤维中没有两个不同元素时，其上确界取 $0$。$\varepsilon_{\mathrm{fib}}=0$ 才表示在所列实验族上，规范化整数已经足以代表历史。
+
+对每个 $i$，从每个非空纤维选一个代表 $r_u$，置
+
+$$
+\bar\kappa_i(u)=p_i(\,\cdot\mid r_u).
+$$
+
+若 $\bar\kappa_i$ 在同一实区间上有 $L_i$-刻度 Lipschitz 延拓，定义代表黄金预测器
+
+$$
+\widehat p_i(\,\cdot\mid r)
+=
+\bar\kappa_i\!\left(\gamma_Z(N(r))\right).
+$$
+
+### 定理 58.6（历史纤维、黄金刻度与任务误差的三项分解）
+
+在上述有限条件下，对所有 $r$ 和 $i$，
+
+$$
+\operatorname{TV}\!\left(
+p_i(\,\cdot\mid r),
+\widehat p_i(\,\cdot\mid r)
+\right)
+<
+\varepsilon_{\mathrm{fib},i}
++
+\frac{L_i}{\sqrt5}.
+$$
+
+因此全部实验输出的最坏总变差误差满足
+
+$$
+\max_{r\in R,\,i\le m}
+\operatorname{TV}\left(
+p_i(\,\cdot\mid r),\widehat p_i(\,\cdot\mid r)
+\right)
+<
+\varepsilon_{\mathrm{fib}}
++
+\frac{L_{\mathfrak T}}{\sqrt5}.
+$$
+
+证明。令 $u=N(r)$，取该纤维代表 $r_u$。三角不等式给出
+
+$$
+\operatorname{TV}\!\left(
+p_i(\,\cdot\mid r),
+\bar\kappa_i(u)
+\right)
+\le
+\varepsilon_{\mathrm{fib},i}.
+$$
+
+另一方面，命题 58.2 和 $\bar\kappa_i$ 的 Lipschitz 条件给出
+
+$$
+\operatorname{TV}\!\left(
+\bar\kappa_i(u),
+\bar\kappa_i(\gamma_Z(u))
+\right)
+<
+\frac{L_i}{\sqrt5}.
+$$
+
+两式相加即得；再对 $i$ 和 $r$ 取最大值。证毕。
+
+该分解把两个常被混淆的损失分开：
+
+$$
+\underbrace{\varepsilon_{\mathrm{fib}}}_{\text{规范化抹去的历史仍可被实验看见}}
+\quad+\quad
+\underbrace{\frac{L_{\mathfrak T}}{\sqrt5}}_{\text{黄金实数刻度的近似误差}}.
+$$
+
+第一项即使整数读数完全精确也可能存在；第二项即使历史恰好经由整数闭合也仍可能存在。更换实验族会改变第一项和各 $L_i$，所以没有脱离任务的单一“黄金现实精度”。
+
+### 命题 58.7（与记忆视界的合并预算）
+
+设第 56 节的 $(T,h)$ 截断在同一任务输出度量下有尾误差 $\tau_{h,T}$；也就是说，把 $n-h$ 步以前的历史和初始隐藏差异删除后，对所有 $n<T$ 的输出改变至多为 $\tau_{h,T}$。若定理 58.6 的黄金代表预测器再用于该截断模型，则总误差满足
+
+$$
+\varepsilon_{\mathrm{total}}(h,T)
+<
+\varepsilon_{\mathrm{fib},T}
++
+\frac{L_T}{\sqrt5}
++
+\tau_{h,T},
+$$
+
+其中 $\varepsilon_{\mathrm{fib},T}$ 和 $L_T$ 分别取长度不超过 $T$ 的全部实验与读出中的最大值。
+
+若第 56 节的线性输出先经过一个以 $c_{\mathrm{out}}$ 为收缩常数的概率读出，则应取
+
+$$
+\tau_{h,T}
+=
+c_{\mathrm{out}}
+\max_{n<T}
+\left(
+\|b_n\|+
+X\sum_{r=h+1}^{n}\|K_r\|
+\right).
+$$
+
+证明。先以真实历史与其规范化纤维代表比较，误差至多 $\varepsilon_{\mathrm{fib},T}$；再以代表的精确整数坐标与黄金坐标比较，误差至多 $L_T/\sqrt5$；最后以完整隐藏演化与 $h$-截断演化比较，误差至多 $\tau_{h,T}$。三次使用总变差的三角不等式即可。若线性尾项先在另一范数中给出，应用读出收缩性得到所列 $c_{\mathrm{out}}$ 因子。证毕。
+
+这条合并预算的解释是：
+
+$$
+\text{总任务误差}
+\le
+\text{规范化纤维缺陷}
++
+\text{黄金刻度误差}
++
+\text{记忆尾项}.
+$$
+
+若给定目标 $\varepsilon$，只有在
+
+$$
+\varepsilon_{\mathrm{fib},T}
++
+\frac{L_T}{\sqrt5}
++
+\tau_{h,T}
+\le\varepsilon
+$$
+
+时，才可把当前 Zeckendorf 读数、$h$-步历史截断和指定实验族一起当作一个满足该预算的有效对象。此判据仍是充分的预算检验，不是必要条件，也不是无条件的物理定律。
+
+### 推论 58.8（响应分离的安全裕量）
+
+设有限标签集 $U$ 的代表响应满足
+
+$$
+\Delta_T
+=
+\min_{\substack{u\ne v\\u,v\in U}}
+\max_{i\le m}
+\operatorname{TV}\!\left(
+\bar\kappa_i(u),\bar\kappa_i(v)
+\right)>0.
+$$
+
+若
+
+$$
+2\left(
+\frac{L_T}{\sqrt5}
++
+\tau_{h,T}
+\right)
++
+2\varepsilon_{\mathrm{fib},T}
+<
+\Delta_T,
+$$
+
+则任意两个不同代表在实际完整任务响应中的分离仍为正；黄金刻度与记忆截断不会在该预算内把它们保证可分的响应合并成同一个预测分布。
+
+证明。对每个代表的近似误差用定理 58.6 和命题 58.7 控制，再对两个代表应用总变差三角不等式的反向形式：
+
+$$
+\operatorname{TV}(p_u,p_v)
+\ge
+\operatorname{TV}(\bar\kappa(u),\bar\kappa(v))
+-
+\operatorname{TV}(p_u,\bar p_u)
+-
+\operatorname{TV}(p_v,\bar p_v).
+$$
+
+由假设右端为正。证毕。
+
+这里“分离仍为正”只表示在所选实验族和预算下不会被这个近似模型保证为同一分布；它不保证一次有限样本实验必然正确判别，也不产生不相容量子测量的全局答案表。
+
+### 命题 58.9（规范化电荷的相位商）
+
+沿用 Z 卷定理 21。若一条有限实际进位路径把原始行 $r$ 送到 $r'$，记其总电荷为 $z$，则
+
+$$
+\beta(r)-\beta(r')=z\in\mathbb Z.
+$$
+
+因此相位读出
+
+$$
+\chi(r)=\exp\!\left(2\pi i\,\beta(r)\right)
+$$
+
+满足
+
+$$
+\chi(r)=\chi(r').
+$$
+
+更一般地，若记录使用相位尺度 $\vartheta$，置 $\chi_{\vartheta}(r)=e^{i\vartheta\beta(r)}$，则
+
+$$
+\frac{\chi_{\vartheta}(r)}{\chi_{\vartheta}(r')}
+=e^{i\vartheta z}.
+$$
+
+当 $\vartheta/(2\pi)\in\mathbb Z$ 时，所有规范化电荷都被该相位商抹去；当 $\vartheta/(2\pi)=a/b$ 为既约有理数时，只能看到 $z$ 模 $b$ 的信息；当 $\vartheta/(2\pi)$ 无理时，$e^{i\vartheta z}=1$ 当且仅当 $z=0$，所以不同整数电荷不会因这个相位因子相等。
+
+证明。第一式是 Z 卷定理 21 的黄金值差公式。将其代入指数函数即得三种情形；有理情形使用 $e^{i2\pi az/b}=1$ 当且仅当 $b\mid z$，无理情形则由 $\vartheta z\in2\pi\mathbb Z$ 推出 $z=0$。证毕。
+
+这说明“规范化前后相位相同”不是无条件事实，而是读出尺度的选择。相位只记录 $\beta$ 的某个商；若选取把整数电荷识别为零的尺度，规范化历史在该读数中严格不可见，但连续黄金值或另一相位尺度仍可能看见它。这个相位商应作为第 55 节 Gram 相位的一个明确输入参数，而不能从 Zeckendorf 唯一性自动推出。
+
+### 与现有章节的关系和边界
+
+第 54 节的 $d_H$ 衡量指定实验族上的预测差异；本节给出一个由 Zeckendorf 规范行到该伪距离的充分上界。第 55 节的 Gram 特征值决定记录相干的衰减与相位回流；本节的 $\eta_Z$ 是数值坐标读数误差，两者不属于同一谱，也不能用黄金误差替代 Gram 谱隙。第 56 节的 $K_r$ 和 $\tau_{h,T}$ 衡量隐藏历史回流；本节只把其尾项与规范化纤维缺陷、刻度误差用三角不等式合并，未重新假设隐藏动力学是无记忆的。
+
+若原始表尚未规范，必须先使用 $\nu$ 或明确给出其输入行的系数界；否则 $\Lambda_Z$ 的有限误差界不适用。若环境有初始关联、实验控制依赖完整历史、或代表响应不存在 Lipschitz 延拓，则定理 58.6--58.7 的相应项只能标为未验证，不能把 $1/\sqrt5$ 冒称为总误差。若 $\varepsilon_{\mathrm{fib},T}>0$，增加数值刻度精度也不能消除被规范化抹去的历史；应扩展记录或缩小实验族。
+
+因此，Zeckendorf 在这条主线中的作用可以精确表述为：
+
+$$
+\boxed{
+\text{规范行提供离散状态，}
+\quad
+\gamma_Z\text{ 提供有界误差的实数坐标，}
+\quad
+\varepsilon_{\mathrm{fib}}\text{ 测量规范化的历史损失，}
+\quad
+\tau_{h,T}\text{ 测量有限记忆截断的损失。}
+}
+$$
+
+稳定的经典对象只有在这三项共同落入任务误差预算时才获得操作性支持。它不要求保留全部历史，也不允许仅凭一个漂亮的黄金刻度宣称历史已经消失。
+
+本节为 repo-derived/open 理论追加；没有新增 Lean 声明、形式覆盖或冻结状态。
+
+## 追加锚（新终端）
+

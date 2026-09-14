@@ -1,0 +1,62 @@
+### 定理 58.6（历史纤维、黄金刻度与任务误差的三项分解）
+
+在上述有限条件下，对所有 $r$ 和 $i$，
+
+$$
+\operatorname{TV}\!\left(
+p_i(\,\cdot\mid r),
+\widehat p_i(\,\cdot\mid r)
+\right)
+<
+\varepsilon_{\mathrm{fib},i}
++
+\frac{L_i}{\sqrt5}.
+$$
+
+因此全部实验输出的最坏总变差误差满足
+
+$$
+\max_{r\in R,\,i\le m}
+\operatorname{TV}\left(
+p_i(\,\cdot\mid r),\widehat p_i(\,\cdot\mid r)
+\right)
+<
+\varepsilon_{\mathrm{fib}}
++
+\frac{L_{\mathfrak T}}{\sqrt5}.
+$$
+
+证明。令 $u=N(r)$，取该纤维代表 $r_u$。三角不等式给出
+
+$$
+\operatorname{TV}\!\left(
+p_i(\,\cdot\mid r),
+\bar\kappa_i(u)
+\right)
+\le
+\varepsilon_{\mathrm{fib},i}.
+$$
+
+另一方面，命题 58.2 和 $\bar\kappa_i$ 的 Lipschitz 条件给出
+
+$$
+\operatorname{TV}\!\left(
+\bar\kappa_i(u),
+\bar\kappa_i(\gamma_Z(u))
+\right)
+<
+\frac{L_i}{\sqrt5}.
+$$
+
+两式相加即得；再对 $i$ 和 $r$ 取最大值。证毕。
+
+该分解把两个常被混淆的损失分开：
+
+$$
+\underbrace{\varepsilon_{\mathrm{fib}}}_{\text{规范化抹去的历史仍可被实验看见}}
+\quad+\quad
+\underbrace{\frac{L_{\mathfrak T}}{\sqrt5}}_{\text{黄金实数刻度的近似误差}}.
+$$
+
+第一项即使整数读数完全精确也可能存在；第二项即使历史恰好经由整数闭合也仍可能存在。更换实验族会改变第一项和各 $L_i$，所以没有脱离任务的单一“黄金现实精度”。
+

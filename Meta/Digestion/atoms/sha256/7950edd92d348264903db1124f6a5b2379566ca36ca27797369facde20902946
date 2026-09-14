@@ -1,0 +1,46 @@
+### 推论 58.8（响应分离的安全裕量）
+
+设有限标签集 $U$ 的代表响应满足
+
+$$
+\Delta_T
+=
+\min_{\substack{u\ne v\\u,v\in U}}
+\max_{i\le m}
+\operatorname{TV}\!\left(
+\bar\kappa_i(u),\bar\kappa_i(v)
+\right)>0.
+$$
+
+若
+
+$$
+2\left(
+\frac{L_T}{\sqrt5}
++
+\tau_{h,T}
+\right)
++
+2\varepsilon_{\mathrm{fib},T}
+<
+\Delta_T,
+$$
+
+则任意两个不同代表在实际完整任务响应中的分离仍为正；黄金刻度与记忆截断不会在该预算内把它们保证可分的响应合并成同一个预测分布。
+
+证明。对每个代表的近似误差用定理 58.6 和命题 58.7 控制，再对两个代表应用总变差三角不等式的反向形式：
+
+$$
+\operatorname{TV}(p_u,p_v)
+\ge
+\operatorname{TV}(\bar\kappa(u),\bar\kappa(v))
+-
+\operatorname{TV}(p_u,\bar p_u)
+-
+\operatorname{TV}(p_v,\bar p_v).
+$$
+
+由假设右端为正。证毕。
+
+这里“分离仍为正”只表示在所选实验族和预算下不会被这个近似模型保证为同一分布；它不保证一次有限样本实验必然正确判别，也不产生不相容量子测量的全局答案表。
+

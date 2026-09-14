@@ -1,0 +1,38 @@
+### 定义 58.5（规范化纤维缺陷）
+
+不假设响应经由 $N$ 因子化。对每个实验定义规范化纤维缺陷
+
+$$
+\varepsilon_{\mathrm{fib},i}
+=
+\sup_{\substack{r,r'\in R\\N(r)=N(r')}}
+\operatorname{TV}\!\left(
+p_i(\,\cdot\mid r),
+p_i(\,\cdot\mid r')
+\right),
+$$
+
+并令
+
+$$
+\varepsilon_{\mathrm{fib}}
+=
+\max_i\varepsilon_{\mathrm{fib},i}.
+$$
+
+它是第 54 节预测伪距离在规范化纤维上的直径；当纤维中没有两个不同元素时，其上确界取 $0$。$\varepsilon_{\mathrm{fib}}=0$ 才表示在所列实验族上，规范化整数已经足以代表历史。
+
+对每个 $i$，从每个非空纤维选一个代表 $r_u$，置
+
+$$
+\bar\kappa_i(u)=p_i(\,\cdot\mid r_u).
+$$
+
+若 $\bar\kappa_i$ 在同一实区间上有 $L_i$-刻度 Lipschitz 延拓，定义代表黄金预测器
+
+$$
+\widehat p_i(\,\cdot\mid r)
+=
+\bar\kappa_i\!\left(\gamma_Z(N(r))\right).
+$$
+

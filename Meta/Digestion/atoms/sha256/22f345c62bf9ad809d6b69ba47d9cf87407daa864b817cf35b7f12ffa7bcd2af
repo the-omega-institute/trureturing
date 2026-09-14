@@ -1,0 +1,41 @@
+### 定理 58.4（刻度误差到有限预测误差的传输）
+
+在定义 58.3 的条件下，对所有 $r\in R$ 和 $i$，
+
+$$
+\operatorname{TV}\!\left(
+p_i(\,\cdot\mid r),
+\widehat p_i(\,\cdot\mid r)
+\right)
+<
+\frac{L_i}{\sqrt5}.
+$$
+
+令 $L_{\mathfrak T}=\max_iL_i$，则全部实验输出的最坏总变差误差满足
+
+$$
+\max_{r\in R,\,i\le m}
+\operatorname{TV}\left(
+p_i(\,\cdot\mid r),\widehat p_i(\,\cdot\mid r)
+\right)
+<
+\frac{L_{\mathfrak T}}{\sqrt5}.
+$$
+
+证明。对每个 $i,r$ 使用 Lipschitz 条件和命题 58.2：
+
+$$
+\operatorname{TV}\!\left(
+\kappa_i(N(r)),
+\kappa_i(\gamma_Z(N(r)))
+\right)
+\le
+L_i\left|N(r)-\gamma_Z(N(r))\right|
+<
+\frac{L_i}{\sqrt5}.
+$$
+
+对 $i$ 取最大值即得。证毕。
+
+这个定理只控制“同一个规范整数的实数刻度近似”。它不控制规范化纤维内部的历史差异，也不证明 $\gamma_Z$ 是一个足够状态。
+
