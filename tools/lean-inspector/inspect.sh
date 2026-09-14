@@ -324,6 +324,11 @@ printf 'LEAN_REPORT_DELTA_PLAN mode=%s changed=%s added=%s removed=%s recheck=%s
   "$delta_status" "$delta_changed_count" "$delta_added_count" \
   "$delta_removed_count" "$delta_recheck_count"
 
+if [[ "$delta_status" == "delta" && "$delta_recheck_count" -eq 0 ]]; then
+  # #7955: retain producer evidence when removed-only reuse runs no logged phase.
+  cp "$DELTA_PLAN" "$LOG_DIR/delta-plan.json"
+fi
+
 if [[ "$delta_status" == "delta" && "$delta_recheck_count" -gt 0 ]]; then
   selection_file="$(mktemp "${TMPDIR:-/tmp}/stratalint-report-delta-selection.XXXXXXXX")"
   python3 - "$DELTA_PLAN" "$selection_file" <<'PY'

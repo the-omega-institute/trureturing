@@ -128,6 +128,111 @@ public sealed class LeanReportCacheTests(ITestOutputHelper output)
     }
 
     [Fact]
+    public void RemovedOnlyDeltaReuseKeepsNonEmptyProducerLogSidecar()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var temporary = new TemporaryDirectory();
+        var repositoryRoot = TestRepositoryLayout.FindRoot();
+        var repository = Path.Combine(temporary.Path, "repository");
+        var cacheRoot = Path.Combine(temporary.Path, "cache");
+        var outputPath = Path.Combine(temporary.Path, "out", "raw-lean-report.json");
+        Directory.CreateDirectory(Path.Combine(repository, "D5"));
+        Directory.CreateDirectory(Path.Combine(repository, "tools", "scripts", "worktree"));
+        Directory.CreateDirectory(cacheRoot);
+        File.SetUnixFileMode(cacheRoot,
+            UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+        LeanReportInputScriptTests.InstallReportConfiguration(repository);
+        Write("Trureturing.lean", "-- surviving module\n");
+        Write("D5/Removed.lean", "-- removed module\n");
+        Write("lean-toolchain", "leanprover/lean4:fixture\n");
+        Write("lakefile.toml", "name = \"fixture\"\n");
+        Write("lake-manifest.json", "{}\n");
+        Write("tools/scripts/worktree/lean-cache-run.sh", "#!/usr/bin/env bash\nexit 99\n");
+        File.SetUnixFileMode(
+            Path.Combine(repository, "tools", "scripts", "worktree", "lean-cache-run.sh"),
+            UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+
+        var oldFields = Address("old-memo");
+        var oldAddress = CacheAddress(oldFields);
+        var cacheEntry = Path.Combine(cacheRoot, oldAddress);
+        Directory.CreateDirectory(cacheEntry);
+        var baseline = Path.Combine(cacheEntry, "raw-lean-report.json");
+        var survivingHash = Hash(File.ReadAllBytes(Path.Combine(repository, "Trureturing.lean")));
+        var removedHash = Hash(File.ReadAllBytes(Path.Combine(repository, "D5", "Removed.lean")));
+        var report = "{\"modules\": ["
+            + Module("Trureturing", "Trureturing.lean", survivingHash) + ", "
+            + Module("D5.Removed", "D5/Removed.lean", removedHash)
+            + "], \"schema\": \"stratalint-raw-lean-report-v2\"}\n";
+        File.WriteAllText(baseline, report, new UTF8Encoding(false));
+        var reportHash = Hash(File.ReadAllBytes(baseline));
+        File.WriteAllText(baseline + ".sha256", $"{reportHash}  raw-lean-report.json\n");
+        using (System.IO.Compression.ZipFile.Open(
+                   baseline + ".materials.zip", System.IO.Compression.ZipArchiveMode.Create)) { }
+        File.WriteAllText(baseline + ".input.attestation",
+            "schema=stratalint-lean-report-input-attestation-v1\n"
+            + $"repository_input_sha256={oldFields[0]}\n"
+            + $"producer_sha256={oldFields[1]}\nreport_sha256={reportHash}\n");
+        File.WriteAllText(baseline + ".provenance.json",
+            "{\"schema\":\"stratalint-lean-report-provenance-v1\","
+            + "\"side\":\"candidate\",\"mode\":\"produced\",\"source_side\":\"candidate\","
+            + $"\"input_address\":\"sha256:{oldAddress}\","
+            + $"\"producer_sha256\":\"{oldFields[1]}\","
+            + $"\"repository_inspector_sha256\":\"{oldFields[1]}\","
+            + $"\"lean_sources_sha256\":\"{oldFields[2]}\","
+            + $"\"lean_config_sha256\":\"{oldFields[3]}\","
+            + $"\"report_sha256\":\"{reportHash}\"}}\n");
+
+        File.Delete(Path.Combine(repository, "D5", "Removed.lean"));
+        var currentFields = Address("current-memo");
+        var result = TestProcessRunner.Run("env",
+            [
+                $"LAKE_BIN=/bin/echo",
+                $"STRATALINT_REPORT_CACHE_ROOT={cacheRoot}",
+                $"STRATALINT_REPORT_INPUT_ADDRESS={CacheAddress(currentFields)}",
+                $"STRATALINT_REPORT_REPOSITORY_SHA256={currentFields[0]}",
+                $"STRATALINT_REPORT_PRODUCER_SHA256={currentFields[1]}",
+                $"STRATALINT_REPORT_RESIDENT_SHA256={currentFields[1]}",
+                $"STRATALINT_REPORT_CONFIG_SHA256={currentFields[3]}",
+                "bash", Path.Combine(repositoryRoot, "tools", "lean-inspector", "inspect.sh"),
+                "--repository", repository, "--output", outputPath,
+            ], repository, TestBudgets.WorkflowProcessHangGuard, 1024 * 1024);
+
+        Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
+        Assert.Contains("mode=delta changed=0 added=0 removed=1 recheck=0",
+            Encoding.UTF8.GetString(result.StandardOutput), StringComparison.Ordinal);
+        Assert.True(Directory.Exists(outputPath + ".logs")
+            && Directory.EnumerateFiles(outputPath + ".logs", "*", SearchOption.AllDirectories).Any(),
+            $"lean-report-pair: producer left no log sidecar: {outputPath}");
+
+        string[] Address(string memoName)
+        {
+            var address = TestProcessRunner.Run("env",
+                [$"STRATALINT_LEAN_INPUT_MEMO_ROOT={Path.Combine(temporary.Path, memoName)}", "bash",
+                    Path.Combine(repositoryRoot, "tools", "scripts", "report", "lean-report-input.sh"),
+                    "address", "--repository", repository], repository,
+                BoundedProcessRunner.HangDetectionBudget, 1024 * 1024);
+            Assert.True(address.ExitCode == 0, Encoding.UTF8.GetString(address.StandardError));
+            return Encoding.UTF8.GetString(address.StandardOutput).Trim().Split(' ');
+        }
+
+        void Write(string relative, string text)
+        {
+            var path = Path.Combine(repository, relative);
+            Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+            File.WriteAllText(path, text, new UTF8Encoding(false));
+        }
+
+        static string Module(string name, string path, string hash) =>
+            $"{{\"module\":\"{name}\",\"source_path\":\"{path}\","
+            + $"\"source_sha256\":\"sha256:{hash}\",\"imports\":[],\"declarations\":[]}}";
+        static string Hash(byte[] bytes) => Convert.ToHexStringLower(SHA256.HashData(bytes));
+        static string CacheAddress(string[] fields) => Hash(Encoding.UTF8.GetBytes(
+            $"schema=stratalint-lean-report-input-v1\nproducer_sha256={fields[1]}\n"
+            + $"repository_inspector_sha256={fields[1]}\nlean_sources_sha256={fields[2]}\n"
+            + $"lean_config_sha256={fields[3]}\n"));
+    }
+
+    [Fact]
     public void ProducedBundleWithoutLogsFailsClosedBeforePublication()
     {
         if (OperatingSystem.IsWindows()) return;
