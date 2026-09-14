@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6c7bc303effafbe3516a3dedef2d5ac5c4f08e5be6f6ddcaa8c8b1c8fcbab6e3
+  normalized_sha256: sha256:6c7bc303effafbe3516a3dedef2d5ac5c4f08e5be6f6ddcaa8c8b1c8fcbab6e3
+cas_ref: sha256:6c7bc303effafbe3516a3dedef2d5ac5c4f08e5be6f6ddcaa8c8b1c8fcbab6e3
+coverage_gids:
+  - gid: D5/S3/Analytic/SeriesInequalities/KarpQuadraticTruncations.r2Polynomial
+    target_statement_id: sha256:d0d47ad2bbf8e2b086351f5d75050c5709aa742b9151891946a0fcb27683847c
+  - gid: D5/S3/Analytic/SeriesInequalities/KarpQuadraticTruncations.r2_coeff_nonneg
+    target_statement_id: sha256:de6ba3660c8255d3ab4dbdf360d777fb1274bb1b66606a6e7163f67d9ed1e063
+receipts:
+  unresolved_subitems: []
