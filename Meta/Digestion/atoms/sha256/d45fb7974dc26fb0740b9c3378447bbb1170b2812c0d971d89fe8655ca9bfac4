@@ -1,0 +1,33 @@
+**定理 41.1（完整输出与免费经典标签的两种精确维数）。** 沿用定理 38.1 的有限维任务。设 $\dim\mathcal H=D\ge1$，$A,J$ 为输入密度矩阵，且
+
+$$
+m\ge1,\qquad 0<c_1<\cdots<c_m,\qquad
+D_j=c_jA-J\ \text{均可逆}.
+$$
+
+令 $P_j=\mathbf 1_{(0,\infty)}(D_j)$ 为正谱投影，允许 $P_j=0$ 或 $I$。记它们生成的含单位有限维 $C^*$ 代数为
+
+$$
+\mathfrak A=C^*(I,P_1,\ldots,P_m)\subseteq\mathcal L(\mathcal H).
+$$
+
+选择该代数的标准分块表示
+
+$$
+\mathcal H\cong\bigoplus_{k=1}^s
+\left(\mathbb C^{d_k}\otimes\mathbb C^{m_k}\right),\qquad
+\mathfrak A\cong\bigoplus_{k=1}^s
+\left(M_{d_k}(\mathbb C)\otimes I_{m_k}\right),
+$$
+
+其中 $s,d_k,m_k\ge1$，$\sum_kd_km_k=D$。这里 $d_k$ 是第 $k$ 个简单矩阵块所作用的 Hilbert 空间维数，$m_k$ 是它在输入空间中的重复次数。
+
+所有存储都必须在实际权重揭示前固定，并逐项满足
+
+$$
+\|\Phi(D_j)\|_1=\|D_j\|_1\qquad(j=1,\ldots,m).
+$$
+
+区分以下两种资源：
+
+- $d_{\rm all}$：在所有有限维输出 CPTP 通道 $\Phi:\mathcal L(\mathcal H)\to\mathcal L(\mathcal K)$ 中，最小化整个输出空间的维数 $\dim\mathcal K$。若输出包含可读的经典分区标签，它们也计入这个空间。

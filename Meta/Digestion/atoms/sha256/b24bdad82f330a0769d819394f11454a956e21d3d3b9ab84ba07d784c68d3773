@@ -1,0 +1,173 @@
+- $q_{\rm free}$：允许任意有限个免费经典标签，输出为 $M_q(\mathbb C)\otimes\mathbb C^L\cong\bigoplus_{\ell=1}^L M_q(\mathbb C)$，只最小化共享量子寄存器的维数 $q$，$L$ 不计成本。直和上的迹与迹范数均取各块之和。
+
+则两种最小值都达到，并且
+
+$$
+\boxed{
+ d_{\rm all}=\sum_{k=1}^s d_k,\qquad
+ q_{\rm free}=\max_{1\le k\le s}d_k.
+}
+$$
+
+有限经典存储逐项无损，当且仅当全部 $d_k=1$，也即 $\mathfrak A$ 为交换代数。
+
+证明。首先从范数等号得到输出上的投影表示。取任意逐项无损的有限维输出通道，写出一个有限 Kraus 表示
+
+$$
+\Phi(X)=\sum_{a=1}^N K_aXK_a^\dagger,\qquad
+\sum_{a=1}^N K_a^\dagger K_a=I.
+$$
+
+在输出上取 $F_j$ 为 $\Phi(D_j)$ 的正谱投影。即使输出加权差有零特征值，这仍是一个合法的最优效应。由第 38 节证明中的可逆输入最优效应唯一性，范数等号强制
+
+$$
+\Phi^*(F_j)=P_j.
+$$
+
+由于 $F_j^2=F_j$，直接展开得
+
+$$
+\sum_a(F_jK_a-K_aP_j)^\dagger(F_jK_a-K_aP_j)
+=P_j-P_j^2=0.
+$$
+
+每项半正定，故
+
+$$
+\boxed{F_jK_a=K_aP_j\qquad\text{对全部 }j,a.}
+$$
+
+令
+
+$$
+\mathcal Q=\operatorname{span}\{\operatorname{ran}K_a:1\le a\le N\}
+=\operatorname{supp}\Phi(I)\subseteq\mathcal K.
+$$
+
+这里将正算子的支撑视为子空间。交织等式说明每个 $F_j$ 都保持 $\mathcal Q$；自伴性使 $\mathcal Q$ 为约化子空间。因此 $G_j=F_j|_{\mathcal Q}$ 是 $\mathcal Q$ 上的正交投影。
+
+对任何非交换多项式 $p$，逐次使用交织等式可得
+
+$$
+p(G_1,\ldots,G_m)K_a
+=K_ap(P_1,\ldots,P_m).
+$$
+
+若 $p(P_1,\ldots,P_m)=0$，左端就在每个 $K_a$ 的值域上为零，故在它们张成的 $\mathcal Q$ 上为零。反过来，若 $p(G_1,\ldots,G_m)=0$，则所有 $K_ap(P_1,\ldots,P_m)=0$；再用 $\sum_aK_a^\dagger K_a=I$，得到
+
+$$
+p(P_1,\ldots,P_m)
+=\sum_aK_a^\dagger K_ap(P_1,\ldots,P_m)=0.
+$$
+
+输入、输出投影因而满足完全相同的多项式关系。有限维中，含单位的 $*$ 代数生成已经闭合，无需再加入极限。于是
+
+$$
+\pi_\Phi:\mathfrak A\longrightarrow\mathcal L(\mathcal Q),
+\qquad \pi_\Phi(P_j)=G_j
+$$
+
+定义了一个忠实的含单位 $*$ 表示。这里“忠实”指 $\pi_\Phi$ 单射。
+
+在每个简单块 $M_{d_k}(\mathbb C)$ 中选择标准矩阵单位 $e_{ab}^{(k)}$。全部 $e_{aa}^{(k)}$ 是非零、两两正交的投影，且总和为代数单位。忠实表示把它们送到 $\mathcal Q$ 上同样非零且两两正交的投影。它们共有 $\sum_kd_k$ 个，故
+
+$$
+\dim\mathcal K\ge\dim\mathcal Q\ge\sum_{k=1}^s d_k.
+$$
+
+这给出完整输出的下界。
+
+接着构造达到通道。令 $U$ 实现陈述中的输入分块，对输入矩阵 $X$，将 $UXU^\dagger$ 的第 $k$ 个对角块记为 $X_{kk}$。在输出空间
+
+$$
+\mathcal K_0=\bigoplus_{k=1}^s\mathbb C^{d_k}
+$$
+
+上定义
+
+$$
+\mathcal C_0(X)
+=\bigoplus_{k=1}^s\operatorname{tr}_{\mathbb C^{m_k}}(X_{kk}).
+$$
+
+该通道先取中央分块，再对重复因子取偏迹。每一步完全正，且输出各块的迹之和为 $\sum_k\operatorname{tr}X_{kk}=\operatorname{tr}X$，所以它是 CPTP 映射。
+
+由于每个 $P_j\in\mathfrak A$，可写
+
+$$
+UP_jU^\dagger=\bigoplus_{k=1}^s(P_{j,k}\otimes I_{m_k}),
+\qquad P_{j,k}^2=P_{j,k}=P_{j,k}^\dagger.
+$$
+
+取输出投影 $\widehat P_j=\bigoplus_kP_{j,k}$，便有 $\mathcal C_0^*(\widehat P_j)=P_j$。因此
+
+$$
+\begin{aligned}
+\|\mathcal C_0(D_j)\|_1
+&\ge2\operatorname{tr}(\widehat P_j\mathcal C_0(D_j))
+-\operatorname{tr}\mathcal C_0(D_j)\\
+&=2\operatorname{tr}(P_jD_j)-\operatorname{tr}D_j
+=\|D_j\|_1.
+\end{aligned}
+$$
+
+迹范数收缩性给出反向不等式，故所有项都无损。这里不要求 $D_j$ 本身属于 $\mathfrak A$；所保留的正谱投影已足以实现该项判别最优值。通道的输出维数为 $\sum_kd_k$，从而达到 $d_{\rm all}$。
+
+现在计算免费经典标签下的量子寄存器维数。对任意输出于 $\bigoplus_{\ell=1}^L M_q(\mathbb C)$ 的逐项无损通道，上述最优谱投影 $F_j$ 都可取为按经典标签分块的矩阵。于是
+
+$$
+\mathcal Q=\bigoplus_{\ell=1}^L\mathcal Q_\ell,
+\qquad \dim\mathcal Q_\ell\le q,
+\qquad \pi_\Phi=\bigoplus_\ell\pi_\ell.
+$$
+
+零支撑的标签可以删去。对第 $k$ 个简单块的中央单位 $z_k=\sum_ae_{aa}^{(k)}$，忠实性保证 $\pi_\Phi(z_k)\ne0$，所以至少有一个标签 $\ell$ 满足 $\pi_\ell(z_k)\ne0$。在该标签内，矩阵单位关系使各 $\pi_\ell(e_{aa}^{(k)})$ 具有相同的秩：$\pi_\ell(e_{ab}^{(k)})$ 给出它们值域间的部分等距。它们的和非零，因而全部非零且两两正交。故
+
+$$
+q\ge\dim\mathcal Q_\ell\ge d_k.
+$$
+
+对每个 $k$ 应用这个论证，得到 $q\ge\max_kd_k$。这里不同简单块可以在不同的经典标签中出现，因此这个口径给出最大块维数。
+
+为达到该下界，取 $q=\max_kd_k$，并选取等距嵌入 $W_k:\mathbb C^{d_k}\to\mathbb C^q$。用 $s$ 个经典标签定义
+
+$$
+\mathcal C_{\rm flag}(X)
+=\bigoplus_{k=1}^s
+W_k\operatorname{tr}_{\mathbb C^{m_k}}(X_{kk})W_k^\dagger
+\in\bigoplus_{k=1}^s M_q(\mathbb C).
+$$
+
+此映射 CPTP；第 $k$ 个标签下只使用 $\operatorname{ran}W_k$。输出投影 $\bigoplus_kW_kP_{j,k}W_k^\dagger$ 仍拉回 $P_j$，所以同样逐项保范数。由此 $q_{\rm free}=\max_kd_k$，并且有限个标签已经足够。
+
+纯经典输出就是 $q=1$ 的情形，因此它可行当且仅当全部 $d_k=1$。在交换情形，简单块对应第 38 节的非零联合符号子空间，$s=N$，故完整输出维数仍为 $N$；若经典标签免费，量子寄存器维数为一。在第 39 节的非对易量子比特情形，两个正谱投影生成 $M_2(\mathbb C)$，两种维数都为二，完整量子比特的可恢复性由该节的 Kraus 条件给出。
+
+交织关系还说明，对全部 $X\in\mathfrak A$ 都有
+
+$$
+[K_a^\dagger K_b,X]=0.
+$$
+
+这是标准算子代数纠错条件在整个输入空间上的形式，见 Bény、Kempf 与 Kribs，*Quantum Error Correction of Observables*，[Theorem 9 及其证明](https://arxiv.org/html/0705.1574)；较早的陈述见同作者 *Generalization of Quantum Error Correction via the Heisenberg Picture*，[Theorem 2，式 (5)](https://arxiv.org/html/quant-ph/0608071)。
+
+免费经典记录下的最大块维数公式已有直接先例：Ballester、Wehner 与 Winter，*State Discrimination with Post-Measurement Information*，[第 5 节、Lemma 5.1 与式 (8)–(11)](https://arxiv.org/html/quant-ph/0608014)。该文研究先受量子存储限制、后获子系综标签时的完美判别，并以支持投影生成代数的最大简单块维数给出精确量子存储门槛。其原文的 $2^q$ 是存储空间维数，对应本节按维数计数的资源。
+
+与本节的对应可逐项写出。对正负部分均非零的 $D_j$，记 $D_j=D_{j,+}-D_{j,-}$，令
+
+$$
+t_{j,\pm}=\operatorname{tr}D_{j,\pm}>0,\qquad
+\rho_{\pm|j}=\frac{D_{j,\pm}}{t_{j,\pm}},\qquad
+p_{\pm|j}=\frac{t_{j,\pm}}{t_{j,+}+t_{j,-}}.
+$$
+
+这给出两个正交态组成的二元子系综；各标签 $j$ 可取任意严格正先验。固定通道 $\Phi$ 后，揭示 $j$ 的条件最优成功概率为
+
+$$
+p_{\rm succ}(j|\Phi)
+=\frac12\left(1+\frac{\|\Phi(D_j)\|_1}{\|D_j\|_1}\right).
+$$
+
+所以 $\|\Phi(D_j)\|_1=\|D_j\|_1$ 恰好等价于该子系综的完美判别。可逆性使两态的支持投影正好是 $P_j$ 和 $I-P_j$，因而它们生成的含单位代数就是 $\mathfrak A$。定号的 $D_j$ 在任意 CPTP 通道下都保范数，且只加入 $0$ 或 $I$，可以略去；若全部定号，则 $\mathfrak A=\mathbb C I$、$q_{\rm free}=1$。因此这里的 $q_{\rm free}=\max_kd_k$ 是上述既有判据在加权差任务上的应用。把全部经典分区也计入的 $d_{\rm all}=\sum_kd_k$ 则由本节前面的完整输出下界与达到构造证明。
+
+精确测量压缩及去除重复块的构造另见 Bluhm、Rauber 与 Wolf，*Quantum Compression Relative to a Set of Measurements*，[Definition 4.1、Proposition 6.4 与 Theorem 7.1](https://arxiv.org/html/1708.04898)。该文允许免费经典侧信息，其压缩维数对应这里的 $q$；Theorem 7.1 给出最大矩阵块维数的上界。对于一般非投影效应，不能直接使用这里的 $0/1$ 刚性或宣称生成代数就决定精确压缩维数；该文的一般问题保留了这一区别。输入加权差的可逆性、输出的有限维性以及两种资源的计数口径均属于本定理条件。证毕。
+

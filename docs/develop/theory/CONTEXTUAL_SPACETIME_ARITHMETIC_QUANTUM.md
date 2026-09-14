@@ -10884,3 +10884,532 @@ $$
 两边平方后恰好得到同一个 $8/\sqrt5<\sqrt{13}$。这证明全部严格关系。此例的最佳二元测量采用 $D_1+D_2$ 的谱基，严格优于只在两个单项谱测量之间选择；同时原损失严格高于由辅助优化得到的下界。证毕。
 
 ## 追加锚（新终端）
+
+## 41. 判别谱投影生成的代数与最小存储维数
+
+**定理 41.1（完整输出与免费经典标签的两种精确维数）。** 沿用定理 38.1 的有限维任务。设 $\dim\mathcal H=D\ge1$，$A,J$ 为输入密度矩阵，且
+
+$$
+m\ge1,\qquad 0<c_1<\cdots<c_m,\qquad
+D_j=c_jA-J\ \text{均可逆}.
+$$
+
+令 $P_j=\mathbf 1_{(0,\infty)}(D_j)$ 为正谱投影，允许 $P_j=0$ 或 $I$。记它们生成的含单位有限维 $C^*$ 代数为
+
+$$
+\mathfrak A=C^*(I,P_1,\ldots,P_m)\subseteq\mathcal L(\mathcal H).
+$$
+
+选择该代数的标准分块表示
+
+$$
+\mathcal H\cong\bigoplus_{k=1}^s
+\left(\mathbb C^{d_k}\otimes\mathbb C^{m_k}\right),\qquad
+\mathfrak A\cong\bigoplus_{k=1}^s
+\left(M_{d_k}(\mathbb C)\otimes I_{m_k}\right),
+$$
+
+其中 $s,d_k,m_k\ge1$，$\sum_kd_km_k=D$。这里 $d_k$ 是第 $k$ 个简单矩阵块所作用的 Hilbert 空间维数，$m_k$ 是它在输入空间中的重复次数。
+
+所有存储都必须在实际权重揭示前固定，并逐项满足
+
+$$
+\|\Phi(D_j)\|_1=\|D_j\|_1\qquad(j=1,\ldots,m).
+$$
+
+区分以下两种资源：
+
+- $d_{\rm all}$：在所有有限维输出 CPTP 通道 $\Phi:\mathcal L(\mathcal H)\to\mathcal L(\mathcal K)$ 中，最小化整个输出空间的维数 $\dim\mathcal K$。若输出包含可读的经典分区标签，它们也计入这个空间。
+- $q_{\rm free}$：允许任意有限个免费经典标签，输出为 $M_q(\mathbb C)\otimes\mathbb C^L\cong\bigoplus_{\ell=1}^L M_q(\mathbb C)$，只最小化共享量子寄存器的维数 $q$，$L$ 不计成本。直和上的迹与迹范数均取各块之和。
+
+则两种最小值都达到，并且
+
+$$
+\boxed{
+ d_{\rm all}=\sum_{k=1}^s d_k,\qquad
+ q_{\rm free}=\max_{1\le k\le s}d_k.
+}
+$$
+
+有限经典存储逐项无损，当且仅当全部 $d_k=1$，也即 $\mathfrak A$ 为交换代数。
+
+证明。首先从范数等号得到输出上的投影表示。取任意逐项无损的有限维输出通道，写出一个有限 Kraus 表示
+
+$$
+\Phi(X)=\sum_{a=1}^N K_aXK_a^\dagger,\qquad
+\sum_{a=1}^N K_a^\dagger K_a=I.
+$$
+
+在输出上取 $F_j$ 为 $\Phi(D_j)$ 的正谱投影。即使输出加权差有零特征值，这仍是一个合法的最优效应。由第 38 节证明中的可逆输入最优效应唯一性，范数等号强制
+
+$$
+\Phi^*(F_j)=P_j.
+$$
+
+由于 $F_j^2=F_j$，直接展开得
+
+$$
+\sum_a(F_jK_a-K_aP_j)^\dagger(F_jK_a-K_aP_j)
+=P_j-P_j^2=0.
+$$
+
+每项半正定，故
+
+$$
+\boxed{F_jK_a=K_aP_j\qquad\text{对全部 }j,a.}
+$$
+
+令
+
+$$
+\mathcal Q=\operatorname{span}\{\operatorname{ran}K_a:1\le a\le N\}
+=\operatorname{supp}\Phi(I)\subseteq\mathcal K.
+$$
+
+这里将正算子的支撑视为子空间。交织等式说明每个 $F_j$ 都保持 $\mathcal Q$；自伴性使 $\mathcal Q$ 为约化子空间。因此 $G_j=F_j|_{\mathcal Q}$ 是 $\mathcal Q$ 上的正交投影。
+
+对任何非交换多项式 $p$，逐次使用交织等式可得
+
+$$
+p(G_1,\ldots,G_m)K_a
+=K_ap(P_1,\ldots,P_m).
+$$
+
+若 $p(P_1,\ldots,P_m)=0$，左端就在每个 $K_a$ 的值域上为零，故在它们张成的 $\mathcal Q$ 上为零。反过来，若 $p(G_1,\ldots,G_m)=0$，则所有 $K_ap(P_1,\ldots,P_m)=0$；再用 $\sum_aK_a^\dagger K_a=I$，得到
+
+$$
+p(P_1,\ldots,P_m)
+=\sum_aK_a^\dagger K_ap(P_1,\ldots,P_m)=0.
+$$
+
+输入、输出投影因而满足完全相同的多项式关系。有限维中，含单位的 $*$ 代数生成已经闭合，无需再加入极限。于是
+
+$$
+\pi_\Phi:\mathfrak A\longrightarrow\mathcal L(\mathcal Q),
+\qquad \pi_\Phi(P_j)=G_j
+$$
+
+定义了一个忠实的含单位 $*$ 表示。这里“忠实”指 $\pi_\Phi$ 单射。
+
+在每个简单块 $M_{d_k}(\mathbb C)$ 中选择标准矩阵单位 $e_{ab}^{(k)}$。全部 $e_{aa}^{(k)}$ 是非零、两两正交的投影，且总和为代数单位。忠实表示把它们送到 $\mathcal Q$ 上同样非零且两两正交的投影。它们共有 $\sum_kd_k$ 个，故
+
+$$
+\dim\mathcal K\ge\dim\mathcal Q\ge\sum_{k=1}^s d_k.
+$$
+
+这给出完整输出的下界。
+
+接着构造达到通道。令 $U$ 实现陈述中的输入分块，对输入矩阵 $X$，将 $UXU^\dagger$ 的第 $k$ 个对角块记为 $X_{kk}$。在输出空间
+
+$$
+\mathcal K_0=\bigoplus_{k=1}^s\mathbb C^{d_k}
+$$
+
+上定义
+
+$$
+\mathcal C_0(X)
+=\bigoplus_{k=1}^s\operatorname{tr}_{\mathbb C^{m_k}}(X_{kk}).
+$$
+
+该通道先取中央分块，再对重复因子取偏迹。每一步完全正，且输出各块的迹之和为 $\sum_k\operatorname{tr}X_{kk}=\operatorname{tr}X$，所以它是 CPTP 映射。
+
+由于每个 $P_j\in\mathfrak A$，可写
+
+$$
+UP_jU^\dagger=\bigoplus_{k=1}^s(P_{j,k}\otimes I_{m_k}),
+\qquad P_{j,k}^2=P_{j,k}=P_{j,k}^\dagger.
+$$
+
+取输出投影 $\widehat P_j=\bigoplus_kP_{j,k}$，便有 $\mathcal C_0^*(\widehat P_j)=P_j$。因此
+
+$$
+\begin{aligned}
+\|\mathcal C_0(D_j)\|_1
+&\ge2\operatorname{tr}(\widehat P_j\mathcal C_0(D_j))
+-\operatorname{tr}\mathcal C_0(D_j)\\
+&=2\operatorname{tr}(P_jD_j)-\operatorname{tr}D_j
+=\|D_j\|_1.
+\end{aligned}
+$$
+
+迹范数收缩性给出反向不等式，故所有项都无损。这里不要求 $D_j$ 本身属于 $\mathfrak A$；所保留的正谱投影已足以实现该项判别最优值。通道的输出维数为 $\sum_kd_k$，从而达到 $d_{\rm all}$。
+
+现在计算免费经典标签下的量子寄存器维数。对任意输出于 $\bigoplus_{\ell=1}^L M_q(\mathbb C)$ 的逐项无损通道，上述最优谱投影 $F_j$ 都可取为按经典标签分块的矩阵。于是
+
+$$
+\mathcal Q=\bigoplus_{\ell=1}^L\mathcal Q_\ell,
+\qquad \dim\mathcal Q_\ell\le q,
+\qquad \pi_\Phi=\bigoplus_\ell\pi_\ell.
+$$
+
+零支撑的标签可以删去。对第 $k$ 个简单块的中央单位 $z_k=\sum_ae_{aa}^{(k)}$，忠实性保证 $\pi_\Phi(z_k)\ne0$，所以至少有一个标签 $\ell$ 满足 $\pi_\ell(z_k)\ne0$。在该标签内，矩阵单位关系使各 $\pi_\ell(e_{aa}^{(k)})$ 具有相同的秩：$\pi_\ell(e_{ab}^{(k)})$ 给出它们值域间的部分等距。它们的和非零，因而全部非零且两两正交。故
+
+$$
+q\ge\dim\mathcal Q_\ell\ge d_k.
+$$
+
+对每个 $k$ 应用这个论证，得到 $q\ge\max_kd_k$。这里不同简单块可以在不同的经典标签中出现，因此这个口径给出最大块维数。
+
+为达到该下界，取 $q=\max_kd_k$，并选取等距嵌入 $W_k:\mathbb C^{d_k}\to\mathbb C^q$。用 $s$ 个经典标签定义
+
+$$
+\mathcal C_{\rm flag}(X)
+=\bigoplus_{k=1}^s
+W_k\operatorname{tr}_{\mathbb C^{m_k}}(X_{kk})W_k^\dagger
+\in\bigoplus_{k=1}^s M_q(\mathbb C).
+$$
+
+此映射 CPTP；第 $k$ 个标签下只使用 $\operatorname{ran}W_k$。输出投影 $\bigoplus_kW_kP_{j,k}W_k^\dagger$ 仍拉回 $P_j$，所以同样逐项保范数。由此 $q_{\rm free}=\max_kd_k$，并且有限个标签已经足够。
+
+纯经典输出就是 $q=1$ 的情形，因此它可行当且仅当全部 $d_k=1$。在交换情形，简单块对应第 38 节的非零联合符号子空间，$s=N$，故完整输出维数仍为 $N$；若经典标签免费，量子寄存器维数为一。在第 39 节的非对易量子比特情形，两个正谱投影生成 $M_2(\mathbb C)$，两种维数都为二，完整量子比特的可恢复性由该节的 Kraus 条件给出。
+
+交织关系还说明，对全部 $X\in\mathfrak A$ 都有
+
+$$
+[K_a^\dagger K_b,X]=0.
+$$
+
+这是标准算子代数纠错条件在整个输入空间上的形式，见 Bény、Kempf 与 Kribs，*Quantum Error Correction of Observables*，[Theorem 9 及其证明](https://arxiv.org/html/0705.1574)；较早的陈述见同作者 *Generalization of Quantum Error Correction via the Heisenberg Picture*，[Theorem 2，式 (5)](https://arxiv.org/html/quant-ph/0608071)。
+
+免费经典记录下的最大块维数公式已有直接先例：Ballester、Wehner 与 Winter，*State Discrimination with Post-Measurement Information*，[第 5 节、Lemma 5.1 与式 (8)–(11)](https://arxiv.org/html/quant-ph/0608014)。该文研究先受量子存储限制、后获子系综标签时的完美判别，并以支持投影生成代数的最大简单块维数给出精确量子存储门槛。其原文的 $2^q$ 是存储空间维数，对应本节按维数计数的资源。
+
+与本节的对应可逐项写出。对正负部分均非零的 $D_j$，记 $D_j=D_{j,+}-D_{j,-}$，令
+
+$$
+t_{j,\pm}=\operatorname{tr}D_{j,\pm}>0,\qquad
+\rho_{\pm|j}=\frac{D_{j,\pm}}{t_{j,\pm}},\qquad
+p_{\pm|j}=\frac{t_{j,\pm}}{t_{j,+}+t_{j,-}}.
+$$
+
+这给出两个正交态组成的二元子系综；各标签 $j$ 可取任意严格正先验。固定通道 $\Phi$ 后，揭示 $j$ 的条件最优成功概率为
+
+$$
+p_{\rm succ}(j|\Phi)
+=\frac12\left(1+\frac{\|\Phi(D_j)\|_1}{\|D_j\|_1}\right).
+$$
+
+所以 $\|\Phi(D_j)\|_1=\|D_j\|_1$ 恰好等价于该子系综的完美判别。可逆性使两态的支持投影正好是 $P_j$ 和 $I-P_j$，因而它们生成的含单位代数就是 $\mathfrak A$。定号的 $D_j$ 在任意 CPTP 通道下都保范数，且只加入 $0$ 或 $I$，可以略去；若全部定号，则 $\mathfrak A=\mathbb C I$、$q_{\rm free}=1$。因此这里的 $q_{\rm free}=\max_kd_k$ 是上述既有判据在加权差任务上的应用。把全部经典分区也计入的 $d_{\rm all}=\sum_kd_k$ 则由本节前面的完整输出下界与达到构造证明。
+
+精确测量压缩及去除重复块的构造另见 Bluhm、Rauber 与 Wolf，*Quantum Compression Relative to a Set of Measurements*，[Definition 4.1、Proposition 6.4 与 Theorem 7.1](https://arxiv.org/html/1708.04898)。该文允许免费经典侧信息，其压缩维数对应这里的 $q$；Theorem 7.1 给出最大矩阵块维数的上界。对于一般非投影效应，不能直接使用这里的 $0/1$ 刚性或宣称生成代数就决定精确压缩维数；该文的一般问题保留了这一区别。输入加权差的可逆性、输出的有限维性以及两种资源的计数口径均属于本定理条件。证毕。
+
+**命题 41.2（五维输入的三维输出与二维量子寄存器）。** 令
+
+$$
+\mathcal H=(\mathbb C^2\otimes\mathbb C^2)\oplus\mathbb C,
+\qquad P_0=|0\rangle\langle0|,
+\qquad P_+=|+\rangle\langle+|,
+\qquad |+\rangle=\frac{|0\rangle+|1\rangle}{\sqrt2},
+$$
+
+并取密度矩阵
+
+$$
+A=\left(\frac34P_0\otimes\frac{I_2}{2}\right)\oplus\frac14,
+\qquad
+J=\left(\frac12P_+\otimes\frac{I_2}{2}\right)\oplus\frac12,
+$$
+
+以及权重 $c_1=1/2$、$c_2=1$。两个加权差均可逆，正谱投影生成的代数为
+
+$$
+\mathfrak A=(M_2(\mathbb C)\otimes I_2)\oplus\mathbb C.
+$$
+
+因此
+
+$$
+\boxed{d_{\rm all}=3,\qquad q_{\rm free}=2.}
+$$
+
+两项量子范数分别为
+
+$$
+\|D_{1/2}\|_1=1,\qquad
+\|D_1\|_1=\frac{\sqrt{13}+1}{4}.
+$$
+
+达到完整输出维数三的通道可以丢弃第二个量子比特的状态，因而无需恢复全部五维输入状态。
+
+证明。$A,J$ 均半正定，且迹分别为 $3/4+1/4=1$、$1/2+1/2=1$。直接分块可得
+
+$$
+D_t=E_t\otimes\frac{I_2}{2}\ \oplus\left(\frac t4-\frac12\right),
+\qquad
+E_t=\begin{pmatrix}
+3t/4-1/4&-1/4\\
+-1/4&-1/4
+\end{pmatrix}.
+$$
+
+由于 $\det E_t=-3t/16<0$，$E_t$ 有一正一负两个特征值。在 $t=1/2,1$ 时，末尾标量也严格为负，所以两项 $D_t$ 均可逆。$E_t$ 的迹为 $(3t-2)/4$，因而
+
+$$
+\|E_t\|_1=\frac{\sqrt{9t^2+4}}4,
+\qquad
+\|D_t\|_1=\frac{\sqrt{9t^2+4}+2-t}{4}
+\quad(t=1/2,1).
+$$
+
+这里使用了 $\|I_2/2\|_1=1$。代入两个权重即得到所列范数。
+
+记 $P_t^{(2)}$ 为 $E_t$ 的正谱投影，则
+
+$$
+P_t=P_t^{(2)}\otimes I_2\oplus0.
+$$
+
+两个二阶投影具体为
+
+$$
+P_{1/2}^{(2)}=\frac15\begin{pmatrix}4&-2\\-2&1\end{pmatrix},
+\qquad
+P_1^{(2)}=\frac12\left[
+I_2+\frac1{\sqrt{13}}\begin{pmatrix}3&-2\\-2&-3\end{pmatrix}
+\right].
+$$
+
+直接相乘有
+
+$$
+[P_{1/2}^{(2)},P_1^{(2)}]
+=\frac3{5\sqrt{13}}\begin{pmatrix}0&1\\-1&0\end{pmatrix},
+\qquad
+[P_{1/2},P_1]^2=-\frac9{325}(I_4\oplus0).
+$$
+
+因此中央投影 $I_4\oplus0$ 及其补投影都属于 $\mathfrak A$。两个二阶投影不对易，故生成 $M_2(\mathbb C)$：在其中一个投影的本征基内，另一个投影有非零非对角元，用左右谱投影夹取便得到两个非对角矩阵单位，再加上两个对角投影即可。这说明四维中央块上的生成代数是 $M_2(\mathbb C)\otimes I_2$，末尾中央块是 $\mathbb C$；反向包含关系由两个生成元的分块形式直接成立。故所列代数精确，定理 41.1 给出 $3$ 与 $2$ 两种资源值。
+
+具体的三维达到通道为
+
+$$
+\mathcal C_0(X)=\operatorname{tr}_2(X_{11})\oplus X_{22},
+$$
+
+其中 $X_{11}$ 是输入的四维对角块，$X_{22}$ 是末尾标量块。它将重复因子取偏迹，并保留中央分区标签。对两个不同纯输入
+
+$$
+\rho_r=(P_0\otimes|r\rangle\langle r|)\oplus0,
+\qquad r=0,1,
+$$
+
+有
+
+$$
+\mathcal C_0(\rho_0)=\mathcal C_0(\rho_1)=P_0\oplus0.
+$$
+
+所以这个达到压缩没有恢复全部五维输入的左逆。它精确保留的是所列判别任务要求的谱投影代数；第二个量子比特的区别不属于这些观测量。若经典标签免费，同一个中央分块构造使用一个二维量子寄存器及两个经典标签即可，符合 $q_{\rm free}=2$。证毕。
+
+## 追加锚（新终端）
+
+## 42. 有限量子存储下的最优值达到与严格资源差距
+
+**定理 42.1（免费经典标签的有限达到界）。** 设输入空间为 $\mathbb C^D$，$D\ge1$，$A,J$ 为该空间上的密度矩阵。给定有限正权重表
+
+$$
+m\ge1,\qquad 0<c_1<\cdots<c_m,
+\qquad D_j=c_jA-J,
+$$
+
+以及一个整数 $1\le q\le D$。存储阶段可以使用任意有限个免费经典标签，每个标签携带一个至多 $q$ 维的量子系统；不足 $q$ 维的分支可以补零嵌入 $\mathbb C^q$。通道预先固定，不能依赖后来揭示的实际权重。
+
+具体地，允许任意有限 $n\ge1$ 及完全正映射
+
+$$
+\Phi_\ell:\mathbb C^{D\times D}\longrightarrow
+\mathbb C^{q\times q},\qquad 1\le\ell\le n,
+$$
+
+满足
+
+$$
+\sum_{\ell=1}^n\operatorname{tr}\Phi_\ell(X)
+=\operatorname{tr}X,
+$$
+
+于是总体 CPTP 存储为
+
+$$
+\Phi(X)=\bigoplus_{\ell=1}^n\Phi_\ell(X).
+$$
+
+各分支保留其未归一化输出，所有标签均计入最终分数，不允许后选择。定义
+
+$$
+V_q=\sup_{\substack{n<\infty\\\Phi\ \mathrm{as\ above}}}
+\sum_{j=1}^m\|\Phi(D_j)\|_1
+=\sup_{\substack{n<\infty\\\Phi\ \mathrm{as\ above}}}
+\sum_{\ell=1}^n\sum_{j=1}^m
+\|\Phi_\ell(D_j)\|_1.
+$$
+
+则这个上确界由至多 $D^2$ 个非零经典分支达到，并有有限变分公式
+
+$$
+\boxed{
+V_q=
+\max_{\substack{E_1,\ldots,E_{D^2}\ge0\\
+\operatorname{rank}E_\ell\le q\ (1\le\ell\le D^2)\\
+\sum_{\ell=1}^{D^2}E_\ell=I_D}}
+\sum_{\ell=1}^{D^2}\sum_{j=1}^m
+\bigl\|\sqrt{E_\ell}\,D_j\sqrt{E_\ell}\bigr\|_1.
+}
+$$
+
+这里允许零效应。公式中的平方根取正平方根，优化变量均为输入空间上的效应；输出量子维数仍是 $q$，并未扩大到 $D$。
+
+进一步，若所有 $D_j$ 均可逆，令
+
+$$
+P_j=\mathbf1_{(0,\infty)}(D_j),\qquad
+\mathfrak A=C^*(I_D,P_1,\ldots,P_m)
+\cong\bigoplus_{k=1}^s
+\left(M_{d_k}(\mathbb C)\otimes I_{r_k}\right),
+\qquad q_*=\max_k d_k,
+$$
+
+其中 $r_k\ge1$ 为输入表示的重数。则
+
+$$
+\boxed{
+V_q=\sum_{j=1}^m\|D_j\|_1
+\quad\Longleftrightarrow\quad q\ge q_*.
+}
+$$
+
+因此，对每个固定的候选对、权重表与整数 $q<q_*$，存在严格正的最优总损失
+
+$$
+\Delta_q:=\sum_{j=1}^m\|D_j\|_1-V_q>0.
+$$
+
+增加有限经典标签数不能使这个损失趋于零。
+
+证明。先把每个分支的完全正映射写成有限 Kraus 和
+
+$$
+\Phi_\ell(X)=\sum_a K_{\ell a}XK_{\ell a}^\dagger,
+\qquad K_{\ell a}:\mathbb C^D\longrightarrow\mathbb C^q,
+\qquad
+\sum_{\ell,a}K_{\ell a}^\dagger K_{\ell a}=I_D.
+$$
+
+改用新的存储仪器，将 $(\ell,a)$ 作为经典标签，每个分支只使用一个 Kraus 算子：
+
+$$
+\widetilde\Phi(X)
+=\bigoplus_{\ell,a}K_{\ell a}XK_{\ell a}^\dagger.
+$$
+
+这是优化域内另一个合法 CPTP 通道。对每个 $j$，三角不等式给出
+
+$$
+\sum_\ell\|\Phi_\ell(D_j)\|_1
+\le\sum_{\ell,a}\|K_{\ell a}D_jK_{\ell a}^\dagger\|_1.
+$$
+
+故这个替换不降低目标值。它使用的是优化时重新选择仪器的自由；没有假定一个已经实现且丢弃环境的通道，还能事后取回其 Kraus 标签。全部新增标签仍保留在输出中，没有删去不利分支。
+
+对一个这样的算子 $K$，置
+
+$$
+E=K^\dagger K\ge0,\qquad \operatorname{rank}E\le q.
+$$
+
+极分解 $K=U\sqrt E$ 中，$U$ 在 $\operatorname{supp}E$ 上为等距映射。矩阵 $\sqrt E D_j\sqrt E$ 的支撑包含于该子空间，因此等距嵌入只增添零特征值，并有
+
+$$
+\|KD_jK^\dagger\|_1
+=\|U\sqrt E D_j\sqrt E U^\dagger\|_1
+=\|\sqrt E D_j\sqrt E\|_1.
+$$
+
+反过来，对任意有限效应表
+
+$$
+E_\ell\ge0,\qquad \operatorname{rank}E_\ell\le q,
+\qquad \sum_\ell E_\ell=I_D,
+$$
+
+为每个非零效应选择等距映射
+
+$$
+U_\ell:\operatorname{supp}E_\ell\longrightarrow\mathbb C^q,
+\qquad K_\ell=U_\ell\sqrt{E_\ell}.
+$$
+
+把 $U_\ell$ 在支撑外延拓为零，并对零效应取 $K_\ell=0$。于是 $K_\ell^\dagger K_\ell=E_\ell$，通道
+
+$$
+\Phi_E(X)=\bigoplus_\ell K_\ell X K_\ell^\dagger
+$$
+
+为 CPTP，且逐项达到效应表的范数目标。故原上确界精确等于所有有限秩受限效应表上
+
+$$
+\sum_\ell f(E_\ell),\qquad
+f(E)=\sum_{j=1}^m\|\sqrt E D_j\sqrt E\|_1
+$$
+
+的上确界。
+
+现在证明效应数可以统一限制为 $D^2$。函数 $f$ 在正半定矩阵上连续，且对每个 $t\ge0$ 有
+
+$$
+f(tE)=t f(E).
+$$
+
+从任意有限可行效应表出发，先删去零效应。若非零效应数大于 $D^2$，由于 $D$ 阶 Hermitian 矩阵构成 $D^2$ 维实向量空间，存在不全为零的实数 $a_\ell$，满足
+
+$$
+\sum_\ell a_\ell E_\ell=0.
+$$
+
+每个非零效应的迹严格为正。对该等式取迹可知，$a_\ell$ 必须同时含有正数和负数。把整组系数变号也保持该关系，故可以选择方向使
+
+$$
+b:=\sum_\ell a_\ell f(E_\ell)\ge0.
+$$
+
+沿该方向取
+
+$$
+t_*:=\min_{\ell:\,a_\ell<0}\frac{-1}{a_\ell}>0,
+\qquad
+E'_\ell=(1+t_*a_\ell)E_\ell.
+$$
+
+所有缩放系数非负，至少一个原非零效应变为零。正性、秩上界以及总和为 $I_D$ 的条件均保持；齐次性给出
+
+$$
+\sum_\ell f(E'_\ell)
+=\sum_\ell f(E_\ell)+t_*b
+\ge\sum_\ell f(E_\ell).
+$$
+
+每次至少删去一个非零效应，有限次重复后得到至多 $D^2$ 个效应，且目标不降。这一消去从任意有限方案开始，不预先假设上确界已经达到。
+
+把效应表补零至 $D^2$ 项。所列固定槽位可行集非空：选一个输入正交基的 $D$ 个秩一投影，再补零即可，因为 $q\ge1$。每个效应自动满足 $0\le E_\ell\le I_D$。正性、总和以及 $\operatorname{rank}E_\ell\le q$ 都是闭条件，后者可由所有 $(q+1)$ 阶子式为零表述。因此可行集在有限维实向量空间中闭且有界，故紧。正矩阵平方根与迹范数连续，所以目标达到最大值。结合前面的消去与物理实现，得到有限变分公式和至多 $D^2$ 个非零经典分支的达到结论。秩约束通常不凸；这个紧集公式不自动给出一般闭式或半正定规划。
+
+最后假设全部 $D_j$ 可逆。任意 CPTP 通道逐项满足
+
+$$
+\|\Phi(D_j)\|_1\le\|D_j\|_1.
+$$
+
+若 $q\ge q_*$，第 41 节的中心分支与重数偏迹构造使用免费经典标签和至多 $q_*$ 维量子分支，同时保留全部范数。将其分支嵌入 $\mathbb C^q$，得到 $V_q=\sum_j\|D_j\|_1$。
+
+若 $q<q_*$ 而两者相等，前面已经证明最大值由一个有限分支通道达到。各项损失均非负而总和为零，故这个通道对每项都有
+
+$$
+\|\Phi(D_j)\|_1=\|D_j\|_1.
+$$
+
+这与第 41 节的必要条件 $q\ge\max_k d_k$ 矛盾。因此 $\Delta_q>0$。严格差距来自达到性和精确无损障碍共同作用；只知道没有无损通道，还不足以排除一列损失趋于零的通道。
+
+上面的有限达到证明本身不要求任何 $D_j$ 可逆，也适用于任意固定有限组 Hermitian 输入差。可逆性只用于最后调用第 41 节的符号投影代数判据。这里没有给出跨候选对或权重表统一的正损失常数，也没有从小损失推出一般恢复误差界。
+
+所用标量依赖扰动与 D'Ariano、Lo Presti、Perinotti，*Classical randomness in quantum measurements*，[推论 7 及其证明](https://arxiv.org/abs/quant-ph/0408115) 中的标准 POVM 方法一致；本节利用目标的正齐次性选择不降方向，同时保持各效应的秩上界。Bluhm、Rauber、Wolf，*Quantum compression relative to a set of measurements*，[引理 5.2、引理 5.3 与定理 5.1](https://arxiv.org/abs/1708.04898) 也通过限制经典辅助规模与紧性证明压缩维数的稳定性，但其 $D^4$ 标签界用于在保持给定复合通道不变的条件下重构压缩与解压缩映射。本节只优化所列有限范数总分，允许更换存储仪器并在权重揭示后分别选择最终判别；$D^2$ 界不承担保持原复合通道或共同解压缩映射的要求。证毕。
+
+## 追加锚（新终端）
