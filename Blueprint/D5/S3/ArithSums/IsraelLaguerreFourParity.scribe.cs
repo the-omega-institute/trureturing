@@ -36,7 +36,11 @@ internal sealed class IsraelLaguerreFourParityDocument : IScribeDocumentDefiniti
                         + "valuation of k factorial is less than k. The ultrametric sum law "
                         + "therefore gives valuation zero for L(n). Reducedness then excludes "
                         + "a factor of two from both num(L(n)) and den(L(n))."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "oeis-a160627-israel-laguerre-four-parity"),
+                    ResolutionKind.Proved)))));
 
     private static Formula DefinitionFormula()
     {

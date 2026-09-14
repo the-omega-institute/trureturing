@@ -22,6 +22,10 @@ $$\forall n \in \mathbb{N},\; (Odd\left(num\left(L\left(n\right)\right)\right)) 
 
 *Proof.* Machine-checked in Lean as `D5/S3/ArithSums/IsraelLaguerreFourParity.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a160627-israel-laguerre-four-parity` (proved) by `D5/S3/ArithSums/IsraelLaguerreFourParity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a160627-israel-laguerre-four-parity","declaration_gid":"D5/S3/ArithSums/IsraelLaguerreFourParity.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* N. J. A. Sloane; Robert Israel (2018). *OEIS A160627, Numerator of Laguerre(n, 4)*. URL: <https://oeis.org/A160627>.
