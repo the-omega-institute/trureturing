@@ -1,0 +1,8 @@
+**定理。** 对 $e,f\in\{0,\ldots,a\}$，
+
+$$
+T_w(e)=f
+\iff
+0\le e+m(w),\qquad e+M(w)\le a,qquad f=e+d(w).
+$$
+

@@ -1,0 +1,10 @@
+**证明。** 由 Cauchy--Schwarz 不等式，
+
+$$
+\langle u,u'\rangle
+=\langle u,A(t)u\rangle+\langle u,f\rangle
+\leq-\gamma\|u\|^2+\rho\|u\|.
+$$
+
+应用前一定理。
+

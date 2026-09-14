@@ -1,0 +1,4 @@
+## 492. 第 490.2 条的引文更正
+
+第 490.2 条证明所引〈[Trimmed Moebius Inversion and Graphs of Bounded Degree](https://arxiv.org/abs/0802.2834v1)〉（*STACS 2008*）中，Algorithm Y 及其坐标归纳的出处为 §2.1（印刷页 89–90），原引文“§2.2”据此更正为“§2.1”；该文 §2.2 为“Trimmed pointwise evaluation”。
+

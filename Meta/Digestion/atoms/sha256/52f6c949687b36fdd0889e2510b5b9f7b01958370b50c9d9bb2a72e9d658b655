@@ -1,0 +1,7 @@
+**定义 20.1（量子观察任务）。** 状态为 $d$ 维密度矩阵 $\varrho\succeq0,\operatorname{tr}\varrho=1$，终端 POVM 为 $(E_y)_y$，允许通道为明确给定的完全正保迹映射族 $\Phi_a$。对偶由 $\operatorname{tr}(\Phi_a(\varrho)A)=\operatorname{tr}(\varrho\Phi_a^*(A))$ 定义。置
+$$
+\mathcal O_0=\operatorname{span}_{\mathbb R}\{I,E_y\},\qquad
+\mathcal O_{h+1}=\operatorname{span}_{\mathbb R}(\mathcal O_h\cup\bigcup_a\Phi_a^*\mathcal O_h).
+$$
+这里的坐标为期望值，不是单份未知态可无误读出的经典寄存器。
+

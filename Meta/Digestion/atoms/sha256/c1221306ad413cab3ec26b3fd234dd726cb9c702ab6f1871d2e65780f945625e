@@ -1,0 +1,6 @@
+**定义。** 对 $e\in\{0,\ldots,a\}$ 与 $H\in\mathbb N$，定义两边界剖面
+
+$$
+Q_H(e)=\bigl(\min(e,H),\min(a-e,H)\bigr).
+$$
+

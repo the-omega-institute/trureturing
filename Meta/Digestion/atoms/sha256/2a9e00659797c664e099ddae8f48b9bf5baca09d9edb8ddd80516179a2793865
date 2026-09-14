@@ -1,0 +1,8 @@
+**定义 13.1（含动量的四列状态）。** 在第9节模型中加入向量动量 $\mathbf p,\mathbf q\in\mathbb R^m$，固定实数 $\beta$ 和步长 $\eta\ge0$，采用
+$$
+\mathbf p^+=\beta\mathbf p+gv,\quad
+\mathbf q^+=\beta\mathbf q+gu,\quad
+u^+=u-\eta\mathbf p^+,\quad v^+=v-\eta\mathbf q^+.
+$$
+令 $X=[u,v,\mathbf p,\mathbf q]\in\mathbb R^{m\times4}$，$Q=X^\top X$，$w=Q_{12}$。动量列与第11节标量 $p,n$ 不同。
+

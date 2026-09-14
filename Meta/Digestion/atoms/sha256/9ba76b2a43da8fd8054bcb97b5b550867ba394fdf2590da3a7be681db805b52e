@@ -1,0 +1,29 @@
+### TR.9 环面作用与周期群
+
+**定义。** 令 $V=\mathbb R^2$，令 $j:\mathbb Z^2\to V$ 为逐坐标嵌入，$L=j(\mathbb Z^2)$，并令
+
+$$
+\mathbb T^2=V/L.
+$$
+
+对整数矩阵 $A$，其实线性延拓保持 $L$，故诱导连续群同态
+
+$$
+f_A:\mathbb T^2\to\mathbb T^2,qquad [x]\longmapsto[Ax].
+$$
+
+**定义。** 对自然数 $n$，定义周期整除 $n$ 的固定点群
+
+$$
+K(A,n)=\ker f_{A^n-I}.
+$$
+
+**定理。** 对整数矩阵 $A,B$ 与自然数 $n$，
+
+$$
+f_A\circ f_B=f_{AB},qquad f_A^n=f_{A^n},qquad
+z\in K(A,n)\Longleftrightarrow f_A^n(z)=z.
+$$
+
+**证明。** 每个等式在代表元上分别化为 $A(Bx)=(AB)x$、矩阵幂的归纳以及 $(A^n-I)x=A^nx-x$。由于整数矩阵保持格 $L$，这些代表元计算均良定义。
+

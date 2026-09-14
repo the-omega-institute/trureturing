@@ -1,0 +1,88 @@
+### TR.12 格同源下的剪切解与度量输运
+
+**定义。** 在两个空间坐标均以 $2\pi$ 为周期的平坦环面上，令
+
+$$
+u(t,X,Y)=(e^{-\nu t}\cos Y,0),qquad
+Q_k=P_k^{-1}=\begin{pmatrix}1&0\\k&1/2\end{pmatrix},
+$$
+
+并定义
+
+$$
+v(t,x,y)=Q_ku(t,P_k(x,y))
+=(1,k)e^{-\nu t}\cos(-2kx+2y).
+$$
+
+**定理。** $u$ 光滑、无散度，且满足欧氏度量下的无外力、零压力 Navier--Stokes 方程
+
+$$
+\partial_tu+(u\cdot\nabla)u-\nu\Delta u=0.
+$$
+
+**证明。** 直接求导得 $\operatorname{div}u=0$、$(u\cdot\nabla)u=0$、$\partial_tu=\nu\Delta u$。
+
+**定理。** 令
+
+$$
+G_k=P_k^{\mathsf T}P_k,qquad
+H_k=Q_kQ_k^{\mathsf T}
+=\begin{pmatrix}1&k\\k&k^2+1/4\end{pmatrix}.
+$$
+
+则 $G_kH_k=H_kG_k=I$，且 $H_k$ 正定。具体地，对 $(r,s)\ne(0,0)$，
+
+$$
+(r,s)H_k(r,s)^{\mathsf T}=(r+ks)^2+s^2/4>0.
+$$
+
+**证明。** 由 $P_kQ_k=Q_kP_k=I$ 直接得到两侧逆关系。二次型恒等式由展开得到；若 $s\ne0$，第二项为正，若 $s=0$，则 $r\ne0$ 且第一项为正。
+
+**定义。** 对实数 $\lambda$，令
+
+$$
+v_\lambda(t,x,y)=(1,k)e^{-\nu\lambda t}\cos(-2kx+2y).
+$$
+
+**定理。** $v_\lambda$ 关于时空变量光滑，并在两个空间方向上均为 $2\pi$ 周期；它无散度，且
+
+$$
+\mathcal R_H(v_\lambda)
+=\nu\bigl(4h_{00}k^2-8h_{01}k+4h_{11}-\lambda\bigr)v_\lambda.
+$$
+
+**证明。** 光滑性与周期性由指数函数、余弦函数及整数频率直接得到。令 $\ell=(-2k,2)$、$a=(1,k)$，则 $\ell\cdot a=0$，所以散度及完整对流项消失。再用
+
+$$
+\partial_tv_\lambda=-\nu\lambda v_\lambda,\qquad
+\partial_{xx}v_\lambda=-4k^2v_\lambda,\qquad
+\partial_{xy}v_\lambda=4kv_\lambda,\qquad
+\partial_{yy}v_\lambda=-4v_\lambda
+$$
+
+代入 TR.11 的残差定义，即得公式。
+
+**定理。** $v_1=v$ 满足逆度量 $H_k$ 下的方程；在欧氏逆度量下则有
+
+$$
+\mathcal R_I(v)=\nu(4k^2+3)v.
+$$
+
+若 $\nu>0$，该残差在 $(t,x,y)=(0,0,0)$ 的第一分量严格为正。另一方面，
+
+$$
+w(t,x,y)=(1,k)e^{-4\nu(k^2+1)t}\cos(-2kx+2y)
+$$
+
+满足欧氏度量下的无外力方程，并且 $w(0,x,y)=v(0,x,y)$。
+
+**证明。** 在残差公式中依次代入 $(h_{00},h_{01},h_{11},\lambda)=(1,k,k^2+1/4,1)$、$(1,0,1,1)$ 与 $(1,0,1,4(k^2+1))$。第一组和第三组的系数为零，第二组的系数为 $4k^2+3$。初值等式由令 $t=0$ 得到。
+
+**定理。** $H_k$ 的最小特征值没有与 $k$ 无关的正下界，并且
+
+$$
+\lambda_{\min}(H_k)\leq\frac{1}{4(k^2+1)}\longrightarrow0.
+$$
+
+**证明。** 在 Rayleigh 商中取非零向量 $(-k,1)$。TR.12 的二次型等于 $1/4$，而该向量的欧氏长度平方为 $k^2+1$。
+

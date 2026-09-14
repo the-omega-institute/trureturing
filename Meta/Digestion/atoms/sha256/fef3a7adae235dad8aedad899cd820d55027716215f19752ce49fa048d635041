@@ -1,0 +1,2 @@
+\operatorname{Enc}(x)=\operatorname{Enc}(y)\iff x=y,
+\qquad \operatorname{Enc}(x)\in_Z\operatorname{Enc}(y)\iff x\in y,\\

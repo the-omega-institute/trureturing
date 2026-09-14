@@ -17,6 +17,20 @@ def CatalogKind.artifactName : CatalogKind -> String
   | .canonicalMaximal => "canonical_maximal"
   | .analysisView => "analysis_view"
 
+/-- Occurrence-bound inputs to the executable predicates in RegistrationReifier.
+No stored boolean asserts certification; consumers revalidate these inputs. -/
+structure AutoDerivedSemanticCertificate where
+  occurrence : Array Name
+  catalogKind : CatalogKind
+  localRegistrationNames : Bool
+  statementIdentity : String
+  levelParams : List Name
+  statement : Expr
+  descriptor : Expr
+  arena : Expr
+  nondegenerate : Name
+  outputEvidence : Expr
+
 structure InformationRegistryEntry where
   theoremName : Name
   unitName : Name
@@ -36,6 +50,7 @@ structure InformationRegistryEntry where
   statementIdentity : String := ""
   /-- False exactly for registrations using occurrence-aware syntax. -/
   localRegistrationNames : Bool := true
+  derivedCertificate : Option AutoDerivedSemanticCertificate := none
 
 def InformationRegistryEntry.canonicalObjectArenaName
     (entry : InformationRegistryEntry) : Name :=

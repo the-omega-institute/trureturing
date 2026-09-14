@@ -1,0 +1,4 @@
+**定义。** 对正整数 $q$，令 $\pi(q)$ 为 $Q$ 在
+$GL_2(\mathbb Z/q\mathbb Z)$ 中的阶；等价地，它是 Fibonacci 递推的可逆伴随矩阵
+$\begin{pmatrix}1&1\\1&0\end{pmatrix}$ 的阶。特别地，$\pi(1)=1$。
+

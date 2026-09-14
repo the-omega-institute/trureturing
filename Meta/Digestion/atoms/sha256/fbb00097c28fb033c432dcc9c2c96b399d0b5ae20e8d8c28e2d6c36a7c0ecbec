@@ -1,0 +1,63 @@
+### 11.4 受迫剪切流的残差、不动点与吸引界
+
+**定义。** 在二维环面 $\mathbb T^2=(\mathbb R/2\pi\mathbb Z)^2$ 上，取 $T>0$、$k\in\mathbb N$、$\nu>0$ 以及可微函数 $a:[0,T]\to\mathbb R$，并定义
+
+\[
+\Phi_k(x,y)=(1,k)\cos(-2kx+2y),\qquad
+\Gamma_k=4\nu(k^2+1),\qquad
+u_a(t,x,y)=a(t)\Phi_k(x,y).
+\]
+
+**命题。** 场 $u_a$ 无散度，并满足零压力 Navier--Stokes 残差恒等式
+
+\[
+\partial_tu_a+(u_a\cdot\nabla)u_a-\nu\Delta u_a
+=(a'(t)+\Gamma_k a(t))\Phi_k.
+\tag{11.2}
+\]
+
+**证明。** 速度方向 $(1,k)$ 与波矢 $(-2k,2)$ 的内积为 $-2k+2k=0$，故 $\nabla\cdot u_a=0$ 且 $(u_a\cdot\nabla)u_a=0$。又有
+
+\[
+\Delta\Phi_k=-4(k^2+1)\Phi_k,
+\qquad \partial_tu_a=a'(t)\Phi_k,
+\]
+
+**证明。** 代入即得式 (11.2)。
+
+**定义。** 固定 $c\in\mathbb R$，令
+
+\[
+u_*(x,y)=c\Phi_k(x,y),\qquad
+f_*(x,y)=\Gamma_kc\Phi_k(x,y).
+\]
+
+**定理。** 场 $u_*$ 是外力 $f_*$ 下的定常零压力解。
+
+**假设。** 设外力为 $f_*+r(t)\Phi_k$，其中 $|r(t)|\leq\rho$，并设幅度满足
+
+\[
+a'(t)=-\Gamma_k(a(t)-c)+r(t),
+\]
+
+**定理。** 在上述外力和幅度方程的假设下，对 $i\in\{1,2\}$、$t\in[0,T]$ 及 $(x,y)\in\mathbb T^2$，
+
+\[
+|u_{a,i}(t,x,y)-u_{*,i}(x,y)|\leq
+(1+k)\left[e^{-\Gamma_k t}|a(0)-c|
++\frac{\rho}{\Gamma_k}(1-e^{-\Gamma_k t})\right].
+\tag{11.3}
+\]
+
+**证明。** 对常幅 $a=c$ 使用式 (11.2)，得到残差 $\Gamma_kc\Phi_k=f_*$。对一般 $a$，式 (11.2) 与幅度方程给出残差 $(\Gamma_kc+r)\Phi_k=f_*+r\Phi_k$。由于 $\Gamma_k>0$，式 (11.1) 作用于 $a-c$；再由 $|\Phi_{k,i}(x,y)|\leq1+k$ 得式 (11.3)。
+
+**命题。** 对每个 $t$ 都有 $a(t)=u_{a,1}(t,0,0)$。当 $r=0$ 时，
+
+\[
+a(t)=c+(a(0)-c)e^{-\Gamma_k t},
+\]
+
+**命题。** 若 $r=0$ 且 $a$ 的定义域为 $[0,\infty)$，则同一剪切不变族内的解全局趋近 $u_*$。
+
+**证明。** 因为 $\Phi_{k,1}(0,0)=1$，第一式成立。第二式是线性方程 $a'=-\Gamma_k(a-c)$ 的解；$\Gamma_k>0$ 蕴含指数项趋于零。
+

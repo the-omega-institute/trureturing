@@ -1,0 +1,68 @@
+**定理 8.12（持续弱记录的有限轮相干与人口漂移界）。** 沿用定义8.11。设初态为任意对角态$\sigma_0=\sum_xp_xP_x$。当$0<r<1$时定义
+$$
+K_r:=\frac{1+\sqrt{1-r^2}}{r},\qquad
+\Lambda_{r,d}:=1+\frac{2\sqrt d\,r}{1-r}.
+$$
+其中$K_r$是固定标签记录的标量常数；由下述递推实际得到的人口预算系数是显式的维数相关量$\Lambda_{r,d}$，二者不互换。对任意已完成的写入轮次以及任意轮间时刻$\tau\in[0,\tau_*]$，有
+$$
+\mathsf d(\sigma(\tau),\Delta(\sigma(\tau)))\le C_N:=\frac{\sqrt d\,a_*}{1-r}=\frac{\sqrt d\,a}{N(1-r)},
+$$
+以及
+$$
+\mathsf d(\Delta(\sigma(\tau)),\sigma_0)\le B_N:=N a_*^2\Lambda_{r,d}=\frac{a^2\Lambda_{r,d}}{N}.
+$$
+因而
+$$
+\mathsf d(\sigma(\tau),\sigma_0)\le C_N+B_N.
+$$
+若$\sigma_0=P_x$，则在任意这些时刻
+$$
+1-\operatorname{tr}(P_x\sigma(\tau))\le\min\{1,B_N\}.
+$$
+给定$\delta,\varepsilon>0$，下列有限轮预算是充分的：
+$$
+N\ge\max\left\{1,\left\lceil\frac{\sqrt d\,a}{\delta(1-r)}\right\rceil,\left\lceil\frac{a^2\Lambda_{r,d}}{\varepsilon}\right\rceil\right\}.
+$$
+这只是充分条件，不声称最优。$r=0$时每轮写入后的状态精确对角；同一Duhamel估计给出$C_N=\sqrt d\,a_*$和$B_N=Na_*^2=a^2/N$，而写入之间仍可有至多$\sqrt d\,a_*$的相干。若$V=0$，则$a_*=a=0$，两个预算均为零。若$r=1$，本定理的收缩预算发散，不能从“频繁”推出稳定性。
+
+证明。 记$Q(A)=A-\Delta(A)$，并令$q_k=\|Q(\sigma_k)\|_2$。对$0\le s\le h$，Duhamel公式及$H=H_d+V$给出
+$$
+\left\|U(s)-\exp\!\left(-\frac{isH_d}{\hbar}\right)\right\|\le\frac{s\|V\|}{\hbar}\le a_*.
+$$
+对任意矩阵$A$，$\Delta$是Hilbert--Schmidt内积下的正交投影，且酉共轭保持Hilbert--Schmidt范数；因此
+$$
+\left\|Q\!\left(U(h)AU(h)^\dagger\right)\right\|_2
+\le\|Q(A)\|_2+2a_*.
+$$
+Schur写入只把每个非对角元乘以模不超过$r$的数，对角相位不改变范数，故
+$$
+q_k\le r(q_{k-1}+2a_*),\qquad q_0=0.
+$$
+归纳得到精确的有限轮式
+$$
+q_k\le\frac{2a_*r(1-r^k)}{1-r}\le\frac{2a_*r}{1-r}.
+$$
+写入前的一段自由演化至多再增加$2a_*$，所以所有轮间时刻均满足
+$$
+\|Q(\sigma(\tau))\|_2\le\frac{2a_*}{1-r}.
+$$
+由于$|X|_1\le\sqrt d\,|X|_2$，并且迹距离带有因子$1/2$，得到$C_N=\sqrt d\,a_* /(1-r)$。
+
+再估计人口。写$\sigma=D+O$，其中$D=\Delta(\sigma)$、$O=Q(\sigma)$。对角部分是指针投影的凸组合；由同一Duhamel估计，每个$P_x$在一个长度为$h$的自由段中离开自身标签的概率至多为$a_*^2$，从而
+$$
+\mathsf d\!\left(\Delta(U(h)DU(h)^\dagger),D\right)\le a_*^2.
+$$
+对$O$部分，因$\Delta(\exp(-ihH_d/\hbar)O\exp(ihH_d/\hbar))=0$，迹范数收缩性与两项展开给出
+$$
+\frac12\left\|\Delta(U(h)OU(h)^\dagger)\right\|_1
+\le a_*\|O\|_1
+\le\sqrt d\,a_*\|O\|_2.
+$$
+在第$k$轮之前用$q_{k-1}\le2a_*r/(1-r)$，人口每轮变化至多为
+$$
+a_*^2+\sqrt d\,a_*q_{k-1}\le a_*^2\left(1+\frac{2\sqrt d\,r}{1-r}\right)=a_*^2\Lambda_{r,d}.
+$$
+Schur写入本身保持人口；累加至多$N$轮得到$B_N$。轮间任意截断时刻只减少已计入的段数，故同一界成立。对角态与$P_x$的迹距离正好是$1-\operatorname{tr}(P_x\sigma)$，三角不等式给出总态界。最后把$C_N\le\delta$和$B_N\le\varepsilon$分别改写为所列整数条件。证毕。
+
+若允许记录质量随$N$变化为$r_N<1$，同一证明给出$C_N\le\sqrt d\,a/[N(1-r_N)]$，以及$B_N\le a^2[1+2\sqrt d\,r_N/(1-r_N)]/N$。因此固定总扰动$a$时，充分的渐近条件是$N(1-r_N)\to+\infty$；仅增加轮数而不控制每轮记录强度没有同一保证。这个有限轮估计与Zeno或重复相互作用文献的主题相近；Ciccarello等人的重复碰撞综述以及Facchi--Pascazio关于Zeno子空间的论文只作背景引用，除非逐式核查，不能作为本定理常数的直接出处。
+

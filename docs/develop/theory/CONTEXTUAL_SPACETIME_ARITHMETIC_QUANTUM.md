@@ -696,3 +696,1763 @@ $$
 因此，保留历史给出定理3.5、3.6的确定性无损提升；仅输出规范标签的后选择支路能消除同纤维记录并相干求和，却消去原始表空间中的全部零和方向，不能无损保留任意原始叠加。忽略结果仍回到定理6.2的平均通道，而非确定性无记录相干归并。这里的正交性属于可独立制备的原始表输入，不把同一个输入的未记录路径项另当正交历史。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 7. 有限记录的可读冗余与时段稳定性
+
+**定义与假设 7.1（等重叠记录、独立擦除及指定保留动力学）。** 沿用定义1.1的复内积方向、假设1.2的有限密度矩阵、Born效应概率及有限Kraus操作。固定整数$n\ge2$，指定系统空间、正交分支基及其投影为
+$$
+\mathcal H_S=\mathbb C^n,\qquad |i\rangle\ (1\le i\le n),\qquad P_i=|i\rangle\langle i|.
+$$
+这些是可分别制备的标签，不把第2.8条中未经记录的路径展开项另当作互斥历史。若将这些标签嵌入某个$\mathcal H_L$，可选$n\le G_L$个构型基态；其张成空间是否在指定的$H_L$下不变，仍须另验。本章的动力学和记录结构是额外假设，不从CSA的整数读数、来源树或Z卷的规范化推出。
+
+固定实数$0\le\mu<1$，令记录信号空间$\mathcal Q=\mathbb C^n$的标准基为$(f_i)_{i=1}^n$，$\mathbf1$为全一列向量，并取
+$$
+G_\mu=(1-\mu)I_n+\mu\mathbf1\mathbf1^\dagger,\qquad
+e_i=G_\mu^{1/2}f_i.
+$$
+$G_\mu$在$\mathbf1$方向和其正交补上的特征值分别为$1+(n-1)\mu$与$1-\mu$，故它正定。这是定理3.1的指定Gram实现，满足
+$$
+\langle e_i,e_j\rangle=
+\begin{cases}1,&i=j,\\ \mu,&i\ne j.\end{cases}
+$$
+每个记录单元另带正交擦除标志，记
+$$
+\mathcal E=\mathcal Q\oplus\mathbb C|\bot\rangle,\qquad
+Q_i=|e_i\rangle\langle e_i|,\qquad Q_\bot=|\bot\rangle\langle\bot|.
+$$
+固定整数$m\ge1$及复振幅列向量$\alpha=(\alpha_1,\ldots,\alpha_n)^{\mathsf T}$，其中
+$$
+p_i=|\alpha_i|^2,\qquad \sum_{i=1}^n p_i=1.
+$$
+指定记录写入完成后的联合态为
+$$
+|\Psi_\alpha\rangle=\sum_{i=1}^n\alpha_i|i\rangle\otimes e_i^{\otimes m}.
+$$
+它因系统基正交而归一化。给定制备标签$i$后的记录是乘积$e_i^{\otimes m}$；一般联合态并不自动具有这个结构。
+
+保留阶段不补写记录、不作纠错，也不施加系统与记录之间的反馈或再耦合。固定有限擦除率$\kappa\ge0$，其量纲为时间的倒数；对$\tau\ge0$规定
+$$
+\eta(\tau)=e^{-\kappa\tau},\qquad
+\mathcal N_\tau(X)=\eta(\tau)X+[1-\eta(\tau)]\operatorname{tr}(X)Q_\bot.
+$$
+这是$\mathcal E$上的完全正保迹通道：对$\mathcal E$的任一正交基$(a_j)_{j=1}^{n+1}$，取
+$$
+K_*=\sqrt{\eta(\tau)}I_{\mathcal E},\qquad
+K_j=\sqrt{1-\eta(\tau)}|\bot\rangle\langle a_j|.
+$$
+它们满足$K_*^\dagger K_*+\sum_jK_j^\dagger K_j=I_{\mathcal E}$，其Kraus和恰为$\mathcal N_\tau$。替换映射$X\mapsto\operatorname{tr}(X)Q_\bot$幂等，故$\mathcal N_{\tau+\sigma}=\mathcal N_\tau\circ\mathcal N_\sigma$。
+
+系统使用时间无关的自伴Hamiltonian $H$，并沿用$\hbar>0$。定义
+$$
+H_{\mathrm d}=\sum_i\langle i|H|i\rangle P_i,\qquad
+V=H-H_{\mathrm d},\qquad U_H(\tau)=e^{-i\tau H/\hbar},\qquad
+\theta(\tau)=\frac{\tau\|V\|}{\hbar}.
+$$
+$\theta(\tau)$是无量纲偏差预算。不同记录单元独立擦除，联合保留通道为
+$$
+\mathcal T_\tau=\operatorname{Ad}_{U_H(\tau)}\otimes\mathcal N_\tau^{\otimes m},\qquad
+\operatorname{Ad}_U(X)=UXU^\dagger.
+$$
+对$J\subseteq\{1,\ldots,m\}$，记$a=|J|$，$J^c$为记录单元中的补集，定义
+$$
+\varrho_{SJ}(\tau)=\operatorname{tr}_{J^c}\mathcal T_\tau(|\Psi_\alpha\rangle\langle\Psi_\alpha|),\qquad
+\sigma_i(\tau)=\eta(\tau)Q_i+[1-\eta(\tau)]Q_\bot,
+$$
+$$
+\omega_{SJ}(\tau)=\sum_i p_iP_i\otimes\sigma_i(\tau)^{\otimes a},\qquad
+D(\varrho,\sigma)=\frac12\|\varrho-\sigma\|_1,\qquad
+\|X\|_1=\operatorname{tr}\sqrt{X^\dagger X}.
+$$
+空张量积使用一维空间，空乘积为一；特别约定$\mu^0=1$，包括$\mu=0$。其他概率幂的零次幂也按空积处理。
+
+$\omega_{SJ}(\tau)$在系统标签上是经典混合，但不同标签的条件记录态未必具有正交支撑。R. Horodecki、J. K. Korbicz、P. Horodecki，*Quantum origins of objectivity*，Physical Review A **91**, 032122（2015），[DOI: 10.1103/PhysRevA.91.032122](https://doi.org/10.1103/PhysRevA.91.032122)，[arXiv:1312.6588](https://arxiv.org/abs/1312.6588)，所讨论的谱广播结构要求各片段对不同标签具有正交支撑。本章在$\mu>0$或存在共同擦除分量时一般不满足此要求，故使用明确的迹距离和解码错误率，不把$\omega_{SJ}$直接称为精确谱广播态。
+
+片段读出允许在该片段内部实施任意有限POVM，不借用其他片段，也不作跨片段联合量子操作；全擦除事件计入错误率，不作后选择。时段保证指在给定区间任选一个时刻读出，不声称连续反复测量同一片段而无额外扰动。$m$只计每个维数为$n+1$的记录单元，不计擦除通道外部的酉扩张载体；通道中的擦除不表示信息从整个封闭世界消失。以下结论均限于这些数学假设，不构成实验验证或Lean形式验证的声明。
+
+**定理 7.2（可见补集控制的精确相干误差与Hamiltonian稳定界）。** 定义
+$$
+c(p)=\frac12\left\|\alpha\alpha^\dagger-\operatorname{diag}(p_1,\ldots,p_n)\right\|_1.
+$$
+此值只依赖$p$，满足$0\le c(p)\le1$；等权$p_i=1/n$时，$c(p)=1-1/n$。在定义与假设7.1下，若$V=0$，则对每个$J$和每个$\tau\ge0$，
+$$
+D(\varrho_{SJ}(\tau),\omega_{SJ}(\tau))
+=c(p)\mu^{m-a}\bigl[\eta(\tau)+(1-\eta(\tau))\mu\bigr]^a.
+$$
+一般$H$下有
+$$
+D(\varrho_{SJ}(\tau),\omega_{SJ}(\tau))
+\le\min\left\{1,\ c(p)\mu^{m-a}\bigl[\eta(\tau)+(1-\eta(\tau))\mu\bigr]^a+\theta(\tau)\right\}.
+$$
+特别地，$V=0$且只看系统时，
+$$
+D\left(\varrho_S(\tau),\sum_i p_iP_i\right)=c(p)\mu^m;
+$$
+记录擦除不改变这个系统约化态的误差。此外，对单独制备的任一系统分支$P_i$，
+$$
+1-\operatorname{tr}\bigl(P_iU_H(\tau)P_iU_H(\tau)^\dagger\bigr)
+\le\min\{1,\theta(\tau)^2\}.
+$$
+
+证明。 先说明所用迹范数事实。Hermitian矩阵$X$的正负谱分解为$X=X_+-X_-$；若$\operatorname{tr}X=0$，则
+$$
+\operatorname{tr}X_+=\operatorname{tr}X_-=\frac12\|X\|_1.
+$$
+因此任一效应$0\le M\le I$满足$|\operatorname{tr}(MX)|\le\|X\|_1/2$。对正且保迹的映射$\Phi$，三角不等式给出
+$$
+\|\Phi(X)\|_1\le\|\Phi(X_+)\|_1+\|\Phi(X_-)\|_1
+=\operatorname{tr}X_++\operatorname{tr}X_-=\|X\|_1.
+$$
+故通道及部分迹不增大密度矩阵间的迹距离。迹范数在酉共轭下不变，在正交直和上相加；这两条由有限奇异值分解直接得到。迹距离与效应概率差的标准背景见 John Watrous，*The Theory of Quantum Information*，Cambridge University Press，2018，[DOI: 10.1017/9781316848142](https://doi.org/10.1017/9781316848142)，[作者公开版本](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)，§3.1；本证明已写出实际需要的不等式。
+
+在$\alpha_i\ne0$时写$\alpha_i=\sqrt{p_i}e^{i\phi_i}$，在零坐标任取$\phi_i=0$。以相位对角酉共轭可将$\alpha$变为$(\sqrt{p_i})_i$，而不改变$\operatorname{diag}(p)$，所以$c(p)$与相位无关。两个矩阵都是密度矩阵，三角不等式给$c(p)\le1$。等权时，差矩阵在$\alpha$方向的特征值为$1-1/n$，在其正交补上为$-1/n$，取迹范数即得$c(p)=1-1/n$。
+
+现在令$V=0$。直接使用定理3.2的部分迹公式：系统外积$|x\rangle\langle y|$对应的被丢弃记录因子是$\langle e_y,e_x\rangle$，当$x\ne y$时为$\mu$。方向仍是先$e_y$、后$e_x$，没有转置该约定。对可见记录上的擦除项，同样有
+$$
+\mathcal N_\tau(|e_x\rangle\langle e_y|)
+=\eta(\tau)|e_x\rangle\langle e_y|
++[1-\eta(\tau)]\langle e_y,e_x\rangle Q_\bot.
+$$
+对$J^c$施加保迹记录通道后再取部分迹，与直接丢弃$J^c$相同，故其中$m-a$个单元各贡献一个非对角因子$\mu$。
+
+擦除标志将可见输出分成互相正交的模式。固定幸存集合$A\subseteq J$，令$k=|A|$，其权重为
+$$
+w_A=\eta(\tau)^k[1-\eta(\tau)]^{a-k}.
+$$
+该权重与标签无关。删除本模式中固定的擦除标志后，参考块为$w_A\Omega_A$，实际块为
+$$
+w_A\left[(1-\mu^{m-k})\Omega_A+\mu^{m-k}|\phi_A(\tau)\rangle\langle\phi_A(\tau)|\right],
+$$
+其中
+$$
+\Omega_A=\sum_i p_i|i,e_i^{\otimes k}\rangle\langle i,e_i^{\otimes k}|,\qquad
+|\phi_A(\tau)\rangle=\sum_i\alpha_i e^{-i\tau\langle i|H|i\rangle/\hbar}|i,e_i^{\otimes k}\rangle.
+$$
+确实，$m-a$个不可见单元与$a-k$个可见但已擦除单元各给非对角项一个$\mu$，合计为$\mu^{m-k}$；对角项保持原权重。这是块的未归一化恒等式，即使$w_A=0$也成立，不需要对零概率事件作条件化。
+
+因为系统标签正交，$(|i,e_i^{\otimes k}\rangle)_i$是一组正交单位向量。相位对角酉不改变迹范数，故该块差的半迹范数为$w_Ac(p)\mu^{m-k}$。在正交模式上相加，得到
+$$
+\begin{aligned}
+D(\varrho_{SJ}(\tau),\omega_{SJ}(\tau))
+&=c(p)\sum_{k=0}^a\binom ak\eta(\tau)^k[1-\eta(\tau)]^{a-k}\mu^{m-k}\\
+&=c(p)\mu^{m-a}\bigl[\eta(\tau)+(1-\eta(\tau))\mu\bigr]^a.
+\end{aligned}
+$$
+最后一步是非负整数次幂的二项式恒等式，不使用除以$\mu$，所以覆盖$\mu=0$。取$a=0$便得到系统单独观察的等式。
+
+对一般$H$，对$U_H(\tau-s)U_{H_{\mathrm d}}(s)$求导并从零积分到$\tau$，得到Duhamel公式
+$$
+U_H(\tau)-U_{H_{\mathrm d}}(\tau)
+=-\frac{i}{\hbar}\int_0^\tau U_H(\tau-s)VU_{H_{\mathrm d}}(s)\,ds.
+$$
+两边取算子范数，利用两个传播算子酉，得
+$$
+\|U_H(\tau)-U_{H_{\mathrm d}}(\tau)\|\le\frac{\tau\|V\|}{\hbar}=\theta(\tau).
+$$
+若$U,W$酉而$R$为任意密度矩阵，则
+$$
+URU^\dagger-WRW^\dagger=(U-W)RU^\dagger+WR(U^\dagger-W^\dagger).
+$$
+将$R$作谱分解，并使用$\||u\rangle\langle v|\|_1=\|u\|\|v\|$，右边两项的迹范数各不超过$\|U-W\|$，从而
+$$
+D(URU^\dagger,WRW^\dagger)\le\|U-W\|.
+$$
+此论证也适用于$U\otimes I$、$W\otimes I$及带任意有限辅助系统的$R$，因为张量恒等不改变算子范数。将同一记录通道应用后的联合态用于该不等式，再取部分迹，并与$H_{\mathrm d}$情形作三角比较，得一般上界；另有密度矩阵迹距离至多一。
+
+最后，$U_{H_{\mathrm d}}(\tau)|i\rangle$只改变相位，所以
+$$
+(I-P_i)U_H(\tau)|i\rangle
+=(I-P_i)\bigl(U_H(\tau)-U_{H_{\mathrm d}}(\tau)\bigr)|i\rangle.
+$$
+其范数平方正是离开标签$i$的概率，至多$\theta(\tau)^2$，也至多一，证明最后一式。证毕。
+
+本条的擦除通道可同时降低可见联合态的残余相干和记录的可读性；丢失记录不等于恢复系统干涉。两种误差须由不同任务分别衡量。
+
+**定理 7.3（独立擦除下对称片段的精确最坏分支判别误差）。** 固定片段大小$s\ge1$。它在制备标签$i$下的条件态及最优最坏分支错误率为
+$$
+\xi_i^{(s)}(\tau)=\sigma_i(\tau)^{\otimes s},\qquad
+\mathsf E_{n,s}(\tau)=
+\min_{\substack{M_i\ge0\ (1\le i\le n)\\\sum_iM_i=I_{\mathcal E^{\otimes s}}}}
+\max_{1\le i\le n}\left[1-\operatorname{tr}\bigl(M_i\xi_i^{(s)}(\tau)\bigr)\right].
+$$
+这里对全部$n$个标签逐个保证，包含实际$p_i=0$的标签，不利用$(p_i)$的偏置降低平均错误率。对$0\le x\le1$，定义
+$$
+q_n(x)=\frac{\sqrt{1+(n-1)x}+(n-1)\sqrt{1-x}}{n},\qquad
+\epsilon_n(x)=1-q_n(x)^2.
+$$
+则精确错误率为
+$$
+\mathsf E_{n,s}(\tau)=\sum_{k=0}^s\binom sk\eta(\tau)^k[1-\eta(\tau)]^{s-k}\epsilon_n(\mu^k).
+$$
+存在一个仅依赖$n,\mu,s$的固定POVM，在全部时刻、每个标签上均达到此同一错误率。它不依赖$(p_i)$或擦除模式的概率，且不删除全擦除事件。端点满足
+$$
+q_n(0)=1,\quad\epsilon_n(0)=0,\qquad
+q_n(1)=\frac1{\sqrt n},\quad\epsilon_n(1)=1-\frac1n.
+$$
+特别地，$k=0$项使用$\mu^0=1$。有上下界
+$$
+\left(1-\frac1n\right)[1-\eta(\tau)]^s
+\le\mathsf E_{n,s}(\tau)
+\le\min\left\{1-\frac1n,\ (n-1)\bigl[1-\eta(\tau)(1-\mu^2)\bigr]^s\right\}.
+$$
+$\mathsf E_{n,s}(\tau)$随$\tau$不减，随整数$s$不增。无擦除时它等于$\epsilon_n(\mu^s)$；$\mu=0$时恰等于$(1-1/n)[1-\eta(\tau)]^s$；形式上的全擦除端点$\eta=0$给$1-1/n$，也是$\kappa>0$时的无穷时间极限。
+
+证明。 先处理固定$k$个幸存单元，令$v_i=e_i^{\otimes k}$、$x=\mu^k$。当$k=0$时，所有$v_i$都是同一个一维单位向量。这些向量的Gram矩阵均为
+$$
+G_x=(1-x)I_n+x\mathbf1\mathbf1^\dagger.
+$$
+令$A$为以$v_i$为列的矩阵，$T=AA^\dagger$，$\mathcal K=\operatorname{span}\{v_i:1\le i\le n\}$，$\Pi_{\mathcal K}$为相应正交投影。$T$的负次幂只在正谱上定义，在核上取零。置
+$$
+|m_i\rangle=T^{-1/2}v_i,\qquad
+M_i^{(k)}=|m_i\rangle\langle m_i|+\frac1n(I-\Pi_{\mathcal K}).
+$$
+由于
+$$
+\sum_i|m_i\rangle\langle m_i|=T^{-1/2}TT^{-1/2}=\Pi_{\mathcal K},
+$$
+这些效应非负且和为恒等。对$A$作奇异值分解，正奇异值上的逐项乘法给出
+$$
+A^\dagger T^{-1/2}A=\sqrt{A^\dagger A}=\sqrt{G_x}.
+$$
+$\sqrt{G_x}$的全部对角元相同，值为$q_n(x)$，故
+$$
+\langle v_i,M_i^{(k)}v_i\rangle
+=|\langle m_i,v_i\rangle|^2=q_n(x)^2
+$$
+对每个$i$成立。
+
+为证明最优性，对任意向量$z$，因$v_i\in\mathcal K$，Cauchy–Schwarz不等式给
+$$
+\begin{aligned}
+|\langle v_i,z\rangle|^2
+&=|\langle T^{-1/4}v_i,T^{1/4}z\rangle|^2\\
+&\le\langle v_i,T^{-1/2}v_i\rangle\langle z,T^{1/2}z\rangle
+=q_n(x)\langle z,T^{1/2}z\rangle.
+\end{aligned}
+$$
+因此$|v_i\rangle\langle v_i|\le q_n(x)T^{1/2}$。任意POVM $(N_i)_i$的等权平均正确率满足
+$$
+\frac1n\sum_i\langle v_i,N_iv_i\rangle
+\le\frac{q_n(x)}n\operatorname{tr}T^{1/2}
+=q_n(x)^2,
+$$
+其中最后一步使用$T$和$G_x$有相同的非零谱，故$\operatorname{tr}T^{1/2}=\operatorname{tr}\sqrt{G_x}=nq_n(x)$。最小分支正确率不超过等权平均正确率，而所构造测量使全部分支都达到这个上界。因此最优最坏分支错误率恰为$\epsilon_n(x)$。本论证允许$G_x$秩亏：$x=1$时$T=n|v\rangle\langle v|$，各效应在$\mathcal K$上都是$\Pi_{\mathcal K}/n$，加上补空间后恰为$I/n$。$x=0$时向量正交，正确率为一，两个端点由此直接成立。
+
+该谱计算属于平方根测量的成熟方法。相关方法与几何均匀态族的最优性见 Yonina C. Eldar、G. David Forney Jr.，*On Quantum Detection and the Square-Root Measurement*，IEEE Transactions on Information Theory **47**, 858–872（2001），[arXiv:quant-ph/0005132v2，§8、定理4](https://arxiv.org/abs/quant-ph/0005132v2)。这里的等重叠Gram矩阵在标签循环置换下不变，因此其向量族可由相应酉循环作用生成；上面的直接证明还给出本任务所需的逐标签最坏情形结论，不以文献中的平均正确率代替它。
+
+回到$s$个可能擦除的单元。先读取每个位置在$\mathcal Q$还是在$\mathbb C|\bot\rangle$，再在幸存位置实施$M_i^{(k)}$；全擦除时均匀随机输出一个标签。这两步合起来是原片段上的一个有限POVM。不同模式互相正交，且模式权重$\eta(\tau)^k[1-\eta(\tau)]^{s-k}$与标签无关。任意POVM在模式之间的非对角块都不贡献条件态上的概率，其在每个模式的压缩仍是完整POVM。于是逐块的等权平均正确率受上面已证界约束；而所构造的逐块测量在每一标签同时达到该界。将全部模式相加，就得到精确有限和及整体的最坏分支最优性。模式测量与各$M_i^{(k)}$均不使用$\eta$，所以同一个POVM适用于全部时刻。
+
+还需证明误差上界。$\sqrt{G_x}$的非对角元均为
+$$
+d_n(x)=\frac{\sqrt{1+(n-1)x}-\sqrt{1-x}}{n}.
+$$
+由$G_x$的对角元为一，$q_n(x)^2+(n-1)d_n(x)^2=1$，故
+$$
+\epsilon_n(x)=\frac{n-1}{n^2}\bigl(\sqrt{1+(n-1)x}-\sqrt{1-x}\bigr)^2
+=\frac{(n-1)x^2}{\bigl(\sqrt{1+(n-1)x}+\sqrt{1-x}\bigr)^2}
+\le(n-1)x^2.
+$$
+分母至少为一，且端点处不为零。代入模式和并用二项式定理，得到
+$$
+\mathsf E_{n,s}(\tau)\le(n-1)\bigl[(1-\eta(\tau))+\eta(\tau)\mu^2\bigr]^s.
+$$
+总可用均匀随机猜测得到错误率$1-1/n$，这给出上界的另一项。全擦除模式的概率为$[1-\eta(\tau)]^s$，其最优错误率为$1-1/n$，仅保留此非负项就得下界。
+
+较晚时刻的条件态可以由较早时刻的条件态再施加独立擦除通道得到，故晚时刻的任一测量都能拉回成早时刻的允许POVM，最优错误率不能随时间下降。多一个单元时总可忽略它而实施原测量，所以最优错误率不随$s$增加。最后，$\eta=1$时只有$k=s$项；$\mu=0$时全部$k\ge1$项为零；$\eta=0$时只有$k=0$项。有限和的连续性再给出所列极限。证毕。
+
+**定理 7.4（指定任务的精确最小记录数与一般动力学的充分预算）。** 固定定义与假设7.1中的$n,\mu,\alpha,\kappa,H$，有限保留时长$\tau_*\ge0$及整数$R\ge2$。将$m$个记录单元分成两两不交、非空的可访问片段$F_1,\ldots,F_R$及不访问的补集$B$，记
+$$
+F=\bigcup_{r=1}^R F_r,\qquad b=|B|,\qquad s_r=|F_r|\ge1,\qquad m=b+\sum_{r=1}^R s_r.
+$$
+划分在整个保留区间内固定。
+
+先设$V=0$，给定$0<\delta<1$和$0<\beta<1-1/n$。精确最小值所针对的任务是：对同一初态$|\Psi_\alpha\rangle$，每个$\tau\in[0,\tau_*]$均满足
+$$
+D(\varrho_{SF}(\tau),\omega_{SF}(\tau))\le\delta,
+$$
+并且每个片段各有一个只作用于自身、与$\tau$无关的固定POVM，对每个单独制备标签$i\in\{1,\ldots,n\}$的错误率均至多$\beta$。此任务只允许选择记录总数、划分和这些POVM，记录质量$\mu$及写入、保留模型保持上述指定值。令
+$$
+b_\delta=\min\{b\in\mathbb Z_{\ge0}:c(p)\mu^b\le\delta\},\qquad
+s_\beta=\min\{s\in\mathbb Z_{\ge1}:\mathsf E_{n,s}(\tau_*)\le\beta\}.
+$$
+这两个整数均有限，且该任务的精确最小单元总数为
+$$
+m_{\min}=b_\delta+R s_\beta.
+$$
+其中$0<\mu<1$时
+$$
+b_\delta=
+\begin{cases}
+0,&c(p)\le\delta,\\
+\left\lceil\dfrac{\log(c(p)/\delta)}{\log(1/\mu)}\right\rceil,&c(p)>\delta,
+\end{cases}
+$$
+而$\mu=0$时直接取$b_\delta=0$或$1$，分别对应$c(p)\le\delta$或$c(p)>\delta$。
+
+再允许一般$H$。各片段使用定理7.3的固定解码器，系统使用末端投影测量$(P_i)_i$，输出分别记为$Z_1,\ldots,Z_R$及$Z_S$。在$\varrho_{SF}(\tau)$上同时实施这些不同因子的测量，则
+$$
+\Pr[Z_S=Z_1=\cdots=Z_R]
+\ge\prod_{r=1}^R[1-\mathsf E_{n,s_r}(\tau)]-\theta(\tau).
+$$
+$V=0$时，上式为等式。这里片段仍解码初始制备标签；系统输出则是读出时刻的当前标签。
+
+给定总态误差目标$\delta\in(0,1)$及同时读出失败目标$\varepsilon\in(0,1)$，假设
+$$
+\theta_*:=\frac{\tau_*\|V\|}{\hbar}<\min\{\delta,\varepsilon\},\qquad
+\eta_*=e^{-\kappa\tau_*},\qquad \gamma_\delta=\delta-\theta_*,\quad
+\gamma_\varepsilon=\varepsilon-\theta_*.
+$$
+当$0<\mu<1$时，令$r_*=1-\eta_*(1-\mu^2)\in(0,1)$，并取
+$$
+b_{\mathrm{suff}}=
+\begin{cases}
+0,&c(p)\le\gamma_\delta,\\
+\left\lceil\dfrac{\log(c(p)/\gamma_\delta)}{\log(1/\mu)}\right\rceil,&c(p)>\gamma_\delta,
+\end{cases}
+\qquad
+s_{\mathrm{suff}}=\max\left\{1,\left\lceil
+\frac{\log\bigl(R(n-1)/\gamma_\varepsilon\bigr)}{\log(1/r_*)}
+\right\rceil\right\}.
+$$
+当$\mu=0$时，不使用$\log(1/\mu)$，而分别定义
+$$
+b_{\mathrm{suff}}=
+\begin{cases}0,&c(p)\le\gamma_\delta,\\1,&c(p)>\gamma_\delta,
+\end{cases}
+\qquad
+s_{\mathrm{suff}}=
+\begin{cases}
+1,&\eta_*=1,\\
+\max\left\{1,\left\lceil\dfrac{\log\bigl(R(1-1/n)/\gamma_\varepsilon\bigr)}{\log(1/(1-\eta_*))}\right\rceil\right\},&0<\eta_*<1.
+\end{cases}
+$$
+有限$\kappa,\tau_*$保证$\eta_*>0$，所以这些情形穷尽所需端点。保留
+$$
+m_{\mathrm{suff}}=b_{\mathrm{suff}}+R s_{\mathrm{suff}}
+$$
+个单元，取补集大小$b_{\mathrm{suff}}$、各片段大小$s_{\mathrm{suff}}$，则对所有$\tau\in[0,\tau_*]$同时保证
+$$
+D(\varrho_{SF}(\tau),\omega_{SF}(\tau))\le\delta,\qquad
+\Pr[Z_S=Z_1=\cdots=Z_R]\ge1-\varepsilon.
+$$
+任一单独制备分支的系统标签离开概率还至多为$\min\{1,\theta_*^2\}$。一般$H$的$m_{\mathrm{suff}}$只是上述两个目标的充分预算，不宣称最优；不满足$\theta_*<\min\{\delta,\varepsilon\}$时，这个充分判据不作保证，也不据此断言任务不可能。
+
+证明。 先证明$V=0$的精确结论。定理7.2应用于$J=F$给出
+$$
+D(\varrho_{SF}(\tau),\omega_{SF}(\tau))
+=c(p)\mu^b\bigl[\eta(\tau)+(1-\eta(\tau))\mu\bigr]^{m-b}.
+$$
+方括号在零时刻为一，以后不增，故全时段的态误差要求恰等价于$c(p)\mu^b\le\delta$，也即$b\ge b_\delta$。$c(p)=0$时$b_\delta=0$；$c(p)>0$且$0<\mu<1$时，几何衰减保证可达，取对数给出所列整数值；$\mu=0$时由$\mu^0=1$及$\mu^b=0$（$b\ge1$）直接得到二分情形。
+
+第$r$个片段在$\tau_*$的任何POVM，其最坏分支错误率都不小于$\mathsf E_{n,s_r}(\tau_*)$。因而任务要求迫使$s_r\ge s_\beta$，从而$m\ge b_\delta+R s_\beta$。反过来，取$b=b_\delta$且每个$s_r=s_\beta$。定理7.3给出同一个对全部时刻适用的解码器，且错误率以$\tau_*$为最大，因此达到全部条件。$s_\beta$确实存在：有限$\tau_*$下
+$$
+0\le 1-e^{-\kappa\tau_*}(1-\mu^2)<1,
+$$
+定理7.3的几何上界随$s$趋于零；底数为零时一个单元即可零错误。故所求下界与可达上界相同。随$s$不增的性质还说明所有$s\ge s_\beta$都可用。
+
+现证明同时读出的概率。先设$V=0$，并令$M_i^{(r)}$为第$r$个解码器的第$i$个效应。“全部输出相同”对应效应
+$$
+M_{\mathrm{eq}}=\sum_{i=1}^n P_i\otimes\bigotimes_{r=1}^R M_i^{(r)},\qquad
+0\le M_{\mathrm{eq}}\le I.
+$$
+系统投影$P_i$消去不同系统标签间的交叉项；给定这一测量标签后，各片段条件态为乘积$\bigotimes_r\sigma_i(\tau)^{\otimes s_r}$。各解码器对每个$i$都有相同正确率$1-\mathsf E_{n,s_r}(\tau)$，所以
+$$
+\begin{aligned}
+\operatorname{tr}\bigl(M_{\mathrm{eq}}\varrho_{SF}(\tau)\bigr)
+&=\sum_i p_i\prod_{r=1}^R\operatorname{tr}\bigl(M_i^{(r)}\sigma_i(\tau)^{\otimes s_r}\bigr)\\
+&=\prod_{r=1}^R[1-\mathsf E_{n,s_r}(\tau)].
+\end{aligned}
+$$
+这是指定联合测量的概率计算，不预设已经选定一个全局隐藏结果。对一般$H$，定理7.2证明中的Duhamel比较给实际可见态与$H_{\mathrm d}$比较态的迹距离至多$\theta(\tau)$。效应概率差至多此迹距离，于是得到一般下界。无需再加退相干误差项，因为比较模型中的$M_{\mathrm{eq}}$本身已在系统标签上对角。
+
+最后验证充分预算。$b_{\mathrm{suff}}$的各分支定义均保证
+$$
+c(p)\mu^{b_{\mathrm{suff}}}\le\gamma_\delta.
+$$
+在$[0,\tau_*]$上，定理7.2的方括号至多一，且$\theta(\tau)\le\theta_*$，因此态误差至多$\gamma_\delta+\theta_*=\delta$。
+
+当$0<\mu<1$时，由定理7.3及$r(\tau)=1-\eta(\tau)(1-\mu^2)\le r_*$，所选$s_{\mathrm{suff}}$保证
+$$
+\mathsf E_{n,s_{\mathrm{suff}}}(\tau)
+\le(n-1)r_*^{s_{\mathrm{suff}}}\le\frac{\gamma_\varepsilon}{R}.
+$$
+当$\mu=0$时，使用精确错误率$(1-1/n)[1-\eta(\tau)]^s$；若$\eta_*=1$，一个单元足够，否则所列对数取整同样保证该错误率至多$\gamma_\varepsilon/R$。所有这些对数分母均严格为正。对$0\le x_r\le1$，归纳使用$(1-x)(1-y)\ge1-x-y$可得
+$$
+\prod_{r=1}^R(1-x_r)\ge1-\sum_{r=1}^R x_r.
+$$
+代入同时读出下界，其失败概率至多$R(\gamma_\varepsilon/R)+\theta_*=\varepsilon$。标签离开概率由定理7.2直接得到。证毕。
+
+例如$V=0,\mu=0,\kappa=0$时，$s_\beta=1$；若$\delta<c(p)$，则$b_\delta=1$、$m_{\min}=R+1$，否则$m_{\min}=R$。这里的精确性只针对上述固定模型及任务，不是脱离记录质量、访问划分、容许误差和保留动力学的普适经典性阈值。
+
+**定理 7.5（片段容量下界、擦除下界与有限保留寿命）。** 对任意$d$维片段及其$n$个条件密度矩阵$\rho_i$，若某POVM $(M_i)_{i=1}^n$对每个标签的正确率均至少为$1-\beta$，其中$0\le\beta<1$，则
+$$
+d\ge\lceil n(1-\beta)\rceil.
+$$
+在定义与假设7.1的独立擦除模型中，若$0<\beta<1-1/n$且$0<\eta(\tau_*)<1$，则$\mathsf E_{n,s}(\tau_*)\le\beta$的必要条件为
+$$
+s\ge\left\lceil
+\frac{\log\bigl((1-1/n)/\beta\bigr)}{\log\bigl(1/(1-\eta(\tau_*))\bigr)}
+\right\rceil.
+$$
+等价地，固定有限$s\ge1$且$\kappa>0$时，任何满足$\mathsf E_{n,s}(\tau)\le\beta$的时刻必有
+$$
+\tau\le\frac1\kappa\log\left(
+\frac1{1-\bigl(\beta/(1-1/n)\bigr)^{1/s}}
+\right).
+$$
+这是必要的寿命上界，不保证在界内一定达到目标。在本章不补写、不纠错的模型中，若$\kappa>0$，任意固定有限片段均不能对全部时间维持严格优于无信息猜测的统一错误率；更精确地，固定$s$时$\mathsf E_{n,s}(\tau)\to1-1/n$。$\kappa=0$时没有由擦除给出的有限寿命结论，且该全时间不可能性陈述不适用。
+
+证明。 密度矩阵的非负特征值之和为一，故$0\le\rho_i\le I$。对每个非负效应$M_i$，$\operatorname{tr}(M_i\rho_i)\le\operatorname{tr}M_i$，于是
+$$
+n(1-\beta)\le\sum_i\operatorname{tr}(M_i\rho_i)
+\le\sum_i\operatorname{tr}M_i=\operatorname{tr}I=d.
+$$
+$d$为整数，给出容量下界。这是对每个标签均需正确读取的结论；若仅要求某个偏置先验的平均正确率，不能直接沿用左端。
+
+定理7.3的全擦除项给出必要条件
+$$
+\beta\ge\left(1-\frac1n\right)[1-\eta(\tau_*)]^s.
+$$
+因为$0<1-\eta(\tau_*)<1$，取对数时$\log(1-\eta(\tau_*))<0$，除以它须反向不等号，整理并取整数上整即得$s$的下界。再令
+$$
+a_\beta=\left(\frac{\beta}{1-1/n}\right)^{1/s}\in(0,1).
+$$
+同一必要条件等价于$1-e^{-\kappa\tau}\le a_\beta$，也即$e^{-\kappa\tau}\ge1-a_\beta$，从而得到所列$\tau$上界。其右端有限，所以任何固定有限$s$都不能保持全时间保证。$\tau=0$时必要条件自然成立，无需对$1-\eta(0)=0$取对数；$\kappa=0$时该底数对全部时间均为零，故上述有限寿命推导不适用。证毕。
+
+容量与冗余还须分开计量。对任意$m\ge1$，整个环境分支族$(e_i^{\otimes m})_i$的Gram矩阵为$G_{\mu^m}$，其秩仍为$n$。直接应用定理3.1，这个整体向量族可以在$n$维空间中实现，保持全部分支内积；但这个整体压缩没有保留指定的$R$个可独立访问张量片段及各自读出操作。因此最小Gram实现维数不等于定理7.4所定义的最小冗余记录预算，单说环境维数大也不能替代片段读出的任务条件。
+
+**命题 7.6（无关重复、局部退相干、时间稳定与唯一全局结果的四个反边界）。** 以下均取二分支标签$0,1$，并使用归一化态。第一个构造取消记录质量条件，第二个取消给定标签后的乘积记录条件；它们说明这些假设不可省。后两个构造在正交乘积记录模型内分别检验系统动力学和全局态的边界。
+
+（一）任意多份无关记录不保证退相干或可读性。对任意$m\ge1$及任意单位环境向量$e$，取
+$$
+|+\rangle=\frac{|0\rangle+|1\rangle}{\sqrt2},\qquad
+|\Psi\rangle=|+\rangle\otimes e^{\otimes m}.
+$$
+两标签的环境条件态完全相同；这是重叠为一的反例，位于7.1的$\mu<1$假设之外。系统约化态为$|+\rangle\langle+|$，其与$I_2/2$之差在$(|0\rangle,|1\rangle)$基中是
+$$
+\frac12\begin{pmatrix}0&1\\1&0\end{pmatrix},
+$$
+特征值为$1/2,-1/2$，故迹距离恰为$1/2$。对任意环境二输出POVM，两标签产生同一输出分布$(r_0,r_1)$，且$r_0+r_1=1$；较小的标签正确率至多$1/2$，均匀猜测可达。因此即便联合读取整个环境，最优最坏分支错误率仍为$1/2$，增加$m$不改变这两个结论。
+
+（二）精确的系统退相干不保证任何真片段可读。对$m\ge2$个环境二能级单元，取归一化GHZ记录
+$$
+|e_\pm\rangle=\frac{|0\rangle^{\otimes m}\pm|1\rangle^{\otimes m}}{\sqrt2},\qquad
+|\Psi\rangle=\frac{|0\rangle_S\otimes|e_+\rangle+|1\rangle_S\otimes|e_-\rangle}{\sqrt2}.
+$$
+两个记录单位向量正交，所以由定理3.2，系统约化态精确为$I_2/2$。但对任何非空真片段$J\subsetneq\{1,\ldots,m\}$，令$j=|J|$，有
+$$
+\operatorname{tr}_{J^c}|e_+\rangle\langle e_+|
+=\operatorname{tr}_{J^c}|e_-\rangle\langle e_-|
+=\frac12\left(
+|0\rangle^{\otimes j}\langle0|^{\otimes j}
++|1\rangle^{\otimes j}\langle1|^{\otimes j}\right).
+$$
+这是因为$J^c$非空，交叉项的部分迹包含$\langle1,0\rangle=0$。两个条件态相同，重复（一）的POVM论证便知任何这样的片段均只能达到最坏错误率$1/2$。整个环境却可用正交投影区分$e_+$与$e_-$，错误率为零。这些环境条件态不具有7.1的单元乘积结构；反例的不可读结论只针对真片段，不针对整个环境。
+
+（三）完美冗余不自动保护当前系统标签。取$\mu=0$、$\kappa=0$及任意多份正交记录，记录向量为$e_0=|0\rangle$、$e_1=|1\rangle$；擦除标志空间可保留但不占据。给定$\tau_*>0$，令
+$$
+X=|0\rangle\langle1|+|1\rangle\langle0|,\qquad
+H=\frac{\pi\hbar}{2\tau_*}X.
+$$
+由于$X^2=I_2$，指数级数给
+$$
+U_H(\tau_*)=\cos(\pi/2)I_2-i\sin(\pi/2)X=-iX.
+$$
+对任一初始制备标签$i$，系统在$\tau_*$必在$1-i$，每份未擦除记录仍完美保存$i$。等权相干初态在该时刻具体为
+$$
+-\frac{i}{\sqrt2}\left(
+|1\rangle_S|0\rangle^{\otimes m}+|0\rangle_S|1\rangle^{\otimes m}
+\right).
+$$
+因而对任意$R$个非空不交片段，使用读取原标签的完美记录测量和系统当前标签测量，有
+$$
+\Pr[Z_S=Z_1=\cdots=Z_R]=0.
+$$
+这个结论固定了解码器的标签语义；它不禁止知道翻转时刻后人为重标记输出。此处$H_{\mathrm d}=0$且$\theta(\tau_*)=\pi/2$，所以不满足7.4的小扰动充分条件。增加记录数没有减小这个Hamiltonian偏差，也没有保护当前标签。
+
+（四）退相干、可读冗余与时段稳定同时完美成立，仍不推出唯一全局结果。取$H=0$、$\kappa=0$、$\mu=0$、整数$R\ge2$及$m=R+1$，令全局态为
+$$
+|\Psi_+\rangle=\frac{
+|0\rangle_S|0\rangle^{\otimes m}+|1\rangle_S|1\rangle^{\otimes m}
+}{\sqrt2}.
+$$
+将一个环境单元留在不访问的$B$中，每个可访问片段各含一个单元。取$F=\bigcup_rF_r$，则在全部时间上
+$$
+\varrho_{SF}=\omega_{SF}
+=\frac12\sum_{i=0}^1P_i\otimes|i\rangle^{\otimes R}\langle i|^{\otimes R}.
+$$
+确实，对$B$取部分迹使两个全局分支的交叉项为零；$H=0$且无擦除使此态不随时间变化。每片段用计算基测量可零错误读取标签，且与系统末端标签全部一致。因此可见联合态的误差、片段错误率及同时读出失败率都为零，单独制备的系统标签也从不离开。
+
+但是包含$B$的全局态仍是上述纯态，区别于非相干全局混合
+$$
+\Xi=\frac12|0\rangle^{\otimes(m+1)}\langle0|^{\otimes(m+1)}
++\frac12|1\rangle^{\otimes(m+1)}\langle1|^{\otimes(m+1)}.
+$$
+在系统及全部$m$个记录单元上定义Hermitian算符
+$$
+W=|0\rangle^{\otimes(m+1)}\langle1|^{\otimes(m+1)}
++|1\rangle^{\otimes(m+1)}\langle0|^{\otimes(m+1)}.
+$$
+它交换两个全局分支，在其正交补上为零，故$\|W\|=1$，且直接计算得
+$$
+\langle\Psi_+|W|\Psi_+\rangle=1,\qquad\operatorname{tr}(\Xi W)=0.
+$$
+所以两个全局密度矩阵不同；例如效应$(I+W)/2$也能给出不同概率。此见证涉及包括$B$在内的全局相干操作，不属于本章限定的片段局部读出。可见约化态与混合完全相同，并不使包含不可见补集的全局纯态变成混合，更没有从保留通道中产生选择一个全局分支的附加规则。
+
+四个构造分别证明：单元数量不能替代记录质量；系统局部退相干不能替代真片段的可读性；历史记录的冗余不能替代当前系统标签的动力学稳定；这些操作性条件全部成立也不构成唯一全局结果定理。证毕。
+
+上述结论只给出指定有限模型中的误差、预算与反例，不给出普适经典性阈值，不作实验或Lean验证声明，也不声称解决唯一结果问题。Gram实现及一般部分迹直接使用第3章，平方根测量和谱广播结构的思想归属于所引文献；本章没有将第6章的后选择成功率当作保留记录的无条件可读率。
+
+## 追加锚（本行以下为增补区）
+
+## 8. 新鲜环境的有限时间合成与相干衰减
+
+**定义与假设 8.1（固定标签、新鲜时间因子与一般复记录）。** 设$\mathcal I$为非空有限标签集，$n=|\mathcal I|$，$\mathcal H_S=\mathbb C^{\mathcal I}$带固定相位的正交基$(|i\rangle)_{i\in\mathcal I}$。记$P_i=|i\rangle\langle i|$、$E_{ij}=|i\rangle\langle j|$。输入为任意密度矩阵$\varrho=\sum_{i,j}\varrho_{ij}E_{ij}$，允许混态、零布居及秩亏。内积首变量共轭线性；本章专用的记录矩阵取乘子方向
+$$
+G_t(i,j)=\langle e_j^{(t)},e_i^{(t)}\rangle.
+$$
+它是第3.1条通常Gram矩阵的转置，不能把两种下标方向混用。
+
+固定有限整数$N\ge0$及时间指标集$T=\{1,\ldots,N\}$。每个$t$有非零有限维环境$\mathcal E_t$、预备单位向量$|0_t\rangle$及单位记录向量$|e_i^{(t)}\rangle$。初态严格为
+$$
+\varrho\otimes\bigotimes_{t\in T}|0_t\rangle\langle0_t|.
+$$
+因此各未用环境不仅有指定边缘态，而且与系统、旧记录及其他未用因子均无初始关联。第$t$步只作用于$\mathcal H_S\otimes\mathcal E_t$，在其预备子空间上满足受控非破坏条件
+$$
+U_t(|i\rangle\otimes|0_t\rangle)
+=e^{i\theta_{i,t}}|i\rangle\otimes|e_i^{(t)}\rangle,
+\qquad \theta_{i,t}\in\mathbb R.
+$$
+这里$U_t$可取酉算符；若只给出该子空间上的等距映射，也只使用它在该子空间上的值。右边的向量因系统标签正交而两两正交，故任何这样的指定都能通过补齐正交基延拓成同一有限空间上的酉算符。无须假定同一时刻的记录正交、线性无关、等重叠或实重叠。
+
+各步按$t$递增执行；已用环境不再与系统或其他环境相互作用，不复用、不回注，不按中间测量结果选择后续操作，不作后选择。除了上述各步，没有混合标签的系统演化；若另有保持每个$P_i$的系统酉演化，其对角相位已经计入$\theta_{i,t}$。本章的保留记录在末端读取前不经历额外噪声。所谓丢弃是无条件部分迹，不是选择一次测量结果；在这些无反馈条件下，丢弃可以在该因子使用后立即进行，也可以推迟到末端。
+
+对任意$A\subseteq T$，令
+$$
+\Theta_i(A)=\sum_{t\in A}\theta_{i,t},\qquad
+|e_i^A\rangle=\bigotimes_{t\in A}|e_i^{(t)}\rangle,\qquad
+\Gamma_A(i,j)=\prod_{t\in A}G_t(i,j).
+$$
+张量因子始终按时间递增排列。空和为零，空积为一，空张量空间为$\mathbb C$且$|e_i^\varnothing\rangle=1$；因而$\Gamma_\varnothing$是全部元素为一的矩阵，不是单位矩阵。取$N=0$时只剩恒等系统演化。阶段的重叠和相位可以逐时刻、逐标签变化，全部陈述只涉及这个有限时间集合。
+
+对时间单元取迹，指对$\mathcal E_t$这个环境记录因子取迹；没有把抽象时间本身当作Hilbert空间，也没有把同一个系统在不同时刻的状态当作独立张量因子。
+
+**定理 8.2（任意保留时间集合的精确部分迹）。** 设$A\subseteq T$为实际执行的时间集合，$R\subseteq A$为末端保留集合，$D=A\setminus R$为丢弃集合。未执行的时间步连同其预备因子省略。输出的系统与保留记录联合态恰为
+$$
+\varrho_{SR}^{A}
+=\sum_{i,j\in\mathcal I}\varrho_{ij}
+e^{i[\Theta_i(A)-\Theta_j(A)]}\Gamma_D(i,j)
+E_{ij}\otimes|e_i^R\rangle\langle e_j^R|.
+$$
+此式对不连续的$R,D$同样成立，不要求它们是时间区间。定义
+$$
+C_{A;D}(i,j)=e^{i[\Theta_i(A)-\Theta_j(A)]}\Gamma_D(i,j),
+\qquad J_R|i\rangle=|i\rangle\otimes|e_i^R\rangle,
+$$
+则$J_R^\dagger J_R=I_S$，并且
+$$
+\varrho_{SR}^{A}=J_R(C_{A;D}\odot\varrho)J_R^\dagger.
+$$
+这里$\odot$表示逐元素乘法。若进一步把$R$也丢弃，系统态为
+$$
+\Phi_A(\varrho)=C_A\odot\varrho,\qquad
+C_A=C_{A;A},\qquad
+C_A(i,j)=e^{i[\Theta_i(A)-\Theta_j(A)]}\Gamma_A(i,j).
+$$
+只迹掉$D$时的联合态不能直接称为系统通道$\Phi_D(\varrho)$：它还含$R$的算符张量，且相位来自全部已执行步骤$A$。若实际只执行$D$并丢弃其全部环境，才得到相位为$\Theta(D)$的$\Phi_D$。
+
+证明。 对单个矩阵元，预备子空间上的指定给出
+$$
+U_t(E_{ij}\otimes|0_t\rangle\langle0_t|)U_t^\dagger
+=e^{i(\theta_{i,t}-\theta_{j,t})}E_{ij}
+\otimes|e_i^{(t)}\rangle\langle e_j^{(t)}|.
+$$
+由于后一步只触及系统及其新鲜因子，归纳得到整个$A$上的输出
+$$
+\sum_{i,j}\varrho_{ij}e^{i[\Theta_i(A)-\Theta_j(A)]}
+E_{ij}\otimes\bigotimes_{t\in A}|e_i^{(t)}\rangle\langle e_j^{(t)}|.
+$$
+对任意单位向量$u,v$及任意正交基$(a_k)_k$，
+$$
+\operatorname{tr}|u\rangle\langle v|
+=\sum_k\langle a_k,u\rangle\langle v,a_k\rangle
+=\langle v,u\rangle.
+$$
+逐因子取迹，恰得到$\prod_{t\in D}\langle e_j^{(t)},e_i^{(t)}\rangle$；保留因子的秩一算符按定义合成$|e_i^R\rangle\langle e_j^R|$。这证明第一式，也核定了内积方向。归一化及系统标签正交给
+$$
+\langle i\otimes e_i^R,j\otimes e_j^R\rangle=\delta_{ij},
+$$
+故$J_R$是等距映射，矩阵元展开即得第二式。再迹掉$R$乘上$\Gamma_R$，由$R\cap D=\varnothing$得$\Gamma_D\odot\Gamma_R=\Gamma_A$。后续操作不触及已弃因子，所以其部分迹与后续操作可交换；这也证明即时丢弃与末端丢弃等价。$D=\varnothing$时没有衰减乘子，$R=\varnothing$时$J_R$自然等同于系统恒等映射，全部公式仍成立。证毕。
+
+**定理 8.3（复Gram乘子的完全正性与秩亏边界）。** 对任意复矩阵$C\in\mathbb C^{\mathcal I\times\mathcal I}$，映射$M_C(X)=C\odot X$完全正且保持迹，当且仅当$C$为Hermitian正半定矩阵并满足$C(i,i)=1$。此时$M_C$也保持恒等算符。定义8.1中的$G_t,\Gamma_D,C_{A;D}$都满足这些矩阵条件；特别地，$\Phi_A$是完全正且保持迹的通道。完全正性无需任何Gram矩阵可逆。
+
+证明。 先设$C\ge0$且对角元为一。有限谱分解给出$C=BB^\dagger$；只保留正特征值即可，允许$B$为$n\times r$矩阵，其中$r=\operatorname{rank}C$。令
+$$
+K_a=\sum_{i\in\mathcal I}B_{ia}P_i\quad(1\le a\le r).
+$$
+直接比较矩阵元得到
+$$
+\sum_aK_aXK_a^\dagger=C\odot X,\qquad
+\sum_aK_a^\dagger K_a=\sum_i C(i,i)P_i=I_S.
+$$
+任意有限辅助空间上的扩张同样是$(K_a\otimes I)$的共轭和，因此保持非负；这就是完全正性。第二个等式给保持迹。又$C\odot I_S=I_S$，故保持恒等算符。
+
+反之，令$|\Omega\rangle=\sum_i|i\rangle\otimes|i\rangle$。若$M_C$完全正，则
+$$
+(M_C\otimes\operatorname{id})(|\Omega\rangle\langle\Omega|)
+=\sum_{i,j}C(i,j)|ii\rangle\langle jj|\ge0.
+$$
+将此算符沿等距嵌入$|i\rangle\mapsto|ii\rangle$压缩，得到$C\ge0$。保持迹应用于$P_i$给$C(i,i)=1$。这同时证明了必要性。
+
+最后核对记录矩阵。固定每个环境的一组正交基，将$e_i^{(t)}$的坐标写为$a_{i\alpha}^{(t)}$，则
+$$
+G_t(i,j)=\sum_\alpha a_{i\alpha}^{(t)}\overline{a_{j\alpha}^{(t)}}.
+$$
+因此$G_t=B_tB_t^\dagger\ge0$，其对角元为一。若$C(i,j)=\sum_a b_{ia}\overline{b_{ja}}$、$F(i,j)=\sum_b d_{ib}\overline{d_{jb}}$，则
+$$
+(C\odot F)(i,j)=\sum_{a,b}(b_{ia}d_{ib})\overline{(b_{ja}d_{jb})},
+$$
+所以正半定矩阵的逐元素乘积仍正半定。重复使用这个Gram证明即得$\Gamma_D\ge0$；空积对应所有标签取同一个标量向量$1$。令$z_i=e^{i\Theta_i(A)}$，则
+$$
+C_{A;D}=\operatorname{diag}(z)\Gamma_D\operatorname{diag}(z)^\dagger,
+$$
+故正半定性与单位对角均保持。此处不对零特征值取逆，重复记录与线性相关记录全部允许。证毕。
+
+这一判据是有限维Schur乘子的标准结论，见 John Watrous，*The Theory of Quantum Information*（2018），[第4.1.3节，命题4.17、4.18，印刷页219、220](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)。上述证明将其直接写成Kraus分解及最大纠缠向量的压缩；相应完全正映射表示的对应见同书定理2.22。
+
+**定理 8.4（时间合成、指针代数及完整不动空间）。** 对互不相交的时间集合$A,B\subseteq T$，每步均满足定义8.1且输入环境保持新鲜，则
+$$
+\Gamma_{A\cup B}=\Gamma_A\odot\Gamma_B,\qquad
+C_{A\cup B}=C_A\odot C_B,\qquad
+\Phi_{A\cup B}=\Phi_B\circ\Phi_A=\Phi_A\circ\Phi_B.
+$$
+这里交换的是指定记录通道；不宣称$U_s,U_t$在任意非预备的环境输入上可交换。相交集合若仍用上式复合，会把交集步骤计算两次，只能解释为另备独立副本后再次执行，不能解释为原时间集合的并。
+
+定义指针代数$\mathcal D=\{\sum_i a_iP_i:a_i\in\mathbb C\}$。每个$E_{ij}$是$\Phi_A$的特征算符，且
+$$
+\Phi_A(E_{ij})=C_A(i,j)E_{ij},\qquad
+\Phi_A|_{\mathcal D}=\operatorname{id}_{\mathcal D},\qquad
+\operatorname{Fix}(\Phi_A)=\operatorname{span}\{E_{ij}:C_A(i,j)=1\}.
+$$
+对偶通道在$E_{ij}$上的特征值为$\overline{C_A(i,j)}$，因此同样逐点固定$\mathcal D$；系统的指针布居和全部对角观察均保持。仅有$|C_A(i,j)|=1$不保证$E_{ij}$固定，还须总相位使$C_A(i,j)=1$。
+
+更精确地，令$w_i=e^{i\Theta_i(A)}e_i^A$。关系$i\sim_Aj$定义为$C_A(i,j)=1$，等价于$w_i=w_j$，故是等价关系。不动空间是各等价类上的完整矩阵代数的直和。它恰为$\mathcal D$的充要条件是每个$i\ne j$都有$C_A(i,j)\ne1$；一个充分条件是每个异标签对至少有一步$t\in A$满足$|G_t(i,j)|<1$。
+
+证明。 不交集合上的有限和与有限积分别相加、相乘，给出前两式；逐元素乘法的结合律和交换律给出通道复合式。对特征算符的结论直接来自$C_A\odot E_{ij}=C_A(i,j)E_{ij}$。矩阵元构成一组线性无关的基，故固定一个矩阵当且仅当其在$C_A(i,j)\ne1$的位置为零。Kraus分解中的$K_a$都对角；将共轭次序反向即得对偶的共轭特征值。
+
+按既定内积方向，$C_A(i,j)=\langle w_j,w_i\rangle$且$\|w_i\|=1$。若其值为一，则
+$$
+\|w_i-w_j\|^2=2-2\operatorname{Re}\langle w_j,w_i\rangle=0.
+$$
+反向蕴含显然。因而等价类内的矩阵元全部固定，类间全部不固定，得到直和描述。Cauchy–Schwarz给$|G_t(i,j)|\le1$；若其中一个严格小于一，则$|C_A(i,j)|<1$，不可能等于一。空时间集合时所有$w_i=1$，不动代数为整个$\operatorname{End}(\mathcal H_S)$，与恒等通道相符。证毕。
+
+相位的分拆本身不是额外物理数据。若改取$e_i^{(t)}\mapsto e^{i\chi_{i,t}}e_i^{(t)}$并同时令$\theta_{i,t}\mapsto\theta_{i,t}-\chi_{i,t}$，预备子空间上的$U_t$不变，$C_A$及定理8.2的联合态亦不变。这个结论由每步的相位因子相消直接得到；对部分保留情形，剩余的$R$相位恰与$|e_i^R\rangle\langle e_j^R|$的相位相消。因此不能先忽略复重叠的相位，再用其模判定不动点。
+
+**定理 8.5（一般混态的精确相干距离与有限时间预算）。** 令$\Delta(X)=\sum_iP_iXP_i$，$p_i=\varrho_{ii}$。在定理8.2的划分下，取比较态
+$$
+\omega_{SR}^{A}=\sum_i p_iP_i\otimes|e_i^R\rangle\langle e_i^R|.
+$$
+它具有相同的指针布居和每个单独制备标签的保留记录。记迹距离为$\mathsf d(\sigma,\tau)=\frac12\|\sigma-\tau\|_1$，并定义
+$$
+L_D=\Gamma_D\odot(\varrho-\Delta(\varrho)),\qquad
+Q_D=\sum_{i\ne j}|\varrho_{ij}|^2\prod_{t\in D}|G_t(i,j)|^2.
+$$
+则有精确公式及上下界
+$$
+\mathsf d(\varrho_{SR}^{A},\omega_{SR}^{A})=\frac12\|L_D\|_1,
+$$
+$$
+\frac12\sqrt{Q_D}
+\le\mathsf d(\varrho_{SR}^{A},\omega_{SR}^{A})
+\le\min\left\{\frac{\sqrt n}{2}\sqrt{Q_D},\,
+\frac12\sum_{i\ne j}|\varrho_{ij}|\prod_{t\in D}|G_t(i,j)|\right\}.
+$$
+新增环境对这个距离的作用取决于访问划分：追加并保留新记录不改变原$D$对应的距离；追加并丢弃新记录使此距离不增。完整丢弃后的各矩阵元满足
+$$
+|\Phi_A(\varrho)_{ij}|=|\varrho_{ij}|\prod_{t\in A}|G_t(i,j)|.
+$$
+因此在新鲜、固定标签且无反馈的有限序列内，各异标签相干的模不增；其复值仍可因相位旋转而改变。
+
+若$D$含$k$个时刻，且有给定$q\in(0,1)$使这些时刻的每个异标签对均满足$|G_t(i,j)|\le q$，令
+$$
+\mathcal C_1(\varrho)=\sum_{i\ne j}|\varrho_{ij}|,
+$$
+则
+$$
+\mathsf d(\varrho_{SR}^{A},\omega_{SR}^{A})
+\le\frac12\mathcal C_1(\varrho)q^k.
+$$
+对指定容许误差$\delta>0$，若$\mathcal C_1(\varrho)>2\delta$，一个充分的丢弃时间样本数为
+$$
+k\ge\left\lceil\frac{\log(\mathcal C_1(\varrho)/(2\delta))}{\log(1/q)}\right\rceil;
+$$
+若$\mathcal C_1(\varrho)\le2\delta$，$k=0$已经满足这个上界。样本数必须不超过可用有限时间数，且所选各步必须实际满足该重叠界；不存在所需步骤时此充分判据不作保证。$q=0$时一个满足全体异标签零重叠的丢弃步骤足以使距离为零；$q=1$只给不增性，不能据它推出衰减。上述预算针对给定初态、误差、标签基与记录质量，不是普适经典性阈值。
+
+证明。 设$Z_A=\sum_ie^{i\Theta_i(A)}P_i$。由定理8.2及$\Gamma_D(i,i)=1$，
+$$
+\varrho_{SR}^{A}-\omega_{SR}^{A}=J_R Z_A L_D Z_A^\dagger J_R^\dagger.
+$$
+酉共轭保持奇异值；等距嵌入$J_R$只在正交补上补零，也保持全部非零奇异值。因此得到精确迹范数式。注意记录$e_i^R$之间可以相同或线性相关；使$J_R$等距的是系统标签的正交性，不是记录的独立性。
+
+$L_D$为Hermitian矩阵，且$\|L_D\|_2^2=Q_D$，其中$\|\cdot\|_2$为Hilbert–Schmidt范数。对其至多$n$个奇异值应用平方和与和之间的不等式，得到
+$$
+\|L_D\|_2\le\|L_D\|_1\le\sqrt n\|L_D\|_2.
+$$
+又因$\|E_{ij}\|_1=1$，逐项三角不等式给出另一上界。
+
+若新增丢弃集合$B$与$D$不交，则$L_{D\cup B}=M_{\Gamma_B}(L_D)$。定理8.3说明此映射正且保持迹。对任意Hermitian矩阵$L=L_+-L_-$的正负谱分解，
+$$
+\|M_{\Gamma_B}(L)\|_1
+\le\operatorname{tr}M_{\Gamma_B}(L_+)+\operatorname{tr}M_{\Gamma_B}(L_-)
+=\operatorname{tr}L_++\operatorname{tr}L_-=\|L\|_1.
+$$
+这证明距离不增。若只增加保留步骤，$D$及$L_D$均不变，精确式给距离相同。逐矩阵元公式由$C_A$的模直接得到。将统一重叠界代入逐项上界得$q^k$，在$q\in(0,1)$时对正数取对数并除以正数$\log(1/q)$即得整数预算；零相干输入与两个$q$端点按原乘积处理，无须对零取对数。证毕。
+
+对仅有$x,y$两个标签的系统，上述距离还有更强的精确形式：$L_D$是对角为零、非对角为$\varrho_{xy}\Gamma_D(x,y)$及其共轭的二阶矩阵，其特征值为$\pm|\varrho_{xy}\Gamma_D(x,y)|$，故
+$$
+\mathsf d(\varrho_{SR}^{A},\omega_{SR}^{A})
+=|\varrho_{xy}|\prod_{t\in D}|G_t(x,y)|.
+$$
+若$\varrho_{xy}=0$，任意$D$的距离都为零；若其非零，有限时刻精确消相干当且仅当$D$中至少一个重叠为零。逐步重叠严格小于一但非零只给有限乘积缩小，不给有限步精确归零。
+
+**定理 8.6（保留时间片段的两标签判别与精确最小样本数）。** 固定两个不同标签$x,y\in\mathcal I$及任意保留时间集合$R\subseteq T$。在分别制备系统标签$x$或$y$的任务中，片段条件态为
+$$
+\sigma_x^R=|e_x^R\rangle\langle e_x^R|,\qquad
+\sigma_y^R=|e_y^R\rangle\langle e_y^R|,
+\qquad s_R=|\Gamma_R(x,y)|=\prod_{t\in R}|G_t(x,y)|.
+$$
+条件态指指定标签制备的输出，不假设任意相干输入已经选中了某个隐藏标签。允许在$\bigotimes_{t\in R}\mathcal E_t$上实施任意联合二输出POVM；在此前不读出、不反馈。则
+$$
+\mathsf d(\sigma_x^R,\sigma_y^R)=\sqrt{1-s_R^2}.
+$$
+若两制备的先验为$\pi,1-\pi$，其中$0\le\pi\le1$，最小平均错误率为
+$$
+P_{\mathrm{err}}^{\pi}(R)
+=\frac{1-\sqrt{1-4\pi(1-\pi)s_R^2}}2.
+$$
+特别地，等先验时$P_{\mathrm{err}}^{1/2}(R)=(1-\sqrt{1-s_R^2})/2$。任意先验的公式针对平均错误率；等先验的这个值还等于最优最坏标签错误率，记为$\beta_{xy}(R)$。这里仍允许联合测量，不保证先分别测量各个时间单元后还能达到相同最优值。
+
+现固定等先验任务、可用有限时间集合$T$及目标$0<\beta<1/2$。可任意选择保留子集，每个时间样本成本均为一。令
+$$
+\ell_t=-\log|G_t(x,y)|^2\in[0,+\infty],\qquad
+B_\beta=\log\frac1{4\beta(1-\beta)}>0,
+$$
+其中零重叠定义为$\ell_t=+\infty$。将这些权重按非增次序排成$\ell_{(1)}\ge\cdots\ge\ell_{(N)}$。则达到$P_{\mathrm{err}}^{1/2}(R)\le\beta$的精确最小样本数为
+$$
+k_{\min}=\min\left\{k\in\{0,\ldots,N\}:\sum_{a=1}^k\ell_{(a)}\ge B_\beta\right\},
+$$
+若右边集合为空，则在这组有限可用样本中不可达。若只能保留按时间到达的前缀，则把排序前缀换成原时间前缀，精确最早达到时刻为
+$$
+k_{\mathrm{first}}=\min\left\{k\in\{0,\ldots,N\}:\sum_{t=1}^k\ell_t\ge B_\beta\right\},
+$$
+并作同样的不可达约定。$\beta=0$时存在可达片段当且仅当某个可用重叠为零；$\beta\ge1/2$时空片段即可。$R=\varnothing$或$s_R=1$时两个条件态相同，最优错误率为$\min\{\pi,1-\pi\}$；$s_R=0$时可零错误区分。
+
+若系统恰有$x,y$两个标签，还可以同时要求系统与保留记录的联合相干误差至多$\delta>0$，以及保留片段最坏标签错误率至多$0<\beta<1/2$。令$c=|\varrho_{xy}|$，并定义
+$$
+B_{\mathrm c}=\begin{cases}
+0,&c\le\delta,\\
+2\log(c/\delta),&c>\delta.
+\end{cases}
+$$
+对任意已执行集合$A=D\mathbin{\dot\cup}R$，两个任务同时达标的充要条件恰为
+$$
+\sum_{t\in D}\ell_t\ge B_{\mathrm c},\qquad
+\sum_{t\in R}\ell_t\ge B_\beta.
+$$
+因此在给定有限序列内，允许每次对已写入前缀选择访问划分时，精确最早可达轮数是
+$$
+\min\left\{k\in\{0,\ldots,N\}:\exists\,D\mathbin{\dot\cup}R=\{1,\ldots,k\},\quad
+\sum_{t\in D}\ell_t\ge B_{\mathrm c},\quad
+\sum_{t\in R}\ell_t\ge B_\beta\right\},
+$$
+集合为空仍表示在该有限序列内不可达。这是两个不交集合的分配条件，单有总和至少$B_{\mathrm c}+B_\beta$不充分。若任务只要求系统边缘态的相干误差，以及另行联合读取全部$A$的能力，则条件改为$\sum_{t\in A}\ell_t\ge\max\{B_{\mathrm c},B_\beta\}$；该任务没有要求系统与全部记录的联合态接近指针对角比较态。
+
+证明。 先取$u=e_x^R,v=e_y^R$。更换$v$的整体相位不改变其投影，故可在计算谱时使$\langle u,v\rangle=s_R\ge0$。若$s_R<1$，在二者张成空间的一组正交基中可写
+$$
+u=\begin{pmatrix}1\\0\end{pmatrix},\qquad
+v=\begin{pmatrix}s_R\\\sqrt{1-s_R^2}\end{pmatrix}.
+$$
+差$|u\rangle\langle u|-|v\rangle\langle v|$的迹为零、行列式为$-(1-s_R^2)$，故特征值为$\pm\sqrt{1-s_R^2}$，得到迹距离。$s_R=1$时两投影相同，此公式仍成立，不需要构造第二个基向量。
+
+二输出测量写为$(M,I-M)$，其中$0\le M\le I$，$M$表示猜$x$。令
+$$
+H_\pi=\pi|u\rangle\langle u|-(1-\pi)|v\rangle\langle v|.
+$$
+正确率为$1-\pi+\operatorname{tr}(MH_\pi)$。在$H_\pi$的特征基中，每个$M$的对角元介于零与一，所以最大值由正谱投影达到，且
+$$
+\max_{0\le M\le I}\operatorname{tr}(MH_\pi)
+=\operatorname{tr}(H_\pi)_+
+=\frac{\|H_\pi\|_1+2\pi-1}{2}.
+$$
+在上述二阶表示中，$\operatorname{tr}H_\pi=2\pi-1$、$\det H_\pi=-\pi(1-\pi)(1-s_R^2)$。两个候选特征值为
+$$
+\lambda_\pm=\frac{2\pi-1\pm\sqrt{1-4\pi(1-\pi)s_R^2}}2.
+$$
+当$0<\pi<1$且$s_R<1$时它们一正一负，故其绝对值之和为根号项。$\pi=0,1$或$s_R=1$时直接计算秩一算符，仍得相同的迹范数公式。代入正确率的最优值即得所述错误率。这是二元量子判别的Helstrom公式在纯记录态上的具体谱计算；一般判别定理见 Watrous，*The Theory of Quantum Information*，[第3章，定理3.4](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)。
+
+为证明等先验值也是最坏标签最优值，仍令$\langle u,v\rangle=s_R$。当$s_R<1$时取
+$$
+u_+=\frac{u+v}{\sqrt{2(1+s_R)}},\qquad
+u_-=\frac{u-v}{\sqrt{2(1-s_R)}},\qquad
+m_x=\frac{u_++u_-}{\sqrt2},\qquad m_y=\frac{u_+-u_-}{\sqrt2}.
+$$
+这两组向量各自正交归一。以$m_x,m_y$的投影为两个效应，并将它们张成空间的正交补各分一半，得到完整POVM。由
+$$
+u=\sqrt{\frac{1+s_R}{2}}u_++\sqrt{\frac{1-s_R}{2}}u_-,\qquad
+v=\sqrt{\frac{1+s_R}{2}}u_+-\sqrt{\frac{1-s_R}{2}}u_-
+$$
+可见两个标签的正确率同为$(1+\sqrt{1-s_R^2})/2$。最坏错误率总不小于等先验平均错误率，而该测量使两者同时达到已证的平均最优值，所以也达到最坏最优值。$s_R=1$时均匀猜测达到最坏错误率$1/2$。
+
+对$0<\beta<1/2$，两边非负使平方变形合法，
+$$
+P_{\mathrm{err}}^{1/2}(R)\le\beta
+\quad\Longleftrightarrow\quad
+s_R^2\le4\beta(1-\beta)
+\quad\Longleftrightarrow\quad
+\sum_{t\in R}\ell_t\ge B_\beta.
+$$
+没有零重叠时最后一步是有限乘积的对数；有零重叠时两边都按上述扩展实数约定成立。任何$k$元子集的权重和不超过最大的$k$项之和，且选择这$k$项就达到该最大值。因此排序前缀第一次达到预算的位置既必要又充分；若所有权重总和仍不足，则任何片段都不可能达标。仅允许时间前缀时没有重排序自由，直接使用原顺序的累计和。两个误差端点和空片段由原错误率公式给出。
+
+联合任务的相干距离由定理8.5精确等于$c\exp(-\frac12\sum_{t\in D}\ell_t)$。当$c\le\delta$时它自动达标，否则取对数给出$D$的预算；$R$的预算已经证明。对每个前缀的这组充要条件取最小值，就得到最早可达轮数。为核对总预算不充分，取$B_{\mathrm c}=B_\beta=1$，一轮重叠模为$e^{-1}$而其余轮重叠模均为一。唯一正权重为$2$，总和达到两预算之和，但这一个时间单元不能同时分配给$D$与$R$，所以任一划分都会有一个预算为零。最后，系统边缘任务及读取全部记录的任务都用$A$的同一个乘积，两下界合取就是它们的最大值。证毕。
+
+在二标签系统且$\varrho_{xy}\ne0$时，同一时间集合$A$还有精确关系
+$$
+\left(\frac{\mathsf d(\Phi_A(\varrho),\Delta(\varrho))}{|\varrho_{xy}|}\right)^2
++\mathsf d(\sigma_x^A,\sigma_y^A)^2=1.
+$$
+这是定理8.5的二阶谱式与本定理的纯态距离式相加所得。它把“丢弃整个$A$后系统还剩多少相干”和“若保留整个$A$能区分多少制备信息”对应起来；同一实际访问划分中的两种乘积仍分别取$D$与$R$，不能把它们替换成同一个集合。
+
+**定理 8.7（一般有限标签族的联合读取界与零误差覆盖）。** 设$n\ge2$，固定有限时间集合$A\subseteq T$，并允许联合读取整个$\bigotimes_{t\in A}\mathcal E_t$。定义
+$$
+q_A=\max_{i\ne j}|\Gamma_A(i,j)|,\qquad
+\beta_A=\min_{\substack{M_i\ge0\\\sum_iM_i=I}}
+\max_i\left[1-\langle e_i^A,M_ie_i^A\rangle\right].
+$$
+则最优最坏标签错误率满足
+$$
+\beta_A\ge\frac{1-\sqrt{1-q_A^2}}2.
+$$
+若$u_A=(n-1)q_A<1$，则还有
+$$
+\beta_A\le\min\left\{1-\frac1n,\left(1-\sqrt{1-u_A}\right)^2\right\}.
+$$
+这个一般非对称记录族的上界由一个具体测量达到不超过该值的错误率，不宣称该测量必为精确最优。相应系统通道满足有限界
+$$
+\frac{q_A}{2}\le\sup_{\varrho}\mathsf d(\Phi_A(\varrho),\Delta(\varrho))
+\le\frac{n-1}{2}q_A,
+$$
+上确界取所有系统密度矩阵。因此对固定有限标签数，全部逐对重叠足够小会同时给出整个记录的联合可读性及系统边缘态的退相干界；不能在保留纯条件记录和完整联合访问的条件下把这两个结论任意割裂。
+
+以下三个有限条件等价：$\Phi_A=\Delta$；全部标签可由$A$的记录零错误联合判别；每个异标签对$i,j$都存在$t\in A$使$G_t(i,j)=0$。若记
+$$
+\mathcal P_t=\{\{i,j\}:i\ne j,\ G_t(i,j)=0\},
+$$
+则它们等价于
+$$
+\bigcup_{t\in A}\mathcal P_t=\{\{i,j\}:i\ne j\}.
+$$
+这是对有限标签对的覆盖条件，不要求某一个时间单元单独区分全部标签。
+
+证明。 有限维POVM的集合闭且有界，目标函数连续，所以定义中的最小值存在。任意$n$输出POVM若每个标签错误率均至多$b$，固定$i\ne j$，保持$i$输出而把其余输出统合为$j$，就得到对这两个标签错误率均至多$b$的二输出测量。定理8.6的最坏标签结论迫使$b\ge(1-\sqrt{1-|\Gamma_A(i,j)|^2})/2$。取重叠最大的标签对即得下界。
+
+为构造上界，令$v_i=e_i^A$，$V$以$v_i$为列，并使用通常方向的Gram矩阵
+$$
+H=V^\dagger V,\qquad H(i,j)=\langle v_i,v_j\rangle=\Gamma_A(j,i).
+$$
+$H-I$的每行绝对值之和不超过$u_A$。对任一特征向量，选择绝对值最大的坐标代入特征方程，得到$|\lambda-1|\le u_A$。当$u_A<1$时所有特征值为正，可以定义
+$$
+m_i=VH^{-1/2}|i\rangle,\qquad
+\Pi=VH^{-1}V^\dagger,\qquad
+M_i=|m_i\rangle\langle m_i|+\frac1n(I-\Pi).
+$$
+由于$(VH^{-1/2})^\dagger(VH^{-1/2})=I$，$m_i$正交归一，$\Pi$是其张成空间的正交投影，所列效应非负且和为恒等。$v_i$位于这个空间，且$\langle m_i,v_i\rangle=(\sqrt H)_{ii}$。由$H(i,i)=1$，
+$$
+1-\langle v_i,M_iv_i\rangle
+=1-(\sqrt H)_{ii}^2
+=\sum_{j\ne i}|(\sqrt H)_{ji}|^2
+\le\|\sqrt H-I\|^2.
+$$
+逐特征值有
+$$
+|\sqrt\lambda-1|=\frac{|\lambda-1|}{\sqrt\lambda+1}
+\le\frac{u_A}{\sqrt{1-u_A}+1}=1-\sqrt{1-u_A}.
+$$
+这给出逐标签上界；均匀猜测另给$1-1/n$。若$u_A\ge1$，这里的逆矩阵构造不作保证，但下界、随机猜测界和其余有限结论仍有效。秩亏记录族并未被排除出整个定理，只是在$u_A<1$这个充分条件下其记录自动线性无关。
+
+定理8.5给出系统距离不超过$\frac12q_A\sum_{i\ne j}|\varrho_{ij}|$。密度矩阵的二阶主子矩阵非负，故$|\varrho_{ij}|\le\sqrt{p_ip_j}$，从而
+$$
+\sum_{i\ne j}|\varrho_{ij}|
+\le\left(\sum_i\sqrt{p_i}\right)^2-1\le n-1.
+$$
+最后一步使用$\sum_i p_i=1$和Cauchy–Schwarz不等式。反向取达到$q_A$的标签对$i,j$及初态$(|i\rangle+|j\rangle)/\sqrt2$，二阶谱计算给距离$q_A/2$，得到上确界的下界。
+
+完整退相干等价于$C_A(i,j)=0$对每个$i\ne j$成立，相位非零使它等价于$\Gamma_A(i,j)=0$。有限乘积为零当且仅当至少一个因子为零，给出覆盖条件。若全部记录两两正交，投影测量可零错误区分，并可将未占据正交补任意分配给各效应；反之，零错误判别由已证二标签下界迫使所有重叠为零。故三个条件等价。$A=\varnothing$时$q_A=1$，所有条件记录相同，最优最坏错误率为$1-1/n$，完整退相干及零错误读取均不成立。$n=1$时无需取异标签最大值：通道本来就是恒等与$\Delta$，读取唯一标签的错误率为零，覆盖条件为空条件。证毕。
+
+上界采用平方根测量方法，方法来源见第7.3条所引 Eldar 与 Forney（2001）。这里直接证明的是一般有限复Gram矩阵的逐标签充分界；第7.3条对单一实等重叠模型的精确最优性不被用于任意非对称族。
+
+**命题 8.8（无条件取迹与实际记录测量的分界）。** 在定理8.2的$A=D\mathbin{\dot\cup}R$中，若在末端实际对$D$实施有限POVM $(B_a)_a$，再丢弃被测因子，结果$a$对应的未归一化系统与保留记录态为
+$$
+\widetilde\varrho_{SR}^{A,a}
+=\sum_{i,j}\varrho_{ij}e^{i[\Theta_i(A)-\Theta_j(A)]}
+\langle e_j^D,B_a e_i^D\rangle
+E_{ij}\otimes|e_i^R\rangle\langle e_j^R|.
+$$
+结果概率以及正概率结果的条件指针布居分别为
+$$
+p(a)=\sum_i p_i\langle e_i^D,B_ae_i^D\rangle,\qquad
+p(i\mid a)=\frac{p_i\langle e_i^D,B_ae_i^D\rangle}{p(a)}\quad(p(a)>0).
+$$
+忘记结果给出$\sum_a\widetilde\varrho_{SR}^{A,a}=\varrho_{SR}^{A}$。当$p(a)=0$时不定义归一化条件态。
+
+证明。 将结果$a$的环境操作写成Kraus族$(L_{a\nu})_\nu$，满足$\sum_\nu L_{a\nu}^\dagger L_{a\nu}=B_a$。即使测量仪器使用额外输出空间，只要该输出随$D$一起丢弃，循环迹公式仍给
+$$
+\sum_\nu\operatorname{tr}\left(L_{a\nu}|e_i^D\rangle\langle e_j^D|L_{a\nu}^\dagger\right)
+=\langle e_j^D,B_ae_i^D\rangle.
+$$
+将此式代入取迹前的全局矩阵元展开，即得未归一化态。再取系统与$R$的迹，系统标签正交消去$i\ne j$项，得到$p(a)$；$p(a)>0$时除以它即得条件布居。最后使用$\sum_aB_a=I$，逐项恢复定理8.2的$\Gamma_D$。证毕。
+
+因此无条件布居保持与条件化后的布居改变并不矛盾。取部分迹本身不指定某个结果，也不要求已经实施一次测量；条件化是另一操作，本命题没有将其结果送入后续动力学作反馈。
+
+**命题 8.9（非实秩亏记录与分布在不同时刻的标签信息）。** 本章允许不能通过各记录的相位重选而同时变实的Gram矩阵；即使总体记录已使全部异标签重叠为零，每个单独时间单元也不必能读出完整标签。
+
+证明。 第一例取三个标签$0,1,2$，一个二能级环境及记录
+$$
+e_0=|0\rangle,\qquad e_1=\frac{|0\rangle+|1\rangle}{\sqrt2},\qquad
+e_2=\frac{|0\rangle+i|1\rangle}{\sqrt2}.
+$$
+按$G(i,j)=\langle e_j,e_i\rangle$，直接计算得
+$$
+G=\begin{pmatrix}
+1&1/\sqrt2&1/\sqrt2\\
+1/\sqrt2&1&(1-i)/2\\
+1/\sqrt2&(1+i)/2&1
+\end{pmatrix}.
+$$
+这三个记录张成二维空间，所以$G$正半定、单位对角且秩为二。各记录乘相位会使$G(i,j)$乘以$e^{i(\chi_i-\chi_j)}$，但循环乘积
+$$
+G(0,1)G(1,2)G(2,0)=\frac{1-i}{4}
+$$
+不变且非实，故不可能把所有元素同时变成实数。它仍完全满足定理8.3，无须压缩成单一实重叠参数。
+
+第二例取四个标签$(a,b)\in\{0,1\}^2$、两个新鲜二能级时间因子、零阶段相位及记录
+$$
+e_{(a,b)}^{(1)}=|a\rangle,\qquad e_{(a,b)}^{(2)}=|b\rangle.
+$$
+它们可分别由标签控制的比特翻转在预备态$|0\rangle$上实现，系统标签保持不变。单步矩阵及时间乘积为
+$$
+G_1((a,b),(a',b'))=\delta_{aa'},\qquad
+G_2((a,b),(a',b'))=\delta_{bb'},\qquad
+\Gamma_{\{1,2\}}((a,b),(a',b'))=\delta_{aa'}\delta_{bb'}.
+$$
+因此完整丢弃两时间因子的通道恰为$\Delta$，而保留全部记录时四个记录$|a\rangle\otimes|b\rangle$正交，可零错误联合读出完整标签。
+
+但是只读取第一时间单元时，$(a,0)$与$(a,1)$的条件态相同。对等先验四标签任务及任何四输出POVM $(M_{ab})_{a,b}$，平均正确率为
+$$
+\frac14\sum_{a=0}^1\langle a,(M_{a0}+M_{a1})a\rangle\le\frac12,
+$$
+因为每个$M_{a0}+M_{a1}\le I$。测出$a$后对$b$均匀猜测达到$1/2$。第二时间单元的结论对称成立。故所有异标签的总体重叠归零只保证整个记录空间中的可辨识性，不能把标签信息在时间之间的分布自动变成每个片段都完整可读的冗余。证毕。
+
+**命题 8.10（相关环境、复用环境与非对角Hamiltonian的反例）。** 去掉新鲜乘积条件、一次使用条件或固定标签演化条件，定理8.4的时间乘积律与定理8.5的单调性均不再是一般保证。以下为三个有限维的具体构造。
+
+证明。 （一）两个尚未与系统接触的环境单元也可以已有相关性。取两个二能级环境的初态
+$$
+|\Phi_+\rangle=\frac{|00\rangle+|11\rangle}{\sqrt2},\qquad
+|\Phi_-\rangle=\frac{|00\rangle-|11\rangle}{\sqrt2},
+$$
+系统初态为$|+\rangle=(|0\rangle+|1\rangle)/\sqrt2$。令$Z=|0\rangle\langle0|-|1\rangle\langle1|$，第$t=1,2$步分别实施$P_0\otimes I+P_1\otimes Z_t$，各自只接触一次对应环境单元。第一步后全局态为
+$$
+\frac{|0\rangle|\Phi_+\rangle+|1\rangle|\Phi_-\rangle}{\sqrt2},
+$$
+因$\langle\Phi_-,\Phi_+\rangle=0$，系统态为$I_2/2$。第二步中$Z_2|\Phi_-\rangle=|\Phi_+\rangle$，于是全局态回到$|+\rangle|\Phi_+\rangle$，系统相干完全恢复。
+
+这里每个环境边缘态为$I_2/2$，若把两个边缘误当作独立新鲜输入，各自的受控相位通道都会给相干乘子$\operatorname{tr}((I_2/2)Z)=0$，相乘仍为零。真实两步乘子却是
+$$
+\langle\Phi_+,(Z\otimes Z)\Phi_+\rangle=1,
+$$
+不等于两个单步边缘期望的乘积。第一步后各单环境在两个标签下的条件边缘态也都为$I_2/2$，信息在环境关联中；第二步仍访问携带该关联的另一因子。因此“每个单元只碰一次”不足以替代初始张量乘积假设。
+
+（二）复用一个环境可以撤销先前写入。取单个预备为$|0\rangle_E$的二能级环境及
+$$
+X=|0\rangle\langle1|+|1\rangle\langle0|,\qquad
+U=P_0\otimes I+P_1\otimes X.
+$$
+系统从$|+\rangle$出发。第一次作用给$(|00\rangle+|11\rangle)/\sqrt2$，系统约化态为$I_2/2$，预备输入上的记录重叠为零。但$U^2=I$，第二次作用于同一个环境后输出$|+\rangle|0\rangle_E$，系统态恢复为$|+\rangle\langle+|$。不能把第二次调用也按$U(|i\rangle|0\rangle)$的预备子空间公式处理：此时它的输入已与系统相关，且标签$1$分支的环境为$|1\rangle$。如果第一次就真正丢掉旧环境，第二步另备$|0\rangle$，系统态仍为$I_2/2$，不会得到上述恢复。
+
+（三）允许混合标签的系统Hamiltonian时，可以从指针对角态重新生成该基中的相干。取$p\in(0,1)$且$p\ne1/2$，从正交记录态
+$$
+|\Psi\rangle=\sqrt p\,|0\rangle|0\rangle_E
++\sqrt{1-p}\,|1\rangle|1\rangle_E
+$$
+得到系统约化态$\varrho_0=\operatorname{diag}(p,1-p)$。令$\omega>0$且系统Hamiltonian为$H=\hbar\omega X/2$，环境此后完全不动。由$X^2=I$，
+$$
+V(\tau)=e^{-iH\tau/\hbar}
+=\cos(\omega\tau/2)I-i\sin(\omega\tau/2)X.
+$$
+记$c=\cos(\omega\tau/2)$、$s=\sin(\omega\tau/2)$，则
+$$
+\varrho(\tau)=V(\tau)\varrho_0V(\tau)^\dagger
+=\begin{pmatrix}
+pc^2+(1-p)s^2&i(2p-1)cs\\
+-i(2p-1)cs&ps^2+(1-p)c^2
+\end{pmatrix}.
+$$
+因此
+$$
+\mathsf d(\varrho(\tau),\Delta(\varrho(\tau)))
+=\frac{|2p-1|}{2}|\sin(\omega\tau)|.
+$$
+此距离从零增加到$\tau=\pi/(2\omega)$时的$|2p-1|/2>0$，以后又可回到零。它是给定指针基中的相干再生，并未恢复迹掉环境所失去的原始相位信息，也未把系统混态变成纯态。$p=1/2$时系统为最大混态，此Hamiltonian不能生成相干，所以该参数已明确排除。这里$H$不与$P_0,P_1$对易，正好违反定义8.1的固定标签动力学条件。
+
+三个构造分别显示：跨时刻的初始环境关联可以破坏独立乘积律；与旧记录重新相互作用可以撤销记录；混合指针标签的系统动力学可以生成新的基相干。有限乘积定理的单调性依赖其明确的动力学假设，不能由记录数量单独推出。部分迹及最优判别只规定约化态和操作概率，不添加选择唯一全局分支的演化规则。证毕。
+
+## 追加锚（本行以下为增补区）
+
+**定义与假设 8.11（自由演化后的持续补写与固定标签 Schur 通道）。** 本节另建一个与定义8.1至命题8.10分开的模型。那些条款中的产品公式要求整个有限前缀始终由一个固定标签控制，并把每个新鲜记录写成同一初始标签的条件向量；本节允许自由Hamiltonian在相邻轮次之间混合标签，因此不能把新记录合并成依赖一个固定初始标签的单一张量积记录。
+
+取有限指针集$\mathsf X$，$d=|\mathsf X|\ge2$，$\mathcal H_S=\mathbb C^{\mathsf X}$，$P_x=|x\rangle\langle x|$，以及$\Delta(A)=\sum_xP_xAP_x$。给定$\tau_*>0$和$N\ge1$，令
+$$
+h=\frac{\tau_*}{N},\qquad U(s)=\exp\!\left(-\frac{isH}{\hbar}\right),\qquad H_d=\sum_x\langle x|H|x\rangle P_x,\qquad V=H-H_d,
+$$
+并定义每一小段的无量纲扰动量和总时段扰动量
+$$
+a_*:=\frac{\tau_*\|V\|}{N\hbar}=\frac{h\|V\|}{\hbar},\qquad a:=Na_*=\frac{\tau_*\|V\|}{\hbar}.
+$$
+其中$a_*$是单个自由演化小段的局部扰动量，而$a=Na_*$是整个时段的总量。下文递推中的局部量始终使用$a_*$。
+
+第$k$轮先施加$U(h)$，再把系统与一个全新的准备单元作固定标签的非破坏写入。该写入在系统边缘上是
+$$
+R_k=\operatorname{Ad}_{Z_k}\circ\Phi_k,\qquad \Phi_k(A)=\Gamma_k\odot A,\qquad \Gamma_k(x,y)=\gamma_k(x,y),
+$$
+其中$Z_k$为对角酉，$\Gamma_k$是由新鲜记录向量得到的正半定单位对角Gram矩阵，并且存在固定的$0\le r<1$使
+$$
+|\gamma_k(x,y)|\le r\qquad(k=1,\ldots,N,\ x\ne y).
+$$
+记录单元在写入后立即从系统边缘取迹，随后不再反馈；没有测量结果反馈，也没有旧记录的再耦合。这里把写入视为理想的离散通道，$\tau_*$只计入自由演化小段；结论不覆盖有限持续时间写入脉冲内部的动力学，也不保证当$h$缩小时能以固定强度、带宽或能量维持同一个$r$。若$\sigma_0$为初态，则写入时刻的递推是
+$$
+\sigma_k=R_k\!\left(U(h)\sigma_{k-1}U(h)^\dagger\right),\qquad k=1,\ldots,N.
+$$
+轮间任意时刻只由$U(s)$给出，$0\le s\le h$。这里的“补写”是每轮一个新鲜固定标签 Schur 通道，且记录随后被取迹；它不等同于前面固定标签产品模型的全程环境张量积。
+
+**定理 8.12（持续弱记录的有限轮相干与人口漂移界）。** 沿用定义8.11。设初态为任意对角态$\sigma_0=\sum_xp_xP_x$。当$0<r<1$时定义
+$$
+\Lambda_{r,d}:=1+\frac{2\sqrt d\,r}{1-r}.
+$$
+对任意已完成的写入轮次以及任意轮间时刻$\tau\in[0,\tau_*]$，有
+$$
+\mathsf d(\sigma(\tau),\Delta(\sigma(\tau)))\le C_N:=\frac{\sqrt d\,a_*}{1-r}=\frac{\sqrt d\,a}{N(1-r)},
+$$
+以及
+$$
+\mathsf d(\Delta(\sigma(\tau)),\sigma_0)\le B_N:=N a_*^2\Lambda_{r,d}=\frac{a^2\Lambda_{r,d}}{N}.
+$$
+因而
+$$
+\mathsf d(\sigma(\tau),\sigma_0)\le C_N+B_N.
+$$
+若$\sigma_0=P_x$，则在任意这些时刻
+$$
+1-\operatorname{tr}(P_x\sigma(\tau))\le\min\{1,B_N\}.
+$$
+给定$\delta,\varepsilon>0$，下列有限轮预算是充分的：
+$$
+N\ge\max\left\{1,\left\lceil\frac{\sqrt d\,a}{\delta(1-r)}\right\rceil,\left\lceil\frac{a^2\Lambda_{r,d}}{\varepsilon}\right\rceil\right\}.
+$$
+这只是充分条件，不声称最优。$r=0$时每轮写入后的状态精确对角；同一Duhamel估计给出$C_N=\sqrt d\,a_*$和$B_N=Na_*^2=a^2/N$，而写入之间仍可有至多$\sqrt d\,a_*$的相干。若$V=0$，则$a_*=a=0$，两个预算均为零。若$r=1$，本定理的收缩预算发散，不能从“频繁”推出稳定性。
+
+证明。 记$Q(A)=A-\Delta(A)$，并令$q_k=\|Q(\sigma_k)\|_2$。对$0\le s\le h$，Duhamel公式及$H=H_d+V$给出
+$$
+\left\|U(s)-\exp\!\left(-\frac{isH_d}{\hbar}\right)\right\|\le\frac{s\|V\|}{\hbar}\le a_*.
+$$
+对任意矩阵$A$，$\Delta$是Hilbert--Schmidt内积下的正交投影，且酉共轭保持Hilbert--Schmidt范数；因此
+$$
+\left\|Q\!\left(U(h)AU(h)^\dagger\right)\right\|_2
+\le\|Q(A)\|_2+2a_*\|A\|_2.
+$$
+在本定理中$A$是密度矩阵，故$\|A\|_2\le1$。Schur写入只把每个非对角元乘以模不超过$r$的数，对角相位不改变范数，故
+$$
+q_k\le r(q_{k-1}+2a_*),\qquad q_0=0.
+$$
+若初态允许含有相干，则同一递推保留瞬态项
+$$
+q_k\le r^kq_0+\frac{2a_*r(1-r^k)}{1-r}.
+$$
+本定理的对角初态给出$q_0=0$，于是归纳得到
+$$
+q_k\le\frac{2a_*r(1-r^k)}{1-r}\le\frac{2a_*r}{1-r}.
+$$
+写入前的一段自由演化至多再增加$2a_*$，所以所有轮间时刻均满足
+$$
+\|Q(\sigma(\tau))\|_2\le\frac{2a_*}{1-r}.
+$$
+由于$|X|_1\le\sqrt d\,|X|_2$，并且迹距离带有因子$1/2$，得到$C_N=\sqrt d\,a_* /(1-r)$。
+
+再估计人口。写$\sigma=D+O$，其中$D=\Delta(\sigma)$、$O=Q(\sigma)$。对角部分是指针投影的凸组合；由同一Duhamel估计，每个$P_x$在一个长度为$h$的自由段中离开自身标签的概率至多为$a_*^2$，从而
+$$
+\mathsf d\!\left(\Delta(U(h)DU(h)^\dagger),D\right)\le a_*^2.
+$$
+对$O$部分，因$\Delta(\exp(-ihH_d/\hbar)O\exp(ihH_d/\hbar))=0$，迹范数收缩性与两项展开给出
+$$
+\frac12\left\|\Delta(U(h)OU(h)^\dagger)\right\|_1
+\le a_*\|O\|_1
+\le\sqrt d\,a_*\|O\|_2.
+$$
+在第$k$轮之前用$q_{k-1}\le2a_*r/(1-r)$，人口每轮变化至多为
+$$
+a_*^2+\sqrt d\,a_*q_{k-1}\le a_*^2\left(1+\frac{2\sqrt d\,r}{1-r}\right)=a_*^2\Lambda_{r,d}.
+$$
+Schur写入本身保持人口；累加至多$N$轮得到$B_N$。轮间任意截断时刻只减少已计入的段数，故同一界成立。对角态与$P_x$的迹距离正好是$1-\operatorname{tr}(P_x\sigma)$，三角不等式给出总态界。最后把$C_N\le\delta$和$B_N\le\varepsilon$分别改写为所列整数条件。证毕。
+
+若允许记录质量随$N$变化为$r_N<1$，同一证明给出$C_N\le\sqrt d\,a/[N(1-r_N)]$，以及$B_N\le a^2[1+2\sqrt d\,r_N/(1-r_N)]/N$。因此固定总扰动$a$时，充分的渐近条件是$N(1-r_N)\to+\infty$；仅增加轮数而不控制每轮记录强度没有同一保证。这个有限轮估计与Zeno或重复相互作用文献的主题相近；Ciccarello等人的重复碰撞综述以及Facchi--Pascazio关于Zeno子空间的论文只作背景引用，除非逐式核查，不能作为本定理常数的直接出处。
+
+**推论 8.13（形成、保留记录与持续补写的联合预算）。** 设形成阶段结束时系统与旧记录$F$的实际态为$\rho_{SF}^{\mathrm{form}}$，给定
+$$
+\Omega_{SF}=\sum_xp_xP_x\otimes\xi_x^F,\qquad
+\mathsf d(\rho_{SF}^{\mathrm{form}},\Omega_{SF})\le e_{\mathrm{form}}.
+$$
+在补写阶段旧记录$F$保持不变、不擦除、不再与系统耦合；只有新的记录单元按定义8.11作用，并在描述系统与旧记录时全部取迹。则定理8.12的任意保证时刻满足
+$$
+\mathsf d(\rho_{SF}(\tau),\Omega_{SF})
+\le e_{\mathrm{form}}+C_N+B_N.
+$$
+若旧记录有一个固定POVM$(M_x)_x$，且对每个标签有$\operatorname{tr}(M_x\xi_x^F)\ge1-\beta$，则同时测量当前系统的$(P_x)_x$与旧记录的$(M_x)_x$，并令$Z_S,Z_F$为两个输出，有
+$$
+\Pr[Z_S=Z_F]\ge(1-\min\{1,B_N\})(1-\beta)-e_{\mathrm{form}}.
+$$
+这里新记录已被取迹，旧记录仍是同一固定解码对象；补写轮数不能替代旧记录的读取误差。若形成阶段本身是定义8.1的固定标签模型，可取$\xi_x^F=|e_x^F\rangle\langle e_x^F|$及$e_{\mathrm{form}}$为相应的形成相干距离。
+
+证明。 令$\sigma_x(\tau)$为从$P_x$开始的补写动力学，并令
+$$
+\widetilde\Omega_{SF}(\tau)=\sum_xp_x\sigma_x(\tau)\otimes\xi_x^F.
+$$
+定理8.12给出每个$x$的$\mathsf d(\sigma_x(\tau),P_x)\le C_N+B_N$；张量乘上固定密度矩阵不增加迹距离，故
+$$
+\mathsf d(\widetilde\Omega_{SF}(\tau),\Omega_{SF})\le C_N+B_N.
+$$
+同一个完全正保迹的补写演化作用于实际态与形成参考态，初始距离至多保持$e_{\mathrm{form}}$，三角不等式即得第一式。
+
+令一致输出事件对应的效应为
+$$
+M_{\mathrm{eq}}=\sum_yP_y\otimes M_y.
+$$
+在参考态上，其概率至少为
+$$
+\sum_xp_x\operatorname{tr}(P_x\sigma_x(\tau))\operatorname{tr}(M_x\xi_x^F)
+\ge(1-\min\{1,B_N\})(1-\beta).
+$$
+实际态与参考态的效应概率相差至多$e_{\mathrm{form}}$，得到第二式。相干预算$C_N$仍由第一式控制，但一致输出事件只读取系统的对角人口，故下界中不需额外扣除$C_N$。证毕。
+
+**定理 8.14（固定有限标签的有限前缀累积等价）。** 现在回到定义8.1的固定标签、新鲜时间因子模型。标签集$\mathsf X$固定且有限，令$d=|\mathsf X|\ge2$；取一列按$t\ge1$编号的新鲜记录，而所有陈述只在每个有限前缀$I_N=\{1,\ldots,N\}$上定义，不构造无限张量积态。这里$\gamma_t(x,y)=G_t(x,y)$沿用§8.1的单轮记录重叠，不引入定义8.11的统一$r<1$假设。令
+$$
+L_{xy}(N)=\sum_{t=1}^{N}-\log|\gamma_t(x,y)|,\qquad
+q_N=\max_{x\ne y}\prod_{t=1}^{N}|\gamma_t(x,y)|,
+$$
+其中零重叠贡献$+\infty$，并定义全部有限前缀记录的最优最坏标签错误率
+$$
+\beta_N=\min_{\substack{M_x\ge0\\\sum_xM_x=I}}
+\max_x\left[1-\langle e_x^{I_N},M_xe_x^{I_N}\rangle\right].
+$$
+以下四项等价：
+$$
+\left(\forall x\ne y,\ L_{xy}(N)\longrightarrow+\infty\right)
+\Longleftrightarrow q_N\longrightarrow0
+\Longleftrightarrow\sup_{\varrho}\mathsf d\!\left(\Phi_{I_N}(\varrho),\Delta(\varrho)\right)\longrightarrow0
+\Longleftrightarrow\beta_N\longrightarrow0.
+$$
+对每个有限$N$，有有限标签的平方根测量界
+$$
+\frac{1-\sqrt{1-q_N^2}}2\le\beta_N,
+$$
+且当$u_N=(d-1)q_N<1$时
+$$
+\beta_N\le\min\left\{1-\frac1d,\left(1-\sqrt{1-u_N}\right)^2\right\}.
+$$
+同时
+$$
+\frac{q_N}{2}\le\sup_{\varrho}\mathsf d\!\left(\Phi_{I_N}(\varrho),\Delta(\varrho)\right)
+\le\frac{d-1}{2}q_N.
+$$
+这些是有限前缀的陈述；极限只表示这些有限数列的极限，不表示存在一个无限时间的全局量子态。
+
+证明。 因为标签对只有有限多个，$\prod_t|\gamma_t(x,y)|=\exp[-L_{xy}(N)]$，故第一项与第二项等价。定理8.5给出系统上界；反向取达到$q_N$的标签对$x,y$以及初态$(|x\rangle+|y\rangle)/\sqrt2$，二阶谱计算给出距离$q_N/2$，所以系统距离趋零也蕴含$q_N\to0$。
+
+任意$d$输出POVM若所有标签错误率均不超过$b$，把所有非$x$输出合并为$y$，便得到对标签对$x,y$错误率均不超过$b$的二输出测量。定理8.6给出
+$$
+b\ge\frac{1-\sqrt{1-|\Gamma_{I_N}(x,y)|^2}}2.
+$$
+取最大重叠得到平方根下界。上界取记录向量为列的矩阵$V$，通常方向Gram矩阵$G=V^\dagger V$，令$u_N=(d-1)q_N$。当$u_N<1$时，Gershgorin型坐标估计给$1-u_N\le\lambda(G)\le1+u_N$。定义平方根测量
+$$
+m_x=VG^{-1/2}|x\rangle,\qquad M_x=|m_x\rangle\langle m_x|+\frac1d(I-\Pi),\qquad \Pi=VG^{-1}V^\dagger.
+$$
+它是POVM，且$\langle m_x,e_x^{I_N}\rangle=(\sqrt G)_{xx}$。因$G_{xx}=1$，逐标签错误率为
+$$
+1-((\sqrt G)_{xx})^2=\sum_{y\ne x}|(\sqrt G)_{yx}|^2\le\|\sqrt G-I\|^2\le(1-\sqrt{1-u_N})^2.
+$$
+随机猜测给出$1-1/d$。最后，定理8.5的上界为$(d-1)q_N/2$；下界仍由二标签初态达到。于是四项全等价。证毕。
+
+这里的平方根测量上界沿用Eldar--Forney（2001）的有限维方法；Watrous关于Schur通道和二态判别的结果、以及重复相互作用和Zeno文献均只作为背景或已明确核查的基础，不把任何未经逐式核查的文献陈述写成这些有限前缀常数的来源。
+
+**命题 8.15（访问集合、混态准备、联合相位与过弱补写的操作性反例）。** 下列构造都只涉及有限维、有限轮次，且不建立无限张量积状态。
+
+（零）每轮都有严格辨识力仍不保证无限前缀完全退相干。取二标签并令每轮重叠模为$|\gamma_t(0,1)|=\exp(-2^{-t})$，则$L_{01}(N)=\sum_{t=1}^N2^{-t}=1-2^{-N}$，从而$|\Gamma_{I_N}(0,1)|=\exp(-(1-2^{-N}))\to e^{-1}>0$。对初态$|+\rangle\langle+|$，系统相干距离趋于$e^{-1}/2$，全部记录的最优最坏二标签错误率趋于$(1-\sqrt{1-e^{-2}})/2>0$。缺少的是发散的累积区分预算，而不是形式上的无限个时间单元。
+
+（一）不可访问时间片与可读取时间片承担不同任务。取二标签，第一轮记录为$e_0^{(1)}=|0\rangle$、$e_1^{(1)}=|1\rangle$，其余轮次取同一个与标签无关的单位向量。令$D=\{1\}$、$F=\{2,\ldots,N\}$。则$\Gamma_D(0,1)=0$，而$|e_0^F\rangle=|e_1^F\rangle$。因此系统与可见记录已经精确达到由$D$控制的参考态，但在指定可读集合$F$上最优最坏错误率仍为$1/2$。若交换$D$与$F$，保留片段的可读性随之交换，而系统边缘仍由同一已执行的动力学决定；对有非零初始相干的输入，系统与新的可见片段的联合相干距离为$|\varrho_{01}|$，不能把“不可访问”自动算作“可读取”。
+
+（二）混态环境可造成边缘退相干而不提供可读记录。每轮取环境输入$I_2/2$，并用
+$$
+U=P_0\otimes I+P_1\otimes Z,\qquad Z=|0\rangle\langle0|-|1\rangle\langle1|.
+$$
+系统非对角乘子是$\operatorname{tr}((I_2/2)Z)=0$，所以系统边缘完全退相干；但两个标签下的环境输出都仍为$I_2/2$，任何读取POVM都不能获得标签信息。这一构造故意不满足定义8.1的纯准备态假设，说明“边缘退相干”与“条件记录可读”不能无条件推广为同一命题。
+
+（三）相同逐对重叠模不决定有限多标签联合判别误差。取三个标签、两轮、零阶段相位，并令
+$$
+G_+=\frac12I_3+\frac12\mathbf1\mathbf1^\dagger,\qquad
+G_-=\frac32I_3-\frac12\mathbf1\mathbf1^\dagger.
+$$
+两者都正半定且对角元为一，非对角元分别为$1/2$和$-1/2$。模型甲两轮都用$G_+$，模型乙第一轮用$G_-$、第二轮用$G_+$。两模型每个标签对的第一轮重叠模都是$1/2$，两轮联合重叠模都是$1/4$，但联合Gram矩阵分别为
+$$
+G_{\mathrm A}=\frac34I_3+\frac14\mathbf1\mathbf1^\dagger,\qquad
+G_{\mathrm B}=\frac54I_3-\frac14\mathbf1\mathbf1^\dagger.
+$$
+设$h_{\mathrm A}=[\sqrt{3/2}+\sqrt3]/3$，$h_{\mathrm B}=[1/\sqrt2+\sqrt5]/3$。两个Gram矩阵的平方根均有恒定对角元，平方根测量分别达到逐标签正确率
+$$
+s_{\mathrm A}=h_{\mathrm A}^2=\frac{(\sqrt{3/2}+\sqrt3)^2}{9},\qquad
+s_{\mathrm B}=h_{\mathrm B}^2=\frac{(1/\sqrt2+\sqrt5)^2}{9},
+$$
+且$s_{\mathrm A}\ne s_{\mathrm B}$。为证其为最坏标签最优值，令$A$为联合记录列矩阵、$T=AA^\dagger$，并令$T^{-1/2}$表示在$\operatorname{supp}T$上的逆平方根、在$\ker T$上为零的Moore--Penrose逆。由于每个$v_x$属于$\operatorname{supp}T$，对任意向量$z$，Cauchy--Schwarz给出
+$$
+|\langle v_x,z\rangle|^2\le\langle v_x,T^{-1/2}v_x\rangle\langle z,T^{1/2}z\rangle=h\langle z,T^{1/2}z\rangle,
+$$
+其中$h$是相应的恒定平方根对角元。因此$|v_x\rangle\langle v_x|\le hT^{1/2}$，任意POVM的等先验平均正确率至多为$h^2$；平方根测量达到该值，且逐标签相同，故最坏任务也达到该值。这个反例只改变联合Gram的相位符号，保留全部逐对模资料，却改变有限联合解码误差。
+
+（四）旧记录的零重叠不阻止后续Hamiltonian从不均匀人口制造指针基相干。取$0<p<1$且$p\ne1/2$，先写入并隐藏正交记录，使系统为$\rho_d=pP_0+(1-p)P_1$。给定$\tau_0>0$，令
+$$
+Y=\begin{pmatrix}0&-i\\ i&0\end{pmatrix},\qquad H=\frac{\pi\hbar}{4\tau_0}Y.
+$$
+则$U(\tau_0)=\exp(-i\pi Y/4)$，直接计算得
+$$
+U(\tau_0)\rho_dU(\tau_0)^\dagger=\frac12\begin{pmatrix}1&2p-1\\ 2p-1&1\end{pmatrix},\qquad
+\mathsf d\!\left(U\rho_dU^\dagger,\Delta(U\rho_dU^\dagger)\right)=\frac{|2p-1|}{2}>0.
+$$
+旧记录仍有零重叠，但它没有把后续系统Hamiltonian限制在指针代数内；这也没有恢复已经丢弃的初始相位。$p=1/2$时初态是最大混态，单独的酉不能制造相干，故该端点不属于反例。
+
+（五）任意密集但过弱的新鲜补写仍可能让系统翻转。取二标签、$\sigma_0=P_0$及
+$$
+H=\frac{\pi\hbar}{2\tau_*}X,\qquad X=|0\rangle\langle1|+|1\rangle\langle0|,\qquad r_N=\exp(-1/N^2).
+$$
+每个长度$h=\tau_*/N$的自由段后施加合法的新鲜Schur通道$\Phi_{r_N}=r_N\operatorname{id}+(1-r_N)\Delta$。没有写入时，$N$段自由演化把$P_0$变为$P_1$。对任意态$\rho$，
+$$
+\mathsf d(\Phi_{r_N}(\rho),\rho)=(1-r_N)\mathsf d(\Delta(\rho),\rho)\le1-r_N.
+$$
+逐轮用通道收缩性比较有写入和无写入的演化，得到
+$$
+\mathsf d(\sigma_N,P_1)\le N(1-r_N)\le\frac1N,\qquad
+\operatorname{tr}(P_0\sigma_N)\le\frac1N.
+$$
+虽然轮次任意增加，$r_N\to1$且$N(1-r_N)\to0$；系统仍趋近翻转态。这个例子与定理8.12的预算一致，说明“任意频繁”必须和每轮记录强度一起计量。
+
+上述六个构造（零）至（五）分别隔离累积预算、访问权限、准备态纯度、联合Gram相位、后续非对角动力学和补写强度。它们不提供实验或Lean验证，不给出普适经典性，不规定唯一全局结果；所有极限仍只是固定有限标签下有限前缀数列的极限。证毕。
+
+本节明确区分两类模型：前者依赖一个固定标签的有限产品记录，后者是“自由演化—新鲜固定标签Schur通道—取迹、无反馈”的交错递推。重复相互作用背景可参见Francesco Ciccarello、Salvatore Lorenzo、Vittorio Giovannetti、G. Massimo Palma，*Quantum collision models: open system dynamics from repeated interactions*，*Physics Reports* 954（2022）1--70，arXiv:2106.11974v2；Zeno背景可参见P. Facchi、S. Pascazio，*Quantum Zeno subspaces*，*Physical Review Letters* 89（2002）080401，arXiv:quant-ph/0201115v2。除已直接核查的Schur判据和二态判别基础外，不宣称这些背景文献给出本节常数或本节命题的优先性。本文没有实验、Lean或唯一结果的断言。
+
+## 追加锚（新终端）
+## 9. 有限前缀的项目一致性与辅助系统稳定性
+
+### 9.1 固定标签模型的前缀态
+
+本章继续使用定义8.1的固定标签、新鲜记录模型。标签集为有限集$\mathsf X$，系统基为$\{|x\rangle:x\in\mathsf X\}$。第$t$个记录单元初态为$|0_t\rangle$，并满足
+$$
+U_t\bigl(|x\rangle|0_t\rangle\bigr)
+=e^{i\theta_{x,t}}|x\rangle|e_x^{(t)}\rangle .
+$$
+记
+$$
+G_t(x,y)=\langle e_y^{(t)}|e_x^{(t)}\rangle,
+\qquad
+\Theta_x(N)=\sum_{t=1}^{N}\theta_{x,t},
+$$
+以及有限前缀记录向量
+$$
+|e_x^{\le N}\rangle=\bigotimes_{t=1}^{N}|e_x^{(t)}\rangle .
+$$
+对系统初态$\rho=\sum_{x,y}\rho_{xy}|x\rangle\langle y|$，定义保留系统和前$N$个记录单元的态
+$$
+\rho_N
+=
+\sum_{x,y}\rho_{xy}
+ e^{i(\Theta_x(N)-\Theta_y(N))}
+ |x\rangle\langle y|\otimes
+ |e_x^{\le N}\rangle\langle e_y^{\le N}| .
+$$
+每个$\rho_N$只涉及有限维空间；本章不把这列有限态预先解释成无限张量积态。
+
+### 9.2 含系统前缀的项目一致性 no-go
+
+**定理 9.1（非平凡记录破坏朴素项目一致性）。** 对任意$N\ge0$，令
+$$
+ c_{xy}^{N+1}
+ =e^{i(\theta_{x,N+1}-\theta_{y,N+1})}G_{N+1}(x,y).
+$$
+则
+$$
+\operatorname{tr}_{E_{N+1}}\rho_{N+1}=\rho_N
+$$
+当且仅当
+$$
+ c_{xy}^{N+1}=1
+\qquad\text{对每个满足 }\rho_{xy}\ne0\text{ 的有序对 }(x,y).
+$$
+
+特别地，若要求该等式对所有系统初态都成立，则对每个$x\ne y$必须有
+$$
+|G_{N+1}(x,y)|=1
+\quad\text{且}\quad
+e^{i(\theta_{x,N+1}-\theta_{y,N+1})}G_{N+1}(x,y)=1.
+$$
+在有限维Hilbert空间中，$|G_{N+1}(x,y)|=1$意味着$|e_x^{(N+1)}\rangle$与$|e_y^{(N+1)}\rangle$只差一个相位；上式再要求该相位被系统相位完全抵消。因此这一步记录在相位补偿后对标签不携带可读区分信息。只要某个标签对满足$|G_{N+1}(x,y)|<1$，就存在一个初态使含系统前缀族不满足项目一致性。
+
+证明。对$\rho_{N+1}$取迹只作用于最后一个记录因子，并使用
+$$
+\operatorname{tr}\!\left(|e_x^{(N+1)}\rangle\langle e_y^{(N+1)}|\right)
+=G_{N+1}(x,y).
+$$
+因此
+$$
+\operatorname{tr}_{E_{N+1}}\rho_{N+1}
+=
+\sum_{x,y}\rho_{xy}e^{i(\Theta_x(N)-\Theta_y(N))}
+ c_{xy}^{N+1}
+ |x\rangle\langle y|\otimes
+ |e_x^{\le N}\rangle\langle e_y^{\le N}| .
+$$
+对角项满足$c_{xx}^{N+1}=1$。系统矩阵单位$|x\rangle\langle y|$两两线性独立，且每个记录算子$|e_x^{\le N}\rangle\langle e_y^{\le N}|$非零，所以与$\rho_N$相等恰好等价于所有非零系数满足$c_{xy}^{N+1}=1$。若要求对所有初态成立，可选取只在$x,y$两维上有非零相干的纯态；于是每个$x\ne y$都必须满足该条件。最后由Cauchy--Schwarz等号条件得到条件环境向量只差相位。证毕。
+
+这个结论区分了两件事：每个有限前缀都可以精确定义，以及这些前缀能否通过朴素的“删除最后一个记录因子”组成同一个含系统历史的项目族。真正的记录步骤通常改变系统与保留记录之间的相干结构，所以第二件事不能从第一件事自动推出。第8.14节的有限数列极限因此不能单独被解释成一个全局密度矩阵。
+
+**反例 9.2（最小非平凡记录）。** 取两个标签、一个新增记录单元，令$\theta_{0,1}=\theta_{1,1}=0$，并令
+$$
+\langle e_1^{(1)}|e_0^{(1)}\rangle=\mu,
+\qquad 0\le|\mu|<1.
+$$
+对初态$|+\rangle\langle+|$，$\rho_0=|+\rangle\langle+|$，而
+$$
+\operatorname{tr}_{E_1}\rho_1
+=\frac12
+\begin{pmatrix}
+1&\mu\\
+\overline\mu&1
+\end{pmatrix}
+\ne
+\frac12
+\begin{pmatrix}
+1&1\\
+1&1
+\end{pmatrix}
+=\rho_0.
+$$
+因此“保留更多记录后再把它删掉”并不会恢复此前的含系统态；删去记录与把记录从未写入过是两个不同操作。
+
+### 9.3 记录边缘的正面一致性
+
+**定理 9.3（记录-only边缘的一致性）。** 令
+$$
+\chi_N=\operatorname{tr}_S\rho_N.
+$$
+若初态系统对角人口为$p_x=\rho_{xx}$，则
+$$
+\chi_N
+=\sum_x p_x|e_x^{\le N}\rangle\langle e_x^{\le N}|,
+$$
+并且对每个$N$都有
+$$
+\operatorname{tr}_{E_{N+1}}\chi_{N+1}=\chi_N.
+$$
+
+证明。取系统迹只保留$x=y$项，因而所有系统相位和初始系统相干都消失。再对最后一个记录因子取迹，$\langle e_x^{(N+1)}|e_x^{(N+1)}\rangle=1$，逐项得到所示等式。证毕。
+
+所以记录边缘给出一个真正一致的有限前缀族，可以作为记录历史的项目数据。这个结论仍只说有限边缘之间的兼容性；若要选择具体的无限记录Hilbert空间、向量或可观测代数，还必须另行指定表示。含系统历史则应使用时间有序过程、过程张量或准局域代数，把“每个有限窗口的态”与“跨窗口的限制映射”分开描述。
+
+### 9.4 纠缠参考下的有限前缀稳定界
+
+项目一致性讨论的是态能否拼接；另一个独立问题是，有限前缀退相干是否对任意旁参考系统都稳定。令$C$为一个有限标签Schur Gram矩阵，$C_{xx}=1$，并令
+$$
+\Phi_C(A)=C\odot A,
+\qquad
+\Delta(A)=\sum_xP_xAP_x,
+\qquad
+q(C)=\max_{x\ne y}|C_{xy}|.
+$$
+定义辅助系统允许的最坏相干缺陷
+$$
+\varepsilon_\diamond(C)
+=\frac12\|\Phi_C-\Delta\|_\diamond
+=\sup_{R,\,\omega_{SR}}
+\mathsf d\!\left((\Phi_C\otimes\operatorname{id}_R)(\omega_{SR}),
+(\Delta\otimes\operatorname{id}_R)(\omega_{SR})\right),
+$$
+其中$R$可取有限维，且只需考察密度态$\omega_{SR}$。
+
+这里$\Phi_C-\Delta$是保厄米、迹消失的线性映射，因此标准稳定化定义可等价地写成密度态上的最大迹距离；辅助系统维数取不超过系统维数$d$即可达到该上确界。
+
+**定理 9.4（辅助系统一致的有限前缀界）。** 对标签数$d=|\mathsf X|\ge2$，有
+$$
+\frac{q(C)}2
+\le \varepsilon_\diamond(C)
+\le \frac{d-1}{2}q(C).
+$$
+因此在固定有限$d$下，任意一列有限前缀Schur通道满足
+$$
+q(C_N)\longrightarrow0
+\quad\Longleftrightarrow\quad
+\varepsilon_\diamond(C_N)\longrightarrow0.
+$$
+这个结论只给出上下界，不声称一般情形下的精确diamond范数公式。
+
+证明。取任意参考系统$R$和密度态$\omega_{SR}$，按系统标签分块为$\omega_{SR}=[\omega_{xy}]_{x,y}$，并令$p_x=\operatorname{tr}(\omega_{xx})$。正块矩阵的Cauchy--Schwarz因子化给出
+$$
+\|\omega_{xy}\|_1\le\sqrt{p_xp_y}.
+$$
+于是
+$$
+\begin{aligned}
+\mathsf d\!\left((\Phi_C\otimes\operatorname{id})(\omega),
+(\Delta\otimes\operatorname{id})(\omega)\right)
+&\le \frac12\sum_{x\ne y}|C_{xy}|\,\|\omega_{xy}\|_1\\
+&\le \frac{q(C)}2\sum_{x\ne y}\sqrt{p_xp_y}\\
+&=\frac{q(C)}2\left[\left(\sum_x\sqrt{p_x}\right)^2-1\right]\\
+&\le\frac{d-1}{2}q(C),
+\end{aligned}
+$$
+其中最后一步使用Cauchy--Schwarz和$\sum_xp_x=1$。下界取一个达到$q(C)$的标签对$x,y$，并使用系统纯态$(|x\rangle+e^{i\varphi}|y\rangle)/\sqrt2$、参考系统一维；此时输出差的迹距离为$q(C)/2$。证毕。
+
+定理9.4把第8.14节的系统态上界提升为带任意有限纠缠参考的操作性上界，但它仍然是固定有限标签、有限前缀的陈述。它不说明记录是否可访问，也不把项目一致性no-go变成全局态存在定理：可操作稳定性与跨前缀可拼接性是两个独立条件。
+
+### 9.5 三个约束不能互相替代
+
+第9章的三个量分别回答不同问题：
+
+$$
+\begin{array}{c|c}
+\text{量}&\text{它控制的性质}\\ \hline
+c_{xy}^{t}&\text{含系统前缀能否按删除映射一致限制}\\
+|G_t(x,y)|&\text{该记录步骤对标签的可区分性}\\
+q(C_N),\ \varepsilon_\diamond(C_N)&\text{有限前缀对系统及旁参考的退相干稳定性}
+\end{array}
+$$
+
+因此“保留多少约束”没有脱离模型的单一整数答案。增加记录单元可以使$q(C_N)$变小，却同时破坏含系统前缀的朴素项目一致性；相位补偿可以使某个$c_{xy}^{t}$等于$1$，却不增加标签可读性；而小的系统退相干缺陷也不保证可读取记录存在。稳定经典描述需要分别指定限制映射、访问集合和动力学预算，再在同一有限前缀上检验它们。
+
+本章没有构造无限时间全局量子态，也没有把记录一致性、退相干稳定性或有限前缀极限解释成普适经典现实。它只把“历史保留多少才稳定”拆成三个可计算的有限问题：前缀能否一致限制、记录是否区分标签、以及包含旁参考时后续操作是否仍看不见相干。
+
+## 10. 约束保留的预测充分性与相位访问预算
+
+“保留多少约束才得到稳定的经典现实”必须先拆成有限任务：保留的数据能否读取，能否预测指定的未来粗读数，以及这些读数是否在给定时段内保持。下面的量分别回答这三个问题；它们不等价于完整量子态已经被确定。
+
+### 10.1 粗标签、预测通道与读取误差
+
+取有限维空间$\mathcal H$和$m\ge2$个非零正交投影
+$$
+Q_aQ_b=\delta_{ab}Q_a,\qquad \sum_{a=1}^{m}Q_a=I.
+$$
+定义粗标签分布、粗块代数和粗块去相干映射
+$$
+C_Q(\rho)_a=\operatorname{tr}(Q_a\rho),
+\qquad
+\mathcal A_Q=\operatorname{span}_{\mathbb C}\{Q_1,\ldots,Q_m\},
+\qquad
+B_Q(X)=\sum_aQ_aXQ_a.
+$$
+$C_Q$只保留粗标签概率，$B_Q$还保留每个粗块内部的量子态。因此$B_Q(\rho)=\rho$不表示$C_Q(\rho)$已经决定$\rho$。
+
+固定有限时刻$0=\tau_0<\tau_1<\cdots<\tau_N=\tau_*<\infty$和CPTP通道$\mathcal E_k$，令
+$$
+\rho_k=\mathcal E_k(\rho_{k-1}),
+\qquad p_k=C_Q(\rho_k).
+$$
+用列随机矩阵$K_k$表示目标经典比较动力学：
+$$
+K_k(b\mid a)\ge0,
+\qquad \sum_bK_k(b\mid a)=1.
+$$
+预测$ p_k\approx K_k\cdots K_1p_0$和保持$ p_k\approx p_0$是两个不同要求；精确可预测的动力学可以是确定翻转。
+
+记录写入取有限等距映射
+$$
+W\psi=\sum_aQ_a\psi\otimes E_a,
+\qquad \|E_a\|=1,
+\qquad E_a\in\mathcal H_F\otimes\mathcal H_B,
+$$
+其中只有$F$可读取，$B$不可访问。令
+$$
+\sigma_a^F=\operatorname{tr}_B|E_a\rangle\langle E_a|,
+$$
+并定义可读取记录的最坏标签错误
+$$
+\beta_F=\min_{\substack{M_a\ge0\\\sum_aM_a=I_F}}
+\max_a\left[1-\operatorname{tr}(M_a\sigma_a^F)\right].
+$$
+若某个解码器的逐标签错误至多为$\beta$，则其输出分布$\widehat p_0$满足
+$$
+\operatorname{TV}(\widehat p_0,p_0)\le\beta,
+\qquad
+\operatorname{TV}(p,q)=\frac12\sum_a|p_a-q_a|.
+$$
+这是记录边缘上的经典通道误差，不把一次解码结果当作完整隐藏历史。
+
+### 10.2 粗标签预测的精确缺陷
+
+对通道$\mathcal E$、列随机矩阵$K$和$B\subseteq\{1,\ldots,m\}$，记
+$$
+Q_B=\sum_{b\in B}Q_b,
+\qquad K(B\mid a)=\sum_{b\in B}K(b\mid a),
+$$
+以及
+$$
+\epsilon_Q(\mathcal E,K)
+=\max_B\left\|
+\mathcal E^*(Q_B)-\sum_aK(B\mid a)Q_a
+\right\|.
+$$
+
+**定理 10.1（粗标签预测缺陷）。** 有精确等式
+$$
+\epsilon_Q(\mathcal E,K)
+=\sup_\rho\operatorname{TV}\!\left(C_Q(\mathcal E(\rho)),KC_Q(\rho)\right),
+$$
+上确理由全部系统密度矩阵取得。对全部输入态存在零缺陷的经典律，当且仅当
+$$
+\mathcal E^*(\mathcal A_Q)\subseteq\mathcal A_Q.
+$$
+此时$K$唯一，并满足
+$$
+K(b\mid a)=\frac{\operatorname{tr}\left(Q_a\mathcal E^*(Q_b)\right)}{\operatorname{rank}Q_a}.
+$$
+
+一般情形的最优缺陷
+$$
+\epsilon_Q^*(\mathcal E)=\min_K\epsilon_Q(\mathcal E,K)
+$$
+可由有限半正定优化取得：最小化$\epsilon$，约束$K$列随机以及对全部$B$
+$$
+-\epsilon I\preceq
+\mathcal E^*(Q_B)-\sum_aK(B\mid a)Q_a
+\preceq\epsilon I.
+$$
+
+证明。对概率向量有$\operatorname{TV}(p,q)=\max_B|p(B)-q(B)|$；对Hermitian$D$有$\sup_\rho|\operatorname{tr}(\rho D)|=\|D\|$，且上确界由某个纯态达到。交换有限最大值与态空间上的上确界即得第一式。零缺陷等价于每个$\mathcal E^*(Q_b)$属于粗块代数；正性与$\mathcal E^*(I)=I$给出非负系数和列和为一，压缩到$Q_a$并取迹得到唯一系数。有限随机矩阵集上的连续最小化达到，算子范数界等价于两侧半正定约束。证毕。
+
+将缺陷拆成
+$$
+\mathcal E^*(Q_B)-\sum_aK(B\mid a)Q_a
+=\bigl[\mathcal E^*(Q_B)-B_Q(\mathcal E^*(Q_B))\bigr]
++\bigl[B_Q(\mathcal E^*(Q_B))-\sum_aK(B\mid a)Q_a\bigr]
+$$
+可分别看出粗块间相干和粗块内部状态对未来读数的影响。粗块间退相干只消除第一项。
+
+### 10.3 预测、保持与有限预算
+
+令
+$$
+\epsilon_k=\epsilon_Q(\mathcal E_k,K_k),
+\qquad
+\lambda_k=\max_a[1-K_k(a\mid a)],
+\qquad
+\bar p_0=\widehat p_0,
+\qquad
+\bar p_k=K_k\cdots K_1\widehat p_0.
+$$
+**定理 10.2（有限前缀的预测与保持预算）。** 若初始读取满足$\operatorname{TV}(\widehat p_0,p_0)\le\beta$，则对每个$k\le N$有
+$$
+\operatorname{TV}(p_k,\bar p_k)
+\le\min\left\{1,\beta+\sum_{j=1}^{k}\epsilon_j\right\},
+$$
+以及
+$$
+\operatorname{TV}(p_k,p_0)
+\le\min\left\{1,\sum_{j=1}^{k}(\epsilon_j+\lambda_j)\right\}.
+$$
+因此
+$$
+\beta+\sum_{j=1}^{N}\epsilon_j\le\delta_{\rm pred},
+\qquad
+\sum_{j=1}^{N}(\epsilon_j+\lambda_j)\le\delta_{\rm stay}
+$$
+是同时覆盖这些有限时刻的充分预算。
+
+证明。随机矩阵不增大总变差距离，故
+$$
+\operatorname{TV}(p_k,\bar p_k)
+\le\epsilon_k+\operatorname{TV}(p_{k-1},\bar p_{k-1}).
+$$
+另一方面，对任意概率向量$p$，$\operatorname{TV}(K_kp,p)\le\lambda_k$；结合三角不等式递推第二式。证毕。
+
+二标签例子中，令
+$$
+\mathcal E_\lambda(\rho)=(1-\lambda)\Delta(\rho)+\lambda X\Delta(\rho)X,
+\qquad 0\le\lambda\le1.
+$$
+其精确经典矩阵为
+$$
+K_\lambda=
+\begin{pmatrix}1-\lambda&\lambda\\\lambda&1-\lambda\end{pmatrix},
+$$
+所以$\epsilon_Q=0$；但$\lambda=1$时标签确定翻转，预测完全精确，而对尖锐初始标签的保持性达到最坏失败。若$\lambda=10^{-3}$、$N=20$，从一个标签出发的末端离开概率为
+$$
+\frac{1-(1-2\lambda)^{20}}2\approx0.0196245.
+$$
+端点界不自动覆盖轮间时刻；若需要连续时段，必须为每个$\tau_{k-1}+s$另给实际通道和比较矩阵。
+
+### 10.4 未来读数所需的最小特征保留
+
+取有限细标签集$\mathsf X$及其完整正交基投影$P_x=|x\rangle\langle x|$、目标读数$g:\mathsf X\to\mathsf Y$，以及有限通道族$\Psi_k$，其中$\Psi_0=\operatorname{id}$。令
+$$
+Q_b^g=\sum_{g(x)=b}P_x,
+\qquad A_{k,b}=\Psi_k^*(Q_b^g).
+$$
+给定有限可访问特征指标集$\mathcal J_{\rm acc}$及特征$h_j:\mathsf X\to\mathsf Z_j$，保留$J\subseteq\mathcal J_{\rm acc}$时的标签为$f_J(x)=(h_j(x))_{j\in J}$。若某个$A_{k,b}$在细标签基中有非对角元，则任何只保留$f_J$的经典标签都不能对全部输入态精确预测该读数。若所有$A_{k,b}$均对角，定义
+$$
+ v(x)=\bigl(\langle x|A_{k,b}|x\rangle\bigr)_{k,b},
+$$
+以及
+$$
+\mathcal P=\{\{x,y\}:v(x)\ne v(y)\},
+\qquad
+S_j=\{\{x,y\}\in\mathcal P:h_j(x)\ne h_j(y)\}.
+$$
+**定理 10.3（最小特征覆盖）。** 对全部输入态精确预测所有指定读数的充要条件是
+$$
+\bigcup_{j\in J}S_j=\mathcal P.
+$$
+给定正成本$c_j$，最小保留成本为
+$$
+C_{\min}
+=\min_{\substack{J\subseteq\mathcal J_{\rm acc}\\\bigcup_{j\in J}S_j=\mathcal P}}
+\sum_{j\in J}c_j,
+$$
+不可行时取$+\infty$；若$\mathcal P=\varnothing$，空集成本为零。
+
+证明。对所有密度态成立的概率等式等价于每个$A_{k,b}$在每个$f_J$纤维上取常值；细标签对被保留特征分开恰好等价于覆盖条件。反向以共同常值定义列随机矩阵，正性和完备性保证其列和为一。证毕。
+
+将$k=0$纳入读数族，表示当前必需标签也必须被保留；不能把所有标签合并成一个常标签来规避原任务。$c_j$只计量指定经典特征的保留成本，不包含写入、控制、存储寿命或读取扰动。
+
+### 10.5 关联记录的相位访问
+
+取二标签系统及有限关联记录$E_0,E_1\in\mathcal H_F\otimes\mathcal H_B$，$\|E_0\|=\|E_1\|=1$，并令
+$$
+W|x\rangle=|x\rangle|E_x\rangle.
+$$
+定义
+$$
+\sigma_x^F=\operatorname{tr}_B|E_x\rangle\langle E_x|,
+\qquad
+T_F=\operatorname{tr}_B|E_0\rangle\langle E_1|,
+$$
+以及
+$$
+D_F=\frac12\|\sigma_0^F-\sigma_1^F\|_1,
+\qquad
+V_F=\|T_F\|_1.
+$$
+$D_F$衡量只读$F$时的等先验标签区分能力；对应最优平均错误为$(1-D_F)/2$。对
+$$
+|\Psi_\phi\rangle=\frac{|0\rangle|E_0\rangle+e^{i\phi}|1\rangle|E_1\rangle}{\sqrt2}
+$$
+并在$B$上取迹，得到
+$$
+\mathsf d(\rho_\phi^{SF},\rho_\psi^{SF})
+=\left|\sin\frac{\phi-\psi}{2}\right|V_F,
+$$
+以及
+$$
+\mathsf d(\rho_\phi^{SF},\Delta_S\rho_\phi^{SF})=\frac{V_F}{2}.
+$$
+更一般地，对系统输入矩阵元$\rho_{01}$，有
+$$
+\mathsf d\!\left(\operatorname{tr}_B(W\rho W^\dagger),
+\Delta_S\operatorname{tr}_B(W\rho W^\dagger)\right)
+=|\rho_{01}|V_F.
+$$
+只读取$F$的边缘态与输入相位无关；$V_F$度量的是系统与可访问记录之间仍可被联合操作利用的相位。
+
+对任意$F$上的酉$U_F$，有
+$$
+V_F=\max_{U_F}\left|\langle E_1|(U_F\otimes I_B)|E_0\rangle\right|.
+$$
+若随后施加受控酉$P_0\otimes U_0+P_1\otimes U_1$并丢弃$F$，恢复后的系统相干乘子为
+$$
+\operatorname{tr}(U_0T_FU_1^\dagger),
+$$
+其最大模为$V_F$；对输入$|+\rangle$，相位校正后的最大$|+\rangle$重叠概率为
+$$
+\frac{1+V_F}{2}.
+$$
+这只对所列受控酉操作类作最优性陈述。
+
+### 10.6 不可访问记录的相位阈值与反例
+
+若不可访问部分$B$上存在二输出测量，使等先验平均标签错误率不超过$0\le\beta<1/2$，则
+$$
+V_F\le2\sqrt{\beta(1-\beta)}.
+$$
+因此所有二标签输入满足
+$$
+\mathsf d\!\left(\operatorname{tr}_B(W\rho W^\dagger),
+\Delta_S\operatorname{tr}_B(W\rho W^\dagger)\right)
+\le2|\rho_{01}|\sqrt{\beta(1-\beta)}
+\le\sqrt{\beta(1-\beta)}.
+$$
+给定$0\le\nu<1$，充分条件
+$$
+\beta\le\frac{1-\sqrt{1-\nu^2}}2
+$$
+保证$V_F\le\nu$。这只给充分条件，记录数量不出现在阈值中。
+
+证明。令不可访问部分上的二输出效应为$M_0,M_1$，并定义$\varepsilon_0=\operatorname{tr}(M_1\tau_0^B)$、$\varepsilon_1=\operatorname{tr}(M_0\tau_1^B)$，其中$\tau_x^B=\operatorname{tr}_F|E_x\rangle\langle E_x|$；其平均值$\beta'=(\varepsilon_0+\varepsilon_1)/2\le\beta$。对任意$U_F$，插入$M_0+M_1=I_B$并对每一项使用Cauchy--Schwarz，得到
+$$
+\left|\langle E_1|(U_F\otimes I_B)E_0\rangle\right|
+\le\sqrt{(1-\varepsilon_0)\varepsilon_1}
+ +\sqrt{\varepsilon_0(1-\varepsilon_1)}
+\le2\sqrt{\beta'(1-\beta')}.
+$$
+取$U_F$的最大值即得$V_F\le2\sqrt{\beta(1-\beta)}$；再使用$|\rho_{01}|\le1/2$得到相干距离界，解二次不等式得到所列充分条件。证毕。
+
+三个有限反例说明数量本身不能替代任务覆盖：
+
+1. **完全关联的重复记录。** 对$0<\beta<1/2$和有限$r\ge2$，取
+$$
+E_0=\sqrt{1-\beta}|0\rangle^{\otimes r}+\sqrt\beta|1\rangle^{\otimes r},
+\qquad
+E_1=\sqrt\beta|0\rangle^{\otimes r}+\sqrt{1-\beta}|1\rangle^{\otimes r}.
+$$
+每个非空真片段$F$（$1\le|F|\le r-1$）都有读取错误$\beta$，但其相位访问量为$V_F=2\sqrt{\beta(1-\beta)}$，与片段大小无关；增加记录没有增加独立证据。若$F$取全部记录，则$B=\varnothing$且$V_F=1$，这是不同的端点。
+
+2. **大量独立但未约束目标自由度的约束。** 取
+$$
+\mathcal H=\mathbb C^2_L\otimes(\mathbb C^2)^{\otimes r},
+\qquad C_j=I_L\otimes Z_j.
+$$
+所有条件$C_j=+1$彼此独立并严格保持，但
+$$
+H=\frac{\pi\hbar}{2\tau_*}X_L\otimes I
+$$
+与它们交换，却在$\tau_*$翻转逻辑标签。约束数量任意大仍不能稳定未被约束的自由度。
+
+3. **完美粗标签遗漏内部相位。** 取
+$$
+Q_A=|0\rangle\langle0|+|1\rangle\langle1|,
+\qquad Q_B=|2\rangle\langle2|,
+$$
+以及$|\pm\rangle=(|0\rangle\pm|1\rangle)/\sqrt2$和
+$$
+H=\hbar\Omega(|2\rangle\langle+|+|+\rangle\langle2|),
+\qquad \tau_*=\frac{\pi}{2\Omega}.
+$$
+$\Omega>0$。$|+\rangle$和$|−\rangle$具有相同粗标签和相同细基布居，但
+$$
+U(\tau_*)|+\rangle=-i|2\rangle,
+\qquad
+U(\tau_*)|−\rangle=|−\rangle.
+$$
+因此末端粗标签分布的总变差距离为$1$，任何数量的初始$A/B$标签副本都不能确定上述未来$A/B$读数；演化之后新取得的记录可以区分这两个状态。
+
+这些反例分别隔离关联冗余、约束覆盖不足和粗标签内部信息缺失。它们说明稳定经典描述需要同时指定访问集合、未来读数、动力学比较律和误差预算；没有脱离这些数据的单一“所需约束数量”。本章所有对象仍为有限维、有限时段；不构造无限张量积态、不主张普适经典性、不提供实验或Lean结论，也不选择唯一全局结果。
+
+## 追加锚（新终端）
