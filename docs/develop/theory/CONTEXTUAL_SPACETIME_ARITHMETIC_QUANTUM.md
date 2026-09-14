@@ -15213,3 +15213,395 @@ $$
 
 ## 追加锚（新终端）
 
+## 60. 记录作用量、相干衰减与不可逆恢复下界
+
+> **状态：repo-derived/open。** 本节整理并连接已有 Lean 结果，没有新增声明、证明覆盖或冻结状态。引用的冻结模块包括 D5/S3/Quantum/Decoherence/RecordActionCoherenceSurvival.lean、D5/S3/Quantum/PureState/RecordCoherenceComplementarity.lean、D5/S3/Quantum/Decoherence/FiniteShiftedRecordChannel.lean 与 D5/S3/Quantum/Decoherence/FiniteRecordRecoveryError.lean。这里的“作用量”是有限记录模型中的数学量，不是一个已从项目推出的普适物理作用量。
+
+第 55 节已经给出单步记录的 Gram 系数。本节把它累积为记录作用量，再连接到有限移位记录模型中的恢复误差下界：
+
+$$
+\text{条件记录重叠}
+\longrightarrow
+\text{累计相干}
+\longrightarrow
+\text{记录作用量}
+\longrightarrow
+\text{恢复误差下界}.
+$$
+
+“不可逆”首先是操作意义上的：指定记录被丢弃以后，任何只作用于剩余系统的恢复通道，都不能把最坏情形误差压到下界以下。这不等于说包括环境在内的联合幺正演化不可逆。
+
+### 60.1 记录重叠的乘积与作用量
+
+设有限标签集为 $$
+I
+$$，第 $$
+r
+$$ 次记录给标签 $$
+i
+$$ 留下归一化环境向量 $$
+e_{r,i}
+$$。定义单步 Gram 系数
+
+$$
+g_r(i,j)=\langle e_{r,j},e_{r,i}\rangle .
+$$
+
+归一化与 Cauchy--Schwarz 不等式给出
+
+$$
+|g_r(i,j)|\le 1.
+$$
+
+若某个相干矩阵元在每一步都乘上这个系数，则 $$
+N
+$$ 次记录后的累计系数为
+
+$$
+C_N(i,j)=\prod_{r<N}g_r(i,j),
+$$
+
+从而
+
+$$
+|C_N(i,j)|=\prod_{r<N}|g_r(i,j)|.
+$$
+
+在非负扩展实数中定义记录作用量
+
+$$
+\mathsf A_N(i,j)=-\log |C_N(i,j)|.
+$$
+
+当某个因子为零时，右侧按扩展值解释为无穷；这正是一次完全正交记录把该相干坐标压到零的情形。冻结定理 RecordActionCoherenceSurvival.record_action_controls_coherence_survival 给出：
+
+$$
+\mathsf A_{N+1}(i,j)\ge \mathsf A_N(i,j),
+$$
+
+以及精确的相干存活关系
+
+$$
+|\rho_N(i,j)|
+=
+\exp\!\bigl(-\mathsf A_N(i,j)\bigr)
+|\rho_0(i,j)|.
+$$
+
+若记录作用量的平均率存在，即
+
+$$
+\lim_{N\to\infty}\frac{\mathsf A_N(i,j)}{N}=\lambda,
+$$
+
+并且初始相干非零，则相对相干的负对数率也是 $$
+\lambda
+$$：
+
+$$
+\lim_{N\to\infty}
+\frac{-\log\!\left(|\rho_N(i,j)|/|\rho_0(i,j)|\right)}{N}
+=
+\lambda.
+$$
+
+若每一步满足统一严格收缩界
+
+$$
+|g_r(i,j)|\le q<1,
+$$
+
+则
+
+$$
+|C_N(i,j)|\le q^N,
+\qquad
+\mathsf A_N(i,j)\ge -N\log q.
+$$
+
+这给出一个可计算的记录预算。相反，若某些步满足 $$
+|g_r(i,j)|=1
+$$，则该方向可能只发生相位旋转而没有模长衰减，甚至周期性返回。因此，固定点呈经典形式不能单独推出所有初态都会趋向经典；还必须检查非对角 Gram 系数的模长。
+
+把单步系数写成
+
+$$
+g_r(i,j)=|g_r(i,j)|\exp\!\bigl(\mathrm i\varphi_r(i,j)\bigr),
+$$
+
+则
+
+$$
+C_N(i,j)
+=
+\exp\!\left(
+-\mathsf A_N(i,j)
++
+\mathrm i\sum_{r<N}\varphi_r(i,j)
+\right).
+$$
+
+作用量只记账模长衰减；累计相位是另一项动力学数据。不能把作用量、Zeckendorf 坐标误差或 Fibonacci 权重直接解释为物理能量或 Hamiltonian 频率。
+
+### 60.2 记录重叠同时限制可区分性与可见相干
+
+对两个归一化纯记录 $$
+e_L,e_R
+$$，令
+
+$$
+c=\langle e_L,e_R\rangle,
+\qquad
+\mathsf V=|c|,
+\qquad
+\mathsf D=\sqrt{1-|c|^2}.
+$$
+
+冻结定理 PureState.RecordCoherenceComplementarity.pure_record_distinguishability_coherence_complementarity 证明
+
+$$
+\mathsf D^2+\mathsf V^2=1.
+$$
+
+于是正交记录满足
+
+$$
+c=0
+\quad\Longrightarrow\quad
+\mathsf D=1,\quad \mathsf V=0,
+$$
+
+而同一量子态射线上的记录满足
+
+$$
+|c|=1
+\quad\Longrightarrow\quad
+\mathsf D=0,\quad \mathsf V=1.
+$$
+
+这项等式只适用于声明中的归一化纯记录，不能无条件推广到混合记录或任意开放系统。对有限记录链，可把每一步的可见度相乘：
+
+$$
+\mathsf V_N(i,j)=|C_N(i,j)|=\exp\!\bigl(-\mathsf A_N(i,j)\bigr).
+$$
+
+因此，标签差异本身不决定可区分性。两个 Zeckendorf 合法构型即使数值不同，也可能留下同一条记录射线；反过来，是否正交取决于实际记录向量，而不取决于标签名称。
+
+### 60.3 有限移位记录通道
+
+FiniteShiftedRecordChannel.lean 给出一个具体有限实现。令
+
+$$
+c:\mathbb Z\to\mathbb C
+$$
+
+在区间 $$
+0,\ldots,N
+$$ 外为零，并满足
+
+$$
+\sum_{n=0}^{N}|c(n)|^2=1.
+$$
+
+给每个系统标签 $$
+i
+$$ 一个整数位置 $$
+q_i
+$$。平移后的系数产生有限环境记录，其自相关函数为
+
+$$
+\gamma(\ell)
+=
+\sum_{n=0}^{N}c(n+\ell)\,\overline{c(n)}.
+$$
+
+相应通道在矩阵元上的作用为
+
+$$
+\Lambda(A)_{kl}
+=
+\gamma(q_k-q_l)A_{kl}.
+$$
+
+所以对角元不变，非对角元按标签位移的自相关系数缩放。该模块证明此构造来自有限维等距嵌入并实现量子通道；它没有额外证明空间局域性、指定 Hamiltonian 的守恒律、零操作成本或任意设备上的普适性。
+
+若
+
+$$
+|\gamma(q_i-q_j)|<1,
+$$
+
+该相干方向经过一次记录即收缩；若模长等于一，则它可能只获得相位。相同的 Zeckendorf 数值差在不同记录波形下也可以对应不同的自相关值，因此离散刻度不决定记录强度。
+
+### 60.4 恢复误差的不可绕过下界
+
+考虑任意候选恢复通道 $$
+R
+$$。冻结定理 FiniteRecordRecoveryError.finite_record_recovery_error_lower_bound 假设有限支持、系数归一化，以及选定的非零位移
+
+$$
+q_i-q_j\ne0.
+$$
+
+对所有密度态取最坏情形迹距离误差，得到
+
+$$
+\boxed{
+\sup_{\rho}
+D\!\left(R\circ\Lambda(\rho),\rho\right)
+\ge
+\frac{1-|\gamma(q_i-q_j)|}{2}.
+}
+$$
+
+定理源码把左侧表示为误差集合的上确界，并使用迹距离的收缩性证明该不等式。
+
+见证态是 $$
+i,j
+$$ 两个标签上的对称与反对称叠加：
+
+$$
+|+\rangle=\frac{|i\rangle+|j\rangle}{\sqrt2},
+\qquad
+|-\rangle=\frac{|i\rangle-|j\rangle}{\sqrt2}.
+$$
+
+记录前两态的距离为
+
+$$
+D(|+\rangle\langle+|,\ |-\rangle\langle-|)=1,
+$$
+
+记录后距离变为
+
+$$
+D\!\left(
+\Lambda(|+\rangle\langle+|),
+\Lambda(|-\rangle\langle-|)\right)
+=
+|\gamma(q_i-q_j)|.
+$$
+
+任何量子通道都不会增加迹距离；将收缩性与三角不等式用于恢复后的两态，就得到上述下界。记录已经降低的这部分区分度，不能由只访问记录后系统的统一恢复无条件补回。
+
+特别地，
+
+$$
+\gamma(q_i-q_j)=0
+\quad\Longrightarrow\quad
+\sup_{\rho}D(R\circ\Lambda(\rho),\rho)\ge\frac12.
+$$
+
+而
+
+$$
+|\gamma(q_i-q_j)|\approx1
+$$
+
+只表示这个下界接近零，并不保证存在零误差恢复。若恢复端还可以访问未丢弃的环境记录，问题已经变成联合系统上的恢复任务，不能继续套用只在系统端恢复的同一结论。
+
+### 60.5 作用量、恢复下界与 Zeckendorf 接口
+
+设有限合法 Zeckendorf 构型集合为
+
+$$
+\mathcal W_L
+=
+\left\{
+w\in\{0,1\}^{L}:w_rw_{r+1}=0
+\right\},
+$$
+
+并给每个构型一个整数标签 $$
+q(w)
+$$。为每个构型选择条件记录 $$
+e_{r,w}
+$$，便得到
+
+$$
+g_r(w,v)=\langle e_{r,v},e_{r,w}\rangle,
+\qquad
+C_N(w,v)=\prod_{r<N}g_r(w,v).
+$$
+
+这一步只把合法构型接入记录模型；它没有指定记录向量的制备，也没有把 Fibonacci 权重自动变成能量。若采用移位记录接口，还必须给出整数标签 $$
+q(w)
+$$、有限波形 $$
+c
+$$ 及其支持条件，才能使用 $$
+\gamma(q(w)-q(v))
+$$ 的恢复定理。
+
+在该接口上，可以分别记录两种损失：
+
+$$
+\mathsf A_N(w,v)=-\log|C_N(w,v)|,
+$$
+
+以及有限移位模型中的恢复下界
+
+$$
+\varepsilon_{\mathrm{rec}}^{\mathrm{lb}}(w,v)
+=
+\frac{1-|\gamma(q(w)-q(v))|}{2}.
+$$
+
+前者是多步相干存活的对数记账，后者是特定一次通道的恢复障碍。两者不是同一个量，不能相加，也不能互相替代。
+
+若每一步都有
+
+$$
+|g_r(w,v)|\le q<1,
+$$
+
+则
+
+$$
+\mathsf A_N(w,v)\ge-N\log q
+$$
+
+给出长期收缩的充分条件；若存在单位模重叠，则该方向可能持续回流。因此，判断一个记录是否足以支持稳定的经典预测，必须同时指定：
+
+$$
+\text{记录波形}
+\;+\;
+\text{可访问的环境范围}
+\;+\;
+\text{允许的恢复操作}
+\;+\;
+\text{预测时间窗}.
+$$
+
+仅知道 Zeckendorf 标签数量或记录次数，不足以确定这些量。
+
+### 60.6 与前面章节的衔接和边界
+
+第 55 节的 Gram 谱给出单步模长收缩与相位信息；本节把模长收缩累积为作用量，并用有限移位实例给出恢复下界。第 56 节的记忆视界描述隐藏变量怎样回流到读出；本节的乘积公式只适用于记录向量和相干坐标已按给定协议组成的有限链，不能替代有记忆联合演化。第 57 节的无限未来预测商决定全部指定未来统计下的不可区分类；本节只针对特定记录通道给出相干与恢复量，不等同于无限实验族的操作商。
+
+适用边界可写成：
+
+$$
+\begin{aligned}
+&\text{记录作用量：归一化记录与有限步乘积；非零初始相干用于速率商；}\\
+&\text{互补关系：归一化纯记录，不自动推广到混合记录；}\\
+&\text{恢复下界：有限移位记录、有限支持、非零标签位移；}\\
+&\text{物理解释：不推出 Hamiltonian、空间局域性或普适恢复定理。}
+\end{aligned}
+$$
+
+因此，本节支持的研究命题是：
+
+$$
+\boxed{
+\text{记录作用量量化相干被削弱的累计程度，}
+\quad
+\text{记录自相关给出有限模型中不可逆恢复的下界。}
+}
+$$
+
+它把“保留多少历史才能得到稳定现实”改写成可检验的问题：在给定 Zeckendorf 合法构型、记录协议和预测视界下，哪些相干方向的作用量已经足够大，哪些方向仍可由可访问关联恢复，以及恢复误差是否超过任务容限。
+
+本节为 repo-derived/open 理论追加；没有新增 Lean 声明、形式覆盖或冻结状态。
+
+## 追加锚（新终端）
+

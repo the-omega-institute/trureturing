@@ -1,0 +1,67 @@
+### 60.4 恢复误差的不可绕过下界
+
+考虑任意候选恢复通道 $$
+R
+$$。冻结定理 FiniteRecordRecoveryError.finite_record_recovery_error_lower_bound 假设有限支持、系数归一化，以及选定的非零位移
+
+$$
+q_i-q_j\ne0.
+$$
+
+对所有密度态取最坏情形迹距离误差，得到
+
+$$
+\boxed{
+\sup_{\rho}
+D\!\left(R\circ\Lambda(\rho),\rho\right)
+\ge
+\frac{1-|\gamma(q_i-q_j)|}{2}.
+}
+$$
+
+定理源码把左侧表示为误差集合的上确界，并使用迹距离的收缩性证明该不等式。
+
+见证态是 $$
+i,j
+$$ 两个标签上的对称与反对称叠加：
+
+$$
+|+\rangle=\frac{|i\rangle+|j\rangle}{\sqrt2},
+\qquad
+|-\rangle=\frac{|i\rangle-|j\rangle}{\sqrt2}.
+$$
+
+记录前两态的距离为
+
+$$
+D(|+\rangle\langle+|,\ |-\rangle\langle-|)=1,
+$$
+
+记录后距离变为
+
+$$
+D\!\left(
+\Lambda(|+\rangle\langle+|),
+\Lambda(|-\rangle\langle-|)\right)
+=
+|\gamma(q_i-q_j)|.
+$$
+
+任何量子通道都不会增加迹距离；将收缩性与三角不等式用于恢复后的两态，就得到上述下界。记录已经降低的这部分区分度，不能由只访问记录后系统的统一恢复无条件补回。
+
+特别地，
+
+$$
+\gamma(q_i-q_j)=0
+\quad\Longrightarrow\quad
+\sup_{\rho}D(R\circ\Lambda(\rho),\rho)\ge\frac12.
+$$
+
+而
+
+$$
+|\gamma(q_i-q_j)|\approx1
+$$
+
+只表示这个下界接近零，并不保证存在零误差恢复。若恢复端还可以访问未丢弃的环境记录，问题已经变成联合系统上的恢复任务，不能继续套用只在系统端恢复的同一结论。
+

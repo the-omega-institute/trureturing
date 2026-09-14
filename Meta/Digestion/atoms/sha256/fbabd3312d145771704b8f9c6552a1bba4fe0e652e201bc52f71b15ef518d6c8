@@ -1,0 +1,44 @@
+### 60.2 记录重叠同时限制可区分性与可见相干
+
+对两个归一化纯记录 $$
+e_L,e_R
+$$，令
+
+$$
+c=\langle e_L,e_R\rangle,
+\qquad
+\mathsf V=|c|,
+\qquad
+\mathsf D=\sqrt{1-|c|^2}.
+$$
+
+冻结定理 PureState.RecordCoherenceComplementarity.pure_record_distinguishability_coherence_complementarity 证明
+
+$$
+\mathsf D^2+\mathsf V^2=1.
+$$
+
+于是正交记录满足
+
+$$
+c=0
+\quad\Longrightarrow\quad
+\mathsf D=1,\quad \mathsf V=0,
+$$
+
+而同一量子态射线上的记录满足
+
+$$
+|c|=1
+\quad\Longrightarrow\quad
+\mathsf D=0,\quad \mathsf V=1.
+$$
+
+这项等式只适用于声明中的归一化纯记录，不能无条件推广到混合记录或任意开放系统。对有限记录链，可把每一步的可见度相乘：
+
+$$
+\mathsf V_N(i,j)=|C_N(i,j)|=\exp\!\bigl(-\mathsf A_N(i,j)\bigr).
+$$
+
+因此，标签差异本身不决定可区分性。两个 Zeckendorf 合法构型即使数值不同，也可能留下同一条记录射线；反过来，是否正交取决于实际记录向量，而不取决于标签名称。
+
