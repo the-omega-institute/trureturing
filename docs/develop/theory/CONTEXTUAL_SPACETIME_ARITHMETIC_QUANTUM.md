@@ -19956,3 +19956,168 @@ $$
 本节使用的永久稳定、可见维数、有限记忆容量和对角饱和均来自现有 Lean 模块；`FutureStatisticsEquivalence` 还把“所有未来读数相同”精确连接到差态对无限 Heisenberg 生成 operator system 的湮灭。$X/Z$ 的非代数例子、完全正编码接口和 Zeckendorf 投影不变条件是对这些结果的组合解释。它们给出可形式化的后续目标，但不宣称仓库已经证明任意 operator system 都有物理回收映射，也不把任务特定的二维嵌入提升为普遍量子存储定理。
 
 ## 追加锚（新终端）
+
+## 80. 中心标签、块内自由度与可组合历史
+
+### 80.1 预测算子系统与代数闭包
+
+第 79 节的 $X/Z$ 例子说明，预测闭合和乘法闭合是不同要求。设一个固定的 Heisenberg 映射为 $H$，初始效果族为 $S$，定义
+
+$$
+V_0=\operatorname{span}_{\mathbb R}(\{I\}\cup S),
+\qquad
+V_{n+1}=V_n+H(V_n).
+$$
+
+全体有限回拉的实线性空间为
+
+$$
+V_\infty
+=\operatorname{span}_{\mathbb R}
+\{H^k(A):A\in V_0, k\in\mathbb N\}.
+$$
+
+`operator_system_tower_once_stable_permanently` 说明，在单一保单位完全正 Heisenberg 映射的前提下，一层相邻稳定就会永久稳定；`future_statistics_iff_annihilates_infinite_system` 则把所有未来统计相同精确连接到差态对 $V_\infty$ 的迹配对全部为零。因此，$V_\infty$ 是相对于这组初始效果和这一个通道的预测载体。
+
+但令
+
+$$
+\mathcal A_\infty
+=\operatorname{Alg}^{\ast}_{\mathbb C}(V_\infty)
+$$
+
+表示包含 $V_\infty$ 的最小含单位复 $\ast$-子代数。一般只有
+
+$$
+V_\infty\subseteq (\mathcal A_\infty)_{\mathrm{sa}},
+$$
+
+而没有等号。两个可见效果的乘积、交换子或条件组合，可能产生原始未来词中没有出现的新方向。特别地，$V_{XZ}=\operatorname{span}_{\mathbb R}\{I,X,Z\}$ 对第 78 节指定仪器足以预测，却因为 $XZ=iY$ 而不是代数。
+
+因此必须区分：
+
+$$
+V_\infty=\text{对指定未来统计最小的线性预测载体},
+$$
+
+$$
+\mathcal A_\infty=\text{对指定可组合操作最小的代数载体}.
+$$
+
+若后续实验只查询原先的效果，加入所有乘积可能是过度保留；若后续实验允许先施加一个可见操作再查询另一个效果，则乘积会进入新的响应，不能只依靠 $V_\infty$ 上的读数。`prediction_closure_minimal_dynamical_repair` 给出相应的线性最小不变闭包，但没有把该闭包提升为乘法代数。
+
+### 80.2 固定代数的中心与块内量子自由度
+
+设有限维固定代数具有块分解
+
+$$
+\mathcal A
+\cong
+\prod_{\lambda\in\Lambda}M_{n_\lambda}(\mathbb C).
+$$
+
+`record_fixed_center_eq_block_scalars` 精确给出其中心：
+
+$$
+Z(\mathcal A)
+=
+\left\{(c_\lambda I_{n_\lambda})_{\lambda\in\Lambda}:c_\lambda\in\mathbb C\right\}.
+$$
+
+因此
+
+$$
+\dim_{\mathbb C}Z(\mathcal A)=|\Lambda|,
+\qquad
+\dim_{\mathbb C}\mathcal A=\sum_{\lambda\in\Lambda}n_\lambda^2.
+$$
+
+只有当所有 $n_\lambda=1$ 时，代数才交换，中心才等于整个代数。若某个 $n_\lambda>1$，同一个中心标签仍允许一个非平凡的块内量子系统；把标签 $lambda$ 当成完整经典对象，会把这部分可由后续操作恢复的关系一并丢掉。
+
+这给“经典记录”的含义加上一个边界：中心投影可以是稳定的经典标签，但中心标签的数量不等于完整联合系统的 Hilbert 维数，也不等于可组合算子的维数。`FiniteMemoryHistoryCapacity.finite_memory_history_capacity` 的 $N\le d$ 也只在 $N$ 个密度态被同一个 POVM 一次性完美区分时成立，不能把中心标签数自动解释成所有物理记忆的维数。
+
+### 80.3 Zeckendorf 标签只决定中心数量的特殊情形
+
+取禁止相邻 $11$ 的合法集合
+
+$$
+\mathcal W_L
+=\{w\in\{0,1\}^L:w_jw_{j+1}=0\},
+\qquad
+|\mathcal W_L|=F_{L+2}.
+$$
+
+若每个合法字串只对应一个一维块，则得到纯经典代数
+
+$$
+\mathcal A_Z
+=\bigoplus_{w\in\mathcal W_L}\mathbb C,
+$$
+
+其中心维数、代数维数和标签数都等于 $F_{L+2}$。这正是 Zeckendorf 刻度与经典记录完全吻合的特殊情况。
+
+若每个标签后面仍保留大小为 $n_w$ 的块，则
+
+$$
+\mathcal A_Z^{\mathrm{block}}
+=\bigoplus_{w\in\mathcal W_L}M_{n_w}(\mathbb C),
+$$
+
+并且
+
+$$
+\dim_{\mathbb C}Z(\mathcal A_Z^{\mathrm{block}})=F_{L+2},
+\qquad
+\dim_{\mathbb C}\mathcal A_Z^{\mathrm{block}}
+=\sum_{w\in\mathcal W_L}n_w^2.
+$$
+
+若物理 Hilbert 空间在第 $w$ 个块上的表示带有重数 $m_w$，其载体维数则为
+
+$$
+\dim\mathcal H=\sum_{w\in\mathcal W_L}m_wn_w.
+$$
+
+这三个数分别回答三个问题：合法标签有多少，可组合的算子有多少，实际联合载体有多少。因此不能从 $F_{L+2}$ 单独推出量子记忆维数、可见算子维数或未来统计的 Hankel 秩。
+
+第 78 节的三构型嵌入已经展示了同一组合法字串在加入补空间后会出现额外记录方向；这里的块分解把“标签之外仍有内部状态”写成了统一公式。若后续实验只访问中心，块内状态可以暂时隐藏；若允许块内操作，隐藏部分必须继续保留在模型中。
+
+### 80.4 近似乘法闭包与历史预算
+
+对一个有限预测截断 $V\subseteq V_\infty$，在选定的矩阵范数下定义乘法缺陷
+
+$$
+\eta(V)
+=
+\sup_{\substack{A,B\in V\\\|A\|,\|B\|\le1}}
+\operatorname{dist}(AB,V+iV).
+$$
+
+这里 $V+iV$ 是 $V$ 的复化；若 $\eta(V)=0$，则所有单位范数以内的可见乘积都落在复化空间中，因而该截断对这些乘积精确闭合。若 $\eta(V)>0$，至少有一对当前可见关系的组合产生了新的方向。研究上有两种不同处理：
+
+$$
+\begin{aligned}
+&\text{扩大记录，加入产生该乘积的历史关系；}\\
+&\text{固定允许误差，把 }\eta(V)\text{ 纳入预测误差预算。}
+\end{aligned}
+$$
+
+$\eta(V)$ 只量化一步的乘法缺口，不自动给出任意多步实验的误差界。多步控制、参考系统和有记忆环境仍需使用联合通道距离或相应的序列误差界；本节没有把 $\eta$ 宣称为一个已冻结的物理误差定理。
+
+因此，对“保留多少历史才能得到稳定经典现实”的问题，三层结构可以写成
+
+$$
+\boxed{
+\begin{gathered}
+\text{只预测指定未来读数：保留 }V_\infty;\\
+\text{允许可组合后续操作：保留 }\mathcal A_\infty;\\
+\text{只读取稳定经典标签：保留 }Z(\mathcal A_\infty);\\
+\text{存在量子块时：还要保留每个中心块的内部自由度。}
+\end{gathered}}
+$$
+
+Zeckendorf 约束可以决定中心标签的自然组织和数量 $F_{L+2}$，但不能替代 Heisenberg 演化、乘法闭包或块内量子动力学。所谓稳定经典现实不是一个脱离任务的单独刻度，而是相对于实验族和后续操作选择的三层对象：预测算子系统、可组合代数以及其中心记录。只有明确当前实验使用哪一层，才知道哪些历史可以安全丢弃，哪些历史会在下一次组合操作中重新显现。
+
+本节复用 `operator_system_tower_once_stable_permanently`、`future_statistics_iff_annihilates_infinite_system`、`prediction_closure_minimal_dynamical_repair`、`record_fixed_center_eq_block_scalars` 和 `finite_memory_history_capacity` 的现有结果。中心维数、块内自由度、乘法缺陷 $\eta(V)$ 与 Zeckendorf 分块的组合是本节的开放研究桥接，不冒充已有 Lean 定理。
+
+## 追加锚（新终端）
