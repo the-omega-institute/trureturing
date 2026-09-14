@@ -65,4 +65,25 @@ elab "observe_declared_template_enrollment" : command => do
 
 observe_declared_template_enrollment
 
+elab "observe_declared_template_plan_identity" : command => do
+  let saved ← get
+  let .ok () ← enroll ``symbolicPointwise | throwError "identity fixture enrollment failed"
+  let .ok plan := selectedPlan (← getEnv) ``symbolicPointwise
+    | throwError "identity fixture plan missing"
+  let .ok bytes := planEncoding plan | throwError "identity fixture encoding failed"
+  logInfo m!"[{if bytes.size == plan.serializedBytes && Sha256.hex bytes == plan.planIdentity then "PASS" else "FAIL"}] complete_plan_encoding_binds_all_nodes bytes={bytes.size} work={plan.chargedWork}"
+  let variants := #[
+    ("summary_changed_body_rejected", { plan with bodyIdentity := String.ofList (List.replicate 64 'a') }),
+    ("summary_wrong_owner_rejected", { plan with enrollmentOwner := `WrongOwner }),
+    ("summary_stale_policy_rejected", { plan with policyIdentity := String.ofList (List.replicate 64 'b') })]
+  for (label, variant) in variants do
+    let index := TemplateIndex.addImported {} variant
+    let result := index.lookup plan.name (pure () : Id Unit)
+    logInfo m!"[{if result matches .error "incomplete_closure:E7.import_identity" then "PASS" else "FAIL"}] {label}"
+  let valid := TemplateIndex.addImported {} plan
+  logInfo m!"[{if (valid.lookup plan.name (pure () : Id Unit)).isOk then "PASS" else "FAIL"}] fresh_source_bound_plan_accepted"
+  setEnv saved.env
+
+observe_declared_template_plan_identity
+
 end LeanInformationAudit.Tests.DeclaredTemplates

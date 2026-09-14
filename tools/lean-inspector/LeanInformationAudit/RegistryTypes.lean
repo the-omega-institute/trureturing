@@ -40,6 +40,11 @@ structure DependencyIdentity where
   bodyIdentity : String
   deriving Inhabited
 
+structure SourceInput where
+  path : String
+  sha256 : String
+  deriving BEq, Inhabited
+
 structure Slot where
   kind : SlotKind
   binderInfo : BinderInfo
@@ -55,20 +60,19 @@ structure TemplatePlanData where
   compatibilityVersion : Nat := 4
   compiler : String
   toolchain : String
+  policyIdentity : String
+  sourceInputs : Array SourceInput
   name : Name
   definitionOwner : Name
   enrollmentOwner : Name
   levelParams : List Name
   slots : Array Slot
-  rawType : Expr
-  rawBody : Expr
   typeIdentity : String
   bodyIdentity : String
   planIdentity : String
   dependencies : Array DependencyIdentity
   plan : PlanNode
   typePlan : PlanNode
-  proofTypes : Array Expr
   rules : Array String
   chargedWork : Nat
   serializedBytes : Nat

@@ -2112,6 +2112,7 @@ private structure WalkResult where
   incomplete : Bool
   admission : Option ProvenanceAdmissionWitness := none
   walked : Array String
+  walkedNames : Array Name := #[]
 
 private def collectReadout (env : Environment) (theoremName address : Name) (readout : Expr) (extractionWork : Nat := 0) (extractionFailed : Bool := false) : CoreM WalkResult := do
   let scope := (moduleScopeCache.getState env).getD (classifyModules env)
@@ -2148,7 +2149,7 @@ private def collectReadout (env : Environment) (theoremName address : Name) (rea
       state.unclassified.isNone then
     some ⟨"unclassified_root", address, namespaceLabel env address, address⟩
     else state.unclassified
-  return ⟨state.forbidden, unclassified, state.incomplete, admission, names⟩
+  return ⟨state.forbidden, unclassified, state.incomplete, admission, names, state.walked.toArray⟩
 
 private def safeCollect (env : Environment) (theoremName address : Name) (readout : Expr)
     (extractionWork : Nat := 0) (extractionFailed : Bool := false) : CoreM WalkResult :=
@@ -2218,7 +2219,7 @@ def templateArgumentsCurrent (theoremName : Name) (arguments : Array Expr)
     if result.forbidden then return .error "forbidden_dependency:dtr.argument_audit"
     if result.unclassified.isSome || result.admission.isNone then
       return .error "unclassified_form:dtr.argument_audit"
-    for name in result.walked do inputs := inputs.insert name.toName
+    for name in result.walkedNames do inputs := inputs.insert name
   return .ok (inputs.toArray, min 524288 availableWork - remaining)
 
 end LeanInformationAudit.RegistrationGates

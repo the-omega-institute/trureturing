@@ -998,6 +998,87 @@ def PlanNode.toExpr : PlanNode → Expr
   | .mdata m b => .mdata m b.toExpr
   | .proj n i b => .proj n i b.toExpr
 
+
+private partial def wirePlan (params : List Name) (depth : Nat) (plan : PlanNode) : WireM Unit := do
+  if depth > 256 then throw "incomplete_closure:E8.plan_depth"
+  let child := wirePlan params (depth + 1)
+  let raw := wireExpr params (depth + 1)
+  match plan with
+  | .atom e => emit "body"; raw e
+  | .supplied _ => throw "incomplete_closure:E7.supplied_in_static_plan"
+  | .expanded e body => emit "expanded"; raw e; child body
+  | .proofLeaf type e => emit "proof-leaf"; raw type; raw e
+  | .app f a => emit "application"; child f; child a
+  | .lam t b bi => emit "lambda"; emit (reprStr bi); child t; child b
+  | .forallE t b bi => emit "forall"; emit (reprStr bi); child t; child b
+  | .letE t v b nd => emit "let"; emit (toString nd); child t; child v; child b
+  | .mdata m b => emit "metadata"; raw (.mdata m (.bvar 0)); child b
+  | .proj n i b => emit "projection"; wireName n; emit (toString i); child b
+
+/-- The canonical wire includes every retained plan node and raw proof/expansion,
+all slots, identities, policy and source references. The hash and byte count are
+outputs of this encoding and are not recursively encoded inside themselves. -/
+def planEncoding (plan : TemplatePlanData) (fuel : Nat := 524288) : Except String ByteArray := do
+  let action : WireM Unit := do
+    emit "DTR-checked-plan-v1"
+    for version in #[plan.schemaVersion, plan.grammarVersion, plan.constructorRecursionVersion,
+        plan.compatibilityVersion] do emit (toString version)
+    emit plan.compiler; emit plan.toolchain; emit plan.policyIdentity
+    wireName plan.name; wireName plan.definitionOwner; wireName plan.enrollmentOwner
+    emit (toString plan.levelParams.length)
+    emit plan.typeIdentity; emit plan.bodyIdentity
+    emit (toString plan.slots.size)
+    for slot in plan.slots do
+      emit (reprStr slot.kind); emit (reprStr slot.binderInfo)
+      wireExpr plan.levelParams 0 slot.type
+    emit (toString plan.dependencies.size)
+    for dep in plan.dependencies do
+      wireName dep.name; wireName dep.owner; emit dep.typeIdentity; emit dep.bodyIdentity
+    emit (toString plan.sourceInputs.size)
+    for input in plan.sourceInputs do emit input.path; emit input.sha256
+    emit (toString plan.rules.size)
+    for rule in plan.rules do emit rule
+    -- Fixed-width work counter keeps total-work encoding stable.
+    emit (String.ofList (List.replicate (6 - (toString plan.chargedWork).length) '0') ++ toString plan.chargedWork)
+    wirePlan plan.levelParams 0 plan.typePlan
+    wirePlan plan.levelParams 0 plan.plan
+  let (_, state) ← action.run { remaining := min fuel 524288 }
+  if state.bytes.size > 65536 then throw "incomplete_closure:E8.plan_bytes"
+  return state.bytes
+
+def sourcePath (name : Name) : String :=
+  (if name.toString.startsWith "LeanInformationAudit." then "tools/lean-inspector/" else "") ++
+    name.toString.replace "." "/" ++ ".lean"
+
+private def policyPaths : Array String := #[
+  "Meta/lean-report.toml", "lean-toolchain", "lake-manifest.json",
+  "tools/lean-inspector/LeanInformationAudit/RegistryTypes.lean",
+  "tools/lean-inspector/LeanInformationAudit/Registry.lean",
+  "tools/lean-inspector/LeanInformationAudit/ReadoutProvenance.lean",
+  "tools/lean-inspector/LeanInformationAudit/Syntax.lean"]
+
+def readSourceInput (path : String) : CoreM SourceInput := do
+  let bytes ← IO.FS.readBinFile path
+  return { path, sha256 := Sha256.hex bytes }
+
+private def sourceInputs (env : Environment) (dependencies : Array DependencyIdentity) : CoreM (Array SourceInput) := do
+  let mut paths := policyPaths.push (sourcePath env.header.mainModule)
+  for dep in dependencies do
+    if dep.owner.toString.startsWith "D5." || dep.owner.toString.startsWith "LeanInformationAudit." then
+      let path := sourcePath dep.owner
+      unless paths.contains path do paths := paths.push path
+  (paths.qsort (· < ·)).mapM readSourceInput
+
+private def sourceIdentity (inputs : Array SourceInput) : String :=
+  Sha256.hex (Json.arr (inputs.map fun input => Json.arr #[Json.str input.path, Json.str input.sha256])).compress.toUTF8
+
+/-- Compare retained bytes; never refresh a stale plan by wrapping old olean
+contents with hashes from the current source tree. -/
+def validateSourceInputs (inputs : Array SourceInput) : CoreM Unit := do
+  for input in inputs do
+    unless (← readSourceInput input.path) == input do
+      throwError "incomplete_closure:E7.stale_source:{input.path}"
+
 end LeanInformationAudit.TemplateAudit
 
 namespace LeanInformationAudit.TemplateAudit
@@ -1054,8 +1135,13 @@ def TemplateIndex.addImported (index : TemplateIndex) (plan : TemplatePlanData) 
       plan.constructorRecursionVersion != 1 || plan.compatibilityVersion != 4 ||
       plan.name.isAnonymous || plan.definitionOwner.isAnonymous || plan.enrollmentOwner.isAnonymous ||
       key.size > 1024 || plan.serializedBytes == 0 || plan.serializedBytes > 65536 ||
-      plan.planIdentity.length != 64 then
+      plan.planIdentity.length != 64 || plan.policyIdentity.length != 64 ||
+      plan.compiler != Lean.versionString || plan.toolchain != Lean.versionString then
     return { index with error := some "incomplete_closure:E8.import_framing" }
+  let .ok encoded := planEncoding plan 65536
+    | return { index with error := some "incomplete_closure:E7.import_encoding" }
+  unless encoded.size == plan.serializedBytes && Sha256.hex encoded == plan.planIdentity do
+    return { index with error := some "incomplete_closure:E7.import_identity" }
   let retained := index.bytes + plan.serializedBytes + key.size
   if retained > 8388608 then
     return { index with error := some "incomplete_closure:E8.import_bytes" }
@@ -1271,7 +1357,7 @@ private partial def compileExpr (e : Expr) (depth : Nat := 0)
     if name == `OfNat.ofNat then
       unless typePosition && args.size == 3 && args[0]!.isConstOf `Nat &&
           args[2]!.isAppOfArity `instOfNatNat 1 && args[2]!.getAppArgs[0]!.equal args[1]! do
-        throwError "unclassified_form:E3.index_encoding:{e}:typePosition={typePosition}"
+        throwError "unclassified_form:E3.index_encoding:OfNat.ofNat"
       dependency info
       dependency (← getConstInfo `instOfNatNat)
       rule "E3.nat_index_encoding"
@@ -1449,21 +1535,31 @@ private def compileTemplate (name : Name) (constructors : Array Name) : MetaM Te
     | throwError "incomplete_closure:E7.type_identity"
   let .ok (bodyIdentity, bodyBytes) := rawIdentity info.levelParams info.value (state.remaining - typeBytes)
     | throwError "incomplete_closure:E7.body_identity"
-  let .ok (planIdentity, planBytes) := rawIdentity info.levelParams plan.toExpr
-      (state.remaining - typeBytes - bodyBytes)
-    | throwError "incomplete_closure:E8.plan_identity"
-  let dependencyBytes := state.dependencies.foldl (init := 0) fun size dep =>
-    size + dep.name.toString.utf8ByteSize + dep.owner.toString.utf8ByteSize + 128
-  let serializedBytes := typeBytes + bodyBytes + planBytes + dependencyBytes + 1024
-  if serializedBytes > 65536 then throwError "incomplete_closure:E8.plan_bytes"
-  return {
+  let inputs ← sourceInputs env state.dependencies
+  let policyIdentity := sourceIdentity (inputs.filter fun input => policyPaths.contains input.path)
+  let data : TemplatePlanData := {
     compiler := Lean.versionString, toolchain := Lean.versionString,
+    policyIdentity, sourceInputs := inputs,
     name, definitionOwner := owner, enrollmentOwner := env.header.mainModule,
-    levelParams := info.levelParams, slots, rawType := info.type, rawBody := info.value,
-    typeIdentity, bodyIdentity, planIdentity, dependencies := state.dependencies,
-    plan, typePlan, proofTypes := #[], rules := state.rules,
-    chargedWork := limit - state.remaining + typeBytes + bodyBytes + planBytes,
-    serializedBytes }
+    levelParams := info.levelParams, slots,
+    typeIdentity, bodyIdentity, planIdentity := "", dependencies := state.dependencies,
+    plan, typePlan, rules := state.rules,
+    chargedWork := limit - state.remaining + typeBytes + bodyBytes, serializedBytes := 0 }
+  let available := state.remaining - typeBytes - bodyBytes
+  let .ok first := planEncoding data available
+    | throwError "incomplete_closure:E8.plan_encoding"
+  -- Two serialization passes are both charged; the counter is fixed-width.
+  let data := { data with chargedWork := data.chargedWork + 2 * first.size }
+  let .ok bytes := planEncoding data (available - first.size)
+    | throwError "incomplete_closure:E8.plan_encoding"
+  return { data with planIdentity := Sha256.hex bytes, serializedBytes := bytes.size }
+
+def diagnosticFields (message : String) : String :=
+  match message.splitOn ":" with
+  | reason :: rule :: site =>
+    "reason=" ++ reason ++ " rule=" ++ rule ++ " site=" ++
+      (Json.str (String.intercalate ":" site)).compress
+  | _ => "reason=incomplete_closure rule=E8.exception site=" ++ (Json.str message).compress
 
 /-- Unsupported enrollment leaves no summary. All budgets are lower-only. -/
 def enroll (name : Name) (constructors : Array Name := #[]) : CommandElabM (Except String Unit) := do
@@ -1667,6 +1763,7 @@ private def validate (event : TemplateOccurrenceEvent) (descriptor : Expr) : Met
     | .ok plan => pure plan
     | .error reason => throwError reason
   let env ← getEnv
+  validateSourceInputs plan.sourceInputs
   unless env.contains name do throwError "incomplete_closure:dtr.template_owner"
   let owner := (RegistrationReifier.declaringModuleOf env name).getD env.header.mainModule
   unless owner == plan.definitionOwner && universeArgs.length == plan.levelParams.length &&
@@ -1726,7 +1823,7 @@ def assess (event : TemplateOccurrenceEvent) (claim : Option TemplateBindingClai
         let message ← error.toMessageData.toString
         let reason := if message.startsWith "unclassified_form:" || message.startsWith "forbidden_dependency:"
             || message.startsWith "incomplete_closure:" then message else "incomplete_closure:E8.assessment:" ++ message
-        return .declaredUnresolved s!"IE-C050 ClosedTruthReadout key={event.key.root}/{event.key.catalog}/{event.key.theoremName} reason={reason}")
+        return .declaredUnresolved s!"IE-C050 ClosedTruthReadout key={event.key.root}/{event.key.catalog}/{event.key.theoremName} {TemplateAudit.diagnosticFields reason}")
     return { occurrence := event, descriptor := some claim.descriptor, bindingOwner := some claim.owner, result }
 
 private initialize occurrenceInventory : SimplePersistentEnvExtension TemplateOccurrenceEvent (Array TemplateOccurrenceEvent) ←
@@ -1739,9 +1836,7 @@ private initialize bindingClaims : SimplePersistentEnvExtension TemplateBindingC
 def inventory (env : Environment) : Array TemplateOccurrenceEvent := occurrenceInventory.getState env
 def records (env : Environment) : Array BindingRecord := bindingRecords.getState env
 
-def sourcePath (name : Name) : String :=
-  (if name.toString.startsWith "LeanInformationAudit." then "tools/lean-inspector/" else "") ++
-    name.toString.replace "." "/" ++ ".lean"
+def sourcePath := TemplateAudit.sourcePath
 
 def publishRegistration (entry : InformationRegistryEntry) : Elab.Command.CommandElabM Unit := do
   let info ← getConstInfo entry.theoremName

@@ -474,7 +474,7 @@ private def elaborateTemplateEnrollment (id : TSyntax `ident)
   match ← TemplateAudit.enroll name constructors with
   | .ok () => pure ()
   | .error message =>
-    logWarning m!"IE-C050 ClosedTruthReadout template={name} reason={message}"
+    logWarning m!"IE-C050 ClosedTruthReadout template={name} {TemplateAudit.diagnosticFields message}"
 
 elab "register_information_template " id:ident : command =>
   elaborateTemplateEnrollment id 1 #[]
