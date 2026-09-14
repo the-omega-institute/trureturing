@@ -58,6 +58,10 @@ $$\forall m \in \mathrm{Nat},\; (m > 1) \Rightarrow (((\operatorname{Even}\left(
 
 *Proof.* Machine-checked in Lean as `D5/S3/ArithSums/RatajczakGcdSumParityCharacterization.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a008590-gcd-sum-parity-characterization` (proved) by `D5/S3/ArithSums/RatajczakGcdSumParityCharacterization.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a008590-gcd-sum-parity-characterization","declaration_gid":"D5/S3/ArithSums/RatajczakGcdSumParityCharacterization.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*
