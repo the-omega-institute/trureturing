@@ -204,6 +204,12 @@ syntax (name := registerInformationTheoremViaCmd)
 
 /-- Transaction boundary shared by registration and exception-injection controls. -/
 def registrationTransaction (action : CommandElabM Unit) : CommandElabM Unit := do
+  -- Command.tryCatch deliberately skips interrupts. At this boundary every
+  -- exception must restore the environment, including extension entries.
+  let _ : MonadExceptOf Exception CommandElabM := {
+    throw := throw
+    tryCatch := fun body handler ctx state =>
+      try body ctx state catch e => handler e ctx state }
   let saved ← getEnv
   let previousMessages := (← get).messages
   modify fun s => { s with messages := {} }
