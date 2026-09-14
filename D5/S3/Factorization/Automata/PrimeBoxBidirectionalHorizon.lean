@@ -62,16 +62,20 @@ theorem mixed_word_profile_classification [Fintype I] (a : I → Nat) (H : Nat) 
     induction w with
     | nil => simp [localWord]
     | cons b w ih =>
-        by_cases h : i = j <;> simp [localWord, h, ih]
+        by_cases h : i = j
+        · subst j
+          simp at ih
+          simp [List.map_cons, localWord, ih]
+        · simp [List.map_cons, localWord, h, ih]
   have hliftAllowed (e : PrimeCapacityHorizon.Capacity a) (i : I) (w : List Bool) :
       allowed a (some e) (w.map (fun b => (i, b))) ↔ accepts (a i) (e i) w = true := by
     constructor
     · intro he
-      simpa only [hlift, if_pos rfl] using he i
+      simpa [hlift] using he i
     · intro he j
       by_cases hij : i = j
       · subst j
-        simpa only [hlift, if_pos rfl] using he
+        simpa [hlift] using he
       · simp [hlift, hij, accepts, run, runTransition]
   have hscalar (i : I) (e f : Fin (a i + 1)) :
       (∀ w : List Bool, w.length ≤ H → accepts (a i) e w = accepts (a i) f w) ↔
