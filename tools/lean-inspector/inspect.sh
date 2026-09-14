@@ -344,9 +344,9 @@ fi
 
 if [[ "$delta_status" == "delta" || "$delta_status" == "reuse" ]]; then
   if [[ "$delta_status" == "reuse" ]]; then
-    cp "$delta_baseline" "$OUTPUT"
-    cp "${delta_baseline}.materials.zip" "${OUTPUT}.materials.zip"
-  elif ! python3 "$DELTA_SCRIPT" merge \
+    run_phase reuse-report cp "$delta_baseline" "$OUTPUT"
+    run_phase reuse-materials cp "${delta_baseline}.materials.zip" "${OUTPUT}.materials.zip"
+  elif ! run_phase delta-merge python3 "$DELTA_SCRIPT" merge \
       "$DELTA_PLAN" "$DELTA_SUBSET_OUTPUT" "$OUTPUT"; then
     delta_status="full-fallback"
   fi
