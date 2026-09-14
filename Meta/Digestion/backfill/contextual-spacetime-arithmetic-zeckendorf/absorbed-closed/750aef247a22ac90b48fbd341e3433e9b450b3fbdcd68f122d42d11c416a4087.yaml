@@ -2,7 +2,13 @@ fingerprints:
   raw_sha256: sha256:750aef247a22ac90b48fbd341e3433e9b450b3fbdcd68f122d42d11c416a4087
   normalized_sha256: sha256:750aef247a22ac90b48fbd341e3433e9b450b3fbdcd68f122d42d11c416a4087
 cas_ref: sha256:750aef247a22ac90b48fbd341e3433e9b450b3fbdcd68f122d42d11c416a4087
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S1/Digit/Infinite/MultiplierObstruction.multiplier_obstruction
+    target_statement_id: sha256:baa6fa5f69ba47b6a34622869f8b3dbd3f8db84a1e7140955acadbe0ce72db06
+  - gid: D5/S1/Digit/Infinite/SignedSeriesFibres.signed_series_fibres
+    target_statement_id: sha256:27879c3be37e0f7363c407727614c2f2aa123a41648c38fb48f6bb4532006b8f
+  - gid: D5/S1/Digit/Infinite/SignedSeriesRange.signed_series_range
+    target_statement_id: sha256:9d47ee68a40e19a32785b1263984b7d633188221567107d16f3612d0578f9777
 receipts:
   unresolved_subitems: []
   chain_atoms:
