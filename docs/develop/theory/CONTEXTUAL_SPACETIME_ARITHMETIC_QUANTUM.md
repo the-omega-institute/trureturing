@@ -19016,4 +19016,277 @@ Hankel 预测维数还取决于未来响应的线性秩，量子模型则可能�
 
 本节复用 `FiniteEquivalenceDescent`、`FiniteStabilityClassBound` 和 `StableDepthCardinalityBounds` 的既有声明；它们适用于有限确定性更新与读出关系。将这套关系塔解释为量子通道的过程记忆，需要另行给出量子状态空间、仪器协议和距离转换。
 
+## 77. 量子任务的可见商、序列核与不可见物理状态
+
+第 62 节已经给出顺序词效果的正交残差，第 59 节已经给出目标可见性的充分性与失败见证。第 75 节则把状态坐标上的投影下降接到输出因子化，第 76 节把有限确定性载体上的未来关系塔接到稳定深度。本节只做它们之间的接口：说明量子任务中的“同一个对象”应当由允许词的统计签名定义，并列出把这个签名接成动力学商时必须补上的条件。
+
+### 77.1 允许词的量子签名
+
+固定有限矩阵维数 $$d$$、字母表 $$\mathsf A$$、允许词族
+
+$$
+\mathcal A\subseteq \operatorname{List}(\mathsf A),
+$$
+
+以及每个字母对应的 Heisenberg 线性作用
+
+$$
+\mathsf I_a:
+\operatorname{Herm}_d
+\longrightarrow
+\operatorname{Herm}_d.
+$$
+
+令 $$E_w$$ 表示仓库 `sequentialWordEffect` 对词 $$w$$ 产生的 Hermitian effect。定义允许词的可见空间、不可见残差和统计签名：
+
+$$
+V_{\mathcal A}
+=
+\operatorname{span}_{\mathbb R}
+\{E_w:w\in\mathcal A\},
+$$
+
+$$
+K_{\mathcal A}=V_{\mathcal A}^{\perp},
+$$
+
+$$
+\Sigma_{\mathcal A}(s)
+=
+\bigl(
+\langle s,E_w\rangle_{\mathbb R}
+\bigr)_{w\in\mathcal A}.
+$$
+
+这里的内积是 Hermitian 空间上的实内积；它只记录所选词效果的实线性响应。它不是完整密度矩阵，也不是自动包含参考系统或环境的联合状态。
+
+`unified_sequential_kernel` 给出精确等价：
+
+$$
+\boxed{
+\Sigma_{\mathcal A}(s)
+=
+\Sigma_{\mathcal A}(s')
+\quad\Longleftrightarrow\quad
+s-s'\in K_{\mathcal A}.
+}
+$$
+
+因此，量子任务中的当前对象应先定义为签名的纤维，而不是把所有物理态直接认作同一个点。若增加允许词族
+
+$$
+\mathcal A_H\subseteq\mathcal A_{H+1},
+$$
+
+则
+
+$$
+V_{\mathcal A_H}
+\subseteq
+V_{\mathcal A_{H+1}},
+\qquad
+K_{\mathcal A_{H+1}}
+\subseteq
+K_{\mathcal A_H}.
+$$
+
+这是第 76 节未来关系塔
+
+$$
+R_{H+1}\subseteq R_H
+$$
+
+的线性量子对应：观察视界扩大时，允许区分的方向增加，不可见残差减少。这里得到的是子空间包含关系，不能直接改写成有限商类数；全体密度态是连续集合，不能套用有限载体的基数界。
+
+### 77.2 目标预测的充分性与不可见见证
+
+对一族实际效应 $$E_i$$，定义含单位方向的可见空间
+
+$$
+V
+=
+\operatorname{span}_{\mathbb R}
+\bigl(\{I\}\cup\{E_i\}_i\bigr).
+$$
+
+单位方向必须显式加入，因为密度态的迹已经固定；没有它，效应签名不能自动控制标量部分。
+
+这里的 $$E_i$$ 必须先满足源码中的物理效应条件：它们是 Hermitian、正半定，且 $$I-E_i$$ 也正半定。`target_prediction_sufficiency` 的第一半可表述为：若目标算子子空间 $$T$$ 满足
+
+$$
+T\subseteq V,
+$$
+
+那么两个密度态对全部 $$E_i$$ 的 trace 读数相同，就对每个 $$A\in T$$ 给出相同的目标期望。对 Hermitian 矩阵，仓库中的实内积与 trace 公式通过实部对应；该对应需要在具体有限维载体中明确，不能把两种配对无条件混写。
+
+第二半给出相反方向的物理见证。若
+
+$$
+A\notin V,
+$$
+
+则存在非零 Hermitian 方向 $$D\in V^{\perp}$$、某个 $$\varepsilon>0$$ 以及两个合法密度态
+
+$$
+\rho_{\pm}
+=
+\frac{I}{d}\pm\varepsilon D
+$$
+
+使得对每个已选效应 $$E_i$$，
+
+$$
+\operatorname{tr}(\rho_+E_i)
+=
+\operatorname{tr}(\rho_-E_i),
+$$
+
+但目标读数满足
+
+$$
+\operatorname{tr}(\rho_+A)
+-
+\operatorname{tr}(\rho_-A)
+=
+2\varepsilon\operatorname{tr}(DA)
+\ne0.
+$$
+
+这说明当前签名对该目标并不充分。它是一个存在性见证：源码只保证某个正 $$\varepsilon$$ 存在，不给出统一的数值下界；结论也不是迹距离或 diamond 距离下界。
+
+若目标是第 $$n$$ 步的效应 $$B$$，应先把 Heisenberg 回拉
+
+$$
+A=(\Phi^*)^n(B)
+$$
+
+放入目标空间，再检查 $$A\in V$$。当前读出空间只含 $$B$$ 而不含其回拉，并不能推出当前签名足以预测未来的 $$B$$ 读数。
+
+### 77.3 从可见空间到动力学下降的附加条件
+
+不能把 effect 空间 $$V$$ 与状态空间上的投影自动视为同一个算子。前者在 Heisenberg 的 Hermitian 算子空间，后者在 Schrödinger 状态坐标；需要有限维 Hilbert--Schmidt 对偶识别、明确的 adjoint，以及一个真正幂等的状态投影 $$P_H$$。
+
+在这些额外结构已经给定后，若 Schrödinger 作用为 $$T_a$$，并且其 Hilbert--Schmidt 对偶满足
+
+$$
+T_a^*=\mathsf I_a,
+$$
+
+再假设允许所有长度不超过 $$H$$ 的词，并且该词空间已经稳定：
+
+$$
+V_H=V_{H+1},
+$$
+
+则对任意 $$k\in V_H^{\perp}$$ 和 $$v\in V_H$$，
+
+$$
+\langle T_a k,v\rangle
+=
+\langle k,T_a^*v\rangle
+=0.
+$$
+
+所以
+
+$$
+T_a(V_H^{\perp})
+\subseteq
+V_H^{\perp},
+$$
+
+等价地，若 $$P_H$$ 是 $$V_H$$ 的正交投影，则
+
+$$
+P_HT_a(I-P_H)=0.
+$$
+
+这是 `VisibleAutonomyCriterion` 所需的 hidden-to-visible 不泄漏条件。由它可得到可见递推的因子化；再加上第 75 节 `ProjectedExactDescent` 的投影动力学条件，才可对任意输入历时推出
+
+$$
+P_Hx_n=\widetilde x_n
+$$
+
+以及在输出因子化条件下的
+
+$$
+Cx_n=\widetilde C\widetilde x_n.
+$$
+
+这里必须保留三条限制：没有 $$P_H^2=P_H$$，不能称为投影下降；没有 state/effect 对偶与 adjoint，不能从 effect span 推出状态不变性；没有量子正性、迹保持和通道假设，这些等式仍只是线性系统结论。
+
+若 $$V_H=V_{H+1}$$ 只是在任意集合中偶然相等，而允许词族没有前缀闭合性，则不能推出更长词仍在 $$V_H$$。永久稳定需要词族对前缀扩展闭合，或另行证明全部后续 Heisenberg 效果仍落在该空间。
+
+### 77.4 何时能接回第 76 节的有限商预算
+
+若选定一个有限物理状态样本
+
+$$
+X\subseteq\operatorname{DensityState},
+$$
+
+有确定更新 $$\tau:X\to X$$，并且第 $$k$$ 步的输出正好等于指定签名坐标，那么可定义
+
+$$
+x\sim_Hx'
+\quad\Longleftrightarrow\quad
+\Sigma_H(x)=\Sigma_H(x').
+$$
+
+这时才能把 $$x\sim_Hx'$$ 与第 76 节的 $$R_H$$ 对齐，并使用有限商类数和稳定深度界。对于包含多条分支或多字母选择的词族，不能直接把它写成单一的 $$q(\tau^{[k]}x)$$；必须固定字母调度，或把分支与历史并入扩大的确定状态。若状态空间是全部密度态，集合通常是连续的，应该报告
+
+$$
+\dim V_H,
+\qquad
+\dim K_H,
+$$
+
+或 centered trace-zero 塔，而不是报告 $$|X/R_H|$$ 的有限数值。
+
+同样，Zeckendorf 合法字串的数量
+
+$$
+|\mathcal W_L|=F_{L+2}
+$$
+
+只在明确指定
+
+$$
+w\longmapsto s_w,
+\qquad
+\tau:\mathcal W_L\to\mathcal W_L,
+\qquad
+q:\mathcal W_L\to O
+$$
+
+以及实际的序列仪器后，才是一个合法的有限载体大小。它不能自动等于
+
+$$
+\dim V_H,
+\qquad
+d^2-1,
+$$
+
+也不能自动等于量子记忆维数、Hankel 秩或 Hamiltonian 不变子空间的维数。Zeckendorf 负责组织合法标签；effect、仪器和更新负责决定哪些标签差异进入可见响应。
+
+### 77.5 本节对“稳定经典现实”的精确含义
+
+在这条接口上，“稳定的经典现实”可以写成三个同时满足的任务条件：
+
+$$
+\boxed{
+\text{签名商定义当前可区分对象}
+\;+
+\text{可见空间对目标足够}
+\;+
+\text{隐藏方向在指定动力学下不回流}
+}
+$$
+
+第一项由 $$\Sigma_H$$ 和 $$K_H$$ 给出；第二项由目标是否落在含单位方向的 effect span 决定；第三项需要真正的投影、对偶和下降条件。三项中任何一项缺失，当前读数都不能单独承担“以后仍然如此”的含义。
+
+因此，“要保留多少历史”没有一个脱离任务的整数答案。对有限 Zeckendorf 载体，先报告合法构型数量；对给定词族，再报告可见 span 与正交残差；对给定更新，最后检验目标回拉是否留在该 span，以及隐藏到可见的耦合是否为零。只有这些对象、操作和误差范围都被指定后，才可以说某一层记录已经足以支撑稳定的经典预测。
+
+本节复用 `unified_sequential_kernel`、`target_prediction_sufficiency`、`finite_time_observer_monotonicity` 和 `incomplete_observer_physical_counterexample` 的现有冻结声明，并把它们接到第 75、76 节的下降与有限关系塔。上述声明均在标准项目公理闭包下通过定向构建；本节没有新增 Lean 定理，也没有把线性 effect 结果提升为 CPTP、trace-distance 或 diamond 等价。
+
 ## 追加锚（新终端）

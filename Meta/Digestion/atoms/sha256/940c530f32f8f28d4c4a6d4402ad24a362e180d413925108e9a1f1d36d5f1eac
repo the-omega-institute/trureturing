@@ -1,0 +1,78 @@
+### 77.1 允许词的量子签名
+
+固定有限矩阵维数 $$d$$、字母表 $$\mathsf A$$、允许词族
+
+$$
+\mathcal A\subseteq \operatorname{List}(\mathsf A),
+$$
+
+以及每个字母对应的 Heisenberg 线性作用
+
+$$
+\mathsf I_a:
+\operatorname{Herm}_d
+\longrightarrow
+\operatorname{Herm}_d.
+$$
+
+令 $$E_w$$ 表示仓库 `sequentialWordEffect` 对词 $$w$$ 产生的 Hermitian effect。定义允许词的可见空间、不可见残差和统计签名：
+
+$$
+V_{\mathcal A}
+=
+\operatorname{span}_{\mathbb R}
+\{E_w:w\in\mathcal A\},
+$$
+
+$$
+K_{\mathcal A}=V_{\mathcal A}^{\perp},
+$$
+
+$$
+\Sigma_{\mathcal A}(s)
+=
+\bigl(
+\langle s,E_w\rangle_{\mathbb R}
+\bigr)_{w\in\mathcal A}.
+$$
+
+这里的内积是 Hermitian 空间上的实内积；它只记录所选词效果的实线性响应。它不是完整密度矩阵，也不是自动包含参考系统或环境的联合状态。
+
+`unified_sequential_kernel` 给出精确等价：
+
+$$
+\boxed{
+\Sigma_{\mathcal A}(s)
+=
+\Sigma_{\mathcal A}(s')
+\quad\Longleftrightarrow\quad
+s-s'\in K_{\mathcal A}.
+}
+$$
+
+因此，量子任务中的当前对象应先定义为签名的纤维，而不是把所有物理态直接认作同一个点。若增加允许词族
+
+$$
+\mathcal A_H\subseteq\mathcal A_{H+1},
+$$
+
+则
+
+$$
+V_{\mathcal A_H}
+\subseteq
+V_{\mathcal A_{H+1}},
+\qquad
+K_{\mathcal A_{H+1}}
+\subseteq
+K_{\mathcal A_H}.
+$$
+
+这是第 76 节未来关系塔
+
+$$
+R_{H+1}\subseteq R_H
+$$
+
+的线性量子对应：观察视界扩大时，允许区分的方向增加，不可见残差减少。这里得到的是子空间包含关系，不能直接改写成有限商类数；全体密度态是连续集合，不能套用有限载体的基数界。
+
