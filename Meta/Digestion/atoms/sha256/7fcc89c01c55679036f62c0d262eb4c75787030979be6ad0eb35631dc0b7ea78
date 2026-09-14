@@ -1,0 +1,8 @@
+**定义。** 给定词 $w=b_1\cdots b_n$，令 $s_0=0$，令 $s_j$ 为前 $j$ 个字母的净位移，并定义
+
+$$
+m(w)=\min_{0\le j\le n}s_j,\qquad
+M(w)=\max_{0\le j\le n}s_j,\qquad
+d(w)=s_n.
+$$
+

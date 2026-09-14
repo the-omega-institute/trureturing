@@ -1,0 +1,6 @@
+**定义。** 参数满足
+
+$$
+0\le l\le u\le a,\qquad -l\le d\le a-u.
+$$
+

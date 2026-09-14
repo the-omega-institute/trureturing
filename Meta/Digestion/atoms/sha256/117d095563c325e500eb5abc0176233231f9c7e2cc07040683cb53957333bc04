@@ -1,0 +1,6 @@
+**定义。** 对允许的继续词集合 $D\subseteq A^*$，定义
+
+$$
+s\sim_D t\iff \forall w\in D,\qquad o(\delta_w(s))=o(\delta_w(t)).
+$$
+
