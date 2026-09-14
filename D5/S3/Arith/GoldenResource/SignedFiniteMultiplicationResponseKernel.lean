@@ -6,7 +6,9 @@
    utility: none
    digest: Finite multiplication and division responses classify states by squarefree distance and truncated two-sided guards. -/
 
-import D5.S3.Arith.GoldenResource.CrossCapacityMultiplicationResponseKernel
+import D5.S3.Arith.GoldenResource.FiniteMultiplicationResponseKernel
+import D5.S0.Rewriting.GuardedBoxPaths
+import Mathlib.Algebra.Ring.Commute
 
 set_option autoImplicit false
 set_option maxHeartbeats 800000
