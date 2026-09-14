@@ -28,39 +28,17 @@ public sealed class ScribeContentChecksScriptTests
     }
 
     [Theory]
-    [InlineData(false)]
-    [InlineData(true)]
-    public void RegisteredInputChangesAndDeletionsSelectChecks(bool deleted)
+    [InlineData("deleted-producer", "projections,describe-report")]
+    [InlineData("manifest", "projections,describe-report")]
+    [InlineData("blueprint", "describe-report,markdown-check")]
+    public void RegisteredProducerDeltaPreservesContentRouting(string change, string expected)
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new ScribeContentFixture();
-        fixture.ChangeRegisteredInput(deleted);
+        fixture.ChangeRegisteredInput(change);
         var result = fixture.RunGate(0);
-        Assert.Equal(0, result.ExitCode);
-        Assert.Equal(new[] { "projections", "describe-report" }, fixture.Invocations);
-    }
-
-    [Fact]
-    public void UnregisteredScriptDoesNotExpandScribeInputs()
-    {
-        if (OperatingSystem.IsWindows()) return;
-        using var fixture = new ScribeContentFixture();
-        fixture.AddUnregisteredScript();
-        Assert.Equal(0, fixture.RunGate(0).ExitCode);
-        Assert.Empty(fixture.Invocations);
-    }
-
-    [Fact]
-    public void MissingScribeRegistrationFailsSpecifically()
-    {
-        if (OperatingSystem.IsWindows()) return;
-        using var fixture = new ScribeContentFixture();
-        fixture.RemoveRegistration();
-        var result = fixture.RunGate(0);
-        Assert.Equal(2, result.ExitCode);
-        Assert.Contains("scribe-content-checks", Encoding.UTF8.GetString(result.StandardError));
-        Assert.Contains("Meta/lean-report.toml", Encoding.UTF8.GetString(result.StandardError));
-        Assert.Empty(fixture.Invocations);
+        Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
+        Assert.Equal(expected.Split(','), fixture.Invocations);
     }
 
     [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
@@ -93,10 +71,6 @@ public sealed class ScribeContentChecksScriptTests
                 Path.Combine(TestRepositoryLayout.FindRoot(), CacheInputPath), Path.Combine(repository, CacheInputPath));
             ScriptHarnessScratch.CopyScriptInto(
                 Path.Combine(TestRepositoryLayout.FindRoot(), CacheFetcherPath), Path.Combine(repository, CacheFetcherPath));
-            Write("Meta/lean-report.toml", "compatibility_version = 1\n"
-                + "source_patterns = [\"Trureturing.lean\", \"D5/**/*.lean\"]\n"
-                + "scribe_check_inputs = [\"tools/scripts/worktree/lean-cache-publish.sh\", \"tools/Registered/**/*.cs\"]\n");
-            Write("tools/Registered/Nested/Probe.cs", "// registered input\n");
             Write("tools/lean-inspector/inspect.sh", "#!/bin/bash\n");
             Write("tools/scripts/lean-report-pair.sh", "#!/bin/bash\n");
             // Synthetic producer input; no assertions depend on the repository workflow text.
@@ -118,6 +92,11 @@ public sealed class ScribeContentChecksScriptTests
                 fi
                 PATH="$ORIGINAL_PATH" exec dotnet "$@"
                 """);
+            Write("Trureturing.lean", "-- fixture\n");
+            Write("lean-toolchain", "leanprover/lean4:v4.31.0\n");
+            Write("lake-manifest.json", "{}\n");
+            Write("lakefile.toml", "name = \"fixture\"\n");
+            LeanReportRegistrationFixture.Install(repository);
             RunGit("init", "--quiet");
             RunGit("config", "user.email", "stratalint@example.invalid");
             RunGit("config", "user.name", "StrataLint Tests");
@@ -131,16 +110,14 @@ public sealed class ScribeContentChecksScriptTests
         internal void ChangeFetcher() => ScriptHarnessScratch.AppendScratchText(
             Path.Combine(repository, CacheFetcherPath), "# fetch acceptance changed\n");
 
-        internal void ChangeRegisteredInput(bool deleted)
+        internal void ChangeRegisteredInput(string change)
         {
-            var path = Path.Combine(repository, "tools/Registered/Nested/Probe.cs");
-            if (deleted) ScriptHarnessScratch.DeleteScratchFile(path);
-            else ScriptHarnessScratch.AppendScratchText(path, "// changed\n");
+            if (change == "deleted-producer")
+                TemporaryFileSystem.File.Delete(Path.Combine(repository, "tools/StrataLint.Engine/Fixture.cs"));
+            else if (change == "manifest")
+                ScriptHarnessScratch.AppendScratchText(Path.Combine(repository, "lean-report-inputs.json"), "\n");
+            else Write("Blueprint/Probe.scribe.cs", "// document\n");
         }
-
-        internal void AddUnregisteredScript() => Write("tools/scripts/unrelated.sh", "#!/bin/bash\n");
-        internal void RemoveRegistration() => Write("Meta/lean-report.toml",
-            "compatibility_version = 1\nsource_patterns = [\"Trureturing.lean\", \"D5/**/*.lean\"]\n");
 
         internal ProcessOutput RunGate(int childExit) => TestProcessRunner.Run(
             "/bin/bash",

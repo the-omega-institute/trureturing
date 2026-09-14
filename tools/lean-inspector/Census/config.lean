@@ -10,7 +10,13 @@ private partial def jsonValue : Value → Json
   | _ => Json.null
 
 def main (args : List String) : IO Unit := do
-  let [source] := args | throw <| IO.userError "expected Lake TOML configuration"
+  let (source, output) ← match args with
+    | [source] => pure (source, none)
+    | [source, "--output", output] => pure (source, some output)
+    | _ => throw <| IO.userError "expected Lake TOML configuration [--output FILE]"
   let result ← (loadToml (Parser.mkInputContext (← IO.FS.readFile source) source)).toBaseIO
   let .ok table := result | throw <| IO.userError "IE-C044 Lake TOML parse failed"
-  (← IO.getStdout).putStrLn (jsonValue (.table .missing table)).compress
+  let json := (jsonValue (.table .missing table)).compress
+  match output with
+  | none => (← IO.getStdout).putStrLn json
+  | some path => IO.FS.writeFile path (json ++ "\n")

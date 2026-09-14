@@ -13,8 +13,8 @@ if [[ "${BASH_SOURCE[0]}" == "$0" ]]; then
       *) echo "lean-cache-input: unknown argument '$1'" >&2; exit 2 ;;
     esac
   done
-  [[ "$COMMAND" == "address" || "$COMMAND" == "dependency-address" ]] \
-    || { echo "usage: lean-cache-input.sh address|dependency-address --repository DIR" >&2; exit 2; }
+  [[ "$COMMAND" == "address" || "$COMMAND" == "dependency-address" || "$COMMAND" == "build-snapshot-address" ]] \
+    || { echo "usage: lean-cache-input.sh address|dependency-address|build-snapshot-address --repository DIR" >&2; exit 2; }
   [[ -n "$REPOSITORY" && "$REPOSITORY" == /* && -d "$REPOSITORY" ]] \
     || { echo "lean-cache-input: --repository requires an absolute directory" >&2; exit 2; }
   REPOSITORY="$(cd "$REPOSITORY" && pwd -P)"
@@ -315,8 +315,8 @@ append_manifest_entry() {
 }
 
 # The report inspector is a Lean program too. Keep its source closure owned by
-# this compiled-cache helper. Report compatibility deliberately excludes these
-# supporting sources and is owned by Meta/lean-report.toml.
+# this compiled-cache helper. Inspector report facets trace registered producers
+# separately; compiled Lean source/config addresses retain their existing meaning.
 lean_inspector_source_paths() {
   local path
   [[ -d "$REPOSITORY/tools/lean-inspector" ]] || return 0
@@ -392,6 +392,14 @@ if [[ "${BASH_SOURCE[0]}" == "$0" ]]; then
   prepare_memo
   if [[ "$COMMAND" == "dependency-address" ]]; then
     lean_dependency_sha256
+  elif [[ "$COMMAND" == "build-snapshot-address" ]]; then
+    # One immutable CI snapshot carries both ordinary Lean and native Inspector
+    # facets. Preserve the existing Lean identities and restore-prefix scope;
+    # distinguish producer-only changes in this snapshot's final generation.
+    snapshot_manifest="$TMP_ROOT/build-snapshot.manifest"
+    lean_cache_address > "$snapshot_manifest"
+    "$REPOSITORY/tools/scripts/report/lean-report-input.sh" address --repository "$REPOSITORY" >> "$snapshot_manifest"
+    hash_file "$snapshot_manifest"
   else
     lean_cache_address
   fi

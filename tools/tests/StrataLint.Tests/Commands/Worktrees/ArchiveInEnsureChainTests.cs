@@ -17,6 +17,39 @@ namespace StrataLint.Tests;
 public sealed partial class LeanCacheEnsureCommandTests
 {
     [Fact]
+    public void PrivateReleaseFallbackPreservesDefaultThroughBoundedEnsureOwner()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        var target = AddWorktree(repository.Path, "private-release-default");
+        LeanCacheStamp.Write(Path.Combine(target, ".lake"), ReadPins(target));
+        var script = LeanArchiveFetch.ScriptPath(target);
+        Directory.CreateDirectory(Path.GetDirectoryName(script)!);
+        File.WriteAllText(script, """
+            #!/bin/sh
+            printf '%s\n' "$@" > fetch-arguments
+            for argument in "$@"; do
+              if [ "$argument" = --allow-seed ]; then
+                echo 'LEAN_CACHE_FETCH {"status":"unpacked","mode":"seed"}'
+                exit 0
+              fi
+            done
+            echo 'LEAN_CACHE_FETCH {"status":"miss","reason":"seed not allowed"}'
+            exit 1
+            """ + "\n");
+
+        var result = WorktreeCommand.Run(repository.Path, ["ensure-cache", "--path", target]);
+
+        Assert.True(result.Success, result.Error);
+        var receipt = ReadReceipt(result);
+        Assert.Equal("miss", receipt.GetProperty("archive_status").GetString());
+        Assert.Equal("seed not allowed", receipt.GetProperty("archive_reason").GetString());
+        Assert.Equal(["fetch", "--repository", target],
+            File.ReadAllLines(Path.Combine(target, "fetch-arguments")));
+    }
+
+    [Fact]
     public void ColdProjectWithAMatchingStampFetchesTheArchiveAndRecordsItsProducer()
     {
         using var repository = new TemporaryDirectory();
