@@ -13,8 +13,9 @@ motivation_gids:
 
 This dossier deliberately anchors only the equality
 `rho^{ab,red}_t(2n+1) = rho^{ab,red}_t(n+1)` for every nonnegative integer
-`n`, proposed in Section 3 (Conclusion), page 15 of arXiv:2509.16034v1.
-The caller-supplied reading, 2026-09-07, quotes its source sentence:
+`n`, proposed in Section 3 (Conclusion), page 15 of arXiv:2509.16034v1 and
+printed page 14 of the verified journal version. The shared Library note
+records the journal citation. The source sentence is:
 
 > Although it appears that rho^{ab,red}_t(2n+1) = rho^{ab,red}_t(n+1) for
 > nonnegative integers n, the problem of determining a full recursion for
@@ -22,8 +23,8 @@ The caller-supplied reading, 2026-09-07, quotes its source sentence:
 
 `red(w)` collapses every maximal constant run; reduced abelian complexity
 counts all length-`n` factors up to rearrangement of their reduced words
-with equal reduced length. The full recursion and the four further open
-items in the paragraph, namely the nonzero sign of `rho(4n+2)-rho(4n)`, a
+with equal reduced length. The full recursion and four further questions
+in the source paragraph, namely the nonzero sign of `rho(4n+2)-rho(4n)`, a
 recursion for `rho(4n)`, equation (11), and non-k-automaticity of sequence
 (10), are deliberately out of scope.
 
@@ -36,10 +37,11 @@ explicit rather than depending on a finite sampled prefix.
 
 ## Gap
 
-The caller reports that the paper does not prove this odd equality. Its
-formal counterpart is already frozen; the missing item addressed here is
+The paper does not prove this odd equality. Its formal counterpart is
+already frozen; the missing item addressed here is
 the literature-backed pool entry. No assertion about a full recursion or
-any of the other four open items follows from this dossier.
+any of the other four source questions follows from this dossier's odd
+recurrence anchor.
 
 ## Route
 
@@ -72,29 +74,36 @@ search or exhaustive factor computation was performed here.
   stating `R (2^k+1) = 3`; it is not another anchored open problem.
 - Machine-checkable frozen-state receipt:
   `Golden/Frozen/state/D5/S1/Words/Complexity/ThueMorseReducedAbelianOdd.lean.json`.
-  The worker's `test -f` exited 0 on 2026-09-07.
 - Literature reading and locators: `Library/Words/campbell2025reduced.md`.
   Theory candidates 6.223 and 6.224 supply provenance context only.
+- The journal venue, February 20, 2026 publication date and printed DOI
+  `10.5281/zenodo.18714474` are verified from the journal PDF, as documented
+  in the Library note. The front matter retains the original arXiv DOI and
+  bibkey; journal publication is not an arXiv v2.
 
 ## Triage
 
 `theorem`. The exact odd recurrence for the all-start definition has a frozen
 kernel-verified proof, subject to the source correspondence limitation below.
-This classification neither covers the paper's other open items nor binds a
+This classification neither covers the paper's other questions nor binds a
 resolution claim.
+
+For the related question about sequence (10), the shared Library note and
+the `ThueMorseReducedAbelianEven` Scribe mirror give an expository consequence
+of the existing extrema recurrences and weighted interval count: `R` is
+unbounded on positive lengths and therefore non-k-automatic in every integer
+base `k >= 2`. This is compatible with `R(2^k+1) = 3`; unboundedness does not
+mean convergence to infinity. No separately kernel-checked nonautomaticity
+endpoint or typed resolution claim is supplied, and the sole anchor of this
+dossier remains the odd recurrence.
 
 ## ASSUMED-UNVERIFIED
 
 - No repository machine verifies that the Lean statement is equivalent to the
-  paper's natural-language proposition. The caller-supplied comparison of
-  the all-start definitions, 2026-09-07, is a human reading, not a proof of
-  equivalence between the source text and Lean.
-- The theory volume's printed venue string, *INTEGERS* 26 (2026), A34, was
-  not independently verified by the caller or this worker. The Library
-  note binds the verified arXiv DOI and metadata.
-- The API, DOI redirect, PDF, and report that the equality is unproved in
-  the paper are caller-supplied. This worker did not fetch those sources
-  again or rebuild Lean; frozen-state existence was checked locally.
-- No literature search for a later resolution of the conjecture was performed;
-  the open status recorded in the problem candidate is the status stated in
-  this arXiv version, not an assessment of the subsequent literature.
+  paper's natural-language proposition. The comparison of the all-start
+  definitions is a reading of the source, not a machine proof of equivalence
+  between the source text and Lean.
+- First-publication priority for the odd recurrence is not established.
+  The source's unproved wording describes that publication. The Library
+  note's targeted later-literature search concerns nonautomaticity and is
+  limited to the searched scope, not a worldwide absence certification.

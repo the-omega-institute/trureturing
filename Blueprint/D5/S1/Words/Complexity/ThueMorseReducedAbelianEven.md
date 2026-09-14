@@ -60,6 +60,30 @@ $$\forall n \in \mathbb{N}, 0 < n \implies (\operatorname{t}\left(n\right) = \op
 
 The alternation counts realised at a fixed length fill an interval, so the class count is the size of a weighted interval fixed by the two extremes. Moving the length from 4n to 4n+2 shifts that interval by a controlled amount, and the gap between the two counts collapses to the difference of the extremes taken modulo two. The previous parity statement then decides it. The hypothesis on n is needed: at n equal to zero the gap is two.
 
+## Consequence for sequence (10)
+
+The journal version ends Section 3, on printed page 14, by asking for non-k-automaticity of sequence (10). That sequence is the full natural-valued reduced abelian complexity at positive factor lengths. The verified journal citation and exact source sentence are recorded in `D5/L/Words/campbell2025reduced`. The recurrence mechanism comes from the paper's Theorem 1 and Lemmas 2–3; factor lengths do not shift when letter indices are translated from one to zero.
+
+Here m(n) and M(n) abbreviate minAlternations n and maxAlternations n, and w(n) = M(n) - m(n). Their argument counts edges: they correspond to the paper's extrema at length n+1. The existing kernel-checked extrema_bounds, extrema_even and extrema_odd in this frozen module give the following identities for every natural n. The bounds m(n) <= M(n) <= n justify normalizing the natural-number subtractions.
+
+$$
+\operatorname{m}\left(4 \cdot n + 1\right) = 2 \cdot n + \operatorname{m}\left(n\right),\quad\operatorname{M}\left(4 \cdot n + 1\right) = 2 \cdot n + 1 + \operatorname{M}\left(n\right)
+$$
+
+$$
+\operatorname{w}\left(4 \cdot n + 1\right) = \operatorname{w}\left(n\right) + 1,\quad\operatorname{w}\left(0\right) = 0
+$$
+
+The existing complexity_weighted formula counts the classes realised over all starts, using run counts from m(n)+1 to M(n)+1. Each run count r has weight 1 + (r mod 2), at least one, so
+
+$$
+\operatorname{R}\left(n + 1\right) \geq \operatorname{w}\left(n\right) + 1
+$$
+
+Set a_0 = 0 and a_(j+1) = 4a_j + 1. Induction gives w(a_j) = j, hence R(a_j+1) >= j+1 for every natural j. Thus R is unbounded on positive lengths. Every finite automaton with a natural-valued output map has a finite, bounded output range, so it cannot produce this sequence in any integer base k >= 2.
+
+This is unboundedness, not convergence to infinity; the existing R(2^k+1) = 3 remains compatible. This argument is exposition from existing ingredients, with no separately kernel-checked nonautomaticity endpoint or typed resolution claim. The source-to-Lean correspondence rests on reading the definitions, not a machine proof of equivalence. The argument does not determine the nonzero sign in equation (11) or a full recursion; the Library note states the limits of the literature search and makes no priority claim.
+
 ## References
 
 - Truth anchor: `D5/S1/Words/Complexity/ThueMorseReducedAbelianEven.alternation_extrema_parity`
