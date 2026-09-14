@@ -4,8 +4,7 @@
    mirror-E: none(waiver:all-prime-boxes-all-mixed-words)
    anchors: []
    utility: none
-   digest: Mixed multiply/divide continuations on a finite prime box induce
-     exactly the product of realized two-boundary horizon profiles. -/
+   digest: Mixed multiply/divide continuations on a finite prime box induce exactly the product of realized two-boundary horizon profiles. -/
 
 import D5.S3.Factorization.Automata.BoundedPrimeHorizon
 import D5.S3.Factorization.Automata.PrimeCapacityHorizon
@@ -15,7 +14,7 @@ open scoped BigOperators
 
 namespace D5.S3.Factorization.Automata.PrimeBoxBidirectionalHorizon
 
-open BoundedPrimeWalk BoundedPrimeHorizon
+open BoundedPrimeHorizon
 open D5.S0.Automata.TypedPartialDFAOOverBase
 
 variable {I : Type*} [DecidableEq I]
@@ -37,44 +36,6 @@ def allowed (a : I → Nat) : Option (PrimeCapacityHorizon.Capacity a) → List 
 def boxStep (a : I → Nat) (e : PrimeCapacityHorizon.Capacity a) (c : I × Bool) :
     Option (PrimeCapacityHorizon.Capacity a) :=
   (step (a c.1) (e c.1) c.2).map (fun next => Function.update e c.1 next)
-
-/-- The ordered joint runner and the conjunction of ordered local runners have
-exactly the same guard semantics. This provides the missing shared-history
-transport before the profile quotient is used. -/
-theorem chronological_legality (a : I → Nat) (e : PrimeCapacityHorizon.Capacity a)
-    (w : List (I × Bool)) :
-    (runTransition (boxStep a) e w).isSome = true ↔ allowed a (some e) w := by
-  induction w generalizing e with
-  | nil => simp [runTransition, allowed, localWord, accepts, run]
-  | cons c w ih =>
-      rcases c with ⟨i, b⟩
-      cases hs : step (a i) (e i) b with
-      | none =>
-          constructor
-          · intro h
-            simp [runTransition, boxStep, hs] at h
-          · intro h
-            have hi := h i
-            simp [localWord, accepts, run, runTransition, hs] at hi
-      | some next =>
-          let e' := Function.update e i next
-          have hleft : (runTransition (boxStep a) e ((i,b) :: w)).isSome =
-              (runTransition (boxStep a) e' w).isSome := by
-            simp [runTransition, boxStep, hs, e']
-          rw [hleft, ih e']
-          have hobs (j : I) :
-              accepts (a j) (e' j) (localWord w j) =
-              accepts (a j) (e j) (localWord ((i,b) :: w) j) := by
-            by_cases hij : i = j
-            · subst j
-              simp [e', localWord, accepts, run, runTransition, hs]
-            · have hji : j ≠ i := Ne.symm hij
-              simp [e', Function.update, localWord, hij, hji]
-          constructor
-          · intro h j
-            exact (hobs j).symm.trans (h j)
-          · intro h j
-            exact (hobs j).trans (h j)
 
 abbrev Profile (a : I → Nat) (H : Nat) := ∀ i, Fin (min (a i) (2 * H) + 1)
 
@@ -180,7 +141,6 @@ theorem mixed_word_profile_classification [Fintype I] (a : I → Nat) (H : Nat) 
             simp only [boxCode, Option.map_some, Option.some.injEq, funext_iff]
   · simp [Profile, Fintype.card_pi, Nat.add_comm]
 
-#print axioms chronological_legality
 #print axioms mixed_word_profile_classification
 
 end D5.S3.Factorization.Automata.PrimeBoxBidirectionalHorizon

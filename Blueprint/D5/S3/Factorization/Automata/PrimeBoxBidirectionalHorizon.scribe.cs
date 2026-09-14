@@ -15,20 +15,6 @@ internal sealed class PrimeBoxBidirectionalHorizonDocument : IScribeDocumentDefi
                 + "The initial state is one capacity-bounded exponent tuple. Commands retain "
                 + "their order within each register, while different registers act independently.")),
             Describe.Lean(
-                DescribeId.Create("prime-box-chronological-guard-transport"),
-                DeclarationHandle.Create(
-                    "D5/S3/Factorization/Automata/PrimeBoxBidirectionalHorizon.chronological_legality"),
-                H("One joint chronological run, not independent edge witnesses"),
-                StatementSource.FromAuthor(Disp(Seq(
-                    F.Id("jointRunIsDefined"), Sp, Eq, Sp, F.Id("allOrderedLocalRunsAreDefined")))),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "Induction on the mixed command list transports the actual repository "
-                    + "partial runner through coordinate updates. A local failure forces a "
-                    + "joint failure; a successful update changes only that register. This "
-                    + "proves that the same initial tuple witnesses the entire history."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("prime-box-exact-bidirectional-profile"),
                 DeclarationHandle.Create(
                     "D5/S3/Factorization/Automata/PrimeBoxBidirectionalHorizon.mixed_word_profile_classification"),
