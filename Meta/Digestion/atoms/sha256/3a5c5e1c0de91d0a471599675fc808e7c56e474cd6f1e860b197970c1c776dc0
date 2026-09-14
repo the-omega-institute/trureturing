@@ -1,0 +1,8 @@
+**假设。** 设
+
+$$
+N=\prod_{i\in I}p_i^{a_i},\qquad
+d=\prod_{i\in I}p_i^{e_i},\qquad
+0\le e_i\le a_i,
+$$
+
