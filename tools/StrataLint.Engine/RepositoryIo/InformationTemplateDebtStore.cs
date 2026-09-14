@@ -85,6 +85,13 @@ public static class InformationTemplateDebtStore
         return new(InformationTemplateJson.Hash(InformationTemplateJson.String(value, "seed_base"), 40), activated.GetBoolean());
     }
 
+    public static ImmutableArray<byte> WriteActivation(InformationTemplateActivation activation) =>
+        InformationTemplateJson.Canonical(JsonSerializer.SerializeToElement(new
+        {
+            schema_version = 1, seed_base = InformationTemplateJson.Hash(activation.SeedBase, 40),
+            activated = activation.Activated,
+        }));
+
     internal static JsonElement KeyJson(InformationOccurrenceKey key) => JsonSerializer.SerializeToElement(new
     {
         root = key.Root, registration_module = key.RegistrationModule, theorem = key.Theorem,
