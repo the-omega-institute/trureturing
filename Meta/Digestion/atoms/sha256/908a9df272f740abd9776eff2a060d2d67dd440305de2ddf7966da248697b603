@@ -1,0 +1,39 @@
+**命题 78.8（任意有限父 POVM 的精确存储不可能性）。** 定义 78.7 中不存在满足
+
+$$
+\operatorname{tr}(\rho E_s^b)=\operatorname{tr}(\rho P_s^b)
+\quad\text{对全部 }\rho,b,s
+$$
+
+的存储和译码方案。
+
+证明。对任意这样的方案，定义四个正效应
+
+$$
+G_{su}=\sum_\lambda k_X(s\mid\lambda)k_Z(u\mid\lambda)M_\lambda.
+$$
+
+由两个译码核的归一化，
+
+$$
+\sum_{s,u}G_{su}=I,\qquad
+\sum_uG_{su}=E_s^X,\qquad
+\sum_sG_{su}=E_u^Z.
+$$
+
+这是构造联合边缘的数学乘积耦合，不要求同时运行两次实际查询。若假设中的全部密度态读数相等，则 $E_s^b=P_s^b$：Hermitian 差若非零，其某个非零特征值的单位本征向量所定义的纯态就给出非零读数，矛盾。因此
+
+$$
+0\le G_{su}\le P_s^X,\qquad0\le G_{su}\le P_u^Z.
+$$
+
+沿用第 38 节的正效应支撑论证：若 $0\le G\le P$ 且 $P$ 是正交投影，对 $v\in\ker P$ 有
+
+$$
+0\le\langle v,Gv\rangle\le\langle v,Pv\rangle=0.
+$$
+
+因 $\langle v,Gv\rangle=\|G^{1/2}v\|^2$，有 $Gv=0$。再由自伴随性，$\operatorname{ran}G\subseteq(\ker P)^\perp=\operatorname{ran}P$。这里 $P_s^X$ 的值域由 $(|0\rangle+s|1\rangle)/\sqrt2$ 张成，而 $P_u^Z$ 的值域由 $|0\rangle$ 或 $|1\rangle$ 张成；它们的交为零。故每个 $G_{su}=0$，与 $\sum_{s,u}G_{su}=I$ 矛盾。
+
+这一支撑原则也是 Heinosaari、Reitzner、Stano，*Notes on Joint Measurability of Quantum Observables*，[arXiv:0811.0783，附录 Proposition 8](https://arxiv.org/abs/0811.0783) 中处理任意联合 POVM 的关键：一个锐边缘已强制相容性。此处直接使用值域交为零的量子比特特例，不以“联合测量本身也是锐测量”为前提。证毕。
+

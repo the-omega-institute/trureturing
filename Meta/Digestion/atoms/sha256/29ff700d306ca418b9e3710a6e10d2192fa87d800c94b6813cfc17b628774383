@@ -1,0 +1,33 @@
+**命题 78.2（第 77 节线性接口的物理限定）。** 第 77.1 节的签名核等价只需实 Hermitian 线性作用；把其中的响应解释为物理序列概率，须另加定义 78.1 的输入和仪器假设。第 77.2 节的目标充分性适用于 $d\ge1$ 及含单位方向的空间
+
+$$
+V=\operatorname{span}_{\mathbb R}\bigl(\{I_d\}\cup\{E_i\}_i\bigr),
+\qquad 0\le E_i\le I_d.
+$$
+
+其中加入 $I_d$ 是利用已知的迹一约束，不要求额外测量单位算子；对任何标量目标 $aI_d$，期望已经恒等于 $a$。若 $A\notin V$，则有对所有 $E_i$ 同读数、对 $A$ 异读数的两个密度矩阵。
+
+证明。Hermitian 矩阵满足
+
+$$
+\overline{\operatorname{tr}(AB)}
+=\operatorname{tr}((AB)^\dagger)
+=\operatorname{tr}(BA)=\operatorname{tr}(AB),
+$$
+
+故所写内积为实数。对任何实线性词效果族，所有配对相等当且仅当状态差正交于这些效果的实张成空间；这就是第 77.1 节 `unified_sequential_kernel` 的线性内容，它不包含密度输入、完全正性或归一化假设。在定义 78.1 下，分支复合把正输入送到正矩阵，其迹给出非负分支概率；对每个已经选定的设置，将该步的结果求和保持输入迹。逐步求和即得每个有限策略树的概率归一化。一般实线性作用没有这些保证，例如作用 $A\mapsto2A$ 从单位效果产生 $2I_d$，对迹一输入的响应为二。
+
+若 $A=aI_d+\sum_i a_iE_i$，其中只有有限个 $a_i$ 非零，则
+
+$$
+\operatorname{tr}(\rho A)=a+\sum_i a_i\operatorname{tr}(\rho E_i),
+$$
+
+直接给出充分性。反向令 $D=A-\operatorname{proj}_V A$。于是 $D\ne0$、$D\perp V$、$\operatorname{tr}D=0$，且
+
+$$
+\operatorname{tr}(DA)=\operatorname{tr}(D^2)>0.
+$$
+
+取 $0<\varepsilon<1/(d\|D\|_{\rm op})$，则 $\rho_\pm=I_d/d\pm\varepsilon D$ 的最小特征值至少为 $1/d-\varepsilon\|D\|_{\rm op}>0$，迹为一。正交性给出相同的 $E_i$ 读数，而两态的 $A$ 读数相差 $2\varepsilon\operatorname{tr}(D^2)>0$。这也是第 77.2 节 `target_prediction_sufficiency` 中正维数假设和单位方向的作用；原节关于标量部分的说明应以迹一约束所给的上述公式为准。证毕。
+

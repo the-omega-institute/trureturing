@@ -1,0 +1,75 @@
+**命题 78.5（分支递推与所有有限词的闭合）。** 每个固定 $b$ 的二分支族是 Lüders 仪器。分支在可见坐标 $(t,x,z)$ 上的作用恰为
+
+$$
+\mathcal J_{X,s}:\ (t,x,z)\longmapsto
+\left(\frac{t+sx}{2},\frac{st+x}{2},0\right),
+$$
+
+$$
+\mathcal J_{Z,s}:\ (t,x,z)\longmapsto
+\left(\frac{t+sz}{2},0,\frac{st+z}{2}\right).
+$$
+
+密度输入恰满足 $t=1$、$x^2+y^2+z^2\le1$。对全部长度不超过 $H$ 的词效果，其实可见空间与稳定正交残差为
+
+$$
+V_0=\operatorname{span}_{\mathbb R}\{I\},\qquad
+V_H=V=\operatorname{span}_{\mathbb R}\{I,X,Z\}\quad(H\ge1),
+\qquad K=V^\perp=\operatorname{span}_{\mathbb R}\{Y\}.
+$$
+
+这些递推精确决定定义 78.4 内全部有限策略的记录概率。
+
+证明。矩阵相乘给出 $X^2=Y^2=Z^2=I$，不同 Pauli 矩阵反对易，且 $I,X,Y,Z$ 两两 Hilbert--Schmidt 正交、平方范数均为二。这证明坐标表示的唯一性。无迹部分满足
+
+$$
+(xX+yY+zZ)^2=(x^2+y^2+z^2)I,
+$$
+
+故 $A$ 的特征值为 $(t\pm\sqrt{x^2+y^2+z^2})/2$，得到所述密度条件。
+
+每个 $P_s^b$ 都是迹一的正交投影，且 $P_+^b+P_-^b=I$。若 $P=|v\rangle\langle v|$、$\|v\|=1$，则对任意矩阵 $A$，
+
+$$
+PAP=\langle v,Av\rangle P=\operatorname{tr}(AP)P.
+$$
+
+因此
+
+$$
+\mathcal J_{X,s}(A)=\frac{t+sx}{2}P_s^X,
+\qquad
+\mathcal J_{Z,s}(A)=\frac{t+sz}{2}P_s^Z,
+$$
+
+展开投影即得坐标递推，并且分支后的 $y$ 坐标为零。对任意辅助空间和任意正矩阵 $B$，
+
+$$
+(\mathcal J_{b,s}\otimes\mathrm{id})(B)
+=(P_s^b\otimes I)B(P_s^b\otimes I)\ge0,
+$$
+
+所以分支完全正。对 $A\ge0$，其迹为 $\operatorname{tr}(AP_s^b)\in[0,\operatorname{tr}A]$；固定 $b$ 后对 $s$ 求和等于 $\operatorname{tr}A$。这证明每个设置的仪器性质。反之，将两个设置的四个分支不加权相加，输出迹为 $2\operatorname{tr}A$，并非归一化仪器。
+
+这些分支关于 Hilbert--Schmidt 配对自伴随。对非空词 $w=(a_1,\ldots,a_n)$，写 $P_j=P_{s_j}^{b_j}$。秩一压缩逐次给出
+
+$$
+E_w=
+\left(\prod_{j=1}^{n-1}\operatorname{tr}(P_jP_{j+1})\right)P_1,
+$$
+
+其中空积为一。事实上 $E_{(a_n)}=P_n$；若后缀效果为 $cP_{j+1}$，则 $P_j(cP_{j+1})P_j=c\operatorname{tr}(P_jP_{j+1})P_j$，倒序归纳即得公式。同一设置的相邻投影重叠为 $\delta_{s_j,s_{j+1}}$，不同设置的重叠为 $1/2$，因为
+
+$$
+\operatorname{tr}(P_s^bP_u^c)
+=\frac{1+su\,\delta_{b,c}}2.
+$$
+
+故所有词效果在 $V$ 内，长度一的效果已通过 $P_+^X-P_-^X=X$、$P_+^Z-P_-^Z=Z$ 张成 $V$，空词给出 $I$。Pauli 正交性给出 $K$。特别地，每个分支都消去 $Y$，所以隐藏方向不会回流到可见坐标。
+
+这也提供命题 78.3 所需的子集反例：只允许全部 $X$ 设置的词，是整个 $X,Z$ 字母表中的前缀闭合子集；其长度一及长度二的可见空间均为 $\operatorname{span}_{\mathbb R}\{I,X\}$，但 $\mathcal J_{Z,+}^*(I)=(I+Z)/2$ 不在其中。只保留这些词的长度一截断，仍有同样的相邻相等和失败。
+
+最后，对一条终止记录 $h$，令 $q_h$ 是沿记录各次设置选择及终止决定的策略概率的乘积；确定策略时它等于零或一。因策略只依赖已有记录，$q_h$ 不依赖隐藏的输入坐标。该记录的概率是 $q_h\operatorname{tr}(\rho E_h)$，而各节点的分支迹按已证的递推求出。有限树上的求和及停止记录均因此精确确定。全程保存未归一化的 $t$；零迹的正分支必为零矩阵，继续递推仍为零，不在零概率记录上除以 $t$。证毕。
+
+这里的精确经典数值预测以输入的精确 $x,z$ 已作为数值资料给定为前提；它没有提供从一份未知量子态中取得这两个数值的测量方法。
+

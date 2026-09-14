@@ -1,0 +1,52 @@
+**命题 78.6（正而非完全正的预测投影）。** 在全复矩阵空间 $M_2(\mathbb C)$ 上，以计算基转置定义复线性映射
+
+$$
+\Pi(A)=\frac{A+A^T}{2}.
+$$
+
+它正、迹保持、保单位且幂等。在实 Hermitian 空间上，它是到 $V$ 的 Hilbert--Schmidt 正交投影；在全复矩阵空间上的像则为 $\operatorname{span}_{\mathbb C}\{I,X,Z\}$。它保持定义 78.4 的全部有限策略统计，却不是完全正映射。
+
+证明。$I^T=I$、$X^T=X$、$Y^T=-Y$、$Z^T=Z$，故 $\Pi$ 恰好删去 $Y$ 坐标。实 Hermitian 限制上的正交性由 Pauli 正交基给出；一般复矩阵也有唯一的复 Pauli 展开，因此其复像是所写复张成空间，不能与实空间 $V$ 等同。
+
+若 $A\ge0$，则 $A^T=\overline A$，且对任意复向量 $v$，
+
+$$
+v^\dagger A^T v
+=\overline{\overline v^{\,\dagger}A\overline v}\ge0.
+$$
+
+右边被共轭的数本来就是非负实数，所以转置保持正性，平均映射 $\Pi$ 也正。记转置作用为 $T(A)=A^T$；它保持迹和单位，且 $T^2=\mathrm{id}$，因此
+
+$$
+\operatorname{tr}\Pi(A)=\operatorname{tr}A,\qquad
+\Pi(I)=I,\qquad
+\Pi^2=\tfrac14(\mathrm{id}+2T+T^2)=\Pi.
+$$
+
+又因 $A-\Pi(A)$ 在 Hermitian 空间上属于 $K$，命题 78.5 的所有词效果对该差配对为零，所有允许策略统计都被保持。
+
+令
+
+$$
+|\Phi\rangle=\frac{|00\rangle+|11\rangle}{\sqrt2},\quad
+\rho_\Phi=|\Phi\rangle\langle\Phi|,\quad
+F=\sum_{i,j=0}^1|ij\rangle\langle ji|.
+$$
+
+由 $\rho_\Phi=\tfrac12\sum_{i,j}|i\rangle\langle j|\otimes|i\rangle\langle j|$ 得到
+
+$$
+(T\otimes\mathrm{id})(\rho_\Phi)=\frac F2,\qquad
+(\Pi\otimes\mathrm{id})(\rho_\Phi)=\frac{\rho_\Phi}{2}+\frac F4.
+$$
+
+归一化反对称向量 $|\Psi^-\rangle=(|01\rangle-|10\rangle)/\sqrt2$ 与 $|\Phi\rangle$ 正交，并满足 $F|\Psi^-\rangle=-|\Psi^-\rangle$，所以
+
+$$
+\langle\Psi^-|(\Pi\otimes\mathrm{id})(\rho_\Phi)|\Psi^-\rangle=-\frac14.
+$$
+
+因此 $\Pi\otimes\mathrm{id}$ 不保持正性，$\Pi$ 非完全正。完全正性、Choi 正性及 Kraus 表示的标准等价见 John Watrous，*The Theory of Quantum Information*，Cambridge University Press，2018，[Theorem 2.22](https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf)；这里的归一化 Bell 见证直接算出了负期望。证毕。
+
+这个见证排除的是把 $\Pi$ 本身当作量子通道；它没有排除其他编码。参考系统在这里用于检验完全正性，并未成为定义 78.4 的可查询对象。任意共同经典编码的障碍由下一命题单独证明。
+

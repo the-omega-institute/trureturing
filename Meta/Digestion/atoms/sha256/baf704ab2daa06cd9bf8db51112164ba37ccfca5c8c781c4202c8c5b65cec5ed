@@ -1,0 +1,83 @@
+**定理 78.10（后揭 $X,Z$ 查询的二元总变差最优值）。** 对定义 78.7 的任意有限父 POVM 和随机译码，定义
+
+$$
+e(M,k)=\sup_{\rho,\,b\in\{X,Z\}}
+\frac12\sum_{s=\pm1}
+\left|\operatorname{tr}(\rho P_s^b)-\operatorname{tr}(\rho E_s^b)\right|.
+$$
+
+则在所有这类方案上，
+
+$$
+\inf_{M,k}e(M,k)=e_*=
+\frac{1-1/\sqrt2}{2},
+$$
+
+且下确界由一个四结果 POVM 达到。下界不要求边缘无偏，也不预设父 POVM 的结果数。
+
+证明。固定任意方案，记 $e=e(M,k)$，并使用命题 78.8 的乘积耦合 $G_{su}$。取四个等概率测试输入 $P_s^X,P_u^Z$，在存储后揭示其所属设置。在输入 $P_s^b$ 上，理想二元输出确定为 $s$，故总变差恰为 $1-\operatorname{tr}(P_s^bE_s^b)$。因此每个正确标签概率至少为 $1-e$，平均成功率满足
+
+$$
+\begin{aligned}
+1-e\le S
+&=\frac14\sum_s\operatorname{tr}(P_s^XE_s^X)
++\frac14\sum_u\operatorname{tr}(P_u^ZE_u^Z)\\
+&=\sum_{s,u}\operatorname{tr}(G_{su}R_{su}),
+\qquad R_{su}=\frac{P_s^X+P_u^Z}{4}.
+\end{aligned}
+$$
+
+采用第 40 节的谱奖励上界方法。因为 $XZ+ZX=0$，
+
+$$
+(sX+uZ)^2=2I,\qquad
+R_{su}=\frac I4+\frac{sX+uZ}{8}.
+$$
+
+$sX+uZ$ 无迹、Hermitian，故特征值为 $\pm\sqrt2$，从而
+
+$$
+R_{su}\le cI,\qquad
+c=\frac{1+1/\sqrt2}{4}.
+$$
+
+正性给出 $\operatorname{tr}(G_{su}(cI-R_{su}))\ge0$；这也可写成正矩阵 $G_{su}^{1/2}(cI-R_{su})G_{su}^{1/2}$ 的迹。因此，对所有有限父 POVM 与随机译码，
+
+$$
+S\le c\sum_{s,u}\operatorname{tr}G_{su}
+=c\operatorname{tr}I=2c,
+\qquad
+ e\ge1-2c=e_*.
+$$
+
+为证明达到该界，取父 POVM
+
+$$
+G_{su}^{\rm opt}=\frac14\left(I+\frac{sX+uZ}{\sqrt2}\right),
+\qquad s,u\in\{+1,-1\}.
+$$
+
+由同一平方恒等式，其特征值为零和 $1/2$，故各项正；对四个符号求和，非单位项相消，得到 $\sum_{s,u}G_{su}^{\rm opt}=I$。请求 $X$ 时输出 $s$，请求 $Z$ 时输出 $u$，其边缘恰为
+
+$$
+E_s^b=\frac{I+sb/\sqrt2}{2}.
+$$
+
+对任意密度输入，两个结果的概率差符号相反，故实际二元总变差为
+
+$$
+\frac12\sum_{s=\pm1}
+\left|\operatorname{tr}\!\left(\rho\frac{s(1-1/\sqrt2)b}{2}\right)\right|
+=e_*|\operatorname{tr}(\rho b)|\le e_*.
+$$
+
+最后一个不等式来自 $b$ 的谱为 $\{+1,-1\}$；在 $b$ 的任一本征态上取等号。因此该方案的上确界为 $e_*$，与下界相同。误差是对所有态统一有界，并非每个态都等于 $e_*$；例如 $\rho=I/2$ 时为零。证毕。
+
+Heinosaari、Reitzner、Stano 的上述论文 Proposition 1、式 (5) 给出无偏二元量子比特效应的判据 $\|a+b\|+\|a-b\|\le2$；取两个正交方向及共同收缩系数 $\eta\ge0$，它化为 $2\sqrt2\eta\le2$，与构造中的 $\eta=1/\sqrt2$ 一致。该无偏判据并不代替上面对任意有偏译码的下界。Carmeli、Heinosaari、Toigo，*State discrimination with post-measurement information and incompatibility of quantum measurements*，[arXiv:1804.09693，§V.2，式 (27)](https://arxiv.org/abs/1804.09693) 给出两个等概率量子比特本征基的平均后测量信息成功率
+
+$$
+\frac12\left(1+\sqrt{\frac{1+|\cos\theta|}{2}}\right).
+$$
+
+在 $\theta=\pi/2$ 时，该值为 $2c=1-e_*$。本定理从四态测试得到极小极大下界，再用构造的逐态误差得到一致上界，补足平均成功率与最坏态代价之间的桥接。$e_*$ 只是在定义 78.7 资源约束下的一次后揭查询最优值，不是可见闭合缺陷、退相干速率或跨任务的普适阈值。
+

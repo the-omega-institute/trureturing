@@ -1,0 +1,21 @@
+**定义 78.7（单份输入的后揭二元查询）。** 存储者收到一份未知量子比特密度矩阵 $\rho$，在请求的设置 $b\in\{X,Z\}$ 揭示之前，固定使用任意有限父 POVM
+
+$$
+M_\lambda\ge0,\qquad\sum_{\lambda\in\Lambda}M_\lambda=I,
+$$
+
+只保留经典结果 $\lambda$。设置揭示后只允许归一化随机译码
+
+$$
+k_b(s\mid\lambda)\ge0,\qquad\sum_{s=\pm1}k_b(s\mid\lambda)=1.
+$$
+
+其有效效应与输出概率为
+
+$$
+E_s^b=\sum_\lambda k_b(s\mid\lambda)M_\lambda,
+\qquad p_{M,k}(s\mid\rho,b)=\operatorname{tr}(\rho E_s^b).
+$$
+
+同一 $M,k$ 必须对所有密度输入和两个设置适用。任务只有一个后揭查询，不允许保留量子输出、再次取得输入副本或依输入改变存储方案。
+
