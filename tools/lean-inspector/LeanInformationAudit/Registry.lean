@@ -1171,9 +1171,18 @@ private initialize templateIndexExt : SimplePersistentEnvExtension TemplatePlanD
       plans.foldl TemplateIndex.addImported index
   }
 
+/-- Read-only observation of actual query operations in the environment's
+imported index. The observer cannot supply a plan or affect admission. -/
+def observeSelectedPlan [Monad m] (env : Environment) (name : Name)
+    (observe : m Unit) : m (Except String TemplatePlanData) :=
+  (templateIndexExt.getState env).lookup name observe
+
 /-- Imported checked summaries are the sole lookup source. -/
 def selectedPlan (env : Environment) (name : Name) : Except String TemplatePlanData :=
-  (templateIndexExt.getState env).lookup name (pure () : Id Unit)
+  observeSelectedPlan env name (pure () : Id Unit)
+
+/-- Serialized bytes retained by the actual imported index, including keys. -/
+def importedSummaryBytes (env : Environment) : Nat := (templateIndexExt.getState env).bytes
 
 end LeanInformationAudit.TemplateAudit
 
