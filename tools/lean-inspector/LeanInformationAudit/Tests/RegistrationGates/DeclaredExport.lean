@@ -1,4 +1,3 @@
-import LeanInformationAudit.InspectorProducer
 import LeanInformationAudit.Tests.RegistrationGates.DeclaredBindings
 import LeanInformationAudit.Tests.RegistrationGates.DeclaredStructural
 

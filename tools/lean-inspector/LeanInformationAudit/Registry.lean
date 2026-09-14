@@ -2164,3 +2164,22 @@ def registerValidatedEntry (entry : InformationRegistryEntry) :
   | .error message => throwError message
 
 end LeanInformationAudit
+
+namespace LeanInformationAudit
+open Lean Meta
+
+/-- Fixed finite producer for environments that have no structural registry.
+The standalone inspector requires this owner-bound API whenever Registry occurs
+in the actual import closure, including roots with an empty inventory. -/
+def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := fun moduleNames => do
+  let env ← getEnv
+  let snapshot ← TemplateBinding.exportSnapshot
+  moduleNames.mapM fun moduleName => do
+    let registered := (InformationRegistry.entries env).filter
+      (·.registrationModuleName == moduleName) |>.map fun entry => {
+        root := moduleName, registrationModule := moduleName, theoremName := entry.theoremName,
+        objectArena := entry.canonicalObjectArenaName, «catalog» := entry.effectiveCatalogId :
+          TemplateOccurrenceKey }
+    TemplateBinding.moduleJson snapshot moduleName registered
+
+end LeanInformationAudit

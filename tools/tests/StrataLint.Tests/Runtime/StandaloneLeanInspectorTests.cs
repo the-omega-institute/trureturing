@@ -269,6 +269,7 @@ public sealed class StandaloneLeanInspectorTests
             {
                 "env",
                 "lean",
+                "--root=" + Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "lean-inspector"),
                 "--run",
                 Path.Combine(
                     TestRepositoryLayout.FindRoot(),

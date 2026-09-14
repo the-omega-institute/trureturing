@@ -823,8 +823,7 @@ namespace LeanInformationAudit
 open Lean Meta
 
 /-- One authoritative imported join shared by all requested report modules. -/
-def informationTemplateReportDriver : InformationTemplateReportDriver where
-  generate moduleNames := do
+def informationTemplateReportDriver : InformationTemplateReportDriver := fun moduleNames => do
     let env ← getEnv
     let snapshot ← TemplateBinding.exportSnapshot
     moduleNames.mapM fun moduleName => do
