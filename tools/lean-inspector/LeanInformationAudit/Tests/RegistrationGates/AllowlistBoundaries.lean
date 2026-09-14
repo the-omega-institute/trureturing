@@ -241,6 +241,16 @@ run_cmd Elab.Command.liftCoreM do
     if result.1 then logInfo m!"[PASS] {label}"
     else logError m!"[FAIL] {label}: {result}"
 
+-- Supported statement spellings also need positive readout controls: replacing
+-- recognition with an unclassified stop preserves negative controls but loses
+-- a legitimate admission.
+run_cmd Elab.Command.liftCoreM do
+  for (label, statement) in [("RegisteredLetClean", ``letTarget),
+      ("ProjectedStatementClean", ``projectedTarget)] do
+    let result ← readoutClosure (← getEnv) statement (mkConst ``plain)
+    if !result.1 && result.2.isSome then logInfo m!"[PASS] {label}: {result}"
+    else logError m!"[FAIL] {label}: expected witnessed admission; actual={result}"
+
 run_cmd Elab.Command.liftCoreM do
   let actual ← withOptions (·.set `provenanceDefEqLimit (0 : Nat)) <| query "exhausted" ``plain
   let closure ← withOptions (·.set `provenanceDefEqLimit (0 : Nat)) <|
