@@ -342,4 +342,40 @@ private theorem twice_square_triangular_exclusion (n f : ℕ) (hn : 0 < n)
     rw [hoddFactor, htwoFactor] at hfactor
     omega
 
+theorem result : ∀ n : ℕ, 0 < n →
+    (IsSquare (n * (n + 1) / 2) ↔
+      (Odd (sigma 1 n) ∧ Odd (sigma 1 (n * (n + 1) / 2)))) := by
+  intro n hn
+  have htriPos : 0 < n * (n + 1) / 2 := by
+    apply Nat.div_pos
+    · nlinarith
+    · decide
+  constructor
+  · intro htriSquare
+    have htwoDvd : 2 ∣ n * (n + 1) :=
+      even_iff_two_dvd.mp (Nat.even_mul_succ_self n)
+    obtain ⟨b, hb⟩ := htriSquare
+    have hprod : n * (n + 1) = 2 * b ^ 2 := by
+      calc
+        n * (n + 1) = n * (n + 1) / 2 * 2 := (Nat.div_mul_cancel htwoDvd).symm
+        _ = (b * b) * 2 := by rw [hb]
+        _ = 2 * b ^ 2 := by ring
+    have hnShape : IsSquare n ∨ ∃ c : ℕ, n = 2 * c ^ 2 := by
+      rcases consecutive_coprime_twice_square_split n b hn hprod with hleft | hright
+      · exact Or.inl hleft.1
+      · exact Or.inr hright.1
+    exact ⟨(sigma_odd_iff_square_or_twice_square n hn).mpr hnShape,
+      (sigma_odd_iff_square_or_twice_square (n * (n + 1) / 2) htriPos).mpr
+        (Or.inl ⟨b, hb⟩)⟩
+  · rintro ⟨hnSigmaOdd, htriSigmaOdd⟩
+    have hnShape : IsSquare n ∨ ∃ c : ℕ, n = 2 * c ^ 2 :=
+      (sigma_odd_iff_square_or_twice_square n hn).mp hnSigmaOdd
+    rcases (sigma_odd_iff_square_or_twice_square
+        (n * (n + 1) / 2) htriPos).mp htriSigmaOdd with htriSquare | htriTwice
+    · exact htriSquare
+    · obtain ⟨f, hf⟩ := htriTwice
+      exact (twice_square_triangular_exclusion n f hn hnShape hf).elim
+
+#print axioms result
+
 end D5.S3.Arith.KrizekTriangularSquareSigmaParity
