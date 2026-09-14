@@ -28,6 +28,71 @@ import native
 from test_native_support import *
 
 class NativePublicationTests:
+    def test_coordinates_use_private_temporary_memo_and_clean_up_failures(self):
+        temporary = self.root / 'coordinate temporary files'
+        temporary.mkdir()
+        environment = dict(self.env, TMPDIR=str(temporary))
+        check_output = subprocess.check_output
+        observed = []
+        for fault in ['none', 'none', 'address-error', 'address-malformed',
+                      'coordinates-error', 'coordinates-malformed']:
+            with self.subTest(fault=fault):
+                def invoke(argv, **kwargs):
+                    if argv[1] == 'address':
+                        memo = Path(kwargs['env']['STRATALINT_LEAN_INPUT_MEMO_ROOT'])
+                        self.assertEqual(memo.parent, temporary)
+                        self.assertTrue(memo.is_dir())
+                        self.assertEqual(memo.stat().st_mode & 0o777, 0o700)
+                        observed.append(memo)
+                    result = check_output(argv, **kwargs)
+                    if fault == argv[1] + '-error':
+                        raise subprocess.CalledProcessError(2, argv)
+                    if fault == argv[1] + '-malformed':
+                        return 'malformed\n'
+                    return result
+                with patch.dict(os.environ, environment), patch.object(
+                        publication.subprocess, 'check_output', side_effect=invoke):
+                    if fault == 'none':
+                        result = publication.coordinates(self.root)
+                        self.assertEqual(set(result), {'repository', 'producer', 'sources', 'config', 'input'})
+                    else:
+                        error = subprocess.CalledProcessError if fault.endswith('-error') else ValueError
+                        with self.assertRaises(error):
+                            publication.coordinates(self.root)
+                self.assertFalse((self.root / '.lake').exists())
+                self.assertEqual(list(temporary.iterdir()), [])
+        self.assertEqual(len(set(observed)), len(observed), 'each invocation must own its memo')
+        with patch.dict(os.environ, dict(environment, TMPDIR=str(temporary / 'absent'))):
+            with self.assertRaises(FileNotFoundError):
+                publication.coordinates(self.root)
+        self.assertFalse((self.root / '.lake').exists())
+        self.assertEqual(list(temporary.iterdir()), [])
+
+    def test_coordinates_reuse_warm_tree_memo(self):
+        self.ensure()
+        self.write('.gitignore', '.lake/\nutility-calls\nactivity.jsonl\nhash-paths\n')
+        helper = self.root / 'tools/scripts/worktree/lean-cache-input.sh'
+        helper.write_text(helper.read_text().replace('  hash_files_batch "$live_paths"',
+            '  cat "$live_paths" >> "$FIXTURE_HASH_PATHS"\n  hash_files_batch "$live_paths"'))
+        for args in [('add', '.'), ('-c', 'user.name=Fixture', '-c', 'user.email=fixture@example.invalid',
+                '-c', 'commit.gpgsign=false', 'commit', '--quiet', '-m', 'private memo fixture')]:
+            subprocess.run(['git', *args], cwd=self.root, env=self.env,
+                check=True, capture_output=True, timeout=120)
+        hashes = self.root / 'hash-paths'
+        environment = dict(self.env, FIXTURE_HASH_PATHS=str(hashes))
+        with patch.dict(os.environ, environment):
+            expected = publication.coordinates(self.root)
+            self.assertTrue(hashes.read_bytes())
+            memo = self.root / '.lake/lean-input-memo/memo.v1'
+            before = (memo.read_bytes(), memo.stat().st_ino, memo.stat().st_mtime_ns)
+            self.assertTrue(before[0])
+            hashes.write_bytes(b'')
+            with patch.object(publication.tempfile, 'TemporaryDirectory',
+                    side_effect=AssertionError('warm tree must reuse its memo')):
+                self.assertEqual(publication.coordinates(self.root), expected)
+            self.assertEqual(hashes.read_bytes(), b'', 'unchanged inputs must use memoized hashes')
+            self.assertEqual(before, (memo.read_bytes(), memo.stat().st_ino, memo.stat().st_mtime_ns))
+
     def test_input_verification_is_read_only(self):
         self.build()
         self.publish()
