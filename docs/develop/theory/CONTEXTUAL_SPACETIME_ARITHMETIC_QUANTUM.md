@@ -3508,3 +3508,640 @@ $$
 本章不构造无限时间或无限张量积态，不推断项目一致性，不主张普适经典现实、唯一全局结果、实验验证或 Lean 验证。
 
 ## 追加锚（新终端）
+
+## 14. 多标签相位环与写入后的最优恢复
+
+### 14.1 有限记录与写入后的恢复类
+
+**定义 14.1（不访问记录的写入后恢复误差）。** 固定有限整数 $d\ge2$，系统空间为 $\mathcal H_S=\mathbb C^d$，标签为 $x\in\{0,\ldots,d-1\}$。不可访问记录空间 $\mathcal H_B$ 非零且有限维，条件记录 $e_x\in\mathcal H_B$ 均为单位向量。写入等距映射和相关矩阵为
+
+$$
+W|x\rangle=|x\rangle|e_x\rangle,
+\qquad
+C_{xy}=\langle e_y,e_x\rangle.
+$$
+
+因此 $C\succeq0$、$C_{xx}=1$；对 $B$ 取部分迹得到第 8.3 条的 Schur 通道
+
+$$
+M_C(\rho)=C\odot\rho.
+$$
+
+记录已写入后，允许在系统上实施任意 CPTP 恢复通道 $\mathcal R:\mathcal L(\mathcal H_S)\to\mathcal L(\mathcal H_S)$。恢复可以使用与未知输入及 $B$ 初始无关的有限维辅助系统、有限结果的仪器和按结果控制的后续操作；全部结果分支都计入无条件系统输出。恢复不访问 $B$，不在写入前编码，不后选择；若产生经典输出，本章不要求该输出满足额外预测任务。
+
+定义
+
+$$
+\eta(C)
+= \inf_{\mathcal R\ {\rm CPTP}}
+\frac12\|\mathcal R\circ M_C-\operatorname{id}_S\|_\diamond.
+$$
+
+输入是未知密度矩阵，允许与任意有限维参考系统纠缠；$\mathcal R$ 不依赖输入或参考上的信息。上述误差比较写入前输入与写入、丢弃记录及恢复之后的系统通道，要求整个未知输入的恢复，而非某个已知状态的重新制备。操作和辅助系统均有限，不引入无限次恢复过程。
+
+当第 13 章的可访问记录空间取 $F=\mathbb C$ 时，其仪器与标签控制反馈合成的无条件系统通道属于此恢复类。此处还允许混合标签布居的系统通道，且不对任何经典输出施加预测约束。若允许访问非平凡记录 $F$，则恢复作用域包含记录空间，不属于本定义。带参考误差沿用第 13.2 节的半 diamond 范数约定，比较目标固定为恒等通道。
+
+Schur 通道的完全正性、保迹条件与对角 Kraus 表示见 John Watrous，[《The Theory of Quantum Information》](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)，§4.1.3，命题 4.17–4.18 与定理 4.19；保 Hermitian 映射的 diamond 范数可在纯态输入及同维参考上达到，见同书定理 3.51、式 (3.291)。
+
+### 14.2 任意系统恢复的谱下界
+
+**定理 14.2（相关矩阵最大特征值给出的恢复障碍）。** 在定义 14.1 中，记 $\lambda_{\max}(C)$ 为 $C$ 的最大特征值。对每个允许的恢复通道 $\mathcal R$，都有
+
+$$
+\frac12\|\mathcal R\circ M_C-\operatorname{id}_S\|_\diamond
+\ge
+1-\frac{\lambda_{\max}(C)}d.
+$$
+
+从而
+
+$$
+\eta(C)\ge1-\frac{\lambda_{\max}(C)}d.
+$$
+
+此界允许 $\mathcal R$ 混合标签布居；不以对角反馈或布居保持为前提。
+
+证明。 取一个 $d$ 维参考系统 $A$ 及归一化最大纠缠态
+
+$$
+|\Omega_d\rangle
+=\frac1{\sqrt d}\sum_{x=0}^{d-1}|x\rangle_S|x\rangle_A.
+$$
+
+令 $(A_\alpha)_\alpha$ 为 $\mathcal R$ 的有限 Kraus 族，满足 $\sum_\alpha A_\alpha^\dagger A_\alpha=I_S$，并定义
+
+$$
+b_{\alpha,x}=\overline{(A_\alpha)_{xx}}.
+$$
+
+恢复输出与目标最大纠缠态的重叠为
+
+$$
+\begin{aligned}
+f_{\mathcal R}
+&=
+\langle\Omega_d|
+[(\mathcal R\circ M_C)\otimes\operatorname{id}_A]
+(|\Omega_d\rangle\langle\Omega_d|)
+|\Omega_d\rangle\\
+&=
+\frac1{d^2}\sum_{\alpha,x,y}
+C_{xy}(A_\alpha)_{xx}\overline{(A_\alpha)_{yy}}\\
+&=
+\frac1{d^2}\sum_\alpha b_\alpha^\dagger Cb_\alpha.
+\end{aligned}
+$$
+
+由 $C\preceq\lambda_{\max}(C)I_d$ 和 Kraus 完备关系，
+
+$$
+\begin{aligned}
+f_{\mathcal R}
+&\le
+\frac{\lambda_{\max}(C)}{d^2}
+\sum_{\alpha,x}|(A_\alpha)_{xx}|^2\\
+&\le
+\frac{\lambda_{\max}(C)}{d^2}
+\sum_{\alpha,x,y}|(A_\alpha)_{yx}|^2\\
+&=
+\frac{\lambda_{\max}(C)}{d^2}
+\operatorname{tr}\!\left(\sum_\alpha A_\alpha^\dagger A_\alpha\right)
+= \frac{\lambda_{\max}(C)}d.
+\end{aligned}
+$$
+
+对输出与 $|\Omega_d\rangle\langle\Omega_d|$ 施加二输出测量
+
+$$
+\{|\Omega_d\rangle\langle\Omega_d|,
+I_{SA}-|\Omega_d\rangle\langle\Omega_d|\},
+$$
+
+所得分布的总变差距离为 $1-f_{\mathcal R}$。量子态迹距离不小于此测量距离，而 diamond 距离的优化包含该最大纠缠输入。因此
+
+$$
+\frac12\|\mathcal R\circ M_C-\operatorname{id}_S\|_\diamond
+\ge1-f_{\mathcal R}
+\ge1-\frac{\lambda_{\max}(C)}d.
+$$
+
+对 $\mathcal R$ 取下确界得到结论。由于 $C\succeq0$ 且 $\operatorname{tr}C=d$，有 $1\le\lambda_{\max}(C)\le d$，故右端是非负的有限误差下界。证毕。
+
+### 14.3 Fourier 对角相关矩阵的精确可达性
+
+**定理 14.3（对角规范不变性与循环相关矩阵的精确最优恢复）。** 对任意对角酉矩阵 $D_0$，都有
+
+$$
+\eta(D_0CD_0^\dagger)=\eta(C).
+$$
+
+进一步，设某个对角酉 $D_0$ 使 $C'=D_0CD_0^\dagger$ 在标准离散 Fourier 基下对角。明确地，令
+
+$$
+\omega=e^{2\pi i/d},
+\qquad
+v_k=(\omega^{kx})_{x=0}^{d-1},
+\qquad
+f_k=\frac{v_k}{\sqrt d},
+\qquad 0\le k<d,
+$$
+
+并假设 $C'f_k=\lambda_k f_k$。则
+
+$$
+\eta(C)=1-\frac{\max_k\lambda_k}d
+=1-\frac{\lambda_{\max}(C)}d.
+$$
+
+设 $k_*$ 是任意达到最大特征值的指标，定义
+
+$$
+Z=\operatorname{diag}(1,\omega,\ldots,\omega^{d-1}),
+\qquad
+\mathcal R_*
+=\operatorname{Ad}_{Z^{-k_*}D_0},
+\qquad
+\operatorname{Ad}_U(X)=UXU^\dagger.
+$$
+
+则 $\mathcal R_*$ 达到上述最小值。最优误差同时由不带参考的输入 $|s_d\rangle=d^{-1/2}\sum_x|x\rangle$ 达到。
+
+上述等式与达到协议以完整相关矩阵经对角规范变换后具有所列 Fourier 特征基为假设；对一般相关矩阵，定理 14.2 只给出恢复误差的下界。
+
+证明。 对角酉的矩阵元计算给出
+
+$$
+M_{D_0CD_0^\dagger}
+=\operatorname{Ad}_{D_0}\circ M_C.
+$$
+
+当 $\mathcal R$ 遍历全部 CPTP 恢复时，$\mathcal R\circ\operatorname{Ad}_{D_0}$ 也遍历全部 CPTP 恢复，因为右侧复合的逆由 $\operatorname{Ad}_{D_0^\dagger}$ 给出。这证明 $\eta$ 的对角规范不变性。
+
+Fourier 向量 $(f_k)_{k=0}^{d-1}$ 正交归一，因此
+
+$$
+C'=\sum_{k=0}^{d-1}\frac{\lambda_k}d v_kv_k^\dagger,
+\qquad
+p_k:=\frac{\lambda_k}d\ge0,
+\qquad
+\sum_kp_k=1.
+$$
+
+逐项使用 $(v_kv_k^\dagger)_{xy}=\omega^{k(x-y)}$，得到
+
+$$
+M_{C'}=\sum_{k=0}^{d-1}p_k\operatorname{Ad}_{Z^k}.
+$$
+
+故恢复后的通道为
+
+$$
+\mathcal R_*\circ M_C
+=\sum_{k=0}^{d-1}p_k\operatorname{Ad}_{Z^{k-k_*}},
+$$
+
+其中恒等通道的权重为 $p_{k_*}$。任意两个通道的 diamond 距离至多为 $2$，所以三角不等式给出
+
+$$
+\frac12\|\mathcal R_*\circ M_C-\operatorname{id}_S\|_\diamond
+\le\sum_{k\ne k_*}p_k
+=1-p_{k_*}.
+$$
+
+另一方面，向量 $(Z^{k-k_*}|s_d\rangle)_k$ 正交归一；对输入 $|s_d\rangle\langle s_d|$，恢复输出是这些正交纯态按 $p_k$ 的混合，目标 $|s_d\rangle\langle s_d|$ 对应指标 $k_*$。二者的迹距离恰为 $1-p_{k_*}$，故上界达到。定理 14.2 排除了任何其他 CPTP 恢复获得更小误差的可能性。证毕。
+
+### 14.4 三标签相位环的精确恢复误差
+
+**命题 14.4（命题 8.9 的三标签记录具有精确恢复误差）。** 按定义 1.1 的低位到高位约定及定理 1.3，系统标签 $0,1,2$ 可分别取两位置 Zeckendorf 合法基底 $|00\rangle,|10\rangle,|01\rangle$。取命题 8.9 的不可访问二能级记录
+
+$$
+e_0=|0\rangle,
+\qquad
+e_1=\frac{|0\rangle+|1\rangle}{\sqrt2},
+\qquad
+e_2=\frac{|0\rangle+i|1\rangle}{\sqrt2}.
+$$
+
+其相关矩阵记作 $C_\circ$，即
+
+$$
+C_\circ=
+\begin{pmatrix}
+1&r&r\\
+r&1&(1-i)/2\\
+r&(1+i)/2&1
+\end{pmatrix},
+\qquad r=\frac1{\sqrt2}.
+$$
+
+则定义 14.1 的全部写入后 CPTP 恢复的最优误差为
+
+$$
+\eta(C_\circ)=\frac{3-\sqrt3}{6},
+$$
+
+并由对角酉
+
+$$
+D_*=\operatorname{diag}(1,e^{i\pi/12},e^{-i\pi/12})
+$$
+
+达到。
+
+证明。 命题 8.9 已经证明上述矩阵正半定、单位对角且秩为二，并计算了对角规范不变的非实循环乘积
+
+$$
+(C_\circ)_{01}(C_\circ)_{12}(C_\circ)_{20}
+=\frac{1-i}{4}.
+$$
+
+令 $a=r e^{-i\pi/12}$，直接相乘得到
+
+$$
+C_*:=D_*C_\circ D_*^\dagger
+= \begin{pmatrix}
+1&a&\bar a\\
+\bar a&1&a\\
+a&\bar a&1
+\end{pmatrix}.
+$$
+
+三个有向循环位置 $(0,1),(1,2),(2,0)$ 的相位均为 $-\pi/12$。取定理 14.3 中的 $d=3$ Fourier 基，逐行相乘得
+
+$$
+\lambda_k
+=1+2r\cos\!\left(\frac{2\pi k}3-\frac\pi{12}\right),
+\qquad k=0,1,2.
+$$
+
+其精确值依次为
+
+$$
+\lambda_0=\frac{3+\sqrt3}{2},
+\qquad
+\lambda_1=\frac{3-\sqrt3}{2},
+\qquad
+\lambda_2=0.
+$$
+
+最大值在 $k_*=0$ 取得，故定理 14.3 直接给出所述最优值及恢复酉 $D_*$。具体地，令 $Z=\operatorname{diag}(1,e^{2\pi i/3},e^{4\pi i/3})$，有
+
+$$
+\operatorname{Ad}_{D_*}\circ M_{C_\circ}
+= \frac{3+\sqrt3}{6}\operatorname{id}_S
++
+\frac{3-\sqrt3}{6}\operatorname{Ad}_Z.
+$$
+
+两个酉分支对均匀叠加输入给出正交输出，这也显示了误差的达到方式。对任意包含 $\operatorname{Ad}_{D_*}$ 且包含于定义 14.1 的恢复类，定理 14.2 的下界与同一达到协议仍给出最优误差 $(3-\sqrt3)/6$。证毕。
+
+### 14.5 相同逐对恢复能力与不同联合最优值
+
+**命题 14.5（逐对模资料不足以确定多标签恢复误差）。** 固定命题 14.4 的 $r=1/\sqrt2$，另取三标签相关矩阵
+
+$$
+C_+=(1-r)I_3+r\mathbf1\mathbf1^\dagger,
+\qquad
+\mathbf1=(1,1,1)^{\mathsf T}.
+$$
+
+两个模型 $C_\circ$ 与 $C_+$ 的全部异标签重叠模都等于 $r$。对任意一个标签对单独构成的二标签恢复问题，两个模型的最优误差都为
+
+$$
+\eta_{\rm pair}^*=\frac{1-r}{2}=\frac{2-\sqrt2}{4}.
+$$
+
+但三标签联合恢复最优值满足
+
+$$
+\eta(C_+)=\frac{2(1-r)}3=\frac{2-\sqrt2}{3},
+$$
+
+以及严格差异
+
+$$
+\eta(C_\circ)-\eta(C_+)
+= \frac{2\sqrt2-\sqrt3-1}{6}>0.
+$$
+
+因此全部逐对重叠模、乃至每对的精确恢复最优值，都不足以决定整个三标签通道的恢复最优值。
+
+证明。 $C_+$ 的特征值为 $1+2r,1-r,1-r$，均非负，且其对角元为一，因此它是合法的条件记录相关矩阵。两组记录若需使用同一环境空间，可全部置于 $\mathbb C^3$：命题 8.9 的二能级记录作等距嵌入，而 $C_+$ 由其正半定平方根构造三维记录即可。更明确地，取 $V=(C_+^{\mathsf T})^{1/2}$，以 $V$ 的各列作为条件记录，则 $V^\dagger V=C_+^{\mathsf T}$，所以按本章 $C_{xy}=\langle e_y,e_x\rangle$ 的方向得到 $C_+$。该比较不要求两个矩阵具有相同秩。
+
+对每个标签对，相关矩阵都具有形式
+
+$$
+C_{xy}^{(2)}=
+\begin{pmatrix}
+1&r e^{i\phi_{xy}}\\
+r e^{-i\phi_{xy}}&1
+\end{pmatrix}.
+$$
+
+该二阶矩阵经对角酉规范变换可使非对角元变为正实数 $r$，特征值为 $1+r$ 和 $1-r$。使用定理 14.3 的 $d=2$ 情形，任意写入后 CPTP 恢复的最优误差为 $(1-r)/2$。这里允许每个二标签问题分别选择自己的恢复；没有假设这些选择能同时组成一个三标签协议。
+
+矩阵 $C_+$ 已在三维 Fourier 基下对角，其最大特征值是 $1+2r$。定理 14.3 给出
+
+$$
+\eta(C_+)=1-\frac{1+2r}{3}=\frac{2(1-r)}3,
+$$
+
+由恒等恢复达到。它的通道分解为
+
+$$
+M_{C_+}
+=\frac{1+2r}{3}\operatorname{id}_S
++\frac{1-r}{3}\operatorname{Ad}_Z
++\frac{1-r}{3}\operatorname{Ad}_{Z^2}.
+$$
+
+结合命题 14.4，相减得到所述精确差。由于 $2\sqrt2>1+\sqrt3$，该差严格为正；此不等式可由两边为正并比较平方 $8>4+2\sqrt3$ 得到。两个三标签最优误差的十进制展开依次为 $0.2113248654\ldots$ 与 $0.1952621459\ldots$，每对的最优误差为 $0.1464466094\ldots$。证毕。
+
+### 14.6 固定逐对模的全部三标签相位范围
+
+**命题 14.6（固定重叠模下的相位分类与完整恢复误差范围）。** 令 $A$ 为三阶 Hermitian 矩阵，满足 $A_{xx}=1$，以及 $|A_{xy}|=r=1/\sqrt2$ 对所有 $x\ne y$ 成立。取有向循环乘积的主辐角
+
+$$
+\phi=\operatorname{Arg}(A_{01}A_{12}A_{20})\in(-\pi,\pi].
+$$
+
+则 $A$ 是合法相关矩阵当且仅当
+
+$$
+|\phi|\le\frac\pi4.
+$$
+
+循环相位 $\phi$ 完全分类这一固定模矩阵族的对角酉规范轨道。对每个合法 $A$，定义 14.1 中全部写入后 CPTP 恢复的最优误差为
+
+$$
+\eta(A)=\frac{2-\sqrt2\cos(\phi/3)}3.
+$$
+
+该误差在 $|\phi|\in[0,\pi/4]$ 上严格递增，其全部可达值恰为
+
+$$
+\left[\frac{2-\sqrt2}{3},\frac{3-\sqrt3}{6}\right].
+$$
+
+命题 14.5 的正实矩阵 $C_+$ 达到最小值，命题 14.4 的 $C_\circ$ 达到最大值。合法矩阵在 $|\phi|<\pi/4$ 时秩为三，在 $|\phi|=\pi/4$ 时秩为二。
+
+证明。 对角酉规范变换使每个有向边 $A_{xy}$ 乘以一个顶点相位差，故循环乘积中的这些相位相消；这正是命题 8.9 已使用的不变量。为证明它在本矩阵族中也足以确定规范轨道，选择实数 $\alpha_{01},\alpha_{12},\alpha_{20}$，使
+
+$$
+A_{01}=r e^{i\alpha_{01}},
+\qquad A_{12}=r e^{i\alpha_{12}},
+\qquad A_{20}=r e^{i\alpha_{20}}.
+$$
+
+它们满足 $\alpha_{01}+\alpha_{12}+\alpha_{20}=\phi$ 模 $2\pi$。定义
+
+$$
+D_\phi
+=\operatorname{diag}\!\left(
+1,
+e^{i(\alpha_{01}-\phi/3)},
+e^{i(\phi/3-\alpha_{20})}
+\right),
+\qquad
+a_\phi=r e^{i\phi/3}.
+$$
+
+逐个有向边相乘给出
+
+$$
+A_\phi:=D_\phi A D_\phi^\dagger
+=\begin{pmatrix}
+1&a_\phi&\overline{a_\phi}\\
+\overline{a_\phi}&1&a_\phi\\
+a_\phi&\overline{a_\phi}&1
+\end{pmatrix}.
+$$
+
+因此相同循环相位的两个矩阵都能规范到同一个 $A_\phi$；不同循环相位则由不变性排除规范等价。这证明分类陈述。
+
+行列式展开给出
+
+$$
+\det A
+=1-3r^2+2r^3\cos\phi
+=-\frac12+\frac{\cos\phi}{\sqrt2}.
+$$
+
+任意二阶主子块的特征值都是 $1+r$ 和 $1-r$，均严格为正。固定一个这样的主子块，用其 Schur 补将 $A$ 作可逆合同变换，得到该正定二阶块与一个实标量的直和；标量等于 $\det A/(1-r^2)$。所以 $A\succeq0$ 当且仅当 $\det A\ge0$，等价于 $\cos\phi\ge1/\sqrt2$。结合主辐角范围，这恰好给出 $|\phi|\le\pi/4$。同一 Schur 补还表明：严格不等号对应秩三，端点对应秩二。
+
+在定理 14.3 的 Fourier 方向约定下，$A_\phi$ 的三个特征值为
+
+$$
+\lambda_k(\phi)
+=1+\sqrt2\cos\!\left(\frac\phi3+\frac{2\pi k}3\right),
+\qquad k=0,1,2.
+$$
+
+对合法相位，$\phi/3\in[-\pi/12,\pi/12]$。此时 $\cos(\phi/3)>0$，而另外两项的余弦都为负：$k=1$ 的角落在 $[7\pi/12,3\pi/4]$，$k=2$ 的角落在 $[5\pi/4,17\pi/12]$。因此 $\lambda_0(\phi)$ 始终是最大特征值。定理 14.3 适用，得到
+
+$$
+\eta(A)
+=1-\frac{\lambda_0(\phi)}3
+=\frac{2-\sqrt2\cos(\phi/3)}3,
+$$
+
+并由恢复 $\operatorname{Ad}_{D_\phi}$ 达到。这一等式使用定理 14.2 对全部 CPTP 恢复的下界，而非仅在对角反馈中求最优。
+
+误差只依赖 $t=|\phi|$。函数 $\cos(t/3)$ 在 $t\in[0,\pi/4]$ 上连续且严格递减，所以 $\eta$ 连续且严格递增。端点分别为
+
+$$
+\eta(0)=\frac{2-\sqrt2}{3},
+\qquad
+\eta(\pi/4)
+=\frac{2-\sqrt2\cos(\pi/12)}3
+=\frac{3-\sqrt3}{6}.
+$$
+
+每个 $\phi\in[-\pi/4,\pi/4]$ 都由已证明正半定、单位对角的 $A_\phi$ 实现，它可按命题 14.5 的平方根方法构造有限维条件记录。因此误差取遍所列闭区间。$C_+$ 的循环相位为零，$C_\circ$ 的循环相位为 $-\pi/4$，故二者达到两端。证毕。
+
+## 追加锚（新终端）
+
+## 15. 可访问旧记录、完整扰动与控制范围
+
+沿用第8、9章的有限新鲜记录假设。除第15.5节另行允许控制外，系统始终在同一指针基上受控写入，旧记录不再参与相互作用。所有Hilbert空间、测量结果集和时间窗口均有限；比较的是分别选定的记录前缀节点上的无条件态。令标签集为 $\mathsf X$、$d=|\mathsf X|\ge2$，$J$ 为全一矩阵。第 $t$ 步的单位对角相关矩阵 $C_t=(c_{xy}^{t})$ 与累计系统相位为
+$$
+c_{xy}^{t}
+=e^{i(\theta_{x,t}-\theta_{y,t})}\langle e_y^{(t)},e_x^{(t)}\rangle,
+\qquad
+\Theta_x(m)=\sum_{t=1}^{m}\theta_{x,t}.
+$$
+记
+$$
+A_N=C_1\odot\cdots\odot C_N,\qquad A_0=J,
+\qquad F_{m,n}=C_{m+1}\odot\cdots\odot C_n,\qquad F_{m,m}=J.
+$$
+系统边缘仍为 $\sigma_N(\rho)=M_{A_N}(\rho)$。算子范数记为 $\|\cdot\|_\infty$，迹范数记为 $\|\cdot\|_1$，迹距离为 $\mathsf d(\rho,\sigma)=\|\rho-\sigma\|_1/2$。
+
+### 15.1 读数自身的剩余非对角量
+
+固定第12章的投影测量 $Q=(Q_b)_{b\in\mathcal B}$，并令 $Q_B=\sum_{b\in B}Q_b$。对任意算符 $X$，$\operatorname{diag}(X)$ 表示其指针基对角部分。定义
+$$
+r_N(Q)=\max_{B\subseteq\mathcal B}
+\left\|\overline{A_N}\odot\bigl(Q_B-\operatorname{diag}(Q_B)\bigr)\right\|_\infty.
+$$
+
+**推论 15.1（依赖读数的尖锐尾窗界）。** $r_N(Q)$ 随 $N$ 不增。对每个有限窗口 $m\le u\le v\le n$，有
+$$
+\alpha_Q(u,v)\le\min\{1,r_u(Q)+r_v(Q)\}
+\le\min\{1,2r_m(Q)\},
+$$
+其中 $\alpha_Q$ 沿用第12.4节，且 $\alpha_Q(u,u)=0$。若 $q_m=\max_{x\ne y}|A_m(x,y)|$，则
+$$
+r_m(Q)\le\frac{d-1}{2}q_m.
+$$
+在前缀 $m$ 之后，无论再施加哪一个新鲜Schur记录通道，$Q$ 的分布都对所有初态保持不变，当且仅当 $r_m(Q)=0$。统一尾窗界中的系数 $2$ 不能减小。
+
+证明。令 $X_{N,B}=\overline{A_N}\odot(Q_B-\operatorname{diag}(Q_B))$。有 $X_{N+1,B}=M_{C_{N+1}}^*(X_{N,B})$，而单位保持正映射收缩Hermitian算子的算子范数，故 $r_{N+1}\le r_N$。第12.4节的对偶公式中对角部分相消，给出 $\alpha_Q(u,v)=\max_B\|X_{v,B}-X_{u,B}\|_\infty$；三角不等式及总变差至多为 $1$ 得到尾窗界。另一方面，按定理10.1的事件与谱范数计算，$r_m(Q)$ 恰为对所有初态取最坏值的
+$$
+\operatorname{TV}\bigl(C_Q(M_{A_m}(\rho)),C_Q(\Delta(\rho))\bigr).
+$$
+定理9.4的迹距离上界与测量收缩给出所列 $q_m$ 界。
+
+若 $r_m=0$，每个 $X_{m,B}$ 都为零，任意继续记录也保持其为零，故以后读数不变。反之，取下一步为完全退相干通道 $M_{I_d}=\Delta$，定理12.1的精确缺陷即为 $r_m$。最后取二标签、$A_m(0,1)=a\in(0,1]$、$Q_+=|+\rangle\langle+|$ 与 $Q_-=I-Q_+$，则 $r_m=a/2$。下一步取 $c_{01}=-1$ 的相位翻转，得到 $\alpha_Q(m,m+1)=a=2r_m$。所需两种矩阵均为合法相关矩阵。证毕。
+
+### 15.2 任意旧记录子集的压缩读数
+
+固定 $0\le m\le n$，并指定可访问的旧记录子集 $R\subseteq\{1,\ldots,m\}$；系统本身也可访问。以时间升序排列记录张量因子，令
+$$
+G^{m,R}_{xy}
+=\prod_{t\in\{1,\ldots,m\}\setminus R}
+\langle e_y^{(t)},e_x^{(t)}\rangle,
+$$
+$$
+W_{m,R}|x\rangle
+=e^{i\Theta_x(m)}|x\rangle\otimes
+\bigotimes_{t\in R}|e_x^{(t)}\rangle.
+$$
+空张量积为一维空间中的单位向量。$G^{m,R}$ 是单位对角相关矩阵；由于系统标签正交，$W_{m,R}$ 为等距映射，无需记录向量线性无关。在这一固定窗口中简称它们为 $G,W$。令 $\tau_t^R(\rho)$ 为第 $t\ge m$ 个前缀在同一子系统 $S+E_R$ 上的态，即忽略全部不可访问旧记录以及全部 $m$ 之后的新记录。
+
+**命题 15.2（部分旧记录可访问时的精确压缩）。** 对 $m\le t\le n$，有
+$$
+\tau_t^R(\rho)=W\bigl((G\odot F_{m,t})\odot\rho\bigr)W^\dagger.
+$$
+给定可访问空间上的有限POVM $P=(P_b)_{b\in\mathcal B}$，记 $C_P(\tau)_b=\operatorname{tr}(P_b\tau)$。其压缩效应
+$$
+\widetilde P_b=W^\dagger P_bW,\qquad
+\widetilde P_B=\sum_{b\in B}\widetilde P_b=W^\dagger P_BW
+$$
+构成系统空间上的POVM，且
+$$
+\sup_\rho\operatorname{TV}
+\bigl(C_P(\tau_n^R(\rho)),C_P(\tau_m^R(\rho))\bigr)
+=\max_{B\subseteq\mathcal B}
+\left\|\overline G\odot(\overline{F_{m,n}}-J)\odot\widetilde P_B\right\|_\infty.
+$$
+即使 $P$ 是投影测量，$\widetilde P$ 也只保证为POVM；此公式不把未经压缩的 $P_B$ 当作系统矩阵。
+
+证明。直接在定理8.2的部分迹公式中保留集合 $R$。不可访问的旧记录贡献 $G_{xy}$，后续步骤的相位与被忽略新记录合计贡献 $(F_{m,t})_{xy}$，旧相位和保留向量均包含于 $W$，得到第一式。由 $W^\dagger W=I$ 可知 $\widetilde P_b\ge0$ 且 $\sum_b\widetilde P_b=I$。把概率差拉回系统，再应用定理10.1所用的有限事件最大值与Hermitian范数论证，得到第二式。该论证只需效应非负且和为恒等，因而适用于POVM。证毕。
+
+### 15.3 完整访问扰动的精确有限优化
+
+定义
+$$
+H_R(m,n)=G^{m,R}\odot(F_{m,n}-J),
+\qquad
+\Delta_R(m,n)=\sup_\rho
+\mathsf d\bigl(\tau_n^R(\rho),\tau_m^R(\rho)\bigr).
+$$
+$H_R(m,n)$ 为Hermitian矩阵且对角元为零。对概率单纯形中的 $p=(p_x)_{x\in\mathsf X}$，记 $D_p=\operatorname{diag}(\sqrt{p_x})$。
+
+**定理 15.3（Schur差值的精确扰动与参考系统无增益）。** 有
+$$
+\boxed{
+\Delta_R(m,n)=\frac12\max_{p_x\ge0,\ \sum_xp_x=1}
+\left\|D_pH_R(m,n)D_p\right\|_1.
+}
+$$
+这也等于同时优化初态及可访问空间上全部有限POVM所得的总变差变化。若允许任意有限旁参考 $K$ 在最初与系统纠缠，随后保持不动且可被联合测量，同一最坏值仍为 $\Delta_R(m,n)$。此外，
+$$
+\Delta_R(m,n)=0
+\quad\Longleftrightarrow\quad
+G^{m,R}_{xy}\bigl((F_{m,n})_{xy}-1\bigr)=0
+\quad\text{对所有 }x,y,
+$$
+且访问范围满足
+$$
+R\subseteq R'\subseteq\{1,\ldots,m\}
+\quad\Longrightarrow\quad
+\Delta_R(m,n)\le\Delta_{R'}(m,n).
+$$
+当全部旧记录可访问时 $G^{m,R}=J$，旧记录的重叠不再出现在该完整扰动公式中。
+
+证明。等距嵌入保持迹范数，故命题15.2将两态之差的范数化为 $\|H_R\odot\rho\|_1$。对纯态 $\psi_x=\sqrt{p_x}e^{i\phi_x}$，该矩阵与 $D_pH_RD_p$ 由对角酉共轭联系。对混态取任意纯态凸分解，迹范数凸性说明其值不超过纯态上的最大值。概率单纯形紧且目标连续，故最大值达到，得到第一式。
+
+再取系统与有限参考的纯态，并写为
+$$
+|\Psi\rangle=\sum_x\sqrt{p_x}|x\rangle|r_x\rangle,
+\qquad \|r_x\|=1\ \text{当 }p_x>0.
+$$
+零概率标签对应的 $r_x$ 任取单位向量。向量 $|x\rangle|r_x\rangle$ 两两正交；因此 $V|x\rangle=|x\rangle|r_x\rangle$ 是等距映射，且
+$$
+(M_{H_R}\otimes\operatorname{id}_K)(|\Psi\rangle\langle\Psi|)
+=V(D_pH_RD_p)V^\dagger.
+$$
+再沿 $W\otimes I_K$ 嵌入也不改变范数，故有限参考不能提高第一式。混态仍由凸性处理；取一维参考即可达到原值。这里的无增益只针对所列Schur差值，不外推为一般通道判别结论。
+
+对任意迹为零的Hermitian差值 $T$，其正谱投影与补投影构成的二输出PVM达到总变差 $\|T\|_1/2$，而所有POVM都受迹距离收缩约束，证明测量优化的等价性。若 $H_{R,xy}\ne0$，取在 $x,y$ 上各占 $1/2$ 的 $p$，则得到扰动 $|H_{R,xy}|/2>0$；反向由零矩阵立即成立。最后，对同一输入态，访问集合 $R$ 的两个边缘都由对应 $R'$ 边缘迹掉 $E_{R'\setminus R}$ 得到。部分迹收缩迹距离，随后取初态上确界，得到访问单调性。证毕。
+
+保 Hermitian 映射的 diamond 范数优化与同维有限参考约定见 John Watrous，[《The Theory of Quantum Information》](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)，定理 3.51、式 (3.291)。本定理中参考系统无增益的结论由上述 Schur 差值的等距表示给出。
+
+### 15.4 固定访问范围的有限窗口预算
+
+在窗口起点 $m$ 固定 $R$，并在之后始终使用同一可访问空间 $S+E_R$。对 $m\le t<n$，定义
+$$
+\xi_t^{m,R}
+=\frac12\max_p
+\left\|D_p\bigl[G^{m,R}\odot F_{m,t}\odot(C_{t+1}-J)\bigr]D_p\right\|_1,
+$$
+以及单步完整扰动
+$$
+\kappa(C)=\frac12\max_p\left\|D_p(C-J)D_p\right\|_1.
+$$
+
+**推论 15.4（固定访问窗口的累积预算）。** $\xi_t^{m,R}$ 恰为 $\tau_{t+1}^R$ 与 $\tau_t^R$ 的最坏迹距离，并且
+$$
+\max_{m\le u\le v\le n}\sup_\rho
+\mathsf d\bigl(\tau_v^R(\rho),\tau_u^R(\rho)\bigr)
+\le\min\left\{1,\sum_{t=m}^{n-1}\xi_t^{m,R}\right\},
+\qquad
+\xi_t^{m,R}\le\kappa(C_{t+1}).
+$$
+同一结论适用于最初与系统纠缠、随后保持不动的任意有限可访问参考系统。
+
+证明。相邻时刻的差值仍为定理15.3所处理的Hermitian Schur差值，其乘子即定义 $\xi_t^{m,R}$ 的方括号。该定理的证明给出精确值及参考系统无增益。固定同一初态后沿窗口作迹距离的三角不等式，再取上确界，得到累积界。矩阵 $G^{m,R}\odot F_{m,t}$ 是相关矩阵；对应通道将 $(M_{C_{t+1}}-\operatorname{id})(\rho)$ 映为这里的差值。CPTP映射对Hermitian算子的迹范数收缩，故 $\xi_t^{m,R}\le\kappa(C_{t+1})$。证毕。
+
+### 15.5 共同处理、交错控制与普遍不扰动
+
+先保留第15.2节无交错控制的两个端点。对两端施加同一个CPTP映射，可以联合处理系统、可访问旧记录与最初携带的有限参考；其后任何测量的总变差变化均不超过 $\Delta_R(m,n)$。这由定理15.3及迹距离收缩直接得到，也包括保留全部经典结果寄存器的无条件处理。
+
+下面另行允许交错控制：比较两个从同一任意态 $\omega_{S\mathcal M}$ 出发的有限协议，其中 $\mathcal M$ 是可访问有限记忆。两协议在各记录步骤之前、之间和之后施加完全相同的CPTP控制；实际协议在步骤 $t=m+1,\ldots,n$ 施加 $M_{C_t}\otimes\operatorname{id}_{\mathcal M}$，比较协议把这些记录通道全部替换为恒等通道。每个新记录均在该步作用后被忽略，此后不再参与控制；控制只访问系统与记忆。存储经典结果并按其反馈可作为共同CPTP控制的一部分，但不对选定结果作后选择。
+
+**定理 15.5（任意共同控制下的混合协议界）。** 两协议的末态满足
+$$
+\mathsf d(\omega_{\rm actual},\omega_{\rm identity})
+\le\min\left\{1,\sum_{t=m+1}^{n}\kappa(C_t)\right\}.
+$$
+对全部共同初态、全部上述共同控制序列和全部最终POVM，两协议的末端统计完全相同，当且仅当
+$$
+C_t=J\qquad(m<t\le n).
+$$
+
+证明。由定理15.3取 $G=J$，$\kappa(C_t)$ 是 $M_{C_t}$ 与恒等通道在任意有限记忆参与下的精确最大单步迹距离。构造有限条中间协议，逐个把实际记录替换为恒等通道。每对相邻中间协议在唯一不同步骤之前具有同一输入，该步骤后的差距至多为 $\kappa(C_t)$；后续共同通道收缩该差距。对这些末态使用三角不等式，再结合迹距离至多为 $1$，得到第一式。
+
+若全部 $C_t=J$，两协议逐步相同。反之，选一步 $t$ 及一对标签 $x\ne y$，使 $c_{xy}^{t}\ne1$。无需额外记忆：先将系统保持在 $|x\rangle$，使此前所有记录均不改变系统态；在所选步骤之前，用共同酉控制制备 $(|x\rangle+|y\rangle)/\sqrt2$。两协议在该步骤之后的态差在此二维空间中为
+$$
+T=\frac12\begin{pmatrix}
+0&c_{xy}^{t}-1\\
+\overline{c_{xy}^{t}}-1&0
+\end{pmatrix},
+\qquad
+\operatorname{spec}(T)=\left\{\frac{|c_{xy}^{t}-1|}{2},-\frac{|c_{xy}^{t}-1|}{2}\right\}.
+$$
+紧接着选取同一个酉控制，将 $T$ 的正交特征基送到指针基。两协议于是具有非零指针布居差。令以后控制均为恒等；后续每个Schur记录都保持这些布居，而比较协议也保持它们。最后一次指针测量仍得到总变差 $|c_{xy}^{t}-1|/2>0$，反驳普遍相同。证毕。
+
+## 追加锚（新终端）
