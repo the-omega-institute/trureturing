@@ -2197,4 +2197,28 @@ def provenanceErrorCurrent (root catalog theoremName realization : Name) : CoreM
 def provenanceError (env : Environment) (root catalog theoremName realization : Name) : CoreM (Option String) :=
   withEnv env (provenanceErrorCurrent root catalog theoremName realization)
 
+/-- Declared-template provenance enters the existing fail-closed walker only at
+raw supplied arguments. All arguments share one lower-only debit, including
+reused syntax summaries; no template body is sent through this path. -/
+def templateArgumentsCurrent (theoremName : Name) (arguments : Array Expr)
+    (availableWork : Nat) : CoreM (Except String (Array Name × Nat)) := do
+  let mut remaining := min 524288 availableWork
+  let mut inputs : NameSet := {}
+  for index in [:arguments.size] do
+    if remaining == 0 then return .error "incomplete_closure:E8.argument_work"
+    let argument := arguments[index]!
+    let result ← withOptions (fun options => options.set
+        `provenanceExpressionLimit (min remaining (provenanceExpressionLimit.get options))) <|
+      safeCollect (← getEnv) theoremName (.num `argument index) argument
+    let counters := countersCache.getState (← getEnv)
+    let used := counters.chargedVisits
+    if used > remaining then return .error "incomplete_closure:E8.argument_work"
+    remaining := remaining - used
+    if result.incomplete then return .error "incomplete_closure:dtr.argument_audit"
+    if result.forbidden then return .error "forbidden_dependency:dtr.argument_audit"
+    if result.unclassified.isSome || result.admission.isNone then
+      return .error "unclassified_form:dtr.argument_audit"
+    for name in result.walked do inputs := inputs.insert name.toName
+  return .ok (inputs.toArray, min 524288 availableWork - remaining)
+
 end LeanInformationAudit.RegistrationGates

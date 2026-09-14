@@ -8,6 +8,8 @@ open Lean.Elab.Command
 open Lean.Elab.Term
 open Lean.Meta
 
+run_cmd TemplateAudit.initializeGrammarPins
+
 /-- Retain construction ownership before the builtin elaborator's structure eta
 compaction loses it. Metadata has no effect on kernel typing or definitional equality.
 Only live forwarding-head traversal consumes this marker; unused arguments do not. -/
@@ -456,5 +458,29 @@ private def elabRegisterInformationTheoremOccurrence : CommandElab := fun stx =>
     variationWitness := ← optionalWitnessName stx[12]
     sensitivityWitness := ← optionalWitnessName stx[13]
   }
+
+end LeanInformationAudit
+
+namespace LeanInformationAudit
+open Lean Elab Command
+
+private def elaborateTemplateEnrollment (id : TSyntax `ident)
+    (version : Nat) (types : Array (TSyntax `ident)) : CommandElabM Unit := registrationTransaction do
+  let name ← liftCoreM <| realizeGlobalConstNoOverloadWithInfo id
+  unless version == 1 do
+    logWarning m!"IE-C050 ClosedTruthReadout template={name} reason=unclassified_form rule=E4c.version"
+    return
+  let constructors ← types.mapM fun ast => liftCoreM <| realizeGlobalConstNoOverloadWithInfo ast
+  match ← TemplateAudit.enroll name constructors with
+  | .ok () => pure ()
+  | .error message =>
+    logWarning m!"IE-C050 ClosedTruthReadout template={name} reason={message}"
+
+elab "register_information_template " id:ident : command =>
+  elaborateTemplateEnrollment id 1 #[]
+
+elab "register_information_template " id:ident " constructors " version:num
+    " [" types:ident,* "]" : command =>
+  elaborateTemplateEnrollment id version.getNat types.getElems
 
 end LeanInformationAudit

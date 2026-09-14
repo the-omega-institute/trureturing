@@ -8,6 +8,126 @@ open Lean
 
 abbrev CatalogId := Name
 
+namespace TemplateAudit
+
+inductive Origin where
+  | templateBody | suppliedArgument | actualExtraction | proofLeaf
+  deriving BEq, Inhabited, Repr
+
+inductive SlotKind where
+  | carrier | data | function | predicate | dictionary | proof | interface
+  deriving BEq, Inhabited, Repr
+
+/-- Raw syntax is retained at proof and supplied-argument boundaries. Neither
+boundary grants normalization or permits walking a proof implementation. -/
+inductive PlanNode where
+  | atom (raw : Expr)
+  | app (fn arg : PlanNode)
+  | lam (domain body : PlanNode) (binderInfo : BinderInfo)
+  | forallE (domain body : PlanNode) (binderInfo : BinderInfo)
+  | letE (type value body : PlanNode) (nondep : Bool)
+  | mdata (data : MData) (body : PlanNode)
+  | proj (typeName : Name) (index : Nat) (body : PlanNode)
+  | expanded (raw : Expr) (checked : PlanNode)
+  | supplied (raw : Expr)
+  | proofLeaf (type raw : Expr)
+  deriving Inhabited
+
+structure DependencyIdentity where
+  name : Name
+  owner : Name
+  typeIdentity : String
+  bodyIdentity : String
+  deriving Inhabited
+
+structure Slot where
+  kind : SlotKind
+  binderInfo : BinderInfo
+  type : Expr
+  deriving Inhabited
+
+/-- Serialized data, not an enrollment authority. Only the private producer
+extension in Registry accepts a result of its checked-plan constructor. -/
+structure TemplatePlanData where
+  schemaVersion : Nat := 1
+  grammarVersion : Nat := 1
+  constructorRecursionVersion : Nat := 1
+  compatibilityVersion : Nat := 4
+  compiler : String
+  toolchain : String
+  name : Name
+  definitionOwner : Name
+  enrollmentOwner : Name
+  levelParams : List Name
+  slots : Array Slot
+  rawType : Expr
+  rawBody : Expr
+  typeIdentity : String
+  bodyIdentity : String
+  planIdentity : String
+  dependencies : Array DependencyIdentity
+  plan : PlanNode
+  typePlan : PlanNode
+  proofTypes : Array Expr
+  rules : Array String
+  chargedWork : Nat
+  serializedBytes : Nat
+  deriving Inhabited
+
+end TemplateAudit
+
+structure TemplateOccurrenceKey where
+  root : Name
+  registrationModule : Name
+  theoremName : Name
+  objectArena : Name
+  catalog : Name
+  deriving BEq, Hashable, Inhabited
+
+structure TemplateOccurrenceEvent where
+  key : TemplateOccurrenceKey
+  unitName : Name
+  realizationName : Name
+  statement : Expr
+  levelParams : List Name
+  statementIdentity : String
+  arena : Expr
+  registrationSource : String
+  registrationSourceIdentity : String
+  deriving Inhabited
+
+structure TemplateBindingCertificate where
+  evidenceRef : String
+  key : TemplateOccurrenceKey
+  planIdentity : String
+  descriptorIdentity : String
+  actualIdentity : String
+  argumentInputs : Array TemplateAudit.DependencyIdentity
+  extractionInputs : Array TemplateAudit.DependencyIdentity
+  deriving Inhabited
+
+inductive TemplateBindingResult where
+  | undeclared
+  | declaredUnresolved (diagnostic : String)
+  | declaredValidated (certificate : TemplateBindingCertificate)
+  deriving Inhabited
+
+structure BindingRecord where
+  schemaVersion : Nat := 1
+  compatibilityVersion : Nat := 4
+  occurrence : TemplateOccurrenceEvent
+  descriptor : Option Expr
+  bindingOwner : Option Name
+  result : TemplateBindingResult
+  deriving Inhabited
+
+structure TemplateBindingClaim where
+  key : TemplateOccurrenceKey
+  arena : Expr
+  descriptor : Expr
+  owner : Name
+  deriving Inhabited
+
 inductive CatalogKind where
   | canonicalMaximal
   | analysisView

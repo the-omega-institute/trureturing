@@ -884,6 +884,892 @@ def validatePersistedEntry (env : Environment) (entry : InformationRegistryEntry
       entry.effectiveCatalogId entry.realizationName realizationMatches)
   return .ok ()
 
+
+end LeanInformationAudit
+
+namespace LeanInformationAudit.TemplateAudit
+open Lean Meta
+
+register_option informationTemplate.work : Nat := {
+  defValue := 524288
+  descr := "Lower-only DTR expression, substitution and byte-work quota" }
+
+private structure WireState where
+  bytes : ByteArray := {}
+  remaining : Nat := 524288
+
+private abbrev WireM := StateT WireState (Except String)
+
+private def emit (text : String) : WireM Unit := do
+  let bytes := text.toUTF8
+  let lengthPrefix := (toString bytes.size ++ ":").toUTF8
+  let size := lengthPrefix.size + bytes.size
+  unless size ≤ (← get).remaining do throw "incomplete_closure:E8.serialization"
+  modify fun s => { bytes := s.bytes ++ lengthPrefix ++ bytes, remaining := s.remaining - size }
+
+private def wireName : Name → WireM Unit
+  | .anonymous => emit "anonymous"
+  | .str parent value => do emit "str"; wireName parent; emit value
+  | .num parent value => do emit "num"; wireName parent; emit (toString value)
+
+private def wireLevel (params : List Name) : Level → WireM Unit
+  | .zero => emit "zero"
+  | .succ value => do emit "succ"; wireLevel params value
+  | .max a b => do emit "max"; wireLevel params a; wireLevel params b
+  | .imax a b => do emit "imax"; wireLevel params a; wireLevel params b
+  | .param name => do
+    if params.contains name then emit "parameter"; emit (toString (params.idxOf name))
+    else emit "rigid"; wireName name
+  | .mvar _ => throw "incomplete_closure:E7.level_metavariable"
+
+private def wireSubstring (s : Substring.Raw) : WireM Unit := do
+  emit s.str; emit (toString s.startPos.byteIdx); emit (toString s.stopPos.byteIdx)
+
+private def wireSource : SourceInfo → WireM Unit
+  | .none => emit "none"
+  | .synthetic p q canonical => do
+    emit "synthetic"; emit (toString p.byteIdx); emit (toString q.byteIdx); emit (toString canonical)
+  | .original leading p trailing q => do
+    emit "original"; wireSubstring leading; emit (toString p.byteIdx)
+    wireSubstring trailing; emit (toString q.byteIdx)
+
+private partial def wireSyntax (depth : Nat) (stx : Syntax) : WireM Unit := do
+  if depth > 256 then throw "incomplete_closure:E8.syntax_depth"
+  match stx with
+  | .missing => emit "missing"
+  | .atom info value => emit "atom"; wireSource info; emit value
+  | .node info kind children =>
+    emit "node"; wireSource info; wireName kind; emit (toString children.size)
+    for child in children do wireSyntax (depth + 1) child
+  | .ident info raw name pre =>
+    emit "ident"; wireSource info; wireSubstring raw; wireName name; emit (toString pre.length)
+    for item in pre do
+      match item with
+      | .namespace name => emit "namespace"; wireName name
+      | .decl name fields =>
+        emit "decl"; wireName name; emit (toString fields.length)
+        for field in fields do emit field
+
+private def wireData (depth : Nat) : DataValue → WireM Unit
+  | .ofString value => do emit "string"; emit value
+  | .ofBool value => do emit "bool"; emit (toString value)
+  | .ofName value => do emit "name"; wireName value
+  | .ofNat value => do emit "nat"; emit (toString value)
+  | .ofInt value => do emit "int"; emit (toString value)
+  | .ofSyntax value => do emit "syntax"; wireSyntax depth value
+
+private partial def wireExpr (params : List Name) (depth : Nat) (e : Expr) : WireM Unit := do
+  if depth > 256 then throw "incomplete_closure:E8.expression_depth"
+  let child := fun x => wireExpr params (depth + 1) x
+  match e with
+  | .bvar index => emit "bvar"; emit (toString index)
+  | .fvar _ | .mvar _ => throw "incomplete_closure:E7.open_expression"
+  | .sort level => emit "sort"; wireLevel params level
+  | .const name levels =>
+    emit "const"; wireName name; emit (toString levels.length)
+    for level in levels do wireLevel params level
+  | .app f a => emit "app"; child f; child a
+  | .lam _ type body bi => emit "lambda"; emit (reprStr bi); child type; child body
+  | .forallE _ type body bi => emit "forall"; emit (reprStr bi); child type; child body
+  | .letE _ type value body nd =>
+    emit "let"; emit (toString nd); child type; child value; child body
+  | .lit (.natVal n) => emit "natLiteral"; emit (toString n)
+  | .lit (.strVal s) => emit "stringLiteral"; emit s
+  | .mdata data body =>
+    emit "metadata"; emit (toString data.entries.length)
+    for (key, value) in data.entries do wireName key; wireData (depth + 1) value
+    child body
+  | .proj name index body => emit "projection"; wireName name; emit (toString index); child body
+
+/-- Domain-separated, length-prefixed raw Expr/Level identity. Binder names are
+anonymous; instances, lets and metadata retain their complete structural bytes. -/
+def rawIdentity (params : List Name) (e : Expr) (fuel : Nat := 524288) : Except String (String × Nat) := do
+  let action : WireM Unit := do emit "DTR-raw-expr-v1"; wireExpr params 0 e
+  let (_, state) ← action.run { remaining := min fuel 524288 }
+  return (Sha256.hex state.bytes, state.bytes.size)
+
+def PlanNode.toExpr : PlanNode → Expr
+  | .atom e | .supplied e | .proofLeaf _ e => e
+  | .expanded _ checked => checked.toExpr
+  | .app f a => .app f.toExpr a.toExpr
+  | .lam t b bi => .lam .anonymous t.toExpr b.toExpr bi
+  | .forallE t b bi => .forallE .anonymous t.toExpr b.toExpr bi
+  | .letE t v b nd => .letE .anonymous t.toExpr v.toExpr b.toExpr nd
+  | .mdata m b => .mdata m b.toExpr
+  | .proj n i b => .proj n i b.toExpr
+
+end LeanInformationAudit.TemplateAudit
+
+namespace LeanInformationAudit.TemplateAudit
+open Lean Meta
+
+/-- A byte-radix tree. Each node has at most 256 sorted outgoing byte edges;
+lookup visits only the selected key's path, never the collection of templates. -/
+inductive TemplateTrie where
+  | node (value : Option TemplatePlanData) (edges : Array (UInt8 × TemplateTrie))
+  deriving Inhabited
+
+namespace TemplateTrie
+private partial def insertAt (tree : TemplateTrie) (key : ByteArray) (offset : Nat)
+    (value : TemplatePlanData) : TemplateTrie := Id.run do
+  let .node old edges := tree
+  if offset == key.size then return .node (some value) edges
+  let byte := key[offset]!
+  let mut found := false
+  let mut next := edges.map fun (b, child) =>
+    if b == byte then
+      (b, insertAt child key (offset + 1) value)
+    else (b, child)
+  for (b, _) in edges do if b == byte then found := true
+  if !found then
+    next := next.push (byte, insertAt (.node none #[]) key (offset + 1) value)
+  return .node old (next.qsort fun a b => a.1 < b.1)
+
+/-- The callback observes actual node/edge visits. It cannot change the lookup. -/
+private partial def lookupAt [Monad m] (tree : TemplateTrie) (key : ByteArray)
+    (offset : Nat) (observe : m Unit) : m (Option TemplatePlanData) := do
+  observe
+  let .node value edges := tree
+  if offset == key.size then return value
+  let byte := key[offset]!
+  for (b, child) in edges do
+    observe
+    if b == byte then return ← lookupAt child key (offset + 1) observe
+    if b > byte then return none
+  return none
+
+end TemplateTrie
+
+structure TemplateIndex where
+  private trie : TemplateTrie := .node none #[]
+  bytes : Nat := 0
+  error : Option String := none
+  deriving Inhabited
+
+/-- Only framing is checked on import. Static bodies are never revisited here. -/
+def TemplateIndex.addImported (index : TemplateIndex) (plan : TemplatePlanData) : TemplateIndex := Id.run do
+  if index.error.isSome then return index
+  let key := plan.name.toString.toUTF8
+  if plan.schemaVersion != 1 || plan.grammarVersion != 1 ||
+      plan.constructorRecursionVersion != 1 || plan.compatibilityVersion != 4 ||
+      plan.name.isAnonymous || plan.definitionOwner.isAnonymous || plan.enrollmentOwner.isAnonymous ||
+      key.size > 1024 || plan.serializedBytes == 0 || plan.serializedBytes > 65536 ||
+      plan.planIdentity.length != 64 then
+    return { index with error := some "incomplete_closure:E8.import_framing" }
+  let retained := index.bytes + plan.serializedBytes + key.size
+  if retained > 8388608 then
+    return { index with error := some "incomplete_closure:E8.import_bytes" }
+  let duplicate := (TemplateTrie.lookupAt index.trie key 0 (pure () : Id Unit)).isSome
+  if duplicate then return { index with error := some "unclassified_form:E7.duplicate_enrollment" }
+  return { index with trie := TemplateTrie.insertAt index.trie key 0 plan, bytes := retained }
+
+def TemplateIndex.lookup [Monad m] (index : TemplateIndex) (name : Name)
+    (observe : m Unit) : m (Except String TemplatePlanData) := do
+  if let some error := index.error then return .error error
+  let key := name.toString.toUTF8
+  if key.size > 1024 then return .error "incomplete_closure:E8.name_bytes"
+  match ← TemplateTrie.lookupAt index.trie key 0 observe with
+  | some plan => return .ok plan
+  | none => return .error "unclassified_form:dtr.unregistered_template"
+
+private initialize templateIndexExt : SimplePersistentEnvExtension TemplatePlanData TemplateIndex ←
+  registerSimplePersistentEnvExtension {
+    addEntryFn := TemplateIndex.addImported
+    addImportedFn := fun modules => modules.foldl (init := {}) fun index plans =>
+      plans.foldl TemplateIndex.addImported index
+  }
+
+/-- Imported checked summaries are the sole lookup source. -/
+def selectedPlan (env : Environment) (name : Name) : Except String TemplatePlanData :=
+  (templateIndexExt.getState env).lookup name (pure () : Id Unit)
+
+end LeanInformationAudit.TemplateAudit
+
+namespace LeanInformationAudit.TemplateAudit
+open Lean Meta
+
+private def PlanNode.abstractAt (x : Expr) (depth : Nat := 0) : PlanNode → PlanNode
+  | .atom e => .atom (e.replaceFVar x (.bvar depth))
+  | .supplied e => .supplied (e.replaceFVar x (.bvar depth))
+  | .expanded raw checked => .expanded (raw.replaceFVar x (.bvar depth)) (checked.abstractAt x depth)
+  | .proofLeaf t e => .proofLeaf (t.replaceFVar x (.bvar depth)) (e.replaceFVar x (.bvar depth))
+  | .app f a => .app (f.abstractAt x depth) (a.abstractAt x depth)
+  | .lam t b bi => .lam (t.abstractAt x depth) (b.abstractAt x (depth + 1)) bi
+  | .forallE t b bi => .forallE (t.abstractAt x depth) (b.abstractAt x (depth + 1)) bi
+  | .letE t v b nd => .letE (t.abstractAt x depth) (v.abstractAt x depth) (b.abstractAt x (depth + 1)) nd
+  | .mdata m b => .mdata m (b.abstractAt x depth)
+  | .proj n i b => .proj n i (b.abstractAt x depth)
+
+private structure CompileState where
+  remaining : Nat := 524288
+  active : NameSet := {}
+  dependencies : Array DependencyIdentity := #[]
+  rules : Array String := #[]
+  constructorTypes : NameSet := {}
+
+private abbrev CompileM := StateT CompileState MetaM
+
+private def charge (work : Nat := 1) : CompileM Unit := do
+  unless work ≤ (← get).remaining do throwError "incomplete_closure:E8.work"
+  modify fun s => { s with remaining := s.remaining - work }
+
+private def rule (name : String) : CompileM Unit := do
+  charge
+  unless (← get).rules.contains name do
+    modify fun s => { s with rules := s.rules.push name }
+
+private def binder (name : Name) (bi : BinderInfo) (type : Expr)
+    (body : Expr → CompileM α) : CompileM α := fun state =>
+  withLocalDecl name bi type fun x => (body x).run state
+
+private def ownerOf (env : Environment) (name : Name) : Option Name :=
+  if env.contains name then
+    some ((RegistrationReifier.declaringModuleOf env name).getD env.header.mainModule)
+  else none
+
+private def dependency (info : ConstantInfo) : CompileM Unit := do
+  let state ← get
+  if state.dependencies.any (·.name == info.name) then return
+  if state.dependencies.size ≥ 4096 then throwError "incomplete_closure:E8.definition_constants"
+  let some owner := ownerOf (← getEnv) info.name | throwError "incomplete_closure:E7.owner"
+  let .ok (typeId, typeBytes) := rawIdentity info.levelParams info.type state.remaining
+    | throwError "incomplete_closure:E7.type_identity"
+  charge typeBytes
+  let (bodyId, bodyBytes) ← match info.value? with
+    | some body =>
+      let .ok pair := rawIdentity info.levelParams body (← get).remaining
+        | throwError "incomplete_closure:E7.body_identity"
+      pure pair
+    | none => pure ("", 0)
+  charge bodyBytes
+  modify fun s => { s with dependencies := s.dependencies.push {
+    name := info.name, owner, typeIdentity := typeId, bodyIdentity := bodyId } }
+
+-- These names describe the finite grammar, never individual template families.
+private def interfaceTypes : Array Name := #[
+  `D5.S3.ConceptDynamics.InformationEscape.Arena,
+  `D5.S3.ConceptDynamics.InformationEscape.PrimitiveSignature,
+  `D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization,
+  `D5.S3.ConceptDynamics.CIRPT.PrimitiveAxis,
+  `LeanInformationAudit.StructuralArena,
+  `LeanInformationAudit.StructuralPrimitiveSignature,
+  `LeanInformationAudit.StructuralPrimitiveRealization]
+
+private def dataTypes : Array Name :=
+  #[`Unit, `PUnit, `Bool, `Nat, `Fin, `Prod, `Sum, `Option, `Subtype]
+
+private def propTypes : Array Name := #[`Eq, `True, `False, `And, `Or, `Not, `Iff, `Exists, `Nat.lt]
+private def dictionaryTypes : Array Name := #[`Fintype, `DecidableEq, `Decidable, `DecidablePred, `DecidableRel]
+
+private def interfaceProjection (env : Environment) (name : Name) : Bool :=
+  match env.getProjectionFnInfo? name with
+  | some p => interfaceTypes.contains p.ctorName.getPrefix &&
+      #["State", "Index", "Output", "AnchorIndex", "indexFintype", "indexDecidableEq",
+        "outputDecidableEq", "anchorFintype", "anchorDecidableEq", "axis", "readout", "anchor"].contains
+          name.getString!
+  | none => false
+
+/-- The checked primitive reference is retained by the judge's own module. It is
+not a content callback or an enrollment claim. Every use compares the reflected
+Name, universe telescope, raw type/body identities and actual declaring module. -/
+private structure PrimitivePin where
+  identity : DependencyIdentity
+  levelCount : Nat
+  deriving Inhabited
+
+private initialize primitivePins : SimplePersistentEnvExtension PrimitivePin (Array PrimitivePin) ←
+  registerSimplePersistentEnvExtension {
+    addEntryFn := Array.push
+    addImportedFn := fun modules => modules.foldl (· ++ ·) #[] }
+
+private def constructiveDictionaryNames : Array Name := #[
+  `Unit.fintype, `PUnit.fintype, `Bool.fintype, `Fin.fintype, `instFintypeProd,
+  `Sum.instFintype, `Option.instFintype, `Subtype.fintype,
+  `instDecidableEqUnit, `instDecidableEqPUnit, `instDecidableEqBool,
+  `instDecidableEqFin, `Prod.instDecidableEq, `Sum.instDecidableEq,
+  `Option.instDecidableEq, `Subtype.instDecidableEq]
+
+private def checkedDictionary (info : ConstantInfo) : CompileM Bool := do
+  unless constructiveDictionaryNames.contains info.name do return false
+  let some pin := (primitivePins.getState (← getEnv)).find? (·.identity.name == info.name)
+    | throwError "incomplete_closure:E2.dictionary_pin"
+  dependency info
+  let some current := (← get).dependencies.find? (·.name == info.name)
+    | throwError "incomplete_closure:E2.dictionary_identity"
+  unless current.owner == pin.identity.owner && current.typeIdentity == pin.identity.typeIdentity &&
+      current.bodyIdentity == pin.identity.bodyIdentity && info.levelParams.length == pin.levelCount do
+    throwError "unclassified_form:E2.dictionary_identity"
+  rule "E2.dictionary"
+  return true
+
+private def staticIdentity (e : Expr) : CompileM Unit := do
+  let env ← getEnv
+  let name := e.getAppFn.constName?.getD .anonymous
+  if !name.isAnonymous && (InformationRegistry.hasTheorem env name || isCompanionName name) then
+    throwError "forbidden_dependency:E6.registered_identity"
+  if #[`Classical.choice, `Classical.propDecidable, `of_decide_eq_true, `Lean.Expr,
+      `Lean.Name, `String].contains name then
+    throwError "forbidden_dependency:E6.closed_identity"
+
+private partial def compileExpr (e : Expr) (depth : Nat := 0)
+    (typePosition : Bool := false) : CompileM PlanNode := do
+  charge
+  if depth > 256 then throwError "incomplete_closure:E8.depth"
+  if e.hasMVar then throwError "incomplete_closure:E7.metavariable"
+  staticIdentity e
+  -- Prop *values* are erased only after their entire proposition is classified.
+  -- A proposition expression itself is not a proof value.
+  if (← isProof e) then
+    let type ← inferType e
+    let _ ← compileExpr type (depth + 1) true
+    rule "E5.proof_leaf"
+    return .proofLeaf type e
+  let child := fun value => compileExpr value (depth + 1) typePosition
+  match e with
+  | .fvar _ => rule "E3.variable"; return .atom e
+  | .bvar _ => throwError "incomplete_closure:E3.loose_binder"
+  | .mvar _ => throwError "incomplete_closure:E7.metavariable"
+  | .sort _ => rule "E2.sort"; return .atom e
+  | .lit (.natVal _) =>
+    unless typePosition do throwError "unclassified_form:E3.nonindex_literal"
+    rule "E3.index_literal"; return .atom e
+  | .lit (.strVal _) => throwError "unclassified_form:E3.string_literal"
+  | .lam n t b bi =>
+    let tp ← compileExpr t (depth + 1) true
+    rule "E3.lambda"
+    binder n bi t fun x => do
+      let body ← child (b.instantiate1 x)
+      return .lam tp (body.abstractAt x) bi
+  | .forallE n t b bi =>
+    let tp ← compileExpr t (depth + 1) true
+    binder n bi t fun x => do
+      let bp ← compileExpr (b.instantiate1 x) (depth + 1) true
+      rule "E2.pi"
+      return .forallE tp (bp.abstractAt x) bi
+  | .letE n t v b nd =>
+    let tp ← compileExpr t (depth + 1) true
+    let vp ← compileExpr v (depth + 1) false
+    binder n .default t fun x => do
+      let bp ← child (b.instantiate1 x)
+      rule "E3.let"
+      return .letE tp vp (bp.abstractAt x) nd
+  | .mdata m b => rule "E3.metadata"; return .mdata m (← child b)
+  | .proj n i b =>
+    unless interfaceTypes.contains n || #[`Prod, `Subtype].contains n do
+      throwError "unclassified_form:E3.projection"
+    rule "E3.projection"; return .proj n i (← child b)
+  | .app .. | .const .. =>
+    let head := e.getAppFn
+    let args := e.getAppArgs
+    if head.isFVar || head.isLambda then
+      let mut plan ← child head
+      for arg in args do plan := .app plan (← child arg)
+      rule "E3.application"
+      return plan
+    let .const name levels := head | throwError "unclassified_form:E3.application_head"
+    let info ← getConstInfo name
+    if name == `OfNat.ofNat then
+      unless typePosition && args.size == 3 && args[0]!.isConstOf `Nat &&
+          args[2]!.isAppOfArity `instOfNatNat 1 && args[2]!.getAppArgs[0]!.equal args[1]! do
+        throwError "unclassified_form:E3.index_encoding:{e}:typePosition={typePosition}"
+      dependency info
+      dependency (← getConstInfo `instOfNatNat)
+      rule "E3.nat_index_encoding"
+      return .expanded e (← compileExpr args[1]! (depth + 1) true)
+    if info.isUnsafe then throwError "unclassified_form:E1.unsafe_definition"
+    let fixedType := dataTypes.contains name || propTypes.contains name ||
+      dictionaryTypes.contains name || interfaceTypes.contains name ||
+      (← get).constructorTypes.contains name
+    let constructorTypes := (← get).constructorTypes
+    let fixedCtor := match info with
+      | .ctorInfo c => dataTypes.contains c.induct || interfaceTypes.contains c.induct ||
+          constructorTypes.contains c.induct
+      | _ => false
+    let recursiveCase := match info with
+      | .recInfo r => constructorTypes.contains (r.all.headD .anonymous)
+      | _ => false
+    if recursiveCase then
+      let .recInfo r := info | throwError "unclassified_form:E4c.recursor"
+      unless args.size > r.getMajorIdx && args[r.getMajorIdx]!.isFVar do
+        throwError "unclassified_form:E4c.structural_descent"
+      rule "E4c.constructor_recursion_v1"
+    let fixedCase := match info with
+      | .recInfo r => #[`Unit, `PUnit, `Bool, `Option, `Sum, `Prod, `Subtype].contains
+          (r.all.headD .anonymous)
+      | _ => false
+    let fixedProjection := interfaceProjection (← getEnv) name || #[`Prod.fst, `Prod.snd, `Subtype.val].contains name
+    let dictionary ← checkedDictionary info
+    if fixedType || fixedCtor || fixedCase || recursiveCase || fixedProjection || dictionary || name == `Fin.elim0 then
+      dependency info
+      let mut plan := PlanNode.atom head
+      for arg in args do plan := .app plan (← compileExpr arg (depth + 1) (typePosition || fixedType || #[`Fin.fintype, `instDecidableEqFin].contains name))
+      rule (if fixedCase then "E4.cases" else if fixedType then "E2.type" else "E3.constructor")
+      return plan
+    if name == ``decide then
+      unless args.size == 2 && args[0]!.hasFVar && args[1]!.hasFVar do
+        throwError "forbidden_dependency:E6.closed_decision"
+      let mut plan := PlanNode.atom head
+      for arg in args do plan := .app plan (← child arg)
+      rule "E3.symbolic_decide"
+      return plan
+    match info with
+    | .thmInfo _ => throwError "forbidden_dependency:E6.executable_theorem:{name}"
+    | .recInfo _ => throwError "unclassified_form:E4.recursion:{name}"
+    | .defnInfo defn =>
+      if (← get).active.contains name || defn.all.length > 1 then
+        throwError "unclassified_form:E5.recursive_definition"
+      dependency info
+      -- Check every raw argument before capture-avoiding expansion, including
+      -- arguments unused by the definition body.
+      for arg in args do discard <| child arg
+      let mut value := defn.value.instantiateLevelParams defn.levelParams levels
+      for arg in args do
+        let .lam _ _ body _ := value | throwError "unclassified_form:E5.unsaturated_definition:{name}"
+        charge
+        value := body.instantiate1 arg
+      if value.isLambda then throwError "unclassified_form:E5.unsaturated_definition:{name}"
+      modify fun s => { s with active := s.active.insert name }
+      let plan ← child value
+      modify fun s => { s with active := s.active.erase name }
+      rule "E5.definition"
+      return .expanded e plan
+    | .opaqueInfo _ => throwError "unclassified_form:E5.opaque_definition"
+    | _ => throwError "unclassified_form:E2.unknown_constant:{name}"
+
+end LeanInformationAudit.TemplateAudit
+
+namespace LeanInformationAudit.TemplateAudit
+open Lean Meta Elab Command
+
+-- Capture standard dictionary references in the trusted judge module, following
+-- P1's reflected-provider pattern. An unavailable pin stays unavailable; import
+-- of an arbitrary same-typed instance cannot supply one later.
+def initializeGrammarPins : CommandElabM Unit := do
+  unless (← getEnv).header.mainModule == `LeanInformationAudit.Syntax do
+    throwError "incomplete_closure:E2.pin_producer_owner"
+  for name in constructiveDictionaryNames do
+    if let some info := (← getEnv).find? name then
+      let some owner := ownerOf (← getEnv) name | throwError "DTR primitive owner missing"
+      let .ok (typeId, _) := rawIdentity info.levelParams info.type
+        | throwError "DTR primitive type exceeds identity bound: {name}"
+      let .ok (bodyId, _) := rawIdentity info.levelParams (info.value?.getD info.type)
+        | throwError "DTR primitive body exceeds identity bound: {name}"
+      modifyEnv fun env => primitivePins.addEntry env {
+        identity := { name, owner, typeIdentity := typeId, bodyIdentity := bodyId }
+        levelCount := info.levelParams.length }
+
+private partial def checkTelescope (type : Expr) (depth : Nat := 0) : CompileM (Array Slot) := do
+  if depth > 64 then throwError "incomplete_closure:E8.slots"
+  match type with
+  | .forallE n domain body bi =>
+    if domain == mkSort .zero then throwError "unclassified_form:E1.proposition_slot"
+    let _ ← compileExpr domain 0 true
+    let kind ← match domain with
+      | .sort (.succ _) => pure SlotKind.carrier
+      | .sort _ => throwError "unclassified_form:E1.carrier_universe"
+      | _ =>
+        if dictionaryTypes.contains domain.getAppFn.constName!.getPrefix ||
+            dictionaryTypes.contains domain.getAppFn.constName! then
+          if domain.isAppOf `Decidable && !domain.hasFVar then
+            throwError "unclassified_form:E1.closed_decision_slot"
+          pure .dictionary
+        else if interfaceTypes.contains domain.getAppFn.constName! then pure .interface
+        else if domain.isForall then
+          let predicate ← forallTelescope domain fun _ result => pure (result == mkSort .zero)
+          pure (if predicate then .predicate else .function)
+        else if (← isProp domain) then pure .proof
+        else pure .data
+    binder n bi domain fun x => do
+      let tail ← checkTelescope (body.instantiate1 x) (depth + 1)
+      -- Stored domains use de Bruijn indices relative to earlier slots.
+      let tail := tail.map fun slot => { slot with type := slot.type.abstract #[x] }
+      return #[{ kind, binderInfo := bi, type := domain }] ++ tail
+  | _ =>
+    let name := type.getAppFn.constName?.getD .anonymous
+    unless #[`D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization,
+        `LeanInformationAudit.StructuralPrimitiveRealization].contains name do
+      throwError "unclassified_form:E1.return_interface"
+    discard <| compileExpr type 0 true
+    return #[]
+
+/-- Version 1 permits one non-mutual, unindexed inductive with only direct
+strictly positive recursive fields. Nested recursion and function-valued
+recursive fields have no rule. The kernel recursor supplies structural descent. -/
+private def checkConstructorType (name : Name) : CompileM Unit := do
+  let .inductInfo ind ← getConstInfo name
+    | throwError "unclassified_form:E4c.inductive_description"
+  if ind.all.length != 1 || ind.numIndices != 0 || dataTypes.contains name ||
+      ind.isUnsafe || ind.ctors.isEmpty then
+    throwError "unclassified_form:E4c.inductive_description"
+  dependency (.inductInfo ind)
+  modify fun s => { s with constructorTypes := s.constructorTypes.insert name }
+  for ctor in ind.ctors do
+    let .ctorInfo ci ← getConstInfo ctor
+      | throwError "incomplete_closure:E4c.constructor_description"
+    dependency (.ctorInfo ci)
+    let inspect : CompileM Unit := fun state =>
+      forallTelescope ci.type fun fields _ => do
+        let mut current := state
+        for i in [:fields.size] do
+          let domain ← inferType fields[i]!
+          if i ≥ ind.numParams then
+            if domain.isAppOf name then
+              unless domain.getAppArgs.size == ind.numParams &&
+                  (domain.getAppArgs.zip (fields.extract 0 ind.numParams)).all
+                    (fun (a, b) => a.equal b) do
+                throwError "unclassified_form:E4c.recursive_parameters"
+            else
+              if (domain.find? fun e => e.isConstOf name).isSome then
+                throwError "unclassified_form:E4c.nested_recursion"
+              let (_, next) ← (compileExpr domain 0 true).run current
+              current := next
+        return ((), current)
+    inspect
+  rule "E4c.description_v1"
+
+/-- Finite enrollment. The constructor is private and only its checked output
+can enter the persistent extension; public query data never grants insertion. -/
+private def compileTemplate (name : Name) (constructors : Array Name) : MetaM TemplatePlanData := do
+  let env ← getEnv
+  let .defnInfo info ← getConstInfo name | throwError "unclassified_form:E1.definition_kind"
+  if info.safety != .safe || info.all.length > 1 then throwError "unclassified_form:E1.recursive_definition"
+  let some owner := ownerOf env name | throwError "incomplete_closure:E7.owner"
+  if name.toString.utf8ByteSize > 1024 then throwError "incomplete_closure:E8.name_bytes"
+  let limit := min 524288 (informationTemplate.work.get (← getOptions))
+  let action : CompileM (Array Slot × PlanNode × PlanNode) := do
+    dependency (.defnInfo info)
+    for ast in constructors do checkConstructorType ast
+    let slots ← checkTelescope info.type
+    let typePlan ← compileExpr info.type 0 true
+    modify fun s => { s with active := s.active.insert name }
+    let plan ← compileExpr info.value
+    return (slots, typePlan, plan)
+  let ((slots, typePlan, plan), state) ← action.run { remaining := limit }
+  let .ok (typeIdentity, typeBytes) := rawIdentity info.levelParams info.type state.remaining
+    | throwError "incomplete_closure:E7.type_identity"
+  let .ok (bodyIdentity, bodyBytes) := rawIdentity info.levelParams info.value (state.remaining - typeBytes)
+    | throwError "incomplete_closure:E7.body_identity"
+  let .ok (planIdentity, planBytes) := rawIdentity info.levelParams plan.toExpr
+      (state.remaining - typeBytes - bodyBytes)
+    | throwError "incomplete_closure:E8.plan_identity"
+  let dependencyBytes := state.dependencies.foldl (init := 0) fun size dep =>
+    size + dep.name.toString.utf8ByteSize + dep.owner.toString.utf8ByteSize + 128
+  let serializedBytes := typeBytes + bodyBytes + planBytes + dependencyBytes + 1024
+  if serializedBytes > 65536 then throwError "incomplete_closure:E8.plan_bytes"
+  return {
+    compiler := Lean.versionString, toolchain := Lean.versionString,
+    name, definitionOwner := owner, enrollmentOwner := env.header.mainModule,
+    levelParams := info.levelParams, slots, rawType := info.type, rawBody := info.value,
+    typeIdentity, bodyIdentity, planIdentity, dependencies := state.dependencies,
+    plan, typePlan, proofTypes := #[], rules := state.rules,
+    chargedWork := limit - state.remaining + typeBytes + bodyBytes + planBytes,
+    serializedBytes }
+
+/-- Unsupported enrollment leaves no summary. All budgets are lower-only. -/
+def enroll (name : Name) (constructors : Array Name := #[]) : CommandElabM (Except String Unit) := do
+  let saved ← getEnv
+  let answer ← liftTermElabM <| tryCatchRuntimeEx
+    (withCurrHeartbeats <| withOptions (fun options =>
+      let configured := maxHeartbeats.get options
+      options.set `maxHeartbeats (if configured == 0 then 100000 else min 100000 configured)) do
+      let plan ← compileTemplate name constructors
+      let current := templateIndexExt.getState (← getEnv)
+      match current.lookup name (pure () : Id Unit) with
+      | .ok _ => throwError "unclassified_form:E7.duplicate_enrollment"
+      | .error _ => pure ()
+      let checked := current.addImported plan
+      if let some error := checked.error then throwError error
+      modifyEnv fun env => templateIndexExt.addEntry env plan
+      pure (.ok ()))
+    (fun error => do
+      let message ← error.toMessageData.toString
+      pure (.error (if message.startsWith "unclassified_form:" ||
+          message.startsWith "forbidden_dependency:" || message.startsWith "incomplete_closure:"
+        then message else "incomplete_closure:E8.elaboration:" ++ message)))
+  if answer matches .error _ then setEnv saved
+  return answer
+
+end LeanInformationAudit.TemplateAudit
+
+namespace LeanInformationAudit.TemplateBinding
+open Lean Meta TemplateAudit
+
+private abbrev CompareM := StateT Nat MetaM
+private def debit (n : Nat := 1) : CompareM Unit := do
+  unless n ≤ (← get) do throwError "incomplete_closure:E8.comparison_work"
+  modify (· - n)
+
+private partial def alpha (e : Expr) (depth : Nat := 0) : CompareM Expr := do
+  debit
+  if depth > 256 then throwError "incomplete_closure:E8.comparison_depth"
+  let child := fun x => alpha x (depth + 1)
+  match e with
+  | .app f a => return .app (← child f) (← child a)
+  | .lam _ t b bi => return .lam .anonymous (← child t) (← child b) bi
+  | .forallE _ t b bi => return .forallE .anonymous (← child t) (← child b) bi
+  | .letE _ t v b nd => return .letE .anonymous (← child t) (← child v) (← child b) nd
+  | .mdata m b => return .mdata m (← child b)
+  | .proj n i b => return .proj n i (← child b)
+  | .mvar _ | .fvar _ => throwError "incomplete_closure:dtr.open_comparison"
+  | _ => return e
+
+private def equalRaw (a b : Expr) : CompareM Bool := do
+  return (← alpha a).equal (← alpha b)
+
+private partial def rawSubstitute (e arg : Expr) (depth : Nat) : CompareM Expr := do
+  debit
+  if depth > 256 then throwError "incomplete_closure:E8.substitution_depth"
+  let child := fun e => rawSubstitute e arg depth
+  match e with
+  | .bvar i =>
+    if i == depth then return arg.liftLooseBVars 0 depth
+    return .bvar (if i > depth then i - 1 else i)
+  | .app f a => return .app (← child f) (← child a)
+  | .lam _ t b bi => return .lam .anonymous (← child t) (← rawSubstitute b arg (depth + 1)) bi
+  | .forallE _ t b bi => return .forallE .anonymous (← child t) (← rawSubstitute b arg (depth + 1)) bi
+  | .letE _ t v b nd =>
+    return .letE .anonymous (← child t) (← child v)
+      (← rawSubstitute b arg (depth + 1)) nd
+  | .mdata m b => return .mdata m (← child b)
+  | .proj n i b => return .proj n i (← child b)
+  | _ => return e
+
+private partial def liftPlan (p : PlanNode) (amount : Nat) (cutoff : Nat := 0) : CompareM PlanNode := do
+  debit
+  let raw := fun e : Expr => e.liftLooseBVars cutoff amount
+  match p with
+  | .atom e => return .atom (raw e)
+  | .supplied e => return .supplied e
+  | .proofLeaf t e => return .proofLeaf (raw t) (raw e)
+  | .expanded e b => return .expanded (raw e) (← liftPlan b amount cutoff)
+  | .app f a => return .app (← liftPlan f amount cutoff) (← liftPlan a amount cutoff)
+  | .lam t b bi => return .lam (← liftPlan t amount cutoff) (← liftPlan b amount (cutoff + 1)) bi
+  | .forallE t b bi => return .forallE (← liftPlan t amount cutoff) (← liftPlan b amount (cutoff + 1)) bi
+  | .letE t v b nd =>
+    return .letE (← liftPlan t amount cutoff) (← liftPlan v amount cutoff)
+      (← liftPlan b amount (cutoff + 1)) nd
+  | .mdata m b => return .mdata m (← liftPlan b amount cutoff)
+  | .proj n i b => return .proj n i (← liftPlan b amount cutoff)
+
+private partial def substitute (p : PlanNode) (arg : PlanNode) (depth : Nat := 0) : CompareM PlanNode := do
+  debit
+  if depth > 256 then throwError "incomplete_closure:E8.substitution_depth"
+  let raw := fun e => rawSubstitute e arg.toExpr depth
+  match p with
+  | .atom (.bvar i) =>
+    if i == depth then return ← liftPlan arg depth
+    return .atom (.bvar (if i > depth then i - 1 else i))
+  | .atom e => return .atom (← raw e)
+  | .supplied e => return .supplied e
+  | .proofLeaf t e => return .proofLeaf (← raw t) (← raw e)
+  | .expanded e b => return .expanded (← raw e) (← substitute b arg depth)
+  | .app f a => return .app (← substitute f arg depth) (← substitute a arg depth)
+  | .lam t b bi => return .lam (← substitute t arg depth) (← substitute b arg (depth + 1)) bi
+  | .forallE t b bi => return .forallE (← substitute t arg depth) (← substitute b arg (depth + 1)) bi
+  | .letE t v b nd =>
+    return .letE (← substitute t arg depth) (← substitute v arg depth)
+      (← substitute b arg (depth + 1)) nd
+  | .mdata m b => return .mdata m (← substitute b arg depth)
+  | .proj n i b => return .proj n i (← substitute b arg depth)
+
+private def levels (params : List Name) (values : List Level) : PlanNode → PlanNode
+  | .atom e => .atom (e.instantiateLevelParams params values)
+  | .supplied e => .supplied e
+  | .proofLeaf t e => .proofLeaf (t.instantiateLevelParams params values) (e.instantiateLevelParams params values)
+  | .expanded e b => .expanded (e.instantiateLevelParams params values) (levels params values b)
+  | .app f a => .app (levels params values f) (levels params values a)
+  | .lam t b bi => .lam (levels params values t) (levels params values b) bi
+  | .forallE t b bi => .forallE (levels params values t) (levels params values b) bi
+  | .letE t v b nd => .letE (levels params values t) (levels params values v) (levels params values b) nd
+  | .mdata m b => .mdata m (levels params values b)
+  | .proj n i b => .proj n i (levels params values b)
+
+private partial def applyPlan (plan : PlanNode) (arg : PlanNode) : CompareM PlanNode := do
+  debit
+  match plan with
+  | .expanded _ body => applyPlan body arg
+  | .lam _ body _ => substitute body arg
+  | _ => throwError "unclassified_form:dtr.unsaturated_plan"
+
+private partial def matchesPlan (plan : PlanNode) (actual : Expr) (depth : Nat := 0) : CompareM Bool := do
+  debit
+  if depth > 256 then throwError "incomplete_closure:E8.match_depth"
+  let child := fun p e => matchesPlan p e (depth + 1)
+  match plan with
+  | .expanded raw body =>
+    if ← equalRaw raw actual then return true
+    child body actual
+  | .atom raw | .supplied raw | .proofLeaf _ raw => equalRaw raw actual
+  | .app (.lam _ body _) arg => child (← substitute body arg) actual
+  | .app f a =>
+    match actual with
+    | .app g b => return (← child f g) && (← child a b)
+    | _ => return false
+  | .lam t b bi =>
+    match actual with
+    | .lam _ u c bj => return bi == bj && (← child t u) && (← child b c)
+    | _ => return false
+  | .forallE t b bi =>
+    match actual with
+    | .forallE _ u c bj => return bi == bj && (← child t u) && (← child b c)
+    | _ => return false
+  | .letE t v b nd =>
+    match actual with
+    | .letE _ u w c ne => return nd == ne && (← child t u) && (← child v w) && (← child b c)
+    | _ => return false
+  | .mdata m b =>
+    match actual with
+    | .mdata n c => return (Expr.mdata m (.bvar 0)).equal (.mdata n (.bvar 0)) && (← child b c)
+    | _ => return false
+  | .proj n i b =>
+    match actual with
+    | .proj k j c => return n == k && i == j && (← child b c)
+    | _ => return false
+
+private def isRealizationType (type : Expr) : Bool :=
+  #[`D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization,
+    `LeanInformationAudit.StructuralPrimitiveRealization].contains type.getAppFn.constName!
+
+private def extract (name : Name) : MetaM Expr := do
+  let info ← getConstInfo name
+  if info.type.isAppOfArity `D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization 3 then
+    return info.type.getAppArgs[2]!
+  if isRealizationType info.type then
+    match info with
+    | .defnInfo defn =>
+      if defn.safety != .safe then throwError "unclassified_form:dtr.extraction_kind"
+      return defn.value
+    | _ => throwError "unclassified_form:dtr.extraction_kind"
+  throwError "unclassified_form:dtr.extraction_interface"
+
+private def closed (e : Expr) : MetaM Unit := do
+  if e.hasMVar || e.hasFVar || e.hasLooseBVars then
+    throwError "incomplete_closure:dtr.descriptor_open"
+
+private def inputIdentity (name : Name) : MetaM DependencyIdentity := do
+  let info ← getConstInfo name
+  let owner := (RegistrationReifier.declaringModuleOf (← getEnv) name).getD (← getEnv).header.mainModule
+  let .ok (typeIdentity, _) := TemplateAudit.rawIdentity info.levelParams info.type
+    | throwError "incomplete_closure:dtr.input_identity"
+  let bodyIdentity ← match info.value? with
+    | none => pure ""
+    | some value =>
+      let .ok (identity, _) := TemplateAudit.rawIdentity info.levelParams value
+        | throwError "incomplete_closure:dtr.input_identity"
+      pure identity
+  return { name, owner, typeIdentity, bodyIdentity }
+
+private def validate (event : TemplateOccurrenceEvent) (descriptor : Expr) : MetaM TemplateBindingCertificate := do
+  closed descriptor
+  let .const name universeArgs := descriptor.getAppFn
+    | throwError "unclassified_form:dtr.descriptor_head"
+  let plan ← match selectedPlan (← getEnv) name with
+    | .ok plan => pure plan
+    | .error reason => throwError reason
+  let env ← getEnv
+  unless env.contains name do throwError "incomplete_closure:dtr.template_owner"
+  let owner := (RegistrationReifier.declaringModuleOf env name).getD env.header.mainModule
+  unless owner == plan.definitionOwner && universeArgs.length == plan.levelParams.length &&
+      descriptor.getAppArgs.size == plan.slots.size do
+    throwError "unclassified_form:dtr.descriptor_telescope"
+  let arguments := descriptor.getAppArgs
+  let budget := min 524288 (TemplateAudit.informationTemplate.work.get (← getOptions))
+  let (argumentNames, argumentWork) ← match ← RegistrationGates.templateArgumentsCurrent event.key.theoremName arguments budget with
+    | .ok result => pure result
+    | .error reason => throwError reason
+  let actual ← extract event.realizationName
+  closed actual
+  let compare : CompareM Unit := do
+    debit plan.serializedBytes
+    let mut body := levels plan.levelParams universeArgs plan.plan
+    let mut type := levels plan.levelParams universeArgs plan.typePlan
+    for argument in arguments do
+      body ← applyPlan body (.supplied argument)
+      match type with
+      | .forallE _ tail _ => type ← substitute tail (.supplied argument)
+      | _ => throwError "unclassified_form:dtr.descriptor_telescope"
+    let actualType ← inferType actual
+    unless ← matchesPlan type actualType do throwError "unclassified_form:dtr.signature_mismatch"
+    if !(← equalRaw descriptor actual) && !(← matchesPlan body actual) then
+      throwError "unclassified_form:dtr.realization_mismatch"
+  let (_, _) ← compare.run (budget - argumentWork)
+  let .ok (descriptorIdentity, _) := TemplateAudit.rawIdentity [] descriptor
+    | throwError "incomplete_closure:dtr.descriptor_identity"
+  let .ok (actualIdentity, _) := TemplateAudit.rawIdentity [] actual
+    | throwError "incomplete_closure:dtr.actual_identity"
+  let argumentInputs ← argumentNames.mapM inputIdentity
+  let extractionInputs ← #[event.realizationName].mapM inputIdentity
+  let identityMaterial := String.intercalate "\u0000" ["DTR-binding-v1", event.key.root.toString,
+    event.key.registrationModule.toString, event.key.theoremName.toString,
+    event.key.objectArena.toString, event.key.catalog.toString, event.statementIdentity,
+    plan.planIdentity, descriptorIdentity, actualIdentity]
+  return {
+    evidenceRef := Sha256.hex identityMaterial.toUTF8
+    key := event.key
+    planIdentity := plan.planIdentity
+    descriptorIdentity, actualIdentity, argumentInputs, extractionInputs }
+
+/-- Registration and final joined assessment share this function. Failure of a
+new binding check is retained metadata, never a module elaboration failure. -/
+def assess (event : TemplateOccurrenceEvent) (claim : Option TemplateBindingClaim) : MetaM BindingRecord := do
+  match claim with
+  | none => return { occurrence := event, descriptor := none, bindingOwner := none, result := .undeclared }
+  | some claim =>
+    let result ← tryCatchRuntimeEx
+      (withCurrHeartbeats <| withOptions (fun options =>
+        let configured := maxHeartbeats.get options
+        options.set `maxHeartbeats (if configured == 0 then 100000 else min 100000 configured)) do
+        unless claim.key == event.key && claim.arena.equal event.arena do
+          throwError "unclassified_form:dtr.claim_occurrence"
+        pure <| TemplateBindingResult.declaredValidated (← validate event claim.descriptor))
+      (fun error => do
+        let message ← error.toMessageData.toString
+        let reason := if message.startsWith "unclassified_form:" || message.startsWith "forbidden_dependency:"
+            || message.startsWith "incomplete_closure:" then message else "incomplete_closure:E8.assessment:" ++ message
+        return .declaredUnresolved s!"IE-C050 ClosedTruthReadout key={event.key.root}/{event.key.catalog}/{event.key.theoremName} reason={reason}")
+    return { occurrence := event, descriptor := some claim.descriptor, bindingOwner := some claim.owner, result }
+
+private initialize occurrenceInventory : SimplePersistentEnvExtension TemplateOccurrenceEvent (Array TemplateOccurrenceEvent) ←
+  registerSimplePersistentEnvExtension { addEntryFn := Array.push, addImportedFn := fun arrays => arrays.foldl (· ++ ·) #[] }
+private initialize bindingRecords : SimplePersistentEnvExtension BindingRecord (Array BindingRecord) ←
+  registerSimplePersistentEnvExtension { addEntryFn := Array.push, addImportedFn := fun arrays => arrays.foldl (· ++ ·) #[] }
+private initialize bindingClaims : SimplePersistentEnvExtension TemplateBindingClaim (Array TemplateBindingClaim) ←
+  registerSimplePersistentEnvExtension { addEntryFn := Array.push, addImportedFn := fun arrays => arrays.foldl (· ++ ·) #[] }
+
+def inventory (env : Environment) : Array TemplateOccurrenceEvent := occurrenceInventory.getState env
+def records (env : Environment) : Array BindingRecord := bindingRecords.getState env
+
+def sourcePath (name : Name) : String :=
+  (if name.toString.startsWith "LeanInformationAudit." then "tools/lean-inspector/" else "") ++
+    name.toString.replace "." "/" ++ ".lean"
+
+def publishRegistration (entry : InformationRegistryEntry) : Elab.Command.CommandElabM Unit := do
+  let info ← getConstInfo entry.theoremName
+  let statementIdentity := match TemplateAudit.rawIdentity info.levelParams info.type with
+    | .ok (identity, _) => identity
+    | .error _ => ""
+  let path := sourcePath entry.registrationModuleName
+  let sourceIdentity ← try pure (Sha256.hex (← IO.FS.readBinFile path)) catch _ => pure ""
+  let event : TemplateOccurrenceEvent := {
+    key := {
+      root := entry.registrationModuleName
+      registrationModule := entry.registrationModuleName
+      theoremName := entry.theoremName
+      objectArena := entry.canonicalObjectArenaName
+      catalog := entry.effectiveCatalogId }
+
+    unitName := entry.unitName, realizationName := entry.realizationName,
+    statement := info.type, levelParams := info.levelParams, statementIdentity,
+    arena := mkConst entry.canonicalObjectArenaName,
+    registrationSource := path, registrationSourceIdentity := sourceIdentity }
+  let record ← Elab.Command.liftTermElabM <| assess event none
+  modifyEnv fun current => bindingRecords.addEntry (occurrenceInventory.addEntry current event) record
+
+end LeanInformationAudit.TemplateBinding
+
+namespace LeanInformationAudit
+open Lean Meta
+
 def registerValidatedEntry (entry : InformationRegistryEntry) :
     Lean.Elab.Command.CommandElabM Unit := do
   let env ← getEnv
@@ -902,6 +1788,7 @@ def registerValidatedEntry (entry : InformationRegistryEntry) :
         RegistrationReifier.checkDiagnostic diagnostic.get!
       RegistrationGates.publishDiagnostic entry.unitName diagnostic
     modifyEnv fun env => informationRegistryExt.addEntry env entry
+    TemplateBinding.publishRegistration entry
   | .error message => throwError message
 
 end LeanInformationAudit
