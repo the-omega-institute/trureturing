@@ -1,0 +1,6 @@
+**定义 23.1（语言与残差质量）。** 给初始未区分状态对集合 $E$、可数候选查询语言 $\Gamma$。查询 $f$ 分离的状态对集记为 $U_f\subseteq E$。对有限 $S\subseteq\Gamma$，
+$$
+E_S=E\setminus\bigcup_{f\in S}U_f,\qquad B=\bigcap_{f\in\Gamma}(E\setminus U_f).
+$$
+给非负有限可加质量 $\nu$，且 $\nu(E)<\infty$，再给有限族成本 $C(S)<\infty$，预算候选随 $L$ 增加且其并包含所有有限族，定义 $M(L)=\inf_{C(S)\le L}\nu(E_S)$，假设空族可行。$B$ 为该语言的盲核，而非某一个计算器当前遗漏的集合。
+

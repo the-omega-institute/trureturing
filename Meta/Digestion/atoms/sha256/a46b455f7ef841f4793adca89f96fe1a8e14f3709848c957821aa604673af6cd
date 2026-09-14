@@ -1,0 +1,4 @@
+**命题 20.7（相干态不等于基底概率混合，repo-derived）。** $|+\rangle\langle+|$ 与 $\tfrac12|0\rangle\langle0|+\tfrac12|1\rangle\langle1|$ 具有相同 $Z$ 概率，但矩阵不同，H 后的 $Z$ 概率也不同。另一方面，$I/2$ 同时等于 $|0\rangle,|1\rangle$ 的等权混合与 $|+\rangle,|-\rangle$ 的等权混合，所以密度矩阵不唯一恢复制备分解。
+
+证明。第一矩阵为 $\tfrac12\begin{psmallmatrix}1&1\\1&1\end{psmallmatrix}$，第二矩阵为 $I/2$；H 将前者送到 $|0\rangle\langle0|$，后者保持不变。把两个相反相位纯态矩阵相加，非对角元抵消，得到 $I$。故固定基底上的经典概率向量不足以代表一般量子态；允许纯态混合分解又不意味着可以从混合态唯一读取哪一种制备历史。证毕。
+
