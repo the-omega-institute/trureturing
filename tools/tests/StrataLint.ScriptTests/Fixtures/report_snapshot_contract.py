@@ -16,6 +16,119 @@ STORE_SUFFIXES = ("", ".sha256", ".input.attestation", ".provenance.json", ".mat
 
 
 class SnapshotContracts(CacheFixture, unittest.TestCase):
+    def prepare_publish(self):
+        owner, arguments, _ = self.prepare_store("producer.json")
+        source = arguments.report
+        output = source.parent.parent / "published" / "candidate.json"
+        owner.copy_bundle(source, output)
+        for report, contents in ((source, "new producer log"), (output, "prior log")):
+            logs = owner.member(report, ".logs") / "nested"
+            logs.mkdir(parents=True)
+            (logs / "producer.log").write_text(contents)
+        return owner, source, output
+
+    def publish_command(self, owner, source, output):
+        with mock.patch.object(sys, "argv", ["report_cache.py", "publish",
+                "--report", str(source), "--output", str(output)]):
+            return owner.main()
+
+    def published_bytes(self, owner, report):
+        values = {suffix: owner.member(report, suffix).read_bytes() for suffix in STORE_SUFFIXES}
+        logs = owner.member(report, ".logs")
+        values.update({".logs/" + path.relative_to(logs).as_posix(): path.read_bytes()
+            for path in logs.rglob("*") if path.is_file()})
+        return values
+
+    def test_report_publish_validates_destination_materials_once(self):
+        owner, source, output = self.prepare_publish()
+        import delta
+        source_bytes = self.published_bytes(owner, source)
+        expected = dict(source_bytes)
+        expected[".sha256"] = (hashlib.sha256(source_bytes[""]).hexdigest()
+                               + "  " + output.name + "\n").encode("ascii")
+        with mock.patch.object(delta, "validate_materials", wraps=delta.validate_materials) as validate:
+            self.assertEqual(0, self.publish_command(owner, source, output))
+        self.assertEqual(expected, self.published_bytes(owner, output))
+        self.assertEqual(source_bytes, self.published_bytes(owner, source))
+        self.assertEqual(1, validate.call_count)
+        staged = validate.call_args.args[0]
+        self.assertEqual(output.parent, staged.parent.parent)
+        self.assertTrue(staged.parent.name.startswith(".lean-report-publish-"))
+        self.assertEqual(output.name, staged.name)
+        self.assertEqual([], list(output.parent.glob(".lean-report-publish-*")))
+
+    def test_report_publish_rejects_invalid_source_checksum_before_copy(self):
+        owner, source, output = self.prepare_publish()
+        before = self.published_bytes(owner, output)
+        checksum = owner.member(source, ".sha256")
+        original = checksum.read_bytes()
+        wrong = (b"0" * 64 + original[64:], original.replace(source.name.encode(), b"wrong.json"),
+                 original + b"extra\n", b"\xff\n")
+        for damaged in wrong:
+            with self.subTest(checksum=damaged):
+                checksum.write_bytes(damaged)
+                with mock.patch.object(owner, "copy_bundle", wraps=owner.copy_bundle) as copy:
+                    self.assertEqual(2, self.publish_command(owner, source, output))
+                self.assertEqual(0, copy.call_count)
+                self.assertEqual(before, self.published_bytes(owner, output))
+                self.assertEqual([], list(output.parent.glob(".lean-report-publish-*")))
+
+    def test_report_publish_rejects_missing_or_corrupt_source_before_replacement(self):
+        owner, source, output = self.prepare_publish()
+        before = self.published_bytes(owner, output)
+        for suffix in STORE_SUFFIXES:
+            # The seed is transported opaquely here; partition consumers validate it.
+            for missing in ((True,) if suffix == ".seed.json" else (True, False)):
+                with self.subTest(suffix=suffix, missing=missing):
+                    damaged = owner.member(source, suffix)
+                    original = damaged.read_bytes()
+                    try:
+                        if missing:
+                            damaged.unlink()
+                        else:
+                            damaged.write_bytes(b"corrupt source")
+                        with mock.patch.object(os, "replace", wraps=os.replace) as replace:
+                            self.assertEqual(2, self.publish_command(owner, source, output))
+                        self.assertEqual(0, replace.call_count)
+                        self.assertEqual(before, self.published_bytes(owner, output))
+                        self.assertEqual([], list(output.parent.glob(".lean-report-publish-*")))
+                    finally:
+                        damaged.write_bytes(original)
+
+    def test_report_publish_rejects_corrupt_staging_before_replacement(self):
+        owner, source, output = self.prepare_publish()
+        before = self.published_bytes(owner, output)
+        copy_bundle = owner.copy_bundle
+        for suffix in ("", ".sha256", ".input.attestation", ".provenance.json", ".materials.zip"):
+            with self.subTest(suffix=suffix):
+                def corrupt_copy(report, staged):
+                    copy_bundle(report, staged)
+                    owner.member(staged, suffix).write_bytes(b"corrupt staging")
+                with mock.patch.object(owner, "copy_bundle", corrupt_copy), \
+                        mock.patch.object(os, "replace", wraps=os.replace) as replace:
+                    self.assertEqual(2, self.publish_command(owner, source, output))
+                self.assertEqual(0, replace.call_count)
+                self.assertEqual(before, self.published_bytes(owner, output))
+                self.assertEqual([], list(output.parent.glob(".lean-report-publish-*")))
+
+    def test_report_publish_requires_nonempty_log_directory(self):
+        owner, source, output = self.prepare_publish()
+        before = self.published_bytes(owner, output)
+        logs = owner.member(source, ".logs")
+        shutil.rmtree(logs)
+        for shape in ("missing", "file", "empty"):
+            with self.subTest(shape=shape):
+                if shape == "file":
+                    logs.write_text("not a directory")
+                elif shape == "empty":
+                    logs.unlink()
+                    logs.mkdir()
+                with mock.patch.object(os, "replace", wraps=os.replace) as replace:
+                    self.assertEqual(2, self.publish_command(owner, source, output))
+                self.assertEqual(0, replace.call_count)
+                self.assertEqual(before, self.published_bytes(owner, output))
+                self.assertEqual([], list(output.parent.glob(".lean-report-publish-*")))
+
     def prepare_store(self, name="raw-lean-report.json"):
         from argparse import Namespace
         from lean_seed_contract import DeltaTests

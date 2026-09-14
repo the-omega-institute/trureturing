@@ -11,7 +11,7 @@ import sys
 import tempfile
 import zipfile
 
-from delta import parse_json_modules, valid_bundle, validate_materials
+from delta import parse_json_modules, valid_bundle, validate_materials, validate_report_sha
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "scripts/worktree"))
 from lean_cache import partition_path
@@ -134,8 +134,11 @@ def store(args: argparse.Namespace) -> bool:
 
 
 def publish(args: argparse.Namespace) -> None:
-    if valid_bundle(args.report, allow_logs=True) is None:
+    if not all(member(args.report, suffix).is_file() for suffix in SUFFIXES):
         raise ValueError("produced report bundle is invalid")
+    # copy_bundle rebinds the checksum filename; validate the source sidecar
+    # before copying, then validate all report/material content once in staging.
+    validate_report_sha(args.report, sha(args.report))
     args.output.parent.mkdir(parents=True, exist_ok=True)
     # Production stays outside .lake until cold provisioning is finished. The
     # output can be on another filesystem (for example RUNNER_TEMP), so only

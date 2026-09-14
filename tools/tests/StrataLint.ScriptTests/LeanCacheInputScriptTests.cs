@@ -70,6 +70,11 @@ public sealed class LeanCacheInputScriptTests
     [InlineData("report_snapshot_contract", "test_report_store_rebuilds_each_missing_or_corrupt_snapshot_file")]
     [InlineData("report_snapshot_contract", "test_report_store_rejects_each_missing_or_corrupt_source_file")]
     [InlineData("report_snapshot_contract", "test_report_store_preserves_concurrent_winner_validation")]
+    [InlineData("report_snapshot_contract", "test_report_publish_validates_destination_materials_once")]
+    [InlineData("report_snapshot_contract", "test_report_publish_rejects_invalid_source_checksum_before_copy")]
+    [InlineData("report_snapshot_contract", "test_report_publish_rejects_missing_or_corrupt_source_before_replacement")]
+    [InlineData("report_snapshot_contract", "test_report_publish_rejects_corrupt_staging_before_replacement")]
+    [InlineData("report_snapshot_contract", "test_report_publish_requires_nonempty_log_directory")]
     public void SnapshotReadinessAndMaterialRespectWriterPermissions(string fixture, string behavior)
     {
         if (OperatingSystem.IsWindows()) return;
