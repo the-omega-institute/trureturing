@@ -126,13 +126,19 @@ public sealed partial class LeanCacheEnsureCommandTests
         using var repository = new TemporaryDirectory();
         var fixture = new EnsureArchiveFixture(repository.Path, $"degrade-{status}");
         string? callbackRoot = null;
+        bool? concurrentWriterAcquired = null;
         // 脚本的约定是 miss/rejected 走非零退出;桩必须照这个约定回,否则测的就不是
         // 真实形状。ensure 侧现在校验判词与退出码自洽,桩若回 0 会被判 failed。
         var runner = new RecordingWorktreeProcessRunner
         {
             ArchiveReceipt = stub,
             ArchiveExitCode = 1,
-            AfterArchiveFetch = root => callbackRoot = root,
+            AfterArchiveFetch = root =>
+            {
+                callbackRoot = root;
+                using var concurrent = LeanCacheWriterGuard.TryAcquire(Path.Combine(root, ".lake"));
+                concurrentWriterAcquired = concurrent is not null;
+            },
         };
 
         var receipt = fixture.Ensure(runner);
@@ -141,10 +147,13 @@ public sealed partial class LeanCacheEnsureCommandTests
         var invocation = Assert.Single(runner.Invocations, static call => call.FileName == "/bin/bash");
         Assert.Equal(
             [Path.Combine(fixture.Target, "tools", "scripts", "worktree", "lean-cache-publish.sh"),
-                "fetch", "--repository", fixture.Target],
+                "fetch", "--repository", fixture.Target, "--writer-owned"],
             invocation.Arguments);
         Assert.Equal(fixture.Target, invocation.WorkingDirectory);
         Assert.Equal(fixture.Target, callbackRoot);
+        Assert.False(concurrentWriterAcquired);
+        using var releasedWriter = LeanCacheWriterGuard.TryAcquire(Path.Combine(fixture.Target, ".lake"));
+        Assert.NotNull(releasedWriter);
         Assert.Equal("present", receipt.GetProperty("status").GetString());
         Assert.Equal(status, receipt.GetProperty("archive_status").GetString());
         Assert.Equal(reason, receipt.GetProperty("archive_reason").GetString());
