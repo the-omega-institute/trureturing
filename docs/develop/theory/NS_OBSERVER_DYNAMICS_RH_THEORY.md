@@ -602,8 +602,7 @@ y=\frac{x'+ax}{b}.
 **定理。** 在上述误差假设下，令 $\widehat y=(\widehat v+a\widehat x)/b$，则
 
 \[
-|\widehat y-y|
-\leq\frac{\varepsilon_v+|a|\varepsilon_x}{|b|}.
+|\widehat y-y|\leq\frac{\varepsilon_v+|a|\varepsilon_x}{|b|}.
 \tag{12.12}
 \]
 
@@ -653,8 +652,7 @@ z'=-bx-dz,
 **定理。** 则对任意 $0\leq s\leq t$，
 
 \[
-|b(y(t)-z(t))|
-\leq |b|e^{-d(t-s)}|y(s)-z(s)|.
+|b(y(t)-z(t))|\leq |b|e^{-d(t-s)}|y(s)-z(s)|.
 \tag{12.15}
 \]
 
@@ -979,3 +977,205 @@ Laplace 反演的严重不适定性有成熟研究背景。[13-C] 本节使用�
 [13-C] Charles L. Epstein and John Schotland. *The Bad Truth about Laplace's Transform*. SIAM Review 50(3), 504–520, 2008. DOI: 10.1137/060657273. https://epubs.siam.org/doi/10.1137/060657273 . 已核对摘要与出版信息，用于 Laplace 反问题背景；不把本节的精确常数或归一化分类命题归属于该文。
 
 [13-D] Angelo Lucia, David Pérez-García, Antonio Pérez-Hernández. *Spectral Gap Bounds for Quantum Markov Semigroups via Correlation Decay*. arXiv:2505.08991, 2025. https://arxiv.org/abs/2505.08991 . 已核对摘要，用于说明具体空间混合与算子识别路线的对照，未将其结果移用于本节的时间相关函数。
+
+## 14. 校准谱带、线性噪声界与真实矩阵热迹认证
+
+### 14.1 从不可辨识边界到可用的附加信息
+
+第 13 节在不规定总质量的有限正测度类中得到尖锐的平方根噪声界，并在概率测度类中证明了统一含噪零质量分类的障碍。本节研究两项具体附加信息：较大谱带内的质量已被校准，以及观察是否覆盖每个谱方向。这些条件改变可行模型类；第 13 节的结论保留原适用范围。
+
+沿用真实积分 $C_\mu(t)=\int e^{-tE}\,\mu(dE)$ 和实际质量 $M_\mu(r)=\mu([0,r])$。本节所有测度均为非负能量轴上的有限正测度。概率归一化与谱带条件只在明确需要的定理中加入。它们都必须来自源模型或独立校准，不能从希望得到的谱隙结论倒推。
+
+精确概率界与极端分布构造属于成熟的矩问题研究框架。[14-A] 本节给出特定 Laplace 上包络问题的显式证明及 Lean 候选实现，没有把闭式表达或形式化本身当作外部开放问题的首次解决。
+
+### 14.2 保留较大谱带质量的积分下界
+
+**定理。** 对 $0\leq r\leq R$、$t\geq0$，有
+
+\[
+\boxed{
+C_\mu(t)\geq
+M_\mu(r)(e^{-rt}-e^{-Rt})+M_\mu(R)e^{-Rt}.
+}
+\tag{14.1}
+\]
+
+**证明。** 定义实际简单函数
+
+\[
+f(E)=(e^{-rt}-e^{-Rt})\mathbf1_{[0,r]}(E)
++e^{-Rt}\mathbf1_{[0,R]}(E).
+\]
+
+在 $E\leq r$ 时，它等于 $e^{-rt}\leq e^{-Et}$；在 $r<E\leq R$ 时，它等于 $e^{-Rt}\leq e^{-Et}$；在 $E>R$ 时，它等于零。有限测度保证两个指示函数可积，而指数核由一控制，亦可积。积分单调性和实际指示函数积分给出式 (14.1)。没有把该下界写成未经推导的谱假设。
+
+对应主声明为 `CalibratedLaplaceBand.band_mass_lower`。它只需要有限性，不要求概率归一化，也不要求整个测度支撑于较大谱带。
+
+### 14.3 归一化谱带问题的精确双原子归约
+
+**定理。** 固定 $0\leq r<R$、$0\leq m\leq1$、时间集合 $S\subseteq[0,\infty)$ 及任意上包络 $U$。以下条件等价：存在概率测度 $\mu$，满足
+
+\[
+M_\mu(R)=1,\qquad M_\mu(r)=m,\qquad C_\mu(t)\leq U(t)\quad(t\in S);
+\]
+
+以及
+
+\[
+m e^{-rt}+(1-m)e^{-Rt}\leq U(t)\quad(t\in S).
+\tag{14.2}
+\]
+
+**证明。** 正向对式 (14.1) 使用 $M_\mu(R)=1$。反向取实际概率测度
+
+\[
+\mu_m=m\delta_r+(1-m)\delta_R.
+\tag{14.3}
+\]
+
+由于 $r<R$，其低带质量为 $m$，较大带质量为一，Laplace 积分就是式 (14.2) 左端。Lean 直接复用 Mathlib 的 `bernoulliMeasure`、概率实例、原子质量和积分公式。[14-B]
+
+对应声明为 `normalized_band_feasible_iff_two_atoms`。它处理任意观察时间集合，包括离散采样，并不从有限采样暗中获得全时间信息。给定总质量后，原第 13 节的单原子极值分布通常不再可行；式 (14.3) 明确保留了剩余质量。
+
+### 14.4 单时刻的线性误差与尾质量界
+
+**定理。** 设 $r>0$，选择
+
+\[
+t_*=\frac{\log2}{r}.
+\]
+
+则 $e^{-rt_*}=1/2$，$e^{-2rt_*}=1/4$。如果参考质量 $M$、误差预算 $\varepsilon$ 和带外缺失预算 $\tau$ 满足
+
+\[
+M_\mu(2r)\geq M-\tau,\qquad
+C_\mu(t_*)\leq M/4+\varepsilon,
+\]
+
+就有
+
+\[
+\boxed{M_\mu(r)\leq4\varepsilon+\tau.}
+\tag{14.4}
+\]
+
+**证明。** 在式 (14.1) 取 $R=2r,t=t_*$，得到
+
+\[
+C_\mu(t_*)\geq\frac{M_\mu(r)+M_\mu(2r)}4
+\geq\frac{M_\mu(r)+M-\tau}4.
+\]
+
+与观测上界比较即得式 (14.4)。时间定义及核值由 `halfBandTime`、`halfBandTime_spec` 承载，质量界由 `calibrated_half_band_bound` 承载。
+
+对概率测度取 $M=1$。如果其高能尾质量 $\mu((2r,\infty))\leq\tau$，则较大带质量条件成立。该条件是额外校准，普通量子哈密顿量不能被无条件假定有有限能量截断。式 (14.4) 对参考质量之外的有限正测度也成立，只要实际较大带质量满足所写不等式。
+
+测量读数为 $y$、绝对误差为 $\delta$ 时，应先用 $C_\mu(t_*)\leq y+\delta$。此时认证界为 $M_\mu(r)\leq4(y+\delta-M/4)+\tau$，不需要拟合整条指数曲线。若时间窗未包含 $t_*$，则必须使用窗口中真实可用时刻的式 (14.1)。
+
+### 14.5 系数四的取等与完整有限窗口极值
+
+**定理。** 对 $0\leq m\leq1$，取归一化测度
+
+\[
+\mu_m=m\delta_r+(1-m)\delta_{2r}.
+\]
+
+它有 $M_{\mu_m}(r)=m$、$M_{\mu_m}(2r)=1$，并满足
+
+\[
+0\leq C_{\mu_m}(t)-e^{-2rt}
+=m(e^{-rt}-e^{-2rt})\leq m/4\qquad(t\geq0).
+\tag{14.5}
+\]
+
+在 $t_*$ 上取等。证明令 $s=e^{-rt}\in(0,1]$，使用 $0\leq s-s^2\leq1/4$；后一个不等式等价于 $(s-1/2)^2\geq0$。对应声明为 `normalized_half_band_sharp`。
+
+因此，对 $\varepsilon\geq0$，在概率归一化、支撑于 $[0,2r]$ 且全时间满足 $C_\mu(t)\leq e^{-2rt}+\varepsilon$ 的模型类中，最大低能质量恰好是
+
+\[
+\boxed{\min\{1,4\varepsilon\}.}
+\tag{14.6}
+\]
+
+当 $0\leq\varepsilon\leq1/4$ 时取 $m=4\varepsilon$，当 $\varepsilon\geq1/4$ 时取 $m=1$。所以噪声系数四无法降低。尾预算系数一目前只证明为有效界，没有声称其尖锐性。
+
+**有限窗口推论，普通证明。** 对 $T>0$，令 $t_T=\min\{T,\log2/r\}$。在相同归一化谱带类、仅要求 $0\leq t\leq T$ 的上包络时，最大低能质量为
+
+\[
+\min\left\{1,\frac{\varepsilon}{e^{-rt_T}-e^{-2rt_T}}\right\}.
+\tag{14.7}
+\]
+
+由式 (14.2)，可行性等价于 $m(e^{-rt}-e^{-2rt})\leq\varepsilon$。该因子在 $t_*$ 之前增加、之后减少，所以窗口最大值在 $t_T$ 取得；式 (14.3) 给出达到上界的测度。$T=0$ 时只有总质量观察，可行最大值为一。式 (14.6)--(14.7) 是已经给出普通证明的组合推论，没有另加形式化下确界或微分优化声明。
+
+线性界与原平方根界适用的模型类不同。原界允许改变总质量、也没有这里的较大谱带校准；本节把这些信息真正加入约束，从而得到更强结论。这不推翻第 13 节在其原模型类中的尖锐性和含噪分类障碍。
+
+### 14.6 从可观测低能质量到实际有限矩阵谱
+
+取非负能量 $\lambda_i$，其中 $i$ 遍历一个有 $d$ 个元素的有限指标集，构造实际实矩阵
+
+\[
+A=\operatorname{diag}(\lambda_i),\qquad
+Z_A(t)=\operatorname{tr}(\exp(-tA)).
+\]
+
+源码使用 `Matrix.trace` 和 `NormedSpace.exp` 定义 $Z_A$，先由 Mathlib 的 `Matrix.exp_diagonal` 和实指数识别定理证明
+
+\[
+Z_A(t)=\sum_i e^{-t\lambda_i}.
+\tag{14.8}
+\]
+
+谱结论使用 Mathlib 的 `spectrum`，由 `spectrum_diagonal` 识别为实际矩阵的对角元集合。[14-B] 这里同时完成了观察算子与谱对象的识别，没有把两个独立命题作合取来代替推导。
+
+**定理。** 若 $0\leq\lambda_i\leq2r$、$r>0$，且单次完整热迹观测满足
+
+\[
+|y-Z_A(t_*)|\leq\delta,\qquad
+ y+\delta<\frac{d+1}4,
+\]
+
+则
+
+\[
+\boxed{\operatorname{spec}_{\mathbb R}(A)\subset(r,\infty).}
+\tag{14.9}
+\]
+
+**证明。** 每个模式至少贡献 $e^{-2rt_*}=1/4$。如果某个模式满足 $\lambda_i\leq r$，它至少贡献 $1/2$，因此完整迹至少为 $(d+1)/4$，与观测上界矛盾。形式证明用每个非负剩余项 $e^{-t_*\lambda_i}-1/4$ 的有限和比较，覆盖任意有限维数和重复本征值。
+
+对应声明为 `CalibratedDiagonalHeatTrace.diagonalHeatTrace`、`diagonalHeatTrace_eq` 和 `calibrated_diagonal_spectrum_exclusion`。当一个能量恰为 $r$、其余能量都为 $2r$ 时，迹恰为 $(d+1)/4$，而低能谱仍非空，所以严格不等号必要。这一边界例在普通数学中直接计算；未另建一个形式化特例。
+
+式 (14.9) 使用完整迹。若只给一个可能与低能方向几乎正交的向量关联函数，单个低能方向的权重可以任意小，第 13 节障碍仍适用。对归一化迹 $Z_A/d$，认证阈值是 $1/4+1/(4d)$，相应绝对误差尺度必须随维数考虑；不能声称该归一化认证精度与维数无关。空指标集的谱为空，形式陈述仍有效。
+
+### 14.7 可继续形式化的定量观察覆盖
+
+**普通定理。** 设有限维实或复 Hilbert 空间上 $A\geq0$ 自伴，观测向量 $v_j$ 组成具有已知下界 $\alpha>0$ 的 frame，即
+
+\[
+\sum_j|\langle x,v_j\rangle|^2\geq\alpha\|x\|^2.
+\]
+
+对 $A$ 的一组正交本征基 $e_i$，定义真实权重 $w_i=\sum_j|\langle e_i,v_j\rangle|^2$。则 $w_i\geq\alpha$，而聚合关联函数是测度 $\nu=\sum_iw_i\delta_{\lambda_i}$ 的 Laplace 积分。若 $\nu([0,2r])\geq M-\tau$、$C_\nu(t_*)\leq M/4+\varepsilon$ 且 $4\varepsilon+\tau<\alpha$，则 $\operatorname{spec}(A)\cap[0,r]=\varnothing$。
+
+**证明。** 式 (14.4) 给出 $\nu([0,r])\leq4\varepsilon+\tau$。若低能本征向量存在，其权重至少为 $\alpha$，矛盾。权重与聚合关联函数的识别来自有限正交谱展开。单位正交基对应 $w_i=1$，解释了完整迹为什么能排除任意小的隐藏观察权重。
+
+这条一般 frame 定理、本征基变换及加权测度的算子识别目前只有上述普通证明。当前 Lean 完成的是实际对角矩阵与完整迹的情形。下一步应形式化真实自伴矩阵的谱展开和 frame 下界，而不是只向既有定理添加名为物理识别的前提。
+
+### 14.8 研究与形式化状态
+
+新增两份 Lean 及对应 Scribe，合计两个公开定义和七个公开定理，均有声明句柄与 `#print axioms` 指令。代码复用第 13 节的 `laplaceCorrelation`，并复用固定 Mathlib 的可积性、指示函数积分、Bernoulli 测度、矩阵指数和矩阵谱。
+
+普通证明、源码逻辑及固定版本 API 已检查。另执行了两项符号恒等式、1000 组正测度诊断、300 组 SciPy 实际矩阵指数诊断和 20 组严格边界诊断，随机种子为 20260915。数值诊断不证明普遍命题，也不替代 Lean 编译。当前容器无 Lean/Lake，外部下载的 DNS 解析失败；本轮没有执行 elaboration、kernel checking、公理闭包收集、Scribe 编译或独立模型审稿。因此这些文件仍是经逻辑审查的候选形式证明，PR 保持草稿。
+
+当前读过的 dev 为 `a5f31555da3d1c07befe13beea8010ffeba91f3e`，延续 PR #7869 的原有分支，不改写其他工作。新增结果和谱带条件不会证明原始 NS 全局正则性，也没有完成四维量子 Yang--Mills 理论的构造。有限对角模型与未截断、自相互作用的场论之间仍需真实的对象识别、重整化和一致极限估计。对一般非自伴 NS 演化，正 Laplace 谱表示本身也需要证明，不能自动套用本节。
+
+### 14.9 来源
+
+[14-A] Dimitris Bertsimas and Ioana Popescu. *Optimal Inequalities in Probability Theory: A Convex Optimization Approach*. SIAM Journal on Optimization 15(3), 780--804, 2005. DOI: 10.1137/S1052623401399903. https://epubs.siam.org/doi/10.1137/S1052623401399903 . 使用其极值概率与矩约束框架作为背景；本节具体常数和双原子证明独立列出，不声称该文逐字包含此命题。
+
+[14-B] Mathlib 4, commit `db584cd6d46c92f209a44c0f1c829460d327499d`. `MeasureTheory/Integral/Bochner/Set.lean`, `Probability/Distributions/Bernoulli.lean`, `Analysis/Normed/Algebra/MatrixExponential.lean`, `Analysis/Normed/Algebra/Exponential.lean`, `Analysis/SpecialFunctions/Exponential.lean`, `LinearAlgebra/Eigenspace/Matrix.lean`. https://github.com/leanprover-community/mathlib4/tree/db584cd6d46c92f209a44c0f1c829460d327499d . 固定版本中实际调用的形式化基础，特别是矩阵指数和真实谱的识别。
+
+[14-C] Charles L. Epstein and John Schotland. *The Bad Truth about Laplace's Transform*. SIAM Review 50(3), 504--520, 2008. DOI: 10.1137/060657273. https://epubs.siam.org/doi/10.1137/060657273 . 指数不适定性的背景；本节校准条件缩小了模型类，不宣称一般 Laplace 反演已经变成稳定问题。
+
+[14-D] Angelo Lucia, David Pérez-García, Antonio Pérez-Hernández. *Spectral Gap Bounds for Quantum Markov Semigroups via Correlation Decay*. arXiv:2505.08991, 2025. https://arxiv.org/abs/2505.08991 . 作为需要具体算子构造与混合条件的相关路线，不用其空间关联结果替代本节的时间积分和矩阵推导。
