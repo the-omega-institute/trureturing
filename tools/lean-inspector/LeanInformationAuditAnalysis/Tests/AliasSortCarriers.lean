@@ -20,5 +20,15 @@ def propHidden (_ : Unit) (state : Bool) : PropPacket := ⟨(137 : Nat) = 137, s
 def propClean (_ : Unit) (state : Bool) : PropPacket := ⟨True, state⟩
 def familyHidden (_ : Unit) (state : Bool) : FamilyPacket := ⟨fun _ => PLift ((137 : Nat) = 137), state⟩
 def familyClean (_ : Unit) (state : Bool) : FamilyPacket := ⟨fun _ => Nat, state⟩
+def BoolAlias : Type := Bool
+def ProofAlias : Prop := (138 : Nat) = 138
+structure OrdinaryPacket where
+  bit : BoolAlias
+structure ProofPacket where
+  proof : ProofAlias
+  bit : Bool
+
+def ordinary (_ : Unit) (state : Bool) : OrdinaryPacket := ⟨state⟩
+def independentProof (_ : Unit) (state : Bool) : ProofPacket := ⟨rfl, state⟩
 def plain (_ : Unit) (state : Bool) : Bool := state
 end AliasSortCarriers
