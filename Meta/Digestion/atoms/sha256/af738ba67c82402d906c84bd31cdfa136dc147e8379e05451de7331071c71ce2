@@ -1,0 +1,7 @@
+Define the pairwise ambiguity
+
+```text
+Delta_eta(phi,q) = max { abs(E_u[q]-E_v[q]) :
+  u,v in simplex(S), abs(E_u[phi_j]-E_v[phi_j]) <= eta_j for every j }.
+```
+
