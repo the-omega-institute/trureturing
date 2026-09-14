@@ -8,7 +8,6 @@ claim: "Intelligence is discussed as task-generalization and skill-acquisition e
 strata_touched: []
 license: "citation-only"
 triage: "anchor"
-url: "https://arxiv.org/abs/1911.01547"
 ---
 
 # On the Measure of Intelligence
