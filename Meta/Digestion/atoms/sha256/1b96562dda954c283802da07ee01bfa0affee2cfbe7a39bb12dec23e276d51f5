@@ -1,0 +1,9 @@
+## 定义 531.1（分类核与闭环后的读出）
+
+设 \(C:X\to B\) 为概念读出，\(H:B\to B\) 为标签空间上的闭环 transport。定义
+
+\[
+\ker C=\{(x,y)\in X\times X:C(x)=C(y)\},
+\qquad C^H=H\circ C.
+\]
+
