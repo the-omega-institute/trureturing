@@ -1,0 +1,161 @@
+**定理 26.1（三步共同幺正反馈超过简单成功概率界）。** 在定义 18.1 的无参考、无可操作记忆任务中，取
+
+$$
+N=3,
+\qquad \beta_1=\beta_2=\frac1{10},
+\qquad \beta_3=\frac12.
+$$
+
+存在共同初态 $|+\rangle=(|0\rangle+|1\rangle)/\sqrt2$ 和共同历史依赖实正交系统控制表，使最终三位经典历史的实际、理想总变差恰为
+
+$$
+T(\Pi)=\frac14+\frac{\sqrt{13}}{10}.
+$$
+
+因此，该参数下原无参考最优值满足
+
+$$
+T_3\!\left(\frac1{10},\frac1{10},\frac12\right)
+\ge\frac14+\frac{\sqrt{13}}{10}
+>\frac{119}{200}
+=1-\prod_{t=1}^3(1-\beta_t).
+$$
+
+这个反例否定把定理 25.2 的两步高末次错误率公式推广为任意有限步数的等式或上界 $1-\prod_t(1-\beta_t)$，即使仍有 $\beta_N\ge\tfrac12$。本例在共同系统幺正类内实现，不证明 CPTP 控制比幺正控制更优，也不主张达到可操作记忆上界；所有参数都在定理 24.1 的严格区域中。
+
+证明。第一共同控制取恒等。令
+
+$$
+P_i=|i\rangle\langle i|,
+\qquad
+K_i=\frac3{\sqrt{10}}P_i+\frac1{\sqrt{10}}P_{1-i},
+\qquad i\in\{0,1\},
+$$
+
+它们分别是前两步共同使用的理想、实际结果算子。第一结果为 $i$ 时，记实际、理想未归一化系统向量为
+
+$$
+x_i=K_i|+\rangle,
+\qquad y_i=P_i|+\rangle.
+$$
+
+定义实对称矩阵
+
+$$
+D_i=\frac1{20}\|x_i\|^2I
++\frac25|x_i\rangle\langle x_i|
+-|y_i\rangle\langle y_i|.
+$$
+
+第二共同控制 $U_i\in O(2)$ 取为 $D_i$ 的一个正交本征基，即令 $U_iD_iU_i^{\mathsf T}$ 为对角矩阵。本征值的排列任意，控制表在实验之前由上述固定矩阵确定，实际与理想过程始终使用同一个 $U_i$。
+
+设前两位历史是 $ij$，其实际、理想概率分别为
+
+$$
+p_{ij}=\|K_jU_ix_i\|^2,
+\qquad q_{ij}=\|P_jU_iy_i\|^2.
+$$
+
+因为
+
+$$
+K_j^\dagger K_j=\frac1{10}I+\frac45P_j,
+$$
+
+有
+
+$$
+\begin{aligned}
+\frac12p_{ij}-q_{ij}
+&=\frac1{20}\|x_i\|^2
++\frac25|\langle j|U_ix_i\rangle|^2
+-|\langle j|U_iy_i\rangle|^2\\
+&=\langle j|U_iD_iU_i^{\mathsf T}|j\rangle.
+\end{aligned}
+$$
+
+按本征基选择控制，便得到
+
+$$
+\sum_j\left|\frac12p_{ij}-q_{ij}\right|=\|D_i\|_1.
+$$
+
+第三共同控制取 $W_{ij}=X^j$，其中 $X|0\rangle=|1\rangle$、$X|1\rangle=|0\rangle$。每个非零理想前缀分支在第二次读取后都指向 $|j\rangle$，因此这个控制使理想末次结果恒为零。实际末次参数为 $\beta_3=\tfrac12$，两个结果算子都为 $I/\sqrt2$，无论分支系统态如何，两个末次结果的条件概率均为一半。故三位最终历史 $ijk$ 的概率满足
+
+$$
+p_{ij0}=p_{ij1}=\frac12p_{ij},
+\qquad q_{ij0}=q_{ij},
+\qquad q_{ij1}=0.
+$$
+
+使用 $\sum_{i,j}p_{ij}=1$，该协议的最终总变差为
+
+$$
+\begin{aligned}
+T(\Pi)
+&=\frac12\sum_{i,j}
+\left(\left|\frac12p_{ij}-q_{ij}\right|
++\frac12p_{ij}\right)\\
+&=\frac14+\frac12\sum_i\|D_i\|_1.
+\end{aligned}
+$$
+
+这里的末次读数归约只用实际末次均匀读取以及共同控制使理想末次结果确定；它把本例的输出距离转化为两个具体加权差矩阵的迹范数。
+
+直接代入初态得到
+
+$$
+x_0=\frac1{\sqrt{20}}\begin{pmatrix}3\\1\end{pmatrix},
+\qquad y_0=\frac1{\sqrt2}\begin{pmatrix}1\\0\end{pmatrix},
+\qquad x_1=Xx_0,
+\qquad y_1=Xy_0.
+$$
+
+所以
+
+$$
+D_0=\frac1{200}
+\begin{pmatrix}-59&12\\12&9\end{pmatrix},
+\qquad D_1=XD_0X.
+$$
+
+两个矩阵的本征值都是
+
+$$
+\lambda_\pm=-\frac18\pm\frac{\sqrt{13}}{20}.
+$$
+
+一正一负，因而
+
+$$
+\|D_0\|_1=\|D_1\|_1=\frac{\sqrt{13}}{10},
+\qquad
+T(\Pi)=\frac14+\frac{\sqrt{13}}{10}.
+$$
+
+另一方面，简单成功概率表达式是
+
+$$
+1-\prod_{t=1}^3(1-\beta_t)
+=1-\frac9{10}\frac9{10}\frac12
+=\frac{119}{200}.
+$$
+
+两者之差为
+
+$$
+\frac14+\frac{\sqrt{13}}{10}-\frac{119}{200}
+=\frac{20\sqrt{13}-69}{200}>0,
+$$
+
+因为 $20^2\cdot13=5200>4761=69^2$。这给出精确的严格反例。
+
+定理 22.2 在本参数下的记忆最优值为
+
+$$
+U\!\left(\frac{19}{100},\frac12\right)
+=\frac14+\frac{3\sqrt7}{20},
+$$
+
+而本构造严格低于它，因为 $2\sqrt{13}<3\sqrt7$ 等价于 $52<63$。本例超过的是被推广的简单成功概率表达式，与定理 24.1 的访问权限严格分离相容。证毕。
+
