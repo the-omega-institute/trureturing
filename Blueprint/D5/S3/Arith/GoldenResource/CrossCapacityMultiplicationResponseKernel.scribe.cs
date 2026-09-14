@@ -23,7 +23,8 @@ internal sealed class CrossCapacityMultiplicationResponseKernelDocument : IScrib
                     + "remaining capacities agree and one of two conditions holds. Either both initial states "
                     + "are not squarefree, or both are squarefree, their coordinate sums have equal parity, "
                     + "and their coordinates agree on every axis of positive remaining capacity. Repeated "
-                    + "letters recover the entire remaining capacity on each axis. On successful words, "
+                    + "letters recover the entire remaining capacity on each axis. In the squarefree branch, "
+                    + "on successful words, "
                     + "coordinates with zero remaining capacity stay fixed and contribute only their initial "
                     + "parity, while all other coordinates increase together. Zero capacities and an empty "
                     + "coordinate set are allowed."))),
