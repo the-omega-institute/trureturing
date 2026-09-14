@@ -8,6 +8,7 @@ import os
 import pathlib
 import re
 import shutil
+import signal
 import subprocess
 import sys
 import tempfile
@@ -16,7 +17,7 @@ import time
 
 from lean_cache import binary_platform, partition_path, resolved_mathlib
 from lean_cache_release import cache_guard
-from cache_material import files, sha
+from cache_material import files, sha, snapshot_files
 
 LAYERS = ("dependency", "project", "report")
 # Execution evidence is deliberately opt-in.  The existing default cache
@@ -283,13 +284,81 @@ def validate_judge_registration(root, layers):
         return project_registry(root)
 
 
-def snapshot(root, keys, layers=LAYERS, registry=None):
+def stage_snapshot(root, keys, layer, staged, registry=None):
+    """Produce a private layer; only the parent may publish it and report ready."""
+    spec = keys[layer]
+    with cache_guard(root, shared=True):
+        if layer in EXECUTION_LAYERS:
+            inventory = snapshot_execution(root, layer, keys, staged / "data")
+        elif layer == "report":
+            inventory = snapshot_report(root, keys["partition"], staged / "data")
+        elif layer == "judge":
+            sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "report"))
+            from dotnet_producer import stage_seed
+            stage_seed(root, staged / "data", registry)
+            inventory = files(staged / "data")
+        else:
+            inventory = snapshot_files(root / spec["target"], staged / "data",
+                                       materialize_links=layer == "dependency")
+    manifest = {"schema": "lean-actions-seed-v1", "partition": keys["partition"], "layer": layer,
+                "key": spec["key"], "files": inventory}
+    (staged / "manifest.json").write_text(json.dumps(manifest, sort_keys=True) + "\n")
+    sizes = [(item, (staged / "data" / item["path"]).stat().st_size) for item in inventory]
+    metrics = {"file_count": len(inventory), "uncompressed_bytes": sum(size for _, size in sizes),
+               "largest_files": [{"path": item["path"], "sha256": item["sha256"], "size_bytes": size}
+                                 for item, size in sorted(sizes, key=lambda pair: (-pair[1], pair[0]["path"]))[:5]]}
+    (staged / "metrics.json").write_text(json.dumps(metrics, sort_keys=True) + "\n")
+    return metrics
+
+
+def bounded_snapshot(root, layer, staged, seconds):
+    command = [sys.executable, str(pathlib.Path(__file__).resolve()), "snapshot", "--repository", str(root),
+               "--layers", layer, "--snapshot-directory", str(staged)]
+    env = dict(os.environ)
+    env.pop("GITHUB_OUTPUT", None)
+    handlers = {signum: signal.getsignal(signum) for signum in (signal.SIGTERM, signal.SIGINT)}
+
+    def cancelled(signum, _frame):
+        raise SystemExit(128 + signum)
+
+    process = None
+    with tempfile.TemporaryFile() as log:
+        try:
+            for signum in handlers:
+                signal.signal(signum, cancelled)
+            process = subprocess.Popen(command, env=env, stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
+            try:
+                result = process.wait(timeout=seconds)
+            except subprocess.TimeoutExpired as error:
+                raise ValueError("snapshot exceeded remaining cache window") from error
+            if result:
+                log.seek(0)
+                raise ValueError("snapshot worker failed: " + log.read(4096).decode(errors="replace"))
+        finally:
+            try:
+                if process is not None:
+                    try:
+                        os.killpg(process.pid, signal.SIGKILL)
+                    except ProcessLookupError:
+                        pass
+                    if process.poll() is None:
+                        process.wait(timeout=5)
+            finally:
+                for signum, handler in handlers.items():
+                    signal.signal(signum, handler)
+
+
+def snapshot(root, keys, layers=LAYERS, registry=None, *, deadline=None):
     registry = registry if registry is not None else validate_judge_registration(root, layers)
     for layer in layers:
-        ready = False
+        ready, committed, save_minutes = False, False, 1
         try:
             if not keys["judge_save_allowed" if layer == "judge" else "save_allowed"]:
                 receipt(layer, "save-disabled")
+                continue
+            seconds = deadline.snapshot_seconds() if deadline is not None else None
+            if seconds is not None and seconds <= 0:
+                receipt(layer, "save-disabled", reason=deadline.reason)
                 continue
             started = time.monotonic()
             spec = keys[layer]
@@ -297,35 +366,40 @@ def snapshot(root, keys, layers=LAYERS, registry=None):
             target.parent.mkdir(parents=True, exist_ok=True)
             with tempfile.TemporaryDirectory(prefix=".snapshot-", dir=target.parent) as temporary:
                 staged = pathlib.Path(temporary)
-                with cache_guard(root, shared=True):
-                    if layer in EXECUTION_LAYERS:
-                        inventory = snapshot_execution(root, layer, keys, staged / "data")
-                    elif layer == "report":
-                        inventory = snapshot_report(root, keys["partition"], staged / "data")
-                    elif layer == "judge":
-                        sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "report"))
-                        from dotnet_producer import stage_seed
-                        stage_seed(root, staged / "data", registry)
-                    else:
-                        shutil.copytree(root / spec["target"], staged / "data", symlinks=True)
-                if layer != "report":
-                    inventory = files(staged / "data", materialize_links=layer == "dependency")
-                sizes = [(item, (staged / "data" / item["path"]).stat().st_size) for item in inventory]
-                manifest = {"schema": "lean-actions-seed-v1", "partition": keys["partition"], "layer": layer,
-                            "key": spec["key"], "files": inventory}
-                (staged / "manifest.json").write_text(json.dumps(manifest, sort_keys=True) + "\n")
-                if target.exists():
-                    shutil.rmtree(target)
-                staged.rename(target)
+                if deadline is None:
+                    metrics = stage_snapshot(root, keys, layer, staged, registry)
+                else:
+                    bounded_snapshot(root, layer, staged, seconds)
+                    save_minutes = deadline.save_timeout_minutes()
+                    if not save_minutes:
+                        raise ValueError("snapshot left no cache save window")
+                    metrics = json.loads((staged / "metrics.json").read_text())
+                with cache_guard(root), tempfile.TemporaryDirectory(prefix=".snapshot-backup-", dir=target.parent) as backup:
+                    previous = pathlib.Path(backup) / "previous"
+                    if target.exists():
+                        target.rename(previous)
+                    try:
+                        staged.rename(target)
+                    except BaseException:
+                        if previous.exists():
+                            previous.rename(target)
+                        raise
+                    committed = True
+                # The job window reserves cleanup time. Filesystem cleanup is
+                # not a hard deadline: late completion disables the remote save.
+                if deadline is not None:
+                    save_minutes = deadline.save_timeout_minutes()
+                    if not save_minutes:
+                        raise ValueError("snapshot publication left no cache save window")
                 ready = True
-                receipt(layer, "snapshot", key=spec["key"], file_count=len(inventory),
-                        uncompressed_bytes=sum(size for _, size in sizes), elapsed_seconds=round(time.monotonic() - started, 3),
-                        largest_files=[{"path": item["path"], "sha256": item["sha256"], "size_bytes": size}
-                                       for item, size in sorted(sizes, key=lambda pair: (-pair[1], pair[0]["path"]))[:5]])
-        except (OSError, ValueError, TypeError, KeyError) as error:
-            receipt(layer, "save-failed", reason=str(error))
+                receipt(layer, "snapshot", key=spec["key"], elapsed_seconds=round(time.monotonic() - started, 3), **metrics)
+        except (OSError, ValueError, TypeError, KeyError, subprocess.SubprocessError) as error:
+            receipt(layer, "save-disabled" if committed else "save-failed", reason=str(error))
         finally:
-            output({layer + "_ready": ready})
+            values = {layer + "_ready": ready}
+            if deadline is not None:
+                values["save_timeout_minutes"] = save_minutes if ready else 1
+            output(values)
 
 
 def restore(root, keys, matched, layers=LAYERS, registry=None):
@@ -395,9 +469,18 @@ def main():
     selection = parser.add_mutually_exclusive_group()
     selection.add_argument("--layers", choices=ALL_LAYERS, nargs="+", default=LAYERS)
     selection.add_argument("--stage", choices=("build", "engineering", "current", "delta"))
+    parser.add_argument("--layer", choices=ALL_LAYERS)
+    parser.add_argument("--bounded-cache", action="store_true")
+    parser.add_argument("--snapshot-directory", type=pathlib.Path, help=argparse.SUPPRESS)
     for layer in ALL_LAYERS:
         parser.add_argument("--" + layer + "-key", default="")
     args = parser.parse_args()
+    if args.layer and not args.stage:
+        parser.error("--layer requires --stage")
+    if args.bounded_cache and (args.command != "snapshot" or not args.layer or args.stage not in ("build", "engineering", "current")):
+        parser.error("--bounded-cache requires snapshot with --stage and --layer")
+    if args.snapshot_directory and (args.command != "snapshot" or args.stage or args.bounded_cache or len(args.layers) != 1):
+        parser.error("snapshot worker requires exactly one explicit layer")
     if args.stage:
         # Routing is required input validation, outside optional-cache failure handling.
         sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "workflow"))
@@ -413,6 +496,14 @@ def main():
         except (OSError, ValueError, KeyError, TypeError, subprocess.SubprocessError) as error:
             print("CI_INPUT_FAILED " + str(error), file=sys.stderr)
             return 2
+        if args.layer:
+            args.layers = [args.layer] if args.layer in args.layers else []
+            if not args.layers:
+                receipt(args.layer, "save-disabled", reason="layer not required by registered stage")
+                values = {args.layer + "_ready": False}
+                if args.bounded_cache:
+                    values["save_timeout_minutes"] = 1
+                output(values)
         if not args.layers:
             return 0
     elan = "elan" in args.layers or args.stage is None
@@ -422,7 +513,9 @@ def main():
     try:
         registry = validate_judge_registration(args.repository, args.layers) if args.command != "keys" else None
         keys = actions_keys(args.repository)
-        if args.command == "keys":
+        if args.snapshot_directory:
+            stage_snapshot(args.repository, keys, args.layers[0], args.snapshot_directory, registry)
+        elif args.command == "keys":
             values = {}
             values.update({key: keys[key] for key in
                            ("mathlib_revision", "os", "arch", "partition", "save_allowed", "judge_save_allowed", "release_prefix")})
@@ -436,13 +529,21 @@ def main():
         elif args.command == "restore":
             restore(args.repository, keys, {layer: getattr(args, layer + "_key") for layer in args.layers}, args.layers, registry)
         else:
-            snapshot(args.repository, keys, args.layers, registry)
+            deadline = None
+            if args.bounded_cache:
+                from cache_deadline import load_deadline
+                deadline = load_deadline(args.repository, args.stage)
+            snapshot(args.repository, keys, args.layers, registry, deadline=deadline)
         return 0
     except ProjectRegistrationError as error:
         print(str(error), file=sys.stderr)
         return 2
     except (OSError, ValueError, TypeError, KeyError, subprocess.CalledProcessError) as error:
         receipt("all", "unavailable", reason=str(error))
+        if args.snapshot_directory:
+            return 1
+        if args.bounded_cache:
+            output({args.layer + "_ready": False, "save_timeout_minutes": 1})
         if args.command == "restore" and "project" in args.layers:
             output({"STRATALINT_ACTIONS_CACHE_SEEDED": "0"}, "GITHUB_ENV")
         return 0

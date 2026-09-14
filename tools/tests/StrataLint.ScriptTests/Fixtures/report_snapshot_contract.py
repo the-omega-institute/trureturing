@@ -165,7 +165,8 @@ atexit.register(finish)
         self.addCleanup(history.doCleanups)
         history.add_declaration_material()
         for index, seed_partition in enumerate((partition, partition, partition.replace(REV, "f" * 40)), 1):
-            history.address = str(index) * 64
+            history.sources = str(index) * 64
+            history.repository_address, history.address = history.input_addresses(history.producer, history.config)
             history.store()
             pathlib.Path(str(history.report) + ".seed.json").write_text(json.dumps({
                 "schema": "lean-report-seed-v1", "partition": seed_partition, "runtime_sha256": "c" * 64,
