@@ -180,4 +180,3 @@ $$
 因此这个菜单外的合法协议严格超过菜单内全体协议。原任务的一般连续控制优化仍未完成；本章只排除固定 $\mathsf X/\mathsf Z$ 两轴菜单已经达到原任务最优值这一简化命题。
 
 所用纯化等价与迹范数收缩见 Watrous，*The Theory of Quantum Information*，[Theorem 2.12 与 Corollary 3.40，式 (3.241)](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)。引理将这两个标准工具应用到同一个固定历史控制表；菜单上界与菜单外的严格比较由本证明的具体矩阵计算给出。证毕。
-
