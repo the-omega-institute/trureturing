@@ -1,0 +1,18 @@
+fingerprints:
+  raw_sha256: sha256:dc7ab7fbf283fa62d4ec95521d52cfdb1c6f41d72af69890969d9bb09f8767d8
+  normalized_sha256: sha256:dc7ab7fbf283fa62d4ec95521d52cfdb1c6f41d72af69890969d9bb09f8767d8
+cas_ref: sha256:dc7ab7fbf283fa62d4ec95521d52cfdb1c6f41d72af69890969d9bb09f8767d8
+coverage_gids:
+  - gid: D5/S3/Entropy/EntropyEquality.entropy_eq_log_card_iff_uniform
+    target_statement_id: sha256:71dc31bafc55792064ed900da5645d67f6ef2b67ee3f0c7fcc00ffe6ab609328
+  - gid: D5/S3/Entropy/EntropyEquality.entropy_eq_zero_iff_point_mass
+    target_statement_id: sha256:2dc204d16c2c0d7e7c1cb1e4bbe9dc83fc15662b52afde243e84caa99d732b78
+  - gid: D5/S3/Entropy/Forgetting/PushforwardComposition.pushforward_comp
+    target_statement_id: sha256:656edd11d1bd5231d848d38234fab4d88b8c20381d0741996e70d41b01e756d6
+  - gid: D5/S3/Factorization/Combinatorics/MarkedPrimeWordSnapshotFiber.snapshot_fiber_equiv_and_forced_marks
+    target_statement_id: sha256:2d628f2f4e721b53df6cf430d2322a50835ee676d28815efc202caad16ae2e95
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - ece906700ed93a0f8954eba9dd8684fdaae3b46fa5d45e055e9ceb89656b286c
+    - c29ad369329e86bbd090af6246d6fc0877caca2039cf8a45ec0c28493de68128

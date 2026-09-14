@@ -1,0 +1,18 @@
+fingerprints:
+  raw_sha256: sha256:0201615e31b1779a67755c9a3c0d3143a8d9798db7dd92baa122e35d7a213fa8
+  normalized_sha256: sha256:0201615e31b1779a67755c9a3c0d3143a8d9798db7dd92baa122e35d7a213fa8
+cas_ref: sha256:0201615e31b1779a67755c9a3c0d3143a8d9798db7dd92baa122e35d7a213fa8
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Interventions/DynamicClosureMinimality.dynamic_closure_is_least
+    target_statement_id: sha256:acc56dac1a926b4ff9b5ef32d7babaa2f7574b9aa0a0ce4ec577abb2d576c9f8
+  - gid: D5/S3/ConceptDynamics/Refinement/ConceptKernelOrderDuality.concept_kernel_order_duality
+    target_statement_id: sha256:8645e015207205861a1419f9da648078569535f427c9d89a58b711c01e69f4f5
+  - gid: D5/S3/ConceptDynamics/RefinementFactorization/RealizedImageKernelFactorization.realized_image_unique_factorization_iff_reverse_kernel
+    target_statement_id: sha256:f668a37b1247d30fd91f2a2acef10b72b80669e00573a6f1b9348c55fa98936e
+  - gid: D5/S3/Quantum/Entanglement/OccupancyWordSectors.multiplicity_eq_factorial
+    target_statement_id: sha256:5264b0008df77f207cb3d13a1a564ce34f67ba585e78625942ccc97ac2dbbcaf
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 6e8913ae8de71ed231a477985ca21a9272a26341d648880f129839adaa78bf57
+    - 4209f1ef4d64c007c83b23b870c0d9245885cec084ac46b35b849730a6e1d55f
