@@ -1629,3 +1629,127 @@ $$
 **Proof.** Each H block supplies such a witness by ZBD.1. This is an inclusion of sets of indices, so no repeated counting of supporting primes is involved.
 
 ZBD3 is a disjunction concerning the actual zero and nonzero initial-quotient supports. It does not assert that either term alone has the displayed order of growth. No estimate on H(X) or D_3(X) is assumed implicitly, and no failing window or WSS witness is asserted to exist by these implications.
+
+
+## Appendix PBC. Prime-block completeness, depth towers, and exact support partition
+
+### PBC.1. Complete powerful classification on five-smooth indices
+
+**Definition.** A positive integer is powerful when every prime divisor occurs with exponent at least two. In particular one is powerful. Let E={1,2,6,12}. A positive integer is five-smooth when all of its prime divisors belong to {2,3,5}.
+
+**Theorem.** For every positive five-smooth integer m,
+
+$$
+\boxed{F_m\text{ powerful}\quad\Longleftrightarrow\quad m\in E.}\tag{PBC1}
+$$
+
+**Proof.** Write m=2^a3^b5^c. If c=1, the classical identity v_5(F_m)=v_5(m) gives a simple prime divisor five. If c>=2, use F_25=5^2*3001. The integer 3001 is prime: no integer from two through 54 divides it, while sqrt(3001)<55. Since 3001 does not divide m, the valuation formula U.1 gives v_3001(F_m)=v_3001(F_25)+v_3001(m/25)=1. Thus powerfulness forces c=0.
+
+If b>=2, the identity F_9=2*17 and 17 not dividing m give v_17(F_m)=1. Thus b<=1. If a>=3, the identity F_8=3*7 and seven not dividing m give v_7(F_m)=1. Thus a<=2. The remaining indices are 1,2,3,4,6,12. The values F_3=2 and F_4=3 are not powerful, whereas F_1=F_2=1, F_6=8 and F_12=144 are powerful. This proves both directions. The valuation formula used here is Lengyel's theorem, as stated in Medina and Rowland, *p-regularity of the p-adic valuation of the Fibonacci sequence*, Theorem 1.4, https://arxiv.org/abs/0910.2907 .
+
+### PBC.2. Prime-index completeness and the least counterexample
+
+**Theorem.** The following assertions are equivalent:
+
+$$
+\begin{aligned}
+\mathrm{(A)}&\quad \forall m\ge1,\quad F_m\text{ powerful}\Longrightarrow m\in E;\\
+\mathrm{(B)}&\quad \forall\ell\ge7\text{ prime},\quad F_\ell\text{ is not powerful}.
+\end{aligned}\tag{PBC2}
+$$
+
+If (A) is false, its least counterexample index is prime and at least seven.
+
+**Proof.** Assertion (A) implies (B), since no prime at least seven belongs to E. Conversely suppose F_m is powerful and m is outside E. By PBC1, m has a prime factor at least seven. Let ell be its largest prime factor. ZBD1 shows that every prime p dividing F_ell has rank ell, exceeds ell, does not divide m, and satisfies v_p(F_m)=v_p(F_ell). Consequently F_ell is powerful. This contradicts (B), proving equivalence. If m is the least counterexample, ell is another counterexample with ell<=m. Minimality forces ell=m.
+
+**Corollary.** Any least counterexample to (A) produces a prime-index block all of whose prime divisors are WSS, and at least one of those divisors has odd initial depth at least three.
+
+**Proof.** The least index ell is prime by PBC2. Each prime divisor p of F_ell has rank ell and initial depth h_p=v_p(F_ell)>=2. Hence q_p=0. The classical Fibonacci square classification excludes F_ell from the squares, so at least one exponent is odd and therefore at least three. Here ell is the index prime; no assertion that q_ell=0 follows.
+
+PBC2 proves an equivalence and the shape of a least counterexample. It does not assert (A) or (B).
+
+### PBC.3. All largest-prime power layers preserve exceptional depth
+
+**Theorem.** Let m>1 have largest prime factor ell>=7, and put a=v_ell(m). For 1<=j<=a define the positive integer
+
+$$
+C_j=\frac{F_{\ell^j}}{F_{\ell^{j-1}}}.
+$$
+
+Then C_j>1, the C_j are pairwise coprime, C_j is not a square, and every prime p dividing C_j satisfies
+
+$$
+\rho(p)=\ell^j,\qquad p>\ell,\qquad
+v_p(C_j)=h_p=v_p(F_m).\tag{PBC3}
+$$
+
+If F_m is powerful, every C_j is powerful, and there exist a distinct primes p_1,...,p_a such that
+
+$$
+\boxed{\rho(p_j)=\ell^j,\qquad h_{p_j}\ge3\text{ is odd},\qquad q_{p_j}=0.}\tag{PBC4}
+$$
+
+**Proof.** Fibonacci divisibility and strict growth give integral C_j>1. Every prime p dividing F_(ell^j) is different from two and five, whose ranks are three and five. Its rank divides ell^j and is greater than one, hence equals ell^i for some 1<=i<=j. The rank bound rho(p)|p-(5/p) implies p>rho(p): otherwise p=rho(p)-1 would be even and greater than two. In particular p>ell and p does not divide m. The valuation formula shows that v_p(F_(ell^j))=h_p and that this also equals v_p(F_m).
+
+For j>=2, every old prime divisor of F_(ell^(j-1)) is different from ell. Multiplying its zero index by ell therefore leaves its valuation unchanged. It cannot divide C_j. Thus gcd(C_j,F_(ell^(j-1)))=1, which also proves pairwise coprimality of all layers. Any prime in C_j must have rank ell^j, and the asserted valuation equalities follow. The j=1 case has previous factor F_1=1.
+
+If C_j were square, the distinct positive odd indices ell^(j-1) and ell^j would give Fibonacci numbers in the same square class. The classical square-class theorem excludes this. The theorem is stated by P. Ribenboim in *FFF: (Favorite Fibonacci Flowers)*, Fibonacci Quarterly 43(1) (2005), section 3.4, https://www.fq.math.ca/Papers1/43-1/paper43-1-1.pdf ; its only nonsingleton positive-index classes are {1,2,12} and {3,6}.
+
+Finally, powerful F_m and PBC3 force every exponent in C_j to be at least two. Since C_j is not square, some exponent is odd and at least three. Choose one such prime p_j for each layer. Distinct ranks, or pairwise coprimality, ensure these primes are distinct. No exceptional prime is supplied without the powerfulness antecedent.
+
+### PBC.4. An exact partition dominates the zero-block sieve bound
+
+**Definition.** For real 7<=Y<=L, let H(Y,L) count primes ell in [Y,L] with F_ell powerful. Let G(Y,L) count distinct primes ell in that interval which equal rho(p) for at least one prime p with q_p nonzero. Let Pi(Y,L) count all primes in [Y,L].
+
+**Theorem.** For every such interval,
+
+$$
+\boxed{G(Y,L)+H(Y,L)=\operatorname{Pi}(Y,L).}\tag{PBC5}
+$$
+
+**Proof.** All prime divisors of F_ell have rank ell when ell>=7 is prime. The integer F_ell is not powerful exactly when one such divisor has exponent one. That exponent is its actual initial depth. This is equivalent to ell being the rank of a non-WSS prime. Thus the two counted classes are disjoint and exhaust the interval's prime indices.
+
+**Proposition, comparison with ZBD3.** Retain the definitions y=X^(4/35), H(X), and R_8(X) of EMWS and ZBD. For sufficiently large X,
+
+$$
+\boxed{R_8(X)+H(X)\ge\operatorname{Pi}(y,60X+1).}\tag{PBC6}
+$$
+
+If H(X)=o(X/log X), then
+
+$$
+G(y,60X+1)\sim\frac{60X}{\log X},\tag{PBC7}
+$$
+
+and the number of non-WSS primes p<=x with prime Fibonacci rank is at least a positive constant times log(x)/log(log(x)) for all sufficiently large x.
+
+**Proof.** A prime rank ell in [y,60X+1] is squarefree, is coprime to 60, and has one odd prime factor at least y. Thus each G rank is counted by R_8(X). Apply PBC5 to obtain PBC6. The prime number theorem gives Pi(y,60X+1) asymptotic to 60X/log X; subtract the hypothesized H bound for PBC7.
+
+For each G rank select one supporting non-WSS prime p. Different ranks have different supporting primes, and p divides F_ell<=2^ell. Take X=floor(log(x)/(120 log 2)). Then 2^(60X+1)<=2sqrt(x)<=x for large x. PBC7 therefore supplies the stated lower bound on primes up to x.
+
+Since the right side of PBC6 has order X/log X, this direct partition is stronger than ZBD3's lower bound of order X^(4/35)/(log X)^4. It needs no four-form sieve. It also weakens the sufficient H-smallness assumption used in ZBD.2. No bound on H is proved by this comparison; the separate EMW-based implication in EMWS.4 is unchanged.
+
+
+## Appendix FDP. Exact parity frequency of the Fibonacci square-plus-one divisor count
+
+**Definition.** Let a(n)=|D_F(F_n^2+1)| for n>=0, as in FDS. For t>=0 let
+
+$$
+O(t)=\left\lfloor\frac{\lfloor\sqrt t\rfloor+1}{2}\right\rfloor,
+$$
+
+the number of positive odd squares not exceeding t.
+
+**Theorem.** For even n>=2, a(n) is even exactly when n-1 or n+1 is an odd square. For odd n>=3, a(n) is even exactly when n-2 or n+2 is an odd square. Moreover a(0)=1 and a(1)=2.
+
+**Proof.** FDS5 gives a(n)=tau(u)+tau(v)-1, with the indicated u,v. Pairing complementary divisors shows that tau(t) is odd exactly when t is square. Thus a(n) is even exactly when precisely one of u,v is square. These numbers are odd, and their difference is two or four. Distinct positive odd squares differ by at least eight, so they cannot both be square. The two initial values are FDS.2.
+
+**Theorem.** For every integer X>=3,
+
+$$
+\boxed{\#\{0\le n\le X:a(n)\text{ even}\}
+=O(X-2)+O(X-1)+O(X+1)+O(X+2)-1
+=2\sqrt X+O(1).}\tag{FDP1}
+$$
+
+**Proof.** The even indices are obtained from positive odd squares s by n=s+1 or n=s-1, excluding s=1 from the second family. They contribute O(X-1)+O(X+1)-1. The odd indices at least three are n=s+2 or n=s-2, excluding s=1 from the second family, contributing O(X-2)+O(X+2)-1. The index n=1 contributes one. These families are disjoint: opposite parities cannot meet, while a same-parity overlap would give odd squares differing by two or four. Summing gives the exact formula. Since O(t)=sqrt(t)/2+O(1), the asymptotic follows with a bounded error.
