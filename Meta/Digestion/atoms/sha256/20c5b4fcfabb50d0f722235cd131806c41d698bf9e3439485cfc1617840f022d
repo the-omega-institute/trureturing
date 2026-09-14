@@ -1,0 +1,21 @@
+**定义 50.3（量子记录与一步闭合误差）。** 在同一有限维算符空间上，令 $\mathcal E$ 为幂等的量子记录通道，$\mathcal E^2=\mathcal E$，令 $\Phi$ 为一步量子通道。对密度算符定义迹距离
+
+$$
+D(\rho,\sigma)=\frac12\lVert\rho-\sigma\rVert_1,
+$$
+
+并定义
+
+$$
+\delta(\mathcal E,\Phi)
+=\sup_{\rho}D\bigl(\mathcal E\Phi(\rho),\nobreak\mathcal E\Phi\mathcal E(\rho)\bigr),
+$$
+
+其中上确界遍历全部密度算符。称记录对一步演化严格闭合，如果
+
+$$
+\mathcal E\Phi=\mathcal E\Phi\mathcal E,
+$$
+
+等价地，$\mathcal E\Phi(I-\mathcal E)=0$。
+
