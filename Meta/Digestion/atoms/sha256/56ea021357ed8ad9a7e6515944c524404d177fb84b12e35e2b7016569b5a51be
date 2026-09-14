@@ -1,0 +1,26 @@
+**定理 300。** 对第 299 条的词 $w=\lambda_1\cdots\lambda_m$，令 $q_j$ 为第 295 条的前缀位移。原子词的精确定义域为
+$$
+\operatorname{Dom}(w)=
+\prod_{p\in P}\left(
+\left[-\min_{0\le j\le m}q_j(p),\ A(p)-\max_{0\le j\le m}q_j(p)\right]\cap\mathbb Z\right).
+$$
+该域非空当且仅当每个坐标的前缀极差不超过容量：
+$$
+\max_{0\le j\le m}q_j(p)-\min_{0\le j\le m}q_j(p)\le A(p)\qquad(p\in P).
+$$
+域内终值为 $x+q_m$。对一般实际宏域，定义 $D-q=\{x\in\mathbb Z^P:x+q\in D\}$，则精确公式为
+$$
+\operatorname{Dom}(w)=X_A\cap\bigcap_{h=1}^m(D_{\lambda_h}-q_{h-1}),\qquad w(x)=x+q_m.
+$$
+内部单位词的域由其全部单位前缀给出；只检查宏边界的端点一般会扩大定义域。
+
+从 $x$ 到 $y$ 的成功词恰为 $\Gamma_T$ 中从 $x$ 到 $y$ 的有向带标签游走。可达蕴含 $y-x\in H$；若 $\Lambda\subseteq\Sigma_r^+$，还蕴含 $y-x\in B[\mathbb N^r]$。逆配对假设下，可达当且仅当属于同一个无向连通分支。若另行证明每条边都能沿有向路径反向返回，也得到这一连通分支结论；只有相反净增量不够。
+
+每个可达的不同端点对有一条至多 $Q-1$ 个给定字母的有向简单路径；相同端点有空路径。有界可达集的相位像有限且在 $\mathbb T^P$ 中闭。
+
+在单坐标、容量一的第 121 条单位系统中，另行给定两个宏
+$$
+T_+=\operatorname{ev}(++-),\qquad T_-=\operatorname{ev}(-)
+$$
+的净增量虽为 $+1,-1$，却有 $D_+=\varnothing$、$D_-=\{1\}$。其无向底图连通零与一，而零不能有向到达一，两宏不是互逆部分映射。这里 $\operatorname{ev}(u)$ 表示按第 121 条依次求值的词 $u$ 所确定的部分映射。
+

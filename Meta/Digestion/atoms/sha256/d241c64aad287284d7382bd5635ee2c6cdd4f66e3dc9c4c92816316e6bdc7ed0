@@ -1,0 +1,36 @@
+**定理 82（整数、有理数及全部实数的交换式）。** 沿用[《情境时空算术》定义 8–10、命题 4–7](CONTEXTUAL_SPACETIME_ARITHMETIC.md)的实际集合构造。为区分两个商载体，定义
+\[
+\bar q_{\mathbb Z}^{Z}=(\bar q_{\mathbb Z})^*\circ\kappa_{\sim},\qquad
+\bar v^{Z}=(\bar v)^*\circ\kappa_{\sim_{\mathbb Q}},\qquad
+\bar\ell^{Z}=(\bar\ell)^*\circ\kappa_{\sim_{\mathbb R}},
+\]
+其中右侧星号只指定义 80 的图共轭，\(\kappa\) 为 (Z-QUOT)。这些是同构，并满足
+\[
+\begin{aligned}
+\bar q_{\mathbb Z}^{Z}([\operatorname{Enc}(X)]_{\sim^*})&=\operatorname{Enc}(q(X)),\\
+\bar v^{Z}([\operatorname{Enc}(R)]_{\sim_{\mathbb Q}^*})&=\operatorname{Enc}(v(R)),\\
+\bar\ell^{Z}([\operatorname{Enc}(R)]_{\sim_{\mathbb R}^*})&=\operatorname{Enc}(\ell(R)).
+\end{aligned}
+\tag{Z-NQR}
+\]
+整数取 \(\mathbb Z_{\rm code}=(\{0\}\times\omega)\cup(\{1\}\times\omega_{>0})\)，故其非负元 \((0,m)\) 的码为 \(\langle\operatorname{NatZ}(0),\operatorname{NatZ}(m)\rangle_Z\)。非负整数商再经 \((0,m)\mapsto\zeta(m)\) 比较到定理 70 的自然算术。
+
+实数载体运输的是全部 \(R\in(\mathcal Q^{\rm rich})^\omega\) 中满足
+\[
+\forall\varepsilon\in\mathbb Q_{>0}\ \exists N\in\omega\ \forall m,n\ge N:
+|v(R_m)-v(R_n)|<\varepsilon
+\tag{Z-CAUCHY}
+\]
+的子集。求逆的准确域为非零实数类，等价于
+\[
+\exists\delta\in\mathbb Q_{>0}\ \exists N\ \forall n\ge N:\ |v(R_n)|\ge\delta.
+\tag{Z-RINV}
+\]
+在此域上，其第 \(n\) 项精确运输原分支
+\[
+(\operatorname{Inv}R)_n=
+\begin{cases}(R_n)^{-1}_{\mathbb Q},&v(R_n)\ne0,\\
+R_n\boxplus_{\mathbb Q}N_{\mathbb Q}(R_n),&v(R_n)=0.
+\end{cases}
+\]
+

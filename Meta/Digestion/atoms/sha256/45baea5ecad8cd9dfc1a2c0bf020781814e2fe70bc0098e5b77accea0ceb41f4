@@ -1,0 +1,19 @@
+**33.13 Mass-four mixture and permutation labels.** For \(r\ge0\) define the
+height-independent positive measure
+\[
+\mu_r=\sum_{p\in\mathcal P}[(1-y_p^*)\delta_{\alpha_p}+y_p^*\delta_{\beta_p}],
+\qquad \mu_r(\mathbb R)=4.
+\]
+The symbol \(\delta_a\) denotes a point mass, not a gap constant. The exact value is
+\(D(T,r)=\int\log(1-za)\,d\mu_r(a)\). This is a coordinate mixture measure
+of mass four, not a probability measure of mass one. Away from prefixes below
+saturation, the configuration mixture interpolates two corners; its upper corner
+has resource \(H_{m+1}>r\). It therefore certifies the fractional mean budget,
+not individual integer-budget or slab feasibility of both support corners.
+For any permutation \(\pi\) of the four labels, the same clipping formula with
+\(\pi\)-ordered prefixes is feasible and uses \(\min(r,H_4)\) resource.
+Its value equals \(D\) if and only if its vector equals \(y^*\), by 33.12.
+Permuting labels within filled or empty blocks can preserve the vector; at zero
+capacity and at or above saturation all 24 labels agree. A unique optimizer
+vector is thus compatible with nonunique permutation labels and prices.
+

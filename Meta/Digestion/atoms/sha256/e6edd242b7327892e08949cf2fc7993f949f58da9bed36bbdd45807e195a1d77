@@ -1,0 +1,7 @@
+**引理 354.3。** 设 $m\ge1$，$\epsilon_a>0$，选正整数 $Q$ 满足 $1/Q<\min_{1\le a\le m}\epsilon_a$，并置 $H=Q^m$。给定任意有序列表 $z_1,\ldots,z_H\in\mathbb T^m$，存在 $0\le i<j\le H$ 使
+$$
+d_{\mathbb T}\left(\sum_{h=i+1}^{j}z_{h,a},0_{\mathbb T}\right)<\epsilon_a
+\quad(1\le a\le m).
+$$
+$m=0$ 时取 $H=1$，任一单成员列表的非空块满足全部空条件。这里的连续块仅指所给列表的位置 $i+1,\ldots,j$；若列表由原坐标集合标记，不要求这些集合组成连续自然数区间。
+

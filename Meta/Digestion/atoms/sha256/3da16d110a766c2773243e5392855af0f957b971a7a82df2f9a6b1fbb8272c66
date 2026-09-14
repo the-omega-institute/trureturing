@@ -1,0 +1,7 @@
+**定义 75（逐公式的翻译）。** 对集合论语言 \(\{=,\in\}\) 的每个有限公式 \(\varphi\)，先避免变元捕获，再递归定义 \(\varphi^Z\)：原子 \(x=y\) 改为 \(c=d\)，原子 \(x\in y\) 改为 \(c\in_Zd\)；否定、合取以及其余布尔联结词保持；量词改为
+\[
+(\exists x\,\psi)^Z=\exists c\,(c\in\mathfrak V_Z\land\psi^Z),\qquad
+(\forall x\,\psi)^Z=\forall c\,(c\in\mathfrak V_Z\Rightarrow\psi^Z).
+\]
+出现的已定义数学符号先展开为其图及域谓词。\(c\in\mathfrak V_Z\) 是定义 72 的类谓词，而不是与某个普遍集合的成员关系。
+

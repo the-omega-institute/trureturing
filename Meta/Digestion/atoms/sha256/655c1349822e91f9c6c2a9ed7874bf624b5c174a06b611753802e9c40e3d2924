@@ -1,0 +1,11 @@
+**定理 350.2。** 在所列带符号域上，
+$$
+L_F[\mathsf V_{\rm reg}]=\mathbb Q,\qquad
+\mathsf V_{\rm reg}/H_F\cong\mathbb Q,
+$$
+$$
+H_F\text{ 饱和},\qquad \ker g_F=H_F,
+\qquad \ker\chi^{\rm rat}_{\theta^F}=L_F^{-1}(\mathbb Z_o)\supsetneq H_F.
+$$
+在 $B_A^{\rm cap}$ 上的实值限制是定义 342.1 的 $\ell_F$；有理满射断言不附加任何容量盒约束。
+

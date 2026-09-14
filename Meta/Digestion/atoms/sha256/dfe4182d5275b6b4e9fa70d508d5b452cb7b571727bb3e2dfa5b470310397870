@@ -1,0 +1,7 @@
+原指标与编码指标的全图由
+$$
+\operatorname{Enc}(p)=\operatorname{Pack}
+\{\langle\operatorname{Enc}(i),\operatorname{Enc}(p_i)\rangle_Z:i\in A\}
+$$
+比较，不把索引 $i$ 和索引码 $\operatorname{Enc}(i)$ 当作同一对象。
+

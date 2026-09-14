@@ -1,0 +1,46 @@
+## 24. One-log holomorphic coordinates and the exact full Jacobian
+
+Write Log for the principal complex logarithm. Define
+
+\[
+ \chi_i(x)=-\frac{\operatorname{Log}(b_i/x-a_i)}{b_i},\qquad
+ f_i(m)=\frac{b_i e^{b_i m}}{1+a_i e^{b_i m}}.
+\]
+
+On the positive real interval this agrees with Section 16's coordinate.
+AffineChart proves, with explicit pole and slit-plane hypotheses,
+
+\[
+ \chi_i'(x)=\frac1{x\Psi_i(x)},\qquad
+ f_i'(m)=f_i(m)\Psi_i(f_i(m)).
+\]
+
+It also proves the real-center inverse and the two-sided inverse on the
+principal strip -pi<Im(b_i*m)<pi. The later tube excludes wrapping uniformly.
+All formulas include a_i=0. No logarithm of activity is used, so activity zero
+is inside the same analytic construction.
+
+For a subset S of actual geometric children put
+
+\[
+ P=\prod_{j\in S}f_j(m_j),\qquad
+ H=b_i-a_i+b_i zP,\qquad G_{i,S}(z,m)=-\operatorname{Log}(H)/b_i.
+\]
+
+The empty product is one. On the pole-free domain, the inverse is exactly
+f_i(G_(i,S))=(1+zP)^(-1). The new TypedJacobian derives the full differential,
+including simultaneous changes in activity and every child coordinate:
+
+\[
+ \boxed{dG=-\frac{P}{H}\,dz
+ -\sum_{j\in S}\frac{zP\Psi_j(f_j(m_j))}{H}\,dm_j.}
+\tag{24.1}
+\]
+
+The source proves this along arbitrary differentiable complex input curves
+and separately proves joint complex differentiability on the finite-dimensional
+product domain. It does not infer holomorphy from a sampled derivative fit.
+The child coefficient is algebraically identical to
+-(1-y)Psi_j(x_j)/Psi_i(y), where y=(1+zP)^(-1). Thus the existing real row
+certificate controls the actual Jacobian of the constructed map.
+

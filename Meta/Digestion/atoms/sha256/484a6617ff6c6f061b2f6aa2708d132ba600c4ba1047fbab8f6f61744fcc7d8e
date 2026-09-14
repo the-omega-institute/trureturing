@@ -1,0 +1,2 @@
+**定理 3.7（众缘和合：支持族并封闭）**〔引 FPP 1.15〕。$S_1,S_2\in\mathcal A(K,\mathfrak A)$ 蕴含 $S_1\cup S_2\in\mathcal A(K,\mathfrak A)$：这是 FPP 定理 1.15 证明中将任意有限闭合证书追加到账本的构造，取原账本见证为 $w_1$、追加证书为 $(S_2,w_2)$，合并见证在 $S_1$ 上用 $w_1$、在 $S_2\setminus S_1$ 上用 $w_2$；$S_2=\varnothing$ 时直接保留 $S_1$。
+

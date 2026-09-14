@@ -1,0 +1,7 @@
+$\Psi_{\rm reg}$ 和 $\Psi_I$ 均为单射同态，且
+$$
+\operatorname{res}^{\mathbb T}_I\circ\Psi_{\rm reg}
+=\Psi_I\circ\operatorname{res}^{\mathbb Z}_I
+\quad\text{于 }\mathsf V_{\rm reg}.
+$$
+$\Psi_{\rm reg}$ 是 $(\mathsf V_{\rm reg},\tau_\Psi)$ 到其相位像子空间的同胚。

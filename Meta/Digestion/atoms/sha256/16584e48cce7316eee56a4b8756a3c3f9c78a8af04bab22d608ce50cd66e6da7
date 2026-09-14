@@ -1,0 +1,10 @@
+**定理 60（5040 的全部幂电荷）。** 按素数标签 \((2,3,5,7)\) 排序，令 \(\boldsymbol Q(k)=\boldsymbol Q_{5040}(k)\)、\(\boldsymbol c(k)=\boldsymbol c_{5040}(k)\)。则
+\[
+\boldsymbol Q(k)=(3k-f(4k),\ k-f(2k),\ k-f(k),\ k-f(k)),
+\]
+\[
+\boldsymbol\delta=(3-4\alpha,\ 1-2\alpha,\ 1-\alpha,\ 1-\alpha),
+\qquad\boldsymbol Q(10)=(5,-2,4,4).
+\]
+二、五、七标签的累计电荷非减，三标签的累计电荷非增；五、七标签的累计电荷与增量电荷均逐时刻相同。
+

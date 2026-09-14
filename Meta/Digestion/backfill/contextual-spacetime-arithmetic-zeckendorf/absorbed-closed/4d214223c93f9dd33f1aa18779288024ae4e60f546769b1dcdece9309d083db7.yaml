@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:4d214223c93f9dd33f1aa18779288024ae4e60f546769b1dcdece9309d083db7
+  normalized_sha256: sha256:4d214223c93f9dd33f1aa18779288024ae4e60f546769b1dcdece9309d083db7
+cas_ref: sha256:4d214223c93f9dd33f1aa18779288024ae4e60f546769b1dcdece9309d083db7
+coverage_gids:
+  - gid: D5/S1/Words/Mechanical/JointRotationFactorComplexity.joint_rotation_factor_complexity
+    target_statement_id: sha256:9170372ea6ca13004b5302f303d1d0f48591074949b7a575baab83dc447ddc14
+receipts:
+  unresolved_subitems: []

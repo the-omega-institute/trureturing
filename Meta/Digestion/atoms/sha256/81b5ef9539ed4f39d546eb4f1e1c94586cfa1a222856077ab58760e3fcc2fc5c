@@ -1,0 +1,43 @@
+**30.66 定义及证明（固定探针、有理 Gram 区间和对称近似）。** There is a total generation
+rule for 30.65 that uses no coefficient grid or enumeration of rational candidates. Given
+\(N,\eta\), form the strictly positive rational constants
+\[
+H_{\rm gen}=4N/\delta,\quad Q_{\rm gen}=NH_{\rm gen},\quad
+C_{\rm gen}=N(1+H_{\rm gen}),\quad C_{\rm width}=1+(N+4)/(2\delta),
+\]
+\[
+\tau=\min(1,\eta/(4C_{\rm width})),\qquad
+\theta=\min(1,\delta/(2N),\tau/C_{\rm gen}).
+\]
+These are generator bounds; they do not redefine \(H_N\) or the box in 30.55.
+Use the fixed integer probes
+\(\mathcal P_N=\{e_i,-e_i:1\le i\le N\}\cup\{e_i+e_j:i<j\}\),
+of cardinality \(2N+N(N-1)/2\), each with coefficient absolute sum at most two.
+The exact value \(R_N(0)=1\) is available separately. Choose
+\[
+h_0=1+\lfloor\Gamma(2)/\theta\rfloor,\quad \Gamma(2)=45/4,
+\quad B_p=B(N,p,h_0+1,h_0),\quad E_p=E(N,p,h_0+1,h_0),\quad c_p=B_p-E_p/2.
+\]
+By 30.56, \(E_p<\theta\) and \(|c_p-R_N(p)|\le E_p/2<\theta/2\).
+The residual quadratic polynomial yields the exact identities
+\[
+F_{ii}=\frac{R_N(e_i)+R_N(-e_i)-2}2,\qquad
+y_i=\frac{R_N(-e_i)-R_N(e_i)}4,
+\quad F_{ij}=\frac{R_N(e_i+e_j)-R_N(e_i)-R_N(e_j)+1}2\quad(i<j).
+\]
+The last constant is \(+1\) because \(R_N(0)=1\) and the remaining cross term is \(2F_{ij}\).
+In particular, writing \(a_p=B_p-E_p,b_p=B_p\), the complete rational entry enclosures are
+\[
+y_i\in\left[\frac{a_{-e_i}-b_{e_i}}4,\frac{b_{-e_i}-a_{e_i}}4\right],\qquad
+F_{ii}\in\left[\frac{a_{e_i}+a_{-e_i}-2}2,\frac{b_{e_i}+b_{-e_i}-2}2\right],
+\]
+\[
+F_{ij}\in\left[\frac{a_{e_i+e_j}-b_{e_i}-b_{e_j}+1}2,
+                 \frac{b_{e_i+e_j}-a_{e_i}-a_{e_j}+1}2\right]\quad(i<j).
+\]
+Replace every residual in the exact formulas by \(c_p\) to define rational
+\(\widetilde F_{ii},\widetilde y_i,\widetilde F_{ij}\) for \(i<j\), and define
+\(\widetilde F_{ji}=\widetilde F_{ij}\). The errors are, respectively,
+\(<\theta/2,<\theta/4,<3\theta/4\), hence at most \(\theta\) in every entry.
+Symmetry holds by definition, not by equality of two separately approximated entries.
+

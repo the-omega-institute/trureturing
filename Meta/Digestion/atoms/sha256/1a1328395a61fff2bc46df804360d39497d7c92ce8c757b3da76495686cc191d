@@ -1,0 +1,65 @@
+**推论 13.6（乘积记录的访问成本）。** 若整个条件记录为乘积
+
+$$
+E_x=
+\left(\bigotimes_{j\in\mathsf I}f_{j,x}\right)\otimes b_x^{(0)},
+$$
+
+记
+
+$$
+a_0=|\langle b_1^{(0)},b_0^{(0)}\rangle|,
+\qquad
+a_j=|\langle f_{j,1},f_{j,0}\rangle|.
+$$
+
+则对每个访问集合
+
+$$
+s_J=\prod_{j\in J}a_j,
+\qquad
+b_J=a_0\prod_{j\in\mathsf I\setminus J}a_j.
+$$
+
+对定理 13.5 的任务，恢复乘子目标为 $\nu$ 时，精确成本为
+
+$$
+C_{\mathrm{vis}}^*(\varepsilon,\nu)
+=\min_{\substack{J\subseteq\mathcal J_{\mathrm{acc}}\\
+s_J^2+t^2\le1\\
+\nu^2\le b_J^2(1-t^2)}}
+\sum_{j\in J}c_j,
+\qquad
+C_{\mathrm{vis}}^*(\varepsilon,\nu)
+=C^*\!\left(\varepsilon,\frac{1-\nu}{2}\right).
+$$
+
+空积为一，零重叠允许，不可行时取 $+\infty$。
+
+证明。每个访问划分都满足定理 13.5 的乘积假设，将其两条充要条件代入有限成本最小化即可。证毕。
+
+例如取两个均可访问的已写入单元，
+
+$$
+c_1=c_2=1,
+\qquad
+a_1=a_2=\frac35,
+\qquad a_0=1.
+$$
+
+要求预测标签，并取
+
+$$
+d=1,
+\qquad
+\varepsilon=\frac1{10},
+\qquad
+\nu=\frac12,
+\qquad
+t=\frac45.
+$$
+
+全部访问选择的精确比较为：
+
+| 访问集合 | 成本 | $s_J$ | $b_J$ | 预测要求达标 | 预测约束下最大恢复乘子 |
+| --- | ---: | ---: | ---: | --- | ---: |

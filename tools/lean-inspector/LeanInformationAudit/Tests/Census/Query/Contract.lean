@@ -29,13 +29,14 @@ run_cmd liftTermElabM do
   | .certified _ => throwError "outsideScopeObserved: outside registration certified"
   let included ← CensusQuery.indexScope `LeanInformationAudit.Tests.Census.Query.Registration
   let registeredRow ← CensusQuery.assess included "fixture-head" key
-  unless included.finite.any (fun entry => entry.theoremName == key.theoremName &&
-      entry.registrationModuleName == `LeanInformationAudit.Tests.Census.Query.Registration) do
-    throwError "registrationScopeIncluded: in-scope registration was not enumerated"
+  let some registration := included.finite.find? (fun entry =>
+      entry.theoremName == key.theoremName &&
+      entry.registrationModuleName == `LeanInformationAudit.Tests.Census.Query.Registration)
+    | throwError "registrationScopeIncluded: in-scope registration was not enumerated"
   match registeredRow with
   | .observed value =>
     unless value.queryCompleted && value.importScope.completed &&
-        value.candidates.contains ``target.__information_unit &&
+        value.candidates.contains registration.unitName &&
         value.candidates.contains ``legacy &&
         value.importScope.modules.contains `LeanInformationAudit.Tests.Census.Query.Registration do
       throwError "registrationScopeIncluded: in-scope candidates were not returned"

@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Arith/GoldenResource/WeightedDiscreteLogNoGo
    mirror-E: none(waiver:exact-real-inequalities)
    anchors: []
-   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Arith/GoldenResource/WeightedDiscreteLogNoGo.uniformSelection
+   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Arith/GoldenResource/WeightedDiscreteLogNoGo.uniformSelection; result=D5/S3/Arith/GoldenResource/WeightedDiscreteLogNoGo.weighted_selector_refutes_uniformity; claim=D5/S3/Arith/GoldenResource/WeightedDiscreteLogNoGo.uniformSelection
    digest: Unequal coordinate prices uniquely select the nonscalar integral matrix diag(2,3). -/
 
 import D5.S3.Arith.GoldenResource.DiscreteLogSelector

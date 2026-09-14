@@ -1,0 +1,17 @@
+**定理 116（配置码的唯一恢复与类型分离）。** 有效配置码属于 \(\mathfrak V_Z\)，且映射
+\[
+(P,A,a)\longmapsto\operatorname{Cfg}_Z(P,A,a)
+\]
+在所有有限配置上是单射。对每个有效配置有
+\[
+\begin{aligned}
+\operatorname{El}(\operatorname{Reg}_Z(P))
+ &=\{\operatorname{NatZ}(p):p\in P\},\\
+\operatorname{El}(\operatorname{Tab}_Z(P,f))
+ &=\{\langle\operatorname{NatZ}(p),\operatorname{NatZ}(f(p))\rangle_Z:p\in P\}.
+\end{aligned}
+\]
+故由配置码可唯一恢复 \(P\)、容量函数 \(A\) 和状态 \(a\)。尤其，标签数字、容量数字和当前内容数字虽都使用同一 \(\zeta\)，但不能因数字相同而互换其类型位置。
+
+**证明。** 定理 73 给出 \(\operatorname{El}(\operatorname{Pack}(B))=B\)，定理 74 给出语义有序对的唯一性；所以两个显示的成员式成立。若两个配置码相等，最外层有序对的三个坐标分别相等。第一坐标给出标签集合相等，\(\operatorname{NatZ}\) 的单射性给出 \(P=P'\)。第二坐标中每个标签的第一分量相同，第二分量的单射性给出 \(A(p)=A'(p)\)；第三坐标同理给出 \(a(p)=a'(p)\)。反向由集合构造的确定性显然成立。所有自然数字先由有限 Zeckendorf 行生成，再由 \(\operatorname{Pack}\) 和语义配对组合，故代码有效且位于 \(\mathfrak V_Z\)。有序坐标的相等不能改变其标签，因此类型位置不会合并。证毕。
+

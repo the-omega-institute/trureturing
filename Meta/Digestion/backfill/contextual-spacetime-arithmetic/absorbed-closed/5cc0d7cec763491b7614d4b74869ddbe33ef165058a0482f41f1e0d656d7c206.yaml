@@ -1,0 +1,53 @@
+fingerprints:
+  raw_sha256: sha256:5cc0d7cec763491b7614d4b74869ddbe33ef165058a0482f41f1e0d656d7c206
+  normalized_sha256: sha256:5cc0d7cec763491b7614d4b74869ddbe33ef165058a0482f41f1e0d656d7c206
+cas_ref: sha256:5cc0d7cec763491b7614d4b74869ddbe33ef165058a0482f41f1e0d656d7c206
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/IntegerExactDivision.division_domains_equal_refuted
+    target_statement_id: sha256:fde68f201f90c5998b0fff44590e1f271093dbf10c441d5f5cce997fcd962fb1
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/IntegerExactDivision.exactDivide_literal
+    target_statement_id: sha256:228cfef4c800a3d13650113c7ed15eff309117ae6e399f418c31bfed682fead4
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/IntegerExactDivision.exactDivide_loses_product_history
+    target_statement_id: sha256:0fbbffd63ccdb681cdcb77205cf9f4434dc3746b1ed82b4ce29b6280072225cd
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/IntegerExactDivision.exact_guard_iff_integer_value
+    target_statement_id: sha256:9f10e7dfc359528802b9bd5cad6e1aeef7452a599d2d9824c2fcc5e7133ef4d6
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/IntegerExactDivision.exact_quotient_exists_unique
+    target_statement_id: sha256:d53a0498182f2e39237dcb066bae2c662fba3cb9d64ef010019fdd4124caa626
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/IntegerExactDivision.quotient_exactDivide
+    target_statement_id: sha256:a1536abf95fe19d1b26489a92d91ecc196cfc4727f386525eddd0858302df241
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/RationalQuotient.class_add
+    target_statement_id: sha256:d3f05cf47152f256ec0b445e62a8bb439a088301101216c9386a29fbc71bb6c7
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/RationalQuotient.class_div
+    target_statement_id: sha256:ce068da87926c783242da34efb1ce61eed7b02b05b43629deac1d6c9333eefe5
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/RationalQuotient.class_eq_iff
+    target_statement_id: sha256:d2768ffb40a6ee326b0ce9544d92ba2f10791bc2e640ae96fc98a4065d1149a1
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/RationalQuotient.class_inv
+    target_statement_id: sha256:be6133f3608965982bc0c2b9e38949c951eff9111513d212fc83e6bcde63fd19
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/RationalQuotient.class_mul
+    target_statement_id: sha256:81706e06396690127a93662fb5bb96bad9f9dc0f49ebf8eea046b091f3f584df
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/RationalQuotient.class_neg
+    target_statement_id: sha256:7d8fddfb176572a380f176f7e04d15d920397e9797616f23346b46682a6d0b13
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/RationalQuotient.quotient_division_domain
+    target_statement_id: sha256:575fb9234f13d23c38bbf5bb11d89d2df7db8fdee5fbe2795315004a5bd4043f
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/RationalQuotient.quotient_inverse_domain
+    target_statement_id: sha256:6390ef09b6d704cc0ff609e1acce95fd323cbaef0e0efe3550a66c22d4cad333
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/RationalQuotient.quotient_readout
+    target_statement_id: sha256:44f1b42ca3fb463224a17475873c04643685744484282032e653614cb9269a7d
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/RationalQuotient.rationalSection_reduced
+    target_statement_id: sha256:e59c6210b854fbb00e478503a279d72d996707726d19488030f25afd9221d7dd
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/RationalQuotient.rationalSection_zero
+    target_statement_id: sha256:d9b0622e4967de1c548a13ad936d7dd81bf1ee4cc9268e8dddad94574bc3cc8f
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/RationalQuotient.rational_field_equiv
+    target_statement_id: sha256:59b3c9e1d2b7a1ebeac8c9ff700bc17e2b684fdc6be569c85f61700ef6bd2775
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/RationalQuotient.reduced_coordinates_unique
+    target_statement_id: sha256:ea02bdb957b41f85c71136c6ff952a90cc28a3f8d714c6b7a841e6c584c730be
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/RichRational.integerEmbedding_readout
+    target_statement_id: sha256:ab7b7d131a9f2742a336560fdc51851e759a83472d3b274ee6a041186f6ea43e
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/RichRational.integerEmbedding_retains
+    target_statement_id: sha256:359537299b5fd46cb0330242a9d50871c03c4d30f888e4704ef26266b2bfe015
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 15c045439e1b3a6822b487e49844b837b7f75284f5018c994421043a033b7d2e
+    - b62f5fe7f76fbcbb6f54f82e3255603497dab17979a9c9159f4969dd67b7d534
+    - 60d8e9dd2edfbcfd4a665da02aaef0c39798a97b851e940e746f9d42dac702ec

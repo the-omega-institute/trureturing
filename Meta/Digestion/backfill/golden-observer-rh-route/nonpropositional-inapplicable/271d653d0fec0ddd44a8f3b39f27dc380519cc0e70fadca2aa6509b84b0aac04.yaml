@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:271d653d0fec0ddd44a8f3b39f27dc380519cc0e70fadca2aa6509b84b0aac04
+  normalized_sha256: sha256:271d653d0fec0ddd44a8f3b39f27dc380519cc0e70fadca2aa6509b84b0aac04
+cas_ref: sha256:271d653d0fec0ddd44a8f3b39f27dc380519cc0e70fadca2aa6509b84b0aac04
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 2, reading 「一　W-A 预登记:曲率–slack 相位桥(`CurvatureSlackPhaseBridge`)」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: 2a6f38431ab43627a340307448f3da3a53358e2c630b9a451d58282a2224300c
+    next_atom_id: ffa80bf97d86e22e27426d8883d0751d94e9cf82f8ccf3e26cb70cce3380f692

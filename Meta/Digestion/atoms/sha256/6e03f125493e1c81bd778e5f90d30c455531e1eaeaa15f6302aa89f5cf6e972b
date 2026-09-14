@@ -1,0 +1,30 @@
+**30.80 定义及证明（八字段版本二 VerifyLocalDual）。** The new certificate record is
+\[
+(2,s,N,\operatorname{Rat}(\eta),\operatorname{List}(q_1,\ldots,q_N),
+ \operatorname{List}(p_0,\ldots,p_{2N}),\operatorname{Rat}(\ell),\operatorname{Rat}(u)),
+\quad p_i=\operatorname{Pair}(J_i-2,K_i-1).
+\]
+Its length is exactly eight. Define \(\operatorname{VerifyLocalDual}(N,\eta,e)\) by
+requiring version two, \(s\in\{0,1,2\}\), legal external \(N\ge1,\eta>0\), equal
+internal inputs, exactly \(N\) rational coefficients and \(2N+1\) parameter codes.
+The encoded mode determines precisely \(\kappa_N^{(s)}\); an arbitrary reported constant is
+not a field. A fixed-mode predicate \(\operatorname{VerifyLocalDual}_s\) additionally requires
+that the encoded mode equal the specified \(s\). Recompute \(\kappa,\sigma_N>0\), derive
+\(q\pm e_k\), and recompute all of 30.79. Require the encoded endpoints to equal the resulting
+ones, and \(0<\ell\le u\le1\), \(u-\ell<\eta\). Reject every malformed or mismatched input.
+
+The Pair map is \(2^a(2b+1)-1\); sign codes are \(2p\) for \(p\ge0\),
+\(-2p-1\) otherwise; rational codes pair the sign code with \(d-1\), \(d\ge1\).
+An empty list is zero and a nonempty one is one plus Pair of its head and tail.
+Repeated division of the positive integer \(n+1\) by two terminates and uniquely decodes Pair.
+Even and odd sign codes invert as in 30.58, denominators are positive, and the tail of a positive
+list code \(L=2^a(2t+1)\) satisfies \(t<L\), proving total decoding on all naturals.
+Every remaining constant, divisor sum, finite residual expression and comparison uses finite
+integer arithmetic; rational comparisons use cross products with positive denominators.
+Thus this is a total predicate inspecting exactly one candidate's \(2N+1\) residual inputs
+and the fixed constants. It does not enumerate a coefficient grid or trust gradients or errors.
+Modes zero and one compute coercivity without determinants, real ranks or eigenvalues.
+Acceptance is sound by 30.79. Versions one and the old VerifyOpt/Verify definitions retain
+their original constants and record formats; a version-two mode cannot be assigned retroactively
+to any historical certificate.
+

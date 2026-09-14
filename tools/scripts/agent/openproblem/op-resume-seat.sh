@@ -52,7 +52,18 @@ if [ "${1:-}" = "--selftest" ]; then
 fi
 
 FLIGHT="${1:?flight id}"; ATT="${2:?attempt}"; BRIEF="${3:?brief}"; WT="${4:?worktree}"; STAGE="${5:?stage}"; STAGGER="${6:-0}"; MAXC="${7:-12}"
-R=${SSHX_RUNNER:-$HOME/.claude/plugins/cache/consensus-rnd/consensus-rnd/1.0.0-beta.42/skills/sshx/scripts/run-codex-worker.sh}
+# runner 解析走共用库,不再把版本钉死(见 seat/sshx-runner-lib.sh 的立库依据)。
+# SSHX_RUNNER 仍是显式覆盖;没有覆盖时解析最新已安装版,解析不到即 fail-closed 退出 3。
+__OP_SEAT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")/../seat" && pwd -P)
+# shellcheck source=../seat/sshx-runner-lib.sh
+. "$__OP_SEAT_DIR/sshx-runner-lib.sh"
+if [ -n "${SSHX_RUNNER:-}" ]; then
+  R="$SSHX_RUNNER"
+else
+  R=$(resolve_runner "$SSHX_PLUGIN_ROOT_DEFAULT") || {
+    echo "RESUME_FAIL runner-unresolved root=$SSHX_PLUGIN_ROOT_DEFAULT"; exit 3; }
+fi
+[ -f "$R" ] || { echo "RESUME_FAIL runner-missing $R"; exit 3; }
 [ -f "$BRIEF" ] || { echo "RESUME_FAIL brief-missing $BRIEF"; exit 3; }
 [ -d "$WT" ] || { echo "RESUME_FAIL worktree-missing $WT"; exit 3; }
 OUT="${BRIEF%.md}.a${ATT}.md"

@@ -1,0 +1,14 @@
+**定义 95（素数标签本身的自然数字图）。** 在定义 70 的有限自然数字上定义
+\[
+\operatorname{Prime}_Z(u)\iff
+1_Z<_Zu\land
+\forall v,w\in\mathsf W_Z,\quad
+v\cdot_Zw=u\Rightarrow(v=1_Z\lor w=1_Z).
+\]
+令 \(\mathsf{Pr}_Z=\{u\in\mathsf W_Z:\operatorname{Prime}_Z(u)\}\)，\(P_Z=\zeta[P]\)。对原始或规范表 \(f\) 定义重索引
+\[
+\widetilde f(u,j)=f(\operatorname{val}(u),j)\quad(u\in\mathsf{Pr}_Z),\qquad
+\lambda_Z(u,j)=\lambda(\operatorname{val}(u),j).
+\]
+对时间表亦置 \(\widetilde d(T,u,j)=d(T,\operatorname{val}(u),j)\)，容量和内容分别为 \(\widetilde A_u=A_{\operatorname{val}(u)}\)、\(\widetilde a_u=a_{\operatorname{val}(u)}\)。这里标签值 \(p\)、标签数字 \(\zeta(p)\)、内容值 \(a_p\)、内容数字 \(\zeta(a_p)\) 各有自己的自变量位置；全部自然数均使用同一 \(\zeta\) 图。
+

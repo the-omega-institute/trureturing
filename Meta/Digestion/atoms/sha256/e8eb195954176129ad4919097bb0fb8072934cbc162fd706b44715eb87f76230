@@ -1,0 +1,22 @@
+**定理 12.1（可达前缀的精确读数缺陷）。** 有
+$$
+\alpha_{Q,N}
+=\max_{B\subseteq\mathcal B}
+\left\|\overline{A_N}\odot(\overline{C_{N+1}}-J)\odot Q_B\right\|_\infty
+\le\delta_Q(C_{N+1}).
+$$
+其为零当且仅当对全部 $B,x,y$ 有
+$$
+A_N(x,y)\bigl(c_{xy}^{N+1}-1\bigr)(Q_B)_{xy}=0.
+$$
+这也恰好是以 $Q_B\otimes I_{E_{1:N}}$ 比较 $\operatorname{tr}_{E_{N+1}}\rho_{N+1}$ 与 $\rho_N$ 的最坏事件缺陷。
+
+证明。系统边缘递推为 $\sigma_{N+1}=M_{C_{N+1}}M_{A_N}(\rho)$。把固定事件概率差通过两次对偶拉回初态，缺陷算子为
+$$
+M_{A_N}^*\bigl(M_{C_{N+1}}^*(Q_B)-Q_B\bigr)
+=\overline{A_N}\odot(\overline{C_{N+1}}-J)\odot Q_B.
+$$
+使用第11.2节的有限事件最大值与Hermitian范数公式得到等式。单位保持正映射对Hermitian算子的算子范数收缩，给出上界。范数为零等价于每个矩阵元为零；系数的复共轭不影响其是否为零，得到所列判据。对全部旧记录取迹，再用偏迹恒等式，得到最后的联合空间比较。证毕。
+
+例如 $A_N(x,y)=0$ 时，这一对历史已对局部读数不可见；后来 $c_{xy}^{N+1}\ne1$ 不再使它产生局部概率变化。这不意味着联合系统中的那一对历史已被删除。
+

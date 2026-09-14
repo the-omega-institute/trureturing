@@ -1,0 +1,42 @@
+**30.54 定理及证明（有理矩阵、有限独立性与旧强制常数）。** Define a real symmetric matrix
+\[
+(K_N)_{kl}=\frac1{(N+1)^2}\int_0^{N+1}\{t/k\}\{t/l\}\,dt
+=\frac1{(N+1)^2kl}\sum_{j=0}^N
+ \left[r_{jk}r_{jl}+\frac{r_{jk}+r_{jl}}2+\frac13\right],
+\quad r_{jk}=j-k\lfloor j/k\rfloor.
+\]
+The equality follows by putting \(t=j+s\), \(0<s<1\): then
+\(\{t/k\}=(r_{jk}+s)/k\), with \(0\le r_{jk}<k\). Thus its entries are exact rationals.
+For complex coefficients,
+\[
+\langle a,K_Na\rangle=(N+1)^{-2}\int_0^{N+1}|g_a(t)|^2dt\ge0.
+\]
+If this is zero, on each \((j,j+1)\), \(j=0,\ldots,N\), the complex affine function
+\(g_a\) vanishes identically: a nonzero value would, by continuity, give positive integral
+on a neighborhood. In particular \(b_a=0\). Both affine one-sided limits at every integer
+\(j=1,\ldots,N\) are zero, and their difference is
+\(-\sum_{k\mid j}a_k\). Hence these divisor sums vanish. At \(j=1\) this gives
+\(a_1=0\); induction on \(j\) then gives \(a_j=0\), since every proper divisor is smaller.
+The interval to \(N+1\) supplies the right side of the last jump. Thus \(K_N\) is positive definite.
+Since \(t^{-2}\ge(N+1)^{-2}\) on this interval,
+\(\|Va\|^2\ge\langle a,K_Na\rangle\). In particular the actual \(f_1,\ldots,f_N\)
+are linearly independent over \(\mathbb C\).
+
+Write \(t_N=\operatorname{tr}K_N\), \(d_N=\det K_N\), and
+\[
+\delta_{\rm old}(N)=\frac{d_N}{t_N^{N-1}}>0.
+\]
+For the positive eigenvalues \(\lambda_1,\ldots,\lambda_N\) of \(K_N\),
+\(\prod_{j\ne i}\lambda_j\le(\sum_j\lambda_j)^{N-1}\). Therefore
+\(\lambda_i\ge d_N/t_N^{N-1}\) for every \(i\), and
+\[
+\|Va\|^2\ge\langle a,K_Na\rangle\ge\delta_{\rm old}(N)\|a\|_2^2.
+\]
+The spectral theorem is used only in this proof. The defining determinant is the finite signed
+permutation sum, with each sign determined by its finite inversion count. Traces, entries,
+integer gcd/lcm and this sum require no real-rank, singular-value or eigenvalue oracle.
+Their proved positive rational numerators may also be checked redundantly. For \(N=1\),
+\(K_1=[(1/4)(1/3+1/3)]=[1/6]\), and the empty product \(t_1^0=1\)
+gives \(\delta_{\rm old}(1)=1/6\). This matrix is a lower bound for the full Gram matrix,
+not an assertion that its entries equal the full Gram entries.
+

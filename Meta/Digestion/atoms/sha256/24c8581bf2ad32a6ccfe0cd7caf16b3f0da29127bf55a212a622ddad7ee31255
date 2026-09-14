@@ -1,0 +1,19 @@
+**定理 186（带符号 Zeckendorf 槽表的群同态）。** 对任意 \(r,s\in\mathcal R_{P,\mathbb Z}\)，有
+\[
+V_P^{\mathbb Z}(r+s)=V_P^{\mathbb Z}(r)+V_P^{\mathbb Z}(s),
+\qquad
+\operatorname{sdig}_P(r+s)(p)
+ =\operatorname{scode}\!\left(
+  V_P^{\mathbb Z}(r)(p)+V_P^{\mathbb Z}(s)(p)\right),
+\]
+\[
+\operatorname{Rat}_P(r+s)
+ =\operatorname{Rat}_P(r)\operatorname{Rat}_P(s),
+\qquad
+\operatorname{Rat}_P(-r)=\operatorname{Rat}_P(r)^{-1}.
+\tag{Z-SIGNED-GROUP}
+\]
+若 \(r,s\) 的每一行已经是唯一的带符号 Zeckendorf 行，则 \(\operatorname{sdig}_P\) 将逐行加法运输为 \((\mathsf Z_{\mathbb Z})^P\) 上的坐标加法；其逆由逐行 \(\operatorname{ival}\) 给出。对非规范原始槽表，\(\operatorname{sdig}_P\) 一般不单射。
+
+**证明。** 第一式是有限整数和的分配律。定义 113 的 \(\operatorname{scode}\) 与 \(\operatorname{ival}\) 互逆，故第二式是逐坐标的带符号 Zeckendorf 规范化。对有限素数集逐个使用 \(p^{u+v}=p^up^v\)，得到有理读数的乘法和逆元等式。若每一行已规范，定理 114 给出逐行整数加法的双射运输；若允许任意原始系数，则存在不同槽表具有相同 Fibonacci 加权和，例如 \(G_2=G_1+G_0\)，所以不能保持单射。证毕。
+

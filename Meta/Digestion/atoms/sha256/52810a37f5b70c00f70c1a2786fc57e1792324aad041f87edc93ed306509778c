@@ -1,0 +1,8 @@
+**命题。** 系统 (12.18) 的总能量满足
+
+\[
+\frac{d}{dt}\bigl(\|x\|^2+\|y\|^2\bigr)
+=-2\langle x,Ax\rangle-2\langle y,Dy\rangle.
+\tag{12.19}
+\]
+

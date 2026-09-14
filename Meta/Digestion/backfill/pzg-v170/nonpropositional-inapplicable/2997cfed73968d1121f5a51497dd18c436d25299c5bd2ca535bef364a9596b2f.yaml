@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2997cfed73968d1121f5a51497dd18c436d25299c5bd2ca535bef364a9596b2f
+  normalized_sha256: sha256:2997cfed73968d1121f5a51497dd18c436d25299c5bd2ca535bef364a9596b2f
+cas_ref: sha256:2997cfed73968d1121f5a51497dd18c436d25299c5bd2ca535bef364a9596b2f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 2, reading 「评注 27.641(η_KM 变分定谳)」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: b98b8b525bfc2e952698c6ec12f870b96ba5c64329786a8548184b3dea83c24f
+    next_atom_id: 5b91b3ac34f2e9229db102a4b1f57b93e3c8c08e0b8ba5704a152520aeb97664

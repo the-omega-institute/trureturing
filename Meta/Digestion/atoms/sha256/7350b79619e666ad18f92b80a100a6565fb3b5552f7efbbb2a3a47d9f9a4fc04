@@ -1,0 +1,11 @@
+**定义 65（素数加权的第二坐标观察）。** 对正整数 \(n\) 定义
+\[
+\mathcal A(n)=\prod_p p^{f(v_p(n))}.
+\]
+该积因 \(f(0)=0\) 而有限。对 \(n>1,k\ge0\)，定义累计对数电荷及相邻有理倍率
+\[
+\mathcal L_n(k)=\sum_{p\mid n}Q_{a_p}(k)\log p,\qquad
+M_n(k)=\prod_{p\mid n}p^{d_{a_p}(k)}\in\mathbb Q_{>0}.
+\]
+这里 \(\mathcal A\) 由规范指数行的 \(U\) 读数加素数权重构成；\(\mathcal L\) 使用净路径电荷与对数权重。
+

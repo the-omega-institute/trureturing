@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:19e00c427d29606f7005ec0dd7a745088cf0db29192c715205472a4f3aeba452
+  normalized_sha256: sha256:19e00c427d29606f7005ec0dd7a745088cf0db29192c715205472a4f3aeba452
+cas_ref: sha256:19e00c427d29606f7005ec0dd7a745088cf0db29192c715205472a4f3aeba452
+coverage_gids:
+  - gid: D5/S3/Quantum/StationaryPreparation/PhysicalGram.physical_gram_from_exact_preparation
+    target_statement_id: sha256:eaf080ed3c855938529c7309811746900f4d99f6153c14e07d3cc487b23f297f
+receipts:
+  unresolved_subitems: []

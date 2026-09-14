@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ffeaa8541b3c19e7cd789b618b71bd76b8accf45e46a18d906a66b4a7c6bfac0
+  normalized_sha256: sha256:ffeaa8541b3c19e7cd789b618b71bd76b8accf45e46a18d906a66b4a7c6bfac0
+cas_ref: sha256:ffeaa8541b3c19e7cd789b618b71bd76b8accf45e46a18d906a66b4a7c6bfac0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 1, reading 「53. 增订二：动作丛、策略充分自我与历时作者性」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: 337c63c9775beafd69956d48b14a9e2b508bfe2c331269f549791beb0aeb0de2
+    next_atom_id: 2e1ade3b99f82e2d805d6e359084344f07893d61d43bb54a6a37631617d2d6f6

@@ -1,0 +1,45 @@
+**定义 418.1（原全集合解释）。** 沿用定理 71–74 的同一总类函数及其逆图，完整定义为
+$$
+\operatorname{NatZ}(n)=\langle0,\zeta(n)\rangle\quad(n\in\omega),\qquad
+\operatorname{Enc}(x)=
+\begin{cases}
+\operatorname{NatZ}(x),&x\in\omega,\\
+\langle1,\{\operatorname{Enc}(y):y\in x\}\rangle,&x\notin\omega,
+\end{cases}
+$$
+$$
+\mathfrak V_Z=\{c:\exists x\ \operatorname{Enc}(x)=c\},\qquad
+\operatorname{Dec}:\mathfrak V_Z\to V,\qquad
+d\in_Zc\ \Longleftrightarrow\ \operatorname{Dec}(d)\in\operatorname{Dec}(c),
+$$
+$$
+\operatorname{El}(c)=\operatorname{Enc}[\operatorname{Dec}(c)],\qquad
+\operatorname{Pack}(B)=\operatorname{Enc}(\operatorname{Dec}[B])
+\quad(B\text{ 为集合且 }B\subseteq\mathfrak V_Z).
+$$
+$\operatorname{Dec}$ 的定义域仅为有效码类；$V$ 表示全部集合的类，$\mathfrak V_Z$ 亦为类谓词。对每个集合 $A$ 记 $A^*=\operatorname{Enc}[A]=\operatorname{El}(\operatorname{Enc}(A))$，不把单个码 $\operatorname{Enc}(A)$ 与它的成员像 $A^*$ 认同。语义配对为
+$$
+\{c,d\}_Z=\operatorname{Pack}(\{c,d\}),\qquad
+\langle c,d\rangle_Z=\{\{c,c\}_Z,\{c,d\}_Z\}_Z.
+$$
+对每个原集合 $x$、每个有效码 $c$ 及每个有效码集合 $B$，采用定理 72–73 的完整双逆及成员等式
+$$
+\operatorname{Dec}(\operatorname{Enc}(x))=x,\qquad
+\operatorname{Enc}(\operatorname{Dec}(c))=c,\qquad
+\operatorname{El}(\operatorname{Pack}(B))=B,\qquad
+\operatorname{Pack}(\operatorname{El}(c))=c,
+$$
+$$
+\operatorname{El}(\operatorname{NatZ}(n))=\{\operatorname{NatZ}(j):j<n\}\quad(n\in\omega),\qquad
+\operatorname{El}(\langle1,B\rangle)=B\quad(\langle1,B\rangle\in\mathfrak V_Z).
+$$
+其中集合构造的全部分支为
+$$
+\operatorname{Pack}(B)=
+\begin{cases}
+\operatorname{NatZ}(n),&B=\{\operatorname{NatZ}(j):j<n\}\text{ 对某 }n\in\omega,\\
+\langle1,B\rangle,&\text{否则}.
+\end{cases}
+$$
+第一分支的 $n$ 唯一，且此时 $\langle1,B\rangle$ 无效。尤其语义空集为 $\operatorname{NatZ}(0)$，$\langle1,\varnothing\rangle\notin\mathfrak V_Z$。定理 71 的传递闭包上的秩递归确定上述总图，定理 72–74 给其双逆、单射性及集合构造；此处的自然叶仍使用有限数字而非无限补零图。
+

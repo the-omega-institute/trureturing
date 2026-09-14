@@ -20,15 +20,29 @@ SP="$(cd "$(dirname "$0")" && pwd)"
 WORK="${WORK:-${TMPDIR:-/tmp}/deposit-evidence}"; mkdir -p "$WORK"
 OUT="$WORK/edges-$(echo "$MOD" | tr '.' '_').json"
 bash "$SP/proof-edges.sh" "$W" "$MOD" "$OUT" >&2 || { echo "(内核判形不可用:边提取失败,本表退化为仅事件字段)"; exit 0; }
-python3 - "$W" "$OUT" "$SP" <<'PY'
+python3 - "$W" "$OUT" "$SP" "$MOD" <<'PY'
 import json, os, re, subprocess, sys
 
-w, edges_path, tooldir = sys.argv[1], sys.argv[2], sys.argv[3]
+w, edges_path, tooldir, mod = sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4]
 eg = json.load(open(edges_path))
 changed = subprocess.run(["git", "-C", w, "diff", "--name-only", "origin/dev...HEAD"],
                          capture_output=True, text=True).stdout.split()
-event = [p for p in changed if p.startswith("Golden/Frozen/accepted/")]
-ev = json.load(open(os.path.join(w, event[0])))
+# The event must be the one for the module that was asked for. Taking changed[0] blindly gave a
+# traceback when the deposit was not committed yet, and silently stripped the wrong module prefix off
+# every constant name when a lane carried two deposits.
+selector = "/".join(mod.split(".")) + ".lean"
+accepted = [p for p in changed if p.startswith("Golden/Frozen/accepted/")]
+matched = []
+for path in accepted:
+    cand = json.load(open(os.path.join(w, path)))
+    if (cand.get("payload", cand)).get("descriptor_selector") == selector:
+        matched.append((path, cand))
+if not matched:
+    sys.exit(f"shapes.sh: origin/dev...HEAD carries no freeze event for {selector} "
+             f"({len(accepted)} accepted event(s) in the diff). Commit the deposit first, then rerun.")
+if len(matched) > 1:
+    sys.exit(f"shapes.sh: {len(matched)} freeze events name {selector}; refusing to guess which one.")
+ev = matched[0][1]
 p = ev.get("payload", ev)
 mod_comps = p.get("descriptor_selector", "")[:-5].split("/")
 

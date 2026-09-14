@@ -1,0 +1,35 @@
+**定理 217（两层规范化的唯一性与交换）。** 对任意 \(q,q'\in\mathsf Q_P\)，有
+\[
+\mathsf N_P^{\rm loc}(q)=\mathsf N_P^{\rm loc}(q')
+\iff
+\mathsf V_P(q)=\mathsf V_P(q')
+\iff
+q-q'\in\ker\mathsf V_P,
+\tag{Z-LOCAL-NORMAL-FORM}
+\]
+以及
+\[
+\mathsf N_P^{\rm term}(q)=\mathsf N_P^{\rm term}(q')
+\iff
+\mathsf C_P(q)=\mathsf C_P(q')
+\iff
+q-q'\in\ker\mathsf C_P.
+\tag{Z-TERM-NORMAL-FORM}
+\]
+局部码和终端码均由其提升给出规范截面：
+\[
+\mathsf N_P^{\rm loc}(\mathsf L_P^{\rm loc}(d))=d,
+\qquad
+\mathsf N_P^{\rm term}(\mathsf L_P^{\rm term}(z))=z.
+\]
+并且
+\[
+\mathsf N_P^{\rm term}(q)(p)
+=\operatorname{scode}\!\left(
+\sum_{t\in\mathbb Z}
+\operatorname{ival}\bigl(\mathsf N_P^{\rm loc}(q)(t,p)\bigr)
+\right).
+\tag{Z-NORMALIZE-AGGREGATE}
+\]
+因此先在 \(j\) 轴规范化再沿 \(t\) 轴求和，与直接对全部三轴整数和作一次终端规范化得到同一结果。
+

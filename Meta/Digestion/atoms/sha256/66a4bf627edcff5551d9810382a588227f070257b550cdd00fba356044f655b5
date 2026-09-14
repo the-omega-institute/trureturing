@@ -1,0 +1,19 @@
+### Actual finite-domain consequence
+
+For every finite V with (-1,0) absent, let P_n(V) be orderedCount under pi_*.
+The geometric simulation and the actual certificate give
+
+\[
+ \boxed{5000^nP_n(V)\le10^9 12603^n.}
+\]
+
+No matrix-growth or path-coverage hypothesis remains in this concrete endpoint.
+Finite holes and irregular boundaries are allowed. A full four-neighbor root
+can be handled by summing its at most four parent-deleted child expansions;
+this root wrapper and the partition-polynomial identity are not included in the
+current Lean endpoint.
+
+**Do not reverse this simulation.** Lower bounds on the relaxed memory tree do
+not give lower bounds on the actual square-grid Weitz tree. The memory barrier
+restricts this chosen approximation strategy, not the physical critical point.
+

@@ -1,0 +1,31 @@
+## 8. Retained geometry and explicit controller transport
+
+The continuation starts from the preceding radius-three delivery. The latest
+read of dev is b89d56d0c9a433f9b714821d2bb1779066c59ede. The original sources
+remain unchanged. MemoryRefinement now proves the radius/blocker inclusion
+statement proposed in Section 6 and its all-depth counting consequences.
+
+There is an important distinction between inclusion and projection. Running
+radius three and radius four from the same parent mask, with fixed SRL ordering
+and direction history S,S,R,R, gives a point (2,-1) present in the fine memory
+but absent from the coarse memory. That point is inside the radius-three disk:
+it had previously left the coarse disk and been forgotten. The independent
+integer-set replay checks the four steps and both memberships. Thus the fine
+state cannot simply be intersected with the coarse disk to recover the actual
+coarse controller state. This example is a replayed diagnostic, not a separately
+elaborated Lean theorem.
+
+For a policy depending only on the complete direction history, both models
+choose the same action automatically. The theorem history_count_antitone proves
+that r<=R and F contained in G imply C_R(n,G)<=C_r(n,F) for every depth and history.
+For a policy depending on its coarse state as well, coupledStep retains the pair
+(F,G), reads the policy at F, decides availability at G, and updates both with
+the same action. The theorem coupled_count_le_coarse proves the same domination
+for every such controller. No state-reconstruction hypothesis is used.
+
+The exact fixed_presentation_count theorem separately transfers a finite table
+to actual geometric sets by direction-preserving transition equality. Only the
+selected order requires closure. This avoids creating states for unused actions
+when a single-policy upper certificate is sufficient. Direction multiplicities
+are preserved even when two directions have equal successor states.
+

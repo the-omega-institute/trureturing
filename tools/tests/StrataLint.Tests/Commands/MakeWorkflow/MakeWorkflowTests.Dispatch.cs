@@ -150,7 +150,8 @@ public sealed partial class MakeWorkflowTests
         Assert.DoesNotContain("run_phase cache-get", inspector, StringComparison.Ordinal);
         Assert.DoesNotContain("run_phase build \"$LAKE\"", inspector, StringComparison.Ordinal);
         Assert.Contains(LeanCacheRunScriptPath, inspector, StringComparison.Ordinal);
-        Assert.Contains("run_phase build \"$CACHE_RUN\" \"$LAKE\" build", inspector, StringComparison.Ordinal);
+        Assert.Contains("local -a lake_build_args=(build)", inspector, StringComparison.Ordinal);
+        Assert.Contains("run_phase build \"$CACHE_RUN\" \"$LAKE\" \"${lake_build_args[@]}\"", inspector, StringComparison.Ordinal);
         Assert.Contains("\"$CACHE_RUN\" \"$LAKE\" env lean", inspector, StringComparison.Ordinal);
 
         int EnsureDependency(string target)
@@ -171,7 +172,8 @@ public sealed partial class MakeWorkflowTests
             inspector,
             "(?m)^(?!\\[\\[).*\\\"\\$CACHE_RUN\\\"",
             RegexOptions.CultureInvariant).Count;
-        // lean-report needs both wrapper calls: inspect.sh:107 builds and inspect.sh:130 inspects.
+        // lean-report needs both wrapper calls: inspect.sh builds lazily inside
+        // invoke_inspector and then runs the Inspector phase.
         var leanEnsures = EnsureDependency("lean") + leanCommands;
         var reportEnsures = EnsureDependency("lean-report") + reportCommands;
         var testEnsures = EnsureDependency("test") + leanEnsures + reportEnsures;
@@ -195,9 +197,21 @@ public sealed partial class MakeWorkflowTests
         Assert.Equal(
             $"\t@/bin/bash {IngestScriptPath} mathlib-reanchor \"$(BASE)\"",
             Recipe(makefile, "mathlib-reanchor"));
-        var showAtomRecipe = Recipe(makefile, "show-atom");
-        Assert.Contains("dotnet run --no-build --project", showAtomRecipe, StringComparison.Ordinal);
-        Assert.Contains(" show-atom --atom-id \"$(ATOM_ID)\"", showAtomRecipe, StringComparison.Ordinal);
+        // The four targets that reach the command line keep the verb in the Makefile and stay one
+        // recipe line: the dispatch table above allows at most one line per target, and
+        // CliVerbLinkageTests reads the verb out of this file to prove it is registered. The same
+        // line first checks that the build output exists and builds it when it does not, because a
+        // fresh worktree carries none; on 2026-09-11 two of five implementation seats hit a raw
+        // process-start exception six times between them while every brief opens by calling show-atom.
+        foreach (var noBuildTarget in new[] { "show-atom", "atom-context", "settle", "settle-clear" })
+        {
+            var recipe = Recipe(makefile, noBuildTarget);
+            Assert.Contains("dotnet run --no-build --project", recipe, StringComparison.Ordinal);
+            Assert.Contains(
+                "@test -x tools/StrataLint.Cli/bin/Release/net10.0/StrataLint || dotnet build",
+                recipe,
+                StringComparison.Ordinal);
+        }
         Assert.Contains(
             EchoResidualSummaryScriptPath,
             Recipe(makefile, "echo-residual-summary"),

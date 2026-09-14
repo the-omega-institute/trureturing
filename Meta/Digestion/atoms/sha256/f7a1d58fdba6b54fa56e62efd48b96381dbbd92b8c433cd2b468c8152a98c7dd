@@ -1,0 +1,14 @@
+**定理 9.2（两坐标精确闭包，repo-derived）。** 令 $\alpha=\eta g(w)$，则任意宽度下
+$$
+\boxed{w^+=(1+\alpha^2)w-\alpha s,\qquad
+s^+=(1+\alpha^2)s-4\alpha w.}
+$$
+映射 $(u,v)\mapsto(w,s)$ 的实际像恰为
+$$
+Q_m=\{(w,s)\in\mathbb R^2:s\ge2|w|\}.
+$$
+上述更新在该像上自映，保留 $\ell(w)$ 和所有输入的预测 $wx$。
+
+证明。展开同步更新的内积得到
+$\langle u-\alpha v,v-\alpha u\rangle=w-\alpha s+\alpha^2w$；展开两范数平方之和得到第二式。由 $\|u\mp v\|^2\ge0$ 得 $s\ge\pm2w$。反向给定 $s\ge2|w|$，取实数 $a=\sqrt{s+2w}$、$b=\sqrt{s-2w}$，令 $u=(a+b)e_1/2,v=(a-b)e_1/2$，便有相应的 $w,s$。输出保持来自定义；像不变也由更新后的实际参数仍存在得到。证毕。
+

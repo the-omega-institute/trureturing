@@ -1,0 +1,29 @@
+**定理 51（第二递推读数的取整桥）。** 对全部 \(a\in\mathbb N\)，
+\[
+f(a)=\lfloor(a+1)\alpha\rfloor,\qquad
+-\alpha^2<f(a)-a\alpha<\alpha.
+\]
+规范行向上移动一位的解码为
+\[
+\sum_jG_{j+1}s(a)_j=a+f(a)
+=\lfloor(a+1)\phi\rfloor-1.
+\]
+
+**证明。** 由初值及递推归纳有
+\[
+\alpha G_j-H_j=(-1)^{j+1}\alpha^{j+2}.
+\]
+确实，\(j=0,1\) 分别为 \(\alpha-1=-\alpha^2\) 与 \(2\alpha-1=\alpha^3\)；等式两侧均满足同一加法递推。令 \(c=s(a)\)，则
+\[
+f(a)-a\alpha=\sum_jc_j(-1)^j\alpha^{j+2}.
+\]
+每个 \(c_j\in\{0,1\}\)，且支撑有限。其正项和严格小于
+\(\sum_{i\ge0}\alpha^{2i+2}=\alpha\)，负项绝对值和严格小于
+\(\sum_{i\ge0}\alpha^{2i+3}=\alpha^2\)。因此
+\[
+0<(a+1)\alpha-f(a)<\alpha+\alpha^2=1.
+\]
+\(f(a)\) 为整数，取整即得第一式；空行 \(a=0\) 亦被涵盖。
+
+再由初值及递推得 \(G_{j+1}=G_j+H_j\)，向上移动的解码即 \(a+f(a)\)。由 \(\phi=1+\alpha\) 得最后的取整式。这是[Zeckendorf 位移读数中的位移取整恒等式](../../../D5/S1/Deficit/ZeckendorfDisplacementReading.lean)在本指数约定下的表达；[Beatty 双坐标闭式](../../../D5/S1/Deficit/Beatty/BetaBeattyClosedForms.lean)给出相应的两个嵌入读数。[黄金相位缺陷](../../../D5/S1/Deficit/GoldenPhaseDeficit.lean)所定义的 \(\operatorname{goldenShift}(a)\) 等于这里的 \(a+f(a)\)，故其加法缺陷等于 \(\kappa\)。证毕。
+

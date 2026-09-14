@@ -1,0 +1,7 @@
+**定理 364.2。** $W_A$ 是 $\mathbb T^\omega$ 的子群；它恰参数化坐标连续的受限环境特征。限制映射是同态，其核及相等条件恰为
+$$
+\ker\operatorname{Res}_{A}^{\rm ph}=\{\theta:\theta_n=0_{\mathbb T}\ (n\in J)\},\qquad
+\operatorname{Res}_{A}^{\rm ph}(\theta)=\operatorname{Res}_{A}^{\rm ph}(\eta)\iff\theta|_J=\eta|_J.
+$$
+在有理系数类中，坐标连续子族恰为 $i^{-1}(W_A)$，其嵌入像为 $i[\Theta_{\rm rat}]\cap W_A$。$\rho$ 满射而不单射。若 $J$ 无限，常数有理行 $[1/2]_{\rm rat}$ 不属于该连续子族。
+

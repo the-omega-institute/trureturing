@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:03cd7ff587b8c050fe267f3bd2b2a6f9cb0547234f6cb10f54e313ab3955a088
+  normalized_sha256: sha256:03cd7ff587b8c050fe267f3bd2b2a6f9cb0547234f6cb10f54e313ab3955a088
+cas_ref: sha256:03cd7ff587b8c050fe267f3bd2b2a6f9cb0547234f6cb10f54e313ab3955a088
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Errata remark 29.10 corrects the landing addresses recorded inside candidate theorems 4.134 and 4.135, whose written directory is not a legal address because the Arith domain binds to S3. It prescribes placement and asserts nothing about mathematical truth, so no Lean declaration can carry it; the mathematical obligations stay with 4.134 and 4.135.
+    previous_atom_id: 1d823302898e7f00573945e01d53d0f9b3f02333c48558fabcd62d583526a94a
+    next_atom_id: 9f75a67bc56b6e309279654921796d3a1019e6485170018388ffbb7d396c880d

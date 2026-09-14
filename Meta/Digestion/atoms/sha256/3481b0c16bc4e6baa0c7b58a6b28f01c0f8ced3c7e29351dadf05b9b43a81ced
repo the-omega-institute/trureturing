@@ -1,0 +1,8 @@
+**定理 177（完整 Zeckendorf 编码是有限历史结构的群胚同构）。** \(\mathcal F_Z\) 是 \(\mathbf{Hist}_{\rm fin}\) 与 \(\mathbf{Hist}_{Z,\rm fin}^{\rm all}\) 之间的群胚同构，且
+\[
+\mathcal F_Z(\operatorname{id}_X)=\operatorname{id}_{\mathcal F_Z(X)},
+\qquad
+\mathcal F_Z(g\circ h)=\mathcal F_Z(g)\circ\mathcal F_Z(h).
+\]
+它保持对象的历史同构类、有限复合的定义域和成功结果，并由 \(\operatorname{Dec}_Z\) 给出逆群胚同构。
+

@@ -1,0 +1,12 @@
+**定义。** 对素数 $p\ne2,5$，定义
+
+$$
+\epsilon_p=\left(\frac5p\right),\qquad
+n_p=p-\epsilon_p,\qquad r_p=\pi(p),
+$$
+
+$$
+\eta_p=\frac{F_{r_p}}p\pmod p,\qquad
+q_p=\frac{F_{n_p}}p\pmod p.
+$$
+

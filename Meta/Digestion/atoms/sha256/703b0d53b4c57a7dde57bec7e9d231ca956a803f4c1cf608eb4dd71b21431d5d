@@ -1,0 +1,22 @@
+**定理 180（单位容量轴增多时的全局稀疏化）。** 令 \(p_1<\cdots<p_k\) 为前 \(k\) 个素数，置 \(P_k=\{p_1,\ldots,p_k\}\)，并令 \(A_k(p_i)=1\)。则
+\[
+Q_k=2^k,\qquad M_k=\prod_{i=1}^kp_i,\qquad
+\delta_{\rm loc}^{Z}(P_k,A_k)=1,
+\]
+并且
+\[
+0<\delta_{\rm glob}^{Z}(P_k,A_k)
+ \le \frac{2^k}{M_k+1}
+ \le \frac{2^k}{(k+1)!}\xrightarrow[k\to\infty]{}0.
+\tag{Z-SPARSE-LIMIT}
+\]
+故局部每轴一位的规范窗口可以始终满占，而把这些轴指数化为一个全局 Zeckendorf 标量会使规范窗口密度趋于零。
+
+**证明。** 每个容量一轴有两个状态且 \(\ell_Z(1)=1,G_1=2\)，故局部窗口和状态数均为 \(2^k\)，局部密度为一。全局状态子集有 \(Q_k\) 个元素，全局窗口有 \(G_{\ell_Z(M_k)}\) 个元素；由 \(M_k<G_{\ell_Z(M_k)}\) 得
+\[
+\delta_{\rm glob}^{Z}
+ =\frac{Q_k}{G_{\ell_Z(M_k)}}
+ \le\frac{2^k}{M_k+1}.
+\]
+第 \(i\) 个素数满足 \(p_i\ge i+1\)，所以 \(M_k\ge\prod_{i=1}^k(i+1)=(k+1)!\)。最后，\(2^k/(k+1)!\to0\)，因为其相邻比值为 \(2/(k+2)\)，从某项起小于一且趋于零。证毕。
+

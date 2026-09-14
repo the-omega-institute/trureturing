@@ -1,0 +1,31 @@
+## RD.2 非负原始数位的完整黄金像
+
+**定理 RD1。** 对 $z=a+b\varphi\in\mathbb Z[\varphi]$，
+
+$$
+\exists r\in\mathcal R:\beta(r)=z
+\quad\Longleftrightarrow\quad
+0\le a\le b\le2a.
+$$
+
+**证明。** $\varphi^2=1+\varphi$ 的系数位于该锥。乘以 $\varphi$ 将 $(a,b)$ 变成 $(b,a+b)$；若 $0\le a\le b\le2a$，则 $0\le b\le a+b\le2b$。故所有 $\varphi^{i+2}$ 均在锥内，非负整数线性组合仍在锥内。
+
+反过来，置 $u=2a-b\ge0$、$w=b-a\ge0$，则
+
+$$
+u\varphi^2+w\varphi^3=(u+w)+(u+2w)\varphi=a+b\varphi.
+$$
+
+取 $r=u\delta_0+w\delta_1$。两个系数由 $u=2a-b,w=b-a$ 唯一决定，故这个两槽代表唯一。证毕。
+
+**定理 RD2。** 对每个 $n\in\mathbb N$，
+
+$$
+\{\beta(r):v(r)=n\}
+=\{a+n\varphi:a\in\mathbb Z,\ a\le n\le2a\}.
+$$
+
+该集合中的 $a$ 从 $\lceil n/2\rceil$ 到 $n$ 取遍每个整数，因而黄金像的数量为 $\lfloor n/2\rfloor+1$。
+
+**证明。** 在 RD1 中固定第二坐标 $b=n$。所得闭整数区间含 $n-\lceil n/2\rceil+1=\lfloor n/2\rfloor+1$ 个整数。证毕。
+

@@ -1,0 +1,27 @@
+fingerprints:
+  raw_sha256: sha256:15c045439e1b3a6822b487e49844b837b7f75284f5018c994421043a033b7d2e
+  normalized_sha256: sha256:15c045439e1b3a6822b487e49844b837b7f75284f5018c994421043a033b7d2e
+cas_ref: sha256:15c045439e1b3a6822b487e49844b837b7f75284f5018c994421043a033b7d2e
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/RationalQuotient.class_add
+    target_statement_id: sha256:d3f05cf47152f256ec0b445e62a8bb439a088301101216c9386a29fbc71bb6c7
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/RationalQuotient.class_div
+    target_statement_id: sha256:ce068da87926c783242da34efb1ce61eed7b02b05b43629deac1d6c9333eefe5
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/RationalQuotient.class_eq_iff
+    target_statement_id: sha256:d2768ffb40a6ee326b0ce9544d92ba2f10791bc2e640ae96fc98a4065d1149a1
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/RationalQuotient.class_inv
+    target_statement_id: sha256:be6133f3608965982bc0c2b9e38949c951eff9111513d212fc83e6bcde63fd19
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/RationalQuotient.class_mul
+    target_statement_id: sha256:81706e06396690127a93662fb5bb96bad9f9dc0f49ebf8eea046b091f3f584df
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/RationalQuotient.class_neg
+    target_statement_id: sha256:7d8fddfb176572a380f176f7e04d15d920397e9797616f23346b46682a6d0b13
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/RationalQuotient.quotient_division_domain
+    target_statement_id: sha256:575fb9234f13d23c38bbf5bb11d89d2df7db8fdee5fbe2795315004a5bd4043f
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/RationalQuotient.quotient_inverse_domain
+    target_statement_id: sha256:6390ef09b6d704cc0ff609e1acce95fd323cbaef0e0efe3550a66c22d4cad333
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/RationalQuotient.quotient_readout
+    target_statement_id: sha256:44f1b42ca3fb463224a17475873c04643685744484282032e653614cb9269a7d
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/RationalQuotient.rational_field_equiv
+    target_statement_id: sha256:59b3c9e1d2b7a1ebeac8c9ff700bc17e2b684fdc6be569c85f61700ef6bd2775
+receipts:
+  unresolved_subitems: []

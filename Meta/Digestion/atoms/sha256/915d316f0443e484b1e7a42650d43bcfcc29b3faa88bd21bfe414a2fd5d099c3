@@ -1,0 +1,20 @@
+**定理 448.2（所有子集、全函数、参数、索引及商的双向运输）。** 对任意集合 $D,Y$，每个子集、每个全函数及每个部分函数的准确域都按原解释双向保留。具体地，对 $f:H\to Y,H\subseteq D$，其外部共轭函数为
+$$
+f^*:H^*\to Y^*,\qquad f^*(\operatorname{Enc}(x))=\operatorname{Enc}(f(x)).
+$$
+令 $G_f$ 为原完整普通函数图、$\Gamma_f^*$ 为共轭函数的外部普通图，则原积桥 $J$ 给
+$$
+\operatorname{Enc}(G_f)=\operatorname{Pack}\bigl(J[\Gamma_f^*]\bigr)
+=\operatorname{Pack}\{\langle\operatorname{Enc}(x),\operatorname{Enc}(f(x))\rangle_Z:x\in H\}.
+$$
+全部外部子集与函数满足
+$$
+\mathcal P(D^*)=\{\operatorname{Enc}[S]:S\subseteq D\},\qquad
+(Y^*)^{D^*}=\{f^*:f\in Y^D\}.
+$$
+这些结论保留域、陪域、值域、限制、复合、单射、满射、相等、任意集合索引族及所有联合参数域。对任意集合上的等价关系 $R$，有
+$$
+[\operatorname{Enc}(x)]_{R^*}=\operatorname{Enc}[[x]_R],\qquad
+\operatorname{Pack}([\operatorname{Enc}(x)]_{R^*})=\operatorname{Enc}([x]_R).
+$$
+

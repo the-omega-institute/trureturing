@@ -1,0 +1,10 @@
+**定理 321.2。** $j_{\rm rat}$ 是单射同态，且
+$$
+\Theta_{\rm rat}\longrightarrow
+\operatorname{Hom}(\mathsf V_{\rm reg},\mathsf D_{\rm rat}),\qquad
+\theta\longmapsto\chi^{\rm rat}_\theta
+$$
+是双射，逆为 $f\mapsto(f(\varepsilon_n))_{n\in\omega}$。$\mathsf V_{\rm reg}$ 可数无限，每个子群 $H$ 的商 $\mathsf V_{\rm reg}/H$ 由序列 $(\varepsilon_n+H)_{n\in\omega}$ 生成。
+
+**证明。** 两有理数之差在实数中是整数，当且仅当它在有理数中是同一整数；这同时证明 $j_{\rm rat}$ 良定义及单射，模一加法给同态性。把两个状态的求和域扩到支撑的有限并，补上的项为零，逐项分配给 $\chi^{\rm rat}_\theta(u+v)=\chi^{\rm rat}_\theta(u)+\chi^{\rm rat}_\theta(v)$。第 307 条已证明唯一有限基展开及自由性；因而任意同态 $f$ 满足 $f(u)=\sum_nu_nf(\varepsilon_n)$，而 $\chi^{\rm rat}_\theta(\varepsilon_n)=\theta_n$。这给两个复合恒等式。可数无限性直接用第 307 条；将该条的有限基展开取商，即得所列生成序列，包括零商。证毕。
+

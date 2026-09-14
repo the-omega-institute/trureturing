@@ -1,0 +1,36 @@
+**34.21 Proof attribution and preserved primary evidence.** The lower-support
+theorem is reused from 27.4-27.5 and the envelope derivative signs from 26.5.
+The projection/distance and paired-nonnegative-increment method already
+appears in 30.12-30.15 and 31.14-31.16 within their stated three-dimensional
+domains. The arbitrary-\(k\) two-radius estimate, weighted displacement
+with its signed square comparison, and precise closed-margin/cutoff
+combination are the specialized repo-derived extension validated by C47.
+
+Triangle and reverse-triangle inequalities, elementary calculus and
+comparison of maxima over a common set are classical. For inherited
+literature evidence, 26.28 attests Boyd/Vandenberghe's
+[Convex functions](https://web.stanford.edu/class/ee364a/lectures/functions.pdf),
+slides 3.4 and 3.14 (PDF pages 6 and 16), for norms/convexity and Jensen;
+26.28 and 33.20 attest HKUST's
+[Lecture 14](https://home.cse.ust.hk/~dekai/271/notes/L14/L14.pdf),
+PDF pages 4-7, for fractional knapsack. The latter locates the inherited
+interpretation of \(D\); this proof uses the full polytope directly.
+These are inherited source-attested references, not documents freshly
+retrieved by I18 and not literature proofs of this particular transfer theorem.
+No necessary new classical premise required an external query.
+The actual I18 literature work was bounded consultation of the pinned
+source and those recorded attributions; external retrievals and priority
+searches were zero. No novelty or priority claim is made.
+
+The completed previous-stage actual PRO primary is task
+192f8575-55cf-4bc0-b180-dd0589f9c31f, conversation conv_efec2f91277779d1,
+completed 2026-09-09T23:55:45.528Z, original envelope SHA256
+e5d84e0dc8c6935b329694f3cf278151543a4ce4460cf0e1d42d4371cd5ce822.
+Its task-observed display was 6/Pro: invocation-display evidence only,
+not hidden serving identity or independent model-family diversity.
+The [single report](../../reports/quantized-gh/dimension-general-transfer-0910.md)
+preserves the raw response as TEXT data, including etadmin and the
+historical C45 label, the exact symbolic program with final LF and SHA,
+and its original one-run receipt and preregistration.
+No historical mathematical certificate is executed by this implementation.
+

@@ -1,0 +1,8 @@
+**定理 359.3。** 若 $J_A$ 有限，则
+$$
+B_A^{\rm cap}=X_A^{\rm cap},\qquad
+|B_A^{\rm cap}|=\prod_{n\in J_A}(A_n+1),\qquad
+\tau_{+,A}=\tau_{\rm coord,A}^{B}
+$$
+且这个拓扑是有限离散拓扑。每点的单点构成有限局部基且为紧开邻域。特别 $A\equiv0$ 时空积为一，载体只含定义域为 $\omega$ 的总零状态。
+

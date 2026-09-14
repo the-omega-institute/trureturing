@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:79c1eb464ce0e45724af6c2c49f2663b49ee1d1e5e7526ac8d5279937e77ca89
+  normalized_sha256: sha256:79c1eb464ce0e45724af6c2c49f2663b49ee1d1e5e7526ac8d5279937e77ca89
+cas_ref: sha256:79c1eb464ce0e45724af6c2c49f2663b49ee1d1e5e7526ac8d5279937e77ca89
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: The dispatch-discipline atom records proof-shape classifications and rules for assigning implementation seats. It asserts nothing about mathematical truth, so no Lean declaration can carry it; the mathematical obligations stay with the listed theorem statements and the X-A-X-J obligation set.
+    previous_atom_id: f7868b6443d0ad2d2727beca2f677500bf1a82963afea824f4d2904570e17136
+    next_atom_id: 1188e733c242ab1cd05fbe3e035d1cb436c2df3d0be446524a9cdf70e17bdf30

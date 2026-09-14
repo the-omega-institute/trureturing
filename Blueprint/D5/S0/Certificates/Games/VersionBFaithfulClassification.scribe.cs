@@ -1,0 +1,91 @@
+using static StrataLint.Scribe.DefinitionDsl;
+using F = StrataLint.Scribe.FormulaDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S0.Certificates.Games;
+
+internal sealed class VersionBFaithfulClassificationDocument : IScribeDocumentDefinition
+{
+    private const string Prefix = "D5/S0/Certificates/Games/VersionBFaithfulClassification.";
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "The threshold classification with three parity cases fails in both directions at twelve piles in normal-play Version B.",
+        H("Version B faithful classification refuted"),
+        Blocks(
+            Describe.Lean(DescribeId.Create("faithful-version-b-odd-piles"),
+                DeclarationHandle.Create(Prefix + "oddPiles"), H("Odd piles"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The multiplicities of sizes one, three and five sum to the number of odd piles in the imported closed subgame with sizes one through six."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("faithful-version-b-allowed-odd-count"),
+                DeclarationHandle.Create(Prefix + "allowedOddCount"), H("Allowed odd counts"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text("The count is at most the pile count. For odd pile count, even counts are allowed. For pile count divisible by four, the lower even range ends two below half the pile count and the upper odd range starts one above half. For pile count congruent to two modulo four, these endpoints are one below half and two above half. Each upper range ends strictly below the pile count.")),
+                    Paragraph(Text("The lower bounds use addition on the count, preserving empty ranges without truncated subtraction."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("faithful-version-b-threshold"),
+                DeclarationHandle.Create(Prefix + "EveryPileExceedsThreshold"), H("Strict threshold"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Every present pile strictly exceeds the integer ceiling of one third of the pile count. Absent sizes impose no condition."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("faithful-version-b-classification"),
+                DeclarationHandle.Create(Prefix + "FaithfulClassification"), H("Classification"),
+                StatementSource.FromAuthor(F.Disp(F.Seq(
+                    Id("FaithfulClassification"), F.Sp, F.Leftrightarrow, F.Sp,
+                    F.Forall, F.Sp, Id("s"), F.Colon, Id("Position"), F.Comma, F.Sp,
+                    Num(3), F.Le, F.Sp, Call("pileCount", Id("s")), F.Sp, F.Rightarrow, F.Sp,
+                    Call("EveryPileExceedsThreshold", Id("s")), F.Sp, F.Rightarrow, F.Sp,
+                    F.Open, Call("Losing", Id("s")), F.Sp, F.Leftrightarrow, F.Sp,
+                    Call("allowedOddCount", Call("pileCount", Id("s")), Call("oddPiles", Id("s"))), F.Close))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The closed proposition quantifies over all positions in the imported closed subgame, with no pile-count bound. Both the lower bound of three piles and the strict threshold precede the biconditional."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("faithful-version-b-twelve-counts"),
+                DeclarationHandle.Create(Prefix + "allowedOddCount_twelve_iff"), H("Exactly six allowed counts at twelve piles"),
+                StatementSource.FromAuthor(F.Disp(F.Seq(
+                    F.Forall, F.Sp, Id("n"), F.InMacro, F.Sp, F.Mathbb, F.Grp(F.Id("N")), F.Comma, F.Sp,
+                    Call("allowedOddCount", Num(12), Id("n")), F.Sp, F.Leftrightarrow, F.Sp,
+                    Id("n"), F.Eq, F.Sp, Num(0), F.Lor, F.Sp, Id("n"), F.Eq, F.Sp, Num(2), F.Lor, F.Sp,
+                    Id("n"), F.Eq, F.Sp, Num(4), F.Lor, F.Sp, Id("n"), F.Eq, F.Sp, Num(7), F.Lor, F.Sp,
+                    Id("n"), F.Eq, F.Sp, Num(9), F.Lor, F.Sp, Id("n"), F.Eq, F.Sp, Num(11)))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The general predicate specializes exactly to zero, two, four, seven, nine and eleven."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("faithful-version-b-seven-fives-five-sixes"),
+                DeclarationHandle.Create(Prefix + "sevenFives_fiveSixes"), H("Seven fives and five sixes"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Write "), Math(Id("s7")), Text(" for this position: seven piles of size five and five of size six."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("faithful-version-b-seven-fours-five-fives"),
+                DeclarationHandle.Create(Prefix + "sevenFours_fiveFives"), H("Seven fours and five fives"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Write "), Math(Id("s4")), Text(" for this position: seven piles of size four and five of size five."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("faithful-version-b-seven-fours-losing"),
+                DeclarationHandle.Create(Prefix + "sevenFours_fiveFives_losing"), H("The successor is losing"),
+                StatementSource.FromAuthor(F.Disp(Call("Losing", Id("s4")))), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The imported certificate equivalence and a kernel-checked certificate bit establish that the player to move loses."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("faithful-version-b-all-move"),
+                DeclarationHandle.Create(Prefix + "sevenFives_fiveSixes_all_move"), H("The winning all-move"),
+                StatementSource.FromAuthor(F.Disp(Call("AllMove", Id("s7"), Id("s4")))), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The starting position is nonempty and simultaneous removal reaches the certified losing successor, so this all-move is legal."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("faithful-version-b-necessity-counterexample"),
+                DeclarationHandle.Create(Prefix + "sixFives_sixSixes_is_losing_but_predicted_winning"), H("Necessity fails"),
+                StatementSource.FromAuthor(F.Disp(F.Seq(
+                    Call("pileCount", Id("target")), F.Eq, F.Sp, Num(12), F.Land, F.Sp,
+                    Num(3), F.Le, F.Sp, Call("pileCount", Id("target")), F.Land, F.Sp,
+                    Call("EveryPileExceedsThreshold", Id("target")), F.Land, F.Sp,
+                    Call("oddPiles", Id("target")), F.Eq, F.Sp, Num(6), F.Land, F.Sp,
+                    Call("Losing", Id("target")), F.Land, F.Sp,
+                    F.Neg, F.Sp, Call("allowedOddCount", Call("pileCount", Id("target")), Call("oddPiles", Id("target")))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The imported target consists of six fives and six sixes. It satisfies both classification hypotheses and is losing, but its six odd piles are excluded by the prediction."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("faithful-version-b-sufficiency-counterexample"),
+                DeclarationHandle.Create(Prefix + "sevenFives_fiveSixes_is_winning_but_predicted_losing"), H("Sufficiency fails"),
+                StatementSource.FromAuthor(F.Disp(F.Seq(
+                    Call("pileCount", Id("s7")), F.Eq, F.Sp, Num(12), F.Land, F.Sp,
+                    Num(3), F.Le, F.Sp, Call("pileCount", Id("s7")), F.Land, F.Sp,
+                    Call("EveryPileExceedsThreshold", Id("s7")), F.Land, F.Sp,
+                    Call("oddPiles", Id("s7")), F.Eq, F.Sp, Num(7), F.Land, F.Sp,
+                    F.Neg, F.Sp, Call("Losing", Id("s7")), F.Land, F.Sp,
+                    Call("allowedOddCount", Call("pileCount", Id("s7")), Call("oddPiles", Id("s7")))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Seven fives and five sixes satisfy both classification hypotheses and the allowed-count prediction. A legal all-move to a losing position proves that this starting position is not losing."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("faithful-version-b-classification-refuted"),
+                DeclarationHandle.Create(Prefix + "faithful_classification_refuted"), H("Classification refuted"),
+                StatementSource.FromAuthor(F.Disp(F.Seq(F.Neg, F.Sp, Id("FaithfulClassification")))), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Applying the asserted biconditional to seven fives and five sixes would make that position losing, contradicting its certified winning move."))), DescribeRole.Theorem)),
+        []));
+}

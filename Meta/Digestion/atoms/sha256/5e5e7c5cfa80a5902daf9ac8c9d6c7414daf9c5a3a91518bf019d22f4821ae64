@@ -1,0 +1,11 @@
+**定理 440.5。** 对任意集合 $X,Y$，
+$$
+\chi:X^*\times Y^*\to(X\times Y)^*,\quad\chi(c,d)=\langle c,d\rangle_Z
+$$
+是双射，逆在 $(X\times Y)^*$ 上为 $\operatorname{Enc}(\langle x,y\rangle)\mapsto\langle\operatorname{Enc}(x),\operatorname{Enc}(y)\rangle$。函数 $f:D\to Y$ 的普通外部图与单个原函数码分别是
+$$
+G_{f^*}=\{\langle\operatorname{Enc}(x),\operatorname{Enc}(f(x))\rangle:x\in D\},\qquad\operatorname{Enc}(f)=\operatorname{Pack}\{\langle\operatorname{Enc}(x),\operatorname{Enc}(f(x))\rangle_Z:x\in D\}.
+$$
+外部域为 $D^*$，单图码的语义域为 $\operatorname{Enc}(D)$；域外没有图边。
+**证明。** 两向解码、配对唯一性及两向编码恒等式使 $\chi$ 及所列逆的两个复合均恒等。语义无序对是把两个成员码打包，反复应用打包式即得到同一个语义有序对。对 $f$ 的每条普通图边逐对施编码，就给显示的语义对，再打包给单个原图码；外部共轭则使用普通码对，故给另一个显示图。两图的有边输入分别恰为 $D^*$ 和 $\operatorname{Enc}(D)$ 的语义成员，保留每个合法输入及唯一输出。空域时外部图为空，单图码为 $\operatorname{Enc}(\varnothing)$，两者的域解释仍不同。证毕。
+

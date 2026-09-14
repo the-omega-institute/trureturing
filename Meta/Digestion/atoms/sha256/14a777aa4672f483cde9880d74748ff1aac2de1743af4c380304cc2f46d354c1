@@ -1,0 +1,15 @@
+**30.24 定理与证明：有限伪逆、范围条件和全部最小化系数。** \(C\succeq0\)，且
+\[
+\operatorname{inner}(b,Cb)=\|Vb\|^2,\qquad \ker C=\ker V.
+\]
+若 \(z\in\ker C\)，则 \(\operatorname{inner}(z,g)=\operatorname{inner}(Vz,u)=0\)。有限维自伴矩阵有 \(\operatorname{Ran}C=(\ker C)^\perp\)，故 \(g\in\operatorname{Ran}C\)。在 \(C\) 的正交谱分解中，将正特征值 \(\lambda\) 替换为 \(1/\lambda\)、零特征值仍取零，定义 \(\operatorname{pinv}(C)\)。它自伴且非负。置
+\[
+\beta=\operatorname{pinv}(C)g,\qquad C\beta=g,\qquad \beta\perp\ker C.
+\]
+\(\operatorname{adj}(V)(u-V\beta)=g-C\beta=0\)，故 \(u-V\beta\perp M\)，从投影唯一性得 \(V\beta=p\)。因此
+\[
+\boxed{d=a-\operatorname{inner}(g,\operatorname{pinv}(C)g),\qquad
+\operatorname*{argmin}_{b\in\mathbb C^N}\|u-Vb\|^2=\beta+\ker C.}
+\]
+这里 \(\operatorname{inner}(g,\beta)=\operatorname{inner}(\beta,C\beta)=\|p\|^2\) 为非负实数，故公式的减项及其方向明确。又 \(\|\beta+z\|^2=\|\beta\|^2+\|z\|^2\) 对 \(z\in\ker C\) 成立，\(\beta\) 是唯一最小系数范数解。只有 \(C\) 可逆时才可把 \(\operatorname{pinv}(C)\) 写成通常逆；线性相关时没有这种许可。
+

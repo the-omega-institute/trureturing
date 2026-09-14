@@ -1,0 +1,39 @@
+**定义 146（全数值 CSA 档案的 Zeckendorf 编码算子）。** 对有限情境
+\[
+C=(E,\prec,t,x,\sigma,\rho,\Omega),
+\]
+其中 \(t:E\to\mathbb Z\)、\(x:E\to\mathbb Z^3\)，定义
+\[
+\operatorname{Code}_Z(C)
+ =\bigl(E,\prec,\iota_Z\!\circ t,\iota_Z^{(3)}\!\circ x,
+          \sigma,\rho,\Omega\bigr).
+\tag{Z-CODE}
+\]
+\(\operatorname{Code}_Z(C)\) 的事件集、偏序、选择集、符号标签和来源树与 \(C\) 相同；其时间和空间字段分别取定义 142 的带符号整数码与三维逐坐标码。对属于该像的编码档案 \(C_Z\)，定义
+\[
+\operatorname{Dec}_Z(C_Z)
+ =\bigl(E,\prec,\iota_Z^{-1}\!\circ t_Z,
+  (\iota_Z^{(3)})^{-1}\!\circ x_Z,\sigma,\rho,\Omega\bigr).
+\]
+对情境表示 \(X=(C,A)\) 置
+\[
+\operatorname{Code}_Z(X)=\bigl(\operatorname{Code}_Z(C),A\bigr),
+\qquad
+\operatorname{Dec}_Z(X_Z)=\bigl(\operatorname{Dec}_Z(C_Z),A\bigr).
+\]
+并置
+\[
+q_Z(X_Z)=\operatorname{scode}(q(\operatorname{Dec}_Z(X_Z))),
+\qquad
+u_Z(X_Z)=\operatorname{scode}(u(\operatorname{Dec}_Z(X_Z))).
+\]
+若 \(\mathscr E\) 是由有限个 CSA 原语组成的表达式，则其 Zeckendorf 共轭 \(\mathscr E_Z\) 递归地把整数严格序、整数加法、三维逐坐标加法、最大值、后继和有符号电荷加法分别替换为
+\[
+<_Z^{\mathbb Z},\qquad \boxplus_Z^{\mathbb Z},qquad
+\boxplus_Z^{(3)},\qquad
+\max_{<_Z^{\mathbb Z}},\qquad
+\operatorname{succ}_{\mathbb Z,Z},\qquad
+\boxplus_Z^{\mathbb Z},
+\]
+符号乘法、集合运算、事件身份和来源配对按原定义保留。
+

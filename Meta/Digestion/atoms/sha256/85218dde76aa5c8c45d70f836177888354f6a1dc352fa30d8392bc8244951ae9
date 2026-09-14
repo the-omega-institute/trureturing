@@ -1,0 +1,29 @@
+- 1536 complete vertex-elimination products.
+
+Five negative controls detect omission of the fourth root direction, assuming
+target nonvanishing from proper-domain nonvanishing alone, dropping the absent
+child's denominator guard, failing to delete the current root, and discarding
+the ordered sibling context. These finite tests supplement logical proof review;
+they do not prove any universal result or validate a Lean proof term.
+
+```sh
+python research/hard_core_weitz/verify_finite_grid_zero_free.py
+```
+
+The existing holomorphic and 881-type affine proof scripts are dependencies,
+not re-executed verdicts in this replay. Lean/lake is unavailable in the authoring
+runtime, so the new and inherited proof scripts still lack an executed
+elaboration, kernel/axiom report and Scribe emission in this session. This is an
+end-to-end candidate formalization with exact finite regressions, not an
+end-to-end kernel-verified theorem or independent-author review.
+
+The public literature versions were rechecked: [1] remains arXiv:2604.02746v1
+of 3 April 2026, and [5] remains arXiv:1909.04244v3 with its 2021 journal reference.
+Real-to-complex contraction and the finite-graph deletion argument are prior
+art. The current work instantiates them through a concrete typed certificate
+and now supplies its missing all-domain consumer. The endpoint 2.55 is the
+specific proposed extension under investigation; no priority claim, optimal
+critical threshold, RH consequence, or solution of the full square-lattice
+phase-transition problem is asserted.
+
+

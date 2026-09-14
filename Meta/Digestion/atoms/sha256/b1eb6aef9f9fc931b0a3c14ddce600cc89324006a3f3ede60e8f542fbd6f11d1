@@ -1,0 +1,19 @@
+**定义 412.1。** 取原《情境时空算术》定义 1–3 的完整配置
+$$
+C=(E,\prec,t,x,\sigma,\rho,\Omega),\qquad X=(C,A).
+$$
+$E\subset HF$ 有限，$\prec\subseteq E\times E$ 是严格偏序，$t,x,\sigma,\rho$ 是全部档案 $E$ 上的总属性函数，$\Omega\subseteq E$，$A\subseteq\Omega$。原时间、位置、符号使用其有限整数表示
+$$
+J_{\rm CSA}=(\{0\}\times\omega)\cup(\{1\}\times(\omega\setminus\{0\})).
+$$
+记到普通整数的双射为
+$$
+v_{\rm CSA}(0,n)=n,\qquad v_{\rm CSA}(1,n)=-n\quad(n>0).
+$$
+原整数序及算术沿此双射运输，$t:E\to J_{\rm CSA}$，$x:E\to J_{\rm CSA}^3$，$\sigma$ 取其中的正负一，$\rho$ 取原有限来源树。按原空间维数约定，对任意预先固定的有限 $d\ge1$，也可取 $x:E\to J_{\rm CSA}^d$；下述结论对每个这样的 $d$ 成立。因果条件仍为 $e\prec f\Rightarrow t(e)<t(f)$。原标量读数和可选的普通整数读数分别为
+$$
+q_{\rm CSA}(X)=\sum_{e\in A}^{J_{\rm CSA}}\sigma(e),\qquad
+q_{\rm ord}(X)=v_{\rm CSA}(q_{\rm CSA}(X)).
+$$
+平衡条件是当前整体 $\Omega$ 上的同一和为原整数零。
+

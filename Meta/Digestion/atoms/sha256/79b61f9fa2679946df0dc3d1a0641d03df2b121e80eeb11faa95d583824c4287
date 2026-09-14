@@ -1,0 +1,64 @@
+**定理 370.8。** 第 332 条的有限字段双射仍有且仅有下列精确域：
+$$
+\operatorname{qenc}:\mathbb Q\leftrightarrow\mathsf{RatFld}:\operatorname{qdec},\qquad
+\operatorname{penc}:\mathsf D_{\rm rat}\leftrightarrow\mathsf{RatPhaseFld}:\operatorname{pdec}.
+$$
+既约 $a/b$，$b>0$，用 $T_2(\operatorname{scode}(a),\zeta(b))$；有理相位的唯一既约代表 $0\le a<b$ 用 $T_2(\zeta(a),\zeta(b))$。两者的零字段均为 $T_2(0_Z,\zeta(1))$。圆周中的有理值须先在 $j_{\rm rat}[\mathsf D_{\rm rat}]$ 上取 $j_{\rm rat}^{-1}$ 才能使用相位字段。
+
+对于 $u\in B$ 和定义 366.1 的总行 $r^{(k)}$，置
+$$
+s=\operatorname{rec}_{\rm reg}(u),\qquad
+t=\operatorname{prec}_{\rm rat}(\rho(r^{(k)})).
+$$
+则
+$$
+E_d(s,t)=E_{\rm fin}^{d}(s,t|_{\operatorname{dom}(s)})
+=\operatorname{penc}(\chi^{\rm rat}_{\rho(r^{(k)})}(u)).
+$$
+对任意独立有限样本 $a\in\mathsf{FinCoef}$，有限求值的充要域条件仍为
+$$
+\operatorname{supp}(u)\subseteq\operatorname{dom}(a)
+\iff\operatorname{dom}(s)\subseteq
+\operatorname{dom}(\operatorname{fprec}_{\rm rat}(a)).
+$$
+域外没有值；严格总化的失败值与成功零值不等。
+
+**证明。** 正分母既约式的存在由通分、变号和最大公因数约分给出；唯一性由 Bézout 整除论证给出，具体证明为第 332.2 条在同一 $\mathbb Q$ 上的证明。区间 $[0,1)\cap\mathbb Q$ 的同类代表唯一，再约分给有理相位的唯一字段。第 70、114 条的数字双逆使四个编码解码复合分别为相应恒等；零的既约式必为 $0/1$，证明零字段。$j_{\rm rat}$ 只有在自己的像上有该逆，而命题 366.3 的延拓值不在这个像中。
+
+第 333.2 条的标签双射及相位双逆给
+$$
+\operatorname{dom}(s)=\lambda_{\rm reg}[\operatorname{supp}(u)],\qquad
+\operatorname{dom}(\operatorname{fprec}_{\rm rat}(a))
+=\lambda_{\rm reg}[\operatorname{dom}(a)].
+$$
+标签单射保持并反映包含，故联合域条件等价。第 334.2 条的精确同域限制遂适用。具体地，若有限记录 $c$ 满足守卫，在 $l\in\operatorname{dom}(s)$ 处写
+$$
+c(l)=T_2(\zeta(a_l),\zeta(b_l)),\qquad
+z_l=\operatorname{ival}(s(l)),\qquad 0\le a_l<b_l,
+$$
+则仍使用原公式
+$$
+B_{s,c}=\prod_{l\in\operatorname{dom}(s)}b_l,\qquad
+A_{s,c}=\sum_{l\in\operatorname{dom}(s)}z_la_l(B_{s,c}/b_l),
+$$
+
+$$
+r_{s,c}=A_{s,c}-B_{s,c}\lfloor A_{s,c}/B_{s,c}\rfloor,
+\qquad d_{s,c}=\gcd(r_{s,c},B_{s,c}),
+$$
+
+$$
+E_{\rm fin}^{d}(s,c)
+=T_2(\zeta(r_{s,c}/d_{s,c}),\zeta(B_{s,c}/d_{s,c})).
+$$
+正分母保证 $B_{s,c}>0$，下取整保证 $0\le r_{s,c}<B_{s,c}$，约分给唯一合法相位字段；通分后相位为 $[A_{s,c}/B_{s,c}]_{\rm rat}$，减去整数再约分不改其类。对总记录 $t$，限制到 $\operatorname{dom}(s)$ 总有定义，给同一有限和，证明显示的总求值等式。额外采样边及零系数边仍保留在样本原域中，只是不参与相应的非零状态和；缺失所需系数时不以零代替缺失值。
+
+空状态与空样本满足守卫，空积为一、空和为零，故 $B_{s,c}=1,A_{s,c}=r_{s,c}=0,d_{s,c}=1$，输出成功零字段。第 259–260、334.2 条的严格总化在不交和中用 $\operatorname{ok}$ 标记成功，域外取 $\bot$，所以 $\operatorname{ok}(T_2(0_Z,\zeta(1)))\ne\bot$。
+
+本条也给定理 370.4 的精确二输入实例。总输入双射为
+$$
+T_2(u,\vartheta)\longmapsto
+T_2(\operatorname{rec}_{\rm reg}(u),\operatorname{prec}_{\rm rat}(\vartheta))
+$$
+从 $T_2[B,\Theta_{\rm rat}]$ 到 $T_2[\mathsf{Rec}_A^{\rm cap},\mathsf{ProbeRec}]$，输出双射为 $\operatorname{penc}$。有限输入则将 $\operatorname{prec}_{\rm rat}$ 换为 $\operatorname{fprec}_{\rm rat}$，并限制到刚证等价的两个联合守卫。逆分别取现有的 $\operatorname{unrec}_{\rm reg}$ 和相应探针逆，输出取 $\operatorname{pdec}$；代入得到原对象图与数字对象图的两条语义图公式，域外均不增加边。证毕。
+

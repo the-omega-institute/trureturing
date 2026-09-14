@@ -1,0 +1,7 @@
+**定理。** 在上一节的双侧边界轨迹族上，对 $J,h\in\mathbb N$、$L>0$，
+
+$$
+[\forall v,w,\ \mathrm{PastEq}_J(v,w)\Rightarrow
+\mathrm{SegmentEq}_{L,h}(v,w)]\iff L+h\le J.
+$$
+

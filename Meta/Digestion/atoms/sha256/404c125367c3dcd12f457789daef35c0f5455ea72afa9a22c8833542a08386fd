@@ -1,0 +1,13 @@
+**定理 346.1。** 若 $\mathsf{Fill}_F(A)$，则对每个 $c\in\mathbb Q_{\ge0}$，
+$$
+\overline{L^F_{A,c}}^{X_A^{\rm cap}}
+=\{x\in X_A^{\rm cap}:S_F(x)\le c\},\qquad
+\overline{L^F_{A,c}}^{B_A^{\rm cap}}
+=\{u\in B_A^{\rm cap}:\ell_F(u)\le c\}.
+$$
+闭包使用第 342 条的坐标拓扑，等价地使用相同的有界黄金拓扑。每个正有理水平非空，并在两个所列载体中都不闭。对任意 $A$ 都有
+$$
+L^F_{A,0}=T^F_{A,0}=\{0\}.
+$$
+若有限实数 $c<0$ 或 $c\notin\mathbb Q$，$L^F_{A,c}$ 及其两个闭包均为空。
+

@@ -73,12 +73,10 @@ internal static class RawLeanReportArtifact
         string? previousModule = null;
         foreach (var moduleElement in RequiredArray(root, "modules").EnumerateArray())
         {
-            RequireProperties(
-                moduleElement,
-                moduleElement.TryGetProperty("utility_refutation", out _)
-                    ? ["declarations", "imports", "module", "source_path", "source_sha256", "utility_refutation"]
-                    : ["declarations", "imports", "module", "source_path", "source_sha256"],
-                "raw Lean module");
+            var moduleProperties = new List<string> { "declarations", "imports", "module", "source_path", "source_sha256" };
+            if (moduleElement.TryGetProperty("utility_refutation", out _)) moduleProperties.Add("utility_refutation");
+            if (moduleElement.TryGetProperty("information_registration_errors", out _)) moduleProperties.Add("information_registration_errors");
+            RequireProperties(moduleElement, moduleProperties, "raw Lean module");
             var module = RequiredString(moduleElement, "module");
             RequireStrictOrder(previousModule, module, "modules");
             previousModule = module;
@@ -105,7 +103,12 @@ internal static class RawLeanReportArtifact
                 RequiredArray(moduleElement, "declarations"),
                 materialArchive);
             if (!reports.TryAdd(sourcePath, new LeanFileReport(imports, declarations)
-                { Refutation = ReadRefutation(moduleElement, source.File, snapshot) }))
+                {
+                    Refutation = ReadRefutation(moduleElement, source.File, snapshot),
+                    InformationRegistrationErrors = moduleElement.TryGetProperty("information_registration_errors", out _)
+                        ? ReadSortedStrings(RequiredArray(moduleElement, "information_registration_errors"), "information_registration_errors")
+                        : null,
+                }))
             {
                 throw new FormatException($"Raw Lean report contains duplicate path {sourcePath}.");
             }
@@ -166,6 +169,7 @@ internal static class RawLeanReportArtifact
                         imports = fileReport.Imports
                             .Distinct(StringComparer.Ordinal)
                             .Order(StringComparer.Ordinal),
+                        information_registration_errors = fileReport.InformationRegistrationErrors,
                         module = item.Key,
                         source_path = item.Value.Path.Value,
                         source_sha256 = Sha256(item.Value.File.RawBytes.AsSpan()),

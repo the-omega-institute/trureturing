@@ -45,7 +45,25 @@ structure UnreachableDisposition (key : StatementKey) where
   reason : UnreachableReason
   evidence : Name
 
+inductive TrivialCatalogContext where
+  | finite (nondegeneracyCertificate stateEnumerationCertificate : Name)
+  | structural
+  deriving DecidableEq, Repr
+
+structure TrivialInCatalogDisposition (key : StatementKey) where
+  root : Name
+  canonicalArena : Name
+  catalog : Name
+  index : Nat
+  registration : Name
+  realization : Name
+  catalogSeal : Name
+  trivialityCertificate : Name
+  context : TrivialCatalogContext
+  deriving DecidableEq, Repr
+
 inductive AnalysisDisposition (key : StatementKey) where
+  | trivialInCatalog (value : TrivialInCatalogDisposition key)
   | finiteOccurrence (value : FiniteOccurrenceDisposition key)
   | structuralOccurrence (value : StructuralOccurrenceDisposition key)
   | boundedFiniteTruncation
@@ -192,13 +210,29 @@ instance {key : StatementKey} : ToJson (AnalysisObservation key) :=
     ("candidates", Json.arr (value.candidates.map nameJson)),
     ("note", toJson value.note)]⟩
 
+instance : ToJson TrivialCatalogContext := ⟨fun
+  | .structural => Json.mkObj [("kind", toJson "structural")]
+  | .finite nondegenerate enumeration => Json.mkObj [("kind", toJson "finite"),
+      ("nondegeneracy_certificate", nameJson nondegenerate),
+      ("state_enumeration_certificate", nameJson enumeration)]⟩
+
+instance {key : StatementKey} : ToJson (TrivialInCatalogDisposition key) :=
+  ⟨fun value => Json.mkObj [
+    ("root", nameJson value.root), ("canonical_arena", nameJson value.canonicalArena),
+    ("catalog", nameJson value.catalog), ("index", toJson value.index),
+    ("registration", nameJson value.registration), ("realization", nameJson value.realization),
+    ("catalog_seal", nameJson value.catalogSeal),
+    ("triviality_certificate", nameJson value.trivialityCertificate), ("context", toJson value.context)]⟩
+
 def AnalysisDisposition.className {key : StatementKey} : AnalysisDisposition key → String
+  | .trivialInCatalog _ => "trivial_in_catalog"
   | .finiteOccurrence _ => "finite_occurrence"
   | .structuralOccurrence _ => "structural_occurrence"
   | .boundedFiniteTruncation _ => "bounded_finite_truncation"
   | .unreachable _ => "unreachable"
 
 def AnalysisDisposition.payloadJson {key : StatementKey} : AnalysisDisposition key → Json
+  | .trivialInCatalog value => toJson value
   | .finiteOccurrence value => toJson value
   | .structuralOccurrence value => toJson value
   | .boundedFiniteTruncation value => toJson value

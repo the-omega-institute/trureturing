@@ -1,0 +1,29 @@
+**30.47 定义与证明：有限自然数编码。** 令 \(\mathbb N_0=\{0,1,\ldots\}\)。定义
+\[
+\operatorname{Pair}(a,b)=2^a(2b+1)-1\quad(a,b\in\mathbb N_0).
+\]
+对任意 \(n\ge0\)，将正整数 \(n+1\) 反复除以 2，直到商为奇数，唯一得到 \(n+1=2^a(2b+1)\)。每次除法使正整数严格减小，故解码终止；奇偶性及唯一的 2 因子次数证明双射。整数符号编码为
+\[
+\operatorname{SignCode}(p)=\begin{cases}2p,&p\ge0,\\-2p-1,&p<0.\end{cases}
+\]
+偶数 \(s\) 解为 \(s/2\)，奇数解为 \(-(s+1)/2\)，因此正、零、负整数都唯一覆盖。对 \(p\in\mathbb Z,d\ge1\)，令
+\[
+\operatorname{RatCode}(p,d)=\operatorname{Pair}(\operatorname{SignCode}(p),d-1).
+\]
+它编码有理数表示 \(p/d\)，无需约分；不同表示可有相同有理值，每个自然数都解出合法的正分母有理表示。有限自然数列表递归编码为
+\[
+\operatorname{ListCode}([])=0,\qquad
+\operatorname{ListCode}([a]\mathbin{+\!+}L)
+=1+\operatorname{Pair}(a,\operatorname{ListCode}(L))
+=2^a(2\operatorname{ListCode}(L)+1).
+\]
+非零列表码 \(n\) 用 \(\operatorname{Pair}\) 的逆解 \(n-1\)，得到头码及尾码 \(t\)；因 \(n=2^a(2t+1)>t\)，递归尾解码严格下降并在零终止。这证明唯一解码及每个有限列表的可编码性。
+
+若 \(q_k=p_k/d_k\)，证书的单个自然数为
+\[
+e=\operatorname{Pair}\bigl(N-1,\operatorname{Pair}(J-2,
+\operatorname{Pair}(K-1,\operatorname{ListCode}([
+\operatorname{RatCode}(p_1,d_1),\ldots,\operatorname{RatCode}(p_N,d_N)])))\bigr).
+\]
+连续三次逆配对得到 \(N-1,J-2,K-1\) 及列表码，再作列表及有理解码。因此整数域自动满足 \(N\ge1,J\ge2,K\ge1\)；解出的列表长度是否为 \(N\) 则另行检查。这里是有限编码定理，不是无穷序列或实数的编码假设。
+

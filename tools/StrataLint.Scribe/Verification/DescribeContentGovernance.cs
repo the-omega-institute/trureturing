@@ -193,7 +193,7 @@ internal static class DescribeContentGovernance
                 findings.Add(new DescribeRedFinding(
                     "incomplete-library-locator",
                     note.RelativePath,
-                    $"referenced Library note {bibkey} must bind its DOI or URL and retain its "
+                    $"referenced Library note {bibkey} must bind each declared DOI and URL and retain its "
                         + "canonical verified locator scope"));
             }
         }

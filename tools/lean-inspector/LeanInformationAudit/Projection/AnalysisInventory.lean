@@ -75,6 +75,7 @@ component={key} expected=array actual=invalid"
   for row in ← rows artifact "kernel_address_coincidence_classes" do
     keys "coincidence-class" #["primitive_kernel_address", "occurrences", "serializer",
       "diagnostic_only"] row
+  let mut systemPositive := true
   for catalog in ← rows artifact "catalogs" do
     keys "catalog" #["catalog_id", "catalog_kind", "object_arena", "proof_method", "state_card",
       "off_diagonal_pair_count", "full_escape_count", "full_escape_rate", "catalog_verdict",
@@ -82,6 +83,12 @@ component={key} expected=array actual=invalid"
       "pairwise_capture_overlap", "kernel_refinement", "kernel_equivalence_classes",
       "catalog_unique_capture_by_role_signature", "capture_multiplicity_spectrum",
       "layer_chains", "kernel_projection", "theorems"] catalog
+    let verdict ← catalog.getObjValAs? String "catalog_verdict"
+    unless ["irredundant", "redundant"].contains verdict do throw "catalog_verdict"
+    let verdictName ← catalog.getObjValAs? String "verdict_certificate"
+    unless verdictName.endsWith (if verdict == "irredundant" then "__catalog_irredundant"
+        else "__catalog_redundant") do throw "verdict_certificate"
+    let mut allPositive := true
     rate catalog "full_escape_rate"
     overlap catalog "pairwise_capture_overlap"
     refinement catalog "kernel_refinement"
@@ -94,7 +101,15 @@ component={key} expected=array actual=invalid"
         "unique_capture_count", "unique_capture_by_role_signature", "gain_rate", "lowers_escape",
         "certificate"] row
       keys "catalog_membership" #["root_id", "catalog_id"] (← field row "catalog_membership")
+      let positive : Bool := (← row.getObjValAs? Nat "unique_capture_count") > 0
+      unless (← row.getObjValAs? Bool "lowers_escape") == positive do throw "lowers_escape"
+      let certificate ← row.getObjValAs? String "certificate"
+      unless certificate.endsWith (if positive then "__lowers_escape" else "__trivial_in_catalog") do
+        throw "occurrence_certificate"
+      allPositive := allPositive && positive
       rate row "gain_rate"
+    unless allPositive == (verdict == "irredundant") do throw "catalog_verdict"
+    systemPositive := systemPositive && allPositive
     for chain in ← rows catalog "layer_chains" do
       keys "layer-chain" #["chain_id", "kernels", "inclusion_certificates", "layers", "unresolved",
         "partition_certificate"] chain
@@ -130,6 +145,8 @@ component={key} expected=array actual=invalid"
     for row in ← rows projection "certified_chains" do
       keys "certified-schedule" #["chain_id", "nodes", "generators", "step_classes", "increments",
         "step_certificates", "terminal_escape_count", "partition_certificate"] row
+  unless (← artifact.getObjValAs? Bool "system_catalog_irredundant") == systemPositive do
+    throw "system_catalog_irredundant"
 
 /-- CIRPT-41's closed containers, checked on the final JSON value before emission.
 Role signatures and certificate labels are maps; their contents are bound separately. -/

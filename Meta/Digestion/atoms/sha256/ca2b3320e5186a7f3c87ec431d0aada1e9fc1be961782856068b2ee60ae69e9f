@@ -1,0 +1,27 @@
+**定理 103（区间总数、容量最坏值与完整窗口）。** 对 \(0\le u\le v\)，
+\[
+\sum_{n=u}^{v-1}h_Z(n)=2(v-u)+w_Z(u)-w_Z(v),\qquad
+\sum_{n=u}^{v-1}r_Z(n)=(v-u)+w_Z(u)-w_Z(v).
+\tag{Z-INTERVAL}
+\]
+特别地，从零递增到容量 \(A\) 的总数分别为 \(2A-w_Z(A)\)、\(A-w_Z(A)\)。\(A\ge1\) 时，
+\[
+\max_{0\le n<A}h_Z(n)=\lfloor\ell_Z(A)/2\rfloor+1,\qquad
+\max_{0\le n<A}r_Z(n)=\lfloor\ell_Z(A)/2\rfloor;
+\]
+\(A=0\) 时二者取零。对完整 \(L\) 位窗口的终点 \(A=G_L-1\)，置总翻转数 \(T_L\)，则
+\[
+T_L=2G_L-\lceil L/2\rceil-2,\quad T_0=0,\quad T_1=1,\qquad
+T_L=T_{L-1}+T_{L-2}+\lfloor L/2\rfloor+1\quad(L\ge2).
+\tag{Z-WINDOW-COST}
+\]
+\(L\ge1\) 时窗口内最坏翻转为 \(\lfloor L/2\rfloor+1\)，最坏重写少一；当 \(L\to\infty\)，均匀窗口后继的平均翻转趋于二，平均最短重写趋于一。
+
+**证明。** (Z-SUCC) 相加，权重项望远镜消去，得到区间式。对 \(k\ge1\)，含 \(k\) 个低位交替占据的最小原数为偶位段
+\[
+1+G_2+\cdots+G_{2k-2}=G_{2k-1}-1.
+\]
+等式以 Fibonacci 递推归纳；奇位段 \(G_1+G_3+\cdots+G_{2k-1}=G_{2k}-1\) 更大，其它高位只会增加值。因此在 \(0\le n<A\) 内有 \(k\) 步折叠，当且仅当 \(A\ge G_{2k-1}\)。由 \(G_{\ell-1}\le A<G_\ell\) 得最大 \(k=\lfloor\ell/2\rfloor\)，\(\ell=\ell_Z(A)\)；\(k=0\) 由后继 \(0\to1\) 达到。
+
+\(G_L-1\) 的规范表示为从最高位 \(L-1\) 开始每隔一位取一，归纳求和给 \(w_Z(G_L-1)=\lceil L/2\rceil\)。代入初始区间式得到 \(T_L\)。将 \(G_L=G_{L-1}+G_{L-2}\) 及奇偶两种取整代入，直接得到所写递推和两个初值。窗口有 \(G_L-1\) 条后继边，\(G_L\) 指数增长而 \(\lceil L/2\rceil=O(L)\)，故 \(T_L/(G_L-1)\to2\)，重写总数比它少 \(G_L-1\)，平均遂趋于一。证毕。
+

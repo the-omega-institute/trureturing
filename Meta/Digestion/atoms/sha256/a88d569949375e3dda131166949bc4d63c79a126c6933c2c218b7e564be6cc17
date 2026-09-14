@@ -1,0 +1,68 @@
+## 35. Actual occupation double counting and the Euler moment hierarchy
+
+This continuation starts at `155387b141f83fa5db47966f5906643be5d4830f` and
+reads dev at `389f79227a4640dcbcb83ad1bc5a12a5160aaa68`. The new generic
+configuration and Gibbs modules depend only on the existing actual independent
+sets and standard Mathlib calculus/probability. The later square-grid consumer
+also uses the preceding normalized-log and zero-free chain. No coefficient,
+geometric transition, activity width, or existing partition definition changes.
+
+For a finite domain V of any simple graph, define unnormalized occupation moments
+on the existing configuration family by
+
+\[
+ M_k(V;z)=\sum_{S\in\mathcal I_G(V)}|S|^k z^{|S|},\qquad M_0(V;z)=Z_G(V;z).
+\]
+
+The new source proves the exact configuration equality
+
+\[
+ \mathcal I_G(V\setminus\{v\})
+ =\{S\in\mathcal I_G(V):v\notin S\}.
+\]
+
+Consequently the total weight of configurations containing v is the partition
+on V minus the partition on V without v. The corresponding addition identity
+holds in every commutative semiring, with no subtraction or nonzero premise.
+Counting each configuration once for each of its occupied vertices then gives,
+for arbitrary vertex weights in a commutative ring,
+
+\[
+ \sum_{S\in\mathcal I_G(V)}|S|\prod_{u\in S}w_u
+ =\sum_{v\in V}\left(Z_G(V;w)-Z_G(V\setminus\{v\};w)\right).
+\tag{35.1}
+\]
+
+This preserves all correlations between vertex indicators. No independence of
+neighbors, graph-size hypothesis, or probability interpretation is used.
+
+Termwise differentiation gives the source-level all-order identity
+
+\[
+ \boxed{zM_k'(V;z)=M_{k+1}(V;z)\quad(k\ge0).}
+\tag{35.2}
+\]
+
+For the empty configuration, the derivative term has coefficient zero. Every
+other term satisfies z*z^(n-1)=z^n. This explicit split preserves the endpoint
+z=0 and does not divide by z. Combining k=0 with (35.1) completes the target
+
+\[
+ \boxed{zZ'_G(V;z)=\sum_{v\in V}
+ \left(Z_G(V;z)-Z_G(V\setminus\{v\};z)\right).}
+\tag{35.3}
+\]
+
+The identity holds at partition zeros as well. Only subsequent normalization
+requires Z!=0. Wherever that condition holds, quotient differentiation and
+(35.2) give a normalized response hierarchy:
+
+\[
+ \boxed{z\frac{d}{dz}\frac{M_k}{Z}
+ =\frac{M_{k+1}}{Z}-\frac{M_k}{Z}\frac{M_1}{Z}.}
+\tag{35.4}
+\]
+
+This general lemma is the common algebraic owner of both the mean and the
+fluctuation calculation below. Real and complex specializations reuse it.
+

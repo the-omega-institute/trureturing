@@ -1,0 +1,9 @@
+**证明。** 若 $m=2r+1$，在 $\mathbb Z/(m)$ 中令 $u=-r$，则 $2u=1$。取
+
+$$
+P=\begin{pmatrix}1&0\\-2k&2\end{pmatrix},qquad
+Q=\begin{pmatrix}1&0\\k&u\end{pmatrix}.
+$$
+
+直接乘法给出 $PQ=QP=I$ 与 $C_kP=PD_k$。反之，若 $m$ 为正偶数，则存在环同态 $\mathbb Z/(m)\to\mathbb Z/(2)$。任何可逆交织子都满足 $\det(P)\det(Q)=1$；TR.8 的行列式公式在 $\mathbb Z/(2)$ 中却使左边为 $0$，矛盾。若 $m=0$，系数环为 $\mathbb Z$，TR.4 排除可逆交织子。$m=1$ 为零环，且属于奇数情形。
+

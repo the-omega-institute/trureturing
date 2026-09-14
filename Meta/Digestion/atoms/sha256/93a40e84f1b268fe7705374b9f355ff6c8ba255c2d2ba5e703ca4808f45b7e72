@@ -1,0 +1,9 @@
+**定理 199（前缀观察商的自由时间群）。** \(\equiv_P^{\rm pf}\) 是等价关系，且并行复合与补集在商上分别诱导加法与加法逆。映射
+\[
+\Theta_P^{\rm pf}:\mathcal H_P\longrightarrow\mathsf J_P,
+\qquad
+\Theta_P^{\rm pf}([X]_{\equiv_P^{\rm pf}})=\delta_X
+\tag{Z-PREFIX-THETA}
+\]
+是交换群同构。
+

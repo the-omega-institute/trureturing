@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:74a7846869a987bb3a564d6a70916cbf04f179b7520d7418d502d575db223ead
+  normalized_sha256: sha256:74a7846869a987bb3a564d6a70916cbf04f179b7520d7418d502d575db223ead
+cas_ref: sha256:74a7846869a987bb3a564d6a70916cbf04f179b7520d7418d502d575db223ead
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Note 3.4.20 corrects only the repository research-tier classification and authorization provenance of the listed candidate lanes. It asserts nothing about mathematical truth, so no Lean declaration can carry it; the mathematical obligations stay with candidate theorems 2.2.1-2.2.2, 3.4.13, and 3.4.16-3.4.17.
+    previous_atom_id: 0ce1aac6b31bba50f06aa7f41d0ab09d8b0a1af10e0b0318c27f511752dc49c1
+    next_atom_id: 9ce969cc5b187ab7664121f00a5e7e1f71046ae7bb01503d8165afe431f0c040

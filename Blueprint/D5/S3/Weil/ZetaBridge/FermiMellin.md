@@ -4,19 +4,19 @@
 
 The Fermi Mellin integral on the positive half-plane and the Salem RH criterion.
 
+Statement provenance is assessed separately below. The modified dbsanfte/RiemannGaussian proof slice, copyright, license, and exact implementation scope are acknowledged in `D5/L/Weil/sanftenberg2026fermi`.
+
 **Theorem 1.1 (Positive-scale integrability).**
 
 $$\forall x \in \mathbb{R},\; 0 < x \Rightarrow \left(\forall s \in \mathbb{C},\; 0 < \operatorname{Re}\left(s\right) \Rightarrow \operatorname{IntegrableOn}\left(t\mapsto\frac{t^{s-1}}{\operatorname{exp}\left(x\,t\right)+1}, \operatorname{Ioi}\left(0\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/ZetaBridge/FermiMellin.fermi_mellin_integrable` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* David Sanftenberg (2026). *Fermi Mellin proof slice from RiemannGaussian*. URL: <https://github.com/dbsanfte/RiemannGaussian/tree/e00f5c558703e7fda181988142e143bb27c1d2c7>.
+*Citation.* B. J. González and E. R. Negrín (2026). *A new equivalence to the Riemann Hypothesis by means of the Salem integral equation*. URL: <https://arxiv.org/abs/2604.15396v1>.
 
 *Commentary.*
 
-The exponentially dominated finite-prefix kernel gives convergence for every positive scale and every complex exponent with positive real part.
+The exponentially dominated finite-prefix kernel gives convergence for every positive scale and every complex exponent with positive real part. This is the absolute-convergence content of the cited equation (1); the source note explains the complex integrability correspondence.
 
 **Theorem 1.2 (Value away from one).**
 
@@ -24,13 +24,11 @@ $$\forall x \in \mathbb{R},\; 0 < x \Rightarrow \left(\forall s \in \mathbb{C},\
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/ZetaBridge/FermiMellin.fermi_mellin_eq_of_ne_one` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* David Sanftenberg (2026). *Fermi Mellin proof slice from RiemannGaussian*. URL: <https://github.com/dbsanfte/RiemannGaussian/tree/e00f5c558703e7fda181988142e143bb27c1d2c7>.
+*Citation.* B. J. González and E. R. Negrín (2026). *A new equivalence to the Riemann Hypothesis by means of the Salem integral equation*. URL: <https://arxiv.org/abs/2604.15396v1>.
 
 *Commentary.*
 
-The paired finite integrals meet the public frozen natural alternating-sum limit. Positive scaling preserves the entire domain, including real part one.
+The paired finite integrals meet the public frozen natural alternating-sum limit. Positive scaling preserves the entire domain, including real part one. Equation (1) is printed with eta, not the zeta product. The source note details the classical factorization and its continuation off one; the paper's xi denotes zeta, not the repository's xiReading.
 
 **Theorem 1.3 (Removable product limit).**
 
@@ -40,11 +38,13 @@ $$\forall x \in \mathbb{R},\; 0 < x \Rightarrow \lim_{s\in\mathbb{C}, s\to1, s\n
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* B. J. González and E. R. Negrín (2026). *A new equivalence to the Riemann Hypothesis by means of the Salem integral equation*. URL: <https://arxiv.org/abs/2604.15396v1>.
+
 *Acknowledgement.* David Sanftenberg (2026). *Fermi Mellin proof slice from RiemannGaussian*. URL: <https://github.com/dbsanfte/RiemannGaussian/tree/e00f5c558703e7fda181988142e143bb27c1d2c7>.
 
 *Commentary.*
 
-The dyadic derivative quotient cancels the zeta residue. Gamma and scale are continuous at one; equality of the products is used only off one.
+The dyadic derivative quotient cancels the zeta residue. Gamma and scale are continuous at one; equality of the products is used only off one. The cited sources do not state this punctured complex limit; it is a repository derivation from the zeta residue and the dyadic derivative.
 
 **Theorem 1.4 (Actual integral at one).**
 
@@ -54,11 +54,13 @@ $$\forall x \in \mathbb{R},\; 0 < x \Rightarrow \int_{0}^{\infty} \frac{t^{1-1}}
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* B. J. González and E. R. Negrín (2026). *A new equivalence to the Riemann Hypothesis by means of the Salem integral equation*. URL: <https://arxiv.org/abs/2604.15396v1>.
+
 *Acknowledgement.* David Sanftenberg (2026). *Fermi Mellin proof slice from RiemannGaussian*. URL: <https://github.com/dbsanfte/RiemannGaussian/tree/e00f5c558703e7fda181988142e143bb27c1d2c7>.
 
 *Commentary.*
 
-Exponential decay and boundedness at zero make the actual Mellin transform continuous at one. Its value is identified by the punctured product limit.
+Exponential decay and boundedness at zero make the actual Mellin transform continuous at one. Its value is identified by the punctured product limit. No explicit log-two endpoint evaluation is supplied by the cited passages; this classification records the repository derivation, not a novelty claim.
 
 **Theorem 1.5 (Full-domain identity).**
 
@@ -68,11 +70,13 @@ $$\forall x \in \mathbb{R},\; 0 < x \Rightarrow \left(\forall s \in \mathbb{C},\
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* B. J. González and E. R. Negrín (2026). *A new equivalence to the Riemann Hypothesis by means of the Salem integral equation*. URL: <https://arxiv.org/abs/2604.15396v1>.
+
 *Acknowledgement.* David Sanftenberg (2026). *Fermi Mellin proof slice from RiemannGaussian*. URL: <https://github.com/dbsanfte/RiemannGaussian/tree/e00f5c558703e7fda181988142e143bb27c1d2c7>.
 
 *Commentary.*
 
-The endpoint branch is a proved integral value. The raw totalized Gamma-dyadic-zeta product at one is not substituted for that value.
+The endpoint branch is a proved integral value. The raw totalized Gamma-dyadic-zeta product at one is not substituted for that value. This conjunction and explicit endpoint branch are repository packaging of the classical identity with the separately proved endpoint.
 
 **Theorem 1.6 (Pointwise strip nonvanishing).**
 
@@ -80,13 +84,11 @@ $$\forall s \in \mathbb{C},\; \left(\frac{1}{2} < \operatorname{Re}\left(s\right
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/ZetaBridge/FermiMellin.fermi_mellin_nonzero_iff_zeta_nonzero` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* David Sanftenberg (2026). *Fermi Mellin proof slice from RiemannGaussian*. URL: <https://github.com/dbsanfte/RiemannGaussian/tree/e00f5c558703e7fda181988142e143bb27c1d2c7>.
+*Citation.* B. J. González and E. R. Negrín (2026). *A new equivalence to the Riemann Hypothesis by means of the Salem integral equation*. URL: <https://arxiv.org/abs/2604.15396v1>.
 
 *Commentary.*
 
-Gamma has no zero for positive real part. The dyadic factor can vanish only at real part one, outside this open strip.
+Gamma has no zero for positive real part. The dyadic factor can vanish only at real part one, outside this open strip. The cited proof states the zero equivalence on the larger open critical strip. Its positive scale factor is nonzero, so the scale-one nonvanishing form is equivalent.
 
 **Theorem 1.7 (Salem criterion iff RH).**
 
@@ -94,13 +96,11 @@ $$\left(\forall delta \in \mathbb{R},\; \frac{1}{2} < delta \Rightarrow \left(de
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/ZetaBridge/FermiMellin.salem_mellin_nonvanishing_iff_rh` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
-
-*Acknowledgement.* David Sanftenberg (2026). *Fermi Mellin proof slice from RiemannGaussian*. URL: <https://github.com/dbsanfte/RiemannGaussian/tree/e00f5c558703e7fda181988142e143bb27c1d2c7>.
+*Citation.* B. J. González and E. R. Negrín (2026). *A new equivalence to the Riemann Hypothesis by means of the Salem integral equation*. URL: <https://arxiv.org/abs/2604.15396v1>.
 
 *Commentary.*
 
-Both implications use the actual complex integral. All real imaginary coordinates are quantified. The integral criterion implies the standard Riemann hypothesis by the frozen right-half-strip reduction.
+Both implications use the actual complex integral. All real imaginary coordinates are quantified. The integral criterion implies the standard Riemann hypothesis by the frozen right-half-strip reduction. The source quantifies every delta strictly between one-half and one and every real gamma. Positive scaling makes its absence of a power solution for all positive scales equivalent to this scale-one criterion; it is not the separate bounded-measurable uniqueness theorem.
 
 ## References
 

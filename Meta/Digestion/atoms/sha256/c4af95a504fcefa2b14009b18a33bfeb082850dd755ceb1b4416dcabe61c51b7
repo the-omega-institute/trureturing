@@ -1,0 +1,38 @@
+## 定理 207.2　刷新间隔内的预测误差
+
+对 \(E\in\mathcal S\)，定义当前模型内的预测：
+
+$$
+\overline E(\tau)
+=
+e^{\tau\Pi\mathcal L\Pi}E.
+$$
+
+则：
+
+$$
+\boxed{
+\|e^{\tau\mathcal L}E-\overline E(\tau)\|_2
+\le
+|\tau|\,\ell_H(\mathcal S)\,\|E\|_2.
+}
+\tag{207.3}
+$$
+
+### 证明
+
+\(\mathcal L\) 在 Hilbert–Schmidt 内积下为反对称生成元，其指数保持范数；\(\Pi\mathcal L\Pi\) 在 \(\mathcal S\) 上同样如此。
+
+Duhamel 公式给出：
+
+$$
+e^{\tau\mathcal L}E-\overline E(\tau)
+=
+\int_0^\tau
+e^{(\tau-s)\mathcal L}
+(I-\Pi)\mathcal L\Pi
+e^{s\Pi\mathcal L\Pi}E\,ds.
+$$
+
+取范数即可。∎
+

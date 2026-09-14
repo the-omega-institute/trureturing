@@ -1,0 +1,8 @@
+以最少闭 $\varepsilon$ 球覆盖数 $N_d(\varepsilon)$ 定义上、下盒维数为
+$\log N_d(\varepsilon)/\log(1/\varepsilon)$ 在 $\varepsilon\downarrow0$ 的上、下极限，则这里二者均为
+$$
+\frac{\log\varphi}{-\log\theta}.
+\tag{477.3}
+$$
+原第 371.1 条距离 $d_K$ 满足 $\tfrac12d_{1/2}\le d_K\le d_{1/2}$，因而盒维数为 $\log\varphi/\log2$。
+

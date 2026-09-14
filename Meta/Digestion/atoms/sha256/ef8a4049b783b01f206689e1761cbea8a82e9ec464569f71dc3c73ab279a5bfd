@@ -1,0 +1,12 @@
+**定义 427.1（预测九·严格有界后继与标记观察）。** 对 $B\in\omega$，令 $N_B=\{0,\ldots,B\}$。对任意集合 $X$，记 $\operatorname{Opt}(X)=\{\bot\}\sqcup\{\operatorname{ok}(x):x\in X\}$ 为不交和，失败点和全部成功点的标签互不相同。$N_B$ 的严格后继总化为
+$$
+s_B(\operatorname{ok}(n))=
+\begin{cases}\operatorname{ok}(n+1),&n<B,\\\bot,&n=B,\end{cases}
+\qquad s_B(\bot)=\bot.
+$$
+对 $q:N_B\to A$，令 $\widehat q(\operatorname{ok}(n))=\operatorname{ok}(q(n))$，$\widehat q(\bot)=\bot$，并定义
+$$
+Q^B_{q,h}(n)=(\widehat q(s_B^t(\operatorname{ok}(n))))_{0\le t\le h}.
+$$
+首次失败时间从初始时刻零计，取第一次出现 $\bot$ 的正整数。
+

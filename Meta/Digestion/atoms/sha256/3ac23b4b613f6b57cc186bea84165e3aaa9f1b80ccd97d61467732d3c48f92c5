@@ -1,0 +1,22 @@
+**32.20 文献重叠与仓内归属。** 本层专门化的证明组合标为 repo-derived,
+不声称经典工具或这个 fixed-box 陈述具有新颖性或优先权。
+现场读取 HKUST [Lecture 14: Greedy Algorithms](https://home.cse.ust.hk/~dekai/271/notes/L14/L14.pdf)
+PDF pp.4-7,支持按 value/weight 递减、最后一项可部分取入及交换论证;
+文本提取的一些数学字体乱码保留为访问限制,本节自己给出精确价格证明。
+读取 Boyd/Vandenberghe [Convex functions](https://web.stanford.edu/class/ee364a/lectures/functions.pdf)
+PDF pp.6,16,26,27 (slides 3.4,3.14,3.24,3.25),支持范数凸性、Jensen 和受单调性控制的复合。
+严格性、插值正域、端点最大化及零半径处理由本节证明,不冒充文献已经给出本 \(G\) 的符号。
+NIST [DLMF 4.6.4](https://dlmf.nist.gov/4.6#E4) 支持上述奇次幂对数级数,
+64 项截断的具体常数由 32.18 推出。
+python-flint [arb 文档](https://python-flint.readthedocs.io/en/latest/arb.html)
+成功读取的是显示为 0.9.0 的 latest 页面,介绍球区间及 \(\mathrm{ctx.prec}\);
+指定 0.8.0 文档 URL 的实际请求返回 HTTP 403,不宣称读取了它。
+实际证书库钉版与版本来自程序自己的运行记录,不由 latest 文档替代。
+所有 URL 的访问时刻、字节/hash 和支持范围在报告列明,不把有限检索称为穷尽调查。
+
+仓内直接复用的是第 26 节的一般有限集/等号定理和第 18-19 节的同一比较归一化。
+ZECKENDORF_EULER_5040.md 定理 12.3 已给连续—整数差额的精确 KL 分解,
+其第 11 章已有另一个 5040 单元的 Robin 证书;本层没有重做这些计算或把 \(G\) 当作该 KL 差额。
+QUANTUM-RH.md 的“5040 还给出一个直接的维数障碍”已明确四个普通指数及可逆编码语义。
+这些重叠是既有参考输入的归属,不是本节的新发现,也不是 Lean 冻结状态声明。
+

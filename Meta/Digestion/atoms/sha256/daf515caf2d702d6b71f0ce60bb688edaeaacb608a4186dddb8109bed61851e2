@@ -1,0 +1,28 @@
+**30.13 投影位移对所有薄层的统一几何界。** 沿用 27.3 的
+\(\Pi=\operatorname{Id}-\mathbf1\mathbf1^{\mathsf T}/3\)。
+30.12 中减去共同 \(T\) 后,形状箱的均值区间为
+\([X/3+r_0/3,X/3+r_1/3]\),端点对为 \(\{\xi_i,\xi_i+h_i\}\)。
+把均值区间再减去 \(X/3\),它与零形状的区间相同,第 \(i\) 行端点则平移
+\(\xi_i-X/3=(\Pi\xi)_i\)。距离在平移下 1-Lipschitz:
+对任一点对用三角不等式并取下确界,再交换两个平移即得绝对值界。
+继而用反三角不等式,
+\[
+|\delta_i^\xi-\delta_i^0|\le|(\Pi\xi)_i|,\qquad
+|\rho_\xi-\rho_0|\le\frac{\|\Pi\xi\|_2}{\sqrt6}.
+\]
+若 \(\varepsilon>0\),仅为计算范数可将形状排列为 \((0,v,\varepsilon)\),
+\(0\le v\le\varepsilon\),并未重排步长标签。29.16 的同一恒等式给
+\[
+\|\Pi\xi\|_2^2=\frac23(\varepsilon^2-\varepsilon v+v^2)
+\le\frac23\varepsilon^2.
+\]
+差为 \(2v(\varepsilon-v)/3\),等号恰在 \(v=0\) 或 \(v=\varepsilon\)。
+令 \(u=X/3\)、\(t=\rho_\xi-\rho_0\),则
+\[
+\varepsilon/3\le u\le2\varepsilon/3,\quad |t|\le\varepsilon/3,\qquad
+\lambda_\xi-\lambda_0=u-t,\quad\eta_\xi-\eta_0=u+2t.
+\]
+所以 \(|\lambda_\xi-\lambda_0|\le\varepsilon\)、
+\(|\eta_\xi-\eta_0|\le4\varepsilon/3\)。当 \(\varepsilon=0\) 时全部相同。
+这些界完全不依赖最近端点分支是否改变或某个反射槽是否活跃。
+

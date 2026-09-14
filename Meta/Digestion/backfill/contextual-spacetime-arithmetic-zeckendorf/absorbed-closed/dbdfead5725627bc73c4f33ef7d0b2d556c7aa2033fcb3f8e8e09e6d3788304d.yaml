@@ -1,0 +1,25 @@
+fingerprints:
+  raw_sha256: sha256:dbdfead5725627bc73c4f33ef7d0b2d556c7aa2033fcb3f8e8e09e6d3788304d
+  normalized_sha256: sha256:dbdfead5725627bc73c4f33ef7d0b2d556c7aa2033fcb3f8e8e09e6d3788304d
+cas_ref: sha256:dbdfead5725627bc73c4f33ef7d0b2d556c7aa2033fcb3f8e8e09e6d3788304d
+coverage_gids:
+  - gid: D5/S1/Deficit/ZeckendorfDisplacementReading.displacement_decode_eq_beatty_floor
+    target_statement_id: sha256:a2a75eaa142e774e908b7d7fd9624f1c694238fadfa2febdb0a0178ad2919b5b
+  - gid: D5/S1/Phase/IntervalSampling.irrational_rotation_interval_sampling
+    target_statement_id: sha256:d48271f834a1c487e5cc5c8831e8a56d4a468514042fe55eeac51d008986ff2c
+  - gid: D5/S1/Words/Mechanical/FloorFractShift.floor_add_sub_floor
+    target_statement_id: sha256:7a4f8559ae3b5ca28625632937d3e0502fb7b528c492ed6eb8a6e0c0706ef317
+  - gid: D5/S1/Words/Mechanical/FloorFractShift.floor_fract_add_indicator
+    target_statement_id: sha256:30f8defc43067c3cc515938a3de159e450085aa7f1d41aec9e8ed4eca6611352
+  - gid: D5/S1/Words/Mechanical/MechanicalBalance.lowerMechanicalLetter_eq_zero_or_one
+    target_statement_id: sha256:5386c38192676a913b44b62dd445e421e0db0c92e65ac92018fa6596026b4f4f
+  - gid: D5/S1/Words/Mechanical/MechanicalBalance.lowerMechanicalWindowTrueCount_eq_floor
+    target_statement_id: sha256:a9245dd883f859b6333e5ecc9e7eb3f007d3df8e6e0ee4eb718bd242efbf8656
+  - gid: D5/S1/Words/Mechanical/MechanicalDensity.lower_mechanical_window_true_density
+    target_statement_id: sha256:c223c081c5fe6b5108c9aad4e579e5474e1f896c3528816c2cfcbde0b4fa0bca
+  - gid: D5/S1/Words/Mechanical/MechanicalDensity.lower_mechanical_window_true_discrepancy
+    target_statement_id: sha256:bfda4e102b59d3bb6f6fc3f26f522e57c9f2d568ce7af8e752eeb867246e3a37
+  - gid: D5/S1/Words/Mechanical/MechanicalPeriodicity.lower_mechanical_eventually_periodic_iff_not_irrational
+    target_statement_id: sha256:147bad97d2511e8b081c9e40f033515742248f62d29b3a77ed95e4578daff85a
+receipts:
+  unresolved_subitems: []

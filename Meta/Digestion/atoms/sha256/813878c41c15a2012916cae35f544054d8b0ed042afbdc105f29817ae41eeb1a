@@ -1,0 +1,2 @@
+**证明。** 系数已在中心区间，$\chi_\theta(\varepsilon_n)=[2^{-n-2}]\to0$。然而 $v_n=2^n\varepsilon_n\in B$，每个固定坐标最终为零，故 $v_n\to0$，而 $\chi_\theta(v_n)=[1/4]$ 恒定。质量为 $\sum_n1/4=+\infty$，定理 363.3 给全部断言。证毕。
+

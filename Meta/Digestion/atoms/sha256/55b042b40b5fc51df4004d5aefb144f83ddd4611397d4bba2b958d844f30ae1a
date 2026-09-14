@@ -1,0 +1,12 @@
+**定理 423.2（预测五·复杂度与最短字典）。** 对所有 $n\ge0$，
+$$
+|\mathcal L_n|=n+1,\qquad B_n[z[\omega]]=\mathcal L_n.
+$$
+对每个 $L\ge1$，存在唯一双射
+$$
+D_L:X_L\longrightarrow\mathcal L_{G_L-1},\qquad
+B_{G_L-1}=D_L\circ P_L,\qquad
+D_L(p)=B_{G_L-1}(z(V_L(p))).
+$$
+从时刻零开始少于 $G_L-1$ 个首位观察不能恢复 $P_L$，在 $K$ 及全部自然输入上均如此。对 $n\ge1$，每个 $B_n(x)$ 都有自然见证 $V_n(P_nx)<G_n$，故也有最小自然见证；空字的见证为零。$\iota$ 是连续单射，并是 $K$ 到其紧像的同胚。空窗口 $X_0$ 由空字恢复。
+

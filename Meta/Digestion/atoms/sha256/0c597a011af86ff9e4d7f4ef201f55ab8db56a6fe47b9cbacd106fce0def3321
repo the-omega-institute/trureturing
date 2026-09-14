@@ -1,0 +1,27 @@
+**定理 229（加权时间商到终端商的自然分裂）。** 并行与补集在 $\mathcal H_P^G$ 上分别诱导加法与加法逆，且
+$$
+\Theta_P^{G,\rm pf}:\mathcal H_P^G\xrightarrow{\ \cong\ }\mathsf J_P,
+\qquad [X]\longmapsto\delta_X^G
+$$
+是群同构。自然映射
+$$
+\pi_P^G:\mathcal H_P^G\longrightarrow\mathcal C_P^{\rm tb}/\equiv_P,
+\qquad [X]_{\equiv_P^{G,\rm pf}}\longmapsto[X]_{\equiv_P}
+$$
+是满射群同态，并满足
+$$
+\Theta_P\circ\pi_P^G=\Sigma_P\circ\Theta_P^{G,\rm pf}.
+$$
+令 $\mathsf K_P,\iota_P$ 仍如定义 200，则有分裂短正合列
+$$
+0\longrightarrow\mathsf K_P
+\xrightarrow{\ k\mapsto(\Theta_P^{G,\rm pf})^{-1}(k)\ }
+\mathcal H_P^G\xrightarrow{\ \pi_P^G\ }
+\mathcal C_P^{\rm tb}/\equiv_P\longrightarrow0,
+$$
+其截面为
+$$
+(\Theta_P^{G,\rm pf})^{-1}\circ\iota_P\circ\Theta_P.
+$$
+特别地 $\ker\pi_P^G\cong\mathsf K_P$，且 $\mathcal H_P^G\cong\mathsf K_P\oplus\mathbb Z^P$。
+

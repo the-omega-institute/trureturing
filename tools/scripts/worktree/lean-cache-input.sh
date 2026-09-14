@@ -314,6 +314,19 @@ append_manifest_entry() {
   printf '%s\0%s\0' "$relative" "$path" >> "${manifest}.requests"
 }
 
+# The report inspector is a Lean program too. Keep its source closure owned by
+# this compiled-cache helper. Report compatibility deliberately excludes these
+# supporting sources and is owned by Meta/lean-report.toml.
+lean_inspector_source_paths() {
+  local path
+  [[ -d "$REPOSITORY/tools/lean-inspector" ]] || return 0
+  find "$REPOSITORY/tools/lean-inspector" -type f -name '*.lean' -print \
+    | while IFS= read -r path; do
+        printf '%s\n' "${path#"$REPOSITORY/"}"
+      done \
+    | sort
+}
+
 # Dependency preimage uses the same manifest form, with only the pinned inputs.
 lean_dependency_sha256() {
   local manifest="$TMP_ROOT/dependency.manifest"
@@ -330,8 +343,7 @@ lean_cache_address() {
   local sources_manifest="$TMP_ROOT/sources.manifest"
   local sources_list="$TMP_ROOT/sources.list"
   local inspector_sources_list="$TMP_ROOT/inspector-sources.list"
-  local config_manifest="$TMP_ROOT/config.manifest"
-  local sources_sha256 config_sha256 lakefile_count=0 lakefile
+  local sources_sha256 config_sha256
 
   : > "$sources_manifest"
   : > "${sources_manifest}.requests"
@@ -343,8 +355,7 @@ lean_cache_address() {
     append_manifest_entry "$sources_manifest" "${path#"$REPOSITORY/"}" || return 2
   done < "$sources_list"
   if [[ -d "$REPOSITORY/tools/lean-inspector" ]]; then
-    find "$REPOSITORY/tools/lean-inspector" -type f -name '*.lean' -print \
-      | sort > "$inspector_sources_list" || return 2
+    lean_inspector_source_paths > "$inspector_sources_list" || return 2
     while IFS= read -r path; do
       append_manifest_entry "$sources_manifest" "${path#"$REPOSITORY/"}" || return 2
     done < "$inspector_sources_list"
@@ -352,6 +363,15 @@ lean_cache_address() {
   materialize_manifest "$sources_manifest" || return 2
   sources_sha256="$(hash_file "$sources_manifest")" || return 2
 
+  config_sha256="$(lean_config_sha256)" || return 2
+
+  printf '%s %s\n' "$sources_sha256" "$config_sha256"
+}
+
+# Shared unchanged Lean toolchain/lake configuration preimage.
+lean_config_sha256() {
+  local config_manifest="$TMP_ROOT/config.manifest"
+  local lakefile_count=0 lakefile
   : > "$config_manifest"
   : > "${config_manifest}.requests"
   append_manifest_entry "$config_manifest" "lean-toolchain" || return 2
@@ -365,9 +385,7 @@ lean_cache_address() {
   [[ "$lakefile_count" -gt 0 ]] \
     || { echo "lean-cache-input: repository has no lakefile" >&2; return 2; }
   materialize_manifest "$config_manifest" || return 2
-  config_sha256="$(hash_file "$config_manifest")" || return 2
-
-  printf '%s %s\n' "$sources_sha256" "$config_sha256"
+  hash_file "$config_manifest"
 }
 
 if [[ "${BASH_SOURCE[0]}" == "$0" ]]; then

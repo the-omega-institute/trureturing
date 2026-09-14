@@ -108,6 +108,9 @@ internal sealed partial class ProductionCliEnvironment
         CoverBatchCommand.Run(repositoryRoot, repository, leanReportSource,
             scribeEmissionVerifier, timeProvider.GetUtcNow(), arguments);
 
+    public CommandResult SettleBatch(IReadOnlyList<string> arguments) =>
+        SettleAtomCommand.RunBatch(repositoryRoot, repository, arguments);
+
     public CommandResult SettleAtom(IReadOnlyList<string> arguments) =>
         SettleAtomCommand.Run(repositoryRoot, repository, arguments);
 

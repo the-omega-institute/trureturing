@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:92df318cf750c0b2631c4e3e02f9fbb2c37c451e02b00d8c90833a2ef9d42bd9
+  normalized_sha256: sha256:92df318cf750c0b2631c4e3e02f9fbb2c37c451e02b00d8c90833a2ef9d42bd9
+cas_ref: sha256:92df318cf750c0b2631c4e3e02f9fbb2c37c451e02b00d8c90833a2ef9d42bd9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This atom is the section heading line of section 22, the two-coordinate global dominance and equality classification on a positive real two-point grid. Its entire content is that title. A heading names the section that follows; it asserts nothing and has no truth value, so there is no proposition for a frozen declaration to cover. The mathematics the heading announces is carried by the sibling atom holding the theorem statement, which is covered separately.
+    previous_atom_id: 2150768d0d1eaac4230a93b181ac0fca48a4c5124d10b92a448f54995b36626d
+    next_atom_id: 89683ac2bda35da807eb9c7931312dd6c954821797e95cd2629ab4519f45ecb2

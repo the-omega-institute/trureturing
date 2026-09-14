@@ -1,0 +1,21 @@
+**定理 284（无限极限秩层的像与限制结构同构）。** 对每个无限极限集合序数 $\lambda$，有
+$$
+\operatorname{Enc}[V_\lambda]=\mathfrak V_Z\cap V_\lambda.
+$$
+对 $A=H_\kappa$ 或 $A=V_\lambda$，其中 $\kappa$ 为任意无限基数、$\lambda$ 为任意无限极限集合序数，限制映射给出集合结构的同构
+$$
+\operatorname{Enc}|_A:
+(A,\in\cap A^2)\cong
+\bigl(\mathfrak V_Z\cap A,
+\in_Z\cap(\mathfrak V_Z\cap A)^2\bigr),
+$$
+逆为 $\operatorname{Dec}|_{\mathfrak V_Z\cap A}$。记这两个限制结构分别为 $\mathfrak A,\mathfrak A_Z$，则对每个一阶集合论公式 $\varphi(x_1,\ldots,x_r)$ 和任意 $a_1,\ldots,a_r\in A$，
+$$
+\mathfrak A\models\varphi(a_1,\ldots,a_r)
+\iff
+\mathfrak A_Z\models\varphi(\operatorname{Enc}(a_1),\ldots,\operatorname{Enc}(a_r)).
+$$
+右侧的成员符号解释为限制后的 $\in_Z$，两侧量词分别只在自己的载体内取值。
+
+上述秩层像等式不能推广到全部后继层：$\omega\in V_{\omega+1}$，但 $\operatorname{Enc}(\omega)\notin V_{\omega+1}$。这些参数条件也不保证各限制结构满足 ZFC；具体地，$H_{\aleph_0}=V_\omega=HF$ 的源、目标限制结构均不满足无穷公理。若另给源限制结构满足 ZFC 的假设，则其目标限制结构满足相同公理及分离、替代的各个模式实例。
+

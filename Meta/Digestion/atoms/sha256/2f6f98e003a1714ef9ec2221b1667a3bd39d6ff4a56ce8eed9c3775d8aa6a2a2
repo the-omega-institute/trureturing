@@ -1,0 +1,8 @@
+**证明。** 对 \(a,b\in\mathsf E_{\rm Pr}\)，有限乘积的指数律给出
+\[
+\Pi_{\rm Pr}(a\boxplus b)=\Pi_{\rm Pr}(a)\Pi_{\rm Pr}(b).
+\]
+基本算术定理给出每个正整数的有限唯一素因子分解，故 \(\Pi_{\rm Pr}\) 满射且单射，得到 (Z-UNIVERSAL-REGISTERS)。定理 70 逐坐标给出 \(\zeta\) 与 \(\operatorname{val}\) 的互逆及逐行加法运输，故 \(\operatorname{dig}_{\rm Pr}\) 是幺半群同构。
+
+给定 \(a\)，取有限支撑 \(P=\operatorname{supp}(a)\)，令 \(A=a|_P\)；若 \(P\) 为空，取任意有限空容量对。则 \(a\) 在该盒中，故得到 (Z-BOX-COVER)。若两个盒有共同扩展，零扩展在共同坐标上恒等、在新增坐标上取零，所以嵌入复合相等；这证明并集的相容性。证毕。
+

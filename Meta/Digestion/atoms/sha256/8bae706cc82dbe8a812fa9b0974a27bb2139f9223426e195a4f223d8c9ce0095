@@ -1,0 +1,15 @@
+**31.17 闭半径 \(1/320\) 的整箱严格裕量。** 31.13-31.16 给
+\[
+e^TG_\xi< -\frac1{40}+\frac{2\varepsilon}{1-z}
+\le-\frac1{40}+4\varepsilon.
+\]
+因而
+\[
+\boxed{\max_i\xi_i\le1/320\quad\Longrightarrow\quad
+e^TG_\xi<-1/80
+\text{ 对每个有限 }T\ge\log2\text{ 和每个 }\mathscr W_{T,\xi}\text{ 薄层}.}
+\]
+\(-1/40+4/320=-1/80\),但首步严格,故闭半径边界和 \(T=\log2\) 同时取等
+也不失严格性。\(\varepsilon=0\) 保留更强的 \(-1/40\) 界。
+与原素数域取交后仍成立,其中没有 \(G=0\) 的薄层。
+

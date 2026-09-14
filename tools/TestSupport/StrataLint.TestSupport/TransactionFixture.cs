@@ -31,6 +31,7 @@ internal sealed partial class TransactionFixture : IDisposable
     internal const string DefinitionPath = "Blueprint/D5/S0/Carrier/Probe.scribe.cs";
     internal const string EmissionPath = "Blueprint/D5/S0/Carrier/Probe.md";
     internal const string LedgerPath = FrozenLedgerChangeClassifier.AcceptedRoot;
+    private const string StatePinPath = "Golden/Frozen/state/D5/S0/Carrier/Probe.lean.json";
     internal const string BackfillPath = "Meta/BACKFILL.yaml";
     private const string ScriptPath = "tools/scripts/workflow/playbook-workflows.sh";
     private readonly TemporaryDirectory temporary = new();
@@ -131,8 +132,16 @@ internal sealed partial class TransactionFixture : IDisposable
             schema_version = 5,
         });
         WriteLedger(freeze);
+        WriteFile(StatePinPath,
+            "{\"statement_id\":\"sha256:3333333333333333333333333333333333333333333333333333333333333333\"}\n");
         WriteFile(".ledger-frozen-status", "0\n");
     }
+
+    internal void RevokeStatePin() => Git("rm", StatePinPath);
+
+    internal bool StatePinExists() => TemporaryFileSystem.File.Exists(Path.Combine(Root, StatePinPath));
+
+    internal string StatePinContents() => TemporaryFileSystem.File.ReadAllText(Path.Combine(Root, StatePinPath));
 
     internal int CommitCount() => int.Parse(Git("rev-list", "--count", "HEAD").Trim());
 
@@ -369,9 +378,21 @@ internal sealed partial class TransactionFixture
             else
               event_id=3333333333333333333333333333333333333333333333333333333333333333
             fi
+            if [[ ${PLAYBOOK_USE_CANONICAL_FROZEN_QUERY:-0} == 1 ]]; then
+              for accepted in Golden/Frozen/accepted/*.json; do
+                [[ -f "$accepted" ]] || continue
+                if jq -e --arg target "$target_module" \
+                    '.payload.descriptor_selector == $target' "$accepted" >/dev/null; then
+                  rm "$accepted"
+                fi
+              done
+            fi
             printf '{"event_hash":"sha256:%s","event_type":"Freeze","payload":{"declaration_statement_ids":[],"descriptor_selector":"%s","prerequisite_frozen_node_ids":[],"statement_id":"sha256:%s"},"schema_version":5}\n' \
               "$event_id" "$target_module" "$event_id" \
               > "Golden/Frozen/accepted/${event_id}.json"
+            state_pin="Golden/Frozen/state/${target_module}.json"
+            mkdir -p "$(dirname "$state_pin")"
+            printf '{"statement_id":"sha256:%s"}\n' "$event_id" > "$state_pin"
             printf '0\n' > .ledger-frozen-status
             if [[ -f fail-ledger-once ]]; then
               rm fail-ledger-once
@@ -383,6 +404,11 @@ internal sealed partial class TransactionFixture
             exit "${PLAYBOOK_COVER_DISPOSITION_FAILURE:-0}"
             ;;
           cover-atom)
+            if [[ ${PLAYBOOK_USE_CANONICAL_FROZEN_QUERY:-0} == 1 \
+                && ! -f "Golden/Frozen/state/${PLAYBOOK_TARGET_MODULE}.json" ]]; then
+              echo "COVER_INVALID cover target module ${PLAYBOOK_TARGET_MODULE} is not frozen; run make deposit before cover" >&2
+              exit 1
+            fi
             atom=''
             gid=''
             for ((index=1; index<${#parts[@]}; index+=2)); do

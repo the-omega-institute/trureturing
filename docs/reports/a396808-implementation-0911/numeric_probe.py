@@ -1,5 +1,10 @@
+"""Explore the ternary coefficient support; optionally compare an OEIS b-file."""
+import argparse
 import json, time
 from pathlib import Path
+parser=argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--bfile', type=Path, help='Optional OEIS index/value table')
+args=parser.parse_args()
 start=time.monotonic()
 def mul(a,b,n,mod):
  c=[0]*(n+1)
@@ -39,11 +44,13 @@ sq=mul(expand,expand,N,3)
 for n in range(3,N+1):r[n]=(r[n]+2*sq[n-3])%3
 pair=[n for n in range(2,201) if any(2*n==3*(u+v) for i,u in enumerate(powers) for v in powers[i+1:])]
 power_support=[n for n in range(2,201) if n in powers]
-source_data=Path('/tmp/a396808-bfile.txt').read_text()
-bfile=[]
-for line in source_data.splitlines():
- if line and line[0]!='#':
-  words=line.split()
-  if len(words)==2 and words[0].isdigit():bfile.append(int(words[1]))
-result={'exact_prefix_18':exact,'oeis_bfile_prefix_matches':exact==bfile[:18], 'power_support_2_200':power_support,'pair_support_2_200':pair,'zero_count_2_200':sum(x==0 for x in a[2:201]),'iff_mismatches_2_200':[n for n in range(2,201) if ((a[n]==2)!=(n in power_support) or (a[n]==1)!=(n in pair))],'S_equation_mismatches_0_400':[n for n in range(N+1) if s[n] != ((1 if n==0 else 0)+(expand[n-1] if n else 0))%3], 'R_recurrence_mismatches_0_400':[n for n in range(N+1) if r[n]!=a[n]],'elapsed_seconds':time.monotonic()-start}
+bfile=None
+if args.bfile is not None:
+ bfile=[]
+ for line in args.bfile.read_text().splitlines():
+  if line and not line.startswith('#'):
+   words=line.split()
+   if len(words)==2 and words[0].isdigit():bfile.append(int(words[1]))
+result={'exact_prefix_18':exact,'power_support_2_200':power_support,'pair_support_2_200':pair,'zero_count_2_200':sum(x==0 for x in a[2:201]),'iff_mismatches_2_200':[n for n in range(2,201) if ((a[n]==2)!=(n in power_support) or (a[n]==1)!=(n in pair))],'S_equation_mismatches_0_400':[n for n in range(N+1) if s[n] != ((1 if n==0 else 0)+(expand[n-1] if n else 0))%3], 'R_recurrence_mismatches_0_400':[n for n in range(N+1) if r[n]!=a[n]],'elapsed_seconds':time.monotonic()-start}
+if bfile is not None:result['oeis_bfile_prefix_matches']=exact==bfile[:18]
 print(json.dumps(result,indent=2))

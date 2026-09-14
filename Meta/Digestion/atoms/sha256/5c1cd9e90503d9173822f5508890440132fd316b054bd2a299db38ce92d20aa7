@@ -1,0 +1,2 @@
+**证明。** 四个标量依次为 $1,2,3,6$，故显示的混合差为 $[6\phi-2\phi-3\phi+\phi]=[2\phi]$。无理性使其非零。令 $H(u)=F_{\rm scal}(u)-F_{\rm scal}(0)$；若 $H(\varepsilon_0+\varepsilon_1)=H(\varepsilon_0)+H(\varepsilon_1)$，移项即要求这个混合差为零，矛盾。另一方面 $g_{\rm add}(\varepsilon_0)=g_{\rm add}(\varepsilon_1)=[\phi]$，但标量相位在两点为 $[2\phi]$、$[3\phi]$，又由无理性不等。整个反例只在所列可容许状态上使用加法等式。证毕。
+

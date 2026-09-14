@@ -1,0 +1,32 @@
+**35.28 Classical attribution and exact source-access limits.** Unique prime
+factorization, Haar existence/uniqueness, compactness, Stone-Weierstrass,
+the character/Weyl criterion and Dirichlet pigeonholing are classical tools.
+C64 attributes Haar probability and invariance to Christopher White,
+*Ergodic Theory and Topological Groups*, Theorem 1.1. It attributes Haar
+distribution on the closure of a homomorphism's image to Tom Meyerovitch,
+*Well-distribution of polynomial maps on locally compact groups*,
+arXiv:2210.01429v2, Proposition 3.2 (PDF page 8), and the compact metrizable
+abelian character criterion to Lemma 5.3 (PDF page 11). For minimal recurrence
+and torus return sets it cites Terence Tao's *254A Lecture 3*, Lemma 1 and
+Theorem 2. The specialized restricted-group/null-boundary/half-open-cell
+combination, rounded prime-box counting and scoped \(G\) applications are
+the repo-derived paper deductions written out here, with no novelty or
+priority claim. The finite geometric series, elementary exponential series,
+floor inequalities and squeeze arguments are classical elementary steps.
+
+The complete primary reports successful retrieval of the pinned raw Markdown
+and rendered GitHub page at d79a2cd3cd3d5881dce26df9cee8266de9ae61e7,
+focused checking of 30.1-30.3, 30.16-30.19, 31.1-31.2, 31.17-31.20 and relevant
+section 34 statements; it expressly does not claim a whole-paper audit or
+independent source byte-hash verification. Its retrieval of the Meyerovitch
+PDF, screenshots of the indicated closure notation, Tao's lecture and White's
+university-hosted notes is worker-reported evidence. It is not caller-independent
+retrieval or retrieval performed by I22. C64 reports a supplementary Steif PDF
+HTTP 403 and attempted Meyerovitch HTML HTTP 404; neither unavailable text
+supports a premise. Caller EoM attempts timed out, as supplied in this brief.
+No missing URL, screenshot or hash is reconstructed. I22's fresh consultation
+is of this pinned local source and the explicitly supplied complete C64
+response; new external reference accesses are zero, since no new premise
+requires a focused lookup. These classical attributions do not independently
+certify the inherited specialized \(G\) estimates.
+

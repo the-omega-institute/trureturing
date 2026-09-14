@@ -1,0 +1,26 @@
+**33.2 Fixed data and exact height domain.** For each prime label \(p\), set
+\(h_p=\log p\), \(c_p^*=(b_p+1)h_p\), \(d_p^*=c_p^*+h_p\), and
+\(c_p(T)=c_p^*+T\), \(d_p(T)=d_p^*+T\), where \(T\) is finite and \(T\ge0\).
+Thus \(z=e^{-T}\in(0,1]\), \(\alpha_p=e^{-c_p^*}\),
+\(\beta_p=e^{-d_p^*}\), and \(A_p=\alpha_p-\beta_p\).
+
+~~~text
+prime label p     2          3          5          7
+c_p^*            log32      log27      log25      log49
+d_p^*            log64      log81      log125     log343
+alpha_p          1/32       1/27       1/25       1/49
+beta_p           1/64       1/81       1/125      1/343
+A_p              1/64       2/81       4/125      6/343
+~~~
+
+Define
+\[
+s_p(z)=\frac{\log((1-\beta_pz)/(1-\alpha_pz))}{h_p},
+\qquad w_p(z)=s_p(z)/z\quad(z>0).
+\]
+Every logarithm has positive argument, since \(0<\beta_p<\alpha_p<1\).
+For a separate continuous extension put \(s_p(0)=0\) and
+\(w_p(0)=A_p/h_p\). The point \(z=0\) is not a finite height or an actual
+translated prime-exponent box. Common translation here is a continuous family;
+no arithmetic-lattice attainability is inferred from it.
+

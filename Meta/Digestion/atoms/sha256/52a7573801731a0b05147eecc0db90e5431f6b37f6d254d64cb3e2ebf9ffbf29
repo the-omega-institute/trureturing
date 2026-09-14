@@ -1,0 +1,32 @@
+**30.73 定理及证明（a.e. 等价类上的有界复线性泛函与精确范数）。** For \(n\ge1\), set
+\[
+Q_n(t)=-2\sum_{d\mid n}\mu(n/d)\psi_d(t),\qquad
+\Lambda_n(h)=\int_0^\infty h(1/t)Q_n(t)\,dt.
+\]
+The substitution \(t=1/x\) yields
+\(\int_0^\infty|h(1/t)|^2dt/t^2=\|h\|^2\).
+A null set in \(x>0\) maps to a null set under inversion: restrict to compact intervals away
+from zero, where inversion is Lipschitz, and take a countable union. Equivalently the positive
+weighted change of variables transfers a.e. equality. The definition thus depends only on
+\(h\)'s \(L^2\) class. Weighted Cauchy–Schwarz gives absolute integrability and
+\[
+|\Lambda_n(h)|^2\le\|h\|^2\int_0^\infty t^2|Q_n(t)|^2dt.
+\]
+It is complex-linear in \(h\). Under the first-conjugate inner product the correctly conjugated
+Riesz representer is
+\[
+r_n(x)=x^{-2}\overline{Q_n(1/x)},\qquad\Lambda_n(h)=\langle r_n,h\rangle.
+\]
+It is supported within the compact interval \([1/(n+1/2),2]\), away from zero, and
+\(\|r_n\|^2=\int t^2|Q_n(t)|^2dt\). For the divisors of a fixed \(n\), the interiors
+\(I_d\) are disjoint, so the cross terms in that particular sum vanish a.e. Consequently
+\[
+C_n:=\|r_n\|^2=4\sum_{d\mid n}\mu(n/d)^2(5d^2+1/6)
+ =\frac23\sum_{d\mid n}\mu(n/d)^2(30d^2+1)>0.
+\]
+Positivity follows already from \(d=n\), where \(\mu(1)=1\).
+At \(h=r_n/\|r_n\|\), \(|\Lambda_n(h)|=\|r_n\|\); hence the exact squared
+operator norm is \(\|\Lambda_n\|^2=C_n\), with norm attained.
+This disjoint-support assertion is only within each divisor sum. Representers for different
+\(n\) can share divisor probes and are not claimed disjoint or orthogonal.
+

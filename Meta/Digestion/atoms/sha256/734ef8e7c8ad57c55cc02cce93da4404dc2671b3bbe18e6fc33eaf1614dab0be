@@ -1,0 +1,29 @@
+**定义 216（三轴表的局部规范化与终端规范化）。** 对 \(q\in\mathsf Q_P\) 定义局部规范化表
+\[
+\mathsf N_P^{\rm loc}(q)(t,p)
+ =\operatorname{scode}\!\left(\mathsf V_P(q)(t,p)\right)
+ \in\mathsf Z_{\mathbb Z},
+\]
+以及终端规范化表
+\[
+\mathsf N_P^{\rm term}(q)(p)
+ =\operatorname{scode}\!\left(\mathsf C_P(q)(p)\right).
+\]
+定义局部码提升
+\[
+\mathsf L_P^{\rm loc}(d)(t,p,j)=
+\begin{cases}
+\operatorname{ival}(d(t,p)),&j=0,\\
+0,&j\ne0,
+\end{cases}
+\]
+其中 \(d\in\mathsf Z_{\mathbb Z}^{(\mathbb Z\times P)}\)，以及终端码提升
+\[
+\mathsf L_P^{\rm term}(z)(t,p,j)=
+\begin{cases}
+\operatorname{ival}(z(p)),&t=0,\ j=0,\\
+0,&\text{其他},
+\end{cases}
+\]
+其中 \(z\in(\mathsf Z_{\mathbb Z})^P\)。
+

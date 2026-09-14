@@ -1,0 +1,76 @@
+## 20. Exact child types, actual contraction and the four-child root
+
+Fix one of the six existing orders a. Before child d, let
+B_d=V\K(a,d), using the original deleted definition, and V_d=T_d(B_d), using
+the original advance definition. The new exact correspondence is
+
+\[
+ \boxed{\alpha(V_d,0;z)=\frac{Z(B_d\setminus\{d\};z)}{Z(B_d;z)}.}
+\]
+
+The selected neighbor becomes the origin. The finite order check proves that
+B_d is precisely the successive domain occurring in ordered elimination,
+including earlier absent vertices. The child factors are neither independent
+marginals of the original graph nor an unconditioned computation-tree surrogate.
+Their product is the exact ordered graph product.
+
+For a present origin and an absent parent, proper-domain nonvanishing yields
+
+\[
+ Z(V;z)=Z(V\setminus\{0\};z)
+        \left(1+z\prod_{d\in\{S,R,L\}}\alpha(V_d,0;z)\right).
+\tag{20.1}
+\]
+
+On the real nonnegative interval all denominator conditions follow from the
+empty configuration. If an actual neighbor is absent, its two partitions are
+identical and positive, so its child value is exactly one.
+
+For an actual domain V disjoint from the certified mask F_i, every present
+child d has a successor j in the existing 881-state table. The theorem
+typed_child_context derives simultaneously
+
+\[
+ 0\in V_d,\qquad V_d\cap F_j=\varnothing,\qquad |V_d|<|V|.
+\]
+
+It consumes the existing full geometric closure and blocker-disjointness
+proofs. No separate table-coverage or child-type assumption is supplied by a
+caller. Strict size decrease supplies the well-founded measure for induction.
+
+Let S(V) be the set of actual present nonparent directions. The new endpoint
+actual_grid_affine_contraction applies the existing affine certificate to the
+actual graph parent and child ratios:
+
+\[
+ \boxed{
+ \frac{(1-\alpha(V,0;\lambda))
+       \sum_{d\in S(V)}\Psi_{j_d}(\alpha(V_d,0;\lambda))}
+      {\Psi_i(\alpha(V,0;\lambda))}<\frac{999}{1000},
+ \quad 0\le\lambda\le\frac{51}{20}.
+ }
+\tag{20.2}
+\]
+
+The original childMessage accessor is used, with its zero value for absent
+geometric directions. Actual presence implies a genuine successor, as proved
+above. The proof derives the input interval, recursion identity and neutral
+absent-child values before invoking affine_pruned_row_contraction. No floating
+approximation or graph-message equality hypothesis is used.
+
+The unconditioned root is treated separately. SquareGridRootMessages proves
+that the four existing rootDomain objects are exactly the successive root
+neighbor domains under their actual coordinate equivalences. Consequently,
+
+\[
+ Z(V;z)=Z(V\setminus\{0\};z)
+   \left(1+z\prod_{e=0}^3\alpha(\operatorname{rootDomain}(V,e),0;z)\right).
+\tag{20.3}
+\]
+
+Only proper pre-recentered subsets are required nonzero. Every present first
+child is smaller, contains its new origin, and is disjoint from the existing
+type-zero mask {(-1,0)}. Extra earlier-neighbor deletions stay in the actual
+vertex domain. No three-child contraction is applied to the four-child root.
+An arbitrary marked root is handled by the proved translation equivalence.
+

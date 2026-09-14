@@ -1,0 +1,36 @@
+**30.84 定理及证明（新模式的严格阈值、等号、见证与 RH）。** For a fixed mode define
+\(\operatorname{DualLess}_s(N,r,e)\) and \(\operatorname{DualGreater}_s(N,r,e)\) to require
+a positive decoded precision, \(\operatorname{VerifyLocalDual}_s(N,\eta_e,e)\), and respectively
+\(u<r\) or \(\ell>r\). They reject invalid decoding and are total. For every rational \(r\),
+\[
+D_N<r\iff\exists e\ \operatorname{DualLess}_s(N,r,e),\qquad
+D_N>r\iff\exists e\ \operatorname{DualGreater}_s(N,r,e).
+\]
+The forward implications follow by generating at \(\eta_j=2^{-j}\): eventually the width
+is below \(r-D_N>0\) or \(D_N-r>0\), giving \(u_j<r\) or \(\ell_j>r\).
+Conversely the enclosing inequalities prove the corresponding strict relation immediately.
+The real gap is only used to prove eventual separation. At \(D_N=r\) no reliable interval
+can pass either strict test; the waiting procedure does not terminate, while each fixed-precision
+call still does. Finitely many failed strict tests prove no equality. For \(r\le0\),
+\(\ell\ge\sigma_N>r\); for \(r>1\), \(u\le1<r\). The threshold one retains strict semantics.
+If \(u<r\le1\), clipping forces \(B_0=u\), and the encoded \(q\) gives
+\(R_N(q)\le B_0<r\). If \(r>1\), the candidate itself need not work, but zero coefficients
+have residual one and do work. In particular at \(r=1/m\) the actual candidate and its parameters
+recover the old strict residual certificate and
+\[
+\langle Z(q),(A_N-m^{-1}E_{00})Z(q)\rangle=R_N(q)-1/m<0,
+\quad Z(q)=(1,-q_1,-2q_2,\ldots,-Nq_N).
+\]
+Using precisely [B1] at the URL and pages specified in 30.62, for each fixed mode
+\[
+\mathrm{RH}\iff\forall m\ge1\ \exists N\ge1\ \exists e\in\mathbb N_0:
+ \operatorname{DualLess}_s(N,1/m,e).
+\]
+Forward, zero closure distance selects \(N\) and the strict certificate; backward, actual
+residual witnesses for every \(m\) give zero closure distance and [B1] applies.
+The finite theorems, support obstructions and all generation bounds need no RH hypothesis.
+There is still no unconditional cutoff that finds a successful \(N\) from \(m\), no finite
+RH decision, and no exchange of \(\forall m\exists N\) for a fixed finite \(N\): the positive
+\(\sigma_{N_0}\) excludes any bounded prefix for sufficiently large \(m\).
+An omitted-prime integer gate is necessary only and cannot supply such a sufficient cutoff.
+

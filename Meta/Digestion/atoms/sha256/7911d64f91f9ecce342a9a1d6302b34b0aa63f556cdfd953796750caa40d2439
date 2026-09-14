@@ -1,0 +1,13 @@
+**定理 328.2。** 第 313 条的核等式、商同构、真饱和性及每个有限坐标投影满性给出
+$$
+\overline{\Psi_{\rm reg}[H_{\rm dy}]}^{\mathsf X_{\rm reg}}
+\cap\Psi_{\rm reg}[\mathsf V_{\rm reg}]
+=\Psi_{\rm reg}[\mathsf V_{\rm reg}]
+\supsetneq\Psi_{\rm reg}[H_{\rm dy}].
+$$
+更明确地，对每个固定 $u\in\mathsf V_{\rm reg}$ 和所有充分大的 $N$，
+$$
+h_N(u)=u-2^N\ell_{\rm dy}(u)\varepsilon_N\in H_{\rm dy},\qquad
+\Psi_{\rm reg}(h_N(u))\longrightarrow\Psi_{\rm reg}(u).
+$$
+

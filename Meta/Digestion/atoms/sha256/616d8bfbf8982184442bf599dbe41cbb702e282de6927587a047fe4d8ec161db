@@ -1,0 +1,56 @@
+## 18. Actual independent-set partitions and noncircular elimination
+
+This continuation begins at ceb6e285c889669fd4090da55ae26e38f28a60ef and reads
+dev at 76d7b4a789e9c44f49b4800fc93e569f68a48b51. The previously delivered
+IndependentPartitionDeletion, OrderedPartitionRecursion and RealPartitionMessages
+sources are present on the research branch. Their missing cumulative mathematical
+summary is supplied here, before the new grid correspondence.
+
+For a simple graph G, a finite vertex domain V and activities w in a commutative
+semiring, the existing partition is the actual independent-configuration sum
+
+\[
+ Z_G(V;w)=\sum_{S\subseteq V,\;S\text{ independent}}\prod_{u\in S}w(u).
+\]
+
+The configuration predicate is Mathlib's SimpleGraph.IsIndepSet. The ambient
+graph may be infinite. Splitting configurations by the occupancy of v in V
+and inserting v into configurations on C=(V\{v})\N_G(v) gives
+
+\[
+ Z_G(V;w)=Z_G(V\setminus\{v\};w)+w(v)Z_G(C;w).
+\]
+
+No nonzero assumption is used. The identity holds as a polynomial identity
+and at complex activities where intermediate partitions vanish.
+
+For an ordered list of neighbors, let W0=V\{v}, Wj=W(j-1)\{uj}, and define
+N=prod_j Z_G(Wj;w), D=prod_j Z_G(W(j-1);w). Exact cross multiplication gives
+
+\[
+ Z_G(V;w)D=Z_G(W_0;w)(D+w(v)N).
+\]
+
+If every partition on a subset of W0 is nonzero, this becomes
+
+\[
+ Z_G(V;w)=Z_G(W_0;w)\left(1+w(v)\prod_j
+ \frac{Z_G(W_j;w)}{Z_G(W_{j-1};w)}\right).
+\]
+
+The target Z_G(V;w) is not assumed nonzero. This is the noncircular induction
+step needed for the later complex result.
+
+For nonnegative real activities, the empty configuration contributes one and
+all other terms are nonnegative. Configuration inclusion gives domain
+monotonicity. If the root activity is at most Lambda, then
+
+\[
+ Z_G(W_0;w)\le Z_G(V;w)\le(1+\Lambda)Z_G(W_0;w),
+ \qquad \frac1{1+\Lambda}\le\frac{Z_G(W_0;w)}{Z_G(V;w)}\le1.
+\]
+
+Thus constant activity in [0,51/20] places every actual real vacancy in
+[20/71,1]. These classical facts are now source dependencies rather than
+unproved graph-message interpretations.
+

@@ -1,0 +1,29 @@
+**定理 179（局部满窗口与全局稀疏窗口）。** 对任意 \(L\in\omega\)，
+\[
+|\mathsf W_Z^{<L}|=G_L.
+\]
+因此，对任意有限配置
+\[
+\delta_{\rm loc}^{Z}(P,A)
+ =\frac{\prod_{p\in P}(A(p)+1)}
+        {\prod_{p\in P}G_{\ell_Z(A(p))}},
+\qquad
+\delta_{\rm glob}^{Z}(P,A)
+ =\frac{\prod_{p\in P}(A(p)+1)}
+        {G_{\ell_Z(M(P,A))}}.
+\tag{Z-DENSITY}
+\]
+特别地，对 \(5040\) 配置
+\[
+\delta_{\rm loc}^{Z}=\frac{60}{G_3G_2G_1G_1}=1,
+\qquad
+\delta_{\rm glob}^{Z}=\frac{60}{G_{18}}=\frac{60}{6765}=\frac4{451},
+\]
+而二进制立方体密度为
+\[
+\delta_{\rm loc}^{2}=\frac{60}{2^7}=\frac{15}{32},
+\qquad
+\delta_{\rm glob}^{2}=\frac{60}{2^{18}}=\frac{15}{65536}.
+\]
+所以局部行的规范窗口恰被 \((4,2,1,1)\) 的状态填满，全局 \(5040\) 标量则是十八位规范窗口中的稀疏子集。
+

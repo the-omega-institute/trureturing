@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f0c2ae3d9f7b7dd5cd5230f143e20bbc7540811060d393d49c221adfaff839bc
+  normalized_sha256: sha256:f0c2ae3d9f7b7dd5cd5230f143e20bbc7540811060d393d49c221adfaff839bc
+cas_ref: sha256:f0c2ae3d9f7b7dd5cd5230f143e20bbc7540811060d393d49c221adfaff839bc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: The obligation 6 note records a subsumption mapping and verification status for previously frozen declarations. It asserts nothing about mathematical truth, so no Lean declaration can carry it; the mathematical obligation stays with obligation 6 and the mapped frozen declarations.
+    previous_atom_id: 86131215bc59a49581c27d70dec450fdbe1d98b3e698b655dd0af4c9f9f93f2f
+    next_atom_id: 4a96b3fef67d1e588304af6b2d3d6bbb0cc6b5d2505d52faf212b5e952a76e88

@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:80da9c7fa8b7bb43445e4de497b179d20fa32ffaf0ce9d46d1cfed4d48f7f7a8
+  normalized_sha256: sha256:80da9c7fa8b7bb43445e4de497b179d20fa32ffaf0ce9d46d1cfed4d48f7f7a8
+cas_ref: sha256:80da9c7fa8b7bb43445e4de497b179d20fa32ffaf0ce9d46d1cfed4d48f7f7a8
+coverage_gids:
+  - gid: D5/S3/Analytic/Interpolation/HermiteEnvelopeEquality.hermite_envelope_sharpness
+    target_statement_id: sha256:bac77d5086cec75c0ffd3b07c7cc5c2214ef5062170769c59c2e265e5d56113a
+  - gid: D5/S3/Analytic/Interpolation/HermiteMomentBounds.hermite_moment_bounds
+    target_statement_id: sha256:c6ad6c5410e7e7947c6f68f4ee537f8cbfcbdee49d098ef669b9a30837bed6a7
+  - gid: D5/S3/Analytic/Interpolation/HermiteUpperEnvelope.hermite_upper_envelope
+    target_statement_id: sha256:c40fcd083895cdfde68b563e35082e9a955594e45518e01720fe71f663075cdb
+  - gid: D5/S3/Arith/GoldenResourceObjectiveFactorization.golden_resource_objective_sum_on
+    target_statement_id: sha256:a656df780668a8d87e6a336d66423024214763d372f818c3d3f7642a747f1ab1
+  - gid: D5/S3/Arith/GoldenResourceOptimalInteger.golden_resource_sigma_identity
+    target_statement_id: sha256:cc1b03bcb9ef0de556e591c672a7252de97d14c8dc21bba7030ff64f6a1c636f
+receipts:
+  unresolved_subitems: []

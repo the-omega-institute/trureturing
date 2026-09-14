@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c93a0f13d555201efbae1ffef4bd2b1c418ab04795548a878558a2d6d9f94b1f
+  normalized_sha256: sha256:c93a0f13d555201efbae1ffef4bd2b1c418ab04795548a878558a2d6d9f94b1f
+cas_ref: sha256:c93a0f13d555201efbae1ffef4bd2b1c418ab04795548a878558a2d6d9f94b1f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: This bullet classifies listed lanes as independent kernelizations or formalizations of known results. It asserts nothing about mathematical truth, so no Lean declaration can carry it; the mathematical obligations stay with the listed candidate statements.
+    previous_atom_id: 41b4268362c53f2ddf0723519093b17388772a608f0f88d5d906df61777ace50
+    next_atom_id: aa388e63e20b456c7b5825e8886740dd381e23e4af5a127d8080116df0d8de7f

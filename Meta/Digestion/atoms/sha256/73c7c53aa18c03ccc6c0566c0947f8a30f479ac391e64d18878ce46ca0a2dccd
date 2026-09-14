@@ -1,0 +1,8 @@
+**定理 446.3（无守卫乘法的完整商）。** 在全部正整数上，允许任意正整数乘法续接，则
+$$
+\forall t\ge1, \mu(mt)=\mu(nt)
+\quad\Longleftrightarrow\quad
+m=n\ \text{或}\ (m,n\text{ 都非平方自由}).
+$$
+所以非平方自由数构成一个吸收类，每个平方自由正整数各为单点。初态分别限制在 $\operatorname{Div}(210),\operatorname{Div}(5040),\operatorname{Div}(30030)$、但续接仍无守卫时，类数为 $16,17,64$。
+

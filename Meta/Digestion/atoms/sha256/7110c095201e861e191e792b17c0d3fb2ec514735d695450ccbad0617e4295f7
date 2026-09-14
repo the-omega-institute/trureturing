@@ -1,0 +1,49 @@
+**定理 430.2（预测十二·全部子集、函数及二元联合域）。** 对所有集合 $x,y$，
+$$
+\langle\operatorname{Enc}(x),\operatorname{Enc}(y)\rangle_Z
+=\operatorname{Enc}(\langle x,y\rangle).
+$$
+对每个 $f:D\to Y$，完整原图的单一码为
+$$
+\operatorname{Enc}(G_f)=\operatorname{Pack}
+\{\langle\operatorname{Enc}(x),\operatorname{Enc}(f(x))\rangle_Z:x\in D\}.
+$$
+其语义域为 $\operatorname{Enc}(D)$，语义值域为 $\operatorname{Enc}(\operatorname{ran}f)$，语义求值满足
+$$
+\operatorname{ev}_Z(\operatorname{Enc}(G_f),\operatorname{Enc}(x))=\operatorname{Enc}(f(x))\quad(x\in D).
+$$
+外部域则为 $D^*$。对任意集合 $X,Y$，
+$$
+\chi_{X,Y}:X^*\times Y^*\longrightarrow(X\times Y)^*,\qquad
+\chi_{X,Y}(c,d)=\langle c,d\rangle_Z
+$$
+是双射，逆为
+$$
+\operatorname{Enc}(\langle x,y\rangle)\longmapsto
+\langle\operatorname{Enc}(x),\operatorname{Enc}(y)\rangle.
+$$
+对每个 $R\subseteq X\times Y$，$\chi_{X,Y}[R^*]=\operatorname{Enc}[R]$，$\operatorname{Enc}(R)=\operatorname{Pack}(\chi_{X,Y}[R^*])$，故 $\chi$ 限制到每个部分联合域仍给出精确双射。
+
+对每个集合 $X$ 的全部子集及每对集合 $X,Y$ 的全部函数，下列对应各自互逆：
+$$
+U\subseteq X\longmapsto\operatorname{Enc}[U],\qquad
+B\subseteq X^*\longmapsto\operatorname{Dec}[B],
+$$
+$$
+f:X\to Y\longmapsto f^*,\qquad
+g:X^*\to Y^*\longmapsto(x\mapsto\operatorname{Dec}(g(\operatorname{Enc}(x)))).
+$$
+因此完整语义幂集与函数集满足
+$$
+\mathcal P_Z(\operatorname{Enc}(X))
+=\operatorname{Pack}\{\operatorname{Pack}(B):B\subseteq X^*\}
+=\operatorname{Enc}(\mathcal P(X)),
+$$
+$$
+\operatorname{Fun}_Z(\operatorname{Enc}(X),\operatorname{Enc}(Y))
+=\operatorname{Enc}(Y^X).
+$$
+这些量词无有限性、可数性或可定义性限制，包含空集合情形。
+
+**证明。** 语义配对及完整幂集、函数空间是定理 74；外部全子集及全函数的互逆是定理 385.3。图的三个层次、语义域、值域及求值由定理 378.3、386.1；二元积双射及对任意关系和联合域的限制由定理 378.4、386.1。特别地，$\Gamma_{f^*}$ 由通常的“码的有序对”组成，而 $\operatorname{El}(\operatorname{Enc}(G_f))=\operatorname{Enc}[G_f]$ 由语义有序对组成，二者由 $\chi$ 连接。对空自变量域，两侧均有唯一空函数；非空域到空值域两侧均无函数，正合这些定理的全部集合域。证毕。
+

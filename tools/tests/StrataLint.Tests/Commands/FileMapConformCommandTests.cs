@@ -6,6 +6,23 @@ namespace StrataLint.Tests;
 public sealed class FileMapConformCommandTests
 {
     [Fact]
+    public void TrackedInventoryIncludesDirectoryAndDanglingLinksWithoutTraversingThem()
+    {
+        using var fixture = new TemporaryDirectory();
+        Directory.CreateDirectory(Path.Combine(fixture.Path, "skills"));
+        File.WriteAllText(Path.Combine(fixture.Path, "skills/SKILL.md"), "skill\n");
+        File.WriteAllText(Path.Combine(fixture.Path, "deleted.md"), "deleted\n");
+        Directory.CreateSymbolicLink(Path.Combine(fixture.Path, "alias"), "skills");
+        File.CreateSymbolicLink(Path.Combine(fixture.Path, "dangling"), "absent");
+        ReviewRegressionTests.RunGit(fixture.Path, "init");
+        ReviewRegressionTests.RunGit(fixture.Path, "add", ".");
+        File.Delete(Path.Combine(fixture.Path, "deleted.md"));
+        File.WriteAllText(Path.Combine(fixture.Path, "untracked.md"), "untracked\n");
+
+        Assert.Equal(new[] { "alias", "dangling", "skills/SKILL.md" }, FileMapPolicy.TrackedPaths(fixture.Path));
+    }
+
+    [Fact]
     public void MissingAdmissionPlaneIsReportedAsAPolicyFinding()
     {
         using var fixture = new TemporaryDirectory();

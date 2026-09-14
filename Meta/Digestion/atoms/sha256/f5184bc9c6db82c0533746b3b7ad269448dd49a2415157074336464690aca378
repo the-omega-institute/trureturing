@@ -1,0 +1,157 @@
+**定理 28.2（高错误率尾段的加权消去及全高尾段闭式）。** 对任意有限 $N\ge k\ge1$，假设
+
+$$
+\beta_t\ge\frac12
+\qquad(k+1\le t\le N),
+\qquad
+C=\prod_{t=k+1}^N(1-\beta_t),
+$$
+
+其中空积为一。则定义 27.1 的最优值精确满足
+
+$$
+T_N^{\mathrm{ref,CPTP}}(\boldsymbol\beta)
+=\frac{1-C}{2}+\frac12W_k(C).
+$$
+
+对每个固定的前 $k$ 步协议，尾段所有共同控制都取为重置到 $|0\rangle$，已经达到该固定前缀的最优续接值；前缀的全局优化仍按定义取上确界。
+
+单步加权值在全部 $\beta_1,c\in[0,1]$ 上为
+
+$$
+W_1(c)=1+c-2c(1-\beta_1).
+$$
+
+因此，只要每个 $t=2,\ldots,N$ 都满足 $\beta_t\ge\tfrac12$，便有完整精确值
+
+$$
+T_N^{\mathrm{ref,CPTP}}(\boldsymbol\beta)
+=1-\prod_{t=1}^N(1-\beta_t).
+$$
+
+它由无参考指针输入 $|0\rangle$ 和全部恒等系统控制达到。所需条件覆盖整个被消去尾段；只知道最后一个参数至少为一半时，仍须保留较长前缀的 $W_k(C)$，不能据此套用单步公式。本结论不比较一般中间 CPTP 控制与系统幺正控制的最优值。
+
+证明。首先把定理 27.2 的高末次错误率论证用于加权实际块。设 $j\ge2$、$\beta_j\ge\tfrac12$，记 $b=\beta_j$、$d=1-b$，并固定前 $j-1$ 步的协议。对一个旧历史，实际分支记为 $\rho$，参考边缘为 $X$；理想分支为 $P_i\otimes Q$。此乘积结构来自第 $j-1$ 次理想指针读取，对混合输入和任意此前共同系统 CPTP 控制同样成立。
+
+对任意第 $j$ 次共同系统 CPTP 控制，记实际两个输出参考块为 $A_0,A_1$。如第 27.2 条，它们满足
+
+$$
+A_0+A_1=X,
+\qquad A_0,A_1\ge dX,
+$$
+
+理想两个输出参考块为 $uQ,(1-u)Q$，其中 $u\in[0,1]$。在当前加权目标中，实际块变为 $cA_0,cA_1$。固定这些块，对理想系数使用凸性，得到
+
+$$
+\begin{aligned}
+&\|cA_0-uQ\|_1+\|cA_1-(1-u)Q\|_1\\
+&\quad\le\max\left\{
+\|cA_0-Q\|_1+c\operatorname{tr}A_1,
+\ c\operatorname{tr}A_0+\|cA_1-Q\|_1
+\right\}.
+\end{aligned}
+$$
+
+因为 $c\ge0$，有 $c(A_0-dX)\ge0$。迹范数三角不等式给出
+
+$$
+\begin{aligned}
+\|cA_0-Q\|_1+c\operatorname{tr}A_1
+&\le\|cdX-Q\|_1
++c\operatorname{tr}(A_0-dX)+c\operatorname{tr}A_1\\
+&=\|cdX-Q\|_1+cb\operatorname{tr}X.
+\end{aligned}
+$$
+
+另一个端点同理。共同重置到 $|0\rangle$ 时，实际两块为 $dX,bX$，理想两块为 $Q,0$，恰好达到这个界。整个推导没有除以 $c$，所以也覆盖 $c=0$；加权只是把实际正块乘以非负标量，不要求它们仍是归一化态。
+
+对全部旧历史相加，物理实际分支的总迹始终满足 $\sum_h\operatorname{tr}X_h=1$，从而第 $j$ 步的固定前缀最优加权值为
+
+$$
+cb+\sum_h\|cdX_h-Q_h\|_1.
+$$
+
+再对全部允许的共同前缀取上确界，得到精确递推
+
+$$
+W_j(c)=c\beta_j+W_{j-1}\bigl(c(1-\beta_j)\bigr)
+\qquad(j\ge2,\ \beta_j\ge\tfrac12).
+$$
+
+上界对任意第 $j$ 次控制成立，达到由重置给出；这两方向保证是等式。对固定更早前缀也可重复同一论证，因此无需先假定最优前缀达到。
+
+现在对定理中的尾段反向应用递推。设
+
+$$
+c_j=\prod_{t=j+1}^N(1-\beta_t)
+\qquad(k\le j\le N).
+$$
+
+于是 $c_N=1$、$c_k=C$，且对 $j=k+1,\ldots,N$ 有
+
+$$
+c_{j-1}=c_j(1-\beta_j),
+\qquad c_j\beta_j=c_j-c_{j-1}.
+$$
+
+由于定义直接给出 $2T_N^{\mathrm{ref,CPTP}}=W_N(1)$，逐步消去尾段并对常数项望远镜求和，得到
+
+$$
+\begin{aligned}
+2T_N^{\mathrm{ref,CPTP}}
+=W_N(1)
+&=\sum_{j=k+1}^Nc_j\beta_j+W_k(c_k)\\
+&=1-C+W_k(C).
+\end{aligned}
+$$
+
+空尾段时求和为零，这个式子仍成立。对每个固定前缀，逐步达到使用尾段每次共同重置。也可直接核对：实际尾段的全零记录概率为 $C$，其余记录的总概率为 $1-C$，每种尾段记录都只把同一参考块 $X_h$ 乘以对应标量；理想尾段确定全零，参考块为 $Q_h$。故该固定前缀的最优续接半迹距离为
+
+$$
+\frac12\sum_h\left(\|CX_h-Q_h\|_1
++(1-C)\operatorname{tr}X_h\right),
+$$
+
+与递推所得表达一致。
+
+还需计算单步加权值。第一共同系统 CPTP 控制的输出可吸收为自由共同输入 $\omega_{SR}$。令
+
+$$
+Z_i=\langle i|\omega_{SR}|i\rangle,
+\qquad Z_i\ge0,
+\qquad \operatorname{tr}Z_0+\operatorname{tr}Z_1=1.
+$$
+
+一次实际、理想仪器之后，参考块分别为 $(1-\beta_1)Z_i+\beta_1Z_{1-i}$ 与 $Z_i$。加权差块是
+
+$$
+[c(1-\beta_1)-1]Z_i+c\beta_1Z_{1-i}.
+$$
+
+由于 $0\le c\le1$，两个所需系数 $1-c(1-\beta_1)$ 与 $c\beta_1$ 都非负。逐块三角不等式给出
+
+$$
+\begin{aligned}
+&\sum_i\bigl\|[c(1-\beta_1)-1]Z_i+c\beta_1Z_{1-i}\bigr\|_1\\
+&\quad\le\bigl[1-c(1-\beta_1)\bigr]
+\sum_i\operatorname{tr}Z_i
++c\beta_1\sum_i\operatorname{tr}Z_{1-i}\\
+&\quad=1+c-2c(1-\beta_1).
+\end{aligned}
+$$
+
+无参考指针输入 $|0\rangle$ 与恒等控制使两个结果的加权差分别为 $c(1-\beta_1)-1$ 和 $c\beta_1$，一非正、一非负，恰好达到上界。这证明全部参数域上的单步公式。
+
+当每个 $t\ge2$ 都满足高错误率条件时，取 $k=1$，代入 $W_1(C)$ 即得
+
+$$
+T_N^{\mathrm{ref,CPTP}}
+=\frac{1-C}{2}
++\frac{1+C-2C(1-\beta_1)}2
+=1-\prod_{t=1}^N(1-\beta_t).
+$$
+
+这个值也由全部恒等控制及初态 $|0\rangle$ 达到：理想记录确定全零，实际记录全零的概率恰为成功概率乘积，系统在所有非零分支上一直保持同一个指针。$N=1$ 时高尾段条件为空，所得数值就是 $\beta_1$，与单步结论一致。
+
+第 26.1 条的参数 $\beta_1=\beta_2=\tfrac1{10}$、$\beta_3=\tfrac12$ 只允许在这里取 $k=2$ 消去最后一步，留下 $W_2(1/2)$；第二步不满足继续消去到单步所需的高错误率条件。因此本定理的成功概率公式不适用于那个反例。证毕。
+

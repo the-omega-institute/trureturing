@@ -1,0 +1,5 @@
+source_id = "ns-observer-dynamics-rh-theory"
+path = "docs/develop/theory/NS_OBSERVER_DYNAMICS_RH_THEORY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

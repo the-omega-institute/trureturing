@@ -1,0 +1,55 @@
+## 26. The actual all-type invariant complex neighborhoods
+
+Define the following open sets using the actual 881 coefficient assignments:
+
+\[
+ \Omega_i=\bigcup_{r\in[20/71,1]}B(c_i(r),\delta),\qquad
+ U_\epsilon=\bigcup_{\lambda\in[0,51/20]}B(\lambda,\epsilon).
+\]
+
+Every child subset must refer to genuine successors of the existing geometric
+transition. Pruning in AdaptiveComplexNeighborhood records exactly that fact;
+its default child accessor is never used for an active nonexistent direction.
+
+Choose a real anchor for each input point. Interpolate linearly from the real
+activity and message anchors to the complex inputs. Along the whole segment,
+the inverse-coordinate and denominator estimates remain valid. Applying the
+actual derivative (24.1), the real mean-value estimate on [0,1], and (25.3)
+gives
+
+\[
+ |G_{i,S}(z,m)-G_{i,S}(\lambda,c(r))|
+ \le\gamma'\delta+10000\epsilon<\delta.
+\]
+
+The remaining exact positive slack is 499/10^26. The real output is the center
+of y=(1+lambda*prod(r_j))^(-1), and y lies in [20/71,1]. Therefore
+
+\[
+ \boxed{z\in U_\epsilon,\quad m_j\in\Omega_{j}\ (j\in S)
+ \quad\Longrightarrow\quad G_{i,S}(z,m)\in\Omega_i.}
+\tag{26.1}
+\]
+
+The quantified theorem covers every actual type and every valid pruning,
+including leaves. There is no supplied complex Lipschitz or invariance premise.
+The proof reuses the existing full-real-box all-pruning certificate, identifies
+it with the real Jacobian, then derives the complex estimates.
+
+The sets are proved open. Every m in Omega_i satisfies |Im(b_i*m)|<=3delta<pi,
+so the principal chart is genuinely inverse to f_i on the whole constructed
+message domain. The transformed map is jointly holomorphic there, and its
+inverse coordinate is exactly the vacancy recursion. For four first-child
+messages in Omega_0, the source proves
+
+\[
+ \operatorname{Re}\left(1+z\prod_{e=0}^{3}f_0(m_e)\right)\ge1/2,
+\]
+
+hence the root denominator is nonzero. Missing first children may use c_0(1),
+whose inverse is exactly one.
+
+The same epsilon works independently of the finite domain, holes, root position
+and recursion depth. The number 10^-30 is a sufficient explicit width, with no
+claim of optimality or physical significance.
+

@@ -1,0 +1,58 @@
+## 29. Quantitative consequences for actual partition increments and vacancies
+
+The induction preserves more than a Boolean nonzero conclusion. The explicit
+root half-plane margin gives (28.1) by multiplying one factor of at least one
+half per deleted vertex. This lower bound concerns the actual independent-set
+sum, not the relaxed geometric tree's number of paths.
+
+After the global induction, every present origin satisfies the source theorem
+
+\[
+ \boxed{\operatorname{Re}\frac{Z(V;z)}{Z(V\setminus\{0\};z)}
+ \ge\tfrac12.}
+\tag{29.1}
+\]
+
+The proved translation equivalence transfers the same statement to any present
+marked vertex. Taking the inverse ratio yields the further public conclusion
+
+\[
+ \boxed{|\alpha(V,v;z)|\le2}
+\tag{29.2}
+\]
+
+for every finite domain and every marked vertex. An absent vertex is included:
+its ratio is one, now justified by the established global nonvanishing.
+
+These bounds provide a direct next route to an actual analytic free energy.
+Choose a complete vertex deletion order and write W_j for its successive
+remaining domains. Set
+
+\[
+ F_V(z)=\sum_j\operatorname{Log}\left(
+       Z(W_{j-1};z)/Z(W_j;z)\right).
+\]
+
+Every argument lies in the right half-plane by (29.1), so its principal
+logarithm has a consistent analytic branch. Polynomiality and the established
+nonzero denominators make every summand holomorphic. Exact telescoping gives
+exp(F_V)=Z(V), and at zero activity every summand is zero. Different deletion
+orders therefore give the same normalized analytic logarithm on the connected
+activity tube. This follows by continuity of their difference in 2*pi*i*Z and
+its value zero at z=0.
+
+For this proposed normalized logarithm the elementary estimates give
+
+\[
+ -|V|\log2\le\operatorname{Re}F_V(z)\le|V|\log4,
+ \qquad |\operatorname{Im}F_V(z)|\le |V|\pi/2.
+\]
+
+The upper real bound uses |z|<3 on U_epsilon and the independent-set sum bounded
+by the sum over all subsets, |Z(V;z)|<=(1+|z|)^|V|. The imaginary bound follows
+from each right-half-plane increment having argument between -pi/2 and pi/2.
+These logarithm construction and bounds are the next paper deductions, not
+additional public Lean declarations in this increment. Establishing an
+infinite-volume limit still requires convergence and boundary control;
+finite-volume boundedness alone is not claimed as a thermodynamic-limit theorem.
+

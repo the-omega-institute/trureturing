@@ -1,0 +1,241 @@
+**定理 48.2（协议精确值与相对无参考最优值的完整优势判据）。** 在定义 48.1 的参数域内，令
+
+$$
+a=1-g,\qquad z=1-2g,\qquad b=1-ca>0,
+$$
+
+$$
+L(p)=1-\frac{cz}{2}-bp,
+\qquad
+R(p)=\left(\frac c2-p\right)^2
++p(1-p)\left[2c-c^2(1-z^2)\right].
+$$
+
+则协议分数精确为
+
+$$
+\boxed{F(c,g,p)=L(p)+\sqrt{R(p)}.}
+$$
+
+第 30 节的全部无参考输入及共同系统 CPTP 控制最优值在本切片化为
+
+$$
+\boxed{
+C(c,g):=W_2^{\mathrm{cl}}(c;1/2,g)
+=\max\{P,S\},
+\qquad
+P=1+cg,\quad S=\sqrt{1+c^2z^2}.
+}
+$$
+
+为比较两者，定义
+
+$$
+J=2g+ca(1-5g)>0,\qquad u=a(1-4g),
+\qquad h=\max\{0,S-P\},
+$$
+
+$$
+D=c^2u-2bh,\qquad
+\mathcal D=D^2-4cJh(c+h).
+$$
+
+对任意给定 $p\in[0,1]$，有精确等价
+
+$$
+\boxed{
+F(c,g,p)>C(c,g)
+\quad\Longleftrightarrow\quad
+-cJp^2+Dp-h(c+h)>0.
+}
+$$
+
+因此，存在严格优于全部无参考协议的输入参数 $p$，当且仅当
+
+$$
+\boxed{D>0\quad\text{且}\quad\mathcal D>0.}
+$$
+
+这两个条件成立时，全部严格优势参数恰为
+
+$$
+\boxed{
+p\in(p_-,p_+),\qquad
+p_\pm=\frac{D\pm\sqrt{\mathcal D}}{2cJ},
+\qquad0\le p_-<p_+<1.
+}
+$$
+
+若 $P\ge S$，判据进一步简化为
+
+$$
+\boxed{
+F(c,g,p)>C(c,g)
+\quad\Longleftrightarrow\quad
+0<g<\frac14,\qquad
+0<p<\frac{ca(1-4g)}{2g+ca(1-5g)}.
+}
+$$
+
+其中 $P\ge S$ 本身等价于
+
+$$
+2g\ge c(1-g)(1-3g).
+$$
+
+若 $g\ge1/4$，本协议族对任何 $c,p$ 都不能超过无参考最优值。这个结论只限制定义 48.1 的输入与控制族，不排除其他参考协议的优势，也未求出一般 $W_2(c;1/2,g)$ 的最优值。
+
+证明。因为 $e=1/2$，实际第一步的两个 Kraus 算子均为 $I_2/\sqrt2$，理想第一步的算子为指针投影 $P_i=|i\rangle\langle i|$。末次实际效应为 $gI_2+zP_j$。对给定系统控制 $U_i$，相应的初始系统差效应为
+
+$$
+M_{ij}=\frac c2U_i^\dagger(gI_2+zP_j)U_i
+-P_iU_i^\dagger P_jU_iP_i.
+$$
+
+记 $\rho_p=\operatorname{diag}(p,1-p)$。由 Schmidt 输入的直接展开，最终历史 $ij$ 的未归一化参考差块是
+
+$$
+N_{ij}=\sqrt{\rho_p}\,M_{ij}^{\mathsf T}\sqrt{\rho_p}.
+$$
+
+这里没有对任何分支重新归一化。不同经典历史的块正交，故 $F=\sum_{i,j}\|N_{ij}\|_1$。
+
+当第一结果为 $0$ 时，$U_0=H$ 给出
+
+$$
+N_{00}=\frac14\begin{pmatrix}
+(c-2)p&cz\sqrt{p(1-p)}\\
+cz\sqrt{p(1-p)}&c(1-p)
+\end{pmatrix},
+$$
+
+$$
+N_{01}=\frac14\begin{pmatrix}
+(c-2)p&-cz\sqrt{p(1-p)}\\
+-cz\sqrt{p(1-p)}&c(1-p)
+\end{pmatrix}.
+$$
+
+它们的行列式同为
+
+$$
+\frac{cp(1-p)}{16}\left[c(1-z^2)-2\right].
+$$
+
+由于 $0<c\le1$ 和 $0<z<1$，括号严格为负。对 $0<p<1$，两个矩阵都严格不定，迹范数等于特征值间距，因此
+
+$$
+\|N_{00}\|_1+\|N_{01}\|_1
+=\frac12\sqrt{\left[c+2(1-c)p\right]^2
++4c^2z^2p(1-p)}
+=\sqrt{R(p)}.
+$$
+
+最后一式由展开得到。在 $p=0,1$ 时，直接计算两个对角矩阵也给出同一公式。
+
+当第一结果为 $1$ 时，$U_1=I_2$ 给出
+
+$$
+N_{10}=\operatorname{diag}\left(\frac{cap}{2},\frac{cg(1-p)}2\right),
+$$
+
+$$
+N_{11}=\operatorname{diag}\left(\frac{cgp}{2},
+\left(\frac{ca}{2}-1\right)(1-p)\right).
+$$
+
+第一块半正定，第二块的两个对角元分别非负、非正。相加得到
+
+$$
+\|N_{10}\|_1+\|N_{11}\|_1
+=\frac{cp}{2}+\left(1-\frac{cz}{2}\right)(1-p)
+=L(p).
+$$
+
+若取 $U_1=X$，两个块只交换，迹范数之和不变。这证明协议的精确分数。四块的总迹为 $c-1$，与实际及理想完整输出的归一化一致；整个计算保留全部历史，没有后选择。
+
+接着计算无参考比较值。将 $e=1/2$ 代入定理 30.2，令该节的 $d=cz$，则 $0<d<1$，而 $r=0$、$v=1$，从而
+
+$$
+\eta=\frac{4(1-d)}{2-d}>0.
+$$
+
+因此该节的第三个内部候选不出现，无参考最优值就是其端点候选 $P=1+cg$ 与对称候选 $S=\sqrt{1+c^2z^2}$ 的最大值。两者都严格为正，直接平方得
+
+$$
+P^2-S^2
+=c\left[2g-c(1-g)(1-3g)\right].
+$$
+
+由 $c>0$，这给出陈述中的 $P\ge S$ 判据。
+
+为了安全地比较根式，注意
+
+$$
+C=P+h,\qquad
+C-L(p)=\frac c2+bp+h>0.
+$$
+
+因此 $F>C$ 等价于 $R(p)>(C-L(p))^2$，平方没有引入额外解。展开协议根式与端点比较值，得到
+
+$$
+R(p)-(P-L(p))^2
+=cp\left[ca(1-4g)-Jp\right].
+$$
+
+再把比较值从 $P$ 改为 $P+h$，便有
+
+$$
+\begin{aligned}
+R(p)-(C-L(p))^2
+&=cp\left[ca(1-4g)-Jp\right]
+-2h\left(\frac c2+bp\right)-h^2\\
+&=-cJp^2+Dp-h(c+h).
+\end{aligned}
+$$
+
+这证明逐 $p$ 的精确等价。
+
+还需证明二次不等式的参数条件确实与 $p\in[0,1]$ 相容。首先，
+
+$$
+J=2g(1-c)+c(1-4g+5g^2),\qquad
+1-4g+5g^2=5\left(g-\frac25\right)^2+\frac15>0,
+$$
+
+所以 $J>0$。相应二次函数严格凹，常数项为 $-h(c+h)\le0$。若 $D\le0$，它在 $p\ge0$ 上不可能为正；若 $D>0$ 而 $\mathcal D\le0$，其全实轴最大值也不为正。因而存在优势参数必须有 $D>0$、$\mathcal D>0$。
+
+反过来，假设这两个条件成立。由 $D=c^2u-2bh>0$、$b>0$、$h\ge0$，必有 $u>0$，即 $g<1/4$。定义
+
+$$
+p_P=\frac{cu}{J}=\frac{ca(1-4g)}{J}.
+$$
+
+它满足
+
+$$
+0<p_P<1,
+\qquad
+J-cu=g(2-ca)>0.
+$$
+
+二次函数的顶点在
+
+$$
+p_{\rm v}=\frac D{2cJ}\in\left(0,\frac{p_P}{2}\right].
+$$
+
+$\mathcal D>0$ 使顶点值严格为正，因此它已在 $(0,1)$ 内取得正值。两个实根为陈述中的 $p_-,p_+$。根的和为正、积为 $h(c+h)/(cJ)\ge0$，故 $p_-\ge0$。若 $h=0$，两根直接是 $0,p_P$；若 $h>0$，二次函数在 $p=p_P$ 处的值为
+
+$$
+-h(c+2bp_P+h)<0.
+$$
+
+结合顶点位于 $p_P/2$ 之前，可知 $0<p_-<p_+<p_P<1$。所以在所有情形下，严格优势参数精确为 $(p_-,p_+)$，并且无需与 $[0,1]$ 再作未知的截取。
+
+若 $P\ge S$，则 $h=0$。优势二次式退化为 $cp(cu-Jp)$，立即得到 $g<1/4$ 及 $0<p<p_P$ 的简化条件。若 $g\ge1/4$，则 $u\le0$、$D\le0$，故本协议不可能严格超过 $C$；这没有对优化域中其他参考控制作断言。
+
+也可核对几个退化边界。$p=0$ 时 $F=P\le C$，$p=1$ 时 $F=1<C$。连续延拓到 $c=0$ 时，$F=C=1$；此时不使用根区间中的除法。延拓到 $g=1/2$ 时，有 $F=1+c/2-cp/2\le C=1+c/2$。在 $g=0$ 时，第 29 节放宽上界与第 30 节无参考值同为 $\sqrt{1+c^2}$；已有无参考协议达到该值，所以本协议也不可能产生严格参考优势。这些边界核对没有把上述开参数域的根公式用于零分母。
+
+协议差块的构造沿用第 21 节的参考输出公式及第 23 节的二阶 Hermitian 迹范数计算；全部无参考优化由定理 30.2 承担。二元判别中迹范数与最优成功概率的标准关系见 Ballester、Wehner 与 Winter，*State Discrimination with Post-Measurement Information*，[Theorem 2.1](https://arxiv.org/html/quant-ph/0608014)，其中归于 Helstrom。本节精确比较的是一个明确参考协议族与已经优化的无参考任务，不把协议族的存在优势判据当作一般参考任务的完整分类。证毕。
+

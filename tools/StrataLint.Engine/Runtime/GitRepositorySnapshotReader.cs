@@ -21,8 +21,11 @@ internal static class GitRepositorySnapshotReader
                 "--exclude-standard",
                 "-z")))
             .Distinct(StringComparer.Ordinal)
-            .Order(StringComparer.Ordinal);
+            .Order(StringComparer.Ordinal)
+            .ToArray();
         var entries = ImmutableArray.CreateBuilder<RawRepositoryEntry>();
+        var links = new HashSet<string>(StringComparer.Ordinal);
+        var inspectedDirectories = new HashSet<string>(StringComparer.Ordinal);
         foreach (var path in paths)
         {
             if (include is not null && !include(path)) continue;
@@ -32,20 +35,28 @@ internal static class GitRepositorySnapshotReader
                 throw new InvalidOperationException($"git emitted an invalid repository path: {path}");
             }
 
-            if (tracked.TryGetValue(path, out var mode) && mode is not ("100644" or "100755"))
+            if (tracked.TryGetValue(path, out var mode) && !IsSupportedMode(mode))
             {
                 throw new InvalidOperationException(
                     $"non-regular repository entry {path} has git mode {mode}");
             }
 
+            FileMapSymlinkPolicy.RequirePlainAncestors(root, path, inspectedDirectories);
             var fullPath = Path.Combine(root, path);
             var info = new FileInfo(fullPath);
+            if (info.LinkTarget is { } target)
+            {
+                links.Add(path);
+                entries.Add(new RawRepositoryEntry(path, ImmutableArray.CreateRange(ReadLinkBytes(root, fullPath, target))));
+                continue;
+            }
+
             if (!info.Exists)
             {
                 continue;
             }
 
-            if (info.LinkTarget is not null || (info.Attributes & FileAttributes.ReparsePoint) != 0)
+            if ((info.Attributes & FileAttributes.ReparsePoint) != 0)
             {
                 throw new InvalidOperationException(
                     $"non-regular repository entry {path} is not a plain file");
@@ -56,6 +67,12 @@ internal static class GitRepositorySnapshotReader
                 ImmutableArray.CreateRange(File.ReadAllBytes(fullPath))));
         }
 
+        FileMapSymlinkPolicy.ValidateSnapshot(entries, links, paths, path =>
+        {
+            FileMapSymlinkPolicy.RequirePlainAncestors(root, path, inspectedDirectories);
+            var info = new FileInfo(Path.Combine(root, path));
+            return info.Exists || Directory.Exists(info.FullName) || info.LinkTarget is not null;
+        });
         return RawRepositorySnapshot.Create(entries);
     }
 
@@ -87,7 +104,7 @@ internal static class GitRepositorySnapshotReader
         var tree = ParseTree(treeResult.StandardOutput).ToArray();
         foreach (var entry in tree)
         {
-            if (entry.Mode is not ("100644" or "100755")
+            if (!IsSupportedMode(entry.Mode)
                 || entry.ObjectType != "blob"
                 || entry.Size is null)
             {
@@ -112,10 +129,40 @@ internal static class GitRepositorySnapshotReader
             input);
         EnsureSuccess(objectResult);
         var blobs = ParseBatchObjects(objects, objectResult.StandardOutput);
-        return RawRepositorySnapshot.Create(tree.Select(entry => new RawRepositoryEntry(
+        var entries = tree.Select(entry => new RawRepositoryEntry(
             entry.Path,
             blobs[entry.ObjectId],
-            (entry.ObjectId.Length == 40 ? "git-sha1:" : "git-sha256:") + entry.ObjectId)));
+            (entry.ObjectId.Length == 40 ? "git-sha1:" : "git-sha256:") + entry.ObjectId)).ToArray();
+        FileMapSymlinkPolicy.ValidateSnapshot(entries,
+            tree.Where(static entry => entry.Mode == "120000").Select(entry => entry.Path).ToHashSet(StringComparer.Ordinal),
+            tree.Select(entry => entry.Path).ToArray());
+        return RawRepositorySnapshot.Create(entries);
+    }
+
+    private static bool IsSupportedMode(string mode) => mode is "100644" or "100755" or "120000";
+
+    private static byte[] ReadLinkBytes(string root, string fullPath, string target)
+    {
+        // Unix link targets are arbitrary bytes. FileInfo.LinkTarget replaces invalid
+        // UTF-8 before returning a string, so re-encoding it would fabricate identity.
+        // Windows reparse points store UTF-16; strict encoding preserves that contract.
+        if (OperatingSystem.IsWindows()) return StrictUtf8.GetBytes(target);
+        var result = BoundedProcessRunner.Run("readlink", [fullPath], root,
+            BoundedProcessRunner.HangDetectionBudget, 64 * 1024);
+        EnsureSuccess(result);
+        var output = result.StandardOutput;
+        if (output.Length == 0 || output[^1] != (byte)'\n')
+            throw new InvalidOperationException($"readlink emitted invalid output for {fullPath}");
+        var bytes = output[..^1]; // readlink appends one LF after the native target bytes.
+        try
+        {
+            _ = StrictUtf8.GetString(bytes);
+        }
+        catch (DecoderFallbackException exception)
+        {
+            throw new InvalidOperationException($"non-regular repository entry {fullPath}: symlink target must be strict UTF-8", exception);
+        }
+        return bytes;
     }
 
     private static byte[] Git(string root, params string[] arguments)

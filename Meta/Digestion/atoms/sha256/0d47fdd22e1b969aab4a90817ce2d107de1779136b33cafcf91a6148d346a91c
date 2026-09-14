@@ -1,0 +1,19 @@
+**33.7 The exact fractional resource problem.** For finite \(T\ge0\) and real
+capacity \(r\), let
+\[
+K_r=\{y\in[0,1]^4:\sum_{p\in\mathcal P}h_py_p\le r\},\quad
+F_0(z)=\sum_p\log(1-\alpha_pz),
+\]
+\[
+D(T,r)=\max_{y\in K_r}\left[F_0(z)+\sum_ph_ps_p(z)y_p\right]\quad(r\ge0).
+\]
+For \(r<0\), \(K_r\) is empty since its resource is nonnegative: there is no
+optimizer or matching finite dual optimum (one may assign value \(-\infty\)).
+For every real \(r\ge0\), \(K_r\) is nonempty compact, so the displayed maximum
+exists. Put \(H_m=\sum_{k=1}^m h_{p_k}\), \(H_0=0\). Then
+\((H_0,H_1,H_2,H_3,H_4)=(0,\log2,\log6,\log30,\log210)\).
+If an upper mean-budget \(u\) is used, its residual is
+\(r=u-C(T)\), where \(C(T)=\sum_pc_p(T)=\log1058400+4T\).
+This is only a change of capacity coordinates. It imposes no lower budget,
+strict 5040 cutoff or requirement of two actual slab corners.
+

@@ -1,0 +1,50 @@
+**定义 287。** 沿用第 50、69、70、113 条的 $\phi=(1+\sqrt5)/2$、$\alpha=\phi^{-1}$、$\mathbb T=\mathbb R/\mathbb Z$、有限自然数字 $\zeta$、唯一零字 $0_Z$、非零数字集 $\mathsf W_Z^+$ 及整数码集 $\mathsf Z_{\mathbb Z}$。$[x]$ 表示实数 $x$ 的模一类，圆周及其有限积取通常拓扑。对正整数 $n$ 定义
+$$
+\mathscr A(n)=\lfloor\log_\phi n\rfloor,\qquad
+\gamma(n)=[n\phi],\qquad
+\Gamma_+(n)=(\mathscr A(n),\zeta(n),\gamma(n))
+\in\mathbb N\times\mathsf W_Z^+\times\mathbb T.
+$$
+另规定 $\gamma(0)=0$，仍有 $\zeta(0)=0_Z$；$\Gamma_+$ 的定义域仍为正整数。取一个不属于 $\mathbb Z$ 的标记 $\bot$，定义
+$$
+\gamma_{\mathbb Z}(m)=[m\phi],\qquad
+\mathscr A_{\mathbb Z}^{\bot}(m)=
+\begin{cases}
+\bot,&m=0,\\
+\mathscr A(|m|),&m\ne0,
+\end{cases}
+$$
+$$
+\Gamma_{\mathbb Z}:\mathbb Z\longrightarrow
+(\mathbb N\cup\{\bot\})\times\mathsf Z_{\mathbb Z}\times\mathbb T,
+\qquad
+m\longmapsto
+(\mathscr A_{\mathbb Z}^{\bot}(m),\operatorname{scode}(m),\gamma_{\mathbb Z}(m)).
+$$
+这里 $\operatorname{scode}$ 严格取第 113–114 条的 $0_Z$、$(+,\zeta(m))$、$(-,\zeta(-m))$ 三种情形，正负标签只与非零字配对。标记 $\bot$ 不给 $\log 0$ 赋实数值。
+
+对辅助实值观察另定义
+$$
+\mathscr A_{\mathbb R}:\mathbb R\setminus\{0\}\longrightarrow\mathbb Z,
+\quad x\longmapsto\lfloor\log_\phi|x|\rfloor,
+\qquad
+\gamma_{\mathbb R}:\mathbb R\longrightarrow\mathbb T,
+\quad x\longmapsto[\phi x].
+$$
+这些定义在各自整数定义域上与前述读数一致；一般实数及一般 $\mathbb Z[\phi]$ 元素不因此取得有限自然数字 $\zeta(x)$。
+
+以 GICT 定义 1.4、1.7 为比较对象，将其首个权值一的位置记为 $k_0$，按权值令
+$$
+W_{k_0+j}=G_j=F_{j+2}\qquad(j\in\omega).
+$$
+$F_n$ 在此等式中为通常 Fibonacci 数；下文三参数函数 $F(P,A,e)$ 为素数位表。对第 115 条的有限配置 $(P,A,e)$，其中 $P\subseteq\operatorname{Pr}$、$A:P\to\omega$、$e\in S(P,A)$，令
+$$
+N_P(e)=\prod_{p\in P}p^{e_p},\qquad
+F(P,A,e)(p,k_0+j)=
+\begin{cases}
+\operatorname{pad}(\zeta(e_p))_j,&p\in P,\\
+0,&p\notin P.
+\end{cases}
+$$
+$F(P,A,e)$ 是全素数标签上的逐行规范有限支撑表；容量、标签与内容的完整编码仍取第 115–116 条的 $\operatorname{Cfg}_Z(P,A,e)$。第 208 条的全局有限支撑指数域在这里由 $e$ 的槽外零扩展给出。观察值 $(\mathscr A(n),\zeta(n),\gamma(n))$、函数索引 $(t,p,j)$、容量 $A$、Fibonacci 权重 $G_j$ 及 CSA 选择集 $A_X$ 各有其类型；$\zeta(n)$ 不表示 CSA 的空间选择电荷 $Z_X(t,y)$。
+

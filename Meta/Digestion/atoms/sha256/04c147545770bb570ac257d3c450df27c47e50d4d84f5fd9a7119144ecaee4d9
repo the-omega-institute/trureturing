@@ -1,0 +1,12 @@
+**定理 367.2。** 对总行与全部代数特征有双射
+$$
+\mathbb T^\omega\longleftrightarrow\mathcal H,
+\qquad \theta\longmapsto\chi_\theta,
+\qquad h\longmapsto(h(\varepsilon_n))_{n\in\omega}.
+$$
+对每个容量 $A$，其精确有界限制满足
+$$
+\tau_{\mathcal H}^{V}|_B
+=\tau_{\mathbb R}^{B}=\tau_{\mathbb Q}^{B}=\tau_{+,A}.
+$$
+

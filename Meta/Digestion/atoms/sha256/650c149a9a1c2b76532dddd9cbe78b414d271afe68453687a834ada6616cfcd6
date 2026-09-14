@@ -1,0 +1,12 @@
+**定理。** 若归一化二元形式级数 $D$ 满足
+
+$$
+-\log D=\sum_{k\ge1}\frac1kH_c(p^k,q^k),
+$$
+
+则
+
+$$
+H_c(p,q)=\sum_{k\ge1}\frac{\mu(k)}k[-\log D(p^k,q^k)].
+$$
+

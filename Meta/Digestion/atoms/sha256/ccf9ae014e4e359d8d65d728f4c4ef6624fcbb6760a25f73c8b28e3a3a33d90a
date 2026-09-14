@@ -1,0 +1,20 @@
+**定理 73（折叠有限序数的唯一集合构造）。** 对任一环境集合 \(B\subseteq\mathfrak V_Z\)，定义
+\[
+\operatorname{Pack}(B)=\operatorname{Enc}(\operatorname{Dec}[B]).
+\]
+则
+\[
+\operatorname{El}(\operatorname{Pack}(B))=B,\qquad
+\operatorname{Pack}(\operatorname{El}(c))=c.
+\]
+显式地，
+\[
+\operatorname{Pack}(B)=
+\begin{cases}
+\operatorname{NatZ}(n),&B=\{\operatorname{NatZ}(m):m<n\}\text{ 对某 }n\in\omega,\\
+\langle1,B\rangle,&\text{否则}.
+\end{cases}
+\tag{Z-PACK}
+\]
+第一分支中的 \(n\) 唯一；此时竞争节点 \(\langle1,B\rangle\) 不在 \(\mathfrak V_Z\)。
+

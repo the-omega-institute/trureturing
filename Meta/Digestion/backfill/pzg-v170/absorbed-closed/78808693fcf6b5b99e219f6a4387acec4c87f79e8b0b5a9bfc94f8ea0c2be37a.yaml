@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:78808693fcf6b5b99e219f6a4387acec4c87f79e8b0b5a9bfc94f8ea0c2be37a
+  normalized_sha256: sha256:78808693fcf6b5b99e219f6a4387acec4c87f79e8b0b5a9bfc94f8ea0c2be37a
+cas_ref: sha256:78808693fcf6b5b99e219f6a4387acec4c87f79e8b0b5a9bfc94f8ea0c2be37a
+coverage_gids:
+  - gid: D5/S3/ArithSums/A397434ThresholdAnf.a_eq_succ_iff_mod_four
+    target_statement_id: sha256:adac79fb9c9d22a6fecc56192d53654c68bd8cc8b74daec054df5f23390cef49
+receipts:
+  unresolved_subitems: []

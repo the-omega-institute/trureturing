@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9236ec33fabdc97ec9602586e055e571e21bf3131e8a8fc7afa256063e80126e
+  normalized_sha256: sha256:9236ec33fabdc97ec9602586e055e571e21bf3131e8a8fc7afa256063e80126e
+cas_ref: sha256:9236ec33fabdc97ec9602586e055e571e21bf3131e8a8fc7afa256063e80126e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 1, reading 「113. 增订四：素数观察者与量子观察者的局部—全局统一」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: 9ddf9ea89f08c99228a2074fd57d3803c6fe908568657cdd1dd3a42f70bcbc30
+    next_atom_id: 07cd42f372016f51782b4764a66a89fc736f13a311f2edd3b765c51d358d704b

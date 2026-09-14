@@ -8,6 +8,24 @@ namespace StrataLint.ArchitectureTests;
 public sealed partial class FileMapPolicyTests
 {
     [Fact]
+    public void LeanReportConfigurationIsAdmittedByRepositoryPathPolicy()
+    {
+        var root = RepositoryLayout.FindRoot();
+        var registry = Assert.IsType<RegistryLoadOutcome.Accepted>(RegistryLoader.Load(
+            File.ReadAllBytes(Path.Combine(root, "Meta/registry.yaml")),
+            File.ReadAllBytes(Path.Combine(root, "Meta/domains.yaml"))));
+
+        Assert.Null(RepositoryPathPolicy.Validate(
+            RepoPath.CreateKnown("Meta/lean-report.toml"), registry.Policy));
+        var manifest = FileMapLoader.Parse(
+            File.ReadAllBytes(Path.Combine(root, FileMapLoader.RelativePath)),
+            FileMapLoader.RelativePath);
+        var entry = Assert.Single(manifest.Match("Meta/lean-report.toml"));
+        Assert.Equal(FileMapKind.Data, entry.Kind);
+        Assert.Equal(FileMapAdmissionPlane.Judge, entry.AdmissionPlane);
+    }
+
+    [Fact]
     public void ComputationalProjectionsHaveCanonicalFileMapEntries()
     {
         var expectedPaths = new HashSet<string>(
@@ -57,8 +75,9 @@ public sealed partial class FileMapPolicyTests
     public void AgentReportsAreAdmittedByRepositoryPathPolicy()
     {
         // Agent-written reports have generated names, cannot be enumerated in
-        // registry.yaml governance_documents, so RepositoryPathPolicy admits the
-        // docs/reports/ prefix and SL-000 must not reject them.
+        // registry.yaml governance_documents. RepositoryPathPolicy admits the
+        // docs/reports/ prefix at the path layer; filemap-conform separately requires
+        // an exact FILEMAP entry before a report is usable.
         const string value = "docs/reports/diag-lane-a/synthetic-open-report.md";
         var registry = SyntheticRegistry();
         var path = RepoPath.CreateKnown(value);
@@ -192,6 +211,85 @@ public sealed partial class FileMapPolicyTests
 
         Assert.Equal("FILEMAP-UNCLASSIFIED", finding.Code);
         Assert.Equal("README.md", finding.Path);
+    }
+
+    [Fact]
+    public void ReportCoveredOnlyByABroadPatternIsRejectedByTheRedFixture()
+    {
+        var manifest = Parse(Entry(
+            "docs/reports/**",
+            "data",
+            "none",
+            "agent",
+            "SnapshotDecoder"));
+
+        var finding = Assert.Single(FileMapPolicy.InspectCoverage(
+            manifest,
+            ["docs/reports/meaningful.md"]));
+
+        Assert.Equal("FILEMAP-REPORT-NONEXACT", finding.Code);
+        Assert.Equal("docs/reports/meaningful.md", finding.Path);
+        Assert.Contains("exact FILEMAP entry", finding.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ReportWithoutAFileMapEntryIsRejectedByTheRedFixture()
+    {
+        var manifest = Parse(Entry(
+            "README.md",
+            "data",
+            "none",
+            "reader",
+            "SnapshotDecoder"));
+
+        var finding = Assert.Single(FileMapPolicy.InspectCoverage(
+            manifest,
+            ["docs/reports/unregistered.md"]));
+
+        Assert.Equal("FILEMAP-REPORT-UNREGISTERED", finding.Code);
+        Assert.Equal("docs/reports/unregistered.md", finding.Path);
+    }
+
+    [Fact]
+    public void ReportWithAnExactFileMapEntryIsAcceptedByTheGreenFixture()
+    {
+        var path = "docs/reports/meaningful.md";
+        var manifest = Parse(Entry(
+            path,
+            "data",
+            "none",
+            "agent",
+            "SnapshotDecoder"));
+
+        Assert.Empty(FileMapPolicy.InspectCoverage(manifest, [path]));
+    }
+
+    [Fact]
+    public void ReportCanBeRegisteredBeforeItsContentIsAdded()
+    {
+        const string path = "docs/reports/experiment/results.json";
+        var entry = Entry(path, "data", "none", "agent", "SnapshotDecoder")
+            .Replace("admission_plane = \"judge\"", "admission_plane = \"content\"", StringComparison.Ordinal);
+        var manifest = Parse(entry);
+
+        // SL-029 requires the registration PR to precede the content PR.
+        Assert.Empty(FileMapPolicy.InspectPatternPopulation(manifest, []));
+        Assert.Empty(FileMapPolicy.InspectCoverage(manifest, [path]));
+        var decision = AdmissionPlanePolicy.Evaluate(
+            Encoding.UTF8.GetBytes("schema_version = 2\n" + entry),
+            [path]);
+        Assert.True(decision.IsAdmissible);
+        Assert.Equal(AdmissionPlaneClassification.ContentOnly, decision.Classification);
+    }
+
+    [Fact]
+    public void EmptyReportGlobCannotReserveUnregisteredContent()
+    {
+        var manifest = Parse(Entry("docs/reports/experiment/*", "data", "none", "agent", "SnapshotDecoder"));
+
+        var finding = Assert.Single(FileMapPolicy.InspectPatternPopulation(manifest, []));
+
+        Assert.Equal("FILEMAP-PATTERN-EMPTY", finding.Code);
     }
 
     [Fact]

@@ -1,0 +1,20 @@
+**定理 211（三级收缩与有理素数幂商）。** \(\chi_P\) 是群同态，且
+\[
+\ker\chi_P=\ker\mathsf C_P.
+\tag{Z-CHARACTER-KERNEL}
+\]
+因此
+\[
+\mathsf Q_P/\ker\chi_P
+\xrightarrow{\ \cong\ }
+\left\{\prod_{p\in P}p^{z(p)}:z\in\mathbb Z^P\right\}
+\subseteq\mathbb Q_{>0}
+\]
+是群同构。对任意 \(q,q'\in\mathsf Q_P\)，有
+\[
+\chi_P(q+q')=\chi_P(q)\chi_P(q'),
+\qquad
+\chi_P(-q)=\chi_P(q)^{-1}.
+\]
+所以从三轴槽表到有理读数的全部信息损失恰好由两类生成元组成：定理 207 的局部 Fibonacci 关系，以及定理 201 的时间零点循环。
+

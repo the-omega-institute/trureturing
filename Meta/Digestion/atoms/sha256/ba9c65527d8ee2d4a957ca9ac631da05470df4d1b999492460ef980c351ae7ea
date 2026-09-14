@@ -1,0 +1,21 @@
+**30.77 推论及证明（有限素数支撑、2442 截断与编码不变性）。** For a finite set of primes \(S\),
+let \(A_S=\{\prod_{p\in S}p^{e_p}:e_p\in\mathbb N_0\}\), including one. A prime divisor
+of \(1+\prod_{p\in S}p\) belongs to no \(S\), since reduction modulo any \(p\in S\)
+gives one. Such a divisor exists by integer factorization. When \(S\) is empty the empty
+product is one and the number is two, so the same proof applies. Call a missing prime \(p\).
+Then \(p\notin A_S\) and
+\(D_{A_S}\ge3/(60p^2+64)>0\), even with all exponents unbounded and the whole norm closure.
+For \(S=\{2,3,5,7\}\), the omitted prime eleven gives
+\[
+D_{A_S}\ge\frac3{60\cdot11^2+64}=\frac3{7324}.
+\]
+A strict residual square \(<1/m\) is impossible whenever
+\(3m\ge7324\), equivalently for integer \(m\ge\lceil7324/3\rceil=2442\).
+This exact cutoff includes equality in the lower-bound comparison; for smaller \(m\) it makes
+no witness-existence claim. Faithful Zeckendorf recoding of the same integer parameters leaves
+\(A_S\), its functions, the measure, norm, span, closure and distance unchanged.
+Changing the functions or inner product creates a different model and requires a new argument;
+recoding adds no orthogonality. This is a full-half-axis approximation obstruction, separate from
+Robin's strict \(n>5040\) domain and the prime-box comparison \(G=D-\Psi\).
+It neither resolves those sign questions nor proves or refutes RH for the full dictionary.
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6406f4c2c603fbcf29c6dc93938488ff549d450f24acb1e6ae4c1b0df5f179a5
+  normalized_sha256: sha256:6406f4c2c603fbcf29c6dc93938488ff549d450f24acb1e6ae4c1b0df5f179a5
+cas_ref: sha256:6406f4c2c603fbcf29c6dc93938488ff549d450f24acb1e6ae4c1b0df5f179a5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 标题片段或定义子句。本子项由定理 72 陈述的字节切分产生：c1 是定理标题片段，c4 是语义成员 ∈_Z 与 El 的定义（冻结模块 AllSetZeckendorfEncoding 中的 MemZ 与 El），均非命题；定理 72 的全部命题子句已由冻结声明覆盖，见父项账目。
+    previous_atom_id: 6da92960220bd2f60ad55d374749857b399a3904ddbd46747c82d53afee9550d
+    next_atom_id: 901d0b76b1b56606e2c71021ab1ddb3559aa2be747130cc34fb81dc203c24687

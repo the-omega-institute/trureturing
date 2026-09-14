@@ -1,0 +1,11 @@
+**定义 157（单位指令的几何路径）。** 对 \(a,b\in S(P,A)\) 定义盒距离
+\[
+d_{P,A}(a,b)=\sum_{p\in P}|a(p)-b(p)|.
+\]
+定义最短路径集
+\[
+\operatorname{Geo}_{P,A}(a,b)
+ =\{w\in\operatorname{Path}_{P,A}(a,b):|w|=d_{P,A}(a,b)\},
+\]
+其中 \(|w|\) 是单位指令词长度。置 \(m_p=|b(p)-a(p)|\) 及 \(D=d_{P,A}(a,b)=\sum_pm_p\)。
+

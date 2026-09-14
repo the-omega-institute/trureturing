@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Observer/Hankel/BalancedHankelSchmidt
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Construct a complete finite Schmidt decomposition of the actual infinite Hankel operator from its balanced Gramians. -/
 
 import D5.S3.Observer.Hankel.InfiniteHankelGramian

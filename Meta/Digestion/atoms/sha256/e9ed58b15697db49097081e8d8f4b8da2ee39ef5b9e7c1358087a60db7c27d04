@@ -1,0 +1,20 @@
+**33.20 Classical tools and bounded deduplication.** The sorting rule is
+literature-attested fractional knapsack: HKUST's
+[Lecture 14](https://home.cse.ust.hk/~dekai/271/notes/L14/L14.pdf), PDF pages 4-7,
+states decreasing value/weight selection and at most one partial item.
+Boyd/Vandenberghe's
+[Duality](https://web.stanford.edu/class/ee364a/lectures/duality.pdf), PDF pages
+14 and 21-23 (slides 5.12 and 5.19-5.21), attests weak duality and complementary
+slackness/KKT. The identities [DLMF 4.6.1](https://dlmf.nist.gov/4.6.E1) and
+[DLMF 4.6.4](https://dlmf.nist.gov/4.6.E4) attest the logarithm series.
+These sources were retrieved online during this implementation; exact timestamps,
+HTTP status, byte identities and extraction limitations are in the report.
+The needed remainder, matching gap and all endpoints are proved here.
+In this pinned predecessor, 18 and 26.10-26.11 already supply the fractional
+framework; 29.5-29.6 concern mass-three mixtures, not this four-label specialization;
+32.7-32.8 give the original fixed-height ordering. ZECKENDORF_EULER_5040's chapter
+41 F-4 already distinguishes integer budgets from price relaxations. Targeted
+text consultation of those volumes and QUANTUM-RH is not a whole-repository or
+Lean theorem search. This coordinate specialization is repo-derived, with no
+novelty, priority or exhaustive literature-search claim.
+

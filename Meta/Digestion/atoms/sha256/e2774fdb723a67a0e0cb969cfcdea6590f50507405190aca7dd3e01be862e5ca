@@ -1,0 +1,108 @@
+**命题 41.2（五维输入的三维输出与二维量子寄存器）。** 令
+
+$$
+\mathcal H=(\mathbb C^2\otimes\mathbb C^2)\oplus\mathbb C,
+\qquad P_0=|0\rangle\langle0|,
+\qquad P_+=|+\rangle\langle+|,
+\qquad |+\rangle=\frac{|0\rangle+|1\rangle}{\sqrt2},
+$$
+
+并取密度矩阵
+
+$$
+A=\left(\frac34P_0\otimes\frac{I_2}{2}\right)\oplus\frac14,
+\qquad
+J=\left(\frac12P_+\otimes\frac{I_2}{2}\right)\oplus\frac12,
+$$
+
+以及权重 $c_1=1/2$、$c_2=1$。两个加权差均可逆，正谱投影生成的代数为
+
+$$
+\mathfrak A=(M_2(\mathbb C)\otimes I_2)\oplus\mathbb C.
+$$
+
+因此
+
+$$
+\boxed{d_{\rm all}=3,\qquad q_{\rm free}=2.}
+$$
+
+两项量子范数分别为
+
+$$
+\|D_{1/2}\|_1=1,\qquad
+\|D_1\|_1=\frac{\sqrt{13}+1}{4}.
+$$
+
+达到完整输出维数三的通道可以丢弃第二个量子比特的状态，因而无需恢复全部五维输入状态。
+
+证明。$A,J$ 均半正定，且迹分别为 $3/4+1/4=1$、$1/2+1/2=1$。直接分块可得
+
+$$
+D_t=E_t\otimes\frac{I_2}{2}\ \oplus\left(\frac t4-\frac12\right),
+\qquad
+E_t=\begin{pmatrix}
+3t/4-1/4&-1/4\\
+-1/4&-1/4
+\end{pmatrix}.
+$$
+
+由于 $\det E_t=-3t/16<0$，$E_t$ 有一正一负两个特征值。在 $t=1/2,1$ 时，末尾标量也严格为负，所以两项 $D_t$ 均可逆。$E_t$ 的迹为 $(3t-2)/4$，因而
+
+$$
+\|E_t\|_1=\frac{\sqrt{9t^2+4}}4,
+\qquad
+\|D_t\|_1=\frac{\sqrt{9t^2+4}+2-t}{4}
+\quad(t=1/2,1).
+$$
+
+这里使用了 $\|I_2/2\|_1=1$。代入两个权重即得到所列范数。
+
+记 $P_t^{(2)}$ 为 $E_t$ 的正谱投影，则
+
+$$
+P_t=P_t^{(2)}\otimes I_2\oplus0.
+$$
+
+两个二阶投影具体为
+
+$$
+P_{1/2}^{(2)}=\frac15\begin{pmatrix}4&-2\\-2&1\end{pmatrix},
+\qquad
+P_1^{(2)}=\frac12\left[
+I_2+\frac1{\sqrt{13}}\begin{pmatrix}3&-2\\-2&-3\end{pmatrix}
+\right].
+$$
+
+直接相乘有
+
+$$
+[P_{1/2}^{(2)},P_1^{(2)}]
+=\frac3{5\sqrt{13}}\begin{pmatrix}0&1\\-1&0\end{pmatrix},
+\qquad
+[P_{1/2},P_1]^2=-\frac9{325}(I_4\oplus0).
+$$
+
+因此中央投影 $I_4\oplus0$ 及其补投影都属于 $\mathfrak A$。两个二阶投影不对易，故生成 $M_2(\mathbb C)$：在其中一个投影的本征基内，另一个投影有非零非对角元，用左右谱投影夹取便得到两个非对角矩阵单位，再加上两个对角投影即可。这说明四维中央块上的生成代数是 $M_2(\mathbb C)\otimes I_2$，末尾中央块是 $\mathbb C$；反向包含关系由两个生成元的分块形式直接成立。故所列代数精确，定理 41.1 给出 $3$ 与 $2$ 两种资源值。
+
+具体的三维达到通道为
+
+$$
+\mathcal C_0(X)=\operatorname{tr}_2(X_{11})\oplus X_{22},
+$$
+
+其中 $X_{11}$ 是输入的四维对角块，$X_{22}$ 是末尾标量块。它将重复因子取偏迹，并保留中央分区标签。对两个不同纯输入
+
+$$
+\rho_r=(P_0\otimes|r\rangle\langle r|)\oplus0,
+\qquad r=0,1,
+$$
+
+有
+
+$$
+\mathcal C_0(\rho_0)=\mathcal C_0(\rho_1)=P_0\oplus0.
+$$
+
+所以这个达到压缩没有恢复全部五维输入的左逆。它精确保留的是所列判别任务要求的谱投影代数；第二个量子比特的区别不属于这些观测量。若经典标签免费，同一个中央分块构造使用一个二维量子寄存器及两个经典标签即可，符合 $q_{\rm free}=2$。证毕。
+

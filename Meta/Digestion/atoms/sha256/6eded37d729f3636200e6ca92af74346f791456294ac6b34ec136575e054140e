@@ -1,0 +1,37 @@
+**定理 431.4（预测十三·拓扑、度量与自然算术）。** 对任意指定拓扑空间 $(X,\tau)$，令
+$$
+\tau^*=\{\operatorname{Enc}[U]:U\in\tau\}.
+$$
+$e_X:(X,\tau)\to(X^*,\tau^*)$ 为同胚；全部集合指标的乘积桥在相应乘积拓扑下为同胚。因此本篇的紧性、稠密性、连续性及首位序列同胚均双向运输。若 $d$ 为普通实值度量，则
+$$
+d_{\rm ext}(c,c')=d(\operatorname{Dec}(c),\operatorname{Dec}(c'))
+$$
+为使 $e_X$ 等距的普通实值度量；值也编码时须使用运输后的实数零、加法及序。拓扑三层满足
+$$
+\operatorname{El}(\operatorname{Enc}(\tau))=\operatorname{Enc}[\tau],\qquad
+\tau^*=\{\operatorname{El}(c):c\in\operatorname{Enc}[\tau]\}.
+$$
+
+令 $\mathsf N_Z=\omega^*$，在它上面共轭通常后继、加法、乘法及序为 $S_{\mathsf N},+_{\mathsf N},\times_{\mathsf N},<_{\mathsf N}$。对全部 $m,n\in\omega$，
+$$
+\operatorname{El}(\operatorname{NatZ}(n))=\{\operatorname{NatZ}(k):k<n\},\qquad
+S_{\mathsf N}(\operatorname{NatZ}(n))=\operatorname{NatZ}(n+1),
+$$
+$$
+\operatorname{NatZ}(m)+_{\mathsf N}\operatorname{NatZ}(n)=\operatorname{NatZ}(m+n),\qquad
+\operatorname{NatZ}(m)\times_{\mathsf N}\operatorname{NatZ}(n)=\operatorname{NatZ}(mn),
+$$
+$$
+\operatorname{NatZ}(m)<_{\mathsf N}\operatorname{NatZ}(n)\iff m<n.
+$$
+全部递归与归纳实例保留。$G$ 的完整图码为
+$$
+\operatorname{Enc}(G)=\operatorname{Pack}
+\{\langle\operatorname{NatZ}(j),\operatorname{NatZ}(G_j)\rangle_Z:j\in\omega\},
+$$
+其初值、递推、空和及零参数取相同的共轭含义。$T$ 仍作用在 $K$，$S_{\mathsf N}$ 仍是自然数后继的共轭。
+
+**证明。** 拓扑同胚及三层公式由定理 378.5；一般实值度量及完全编码实值的区别由定理 378.6。任意集合指标积的拓扑桥为定理 387.2：只限制有限坐标的基本开集逐坐标对应，逆映射也对应这些基本开集，故两个方向连续。将它应用于首位序列和窗口序列的目标乘积，再用定理 431.2 的共轭公式，便运输每个新连续映射及同胚断言；同胚保持紧性及稠密性。
+
+自然序数的语义成员和全部通常算术是定理 70、73、77 及定义 388.1 的同一自然解释。共轭求值直接给所写后继、加乘和序等式，二元运算的输入以 $\chi$ 对应。递归式逐项解码回原递归，任一归纳实例也经同一双射解码回通常自然数归纳。$G$ 图式由完整函数图公式给出，每个 $j$ 皆在其域中。最后 $T$ 的域和非单射性质由命题 421.2 确定，与此自然后继的域及单射性质各自保持。证毕。
+

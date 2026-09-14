@@ -15,7 +15,8 @@ internal static class DigestionDecomposition
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
     internal static DigestionClausePlan Plan(DigestionLedgerEntry parent, ImmutableArray<byte> bytes,
-        TheoryAtomizer atomizer, TheoryAtomizerRules rules)
+        TheoryAtomizer atomizer, TheoryAtomizerRules rules, RepositorySnapshot? snapshot = null,
+        ImmutableArray<int> splitAt = default)
     {
         var frozen = DigestionAtom.FromFrozenCas(bytes);
         if (parent.CasRef != frozen.Fingerprints.RawSha256
@@ -38,10 +39,72 @@ internal static class DigestionDecomposition
         var matching = plans.Where(p => p.Parent.Fingerprints == frozen.Fingerprints).ToArray();
         if (matching.Length > 1)
             throw new FormatException("AMBIGUOUS duplicate parent clause plans");
-        var plan = matching.SingleOrDefault() ?? PlanClauses(frozen)
+        var canonical = matching.SingleOrDefault() ?? PlanClauses(frozen);
+        var explicitPlan = splitAt.IsDefaultOrEmpty ? null : PlanAt(frozen, splitAt);
+        if (canonical is not null && explicitPlan is not null
+            && !canonical.Children.Select(static child => child.Fingerprints)
+                .SequenceEqual(explicitPlan.Children.Select(static child => child.Fingerprints)))
+            throw new FormatException("PLAN_CONFLICT split points differ from canonical clause plan");
+        var plan = canonical ?? explicitPlan ?? PersistedPlan(parent, frozen, snapshot)
             ?? throw new FormatException("parent CAS blob has no clause plan (NO_CLAUSE_PLAN)");
         RequireValid(plan);
         return plan;
+    }
+
+    private static DigestionClausePlan PlanAt(DigestionAtom parent, ImmutableArray<int> splitAt)
+    {
+        var segments = ImmutableArray.CreateBuilder<DigestionSegment>(splitAt.Length + 1);
+        var start = 0;
+        foreach (var end in splitAt.Add(parent.RawBytes.Length))
+        {
+            if (end <= start || end > parent.RawBytes.Length
+                || end == parent.RawBytes.Length && segments.Count < splitAt.Length)
+                throw new FormatException("SPLIT_AT_INVALID cuts must be strictly increasing interior byte offsets");
+            var raw = parent.RawBytes[start..end];
+            try { _ = StrictUtf8.GetCharCount(raw.AsSpan()); }
+            catch (DecoderFallbackException)
+            {
+                throw new FormatException("SPLIT_AT_INVALID cut splits a UTF-8 character");
+            }
+            var child = DigestionAtom.FromFrozenCas(raw) with
+            {
+                StartByte = parent.StartByte + start,
+                EndByte = parent.StartByte + end,
+                Context = parent.Context,
+            };
+            segments.Add(new DigestionSegment(DigestionSegmentKind.Claim, child));
+            start = end;
+        }
+        var plan = new DigestionClausePlan(parent, segments.MoveToImmutable()) { IsExplicit = true };
+        RequireValid(plan);
+        return plan;
+    }
+
+    private static DigestionClausePlan? PersistedPlan(DigestionLedgerEntry entry,
+        DigestionAtom parent, RepositorySnapshot? snapshot)
+    {
+        if (entry.Receipts.ChainAtoms.IsEmpty || snapshot is null) return null;
+        var segments = ImmutableArray.CreateBuilder<DigestionSegment>(entry.Receipts.ChainAtoms.Length);
+        var start = parent.StartByte;
+        foreach (var childId in entry.Receipts.ChainAtoms)
+        {
+            if (!snapshot.TryGetFile(DigestionCasStore.RootPath + childId, out var blob))
+                throw new FormatException($"CHILD_CAS_MISSING atom_id={childId}");
+            try { _ = StrictUtf8.GetCharCount(blob.RawBytes.AsSpan()); }
+            catch (DecoderFallbackException)
+            {
+                throw new FormatException($"CHILD_CAS_INVALID_UTF8 atom_id={childId}");
+            }
+            var child = DigestionAtom.FromFrozenCas(blob.RawBytes);
+            if (child.Fingerprints.RawSha256 != "sha256:" + childId)
+                throw new FormatException($"CHILD_CAS_MISMATCH atom_id={childId}");
+            if (child.RawBytes.Length > parent.EndByte - start)
+                throw new FormatException("clause plan children exceed parent bytes");
+            child = child with { StartByte = start, EndByte = start + child.RawBytes.Length, Context = parent.Context };
+            segments.Add(new DigestionSegment(DigestionSegmentKind.Claim, child));
+            start = child.EndByte;
+        }
+        return new DigestionClausePlan(parent, segments.MoveToImmutable()) { IsExplicit = true };
     }
 
     internal static DigestionClausePlan? PlanClauses(DigestionAtom parent)
@@ -112,7 +175,9 @@ internal static class DigestionDecomposition
     }
 
     internal static DigestionDecompositionWriteSet Materialize(DigestionLedgerEntry parent,
-        DigestionClausePlan plan, IReadOnlyDictionary<string, DigestionLedgerEntry> globalEntries)
+        DigestionClausePlan plan, IReadOnlyDictionary<string, DigestionLedgerEntry> globalEntries,
+        bool reconcileExistingChain = false, RepositorySnapshot? snapshot = null,
+        TheoryAtomizerRules? rules = null)
     {
         RequireValid(plan);
         if (parent.Fingerprints != plan.Parent.Fingerprints || parent.CasRef != plan.Parent.Fingerprints.RawSha256)
@@ -137,12 +202,63 @@ internal static class DigestionDecomposition
                 new DigestionStatus(DigestionMigrationState.Residual, DigestionTruthState.Open), captured.Reference));
         }
         var chain = ids.ToImmutable();
-        if (!parent.Receipts.ChainAtoms.IsEmpty && !parent.Receipts.ChainAtoms.SequenceEqual(chain, StringComparer.Ordinal))
+        if (reconcileExistingChain)
+        {
+            if (parent.Receipts.ChainAtoms.IsEmpty)
+                throw new FormatException("CHAIN_RECONCILE_REQUIRES_EXISTING_CHAIN");
+            if (!parent.Coverage.IsEmpty || !parent.Receipts.UnresolvedSubitems.IsEmpty
+                || parent.Receipts.TailAuthorization is not null
+                || parent.Receipts.Quarantine is not null
+                || parent.Receipts.CoverDisposition is not null
+                || parent.Receipts.Nonpropositional is not null)
+                throw new FormatException("CHAIN_RECONCILE_LIVE_OBLIGATIONS");
+            ArgumentNullException.ThrowIfNull(snapshot);
+            ArgumentNullException.ThrowIfNull(rules);
+            // The old direct chain must itself be a lossless, identity-valid partition.
+            // Reuse the same persisted-plan and nested-plan authority as ordinary decomposition.
+            RequireValid(PersistedPlan(parent, plan.Parent, snapshot)!);
+            _ = ValidatedClosure(parent.Receipts.ChainAtoms, globalEntries, snapshot, rules);
+            var retained = ValidatedClosure(chain.Where(globalEntries.ContainsKey), globalEntries, snapshot, rules);
+            retained.UnionWith(chain);
+            foreach (var oldChild in parent.Receipts.ChainAtoms)
+                if (!retained.Contains(oldChild))
+                    throw new FormatException($"CHAIN_RECONCILE_DROPS_CHILD atom_id={oldChild}");
+        }
+        else if (!parent.Receipts.ChainAtoms.IsEmpty
+            && !parent.Receipts.ChainAtoms.SequenceEqual(chain, StringComparer.Ordinal))
             throw new FormatException("CHAIN_CONFLICT existing chain differs from parent CAS plan");
         return new DigestionDecompositionWriteSet(parent with
         {
             Receipts = parent.Receipts with { ChainAtoms = chain, UnresolvedSubitems = [] },
         }, children.ToImmutable(), objects.ToImmutable());
+    }
+
+    private static HashSet<string> ValidatedClosure(IEnumerable<string> roots,
+        IReadOnlyDictionary<string, DigestionLedgerEntry> entries,
+        RepositorySnapshot snapshot, TheoryAtomizerRules rules)
+    {
+        var seen = new HashSet<string>(StringComparer.Ordinal);
+        var pending = new Stack<string>(roots);
+        while (pending.TryPop(out var id))
+        {
+            if (!seen.Add(id)) continue;
+            if (!entries.TryGetValue(id, out var entry))
+                throw new FormatException($"CHILD_MISSING atom_id={id}");
+            if (!snapshot.TryGetFile(DigestionCasStore.RootPath + id, out var blob))
+                throw new FormatException($"CHILD_CAS_MISSING atom_id={id}");
+            var fingerprint = DigestionFingerprint.Compute(blob.RawBytes.AsSpan());
+            if (entry.AtomId != id || fingerprint.RawSha256 != "sha256:" + id
+                || entry.CasRef != fingerprint.RawSha256 || entry.Fingerprints != fingerprint)
+                throw new FormatException($"CHILD_IDENTITY_CONFLICT atom_id={id}");
+            if (entry.Receipts.ChainAtoms.IsEmpty) continue;
+            var nested = Plan(entry, blob.RawBytes, AtomizerRegistry.Require(entry.Atomizer).Atomize,
+                rules, snapshot);
+            var materialized = Materialize(entry, nested, entries);
+            if (!materialized.NewEntries.IsEmpty)
+                throw new FormatException($"CHILD_MISSING parent={id}");
+            foreach (var child in entry.Receipts.ChainAtoms) pending.Push(child);
+        }
+        return seen;
     }
 
     private static void RequireValid(DigestionClausePlan plan)

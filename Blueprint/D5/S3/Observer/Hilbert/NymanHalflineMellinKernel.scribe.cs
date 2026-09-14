@@ -48,8 +48,10 @@ internal sealed class NymanHalflineMellinKernelDocument : IScribeDocumentDefinit
             Describe.Lean(DescribeId.Create("halfline-real-source-vector"),
                 DeclarationHandle.Create(Prefix + "realSourceVector"), H("Real source vector"),
                 StatementSource.FromAuthor(Disp(Seq(RealBind, Source(A), InMacro, Sp, F.Id("H")))),
-                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
+                AssessedProvenance.FromLiterature(
+                    LibraryNoteRef.Create("D5/L/Weil/baezduarte2002nyman")), Blocks(Paragraph(Text(
                     "F_a is the Lp class of x |-> ofReal(fract(1/(a*x))). "
+                    + "This realizes the Introduction's real-dilation family in the complex Lp space. "
                     + "The construction proves square integrability before taking the quotient."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("halfline-real-source-representative"),

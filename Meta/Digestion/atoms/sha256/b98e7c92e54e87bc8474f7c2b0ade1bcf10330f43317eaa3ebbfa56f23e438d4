@@ -1,0 +1,25 @@
+**30.29 定理与证明：系数空间上的正迹类 Gram 算子。** 定义
+\[
+A=\operatorname{compose}(\operatorname{adj}(T),T):\ell^2(\mathbb N_0)\to\ell^2(\mathbb N_0).
+\]
+它有界自伴，\(A_{ij}=\operatorname{inner}(h_i,h_j)\)，且 \(\operatorname{inner}(z,Az)=\|Tz\|^2\ge0\)。若 \(P_N\) 投影到 \(e_0,\ldots,e_N\)，则
+\[
+\|T-TP_N\|_{\rm op}\le\left(\sum_{k>N}\|h_k\|^2\right)^{1/2}\longrightarrow0.
+\]
+故 \(T\) 是有限秩算子的范数极限，紧致；\(A\) 亦紧致。用正紧算子的谱定理，取非零特征值 \(\lambda_j>0\) 及相应正交单位特征向量 \(u_j\)，余空间在核中。Parseval 和非负项 Tonelli 给
+\[
+\begin{aligned}
+\sum_{k\ge0}\operatorname{inner}(e_k,Ae_k)
+&=\sum_{k\ge0}\sum_j\lambda_j|\operatorname{inner}(u_j,e_k)|^2\\
+&=\sum_j\lambda_j\sum_{k\ge0}|\operatorname{inner}(u_j,e_k)|^2
+=\sum_j\lambda_j=S_0.
+\end{aligned}
+\]
+因此特征值可求和，\(A\) 为正迹类，
+\[
+\boxed{\operatorname{tr}A=\|A\|_1=\|T\|_{\rm HS}^2=S_0,\qquad
+\|A\|_{\rm op}=\|T\|_{\rm op}^2.}
+\]
+最后的范数等式：一向由伴随范数和复合次乘性，另一向由
+\(\|Tz\|^2=\operatorname{inner}(z,Az)\le\|A\|_{\rm op}\|z\|^2\) 取上确界。这里的正迹类对象在系数空间上；它不是类型不匹配的 \(TT\)，也不把 \(T\operatorname{adj}(T)\) 所在的 \(H\) 与系数空间混同。
+

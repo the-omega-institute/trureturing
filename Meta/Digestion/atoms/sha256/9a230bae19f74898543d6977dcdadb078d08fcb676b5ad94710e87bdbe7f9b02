@@ -1,0 +1,22 @@
+**命题 28.3（受限解码的三层风险分解）。** 在所有条件分布具有有限对数损失的条件下，令
+$$
+L(p)=\mathbb E[-\log_2p(Y\mid Z,Q)].
+$$
+则
+$$
+\begin{aligned}
+L(\widehat p)-H(Y\mid H,Q)
+={}&I(Y;H\mid Z,Q)\\
+&+\inf_{p\in\mathcal D_B}\mathbb E D_{\rm KL}\!\left(P_{Y\mid Z,Q}\Vert p_{\cdot\mid Z,Q}\right)\\
+&+\left[L(\widehat p)-\inf_{p\in\mathcal D_B}L(p)\right].
+\end{aligned}
+$$
+
+**证明。** 交叉熵恒等式给 $L(p)=H(Y\mid Z,Q)+\mathbb E D_{\rm KL}(P_{Y\mid Z,Q}\Vert p)$。由于 $Z$ 是 $(H,Q)$ 的函数，条件熵链式恒等式给
+$$
+H(Y\mid Z,Q)-H(Y\mid H,Q)=I(Y;H\mid Z,Q).
+$$
+将 $\inf_{p\in\mathcal D_B}L(p)$ 加上再减去，并用前一恒等式展开，即得三项分解。证毕。
+
+第一项是表示遗漏的任务相关历史；第二项是预算受限的解码类即使达到其最优仍存在的逼近障碍；第三项是具体算法在该类中尚未达到最优的差距。三项的归因只对给定分布、问题和对数损失成立；它不是因果识别定理，也不保证有限算法能求出类内下确界。第18.2节的无预算分解是这里在 $\mathcal D_B$ 取全体可行解码器时的特例，因此本命题的增量是把“表示不足”和“受限读取能力”分开。
+

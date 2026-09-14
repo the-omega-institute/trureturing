@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:68cb6b767e71ea2e6e925a40eaa872879df591641ee61daa5ba267f114b5bc4e
+  normalized_sha256: sha256:68cb6b767e71ea2e6e925a40eaa872879df591641ee61daa5ba267f114b5bc4e
+cas_ref: sha256:68cb6b767e71ea2e6e925a40eaa872879df591641ee61daa5ba267f114b5bc4e
+coverage_gids:
+  - gid: D5/S3/PrimeForms/PrimaryPseudoperfectPortComposition.isPPN_mul_squarefree_coprime_iff_portDelta_eq_one
+    target_statement_id: sha256:77ece752accbbe9516910638ec5aaea858991ed43f3438d37c0b280f179b3c1d
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1107cc7f3b8ff0efad0721fb0366a20c89b107c77cfe1e89a626988d627a83fa
+  normalized_sha256: sha256:1107cc7f3b8ff0efad0721fb0366a20c89b107c77cfe1e89a626988d627a83fa
+cas_ref: sha256:1107cc7f3b8ff0efad0721fb0366a20c89b107c77cfe1e89a626988d627a83fa
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 3, reading 「42.2 总响应、部分消费者与严格标签闭包」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: fb685e4730b67da85335673063d7b754e0b4b0cad839524fd79d57b2e08119f0
+    next_atom_id: 5afeab3086d36434422ad7fdf15ae0b31f8e422610da36d1720796ef61e092b1

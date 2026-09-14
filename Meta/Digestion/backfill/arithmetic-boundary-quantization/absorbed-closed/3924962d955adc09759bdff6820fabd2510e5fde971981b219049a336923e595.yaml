@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:3924962d955adc09759bdff6820fabd2510e5fde971981b219049a336923e595
+  normalized_sha256: sha256:3924962d955adc09759bdff6820fabd2510e5fde971981b219049a336923e595
+cas_ref: sha256:3924962d955adc09759bdff6820fabd2510e5fde971981b219049a336923e595
+coverage_gids:
+  - gid: D5/S3/Analytic/Knapsack/GridDualStructure.fractional_optimum_saturates
+    target_statement_id: sha256:9e8d5e23a31ac6dd05ff5f0485047fd7ce93675249237ceb4fa6154f79555f63
+receipts:
+  unresolved_subitems: []

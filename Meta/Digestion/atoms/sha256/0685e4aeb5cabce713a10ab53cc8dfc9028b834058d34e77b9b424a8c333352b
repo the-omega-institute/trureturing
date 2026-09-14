@@ -1,0 +1,33 @@
+**35.8 Proposition (Null boundary and uniform consecutive-block density).** The continuous
+function \(g(x)=\max_i\|x_i\|_{\mathbb T}\) has
+\[
+\partial_H U_Q\subseteq\{g=r\}
+\subseteq\bigcup_{i=1}^d\pi_i^{-1}(\{r,-r\}).
+\]
+All these fibers are Haar-null by 35.7. Thus both \(\{g=r\}\) and the
+relative boundary of the strict neighborhood are null. For small
+\(0<\delta<\min(r,1/2-r)\), define continuous cutoffs by composing \(g\)
+with the piecewise linear functions
+\[
+f^-_\delta=\min(1,\max(0,(r-g)/\delta)),\qquad
+f^+_\delta=\min(1,\max(0,(r+\delta-g)/\delta)).
+\]
+They satisfy \(f^-_\delta\le\mathbf1_{U_Q}\le f^+_\delta\), and differ
+from that indicator only in \(\{|g-r|\le\delta\}\). As \(\delta\downarrow0\),
+continuity from above of finite measure makes the strip measure tend to 0.
+The two integrals therefore tend to \(d_Q\). Applying 35.5 to the two
+cutoffs, then squeezing and taking \(\delta\downarrow0\), proves
+\[
+\sup_{x\in H}\left|\frac1M\sum_{n=1}^M\mathbf1_{U_Q}(x+n\alpha)-d_Q\right|
+\longrightarrow0.
+\]
+In particular, with integer \(m\ge0\),
+\[
+\sup_{m\ge0}\left|
+\frac{\#(B_Q\cap\{m+1,\ldots,m+M\})}{M}-d_Q\right|\longrightarrow0.
+\]
+Taking \(m=0\) gives natural density. Taking any fixed forward tail gives
+the same density. Merely observing that an orbit avoids the boundary would
+not have justified the indicator passage; the Haar-null boundary is essential
+to this proof.
+

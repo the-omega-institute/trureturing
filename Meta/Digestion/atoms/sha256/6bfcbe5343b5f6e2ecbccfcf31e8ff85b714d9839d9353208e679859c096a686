@@ -1,0 +1,13 @@
+**定理。** 若 $\omega\ne0$，且 $r\in\mathbb N$、$r>0$，则未取模的几何相位差
+
+$$
+\Theta_{L,r}=-\frac{\omega}{2}(d_L-d_{L+r})
+$$
+
+满足
+
+$$
+\boxed{\Theta_{L,r}\ne0,\qquad
+\Theta_{L+1,r}=-\alpha\Theta_{L,r}.}
+$$
+

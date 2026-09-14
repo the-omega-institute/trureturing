@@ -1,0 +1,6 @@
+**命题 361.3。** 对每个无限 $J_A$，存在 $x\in X_A^{\rm cap}\setminus B_A^{\rm cap}$ 和 $r\in\mathbb Q^\omega$，使前缀圆周和
+$$
+\left[\sum_{n=0}^{N}r_nx_n\right]\quad(N\in\omega)
+$$
+不收敛。因此全部有理观察的有限支撑公式不定义全乘积上的一般相位级数。
+

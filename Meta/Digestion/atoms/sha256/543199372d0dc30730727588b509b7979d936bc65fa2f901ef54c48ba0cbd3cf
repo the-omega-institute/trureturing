@@ -1,0 +1,17 @@
+**定义 213（全素数零扩展与 5040 局部窗口）。** 对有限容量对 \((P,A)\)，定义全素数零扩展
+\[
+\jmath_{(P,A)}^{\rm Pr}:S(P,A)\longrightarrow\mathsf E_{\rm Pr},
+\qquad
+\jmath_{(P,A)}^{\rm Pr}(a)(p)=
+\begin{cases}
+a(p),&p\in P,\\
+0,&p\in\operatorname{Pr}\setminus P.
+\end{cases}
+\]
+对 \(P_{5040},A_{5040}\) 定义其局部窗口
+\[
+\mathsf S_{5040}^{\rm loc}
+=\{(p,j):p\in P_{5040},\ j<\ell_Z(A_{5040}(p))\}.
+\]
+这里“局部位置”只指该容量所需的有限窗口；三轴群 \(\mathsf Q_{P_{5040}}\) 的环境仍允许全部 \(j\in\omega\)。
+

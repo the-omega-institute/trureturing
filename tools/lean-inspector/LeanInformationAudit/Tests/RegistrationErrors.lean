@@ -4,6 +4,8 @@ open Lean
 open D5.S3.ConceptDynamics.CIRPT
 open D5.S3.ConceptDynamics.InformationEscape
 
+set_option linter.style.longLine false
+
 namespace LeanInformationAudit.Tests.RegistrationErrors
 
 set_option autoImplicit false
@@ -155,8 +157,7 @@ register_information_theorem definitionBackedTarget
   primitives fixtureBundle
   realization definitionBackedRealization
 
-/-- error: IE-C002 DuplicateRegistration:
-LeanInformationAudit.Tests.RegistrationErrors.legacyExample -/
+/-- error: IE-C002 DuplicateRegistration object_arena=LeanInformationAudit.Tests.RegistrationErrors.fixtureLawArena theorem_name=LeanInformationAudit.Tests.RegistrationErrors.legacyExample registration_modules=["LeanInformationAudit.Tests.RegistrationErrors"] count=2 -/
 #guard_msgs (error) in
 register_information_theorem legacyExample
   in fixtureLawArena

@@ -1,0 +1,12 @@
+**定理 59（残差与增量协方差的精确秩）。** 对任意有限正整数列 \(a_1,\ldots,a_d\)，实对称矩阵
+\[
+\bigl(\Sigma(a_i,a_j)\bigr)_{i,j},\qquad
+\bigl(\Lambda_{a_i a_j}(0)\bigr)_{i,j}
+\]
+的秩都等于不同指数的个数。两矩阵的核同为
+\[
+\left\{w\in\mathbb R^d:\ \sum_{i:a_i=a}w_i=0
+\text{ 对每个出现的指数 }a\right\}.
+\]
+此外任意 \(a,b>0\) 的 \(\Sigma(a,b)\ne0\)。有界漂移抵消关系与这些协方差零关系分别由定理 55 与本定理规定。
+

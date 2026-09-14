@@ -1,0 +1,5 @@
+$$
+p_k(c)=\sum_{c'\in\mathcal C_{n,k+1}}p_{k+1}(c')D_k(c',c),\qquad
+Z_k(c)=\sum_{c'\in\mathcal C_{n,k+1}}Z_{k+1}(c')D_k(c',c),
+\tag{479.3a}
+$$

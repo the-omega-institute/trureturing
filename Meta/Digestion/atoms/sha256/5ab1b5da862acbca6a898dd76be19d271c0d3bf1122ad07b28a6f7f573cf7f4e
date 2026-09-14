@@ -1,0 +1,6 @@
+**定理 353.2。** 对上述任一集合 $X$，记
+$$
+X^*=\operatorname{Enc}[X]=\operatorname{El}(\operatorname{Enc}(X)),\qquad
+\operatorname{enc}_X=\operatorname{Enc}|_X.
+$$
+它是 $X\to X^*$ 的双射，逆恰为 $\operatorname{Dec}|_{X^*}$。

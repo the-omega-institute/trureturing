@@ -1,0 +1,15 @@
+**定义 447.1（全前缀黄金窗口及实际实数 Mertens 函数）。** 本组的 $A_L$ 专指下列 Mertens 全前缀最大值，不与其它局部定义的同名窗口参数混用。对 $L\ge1$ 定义
+$$
+A_L=\max_{1\le N<G_L}|M(N)|.
+$$
+这个有限非空集合包含 $N=1$，所以 $A_L\ge1$。对全部实数 $x$，沿用实际取整定义
+$$
+\mathcal M(x)=\sum_{1\le n\le\lfloor x\rfloor_+}\mu(n)
+=M(\max(0,\lfloor x\rfloor)),
+$$
+其中 $\lfloor x\rfloor_+=\max(0,\lfloor x\rfloor)$。$x<1$ 时和为空；它的定义域仍是全部实数。解析前提 $hM(a)$ 指
+$$
+\exists A>0\ \forall x\in\mathbb R,\quad x\ge1\Longrightarrow |\mathcal M(x)|\le A x^a.
+$$
+实数幂只在此处的正基底上使用。
+

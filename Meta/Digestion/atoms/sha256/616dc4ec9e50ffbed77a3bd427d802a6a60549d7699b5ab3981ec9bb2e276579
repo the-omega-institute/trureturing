@@ -1,0 +1,27 @@
+**35.2 Definition (Fixed parameters and distinct height symbols).** All logarithms are
+natural. Fix the primes, \(k\) and \(Q\) as in 35.1 throughout all limits, and set
+\[
+d=k-1,\qquad h_i=\log p_i>0,\qquad
+\alpha_i=h_0/h_i\ (1\le i\le d),\qquad
+\alpha=(\alpha_1,\ldots,\alpha_d).
+\]
+Write \(\mathbb T=\mathbb R/\mathbb Z\),
+\(\|t\|_{\mathbb T}=\min_{a\in\mathbb Z}|t-a|\), and
+\[
+H=\overline{\{n\alpha:n\in\mathbb Z\}}\subseteq\mathbb T^d,
+\qquad r=1/Q,\qquad
+U_Q=\{x\in H:\max_{1\le i\le d}\|x_i\|_{\mathbb T}<r\},
+\]
+\[
+B_Q=\{n\in\mathbb Z_{\ge1}:n\alpha\in U_Q\},\qquad
+d_Q=\mu_H(U_Q),\qquad
+S_h=\sum_{i=0}^{k-1}h_i,\quad h_{\max}=\max_i h_i,\quad
+E_Q=\frac1Q\sum_{i=1}^{d}h_i.
+\]
+Here \(\mu_H\) is normalized Haar probability, justified in 35.3. The group
+\(H\) need not be the full torus or connected. The source's earlier slab
+symbol \(Q=\sum h_i\) is denoted \(S_h\) in this section, so it cannot be
+confused with the integer recurrence parameter. For each rounded box below,
+\(T_n=\min_i c_i\) is its lower height and \(A_n=\sum_i c_i\) is its total;
+these two quantities have different roles and are never identified.
+

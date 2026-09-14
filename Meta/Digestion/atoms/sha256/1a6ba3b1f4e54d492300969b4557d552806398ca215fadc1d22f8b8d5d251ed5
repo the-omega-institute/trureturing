@@ -1,0 +1,74 @@
+**定理 276（目标构造的合法性及参考点交换）。** 第 275 条的两个规范树载体是集合，其叶与配对构造器单射、像互斥且满足自由有限树条件；第 261 条的递归式在它们之间给出双射及其完整逆。对每个 $o\in J^3$，映射
+$$
+R_o:\mathcal B_o\longrightarrow\mathcal B_{R,b_3(o)},\qquad
+R_o(o,X)=(b_3(o),RX)
+$$
+是双射，且
+$$
+R_o\bigl((o,X)\boxtimes_o(o,Y)\bigr)
+ =\bigl(b_3(o),RX\boxtimes^R_{b_3(o)}RY\bigr).
+$$
+这是完整记录的等式，联合域也保持且反映。目标参考点为 $(0_S,0_S,0_S)$ 时，底层乘法恰为第 264 条的 $\boxtimes^R$。对任意 $L\in\operatorname{Mat}_{3\times3}(J)$、$u\in J^3$，整数仿射函数 $F:J^3\to J^3$、$F(x)=Lx+_Ju$ 的第 266 条目标 $F^R:S^3\to S^3$ 满足下式，其中 $u',v',o'\in S^3$ 独立任取：
+$$
+F^R(u'\oplus_Z^{(3)}v'\ominus_Z^{(3)}o')
+ =F^R(u')\oplus_Z^{(3)}F^R(v')\ominus_Z^{(3)}F^R(o').
+$$
+
+第 268 条的零表、逐点加减与差分满足准确类型的等式
+$$
+\begin{gathered}
+\mathscr T_{b_3}(0_{\mathcal R})=\mathbf0_R,\qquad
+\mathscr T_{b_3}(c+d)=\mathscr T_{b_3}(c)\oplus_R\mathscr T_{b_3}(d),\\
+\mathscr T_{b_3}(-c)=\ominus_R\mathscr T_{b_3}(c),\qquad
+\mathscr T_k(\Delta C)=\Delta^R(\mathscr C C).
+\end{gathered}
+$$
+其中 $c,d\in\mathcal R$、$C\in\mathcal A(\mathcal R)$；$\mathscr C$ 将 $\mathcal A(\mathcal R)$ 双射到第 268 条按第 275 条解释的 $\mathcal A_R$。
+
+**证明。** Kuratowski 对的单射性及 $\tau_0\ne\tau_1$ 给出各构造器的单射性与叶、配对像的互斥性。$\omega,\mathsf N_Z$ 是集合，替代给两边第零层；每层用积、替代和并集得到下一层，自然递归及替代、并集给两个载体都是集合。层的递增性保证任意两棵已有树在某一共同层内，故配对仍属载体；反向每个元素按所属有限层有有限构造。若 $r$ 是配对节点的直接子树，则从 $r$ 到该节点存在经过配对外壳的非空成员链，故 $r$ 的环境秩严格较小；沿子树路径反复下降，不能产生循环。构造器互斥单射使递归分支及每一分支的参数唯一，所以第 261 条递归图存在且单值。
+
+对原树的构造高度归纳：叶上逆复合由 $\operatorname{Dec}(\operatorname{NatZ}(n))=n$ 恢复参数；配对上分别恢复左右子树再配对，故逆复合为恒等。另对目标树高度归纳：叶参数 $c\in\mathsf N_Z$ 满足 $\operatorname{NatZ}(\operatorname{Dec}(c))=c$；配对上将两个目标侧归纳式代入，故另一复合也为恒等。于是得到双射及完整逆；该证明分别用于各个已固定的合法实现。
+
+参考点乘法只改变位置，而位置不参与严格增时条件，所以第 265 条的合法性证明仍适用，背景电荷仍是两个背景电荷之积。新位置由第 256、258 条逐坐标给出
+$$
+b_3(x_X(a)+_Jx_Y(b)-_Jo)
+ =b_3(x_X(a))\oplus_Z^{(3)}b_3(x_Y(b))\ominus_Z^{(3)}b_3(o).
+$$
+其余字段逐项如下：两份旧事件的标签副本及全部 $\Omega_X\times\Omega_Y$ 父对事件在两侧相同；旧字段复制交换；新时刻用第 256 条的最大值和后继式交换；符号按同一标签乘法相乘；来源用 $\theta(\operatorname{pair}(r,s))=\operatorname{pair}_R(\theta r,\theta s)$ 交换。两旧偏序和每条父边相同，故连接任意两事件的有限生成边路径也相同，传递闭包因而相等。当前整体是全部父对，选择是 $A_X\times A_Y$ 的父对像，两者分别相同。这证明的是完整记录等式。每条生成边仍严格增时，因而闭包无自环；背景电荷为 $u^R(R(C_X))\otimes_Zu^R(R(C_Y))$，由第 265 条为零，保证乘法落在所述平衡纤维。
+
+$b_3$ 单射使两个参考点相等的条件保持且反映。第 262、265 条给 $R$ 与 $D_R$ 在平衡载体上的双逆，故纤维逆明确为 $(b_3(o),Y)\mapsto(o,D_RY)$。任意目标参考点又有唯一 $b_3^{-1}$ 原像，因此联合域两向对应。零参考点的逐坐标减法不改变位置，其余字段未改，故回到默认乘法。
+
+对仿射式的第 $i$ 个坐标取 $\operatorname{ival}$。由第 114 条，两侧都展开为通常整数
+$$
+\sum_{j=1}^{3}\operatorname{ival}(L^R_{ij})
+ \bigl(\operatorname{ival}(u'_j)+\operatorname{ival}(v'_j)-\operatorname{ival}(o'_j)\bigr)
+ +\operatorname{ival}(u^R_i).
+$$
+右侧的三个平移项之和为 $\operatorname{ival}(u^R_i)+\operatorname{ival}(u^R_i)-\operatorname{ival}(u^R_i)$，恰剩一个平移项。$\operatorname{ival}$ 单射及三个投影的唯一性给原等式；证明不要求矩阵可逆。
+
+表运算的支撑满足
+$$
+\operatorname{supp}(C'\oplus_R D')\subseteq
+\operatorname{supp}(C')\cup\operatorname{supp}(D'),\qquad
+\operatorname{supp}(\ominus_R C')=\operatorname{supp}(C'),\qquad
+\operatorname{supp}(\mathbf0_R)=\varnothing.
+$$
+故加、负、减均落在 $\mathcal R_R$，而零表的全函数域仍是 $S^3$。对每个 $p\in J^3$，$\mathscr T_{b_3}(c)(b_3p)=b(c(p))$，第 256 条的零、加、负式遂分别给前三个等式；$b_3$ 满射使它们是全域函数等式。
+
+原累积序列的尾部见证 $(\ell,u,B)$ 映到 $(b(\ell),b(u),\mathscr T_{b_3}(B))$。反向，对任意 $C'\in\mathcal A_R$，逐时间置 $C(n)=\mathscr T_{b_3}^{-1}(C'(b(n)))$；把目标见证 $(\ell',u',B')$ 取逆得到原见证 $(b^{-1}(\ell'),b^{-1}(u'),\mathscr T_{b_3}^{-1}(B'))$。序的保持反映和零表式使两侧左尾零、右尾常值分别对应，右尾常值不要求为零。逐点双逆证明 $\mathscr C[\mathcal A(\mathcal R)]=\mathcal A_R$ 且该限制是双射。
+
+给任意目标尾部见证，减小左阈值、增大右阈值可令 $\ell'\le_Su'$。若 $n'<_S\ell'$，则 $n'$ 及其前驱的时间片都为零；若 $u'<_Sn'$，整数前驱满足 $u'\le_Sn'\ominus_S1_S$，两个时间片都为 $B'$。所以差分的非零时间限于有限整数区间 $[\ell',u']_S$，并有
+$$
+\operatorname{supp}(\Delta^RC')\subseteq
+\bigcup_{n'\in[\ell',u']_S}\{n'\}\times
+\bigl(\operatorname{supp}(C'(n'))\cup
+\operatorname{supp}(C'(n'\ominus_S1_S))\bigr).
+$$
+每项有限，区间由 $\operatorname{ival}$ 双射到一个有限整数区间，故右侧有限，证明联合目标 $\mathcal L_R$ 的合法性。原侧用相同论证给 $\Delta C\in\mathcal L$。最后第 256 条给 $b(n-_J1_J)=b(n)\ominus_S1_S$。对任意 $(n,p)\in J\times J^3$，将此式及表的加负运输式代入第 275 条联合差分，得到
+$$
+\bigl(\Delta^R(\mathscr C C)\bigr)(b(n),b_3(p))
+ =b\bigl(C(n)(p)-_JC(n-_J1_J)(p)\bigr)
+ =\mathscr T_k(\Delta C)(b(n),b_3(p)).
+$$
+$k$ 满射给完整联合函数图等式，时间切片等式是它的逐时间限制。证毕。
+

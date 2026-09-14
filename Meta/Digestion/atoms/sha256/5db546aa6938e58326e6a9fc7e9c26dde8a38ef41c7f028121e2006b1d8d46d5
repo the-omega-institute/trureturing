@@ -1,0 +1,9 @@
+**证明。** 在 R15 中取
+$x=\varphi^{r_p}$、$y=\varphi^{n_p}$、$k=n_p$、$l=r_p$；等幂前提来自
+$(\varphi^{r_p})^{n_p}=(\varphi^{n_p})^{r_p}$。由 R2 与 R.10，
+$x_a=1$、$y_a=\epsilon_p$ 于模 $p$，所以
+
+$$
+n_p\eta_p=r_p\epsilon_p^{r_p-1}q_p\pmod p.
+$$
+

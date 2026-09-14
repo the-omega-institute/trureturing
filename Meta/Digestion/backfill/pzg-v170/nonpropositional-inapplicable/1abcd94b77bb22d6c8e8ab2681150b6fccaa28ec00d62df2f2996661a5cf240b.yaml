@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1abcd94b77bb22d6c8e8ab2681150b6fccaa28ec00d62df2f2996661a5cf240b
+  normalized_sha256: sha256:1abcd94b77bb22d6c8e8ab2681150b6fccaa28ec00d62df2f2996661a5cf240b
+cas_ref: sha256:1abcd94b77bb22d6c8e8ab2681150b6fccaa28ec00d62df2f2996661a5cf240b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 2, reading 「评注 27.634(统计隙立方律与系综对数亏:全案清账)」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: 6f5c6e69f98ba1f8abda4054b4eb828eb08696e171c6358e90140e6b988c984e
+    next_atom_id: 357ffe698f41a9e46b9cb77a5b118360cff8bb5bf8dc318693762b2e4aac20c6

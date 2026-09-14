@@ -15,7 +15,9 @@ def evidenceTypes : Array Name := #[
   `D5.S3.ConceptDynamics.InformationEscape.StructuralStrictnessCertificate,
   `LeanInformationAudit.BoundedTruncationFamily,
   `LeanInformationAudit.UnreachableElaborationEvidence,
-  `LeanInformationAudit.AnalysisDisposition, `LeanInformationAudit.CensusAssessment]
+  `LeanInformationAudit.AnalysisDisposition, `LeanInformationAudit.CensusAssessment,
+  `LeanInformationAudit.StructuralCatalogSeal,
+  `D5.S3.ConceptDynamics.InformationEscape.StructuralCatalog.TrivialInCatalog]
 
 def approximationHead := `LeanInformationAudit.BoundedTruncationFamily.approximation
 
@@ -56,7 +58,8 @@ partial def decodeName? (expr : Expr) : Option Name := do
 
 def isSupport (head : Name) : Bool :=
   (evidenceTypes.extract 0 2 ++ evidenceTypes.extract 3 5).contains head ||
-    head == approximationHead
+    head == approximationHead || head == `LeanInformationAudit.StructuralCatalogSeal ||
+    head == `D5.S3.ConceptDynamics.InformationEscape.StructuralCatalog.TrivialInCatalog
 
 private def namedRecord (info : ConstantInfo) (head : Name) : Json := Id.run do
   let args := info.type.getAppArgs

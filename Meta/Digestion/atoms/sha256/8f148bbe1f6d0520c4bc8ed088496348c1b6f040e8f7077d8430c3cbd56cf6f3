@@ -1,0 +1,10 @@
+**定理 440.6。** 任意集合索引 $J$ 和集合族 $(Y_i)_{i\in J}$ 有积双射
+$$
+\Psi:\prod_{i\in J}Y_i^*\to\left(\prod_{i\in J}Y_i\right)^*,\quad\Psi(c)=\operatorname{Enc}(i\mapsto\operatorname{Dec}(c_i)),
+$$
+逆为 $\operatorname{Enc}(p)\mapsto(i\mapsto\operatorname{Enc}(p_i))$，且完整图满足
+$$
+\operatorname{Enc}(p)=\operatorname{Pack}\{\langle\operatorname{Enc}(i),\operatorname{Enc}(p_i)\rangle_Z:i\in J\}.
+$$
+**证明。** 逐坐标解码落在指定因子，替代给原索引上的完整函数图；逐坐标两向逆使两个复合恒等。逐图边应用配对式再打包，给完整图公式。改用索引 $J^*$ 时须沿 $i\mapsto\operatorname{Enc}(i)$ 重索引。$J=\varnothing$ 时两个普通积各含唯一空函数，$\Psi$ 将它送到 $\operatorname{Enc}(\varnothing)$；有空因子时两个积都空。构造未删任何无限索引或零值图边。证毕。
+

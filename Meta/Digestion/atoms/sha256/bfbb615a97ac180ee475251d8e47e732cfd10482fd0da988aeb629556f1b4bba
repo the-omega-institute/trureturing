@@ -1,0 +1,15 @@
+**证明。** 有限支撑使 \(\mathsf V_P\) 和 \(\mathsf C_P\) 的定义都是有限整数和，故为群同态。对任意 \(c\in\mathsf J_P\)，\(\mathsf s_P(c)\) 只有 \(j=0\) 一层，且 \(G_0=1\)，所以 \(\mathsf V_P(\mathsf s_P(c))=c\)，得到 \(\mathsf V_P\) 满射；\(\Sigma_P\) 的满射性由定义 200 给出，故 \(\mathsf C_P\) 也满射。
+
+先固定 \(t,p\)。Fibonacci 递推给出
+\[
+G_1=2G_0,\qquad G_{j+2}=G_{j+1}+G_j.
+\]
+所以 (Z-SLOT-KERNEL) 中列出的每个生成元均被 \(\mathsf V_P\) 送到零。反向取任意 \(q\in\ker\mathsf V_P\)，逐次用 \(e_{j+2}=e_{j+1}+e_j\) 将其在每个固定的 \((t,p)\) 上化为 \(a_{t,p}e_{t,p,0}+b_{t,p}e_{t,p,1}\)。其加权值为 \(a_{t,p}+2b_{t,p}\)，对每个 \((t,p)\) 的零值条件给出 \(a_{t,p}=-2b_{t,p}\)，该余项是 \(b_{t,p}(e_{t,p,1}-2e_{t,p,0})\)。有限支撑保证只出现有限多个生成元，遂得核的反向包含。
+
+若 \(q\in\ker\mathsf C_P\)，置 \(c=\mathsf V_P(q)\in\ker\Sigma_P\)。有限支撑且 \(\Sigma_P(c)=0\) 给出
+\[
+c=\sum_{t\ne0,p}c(t,p)\bigl(e_{t,p}-e_{0,p}\bigr)
+\quad\text{于 }\mathsf J_P,
+\]
+其中 \(e_{t,p}\) 是 \((t,p)\) 处的单位表。其 \(\mathsf s_P\) 的提升属于 \(\mathsf L_P\)，从 \(q\) 中减去该提升后落在 \(\ker\mathsf V_P\)。故 \(\ker\mathsf C_P=\ker\mathsf V_P+\mathsf L_P\)。若某元素同时属于两者，应用 \(\mathsf V_P\) 得到它在 \(\mathsf J_P\) 中既为零又是由 \(j=0\) 的时间循环表示的表，故其所有系数为零；和为直和。商同构由第一同构定理及 \(\mathsf C_P\) 的满射性得到。证毕。
+

@@ -1,0 +1,17 @@
+**定理 425.2（预测七·全未来分离与最小闭包）。** 对每个 $L\ge1$，$Q_{L,\infty}$ 在 $K$ 上单射，$n\mapsto Q_{L,\infty}(z(n))$ 在 $\omega$ 上单射。对 $(X,s,q)=(K,T,P_L)$ 或 $(\omega,n\mapsto n+1,P_Lz)$，保持 $q$ 且被 $s$ 保持的最大等价关系为相等关系。对任意集合 $C$ 及函数
+$$
+a:X\to C,\quad d:C\to X_L,\quad s_C:C\to C,
+\qquad q=d\circ a,\qquad a\circ s=s_C\circ a,
+$$
+$a$ 必单射。因此有限 $C$ 上不存在这样的精确实现，无须假设 $a$ 满射。
+
+对定义中的任意集合及全运算族，$\operatorname{DynClosure}(q,I)$ 的纤维对 $I$ 封闭，且
+$$
+\operatorname{Refines}(q,\operatorname{DynClosure}(q,I)).
+$$
+若 $a:X\to C$ 满足 $\operatorname{Refines}(q,a)$ 且其纤维对 $I$ 封闭，则
+$$
+\operatorname{Refines}(\operatorname{DynClosure}(q,I),a).
+$$
+这对空集合情形也成立。$U$ 为单点且唯一运算为 $s$ 时，动态闭包的核正是全未来的核。
+

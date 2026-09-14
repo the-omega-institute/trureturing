@@ -1,0 +1,19 @@
+**33.16 Logarithm series and moment objectives.** For \(p\in\mathcal P\) and
+integer \(n\ge1\), put
+\[
+a_{p,n}=\frac{\alpha_p^n-\beta_p^n}{h_p},\qquad
+J_n(y)=\sum_py_p(\alpha_p^n-\beta_p^n).
+\]
+The classical logarithm series (NIST DLMF 4.6.1, applied to negative arguments)
+gives, for \(0\le z\le1\),
+\[
+s_p(z)=\sum_{n\ge1}\frac{a_{p,n}}n z^n,\qquad
+\mathcal L_z(y):=\sum_ph_ps_p(z)y_p
+=\sum_{n\ge1}\frac{z^n}{n}J_n(y).
+\]
+Indeed \(a_{\max}=\max_p\alpha_p=1/25<1\), and, uniformly on every \(K_r\),
+\(0\le J_n(y)\le4a_{\max}^n\). Comparison with a geometric series proves
+absolute uniform convergence even at \(z=1\), justifying the sums and subsequent
+limits. The first-moment density is \(a_{p,1}=w_p(0)\), whose strict order is
+33.6. This does not imply the same order for every \(n\).
+

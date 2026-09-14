@@ -1,0 +1,11 @@
+**命题 352.4。** 未取模一的有理值及黄金相位在状态记录上的求值分别为
+$$
+s\longmapsto\operatorname{qenc}(L_F(\operatorname{unrec}_{\rm reg}(s)))
+\quad(\mathsf{Rec}_{\rm reg}\to\mathsf{RatFld}),
+$$
+$$
+s\longmapsto T_2(\zeta(1),\operatorname{qenc}(L_F(\operatorname{unrec}_{\rm reg}(s))))
+\quad(\mathsf{Rec}_{\rm reg}\to\mathsf{Phase}_\phi).
+$$
+对容量 $A$ 的限制域恰为第 341 条的 $\mathsf{Rec}_A^{\rm cap}=\operatorname{rec}_{\rm reg}[B_A^{\rm cap}]$。第一式解码再经 $\iota_{\mathbb Q}$ 给 $\ell_F$；第二式为第 336 条固定 $r=r^F$ 的黄金求值。第 332 条的 CSA 桥仍在且仅在既约丰富截面像上互逆。
+

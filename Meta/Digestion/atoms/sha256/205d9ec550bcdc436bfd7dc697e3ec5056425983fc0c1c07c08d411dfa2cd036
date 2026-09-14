@@ -1,0 +1,12 @@
+### 10.3 预测、保持与有限预算
+
+令
+$$
+\epsilon_k=\epsilon_Q(\mathcal E_k,K_k),
+\qquad
+\lambda_k=\max_a[1-K_k(a\mid a)],
+\qquad
+\bar p_0=\widehat p_0,
+\qquad
+\bar p_k=K_k\cdots K_1\widehat p_0.
+$$

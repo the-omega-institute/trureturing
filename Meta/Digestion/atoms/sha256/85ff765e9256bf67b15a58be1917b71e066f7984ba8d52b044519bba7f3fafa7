@@ -1,0 +1,4 @@
+**命题 3.3（缘足不必果生）**〔证〕。存在满足假设 2.2、2.3 的核、账本 $L$ 和可证命题 $v\notin N_L$，使 $v$ 的一个合格证明项的全部引用都属于 $N_L$，而且该引用集非空。
+
+*证明*。取命题逻辑公式为 $\mathcal P$，令 $a=(p\lor\neg p)$、$v=(p\to p)$，二者按句法不同且均为重言式。证明项取两个符号 $\alpha,\beta$；核恰接受 $(\alpha,a)$ 与 $(\beta,v)$，拒绝其他配对。取 $\mathrm{ax}\equiv\varnothing$、$\mathfrak A=\varnothing$、$\mathrm{refs}(\alpha)=\varnothing$、$\mathrm{refs}(\beta)=\{a\}$。可证集恰为 $\{a,v\}$，两者对所有赋值为真，且任何一个的否定均不被接受，故可靠且一致。$a$ 有单点证书，$v$ 有 $\{a,v\}$ 上的无环证书，故假设 2.2 的证书条件也成立。现在取 $N_L=\{a\}$、$w_L(a)=\alpha$、$E_L=\varnothing$、$O_L=\{v\}$。这给出合法账本，$\beta$ 的所有引用均在其中，但 $v\notin N_L$。所以引用条件的满足不强迫选择追加该命题。∎
+

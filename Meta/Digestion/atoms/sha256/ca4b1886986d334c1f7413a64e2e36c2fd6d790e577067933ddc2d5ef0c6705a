@@ -1,0 +1,50 @@
+### 11.5 周期 Navier--Stokes 稳态的扰动能量恒等式
+
+**假设。** 设 $u$ 与 $u_*$ 是光滑周期无散度向量场，$u$ 满足带外力 $f+r$ 的 Navier--Stokes 方程，$u_*$ 满足带外力 $f$ 的定常方程。令 $w=u-u_*$，并假设周期分部积分以及压力与无散度场的 $L^2$ 正交性成立。
+
+**命题。** 扰动 $w$ 满足
+
+\[
+\frac12\frac{d}{dt}\|w\|_{L^2}^2
++\nu\|\nabla w\|_{L^2}^2
+=-\int_{\mathbb T^d}w\cdot((w\cdot\nabla)u_*)
++\int_{\mathbb T^d}w\cdot r.
+\tag{11.4}
+\]
+
+**证明。** 两个方程相减后，对 $w$ 作 $L^2$ 配对。周期边界与无散度条件使
+
+\[
+\int w\cdot((u_*\cdot\nabla)w)=0,
+\qquad
+\int w\cdot((w\cdot\nabla)w)=0,
+\]
+
+**证明。** 压力项也为零，而黏性项经分部积分成为 $\nu\|\nabla w\|_{L^2}^2$，余项即为式 (11.4)。
+
+**假设。** 再假设 $w$ 属于零均值子空间，并满足 Poincare 不等式
+
+\[
+\|\nabla w\|_{L^2}^2\geq\lambda_1\|w\|_{L^2}^2
+\]
+
+**假设。** 同时假设
+
+\[
+-\int_{\mathbb T^d}w\cdot((w\cdot\nabla)u_*)
+\leq G\|w\|_{L^2}^2,
+\qquad
+\gamma=\nu\lambda_1-G>0.
+\]
+
+**定理。** 若 $\|r(t)\|_{L^2}\leq\rho$，则 $\|w(t)\|_{L^2}$ 满足式 (11.1) 的指数误差管。
+
+**证明。** 由式 (11.4)、Poincare 不等式和 Cauchy--Schwarz 不等式，
+
+\[
+\frac12\frac{d}{dt}\|w\|_{L^2}^2
+\leq-\gamma\|w\|_{L^2}^2+\rho\|w\|_{L^2}.
+\]
+
+**证明。** 对 $\|w\|_{L^2}$ 应用第 11.3 节的比较论证即得结论。
+

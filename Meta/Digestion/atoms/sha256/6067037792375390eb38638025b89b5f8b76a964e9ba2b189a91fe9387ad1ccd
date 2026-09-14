@@ -1,0 +1,6 @@
+**定理 418.2（普通积、完整图与全部候选域）。** 对任意集合 $A,B$，包括空集合，令
+$$
+J_{A,B}:A^*\times B^*\longrightarrow\operatorname{Enc}[A\times B],\qquad
+J_{A,B}(\langle c,d\rangle)=\langle c,d\rangle_Z.
+$$
+它是双射。

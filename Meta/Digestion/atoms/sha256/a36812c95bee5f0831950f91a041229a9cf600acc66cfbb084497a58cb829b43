@@ -1,0 +1,5 @@
+**证明。** R.6 表明 $r_p$ 为偶数，故
+$\epsilon_p^{r_p-1}=\epsilon_p$；又
+$n_p\equiv-\epsilon_p\pmod p$。约去单位 $\epsilon_p$ 即得
+$\eta_p=-r_pq_p$。R.10 已证明 $p\nmid r_p$，所以 $-r_p$ 是单位。
+

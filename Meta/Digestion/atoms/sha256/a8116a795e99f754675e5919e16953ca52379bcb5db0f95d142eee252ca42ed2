@@ -1,0 +1,2 @@
+**定义 432.3。** 对 $v,w\in\mathbb R^d$，$v\preceq w$ 表示逐坐标不大于；严格支配表示 $v\preceq w$ 且 $v\ne w$。记 $\operatorname{Min}A=\{v\in A:\neg\exists w\in A\ (w\preceq v\land w\ne v)\}$，并约定 $\operatorname{Min}\varnothing=\varnothing$。此定义允许多个不可比极小值，不预设有同时最小的向量。
+

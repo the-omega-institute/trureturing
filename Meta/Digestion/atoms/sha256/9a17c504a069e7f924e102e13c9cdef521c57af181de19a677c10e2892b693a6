@@ -1,0 +1,26 @@
+**定义与假设 8.11（自由演化后的持续补写与固定标签 Schur 通道）。** 本节另建一个与定义8.1至命题8.10分开的模型。那些条款中的产品公式要求整个有限前缀始终由一个固定标签控制，并把每个新鲜记录写成同一初始标签的条件向量；本节允许自由Hamiltonian在相邻轮次之间混合标签，因此不能把新记录合并成依赖一个固定初始标签的单一张量积记录。
+
+取有限指针集$\mathsf X$，$d=|\mathsf X|\ge2$，$\mathcal H_S=\mathbb C^{\mathsf X}$，$P_x=|x\rangle\langle x|$，以及$\Delta(A)=\sum_xP_xAP_x$。给定$\tau_*>0$和$N\ge1$，令
+$$
+h=\frac{\tau_*}{N},\qquad U(s)=\exp\!\left(-\frac{isH}{\hbar}\right),\qquad H_d=\sum_x\langle x|H|x\rangle P_x,\qquad V=H-H_d,
+$$
+并定义每一小段的无量纲扰动量和总时段扰动量
+$$
+a_*:=\frac{\tau_*\|V\|}{N\hbar}=\frac{h\|V\|}{\hbar},\qquad a:=Na_*=\frac{\tau_*\|V\|}{\hbar}.
+$$
+其中$a_*$是单个自由演化小段的局部扰动量，而$a=Na_*$是整个时段的总量。下文递推中的局部量始终使用$a_*$。
+
+第$k$轮先施加$U(h)$，再把系统与一个全新的准备单元作固定标签的非破坏写入。该写入在系统边缘上是
+$$
+R_k=\operatorname{Ad}_{Z_k}\circ\Phi_k,\qquad \Phi_k(A)=\Gamma_k\odot A,\qquad \Gamma_k(x,y)=\gamma_k(x,y),
+$$
+其中$Z_k$为对角酉，$\Gamma_k$是由新鲜记录向量得到的正半定单位对角Gram矩阵，并且存在固定的$0\le r<1$使
+$$
+|\gamma_k(x,y)|\le r\qquad(k=1,\ldots,N,\ x\ne y).
+$$
+记录单元在写入后立即从系统边缘取迹，随后不再反馈；没有测量结果反馈，也没有旧记录的再耦合。这里把写入视为理想的离散通道，$\tau_*$只计入自由演化小段；结论不覆盖有限持续时间写入脉冲内部的动力学，也不保证当$h$缩小时能以固定强度、带宽或能量维持同一个$r$。若$\sigma_0$为初态，则写入时刻的递推是
+$$
+\sigma_k=R_k\!\left(U(h)\sigma_{k-1}U(h)^\dagger\right),\qquad k=1,\ldots,N.
+$$
+轮间任意时刻只由$U(s)$给出，$0\le s\le h$。这里的“补写”是每轮一个新鲜固定标签 Schur 通道，且记录随后被取迹；它不等同于前面固定标签产品模型的全程环境张量积。
+

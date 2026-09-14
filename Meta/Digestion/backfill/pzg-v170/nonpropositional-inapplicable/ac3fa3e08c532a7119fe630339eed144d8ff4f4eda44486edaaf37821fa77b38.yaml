@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ac3fa3e08c532a7119fe630339eed144d8ff4f4eda44486edaaf37821fa77b38
+  normalized_sha256: sha256:ac3fa3e08c532a7119fe630339eed144d8ff4f4eda44486edaaf37821fa77b38
+cas_ref: sha256:ac3fa3e08c532a7119fe630339eed144d8ff4f4eda44486edaaf37821fa77b38
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 2, reading 「评注 27.753(M3 Greene 仪卷:铸成与平反)」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: 683c9d1303ac1baf71ac16e71fe1e69c75e49bcb89daa20c862eae83f582d667
+    next_atom_id: 281b1890fc3b8556ba40cd59f6e17dab1c167c379b71bc17af6cedef2655eba5

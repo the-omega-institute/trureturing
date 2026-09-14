@@ -1,0 +1,29 @@
+**假设 477.5（进一步解析、完整动态与跨层统计条件）。** 原 $H_c$ 已由定理 474.3 证明，原第 443.14 条的 $M(N)=o(N)$ 后果及 474.6 的同一增长支撑极限据此适用。它们不提供原第 443.13 条的固定指数 $H_6(a)$：若要使用该同指数转移，仍须给某个固定 $0\le a<1$、某个 $C>0$，使全部整数 $N\ge1$ 满足
+$$
+\left|\sum_{\substack{N/2<d\le N\\(d,6)=1}}\mu(d)\right|
++\left|\sum_{\substack{N/6<d\le N/3\\(d,6)=1}}\mu(d)\right|\le CN^a.
+$$
+非平方自由项因 $\mu(d)=0$ 为零，两个原半开区间不改变。对第447条及原 Baez–Duarte 转移，仍使用真实函数 $\mathcal M(x)=M(\max(0,\lfloor x\rfloor))$；相应 $hM(a)$ 要求某个 $A>0$ 对全部实数 $x\ge1$ 有 $|\mathcal M(x)|\le Ax^a$，转移另有原 $0\le a<2$ 条件。第447.6条在这些条件下给原 Baez–Duarte 系数的 $O(k^{a/2-1})$ 界；该系数不是第443条的 $c_Q$。第447.3条所比较的条件仍是
+$$
+\forall\varepsilon>0\ \exists C_\varepsilon>0\ \forall N\in\mathbb N_{\ge1},
+\qquad |M(N)|\le C_\varepsilon N^{1/2+\varepsilon}.
+$$
+其原全前缀窗口为 $A_L=\max_{1\le N<G_L}|M(N)|$（全部 $L\ge1$），对应条件是 $\limsup_{L\to\infty}A_L^{1/L}\le\sqrt\varphi$，并与每个 $\varepsilon>0$ 的真实 $hM(1/2+\varepsilon)$ 按第447.2–447.3条衔接；不只取窗口末值，也不改成单个临界 $O(\sqrt N)$ 界。与 RH 的等价仍需第447.7条的原 $H_{\rm RM}$，第442.3、442.5条的 Nicolas 接口仍保留各自原假设。
+
+这些界的准确缺口可在实际消费者处表述：在第 443.2 条原平方自由且互素支持上，将 $\mu(d)B_Q(N/d)$ 的正质量与负质量绝对值记为 $A_Q^+,A_Q^-$。原支持等式及 $W$ 定义直接给 $M=A_Q^+-A_Q^-$、$W_Q=A_Q^++A_Q^-$。因此若希望从无符号证书推出 $|M(N)|\le CN^a$，所需相对抵消正是
+$$
+2\min(A_Q^+,A_Q^-)\ge W_Q(N)-CN^a.
+$$
+它与474.5的核扩张内部同号重叠不同。定理472.2控制统一余项，定理472.7约束四个明确定义的上界公式；它们都没有证明这个外层有符号条件。474.3证明中所用的经典对角界为 $Kx/\log x$ 量级，且对任意固定 $a<1$，$x^{1-a}/\log x\to\infty$，不能仅以大小比较推出 $O(x^a)$。这里没有把公式障碍认作实际 Möbius 函数的下界。
+
+更一般的5040动态比较仍须给同一个完整共同任务、全部输入与失败、实际初态和带身份边、来源、绝对时间、全档案守卫、终态及转换费，并固定坐标或标量权和同一输入概率。473.4只使用473.3的完整域及精确费用；476.2的准确成功分类只用于476.1的最大图，任意子图只继承已证失败下界。476.3的准入非因子化只在最大图或仍能提升 $M_{11}$ 的指定子图成立；删去所有转换的反例仍允许准入下降。合并算术与换容量的一步边属于其它协议，须另查。若475.7的常余费或实际词边缘条件不成立，须按每条完整执行求费，不能代用其四项特例。
+
+将475.9不同 $k$ 的快照域接成相容系统，仍须给实际连接映射和相容概率。若希望恢复完整历史而不只是某个可下降的谓词，须另给分离历史的观察族、线程完成、非平凡持续细化及所需有效求值条件；全部终点数字观察不分离历史，不能满足这项历史恢复要求。原第469.16条仍覆盖所有 $\ell:[2,\infty)\to\mathbb N$、$\ell(X)\to\infty$ 及全部温度函数 $\beta_X\in\mathbb R,t_X=e^{-\beta_X}>0$，其实际纤维质量为
+$$
+Z_{X,t_X}^{-1}\sum_{\gamma\in\mathcal E_{X,\ell(X),u}}t_X^{|\gamma|}
+\qquad(u\in\mathcal W_{\ell(X)}).
+$$
+完整纤维域、空纤维的零质量及实际统一极限条件都保留。有限词重数、固定距离的维数和固定窗失败质量不提供这些增长窗口及全部温度函数的一致统计估计。
+
+**必要数学引用。** 同一全集合解释、任意集合参数、实复数、测度与无限函数图使用 Z 卷第448条、470.30及原第71–79条；完整零边路径及初态费使用第453条。原 D5 引用为 `ConceptFiberDecomposition`、`Observation/HistoryPayloadFactorization`、`SplitSurjectionFactorization`、`RefinementGeometry/StableObservationInverseLimit`、`RefinementGeometry/InverseLimitCompletion`、`ObserverMemory/ProObjects/FiniteStageReadout`、`DefinitionEscapeAdjudication/GainDifferenceCocycle`、`RefinementGeometry/RefinementUltrametric`，以及 `Weil/Analytic/BaezDuarteMertensTransfer` 的真实有符号前提。有限余滤系统及局部常值读数分别使用 mathlib 版本 $db584cd6d46c92f209a44c0f1c829460d327499d$ 的 `CategoryTheory/CofilteredSystem.lean` 与 `Topology/Category/Profinite/CofilteredLimit.lean`。这些原结果按所列实际域直接用于上述消费者，不另改变其量词或构造新的集合解释。
+

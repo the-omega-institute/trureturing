@@ -323,6 +323,9 @@ public sealed partial class LedgerAlignWriterTests
         public CommandResult CoverBatch(IReadOnlyList<string> arguments) => throw Unsupported();
 
         public CommandResult QuarantineAtom(IReadOnlyList<string> arguments) => throw Unsupported();
+        public CommandResult SettleBatch(IReadOnlyList<string> arguments) =>
+            new(false, string.Empty, "settle-batch is not configured in this fixture");
+
         public CommandResult SettleAtom(IReadOnlyList<string> arguments) => throw Unsupported();
         public CommandResult DecomposeAtom(IReadOnlyList<string> arguments) => throw Unsupported();
         public CommandResult StripScribeReceipts(IReadOnlyList<string> arguments) => throw Unsupported();

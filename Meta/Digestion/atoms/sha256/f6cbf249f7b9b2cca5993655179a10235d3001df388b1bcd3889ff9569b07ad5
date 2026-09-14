@@ -1,0 +1,12 @@
+**定义。** 令 $\nu(r)$ 为 $r$ 的规范化，$c(r)\in\mathbb Z$ 为进位过程的有符号计数，并假设
+
+$$
+\beta(r)-\beta(\nu(r))=c(r)\in\mathbb Z\subset\mathbb Z[\varphi].
+$$
+
+再令 $a_0(n)$ 为 $v=n$ 的唯一规范表示之黄金像的常数坐标，则
+
+$$
+\beta(r).a=a_0(v(r))+c(r).
+$$
+

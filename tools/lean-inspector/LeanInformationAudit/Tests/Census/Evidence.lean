@@ -121,6 +121,7 @@ expect_information_occurrence SealSuccess.idTheorem
 
 run_cmd Lean.Elab.Command.liftTermElabM do
   validateEvidence (← getEnv).header.mainModule inventory
+  unless (count inventory).trivialInCatalog == 0 do throwError "four-class trivial count"
 
 run_cmd do
   let report : FrozenReport := ⟨inventory.headSha, "fixture-digest", inventory.entries.map (·.1)⟩

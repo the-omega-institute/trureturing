@@ -1,0 +1,12 @@
+**定理 55（原始代表修正与有理有界关系的全分类）。** 对任意 \(r\in\mathcal R\)，令 \(a_p=V_p(r)\)、\(n=D(r)\)、\(\zeta_p(r)=U_p(r)-f(a_p)\)。从 \(kr\) 到 \(K(n^k)\) 的每条有限实际路径的电荷为
+\[
+J_p^r(k)=kU_p(r)-f(ka_p)=Q_{a_p}(k)+k\zeta_p(r).
+\]
+对任意有限正整数列 \(a_1,\ldots,a_d\) 与有理数 \(w_1,\ldots,w_d\)，以下等价：
+\[
+\left(\sum_iw_iQ_{a_i}(k)\right)_{k\ge0}\text{ 有界}
+\quad\Longleftrightarrow\quad
+\sum_iw_i a_i=0\quad\text{且}\quad\sum_iw_i f(a_i)=0.
+\]
+条件不成立时该和具有非零线性漂移，并趋于相应符号的无穷。
+

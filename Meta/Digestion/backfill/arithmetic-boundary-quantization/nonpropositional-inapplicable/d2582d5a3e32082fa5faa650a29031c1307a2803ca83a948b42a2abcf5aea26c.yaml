@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d2582d5a3e32082fa5faa650a29031c1307a2803ca83a948b42a2abcf5aea26c
+  normalized_sha256: sha256:d2582d5a3e32082fa5faa650a29031c1307a2803ca83a948b42a2abcf5aea26c
+cas_ref: sha256:d2582d5a3e32082fa5faa650a29031c1307a2803ca83a948b42a2abcf5aea26c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 2, reading 「19. 对方差包络的三个充分占优条件」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: bb9cb917b899f69525f976e72623f465b5df3ccfff956d520c8bda50da6cd742
+    next_atom_id: d308e0151342a0704362c61f969a1247ba1ed2a1df70e64489232f39222840c0

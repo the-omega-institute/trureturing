@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:06c0e8eabbf42144dbc0bca594fb58fee412b501aba260b093da0050cb11bddd
+  normalized_sha256: sha256:06c0e8eabbf42144dbc0bca594fb58fee412b501aba260b093da0050cb11bddd
+cas_ref: sha256:06c0e8eabbf42144dbc0bca594fb58fee412b501aba260b093da0050cb11bddd
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Remark 29.14 corrects only the bibliographic date and source-attribution precedence for candidate theorem 4.129. It asserts nothing about mathematical truth, so no Lean declaration can carry it; the mathematical obligation stays with 4.129 itself.
+    previous_atom_id: 78808693fcf6b5b99e219f6a4387acec4c87f79e8b0b5a9bfc94f8ea0c2be37a
+    next_atom_id: e9d9678998f5dbb13d015694078d02607ee6bd84142191c8830df209870cdd7b

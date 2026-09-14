@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7b23dd9dc39b51df6323855171a6a50ed9f530498f196e3e42df81d0bfffd290
+  normalized_sha256: sha256:7b23dd9dc39b51df6323855171a6a50ed9f530498f196e3e42df81d0bfffd290
+cas_ref: sha256:7b23dd9dc39b51df6323855171a6a50ed9f530498f196e3e42df81d0bfffd290
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 2, reading 「三　M3-b 预登记:偶测试函数变换的有限插值(`EvenTestFunctionFiniteInterpolation`)」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: 317ea2f0859cb47b0b224d339e67a1e474e3169b9e4f3c96499e82d8235951a2
+    next_atom_id: 0eb011bfbaf95ddd660c9d79c5a5f030f6c096f5ee21449c00662c4dfe49b851

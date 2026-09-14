@@ -18,12 +18,14 @@ internal static partial class IngestCommand
         string repositoryRoot,
         RawRepositorySnapshot current,
         ImmutableArray<LedgerUpdate> updates,
-        Action<string, string>? commit = null)
+        Action<string, string>? commit = null,
+        Action? requireInputsUnchanged = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         ArgumentNullException.ThrowIfNull(current);
         if (updates.Length == 0)
         {
+            requireInputsUnchanged?.Invoke();
             return;
         }
 
@@ -36,6 +38,9 @@ internal static partial class IngestCommand
                 ? (ImmutableArray<byte>?)bytes
                 : null,
             StringComparer.Ordinal);
+        // The caller's complete input precondition belongs after the ledger reread,
+        // before any directory creation, replacement or rollback-visible touch.
+        requireInputsUnchanged?.Invoke();
         var touched = new List<string>(updates.Length);
         try
         {
@@ -228,7 +233,7 @@ internal static partial class IngestCommand
             StringComparer.Ordinal));
     }
 
-    private static ImmutableArray<string> WriteCasObjects(
+    private static List<(DigestionCasObject Object, string FullPath)> ReadPendingCasObjects(
         string repositoryRoot,
         ImmutableArray<DigestionCasObject> casObjects)
     {
@@ -253,6 +258,14 @@ internal static partial class IngestCommand
             pending.Add((item, fullPath));
         }
 
+        return pending;
+    }
+
+    private static ImmutableArray<string> WriteCasObjects(
+        string repositoryRoot,
+        ImmutableArray<DigestionCasObject> casObjects)
+    {
+        var pending = ReadPendingCasObjects(repositoryRoot, casObjects);
         var created = ImmutableArray.CreateBuilder<string>(pending.Count);
         try
         {

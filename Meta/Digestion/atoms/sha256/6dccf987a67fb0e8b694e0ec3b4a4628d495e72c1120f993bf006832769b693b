@@ -1,0 +1,43 @@
+**34.7 Dimension-general weighted displacement with signs checked before squaring.**
+For the \(u,t\) in 34.5-34.6 define
+\[
+B=(k-1)|u-t|+|u+(k-1)t|.
+\]
+We prove \(B\le(k-1)\epsilon\). Since \(u\ge|t|\), the first absolute value is
+\(u-t\). If \(u+(k-1)t\ge0\), cancellation gives
+\[
+B=(k-1)(u-t)+u+(k-1)t=ku=S\le(k-1)\epsilon.
+\]
+Otherwise \(t<0\), and the second actual-radius bound gives
+\[
+B=(k-2)u-2(k-1)t
+\le\frac{(k-2)S+2\sqrt{(k-1)S(k\epsilon-S)}}k.
+\]
+Set
+\[
+A_0=k(k-1)\epsilon-(k-2)S,\qquad
+R=2\sqrt{(k-1)S(k\epsilon-S)}.
+\]
+Before comparing squares, \(k-2\ge0\) and \(S\le(k-1)\epsilon\) imply
+\[
+A_0\ge2(k-1)\epsilon\ge0,\qquad R\ge0.
+\]
+Direct polynomial expansion proves
+\[
+\begin{aligned}
+A_0^2-R^2
+&=k^2(k-1)^2\epsilon^2
+ -2k^2(k-1)\epsilon S+k^2S^2\\
+&=k^2\big(S-(k-1)\epsilon\big)^2\ge0.
+\end{aligned}
+\]
+Thus \(A_0\ge R\). Substitution into the displayed bound for \(B\) proves
+\[
+\boxed{(k-1)|L_\xi-L_0|+|H_\xi-H_0|\le(k-1)\epsilon.}
+\]
+For \(k=2\), the negative-high-shift case is impossible because \(u+t\ge0\).
+If \(S=0\) or \(\epsilon=0\), nonnegativity forces \(\xi=0\), \(u=t=B=0\).
+Nothing was divided by either of these quantities. The historical single
+symbolic audit concerns only the displayed polynomial identity; the radius
+connection and nonnegative square-root premises are the analytical proof above.
+

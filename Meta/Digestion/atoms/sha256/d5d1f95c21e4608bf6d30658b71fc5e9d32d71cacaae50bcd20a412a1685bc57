@@ -1,0 +1,27 @@
+**定理 378.3。** $\operatorname{enc}_X$ 是双射，逆恰为 $\operatorname{Dec}|_{X^*}$。对每个上述 $f$，
+$$
+G_{f^*}=\{\langle\operatorname{Enc}(x),\operatorname{Enc}(f(x))\rangle:x\in D\},
+$$
+$$
+\operatorname{Enc}(G_f)
+=\operatorname{Pack}\{\langle\operatorname{Enc}(x),\operatorname{Enc}(f(x))\rangle_Z:x\in D\},\qquad
+\operatorname{El}(\operatorname{Enc}(G_f))=\operatorname{Enc}[G_f].
+$$
+外部共轭的域为 $D^*$；原图码的语义域、语义值域分别为 $\operatorname{Enc}(D)$、$\operatorname{Enc}(\operatorname{ran}f)$，且
+$$
+\operatorname{ev}_Z(\operatorname{Enc}(G_f),\operatorname{Enc}(x))
+=\operatorname{Enc}(f(x))\qquad(x\in D).
+$$
+这些式子包括空域，域外没有图边。
+
+对每个 $x\in K_{\rm infdig}$，
+$$
+\operatorname{Enc}(x)=\operatorname{Pack}
+\{\langle\operatorname{NatZ}(j),\operatorname{NatZ}(x_j)\rangle_Z:j\in\omega\}.
+$$
+特别，$z_{\rm infdig}^*:\omega^*\to K_{\rm infdig}^*$ 满足
+$$
+z_{\rm infdig}^*(\operatorname{NatZ}(n))=\operatorname{Enc}(z_{\rm infdig}(n)).
+$$
+有限字和自然叶遗传有限；这些总函数图及其完整码均不遗传有限，即使它们只有有限支撑。
+

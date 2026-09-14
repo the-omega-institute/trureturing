@@ -1,0 +1,12 @@
+**定理 247（阈值前沿的全域有限支配族）。** 设 $q\ge2$，令 $h=\min\{s\in\mathbb N:q\le2^s\}$。对任一 $Q\ge q,k\le K$ 的有限配置，存在一个弱改进 $B,M,k$ 的规范配置，其正容量序列属于有限族
+$$
+\mathcal A_{q,K}=\left\{(e_1,\ldots,e_r):
+1\le r\le\min(K,h),\quad q-1\ge e_1\ge\cdots\ge e_r\ge1,
+\quad\prod_{j=1}^r(e_j+1)\ge q\right\}.
+$$
+无轴数约束时把长度上界换为 $h$，得到 $\mathcal A_q$。各前沿准确等于相应有限族的读数对中的不受支配点；任意全域竞争者都可如此弱改进，所以这也是针对全部有限配置的完备性。每个不受支配配置对任一正容量 $e$ 均满足
+$$
+\frac{Qe}{e+1}<q,
+\qquad Q<2q.
+$$
+

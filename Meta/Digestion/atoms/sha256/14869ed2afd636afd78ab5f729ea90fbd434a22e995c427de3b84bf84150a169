@@ -1,0 +1,11 @@
+**定义 135（配置格的秩与两种重量）。** 对 \(a\in S(P,A)\) 定义坐标秩和 Zeckendorf 重量
+\[
+r_{P}(a)=\sum_{p\in P}a(p),\qquad
+\omega_Z(a)=\sum_{p\in P}\sum_{j<\ell_Z(a(p))}\zeta(a(p))(j).
+\]
+定义配置的秩生成多项式
+\[
+\mathcal R_{P,A}(X)
+=\sum_{a\in S(P,A)}X^{r_P(a)}.
+\]
+

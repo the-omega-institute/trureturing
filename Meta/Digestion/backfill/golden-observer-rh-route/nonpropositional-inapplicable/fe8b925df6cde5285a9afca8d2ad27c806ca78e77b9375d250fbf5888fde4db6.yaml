@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fe8b925df6cde5285a9afca8d2ad27c806ca78e77b9375d250fbf5888fde4db6
+  normalized_sha256: sha256:fe8b925df6cde5285a9afca8d2ad27c806ca78e77b9375d250fbf5888fde4db6
+cas_ref: sha256:fe8b925df6cde5285a9afca8d2ad27c806ca78e77b9375d250fbf5888fde4db6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'This atom is a single markdown heading line of level 2, reading 「一　R-F 路线勘误(不改 atom,只追加)」, and that line is its entire content. A heading names the material that follows it; it asserts nothing about any mathematical object and carries no truth value, so no frozen declaration can cover it and none should be asked to. Verifiable predicate, recomputable from the atom bytes: the text stripped of surrounding whitespace is exactly one line, it begins with the markdown heading marker, and it contains no formula marker, namely none of display-math brackets, dollar signs, LaTeX begin environments, inline-math parentheses, or the symbols ≤ ≥ ∀ ∃ ⟹ ⟺. The substantive content lives in the sibling atoms that this heading introduces, and those are covered or settled on their own terms.'
+    previous_atom_id: a53df19e55e965af36c14ab327ef31628f30db90bf111bf7a840643d3dcefe24
+    next_atom_id: df607ea9588e66371e179bfdbbd8a83f7b7caffc8a9c7b23af8cde2dbe4e517d

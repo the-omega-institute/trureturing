@@ -1,0 +1,2 @@
+**定义 3.1（缘与缘生）**〔semantic〕。对 $v\in N_L$，定义其直接缘为 $\operatorname{缘}_L(v)=\mathrm{refs}(w_L(v))$；$u$ 是 $v$ 的缘，意指 $u\in\operatorname{缘}_L(v)$。称 $v$ 在此见证下缘生，当且仅当 $\operatorname{缘}_L(v)\ne\varnothing$。这是依赖某个证明见证的谓词，尚不是对一个命题所有可能证明的断言。
+

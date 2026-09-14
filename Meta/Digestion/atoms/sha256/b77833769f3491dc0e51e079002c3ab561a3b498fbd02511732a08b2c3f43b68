@@ -1,0 +1,36 @@
+**定理 294。** 对 $x\in\mathbb R\setminus\{0\}$，有
+$$
+\mathscr A_{\mathbb R}(\phi x)=\mathscr A_{\mathbb R}(x)+1.
+$$
+在第 293 条实尺度流假设下，
+$$
+\mathscr A_{\mathbb R}(r_k)=\mathscr A_{\mathbb R}(r_0)+k,\qquad
+\gamma_{\mathbb R}(r_{k+1})=[\phi^2r_k].
+$$
+若另有 $t_k=t_0+k$，则
+$$
+\mathscr A_{\mathbb R}(r_k)-t_k
+=\mathscr A_{\mathbb R}(r_0)-t_0.
+$$
+一般不能把实相位更新写成圆周上的 $\phi$ 倍运算。
+
+对 $e_k,e_{k+1},a\in\mathbb Z^P$，有
+$$
+e_{k+1}=e_k+a
+\iff
+\varpi_P(e_{k+1})=\varpi_P(e_k)+\varpi_P(a).
+$$
+因此第 293 条寄存器增量假设蕴含
+$$
+e_k=e_0+ka,\qquad
+\varpi_P(e_k)=\varpi_P(e_0)+i_a([k\alpha]).
+$$
+单个 $q\in\mathsf Q_P$ 的累计指数最终恒定；非零固定增量的无界序列可由相容的有限前缀族实现，但不能作为第 206 条的一个有限支撑历史。具体地，对任意 $a\in\mathbb Z^P$ 存在 $X_K\in\mathcal C_P^{\rm pb}$，其有限槽历史为
+$$
+q^{(K)}=\sum_{t=1}^K\sum_{p\in P}a_p e_{t,p,0},\qquad
+\mathsf C_P(q^{(K)})=Ka,
+$$
+且 $L\ge K$ 时 $X_L$ 在时刻 $t\le K$ 的限制就是 $X_K$，所有旧事件属性与选择保持。对 $a=(4,2,1,1)$、$P=\{2,3,5,7\}$，终端乘积为 $5040^K$，容量条件取第 292 条。
+
+尺度、CSA 事件时标与有限 von Neumann 整数的集合秩不能无条件识别；第 288 条的整数数位移位也不恒增一层。
+

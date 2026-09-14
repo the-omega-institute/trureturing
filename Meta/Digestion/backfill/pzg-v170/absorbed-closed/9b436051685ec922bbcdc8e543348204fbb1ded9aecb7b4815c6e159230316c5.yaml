@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:9b436051685ec922bbcdc8e543348204fbb1ded9aecb7b4815c6e159230316c5
+  normalized_sha256: sha256:9b436051685ec922bbcdc8e543348204fbb1ded9aecb7b4815c6e159230316c5
+cas_ref: sha256:9b436051685ec922bbcdc8e543348204fbb1ded9aecb7b4815c6e159230316c5
+coverage_gids:
+  - gid: D5/S3/Arith/SchurShiftedTemplateLift.tableII_finite_compatibility
+    target_statement_id: sha256:f40e2004bf4cee4bda447fc4528f7ba5a4aa5cdf7a0758dbeb46f77b1ee26936
+receipts:
+  unresolved_subitems: []

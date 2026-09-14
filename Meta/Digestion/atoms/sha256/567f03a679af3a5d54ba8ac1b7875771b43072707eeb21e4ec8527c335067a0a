@@ -1,0 +1,40 @@
+**定理 82（整数、有理数及全部实数的交换式）。** 沿用[《情境时空算术》定义 8–10、命题 4–7](CONTEXTUAL_SPACETIME_ARITHMETIC.md)的实际集合构造。为区分两个商载体，定义
+\[
+\bar q_{\mathbb Z}^{Z}=(\bar q_{\mathbb Z})^*\circ\kappa_{\sim},\qquad
+\bar v^{Z}=(\bar v)^*\circ\kappa_{\sim_{\mathbb Q}},\qquad
+\bar\ell^{Z}=(\bar\ell)^*\circ\kappa_{\sim_{\mathbb R}},
+\]
+其中右侧星号只指定义 80 的图共轭，\(\kappa\) 为 (Z-QUOT)。这些是同构，并满足
+\[
+\begin{aligned}
+\bar q_{\mathbb Z}^{Z}([\operatorname{Enc}(X)]_{\sim^*})&=\operatorname{Enc}(q(X)),\\
+\bar v^{Z}([\operatorname{Enc}(R)]_{\sim_{\mathbb Q}^*})&=\operatorname{Enc}(v(R)),\\
+\bar\ell^{Z}([\operatorname{Enc}(R)]_{\sim_{\mathbb R}^*})&=\operatorname{Enc}(\ell(R)).
+\end{aligned}
+\tag{Z-NQR}
+\]
+整数取 \(\mathbb Z_{\rm code}=(\{0\}\times\omega)\cup(\{1\}\times\omega_{>0})\)，故其非负元 \((0,m)\) 的码为 \(\langle\operatorname{NatZ}(0),\operatorname{NatZ}(m)\rangle_Z\)。非负整数商再经 \((0,m)\mapsto\zeta(m)\) 比较到定理 70 的自然算术。
+
+实数载体运输的是全部 \(R\in(\mathcal Q^{\rm rich})^\omega\) 中满足
+\[
+\forall\varepsilon\in\mathbb Q_{>0}\ \exists N\in\omega\ \forall m,n\ge N:
+|v(R_m)-v(R_n)|<\varepsilon
+\tag{Z-CAUCHY}
+\]
+的子集。求逆的准确域为非零实数类，等价于
+\[
+\exists\delta\in\mathbb Q_{>0}\ \exists N\ \forall n\ge N:\ |v(R_n)|\ge\delta.
+\tag{Z-RINV}
+\]
+在此域上，其第 \(n\) 项精确运输原分支
+\[
+(\operatorname{Inv}R)_n=
+\begin{cases}(R_n)^{-1}_{\mathbb Q},&v(R_n)\ne0,\\
+R_n\boxplus_{\mathbb Q}N_{\mathbb Q}(R_n),&v(R_n)=0.
+\end{cases}
+\]
+
+**证明。** 原整数读数的核为 \(\sim\)，\(q(\mathbf i(n))=n\) 给满射；有理交叉相乘的核为 \(\sim_{\mathbb Q}\)，既约分数截面给满射。实数的零差关系恰为 \(\ell\) 的核，每条有理 Cauchy 序列逐项用该截面提升，给出到全部完备化实数的满射。逐个应用定理 81 就得 (Z-NQR)，其加、乘、负及合法除法由原读数公式和 (Z-CONJ) 交换。整数精确除法仍须非零且整除；有理除法只须对应分子非零。实际有符号编码的配对比较由定理 74，不能将 \(\operatorname{Enc}((0,m))\) 与自然叶合并。
+
+定理 74 包括整个函数空间，定理 76 将 (Z-CAUCHY) 的每个量词和任意序列参数完整运输。为核对 (Z-RINV)，若 Cauchy 序列 \(a_n\) 不趋零，某 \(\varepsilon>0\) 在每个尾部都有 \(|a_j|\ge\varepsilon\)；在误差 \(\varepsilon/2\) 的 Cauchy 尾部比较任意 \(a_n\) 与这样一个 \(a_j\)，得 \(|a_n|>\varepsilon/2\)。反向尾部正下界排除趋零。倒数尾部满足 \(|a_m^{-1}-a_n^{-1}|\le |a_m-a_n|/\delta^2\)，所以为 Cauchy，有限零前缀的给定合法零分支不改变其类。换代表时用两个尾部下界估计倒数之差，故域和结果都由实数类决定。序列 \((0,1,1,\ldots)\) 可逆，处处非零的 \((1/(n+1))_n\) 却在零类，不能求实数逆。所有分支在码侧以对应谓词及原语表达，故精确成立。证毕。
+

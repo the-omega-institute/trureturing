@@ -1,0 +1,1 @@
+**原数学引用（实际像下降与有限权重的消费域）。** 定理 476.3 的准入比较直接使用本库 `HistoryPayloadFactorization` 及 `SplitSurjectionFactorization` 的原判据：对给定 $Q:H\to Y,J:H\to\mathbb R$，$J$ 唯一下降到实际像 $Q[H]$ 当且仅当它在每个 $Q$ 纤维常值。

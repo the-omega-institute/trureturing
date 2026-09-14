@@ -1,0 +1,17 @@
+**定义 227（保留 Fibonacci 权重的时间剖面）。** 固定有限素数集 $P$，复用定义 185、193、196、198、200、206 的槽表、支撑域、时间群与求和映射。对 $X\in\mathcal C_P^{\rm tb}$ 定义
+$$
+q_X(t,p,j)=Z_X(t,\lambda(p,j)),\qquad q_X\in\mathsf Q_P,
+$$
+$$
+\delta_X^G=\mathsf V_P(q_X),\qquad
+\mathbf a_X^{G,T}=\mathsf I_P(\delta_X^G)(T,-),\qquad
+\mathbf a_X^{G,\infty}=\Sigma_P(\delta_X^G).
+$$
+在 $\mathcal C_P^{\rm pb}$ 上定义
+$$
+X\equiv_P^{G,\rm pf}Y\iff\delta_X^G=\delta_Y^G,
+\qquad
+\mathcal H_P^G=\mathcal C_P^{\rm pb}/\equiv_P^{G,\rm pf}.
+$$
+这些是加权剖面；定义 196 的 $\delta_X=\mathsf U_P(q_X)$ 及 $\mathbf a_X^T,\mathbf a_X^\infty$ 仍保留其无权含义。
+

@@ -1,0 +1,11 @@
+**证明。** 第 72 条在任意集合及有效码上给编码与解码的双逆和成员像恒等式，直接限制得到第一断言。对 $x\in D$，共轭在 $\operatorname{Enc}(x)$ 处唯一取 $\operatorname{Enc}(f(x))$，这给以普通有序对组成的外部图。第 74 条的恒等式
+$$
+\langle\operatorname{Enc}(x),\operatorname{Enc}(y)\rangle_Z
+=\operatorname{Enc}(\langle x,y\rangle)
+$$
+使原图的逐边编码恰为所列语义对。第 73 条的 $\operatorname{Pack}$ 将这一成员像恢复为单个原图码，得第二图式；再用第 72 条得 $\operatorname{El}$ 式。语义域中的成员恰为有边的输入码，语义值域中的成员恰为有边的输出码，故分别编码 $D$ 与 $\operatorname{ran}f$。逐边唯一输出就是语义求值式。若 $D=\varnothing$，边集合为空，$\operatorname{Pack}(\varnothing)=\operatorname{Enc}(\varnothing)$；语义域和值域都是这个空集码，外部域则为空集，所有式子仍成立。
+
+总数字函数 $x$ 的普通图对每个 $j\in\omega$ 均有且仅有 $\langle j,x_j\rangle$，输入输出都是自然数，故以 $\operatorname{NatZ}$ 代替各自的 $\operatorname{Enc}$ 就得到显示的总图码。零值边同样出现；特别总零函数的每个 $\langle j,0\rangle$ 都保留。不同 $j$ 给不同边，所以任何这样的总图都无限，因而不属于 $HF$。第 72 条给 $\operatorname{Enc}(x)\in HF\iff x\in HF$，故全码也不遗传有限。有限字及自然叶的遗传有限性直接使用第 70 条。
+
+原始空字 $\zeta(0)=\varnothing$ 不是有效码：第 71 条的每个有效码都是非空 Kuratowski 对。语义空集为 $\operatorname{NatZ}(0)$，所以原始空字不能直接作语义配对的参数。单个载体码 $\operatorname{Enc}(X)$、其外部成员像 $X^*$、有限字及总图各有上述定义；这些角色差别不蕴含所有特殊输入下的值都两两不等。证毕。
+

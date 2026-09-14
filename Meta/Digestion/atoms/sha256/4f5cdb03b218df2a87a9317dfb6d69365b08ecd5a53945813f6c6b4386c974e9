@@ -1,0 +1,29 @@
+**定义 178（局部与全局规范窗口的密度）。** 对 \(L\in\omega\) 定义规范窗口
+\[
+\mathsf W_Z^{<L}=\{u\in\mathsf W_Z:\operatorname{val}(u)<G_L\}.
+\]
+对有限配置 \((P,A)\)，令 \(L_p=\ell_Z(A(p))\)、\(L_M=\ell_Z(M(P,A))\)，定义局部窗口、全局窗口及相应状态子集
+\[
+\mathsf W_{\rm loc}(P,A)=\prod_{p\in P}\mathsf W_Z^{<L_p},
+\qquad
+\mathsf W_{\rm glob}(P,A)=\mathsf W_Z^{<L_M},
+\]
+\[
+\mathsf S_{\rm loc}(P,A)=\operatorname{dig}_{P,A}[S(P,A)],
+\qquad
+\mathsf S_{\rm glob}(P,A)=\mathsf G_{P,A}[S(P,A)].
+\]
+定义规范窗口密度和二进制立方体密度为
+\[
+\delta_{\rm loc}^{Z}(P,A)
+ =\frac{|\mathsf S_{\rm loc}(P,A)|}{|\mathsf W_{\rm loc}(P,A)|},
+\qquad
+\delta_{\rm glob}^{Z}(P,A)
+ =\frac{|\mathsf S_{\rm glob}(P,A)|}{|\mathsf W_{\rm glob}(P,A)|},
+\]
+\[
+\delta_{\rm loc}^{2}(P,A)=\frac{Q}{2^{\Lambda_{\rm loc}(P,A)}},
+\qquad
+\delta_{\rm glob}^{2}(P,A)=\frac{Q}{2^{\Lambda_{\rm glob}(P,A)}}.
+\]
+

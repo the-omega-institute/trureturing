@@ -1,0 +1,4 @@
+**证明。** 首式由 $\operatorname{Dec}\operatorname{Enc}=\operatorname{id}$ 得出。第 74 条的语义配对比较使递归式成立。固定元数的投影恢复每个分量，反向投影后重新装配恢复原元组；对 $r\ge2$ 按元数归纳，对 $r=1$ 用恒等，对 $r=0$ 用单点集之间的唯一映射。相同论证给 $\kappa_r$ 两侧恒等式，故不同括号之间确有双射而非字面等式。$b_3^{\rm can}$ 的两个复合逐坐标由第 256 条为恒等，算术式亦逐坐标由该条成立；再复合 $\kappa_3$ 的双逆即得 $b_3$ 的结论。两种集合提升由首式得出；要取得原 CSA 括号的元组码，再对第一式两侧使用 $\operatorname{Enc}\circ\kappa_3^{-1}\circ\operatorname{Dec}$。
+
+序列图的每条边经第 74 条变成 $\langle\operatorname{NatZ}(i),\operatorname{Enc}(a_i)\rangle_Z$。第 73 条将全部这些边恰装为 $\operatorname{Enc}(s)$，没有增加或遗漏成员。原图定义域恰为自然序数 $r$，故语义定义域为其码 $\operatorname{NatZ}(r)$，求值由第 74 条保持反映。外部数字图的域为 $\zeta[r]$，施加 $\operatorname{val}$ 得回 $r$，包括空域时的零长度；每条边的值用 $b^{-1}$ 唯一恢复。最后 $T_0=T_1(\varnothing)$，已是跨元数去标签的碰撞。以上有限性仅限制元数和序列长度，未用于限制 $a_i$ 的成员数。证毕。
+

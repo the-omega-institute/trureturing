@@ -56,6 +56,7 @@ public sealed partial class MakeWorkflowTests
         "emit",
         "ingest",
         "align-digestion-status",
+        "refresh-source-registry",
         "mathlib-reanchor",
         "echo-residual-summary",
         "digestion-readiness",
@@ -80,11 +81,13 @@ public sealed partial class MakeWorkflowTests
         "preflight",
         "gate",
         "census",
+        "census-derivational",
     ];
 
     private static readonly string[] ToolsTargets =
     [
         "help",
+        "settle-batch",
         "dotnet",
         "check-fast",
         "test",

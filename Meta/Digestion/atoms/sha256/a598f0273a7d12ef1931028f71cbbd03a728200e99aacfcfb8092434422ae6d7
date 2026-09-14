@@ -1,0 +1,11 @@
+**定理 387.2。** $\Psi_Y$ 是双射，其逆在 $\mathscr P_Y^*$ 上为
+$$
+\Psi_Y^{-1}(\operatorname{Enc}(p))=(\operatorname{Enc}(p_i))_{i\in A}.
+$$
+对任意所指定因子拓扑，它也是同胚。这里包括空指标集以及有空因子的情形。原指标与编码指标的全图由
+$$
+\operatorname{Enc}(p)=\operatorname{Pack}
+\{\langle\operatorname{Enc}(i),\operatorname{Enc}(p_i)\rangle_Z:i\in A\}
+$$
+比较，不把索引 $i$ 和索引码 $\operatorname{Enc}(i)$ 当作同一对象。
+

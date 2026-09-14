@@ -36,7 +36,9 @@ internal static class LedgerFrozenCommand
             }
 
             var snapshot = ((SnapshotDecodeOutcome.Decoded)decoded).Snapshot;
-            var frozen = FrozenLedgerBaseViewReader.Read(snapshot).ActiveByPath.ContainsKey(target);
+            // Keep ledger validation separate from current frozen membership.
+            _ = FrozenLedgerBaseViewReader.Read(snapshot);
+            var frozen = FrozenStateCatalog.Load(snapshot).Records.ContainsKey(target);
             return new ExplicitCommandResult(frozen ? 0 : 1, string.Empty, string.Empty);
         }
         catch (Exception exception)

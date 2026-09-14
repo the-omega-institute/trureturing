@@ -1,0 +1,23 @@
+**33.11 All matching nonnegative prices.** For finite \(T\ge0\) and the exact
+resource program 33.7, the complete sets of optimal resource prices are
+
+~~~text
+capacity                         all optimal lambda
+r = 0                            [s_2,+infinity)
+H_m < r < H_(m+1), m=0,1,2,3     {s_(p_(m+1))}
+r = H_m, m=1,2,3                 [s_(p_(m+1)),s_(p_m)]
+r = H4                           [0,s_7]
+r > H4                           {0}
+~~~
+
+Here every \(s\) is evaluated at the same \(z=e^{-T}>0\), and \(H_m\) has the
+definition of 33.7. Inserting each listed price and 33.8's vector into every
+nonnegative term of 33.10 gives zero. Hence both extrema are attained and
+\[
+D(T,r)=F_0(z)+\min_{\lambda\ge0}\Phi_r(\lambda).
+\]
+The upper multipliers for every matching price are the \(\mu_p\) in 33.10.
+Strict density inequalities do not make the price unique at prefix boundaries,
+at zero capacity or at full saturation. There is no finite matching price for
+negative capacity. Completeness, including price endpoints, is proved next.
+

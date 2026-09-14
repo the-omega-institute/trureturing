@@ -7,16 +7,17 @@ doi: 10.46298/dmtcs.17199
 claim: Section 5 conjectures a counting equality for permutations avoiding 312 and 321 whose cubes avoid 2143 and compositions with at most one part outside 1 and 3.
 strata_touched:
   - D5/S3/ConceptDynamics/PatternAvoidance/RotationSumPowerPatternAvoidance
+  - D5/S3/ConceptDynamics/PatternAvoidance/ArcherBourneDecomposition
 license: citation-only
 triage: anchor
 ---
 
 # Pattern avoidance in compositions and powers of permutations
 
-This note anchors only the unnumbered cube-counting conjecture in Section 5,
-"Further directions and open questions", page 13 of arXiv:2505.05218v3, for
-`Problems/archer-bourne-cube-2143-count.md`. The following is the worker's
-verbatim transcription of the sentence, with line wrapping removed and
+This note anchors Lemma 3.1 and its resulting bijection, as well as the
+unnumbered cube-counting conjecture in Section 5, "Further directions and
+open questions", page 13 of arXiv:2505.05218v3. The following is the worker's
+verbatim transcription of the conjecture, with line wrapping removed and
 mathematical glyphs represented in inline LaTeX:
 
 > For example, based on the ideas similar to the ones in this paper, we conjecture
@@ -33,17 +34,19 @@ direct sum of these rotations for some composition of `n`. The first
 paragraph on page 5 explicitly identifies the resulting bijection with
 compositions. These are already-proved source results.
 
-The frozen module
+The frozen modules
 `D5/S3/ConceptDynamics/PatternAvoidance/RotationSumPowerPatternAvoidance`
-proves the criterion for a specified list of positive block sizes:
+and `D5/S3/ConceptDynamics/PatternAvoidance/ArcherBourneDecomposition`
+formalize this route. The former proves the criterion for a specified list
+of positive block sizes:
 `rotationSumPerm_pow_avoids_2143_iff` allows at most one block size not
 dividing the exponent, and `rotationSumPerm_cube_avoids_2143_iff` specializes
-this to at most one part outside `{1,3}`. Combining the cube criterion with
-the paper's bijection yields the counting equality mathematically. The
-repository has not formalized that decomposition, its bijectivity, or the
-conjecture's counting statement; the theory volume records this missing
-bridge as candidate 6.222. This note records the criterion's scope and does
-not assert a repository proof of the Archer-Bourne conjecture.
+this to at most one part outside `{1,3}`. The latter formalizes Lemma 3.1 and
+the bijection using the repository's generic pattern-containment predicate
+and Mathlib compositions, then combines them with the cube criterion to prove
+the counting equality. Lemma 3.1 and the bijection retain literature
+provenance; the final counting theorem is repository-derived and carries the
+problem's `Proved` resolution claim.
 
 ## Search log
 
@@ -70,14 +73,15 @@ not assert a repository proof of the Archer-Bourne conjecture.
   criterion statements and the frozen-state receipt. The API and DOI HEAD
   readings above were not repeated.
 
-No literature search for a later resolution of the conjecture was performed; the
-open status recorded in the problem candidate is the status stated in this
-arXiv version, not an assessment of the subsequent literature.
+No literature search for a later resolution of the conjecture was performed.
+This note records only that arXiv:2505.05218v3 presents the statement as a
+conjecture; it does not assess the subsequent literature.
 
 **ASSUMED-UNVERIFIED:** no repository machine verifies equivalence between the
 paper's natural-language proposition and a Lean statement. The correspondence
 of the paper's rotations and avoidance convention with the frozen criterion
-is a reading comparison; the counting bridge is still unformalized.
+is a reading comparison; the frozen counting theorem proves the corresponding
+formal statement.
 
 ## Verified locator
 

@@ -1,0 +1,6 @@
+**定理 358.1。** 若 $J_A$ 无限，则 $(B_A^{\rm cap},\tau_{+,A})$ 的每一点都非孤立。更精确地，每个 $u$ 的基本邻域都含一个形如
+$$
+u+v,\qquad v=\sum_{h=i+1}^{j}\varepsilon_{n_h}\ne0,
+$$
+的不同状态，其中 $n_1,\ldots,n_H$ 是 $J_A\setminus(I\cup\operatorname{supp}(u))$ 中互异的指标，$H$ 按该邻域的有限特征族由引理 354.3 选定。
+

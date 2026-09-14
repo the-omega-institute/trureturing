@@ -1,0 +1,13 @@
+**定理 331.2。** 有
+$$
+\ell_{\rm dy}(u_{5040})=\frac{43}{8},\qquad
+\chi^{\rm rat}_{\eta^{\rm dy}}(u_{5040})=[3/8]_{\rm rat},\qquad
+g_{\rm dy}(u_{5040})=[43\phi/8].
+$$
+最后一相位在 $[0,1)$ 中的代表恰为 $(43\sqrt5-85)/16\in(0,1)$。$8u_{5040}\notin H_{\rm dy}$，但 $\chi^{\rm rat}_{\eta^{\rm dy}}(8u_{5040})=0$，而其黄金相位非零。对 $N\ge4$，
+$$
+h_N=u_{5040}-43\,2^{N-3}\varepsilon_N\in H_{\rm dy},\qquad
+\Psi_{\rm reg}(h_N)\longrightarrow\Psi_{\rm reg}(u_{5040}),
+$$
+其中 $h_4=(4,2,1,1,-86,0,\ldots)$。每个固定有限坐标集上的状态值及旧相位值最终与 $u_{5040}$ 完全相等。
+

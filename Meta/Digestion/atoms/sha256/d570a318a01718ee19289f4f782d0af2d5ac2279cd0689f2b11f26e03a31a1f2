@@ -1,0 +1,2 @@
+**定理 322.2。** 每个上述 $f$ 都可延拓到 $A$。对每个 $x\in A\setminus\{0\}$，存在同态 $F:A\to\mathsf D_{\rm rat}$ 使 $F(x)\ne0$。
+

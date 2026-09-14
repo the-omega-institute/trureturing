@@ -1,0 +1,25 @@
+**34.8 The mixed-objective increment is nonnegative and bounded.** For
+\(x\ge m+T>0\),
+\[
+0<f'(x)=\frac1{e^x-1}\le K=\frac z{e^m-z}.
+\]
+For either row endpoint \(w=c_i\) or \(d_i\), the segment from \(w\) to
+\(w+\xi_i\) lies in this domain, so the mean-value inequality gives
+\[
+0\le f(w+\xi_i)-f(w)\le \xi_i K.
+\]
+Every \(y\) in the common \(\mathcal P\) has nonnegative row weights
+\(1-y_i,y_i\) summing to one. Summing the endpoint inequalities gives
+\[
+0\le J_\xi(y)-J_0(y)\le SK.
+\]
+Comparison of maxima over exactly this common set now yields
+\[
+D_0\le D_\xi\le D_0+SK\le D_0+(k-1)\epsilon K.
+\]
+For example, the upper inequality follows by applying
+\(J_\xi(y)\le J_0(y)+SK\le D_0+SK\) to every \(y\); the lower one follows
+at a maximizer of \(J_0\). No density order or differentiability of a
+maximum is assumed. This covers different optimal faces and every capacity
+allowed by 34.3.
+

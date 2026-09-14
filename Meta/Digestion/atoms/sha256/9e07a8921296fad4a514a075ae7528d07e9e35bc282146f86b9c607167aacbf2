@@ -1,0 +1,8 @@
+**定理 RD1。** 对 $z=a+b\varphi\in\mathbb Z[\varphi]$，
+
+$$
+\exists r\in\mathcal R:\beta(r)=z
+\quad\Longleftrightarrow\quad
+0\le a\le b\le2a.
+$$
+

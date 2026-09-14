@@ -1,0 +1,31 @@
+## 4. Finite presentation and reproducible construction
+
+Start at F0={(-1,0)}. Close under every allowed move and all six orderings at
+radius three. The set-based replay finds 483 distinct reachable masks, verifies
+all 8694 state-order-direction cases, and checks that each unblocked successor
+has exactly its prescribed geometric mask. Every stored state is reachable when
+all actions are available. The selected policy reaches 70 states; fixed SRL
+reaches 75. These reachability counts were externally replayed, not separately
+asserted as Lean theorem conclusions.
+
+Coordinates are ordered lexicographically within the punctured Manhattan disk,
+followed by the origin. The initial code is 64. The data use a lossless packing:
+low 19 bits encode the mask; the remaining quotient modulo six encodes the
+ordering; its quotient by six indexes one of 55 repeated weight triples.
+The expanded radiusThreeRows is the sole owner of masks, three weights and policy.
+No transition table, approximate eigenvalue or solver success flag is a premise.
+The Lean transition function computes the geometric update and exact lookup.
+
+Candidate discovery used finite-set exploration and numerical nonlinear power
+iteration for the Bellman operator
+
+\[
+ (Tv)_i=\min_a\sum_{d:\,i\overset{a,d}{\longrightarrow}j}v_j.
+\]
+
+The resulting float vector was only a proposal. Lower weights were rounded down,
+upper weights rounded up with a floor of one, at scale 10^9. A separate fixed-SRL
+vector supplied the third witness. Acceptance uses the exact integer inequalities
+below. Numerical convergence or eigenvalue approximation is unnecessary for
+certificate validity.
+

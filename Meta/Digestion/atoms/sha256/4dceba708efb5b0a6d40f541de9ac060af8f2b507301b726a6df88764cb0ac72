@@ -1,0 +1,48 @@
+**30.56 定义及证明（有理残差包络的统一形式）。** The scalar construction of 30.41–30.45
+has the following identical notation for \(q\in\mathbb Q^N\), \(J\ge2,K\ge1\):
+\[
+b=\sum_kq_k/k,\quad M=1+\sum_k|q_k|,\quad
+A_j=1+\sum_kq_k\lfloor j/k\rfloor,\quad d_j=-2A_jb,\quad d_j^+=\max(d_j,0),
+\]
+\[
+w_j=2j+1,\quad L_{j,K}=2\sum_{l=0}^{K-1}\frac1{(2l+1)w_j^{2l+1}},\qquad
+\rho_{j,K}=\frac2{(2K+1)w_j^{2K-1}(w_j^2-1)},
+\]
+\[
+B(N,q,J,K)=b^2+\sum_{j=1}^{J-1}
+ \left[\frac{A_j^2}{j(j+1)}+b^2+d_jL_{j,K}+d_j^+\rho_{j,K}\right]+\frac{M^2}{J},
+\quad E(N,q,J,K)=\frac{M^2}{J}+\frac{3|b|M}{8\,9^{K-1}}.
+\]
+Then \(B-E\le R_N(q)\le B\). Indeed the transformed residual on \((0,1)\)
+contributes \(b^2\), on \((j,j+1)\) it is \(A_j-bt\), whose integral is
+\(A_j^2/[j(j+1)]+b^2+d_j\log((j+1)/j)\), and the remaining weighted tail lies in
+\([0,M^2/J]\). Integrating
+\(1/(1-s^2)=\sum_{l=0}^{K-1}s^{2l}+s^{2K}/(1-s^2)\)
+from zero to \(1/(2j+1)\), and bounding the last denominator by its endpoint, proves
+\(L_{j,K}\le\log((j+1)/j)\le L_{j,K}+\rho_{j,K}\).
+The upper endpoint is used when \(d_j\ge0\), the lower when \(d_j<0\).
+Moreover \(|A_j|\le jM\), \(|d_j|\le2|b|Mj\),
+\(\rho_{j,K}\le(3/4)9^{1-K}/(2j+1)^3\),
+\(j/(2j+1)^3\le1/(8j^2)\), and \(\sum_{j=1}^{J-1}j^{-2}\le2\).
+Summing \(|d_j|\rho_{j,K}\) proves the stated \(E\).
+These are finite rational definitions; logarithms enter only the proof.
+
+For \(q\in\mathcal C_N\), set
+\[
+Q_0=NH_N,\quad M_0=1+Q_0,\quad \Lambda_0=3Q_0M_0/8,\quad
+\Gamma_0=M_0^2+\Lambda_0.
+\]
+Then for every integer \(v\ge1\),
+\[
+0\le B(N,q,v+1,v)-R_N(q)
+ \le\frac{M_0^2}{v+1}+\Lambda_0\,9^{1-v}\le\frac{\Gamma_0}{v}.
+\]
+The last step uses \(9^{v-1}\ge v\): equality holds at one, and induction follows from
+\(9v\ge v+1\). More generally, if \(\sum|q_k|\le Q\), put
+\(\Gamma(Q)=(1+Q)^2+3Q(1+Q)/8\). The same proof gives
+\(E(N,q,h+1,h)\le\Gamma(Q)/h\); for any rational \(\varepsilon>0\),
+\(h=1+\lfloor\Gamma(Q)/\varepsilon\rfloor\) makes this strictly less than \(\varepsilon\).
+All denominators are positive. For \(q=0\), telescoping gives \(B=R_N(0)=1\).
+For \(b=0\) with nonzero \(q\), all logarithmic terms disappear, leaving only the tail error.
+Negative coefficients, cancellation, \(J<N\), and non-lcm truncations require no additional hypotheses.
+

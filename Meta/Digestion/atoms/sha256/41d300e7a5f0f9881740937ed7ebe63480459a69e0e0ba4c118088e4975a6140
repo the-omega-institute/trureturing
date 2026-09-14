@@ -1,0 +1,29 @@
+**30.21 单一源/报告/摄入层与交付义务。** 本实施是 caller 提供的
+consensus-rnd:sshx 1.0.0-beta.42 runner 合约下的 I14,flight
+qgh0910-i14-balanced-all-slabs,attempt 1,实施者为 Codex CLI。
+未查阅另一版本的 skill,没有 native subagent、委派、额外 oracle 或本轮独立评审票;
+只继承已供 GoalArtifact 与仓库先验,不声称无先验或模型族多样性。
+primary 的具体 serving-model/routing 未在本实施独立鉴定,实际 GPT PRO 身份是 caller 的来源记录。
+工作树为 /Users/auricstudio/trureturing-qgh-balanced-all-slabs,
+分支 lane/math/quantized-gh-balanced-all-slabs-0910,immutable BASE 为
+a8e208440d8a3f465a7b20c82ededbb27ee95026。
+准备文件旧的 predecessor-in-flight 行只属准备时状态,当前以这个实际封存 S18 base 为准;
+没有读取 S18 活跃评审 target、result、任何 worker 日志、log_ref 内容或 caller 转录。
+
+第 1-29 节完整前缀保持 254298 字节、4743 个 LF,SHA256
+c5e1fa97fff5921fe5ba10d84b0268c884caab112fb32beed0c92027ee1aa3f5,
+每个历史 CAS、entry 和报告均保留。只允许本节、一个报告及下列 canonical 摄入输出:
+~~~sh
+make ingest BASE=a8e208440d8a3f465a7b20c82ededbb27ee95026 SOURCE=arithmetic-boundary-quantization
+~~~
+每个新 CAS/YAML、raw/normalized 指纹、源的完整连续跨度和有序 chain children
+在实施结论中逐项给出;指纹/cas_ref 带 `sha256:`,子 atom_id 为裸 hash。
+生成器拥有的 EOF、历史末单元 terminal-LF 变体和自动 child 均原样保留,
+不手修 producer 字节。摄入是参考输入的内容寻址,不是 Lean 吸收或冻结。
+CPU 仅运行固定证明证书和必要编排,没有指数、高度、形状、素数或薄层候选生成,
+没有 GPU、daemon、旧搜索重放、工具/Lean/frozen 改动或广泛 build/preflight。
+源、报告与摄入组成同一可审查的内容层;不能在未保真源语义时单独交付派生地址,
+也没有理由把后来定理或新搜索绑入这一层。
+caller 在本次 implementation terminal 后负责封存、独立评审和普通仓库门,
+最终 S19 交付仍等待 S18 MERGED;本实施不执行暂存、commit、push、PR、merge 或生命周期动作。
+候选交回不是独立批准、正式交付或长期研究目标完成。

@@ -1,0 +1,6 @@
+**定义。** 带输出的确定性有限状态自动机由有限状态集 $S$、输入字母表 $A$、转移 $\delta:S\times A\to S$ 与输出 $o:S\to O$ 组成。对词 $w\in A^*$，记迭代转移为 $\delta_w$；状态的继续词等价定义为
+
+$$
+s\sim t\iff\forall w\in A^*,\qquad o(\delta_w(s))=o(\delta_w(t)).
+$$
+

@@ -1,0 +1,17 @@
+**30.37 定理与证明：严格残差的有理系数稠密性。** 记 \(\mathbb Q(i)=\{a+ib:a,b\in\mathbb Q\}\)。对固定有限 \(N\)，任意 \(a,q\in\mathbb C^N\) 满足
+\[
+\left\|\sum_{k=1}^N(a_k-q_k)f_k\right\|
+\le\left(\sum_{k=1}^N|a_k-q_k|^2\right)^{1/2}
+K_N,\qquad K_N=\left(c\sum_{k=1}^N k^{-1}\right)^{1/2}.
+\]
+这是逐项范数三角不等式后应用 Cauchy–Schwarz。若 \(R_N(a)<\delta\)，则 \(\delta>0\)。选 \(q\in\mathbb Q(i)^N\) 足够近，使上界严格小于 \(\sqrt\delta-\sqrt{R_N(a)}>0\)；残差范数的三角不等式给 \(R_N(q)<\delta\)。故
+\[
+D_N=\inf_{q\in\mathbb Q(i)^N}R_N(q).
+\]
+此式没有断言有理系数达到下确界。在此具体实值函数模型，若 \(a=x+iy\) 且 \(x,y\in\mathbb R^N\)，逐点实虚部正交给
+\[
+R_N(a)=R_N(x)+\left\|\sum_{k=1}^Ny_kf_k\right\|^2\ge R_N(x).
+\]
+所以先取实部，再用 \(\mathbb Q^N\) 在 \(\mathbb R^N\) 中稠密，也得
+\(D_N=\inf_{q\in\mathbb Q^N}R_N(q)\)，并保持每个严格不等式。这个实化步骤仅属于实值模型；30.22–30.26 的一般复定理及其复共轭反例仍完整适用。
+

@@ -1,0 +1,5 @@
+source_id = "hard-core-weitz-zero-free-theory"
+path = "docs/develop/theory/HARD_CORE_WEITZ_ZERO_FREE_THEORY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

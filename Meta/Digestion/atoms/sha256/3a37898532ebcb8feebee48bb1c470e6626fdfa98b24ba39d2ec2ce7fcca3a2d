@@ -1,0 +1,15 @@
+**30.32 定理与证明：递增张成空间的距离极限和闭包投影。** 令
+\[
+M_N=\operatorname{span}\{f_1,\ldots,f_N\},\quad
+M=\overline{\bigcup_{N\ge1}M_N}^{H},\quad d_\infty=\operatorname{dist}(\chi,M)^2.
+\]
+零近似和包含关系给 \(1\ge D_N\ge D_{N+1}\ge0\)。设极限为 \(l\)。因 \(M_N\subset M\)，\(l\ge d_\infty\)。任意 \(y\in M\) 可由并集中的 \(y_j\) 范数逼近；相应 \(D_{N_j}\le\|\chi-y_j\|^2\)，故 \(l\le\|\chi-y\|^2\)。对 \(y\) 取下确界得
+\[
+\boxed{D_N\downarrow d_\infty=\inf_{N\ge1}D_N.}
+\]
+为明确闭包中的达到性，取最小化序列 \(y_j\in M\)，使 \(\|\chi-y_j\|^2\to d_\infty\)。平行四边形恒等式及 \((y_j+y_l)/2\in M\) 给
+\[
+\|y_j-y_l\|^2\le2\|\chi-y_j\|^2+2\|\chi-y_l\|^2-4d_\infty\longrightarrow0.
+\]
+闭性与完备性给极限 \(p\in M\)，且 \(\|\chi-p\|^2=d_\infty\)。对任意 \(v\in M\)，最小性应用于 \(p+tv\)（\(t\) 为任意复数）使线性项为零，故 \(\chi-p\perp M\)。这也证明投影唯一。\(p\) 存在于闭包不等于它属于某个有限 \(M_N\)，也不等于有一个 \(\ell^2\) 合成系数表示它。
+

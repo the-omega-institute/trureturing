@@ -1,0 +1,34 @@
+**定理 84（联合剖面、任意区域与三种权重）。** 定义 1 的 \(\Xi\) 及[《情境时空算术》定义 26](CONTEXTUAL_SPACETIME_ARITHMETIC.md)的 \(\Gamma_t\) 满足
+\[
+\Xi^*(\operatorname{Enc}(X))=\operatorname{Enc}(\Xi(X)),\qquad
+\Gamma_t^*(\operatorname{Enc}(X))=\operatorname{Enc}(\Gamma_t(X)).
+\tag{Z-PROFILE}
+\]
+这里实际摘要域是 \(\mathcal D_{ts}=\Xi[\mathcal B]\) 的码像。定义
+\[
+\alpha_t(e)=(x(e),\sigma(e),\rho(e),t(e)),\quad
+U_t^X(e)=\{\alpha_t(d):d\in\Omega_X, e\preceq d\},\quad
+b_X(e)=\mathbf1_{A_X}(e),
+\]
+\[
+\Gamma_t(X)(a,b,U)=\sum_{\substack{e\in\Omega_X\,:\ \alpha_t(e)=a\\b_X(e)=b, U_t^X(e)=U}}\sigma(e).
+\]
+于是 \(q(X)=\sum_{a,U}\Gamma_t(X)(a,1,U)\)。每个 \(U\) 包含自身属性，目标遍历整个当前区域；\(a\) 已含符号，非零格的系数已带此符号。
+
+对原第 25 节的完整 TS 签名以及原定义 26 的完整含时因果签名，严格观察核分别满足
+\[
+(\approx_{\rm ts})^*=\ker\Xi^*,\qquad
+(\approx_{\Sigma_{{\rm cau},t}})^*=
+\ker\bigl((\Gamma_t,m,M)^*\bigr).
+\]
+这里每个核只相对于该原签名的全部有限严格上下文，未把两个签名合并。
+
+对 \(\Xi=(W,Z,m,M,s)\)，并行与合法时间复合将 \(W,Z\) 相加并取档案端点的并集端点、当前最高时刻的最大值；补集取 \((W,W-Z,m,M,s)\)。乘积更新为
+\[
+\Xi(X\boxtimes Y)=(W_X\odot W_Y,Z_X\odot Z_Y,
+\min(m_X,m_Y),\max(M_X,M_Y,g),g),
+\quad
+ g=\begin{cases}\max(s_X,s_Y)+1,&\Omega_X,\Omega_Y\ne\varnothing,\\-\infty,&\text{否则},\end{cases}
+\]
+其中 \(\odot\) 在联合单元对上用时间 \(\max+1\)、位置加法推送。任意空间集、时间集、来源树集、因果目标属性集及属性对集均可作为其原有类型的集合参数运输。
+

@@ -16,7 +16,8 @@ internal sealed class FakeRepositoryGateway(
     RawRepositorySnapshot? baseline,
     Func<FrozenRevisionIdentity>? currentRevisionResolver = null,
     Func<string, RawChangeSet>? changesForBase = null,
-    Func<RawRepositorySnapshot>? currentReader = null)
+    Func<RawRepositorySnapshot>? currentReader = null,
+    Func<string, RawRepositorySnapshot>? revisionReader = null)
     : IRepositoryGateway
 {
     internal int ReadCount { get; private set; }
@@ -65,7 +66,8 @@ internal sealed class FakeRepositoryGateway(
         ReadCount++;
         ReadRevisionCalls.Add(revision);
         return WithAtomizerData(
-            baseline ?? throw new InvalidOperationException("baseline snapshot should not be read"));
+            revisionReader?.Invoke(revision)
+            ?? baseline ?? throw new InvalidOperationException("baseline snapshot should not be read"));
     }
 
     public RawChangeSet ReadCurrentChanges() => changes;

@@ -1,0 +1,15 @@
+**30.23 证明：有限投影与距离达到。** 对有限维子空间 \(M=\operatorname{Ran}V\) 选一组正交单位基 \(w_1,\ldots,w_s\)，空基允许。令
+\[
+p=\sum_{j=1}^s\operatorname{inner}(w_j,u)w_j,\qquad r=u-p.
+\]
+逐个内积给 \(r\perp M\)。因 \(p\in M\)，存在 \(b_0\in\mathbb C^N\) 使 \(Vb_0=p\)。任意 \(b\) 满足
+\[
+\|u-Vb\|^2=\|r\|^2+\|p-Vb\|^2.
+\]
+故 \(d=\|r\|^2\) 是达到的最小值，所有最小化系数恰为 \(b_0+\ker V\)。对任意 \(\alpha,b\)，同一正交分解给
+\[
+\|\alpha u+Vb\|^2-\delta|\alpha|^2
+=\|V(b+\alpha b_0)\|^2+(d-\delta)|\alpha|^2.
+\]
+\(\delta\le d\) 时右边非负；\(\delta>d\) 时取 \((\alpha,b)=(1,-b_0)\) 得严格负值 \(d-\delta\)。这证明 30.22，包括端点 \(d\) 本身。有限闭子空间的投影达到不意味着某个有限距离必须为零。
+

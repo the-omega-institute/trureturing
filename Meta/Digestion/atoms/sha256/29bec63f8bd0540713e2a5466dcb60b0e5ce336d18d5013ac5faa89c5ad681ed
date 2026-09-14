@@ -1,0 +1,3 @@
+**证明。**$k=1$ 两边均为 $\alpha$。记左侧为 $b_k$，由 $\alpha^2+\alpha=1$ 及 Fibonacci 递推，
+$b_{k+1}=(\alpha-1)F_k+\alpha F_{k-1}=-\alpha b_k$，归纳给第一式。令 $k=j+2$ 得 $\varepsilon_j$ 及两个比例式。将 $\alpha G_j=F_{j+1}+\varepsilon_j$ 乘以 $d_j(n)$ 作有限求和，第一部分为整数，取模得相位式。$k=0$ 涉及未定义的 $F_{-1}$，不在本命题中。证毕。
+

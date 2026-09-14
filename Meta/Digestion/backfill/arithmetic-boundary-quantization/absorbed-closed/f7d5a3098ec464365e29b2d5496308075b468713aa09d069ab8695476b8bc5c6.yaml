@@ -1,0 +1,18 @@
+fingerprints:
+  raw_sha256: sha256:f7d5a3098ec464365e29b2d5496308075b468713aa09d069ab8695476b8bc5c6
+  normalized_sha256: sha256:f7d5a3098ec464365e29b2d5496308075b468713aa09d069ab8695476b8bc5c6
+cas_ref: sha256:f7d5a3098ec464365e29b2d5496308075b468713aa09d069ab8695476b8bc5c6
+coverage_gids:
+  - gid: D5/S3/Analytic/Interpolation/TwoPointGridDominance.two_point_grid_domain
+    target_statement_id: sha256:adf818beaa1b4fda968bcd7d7be6dea3361bde4871815eb2ab60b5b5d7537a0b
+  - gid: D5/S3/Analytic/Interpolation/TwoPointGridDominanceFinal.two_point_grid_dominance
+    target_statement_id: sha256:95f8ef35a938a68c4fad41b474e2208dc556b2835086fe9f86fefa999b2438da
+  - gid: D5/S3/Analytic/Interpolation/TwoPointGridDominanceFinal.two_point_grid_equality
+    target_statement_id: sha256:6f74985be52610082f6177c05c477471dccb4dc1a5f6faeee5399a94076f13fb
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 92df318cf750c0b2631c4e3e02f9fbb2c37c451e02b00d8c90833a2ef9d42bd9
+    - 89683ac2bda35da807eb9c7931312dd6c954821797e95cd2629ab4519f45ecb2
+    - 6d4aa4daa1a4df89fc85dc2ccd41cd47435ed1c8a1e9a9b8f70ee8b4af454826
+    - 57cedf395dbb5d432a824d4fc8b6b60a40501822b31324770dfa7549261bd0fd

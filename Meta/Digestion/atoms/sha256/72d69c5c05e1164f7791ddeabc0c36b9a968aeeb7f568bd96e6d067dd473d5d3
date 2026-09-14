@@ -1,0 +1,17 @@
+**30.39 定理与证明：全部自然数容差和互补量词。** 以下在同一个全半轴模型中等价：
+\[
+\begin{aligned}
+\mathrm{RH}
+&\iff\forall\varepsilon>0\ \exists N\ge1\ \exists q\in\mathbb Q^N:R_N(q)<\varepsilon\\
+&\iff\forall m\in\mathbb N_+\ \exists N\ge1\ \exists q\in\mathbb Q^N:R_N(q)<1/m\\
+&\iff\forall m\ge1\ \exists N\ge1:A_N-(1/m)E_{00}\not\succeq0\\
+&\iff\forall\delta>0:A-\delta E_{00}\not\succeq0.
+\end{aligned}
+\]
+证明：30.36–30.38 给任意正容差的严格近似；取 \(\varepsilon=1/m\) 得一向。反向给定 \(\varepsilon>0\)，由 Archimedean 性选 \(m\) 使 \(1/m<\varepsilon\)。各有理见证可零填充到更长前缀，残差不变。全局式由 30.34 等价于 \(d_\infty=0\)。互补陈述为
+\[
+\neg\mathrm{RH}\iff d_\infty>0
+\iff\exists m\ge1\ \forall N\ge1:A_N-(1/m)E_{00}\succeq0.
+\]
+若 \(d_\infty>0\)，取 \(1/m\le d_\infty\)；反向由所有有限阈值得 \(d_\infty\ge1/m>0\)。等号 \(1/m=d_\infty\) 属于非负侧。每个固定 \(N\) 有 \(D_N>0\)，可取 \(m\) 使 \(1/m\le D_N\)，所以不能交换成一个固定有限 \(N\) 对所有 \(m\) 有效。这些全称存在式没有给出一个有效全局成功上限。
+

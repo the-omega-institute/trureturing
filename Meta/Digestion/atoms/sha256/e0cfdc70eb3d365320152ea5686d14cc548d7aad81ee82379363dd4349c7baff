@@ -1,0 +1,52 @@
+## 31. Branch-correct local logarithmic squares
+
+This continuation verifies the seven preceding delivery blobs at
+`a565cc4798502a5c77c703aabaf8d4eff98033ad` against the retained delivery bytes;
+all seven match. The current dev source read is
+`63ba7cc8376be34ff5ba4ed3bb73c0eab56f1f6d`. The existing v4.33.0 Mathlib pin
+is `db584cd6d46c92f209a44c0f1c829460d327499d`. The new mathematics consumes the
+actual finite-grid endpoint without changing its coefficient or geometric data.
+
+Define the actual insertion factor
+
+\[
+ R(V,v;z)=\frac{Z(V;z)}{Z(V\setminus\{v\};z)}.
+\]
+
+The preceding origin half-plane theorem transports through the actual marked
+translation, so Re R(V,v;z)>=1/2 for every marked vertex and z in U_epsilon.
+An absent vertex has factor one, justified by the established nonzero partition.
+The principal logarithm of each factor therefore has imaginary part strictly
+between -pi/2 and pi/2.
+
+For any two vertices u,v, exact cancellation gives the multiplicative square
+
+\[
+ R(V,u;z)R(V\setminus\{u\},v;z)
+ =R(V,v;z)R(V\setminus\{v\},u;z).
+\]
+
+The four individual factors are in the right half-plane. The sum of the two
+arguments on either side lies strictly between -pi and pi. Mathlib's actual
+principal-log multiplication theorem therefore upgrades the square to
+
+\[
+\boxed{
+ \operatorname{Log}R(V,u;z)+\operatorname{Log}R(V\setminus\{u\},v;z)
+ =\operatorname{Log}R(V,v;z)+\operatorname{Log}R(V\setminus\{v\},u;z).
+}
+\tag{31.1}
+\]
+
+The equality is exact in the complex numbers, with no unresolved multiple of
+2*pi*i. This proves zero additive circulation around every actual deletion
+square. It is a concrete local flatness statement for the intended observable.
+No global principal-log identity for Z(V;z) is assumed.
+
+This yields a more local proof of deletion-order independence than the
+connected-domain uniqueness argument proposed in Section 29. Adjacent swaps
+of vertices generate every finite permutation, and each swap is certified by
+(31.1). The argument works pointwise throughout the activity tube and does not
+need a separate connectedness theorem. It also covers permutations of partial
+lists and lists containing repeated or absent vertices.
+

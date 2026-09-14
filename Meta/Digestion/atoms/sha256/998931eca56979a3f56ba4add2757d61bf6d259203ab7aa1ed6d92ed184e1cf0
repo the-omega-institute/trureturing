@@ -1,0 +1,23 @@
+**定义 208（全素数寄存器幺半群及其 Zeckendorf 呈现）。** 令
+\[
+\mathsf E_{\rm Pr}=\mathbb N^{(\operatorname{Pr})},
+\qquad
+(a\boxplus b)(p)=a(p)+b(p),
+\]
+为所有素数上的有限支撑指数幺半群。定义全局素数读数与局部 Zeckendorf 呈现
+\[
+\Pi_{\rm Pr}(a)=\prod_{p\in\operatorname{Pr}}p^{a(p)},
+\qquad
+\operatorname{dig}_{\rm Pr}(a)(p)=\zeta(a(p)).
+\]
+令 \(\mathfrak B\) 为所有有限容量对 \((P,A)\) 的类，并定义
+\[
+(P,A)\preceq(P',A')
+\iff P\subseteq P'\ \land\ \forall p\in P\; A(p)\le A'(p).
+\]
+若 \((P,A)\preceq(P',A')\)，定义零扩展嵌入
+\[
+\jmath_{(P,A)}^{(P',A')}:S(P,A)\longrightarrow S(P',A')
+\]
+为在 \(P\) 上保持坐标、在 \(P'\setminus P\) 上取零。
+

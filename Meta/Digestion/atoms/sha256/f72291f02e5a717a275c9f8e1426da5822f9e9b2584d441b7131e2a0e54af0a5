@@ -1,0 +1,17 @@
+**定义 416.3（完整半开相位字典）。** 对每个 $k\ge0$ 与 $x\in[0,1)$，令 $B_k(x)$ 是定义域恰为序数 $k$ 的有限函数
+$$
+B_k(x)(j)=\lfloor x+(j+1)\alpha\rfloor-\lfloor x+j\alpha\rfloor\quad(j<k).
+$$
+将 $k+1$ 个点 $\{\{-j\alpha\}:0\le j\le k\}$ 严格递增排列为
+$$
+0=c_{k,0}<c_{k,1}<\cdots<c_{k,k}<1,
+\qquad c_{k,k+1}=1,
+\qquad I_{k,i}=[c_{k,i},c_{k,i+1})\quad(0\le i\le k).
+$$
+实际块为 $\operatorname{Block}(m,k)(j)=w_{m+j}$，$m\ge1,j<k$。令
+$$
+\mathcal L_k=\{\operatorname{Block}(m,k):m\ge1\}\subseteq\{0,1\}^k,
+\qquad p(k)=|\mathcal L_k|.
+$$
+全部语言为 $\bigcup_{k\in\omega}\mathcal L_k$；也可用与它显式双射的带长度形式 $\{\langle k,v\rangle:k\in\omega,v\in\mathcal L_k\}$，双射为 $v\mapsto\langle\operatorname{dom}(v),v\rangle$。
+

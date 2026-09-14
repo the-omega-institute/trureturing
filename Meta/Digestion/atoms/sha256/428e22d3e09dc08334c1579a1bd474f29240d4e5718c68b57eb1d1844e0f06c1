@@ -1,0 +1,13 @@
+**定理 122（指令词的端点与素数乘法）。** 若 \(\operatorname{ev}_A(a,w)\) 有值，则对每个 \(p\in P\)，
+\[
+\operatorname{ev}_A(a,w)(p)=a(p)+\eta_p(w),
+\]
+且
+\[
+\Pi_P(\operatorname{ev}_A(a,w))
+=\Pi_P(a)\prod_{p\in P}p^{\eta_p(w)}
+\quad\text{于 }\mathbb Q_{>0}.
+\tag{Z-INSTR}
+\]
+若两个词 \(w,v\) 都在 \(a\) 上有值且 \(\eta_p(w)=\eta_p(v)\) 对所有 \(p\) 成立，则它们的终点相同；词的次序可能改变定义域，但不改变已成功词的端点。
+

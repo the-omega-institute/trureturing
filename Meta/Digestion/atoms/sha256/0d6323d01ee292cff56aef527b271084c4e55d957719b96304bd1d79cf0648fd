@@ -1,0 +1,21 @@
+**定理 237（普通卷积的精确乘法缺陷与相容域）。** 对任意 $F,K\in R$，有
+$$
+V_G(FK)-V_G(F)V_G(K)
+=-\bigl(V_G(F)-U_H(F)\bigr)\bigl(V_G(K)-U_H(K)\bigr).
+$$
+所以整数系数下 $V_G(FK)=V_G(F)V_G(K)$ 当且仅当至少一个因子模 $(m)$ 为常数。若两个多项式系数均非负，则此条件等价于至少一个因子本身是常数多项式，包括零。
+
+对规范有限数字 $u,v\in\mathsf W_Z$，有
+$$
+\operatorname{nf}_G(F_uF_v)=u\cdot_Zv
+\iff
+u\in\{0_Z,1_Z\}\ \lor\ v\in\{0_Z,1_Z\}.
+$$
+若 $\operatorname{val}(u),\operatorname{val}(v)\ge2$，则普通卷积规范化后的数值严格小于 $\operatorname{val}(u)\operatorname{val}(v)$。
+
+使 $V_G$ 保乘法的最大含幺子环为 $\mathbb Z+(m)\subseteq R$。对固定 $K\in R$，存在函数 $h:\mathbb Z\to\mathbb Z$ 使
+$$
+V_G(FK)=h(V_G(F))\quad\text{对所有 }F\in R
+$$
+当且仅当 $V_G(K)=U_H(K)$；此时唯一可能的函数为 $h(n)=nV_G(K)$。
+

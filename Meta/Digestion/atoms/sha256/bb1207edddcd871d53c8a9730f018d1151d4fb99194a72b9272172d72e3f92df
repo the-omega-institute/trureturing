@@ -1,0 +1,4 @@
+**证明。** 因为 $\varphi=1+\alpha$ 且 $m$ 为整数，
+$\lfloor m\varphi\rfloor=m+\lfloor m\alpha\rfloor$。
+再用 $A_L=B_L+C_L$ 展开右端即可。
+

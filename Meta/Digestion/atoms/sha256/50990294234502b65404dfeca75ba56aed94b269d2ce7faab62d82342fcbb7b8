@@ -1,0 +1,13 @@
+### 12.2 既有记录限制可达输入
+
+固定第9.1节的有限新鲜记录模型；所有步骤均在同一指针基上受控写入，中间没有额外控制、系统跃迁或旧记录反馈。记
+$$
+A_N=C_1\odot\cdots\odot C_N,\qquad A_0=J,
+\qquad \sigma_N=\operatorname{tr}_{E_{1:N}}\rho_N=M_{A_N}(\rho).
+$$
+$\rho$ 是任意初始系统密度矩阵。实际第 $N$ 个时刻的局部输入只遍历 $M_{A_N}$ 的像，不能重新视为全部密度矩阵。沿用第11章的固定投影测量 $\{Q_b\}$，定义
+$$
+\alpha_{Q,N}=\sup_\rho\operatorname{TV}
+\bigl(C_Q(\sigma_{N+1}),C_Q(\sigma_N)\bigr).
+$$
+

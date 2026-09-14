@@ -1,0 +1,14 @@
+**定理 431.3（预测十三·严格标记、字域与首个失败的运输）。** 对任意集合 $X$，存在双射
+$$
+\eta_X:\operatorname{Opt}(X^*)\longrightarrow(\operatorname{Opt}(X))^*,\qquad
+\eta_X(\bot)=\operatorname{Enc}(\bot),\quad
+\eta_X(\operatorname{ok}(c))=\operatorname{Enc}(\operatorname{ok}(\operatorname{Dec}(c))).
+$$
+它的逆先解码原不交和元素，再按其标签取 $\bot$ 或 $\operatorname{ok}(\operatorname{Enc}(x))$。对全部设置字或严格有界后继字，此桥和字、状态的乘积桥保持并反映每步定义域、成功输出、失败状态、首个失败编号及末端标记观察。对 $\operatorname{Exec}$ 限制乘积桥所得的像恰为 $\operatorname{Enc}[\operatorname{Exec}]$。有限前缀因子与条件代价同样在各自精确域上共轭。
+
+**证明。** 不交和中的元素有且仅有一个标签；各成功标签的内容又由 $\operatorname{Dec}$ 唯一给出。逐个失败及成功情形复合所写两式，分别化为标签恒等及 $\operatorname{Enc},\operatorname{Dec}$ 的逆式，故为双射。即使成功内容本身被命名为零或失败，其外层成功标签也使它不同于失败点。
+
+对每个 $a$，$\operatorname{Enc}(x)\in\operatorname{Enc}[D_a]$ 等价于 $x\in D_a$。在该域上，$S_a^*(\operatorname{Enc}(x))=\operatorname{Enc}(S_a(x))$；域外的严格总化经 $\eta$ 恰为 $\operatorname{Enc}(\bot)$。已经失败的输入在两边都保持失败。于是单字的完整交换关系成立。对字长归纳，在每个前缀末端两侧要么同为对应成功值，要么同为失败；下一步用刚证的单字关系。故整个字及所有前缀完全对应，第一次失败下标也相同，其完全语义编号为 $\operatorname{NatZ}(i)$，无失败时为所设符号的码。有界后继同样只需用其 $n<B,n=B,\bot$ 三个完整分支作此归纳。
+
+字桥给每个原字的准确原像，状态桥给每个原状态的准确原像，而 $x\in D_w$ 的双向等价刚由归纳证明，故限制在 $\operatorname{Exec}$ 的桥同时有两个成员方向。成功观察由 $P_L$ 共轭，失败观察由标签桥，因而 $O_{L,w}$ 和 $\Phi_{L,w}$ 的等式保持。代价函数在所有句法字上共轭，限制到 $\operatorname{Exec}$ 时域的同一桥适用；首个失败前缀代价只在其另给约定的域上用同一编号函数。故联合域的相关条件始终保留，零值边不充当域外失败，后续设置亦不使失败状态复活。证毕。
+

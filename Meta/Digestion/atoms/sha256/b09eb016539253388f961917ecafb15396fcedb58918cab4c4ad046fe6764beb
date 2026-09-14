@@ -1,0 +1,41 @@
+**定义 318。** 复用第 71–78 条的 $\operatorname{Enc},\operatorname{Dec},\mathfrak V_Z,\operatorname{El},\operatorname{Pack},\operatorname{NatZ},\in_Z$ 及语义配对。对任意集合 $A$，沿用 $A^*=\operatorname{Enc}[A]=\operatorname{El}(\operatorname{Enc}(A))$，记其限制双射为
+$$
+\operatorname{enc}_A=\operatorname{Enc}|_A:A\to A^*.
+$$
+第 255–256 条的 $J,v,b,\chi,\mathrm e$ 保持原义：$b=\operatorname{scode}\circ v$，$\chi(c)=\operatorname{Enc}(b^{-1}(c))$，$\mathrm e(c)=\operatorname{Enc}(c)$，两提升的域均为原始带符号字集 $S$。
+
+对 $A$ 上明确给定的拓扑 $\tau$，沿用第 289、291 条的外部运输拓扑
+$$
+\tau^*=\{\operatorname{Enc}[U]:U\in\tau\}\quad\text{于 }A^*.
+$$
+这是 $A^*$ 的外部子集族；单个拓扑码 $\operatorname{Enc}(\tau)$ 和开集码族 $\operatorname{Enc}[\tau]$ 分别有另外的用途。在独立记录、总数字目标上定义
+$$
+\tau_{\rm rec}=\{\operatorname{rec}_{\rm reg}[U]:U\in\tau_\Psi\},\qquad
+\tau_{\rm dig}=\{\operatorname{dig}_{\rm reg}[U]:U\in\tau_\Psi\}.
+$$
+
+局部给定集合之间的双射 $\eta_A:A\to A^d$、$\eta_B:B\to B^d$，以及部分函数 $f:D\to B$、$D\subseteq A$，定义
+$$
+f^\eta:\eta_A[D]\to B^d,\qquad
+f^\eta(c)=\eta_B(f(\eta_A^{-1}(c))),
+$$
+$$
+G_f=\{\langle x,f(x)\rangle:x\in D\},\qquad
+G_{f^\eta}=\{\langle c,f^\eta(c)\rangle:c\in\eta_A[D]\}.
+$$
+此为第 259–260 条元数一的特化，整个状态或整个函数图作为一个集合输入。另记既有集合解释的外部共轭及其普通图
+$$
+f^*:D^*\to B^*,\qquad
+f^*(\operatorname{Enc}(x))=\operatorname{Enc}(f(x)),\qquad
+\Gamma_f^*=\{\langle\operatorname{Enc}(x),\operatorname{Enc}(f(x))\rangle:x\in D\}.
+$$
+$G_f,G_{f^\eta}$ 是原图与数字共轭图；$\operatorname{Enc}(G_f),\operatorname{Enc}(G_{f^\eta})$ 是两个图码；$\Gamma_f^*$ 是外部共轭的普通图；$\operatorname{Enc}[G_f]$ 是原图的外部语义成员像。普通图使用普通有序对，下标 $Z$ 的有序对仅在两个有效码上使用。
+
+对状态 $u$ 定义 $g_u^J:\operatorname{Pr}\to J$，$g_u^J(p_n)=v^{-1}(u_n)$。对 $r\in\mathsf{Rec}_{\rm reg}$ 分别保留
+$$
+\operatorname{Enc}(\operatorname{unrec}_{\rm reg}(r)),\qquad
+\operatorname{Enc}(r),\qquad
+\operatorname{Enc}(g_{\operatorname{unrec}_{\rm reg}(r)})
+$$
+作为状态值、原始记录自身及普通素数总图的三个提升。对 $c\in S$ 分别保留 $\operatorname{Enc}(\operatorname{ival}(c))$、$\chi(c)$、$\mathrm e(c)$ 作为普通数值、原 $J$ 对象和数字对象的提升；此处不宣称这些集合在所有输入下两两不等。
+

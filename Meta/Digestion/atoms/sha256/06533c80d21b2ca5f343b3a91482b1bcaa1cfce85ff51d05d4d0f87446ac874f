@@ -1,0 +1,17 @@
+**命题 425.3（预测七·读数纤维、联合与有限行为实现）。** 对任意 $q:X\to A$，映射 $x\mapsto(q(x),x)$ 给出双射
+$$
+X\longrightarrow\{(a,x):a\in A,\ x\in X,\ q(x)=a\}.
+$$
+对 $q_C:X\to C,q_D:X\to D$，联合读数 $x\mapsto(q_C(x),q_D(x))$ 分别细化两个读数；任意同时细化它们的 $q_E:X\to E$ 也细化该联合读数。
+
+再设 $Y,W$ 为有限集合，$U,O$ 为任意集合，$I_u:Y\to Y$、$J_u:W\to W$ 为全运算，$q:Y\to O,r:W\to O$ 为读数，$a:Y\to W$ 满射且对每个 $u\in U$ 满足
+$$
+a\circ I_u=J_u\circ a,\qquad q=r\circ a.
+$$
+令 $\mathcal B=Y/\ker\operatorname{DynClosure}(q,I)$，$\pi:Y\to\mathcal B$ 为商映射，则 $\overline I_u([y])=[I_uy]$、$\overline q([y])=q(y)$ 良定义，且存在唯一满射 $f:W\to\mathcal B$ 使
+$$
+\pi=f\circ a,\qquad f\circ J_u=\overline I_u\circ f\quad(u\in U),
+\qquad \overline q\circ f=r.
+$$
+从而 $|\mathcal B|\le|W|$。
+

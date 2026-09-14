@@ -37,7 +37,8 @@ internal sealed record FileMapEntry
         string artifactId,
         string? mode,
         string runtimeDisposition,
-        string? historyRequirement)
+        string? historyRequirement,
+        FileMapSymlink? symlink)
     {
         glob = FileMapGlob.Create(pattern);
         Pattern = pattern;
@@ -51,6 +52,7 @@ internal sealed record FileMapEntry
         Mode = mode;
         RuntimeDisposition = runtimeDisposition;
         HistoryRequirement = historyRequirement;
+        Symlink = symlink;
     }
 
     internal string Pattern { get; }
@@ -74,6 +76,8 @@ internal sealed record FileMapEntry
     internal string RuntimeDisposition { get; }
 
     internal string? HistoryRequirement { get; }
+
+    internal FileMapSymlink? Symlink { get; }
 
     internal bool Matches(string path) => glob.IsMatch(path);
 }
@@ -195,6 +199,8 @@ internal static class FileMapLoader
             throw Invalid(location, "artifact_id values other than none must be unique");
         }
 
+        FileMapSymlinkPolicy.ValidateCoverage(entries.Select(entry => entry.Symlink).OfType<FileMapSymlink>(),
+            path => entries.Count(entry => entry.Matches(path)), location);
         return new FileMapManifest(residencePolicy, entries);
     }
 
@@ -253,7 +259,9 @@ internal static class FileMapLoader
             && rawArtifactId is string artifactIdValue
             && artifactIdValue != "none"
             && disposition is "committed-source";
-        RequireExactKeys(table, location, isDataKeyedRunLocal ? EntryKeys : isRunLocal ? RunLocalEntryKeys : isGeneratedArtifact ? GeneratedArtifactEntryKeys : hasResidenceViolation ? ResidenceEntryKeys : EntryKeys);
+        var expectedKeys = isDataKeyedRunLocal ? EntryKeys : isRunLocal ? RunLocalEntryKeys : isGeneratedArtifact ? GeneratedArtifactEntryKeys : hasResidenceViolation ? ResidenceEntryKeys : EntryKeys;
+        RequireExactKeys(table, location, table.ContainsKey("symlink") ? [.. expectedKeys, "symlink"] : expectedKeys);
+        var symlink = FileMapSymlinkPolicy.ParseEntry(table, location);
         var pattern = RequiredString(table, "pattern", location);
         _ = FileMapGlob.Create(pattern);
         var kind = RequiredString(table, "kind", location) switch
@@ -330,7 +338,8 @@ internal static class FileMapLoader
             artifactId,
             mode,
             runtimeDisposition,
-            historyRequirement);
+            historyRequirement,
+            symlink);
     }
 
     private static ImmutableArray<string> RequiredNames(

@@ -1,0 +1,5 @@
+**命题 20.6（统计约化不等于物理提取，repo-derived）。** 对整数 $N\ge1$、实数 $\varepsilon>0$，$N$ 份独立同分布态上测量 $Z$ 并平均，所得估计 $\widehat z$ 满足 $\mathbb E\widehat z=z$、$\operatorname{Var}\widehat z=(1-z^2)/N\le1/N$，故 $P(|\widehat z-z|\ge\varepsilon)\le1/(N\varepsilon^2)$。这不提供单份未知态的任意精度确定读取，也不提供未知态的任意克隆。
+
+证明。每次结果为 $\pm1$，均值 $z$、方差 $1-z^2$，独立性给均值方差除以 $N$，Chebyshev 不等式给概率界。若完全正保迹通道能精确克隆任意纯态，将固定辅助态及环境纳入其等距扩张 $V$；两个克隆边缘均为纯态，故全局纯态必分解为 $V|\psi\rangle=|\psi\rangle\otimes|\psi\rangle\otimes|e_\psi\rangle$，其中环境向量归一化。对可选的两态令 $c=\langle\psi|\phi\rangle$ 且 $0<|c|<1$，保内积给 $c=c^2\langle e_\psi|e_\phi\rangle$，从而 $|c|\le|c|^2$，矛盾。这不禁止已知态制备或互相正交态的复制。密度矩阵闭包是统计计算上的精确约化；要求它由物理通道实现时还需完全正性、可制备性及仪器代价，不能把经典隐变量消元当作量子理论的推导。证毕。
+
+

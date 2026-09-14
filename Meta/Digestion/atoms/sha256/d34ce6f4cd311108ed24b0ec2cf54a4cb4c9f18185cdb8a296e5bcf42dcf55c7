@@ -1,0 +1,41 @@
+**定理 10.2（有限前缀的预测与保持预算）。** 若初始读取满足$\operatorname{TV}(\widehat p_0,p_0)\le\beta$，则对每个$k\le N$有
+$$
+\operatorname{TV}(p_k,\bar p_k)
+\le\min\left\{1,\beta+\sum_{j=1}^{k}\epsilon_j\right\},
+$$
+以及
+$$
+\operatorname{TV}(p_k,p_0)
+\le\min\left\{1,\sum_{j=1}^{k}(\epsilon_j+\lambda_j)\right\}.
+$$
+因此
+$$
+\beta+\sum_{j=1}^{N}\epsilon_j\le\delta_{\rm pred},
+\qquad
+\sum_{j=1}^{N}(\epsilon_j+\lambda_j)\le\delta_{\rm stay}
+$$
+是同时覆盖这些有限时刻的充分预算。
+
+证明。随机矩阵不增大总变差距离，故
+$$
+\operatorname{TV}(p_k,\bar p_k)
+\le\epsilon_k+\operatorname{TV}(p_{k-1},\bar p_{k-1}).
+$$
+另一方面，对任意概率向量$p$，$\operatorname{TV}(K_kp,p)\le\lambda_k$；结合三角不等式递推第二式。证毕。
+
+二标签例子中，令
+$$
+\mathcal E_\lambda(\rho)=(1-\lambda)\Delta(\rho)+\lambda X\Delta(\rho)X,
+\qquad 0\le\lambda\le1.
+$$
+其精确经典矩阵为
+$$
+K_\lambda=
+\begin{pmatrix}1-\lambda&\lambda\\\lambda&1-\lambda\end{pmatrix},
+$$
+所以$\epsilon_Q=0$；但$\lambda=1$时标签确定翻转，预测完全精确，而对尖锐初始标签的保持性达到最坏失败。若$\lambda=10^{-3}$、$N=20$，从一个标签出发的末端离开概率为
+$$
+\frac{1-(1-2\lambda)^{20}}2\approx0.0196245.
+$$
+端点界不自动覆盖轮间时刻；若需要连续时段，必须为每个$\tau_{k-1}+s$另给实际通道和比较矩阵。
+

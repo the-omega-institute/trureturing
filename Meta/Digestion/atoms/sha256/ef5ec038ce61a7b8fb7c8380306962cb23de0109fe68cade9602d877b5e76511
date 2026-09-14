@@ -1,0 +1,8 @@
+令 \(h_i=d_i-c_i>0\)、\(\Delta_i=f(d_i)-f(c_i)>0\)、\(\rho_i=\Delta_i/h_i\)、\(R=M_1-c_1-c_2\ge0\)。第 18 节的逐项弱对偶及匹配证书,将重量 \(\ell_p\) 换成 \(h_i\),即给出
+
+\[
+D(M_1)=\max_{\substack{0\le\alpha_i\le1\\
+h_1\alpha_1+h_2\alpha_2\le R}}
+\sum_{i=1}^2[f(c_i)+\alpha_i\Delta_i].
+\]
+

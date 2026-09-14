@@ -1,0 +1,11 @@
+**33.14 Density limits and all equality qualifications.** For the fixed family,
+\(s_p(z)=zA_p/h_p+o(z)\) as \(z\downarrow0\), directly from differentiability
+at zero. Consequently all unscaled densities and all unscaled adjacent gaps
+tend to zero as \(T\to\infty\). Each adjacent unscaled gap has infimum 0 on
+finite \(T\ge0\), never attained there. There is no finite-height tie, including
+\(T=0\). At the formal endpoint \(z=0\), all \(s_p=0\) and the inequalities
+\(s_i-s_j>\delta_{ij}z\) extend only as equalities \(0=0\).
+The separate scaled extension has \(w_p(0)=A_p/h_p\) and retains every strict
+margin in 33.6. An equality in the unscaled endpoint problem is not a scaled
+density tie or an equality at an actual finite height.
+

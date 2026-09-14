@@ -92,7 +92,19 @@ internal static class BoundedProcessRunner
                     process.StandardInput.BaseStream,
                     standardInput,
                     cancellation.Token);
-            process.WaitForExitAsync(cancellation.Token).GetAwaiter().GetResult();
+            // A failed reader no longer drains its pipe. Observe its failure
+            // while the child is running, before a blocked writer can turn an
+            // output/parse error into a misleading process timeout.
+            var pending = new List<Task>
+            {
+                stdout, stderr, process.WaitForExitAsync(cancellation.Token),
+            };
+            while (pending.Count != 0)
+            {
+                var completed = Task.WhenAny(pending).GetAwaiter().GetResult();
+                completed.GetAwaiter().GetResult();
+                pending.Remove(completed);
+            }
             try
             {
                 stdin.GetAwaiter().GetResult();

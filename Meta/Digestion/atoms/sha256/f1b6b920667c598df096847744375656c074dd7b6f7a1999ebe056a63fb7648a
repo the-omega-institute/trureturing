@@ -1,0 +1,7 @@
+**定义 360.1。** 设 $\mathcal C\subseteq\mathbb Q^\omega$ 为任意至多可数的预先指定行族。保留全部黄金坐标而只保留 $\mathcal C$ 中的有理特征，记其在 $B_A^{\rm cap}$ 上的初始拓扑为 $\tau_{\mathcal C,A}$。由定理 337.2，等价地可用映射
+$$
+E_{\mathcal C,A}:B_A^{\rm cap}\longrightarrow X_A^{\rm cap}\times\mathbb T^{\mathcal C},\qquad
+E_{\mathcal C,A}(u)=(u,(\chi_r^{\rm cap}(u))_{r\in\mathcal C}),
+$$
+目标取所列坐标乘积拓扑。定义域仍为 $B_A^{\rm cap}$；首分量落在 $X_A^{\rm cap}$ 不使后面的特征在整个乘积上有定义。
+

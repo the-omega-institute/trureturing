@@ -1,0 +1,27 @@
+**定义 295。** 固定有限互异素数标签集 $P$，令 $d=|P|$，并固定非负整数 $r$。为矩阵书写选定 $P$ 的一个顺序，系数坐标按 $1,\ldots,r$ 排列。以下指令族的矩阵及其相关群记为
+$$
+B:\mathbb Z^r\longrightarrow\mathbb Z^P,\qquad
+B=(b_1\ \cdots\ b_r),\qquad
+H=B[\mathbb Z^r],\qquad k=\operatorname{rank}_{\mathbb Q}B,
+$$
+$$
+L_{\rm sat}=(\operatorname{span}_{\mathbb Q}H)\cap\mathbb Z^P,\qquad
+K_B^{\mathbb Z}=\ker B,\qquad
+R_B=\ker(B^{\mathsf T}:\mathbb Z^P\to\mathbb Z^r).
+$$
+$H$ 是实际整数像，$L_{\rm sat}$ 是它的饱和格，$K_B^{\mathbb Z}$ 是整数系数核，$R_B$ 是目标坐标上的整数关系格。零列、重复列、线性相关列及非本原列均允许；不同列号始终是不同标签。
+
+无界有符号字母表与正字母表分别为
+$$
+\Sigma_r=\{1,\ldots,r\}\times\{+1,-1\},\qquad
+\Sigma_r^+=\{(i,+1):1\le i\le r\}.
+$$
+字母 $(i,\epsilon)$ 在整个 $\mathbb Z^P$ 上作用为 $x\mapsto x+\epsilon b_i$。词 $w=\lambda_1\cdots\lambda_m$ 按从左至右的顺序作用，其中 $\lambda_h=(i_h,\epsilon_h)$。令
+$$
+\eta_i(w)=\#\{h:\lambda_h=(i,+1)\}-\#\{h:\lambda_h=(i,-1)\},
+$$
+$$
+q_0=0,\qquad q_j=\sum_{h=1}^j\epsilon_hb_{i_h}\quad(1\le j\le m).
+$$
+这些 $q_j$ 只表示当前词的前缀位移。空词的计数和位移均为零。采用 $\mathbb Z^0=\{0\}$、空直和为零群、空乘积为一的约定；空坐标向量是唯一空函数。这里的无界全域是 $\mathbb Z^P$；$\mathbb N^P$ 已有非负边界，不能代替这个全域。
+

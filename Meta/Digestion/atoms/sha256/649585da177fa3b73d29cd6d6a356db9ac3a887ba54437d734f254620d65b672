@@ -1,0 +1,13 @@
+**定义 69（有限自然数字与补零）。** 以 ZFC 为集合论语言，取有限 von Neumann 序数、Kuratowski 有序对与由此构造的函数图。沿用定义 3、9 的 \(G_j\) 和低位到高位次序。令 \(\mathsf W_Z\) 为全部有限函数 \(u:\ell\to\{0,1\}\) 的集合，其中相邻值不同时为一，且 \(\ell=0\) 或 \(u(\ell-1)=1\)。定义
+\[
+\operatorname{pad}(u)_j=\begin{cases}u(j),&j<\ell,\\0,&j\ge\ell,\end{cases}
+\qquad \operatorname{val}(u)=\sum_{j<\ell}G_ju(j),
+\qquad \zeta(n)=\operatorname{trim}(s(n)).
+\]
+\(\operatorname{trim}\) 在零行上取空函数，在其余规范行上截到最大占据位置之后。这里无下标的 \(\zeta(n)\) 指有限数字。自然叶定义为
+\[
+\operatorname{NatZ}(n)=\langle0,\zeta(n)\rangle,
+\qquad \mathsf N_Z=\{\operatorname{NatZ}(n):n\in\omega\}.
+\]
+对任意有限非负行 \(r\) 定义 \(\operatorname{Norm}(r)=\zeta(\sum_jG_jr_j)\)。引文为定理 10、21 及 [Mathlib 的 Zeckendorf 定理](https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Nat/Fib/Zeckendorf.html)，指标换算为 \(G_j=F_{j+2}\)。
+

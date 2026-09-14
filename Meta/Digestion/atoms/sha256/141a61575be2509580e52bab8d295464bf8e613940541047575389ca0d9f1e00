@@ -1,0 +1,43 @@
+**定理 291。** 令 $D=\{[m\phi]:m\in\mathbb Z\}\subseteq\mathbb T$。第 289 条的 $\varpi_P$ 是单射群同态，精确像及其在积拓扑中的闭包分别为
+$$
+\varpi_P[\mathbb Z^P]=D^P,\qquad
+\overline{\varpi_P[\mathbb Z^P]}=\mathbb T^P.
+$$
+$P\ne\varnothing$ 时这个像可数且为真子集；$P=\varnothing$ 时域、像和闭包都是单点。点时映射 $\widehat\varpi_P$ 也是单射群同态，因而
+$$
+\ker\widehat\Psi_P=\ker\mathsf V_P,\qquad
+\ker\Psi_P=\ker\mathsf C_P.
+$$
+对任意 $q\in\mathsf Q_P$，有精确相位公式
+$$
+\widehat\Psi_P(q)(t,p)
+=\left[\sum_j(-1)^{j+1}\alpha^{j+2}q(t,p,j)\right],
+\qquad
+\Psi_P(q)_p
+=\left[\sum_{t,j}(-1)^{j+1}\alpha^{j+2}q(t,p,j)\right].
+$$
+因此，对任意 $q,q'\in\mathsf Q_P$，
+$$
+\widehat\Psi_P(q)=\widehat\Psi_P(q')
+\iff\mathsf V_P(q)=\mathsf V_P(q'),\qquad
+\Psi_P(q)=\Psi_P(q')\iff\mathsf C_P(q)=\mathsf C_P(q').
+$$
+第 207 条的两个具体核在这里分别给
+$$
+\ker\widehat\Psi_P
+=\left\langle e_{t,p,1}-2e_{t,p,0},\
+e_{t,p,j+2}-e_{t,p,j+1}-e_{t,p,j}
+:t\in\mathbb Z,\ p\in P,\ j\in\omega\right\rangle_{\mathbb Z},
+$$
+$$
+\ker\Psi_P=\ker\mathsf V_P\oplus\mathsf L_P,\qquad
+\mathsf L_P=\langle e_{t,p,0}-e_{0,p,0}:t\ne0,\ p\in P\rangle_{\mathbb Z}.
+$$
+在加权前缀商 $\mathcal H_P^G$ 上，终端相位的零核为
+$$
+\ker(\varpi_P\circ\Sigma_P\circ\Theta_P^{G,\rm pf})
+=(\Theta_P^{G,\rm pf})^{-1}(\mathsf K_P),
+\qquad \mathsf K_P=\ker\Sigma_P.
+$$
+这些相等式以及闭包结论均可沿第 71–79 条的原集合解释运输；闭包使用第 289 条指定的运输拓扑。
+

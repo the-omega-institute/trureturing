@@ -32,7 +32,7 @@ guarded seal above fail with IE-C009 `role histogram mismatch`. -/
 #guard_msgs (info) in
 run_cmd do
   let proofName :=
-    `D5.S3.ConceptDynamics.Aggregation.AgendaPower.agenda_power.__lowers_escape
+    ``D5.S3.ConceptDynamics.Aggregation.AgendaPower.agenda_power.__lowers_escape
   let info ← getConstInfo proofName
   let some value := info.value? (allowOpaque := true)
     | throwError "generated reflected lowering theorem has no proof value"

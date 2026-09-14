@@ -1,0 +1,21 @@
+**33.17 The prescribed second-moment reversal and primary notation erratum.**
+At precisely \(n=2\), direct rational arithmetic gives
+\[
+\alpha_2^2-\beta_2^2=3/4096,\qquad
+\alpha_3^2-\beta_3^2=8/6561.
+\]
+Since \(3^5=243<256=2^8\), strict monotonicity of logarithms gives
+\(h_3/h_2<8/5\). The exact multiplication is
+\[
+8\cdot19683=157464<163840=5\cdot32768,
+\qquad 8/5<32768/19683.
+\]
+Thus \(19683h_3<32768h_2\), equivalently
+\(a_{2,2}=3/(4096h_2)<8/(6561h_3)=a_{3,2}\); equality is impossible.
+For historical fidelity, C44's returned conclusion literally used the compressed
+tokens `819683` and `532768` in `Since 819683=157464<163840=532768`.
+Those are not valid integer equalities as written. The mathematical exposition
+explicitly corrects them to `8*19683` and `5*32768`, respectively, as proved above;
+the original primary bytes are not edited or silently reinterpreted as a repaired
+historical envelope. Only this second-moment pair is evaluated here.
+

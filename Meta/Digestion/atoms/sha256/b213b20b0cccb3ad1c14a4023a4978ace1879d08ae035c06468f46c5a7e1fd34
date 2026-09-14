@@ -1,0 +1,4 @@
+**定理 458.2。**$R_q([t])=[t+\alpha q]$ 和 $\mathsf M_q([t])=[qt]$ 均保持 $\lambda$。全部这些映射的共同不变 Borel 概率恰为 $\lambda$。
+
+**证明。**对任意可积 $f$，平移变量并利用一周期性给 $\int_0^1f(t+\alpha q)\,dt=\int_0^1f(t)\,dt$。将 $[0,1)$ 分成 $q$ 个长度 $1/q$ 的半开区间，在各段令 $u=qt-j$，得到 $\int_0^1f(qt)\,dt=q(1/q)\int_0^1f(u)\,du$。取指示函数即得推前等式。若 $\nu$ 对任一 $R_q$ 不变，令 $\widehat\nu(k)=\int e(kt)\,d\nu(t)$，则 $\widehat\nu(k)=e(kq\alpha)\widehat\nu(k)$。$k\ne0$ 时因子不为一，故所有非零 Fourier 系数为零。三角多项式在连续函数中一致稠密，积分质量有界，所以 $\nu,\lambda$ 对全部连续函数积分相同，因而是同一 Borel 概率。证毕。
+

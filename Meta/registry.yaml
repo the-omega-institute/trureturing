@@ -6,6 +6,7 @@ root_files:
   - "CLAUDE.md"
   - "Directory.Build.props"
   - "Directory.Packages.props"
+  - "LICENSE"
   - "Makefile"
   - "README.md"
   - "Trureturing.lean"
@@ -14,10 +15,13 @@ root_files:
   - "lakefile.toml"
   - "lean-toolchain"
 governance_documents:
+  - ".claude/skills"
+  - ".codex/skills"
   - "D5/X_Frontier/HeartsAuthorizations.md"
   - "Golden/gate-authority-roots.toml"
   - "Meta/Digestion/atomizers.toml"
   - "Meta/FILEMAP.toml"
+  - "Meta/lean-report.toml"
   - "docs/CONTRIBUTING.md"
   - "docs/GOVERNANCE.md"
 agent_files:

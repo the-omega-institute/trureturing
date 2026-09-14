@@ -1,0 +1,12 @@
+**定理 370.9。** 第 335 条的两个黄金有限字段保留精确域
+$$
+L_\phi=\phi\mathbb Q\subseteq\mathbb R,\qquad
+C_\phi=\{[\phi q]:q\in\mathbb Q\}\subseteq\mathbb T,
+$$
+
+$$
+\operatorname{cenc}_\phi(\phi q)=T_2(\zeta(0),\operatorname{qenc}(q)),\qquad
+\operatorname{genc}_\phi([\phi q])=T_2(\zeta(1),\operatorname{qenc}(q)).
+$$
+它们各自与 $\operatorname{cdec}_\phi,\operatorname{gdec}_\phi$ 双向互逆，两个字段域不交。$g_{\rm add}(u)$、$F_{\rm scal}(u)$ 和 $g_{(2^{-n})_n}(u_{5040})$ 的有理乘数分别为 $\sum_nu_n$、$N(u)$ 和 $43/8$。中心代表 $\phi-2$ 不属于 $L_\phi$，虽然其圆周类属于 $C_\phi$。
+
