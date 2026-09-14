@@ -13,6 +13,7 @@ from lean_seed_runtime import FAKE_LAKE, PAIR_PRODUCER
 
 from lean_seed_support import DELTA, INPUT, OTHER, PUBLISH, REV, ROOT, PartitionFixture, digest, write
 from lean_seed_transport import FAKE_GH, ReleaseTransportCases
+from cache_deadline_cases import CacheDeadlineCases
 
 
 class DeltaFixture:
@@ -182,7 +183,7 @@ class RegistrationEvidenceTests(DeltaFixture, unittest.TestCase):
         self.assertEqual("fallback", self.plan()["status"])
 
 
-class TransportTests(ReleaseTransportCases, unittest.TestCase):
+class TransportTests(CacheDeadlineCases, ReleaseTransportCases, unittest.TestCase):
     """Release transport cases exposed under their existing test identity."""
 
     def test_transition_fetch_flag_cannot_widen_partition_compatibility(self):

@@ -8,6 +8,7 @@ import importlib
 import os
 import pathlib
 import shutil
+import signal
 import subprocess
 import sys
 import tempfile
@@ -322,6 +323,288 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
     def restore_owner(self):
         sys.path.insert(0, str(CACHE.parent))
         return importlib.import_module("lean_actions")
+
+    def test_layer_filter_cannot_expand_registered_stage_scope(self):
+        owner = self.restore_owner()
+        sys.path.insert(0, str(REPO / "tools/scripts/workflow"))
+        plan = importlib.import_module("ci_plan")
+        for selected in (False, True):
+            with self.subTest(selected=selected):
+                argv = [str(CACHE), "snapshot", "--repository", str(self.root),
+                        "--stage", "current", "--layer", "dependency", "--bounded-cache"]
+                with mock.patch.dict(os.environ, dict(self.env, CANDIDATE_SHA=REV,
+                        CI_PLAN_PATH="build/ci/plan.json", CI_CHANGES_PATH="build/ci/changes.json")), \
+                     mock.patch.object(sys, "argv", argv), \
+                     mock.patch.object(plan, "git", return_value=(REV + "\n").encode()), \
+                     mock.patch.object(plan, "validate_plan", return_value={}), \
+                     mock.patch.object(plan, "stage_requirements", return_value={
+                         "cache_layers": ["dependency", "project"] if selected else ["report"]}), \
+                     mock.patch.object(owner, "actions_keys", wraps=owner.actions_keys) as keys, \
+                     mock.patch.object(owner, "snapshot", wraps=owner.snapshot) as snapshot, \
+                     contextlib.redirect_stdout(io.StringIO()) as receipts:
+                    self.assertEqual(0, owner.main())
+                self.assertIn("dependency_ready=false", receipts.getvalue())
+                self.assertIn("save_timeout_minutes=1", receipts.getvalue())
+                if selected:
+                    self.assertEqual(["dependency"], snapshot.call_args.args[2])
+                    self.assertEqual(1, keys.call_count)
+                else:
+                    snapshot.assert_not_called()
+                    keys.assert_not_called()
+                self.assertFalse((self.root / "build/lean-cache").exists())
+
+    def test_bounded_snapshot_publishes_only_after_worker_and_save_window(self):
+        owner = self.restore_owner()
+        from cache_deadline import CacheDeadline
+        source, cached, _ = self.restore_fixture("project", {"a.olean": b"accepted"})
+        before = (cached / "manifest.json").read_bytes()
+        (source / "a.olean").write_bytes(b"new source")
+        for cutoff in (None, 164, 400):
+            with self.subTest(cutoff=cutoff), mock.patch.dict(os.environ, self.env), \
+                 contextlib.redirect_stdout(io.StringIO()) as receipts:
+                (self.root / "outputs").unlink(missing_ok=True)
+                deadline = CacheDeadline(cutoff, monotonic=lambda: 100)
+                owner.snapshot(self.root, owner.actions_keys(self.root), ["project"], deadline=deadline)
+                outputs = (self.root / "outputs").read_text().splitlines()
+                self.assertEqual(["project_ready=" + str(cutoff == 400).lower(),
+                                  "save_timeout_minutes=" + ("4" if cutoff == 400 else "1")], outputs)
+                self.assertFalse(list(cached.parent.glob(".snapshot-*")))
+                if cutoff == 400:
+                    self.assertEqual(b"new source", (cached / "data/a.olean").read_bytes())
+                else:
+                    self.assertEqual(before, (cached / "manifest.json").read_bytes())
+
+    def test_bounded_snapshot_timeout_and_signals_clean_only_owned_staging(self):
+        owner = self.restore_owner()
+        from cache_deadline import CacheDeadline
+        source, cached, _ = self.restore_fixture("project", {"a.olean": b"accepted"})
+        before = (cached / "manifest.json").read_bytes()
+        sibling = cached.parent / ".snapshot-other-owner"
+        sibling.mkdir()
+        (sibling / "material").write_bytes(b"concurrent snapshot")
+        for cancellation in ("timeout", signal.SIGTERM, signal.SIGINT, "late", "leader-exited"):
+            process = mock.Mock(pid=12345)
+            process.poll.return_value = None
+            deadline = CacheDeadline(400, monotonic=lambda: 100)
+
+            def start(command, **kwargs):
+                self.assertNotIn("GITHUB_OUTPUT", kwargs["env"])
+                self.assertTrue(kwargs["start_new_session"])
+                staged = pathlib.Path(command[command.index("--snapshot-directory") + 1])
+                (staged / "partial").write_bytes(b"unfinished new material")
+                if cancellation == "late":
+                    (staged / "manifest.json").write_text(json.dumps({"files": []}))
+                return process
+
+            def interrupted(*, timeout):
+                self.assertEqual(235, timeout)
+                if cancellation == "timeout":
+                    raise subprocess.TimeoutExpired("snapshot", timeout)
+                if cancellation == "late":
+                    deadline.cutoff = 100
+                    process.poll.return_value = 0
+                    return 0
+                if cancellation == "leader-exited":
+                    process.poll.return_value = 7
+                    return 7
+                signal.getsignal(cancellation)(cancellation, None)
+
+            calls = []
+            def wait(*, timeout=None):
+                calls.append(timeout)
+                return interrupted(timeout=timeout) if len(calls) == 1 else 0
+            process.wait.side_effect = wait
+            with self.subTest(cancellation=cancellation), mock.patch.dict(os.environ, self.env), \
+                 mock.patch.object(owner.subprocess, "Popen", side_effect=start), \
+                 mock.patch.object(owner.os, "killpg") as kill, \
+                 contextlib.redirect_stdout(io.StringIO()) as receipts:
+                if cancellation in (signal.SIGTERM, signal.SIGINT):
+                    with self.assertRaises(SystemExit) as raised:
+                        owner.snapshot(self.root, owner.actions_keys(self.root), ["project"], deadline=deadline)
+                    self.assertEqual(128 + cancellation, raised.exception.code)
+                else:
+                    owner.snapshot(self.root, owner.actions_keys(self.root), ["project"], deadline=deadline)
+                kill.assert_called_once_with(process.pid, signal.SIGKILL)
+                self.assertNotIn("project_ready=true", receipts.getvalue())
+                self.assertIn("project_ready=false", receipts.getvalue())
+                self.assertIn("save_timeout_minutes=1", receipts.getvalue())
+                self.assertEqual(before, (cached / "manifest.json").read_bytes())
+                self.assertEqual([sibling], list(cached.parent.glob(".snapshot-*")))
+                self.assertEqual(b"concurrent snapshot", (sibling / "material").read_bytes())
+
+    def test_bounded_snapshot_cleans_descendants_after_worker_exits(self):
+        owner = self.restore_owner()
+        from cache_deadline import CacheDeadline
+        hooks = self.root / "hooks"
+        hooks.mkdir()
+        channel = self.root / "descendant-ready"
+        os.mkfifo(channel)
+        (hooks / "sitecustomize.py").write_text('''
+import os, pathlib, subprocess, sys
+if pathlib.Path(sys.argv[0]).name == "lean_actions.py":
+    subprocess.Popen([sys.executable, "-c", "import signal,sys; channel=open(sys.argv[1], 'wb', buffering=0); channel.write(b'x'); signal.pause()", os.environ["DESCENDANT_CHANNEL"]])
+    os._exit(7)
+''')
+        launch = subprocess.Popen
+        streams = []
+
+        def exited_worker(command, **kwargs):
+            process = launch(command, **kwargs)
+            stream = channel.open("rb", buffering=0)
+            streams.append(stream)
+            self.assertEqual(b"x", stream.read(1))
+            # The actual worker is gone; its descendant still holds the pipe.
+            self.assertEqual(7, process.wait())
+            return process
+
+        with mock.patch.dict(os.environ, dict(self.env, PYTHONPATH=str(hooks), DESCENDANT_CHANNEL=str(channel))), \
+             mock.patch.object(owner.subprocess, "Popen", side_effect=exited_worker), \
+             contextlib.redirect_stdout(io.StringIO()) as receipts:
+            owner.snapshot(self.root, owner.actions_keys(self.root), ["project"],
+                           deadline=CacheDeadline(400, monotonic=lambda: 100))
+        self.assertIn("project_ready=false", receipts.getvalue())
+        for stream in streams:
+            # EOF proves the surviving descendant was also killed. The native
+            # test runner's hang guard handles a regression without timing the verdict.
+            self.assertEqual(b"", stream.read())
+            stream.close()
+
+    def test_snapshot_publication_failure_restores_previous_seed(self):
+        owner = self.restore_owner()
+        source, cached, _ = self.restore_fixture("project", {"a.olean": b"accepted"})
+        before = {path.relative_to(cached).as_posix(): path.read_bytes()
+                  for path in cached.rglob("*") if path.is_file()}
+        (source / "a.olean").write_bytes(b"new source")
+        rename = pathlib.Path.rename
+
+        def fail_install(path, target):
+            if path.name.startswith(".snapshot-") and target == cached:
+                raise OSError("injected snapshot publication failure")
+            return rename(path, target)
+
+        with mock.patch.dict(os.environ, self.env), mock.patch.object(pathlib.Path, "rename", fail_install), \
+             contextlib.redirect_stdout(io.StringIO()) as receipts:
+            owner.snapshot(self.root, owner.actions_keys(self.root), ["project"])
+        self.assertIn("project_ready=false", receipts.getvalue())
+        self.assertEqual(before, {path.relative_to(cached).as_posix(): path.read_bytes()
+                                 for path in cached.rglob("*") if path.is_file()})
+        self.assertFalse(list(cached.parent.glob(".snapshot-*")))
+
+    def test_large_layer_snapshot_copies_and_hashes_in_one_read(self):
+        owner = self.restore_owner()
+        material = {"a.olean": bytes(range(251)) * 9000, "nested/z.olean": b"last material"}
+        for layer, target in (("dependency", ".lake/packages"), ("project", ".lake/build")):
+            with self.subTest(layer=layer):
+                source = self.root / target
+                for name, data in material.items():
+                    path = source / name
+                    path.parent.mkdir(parents=True, exist_ok=True)
+                    path.write_bytes(data)
+                    path.chmod(0o640)
+                    os.utime(path, (1_600_000_000, 1_600_000_000))
+                observed = {"source": 0, "staged": 0}
+
+                class CountReads:
+                    def __init__(self, stream, area):
+                        self.stream, self.area = stream, area
+
+                    def __enter__(self):
+                        return self
+
+                    def __exit__(self, *args):
+                        return self.stream.__exit__(*args)
+
+                    def __getattr__(self, name):
+                        return getattr(self.stream, name)
+
+                    def read(self, size=-1):
+                        data = self.stream.read(size)
+                        observed[self.area] += len(data)
+                        return data
+
+                def instrument(open_file):
+                    def opened(file, mode="r", *args, **kwargs):
+                        stream = open_file(file, mode, *args, **kwargs)
+                        path = pathlib.Path(file) if not isinstance(file, int) else None
+                        if path is not None and "r" in mode:
+                            if path.is_relative_to(source):
+                                return CountReads(stream, "source")
+                            if path.is_relative_to(self.root / "build/lean-cache") and path.suffix == ".olean":
+                                return CountReads(stream, "staged")
+                        return stream
+                    return opened
+
+                with mock.patch.dict(os.environ, self.env), \
+                     mock.patch.object(io, "open", side_effect=instrument(io.open)), \
+                     mock.patch.object(builtins, "open", side_effect=instrument(builtins.open)), \
+                     mock.patch.object(shutil, "_HAS_FCOPYFILE", False, create=True), \
+                     mock.patch.object(shutil, "_USE_CP_SENDFILE", False, create=True), \
+                     contextlib.redirect_stdout(io.StringIO()) as receipts:
+                    owner.snapshot(self.root, owner.actions_keys(self.root), [layer])
+                self.assertIn('"status": "snapshot"', receipts.getvalue())
+                self.assertEqual({"source": sum(map(len, material.values())), "staged": 0}, observed)
+                cached = self.root / "build/lean-cache" / layer
+                expected = [{"path": name, "sha256": hashlib.sha256(data).hexdigest(), "mode": 0o640}
+                            for name, data in sorted(material.items())]
+                self.assertEqual(expected, json.loads((cached / "manifest.json").read_text())["files"])
+                for name, data in material.items():
+                    destination = cached / "data" / name
+                    self.assertEqual(data, destination.read_bytes())
+                    self.assertEqual(0o640, destination.stat().st_mode & 0o777)
+                    self.assertEqual(1_600_000_000, destination.stat().st_mtime)
+                    self.assertNotEqual((source / name).stat().st_ino, destination.stat().st_ino)
+                (source / "a.olean").write_bytes(b"source changed")
+                self.assertEqual(material["a.olean"], (cached / "data/a.olean").read_bytes())
+
+    def test_execution_snapshot_consumes_the_exporters_inventory(self):
+        owner = self.restore_owner()
+        for layer in ("engineering", "current"):
+            with self.subTest(layer=layer):
+                payload = b"already inventoried native transport material"
+                inventory = [{"path": "material", "sha256": hashlib.sha256(payload).hexdigest(), "mode": 0o640}]
+
+                def exported(root, selected, keys, destination):
+                    self.assertEqual(layer, selected)
+                    destination.mkdir()
+                    (destination / "material").write_bytes(payload)
+                    (destination / "material").chmod(0o640)
+                    return inventory
+
+                with mock.patch.dict(os.environ, self.env), \
+                     mock.patch.object(owner, "snapshot_execution", side_effect=exported), \
+                     mock.patch.object(owner, "files", side_effect=AssertionError("export material was read twice")), \
+                     contextlib.redirect_stdout(io.StringIO()) as receipts:
+                    owner.snapshot(self.root, owner.actions_keys(self.root), [layer])
+                self.assertIn('"status": "snapshot"', receipts.getvalue())
+                cached = self.root / "build/lean-cache" / layer
+                self.assertEqual(inventory, json.loads((cached / "manifest.json").read_text())["files"])
+                self.assertEqual(payload, (cached / "data/material").read_bytes())
+
+    def test_snapshot_late_read_failure_keeps_published_material_and_source(self):
+        owner = self.restore_owner()
+        for layer in ("dependency", "project"):
+            with self.subTest(layer=layer):
+                source, cached, _ = self.restore_fixture(layer, {"a.olean": b"accepted", "z.olean": b"last"})
+                before = {path.relative_to(cached).as_posix(): path.read_bytes()
+                          for path in cached.rglob("*") if path.is_file()}
+                (source / "a.olean").write_bytes(b"new source")
+                def fail_late(open_file):
+                    def opened(path, mode="r", *args, **kwargs):
+                        if pathlib.Path(path) == source / "z.olean" and mode == "rb":
+                            raise OSError("injected late source read failure")
+                        return open_file(path, mode, *args, **kwargs)
+                    return opened
+
+                with mock.patch.dict(os.environ, self.env), \
+                     mock.patch.object(io, "open", side_effect=fail_late(io.open)), \
+                     mock.patch.object(builtins, "open", side_effect=fail_late(builtins.open)), \
+                     contextlib.redirect_stdout(io.StringIO()) as receipts:
+                    owner.snapshot(self.root, owner.actions_keys(self.root), [layer])
+                self.assertIn(layer + "_ready=false", receipts.getvalue())
+                self.assertEqual(before, {path.relative_to(cached).as_posix(): path.read_bytes()
+                                         for path in cached.rglob("*") if path.is_file()})
+                self.assertEqual(b"new source", (source / "a.olean").read_bytes())
+                self.assertFalse(list(cached.parent.glob(".snapshot-*")))
 
     def restore_fixture(self, layer, material):
         source = self.root / (".lake/packages" if layer == "dependency" else ".lake/build")

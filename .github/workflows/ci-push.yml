@@ -68,6 +68,12 @@ jobs:
       - id: route
         name: Validate plan and route build
         run: python3 -B tools/scripts/workflow/ci.py stage-input --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA" --stage build
+      - id: cache_window
+        if: env.STRATALINT_CACHE_WRITES == 'true' && steps.route.outputs.cache_layers != ''
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/scripts/worktree/cache_deadline.py begin --repository "$GITHUB_WORKSPACE" --stage build --job-timeout-minutes 30
       - uses: actions/setup-dotnet@v4
         if: steps.route.outputs.dotnet == 'true'
         with:
@@ -104,12 +110,14 @@ jobs:
           compression-level: 0
           retention-days: 7
       - id: snapshot
-        if: env.STRATALINT_CACHE_WRITES == 'true' && steps.route.outputs.cache_layers != ''
+        if: steps.cache_window.outcome == 'success' && steps.cache_window.outputs.cache_allowed == 'true'
+        continue-on-error: true
         env:
           STRATALINT_BUILD_SUCCEEDED: 'true'
-        run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --stage build
-      - if: env.STRATALINT_CACHE_WRITES == 'true' && steps.snapshot.outputs.judge_ready == 'true'
+        run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --stage build --layer judge --bounded-cache
+      - if: env.STRATALINT_CACHE_WRITES == 'true' && steps.snapshot.outcome == 'success' && steps.snapshot.outputs.judge_ready == 'true'
         continue-on-error: true
+        timeout-minutes: ${{ fromJSON(steps.snapshot.outputs.save_timeout_minutes || '1') }}
         uses: actions/cache/save@v4
         with:
           path: ${{ steps.keys.outputs.judge_path }}
@@ -147,6 +155,12 @@ jobs:
       - id: route
         name: Validate plan and route engineering
         run: python3 -B tools/scripts/workflow/ci.py stage-input --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA" --stage engineering
+      - id: cache_window
+        if: env.STRATALINT_CACHE_WRITES == 'true' && steps.route.outputs.cache_layers != ''
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/scripts/worktree/cache_deadline.py begin --repository "$GITHUB_WORKSPACE" --stage engineering --job-timeout-minutes 30
       - uses: actions/setup-dotnet@v4
         if: steps.route.outputs.dotnet == 'true'
         with:
@@ -204,27 +218,35 @@ jobs:
           if-no-files-found: error
           compression-level: 0
           retention-days: 7
-      - id: snapshot
-        if: env.STRATALINT_CACHE_WRITES == 'true' && steps.route.outputs.cache_layers != ''
+      - id: snapshot_engineering
+        if: steps.cache_window.outcome == 'success' && steps.cache_window.outputs.cache_allowed == 'true' && steps.keys.outputs.engineering_key != ''
+        continue-on-error: true
         env:
           STRATALINT_CHECK_SUCCEEDED: 'true'
-        run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --stage engineering
-      - if: env.STRATALINT_CACHE_WRITES == 'true' && steps.route.outputs.lake == 'true' && steps.elan.outputs.cache-hit != 'true' && steps.keys.outputs.elan_key != ''
+        run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --stage engineering --layer engineering --bounded-cache
+      - if: steps.snapshot_engineering.outcome == 'success' && steps.snapshot_engineering.outputs.engineering_ready == 'true'
         continue-on-error: true
-        uses: actions/cache/save@v4
-        with:
-          path: ~/.elan
-          key: ${{ steps.keys.outputs.elan_key }}
-      - if: env.STRATALINT_CACHE_WRITES == 'true' && steps.snapshot.outputs.engineering_ready == 'true'
-        continue-on-error: true
+        timeout-minutes: ${{ fromJSON(steps.snapshot_engineering.outputs.save_timeout_minutes || '1') }}
         uses: actions/cache/save@v4
         with:
           path: ${{ steps.keys.outputs.engineering_path }}
           key: ${{ steps.keys.outputs.engineering_key }}
+      - id: save_elan
+        if: steps.cache_window.outcome == 'success' && steps.cache_window.outputs.cache_allowed == 'true' && steps.keys.outputs.elan_key != '' && steps.elan.outputs.cache-hit != 'true'
+        continue-on-error: true
+        run: python3 tools/scripts/worktree/cache_deadline.py allow-save --repository "$GITHUB_WORKSPACE" --stage engineering --max-minutes 12
+      - if: steps.save_elan.outcome == 'success' && steps.save_elan.outputs.save_allowed == 'true'
+        continue-on-error: true
+        timeout-minutes: ${{ fromJSON(steps.save_elan.outputs.save_timeout_minutes || '1') }}
+        uses: actions/cache/save@v4
+        with:
+          path: ~/.elan
+          key: ${{ steps.keys.outputs.elan_key }}
       - if: always()
         run: python3 tools/scripts/workflow/ci.py summary --repository "$GITHUB_WORKSPACE" --stage engineering
-      - name: Retain failed engineering diagnostics
-        if: failure()
+      - name: Retain engineering diagnostics
+        if: failure() || (success() && steps.route.outputs.required == 'true')
+        continue-on-error: true
         uses: actions/upload-artifact@v4
         with:
           name: ci-engineering-diagnostics-${{ github.run_id }}-${{ github.run_attempt }}
@@ -265,6 +287,12 @@ jobs:
       - id: route
         name: Validate plan and route current
         run: python3 -B tools/scripts/workflow/ci.py stage-input --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA" --stage current
+      - id: cache_window
+        if: env.STRATALINT_CACHE_WRITES == 'true' && steps.route.outputs.cache_layers != ''
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/scripts/worktree/cache_deadline.py begin --repository "$GITHUB_WORKSPACE" --stage current --job-timeout-minutes 45
       - uses: actions/setup-dotnet@v4
         if: steps.route.outputs.dotnet == 'true'
         with:
@@ -351,47 +379,74 @@ jobs:
           if-no-files-found: error
           compression-level: 0
           retention-days: 14
-      - id: snapshot
-        if: env.STRATALINT_CACHE_WRITES == 'true' && steps.route.outputs.cache_layers != ''
+      - id: snapshot_report
+        if: steps.cache_window.outcome == 'success' && steps.cache_window.outputs.cache_allowed == 'true' && steps.keys.outputs.report_key != ''
+        continue-on-error: true
         env:
           STRATALINT_CHECK_SUCCEEDED: 'true'
-        run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --stage current
-      - if: env.STRATALINT_CACHE_WRITES == 'true' && steps.route.outputs.lake == 'true' && steps.elan.outputs.cache-hit != 'true' && steps.keys.outputs.elan_key != ''
+        run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --stage current --layer report --bounded-cache
+      - if: steps.snapshot_report.outcome == 'success' && steps.snapshot_report.outputs.report_ready == 'true'
         continue-on-error: true
-        uses: actions/cache/save@v4
-        with:
-          path: ~/.elan
-          key: ${{ steps.keys.outputs.elan_key }}
-      - if: env.STRATALINT_CACHE_WRITES == 'true' && steps.snapshot.outputs.dependency_ready == 'true'
-        continue-on-error: true
-        timeout-minutes: 12
-        uses: actions/cache/save@v4
-        with:
-          path: ${{ steps.keys.outputs.dependency_path }}
-          key: ${{ steps.keys.outputs.dependency_key }}
-      - if: env.STRATALINT_CACHE_WRITES == 'true' && steps.snapshot.outputs.project_ready == 'true'
-        continue-on-error: true
-        timeout-minutes: 12
-        uses: actions/cache/save@v4
-        with:
-          path: ${{ steps.keys.outputs.project_path }}
-          key: ${{ steps.keys.outputs.project_key }}
-      - if: env.STRATALINT_CACHE_WRITES == 'true' && steps.snapshot.outputs.report_ready == 'true'
-        continue-on-error: true
+        timeout-minutes: ${{ fromJSON(steps.snapshot_report.outputs.save_timeout_minutes || '1') }}
         uses: actions/cache/save@v4
         with:
           path: ${{ steps.keys.outputs.report_path }}
           key: ${{ steps.keys.outputs.report_key }}
-      - if: env.STRATALINT_CACHE_WRITES == 'true' && steps.snapshot.outputs.current_ready == 'true'
+      - id: snapshot_current
+        if: steps.cache_window.outcome == 'success' && steps.cache_window.outputs.cache_allowed == 'true' && steps.keys.outputs.current_key != ''
         continue-on-error: true
+        env:
+          STRATALINT_CHECK_SUCCEEDED: 'true'
+        run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --stage current --layer current --bounded-cache
+      - if: steps.snapshot_current.outcome == 'success' && steps.snapshot_current.outputs.current_ready == 'true'
+        continue-on-error: true
+        timeout-minutes: ${{ fromJSON(steps.snapshot_current.outputs.save_timeout_minutes || '1') }}
         uses: actions/cache/save@v4
         with:
           path: ${{ steps.keys.outputs.current_path }}
           key: ${{ steps.keys.outputs.current_key }}
+      - id: snapshot_project
+        if: steps.cache_window.outcome == 'success' && steps.cache_window.outputs.cache_allowed == 'true' && steps.keys.outputs.project_key != ''
+        continue-on-error: true
+        env:
+          STRATALINT_CHECK_SUCCEEDED: 'true'
+        run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --stage current --layer project --bounded-cache
+      - if: steps.snapshot_project.outcome == 'success' && steps.snapshot_project.outputs.project_ready == 'true'
+        continue-on-error: true
+        timeout-minutes: ${{ fromJSON(steps.snapshot_project.outputs.save_timeout_minutes || '1') }}
+        uses: actions/cache/save@v4
+        with:
+          path: ${{ steps.keys.outputs.project_path }}
+          key: ${{ steps.keys.outputs.project_key }}
+      - id: snapshot_dependency
+        if: steps.cache_window.outcome == 'success' && steps.cache_window.outputs.cache_allowed == 'true' && steps.keys.outputs.dependency_key != ''
+        continue-on-error: true
+        env:
+          STRATALINT_CHECK_SUCCEEDED: 'true'
+        run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --stage current --layer dependency --bounded-cache
+      - if: steps.snapshot_dependency.outcome == 'success' && steps.snapshot_dependency.outputs.dependency_ready == 'true'
+        continue-on-error: true
+        timeout-minutes: ${{ fromJSON(steps.snapshot_dependency.outputs.save_timeout_minutes || '1') }}
+        uses: actions/cache/save@v4
+        with:
+          path: ${{ steps.keys.outputs.dependency_path }}
+          key: ${{ steps.keys.outputs.dependency_key }}
+      - id: save_elan
+        if: steps.cache_window.outcome == 'success' && steps.cache_window.outputs.cache_allowed == 'true' && steps.keys.outputs.elan_key != '' && steps.elan.outputs.cache-hit != 'true'
+        continue-on-error: true
+        run: python3 tools/scripts/worktree/cache_deadline.py allow-save --repository "$GITHUB_WORKSPACE" --stage current --max-minutes 12
+      - if: steps.save_elan.outcome == 'success' && steps.save_elan.outputs.save_allowed == 'true'
+        continue-on-error: true
+        timeout-minutes: ${{ fromJSON(steps.save_elan.outputs.save_timeout_minutes || '1') }}
+        uses: actions/cache/save@v4
+        with:
+          path: ~/.elan
+          key: ${{ steps.keys.outputs.elan_key }}
       - if: always()
         run: python3 tools/scripts/workflow/ci.py summary --repository "$GITHUB_WORKSPACE" --stage current
-      - name: Retain current failure or cancellation diagnostics
-        if: (failure() || cancelled()) && needs.build.result == 'success'
+      - name: Retain current diagnostics
+        if: (failure() || cancelled() || (success() && steps.route.outputs.required == 'true')) && needs.build.result == 'success'
+        continue-on-error: true
         uses: actions/upload-artifact@v4
         with:
           name: ci-current-diagnostics-${{ github.run_id }}-${{ github.run_attempt }}
