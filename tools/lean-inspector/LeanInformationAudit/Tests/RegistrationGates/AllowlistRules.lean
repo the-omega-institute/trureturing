@@ -1296,6 +1296,8 @@ run_cmd Elab.Command.liftCoreM do
       ("IndexedPropositionNodupPayload", ``existsTarget, ``indexedRealization, false),
       ("LetPropositionNodupPayload", ``existsTarget, ``letPropositionRealization, false)] do
     let result ← provenanceErrorCurrent (← getEnv).header.mainModule `catalog statement holder
+    if label == "IndexedPropositionNodupPayload" || label == "PropositionMemPayload" then
+      logInfo m!"[LIST-DIAGNOSTIC] {label}: {result}"
     if clean == result.isNone then logInfo m!"[PASS] {label}"
     else logError m!"[FAIL] {label}: {result}"
 end ListMetadataFixtures
@@ -1315,6 +1317,8 @@ run_cmd Elab.Command.liftCoreM do
       ("EnumMemNegExistsClean", ``notExistsTarget, ``enumMemRealization, true),
       ("PropositionMemPayload", ``existsTarget, ``propositionMemRealization, false)] do
     let result ← provenanceErrorCurrent (← getEnv).header.mainModule `catalog statement holder
+    if label == "IndexedPropositionNodupPayload" || label == "PropositionMemPayload" then
+      logInfo m!"[LIST-DIAGNOSTIC] {label}: {result}"
     if clean == result.isNone then logInfo m!"[PASS] {label}"
     else logError m!"[FAIL] {label}: {result}"
 end ListMetadataFixtures

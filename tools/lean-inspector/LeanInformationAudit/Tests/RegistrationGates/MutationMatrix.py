@@ -1,5 +1,3 @@
-"""Executable mutation specifications; the guarded runner owns build scheduling."""
-
 def specification(label, original):
     TARGET='LeanInformationAudit.Tests.RegistrationGates.AllowlistRules'
     kind=label.removeprefix('a11-')
@@ -141,8 +139,8 @@ def specification(label, original):
         description='Remove the audited rigid arena/signature carrier projection boundary; concrete statement payload rejection remains.'
     elif kind=='nonadmission-trace-edit':
         TARGET='LeanInformationAudit.Tests.RegistrationGates.AllowlistBoundaries'
-        needle='"collection_failure: {ex.toMessageData}"'
-        replacement='"collection_failure detail={ex.toMessageData}"'
+        needle='"incomplete cause=collection_failure operation=collect_readout first={address} site={address}: {ex.toMessageData}"'
+        replacement='"incomplete cause=collection_failure operation=collect_readout first={address} site={address} detail={ex.toMessageData}"'
         predicted=[]
         description='Neutral control: edit only a trace string; no inventory or behavior assertion should fail.'
     elif kind=='remove-collection-interfaces':
@@ -187,6 +185,19 @@ def specification(label, original):
         replacement='  return .recognized (witness .statementInductive head)'
         predicted=[name+suffix for suffix in ['', 'Diagnostic'] for name in ['ComputedRegisteredProof','ComputedRegisteredNominalPayload','ComputedRegisteredDecision']]
         description='Treat an unresolved registered statement head as a completed recognized stop, recreating the round-7 default admission.'
+    elif kind=='list-nominal-carrier-path':
+        TARGET='LeanInformationAudit.Tests.RegistrationGates.SurvivingListBoundaries'
+        needle='            if carrierValued ||\n                (concrete.isFVar && !parameter && !auditedFamily) then'
+        replacement='            if name != ``List && (carrierValued ||\n                (concrete.isFVar && !parameter && !auditedFamily)) then'
+        predicted=[n+'CarrierPath' for n in ['PropositionNodupPayload','LetPropositionNodupPayload','IndexedPropositionNodupPayload','PropositionMemPayload']]
+        description='Remove only the nominal List abstract carrier fence; the old metadata fence still rejects, while all four exact diagnostic-path pins fail.'
+    elif kind=='list-both-carrier-fences':
+        TARGET='LeanInformationAudit.Tests.RegistrationGates.AllowlistRules'
+        source=source.replace('if carrierEvidence.isSome &&', 'if true &&')
+        needle='            if carrierValued ||\n                (concrete.isFVar && !parameter && !auditedFamily) then'
+        replacement='            if name != ``List && (carrierValued ||\n                (concrete.isFVar && !parameter && !auditedFamily)) then'
+        predicted=['PropositionNodupPayload','LetPropositionNodupPayload']
+        description='Remove nominal List abstract-carrier and List metadata carrier fences together; indexed and membership payloads retain independent rejection paths.'
     elif kind=='carrier-default-kind':
         TARGET='LeanInformationAudit.Tests.RegistrationGates.Round7PackedConsumer'
         needle='            if carrierValued ||\n                (concrete.isFVar && !parameter && !auditedFamily) then'
@@ -195,7 +206,7 @@ def specification(label, original):
         description='Default-admit nominal carrier-valued and abstract fields by their kind, recreating the round-7 unaudited external carrier boundary.'
     else:raise ValueError(label)
     overrides={
-      'drop-list-carrier-fence':['PropositionNodupPayload','LetPropositionNodupPayload'],
+      'drop-list-carrier-fence':[],
       'resume-proof-implementations':['InternalTargetProofErased','InternalCompanionProofErased','ProofArgumentBoundary','AlternativeProofBoundary','ProofFieldBoundary','ErasedPredicateBoundary','BoundedNatInterfaceHead','ProofImplementationInvariance'],
       'remove-algebra-families':['UniformMonoidHeads','UniformRingHeads','UniformOrderHeads','UniformFieldHeads','UniformCommutativeRingHeads','FunctionInterfaceHead'],
       'remove-named-carrier-alias':['ArenaProjectedCarrier','CatalogProjectedCarrier','BundleProjectedCarrier','NestedScalarCarrier','FiniteFunctionRange'],

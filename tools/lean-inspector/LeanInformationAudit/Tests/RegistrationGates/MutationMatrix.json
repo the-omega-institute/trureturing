@@ -872,6 +872,41 @@
         "CleanReturnInventory.provenanceErrorCurrent.1",
         "CleanReturnInventory.MissingRuleId.provenanceErrorCurrent"
       ]
+    },
+    {
+      "id": "a11-drop-list-carrier-fence",
+      "kind": "behavioral",
+      "target": "LeanInformationAudit.Tests.RegistrationGates.AllowlistRules",
+      "mutation": "Admit proposition-valued list elements through the natural-number uniqueness primitive.",
+      "before": "if carrierEvidence.isSome &&",
+      "after": "if true &&",
+      "predicted_red_names": []
+    },
+    {
+      "id": "a11-list-nominal-carrier-path",
+      "kind": "behavioral",
+      "target": "LeanInformationAudit.Tests.RegistrationGates.SurvivingListBoundaries",
+      "mutation": "Remove only the nominal List abstract carrier fence; the old metadata fence still rejects, while all four exact diagnostic-path pins fail.",
+      "before": "            if carrierValued ||\n                (concrete.isFVar && !parameter && !auditedFamily) then",
+      "after": "            if name != ``List && (carrierValued ||\n                (concrete.isFVar && !parameter && !auditedFamily)) then",
+      "predicted_red_names": [
+        "PropositionNodupPayloadCarrierPath",
+        "LetPropositionNodupPayloadCarrierPath",
+        "IndexedPropositionNodupPayloadCarrierPath",
+        "PropositionMemPayloadCarrierPath"
+      ]
+    },
+    {
+      "id": "a11-list-both-carrier-fences",
+      "kind": "behavioral",
+      "target": "LeanInformationAudit.Tests.RegistrationGates.AllowlistRules",
+      "mutation": "Remove nominal List abstract-carrier and List metadata carrier fences together; indexed and membership payloads retain independent rejection paths.",
+      "before": "            if carrierValued ||\n                (concrete.isFVar && !parameter && !auditedFamily) then",
+      "after": "            if name != ``List && (carrierValued ||\n                (concrete.isFVar && !parameter && !auditedFamily)) then",
+      "predicted_red_names": [
+        "PropositionNodupPayload",
+        "LetPropositionNodupPayload"
+      ]
     }
   ],
   "boundary": "A well-typed rule-less success is not expressible by the witness-bearing constructors. Source-contract rows reject that malformed admission surface; behavioral rows forge an existing rule or remove a fence and run the Lean fixtures."
