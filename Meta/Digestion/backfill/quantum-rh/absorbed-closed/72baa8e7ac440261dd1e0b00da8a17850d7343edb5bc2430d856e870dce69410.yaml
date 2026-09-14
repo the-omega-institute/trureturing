@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:72baa8e7ac440261dd1e0b00da8a17850d7343edb5bc2430d856e870dce69410
+  normalized_sha256: sha256:72baa8e7ac440261dd1e0b00da8a17850d7343edb5bc2430d856e870dce69410
+cas_ref: sha256:72baa8e7ac440261dd1e0b00da8a17850d7343edb5bc2430d856e870dce69410
+coverage_gids:
+  - gid: D5/S3/Zeros/PochhammerDeformation/QuadraticInterval.lOp_quadratic
+    target_statement_id: sha256:707e6c37f64b9da11c8f342467b45845cc0241759a6df9f61faab95fa9ed90ad
+  - gid: D5/S3/Zeros/PochhammerDeformation/QuadraticInterval.quadratic_endpoint_squares
+    target_statement_id: sha256:eb22f6d0022e1a46d5f173e094b2a96a4ae901c136a28bf3f3b86c2e13d6b184
+  - gid: D5/S3/Zeros/PochhammerDeformation/QuadraticInterval.quadratic_interval_closed_form
+    target_statement_id: sha256:78b78ec033f1cc777b3bdcbb5ea3aa752cd65c953f228b9ab56bff868488f42d
+receipts:
+  unresolved_subitems: []
