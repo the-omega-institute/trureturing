@@ -555,6 +555,28 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
+# Preserves exact interval bounds and margins for the conditional Mertens proof.
+pattern = "docs/reports/csa-mertens-auxiliary-domain/interval_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+# Checks exact interval propagation and rounding for the conditional Mertens bound.
+pattern = "docs/reports/csa-mertens-auxiliary-domain/interval_check.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
 # Compares correlated and product states in the energy-information identity.
 pattern = "docs/reports/energyinfo164/numerical_check.py"
 kind = "program"
