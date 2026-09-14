@@ -729,7 +729,18 @@ def relu_certified_word(rows, xs, ys, word, eta, mu, nonstationary=False):
 def relu_certificate_records():
     """Deterministic additions after all legacy RNG consumers; §§27.4–27.10."""
     rng_state = RNG.getstate()
+
+    def assert_rejected(name, *args):
+        try:
+            relu_certified_word(*args)
+        except AssertionError:
+            pass
+        else:
+            raise AssertionError(f'{name} must fail certificate checking')
+
     batches = relu_batches(2)
+    assert len(batches) == 3 and set(batches) == {(0,), (1,), (0, 1)}, \
+        'two-sample nonempty batches'
     family = []
     for horizon, sizes in product((2, 3), ((1, 1), (1, 2), (2, 3))):
         pos, neg = sizes
@@ -737,6 +748,7 @@ def relu_certificate_records():
         rows += [[-F(1, neg), -F(1, neg)] for _ in range(neg)]
         eta, max_drift, steps = F(1, 4*horizon), F(0), 0
         words = list(product(batches, repeat=horizon))
+        assert len(words) == len(set(words)) == 3**horizon, 'family all-word cardinality'
         for word in words:
             drift, minimum, trace, count = relu_certified_word(
                 rows, [[F(1)], [F(-1)]], [[F(0)], [F(0)]], word, eta, F(1, 2), True)
@@ -751,17 +763,23 @@ def relu_certificate_records():
             assert trace[-1] == [[masses[0]], [-masses[1]]]
         envelope = (1+eta)**horizon-1
         assert max_drift <= envelope < F(1, 3) < F(1, 2)
-        assert steps == horizon*len(words)
+        assert steps == horizon*3**horizon
         family.append({'horizon': horizon, 'group_widths': list(sizes),
                        'initial_squared_masses': [str(F(1, pos)), str(F(1, neg))],
                        'eta': str(eta), 'all_batch_words': len(words),
                        'nonzero_gradient_steps': steps,
                        'max_global_drift': str(max_drift), 'uniform_bound': str(envelope)})
+        assert family[-1]['all_batch_words'] == 3**horizon, 'family reported word count'
 
     worked_rows = [[F(1), F(1)], [F(-1, 2), F(-1, 2)]]
-    worked_drift, _, worked_trace, count = relu_certified_word(
+    worked_drift, worked_minimum, worked_trace, count = relu_certified_word(
         worked_rows, [[F(1)], [F(-1)]], [[F(0)], [F(0)]],
         ((0, 1), (0, 1)), F(1, 8), F(1, 2), True)
+    assert worked_drift < worked_minimum == F(1, 2)
+    # The accepted trajectory above controls this same-input margin rejection.
+    assert_rejected('overstated initial mu', worked_rows,
+                    [[F(1)], [F(-1)]], [[F(0)], [F(0)]],
+                    ((0, 1), (0, 1)), F(1, 8), F(3, 4))
     assert count == 2
     assert worked_trace == [[[F(1)], [F(-1, 4)]],
                             [[F(225, 256)], [F(-3969, 16384)]],
@@ -791,17 +809,38 @@ def relu_certificate_records():
         rows = [u+v for u, v in zip(us, vs)]
         ys = [[F((i+1)*(r+1)-2, 5) for r in range(k)] for i in range(3)]
         actions, mu, eta = relu_batches(3), F(1, 10), F(1, 10000)
+        assert len(actions) == 7 and set(actions) == {
+            (0,), (1,), (2,), (0, 1), (0, 2), (1, 2), (0, 1, 2)}, \
+            'three-sample nonempty batches'
         groups, minimum = relu_extract(rows, xs, mu)
         assert len(groups) == 4 and (0, 0, 0) in groups
         max_drift = F(0)
-        for word in product(actions, repeat=2):
+        words = list(product(actions, repeat=2))
+        assert len(words) == len(set(words)) == 49, 'mixed all-word cardinality'
+        for word in words:
             drift, _, _, _ = relu_certified_word(rows, xs, ys, word, eta, mu)
             max_drift = max(max_drift, drift)
         mixed.append({'d': d, 'k': k, 'n': 3, 'width': 4, 'horizon': 2,
                       'patterns': [list(s) for s in sorted(groups)],
-                      'all_batch_words': len(actions)**2, 'eta': str(eta),
+                      'all_batch_words': len(words), 'eta': str(eta),
                       'mu': str(mu), 'initial_minimum': str(minimum),
                       'max_global_drift': str(max_drift)})
+        assert mixed[-1]['all_batch_words'] == 49, 'mixed reported word count'
+
+    # Independent rectangular norms: max(9, 6)=9 and max(2, 3)=3.
+    for name, rows, xs, ys, margin, expected_g, expected_drift in (
+            ('row_dominant', [[F(1), F(1), F(1)]], [[F(1), F(2)]], [[F(0)]],
+             F(1, 2), [[F(3), F(6)]], F(3, 5)),
+            ('column_dominant', [[F(1), F(1), F(2)]], [[F(1)]], [[F(0), F(0)]],
+             F(1, 4), [[F(1)], [F(2)]], F(1, 5))):
+        groups, _ = relu_extract(rows, xs, margin)
+        _, drift, gs = relu_reduced_step(groups, xs, ys, (0,), F(1, 15), F(0))
+        assert gs == {(1,): expected_g}
+        assert drift == expected_drift, f'{name} induced norm'
+        if name == 'row_dominant':
+            # Using min gives 2/5 < mu; the correct 3/5 must reject.
+            assert_rejected('rectangular drift', rows, xs, ys,
+                            ((0,),), F(1, 15), margin)
 
     xs, ys, batch = [[F(1)]], [[F(0)]], (0,)
     left = [[F(2), F(0)], [F(1), F(1)], [F(1), F(3)]]
@@ -835,6 +874,7 @@ def relu_certificate_records():
     for name, rows, labels, step, margin in (
             ('equality', [[F(1), F(0)]], [[F(-1)]], F(1), F(1)),
             ('strictly_above', [[F(1), F(1)]], ys, F(3, 4), F(1, 2))):
+        assert_rejected(name, rows, xs, labels, (batch, batch), step, margin)
         groups, _ = relu_extract(rows, xs, margin)
         drift = F(0)
         for _ in range(2):

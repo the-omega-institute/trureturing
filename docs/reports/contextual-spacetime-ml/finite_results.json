@@ -651,7 +651,7 @@
   "result": "all finite assertions passed",
   "schema": "contextual-spacetime-ml-finite-checks-v1",
   "source": "docs/reports/contextual-spacetime-ml/finite_checks.py",
-  "source_sha256": "117de5dc3b4dbc12eb9c5c2fda14652ebdd65511eafb6bad5de70c3071ac9586",
+  "source_sha256": "b19fafb310ed8fbd286e5404e787591fd24ad130b9cc606b682c1204a5afdcb2",
   "stochastic_records": {
     "bernoulli_discounted_distance": "rho*abs(p-pprime); first random output at depth 1",
     "iid_state_contraction": "0",
