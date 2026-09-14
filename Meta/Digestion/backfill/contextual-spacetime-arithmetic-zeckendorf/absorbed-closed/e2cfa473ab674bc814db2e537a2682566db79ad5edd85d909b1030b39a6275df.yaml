@@ -1,0 +1,20 @@
+fingerprints:
+  raw_sha256: sha256:e2cfa473ab674bc814db2e537a2682566db79ad5edd85d909b1030b39a6275df
+  normalized_sha256: sha256:e2cfa473ab674bc814db2e537a2682566db79ad5edd85d909b1030b39a6275df
+cas_ref: sha256:e2cfa473ab674bc814db2e537a2682566db79ad5edd85d909b1030b39a6275df
+coverage_gids:
+  - gid: D5/S1/Digit/Carry/SuccessorShortest.successor_erasure_and_shortest
+    target_statement_id: sha256:af5e577567f49fc672db1099a74d81d242fcc1ab932d46b0924f19bf76bb65a7
+  - gid: D5/S1/Digit/Infinite/PhaseOrbitRelations.phase_orbit_relations
+    target_statement_id: sha256:4c9a663263b7e3cc69c4a36def358425c125323f2aed8d864a29ff009a06dd77
+  - gid: D5/S1/Digit/Infinite/SignedSeriesRange.signed_series_range
+    target_statement_id: sha256:9d47ee68a40e19a32785b1263984b7d633188221567107d16f3612d0578f9777
+  - gid: D5/S1/Digit/Infinite/SuccessorContinuity.infinite_successor_continuous
+    target_statement_id: sha256:1fe044a30b2003783433ffbafe7f7e4daf697a3e5cf0605aea218d117fb40f0d
+  - gid: D5/S1/Digit/Infinite/WindowCylinderPartition.window_cylinder_partition
+    target_statement_id: sha256:99a45c0281146aa85c4abb581fdb6e19844ed3d8da4050332419cf1f97aca900
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - c956efa86bf7a35f0095a3120daee6bafb45c0712913434277002c672befb2d6
+    - b7f106a452fe44a8f239bbad9fcb913af89a0923d1c919977bbf34fe99cd67fa
