@@ -4,8 +4,7 @@
    mirror-E: none(waiver:all-intervals-all-contexts)
    anchors: []
    utility: none
-   digest: The exact history normal form composes by translated interval
-     intersection, supports partial reversal, and classifies contextual legality. -/
+   digest: The exact history normal form composes by translated interval intersection and classifies contextual legality. -/
 
 import D5.S3.Factorization.Automata.PrimeHistoryNormalForm
 import D5.S3.Factorization.Automata.BoundedPrimeHorizon
@@ -14,7 +13,7 @@ set_option autoImplicit false
 
 namespace D5.S3.Factorization.Automata.PrimeHistoryComposition
 
-open PrimeHistoryNormalForm BoundedPrimeWalk
+open PrimeHistoryNormalForm WordExcursionLowerBound BoundedPrimeHorizon
 open D5.S0.Automata.TypedPartialDFAOOverBase
 
 /-- Chronological composition: execute s first and t second. The actual domain
@@ -33,36 +32,89 @@ def compose {a : Nat} (s t : Option (IntervalMap a)) : Option (IntervalMap a) :=
         image_hi := by have := v.image_hi; omega }
     else none
 
-/-- Closed-form composition has precisely the real intermediate-state semantics. -/
-theorem evaluate_compose {a : Nat} (s t : Option (IntervalMap a)) (x : Int) :
-    evaluate (compose s t) x = (evaluate s x).bind (evaluate t) := by
-  cases s with
-  | none => rfl
-  | some u =>
-      cases t with
-      | none =>
-          by_cases h : u.lo ≤ x ∧ x ≤ u.hi <;>
-            simp [compose, evaluate, h]
-      | some v =>
-          by_cases h : max u.lo (v.lo - u.shift) ≤ min u.hi (v.hi - u.shift)
-          · have hc :
-                (max u.lo (v.lo - u.shift) ≤ x ∧ x ≤ min u.hi (v.hi - u.shift)) ↔
-                ((u.lo ≤ x ∧ x ≤ u.hi) ∧
-                  (v.lo ≤ x + u.shift ∧ x + u.shift ≤ v.hi)) := by omega
-            by_cases hu : u.lo ≤ x ∧ x ≤ u.hi <;>
-              by_cases hv : v.lo ≤ x + u.shift ∧ x + u.shift ≤ v.hi <;>
-              simp [compose, h, evaluate, hc, hu, hv, add_assoc]
-          · have hc : ¬ ((u.lo ≤ x ∧ x ≤ u.hi) ∧
-                (v.lo ≤ x + u.shift ∧ x + u.shift ≤ v.hi)) := by omega
-            by_cases hu : u.lo ≤ x ∧ x ≤ u.hi
-            · have hv : ¬ (v.lo ≤ x + u.shift ∧ x + u.shift ≤ v.hi) := by tauto
-              simp [compose, h, evaluate, hu, hv]
-            · simp [compose, h, evaluate, hu]
-
 /-- Normalizing concatenated histories agrees with the closed-form composition.
 The visited extrema are translated, not simply added or separately forgotten. -/
 theorem normal_append (a : Nat) (v w : List Bool) :
     normal a (v ++ w) = compose (normal a v) (normal a w) := by
+  have evaluate_compose {s t : Option (IntervalMap a)} (x : Int) :
+      evaluate (compose s t) x = (evaluate s x).bind (evaluate t) := by
+    cases s with
+    | none => rfl
+    | some u =>
+        cases t with
+        | none =>
+            by_cases h : u.lo ≤ x ∧ x ≤ u.hi <;>
+              simp [compose, evaluate, h]
+        | some z =>
+            by_cases h : max u.lo (z.lo - u.shift) ≤ min u.hi (z.hi - u.shift)
+            · have hc :
+                  (max u.lo (z.lo - u.shift) ≤ x ∧ x ≤ min u.hi (z.hi - u.shift)) ↔
+                  ((u.lo ≤ x ∧ x ≤ u.hi) ∧
+                    (z.lo ≤ x + u.shift ∧ x + u.shift ≤ z.hi)) := by omega
+              by_cases hu : u.lo ≤ x ∧ x ≤ u.hi
+              · by_cases hz : z.lo ≤ x + u.shift ∧ x + u.shift ≤ z.hi
+                · have hx := hc.mpr ⟨hu, hz⟩
+                  simp only [compose, Option.bind_some, dif_pos h, evaluate,
+                    if_pos hx, if_pos hu, if_pos hz, add_assoc]
+                · have hx : ¬ (max u.lo (z.lo - u.shift) ≤ x ∧
+                      x ≤ min u.hi (z.hi - u.shift)) := by
+                    intro hx
+                    exact hz (hc.mp hx).2
+                  simp only [compose, Option.bind_some, dif_pos h, evaluate,
+                    if_neg hx, if_pos hu, if_neg hz]
+              · have hx : ¬ (max u.lo (z.lo - u.shift) ≤ x ∧
+                    x ≤ min u.hi (z.hi - u.shift)) := by
+                  intro hx
+                  exact hu (hc.mp hx).1
+                simp only [compose, Option.bind_some, dif_pos h, evaluate,
+                  if_neg hx, if_neg hu]
+                rfl
+            · have hc : ¬ ((u.lo ≤ x ∧ x ≤ u.hi) ∧
+                  (z.lo ≤ x + u.shift ∧ x + u.shift ≤ z.hi)) := by omega
+              by_cases hu : u.lo ≤ x ∧ x ≤ u.hi
+              · have hz : ¬ (z.lo ≤ x + u.shift ∧ x + u.shift ≤ z.hi) := by tauto
+                simp only [compose, Option.bind_some, dif_neg h, evaluate,
+                  if_pos hu, if_neg hz]
+                rfl
+              · simp only [compose, Option.bind_some, dif_neg h, evaluate,
+                  if_neg hu]
+                rfl
+  have evaluate_normal (u : List Bool) (x : Int) :
+      evaluate (normal a u) x =
+        if 0 ≤ x + low u ∧ x + high u ≤ (a : Int)
+        then some (x + displacement u) else none := by
+    unfold normal
+    split
+    · have hc : (-low u ≤ x ∧ x ≤ (a : Int) - high u) ↔
+          (0 ≤ x + low u ∧ x + high u ≤ (a : Int)) := by omega
+      simp [evaluate, hc]
+    · rename_i h
+      have hc : ¬ (0 ≤ x + low u ∧ x + high u ≤ (a : Int)) := by omega
+      simp [evaluate, hc]
+  have excursion_bounds : ∀ u : List Bool,
+      low u ≤ 0 ∧ 0 ≤ high u ∧ low u ≤ displacement u ∧ displacement u ≤ high u := by
+    intro u
+    induction u with
+    | nil => simp [low, high, displacement]
+    | cons b u ih => simp only [low, high, displacement]; omega
+  have append_signature (u z : List Bool) :
+      displacement (u ++ z) = displacement u + displacement z ∧
+      low (u ++ z) = min (low u) (displacement u + low z) ∧
+      high (u ++ z) = max (high u) (displacement u + high z) := by
+    induction u with
+    | nil =>
+        have hb := excursion_bounds z
+        simp only [List.nil_append, displacement, low, high]
+        constructor
+        · omega
+        constructor <;> omega
+    | cons b u ih =>
+        simp only [List.cons_append, displacement, low, high]
+        rcases ih with ⟨hd, hl, hh⟩
+        rw [hd, hl, hh]
+        constructor
+        · omega
+        constructor <;> omega
   apply evaluate_injective a
   funext x
   rw [evaluate_compose, evaluate_normal, evaluate_normal]
@@ -80,36 +132,107 @@ theorem normal_append (a : Nat) (v w : List Bool) :
     simp [hc, hv, add_assoc]
   · simp [hc, hv]
 
-/-- Reversing an interval translation exchanges its source and image intervals.
-This is a partial inverse, not a total group inverse at boundary states. -/
-def inverse {a : Nat} (s : Option (IntervalMap a)) : Option (IntervalMap a) :=
-  s.map fun t => {
-    lo := t.lo + t.shift
-    hi := t.hi + t.shift
-    shift := -t.shift
-    lo_nonneg := t.image_lo
-    ordered := by have := t.ordered; omega
-    hi_le := t.image_hi
-    image_lo := by have := t.lo_nonneg; omega
-    image_hi := by have := t.hi_le; omega }
-
-/-- The inverse reverses exactly the graph, including singleton intervals. -/
-theorem inverse_graph {a : Nat} (s : Option (IntervalMap a)) (x y : Int) :
-    evaluate (inverse s) y = some x ↔ evaluate s x = some y := by
-  cases s with
-  | none => simp [inverse, evaluate]
-  | some t =>
-      simp only [inverse, Option.map_some, evaluate, Option.bind_some]
-      by_cases hy : t.lo + t.shift ≤ y ∧ y ≤ t.hi + t.shift <;>
-        by_cases hx : t.lo ≤ x ∧ x ≤ t.hi <;>
-        simp [hy, hx] <;> omega
-
 /-- Endpoint semantics alone already has a contextual meaning: replacing a word
 with an equal partial map preserves execution inside every prefix/suffix context. -/
 theorem normal_eq_iff_contextual_run (a : Nat) (v w : List Bool) :
     normal a v = normal a w ↔
       ∀ (before after : List Bool) (e : Fin (a + 1)),
         run a e (before ++ v ++ after) = run a e (before ++ w ++ after) := by
+  have excursion_bounds : ∀ u : List Bool,
+      low u ≤ 0 ∧ 0 ≤ high u ∧ low u ≤ displacement u ∧ displacement u ≤ high u := by
+    intro u
+    induction u with
+    | nil => simp [low, high, displacement]
+    | cons b u ih => simp only [low, high, displacement]; omega
+  have run_spec (u : List Bool) (e f : Fin (a + 1)) :
+      run a e u = some f ↔
+        0 ≤ (e.val : Int) + low u ∧ (e.val : Int) + high u ≤ (a : Int) ∧
+          (f.val : Int) = (e.val : Int) + displacement u := by
+    induction u generalizing e f with
+    | nil =>
+        have he := e.isLt
+        simp only [run, runTransition, Option.some.injEq, low, high, displacement, add_zero]
+        constructor
+        · intro h
+          subst f
+          omega
+        · rintro ⟨_, _, h⟩
+          apply Fin.ext
+          omega
+    | cons b u ih =>
+        have he := e.isLt
+        rcases excursion_bounds u with ⟨hlo, hhi, hld, hdh⟩
+        cases b with
+        | false =>
+            by_cases hpos : 0 < e.val
+            · let next : Fin (a + 1) := ⟨e.val - 1, by omega⟩
+              have hr : run a e (false :: u) = run a next u := by
+                simp [run, runTransition, step, hpos, next]
+              rw [hr, ih]
+              simp only [low, high, displacement, reduceCtorEq, if_false]
+              dsimp [next]
+              omega
+            · have hr : run a e (false :: u) = none := by
+                simp [run, runTransition, step, hpos]
+              rw [hr]
+              simp only [reduceCtorEq, low, high, displacement, if_false]
+              constructor
+              · intro impossible
+                contradiction
+              · rintro ⟨hlower, _, _⟩
+                have hmin : min 0 (-1 + low u) ≤ -1 + low u := min_le_right _ _
+                omega
+        | true =>
+            by_cases hroom : e.val < a
+            · let next : Fin (a + 1) := ⟨e.val + 1, by omega⟩
+              have hr : run a e (true :: u) = run a next u := by
+                simp [run, runTransition, step, hroom, next]
+              rw [hr, ih]
+              simp only [low, high, displacement, if_true]
+              dsimp [next]
+              omega
+            · have hr : run a e (true :: u) = none := by
+                simp [run, runTransition, step, hroom]
+              rw [hr]
+              simp only [reduceCtorEq, low, high, displacement, if_true]
+              constructor
+              · intro impossible
+                contradiction
+              · rintro ⟨_, hupper, _⟩
+                have hmax : 1 + high u ≤ max 0 (1 + high u) := le_max_right _ _
+                omega
+  have evaluate_normal (u : List Bool) (x : Int) :
+      evaluate (normal a u) x =
+        if 0 ≤ x + low u ∧ x + high u ≤ (a : Int)
+        then some (x + displacement u) else none := by
+    unfold normal
+    split
+    · have hc : (-low u ≤ x ∧ x ≤ (a : Int) - high u) ↔
+          (0 ≤ x + low u ∧ x + high u ≤ (a : Int)) := by omega
+      simp [evaluate, hc]
+    · rename_i h
+      have hc : ¬ (0 ≤ x + low u ∧ x + high u ≤ (a : Int)) := by omega
+      simp [evaluate, hc]
+  have normal_correct (u : List Bool) (e : Fin (a + 1)) :
+      (run a e u).map (fun f => (f.val : Int)) = evaluate (normal a u) (e.val : Int) := by
+    rw [evaluate_normal]
+    by_cases h : 0 ≤ (e.val : Int) + low u ∧ (e.val : Int) + high u ≤ (a : Int)
+    · rw [if_pos h]
+      have hb := excursion_bounds u
+      let z : Int := (e.val : Int) + displacement u
+      have hz0 : 0 ≤ z := by dsimp [z]; omega
+      have hza : z ≤ (a : Int) := by dsimp [z]; omega
+      let f : Fin (a + 1) := ⟨z.toNat, by omega⟩
+      have hf : (f.val : Int) = z := by dsimp [f]; omega
+      have hr : run a e u = some f := (run_spec u e f).mpr ⟨h.1, h.2, hf⟩
+      rw [hr]
+      exact congrArg some hf
+    · rw [if_neg h]
+      cases hr : run a e u with
+      | none => rfl
+      | some f =>
+          have hs := (run_spec u e f).mp hr
+          exact False.elim (h ⟨hs.1, hs.2.1⟩)
   have run_eq_of_normal {v w : List Bool} (heq : normal a v = normal a w)
       (e : Fin (a + 1)) : run a e v = run a e w := by
     have hm : (run a e v).map (fun f => (f.val : Int)) =
@@ -131,8 +254,8 @@ theorem normal_eq_iff_contextual_run (a : Nat) (v w : List Bool) :
       have he : (e.val : Int) = x := by dsimp [e]; omega
       have hr := h [] [] e
       simp only [List.nil_append, List.append_nil] at hr
-      have hv := normal_correct a v e
-      have hw := normal_correct a w e
+      have hv := normal_correct v e
+      have hw := normal_correct w e
       rw [he] at hv hw
       exact hv.symm.trans ((congrArg (Option.map (fun f : Fin (a + 1) => (f.val : Int))) hr).trans hw)
     · rcases excursion_bounds v with ⟨vl, vh, _, _⟩
@@ -164,29 +287,41 @@ theorem normal_eq_iff_contextual_accepts (a : Nat) (v w : List Bool) :
         cases hw : run a e (before ++ w ++ after) with
         | none => rfl
         | some f =>
-            have hh := htail []
-            simp [accepts, List.append_nil, hv, hw] at hh
+            have hh := h before after e
+            unfold accepts at hh
+            rw [hv, hw] at hh
+            simp at hh
     | some f =>
         cases hw : run a e (before ++ w ++ after) with
         | none =>
-            have hh := htail []
-            simp [accepts, List.append_nil, hv, hw] at hh
+            have hh := h before after e
+            unfold accepts at hh
+            rw [hv, hw] at hh
+            simp at hh
         | some g =>
             have heq : f = g :=
-              (BoundedPrimeHorizon.full_separation_threshold a a).mpr (by omega) f g (by
-                intro tail _
-                have hh := htail tail
-                have append_run (u z : List Bool) :
-                    run a e (u ++ z) = (run a e u).bind (fun f => run a f z) :=
-                  PartialDFA.evalFrom_append {start := e, step := step a} e u z
-                unfold accepts at hh
-                rw [append_run, append_run, hv, hw] at hh
-                exact hh)
-            simpa [heq]
+              by
+                have hkernel : ∀ tail : List Bool, tail.length ≤ a →
+                    accepts a f tail = accepts a g tail := by
+                  intro tail _
+                  have hh := htail tail
+                  have append_run (u z : List Bool) :
+                      run a e (u ++ z) = (run a e u).bind (fun q => run a q z) :=
+                    PartialDFA.evalFrom_append {start := e, step := step a} e u z
+                  unfold accepts at hh
+                  rw [append_run (before ++ v ++ after) tail,
+                    append_run (before ++ w ++ after) tail, hv, hw] at hh
+                  exact hh
+                have hc := (finite_horizon_kernel a a f g).mp hkernel
+                have hfBound := f.isLt
+                have hgBound := g.isLt
+                apply Fin.ext
+                dsimp [close] at hc
+                omega
+            simp [heq]
 
-#print axioms evaluate_compose
 #print axioms normal_append
-#print axioms inverse_graph
+#print axioms normal_eq_iff_contextual_run
 #print axioms normal_eq_iff_contextual_accepts
 
 end D5.S3.Factorization.Automata.PrimeHistoryComposition

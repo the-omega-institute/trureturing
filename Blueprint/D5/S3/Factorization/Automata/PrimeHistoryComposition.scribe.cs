@@ -35,20 +35,19 @@ internal sealed class PrimeHistoryCompositionDocument : IScribeDocumentDefinitio
                     + "would lose the necessary intersection condition."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("prime-history-partial-inverse"),
+                DescribeId.Create("prime-history-contextual-run-completeness"),
                 DeclarationHandle.Create(
-                    "D5/S3/Factorization/Automata/PrimeHistoryComposition.inverse_graph"),
-                H("Reversal is a partial inverse with an explicit domain"),
+                    "D5/S3/Factorization/Automata/PrimeHistoryComposition.normal_eq_iff_contextual_run"),
+                H("Contextual runs characterize the normal form"),
                 StatementSource.FromAuthor(Disp(Seq(
-                    F.Id("graph"), Open, F.Id("inverse(s)"), Close, Sp, Eq, Sp,
-                    F.Id("reverseGraph"), Open, F.Id("s"), Close))),
+                    F.Id("normal(a,v)"), Sp, Eq, Sp, F.Id("normal(a,w)"), Sp, Iff, Sp,
+                    Forall, Sp, F.Id("before,after,e"), Comma, Sp,
+                    F.Id("run(a,e,before++v++after)"), Sp, Eq, Sp,
+                    F.Id("run(a,e,before++w++after)")))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "The inverse of [l,u] translated by d has interval [l+d,u+d] and "
-                    + "translation -d. Its graph is proved to be the reversed graph, "
-                    + "including singleton and empty cases. It is not asserted to be a "
-                    + "total inverse on all capacity states. Existence of an actual word "
-                    + "realizing this form follows from the normal-form realization owner."))),
+                    "Equality of normal forms is equivalent to equality of the exact partial "
+                    + "runner in every prefix and suffix context and at every live state."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("prime-history-contextual-completeness"),
@@ -56,7 +55,10 @@ internal sealed class PrimeHistoryCompositionDocument : IScribeDocumentDefinitio
                     "D5/S3/Factorization/Automata/PrimeHistoryComposition.normal_eq_iff_contextual_accepts"),
                 H("Boolean contextual tests detect every difference of normal forms"),
                 StatementSource.FromAuthor(Disp(Seq(
-                    F.Id("normal(v)"), Sp, Eq, Sp, F.Id("normal(w)")))),
+                    F.Id("normal(a,v)"), Sp, Eq, Sp, F.Id("normal(a,w)"), Sp, Iff, Sp,
+                    Forall, Sp, F.Id("before,after,e"), Comma, Sp,
+                    F.Id("accepts(a,e,before++v++after)"), Sp, Eq, Sp,
+                    F.Id("accepts(a,e,before++w++after)")))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The displayed equality holds exactly when every capacity-bounded "
