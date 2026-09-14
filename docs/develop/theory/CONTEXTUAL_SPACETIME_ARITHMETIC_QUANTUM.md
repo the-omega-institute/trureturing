@@ -7134,3 +7134,1306 @@ $$
 这给出所列等号条件的必要性，并与充分性合成完整分类。证毕。
 
 ## 追加锚（新终端）
+
+## 25. 两步惰性参考任务中系统 CPTP 控制的完整归约
+
+**定义 25.1（无可操作记忆的两步系统 CPTP 控制）。** 在定义 21.1 的两步任务中，令 $e=\beta_1\in[0,1]$、$f=\beta_2\in[0,1]$。保持任意有限维惰性参考 $R$、两候选共同联合输入和最终输出 $H_2R$ 的约定，只把系统控制从共同历史依赖 $U(2)$ 扩大为共同历史依赖的系统 CPTP 映射。第一控制无历史可用，第二控制只依赖已存第一结果；实际与理想过程使用同一张控制表。控制只作用于活动系统 $S=\mathbb C^2$，可以丢弃余系统，但这些余系统不再被访问或重新耦合。没有另一个可操作量子记忆，不操作参考、不与参考耦合，不后选择，末次仪器之后丢弃活动系统。对所有允许的共同输入、共同控制表和有限参考取最优半迹距离，记为 $T_2^{\mathrm{ref,CPTP}}(e,f)$；定义 21.1 的原系统幺正任务仍记作 $T_2^{\mathrm{ref}}(e,f)$。
+
+**定理 25.2（两步 CPTP 归约、高末次错误率精确值及最小记忆维数）。** 对定义 25.1 的完整参数域，有
+
+$$
+T_2^{\mathrm{ref,CPTP}}(e,f)
+=T_2^{\mathrm{ref}}(e,f).
+$$
+
+当 $0\le f\le\tfrac12$ 时，对任意固定共同输入和共同 CPTP 控制表，吸收第一控制后的共同输入作为新初态，再逐个第一历史选择依赖该输入的共同系统幺正替换，即可使最终半迹距离不减。当 $\tfrac12\le f\le1$ 时，两类任务都有精确值
+
+$$
+T_2^{\mathrm{ref,CPTP}}(e,f)
+=T_2^{\mathrm{ref}}(e,f)
+=e+f-ef.
+$$
+
+后一数值无需参考，指针初态和两步恒等控制即可达到。
+
+进一步，在定义 22.1 的两步可操作记忆任务中，仍允许任意共同 $SM$ CPTP 控制，并允许额外任意有限维惰性参考 $R$，最终保留 $H_2MR$。以达到定理 22.2 的最优值 $U(e,f)$ 为目标，所需非零可操作记忆 $M$ 的最小维数恰为
+
+$$
+d_{\min}(e,f)=
+\begin{cases}
+2,&0<e<1\ \text{且}\ 0<f<1,\\
+1,&e\in\{0,1\}\ \text{或}\ f\in\{0,1\}.
+\end{cases}
+$$
+
+结论限定于两步及上述访问权限、控制类和保留输出，不把一般多步任务的控制类或最小记忆维数等同，也不求 $f<\tfrac12$ 时原惰性参考最优值的闭式。
+
+证明。记 $a=1-f$、$\alpha=\sqrt{1-e}$、$b=\sqrt e$，并令
+
+$$
+P_i=|i\rangle\langle i|,
+\qquad K_i=\alpha P_i+bP_{1-i},
+\qquad i\in\{0,1\}.
+$$
+
+第一共同系统 CPTP 控制对任意共同联合输入 $\omega_{SR}$ 的输出仍是一个允许的共同联合态。由于初态自由选择，把这个输出直接作为新初态，并把第一控制改为恒等，不改变后续两个候选输出。因此只需考虑第一控制恒等的协议，且不必限制输入为纯态或参考维数。
+
+固定第一历史 $i$，记其末次共同系统 CPTP 控制为 $\Lambda_i$。因为末次仪器之后丢弃活动系统，这个控制对最终参考块的作用只通过效应算子
+
+$$
+E_i=\Lambda_i^*(P_0),
+\qquad 0\le E_i\le I,
+\qquad \Lambda_i^*(P_1)=I-E_i
+$$
+
+体现。这里星号表示 Heisenberg 对偶。实际末次结果 $0$ 的效应为 $fI+(a-f)E_i$，结果 $1$ 的效应为 $aI+(f-a)E_i$；理想末次的两个效应为 $E_i,I-E_i$。这来自
+
+$$
+K_{2,0}^\dagger K_{2,0}=aP_0+fP_1,
+\qquad
+K_{2,1}^\dagger K_{2,1}=aP_1+fP_0
+$$
+
+及 $\Lambda_i^*(I)=I$。
+
+对固定共同输入和第一历史，两个最终参考差块关于 $E_i$ 都是仿射函数，故它们迹范数之和 $G_i(E_i)$ 是凸函数。任意二阶效应算子都可以写成
+
+$$
+E_i=\lambda_{\min}I
++(\lambda_{\max}-\lambda_{\min})Q
++(1-\lambda_{\max})0,
+\qquad
+0\le\lambda_{\min}\le\lambda_{\max}\le1,
+$$
+
+其中 $Q$ 是秩一正交投影；重特征值时任选 $Q$。这是 $I,Q,0$ 的凸组合。因此存在一个 $E_i'\in\{I,Q,0\}$，使 $G_i(E_i')\ge G_i(E_i)$。秩一投影 $Q$ 可写成 $V_i^\dagger P_0V_i$，由一个共同系统幺正 $V_i$ 实现；效应 $I$ 与 $0$ 分别由把系统重置为 $|0\rangle$ 与 $|1\rangle$ 的 CPTP 映射实现。
+
+先设 $f\le\tfrac12$，于是 $a\ge f$。下面证明两个常值效应都可由系统幺正控制支配。对当前第一历史 $i$，定义输入的两个对角参考块
+
+$$
+X=\langle i|\omega_{SR}|i\rangle,
+\qquad Y=\langle1-i|\omega_{SR}|1-i\rangle.
+$$
+
+它们可以为零，且都半正定。第一步后，实际候选的参考边缘块为 $(1-e)X+eY$，理想候选的参考块为 $X$。定义 Hermitian 算子
+
+$$
+D=[a(1-e)-1]X.
+$$
+
+若末次效应 $E_i=I$，两个最终参考差块分别为
+
+$$
+D+aeY,
+\qquad f(1-e)X+feY.
+$$
+
+第二块半正定，故对应迹范数之和为
+
+$$
+G_i(I)=\|D+aeY\|_1
++f(1-e)\operatorname{tr}X+fe\operatorname{tr}Y.
+$$
+
+改用指针投影效应 $E_i=P_i$，两个最终参考差块则为
+
+$$
+D+feY,
+\qquad f(1-e)X+aeY,
+$$
+
+从而
+
+$$
+G_i(P_i)=\|D+feY\|_1
++f(1-e)\operatorname{tr}X+ae\operatorname{tr}Y.
+$$
+
+因为 $(a-f)eY$ 半正定，迹范数三角不等式给出
+
+$$
+\|D+aeY\|_1
+\le\|D+feY\|_1+(a-f)e\operatorname{tr}Y.
+$$
+
+代入即得 $G_i(I)\le G_i(P_i)$。常值效应 $E_i=0$ 只把 $E_i=I$ 的两个末次结果交换，因此 $G_i(0)=G_i(I)$，同样被一个指针投影效应支配。
+
+由此，任意效应先取不劣的 $I,Q,0$ 之一，再把常值效应替换为不劣的指针投影，最终总能取到一个不劣的秩一投影。两个第一历史的控制可独立选取，最终经典历史块的迹范数相加，所以逐历史替换使完整输出半迹距离不减。所有替换都作用于系统，保持同一个共同输入和惰性参考。结合第一控制的吸收，任意系统 CPTP 协议均被一个合法系统幺正协议支配，故
+
+$$
+T_2^{\mathrm{ref,CPTP}}(e,f)
+\le T_2^{\mathrm{ref}}(e,f)
+\qquad(0\le f\le\tfrac12).
+$$
+
+反向不等式来自控制类包含，低参数区间的等式成立。
+
+现设 $f\ge\tfrac12$，于是 $a\le f$。仍把第一控制吸收到输入中，并记当前第一历史上两个末次理想效应为
+
+$$
+E_{i,0}=E_i,
+\qquad E_{i,1}=I-E_i.
+$$
+
+整个两步过程对初始系统的实际、理想历史效应分别为
+
+$$
+A_{ij}=K_i\bigl[fI+(a-f)E_{i,j}\bigr]K_i,
+\qquad
+J_{ij}=P_iE_{i,j}P_i.
+$$
+
+因为 $0\le E_{i,j}\le I$，有
+
+$$
+fI+(a-f)E_{i,j}\ge aI,
+\qquad 0\le J_{ij}\le P_i.
+$$
+
+设 $c=a(1-e)$。逐个历史的算子序给出
+
+$$
+A_{ij}\ge aK_i^2
+=a(1-e)P_i+aeP_{1-i}
+\ge cP_i\ge cJ_{ij}.
+$$
+
+实际、理想历史效应各自构成 POVM，故
+
+$$
+A_{ij}-cJ_{ij}\ge0,
+\qquad
+\sum_{i,j}(A_{ij}-cJ_{ij})=(1-c)I.
+$$
+
+这里 $c\le\tfrac12$，所以 $1-c>0$。因此
+
+$$
+C_{ij}=\frac{A_{ij}-cJ_{ij}}{1-c}
+$$
+
+也是一组 POVM。记三个相应的量子到经典通道为 $\mathcal A,\mathcal J,\mathcal C$，逐效应恒等式给出真正的通道凸分解
+
+$$
+\mathcal A=c\mathcal J+(1-c)\mathcal C.
+$$
+
+对任意有限惰性参考和任意共同联合输入，$\mathcal C\otimes\operatorname{id}_R$ 与 $\mathcal J\otimes\operatorname{id}_R$ 的输出都是密度矩阵，两者迹距离至多为一。因此
+
+$$
+\frac12\left\|
+\bigl[(\mathcal A-\mathcal J)\otimes\operatorname{id}_R\bigr](\omega_{SR})
+\right\|_1
+\le1-c=e+f-ef.
+$$
+
+这个界对任意末次系统 CPTP 控制和共同输入成立。
+
+取无参考初态 $|0\rangle$，第一控制和两个末次历史控制均为恒等。实际与理想候选的系统在每个非零历史上都保持指针 $|0\rangle$。理想历史必为 $00$；实际历史为 $00$ 的概率是 $(1-e)(1-f)=c$。因此最终经典历史的总变差恰为 $1-c=e+f-ef$，已经由原系统幺正任务达到。结合上界与控制类包含，高参数区间的精确值以及两类任务的等式均成立。两段在 $f=\tfrac12$ 相容，并穷尽完整参数域。
+
+最后证明所述最小记忆维数。$\dim M=1$ 时，$SM$ 上的任意共同 CPTP 控制正是系统共同 CPTP 控制，任意额外惰性参考也正是定义 25.1 允许的输入及最终参考。因此该维数下的最优值等于本定理已经确定的 $T_2^{\mathrm{ref}}(e,f)$。当 $e,f\in(0,1)$ 时，定理 23.2（亦为定理 24.1 的两步情形）给出
+
+$$
+T_2^{\mathrm{ref}}(e,f)<U(e,f),
+$$
+
+故一维可操作记忆不足以达到目标，即使允许任意额外惰性参考也不例外。定理 22.2 的一个记忆量子比特及末次一次 SWAP 已经达到 $U(e,f)$，所以二维足够，内域的最小维数为二。
+
+若 $e\in\{0,1\}$ 或 $f\in\{0,1\}$，定理 22.3 的两步边界构造在无参考、无可操作记忆的系统幺正任务中已达到 $U(e,f)$。它可在 $\dim M=1$ 的任务中原样实现，而记忆维数按定义必须为正，所以四边的最小维数为一。这完成全部结论。证毕。
+
+## 追加锚（新终端）
+
+## 26. 高末次错误率公式向三步推广的精确反例
+
+**定理 26.1（三步共同幺正反馈超过简单成功概率界）。** 在定义 18.1 的无参考、无可操作记忆任务中，取
+
+$$
+N=3,
+\qquad \beta_1=\beta_2=\frac1{10},
+\qquad \beta_3=\frac12.
+$$
+
+存在共同初态 $|+\rangle=(|0\rangle+|1\rangle)/\sqrt2$ 和共同历史依赖实正交系统控制表，使最终三位经典历史的实际、理想总变差恰为
+
+$$
+T(\Pi)=\frac14+\frac{\sqrt{13}}{10}.
+$$
+
+因此，该参数下原无参考最优值满足
+
+$$
+T_3\!\left(\frac1{10},\frac1{10},\frac12\right)
+\ge\frac14+\frac{\sqrt{13}}{10}
+>\frac{119}{200}
+=1-\prod_{t=1}^3(1-\beta_t).
+$$
+
+这个反例否定把定理 25.2 的两步高末次错误率公式推广为任意有限步数的等式或上界 $1-\prod_t(1-\beta_t)$，即使仍有 $\beta_N\ge\tfrac12$。本例在共同系统幺正类内实现，不证明 CPTP 控制比幺正控制更优，也不主张达到可操作记忆上界；所有参数都在定理 24.1 的严格区域中。
+
+证明。第一共同控制取恒等。令
+
+$$
+P_i=|i\rangle\langle i|,
+\qquad
+K_i=\frac3{\sqrt{10}}P_i+\frac1{\sqrt{10}}P_{1-i},
+\qquad i\in\{0,1\},
+$$
+
+它们分别是前两步共同使用的理想、实际结果算子。第一结果为 $i$ 时，记实际、理想未归一化系统向量为
+
+$$
+x_i=K_i|+\rangle,
+\qquad y_i=P_i|+\rangle.
+$$
+
+定义实对称矩阵
+
+$$
+D_i=\frac1{20}\|x_i\|^2I
++\frac25|x_i\rangle\langle x_i|
+-|y_i\rangle\langle y_i|.
+$$
+
+第二共同控制 $U_i\in O(2)$ 取为 $D_i$ 的一个正交本征基，即令 $U_iD_iU_i^{\mathsf T}$ 为对角矩阵。本征值的排列任意，控制表在实验之前由上述固定矩阵确定，实际与理想过程始终使用同一个 $U_i$。
+
+设前两位历史是 $ij$，其实际、理想概率分别为
+
+$$
+p_{ij}=\|K_jU_ix_i\|^2,
+\qquad q_{ij}=\|P_jU_iy_i\|^2.
+$$
+
+因为
+
+$$
+K_j^\dagger K_j=\frac1{10}I+\frac45P_j,
+$$
+
+有
+
+$$
+\begin{aligned}
+\frac12p_{ij}-q_{ij}
+&=\frac1{20}\|x_i\|^2
++\frac25|\langle j|U_ix_i\rangle|^2
+-|\langle j|U_iy_i\rangle|^2\\
+&=\langle j|U_iD_iU_i^{\mathsf T}|j\rangle.
+\end{aligned}
+$$
+
+按本征基选择控制，便得到
+
+$$
+\sum_j\left|\frac12p_{ij}-q_{ij}\right|=\|D_i\|_1.
+$$
+
+第三共同控制取 $W_{ij}=X^j$，其中 $X|0\rangle=|1\rangle$、$X|1\rangle=|0\rangle$。每个非零理想前缀分支在第二次读取后都指向 $|j\rangle$，因此这个控制使理想末次结果恒为零。实际末次参数为 $\beta_3=\tfrac12$，两个结果算子都为 $I/\sqrt2$，无论分支系统态如何，两个末次结果的条件概率均为一半。故三位最终历史 $ijk$ 的概率满足
+
+$$
+p_{ij0}=p_{ij1}=\frac12p_{ij},
+\qquad q_{ij0}=q_{ij},
+\qquad q_{ij1}=0.
+$$
+
+使用 $\sum_{i,j}p_{ij}=1$，该协议的最终总变差为
+
+$$
+\begin{aligned}
+T(\Pi)
+&=\frac12\sum_{i,j}
+\left(\left|\frac12p_{ij}-q_{ij}\right|
++\frac12p_{ij}\right)\\
+&=\frac14+\frac12\sum_i\|D_i\|_1.
+\end{aligned}
+$$
+
+这里的末次读数归约只用实际末次均匀读取以及共同控制使理想末次结果确定；它把本例的输出距离转化为两个具体加权差矩阵的迹范数。
+
+直接代入初态得到
+
+$$
+x_0=\frac1{\sqrt{20}}\begin{pmatrix}3\\1\end{pmatrix},
+\qquad y_0=\frac1{\sqrt2}\begin{pmatrix}1\\0\end{pmatrix},
+\qquad x_1=Xx_0,
+\qquad y_1=Xy_0.
+$$
+
+所以
+
+$$
+D_0=\frac1{200}
+\begin{pmatrix}-59&12\\12&9\end{pmatrix},
+\qquad D_1=XD_0X.
+$$
+
+两个矩阵的本征值都是
+
+$$
+\lambda_\pm=-\frac18\pm\frac{\sqrt{13}}{20}.
+$$
+
+一正一负，因而
+
+$$
+\|D_0\|_1=\|D_1\|_1=\frac{\sqrt{13}}{10},
+\qquad
+T(\Pi)=\frac14+\frac{\sqrt{13}}{10}.
+$$
+
+另一方面，简单成功概率表达式是
+
+$$
+1-\prod_{t=1}^3(1-\beta_t)
+=1-\frac9{10}\frac9{10}\frac12
+=\frac{119}{200}.
+$$
+
+两者之差为
+
+$$
+\frac14+\frac{\sqrt{13}}{10}-\frac{119}{200}
+=\frac{20\sqrt{13}-69}{200}>0,
+$$
+
+因为 $20^2\cdot13=5200>4761=69^2$。这给出精确的严格反例。
+
+定理 22.2 在本参数下的记忆最优值为
+
+$$
+U\!\left(\frac{19}{100},\frac12\right)
+=\frac14+\frac{3\sqrt7}{20},
+$$
+
+而本构造严格低于它，因为 $2\sqrt{13}<3\sqrt7$ 等价于 $52<63$。本例超过的是被推广的简单成功概率表达式，与定理 24.1 的访问权限严格分离相容。证毕。
+
+## 追加锚（新终端）
+
+## 27. 任意有限历史的末次 CPTP 控制分类与加权前缀目标
+
+**定义 27.1（任意有限历史的系统 CPTP 控制与惰性参考）。** 对任意有限 $N\ge1$ 和参数 $\boldsymbol\beta\in[0,1]^N$，沿用定义 25.1 的系统 CPTP 控制访问权限，推广为 $N$ 次读取。活动系统为 $S=\mathbb C^2$，允许任意有限维惰性参考 $R$ 和两候选共同使用的归一化联合输入。每次仪器之前，只根据已经存储的经典历史，在 $S$ 上施加共同 CPTP 控制；实际与理想过程使用同一张控制表。控制余系统一旦丢弃，就不再被访问或重新耦合；没有可操作量子记忆，不操作参考、不与参考耦合，不后选择。第 $t$ 次实际、理想结果算子仍为
+
+$$
+K_{t,z}=\sqrt{1-\beta_t}\,P_z+\sqrt{\beta_t}\,P_{1-z},
+\qquad P_z=|z\rangle\langle z|,
+\qquad z\in\{0,1\}.
+$$
+
+末次仪器之后丢弃 $S$，输出 $H_NR$。对所有允许的共同输入、共同系统 CPTP 控制表和有限参考取最优半迹距离，记作 $T_N^{\mathrm{ref,CPTP}}(\boldsymbol\beta)$。
+
+**定理 27.2（末次控制的完整分段归约）。** 对定义 27.1 的 $N\ge2$，令 $f=\beta_N$、$a=1-f$。固定共同输入和前 $N-1$ 步的共同控制表。对每个长度 $N-1$ 的历史 $h$，记末次控制之前实际、理想未归一化分支态为 $\rho_h^{\mathrm A},\rho_h^{\mathrm J}$，并令
+
+$$
+X_h=\operatorname{Tr}_S\rho_h^{\mathrm A},
+\qquad Q_h=\operatorname{Tr}_S\rho_h^{\mathrm J}.
+$$
+
+当 $0\le f\le\tfrac12$ 时，任意末次共同系统 CPTP 控制都可逐历史替换为一个共同系统幺正控制，使最终半迹距离不减。替换可依赖已固定的输入和前缀分支态。
+
+当 $\tfrac12\le f\le1$ 时，对这个固定前缀，末次共同系统重置
+
+$$
+\mathcal R_0(\sigma)=|0\rangle\langle0|\operatorname{tr}\sigma
+$$
+
+已经最优；相应最优半迹距离恰为
+
+$$
+\frac12\sum_h\left(\|aX_h-Q_h\|_1+f\operatorname{tr}X_h\right).
+$$
+
+因而在高末次错误率区间，有精确表达
+
+$$
+T_N^{\mathrm{ref,CPTP}}(\boldsymbol\beta)
+=\frac f2+\frac12\sup_{\text{共同输入、有限参考及前缀共同 CPTP 控制}}
+\sum_{h\in\{0,1\}^{N-1}}\|aX_h-Q_h\|_1.
+$$
+
+右端前缀使用给定的前 $N-1$ 个仪器参数，包含所有共同输入和前 $N-1$ 次系统控制；其控制余系统仍不可再访问。$N=1$ 时另有 $T_1^{\mathrm{ref,CPTP}}(\beta_1)=\beta_1$。本定理只归约末次控制，不把此前的系统 CPTP 控制等同于幺正控制；高错误率表达仍保留对完整前缀的优化，不将它化为简单成功概率乘积。
+
+证明。理想过程在倒数第二次仪器后刚经历秩一指针投影。无论共同输入是否混合、参考维数为何、此前系统 CPTP 控制怎样选择，每个理想分支都满足
+
+$$
+\rho_h^{\mathrm J}=P_{i_h}\otimes Q_h,
+\qquad i_h=h_{N-1}.
+$$
+
+零分支也包含在内。两候选仪器和控制均保持总迹，所以
+
+$$
+X_h,Q_h\ge0,
+\qquad \sum_h\operatorname{tr}X_h
+=\sum_h\operatorname{tr}Q_h=1.
+$$
+
+固定一个历史，暂时省略下标 $h$，把 $i_h$ 记为 $i$、实际分支记为 $\rho$。若末次系统控制为 $\Lambda$，令
+
+$$
+E=\Lambda^*(P_0),
+\qquad 0\le E\le I.
+$$
+
+末次丢弃系统之后，实际两个参考块只依赖效应 $fI+(a-f)E$ 与 $aI+(f-a)E$，理想两个参考块则为 $uQ,(1-u)Q$，其中
+
+$$
+u=\langle i|E|i\rangle\in[0,1].
+$$
+
+因此，固定前缀分支后，两个参考差块关于 $E$ 是仿射函数，它们迹范数之和 $G(E)$ 是凸函数。任意二阶效应都可按其特征值分解为
+
+$$
+E=\lambda_{\min}I
++(\lambda_{\max}-\lambda_{\min})\Pi
++(1-\lambda_{\max})0,
+\qquad 0\le\lambda_{\min}\le\lambda_{\max}\le1,
+$$
+
+其中 $\Pi$ 为秩一正交投影；重特征值时可任选。故 $I,\Pi,0$ 之中至少一个效应的目标不小于 $G(E)$。秩一效应可由系统幺正实现，而 $I,0$ 分别由重置到两个指针实现。
+
+先处理 $f\le\tfrac12$，即 $a\ge f$。在当前理想指针基下，定义实际分支的两个参考对角块
+
+$$
+Y=\langle i|\rho|i\rangle,
+\qquad Z=\langle1-i|\rho|1-i\rangle,
+\qquad Y,Z\ge0,
+\qquad Y+Z=X.
+$$
+
+令 $D=aY-Q$。常值效应 $E=I$ 的两个参考差块为
+
+$$
+D+aZ,
+\qquad fY+fZ,
+$$
+
+故
+
+$$
+G(I)=\|D+aZ\|_1+f\operatorname{tr}Y+f\operatorname{tr}Z.
+$$
+
+指针投影效应 $E=P_i$ 的两个参考差块为
+
+$$
+D+fZ,
+\qquad fY+aZ,
+$$
+
+故
+
+$$
+G(P_i)=\|D+fZ\|_1+f\operatorname{tr}Y+a\operatorname{tr}Z.
+$$
+
+因为 $(a-f)Z$ 半正定，
+
+$$
+\|D+aZ\|_1
+\le\|D+fZ\|_1+(a-f)\operatorname{tr}Z,
+$$
+
+代入即得 $G(I)\le G(P_i)$。效应 $E=0$ 只交换常值效应 $I$ 的两个结果，因此 $G(0)=G(I)$，也被指针投影支配。结合凸分解，任意末次效应都可替换为一个不劣的秩一投影。这些投影在每个历史上分别选择，由共同系统幺正实现；历史块的迹范数相加，所以整体目标不减。证明没有要求实际分支与理想分支的参考因子相同，也没有把替换断言为对所有输入同时成立的通道支配。
+
+现处理 $f\ge\tfrac12$，即 $a\le f$。记任意末次控制之后的实际联合分支为
+
+$$
+\sigma=(\Lambda\otimes\operatorname{id}_R)(\rho),
+\qquad Y_j=\langle j|\sigma|j\rangle.
+$$
+
+系统 CPTP 控制保持参考边缘，因此 $Y_0+Y_1=X$。实际末次两个参考块为
+
+$$
+A_0=aY_0+fY_1,
+\qquad A_1=fY_0+aY_1.
+$$
+
+它们满足
+
+$$
+A_0+A_1=X,
+\qquad A_0\ge aX,
+\qquad A_1\ge aX.
+$$
+
+理想两个参考块仍为 $uQ,(1-u)Q$，$u\in[0,1]$。固定当前 $A_0,A_1$，函数
+
+$$
+g(v)=\|A_0-vQ\|_1+\|A_1-(1-v)Q\|_1
+$$
+
+关于 $v\in[0,1]$ 凸，所以 $g(u)\le\max\{g(0),g(1)\}$。这里两个端点只用于数学上界，不要求它们与固定的 $A_0,A_1$ 来自同一个可实现控制。
+
+对 $v=1$，令 $B=A_0-aX\ge0$。迹范数三角不等式与 $A_1\ge0$ 给出
+
+$$
+\begin{aligned}
+g(1)
+&=\|A_0-Q\|_1+\operatorname{tr}A_1\\
+&\le\|aX-Q\|_1+\operatorname{tr}B+\operatorname{tr}A_1\\
+&=\|aX-Q\|_1+f\operatorname{tr}X.
+\end{aligned}
+$$
+
+最后一步使用 $B+A_1=X-aX=fX$。交换 $A_0,A_1$，同样得到 $g(0)$ 不超过这个值。因此，任何末次系统 CPTP 控制的当前历史贡献均不超过
+
+$$
+\|aX-Q\|_1+f\operatorname{tr}X.
+$$
+
+共同重置 $\mathcal R_0$ 把实际联合分支送到 $P_0\otimes X$，把理想联合分支送到 $P_0\otimes Q$。它的实际末次参考块是 $aX,fX$，理想末次参考块是 $Q,0$，恰好达到所示上界。这一构造可以在所有历史上同时采用。因此固定前缀的最优值就是定理中的块范数之和；再用 $\sum_h\operatorname{tr}X_h=1$ 并对所有允许前缀取上确界，得到精确加权前缀表达。这里不需要证明参考维数归约或最优前缀达到。
+
+在共同边界 $f=\tfrac12$，实际末次参考块始终是 $X/2,X/2$。把理想指针 $|i\rangle$ 幺正地送到 $|0\rangle$，就与重置产生相同的最终参考块，因此两种归约相容。
+
+最后，$N=1$ 没有先前的理想指针投影，不能对任意固定输入套用上述分支乘积论证。此时把唯一共同 CPTP 控制的输出吸收为自由共同输入；定理 22.2 的参考一致上界给出 $T_1^{\mathrm{ref,CPTP}}\le U(0,\beta_1)=\beta_1$。指针输入与恒等控制已达到 $\beta_1$，所以所述单步值成立。这完成全部有限步数的相应结论。证毕。
+
+## 追加锚（新终端）
+
+## 28. 连续高错误率尾段的精确消去与成功概率公式
+
+**定义 28.1（共同系统 CPTP 前缀的加权参考差异）。** 固定定义 27.1 的前缀参数 $\beta_1,\ldots,\beta_k$，其中 $k\ge1$。对每个允许的共同输入、有限维惰性参考和前 $k$ 次共同系统 CPTP 控制，在第 $k$ 次仪器后对活动系统取部分迹，记历史 $h\in\{0,1\}^k$ 的实际、理想未归一化参考块为 $X_h,Q_h$。这些部分迹只定义前缀的参考读数；续接时仍保留活动系统。对 $c\in[0,1]$，定义
+
+$$
+W_k(c)=\sup_{\text{共同输入、有限参考及前 }k\text{ 次共同 CPTP 控制}}
+\sum_{h\in\{0,1\}^k}\|cX_h-Q_h\|_1.
+$$
+
+参数前缀由下标所指的给定仪器确定，记号中省略；两候选使用共同输入与控制表，控制余系统仍不可再访问，参考始终不可操作。系数 $c$ 只用于比较输出，不改变实际仪器或物理输入的归一化。
+
+**定理 28.2（高错误率尾段的加权消去及全高尾段闭式）。** 对任意有限 $N\ge k\ge1$，假设
+
+$$
+\beta_t\ge\frac12
+\qquad(k+1\le t\le N),
+\qquad
+C=\prod_{t=k+1}^N(1-\beta_t),
+$$
+
+其中空积为一。则定义 27.1 的最优值精确满足
+
+$$
+T_N^{\mathrm{ref,CPTP}}(\boldsymbol\beta)
+=\frac{1-C}{2}+\frac12W_k(C).
+$$
+
+对每个固定的前 $k$ 步协议，尾段所有共同控制都取为重置到 $|0\rangle$，已经达到该固定前缀的最优续接值；前缀的全局优化仍按定义取上确界。
+
+单步加权值在全部 $\beta_1,c\in[0,1]$ 上为
+
+$$
+W_1(c)=1+c-2c(1-\beta_1).
+$$
+
+因此，只要每个 $t=2,\ldots,N$ 都满足 $\beta_t\ge\tfrac12$，便有完整精确值
+
+$$
+T_N^{\mathrm{ref,CPTP}}(\boldsymbol\beta)
+=1-\prod_{t=1}^N(1-\beta_t).
+$$
+
+它由无参考指针输入 $|0\rangle$ 和全部恒等系统控制达到。所需条件覆盖整个被消去尾段；只知道最后一个参数至少为一半时，仍须保留较长前缀的 $W_k(C)$，不能据此套用单步公式。本结论不比较一般中间 CPTP 控制与系统幺正控制的最优值。
+
+证明。首先把定理 27.2 的高末次错误率论证用于加权实际块。设 $j\ge2$、$\beta_j\ge\tfrac12$，记 $b=\beta_j$、$d=1-b$，并固定前 $j-1$ 步的协议。对一个旧历史，实际分支记为 $\rho$，参考边缘为 $X$；理想分支为 $P_i\otimes Q$。此乘积结构来自第 $j-1$ 次理想指针读取，对混合输入和任意此前共同系统 CPTP 控制同样成立。
+
+对任意第 $j$ 次共同系统 CPTP 控制，记实际两个输出参考块为 $A_0,A_1$。如第 27.2 条，它们满足
+
+$$
+A_0+A_1=X,
+\qquad A_0,A_1\ge dX,
+$$
+
+理想两个输出参考块为 $uQ,(1-u)Q$，其中 $u\in[0,1]$。在当前加权目标中，实际块变为 $cA_0,cA_1$。固定这些块，对理想系数使用凸性，得到
+
+$$
+\begin{aligned}
+&\|cA_0-uQ\|_1+\|cA_1-(1-u)Q\|_1\\
+&\quad\le\max\left\{
+\|cA_0-Q\|_1+c\operatorname{tr}A_1,
+\ c\operatorname{tr}A_0+\|cA_1-Q\|_1
+\right\}.
+\end{aligned}
+$$
+
+因为 $c\ge0$，有 $c(A_0-dX)\ge0$。迹范数三角不等式给出
+
+$$
+\begin{aligned}
+\|cA_0-Q\|_1+c\operatorname{tr}A_1
+&\le\|cdX-Q\|_1
++c\operatorname{tr}(A_0-dX)+c\operatorname{tr}A_1\\
+&=\|cdX-Q\|_1+cb\operatorname{tr}X.
+\end{aligned}
+$$
+
+另一个端点同理。共同重置到 $|0\rangle$ 时，实际两块为 $dX,bX$，理想两块为 $Q,0$，恰好达到这个界。整个推导没有除以 $c$，所以也覆盖 $c=0$；加权只是把实际正块乘以非负标量，不要求它们仍是归一化态。
+
+对全部旧历史相加，物理实际分支的总迹始终满足 $\sum_h\operatorname{tr}X_h=1$，从而第 $j$ 步的固定前缀最优加权值为
+
+$$
+cb+\sum_h\|cdX_h-Q_h\|_1.
+$$
+
+再对全部允许的共同前缀取上确界，得到精确递推
+
+$$
+W_j(c)=c\beta_j+W_{j-1}\bigl(c(1-\beta_j)\bigr)
+\qquad(j\ge2,\ \beta_j\ge\tfrac12).
+$$
+
+上界对任意第 $j$ 次控制成立，达到由重置给出；这两方向保证是等式。对固定更早前缀也可重复同一论证，因此无需先假定最优前缀达到。
+
+现在对定理中的尾段反向应用递推。设
+
+$$
+c_j=\prod_{t=j+1}^N(1-\beta_t)
+\qquad(k\le j\le N).
+$$
+
+于是 $c_N=1$、$c_k=C$，且对 $j=k+1,\ldots,N$ 有
+
+$$
+c_{j-1}=c_j(1-\beta_j),
+\qquad c_j\beta_j=c_j-c_{j-1}.
+$$
+
+由于定义直接给出 $2T_N^{\mathrm{ref,CPTP}}=W_N(1)$，逐步消去尾段并对常数项望远镜求和，得到
+
+$$
+\begin{aligned}
+2T_N^{\mathrm{ref,CPTP}}
+=W_N(1)
+&=\sum_{j=k+1}^Nc_j\beta_j+W_k(c_k)\\
+&=1-C+W_k(C).
+\end{aligned}
+$$
+
+空尾段时求和为零，这个式子仍成立。对每个固定前缀，逐步达到使用尾段每次共同重置。也可直接核对：实际尾段的全零记录概率为 $C$，其余记录的总概率为 $1-C$，每种尾段记录都只把同一参考块 $X_h$ 乘以对应标量；理想尾段确定全零，参考块为 $Q_h$。故该固定前缀的最优续接半迹距离为
+
+$$
+\frac12\sum_h\left(\|CX_h-Q_h\|_1
++(1-C)\operatorname{tr}X_h\right),
+$$
+
+与递推所得表达一致。
+
+还需计算单步加权值。第一共同系统 CPTP 控制的输出可吸收为自由共同输入 $\omega_{SR}$。令
+
+$$
+Z_i=\langle i|\omega_{SR}|i\rangle,
+\qquad Z_i\ge0,
+\qquad \operatorname{tr}Z_0+\operatorname{tr}Z_1=1.
+$$
+
+一次实际、理想仪器之后，参考块分别为 $(1-\beta_1)Z_i+\beta_1Z_{1-i}$ 与 $Z_i$。加权差块是
+
+$$
+[c(1-\beta_1)-1]Z_i+c\beta_1Z_{1-i}.
+$$
+
+由于 $0\le c\le1$，两个所需系数 $1-c(1-\beta_1)$ 与 $c\beta_1$ 都非负。逐块三角不等式给出
+
+$$
+\begin{aligned}
+&\sum_i\bigl\|[c(1-\beta_1)-1]Z_i+c\beta_1Z_{1-i}\bigr\|_1\\
+&\quad\le\bigl[1-c(1-\beta_1)\bigr]
+\sum_i\operatorname{tr}Z_i
++c\beta_1\sum_i\operatorname{tr}Z_{1-i}\\
+&\quad=1+c-2c(1-\beta_1).
+\end{aligned}
+$$
+
+无参考指针输入 $|0\rangle$ 与恒等控制使两个结果的加权差分别为 $c(1-\beta_1)-1$ 和 $c\beta_1$，一非正、一非负，恰好达到上界。这证明全部参数域上的单步公式。
+
+当每个 $t\ge2$ 都满足高错误率条件时，取 $k=1$，代入 $W_1(C)$ 即得
+
+$$
+T_N^{\mathrm{ref,CPTP}}
+=\frac{1-C}{2}
++\frac{1+C-2C(1-\beta_1)}2
+=1-\prod_{t=1}^N(1-\beta_t).
+$$
+
+这个值也由全部恒等控制及初态 $|0\rangle$ 达到：理想记录确定全零，实际记录全零的概率恰为成功概率乘积，系统在所有非零分支上一直保持同一个指针。$N=1$ 时高尾段条件为空，所得数值就是 $\beta_1$，与单步结论一致。
+
+第 26.1 条的参数 $\beta_1=\beta_2=\tfrac1{10}$、$\beta_3=\tfrac12$ 只允许在这里取 $k=2$ 消去最后一步，留下 $W_2(1/2)$；第二步不满足继续消去到单步所需的高错误率条件。因此本定理的成功概率公式不适用于那个反例。证毕。
+
+## 追加锚（新终端）
+
+## 29. 加权两步参考差异的 Pauli 协变放宽与解析上界
+
+**定义 29.1（两步加权目标与保留活动系统的放宽）。** 在定义 28.1 的两步任务中，显式写出参数
+
+$$
+W_2(c;e,g),
+\qquad 0\le c,e\le1,\quad 0\le g\le\frac12,
+$$
+
+其中 $e=\beta_1$、$g=\beta_2$。共同输入、惰性参考、共同历史依赖系统 CPTP 控制和末端部分迹的约定均不变。令
+
+$$
+a=1-g,\qquad z=1-2g,
+\qquad K_i=\sqrt{1-e}\,P_i+\sqrt e\,P_{1-i}.
+$$
+
+定义系统退极化通道
+
+$$
+\mathcal D_g(\sigma)=z\sigma+g\operatorname{tr}(\sigma)I_S.
+$$
+
+由于 $\mathcal D_g$ 是恒等通道与完全退极化通道 $\sigma\mapsto\operatorname{tr}(\sigma)I_S/2$ 按权重 $1-2g,2g$ 的混合，它是 CPTP 映射。它满足任意系统幺正 $U$ 下的协变性
+
+$$
+\mathcal D_g(U\sigma U^\dagger)
+=U\mathcal D_g(\sigma)U^\dagger.
+$$
+
+以 $H_1$ 存储第一次结果，定义两个从 $S$ 到 $H_1S$ 的通道
+
+$$
+\mathcal A_{e,g}(\sigma)
+=\bigoplus_{i=0}^1\mathcal D_g(K_i\sigma K_i),
+\qquad
+\mathcal J_e(\sigma)
+=\bigoplus_{i=0}^1P_i\sigma P_i,
+$$
+
+以及 Hermitian 保持线性映射
+
+$$
+\mathcal F_c=c\mathcal A_{e,g}-\mathcal J_e.
+$$
+
+记保留 $H_1S$ 并允许惰性参考的加权差异为
+
+$$
+\mathcal B(c;e,g)
+=\sup_{\substack{1\le\dim R<\infty\\
+\omega_{SR}\ge0,\ \operatorname{tr}\omega_{SR}=1}}
+\left\|(\mathcal F_c\otimes\operatorname{id}_R)(\omega_{SR})\right\|_1.
+$$
+
+这里以保留 $H_1S$ 的固定通道定义放宽目标；其与原任务的关系由下述共同后处理建立，$\mathcal F_c$ 不再包含对控制表的优化。系数 $c$ 不是物理通道的成功概率，也不改变输入归一化。
+
+**定理 29.2（两步解析上界、严格改进与精确参数区间）。** 对定义 29.1 的全部参数域，令
+
+$$
+B(c;e,g)
+=cg+\sqrt{
+\bigl[1-c(1-g)(1-2e)\bigr]^2
++4c^2(1-2g)^2e(1-e)}.
+$$
+
+则
+
+$$
+W_2(c;e,g)\le\mathcal B(c;e,g)=B(c;e,g).
+$$
+
+放宽目标 $\mathcal B$ 的上确界由一个参考量子比特和 Bell 输入
+
+$$
+|\Phi\rangle=\frac{|00\rangle+|11\rangle}{\sqrt2}
+$$
+
+达到；这不声称原目标 $W_2$ 达到 $B$。若另记
+
+$$
+A(c;e,g)
+=cg+\sqrt{\bigl[1-c(1-g)\bigr]^2+4c(1-g)e},
+$$
+
+则在全部参数域有 $B\le A$，且
+
+$$
+c>0,\quad 0<e<1,\quad 0<g\le\frac12
+\quad\Longrightarrow\quad B<A.
+$$
+
+在精确参数 $c=7/20$、$e=3/10$、$g=1/10$ 上，有
+
+$$
+\frac{\sqrt{534}}{25}
+\le W_2\left(\frac7{20};\frac3{10},\frac1{10}\right)
+\le\frac7{200}+\frac{\sqrt{207433}}{500}.
+$$
+
+结合定理 28.2，这给出相应三步任务的精确区间
+
+$$
+\frac{13}{40}+\frac{\sqrt{534}}{50}
+\le T_3^{\mathrm{ref,CPTP}}
+\left(\frac3{10},\frac1{10},\frac{13}{20}\right)
+\le\frac{137}{400}+\frac{\sqrt{207433}}{1000}.
+$$
+
+证明。先证明任意允许的两步协议都被 $\mathcal B$ 控制。第一共同系统 CPTP 控制的输出可吸收为自由共同输入。末次控制的低错误率幺正归约也适用于当前加权目标：在定理 27.2 的逐历史证明中，将实际未归一化分支 $\rho$ 换成 $c\rho$，保留理想分支 $P_i\otimes Q$。该证明只使用实际块的半正定性、效应的凸分解与迹范数三角不等式，没有使用分支归一化。具体地，以
+
+$$
+Y=c\langle i|\rho|i\rangle,
+\qquad Z=c\langle1-i|\rho|1-i\rangle,
+\qquad D=aY-Q
+$$
+
+代入，仍有
+
+$$
+\|D+aZ\|_1\le\|D+gZ\|_1+(a-g)\operatorname{tr}Z.
+$$
+
+因此两个常值效应被指针投影支配，任意末次共同 CPTP 控制均可换成一个使当前加权目标不减的共同系统幺正。该替换针对固定输入逐历史选择，允许依赖这一输入。
+
+对第一历史 $i$，把其末次共同幺正记作 $U_i$。在任意联合分支 $\rho_{SR}$ 上，第二次实际仪器产生的第 $j$ 个参考块为
+
+$$
+a\langle j|U_i\rho_{SR}U_i^\dagger|j\rangle
++g\langle1-j|U_i\rho_{SR}U_i^\dagger|1-j\rangle.
+$$
+
+这恰好等于先施加 $\mathcal D_g\otimes\operatorname{id}_R$，再施加 $U_i$ 并作完美指针读取所得的参考块；交叉项在系统部分迹后为零。理想候选同样在其第一分支上施加 $U_i$ 并完美读取。因此，原两步输出的加权差异由
+
+$$
+(\mathcal F_c\otimes\operatorname{id}_R)(\omega_{SR})
+$$
+
+经同一个依赖 $H_1$ 的 CPTP 后处理得到：调用 $U_i$、完美读取第二结果并丢弃 $S$。Hermitian 算子的迹范数在这一后处理下收缩，所以每个原协议的值不超过 $\mathcal B$，从而 $W_2\le\mathcal B$。
+
+下面直接证明 $\mathcal B$ 的 Bell 达到性。令 $X,Z$ 是系统 Pauli 矩阵，$X_H$ 交换历史基 $|0\rangle,|1\rangle$。从
+
+$$
+K_iZ=ZK_i,\qquad P_iZ=ZP_i,
+\qquad K_iX=XK_{1-i},\qquad P_iX=XP_{1-i}
+$$
+
+及 $\mathcal D_g$ 的协变性，得到
+
+$$
+\begin{aligned}
+\mathcal F_c(Z\sigma Z)
+&=(I_H\otimes Z)\mathcal F_c(\sigma)(I_H\otimes Z),\\
+\mathcal F_c(X\sigma X)
+&=(X_H\otimes X)\mathcal F_c(\sigma)(X_H\otimes X).
+\end{aligned}
+$$
+
+故对于四个系统 Pauli 算子 $V_p\in\{I,X,Z,XZ\}$，各存在输出幺正 $\widetilde V_p$，使 $\mathcal F_c(V_p\sigma V_p^\dagger)=\widetilde V_p\mathcal F_c(\sigma)\widetilde V_p^\dagger$。
+
+任取有限参考和归一化纯输入 $|\psi\rangle_{SR}$，以四维辅助参考 $F$ 构造
+
+$$
+|\Omega\rangle_{SRF}
+=\frac12\sum_{p=0}^3
+(V_p\otimes I_R)|\psi\rangle_{SR}\otimes|p\rangle_F.
+$$
+
+这个向量归一化。若 $\rho_S=\operatorname{Tr}_R|\psi\rangle\langle\psi|$，则
+
+$$
+\operatorname{Tr}_{RF}|\Omega\rangle\langle\Omega|
+=\frac14\sum_pV_p\rho_SV_p^\dagger=\frac{I_S}{2}.
+$$
+
+把 $\mathcal F_c$ 作用于 $S$，再对 $F$ 去相干，所得 Hermitian 算子是四个块的直和。每块为
+
+$$
+\frac14(\widetilde V_p\otimes I_R)
+(\mathcal F_c\otimes\operatorname{id}_R)
+(|\psi\rangle\langle\psi|)
+(\widetilde V_p^\dagger\otimes I_R).
+$$
+
+块迹范数相加与幺正不变性表明，去相干后的总迹范数恰等于原输入 $|\psi\rangle$ 的目标值。去相干是 CPTP 映射，所以去相干前、即输入 $|\Omega\rangle$ 的目标值不小于原值。
+
+另一方面，$|\Omega\rangle$ 是系统边缘为 $I_S/2$ 的纯态。其两个参考系数正交且模长均为 $1/\sqrt2$，故存在等距 $V:\mathbb C^2\to R\otimes F$，使
+
+$$
+|\Omega\rangle=(I_S\otimes V)|\Phi\rangle.
+$$
+
+映射只作用于 $S$，参考等距不改变输出迹范数，因此 $|\Omega\rangle$ 的值等于 Bell 输入的值。Bell 输入于是支配所有有限参考纯输入。对混合输入按纯态分解使用迹范数凸性，结论仍成立。Bell 输入本身可行，所以 $\mathcal B$ 的上确界确实由它达到。辅助标记 $F$ 仅用于这项放宽目标的证明，未被放回原协议作为可操作记忆。
+
+计算 Bell 输出。第一历史 $i$ 的实际、理想向量分别为
+
+$$
+|x_i\rangle
+=\frac{\sqrt{1-e}|ii\rangle+\sqrt e|1-i,1-i\rangle}{\sqrt2},
+\qquad
+|y_i\rangle=\frac{|ii\rangle}{\sqrt2}.
+$$
+
+该历史的放宽差块是
+
+$$
+c z|x_i\rangle\langle x_i|
++cg I_S\otimes\operatorname{Tr}_S|x_i\rangle\langle x_i|
+-|y_i\rangle\langle y_i|.
+$$
+
+在子空间 $\operatorname{span}\{|ii\rangle,|1-i,1-i\rangle\}$ 上，它的矩阵为
+
+$$
+M=\frac12
+\begin{pmatrix}
+ca(1-e)-1&cz\sqrt{e(1-e)}\\
+cz\sqrt{e(1-e)}&cae
+\end{pmatrix}.
+$$
+
+另外两个正交方向的特征值是 $cg(1-e)/2$ 与 $cge/2$，均非负。注意
+
+$$
+\det M
+=\frac{ce}{4}\bigl[cg(2-3g)(1-e)-(1-g)\bigr]\le0.
+$$
+
+事实上，括号内的负号由
+
+$$
+(1-g)-cg(2-3g)(1-e)
+\ge1-3g+3g^2
+=3\left(g-\frac12\right)^2+\frac14>0
+$$
+
+保证。因而 $ce>0$ 时 $M$ 的两特征值异号；$ce=0$ 时同一迹范数公式以连续性或直接计算成立。两特征值的间距给出
+
+$$
+\|M\|_1
+=\frac12\sqrt{[1-ca(1-2e)]^2+4c^2z^2e(1-e)}.
+$$
+
+每个第一历史的块范数为 $cg/2+\|M\|_1$，两历史的表达相同，相加得到 $\mathcal B=B$。
+
+比较两个解析表达，直接展开得
+
+$$
+\begin{aligned}
+(B-cg)^2
+&=(1-ca)^2+4cae
+-4c^2g(2-3g)e(1-e)\\
+&=(A-cg)^2-4c^2g(2-3g)e(1-e).
+\end{aligned}
+$$
+
+两个平方根均非负，减去的项在完整参数域非负，在陈述的严格域为正。因此 $B\le A$，并得到所述严格不等式。
+
+最后给出精确区间中的可实现下界。取无参考共同输入 $|+\rangle=(|0\rangle+|1\rangle)/\sqrt2$、第一控制恒等。令 $x_i=K_i|+\rangle$、$y_i=P_i|+\rangle$，并定义系统 Hermitian 矩阵
+
+$$
+D_i=cg\|x_i\|^2I_S+czx_ix_i^\dagger-y_iy_i^\dagger.
+$$
+
+选择每个第一历史的共同末次幺正 $U_i$，使 $U_iD_iU_i^\dagger$ 对角。其第二结果 $j$ 的加权实际概率减理想概率恰为该矩阵的第 $j$ 个对角元。因此这个合法协议的目标值为 $\sum_i\|D_i\|_1$。
+
+在指定参数上，直接得到
+
+$$
+D_0=\frac1{2000}
+\begin{pmatrix}
+-769&28\sqrt{21}\\
+28\sqrt{21}&119
+\end{pmatrix},
+\qquad D_1=XD_0X.
+$$
+
+$D_0$ 的行列式为负，其两特征值间距为
+
+$$
+\sqrt{\left(\frac{-888}{2000}\right)^2
++4\left(\frac{28\sqrt{21}}{2000}\right)^2}
+=\frac{\sqrt{534}}{50}.
+$$
+
+两历史相加得到 $\sqrt{534}/25$ 的可实现下界；它来自明确输入与共同控制，不依赖数值搜索。上界则将相同参数代入 $B$，使用
+
+$$
+cg=\frac7{200},
+\qquad
+[1-ca(1-2e)]^2+4c^2z^2e(1-e)=\frac{207433}{250000}.
+$$
+
+三步参数的高错误率末段为 $\beta_3=13/20$。定理 28.2 给出 $T_3^{\mathrm{ref,CPTP}}=13/40+W_2(7/20;3/10,1/10)/2$，代入两端即得最后一个区间。证毕。
+
+## 追加锚（新终端）
+
+## 30. 无参考加权两步目标的有限闭式与三步精确值
+
+**定义 30.1（无参考的加权两步经典历史差异）。** 在定义 28.1 中把参考维数限制为一，并显式记第一、第二仪器参数为 $e,g$。共同系统 CPTP 控制的余系统不可再访问，无可操作记忆，无后选择，最终只保留两位经典历史。对所有共同输入和共同系统控制，记实际、理想历史概率为 $p_{ij},q_{ij}$，并定义
+
+$$
+W_2^{\mathrm{cl}}(c;e,g)
+=\sup\sum_{i,j\in\{0,1\}}|cp_{ij}-q_{ij}|,
+\qquad c,e\in[0,1],\quad g\in[0,1/2].
+$$
+
+系数 $c$ 仅为输出比较权重。无参考三步系统 CPTP 任务的最优半迹距离记作 $T_3^{\mathrm{cl,CPTP}}$；定义 18.1 原无参考系统幺正任务的最优值仍记作 $T_3$。
+
+**定理 30.2（有限显式候选及三步无参考精确值）。** 在定义 30.1 的完整参数域，令
+
+$$
+d=c(1-2g),\qquad r=1-2e,\qquad v=1-cr,
+$$
+
+并定义端点与对称候选
+
+$$
+P=1+c-2c(1-e)(1-g),
+\qquad B=\sqrt{(1-d)^2+4de}.
+$$
+
+若 $d=0$ 或 $e\in\{0,1\}$，则
+
+$$
+W_2^{\mathrm{cl}}(c;e,g)=P.
+$$
+
+这包含 $c=0$ 时的值一、$e=0$ 时的 $1-d$、$e=1$ 时的 $1+c$，以及 $g=1/2$ 时的 $1+ce$。这些情形不使用下述可能退化的分母。
+
+在其余情形 $d>0$、$0<e<1$，令
+
+$$
+q_2=1-2d+d^2r^2,
+\qquad q_1=2de(1+dr),
+\qquad q_0=d^2e^2,
+$$
+
+$$
+\eta=v+\frac{2q_2+q_1}{2[1-d(1-e)]}.
+$$
+
+若 $\eta\ge0$，精确值为
+
+$$
+W_2^{\mathrm{cl}}(c;e,g)=\max\{P,B\}.
+$$
+
+若 $\eta<0$，则必有 $q_2<0$。定义
+
+$$
+h=-q_2>0,
+\qquad m=\frac{q_1}{2h},
+\qquad \kappa=q_0+\frac{q_1^2}{4h}>0,
+$$
+
+$$
+M=c(1-e)-1+vm+
+\sqrt{\frac{\kappa(h+v^2)}h}.
+$$
+
+此时精确值为
+
+$$
+W_2^{\mathrm{cl}}(c;e,g)=\max\{P,B,M\}.
+$$
+
+第三个候选来自一个交叉项的唯一内部驻点，不需要对连续参数再作优化。上述每个最终最大值都可由纯共同输入、第一控制恒等及两个实正交末次共同控制达到，故这里的系统 CPTP 最优值也等于系统幺正类的最优值。公式没有额外断言第三候选总能被前两个排除。
+
+对任意 $f\in[1/2,1]$，相应无参考系统 CPTP 三步值为
+
+$$
+T_3^{\mathrm{cl,CPTP}}(e,g,f)
+=\frac f2+\frac12W_2^{\mathrm{cl}}(1-f;e,g).
+$$
+
+在 $f=1/2$ 的共同边界，原无参考系统幺正任务也满足
+
+$$
+T_3(e,g,1/2)
+=\frac14+\frac12W_2^{\mathrm{cl}}(1/2;e,g).
+$$
+
+特别地，第 26.1 条的可达下界在这个原无参考任务中已经是精确最优值：
+
+$$
+T_3(1/10,1/10,1/2)
+=\frac14+\frac{\sqrt{13}}{10}.
+$$
+
+这个升级只针对无参考任务，不把该数值宣告为惰性参考任务或可操作记忆任务的最优值。
+
+证明。第一共同系统 CPTP 控制的输出可以吸收为自由共同输入。第二控制的加权幺正归约由定理 27.2 的低错误率证明得到：只需把实际分支乘以非负系数 $c$，其半正定性、效应凸分解和指针投影三角不等式均保持。因此，对每个固定输入，第二控制可取为两个共同系统幺正。
+
+对固定幺正控制表，目标关于共同输入密度矩阵凸，故某个纯态分量的目标不低于混合输入。纯输入的相对相位可写成系统对角幺正；这个幺正与第一步的全部实际、理想结果算子交换，可以吸收到两个第二控制中。因此只需考虑
+
+$$
+|\psi_t\rangle=\sqrt t\,|0\rangle+\sqrt{1-t}\,|1\rangle,
+\qquad t\in[0,1],
+$$
+
+并取第一控制恒等。记
+
+$$
+K_i=\sqrt{1-e}\,P_i+\sqrt e\,P_{1-i},
+\qquad x_i=K_i|\psi_t\rangle,
+\qquad y_i=P_i|\psi_t\rangle.
+$$
+
+在第一历史 $i$ 上，定义实对称矩阵
+
+$$
+D_i(t)=cg\|x_i\|^2I+d|x_i\rangle\langle x_i|-|y_i\rangle\langle y_i|.
+$$
+
+若第二控制为 $U_i$，则该历史的第二结果 $j$ 满足
+
+$$
+cp_{ij}-q_{ij}
+=\langle j|U_iD_i(t)U_i^\dagger|j\rangle.
+$$
+
+对角元绝对值之和不超过 Hermitian 矩阵的迹范数；选择 $D_i(t)$ 的实正交本征基则达到等号。所以固定 $t$ 的最优值是
+
+$$
+F(t)=\|D_0(t)\|_1+\|D_1(t)\|_1,
+\qquad W_2^{\mathrm{cl}}=\max_{0\le t\le1}F(t).
+$$
+
+这里最大值存在，因为 $F$ 连续。交换两个系统指针给出 $D_1(t)=XD_0(1-t)X$。令
+
+$$
+p(t)=e+rt,
+\qquad L(t)=cp(t)-t=ce-vt,
+\qquad R(t)=\sqrt{q_2t^2+q_1t+q_0}.
+$$
+
+$D_0(t)$ 的迹为 $L(t)$，两个本征值的间距为 $R(t)$。具体地，间距平方等于
+
+$$
+[de+(1-d)t]^2+4d^2e(1-e)t(1-t),
+$$
+
+展开就是上述 $q_2,q_1,q_0$。同时，$D_0(t)$ 在方向 $|1\rangle$ 上的二次型为
+
+$$
+cg\,p(t)+de(1-t)\ge0,
+$$
+
+所以其较大本征值非负。这保证 $-L(t)\le R(t)$，由二阶 Hermitian 矩阵的迹范数公式得到
+
+$$
+\|D_0(t)\|_1=\max\{L(t),R(t)\},
+$$
+
+从而
+
+$$
+F(t)=\max\{L(t),R(t)\}
++\max\{L(1-t),R(1-t)\}.
+$$
+
+先处理退化情形。若 $d=0$，则 $R(t)=t$；若 $e=0$，则 $R(t)=(1-d)t$；若 $e=1$，则 $R(t)=d+(1-d)t$。这些情形中的 $L,R$ 都是仿射函数，故 $F$ 凸。又有 $F(t)=F(1-t)$，所以最大值由 $t=0$ 或 $t=1$ 达到。直接代入得 $F(0)=P$，证明全部所列边界值，也避免了端点根为零时的求导。
+
+以下设 $d>0$、$0<e<1$。此时 $R(t)>0$，并且
+
+$$
+4q_2q_0-q_1^2=-16d^3e^2(1-e)<0.
+$$
+
+因此
+
+$$
+R''(t)=\frac{4q_2q_0-q_1^2}{4R(t)^3}<0,
+$$
+
+即 $R$ 严格凹。把 $F$ 中的两个最大值展开成四种和，便有
+
+$$
+\begin{aligned}
+F(t)=\max\{&L(t)+L(1-t),\ R(t)+R(1-t),\\
+&L(t)+R(1-t),\ R(t)+L(1-t)\}.
+\end{aligned}
+$$
+
+第一项恒为 $c-1\le0$。第二项由凹性在 $t=1/2$ 达到最大值
+
+$$
+2R(1/2)=\sqrt{(1-d)^2+4de}=B.
+$$
+
+两个交叉项在 $t\mapsto1-t$ 下互换，故具有相同最大值。令 $u=1-t$，则其中一个是
+
+$$
+L(t)+R(1-t)=L(1)+vu+R(u),
+\qquad L(1)=c(1-e)-1.
+$$
+
+于是问题精确化为
+
+$$
+W_2^{\mathrm{cl}}
+=\max\left\{B,\ L(1)+\max_{0\le u\le1}H(u)\right\},
+\qquad H(u)=R(u)+vu.
+$$
+
+这一步只是有限最大值的分配，没有把两个函数各自凹误认为它们的逐点最大值仍凹。
+
+$H$ 严格凹，且
+
+$$
+H'(0)=1+dr+v>0,
+\qquad
+H'(1)=v+\frac{2q_2+q_1}{2[1-d(1-e)]}=\eta.
+$$
+
+分母严格为正，因为 $1-d(1-e)\ge e>0$。若 $\eta\ge0$，严格凹性使 $H$ 在整个区间上不减，最大值取在 $u=1$。相应交叉值为
+
+$$
+L(1)+H(1)=ce+R(1)=P,
+$$
+
+于是 $W_2^{\mathrm{cl}}=\max\{P,B\}$，也包括 $\eta=0$ 的端点驻点。
+
+若 $\eta<0$，则 $H'$ 从正变负且严格递减，存在唯一内部最大点。由于 $q_1>0$，$q_2\ge0$ 会使 $R'$ 全程为正，故此时必须有 $q_2<0$。按陈述中的 $h,m,\kappa$ 完成平方，得到
+
+$$
+R(u)=\sqrt{\kappa-h(u-m)^2}.
+$$
+
+方程 $H'(u)=0$ 的唯一适当符号解是
+
+$$
+u_*=m+v\sqrt{\frac{\kappa}{h(h+v^2)}}\in(0,1).
+$$
+
+代入得
+
+$$
+\max_{0\le u\le1}H(u)
+=vm+\sqrt{\frac{\kappa(h+v^2)}h}.
+$$
+
+所以交叉项最大值为 $M$。因为这个内部最大值严格高于端点值，$M>P$；保留端点候选仍可统一写成 $W_2^{\mathrm{cl}}=\max\{P,B,M\}$。
+
+这些公式也给出达到控制。端点候选取 $t=0$，对称候选取 $t=1/2$；若第三候选为最终最大项，取 $t=1-u_*$。在最后一种情况下，$F(1-u_*)\ge M$，而已证全局上界就是 $M$，因此该输入确实达到最优。随后在两个第一历史上分别用 $D_i(t)$ 的实正交本征基作第二共同控制。这完成有限闭式及幺正达到的证明；不需要再判断第三候选是否总被其他候选支配。
+
+把定理 28.2 的同一加权尾段论证限制到平凡参考，便得到任何 $f\ge1/2$ 下的三步系统 CPTP 等式
+
+$$
+T_3^{\mathrm{cl,CPTP}}(e,g,f)
+=\frac f2+\frac12W_2^{\mathrm{cl}}(1-f;e,g).
+$$
+
+在 $f=1/2$ 时，定理 27.2 已说明末次重置可以用把理想前缀指针送到 $|0\rangle$ 的系统幺正替代，而本定理已用系统幺正实现前两步加权最优值。因此整个三步值由原无参考系统幺正协议达到；控制类包含给出反向界，从而原 $T_3$ 也满足陈述中的精确式。
+
+最后代入 $c=1/2$、$e=g=1/10$，得到
+
+$$
+d=\frac25,\quad r=\frac45,\quad v=\frac35,
+\qquad q_2=\frac{189}{625},\quad q_1=\frac{66}{625},\quad q_0=\frac1{625},
+$$
+
+$$
+\eta=\frac{231}{200}>0,
+\qquad P=\frac{69}{100},
+\qquad B=\frac{\sqrt{13}}5>P.
+$$
+
+因此 $W_2^{\mathrm{cl}}(1/2;1/10,1/10)=\sqrt{13}/5$，进而
+
+$$
+T_3(1/10,1/10,1/2)
+=\frac14+\frac{\sqrt{13}}{10}.
+$$
+
+这把第 26.1 条同一无参考幺正构造的可达下界提升为该任务的精确值，且没有扩大其参考或记忆访问权限。证毕。
+
+## 追加锚（新终端）
