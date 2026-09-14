@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c58de959cb3921e11093180d516596986c79a527ca6cbc48bac15b1dd5e845f7
+  normalized_sha256: sha256:c58de959cb3921e11093180d516596986c79a527ca6cbc48bac15b1dd5e845f7
+cas_ref: sha256:c58de959cb3921e11093180d516596986c79a527ca6cbc48bac15b1dd5e845f7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Producer provenance, independent audit attribution, and finite checker scope; this paragraph records provenance, not a mathematical proposition.
+    previous_atom_id: 8c68d75c4c19bb6da517e5a4ee11d7303d768637c1efc30bb4709a43ac4bd450
+    next_atom_id: 00387dee076df51c5426e17066e239b0044d82d0bd4239868b01f084293a7698
