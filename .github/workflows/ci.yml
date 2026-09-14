@@ -454,7 +454,7 @@ jobs:
         run: |
           set -euo pipefail
           nproc; free -m; echo "LEAN_NUM_THREADS_ENV=${LEAN_NUM_THREADS:-unset}"
-          ( while true; do printf 'MEMSAMPLE %s ' "$(date -u +%T)"; free -m | awk 'NR==2{printf "used=%sMB free=%sMB avail=%sMB ", $3,$4,$7}'; printf 'lean_procs=%s ' "$(pgrep -c -x lean || true)"; ps -eo rss=,comm= --sort=-rss | head -4 | awk '{printf "%s:%dMB ", $2, $1/1024}'; echo; sleep 5; done ) & SAMPLER=$!
+          ( while true; do printf 'MEMSAMPLE %s ' "$(date -u +%T)"; free -m | awk 'NR==2{printf "used=%sMB free=%sMB avail=%sMB ", $3,$4,$7}'; printf 'lean_procs=%s ' "$(pgrep -c -x lean || true)"; ps -eo rss=,args= --sort=-rss | head -3 | awk '{m=$2; sub(/.*\//,"",m); for(i=2;i<=NF;i++) if($i ~ /\.lean$/){m=$i; sub(/^.*\/candidate\//,"",m)}; printf "%s:%dMB ", m, $1/1024}'; echo; sleep 5; done ) & SAMPLER=$!
           if PATH="$HOME/.elan/bin:$PATH" make -C candidate lean; then RC=0; else RC=$?; fi
           kill "$SAMPLER" 2>/dev/null || true; wait "$SAMPLER" 2>/dev/null || true
           echo "MEMSAMPLE_END rc=$RC"; exit "$RC"
