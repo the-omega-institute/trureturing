@@ -4,18 +4,32 @@
    mirror-E: none(waiver:exact-all-word-observation-kernel)
    anchors: []
    utility: none
-   digest: Actual bounded multiplication/division words have the exact two-boundary
-     observation kernel, a realizable finite quotient, and sharp separation lengths. -/
+   digest: Bounded multiplication/division words have an exact realizable two-boundary observation quotient. -/
 
-import D5.S3.Factorization.Automata.BoundedPrimeWalk
+import D5.S0.Automata.TypedPartialDFAOOverBase
 import Mathlib.Data.Fintype.Card
+import Mathlib.Tactic
 
 set_option autoImplicit false
 
 namespace D5.S3.Factorization.Automata.BoundedPrimeHorizon
 
-open BoundedPrimeWalk
 open D5.S0.Automata.TypedPartialDFAOOverBase
+
+/-- A live exponent is in the closed interval `[0,a]`; undefined steps reject. -/
+def step (a : Nat) (e : Fin (a + 1)) (up : Bool) : Option (Fin (a + 1)) :=
+  if up then
+    if h : e.val < a then some ⟨e.val + 1, by omega⟩ else none
+  else
+    if h : 0 < e.val then some ⟨e.val - 1, by have := e.isLt; omega⟩ else none
+
+/-- Execute a guarded multiplication/division word from a live exponent. -/
+def run (a : Nat) (e : Fin (a + 1)) (w : List Bool) : Option (Fin (a + 1)) :=
+  runTransition (step a) e w
+
+/-- Record whether every command in the word respects the two guards. -/
+def accepts (a : Nat) (e : Fin (a + 1)) (w : List Bool) : Bool :=
+  (run a e w).isSome
 
 /-- Distances to both guards, truncated at the remaining query horizon. -/
 def close (a H : Nat) (e f : Fin (a + 1)) : Prop :=
@@ -25,6 +39,34 @@ def close (a H : Nat) (e f : Fin (a + 1)) : Prop :=
 The induction treats failure at each intermediate step, not only net displacement. -/
 theorem finite_horizon_kernel (a H : Nat) (e f : Fin (a + 1)) :
     (∀ w : List Bool, w.length ≤ H → accepts a e w = accepts a f w) ↔ close a H e f := by
+  have accepts_up (x : Fin (a + 1)) (n : Nat) :
+      accepts a x (List.replicate n true) = decide (x.val + n ≤ a) := by
+    induction n generalizing x with
+    | zero =>
+        have hx : x.val ≤ a := by have := x.isLt; omega
+        simp [accepts, run, runTransition, hx]
+    | succ n ih =>
+        unfold accepts at ih ⊢
+        simp only [List.replicate_succ, run, runTransition]
+        by_cases hx : x.val < a
+        · have hy : x.val + 1 < a + 1 := by omega
+          simpa [run, step, hx, Nat.add_assoc, Nat.add_comm, Nat.add_left_comm]
+            using ih (⟨x.val + 1, hy⟩ : Fin (a + 1))
+        · have hn : ¬ x.val + (n + 1) ≤ a := by omega
+          simp [step, hx, hn]
+  have accepts_down (x : Fin (a + 1)) (n : Nat) :
+      accepts a x (List.replicate n false) = decide (n ≤ x.val) := by
+    induction n generalizing x with
+    | zero => simp [accepts, run, runTransition]
+    | succ n ih =>
+        unfold accepts at ih ⊢
+        simp only [List.replicate_succ, run, runTransition]
+        by_cases hx : 0 < x.val
+        · have hy : x.val - 1 < a + 1 := by have := x.isLt; omega
+          have hn : (n ≤ x.val - 1) ↔ n + 1 ≤ x.val := by omega
+          simpa [run, step, hx, hn] using ih (⟨x.val - 1, hy⟩ : Fin (a + 1))
+        · have hn : ¬ n + 1 ≤ x.val := by omega
+          simp [step, hx, hn]
   constructor
   · intro hall
     have low (x y : Fin (a + 1))
@@ -65,7 +107,7 @@ theorem finite_horizon_kernel (a H : Nat) (e f : Fin (a + 1)) :
     induction H generalizing e f with
     | zero =>
         intro w hw
-        have hnil : w = [] := List.length_eq_zero.mp (by omega)
+        have hnil : w = [] := List.length_eq_zero_iff.mp (by omega)
         subst w
         rfl
     | succ H ih =>
@@ -185,63 +227,7 @@ theorem profile_classification (a H : Nat) :
             simpa only [observed, Option.map_some, Option.some.injEq] using
               (finite_horizon_kernel a H e f).trans (hkernel e f).symm
 
-/-- An exact query-length threshold for any two ordered live exponents.
-The witnessing word is a pure sequence of multiplications or exact divisions;
-no shorter mixed word can distinguish this pair. -/
-theorem shortest_separation (a H : Nat) (e f : Fin (a + 1)) (hef : e.val < f.val) :
-    (∃ w : List Bool, w.length ≤ H ∧ accepts a e w ≠ accepts a f w) ↔
-      min (e.val + 1) (a - f.val + 1) ≤ H := by
-  have he := e.isLt
-  have hf := f.isLt
-  constructor
-  · rintro ⟨w, hw, hd⟩
-    by_contra hn
-    have hc : close a H e f := by
-      dsimp [close]
-      constructor <;> omega
-    exact hd ((finite_horizon_kernel a H e f).mpr hc w hw)
-  · intro h
-    by_cases hlo : e.val + 1 ≤ H
-    · refine ⟨List.replicate (e.val + 1) false, by simpa, ?_⟩
-      rw [accepts_down, accepts_down]
-      have he0 : ¬ e.val + 1 ≤ e.val := by omega
-      have hf0 : e.val + 1 ≤ f.val := by omega
-      simp [he0, hf0]
-    · have hhi : a - f.val + 1 ≤ H := by omega
-      refine ⟨List.replicate (a - f.val + 1) true, by simpa, ?_⟩
-      rw [accepts_up, accepts_up]
-      have he0 : e.val + (a - f.val + 1) ≤ a := by omega
-      have hf0 : ¬ f.val + (a - f.val + 1) ≤ a := by omega
-      simp [he0, hf0]
-
-/-- The least horizon that separates all live states is ceiling(a/2).
-Necessity constructs the distinct central states H and H+1 when a>2H. -/
-theorem full_separation_threshold (a H : Nat) :
-    (∀ e f : Fin (a + 1),
-      (∀ w : List Bool, w.length ≤ H → accepts a e w = accepts a f w) → e = f) ↔
-      a ≤ 2 * H := by
-  constructor
-  · intro hall
-    by_contra hn
-    let e : Fin (a + 1) := ⟨H, by omega⟩
-    let f : Fin (a + 1) := ⟨H + 1, by omega⟩
-    have hc : close a H e f := by
-      dsimp [close, e, f]
-      constructor <;> omega
-    have heq := hall e f ((finite_horizon_kernel a H e f).mpr hc)
-    have := congrArg Fin.val heq
-    dsimp [e, f] at this
-    omega
-  · intro ha e f h
-    obtain ⟨hlo, hhi⟩ := (finite_horizon_kernel a H e f).mp h
-    have he := e.isLt
-    have hf := f.isLt
-    apply Fin.ext
-    omega
-
 #print axioms finite_horizon_kernel
 #print axioms profile_classification
-#print axioms shortest_separation
-#print axioms full_separation_threshold
 
 end D5.S3.Factorization.Automata.BoundedPrimeHorizon
