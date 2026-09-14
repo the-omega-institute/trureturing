@@ -44,6 +44,14 @@ public sealed class LeanCacheInputScriptTests
     }
 
     [Theory]
+    [InlineData("ci_contract", "test_large_layer_snapshot_copies_and_hashes_in_one_read")]
+    [InlineData("ci_contract", "test_execution_snapshot_consumes_the_exporters_inventory")]
+    [InlineData("ci_contract", "test_snapshot_late_read_failure_keeps_published_material_and_source")]
+    [InlineData("ci_contract", "test_layer_filter_cannot_expand_registered_stage_scope")]
+    [InlineData("ci_contract", "test_bounded_snapshot_publishes_only_after_worker_and_save_window")]
+    [InlineData("ci_contract", "test_bounded_snapshot_timeout_and_signals_clean_only_owned_staging")]
+    [InlineData("ci_contract", "test_bounded_snapshot_cleans_descendants_after_worker_exits")]
+    [InlineData("ci_contract", "test_snapshot_publication_failure_restores_previous_seed")]
     [InlineData("ci_contract", "test_dependency_and_project_restore_read_each_material_once")]
     [InlineData("ci_contract", "test_dependency_and_project_reject_late_bad_material_without_installing")]
     [InlineData("ci_contract", "test_dependency_module_and_submodule_seed_round_trip")]

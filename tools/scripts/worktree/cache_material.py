@@ -15,7 +15,52 @@ def sha(path):
     return value.hexdigest()
 
 
-def files(directory, *, materialize_links=False, expected=_UNSPECIFIED, copy_to=None):
+def copy_hash(path, destination):
+    """Hash exactly the bytes copied to a new, independently owned file."""
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    value = hashlib.sha256()
+    with path.open("rb") as source, destination.open("xb") as target:
+        for block in iter(lambda: source.read(1024 * 1024), b""):
+            target.write(block)
+            value.update(block)
+    shutil.copystat(path, destination)
+    return value.hexdigest(), destination.stat().st_mode & 0o777
+
+
+def snapshot_files(directory, destination, *, materialize_links=False):
+    """Copy and inventory one registered layer directory in a single read."""
+    destination.mkdir()
+    result, directories = [], [(directory, destination)]
+    for path in sorted(directory.rglob("*")):
+        relative = path.relative_to(directory)
+        target = destination / relative
+        source = path
+        if path.is_symlink():
+            if not materialize_links:
+                raise ValueError(f"cache has a symlink: {relative.as_posix()}")
+            try:
+                source = path.resolve(strict=True)
+                if (path.readlink().is_absolute() or not source.is_relative_to(directory.resolve())
+                        or not source.is_file()):
+                    raise ValueError("link must resolve to an internal regular file")
+            except (OSError, RuntimeError, ValueError) as error:
+                raise ValueError(f"cache link {relative.as_posix()}: {error}") from error
+        elif path.is_dir():
+            target.mkdir(parents=True, exist_ok=True)
+            directories.append((path, target))
+            continue
+        if not source.is_file():
+            raise ValueError(f"cache material is not a regular file: {relative.as_posix()}")
+        digest, mode = copy_hash(source, target)
+        result.append({"path": relative.as_posix(), "sha256": digest, "mode": mode})
+    if not result:
+        raise ValueError("cache has no files")
+    for source, target in reversed(directories):
+        shutil.copystat(source, target)
+    return result
+
+
+def files(directory, *, expected=_UNSPECIFIED, copy_to=None):
     if copy_to is not None and expected is _UNSPECIFIED:
         raise ValueError("copy requires registered cache material")
     if expected is not _UNSPECIFIED:
@@ -43,15 +88,7 @@ def files(directory, *, materialize_links=False, expected=_UNSPECIFIED, copy_to=
             if copy_to is None:
                 digest, mode = sha(path), path.stat().st_mode & 0o777
             else:
-                destination = copy_to / name
-                destination.parent.mkdir(parents=True, exist_ok=True)
-                value = hashlib.sha256()
-                with path.open("rb") as source, destination.open("xb") as target:
-                    for block in iter(lambda: source.read(1024 * 1024), b""):
-                        target.write(block)
-                        value.update(block)
-                shutil.copystat(path, destination)
-                digest, mode = value.hexdigest(), destination.stat().st_mode & 0o777
+                digest, mode = copy_hash(path, copy_to / name)
             actual = {"path": name, "sha256": digest, "mode": mode}
             if actual != item:
                 raise ValueError(f"cache material integrity mismatch: {name}")
@@ -61,18 +98,7 @@ def files(directory, *, materialize_links=False, expected=_UNSPECIFIED, copy_to=
     for path in sorted(directory.rglob("*")):
         if path.is_symlink():
             relative = path.relative_to(directory).as_posix()
-            if not materialize_links:
-                raise ValueError(f"cache has a symlink: {relative}")
-            # Only the private dependency snapshot may turn internal file links
-            # into ordinary, hashed copies. Restores still reject raw links.
-            try:
-                target = path.resolve(strict=True)
-                if not target.is_relative_to(directory.resolve()) or not target.is_file():
-                    raise ValueError("link must resolve to an internal regular file")
-                path.unlink()
-                shutil.copy2(target, path)
-            except (OSError, RuntimeError, ValueError) as error:
-                raise ValueError(f"cache link {relative}: {error}") from error
+            raise ValueError(f"cache has a symlink: {relative}")
         if path.is_file():
             result.append({"path": path.relative_to(directory).as_posix(), "sha256": sha(path), "mode": path.stat().st_mode & 0o777})
     if not result:
