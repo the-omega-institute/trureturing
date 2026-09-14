@@ -65,7 +65,14 @@ internal static class Program
         var changedPaths = GitPaths(options.RepositoryRoot, @base, head);
         var protectedBaseRaw = GitRepositorySnapshotReader.ReadRevision(options.RepositoryRoot, @base);
         var candidateRaw = GitRepositorySnapshotReader.ReadRevision(options.RepositoryRoot, head);
-        var admissionPlane = AdmissionPlanePolicy.Evaluate(candidateRaw, changedPaths);
+        var basePaths = protectedBaseRaw.Entries.Select(static entry => entry.Path).ToHashSet(StringComparer.Ordinal);
+        var candidatePaths = candidateRaw.Entries.Select(static entry => entry.Path).ToHashSet(StringComparer.Ordinal);
+        var changes = RawChangeSet.CreateWithKinds(changedPaths.Select(path => (
+            path,
+            candidatePaths.Contains(path)
+                ? basePaths.Contains(path) ? RawChangeKind.Modified : RawChangeKind.Added
+                : RawChangeKind.Deleted)));
+        var admissionPlane = AdmissionPlanePolicy.Evaluate(candidateRaw, protectedBaseRaw, changes);
         if (!admissionPlane.IsAdmissible)
         {
             throw new InvalidDataException(

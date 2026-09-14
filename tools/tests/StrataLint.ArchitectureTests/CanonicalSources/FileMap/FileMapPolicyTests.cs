@@ -16,11 +16,11 @@ public sealed partial class FileMapPolicyTests
             File.ReadAllBytes(Path.Combine(root, "Meta/domains.yaml"))));
 
         Assert.Null(RepositoryPathPolicy.Validate(
-            RepoPath.CreateKnown("Meta/lean-report.toml"), registry.Policy));
+            RepoPath.CreateKnown("lean-report-inputs.json"), registry.Policy));
         var manifest = FileMapLoader.Parse(
             File.ReadAllBytes(Path.Combine(root, FileMapLoader.RelativePath)),
             FileMapLoader.RelativePath);
-        var entry = Assert.Single(manifest.Match("Meta/lean-report.toml"));
+        var entry = Assert.Single(manifest.Match("lean-report-inputs.json"));
         Assert.Equal(FileMapKind.Data, entry.Kind);
         Assert.Equal(FileMapAdmissionPlane.Judge, entry.AdmissionPlane);
     }

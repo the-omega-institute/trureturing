@@ -1,6 +1,8 @@
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
 using StrataLint.Engine;
+using Trureturing.Truth;
 
 namespace StrataLint.Tests;
 
@@ -21,10 +23,30 @@ public sealed partial class LeanReportInputScriptTests
         var fields = Fields(result);
         var hash = Convert.ToHexStringLower(SHA256.HashData(TemporaryFileSystem.File.ReadAllBytes(report)));
         TemporaryFileSystem.File.WriteAllText(report + ".sha256", $"{hash}  {Path.GetFileName(report)}\n");
-        TemporaryFileSystem.File.WriteAllText(report + ".provenance.json", "{}\n");
+        WriteFixtureOrigins(report, fields[1]);
         TemporaryFileSystem.File.WriteAllText(report + ".input.attestation",
             "schema=stratalint-lean-report-input-attestation-v1\n"
             + $"repository_input_sha256={fields[0]}\nproducer_sha256={fields[1]}\nreport_sha256={hash}\n");
+    }
+
+    private static void WriteFixtureOrigins(string report, string compatibility)
+    {
+        using var document = JsonDocument.Parse(TemporaryFileSystem.File.ReadAllBytes(report));
+        var origins = document.RootElement.GetProperty("modules").EnumerateArray().ToDictionary(
+            row => row.GetProperty("module").GetString()!, row => new
+            {
+                module = row.GetProperty("module").GetString(),
+                report_sha256 = Convert.ToHexStringLower(SHA256.HashData(StructuredCanonicalWriter.WriteJson(
+                    JsonSerializer.SerializeToElement(new { schema = "stratalint-raw-lean-report-v2", modules = new[] { row } })).AsSpan())),
+                compatibility_sha256 = compatibility,
+                producer_sources_sha256 = new string('1', 64),
+                inspector_executable_sha256 = new string('2', 64),
+                input_sources = new Dictionary<string, string>
+                {
+                    [row.GetProperty("source_path").GetString()!] = row.GetProperty("source_sha256").GetString()![7..],
+                },
+            }, StringComparer.Ordinal);
+        TemporaryFileSystem.File.WriteAllText(report + ".provenance.json", JsonSerializer.Serialize(new { module_origins = origins }));
     }
 
     private sealed partial class LeanReportInputFixture
