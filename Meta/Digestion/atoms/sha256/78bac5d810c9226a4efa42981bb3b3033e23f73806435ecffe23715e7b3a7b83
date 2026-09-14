@@ -1,0 +1,74 @@
+## 71. 幂等记录的有限视界强化与近似记忆容量
+
+第 70 节给出的逐步误差界
+
+$$
+D(A^n\rho,B^n\rho)\le n\delta
+$$
+
+适用于一般的逐步通道比较，但在本卷当前采用的 pinching 协议中，还可以利用记录映射的幂等性得到更强的结论。令
+
+$$
+A=\mathcal E\Phi,
+\qquad
+B=\mathcal E\Phi\mathcal E,
+\qquad
+\mathcal E^2=\mathcal E.
+$$
+
+由于 $\mathcal E$ 是记录后的 pinching，$A\rho$ 和 $B\rho$ 都属于 $\operatorname{im}\mathcal E$。若 $\sigma\in\operatorname{im}\mathcal E$，则 $\mathcal E\sigma=\sigma$，从而
+
+$$
+A\sigma
+=\mathcal E\Phi\sigma
+=\mathcal E\Phi\mathcal E\sigma
+=B\sigma.
+$$
+
+也就是说，$A$ 与 $B$ 在第一次记录之后限制为同一个像空间内的通道。设
+
+$$
+\delta
+=
+\sup_{\rho\in\mathsf D}
+D(A\rho,B\rho).
+$$
+
+则对任意 $n\ge1$，迹距离收缩性给出
+
+$$
+\boxed{
+D(A^n\rho,B^n\rho)
+\le
+D(A\rho,B\rho)
+\le
+\delta.
+}
+$$
+
+证明可以写成一行递归。令 $C$ 为 $A$ 与 $B$ 在 $\operatorname{im}\mathcal E$ 上共同的限制，则
+
+$$
+A^n\rho=C^{n-1}A\rho,
+\qquad
+B^n\rho=C^{n-1}B\rho.
+$$
+
+于是
+
+$$
+D(A^n\rho,B^n\rho)
+=D(C^{n-1}A\rho,C^{n-1}B\rho)
+\le D(A\rho,B\rho).
+$$
+
+因此，在固定、无记忆、每步都重新 pinching 的协议中，$n\delta$ 是通用的累积上界，而
+
+$$
+\boxed{
+D(A^n\rho,B^n\rho)\le\delta\quad(n\ge1)
+}
+$$
+
+是利用幂等记录结构得到的强化。这个强化不适用于相干复用同一个记录单元的协议：那时完整联合态未必在每一步落入同一个无记忆像空间，旧关联可以沿联合动力学返回可见部分。故“误差是否随视界线性累积”本身也是协议相关的性质。
+
