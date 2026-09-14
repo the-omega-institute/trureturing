@@ -4,8 +4,7 @@
    mirror-E: none(waiver:all-capacities-all-horizons)
    anchors: [mathlib/module/Mathlib.Data.Fintype.Card]
    utility: none
-   digest: Actual continuation words determine exactly the clipped remaining
-     capacities, giving the complete finite-horizon observation quotient. -/
+   digest: Continuation words determine exactly the clipped remaining-capacity quotient at every finite horizon. -/
 
 import Mathlib.Data.Fintype.Card
 import Mathlib.Data.Fintype.Pi
@@ -46,63 +45,6 @@ def clipState (a : I → Nat) (H : Nat) :
         have he : min (r i).val H ≤ min (a i) H := le_min (by omega) hy
         omega⟩)
 
-private theorem repeated_fits (r : I → Nat) (i : I) (k : Nat) (hk : k ≤ r i) :
-    fits r (List.replicate k i) := by
-  intro j
-  by_cases hij : i = j
-  · subst j
-    simpa using hk
-  · simp [List.count_replicate, hij]
-
-private theorem finite_word_kernel (r s : I → Nat) (H : Nat) :
-    (∀ w : List I, w.length ≤ H → (fits r w ↔ fits s w)) ↔
-      ∀ i, min (r i) H = min (s i) H := by
-  constructor
-  · intro he i
-    have hleft : min (r i) H ≤ s i := by
-      have h := (he (List.replicate (min (r i) H) i)
-        (by simp [min_le_right])).mp
-          (repeated_fits r i _ (min_le_left _ _))
-      simpa using h i
-    have hright : min (s i) H ≤ r i := by
-      have h := (he (List.replicate (min (s i) H) i)
-        (by simp [min_le_right])).mpr
-          (repeated_fits s i _ (min_le_left _ _))
-      simpa using h i
-    exact le_antisymm
-      (le_min hleft (min_le_right _ _))
-      (le_min hright (min_le_right _ _))
-  · intro he w hw
-    constructor
-    · intro hr i
-      have hc : w.count i ≤ H := List.count_le_length.trans hw
-      have hm : w.count i ≤ min (r i) H := le_min (hr i) hc
-      rw [he i] at hm
-      exact hm.trans (min_le_left _ _)
-    · intro hs i
-      have hc : w.count i ≤ H := List.count_le_length.trans hw
-      have hm : w.count i ≤ min (s i) H := le_min (hs i) hc
-      rw [← he i] at hm
-      exact hm.trans (min_le_left _ _)
-
-private theorem profile_surjective (a : I → Nat) (H : Nat) :
-    Function.Surjective (clipState a H) := by
-  intro q
-  cases q with
-  | none => exact ⟨none, rfl⟩
-  | some q =>
-      let r : Capacity a := fun i =>
-        ⟨(q i).val, lt_of_lt_of_le (q i).isLt
-          (Nat.add_le_add_right (min_le_left (a i) H) 1)⟩
-      refine ⟨some r, ?_⟩
-      apply congrArg some
-      funext i
-      apply Fin.ext
-      change min (q i).val H = (q i).val
-      have hq := (q i).isLt
-      have hm := min_le_right (a i) H
-      exact min_eq_left (by omega)
-
 /-- Complete observation quotient for every capacity vector and every horizon.
 It gives the exact kernel on actual list continuations, surjectivity onto the
 stated profile carrier, and its cardinality. A fixed-H quotient need not be
@@ -113,7 +55,60 @@ theorem finite_horizon_state_classification [Fintype I] (a : I → Nat) (H : Nat
       (∀ w : List I, w.length ≤ H → (allowed a s w ↔ allowed a t w)) ↔
         clipState a H s = clipState a H t) ∧
     Fintype.card (Option (Profile a H)) = 1 + ∏ i, (min (a i) H + 1) := by
-  refine ⟨profile_surjective a H, ?_, ?_⟩
+  have repeated_fits (r : I → Nat) (i : I) (k : Nat) (hk : k ≤ r i) :
+      fits r (List.replicate k i) := by
+    intro j
+    by_cases hij : i = j
+    · subst j
+      simpa using hk
+    · simp [List.count_replicate, hij]
+  have finite_word_kernel (r s : I → Nat) :
+      (∀ w : List I, w.length ≤ H → (fits r w ↔ fits s w)) ↔
+        ∀ i, min (r i) H = min (s i) H := by
+    constructor
+    · intro he i
+      have hleft : min (r i) H ≤ s i := by
+        have h := (he (List.replicate (min (r i) H) i)
+          (by simp [min_le_right])).mp
+            (repeated_fits r i _ (min_le_left _ _))
+        simpa using h i
+      have hright : min (s i) H ≤ r i := by
+        have h := (he (List.replicate (min (s i) H) i)
+          (by simp [min_le_right])).mpr
+            (repeated_fits s i _ (min_le_left _ _))
+        simpa using h i
+      exact le_antisymm
+        (le_min hleft (min_le_right _ _))
+        (le_min hright (min_le_right _ _))
+    · intro he w hw
+      constructor
+      · intro hr i
+        have hc : w.count i ≤ H := List.count_le_length.trans hw
+        have hm : w.count i ≤ min (r i) H := le_min (hr i) hc
+        rw [he i] at hm
+        exact hm.trans (min_le_left _ _)
+      · intro hs i
+        have hc : w.count i ≤ H := List.count_le_length.trans hw
+        have hm : w.count i ≤ min (s i) H := le_min (hs i) hc
+        rw [← he i] at hm
+        exact hm.trans (min_le_left _ _)
+  have profile_surjective : Function.Surjective (clipState a H) := by
+    intro q
+    cases q with
+    | none => exact ⟨none, rfl⟩
+    | some q =>
+        let r : Capacity a := fun i =>
+          ⟨(q i).val, lt_of_lt_of_le (q i).isLt
+            (Nat.add_le_add_right (min_le_left (a i) H) 1)⟩
+        refine ⟨some r, ?_⟩
+        apply congrArg some
+        funext i
+        apply Fin.ext
+        change min (q i).val H = (q i).val
+        have hq := (q i).isLt
+        have hm := min_le_right (a i) H
+        exact min_eq_left (by omega)
+  refine ⟨profile_surjective, ?_, ?_⟩
   · intro s t
     cases s with
     | none =>
