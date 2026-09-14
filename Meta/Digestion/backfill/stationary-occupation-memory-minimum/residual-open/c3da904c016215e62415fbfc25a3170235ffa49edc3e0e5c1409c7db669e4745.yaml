@@ -5,7 +5,7 @@ cas_ref: sha256:c3da904c016215e62415fbfc25a3170235ffa49edc3e0e5c1409c7db669e4745
 coverage_gids: []
 receipts:
   unresolved_subitems: []
-  nonpropositional:
-    justification: Checker rerun status, SHA hashes, GPU approximation limitations, and future formalization note; this paragraph records audit provenance, not a mathematical proposition.
-    previous_atom_id: 42f9a8d89d992e2c53852809eb6bdd79573d9c83ba5bf43b17b4ba689fc45c4a
-    next_atom_id: null
+  chain_atoms:
+    - 67179856edc71d738ed3bec6b3227dbd447a9f285be8e309279237471b6f239e
+    - 53c3d3c7fb0027e393a978733e9fe7440fc92beadebef8265dab14aba0bb62f6
+    - 7e0824477e087e729f572b8dd076decd5ab6f055aa620dc5efe59e43ab4122bc

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:67179856edc71d738ed3bec6b3227dbd447a9f285be8e309279237471b6f239e
+  normalized_sha256: sha256:67179856edc71d738ed3bec6b3227dbd447a9f285be8e309279237471b6f239e
+cas_ref: sha256:67179856edc71d738ed3bec6b3227dbd447a9f285be8e309279237471b6f239e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Records the checker rerun and output hashes, the research role and evidential limits of GPU runs, and the absence of a global-optimality proof. These are audit and proof-status provenance; the separate exact55 fidelity proposition is excluded.
+    previous_atom_id: 42f9a8d89d992e2c53852809eb6bdd79573d9c83ba5bf43b17b4ba689fc45c4a
+    next_atom_id: 53c3d3c7fb0027e393a978733e9fe7440fc92beadebef8265dab14aba0bb62f6
