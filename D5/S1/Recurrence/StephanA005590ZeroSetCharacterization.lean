@@ -94,4 +94,102 @@ private theorem invariant (n : ℕ) :
               · exact hsnd
             · nlinarith
 
+theorem result : ∀ n : ℕ, r (3 * n) = 0 ↔ No11 n := by
+  have no11_bits (n : ℕ) :
+      No11 n ↔ ∀ i, (n.testBit i && n.testBit (i + 1)) = false := by
+    constructor
+    · intro h i
+      have he := congrArg (fun k ↦ Nat.testBit k i) h
+      simpa only [No11, Nat.testBit_land, Nat.testBit_shiftRight,
+        Nat.zero_testBit, Nat.add_comm 1 i] using he
+    · intro h
+      apply Nat.zero_of_testBit_eq_false
+      intro i
+      simpa only [No11, Nat.testBit_land, Nat.testBit_shiftRight,
+        Nat.add_comm 1 i] using h i
+  have no11_bit (b : Bool) (n : ℕ) :
+      No11 (Nat.bit b n) ↔ (b && n.testBit 0) = false ∧ No11 n := by
+    rw [no11_bits, no11_bits]
+    constructor
+    · intro h
+      refine ⟨?_, fun i ↦ ?_⟩
+      · simpa only [Nat.testBit_bit_zero, Nat.testBit_bit_succ] using h 0
+      · simpa only [Nat.testBit_bit_succ] using h (i + 1)
+    · rintro ⟨hz, hs⟩ i
+      cases i with
+      | zero => simpa only [Nat.testBit_bit_zero, Nat.testBit_bit_succ] using hz
+      | succ i => simpa only [Nat.testBit_bit_succ] using hs i
+  have no11_even (n : ℕ) : No11 (2 * n) ↔ No11 n := by
+    simpa only [Nat.bit_false, two_mul, Bool.false_and, true_and] using
+      no11_bit false n
+  have no11_one (n : ℕ) : No11 (4 * n + 1) ↔ No11 n := by
+    have he : 4 * n + 1 = Nat.bit true (Nat.bit false n) := by
+      simp [Nat.bit]
+      omega
+    simp only [he, no11_bit, Nat.testBit_bit_zero, Bool.true_and,
+      Bool.false_and, true_and]
+  have no11_three (n : ℕ) : ¬ No11 (4 * n + 3) := by
+    have he : 4 * n + 3 = Nat.bit true (Nat.bit true n) := by
+      simp [Nat.bit]
+      omega
+    rw [he, no11_bit, Nat.testBit_bit_zero]
+    simp
+  have zero_even (n : ℕ) : r (3 * (2 * n)) = 0 ↔ r (3 * n) = 0 := by
+    rw [show 3 * (2 * n) = 2 * (3 * n) by omega, r_two_mul]
+  have zero_one (n : ℕ) : r (3 * (4 * n + 1)) = 0 ↔ r (3 * n) = 0 := by
+    have heq : r (3 * (4 * n + 1)) = r (3 * n) := by
+      rw [show 3 * (4 * n + 1) = 2 * (6 * n + 1) + 1 by omega,
+        r_two_mul_add_one,
+        show 6 * n + 1 + 1 = 2 * (3 * n + 1) by omega, r_two_mul,
+        show 6 * n + 1 = 2 * (3 * n) + 1 by omega, r_two_mul_add_one]
+      omega
+    constructor
+    · intro h
+      exact heq ▸ h
+    · intro h
+      exact heq.symm ▸ h
+  have zero_three (n : ℕ) : r (3 * (4 * n + 3)) ≠ 0 := by
+    intro hzero
+    have hinv := invariant (3 * n + 2)
+    rw [show 3 * n + 2 + 1 = 3 * n + 3 by omega] at hinv
+    have heq : r (3 * (4 * n + 3)) =
+        r (3 * n + 3) - 2 * r (3 * n + 2) := by
+      rw [show 3 * (4 * n + 3) = 2 * (6 * n + 4) + 1 by omega,
+        r_two_mul_add_one,
+        show 6 * n + 4 + 1 = 2 * (3 * n + 2) + 1 by omega,
+        r_two_mul_add_one,
+        show 6 * n + 4 = 2 * (3 * n + 2) by omega, r_two_mul]
+      rw [show 3 * n + 2 + 1 = 3 * n + 3 by omega]
+      omega
+    rw [heq] at hzero
+    have hx : r (3 * n + 2) = 0 := by
+      nlinarith [hinv.2, sq_nonneg (r (3 * n + 2))]
+    have hy : r (3 * n + 3) = 0 := by omega
+    apply hinv.1
+    apply Prod.ext
+    · exact hx
+    · exact hy
+  intro n
+  induction n using Nat.strong_induction_on with
+  | h n ih =>
+      cases n with
+      | zero => simp [No11]
+      | succ n =>
+          by_cases heven : (n + 1) % 2 = 0
+          · let m := (n + 1) / 2
+            have hn : n + 1 = 2 * m := by dsimp [m]; omega
+            rw [hn, zero_even, no11_even]
+            exact ih m (by dsimp [m]; omega)
+          · by_cases hhalf : (n / 2) % 2 = 0
+            · let m := n / 2 / 2
+              have hn : n + 1 = 4 * m + 1 := by dsimp [m]; omega
+              rw [hn, zero_one, no11_one]
+              exact ih m (by dsimp [m]; omega)
+            · let m := n / 4
+              have hn : n + 1 = 4 * m + 3 := by dsimp [m]; omega
+              rw [hn]
+              exact iff_of_false (zero_three m) (no11_three m)
+
+#print axioms result
+
 end D5.S1.Recurrence.StephanA005590ZeroSetCharacterization
