@@ -30,10 +30,6 @@ open scoped Topology
 /-- The successor as a self-map of the legal digit streams. -/
 noncomputable def T (x : LegalDigits) : LegalDigits := ⟨next x.val, next_fibres.1 x⟩
 
-/-- Rotation of the circle by the golden ratio modulo one. -/
-noncomputable def rotation (t : AddCircle (1 : ℝ)) : AddCircle (1 : ℝ) :=
-  t + (Real.goldenRatio : AddCircle (1 : ℝ))
-
 /-- Two circle points belong to the same rotation orbit. -/
 def ER (t s : AddCircle (1 : ℝ)) : Prop :=
   ∃ k : ℤ, s = t + k • (Real.goldenRatio : AddCircle (1 : ℝ))
