@@ -1,0 +1,13 @@
+**定理。** 对每个奇素数 $p$，
+
+$$
+\operatorname{disc}(\mathcal P_p)=p^{2p}5^p.
+$$
+
+若 $\mathcal P_p$ 是 $\theta_p$ 的最小多项式，则
+
+$$
+\operatorname{disc}(\mathcal P_p)
+=I_p^2\operatorname{disc}(K_p).
+$$
+

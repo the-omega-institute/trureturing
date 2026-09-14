@@ -1,0 +1,15 @@
+**定义。** 令 $W$ 为非零有限维实空间，
+
+$$
+P=\begin{pmatrix}1&0\\0&0\end{pmatrix}\otimes I_W,
+\quad Q=I-P,
+$$
+
+并对 $a,b\in\mathbb R$ 置 $c=(a+b)/2,d=(a-b)/2$，
+
+$$
+K_0=\begin{pmatrix}a&0\\0&b\end{pmatrix}\otimes I_W,
+\qquad
+K_1=\begin{pmatrix}c&d\\d&c\end{pmatrix}\otimes I_W.
+$$
+

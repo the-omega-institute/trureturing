@@ -1,0 +1,25 @@
+**证明。** 在单位区间上 $|x^k-y^k|\le k|x-y|$，从而
+
+$$
+|\widehat g-g|\le3\epsilon,
+\qquad |\widehat z-gw|\le8\epsilon.
+$$
+
+若 $\widehat g\le0$，则 $0\le g\le3\epsilon$，结论成立。若 $\widehat g>0$，令 $\widehat w=\operatorname{clip}_{[-1,1]}(\widehat z/\widehat g)$。截断不增加到 $w$ 的距离，故
+
+$$
+\widehat g|\widehat w-w|
+\le|\widehat z-\widehat g w|
+\le8\epsilon+3\epsilon|w|\le11\epsilon.
+$$
+
+于是
+
+$$
+|\widehat g\widehat w^j-gw^j|
+\le\widehat g|\widehat w^j-w^j|+|\widehat g-g||w|^j
+\le11j\epsilon+3\epsilon.
+$$
+
+证毕。
+

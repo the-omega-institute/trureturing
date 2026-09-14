@@ -1,0 +1,6 @@
+**定义。** 令
+
+$$
+P_G=\frac1{|G|}\sum_{g\in G}\rho(g),\qquad Q_G=I-P_G.
+$$
+

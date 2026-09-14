@@ -1,0 +1,30 @@
+**证明。** 在 $1\le u<2$ 上 $\mathcal M(u)=1$，故该段积分为 $1/2$。对余段使用 (488.1)，得到
+$$
+\frac12\le I\le\frac12+362.7\int_2^\infty\frac{du}{u(\log u)^2}
+=\frac12+\frac{362.7}{\log2}=H.
+$$
+这也证明所定义非负积分有限。
+
+对每个固定的 $y$，第 474.3 条的准确识别为
+$B_{\mathcal P(y)}(u)=\sum_{n\in\mathcal S(u,y)}\mu(n)$，且在 $1\le u\le y$ 等于 $\mathcal M(u)$。它同时保留闭上端、平方自由项及非平方自由项的零贡献。直接在第 443.7 条的原系数积分中按 $y$ 分段，第一段为 $e_yI_y$，余段非负，给 (488.2a) 的下界。第 474.2 条在 $(u,y)$、$u\ge y$ 处的同一个 $K$ 以及 (474.3c) 给
+$$
+\begin{aligned}
+0\le c_{\mathcal P(y)}-e_yI_y
+&\le\frac{Ke_y}{\log y}\int_y^\infty\Psi(u,y)\frac{du}{u^2}\\
+&\le\frac{Ke_y}{\log y}\,e_y^{-1}
+=\frac K{\log y}.
+\end{aligned}
+$$
+再用 $I_y\le I\le H$ 及 (474.3d) 的 $e_y\le1/\log y$，得到全部上界。这里仅在固定 $y$ 处使用已有的非负积分公式，没有交换增长支撑与无穷积分的极限，也没有要求光滑尾积分趋零。
+
+现在直接用 Mertens 第三定理的原乘积极限
+$$
+\lim_{y\to\infty}(\log y)\prod_{p\le y}(1-p^{-1})=e^{-\gamma}.
+$$
+所用精确归一化见本库 [Mertens 第三定理](../../../D5/S3/Weil/Mertens/Third.lean) 的乘积恒等式与 `Mertens.E₃.bound''`；此处借用的是这个经典乘积极限。由极限定义可固定 $Y\ge2$，使每个 $y\ge Y$ 都有 $e_y\log y\ge e^{-\gamma}/2$。又 $I_y\ge1/2$，第 443.12 条给 $c_Q/z\le\alpha_Q\le c_Q$，所以
+$$
+\alpha_{\mathcal P(y)}\ge\frac{e_y I_y}{z}
+\ge\frac{e^{-\gamma}}{4z\log y}.
+$$
+这证明 (488.2b)，所有常数均不随 $y$ 改变。上下界之间仍有固定宽度，不能由它们推出一个极限首项常数。证毕。
+

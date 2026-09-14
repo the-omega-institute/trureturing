@@ -1,0 +1,9 @@
+**定理。** 对每个奇数 $n$ 与每个整数 $q$，
+
+$$
+\boxed{q\mid E_n\text{ 于 }\mathcal O
+\iff q\mid L_n-1\text{ 于 }\mathbb Z.}\tag{T2}
+$$
+
+这包括复合整数 $q$ 及 $q=0$。
+

@@ -1,0 +1,7 @@
+**定理。** 对奇素数 $p$，
+
+$$
+\boxed{\pi(p^2)=\pi(p)\iff p\mid F_{\pi(p)}/p.}
+\tag{R11}
+$$
+

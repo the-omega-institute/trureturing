@@ -1,0 +1,6 @@
+**定义。** 若观察历史 $h=(y_0,\ldots,y_t)$ 的概率非零，令
+
+$$
+\nu_h=\operatorname{Law}(X_t\mid Y_{0:t}=h).
+$$
+

@@ -1,0 +1,8 @@
+**定义。** 对 $z=a+b\varphi\in\mathcal O/q\mathcal O$，以反序坐标
+$(b,a)$ 定义正则表示
+
+$$
+\mathcal R_q(z)=\begin{pmatrix}a+b&b\\b&a\end{pmatrix}.
+\tag{R3}
+$$
+
