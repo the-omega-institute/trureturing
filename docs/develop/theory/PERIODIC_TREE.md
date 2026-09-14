@@ -1015,3 +1015,453 @@ $$
 **证明。** $m^2+1>0$，应用 FSP3。这是 Michel Lagneau 于 2020 年 12 月 10 日提出、OEIS A339621 COMMENTS 中标为猜想的命题。证明实际上适用于全部正整数 $M$，不需要 $M=m^2+1$ 或 $3\nmid M$。
 
 FSP4 对值一给出 $1=F_2$，并不否认 $1=F_1$；结论是存在偶下标表示。若允许重复一，$1+1=F_3$ 将破坏结论；若删去必须含一的假设，$\{2,3\}$ 的和为 $F_5$，同样破坏结论。FSP3 没有断言每个偶下标 Fibonacci 数都能由某个 $m^2+1$ 的约数和实现。
+
+
+## 附录 EMW：Fibonacci 平方中心与非 WSS 秩支持
+
+**定义。** 正整数称为强力数，当且仅当每个素数因子均以至少二次幂出现。令 $F_0=0$、$F_1=1$、$F_{n+2}=F_{n+1}+F_n$。对素数 $p\ne2,5$，定义
+
+$$
+\rho(p)=\min\{n\ge1:p\mid F_n\},\qquad
+q_p=\frac{F_{p-(5/p)}}p\pmod p.
+$$
+
+对 $60\mid M$，定义不同秩组成的集合
+
+$$
+\mathcal R_1=\{\rho(p):p\ne2,5\text{ 为素数},\ q_p\ne0\},\qquad
+\mathcal R_1(M)=\{r\in\mathcal R_1:\gcd(r,M)\le2\}.
+$$
+
+同一秩只计一次。令 EMW 表示不存在连续三个正强力数的命题。
+
+### EMW.1 初始商与简单素因子
+
+记
+
+\[
+\varphi^2=\varphi+1,\qquad
+\mathcal O_K=\mathbb Z[\varphi],\qquad
+\operatorname N(\varphi)=-1.
+\]
+
+对素数 \(p\)，定义
+
+\[
+\rho(p)=\min\{n\ge1:p\mid F_n\}.
+\]
+
+存在性、强整除性与黄金 Frobenius 给出
+
+\[
+p\mid F_n\iff\rho(p)\mid n,
+\qquad
+\rho(p)\mid p-\left(\frac5p\right)\quad(p\ne2,5).
+\tag{EMW-B1}
+\]
+
+此外 \(\rho(p)\ge3\)，且
+
+\[
+\rho(2)=3,\qquad\rho(3)=4,\qquad\rho(5)=5.
+\tag{EMW-B2}
+\]
+
+**引理 1。** 对 \(p\ne2,5\)，
+
+\[
+q_p\ne0\iff v_p(F_{\rho(p)})=1.
+\tag{EMW-B3}
+\]
+
+**证明。** 写 \(r=\rho(p)\)、\(N=p-(5/p)=kr\)，并在黄金整数中写
+
+\[
+\varphi^r=a+b\varphi,
+\qquad a=F_{r-1},\quad b=F_r.
+\]
+
+有 \(p\mid b\)。范数恒等式模 \(p\) 给出
+\(a^2\equiv(-1)^r\pmod p\)，所以 \(p\nmid a\)。又因 \(p\nmid N\)，有 \(p\nmid k\)。在自由基 \(1,\varphi\) 上模 \(p^2\) 展开：
+
+\[
+\varphi^N=(a+b\varphi)^k
+\equiv a^k+ka^{k-1}b\varphi\pmod{p^2\mathcal O_K}.
+\]
+
+高于一次的项都含有 \(b^2\)。比较 \(\varphi\) 坐标，得
+
+\[
+F_N\equiv ka^{k-1}F_r\pmod{p^2}.
+\]
+
+系数 \(ka^{k-1}\) 模 \(p\) 可逆。因此 \(p^2\mid F_N\) 当且仅当 \(p^2\mid F_r\)，从而得到 (EMW-B3)。证毕。
+
+**推论 2。** 若 \(p\ne2,5\) 且 \(p\parallel F_m\)，则 \(q_p\ne0\)，且 \(\rho(p)\mid m\)。
+
+**证明。** 由 (EMW-B1)，\(r=\rho(p)\mid m\)，再由 Fibonacci 整除性有 \(F_r\mid F_m\)。既然 \(p\mid F_r\) 且 \(p^2\nmid F_m\)，必有 \(p\parallel F_r\)。应用引理 1。证毕。
+
+这里 \(p\parallel A\) 表示 \(p\mid A\) 而 \(p^2\nmid A\)。仅仅知道某个素数整除 \(F_m\) 并不足以推出非 WSS；指数恰为一是必要环节。
+
+### EMW.2 四个相邻指标与连续三元组
+
+**引理 3。** 对 \(n\ge3\)，
+
+\[
+F_{n-1}F_{n+1}=F_n^2+(-1)^n,
+\qquad
+F_{n-2}F_{n+2}=F_n^2-(-1)^n.
+\tag{EMW-C1}
+\]
+
+若 \(4\mid n\)，则
+
+\[
+F_n^2-1=F_{n-2}F_{n+2},\qquad
+F_n^2+1=F_{n-1}F_{n+1},
+\tag{EMW-C2}
+\]
+
+并且两个乘积各自的因子互素。
+
+**证明。** 第一式是 Cassini 恒等式。设 \(A=F_{n-1}\)、\(B=F_n\)，则
+\(F_{n-2}=B-A\)、\(F_{n+2}=A+2B\)，所以第二个乘积等于
+\(2B^2-A(A+B)=B^2-(-1)^n\)。
+
+若 \(4\mid n\)，则 \(\gcd(n-1,n+1)=1\)、\(\gcd(n-2,n+2)=2\)。强整除性和 \(F_1=F_2=1\) 给出因子的互素性。证毕。
+
+两个强力数的乘积仍为强力数；反之，互素乘积是强力数时，每个因子均为强力数。因此，在 \(4\mid n\)、\(n\ge4\) 时，(EMW-C2) 给出精确对应：
+
+\[
+\begin{aligned}
+&F_n^2-1,F_n^2,F_n^2+1\text{ 均为强力数}\\
+&\quad\iff
+F_{n-2},F_{n-1},F_{n+1},F_{n+2}\text{ 均为强力数}.
+\end{aligned}
+\tag{EMW-C3}
+\]
+
+中间的 \(F_n^2\) 本身总是正平方。
+
+### EMW.3 有限素数集合的条件性排除
+
+**定理 4，条件于 EMW。** 给定任意有限素数集合 \(S\)，令
+
+\[
+M=\operatorname{lcm}\bigl(60,\{\rho(p):p\in S\}\bigr).
+\]
+
+则存在素数 \(p\notin S\cup\{2,5\}\)，使
+
+\[
+q_p\ne0,\qquad
+\gcd(\rho(p),M)\le2,\qquad
+p\le F_{M+2}.
+\tag{EMW-D1}
+\]
+
+**证明。** 对每个 \(p\in S\) 及 \(s\in\{-2,-1,1,2\}\)，\(\rho(p)\mid M\) 且 \(\rho(p)\ge3\)，故 \(\rho(p)\nmid M+s\)。由 (EMW-B1)，\(p\nmid F_{M+s}\)。
+
+EMW 排除中心 \(F_M^2\) 的强力数三元组，故至少一个外侧数不是强力数。由 (EMW-C2)，四个相邻 Fibonacci 数中至少一个有简单素因子 \(p\)。\(M\) 被 60 整除，也排除了秩分别为 3、4、5 的素数 2、3、5。推论 2 给出 \(q_p\ne0\)。
+
+由 \(\rho(p)\mid M+s\) 得 \(\gcd(\rho(p),M)\mid s\)，因此最大公约数不超过 2。最后，\(p\mid F_{M+s}\le F_{M+2}\)。证毕。
+
+### EMW.4 无限周期并集的密度
+
+记 \(\mathcal S=\{-2,-1,1,2\}\)。对 \(60\mid M\)、\(r\ge3\)，定义
+
+\[
+E_r(M)=\{k\ge1:\exists s\in\mathcal S,\ r\mid Mk+s\}.
+\]
+
+**引理 5，单个秩。** 若 \(g=\gcd(r,M)>2\)，则 \(E_r(M)\) 为空。若 \(g\le2\)，则它是有限个模 \(r/g\) 的剩余类的并，且其自然密度满足
+
+\[
+d(E_r(M))\le\frac4r.
+\tag{EMW-E1}
+\]
+
+**证明。** 线性同余 \(Mk\equiv-s\pmod r\) 有解当且仅当 \(g\mid s\)；有解时，恰对应一个模 \(r/g\) 的剩余类。若 \(g=1\)，至多有四个类，各密度 \(1/r\)。若 \(g=2\)，只有 \(s=\pm2\) 可能，每个类密度 \(2/r\)。若 \(g>2\)，四个同余都无解。证毕。
+
+**引理 6，可求和尾项。** 设 \(D\subseteq\{3,4,\ldots\}\)，且
+
+\[
+\sum_{r\in D}\frac1r<\infty.
+\]
+
+则 \(E_D(M)=\bigcup_{r\in D}E_r(M)\) 有自然密度，并且
+
+\[
+d(E_D(M))\le
+4\sum_{\substack{r\in D\\\gcd(r,M)\le2}}\frac1r.
+\tag{EMW-E2}
+\]
+
+**证明。** 先取任意有限 \(T\subset D\)。有限并 \(E_T(M)\) 是周期集合，故有自然密度；由有限次并集上界及引理 5，满足相应的有限和估计。
+
+不能直接假设自然密度对可数并次可加。为处理尾项，对整数 \(X\ge1\) 使用下面的有限计数：
+
+\[
+\#\left(\left(\bigcup_{r\in D\setminus T}E_r(M)\right)\cap[1,X]\right)
+\le4(MX+2)\sum_{r\in D\setminus T}\frac1r.
+\tag{EMW-E3}
+\]
+
+事实上，对固定 \(s\)，映射 \(k\mapsto Mk+s\) 在 \(1\le k\le X\) 上为正且单射，其像包含于 \([1,MX+2]\)。其中被 \(r\) 整除的数至多 \(\lfloor(MX+2)/r\rfloor\) 个。对四个 \(s\) 以及所有尾部 \(r\) 求和即得 (EMW-E3)。在任意固定的 \(X\) 上，\(r>MX+2\) 根本没有贡献。
+
+固定 \(M\) 后，(EMW-E3) 除以 \(X\) 并取上极限，所得误差至多
+\(4M\sum_{r\in D\setminus T}1/r\)，它随着有限集合 \(T\) 穷尽 \(D\) 而趋零。因此无限并的上下密度均趋向有限周期并密度的同一极限。自然密度存在；再让有限并中的求和穷尽，得到 (EMW-E2)。证毕。
+
+证明没有使用各个秩、素数或剩余类之间的独立性。选择 \(M\) 与让尾项趋零分属两个步骤：应用引理时，\(M\) 已经固定。
+
+### EMW.5 可求和秩支持的密度放大
+
+定义
+
+\[
+\mathcal T=\{n\ge3:F_n^2-1,F_n^2,F_n^2+1\text{ 均为强力数}\}.
+\]
+
+对正整数集合 \(A\)，下渐近密度记为
+
+\[
+\underline d(A)=\liminf_{X\to\infty}\frac{\#(A\cap[1,X])}{X}.
+\]
+
+**定理 7。** 若对某个 \(60\mid M_0\)，
+
+\[
+\sum_{r\in\mathcal R_1(M_0)}\frac1r<\infty,
+\tag{EMW-F1}
+\]
+
+则对每个 \(0<\eta<1\)，存在 \(M_0\mid M\)，使
+
+\[
+\underline d\{k\ge1:Mk\in\mathcal T\}\ge1-\eta.
+\tag{EMW-F2}
+\]
+
+特别地，\(\underline d(\mathcal T)>0\)。
+
+**证明。** 从 (EMW-F1) 选有限 \(T\subset\mathcal R_1(M_0)\)，使
+
+\[
+\sum_{r\in\mathcal R_1(M_0)\setminus T}\frac1r<\frac\eta4.
+\]
+
+令 \(M=\operatorname{lcm}(M_0,T)\)。若 \(r\in\mathcal R_1(M)\)，则由 \(M_0\mid M\)，有 \(r\in\mathcal R_1(M_0)\)。它不可能属于 \(T\)，因为此时 \(r\mid M\)，而 \(r\ge3\) 会违反 \(\gcd(r,M)\le2\)。所以
+
+\[
+\mathcal R_1(M)\subseteq\mathcal R_1(M_0)\setminus T,
+\qquad
+\sum_{r\in\mathcal R_1(M)}\frac1r<\frac\eta4.
+\]
+
+对固定的这个 \(M\)，应用引理 6，得到
+
+\[
+d\left(\bigcup_{r\in\mathcal R_1(M)}E_r(M)\right)<\eta.
+\]
+
+考虑不属于这个并集的 \(k\)。如果某个 \(F_{Mk+s}\) 不是强力数，则它有简单素因子 \(p\)。由 \(60\mid M\) 与 (EMW-B2)，\(p\) 不会是 2、3、5。由推论 2，\(r=\rho(p)\in\mathcal R_1\)；又因为 \(r\mid Mk+s\)，有 \(\gcd(r,M)\le2\)，从而 \(r\in\mathcal R_1(M)\) 且 \(k\in E_r(M)\)，矛盾。
+
+因此这四个 Fibonacci 数都是强力数，(EMW-C2) 给出 \(Mk\in\mathcal T\)。此类 \(k\) 的下密度至少为 \(1-\eta\)，即 (EMW-F2)。
+
+最后，将等差数列中的计数换回全部指标：
+
+\[
+\underline d(\mathcal T)\ge\frac{1-\eta}{M}>0.
+\]
+
+证毕。
+
+### EMW.6 条件性秩发散与秩素因子限制
+
+**定理 8。** 若 \(\underline d(\mathcal T)=0\)，则对每个 \(60\mid M\)，
+
+\[
+\boxed{\sum_{r\in\mathcal R_1(M)}\frac1r=\infty.}
+\tag{EMW-G1}
+\]
+
+**证明。** 若有一个这样的级数收敛，定理 7 给出 \(\underline d(\mathcal T)>0\)，矛盾。证毕。
+
+EMW 使 \(\mathcal T\) 为空，故是定理 8 的充分条件。即使允许存在无限多个强力数三元组，只要此 Fibonacci 平方切片的指标集合下密度为零，结论仍然成立。所有整数高度中的零密度并不自动意味着这一指标密度条件。
+
+**推论 9。** 在定理 8 的前提下，对每个 \(60\mid M\)，
+
+\[
+\sum_{\substack{p\ne2,5\text{ 素数}\\q_p\ne0\\\gcd(\rho(p),M)\le2}}
+\frac1{\rho(p)}=\infty.
+\tag{EMW-G2}
+\]
+
+**证明。** 为每个 \(r\in\mathcal R_1(M)\) 选择一个支持该秩的素数 \(p_r\)。不同秩必对应不同素数，故左侧至少包含 (EMW-G1) 中的全部项。证毕。
+
+(EMW-G1) 比 (EMW-G2) 更强，因为它没有利用同一秩对应的多个素数来重复增加级数。两式均没有声称 \(\sum1/p\) 发散。
+
+**推论 10，避开任意有限的小素因子。** 给定整数 \(B\ge5\)，令
+
+\[
+M_B=\operatorname{lcm}(60,1,2,\ldots,B).
+\]
+
+在定理 8 的前提下，存在无限多个非 WSS 素数，其不同秩满足 (EMW-G1)，且每个这样的秩 \(r\) 都有
+
+\[
+r>B,\qquad4\nmid r,\qquad
+q\mid r,\ q\text{ 为奇素数}\Longrightarrow q>B.
+\tag{EMW-G3}
+\]
+
+**证明。** 每个 \(q\le B\) 的奇素数都整除 \(M_B\)，而 \(4\mid M_B\)。因此 \(\gcd(r,M_B)\le2\) 排除了这些奇素因子及因子 4。如果 \(3\le r\le B\)，则 \(r\mid M_B\)，同样矛盾。应用定理 8。证毕。
+
+该族允许奇秩及二倍奇秩，未限制秩必须为素数，也未限制素数 \(p\) 在黄金域中惰性或分裂。
+
+
+
+## 附录 EMWS：四个线性形式的筛与平方自由的非 WSS 秩
+
+### EMWS.1 线性形式与四维分布
+
+**定义。** 沿用附录 EMW 的 Fibonacci 数列、实际初始商 $q_p$、出现秩 $\rho(p)$、不同非 WSS 秩集合 $\mathcal R_1$ 与强力数三元组指标集合 $\mathcal T$。在本附录中，$\log$ 表示自然对数。令
+
+$$
+Q(k)=(60k-1)(60k+1)(30k-1)(30k+1),\qquad k\ge1.
+$$
+
+**引理。** 四个线性因子的值两两互素，且均与 $30$ 互素。对每个素数 $t>5$，$Q$ 模 $t$ 恰有四个不同的根，模 $t^2$ 也恰有四个不同的根。
+
+**证明。** 同一斜率的两个值相差二，交叉斜率的整数线性组合为 $1,-1,3,-3$；全部值均为奇数且不被三、五整除，故两两互素。模 $t$ 的根为 $\pm60^{-1},\pm30^{-1}$。同组根重合会使 $t\mid2$；跨组重合会使 $t\mid1$ 或 $t\mid3$，均不可能。每个斜率模 $t^2$ 可逆，故各根唯一提升。模 $t$ 不同保证提升后仍不同。
+
+**引理。** 对平方自由的 $d$ 且 $\gcd(d,30)=1$，有
+
+$$
+\#\{1\le k\le X:d\mid Q(k)\}
+=\frac{4^{\omega(d)}}dX+R_d(X),\qquad
+|R_d(X)|\le4^{\omega(d)}.\tag{EMWS1}
+$$
+
+**证明。** 中国剩余定理给出恰好 $4^{\omega(d)}$ 个模 $d$ 的根。每个剩余类在 $[1,X]$ 内的计数与 $X/d$ 相差至多一。对根求和即得。
+
+**定理，四维下界筛的应用。** 令 $a=4/35$。存在 $c_0>0$，使全部充分大的整数 $X$ 满足
+
+$$
+\#\{1\le k\le X:t\mid Q(k),\ t\text{ 素数}\Longrightarrow t\ge X^a\}
+\ge c_0\frac{X}{(\log X)^4}.\tag{EMWS2}
+$$
+
+**证明。** 对素数集合 $t>5$ 使用 C. S. Franze, *Sifting Limits for the $\Lambda^2\Lambda^-$ Sieve*, Theorem 1, arXiv:1012.3809, https://arxiv.org/pdf/1012.3809 。该定理的四维参数为 $8.522$。验证其假设如下：EMWS1 给出 $f(t)=t/4$；Mertens 素数求和式给出
+
+$$
+\sum_{5<t<z}\frac{\log t}{f(t)}=4\log z+O(1).
+$$
+
+取 $D=X/(\log X)^{40}$。该定理所需的加权余项满足
+
+$$
+\sum_{\substack{d<D\ (d,30)=1}}\mu^2(d)7^{\omega(d)}|R_d(X)|
+\le\sum_{d<D}\mu^2(d)28^{\omega(d)}
+\le\sum_{d<D}\tau_{28}(d)
+\ll D(1+\log D)^{27}
+\ll\frac{X}{(\log X)^{13}}.\tag{EMWS3}
+$$
+
+这里 $\tau_{28}$ 计有序的二十八因子分解；其和的上界可由先固定二十七个因子、再以 $D$ 除以前面因子的乘积控制最后一因子得到。四维所需误差为 $O(X/(\log X)^5)$，故 EMWS3 充分。$Q(k)$ 随正整数 $k$ 严格递增，所以所筛序列恰有 $X$ 项。Franze 定理给出筛界 $z=X^{1/8.522}$；因 $4/35<1/8.522$，减小筛界的单调性得到 EMWS2。素数二、三、五不整除任何 $Q(k)$，无需加入筛集。
+
+### EMWS.2 平方自由与最多八个素因子
+
+**定义。** 对整数 $X\ge2$，令 $y=X^{4/35}$，并定义
+
+$$
+\mathcal A_X=\{1\le k\le X:Q(k)\text{ 平方自由，且其全部素因子}\ge y\}.
+$$
+
+**定理。** 存在 $c>0$，使全部充分大的 $X$ 满足
+
+$$
+|\mathcal A_X|\ge c\frac{X}{(\log X)^4}.\tag{EMWS4}
+$$
+
+对每个 $k\in\mathcal A_X$，四个线性因子各自至多包含八个素因子。
+
+**证明。** 在 EMWS2 的集合内，若 $t^2\mid Q(k)$，则 $t\ge y>5$。两两互素性迫使 $t^2$ 整除某一个线性因子，因此 $t\le\sqrt{60X+1}$。每个线性形式模 $t^2$ 只有一个根，故删去的指标数至多
+
+$$
+4\sum_{\substack{y\le t\le\sqrt{60X+1}\ t\text{ 素数}}}
+\left(\frac{X}{t^2}+1\right)
+\ll \frac{X}{y}+\sqrt X
+=o\left(\frac{X}{(\log X)^4}\right).\tag{EMWS5}
+$$
+
+这证明 EMWS4。若某一个线性因子包含至少九个素因子，则它至少为 $y^9=X^{36/35}$，但它至多为 $60X+1$，对充分大的 $X$ 矛盾。平方自由性使这里的不同素因子数和按重数计的素因子数相同。
+
+### EMWS.3 无条件的关联计数不等式
+
+**定义。** 对正整数 $r$，令 $r_{\rm odd}=r/2^{v_2(r)}$。令 $\mathcal R_8(X)$ 为满足下列条件的不同秩 $r\in\mathcal R_1$ 的集合：
+
+$$
+r\le60X+2,\quad r\text{ 平方自由},\quad\gcd(r,60)\le2,\quad
+1\le\omega(r_{\rm odd})\le8,
+$$
+
+且 $r_{\rm odd}$ 的每个素因子均不小于 $y=X^{4/35}$。记
+
+$$
+R_8(X)=|\mathcal R_8(X)|,\qquad
+T_X=\#\{k\in\mathcal A_X:60k\in\mathcal T\}.
+$$
+
+**定理。** 对全部充分大的 $X$，
+
+$$
+\boxed{
+T_X+\frac{8X}{y}R_8(X)
+\ge |\mathcal A_X|
+\ge c\frac{X}{(\log X)^4}.
+}\tag{EMWS6}
+$$
+
+**证明。** 取 $k\in\mathcal A_X$ 且 $60k\notin\mathcal T$。EMW-C3 给出某个 $s\in\{-2,-1,1,2\}$，使 $F_{60k+s}$ 具有简单素因子 $p$。由于素数二、三、五的出现秩分别为三、四、五，而 $60k+s$ 均不被这些秩整除，所以 $p\notin\{2,3,5\}$。EMW-B3 给出 $q_p\ne0$ 及 $r=\rho(p)\mid60k+s$。
+
+四个指标为 $60k-1,60k+1,2(30k-1),2(30k+1)$。因此 $r$ 平方自由，$\gcd(r,60)\le2$，且其奇部整除一个平方自由的线性因子。秩至少为三，故奇部大于一；EMWS.2 给出其素因子数至多八，且每个素因子均至少为 $y$。故 $r\in\mathcal R_8(X)$，并有 $r\ge y$。
+
+固定一个这样的 $r$，令 $g=\gcd(r,60)$。若 $g=1$，至多四个模 $r$ 的类能满足 $r\mid60k+s$；若 $g=2$，只有两个模 $r/2$ 的类。因而在 $1\le k\le X$ 中，一个秩至多对应
+
+$$
+\frac{4X}{r}+4\le\frac{8X}{y}
+$$
+
+个指标，其中使用 $r\ge y$ 与 $y\le X$。对每个 $k$ 选择一个见证秩，再按不同秩合并计数，得到 $|\mathcal A_X|-T_X\le(8X/y)R_8(X)$。EMWS4 给出第二个不等式。证明未假设不同秩的剩余类独立或互不重叠。
+
+### EMWS.4 条件性非 WSS 素数族与定量界
+
+**定理。** 若 $T_X=o(X/(\log X)^4)$，则
+
+$$
+\boxed{R_8(X)\gg\frac{X^{4/35}}{(\log X)^4}}\tag{EMWS7}
+$$
+
+对全部充分大的 $X$ 成立。EMW 是该前提的充分条件。
+
+**证明。** EMWS6 中用 $T_X\le(c/2)X/(\log X)^4$，移项后除以 $8X/y$。EMW 排除所有强力数三元组，故 $T_X=0$。
+
+**推论。** 在同一前提下，存在常数 $c_1>0$，使全部充分大的 $x$ 满足
+
+$$
+\#\left\{p\le x:\begin{array}{l}
+p\ne2,5\text{ 为素数},\ q_p\ne0,\\
+\rho(p)\text{ 平方自由},\ \gcd(\rho(p),60)\le2,\\
+1\le\omega(\rho(p)_{\rm odd})\le8
+\end{array}\right\}
+\ge c_1\frac{(\log x)^{4/35}}{(\log\log x)^4}.\tag{EMWS8}
+$$
+
+**证明。** 每个 $r\in\mathcal R_8(X)$ 都有一个实际的非 WSS 素数支持。不同秩的支持素数不同。由于该素数整除 $F_r$，它至多为 $F_{60X+2}\le2^{60X+2}$。取 $X=\lfloor\log x/(120\log2)\rfloor$，则充分大的 $x$ 满足 $2^{60X+2}\le4\sqrt x\le x$。应用 EMWS7 并用 $X\asymp\log x$ 即得。
+
+**推论。** 在同一前提下，可选出无限多个非 WSS 素数，使其出现秩的奇部大于一、平方自由、各至多有八个素因子，并且这些奇部两两互素。
+
+**证明。** 已选有限多个秩后，取 $X$ 足够大，使 $X^{4/35}$ 大于所有先前奇部的素因子。EMWS7 保证新集合非空。其任何秩的奇部全部由更大的素数组成，因此与先前全部奇部互素。递归选择完成证明。
+
+EMWS7 的前提是薄筛集上的相对计数条件。一般集合的下密度为零并不蕴含其计数为 $o(X/(\log X)^4)$，因此附录 EMW 的 $\underline d(\mathcal T)=0$ 不能单独替代本节前提。上述族没有限制出现秩为素数，也没有限制支持素数在黄金域中的分裂类型。
