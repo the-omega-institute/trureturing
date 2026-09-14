@@ -5771,3 +5771,557 @@ $$
 当 $N=1$ 时，$s=1$、$E=0$，上界给出 $U(0,f)=f$，由指针初态达到，因而一次经典结果的最优差异为 $f$；保留最终量子输出时则为 $\sqrt f$。一般有限步中，$E$ 只用于本定理的统一上界，没有取代第 19 章的分支三参数递推；命题 19.3 所排除的累计标量替代仍然不成立。证毕。
 
 ## 追加锚（新终端）
+
+## 21. 惰性参考对两步经典历史辨识的严格增益
+
+**定义 21.1（仅在输入和最终观察时使用的参考）。** 沿用定义 18.1 的二标签记录仪器与共同系统控制表，但允许初始活动系统 $S=\mathbb C^2$ 与一个有限维参考系统 $R$ 处于联合态 $\omega_{SR}$。每个过程内控制只作用于 $S$，只依赖已经存储的经典历史，实际与理想过程始终使用同一个表。所有记录单元新鲜准备，量子记录余系统读取后不再耦合，不后选择；没有另一个可访问辅助量子记忆，也不在过程内对 $R$ 施加操作或与它耦合。
+
+经过 $N$ 步后丢弃活动系统 $S$，保留完整经典历史 $H_N$ 和惰性参考 $R$，允许最终联合测量 $H_N R$。对固定控制表 $U$，记从初始系统到经典历史的两个通道为
+
+$$
+\mathcal C_{\mathrm{actual},N}^U,
+\qquad
+\mathcal C_{\mathrm{ideal},N}^U:
+\mathcal L(S)\longrightarrow\mathcal L(H_N).
+$$
+
+定义该访问范围中的最优差异为
+
+$$
+\begin{aligned}
+T_N^{\mathrm{ref}}(\boldsymbol\beta)
+&=\sup_{U,R,\omega_{SR}}
+\frac12\left\|
+\left[
+\bigl(\mathcal C_{\mathrm{actual},N}^U
+-\mathcal C_{\mathrm{ideal},N}^U\bigr)
+\otimes\operatorname{id}_R
+\right](\omega_{SR})
+\right\|_1\\
+&=\sup_U\frac12\left\|
+\mathcal C_{\mathrm{actual},N}^U
+-\mathcal C_{\mathrm{ideal},N}^U
+\right\|_\diamond.
+\end{aligned}
+$$
+
+输入上确界取两实验共同使用的归一化联合密度矩阵，参考维数可以是任意有限值。第二行是通道辨识中允许输入参考的半 diamond 距离。取平凡参考即可恢复定义 18.1 的观察类，因此 $T_N\le T_N^{\mathrm{ref}}$；下条给出该包含关系导致严格差异的两步见证。
+
+**命题 21.2（一个惰性参考量子比特的显式两步优势）。** 取
+
+$$
+e=\beta_1=\frac12,
+\qquad
+f=\beta_2=\frac15.
+$$
+
+在定义 21.1 的任务中，使用一个参考量子比特，准备共同初态
+
+$$
+|\Psi\rangle_{SR}
+=\frac12|00\rangle+\frac{\sqrt3}{2}|11\rangle,
+\qquad
+\rho_S=\operatorname{diag}\left(\frac14,\frac34\right),
+$$
+
+其中第一个张量因子是活动系统。第一共同控制取恒等；第一结果为 $i$ 时，第二共同系统控制取
+
+$$
+U_{2,0}=H
+=\frac1{\sqrt2}\begin{pmatrix}1&1\\1&-1\end{pmatrix},
+\qquad
+U_{2,1}=X
+=\begin{pmatrix}0&1\\1&0\end{pmatrix}.
+$$
+
+该策略在最终 $H_2R$ 输出上达到
+
+$$
+\frac{13+\sqrt{127}}{40}.
+$$
+
+因而
+
+$$
+T_2^{\mathrm{ref}}(1/2,1/5)
+\ge\frac{13+\sqrt{127}}{40}
+>\frac35
+=T_2(1/2,1/5).
+$$
+
+这是指定策略的可达下界，不宣称已经求出 $T_2^{\mathrm{ref}}$ 的精确最优值。所有系统控制都为实正交矩阵；参考从初始制备到最终测量之间始终接受恒等操作。
+
+证明。 令 $P_j=|j\rangle\langle j|$。由于 $e=1/2$，实际第一步的两个 Kraus 算子均为 $I_2/\sqrt2$，理想第一步算子则为 $P_i$。在 $f=1/5$ 时，实际末次结果效应为
+
+$$
+K_{2,j}^\dagger K_{2,j}
+=\frac45P_j+\frac15P_{1-j}.
+$$
+
+因此对历史 $ij$，实际与理想的初始系统效应分别为
+
+$$
+E_{ij}^{\mathrm{actual}}
+=\frac12U_{2,i}^\dagger
+\left(\frac45P_j+\frac15P_{1-j}\right)U_{2,i},
+$$
+
+$$
+E_{ij}^{\mathrm{ideal}}
+=P_iU_{2,i}^\dagger P_jU_{2,i}P_i.
+$$
+
+记 $M_{ij}=E_{ij}^{\mathrm{actual}}-E_{ij}^{\mathrm{ideal}}$，代入 $H$ 和 $X$ 得到
+
+$$
+M_{00}=\frac1{20}\begin{pmatrix}-5&3\\3&5\end{pmatrix},
+\qquad
+M_{01}=\frac1{20}\begin{pmatrix}-5&-3\\-3&5\end{pmatrix},
+$$
+
+$$
+M_{10}=\operatorname{diag}\left(\frac1{10},-\frac35\right),
+\qquad
+M_{11}=\operatorname{diag}\left(\frac25,\frac1{10}\right).
+$$
+
+例如，$H^\dagger P_0H$ 的每个矩阵元均为 $1/2$，而 $P_0H^\dagger P_0HP_0=P_0/2$，所以相减后得到 $M_{00}$。其余三式使用互补投影及 $X^\dagger P_0X=P_1$。四个差效应之和为零，与两种历史分布均归一化一致。
+
+对所选 Schmidt 初态，系统效应 $E$ 对应的未归一化参考输出为
+
+$$
+\sqrt{\rho_S}\,E^{\mathsf T}\sqrt{\rho_S}.
+$$
+
+这是因为该参考矩阵的 $(a,b)$ 元为
+
+$$
+\sqrt{(\rho_S)_{aa}(\rho_S)_{bb}}\,
+\langle b|E|a\rangle,
+$$
+
+可由初态在 $|a\rangle_S|a\rangle_R$ 基中的展开直接求出。因此两个最终 $H_2R$ 输出之差是按历史分块的 Hermitian 算子
+
+$$
+\Delta_{H_2R}
+=\sum_{i,j}|ij\rangle\langle ij|\otimes D_{ij},
+\qquad
+D_{ij}=\sqrt{\rho_S}\,M_{ij}^{\mathsf T}\sqrt{\rho_S}.
+$$
+
+使用 $\sqrt{\rho_S}=\operatorname{diag}(1/2,\sqrt3/2)$，四个参考差块明确为
+
+$$
+D_{00}=\frac1{80}\begin{pmatrix}-5&3\sqrt3\\3\sqrt3&15\end{pmatrix},
+\qquad
+D_{01}=\frac1{80}\begin{pmatrix}-5&-3\sqrt3\\-3\sqrt3&15\end{pmatrix},
+$$
+
+$$
+D_{10}=\operatorname{diag}\left(\frac1{40},-\frac9{20}\right),
+\qquad
+D_{11}=\operatorname{diag}\left(\frac1{10},\frac3{40}\right).
+$$
+
+前两个矩阵的迹均为 $1/8$，行列式均为 $-51/3200$，所以两个特征值异号。各自的迹范数等于特征值间距：
+
+$$
+\|D_{00}\|_1=\|D_{01}\|_1
+=\sqrt{\frac1{64}+\frac{204}{3200}}
+=\frac{\sqrt{127}}{40}.
+$$
+
+另外两个对角块给出
+
+$$
+\|D_{10}\|_1=\frac{19}{40},
+\qquad
+\|D_{11}\|_1=\frac7{40}.
+$$
+
+由于不同经典历史对应正交块，整体迹范数是各块迹范数之和，故
+
+$$
+\frac12\|\Delta_{H_2R}\|_1
+=\frac12\sum_{i,j}\|D_{ij}\|_1
+=\frac{13+\sqrt{127}}{40}.
+$$
+
+最终观察者可以先读取历史 $ij$，再在参考上测量对应 $D_{ij}$ 的正负谱子空间，以达到该可区分性。该测量只发生在两个记录步骤之后，没有对参考施加过程内控制，也没有丢弃任何历史。
+
+另一方面，定理 18.2 已经优化全部无参考输入和共同系统控制，给出
+
+$$
+T_2(1/2,1/5)
+=\max\left\{\frac35,\sqrt{\frac{17}{50}}\right\}
+=\frac35,
+$$
+
+其中 $9/25=18/50>17/50$。所构造参考策略相对此完整无参考最优值的增量为
+
+$$
+\frac{13+\sqrt{127}}{40}-\frac35
+=\frac{\sqrt{127}-11}{40}>0,
+$$
+
+严格不等式由 $127>121$ 得到。这证明了被动保留的初始纠缠参考可以提高该两步任务的最优值。证毕。
+
+## 追加锚（新终端）
+
+## 22. 一个可操作记忆比特的精确最优值与经典达到边界
+
+**定义 22.1（丢弃活动系统而保留可操作记忆）。** 沿用定义 17.1 的二结果仪器族。活动系统 $S=\mathbb C^2$，参数 $\beta_t\in[0,1]$，实际与理想结果算子分别为
+
+$$
+K_{t,z}=\sqrt{1-\beta_t}\,P_z+\sqrt{\beta_t}\,P_{1-z},
+\qquad P_z=|z\rangle\langle z|,
+\qquad z\in\{0,1\}.
+$$
+
+允许一个任意非零有限维可操作量子记忆 $M$。每次仪器之前，可以根据全部已存经典历史，在 $S\otimes M$ 上调用预先指定的共同 CPTP 控制；实际和理想实验调用同一张控制表。仪器只作用于 $S$，每次读取的经典结果追加到 $H_t$，旧历史保持不变。已丢弃的控制余系统或仪器余系统不再耦合，无后选择。末次仪器之后丢弃 $S$，输出为 $H_N\otimes M$。
+
+固定 $M$ 和共同控制表 $\Pi$ 后，这定义实际与理想通道
+
+$$
+\mathcal C_{{\rm A},N}^{\Pi},\mathcal C_{{\rm J},N}^{\Pi}:
+\mathcal L(S\otimes M)\longrightarrow\mathcal L(H_N\otimes M).
+$$
+
+记无参考共同输入的最优输出差异为
+
+$$
+T_N^{\rm mem}(\boldsymbol\beta)
+=\sup_{\substack{1\le\dim M<\infty,\,\Pi\\
+\rho\ge0,\,\operatorname{tr}\rho=1}}
+\frac12\left\|
+\mathcal C_{{\rm A},N}^{\Pi}(\rho)
+-\mathcal C_{{\rm J},N}^{\Pi}(\rho)
+\right\|_1.
+$$
+
+输入 $\rho$ 位于 $S\otimes M$。对固定通道还可以使用惰性参考 $R$ 定义 diamond 距离，此时控制不作用于 $R$，最终同时保留 $R$。$M$ 允许与活动系统耦合；这一访问权限不同于仅保留一个始终不可操作的参考系统。
+
+**定理 22.2（精确记忆最优值及一次 SWAP 的达到）。** 对定义 22.1 的任意有限 $N\ge1$ 和完整参数域 $\beta_t\in[0,1]$，令
+
+$$
+f=\beta_N,\qquad a=1-f,\qquad
+s=\prod_{t=1}^{N-1}\sqrt{1-\beta_t},\qquad E=1-s^2,
+$$
+
+其中空积为一。使用第 20.2 条的函数
+
+$$
+U(E,f)=\frac{f+\sqrt{f^2+4(1-f)E}}2
+=\frac{f+\sqrt{(a+1)^2-4as^2}}2,
+$$
+
+有
+
+$$
+T_N^{\rm mem}(\boldsymbol\beta)=U(E,f).
+$$
+
+更强地，每个固定有限维记忆及共同控制表都满足
+
+$$
+\frac12\left\|
+\mathcal C_{{\rm A},N}^{\Pi}
+-\mathcal C_{{\rm J},N}^{\Pi}
+\right\|_\diamond\le U(E,f).
+$$
+
+一个初态为 $|0\rangle$ 的记忆量子比特即可达到等号：前 $N-1$ 步完全不操作记忆，只在活动比特上执行共同实反馈；末次仪器前把 $S$ 与 $M$ 作一次 SWAP。达到使用共同输入 $|0\rangle_S|0\rangle_M$，无需惰性参考。该结论给出此仪器族及保留输出的精确最优值，不断言每个参数选择都比无记忆经典历史任务更优。
+
+证明。先证明对任意记忆和参考一致的上界。给共同输入作纯化，并给实际、理想实验中的共同 CPTP 控制使用同一个 Stinespring 等距。每次仪器使用结果标签及其丢弃副本，实际、理想两种等距的交叉算子为
+
+$$
+\sum_zP_zK_{t,z}=\sqrt{1-\beta_t}\,I_S.
+$$
+
+共同历史控制保持完整纯化的内积，每次仪器则将其乘以所示标量。经过前 $N-1$ 次仪器及末次共同控制后，全部保留与纯化寄存器上的两个单位向量可以取为 $|A\rangle,|J\rangle$，满足
+
+$$
+\langle J|A\rangle=s.
+$$
+
+纯化中保留的丢弃寄存器只用于分析，不允许重新接回协议；惰性参考也始终不参与控制。
+
+在两候选上都假设末次作完美指针读取并丢弃 $S$，得到归一化经典量子态 $\mathsf P,\mathsf Q$，其空间为 $H_N\otimes M\otimes R$。它们是 $|A\rangle,|J\rangle$ 经同一通道的输出，而 $\mathsf Q$ 正好是理想最终态。对 Hermitian 算子的迹范数收缩及秩一差值公式给出
+
+$$
+\begin{aligned}
+\|a\mathsf P-\mathsf Q\|_1
+&\le\|a|A\rangle\langle A|-|J\rangle\langle J|\|_1\\
+&=\sqrt{(a+1)^2-4a|\langle J|A\rangle|^2}\\
+&=\sqrt{(a+1)^2-4as^2}.
+\end{aligned}
+$$
+
+令 $\tau$ 只翻转最后一个经典结果位，保持旧历史、记忆和参考不动。对末次仪器前任意历史块 $\omega_h$，实际结果 $z$ 的记忆参考块为
+
+$$
+\begin{aligned}
+&\operatorname{Tr}_S\bigl[
+(K_{N,z}\otimes I)\omega_h(K_{N,z}\otimes I)
+\bigr]\\
+&\qquad=a\langle z|\omega_h|z\rangle
++f\langle1-z|\omega_h|1-z\rangle.
+\end{aligned}
+$$
+
+两指针之间的交叉项在部分迹后为零，故实际最终态严格满足
+
+$$
+\mathsf R=a\mathsf P+f\tau(\mathsf P).
+$$
+
+因为 $\tau(\mathsf P)$ 是迹范数为一的密度矩阵，
+
+$$
+\begin{aligned}
+\frac12\|\mathsf R-\mathsf Q\|_1
+&\le\frac12\bigl(\|a\mathsf P-\mathsf Q\|_1+f\bigr)\\
+&\le U(E,f).
+\end{aligned}
+$$
+
+这对任意共同输入及参考一致，因而也是所述半 diamond 上界。
+
+为构造达到，把定理 17.2 的零对角递推用于不等初始权重。前缀中不操作记忆，实际与理想物理分支向量记为 $x_h,y_h$，初态均为 $|0\rangle$。只在控制表计算中引入
+
+$$
+\psi_h=\sqrt a\,x_h,\qquad\phi_h=y_h,
+$$
+
+并定义
+
+$$
+\begin{aligned}
+p_h&=\|\psi_h\|^2,&q_h&=\|\phi_h\|^2,
+&c_h&=\phi_h^{\mathsf T}\psi_h,\\
+r_k&=\frac{2\sqrt a}{a+1}
+\prod_{t=1}^k\sqrt{1-\beta_t}.
+\end{aligned}
+$$
+
+逐层构造共同实控制，使每个深度 $k$ 的历史满足
+
+$$
+2c_h=r_k(p_h+q_h).
+$$
+
+初始 $p=a,q=1,c=\sqrt a$，故关系成立。分母 $a+1$ 总为正，而且 $0\le r_k\le1$。
+
+固定一个深度 $t-1$ 的节点，暂略历史下标，写 $\alpha=\sqrt{1-\beta_t}$、$b=\sqrt{\beta_t}$、$r=r_{t-1}$。定义实对称矩阵
+
+$$
+X=\psi\phi^{\mathsf T}+\phi\psi^{\mathsf T}
+-r\bigl[(\alpha^2-b^2)\psi\psi^{\mathsf T}
++\phi\phi^{\mathsf T}\bigr]-rb^2pI_2.
+$$
+
+由归纳关系及 $\alpha^2+b^2=1$，
+
+$$
+\operatorname{tr}X
+=2c-r[(\alpha^2-b^2)p+q]-2rb^2p
+=2c-r(p+q)=0.
+$$
+
+按定理 17.2 的实对称谱基构造，取正交归一的 $v_0,v_1$ 使 $v_z^{\mathsf T}Xv_z=0$，并以 $v_z^{\mathsf T}$ 为共同控制矩阵的第 $z$ 行。$X=0$ 时任取实正交基。令 $u_z=v_z^{\mathsf T}\psi$、$w_z=v_z^{\mathsf T}\phi$，子分支满足
+
+$$
+p_{hz}=b^2p+(\alpha^2-b^2)u_z^2,
+\qquad q_{hz}=w_z^2,
+\qquad c_{hz}=\alpha u_zw_z.
+$$
+
+零对角关系等价于 $2u_zw_z=r(p_{hz}+q_{hz})$，两边乘以 $\alpha$ 即得
+
+$$
+2c_{hz}=r_t(p_{hz}+q_{hz}).
+$$
+
+这个递推没有除以 $a,\alpha,b,p,q$，所以零向量、零概率历史及 $\beta_t=0,1$ 都包括在内。$a=0$ 时加权实际向量全为零，但物理实际向量仍按同一个控制表定义；加权只用于选择控制，不要求从零向量反演物理分支。仪器完备性给出每层总权重 $\sum_hp_h=a$、$\sum_hq_h=1$。
+
+令 $\rho_A,\rho_J$ 是前 $N-1$ 步的历史加活动系统输出。逐历史使用秩一差值公式，得到
+
+$$
+\begin{aligned}
+\|a\rho_A-\rho_J\|_1
+&=\sum_{|h|=N-1}\sqrt{(p_h+q_h)^2-4c_h^2}\\
+&=\sum_{|h|=N-1}(p_h+q_h)\sqrt{1-r_{N-1}^2}\\
+&=\sqrt{(a+1)^2-4as^2}.
+\end{aligned}
+$$
+
+最后把活动比特与尚未参与、初态为 $|0\rangle$ 的记忆比特 $M$ 作 SWAP。前缀候选量子态进入记忆，两实验中的活动系统都成为 $|0\rangle$。末次实际结果零、一的概率为 $a,f$，理想结果恒为零。识别 SWAP 前后的比特空间，最终输出差关于末次经典结果的两个直和块恰为
+
+$$
+(a\rho_A-\rho_J)\ \oplus\ f\rho_A.
+$$
+
+所以最终迹距离为
+
+$$
+\frac12\bigl(\|a\rho_A-\rho_J\|_1+f\bigr)=U(E,f).
+$$
+
+无参考纯输入已达到参考一致上界，故该固定控制表的半 diamond 距离也达到同一值。$N=1$ 时前缀为空，结果为 $f$；$f=0$ 时为 $\sqrt{1-s^2}$；$f=1$ 或某个前缀参数为一时为一。有限反馈表按模型参数与已存历史预先计算，两实验始终使用同一表。证毕。
+
+**定理 22.3（无记忆经典历史的等号分类）。** 令 $T_N$ 仍表示定义 18.1 的原始任务：单活动量子比特、全部共同历史依赖 $U(2)$ 控制、无可操作记忆、无输入参考，末端只保留经典历史。对完整参数域 $\beta_t\in[0,1]$，$N=1$ 时总有
+
+$$
+T_1=U(0,f)=f.
+$$
+
+对 $N\ge2$，有充要分类
+
+$$
+T_N=U(E,f)
+\quad\Longleftrightarrow\quad
+\left[
+\beta_{N-1}=0\ \text{或}\ \beta_N=0
+\ \text{或存在 }t\le N\text{ 使 }\beta_t=1
+\right].
+$$
+
+因此，若 $N\ge2$、$0<\beta_N<1$、所有 $\beta_t<1$ 且 $\beta_{N-1}>0$，则
+
+$$
+T_N<U(E,f)=T_N^{\rm mem}.
+$$
+
+这里比较的是两个控制与访问任务各自优化后的值。严格情形中一个可操作记忆比特足以取得增益；所列等号边界则无需该记忆。该分类不确定只允许惰性参考而禁止系统参考耦合的最优值。
+
+证明。第 20.2 条给出 $T_N\le U(E,f)$。$N=1$ 时，指针初态达到 $f=U(0,f)$。若 $f=0$，命题 18.3 的最终完美读取达到 $\sqrt E=U(E,0)$。若某个 $\beta_t=1$，取指针初态和恒等控制，实际与理想历史支撑不交，达到 $1=U(E,f)$。
+
+设 $N\ge2$ 且 $\beta_{N-1}=0$。对前 $N-2$ 步使用定理 22.2 证明中的加权实反馈，得到历史加活动系统态 $\rho_A,\rho_J$，满足
+
+$$
+\|a\rho_A-\rho_J\|_1
+=\sqrt{(a+1)^2-4as^2}.
+$$
+
+倒数第二步参数为零，所以 $s$ 与前 $N-2$ 步的重叠乘积相同。对每个长度 $N-2$ 的历史 $g$，将 Hermitian 块
+
+$$
+D_g=a|x_g\rangle\langle x_g|-|y_g\rangle\langle y_g|
+$$
+
+的特征基通过共同系统酉送入指针基，随后作倒数第二次完美读取。若该步后的两种经典分布为 $p_h,q_h$，逐块读取特征值给出
+
+$$
+\sum_h|ap_h-q_h|=\|a\rho_A-\rho_J\|_1.
+$$
+
+读取结果 $y$ 后，两实验中非零系统分支都沿已知指针 $|y\rangle$。按该经典结果使用 $X^y$ 把它送到 $|0\rangle$，其中 $X|0\rangle=|1\rangle$、$X|1\rangle=|0\rangle$。再执行末次仪器，末次结果零、一上的实际分布分别为 $ap_h,fp_h$，理想分布为 $q_h,0$，故
+
+$$
+\operatorname{TV}
+=\frac12\sum_h\bigl(|ap_h-q_h|+fp_h\bigr)
+=U(E,f).
+$$
+
+该方案完全不使用量子记忆，零概率历史任意指定控制。$N=2$ 时前缀为空，上述构造仍成立。
+
+剩下证明必要性。设 $N\ge2$、$0<f<1$、所有参数小于一且 $\beta_{N-1}>0$。于是 $a>0$、$s>0$，并有 $0<\beta_{N-1}<1$。若 $T_N=U(E,f)$，由定理 19.2 的纯输入归约和有限控制树紧性，存在纯初态及共同控制表真正达到此值。
+
+固定该策略，在末次控制前，对每个长度 $N-1$ 的历史 $h$ 记未归一化候选向量为 $x_h,y_h$，末次控制为 $W_h$。定义
+
+$$
+P(h,z)=|\langle z|W_hx_h\rangle|^2,
+\qquad
+Q(h,z)=|\langle z|W_hy_h\rangle|^2.
+$$
+
+实际最终分布是 $R=aP+f\tau P$，其中 $\tau$ 翻转末次结果。第 20.2 条的内积递推与三角不等式给出
+
+$$
+\sum_h\langle y_h,x_h\rangle=s,
+\qquad
+B(P,Q):=\sum_{h,z}\sqrt{P(h,z)Q(h,z)}\ge s.
+$$
+
+上界可以写为
+
+$$
+\begin{aligned}
+2\operatorname{TV}(R,Q)
+&=\|aP-Q+f\tau P\|_1\\
+&\le\|aP-Q\|_1+f\\
+&\le\sqrt{(a+1)^2-4aB(P,Q)^2}+f\\
+&\le\sqrt{(a+1)^2-4as^2}+f=2U(E,f).
+\end{aligned}
+$$
+
+达到最终界强制每一步等号。因为 $a,s>0$，最后一步等号强制 $B(P,Q)=s$。
+
+考察加权 Cauchy--Schwarz 步骤。对坐标 $i=(h,z)$，令
+
+$$
+u_i=|\sqrt{aP_i}-\sqrt{Q_i}|,
+\qquad v_i=\sqrt{aP_i}+\sqrt{Q_i}.
+$$
+
+等号要求存在 $\lambda\ge0$ 使所有坐标满足 $u_i=\lambda v_i$，其中
+
+$$
+\lambda^2
+=\frac{a+1-2\sqrt a\,B(P,Q)}
+{a+1+2\sqrt a\,B(P,Q)}<1.
+$$
+
+分母正，而 $a>0$、$B(P,Q)=s>0$。若某坐标 $P_i,Q_i$ 恰有一个为零，则 $u_i=v_i>0$，与 $\lambda<1$ 矛盾。因此 $P,Q$ 逐坐标具有相同支撑。
+
+因为 $\sum_i(aP_i-Q_i)=-f<0$，存在负坐标 $(h,z)$，使 $d_i=aP_i-Q_i<0$。第一个迹范数三角等号逐坐标要求
+
+$$
+P(h,1-z)=0.
+$$
+
+否则负数 $d_i$ 与严格正的 $fP(h,1-z)$ 相加会使三角不等式严格。由相同支撑，$Q(h,1-z)=0$；该负坐标自身则有 $P(h,z),Q(h,z)>0$。所以末次控制后的两候选向量都是同一指针 $|z\rangle$ 的非零倍数，控制前的 $x_h,y_h$ 也非零且共线。
+
+写 $h=g\ell$，其中 $\ell$ 为倒数第二次结果。令倒数第二次控制后的父候选为
+
+$$
+\xi=U_{N-1,g}x_g,
+\qquad \eta=U_{N-1,g}y_g,
+$$
+
+并记 $\alpha=\sqrt{1-\beta_{N-1}}>0$、$b=\sqrt{\beta_{N-1}}>0$。于是
+
+$$
+x_{g\ell}=(\alpha P_\ell+bP_{1-\ell})\xi,
+\qquad y_{g\ell}=P_\ell\eta.
+$$
+
+$y_{g\ell}$ 非零并沿 $|\ell\rangle$，共线性强制实际向量也沿该指针。由于 $\alpha,b>0$，这迫使 $\xi$ 非零并沿 $|\ell\rangle$。因此兄弟历史 $h'=g(1-\ell)$ 的实际向量
+
+$$
+x_{h'}=(\alpha P_{1-\ell}+bP_\ell)\xi=b\xi
+$$
+
+非零且沿 $|\ell\rangle$。如果理想向量 $y_{h'}=P_{1-\ell}\eta$ 为零，该历史下 $Q$ 的两个末次坐标都为零，而 $P$ 至少一个为正，违反相同支撑。故 $y_{h'}$ 非零并沿 $|1-\ell\rangle$，从而
+
+$$
+\langle y_{h'},x_{h'}\rangle=0.
+$$
+
+但相同支撑和非零分支权重又强制
+
+$$
+B_{h'}:=\sum_z\sqrt{P(h',z)Q(h',z)}>0.
+$$
+
+对每个历史都有 $B_h\ge|\langle y_h,x_h\rangle|$，对 $h'$ 严格。因此
+
+$$
+B(P,Q)=\sum_hB_h
+>\sum_h|\langle y_h,x_h\rangle|
+\ge\left|\sum_h\langle y_h,x_h\rangle\right|=s,
+$$
+
+与等号所需 $B(P,Q)=s$ 矛盾。没有策略达到 $U(E,f)$，而原任务的最优值确实达到，所以 $T_N<U(E,f)$。参数域已经穷尽，得到所述分类。证毕。
+
+## 追加锚（新终端）

@@ -1,0 +1,155 @@
+**定理 22.3（无记忆经典历史的等号分类）。** 令 $T_N$ 仍表示定义 18.1 的原始任务：单活动量子比特、全部共同历史依赖 $U(2)$ 控制、无可操作记忆、无输入参考，末端只保留经典历史。对完整参数域 $\beta_t\in[0,1]$，$N=1$ 时总有
+
+$$
+T_1=U(0,f)=f.
+$$
+
+对 $N\ge2$，有充要分类
+
+$$
+T_N=U(E,f)
+\quad\Longleftrightarrow\quad
+\left[
+\beta_{N-1}=0\ \text{或}\ \beta_N=0
+\ \text{或存在 }t\le N\text{ 使 }\beta_t=1
+\right].
+$$
+
+因此，若 $N\ge2$、$0<\beta_N<1$、所有 $\beta_t<1$ 且 $\beta_{N-1}>0$，则
+
+$$
+T_N<U(E,f)=T_N^{\rm mem}.
+$$
+
+这里比较的是两个控制与访问任务各自优化后的值。严格情形中一个可操作记忆比特足以取得增益；所列等号边界则无需该记忆。该分类不确定只允许惰性参考而禁止系统参考耦合的最优值。
+
+证明。第 20.2 条给出 $T_N\le U(E,f)$。$N=1$ 时，指针初态达到 $f=U(0,f)$。若 $f=0$，命题 18.3 的最终完美读取达到 $\sqrt E=U(E,0)$。若某个 $\beta_t=1$，取指针初态和恒等控制，实际与理想历史支撑不交，达到 $1=U(E,f)$。
+
+设 $N\ge2$ 且 $\beta_{N-1}=0$。对前 $N-2$ 步使用定理 22.2 证明中的加权实反馈，得到历史加活动系统态 $\rho_A,\rho_J$，满足
+
+$$
+\|a\rho_A-\rho_J\|_1
+=\sqrt{(a+1)^2-4as^2}.
+$$
+
+倒数第二步参数为零，所以 $s$ 与前 $N-2$ 步的重叠乘积相同。对每个长度 $N-2$ 的历史 $g$，将 Hermitian 块
+
+$$
+D_g=a|x_g\rangle\langle x_g|-|y_g\rangle\langle y_g|
+$$
+
+的特征基通过共同系统酉送入指针基，随后作倒数第二次完美读取。若该步后的两种经典分布为 $p_h,q_h$，逐块读取特征值给出
+
+$$
+\sum_h|ap_h-q_h|=\|a\rho_A-\rho_J\|_1.
+$$
+
+读取结果 $y$ 后，两实验中非零系统分支都沿已知指针 $|y\rangle$。按该经典结果使用 $X^y$ 把它送到 $|0\rangle$，其中 $X|0\rangle=|1\rangle$、$X|1\rangle=|0\rangle$。再执行末次仪器，末次结果零、一上的实际分布分别为 $ap_h,fp_h$，理想分布为 $q_h,0$，故
+
+$$
+\operatorname{TV}
+=\frac12\sum_h\bigl(|ap_h-q_h|+fp_h\bigr)
+=U(E,f).
+$$
+
+该方案完全不使用量子记忆，零概率历史任意指定控制。$N=2$ 时前缀为空，上述构造仍成立。
+
+剩下证明必要性。设 $N\ge2$、$0<f<1$、所有参数小于一且 $\beta_{N-1}>0$。于是 $a>0$、$s>0$，并有 $0<\beta_{N-1}<1$。若 $T_N=U(E,f)$，由定理 19.2 的纯输入归约和有限控制树紧性，存在纯初态及共同控制表真正达到此值。
+
+固定该策略，在末次控制前，对每个长度 $N-1$ 的历史 $h$ 记未归一化候选向量为 $x_h,y_h$，末次控制为 $W_h$。定义
+
+$$
+P(h,z)=|\langle z|W_hx_h\rangle|^2,
+\qquad
+Q(h,z)=|\langle z|W_hy_h\rangle|^2.
+$$
+
+实际最终分布是 $R=aP+f\tau P$，其中 $\tau$ 翻转末次结果。第 20.2 条的内积递推与三角不等式给出
+
+$$
+\sum_h\langle y_h,x_h\rangle=s,
+\qquad
+B(P,Q):=\sum_{h,z}\sqrt{P(h,z)Q(h,z)}\ge s.
+$$
+
+上界可以写为
+
+$$
+\begin{aligned}
+2\operatorname{TV}(R,Q)
+&=\|aP-Q+f\tau P\|_1\\
+&\le\|aP-Q\|_1+f\\
+&\le\sqrt{(a+1)^2-4aB(P,Q)^2}+f\\
+&\le\sqrt{(a+1)^2-4as^2}+f=2U(E,f).
+\end{aligned}
+$$
+
+达到最终界强制每一步等号。因为 $a,s>0$，最后一步等号强制 $B(P,Q)=s$。
+
+考察加权 Cauchy--Schwarz 步骤。对坐标 $i=(h,z)$，令
+
+$$
+u_i=|\sqrt{aP_i}-\sqrt{Q_i}|,
+\qquad v_i=\sqrt{aP_i}+\sqrt{Q_i}.
+$$
+
+等号要求存在 $\lambda\ge0$ 使所有坐标满足 $u_i=\lambda v_i$，其中
+
+$$
+\lambda^2
+=\frac{a+1-2\sqrt a\,B(P,Q)}
+{a+1+2\sqrt a\,B(P,Q)}<1.
+$$
+
+分母正，而 $a>0$、$B(P,Q)=s>0$。若某坐标 $P_i,Q_i$ 恰有一个为零，则 $u_i=v_i>0$，与 $\lambda<1$ 矛盾。因此 $P,Q$ 逐坐标具有相同支撑。
+
+因为 $\sum_i(aP_i-Q_i)=-f<0$，存在负坐标 $(h,z)$，使 $d_i=aP_i-Q_i<0$。第一个迹范数三角等号逐坐标要求
+
+$$
+P(h,1-z)=0.
+$$
+
+否则负数 $d_i$ 与严格正的 $fP(h,1-z)$ 相加会使三角不等式严格。由相同支撑，$Q(h,1-z)=0$；该负坐标自身则有 $P(h,z),Q(h,z)>0$。所以末次控制后的两候选向量都是同一指针 $|z\rangle$ 的非零倍数，控制前的 $x_h,y_h$ 也非零且共线。
+
+写 $h=g\ell$，其中 $\ell$ 为倒数第二次结果。令倒数第二次控制后的父候选为
+
+$$
+\xi=U_{N-1,g}x_g,
+\qquad \eta=U_{N-1,g}y_g,
+$$
+
+并记 $\alpha=\sqrt{1-\beta_{N-1}}>0$、$b=\sqrt{\beta_{N-1}}>0$。于是
+
+$$
+x_{g\ell}=(\alpha P_\ell+bP_{1-\ell})\xi,
+\qquad y_{g\ell}=P_\ell\eta.
+$$
+
+$y_{g\ell}$ 非零并沿 $|\ell\rangle$，共线性强制实际向量也沿该指针。由于 $\alpha,b>0$，这迫使 $\xi$ 非零并沿 $|\ell\rangle$。因此兄弟历史 $h'=g(1-\ell)$ 的实际向量
+
+$$
+x_{h'}=(\alpha P_{1-\ell}+bP_\ell)\xi=b\xi
+$$
+
+非零且沿 $|\ell\rangle$。如果理想向量 $y_{h'}=P_{1-\ell}\eta$ 为零，该历史下 $Q$ 的两个末次坐标都为零，而 $P$ 至少一个为正，违反相同支撑。故 $y_{h'}$ 非零并沿 $|1-\ell\rangle$，从而
+
+$$
+\langle y_{h'},x_{h'}\rangle=0.
+$$
+
+但相同支撑和非零分支权重又强制
+
+$$
+B_{h'}:=\sum_z\sqrt{P(h',z)Q(h',z)}>0.
+$$
+
+对每个历史都有 $B_h\ge|\langle y_h,x_h\rangle|$，对 $h'$ 严格。因此
+
+$$
+B(P,Q)=\sum_hB_h
+>\sum_h|\langle y_h,x_h\rangle|
+\ge\left|\sum_h\langle y_h,x_h\rangle\right|=s,
+$$
+
+与等号所需 $B(P,Q)=s$ 矛盾。没有策略达到 $U(E,f)$，而原任务的最优值确实达到，所以 $T_N<U(E,f)$。参数域已经穷尽，得到所述分类。证毕。
+
