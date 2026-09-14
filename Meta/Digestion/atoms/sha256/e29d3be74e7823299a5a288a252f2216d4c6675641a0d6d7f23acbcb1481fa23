@@ -1,0 +1,4 @@
+**定理 375.3。** 对所有 $x\in K_{\rm infdig}$，
+$$
+H_{\rm infdig}(T_{\rm infdig}x)=H_{\rm infdig}(x)+[\phi].
+$$
