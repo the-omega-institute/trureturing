@@ -16001,3 +16001,203 @@ $L$ 增大可能增加构型数，但不保证 $\mathcal V_L$ 增维；$N$ 增�
 
 ## 追加锚（新终端）
 
+## 63. 约化不可见、整体可逆与恢复误差下界
+
+第 60 节已经把记录作用量与恢复下界分开。本节进一步区分两种常被混称为“不可逆”的现象：一是只访问约化态时无法从同一个输入恢复不同的联合记录；二是包括记录自由度在内的整体演化是否真的不可逆。仓库中的可逆复制模型给出一个明确反例：前者可以成立，而后者仍然完全可逆。
+
+本节引用 `ReducedRecordAccessDefect.lean` 的 `reduced_irreversibility_is_access_defect`、`CanonicalRecordAccessRecovery.lean` 的 canonical-record 包装，以及 `FiniteRecordRecoveryError.lean` 的 `finite_record_recovery_error_lower_bound`。这些结果都是有限矩阵和有限通道命题，正文继续标记为 `repo-derived/open`。
+
+### 63.1 受控复制的联合演化
+
+令系统是一个 qubit，环境记录也是一个两态自由度。对系统矩阵 $\rho$，先把环境置于空白态，记为
+
+$$
+B(\rho).
+$$
+
+受控复制幺正 $U_{\mathrm{copy}}$ 把系统地址写入记录，得到
+
+$$
+U_{\mathrm{copy}}B(\rho)U_{\mathrm{copy}}^{\dagger}
+=
+J(\rho),
+$$
+
+其中 $J(\rho)$ 是带有 copied-address record 的联合态。`ReducedRecordAccessDefect` 明确构造了这个 permutation unitary，并证明其满足
+
+$$
+U_{\mathrm{copy}}^{\dagger}U_{\mathrm{copy}}=I.
+$$
+
+因此，联合系统的演化有显式逆
+
+$$
+U_{\mathrm{copy}}^{\dagger}J(\rho)=B(\rho).
+$$
+
+这一步只使用整体记录仍然可访问的假设；它没有说任何局部观察者都能访问环境。
+
+### 定理 63.1（约化访问缺陷）
+
+设两个系统态 $\rho,\sigma$ 满足相同的对角元
+
+$$
+\forall i,\qquad \rho_{ii}=\sigma_{ii},
+$$
+
+但存在非对角位置 $i\ne j$ 使
+
+$$
+\rho_{ij}\ne\sigma_{ij}.
+$$
+
+冻结定理 `reduced_irreversibility_is_access_defect` 给出以下同时成立的事实：
+
+$$
+\operatorname{Tr}_{E}J(\rho)
+=
+\operatorname{Tr}_{E}J(\sigma),
+$$
+
+但
+
+$$
+J(\rho)\ne J(\sigma),
+$$
+
+并且不存在只依赖约化态的函数 $F$，同时满足
+
+$$
+F(\operatorname{Tr}_{E}J(\rho))=J(\rho),
+\qquad
+F(\operatorname{Tr}_{E}J(\sigma))=J(\sigma).
+$$
+
+另一方面，访问完整记录并施加逆耦合时，分别有
+
+$$
+U_{\mathrm{copy}}^{\dagger}J(\rho)=B(\rho),
+\qquad
+U_{\mathrm{copy}}^{\dagger}J(\sigma)=B(\sigma).
+$$
+
+所以这里真正失败的是访问范围：相同的约化输入被要求映到两个不同联合输出，任何约化态函数都无法完成；整体联合演化仍保留了区分，并且有明确的逆。
+
+### 63.2 与经典记录的关系
+
+对角元相同的条件意味着，受控复制后对环境做偏迹会抹掉该模型中的非对角相干。若把环境记录也纳入整体，非对角差异并没有从联合态中消失；它只是被转移到系统—记录关联中。因而必须区分：
+
+$$
+\begin{aligned}
+&\text{局部约化不可见},\\
+&\text{联合态仍然不同},\\
+&\text{访问联合记录后可逆恢复}.
+\end{aligned}
+$$
+
+`CanonicalRecordAccessRecovery` 把同一个结论接到项目的 canonical `copiedAddressRecord`，说明这不是两个定义方向造成的记号差异。它仍然是特定 qubit 复制模型的结果，不是任意偏迹通道都可逆的断言。
+
+这个例子也修正了“去相干就是历史删除”的说法。若记录被丢弃，历史对该局部读出不可见；若记录保留并可控，历史差异仍可能恢复。是否称为“消失”，必须先指定访问的代数和允许的恢复操作。
+
+### 63.3 有限移位记录的通道系数
+
+令有限记录振幅为
+
+$$
+c:\mathbb Z\longrightarrow\mathbb C,
+$$
+
+其支撑位于有限区间并满足归一化
+
+$$
+\sum_{k\in\mathbb Z}|c(k)|^2=1.
+$$
+
+定义记录自相关
+
+$$
+\gamma(\ell)
+=
+\sum_{k\in\mathbb Z}c(k+\ell)\,\overline{c(k)}.
+$$
+
+给每个系统标签 $i$ 一个整数位置 $q(i)$，则 `FiniteShiftedRecordChannel` 产生的 Heisenberg 作用按逐项乘法写成
+
+$$
+\Lambda(A)_{ij}
+=
+\gamma\bigl(q(i)-q(j)\bigr)A_{ij}.
+$$
+
+因此，对角元保持不变，非对角元由记录自相关调节。这里的 $\gamma$ 是有限移位模型的输入，不是任意记录通道都必须具有的普适函数。
+
+`finite_record_pair_witnesses` 构造两个只在 $i,j$ 位置有相反相干符号的纯态，使其初始迹距离为
+
+$$
+D(\rho,\sigma)=1,
+$$
+
+而经过 $\Lambda$ 后的距离恰为
+
+$$
+D(\Lambda\rho,\Lambda\sigma)
+=|\gamma(q(i)-q(j))|.
+$$
+
+这个见证把 Gram 或自相关系数直接连接到一个可测的最坏方向：不是所有初态都按同一个相干速率衰减，至少有一对相位方向实现该系数。
+
+### 定理 63.2（有限记录恢复的误差下界）
+
+对任意候选量子通道 $R$ 作为恢复操作，冻结定理 `finite_record_recovery_error_lower_bound` 给出
+
+$$
+\sup_{\tau}
+D\bigl(R\Lambda(\tau),\tau\bigr)
+\ge
+\frac{1-|\gamma(q(i)-q(j))|}{2},
+$$
+
+其中 $q(i)-q(j)\ne0$，上确界遍历该有限标签空间的密度态。若记录完全区分这两个位置，使
+
+$$
+\gamma(q(i)-q(j))=0,
+$$
+
+则这个模型中的任何恢复都存在至少 $1/2$ 的最坏迹距离误差；若
+
+$$
+|\gamma(q(i)-q(j))|=1,
+$$
+
+该下界变为零，但这只表示该见证方向没有给出正的恢复障碍，不表示任意通道都可被完美恢复。
+
+这个下界和第 60 节的记录作用量承担不同工作：作用量描述相干模长的累计损失；这里的下界描述在指定有限通道族中，丢弃记录后恢复误差至少有多大。二者不能互相替代。
+
+### 63.4 接到 Zeckendorf 历史与访问预算
+
+若把合法 Zeckendorf 构型 $w$ 映到整数位置 $q(w)$，则记录自相关只看位置差
+
+$$
+q(w)-q(v),
+$$
+
+而不自动保留完整的规范化来源。两个不同历史可以有相同位置差，因而拥有相同的该通道系数；这并不说明它们在第 54 节的全部实验族上等价。要把它们合并，仍须检查所有允许读出和后续操作。
+
+恢复能力可以用三项预算描述：
+
+$$
+\begin{aligned}
+&\text{局部可访问记录的范围},\\
+&\text{记录自相关的模长 }|\gamma(\ell)|,\\
+&\text{允许恢复通道的类别}.
+\end{aligned}
+$$
+
+扩大访问范围可能把约化不可见变成联合可见；改变记录分布会改变 $\gamma$ 和第 60 节的作用量；限制恢复通道则会提高可达到的最坏误差。单独知道 Zeckendorf 标签的数量或记录次数，不能决定这三项。
+
+因此，对“多少约束足以形成稳定经典现实”的一个更精确表述是：在指定访问代数和恢复通道类下，约化不可见的历史残差是否已经低于任务误差；若未低于，则需要保留记录关联或扩大可访问端口，而不是仅仅增加数值刻度精度。
+
+本节为 `repo-derived/open` 理论追加；没有新增 Lean 声明、形式覆盖或冻结状态。
+
+## 追加锚（新终端）
+

@@ -1,0 +1,46 @@
+### 定理 63.1（约化访问缺陷）
+
+设两个系统态 $\rho,\sigma$ 满足相同的对角元
+
+$$
+\forall i,\qquad \rho_{ii}=\sigma_{ii},
+$$
+
+但存在非对角位置 $i\ne j$ 使
+
+$$
+\rho_{ij}\ne\sigma_{ij}.
+$$
+
+冻结定理 `reduced_irreversibility_is_access_defect` 给出以下同时成立的事实：
+
+$$
+\operatorname{Tr}_{E}J(\rho)
+=
+\operatorname{Tr}_{E}J(\sigma),
+$$
+
+但
+
+$$
+J(\rho)\ne J(\sigma),
+$$
+
+并且不存在只依赖约化态的函数 $F$，同时满足
+
+$$
+F(\operatorname{Tr}_{E}J(\rho))=J(\rho),
+\qquad
+F(\operatorname{Tr}_{E}J(\sigma))=J(\sigma).
+$$
+
+另一方面，访问完整记录并施加逆耦合时，分别有
+
+$$
+U_{\mathrm{copy}}^{\dagger}J(\rho)=B(\rho),
+\qquad
+U_{\mathrm{copy}}^{\dagger}J(\sigma)=B(\sigma).
+$$
+
+所以这里真正失败的是访问范围：相同的约化输入被要求映到两个不同联合输出，任何约化态函数都无法完成；整体联合演化仍保留了区分，并且有明确的逆。
+
