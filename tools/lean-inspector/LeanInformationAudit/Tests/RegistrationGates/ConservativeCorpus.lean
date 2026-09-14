@@ -7,6 +7,10 @@ import D5.S3.ConceptDynamics.InformationEscape.PointwiseEqualityRegistrations
 import D5.S3.ConceptDynamics.InformationEscape.PointwiseOrderRegistrations
 import D5.S3.ConceptDynamics.InformationEscape.TemplateShadow
 
+import D5.S3.ConceptDynamics.InformationEscape.InformationRoot
+import D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers
+import D5.S3.ConceptDynamics.InformationEscapeRealizations.UnifiedCausalRegistration
+
 open Lean
 
 -- Check published diagnostics as well as command exit status. A successful
@@ -21,7 +25,10 @@ run_cmd do
     (`D5.S3.ConceptDynamics.InformationEscape.PointwiseDisequalityRegistrations, 2),
     (`D5.S3.ConceptDynamics.InformationEscape.PointwiseEqualityRegistrations, 2),
     (`D5.S3.ConceptDynamics.InformationEscape.PointwiseOrderRegistrations, 2),
-    (`D5.S3.ConceptDynamics.InformationEscape.TemplateShadow, 10)]
+    (`D5.S3.ConceptDynamics.InformationEscape.TemplateShadow, 10),
+    (`D5.S3.ConceptDynamics.InformationEscape.InformationRoot, 11),
+    (`D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers, 7),
+    (`D5.S3.ConceptDynamics.InformationEscapeRealizations.UnifiedCausalRegistration, 2)]
   for (moduleName, expected) in modules do
     let some index := env.getModuleIdx? moduleName
       | throwError "[FAIL] DevConservation: missing {moduleName}"
