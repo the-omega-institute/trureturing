@@ -36,6 +36,10 @@ $$\forall n \in \mathbb{N},\; 1 \le n \Rightarrow \left(isMersenneProduct\left(n
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Mersenne/KrizekSigmaTauRationalPowerMersenne.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a046528-sigma-tau-rational-power-mersenne-characterization` (proved) by `D5/S3/Arith/Mersenne/KrizekSigmaTauRationalPowerMersenne.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a046528-sigma-tau-rational-power-mersenne-characterization","declaration_gid":"D5/S3/Arith/Mersenne/KrizekSigmaTauRationalPowerMersenne.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*

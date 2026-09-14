@@ -48,7 +48,11 @@ internal sealed class KrizekSigmaTauRationalPowerMersenneDocument
                     + "Sivaramakrishnan-Shallit prerequisite then identifies n as a product "
                     + "of distinct Mersenne primes. Conversely, multiplicativity gives the "
                     + "required exponents. Only this equivalence is proved.",
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "oeis-a046528-sigma-tau-rational-power-mersenne-characterization"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(
         string name,
