@@ -27,10 +27,7 @@ internal sealed class GuardedPrimeProductDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(
                     "D5/S3/Factorization/Automata/GuardedPrimeProduct.arithmetic_dfao_minimality"),
                 H("Correctness and the exact total-state minimum"),
-                StatementSource.FromAuthor(Disp(Seq(
-                    F.Id("minimumTotalStates"), Open, F.Id("N"), Close,
-                    Sp, Eq, Sp, F.Id("card"), Open, F.Id("divisors"),
-                    Open, F.Id("N"), Close, Close, Sp, Plus, Sp, D(1)))),
+                StatementSource.FromAuthor(ArithmeticMinimalityFormula()),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
@@ -59,4 +56,42 @@ internal sealed class GuardedPrimeProductDocument : IScribeDocumentDefinition
             DocumentEdge.Dependency.Create(
                 GidRef.Create("D5/S0/Automata/DFAOStateLowerBound")),
         ]));
+
+    private static Formula Call(string name, params Formula[] arguments)
+    {
+        var items = new List<Formula> { Operatorname, Grp(F.Id(name)), Open };
+        for (var index = 0; index < arguments.Length; index++)
+        {
+            if (index > 0) items.AddRange([Comma, Sp]);
+            items.Add(arguments[index]);
+        }
+        items.Add(Close);
+        return Seq([.. items]);
+    }
+
+    private static Formula Alphabet() => Call("Alphabet", F.Id("N"));
+
+    private static Formula Words() => Call("List", Alphabet());
+
+    private static Formula Correct(Formula machine) => Seq(
+        Open, Forall, Sp, F.Id("w"), Colon, Sp, Words(), Comma, Sp,
+        Call("evalOutput", machine, F.Id("w")), Sp, Eq, Sp,
+        Call("target", F.Id("N"), F.Id("w")), Close);
+
+    private static Formula DivisorStateCount() => Seq(
+        Call("card", Call("divisors", F.Id("N"))), Sp, Plus, Sp, D(1));
+
+    private static Formula ArithmeticMinimalityFormula() => Disp(Seq(
+        Forall, Sp, F.Id("N"), Sp, InMacro, Sp, Mathbb, Grp(F.Id("N")), Comma, Sp,
+        Forall, Sp, F.Id("hN"), Colon, Sp, F.Id("N"), Sp, Neq, Sp, D(0), Comma, Sp,
+        Forall, Sp, F.Id("p"), Colon, Sp, Alphabet(), Comma, Sp,
+        Correct(Call("machine", F.Id("hN"))), Sp, Land, Sp,
+        Call("card", Call("Option", Call("Live", F.Id("N")))), Sp, Eq, Sp,
+        DivisorStateCount(), Sp, Land, Sp,
+        Open, Forall, Sp, F.Id("S"), Colon, Sp, F.Id("Type"), Comma, Sp,
+        Call("Fintype", F.Id("S")), Sp, Rightarrow, Sp,
+        Forall, Sp, F.Id("M"), Colon, Sp,
+        Call("DFAO", Alphabet(), F.Id("Bool"), F.Id("S")), Comma, Sp,
+        Correct(F.Id("M")), Sp, Rightarrow, Sp,
+        DivisorStateCount(), Sp, Leq, Sp, Call("card", F.Id("S")), Close));
 }
