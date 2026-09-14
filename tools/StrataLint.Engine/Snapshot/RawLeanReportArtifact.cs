@@ -15,12 +15,12 @@ internal static class RawLeanReportArtifact
     internal static readonly AsyncLocal<Action?> Reading = new();
 
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
-    internal static LeanAxiomReport ReadFile(string path, RepositorySnapshot snapshot)
+    internal static LeanAxiomReport ReadFile(string path, RepositorySnapshot snapshot, bool validateMaterials = false)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(path);
         var fullPath = Path.GetFullPath(path);
         var bytes = File.ReadAllBytes(fullPath);
-        return Read(bytes, snapshot, MaterialsPath(fullPath));
+        return Read(bytes, snapshot, MaterialsPath(fullPath), validateMaterials);
     }
 
     internal static LeanAxiomReport Read(ReadOnlySpan<byte> bytes, RepositorySnapshot snapshot)
@@ -29,7 +29,8 @@ internal static class RawLeanReportArtifact
     private static LeanAxiomReport Read(
         ReadOnlySpan<byte> bytes,
         RepositorySnapshot snapshot,
-        string? materialPath)
+        string? materialPath,
+        bool validateMaterials = false)
     {
         ArgumentNullException.ThrowIfNull(snapshot);
         Reading.Value?.Invoke();
@@ -125,6 +126,7 @@ internal static class RawLeanReportArtifact
                 "Raw Lean report is missing modules: " + string.Join(", ", missing));
         }
 
+        if (validateMaterials) materialArchive!.ValidateAll();
         return LeanAxiomReport.Create(reports);
     }
 
@@ -469,11 +471,20 @@ internal static class RawLeanReportArtifact
             return material.GetOrAdd(
                 address,
                 value => new Lazy<string>(
-                    () => ReadCore(value),
+                    () => ReadCore(value, materialize: true)!,
                     LazyThreadSafetyMode.ExecutionAndPublication)).Value;
         }
 
-        private string ReadCore(string address)
+        internal void ValidateAll()
+        {
+            _ = addressesValidated.Value;
+            // Validate every entry without retaining expanded strings in the
+            // demand-read cache for the lifetime of the report.
+            foreach (var name in contents.Value.Entries.Keys)
+                _ = ReadCore("sha256:" + name[EntryPrefix.Length..], materialize: false);
+        }
+
+        private string? ReadCore(string address, bool materialize)
         {
             var archive = contents.Value;
             if (!archive.Entries.TryGetValue(EntryName(address), out var entry))
@@ -492,10 +503,11 @@ internal static class RawLeanReportArtifact
                 stream.ReadExactly(bytes);
             }
 
-            string value;
+            string? value = null;
             try
             {
-                value = StrictUtf8.GetString(bytes);
+                if (materialize) value = StrictUtf8.GetString(bytes);
+                else _ = StrictUtf8.GetCharCount(bytes);
             }
             catch (DecoderFallbackException exception)
             {

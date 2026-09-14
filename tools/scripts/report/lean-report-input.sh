@@ -8,6 +8,7 @@ if [[ -n "$COMMAND" ]]; then shift; fi
 REPOSITORY=""
 REPORT=""
 while [[ $# -gt 0 ]]; do
+  [[ $# -ge 2 ]] || { echo "lean-report-input: missing argument value" >&2; exit 2; }
   case "$1" in
     --repository) REPOSITORY="$2"; shift 2 ;;
     --report) REPORT="$2"; shift 2 ;;
@@ -16,8 +17,9 @@ while [[ $# -gt 0 ]]; do
 done
 
 [[ "$COMMAND" == "address" || "$COMMAND" == "verify" || "$COMMAND" == "modules" \
-  || "$COMMAND" == "compatibility-token" || "$COMMAND" == "scribe-input-patterns" ]] \
-  || { echo "usage: lean-report-input.sh address|verify|modules|compatibility-token|scribe-input-patterns --repository DIR [--report FILE]" >&2; exit 2; }
+  || "$COMMAND" == "compatibility-token" \
+  || "$COMMAND" == "producer-paths" || "$COMMAND" == "scribe-producer-paths" ]] \
+  || { echo "usage: lean-report-input.sh address|verify|modules|compatibility-token|producer-paths|scribe-producer-paths --repository DIR [--report FILE]" >&2; exit 2; }
 [[ -n "$REPOSITORY" && "$REPOSITORY" == /* && -d "$REPOSITORY" ]] \
   || { echo "lean-report-input: --repository requires an absolute directory" >&2; exit 2; }
 REPOSITORY="$(cd "$REPOSITORY" && pwd -P)"
@@ -27,6 +29,16 @@ trap cleanup EXIT
 
 SCRIPT_DIRECTORY="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 source "$SCRIPT_DIRECTORY/../worktree/lean-cache-input.sh"
+
+# Producer enumeration is an explicit registry interface for engineering/cache
+# consumers. Its source bytes do not define report compatibility.
+if [[ "$COMMAND" == "producer-paths" || "$COMMAND" == "scribe-producer-paths" ]]; then
+  scope=lean-report
+  [[ "$COMMAND" != "scribe-producer-paths" ]] || scope=scribe-content
+  python3 "$SCRIPT_DIRECTORY/producer_paths.py" "$REPOSITORY" "$scope" "$TMP_ROOT/producer-semantics" \
+    || { echo "lean-report-input: registered producer inputs are unavailable" >&2; exit 2; }
+  exit 0
+fi
 
 # One canonical, dependency-free reader for the registered manifest. The closed
 # TOML subset is documented in the report contract; no SDK/MSBuild evaluation or
@@ -54,7 +66,7 @@ try:
         if match is None:
             raise ValueError("invalid assignment")
         key = match[1]
-        if key not in {"compatibility_version", "source_patterns", "scribe_check_inputs"} or key in values:
+        if key not in {"compatibility_version", "source_patterns"} or key in values:
             raise ValueError(f"unknown or duplicate key: {key}")
         value_text = text[match.end():]
         value, end = decoder.raw_decode(value_text)
@@ -86,11 +98,6 @@ try:
     (scratch / "compatibility").write_text(token + "\n", encoding="ascii")
     if command == "compatibility-token":
         print(token)
-    elif command == "scribe-input-patterns":
-        try:
-            print("\n".join(patterns("scribe_check_inputs")))
-        except ValueError as error:
-            raise ValueError(f"scribe-content-checks: {error}") from error
     else:
         paths = []
         for pattern in sources:
@@ -118,7 +125,7 @@ fi
 
 # Digest-shaped producer/resident fields are the same version-derived token.
 # Report sources exclude Inspector; the Lean config preimage is shared with the
-# compiled-cache helper without changing its source scope or configuration.
+# compiled-cache helper: metadata-only changes do not invalidate module results.
 repository_address() {
   local preimage="$TMP_ROOT/repository-input.preimage"
   local sources_manifest="$TMP_ROOT/report-sources.manifest"
@@ -132,7 +139,8 @@ repository_address() {
   done < "$TMP_ROOT/modules"
   materialize_manifest "$sources_manifest" || return 2
   sources_sha256="$(hash_file "$sources_manifest")" || return 2
-  config_sha256="$(lean_config_sha256)" || return 2
+  lean_semantic_config > "$TMP_ROOT/config.manifest" || return 2
+  config_sha256="$(hash_file "$TMP_ROOT/config.manifest")" || return 2
 
   {
     printf '%s\n' "schema=stratalint-lean-report-repository-input-v1"
@@ -168,7 +176,7 @@ case "$COMMAND" in
   modules)
     cat "$TMP_ROOT/modules"
     ;;
-  compatibility-token|scribe-input-patterns)
+  compatibility-token)
     # Already emitted by the canonical manifest reader above.
     ;;
   verify)

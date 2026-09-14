@@ -4,9 +4,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
-// WorktreeCacheStrategyTests.cs 的共享夹具:RecordingWorktreeProcessRunner(12 个测试文件消费)及其同族。
-// 它们此前住在一个以某测试类命名的文件里,消费面却比那个测试类大 ——
-// 按文件名找不到。纯搬迁:类型、可见性、成员逐字不变;本文件不含测试方法。
+// Worktree 缓存测试共用的进程与目录复制夹具。
 
 internal sealed class RecordingDirectoryCloner : IDirectoryCloner
 {
@@ -125,8 +123,7 @@ internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
     internal bool BusyOnlyAfterCopy { get; init; }
 
     /// <summary>
-    /// 归档取回的桩。默认**不拦**（返回 null），此时 ensure 会真去跑脚本；测试要观察
-    /// 归档路径就设它。记录调用次数是为了钉住那条机器门：内容层不冷时**一次都不该调**。
+    /// 归档 fetch 的桩输出,调用次数由 ArchiveInvocations 记录。
     /// </summary>
     internal string? ArchiveReceipt { get; init; }
 
@@ -174,8 +171,7 @@ internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
             && arguments[1] == "fetch")
         {
             ArchiveInvocations++;
-            // 成功的桩必须**真的落下产物**：只回一句 unpacked 而不造 olean，会让
-            // 「成功后重探热度」这段代码删掉也不红 —— 那样它就只是生产代码，不是契约。
+            // 成功场景通过回调写入产物,供后续热度探测读取。
             AfterArchiveFetch?.Invoke(workingDirectory);
             return ArchiveReceipt is null
                 ? Failure("archive fetcher is not stubbed for this test")

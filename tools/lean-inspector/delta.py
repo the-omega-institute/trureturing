@@ -20,6 +20,8 @@ import sys
 import tempfile
 import zipfile
 
+from materials import canonical_json, require_keys, require_sorted_strings, statement_address
+
 
 HEX64 = re.compile(r"^[0-9a-f]{64}$")
 SHA_FIELD = re.compile(r"^sha256:[0-9a-f]{64}$")
@@ -50,30 +52,43 @@ def materials_path(report: pathlib.Path) -> pathlib.Path:
     return pathlib.Path(str(report) + ".materials.zip")
 
 
-def parse_json_modules(report: pathlib.Path) -> tuple[dict[str, dict], str]:
-    data = report.read_bytes()
-    digest = hashlib.sha256(data).hexdigest()
+def validate_report_sha(report: pathlib.Path, digest: str) -> None:
     lines = sidecar_path(report).read_text(encoding="ascii").splitlines()
     if len(lines) != 1:
         raise ValueError("report SHA sidecar is not one line")
     fields = lines[0].split(" ")
-    if len(fields) != 3 or fields[1] != "" or fields[2] != "raw-lean-report.json":
+    if len(fields) != 3 or fields[1] != "" or fields[2] != report.name:
         raise ValueError("report SHA sidecar is malformed")
     if fields[0] != digest or not HEX64.fullmatch(fields[0]):
         raise ValueError("report SHA sidecar does not match report")
+
+
+def parse_json_modules(report: pathlib.Path) -> tuple[dict[str, dict], str]:
+    data = report.read_bytes()
+    digest = hashlib.sha256(data).hexdigest()
+    validate_report_sha(report, digest)
     root = json.loads(data.decode("utf-8"))
+    require_keys(root, {"modules", "schema"}, "cached report")
     if root.get("schema") != "stratalint-raw-lean-report-v2" or not isinstance(root.get("modules"), list):
         raise ValueError("report schema is not canonical")
     modules: dict[str, dict] = {}
     for item in root["modules"]:
         if not isinstance(item, dict):
             raise ValueError("module record is not an object")
+        module_keys = {"module", "source_path", "source_sha256", "imports", "declarations"}
+        if "information_registration_errors" in item:
+            module_keys.add("information_registration_errors")
+            require_sorted_strings(item["information_registration_errors"], "cached information registration errors")
+        if "utility_refutation" in item:
+            module_keys.add("utility_refutation")
+        require_keys(item, module_keys, "cached module")
         name = item.get("module")
         source_path = item.get("source_path")
         source_sha = item.get("source_sha256")
         imports = item.get("imports")
         declarations = item.get("declarations")
         if (not isinstance(name, str) or not name or name in modules
+                or modules and name <= next(reversed(modules))
                 or not isinstance(source_path, str) or not source_path
                 or not isinstance(source_sha, str) or not SHA_FIELD.fullmatch(source_sha)
                 or not isinstance(imports, list)
@@ -90,16 +105,57 @@ def parse_json_modules(report: pathlib.Path) -> tuple[dict[str, dict], str]:
             "imports": imports,
             "refutation_claim_path": None,
         }
+        require_sorted_strings(imports, "cached imports")
+        previous = None
+        for declaration in declarations:
+            require_keys(declaration, {"axioms", "include_in_statement", "kind", "name", "name_key",
+                "statement_id", "type_sha256"}, "cached declaration")
+            key = declaration["name_key"]
+            if (not all(isinstance(declaration[field], str) and declaration[field]
+                        for field in ("kind", "name", "name_key"))
+                    or not isinstance(declaration["include_in_statement"], bool)
+                    or previous is not None and key <= previous):
+                raise ValueError("cached declaration binding is malformed or unordered")
+            require_sorted_strings(declaration["axioms"], "cached axioms")
+            previous = key
         refutation = item.get("utility_refutation")
         if refutation is not None:
-            if (not isinstance(refutation, dict)
-                    or not isinstance(refutation.get("claim_source_path"), str)
-                    or not refutation["claim_source_path"]
-                    or not isinstance(refutation.get("claim_source_sha256"), str)
-                    or not SHA_FIELD.fullmatch(refutation["claim_source_sha256"])):
+            require_keys(refutation, {"claim_gid", "claim_source_path", "claim_source_sha256",
+                "result_gid", "is_closed_negation"}, "cached refutation")
+            if (not all(isinstance(refutation[field], str) and refutation[field]
+                        for field in ("claim_gid", "result_gid", "claim_source_path", "claim_source_sha256"))
+                    or not SHA_FIELD.fullmatch(refutation["claim_source_sha256"])
+                    or not isinstance(refutation["is_closed_negation"], bool)):
                 raise ValueError("refutation source binding is malformed")
             modules[name]["refutation_claim_path"] = refutation["claim_source_path"]
     return modules, digest
+
+
+def validate_materials(report: pathlib.Path) -> None:
+    root = json.loads(report.read_text(encoding="utf-8"))
+    with zipfile.ZipFile(materials_path(report)) as archive:
+        names = archive.namelist()
+        if len(names) != len(set(names)):
+            raise ValueError("duplicate statement material")
+        expected = set()
+        for module in root["modules"]:
+            for declaration in module["declarations"]:
+                address = declaration["type_sha256"]
+                name = "sha256/" + address[7:]
+                material = archive.read(name)
+                if statement_address(material) != address:
+                    raise ValueError("statement material checksum mismatch")
+                identity = statement_address(canonical_json({
+                    "declaration_name_key": declaration["name_key"],
+                    "kind": declaration["kind"], "module_path": module["source_path"],
+                    "schema": "declaration-statement-v1",
+                    "statement_material": material.decode("utf-8"),
+                }))
+                if identity != declaration["statement_id"]:
+                    raise ValueError("declaration statement identity mismatch")
+                expected.add(name)
+        if set(names) != expected:
+            raise ValueError("statement material archive does not match report")
 
 
 def baseline_identity(report: pathlib.Path) -> dict:
@@ -149,18 +205,9 @@ def baseline_identity(report: pathlib.Path) -> dict:
     return value
 
 
-def valid_baseline(
-    entry: pathlib.Path,
-    current_address: str,
-    producer_sha: str,
-    resident_sha: str,
-    config_sha: str,
-) -> tuple[dict[str, dict], str] | None:
-    if not HEX64.fullmatch(entry.name) or entry.name == current_address:
-        return None
-    report = entry / "raw-lean-report.json"
-    logs = entry / "raw-lean-report.json.logs"
-    if logs.exists() or logs.is_symlink():
+def valid_bundle(report: pathlib.Path, partition: str = "", allow_logs: bool = False) -> tuple[dict[str, dict], str] | None:
+    logs = pathlib.Path(str(report) + ".logs")
+    if not allow_logs and (logs.exists() or logs.is_symlink()):
         return None
     if not (report.is_file() and sidecar_path(report).is_file()
             and materials_path(report).is_file()
@@ -169,16 +216,19 @@ def valid_baseline(
         return None
     try:
         value = baseline_identity(report)
-        if (value["input_address"] != "sha256:" + entry.name
-                or value["producer_sha256"] != producer_sha
-                or value["repository_inspector_sha256"] != resident_sha
-                or value["lean_config_sha256"] != config_sha):
-            return None
         modules, report_sha = parse_json_modules(report)
         if value["report_sha256"] != report_sha:
             return None
+        if partition:
+            seed = json.loads(pathlib.Path(str(report) + ".seed.json").read_text(encoding="utf-8"))
+            if (seed.get("schema") != "lean-report-seed-v1" or seed.get("partition") != partition
+                    or seed.get("report_sha256") != report_sha
+                    or seed.get("materials_sha256") != hashlib.sha256(materials_path(report).read_bytes()).hexdigest()
+                    or not HEX64.fullmatch(seed.get("runtime_sha256", ""))):
+                return None
+        validate_materials(report)
         return modules, report_sha
-    except (OSError, UnicodeError, ValueError, KeyError):
+    except (OSError, UnicodeError, ValueError, TypeError, AttributeError, KeyError, zipfile.BadZipFile):
         return None
 
 
@@ -187,26 +237,23 @@ def plan(args: argparse.Namespace) -> int:
     cache_root = pathlib.Path(args.cache_root)
     current = current_modules(pathlib.Path(args.module_table), repository)
     entries: list[tuple[int, pathlib.Path]] = []
-    for entry in cache_root.iterdir():
+    for entry in cache_root.iterdir() if cache_root.is_dir() else []:
         if not entry.is_dir():
             continue
-        if not HEX64.fullmatch(entry.name) or entry.name == args.current_address:
+        if not HEX64.fullmatch(entry.name):
             continue
         try:
             stamp = entry.stat().st_mtime_ns
         except OSError:
             continue
         entries.append((stamp, entry))
-    # Provenance is tiny compared with a report (the production report is
-    # hundreds of MB), so reject identity-mismatched entries before opening the
-    # report.  Newest valid candidate wins; older entries are only inspected when
-    # a newer entry is incomplete or malformed.
+    # The caller supplies only this mathlib/platform partition. Semantic changes
+    # invalidate module results below, never the compatibility of the seed.
     entries.sort(reverse=True, key=lambda value: value[0])
     best: tuple[int, pathlib.Path, dict[str, dict], str] | None = None
     for stamp, entry in entries:
-        candidate = valid_baseline(
-            entry, args.current_address, args.producer_sha, args.resident_sha,
-            args.config_sha)
+        # Bundle validation checks the small identity sidecars before the report.
+        candidate = valid_bundle(entry / "raw-lean-report.json", args.partition)
         if candidate is not None:
             best = (stamp, entry, candidate[0], candidate[1])
             break
@@ -215,6 +262,16 @@ def plan(args: argparse.Namespace) -> int:
         result: dict = {"status": "fallback"}
     else:
         _, entry, old, report_sha = best
+        provenance = json.loads((entry / "raw-lean-report.json.provenance.json").read_text(encoding="utf-8"))
+        semantic_changed = (provenance["producer_sha256"] != args.producer_sha
+                            or provenance["repository_inspector_sha256"] != args.resident_sha
+                            or provenance["lean_config_sha256"] != args.config_sha)
+        if args.runtime_sha:
+            try:
+                seed = json.loads((entry / "raw-lean-report.json.seed.json").read_text(encoding="utf-8"))
+                semantic_changed |= seed.get("runtime_sha256") != args.runtime_sha
+            except (OSError, ValueError):
+                semantic_changed = True
         changed = sorted(
             name for name in set(old) & set(current)
             if old[name]["path"] != current[name]["path"]
@@ -251,6 +308,8 @@ def plan(args: argparse.Namespace) -> int:
             if importer in current
         }
         roots = set(changed) | set(added) | removed_importers
+        if semantic_changed:
+            roots = set(current)
         recheck = set(roots)
         pending = list(roots)
         while pending:
@@ -261,7 +320,8 @@ def plan(args: argparse.Namespace) -> int:
                     pending.append(dependent)
 
         result = {
-            "status": "reuse" if not changed and not added and not removed else "delta",
+            "status": "reuse" if not changed and not added and not removed and not semantic_changed else "delta",
+            "semantic_changed": semantic_changed,
             "baseline": str(entry / "raw-lean-report.json"),
             "baseline_report_sha256": report_sha,
             "changed": changed,
@@ -366,6 +426,8 @@ def merge(args: argparse.Namespace) -> int:
                             continue
                     if material is None:
                         raise ValueError(f"statement material is missing for {address}")
+                    if statement_address(material) != address:
+                        raise ValueError(f"statement material checksum mismatch for {address}")
                     info = zipfile.ZipInfo(name, ARCHIVE_TIMESTAMP)
                     info.compress_type = zipfile.ZIP_DEFLATED
                     info.create_system = 3
@@ -399,6 +461,8 @@ def main() -> int:
     planner.add_argument("config_sha")
     planner.add_argument("module_table")
     planner.add_argument("plan")
+    planner.add_argument("--runtime-sha", default="")
+    planner.add_argument("--partition", default="")
     planner.set_defaults(function=plan)
     merger = subparsers.add_parser("merge")
     merger.add_argument("plan")

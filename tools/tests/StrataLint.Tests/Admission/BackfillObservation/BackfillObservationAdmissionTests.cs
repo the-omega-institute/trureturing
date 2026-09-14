@@ -68,12 +68,7 @@ public sealed partial class ProductionEnvironmentTests
             RuleFixture.FixtureDigestionSourcePath,
             GenreRegistryCheck.Collected([]));
         DirectoryLedgerTestSupport.ReplaceWithProjection(fixture.Baseline, emptyBaseline);
-        // Drop the atom's CAS object from the baseline by prefix rather than by
-        // reconstructing its content address. Capture(...).RelativePath would embed a
-        // runtime-computed hash in the path, which ScribeTestMapDeriver cannot resolve
-        // statically; that makes the method a conservative unknown and SL-003 blocks any
-        // such method introduced after the protected baseline. Matching on the store root keeps
-        // every path this test touches a string literal.
+        // Remove the baseline CAS entries before exercising candidate ingestion.
         foreach (var casPath in fixture.Baseline.Keys
             .Where(static path => path.StartsWith("Meta/Digestion/atoms/sha256/", StringComparison.Ordinal))
             .ToArray())
@@ -96,11 +91,6 @@ public sealed partial class ProductionEnvironmentTests
                 Snapshot(fixture.Baseline)),
             new MutatingLeanReportSource(
                 LeanAxiomReport.Create(fixture.Reports),
-                // Array.Copy rather than changedSourceBytes.CopyTo(...): ScribeTestMapDeriver
-                // matches file-reading APIs by method name alone, so an array CopyTo is taken
-                // for a file copy, its first argument fails the literal-path test, and the
-                // whole method becomes a conservative unknown that SL-003 blocks. Same bytes,
-                // same semantics, no false positive.
                 () => Array.Copy(changedSourceBytes, mutableSourceBytes, changedSourceBytes.Length)),
             new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
         var console = new BufferedConsole();
