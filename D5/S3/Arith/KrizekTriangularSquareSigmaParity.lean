@@ -275,4 +275,71 @@ private theorem consecutive_coprime_twice_square_split (n b : ℕ) (hn : 0 < n)
         nlinarith [hprod]
       exact (no_nonzero_square_eq_twice_square b (c * d) hb0 heq).elim
 
+private theorem twice_square_triangular_exclusion (n f : ℕ) (hn : 0 < n)
+    (hnShape : IsSquare n ∨ ∃ d : ℕ, n = 2 * d ^ 2)
+    (htri : n * (n + 1) / 2 = 2 * f ^ 2) : False := by
+  have htwoDvd : 2 ∣ n * (n + 1) :=
+    even_iff_two_dvd.mp (Nat.even_mul_succ_self n)
+  have hprod : n * (n + 1) = 4 * f ^ 2 := by
+    calc
+      n * (n + 1) = n * (n + 1) / 2 * 2 := (Nat.div_mul_cancel htwoDvd).symm
+      _ = (2 * f ^ 2) * 2 := by rw [htri]
+      _ = 4 * f ^ 2 := by ring
+  rcases hnShape with hnSquare | hnTwice
+  · obtain ⟨c, hc⟩ := hnSquare
+    have hc0 : c ≠ 0 := by
+      intro h
+      subst c
+      simp at hc
+      omega
+    have heq : c ^ 2 * (c ^ 2 + 1) = (2 * f) ^ 2 := by
+      rw [hc] at hprod
+      nlinarith [hprod]
+    have hcSqDvd : c ^ 2 ∣ (2 * f) ^ 2 :=
+      ⟨c ^ 2 + 1, heq.symm⟩
+    have hcDvd : c ∣ 2 * f :=
+      (Nat.pow_dvd_pow_iff (by decide : 2 ≠ 0)).mp hcSqDvd
+    obtain ⟨g, hg⟩ := hcDvd
+    have hcancel : c ^ 2 * (c ^ 2 + 1) = c ^ 2 * g ^ 2 := by
+      calc
+        c ^ 2 * (c ^ 2 + 1) = (2 * f) ^ 2 := heq
+        _ = (c * g) ^ 2 := by rw [hg]
+        _ = c ^ 2 * g ^ 2 := by ring
+    have hnextSquare : c ^ 2 + 1 = g ^ 2 :=
+      Nat.mul_left_cancel (pow_pos (by omega : 0 < c) 2) hcancel
+    have hcLtG : c < g := by
+      rw [← Nat.mul_self_lt_mul_self_iff]
+      simpa only [pow_two] using (show c ^ 2 < g ^ 2 by omega)
+    have hnextLe : (c + 1) * (c + 1) ≤ g * g :=
+      Nat.mul_self_le_mul_self (by omega)
+    nlinarith [hnextLe]
+  · obtain ⟨d, hd⟩ := hnTwice
+    have hd0 : d ≠ 0 := by
+      intro h
+      subst d
+      simp at hd
+      omega
+    have heq : d ^ 2 * (2 * d ^ 2 + 1) = 2 * f ^ 2 := by
+      rw [hd] at hprod
+      nlinarith [hprod]
+    have hf0 : f ≠ 0 := by
+      intro h
+      subst f
+      simp at heq
+      exact hd0 (by nlinarith [heq])
+    have hoddNotDiv : ¬2 ∣ 2 * d ^ 2 + 1 := by omega
+    have hoddFactor : (2 * d ^ 2 + 1).factorization 2 = 0 :=
+      Nat.factorization_eq_zero_of_not_dvd hoddNotDiv
+    have hfactor := congrArg (fun z : ℕ ↦ z.factorization 2) heq
+    rw [Nat.factorization_mul (pow_ne_zero _ hd0) (by omega),
+      Nat.factorization_pow,
+      Nat.factorization_mul (by decide) (pow_ne_zero _ hf0),
+      Nat.factorization_pow] at hfactor
+    change 2 * d.factorization 2 + (2 * d ^ 2 + 1).factorization 2 =
+      Nat.factorization 2 2 + 2 * f.factorization 2 at hfactor
+    have htwoFactor : Nat.factorization 2 2 = 1 :=
+      Nat.Prime.factorization_self Nat.prime_two
+    rw [hoddFactor, htwoFactor] at hfactor
+    omega
+
 end D5.S3.Arith.KrizekTriangularSquareSigmaParity
