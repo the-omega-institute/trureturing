@@ -38,7 +38,11 @@ internal sealed class DetlefsRoughResidueCharacterizationRefutationDocument
                     + "modulo 2310, outside the four proposed classes. The five residues "
                     + "1, 421, 631, 841, and 1681 attained by 13-rough values are disclosed "
                     + "here without asserting the corrected characterization or its converse.",
-                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "oeis-a008365-detlefs-rough-residue-characterization-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(
         string id,

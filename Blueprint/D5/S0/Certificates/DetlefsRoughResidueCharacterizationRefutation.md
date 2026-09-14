@@ -46,6 +46,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/DetlefsRoughResidueCharacterizationRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a008365-detlefs-rough-residue-characterization-refutation` (refuted) by `D5/S0/Certificates/DetlefsRoughResidueCharacterizationRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a008365-detlefs-rough-residue-characterization-refutation","declaration_gid":"D5/S0/Certificates/DetlefsRoughResidueCharacterizationRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* N. J. A. Sloane; Gary Detlefs (2011). *OEIS A008365, 13-rough numbers: positive integers that have no prime factors less than 13*. URL: <https://oeis.org/A008365>.
