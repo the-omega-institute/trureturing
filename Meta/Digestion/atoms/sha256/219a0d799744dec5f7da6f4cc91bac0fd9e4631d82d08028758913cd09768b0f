@@ -1,0 +1,39 @@
+### 65.2 对 qubit 与受约束构型的含义
+
+当 $d=2$ 时，
+
+$$
+d^2-1=3.
+$$
+
+因此，任何 informationally complete 的多上下文 qubit 读出至少需要三项独立的 traceless 方向。把它们写成三个 Pauli 方向只是一个常见实现；下界本身不依赖具体坐标选择。
+
+对 Zeckendorf 合法窗口
+
+$$
+\mathcal W_L
+=\{w\in\{0,1\}^L:w_rw_{r+1}=0\},
+$$
+
+可以把构型集合分成上下文
+
+$$
+\mathcal W_L=\bigsqcup_{x\in\mathcal X}\mathcal W_{L,x},
+$$
+
+并为每个上下文指定一组 effect。合法构型数量
+
+$$
+|\mathcal W_L|=F_{L+2}
+$$
+
+本身不是 informational completeness 的预算；它只告诉我们有多少离散基底候选。要判断这些候选是否真的提供独立读出，必须计算对应 effect 的 span，并检查是否覆盖任务所需的 traceless 方向。
+
+因此，增加 Zeckendorf 窗口长度可能增加标签，却不一定满足
+
+$$
+\sum_xm_x\ge d^2-1.
+$$
+
+反过来，较短窗口若配备线性独立的多个上下文，也可能达到指定有限维载体的完备性。编码容量和观测容量是两笔不同的账。
+

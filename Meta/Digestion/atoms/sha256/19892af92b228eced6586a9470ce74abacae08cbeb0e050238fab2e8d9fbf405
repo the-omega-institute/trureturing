@@ -1,0 +1,18 @@
+### 65.3 与观察精炼和顺序深度的关系
+
+第 61 节中的容量守恒对单个 effect span 给出
+
+$$
+C+Q=d^2-1.
+$$
+
+本节给出的多上下文下界则说明，若目标是把残差降到零，跨上下文累积的独立方向至少要填满同一个 $d^2-1$ 维 traceless 载体。第 62 节的顺序词可以提供这些方向，但每一个顺序词是否增加新维数仍要由 effect span 检验；重复一个已在 span 内的词不会增加预算。
+
+若只要求某个目标 observable $A$ 的预测，而不是完整 informational completeness，则不必支付整个 $d^2-1$ 的预算。只要
+
+$$
+A\in\mathcal V_{\mathrm{task}},
+$$
+
+目标就由任务可见空间决定；这正是第 59 节 `TargetPredictionSufficiency` 的边界。因而本下界是完整 tomography 的必要条件，不是所有预测任务的普遍最小成本。
+

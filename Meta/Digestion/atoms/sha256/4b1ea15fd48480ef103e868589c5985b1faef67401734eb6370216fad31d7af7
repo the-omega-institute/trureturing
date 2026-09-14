@@ -1,0 +1,35 @@
+### 65.1 上下文、归一化与独立 outcome
+
+令系统 Hilbert 空间维数为
+
+$$
+d\in\mathbb N,
+$$
+
+每个上下文属于有限集合
+
+$$
+X\in\mathcal X.
+$$
+
+上下文 $x$ 有 $m_x+1$ 个 outcome effect，记为
+
+$$
+E_{x,0},E_{x,1},\ldots,E_{x,m_x}.
+$$
+
+归一化条件是 centered effect 的和为零：
+
+$$
+\sum_{j=0}^{m_x}E_{x,j}=0.
+$$
+
+因此最后一个 outcome 由前 $m_x$ 个决定：
+
+$$
+E_{x,m_x}
+=-\sum_{j=0}^{m_x-1}E_{x,j}.
+$$
+
+真正计入预算的是每个上下文的独立数量 $m_x$，而不是把归一化约束后的全部 outcome 数量重复相加。
+

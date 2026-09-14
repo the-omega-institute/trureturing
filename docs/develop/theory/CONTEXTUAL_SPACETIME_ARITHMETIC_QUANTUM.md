@@ -16410,3 +16410,159 @@ $$
 
 ## 追加锚（新终端）
 
+## 65. 多上下文读出的独立预算下界
+
+第 61 节给出了单一观察族的可见容量守恒，第 62 节给出了顺序观测的有限稳定深度。本节问一个不同的问题：如果把读出分成多个上下文，每个上下文内部有一组归一化 outcome，那么为了让联合读出区分所有密度态，最少需要保留多少独立 outcome？
+
+冻结模块 `D5/S3/Quantum/PredictionDepth/MultiContextBudgetLowerBound.lean` 中的 `multi_context_budget_lower_bound` 给出一个一般下界。它只使用有限维 traceless-Hermitian 载体和 informational completeness 假设；本节的 Zeckendorf 解释是接口层推导，不是该 Lean 定理的额外前提。
+
+### 65.1 上下文、归一化与独立 outcome
+
+令系统 Hilbert 空间维数为
+
+$$
+d\in\mathbb N,
+$$
+
+每个上下文属于有限集合
+
+$$
+X\in\mathcal X.
+$$
+
+上下文 $x$ 有 $m_x+1$ 个 outcome effect，记为
+
+$$
+E_{x,0},E_{x,1},\ldots,E_{x,m_x}.
+$$
+
+归一化条件是 centered effect 的和为零：
+
+$$
+\sum_{j=0}^{m_x}E_{x,j}=0.
+$$
+
+因此最后一个 outcome 由前 $m_x$ 个决定：
+
+$$
+E_{x,m_x}
+=-\sum_{j=0}^{m_x-1}E_{x,j}.
+$$
+
+真正计入预算的是每个上下文的独立数量 $m_x$，而不是把归一化约束后的全部 outcome 数量重复相加。
+
+### 定理 65.1（多上下文 informational completeness 下界）
+
+若联合读出对密度态是单射，即
+
+$$
+\rho\ne\sigma
+\Longrightarrow
+\exists x,j,
+\quad
+\operatorname{Tr}(\rho E_{x,j})
+e
+\operatorname{Tr}(\sigma E_{x,j}),
+$$
+
+则冻结定理 `multi_context_budget_lower_bound` 证明
+
+$$
+\boxed{
+ d^2-1
+\le
+\sum_{x\in\mathcal X}m_x.
+}
+$$
+
+证明的线性核心是：所有上下文 outcome 的 span 必须覆盖完整的 traceless-Hermitian 载体，其实维数为
+
+$$
+\dim_{\mathbb R}\operatorname{Herm}_0(d)=d^2-1.
+$$
+
+每个上下文删去一个由归一化关系决定的 outcome 后，剩余独立 outcome 总数为
+
+$$
+\sum_xm_x.
+$$
+
+一个有限 spanning family 的基数不可能小于载体维数，于是得到下界。该结论不要求上下文彼此正交，也不要求它们来自同一个物理装置；只要求联合读出确实 informationally complete。
+
+### 65.2 对 qubit 与受约束构型的含义
+
+当 $d=2$ 时，
+
+$$
+d^2-1=3.
+$$
+
+因此，任何 informationally complete 的多上下文 qubit 读出至少需要三项独立的 traceless 方向。把它们写成三个 Pauli 方向只是一个常见实现；下界本身不依赖具体坐标选择。
+
+对 Zeckendorf 合法窗口
+
+$$
+\mathcal W_L
+=\{w\in\{0,1\}^L:w_rw_{r+1}=0\},
+$$
+
+可以把构型集合分成上下文
+
+$$
+\mathcal W_L=\bigsqcup_{x\in\mathcal X}\mathcal W_{L,x},
+$$
+
+并为每个上下文指定一组 effect。合法构型数量
+
+$$
+|\mathcal W_L|=F_{L+2}
+$$
+
+本身不是 informational completeness 的预算；它只告诉我们有多少离散基底候选。要判断这些候选是否真的提供独立读出，必须计算对应 effect 的 span，并检查是否覆盖任务所需的 traceless 方向。
+
+因此，增加 Zeckendorf 窗口长度可能增加标签，却不一定满足
+
+$$
+\sum_xm_x\ge d^2-1.
+$$
+
+反过来，较短窗口若配备线性独立的多个上下文，也可能达到指定有限维载体的完备性。编码容量和观测容量是两笔不同的账。
+
+### 65.3 与观察精炼和顺序深度的关系
+
+第 61 节中的容量守恒对单个 effect span 给出
+
+$$
+C+Q=d^2-1.
+$$
+
+本节给出的多上下文下界则说明，若目标是把残差降到零，跨上下文累积的独立方向至少要填满同一个 $d^2-1$ 维 traceless 载体。第 62 节的顺序词可以提供这些方向，但每一个顺序词是否增加新维数仍要由 effect span 检验；重复一个已在 span 内的词不会增加预算。
+
+若只要求某个目标 observable $A$ 的预测，而不是完整 informational completeness，则不必支付整个 $d^2-1$ 的预算。只要
+
+$$
+A\in\mathcal V_{\mathrm{task}},
+$$
+
+目标就由任务可见空间决定；这正是第 59 节 `TargetPredictionSufficiency` 的边界。因而本下界是完整 tomography 的必要条件，不是所有预测任务的普遍最小成本。
+
+### 65.4 上下文预算与历史保留
+
+把“历史保留多少”改写成上下文预算时，需要区分三层：
+
+$$
+\begin{aligned}
+&\text{离散层：保留哪些 Zeckendorf 合法构型；}\\
+&\text{上下文层：允许哪些读出方式和操作顺序；}\\
+&\text{线性层：这些读出在 traceless 载体中提供多少独立方向。}
+\end{aligned}
+$$
+
+若联合读出不是 informationally complete，剩余方向仍可能在第 57 节的未来动力学或第 63 节的完整记录访问中重新出现；不能仅因当前上下文预算不足就宣称这些方向不存在。若联合读出达到完整性，则在该有限维、指定 effect 模型内，当前密度态被唯一确定，但这仍不等于所有环境历史或所有不相容未来实验都已被编码。
+
+所以一个可检验的预算流程是：先列出上下文及其 outcome 归一化关系，再计算独立 outcome 总数和 effect span，最后根据任务是完整 tomography 还是目标预测选择下界。Zeckendorf 只提供合法构型组织，不替代这三步线性核验。
+
+本节为 `repo-derived/open` 理论追加；没有新增 Lean 声明、形式覆盖或冻结状态。
+
+## 追加锚（新终端）
+
