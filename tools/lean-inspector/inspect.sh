@@ -183,7 +183,7 @@ ensure_lake_build() {
     if [[ "${#build_targets[@]}" -gt 0 && "${#build_targets[@]}" -lt "${module_count}" ]]; then
       lake_build_args+=("${build_targets[@]}")
     fi
-    run_phase build "$CACHE_RUN" "$LAKE" "${lake_build_args[@]}"
+    run_phase build "$CACHE_RUN" "$LAKE" "${lake_build_args[@]}" || return $?
     lake_build_done=1
   fi
 }
@@ -220,23 +220,23 @@ invoke_inspector() {
       && ! grep -Fqx -- "$module" "$selection_file"; then
       continue
     fi
-    append_module "$module" "$path"
-    build_targets+=("$module")
+    append_module "$module" "$path" || return $?
+    build_targets+=("+$module")
   done < "$MODULE_TABLE"
   [[ "${#inspector_arguments[@]}" -gt 0 ]] || return 2
   run_phase utility-input-build dotnet build \
-    "$INSPECTOR_DIR/../StrataLint.Cli/StrataLint.Cli.csproj" --configuration Release --nologo --verbosity quiet
+    "$INSPECTOR_DIR/../StrataLint.Cli/StrataLint.Cli.csproj" --configuration Release --nologo --verbosity quiet || return $?
   run_phase utility-input dotnet run \
     --project "$INSPECTOR_DIR/../StrataLint.Cli/StrataLint.Cli.csproj" \
-    --configuration Release --no-build --no-restore --no-launch-profile -- lean-utility-input
-  ensure_lake_build
+    --configuration Release --no-build --no-restore --no-launch-profile -- lean-utility-input || return $?
+  ensure_lake_build || return $?
   run_phase inspect \
     "$CACHE_RUN" "$LAKE" env lean --run "$INSPECTOR" \
     --output "$SPOOL_REPORT" --material-spool "$MATERIAL_SPOOL" \
     --utility-input "$LOG_DIR/utility-input.stdout.log" \
-    "${inspector_arguments[@]}"
+    "${inspector_arguments[@]}" || return $?
   run_phase compact python3 "$compactor" compact \
-    "$SPOOL_REPORT" "$MATERIAL_SPOOL" "$output"
+    "$SPOOL_REPORT" "$MATERIAL_SPOOL" "$output" || return $?
   rm -rf -- "$SPOOL_REPORT" "$MATERIAL_SPOOL"
   SPOOL_REPORT=""
   MATERIAL_SPOOL=""
