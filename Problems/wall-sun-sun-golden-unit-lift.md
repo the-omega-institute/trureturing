@@ -550,3 +550,633 @@ odd-inert-base power layer. Its prime-divisor exponents refer to the
 actual quotient. The exact-rank transfer for prime bases and the full
 mixed-index classification IP8-IP11 are ordinary proofs in this
 appendix; they are not silently asserted as kernel-certified results.
+
+
+### IP.7 A first ramified digit beyond the quadratic character
+
+Keep the original Fibonacci sequence and the fixed discriminant-five field.
+For a positive integer x coprime to five define
+
+$$
+\lambda_5(x)=\frac{x^4-1}{5}\pmod5\in\mathbb F_5.
+$$
+
+This is the Fermat quotient at the FIXED prime five, with varying integer
+base x. It must not be confused with the WSS quotient
+$q_p=F_{p-(5/p)}/p\pmod p$ at the varying prime p.
+
+**Lemma RP1.** The map depends only on x modulo 25 and satisfies
+
+$$
+\lambda_5(xy)=\lambda_5(x)+\lambda_5(y),\quad
+\lambda_5(x^h)=h\lambda_5(x),\quad
+\lambda_5(2)=3,\quad \lambda_5(1+5u)=4u\pmod5.
+$$
+
+It extends to ratios of integers coprime to five by subtraction. Its
+kernel in $(\mathbb Z/25\mathbb Z)^\times$ is $\{1,7,18,24\}$.
+The pair $(x\bmod5,\lambda_5(x))$ determines x modulo 25 uniquely.
+
+**Proof.** Fermat's theorem makes the integer quotient well-defined.
+Replacing x by x+25t changes x^4 by a multiple of 25. Expanding
+$(1+5A)(1+5B)$ proves additivity. The kernel follows by checking the
+four roots of $X^4=1$ modulo 25: each nonzero residue modulo five has a
+unique lift, since its derivative $4X^3$ is a unit. More explicitly,
+$\lambda_5(x+5t)-\lambda_5(x)=4x^3t\pmod5$, a bijection as t varies.
+
+**Theorem RP2.** For every positive integer n with $5\nmid n$,
+
+$$
+\boxed{\lambda_5(F_n)=\lambda_5(n)+1-n^2\pmod5.}\tag{RP2}
+$$
+
+**Proof.** The Binet formula and binomial theorem give the integer identity
+
+$$
+2^{n-1}F_n=\sum_{j\ge0}\binom n{2j+1}5^j.
+$$
+
+The sum is finite. Modulo 25 it becomes
+
+$$
+F_n\equiv n2^{1-n}
+ \left(1+\frac56(n-1)(n-2)\right)\pmod{25}.
+$$
+
+The denominators 2, 6, and n are units at five. In particular F_n is a
+unit at five. Apply RP1 to obtain
+
+$$
+\lambda_5(F_n)=\lambda_5(n)+3(1-n)
+ +\frac23(n-1)(n-2)=\lambda_5(n)+1-n^2\pmod5.
+$$
+
+All division by five precedes reduction; no inverse of five in a residue
+ring is used. The underlying binomial identity is classical.
+
+### IP.8 The next digit in every primitive block
+
+For $n>3$ odd and $5\nmid n$, retain the actual cyclotomic block
+$\mathcal C_n$, old factor $E_n$, and primitive block $\mathcal R_n$
+from IP.3-IP.5. Put
+
+$$
+c_n=\Phi_n(1)=\prod_{d\mid n}d^{\mu(n/d)},\qquad
+J_2(n)=\sum_{d\mid n}\mu(n/d)d^2.
+$$
+
+Here $c_n$ equals the underlying prime when n is a prime power and one
+otherwise. $J_2$ is the classical second Jordan totient.
+
+**Theorem RP3.** There is an exact weighted initial-depth congruence
+
+$$
+\boxed{
+\sum_{r(p)=n}h_p\lambda_5(p)
+\equiv\lambda_5(c_n)-J_2(n)-\lambda_5(E_n)\pmod5.
+}\tag{RP3}
+$$
+
+The sum is over actual primes of exact Fibonacci rank n. Its h_p are
+the actual initial WSS depths, without assuming they equal one.
+
+**Proof.** Apply RP1 and RP2 to the Moebius product for $\mathcal C_n$.
+The terms $\lambda_5(d)$ sum to $\lambda_5(c_n)$. The constant terms
+sum to zero, because n>1, and the square terms sum to $-J_2(n)$.
+Removing the old factor subtracts $\lambda_5(E_n)$. Finally use the
+exact prime factorization $\mathcal R_n=\prod_{r(p)=n}p^{h_p}$ from IP9.
+
+One may equivalently retain the full modulus-25 cyclotomic congruence
+
+$$
+\mathcal C_n\equiv
+ c_n2^{-\varphi_{\rm E}(n)}
+ \left(1+\frac56\bigl(J_2(n)-3\varphi_{\rm E}(n)\bigr)\right)
+ \pmod{25}.                                           \tag{RP4}
+$$
+
+**Proof.** Multiply the modulo-25 expansions used in RP2 with exponents
+$\mu(n/d)\in\{-1,0,1\}$. Products of two correction terms vanish modulo
+25; a negative exponent changes the sign of its first correction. The
+linear and quadratic divisor sums are $\varphi_{\rm E}(n)$ and J_2(n).
+This gives RP4 directly.
+
+RP3 supplements the earlier quadratic-character parity by a relation
+modulo five on the depths. It does not recover the individual h_p from
+one weighted sum. Some coefficients vanish: for example
+$\lambda_5(159607993)=0$, even though this is an inert primitive prime
+at rank 91. Nonzero terms can also cancel. No WSS occurrence or absence
+is inferred merely from RP3.
+
+### IP.9 Uniform two-cycle modulo 25
+
+Let ell>1 be an odd integer with $\chi(\ell)=-1$, and retain the actual
+integer quotient
+
+$$
+B_{\ell,k}=F_{\ell^{k+1}}/F_{\ell^k}\quad(k\ge0).
+$$
+
+Primality of ell is not needed in this section. When ell is a prime at
+least seven, IP5 identifies its factors and exponents with exact ranks
+and initial depths.
+
+**Theorem RP5.** For all k>=0,
+
+$$
+\lambda_5(B_{\ell,k})
+\equiv\lambda_5(\ell)-3(-1)^k\pmod5,              \tag{RP5}
+$$
+
+and
+
+$$
+\boxed{
+B_{\ell,2j}\equiv F_\ell,\qquad
+B_{\ell,2j+1}\equiv-4F_\ell\pmod{25}.
+}\tag{RP6}
+$$
+
+The two displayed residues are distinct.
+
+**Proof.** RP2 at the two power indices and RP1 give
+
+$$
+\lambda_5(B_{\ell,k})=
+ \lambda_5(\ell)-\ell^{2k}(\ell^2-1)\pmod5.
+$$
+
+Inertness means $\ell^2=-1\pmod5$, proving RP5. IP5's residue formula
+$B_{\ell,k}=\ell(-1)^{(\ell-1)/2}\pmod5$ also holds for composite odd
+bases coprime to five, by direct division of the formula in IP2. Thus
+all B have the same nonzero residue modulo five. RP5 alternates between
+two values differing by one. Multiplication by -4=1-5 leaves the residue
+modulo five unchanged and adds $\lambda_5(-4)=1$. RP1's uniqueness of a
+modulo-25 lift from these two coordinates proves RP6, starting with
+$B_{\ell,0}=F_\ell$. Since F_ell is a unit at five, their difference
+$-5F_\ell$ is nonzero modulo 25.
+
+### IP.10 Exact distance between any two layers
+
+Define integer polynomials
+
+$$
+P_0(X)=1,\qquad P_1(X)=X-3,\qquad
+P_{a+2}(X)=(X-2)P_{a+1}(X)-P_a(X).
+$$
+
+**Lemma RP7.** For every odd positive n and every a>=0,
+
+$$
+\frac{F_{(2a+1)n}}{F_n}=P_a(5F_n^2),\qquad
+P_a(0)=(-1)^a(2a+1),
+$$
+
+$$
+24P'_a(0)=(-1)^{a+1}(2a+1)((2a+1)^2-1).         \tag{RP7}
+$$
+
+**Proof.** Put u=phi^n and v=psi^n. Since n is odd, uv=-1 and
+$(u-v)^2=5F_n^2$. The quotients
+$(u^{2a+1}-v^{2a+1})/(u-v)$ have initial values 1 and
+$u^2+uv+v^2=5F_n^2-3$; their two-step recurrence has coefficient
+$u^2+v^2=5F_n^2-2$ and constant determinant $(uv)^2=1$.
+This proves the first identity. Setting X=0 gives the second.
+Differentiating the polynomial recurrence gives
+$d_{a+2}=P_{a+1}(0)-2d_{a+1}-d_a$, with d_0=0,d_1=1.
+Induction yields $6d_a=(-1)^{a+1}a(a+1)(2a+1)$, equivalent to RP7.
+These are polynomial identities over the integers, not formal division
+by the nonunit five.
+
+**Lemma RP8.** For odd inert ell=2a+1, and distinct integers x,y divisible
+by five,
+
+$$
+v_5(P_a(x)-P_a(y))=v_5(x-y).                    \tag{RP8}
+$$
+
+**Proof.** RP7 makes $P'_a(0)$ a unit modulo five: 24, ell, and
+ell^2-1 are all units there. Polynomial subtraction factors as
+$P_a(x)-P_a(y)=(x-y)(P'_a(0)+5z)$ for some integer z, because each
+remaining divided-difference term has a factor x or y. The second
+factor is a unit at five, proving the equality.
+
+**Theorem RP9.** For every k>=0 and t>=1,
+
+$$
+\boxed{
+v_5(B_{\ell,k+t}-B_{\ell,k})
+ =1+v_5(\ell^{2t}-1).
+}\tag{RP9}
+$$
+
+Valuations of negative integers, if any, mean valuations of their
+absolute values. All differences here are nonzero.
+
+**Proof.** Set m=ell^(k+t), n=ell^k, so m>n are odd and coprime to five.
+By RP7-RP8 the left side equals $1+v_5(F_m^2-F_n^2)$.
+The classical Fibonacci identity, with n odd, gives
+$F_m^2-F_n^2=F_{m+n}F_{m-n}$. Lengyel's formula
+$v_5(F_u)=v_5(u)$, valid for every positive u, consequently gives
+
+$$
+1+v_5(m+n)+v_5(m-n)=1+v_5(m^2-n^2)
+=1+v_5(\ell^{2t}-1),
+$$
+
+because five does not divide ell. This proves RP9 with no assumption
+about the WSS depths of the primes dividing the individual blocks.
+
+### IP.11 All finite-precision periods and the full 5-adic closure
+
+Put $s_\ell=v_5(\ell^4-1)\ge1$. Then RP9 becomes
+
+$$
+v_5(B_{\ell,k+t}-B_{\ell,k})=
+\begin{cases}
+1,&t\text{ odd},\\
+1+s_\ell+v_5(t),&t\text{ even}.
+\end{cases}                                      \tag{RP10}
+$$
+
+**Proof.** For odd t, ell^(2t)=-1 modulo five. For even t=2u,
+$v_5((ell^4)^u-1)=s_ell+v_5(u)$. To prove this last elementary lifting
+formula, write ell^4=1+5^s z with five not dividing z. An exponent
+coprime to five preserves the initial valuation by the geometric sum;
+raising a number congruent to one modulo five to the fifth power raises
+its difference-from-one valuation exactly by one, by binomial
+expansion. Iterate and use v_5(2)=0.
+
+**Theorem RP11.** The least positive period of the sequence
+$k\mapsto B_{\ell,k}\pmod{5^r}$, from k=0 onward, is
+
+$$
+\boxed{
+T_\ell(1)=1,\qquad
+T_\ell(r)=2\cdot5^{\max(0,r-1-s_\ell)}\quad(r\ge2).
+}\tag{RP11}
+$$
+
+There is no smaller eventual period either.
+
+**Proof.** RP10 is independent of k. A difference t is a period if and
+only if its displayed valuation is at least r. For r>=2 it must be even,
+and then v_5(t)>=max(0,r-1-s_ell). The smallest positive such integer
+is the formula in RP11. The same necessary condition holds even when
+the congruences are only required after an arbitrary initial index.
+
+**Theorem RP12.** In $\mathbb Z_5$, the closure of the block values is
+exactly the disjoint union
+
+$$
+\boxed{
+\overline{\{B_{\ell,k}:k\ge0\}}=
+\bigl(F_\ell+5^{s_\ell+1}\mathbb Z_5\bigr)
+\ \cup\
+\bigl(B_{\ell,1}+5^{s_\ell+1}\mathbb Z_5\bigr).
+}\tag{RP12}
+$$
+
+The limiting fraction of residue classes occupied by the block values
+modulo 5^r is $2/5^{s_\ell+1}$.
+
+**Proof.** RP10 puts every even-indexed value in the first ball and
+every odd-indexed value in the second. The balls are disjoint because
+the difference between their centers has valuation one. For r>s_ell+1,
+RP10 also shows that the first $5^{r-s_ell-1}$ values in either parity
+subsequence are pairwise distinct modulo 5^r. There are exactly that
+many residue classes in the relevant ball, so all its classes are hit.
+This proves density in each ball at every precision, hence the closure
+identity. Counting both balls gives the limiting fraction. This density
+belongs to the block sequence at the fixed prime five; it is NOT the
+previous Bragman-Rowland Fibonacci density delta(p).
+
+For example $s_7=2$, because 7^4-1=2400. Hence the least block period
+at modulus 125 is still two, and the closure has density 2/125.
+However $h_7=v_7(F_8)=1$, so seven is not a WSS prime. The period plateau
+here measures the Fermat valuation of the BASE seven at the PRIME five.
+It must not be relabelled as a Fibonacci-Wieferich exception at seven.
+
+### IP.12 Mathematical boundary of the refinement
+
+RP3 does constrain the actual initial depths modulo five through a
+known weighted sum. For a fixed prime with lambda_5(p) nonzero, changing
+its depth from one to three changes its contribution by
+2 lambda_5(p). Other changes can cancel it, and lambda_5 can itself
+vanish on inert primes. The period and closure theorems describe the
+fixed-five readout completely but do not force some h_p>=2, or force
+infinitely many h_p=1. They supply additional arithmetic information
+beyond quadratic parity, without resolving the WSS zero set.
+
+No externally posed open problem is counted as newly resolved by this
+appendix. Its recurrence, binomial, Jordan-totient, and valuation inputs
+are classical; priority for this combination is unconfirmed.
+
+The valuation input v_5(F_n)=v_5(n) and the varying-prime initial-depth
+formula are in L. A. Medina and E. Rowland, *p-regularity of the p-adic
+valuation of the Fibonacci sequence*, Fibonacci Quarterly 53 (2015),
+265-271, Theorem 1.4, https://arxiv.org/abs/0910.2907 .
+For the established cyclotomic/primitive-factor framework see
+H. Hong, *On big primitive divisors of Fibonacci numbers*,
+https://arxiv.org/abs/2312.04354 . Jordan-totient and cyclotomic-derivative
+connections are already studied in P. Moree, S. Saad Eddin, A. Sedunova,
+and Y. Suzuki, *Jordan totient quotients*, https://arxiv.org/abs/1810.04742 .
+
+
+## S5040. Auxiliary depth constraints and the limits of the 5040 readout
+
+### S5040.1 Scope of the existing 5040 results
+
+The existing Robin and resource results concern specific arithmetic objectives.
+`GoldenResource5040PriceInterval.golden_resource_5040_unique_maximum_of_price_interval`
+requires a price strictly between log(12/11)/log(11) and log(31/30)/log(2).
+`GoldenCell5040Shape.modEq_2241_shape` requires BOTH 5040 dividing the index
+and the congruence 3^n=2241 modulo n. Neither hypothesis is supplied by the
+initial WSS condition. `Robin.SevenSmooth` applies to integers supported on
+2,3,5,7. A primitive Fibonacci block at an odd index greater than three has
+none of these prime factors. These statements cannot be transferred by
+identifying an arbitrary Fibonacci block with their optimized or constrained
+integer. The Library entry `wu2019abundant` also records that the maximal
+abundancy at eight prime factors counted with multiplicity is attained by
+180180, not by 5040; the two optimization problems have different objectives.
+
+There is nevertheless a direct auxiliary modulus interpretation:
+
+$$
+5040=16\cdot9\cdot5\cdot7.
+$$
+
+The factor nine supplies a first 3-adic digit absent from the earlier
+modulo-twenty-five readout. The auxiliary character below does not change
+the original golden field, Fibonacci sequence, or definition of initial depth.
+
+### S5040.2 A modulo-nine identity and its primitive-block consequence
+
+Define the integer-valued character
+
+$$
+\eta(n)=\begin{cases}
+1,&n\equiv1,11\pmod{12},\\
+-1,&n\equiv5,7\pmod{12},\\
+0,&\gcd(n,6)>1.
+\end{cases}
+$$
+
+It is multiplicative: on the units modulo twelve the classes 1,11 form the
+kernel of an index-two character, and multiplying a nonunit leaves a nonunit.
+For integers x coprime to three define
+
+$$
+\lambda_3(x)=\frac{x^2-1}{3}\pmod3.
+$$
+
+The division takes place in the integers. The residue depends only on x
+modulo nine, and expansion of (xy)^2-1 gives
+
+$$
+\lambda_3(xy)=\lambda_3(x)+\lambda_3(y),\qquad
+\lambda_3(x^h)=h\lambda_3(x).
+\tag{S1}
+$$
+
+**Theorem.** For every positive n coprime to six,
+
+$$
+\boxed{F_n^2\equiv4-3\eta(n)\pmod9,
+\qquad \lambda_3(F_n)=1-\eta(n)\pmod3.}
+\tag{S2}
+$$
+
+**Proof.** The original pair recurrence gives (F_24,F_25)=(0,1) modulo
+nine, hence F_(n+24)=F_n for every n by recurrence induction. The square
+values at the eight unit classes modulo twenty-four are one at classes
+1,11,13,23 and seven at classes 5,7,17,19. These are exactly 4-3*eta(n).
+All values are units at three. Dividing the square congruence minus one
+by three in the integers gives the second statement. Thus the finite
+calculation proves a universal congruence after the period reduction.
+
+For n>3 with gcd(n,30)=1, retain the actual primitive block
+R_n=C_n/E_n from IP9. All Fibonacci terms F_d with d dividing n are units
+at three. Let mu be the Moebius function, and set
+
+$$
+H(n)=(\mu*\eta)(n)=\sum_{d\mid n}\mu(n/d)\eta(d).
+$$
+
+**Theorem.** The actual initial depths satisfy
+
+$$
+\boxed{\sum_{r(p)=n}h_p\lambda_3(p)
+\equiv-H(n)-\lambda_3(E_n)\pmod3.}
+\tag{S3}
+$$
+
+Moreover,
+
+$$
+H(n)=\prod_{q^a\parallel n}\eta(q)^{a-1}(\eta(q)-1).
+\tag{S4}
+$$
+
+**Proof.** Apply the homomorphism S1 to the exact Moebius product for C_n.
+For a reciprocal, its value is the negative of the original value; equivalently
+one can work in the units modulo nine. Equation S2 and sum_(d|n)mu(n/d)=0
+for n>1 give lambda_3(C_n)=-H(n). Subtract the contribution of the actual
+old factor E_n, then apply R_n=product_(r(p)=n)p^h_p. Finally mu and eta
+are multiplicative, and their convolution at q^a is eta(q)^a-eta(q)^(a-1).
+
+If some prime q dividing n is 1 or 11 modulo twelve, H(n)=0. If every
+prime dividing n is 5 or 7 modulo twelve, then
+
+$$
+\lambda_3(C_n)\equiv(-1)^{\Omega(n)-\omega(n)+1}\pmod3.
+$$
+
+The sum in S3 includes split primes as well as inert primes. A nonzero
+right-hand side forces a nonzero weighted contribution, but does not
+force that contributor to be inert or to have depth greater than one.
+
+**The previously blind coefficient.** At n=91, the earlier exact block is
+R_91=741469*159607993 and E_91=13. Here H(91)=0 and
+
+$$
+\lambda_3(13)=\lambda_3(741469)=\lambda_3(159607993)=2.
+$$
+
+Consequently its actual depths obey
+
+$$
+2h_{741469}+2h_{159607993}\equiv1\pmod3.
+\tag{S5}
+$$
+
+The previous modulo-five-digit equation is
+4h_(741469)=4 modulo five, because lambda_5(159607993)=0.
+Thus the additional modulo-nine coordinate detects a change of the latter
+exponent from one to three. It does not eliminate coordinated changes of
+several exponents. The full modulo-five residue, which is more informative
+than its quadratic character, can also distinguish some such changes;
+5040 is not claimed to be a minimal necessary modulus.
+
+### S5040.3 Every Fibonacci power-layer sequence modulo 5040
+
+**Theorem.** Let ell>1 and gcd(ell,30)=1. For all k>=0 the denominator in
+B_(ell,k)=F_(ell^(k+1))/F_(ell^k) is a unit modulo 5040, and
+
+$$
+\boxed{B_{\ell,2k}\equiv F_\ell,\qquad
+B_{\ell,2k+1}\equiv F_{\ell^2}F_\ell^{-1}\pmod{5040}.}
+\tag{S6}
+$$
+
+Its least positive period, even allowing an eventual starting index, is
+
+$$
+\boxed{T_{5040}(\ell)=
+\begin{cases}1,&\ell\equiv1,23\pmod{24},\\2,&\text{otherwise}.
+\end{cases}}
+\tag{S7}
+$$
+
+**Proof.** The small-prime ranks are r(2)=3,r(3)=4,r(5)=5,r(7)=8,
+as verified by their first zeros in the original recurrence. None divides
+ell^k under the hypothesis, proving invertibility. The actual pair periods
+modulo 16,9,5,7 are respectively 24,24,20,16; the return pairs and absence
+of earlier return can be checked over these complete finite periods.
+The recurrence transports each return to every starting index. Their
+least common multiple is 240, the already-used Fibonacci period of 5040.
+
+Modulo 144, ell^2=1 modulo 24. Thus F_(ell^k) alternates between one
+and F_ell, and the consecutive quotients alternate between F_ell and its
+inverse. Modulo five, IP2 gives
+B_(ell,k)=ell*3^(ell^k*(ell-1)); its value is independent of k because
+ell^k is odd and ell-1 is even.
+
+Modulo seven, Q^8=-I and Q^16=I for the Fibonacci matrix Q. Every odd
+ell satisfies ell^2=1 or 9 modulo sixteen. Put A=F_ell modulo seven
+and d=F_(ell^2), so d=1 or -1. The four cumulative values are
+1,A,d,d*A. In the second case ell^3=ell+8 modulo sixteen; in the first
+case ell^3=ell. Hence their consecutive quotients are A,d/A,A,d/A.
+CRT gives S6 for all k.
+
+To decide when the two values coincide, the complete eight-class table
+modulo 144 is
+
+$$
+\begin{array}{c|rrrrrrrr}
+\ell\bmod24&1&5&7&11&13&17&19&23\\\hline
+F_\ell\bmod144&1&5&13&89&89&13&5&1\\
+F_\ell^2\bmod144&1&25&25&1&1&25&25&1.
+\end{array}
+$$
+
+Equality holds there exactly at classes 1,11,13,23. Modulo seven it
+holds exactly for ell=1,7,9,15 modulo sixteen, as follows from
+F_ell=1,2,5,6,6,5,2,1 at the eight odd classes 1,3,...,15, and
+F_(ell^2)=1,6,6,1,1,6,6,1 at those classes. Intersecting the two
+conditions leaves precisely ell=1 or23 modulo twenty-four. Modulo five
+already gives equality. This proves S7. A nonconstant two-cycle cannot
+acquire an eventual period one.
+
+Examples are ell=7 with residues 13,853; ell=13 with residues 233,4553;
+and ell=23 with constant residue 3457. For prime inert bases at least
+seven, all preceding primitive-support conclusions still hold: a repeated
+auxiliary residue does not imply repeated prime support or repeated
+initial depth.
+
+### S5040.4 Exact information limit of the fixed modulus
+
+**Theorem.** The unit group modulo 5040 has order 1152 and exponent twelve:
+
+$$
+(\mathbb Z/5040\mathbb Z)^\times
+\simeq C_4\times C_2\times C_6\times C_4\times C_6.
+\tag{S8}
+$$
+
+For every integer s>=1 its counterpart modulo 5040^s has exponent
+
+$$
+\boxed{L_s=12\cdot5040^{s-1}.}
+\tag{S9}
+$$
+
+**Proof.** CRT gives the factors from the moduli 16,9,5,7. Their unit
+groups have the listed cyclic factors; their orders multiply to1152
+and their exponents have least common multiple twelve. At higher powers,
+the four local exponents are 2^(4s-2), 2*3^(2s-1), 4*5^(s-1) and
+6*7^(s-1). Their least common multiple is S9. These are the standard
+prime-power unit-group formulas, specialized to the actual modulus.
+
+Consequently every unit u satisfies u^(e+12)=u^e modulo5040. Even the
+full residue, and hence every character or other postprocessing of that
+residue, cannot distinguish those two exponents. The analogous shift
+at precision5040^s is L_s. For an inert odd-rank prime the modulo-five
+order is four, so its modulo5040 order is either four or twelve.
+For p=159607993, that order is twelve, and the exact residues are
+
+$$
+p\equiv1273,\qquad p^3\equiv937,\qquad
+p^{13}\equiv1273\pmod{5040}.
+$$
+
+These are statements about what the observation can distinguish. They
+do not assert that arbitrary altered exponent vectors occur as actual
+Fibonacci factorizations. Native modulus5040 also does not include the
+previous modulus25. Combining both requires their least common multiple
+25200. In the displayed example the thirteenth power still has the same
+residue even modulo25200. Higher precision can distinguish more, but no
+fixed finite precision recovers an unbounded exponent without further
+arithmetic information.
+
+### S5040.5 Primitive-block abundancy and the Robin boundary
+
+**Theorem.** For every odd n>3 with 5 not dividing n and R_n>1,
+
+$$
+\boxed{1<\frac{\sigma(R_n)}{R_n}
+<\exp\!\left(\frac{\log\phi}{2\log(2n-1)}\right).}
+\tag{S10}
+$$
+
+Thus along such indices tending to infinity the abundancy tends to one,
+independently of whether any initial depth is greater than one.
+
+**Proof.** Every prime p with r(p)=n satisfies n dividing p-chi(p).
+Since n is odd and p-chi(p) is even, p>=2n-1. These primes also satisfy
+p=1 modulo four. Let w be the number of distinct prime factors of R_n.
+Then (2n-1)^w<=R_n<=F_n<phi^(n-1), the latter bound following by ordinary
+Fibonacci recurrence induction. Prime-power divisor sums give
+
+$$
+\begin{aligned}
+\log\frac{\sigma(R_n)}{R_n}
+&<\sum_{p\mid R_n}-\log(1-1/p)\\
+&<\sum_{p\mid R_n}\frac1{p-1}\\
+&\le\frac{w}{2n-2}
+\le\frac{\log R_n}{(2n-2)\log(2n-1)}
+<\frac{\log\phi}{2\log(2n-1)}.
+\end{aligned}
+$$
+
+The elementary inequality log(1+x)<x for x>0 gives the second step.
+No h_p=1 assumption occurs. Exponentiate to obtain S10. If R_n=1,
+its abundancy is one directly, so the convergence statement also holds
+when those indices are included.
+
+Theorem2 of Choie, Lichiardopol, Moree and Sole, *On Robin's criterion
+for the Riemann Hypothesis*, Journal de Theorie des Nombres de Bordeaux
+19 (2007),357-372, states that every odd positive integer except1,3,5,9
+satisfies Robin's strict inequality. Every nontrivial R_n here is odd
+and at least13, so it satisfies that inequality unconditionally. Thus
+applying Robin's inequality to these unmodified primitive blocks cannot
+separate their WSS and non-WSS depths. Multiplying by5040 creates a
+different integer and would require a new, proved arithmetic implication.
+
+The first mod-nine theorem is supplied as a Lean proof-script candidate
+with a matching Scribe. S3 and S6-S10 are complete ordinary deductions
+in this appendix, not newly kernel-certified declarations. None of these
+results establishes a WSS prime, excludes an unbounded WSS prime class,
+or settles a newly identified external open problem. The local-group,
+rank, valuation and divisor-sum tools are classical. Their specialization
+here has no worldwide mathematical priority claim.
