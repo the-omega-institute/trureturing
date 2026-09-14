@@ -6,7 +6,7 @@ The sequence member 9216 refutes Ianakiev's power-sum divisibility conjecture.
 
 **Definition 1.1 (Non-unitary divisors).**
 
-$$\forall n \in \mathrm{Nat},\; \operatorname{nonunitaryDivisors}\left(n\right) = \left\{d \mid d \in \operatorname{divisors}\left(n\right), 1 < \operatorname{gcd}\left(d, n / d\right)\right\}$$
+$$\forall n \in \mathrm{Nat},\; \operatorname{nonunitaryDivisors}\left(n\right) = \{d \in \operatorname{divisors}\left(n\right) \mid 1 < \operatorname{gcd}\left(d, n / d\right)\}$$
 
 *Formalization.* `D5/S0/Certificates/IanakievOddNonunitaryPowerSumRefutation.nonunitaryDivisors` (`✓ std3`).
 
@@ -30,7 +30,7 @@ For natural k and n, S(k,n) sums d^k over all non-unitary divisors d of n.
 
 **Definition 1.3 (Odd non-unitary divisor powers).**
 
-$$\forall k \in \mathrm{Nat}, n \in \mathrm{Nat},\; \operatorname{O}\left(k, n\right) = \sum_{d \in \left\{d \mid d \in \operatorname{nonunitaryDivisors}\left(n\right), d \bmod 2 = 1\right\}} (d^{k})$$
+$$\forall k \in \mathrm{Nat}, n \in \mathrm{Nat},\; \operatorname{O}\left(k, n\right) = \sum_{d \in \{d \in \operatorname{nonunitaryDivisors}\left(n\right) \mid d \bmod 2 = 1\}} (d^{k})$$
 
 *Formalization.* `D5/S0/Certificates/IanakievOddNonunitaryPowerSumRefutation.O` (`✓ std3`).
 

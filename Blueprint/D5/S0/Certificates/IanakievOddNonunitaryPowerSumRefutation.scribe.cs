@@ -80,8 +80,9 @@ internal sealed class IanakievOddNonunitaryPowerSumRefutationDocument : IScribeD
         var d = F.Id("d");
         var exactQuotient = Seq(n, Sp, Slash, Sp, d);
         var predicate = Less(D(1), Call("gcd", d, exactQuotient));
-        var filtered = new Formula.SetBuilder(
-            d, d, Seq(Call("divisors", n), Comma, Sp, predicate));
+        var filtered = Seq(
+            OpenBrace, d, Sp, InMacro, Sp, Call("divisors", n), Sp, Mid, Sp,
+            predicate, CloseBrace);
         return Universal(["n"], Equal(Call("nonunitaryDivisors", n), filtered));
     }
 
@@ -100,9 +101,9 @@ internal sealed class IanakievOddNonunitaryPowerSumRefutationDocument : IScribeD
         var k = F.Id("k");
         var n = F.Id("n");
         var d = F.Id("d");
-        var oddDivisors = new Formula.SetBuilder(
-            d, d, Seq(Call("nonunitaryDivisors", n), Comma, Sp,
-                Equal(new Formula.Modulo(d, D(2)), D(1))));
+        var oddDivisors = Seq(
+            OpenBrace, d, Sp, InMacro, Sp, Call("nonunitaryDivisors", n), Sp, Mid, Sp,
+            Equal(new Formula.Modulo(d, D(2)), D(1)), CloseBrace);
         return Universal(["k", "n"], Equal(
             Call("O", k, n), Sum(d, oddDivisors, new Formula.Power(d, k))));
     }
