@@ -152,6 +152,7 @@ public sealed class SharedBuildRuntimeTests
             ["PATH"] = Path.Combine(physicalRoot, "build/bin") + Path.PathSeparator + Environment.GetEnvironmentVariable("PATH"),
             ["CONTRACT_SCOPE"] = scope, ["CONTRACT_DOTNET"] = dotnet,
             ["DOTNET_CLI_UI_LANGUAGE"] = "en-US",
+            ["CI_CSC_LOGGER_ASSEMBLY"] = Path.Combine(root, "missing-previous-observer.dll"),
             ["CI_PLAN_PATH"] = "", ["CI_CHANGES_PATH"] = "",
             ["CI_WORKFLOW_INPUTS"] = "null", ["CI_NEEDS"] = "{}", ["CI_BUILD_ROUND"] = "", ["CANDIDATE_SHA"] = "",
             ["GITHUB_RUN_ID"] = "17", ["GITHUB_RUN_ATTEMPT"] = "2", ["GITHUB_EVENT_NAME"] = "",
@@ -162,6 +163,7 @@ public sealed class SharedBuildRuntimeTests
             ["STRATALINT_CHECK_SUCCEEDED"] = "false", ["STRATALINT_BUILD_SUCCEEDED"] = "true" };
         var cold = Stage("cold", "build");
         Assert.Equal(projects.Length + 2, Compilers(cold)); // Four utilities, Runtime, and the registered JudgeSeedTask.
+        Assert.Equal(projects.Length + 2, ObservedCompilers(cold));
         var build = CommonExecutionEvidence.ValidateBuild(root);
         Assert.Equal(new[] { "restore-StrataLint", "build" }, build.Steps.Select(step => step.Name));
         Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(root, CommonExecutionEvidence.EngineeringPath)));
@@ -180,6 +182,7 @@ public sealed class SharedBuildRuntimeTests
         Cache("restore", "--judge-key", key);
         var warm = Stage("warm", "build");
         Assert.Equal(0, Compilers(warm));
+        Assert.Equal(0, ObservedCompilers(warm));
         Assert.Contains("\"status\": \"installed\"", warm, StringComparison.Ordinal);
         var fresh = CommonExecutionEvidence.ValidateBuild(root);
         Assert.NotEqual(build.Round, fresh.Round);
@@ -297,6 +300,16 @@ public sealed class SharedBuildRuntimeTests
             Assert.True(result.Exit == 0, result.Text);
         }
         string[] Calls() => File.ReadAllLines(Path.Combine(root, "build/dotnet-calls"));
+        static int ObservedCompilers(string text)
+        {
+            var rows = text.Split('\n').Where(line => line.StartsWith("JUDGE_CSC ", StringComparison.Ordinal))
+                .Select(line => JsonDocument.Parse(line["JUDGE_CSC ".Length..]).RootElement).ToArray();
+            Assert.DoesNotContain(rows, row => row.GetProperty("status").GetString() == "unavailable");
+            var summaries = rows.Where(row => row.GetProperty("status").GetString() == "complete").ToArray();
+            Assert.Equal(2, summaries.Length); // Bootstrap and the one requested fixture build root.
+            return summaries.Sum(row => row.GetProperty("count").GetInt32());
+        }
+
         static int Compilers(string text) => Regex.Matches(text,
                 @"(?m)^Task Performance Summary:\r?\n(?<tasks>(?:[^\r\n]+\r?\n)*)")
             .SelectMany(summary => Regex.Matches(summary.Groups["tasks"].Value,

@@ -6,11 +6,86 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Text.Json;
 using System.Xml.Linq;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 
 namespace StrataLint.JudgeSeed;
+
+// Observe real MSBuild task starts, independently of the seed reconciliation
+// result. These diagnostics never participate in build or cache decisions.
+public sealed class CscExecutionLogger : ILogger
+{
+    private readonly TextWriter output;
+    private readonly object sync = new object();
+    private readonly Dictionary<string, int> projects = new Dictionary<string, int>(StringComparer.Ordinal);
+    private IEventSource events;
+    private bool finished;
+    private bool unavailable;
+    private int count;
+    public LoggerVerbosity Verbosity { get; set; } = LoggerVerbosity.Normal;
+    public string Parameters { get; set; }
+
+    public CscExecutionLogger() : this(Console.Out) { }
+    public CscExecutionLogger(TextWriter output) { this.output = output; }
+
+    public void Initialize(IEventSource eventSource) => Observe(() =>
+    {
+        events = eventSource;
+        events.TaskStarted += TaskStarted;
+        events.BuildFinished += BuildFinished;
+    });
+
+    private void TaskStarted(object sender, TaskStartedEventArgs task)
+    {
+        if (task.TaskName != "Csc") return;
+        Observe(() =>
+        {
+            if (string.IsNullOrEmpty(task.ProjectFile)) throw new InvalidDataException("Csc project unavailable");
+            projects.TryGetValue(task.ProjectFile, out var previous);
+            projects[task.ProjectFile] = previous + 1;
+            count++;
+            Write(new { status = "task-started", project = task.ProjectFile });
+        });
+    }
+
+    private void BuildFinished(object sender, BuildFinishedEventArgs build) => Observe(() =>
+    {
+        finished = true;
+        Write(new { status = unavailable ? "unavailable" : "complete", count = unavailable ? (int?)null : count,
+            build_succeeded = build.Succeeded,
+            projects = unavailable ? null : projects.OrderBy(item => item.Key, StringComparer.Ordinal)
+                .Select(item => new { project = item.Key, count = item.Value }).ToArray() });
+    });
+
+    public void Shutdown() => Observe(() =>
+    {
+        if (events != null)
+        {
+            events.TaskStarted -= TaskStarted;
+            events.BuildFinished -= BuildFinished;
+        }
+        if (!finished) WriteUnavailable();
+    });
+
+    private void Observe(Action action)
+    {
+        lock (sync)
+        {
+            try { action(); }
+            catch (Exception)
+            {
+                unavailable = true;
+                // A broken diagnostic destination must not throw into MSBuild.
+                try { WriteUnavailable(); } catch (Exception) { }
+            }
+        }
+    }
+
+    private void WriteUnavailable() => Write(new { status = "unavailable", count = (int?)null });
+    private void Write(object value) => output.WriteLine("JUDGE_CSC " + JsonSerializer.Serialize(value));
+}
 
 public sealed class JudgeSeedInputs : Microsoft.CodeAnalysis.BuildTasks.Csc
 {
