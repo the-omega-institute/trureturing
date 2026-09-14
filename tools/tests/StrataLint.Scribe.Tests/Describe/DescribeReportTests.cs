@@ -86,6 +86,64 @@ public sealed class DescribeReportTests
         });
     }
 
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void ReferencedLibraryNoteWithDoiAndUrlMustBindBothInItsLocator(bool bindsUrl)
+    {
+        WithRepository(root =>
+        {
+            TemporaryFileSystem.File.WriteAllText(
+                Path.Combine(root, "Library", "notes", "sos1957threegap.md"),
+                "---\n"
+                + "bibkey: sos1957threegap\n"
+                + "authors: Vera T. Sos\n"
+                + "year: 1957\n"
+                + "title: On the three gap theorem\n"
+                + "doi: 10.1007/BF01389053\n"
+                + "url: https://example.org/source\n"
+                + "claim: Gap lengths for irrational rotations.\n"
+                + "strata_touched:\n"
+                + "  - D5/S1/Phase/Basic\n"
+                + "license: citation-only\n"
+                + "triage: anchor\n"
+                + "---\n"
+                + "\n## Verified locator\n\nDOI 10.1007/BF01389053, Theorem 1."
+                + (bindsUrl ? " Source page https://example.org/source." : string.Empty)
+                + "\n",
+                new UTF8Encoding(false, true));
+            var literature = LibraryNoteRef.Create("D5/L/sos1957threegap");
+            var document = ScribeDocument.Create(
+                DefinitionDsl.Header("D5/S1/Phase/Basic", "Locator fixture."),
+                Heading.Create("Locator"),
+                BlockSequence.Create(
+                [
+                    CreateDescribe(
+                        "literature",
+                        "Literature",
+                        DescribeKind.Remark,
+                        AssessedProvenance.FromLiterature(literature)),
+                ]));
+            var inspection = LibraryNoteCatalog.Inspect(root);
+
+            var findings = DescribeContentGovernance.ValidateReferencedNoteLocators(
+                root,
+                [document],
+                inspection);
+
+            Assert.Empty(inspection.Findings);
+            Assert.Single(inspection.Notes);
+            if (bindsUrl)
+            {
+                Assert.Empty(findings);
+            }
+            else
+            {
+                Assert.Contains(findings, finding => finding.Code == "incomplete-library-locator");
+            }
+        });
+    }
+
     [Fact]
     public void ReportObservesTitleDerivedIdsAndCrossModuleDeclarationsWithoutBlocking()
     {

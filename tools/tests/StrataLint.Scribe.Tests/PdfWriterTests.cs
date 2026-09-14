@@ -69,9 +69,10 @@ public sealed class PdfWriterTests
             new Formula.Fraction(new Formula.Number(1), new Formula.Number(2))));
 
     [Theory]
-    [InlineData(false)]
-    [InlineData(true)]
-    public void QuestPdfWriterCompilesAcademicLiteratureCitations(bool useUrl)
+    [InlineData(true, false)]
+    [InlineData(false, true)]
+    [InlineData(true, true)]
+    public void QuestPdfWriterCompilesAcademicLiteratureCitations(bool useDoi, bool useUrl)
     {
         var reference = LibraryNoteRef.Create("D5/L/sos1957threegap");
         var document = ScribeDocument.Create(
@@ -96,7 +97,7 @@ public sealed class PdfWriterTests
                 "Vera T. Sos",
                 1957,
                 "On the three gap theorem",
-                useUrl ? null : "10.1007/BF01389053",
+                useDoi ? "10.1007/BF01389053" : null,
                 useUrl ? "https://example.org/source" : null),
         };
 
