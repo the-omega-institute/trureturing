@@ -9226,3 +9226,215 @@ $$
 本构造使用标准二元判别的正负谱测量，以及测量后制备的 CPTP 通道。关于正负谱测量的一般最优性，见 Watrous，*The Theory of Quantum Information*，[第 3 章定理 3.4 及式 (3.16)–(3.18)](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)；关于测量后制备与纠缠破坏通道的刻画，见 Horodecki、Shor、Ruskai，[*General Entanglement Breaking Channels*（2003），定理 4](https://arxiv.org/abs/quant-ph/0302031)。Bisio、D’Ariano、Perinotti、Sedlak，[*Memory cost of quantum protocols*（2012），§IV](https://arxiv.org/abs/1112.3853) 把量子辅助维数与经典记忆辅助明确区分，并把经典记忆建模为固定正交基上保持对角的寄存器。其资源任务是实现给定量子策略；这里优化的是指定二元区分值，不要求保留该策略对所有后续用途的完整量子输出。证毕。
 
 ## 追加锚（新终端）
+
+## 34. 后揭判别权重与经典存储的两问障碍
+
+**定义 34.1（固定存储之后才揭示权重的二态任务）。** 给定系统 $S=\mathbb C^2$ 上两个已知候选密度算子 $A,J$。实际输入是哪一个候选未知。存储阶段对两个候选使用同一个 CPTP 映射 $\Phi$；权重的两个可能值 $c_1,c_2>0$ 在存储前已知，但最终采用哪一个只在存储结束后揭示，并允许根据揭示的 $c$ 选择最终判别。存储映射不能依赖后来揭示的 $c$。
+
+定义存储前、后的加权判别量
+
+$$
+L(c)=\|cA-J\|_1,
+\qquad L_\Phi(c)=\|c\Phi(A)-\Phi(J)\|_1.
+$$
+
+它们对应先验为 $c/(1+c)$ 与 $1/(1+c)$ 的二态判别；存储后的最优成功概率为
+
+$$
+\frac12\left(1+\frac{L_\Phi(c)}{1+c}\right).
+$$
+
+有限经典存储指输出在同一固定正交基上对角。它等价于一个有限 POVM $\{E_k\}_{k=1}^m$，满足 $E_k\ge0$、$\sum_kE_k=I$，并具有形式
+
+$$
+\Phi(\rho)=\sum_{k=1}^m\operatorname{tr}(E_k\rho)|k\rangle\langle k|.
+$$
+
+于是
+
+$$
+L_\Phi(c)=\sum_{k=1}^m
+\left|\operatorname{tr}\bigl[E_k(cA-J)\bigr]\right|.
+$$
+
+这个任务允许最终判别使用全部经典记录和已经揭示的权重；限制只在于存储阶段使用同一个映射。它把权重的揭示时刻作为新假设，不改写前述仪器模型中参数预先给定的约定。
+
+**定理 34.2（两个不同权重排除经典无损存储）。** 在定义 34.1 中，设
+
+$$
+A=|u\rangle\langle u|,\qquad
+J=|v\rangle\langle v|,
+\qquad \|u\|=\|v\|=1,
+\qquad 0<|\langle u,v\rangle|<1.
+$$
+
+对任意两个不同的正权重 $c_1,c_2$，不存在有限经典存储 $\Phi$ 同时满足
+
+$$
+L_\Phi(c_1)=L(c_1),
+\qquad L_\Phi(c_2)=L(c_2).
+$$
+
+一个量子比特的恒等存储则对全部 $c>0$ 同时保持等号。若最终采用的权重在存储前已经告知存储方，对该权重的一个二元谱测量就能保持等号。
+
+证明。记 $D_c=cA-J$。在 $\operatorname{span}\{u,v\}$ 上直接计算行列式，得到
+
+$$
+\det D_c=-c\left(1-|\langle u,v\rangle|^2\right)<0.
+$$
+
+所以 $D_c$ 有一个严格正特征值和一个严格负特征值。记其正谱投影为 $P_c$。对于任意效应 $0\le F\le I$，
+
+$$
+\operatorname{tr}(FD_c)\le\operatorname{tr}(P_cD_c),
+$$
+
+而等号强制 $F=P_c$。事实上，在 $D_c$ 的正交特征基中，达到上界要求 $F$ 的正特征方向对角元为一、负特征方向对角元为零；$F\ge0$ 与 $I-F\ge0$ 随即使非对角元为零。这也给出
+
+$$
+\|D_c\|_1
+=2\operatorname{tr}(P_cD_c)-\operatorname{tr}D_c.
+$$
+
+反设某个有限 POVM 对权重 $c$ 保持范数。把满足 $\operatorname{tr}(E_kD_c)>0$ 的结果集合记为 $S_c$，并令 $F_c=\sum_{k\in S_c}E_k$。则
+
+$$
+\sum_k|\operatorname{tr}(E_kD_c)|
+=2\operatorname{tr}(F_cD_c)-\operatorname{tr}D_c.
+$$
+
+范数等号及最优效应的唯一性因此给出 $F_c=P_c$。迹为零的结果可以放入补集，上式仍精确成立。
+
+若同一个 POVM 对 $c_1,c_2$ 都保持范数，按一个结果是否属于 $S_{c_1}$、$S_{c_2}$ 分成四组。相应四个效应记作 $G_{++},G_{+-},G_{-+},G_{--}$，满足
+
+$$
+\begin{aligned}
+P_{c_1}&=G_{++}+G_{+-},&
+I-P_{c_1}&=G_{-+}+G_{--},\\
+P_{c_2}&=G_{++}+G_{-+},&
+I-P_{c_2}&=G_{+-}+G_{--}.
+\end{aligned}
+$$
+
+若 $0\le G\le P$ 且 $P$ 是正交投影，则 $PG=GP=G$；这是因为 $G$ 在 $\ker P$ 上的二次型为零，正性使该子空间包含于 $\ker G$。因此
+
+$$
+P_{c_1}P_{c_2}=G_{++}=P_{c_2}P_{c_1}.
+$$
+
+两个正谱投影可交换，意味着两个二阶 Hermitian 算子 $D_{c_1},D_{c_2}$ 可交换。然而
+
+$$
+[D_{c_1},D_{c_2}]=(c_2-c_1)[A,J]\ne0.
+$$
+
+最后的不等号来自 $c_1\ne c_2$ 以及两个不同且非正交的秩一投影不可交换，矛盾。故任何固定有限经典存储至少损失一个权重的判别量。
+
+恒等量子存储保留 $A,J$ 本身，当然保持全部加权差的迹范数。对于存储前已知的最终权重 $c$，使用 $P_c,I-P_c$ 作二元测量，把正、负谱分别记入两个经典结果，所得绝对迹之和恰为 $\|D_c\|_1$。这里两种权重可以各自选择不同的存储测量；定理排除的是同一个经典存储同时无损。证毕。
+
+**命题 34.3（两个后揭权重的精确经典和界）。** 在定义 34.1 中取
+
+$$
+A=|0\rangle\langle0|,
+\qquad J=|+\rangle\langle+|,
+\qquad |+\rangle=\frac{|0\rangle+|1\rangle}{\sqrt2},
+\qquad c_1=1,\quad c_2=\frac12.
+$$
+
+对任意有限经典存储，两个加权判别量的和满足精确界
+
+$$
+\sup_{\Phi\ \mathrm{classical}}
+\left[L_\Phi(1)+L_\Phi(1/2)\right]=\frac52.
+$$
+
+一个二元投影测量已经达到该上界，而量子比特恒等存储给出
+
+$$
+L(1)+L(1/2)=\sqrt2+\frac{\sqrt5}{2}>\frac52.
+$$
+
+所以两问之和的经典损失至少为
+
+$$
+\frac{2\sqrt2+\sqrt5-5}{2}>0.
+$$
+
+这里比较的是陈述中两个加权迹范数的和，不把它称为两个不同先验成功概率的未加权和。
+
+证明。用计算基写出
+
+$$
+D_1=\begin{pmatrix}1/2&-1/2\\-1/2&-1/2\end{pmatrix},
+\qquad
+D_{1/2}=\begin{pmatrix}0&-1/2\\-1/2&-1/2\end{pmatrix}.
+$$
+
+令
+
+$$
+B=D_1+D_{1/2}
+=\begin{pmatrix}1/2&-1\\-1&-1\end{pmatrix},
+\qquad
+D_1-D_{1/2}=\frac12 A,
+$$
+
+并取
+
+$$
+Y=\begin{pmatrix}11/10&1/5\\1/5&7/5\end{pmatrix}.
+$$
+
+$B$ 的特征值为 $1,-3/2$。直接相乘有 $Y^2=B^2$，且 $Y$ 正定，因此 $Y=|B|$，特别地 $Y\ge B$、$Y\ge-B$。此外
+
+$$
+Y-\frac12A
+=\begin{pmatrix}3/5&1/5\\1/5&7/5\end{pmatrix}>0,
+$$
+
+因为两个对角元为正、行列式为 $4/5>0$。由此也有 $Y\ge-\frac12A$。四种符号组合因此统一满足
+
+$$
+Y\ge sD_1+tD_{1/2},\qquad s,t\in\{-1,1\}.
+$$
+
+固定任意经典存储的 POVM $\{E_k\}$，对每个结果按两个实数 $\operatorname{tr}(E_kD_1)$、$\operatorname{tr}(E_kD_{1/2})$ 的符号选择 $s_k,t_k$；零值任取符号。正性给出
+
+$$
+\begin{aligned}
+L_\Phi(1)+L_\Phi(1/2)
+&=\sum_k\operatorname{tr}\bigl[E_k(s_kD_1+t_kD_{1/2})\bigr]\\
+&\le\sum_k\operatorname{tr}(E_kY)
+=\operatorname{tr}Y=\frac52.
+\end{aligned}
+$$
+
+这个上界与经典结果的数量无关。取二元测量
+
+$$
+E_+=\frac15\begin{pmatrix}4&-2\\-2&1\end{pmatrix},
+\qquad E_-=I-E_+.
+$$
+
+$E_+$ 是向量 $(2|0\rangle-|1\rangle)/\sqrt5$ 的秩一投影。四个输出差为
+
+$$
+\begin{aligned}
+\operatorname{tr}(E_+D_1)&=\frac7{10},&
+\operatorname{tr}(E_-D_1)&=-\frac7{10},\\
+\operatorname{tr}(E_+D_{1/2})&=\frac3{10},&
+\operatorname{tr}(E_-D_{1/2})&=-\frac45.
+\end{aligned}
+$$
+
+故该测量分别得到 $7/5$ 与 $11/10$，两者之和正是 $5/2$，证明经典界的达到性。
+
+两个加权秩一差的迹范数公式给出
+
+$$
+L(c)=\sqrt{(1+c)^2-2c}=\sqrt{1+c^2},
+$$
+
+于是量子恒等存储的两问之和为 $\sqrt2+\sqrt5/2$。为验证严格比较，$2\sqrt2>14/5$ 来自 $2>49/25$，而 $\sqrt5>11/5$ 来自 $5>121/25$；两式相加得 $2\sqrt2+\sqrt5>5$。这同时证明正损失的陈述。证毕。
+
+## 追加锚（新终端）
