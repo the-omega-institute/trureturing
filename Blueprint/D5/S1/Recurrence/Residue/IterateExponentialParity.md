@@ -56,7 +56,7 @@ $$\forall n: \mathbb{N}, (1 \le n) \implies ((\operatorname{Odd}\left(\operatorn
 
 <!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a396803-iterate-exponential-parity","declaration_gid":"D5/S1/Recurrence/Residue/IterateExponentialParity.parity_iterate_three","resolution_kind":"proved"} -->
 
-*Citation.* Paul D. Hanna (2026). *OEIS A396803, A396805 and A396806: iterated-exponential parity*. URL: <https://oeis.org/A396803>.
+*Citation.* Paul D. Hanna (2026). *OEIS A396803, A396805 and A396806: iterated-exponential congruences*. URL: <https://oeis.org/A396803>.
 
 *Commentary.*
 

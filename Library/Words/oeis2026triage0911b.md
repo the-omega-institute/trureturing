@@ -59,7 +59,7 @@ triage: anchor
 | [A396808](https://oeis.org/A396808) | 原隐式幂系数序列的两个模3支持猜想；奇偶子命题已证并排除。 | 1 | open | med | yes | dispatch |
 | [A396806](https://oeis.org/A396806) | A=Σ(n≥1)a_n x^n/n!, A=x exp(A^{∘6}), a0=0,a1=1；∀n≥1,Odd(a_n) iff Odd(n)，a_n≡n mod3及mod6。 | 1 | unknown | med | yes | note-only |
 | [A396805](https://oeis.org/A396805) | EGF A=x exp(A∘5)的奇偶和mod3剩余候选；mod5=a_n≡n已由n23反驳。 | 1 | unknown | med | yes | note-only |
-| [A396803](https://oeis.org/A396803) | A=x exp(A^{∘3})为EGF，a0=0,a1=1；∀n≥1,Odd(a_n) iff Odd(n)，且a_n≡n mod3。 | 1 | unknown | med | yes | note-only |
+| [A396803](https://oeis.org/A396803) | A=x exp(A^{∘3})为EGF，a0=0,a1=1；∀n≥1,Odd(a_n) iff Odd(n)，且a_n≡n mod3。 | 1 | proved | med | yes | reuse |
 | [A396798](https://oeis.org/A396798) | A=x+(A∘4)(A∘5)的七条迭代mod8猜想；首条周期原起点n≥1已反驳。 | 1 | unknown | med | yes | note-only |
 | [A393868](https://oeis.org/A393868) | A393866从常数项起的每个已结束极大奇偶游程长度为偶数。 | 1 | open | high | yes | note-only |
 | [A396493](https://oeis.org/A396493) | ∀n≥1，Sat4(n)=C(C(2n+2,3)+3,4)−n(16n^6+48n^5+340n^4+180n^3+2818n²−10011n+6789)/18；子句为3文字多重集，公式为4子句多重集，允许同义重复及重子句。 | out | unknown | high | yes | note-only |
@@ -151,7 +151,11 @@ triage: anchor
 
 ### A396803
 
-精确目标：A=x exp(A^{∘3})为EGF，a0=0,a1=1；∀n≥1,Odd(a_n) iff Odd(n)，且a_n≡n mod3。 精确对象是复合三次的自指EGF及全部正下标，而非Cayley树列 n^(n−1)（A000169只对应l=1），也不是普通三次幂的树方程。已完整读 `IntegralEGFComposition.eCoeff_composition`、`composition_map` 的整系数链式递推证明；`QuarticEGFFixedPoint.A_equation`、`fixed_unique` 把复合次数写死为4；`QuarticEGFModFour.mod_four` 与 `linear_fourth_mod_four` 也只处理第四次迭代和模4，不能以换数字包装出本条。 参数表A396800及l=2的A140054只提供公式、数据，没有这些同余的完整证明。直接引用A396804又明载旧mod3猜想被n=5的41005≡1（预期2）反驳，所以“各l皆 a_n≡n mod3”的推广无效。Google组合精确A号搜索只回跳转壳，Yahoo明确搜索失败；本条第一档仅按已读材料中未见证明裁决，仍有外部检索覆盖限制。整数EGF计算使用部分Bell多项式 B(m,k)=Σ(j=1..m−k+1)C(m−1,j−1)g_j B(m−j,k−1)，B(0,0)=1；复合系数为Σf_kB(m,k)。把严格前缀复合l次得g，再令 e_0=1、e_m=Σ(j=1..m)C(m−1,j−1)g_j e_(m−j)，a_n=n e_(n−1)。O(lN⁴)模运算、O(N²)存储，没有在有限特征内除n!，也不枚举排列。 可复制 `python3 probes.py A396803`：N=64、模30，奇偶和模3零差异；精确n≤16，首项1,2,21,472,17165,885696。新逃逸可具体落在F3的整EGF算子：设f_n=n，证明∀n≥1，n·E(f^{∘3})_(n−1)=n，而非错误地证明 f^{∘3}=identity；本次 `egf_escape.py` 显示后者在第8项为1已经不成立，但保留外层指数和n因子的固定列测试至64通过。需要新Bell系数消去或带特征的微分恒等式，随后才是现成前缀收缩方法；这一新命题不是现有q=4定理的bind。奇偶可以统一研究Φ_l在模2的固定列，若只复制已有四次证据则不构成成果。停止条件：发现该精确算子的文献证明、出现反例、或无法摆脱把固定列性质当假设。派发若获采纳，EGF族至多1席、以此模3消去为首个具体任务；六次参数是同设施的后续目标但尚无等价定理，五次mod3另列u且其mod5已drop，不能三个A号各占一席。全部直接A引用：A000169, A140054, A396799, A396800, A396804, A396805, A396806，每份文件全部字段、项目均已读完。当前note-only；潜在EGF组最多一席、以本条为首目标，先解决保留外层exp与n乘子的消去，再处理ℓ=6，尚未证明参数等价。数值核心在段内完整给出，所有Bell数组取B(0,0)=1、其他边界0，内层g₀=0；不得省略外层exp。其余未打开的源引文及页面均ASSUMED-UNVERIFIED。
+精确目标：A=x exp(A^{∘3})为EGF，a0=0,a1=1；∀n≥1，Odd(a_n) iff Odd(n)，且a_n≡n mod3。A^{∘3}是三次函数复合，不是普通三次幂。`IterateExponentialParity.parity_iterate_three` 证明奇偶结论；`IterateExponentialModThree.result` 证明同一 `aK 3` 数列的模3结论。既有 `A_equation`、`fixed_unique` 与 `eCoeff_encode` 给出原方程、唯一性和阶乘归一化系数身份。两条均为全部正下标的定理，不再作为待派题候选。
+
+模3证明在整EGF坐标中取线性列 l_n=n。Lucas分解给出三重复合 g 的支持条件：g_(3q)=0，g_(3q+1)=1_{q=0}；任意满足这些条件的 g，其外层指数 E 在3q与3q+1的系数均为1。外部因子n消去剩余余数类，得到原固定点算子保持 l，再经逐阶段归纳连接既有 aK。较强的 g=identity 仍为假：第8项的整数EGF系数为10161280，模3余1；这不反驳原猜想。
+
+出处及文献范围见 `Problems/oeis-a396803-iterate-exponential-mod-three.md` 与 `Library/ArithSums/hanna2026a396family.md`。所读OEIS revision16及直接引用未给模3证明，精确A号和主题搜索限于已核对范围，不主张全球优先权。该结果只处理复合次数3；A396805与A396806的剩余同余不得据此当作已证。此前“所有复合次数都有 a_n≡n mod3”的推广仍由A396804的n=5值41005排除。
 
 ### A396798
 
