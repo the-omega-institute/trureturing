@@ -8,7 +8,6 @@
 
 import D5.S1.Digit.Infinite.MultiplierObstruction
 import D5.S1.Digit.Infinite.InfiniteSuccessorFibres
-import D5.S1.Digit.Carry.SuccessorShortest
 import Mathlib.Data.Set.Card
 
 set_option autoImplicit false
