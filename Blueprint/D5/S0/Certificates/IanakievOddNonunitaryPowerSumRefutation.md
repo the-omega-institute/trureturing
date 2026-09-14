@@ -70,6 +70,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/IanakievOddNonunitaryPowerSumRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a319927-odd-nonunitary-power-sum-refutation` (refuted) by `D5/S0/Certificates/IanakievOddNonunitaryPowerSumRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a319927-odd-nonunitary-power-sum-refutation","declaration_gid":"D5/S0/Certificates/IanakievOddNonunitaryPowerSumRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Ivan N. Ianakiev (2018). *OEIS A319927, Numbers k such that the sum of the squares of the odd non-unitary divisors of k divides the sum of the squares of the non-unitary divisors of k*. URL: <https://oeis.org/A319927>.

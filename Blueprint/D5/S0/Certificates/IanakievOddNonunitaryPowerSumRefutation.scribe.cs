@@ -45,7 +45,11 @@ internal sealed class IanakievOddNonunitaryPowerSumRefutationDocument : IScribeD
                 "At 9216=2^10*3^2 the odd non-unitary divisor set is {3}; O(1,9216)=3 "
                     + "and S(1,9216)=16361, so the claimed divisibility fails. Munn's 2020 "
                     + "question about p=3 and the entry's 2022 remark are not claimed here.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "oeis-a319927-odd-nonunitary-power-sum-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(
         string id,
@@ -53,10 +57,11 @@ internal sealed class IanakievOddNonunitaryPowerSumRefutationDocument : IScribeD
         Formula formula,
         string prose,
         DescribeRole role,
-        AssessedProvenance provenance) => Describe.Lean(
+        AssessedProvenance provenance,
+        OpenProblemResolutionClaim? claim = null) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + DeclarationName(id)),
             H(title), StatementSource.FromAuthor(formula), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, claim);
 
     private static string DeclarationName(string id) => id switch
     {
