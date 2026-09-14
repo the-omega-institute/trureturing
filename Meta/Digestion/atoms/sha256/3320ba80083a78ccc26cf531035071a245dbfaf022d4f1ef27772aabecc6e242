@@ -1,0 +1,2 @@
+**证明。** 两种次序必居其一，而两下界都不小于 $2(\operatorname{high}-\operatorname{low})-|d|$。证毕。
+

@@ -1,0 +1,8 @@
+**命题。** 后缀 $w$ 从状态 $d$ 出发合法，当且仅当
+
+$$
+d\operatorname{val}(w)\mid N
+\iff
+\forall i\in I,\qquad c_i(w)\le r_i.
+$$
+
