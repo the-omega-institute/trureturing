@@ -1,0 +1,14 @@
+**命题 28.3（受限解码的三层风险分解）。** 在所有条件分布具有有限对数损失的条件下，令
+$$
+L(p)=\mathbb E[-\log_2p(Y\mid Z,Q)].
+$$
+则
+$$
+\begin{aligned}
+L(\widehat p)-H(Y\mid H,Q)
+={}&I(Y;H\mid Z,Q)\\
+&+\inf_{p\in\mathcal D_B}\mathbb E D_{\rm KL}\!\left(P_{Y\mid Z,Q}\Vert p_{\cdot\mid Z,Q}\right)\\
+&+\left[L(\widehat p)-\inf_{p\in\mathcal D_B}L(p)\right].
+\end{aligned}
+$$
+
