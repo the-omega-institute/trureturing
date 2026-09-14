@@ -1,0 +1,9 @@
+**定理 20.3（H 与 S 的精确闭包，repo-derived）。** 对 qubit 写 $\varrho=(I+xX+yY+zZ)/2$，其中 $x^2+y^2+z^2\le1$。Hadamard $H$ 与相位门 $S=\operatorname{diag}(1,i)$ 的态作用分别为
+$$
+H:(x,y,z)\mapsto(z,-y,x),\qquad
+S:(x,y,z)\mapsto(-y,x,z).
+$$
+只允许 $Z$ 测量时当前摘要为 $q_Z=z$；加 $H$ 的全部词后 $q_H=(z,x)$ 充分且必要；同时允许 $H,S$ 时 $q_{HS}=(z,x,y)$ 充分且必要，$Y$ 方向在深度二出现。
+
+证明。Pauli 矩阵相乘给 $HZH=X,HXH=Z,HYH=-Y$，$SXS^\dagger=Y,SYS^\dagger=-X,SZS^\dagger=Z$，所以得到 Bloch 更新。只有 $H$ 时 $\operatorname{span}\{I,Z,X\}$ 对共轭不变且从 $I,Z$ 一步生成 $X$。再加 $S$，$S^\dagger XS=-Y$ 在第二层出现，空间成为全部 Hermitian 二阶矩阵。必要性由定理20.2；例如先 $S$ 后 $H$ 的终端 $Z$ 期望为 $-y$。证毕。
+

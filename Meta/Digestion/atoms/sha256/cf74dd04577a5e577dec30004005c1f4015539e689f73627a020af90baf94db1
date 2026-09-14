@@ -1,0 +1,8 @@
+**定理 2.2（任务精确下降，repo-derived）。** 对 $q:\mathcal X\twoheadrightarrow Q_q$，存在唯一的实际像上读出 $\bar o$、部分更新 $\bar T_a$ 及费用 $\bar c_a$，满足
+$$
+o=\bar o q,\quad D_a=q^{-1}[\bar D_a],\quad qT_a=\bar T_a q\text{ 于 }D_a,\quad c_a=\bar c_a q\text{ 于 }D_a,
+$$
+当且仅当同一 $q$ 纤维具有相同 $o$、相同动作定义性，并在动作合法时具有相同后继 $q$ 与费用。必需查询的因子化另按定义1.2逐项要求。
+
+证明。若因子化存在，各函数在同一纤维上必常值，定义域是全逆像。反之令 $\bar D_a=q[D_a]$；定义性饱和保证其逆像恰为 $D_a$。对 $z\in\bar D_a$，关系 $\{(q\xi,qT_a\xi):\xi\in D_a\}$ 每个输入有唯一输出，故定义 $\bar T_a$。输出及费用同理。满射性给唯一性，完全不需要在 $Q\setminus Q_q$ 上延拓。主卷第9节命题11提供保域下降框架；这里将任务所要求的输出和费用并入同一个条件。证毕。
+
