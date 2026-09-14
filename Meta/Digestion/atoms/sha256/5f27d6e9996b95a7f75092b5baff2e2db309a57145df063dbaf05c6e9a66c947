@@ -1,0 +1,12 @@
+**定义 33.1（有限鲁棒信念状态）。** 令 $Σ$ 是有限的隐藏状态集，$A$ 是有限且非空的动作集，且 $|A|≥2$。给定 $M>0$ 及损失
+$$
+\ell:A\times\Sigma\to[0,M],
+$$
+令 $\mathcal{P}(\Sigma)$ 表示 $Σ$ 上的概率分布。非空集合 $\mathcal{F}\subseteq\mathcal{P}(\Sigma)$ 称为鲁棒信念集，并定义
+$$
+R_{\mathcal{F}}(a)=\sup_{μ\in\mathcal{F}}\sum_{s\in\Sigma}μ(s)\ell(a,s),
+\qquad
+V(\mathcal{F})=\min_{a\in A}R_{\mathcal{F}}(a).
+$$
+状态还必须带上第32.2节中的策略状态、公开历史摘要和剩余预算；只记录 $\mathcal{F}$ 只对读取接口确实不再访问这些变量的协议成立。
+

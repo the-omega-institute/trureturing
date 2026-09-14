@@ -1,0 +1,10 @@
+**定理 35.2（无费用观察不增加 Bayes 风险）。** 对任意实验 $e$，有
+$$
+R(\mu)-\sum_{y:p_e(y)>0}p_e(y)R(\mu_e^y)\ge0.
+$$
+若 $d_{\rm TV}$ 是总变差，则还有
+$$
+0\le R(\mu)-\sum_{y:p_e(y)>0}p_e(y)R(\mu_e^y)
+\le M\sum_{y:p_e(y)>0}p_e(y)d_{\rm TV}(\mu_e^y,\mu).
+$$
+
