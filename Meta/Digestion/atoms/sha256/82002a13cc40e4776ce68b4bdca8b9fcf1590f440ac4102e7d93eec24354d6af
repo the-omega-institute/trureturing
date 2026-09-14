@@ -1,0 +1,34 @@
+**定义 16.2（实际与理想全历史通道）。** 对 $S\otimes M$ 上的算符 $\rho$，定义实际结果仪器
+
+$$
+\mathcal I_{t,h,z}(\rho)
+=\sum_{x,y\in\mathsf X}
+\langle e_{t,h,y},M_{t,h,z}e_{t,h,x}\rangle
+(P_x\otimes I_M)\rho(P_y\otimes I_M),
+$$
+
+以及理想 Lüders 仪器
+
+$$
+\mathcal J_z(\rho)
+=(P_z\otimes I_M)\rho(P_z\otimes I_M).
+$$
+
+对应的带经典结果通道为
+
+$$
+\mathcal I_{t,h}(\rho)
+=\sum_z|z\rangle\langle z|_{Z_t}\otimes\mathcal I_{t,h,z}(\rho),
+\qquad
+\mathcal J(\rho)
+=\sum_z|z\rangle\langle z|_{Z_t}\otimes\mathcal J_z(\rho).
+$$
+
+在定义 16.1 的同一共同控制策略下，逐步使用实际仪器或理想仪器，得到从 $S\otimes M$ 到全部历史 $H_N=Z_1\cdots Z_N$、最终系统 $S$ 及可访问记忆 $M$ 的通道
+
+$$
+\mathcal H_{\rm actual},\qquad\mathcal H_{\rm ideal}.
+$$
+
+全部历史寄存器保持为经典；不按某些历史筛选运行，也不在后续步骤相干重合并已经写出的结果。本章比较这两个无条件全输出通道的半 diamond 距离，允许输入与任意有限维参考系统 $R$ 纠缠。参考系统不参与控制。通道模型、部分迹及结果仪器的矩阵元方向沿用假设 1.2、定理 8.3 与命题 8.8。有限测量仪器、Stinespring 扩张及通道距离的参考系统表述采用 John Watrous，*The Theory of Quantum Information*（2018），[第 2–3 章](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)的标准框架，其中 §2.3.2、式 (2.262) 给出带经典结果寄存器的仪器表示。
+
