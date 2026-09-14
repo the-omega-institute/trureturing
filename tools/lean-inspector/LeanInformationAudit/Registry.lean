@@ -87,9 +87,19 @@ def variationProvider : Name := providerModule.str "variation"
 private def pointwiseArenaName : Name :=
   `D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates.pointwiseEqArena
 
+/-- Build a closed telescope by abstraction alone, without a local or global environment. -/
+private def pinForall (name : Name) (bi : BinderInfo) (domain : Expr)
+    (body : Expr → Except MessageData Expr) : Except MessageData Expr := do
+  let var := mkFVar ⟨name⟩
+  return mkForall name bi domain ((← body var).abstract #[var])
+
+private def pinForallD (name : Name) (domain : Expr)
+    (body : Expr → Except MessageData Expr) : Except MessageData Expr :=
+  pinForall name .default domain body
+
 /-- Independent structural type pins. No provider lookup, type inference, or
 normalization contributes to these expected telescopes. Binder names alone may vary. -/
-private def providerType (name : Name) : MetaM Expr := do
+private def providerType (name : Name) : Except MessageData Expr := do
   let zero := Level.zero
   let one := Level.succ zero
   let sensitivity := mkConst ``FiniteSlotSensitivity [zero, zero, zero]
@@ -98,40 +108,74 @@ private def providerType (name : Name) : MetaM Expr := do
     let v := Level.param `v
     let w := Level.param `w
     let arenaType := mkConst ``PrimitiveLawArena [u, v, w]
-    withLocalDeclD `A arenaType fun a => do
+    pinForallD `A arenaType fun a => do
     let signature := mkApp (mkConst ``PrimitiveLawArena.signature [u, v, w]) a
     let object := mkApp (mkConst ``PrimitiveLawArena.toArena [u, v, w]) a
     let state := mkApp (mkConst ``Arena.State [u]) object
     let index := mkAppN (mkConst ``PrimitiveSignature.Index [u, v, w]) #[state, signature]
-    withLocalDeclD `i index fun i =>
-    withLocalDeclD `h (mkApp (mkConst ``FiniteSlotSensitivity [u, v, w]) a) fun h =>
-      mkForallFVars #[a, i, h] (mkApp (mkConst ``FiniteLawVariation [u, v, w]) a)
+    pinForallD `i index fun i =>
+    pinForallD `h (mkApp (mkConst ``FiniteSlotSensitivity [u, v, w]) a) fun h =>
+      pure (mkApp (mkConst ``FiniteLawVariation [u, v, w]) a)
   else
-    withLocalDecl `X .implicit (mkSort one) fun x =>
-    withLocalDecl `Y .implicit (mkSort one) fun y =>
-    withLocalDecl `finite .instImplicit (mkApp (mkConst ``Fintype [zero]) x) fun finite =>
-    withLocalDecl `decX .instImplicit (mkApp (mkConst ``DecidableEq [one]) x) fun decX =>
-    withLocalDecl `decY .instImplicit (mkApp (mkConst ``DecidableEq [one]) y) fun decY => do
+    pinForall `X .implicit (mkSort one) fun x =>
+    pinForall `Y .implicit (mkSort one) fun y =>
+    pinForall `finite .instImplicit (mkApp (mkConst ``Fintype [zero]) x) fun finite =>
+    pinForall `decX .instImplicit (mkApp (mkConst ``DecidableEq [one]) x) fun decX =>
+    pinForall `decY .instImplicit (mkApp (mkConst ``DecidableEq [one]) y) fun decY => do
       let object := mkAppN (mkConst ``Arena.ofFintype [zero]) #[x, finite, decX]
       let arena := mkAppN (mkConst pointwiseArenaName) #[object, y, decY]
       if name == pointwiseProvider then
-        let readoutType ← mkArrow x y
-        withLocalDeclD `f readoutType fun f =>
-        withLocalDeclD `g readoutType fun g => do
-          let statement ← withLocalDeclD `x x fun arg =>
-            mkForallFVars #[arg] (mkAppN (mkConst ``Eq [one]) #[y, mkApp f arg, mkApp g arg])
+        let readoutType := mkForall .anonymous .default x y
+        pinForallD `f readoutType fun f =>
+        pinForallD `g readoutType fun g => do
+          let statement ← pinForallD `x x fun arg =>
+            pure (mkAppN (mkConst ``Eq [one]) #[y, mkApp f arg, mkApp g arg])
           let state := mkApp (mkConst ``Arena.State [zero])
             (mkApp (mkConst ``PrimitiveLawArena.toArena [zero, zero, zero]) arena)
           let realization := mkAppN
             (mkConst `D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates.pointwiseEqRealization)
             #[state, y, decY, f, g]
-          mkForallFVars #[x, y, finite, decX, decY, f, g]
-            (mkAppN (mkConst ``LegacyPrimitiveRealization [zero, zero, zero]) #[arena, statement, realization])
+          pure (mkAppN (mkConst ``LegacyPrimitiveRealization [zero, zero, zero]) #[arena, statement, realization])
       else if name == sensitivityProvider then
-        withLocalDecl `outputs .instImplicit (mkApp (mkConst ``Nontrivial [zero]) y) fun outputs =>
-        withLocalDeclD `h (mkApp (mkConst ``Arena.Nondegenerate [zero]) object) fun h =>
-          mkForallFVars #[x, y, finite, decX, decY, outputs, h] (mkApp sensitivity arena)
-      else throwError "P1.UnsupportedDescriptor: unknown provider {name}"
+        pinForall `outputs .instImplicit (mkApp (mkConst ``Nontrivial [zero]) y) fun outputs =>
+        pinForallD `h (mkApp (mkConst ``Arena.Nondegenerate [zero]) object) fun h =>
+          pure (mkApp sensitivity arena)
+      else throw m!"P1.UnsupportedDescriptor: unknown provider {name}"
+
+/-- The complete provider decision consumes reflected metadata only. Fuel remains
+lower-only, including for callers using the pure core directly. -/
+def checkProviderPin (info : ConstantInfo) (owner : Name) (fuel : Nat := 65536) :
+    Except MessageData ConstantInfo := do
+  let name := info.name
+  unless #[pointwiseProvider, sensitivityProvider, variationProvider].contains name do
+    throw m!"P1.UnsupportedDescriptor: unknown provider {name}"
+  unless info matches .thmInfo _ do
+    throw m!"P1.UnsupportedDescriptor: provider is not a theorem {name}"
+  let levels := if name == variationProvider then [Level.param `u, .param `v, .param `w] else []
+  unless info.levelParams.length == levels.length do
+    throw m!"P1.UnsupportedDescriptor: provider type pin universes {name}: {info.levelParams}"
+  let actual := info.type.instantiateLevelParams info.levelParams levels
+  let expected ← providerType name
+  for e in #[actual, expected] do
+    if e.hasMVar || e.hasFVar || e.hasLooseBVars then
+      throw m!"P1.UnresolvedMetavariables: {e}"
+  let normalize (e : Expr) : Except MessageData Expr :=
+    match (canonical e).run (min 65536 fuel) with
+    | .ok (e, _) => .ok e
+    | .error reason => .error m!"{reason}"
+  let a ← normalize actual
+  let b ← normalize expected
+  unless a.equal b do
+    let reason := s!"UnsupportedDescriptor: provider type pin {name}"
+    throw m!"P1.{reason} path={difference a b}\nactual={actual}\nexpected={expected}"
+  unless owner == providerModule do
+    throw m!"P1.UnsupportedDescriptor: provider module {name}: {owner}"
+  return info
+
+/-- Reflect imported ownership. Current declarations have no import index;
+`checkedProvider` retains the current-module fallback in that case. -/
+def declaringModuleOf (env : Environment) (name : Name) : Option Name :=
+  (env.getModuleIdxFor? name).bind (env.header.moduleNames[·]?)
 
 /-- Both insertion and persisted validation bind Name, raw type and declaring module.
 A namespace spelling, even with an identical type, is not module ownership. -/
@@ -139,20 +183,15 @@ def checkedProvider (name : Name) : MetaM ConstantInfo := bounded do
   unless #[pointwiseProvider, sensitivityProvider, variationProvider].contains name do
     throwError "P1.UnsupportedDescriptor: unknown provider {name}"
   let env ← getEnv
-  let some info := env.find? name
-    | throwError "P1.UnsupportedDescriptor: missing provider {name}"
-  unless info matches .thmInfo _ do
-    throwError "P1.UnsupportedDescriptor: provider is not a theorem {name}"
-  let levels := if name == variationProvider then [Level.param `u, .param `v, .param `w] else []
-  unless info.levelParams.length == levels.length do
-    throwError "P1.UnsupportedDescriptor: provider type pin universes {name}: {info.levelParams}"
-  requireExact s!"UnsupportedDescriptor: provider type pin {name}"
-    (info.type.instantiateLevelParams info.levelParams levels) (← providerType name)
-  let owner := (env.getModuleIdxFor? name).bind (env.allImportedModuleNames[·]?)
-    |>.getD env.header.mainModule
-  unless owner == providerModule do
-    throwError "P1.UnsupportedDescriptor: provider module {name}: {owner}"
-  return info
+  unless env.contains name do
+    throwError "P1.UnsupportedDescriptor: missing provider {name}"
+  let info ← getConstInfo name
+  let owner := (declaringModuleOf env name).getD env.header.mainModule
+  match checkProviderPin info owner (informationReifier.fuel.get (← getOptions)) with
+  | .ok info => return info
+  | .error message =>
+    withOptions (fun o => (o.setBool `pp.universes true).setBool `pp.explicit true) do
+      throwError message
 
 /-- Only descriptor-created application sites beta-substitute a supplied lambda. -/
 private def readoutBody (f arg : Expr) : Option Expr :=
