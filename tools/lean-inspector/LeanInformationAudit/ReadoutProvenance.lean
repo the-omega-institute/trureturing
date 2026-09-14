@@ -365,6 +365,11 @@ private def inProtected (env : Environment) (n : Name) : Bool :=
     m == env.header.mainModule ||
       ((moduleScopeCache.getState env).bind (·[m]?)).getD true
 
+-- These producers expose their implementations or have kernel-controlled
+-- computation rules. Arbitrary external definitions have no such permission.
+private def carrierProducerAllowed (env : Environment) (name : Name) : Bool :=
+  inProtected env name || isCtorOrInductive env name || name == ``Nat.brecOn
+
 private def namespaceLabel (env : Environment) (n : Name) : String :=
   if inProtected env n then
     if moduleName env n == env.header.mainModule then "protected:current"
@@ -378,16 +383,46 @@ private structure Unclassified where
   namespaceName : String
   siteName : Name
 
+/-- Every successful type decision identifies a reviewed rule and its actual
+head/type. There is deliberately no default/unknown admission constructor. -/
+inductive ProvenanceAllowRule where
+  | statementInductive | statementForall | statementMembership
+  | telescope | letType | lambdaType | metadataType | sortKind | betaType
+  | scopedParameter | auditedProjection | equality | naturalOrder | listMetadata
+  | quotientType | recursorType | enumRecursorType | aliasType | recursiveFamily | nominalFields
+  | ordinaryData | typeFamily | scalarCarrier | rigidCarrier | functionCarrier
+  | containerCarrier | subtypeCarrier | nullaryCarrier | nominalCarrier
+  | proofBoundary | propositionBoundary | externalLeaf | syntaxLeaf
+  | listForall | listNegated | listPositive | carrierAlias | carrierProjection
+  deriving BEq, Repr
+
+structure ProvenanceAdmissionWitness where
+  rule : ProvenanceAllowRule
+  matchedHead : Expr
+  matchedType : Expr
+  sourceDependency : Option Name := none
+
 private inductive TypeClassification where
-  /-- The only verdicts accepted by the walker: a positive allowlist result,
-  statement mention, direct forbidden dependency, an unclassified form, or
-  incomplete work. Callers must handle every constructor. -/
-  | allowlisted
+  | allowlisted (witness : ProvenanceAdmissionWitness)
   | statementMention
   | forbidden
-  | unclassified
+  | unclassified (site : Unclassified)
   | incomplete
-  deriving Inhabited
+
+private instance : Inhabited TypeClassification := ⟨.incomplete⟩
+
+private def TypeClassification.flags : TypeClassification → Bool × Bool
+  | .allowlisted _ => (false, false)
+  | .statementMention | .forbidden => (true, false)
+  | .unclassified _ | .incomplete => (false, true)
+
+private def TypeClassification.witness? : TypeClassification → Option ProvenanceAdmissionWitness
+  | .allowlisted witness => some witness
+  | _ => none
+
+private inductive FamilyClassification where
+  | data (witness : ProvenanceAdmissionWitness)
+  | family (verdict : TypeClassification)
 
 private inductive Position where | dataPos | proofPos | typePos
   deriving BEq, Hashable, Inhabited
@@ -449,6 +484,7 @@ private structure WalkState where
   currentOrigin : Name := .anonymous
   statement : Expr
   statementForms : Array Expr := #[]
+  recognizedStatement : Option ProvenanceAdmissionWitness := none
   decision : Expr
   summaries : Std.HashMap (Name × List Level) Summary := {}
   counters : ProvenanceCounters := {}
@@ -456,7 +492,7 @@ private structure WalkState where
   walked : NameHashSet := {}
   queued : Std.HashSet (Name × List Level) := {}
   pending : List (Name × List Level) := []
-  typeChecks : Std.HashMap (Expr × Array Expr) TypeClassification := {}
+  typeChecks : Std.HashMap (Expr × Array Expr × Name) TypeClassification := {}
   forbidden : Bool := false
   unclassified : Option Unclassified := none
   incomplete : Bool := false
@@ -464,13 +500,14 @@ private structure WalkState where
   substitutionWeights : Std.HashMap (Expr × Nat) Nat := {}
   levelWeights : Std.HashMap Level Nat := {}
   applications : Std.HashMap Expr (Expr × Array Expr) := {}
-  cleanTypes : Std.HashSet Expr := {}
+  cleanTypes : Std.HashMap (Expr × Option Name) ProvenanceAdmissionWitness := {}
   assumedFamilyDepth : Option Nat := none
+  assumedProducer : Option Name := none
   inferredTypes : Std.HashMap Expr Expr := {}
-  cleanKinds : Std.HashSet Expr := {}
-  certifiedNullaryCarriers : Std.HashSet Expr := {}
-  dataFunctionTypes : Std.HashSet Expr := {}
-  cleanFamilies : Std.HashSet (Expr × Expr) := {}
+  cleanKinds : Std.HashMap (Expr × Option Name) ProvenanceAdmissionWitness := {}
+  certifiedNullaryCarriers : Std.HashMap Expr ProvenanceAdmissionWitness := {}
+  dataFunctionTypes : Std.HashMap (Expr × Option Name) ProvenanceAdmissionWitness := {}
+  cleanFamilies : Std.HashMap (Expr × Expr × Option Name) ProvenanceAdmissionWitness := {}
   binderContexts : Std.HashMap (Array Expr) (LocalContext × LocalInstances × Array Expr) := {}
   exprFuel : Nat := provenanceExpressionFuel
   constFuel : Nat := provenanceConstantFuel
@@ -594,6 +631,53 @@ private def resultHead (raw : Expr) : WalkM (Option Name) := do
 
 private def noteUnclassified (u : Unclassified) : WalkM Unit := do
   if (← get).unclassified |>.isNone then modify fun s => { s with unclassified := some u }
+
+private def witness (rule : ProvenanceAllowRule) (type : Expr) : ProvenanceAdmissionWitness :=
+  ⟨rule, type.getAppFn, type, none⟩
+
+-- Cache only the exact dependency that justified a producer-sensitive rule.
+-- Most types have no such dependency and remain reusable at every occurrence.
+-- A source name is occurrence data, never a caller-selectable classification mode.
+private def reuseWitness (cache : Std.HashMap (Expr × Option Name) ProvenanceAdmissionWitness)
+    (type : Expr) : WalkM (Option ProvenanceAdmissionWitness) := do
+  let source := (← get).currentFirst
+  let found := cache[(type, (none : Option Name))]?.orElse fun _ => cache[(type, some source)]?
+  let found := found.filter fun evidence => evidence.sourceDependency.all (· == source)
+  if let some evidence := found then
+    modify fun s => { s with assumedProducer := s.assumedProducer.or evidence.sourceDependency }
+  return found
+
+private def bindWitnessSource (verdict : TypeClassification) (source : Option Name) :
+    TypeClassification := match verdict with
+  | .allowlisted evidence => .allowlisted { evidence with sourceDependency := source }
+  | other => other
+
+private def unknownType (type : Expr) (className : String := "unclassified_argument_type") :
+    WalkM TypeClassification := do
+  let state ← get
+  let first := if state.currentFirst.isAnonymous then
+    type.getAppFn.constName?.getD state.theoremName else state.currentFirst
+  return .unclassified ⟨className, first, namespaceLabel (← getEnv) first, state.currentOrigin⟩
+
+-- A rule discharges a structural obligation only when every child was
+-- classified. Rejection flags are projections of typed child verdicts; a
+-- failed branch can never supply the witness accepted by the caller or memo.
+private def checkedType (rule : ProvenanceAllowRule) (type : Expr)
+    (mentions unknown : Bool) : WalkM TypeClassification := do
+  if mentions then return .statementMention
+  if unknown then return ← unknownType type
+  return .allowlisted (witness rule type)
+
+-- Only scan an explicit telescope. A failed reservation supplies no carrier
+-- evidence. This does not reduce or evaluate a computed carrier.
+private def carrierValuedField (type : Expr) : WalkM Bool := do
+  let mut current := type
+  repeat
+    unless ← chargeTraversal do return true
+    match current with
+    | .forallE _ _ body _ | .mdata _ body => current := body
+    | .sort _ => return true
+    | _ => return false
 
 private def queue (name : Name) (levels : List Level) : WalkM Unit := do
   let n := (name, levels)
@@ -723,7 +807,8 @@ private def scalarStatement (e : Expr) : Option (Name × Nat × Nat) := do
 private def exactScalarStatement (e : Expr) : WalkM Bool := do
   unless ← chargeTraversal do return false
   let some shape := scalarStatement e | return false
-  return (← get).statementForms.any (fun form => scalarStatement form == some shape)
+  let some recognized := (← get).recognizedStatement | return false
+  return scalarStatement recognized.matchedType == some shape
 
 -- Constructor telescopes are inferred from native occurrences. Only literal
 -- constructor-index patterns are supported; no metavariables, equation solver,
@@ -831,83 +916,124 @@ private partial def representationType (type : Expr) : WalkM (Option Expr) := do
 
 -- Decode only an explicit record projection. The receiver must expose a
 -- constructor of the projection's own structure; computed recursors stay opaque.
-private def statementStep (env : Environment) (current : Expr) : WalkM (Option Expr) := do
-  let some (head, args) ← applicationParts current | return none
+private inductive StatementStep where
+  | next (expression : Expr)
+  | recognized (evidence : ProvenanceAdmissionWitness)
+  | unclassified (site : Unclassified)
+  | incomplete
+
+private def statementUnknown (head : Expr) : WalkM StatementStep := do
+  let name := head.constName?.getD (match head with
+    | .proj structureName _ _ => structureName
+    | .fvar _ => `fvar
+    | .bvar _ => `bvar
+    | .lam .. => `lambda
+    | _ => `unrecognized_head)
+  return .unclassified ⟨"unclassified_statement_head", name,
+    namespaceLabel (← getEnv) name, (← get).theoremName⟩
+
+private def statementStep (env : Environment) (current : Expr) : WalkM StatementStep := do
+  let some (head, args) ← applicationParts current | return .incomplete
   match head with
+  | .forallE .. => return .recognized (witness .statementForall current)
   | .const n levels =>
-    let some (.defnInfo info) := env.find? n | return none
-    let value ← Core.instantiateValueLevelParams (.defnInfo info) levels
-    aliasBody value args
+    match env.find? n with
+    | some (.inductInfo _) => return .recognized (witness .statementInductive current)
+    | some (.defnInfo info) =>
+      let value ← Core.instantiateValueLevelParams (.defnInfo info) levels
+      let some body ← aliasBody value args | return .incomplete
+      return .next body
+    | _ => return ← statementUnknown head
   | .lam .. =>
-    if args.isEmpty then return none
-    aliasBody head args
-  | .mdata _ body => return some (mkAppN body args)
+    if args.isEmpty then return ← statementUnknown head
+    let some body ← aliasBody head args | return .incomplete
+    return .next body
+  | .mdata _ body => return .next (mkAppN body args)
   | .letE _ _ value body _ =>
-    let some body ← substitute body #[value] | return none
-    aliasBody body args
+    let some body ← substitute body #[value] | return .incomplete
+    let some body ← aliasBody body args | return .incomplete
+    return .next body
   | .proj structureName index receiver =>
     let (record, work) := ReadoutFamily.carrier env receiver (← get).exprFuel
-    unless ← chargeTraversal work do return none
-    let some record := record | return none
-    let some (ctor, fields) ← applicationParts record | return none
-    let some (.ctorInfo info) := ctor.constName?.bind env.find? | return none
-    unless info.induct == structureName do return none
-    let some field := fields[info.numParams + index]? | return none
-    aliasBody field args
-  | _ => return none
+    unless ← chargeTraversal work do return .incomplete
+    let some record := record | return ← statementUnknown head
+    let some (ctor, fields) ← applicationParts record | return .incomplete
+    let some (.ctorInfo info) := ctor.constName?.bind env.find?
+      | return ← statementUnknown head
+    unless info.induct == structureName do return ← statementUnknown head
+    let some field := fields[info.numParams + index]? | return ← statementUnknown head
+    let some body ← aliasBody field args | return .incomplete
+    return .next body
+  | _ => return ← statementUnknown head
 
-private partial def statementOuter (env : Environment) (type : Expr) : WalkM (Option Expr) := do
+private partial def statementOuter (env : Environment) (type : Expr) :
+    WalkM (Option ProvenanceAdmissionWitness) := do
   unless ← chargeTraversal do return none
-  if type.getAppFn.isConstOf `Multiset.Mem then return some type
-  let some next ← statementStep env type | return some type
-  if next == type then return none
-  statementOuter env next
+  if type.getAppFn.isConstOf `Multiset.Mem then
+    return some (witness .statementMembership type)
+  match ← statementStep env type with
+  | .recognized evidence => return some evidence
+  | .unclassified _ => return none
+  | .incomplete => modify fun s => { s with incomplete := true }; return none
+  | .next next =>
+    if next == type then return none
+    statementOuter env next
 
 -- Equality-only List metadata has recursive List premises and disequalities
 -- ending in False. These explicit positive conclusions, or negations of known
 -- non-equality heads, cannot be those premises. Unknown predicate heads stop.
 private partial def listStatementBoundary (env : Environment) (type : Expr)
-    (binders : Nat := 0) : WalkM Bool := do
-  let some type ← statementOuter env type | return false
+    (binders : Nat := 0) : WalkM (Option ProvenanceAdmissionWitness) := do
+  let some evidence ← statementOuter env type | return none
+  let type := evidence.matchedType
   match type with
   | .forallE n domain body bi =>
     if binders == 0 then
-      let some firstProof ← boundedMeta (Meta.isProp domain) `list_statement_domain | return false
+      let some firstProof ← boundedMeta (Meta.isProp domain) `list_statement_domain | return none
       if !firstProof then
         let twoDataBinders ← Meta.withLocalDecl n bi domain fun x => do
           let some body ← substitute body #[x] | return false
-          let some body ← statementOuter env body | return false
+          let some evidence ← statementOuter env body | return false
+          let body := evidence.matchedType
           let .forallE _ secondDomain _ _ := body | return false
           let some secondProof ← boundedMeta (Meta.isProp secondDomain) `list_statement_domain
             | return false
           return !secondProof
-        if twoDataBinders then return true
+        if twoDataBinders then return some (witness .listForall type)
     if body.isConstOf ``False then
-      let some domain ← statementOuter env domain | return false
-      return domain.isForall || domain.getAppFn.constName?.any
-        (#[``Exists, ``And, ``Or, ``List.Mem, `Multiset.Mem].contains ·)
+      let some evidence ← statementOuter env domain | return none
+      let domain := evidence.matchedType
+      if domain.isForall || domain.getAppFn.constName?.any
+          (#[``Exists, ``And, ``Or, ``List.Mem, `Multiset.Mem].contains ·) then
+        return some (witness .listNegated type)
+      return none
     Meta.withLocalDecl n bi domain fun x => do
-      let some body ← substitute body #[x] | return false
+      let some body ← substitute body #[x] | return none
       listStatementBoundary env body (binders + 1)
   | _ =>
     let name := type.getAppFn.constName?.getD .anonymous
-    return #[``And, ``Or, ``Exists, ``True, ``Eq, ``HEq, ``Nat.le].contains name ||
-      (binders > 0 && #[``List.Mem, `Multiset.Mem].contains name)
+    if #[``And, ``Or, ``Exists, ``True, ``Eq, ``HEq, ``Nat.le].contains name ||
+        (binders > 0 && #[``List.Mem, `Multiset.Mem].contains name) then
+      return some (witness .listPositive type)
+    return none
 
 -- Pure data carriers for equality-only collection metadata. The surrounding
 -- type fold has already checked actual parameters and statement-bearing fields.
 -- Nominal carriers with proof/type-valued fields are excluded here; intrinsic
 -- scalar bounds and quotient containers have explicit representation boundaries.
 private partial def dataCarrier (env : Environment) (type : Expr)
-    (active : Array Expr := #[]) : WalkM Bool := do
-  unless ← chargeTraversal do return false
-  let some type ← representationType type | return false
-  let some kind ← occurrenceType type | return false
-  let .sort level := kind | return false
-  unless level.isNeverZero do return false
+    (active : Array Expr := #[]) : WalkM (Option ProvenanceAdmissionWitness) := do
+  unless ← chargeTraversal do return none
+  let some type ← representationType type | return none
+  let some kind ← occurrenceType type | return none
+  let .sort level := kind | return none
+  unless level.isNeverZero do return none
   match type with
-  | .sort _ => return false
-  | .fvar id => return (← id.getDecl).value? (allowNondep := true) |>.isNone
+  | .sort _ => return none
+  | .fvar id =>
+    if (← id.getDecl).value? (allowNondep := true) |>.isNone then
+      return some (witness .rigidCarrier type)
+    return none
   | .proj structureName index receiver =>
     -- Only registered arena/signature carrier selectors inherit the rigid
     -- local parameter boundary. Concrete receivers expose their actual field,
@@ -920,39 +1046,41 @@ private partial def dataCarrier (env : Environment) (type : Expr)
           | .ctorInfo info => info.induct == structureName
           | _ => false
       | none => false
-    unless audited do return false
-    let some receiver ← representationType receiver | return false
+    unless audited do return none
+    let some receiver ← representationType receiver | return none
     if let .fvar id := receiver then
-      if (← id.getDecl).value? (allowNondep := true) |>.isNone then return true
-    let some field ← statementStep env (.proj structureName index receiver) | return false
-    if field == type then return false
+      if (← id.getDecl).value? (allowNondep := true) |>.isNone then
+        return some (witness .carrierProjection type)
+    let .next field ← statementStep env (.proj structureName index receiver) | return none
+    if field == type then return none
     dataCarrier env field active
   | .forallE n domain body bi =>
-    unless ← dataCarrier env domain active do return false
+    unless (← dataCarrier env domain active).isSome do return none
     Meta.withLocalDecl n bi domain fun x => do
-      let some body ← substitute body #[x] | return false
+      let some body ← substitute body #[x] | return none
       dataCarrier env body active
   | _ =>
-    let some (head, args) ← applicationParts type | return false
-    let .const name levels := head | return false
-    if #[``Nat, ``Int, `Rat, ``Fin, `ZMod].contains name then return true
+    let some (head, args) ← applicationParts type | return none
+    let .const name levels := head | return none
+    if #[``Nat, ``Int, `Rat, ``Fin, `ZMod].contains name then
+      return some (witness .scalarCarrier type)
     if #[``List, `Multiset, `Finset].contains name && args.size == 1 then
       return ← dataCarrier env args[0]! active
     if name == ``Subtype && args.size == 2 then
       return ← dataCarrier env args[0]! active
-    if active.contains type then return false
+    if active.contains type then return none
     if let some (.defnInfo info) := env.find? name then
       let value ← Core.instantiateValueLevelParams (.defnInfo info) levels
-      let some body ← aliasBody value args | return false
+      let some body ← aliasBody value args | return none
       return ← dataCarrier env body (active.push type)
-    let some branches ← caseFields type | return false
+    let some branches ← caseFields type | return none
     for (lctx, instances, fields) in branches do
       for field in fields do
         let clean ← Meta.withLCtx lctx instances do
-          let some fieldType ← occurrenceType field | return false
+          let some fieldType ← occurrenceType field | return none
           dataCarrier env fieldType (active.push type)
-        unless clean do return false
-    return true
+        unless clean.isSome do return none
+    return some (witness .nominalCarrier type)
 
 -- Record explicit proposition-alias spellings only as rejection witnesses.
 -- These hashes never certify non-mention and never normalize data operands.
@@ -966,14 +1094,18 @@ private def statementAliases (env : Environment) : WalkM Unit := do
       return
     seen := seen.insert (hash current)
     modify fun s => { s with statementForms := s.statementForms.push current }
-    let some body ← statementStep env current | return
-    current := body
+    match ← statementStep env current with
+    | .next body => current := body
+    | .recognized evidence =>
+      modify fun s => { s with recognizedStatement := some evidence }
+      return
+    | .unclassified site => noteUnclassified site; return
+    | .incomplete => modify fun s => { s with incomplete := true }; return
 
 -- The final supported outer spelling is used for structural family fences.
 -- Computed operands remain untouched and cannot establish non-mention.
-private def statementBoundary : WalkM Expr := do
-  let state ← get
-  return state.statementForms.back?.getD state.statement
+private def statementBoundary : WalkM (Option ProvenanceAdmissionWitness) := do
+  return (← get).recognizedStatement
 
 -- A carrier alias is supported only when its explicit body is another named
 -- type application. This recognizes Unit/PUnit without evaluating data or
@@ -1057,22 +1189,23 @@ mutual
 -- One structural fold over inferred types and their type-valued arguments.
 -- Nominal fields are native occurrences specialized by constructor-index patterns.
 private partial def inputType (env : Environment) (type : Expr)
-    (active : Array Expr := #[]) : WalkM (Bool × Bool) := do
+    (active : Array Expr := #[]) : WalkM TypeClassification := do
   unless ← chargeSummaryWork (fun c => { c with recheckedNodes := c.recheckedNodes + 1 }) do
-    return (false, true)
-  if type.hasLooseBVars || type.hasMVar || type.hasLevelMVar then return (false, true)
+    return ← unknownType type
+  if type.hasLooseBVars || type.hasMVar || type.hasLevelMVar then return ← unknownType type
   if ReadoutFamily.carrierHeads.contains (type.getAppFn.constName?.getD .anonymous) then
     let (decoded, work) := ReadoutFamily.carrier env type (← get).exprFuel
-    unless ← chargeTraversal work do return (false, true)
-    let some decoded := decoded | return (false, true)
-    if decoded == type then return (false, true)
+    unless ← chargeTraversal work do return ← unknownType type
+    let some decoded := decoded | return ← unknownType type
+    if decoded == type then return ← unknownType type
     return ← inputType env decoded active
-  let key := type
-  if (← get).cleanTypes.contains key then return (false, false)
-  unless ← chargeTraversal do return (false, true)
+  let producerAllowed := carrierProducerAllowed env (← get).currentFirst
+  if let some cached ← reuseWitness (← get).cleanTypes type then return .allowlisted cached
+  unless ← chargeTraversal do return ← unknownType type
   let enclosingAssumptions := (← get).assumedFamilyDepth
-  modify fun s => { s with assumedFamilyDepth := none }
-  let classify : WalkM (Bool × Bool) := do
+  let enclosingProducer := (← get).assumedProducer
+  modify fun s => { s with assumedFamilyDepth := none, assumedProducer := none }
+  let classify : WalkM TypeClassification := do
     -- Recursive occurrences recheck their actual arguments before using an
     -- enclosing-family assumption.
     -- A telescope is already traversed domain by domain by this classifier.
@@ -1081,119 +1214,119 @@ private partial def inputType (env : Environment) (type : Expr)
     if let .forallE n domain body bi := type then
       let exact ← compareCanonical type (← get).statement
       let decision ← compareCanonical type (← get).decision
-      let (dm, du) ← inputType env domain active
-      let (bm, bu) ← Meta.withLocalDecl n bi domain fun x => do
-        let some body ← substitute body #[x] | return (false, true)
-        inputType env body active
-      return (exact || decision || dm || bm, du || bu)
+      let (dm, du) := (← inputType env domain active).flags
+      let (bm, bu) ← (TypeClassification.flags <$> Meta.withLocalDecl n bi domain fun x => do
+        let some body ← substitute body #[x] | return ← unknownType type
+        inputType env body active)
+      return ← checkedType .telescope type (exact || decision || dm || bm) (du || bu)
     if let .letE _ domain value body _ := type then
       let exact ← compareCanonical type (← get).statement
       let decision ← compareCanonical type (← get).decision
-      let (dm, du) ← inputType env domain active
+      let (dm, du) := (← inputType env domain active).flags
       let vm ← typeMentions env value
-      let some body ← substitute body #[value] | return (false, true)
-      let (bm, bu) ← inputType env body active
-      return (exact || decision || dm || vm || bm, du || bu)
+      let some body ← substitute body #[value] | return ← unknownType type
+      let (bm, bu) := (← inputType env body active).flags
+      return ← checkedType .letType type (exact || decision || dm || vm || bm) (du || bu)
     let mut mentions ← typeMentions env type
     if ← compareCanonical type (← get).decision then mentions := true
     let some reduced ← representationType type | do
       trace[InformationProvenance.check] "failed_type={type}"
-      return (mentions, true)
+      return ← checkedType .nominalFields type mentions true
     mentions := (← typeMentions env reduced) || mentions
     match reduced with
     | .forallE n domain body bi =>
-      let (dm, du) ← inputType env domain active
-      let (bm, bu) ← Meta.withLocalDecl n bi domain fun x =>
+      let (dm, du) := (← inputType env domain active).flags
+      let (bm, bu) ← (TypeClassification.flags <$> Meta.withLocalDecl n bi domain fun x =>
         do
-          let some body ← substitute body #[x] | return (false, true)
-          inputType env body active
-      return (mentions || dm || bm, du || bu)
+          let some body ← substitute body #[x] | return ← unknownType type
+          inputType env body active)
+      return ← checkedType .telescope reduced (mentions || dm || bm) (du || bu)
     | .lam n domain body bi =>
       -- Type-valued lambda expressions are generated by dependent recursors
       -- (for example `Fin.casesOn` motives).  Inspect their domains and bodies
       -- through this same classifier instead of treating the lambda head as
       -- an unknown escape.
-      let (dm, du) ← inputType env domain active
-      let (bm, bu) ← Meta.withLocalDecl n bi domain fun x => do
-        let some body ← substitute body #[x] | return (false, true)
-        inputType env body active
-      return (mentions || dm || bm, du || bu)
+      let (dm, du) := (← inputType env domain active).flags
+      let (bm, bu) ← (TypeClassification.flags <$> Meta.withLocalDecl n bi domain fun x => do
+        let some body ← substitute body #[x] | return ← unknownType type
+        inputType env body active)
+      return ← checkedType .lambdaType reduced (mentions || dm || bm) (du || bu)
     | .letE n domain value body nd =>
-      let (dm, du) ← inputType env domain active
-      let (vm, vu) ← inputType env value active
-      let (bm, bu) ← Meta.withLetDecl n domain value (fun x => do
-        let some body ← substitute body #[x] | return (false, true)
-        inputType env body active) (nondep := nd)
-      return (mentions || dm || vm || bm, du || vu || bu)
+      let (dm, du) := (← inputType env domain active).flags
+      let (vm, vu) := (← inputType env value active).flags
+      let (bm, bu) ← (TypeClassification.flags <$> Meta.withLetDecl n domain value (fun x => do
+        let some body ← substitute body #[x] | return ← unknownType type
+        inputType env body active) (nondep := nd))
+      return ← checkedType .letType reduced (mentions || dm || vm || bm) (du || vu || bu)
     | .mdata _ body =>
-      let (bm, bu) ← inputType env body active
-      return (mentions || bm, bu)
+      let (bm, bu) := (← inputType env body active).flags
+      return ← checkedType .metadataType reduced (mentions || bm) bu
     | _ =>
-      if reduced.isSort then return (mentions, false)
-      let some (head, args) ← applicationParts reduced | return (mentions, true)
+      if reduced.isSort then return ← checkedType .sortKind reduced mentions false
+      let some (head, args) ← applicationParts reduced | return ← checkedType .nominalFields type mentions true
       if let .lam .. := head then
-        let some body ← aliasBody head args | return (mentions, true)
-        let (bm, bu) ← inputType env body active
-        return (mentions || bm, bu)
+        let some body ← aliasBody head args | return ← checkedType .nominalFields type mentions true
+        let (bm, bu) := (← inputType env body active).flags
+        return ← checkedType .betaType reduced (mentions || bm) bu
       let mut unclassified := false
       for arg in args do
         if let .const n _ := arg.getAppFn then directConstant env n
         if let .proj n _ _ := arg.getAppFn then directProjection env n
-        let some argType ← occurrenceType arg | return (mentions, true)
-        let (tm, tu) ← inputType env argType active
+        let some argType ← occurrenceType arg | return ← checkedType .nominalFields type mentions true
+        let (tm, tu) := (← inputType env argType active).flags
         mentions := mentions || tm
         unclassified := unclassified || tu
-        if let some (am, au) ← typeFamilyArgument env arg argType active then
+        if let .family result ← typeFamilyArgument env arg argType active then
+          let (am, au) := result.flags
           mentions := mentions || am
           unclassified := unclassified || au
       -- A local type-family head is allowed only after its inferred type has
       -- itself passed the funnel.  This keeps local neutral syntax from being
       -- an unknown-tolerant escape hatch.
       if head.isFVar then
-        let some neutralType ← occurrenceType reduced | return (mentions, true)
-        let (fm, fu) ← inputType env neutralType active
-        return (mentions || fm, unclassified || fu)
+        let some neutralType ← occurrenceType reduced | return ← checkedType .nominalFields type mentions true
+        let (fm, fu) := (← inputType env neutralType active).flags
+        return ← checkedType .scopedParameter reduced (mentions || fm) (unclassified || fu)
       if let .proj _ _ receiver := head then
         -- Infer both the receiver and projection in the same context. Lean
         -- supplies the receiver's actual parameters, indices and universe.
-        let some receiverType ← occurrenceType receiver | return (mentions, true)
-        let (rm, ru) ← inputType env receiverType active
-        let some projectionType ← occurrenceType head | return (mentions || rm, true)
-        let (pm, pu) ← inputType env projectionType active
-        return (mentions || rm || pm, ru || pu || unclassified)
-      let .const name _ := head | do
-        -- Neutral type expressions have no declaration head to inspect.  Their
-        -- inferred type is still an obligation: classify it before accepting
-        -- the neutral expression, and fail closed if inference is unavailable.
-        let some neutralType ← occurrenceType reduced | return (mentions, true)
-        let (nm, nu) ← inputType env neutralType active
-        return (mentions || nm, unclassified || nu)
+        let some receiverType ← occurrenceType receiver | return ← checkedType .nominalFields type mentions true
+        let (rm, ru) := (← inputType env receiverType active).flags
+        let some projectionType ← occurrenceType head | return ← checkedType .auditedProjection type (mentions || rm) true
+        let (pm, pu) := (← inputType env projectionType active).flags
+        return ← checkedType .auditedProjection reduced (mentions || rm || pm) (ru || pu || unclassified)
+      let .const name _ := head | return ← unknownType reduced
       directProjection env name
-      let some declaration := env.find? name | return (mentions, true)
-      unless ← chargeTraversal do return (mentions, true)
-      if !declaration.hasValue (allowOpaque := true) && !(← get).cleanKinds.contains head then
+      let some declaration := env.find? name | return ← checkedType .nominalFields type mentions true
+      unless ← chargeTraversal do return ← checkedType .nominalFields type mentions true
+      let knownKind ← if declaration.hasValue (allowOpaque := true) then pure none
+        else reuseWitness (← get).cleanKinds head
+      if !declaration.hasValue (allowOpaque := true) && knownKind.isNone then
         -- The actual head occurrence supplies its inferred kind. This closed
         -- kind is independent of the caller's recursive-family assumptions.
-        let some kind ← occurrenceType head | return (mentions, true)
-        let (km, ku) ← inputType env kind #[]
+        let some kind ← occurrenceType head | return ← checkedType .nominalFields type mentions true
+        let kindVerdict ← inputType env kind #[]
+        let (km, ku) := kindVerdict.flags
         mentions := mentions || km
         unclassified := unclassified || ku
         let state ← get
         if !km && !ku && !state.incomplete && !state.forbidden && state.unclassified.isNone then
-          unless ← chargeTraversal do return (mentions, true)
-          modify fun s => { s with cleanKinds := s.cleanKinds.insert head }
-      let statement ← statementBoundary
+          unless ← chargeTraversal do return ← checkedType .nominalFields type mentions true
+          if let some evidence := kindVerdict.witness? then
+            modify fun s => { s with cleanKinds := s.cleanKinds.insert (head, evidence.sourceDependency) evidence }
+      let some evidence ← statementBoundary | return ← unknownType reduced
+      let statement := evidence.matchedType
       let natOrder := fun e =>
         let h := e.getAppFn
         h.isConstOf ``Nat.le || h.isConstOf ``Nat.lt ||
           ((h.isConstOf ``LE.le || h.isConstOf ``LT.lt) &&
             e.getAppArgs[0]?.any (·.isConstOf ``Nat))
-      if natOrder reduced && natOrder statement then return (mentions, true)
+      if natOrder reduced && natOrder statement then return ← checkedType .nominalFields type mentions true
       -- Membership of propositions is not a data-carrier boundary. Inspect
       -- the actual receiver carrier even when the interface projection is stuck.
       if name == ``Membership.mem && args.size >= 2 then
         let element := args[0]!
-        if element == .sort .zero then return (mentions, true)
+        if element == .sort .zero then return ← checkedType .nominalFields type mentions true
       -- Equality has no independent payload: reflexivity carries only the
       -- operands already checked above. Eliminating an arbitrary equality
       -- would instead ask Lean to solve a theorem (e.g. f x = x).
@@ -1223,185 +1356,264 @@ private partial def inputType (env : Environment) (type : Expr)
             if closed operand && !literal && !nullary then
               trace[InformationProvenance.check] "unsupported_equality_operand={repr operand} type={reduced}"
               unclassified := true
-        return (mentions, unclassified)
+        return ← checkedType .equality reduced mentions unclassified
       -- Nat.le has only natural indices and recursive Nat.le premises. Check
       -- the actual operands above; if S is itself an order statement, reject
       -- conservatively so no recursive order subproof can conceal it. This
       -- avoids enumerating numeric representation bounds (UInt32, Char, ...).
       if name == ``Nat.le then
-        let some statement ← representationType (← statementBoundary)
-          | return (mentions, true)
+        let some statement ← representationType statement
+          | return ← checkedType .nominalFields type mentions true
         let head := statement.getAppFn
         let order := head.isConstOf ``Nat.le || head.isConstOf ``Nat.lt ||
           ((head.isConstOf ``LE.le || head.isConstOf ``LT.lt) &&
             statement.getAppArgs[0]?.any (·.isConstOf ``Nat))
-        return (mentions, unclassified || order)
+        return ← checkedType .naturalOrder reduced mentions (unclassified || order)
       -- Membership and uniqueness proofs over checked data carriers contain
       -- only recursive Mem/Pairwise and equality/function proof forms. The
       -- positive statement heads below cannot specialize to those forms.
       if (name == ``List.Pairwise || name == ``List.Mem) && args.size == 3 then
-        let some kind ← occurrenceType args[0]! | return (mentions, true)
+        let some kind ← occurrenceType args[0]! | return ← checkedType .nominalFields type mentions true
         let some (.sort level) ← representationType kind
-          | return (mentions, true)
+          | return ← checkedType .nominalFields type mentions true
         let relation := mkApp (mkConst ``Ne [level]) args[0]!
-        let some carrier ← namedCarrier env args[0]! | return (mentions, true)
+        let some carrier ← namedCarrier env args[0]! | return ← checkedType .nominalFields type mentions true
         let some rigid ← boundedMeta (do
           let carrier ← pure carrier
           let .fvar id := carrier | return false
           return (← id.getDecl).value? (allowNondep := true) |>.isNone) `carrier_rigidity
-          | return (mentions, true)
+          | return ← checkedType .nominalFields type mentions true
         -- A rigid parameter is scoped to this occurrence. Applications and
         -- enclosing case substitutions get freshly inferred field types.
-        let mut carrierAllowed := rigid || (carrier.isConstOf ``Nat) || (← dataCarrier env args[0]!)
-        if !carrierAllowed && level.isNeverZero then
+        let mut carrierEvidence ← if rigid then pure (some (witness .rigidCarrier carrier))
+          else if carrier.isConstOf ``Nat then pure (some (witness .scalarCarrier carrier))
+          else dataCarrier env args[0]!
+        if carrierEvidence.isNone && level.isNeverZero then
           let some carrier ← representationType carrier
-            | return (mentions, true)
+            | return ← checkedType .nominalFields type mentions true
           if let some (.inductInfo family) := (carrier.getAppFn.constName?.bind env.find?) then
             let nullary := family.numParams == 0 && family.numIndices == 0 &&
               family.ctors.all (fun ctor => match env.find? ctor with
                 | some (.ctorInfo info) => info.numFields == 0
                 | _ => false)
             if nullary && closed carrier && !carrier.hasLevelMVar then
-              unless ← chargeTraversal do return (mentions, true)
-              if (← get).certifiedNullaryCarriers.contains carrier then
-                carrierAllowed := true
+              unless ← chargeTraversal do return ← checkedType .nominalFields type mentions true
+              if let some cached := (← get).certifiedNullaryCarriers[carrier]? then
+                carrierEvidence := some cached
               else
-                let some branches ← caseFields carrier | return (mentions, true)
-                carrierAllowed := branches.all (fun (_, _, fields) => fields.isEmpty)
-                if carrierAllowed then
-                  unless ← chargeTraversal do return (mentions, true)
+                let some branches ← caseFields carrier | return ← checkedType .nominalFields type mentions true
+                if branches.all (fun (_, _, fields) => fields.isEmpty) then
+                  let evidence := witness .nullaryCarrier carrier
+                  carrierEvidence := some evidence
+                  unless ← chargeTraversal do return ← checkedType .nominalFields type mentions true
                   modify fun s => { s with certifiedNullaryCarriers :=
-                    s.certifiedNullaryCarriers.insert carrier }
+                    s.certifiedNullaryCarriers.insert carrier evidence }
         let relationAllowed := args[1]! == relation || match args[1]! with
           | .lam _ _ (.lam _ _ body _) _ =>
             body.isAppOfArity ``Ne 3 && body.getAppArgs[1]! == .bvar 1 &&
               body.getAppArgs[2]! == .bvar 0
           | _ => false
-        if carrierAllowed && (name == ``List.Mem || relationAllowed) then
-          let some statement ← representationType (← statementBoundary)
-            | return (mentions, true)
+        if carrierEvidence.isSome && (name == ``List.Mem || relationAllowed) then
+          let some statement ← representationType statement
+            | return ← checkedType .nominalFields type mentions true
           let disjoint ← listStatementBoundary env statement
-          if disjoint then return (mentions, unclassified)
-        trace[InformationProvenance.check] "unsupported_list_boundary type={reduced} carrier={carrier} allowed={carrierAllowed} relation={relationAllowed}"
-        return (mentions, true)
+          if disjoint.isSome then return ← checkedType .listMetadata reduced mentions unclassified
+        trace[InformationProvenance.check] "unsupported_list_boundary type={reduced} carrier={carrier} allowed={carrierEvidence.isSome} relation={relationAllowed}"
+        return ← checkedType .nominalFields type mentions true
       if Lean.isClass env name && !listedTypeClasses.contains name then
         trace[InformationProvenance.check] "unsupported_class={name} type={type}"
-        return (mentions, true)
+        return ← checkedType .nominalFields type mentions true
       -- Quotient carriers and lifted type families expose their relation or
       -- predicate to the same argument classifier; no predicate is a leaf.
       if let some (.quotInfo info) := env.find? name then
         if match info.kind with | .type | .lift => true | _ => false then
-          return (mentions, unclassified)
-      if let some (.recInfo _) := env.find? name then return (mentions, unclassified)
+          return ← checkedType .quotientType reduced mentions unclassified
+      if let some (.recInfo recursor) := env.find? name then
+        if #[``Bool.rec, ``Nat.rec, ``List.rec, ``Prod.rec, ``Sum.rec, ``Option.rec,
+            ``PUnit.rec, ``Fin.rec].contains name then
+          return ← checkedType .recursorType reduced mentions unclassified
+        -- A kernel recursor over one parameter-free, index-free enumeration
+        -- has no abstract carrier or proof payload in its constructors. Its
+        -- actual motive, branches and major argument were checked above.
+        -- This rule classifies output types; registered statement spellings
+        -- still reject every recursor in statementStep.
+        if recursor.numParams == 0 && recursor.numIndices == 0 &&
+            recursor.numMotives == 1 then
+          if let [familyName] := recursor.all then
+            if let some (.inductInfo family) := env.find? familyName then
+              let mut enumeration := family.numParams == 0 && family.numIndices == 0
+              for constructor in family.ctors do
+                unless ← chargeTraversal do return ← unknownType reduced
+                enumeration := enumeration && (env.find? constructor).any fun declaration =>
+                  match declaration with
+                  | .ctorInfo constructor => constructor.numParams == 0 && constructor.numFields == 0
+                  | _ => false
+              if enumeration then
+                return ← checkedType .enumRecursorType reduced mentions unclassified
+        trace[InformationProvenance.check] "unclassified_recursor_head={name} type={reduced}"
+        return ← unknownType reduced
       if let some (.defnInfo _) := env.find? name then
         -- An explicit type alias forwards its actual parameters. Its raw body
         -- must pass the same structural families; computed data is not evaluated.
         let value ← Core.instantiateValueLevelParams declaration head.constLevels! (allowOpaque := false)
-        let some unfolded ← aliasBody value args | return (mentions, true)
-        if unfolded == reduced then return (mentions, true)
-        let (um, uu) ← inputType env unfolded active
-        return (mentions || um, unclassified || uu)
-      let some (.inductInfo info) := env.find? name | return (mentions, true)
+        let some unfolded ← aliasBody value args | return ← checkedType .nominalFields type mentions true
+        if unfolded == reduced then return ← checkedType .nominalFields type mentions true
+        let (um, uu) := (← inputType env unfolded active).flags
+        return ← checkedType .aliasType reduced (mentions || um) (unclassified || uu)
+      let some (.inductInfo info) := env.find? name | return ← checkedType .nominalFields type mentions true
       for depth in [:active.size] do
         let previous := active[depth]!
-        let some (previousHead, previousArgs) ← applicationParts previous | return (mentions, true)
-        unless ← chargeTraversal do return (mentions, true)
+        let some (previousHead, previousArgs) ← applicationParts previous | return ← checkedType .nominalFields type mentions true
+        unless ← chargeTraversal do return ← checkedType .nominalFields type mentions true
         if hash previousHead != hash head then continue
-        unless ← chargeExpression previousHead do return (mentions, true)
-        unless ← chargeExpression head do return (mentions, true)
+        unless ← chargeExpression previousHead do return ← checkedType .nominalFields type mentions true
+        unless ← chargeExpression head do return ← checkedType .nominalFields type mentions true
         if previousHead == head then
           let mut sameParameters := true
           for index in [:info.numParams] do
-            unless ← chargeTraversal do return (mentions, true)
-            let some a := previousArgs[index]? | return (mentions, true)
-            let some b := args[index]? | return (mentions, true)
+            unless ← chargeTraversal do return ← checkedType .nominalFields type mentions true
+            let some a := previousArgs[index]? | return ← checkedType .nominalFields type mentions true
+            let some b := args[index]? | return ← checkedType .nominalFields type mentions true
             sameParameters := (a == b) && sameParameters
           let mut coveredIndices := true
           for index in [info.numParams:args.size] do
-            unless ← chargeTraversal do return (mentions, true)
+            unless ← chargeTraversal do return ← checkedType .nominalFields type mentions true
             let current := args[index]!
             -- Recursive occurrences with fresh indices share the enclosing
             -- family obligation. Concrete changed indices require fresh cases.
             if current.hasFVar then
-              let some normalized ← representationType current | return (mentions, true)
+              let some normalized ← representationType current | return ← checkedType .nominalFields type mentions true
               if normalized.hasFVar then continue
-            let some previous := previousArgs[index]? | return (mentions, true)
+            let some previous := previousArgs[index]? | return ← checkedType .nominalFields type mentions true
             coveredIndices := (previous == current) && coveredIndices
           if sameParameters && coveredIndices then
             noteFamilyAssumption depth
-            return (mentions, unclassified)
+            return ← checkedType .recursiveFamily reduced mentions unclassified
           -- Different parameters are a fresh obligation, as in nested products.
       let some branches ← caseFields reduced | do
         trace[InformationProvenance.check] "unsupported_nominal_fields type={reduced}"
-        return (mentions, true)
-      unless ← chargeTraversal (active.size + 1) do return (mentions, true)
+        return ← checkedType .nominalFields type mentions true
+      unless ← chargeTraversal (active.size + 1) do return ← checkedType .nominalFields type mentions true
       let nextActive := active.push reduced
       for (lctx, instances, fields) in branches do
-        unless ← chargeTraversal do return (mentions, true)
+        unless ← chargeTraversal do return ← checkedType .nominalFields type mentions true
         for field in fields do
-          unless ← chargeTraversal do return (mentions, true)
-          let (fm, fu) ← Meta.withLCtx lctx instances do
-            let some fieldType ← occurrenceType field | return (false, true)
-            inputType env fieldType nextActive
+          unless ← chargeTraversal do return ← checkedType .nominalFields type mentions true
+          let (fm, fu) ← (TypeClassification.flags <$> Meta.withLCtx lctx instances do
+            let some fieldType ← occurrenceType field | return ← unknownType type
+            let some concrete ← representationType fieldType | return ← unknownType fieldType
+            -- Constructor fields that introduce a carrier, or hide their value
+            -- behind such a carrier, have no concrete representation witness.
+            unless ← chargeTraversal args.size do return ← unknownType concrete
+            let parameter := args.contains concrete
+            -- Predicate slots of these reviewed interfaces are followed at each
+            -- actual use. The two project containers require protected imports,
+            -- so no value of their type can acquire the external implementation
+            -- leaf rule; concrete statement/decision fields remain inspected.
+            -- Course-of-values type recursion uses PProd to hold prior types.
+            -- This representation is supported only at a protected implementation
+            -- or a kernel constructor/recursor with inspected actual arguments.
+            -- An opaque external producer of PProd Type still has no witness.
+            let auditedProduct := name == ``PProd && producerAllowed
+            if auditedProduct then
+              modify fun s => { s with assumedProducer := some s.currentFirst }
+            let auditedFamily := auditedProduct ||
+              (Lean.isClass env name && listedTypeClasses.contains name) ||
+              #[`D5.S3.ConceptDynamics.CIRPT.DecidableKernel,
+                `D5.S3.ConceptDynamics.InformationEscape.TheoremUnit].contains name ||
+              ReadoutFamily.carrierHeads.any fun selector =>
+              (env.getProjectionFnInfo? selector).any fun projection =>
+                (env.find? projection.ctorName).any fun declaration =>
+                  match declaration with
+                  | .ctorInfo ctor => ctor.induct == name
+                  | _ => false
+            let carrierValued ← if auditedFamily then pure false else carrierValuedField concrete
+            if carrierValued ||
+                (concrete.isFVar && !parameter && !auditedFamily) then
+              trace[InformationProvenance.check] "unclassified_abstract_carrier family={name} field_type={concrete} first={(← get).currentFirst}"
+              return ← unknownType concrete "unclassified_abstract_carrier"
+            inputType env concrete nextActive)
           mentions := mentions || fm
           unclassified := unclassified || fu
-      return (mentions, unclassified)
+      return ← checkedType .nominalFields reduced mentions unclassified
 
   let result ← classify
+  let producerDependency := (← get).assumedProducer
+  let result := bindWitnessSource result producerDependency
   -- Constructor scans introduced in this call have now completed; discharge
   -- their recursive assumptions. A dependency on an enclosing unfinished family
   -- still forbids caching. Independent nested checks can be reused immediately.
-  unless ← chargeTraversal do return (false, true)
+  unless ← chargeTraversal do return ← unknownType type
   let unresolved := (← get).assumedFamilyDepth.filter (· < active.size)
   modify fun s => { s with
-    assumedFamilyDepth := mergeAssumptions enclosingAssumptions unresolved }
+    assumedFamilyDepth := mergeAssumptions enclosingAssumptions unresolved
+    assumedProducer := enclosingProducer.or producerDependency }
   let state ← get
-  if unresolved.isNone && !type.hasLooseBVars && !type.hasMVar && !type.hasLevelMVar &&
-      !result.1 && !result.2 &&
-      !state.incomplete && !state.forbidden && state.unclassified.isNone then
-    unless ← chargeTraversal do return (false, true)
-    modify fun s => { s with cleanTypes := s.cleanTypes.insert key }
+  if let some evidence := result.witness? then
+    if unresolved.isNone && !type.hasLooseBVars && !type.hasMVar && !type.hasLevelMVar &&
+        !state.incomplete && !state.forbidden && state.unclassified.isNone then
+      unless ← chargeTraversal do return ← unknownType type
+      modify fun s => { s with cleanTypes := s.cleanTypes.insert (type, evidence.sourceDependency) evidence }
   return result
 
 -- Probe the inferred telescope first. Only functions ending in Sort supply
 -- type families; ordinary data functions keep their term-provenance treatment.
 private partial def typeFamilyArgument (env : Environment) (value type : Expr)
-    (active : Array Expr) : WalkM (Option (Bool × Bool)) := do
-  unless ← chargeTraversal do return some (false, true)
-  if (← get).dataFunctionTypes.contains type then return none
+    (active : Array Expr) : WalkM FamilyClassification := do
+  unless ← chargeTraversal do return .family (← unknownType type)
+  if let some cached ← reuseWitness (← get).dataFunctionTypes type then return .data cached
   let canCache := #[value, type].all fun e =>
     !e.hasLooseBVars && !e.hasMVar && !e.hasLevelMVar
-  if canCache && (← get).cleanFamilies.contains (value, type) then
-    modify fun s => { s with counters.familyMemoHits := s.counters.familyMemoHits + 1 }
-    return some (false, false)
+  let source := (← get).currentFirst
+  let cache := (← get).cleanFamilies
+  if let some cached := cache[(value, type, (none : Option Name))]?.orElse fun _ => cache[(value, type, some source)]? then
+    modify fun s => { s with
+      counters.familyMemoHits := s.counters.familyMemoHits + 1
+      assumedProducer := s.assumedProducer.or cached.sourceDependency }
+    return .family (.allowlisted cached)
   let enclosing := (← get).assumedFamilyDepth
-  modify fun s => { s with assumedFamilyDepth := none }
-  let inspect : WalkM (Option (Bool × Bool)) := do
-    let some reduced ← representationType type | return some (false, true)
+  let enclosingProducer := (← get).assumedProducer
+  modify fun s => { s with assumedFamilyDepth := none, assumedProducer := none }
+  let inspect : WalkM FamilyClassification := do
+    let some reduced ← representationType type | return .family (← unknownType type)
     match reduced with
     | .forallE n domain body bi =>
       let result ← Meta.withLocalDecl n bi domain fun x => do
-        let some body ← substitute body #[x] | return some (false, true)
-        unless ← chargeTraversal do return some (false, true)
+        let some body ← substitute body #[x] | return .family (← unknownType type)
+        unless ← chargeTraversal do return .family (← unknownType type)
         typeFamilyArgument env (mkApp value x) body active
-      let some (bm, bu) := result | return none
-      let (dm, du) ← inputType env domain active
-      return some (dm || bm, du || bu)
-    | .sort _ => return some (← inputType env value active)
-    | _ => return none
+      let .family verdict := result | return result
+      let (bm, bu) := verdict.flags
+      let (dm, du) := (← inputType env domain active).flags
+      return .family (← checkedType .typeFamily value (dm || bm) (du || bu))
+    | .sort _ => return .family (← inputType env value active)
+    | _ =>
+      -- Non-family delegation also requires the positive carrier classification.
+      -- A shape outside the type allowlist cannot become data by falling through.
+      let verdict ← inputType env reduced active
+      match verdict with
+      | .allowlisted evidence => return .data evidence
+      | _ => return .family verdict
   let result ← inspect
   let state ← get
-  modify fun s => { s with assumedFamilyDepth := mergeAssumptions enclosing state.assumedFamilyDepth }
+  let result := match result with
+    | .family verdict => .family (bindWitnessSource verdict state.assumedProducer)
+    | .data evidence => .data { evidence with sourceDependency := state.assumedProducer }
+  modify fun s => { s with
+    assumedFamilyDepth := mergeAssumptions enclosing state.assumedFamilyDepth
+    assumedProducer := enclosingProducer.or state.assumedProducer }
   -- This fold opens no family frame: every surviving assumption is external.
-  if canCache && result == some (false, false) && state.assumedFamilyDepth.isNone &&
-      !state.incomplete && !state.forbidden && state.unclassified.isNone then
-    unless ← chargeTraversal do return some (false, true)
-    modify fun s => { s with cleanFamilies := s.cleanFamilies.insert (value, type) }
-  -- A non-family telescope performs no domain/value classification, so this
-  -- completed negative result is independent of recursive-family assumptions.
-  if result.isNone && closed type then
-    unless ← chargeTraversal do return some (false, true)
-    modify fun s => { s with dataFunctionTypes := s.dataFunctionTypes.insert type }
+  match result with
+  | .family (.allowlisted evidence) =>
+    if canCache && state.assumedFamilyDepth.isNone &&
+        !state.incomplete && !state.forbidden && state.unclassified.isNone then
+      unless ← chargeTraversal do return .family (← unknownType type)
+      modify fun s => { s with cleanFamilies := s.cleanFamilies.insert (value, type, evidence.sourceDependency) evidence }
+  | .data evidence =>
+    if closed type && state.assumedFamilyDepth.isNone then
+      unless ← chargeTraversal do return .family (← unknownType type)
+      modify fun s => { s with dataFunctionTypes := s.dataFunctionTypes.insert (type, evidence.sourceDependency) evidence }
+  | _ => pure ()
   return result
 end
 
@@ -1411,7 +1623,7 @@ private def classifyOccurrence (env : Environment) (occurrence : Expr)
     (context : Array Expr) : WalkM TypeClassification := do
   let context := if occurrence.hasLooseBVars then context else #[]
   unless ← chargeTraversal (2 * context.size + 1) do return .incomplete
-  let key := (occurrence, context)
+  let key := (occurrence, context, (← get).currentFirst)
   if let some cached := (← get).typeChecks[key]? then return cached
   let verdict ← inBinderContext context fun locals => do
     let some occurrence ← substitute occurrence locals | return .incomplete
@@ -1419,16 +1631,18 @@ private def classifyOccurrence (env : Environment) (occurrence : Expr)
     let exact ← exactScalarStatement type
     let decision ← if type.isAppOfArity ``Decidable 1 then
         exactScalarStatement type.getAppArgs[0]! else pure false
-    let (mentions, unclassified) ← inputType env type
+    let classification ← inputType env type
+    let (mentions, _) := classification.flags
     if exact || decision then return .forbidden
     if mentions then return .statementMention
     let state ← get
     if state.forbidden then return .forbidden
     if state.incomplete then return .incomplete
-    if state.unclassified.isSome then return .unclassified
-    if unclassified then return .unclassified
-    return .allowlisted
-  let verdict := verdict.getD (if (← get).incomplete then .incomplete else .unclassified)
+    if let some site := state.unclassified then return .unclassified site
+    return classification
+  let verdict ← match verdict with
+    | some verdict => pure verdict
+    | none => if (← get).incomplete then pure .incomplete else unknownType occurrence
   unless ← chargeTraversal context.size do return .incomplete
   modify fun s => { s with typeChecks := s.typeChecks.insert key verdict }
   return verdict
@@ -1461,9 +1675,9 @@ private partial def visitOccurrence (env : Environment) (pos : Position)
   match verdict with
   | .forbidden => modify fun s => { s with forbidden := true }; return
   | .statementMention => noteUnclassified ⟨"statement_mentioning_type", first, namespaceLabel env first, origin⟩
-  | .unclassified => noteUnclassified ⟨"unclassified_argument_type", first, namespaceLabel env first, origin⟩
+  | .unclassified site => noteUnclassified site
   | .incomplete => modify fun s => { s with incomplete := true }; return
-  | .allowlisted => pure ()
+  | .allowlisted _ => pure ()
   let actualContext := if e.hasLooseBVars then context else #[]
   let proof ← inBinderContext actualContext fun locals => do
     let some actual ← substitute e locals | return false
@@ -1476,7 +1690,8 @@ private partial def visitOccurrence (env : Environment) (pos : Position)
       -- Propositions are checked as statement-bearing types. Their mathematical
       -- operands are erased; executable decision dictionaries are visited on
       -- their own actual data occurrences.
-      let (mentions, unknown) ← inputType env actual
+      let classification ← inputType env actual
+      let (mentions, unknown) := classification.flags
       if mentions then
         noteUnclassified ⟨"statement_mentioning_type", first, namespaceLabel env first, origin⟩
       if unknown then
@@ -1524,7 +1739,10 @@ private partial def visitOccurrence (env : Environment) (pos : Position)
   | .proj _ _ receiver => child receiver context
   | .mdata _ body => child body context
   | .mvar _ => modify fun s => { s with incomplete := true }
-  | _ => pure ()
+  | .lit _ | .sort _ | .fvar _ | .bvar _ =>
+    match verdict with
+    | .allowlisted _ => pure () -- syntaxLeaf: already inferred in its real binder context
+    | _ => noteUnclassified ⟨"unclassified_syntax_leaf", first, namespaceLabel env first, origin⟩
 
 private def visitSummary (env : Environment) (origin : Name) (summary : Summary) : WalkM Unit := do
   if summary.incomplete then modify fun s => { s with incomplete := true }
@@ -1575,6 +1793,7 @@ private structure WalkResult where
   forbidden : Bool
   unclassified : Option Unclassified
   incomplete : Bool
+  admission : Option ProvenanceAdmissionWitness := none
   walked : Array String
 
 private def collectReadout (env : Environment) (theoremName address : Name) (readout : Expr) (extractionWork : Nat := 0) (extractionFailed : Bool := false) : CoreM WalkResult := do
@@ -1595,14 +1814,21 @@ private def collectReadout (env : Environment) (theoremName address : Name) (rea
     process env
   let budget := min provenanceExpressionFuel (provenanceExpressionLimit.get (← getOptions))
   let (_, state) ← Meta.MetaM.run' <| computation.run {
-    theoremName, statement, decision, summaries := summaryCache.getState env, exprFuel := budget }
+    theoremName, currentFirst := address, currentOrigin := address, statement, decision, summaries := summaryCache.getState env, exprFuel := budget }
   let counters := { state.counters with chargedVisits := budget - state.exprFuel }
   modifyEnv (summaryCache.setState · state.summaries)
   modifyEnv (countersCache.setState · counters)
   trace[InformationProvenance.check]
     "theorem={theoremName} P_constants_summarised={counters.summarisedConstants} visits={counters.visits} memo_hits={counters.memoHits} charged_visits={counters.chargedVisits} rechecked_nodes={counters.recheckedNodes} spine_arguments={counters.spineArguments} canonicalizations={counters.canonicalizations} construction_work={counters.constructionWork} traversal_work={counters.traversalWork} dispatch_work={counters.dispatchWork} inferred_occurrences={counters.inferredOccurrences} case_expansions={counters.caseExpansions} family_memo_hits={counters.familyMemoHits}"
+  let rootProducer := readout.getAppFn.constName?.getD address
+  let admission := (state.typeChecks[(readout, (#[] : Array Expr), rootProducer)]?).bind
+    TypeClassification.witness?
   let names := state.walked.toArray.map Name.toString |>.qsort (· < ·)
-  return (WalkResult.mk state.forbidden state.unclassified state.incomplete names)
+  let unclassified := if admission.isNone && !state.incomplete && !state.forbidden &&
+      state.unclassified.isNone then
+    some ⟨"unclassified_root", address, namespaceLabel env address, address⟩
+    else state.unclassified
+  return ⟨state.forbidden, unclassified, state.incomplete, admission, names⟩
 
 private def safeCollect (env : Environment) (theoremName address : Name) (readout : Expr)
     (extractionWork : Nat := 0) (extractionFailed : Bool := false) : CoreM WalkResult :=
@@ -1617,7 +1843,8 @@ def readoutClosureCurrent (theoremName : Name) (readout : Expr) : CoreM (Bool ×
   let r ← safeCollect env theoremName `readout readout
   if r.incomplete then return (false, none)
   if r.forbidden || r.unclassified.isSome then return (true, some r.walked)
-  return (false, some r.walked)
+  if r.admission.isSome then return (false, some r.walked)
+  return (true, some r.walked)
 
 def readoutClosure (env : Environment) (theoremName : Name) (readout : Expr) : CoreM (Bool × Option (Array String)) :=
   withEnv env (readoutClosureCurrent theoremName readout)
@@ -1636,7 +1863,7 @@ def provenanceErrorCurrent (root catalog theoremName realization : Name) : CoreM
   let result ← match readout with
     | some (e, _) => safeCollect env theoremName address e extractionWork
     | none => safeCollect env theoremName address (.sort .zero) extractionWork true
-  if !result.forbidden && result.unclassified.isNone && !result.incomplete then return none
+  if result.admission.isSome && !result.forbidden && result.unclassified.isNone && !result.incomplete then return none
   let reason := if result.incomplete then "incomplete_closure"
     else if result.forbidden then "forbidden_dependency" else "unclassified_form"
   let payload := if result.incomplete then Json.null
