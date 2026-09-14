@@ -78,9 +78,19 @@ def archive_sha(path, deadline):
             value.update(block)
 
 
+class GitHubCommandError(subprocess.CalledProcessError):
+    """Keep captured diagnostics in callers' failure receipts."""
+    def __str__(self):
+        return f"{super().__str__()} stderr: {self.stderr or '<empty>'}"
+
+
 def gh(deadline, *args):
-    return subprocess.run(["gh", *args], check=True, capture_output=True, text=True,
-                          timeout=remaining(deadline)).stdout
+    try:
+        return subprocess.run(["gh", *args], check=True, capture_output=True, text=True,
+                              timeout=remaining(deadline)).stdout
+    except subprocess.CalledProcessError as error:
+        raise GitHubCommandError(error.returncode, error.cmd,
+                                 output=error.output, stderr=error.stderr) from error
 
 
 def receipt(verb, status, **fields):

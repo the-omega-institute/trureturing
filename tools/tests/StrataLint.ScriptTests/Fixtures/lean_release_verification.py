@@ -136,9 +136,14 @@ class ReleaseVerificationCases:
         self.verification_fixture()
         self.assertEqual(19, self.verification("publish", FAKE_BUILD_EXIT="19").returncode)
         self.assertEqual([], list(self.remote.iterdir()))
-        failed = self.verification("publish", FAKE_FAIL="upload")
+        diagnostic = "HTTP 422: fixture upload rejected\n"
+        failed = self.verification("publish", FAKE_FAIL="upload", FAKE_FAIL_STDERR=diagnostic)
         self.assertNotEqual(0, failed.returncode)
         self.assertIn('"status":"failed"', failed.stdout)
+        report = json.loads(next(line.removeprefix("LEAN_CACHE_PUBLISH ")
+                                 for line in failed.stdout.splitlines() if line.startswith("LEAN_CACHE_PUBLISH ")))
+        self.assertIn("exit status 23", report["reason"])
+        self.assertTrue(report["reason"].endswith("stderr: " + diagnostic), report)
         self.assertFalse(any(call[:2] == ["release", "edit"] for call in self.verification_calls()))
 
     def test_verification_local_preparation_deadline_is_nonzero_before_release_creation(self):

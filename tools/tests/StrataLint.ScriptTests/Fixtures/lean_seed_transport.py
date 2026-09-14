@@ -454,6 +454,28 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
         self.assertNotEqual(0, self.transport("fetch").returncode)
         self.assertFalse((self.root / ".lake/build").exists())
 
+    def test_failed_github_command_preserves_stderr_and_exit_in_receipt(self):
+        diagnostic = "HTTP 422: fixture rejection\n具体原因: invalid fixture target\n"
+        result = self.transport("publish", FAKE_FAIL="create", FAKE_FAIL_STDERR=diagnostic)
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        report = json.loads(next(line.removeprefix("LEAN_CACHE_PUBLISH ")
+                                 for line in result.stdout.splitlines() if line.startswith("LEAN_CACHE_PUBLISH ")))
+        self.assertEqual("failed", report["status"])
+        self.assertIn("'gh', 'release', 'create'", report["reason"])
+        self.assertIn("exit status 23", report["reason"])
+        self.assertTrue(report["reason"].endswith("stderr: " + diagnostic), report)
+        self.assertEqual([], list(self.remote.iterdir()))
+
+    def test_failed_github_command_without_stderr_reports_explicit_fallback(self):
+        result = self.transport("publish", FAKE_FAIL="create")
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        report = json.loads(next(line.removeprefix("LEAN_CACHE_PUBLISH ")
+                                 for line in result.stdout.splitlines() if line.startswith("LEAN_CACHE_PUBLISH ")))
+        self.assertEqual("failed", report["status"])
+        self.assertIn("exit status 23", report["reason"])
+        self.assertIn("stderr: <empty>", report["reason"])
+        self.assertEqual([], list(self.remote.iterdir()))
+
     def test_concurrent_publishers_keep_distinct_complete_snapshots(self):
         with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
             results = list(pool.map(lambda run: self.transport("publish", run), ["401", "402"]))
@@ -529,7 +551,10 @@ verb = args[0] if args and args[0] == "api" else (args[1] if len(args) > 1 else 
 if os.environ.get("FAKE_HANG") == verb:
     import signal
     signal.pause()
-if len(args) > 1 and os.environ.get("FAKE_FAIL") == verb and verb != "upload": sys.exit(23)
+def fail():
+    sys.stderr.write(os.environ.get("FAKE_FAIL_STDERR", ""))
+    sys.exit(23)
+if len(args) > 1 and os.environ.get("FAKE_FAIL") == verb and verb != "upload": fail()
 if args[:2] == ["release", "list"] and "FAKE_LIST_JSON" in os.environ:
     print(os.environ["FAKE_LIST_JSON"]); sys.exit(0)
 if args[0] == "api" and "FAKE_API_JSON" in os.environ:
@@ -559,7 +584,7 @@ else:
     elif verb == "upload":
         for value in args[3:]:
             if pathlib.Path(value).is_file(): shutil.copyfile(value, directory / pathlib.Path(value).name)
-        if os.environ.get("FAKE_FAIL") == "upload": sys.exit(23)
+        if os.environ.get("FAKE_FAIL") == "upload": fail()
     elif verb == "edit":
         value = json.loads((directory / "release.json").read_text()); value["draft"] = False
         (directory / "release.json").write_text(json.dumps(value))
