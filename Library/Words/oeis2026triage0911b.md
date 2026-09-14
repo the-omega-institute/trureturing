@@ -58,7 +58,7 @@ triage: anchor
 | [A397244](https://oeis.org/A397244) | A(0)=a0=1,a1=1；∀n>1，2n[x^n]A^(2n)=(2n−1)[x^n]A^(2n+1)；∀n>0，Odd(a_n) iff ∃m≥0,n=2m+1且m&(m>>1)=0。 | 1 | unknown | med | yes | note-only |
 | [A396808](https://oeis.org/A396808) | 原隐式幂系数序列的两个模3支持猜想；奇偶子命题已证并排除。 | 1 | open | med | yes | dispatch |
 | [A396806](https://oeis.org/A396806) | A=x exp(A^{∘6}) 的 EGF；∀n≥1，a_n≡n mod6，由 IterateExponentialModSix.result 证明，蕴含源 mod3；奇偶已有 parity_iterate_six。 | 1 | repo-derived | med | yes | theorem |
-| [A396805](https://oeis.org/A396805) | EGF A=x exp(A∘5)的奇偶和mod3剩余候选；mod5=a_n≡n已由n23反驳。 | 1 | unknown | med | yes | note-only |
+| [A396805](https://oeis.org/A396805) | EGF A=x exp(A∘5)：奇偶已证；n≥3的模3周期0,1,0由 IterateExponentialFiveModThree.result 证明。mod5保留n23的非kernel反例。 | 1 | repo-derived | med | yes | theorem |
 | [A396803](https://oeis.org/A396803) | A=x exp(A^{∘3})为EGF，a0=0,a1=1；∀n≥1,Odd(a_n) iff Odd(n)，且a_n≡n mod3。 | 1 | proved | med | yes | reuse |
 | [A396798](https://oeis.org/A396798) | A=x+(A∘4)(A∘5)的七条迭代mod8猜想；首条周期原起点n≥1已反驳。 | 1 | unknown | med | yes | note-only |
 | [A393868](https://oeis.org/A393868) | A393866从常数项起的每个已结束极大奇偶游程长度为偶数。 | 1 | open | high | yes | note-only |
@@ -161,11 +161,39 @@ stepK 6 的线性固定列，再经全阶段归纳与既有模二定理合成模
 文献范围见 #7920，独立卷宗为
 `Problems/oeis-a396806-iterate-exponential-mod-six.md`。本次刷新 OEIS 与
 本仓 all-state 去重；复用先前直接引用、arXiv、MathOverflow、MSE 和
-GitHub 数列代码检索，不声称全球优先权。A396805 的模三问题仍独立开放。
+GitHub 数列代码检索，不声称全球优先权。A396805 的模三问题由独立的 IterateExponentialFiveModThree.result 结算，范围为 n≥3。
 
 ### A396805
 
-精确目标：A=x exp(A^{∘5})为EGF，a0=0,a1=1。∀n≥1,Odd(a_n) iff Odd(n)；∀n≥3,a_n≡1 mod3 iff n≡1 mod3，其余≡0；原称∀n≥1,a_n≡n mod5为假。 主风险是源码把一个已能数值反驳的命题仍标为Conjecture。已打开 https://oeis.org/A396805/b396805.txt ，逐行核对1..24，其中第23行 a_23=516114659489378430688740267292635767160672734031357，模5为2而23模5为3；第24行 a_24=454037334939528563499548911469632061937352653587474112，模5为2而预期4。`counterexamples.py` 用Bell整系数算法及源码Manyama的缓存递推 b(n,k,l)=Σ i C(n,i)b(n−i,k,l)Σ(j=1..k)b(i,j+l−1,l)/(n−1) 独立计算至24，每次除法检查整除，双方及官方b-file全一致；故这是明确反例，不是前缀未通过而已。mod5在1..64的失败下标为23,24,43,44,63,64，原命题应drop，无须再求证明。奇偶和n≥3的模3周期仍零差异，首项异常n=2必须保留。已完整读 `IntegralEGFComposition.eCoeff_composition`、`composition_map` 的整系数链式递推证明；`QuarticEGFFixedPoint.A_equation`、`fixed_unique` 把复合次数写死为4；`QuarticEGFModFour.mod_four` 与 `linear_fourth_mod_four` 也只处理第四次迭代和模4，不能以换数字包装出本条。 特别不能把 `linear_fourth_mod_four` 泛化成“素数p次迭代模p恒等”：本次 F=x exp x 的五次迭代在第22项模5为3，恰是早期错误推广的警报。整数EGF计算使用部分Bell多项式 B(m,k)=Σ(j=1..m−k+1)C(m−1,j−1)g_j B(m−j,k−1)，B(0,0)=1；复合系数为Σf_kB(m,k)。把严格前缀复合l次得g，再令 e_0=1、e_m=Σ(j=1..m)C(m−1,j−1)g_j e_(m−j)，a_n=n e_(n−1)。O(lN⁴)模运算、O(N²)存储，没有在有限特征内除n!，也不枚举排列。 可复制 `python3 probes.py A396805` 及 `python3 counterexamples.py`；主探针N=64、精确前缀16、反例复核24。外部Google/Yahoo检索失效，不能据此确定其余两条全球未证。剩余非包装逃逸是对 u_0=0,u_1=1,u_2=2,u_n=1_{n≡1 mod3}(n≥3) 证明F3中Φ_5(u)=u，并通过原EGF的前缀收缩转移；这是尚未证明的固定列消去式，不建议因mod5错误顺手重写成新的模5周期。停止条件：继续尝试原mod5命题立即停；其余若查到同源固定列证明、反例或只复述数字表也停。与l=3,6只共享Bell/收缩设施，模3结论不是同一个命题；本条余项并入该族note-only，当前0新增席，未来完整固定列证明才讨论独立席。全部直接A引用：A000169, A140054, A396799, A396800, A396803, A396804, A396806，每份文件全部字段、项目均已读完。本行档位1仅登记仍未找到证明的奇偶及模3两句；模5原句已由n23反例淘汰。三方核对是同族读者的两种算法与b-file，不冒称三席独立共识。数值步骤完全沿用A396803段Bell/exp操作，ℓ=5，N64；无需照原来源扩大到400。其余未打开的源引文及页面均ASSUMED-UNVERIFIED。
+精确目标：A=x exp(A^{∘5}) 为EGF，a(n)=n![x^n]A，a0=0、a1=1。
+`IterateExponentialParity.parity_iterate_five` 已证明全部正指标的奇偶性。
+`IterateExponentialFiveModThree.result` 证明 ∀n≥3，aK(5,n) 模3为
+`if n % 3 = 1 then 1 else 0`，即从n=3开始的0,1,0周期。
+既有 `A_equation`、`fixed_unique` 和 `eCoeff_encode` 确定原数列身份；
+source a(2)=2，故不能删除 n≥3 下界。OEIS revision13仍标原句为Conjecture；
+精确目标在 #7925 预登记，独立结算见
+`Problems/oeis-a396805-iterate-exponential-mod-three.md`。
+
+证明在整数EGF坐标中由 D(S³)=3S²DS 得立方的正次数系数被3整除，
+完整三阶链式法则经整数投影到模3。Lucas分解仅在3q截面消去最后一项，
+得到对任意外列f、内列g满足g(3q)=0且g(1)=1的两条复合截面公式。
+固定点递推依次给 b(3q)=0、b(3q+1)=1、b的j次迭代在3q+1处为j^q，
+以及 b(3q+2)=2·6^q；q=0保留2，q≥1为0。此为无界符号证明，
+不使用有限项拟合、模3中的阶乘除法或“完整五次迭代恒等”的假设。
+
+原模5猜想仍由已有精确非kernel计算反驳：官方
+https://oeis.org/A396805/b396805.txt 的第23项为
+516114659489378430688740267292635767160672734031357，模5为2而23模5为3；
+第24项为454037334939528563499548911469632061937352653587474112，模5为2而预期4。
+既有Bell整数算法、Manyama递推和b-file一致；1..64内失败指标为
+23,24,43,44,63,64。该结果没有在本次Lean定理中形式化，不新建Refuted声明。
+比较级数 F=x exp(x) 的五次迭代第22项模5为3，排除了此前的过强辅助恒等式。
+
+完整读取的直接A引用为 A000169、A140054、A396799、A396800、A396803、
+A396804、A396806。文献范围复用 #7925 所列交叉引用、arXiv、MathOverflow、
+Math StackExchange及GitHub数列代码检索；本轮刷新OEIS和仓库全状态PR，
+未重跑全部外部搜索。不可用的通用搜索引擎不作否定证据；不声称全球优先权。
+模5数值反例是已有外部计算读数，本次公开成果仅为独立模3定理。
 
 ### A396803
 
