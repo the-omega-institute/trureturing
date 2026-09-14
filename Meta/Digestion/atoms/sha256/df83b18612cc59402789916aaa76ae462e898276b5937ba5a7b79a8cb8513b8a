@@ -1,0 +1,18 @@
+### 定理 57.2（全部未来统计的充要预测表示）
+
+对两个 traceless-Hermitian 状态坐标 $\rho,\sigma$，有
+
+$$
+P_{\infty}\rho=P_{\infty}\sigma
+\iff
+\forall n\in\mathbb N,\ \forall i\in I,
+\quad
+\langle\rho,H^nE_i\rangle
+=
+\langle\sigma,H^nE_i\rangle.
+$$
+
+证明思路是把投影差为零转化为 $\rho-\sigma\in\mathcal V_{\infty}^{\perp}$，再用 span induction 将生成元上的内积相等推广到整个空间；反向则把每个 $H^nE_i$ 看作生成元。形式化定理为 `all_future_statistics_sufficiency`。
+
+这一定义比单次读数严格：两个状态可以有相同当前概率，却在某个未来 Heisenberg 迭代的 effect 上分开。相反，若投影相同，则在这套实验协议允许的任意有限延迟下都不能分开。
+

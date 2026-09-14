@@ -1,0 +1,20 @@
+### 定理 57.5（操作读数商的规范代表）
+
+定义
+
+$$
+\rho\sim_{\mathcal A_0}\sigma
+\iff
+R_{\mathcal A_0}(\rho)=R_{\mathcal A_0}(\sigma).
+$$
+
+则商空间 $\mathrm{States}/\!\sim_{\mathcal A_0}$ 规范等价于实际 readout 的 range。该等价把每个状态类送到它的 readout，并保持二元密度混合：
+
+$$
+R(t\rho+(1-t)\sigma)
+=tR(\rho)+(1-t)R(\sigma),
+\qquad 0\le t\le1.
+$$
+
+这是 `operational_readout_quotient_representation` 的内容。故当前尺度上的“对象”可以取为操作商中的一个类；它不是脱离指定 readout 的本体标签。
+

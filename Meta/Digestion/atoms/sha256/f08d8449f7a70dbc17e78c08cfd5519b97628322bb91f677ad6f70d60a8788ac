@@ -1,0 +1,21 @@
+### 定理 57.6（最小动力学修复）
+
+仅有当前 visible space $\mathcal V$ 时，$\mathcal V^{\perp}$ 未必对后续演化保持不变；于是两个当前不可区分状态的差异可能在未来重新出现。令
+
+$$
+\overline{\mathcal V}
+=\operatorname{span}\{(H^*)^n v:v\in\mathcal V,\ n\in\mathbb N\},
+\qquad
+\mathcal R=\overline{\mathcal V}^{\perp}.
+$$
+
+则 $\overline{\mathcal V}$ 是包含 $\mathcal V$ 且对 observable evolution 不变的最小扩张，$\mathcal R$ 对 adjoint evolution 不变，并且存在商上的线性演化 $\overline H$ 满足
+
+$$
+\overline H\circ\pi
+=
+\pi\circ H^*.
+$$
+
+形式化定理为 `prediction_closure_minimal_dynamical_repair`。这给第 50 节的经典闭合判据一个线性算子版本：若当前记录没有形成演化同余，就把可见空间闭包到最小不变空间，再在残差商上定义演化。
+

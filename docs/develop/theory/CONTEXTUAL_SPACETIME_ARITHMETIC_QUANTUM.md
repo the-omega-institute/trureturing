@@ -14377,3 +14377,186 @@ $$
 本节为 `repo-derived/open` 理论追加；没有新增 Lean 声明、形式覆盖或冻结状态。
 
 ## 追加锚（新终端）
+
+## 57. 无限未来统计、预测商与最小动力学修复
+
+第 54 节把对象定义在有限实验族上，第 55–56 节把记录复用和隐藏回流写成有限记忆模型。若允许继续进行同一类后续操作，还需要回答一个更强的问题：**当前记录是否足以决定所有有限次未来读数？** 这一节用 Heisenberg 迭代生成的可观测空间回答它。
+
+本节使用仓库中已冻结的 `AllFutureStatisticsSufficiency`、`FutureStatisticsEquivalence`、`MinimalPredictiveSummary`、`OperationalReadoutQuotientRepresentation` 与 `PredictionClosureDynamicalRepair` 结果。这里的“所有未来”指给定有限初始 effect 家族、给定离散 Heisenberg 演化下的所有有限迭代；它不表示任意连续控制或任意物理实验都已包含。
+
+### 定义 57.1（未来可见空间与预测投影）
+
+令 $\mathcal V_0$ 是当前选定的有限 effect 家族在 traceless-Hermitian 载体中的实线性 span，令 $H$ 是 Heisenberg 迭代的实线性作用。定义
+
+$$
+\mathcal V_{\infty}
+=
+\operatorname{span}_{\mathbb R}
+\{H^n E_i:n\in\mathbb N,\ i\in I\}.
+$$
+
+记 $P_{\infty}$ 为到 $\mathcal V_{\infty}$ 的正交投影。它只保留会在某个有限未来时刻进入所选 effect 读数的方向。
+
+### 定理 57.2（全部未来统计的充要预测表示）
+
+对两个 traceless-Hermitian 状态坐标 $\rho,\sigma$，有
+
+$$
+P_{\infty}\rho=P_{\infty}\sigma
+\iff
+\forall n\in\mathbb N,\ \forall i\in I,
+\quad
+\langle\rho,H^nE_i\rangle
+=
+\langle\sigma,H^nE_i\rangle.
+$$
+
+证明思路是把投影差为零转化为 $\rho-\sigma\in\mathcal V_{\infty}^{\perp}$，再用 span induction 将生成元上的内积相等推广到整个空间；反向则把每个 $H^nE_i$ 看作生成元。形式化定理为 `all_future_statistics_sufficiency`。
+
+这一定义比单次读数严格：两个状态可以有相同当前概率，却在某个未来 Heisenberg 迭代的 effect 上分开。相反，若投影相同，则在这套实验协议允许的任意有限延迟下都不能分开。
+
+### 定理 57.3（Schrödinger 读数与无限 Heisenberg span）
+
+设 $\Phi$ 是有限维量子通道，$H$ 是其 Heisenberg 对偶，$\mathcal A_0$ 是当前 operator system。令
+
+$$
+\mathcal V_{\infty}
+=\operatorname{span}_{\mathbb R}
+\{H^k A:A\in\mathcal A_0,\ k\in\mathbb N\}.
+$$
+
+则两个密度态的所有未来 operator-system readout 相等，当且仅当
+
+$$
+\rho-\sigma\in\mathcal V_{\infty}^{\perp_{\operatorname{tr}}},
+$$
+
+即
+
+$$
+\left[\forall k,\quad
+R_{\mathcal A_0}(\Phi^k\rho)
+=
+R_{\mathcal A_0}(\Phi^k\sigma)\right]
+\iff
+\left[\forall A\in\mathcal V_{\infty},\quad
+\operatorname{Tr}\bigl((\rho-\sigma)A\bigr)=0\right].
+$$
+
+形式化定理为 `future_statistics_iff_annihilates_infinite_system`。它把“历史被丢掉”精确改写为：历史差异是否落入全部未来读数的正交核。这个核依赖初始 effect 家族和 channel 对偶，不能被称为绝对不可观测部分。
+
+### 定理 57.4（预测充分 summary 的唯一因子化和维数下界）
+
+令 $S$ 是当前状态的线性 summary，并假设
+
+$$
+S(x)=S(y)
+\Longrightarrow
+\langle x,H^nE_i\rangle
+=
+\langle y,H^nE_i\rangle
+$$
+
+对所有 $n,i$ 成立。则存在唯一线性映射 $L$，使
+
+$$
+P_{\infty}=L\circ S_{\rm range},
+$$
+
+并且
+
+$$
+\operatorname{finrank}(\mathcal V_{\infty})
+\le
+\operatorname{finrank}(\operatorname{range}S).
+$$
+
+形式化定理为 `minimal_predictive_summary`。因此“保留多少历史”在该线性模型中有一条必要条件：summary 的可达维数不能小于未来预测空间的维数。summary 可以包含额外不可见坐标，但这些坐标对当前声明的未来任务不是必要的。
+
+### 定理 57.5（操作读数商的规范代表）
+
+定义
+
+$$
+\rho\sim_{\mathcal A_0}\sigma
+\iff
+R_{\mathcal A_0}(\rho)=R_{\mathcal A_0}(\sigma).
+$$
+
+则商空间 $\mathrm{States}/\!\sim_{\mathcal A_0}$ 规范等价于实际 readout 的 range。该等价把每个状态类送到它的 readout，并保持二元密度混合：
+
+$$
+R(t\rho+(1-t)\sigma)
+=tR(\rho)+(1-t)R(\sigma),
+\qquad 0\le t\le1.
+$$
+
+这是 `operational_readout_quotient_representation` 的内容。故当前尺度上的“对象”可以取为操作商中的一个类；它不是脱离指定 readout 的本体标签。
+
+### 定理 57.6（最小动力学修复）
+
+仅有当前 visible space $\mathcal V$ 时，$\mathcal V^{\perp}$ 未必对后续演化保持不变；于是两个当前不可区分状态的差异可能在未来重新出现。令
+
+$$
+\overline{\mathcal V}
+=\operatorname{span}\{(H^*)^n v:v\in\mathcal V,\ n\in\mathbb N\},
+\qquad
+\mathcal R=\overline{\mathcal V}^{\perp}.
+$$
+
+则 $\overline{\mathcal V}$ 是包含 $\mathcal V$ 且对 observable evolution 不变的最小扩张，$\mathcal R$ 对 adjoint evolution 不变，并且存在商上的线性演化 $\overline H$ 满足
+
+$$
+\overline H\circ\pi
+=
+\pi\circ H^*.
+$$
+
+形式化定理为 `prediction_closure_minimal_dynamical_repair`。这给第 50 节的经典闭合判据一个线性算子版本：若当前记录没有形成演化同余，就把可见空间闭包到最小不变空间，再在残差商上定义演化。
+
+### Zeckendorf 前缀作为一个有误差界的预测摘要
+
+Zeckendorf 卷定理 459.2 给出一个可直接接入本节的有限精度例子。设 $q_L(n)$ 读取自然数 $n$ 的低 $L$ 位合法 Zeckendorf 字串，设 $\alpha$ 为该卷相位定义中的黄金共轭数。若
+
+$$
+q_L(n)=q_L(m),
+$$
+
+则
+
+$$
+\left\|\alpha(n-m)\right\|\le\alpha^L,
+$$
+
+其中左侧是到最近整数的圆周距离。于是可以定义一个明确的相位记录模型
+
+$$
+|\psi_n\rangle
+=\frac{|0\rangle+e^{2\pi i\alpha n}|1\rangle}{\sqrt2}.
+$$
+
+两条同前缀历史对应的纯态迹距离满足
+
+$$
+D\bigl(|\psi_n\rangle\langle\psi_n|,
+|\psi_m\rangle\langle\psi_m|\bigr)
+=\left|\sin\bigl(\pi\alpha(n-m)\bigr)\right|
+\le\min\{1,\pi\alpha^L\}.
+$$
+
+因此，对这个特定的相位读出和任意后续 POVM，低 $L$ 位可以作为误差为 $\pi\alpha^L$ 的近似预测摘要；要让单次读出误差不超过 $\varepsilon$，一个充分条件是
+
+$$
+L\ge
+\left\lceil\frac{\log(\pi/\varepsilon)}{-\log\alpha}\right\rceil.
+$$
+
+这只是一个指定记录模型中的任务界。Zeckendorf 卷定理 469.5 同时指出，同前缀相位的 Wasserstein 或 Lipschitz 误差界不自动给出总变差收敛；某些端点读出仍可把两个同前缀历史完全分开。故“前缀足够”必须连同读出类别和误差度量一起声明，不能从相位逼近直接推出完整历史已经被压缩。
+
+### 与第 54–56 节的边界
+
+第 54 节的有限实验族只要求在已声明的协议上响应相同；本节的 $\mathcal V_{\infty}$ 把协议固定后允许任意有限迭代，因此条件更强。第 56 节的 $h_{\varepsilon,T}$ 是给定时间窗与误差的近似记忆视界；本节给出的是精确的线性预测商，未引入范数误差或有限时间截断。实际应用中可以先取后续章节的有限稳定深度，再用第 56 节的尾核界控制截断误差。
+
+这些定理不声称任意开放量子系统都有给定的有限维 Heisenberg 对偶，也不声称所有连续控制已被枚举；它们只在文件中明确的有限维、线性、指定 effect/channel 假设下成立。本节新增理论叙述应标记为 `repo-derived/open`；不新增 Lean 声明，也不把解释层的“客体”表述升级为普适物理定律。
+
+## 追加锚（新终端）
