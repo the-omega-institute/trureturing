@@ -113,7 +113,7 @@ Implement three independent exact calculations for every prime `p < 10^6`,
 excluding and separately reporting ramified and small cases:
 
 1. direct pair-state Pisano periods modulo `p` and `p^2`;
-2. fast-doubling checks of `F_r mod p^2` and `F_{r+1}-1 mod p^2` at `r = pi(p)`;
+2. fast-doubling checks of `F_r mod p^2` and `F_{r+1} mod p^2` at `r = pi(p)`;
 3. matrix exponentiation of `A^r mod p^2` and the first-lift matrix `B mod p`.
 
 Receipt fields should include `p`, `legendreSym 5 p`, `rank`, `pi_p`, `pi_p2`,
@@ -444,7 +444,7 @@ classification, without a hypothesis on any initial depth.
 **Unbounded mixed-index consequence.** Fix any odd inert prime $q$ whose
 rank $a=r(q)$ is odd. For every $j\ge1$, the primitive block at index
 $a q^j$ contains an inert prime of odd initial depth. Such witnesses in
-different j are distinct, and each satisfies
+different $j$ are distinct, and each satisfies
 
 $$
 r(p)=a q^j,\qquad p\ge2a q^j-1,
