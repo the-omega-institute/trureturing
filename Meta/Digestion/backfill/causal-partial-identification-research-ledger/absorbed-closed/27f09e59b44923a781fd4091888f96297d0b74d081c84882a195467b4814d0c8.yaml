@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:27f09e59b44923a781fd4091888f96297d0b74d081c84882a195467b4814d0c8
   normalized_sha256: sha256:27f09e59b44923a781fd4091888f96297d0b74d081c84882a195467b4814d0c8
 cas_ref: sha256:27f09e59b44923a781fd4091888f96297d0b74d081c84882a195467b4814d0c8
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S0/Certificates/RationalMomentAmbiguityCertificate.query_gap_le_residualBudget
+    target_statement_id: sha256:f6b63a228a763d58bc7fab630ded9479b1f5bfda33885e926592bec37fe080c6
 receipts:
   unresolved_subitems: []
