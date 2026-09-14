@@ -3,8 +3,10 @@ import concurrent.futures
 import json
 import os
 import pathlib
+import random
 import shutil
 import subprocess
+import tarfile
 
 from lean_seed_support import OTHER, PUBLISH, REV, PartitionFixture, digest, write
 
@@ -78,6 +80,64 @@ subprocess.run = run
 
     def gh_budgets(self):
         return [json.loads(line) for line in (self.root / "gh-budgets").read_text().splitlines()]
+
+    def preparation_deadline_probe(self, phase):
+        # Small incompressible material reaches archive hashing and multipart
+        # splitting without allocating a production-sized Release asset.
+        (self.root / ".lake/build/lib/lean/D5/A.olean").write_bytes(random.Random(31).randbytes(3 * 1024 * 1024))
+        owner = self.publisher.with_name("lean_cache_release.py")
+        owner.write_text(owner.read_text().replace("CHUNK_BYTES = 1610612736", "CHUNK_BYTES = 2097152"))
+        environment = self.deadline_probe(1)
+        with (self.bin / "sitecustomize.py").open("a") as fixture:
+            fixture.write('''
+import tarfile
+phase = os.environ["FAKE_PREPARATION_PHASE"]
+archive_opens = 0
+original_open, original_copy = pathlib.Path.open, tarfile.copyfileobj
+class TimedReader:
+    def __init__(self, source): self.source = source
+    def __getattr__(self, name): return getattr(self.source, name)
+    def __enter__(self): return self
+    def __exit__(self, *args): return self.source.__exit__(*args)
+    def read(self, size=-1):
+        global clock
+        block = self.source.read(size)
+        if block:
+            with original_open(pathlib.Path(os.environ["FAKE_REMOTE"]).parent / "preparation-reads", "a") as log:
+                log.write(str(len(block)) + "\\n")
+            clock = 2
+        return block
+def open_path(path, mode="r", *args, **kwargs):
+    global archive_opens
+    source = original_open(path, mode, *args, **kwargs)
+    if mode == "rb" and path.name == "lean-build.tgz":
+        archive_opens += 1
+        if (phase, archive_opens) in (("hash", 1), ("split", 2)): return TimedReader(source)
+    if mode == "rb" and path.name == "lean-build.tgz.part-00" and phase == "part-hash":
+        return TimedReader(source)
+    return source
+def copy(source, target, *args, **kwargs):
+    if phase == "archive" and str(getattr(source, "name", "")).endswith("A.olean"):
+        source = TimedReader(source)
+    return original_copy(source, target, *args, **kwargs)
+pathlib.Path.open, tarfile.copyfileobj = open_path, copy
+''')
+        (self.root / "preparation-reads").unlink(missing_ok=True)
+        return {**environment, "FAKE_PREPARATION_PHASE": phase}
+
+    def assert_preparation_stopped(self, result, status):
+        self.assertEqual(status, result.returncode, result.stdout + result.stderr)
+        self.assertIn('"status":"failed"', result.stdout)
+        self.assertIn("deadline exhausted", result.stdout)
+        consumed = sum(map(int, (self.root / "preparation-reads").read_text().splitlines()))
+        self.assertGreater(consumed, 0)
+        self.assertLessEqual(consumed, 1024 * 1024, "local preparation continued reading after its deadline")
+        self.assertEqual([], list(self.remote.iterdir()))
+
+    def test_publication_deadline_stops_local_archive_hash_and_split_work(self):
+        for phase in ("archive", "hash", "split", "part-hash"):
+            with self.subTest(phase=phase):
+                self.assert_preparation_stopped(self.transport("publish", **self.preparation_deadline_probe(phase)), 0)
 
     def test_hanging_direct_fetch_is_bounded_and_fallback_preserves_build_exit(self):
         self.assertEqual(0, self.transport("publish").returncode)
@@ -220,14 +280,29 @@ subprocess.run = run
         self.assertFalse((self.root / ".lake/build").exists())
 
     def test_roundtrip_is_partitioned_and_source_sha_is_provenance_only(self):
+        address = self.transport("address")
+        self.assertEqual(0, address.returncode, address.stdout + address.stderr)
+        report_path = "report-cache/" + json.loads(address.stdout)["partition"] + "/seed.json"
+        write(self.root / ".lake" / report_path, '{"material":"report-seed"}\n')
         saved = self.transport("publish")
         self.assertEqual(0, saved.returncode, saved.stdout + saved.stderr)
         self.assertIn('"status":"published"', saved.stdout.replace(" ", ""))
+        snapshot = next(self.remote.iterdir())
+        metadata = json.loads((snapshot / "manifest.json").read_text())
+        packed = (snapshot / "lean-build.tgz").read_bytes()
+        self.assertEqual(digest(packed), metadata["archive_sha256"])
+        self.assertEqual(len(packed), metadata["archive_bytes"])
+        self.assertEqual([{"name": "lean-build.tgz", "sha256": digest(packed), "bytes": len(packed)}], metadata["parts"])
+        with tarfile.open(snapshot / "lean-build.tgz") as archive:
+            self.assertEqual(b"locally-produced-olean", archive.extractfile("build/lib/lean/D5/A.olean").read())
+            self.assertEqual(b'{"material":"report-seed"}\n', archive.extractfile(report_path).read())
         shutil.rmtree(self.root / ".lake/build")
+        shutil.rmtree(self.root / ".lake/report-cache")
         write(self.root / "D5/A.lean", "def a := 333\n")
         restored = self.transport("fetch", GITHUB_SHA="e"*40)
         self.assertEqual(0, restored.returncode, restored.stdout + restored.stderr)
         self.assertEqual("locally-produced-olean", (self.root / ".lake/build/lib/lean/D5/A.olean").read_text())
+        self.assertEqual('{"material":"report-seed"}\n', (self.root / ".lake" / report_path).read_text())
         self.assertIn('"mode":"partition"', restored.stdout.replace(" ", ""))
 
     def test_missing_corrupt_and_cross_partition_are_misses_without_target_writes(self):

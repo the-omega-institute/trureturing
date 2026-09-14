@@ -140,6 +140,12 @@ class ReleaseVerificationCases:
         self.assertIn('"status":"failed"', failed.stdout)
         self.assertFalse(any(call[:2] == ["release", "edit"] for call in self.verification_calls()))
 
+    def test_verification_local_preparation_deadline_is_nonzero_before_release_creation(self):
+        environment = self.preparation_deadline_probe("archive")
+        self.verification_fixture()
+        self.assert_preparation_stopped(self.verification("publish", **environment), 1)
+        self.assertFalse(any(call[:2] == ["release", "create"] for call in self.verification_calls()))
+
     def test_verification_rejects_dirty_checkout_before_build(self):
         self.verification_fixture()
         write(self.root / "D5/A.lean", "def a := 2\n")
