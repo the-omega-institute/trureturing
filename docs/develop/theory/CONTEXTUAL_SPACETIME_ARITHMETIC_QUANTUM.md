@@ -9725,3 +9725,177 @@ $$
 因此本节优化与这个系综的后信息辨别只差固定正仿射变换。该一般框架见 Carmeli、Heinosaari、Toigo，[*State discrimination with post-measurement information and incompatibility of quantum measurements*（2018），§II.1、定理 1–2](https://arxiv.org/abs/1804.09693)。其定理 1 将事前与事后揭示信息时的最优值相同，刻画为存在兼容的各子系综最优测量；两个候选密度算子可以在不同子系综中重复出现，子系综标签仍互不混淆。这里的权重归一化与该映射明确保留了信息揭示的时点。证毕。
 
 ## 追加锚（新终端）
+
+## 36. 任意有限个后揭权重的三标签经典最优存储
+
+**定理 36.1（有限权重表的三结果达到界）。** 沿用定义 34.1 的固定存储任务。允许 $A,J$ 为任意两个量子比特密度矩阵，即
+
+$$
+A,J\in\mathbb C^{2\times2},\qquad A,J\ge0,
+\qquad \operatorname{tr}A=\operatorname{tr}J=1,
+$$
+
+并预先给定任意有限个正权重
+
+$$
+m\ge1,\qquad 0<c_1<c_2<\cdots<c_m.
+$$
+
+共同存储通道可以依赖 $A,J$ 和整个权重表，但必须在实际权重揭示前固定。对任意有限经典输出通道 $\Phi$，记
+
+$$
+L_\Phi(c)=\|c\Phi(A)-\Phi(J)\|_1,
+\qquad
+V_m=\sup_{\Phi\ \mathrm{classical}}\sum_{j=1}^m L_\Phi(c_j).
+$$
+
+这里优化的是所写范数之和；把某个权重的读数换算为定义 34.1 的判别成功率时，仍须使用该权重对应的 $1+c_j$ 分母。
+
+对 $k=0,\ldots,m$ 定义 Hermitian 奖励矩阵
+
+$$
+G_k=
+\left(\sum_{j=k+1}^m c_j-\sum_{j=1}^k c_j\right)A
++(2k-m)J,
+$$
+
+其中空和为零。则
+
+$$
+\boxed{
+V_m=
+\max_{\substack{E_0,\ldots,E_m\ge0\\\sum_{k=0}^m E_k=I}}
+\sum_{k=0}^m\operatorname{tr}(E_kG_k)
+=\min_{\substack{Y=Y^\dagger\\Y\ge G_k\ (0\le k\le m)}}
+\operatorname{tr}Y.
+}
+$$
+
+两个最优值均达到，并且存在一组达到原范数总分 $V_m$ 的 POVM，其非零效应数至多为
+
+$$
+\boxed{\min\{m+1,3\}.}
+$$
+
+因此，无论这张有限权重表有多少项，最优经典存储总能只保留至多三个输出标签。权重揭示后再根据存储标签作相应的二元决策。
+
+证明。先核对从任意结果数到有限奖励表的归约。对一个任意 POVM 效应 $E\ge0$，令
+
+$$
+a=\operatorname{tr}(EA)\ge0,\qquad
+b=\operatorname{tr}(EJ)\ge0.
+$$
+
+序列 $c_ja-b$ 随 $j$ 不减。因此可以选择一个 $k\in\{0,\ldots,m\}$，使 $j\le k$ 时 $c_ja-b\le0$，$j>k$ 时 $c_ja-b\ge0$。零值可以置于分界的任一侧；若 $a=0$，取 $k=m$ 即可，不需除以 $a$。于是
+
+$$
+\sum_{j=1}^m|c_ja-b|
+=-\sum_{j=1}^k(c_ja-b)+\sum_{j=k+1}^m(c_ja-b)
+=\operatorname{tr}(EG_k).
+$$
+
+任何其他分界给出的带符号和都不超过绝对值之和，所以逐效应恒有
+
+$$
+\sum_{j=1}^m\bigl|\operatorname{tr}(E(c_jA-J))\bigr|
+=\max_{0\le k\le m}\operatorname{tr}(EG_k).
+$$
+
+给定任意有限 POVM $(M_\ell)_\ell$，为每个结果选择一个达到上述最大值的标签 $k(\ell)$，然后令
+
+$$
+E_k=\sum_{\ell:\,k(\ell)=k}M_\ell.
+$$
+
+这些效应组成 $m+1$ 标签的 POVM，其线性奖励恰等于原 POVM 的范数总分。因此，原问题在任意有限结果数上的上确界不超过所列线性奖励最大值。反过来，对任一这样的 $(E_k)$，逐效应的绝对值之和都不小于所选择的第 $k$ 项奖励，故其原范数总分不小于线性奖励。这给出反向不等式，两个最优值相等。
+
+线性奖励的可行集是有限维紧集：各 $E_k$ 满足 $0\le E_k\le I$，完整性与正性条件均闭。连续目标因而达到最大值。其半正定对偶就是陈述中的 $Y\ge G_k$；原问题取 $E_k=I/(m+1)$ 严格可行，对偶取足够大的正数乘 $I$ 也严格可行。Slater 强对偶给出两者值相等及对偶最优值达到。
+
+现在证明三个非零效应足够。先用共同酉变换将 $A$ 对角化，再施加保持 $A$ 对角的对角相位变换，使 $J$ 的非对角元变为实数；若该元为零，则无需第二步。即使 $A$ 简并，这个操作也成立。因此 $A,J$ 及全部 $G_k$ 都可取实对称矩阵。对一个最优 POVM 的每项作
+
+$$
+E_k\longmapsto\frac{E_k+\overline{E_k}}2,
+$$
+
+正性与完整性保持。由于 $G_k$ 实对称，$\operatorname{tr}(E_kG_k)$ 也保持，所以存在实对称最优 POVM。
+
+记其非零效应的指标集为 $\mathcal I$。实对称二阶矩阵构成三维实向量空间。若 $|\mathcal I|>3$，则存在不全为零的实数 $(a_k)_{k\in\mathcal I}$，使
+
+$$
+\sum_{k\in\mathcal I}a_kE_k=0.
+$$
+
+每个非零正效应的迹严格为正。对该等式取迹可知，系数 $a_k$ 必须既有正数也有负数。把系数在 $\mathcal I$ 外延拓为零，并选择
+
+$$
+0<\varepsilon<\frac1{\max_{k\in\mathcal I}|a_k|}.
+$$
+
+则两组
+
+$$
+E_k^{\pm}=(1\pm\varepsilon a_k)E_k
+$$
+
+都为合法 POVM。令
+
+$$
+\Delta=\sum_{k\in\mathcal I}a_k\operatorname{tr}(E_kG_k).
+$$
+
+两组线性奖励分别为 $V_m+\varepsilon\Delta$ 与 $V_m-\varepsilon\Delta$。最优性要求两者都不超过 $V_m$，故 $\Delta=0$。
+
+沿同一方向走到
+
+$$
+s_* =\min_{k:\,a_k<0}\frac{-1}{a_k}>0,
+\qquad
+\widetilde E_k=(1+s_*a_k)E_k.
+$$
+
+此时全部系数 $1+s_*a_k$ 非负，至少一个原非零效应变为零；矩阵和仍为 $I$，奖励仍为 $V_m+s_*\Delta=V_m$。这一步不要求效应为秩一。每次至少消去一个非零效应，有限次重复后便得到至多三个非零效应的最优奖励 POVM。
+
+最后把这组 POVM 用作经典存储。其原范数总分不小于 $V_m$，又由 $V_m$ 的定义不大于 $V_m$，所以原目标也达到。删去零效应后，通道可写为
+
+$$
+\Phi_*(\rho)=\sum_{\ell=1}^{n_*}
+\operatorname{tr}(E_\ell^*\rho)|\ell\rangle\langle\ell|,
+\qquad n_*\le\min\{m+1,3\}.
+$$
+
+所用线性依赖扰动是标准 POVM 极点方法，见 D'Ariano、Lo Presti 与 Perinotti，*Classical randomness in quantum measurements*，[推论 7 及其证明](https://arxiv.org/abs/quant-ph/0408115)。实对称空间的 $d(d+1)/2$ 维数界也用于实态系综的可访问信息优化，见 Sasaki 等，*Accessible information and optimal strategies for real symmetrical quantum sources*，[引理 5](https://arxiv.org/abs/quant-ph/9812062)；该文研究的是 Shannon 互信息，上面的奖励归约与保值消去步骤直接处理本节的范数总分。证毕。
+
+**推论 36.2（三标签统一界的锐性与纯态量子差距）。** 对定理 36.1 的全部候选对与有限权重表，统一的三标签上界不能改成两个。进一步，若
+
+$$
+A=|u\rangle\langle u|,\qquad J=|v\rangle\langle v|,
+\qquad \|u\|=\|v\|=1,
+\qquad 0<|\langle u,v\rangle|^2<1,
+$$
+
+且 $m\ge2$，则仍有严格差距
+
+$$
+V_m<\sum_{j=1}^m\|c_jA-J\|_1.
+$$
+
+证明。命题 35.2 中
+
+$$
+m=2,\qquad c_1=\frac12,\quad c_2=\frac32,
+\qquad |\langle u,v\rangle|^2=\frac9{10}
+$$
+
+的最优经典总分为 $8-6\sqrt{30}/5$，且任一达到测量都至少有三个非零结果。它属于本节任务，故排除了对全部有限权重表适用的二标签上界。
+
+对于所述纯态候选的严格差距，经典测量的迹范数收缩性逐项给出
+
+$$
+L_\Phi(c_j)\le\|c_jA-J\|_1.
+$$
+
+若总和取等，定理 36.1 保证存在达到该总和的有限经典存储，且每一项都必须取等。任选两个不同权重即与定理 34.2 矛盾。因此总和严格小于量子原值。恒等量子存储则同时保留右端各项。
+
+这里的三标签计数只针对这一次固定存储后留下的经典输出，保证给定权重表上的最佳经典总分。所用测量可以随权重表改变；结论既不要求保留各个权重的量子最优值，也不给此前多阶段仪器、控制器运行存储或完整历史档案设定三标签上界。证毕。
+
+## 追加锚（新终端）
