@@ -931,17 +931,21 @@ private def emit (text : String) : WireM Unit := do
     emitLiteral text
     modify fun s => { s with tokens := some (tokens.insert text tokens.size) }
 
-private def wireName : Name → WireM Unit
+private def wireName (name : Name) (depth : Nat := 0) : WireM Unit := do
+  if depth > 256 then throw "incomplete_closure:E8.name_depth"
+  match name with
   | .anonymous => emit "anonymous"
-  | .str parent value => do emit "str"; wireName parent; emit value
-  | .num parent value => do emit "num"; wireName parent; emit (toString value)
+  | .str parent value => emit "str"; wireName parent (depth + 1); emit value
+  | .num parent value => emit "num"; wireName parent (depth + 1); emit (toString value)
 
-private def wireLevel (params : List Name) : Level → WireM Unit
+private def wireLevel (params : List Name) (level : Level) (depth : Nat := 0) : WireM Unit := do
+  if depth > 256 then throw "incomplete_closure:E8.level_depth"
+  match level with
   | .zero => emit "zero"
-  | .succ value => do emit "succ"; wireLevel params value
-  | .max a b => do emit "max"; wireLevel params a; wireLevel params b
-  | .imax a b => do emit "imax"; wireLevel params a; wireLevel params b
-  | .param name => do
+  | .succ value => emit "succ"; wireLevel params value (depth + 1)
+  | .max a b => emit "max"; wireLevel params a (depth + 1); wireLevel params b (depth + 1)
+  | .imax a b => emit "imax"; wireLevel params a (depth + 1); wireLevel params b (depth + 1)
+  | .param name =>
     if params.contains name then emit "parameter"; emit (toString (params.idxOf name))
     else emit "rigid"; wireName name
   | .mvar _ => throw "incomplete_closure:E7.level_metavariable"
