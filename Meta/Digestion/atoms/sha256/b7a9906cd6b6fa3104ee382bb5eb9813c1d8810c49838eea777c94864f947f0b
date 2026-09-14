@@ -1,0 +1,17 @@
+**命题 33.3（信念半径与动作保持）。** 令 $\mu\in\mathcal{P}(\Sigma)$，并用
+$$
+d_{\rm TV}(\nu,\mu)=\frac12\sum_s|\nu(s)-\mu(s)|
+$$
+定义总变差。若非空 $\mathcal{F}$ 满足 $d_{\rm TV}(\nu,\mu)\le\varepsilon$ 对所有 $\nu\in\mathcal{F}$，则对每个 $a$：
+$$
+\left|R_{\mathcal{F}}(a)-\sum_s\mu(s)\ell(a,s)\right|\le M\varepsilon.
+$$
+若 $a_\mu$ 是点信念风险的唯一最优动作，并且
+$$
+\gamma_\mu=\min_{a\ne a_\mu}
+\left[
+\sum_s\mu(s)\ell(a,s)-\sum_s\mu(s)\ell(a_\mu,s)
+\right]>2M\varepsilon,
+$$
+则 $a_\mu$ 也是鲁棒风险 $R_{\mathcal{F}}$ 的唯一最优动作。
+
