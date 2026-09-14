@@ -2,11 +2,10 @@
    generality: I
    mirror-B: D5/B/S0/Certificates/KarttunenGcdTotientPositionRefutation
    mirror-E: none(waiver:kernel-checked-refutation)
-   anchors: [mathlib/module/Mathlib.Data.Nat.Totient, mathlib/module/Mathlib.Data.Nat.Find, mathlib/module/Mathlib.Tactic.Simproc.Factors]
+   anchors: [mathlib/module/Mathlib.Data.Nat.Totient, mathlib/module/Mathlib.Tactic.Simproc.Factors]
    utility: kind=certified-instance; basis=refutes=gid:D5/S0/Certificates/KarttunenGcdTotientPositionRefutation.claim; result=D5/S0/Certificates/KarttunenGcdTotientPositionRefutation.result; claim=D5/S0/Certificates/KarttunenGcdTotientPositionRefutation.claim
    digest: The value 60 refutes Karttunen's A089966 characterization of A129598 differences. -/
 
-import Mathlib.Data.Nat.Find
 import Mathlib.Data.Nat.Totient
 import Mathlib.Tactic.Simproc.Factors
 
