@@ -1,0 +1,260 @@
+## 第 11 章：粗标签读数的项目一致性桥接
+
+第 9 章的项目一致性条件作用于完整含系统态：删除一个未来记录后，含系统与既有记录前缀的边缘是否保持不变。第 10 章的粗标签缺陷则描述单步动力学是否能由粗标签概率闭合预测。两者之间还缺少一个可直接计算的桥接：**删除记录之后，粗标签测量本身的概率是否保持不变。** 这一问题只涉及测量事件，不要求完整密度矩阵保持不变。
+
+### 11.1 一步记录与粗事件
+
+设有限系统基为 $\{|x\rangle\}_{x\in X}$，一步记录丢弃通道为
+$$
+M_C(\rho)=C\odot\rho,
+$$
+其中 $C=(c_{xy})$ 是单位对角的相关矩阵，因此 $C\succeq0$ 且 $c_{yx}=\overline{c_{xy}}$。记 $J$ 为全 1 矩阵，即 $J_{xy}=1$；它是 Schur 乘法的单位元。令 $\{Q_b\}_{b\in\mathcal B}$ 是有限粗标签的投影测量：
+$$
+Q_bQ_{b'}=\delta_{bb'}Q_b,
+\qquad
+\sum_{b\in\mathcal B}Q_b=I.
+$$
+对事件 $B\subseteq\mathcal B$，记
+$$
+Q_B=\sum_{b\in B}Q_b.
+$$
+粗标签分布记为
+$$
+C_Q(\rho)_b=\operatorname{tr}(Q_b\rho).
+$$
+定义删除前后的事件概率差的最坏值为
+$$
+\delta_B(C)
+=
+\sup_{\rho}\left|
+\operatorname{tr}\!\left(Q_BM_C(\rho)\right)
+-
+\operatorname{tr}(Q_B\rho)
+\right|,
+$$
+以及所有粗事件的缺陷
+$$
+\delta_Q(C)=\max_{B\subseteq\mathcal B}\delta_B(C).
+$$
+这里的上确界遍历系统上的所有密度算子。
+
+Schur 通道的对偶为
+$$
+M_C^*(A)=\overline C\odot A,
+$$
+因为
+$$
+\operatorname{tr}\!\left(A(C\odot\rho)\right)
+=
+\operatorname{tr}\!\left((\overline C\odot A)\rho\right).
+$$
+所以定义粗事件缺陷算子
+$$
+D_B(C)=M_C^*(Q_B)-Q_B
+=(\overline C-J)\odot Q_B.
+$$
+$D_B(C)$ 是 Hermitian 算子，因而
+$$
+\delta_B(C)=\|D_B(C)\|_\infty.
+$$
+这里使用了有限维事实
+$$
+\sup_{\rho}\left|\operatorname{tr}(\rho A)\right|=\|A\|_\infty
+$$
+对任意 Hermitian $A$ 成立。
+
+### 11.2 最坏粗读数误差的精确公式
+
+对每个输入态，粗标签分布的总变差距离满足
+$$
+\operatorname{TV}\!\left(
+C_Q(M_C(\rho)),C_Q(\rho)
+\right)
+=
+\max_{B\subseteq\mathcal B}
+\left|
+\operatorname{tr}\!\left(Q_BM_C(\rho)\right)
+-
+\operatorname{tr}(Q_B\rho)
+\right|.
+$$
+因此
+$$
+\boxed{
+\sup_{\rho}\operatorname{TV}\!\left(
+C_Q(M_C(\rho)),C_Q(\rho)
+\right)
+=
+\delta_Q(C)
+=
+\max_{B\subseteq\mathcal B}
+\left\|(\overline C-J)\odot Q_B\right\|_\infty.
+}
+$$
+证明只用有限最大值与态空间上确界的交换：对任意 $\rho$，每个事件差都不超过相应的算子范数，给出一个上界；反之，固定达到最大值的事件 $B$，取其 Hermitian 缺陷算子的最大特征向量态即可达到该事件的范数。证毕。
+
+于是粗读数对所有输入态项目一致，当且仅当
+$$
+\boxed{
+(\overline{c_{xy}}-1)(Q_B)_{xy}=0
+\quad
+\text{对所有 }B\subseteq\mathcal B\text{ 与所有 }x,y\in X.
+}
+$$
+由于 $c_{xy}=1$ 与 $\overline{c_{xy}}=1$ 等价，也可写成：
+$$
+(Q_B)_{xy}=0
+\quad\text{只要 }c_{xy}\ne1.
+$$
+这是一条比完整态项目一致性更弱、但比单纯保留对角布居更强的精确条件。
+
+### 11.3 Gram 几何与等价类块对角性
+
+在受控记录模型中，若
+$$
+ c_{xy}=e^{i(\theta_x-\theta_y)}\langle e_y,e_x\rangle,
+$$
+令
+$$
+ w_x=e^{i\theta_x}e_x,
+$$
+则
+$$
+ c_{xy}=\langle w_y,w_x\rangle.
+$$
+因为 $w_x,w_y$ 都是单位向量，Cauchy--Schwarz 等号条件给出
+$$
+ c_{xy}=1
+\iff
+w_x=w_y.
+$$
+于是关系
+$$
+ x\sim_C y
+\iff
+c_{xy}=1
+$$
+是一个等价关系。粗事件 $Q_B$ 的项目一致性条件等价于：每个 $Q_B$ 相对于这些等价类分解都是块对角的。也就是说，只有相位补偿后的记录向量满足 $w_x=w_y$ 的系统标签之间，粗投影才允许保留非零矩阵元；记录向量不同的标签之间，粗投影必须没有相干矩阵元。
+
+这给出三种可区分的情况：
+
+1. 完整含系统态可能不满足项目一致性，因为某个 $c_{xy}\ne1$；
+2. 指针基投影 $Q_B=\sum_{x\in B}|x\rangle\langle x|$ 始终满足条件，因为它没有非对角元；
+3. 粗标签若把不同指针态相干叠加为同一事件投影，则会暴露记录删除造成的相位或幅度变化。
+
+因此，“粗读数稳定”不能推出“完整态稳定”；它只说明所选观测代数没有访问被记录抹除的矩阵元。
+
+### 11.4 二标签最小反例
+
+取 $X=\{0,1\}$，并令粗测量为
+$$
+Q_+=|+\rangle\langle+|,
+\qquad
+Q_-=|-\rangle\langle-|,
+$$
+其中
+$$
+|\pm\rangle=\frac{|0\rangle\pm|1\rangle}{\sqrt2}.
+$$
+设一步记录的非对角 Schur 因子为
+$$
+ c_{01}=re^{i\phi}\ne1,
+\qquad
+c_{10}=\overline{c_{01}},
+\qquad
+0\le r\le1.
+$$
+对事件 $\{+\}$，有
+$$
+Q_+=
+\frac12
+\begin{pmatrix}
+1&1\\
+1&1
+\end{pmatrix},
+$$
+从而
+$$
+D_+(C)=
+\frac12
+\begin{pmatrix}
+0&\overline{c_{01}}-1\\
+c_{01}-1&0
+\end{pmatrix}.
+$$
+其算子范数为
+$$
+\|D_+(C)\|_\infty=\frac{|1-c_{01}|}{2}.
+$$
+$Q_-$ 给出相同范数，因此
+$$
+\boxed{
+\delta_Q(C)=\frac{|1-c_{01}|}{2}.
+}
+$$
+若改用指针测量
+$$
+Q_0=|0\rangle\langle0|,
+\qquad
+Q_1=|1\rangle\langle1|,
+$$
+则所有 $D_B(C)$ 都为零，故
+$$
+\delta_Q(C)=0
+$$
+即使完整含系统态的非对角元已经被记录改变。这一对测量明确展示了“同一个物理记录，对一个读数代数不可见，对另一个读数代数可见”。
+
+### 11.5 多步删除与联合预算
+
+若连续删除记录的 Schur 因子为 $C_1,\ldots,C_k$，则总通道为
+$$
+M_{1:k}=M_{C_k}\circ\cdots\circ M_{C_1}
+=M_{C_1\odot\cdots\odot C_k}.
+$$
+令
+$$
+C_{1:k}=C_1\odot\cdots\odot C_k.
+$$
+经过前 $k$ 步删除后，所选粗测量的累计读数缺陷精确为
+$$
+\delta_Q(C_{1:k})
+=
+\max_B\left\|(\overline{C_{1:k}}-J)\odot Q_B\right\|_\infty.
+$$
+相应地，累计因子 $c_{xy}^{(1:k)}=\prod_{t=1}^k c_{xy}^{(t)}$ 定义累计记录等价类；各步等价关系的交集是一个充分条件，但在存在相位抵消时不必等于累计等价类。只有累计因子回到 $1$ 的标签对之间，粗投影才可持续保留非对角矩阵元。
+
+若只知道各步的粗读数预算
+$$
+\delta_Q(C_t)\le\eta_t,
+$$
+则不能仅由这些单步标量确定总缺陷的精确值；不同步的非对角元可能相互抵消，也可能相互增强。不过，Schur 乘法对应的单位保持完全正映射收缩算子范数，因此总有保守上界
+$$
+\delta_Q(C_{1:k})\le\sum_{t=1}^k\delta_Q(C_t)\le\sum_{t=1}^k\eta_t.
+$$
+若需要更尖锐的上界，可对标量乘积作望远镜展开：令
+$$
+C_{<t}=C_1\odot\cdots\odot C_{t-1},
+\qquad C_{<1}=J,
+$$
+则对每个粗事件有
+$$
+(\overline{C_{1:k}}-J)\odot Q_B
+=
+\sum_{t=1}^k
+\bigl(\overline{C_{<t}}\odot(\overline{C_t}-J)\bigr)\odot Q_B.
+$$
+因此
+$$
+\delta_Q(C_{1:k})
+\le
+\max_B\sum_{t=1}^k
+\left\|
+\bigl(\overline{C_{<t}}\odot(\overline{C_t}-J)\bigr)\odot Q_B
+\right\|_\infty.
+$$
+这里每一项由前缀 Schur 通道对算子范数的收缩性控制，因而不超过相应的单步缺陷；显示的累计因子界通常比 $\sum_t\eta_t$ 更尖锐。
+
+第 10 章的预测缺陷 $\epsilon_Q(\mathcal E,K)$ 与本章的删除缺陷 $\delta_Q(C)$ 作用在不同方向：前者衡量动力学后验是否仍由粗标签闭合，后者衡量环境记录被删除后粗事件概率是否改变。若二者均有预算，则对任意参考粗分布 $\bar p_k$ 可先用第 10 章的动力学界，再增加本章的记录删除误差；这只是三角不等式得到的联合上界，不意味着存在与模型无关的最小约束数量。
+
+本章给出了“保留多少约束才能稳定经典读数”的一个可检验答案：约束数量本身不是充分变量，决定粗读数稳定性的是粗投影的非对角支撑是否落在 $c_{xy}=1$ 的记录等价类内。不同读数代数可以对同一条记录给出不同的稳定性结论；因此经典现实的稳定范围必须连同读数代数、记录 Gram 几何和后续动力学一起指定。
+
