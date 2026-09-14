@@ -2,13 +2,12 @@
    generality: I
    mirror-B: D5/B/S3/Arith/Congruence/KrizekNextPrimeProductQuadruplet
    mirror-E: none(waiver:symbolic-proof-no-numeric-artifact)
-   anchors: [mathlib/module/Mathlib.Data.Nat.Prime.Basic, mathlib/module/Mathlib.Data.Nat.Prime.Infinite, mathlib/module/Mathlib.Tactic.IntervalCases, mathlib/module/Mathlib.Tactic.NormNum]
+   anchors: [mathlib/module/Mathlib.Data.Nat.Prime.Basic, mathlib/module/Mathlib.Data.Nat.Prime.Infinite, mathlib/module/Mathlib.Tactic.NormNum]
    utility: none
    digest: Krizek's next-prime product has four prime neighbors exactly at three. -/
 
 import Mathlib.Data.Nat.Prime.Basic
 import Mathlib.Data.Nat.Prime.Infinite
-import Mathlib.Tactic.IntervalCases
 import Mathlib.Tactic.NormNum
 
 namespace D5.S3.Arith.Congruence.KrizekNextPrimeProductQuadruplet
