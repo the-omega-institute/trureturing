@@ -259,6 +259,12 @@ def exactUse (theoremName : Name) (arena descriptor : Expr) : MetaM (Expr × Exp
   let info ← getConstInfo theoremName
   unless info.levelParams.isEmpty do throwError "P1.RigidUniverseMismatch: {theoremName}"
   let (bridgeArena, statement, realization) ← semanticSource descriptor
+  -- A reflexive source supplies no comparison between distinct object readouts.
+  -- Preserve this P1 exclusion at both insertion and persisted consumption;
+  -- exact uses alpha-only structural comparison, never function extensionality.
+  if ← exact descriptor.getAppArgs[5]! descriptor.getAppArgs[6]! then
+    throwError "P1.SemanticRejected: IE-C050 ClosedTruthReadout \
+      key={theoremName} reason=unclassified_form rule=p1.reflexive_source"
   requireExact "ArenaMismatch" (← arenaHead 128 arena) bridgeArena
   requireExact s!"StatementIdentityMismatch theorem={theoremName} template=ReifierTemplates.pointwise arena={arena} bridge={descriptor}"
     info.type statement
@@ -1251,7 +1257,7 @@ private def interfaceTypes : Array Name := #[
   `D5.S3.ConceptDynamics.InformationEscape.PrimitiveSignature,
   `D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization,
   `D5.S3.ConceptDynamics.CIRPT.PrimitiveAxis,
-  `LeanInformationAudit.StructuralArena,
+  `D5.S3.ConceptDynamics.InformationEscape.StructuralArena,
   `LeanInformationAudit.StructuralPrimitiveSignature,
   `LeanInformationAudit.StructuralPrimitiveRealization]
 

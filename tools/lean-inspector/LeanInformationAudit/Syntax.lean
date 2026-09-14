@@ -505,7 +505,7 @@ private partial def descriptorHead (stx : Syntax) : Option Syntax :=
 
 /-- Resolve the written head first so a missing template is evidence failure.
 Other term/type errors keep the standard elaborator's error/rollback behavior. -/
-private def resolveReadout (term : TSyntax `term) : CommandElabM (Option Expr × Option String) := do
+def elaborateReadoutDescriptor (term : TSyntax `term) : CommandElabM (Option Expr × Option String) := do
   if let some head := descriptorHead term then
     let resolved ← try
       discard <| liftCoreM <| realizeGlobalConstNoOverloadWithInfo head
@@ -526,7 +526,7 @@ private def withReadout (theoremId arenaId : TSyntax `ident)
     | none => pure lawArena
     | some id => resolveArena id
   let arena ← liftTermElabM <| resolveCanonicalArenaName arenaName
-  let (descriptor, diagnostic) ← resolveReadout term
+  let (descriptor, diagnostic) ← elaborateReadoutDescriptor term
   if (← get).messages.hasErrors then return
   let theoremName ← if native then declarationName theoremId else resolveTheorem theoremId
   TemplateBinding.withDeclaration { theoremName, arena, descriptor, diagnostic } <| elabCommand command
@@ -595,7 +595,7 @@ private def elabBindingSidecar : CommandElab := fun stx => registrationTransacti
   let explicitObject := stx[4].getNumArgs != 0
   let objectArena ← if explicitObject then resolveArena ⟨stx[4][1]⟩ else pure lawArena
   let arena ← liftTermElabM <| resolveCanonicalArenaName objectArena
-  let (descriptor, diagnostic) ← resolveReadout ⟨stx[8]⟩
+  let (descriptor, diagnostic) ← elaborateReadoutDescriptor ⟨stx[8]⟩
   if (← get).messages.hasErrors then return
   let theoremName ← resolveTheorem ⟨stx[1]⟩
   let catalogId := if explicitObject then some (catalogIdFrom ⟨stx[4][3]⟩) else none
