@@ -61,6 +61,7 @@ public sealed partial class MakeWorkflowTests
         "show-atom",
         "atom-context",
         "truth-export",
+        "truth-release-verify",
         "deliver-check",
         "deposit",
         "deposit-uncovered",
