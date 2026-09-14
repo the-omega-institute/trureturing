@@ -18779,4 +18779,241 @@ $$
 
 本节复用 `ProjectedExactDescent` 与 `VisibleAutonomyCriterion` 的精确下降结果，并把它们与第 74 节的残差界连接起来。它没有把可见任务的精确闭合提升为全态恢复、量子通道等价或唯一的经典现实。
 
+## 76. 有限未来关系塔的终止、类预算与 Zeckendorf 标签边界
+
+第 75 节说明了一个选定读出何时可以由压缩状态精确产生。下一步要问的是：需要观察多少个未来时刻，才足以确定这个任务的全部未来响应？对有限状态载体，仓库已有一个不依赖收缩率的答案。
+
+设 $$X$$ 是有限状态载体，
+
+$$
+\tau:X\to X,
+\qquad
+q:X\to O
+$$
+
+分别是更新和当前读出。对每个有限深度 $$m$$，定义
+
+$$
+x\sim_m x'
+\quad\Longleftrightarrow\quad
+\forall k\le m,
+\ q\bigl(\tau^{[k]}x\bigr)=q\bigl(\tau^{[k]}x'\bigr),
+$$
+
+并定义完全未来关系
+
+$$
+ x\sim_\infty x'
+ \quad\Longleftrightarrow\quad
+ \forall k,
+ \ q\bigl(\tau^{[k]}x\bigr)=q\bigl(\tau^{[k]}x'\bigr).
+$$
+
+这里的 $$\tau^{[k]}$$ 表示迭代 $$k$$ 次。源码中的 `finiteFutureRelation` 和 `infiniteFutureRelation` 正是这两种关系。记
+
+$$
+R_m=\sim_m,
+\qquad
+R_\infty=\sim_\infty,
+$$
+
+并记相应商类数为
+
+$$
+C_m=\lvert X/R_m\rvert,
+\qquad
+C_\infty=\lvert X/R_\infty\rvert.
+$$
+
+### 76.1 相邻稳定已经足够确定全部未来
+
+`FiniteEquivalenceDescent` 给出有限未来关系的递归
+
+$$
+R_0=\ker q,
+$$
+
+$$
+R_{m+1}
+=
+\left\{(x,x')\in R_0:
+(\tau x,\tau x')\in R_m\right\},
+$$
+
+以及有限交表示
+
+$$
+R_m
+=
+\bigcap_{0\le k\le m}
+\left\{(x,x'):
+q\bigl(\tau^{[k]}x\bigr)=q\bigl(\tau^{[k]}x'\bigr)
+\right\}.
+$$
+
+因此关系塔只能变细，商类数只能增加：
+
+$$
+C_m\le C_{m+1}.
+$$
+
+`FiniteStabilityClassBound` 定义最小相邻稳定深度
+
+$$
+ d=\min\left\{m:R_m=R_{m+1}\right\}.
+$$
+
+它证明
+
+$$
+\boxed{
+R_d=R_{d+1}=R_\infty.
+}
+$$
+
+并且对任意满足
+
+$$
+R_n=R_{n+1}
+$$
+
+的 $$n$$，都有
+
+$$
+ d\le n.
+$$
+
+所以在有限载体上，“再看一个时刻没有产生新区分”已经足以推出全部未来读出相同。这个结论不需要范数收缩、谱隙、输入振幅界或量子通道结构；它是有限关系塔的组合稳定性。它也不是说任意系统都有一个与任务无关的稳定深度：$$d$$ 依赖更新 $$\tau$$ 和读出 $$q$$。
+
+### 76.2 稳定深度消耗的是商类预算
+
+初始类数不是状态数本身，而是当前读出能够区分的商类数：
+
+$$
+C_0
+=
+\left\lvert X/\ker q\right\rvert
+=
+\left\lvert\operatorname{range}q\right\rvert.
+$$
+
+完全未来类数为 $$C_\infty$$。在源码的自然数减法语境下，`finite_stability_class_bound` 给出两段类预算
+
+$$
+\boxed{
+ d\le C_\infty-C_0,
+}
+$$
+
+以及
+
+$$
+\boxed{
+ C_\infty-C_0
+ \le
+ \lvert X\rvert-C_0.
+}
+$$
+
+这表示每次关系塔严格细化，都必须消耗至少一个新的商类；它不是说每一步一定恰好增加一个类，也不是最小线性预测维数定理。若 $$q$$ 满射到有限字母表 $$O$$，则
+
+$$
+C_0=\lvert O\rvert,
+$$
+
+从而得到
+
+$$
+ d\le C_\infty-\lvert O\rvert
+ \le
+ \lvert X\rvert-\lvert O\rvert.
+$$
+
+更一般地，若初始关系不是当前读出的核，而是任意有限载体上的 Setoid $$R$$，`finite_equivalence_descent_and_stability_bound` 给出相应的形式
+
+$$
+ d\le C_\infty-\lvert Y/R\rvert
+ \le
+ \lvert Y\rvert-\lvert Y/R\rvert.
+$$
+
+所以“需要保留多少历史”在这个有限确定性模型中首先表现为一个商类预算：不是保存每条历史词，而是继续细分那些仍会在未来读出中分开的类。
+
+### 76.3 Zeckendorf 标签只提供载体大小
+
+取长度为 $$L$$、禁止相邻两个 $$1$$ 的合法字串集合
+
+$$
+\mathcal W_L
+=
+\left\{w\in\{0,1\}^L:
+ w_jw_{j+1}=0\right\}.
+$$
+
+其合法构型数为
+
+$$
+\lvert\mathcal W_L\rvert=F_{L+2}.
+$$
+
+只有在更新和读出真的定义在同一个有限载体
+
+$$
+\tau:\mathcal W_L\to\mathcal W_L,
+\qquad
+q:\mathcal W_L\to O
+$$
+
+上时，才可以把上一节的类预算代入为
+
+$$
+ d\le C_\infty-C_0
+ \le
+ F_{L+2}-C_0.
+$$
+
+若 $$q$$ 满射到 $$O$$，则右侧可写成
+
+$$
+ d\le C_\infty-\lvert O\rvert
+ \le
+ F_{L+2}-\lvert O\rvert.
+$$
+
+这只是把有限载体大小代入稳定深度上界。它不把 Fibonacci 数自动变成预测维数。反例很直接：若 $$q$$ 在 $$\mathcal W_L$$ 上单射，则
+
+$$
+C_0=F_{L+2},
+\qquad
+ d=0,
+$$
+
+但载体仍有 $$F_{L+2}$$ 个状态。相反，若所有未来读出都相同，则
+
+$$
+C_\infty=C_0=1,
+\qquad
+ d=0,
+$$
+
+即使合法标签很多，也不需要更深的未来窗口来区分任务响应。
+
+因此应分开报告三种量：
+
+$$
+\boxed{
+\text{合法标签载体大小 }F_{L+2},
+\qquad
+\text{完全未来商类数 }C_\infty,
+\qquad
+\text{稳定深度 }d.
+}
+$$
+
+Hankel 预测维数还取决于未来响应的线性秩，量子模型则可能需要算符空间、相位方向、可访问记录和参考系统。它们都不能仅由 $$F_{L+2}$$ 的离散计数推出。即使有限未来商已经稳定，也只说明指定经典更新和读出上的确定性响应已经闭合；它不自动证明密度算符相等、迹距离为零、diamond 距离为零或某个物理 Hamiltonian 保持合法 Zeckendorf 子空间。
+
+第 76 节把“稳定经典接口”进一步拆成了三个可测层次：载体允许哪些合法构型，完全未来还能区分多少类，以及需要看到多深才达到全部未来等价。只有在额外证明编码、更新、读出和预测实现之间的同构时，才可以把其中两个量合并；一般情况下，Fibonacci 标签数只是适用载体的大小，而不是世界必须保留的历史长度。
+
+本节复用 `FiniteEquivalenceDescent`、`FiniteStabilityClassBound` 和 `StableDepthCardinalityBounds` 的既有声明；它们适用于有限确定性更新与读出关系。将这套关系塔解释为量子通道的过程记忆，需要另行给出量子状态空间、仪器协议和距离转换。
+
 ## 追加锚（新终端）
