@@ -20004,11 +20004,11 @@ $$
 \mathcal A_\infty=\text{对指定可组合操作最小的代数载体}.
 $$
 
-若后续实验只查询原先的效果，加入所有乘积可能是过度保留；若后续实验允许先施加一个可见操作再查询另一个效果，则乘积会进入新的响应，不能只依靠 $V_\infty$ 上的读数。`prediction_closure_minimal_dynamical_repair` 给出相应的线性最小不变闭包，但没有把该闭包提升为乘法代数。
+若后续实验只查询原先的效果，加入所有乘积可能是过度保留；若实际协议的组合观测明确包含某个乘积（例如把 $AB$ 作为新的效应或关联观测），该乘积才会进入新的响应，不能只依靠 $V_\infty$ 上的读数。一般序列仪器的响应仍由具体 instrument 和 Heisenberg 共轭决定。`prediction_closure_minimal_dynamical_repair` 给出相应的线性最小不变闭包，但没有把该闭包提升为乘法代数。
 
 ### 80.2 固定代数的中心与块内量子自由度
 
-设有限维固定代数具有块分解
+设 $\Lambda$ 有限、每个 $n_\lambda$ 有限，并先选定一个代数同构，使有限维固定代数具有块分解
 
 $$
 \mathcal A
@@ -20016,7 +20016,7 @@ $$
 \prod_{\lambda\in\Lambda}M_{n_\lambda}(\mathbb C).
 $$
 
-`record_fixed_center_eq_block_scalars` 精确给出其中心：
+仓库的 `record_fixed_center_eq_block_scalars` 精确给出规范乘积代数的中心；经上述同构输运后得到这里的中心公式：
 
 $$
 Z(\mathcal A)
@@ -20024,7 +20024,7 @@ Z(\mathcal A)
 \left\{(c_\lambda I_{n_\lambda})_{\lambda\in\Lambda}:c_\lambda\in\mathbb C\right\}.
 $$
 
-因此
+因此（维数公式使用有限直积的标准线性代数维数计算）
 
 $$
 \dim_{\mathbb C}Z(\mathcal A)=|\Lambda|,
@@ -20032,9 +20032,9 @@ $$
 \dim_{\mathbb C}\mathcal A=\sum_{\lambda\in\Lambda}n_\lambda^2.
 $$
 
-只有当所有 $n_\lambda=1$ 时，代数才交换，中心才等于整个代数。若某个 $n_\lambda>1$，同一个中心标签仍允许一个非平凡的块内量子系统；把标签 $lambda$ 当成完整经典对象，会把这部分可由后续操作恢复的关系一并丢掉。
+只有当所有 $n_\lambda=1$ 时，代数才交换，中心才等于整个代数。若某个 $n_\lambda>1$，同一个中心标签仍允许一个非平凡的块内量子系统；把标签 $\lambda$ 当成完整经典对象，会把这部分可由后续操作恢复的关系一并丢掉。
 
-这给“经典记录”的含义加上一个边界：中心投影可以是稳定的经典标签，但中心标签的数量不等于完整联合系统的 Hilbert 维数，也不等于可组合算子的维数。`FiniteMemoryHistoryCapacity.finite_memory_history_capacity` 的 $N\le d$ 也只在 $N$ 个密度态被同一个 POVM 一次性完美区分时成立，不能把中心标签数自动解释成所有物理记忆的维数。
+这给“经典记录”的含义加上一个边界：在给定记录通道确实固定这些中心投影、且允许观测族只读取它们时，中心投影才可作为稳定的经典标签；抽象代数的中心本身不自动给出物理记录通道。中心标签的数量不等于完整联合系统的 Hilbert 维数，也不等于可组合算子的维数。`FiniteMemoryHistoryCapacity.finite_memory_history_capacity` 的 $N\le d$ 也只在 $N$ 个密度态被同一个 POVM 一次性完美区分时成立，不能把中心标签数自动解释成所有物理记忆的维数。
 
 ### 80.3 Zeckendorf 标签只决定中心数量的特殊情形
 
@@ -20072,7 +20072,7 @@ $$
 =\sum_{w\in\mathcal W_L}n_w^2.
 $$
 
-若物理 Hilbert 空间在第 $w$ 个块上的表示带有重数 $m_w$，其载体维数则为
+若物理 Hilbert 空间是一个有限维表示，并在第 $w$ 个块上含有重数 $m_w$（且这些重数满足所选表示的忠实性要求），其载体维数则为
 
 $$
 \dim\mathcal H=\sum_{w\in\mathcal W_L}m_wn_w.
@@ -20084,7 +20084,7 @@ $$
 
 ### 80.4 近似乘法闭包与历史预算
 
-对一个有限预测截断 $V\subseteq V_\infty$，在选定的矩阵范数下定义乘法缺陷
+对一个有限维预测截断 $V\subseteq V_\infty$，先选定矩阵范数，并令距离取该范数到子空间的距离；定义乘法缺陷
 
 $$
 \eta(V)
@@ -20093,7 +20093,7 @@ $$
 \operatorname{dist}(AB,V+iV).
 $$
 
-这里 $V+iV$ 是 $V$ 的复化；若 $\eta(V)=0$，则所有单位范数以内的可见乘积都落在复化空间中，因而该截断对这些乘积精确闭合。若 $\eta(V)>0$，至少有一对当前可见关系的组合产生了新的方向。研究上有两种不同处理：
+这里 $V+iV$ 是 $V$ 的复化；有限维保证该子空间闭合。若 $\eta(V)=0$，则所有单位范数以内的可见乘积都落在复化空间中，因而该截断对这些乘积精确闭合。若 $\eta(V)>0$，至少有一对当前可见关系的组合产生了新的方向。这个量是研究定义，不是已冻结的物理误差；研究上有两种不同处理：
 
 $$
 \begin{aligned}
