@@ -1,0 +1,35 @@
+**证明。** 在 $\mathbb F_p[\sqrt5]$ 中，Euler 判据与 Frobenius 映射给出
+
+$$
+(\sqrt5)^p=\epsilon\sqrt5,
+\qquad L_p\equiv1\pmod p,
+\qquad F_p\equiv\epsilon\pmod p.
+$$
+
+由
+$L_p=F_p+2F_{p-1}=2F_{p+1}-F_p$，得到
+$p\mid F_{p-\epsilon}$。写
+
+$$
+F_p=\epsilon+pA,
+\qquad F_{p-\epsilon}=pB.
+$$
+
+若 $\epsilon=1$，Cassini 恒等式化为
+
+$$
+F_p^2-F_pF_{p-1}-F_{p-1}^2=1.
+$$
+
+模 $p^2$ 化简得 $2A\equiv B\pmod p$，而
+$\ell_p\equiv A+2B$、$q_p\equiv B$，所以
+$2\ell_p\equiv5q_p\pmod p$。若 $\epsilon=-1$，Cassini 恒等式化为
+
+$$
+F_{p+1}(F_{p+1}-F_p)-F_p^2=-1.
+$$
+
+模 $p^2$ 化简得 $2A\equiv-B\pmod p$，而
+$\ell_p\equiv2B-A$、$q_p\equiv B$，仍有
+$2\ell_p\equiv5q_p\pmod p$。
+

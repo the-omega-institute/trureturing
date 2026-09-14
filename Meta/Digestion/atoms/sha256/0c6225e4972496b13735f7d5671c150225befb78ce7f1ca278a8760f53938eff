@@ -1,0 +1,6 @@
+**定义。** 对 $m\in\mathbb Z$，定义黄金返回映射
+
+$$
+T_L(m)=A_Lm+B_L\lfloor m\alpha\rfloor.
+$$
+

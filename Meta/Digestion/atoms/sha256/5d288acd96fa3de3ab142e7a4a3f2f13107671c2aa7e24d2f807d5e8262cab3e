@@ -1,0 +1,14 @@
+**定理 FM2。** 假设在 $1\le t\le H+2$ 上
+
+$$
+\|R_t\|,\|\widehat R_t\|\le1,qquad
+\|\widehat R_t-R_t\|\le\eta,
+$$
+
+且在 $0\le j\le H$ 上 $\|M_j\|\le1$。则
+
+$$
+\boxed{\|\widehat M_j-M_j\|\le(2^{j+2}-1)\eta
+\qquad(0\le j\le H).}
+$$
+

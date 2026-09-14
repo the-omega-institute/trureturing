@@ -1,0 +1,7 @@
+**定义。** 对 $n\in\mathbb N$，定义
+
+$$
+\mathcal P_n(X)=X^{2n}-X^n-1,
+\qquad E_n=\mathcal P_n(\varphi)\in\mathcal O.
+$$
+

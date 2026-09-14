@@ -1,0 +1,11 @@
+**定理。** 设 $p$ 为素数，$s>0$，$s+2\le ps$，$B\in\mathcal O$ 且
+$p\nmid B$。则对每个 $j\ge0$，存在 $D_j\in\mathcal O$ 使下式成立，
+且左侧与 $1$ 的差恰被 $p^{s+j}$ 整除而不被 $p^{s+j+1}$ 整除：
+
+$$
+\boxed{
+(1+p^sB)^{p^j}=1+p^{s+j}(B+pD_j).
+}
+\tag{R17}
+$$
+

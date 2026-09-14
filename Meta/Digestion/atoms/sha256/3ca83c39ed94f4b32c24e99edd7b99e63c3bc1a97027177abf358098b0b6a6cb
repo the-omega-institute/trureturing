@@ -1,0 +1,13 @@
+**命题。** 有
+
+$$
+(M_j)_{22}=\frac{b^2}{2}\lambda^j.
+$$
+
+若 $a\ge0,b>0,a+b\le1$，则 $-1<\lambda<1$，并且对 $m\ge0$，
+
+$$
+\sum_{j=m}^{\infty}|(M_j)_{22}|=
+\frac{b^2|\lambda|^m}{2(1-|\lambda|)}.
+$$
+

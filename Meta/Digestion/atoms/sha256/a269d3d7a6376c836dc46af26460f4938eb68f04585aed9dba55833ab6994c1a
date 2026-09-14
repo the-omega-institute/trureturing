@@ -1,0 +1,7 @@
+**定理。** $\mathcal R_q$ 是单射环同态，$\mathcal R_q(\varphi)=Q$，因而
+
+$$
+\boxed{\pi(q)=\operatorname{ord}(\overline\varphi\in(\mathcal O/q\mathcal O)^\times).}
+\tag{R4}
+$$
+

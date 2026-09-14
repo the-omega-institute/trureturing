@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:60f7b75158592df0c0594fb1a250c0add8d8652d113f9c708ad17d2f67d98786
+  normalized_sha256: sha256:60f7b75158592df0c0594fb1a250c0add8d8652d113f9c708ad17d2f67d98786
+cas_ref: sha256:60f7b75158592df0c0594fb1a250c0add8d8652d113f9c708ad17d2f67d98786
+coverage_gids:
+  - gid: D5/S3/Factorization/Combinatorics/MarkedPrimeWordSnapshotFiber.snapshot_fiber_equiv_and_forced_marks
+    target_statement_id: sha256:2d628f2f4e721b53df6cf430d2322a50835ee676d28815efc202caad16ae2e95
+receipts:
+  unresolved_subitems: []

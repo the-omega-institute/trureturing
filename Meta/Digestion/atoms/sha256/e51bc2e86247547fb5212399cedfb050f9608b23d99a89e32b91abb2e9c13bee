@@ -1,0 +1,49 @@
+## RD.3 显示对与全部移位观察
+
+**定义。** 令 $\operatorname{shift}_k(r)$ 把每个槽号提高 $k$，并置
+
+$$
+v_k(r)=v(\operatorname{shift}_k(r)).
+$$
+
+**命题。** 对每个 $k\in\mathbb N$，
+
+$$
+\beta(\operatorname{shift}_k(r))=\varphi^k\beta(r),
+\qquad v_k(r)=\pi(\varphi^k\beta(r)).
+$$
+
+**证明。** 对有限支撑和换元，再用幂的乘法法则及 RD.1 的求值命题。证毕。
+
+**定理 RD3。** 对任意 $n,m\in\mathbb N$，
+
+$$
+\exists r:\ v(r)=n\ \land\ v_1(r)=m
+\quad\Longleftrightarrow\quad
+3n\le2m\ \land\ m\le2n.
+$$
+
+每个这样的 $r$ 都满足 $\beta(r)=(m-n)+n\varphi$。
+
+**证明。** 写 $\beta(r)=a+n\varphi$，乘以 $\varphi$ 后读数为 $m=a+n$。RD1 的 $a\le n\le2a$ 恰转成所列两项不等式。反向取 $a=m-n$，由两项不等式及 RD1 构造 $r$。证毕。
+
+**命题。** 当 $n\ge2$ 时，$m=2n$ 与 $m=2n-1$ 都可实现。因此在全部原始数位表上，显示 $n$ 唯一确定黄金像当且仅当 $n\le1$；在规范原始数位表上，每个 $n$ 都由 Zeckendorf 唯一性确定唯一黄金像。
+
+**证明。** 将两个 $m$ 分别代入 RD3；当 $n\ge2$ 时两者不同。$n=0,1$ 的结论由 RD2 的区间直接检验。规范情形由 RD.1 的唯一性。证毕。
+
+**定理 RD4。** 对原始输入 $r,s$，
+
+$$
+\beta(r)=\beta(s)
+\iff (v(r),v_1(r))=(v(s),v_1(s))
+\iff \forall k\in\mathbb N,\ v_k(r)=v_k(s),
+$$
+
+并且
+
+$$
+v_{k+2}(r)=v_{k+1}(r)+v_k(r).
+$$
+
+**证明。** 相同黄金元素乘以每个 $\varphi^k$ 后仍相同。反向由第零与第一读数及 RD3 的恢复式得到两个黄金坐标。递推由 $\varphi^{k+2}=\varphi^{k+1}+\varphi^k$ 乘以 $\beta(r)$ 后取第二坐标得到。证毕。
+

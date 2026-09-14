@@ -1,0 +1,61 @@
+**证明。** 所需经典输入只是 Chebyshev 估计。准确的现成形式见 [Chebyshev 原声明](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/NumberTheory/Chebyshev.lean) 中的 `theta_eq_log_primorial`、`theta_le_log4_mul_x`、`theta_ge`、`pi_ge` 及 `eventually_primeCounting_le`：对自然数 $m$，
+$$
+\log Q=\vartheta(m),\qquad
+m\log2-\log(m+1)-2\sqrt m\log m\le\vartheta(m)\le m\log4,
+$$
+$$
+\frac{m\log2-\log(m+1)}{\log m}\le\pi(m),
+$$
+而对每个固定 $\epsilon>0$，充分大实数 $x$ 有
+$\pi(x)\le(\log4+\epsilon)x/\log x$。下界在这里仅用于整数 $m\ge2$，最后一条取固定 $\epsilon=1$；没有把最终成立的上界改为全域上界，也不需要素数定理。
+
+由于 $\log(m+1)/m\to0$ 和 $\log m/\sqrt m\to0$，可固定一个整数阈值，使上述式子给出 (488.5a) 的素数个数界及 $\vartheta(m)\ge m\log2/2$。这给 $b\ge m/2$。另一方面 $b\le\vartheta(m)/\log2+2\le2m+2\le3m$。把阈值增大到至少 $12,Y$，再使全部其后整数满足
+$$
+\log(3Am)\le\frac m{\log m},
+$$
+得到所需的 $M_0$；这一步可行，因为 $\log(3Am)\log m/m\to0$。
+
+对任意合法表，由 (488.4a)、$b\ge m/2\ge6$ 得
+$$
+\log|T|\ge k\log2+\log(b/6)
+\ge A_\pi\log2\,\frac m{\log m}
+\ge d_0\frac m{\log m}.
+$$
+对于 $S_{\min},S_0$，(488.4b) 另给
+$$
+\log S\le k\log2+\log(Ab)
+\le B_\pi\log2\,\frac m{\log m}+\frac m{\log m}
+=D_0\frac m{\log m}.
+$$
+对正的两边取对数即得 (488.5c) 的第一式。再结合 (488.2b)，因为 $\log\log S/\log m\to1$，得到第二式。对任意膨胀字段表不能使用这一步的上界，所以也没有该系数与任意实际长度的等价关系。
+
+所有有限截止的 $c$ 严格正，且 $c_{\mathcal P(m)}\to0$。因此对每个固定有限区间，把容差缩至其系数最小值以下，就没有该区间内的可用截止；这还证明 $m_*(\eta)\to\infty$。在所列 $\eta_0$ 下，$2\le m<M_0$ 一律不可用；每个可用 $m$ 都有
+$$
+\frac a{\log m}\le c_{\mathcal P(m)}\le\eta,
+$$
+从而 $m\ge e^{a/\eta}$，方向是必要性。另一方面，在 $X_+=\lceil e^{C/\eta}\rceil$ 处有 $C/\log X_+\le\eta$，(488.2a) 给可用性，方向是充分性。两者证明 (488.5d)。特别地 $a/\eta\ge2\log M_0$；由 (488.2b) 也有 $C\ge a$，所以所用截止均超过 $M_0>e$。
+
+函数 $x/\log x$ 在 $x>e$ 上严格递增。将必要截止代入 (488.5a) 下界，给 (488.5e) 左侧。又
+$$
+X_+\le2e^{C/\eta},\qquad \log X_+\ge C/\eta,
+$$
+所以 (488.5a) 在 $X_+$ 的上界给右侧预算。素数个数与 $b$ 随整数截止非减，$m_*\le X_+$ 便给最小截止处的右侧；这一步不要求表字段长度单调。
+
+对任意可用 $m$ 和任意正确 $T$，由必要截止和 (488.5b) 的下界，
+$$
+\log|T|\ge d_0\frac m{\log m}
+\ge d_0\frac{e^{a/\eta}}{a/\eta}.
+$$
+取对数并对全部可用表取最小，给 (488.5f) 的下界。对于上界，只需选择可用的 $T_0(X_+)$：
+$$
+\log S_*\le\log S_0(X_+)
+\le D_0\frac{X_+}{\log X_+}
+\le2D_0\frac{e^{C/\eta}}{C/\eta}.
+$$
+再取对数给上界，没有把 $S_*$ 的取得位置认定为 $m_*$。最后，可选固定 $\eta_1\le\eta_0$，使所有 $0<\eta\le\eta_1$ 同时满足
+$$
+\log(a/\eta)-\log d_0\le\frac a{2\eta},\qquad
+-\log(C/\eta)+\log(2D_0)\le\frac C\eta.
+$$
+这样的阈值存在，因为对数增长慢于 $1/\eta$。于是 (488.5f) 夹在 $a/(2\eta)$ 与 $2C/\eta$ 之间，连续取两次指数得到 (488.5g)。证毕。
+

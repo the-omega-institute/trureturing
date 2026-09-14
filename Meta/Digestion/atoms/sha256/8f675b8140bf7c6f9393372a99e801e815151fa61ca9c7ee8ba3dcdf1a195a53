@@ -1,0 +1,2 @@
+**证明。** 群只作用于不可约因子 $W_\lambda$；任意 $I_{W_\lambda}\otimes A_\lambda$ 都与群作用交换，而重数空间上的两个 $A_\lambda$ 不必交换。证毕。
+

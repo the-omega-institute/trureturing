@@ -19744,3 +19744,409 @@ $$
 所有集合、成员关系、任意集合参数、全部子集、零边及完整全函数图，直接使用第448.1–448.6、453.1–453.3、470.30条同一个 $\operatorname{Enc}/\operatorname{Dec}$ 及其准确域运输；空路径仍含初态和终态收费。有限字不编码全部集合，不据观察或历史关系改写集合成员关系与 Foundation，不给无条件 ZFC 一致性证明。容量轴 $(4,2,1,1)$、独立 Zeckendorf 行窗口宽 $(3,2,1,1)$、末七词重数 $(4,2,1)$ 及原 CSA 三维位置各保留原类型。
 
 ## 487.
+
+## 488. 初始素数支撑的系数容差与完整约数表
+
+**定义 488.1（原系数与可积的经典输入）。** 沿用第 443、472、474 条的 $B_Q,U_Q,W_Q,c_Q,\alpha_Q,D_Q,E_Q$ 及其全部支持条件。令 $\mathcal M(u)=M(\lfloor u\rfloor)$（$u\ge1$），$z=\zeta_R(2)$，$Q=\mathcal P(y)=\prod_{p\le y}p$，$e_y=\Phi(Q)/Q$，其中 $y\ge2$ 为实数。$\log$ 为自然对数，$\log_2$ 为以二为底的对数。定义
+$$
+I_y=\int_1^y|\mathcal M(u)|\frac{du}{u^2},\qquad
+I=\int_1^\infty|\mathcal M(u)|\frac{du}{u^2},\qquad
+H=\frac12+\frac{362.7}{\log2}.
+$$
+固定第 474.2 条的同一个绝对常数 $K\ge1$，置 $C=H+K$。
+
+这里使用的经典输入为 M. El Marraki，〈Fonction sommatoire de la fonction de Möbius, 3. Majorations asymptotiques effectives fortes〉，*Journal de Théorie des Nombres de Bordeaux* **7**(2) (1995)，407–433，[原文](https://www.numdam.org/item/JTNB_1995__7_2_407_0/)，印刷第421页的推论及第422页的证明：
+$$
+|\mathcal M(x)|<362.7\frac{x}{(\log x)^2}\qquad\text{对全部实数 }x>1.
+\tag{488.1}
+$$
+原文第421页区分了各界优于其它界的区间与各界的有效域；本式的有效域并非仅为表中的大数区间。这里直接借用已发表的推论。其第422页插值中的舍入等号不是精确小数恒等式；第417–418页命题7证明的分段需满足其辅助积分下端 $C_{\rm aux}\le x^{9/10}$，并需在 $[C_{\rm aux},x]$ 上具有所用的 $N(u)$ 界。后者的 $N$ 是该论文的辅助函数，不是本卷的整数输入。原列域 $x>\max(e^T,C_{\rm aux}^{9/10})$ 本身不保证上述分段条件；第411页的 Abel 公式本身要求 $x\ge C_{\rm aux}$。本条引用不提供原数值递推与数值表的独立认证，也不把这些未重建的计算作为新的数值定理。
+
+**定理 488.2（原正系数的同阶上下界）。** 有 $1/2\le I\le H<\infty$，且对每个实数 $y\ge2$，
+$$
+e_y I_y\le c_{\mathcal P(y)}
+\le e_y I_y+\frac K{\log y}
+\le e_y I+\frac K{\log y}
+\le\frac C{\log y}.
+\tag{488.2a}
+$$
+令 $\gamma$ 为 Euler 常数，固定
+$$
+a=\frac{e^{-\gamma}}{4z}>0.
+$$
+存在同一个实数 $Y\ge2$，使全部实数 $y\ge Y$ 满足
+$$
+\frac a{\log y}\le\alpha_{\mathcal P(y)}
+\le c_{\mathcal P(y)}\le\frac C{\log y}.
+\tag{488.2b}
+$$
+因此两个原系数都是 $\Theta(1/\log y)$；这里没有断言 $c_{\mathcal P(y)}\log y$ 或 $\alpha_{\mathcal P(y)}\log y$ 有极限。
+
+**证明。** 在 $1\le u<2$ 上 $\mathcal M(u)=1$，故该段积分为 $1/2$。对余段使用 (488.1)，得到
+$$
+\frac12\le I\le\frac12+362.7\int_2^\infty\frac{du}{u(\log u)^2}
+=\frac12+\frac{362.7}{\log2}=H.
+$$
+这也证明所定义非负积分有限。
+
+对每个固定的 $y$，第 474.3 条的准确识别为
+$B_{\mathcal P(y)}(u)=\sum_{n\in\mathcal S(u,y)}\mu(n)$，且在 $1\le u\le y$ 等于 $\mathcal M(u)$。它同时保留闭上端、平方自由项及非平方自由项的零贡献。直接在第 443.7 条的原系数积分中按 $y$ 分段，第一段为 $e_yI_y$，余段非负，给 (488.2a) 的下界。第 474.2 条在 $(u,y)$、$u\ge y$ 处的同一个 $K$ 以及 (474.3c) 给
+$$
+\begin{aligned}
+0\le c_{\mathcal P(y)}-e_yI_y
+&\le\frac{Ke_y}{\log y}\int_y^\infty\Psi(u,y)\frac{du}{u^2}\\
+&\le\frac{Ke_y}{\log y}\,e_y^{-1}
+=\frac K{\log y}.
+\end{aligned}
+$$
+再用 $I_y\le I\le H$ 及 (474.3d) 的 $e_y\le1/\log y$，得到全部上界。这里仅在固定 $y$ 处使用已有的非负积分公式，没有交换增长支撑与无穷积分的极限，也没有要求光滑尾积分趋零。
+
+现在直接用 Mertens 第三定理的原乘积极限
+$$
+\lim_{y\to\infty}(\log y)\prod_{p\le y}(1-p^{-1})=e^{-\gamma}.
+$$
+所用精确归一化见本库 [Mertens 第三定理](../../../D5/S3/Weil/Mertens/Third.lean) 的乘积恒等式与 `Mertens.E₃.bound''`；此处借用的是这个经典乘积极限。由极限定义可固定 $Y\ge2$，使每个 $y\ge Y$ 都有 $e_y\log y\ge e^{-\gamma}/2$。又 $I_y\ge1/2$，第 443.12 条给 $c_Q/z\le\alpha_Q\le c_Q$，所以
+$$
+\alpha_{\mathcal P(y)}\ge\frac{e_y I_y}{z}
+\ge\frac{e^{-\gamma}}{4z\log y}.
+$$
+这证明 (488.2b)，所有常数均不随 $y$ 改变。上下界之间仍有固定宽度，不能由它们推出一个极限首项常数。证毕。
+
+**定义 488.3（完整表、最短长度与共同容差）。** 对整数 $m\ge2$，以下始终取
+$$
+Q=\mathcal P(m),\qquad k=\pi(m),\qquad t=2^k,\qquad b=1+\lceil\log_2Q\rceil.
+$$
+完整表严格使用第 474.7 条的字段：全部升序约数 $1=a_1<\cdots<a_t=Q$，每个 $\mu(a_i)$，以 $b_0=0$ 为初值的全部部分和 $b_i=\sum_{j\le i}\mu(a_j)$，全部跳变 $\varepsilon_i=|b_i|-|b_{i-1}|$，实际素数标签 $p\le m$、行数以及所需轴数、类型、长度首部与界定符。首部按所在语法域解释；凡该表格式需要的元数据都计入长度，素数地址不换成素数序号。自然字段及其长度仍为
+$$
+\operatorname{Fr}(n)=\zeta(L(n)+1)\,1\,\zeta(n),\qquad
+|\operatorname{Fr}(n)|=L(n)+L(L(n)+1)+1,
+$$
+其中 $\zeta(n)$ 是原 Zeckendorf 规范字，$L(n)=|\zeta(n)|$，零的载荷为空；符号和绝对值各用一个自然字段。所有有理字段的分子、分母也用这个码，分母为正。
+
+还必须列出精确有理数 $c_Q$ 与 $z\alpha_Q$；第二个字段不是 $\alpha_Q$ 本身。第 474.8 条给出一种有界整数构造：
+$$
+A_Q=\sum_{i=1}^t\varepsilon_i\frac Q{a_i},\qquad
+c_Q=\frac{\Phi(Q)A_Q}{Q^2},\qquad
+z\alpha_Q=\frac{A_Q}{\prod_{p\mid Q}(p+1)}.
+\tag{488.3}
+$$
+固定第 474.7 条的完整字段格式。令 $\mathfrak T_m$ 为按该格式写出的全部正确完整表，包括用更大的未约分分子、分母表达同一有理数的表。表长 $|T|$ 是实际比特数。令 $T_0(m)$ 为直接采用 (488.3) 所示分子、分母及原首部构造的表，记
+$$
+S_0(m)=|T_0(m)|,\qquad S_{\min}(m)=\min_{T\in\mathfrak T_m}|T|.
+$$
+$T_0(m)$ 保证该类非空，自然数良序保证最短长度存在。
+
+给定实数容差 $\eta>0$，称整数 $m\ge2$ 可用，当且仅当同时有 $c_{\mathcal P(m)}\le\eta$ 和 $\alpha_{\mathcal P(m)}\le\eta$。第 443.12 条使此共同条件恰等价于 $c_{\mathcal P(m)}\le\eta$。定义最小可用截止及最短可用输出为
+$$
+m_*(\eta)=\min\{m\in\mathbb Z:m\ge2,\ c_{\mathcal P(m)}\le\eta\},
+$$
+$$
+S_*(\eta)=\min\{|T|:m\ge2\text{ 可用},\ T\in\mathfrak T_m\}.
+$$
+由 (488.2a) 可用截止存在，因此这两个最小值存在。$S_*$ 的定义没有假定最短输出必在 $m_*$ 取得。
+
+**定理 488.4（完整载荷下界与分开的资源）。** 对每个整数 $m\ge2$ 及每张 $T\in\mathfrak T_m$，
+$$
+|T|\ge\sum_{d\mid Q}L(d)
+\ge2^{k-1}\log_2Q\ge\frac{2^k b}{6}.
+\tag{488.4a}
+$$
+存在固定常数 $A\ge1$，使全部 $m\ge2$ 满足
+$$
+\frac{2^k b}{6}\le S_{\min}(m)\le S_0(m)\le A2^k b.
+\tag{488.4b}
+$$
+故最短表及所示构造的输出长度均为 $\Theta(2^k b)$。完整输出的逐位发出费用至少为实际输出长度；第 468.8 条规定的完整结构解析至少收取同样的读位费用。更一般地，对任意输入字符串均须正确判定其是否属于 $\mathfrak T_m$、无有效性承诺且不允许错误的确定性检查器，在每张正确表上也必须读取全部约数载荷位，故有 $\Omega(2^k b)$ 的读位下界。
+
+对 $T_0(m)$，直接使用第 474.8 条的生成、完整核对及素数支撑完整性核对，其位运算上界为
+$$
+R(m)=O(2^k k b^2+m^3).
+\tag{488.4c}
+$$
+同一逐位实现可用不超过该运算上界的辅助工作空间。输出同时驻留时另需 $\Theta(2^k b)$ 位输出存储；(488.4a) 不给辅助空间的同阶下界，也不把 (488.4c) 与输出下界认成相同的运行时间。
+
+**证明。** 原权满足 $G_0=1,G_1=2,G_{j+2}=G_j+G_{j+1}$。归纳得 $G_j\le2^j$：前两项成立，若连续两项成立，则下一项至多 $2^j+2^{j+1}\le2^{j+2}$。因此任意长 $L$ 的零一载荷所表示的值至多
+$$
+\sum_{j=0}^{L-1}G_j\le\sum_{j=0}^{L-1}2^j=2^L-1.
+$$
+特别地 $L(d)\ge\log_2(d+1)\ge\log_2d$。完整表必须逐个写出原约数载荷，所有其它字段的长度非负，故可以只对这些必有位求和。平方自由 $Q$ 的每个素因子恰出现于 $2^{k-1}$ 个约数中，于是
+$$
+\sum_{d\mid Q}\log_2d
+=\sum_{p\mid Q}2^{k-1}\log_2p
+=2^{k-1}\log_2Q.
+$$
+令 $v=\log_2Q\ge1$，则 $b=1+\lceil v\rceil\le v+2\le3v$，得到 (488.4a)。这一步使用原 Fibonacci 载荷，没有替换成二进制自然字段。
+
+上界直接应用第 446.9、474.8 条的完整构造。每个约数、素数标签、部分和的绝对值均不超过 $Q$，各跳变为 $\pm1$，行数 $2^k\le Q$；这些值、符号、长度首部和界定符的各字段合计均为 $O(b)$ 位。$t$ 行、$k\le t$ 个实际素数标签及必要首部合计为 $O(tb)$。所示 $A_Q$ 的绝对值不超过 $tQ$，$\Phi(Q)\le Q$，且 $\prod(p+1)\le2^kQ\le Q^2$；(488.3) 的分子、分母都只有 $O(b)$ 位。故可选固定 $A$ 给全部 $m\ge2$ 的 (488.4b)，并未免费删去有理字段或元数据。
+
+(488.4c) 使用的是同一实际构造：对 $2,\ldots,m$ 的每个整数试除至平方根，合数也逐一排除，因而同时确认没有遗漏任何 $p\le m$。所列素数的全部子集产生恰好全部约数，子集奇偶给 Möbius 符号；归并排序后累积 $b_i,\varepsilon_i$，再计算 (488.3) 的全部整数和原规范字段。原试除项 $O(m^3)$、枚举排序和整数运算项 $O(tkb^2)$ 已包括每个步骤。重新执行并逐项比较能够核对支撑的完整性、全部符号和有理值。所需 Fibonacci 权表及每个 $\operatorname{Fr}$ 首部的构造亦已包含。引用此原算法不需要另一套素性或表格式假设。
+
+为证明检查器下界，固定一个正确输入 $T$。若检查器在该输入的确定性运行中未读某一约数载荷位，只翻转该位而保持其长度首部、所有其它字段及字符串总长度不动。若翻转后不再是规范载荷，字符串不合法；若仍规范，则该字段数值因相应的正权 $G_j$ 改变。其它约数行不变，这一升序完整约数表因而不正确。原第 468.9 条的唯一解析确保这不是另一次合法分段。在被翻转位被读取以前，两个输入的每步运行相同；原运行从不读取它，所以新运行也同样停止并接受，矛盾。于是全部约数载荷位都必须读到，结合上述求和给下界。有效输入承诺、允许出错或改变输出任务均不是此判定问题。
+
+对任意膨胀的未约分有理字段，(488.4a) 仍成立，但统一的 $A2^k b$ 上界不成立。接受全部 $\mathfrak T_m$ 的检查器不能仅因一个正确有理字段较长就判错；必须另收实际输入长度及相应大整数运算费。(488.4c) 是对所示构造以及分子、分母均有固定 $O(b)$ 位限制的输入的上界。最后，逐位发出、完整结构解析的下界来自原收费定义；一次实际构造使用的辅助位可由其运算次数保守控制，输出驻留空间与辅助空间分开计，得到所列资源断言。证毕。
+
+**定理 488.5（系数、支撑和必要输出的容差关系）。** 固定 (488.2) 的 $a,C,Y$ 及 (488.4b) 的 $A$。置
+$$
+A_\pi=\frac{\log2}{2},\quad B_\pi=\log4+1,\quad
+d_0=\frac{(\log2)^2}{4},\quad D_0=(\log4+1)\log2+1.
+$$
+可以固定一个整数 $M_0\ge\max(12,Y)$，使每个整数 $m\ge M_0$ 满足
+$$
+A_\pi\frac m{\log m}\le\pi(m)\le B_\pi\frac m{\log m},\qquad
+\frac m2\le b\le3m,
+\tag{488.5a}
+$$
+$$
+d_0\frac m{\log m}\le\log S\le D_0\frac m{\log m}
+\quad\bigl(S=S_{\min}(m)\text{ 或 }S_0(m)\bigr).
+\tag{488.5b}
+$$
+每张其它合法完整表仍满足 (488.5b) 的下界。特别地，对所列两种长度，
+$$
+\log\log S=\log m-\log\log m+O(1)\sim\log m,
+\qquad c_{\mathcal P(m)},\alpha_{\mathcal P(m)}
+=\Theta\left(\frac1{\log\log S}\right).
+\tag{488.5c}
+$$
+这里的系数与长度来自同一个 $m$。
+
+具体地，可固定
+$$
+\eta_0=\min\left\{\frac12,\frac a{2\log M_0},
+\frac12\min_{2\le m<M_0}c_{\mathcal P(m)}\right\}>0.
+$$
+对全部实数 $0<\eta\le\eta_0$，
+$$
+\exp(a/\eta)\le m_*(\eta)\le X_+(\eta):=\lceil\exp(C/\eta)\rceil.
+\tag{488.5d}
+$$
+每个可用截止都必须至少为左端；所示 $X_+$ 是一个充分的可用截止。在最小截止处，还可同时取
+$$
+A_\pi\frac\eta a e^{a/\eta}\le\pi(m_*)
+\le2B_\pi\frac\eta C e^{C/\eta},\qquad
+\frac12 e^{a/\eta}\le b(m_*)\le6e^{C/\eta}.
+\tag{488.5e}
+$$
+左侧的必要下界适用于每个可用截止，右侧的充分支撑预算也适用于 $X_+$。最短可用输出满足
+$$
+\frac a\eta-\log\frac a\eta+\log d_0
+\le\log\log S_*(\eta)
+\le\frac C\eta-\log\frac C\eta+\log(2D_0).
+\tag{488.5f}
+$$
+因此存在固定 $0<\eta_1\le\eta_0$，使每个 $0<\eta\le\eta_1$ 都有
+$$
+\exp\!\left(\exp\frac a{2\eta}\right)
+\le S_*(\eta)
+\le\exp\!\left(\exp\frac{2C}\eta\right),
+\qquad \log\log S_*(\eta)=\Theta(1/\eta).
+\tag{488.5g}
+$$
+这些阈值是具有所列量词的存在阈值，并非由未知数值的 $K,Y$ 给出的数值停止证书。
+
+**证明。** 所需经典输入只是 Chebyshev 估计。准确的现成形式见 [Chebyshev 原声明](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/NumberTheory/Chebyshev.lean) 中的 `theta_eq_log_primorial`、`theta_le_log4_mul_x`、`theta_ge`、`pi_ge` 及 `eventually_primeCounting_le`：对自然数 $m$，
+$$
+\log Q=\vartheta(m),\qquad
+m\log2-\log(m+1)-2\sqrt m\log m\le\vartheta(m)\le m\log4,
+$$
+$$
+\frac{m\log2-\log(m+1)}{\log m}\le\pi(m),
+$$
+而对每个固定 $\epsilon>0$，充分大实数 $x$ 有
+$\pi(x)\le(\log4+\epsilon)x/\log x$。下界在这里仅用于整数 $m\ge2$，最后一条取固定 $\epsilon=1$；没有把最终成立的上界改为全域上界，也不需要素数定理。
+
+由于 $\log(m+1)/m\to0$ 和 $\log m/\sqrt m\to0$，可固定一个整数阈值，使上述式子给出 (488.5a) 的素数个数界及 $\vartheta(m)\ge m\log2/2$。这给 $b\ge m/2$。另一方面 $b\le\vartheta(m)/\log2+2\le2m+2\le3m$。把阈值增大到至少 $12,Y$，再使全部其后整数满足
+$$
+\log(3Am)\le\frac m{\log m},
+$$
+得到所需的 $M_0$；这一步可行，因为 $\log(3Am)\log m/m\to0$。
+
+对任意合法表，由 (488.4a)、$b\ge m/2\ge6$ 得
+$$
+\log|T|\ge k\log2+\log(b/6)
+\ge A_\pi\log2\,\frac m{\log m}
+\ge d_0\frac m{\log m}.
+$$
+对于 $S_{\min},S_0$，(488.4b) 另给
+$$
+\log S\le k\log2+\log(Ab)
+\le B_\pi\log2\,\frac m{\log m}+\frac m{\log m}
+=D_0\frac m{\log m}.
+$$
+对正的两边取对数即得 (488.5c) 的第一式。再结合 (488.2b)，因为 $\log\log S/\log m\to1$，得到第二式。对任意膨胀字段表不能使用这一步的上界，所以也没有该系数与任意实际长度的等价关系。
+
+所有有限截止的 $c$ 严格正，且 $c_{\mathcal P(m)}\to0$。因此对每个固定有限区间，把容差缩至其系数最小值以下，就没有该区间内的可用截止；这还证明 $m_*(\eta)\to\infty$。在所列 $\eta_0$ 下，$2\le m<M_0$ 一律不可用；每个可用 $m$ 都有
+$$
+\frac a{\log m}\le c_{\mathcal P(m)}\le\eta,
+$$
+从而 $m\ge e^{a/\eta}$，方向是必要性。另一方面，在 $X_+=\lceil e^{C/\eta}\rceil$ 处有 $C/\log X_+\le\eta$，(488.2a) 给可用性，方向是充分性。两者证明 (488.5d)。特别地 $a/\eta\ge2\log M_0$；由 (488.2b) 也有 $C\ge a$，所以所用截止均超过 $M_0>e$。
+
+函数 $x/\log x$ 在 $x>e$ 上严格递增。将必要截止代入 (488.5a) 下界，给 (488.5e) 左侧。又
+$$
+X_+\le2e^{C/\eta},\qquad \log X_+\ge C/\eta,
+$$
+所以 (488.5a) 在 $X_+$ 的上界给右侧预算。素数个数与 $b$ 随整数截止非减，$m_*\le X_+$ 便给最小截止处的右侧；这一步不要求表字段长度单调。
+
+对任意可用 $m$ 和任意正确 $T$，由必要截止和 (488.5b) 的下界，
+$$
+\log|T|\ge d_0\frac m{\log m}
+\ge d_0\frac{e^{a/\eta}}{a/\eta}.
+$$
+取对数并对全部可用表取最小，给 (488.5f) 的下界。对于上界，只需选择可用的 $T_0(X_+)$：
+$$
+\log S_*\le\log S_0(X_+)
+\le D_0\frac{X_+}{\log X_+}
+\le2D_0\frac{e^{C/\eta}}{C/\eta}.
+$$
+再取对数给上界，没有把 $S_*$ 的取得位置认定为 $m_*$。最后，可选固定 $\eta_1\le\eta_0$，使所有 $0<\eta\le\eta_1$ 同时满足
+$$
+\log(a/\eta)-\log d_0\le\frac a{2\eta},\qquad
+-\log(C/\eta)+\log(2D_0)\le\frac C\eta.
+$$
+这样的阈值存在，因为对数增长慢于 $1/\eta$。于是 (488.5f) 夹在 $a/(2\eta)$ 与 $2C/\eta$ 之间，连续取两次指数得到 (488.5g)。证毕。
+
+**定理 488.6（原增长截止上的两种证书与完整表）。** 固定实数 $0<\theta<1/2$。对满足 $m_N=\lfloor\theta\log_2N\rfloor\ge2$ 的整数 $N$，令 $Q_N=\mathcal P(m_N)$、$k_N=\pi(m_N)$。同一个截止处有
+$$
+\frac{|M(N)|}{N}\le\frac{U_{Q_N}(N)}N
+\le\frac C{\log m_N}+N^{2\theta-1},
+\tag{488.6a}
+$$
+$$
+\frac{|M(N)|}{N}\le\frac{W_{Q_N}(N)}N
+\le\frac C{\log m_N}
++(N^\theta+2)N^{-1/2}\exp(2\sqrt{\theta\log_2N}),
+\tag{488.6b}
+$$
+$$
+\left|\frac{\mathcal L_{k_N}(N)}N-\frac1{6z}\right|
+\le\frac C{2\log m_N}
++\frac{E_2+(N^\theta+2)\exp(2\sqrt{\theta\log_2N})}{2\sqrt N}.
+\tag{488.6c}
+$$
+更有固定整数 $N_\theta$，使全部 $N\ge N_\theta$ 都满足 $m_N\ge Y$，且
+$$
+\frac a{2\log m_N}\le\frac{U_{Q_N}(N)}N\le\frac{C+a/2}{\log m_N},\qquad
+\frac a{2\log m_N}\le\frac{W_{Q_N}(N)}N\le\frac{C+a/2}{\log m_N},
+\tag{488.6d}
+$$
+因此
+$$
+c_{Q_N},\alpha_{Q_N},\frac{U_{Q_N}(N)}N,\frac{W_{Q_N}(N)}N
+=\Theta_\theta(1/\log\log N).
+\tag{488.6e}
+$$
+
+在这个相同截止处，第 474.8 条的构造表长、生成与完整核对位运算、表已给定后的准确 $U$ 求值位运算仍分别具有原预算
+$$
+O_\theta(N^\theta\log N\log\log N),
+\tag{488.6f}
+$$
+$$
+O_\theta\bigl(N^\theta(\log N)^3(\log\log N)^2+(\log N)^3\bigr),
+\tag{488.6g}
+$$
+$$
+O_\theta\bigl(N^{2\theta}(\log N)^2(\log\log N)^2\bigr).
+\tag{488.6h}
+$$
+三者均为 $o(N)$。表长及生成核对的更强 $N^{o(1)}$ 预算直接沿用第 472.3 条的 Chebyshev 代入，不由 (488.1) 另生一个费用定理。
+
+**证明。** 保留 (474.6a) 对所有满足 $\omega(Q)\le\theta\log_2N$ 的平方自由 $Q\ge1$ 的原统一误差。所选 $k_N\le m_N\le\theta\log_2N$，因而这两个误差适用于 $Q_N$；它们不含暗中依赖增长 $Q_N$ 的常数。将 (488.2a) 的 $c_{Q_N},\alpha_{Q_N}\le C/\log m_N$ 代入第 474.6 条的同一证明，分别得到 (488.6a)、(488.6b)。对于 (488.6c)，(474.5c) 的两端误差给
+$$
+\left|\frac{\mathcal L_{k_N}(N)}N-\frac1{6z}\right|
+\le\frac{\alpha_{Q_N}}2+\frac{E_2+E_{Q_N}}{2\sqrt N}.
+$$
+再用 $E_{Q_N}\le(2^{k_N}+2)e^{2\sqrt{k_N}}$ 及系数上界即可，不累计中间支撑的误差。
+
+为取得实际 $U,W$ 的下界，必须使用两侧误差，而不只是它们各自的上界公式。令
+$$
+\delta_U(N)=N^{2\theta-1},\qquad
+\delta_W(N)=3N^{\theta-1/2}\exp(2\sqrt{\theta\log_2N}).
+$$
+第 474.6 条给 $|U_{Q_N}(N)/N-c_{Q_N}|\le\delta_U(N)$ 和
+$|W_{Q_N}(N)/N-\alpha_{Q_N}|\le\delta_W(N)$。
+因为 $m_N\sim\theta\log_2N$，有 $\log m_N\sim\log\log N$。对 $\delta_U\log m_N$ 取对数，其主项为 $-(1-2\theta)\log N$；对于 $\delta_W\log m_N$，主项为
+$$
+-(1/2-\theta)\log N+2\sqrt{\theta\log_2N}
++\log\log m_N+\log3.
+$$
+两者均趋于负无穷。因此可固定 $N_\theta$，使全部其后整数满足 $m_N\ge Y$、
+$\delta_U(N)\log m_N\le a/2$ 和 $\delta_W(N)\log m_N\le a/2$。从 (488.2b) 的两个系数下界减去相应误差、从上界加上误差，便得 (488.6d)。结合对数等价与系数本身的界，得到 (488.6e)。这一步未证明 $M(N)$ 的正下界。
+
+支持和端点始终是原来的：$U$ 求和遍历所有 $1\le d\le N,(d,Q_N)=1$，$W$ 另要求 $d$ 平方自由；$B_Q$ 在 $[a_i,a_{i+1})$ 的值对应外层的 $(N/a_{i+1},N/a_i]$，不把两种外层相混。第 474.6 条还保证充分大 $N$ 时存在 $m_N<q\le N$ 的素数 $q\nmid Q_N$，所以没有取到全素数截止而把问题换成原 $M(N)$ 自身。上述粗一致误差在 $\theta=1/2$ 不能给所需小量，故不含该端点。
+
+最后直接使用 (474.8d)–(474.8f)，得到 (488.6f)–(488.6h)；其位运算、字段和整数输入条件不因改进系数界而变化。固定有理 $\theta$ 的截止计算使用 (474.9b)，并另计其中 $\log N$ 的固定多项式费用。任意实 $\theta$ 在这里是数学参数，若未给其计算接口，运算仍以已给的整数 $m_N$ 为输入。由第 472.3 条，$k_N=O_\theta(\log N/\log\log N)$、$\log Q_N=O_\theta(\log N)$，原表预算的 $N^{o(1)}$ 结论也原样适用。证毕。
+
+若任务仅请求 $M(N)$ 的一个上界，则对整数 $N\ge2$ 直接用 (488.1) 得 $|M(N)|/N<362.7/(\log N)^2$，这在渐近上强于上述 $U/N,W/N$ 的 $1/\log\log N$ 量级，并不需要完整约数表。$N=0,1$ 仍直接取原值零、一。因而此处的系数与必有输出关系不构成相对直接使用经典 $M$ 估计的上界改进；准确计算 $M$ 又是另一个任务。
+
+**定理 488.7（共同有理容差的有限搜索与全部费用）。** 输入为正整数 $r,s$ 的原自然字段，代表 $\eta=r/s>0$。令
+$$
+h=|\operatorname{Fr}(r)\operatorname{Fr}(s)|
+$$
+为实际给入长度，不预先约分，也不以约分后的长度替代它。逐次取 $m=2,4,8,\ldots$，在每次尝试生成并完整核对第 474.8 条的表，然后作精确整数比较
+$$
+s\Phi(Q)A_Q\le rQ^2.
+\tag{488.7a}
+$$
+设 $m^\dagger$ 是第一次成功的倍增截止，$k^\dagger=\pi(m^\dagger)$、$b^\dagger=1+\lceil\log_2\mathcal P(m^\dagger)\rceil$。这个过程必停止，且 $m^\dagger\le2m_*(\eta)$。若 $m=2$ 首次即成功，直接返回二；否则保留上次失败和本次成功的整数区间，作精确二分可返回 $m_*(\eta)$ 及其完整表。
+
+包括所有失败尝试、所有二分尝试和必要的最终表重建，实际位运算的上界为
+$$
+O\left(h+\log(m^\dagger+1)
+\left[2^{k^\dagger}k^\dagger(b^\dagger)^2
++(m^\dagger)^3+(h+b^\dagger)^2\right]\right).
+\tag{488.7b}
+$$
+令方括号内为 $R^\dagger$，顺次丢弃旧表时，辅助工作空间可保守地取 $O(h+R^\dagger)$；最终输出长度为 $S_0(m_*(\eta))$，如需驻留则另计其输出存储。搜索不需要给出数值 $K$ 或数值 $Y$。
+
+另有整数 $N\ge1$、$\ell=1+\lceil\log_2(N+1)\rceil$ 时，在已给定且已核对的 $T_0(m)$（或全部整数域具有同样位长界的表）上，准确 $U_Q(N)$ 仍使用 (474.8g) 的原式
+$$
+U_Q(N)=\sum_{i=1}^{2^k}\sum_{d\mid Q}
+\varepsilon_i\mu(d)\left\lfloor\frac N{a_i d}\right\rfloor,
+\tag{488.7c}
+$$
+至多 $4^k$ 次带余除法，总位运算 $O(4^k(\ell+b)^2)$。计算 $c_QN+4^k$ 另需 $O((\ell+b)^2)$。若任务要求先取得并核对表，则必须加上 (488.4c) 或 (488.7b)，不能将表视为免费。
+
+对于规范输入 $\eta=1/q$、整数 $q\to\infty$，有 $h=O(\log q)$。上述指定搜索并交付完整表的实际逐位费用 $T(q)$ 满足
+$$
+\log\log T(q)=\Theta(q)=\Theta(1/\eta).
+\tag{488.7d}
+$$
+这是所示有限方法的运行费用与强制输出下界在两次对数尺度上的匹配，不是原运行时间的同阶最优性。若 $r,s$ 任意膨胀而保持比值不变，必须保留 (488.7b) 的 $h$ 项，不能仅由数值 $\eta$ 给总运行费用上界。
+
+**证明。** (488.3) 中 $Q^2>0$，故 (488.7a) 当且仅当 $c_Q\le r/s$；第 443.12 条又使它当且仅当满足所定义的共同 $c,\alpha$ 容差。比较只使用整数乘法与顺序，没有把 $\alpha_Q$ 当作有理字段，也没有将单独 $\alpha$ 最小截止的数学存在性用作一个精确实数比较步骤。
+
+在两相邻素数之间 $\mathcal P(m)$ 不变。遇到新的素数 $p$，从 $R\ge2$ 的原递推
+$$
+c_{Rp}=(1-p^{-2})c_R-2e_R(1-p^{-1})J_{R,p}
+$$
+及 $J_{R,p}\ge0,c_R>0$ 得严格下降。因此整数 $m\ge2$ 上的 $c_{\mathcal P(m)}$ 非增，可用性一旦成立即一直成立。它趋于零，故某个有限倍增截止必成功。这只用收敛的数学事实，不需要预先知道一个数值停止阈值。
+
+若二处已成功，定义域从二开始，所以 $m_*=2=m^\dagger$。若第一次成功在 $m^\dagger>2$，则 $m^\dagger/2$ 失败，故
+$$
+m^\dagger/2<m_*\le m^\dagger<2m_*.
+$$
+对这两个整数端点取中点并检查同一条件，每次保留失败端和成功端；可用性的单调性保持 $m_*$ 在其中。整数区间长度每次至多减至原来的一半向上取整，最终两端相邻，成功端恰为 $m_*$。必要时在该端重建一次表。倍增次数与二分次数之和，加上这次重建，为 $O(\log(m^\dagger+1))$；首步成功的常数次情形也包括在内。
+
+全部尝试的 $m,k,b$ 均不超过 $m^\dagger,k^\dagger,b^\dagger$，所以第 474.8 条的一次构造、核对费被方括号内的前两项控制。输入 $r,s$ 的真实二进制位长为 $O(h)$：原载荷权 $G_j\le2^j$ 给这个界，解析首部及逐位恢复整数的 $O(h^2)$ 费用可被最后一项吸收。所示系数的整数位长为 $O(b)$，故 (488.7a) 两侧交叉乘法及比较只需 $O((h+b)^2)$ 位运算。读取实际输入、全部尝试次数及整数区间操作一并计入，得到 (488.7b)。保留 $r,s$ 和两个端点，完成一次尝试后丢弃其表；一次尝试的辅助空间由其实际运算次数控制，端点只需 $O(\log(m^\dagger+1))$ 位，给所列空间上界。它没有对流式输出的辅助空间给反向下界。
+
+(488.7c) 直接使用第 474.8 条已证明的准确求值算法和位长控制：所有分母 $a_i d\le Q^2$，商不超过 $N$，累加中间绝对值不超过 $4^kN$，故原 $O((\ell+b)^2)$ 每项预算适用。这里没有准确 $W$ 或 $M$ 的新求值算法。
+
+最后取 $\eta=1/q$。对于充分大 $q$，第 488.5 条及 $m^\dagger\le2m_*$ 给
+$$
+e^{aq}\le m_*\le m^\dagger\le2\lceil e^{Cq}\rceil\le4e^{Cq}.
+$$
+由第 446.9 条 $h=O(\log q)$。在 (488.7b) 中使用
+$k^\dagger=O(m^\dagger/\log m^\dagger)$、$b^\dagger=O(m^\dagger)$，对各多项式因子取对数，得到
+$$
+\log T(q)=O\left(\frac{m^\dagger}{\log m^\dagger}\right).
+$$
+确实，指数项的对数为 $k^\dagger\log2$，其它因子只增加 $O(\log m^\dagger+\log(h+1))$；由 $m^\dagger\ge e^{aq}$，这些项以及尝试次数的对数均被 $m^\dagger/\log m^\dagger$ 吸收。因此
+$\log\log T(q)\le\log m^\dagger-\log\log m^\dagger+O(1)=O(q)$。
+另一方面，这一任务必须实际发出一张可用完整表，费用至少为 $S_*(1/q)$；由 (488.5g)，充分大 $q$ 时 $\log\log T(q)\ge aq/2$。这证明 (488.7d)。对于任意膨胀的输入，读完 $h$ 位已经不可省，且交叉乘法受真实整数位长约束，故不能删去 $h$。
+
+本定理的共同任务是原系数容差及完整表交付。若只请求 $M$ 的上界，仍直接应用 (488.1)，不据此表任务的下界向那一不同任务转移必要费用。固定任意 $0\le\beta<1$ 时，$x^{1-\beta}/(\log x)^2\to\infty$，所以所借经典界仍不以大小比较给出 $O(x^\beta)$。第 477.5 条的原半开区间有符号 $H_6$、真实 $hM$、全部 epsilon 的 RH 接口、全前缀窗口、外层正负质量的实际抵消条件及其跨层统计条件仍各需原假设；第 472.7 条的公式障碍仍不等于 $M$ 的下界。原加权前缀的 1975 年文献定理及其前缀后果的准确适用性缺口也不由此解除。
+
+对原5040动态任务，仍须保留同一全部输入和失败、输入概率、初态、实际带身份边、来源与绝对时间及全档案守卫、终态和转换费用；原完整成本各项只计一次。上述有限表费用不替代这些费用，独立指数行宽也不包含全部素数地址和容量表。5040的容量 $(4,2,1,1)$、独立 Z 窗口 $(3,2,1,1)$ 及原 CSA 位置域仍为各自原对象。这里直接使用第 448.1–448.6 条的同一个 $\operatorname{Enc}/\operatorname{Dec}$、全部集合、成员关系、全函数图、全部零边和任意集合参数；有限表的自然字段不编码全部集合，未将语义约束缩成有限可计算域。因而这些资源结论不证明完整 ZFC 实现的单一最低费用、所有允许算法的普遍最优性、物理动力学或 RH。证毕。
+
+## 489.
