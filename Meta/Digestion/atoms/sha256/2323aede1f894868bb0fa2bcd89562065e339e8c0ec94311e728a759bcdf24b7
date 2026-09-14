@@ -1,0 +1,16 @@
+**定理。** 设 $S$ 为交换环，$k\geq0$。矩阵 $U\in M_2(S)$ 满足 $C_kU=UD_k$ 当且仅当存在 $a,b\in S$ 使
+
+$$
+U=U(a,b)=
+\begin{pmatrix}
+a&b\\
+2k((k+1)b-a)&2(a-kb)
+\end{pmatrix}.
+$$
+
+此时
+
+$$
+\det U(a,b)=2\bigl(a^2-k(k+1)b^2\bigr).
+$$
+

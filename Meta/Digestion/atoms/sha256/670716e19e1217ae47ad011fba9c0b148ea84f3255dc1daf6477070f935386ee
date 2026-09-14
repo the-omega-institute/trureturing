@@ -1,0 +1,159 @@
+**命题 21.2（一个惰性参考量子比特的显式两步优势）。** 取
+
+$$
+e=\beta_1=\frac12,
+\qquad
+f=\beta_2=\frac15.
+$$
+
+在定义 21.1 的任务中，使用一个参考量子比特，准备共同初态
+
+$$
+|\Psi\rangle_{SR}
+=\frac12|00\rangle+\frac{\sqrt3}{2}|11\rangle,
+\qquad
+\rho_S=\operatorname{diag}\left(\frac14,\frac34\right),
+$$
+
+其中第一个张量因子是活动系统。第一共同控制取恒等；第一结果为 $i$ 时，第二共同系统控制取
+
+$$
+U_{2,0}=H
+=\frac1{\sqrt2}\begin{pmatrix}1&1\\1&-1\end{pmatrix},
+\qquad
+U_{2,1}=X
+=\begin{pmatrix}0&1\\1&0\end{pmatrix}.
+$$
+
+该策略在最终 $H_2R$ 输出上达到
+
+$$
+\frac{13+\sqrt{127}}{40}.
+$$
+
+因而
+
+$$
+T_2^{\mathrm{ref}}(1/2,1/5)
+\ge\frac{13+\sqrt{127}}{40}
+>\frac35
+=T_2(1/2,1/5).
+$$
+
+这是指定策略的可达下界，不宣称已经求出 $T_2^{\mathrm{ref}}$ 的精确最优值。所有系统控制都为实正交矩阵；参考从初始制备到最终测量之间始终接受恒等操作。
+
+证明。 令 $P_j=|j\rangle\langle j|$。由于 $e=1/2$，实际第一步的两个 Kraus 算子均为 $I_2/\sqrt2$，理想第一步算子则为 $P_i$。在 $f=1/5$ 时，实际末次结果效应为
+
+$$
+K_{2,j}^\dagger K_{2,j}
+=\frac45P_j+\frac15P_{1-j}.
+$$
+
+因此对历史 $ij$，实际与理想的初始系统效应分别为
+
+$$
+E_{ij}^{\mathrm{actual}}
+=\frac12U_{2,i}^\dagger
+\left(\frac45P_j+\frac15P_{1-j}\right)U_{2,i},
+$$
+
+$$
+E_{ij}^{\mathrm{ideal}}
+=P_iU_{2,i}^\dagger P_jU_{2,i}P_i.
+$$
+
+记 $M_{ij}=E_{ij}^{\mathrm{actual}}-E_{ij}^{\mathrm{ideal}}$，代入 $H$ 和 $X$ 得到
+
+$$
+M_{00}=\frac1{20}\begin{pmatrix}-5&3\\3&5\end{pmatrix},
+\qquad
+M_{01}=\frac1{20}\begin{pmatrix}-5&-3\\-3&5\end{pmatrix},
+$$
+
+$$
+M_{10}=\operatorname{diag}\left(\frac1{10},-\frac35\right),
+\qquad
+M_{11}=\operatorname{diag}\left(\frac25,\frac1{10}\right).
+$$
+
+例如，$H^\dagger P_0H$ 的每个矩阵元均为 $1/2$，而 $P_0H^\dagger P_0HP_0=P_0/2$，所以相减后得到 $M_{00}$。其余三式使用互补投影及 $X^\dagger P_0X=P_1$。四个差效应之和为零，与两种历史分布均归一化一致。
+
+对所选 Schmidt 初态，系统效应 $E$ 对应的未归一化参考输出为
+
+$$
+\sqrt{\rho_S}\,E^{\mathsf T}\sqrt{\rho_S}.
+$$
+
+这是因为该参考矩阵的 $(a,b)$ 元为
+
+$$
+\sqrt{(\rho_S)_{aa}(\rho_S)_{bb}}\,
+\langle b|E|a\rangle,
+$$
+
+可由初态在 $|a\rangle_S|a\rangle_R$ 基中的展开直接求出。因此两个最终 $H_2R$ 输出之差是按历史分块的 Hermitian 算子
+
+$$
+\Delta_{H_2R}
+=\sum_{i,j}|ij\rangle\langle ij|\otimes D_{ij},
+\qquad
+D_{ij}=\sqrt{\rho_S}\,M_{ij}^{\mathsf T}\sqrt{\rho_S}.
+$$
+
+使用 $\sqrt{\rho_S}=\operatorname{diag}(1/2,\sqrt3/2)$，四个参考差块明确为
+
+$$
+D_{00}=\frac1{80}\begin{pmatrix}-5&3\sqrt3\\3\sqrt3&15\end{pmatrix},
+\qquad
+D_{01}=\frac1{80}\begin{pmatrix}-5&-3\sqrt3\\-3\sqrt3&15\end{pmatrix},
+$$
+
+$$
+D_{10}=\operatorname{diag}\left(\frac1{40},-\frac9{20}\right),
+\qquad
+D_{11}=\operatorname{diag}\left(\frac1{10},\frac3{40}\right).
+$$
+
+前两个矩阵的迹均为 $1/8$，行列式均为 $-51/3200$，所以两个特征值异号。各自的迹范数等于特征值间距：
+
+$$
+\|D_{00}\|_1=\|D_{01}\|_1
+=\sqrt{\frac1{64}+\frac{204}{3200}}
+=\frac{\sqrt{127}}{40}.
+$$
+
+另外两个对角块给出
+
+$$
+\|D_{10}\|_1=\frac{19}{40},
+\qquad
+\|D_{11}\|_1=\frac7{40}.
+$$
+
+由于不同经典历史对应正交块，整体迹范数是各块迹范数之和，故
+
+$$
+\frac12\|\Delta_{H_2R}\|_1
+=\frac12\sum_{i,j}\|D_{ij}\|_1
+=\frac{13+\sqrt{127}}{40}.
+$$
+
+最终观察者可以先读取历史 $ij$，再在参考上测量对应 $D_{ij}$ 的正负谱子空间，以达到该可区分性。该测量只发生在两个记录步骤之后，没有对参考施加过程内控制，也没有丢弃任何历史。
+
+另一方面，定理 18.2 已经优化全部无参考输入和共同系统控制，给出
+
+$$
+T_2(1/2,1/5)
+=\max\left\{\frac35,\sqrt{\frac{17}{50}}\right\}
+=\frac35,
+$$
+
+其中 $9/25=18/50>17/50$。所构造参考策略相对此完整无参考最优值的增量为
+
+$$
+\frac{13+\sqrt{127}}{40}-\frac35
+=\frac{\sqrt{127}-11}{40}>0,
+$$
+
+严格不等式由 $127>121$ 得到。这证明了被动保留的初始纠缠参考可以提高该两步任务的最优值。证毕。
+

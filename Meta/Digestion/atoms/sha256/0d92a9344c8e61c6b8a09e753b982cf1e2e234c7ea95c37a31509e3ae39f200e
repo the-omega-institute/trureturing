@@ -1,0 +1,15 @@
+### 10.2 粗标签预测的精确缺陷
+
+对通道$\mathcal E$、列随机矩阵$K$和$B\subseteq\{1,\ldots,m\}$，记
+$$
+Q_B=\sum_{b\in B}Q_b,
+\qquad K(B\mid a)=\sum_{b\in B}K(b\mid a),
+$$
+以及
+$$
+\epsilon_Q(\mathcal E,K)
+=\max_B\left\|
+\mathcal E^*(Q_B)-\sum_aK(B\mid a)Q_a
+\right\|.
+$$
+

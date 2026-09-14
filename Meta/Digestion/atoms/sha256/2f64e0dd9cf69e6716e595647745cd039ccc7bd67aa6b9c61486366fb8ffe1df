@@ -1,0 +1,12 @@
+**定理 25.2（区域证书的组合充分性，repo-derived）。** 若定义25.1的全部精确义务成立，则全域上存在唯一精确商更新，且保留每条合法有限路径。若定义25.1的近似证书成立，置 $\delta=\delta_{\rm close}+\delta_{\rm eval}$ 和
+$$
+B_h=L^he_0+\delta\sum_{j=0}^{h-1}L^j,\qquad 0\le h\le H.
+$$
+若每一步以 $B_t$ 为误差半径满足定理21.4型的区域、守卫、停止及适用时反馈选择的裕量条件（判定有求值误差时须计入裕量），保证相同区域与合法动作、停止时刻，则在声明的 $H$ 步合法路径上，状态误差满足 $e_h=\|q\xi_h-\widehat z_h\|\le B_h$。若只认证首次退出前的域条件，则仅在该停止范围内断言此界。仅当另有 $o=\bar o q$，$\bar o$ 在含有两条摘要轨迹的读出域上成对 $L_o$-Lipschitz，且 $\|\widehat o(z)-\bar o(z)\|\le\varepsilon_o$ 时，才另得输出误差 $\|o(\xi_h)-\widehat o(\widehat z_h)\|\le L_oB_h+\varepsilon_o$。
+
+证明。同摘要状态由区域可恢复性落在同一区域；在该区域合法性、后继摘要、输出及费用相同，由定理2.2得到局部下降。后继区域也由摘要恢复，使这些局部图在实际域拼成单值全局部分图；有限步归纳得路径保持。近似版本以 $e_0\le B_0$ 起步：若 $e_t\le B_t$，裕量先保证该步同区域、同合法动作及停止判断。保域条件使 $q\xi_t,\widehat z_t\in E_{a_t,\sigma_t}$，依次使用交换缺陷、该区域的成对 Lipschitz 界和求值缺陷，得
+$$
+e_{t+1}\le\delta_{\rm close}+Le_t+\delta_{\rm eval}\le LB_t+\delta=B_{t+1}.
+$$
+归纳即得定理21.2的状态界，不需比较不同区域的更新值。输出因子化、读出正则性及求值界再由三角不等式给输出结论。裕量只保证分支同步，不提供稳定性：在单区域 $X=[0,\infty)$、恒真守卫、$q=\operatorname{id}$、$T=F:x\mapsto x^2$、$\widehat F(x)=x^2+\varepsilon$（$\varepsilon>0$）下，同初态的两步误差为 $\varepsilon(2x_0^2+1+\varepsilon)$；$F$ 在此域无有限统一 Lipschitz 常数。证毕。
+

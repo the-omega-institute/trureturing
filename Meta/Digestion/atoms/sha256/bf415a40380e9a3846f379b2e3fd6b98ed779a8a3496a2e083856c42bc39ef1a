@@ -1,0 +1,107 @@
+**定理 8.6（保留时间片段的两标签判别与精确最小样本数）。** 固定两个不同标签$x,y\in\mathcal I$及任意保留时间集合$R\subseteq T$。在分别制备系统标签$x$或$y$的任务中，片段条件态为
+$$
+\sigma_x^R=|e_x^R\rangle\langle e_x^R|,\qquad
+\sigma_y^R=|e_y^R\rangle\langle e_y^R|,
+\qquad s_R=|\Gamma_R(x,y)|=\prod_{t\in R}|G_t(x,y)|.
+$$
+条件态指指定标签制备的输出，不假设任意相干输入已经选中了某个隐藏标签。允许在$\bigotimes_{t\in R}\mathcal E_t$上实施任意联合二输出POVM；在此前不读出、不反馈。则
+$$
+\mathsf d(\sigma_x^R,\sigma_y^R)=\sqrt{1-s_R^2}.
+$$
+若两制备的先验为$\pi,1-\pi$，其中$0\le\pi\le1$，最小平均错误率为
+$$
+P_{\mathrm{err}}^{\pi}(R)
+=\frac{1-\sqrt{1-4\pi(1-\pi)s_R^2}}2.
+$$
+特别地，等先验时$P_{\mathrm{err}}^{1/2}(R)=(1-\sqrt{1-s_R^2})/2$。任意先验的公式针对平均错误率；等先验的这个值还等于最优最坏标签错误率，记为$\beta_{xy}(R)$。这里仍允许联合测量，不保证先分别测量各个时间单元后还能达到相同最优值。
+
+现固定等先验任务、可用有限时间集合$T$及目标$0<\beta<1/2$。可任意选择保留子集，每个时间样本成本均为一。令
+$$
+\ell_t=-\log|G_t(x,y)|^2\in[0,+\infty],\qquad
+B_\beta=\log\frac1{4\beta(1-\beta)}>0,
+$$
+其中零重叠定义为$\ell_t=+\infty$。将这些权重按非增次序排成$\ell_{(1)}\ge\cdots\ge\ell_{(N)}$。则达到$P_{\mathrm{err}}^{1/2}(R)\le\beta$的精确最小样本数为
+$$
+k_{\min}=\min\left\{k\in\{0,\ldots,N\}:\sum_{a=1}^k\ell_{(a)}\ge B_\beta\right\},
+$$
+若右边集合为空，则在这组有限可用样本中不可达。若只能保留按时间到达的前缀，则把排序前缀换成原时间前缀，精确最早达到时刻为
+$$
+k_{\mathrm{first}}=\min\left\{k\in\{0,\ldots,N\}:\sum_{t=1}^k\ell_t\ge B_\beta\right\},
+$$
+并作同样的不可达约定。$\beta=0$时存在可达片段当且仅当某个可用重叠为零；$\beta\ge1/2$时空片段即可。$R=\varnothing$或$s_R=1$时两个条件态相同，最优错误率为$\min\{\pi,1-\pi\}$；$s_R=0$时可零错误区分。
+
+若系统恰有$x,y$两个标签，还可以同时要求系统与保留记录的联合相干误差至多$\delta>0$，以及保留片段最坏标签错误率至多$0<\beta<1/2$。令$c=|\varrho_{xy}|$，并定义
+$$
+B_{\mathrm c}=\begin{cases}
+0,&c\le\delta,\\
+2\log(c/\delta),&c>\delta.
+\end{cases}
+$$
+对任意已执行集合$A=D\mathbin{\dot\cup}R$，两个任务同时达标的充要条件恰为
+$$
+\sum_{t\in D}\ell_t\ge B_{\mathrm c},\qquad
+\sum_{t\in R}\ell_t\ge B_\beta.
+$$
+因此在给定有限序列内，允许每次对已写入前缀选择访问划分时，精确最早可达轮数是
+$$
+\min\left\{k\in\{0,\ldots,N\}:\exists\,D\mathbin{\dot\cup}R=\{1,\ldots,k\},\quad
+\sum_{t\in D}\ell_t\ge B_{\mathrm c},\quad
+\sum_{t\in R}\ell_t\ge B_\beta\right\},
+$$
+集合为空仍表示在该有限序列内不可达。这是两个不交集合的分配条件，单有总和至少$B_{\mathrm c}+B_\beta$不充分。若任务只要求系统边缘态的相干误差，以及另行联合读取全部$A$的能力，则条件改为$\sum_{t\in A}\ell_t\ge\max\{B_{\mathrm c},B_\beta\}$；该任务没有要求系统与全部记录的联合态接近指针对角比较态。
+
+证明。 先取$u=e_x^R,v=e_y^R$。更换$v$的整体相位不改变其投影，故可在计算谱时使$\langle u,v\rangle=s_R\ge0$。若$s_R<1$，在二者张成空间的一组正交基中可写
+$$
+u=\begin{pmatrix}1\\0\end{pmatrix},\qquad
+v=\begin{pmatrix}s_R\\\sqrt{1-s_R^2}\end{pmatrix}.
+$$
+差$|u\rangle\langle u|-|v\rangle\langle v|$的迹为零、行列式为$-(1-s_R^2)$，故特征值为$\pm\sqrt{1-s_R^2}$，得到迹距离。$s_R=1$时两投影相同，此公式仍成立，不需要构造第二个基向量。
+
+二输出测量写为$(M,I-M)$，其中$0\le M\le I$，$M$表示猜$x$。令
+$$
+H_\pi=\pi|u\rangle\langle u|-(1-\pi)|v\rangle\langle v|.
+$$
+正确率为$1-\pi+\operatorname{tr}(MH_\pi)$。在$H_\pi$的特征基中，每个$M$的对角元介于零与一，所以最大值由正谱投影达到，且
+$$
+\max_{0\le M\le I}\operatorname{tr}(MH_\pi)
+=\operatorname{tr}(H_\pi)_+
+=\frac{\|H_\pi\|_1+2\pi-1}{2}.
+$$
+在上述二阶表示中，$\operatorname{tr}H_\pi=2\pi-1$、$\det H_\pi=-\pi(1-\pi)(1-s_R^2)$。两个候选特征值为
+$$
+\lambda_\pm=\frac{2\pi-1\pm\sqrt{1-4\pi(1-\pi)s_R^2}}2.
+$$
+当$0<\pi<1$且$s_R<1$时它们一正一负，故其绝对值之和为根号项。$\pi=0,1$或$s_R=1$时直接计算秩一算符，仍得相同的迹范数公式。代入正确率的最优值即得所述错误率。这是二元量子判别的Helstrom公式在纯记录态上的具体谱计算；一般判别定理见 Watrous，*The Theory of Quantum Information*，[第3章，定理3.4](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)。
+
+为证明等先验值也是最坏标签最优值，仍令$\langle u,v\rangle=s_R$。当$s_R<1$时取
+$$
+u_+=\frac{u+v}{\sqrt{2(1+s_R)}},\qquad
+u_-=\frac{u-v}{\sqrt{2(1-s_R)}},\qquad
+m_x=\frac{u_++u_-}{\sqrt2},\qquad m_y=\frac{u_+-u_-}{\sqrt2}.
+$$
+这两组向量各自正交归一。以$m_x,m_y$的投影为两个效应，并将它们张成空间的正交补各分一半，得到完整POVM。由
+$$
+u=\sqrt{\frac{1+s_R}{2}}u_++\sqrt{\frac{1-s_R}{2}}u_-,\qquad
+v=\sqrt{\frac{1+s_R}{2}}u_+-\sqrt{\frac{1-s_R}{2}}u_-
+$$
+可见两个标签的正确率同为$(1+\sqrt{1-s_R^2})/2$。最坏错误率总不小于等先验平均错误率，而该测量使两者同时达到已证的平均最优值，所以也达到最坏最优值。$s_R=1$时均匀猜测达到最坏错误率$1/2$。
+
+对$0<\beta<1/2$，两边非负使平方变形合法，
+$$
+P_{\mathrm{err}}^{1/2}(R)\le\beta
+\quad\Longleftrightarrow\quad
+s_R^2\le4\beta(1-\beta)
+\quad\Longleftrightarrow\quad
+\sum_{t\in R}\ell_t\ge B_\beta.
+$$
+没有零重叠时最后一步是有限乘积的对数；有零重叠时两边都按上述扩展实数约定成立。任何$k$元子集的权重和不超过最大的$k$项之和，且选择这$k$项就达到该最大值。因此排序前缀第一次达到预算的位置既必要又充分；若所有权重总和仍不足，则任何片段都不可能达标。仅允许时间前缀时没有重排序自由，直接使用原顺序的累计和。两个误差端点和空片段由原错误率公式给出。
+
+联合任务的相干距离由定理8.5精确等于$c\exp(-\frac12\sum_{t\in D}\ell_t)$。当$c\le\delta$时它自动达标，否则取对数给出$D$的预算；$R$的预算已经证明。对每个前缀的这组充要条件取最小值，就得到最早可达轮数。为核对总预算不充分，取$B_{\mathrm c}=B_\beta=1$，一轮重叠模为$e^{-1}$而其余轮重叠模均为一。唯一正权重为$2$，总和达到两预算之和，但这一个时间单元不能同时分配给$D$与$R$，所以任一划分都会有一个预算为零。最后，系统边缘任务及读取全部记录的任务都用$A$的同一个乘积，两下界合取就是它们的最大值。证毕。
+
+在二标签系统且$\varrho_{xy}\ne0$时，同一时间集合$A$还有精确关系
+$$
+\left(\frac{\mathsf d(\Phi_A(\varrho),\Delta(\varrho))}{|\varrho_{xy}|}\right)^2
++\mathsf d(\sigma_x^A,\sigma_y^A)^2=1.
+$$
+这是定理8.5的二阶谱式与本定理的纯态距离式相加所得。它把“丢弃整个$A$后系统还剩多少相干”和“若保留整个$A$能区分多少制备信息”对应起来；同一实际访问划分中的两种乘积仍分别取$D$与$R$，不能把它们替换成同一个集合。
+

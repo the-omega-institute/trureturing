@@ -1,0 +1,5 @@
+对任意集合 $Y,Z$，
+$$
+\mathcal P(Y^*)=\{\operatorname{Enc}[U]:U\subseteq Y\},\qquad
+(Z^*)^{Y^*}=\{f^*:f\in Z^Y\}.
+$$

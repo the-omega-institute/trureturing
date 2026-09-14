@@ -1,0 +1,100 @@
+**命题 14.6（固定重叠模下的相位分类与完整恢复误差范围）。** 令 $A$ 为三阶 Hermitian 矩阵，满足 $A_{xx}=1$，以及 $|A_{xy}|=r=1/\sqrt2$ 对所有 $x\ne y$ 成立。取有向循环乘积的主辐角
+
+$$
+\phi=\operatorname{Arg}(A_{01}A_{12}A_{20})\in(-\pi,\pi].
+$$
+
+则 $A$ 是合法相关矩阵当且仅当
+
+$$
+|\phi|\le\frac\pi4.
+$$
+
+循环相位 $\phi$ 完全分类这一固定模矩阵族的对角酉规范轨道。对每个合法 $A$，定义 14.1 中全部写入后 CPTP 恢复的最优误差为
+
+$$
+\eta(A)=\frac{2-\sqrt2\cos(\phi/3)}3.
+$$
+
+该误差在 $|\phi|\in[0,\pi/4]$ 上严格递增，其全部可达值恰为
+
+$$
+\left[\frac{2-\sqrt2}{3},\frac{3-\sqrt3}{6}\right].
+$$
+
+命题 14.5 的正实矩阵 $C_+$ 达到最小值，命题 14.4 的 $C_\circ$ 达到最大值。合法矩阵在 $|\phi|<\pi/4$ 时秩为三，在 $|\phi|=\pi/4$ 时秩为二。
+
+证明。 对角酉规范变换使每个有向边 $A_{xy}$ 乘以一个顶点相位差，故循环乘积中的这些相位相消；这正是命题 8.9 已使用的不变量。为证明它在本矩阵族中也足以确定规范轨道，选择实数 $\alpha_{01},\alpha_{12},\alpha_{20}$，使
+
+$$
+A_{01}=r e^{i\alpha_{01}},
+\qquad A_{12}=r e^{i\alpha_{12}},
+\qquad A_{20}=r e^{i\alpha_{20}}.
+$$
+
+它们满足 $\alpha_{01}+\alpha_{12}+\alpha_{20}=\phi$ 模 $2\pi$。定义
+
+$$
+D_\phi
+=\operatorname{diag}\!\left(
+1,
+e^{i(\alpha_{01}-\phi/3)},
+e^{i(\phi/3-\alpha_{20})}
+\right),
+\qquad
+a_\phi=r e^{i\phi/3}.
+$$
+
+逐个有向边相乘给出
+
+$$
+A_\phi:=D_\phi A D_\phi^\dagger
+=\begin{pmatrix}
+1&a_\phi&\overline{a_\phi}\\
+\overline{a_\phi}&1&a_\phi\\
+a_\phi&\overline{a_\phi}&1
+\end{pmatrix}.
+$$
+
+因此相同循环相位的两个矩阵都能规范到同一个 $A_\phi$；不同循环相位则由不变性排除规范等价。这证明分类陈述。
+
+行列式展开给出
+
+$$
+\det A
+=1-3r^2+2r^3\cos\phi
+=-\frac12+\frac{\cos\phi}{\sqrt2}.
+$$
+
+任意二阶主子块的特征值都是 $1+r$ 和 $1-r$，均严格为正。固定一个这样的主子块，用其 Schur 补将 $A$ 作可逆合同变换，得到该正定二阶块与一个实标量的直和；标量等于 $\det A/(1-r^2)$。所以 $A\succeq0$ 当且仅当 $\det A\ge0$，等价于 $\cos\phi\ge1/\sqrt2$。结合主辐角范围，这恰好给出 $|\phi|\le\pi/4$。同一 Schur 补还表明：严格不等号对应秩三，端点对应秩二。
+
+在定理 14.3 的 Fourier 方向约定下，$A_\phi$ 的三个特征值为
+
+$$
+\lambda_k(\phi)
+=1+\sqrt2\cos\!\left(\frac\phi3+\frac{2\pi k}3\right),
+\qquad k=0,1,2.
+$$
+
+对合法相位，$\phi/3\in[-\pi/12,\pi/12]$。此时 $\cos(\phi/3)>0$，而另外两项的余弦都为负：$k=1$ 的角落在 $[7\pi/12,3\pi/4]$，$k=2$ 的角落在 $[5\pi/4,17\pi/12]$。因此 $\lambda_0(\phi)$ 始终是最大特征值。定理 14.3 适用，得到
+
+$$
+\eta(A)
+=1-\frac{\lambda_0(\phi)}3
+=\frac{2-\sqrt2\cos(\phi/3)}3,
+$$
+
+并由恢复 $\operatorname{Ad}_{D_\phi}$ 达到。这一等式使用定理 14.2 对全部 CPTP 恢复的下界，而非仅在对角反馈中求最优。
+
+误差只依赖 $t=|\phi|$。函数 $\cos(t/3)$ 在 $t\in[0,\pi/4]$ 上连续且严格递减，所以 $\eta$ 连续且严格递增。端点分别为
+
+$$
+\eta(0)=\frac{2-\sqrt2}{3},
+\qquad
+\eta(\pi/4)
+=\frac{2-\sqrt2\cos(\pi/12)}3
+=\frac{3-\sqrt3}{6}.
+$$
+
+每个 $\phi\in[-\pi/4,\pi/4]$ 都由已证明正半定、单位对角的 $A_\phi$ 实现，它可按命题 14.5 的平方根方法构造有限维条件记录。因此误差取遍所列闭区间。$C_+$ 的循环相位为零，$C_\circ$ 的循环相位为 $-\pi/4$，故二者达到两端。证毕。
+

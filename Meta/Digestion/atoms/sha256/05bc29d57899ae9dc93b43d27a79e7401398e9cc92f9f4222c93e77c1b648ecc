@@ -1,0 +1,2 @@
+原对象提升 $h_D$ 的像恰为 $D^*$，逆在这个像上为 $b_D\circ\operatorname{Dec}$；数字对象提升 $e_D(c)=\operatorname{Enc}(c)$ 的像恰为 $\operatorname{Enc}[C_D]$，逆在这个像上为 $\operatorname{Dec}$。输出槽有相同的两个精确逆域。
+

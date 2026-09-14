@@ -1,0 +1,7 @@
+**证明。** 若先到高点再到低点，同理
+
+$$
+|w|\ge \operatorname{high}+(\operatorname{high}-\operatorname{low})+(d-\operatorname{low})
+=2(\operatorname{high}-\operatorname{low})+d.
+$$
+

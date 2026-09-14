@@ -1,0 +1,7 @@
+**定理。** 对所有自然数 $k,m$，
+
+$$
+C_k\text{ 与 }D_k\text{ 在 }\mathbb Z/(m)\text{ 上共轭}
+\quad\Longleftrightarrow\quad m\text{ 为奇数}.
+$$
+

@@ -1,0 +1,7 @@
+若 $f:D\to Y$ 为所列任一函数或精确部分域上的函数，$G_f$ 为其普通图，则外部共轭和原图码分别为
+$$
+f^*=\operatorname{enc}_Y\circ f\circ\operatorname{enc}_D^{-1}:D^*\to Y^*,
+$$
+$$
+G_{f^*}=\{\langle\operatorname{Enc}(x),\operatorname{Enc}(f(x))\rangle:x\in D\},
+$$

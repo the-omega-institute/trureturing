@@ -1,0 +1,53 @@
+### 10.5 关联记录的相位访问
+
+取二标签系统及有限关联记录$E_0,E_1\in\mathcal H_F\otimes\mathcal H_B$，$\|E_0\|=\|E_1\|=1$，并令
+$$
+W|x\rangle=|x\rangle|E_x\rangle.
+$$
+定义
+$$
+\sigma_x^F=\operatorname{tr}_B|E_x\rangle\langle E_x|,
+\qquad
+T_F=\operatorname{tr}_B|E_0\rangle\langle E_1|,
+$$
+以及
+$$
+D_F=\frac12\|\sigma_0^F-\sigma_1^F\|_1,
+\qquad
+V_F=\|T_F\|_1.
+$$
+$D_F$衡量只读$F$时的等先验标签区分能力；对应最优平均错误为$(1-D_F)/2$。对
+$$
+|\Psi_\phi\rangle=\frac{|0\rangle|E_0\rangle+e^{i\phi}|1\rangle|E_1\rangle}{\sqrt2}
+$$
+并在$B$上取迹，得到
+$$
+\mathsf d(\rho_\phi^{SF},\rho_\psi^{SF})
+=\left|\sin\frac{\phi-\psi}{2}\right|V_F,
+$$
+以及
+$$
+\mathsf d(\rho_\phi^{SF},\Delta_S\rho_\phi^{SF})=\frac{V_F}{2}.
+$$
+更一般地，对系统输入矩阵元$\rho_{01}$，有
+$$
+\mathsf d\!\left(\operatorname{tr}_B(W\rho W^\dagger),
+\Delta_S\operatorname{tr}_B(W\rho W^\dagger)\right)
+=|\rho_{01}|V_F.
+$$
+只读取$F$的边缘态与输入相位无关；$V_F$度量的是系统与可访问记录之间仍可被联合操作利用的相位。
+
+对任意$F$上的酉$U_F$，有
+$$
+V_F=\max_{U_F}\left|\langle E_1|(U_F\otimes I_B)|E_0\rangle\right|.
+$$
+若随后施加受控酉$P_0\otimes U_0+P_1\otimes U_1$并丢弃$F$，恢复后的系统相干乘子为
+$$
+\operatorname{tr}(U_0T_FU_1^\dagger),
+$$
+其最大模为$V_F$；对输入$|+\rangle$，相位校正后的最大$|+\rangle$重叠概率为
+$$
+\frac{1+V_F}{2}.
+$$
+这只对所列受控酉操作类作最优性陈述。
+

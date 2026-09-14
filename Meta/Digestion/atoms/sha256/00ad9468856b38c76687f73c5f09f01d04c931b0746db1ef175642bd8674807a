@@ -1,0 +1,4 @@
+**定理 376.1。** 对每个整数 $m\ge2$，不存在连续映射 $M:K_{\rm infdig}\to K_{\rm infdig}$ 使
+$$
+M(z_{\rm infdig}(n))=z_{\rm infdig}(mn)\qquad(n\in\omega).
+$$

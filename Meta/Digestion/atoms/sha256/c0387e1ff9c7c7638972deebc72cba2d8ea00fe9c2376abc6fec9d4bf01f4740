@@ -1,0 +1,6 @@
+**定理。** $u$ 光滑、无散度，且满足欧氏度量下的无外力、零压力 Navier--Stokes 方程
+
+$$
+\partial_tu+(u\cdot\nabla)u-\nu\Delta u=0.
+$$
+

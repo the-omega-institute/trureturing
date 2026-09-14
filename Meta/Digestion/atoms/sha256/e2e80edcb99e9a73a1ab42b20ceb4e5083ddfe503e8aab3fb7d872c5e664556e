@@ -1,0 +1,5 @@
+**定理 404.1。** 设 $D\subseteq X$，$f:D\to Y$ 为任意函数。令 $G_f=\{\langle x,f(x)\rangle:x\in D\}$。其外部函数在准确的域 $D^*=e_X[D]$ 上为
+$$
+f^*=e_Y\circ f\circ e_X^{-1},\qquad
+\Gamma_{f^*}=\{\langle\operatorname{Enc}(x),\operatorname{Enc}(f(x))\rangle:x\in D\}.
+$$

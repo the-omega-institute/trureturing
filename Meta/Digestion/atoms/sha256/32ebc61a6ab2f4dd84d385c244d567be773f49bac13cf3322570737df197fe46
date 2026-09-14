@@ -1,0 +1,9 @@
+**命题。** 对不同状态向量 $e,f$，最短混合分离词长度为
+
+$$
+\min_{i:e_i\ne f_i}
+\left(
+\min\bigl(\min(e_i,f_i)+1,\ a_i-\max(e_i,f_i)+1\bigr)
+\right),
+$$
+

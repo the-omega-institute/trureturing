@@ -35,6 +35,16 @@ internal sealed class GettierWitnessDocument : IScribeDocumentDefinition
                             + "conclusion after that truncation is supplied here."))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("gettier-witness-characterization"),
+                DeclarationHandle.Create(DeclarationPrefix + "gettier_iff"),
+                H("Gettier witness characterization"),
+                StatementSource.FromAuthor(DefinitionFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The equivalence unfolds the Gettier predicate into its anchor "
+                        + "clauses and admissible same-evidence counterexample."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("gettier-concrete-examples"),
                 DeclarationHandle.Create(
                     DeclarationPrefix + "gettier_concrete_examples"),

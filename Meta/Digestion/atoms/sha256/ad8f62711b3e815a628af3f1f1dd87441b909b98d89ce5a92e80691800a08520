@@ -1,0 +1,181 @@
+**定理 20.2（最终量子输出的显式访问差距与等号分类）。** 在定义 18.1 的同一无量子记忆、无输入输出参考的控制类中，固定 $N\ge1$ 和 $\beta_t\in[0,1]$，令
+
+$$
+f=\beta_N,
+\qquad
+s=\prod_{t=1}^{N-1}\sqrt{1-\beta_t},
+\qquad
+E=1-s^2,
+$$
+
+其中空积为一。再定义
+
+$$
+U(E,f)=\frac{f+\sqrt{f^2+4(1-f)E}}2,
+\qquad
+\delta_N=\sqrt{1-(1-f)s^2}.
+$$
+
+若最终保留全部历史和活动量子比特 $H_N\otimes S$，则最优输出迹距离为 $\delta_N$：上界由定理 16.3 给出，定理 17.2 用实反馈和无参考的共同输入达到。若最终丢弃活动系统，只比较经典历史，则有统一上界
+
+$$
+T_N(\beta_1,\ldots,\beta_N)\le U(E,f).
+$$
+
+若所有 $\beta_t<1$ 且末次 $0<f<1$，则 $s>0$，并且
+
+$$
+T_N\le U(E,f)<\delta_N,
+\qquad
+\delta_N-T_N
+\ge\frac{f(1-f)s^2}{2(2-f)}>0.
+$$
+
+在完整参数域上，两个观察任务最优值相等的条件恰为
+
+$$
+T_N(\beta_1,\ldots,\beta_N)=\delta_N
+\quad\Longleftrightarrow\quad
+\bigl[\beta_N=0\ \text{或存在 }t\le N\text{ 使 }\beta_t=1\bigr].
+$$
+
+证明。 固定共同历史控制表。经典总变差是共同输入密度矩阵的凸函数，所以证明输入无关的上界时纯输入足够。取共同单位初态，在末次控制之前，对长度为 $N-1$ 的旧历史 $h$，记实际与理想的未归一化分支向量为 $\psi_h,\phi_h$。
+
+第 $t$ 次实际与理想结果算子满足
+
+$$
+\sum_{z=0}^1P_zK_{\beta_t,z}
+=\sqrt{1-\beta_t}\,I_2.
+$$
+
+因此，设该节点调用的共同控制为 $W_h$，便有
+
+$$
+\sum_z
+\langle P_zW_h\phi_h,K_{\beta_t,z}W_h\psi_h\rangle
+=\sqrt{1-\beta_t}\langle\phi_h,\psi_h\rangle.
+$$
+
+从共同初态的内积一开始，逐层对所有历史求和，得到
+
+$$
+\sum_{|h|=N-1}\langle\phi_h,\psi_h\rangle=s.
+$$
+
+这只约束全部历史上的内积之和，不要求每个分支内积单独为实或非负。$N=1$ 时只有空历史，该等式就是初态内积一。
+
+对最后共同控制 $W_h$，定义两种候选前缀若都接受完美指针读取时的经典分布
+
+$$
+P(h,z)=|\langle z|W_h\psi_h\rangle|^2,
+\qquad
+Q(h,z)=|\langle z|W_h\phi_h\rangle|^2.
+$$
+
+这里 $P$ 是用于比较的分布，未声称该完美读取已经在实际过程中执行；$Q$ 则恰好是理想全历史分布。两者总质量均为一。它们的 Bhattacharyya 重叠满足
+
+$$
+\begin{aligned}
+B(P,Q)
+&:=\sum_{h,z}\sqrt{P(h,z)Q(h,z)}\\
+&\ge\left|\sum_{h,z}
+\overline{\langle z|W_h\phi_h\rangle}
+\langle z|W_h\psi_h\rangle\right|\\
+&=\left|\sum_h\langle\phi_h,\psi_h\rangle\right|=s.
+\end{aligned}
+$$
+
+实际末次仪器的结果效应为
+
+$$
+K_{f,z}^\dagger K_{f,z}
+=(1-f)P_z+fP_{1-z}.
+$$
+
+所以实际全历史分布 $R$ 精确满足
+
+$$
+R(h,z)=(1-f)P(h,z)+fP(h,1-z).
+$$
+
+令 $\tau(h,z)=(h,1-z)$，则对任意经典事件 $A$，
+
+$$
+\begin{aligned}
+R(A)-Q(A)
+&=(1-f)P(A)+fP(\tau(A))-Q(A)\\
+&\le f+(1-f)P(A)-Q(A).
+\end{aligned}
+$$
+
+记 $a=1-f$。向量 $aP-Q$ 的元素之和为 $-f$，故其正部之和为
+
+$$
+\max_A\bigl[aP(A)-Q(A)\bigr]
+=\frac{\|aP-Q\|_1-f}{2}.
+$$
+
+概率分布的总变差等于正事件差的最大值，因此
+
+$$
+\operatorname{TV}(R,Q)
+\le\frac{f+\|aP-Q\|_1}{2}.
+$$
+
+对每个坐标分解平方差，再用 Cauchy--Schwarz 不等式，得到
+
+$$
+\begin{aligned}
+\|aP-Q\|_1
+&=\sum_{h,z}
+\left|\sqrt{aP(h,z)}-\sqrt{Q(h,z)}\right|
+\left(\sqrt{aP(h,z)}+\sqrt{Q(h,z)}\right)\\
+&\le\sqrt{\bigl(a+1-2\sqrt a\,B(P,Q)\bigr)
+\bigl(a+1+2\sqrt a\,B(P,Q)\bigr)}\\
+&=\sqrt{(a+1)^2-4aB(P,Q)^2}\\
+&\le\sqrt{(2-f)^2-4(1-f)s^2}\\
+&=\sqrt{f^2+4(1-f)E}.
+\end{aligned}
+$$
+
+于是每个固定策略和纯输入的代价都不超过 $U(E,f)$。对混合输入用同一策略下的凸性，再对全部共同策略取上确界，得到 $T_N\le U(E,f)$。推导使用完整 $U(2)$ 控制表，因此该界不依赖先将控制限制为实。
+
+现设 $s>0$ 且 $0<f<1$，简记 $U=U(E,f)$。它满足二次等式
+
+$$
+U^2-fU=(1-f)(1-s^2).
+$$
+
+由于 $s>0$，定义中的根式严格小于 $2-f$，所以 $0<U<1$。直接相减得到
+
+$$
+\delta_N^2-U^2=f(1-U)>0,
+$$
+
+因而 $U<\delta_N$。进一步，由同一个二次等式可得
+
+$$
+(1-U)(1+U-f)=(1-f)s^2,
+$$
+
+于是
+
+$$
+\begin{aligned}
+\delta_N-U
+&=\frac{f(1-f)s^2}
+{(\delta_N+U)(1+U-f)}\\
+&\ge\frac{f(1-f)s^2}{2(2-f)}>0.
+\end{aligned}
+$$
+
+这里两个分母因子均正，并且 $\delta_N,U\le1$。结合 $T_N\le U$，即得所述统一正差距。
+
+还需确定其余参数边界。若末次 $f=0$，则 $U(E,0)=\sqrt E=\delta_N$，命题 18.3 的最终完美读取构造达到这一值，故 $T_N=\delta_N$。
+
+若存在某个 $\beta_t=1$，则 $\delta_N=1$。取指针初态 $|0\rangle$，并在每个历史节点都用恒等控制。因为所有结果算子在指针基中对角，实际非零分支向量始终沿 $|0\rangle$ 方向；理想历史恒为全零，而在所选阶段 $t$，实际结果必为一。因此两种全历史分布的支撑不交，经典总变差达到一。这也包括末次 $f=1$。
+
+反过来，若末次参数不为零且没有参数等于一，则所有 $\beta_t<1$，同时 $0<f<1$，恰好属于已经证明的严格差距条件。因此其最优值不相等。参数域已被这几种情况穷尽，得到所陈述的充要分类。
+
+当 $N=1$ 时，$s=1$、$E=0$，上界给出 $U(0,f)=f$，由指针初态达到，因而一次经典结果的最优差异为 $f$；保留最终量子输出时则为 $\sqrt f$。一般有限步中，$E$ 只用于本定理的统一上界，没有取代第 19 章的分支三参数递推；命题 19.3 所排除的累计标量替代仍然不成立。证毕。
+

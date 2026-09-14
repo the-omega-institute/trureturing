@@ -1,0 +1,28 @@
+**推论 52.5（经典记录的原始预测式）。** 若记录通道为有限正交指针基中的完全去相干，
+
+$$
+\mathcal E(\rho)=\sum_i\operatorname{tr}(P_i\rho)P_i,
+\qquad P_i=|i\rangle\langle i|,
+$$
+
+令 $\pi(\rho)_i=\operatorname{tr}(P_i\rho)$，$\iota(p)=\sum_i p_iP_i$，以及列随机矩阵
+
+$$
+K_{ij}=\operatorname{tr}\bigl(P_i\Phi(P_j)\bigr).
+$$
+
+则
+
+$$
+D\bigl(\mathcal E\Phi^n(\rho),\iota(K^n\pi(\rho))\bigr)
+\le n\delta.
+$$
+
+等价地，真实末端读数分布与仅从初始读数预测出的 $K^n\pi(\rho)$ 之间，总变差距离不超过 $n\delta$。
+
+证明。每个 $K_{ij}\ge0$，且迹保持给出 $\sum_iK_{ij}=1$。直接代入得 $T\iota(p)=\iota(Kp)$，而 $\mathcal E(\rho)=\iota\pi(\rho)$，故 $T^n\mathcal E(\rho)=\iota(K^n\pi(\rho))$。两个对角密度算符的迹距离恰为其权重向量的总变差距离，应用定理 52.2 即得。证毕。
+
+所用迹范数收缩见 Watrous，*The Theory of Quantum Information*，[Corollary 3.40，式 (3.241)](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)。本章在有限维 CPTP 模型中用这一标准工具证明末端观察的递推界；一步缺陷的最大值遍历所声明系统的全部密度算符。若要对额外惰性参考上的任意纠缠输入给出统一保证，需要把缺陷改为扩展通道上的最大迹距离，或使用相应 diamond 范数界，不能由未扩展的 $\delta$ 自动推出。界中的 $n\delta$ 可以大于一，此时只有平凡的迹距离上界一更强。量子通道收缩和预测误差界均不指定某一次观测的唯一结果，也不要求把证明中的各次粗观察实现为实际中间测量。
+
+
+

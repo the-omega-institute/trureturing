@@ -1,0 +1,94 @@
+**定理 37.1（有限权重表的逐项无损条件）。** 沿用第 36 节的固定存储任务，设 $A,J$ 为任意两个量子比特密度矩阵，且
+
+$$
+m\ge1,\qquad 0<c_1<\cdots<c_m.
+$$
+
+记
+
+$$
+D_c=cA-J,\qquad
+L(c)=\|D_c\|_1,\qquad
+L_\Phi(c)=\|\Phi(D_c)\|_1,
+$$
+
+并定义不定权重集合及其大小
+
+$$
+\mathcal I=\{c_j:\det D_{c_j}<0\},\qquad n=|\mathcal I|.
+$$
+
+这里“不定”表示 $D_c$ 有一个严格正特征值和一个严格负特征值。行列式为零的权重不计入 $\mathcal I$。
+
+存在同一个有限经典存储 $\Phi$，使
+
+$$
+L_\Phi(c_j)=L(c_j)\qquad(j=1,\ldots,m),
+$$
+
+当且仅当
+
+$$
+\boxed{[A,J]=0\quad\text{或}\quad n\le1.}
+$$
+
+证明。先处理不在 $\mathcal I$ 中的权重。二阶 Hermitian 矩阵的特征值为实数，行列式非负意味着它们同号或至少一个为零。因此 $D_c$ 半正定或半负定，且
+
+$$
+\|D_c\|_1=|\operatorname{tr}D_c|=|c-1|.
+$$
+
+任意 CPTP 映射都保持半定性与迹，故对这样的权重，任意存储自动满足
+
+$$
+\|\Phi(D_c)\|_1=|c-1|=\|D_c\|_1.
+$$
+
+特别地，$\det D_c=0$ 的端点不产生额外限制。若 $n=0$，只有一个效应 $I$ 的测量已经逐项无损；若 $n=1$，测量唯一不定矩阵的正、负谱投影即可，其他权重的等号自动保持。若 $[A,J]=0$，则共同本征基上的二元投影测量保持所有 $D_c$ 的谱读数，因而同时保持任意正权重的迹范数。这证明充分性。
+
+下面证明必要性。设 $D_c$ 不定，写为
+
+$$
+D_c=\lambda_+P_c-\lambda_-(I-P_c),\qquad
+\lambda_+,\lambda_->0,
+$$
+
+其中 $P_c$ 是秩一正谱投影。对任意效应 $E\ge0$，令
+
+$$
+x_E=\lambda_+\operatorname{tr}(EP_c),\qquad
+y_E=\lambda_-\operatorname{tr}(E(I-P_c)).
+$$
+
+两者非负，所以 $|x_E-y_E|\le x_E+y_E$，等号当且仅当至少一项为零。若一个有限 POVM $(E_\ell)_\ell$ 保持 $\|D_c\|_1$，则
+
+$$
+\sum_\ell|x_{E_\ell}-y_{E_\ell}|
+=\lambda_++\lambda_-
+=\sum_\ell(x_{E_\ell}+y_{E_\ell}).
+$$
+
+每项的损失非负，总损失为零强制逐项取等。由正性，$\operatorname{tr}(EP)=0$ 对秩一投影 $P$ 意味着 $E$ 消去 $\operatorname{ran}P$：若 $P=|v\rangle\langle v|$，则 $\langle v,Ev\rangle=\|E^{1/2}v\|^2=0$。因此每个非零效应必为下列两种形式之一：
+
+$$
+E_\ell=\alpha_\ell P_c\quad\text{或}\quad
+E_\ell=\beta_\ell(I-P_c),\qquad
+\alpha_\ell,\beta_\ell>0.
+$$
+
+也就是说，不定权重的范数等号要求存储测量细分其唯一的二元谱测量。
+
+若同一个 POVM 也对另一个不定权重 $d\ne c$ 保持等号，那么每个非零效应还必须为 $P_d$ 或 $I-P_d$ 的正倍数。取任意一个非零效应，比较其一维值域可知
+
+$$
+P_d=P_c\quad\text{或}\quad P_d=I-P_c.
+$$
+
+两个谱投影可交换，故 $D_c,D_d$ 可交换。但直接展开有
+
+$$
+[D_c,D_d]=(d-c)[A,J].
+$$
+
+由于 $d\ne c$，这要求 $[A,J]=0$。所以非对易候选对只要有两个不同的不定权重，就不存在逐项无损的有限经典存储。证毕。
+

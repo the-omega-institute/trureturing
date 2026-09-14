@@ -1,0 +1,20 @@
+**命题 15.2（部分旧记录可访问时的精确压缩）。** 对 $m\le t\le n$，有
+$$
+\tau_t^R(\rho)=W\bigl((G\odot F_{m,t})\odot\rho\bigr)W^\dagger.
+$$
+给定可访问空间上的有限POVM $P=(P_b)_{b\in\mathcal B}$，记 $C_P(\tau)_b=\operatorname{tr}(P_b\tau)$。其压缩效应
+$$
+\widetilde P_b=W^\dagger P_bW,\qquad
+\widetilde P_B=\sum_{b\in B}\widetilde P_b=W^\dagger P_BW
+$$
+构成系统空间上的POVM，且
+$$
+\sup_\rho\operatorname{TV}
+\bigl(C_P(\tau_n^R(\rho)),C_P(\tau_m^R(\rho))\bigr)
+=\max_{B\subseteq\mathcal B}
+\left\|\overline G\odot(\overline{F_{m,n}}-J)\odot\widetilde P_B\right\|_\infty.
+$$
+即使 $P$ 是投影测量，$\widetilde P$ 也只保证为POVM；此公式不把未经压缩的 $P_B$ 当作系统矩阵。
+
+证明。直接在定理8.2的部分迹公式中保留集合 $R$。不可访问的旧记录贡献 $G_{xy}$，后续步骤的相位与被忽略新记录合计贡献 $(F_{m,t})_{xy}$，旧相位和保留向量均包含于 $W$，得到第一式。由 $W^\dagger W=I$ 可知 $\widetilde P_b\ge0$ 且 $\sum_b\widetilde P_b=I$。把概率差拉回系统，再应用定理10.1所用的有限事件最大值与Hermitian范数论证，得到第二式。该论证只需效应非负且和为恒等，因而适用于POVM。证毕。
+

@@ -1,0 +1,28 @@
+### 9.1 固定标签模型的前缀态
+
+本章继续使用定义8.1的固定标签、新鲜记录模型。标签集为有限集$\mathsf X$，系统基为$\{|x\rangle:x\in\mathsf X\}$。第$t$个记录单元初态为$|0_t\rangle$，并满足
+$$
+U_t\bigl(|x\rangle|0_t\rangle\bigr)
+=e^{i\theta_{x,t}}|x\rangle|e_x^{(t)}\rangle .
+$$
+记
+$$
+G_t(x,y)=\langle e_y^{(t)}|e_x^{(t)}\rangle,
+\qquad
+\Theta_x(N)=\sum_{t=1}^{N}\theta_{x,t},
+$$
+以及有限前缀记录向量
+$$
+|e_x^{\le N}\rangle=\bigotimes_{t=1}^{N}|e_x^{(t)}\rangle .
+$$
+对系统初态$\rho=\sum_{x,y}\rho_{xy}|x\rangle\langle y|$，定义保留系统和前$N$个记录单元的态
+$$
+\rho_N
+=
+\sum_{x,y}\rho_{xy}
+ e^{i(\Theta_x(N)-\Theta_y(N))}
+ |x\rangle\langle y|\otimes
+ |e_x^{\le N}\rangle\langle e_y^{\le N}| .
+$$
+每个$\rho_N$只涉及有限维空间；本章不把这列有限态预先解释成无限张量积态。
+

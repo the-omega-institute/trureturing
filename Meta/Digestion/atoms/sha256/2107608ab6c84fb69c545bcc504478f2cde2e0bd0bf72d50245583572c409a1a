@@ -1,0 +1,2 @@
+**定义 18.6（任务能力与资源向量）。** 预先固定任务分布 $\mathcal D$、有界可测实回报函数、允许策略和有限非负资源度量 $\mathbf c=(c_{\rm extract},c_{\rm store},c_{\rm update},c_{\rm query},c_{\rm verify})$。策略能力值定义为 $V_{\mathcal D}(\pi)=\mathbb E_{\mathcal D,\pi}[\text{回报}]$；可比较 $(V,-\mathbf c)$ 的 Pareto 偏序，或在事先给定非负价格 $\lambda$ 后比较 $V-\lambda\cdot\mathbf c$。此是指定任务的操作性能力定义，不将所有智能压成一个与任务无关的本体量。
+

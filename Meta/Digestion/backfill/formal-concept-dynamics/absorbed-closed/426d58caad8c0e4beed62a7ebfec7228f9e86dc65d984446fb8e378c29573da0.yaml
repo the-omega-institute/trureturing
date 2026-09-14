@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:426d58caad8c0e4beed62a7ebfec7228f9e86dc65d984446fb8e378c29573da0
+  normalized_sha256: sha256:426d58caad8c0e4beed62a7ebfec7228f9e86dc65d984446fb8e378c29573da0
+cas_ref: sha256:426d58caad8c0e4beed62a7ebfec7228f9e86dc65d984446fb8e378c29573da0
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Epistemic/TopologicalKnowledgeOperator.topological_knowledge_operator_laws
+    target_statement_id: sha256:6f7a679f5be79acb545f5fe94992dc0260c7512a78ccd5ff049807061b0d0bc9
+receipts:
+  unresolved_subitems: []

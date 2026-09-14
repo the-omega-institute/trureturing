@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:d6a5ffb2371165fc4a2a2bbf683680e37408ed378e65c646831094164c543514
+  normalized_sha256: sha256:d6a5ffb2371165fc4a2a2bbf683680e37408ed378e65c646831094164c543514
+cas_ref: sha256:d6a5ffb2371165fc4a2a2bbf683680e37408ed378e65c646831094164c543514
+coverage_gids:
+  - gid: D5/S3/Quantum/StationaryPreparation/HeadAttainment.stationary_attainment
+    target_statement_id: sha256:cd2c7583155051ca4ab542e89d972a6dfc2644ee3bd89799eea206812c494451
+receipts:
+  unresolved_subitems: []

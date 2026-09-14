@@ -406,8 +406,8 @@ internal static class DescribeRepositoryValidator
 
     /// <summary>
     /// Binds a problem candidate to its literature note. The note owns the paper's
-    /// identity, so the candidate must reproduce the note's DOI or URL byte
-    /// for byte, and a candidate
+    /// identity, so every DOI or URL the candidate declares must reproduce the
+    /// note's source of the same kind byte for byte, and a candidate
     /// whose bibkey names no note is a dangling reference rather than a stylistic slip.
     /// </summary>
     private static void ValidateProblemSource(
@@ -424,15 +424,23 @@ internal static class DescribeRepositoryValidator
             return;
         }
 
-        var expected = candidate.Doi?.Value ?? candidate.Url!.AbsoluteUri;
-        var actual = note.Doi?.Value ?? note.Url?.AbsoluteUri;
-        if (!string.Equals(actual, expected, StringComparison.Ordinal))
+        (string? Expected, string? Actual)[] sources =
+        [
+            (candidate.Doi?.Value, note.Doi?.Value),
+            (candidate.Url?.AbsoluteUri, note.Url?.AbsoluteUri),
+        ];
+        foreach (var (expected, actual) in sources)
         {
+            if (expected is null || string.Equals(actual, expected, StringComparison.Ordinal))
+            {
+                continue;
+            }
+
             findings.Add(new DescribeRedFinding(
                 "problem-source-mismatch",
                 candidate.RelativePath,
                 $"problem expects source {expected} in "
-                + $"{note.RelativePath}, which carries {actual ?? "no locator"}"));
+                + $"{note.RelativePath}, which carries {actual ?? "no source of that kind"}"));
         }
     }
 

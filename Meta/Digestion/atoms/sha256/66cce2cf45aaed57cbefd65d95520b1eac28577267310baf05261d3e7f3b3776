@@ -1,0 +1,100 @@
+**定义 13.1（记录、访问划分与预测误差）。** 固定二标签系统
+
+$$
+\mathcal H_S=\mathbb C^2,
+\qquad
+P_x=|x\rangle\langle x|,
+\qquad x\in\{0,1\}.
+$$
+
+输入是未知密度矩阵，允许与任意有限维参考系统纠缠；协议不能依赖输入的振幅、相位或其纯化。令记录指标集为 $\mathsf I=\{1,\ldots,r\}$，其中 $r\ge0$，并给定
+
+$$
+\mathcal H_E=
+\left(\bigotimes_{j\in\mathsf I}\mathcal H_{E_j}\right)
+\otimes\mathcal H_{B_0}.
+$$
+
+所有记录因子均为非零有限维 Hilbert 空间。固定单位条件记录向量 $E_0,E_1\in\mathcal H_E$，写入等距映射为
+
+$$
+W|x\rangle=|x\rangle|E_x\rangle.
+$$
+
+全部准备、写入、读取与反馈都发生在给定有限时段内，使用有限步操作。一般的 $E_x$ 可以具有跨单元关联，不预设独立时间记录的乘积结构。
+
+给定允许访问的指标集 $\mathcal J_{\mathrm{acc}}\subseteq\mathsf I$。选择 $J\subseteq\mathcal J_{\mathrm{acc}}$ 后，记
+
+$$
+\mathcal H_{F_J}=\bigotimes_{j\in J}\mathcal H_{E_j},
+\qquad
+\mathcal H_{B_J}=
+\left(\bigotimes_{j\in\mathsf I\setminus J}\mathcal H_{E_j}\right)
+\otimes\mathcal H_{B_0}.
+$$
+
+张量顺序固定，空张量空间为 $\mathbb C$。暂固定 $J$，简写 $F,B$，并令
+
+$$
+\sigma_x=\operatorname{tr}_B|E_x\rangle\langle E_x|,
+\qquad
+T=\operatorname{tr}_B|E_0\rangle\langle E_1|.
+$$
+
+$T$ 一般不是 Hermitian 矩阵。写入后对 $B$ 取部分迹，得到
+
+$$
+\mathcal W_F(\rho)=
+\begin{pmatrix}
+\rho_{00}\sigma_0&\rho_{01}T\\
+\rho_{10}T^\dagger&\rho_{11}\sigma_1
+\end{pmatrix}.
+$$
+
+固定有限个预测时刻
+
+$$
+0\le\tau_1<\cdots<\tau_N\le\tau_*<\infty,
+\qquad N\ge1.
+$$
+
+第 $k$ 个理想任务由 CPTP 通道 $\Psi_k$ 和有限 POVM $(Q_{k,b})_{b\in\mathsf Y_k}$ 指定。定义
+
+$$
+A_{k,b}=\Psi_k^*(Q_{k,b}),
+\qquad
+p_{k,b}(\rho)=\operatorname{tr}(\rho A_{k,b}).
+$$
+
+这些概率对应未插入本章读取与恢复操作的指定理想过程，输入仍为 $\rho$。若当前标签也是必需读数，应把 $\Psi=\operatorname{id}$、$Q_x=P_x$ 加入任务清单。
+
+预测输出保存在有限经典寄存器
+
+$$
+\mathsf Z=\prod_{k=1}^N\mathsf Y_k.
+$$
+
+只在 $F$ 上读取 POVM $(M_z)_{z\in\mathsf Z}$。令
+
+$$
+p_z(x)=\operatorname{tr}(M_z\sigma_x).
+$$
+
+第 $k$ 个预测坐标的分布为
+
+$$
+q_{k,b}^M(\rho)=
+\sum_{x=0}^1\rho_{xx}
+\sum_{z:z_k=b}p_z(x).
+$$
+
+定义最坏预测误差
+
+$$
+e_k(M)=\sup_\rho\operatorname{TV}\bigl(p_k(\rho),q_k^M(\rho)\bigr),
+\qquad
+\operatorname{TV}(p,q)=\frac12\sum_b|p_b-q_b|.
+$$
+
+这里比较概率分布，不要求一个预测样本等于同次运行中尚未产生的未来随机结果。多个预测坐标也不声称复现非交换测量的真实联合历史分布。
+

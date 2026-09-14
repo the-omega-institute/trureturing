@@ -1,0 +1,16 @@
+原图的完整码为
+$$
+\operatorname{Enc}(G_f)=
+\operatorname{Pack}\{\langle\operatorname{Enc}(x),\operatorname{Enc}(f(x))\rangle_Z:x\in D\}.
+$$
+其语义域、语义值域分别为 $\operatorname{Enc}(D)$、$\operatorname{Enc}(f[D])$，且对每个 $x\in D$，
+$$
+\operatorname{ev}_Z(\operatorname{Enc}(G_f),\operatorname{Enc}(x))
+=\operatorname{Enc}(f(x)).
+$$
+若编码的是外部图自身，则准确为
+$$
+\operatorname{Enc}(\Gamma_{f^*})=
+\operatorname{Pack}\{\langle\operatorname{Enc}(c),
+\operatorname{Enc}(f^*(c))\rangle_Z:c\in D^*\}.
+$$

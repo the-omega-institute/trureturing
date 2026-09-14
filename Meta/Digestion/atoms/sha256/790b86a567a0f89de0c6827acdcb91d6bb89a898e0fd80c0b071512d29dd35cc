@@ -1,0 +1,15 @@
+### 15.2 任意旧记录子集的压缩读数
+
+固定 $0\le m\le n$，并指定可访问的旧记录子集 $R\subseteq\{1,\ldots,m\}$；系统本身也可访问。以时间升序排列记录张量因子，令
+$$
+G^{m,R}_{xy}
+=\prod_{t\in\{1,\ldots,m\}\setminus R}
+\langle e_y^{(t)},e_x^{(t)}\rangle,
+$$
+$$
+W_{m,R}|x\rangle
+=e^{i\Theta_x(m)}|x\rangle\otimes
+\bigotimes_{t\in R}|e_x^{(t)}\rangle.
+$$
+空张量积为一维空间中的单位向量。$G^{m,R}$ 是单位对角相关矩阵；由于系统标签正交，$W_{m,R}$ 为等距映射，无需记录向量线性无关。在这一固定窗口中简称它们为 $G,W$。令 $\tau_t^R(\rho)$ 为第 $t\ge m$ 个前缀在同一子系统 $S+E_R$ 上的态，即忽略全部不可访问旧记录以及全部 $m$ 之后的新记录。
+
