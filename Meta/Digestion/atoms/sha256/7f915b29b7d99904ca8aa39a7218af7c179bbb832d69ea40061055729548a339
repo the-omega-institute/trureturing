@@ -1,0 +1,92 @@
+**定理 7.3（独立擦除下对称片段的精确最坏分支判别误差）。** 固定片段大小$s\ge1$。它在制备标签$i$下的条件态及最优最坏分支错误率为
+$$
+\xi_i^{(s)}(\tau)=\sigma_i(\tau)^{\otimes s},\qquad
+\mathsf E_{n,s}(\tau)=
+\min_{\substack{M_i\ge0\ (1\le i\le n)\\\sum_iM_i=I_{\mathcal E^{\otimes s}}}}
+\max_{1\le i\le n}\left[1-\operatorname{tr}\bigl(M_i\xi_i^{(s)}(\tau)\bigr)\right].
+$$
+这里对全部$n$个标签逐个保证，包含实际$p_i=0$的标签，不利用$(p_i)$的偏置降低平均错误率。对$0\le x\le1$，定义
+$$
+q_n(x)=\frac{\sqrt{1+(n-1)x}+(n-1)\sqrt{1-x}}{n},\qquad
+\epsilon_n(x)=1-q_n(x)^2.
+$$
+则精确错误率为
+$$
+\mathsf E_{n,s}(\tau)=\sum_{k=0}^s\binom sk\eta(\tau)^k[1-\eta(\tau)]^{s-k}\epsilon_n(\mu^k).
+$$
+存在一个仅依赖$n,\mu,s$的固定POVM，在全部时刻、每个标签上均达到此同一错误率。它不依赖$(p_i)$或擦除模式的概率，且不删除全擦除事件。端点满足
+$$
+q_n(0)=1,\quad\epsilon_n(0)=0,\qquad
+q_n(1)=\frac1{\sqrt n},\quad\epsilon_n(1)=1-\frac1n.
+$$
+特别地，$k=0$项使用$\mu^0=1$。有上下界
+$$
+\left(1-\frac1n\right)[1-\eta(\tau)]^s
+\le\mathsf E_{n,s}(\tau)
+\le\min\left\{1-\frac1n,\ (n-1)\bigl[1-\eta(\tau)(1-\mu^2)\bigr]^s\right\}.
+$$
+$\mathsf E_{n,s}(\tau)$随$\tau$不减，随整数$s$不增。无擦除时它等于$\epsilon_n(\mu^s)$；$\mu=0$时恰等于$(1-1/n)[1-\eta(\tau)]^s$；形式上的全擦除端点$\eta=0$给$1-1/n$，也是$\kappa>0$时的无穷时间极限。
+
+证明。 先处理固定$k$个幸存单元，令$v_i=e_i^{\otimes k}$、$x=\mu^k$。当$k=0$时，所有$v_i$都是同一个一维单位向量。这些向量的Gram矩阵均为
+$$
+G_x=(1-x)I_n+x\mathbf1\mathbf1^\dagger.
+$$
+令$A$为以$v_i$为列的矩阵，$T=AA^\dagger$，$\mathcal K=\operatorname{span}\{v_i:1\le i\le n\}$，$\Pi_{\mathcal K}$为相应正交投影。$T$的负次幂只在正谱上定义，在核上取零。置
+$$
+|m_i\rangle=T^{-1/2}v_i,\qquad
+M_i^{(k)}=|m_i\rangle\langle m_i|+\frac1n(I-\Pi_{\mathcal K}).
+$$
+由于
+$$
+\sum_i|m_i\rangle\langle m_i|=T^{-1/2}TT^{-1/2}=\Pi_{\mathcal K},
+$$
+这些效应非负且和为恒等。对$A$作奇异值分解，正奇异值上的逐项乘法给出
+$$
+A^\dagger T^{-1/2}A=\sqrt{A^\dagger A}=\sqrt{G_x}.
+$$
+$\sqrt{G_x}$的全部对角元相同，值为$q_n(x)$，故
+$$
+\langle v_i,M_i^{(k)}v_i\rangle
+=|\langle m_i,v_i\rangle|^2=q_n(x)^2
+$$
+对每个$i$成立。
+
+为证明最优性，对任意向量$z$，因$v_i\in\mathcal K$，Cauchy–Schwarz不等式给
+$$
+\begin{aligned}
+|\langle v_i,z\rangle|^2
+&=|\langle T^{-1/4}v_i,T^{1/4}z\rangle|^2\\
+&\le\langle v_i,T^{-1/2}v_i\rangle\langle z,T^{1/2}z\rangle
+=q_n(x)\langle z,T^{1/2}z\rangle.
+\end{aligned}
+$$
+因此$|v_i\rangle\langle v_i|\le q_n(x)T^{1/2}$。任意POVM $(N_i)_i$的等权平均正确率满足
+$$
+\frac1n\sum_i\langle v_i,N_iv_i\rangle
+\le\frac{q_n(x)}n\operatorname{tr}T^{1/2}
+=q_n(x)^2,
+$$
+其中最后一步使用$T$和$G_x$有相同的非零谱，故$\operatorname{tr}T^{1/2}=\operatorname{tr}\sqrt{G_x}=nq_n(x)$。最小分支正确率不超过等权平均正确率，而所构造测量使全部分支都达到这个上界。因此最优最坏分支错误率恰为$\epsilon_n(x)$。本论证允许$G_x$秩亏：$x=1$时$T=n|v\rangle\langle v|$，各效应在$\mathcal K$上都是$\Pi_{\mathcal K}/n$，加上补空间后恰为$I/n$。$x=0$时向量正交，正确率为一，两个端点由此直接成立。
+
+该谱计算属于平方根测量的成熟方法。相关方法与几何均匀态族的最优性见 Yonina C. Eldar、G. David Forney Jr.，*On Quantum Detection and the Square-Root Measurement*，IEEE Transactions on Information Theory **47**, 858–872（2001），[arXiv:quant-ph/0005132v2，§8、定理4](https://arxiv.org/abs/quant-ph/0005132v2)。这里的等重叠Gram矩阵在标签循环置换下不变，因此其向量族可由相应酉循环作用生成；上面的直接证明还给出本任务所需的逐标签最坏情形结论，不以文献中的平均正确率代替它。
+
+回到$s$个可能擦除的单元。先读取每个位置在$\mathcal Q$还是在$\mathbb C|\bot\rangle$，再在幸存位置实施$M_i^{(k)}$；全擦除时均匀随机输出一个标签。这两步合起来是原片段上的一个有限POVM。不同模式互相正交，且模式权重$\eta(\tau)^k[1-\eta(\tau)]^{s-k}$与标签无关。任意POVM在模式之间的非对角块都不贡献条件态上的概率，其在每个模式的压缩仍是完整POVM。于是逐块的等权平均正确率受上面已证界约束；而所构造的逐块测量在每一标签同时达到该界。将全部模式相加，就得到精确有限和及整体的最坏分支最优性。模式测量与各$M_i^{(k)}$均不使用$\eta$，所以同一个POVM适用于全部时刻。
+
+还需证明误差上界。$\sqrt{G_x}$的非对角元均为
+$$
+d_n(x)=\frac{\sqrt{1+(n-1)x}-\sqrt{1-x}}{n}.
+$$
+由$G_x$的对角元为一，$q_n(x)^2+(n-1)d_n(x)^2=1$，故
+$$
+\epsilon_n(x)=\frac{n-1}{n^2}\bigl(\sqrt{1+(n-1)x}-\sqrt{1-x}\bigr)^2
+=\frac{(n-1)x^2}{\bigl(\sqrt{1+(n-1)x}+\sqrt{1-x}\bigr)^2}
+\le(n-1)x^2.
+$$
+分母至少为一，且端点处不为零。代入模式和并用二项式定理，得到
+$$
+\mathsf E_{n,s}(\tau)\le(n-1)\bigl[(1-\eta(\tau))+\eta(\tau)\mu^2\bigr]^s.
+$$
+总可用均匀随机猜测得到错误率$1-1/n$，这给出上界的另一项。全擦除模式的概率为$[1-\eta(\tau)]^s$，其最优错误率为$1-1/n$，仅保留此非负项就得下界。
+
+较晚时刻的条件态可以由较早时刻的条件态再施加独立擦除通道得到，故晚时刻的任一测量都能拉回成早时刻的允许POVM，最优错误率不能随时间下降。多一个单元时总可忽略它而实施原测量，所以最优错误率不随$s$增加。最后，$\eta=1$时只有$k=s$项；$\mu=0$时全部$k\ge1$项为零；$\eta=0$时只有$k=0$项。有限和的连续性再给出所列极限。证毕。
+
