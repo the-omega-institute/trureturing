@@ -5,11 +5,12 @@ year: 2026
 title: "OEIS A396803, A396805 and A396806: iterated-exponential congruences"
 doi: null
 url: https://oeis.org/A396803
-claim: "For each of A396803, A396805 and A396806, a(n) is odd iff n is odd for n >= 1; for A396803, a(n) is congruent to n modulo 3; for A396806, a(n) is congruent to n modulo 6."
+claim: "For each of A396803, A396805 and A396806, a(n) is odd iff n is odd for n >= 1; for A396803, a(n) is congruent to n modulo 3; for A396806, a(n) is congruent to n modulo 6; for A396805, residues modulo 3 repeat 0, 1, 0 from n = 3."
 strata_touched:
   - D5/S1/Recurrence/Residue/IterateExponentialParity
   - D5/S1/Recurrence/Residue/IterateExponentialModThree
   - D5/S1/Recurrence/Residue/IterateExponentialModSix
+  - D5/S1/Recurrence/Residue/IterateExponentialFiveModThree
 license: citation-only
 triage: anchor
 ---
@@ -35,9 +36,10 @@ the same sequence. The entry's revision 16, retrieved September 15, 2026,
 still presents it as a conjecture; the proof is repository-derived.
 IterateExponentialModSix.result separately proves the A396806 congruence
 a(n) = n modulo six for every positive index, hence also its modulo-three
-congruence. A396805's modulo-three question remains open. Its modulo-five
-assertion has previously recorded non-kernel counterexamples and is not
-claimed by either result.
+congruence. IterateExponentialFiveModThree.result proves A396805's pattern
+0,1,0 modulo three starting at n=3; the lower bound retains the exceptional
+source value a(2)=2. Its modulo-five assertion has previously recorded
+non-kernel counterexamples; none of these theorems formalizes that refutation.
 
 ## Verified locator
 
