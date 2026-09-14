@@ -1,0 +1,4 @@
+**定理 20.2（真实效应空间闭包，repo-derived）。** 在不超过 $d^2-\dim\mathcal O_0$ 次严格增长后，上述空间稳定；两个密度矩阵在全部允许词后的终端测量概率相同，当且仅当其差属于 $\mathcal O_\infty^\perp$。能区分全部密度矩阵当且仅当 $\mathcal O_\infty=\operatorname{Herm}(d)$。
+
+证明。反复使用对偶恒等式，将每个概率写成初态对某个 $\Phi_w^*E_y$ 的迹配对；长度至多 $h$ 的这些效应及 $I$ 恰张成 $\mathcal O_h$。有限维嵌套空间若一步相等则已对所有对偶不变，否则维数至少增一。正交刻画随即成立。若空间真小，取非零 $D\in\mathcal O_\infty^\perp$；$I$ 在空间中给 $\operatorname{tr}D=0$，足够小 $\varepsilon>0$ 时 $I/d\pm\varepsilon D$ 为不同密度矩阵且全部观察相同。反向用全 Hermitian 空间测试差自身。此为[量子伴卷](CONTEXTUAL_SPACETIME_ARITHMETIC_QUANTUM.md)定义4.1及定理4.2的直接复用；该卷定理4.3明确区分矩阵乘法代数的生成与实际控制可观测性。证毕。
+

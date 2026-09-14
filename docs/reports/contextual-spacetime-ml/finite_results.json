@@ -1,0 +1,305 @@
+{
+  "boundary": "Finite exact checks are not proofs of universal claims; no empirical 2027 or kernel-verification claim.",
+  "capacity_boxes": {
+    "210": {
+      "capacities": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "classes_h0_to_h4": [
+        2,
+        16,
+        16,
+        16,
+        16
+      ],
+      "minimum_label_bits": [
+        1,
+        4,
+        4,
+        4,
+        4
+      ],
+      "states": 16
+    },
+    "30030": {
+      "capacities": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "classes_h0_to_h4": [
+        2,
+        64,
+        64,
+        64,
+        64
+      ],
+      "minimum_label_bits": [
+        1,
+        6,
+        6,
+        6,
+        6
+      ],
+      "states": 64
+    },
+    "5040": {
+      "capacities": [
+        4,
+        2,
+        1,
+        1
+      ],
+      "classes_h0_to_h4": [
+        3,
+        32,
+        52,
+        56,
+        60
+      ],
+      "minimum_label_bits": [
+        2,
+        5,
+        6,
+        6,
+        6
+      ],
+      "states": 60
+    }
+  },
+  "configuration": {
+    "arithmetic": "fractions.Fraction and rational-complex pairs",
+    "automata_max_word_length": 4,
+    "automata_scope": "all binary-output partial deterministic machines with 1 or 2 states and 2 actions",
+    "momentum_steps": 3,
+    "quantum_initial_grid": "Bloch coordinates in {-1,-1/2,0,1/2,1} with squared norm at most 1",
+    "quantum_max_word_length": 4,
+    "regression_steps": 5,
+    "seed": 20270914,
+    "two_layer_steps": 4
+  },
+  "counterexamples": {
+    "approximation": {
+      "regional_missing_stability": {
+        "Fhat": "x^2+epsilon",
+        "T_and_F": "x^2",
+        "actions": 1,
+        "cases": [
+          {
+            "second_step_secant_slope": "201/100",
+            "state_errors_h0_to_h2": [
+              "0",
+              "1/100",
+              "301/10000"
+            ],
+            "x0": "1"
+          },
+          {
+            "second_step_secant_slope": "20001/100",
+            "state_errors_h0_to_h2": [
+              "0",
+              "1/100",
+              "20101/10000"
+            ],
+            "x0": "10"
+          },
+          {
+            "second_step_secant_slope": "2000001/100",
+            "state_errors_h0_to_h2": [
+              "0",
+              "1/100",
+              "2000101/10000"
+            ],
+            "x0": "100"
+          }
+        ],
+        "cost": "0",
+        "delta_close": "0",
+        "delta_eval": "1/100",
+        "domain": "[0,infinity)",
+        "guard": "constant true",
+        "output": "x",
+        "q": "identity",
+        "regions": 1
+      },
+      "state_error_without_readout_regularity": {
+        "L": "1",
+        "actions": 1,
+        "cases": [
+          {
+            "a": "1/10",
+            "initial_approximate": "1/10",
+            "initial_exact": "-1/10",
+            "output_errors_h0_to_h2": [
+              1,
+              1,
+              1
+            ],
+            "state_errors_h0_to_h2": [
+              "1/5",
+              "1/5",
+              "1/5"
+            ]
+          },
+          {
+            "a": "1/100",
+            "initial_approximate": "1/100",
+            "initial_exact": "-1/100",
+            "output_errors_h0_to_h2": [
+              1,
+              1,
+              1
+            ],
+            "state_errors_h0_to_h2": [
+              "1/50",
+              "1/50",
+              "1/50"
+            ]
+          },
+          {
+            "a": "1/10000",
+            "initial_approximate": "1/10000",
+            "initial_exact": "-1/10000",
+            "output_errors_h0_to_h2": [
+              1,
+              1,
+              1
+            ],
+            "state_errors_h0_to_h2": [
+              "1/5000",
+              "1/5000",
+              "1/5000"
+            ]
+          }
+        ],
+        "delta_close": "0",
+        "delta_eval": "0",
+        "domain": "[-1,1]",
+        "guard": "constant true",
+        "output": "1{x>0}",
+        "output_evaluation_error": "0",
+        "q_T_F_Fhat": "identity",
+        "regions": 1,
+        "requested_output_budget_each_h0_to_h2": "1/2"
+      }
+    },
+    "discrete_C_before_after": [
+      "9",
+      "5184/625"
+    ],
+    "families": [
+      "same_w_different_next_w",
+      "coordinate_intervention",
+      "relu_prediction",
+      "ntk_nonclosure",
+      "flow_invariant_not_discrete_invariant",
+      "xor_use_and_misuse",
+      "terminal_marginal_not_transcript",
+      "stationary_fiber_exception",
+      "optimizer_memory",
+      "coordinate_preconditioning",
+      "relu_region_exit",
+      "quotient_path_without_common_lift",
+      "regional_missing_stability",
+      "state_error_without_readout_regularity"
+    ],
+    "minimax_absolute_error": "9/80",
+    "ntk_Kdot": [
+      "48",
+      "-48"
+    ],
+    "pair_difference": "9/40",
+    "two_layer_next_w": [
+      "81/100",
+      "117/200"
+    ],
+    "xor_accuracy": {
+      "ignore": "1/2",
+      "reverse": "0",
+      "use": "1"
+    }
+  },
+  "counts": {
+    "bloch_initial_states": 33,
+    "capacity_boxes": 3,
+    "exhaustive_partial_automata": 332,
+    "hidden_memory_trajectories": 72,
+    "lipschitz_box_pairs": 108,
+    "matrix_cases": 108,
+    "momentum_trajectories": 60,
+    "named_counterexample_families": 14,
+    "partition_horizon_comparisons": 1675,
+    "quantum_word_cases": 1023,
+    "regional_missing_stability_cases": 3,
+    "regression_trajectories": 48,
+    "state_error_without_readout_regularity_cases": 3,
+    "stochastic_discounted_pairs": 27,
+    "stochastic_iid_horizons": 36,
+    "stochastic_joint_law_cases": 1,
+    "two_layer_trajectories": 90,
+    "worked_regression_trajectory": 1
+  },
+  "result": "all finite assertions passed",
+  "schema": "contextual-spacetime-ml-finite-checks-v1",
+  "source": "docs/reports/contextual-spacetime-ml/finite_checks.py",
+  "source_sha256": "3df005fe87c405794e2a3295686c4c31bde45de5c471f51a986c2e224fe4ff00",
+  "stochastic_records": {
+    "bernoulli_discounted_distance": "rho*abs(p-pprime); first random output at depth 1",
+    "iid_state_contraction": "0",
+    "iid_trace_tv_h0_to_h8": {
+      "0": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "1": [
+        "0",
+        "1",
+        "1",
+        "1",
+        "1",
+        "1",
+        "1",
+        "1",
+        "1"
+      ],
+      "1/2": [
+        "0",
+        "1/2",
+        "3/4",
+        "7/8",
+        "15/16",
+        "31/32",
+        "63/64",
+        "127/128",
+        "255/256"
+      ],
+      "1/5": [
+        "0",
+        "1/5",
+        "9/25",
+        "61/125",
+        "369/625",
+        "2101/3125",
+        "11529/15625",
+        "61741/78125",
+        "325089/390625"
+      ]
+    },
+    "joint_output_next_summary_tv": "1",
+    "joint_two_step_trace_tv": "1"
+  },
+  "theory": "docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ML.md"
+}
