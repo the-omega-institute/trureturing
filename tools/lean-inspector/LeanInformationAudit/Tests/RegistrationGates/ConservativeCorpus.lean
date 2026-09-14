@@ -44,6 +44,7 @@ run_cmd do
       if message.startsWith "IE-C050 " then
         findings := findings + 1
         logError m!"[FAIL] DevConservation/{moduleName}: {message}"
-    unless count == expected && findings == 0 do
-      throwError "[FAIL] DevConservation/{moduleName}: expected {expected}; count={count}; IE-C050={findings}"
-    logInfo m!"[PASS] DevConservation/{moduleName}: registrations={count} IE-C050=0"
+    if count == expected && findings == 0 then
+      logInfo m!"[PASS] DevConservation/{moduleName}: registrations={count} IE-C050=0"
+    else
+      logError m!"[FAIL] DevConservation/{moduleName}: expected {expected}; count={count}; IE-C050={findings}"
