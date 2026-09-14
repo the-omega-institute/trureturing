@@ -1,5 +1,6 @@
 import D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates
 import LeanInformationAudit.Syntax
+import LeanInformationAudit.Tests.RegistrationGates.ReifierInterrupt
 import LeanInformationAudit.Tests.RegistrationGates.Positive
 
 namespace LeanInformationAudit.Tests.ReifierChecks
@@ -417,5 +418,189 @@ run_meta do
   let some entry := InformationRegistry.find? (← getEnv) ``clean | throwError "missing real provider registration"
   validateDerivedCertificate entry
   logInfo "P1_PROVIDER real_provider insertion_and_consumer accepted"
+
+-- A5: the producer executes an uncaught internal interrupt after actual derivation.
+run_meta do
+  let env ← getEnv
+  let owner := ``LeanInformationAudit.Tests.ReifierInterrupt.clean
+  let producer := `LeanInformationAudit.Tests.RegistrationGates.ReifierInterrupt
+  let unit := owner.str theoremUnitSuffix
+  let names := #[unit, owner.str primitiveRealizationSuffix,
+    unit.str "__nondegenerate", unit.str "__sensitivity", unit.str "__variation",
+    RegistrationGates.diagnosticName unit producer]
+  let present := names.filter env.contains
+  let rows := (InformationRegistry.entries env).filter (·.registrationModuleName == producer)
+  logInfo m!"P1_A5 interrupt_publication source_imported={env.isImportedConst owner} rows={rows.size} present_generated={present} checked_names={names.size}"
+  unless env.isImportedConst owner && rows.isEmpty && present.isEmpty do
+    throwError "interrupt_publication: cancellation published generated content"
+
+def highArena : PrimitiveLawArena.{1,0,0} where
+  toArena := Arena.ofFintype (ULift.{1} Bool)
+  signature := {
+    Index := Fin 0, indexFintype := inferInstance, indexDecidableEq := inferInstance
+    Output := fun _ => Bool, outputDecidableEq := fun _ => inferInstance
+    axis := fun _ => .cut, readoutAxisNotAnchor := by simp
+    AnchorIndex := Fin 0, anchorFintype := inferInstance, anchorDecidableEq := inferInstance }
+  Law _ := True
+
+run_meta do
+  unless (← freezeArena ``eqArena).equal (mkConst ``eqArena) do
+    throwError "arena_type0: raw arena changed"
+  logInfo "P1_A5 arena_type0 accepted raw_head=preserved"
+  expectFailure "arena_universe1" "P1.RigidUniverseMismatch" do
+    discard <| freezeArena ``highArena
+
+-- A descriptor that would fail if arena resolution did not reject first.
+elab "arena_order_tripwire" : term => throwError "arena_order_tripwire executed"
+reject_via "arena_universe1_early" expects "P1.RigidUniverseMismatch" in
+register_information_theorem wrongArena via arena_order_tripwire in highArena
+
+-- Full Name identity survives name resolution, but never unfolds a wrapper.
+theorem aliasPointwise {X Y : Type} [Fintype X] [DecidableEq X] [DecidableEq Y]
+    (f g : X → Y) : LegacyPrimitiveRealization (pointwiseEqArena (Arena.ofFintype X) Y)
+    (∀ x : X, f x = g x) (pointwiseEqRealization f g) :=
+  D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise f g
+abbrev abbrevPointwise := @D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise
+@[reducible] def reduciblePointwise := @D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise
+namespace ProviderAlias
+abbrev pointwise := @D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise
+end ProviderAlias
+macro "approved_descriptor" : term =>
+  `(D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates.pointwise
+    (fun x : Bool => x.not.not) (fun x => x))
+
+elab "accept_via " label:str " in " command:command : command => do
+  let saved ← getEnv
+  try
+    elabCommand command
+    let some entry := InformationRegistry.find? (← getEnv) ``wrongArena
+      | throwError "{label.getString}: missing positive registration"
+    match ← liftTermElabM <| validatePersistedEntry (← getEnv) entry with
+    | .error reason => throwError reason
+    | .ok () => logInfo m!"P1_A5 {label.getString} insertion_and_consumer accepted"
+  finally setEnv saved
+
+open D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates in
+accept_via "provider_open_namespace" in
+register_information_theorem wrongArena via (pointwise (fun x : Bool => x.not.not) (fun x => x)) in eqArena
+accept_via "provider_macro" in
+register_information_theorem wrongArena via approved_descriptor in eqArena
+reject_via "provider_theorem_alias" expects "P1.UnsupportedDescriptor" in
+register_information_theorem wrongArena via (aliasPointwise (fun x : Bool => x.not.not) (fun x => x)) in eqArena
+reject_via "provider_abbrev" expects "P1.UnsupportedDescriptor" in
+register_information_theorem wrongArena via (abbrevPointwise (fun x : Bool => x.not.not) (fun x => x)) in eqArena
+reject_via "provider_reducible" expects "P1.UnsupportedDescriptor" in
+register_information_theorem wrongArena via (reduciblePointwise (fun x : Bool => x.not.not) (fun x => x)) in eqArena
+reject_via "provider_namespace_alias" expects "P1.UnsupportedDescriptor" in
+register_information_theorem wrongArena via (ProviderAlias.pointwise (fun x : Bool => x.not.not) (fun x => x)) in eqArena
+
+-- Every candidate is kernel checked, then tested in an independently loaded environment.
+private def providerPinProbe (fresh : Environment) (name : Name) (change : String) : MetaM Unit := do
+  let .thmInfo info ← getConstInfo name | throwError "pin control: not theorem"
+  let saved ← getEnv
+  try
+    setEnv (fresh.setMainModule providerModule)
+    let type := if change == "raw_type" then mkAnnotation `changedProviderType info.type
+      else if change == "binder" then
+        match info.type with
+        | .forallE n t b bi => .forallE n t b (if bi == .default then .implicit else .default)
+        | t => t
+      else info.type
+    let levels := if change == "universe_order" then info.levelParams.reverse else info.levelParams
+    let (levels, type, value) := if change == "universe_rename" then
+      let renamed := levels.map (fun n => n.str "renamed")
+      (renamed, type.instantiateLevelParams levels (renamed.map Level.param),
+        info.value.instantiateLevelParams levels (renamed.map Level.param))
+      else (levels, type, info.value)
+    if change == "kind" then
+      addDecl (.defnDecl { name, levelParams := levels, type, value, hints := .abbrev, safety := .safe })
+    else addDecl (.thmDecl { name, levelParams := levels, type, value })
+    let label := s!"provider_pin_{change}_{name.getString!}"
+    if change == "same_module" || change == "universe_rename" then
+      discard <| checkedProvider name
+      logInfo m!"P1_A5 {label} accepted"
+    else
+      expectFailure label (if change == "kind" then "provider is not a theorem" else "provider type pin") do
+        discard <| checkedProvider name
+  finally setEnv saved
+
+run_meta do
+  let fresh ← importModules #[{
+    module := `D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates }] {}
+  for name in #[pointwiseProvider, sensitivityProvider, variationProvider] do
+    for change in #["same_module", "binder", "raw_type", "kind"] do
+      providerPinProbe fresh name change
+  providerPinProbe fresh variationProvider "universe_order"
+  providerPinProbe fresh variationProvider "universe_rename"
+
+-- Serialize kernel-checked fixtures and import them through explicit artifacts.
+-- This makes the foreign-owner arm self-contained under a single make target.
+run_meta do
+  let saved ← getEnv
+  let fresh ← importModules #[{
+    module := `D5.S3.ConceptDynamics.InformationEscape.PointwiseRegistrationTemplates }] {}
+  let foreignName := `P1ForeignProvider
+  IO.FS.withTempDir fun dir => do
+    try
+      setEnv (fresh.setMainModule foreignName)
+      for name in #[pointwiseProvider, sensitivityProvider, variationProvider] do
+        let some (.thmInfo info) := saved.find? name | throwError "missing provider fixture"
+        addDecl (.thmDecl { name, levelParams := info.levelParams, type := info.type, value := info.value })
+      let file := dir / "P1ForeignProvider.olean"
+      writeModule (← getEnv) file (writeIR := false)
+      let foreign ← importModules #[{ module := foreignName }] {}
+        (arts := ({} : NameMap ImportArtifacts).insert foreignName (.ofArrays #[#[file]]))
+      setEnv (foreign.setMainModule `P1.ForeignConsumer)
+      for name in #[pointwiseProvider, sensitivityProvider, variationProvider] do
+        unless foreign.isImportedConst name do throwError "foreign provider was not imported"
+        expectFailure s!"provider_foreign_import_{name.getString!}" "provider module" do
+          discard <| checkedProvider name
+    finally setEnv saved
+
+-- Check the same transaction after insertion, when both extension rows and all
+-- six companions exist. Catch at EIO to observe the exact rethrown internal id.
+def captureCommandException (action : CommandElabM Unit) : CommandElabM (Option Exception) :=
+  fun ctx state => do
+    try action ctx state; return none
+    catch e => return some e
+
+elab "check_internal_rollback" : command => do
+  let initial ← get
+  let some source := InformationRegistry.find? initial.env ``clean | throwError "missing source"
+  let some cert := source.derivedCertificate | throwError "missing source certificate"
+  let owner := ``wrongArena
+  let unit := localCompanionName initial.env owner theoremUnitSuffix
+  let names := #[unit, localCompanionName initial.env owner primitiveRealizationSuffix,
+    unit.str "__nondegenerate", unit.str "__sensitivity", unit.str "__variation",
+    RegistrationGates.diagnosticName unit initial.env.header.mainModule]
+  let mut observations : Array String := #[]
+  for (label, id) in #[("interrupt", interruptExceptionId),
+      ("abort_command", abortCommandExceptionId), ("abort_term", abortTermExceptionId),
+      ("other_internal", postponeExceptionId)] do
+    set initial
+    let caught ← captureCommandException <| registrationTransaction do
+      let entry ← liftTermElabM do
+        let e ← prepareRegistrationEntry (← getEnv) { source with
+          theoremName := owner, unitName := unit, realizationName := names[1]!,
+          statementIdentity := theoremStatementIdentity (← getEnv) owner, derivedCertificate := none }
+        derive e (← freezeArena ``eqArena) cert.descriptor
+      registerValidatedEntry entry
+      unless names.all (← getEnv).contains &&
+          (InformationRegistry.entries (← getEnv)).size == (InformationRegistry.entries initial.env).size + 1 do
+        throwError "internal rollback control did not stage all declarations and row"
+      throw (.internal id)
+    let env ← getEnv
+    let rethrown := match caught with
+      | some (.internal actual _) => actual == id
+      | _ => false
+    let present := names.filter env.contains
+    let unchanged := (InformationRegistry.entries env).size == (InformationRegistry.entries initial.env).size
+    let observation := s!"P1_A5 rollback_{label} rethrown={rethrown} row_unchanged={unchanged} present_generated={present}"
+    observations := observations.push observation
+    -- Restore the test harness even on a broken production transaction.
+    set initial
+    unless rethrown && unchanged && present.isEmpty do throwError observation
+  for observation in observations do logInfo observation
+check_internal_rollback
 
 end LeanInformationAudit.Tests.ReifierChecks

@@ -212,6 +212,8 @@ def freezeArena (name : Name) : MetaM Expr := bounded do
   let type ← inferType arena
   unless type.isAppOf ``PrimitiveLawArena do throwError "P1.ArenaMismatch: not a PrimitiveLawArena"
   unless (← getConstInfo name).levelParams.isEmpty do throwError "P1.RigidUniverseMismatch: arena"
+  unless type.equal (mkConst ``PrimitiveLawArena [.zero, .zero, .zero]) do
+    throwError "P1.RigidUniverseMismatch: arena must have three zero universe levels"
   return arena
 
 def exactUse (theoremName : Name) (arena descriptor : Expr) : MetaM (Expr × Expr) := do
