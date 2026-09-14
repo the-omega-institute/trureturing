@@ -389,3 +389,145 @@ $$\{[\tau^n(u)]:n\in\mathbb Z\}\cap X_{\rm simp}=\varnothing.$$
 并且映射 $n\mapsto[\tau^n(u)]$ 在 $\mathbb Z$ 上为单射。
 
 **证明。** 自同构保持第二导出子群及非平凡性，故其每个轨道元素都不能代表本质简单闭曲线。若两个不同整数 $p,n$ 给出相同共轭类，取 $m>|n-p|$。经第 13 节的有限商后仍共轭，强制 $m$ 整除非零整数 $n-p$，与大小界矛盾。
+
+## 16. 在全部 Johnson 层保留的有限单群商
+
+**定义。** 固定闭、连通、可定向曲面 $\Sigma_g$，$g\ge3$，记 $\pi=\pi_1(\Sigma_g)$，$\mathcal M_g=\operatorname{Mod}^{+}(\Sigma_g)$。以下群作用始终来自保持曲面定向的映射类。令
+
+$$\mathcal J_c=\ker\left(\mathcal M_g\longrightarrow\operatorname{Out}(\pi/\gamma_{c+1}\pi)\right),\qquad c\ge1.$$
+
+$\mathcal J_1$ 是 Torelli 群，$\mathcal J_2$ 是 Johnson 核。Johnson 同态给出 $\mathcal J_c/\mathcal J_{c+1}$ 为交换群；Johnson 核由所有本质分离简单闭曲线上的 Dehn 扭转生成。
+
+**引理。** 设 $J_1\ge J_2\ge\cdots$ 是群 $\Lambda$ 的子群列，每个 $J_{c+1}$ 正规于 $J_c$ 且 $J_c/J_{c+1}$ 交换。若同态 $f:\Lambda\to F$ 满足 $F=[F,F]$ 和 $f(J_1)=F$，则 $f(J_c)=F$ 对所有 $c\ge1$ 成立。
+
+**证明。** 归纳。若 $f(J_c)=F$，由 $[J_c,J_c]\subseteq J_{c+1}$ 及同态保持交换子，得到
+
+$$F=[F,F]=[f(J_c),f(J_c)]=f([J_c,J_c])\subseteq f(J_{c+1})\subseteq F.$$
+
+**已知存在定理。** 对每个 $g\ge3$，存在非交换有限单群 $F$ 和满射 $f:\mathcal M_g\twoheadrightarrow F$，使 $f(\mathcal J_1)=F$。
+
+**证明依据。** Masbaum–Reid 的量子表示与强逼近构造给出 $\mathcal M_g$ 到任意大维数的一族 $\operatorname{PSL}(N,q)$ 的满射。Torelli 群正规，故其在同一个满射下的像为平凡群或整个单群。若像平凡，该满射将经 $\operatorname{Sp}(2g,\mathbb Z)$ 因子化；对构造中足够大的 $N$，辛群的合同子群性质排除了这一可能。这里需要的是同一个 $f$ 的限制满射，单独存在某个 Torelli 群商不够。
+
+**推论。** 可以固定一个这样的 $f$ 和 $\Gamma=\ker f$，使
+
+$$\boxed{f(\mathcal J_c)=F\quad\text{对所有 }c\ge1.}$$
+
+**证明。** 非交换单群完美，应用引理。
+
+## 17. 一条真实简单曲线对全部有限幂零观察的障碍
+
+**定义。** 对有限特征商 $q:\pi\twoheadrightarrow Q$，记实际诱导外作用为 $a_q:\mathcal M_g\to\operatorname{Out}(Q)$，主合同核为 $C_q=\ker a_q$。这里的幂零性指 $Q$，不指其自同构群或外自同构群。
+
+**定理。** 对每个 $g\ge3$，存在固定的有限指数正规子群 $\Gamma\triangleleft\mathcal M_g$ 和固定的本质分离简单闭曲线 $\alpha$，使对每个有限特征幂零商 $q:\pi\twoheadrightarrow Q$，都有
+
+$$\boxed{C_q\alpha\not\subseteq\Gamma\alpha.}$$
+
+同一个 $(\Gamma,\alpha)$ 对全部有限阶、全部幂零类及全部模数同时成立。
+
+**证明。** 固定第 16 节的 $f$。因为 $f(\mathcal J_2)=F\ne1$ 且 $\mathcal J_2$ 由分离扭转生成，存在本质分离曲线 $\alpha$ 使 $z=f(T_\alpha)\ne1$。非交换单群的中心平凡，所以 $C_F(z)<F$。令 $H=\operatorname{Stab}_{\mathcal M_g}(\alpha)$。对于 $h\in H$，曲面定向保持性给出 $hT_\alpha h^{-1}=T_\alpha$，故
+
+$$f(H)\subseteq C_F(z)<F.$$
+
+若 $Q$ 的幂零类至多为 $c\ge1$，则 $q$ 消去 $\gamma_{c+1}\pi$。$\mathcal J_c$ 中的元素在 $\pi/\gamma_{c+1}\pi$ 上以内自同构作用，因而在 $Q$ 上也以内自同构作用。因此 $\mathcal J_c\subseteq C_q$，继而 $f(C_q)=F$。如果 $C_q\alpha\subseteq\Gamma\alpha$，第 9 节给出 $C_q\subseteq\Gamma H$，取 $f$ 的像将得到 $F\subseteq f(H)$，矛盾。平凡目标也可取 $c=1$。
+
+**推论。** 用任意有限多个有限特征幂零商作联合观察仍有同一障碍。
+
+**证明。** 联合像是有限个幂零群直积的子群，其幂零类至多为这些类的最大值，投影核是各特征核的交。应用定理。这里不需要、也不假设联合像的主合同核等于各主合同核的交；不同投影的内共轭元可能不相容。
+
+**定理。** 对上述 $f$、$\Gamma$ 和任意这样的 $q$，令 $A_q=a_q(\mathcal M_g)$。有
+
+$$\boxed{\operatorname{im}(f,a_q)=F\times A_q.}$$
+
+因此，对于每个 $v\in A_q$ 和每个 $y\in F$，存在同一个映射类 $x$ 满足 $a_q(x)=v$、$f(x)=y$。此外，$C_q\alpha$ 与整个 $\mathcal M_g\alpha$ 中每个 $\Gamma$ 轨道都相交。
+
+**证明。** 先选 $x_0$ 使 $a_q(x_0)=v$，再由 $f(C_q)=F$ 选 $c\in C_q$ 满足 $f(c)=y f(x_0)^{-1}$。取 $x=cx_0$ 即可。对于轨道结论，正规性给出 $\Gamma\backslash\mathcal M_g/H\cong F/f(H)$；而 $f(C_q)=F$，所以 $C_q$ 的元素达到全部这些陪集。轨道数恰为 $[F:f(H)]\ge[F:C_F(z)]>1$，没有把 $f(H)$ 与 $C_F(z)$ 当成相等。
+
+**推论。** 在由全部有限特征幂零曲面商的主合同核定义的群拓扑中，$\Gamma$ 的每个陪集都稠密；$f$ 到离散有限群 $F$ 不连续。
+
+**证明。** 主核在有限交下有来自联合像的更小主核，因而构成单位元邻域基。上一项定理说明每个这样的邻域的每个平移都与 $f^{-1}(y)$ 相交。$\Gamma$ 是真子群却稠密，故它不开放，$f$ 不连续。此拓扑是曲面幂零商所诱导的合同拓扑，不是对映射类群本身直接取幂零商所定义的拓扑。
+
+## 18. 单群目标的轨道控制等价于完整因子化
+
+**定理。** 设 $\Lambda$ 作用于 $X$，$\alpha\in X$，$H=\operatorname{Stab}_\Lambda(\alpha)$。令 $f:\Lambda\twoheadrightarrow F$ 为到非交换有限单群的满射，$\Gamma=\ker f$，并假设 $f(H)<F$。对任意同态 $a:\Lambda\to A$，令 $A_0=a(\Lambda)$、$C=\ker a$。则下列条件等价：
+
+$$C\alpha\subseteq\Gamma\alpha;\qquad C\subseteq\Gamma;\qquad
+\exists\,\theta:A_0\twoheadrightarrow F,\ f=\theta\circ a.$$
+
+**证明。** 由第 9 节及 $\Gamma=\ker f$，第一条件等价于 $f(C)\subseteq f(H)$。$C$ 正规于 $\Lambda$，所以 $f(C)$ 正规于 $F$。单性及 $f(H)<F$ 强制 $f(C)=1$，即第二条件。反之第二条件直接给出第一条件。第二条件使 $\theta(a(x))=f(x)$ 良定义；乘法保持性和满射性来自 $f$。任何这样的因子化都消去 $C$。
+
+**推论。** 对第 17 节固定的真实曲面、曲线和 $f$，某个有限特征商 $q$ 能满足该轨道要求，当且仅当这个同一个 $f$ 经 $a_q(\mathcal M_g)$ 因子化。只证明某个单独扭转被看见，或只证明 $a_q$ 的像很大，不足以给出该因子化。
+
+**定理。** 在上述一般条件中，若 $A_0$ 有限，令
+
+$$B=\operatorname{im}(f,a)\le F\times A_0.$$
+
+则恰有两种可能：$B=F\times A_0$，或者 $B$ 是一个满射 $\theta:A_0\twoheadrightarrow F$ 的图像。后一种情形恰好对应轨道控制；等价的有限判据为
+
+$$\boxed{B\cap(F\times\{1\})=\{(1,1)\}.}$$
+
+**证明。** 该交等于 $f(C)\times\{1\}$。单性给出 $f(C)=1$ 或 $F$。前者使第二坐标投影 $B\to A_0$ 为同构，其逆的第一坐标即 $\theta$。后者使 $F\times\{1\}\subseteq B$；利用 $B\to A_0$ 满射即可得到整个直积。若给定 $\Lambda$ 的生成集，则 $B$ 由同一批生成元在 $f$ 与 $a$ 下的像对生成；不能独立生成两侧像后把它们默认视为联合像。
+
+## 19. 状态分离与外动力学分离的两种相容性
+
+**引理。** 设 $S_1,\ldots,S_t$ 为非交换有限单群，$B\le\prod_iS_i$ 在每个坐标上满射。若 $M\triangleleft B$ 也在每个坐标上满射，则 $M=B$。此外，$B$ 是完美群。
+
+**证明。** 对 $t$ 归纳。向前 $t-1$ 个坐标投影，记像为 $B'$，核为 $K\le S_t$。由于 $B\to S_t$ 满射，$K$ 正规于 $S_t$，故 $K=1$ 或 $S_t$。归纳假设给出 $M$ 的前坐标像为 $B'$。若 $K=1$，结论立即成立。若 $K=S_t$，则 $[M,K]\subseteq M\cap K$，而其最后坐标为 $[S_t,S_t]=S_t$，所以 $K\subseteq M$，仍得 $M=B$。对于完美性，在 $K=1$ 时由 $B\cong B'$ 得到；在 $K=S_t$ 时 $K=[K,K]\subseteq[B,B]$，且 $[B,B]$ 满射到完美群 $B'$，故 $[B,B]=B$。
+
+**定理。** 设 $1\to\pi\to E\to\Lambda\to1$ 是群扩张。对每个 $i$，设 $\rho_i:E\to S_i$ 是到非交换有限单群的同态，且 $\rho_i(\pi)=S_i$。对于任意有限子族，令 $q$ 为 $\pi$ 在这些坐标上的联合像满射。则 $E$ 在该联合像上的共轭作用全部为内自同构，所以 $\Lambda$ 的诱导外作用平凡。
+
+**证明。** 令 $B$ 为 $E$ 的联合像，$M$ 为 $\pi$ 的联合像。正规性和逐坐标满射性给出引理的条件，故 $M=B$。任意 $e\in E$ 的像已经属于 $q(\pi)$，用它作为共同共轭元即可。该结论允许各 $S_i$ 同构；没有独立坐标假设。
+
+**推论。** 若每个 $\ker(\rho_i|_\pi)$ 都是 $\pi$ 的特征子群，且其可数交为 $1$，则有限前缀交构成一条递降、交为 $1$ 的有限指数特征子群塔，且 $\Lambda$ 在每层商上的外作用都平凡。
+
+**证明。** 有限交保持特征性和有限指数；有限联合像的核正是这个交，应用定理。交为 $1$ 保证 $\pi$ 的元素被联合状态读出分离，但外作用仍全部平凡。仅有 $E$ 下的不变性并不自动给出 $\pi$ 的完整特征性，后者在本推论中单独假设。
+
+## 20. 加入外作用平凡的完美商不能修复幂零路线
+
+**引理。** 设 $A$ 可解、$P$ 完美，$B\le A\times P$ 对两侧都满射，则 $B=A\times P$。
+
+**证明。** 若 $A$ 的导出长度至多为 $d$，则 $B^{(d)}$ 的第一投影为 $1$，第二投影为 $P^{(d)}=P$，故 $\{1\}\times P\subseteq B$。结合第一投影满射得到结论。
+
+**定理。** 设 $q_A:\pi\twoheadrightarrow A$ 与 $q_P:\pi\twoheadrightarrow P$ 是有限特征商，其中 $A$ 可解、$P$ 完美。设某群 $\Lambda\le\operatorname{Out}(\pi)$ 在 $P$ 上的诱导外作用平凡。令 $q$ 为两商的联合像投影，则该联合像为 $A\times P$，且
+
+$$\boxed{\ker a_q=\ker a_{q_A}.}$$
+
+**证明。** 直积结论来自引理。若一个映射类在联合像上为内自同构，其在 $A$ 上也为内自同构。反之，若它在 $A$ 上由 $a\in A$ 实现内共轭，在 $P$ 上由 $p\in P$ 实现内共轭，那么 $(a,p)$ 属于实际联合像并实现两者的共同内共轭。投影核特征，故两个坐标作用保持各自因素，不出现因素交换。
+
+**推论。** 在第 17 节的障碍中，把任意有限多个幂零观察与第 19 节任意有限子族联合，仍不能达到 $C_q\alpha\subseteq\Gamma\alpha$。
+
+**证明。** 幂零观察的联合像仍幂零，因而可解；第 19 节的联合像完美且外作用平凡。应用定理，主合同核与仅保留幂零联合像时完全相同。这一结论不排除一般非幂零商，也不排除具有非平凡外作用的可解商。
+
+## 21. 从单群商的内部元素转向核集合的置换
+
+**定义。** 令 $\pi$ 为有限生成群，$S$ 为非交换有限单群，且 $\operatorname{Epi}(\pi,S)$ 非空。设
+
+$$\mathcal E_S=\operatorname{Epi}(\pi,S)/\operatorname{Aut}(S),\qquad
+N_S=\bigcap_{\rho\in\operatorname{Epi}(\pi,S)}\ker\rho,$$
+
+其中等价关系为在目标端复合自同构。记 $r=|\mathcal E_S|$。该集合也可识别为所有满足 $\pi/N\cong S$ 的正规子群 $N$ 的集合。
+
+**定理。** $\mathcal E_S$ 有限，$N_S$ 特征，且 $\pi/N_S\cong S^r$。同构依赖各等价类代表的选择，而特征核与其置换作用不依赖此选择。
+
+**证明。** 若 $\pi$ 有 $d$ 个生成元，同态由其像唯一确定，故 $|\operatorname{Epi}(\pi,S)|\le|S|^d$。两个满射核相同当且仅当相差目标自同构。选择互不等价的满射 $\rho_1,\ldots,\rho_r$，其联合像在每侧满射。归纳证明它是整个直积：若向前 $r-1$ 个坐标投影的核为 $S$，结论成立；若核平凡，最后一个坐标是满射 $S^{r-1}\to S$ 的图像。各因素像正规且两两交换，故因 $S$ 非交换单，恰有一个因素映为 $S$，其余映为 $1$。于是 $\rho_r$ 与前某个满射具有相同的核，矛盾。$N_S$ 对所有自同构不变，因为预复合置换满射族；没有因此断言它对所有自同态完全不变。
+
+**定义。** 对 $\Lambda\le\operatorname{Out}(\pi)$，记 $a_S:\Lambda\to\operatorname{Out}(S^r)$ 为上述特征商的外作用，$b_S:\Lambda\to\operatorname{Sym}(\mathcal E_S)$ 为对核集合的置换。内自同构不改变正规子群，故 $b_S$ 良定义。与该核标记相容地，$b_S$ 是 $a_S$ 的因素置换。
+
+**定理。** 假设 $\operatorname{Out}(S)$ 可解。对任意到非交换有限单群的满射 $f:\Lambda\twoheadrightarrow F$，有
+
+$$\boxed{f\text{ 经 }a_S\text{ 的像因子化}
+\quad\Longleftrightarrow\quad
+f\text{ 经 }b_S\text{ 的像因子化}.}$$
+
+**证明。** $S^r$ 的自同构置换其最小正规子群，即各简单因素；固定各因素的自同构逐因素来自 $\operatorname{Aut}(S)$。除以内自同构后，因素置换的核为 $\operatorname{Out}(S)^r$。因此 $a_S(\Lambda)$ 到 $b_S(\Lambda)$ 的核可解且正规。若存在满射 $\theta:a_S(\Lambda)\twoheadrightarrow F$ 给出 $f$，该核的像是 $F$ 的可解正规子群，单性强制其平凡；$\theta$ 因而继续经过置换像因子化。反向直接复合。可解性在此作为明确前提保留。
+
+**推论。** 对第 17 节的 $(f,\Gamma,\alpha)$，上述特征商能控制该简单曲线轨道，当且仅当
+
+$$\operatorname{im}(f,b_S)\cap(F\times\{1\})=\{(1,1)\}.$$
+
+若 $\mathcal M_g$ 的同一组生成元为 $s_1,\ldots,s_k$，则应使用其实际像对 $(f(s_i),b_S(s_i))$ 生成联合子群。必要条件包括 $|F|\mid|b_S(\mathcal M_g)|$，进而 $|F|\mid r!$；这些阶数条件不充分。
+
+**证明。** 依次应用第 18 节、本节定理及第 18 节的有限联合像判据。阶数条件来自满射与拉格朗日定理。
+
+**命题。** 本节仅给出这一类特征商的准确验收条件，并不证明对任意给定的 $f$ 必有某个 $S$ 达到该条件。即使一个序列中的单群曲面商能够分离全部曲面群元素，若其核都被映射类固定、诱导外作用平凡，该序列也不满足任何非平凡 $f$ 的因子化要求。
+
+**证明。** 验收条件以存在经实际置换像的满射为内容；有限性、状态分离和单群性本身均不提供该满射。对于后一种序列，第 19 节的条件满足时任意有限联合外作用仍平凡，故无法满射到非平凡的 $F$。
