@@ -8,7 +8,6 @@ claim: "Information processing capacity is defined through optimal linear readou
 strata_touched: []
 license: "citation-only"
 triage: "anchor"
-url: null
 ---
 
 # Information Processing Capacity of Dynamical Systems
