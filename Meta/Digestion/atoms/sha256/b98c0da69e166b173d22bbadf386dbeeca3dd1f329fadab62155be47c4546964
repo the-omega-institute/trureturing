@@ -1,0 +1,8 @@
+计算基读取对两个标签的错误均为 $1/10$；对任何 POVM，
+
+$$
+v(M)=\sum_z\left\|\frac3{10}M_z\right\|_1
+=\frac3{10}\operatorname{tr}I_2
+=\frac35.
+$$
+
