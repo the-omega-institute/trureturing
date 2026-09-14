@@ -1,0 +1,5 @@
+Its Gram vectors define the same fixed isometry through
+V phi_r=sum_i sqrt(r_i/|r|)|i> tensor phi_(r-e_i). The Gram recurrence preserves
+all dependencies. In this construction phi_0=phi_e_head, so the nonterminal
+vectors already span H when A>0. Iteration telescopes to the required word
+amplitudes and common final vector. The all-zero occupation uses memory C.
