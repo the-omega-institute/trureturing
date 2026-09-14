@@ -82,6 +82,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/KarttunenGcdTotientPositionRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a129598-gcd-totient-position-refutation` (refuted) by `D5/S0/Certificates/KarttunenGcdTotientPositionRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a129598-gcd-totient-position-refutation","declaration_gid":"D5/S0/Certificates/KarttunenGcdTotientPositionRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Antti Karttunen (2007). *OEIS A129598, a(n) = n * A111089(n)*. URL: <https://oeis.org/A129598>.

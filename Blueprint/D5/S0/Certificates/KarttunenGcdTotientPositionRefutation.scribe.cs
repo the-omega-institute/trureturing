@@ -51,7 +51,11 @@ internal sealed class KarttunenGcdTotientPositionRefutationDocument
                     + "has gcd-totient value 60 because 900 supplies a positive preimage. Thus "
                     + "a(60) and b(60) differ, but 60 is not in A089966. This refutes only the "
                     + "differing-position characterization; Conjecture 2 is untouched.",
-                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "oeis-a129598-gcd-totient-position-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(
         string id,
