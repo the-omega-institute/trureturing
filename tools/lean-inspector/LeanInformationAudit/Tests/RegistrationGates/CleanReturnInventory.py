@@ -74,6 +74,20 @@ def check(source, manifest):
     return list(dict.fromkeys(failures))
 
 
+
+def default_admit_mutation(source, entry):
+    """A source-contract attack; deliberately rejected before elaboration."""
+    lines = source.splitlines(True)
+    marker = '-- admission-exit: ' + entry['id'] + ' rule='
+    positions = [i + 1 for i, line in enumerate(lines) if marker in line]
+    if len(positions) != 1 or lines[positions[0]].strip() != entry['source']:
+        raise ValueError('Unresolved admission exit: ' + entry['id'])
+    index = positions[0]
+    indent = lines[index][:len(lines[index]) - len(lines[index].lstrip())]
+    lines[index] = indent + 'return defaultAdmit\n'
+    return ''.join(lines)
+
+
 def main():
     manifest = json.loads(MANIFEST.read_text())
     source = Path(sys.argv[1]).read_text() if len(sys.argv) > 1 else SOURCE.read_text()
@@ -90,6 +104,14 @@ def main():
         print('[FAIL] CleanReturnInventory.MissingRuleControl')
         return 1
     print('[PASS] CleanReturnInventory.MissingRuleControl')
+    for row in manifest['entries']:
+        predicted = ['CleanReturnInventory.' + row['id'],
+                     'CleanReturnInventory.MissingRuleId.' + row['function']]
+        observed = check(default_admit_mutation(source, row), manifest)
+        if sorted(observed) != sorted(predicted):
+            print('[FAIL] CleanReturnInventory.DefaultAdmitControl.' + row['id'])
+            return 1
+        print('[PASS] CleanReturnInventory.DefaultAdmitControl.' + row['id'])
     print('[PASS] CleanReturnInventory: ' + str(len(manifest['entries'])) + ' exits')
     return 0
 

@@ -45,6 +45,11 @@ private def full (label : String) (target readout : Name) : CoreM Unit := do
       (message.contains "reason=unclassified_form" || message.contains "reason=forbidden_dependency")) then
     logInfo m!"[PASS] {label}Diagnostic: {actual}"
   else logError m!"[FAIL] {label}Diagnostic: expected IE-C050; actual={actual}"
+  if target == ``computedTarget then
+    if actual.any (fun message => message.contains "unclassified_statement_head" &&
+        message.contains "\"first\":\"Bool.rec\"") then
+      logInfo m!"[PASS] {label}HeadNamed: {actual}"
+    else logError m!"[FAIL] {label}HeadNamed: expected unresolved Bool.rec head; actual={actual}"
 run_cmd Elab.Command.liftCoreM do
   for (label, target, readout) in [
       ("PlainRegisteredScalarControl", ``AllowlistBoundaries.target,

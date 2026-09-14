@@ -8,28 +8,32 @@
       "function": "TypeClassification.flags",
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
-      "source": "| .allowlisted _ => (false, false)"
+      "source": "| .allowlisted _ => (false, false)",
+      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
     },
     {
       "id": "TypeClassification.witness?.forward.1",
       "function": "TypeClassification.witness?",
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
-      "source": "| .allowlisted witness => some witness"
+      "source": "| .allowlisted witness => some witness",
+      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
     },
     {
       "id": "reuseWitness.1",
       "function": "reuseWitness",
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
-      "source": "return found"
+      "source": "return found",
+      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
     },
     {
       "id": "bindWitnessSource.forward.1",
       "function": "bindWitnessSource",
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
-      "source": "| .allowlisted evidence => .allowlisted { evidence with sourceDependency := source }"
+      "source": "| .allowlisted evidence => .allowlisted { evidence with sourceDependency := source }",
+      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
     },
     {
       "id": "checkedType.1",
@@ -40,7 +44,8 @@
       "requires": [
         "if mentions then return .statementMention",
         "if unknown then return \u2190 unknownType type"
-      ]
+      ],
+      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
     },
     {
       "id": "statementStep.1",
@@ -68,14 +73,16 @@
       "function": "statementOuter",
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
-      "source": "| .recognized evidence => return some evidence"
+      "source": "| .recognized evidence => return some evidence",
+      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
     },
     {
       "id": "statementOuter.forward.1",
       "function": "statementOuter",
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
-      "source": "statementOuter env next"
+      "source": "statementOuter env next",
+      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
     },
     {
       "id": "listStatementBoundary.1",
@@ -96,7 +103,8 @@
       "function": "listStatementBoundary",
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
-      "source": "listStatementBoundary env body (binders + 1)"
+      "source": "listStatementBoundary env body (binders + 1)",
+      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
     },
     {
       "id": "listStatementBoundary.3",
@@ -124,14 +132,16 @@
       "function": "dataCarrier",
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
-      "source": "dataCarrier env field active"
+      "source": "dataCarrier env field active",
+      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
     },
     {
       "id": "dataCarrier.forward.2",
       "function": "dataCarrier",
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
-      "source": "dataCarrier env body active"
+      "source": "dataCarrier env body active",
+      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
     },
     {
       "id": "dataCarrier.3",
@@ -145,28 +155,32 @@
       "function": "dataCarrier",
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
-      "source": "return \u2190 dataCarrier env args[0]! active"
+      "source": "return \u2190 dataCarrier env args[0]! active",
+      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
     },
     {
       "id": "dataCarrier.5",
       "function": "dataCarrier",
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
-      "source": "return \u2190 dataCarrier env args[0]! active"
+      "source": "return \u2190 dataCarrier env args[0]! active",
+      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
     },
     {
       "id": "dataCarrier.6",
       "function": "dataCarrier",
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
-      "source": "return \u2190 dataCarrier env body (active.push type)"
+      "source": "return \u2190 dataCarrier env body (active.push type)",
+      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
     },
     {
       "id": "dataCarrier.forward.3",
       "function": "dataCarrier",
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
-      "source": "dataCarrier env fieldType (active.push type)"
+      "source": "dataCarrier env fieldType (active.push type)",
+      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
     },
     {
       "id": "dataCarrier.7",
@@ -180,133 +194,136 @@
       "function": "statementBoundary",
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
-      "source": "return (\u2190 get).recognizedStatement"
+      "source": "return (\u2190 get).recognizedStatement",
+      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
     },
     {
       "id": "statementApart.1",
       "function": "statementApart",
       "rule_id": "statementLiteralApart",
       "kind": "production",
-      "source": "return some (witness .statementLiteralApart left)"
+      "source": "return some (witness .statementLiteralApart a)"
     },
     {
       "id": "statementApart.2",
       "function": "statementApart",
       "rule_id": "statementLiteralApart",
       "kind": "production",
-      "source": "return some (witness .statementLiteralApart left)"
+      "source": "return some (witness .statementLiteralApart a)"
     },
     {
       "id": "statementApart.3",
       "function": "statementApart",
       "rule_id": "statementLiteralApart",
       "kind": "production",
-      "source": "if x != y then return some (witness .statementLiteralApart left)"
+      "source": "if x != y then return some (witness .statementLiteralApart a)"
     },
     {
       "id": "statementApart.4",
       "function": "statementApart",
       "rule_id": "statementMetadataApart",
       "kind": "production",
-      "source": "if am.isSome || bm.isSome then return some (witness .statementMetadataApart left)"
+      "source": "if am.isSome || bm.isSome then return some (witness .statementMetadataApart a)"
     },
     {
       "id": "statementApart.5",
       "function": "statementApart",
       "rule_id": "statementHeadApart",
       "kind": "production",
-      "source": "return some (witness .statementHeadApart left)"
+      "source": "return some (witness .statementHeadApart a)"
     },
     {
       "id": "statementApart.6",
       "function": "statementApart",
       "rule_id": "statementArgumentApart",
       "kind": "production",
-      "source": "return some (witness .statementArgumentApart left)"
+      "source": "return some (witness .statementArgumentApart a)"
     },
     {
       "id": "statementApart.7",
       "function": "statementApart",
       "rule_id": "statementRigidApart",
       "kind": "production",
-      "source": "return some (witness .statementRigidApart left)"
+      "source": "return some (witness .statementRigidApart a)"
     },
     {
       "id": "statementApart.8",
       "function": "statementApart",
       "rule_id": "statementDomainApart",
       "kind": "production",
-      "source": "return some (witness .statementDomainApart left)"
+      "source": "return some (witness .statementDomainApart a)"
     },
     {
       "id": "statementApart.9",
       "function": "statementApart",
       "rule_id": "statementBodyApart",
       "kind": "production",
-      "source": "return some (witness .statementBodyApart left)"
+      "source": "return some (witness .statementBodyApart a)"
     },
     {
       "id": "statementApart.10",
       "function": "statementApart",
       "rule_id": "statementMetadataApart",
       "kind": "production",
-      "source": "if bm.isSome then return some (witness .statementMetadataApart left)"
+      "source": "if bm.isSome then return some (witness .statementMetadataApart a)"
     },
     {
       "id": "statementApart.11",
       "function": "statementApart",
       "rule_id": "statementHeadApart",
       "kind": "production",
-      "source": "if bh.isSome || b.isSort then return some (witness .statementHeadApart left)"
+      "source": "if bh.isSome || b.isSort then return some (witness .statementHeadApart a)"
     },
     {
       "id": "statementApart.12",
       "function": "statementApart",
       "rule_id": "statementMetadataApart",
       "kind": "production",
-      "source": "if am.isSome then return some (witness .statementMetadataApart left)"
+      "source": "if am.isSome then return some (witness .statementMetadataApart a)"
     },
     {
       "id": "statementApart.13",
       "function": "statementApart",
       "rule_id": "statementHeadApart",
       "kind": "production",
-      "source": "if ah.isSome || a.isSort then return some (witness .statementHeadApart left)"
+      "source": "if ah.isSome || a.isSort then return some (witness .statementHeadApart a)"
     },
     {
       "id": "statementApart.14",
       "function": "statementApart",
       "rule_id": "statementHeadApart",
       "kind": "production",
-      "source": "return some (witness .statementHeadApart left)"
+      "source": "return some (witness .statementHeadApart a)"
     },
     {
       "id": "statementApart.15",
       "function": "statementApart",
       "rule_id": "statementHeadApart",
       "kind": "production",
-      "source": "if bh.isSome || b.isFVar then return some (witness .statementHeadApart left)"
+      "source": "if bh.isSome || b.isFVar then return some (witness .statementHeadApart a)"
     },
     {
       "id": "statementApart.16",
       "function": "statementApart",
       "rule_id": "statementHeadApart",
       "kind": "production",
-      "source": "if ah.isSome || a.isFVar then return some (witness .statementHeadApart left)"
+      "source": "if ah.isSome || a.isFVar then return some (witness .statementHeadApart a)"
     },
     {
       "id": "checkedStatementType.1",
       "function": "checkedStatementType",
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
-      "source": "if let some evidence := (\u2190 get).apartPropositions[type]? then return some evidence"
+      "source": "if let some evidence := (\u2190 get).apartPropositions[type]? then return some evidence",
+      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
     },
     {
       "id": "checkedStatementType.2",
       "function": "checkedStatementType",
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
-      "source": "return evidence"
+      "source": "return evidence",
+      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
     },
     {
       "id": "observedType.1",
@@ -316,7 +333,8 @@
       "source": "return \u2190 inputType env type active",
       "requires": [
         "unless (\u2190 checkedStatementType env type).isSome do"
-      ]
+      ],
+      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
     },
     {
       "id": "inputType.1",
@@ -326,7 +344,8 @@
       "source": "return \u2190 inputType env decoded active",
       "requires": [
         "unless (\u2190 checkedStatementType env type).isSome do"
-      ]
+      ],
+      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
     },
     {
       "id": "inputType.2",
@@ -336,7 +355,8 @@
       "source": "if let some cached \u2190 reuseWitness (\u2190 get).cleanTypes type then return .allowlisted cached",
       "requires": [
         "unless (\u2190 checkedStatementType env type).isSome do"
-      ]
+      ],
+      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
     },
     {
       "id": "inputType.forward.1",
@@ -346,7 +366,8 @@
       "source": "inputType env body active)",
       "requires": [
         "unless (\u2190 checkedStatementType env type).isSome do"
-      ]
+      ],
+      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
     },
     {
       "id": "inputType.3",
@@ -376,7 +397,8 @@
       "source": "inputType env body active)",
       "requires": [
         "unless (\u2190 checkedStatementType env type).isSome do"
-      ]
+      ],
+      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
     },
     {
       "id": "inputType.5",
@@ -396,7 +418,8 @@
       "source": "inputType env body active)",
       "requires": [
         "unless (\u2190 checkedStatementType env type).isSome do"
-      ]
+      ],
+      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
     },
     {
       "id": "inputType.6",
@@ -416,7 +439,8 @@
       "source": "inputType env body active) (nondep := nd))",
       "requires": [
         "unless (\u2190 checkedStatementType env type).isSome do"
-      ]
+      ],
+      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
     },
     {
       "id": "inputType.7",
@@ -596,7 +620,8 @@
       "source": "observedType env concrete nextActive)",
       "requires": [
         "unless (\u2190 checkedStatementType env type).isSome do"
-      ]
+      ],
+      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
     },
     {
       "id": "inputType.24",
@@ -616,35 +641,40 @@
       "source": "return result",
       "requires": [
         "unless (\u2190 checkedStatementType env type).isSome do"
-      ]
+      ],
+      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
     },
     {
       "id": "typeFamilyArgument.1",
       "function": "typeFamilyArgument",
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
-      "source": "if let some cached \u2190 reuseWitness (\u2190 get).dataFunctionTypes type then return .data cached"
+      "source": "if let some cached \u2190 reuseWitness (\u2190 get).dataFunctionTypes type then return .data cached",
+      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
     },
     {
       "id": "typeFamilyArgument.2",
       "function": "typeFamilyArgument",
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
-      "source": "return .family (.allowlisted cached)"
+      "source": "return .family (.allowlisted cached)",
+      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
     },
     {
       "id": "typeFamilyArgument.forward.1",
       "function": "typeFamilyArgument",
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
-      "source": "typeFamilyArgument env (mkApp value x) body active"
+      "source": "typeFamilyArgument env (mkApp value x) body active",
+      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
     },
     {
       "id": "typeFamilyArgument.3",
       "function": "typeFamilyArgument",
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
-      "source": "let .family verdict := result | return result"
+      "source": "let .family verdict := result | return result",
+      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
     },
     {
       "id": "typeFamilyArgument.4",
@@ -658,98 +688,112 @@
       "function": "typeFamilyArgument",
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
-      "source": "| .allowlisted evidence => return .data evidence"
+      "source": "| .allowlisted evidence => return .data evidence",
+      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
     },
     {
       "id": "typeFamilyArgument.forward.2",
       "function": "typeFamilyArgument",
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
-      "source": "| .data evidence => .data { evidence with sourceDependency := state.assumedProducer }"
+      "source": "| .data evidence => .data { evidence with sourceDependency := state.assumedProducer }",
+      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
     },
     {
       "id": "typeFamilyArgument.6",
       "function": "typeFamilyArgument",
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
-      "source": "return result"
+      "source": "return result",
+      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
     },
     {
       "id": "classifyOccurrence.1",
       "function": "classifyOccurrence",
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
-      "source": "if let some cached := (\u2190 get).typeChecks[key]? then return cached"
+      "source": "if let some cached := (\u2190 get).typeChecks[key]? then return cached",
+      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
     },
     {
       "id": "classifyOccurrence.2",
       "function": "classifyOccurrence",
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
-      "source": "return classification"
+      "source": "return classification",
+      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
     },
     {
       "id": "classifyOccurrence.3",
       "function": "classifyOccurrence",
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
-      "source": "return verdict"
+      "source": "return verdict",
+      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
     },
     {
       "id": "visitOccurrence.1",
       "function": "visitOccurrence",
       "rule_id": "retained-witness.rule",
       "kind": "checked-occurrence-boundary",
-      "source": "if decoded == some true then return"
+      "source": "if decoded == some true then return",
+      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
     },
     {
       "id": "visitOccurrence.2",
       "function": "visitOccurrence",
       "rule_id": "retained-witness.rule",
       "kind": "checked-occurrence-boundary",
-      "source": "if (\u2190 get).visited.contains key then return"
+      "source": "if (\u2190 get).visited.contains key then return",
+      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
     },
     {
       "id": "visitOccurrence.forward.1",
       "function": "visitOccurrence",
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
-      "source": "| .allowlisted _ => pure ()"
+      "source": "| .allowlisted _ => pure ()",
+      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
     },
     {
       "id": "visitOccurrence.3",
       "function": "visitOccurrence",
       "rule_id": "retained-witness.rule",
       "kind": "checked-occurrence-boundary",
-      "source": "if proof == some true then return"
+      "source": "if proof == some true then return",
+      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
     },
     {
       "id": "visitOccurrence.4",
       "function": "visitOccurrence",
       "rule_id": "retained-witness.rule",
       "kind": "checked-occurrence-boundary",
-      "source": "else if inProtected env n then queue n levels"
+      "source": "else if inProtected env n then queue n levels",
+      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
     },
     {
       "id": "visitOccurrence.5",
       "function": "visitOccurrence",
       "rule_id": "retained-witness.rule",
       "kind": "checked-occurrence-boundary",
-      "source": "| .allowlisted _ => pure () -- syntaxLeaf: already inferred in its real binder context"
+      "source": "| .allowlisted _ => pure () -- syntaxLeaf: already inferred in its real binder context",
+      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
     },
     {
       "id": "readoutClosureCurrent.1",
       "function": "readoutClosureCurrent",
       "rule_id": "retained-witness.rule",
       "kind": "guarded-admission",
-      "source": "if r.admission.isSome then return (false, some r.walked)"
+      "source": "if r.admission.isSome then return (false, some r.walked)",
+      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
     },
     {
       "id": "provenanceErrorCurrent.1",
       "function": "provenanceErrorCurrent",
       "rule_id": "retained-witness.rule",
       "kind": "guarded-admission",
-      "source": "if result.admission.isSome && !result.forbidden && result.unclassified.isNone && !result.incomplete then return none"
+      "source": "if result.admission.isSome && !result.forbidden && result.unclassified.isNone && !result.incomplete then return none",
+      "rule_resolution": "The incoming ProvenanceAdmissionWitness.rule; forwarding does not choose a new rule."
     }
   ]
 }

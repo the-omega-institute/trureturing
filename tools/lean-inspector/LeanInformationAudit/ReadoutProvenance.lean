@@ -1229,6 +1229,7 @@ private partial def rigidStatementLocal (expression : Expr) : WalkM Bool := do
   match expression with
   | .fvar id => return ((← id.getDecl).value? (allowNondep := true)).isNone
   | .proj _ _ receiver => rigidStatementLocal receiver
+  | .app function _ => rigidStatementLocal function
   | _ => return false
 
 private partial def statementIdentityForm (env : Environment) (expression : Expr) :
@@ -1278,15 +1279,15 @@ private partial def statementApart (env : Environment) (left right : Expr) :
     if let some y := naturalLiteral b then
       if x != y then
         -- admission-exit: statementApart.1 rule=statementLiteralApart
-        return some (witness .statementLiteralApart left)
+        return some (witness .statementLiteralApart a)
   if (a.isConstOf ``Bool.true && b.isConstOf ``Bool.false) ||
       (a.isConstOf ``Bool.false && b.isConstOf ``Bool.true) then
     -- admission-exit: statementApart.2 rule=statementLiteralApart
-    return some (witness .statementLiteralApart left)
+    return some (witness .statementLiteralApart a)
   if let .lit x := a then
     if let .lit y := b then
       -- admission-exit: statementApart.3 rule=statementLiteralApart
-      if x != y then return some (witness .statementLiteralApart left)
+      if x != y then return some (witness .statementLiteralApart a)
   let kernelHead := fun expression => expression.getAppFn.constName?.filter fun name =>
     (env.find? name).any fun info => match info with
       | .inductInfo _ => true
@@ -1302,9 +1303,9 @@ private partial def statementApart (env : Environment) (left right : Expr) :
     if let some bn := bh then
       if an != bn then
         -- admission-exit: statementApart.4 rule=statementMetadataApart
-        if am.isSome || bm.isSome then return some (witness .statementMetadataApart left)
+        if am.isSome || bm.isSome then return some (witness .statementMetadataApart a)
         -- admission-exit: statementApart.5 rule=statementHeadApart
-        return some (witness .statementHeadApart left)
+        return some (witness .statementHeadApart a)
       -- A shared metadata family is not evidence of identity or disjointness;
       -- its quotient representation is deliberately left unresolved.
       if am.isSome || bm.isSome then return none
@@ -1315,7 +1316,7 @@ private partial def statementApart (env : Environment) (left right : Expr) :
       for i in [:aa.size] do
         if (← statementApart env aa[i]! ba[i]!).isSome then
           -- admission-exit: statementApart.6 rule=statementArgumentApart
-          return some (witness .statementArgumentApart left)
+          return some (witness .statementArgumentApart a)
       return none
   -- A rigid type parameter cannot reduce to a kernel inductive type head.
   -- No distinct-proof-variable or proof-constructor comparison is permitted.
@@ -1325,13 +1326,13 @@ private partial def statementApart (env : Environment) (left right : Expr) :
   let bn ← rigidStatementLocal b.getAppFn
   if (an && rigidValue b bh) || (bn && rigidValue a ah) then
     -- admission-exit: statementApart.7 rule=statementRigidApart
-    return some (witness .statementRigidApart left)
+    return some (witness .statementRigidApart a)
   match a, b with
   | .forallE n da ab bi, .forallE _ db bb _
   | .lam n da ab bi, .lam _ db bb _ =>
     if (← statementApart env da db).isSome then
       -- admission-exit: statementApart.8 rule=statementDomainApart
-      return some (witness .statementDomainApart left)
+      return some (witness .statementDomainApart a)
     -- Congruence is conditional on equal domains. In that case one shared
     -- binder gives both well-typed bodies; unequal domains already distinguish
     -- the binders. This does not decide domain equality or normalize a carrier.
@@ -1340,30 +1341,30 @@ private partial def statementApart (env : Environment) (left right : Expr) :
       let some bb ← substitute bb #[x] | return none
       if (← statementApart env ab bb).isSome then
         -- admission-exit: statementApart.9 rule=statementBodyApart
-        return some (witness .statementBodyApart left)
+        return some (witness .statementBodyApart a)
       return none
   | .forallE .., _ =>
     -- admission-exit: statementApart.10 rule=statementMetadataApart
-    if bm.isSome then return some (witness .statementMetadataApart left)
+    if bm.isSome then return some (witness .statementMetadataApart a)
     -- admission-exit: statementApart.11 rule=statementHeadApart
-    if bh.isSome || b.isSort then return some (witness .statementHeadApart left)
+    if bh.isSome || b.isSort then return some (witness .statementHeadApart a)
     return none
   | _, .forallE .. =>
     -- admission-exit: statementApart.12 rule=statementMetadataApart
-    if am.isSome then return some (witness .statementMetadataApart left)
+    if am.isSome then return some (witness .statementMetadataApart a)
     -- admission-exit: statementApart.13 rule=statementHeadApart
-    if ah.isSome || a.isSort then return some (witness .statementHeadApart left)
+    if ah.isSome || a.isSort then return some (witness .statementHeadApart a)
     return none
   | .sort .zero, .sort (.succ _) | .sort (.succ _), .sort .zero =>
     -- admission-exit: statementApart.14 rule=statementHeadApart
-    return some (witness .statementHeadApart left)
+    return some (witness .statementHeadApart a)
   | .sort _, _ =>
     -- admission-exit: statementApart.15 rule=statementHeadApart
-    if bh.isSome || b.isFVar then return some (witness .statementHeadApart left)
+    if bh.isSome || b.isFVar then return some (witness .statementHeadApart a)
     return none
   | _, .sort _ =>
     -- admission-exit: statementApart.16 rule=statementHeadApart
-    if ah.isSome || a.isFVar then return some (witness .statementHeadApart left)
+    if ah.isSome || a.isFVar then return some (witness .statementHeadApart a)
     return none
   | _, _ => return none
 
@@ -1394,6 +1395,7 @@ private partial def observedType (env : Environment) (type : Expr)
     (active : Array Expr := #[]) : WalkM TypeClassification := do
   let some kind ← occurrenceType type | return ← unknownType type
   if kind == .sort .zero then
+    if ← typeMentions env type then return .statementMention
     unless (← checkedStatementType env type).isSome do
       return ← unknownType type "unresolved_statement_identity"
   -- admission-exit: observedType.1 rule=retained-witness.rule
@@ -1421,6 +1423,7 @@ private partial def inputType (env : Environment) (type : Expr)
   if closed type then
     let some kind ← occurrenceType type | return ← unknownType type
     if kind == .sort .zero then
+      if ← typeMentions env type then return .statementMention
       unless (← checkedStatementType env type).isSome do
         return ← unknownType type "unresolved_statement_identity"
   unless ← chargeTraversal do return ← unknownType type

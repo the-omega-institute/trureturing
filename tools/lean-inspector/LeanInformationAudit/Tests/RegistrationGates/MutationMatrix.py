@@ -213,6 +213,7 @@ def specification(label, original):
     else:raise ValueError(label)
     overrides={
       'drop-list-carrier-fence':[],
+      'computed-default-stop':[n+'HeadNamed' for n in ['ComputedRegisteredProof','ComputedRegisteredNominalPayload','ComputedRegisteredDecision']],
       'resume-proof-implementations':['InternalTargetProofErased','InternalCompanionProofErased','ProofArgumentBoundary','AlternativeProofBoundary','ProofFieldBoundary','ErasedPredicateBoundary','BoundedNatInterfaceHead','ProofImplementationInvariance'],
       'remove-algebra-families':['UniformMonoidHeads','UniformRingHeads','UniformOrderHeads','UniformFieldHeads','UniformCommutativeRingHeads','FunctionInterfaceHead'],
       'remove-named-carrier-alias':['ArenaProjectedCarrier','CatalogProjectedCarrier','BundleProjectedCarrier','NestedScalarCarrier','FiniteFunctionRange'],

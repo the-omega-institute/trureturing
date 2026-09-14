@@ -11,7 +11,11 @@
       "predicted_red_names": [
         "CleanReturnInventory.TypeClassification.flags.forward.1",
         "CleanReturnInventory.MissingRuleId.TypeClassification.flags"
-      ]
+      ],
+      "source_mutation": {
+        "before": "| .allowlisted _ => (false, false)",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-TypeClassification.witness?.forward.1",
@@ -23,7 +27,11 @@
       "predicted_red_names": [
         "CleanReturnInventory.TypeClassification.witness?.forward.1",
         "CleanReturnInventory.MissingRuleId.TypeClassification.witness?"
-      ]
+      ],
+      "source_mutation": {
+        "before": "| .allowlisted witness => some witness",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-reuseWitness.1",
@@ -35,7 +43,11 @@
       "predicted_red_names": [
         "CleanReturnInventory.reuseWitness.1",
         "CleanReturnInventory.MissingRuleId.reuseWitness"
-      ]
+      ],
+      "source_mutation": {
+        "before": "return found",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-bindWitnessSource.forward.1",
@@ -47,7 +59,11 @@
       "predicted_red_names": [
         "CleanReturnInventory.bindWitnessSource.forward.1",
         "CleanReturnInventory.MissingRuleId.bindWitnessSource"
-      ]
+      ],
+      "source_mutation": {
+        "before": "| .allowlisted evidence => .allowlisted { evidence with sourceDependency := source }",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-checkedType.1",
@@ -59,7 +75,11 @@
       "predicted_red_names": [
         "CleanReturnInventory.checkedType.1",
         "CleanReturnInventory.MissingRuleId.checkedType"
-      ]
+      ],
+      "source_mutation": {
+        "before": "return .allowlisted (witness rule type)",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-statementStep.1",
@@ -71,7 +91,11 @@
       "predicted_red_names": [
         "CleanReturnInventory.statementStep.1",
         "CleanReturnInventory.MissingRuleId.statementStep"
-      ]
+      ],
+      "source_mutation": {
+        "before": "| .forallE .. => return .recognized (witness .statementForall current)",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-statementStep.2",
@@ -83,7 +107,11 @@
       "predicted_red_names": [
         "CleanReturnInventory.statementStep.2",
         "CleanReturnInventory.MissingRuleId.statementStep"
-      ]
+      ],
+      "source_mutation": {
+        "before": "| some (.inductInfo _) => return .recognized (witness .statementInductive current)",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-statementOuter.1",
@@ -95,7 +123,11 @@
       "predicted_red_names": [
         "CleanReturnInventory.statementOuter.1",
         "CleanReturnInventory.MissingRuleId.statementOuter"
-      ]
+      ],
+      "source_mutation": {
+        "before": "return some (witness .statementMembership type)",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-statementOuter.2",
@@ -107,7 +139,11 @@
       "predicted_red_names": [
         "CleanReturnInventory.statementOuter.2",
         "CleanReturnInventory.MissingRuleId.statementOuter"
-      ]
+      ],
+      "source_mutation": {
+        "before": "| .recognized evidence => return some evidence",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-statementOuter.forward.1",
@@ -119,7 +155,11 @@
       "predicted_red_names": [
         "CleanReturnInventory.statementOuter.forward.1",
         "CleanReturnInventory.MissingRuleId.statementOuter"
-      ]
+      ],
+      "source_mutation": {
+        "before": "statementOuter env next",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-listStatementBoundary.1",
@@ -131,7 +171,11 @@
       "predicted_red_names": [
         "CleanReturnInventory.listStatementBoundary.1",
         "CleanReturnInventory.MissingRuleId.listStatementBoundary"
-      ]
+      ],
+      "source_mutation": {
+        "before": "if twoDataBinders then return some (witness .listForall type)",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-listStatementBoundary.2",
@@ -143,7 +187,11 @@
       "predicted_red_names": [
         "CleanReturnInventory.listStatementBoundary.2",
         "CleanReturnInventory.MissingRuleId.listStatementBoundary"
-      ]
+      ],
+      "source_mutation": {
+        "before": "return some (witness .listNegated type)",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-listStatementBoundary.forward.1",
@@ -155,7 +203,11 @@
       "predicted_red_names": [
         "CleanReturnInventory.listStatementBoundary.forward.1",
         "CleanReturnInventory.MissingRuleId.listStatementBoundary"
-      ]
+      ],
+      "source_mutation": {
+        "before": "listStatementBoundary env body (binders + 1)",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-listStatementBoundary.3",
@@ -167,7 +219,11 @@
       "predicted_red_names": [
         "CleanReturnInventory.listStatementBoundary.3",
         "CleanReturnInventory.MissingRuleId.listStatementBoundary"
-      ]
+      ],
+      "source_mutation": {
+        "before": "return some (witness .listPositive type)",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-dataCarrier.1",
@@ -179,7 +235,11 @@
       "predicted_red_names": [
         "CleanReturnInventory.dataCarrier.1",
         "CleanReturnInventory.MissingRuleId.dataCarrier"
-      ]
+      ],
+      "source_mutation": {
+        "before": "return some (witness .rigidCarrier type)",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-dataCarrier.2",
@@ -191,7 +251,11 @@
       "predicted_red_names": [
         "CleanReturnInventory.dataCarrier.2",
         "CleanReturnInventory.MissingRuleId.dataCarrier"
-      ]
+      ],
+      "source_mutation": {
+        "before": "return some (witness .carrierProjection type)",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-dataCarrier.forward.1",
@@ -203,7 +267,11 @@
       "predicted_red_names": [
         "CleanReturnInventory.dataCarrier.forward.1",
         "CleanReturnInventory.MissingRuleId.dataCarrier"
-      ]
+      ],
+      "source_mutation": {
+        "before": "dataCarrier env field active",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-dataCarrier.forward.2",
@@ -215,7 +283,11 @@
       "predicted_red_names": [
         "CleanReturnInventory.dataCarrier.forward.2",
         "CleanReturnInventory.MissingRuleId.dataCarrier"
-      ]
+      ],
+      "source_mutation": {
+        "before": "dataCarrier env body active",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-dataCarrier.3",
@@ -227,7 +299,11 @@
       "predicted_red_names": [
         "CleanReturnInventory.dataCarrier.3",
         "CleanReturnInventory.MissingRuleId.dataCarrier"
-      ]
+      ],
+      "source_mutation": {
+        "before": "return some (witness .scalarCarrier type)",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-dataCarrier.4",
@@ -239,7 +315,11 @@
       "predicted_red_names": [
         "CleanReturnInventory.dataCarrier.4",
         "CleanReturnInventory.MissingRuleId.dataCarrier"
-      ]
+      ],
+      "source_mutation": {
+        "before": "return \u2190 dataCarrier env args[0]! active",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-dataCarrier.5",
@@ -251,7 +331,11 @@
       "predicted_red_names": [
         "CleanReturnInventory.dataCarrier.5",
         "CleanReturnInventory.MissingRuleId.dataCarrier"
-      ]
+      ],
+      "source_mutation": {
+        "before": "return \u2190 dataCarrier env args[0]! active",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-dataCarrier.6",
@@ -263,7 +347,11 @@
       "predicted_red_names": [
         "CleanReturnInventory.dataCarrier.6",
         "CleanReturnInventory.MissingRuleId.dataCarrier"
-      ]
+      ],
+      "source_mutation": {
+        "before": "return \u2190 dataCarrier env body (active.push type)",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-dataCarrier.forward.3",
@@ -275,7 +363,11 @@
       "predicted_red_names": [
         "CleanReturnInventory.dataCarrier.forward.3",
         "CleanReturnInventory.MissingRuleId.dataCarrier"
-      ]
+      ],
+      "source_mutation": {
+        "before": "dataCarrier env fieldType (active.push type)",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-dataCarrier.7",
@@ -287,7 +379,11 @@
       "predicted_red_names": [
         "CleanReturnInventory.dataCarrier.7",
         "CleanReturnInventory.MissingRuleId.dataCarrier"
-      ]
+      ],
+      "source_mutation": {
+        "before": "return some (witness .nominalCarrier type)",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-statementBoundary.1",
@@ -299,7 +395,11 @@
       "predicted_red_names": [
         "CleanReturnInventory.statementBoundary.1",
         "CleanReturnInventory.MissingRuleId.statementBoundary"
-      ]
+      ],
+      "source_mutation": {
+        "before": "return (\u2190 get).recognizedStatement",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-statementApart.1",
@@ -307,11 +407,15 @@
       "rule_id": "statementLiteralApart",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1281",
+      "location": "ReadoutProvenance.lean:1282",
       "predicted_red_names": [
         "CleanReturnInventory.statementApart.1",
         "CleanReturnInventory.MissingRuleId.statementApart"
-      ]
+      ],
+      "source_mutation": {
+        "before": "return some (witness .statementLiteralApart a)",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-statementApart.2",
@@ -319,11 +423,15 @@
       "rule_id": "statementLiteralApart",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1285",
+      "location": "ReadoutProvenance.lean:1286",
       "predicted_red_names": [
         "CleanReturnInventory.statementApart.2",
         "CleanReturnInventory.MissingRuleId.statementApart"
-      ]
+      ],
+      "source_mutation": {
+        "before": "return some (witness .statementLiteralApart a)",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-statementApart.3",
@@ -331,11 +439,15 @@
       "rule_id": "statementLiteralApart",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1289",
+      "location": "ReadoutProvenance.lean:1290",
       "predicted_red_names": [
         "CleanReturnInventory.statementApart.3",
         "CleanReturnInventory.MissingRuleId.statementApart"
-      ]
+      ],
+      "source_mutation": {
+        "before": "if x != y then return some (witness .statementLiteralApart a)",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-statementApart.4",
@@ -343,11 +455,15 @@
       "rule_id": "statementMetadataApart",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1305",
+      "location": "ReadoutProvenance.lean:1306",
       "predicted_red_names": [
         "CleanReturnInventory.statementApart.4",
         "CleanReturnInventory.MissingRuleId.statementApart"
-      ]
+      ],
+      "source_mutation": {
+        "before": "if am.isSome || bm.isSome then return some (witness .statementMetadataApart a)",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-statementApart.5",
@@ -355,11 +471,15 @@
       "rule_id": "statementHeadApart",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1307",
+      "location": "ReadoutProvenance.lean:1308",
       "predicted_red_names": [
         "CleanReturnInventory.statementApart.5",
         "CleanReturnInventory.MissingRuleId.statementApart"
-      ]
+      ],
+      "source_mutation": {
+        "before": "return some (witness .statementHeadApart a)",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-statementApart.6",
@@ -367,11 +487,15 @@
       "rule_id": "statementArgumentApart",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1318",
+      "location": "ReadoutProvenance.lean:1319",
       "predicted_red_names": [
         "CleanReturnInventory.statementApart.6",
         "CleanReturnInventory.MissingRuleId.statementApart"
-      ]
+      ],
+      "source_mutation": {
+        "before": "return some (witness .statementArgumentApart a)",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-statementApart.7",
@@ -379,11 +503,15 @@
       "rule_id": "statementRigidApart",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1328",
+      "location": "ReadoutProvenance.lean:1329",
       "predicted_red_names": [
         "CleanReturnInventory.statementApart.7",
         "CleanReturnInventory.MissingRuleId.statementApart"
-      ]
+      ],
+      "source_mutation": {
+        "before": "return some (witness .statementRigidApart a)",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-statementApart.8",
@@ -391,11 +519,15 @@
       "rule_id": "statementDomainApart",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1334",
+      "location": "ReadoutProvenance.lean:1335",
       "predicted_red_names": [
         "CleanReturnInventory.statementApart.8",
         "CleanReturnInventory.MissingRuleId.statementApart"
-      ]
+      ],
+      "source_mutation": {
+        "before": "return some (witness .statementDomainApart a)",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-statementApart.9",
@@ -403,11 +535,15 @@
       "rule_id": "statementBodyApart",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1343",
+      "location": "ReadoutProvenance.lean:1344",
       "predicted_red_names": [
         "CleanReturnInventory.statementApart.9",
         "CleanReturnInventory.MissingRuleId.statementApart"
-      ]
+      ],
+      "source_mutation": {
+        "before": "return some (witness .statementBodyApart a)",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-statementApart.10",
@@ -415,11 +551,15 @@
       "rule_id": "statementMetadataApart",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1347",
+      "location": "ReadoutProvenance.lean:1348",
       "predicted_red_names": [
         "CleanReturnInventory.statementApart.10",
         "CleanReturnInventory.MissingRuleId.statementApart"
-      ]
+      ],
+      "source_mutation": {
+        "before": "if bm.isSome then return some (witness .statementMetadataApart a)",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-statementApart.11",
@@ -427,11 +567,15 @@
       "rule_id": "statementHeadApart",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1349",
+      "location": "ReadoutProvenance.lean:1350",
       "predicted_red_names": [
         "CleanReturnInventory.statementApart.11",
         "CleanReturnInventory.MissingRuleId.statementApart"
-      ]
+      ],
+      "source_mutation": {
+        "before": "if bh.isSome || b.isSort then return some (witness .statementHeadApart a)",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-statementApart.12",
@@ -439,11 +583,15 @@
       "rule_id": "statementMetadataApart",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1353",
+      "location": "ReadoutProvenance.lean:1354",
       "predicted_red_names": [
         "CleanReturnInventory.statementApart.12",
         "CleanReturnInventory.MissingRuleId.statementApart"
-      ]
+      ],
+      "source_mutation": {
+        "before": "if am.isSome then return some (witness .statementMetadataApart a)",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-statementApart.13",
@@ -451,11 +599,15 @@
       "rule_id": "statementHeadApart",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1355",
+      "location": "ReadoutProvenance.lean:1356",
       "predicted_red_names": [
         "CleanReturnInventory.statementApart.13",
         "CleanReturnInventory.MissingRuleId.statementApart"
-      ]
+      ],
+      "source_mutation": {
+        "before": "if ah.isSome || a.isSort then return some (witness .statementHeadApart a)",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-statementApart.14",
@@ -463,11 +615,15 @@
       "rule_id": "statementHeadApart",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1359",
+      "location": "ReadoutProvenance.lean:1360",
       "predicted_red_names": [
         "CleanReturnInventory.statementApart.14",
         "CleanReturnInventory.MissingRuleId.statementApart"
-      ]
+      ],
+      "source_mutation": {
+        "before": "return some (witness .statementHeadApart a)",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-statementApart.15",
@@ -475,11 +631,15 @@
       "rule_id": "statementHeadApart",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1362",
+      "location": "ReadoutProvenance.lean:1363",
       "predicted_red_names": [
         "CleanReturnInventory.statementApart.15",
         "CleanReturnInventory.MissingRuleId.statementApart"
-      ]
+      ],
+      "source_mutation": {
+        "before": "if bh.isSome || b.isFVar then return some (witness .statementHeadApart a)",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-statementApart.16",
@@ -487,11 +647,15 @@
       "rule_id": "statementHeadApart",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1366",
+      "location": "ReadoutProvenance.lean:1367",
       "predicted_red_names": [
         "CleanReturnInventory.statementApart.16",
         "CleanReturnInventory.MissingRuleId.statementApart"
-      ]
+      ],
+      "source_mutation": {
+        "before": "if ah.isSome || a.isFVar then return some (witness .statementHeadApart a)",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-checkedStatementType.1",
@@ -499,11 +663,15 @@
       "rule_id": "retained-witness.rule",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1374",
+      "location": "ReadoutProvenance.lean:1375",
       "predicted_red_names": [
         "CleanReturnInventory.checkedStatementType.1",
         "CleanReturnInventory.MissingRuleId.checkedStatementType"
-      ]
+      ],
+      "source_mutation": {
+        "before": "if let some evidence := (\u2190 get).apartPropositions[type]? then return some evidence",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-checkedStatementType.2",
@@ -511,11 +679,15 @@
       "rule_id": "retained-witness.rule",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1387",
+      "location": "ReadoutProvenance.lean:1388",
       "predicted_red_names": [
         "CleanReturnInventory.checkedStatementType.2",
         "CleanReturnInventory.MissingRuleId.checkedStatementType"
-      ]
+      ],
+      "source_mutation": {
+        "before": "return evidence",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-observedType.1",
@@ -523,11 +695,15 @@
       "rule_id": "retained-witness.rule",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1400",
+      "location": "ReadoutProvenance.lean:1402",
       "predicted_red_names": [
         "CleanReturnInventory.observedType.1",
         "CleanReturnInventory.MissingRuleId.observedType"
-      ]
+      ],
+      "source_mutation": {
+        "before": "return \u2190 inputType env type active",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-inputType.1",
@@ -535,11 +711,15 @@
       "rule_id": "retained-witness.rule",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1415",
+      "location": "ReadoutProvenance.lean:1417",
       "predicted_red_names": [
         "CleanReturnInventory.inputType.1",
         "CleanReturnInventory.MissingRuleId.inputType"
-      ]
+      ],
+      "source_mutation": {
+        "before": "return \u2190 inputType env decoded active",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-inputType.2",
@@ -547,11 +727,15 @@
       "rule_id": "retained-witness.rule",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1418",
+      "location": "ReadoutProvenance.lean:1420",
       "predicted_red_names": [
         "CleanReturnInventory.inputType.2",
         "CleanReturnInventory.MissingRuleId.inputType"
-      ]
+      ],
+      "source_mutation": {
+        "before": "if let some cached \u2190 reuseWitness (\u2190 get).cleanTypes type then return .allowlisted cached",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-inputType.forward.1",
@@ -559,11 +743,15 @@
       "rule_id": "retained-witness.rule",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1443",
+      "location": "ReadoutProvenance.lean:1446",
       "predicted_red_names": [
         "CleanReturnInventory.inputType.forward.1",
         "CleanReturnInventory.MissingRuleId.inputType"
-      ]
+      ],
+      "source_mutation": {
+        "before": "inputType env body active)",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-inputType.3",
@@ -571,11 +759,15 @@
       "rule_id": "telescope",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1445",
+      "location": "ReadoutProvenance.lean:1448",
       "predicted_red_names": [
         "CleanReturnInventory.inputType.3",
         "CleanReturnInventory.MissingRuleId.inputType"
-      ]
+      ],
+      "source_mutation": {
+        "before": "return \u2190 checkedType .telescope type (exact || decision || dm || bm) (du || bu)",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-inputType.4",
@@ -583,11 +775,15 @@
       "rule_id": "letType",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1454",
+      "location": "ReadoutProvenance.lean:1457",
       "predicted_red_names": [
         "CleanReturnInventory.inputType.4",
         "CleanReturnInventory.MissingRuleId.inputType"
-      ]
+      ],
+      "source_mutation": {
+        "before": "return \u2190 checkedType .letType type (exact || decision || dm || vm || bm) (du || bu)",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-inputType.forward.2",
@@ -595,11 +791,15 @@
       "rule_id": "retained-witness.rule",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1468",
+      "location": "ReadoutProvenance.lean:1471",
       "predicted_red_names": [
         "CleanReturnInventory.inputType.forward.2",
         "CleanReturnInventory.MissingRuleId.inputType"
-      ]
+      ],
+      "source_mutation": {
+        "before": "inputType env body active)",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-inputType.5",
@@ -607,11 +807,15 @@
       "rule_id": "telescope",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1470",
+      "location": "ReadoutProvenance.lean:1473",
       "predicted_red_names": [
         "CleanReturnInventory.inputType.5",
         "CleanReturnInventory.MissingRuleId.inputType"
-      ]
+      ],
+      "source_mutation": {
+        "before": "return \u2190 checkedType .telescope reduced (mentions || dm || bm) (du || bu)",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-inputType.forward.3",
@@ -619,11 +823,15 @@
       "rule_id": "retained-witness.rule",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1480",
+      "location": "ReadoutProvenance.lean:1483",
       "predicted_red_names": [
         "CleanReturnInventory.inputType.forward.3",
         "CleanReturnInventory.MissingRuleId.inputType"
-      ]
+      ],
+      "source_mutation": {
+        "before": "inputType env body active)",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-inputType.6",
@@ -631,11 +839,15 @@
       "rule_id": "lambdaType",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1482",
+      "location": "ReadoutProvenance.lean:1485",
       "predicted_red_names": [
         "CleanReturnInventory.inputType.6",
         "CleanReturnInventory.MissingRuleId.inputType"
-      ]
+      ],
+      "source_mutation": {
+        "before": "return \u2190 checkedType .lambdaType reduced (mentions || dm || bm) (du || bu)",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-inputType.forward.4",
@@ -643,11 +855,15 @@
       "rule_id": "retained-witness.rule",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1489",
+      "location": "ReadoutProvenance.lean:1492",
       "predicted_red_names": [
         "CleanReturnInventory.inputType.forward.4",
         "CleanReturnInventory.MissingRuleId.inputType"
-      ]
+      ],
+      "source_mutation": {
+        "before": "inputType env body active) (nondep := nd))",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-inputType.7",
@@ -655,11 +871,15 @@
       "rule_id": "letType",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1491",
+      "location": "ReadoutProvenance.lean:1494",
       "predicted_red_names": [
         "CleanReturnInventory.inputType.7",
         "CleanReturnInventory.MissingRuleId.inputType"
-      ]
+      ],
+      "source_mutation": {
+        "before": "return \u2190 checkedType .letType reduced (mentions || dm || vm || bm) (du || vu || bu)",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-inputType.8",
@@ -667,11 +887,15 @@
       "rule_id": "metadataType",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1495",
+      "location": "ReadoutProvenance.lean:1498",
       "predicted_red_names": [
         "CleanReturnInventory.inputType.8",
         "CleanReturnInventory.MissingRuleId.inputType"
-      ]
+      ],
+      "source_mutation": {
+        "before": "return \u2190 checkedType .metadataType reduced (mentions || bm) bu",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-inputType.9",
@@ -679,11 +903,15 @@
       "rule_id": "sortKind",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1498",
+      "location": "ReadoutProvenance.lean:1501",
       "predicted_red_names": [
         "CleanReturnInventory.inputType.9",
         "CleanReturnInventory.MissingRuleId.inputType"
-      ]
+      ],
+      "source_mutation": {
+        "before": "if reduced.isSort then return \u2190 checkedType .sortKind reduced mentions false",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-inputType.10",
@@ -691,11 +919,15 @@
       "rule_id": "betaType",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1504",
+      "location": "ReadoutProvenance.lean:1507",
       "predicted_red_names": [
         "CleanReturnInventory.inputType.10",
         "CleanReturnInventory.MissingRuleId.inputType"
-      ]
+      ],
+      "source_mutation": {
+        "before": "return \u2190 checkedType .betaType reduced (mentions || bm) bu",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-inputType.11",
@@ -703,11 +935,15 @@
       "rule_id": "scopedParameter",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1524",
+      "location": "ReadoutProvenance.lean:1527",
       "predicted_red_names": [
         "CleanReturnInventory.inputType.11",
         "CleanReturnInventory.MissingRuleId.inputType"
-      ]
+      ],
+      "source_mutation": {
+        "before": "return \u2190 checkedType .scopedParameter reduced (mentions || fm) (unclassified || fu)",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-inputType.12",
@@ -715,11 +951,15 @@
       "rule_id": "auditedProjection",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1533",
+      "location": "ReadoutProvenance.lean:1536",
       "predicted_red_names": [
         "CleanReturnInventory.inputType.12",
         "CleanReturnInventory.MissingRuleId.inputType"
-      ]
+      ],
+      "source_mutation": {
+        "before": "return \u2190 checkedType .auditedProjection reduced (mentions || rm || pm) (ru || pu || unclassified)",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-inputType.13",
@@ -727,11 +967,15 @@
       "rule_id": "equality",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1596",
+      "location": "ReadoutProvenance.lean:1599",
       "predicted_red_names": [
         "CleanReturnInventory.inputType.13",
         "CleanReturnInventory.MissingRuleId.inputType"
-      ]
+      ],
+      "source_mutation": {
+        "before": "return \u2190 checkedType .equality reduced mentions unclassified",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-inputType.14",
@@ -739,11 +983,15 @@
       "rule_id": "naturalOrder",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1609",
+      "location": "ReadoutProvenance.lean:1612",
       "predicted_red_names": [
         "CleanReturnInventory.inputType.14",
         "CleanReturnInventory.MissingRuleId.inputType"
-      ]
+      ],
+      "source_mutation": {
+        "before": "return \u2190 checkedType .naturalOrder reduced mentions (unclassified || order)",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-inputType.15",
@@ -751,11 +999,15 @@
       "rule_id": "rigidCarrier",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1627",
+      "location": "ReadoutProvenance.lean:1630",
       "predicted_red_names": [
         "CleanReturnInventory.inputType.15",
         "CleanReturnInventory.MissingRuleId.inputType"
-      ]
+      ],
+      "source_mutation": {
+        "before": "let mut carrierEvidence \u2190 if rigid then pure (some (witness .rigidCarrier carrier))",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-inputType.16",
@@ -763,11 +1015,15 @@
       "rule_id": "scalarCarrier",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1629",
+      "location": "ReadoutProvenance.lean:1632",
       "predicted_red_names": [
         "CleanReturnInventory.inputType.16",
         "CleanReturnInventory.MissingRuleId.inputType"
-      ]
+      ],
+      "source_mutation": {
+        "before": "else if carrier.isConstOf ``Nat then pure (some (witness .scalarCarrier carrier))",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-inputType.17",
@@ -775,11 +1031,15 @@
       "rule_id": "nullaryCarrier",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1647",
+      "location": "ReadoutProvenance.lean:1650",
       "predicted_red_names": [
         "CleanReturnInventory.inputType.17",
         "CleanReturnInventory.MissingRuleId.inputType"
-      ]
+      ],
+      "source_mutation": {
+        "before": "let evidence := witness .nullaryCarrier carrier",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-inputType.18",
@@ -787,11 +1047,15 @@
       "rule_id": "listMetadata",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1662",
+      "location": "ReadoutProvenance.lean:1665",
       "predicted_red_names": [
         "CleanReturnInventory.inputType.18",
         "CleanReturnInventory.MissingRuleId.inputType"
-      ]
+      ],
+      "source_mutation": {
+        "before": "if disjoint.isSome then return \u2190 checkedType .listMetadata reduced mentions unclassified",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-inputType.19",
@@ -799,11 +1063,15 @@
       "rule_id": "quotientType",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1673",
+      "location": "ReadoutProvenance.lean:1676",
       "predicted_red_names": [
         "CleanReturnInventory.inputType.19",
         "CleanReturnInventory.MissingRuleId.inputType"
-      ]
+      ],
+      "source_mutation": {
+        "before": "return \u2190 checkedType .quotientType reduced mentions unclassified",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-inputType.20",
@@ -811,11 +1079,15 @@
       "rule_id": "recursorType",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1678",
+      "location": "ReadoutProvenance.lean:1681",
       "predicted_red_names": [
         "CleanReturnInventory.inputType.20",
         "CleanReturnInventory.MissingRuleId.inputType"
-      ]
+      ],
+      "source_mutation": {
+        "before": "return \u2190 checkedType .recursorType reduced mentions unclassified",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-inputType.21",
@@ -823,11 +1095,15 @@
       "rule_id": "enumRecursorType",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1697",
+      "location": "ReadoutProvenance.lean:1700",
       "predicted_red_names": [
         "CleanReturnInventory.inputType.21",
         "CleanReturnInventory.MissingRuleId.inputType"
-      ]
+      ],
+      "source_mutation": {
+        "before": "return \u2190 checkedType .enumRecursorType reduced mentions unclassified",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-inputType.22",
@@ -835,11 +1111,15 @@
       "rule_id": "aliasType",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1708",
+      "location": "ReadoutProvenance.lean:1711",
       "predicted_red_names": [
         "CleanReturnInventory.inputType.22",
         "CleanReturnInventory.MissingRuleId.inputType"
-      ]
+      ],
+      "source_mutation": {
+        "before": "return \u2190 checkedType .aliasType reduced (mentions || um) (unclassified || uu)",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-inputType.23",
@@ -847,11 +1127,15 @@
       "rule_id": "recursiveFamily",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1738",
+      "location": "ReadoutProvenance.lean:1741",
       "predicted_red_names": [
         "CleanReturnInventory.inputType.23",
         "CleanReturnInventory.MissingRuleId.inputType"
-      ]
+      ],
+      "source_mutation": {
+        "before": "return \u2190 checkedType .recursiveFamily reduced mentions unclassified",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-inputType.forward.5",
@@ -859,11 +1143,15 @@
       "rule_id": "retained-witness.rule",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1783",
+      "location": "ReadoutProvenance.lean:1786",
       "predicted_red_names": [
         "CleanReturnInventory.inputType.forward.5",
         "CleanReturnInventory.MissingRuleId.inputType"
-      ]
+      ],
+      "source_mutation": {
+        "before": "observedType env concrete nextActive)",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-inputType.24",
@@ -871,11 +1159,15 @@
       "rule_id": "nominalFields",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1787",
+      "location": "ReadoutProvenance.lean:1790",
       "predicted_red_names": [
         "CleanReturnInventory.inputType.24",
         "CleanReturnInventory.MissingRuleId.inputType"
-      ]
+      ],
+      "source_mutation": {
+        "before": "return \u2190 checkedType .nominalFields reduced mentions unclassified",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-inputType.25",
@@ -883,11 +1175,15 @@
       "rule_id": "retained-witness.rule",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1807",
+      "location": "ReadoutProvenance.lean:1810",
       "predicted_red_names": [
         "CleanReturnInventory.inputType.25",
         "CleanReturnInventory.MissingRuleId.inputType"
-      ]
+      ],
+      "source_mutation": {
+        "before": "return result",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-typeFamilyArgument.1",
@@ -895,11 +1191,15 @@
       "rule_id": "retained-witness.rule",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1815",
+      "location": "ReadoutProvenance.lean:1818",
       "predicted_red_names": [
         "CleanReturnInventory.typeFamilyArgument.1",
         "CleanReturnInventory.MissingRuleId.typeFamilyArgument"
-      ]
+      ],
+      "source_mutation": {
+        "before": "if let some cached \u2190 reuseWitness (\u2190 get).dataFunctionTypes type then return .data cached",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-typeFamilyArgument.2",
@@ -907,11 +1207,15 @@
       "rule_id": "retained-witness.rule",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1825",
+      "location": "ReadoutProvenance.lean:1828",
       "predicted_red_names": [
         "CleanReturnInventory.typeFamilyArgument.2",
         "CleanReturnInventory.MissingRuleId.typeFamilyArgument"
-      ]
+      ],
+      "source_mutation": {
+        "before": "return .family (.allowlisted cached)",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-typeFamilyArgument.forward.1",
@@ -919,11 +1223,15 @@
       "rule_id": "retained-witness.rule",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1837",
+      "location": "ReadoutProvenance.lean:1840",
       "predicted_red_names": [
         "CleanReturnInventory.typeFamilyArgument.forward.1",
         "CleanReturnInventory.MissingRuleId.typeFamilyArgument"
-      ]
+      ],
+      "source_mutation": {
+        "before": "typeFamilyArgument env (mkApp value x) body active",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-typeFamilyArgument.3",
@@ -931,11 +1239,15 @@
       "rule_id": "retained-witness.rule",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1839",
+      "location": "ReadoutProvenance.lean:1842",
       "predicted_red_names": [
         "CleanReturnInventory.typeFamilyArgument.3",
         "CleanReturnInventory.MissingRuleId.typeFamilyArgument"
-      ]
+      ],
+      "source_mutation": {
+        "before": "let .family verdict := result | return result",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-typeFamilyArgument.4",
@@ -943,11 +1255,15 @@
       "rule_id": "typeFamily",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1843",
+      "location": "ReadoutProvenance.lean:1846",
       "predicted_red_names": [
         "CleanReturnInventory.typeFamilyArgument.4",
         "CleanReturnInventory.MissingRuleId.typeFamilyArgument"
-      ]
+      ],
+      "source_mutation": {
+        "before": "return .family (\u2190 checkedType .typeFamily value (dm || bm) (du || bu))",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-typeFamilyArgument.5",
@@ -955,11 +1271,15 @@
       "rule_id": "retained-witness.rule",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1851",
+      "location": "ReadoutProvenance.lean:1854",
       "predicted_red_names": [
         "CleanReturnInventory.typeFamilyArgument.5",
         "CleanReturnInventory.MissingRuleId.typeFamilyArgument"
-      ]
+      ],
+      "source_mutation": {
+        "before": "| .allowlisted evidence => return .data evidence",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-typeFamilyArgument.forward.2",
@@ -967,11 +1287,15 @@
       "rule_id": "retained-witness.rule",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1858",
+      "location": "ReadoutProvenance.lean:1861",
       "predicted_red_names": [
         "CleanReturnInventory.typeFamilyArgument.forward.2",
         "CleanReturnInventory.MissingRuleId.typeFamilyArgument"
-      ]
+      ],
+      "source_mutation": {
+        "before": "| .data evidence => .data { evidence with sourceDependency := state.assumedProducer }",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-typeFamilyArgument.6",
@@ -979,11 +1303,15 @@
       "rule_id": "retained-witness.rule",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1875",
+      "location": "ReadoutProvenance.lean:1878",
       "predicted_red_names": [
         "CleanReturnInventory.typeFamilyArgument.6",
         "CleanReturnInventory.MissingRuleId.typeFamilyArgument"
-      ]
+      ],
+      "source_mutation": {
+        "before": "return result",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-classifyOccurrence.1",
@@ -991,11 +1319,15 @@
       "rule_id": "retained-witness.rule",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1886",
+      "location": "ReadoutProvenance.lean:1889",
       "predicted_red_names": [
         "CleanReturnInventory.classifyOccurrence.1",
         "CleanReturnInventory.MissingRuleId.classifyOccurrence"
-      ]
+      ],
+      "source_mutation": {
+        "before": "if let some cached := (\u2190 get).typeChecks[key]? then return cached",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-classifyOccurrence.2",
@@ -1003,11 +1335,15 @@
       "rule_id": "retained-witness.rule",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1902",
+      "location": "ReadoutProvenance.lean:1905",
       "predicted_red_names": [
         "CleanReturnInventory.classifyOccurrence.2",
         "CleanReturnInventory.MissingRuleId.classifyOccurrence"
-      ]
+      ],
+      "source_mutation": {
+        "before": "return classification",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-classifyOccurrence.3",
@@ -1015,11 +1351,15 @@
       "rule_id": "retained-witness.rule",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1909",
+      "location": "ReadoutProvenance.lean:1912",
       "predicted_red_names": [
         "CleanReturnInventory.classifyOccurrence.3",
         "CleanReturnInventory.MissingRuleId.classifyOccurrence"
-      ]
+      ],
+      "source_mutation": {
+        "before": "return verdict",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-visitOccurrence.1",
@@ -1027,11 +1367,15 @@
       "rule_id": "retained-witness.rule",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1932",
+      "location": "ReadoutProvenance.lean:1935",
       "predicted_red_names": [
         "CleanReturnInventory.visitOccurrence.1",
         "CleanReturnInventory.MissingRuleId.visitOccurrence"
-      ]
+      ],
+      "source_mutation": {
+        "before": "if decoded == some true then return",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-visitOccurrence.2",
@@ -1039,11 +1383,15 @@
       "rule_id": "retained-witness.rule",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1935",
+      "location": "ReadoutProvenance.lean:1938",
       "predicted_red_names": [
         "CleanReturnInventory.visitOccurrence.2",
         "CleanReturnInventory.MissingRuleId.visitOccurrence"
-      ]
+      ],
+      "source_mutation": {
+        "before": "if (\u2190 get).visited.contains key then return",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-visitOccurrence.forward.1",
@@ -1051,11 +1399,15 @@
       "rule_id": "retained-witness.rule",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1944",
+      "location": "ReadoutProvenance.lean:1947",
       "predicted_red_names": [
         "CleanReturnInventory.visitOccurrence.forward.1",
         "CleanReturnInventory.MissingRuleId.visitOccurrence"
-      ]
+      ],
+      "source_mutation": {
+        "before": "| .allowlisted _ => pure ()",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-visitOccurrence.3",
@@ -1063,11 +1415,15 @@
       "rule_id": "retained-witness.rule",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1967",
+      "location": "ReadoutProvenance.lean:1970",
       "predicted_red_names": [
         "CleanReturnInventory.visitOccurrence.3",
         "CleanReturnInventory.MissingRuleId.visitOccurrence"
-      ]
+      ],
+      "source_mutation": {
+        "before": "if proof == some true then return",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-visitOccurrence.4",
@@ -1075,11 +1431,15 @@
       "rule_id": "retained-witness.rule",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:1981",
+      "location": "ReadoutProvenance.lean:1984",
       "predicted_red_names": [
         "CleanReturnInventory.visitOccurrence.4",
         "CleanReturnInventory.MissingRuleId.visitOccurrence"
-      ]
+      ],
+      "source_mutation": {
+        "before": "else if inProtected env n then queue n levels",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-visitOccurrence.5",
@@ -1087,11 +1447,15 @@
       "rule_id": "retained-witness.rule",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:2011",
+      "location": "ReadoutProvenance.lean:2014",
       "predicted_red_names": [
         "CleanReturnInventory.visitOccurrence.5",
         "CleanReturnInventory.MissingRuleId.visitOccurrence"
-      ]
+      ],
+      "source_mutation": {
+        "before": "| .allowlisted _ => pure () -- syntaxLeaf: already inferred in its real binder context",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-readoutClosureCurrent.1",
@@ -1099,11 +1463,15 @@
       "rule_id": "retained-witness.rule",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:2117",
+      "location": "ReadoutProvenance.lean:2120",
       "predicted_red_names": [
         "CleanReturnInventory.readoutClosureCurrent.1",
         "CleanReturnInventory.MissingRuleId.readoutClosureCurrent"
-      ]
+      ],
+      "source_mutation": {
+        "before": "if r.admission.isSome then return (false, some r.walked)",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "default-admit-provenanceErrorCurrent.1",
@@ -1111,11 +1479,15 @@
       "rule_id": "retained-witness.rule",
       "kind": "source-contract",
       "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
-      "location": "ReadoutProvenance.lean:2138",
+      "location": "ReadoutProvenance.lean:2141",
       "predicted_red_names": [
         "CleanReturnInventory.provenanceErrorCurrent.1",
         "CleanReturnInventory.MissingRuleId.provenanceErrorCurrent"
-      ]
+      ],
+      "source_mutation": {
+        "before": "if result.admission.isSome && !result.forbidden && result.unclassified.isNone && !result.incomplete then return none",
+        "after": "return defaultAdmit"
+      }
     },
     {
       "id": "a11-erase-level-instantiation",
@@ -2101,12 +2473,9 @@
       "additional_source_changes_before_needle": false,
       "mutator": "MutationMatrix.specification",
       "predicted_red_names": [
-        "ComputedRegisteredProof",
-        "ComputedRegisteredNominalPayload",
-        "ComputedRegisteredDecision",
-        "ComputedRegisteredProofDiagnostic",
-        "ComputedRegisteredNominalPayloadDiagnostic",
-        "ComputedRegisteredDecisionDiagnostic"
+        "ComputedRegisteredProofHeadNamed",
+        "ComputedRegisteredNominalPayloadHeadNamed",
+        "ComputedRegisteredDecisionHeadNamed"
       ]
     },
     {
