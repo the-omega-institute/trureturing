@@ -29,12 +29,7 @@ internal sealed class PrimeCapacityHorizonDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(
                     "D5/S3/Factorization/Automata/PrimeCapacityHorizon.finite_horizon_state_classification"),
                 H("Exact kernel, attainable profiles and cardinality for every horizon"),
-                StatementSource.FromAuthor(Disp(Seq(
-                    F.Id("horizonClassCount"), Open, F.Id("a"), Comma, F.Id("H"), Close,
-                    Sp, Eq, Sp, D(1), Sp, Plus, Sp,
-                    F.Id("product"), Open, F.Id("i"), Comma,
-                    F.Id("min"), Open, F.Id("a_i"), Comma, F.Id("H"), Close,
-                    Sp, Plus, Sp, D(1), Close))),
+                StatementSource.FromAuthor(StateClassificationFormula()),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
@@ -61,4 +56,45 @@ internal sealed class PrimeCapacityHorizonDocument : IScribeDocumentDefinition
                         + "not silently an exact autonomous state model."))),
                 DescribeRole.Theorem)),
         []));
+
+    private static Formula Call(string name, params Formula[] arguments)
+    {
+        var items = new List<Formula> { Operatorname, Grp(F.Id(name)), Open };
+        for (var index = 0; index < arguments.Length; index++)
+        {
+            if (index > 0) items.AddRange([Comma, Sp]);
+            items.Add(arguments[index]);
+        }
+        items.Add(Close);
+        return Seq([.. items]);
+    }
+
+    private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
+
+    private static Formula Capacity() => Call("Capacity", F.Id("a"));
+
+    private static Formula Profile() => Call("Profile", F.Id("a"), F.Id("H"));
+
+    private static Formula Allowed(string state) =>
+        Call("allowed", F.Id("a"), F.Id(state), F.Id("w"));
+
+    private static Formula StateClassificationFormula() => Disp(Seq(
+        Forall, Sp, F.Id("I"), Colon, Sp, F.Id("Type"), Comma, Sp,
+        Open, Call("DecidableEq", F.Id("I")), Sp, Land, Sp, Call("Fintype", F.Id("I")), Close,
+        Sp, Rightarrow, Sp,
+        Forall, Sp, F.Id("a"), Colon, Sp, F.Id("I"), Sp, To, Sp, Naturals(), Comma, Sp,
+        Forall, Sp, F.Id("H"), Sp, InMacro, Sp, Naturals(), Comma, Sp,
+        Call("Surjective", Call("clipState", F.Id("a"), F.Id("H"))), Sp, Land, Sp,
+        Open, Forall, Sp, F.Id("s"), Comma, Sp, F.Id("t"), Colon, Sp,
+        Call("Option", Capacity()), Comma, Sp,
+        Open, Forall, Sp, F.Id("w"), Colon, Sp, Call("List", F.Id("I")), Comma, Sp,
+        Call("length", F.Id("w")), Sp, Leq, Sp, F.Id("H"), Sp, Rightarrow, Sp,
+        Open, Allowed("s"), Sp, Iff, Sp, Allowed("t"), Close, Close,
+        Sp, Iff, Sp,
+        Call("clipState", F.Id("a"), F.Id("H"), F.Id("s")), Sp, Eq, Sp,
+        Call("clipState", F.Id("a"), F.Id("H"), F.Id("t")), Close,
+        Sp, Land, Sp,
+        Call("card", Call("Option", Profile())), Sp, Eq, Sp, D(1), Sp, Plus, Sp,
+        Prod, Underscore, Grp(F.Id("i"), Sp, InMacro, Sp, F.Id("I")), Sp,
+        Open, Call("min", Call("a", F.Id("i")), F.Id("H")), Sp, Plus, Sp, D(1), Close));
 }
