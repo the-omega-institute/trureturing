@@ -21,11 +21,7 @@ internal sealed class PrimeHistoryCompositionDocument : IScribeDocumentDefinitio
                 DeclarationHandle.Create(
                     "D5/S3/Factorization/Automata/PrimeHistoryComposition.normal_append"),
                 H("Actual concatenation descends to the computed composition"),
-                StatementSource.FromAuthor(Disp(Seq(
-                    F.Id("normal"), Open, F.Id("a"), Comma,
-                    F.Id("v ++ w"), Close, Sp, Eq, Sp,
-                    F.Id("compose"), Open, F.Id("normal(v)"), Comma,
-                    F.Id("normal(w)"), Close))),
+                StatementSource.FromAuthor(NormalAppendFormula()),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The proof first derives the exact intermediate-state evaluation law "
@@ -39,36 +35,11 @@ internal sealed class PrimeHistoryCompositionDocument : IScribeDocumentDefinitio
                 DeclarationHandle.Create(
                     "D5/S3/Factorization/Automata/PrimeHistoryComposition.normal_eq_iff_contextual_run"),
                 H("Contextual runs characterize the normal form"),
-                StatementSource.FromAuthor(Disp(Seq(
-                    F.Id("normal(a,v)"), Sp, Eq, Sp, F.Id("normal(a,w)"), Sp, Iff, Sp,
-                    Forall, Sp, F.Id("before,after,e"), Comma, Sp,
-                    F.Id("run(a,e,before++v++after)"), Sp, Eq, Sp,
-                    F.Id("run(a,e,before++w++after)")))),
+                StatementSource.FromAuthor(ContextualRunFormula()),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Equality of normal forms is equivalent to equality of the exact partial "
                     + "runner in every prefix and suffix context and at every live state."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("prime-history-contextual-completeness"),
-                DeclarationHandle.Create(
-                    "D5/S3/Factorization/Automata/PrimeHistoryComposition.normal_eq_iff_contextual_accepts"),
-                H("Boolean contextual tests detect every difference of normal forms"),
-                StatementSource.FromAuthor(Disp(Seq(
-                    F.Id("normal(a,v)"), Sp, Eq, Sp, F.Id("normal(a,w)"), Sp, Iff, Sp,
-                    Forall, Sp, F.Id("before,after,e"), Comma, Sp,
-                    F.Id("accepts(a,e,before++v++after)"), Sp, Eq, Sp,
-                    F.Id("accepts(a,e,before++w++after)")))),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "The displayed equality holds exactly when every capacity-bounded "
-                    + "starting state and every prefix/suffix context give the same whole-word "
-                    + "success/failure output. A domain difference is already an acceptance "
-                    + "difference. If both words succeed with different endpoints, the "
-                    + "previous exact horizon theorem supplies a suffix that separates them. "
-                    + "This uses actual common intermediate states and the existing partial "
-                    + "runner append law. The result quantifies over starting states; "
-                    + "it does not posit a safe identification experiment on one unknown copy."))),
                 DescribeRole.Theorem),
             Paragraph(Text(
                 "Contextual equality concerns total executability and final state. It is "
@@ -76,10 +47,59 @@ internal sealed class PrimeHistoryCompositionDocument : IScribeDocumentDefinitio
                 + "or costs. Group cancellation is unsafe at the guards: divide then "
                 + "multiply is an identity only on its proper source interval. No group "
                 + "action or Monster representation is inferred from the prime labels."))),
-        [
-            DocumentEdge.Dependency.Create(
-                GidRef.Create("D5/S3/Factorization/Automata/PrimeHistoryNormalForm")),
-            DocumentEdge.Dependency.Create(
-                GidRef.Create("D5/S3/Factorization/Automata/BoundedPrimeHorizon"))
-        ]));
+        [DocumentEdge.Dependency.Create(
+            GidRef.Create("D5/S3/Factorization/Automata/PrimeHistoryNormalForm"))]));
+
+    private static Formula Call(string name, params Formula[] arguments) =>
+        new Formula.Apply(F.Id(name), [.. arguments]);
+
+    private static Formula QualifiedCall(
+        string prefix,
+        string name,
+        params Formula[] arguments) =>
+        new Formula.Apply(Seq(F.Id(prefix), Dot, F.Id(name)), [.. arguments]);
+
+    private static Formula Universal(string variable, Formula domain, Formula body) =>
+        new Formula.Bind(
+            FormulaQuantifier.ForAll,
+            FormulaIdentifier.Create(variable),
+            domain,
+            body);
+
+    private static Formula Equal(Formula left, Formula right) =>
+        new Formula.Relation(left, FormulaRelationOperator.Equal, right);
+
+    private static Formula IffFormula(Formula left, Formula right) =>
+        new Formula.Logic(left, FormulaLogicOperator.Iff, right);
+
+    private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
+
+    private static Formula Words() => Call("List", F.Id("Bool"));
+
+    private static Formula FinState() =>
+        Call("Fin", new Formula.Binary(F.Id("a"), FormulaBinaryOperator.Add, D(1)));
+
+    private static Formula Append(Formula left, Formula right) =>
+        QualifiedCall("List", "append", left, right);
+
+    private static Formula Normal(string word) => Call("normal", F.Id("a"), F.Id(word));
+
+    private static Formula Context(string word) =>
+        Append(Append(F.Id("before"), F.Id(word)), F.Id("after"));
+
+    private static Formula NormalAppendFormula() => Disp(Universal("a", Naturals(),
+        Universal("v", Words(), Universal("w", Words(),
+            Equal(
+                Call("normal", F.Id("a"), Append(F.Id("v"), F.Id("w"))),
+                Call("compose", Normal("v"), Normal("w")))))));
+
+    private static Formula ContextualRunFormula() => Disp(Universal("a", Naturals(),
+        Universal("v", Words(), Universal("w", Words(),
+            IffFormula(
+                Equal(Normal("v"), Normal("w")),
+                Universal("before", Words(), Universal("after", Words(),
+                    Universal("e", FinState(),
+                        Equal(
+                            Call("run", F.Id("a"), F.Id("e"), Context("v")),
+                            Call("run", F.Id("a"), F.Id("e"), Context("w")))))))))));
 }
