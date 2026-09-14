@@ -32,11 +32,6 @@ def allowed (a : I → Nat) : Option (PrimeCapacityHorizon.Capacity a) → List 
   | none, _ => False
   | some e, w => ∀ i, accepts (a i) (e i) (localWord w i) = true
 
-/-- One genuine interleaved command changes only its selected register. -/
-def boxStep (a : I → Nat) (e : PrimeCapacityHorizon.Capacity a) (c : I × Bool) :
-    Option (PrimeCapacityHorizon.Capacity a) :=
-  (step (a c.1) (e c.1) c.2).map (fun next => Function.update e c.1 next)
-
 abbrev Profile (a : I → Nat) (H : Nat) := ∀ i, Fin (min (a i) (2 * H) + 1)
 
 def boxCode (a : I → Nat) (H : Nat) (q : Option (PrimeCapacityHorizon.Capacity a)) :
