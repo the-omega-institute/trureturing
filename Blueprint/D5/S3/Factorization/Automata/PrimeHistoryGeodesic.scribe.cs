@@ -17,28 +17,17 @@ internal sealed class PrimeHistoryGeodesicDocument : IScribeDocumentDefinition
                 + "same net displacement but a smaller excursion would have a different "
                 + "legal starting-state set, and is not an admissible replacement.")),
             Describe.Lean(
-                DescribeId.Create("prime-history-geodesic-lower-bound"),
-                DeclarationHandle.Create(
-                    "D5/S3/Factorization/Automata/PrimeHistoryGeodesic.word_length_lower_bound"),
-                H("The sharp excursion cost lower bound applies to every word"),
-                StatementSource.FromAuthor(Disp(Seq(
-                    D(2), Sp, F.Id("width(w)"), Sp, Minus, Sp,
-                    F.Id("abs(displacement(w))"), Sp, Leq, Sp, F.Id("length(w)")))),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "The proof inducts on the actual command list using the derived bounds "
-                    + "low<=0<=high and low<=displacement<=high. Prepending one unit step "
-                    + "increases the displayed required cost by at most one. The integer "
-                    + "maximum of d and -d represents absolute displacement in the source."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("prime-history-sharp-representative"),
                 DeclarationHandle.Create(
                     "D5/S3/Factorization/Automata/PrimeHistoryGeodesic.shortest_realization"),
                 H("The lower bound is attained by an explicit word"),
                 StatementSource.FromAuthor(Disp(Seq(
-                    F.Id("minimumLength"), Sp, Eq, Sp,
-                    D(2), Sp, F.Id("(a-u+l)"), Sp, Minus, Sp, F.Id("abs(d)")))),
+                    F.Id("normal(a,shortestWord(t))"), Sp, Eq, Sp, F.Id("some(t)"), Sp, Land, Sp,
+                    F.Id("length(shortestWord(t))"), Sp, Eq, Sp,
+                    D(2), Sp, F.Id("(a-u+l)"), Sp, Minus, Sp, F.Id("abs(d)"), Sp, Land, Sp,
+                    Forall, Sp, F.Id("w"), Comma, Sp,
+                    F.Id("normal(a,w)"), Sp, Eq, Sp, F.Id("some(t)"), Sp, Rightarrow, Sp,
+                    F.Id("length(shortestWord(t))"), Sp, Leq, Sp, F.Id("length(w)")))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "For nonnegative d, use the earlier lower-first realization. For negative "
@@ -50,6 +39,10 @@ internal sealed class PrimeHistoryGeodesicDocument : IScribeDocumentDefinition
                     + "inside a contextual behavior class, not recovery of the original "
                     + "history's length and not a preservation theorem for other costs."))),
                 DescribeRole.Theorem)),
-        [DocumentEdge.Dependency.Create(
-            GidRef.Create("D5/S3/Factorization/Automata/PrimeHistoryNormalForm"))]));
+        [
+            DocumentEdge.Dependency.Create(
+                GidRef.Create("D5/S3/Factorization/Automata/PrimeHistoryNormalForm")),
+            DocumentEdge.Dependency.Create(
+                GidRef.Create("D5/S3/Factorization/Automata/WordExcursionLowerBound"))
+        ]));
 }
