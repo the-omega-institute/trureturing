@@ -4,6 +4,7 @@ authors: M. H. A. Newman
 year: 1942
 title: 'On Theories with a Combinatorial Definition of "Equivalence"'
 doi: 10.2307/1968867
+url: https://www.jstor.org/stable/1968867
 claim: Termination and local confluence give a unique reachable normal form.
 strata_touched:
   - D5/S0/Rewriting/Newman
@@ -37,3 +38,4 @@ literature note attests the theorem statement rather than the proof term.
 ## Verified locator
 
 - DOI: https://doi.org/10.2307/1968867
+- URL: https://www.jstor.org/stable/1968867
