@@ -53,13 +53,28 @@ case "$stage" in
     fi
     python3 tools/scripts/report/dotnet_producer.py prepare "$ROOT"
     export CustomAfterMicrosoftCSharpTargets="$ROOT/build/judge-seed/seed.targets"
+    # compiler-logger / CI_CSC_LOGGER_ASSEMBLY carry only this run's diagnostic
+    # address, not work selection or cache validity. The helper's own bootstrap
+    # precedes this logger and is outside its counts. Always replace an inherited
+    # address, including after an optional seed miss.
+    CI_CSC_LOGGER_ASSEMBLY=
+    if ! CI_CSC_LOGGER_ASSEMBLY="$(python3 tools/scripts/report/dotnet_producer.py compiler-logger "$ROOT")"; then
+      CI_CSC_LOGGER_ASSEMBLY=
+    fi
+    export CI_CSC_LOGGER_ASSEMBLY
+    compiler_observation=()
+    if [[ -n "$CI_CSC_LOGGER_ASSEMBLY" && -f "$CI_CSC_LOGGER_ASSEMBLY" ]]; then
+      compiler_observation+=("-logger:StrataLint.JudgeSeed.CscExecutionLogger,$CI_CSC_LOGGER_ASSEMBLY")
+    else
+      echo 'JUDGE_CSC {"status":"unavailable","count":null}'
+    fi
     # Bootstrap nodes belong to these invocations and must release their output.
     /bin/bash tools/scripts/report/report-supervisor.sh --role ci-bootstrap-restore -- \
       dotnet restore tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj --locked-mode -nr:false
     # Match the solution's import graph so its bootstrap compiler seed is reusable.
     /bin/bash tools/scripts/report/report-supervisor.sh --role ci-bootstrap-build -- \
       dotnet build tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj --configuration Release --no-restore --warnaserror -nr:false \
-        -p:CustomAfterMicrosoftCommonTargets="$ROOT/tools/scripts/ci-build-outputs.targets"
+        -p:CustomAfterMicrosoftCommonTargets="$ROOT/tools/scripts/ci-build-outputs.targets" ${compiler_observation[@]+"${compiler_observation[@]}"}
     dotnet "$runner" "$stage" --repository "$ROOT" ${stage_options[@]+"${stage_options[@]}"} ${seed_options[@]+"${seed_options[@]}"}
     ;;
   current)

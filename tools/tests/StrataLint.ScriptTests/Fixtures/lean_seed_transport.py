@@ -321,6 +321,9 @@ FAKE_GH = '''#!/usr/bin/env python3
 import hashlib, json, os, pathlib, shutil, sys
 args = sys.argv[1:]
 root = pathlib.Path(os.environ["FAKE_REMOTE"])
+if "FAKE_GH_LOG" in os.environ:
+    with pathlib.Path(os.environ["FAKE_GH_LOG"]).open("a") as log:
+        log.write(json.dumps(args) + "\\n")
 verb = args[0] if args and args[0] == "api" else (args[1] if len(args) > 1 else "")
 if os.environ.get("FAKE_HANG") == verb:
     import signal
@@ -330,6 +333,10 @@ if args[:2] == ["release", "list"] and "FAKE_LIST_JSON" in os.environ:
     print(os.environ["FAKE_LIST_JSON"]); sys.exit(0)
 if args[0] == "api" and "FAKE_API_JSON" in os.environ:
     print(os.environ["FAKE_API_JSON"]); sys.exit(0)
+if args[0] == "api" and "FAKE_VERIFICATION_API" in os.environ:
+    responses = json.loads(pathlib.Path(os.environ["FAKE_VERIFICATION_API"]).read_text())
+    if args[1] in responses:
+        print(json.dumps(responses[args[1]])); sys.exit(0)
 def option(name): return args[args.index(name)+1]
 def metadata(directory):
     value = json.loads((directory / "release.json").read_text())
@@ -355,6 +362,8 @@ else:
     elif verb == "edit":
         value = json.loads((directory / "release.json").read_text()); value["draft"] = False
         (directory / "release.json").write_text(json.dumps(value))
+        if os.environ.get("FAKE_DAMAGE_AFTER_EDIT") == "1":
+            (directory / "lean-build.tgz").write_bytes(b"damaged after upload")
     elif verb == "download":
         destination = pathlib.Path(option("--dir")); destination.mkdir(exist_ok=True)
         if not directory.exists():

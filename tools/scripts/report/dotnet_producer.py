@@ -419,6 +419,16 @@ def _prepare_seed(root, projects, registration, sdk, repository):
     return target
 
 
+def compiler_logger(root):
+    """Read this preparation's explicit helper address; observation is optional."""
+    try:
+        driver = ET.parse(root / "build/judge-seed/seed.targets").getroot()
+        address = driver.findtext("PropertyGroup/JudgeSeedTaskAssembly")
+        return address if address and pathlib.Path(address).is_file() else None
+    except (OSError, ValueError, ET.ParseError):
+        return None
+
+
 def prepare_task(directory, sdk, registration):
     """Bootstrap the SDK task using the resolved SDK, with no NuGet packages."""
     framework = registration["target_framework"]
@@ -623,6 +633,10 @@ if __name__ == "__main__":
     command, path = sys.argv[1:]
     if command == "prepare":
         print(prepare_seed(pathlib.Path(path)))
+    elif command == "compiler-logger":
+        logger = compiler_logger(pathlib.Path(path))
+        if logger is not None:
+            print(logger)
     elif command == "reconcile":
         raise SystemExit(reconcile(pathlib.Path(path)))
     elif command == "seal":

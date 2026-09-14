@@ -5,6 +5,55 @@ namespace StrataLint.Tests;
 public sealed class JudgeSeedTests
 {
     [Fact]
+    public void FailedSeedPreparationCannotLeaveAStaleCompilerLoggerBlockingRebuild()
+    {
+        using var fixture = new JudgeSeedFixture();
+        fixture.Prepare();
+        fixture.Build("observer-before-prepare-failure", 2, fixture.CompilerObservation());
+
+        var missed = fixture.PrepareWithoutHelper();
+        Assert.Contains("fixture helper unavailable", missed.Text, StringComparison.Ordinal);
+        var observation = fixture.CompilerObservation();
+        fixture.Build("observer-after-prepare-failure", 2, observation);
+
+        Assert.Empty(observation);
+    }
+
+    [Fact]
+    public void CompilerLoggerReportsNativeColdWarmAndChangedProjectExecutions()
+    {
+        using var fixture = new JudgeSeedFixture();
+        fixture.Prepare();
+        var logger = Assert.Single(fixture.CompilerObservation());
+        var cold = fixture.Build("csc-observed-cold", 2, logger);
+        AssertCompilers(cold, "Library.csproj", "Consumer.csproj");
+        fixture.Snapshot();
+        fixture.Restore();
+
+        var warm = fixture.Build("csc-observed-warm", 0, logger);
+        AssertCompilers(warm);
+        fixture.Write("tools/Consumer/Program.cs", "System.Console.WriteLine(Library.Value() + 1);\n");
+        var changed = fixture.Build("csc-observed-changed", 1, logger);
+        AssertCompilers(changed, "Consumer.csproj");
+        // Production uses the default console verbosity, without diagnostic
+        // logging or PerformanceSummary to request additional MSBuild events.
+        fixture.Write("tools/Consumer/Program.cs", "System.Console.WriteLine(Library.Value() + 2);\n");
+        var normal = fixture.Dotnet(["build", "tools/StrataLint.sln", "--no-restore", "--configuration", "Release", "--warnaserror", logger]);
+        AssertCompilers(normal, "Consumer.csproj");
+
+        static void AssertCompilers(JudgeSeedFixture.Invocation result, params string[] projects)
+        {
+            var rows = result.Text.Split('\n').Where(line => line.StartsWith("JUDGE_CSC ", StringComparison.Ordinal))
+                .Select(line => JsonNode.Parse(line["JUDGE_CSC ".Length..])!).ToArray();
+            var summary = Assert.Single(rows, row => row["status"]!.GetValue<string>() == "complete");
+            Assert.Equal(projects.Length, summary["count"]!.GetValue<int>());
+            Assert.True(summary["build_succeeded"]!.GetValue<bool>());
+            Assert.Equal(projects.Order(StringComparer.Ordinal), rows.Where(row => row["status"]!.GetValue<string>() == "task-started")
+                .Select(row => Path.GetFileName(row["project"]!.GetValue<string>())).Order(StringComparer.Ordinal));
+        }
+    }
+
+    [Fact]
     public void RestoredJudgeSeedKeepsNativePushPlanValidWithoutAllowingDirtySources()
     {
         using var fixture = new JudgeSeedFixture();

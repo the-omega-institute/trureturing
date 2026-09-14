@@ -1,4 +1,4 @@
-"""Select a named dev push and compose a release from its validated common bundle."""
+"""Consume a protected push bundle for dev publication or explicit source verification."""
 import argparse
 import datetime
 import gzip
@@ -14,6 +14,7 @@ import tempfile
 import zipfile
 
 from ci import CLI, RUNNER, checkout, extract, oid, outputs, run
+from source_reference import validate_source_ref
 
 
 def api(repository, path):
@@ -27,7 +28,7 @@ def pages(repository, path, field=None):
     return [item for page in data for item in (page[field] if field else page)]
 
 
-def collect(repository, commit, workflow):
+def collect(repository, commit, workflow, source_ref="refs/heads/dev"):
     runs = pages(repository, "actions/workflows/ci-push.yml/runs?event=push&head_sha=" + commit + "&per_page=100", "workflow_runs")
     def artifacts(run):
         try:
@@ -35,7 +36,7 @@ def collect(repository, commit, workflow):
         except (OSError, ValueError, KeyError, TypeError, subprocess.SubprocessError) as error:
             print("TRUTH_RELEASE_INPUT_UNAVAILABLE " + json.dumps({"run_id": run["id"], "reason": str(error)}))
             return []
-    return {"source_commit": commit, "workflow": workflow, "runs": runs,
+    return {"source_ref": source_ref, "source_commit": commit, "workflow": workflow, "runs": runs,
             "jobs": {str(row["id"]) + "/" + str(row["run_attempt"]):
                      pages(repository, f'actions/runs/{row["id"]}/attempts/{row["run_attempt"]}/jobs?per_page=100', "jobs")
                      for row in runs},
@@ -127,15 +128,23 @@ def assemble(root, area, selected):
             "release_digest": digest, "run_attempt": transfer["run_attempt"], "source_commit": commit, "source_tree": tree}
 
 
-def prepare(root, area, repository):
+def prepare(root, area, repository, source_ref="refs/heads/dev", source_commit=None, verification=False):
     area.mkdir(parents=True, exist_ok=True)
-    if api(repository, "branches/dev").get("protected") is not True:
+    if not verification and source_ref != "refs/heads/dev":
+        raise ValueError("publication requires refs/heads/dev; use verify-source for integration")
+    if verification and source_commit is None:
+        raise ValueError("verify-source requires an explicit source ref and commit")
+    if source_commit is not None:
+        validate_source_ref(repository, source_ref, source_commit,
+                            lambda path: api(repository, path.removeprefix("repos/" + repository + "/")))
+    elif api(repository, "branches/dev").get("protected") is not True:
         raise ValueError("dev is not protected")
     workflow = api(repository, "actions/workflows/ci-push.yml")
-    # Preserve the existing newest-first, recent-40 protected-dev history policy.
-    for row in api(repository, "commits?sha=dev&per_page=40"):
+    # Explicit sources never substitute a different commit from the recent-dev scan.
+    commits = [{"sha": source_commit}] if source_commit is not None else api(repository, "commits?sha=dev&per_page=40")
+    for row in commits:
         commit = oid(row["sha"])
-        evidence = collect(repository, commit, workflow)
+        evidence = collect(repository, commit, workflow, source_ref)
         while (selected := select(root, area, evidence))["publish_ready"]:
             try:
                 candidate = restore_candidate(root, area, selected)
@@ -149,20 +158,33 @@ def prepare(root, area, repository):
                 print("TRUTH_RELEASE_REPORT_NOT_REQUIRED " + json.dumps({"run_id": selected["run_id"]}))
                 evidence["runs"] = [run for run in evidence["runs"] if run["id"] != selected["run_id"]]
                 continue
-            result = assemble(candidate, area, selected)
-            outputs({**result, "publish_ready": True})
+            if verification:
+                print("TRUTH_RELEASE_INPUT " + json.dumps(selected, sort_keys=True))
+                identity = {key: selected[key] for key in ("source_ref", "source_commit", "run_id", "run_attempt", "artifact_id", "artifact_name")}
+                outputs({**identity, "source_tree": oid(run(candidate, "git", "rev-parse", "HEAD^{tree}")),
+                         "source_verified": True, "publish_ready": False})
+            else:
+                result = assemble(candidate, area, selected)
+                outputs({**result, "publish_ready": True})
             return
+    if verification:
+        raise ValueError("explicit source has no successful push with a complete verified report bundle")
     outputs({"publish_ready": False})
 
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("command", choices=("prepare",))
+    parser.add_argument("command", choices=("prepare", "verify-source"))
     parser.add_argument("--repository", type=pathlib.Path, required=True)
     parser.add_argument("--output", type=pathlib.Path, required=True)
+    parser.add_argument("--source-ref")
+    parser.add_argument("--source-commit")
     args = parser.parse_args()
     try:
-        prepare(args.repository.resolve(), args.output.resolve(), os.environ["GITHUB_REPOSITORY"])
+        if args.command == "verify-source" and (not args.source_ref or not args.source_commit):
+            raise ValueError("verify-source requires an explicit source ref and commit")
+        prepare(args.repository.resolve(), args.output.resolve(), os.environ["GITHUB_REPOSITORY"],
+                args.source_ref or "refs/heads/dev", args.source_commit, args.command == "verify-source")
         return 0
     except (OSError, ValueError, KeyError, TypeError, subprocess.SubprocessError) as error:
         print("TRUTH_RELEASE_FAILED " + str(error), file=sys.stderr)

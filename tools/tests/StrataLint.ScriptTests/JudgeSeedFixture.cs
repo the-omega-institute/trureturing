@@ -142,13 +142,26 @@ internal sealed class JudgeSeedFixture : IDisposable
         return result;
     }
 
+    internal Invocation PrepareWithoutHelper()
+    {
+        Directory.Delete(PathOf("build/judge-seed/task/bin"), recursive: true);
+        return Python("judge.prepare_task = lambda *_: (_ for _ in ()).throw(OSError('fixture helper unavailable')); judge.prepare_seed(root)");
+    }
+
+    internal string[] CompilerObservation()
+    {
+        var result = Run("python3", [Path.Combine(producerRoot, "tools/scripts/report/dotnet_producer.py"), "compiler-logger", root]);
+        var assembly = result.Text.Trim();
+        return assembly.Length == 0 ? [] : ["-logger:StrataLint.JudgeSeed.CscExecutionLogger," + assembly];
+    }
+
     // Only owned MSBuild invocations disable node reuse; DLL/CLI calls retain
     // their normal arguments and the producer must own its own child options.
     internal Invocation Dotnet(string[] args, bool success = true) =>
         Run("dotnet", args[0] is "restore" or "build" ? [..args, "-nr:false"] : args, success);
-    internal void Build(string name, int expected, params string[] properties) => BuildProject(name, "tools/StrataLint.sln", expected, properties);
+    internal Invocation Build(string name, int expected, params string[] properties) => BuildProject(name, "tools/StrataLint.sln", expected, properties);
     internal void BuildHelper(string name, int expected) => BuildProject(name, "tools/scripts/report/JudgeSeedTask.csproj", expected, []);
-    private void BuildProject(string name, string project, int expected, string[] properties)
+    private Invocation BuildProject(string name, string project, int expected, string[] properties)
     {
         Dotnet(["restore", project, "--locked-mode"]);
         var result = Dotnet(["build", project, "--no-restore", "--configuration", "Release", "--warnaserror", "-v:diag", ..properties], false);
@@ -162,6 +175,7 @@ internal sealed class JudgeSeedFixture : IDisposable
         {
             version = 2, projects = project == "tools/StrataLint.sln" ? projectFiles : [project],
         }));
+        return result;
     }
 
     internal Invocation BuildFailure(string name)

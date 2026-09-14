@@ -44,6 +44,8 @@ public sealed class AdmissionWorkflowTopologyTests
     [Theory]
     [InlineData(".github/workflows/ci-pr.yml", true)]
     [InlineData(".github/workflows/ci-push.yml", true)]
+    [InlineData(".github/workflows/ci-publication-verify.yml", true)]
+    [InlineData(".github/workflows/ci-publication-verify-extra.yml", false)]
     [InlineData(".github/workflows/lean-analysis-fixtures.yml", true)]
     [InlineData(".github/workflows/ci.yml", false)]
     // Remove this allowance with the gate after ci-push/ci-pr and required-set migration.
