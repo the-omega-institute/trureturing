@@ -32,7 +32,11 @@ internal sealed class KrizekNextPrimeProductQuadrupletDocument
                     + "one or two; respectively Q(q)+2 or Q(q)-2 is then a multiple of "
                     + "three greater than three. The cases q=2 and q=3 reduce to the "
                     + "explicit values 4 and the prime quadruplet 11, 13, 17, 19.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "oeis-a136162-krizek-next-prime-product-quadruplet"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
         string prose, DescribeRole role, AssessedProvenance provenance,

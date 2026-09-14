@@ -34,6 +34,10 @@ $$\forall q \in \mathrm{Nat},\; Prime\left(q\right) \Rightarrow ((Prime\left(Q\l
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Congruence/KrizekNextPrimeProductQuadruplet.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a136162-krizek-next-prime-product-quadruplet` (proved) by `D5/S3/Arith/Congruence/KrizekNextPrimeProductQuadruplet.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a136162-krizek-next-prime-product-quadruplet","declaration_gid":"D5/S3/Arith/Congruence/KrizekNextPrimeProductQuadruplet.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Harry J. Smith; Jaroslav Krizek (2017). *OEIS A136162, List of prime quadruplets {p, p+2, p+6, p+8}*. URL: <https://oeis.org/A136162>.
