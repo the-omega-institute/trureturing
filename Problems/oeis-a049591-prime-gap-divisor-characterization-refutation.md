@@ -1,6 +1,6 @@
 ---
 slug: oeis-a049591-prime-gap-divisor-characterization-refutation
-bibkey: cloitre2002a049591
+bibkey: laboselemer2002a049591
 doi: null
 url: https://oeis.org/A049591
 triage: theorem

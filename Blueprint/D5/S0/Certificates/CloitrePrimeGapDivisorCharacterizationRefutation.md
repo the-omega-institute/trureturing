@@ -10,7 +10,7 @@ $$\forall n \in \mathrm{Nat},\; (\operatorname{Term}\left(n\right)) \Leftrightar
 
 *Formalization.* `D5/S0/Certificates/CloitrePrimeGapDivisorCharacterizationRefutation.Term` (`✓ std3`).
 
-*Citation.* Benoit Cloitre (2002). *OEIS A049591, Odd primes p such that p+2 is composite*. URL: <https://oeis.org/A049591>.
+*Citation.* Labos Elemer; Benoit Cloitre (2002). *OEIS A049591, Odd primes p such that p+2 is composite*. URL: <https://oeis.org/A049591>.
 
 *Commentary.*
 
@@ -22,7 +22,7 @@ $$\forall n \in \mathrm{Nat},\; (\operatorname{NoPrimeInGap}\left(n\right)) \Lef
 
 *Formalization.* `D5/S0/Certificates/CloitrePrimeGapDivisorCharacterizationRefutation.NoPrimeInGap` (`✓ std3`).
 
-*Citation.* Benoit Cloitre (2002). *OEIS A049591, Odd primes p such that p+2 is composite*. URL: <https://oeis.org/A049591>.
+*Citation.* Labos Elemer; Benoit Cloitre (2002). *OEIS A049591, Odd primes p such that p+2 is composite*. URL: <https://oeis.org/A049591>.
 
 *Commentary.*
 
@@ -34,7 +34,7 @@ $$(claim) \Leftrightarrow (\forall n \in \mathrm{Nat},\; (1 < n) \Rightarrow ((\
 
 *Formalization.* `D5/S0/Certificates/CloitrePrimeGapDivisorCharacterizationRefutation.claim` (`✓ std3`).
 
-*Citation.* Benoit Cloitre (2002). *OEIS A049591, Odd primes p such that p+2 is composite*. URL: <https://oeis.org/A049591>.
+*Citation.* Labos Elemer; Benoit Cloitre (2002). *OEIS A049591, Odd primes p such that p+2 is composite*. URL: <https://oeis.org/A049591>.
 
 *Commentary.*
 
@@ -52,7 +52,7 @@ $$\neg claim$$
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Benoit Cloitre (2002). *OEIS A049591, Odd primes p such that p+2 is composite*. URL: <https://oeis.org/A049591>.
+*Acknowledgement.* Labos Elemer; Benoit Cloitre (2002). *OEIS A049591, Odd primes p such that p+2 is composite*. URL: <https://oeis.org/A049591>.
 
 *Commentary.*
 

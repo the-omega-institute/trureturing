@@ -10,7 +10,7 @@ internal sealed class CloitrePrimeGapDivisorCharacterizationRefutationDocument
     private const string Prefix =
         "D5/S0/Certificates/CloitrePrimeGapDivisorCharacterizationRefutation.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Arith/cloitre2002a049591");
+        LibraryNoteRef.Create("D5/L/Arith/laboselemer2002a049591");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The value 529 refutes Cloitre's divisor-count prime-gap characterization.",
