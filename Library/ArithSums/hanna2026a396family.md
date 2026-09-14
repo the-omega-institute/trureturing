@@ -2,12 +2,13 @@
 bibkey: hanna2026a396family
 authors: Paul D. Hanna
 year: 2026
-title: "OEIS A396803, A396805 and A396806: iterated-exponential parity"
+title: "OEIS A396803, A396805 and A396806: iterated-exponential congruences"
 doi: null
 url: https://oeis.org/A396803
-claim: "For each of A396803, A396805 and A396806, a(n) is odd iff n is odd for n >= 1."
+claim: "For each of A396803, A396805 and A396806, a(n) is odd iff n is odd for n >= 1; for A396803, a(n) is congruent to n modulo 3."
 strata_touched:
   - D5/S1/Recurrence/Residue/IterateExponentialParity
+  - D5/S1/Recurrence/Residue/IterateExponentialModThree
 license: citation-only
 triage: anchor
 ---
@@ -27,9 +28,12 @@ for every `n >= 1`. The repository proves this parity statement uniformly
 in the natural iterate count, together with the defining series equation
 and uniqueness among rational formal series with zero constant coefficient.
 
-Each entry carries further residue conjectures that this repository does not prove.
-These concern modulus 3 for A396803, moduli 3 and 5 for A396805,
-and moduli 3 and 6 for A396806.
+The A396803 entry also conjectures: "a(n) == [1,2,0] repeating (mod 3)
+for n >= 1." `IterateExponentialModThree.result` proves this statement for
+the same sequence. The entry's revision 16, retrieved September 15, 2026,
+still presents it as a conjecture; the proof is repository-derived.
+The further conjectures for A396805 (moduli 3 and 5) and A396806
+(moduli 3 and 6) remain outside these results.
 
 ## Verified locator
 
