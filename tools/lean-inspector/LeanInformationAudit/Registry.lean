@@ -822,7 +822,7 @@ private def sameCertificate : Option AutoDerivedSemanticCertificate →
       a.arena.equal b.arena && a.outputEvidence.equal b.outputEvidence
   | _, _ => false
 
-private def sameEntry (left right : InformationRegistryEntry) : Bool :=
+def sameEntry (left right : InformationRegistryEntry) : Bool :=
   RegistrationReifier.occurrenceBinding left == RegistrationReifier.occurrenceBinding right &&
     left.catalogKind == right.catalogKind && left.statementIdentity == right.statementIdentity &&
     left.localRegistrationNames == right.localRegistrationNames &&
@@ -1944,9 +1944,17 @@ private def validate (event : TemplateOccurrenceEvent) (descriptor : Expr) : Met
     planIdentity := plan.planIdentity
     descriptorIdentity, actualIdentity, argumentInputs, extractionInputs }
 
+private initialize assessmentEvents : EnvExtension (Array TemplateOccurrenceKey) ←
+  registerEnvExtension (pure #[])
+
+/-- Read-only observations of actual occurrence assessments in this environment. -/
+def observedAssessments (env : Environment) : Array TemplateOccurrenceKey :=
+  assessmentEvents.getState env
+
 /-- Registration and final joined assessment share this function. Failure of a
 new binding check is retained metadata, never a module elaboration failure. -/
 def assess (event : TemplateOccurrenceEvent) (claim : Option TemplateBindingClaim) : MetaM BindingRecord := do
+  modifyEnv fun env => assessmentEvents.modifyState env (·.push event.key)
   match claim with
   | none => return { occurrence := event, descriptor := none, bindingOwner := none, result := .undeclared }
   | some claim =>
@@ -1995,6 +2003,59 @@ def withDeclaration (declaration : ResolvedDeclaration)
 
 def inventory (env : Environment) : Array TemplateOccurrenceEvent := occurrenceInventory.getState env
 def records (env : Environment) : Array BindingRecord := bindingRecords.getState env
+
+/-- Reuse producer-issued results for mathematical publication in this immutable
+environment. This join issues no certificate and makes no claim about subsequent
+filesystem changes. The authoritative report rechecks source inputs and assesses
+the full join through `assessJoined` before admission can consume its evidence. -/
+def cachedJoinedRecords (env : Environment) : Except String (Array BindingRecord) := do
+  let events := inventory env
+  let claims := bindingClaims.getState env
+  let retained := records env
+  for claim in claims do
+    unless (events.filter (·.key == claim.key)).size == 1 do
+      throw "incomplete_closure:dtr.cached_claim_occurrence"
+  for index in [:env.header.moduleNames.size] do
+    let owner := env.header.moduleNames[index]!
+    for record in bindingRecords.getModuleEntries env index do
+      unless record.bindingOwner.getD record.occurrence.key.registrationModule == owner do
+        throw "incomplete_closure:dtr.cached_record_owner"
+  events.mapM fun event => do
+    unless (events.filter (·.key == event.key)).size == 1 do
+      throw "incomplete_closure:dtr.cached_duplicate_occurrence"
+    let selected := claims.filter (·.key == event.key)
+    if selected.size > 1 then throw "unclassified_form:dtr.duplicate_claim"
+    let claim := selected[0]?
+    let owner := claim.map (·.owner)
+    let candidates := retained.filter fun record =>
+      record.occurrence.key == event.key && record.bindingOwner == owner
+    unless candidates.size == 1 do throw "incomplete_closure:dtr.cached_record_missing"
+    let record := candidates[0]!
+    let occurrence := record.occurrence
+    unless occurrence.statementIdentity == event.statementIdentity &&
+        occurrence.statement.equal event.statement && occurrence.levelParams == event.levelParams &&
+        occurrence.arena.equal event.arena && occurrence.unitName == event.unitName &&
+        occurrence.realizationName == event.realizationName &&
+        occurrence.registrationSource == event.registrationSource &&
+        occurrence.registrationSourceIdentity == event.registrationSourceIdentity do
+      throw "incomplete_closure:dtr.cached_record_inputs"
+    match claim, record.descriptor with
+    | none, none =>
+      unless record.result matches .undeclared do
+        throw "incomplete_closure:dtr.cached_undeclared"
+    | some claim, descriptor =>
+      unless claim.arena.equal event.arena && (match claim.descriptor, descriptor with
+        | none, none => true
+        | some a, some b => a.equal b
+        | _, _ => false) do
+        throw "incomplete_closure:dtr.cached_descriptor"
+      if let .declaredValidated certificate := record.result then
+        unless certificate.key == event.key && claim.resolutionDiagnostic.isNone && descriptor.isSome do
+          throw "incomplete_closure:dtr.cached_certificate"
+      if record.result matches .undeclared then
+        throw "incomplete_closure:dtr.cached_declared"
+    | _, _ => throw "incomplete_closure:dtr.cached_descriptor"
+    return record
 
 def sourcePath := TemplateAudit.sourcePath
 
