@@ -45,7 +45,11 @@ internal sealed class DetlefsFibonacciFermatPrimeCharacterizationRefutationDocum
                     + "set because two to the first power has remainder zero modulo two. The "
                     + "Fibonacci-type pseudoprime status of 219781 is prior art recorded by "
                     + "OEIS A094401, A093372, and A212424.",
-                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "oeis-a000040-detlefs-fibonacci-fermat-prime-characterization-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(
         string id,

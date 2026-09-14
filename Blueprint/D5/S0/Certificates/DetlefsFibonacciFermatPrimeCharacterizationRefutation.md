@@ -58,6 +58,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/DetlefsFibonacciFermatPrimeCharacterizationRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a000040-detlefs-fibonacci-fermat-prime-characterization-refutation` (refuted) by `D5/S0/Certificates/DetlefsFibonacciFermatPrimeCharacterizationRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a000040-detlefs-fibonacci-fermat-prime-characterization-refutation","declaration_gid":"D5/S0/Certificates/DetlefsFibonacciFermatPrimeCharacterizationRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* N. J. A. Sloane; Gary Detlefs (2014). *OEIS A000040, The prime numbers*. URL: <https://oeis.org/A000040>.
