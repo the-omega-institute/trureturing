@@ -1,0 +1,50 @@
+**命题 67.1（线性完备不提供统一抗噪裕量）。** 在二维实内积载体上，取 $\varepsilon>0$ 和
+
+$$
+A_\varepsilon=
+\begin{pmatrix}
+1&0\\
+1&\varepsilon
+\end{pmatrix}.
+$$
+
+每个 $A_\varepsilon$ 都单射，但其 Gram 特征值为
+
+$$
+\lambda_\pm(\varepsilon)
+=\frac{2+\varepsilon^2\pm\sqrt{4+\varepsilon^4}}{2},
+$$
+
+且 $\lambda_-(\varepsilon)\to0$、$\kappa(A_\varepsilon)\to\infty$ 当 $\varepsilon\to0^+$。不存在对这整个族统一有效的正下帧界。
+
+证明。行列式为 $\varepsilon$，故单射；直接计算
+
+$$
+A_\varepsilon^\ast A_\varepsilon
+=\begin{pmatrix}2&\varepsilon\\\varepsilon&\varepsilon^2\end{pmatrix},
+$$
+
+其特征多项式为 $\lambda^2-(2+\varepsilon^2)\lambda+\varepsilon^2$，得到所列特征值。为避免把两个接近数相减，用等价形式
+
+$$
+\lambda_-(\varepsilon)
+=\frac{2\varepsilon^2}
+{2+\varepsilon^2+\sqrt{4+\varepsilon^4}}.
+$$
+
+于是 $\lambda_-/\varepsilon^2\to1/2$、$\lambda_+\to2$，推出结论。更直接地，对真实向量零施加观测噪声 $(0,\nu)$，精确求解得到重建向量 $(0,\nu/\varepsilon)$；其误差为 $|\nu|/\varepsilon$。证毕。
+
+这是一般线性读出的反例，也可以作用在 qubit 无迹空间中任意指定的二维子空间上；它本身不是一个完整 qubit POVM。两项读出接近同一方向，虽然仍线性独立，却不能稳定地区分垂直于该方向的差异。
+
+条件数和绝对灵敏度还必须分别记账。若 $s>0$，把 $A$ 换成 $sA$，则
+
+$$
+\alpha\longmapsto s^2\alpha,
+\qquad
+\beta\longmapsto s^2\beta,
+\qquad
+\kappa(sA)=\kappa(A).
+$$
+
+同一绝对读数噪声下，重建放大因子却变成 $1/(s\sqrt\alpha)$。若只是改写单位，噪声也须同步乘以 $s$，物理预算不因此改善；若真的改变耦合，则必须重新标定噪声，不能仅凭形式缩放声称获取了更多信息。
+

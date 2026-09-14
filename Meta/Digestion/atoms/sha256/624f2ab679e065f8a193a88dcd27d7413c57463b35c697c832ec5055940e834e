@@ -1,0 +1,4 @@
+### 67.5 从线性重建到合法状态与可见预测
+
+无约束最小二乘只保证 $\rho_{\mathrm{raw}}=I/d+\widehat D$ 是迹为一的 Hermitian 矩阵，不保证正半定。可在 Hilbert–Schmidt 距离下把它投影到密度矩阵的闭凸集，得到 $\widehat\rho$。这一步与求解正规方程是两个不同操作。
+

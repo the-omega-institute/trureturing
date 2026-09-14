@@ -1,0 +1,72 @@
+**定理 67.3（扰动读出的稳定裕量）。** 设 $A$ 满足帧界 $0<\alpha\le\beta$，实际用于重建的标定映射为
+
+$$
+\widehat A=A+\Delta,
+\qquad
+\|\Delta\|_{\mathrm{op}}\le\eta<\sqrt\alpha.
+$$
+
+则对全部 $D\in\mathsf H_0$，
+
+$$
+(\sqrt\alpha-\eta)\|D\|_{\mathrm{HS}}
+\le\|\widehat A D\|_2
+\le(\sqrt\beta+\eta)\|D\|_{\mathrm{HS}}.
+$$
+
+所以 $\widehat A$ 单射，且
+
+$$
+\kappa(\widehat A)
+\le\frac{\sqrt\beta+\eta}{\sqrt\alpha-\eta}.
+$$
+
+若真实数据仍为 $b=AD+\xi$，而 $\widehat D$ 满足
+
+$$
+\widehat A^\ast(\widehat A\widehat D-b)=0,
+$$
+
+则
+
+$$
+\boxed{
+\|\widehat D-D\|_{\mathrm{HS}}
+\le
+\frac{\|\xi\|_2+\eta\|D\|_{\mathrm{HS}}}
+{\sqrt\alpha-\eta}.
+}
+$$
+
+证明。上下界分别来自反三角不等式和三角不等式：$\|AD\|-\|\Delta D\|\le\|\widehat AD\|\le\|AD\|+\|\Delta D\|$。正的下界保证单射，极端奇异值之比给出条件数估计。再把数据改写为
+
+$$
+b=\widehat A D+(\xi-\Delta D).
+$$
+
+以 $\widehat A$ 的下帧界 $(\sqrt\alpha-\eta)^2$ 应用命题 67.2，并用 $\|\xi-\Delta D\|_2\le\|\xi\|_2+\eta\|D\|_{\mathrm{HS}}$，即得结论。证毕。
+
+这里 $A$ 是数据真实遵循的读出，$\widehat A$ 是重建采用的标定模型；两者的角色不能在误差公式中静默互换。严格条件 $\eta<\sqrt\alpha$ 也有内容：在最弱奇异方向上，大小恰为 $\sqrt\alpha$ 的扰动就能把该方向完全消掉。
+
+若真实状态为密度矩阵，选择参考 $\rho_\ast=I/d$，则
+
+$$
+D=\rho-I/d,
+\qquad
+\|D\|_{\mathrm{HS}}^2
+=\operatorname{Tr}(\rho^2)-\frac1d
+\le1-\frac1d.
+$$
+
+在参考读数的误差也已计入 $\xi$ 的条件下，$\|\xi\|_2\le\nu$ 给出统一预算
+
+$$
+\boxed{
+\|\widehat D-D\|_{\mathrm{HS}}
+\le
+\frac{\nu+\eta\sqrt{1-1/d}}{\sqrt\alpha-\eta}.
+}
+$$
+
+这是有限维、指定读出、确定性范数误差下的结论；$\nu$ 和 $\eta$ 必须由实际采样与标定程序提供。
+

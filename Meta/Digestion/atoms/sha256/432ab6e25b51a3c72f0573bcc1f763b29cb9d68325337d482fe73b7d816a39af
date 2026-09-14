@@ -1,0 +1,63 @@
+### 68.3 多上下文预算使用的是 centered 方向
+
+第 65.1 节中单射条件的显示式有一个排版错误：理论正文中的孤立字符 `e` 应改为数学关系符号 $\ne$。
+
+$$
+\rho\ne\sigma
+\Longrightarrow
+\exists x,j,
+\quad
+\operatorname{Tr}(\rho E_{x,j})
+\ne
+\operatorname{Tr}(\sigma E_{x,j}).
+$$
+
+此外，第 65 节不能把源码中的 `effect` 自动称为物理 POVM outcome。`multi_context_budget_lower_bound` 的参数类型是
+
+$$
+\operatorname{effect}(x,j):\operatorname{traceZeroHermitian}(d),
+$$
+
+并且只假设
+
+$$
+\sum_j\operatorname{effect}(x,j)=0.
+$$
+
+这表达的是 centered effect 方向的线性归一化关系；源码没有为这些项加入正半定性、$0\le E\le I$ 或原始 POVM 的
+
+$$
+\sum_jE_{x,j}=I
+$$
+
+条件。因此需撤回“这些项本身就是概率 outcome”的表述。
+
+若从合法 POVM $(E_{x,j})_j$ 出发，应先定义
+
+$$
+\widetilde E_{x,j}
+=E_{x,j}-\frac{\operatorname{Tr}(E_{x,j})}{d}I_d.
+$$
+
+原 POVM 的归一化会给出
+
+$$
+\sum_j\widetilde E_{x,j}=0,
+$$
+
+而状态差上的读数满足
+
+$$
+\operatorname{Tr}\bigl((\rho-\sigma)\widetilde E_{x,j}\bigr)
+=
+\operatorname{Tr}\bigl((\rho-\sigma)E_{x,j}\bigr).
+$$
+
+所以第 65.1 节的下界应保留为 centered 线性读出预算：
+
+$$
+d^2-1\le\sum_xm_x,
+$$
+
+其中 $m_x$ 是每个上下文删去一个由零和关系决定的项后，剩余 centered 方向的项数。源码虽把参数命名为 `independentCount`，却未假设这些剩余方向线性独立；它们的 span 维数只保证不超过 $m_x$。要把它解释为物理概率测量，还必须另外提供原始 POVM 的正性和单位和条件。
+

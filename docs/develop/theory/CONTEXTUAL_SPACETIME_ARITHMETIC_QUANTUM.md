@@ -16728,3 +16728,526 @@ $$
 
 ## 追加锚（新终端）
 
+
+## 67. 有限读出的条件数、稳定重建与噪声预算
+
+第 66 节的有限证书回答哪些读出足以唯一确定指定有限维密度态读出任务中的每个状态。本节再问：读数有误差、耦合的标定也有误差时，这种唯一性是否仍能支持稳定预测？本节把帧下界、最小二乘误差与标定扰动接到同一预算中。新增连接为 `repo-derived/open` 理论推导，不增加 Lean 声明或冻结状态。
+
+### 67.1 读出方向的数目与最弱可见方向
+
+取 $d>1$，令实内积空间
+
+$$
+\mathsf H_0=\operatorname{Herm}_0(d)
+$$
+
+由无迹 Hermitian 矩阵组成，使用 Hilbert–Schmidt 内积与范数。给定有限指标集 $I$、权重 $w_i\ge0$ 和 Hermitian 读出方向 $E_i$，定义
+
+$$
+A:\mathsf H_0\longrightarrow\mathbb R^I,
+\qquad
+A(D)_i=\sqrt{w_i}\,\langle D,E_i\rangle_{\mathrm{HS}}.
+$$
+
+这里的 $E_i$ 首先是线性读出方向。只有另行满足 $0\le E_i\le I$、适当归一化以及物理测量实现条件时，才能赋予其概率 effect 的解释。若 $D=\rho-\rho_\ast$，$A(D)$ 表示扣除已知参考读数后的加权差值，而非未经中心化的一份概率分布。
+
+令 $G=A^\ast A$，并记
+
+$$
+\alpha=\lambda_{\min}(G),
+\qquad
+\beta=\lambda_{\max}(G).
+$$
+
+源码 `D5/S3/Observer/Linear/RobustFrameBounds.lean` 的 `robust_observer_frame_bounds` 给出这一载体上的谱帧界及单射性条件：
+
+$$
+\alpha\|D\|_{\mathrm{HS}}^2
+\le\|A(D)\|_2^2
+\le\beta\|D\|_{\mathrm{HS}}^2,
+\qquad
+A\text{ 单射}\iff\alpha>0.
+$$
+
+在 $\alpha>0$ 的范围，奇异值条件数为
+
+$$
+\kappa(A)=\sqrt{\frac{\beta}{\alpha}}.
+$$
+
+源码排除 $d=1$，因为这时无迹载体为零维，其构造没有最小特征值。源码使用 Lean 的总定义除法；$\alpha=0$ 时写出的形式商不能解释为通常数值分析中有限的可逆条件数。本节所有可逆条件数与除以 $\sqrt\alpha$ 的公式都明确要求 $\alpha>0$。
+
+同一个有限维读出一旦单射就有正的 $\alpha$；但对一族不同读出而言，单射性不提供共同的正下界。稳定预算需要的是
+
+$$
+\alpha\ge\alpha_0>0,
+$$
+
+并且需要说明使用的坐标尺度、权重和噪声范数。
+
+### 67.2 完备读出可以任意病态
+
+**命题 67.1（线性完备不提供统一抗噪裕量）。** 在二维实内积载体上，取 $\varepsilon>0$ 和
+
+$$
+A_\varepsilon=
+\begin{pmatrix}
+1&0\\
+1&\varepsilon
+\end{pmatrix}.
+$$
+
+每个 $A_\varepsilon$ 都单射，但其 Gram 特征值为
+
+$$
+\lambda_\pm(\varepsilon)
+=\frac{2+\varepsilon^2\pm\sqrt{4+\varepsilon^4}}{2},
+$$
+
+且 $\lambda_-(\varepsilon)\to0$、$\kappa(A_\varepsilon)\to\infty$ 当 $\varepsilon\to0^+$。不存在对这整个族统一有效的正下帧界。
+
+证明。行列式为 $\varepsilon$，故单射；直接计算
+
+$$
+A_\varepsilon^\ast A_\varepsilon
+=\begin{pmatrix}2&\varepsilon\\\varepsilon&\varepsilon^2\end{pmatrix},
+$$
+
+其特征多项式为 $\lambda^2-(2+\varepsilon^2)\lambda+\varepsilon^2$，得到所列特征值。为避免把两个接近数相减，用等价形式
+
+$$
+\lambda_-(\varepsilon)
+=\frac{2\varepsilon^2}
+{2+\varepsilon^2+\sqrt{4+\varepsilon^4}}.
+$$
+
+于是 $\lambda_-/\varepsilon^2\to1/2$、$\lambda_+\to2$，推出结论。更直接地，对真实向量零施加观测噪声 $(0,\nu)$，精确求解得到重建向量 $(0,\nu/\varepsilon)$；其误差为 $|\nu|/\varepsilon$。证毕。
+
+这是一般线性读出的反例，也可以作用在 qubit 无迹空间中任意指定的二维子空间上；它本身不是一个完整 qubit POVM。两项读出接近同一方向，虽然仍线性独立，却不能稳定地区分垂直于该方向的差异。
+
+条件数和绝对灵敏度还必须分别记账。若 $s>0$，把 $A$ 换成 $sA$，则
+
+$$
+\alpha\longmapsto s^2\alpha,
+\qquad
+\beta\longmapsto s^2\beta,
+\qquad
+\kappa(sA)=\kappa(A).
+$$
+
+同一绝对读数噪声下，重建放大因子却变成 $1/(s\sqrt\alpha)$。若只是改写单位，噪声也须同步乘以 $s$，物理预算不因此改善；若真的改变耦合，则必须重新标定噪声，不能仅凭形式缩放声称获取了更多信息。
+
+### 67.3 最小二乘中的噪声如何进入重建
+
+**命题 67.2（有参考读数的重建预算）。** 设 $A$ 满足下帧界 $\alpha>0$，数据模型为
+
+$$
+b=A(D)+\xi,
+$$
+
+且重建 $\widehat D$ 满足正规方程
+
+$$
+A^\ast(A\widehat D-b)=0.
+$$
+
+则
+
+$$
+\boxed{
+\|\widehat D-D\|_{\mathrm{HS}}
+\le\frac{\|\xi\|_2}{\sqrt\alpha}.
+}
+$$
+
+证明。令 $e=\widehat D-D$。正规方程给出 $A^\ast(Ae-\xi)=0$，从而
+
+$$
+\|Ae\|_2^2=\langle Ae,\xi\rangle
+\le\|Ae\|_2\|\xi\|_2.
+$$
+
+若 $Ae=0$，下帧界推出 $e=0$；否则约去 $\|Ae\|_2$。两种情形均有 $\sqrt\alpha\|e\|_{\mathrm{HS}}\le\|\xi\|_2$。这一推导的抽象有限维内积空间版本由 `D5/S3/Observer/Linear/LeastSquaresReconstructionNoiseBound.lean` 的 `least_squares_reconstruction_noise_bound` 承担。证毕。
+
+这个命题不自行给出 $\xi$ 的统计分布或有限采样置信度。若采样、刻度近似和其他建模误差已在同一个加权数据范数中分别有界，才能用三角不等式合并。第 58 节的黄金刻度误差只有经过该节要求的响应正则性或另行证明的范数转换，才能作为这里的输入噪声界。
+
+### 67.4 耦合标定误差与噪声共用一个预算
+
+**定理 67.3（扰动读出的稳定裕量）。** 设 $A$ 满足帧界 $0<\alpha\le\beta$，实际用于重建的标定映射为
+
+$$
+\widehat A=A+\Delta,
+\qquad
+\|\Delta\|_{\mathrm{op}}\le\eta<\sqrt\alpha.
+$$
+
+则对全部 $D\in\mathsf H_0$，
+
+$$
+(\sqrt\alpha-\eta)\|D\|_{\mathrm{HS}}
+\le\|\widehat A D\|_2
+\le(\sqrt\beta+\eta)\|D\|_{\mathrm{HS}}.
+$$
+
+所以 $\widehat A$ 单射，且
+
+$$
+\kappa(\widehat A)
+\le\frac{\sqrt\beta+\eta}{\sqrt\alpha-\eta}.
+$$
+
+若真实数据仍为 $b=AD+\xi$，而 $\widehat D$ 满足
+
+$$
+\widehat A^\ast(\widehat A\widehat D-b)=0,
+$$
+
+则
+
+$$
+\boxed{
+\|\widehat D-D\|_{\mathrm{HS}}
+\le
+\frac{\|\xi\|_2+\eta\|D\|_{\mathrm{HS}}}
+{\sqrt\alpha-\eta}.
+}
+$$
+
+证明。上下界分别来自反三角不等式和三角不等式：$\|AD\|-\|\Delta D\|\le\|\widehat AD\|\le\|AD\|+\|\Delta D\|$。正的下界保证单射，极端奇异值之比给出条件数估计。再把数据改写为
+
+$$
+b=\widehat A D+(\xi-\Delta D).
+$$
+
+以 $\widehat A$ 的下帧界 $(\sqrt\alpha-\eta)^2$ 应用命题 67.2，并用 $\|\xi-\Delta D\|_2\le\|\xi\|_2+\eta\|D\|_{\mathrm{HS}}$，即得结论。证毕。
+
+这里 $A$ 是数据真实遵循的读出，$\widehat A$ 是重建采用的标定模型；两者的角色不能在误差公式中静默互换。严格条件 $\eta<\sqrt\alpha$ 也有内容：在最弱奇异方向上，大小恰为 $\sqrt\alpha$ 的扰动就能把该方向完全消掉。
+
+若真实状态为密度矩阵，选择参考 $\rho_\ast=I/d$，则
+
+$$
+D=\rho-I/d,
+\qquad
+\|D\|_{\mathrm{HS}}^2
+=\operatorname{Tr}(\rho^2)-\frac1d
+\le1-\frac1d.
+$$
+
+在参考读数的误差也已计入 $\xi$ 的条件下，$\|\xi\|_2\le\nu$ 给出统一预算
+
+$$
+\boxed{
+\|\widehat D-D\|_{\mathrm{HS}}
+\le
+\frac{\nu+\eta\sqrt{1-1/d}}{\sqrt\alpha-\eta}.
+}
+$$
+
+这是有限维、指定读出、确定性范数误差下的结论；$\nu$ 和 $\eta$ 必须由实际采样与标定程序提供。
+
+### 67.5 从线性重建到合法状态与可见预测
+
+无约束最小二乘只保证 $\rho_{\mathrm{raw}}=I/d+\widehat D$ 是迹为一的 Hermitian 矩阵，不保证正半定。可在 Hilbert–Schmidt 距离下把它投影到密度矩阵的闭凸集，得到 $\widehat\rho$。这一步与求解正规方程是两个不同操作。
+
+**命题 67.4（凸投影与后续概率的误差）。** 设 $\rho$ 是真实密度矩阵，$\widehat\rho$ 是上述 Hilbert–Schmidt 最近点投影。若 $\|\rho_{\mathrm{raw}}-\rho\|_{\mathrm{HS}}\le r$，则
+
+$$
+\|\widehat\rho-\rho\|_{\mathrm{HS}}\le r.
+$$
+
+若此后施加同一个量子通道 $\Phi$ 和同一个有限 POVM，输出分布分别为 $p,\widehat p$，则
+
+$$
+\boxed{
+\operatorname{TV}(p,\widehat p)
+\le\frac12\|\Phi(\widehat\rho)-\Phi(\rho)\|_1
+\le\frac12\|\widehat\rho-\rho\|_1
+\le\frac{\sqrt d}{2}\,r.
+}
+$$
+
+证明。记 $u=\rho_{\mathrm{raw}}$、$v=\widehat\rho$。闭凸集的最近点条件给出 $\langle u-v,\rho-v\rangle_{\mathrm{HS}}\le0$。展开 $\|u-\rho\|_{\mathrm{HS}}^2$，得到它不小于 $\|v-\rho\|_{\mathrm{HS}}^2$。后续测量和通道的迹距离收缩分别给出前两条不等式；最后一条是对至多 $d$ 个奇异值应用 Cauchy–Schwarz。证毕。
+
+投影后的 $\widehat\rho-I/d$ 不必满足原正规方程；误差不增来自凸几何。上述后续通道必须是作用于该状态的同一个已指定通道。若真正后续还依赖未纳入状态的旧环境记录，就不能直接套用；应先扩大联合状态，或另计历史回流误差。
+
+### 67.6 这给历史保留问题增加了哪一个约束
+
+Zeckendorf 合法窗口确定候选构型载体，实际耦合与读出标定确定 $E_i$；权重还包含统计加权等分析选择。两者共同确定最弱可见方向及 $\alpha$。对基底作纯标签重排会给出等距的坐标变换，奇异值不变；把 Fibonacci 数值直接改当物理耦合强度，则是在改变 $A$，必须重新计算谱界。
+
+有限证书解决的是“保留的读出是否足够”；$\alpha$ 解决的是“这些读出是否足够敏感”；$\eta$ 和 $\nu$ 解决的是“标定及采样是否准确到可以使用这种敏感度”。在完整状态重建的任务中，给定重建误差容限 $r_\ast$，一个充分条件为
+
+$$
+\eta<\sqrt\alpha,
+\qquad
+\nu+\eta\sqrt{1-1/d}
+\le r_\ast(\sqrt\alpha-\eta).
+$$
+
+稳定预测还需后续演化对所选状态描述闭合，或者另有已校准的回流误差界。若只预测少数目标读数，则不必要求完整状态重建，所需的稳定常数应只针对那些目标；完整 tomography 的最弱方向不能自动成为所有任务的成本下界。
+
+本节的谱帧界与最小二乘基础按上述两份项目源码定位；扰动、凸投影及任务解释属于本节的有限维连接推导。所用线性代数、最小二乘和迹距离收缩为标准数学结构，`repo-derived` 表示本卷中的组合与适用域，不声称发明这些结构。本节没有从编码推导物理耦合、采样置信度、唯一测量结果或宇宙的经典性，也没有新增 Lean 形式化或覆盖。
+
+## 追加锚（新终端）
+
+## 68. 适用域校准与读出约束
+
+第 61–66 节的有限维结论可以继续使用，但需要把矩阵记号、读出类型和任务范围校准到源码实际证明的假设。本节只修正适用域，不新增 Lean 声明；正文状态为 `repo-derived/open`。
+
+### 68.1 受控复制的恢复必须是左右共轭
+
+第 63.1 节原先写成
+
+$$
+U_{\mathrm{copy}}^{\dagger}J(\rho)=B(\rho).
+$$
+
+这条写法应撤回。源码 `D5/S3/Quantum/Decoherence/ReducedRecordAccessDefect.lean` 的 `unitaryEvolution` 是左右乘法；定理 `reduced_irreversibility_is_access_defect` 的恢复分支实际断言
+
+$$
+\operatorname{unitaryEvolution}
+\bigl(U_{\mathrm{copy}}^{\dagger},J(\rho)\bigr)
+=B(\rho),
+$$
+
+亦即
+
+$$
+\boxed{
+U_{\mathrm{copy}}^{\dagger}J(\rho)U_{\mathrm{copy}}=B(\rho)
+}.
+$$
+
+对 $\sigma$ 同样有
+
+$$
+U_{\mathrm{copy}}^{\dagger}J(\sigma)U_{\mathrm{copy}}=B(\sigma).
+$$
+
+保留的结论是：包括记录自由度的受控复制仍由显式幺正控制，访问联合记录并施加逆耦合可以恢复；只访问偏迹后的系统矩阵，则不能由同一个函数恢复两个不同联合矩阵。这里的左右共轭是矩阵演化的必要部分，不能删去。
+
+### 68.2 正权重改变的是度量尺度，不自动改变观察商
+
+第 61.5 节原先说“改变 effect 集合或权重，则半范数、商空间和容量账本都会改变”。其中关于权重的部分需要撤回并加条件。
+
+在固定 centered effect 家族、且所有权重仍满足
+
+$$
+\forall i,\qquad w_i>0,
+$$
+
+时，`D5/S3/Quantum/Measurement/OperationalObservationKernel.lean` 中的 私有引理 `operational_seminorm_kernel` 表明
+
+$$
+\ker\|D\|_{\mathrm{obs}}
+=
+\operatorname{span}_{\mathbb R}\{E_i\}^{\perp}
+$$
+
+与正权重的具体数值无关。加权读出只是对每个坐标乘以非零因子 $\sqrt{w_i}$；因此状态的零距离关系、`OperationalStateQuotient` 的商以及由 effect span 定义的
+
+$$
+C(E)=\dim\operatorname{span}(\{I\}\cup E)-1,
+\qquad
+Q(E)=\dim\operatorname{span}(\{I\}\cup E)^{\perp}
+$$
+
+保持不变。`ObserverCapacityConservation.lean` 的 `observer_capacity_conservation` 没有权重参数，正是这一点的源码边界。
+
+应保留的校准说法是：改变严格正权重通常改变半范数和距离的数值尺度；改变 effect 集合可能改变 kernel、商和容量。若允许某些权重降为零，kernel 与商应对有效家族
+
+$$
+E_{\mathrm{eff}}=\{E_i:w_i>0\}
+$$
+
+重新计算；此时由有效家族定义的容量才可能改变，而把全部未加权 effect 仍计入 $C(E),Q(E)$ 的名义账本则不会自动改变。若权重不再严格为正，`operational_observation_kernel_and_metric` 的正权重假设不再适用。
+
+### 68.3 多上下文预算使用的是 centered 方向
+
+第 65.1 节中单射条件的显示式有一个排版错误：理论正文中的孤立字符 `e` 应改为数学关系符号 $\ne$。
+
+$$
+\rho\ne\sigma
+\Longrightarrow
+\exists x,j,
+\quad
+\operatorname{Tr}(\rho E_{x,j})
+\ne
+\operatorname{Tr}(\sigma E_{x,j}).
+$$
+
+此外，第 65 节不能把源码中的 `effect` 自动称为物理 POVM outcome。`multi_context_budget_lower_bound` 的参数类型是
+
+$$
+\operatorname{effect}(x,j):\operatorname{traceZeroHermitian}(d),
+$$
+
+并且只假设
+
+$$
+\sum_j\operatorname{effect}(x,j)=0.
+$$
+
+这表达的是 centered effect 方向的线性归一化关系；源码没有为这些项加入正半定性、$0\le E\le I$ 或原始 POVM 的
+
+$$
+\sum_jE_{x,j}=I
+$$
+
+条件。因此需撤回“这些项本身就是概率 outcome”的表述。
+
+若从合法 POVM $(E_{x,j})_j$ 出发，应先定义
+
+$$
+\widetilde E_{x,j}
+=E_{x,j}-\frac{\operatorname{Tr}(E_{x,j})}{d}I_d.
+$$
+
+原 POVM 的归一化会给出
+
+$$
+\sum_j\widetilde E_{x,j}=0,
+$$
+
+而状态差上的读数满足
+
+$$
+\operatorname{Tr}\bigl((\rho-\sigma)\widetilde E_{x,j}\bigr)
+=
+\operatorname{Tr}\bigl((\rho-\sigma)E_{x,j}\bigr).
+$$
+
+所以第 65.1 节的下界应保留为 centered 线性读出预算：
+
+$$
+d^2-1\le\sum_xm_x,
+$$
+
+其中 $m_x$ 是每个上下文删去一个由零和关系决定的项后，剩余 centered 方向的项数。源码虽把参数命名为 `independentCount`，却未假设这些剩余方向线性独立；它们的 span 维数只保证不超过 $m_x$。要把它解释为物理概率测量，还必须另外提供原始 POVM 的正性和单位和条件。
+
+### 68.4 第 63 节的裸矩阵定理与密度态见证分开
+
+`reduced_irreversibility_is_access_defect` 及其 canonical bridge 的输入是
+
+$$
+\rho,\sigma:\operatorname{QubitMatrix},
+$$
+
+源码假设只有对角元相等和某个非对角元不同；没有在该定理的参数中要求 Hermitian、正半定或迹为 $1$。因此第 63.1 节把任意参数直接称为“两个密度态”的说法应撤回，改为“两个 qubit 矩阵的线性见证”。
+
+文件末尾的具体例子取 $\rho=|+\rangle\langle+|$、$\sigma=|-\rangle\langle-|$。从这两个归一化向量的外积可直接检验正性和迹为一；该 Lean `example` 的结论本身只记录对角相等及非对角不同。因此可以在上述合法性检验后保留如下物理实例：在这个例子中，偏迹相同、联合矩阵不同，并且联合逆耦合可恢复。一般的密度态版本需要显式加入
+
+$$
+\rho\succeq0,\quad \sigma\succeq0,
+\qquad
+\operatorname{Tr}\rho=\operatorname{Tr}\sigma=1,
+$$
+
+或直接引用该具体见证。
+
+同样，第 63.3 节的恢复误差下界不是任意记录通道的定理。`FiniteRecordRecoveryError.lean` 的 `finite_record_recovery_error_lower_bound` 固定了有限支撑振幅 $c:\mathbb Z\to\mathbb C$、归一化、整数标签 $q$、非零位移 $q(i)-q(j)$，并对由 `FiniteShiftedRecordChannel` 构造的具体通道 $\Lambda$ 以及任意恢复通道 $R$ 给出
+
+$$
+\sup_{\tau}D\bigl(R\Lambda(\tau),\tau\bigr)
+\ge
+\frac{1-|\gamma(q(i)-q(j))|}{2}.
+$$
+
+因此应保留“该有限移位记录模型中的恢复下界”，撤回任何对任意记录通道、任意环境或普适物理恢复的外推。
+
+### 68.5 稳定深度的维数必须区分 identity 与 centered predictive space
+
+第 62.3 节前面定义的 $\mathcal V_n$ 包含单位方向 $I$，而源码 `CenteredEffectStabilityDepthBound.lean` 的 `towerSpace` 与 `predictiveSpace` 都位于 trace-zero Hermitian 载体。源码定理 `centered_effect_stability_depth_bound` 的精确上界是
+
+$$
+\operatorname{sd}(H,E)
+\le
+\dim\mathcal P_{\infty}-\dim\mathcal T_0,
+$$
+
+其中
+
+$$
+\mathcal P_{\infty}=\operatorname{predictiveSpace}(H,E),
+\qquad
+\mathcal T_0=\operatorname{towerSpace}(H,E,0).
+$$
+
+它还给出
+
+$$
+\dim\mathcal P_{\infty}-\dim\mathcal T_0
+\le
+d^2-1-\dim\mathcal T_0.
+$$
+
+因此原先写成 $\dim(\mathcal V_{\infty})-\dim(\mathcal T_0)$ 的公式应撤回，除非明确重新定义 $\mathcal V_{\infty}$ 为 centered predictive space。若保留第 62.1 节含单位的全 Hermitian 观察塔，在另行假定单位方向被单列且动力学保持相应 trace-zero 子空间时，可写
+
+$$
+\mathcal V_{\infty}=\mathbb RI\oplus\mathcal P_{\infty};
+$$
+
+此时单位方向不计入 trace-zero 稳定深度。保留的结论是：固定有限维载体和固定线性 Heisenberg 作用下，某一步 tower 稳定后以后永久稳定，并存在有限深度证书。
+
+### 68.6 有限 effect 证书分离全部密度态
+
+第 66.5 节把有限证书说成“当前指定密度态读出的完备性”，范围过窄。`FiniteInformationalEffectCertificate.lean` 的 `finite_informational_effect_certificate` 假设的是整个映射
+
+$$
+\rho\longmapsto
+\bigl(\operatorname{Tr}(\rho F_i)\bigr)_{i\in I}
+$$
+
+在全部 $\operatorname{DensityState}(\operatorname{Fin}d)$ 上 injective。它抽取有限 $S\subseteq I$，满足
+
+$$
+|S|\le d^2-1
+$$
+
+以及
+
+$$
+\operatorname{span}_{\mathbb R}
+\left\{
+F_i-\frac{\operatorname{Tr}(F_i)}{d}I_d:i\in S
+\right\}
+=\operatorname{Herm}_0(d),
+$$
+
+并且同一子族仍分离全部密度态：
+
+$$
+\left[
+\forall i\in S,
+\quad
+\operatorname{Tr}(\rho F_i)=\operatorname{Tr}(\sigma F_i)
+\right]
+\Longrightarrow
+\rho=\sigma.
+$$
+
+所以应把旧说法改为“指定有限维密度态读出任务的全体状态完备性”。它仍然是任务索引的：不保证环境记录已保留，不保证未来 Heisenberg 方向仍在该子族 span 内，也不保证约化不可见的联合相干可以恢复。
+
+### 68.7 校准后的使用规则
+
+六项边界合并后，当前可安全使用的推理链是
+
+$$
+\begin{aligned}
+&\text{centered effect span}
+\longrightarrow
+\text{当前读出商与残差},\\
+&\text{trace-zero predictive tower}
+\longrightarrow
+\text{有限观察深度},\\
+&\text{具体记录通道}
+\longrightarrow
+\text{具体相干衰减与恢复下界},\\
+&\text{联合幺正}
+\longrightarrow
+\text{左右共轭的整体恢复}.
+\end{aligned}
+$$
+
+因此，Zeckendorf 合法构型仍可作为离散索引和约束窗口；它不自动提供 POVM 正性、Hamiltonian、记录通道、全体未来完备性或环境恢复。所谓“保留多少历史”必须同时标明：使用的是哪一类 effect、是否已经 centered、动力学位于哪个 trace-zero 载体、记录通道的具体假设是什么，以及完备性是针对全部有限维密度态还是仅针对一个目标预测任务。
+
+## 追加锚（新终端）
