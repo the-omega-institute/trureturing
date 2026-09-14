@@ -33,4 +33,7 @@ def claim : Prop :=
 private theorem first_case : v 47 1 < u 47 1 := by
   decide +kernel
 
+private theorem fifteenth_case : v 47 15 < u 47 15 := by
+  decide +kernel
+
 end D5.S3.Factorization.ErdosConsecutiveProductSquarefreeFactorRefutation
