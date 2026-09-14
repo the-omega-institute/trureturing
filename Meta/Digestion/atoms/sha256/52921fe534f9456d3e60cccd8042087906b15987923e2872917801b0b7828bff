@@ -1,0 +1,12 @@
+**命题 34.6（矩形化惩罚的可测差值）。** 对有限模型族 $\mathcal M$、有限观测集 $Y$ 和固定策略 $\pi:Y\to A$，令 $p_m(y)$ 为模型 $m$ 的观测概率，令 $u_m(y)=p_m(y)c_m(y,\pi(y))\ge0$。定义全局最坏值与逐分支矩形化值
+$$
+J_{\mathcal M}(\pi)=\sup_{m\in\mathcal M}\sum_y u_m(y),
+\qquad
+J_{\square}(\pi)=\sum_y\sup_{m\in\mathcal M}u_m(y).
+$$
+则
+$$
+J_{\mathcal M}(\pi)\le J_{\square}(\pi).
+$$
+差值 $\Delta_{\rm rect}(\pi)=J_{\square}(\pi)-J_{\mathcal M}(\pi)\ge0$ 是把同一个全局模型错误拆成逐分支独立模型选择所付出的过估计。有限族中，若存在一个模型在所有正权分支同时达到各项上确界，则差值为零；矩形模型族则允许按分支拼接，递推值与该矩形化值相容。
+

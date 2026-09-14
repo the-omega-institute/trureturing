@@ -1,0 +1,52 @@
+**定理 38.4（局部 Bellman 半径与反馈策略损失，repo-derived/open）。** 在假设38.3下，对有限非空集上的函数定义 $\operatorname{sp}(f)=\max f-\min f$。记 $\widehat K_tf(z,a)=\sum_{z'}\widehat K_t(z'\mid z,a)f(z')$。从 $\widehat V_H=\widehat g$ 倒向定义
+$$
+\widehat Q_t(z,a)=\widehat r_t(z,a)+\widehat K_t\widehat V_{t+1}(z,a),
+\qquad
+\widehat V_t(z)=\max_{a\in A_t(z)}\widehat Q_t(z,a).
+$$
+从假设中的 $b_H$ 同时倒向计算逐动作半径和逐摘要半径：
+$$
+\begin{aligned}
+\beta_t(z,a)={}&\rho_t(z,a)
+ +\epsilon_t(z,a)\operatorname{sp}(\widehat V_{t+1})\\
+ &+\widehat K_tb_{t+1}(z,a)
+ +\epsilon_t(z,a)\operatorname{sp}(b_{t+1}),\\
+b_t(z)={}&\max_{a\in A_t(z)}\beta_t(z,a).
+\end{aligned}
+$$
+振幅均在完整实际像 $Z_{t+1}$ 上取。令 $V_t^*(h)$ 为使用全部公开历史的最优尾价值，$Q_t^*(h,a)$ 为先强制动作 $a$ 再最优延续的价值。则
+$$
+|Q_t^*(h,a)-\widehat Q_t(q_t(h),a)|\le\beta_t(q_t(h),a),
+\qquad
+|V_t^*(h)-\widehat V_t(q_t(h))|\le b_t(q_t(h)).
+$$
+取固定破同分规则的摘要贪心动作 $\widehat a_t(z)\in\arg\max_a\widehat Q_t(z,a)$，在真实观测后用 $U_t$ 更新，得到可实施策略 $\pi_t(h)=\widehat a_t(q_t(h))$。其真实价值满足
+$$
+|V_t^\pi(h)-\widehat V_t(q_t(h))|\le b_t(q_t(h)),
+\qquad
+0\le V_t^*(h)-V_t^\pi(h)\le2b_t(q_t(h)).
+$$
+这不要求最优动作唯一，也不要求精确最优策略与摘要策略走相同动作序列。
+
+证明。对概率向量 $P,Q$ 和有限实函数 $f$，从 $f$ 减去最小值，利用 $P-Q$ 正、负部分各有质量 $\operatorname{TV}(P,Q)$，得到
+$$
+|Pf-Qf|\le\operatorname{TV}(P,Q)\operatorname{sp}(f).
+$$
+有限历史树上每个动作后的尾策略可按观测分别选取，有限最大值均取到，故
+$$
+Q_t^*(h,a)=r_t(h,a)+\sum_y p_t(y\mid h,a)V_{t+1}^*(hay),
+\qquad V_t^*(h)=\max_aQ_t^*(h,a).
+$$
+终端由 $b_H$ 起步。若下一层价值误差受 $b_{t+1}\circ q_{t+1}$ 控制，在上述真值递推和摘要递推之间插入 $K_t^q\widehat V_{t+1}$，得到
+$$
+|Q_t^*(h,a)-\widehat Q_t(z,a)|
+\le\rho_t(z,a)+\epsilon_t(z,a)\operatorname{sp}(\widehat V_{t+1})
+ +K_t^qb_{t+1}(h,a).
+$$
+再次应用 TV 不等式，最后一项至多
+$\widehat K_tb_{t+1}(z,a)+\epsilon_t(z,a)\operatorname{sp}(b_{t+1})$，即得 $\beta_t$。同一合法动作集上两个最大值之差不超过各项差的最大值，得 $b_t$，完成倒向归纳。对 $V^\pi$ 重复归纳，每步只取 $\widehat a_t(z)$；它在摘要模型中的价值恰为 $\widehat V_t$，同一半径仍有效。两次与 $\widehat V_t$ 比较给 $2b_t$，最优性给非负。在线等式使执行中的摘要始终恰为 $q_t(h_t)$；用 $\widehat K_t$ 虚构一个后继替代真实 $y$ 的更新没有这项保证。
+
+第二个 TV 振幅项不可一般删除：取一期任务、单初态、单动作，真实观测 $y\sim\operatorname{Bernoulli}(e)$，$0<e<1$，终端摘要为 $y$。令即时真、近似报酬均为零，$\widehat K_0=\delta_0$，$g(y)=y$，$\widehat g(y)=0$，$b_1(y)=y$。在线更新取 $U_0(z,a,y)=y$，局部参数为 $\rho_0=0,\epsilon_0=e$。真实价值为 $e$，近似价值为零；$\operatorname{sp}(\widehat V_1)=0$ 且 $\widehat K_0b_1=0$，故删除末项会错误给出零半径。保留 $e\operatorname{sp}(b_1)=e$ 恰覆盖真实误差。
+
+一般的近似信息状态动态规划、时变压缩及二倍策略损失界已有 [Subramanian、Sinha、Seraj与Mahajan，JMLR 23(12)，2022，定义7、定理9](https://www.jmlr.org/papers/v23/20-1165.html)；它们不是本节的新原理。这里的桥接对象是可在线切换的实际像、精确保留的动作守卫，以及沿后继分布传播的局部半径 $b_t(z)$。第二个 TV 振幅项专门补偿非恒定误差预算的分布迁移。若各 $b_{t+1}$ 常值，此项为零，后继期望退为该常数，回到统一半径形式。本卷定理21.6则比较固定摘要下共同策略的完整记录律；本定理只需后继摘要律和报酬界，也不声称完整记录 TV 受这些局部价值半径控制。证毕。
+
