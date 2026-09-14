@@ -108,4 +108,50 @@ run_meta do
     providerPinProbe pointwiseProvider "interior_binder"
   finally setEnv saved
 
+-- A genuine current-module declaration has no imported owner.
+private theorem currentDeclaration : True := True.intro
+
+private def reflectionNatAdd : MetaM Unit := do
+  let env ← getEnv
+  let owner := declaringModuleOf env ``Nat.add
+  unless owner == some `Init.Prelude do
+    throwError "reflection_nat_add: expected Init.Prelude, got {owner}"
+  -- Nat.add is outside the provider set, so changing the owner's argument alone
+  -- cannot change checkedProvider Nat.add's unknown-provider outcome. Reflect
+  -- the wrapper's declaration too: the specified bypass must remove this edge.
+  -- This pins the implementation edge, not arbitrary semantic data flow.
+  let some body := (← getConstInfo ``checkedProvider).value?
+    | throwError "reflection_nat_add: missing checkedProvider body"
+  unless (body.find? (·.isConstOf ``declaringModuleOf)).isSome do
+    throwError "reflection_nat_add: checkedProvider bypassed declaringModuleOf"
+  logInfo m!"P1_REFLECTION reflection_nat_add owner={owner} wrapper_dependency=present"
+
+private def reflectionProvider (name : Name) : MetaM Unit := do
+  let env ← getEnv
+  unless declaringModuleOf env name == some providerModule do
+    throwError "reflection_provider_{name.getString!}: incorrect owner"
+  let info ← getConstInfo name
+  let checked ← checkedProvider name
+  unless info.name == checked.name && info.type.equal checked.type &&
+      info.levelParams == checked.levelParams do
+    throwError "reflection_provider_{name.getString!}: lookup changed metadata"
+  logInfo m!"P1_REFLECTION reflection_provider_{name.getString!} lookup_and_wrapper accepted"
+
+private def reflectionCurrent : MetaM Unit := do
+  let env ← getEnv
+  unless declaringModuleOf env ``currentDeclaration == none do
+    throwError "reflection_current_module: expected no imported owner"
+  let owner := (declaringModuleOf env ``currentDeclaration).getD env.header.mainModule
+  unless owner == `LeanInformationAudit.Tests.RegistrationGates.ReifierProviderBinding do
+    throwError "reflection_current_module: incorrect main module"
+  unless declaringModuleOf env `P1Fixture.missing == none do
+    throwError "reflection_current_module: missing declaration acquired owner"
+  logInfo m!"P1_REFLECTION reflection_current_module none fallback={owner} missing=none"
+
+run_meta do
+  reflectionNatAdd
+  for name in #[pointwiseProvider, sensitivityProvider, variationProvider] do
+    reflectionProvider name
+  reflectionCurrent
+
 end LeanInformationAudit.Tests.ReifierProviderBinding

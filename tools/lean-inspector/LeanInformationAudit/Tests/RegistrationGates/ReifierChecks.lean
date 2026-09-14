@@ -512,4 +512,21 @@ elab "check_internal_rollback" : command => do
   for observation in observations do logInfo observation
 check_internal_rollback
 
+-- An export is a name-resolution alias of the genuine declaration, not a wrapper.
+namespace Exported
+export D5.S3.ConceptDynamics.InformationEscape.ReifierTemplates (pointwise)
+end Exported
+
+theorem exportedClean (x : Bool) : x.not.not = x := Bool.not_not _
+register_information_theorem exportedClean
+  via (Exported.pointwise (fun x : Bool => x.not.not) (fun x => x)) in eqArena
+run_meta do
+  let env ← getEnv
+  let some entry := InformationRegistry.find? env ``exportedClean
+    | throwError "provider_export: missing registration"
+  validateDerivedCertificate entry
+  match ← validatePersistedEntry env entry with
+  | .error reason => throwError reason
+  | .ok () => logInfo "P1_A7 provider_export insertion_and_consumer accepted"
+
 end LeanInformationAudit.Tests.ReifierChecks
