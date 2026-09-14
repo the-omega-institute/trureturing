@@ -1,0 +1,8 @@
+**定理 8.4（训练输出商与测试行边界，repo-derived）。** 给设计矩阵 $D\in\mathbb R^{n\times d}$、标签 $y\in\mathbb R^n$，$L(\theta)=\|D\theta-y\|^2/(2n)$。令 $z=D\theta$，则
+$$
+z^+=z-\frac\eta n DD^\top(z-y).
+$$
+对全部 $\theta\in\mathbb R^d$，测试行 $v^\top\theta$ 能由 $z$ 恢复，当且仅当 $v^\top$ 属于 $D$ 的行空间。
+
+证明。参数更新为 $\theta^+=\theta-\eta D^\top(D\theta-y)/n$，左乘 $D$ 即得。若 $v^\top=\lambda^\top D$，测试值为 $\lambda^\top z$。反向，若 $v\notin\operatorname{range}(D^\top)$，取其在 $\ker D$ 上的非零正交分量 $h$，则 $Dh=0$ 且 $v^\top h=\|h\|^2>0$；$\theta=0,h$ 的训练输出同为零，测试值不同。训练集上的精确商不自动回答任意测试输入。证毕。
+
