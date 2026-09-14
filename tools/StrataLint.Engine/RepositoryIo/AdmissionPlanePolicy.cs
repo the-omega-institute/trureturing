@@ -58,9 +58,11 @@ internal static class AdmissionPlanePolicy
     internal const string MixedCode = "ADMISSION-PLANE-MIXED";
 
     internal static AdmissionPlaneDecision Evaluate(
+        RawRepositorySnapshot protectedBase,
         RawRepositorySnapshot candidate,
         IReadOnlyList<string> changedPaths)
     {
+        ArgumentNullException.ThrowIfNull(protectedBase);
         ArgumentNullException.ThrowIfNull(candidate);
         ArgumentNullException.ThrowIfNull(changedPaths);
         if (changedPaths.Count == 0)
@@ -70,44 +72,61 @@ internal static class AdmissionPlanePolicy
 
         var fileMap = candidate.Entries.FirstOrDefault(
             static entry => entry.Path == FileMapPath);
-        return fileMap is null
-            ? Failed(
+        if (fileMap is null)
+        {
+            return Failed(
                 "ADMISSION-PLANE-FILEMAP-UNAVAILABLE",
                 FileMapPath,
-                "FILEMAP is unavailable")
-            : Evaluate(fileMap.Bytes.AsSpan(), changedPaths);
-    }
-
-    internal static AdmissionPlaneDecision Evaluate(
-        ReadOnlySpan<byte> candidateFileMap,
-        IReadOnlyList<string> changedPaths)
-    {
-        ArgumentNullException.ThrowIfNull(changedPaths);
-        if (changedPaths.Count == 0)
-        {
-            return Admissible(AdmissionPlaneClassification.Empty);
+                "FILEMAP is unavailable");
         }
 
+        // Only snapshot-confirmed deletions use historical registration. A missing
+        // candidate FILEMAP match is not evidence that the file was deleted.
+        var candidatePaths = candidate.Entries.Select(static entry => entry.Path)
+            .ToHashSet(StringComparer.Ordinal);
+        var deletedPaths = protectedBase.Entries.Select(static entry => entry.Path)
+            .Where(path => !candidatePaths.Contains(path))
+            .Intersect(changedPaths, StringComparer.Ordinal)
+            .ToHashSet(StringComparer.Ordinal);
         AdmissionPlaneFileMap manifest;
+        AdmissionPlaneFileMap? baselineManifest = null;
+        var source = "FILEMAP";
         try
         {
             manifest = AdmissionPlaneFileMapLoader.Parse(
-                candidateFileMap,
+                fileMap.Bytes.AsSpan(),
                 FileMapPath);
+            if (deletedPaths.Count > 0)
+            {
+                source = "protected-base FILEMAP";
+                var baselineFileMap = protectedBase.Entries.FirstOrDefault(
+                    static entry => entry.Path == FileMapPath);
+                if (baselineFileMap is null)
+                {
+                    return Failed(
+                        "ADMISSION-PLANE-FILEMAP-UNAVAILABLE",
+                        FileMapPath,
+                        $"{source} is unavailable");
+                }
+
+                baselineManifest = AdmissionPlaneFileMapLoader.Parse(
+                    baselineFileMap.Bytes.AsSpan(),
+                    $"protected-base {FileMapPath}");
+            }
         }
         catch (FileMapParseException exception)
         {
             return Failed(
                 "ADMISSION-PLANE-FILEMAP-INVALID",
                 FileMapPath,
-                $"FILEMAP cannot be parsed: {exception.Message}");
+                $"{source} cannot be parsed: {exception.Message}");
         }
         catch (FileMapPatternException exception)
         {
             return Failed(
                 FileMapPatternException.FindingCode,
                 exception.Pattern,
-                $"{FileMapPatternException.FindingCode}: {exception.Message}");
+                $"{source}: {FileMapPatternException.FindingCode}: {exception.Message}");
         }
         catch (FormatException exception)
         {
@@ -121,14 +140,16 @@ internal static class AdmissionPlanePolicy
         var contentPaths = new List<string>();
         foreach (var path in changedPaths)
         {
-            var matches = manifest.Match(path);
+            var deleted = deletedPaths.Contains(path);
+            var matches = (deleted ? baselineManifest! : manifest).Match(path);
             if (matches is not [var match])
             {
                 return Failed(
                     "ADMISSION-PLANE-PATH-MATCH-COUNT",
                     path,
                     "changed path must match exactly one FILEMAP entry; "
-                    + $"path={path} matches={matches.Length}");
+                    + $"path={path} matches={matches.Length}"
+                    + (deleted ? "; source=protected-base FILEMAP" : string.Empty));
             }
 
             if (match.AdmissionPlane is FileMapAdmissionPlane.Judge)

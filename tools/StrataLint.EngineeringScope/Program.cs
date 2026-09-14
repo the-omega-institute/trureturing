@@ -65,7 +65,7 @@ internal static class Program
         var changedPaths = GitPaths(options.RepositoryRoot, @base, head);
         var protectedBaseRaw = GitRepositorySnapshotReader.ReadRevision(options.RepositoryRoot, @base);
         var candidateRaw = GitRepositorySnapshotReader.ReadRevision(options.RepositoryRoot, head);
-        var admissionPlane = AdmissionPlanePolicy.Evaluate(candidateRaw, changedPaths);
+        var admissionPlane = AdmissionPlanePolicy.Evaluate(protectedBaseRaw, candidateRaw, changedPaths);
         if (!admissionPlane.IsAdmissible)
         {
             throw new InvalidDataException(
