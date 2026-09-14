@@ -1,0 +1,10 @@
+**定义 39.2（全域 $\tau$ 见证，repo-derived/open）。** 对 $t<H$，一个见证为 $(h,h',a)$，其中 $h,h'\in\mathcal H_t$、$q_t^S(h)=q_t^S(h')$，且对同一动作字母 $a\in\mathcal A$ 满足下列之一：
+$$
+\begin{aligned}
+&\mathbf1_{a\in A_t(h)}\ne\mathbf1_{a\in A_t(h')};\qquad\text{或}\\
+&a\in A_t(h)\cap A_t(h'),\quad
+ |Q_t^*(h,a)-Q_t^*(h',a)|>2\tau.
+\end{aligned}
+$$
+这里“共同动作”指比较同一动作字母；第一种情形不能同时要求两侧合法。非法动作的 $Q^*$ 不取实数值、不参与差值比较，而由精确抽象守卫处理。终端误差由第38节的 $b_H$ 另行核验，不能由没有决策层见证代替。见证搜索的量词覆盖整个有限历史域及全部动作，未从样本中发现见证不等于无见证。
+
