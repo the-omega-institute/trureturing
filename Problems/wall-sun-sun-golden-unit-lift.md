@@ -113,7 +113,7 @@ Implement three independent exact calculations for every prime `p < 10^6`,
 excluding and separately reporting ramified and small cases:
 
 1. direct pair-state Pisano periods modulo `p` and `p^2`;
-2. fast-doubling checks of `F_r mod p^2` and `F_{r+1} mod p^2` at `r = pi(p)`;
+2. fast-doubling checks of `F_r mod p^2` and `F_{r+1}-1 mod p^2` at `r = pi(p)`;
 3. matrix exponentiation of `A^r mod p^2` and the first-lift matrix `B mod p`.
 
 Receipt fields should include `p`, `legendreSym 5 p`, `rank`, `pi_p`, `pi_p2`,
@@ -444,7 +444,7 @@ classification, without a hypothesis on any initial depth.
 **Unbounded mixed-index consequence.** Fix any odd inert prime $q$ whose
 rank $a=r(q)$ is odd. For every $j\ge1$, the primitive block at index
 $a q^j$ contains an inert prime of odd initial depth. Such witnesses in
-different $j$ are distinct, and each satisfies
+different j are distinct, and each satisfies
 
 $$
 r(p)=a q^j,\qquad p\ge2a q^j-1,
@@ -1180,3 +1180,374 @@ results establishes a WSS prime, excludes an unbounded WSS prime class,
 or settles a newly identified external open problem. The local-group,
 rank, valuation and divisor-sum tools are classical. Their specialization
 here has no worldwide mathematical priority claim.
+
+
+## NP. Native-prime layers and exact coupling of initial depths
+
+### NP.1 The native modulus and the actual sequences
+
+Let p>=7 be prime, epsilon=chi(p)=(5/p), N=p-epsilon, and
+
+$$
+h_p=v_p(F_N)=v_p(F_{r(p)})\ge1,\qquad
+q_p=F_N/p\pmod p,\qquad u_p=F_N/p^{h_p}\pmod p\ne0.
+$$
+
+Here r(p) is the least positive Fibonacci zero index. Equality of the
+initial depths uses r(p)|N, p not dividing N, and the classical valuation
+formula in the sources below. Neither depth is assumed to be one.
+For k>=0 define the same exact integer quotient as in IP.2,
+
+$$
+B_{p,k}=\frac{F_{p^{k+1}}}{F_{p^k}}.
+$$
+
+This section observes it at the prime p itself, rather than at the fixed
+auxiliary moduli five or 5040. Its prime divisors still have exact rank
+p^(k+1), and their exponents are their own initial depths, by IP5.
+
+**Lemma.** For every k>=0, F_(p^k) is a unit at p, and
+
+$$
+F_{p^k}\equiv\epsilon^k,\qquad L_{p^k}\equiv1\pmod p.       \tag{NP1}
+$$
+
+**Proof.** The rank r(p)>2 divides N and is coprime to p, so it cannot
+divide p^k. This proves the unit assertion. In the original golden
+algebra over F_p, Frobenius fixes phi,psi when epsilon=1 and exchanges
+them when epsilon=-1. The denominator phi-psi has square five, a unit,
+and the Binet difference and trace formulas therefore give the two
+residues at p^k. For the swapped case, the difference changes sign at
+each Frobenius application while the trace stays one. These calculations
+also apply at k=0. The integer quotient is exact by Fibonacci divisibility.
+
+### NP.2 Exact depth, all forward distances, and the first constant tail
+
+**Theorem.** For every k>=0,
+
+$$
+\boxed{v_p(B_{p,k}-\epsilon)=h_p+k.}                       \tag{NP2}
+$$
+
+All arguments of valuations here are nonzero; valuations of negative
+integers mean valuations of their absolute values.
+
+**Proof.** Put m=p^(k+1) and n=p^k. BOTH indices are odd. The Catalan
+identity in this parity gives
+
+$$
+(F_m-\epsilon F_n)(F_m+\epsilon F_n)
+ =F_m^2-F_n^2=F_{m+n}F_{m-n}.                             \tag{NP3}
+$$
+
+The rank r(p) divides p-epsilon and does not divide p+epsilon. Otherwise
+it would divide their difference two, contradicting r(p)>2. It is
+coprime to p, so precisely one of F_(m+n), F_(m-n) vanishes modulo p.
+Its index is p^k*(p-epsilon), and the valuation formula gives h_p+k.
+The other factor has valuation zero. NP1 gives
+F_m+epsilon*F_n=2*epsilon^(k+1) modulo p, a unit. Dividing the resulting
+valuation of F_m-epsilon*F_n by the unit F_n proves NP2. Nonzeroness
+also follows from this finite valuation, or from strict growth of the
+positive Fibonacci quotient and epsilon in {1,-1}.
+
+**Corollary.** For every k>=0 and t>=1,
+
+$$
+\boxed{v_p(B_{p,k+t}-B_{p,k})=h_p+k.}                    \tag{NP4}
+$$
+
+**Proof.** Their respective differences from epsilon have unequal
+valuations h_p+k+t and h_p+k. The difference of two nonzero integers of
+unequal p-valuations has the smaller valuation, by factoring out that
+power and reducing the remaining factor modulo p.
+
+**Corollary.** At precision p^s, s>=1, the earliest starting index of
+any positive eventual period is exactly
+
+$$
+K_s=\max(0,s-h_p).                                      \tag{NP5}
+$$
+
+From K_s onward the sequence is constant epsilon and its least eventual
+period is one. It has no period of any positive length starting before
+K_s. Consequently B_(p,k) tends to epsilon in Z_p with exact distance
+p^(-h_p-k).
+
+**Proof.** NP2 gives constant residue epsilon precisely when k>=K_s.
+At an earlier starting index k, NP4 shows that the difference to EVERY
+forward index has valuation h_p+k<s, so no positive period can start
+there. The limit is the restatement of these finite congruences.
+General p-adic convergence of Fibonacci prime-power subsequences is
+already covered by Rowland-Yassawi; the exact depth here is derived
+using the stated classical valuation formula, with no novelty claim
+for convergence itself.
+
+### NP.3 The leading digit has a fixed signed coefficient
+
+**Theorem.** With division by powers of p performed in the integers,
+
+$$
+\boxed{
+\frac{B_{p,k}-\epsilon}{p^{h_p+k}}
+ \equiv\frac{\epsilon^{k+1}u_p}{2}\pmod p,
+\qquad
+\frac{\epsilon B_{p,k}-1}{p^{k+1}}
+ \equiv\frac{\epsilon^k q_p}{2}\pmod p.
+}                                                       \tag{NP6}
+$$
+
+The second statement includes h_p>1, when both of its residues vanish.
+
+**Proof.** Work with integer matrices localized at p; two is a unit.
+For the actual Fibonacci matrix and its trace coordinate put
+
+$$
+Q=\begin{pmatrix}1&1\\1&0\end{pmatrix},\qquad
+H=\begin{pmatrix}1&2\\2&-1\end{pmatrix}.
+$$
+
+Then H^2=5I and Q^a=(L_a I+F_a H)/2 for every integer a, using the
+usual negative-index extension and det(Q)=-1. Because N is even,
+
+$$
+(L_N-2\epsilon)(L_N+2\epsilon)=5F_N^2.
+$$
+
+Frobenius gives L_N=2*epsilon modulo p, so the second factor is a unit
+and v_p(L_N-2*epsilon)=2h_p. Thus
+
+$$
+\epsilon Q^N=I+p^{h_p}Z,\qquad
+Z\equiv\epsilon u_p H/2\pmod p.
+$$
+
+For s>=1 and any p-integral matrix Z, binomial expansion gives
+
+$$
+(I+p^sZ)^p\equiv I+p^{s+1}Z\pmod{p^{s+2}}.
+$$
+
+For terms of degree 2 through p-1, the binomial coefficient supplies a
+factor p; the term of degree p has sp>=s+2 because p>=3. Induction then
+yields (I+p^h Z)^(p^k)=I+p^(h+k)Z modulo p^(h+k+1). Since p^k is odd,
+
+$$
+Q^{Np^k}\equiv\epsilon I+p^{h_p+k}u_pH/2
+ \pmod{p^{h_p+k+1}}.                                    \tag{NP7}
+$$
+
+Let n=p^k and multiply NP7 by Q^(epsilon*n). For odd n,
+F_(-n)=F_n and L_(-n)=-L_n. The off-diagonal entry of Q^aH is L_a.
+Using p*n=epsilon*n+N*n gives
+
+$$
+F_{pn}-\epsilon F_n
+ \equiv p^{h_p+k}\epsilon u_pL_n/2
+ \pmod{p^{h_p+k+1}}.
+$$
+
+Divide by the unit F_n, and use NP1, to obtain the first formula in
+NP6. Multiply it by epsilon and by p^(h_p-1) to obtain the second.
+No division by p in a residue field is used.
+
+### NP.4 A sum over disjoint primitive-prime families
+
+For a=p^(k+1), define the finite set of actual primes
+
+$$
+\mathcal P_{p,k}=\{q:q\text{ prime},\ r(q)=a\}.
+$$
+
+IP5, which is valid for every prime base p>=7, gives
+
+$$
+B_{p,k}=\prod_{q\in\mathcal P_{p,k}}q^{h_q}.
+$$
+
+These sets are disjoint for distinct k. Their primes are all distinct
+from p, and every q satisfies a|(q-chi(q)). Hence the signed integer
+
+$$
+t_{p,k}(q)=\frac{\chi(q)q-1}{p^{k+1}}
+$$
+
+is well-defined. It is negative for inert q; no nonnegativity is
+assumed. Define the actual weighted sum
+
+$$
+S_{p,k}=\sum_{q\in\mathcal P_{p,k}}h_q\,t_{p,k}(q).
+$$
+
+**Theorem.** For every k>=0,
+
+$$
+\boxed{
+2S_{p,k}\equiv\epsilon^k q_p\pmod p.
+}                                                       \tag{NP8}
+$$
+
+More generally, for every integer s with 1<=s<=k+1,
+
+$$
+\boxed{p^s\mid S_{p,k}\quad\Longleftrightarrow\quad h_p\ge s+1.}
+                                                               \tag{NP9}
+$$
+
+If k>=h_p-1, the sum is nonzero and v_p(S_(p,k))=h_p-1.
+Thus for every k, WSS(p) is equivalent to S_(p,k)=0 modulo p.
+For an inert base the first residues alternate in sign between layers;
+for a split base they are constant.
+
+**Proof.** The odd-index character identity gives chi(B_(p,k))=epsilon.
+Therefore product chi(q)^h_q=epsilon, and the exact signed product is
+
+$$
+\epsilon B_{p,k}
+ =\prod_{q\in\mathcal P_{p,k}}(1+a\,t_{p,k}(q))^{h_q}
+ \equiv1+aS_{p,k}\pmod{a^2}.
+$$
+
+The congruence follows by expanding each integer power and multiplying:
+every term involving at least two factors a is divisible by a^2.
+Negative t and positive integer exponents cause no difficulty. Thus
+
+$$
+D_{p,k}:=\frac{\epsilon B_{p,k}-1}{p^{k+1}}
+ \equiv S_{p,k}\pmod{p^{k+1}}.                           \tag{NP10}
+$$
+
+By NP2, v_p(D_(p,k))=h_p-1. For s<=k+1, NP10 makes divisibility of
+S by p^s equivalent to divisibility of D by p^s, proving NP9. If
+k>=h_p-1, that valuation is less than k+1, so the difference in NP10
+cannot change it; this proves the exact valuation assertion. Finally
+combine NP10 modulo p with NP6 to prove NP8. Changing k to k+1 in
+NP8 gives S_(p,k+1)=epsilon*S_(p,k) modulo p.
+
+The restriction s<=k+1 in NP9 is essential to the linear truncation.
+It is not a statement about arbitrary precision at one fixed layer.
+No value v_p(0) needs to be assigned for the divisibility version.
+
+**Example.** At p=7, q_p=F_8/7=3 modulo seven. At k=0 the only factor
+is13, so S_(7,0)=(-13-1)/7=-2=5 modulo seven. At k=1 the exact block
+is97*6168709, both initial depths one. The signed coefficients are
+-2 and125892, respectively. Hence S_(7,1)=125890=2 modulo seven,
+as predicted by the sign reversal. The sum contains both split and
+inert primes; restricting it to inert primes would invalidate NP8.
+
+### NP.5 Prime-power primitive orbit counts retain the same depth
+
+Use the two-vertex directed graph with adjacency matrix Q. Its number
+of length-n closed walks with a marked starting position is L_n.
+Let b_n be the number of cyclic orbits whose least period is exactly n.
+Every such orbit supplies n marked walks, so
+
+$$
+L_n=\sum_{d\mid n}d b_d.
+$$
+
+**Theorem.** For every k>=0,
+
+$$
+b_{p^{k+1}}=\frac{L_{p^{k+1}}-L_{p^k}}{p^{k+1}}>0,
+\qquad
+\boxed{v_p(b_{p^{k+1}})=h_p-1.}                         \tag{NP11}
+$$
+
+Furthermore b_(p^(k+1))=5*S_(p,k) modulo p.
+
+**Proof.** Subtract the two divisor sums at successive p-powers to
+obtain the exact integer quotient; positivity follows from increasing
+Lucas numbers at these positive indices. With m=p^(k+1), n=p^k both
+odd, the trace-norm and Catalan identities give
+
+$$
+(L_m-L_n)(L_m+L_n)=5(F_m^2-F_n^2)=5F_{m+n}F_{m-n}.
+$$
+
+NP1 makes L_m+L_n=2 modulo p, a unit. The same valuation argument as
+NP2 therefore gives v_p(L_m-L_n)=h_p+k. Divide by p^(k+1) to obtain
+NP11. For the first digit, take traces in NP7 after multiplication by
+Q^(epsilon*n), using tr(Q^a H)=5F_a and F_(epsilon*n)=F_n. This gives
+
+$$
+\frac{L_m-L_n}{p^{k+1}}
+ \equiv\frac52\epsilon^k q_p\pmod p.
+$$
+
+Together with NP8 this proves the last statement. Orbit integrality
+comes from the actual graph action, not from assuming the desired
+prime divisibility. This is a consequence within the same proof family,
+not another externally posed open problem being declared solved.
+
+### NP.6 A concrete limit of the auxiliary-residue and height method
+
+**Proposition.** The conditions of correct prime rank, inertness, odd
+exponent, fixed residue modulo25200, and the available upper height
+bound do not by themselves exclude a powerful candidate.
+
+**Proof by an exact example.** Let n=337 and q=673. Both are primes,
+chi(n)=chi(q)=-1, q=2n-1, and q divides F_n. Since n is prime and
+F_1=1, the exact rank of q is337. Put M=q^3=304821217. Then
+
+$$
+1<M<F_{337},\qquad M\equiv F_{337}\equiv2017\pmod{25200}.
+$$
+
+The integer M is powerful, with one inert prime at odd exponent three,
+and it meets the rank lower bound with equality q=2n-1. The actual
+Fibonacci value and the exact distinguishing residues are
+
+$$
+F_{337}=
+12004657173391489668678522013941832147005954727556362660159637892443617,
+$$
+
+$$
+F_{337}\bmod673^2=172288=256\cdot673\ne0,
+$$
+
+$$
+M\bmod337^2=2021,\qquad F_{337}\bmod337^2=86945.
+$$
+
+All residues are computed by the integer Fibonacci recurrence or binary
+doubling. The primalities require only trial division through the square
+roots. In particular q's actual initial depth is ONE, not three.
+The native parent quotient is q_337=158 modulo337, so NP8 requires
+S_(337,0)=79 modulo337. The candidate M instead gives3*(-2)=-6=331
+modulo337. The native-prime first digit thus excludes this particular
+candidate which the fixed5040/25 data and the coarse height bound admit.
+
+This example does not give two Fibonacci factorizations of one integer.
+M is not asserted to be a Fibonacci value; it has neither the exact
+magnitude nor necessarily the complete prime support of F_337. It only
+refutes the proposed inference from the displayed weaker necessary
+conditions alone. More precise height, exact support, or native-prime
+information could exclude it, as the last calculation demonstrates.
+
+### NP.7 Arithmetic and prior-art boundary
+
+NP8-NP9 couple the actual depth at a base prime p to actual depths at
+other, strictly larger primes having exact ranks p^(k+1). This improves
+the bookkeeping beyond a fixed auxiliary character, but it does not
+prove that the weighted sum vanishes or stays nonzero for an unbounded
+prime family. Both signs occur and weighted contributions can cancel.
+Replacing h_q by one would assume away precisely the exceptions under
+investigation. Neither a WSS prime nor a new unbounded non-WSS prime
+family is constructed by these identities.
+
+The underlying rank, valuation, Catalan, and matrix-power tools are
+classical. The valuation formula is Theorem1.4 of L. A. Medina and
+E. Rowland, *p-regularity of the p-adic valuation of the Fibonacci
+sequence*, The Fibonacci Quarterly53(2015),265-271,
+https://arxiv.org/abs/0910.2907 . It leaves the initial valuation
+arbitrary. General p-adic subsequence convergence and interpolation
+appear in E. Rowland and R. Yassawi, *p-adic asymptotic properties of
+constant-recursive sequences*, Indagationes Mathematicae28(2017),205-220,
+DOI10.1016/j.indag.2016.11.019, arXiv:1602.00176, Corollary11 and
+section5. No first proof of that general convergence is claimed here.
+The exact signed factor-sum and all-depth formulation above is an
+ordinary derivation from these inputs and IP5. Priority for its combined
+formulation is unconfirmed. No new externally posed open problem is
+counted as resolved, and no new Lean/kernel-certified declaration is
+asserted by this theory-only continuation.
