@@ -27,11 +27,11 @@ In this entry `A^5(x)` denotes the 5-fold COMPOSITIONAL ITERATE of `A`, not
 the 5-th power; the entry's formula field states that convention explicitly.
 The offset is 1 and the first terms are 1, 2, 33, 1264, 80505, 7365456, 893006317.
 
-This lane settles ONLY the parity conjecture. The remaining
-conjectures quoted above,
-on residues modulo three and five,
-are NOT proved, are not claimed, and do not appear in the module in any form.
-The modulo-five one is in fact refuted by an exact computation recorded under Triage.
+This dossier settles the parity conjecture. The separate
+[modulo-three dossier](oeis-a396805-iterate-exponential-mod-three.md) binds
+`IterateExponentialFiveModThree.result`, which proves the pattern from n=3.
+The modulo-five assertion has the non-kernel counterexamples recorded under
+Triage; the parity theorem does not formalize that refutation.
 
 ## Motivation
 
@@ -107,8 +107,8 @@ the same vanishing constant coefficient would falsify `fixed_unique`.
 ## Triage
 
 `theorem`. One universal conjecture of this entry is settled, for a sequence
-proved to satisfy the entry's defining equation. The modulo-three conjecture is
-not proved here. The modulo-five conjecture is NOT open: an exact computation
+proved to satisfy the entry's defining equation. The modulo-three conjecture is proved separately by
+`IterateExponentialFiveModThree.result` for n>=3. The modulo-five conjecture is NOT open: an exact computation
 outside Lean gives a(23) ≡ 2 while 23 ≡ 3 (mod 5), so that conjecture is false as
 stated, with n = 23 the least counterexample and n = 24 also failing. This lane
 neither proves nor formalizes that refutation.
