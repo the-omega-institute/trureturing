@@ -172,11 +172,6 @@ theorem signed_series_fibres :
     rw [Srec]
     cases c <;> simp [len, digitsOf, expand, r, B, pow_add] <;> ring
   have fempty (t : ℝ) : f [] t = t := by simp [f, S, len, digitsOf, expand]
-  have valword (w : List Block) (x : LegalDigits) :
-      signedValue (prependWord w x) = f w (signedValue x) := by
-    induction w with
-    | nil => exact (fempty _).symm
-    | cons c w ih => rw [prependWord, valB, ih, frec]
   have srec (c : Block) (w : List Block) : seam (c :: w) = B c (seam w) := frec c w q
   have sempty : seam [] = q := fempty q
   have bounds (x : LegalDigits) : signedValue x ∈ Set.Icc a b := by
