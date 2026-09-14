@@ -58,6 +58,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Factorization/ErdosConsecutiveProductSquarefreeFactorRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/erdos-1985-consecutive-product-squarefree-factor-refutation` (refuted) by `D5/S3/Factorization/ErdosConsecutiveProductSquarefreeFactorRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"erdos-1985-consecutive-product-squarefree-factor-refutation","declaration_gid":"D5/S3/Factorization/ErdosConsecutiveProductSquarefreeFactorRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul Erdős (1985). *Problems and results on consecutive integers and prime factors of binomial coefficients*. DOI: [10.1216/RMJ-1985-15-2-353](https://doi.org/10.1216/RMJ-1985-15-2-353).

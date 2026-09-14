@@ -40,7 +40,11 @@ internal sealed class ErdosConsecutiveProductSquarefreeFactorRefutationDocument
                     + "For every length at least 79, an inductive exponential lower bound "
                     + "for P combines with the primorial upper bound for v to give v<u. "
                     + "This leaves conjecture (22) and the statement about x=23 untouched.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "erdos-1985-consecutive-product-squarefree-factor-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string id, string title, string declaration,
         Formula formula, string prose, DescribeRole role, AssessedProvenance provenance,
