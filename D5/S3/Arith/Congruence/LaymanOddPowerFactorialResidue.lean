@@ -2,12 +2,11 @@
    generality: I
    mirror-B: D5/B/S3/Arith/Congruence/LaymanOddPowerFactorialResidue
    mirror-E: none(waiver:symbolic-proof-no-numeric-artifact)
-   anchors: [mathlib/module/Mathlib.NumberTheory.Wilson, mathlib/module/Mathlib.Data.Nat.Choose.Basic]
+   anchors: [mathlib/module/Mathlib.NumberTheory.Wilson]
    utility: none
    digest: Odd powers of n! have Layman's classified residue modulo n(n+1)/2. -/
 
 import Mathlib.NumberTheory.Wilson
-import Mathlib.Data.Nat.Choose.Basic
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
