@@ -2,11 +2,10 @@
    generality: I
    mirror-B: D5/B/S3/Arith/Congruence/DaleTripleScalingPrimeMultiplesOfTen
    mirror-E: none(waiver:symbolic-proof-no-numeric-artifact)
-   anchors: [mathlib/module/Mathlib.Tactic.NormNum.Ineq, mathlib/module/Mathlib.Tactic.NormNum.Prime]
+   anchors: [mathlib/module/Mathlib.Tactic.NormNum.Prime]
    utility: none
    digest: Four prime values at successive powers-of-three scalings force k to be four or a multiple of ten. -/
 
-import Mathlib.Tactic.NormNum.Ineq
 import Mathlib.Tactic.NormNum.Prime
 
 set_option autoImplicit false
@@ -58,6 +57,7 @@ theorem result : claim := by
       (hp1.eq_one_or_self_of_dvd 5 hdvd).resolve_left (by decide)
     omega
 
+#print axioms claim
 #print axioms result
 
 end D5.S3.Arith.Congruence.DaleTripleScalingPrimeMultiplesOfTen
