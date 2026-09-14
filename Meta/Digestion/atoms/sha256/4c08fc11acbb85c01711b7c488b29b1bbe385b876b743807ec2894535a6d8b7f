@@ -1,0 +1,46 @@
+## 18. 两步重完
+
+两步以后：
+
+$$
+b_{n+2}
+=
+\varphi^{-4}b_n.
+$$
+
+符号恢复，且进一步缩小。
+
+所以：
+
+$$
+\boxed{
+\text{one step}
+=
+\text{orientation break},
+}
+$$
+
+$$
+\boxed{
+\text{two steps}
+=
+\text{orientation-preserving recompletion}.
+}
+$$
+
+最终：
+
+$$
+R^n\to P_+.
+$$
+
+稳定极限不是一个普通状态，而是一个 rank-one projector：
+
+$$
+\boxed{
+P_+
+=
+\text{黄金稳定观察轴}.
+}
+$$
+
