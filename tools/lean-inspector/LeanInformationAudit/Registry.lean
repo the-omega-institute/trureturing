@@ -1018,7 +1018,7 @@ def bindingIdentity (statementIdentity : String) (certificate : TemplateBindingC
 
 def PlanNode.toExpr : PlanNode → Expr
   | .atom e | .supplied e | .proofLeaf _ e => e
-  | .expanded _ checked | .typeNode checked => checked.toExpr
+  | .expanded _ checked | .typeNode checked | .audit _ checked => checked.toExpr
   | .app f a => .app f.toExpr a.toExpr
   | .lam t b bi => .lam .anonymous t.toExpr b.toExpr bi
   | .forallE t b bi => .forallE .anonymous t.toExpr b.toExpr bi
@@ -1037,6 +1037,7 @@ private partial def wirePlan (params : List Name) (depth : Nat) (plan : PlanNode
   | .expanded e body => emit "expanded"; raw e; child body
   | .proofLeaf type e => emit "proof-leaf"; raw type; raw e
   | .typeNode checked => emit "type-node"; child checked
+  | .audit input body => emit "audit-input"; child input; child body
   | .app f a => emit "application"; child f; child a
   | .lam t b bi => emit "lambda"; emit (reprStr bi); child t; child b
   | .forallE t b bi => emit "forall"; emit (reprStr bi); child t; child b
@@ -1279,6 +1280,7 @@ private def PlanNode.abstractAt (x : Expr) (depth : Nat := 0) : PlanNode → Pla
   | .expanded raw checked => .expanded (abstractLocal raw x depth) (checked.abstractAt x depth)
   | .proofLeaf t e => .proofLeaf (abstractLocal t x depth) (abstractLocal e x depth)
   | .typeNode p => .typeNode (p.abstractAt x depth)
+  | .audit input body => .audit (input.abstractAt x depth) (body.abstractAt x depth)
   | .app f a => .app (f.abstractAt x depth) (a.abstractAt x depth)
   | .lam t b bi => .lam (t.abstractAt x depth) (b.abstractAt x (depth + 1)) bi
   | .forallE t b bi => .forallE (t.abstractAt x depth) (b.abstractAt x (depth + 1)) bi
@@ -1300,6 +1302,76 @@ private abbrev CompileM := StateT CompileState MetaM
 private def charge (work : Nat := 1) : CompileM Unit := do
   unless work ≤ (← get).remaining do throwError "incomplete_closure:E8.work"
   modify fun s => { s with remaining := s.remaining - work }
+
+private partial def sameLevel (a b : Level) : CompileM Bool := do
+  charge
+  match a, b with
+  | .zero, .zero => return true
+  | .param a, .param b => return a == b
+  | .succ a, .succ b => sameLevel a b
+  | .max a b, .max c d | .imax a b, .imax c d =>
+    return (← sameLevel a c) && (← sameLevel b d)
+  | _, _ => return false
+
+private partial def sameRaw (a b : Expr) : CompileM Bool := do
+  charge
+  if hash a != hash b then return false
+  match a, b with
+  | .bvar a, .bvar b => return a == b
+  | .fvar a, .fvar b => return a == b
+  | .sort a, .sort b => sameLevel a b
+  | .const a us, .const b vs =>
+    if a != b || us.length != vs.length then return false
+    for (u, v) in us.zip vs do unless ← sameLevel u v do return false
+    return true
+  | .lit a, .lit b => return a == b
+  | .app f a, .app g b => return (← sameRaw f g) && (← sameRaw a b)
+  | .lam n t b bi, .lam m u c ci | .forallE n t b bi, .forallE m u c ci =>
+    return n == m && bi == ci && (← sameRaw t u) && (← sameRaw b c)
+  | .letE n t v b nd, .letE m u w c md =>
+    return n == m && nd == md && (← sameRaw t u) && (← sameRaw v w) && (← sameRaw b c)
+  | .proj n i b, .proj m j c => return n == m && i == j && (← sameRaw b c)
+  -- Metadata never receives a deduplication shortcut; it remains retained.
+  | _, _ => return false
+
+private partial def samePlan (a b : PlanNode) : CompileM Bool := do
+  charge
+  match a, b with
+  | .atom a, .atom b => sameRaw a b
+  | .typeNode a, .typeNode b => samePlan a b
+  | .proofLeaf t a, .proofLeaf u b => return (← sameRaw t u) && (← sameRaw a b)
+  | .expanded a p, .expanded b q => return (← sameRaw a b) && (← samePlan p q)
+  | .app a b, .app c d | .audit a b, .audit c d =>
+    return (← samePlan a c) && (← samePlan b d)
+  | .lam t b bi, .lam u c ci | .forallE t b bi, .forallE u c ci =>
+    return bi == ci && (← samePlan t u) && (← samePlan b c)
+  | .letE t v b nd, .letE u w c md =>
+    return nd == md && (← samePlan t u) && (← samePlan v w) && (← samePlan b c)
+  | .proj n i b, .proj m j c => return n == m && i == j && (← samePlan b c)
+  | _, _ => return false
+
+/-- An identical checked subtree already carries the same obligations. Search
+only nodes visited without prior substitution, never raw expansion/proof syntax.
+Inputs have no loose variables at this compilation boundary; external locals
+keep their unique fvar identities. Every search/comparison step is charged. -/
+private partial def containsInput (tree input : PlanNode) : CompileM Bool := do
+  charge
+  if ← samePlan tree input then return true
+  let child := fun p => containsInput p input
+  let rec arguments : PlanNode → CompileM Bool
+    | .app f a => do
+      charge
+      if ← child a then return true
+      arguments f
+    | _ => pure false
+  match tree with
+  | .audit a b | .lam a b _ | .forallE a b _ =>
+    return (← child a) || (← child b)
+  -- A function or let body can change context before its obligations are read.
+  | .app .. => arguments tree
+  | .letE t v _ _ => return (← child t) || (← child v)
+  | .expanded _ b | .typeNode b | .mdata _ b | .proj _ _ b => child b
+  | _ => return false
 
 private def rule (name : String) : CompileM Unit := do
   charge
@@ -1544,14 +1616,16 @@ private partial def compileNode (e : Expr) (depth : Nat)
       dependency info
       -- Check every raw argument before capture-avoiding expansion, including
       -- arguments unused by the definition body.
-      for arg in args do discard <| child arg
+      let inputs ← args.mapM child
       let mut value := defn.value.instantiateLevelParams defn.levelParams levels
       for arg in args do
         let .lam _ _ body _ := value | throwError "unclassified_form:E5.unsaturated_definition:{name}"
         charge
         value := body.instantiate1 arg
       if value.isLambda then throwError "unclassified_form:E5.unsaturated_definition:{name}"
-      let plan ← child value
+      let mut plan ← child value
+      for input in inputs.reverse do
+        unless ← containsInput plan input do plan := .audit input plan
       rule "E5.definition"
       return .expanded e plan
     | .opaqueInfo _ => throwError "unclassified_form:E5.opaque_definition"
@@ -1821,6 +1895,8 @@ private partial def liftPlan (p : PlanNode) (amount : Nat) (cutoff : Nat := 0) :
   | .supplied e => return .supplied e
   | .proofLeaf t e => return .proofLeaf (raw t) (raw e)
   | .typeNode p => return .typeNode (← liftPlan p amount cutoff)
+  | .audit input body =>
+    return .audit (← liftPlan input amount cutoff) (← liftPlan body amount cutoff)
   | .expanded e b => return .expanded (raw e) (← liftPlan b amount cutoff)
   | .app f a => return .app (← liftPlan f amount cutoff) (← liftPlan a amount cutoff)
   | .lam t b bi => return .lam (← liftPlan t amount cutoff) (← liftPlan b amount (cutoff + 1)) bi
@@ -1843,6 +1919,8 @@ private partial def substitute (p : PlanNode) (arg : PlanNode) (depth : Nat := 0
   | .supplied e => return .supplied e
   | .proofLeaf t e => return .proofLeaf (← raw t) (← raw e)
   | .typeNode p => return .typeNode (← substitute p arg depth)
+  | .audit input body =>
+    return .audit (← substitute input arg depth) (← substitute body arg depth)
   | .expanded e b => return .expanded (← raw e) (← substitute b arg depth)
   | .app f a => return .app (← substitute f arg depth) (← substitute a arg depth)
   | .lam t b bi => return .lam (← substitute t arg depth) (← substitute b arg (depth + 1)) bi
@@ -1858,6 +1936,7 @@ private def levels (params : List Name) (values : List Level) : PlanNode → Pla
   | .supplied e => .supplied e
   | .proofLeaf t e => .proofLeaf (t.instantiateLevelParams params values) (e.instantiateLevelParams params values)
   | .typeNode p => .typeNode (levels params values p)
+  | .audit input body => .audit (levels params values input) (levels params values body)
   | .expanded e b => .expanded (e.instantiateLevelParams params values) (levels params values b)
   | .app f a => .app (levels params values f) (levels params values a)
   | .lam t b bi => .lam (levels params values t) (levels params values b) bi
@@ -1870,6 +1949,7 @@ private partial def applyPlan (plan : PlanNode) (arg : PlanNode) : CompareM Plan
   debit
   match plan with
   | .expanded _ body | .typeNode body => applyPlan body arg
+  | .audit input body => return .audit input (← applyPlan body arg)
   | .lam _ body _ => substitute body arg
   | _ => throwError "unclassified_form:dtr.unsaturated_plan"
 
@@ -1950,7 +2030,7 @@ private partial def checkedHead (plan : PlanNode) (depth : Nat := 0) : CompareM 
   debit
   if depth > 256 then throwError "incomplete_closure:E8.extraction_depth"
   match plan with
-  | .expanded _ body | .typeNode body => checkedHead body (depth + 1)
+  | .expanded _ body | .typeNode body | .audit _ body => checkedHead body (depth + 1)
   | .app f a =>
     let f ← checkedHead f (depth + 1)
     match f with
@@ -1958,6 +2038,7 @@ private partial def checkedHead (plan : PlanNode) (depth : Nat := 0) : CompareM 
     | _ => return .app f a
   | _ => return plan
 
+mutual
 /-- Read already checked type/proof-leaf nodes after slot substitution. Plan
 lambda applications expose their instantiated obligations; supplied nodes are
 never inspected or normalized by this consumer. -/
@@ -1972,11 +2053,13 @@ private partial def retainedTypes (plan : PlanNode) (context : Array Expr := #[]
   | .proofLeaf type _ => return #[obligation type]
   | .typeNode checked => return #[obligation checked.toExpr] ++ (← child checked)
   | .expanded _ checked => child checked
+  | .audit input body => return (← child input) ++ (← child body)
   | .app f a =>
-    let head ← checkedHead f
-    if let .lam _ body _ := head then
-      return ← child (← substitute body a)
-    return (← child f) ++ (← child a)
+    let (head, pending) ← retainedHead f context (depth + 1)
+    if let .lam domain body _ := head then
+      return pending ++ #[obligation domain.toExpr] ++ (← child domain) ++
+        (← child a) ++ (← child (← substitute body a))
+    return pending ++ (← child head) ++ (← child a)
   | .lam domain body _ | .forallE domain body _ =>
     let type := domain.toExpr
     return #[obligation type] ++ (← child domain) ++
@@ -1987,6 +2070,35 @@ private partial def retainedTypes (plan : PlanNode) (context : Array Expr := #[]
     return #[obligation type.toExpr] ++ (← child type) ++ (← child value) ++
       (← child (← substitute body value))
   | .mdata _ body | .proj _ _ body => child body
+
+/-- Expose a plan-created lambda while retaining obligations from every
+intermediate application. Do not inspect an uninstantiated lambda body or
+normalize a supplied node to discover a function head. -/
+private partial def retainedHead (plan : PlanNode) (context : Array Expr)
+    (depth : Nat) : CompareM (PlanNode × Array (Expr × Array Expr)) := do
+  debit
+  if depth > 256 then throwError "incomplete_closure:E8.type_obligation_depth"
+  let child := fun p => retainedHead p context (depth + 1)
+  let types := fun p => retainedTypes p context (depth + 1)
+  let obligation := fun type : Expr => (type, if type.hasLooseBVars then context else #[])
+  match plan with
+  | .expanded _ body => child body
+  | .audit input body =>
+    let pending ← types input
+    let (head, rest) ← child body
+    return (head, pending ++ rest)
+  | .typeNode checked =>
+    let (head, rest) ← child checked
+    return (head, #[obligation checked.toExpr] ++ rest)
+  | .app f a =>
+    let (head, pending) ← child f
+    if let .lam domain body _ := head then
+      let inputs := #[obligation domain.toExpr] ++ (← types domain) ++ (← types a)
+      let (result, rest) ← child (← substitute body a)
+      return (result, pending ++ inputs ++ rest)
+    return (.app head a, pending)
+  | _ => return (plan, #[])
+end
 
 private structure MatchContext where
   theoremName : Name
@@ -2028,6 +2140,7 @@ private partial def matchesPlan (context : MatchContext) (plan : PlanNode) (actu
   -- A supplied argument is an immutable comparison leaf. In particular, an
   -- apparent projection or forwarding application inside it is not reduced.
   if let .typeNode checked := plan then return ← child checked actual
+  if let .audit _ checked := plan then return ← child checked actual
   if let .supplied raw := plan then return ← equalRaw raw actual
   if let some projection ← fixedProjection actual then
     if realizationInterfaces.contains projection.typeName then
@@ -2069,6 +2182,7 @@ private partial def matchesPlan (context : MatchContext) (plan : PlanNode) (actu
             if parametersMatch then return ← child plan fields[info.numParams + projection.index]!
   match plan with
   | .typeNode checked => child checked actual
+  | .audit _ checked => child checked actual
   | .expanded raw body =>
     if ← equalRaw raw actual then return true
     child body actual

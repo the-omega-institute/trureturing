@@ -21,6 +21,7 @@ private def decisionTypeRetained : TemplateAudit.PlanNode → Bool
   | .app (.app (.atom (.const ``decide _)) proposition) _ =>
     match proposition with | .typeNode _ => true | _ => false
   | .app f a => decisionTypeRetained f || decisionTypeRetained a
+  | .audit input body => decisionTypeRetained input || decisionTypeRetained body
   | .lam t b _ | .forallE t b _ => decisionTypeRetained t || decisionTypeRetained b
   | .letE t v b _ => decisionTypeRetained t || decisionTypeRetained v || decisionTypeRetained b
   | .expanded _ b | .typeNode b | .mdata _ b | .proj _ _ b => decisionTypeRetained b

@@ -32,6 +32,8 @@ inductive PlanNode where
   | supplied (raw : Expr)
   | proofLeaf (type raw : Expr)
   | typeNode (checked : PlanNode)
+  /-- Checked E5 inputs remain obligations even when expansion discards them. -/
+  | audit (input body : PlanNode)
   deriving Inhabited
 
 structure DependencyIdentity where
@@ -264,6 +266,7 @@ private partial def plan (depth : Nat := 0) : M PlanNode := do
   | "expanded" => return .expanded (← raw) (← child)
   | "proof-leaf" => return .proofLeaf (← raw) (← raw)
   | "type-node" => return .typeNode (← child)
+  | "audit-input" => return .audit (← child) (← child)
   | "application" => return .app (← child) (← child)
   | "lambda" =>
     let bi ← binderInfo
