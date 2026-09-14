@@ -39,10 +39,15 @@ internal static class InformationTemplateEvidence
         foreach (var record in Array(value, "records"))
         {
             InformationTemplateJson.Fields(record, "key", "registration_source_path", "statement_identity",
-                "content_inputs", "binding_source_path", "state", "diagnostic", "certificate");
+                "content_inputs", "binding_source_path", "state", "diagnostic", "certificate",
+                "unit_name", "realization_name");
             var key = InformationTemplateDebtStore.ReadKey(record.GetProperty("key"));
             if (!keys.Add(key)) throw new FormatException("DTR-Evidence: duplicate binding record");
             var registration = InformationTemplateJson.String(record, "registration_source_path");
+            var unit = InformationTemplateJson.Name(InformationTemplateJson.String(record, "unit_name"));
+            var realization = InformationTemplateJson.Name(InformationTemplateJson.String(record, "realization_name"));
+            if (key.RegistrationModule != LeanImportClosure.ModuleName(RepoPath.CreateKnown(registration)))
+                throw new FormatException("DTR-Evidence: registration module/source owner differs");
             var statement = InformationTemplateJson.Hash(InformationTemplateJson.String(record, "statement_identity"), 64);
             var contentInputs = InformationTemplateDebtStore.ReadInputs(record.GetProperty("content_inputs"), snapshot);
             if (!contentInputs.Any(input => input.Path == registration)
@@ -88,7 +93,7 @@ internal static class InformationTemplateEvidence
                     || state == InformationTemplateBindingState.DeclaredUnresolved && diagnostic is null)
                     throw new FormatException("DTR-Evidence: binding owner/diagnostic is missing or wrong");
             }
-            records.Add(new(key, registration, statement, contentInputs, state, reference, diagnostic, binding));
+            records.Add(new(key, registration, statement, contentInputs, state, reference, diagnostic, binding, unit, realization));
         }
         return new(value.Clone(), inventory, records.ToImmutable(), registered, inputs);
     }
@@ -107,6 +112,12 @@ internal static class InformationTemplateEvidence
             if (!report.Files.TryGetValue(RepoPath.CreateKnown(source), out var module) || module.Error is not null
                 || module.InformationTemplates is not { } evidence)
                 throw new FormatException($"DTR-Evidence: missing current producer for {source}");
+            var requiredInputs = LeanImportClosure.RepositoryPaths(report, RepoPath.CreateKnown(source));
+            if (!requiredInputs.All(path => evidence.Inputs.Any(input => input.Path == path.Value)))
+                throw new FormatException("DTR-Evidence: omitted imported source input");
+            foreach (var policy in new[] { "Meta/lean-report.toml", "lean-toolchain", "lake-manifest.json" })
+                if (snapshot.TryGetFile(policy, out _) && !evidence.Inputs.Any(input => input.Path == policy))
+                    throw new FormatException("DTR-Evidence: omitted compiler/policy input " + policy);
             assessed.Add(source);
             foreach (var key in evidence.Inventory)
                 if (!inventory.Add(key)) throw new FormatException("DTR-Inventory: duplicate occurrence owner");
@@ -127,13 +138,30 @@ internal static class InformationTemplateEvidence
                 || record.BindingSourcePath == record.RegistrationSourcePath).ToArray();
             if (originals.Length != 1) throw new FormatException("DTR-Inventory: original registration owner missing/duplicate");
             var original = originals[0];
+            var ownerReport = report.Files[RepoPath.CreateKnown(original.RegistrationSourcePath)];
+            if (original.UnitName is null || original.RealizationName is null
+                || !ownerReport.Declarations.Any(declaration => declaration.Name == original.UnitName
+                    && declaration.Kind == "def")
+                || !ownerReport.Declarations.Any(declaration => declaration.Name == original.RealizationName))
+                throw new FormatException("DTR-Inventory: retained unit/realization owner is missing");
             var declared = records.Where(record => record.State != InformationTemplateBindingState.Undeclared).ToArray();
             if (declared.Length > 1) throw new FormatException("DTR-Evidence: duplicate/contradictory inline or sidecar claim");
             var selected = declared.SingleOrDefault() ?? original;
             if (selected.StatementIdentity != original.StatementIdentity
-                || selected.RegistrationSourcePath != original.RegistrationSourcePath)
+                || selected.RegistrationSourcePath != original.RegistrationSourcePath
+                || selected.UnitName != original.UnitName || selected.RealizationName != original.RealizationName)
                 throw new FormatException("DTR-Evidence: sidecar retargets the occurrence");
             joined.Add(key, selected);
+        }
+        foreach (var source in governed)
+        {
+            var expectedUnits = report.Files[RepoPath.CreateKnown(source)].Declarations
+                .Where(declaration => declaration.Name.EndsWith(".__information_unit", StringComparison.Ordinal))
+                .Select(declaration => declaration.Name).ToHashSet(StringComparer.Ordinal);
+            var actualUnits = joined.Values.Where(occurrence => occurrence.RegistrationSourcePath == source)
+                .Select(occurrence => occurrence.UnitName!).ToHashSet(StringComparer.Ordinal);
+            if (!expectedUnits.IsSubsetOf(actualUnits))
+                throw new FormatException("DTR-Inventory: retained unit hidden from occurrence inventory");
         }
         return new(joined.ToImmutable(), inventory.ToImmutable(), governed, assessed.ToImmutable());
     }

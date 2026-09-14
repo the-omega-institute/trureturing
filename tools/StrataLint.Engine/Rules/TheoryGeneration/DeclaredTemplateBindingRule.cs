@@ -17,7 +17,9 @@ internal sealed record InformationTemplateOccurrence(
     InformationTemplateBindingState State,
     string? EvidenceRef,
     string? Diagnostic,
-    string? BindingSourcePath);
+    string? BindingSourcePath,
+    string? UnitName = null,
+    string? RealizationName = null);
 
 internal sealed record InformationTemplateUniverse(
     ImmutableDictionary<InformationOccurrenceKey, InformationTemplateOccurrence> Occurrences,
