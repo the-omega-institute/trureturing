@@ -86,36 +86,6 @@ def elRaw (c : ZFSet.{u}) : ZFSet.{u} := ZFSet.image Enc (decodeRaw c)
 /-- The set of encoded members of the decoded set. -/
 def El (c : Code.{u}) : ZFSet.{u} := elRaw c.val
 
-/-- Every member of a given set is a valid code. -/
-def AllValid (B : ZFSet.{u}) : Prop := ∀ d ∈ B, Valid d
-
-/-- Packing decodes a set of codes and encodes the resulting set. -/
-def packRaw (B : ZFSet.{u}) : ZFSet.{u} := Enc (ZFSet.image decodeRaw B)
-
-/-- Packing a set of valid codes produces a valid code. -/
-def Pack (B : ZFSet.{u}) (_ : AllValid B) : Code.{u} :=
-  encode (ZFSet.image decodeRaw B)
-
-/-- The semantic unordered pair obtained by packing two valid codes. -/
-def unorderedPairZ (c d : Code.{u}) : Code.{u} :=
-  Pack {c.val, d.val} (by
-    intro e he
-    rcases ZFSet.mem_pair.mp he with rfl | rfl
-    · exact c.property
-    · exact d.property)
-
-/-- The semantic Kuratowski ordered pair of two valid codes. -/
-def orderedPairZ (c d : Code.{u}) : Code.{u} :=
-  unorderedPairZ (unorderedPairZ c c) (unorderedPairZ c d)
-
-/-- The raw semantic union obtained by packing encoded members of encoded members. -/
-def unionRawZ (c : ZFSet.{u}) : ZFSet.{u} :=
-  packRaw (ZFSet.sUnion (ZFSet.image elRaw (elRaw c)))
-
-/-- The raw semantic power set obtained by packing the packs of all subsets. -/
-def powerRawZ (c : ZFSet.{u}) : ZFSet.{u} :=
-  packRaw (ZFSet.image packRaw (elRaw c).powerset)
-
 /-- Equal encodings characterize equal sets, and decoding an encoded set recovers it. -/
 theorem enc_injective_and_left_inverse :
     (∀ x y : ZFSet.{u}, Enc x = Enc y ↔ x = y) ∧
