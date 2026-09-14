@@ -66,8 +66,17 @@ elab "observe_constructor_recursion" : command => do
     let saved ← get
     let result ← enroll name asts
     let actual := match result with | .ok () => none | .error text => some text
-    let retained := (selectedPlan (← getEnv) name).isOk
+    let selected := selectedPlan (← getEnv) name
+    let retained := selected.isOk
     set saved
+    if let .ok plan := selected then
+      let .ok bytes := planEncoding plan | throwError "setup: retained recursion plan cannot encode"
+      let decoded := PlanDecoder.decode bytes (32 * bytes.size)
+      let valid := match decoded with
+        | .ok (plan, _) => (planEncoding plan).toOption == some bytes
+        | .error _ => false
+      logInfo m!"[{if valid then "PASS" else "FAIL"}] recursion_plan_import_{name} bytes={bytes.size} work={plan.chargedWork}"
+      if let .error reason := decoded then logInfo m!"actual={reason}"
     logInfo m!"[{if actual == expected && retained == expected.isNone then "PASS" else "FAIL"}] {label} result={repr actual}"
 
 observe_constructor_recursion

@@ -903,15 +903,33 @@ register_option informationTemplate.work : Nat := {
 private structure WireState where
   bytes : ByteArray := {}
   remaining : Nat := 524288
+  tokens : Option (Std.HashMap String Nat) := none
 
 private abbrev WireM := StateT WireState (Except String)
 
-private def emit (text : String) : WireM Unit := do
+private def wireCharge (amount : Nat) : WireM Unit := do
+  unless amount ≤ (← get).remaining do throw "incomplete_closure:E8.serialization"
+  modify fun s => { s with remaining := s.remaining - amount }
+
+private def emitLiteral (text : String) : WireM Unit := do
   let bytes := text.toUTF8
   let lengthPrefix := (toString bytes.size ++ ":").toUTF8
   let size := lengthPrefix.size + bytes.size
-  unless size ≤ (← get).remaining do throw "incomplete_closure:E8.serialization"
-  modify fun s => { bytes := s.bytes ++ lengthPrefix ++ bytes, remaining := s.remaining - size }
+  wireCharge size
+  modify fun s => { s with bytes := s.bytes ++ lengthPrefix ++ bytes }
+
+private def emit (text : String) : WireM Unit := do
+  let some tokens := (← get).tokens | emitLiteral text
+  -- Interning is plan-only. Charge every token's full input even on a hit;
+  -- compression must not conceal logical serialization work.
+  wireCharge (text.utf8ByteSize + 1)
+  if let some index := tokens[text]? then
+    let reference := ("@" ++ toString index ++ ":").toUTF8
+    wireCharge reference.size
+    modify fun s => { s with bytes := s.bytes ++ reference }
+  else
+    emitLiteral text
+    modify fun s => { s with tokens := some (tokens.insert text tokens.size) }
 
 private def wireName : Name → WireM Unit
   | .anonymous => emit "anonymous"
@@ -994,8 +1012,8 @@ def rawIdentity (params : List Name) (e : Expr) (fuel : Nat := 524288) : Except 
   let (_, state) ← action.run { remaining := min fuel 524288 }
   return (Sha256.hex state.bytes, state.bytes.size)
 
-/-- Complete binding evidence uses the same unambiguous, bounded wire format as
-plans. Dependency arrays are separate length-delimited inputs, not annotations
+/-- Complete binding evidence uses the unshared raw-identity wire format.
+Dependency arrays are separate length-delimited inputs, not annotations
 outside the evidence identity. The evidence reference itself is not encoded. -/
 def bindingIdentity (statementIdentity : String) (certificate : TemplateBindingCertificate)
     (fuel : Nat) : Except String (String × Nat) := do
@@ -1048,9 +1066,10 @@ private partial def wirePlan (params : List Name) (depth : Nat) (plan : PlanNode
 /-- The canonical wire includes every retained plan node and raw proof/expansion,
 all slots, identities, policy and source references. The hash and byte count are
 outputs of this encoding and are not recursively encoded inside themselves. -/
-def planEncoding (plan : TemplatePlanData) (fuel : Nat := 524288) : Except String ByteArray := do
+def planEncodingWithWork (plan : TemplatePlanData) (fuel : Nat := 524288) :
+    Except String (ByteArray × Nat) := do
   let action : WireM Unit := do
-    emit "DTR-checked-plan-v1"
+    emit "DTR-checked-plan-v2"
     for version in #[plan.schemaVersion, plan.grammarVersion, plan.constructorRecursionVersion,
         plan.compatibilityVersion] do emit (toString version)
     emit plan.compiler; emit plan.toolchain; emit plan.policyIdentity
@@ -1068,13 +1087,18 @@ def planEncoding (plan : TemplatePlanData) (fuel : Nat := 524288) : Except Strin
     for input in plan.sourceInputs do emit input.path; emit input.sha256
     emit (toString plan.rules.size)
     for rule in plan.rules do emit rule
-    -- Fixed-width work counter keeps total-work encoding stable.
-    emit (String.ofList (List.replicate (6 - (toString plan.chargedWork).length) '0') ++ toString plan.chargedWork)
+    -- The fixed-width work field is outside the token table so its changing
+    -- digits cannot affect references, serialized size or either pass's work.
+    emitLiteral (String.ofList (List.replicate (6 - (toString plan.chargedWork).length) '0') ++ toString plan.chargedWork)
     wirePlan plan.levelParams 0 plan.typePlan
     wirePlan plan.levelParams 0 plan.plan
-  let (_, state) ← action.run { remaining := min fuel 524288 }
-  if state.bytes.size > 65536 then throw "incomplete_closure:E8.plan_bytes"
-  return state.bytes
+  let limit := min fuel 524288
+  let (_, state) ← action.run { remaining := limit, tokens := some {} }
+  if state.bytes.size > 65536 then throw s!"incomplete_closure:E8.plan_bytes:{state.bytes.size}"
+  return (state.bytes, limit - state.remaining)
+
+def planEncoding (plan : TemplatePlanData) (fuel : Nat := 524288) : Except String ByteArray :=
+  (planEncodingWithWork plan fuel).map Prod.fst
 
 def sourcePath (name : Name) : String :=
   (if name.toString.startsWith "LeanInformationAudit." then "tools/lean-inspector/" else "") ++
@@ -1224,7 +1248,7 @@ private structure CheckedTemplatePlan where
 private initialize templateIndexExt : PersistentEnvExtension TemplatePlanFrame CheckedTemplatePlan TemplateIndex ←
   registerPersistentEnvExtension {
     -- A new entry layout must not reinterpret an old olean extension payload.
-    name := `LeanInformationAudit.TemplateAudit.checkedPlanFramesV1
+    name := `LeanInformationAudit.TemplateAudit.checkedPlanFramesV2
     mkInitial := pure {}
     addEntryFn := fun index checked =>
       { (index.insertChecked checked.data checked.frame.retainedBytes) with
@@ -1490,10 +1514,10 @@ private partial def compileNode (e : Expr) (depth : Nat)
   -- A proposition expression itself is not a proof value.
   if (← isProof e) then
     let type ← inferType e
-    let _ ← compileExpr type (depth + 1) true
+    let checkedType ← compileExpr type (depth + 1) true
     if let some name := e.getAppFn.constName? then dependency (← getConstInfo name)
     rule "E5.proof_leaf"
-    return .proofLeaf type e
+    return .audit checkedType (.proofLeaf type e)
   let child := fun value => compileExpr value (depth + 1) typePosition
   match e with
   | .fvar _ => rule "E3.variable"; return .atom e
@@ -1616,13 +1640,21 @@ private partial def compileNode (e : Expr) (depth : Nat)
       dependency info
       -- Check every raw argument before capture-avoiding expansion, including
       -- arguments unused by the definition body.
-      let inputs ← args.mapM child
+      let mut inputs ← args.mapM child
       let mut value := defn.value.instantiateLevelParams defn.levelParams levels
+      let mut type := defn.type.instantiateLevelParams defn.levelParams levels
       for arg in args do
-        let .lam _ _ body _ := value | throwError "unclassified_form:E5.unsaturated_definition:{name}"
+        let .lam _ bodyDomain body _ := value
+          | throwError "unclassified_form:E5.unsaturated_definition:{name}"
+        let .forallE _ domain tail _ := type
+          | throwError "unclassified_form:E5.unsaturated_definition:{name}"
+        inputs := inputs.push (← compileExpr domain (depth + 1) true)
+        inputs := inputs.push (← compileExpr bodyDomain (depth + 1) true)
         charge
+        type := tail.instantiate1 arg
         value := body.instantiate1 arg
       if value.isLambda then throwError "unclassified_form:E5.unsaturated_definition:{name}"
+      inputs := inputs.push (← compileExpr type (depth + 1) true)
       let mut plan ← child value
       for input in inputs.reverse do
         unless ← containsInput plan input do plan := .audit input plan
@@ -1788,12 +1820,15 @@ private def compileTemplate (name : Name) (constructors : Array Name) : MetaM Ch
     plan, typePlan, rules := state.rules,
     chargedWork := limit - state.remaining + typeBytes + bodyBytes, serializedBytes := 0 }
   let available := state.remaining - typeBytes - bodyBytes
-  let .ok first := planEncoding data available
-    | throwError "incomplete_closure:E8.plan_encoding"
+  let (_, firstWork) ← match planEncodingWithWork data available with
+    | .ok result => pure result
+    | .error reason => throwError reason
   -- Two serialization passes are both charged; the counter is fixed-width.
-  let data := { data with chargedWork := data.chargedWork + 2 * first.size }
-  let .ok bytes := planEncoding data (available - first.size)
-    | throwError "incomplete_closure:E8.plan_encoding"
+  let data := { data with chargedWork := data.chargedWork + 2 * firstWork }
+  let (bytes, secondWork) ← match planEncodingWithWork data (available - firstWork) with
+    | .ok result => pure result
+    | .error reason => throwError reason
+  unless firstWork == secondWork do throwError "incomplete_closure:E8.serialization"
   let frame : TemplatePlanFrame := { key := name.toString.toUTF8, payload := bytes, identity := Sha256.hex bytes }
   if frame.retainedBytes > 65536 then throwError "incomplete_closure:E8.plan_bytes"
   return { data := { data with planIdentity := frame.identity, serializedBytes := bytes.size }, frame }

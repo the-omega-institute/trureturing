@@ -81,7 +81,7 @@ structure TemplatePlanData where
   serializedBytes : Nat
   deriving Inhabited
 
-/- Bounded decoder for the canonical length-prefixed plan payload. The
+/- Bounded decoder for the canonical token-interned plan payload. The
 persistent extension stores bytes, so none of these nodes exist before its
 framing and aggregate-budget checks. Allocation debit is conservative and
 includes token copies, collection slots and expression/plan constructors. -/
@@ -92,6 +92,8 @@ private structure State where
   offset : Nat := 0
   allocationRemaining : Nat
   levelParams : List Name := []
+  tokens : Array String := #[]
+  tokenSet : Std.HashSet String := {}
   deriving Inhabited
 
 private abbrev M := StateT State (Except String)
@@ -107,9 +109,13 @@ private def node (depth : Nat) : M Unit := do
   if depth > 256 then throw "incomplete_closure:E8.import_depth"
   allocate 96
 
-private def token : M String := do
+private def token (shared : Bool := true) : M String := do
   let state ← get
   let mut cursor := state.offset
+  let reference := cursor < state.bytes.size && state.bytes[cursor]! == 64
+  if reference then
+    unless shared do fail
+    cursor := cursor + 1
   let mut length := 0
   let mut digits := 0
   while cursor < state.bytes.size && state.bytes[cursor]! != 58 do
@@ -119,10 +125,20 @@ private def token : M String := do
     length := 10 * length + c - 48
     cursor := cursor + 1
     digits := digits + 1
-  unless digits > 0 && cursor < state.bytes.size &&
-      length ≤ state.bytes.size - (cursor + 1) do fail
-  allocate (3 * length + 64)
+  unless digits > 0 && cursor < state.bytes.size do fail
+  if reference then
+    let some value := state.tokens[length]? | fail
+    -- References reuse a retained String; no new copy or table entry exists.
+    modify fun s => { s with offset := cursor + 1 }
+    return value
+  unless length ≤ state.bytes.size - (cursor + 1) do fail
+  -- Literal copies and both interning collection entries are debited before
+  -- allocation. Shared strings do not multiply this cost on later references.
+  allocate (3 * length + if shared then 192 else 64)
   let some value := String.fromUTF8? (state.bytes.extract (cursor + 1) (cursor + 1 + length)) | fail
+  if shared then
+    if state.tokenSet.contains value then fail
+    modify fun s => { s with tokens := s.tokens.push value, tokenSet := s.tokenSet.insert value }
   modify fun s => { s with offset := cursor + 1 + length }
   return value
 
@@ -296,7 +312,7 @@ private def digest : M String := do
   return value
 
 private def payload : M TemplatePlanData := do
-  expect "DTR-checked-plan-v1"
+  expect "DTR-checked-plan-v2"
   for version in #[1, 1, 1, 4] do unless (← natural) == version do fail
   let compiler ← token
   let toolchain ← token
@@ -328,7 +344,7 @@ private def payload : M TemplatePlanData := do
     let sha256 ← digest
     return { path, sha256 : SourceInput }
   let rules ← sequence 4096 token
-  let work ← token
+  let work ← token false
   let some chargedWork := work.toNat? | fail
   unless work.utf8ByteSize == 6 && work.all Char.isDigit && chargedWork ≤ 524288 do fail
   let typePlan ← plan
