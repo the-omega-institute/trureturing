@@ -1191,3 +1191,596 @@ $$
 =(L_n-1)^2(\varphi\psi)^n
 =-(L_n-1)^2.
 $$
+
+## 附录 R：Fibonacci 回归谱与素数幂提升
+
+### R.1 Fibonacci 矩阵与黄金二次环
+
+**定义。** 令 $F_0=0$、$F_1=1$、$F_{t+2}=F_{t+1}+F_t$，并令
+
+$$
+Q=\begin{pmatrix}1&1\\1&0\end{pmatrix},\qquad \det Q=-1,
+\qquad \mathcal O=\mathbb Z[\varphi],\quad \varphi^2=\varphi+1.
+$$
+
+**命题。** Fibonacci 矩阵满足
+
+$$
+Q^2=
+\begin{pmatrix}1&1\\0&1\end{pmatrix}
+\begin{pmatrix}1&0\\1&1\end{pmatrix}.
+$$
+
+**证明。** 两端直接相乘都等于 $\begin{pmatrix}2&1\\1&1\end{pmatrix}$。
+
+**定理。** 对全部 $t\ge0$，
+
+$$
+\boxed{
+Q^t=
+\begin{pmatrix}
+F_{t+1}&F_t\\F_t&F_{t+1}-F_t
+\end{pmatrix}.}
+\tag{R1}
+$$
+
+**证明。** 当 $t=0$ 时右端是单位矩阵。若公式对 $t$ 成立，将右端乘以
+$Q$，再用 $F_{t+2}=F_{t+1}+F_t$，便得到 $t+1$ 时的公式。
+
+### R.2 序列周期、伴随矩阵阶与黄金单位阶
+
+**定义。** 对正整数 $q$，令 $\pi(q)$ 为 $Q$ 在
+$GL_2(\mathbb Z/q\mathbb Z)$ 中的阶；等价地，它是 Fibonacci 递推的可逆伴随矩阵
+$\begin{pmatrix}1&1\\1&0\end{pmatrix}$ 的阶。特别地，$\pi(1)=1$。
+
+**定理。** 对正整数 $q$ 与 $t\ge0$，
+
+$$
+\boxed{
+\pi(q)\mid t
+\iff(F_t,F_{t+1})\equiv(0,1)\pmod q
+\iff\forall n\ge0,\ F_{n+t}\equiv F_n\pmod q.
+}
+\tag{R2}
+$$
+
+**证明。** 由 R1，$Q^t=I$ 当且仅当矩阵的左下项为 $0$、左上项为
+$1$，即 $(F_t,F_{t+1})\equiv(0,1)$。若 $Q^t=I$，则
+$Q^{n+t}=Q^n$，比较左下项便得序列同余。反之，在序列同余中依次取
+$n=0,1$，即得所需的两项回归条件。
+
+**定义。** 对 $z=a+b\varphi\in\mathcal O/q\mathcal O$，以反序坐标
+$(b,a)$ 定义正则表示
+
+$$
+\mathcal R_q(z)=\begin{pmatrix}a+b&b\\b&a\end{pmatrix}.
+\tag{R3}
+$$
+
+**定理。** $\mathcal R_q$ 是单射环同态，$\mathcal R_q(\varphi)=Q$，因而
+
+$$
+\boxed{\pi(q)=\operatorname{ord}(\overline\varphi\in(\mathcal O/q\mathcal O)^\times).}
+\tag{R4}
+$$
+
+**证明。** 若 $w=c+d\varphi$，则
+$zw=(ac+bd)+(ad+bc+bd)\varphi$；在坐标 $(d,c)$ 上，这正是 R3 的矩阵作用。
+由此乘法与加法均被保持。矩阵第二列为 $(b,a)$，故表示为零只可能
+$a=b=0$，所以它单射。取 $z=\varphi$ 得 $Q$；单射同态保持并反映
+幂等于单位元，故两侧的阶相等。
+
+### R.3 回归内容量与整除对偶
+
+**定义。** 对 $t\ge0$，定义
+
+$$
+C_t=\gcd(F_t,F_{t+1}-1).
+$$
+
+**定理。** 对正整数 $q$ 与 $t\ge0$，
+
+$$
+\boxed{\pi(q)\mid t\iff q\mid C_t.}
+\tag{R5}
+$$
+
+**证明。** 由 R2，左侧等价于 $q\mid F_t$ 且
+$q\mid(F_{t+1}-1)$；这又等价于 $q$ 整除两数的最大公约数。
+
+**命题。** $C_0=0$；若 $t>0$，则 $C_t>0$，并且满足
+$\pi(q)\mid t$ 的正整数 $q$ 恰有 $\tau(C_t)$ 个。
+
+**证明。** 初值得 $C_0=\gcd(0,0)=0$。当 $t>0$ 时，$F_t>0$，故
+$C_t>0$。R5 表明所求正整数恰为 $C_t$ 的全部正约数，数量即
+$\tau(C_t)$。
+
+**定理。** 对正整数 $a,b$ 与非负整数 $s,t$，
+
+$$
+\boxed{
+\pi(\operatorname{lcm}(a,b))=\operatorname{lcm}(\pi(a),\pi(b)),\qquad
+C_{\gcd(s,t)}=\gcd(C_s,C_t).
+}
+\tag{R6}
+$$
+
+**证明。** 任意 $T$ 同时被 $\pi(a),\pi(b)$ 整除，当且仅当
+$a,b$ 同时整除 $C_T$，也即 $\operatorname{lcm}(a,b)\mid C_T$；以
+$T$ 取两边相应的最小周期，双向整除即得第一式。对任意正整数 $q$，
+$q\mid C_{\gcd(s,t)}$ 当且仅当 $\pi(q)$ 同时整除 $s,t$，也即
+$q$ 同时整除 $C_s,C_t$。若 $s=t=0$，第二式由 $C_0=0$ 直接成立；
+否则两边均为正整数，分别取 $q$ 为等式两边便得第二式。
+
+### R.4 第六十步回归与三个有限模数
+
+**命题。** 有
+
+$$
+C_{60}=832040=2^3\cdot5\cdot11\cdot31\cdot61,
+\qquad \tau(C_{60})=64.
+$$
+
+**证明。** 用 Fibonacci 递推算出 $F_{60}$ 与 $F_{61}$，再施行欧几里得算法，
+得到 $\gcd(F_{60},F_{61}-1)=832040$；所示素因子分解给出
+$\tau(C_{60})=(3+1)2^4=64$。
+
+**命题。** 在 $C_{60}$ 的 $64$ 个正约数中，除 $q=1$ 外有 $63$ 个
+非平凡模数，并且有 $49$ 个模数满足 $\pi(q)=60$。
+
+**证明。** $64$ 个正约数中只有 $q=1$ 等于 $1$，其余 $63$ 个均大于 $1$。
+由 R2 直接计算
+
+$$
+\pi(1)=1, \pi(2)=3, \pi(4)=6, \pi(8)=12,
+\ \pi(5)=20, \pi(11)=10, \pi(31)=30, \pi(61)=60.
+$$
+
+**证明。** 含因子 $61$ 的 $32$ 个约数均有周期 $60$。不含 $61$ 时，周期的最小公倍数
+等于 $60$ 的情形按 $2$ 的指数 $3,2,1,0$ 分别有 $7,4,4,2$ 个，合计
+$17$ 个。因此总数为 $32+17=49$。
+
+**命题。** 下列数值成立：
+
+| 模数 $N$ | $\tau(N)$ | $\pi(N)$ |
+|---|---:|---:|
+| $5040=2^4 3^2 5\cdot7$ | 60 | 240 |
+| $7560=2^3 3^3 5\cdot7$ | 64 | 720 |
+| $55440=2^4 3^2 5\cdot7\cdot11$ | 120 | 240 |
+
+**证明。** 约数个数由三行的素因子指数相乘得到。用 R2 逐次乘矩阵可得
+
+$$
+\pi(16)=24,\quad\pi(9)=24,\quad\pi(8)=12,\quad\pi(27)=72,\quad
+\pi(5)=20,\quad\pi(7)=16,\quad\pi(11)=10.
+$$
+
+**证明。** 再由 R6 对各互素素数幂取周期的最小公倍数，依次得到 $240,720,240$。
+
+### R.5 模平方的平方零回归缺陷与 Wall 二分律
+
+**定义。** 设 $p>0$，$r=\pi(p)$，并定义整数
+
+$$
+a=F_r/p,\qquad b=(F_{r+1}-1)/p,\qquad
+B=\begin{pmatrix}b&a\\a&b-a\end{pmatrix}.
+$$
+
+**证明。** 这些商为整数，因为 R2 给出 $p\mid F_r$ 与 $p\mid(F_{r+1}-1)$。
+
+**定理。** 在 $\mathbb Z/p^2\mathbb Z$ 上，
+
+$$
+\boxed{Q^r=I+pB.}
+\tag{R7}
+$$
+
+**证明。** 将 $F_r=pa$ 与 $F_{r+1}=1+pb$ 代入 R1 的四个矩阵项即可。
+
+**定理。** 若环中 $D^2=0$，则对全部 $m\ge0$，
+
+$$
+(1+D)^m=1+mD.
+$$
+
+**证明。** 对 $m$ 归纳。归纳步中
+$(1+mD)(1+D)=1+(m+1)D+mD^2=1+(m+1)D$。
+
+**定理。** 对任意正整数 $p$，
+
+$$
+\pi(p)\mid\pi(p^2)\mid p\pi(p).
+$$
+
+**证明。** 降模同态给出左侧整除。令 $D=pB$；在模 $p^2$ 下有
+$D^2=0$ 与 $pD=0$。由 R7 和前一定理，
+$(Q^r)^p=(I+D)^p=I+pD=I$，故 $\pi(p^2)\mid pr$。
+
+**定理。** 若 $p$ 为素数，则下列二者必有且仅有一个成立；该结论包括
+$p=2$ 与 $p=5$：
+
+$$
+\boxed{\pi(p^2)=\pi(p)\quad\text{或}\quad
+\pi(p^2)=p\pi(p).}
+\tag{R8}
+$$
+
+**证明。** 由前一定理，$\pi(p^2)/\pi(p)$ 是 $p$ 的正约数；素性迫使它
+等于 $1$ 或 $p$。
+
+**定理。** 对素数 $p$，
+
+$$
+\boxed{
+\pi(p^2)=\pi(p)
+\iff p^2\mid C_{\pi(p)}
+\iff p\mid a\ \text{且}\ p\mid b.
+}
+\tag{R9}
+$$
+
+**证明。** 第一处等价由 R5 对旧周期与模 $p^2$ 应用，并结合
+$\pi(p)\mid\pi(p^2)$。又因 $F_r=pa$、$F_{r+1}-1=pb$，
+$p^2$ 同时整除这两数当且仅当 $p$ 同时整除 $a,b$。
+
+### R.6 奇素数的迹约束与判别式方向
+
+**定理。** 若 $p$ 为奇素数，则 $r=\pi(p)$ 为偶数，并且 R.5 中的整数商满足
+
+$$
+\boxed{2b-a=-p(b^2-ab-a^2).}
+\tag{R10}
+$$
+
+**证明。** 因 $Q^r\equiv I\pmod p$，取行列式得
+$(-1)^r\equiv1\pmod p$。奇素数下 $1\not\equiv-1$，故 $r$ 为偶数。
+**证明。** 再由 R1 与 R.5 中 $a,b$ 的定义，在整数矩阵中计算
+
+$$
+1=\det Q^r
+=1+p(2b-a)+p^2(b^2-ab-a^2).
+$$
+
+**证明。** 在整数环中约去非零的 $p$，即得 R10。
+
+**定理。** 对奇素数 $p$，
+
+$$
+\boxed{\pi(p^2)=\pi(p)\iff p\mid F_{\pi(p)}/p.}
+\tag{R11}
+$$
+
+**证明。** R10 模 $p$ 给出 $2b=a$。由于 $2$ 在模 $p$ 下可逆，
+$p\mid a$ 当且仅当 $p\mid b$；再用 R9。
+
+**定义。** 在模 $p$ 下令
+
+$$
+H=\begin{pmatrix}1&2\\2&-1\end{pmatrix},\qquad
+\overline B=\begin{pmatrix}b&a\\a&b-a\end{pmatrix}.
+$$
+
+**定理。** 对奇素数 $p$，
+
+$$
+\boxed{2\overline B=aH,\qquad (2\overline B)^2=5a^2I.}
+\tag{R12}
+$$
+
+**证明。** 由 $2b=a$ 逐项比较得到第一式；直接相乘得 $H^2=5I$，
+从而得到第二式。
+
+**命题。** 若 $p$ 为素数、$p\ne2,5$ 且 $a\not\equiv0\pmod p$，则
+$\ker\overline B=0$。此外，对模 $p^2$ 的状态向量 $v$，旧周期后的差为
+$pBv$；若 $v\not\equiv0\pmod p$，则该差不为零。
+
+**证明。** 若 $\overline Bv=0$，R12 给出 $5a^2v=0$；$5a^2$ 可逆，故
+$v=0$。R7 给出 $Q^rv-v=pBv$。若后者在模 $p^2$ 下为零，则
+$\overline B(v\bmod p)=0$，由核为零得到 $v\equiv0\pmod p$，与假设矛盾。
+
+### R.7 模平方上的双根障碍
+
+**定理。** 对每个整数 $n>1$，在 $(\mathbb Z/n^2\mathbb Z)[X]$ 中有
+下式；等价地，$X^2-2X+1$ 不整除 $X^n-1$：
+
+$$
+\boxed{(X-1)^2\nmid X^n-1.}
+\tag{R13}
+$$
+
+**证明。** 若 $X^n-1=(X-1)^2g(X)$，形式求导并代入 $X=1$，右端为
+$0$，左端为 $n$。于是 $n=0$ 于 $\mathbb Z/n^2\mathbb Z$，即
+$n^2\mid n$，这与 $n>1$ 矛盾。最后的等价表述来自
+$X^2-2X+1=(X-1)^2$。
+
+### R.8 平方零系数的一阶幂律
+
+**定义。** 对交换环 $R$，令 $R[\varphi]=R[T]/(T^2-T-1)$，并把元素写成
+$z=z_a+z_b\varphi$。
+
+**定理。** 若 $z_b^2=0$，则对每个 $k\ge0$ 有下式，其中 $k=0$ 时
+第二式右端按 $0\cdot z_a^0z_b=0$ 解释：
+
+$$
+\boxed{
+(z^k)_a=z_a^k,\qquad
+(z^k)_b=kz_a^{k-1}z_b,
+}
+$$
+
+**证明。** 对 $k$ 归纳。乘法公式为
+$(xy)_a=x_ay_a+x_by_b$ 与
+$(xy)_b=x_ay_b+x_by_a+x_by_b$。归纳步代入归纳假设；所有含
+$z_b^2$ 的项消失，余项分别合并为 $z_a^{k+1}$ 与
+$(k+1)z_a^kz_b$。
+
+### R.9 等幂的归一化系数输运
+
+**定理。** 设 $p>0$，$x,y\in\mathcal O$，$k,l\ge0$，且
+$x_b=pA$、$y_b=pB$、$x^k=y^l$。则在 $\mathbb Z/p\mathbb Z$ 中有
+
+$$
+\boxed{
+kx_a^{k-1}A=ly_a^{l-1}B.
+}
+\tag{R15}
+$$
+
+**证明。** 将 $x,y$ 降到 $\mathcal O/p^2\mathcal O$。因
+$x_b^2=y_b^2=0$，R.8 给出等幂两侧的 $\varphi$ 系数分别为
+$pkx_a^{k-1}A$ 与 $ply_a^{l-1}B$。它们模 $p^2$ 相等，所以对应整数之差
+被 $p^2$ 整除；在整数整除等式中约去 $p$，再降模 $p$，即得 R15。
+
+### R.10 带符号的 Frobenius 指标
+
+**定义。** 对素数 $p\ne2,5$，定义
+
+$$
+\epsilon_p=\left(\frac5p\right),\qquad
+n_p=p-\epsilon_p,\qquad r_p=\pi(p),
+$$
+
+$$
+\eta_p=\frac{F_{r_p}}p\pmod p,\qquad
+q_p=\frac{F_{n_p}}p\pmod p.
+$$
+
+**定理。** 有 $\epsilon_p\in\{1,-1\}$、$n_p>0$，并且
+
+$$
+p\mid F_{n_p},\qquad
+\varphi^{n_p}=\epsilon_p\pmod p,\qquad
+r_p\mid2n_p,\qquad p\nmid r_p.
+$$
+
+**证明。** 令 $\delta=2\varphi-1$，则 $\delta^2=5$。在特征 $p$ 的
+二次代数中，由 Frobenius 同态与 Euler 判据，
+$\delta^p=\epsilon_p\delta$。若 $\epsilon_p=1$，便有
+$\varphi^{p-1}=1$；若 $\epsilon_p=-1$，则
+$\varphi^p=1-\varphi=-\varphi^{-1}$，故 $\varphi^{p+1}=-1$。
+两种情形统一为 $\varphi^{n_p}=\epsilon_p$。比较 $\varphi$ 系数得
+$p\mid F_{n_p}$，平方后得 $\varphi^{2n_p}=1$，故 $r_p\mid2n_p$。
+又 $n_p\equiv-\epsilon_p\not\equiv0\pmod p$ 且 $p$ 为奇数，所以
+$p\nmid r_p$。
+
+**命题。** 当 $p=3$ 时，$\epsilon_p=-1$、$n_p=4$、$F_{n_p}=3$，而
+$\pi(3)=8$；当 $p=7$ 时，$n_p=8$、$r_p=16$。
+
+**证明。** Legendre 符号直接给出两个 $\epsilon_p$ 的值；Fibonacci 递推给出
+$F_4=3$。对 $Q$ 分别在模 $3$ 与模 $7$ 下逐次乘方，并用 R2 检查所有真因子，
+得到所列最小周期。
+
+### R.11 首次回归深度
+
+**定义。** 对素数 $p$，令 $\nu_p$ 表示正整数的 $p$-进赋值，并定义
+
+$$
+s_p=\nu_p(C_{r_p}),\qquad r_p=\pi(p),
+$$
+
+**命题。** $C_{r_p}>0$、$p\mid C_{r_p}$，因而 $s_p$ 是有限正整数。
+
+**证明。** $r_p>0$，故 $F_{r_p}>0$，于是 $C_{r_p}>0$。R5 对
+$t=r_p$ 给出 $p\mid C_{r_p}$，所以 $s_p\ge1$ 且有限。
+
+### R.12 周期商与 Frobenius 商的准确比例
+
+**定理。** 对每个素数 $p\ne2,5$，
+
+$$
+\boxed{
+\eta_p=-r_pq_p\quad\text{于 }\mathbb F_p,\qquad
+-r_p\in\mathbb F_p^\times.
+}
+\tag{R14}
+$$
+
+**证明。** 在 R15 中取
+$x=\varphi^{r_p}$、$y=\varphi^{n_p}$、$k=n_p$、$l=r_p$；等幂前提来自
+$(\varphi^{r_p})^{n_p}=(\varphi^{n_p})^{r_p}$。由 R2 与 R.10，
+$x_a=1$、$y_a=\epsilon_p$ 于模 $p$，所以
+
+$$
+n_p\eta_p=r_p\epsilon_p^{r_p-1}q_p\pmod p.
+$$
+
+**证明。** R.6 表明 $r_p$ 为偶数，故
+$\epsilon_p^{r_p-1}=\epsilon_p$；又
+$n_p\equiv-\epsilon_p\pmod p$。约去单位 $\epsilon_p$ 即得
+$\eta_p=-r_pq_p$。R.10 已证明 $p\nmid r_p$，所以 $-r_p$ 是单位。
+
+**命题。** 对 $p=7$，有 $n_p=8$、$r_p=16$、$q_p=3$、$\eta_p=1$，且
+$-r_p\equiv5\pmod7$，从而 $\eta_p=(-r_p)q_p$。
+
+**证明。** 递推得 $F_8=21$、$F_{16}=987$；分别先除以 $7$ 再模 $7$，
+得到 $q_p=3$ 与 $\eta_p=1$，而 $-16\equiv5$ 且 $5\cdot3\equiv1$。
+
+**定理。** 对素数 $p\ne2,5$，
+
+$$
+\boxed{\pi(p^2)=\pi(p)\iff q_p=0.}
+\tag{R16}
+$$
+
+**证明。** R11 将左侧等价为 $\eta_p=0$；R14 中的系数 $-r_p$ 是单位，
+故 $\eta_p=0$ 当且仅当 $q_p=0$。
+
+### R.13 素数幂的准确缺陷深度
+
+**定理。** 设 $p$ 为素数，$s>0$，$s+2\le ps$，$B\in\mathcal O$ 且
+$p\nmid B$。则对每个 $j\ge0$，存在 $D_j\in\mathcal O$ 使下式成立，
+且左侧与 $1$ 的差恰被 $p^{s+j}$ 整除而不被 $p^{s+j+1}$ 整除：
+
+$$
+\boxed{
+(1+p^sB)^{p^j}=1+p^{s+j}(B+pD_j).
+}
+\tag{R17}
+$$
+
+**证明。** 对 $j$ 归纳。$j=0$ 时取 $D_0=0$。设第 $j$ 步括号内为
+$U=B+pD_j$，则 $U\equiv B\pmod p$。对
+$(1+p^{s+j}U)^p$ 作二项展开：一次项为 $p^{s+j+1}U$；中间项因
+$p\mid\binom{p}{i}$ 且 $i\ge2$，都被 $p^{s+j+2}$ 整除；最高次项由
+$s+2\le ps$ 也被 $p^{s+j+2}$ 整除。因此余项可吸收到新的
+$D_{j+1}$ 中，且括号仍模 $p$ 等于 $B$。因为 $p\nmid B$，这个括号不被
+$p$ 整除，故所述深度准确。
+
+**定理。** 在 R17 的假设下，$1+p^sB$ 在
+$(\mathcal O/p^{s+j}\mathcal O)^\times$ 中的阶恰为 $p^j$。
+
+**证明。** R17 给出其 $p^j$ 次幂为 $1$。若 $j>0$，R17 对 $j-1$
+给出的差恰只有深度 $s+j-1$，所以 $p^{j-1}$ 次幂尚不为 $1$。
+该阶是 $p^j$ 的约数，却不整除 $p^{j-1}$，故只能是 $p^j$。
+
+**命题。** 对奇素数，$s\ge1$ 即满足 $s+2\le ps$；对 $p=2$，该条件在
+$s\ge2$ 时满足。
+
+**证明。** 第一种情形有 $p\ge3$，故 $ps-(s+2)=(p-1)s-2\ge0$；
+第二种情形化为 $s\ge2$。
+
+### R.14 奇素数的完整周期塔
+
+**定理。** 对任意奇素数 $p$ 与任意 $e\ge1$，
+
+$$
+\boxed{
+\pi(p^e)=r_p\,p^{\max(e-s_p,0)},
+\qquad s_p=\nu_p(C_{r_p}).
+}
+\tag{R18}
+$$
+
+**证明。** 由 Fibonacci 递推，
+$C_{r_p}=\gcd(F_{r_p},F_{r_p-1}-1)$。结合 $s_p$ 的定义与 R2，
+$\varphi^{r_p}-1$ 的两个整数坐标都被
+$p^{s_p}$ 整除，但不都被 $p^{s_p+1}$ 整除。因此存在
+$B\in\mathcal O$ 使
+
+$$
+\varphi^{r_p}=1+p^{s_p}B,\qquad p\nmid B.
+$$
+
+**证明。** 若 $e\le s_p$，则 $r_p$ 已在模 $p^e$ 下回归，而降模到 $p$ 又给
+$r_p\mid\pi(p^e)$，故 $\pi(p^e)=r_p$。若 $e=s_p+j$，R.13 表明
+$\varphi^{r_p}$ 在模 $p^e$ 下的阶为 $p^j$。令
+$T=\pi(p^e)$；因 $r_p\mid T$，元素幂的阶公式给出
+
+$$
+\operatorname{ord}(\varphi^{r_p})
+=\frac{T}{\gcd(T,r_p)}=\frac{T}{r_p}=p^j.
+$$
+
+**证明。** 于是 $T=r_pp^j$，与第一种情形合并即得 R18。
+
+**定理。** 对素数 $p\ne2,5$，
+
+$$
+\boxed{q_p=0\iff s_p\ge2.}
+\tag{R19}
+$$
+
+**证明。** 由 R5，$s_p\ge2$ 当且仅当
+$p^2\mid C_{r_p}$，也即 $\pi(p^2)=\pi(p)$；再用 R16，即得 R19。
+
+**命题。** 对素数 $p\ne2,5$，若 $q_p\ne0$，则
+
+$$
+\forall e\ge1,\quad \pi(p^e)=\pi(p)p^{e-1}.
+$$
+
+**证明。** 若 $q_p\ne0$，则 R19 给出 $s_p\not\ge2$，而 R.11 给出
+$s_p\ge1$，故 $s_p=1$；代入 R18 即得最后一式。
+
+### R.15 二进与分歧素数的完整周期塔
+
+**定理。** 对每个 $e\ge1$，
+
+$$
+\boxed{
+\pi(2^e)=3\cdot2^{e-1},\qquad
+\pi(5^e)=20\cdot5^{e-1}.
+}
+\tag{R20}
+$$
+
+**证明。** 由 R2 的有限检查，
+$\pi(2)=3$、$\pi(4)=6$、$\pi(5)=20$。在 $\mathcal O$ 中直接递推得到
+
+$$
+\varphi^6=1+4(1+2\varphi),
+\qquad
+\varphi^{20}=1+5(836+1353\varphi).
+$$
+
+**证明。** 第一式括号不被 $2$ 整除，是深度 $2$ 的原始缺陷；第二式括号不被 $5$
+整除，是深度 $1$ 的原始缺陷。分别从模 $4$ 与模 $5$ 应用 R.13 的准确阶
+结论，得到 $e\ge2$ 时
+$\pi(2^e)=6\cdot2^{e-2}$，以及全部 $e\ge1$ 时
+$\pi(5^e)=20\cdot5^{e-1}$。前者再与 $e=1$ 合并，便是 R20。
+
+**命题。** $\pi(2^0)=\pi(5^0)=\pi(1)=1$，所以 R20 的范围不能扩为
+$e=0$。
+
+**证明。** 模 $1$ 的可逆矩阵群只有单位元，故其元素阶为 $1$；而 R20
+右侧在 $e=0$ 不按自然数指数给出所需值。
+
+### R.16 周期平台与逐层提升
+
+**命题。** 对奇素数 $p$，若 $1\le e\le s_p$，则
+$\pi(p^e)=r_p$；若 $e\ge s_p$，则
+
+$$
+\pi(p^{e+1})=p\,\pi(p^e).
+$$
+
+**证明。** 第一式由 R18 中 $\max(e-s_p,0)=0$ 得到。第二式中指数
+分别为 $e-s_p+1$ 与 $e-s_p$，相差 $1$，故两周期相差因子 $p$。
+
+### R.17 任意周期倍数的精确回归深度
+
+**定理。** 令 $p$ 为奇素数、$r_p=\pi(p)$、
+$s_p=\nu_p(C_{r_p})$。对全部 $k\ge0$ 与 $e\ge1$，
+
+$$
+\boxed{
+p^e\mid C_{r_pk}\iff p^{\max(e-s_p,0)}\mid k.
+}
+\tag{R21}
+$$
+
+**证明。** 由 R5，左侧等价于 $\pi(p^e)\mid r_pk$。代入 R18，并在
+自然数整除见证中约去正整数 $r_p$，即得右侧。$k=0$ 时两边都成立。
+
+**定理。** 在前一定理的假设下，若 $k>0$，则
+
+$$
+\boxed{
+\nu_p(C_{r_pk})=s_p+\nu_p(k).
+}
+\tag{R22}
+$$
+
+**证明。** 令 $d=s_p+\nu_p(k)$。由 R21，$p^d\mid C_{r_pk}$，而
+$p^{d+1}\nmid C_{r_pk}$。又因 $r_pk>0$，有 $F_{r_pk}>0$，从而
+$C_{r_pk}>0$；按 $p$-进赋值的定义即得 R22。

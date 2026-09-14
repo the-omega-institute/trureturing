@@ -1,0 +1,20 @@
+## RD.1 原始数位、黄金求值与整数显示
+
+**定义。** 令 $F_0=0,F_1=1,F_{i+2}=F_{i+1}+F_i$，$\varphi^2=\varphi+1$，并定义
+
+$$
+\mathcal R=\mathbb N^{(\mathbb N)},\qquad
+v(r)=\sum_i r_iF_{i+2},\qquad
+\beta(r)=\sum_i r_i\varphi^{i+2}\in\mathbb Z[\varphi].
+$$
+
+**命题。** 若 $\pi(a+b\varphi)=b$，则对每个 $r\in\mathcal R$ 有 $\pi(\beta(r))=v(r)$。
+
+**证明。** 由 $\varphi^{i+2}=F_{i+1}+F_{i+2}\varphi$ 逐项取 $\varphi$ 的系数并求和即得。
+
+**定义。** 若 $r_i\le1$ 且任意相邻两个系数不同时为一，则称 $r$ 为规范原始数位表。
+
+**命题。** 在规范原始数位表中，整数显示 $v(r)$ 唯一确定 $r$；在全部 $\mathcal R$ 上，$v$ 不必为单射。若谓词 $P(v(r))$ 只依赖显示，则它在每个 $v$-纤维上恒定。
+
+**证明。** 第一项是 Zeckendorf 唯一性。第二项例如由 $F_{i+4}=F_{i+3}+F_{i+2}$ 得到不同的原始表示。最后一项由函数复合的定义立即成立。
+

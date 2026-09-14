@@ -1,0 +1,10 @@
+**定理。** 设 $p>0$，$x,y\in\mathcal O$，$k,l\ge0$，且
+$x_b=pA$、$y_b=pB$、$x^k=y^l$。则在 $\mathbb Z/p\mathbb Z$ 中有
+
+$$
+\boxed{
+kx_a^{k-1}A=ly_a^{l-1}B.
+}
+\tag{R15}
+$$
+

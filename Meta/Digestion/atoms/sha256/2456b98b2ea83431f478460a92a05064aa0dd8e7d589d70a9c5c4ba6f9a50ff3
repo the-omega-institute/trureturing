@@ -1,0 +1,16 @@
+**定理 SM1。** 对任意 $R\in\operatorname{End}(W)$，$K_0,K_1,P$ 均与 $I_2\otimes R$ 交换，且对全部 $k\ge0$，
+
+$$
+\operatorname{Tr}((I_2\otimes R)K_0^k)
+=\operatorname{Tr}((I_2\otimes R)K_1^k)
+=(a^k+b^k)\operatorname{Tr}(R).
+$$
+
+但若 $M_j(K)=(PKQ)(QKQ)^j(QKP)$，则
+
+$$
+\boxed{M_j(K_0)=0,\qquad M_j(K_1)=d^2c^jP\quad(j\ge0).}
+$$
+
+当 $a\ne b$ 时，二者的零滞后核不同。
+

@@ -1,0 +1,14 @@
+**定理 RD5。** 对每个显示 $n$，
+
+$$
+\{c(r):v(r)=n\}
+=\{c\in\mathbb Z:a_0(n)+c\le n\le2(a_0(n)+c)\},
+$$
+
+并且
+
+$$
+\beta(r)=\beta(s)
+\iff v(r)=v(s)\ \land\ c(r)=c(s).
+$$
+
