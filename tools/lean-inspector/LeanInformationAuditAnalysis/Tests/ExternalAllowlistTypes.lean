@@ -250,3 +250,8 @@ structure PropositionMember where
 def propositionMemRead (_ : Unit) (bit : Bool) : PropositionMember :=
   ⟨.tail _ (.head _), bit⟩
 end ListMetadataFixtures
+
+namespace BoundarySubtypeFixtures
+-- An external implementation cannot hide this statement-bearing proof field.
+def payload (state : Bool) : {b : Bool // (137 : Nat) = 137} := ⟨state, rfl⟩
+end BoundarySubtypeFixtures

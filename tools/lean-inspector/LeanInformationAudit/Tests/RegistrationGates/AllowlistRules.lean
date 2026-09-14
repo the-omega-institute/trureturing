@@ -920,7 +920,6 @@ run_cmd Elab.Command.liftTermElabM do
         if (← Meta.inferType param) == mkConst ``Bool then
           throwError "[FAIL] NoTypeClassificationModes: {userName} has a Boolean mode"
   for userName in [
-      `LeanInformationAudit.RegistrationGates.WalkState.typeObligations,
       `LeanInformationAudit.RegistrationGates.WalkState.typeChecks,
       `LeanInformationAudit.RegistrationGates.WalkState.cleanTypes] do
     let some (_, info) := env.constants.toList.find? (fun (name, _) =>
