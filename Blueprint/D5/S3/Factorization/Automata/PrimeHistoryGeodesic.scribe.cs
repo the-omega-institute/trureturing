@@ -21,13 +21,7 @@ internal sealed class PrimeHistoryGeodesicDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(
                     "D5/S3/Factorization/Automata/PrimeHistoryGeodesic.shortest_realization"),
                 H("The lower bound is attained by an explicit word"),
-                StatementSource.FromAuthor(Disp(Seq(
-                    F.Id("normal(a,shortestWord(t))"), Sp, Eq, Sp, F.Id("some(t)"), Sp, Land, Sp,
-                    F.Id("length(shortestWord(t))"), Sp, Eq, Sp,
-                    D(2), Sp, F.Id("(a-u+l)"), Sp, Minus, Sp, F.Id("abs(d)"), Sp, Land, Sp,
-                    Forall, Sp, F.Id("w"), Comma, Sp,
-                    F.Id("normal(a,w)"), Sp, Eq, Sp, F.Id("some(t)"), Sp, Rightarrow, Sp,
-                    F.Id("length(shortestWord(t))"), Sp, Leq, Sp, F.Id("length(w)")))),
+                StatementSource.FromAuthor(ShortestRealizationFormula()),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "For nonnegative d, use the earlier lower-first realization. For negative "
@@ -45,4 +39,76 @@ internal sealed class PrimeHistoryGeodesicDocument : IScribeDocumentDefinition
             DocumentEdge.Dependency.Create(
                 GidRef.Create("D5/S3/Factorization/Automata/WordExcursionLowerBound"))
         ]));
+
+    private static Formula Call(string name, params Formula[] arguments) =>
+        new Formula.Apply(F.Id(name), [.. arguments]);
+
+    private static Formula QualifiedCall(
+        string prefix,
+        string name,
+        params Formula[] arguments) =>
+        new Formula.Apply(Seq(F.Id(prefix), Dot, F.Id(name)), [.. arguments]);
+
+    private static Formula Universal(string variable, Formula domain, Formula body) =>
+        new Formula.Bind(
+            FormulaQuantifier.ForAll,
+            FormulaIdentifier.Create(variable),
+            domain,
+            body);
+
+    private static Formula Equal(Formula left, Formula right) =>
+        new Formula.Relation(left, FormulaRelationOperator.Equal, right);
+
+    private static Formula LessOrEqual(Formula left, Formula right) =>
+        new Formula.Relation(left, FormulaRelationOperator.LessThanOrEqual, right);
+
+    private static Formula And(Formula left, Formula right) =>
+        new Formula.Logic(left, FormulaLogicOperator.And, right);
+
+    private static Formula Implies(Formula left, Formula right) =>
+        new Formula.Logic(left, FormulaLogicOperator.Implies, right);
+
+    private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
+
+    private static Formula Integers() => new Formula.Integers();
+
+    private static Formula Words() => Call("List", F.Id("Bool"));
+
+    private static Formula IntervalMaps() => Call("IntervalMap", F.Id("a"));
+
+    private static Formula Field(string name) => Seq(F.Id("t"), Dot, F.Id(name));
+
+    private static Formula ShortestWord() => Call("shortestWord", F.Id("t"));
+
+    private static Formula Length(Formula word) => QualifiedCall("List", "length", word);
+
+    private static Formula Normal(Formula word) => Call("normal", F.Id("a"), word);
+
+    private static Formula IntCast(Formula value) =>
+        Seq(Open, value, Colon, Sp, Integers(), Close);
+
+    private static Formula ExactLength() => new Formula.Binary(
+        new Formula.Binary(
+            D(2),
+            FormulaBinaryOperator.Multiply,
+            new Formula.Binary(
+                new Formula.Binary(
+                    IntCast(F.Id("a")),
+                    FormulaBinaryOperator.Subtract,
+                    Field("hi")),
+                FormulaBinaryOperator.Add,
+                Field("lo"))),
+        FormulaBinaryOperator.Subtract,
+        Call("max", Field("shift"), new Formula.Negate(Field("shift"))));
+
+    private static Formula ShortestRealizationFormula() => Disp(Universal("a", Naturals(),
+        Universal("t", IntervalMaps(),
+            And(
+                Equal(Normal(ShortestWord()), Call("some", F.Id("t"))),
+                And(
+                    Equal(IntCast(Length(ShortestWord())), ExactLength()),
+                    Universal("w", Words(),
+                        Implies(
+                            Equal(Normal(F.Id("w")), Call("some", F.Id("t"))),
+                            LessOrEqual(Length(ShortestWord()), Length(F.Id("w"))))))))));
 }
