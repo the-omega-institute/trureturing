@@ -12,8 +12,117 @@ from unittest import mock
 
 from ci_contract import CACHE, REPO, REV, CacheFixture
 
+STORE_SUFFIXES = ("", ".sha256", ".input.attestation", ".provenance.json", ".materials.zip", ".seed.json")
+
 
 class SnapshotContracts(CacheFixture, unittest.TestCase):
+    def prepare_store(self, name="raw-lean-report.json"):
+        from argparse import Namespace
+        from lean_seed_contract import DeltaTests
+        sys.path.insert(0, str(REPO / "tools/lean-inspector"))
+        import report_cache
+        fixture = DeltaTests()
+        fixture.setUp()
+        self.addCleanup(fixture.doCleanups)
+        fixture.add_declaration_material()
+        source = fixture.root / "source" / name
+        source.parent.mkdir()
+        for suffix in ("", ".sha256", ".input.attestation", ".provenance.json", ".materials.zip"):
+            shutil.copyfile(pathlib.Path(str(fixture.report) + suffix), pathlib.Path(str(source) + suffix))
+        pathlib.Path(str(source) + ".sha256").write_text(hashlib.sha256(source.read_bytes()).hexdigest() + "  " + name + "\n")
+        partition = REV + "/linux-x64"
+        pathlib.Path(str(source) + ".seed.json").write_text(json.dumps({
+            "schema": "lean-report-seed-v1", "partition": partition, "runtime_sha256": "c" * 64,
+            "report_sha256": hashlib.sha256(source.read_bytes()).hexdigest(),
+            "materials_sha256": hashlib.sha256(pathlib.Path(str(source) + ".materials.zip").read_bytes()).hexdigest()}))
+        arguments = Namespace(repository=None, report=source, cache_root=fixture.root / "stored")
+        self.assertTrue(report_cache.store(arguments))
+        snapshot = arguments.cache_root / partition / report_cache.seed_identity(source) / "raw-lean-report.json"
+        return report_cache, arguments, snapshot
+
+    def test_report_store_same_bundle_validates_materials_once(self):
+        owner, arguments, snapshot = self.prepare_store()
+        import delta
+        before = {suffix: owner.member(snapshot, suffix).read_bytes() for suffix in STORE_SUFFIXES}
+        with mock.patch.object(delta, "validate_materials", wraps=delta.validate_materials) as validate:
+            self.assertTrue(owner.store(arguments))
+        self.assertEqual(1, validate.call_count)
+        self.assertEqual(before, {suffix: owner.member(snapshot, suffix).read_bytes() for suffix in STORE_SUFFIXES})
+
+    def test_report_store_renamed_source_binds_cached_checksum_name(self):
+        owner, arguments, snapshot = self.prepare_store("candidate.json")
+        import delta
+        expected = hashlib.sha256(arguments.report.read_bytes()).hexdigest() + "  raw-lean-report.json\n"
+        with mock.patch.object(delta, "validate_materials", wraps=delta.validate_materials) as validate:
+            self.assertTrue(owner.store(arguments))
+        self.assertEqual(1, validate.call_count)
+        self.assertEqual(expected, owner.member(snapshot, ".sha256").read_text())
+        for wrong in (expected.replace("raw-lean-report.json", "candidate.json"), "0" * 64 + expected[64:], expected + "extra\n"):
+            with self.subTest(checksum=wrong):
+                owner.member(snapshot, ".sha256").write_text(wrong)
+                self.assertTrue(owner.store(arguments))
+                self.assertEqual(expected, owner.member(snapshot, ".sha256").read_text())
+
+    def test_report_store_rebuilds_each_missing_or_corrupt_snapshot_file(self):
+        owner, arguments, snapshot = self.prepare_store()
+        expected = {suffix: owner.member(snapshot, suffix).read_bytes() for suffix in STORE_SUFFIXES}
+        for suffix in STORE_SUFFIXES:
+            for missing in (False, True):
+                with self.subTest(suffix=suffix, missing=missing):
+                    damaged = owner.member(snapshot, suffix)
+                    if missing:
+                        damaged.unlink()
+                    else:
+                        damaged.write_bytes(expected[suffix] + b"corrupt")
+                    self.assertTrue(owner.store(arguments))
+                    self.assertEqual(expected, {key: owner.member(snapshot, key).read_bytes() for key in STORE_SUFFIXES})
+
+    def test_report_store_rejects_each_missing_or_corrupt_source_file(self):
+        owner, arguments, snapshot = self.prepare_store()
+        expected = {suffix: owner.member(snapshot, suffix).read_bytes() for suffix in STORE_SUFFIXES}
+        for suffix in STORE_SUFFIXES:
+            for missing in (False, True):
+                with self.subTest(suffix=suffix, missing=missing):
+                    damaged = owner.member(arguments.report, suffix)
+                    original = damaged.read_bytes()
+                    try:
+                        if missing:
+                            damaged.unlink()
+                        else:
+                            damaged.write_bytes(original + b"corrupt")
+                        try:
+                            accepted = owner.store(arguments)
+                        except (OSError, ValueError):
+                            accepted = False
+                        self.assertFalse(accepted)
+                        self.assertEqual(expected, {key: owner.member(snapshot, key).read_bytes() for key in STORE_SUFFIXES})
+                    finally:
+                        damaged.write_bytes(original)
+
+    def test_report_store_preserves_concurrent_winner_validation(self):
+        owner, arguments, snapshot = self.prepare_store()
+        expected = {suffix: owner.member(snapshot, suffix).read_bytes() for suffix in STORE_SUFFIXES}
+        for corrupt in (False, True):
+            with self.subTest(corrupt=corrupt):
+                shutil.rmtree(snapshot.parent)
+                def competing_publish(staged, target):
+                    self.assertEqual(snapshot.parent, target)
+                    shutil.copytree(staged, target)
+                    if corrupt:
+                        snapshot.write_bytes(b"corrupt winner")
+                    raise FileExistsError(str(target))
+                with mock.patch.object(pathlib.Path, "rename", competing_publish):
+                    if corrupt:
+                        with self.assertRaises(FileExistsError):
+                            owner.store(arguments)
+                    else:
+                        self.assertTrue(owner.store(arguments))
+                if corrupt:
+                    self.assertEqual(b"corrupt winner", snapshot.read_bytes())
+                else:
+                    self.assertEqual(expected, {key: owner.member(snapshot, key).read_bytes() for key in STORE_SUFFIXES})
+                self.assertEqual([], list(snapshot.parent.parent.glob(".staging-*")))
+
     def prepare_report(self):
         from lean_seed_contract import InspectorTests, FAKE_LAKE
         fixture = InspectorTests("test_inspector_runs_lake_on_exact_seed_with_zero_reinspection")

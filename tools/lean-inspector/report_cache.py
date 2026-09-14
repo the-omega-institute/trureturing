@@ -101,8 +101,21 @@ def store(args: argparse.Namespace) -> bool:
     target.mkdir(parents=True, exist_ok=True)
     identity = seed_identity(args.report)
     snapshot = target / identity
-    if snapshot.is_dir() and seed_valid(snapshot / "raw-lean-report.json", partition):
-        return True
+    if snapshot.is_dir():
+        cached = snapshot / "raw-lean-report.json"
+        try:
+            # Reuse this invocation's source validation only for the same bundle.
+            # copy_bundle binds the checksum sidecar to the destination basename.
+            digests = {suffix: sha(member(args.report, suffix))
+                for suffix in SUFFIXES if suffix != ".sha256"}
+            if (all(sha(member(cached, suffix)) == digest for suffix, digest in digests.items())
+                    and member(cached, ".sha256").read_bytes()
+                    == f"{digests['']}  {cached.name}\n".encode("ascii")):
+                return True
+        except OSError:
+            pass
+        if seed_valid(cached, partition):
+            return True
     if snapshot.exists():
         shutil.rmtree(snapshot)
     staged = pathlib.Path(tempfile.mkdtemp(prefix=".staging-", dir=target))
