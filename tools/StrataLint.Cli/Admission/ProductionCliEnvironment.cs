@@ -360,7 +360,8 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
                 var historical = Decode(repository.ReadRevision(revision));
                 var path = Path.Combine(Path.GetDirectoryName(Path.GetFullPath(options.CandidateLeanReport))!,
                     "information-template-history", revision, "raw-lean-report.json");
-                return new(historical, RawLeanReportArtifact.ReadFile(path, historical));
+                return new(historical, RawLeanReportArtifact.ReadFile(path,
+                    InformationTemplateEvidence.HistoricalInputs(historical, current)));
             });
             var verifiedScribeEmissions = timing.Measure(
                 "scribe-verify",

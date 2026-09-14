@@ -131,4 +131,21 @@ public sealed class InformationTemplateEvidenceTests
         });
         Assert.Throws<FormatException>(() => InformationTemplateEvidence.Collect(snapshot, report));
     }
+    [Fact]
+    public void historical_content_uses_current_judge_producer()
+    {
+        const string judge = "tools/lean-inspector/LeanInformationAudit/Registry.lean";
+        var historical = Snapshot((PathA, TextA), (judge, "old producer"));
+        var current = Snapshot((PathA, "candidate content cannot replace seed"), (judge, "current producer"));
+        var wire = JsonSerializer.SerializeToNode(Wire())!.AsObject();
+        wire["inputs"] = JsonSerializer.SerializeToNode(new[] { Input(PathA, TextA), Input(judge, "current producer") });
+        var value = JsonSerializer.SerializeToElement(wire);
+        Assert.Throws<FormatException>(() => InformationTemplateEvidence.Read(value, PathA, historical));
+        var inputs = InformationTemplateEvidence.HistoricalInputs(historical, current);
+        var evidence = InformationTemplateEvidence.Read(value, PathA, inputs);
+        Assert.Single(evidence.Inventory);
+        Assert.Equal(Key, Assert.Single(evidence.Records).Key);
+        Assert.Equal(Hash(TextA), Assert.Single(evidence.Records).ContentInputs[0].Sha256);
+        Assert.Throws<FormatException>(() => InformationTemplateEvidence.Read(value, PathA, current));
+    }
 }

@@ -21,6 +21,17 @@ internal sealed record InformationTemplateEvidenceContext(
 
 internal static class InformationTemplateEvidence
 {
+    // The historical content is data evaluated by today's producer. Keep its
+    // D5 sources and state; bind compiler/judge inputs to the current program.
+    internal static RepositorySnapshot HistoricalInputs(RepositorySnapshot historical, RepositorySnapshot current)
+    {
+        static bool ProducerInput(string path) => path.StartsWith("tools/lean-inspector/", StringComparison.Ordinal)
+            || path is "Meta/lean-report.toml" or "lean-toolchain" or "lake-manifest.json" or "lakefile.toml";
+        var files = historical.Files.RemoveRange(historical.Files.Keys.Where(path => ProducerInput(path.Value)))
+            .SetItems(current.Files.Where(pair => ProducerInput(pair.Key.Value)));
+        return RepositorySnapshot.Create(files);
+    }
+
     internal static InformationTemplateModuleEvidence Read(
         JsonElement value, string sourcePath, RepositorySnapshot snapshot)
     {

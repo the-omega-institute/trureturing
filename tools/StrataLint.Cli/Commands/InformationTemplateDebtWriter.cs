@@ -41,7 +41,8 @@ internal static class InformationTemplateDebtWriter
             var reportDirectory = Path.Combine(root, ".lake", "build", "stratalint");
             string ReportPath(string option, string revision) => options.GetValueOrDefault(option)
                 ?? Path.Combine(reportDirectory, "information-template-history", revision, "raw-lean-report.json");
-            var seedReport = RawLeanReportArtifact.ReadFile(ReportPath("--seed-lean-report", activation.SeedBase), seed);
+            var seedReport = RawLeanReportArtifact.ReadFile(ReportPath("--seed-lean-report", activation.SeedBase),
+                InformationTemplateEvidence.HistoricalInputs(seed, current));
             var seedUniverse = InformationTemplateEvidence.Collect(seed, seedReport);
             var baseDebt = InformationTemplateDebtStore.Load(baseline, activation, seed);
             var headDebt = InformationTemplateDebtStore.Load(current, activation, seed);
@@ -60,7 +61,8 @@ internal static class InformationTemplateDebtWriter
                 if (!options.TryGetValue("--candidate-lean-report", out var candidatePath))
                     throw new FormatException("--candidate-lean-report is required for discharge");
                 var currentReport = RawLeanReportArtifact.ReadFile(candidatePath, current);
-                var beforeReport = RawLeanReportArtifact.ReadFile(ReportPath("--base-lean-report", prepared.Revision), baseline);
+                var beforeReport = RawLeanReportArtifact.ReadFile(ReportPath("--base-lean-report", prepared.Revision),
+                    InformationTemplateEvidence.HistoricalInputs(baseline, current));
                 var after = InformationTemplateEvidence.Collect(current, currentReport);
                 var before = InformationTemplateEvidence.Collect(baseline, beforeReport);
                 if (!headDebt.Keys.ToHashSet().SetEquals(baseDebt.Keys))
