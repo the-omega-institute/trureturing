@@ -1493,7 +1493,7 @@
       "id": "a11-erase-level-instantiation",
       "kind": "behavioral",
       "target": "LeanInformationAudit.Tests.RegistrationGates.AllowlistRules",
-      "mutation": "Erase the actual constant universe instantiation before inference, replacing its levels by the declaration universe parameters.",
+      "mutation": "Erase explicit universe instantiations only for definition constants before inference. Retain kernel constructor occurrences, isolating the nominal-return diagnostic boundary.",
       "mutation_site": {
         "file": "LeanInformationAudit/ReadoutProvenance.lean",
         "function": "occurrenceType",
@@ -1505,11 +1505,10 @@
         "scope_note": "Related witness exits in this function; exact mutation is the code below and specification() in MutationMatrix.py. Empty exit list denotes a nonadmission diagnostic/API control."
       },
       "before": "  let some type \u2190 boundedMeta (Meta.inferType e) `infer_type | return none",
-      "after": "  let some type \u2190 boundedMeta (do\n    let occurrence \u2190 match e with\n      | .const n _ => do\n        let declaration \u2190 getConstInfo n\n        pure (mkConst n (declaration.levelParams.map Level.param))\n      | _ => pure e\n    Meta.inferType occurrence) `infer_type | return none",
+      "after": "  let some type \u2190 boundedMeta (do\n    let occurrence \u2190 match e with\n      | .const n _ => do\n        let declaration \u2190 getConstInfo n\n        match declaration with\n        | .defnInfo _ => pure (mkConst n (declaration.levelParams.map Level.param))\n        | _ => pure e\n      | _ => pure e\n    Meta.inferType occurrence) `infer_type | return none",
       "additional_source_changes_before_needle": false,
       "mutator": "MutationMatrix.specification",
       "predicted_red_names": [
-        "UniverseBox.mk.{1}/PLift",
         "NominalUniverseField"
       ]
     },

@@ -10,11 +10,13 @@ def specification(label, original):
     let occurrence ← match e with
       | .const n _ => do
         let declaration ← getConstInfo n
-        pure (mkConst n (declaration.levelParams.map Level.param))
+        match declaration with
+        | .defnInfo _ => pure (mkConst n (declaration.levelParams.map Level.param))
+        | _ => pure e
       | _ => pure e
     Meta.inferType occurrence) `infer_type | return none'''
-        predicted=['UniverseBox.mk.{1}/PLift','NominalUniverseField']
-        description='Erase the actual constant universe instantiation before inference, replacing its levels by the declaration universe parameters.'
+        predicted=['NominalUniverseField']
+        description='Erase explicit universe instantiations only for definition constants before inference. Retain kernel constructor occurrences, isolating the nominal-return diagnostic boundary.'
     elif kind in ['reconstruct-constructor-type','generic-inferred-telescope']:
         needle='  let mut branches := #[]\n  for ctor in family.ctors do'
         ty='declaration.type' if kind=='reconstruct-constructor-type' else '(← Meta.inferType (mkConst ctorName levels))'
