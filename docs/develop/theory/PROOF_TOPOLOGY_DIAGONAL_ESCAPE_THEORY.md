@@ -13,7 +13,7 @@
 
 第一条主线来自定义逃逸与观察者读数：一个表示保留哪些区别，遗漏哪些区别，加入新定义后 residual 怎样缩小，目标何时能从 latent 中恢复，对角对象何时真正增加可回答问题。
 
-第二条主线来自认证 DAG 与拓扑：直接依赖怎样生成可达偏序，深度怎样形成 filtration，dominator 为什么必须保留路径多重性，观察投影怎样制造或隐藏结构。
+第二条主线来自认证 DAG 与拓扑：直接依赖怎样生成可达偏序，偏序怎样生成 Alexandrov 拓扑，深度怎样形成 filtration，dominator 为什么必须保留路径多重性，观察投影怎样制造或隐藏结构。
 
 两条主线在以下链条中会合：
 
@@ -3156,7 +3156,7 @@ $$
 
 **证明。** $e$ 的两个值为 $5/\sqrt{15}$ 与 $-3/\sqrt{15}$，所以乘积 $e(X_0)e(X_t)$ 位于 $[-1,5/3]$，区间长度为 $8/3$。Hoeffding 不等式给出单个时刻的尾概率上界 $2\exp(-9H\epsilon^2/32)$，再对五个时刻取并集界。轨迹间的独立性足够，同一条轨迹的不同时刻不必独立。证毕。
 
-**引文。** W. Hoeffding，*Probability Inequalities of Sums of Bounded Random Variables*，Journal of the American Statistical Association 58 (1963), 13–30，doi:10.1080/01621459.1963.10500830。
+**引文。** W. Hoeffding，*Probability Inequalities for Sums of Bounded Random Variables*，Journal of the American Statistical Association 58 (1963), 13–30，doi:10.1080/01621459.1963.10500830。
 
 ## AT.10 让素数值进入热浴动力学
 
@@ -3353,7 +3353,7 @@ $$
 
 **证明。** 常数项由 $w_0$ 的定义得到。展开 $f_{n+1}-a f_n$，首节点项消失，其余每项的 $(\lambda_j-a)$ 消去分母，得到 $(1-a)v_n$。对节点数及时间归纳，递推右侧是两个 $[0,1]$ 值的凸组合；在初始平台内两个值均为一。证毕。
 
-**推论。** 对任意正质量预算 $M$ 和任意有限不同节点族，存在 $\delta>0$ 以及两组非负权重 $w_i^+,w_i^-$，使
+**推论。** 对任意正质量预算 $M$ 和任意有限不同节点族，节点均在 $[0,1]$，存在 $\delta>0$ 以及两组非负权重 $w_i^+,w_i^-$，使
 
 $$
 \sum_i(w_i^++w_i^-)\le M,
@@ -3363,7 +3363,7 @@ $$
 
 其中 $m_n^\pm=\sum_iw_i^\pm\lambda_i^n$。
 
-**证明。** 令 $S=\sum_i|c_i|$，取 $\delta=M/(1+S)$，并取 $w_i^+=\delta\max(c_i,0)$、$w_i^-=\delta\max(-c_i,0)$。合并质量为 $\delta S\le M$，矩差为 $\delta u_n$。证毕。
+**证明。** 对递归构造的权重 $c_i$，令 $S=\sum_i|c_i|$，取 $\delta=M/(1+S)$，并取 $w_i^+=\delta\max(c_i,0)$、$w_i^-=\delta\max(-c_i,0)$。合并质量为 $\delta S\le M$，矩差为 $\delta u_n$；前一命题覆盖端点和空族。证毕。
 
 这里正性属于两份测度各自；它们之差可以包含精确抵消。上述结论没有对单份正测度声称其自身具有长平台。
 
@@ -3502,7 +3502,7 @@ $$
 
 这里没有要求被测序列经逐项裁剪后自动具有相容模型，也没有要求对真实隐藏维数预先设上界。此证明给出估计器存在性；没有把有限矩拟合的数值复杂度或有限精度实现作为已经证明的结论。
 
-**推论。** 取 $J=\lceil\log(1/\epsilon)/\log(1/\kappa)\rceil$，对固定 $\kappa\in(0,1)$，PM5 与 PM6 合起来给出
+**推论。** 当 $0<\epsilon<1$，取 $J=\lceil\log(1/\epsilon)/\log(1/\kappa)\rceil$。对固定 $\kappa\in(0,1)$，PM5 与 PM6 合起来给出
 
 $$
 \boxed{\mathfrak R_\kappa(\epsilon)
@@ -3514,7 +3514,7 @@ $$
 
 ## PM.7 同一个平衡分布与固定观察下的可逆马尔可夫实现
 
-**定义。** 对 PM3 的两模型，令 $r=3\kappa/4$、$h_0=1$，
+**定义。** 对 PM3 的两模型，本节把隐藏坐标重标为 $1,\ldots,q$，可见坐标编号为 $0$。令 $r=3\kappa/4$、$h_0=1$，并对 $1\le i\le q$ 定义
 
 $$
 h_i=\frac{\sqrt{\delta|c_i|}}{r-\lambda_i}>0,\qquad
@@ -3562,7 +3562,7 @@ $$
 
 因此所有 $d_i^\pm\ge1-r>0$。$\pi_iT^\pm_{ij}=h_ih_jK^\pm_{ij}/Z_h$ 对 $i,j$ 对称；补充项的平衡流为 $\pi_i d_i^\pm\pi_j d_j^\pm/(4Z_d^\pm)$，也对称。行和为一且补充项严格为正，所以两个链不可约、非周期，并具有所述共同平稳分布。
 
-分解符号偶、奇两个子空间。奇子空间上的传播为 $T^\pm$，在乘以 $h_i$ 的加权等距坐标中等于 $K_\pm$。偶子空间的对称坐标矩阵为
+分解符号偶、奇两个子空间。奇子空间上的传播为 $T^\pm$，在等距坐标 $f\mapsto(h_if_i/\sqrt{Z_h})_i$ 中等于 $K_\pm$。偶子空间的对称坐标矩阵为
 
 $$
 J_\pm=K_\pm+
