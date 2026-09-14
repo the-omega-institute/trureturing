@@ -52,6 +52,43 @@ class ReleaseVerificationCases:
         path = self.root / "gh-calls"
         return [json.loads(line) for line in path.read_text().splitlines()] if path.exists() else []
 
+    def failing_git(self, operation, exit_code, stderr):
+        real_git = shutil.which("git")
+        script = """#!/usr/bin/env python3
+import os
+import sys
+if len(sys.argv) > 3 and sys.argv[3] == {operation}:
+    sys.stderr.write({stderr})
+    raise SystemExit({exit_code})
+os.execv({real_git}, [{real_git}, *sys.argv[1:]])
+""".format(operation=repr(operation), stderr=repr(stderr), exit_code=exit_code,
+           real_git=repr(real_git))
+        path = self.root / "bin/git"
+        path.write_text(script)
+        path.chmod(0o755)
+
+    def test_verification_direct_git_failures_preserve_diagnostics_and_exit_policy(self):
+        (self.root / "bin/git").unlink(missing_ok=True)
+        self.verification_fixture()
+        for operation, exit_code in (("rev-parse", 17), ("status", 23)):
+            for stderr in ("git fixture failed\nsecond line\n", ""):
+                with self.subTest(operation=operation, stderr=stderr):
+                    self.failing_git(operation, exit_code, stderr)
+                    expected_stderr = stderr or "<empty>"
+                    for verb, expected_exit in (("publish", 2), ("fetch", 1)):
+                        result = self.verification(verb)
+                        self.assertEqual(expected_exit, result.returncode, result.stdout + result.stderr)
+                        line = next(line for line in result.stdout.splitlines()
+                                     if line.startswith("LEAN_CACHE_" + verb.upper() + " "))
+                        report = json.loads(line.partition(" ")[2])
+                        reason = report["reason"]
+                        command_tail = ([operation, "--verify", "HEAD"] if operation == "rev-parse"
+                                        else [operation, "--porcelain", "--untracked-files=no"])
+                        command = repr(["git", "-C", str(self.root), *command_tail])
+                        self.assertIn("Command '" + command, reason)
+                        self.assertIn(f"exit status {exit_code}", reason)
+                        self.assertTrue(reason.endswith("stderr: " + expected_stderr), report)
+
     def test_verification_rejects_non_native_or_mismatched_context_before_build(self):
         self.verification_fixture()
         for changes in ({"GITHUB_ACTIONS": "false"}, {"GITHUB_EVENT_NAME": "schedule"},
