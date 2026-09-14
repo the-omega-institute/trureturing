@@ -1,0 +1,6 @@
+## 62. 有限观察深度、稳定塔与顺序词完备性
+
+第 61 节给出了静态观察精炼的容量守恒，但“增加一次后续操作”还需要一个时间方向的版本。本节把初始 effect 在 Heisenberg 作用下的前 $n$ 次迭代组成观察塔，证明可见空间随深度单调增加、残差反向减少，并在有限维条件下得到稳定深度。随后把同一思想推广到 sequential instrument words。
+
+使用的冻结模块是 `FiniteTimeObserverMonotonicity.lean` 的 `finite_time_observer_monotonicity`、`CenteredEffectStabilityDepthBound.lean` 的 `centered_effect_stability_depth_bound`、`FiniteSequentialCompletenessDepth.lean` 的 `finite_sequential_completeness_depth`，以及 `UnifiedSequentialKernel.lean` 的 `unified_sequential_kernel`。本节仍为 `repo-derived/open` 理论解释，没有新增 Lean 声明。
+

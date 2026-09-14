@@ -15795,3 +15795,209 @@ $$
 
 ## 追加锚（新终端）
 
+## 62. 有限观察深度、稳定塔与顺序词完备性
+
+第 61 节给出了静态观察精炼的容量守恒，但“增加一次后续操作”还需要一个时间方向的版本。本节把初始 effect 在 Heisenberg 作用下的前 $n$ 次迭代组成观察塔，证明可见空间随深度单调增加、残差反向减少，并在有限维条件下得到稳定深度。随后把同一思想推广到 sequential instrument words。
+
+使用的冻结模块是 `FiniteTimeObserverMonotonicity.lean` 的 `finite_time_observer_monotonicity`、`CenteredEffectStabilityDepthBound.lean` 的 `centered_effect_stability_depth_bound`、`FiniteSequentialCompletenessDepth.lean` 的 `finite_sequential_completeness_depth`，以及 `UnifiedSequentialKernel.lean` 的 `unified_sequential_kernel`。本节仍为 `repo-derived/open` 理论解释，没有新增 Lean 声明。
+
+### 定义 62.1（有限 Heisenberg 观察塔）
+
+令 $H$ 是 Hermitian 载体上的 Heisenberg 线性作用，初始 effect 家族为
+
+$$
+E_0=\{E_i: i\in I\}.
+$$
+
+定义 horizon 为 $n$ 的可见空间
+
+$$
+\mathcal V_n
+=
+\operatorname{span}_{\mathbb R}
+\left(
+\{I\}\cup
+\{H^tE_i:t<n,\ i\in I\}
+\right),
+$$
+
+以及有限深度残差
+
+$$
+\mathcal R_n=\mathcal V_n^{\perp}.
+$$
+
+这里的 $n$ 是允许的后续迭代次数，不是物理时间单位；是否存在连续时间生成元需要另外的动力学假设。
+
+### 定理 62.2（观察深度的单调性）
+
+冻结结果 `finite_time_observer_monotonicity` 证明对每个 $n$：
+
+$$
+\mathcal V_n\subseteq\mathcal V_{n+1},
+$$
+
+并且正交残差满足反向包含
+
+$$
+\mathcal R_{n+1}subseteq\mathcal R_n.
+$$
+
+证明只使用 $t<n$ 蕴含 $t<n+1$，以及正交补对包含关系的反变性。它给出一个可计算的观察偏序：增加允许的后续操作不会让已经可见的线性方向消失，但会缩小当前任务仍无法区分的残差。
+
+对两个状态坐标差 $D$，若
+
+$$
+D\in\mathcal R_n,
+$$
+
+则所有深度小于 $n$ 的 effect 读数都相同。若在某个更大深度首次有
+
+$$
+D\notin\mathcal R_{n+1},
+$$
+
+这说明新加入的一步确实把该历史差异带入了可见响应。这个结论是线性读数的结论，不等于一次有限样本实验必然识别出该差异。
+
+### 定理 62.3（有限维稳定深度）
+
+在 trace-zero Hermitian 载体上，令 `towerSpace` 表示由初始 centered effects 和前面各层的 Heisenberg 像递归生成的空间，令 `predictiveSpace` 是所有有限迭代的 span。冻结结果 `centered_effect_stability_depth_bound` 定义最小一步稳定深度
+
+$$
+\operatorname{sd}(H,E)
+=\min\{m:\mathcal T_m=\mathcal T_{m+1}\}.
+$$
+
+它给出
+
+$$
+\operatorname{sd}(H,E)
+\le
+\dim(\mathcal V_{\infty})-\dim(\mathcal T_0),
+$$
+
+以及
+
+$$
+\dim(\mathcal V_{\infty})-\dim(\mathcal T_0)
+\le
+ d^2-1-\dim(\mathcal T_0).
+$$
+
+更强的是，一旦某一步满足
+
+$$
+\mathcal T_m=\mathcal T_{m+1},
+$$
+
+以后所有层都保持相同；并且
+
+$$
+\mathcal V_{\infty}
+=\bigcup_{n\ge0}\mathcal T_n
+=\mathcal T_{\operatorname{sd}(H,E)}.
+$$
+
+因此，在固定有限维载体与固定线性 Heisenberg 作用下，“所有有限未来 effect”虽然以无限并集定义，却有一个有限深度的线性证书。这个证书的上界来自 traceless-Hermitian 载体维数，而不是来自 Zeckendorf 窗口长度本身。
+
+### 62.4 顺序词不是单时刻标签的重复
+
+令 `Alphabet` 是允许的仪器字母，令
+
+$$
+\mathsf E_w
+$$
+
+表示由字 $w$ 经过指定 instrument-dual 顺序折叠得到的 sequential word effect。对一个允许词集合
+
+$$
+\mathcal A\subseteq\operatorname{List}(\mathrm{Alphabet}),
+$$
+
+定义顺序可见空间
+
+$$
+\mathcal V_{\mathcal A}
+=\operatorname{span}_{\mathbb R}
+\{\mathsf E_w:w\in\mathcal A\}.
+$$
+
+顺序词记录了操作次序；它不应被替换成只保存每个单步标签的无序集合。不同词可能拥有相同的最终经典标签，却对应不同的 effect 和不同的后续响应。
+
+### 定理 62.5（统一顺序核）
+
+冻结结果 `unified_sequential_kernel` 给出：对任意状态表示 $s$、$s'$，所有允许顺序词的统计相等，当且仅当状态差落在顺序可见空间的正交残差中：
+
+$$
+\begin{aligned}
+&\forall w\in\mathcal A,
+\quad
+\langle s,\mathsf E_w\rangle
+=
+\langle s',\mathsf E_w\rangle\\
+&\qquad\Longleftrightarrow\\
+&s-s'\in\mathcal V_{\mathcal A}^{\perp}.
+\end{aligned}
+$$
+
+因此，历史压缩的安全条件不是“最终标签相同”，而是所有允许顺序词对这两个历史给出相同统计。若再加入一个新词，空间变为
+
+$$
+\mathcal V_{\mathcal A\cup\{w_0\}},
+$$
+
+残差只会缩小或保持不变；新词是否真正增加信息，要看 $\mathsf E_{w_0}$ 是否已经落在旧 span 中。
+
+### 定理 62.6（顺序词的有限完备深度）
+
+若所有有限 sequential word effects 在完整实 Hermitian 载体中张成单位空间，即
+
+$$
+\operatorname{span}_{\mathbb R}
+\{\mathsf E_w:w\text{ 为任意有限词}\}
+=\operatorname{Herm}(d),
+$$
+
+则 `finite_sequential_completeness_depth` 保证存在某个
+
+$$
+N\le d^2-1
+$$
+
+使长度不超过 $N$ 的 sequential words 已经张成完整 Hermitian 可见空间：
+
+$$
+\operatorname{span}_{\mathbb R}
+\{\mathsf E_w:\lvert w\rvert\le N\}
+=\operatorname{Herm}(d).
+$$
+
+这里的完备性是假设了所有有限词的总 span 已经完整；定理只把这个无界假设压缩成一个有限深度证书，不声称任意给定仪器族自动满足它。它也不说单个时间片的 POVM 必然 informationally complete。
+
+### 62.7 接到 Zeckendorf 窗口和记忆视界
+
+对合法 Zeckendorf 构型集合
+
+$$
+\mathcal W_L
+=\{w\in\{0,1\}^L:w_rw_{r+1}=0\},
+$$
+
+可以把窗口内每个构型映射成初始 effect，或映射成允许的 sequential word。此时有三种彼此不同的深度参数：
+
+$$
+\begin{aligned}
+&L: \text{合法离散构型窗口长度},\\
+&N: \text{观察词的最大操作长度},\\
+&h: \text{第 56 节隐藏历史的截断深度}.
+\end{aligned}
+$$
+
+$L$ 增大可能增加构型数，但不保证 $\mathcal V_L$ 增维；$N$ 增大只在新增 effect 不在旧 span 时增加可见方向；$h$ 增大控制的是隐藏回流尾，而不是线性 effect span 的稳定深度。将三者混成一个“观察深度”会把离散编码、操作次序和环境记忆混为一谈。
+
+因此，在任务误差 $\varepsilon$ 下，一个可检查的停止判据可以写成：先找到 $N$ 使线性观察塔稳定，再估计第 56 节的记忆尾和第 58、60 节的刻度与记录误差，要求合并预算不超过 $\varepsilon$。只有在这个复合条件下，才可以把有限深度摘要作为当前任务的有效对象。
+
+本节为 `repo-derived/open` 理论追加；没有新增 Lean 声明、形式覆盖或冻结状态。
+
+## 追加锚（新终端）
+

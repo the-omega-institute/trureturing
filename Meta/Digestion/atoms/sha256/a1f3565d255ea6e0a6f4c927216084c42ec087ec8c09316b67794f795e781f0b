@@ -1,0 +1,41 @@
+### 定理 62.3（有限维稳定深度）
+
+在 trace-zero Hermitian 载体上，令 `towerSpace` 表示由初始 centered effects 和前面各层的 Heisenberg 像递归生成的空间，令 `predictiveSpace` 是所有有限迭代的 span。冻结结果 `centered_effect_stability_depth_bound` 定义最小一步稳定深度
+
+$$
+\operatorname{sd}(H,E)
+=\min\{m:\mathcal T_m=\mathcal T_{m+1}\}.
+$$
+
+它给出
+
+$$
+\operatorname{sd}(H,E)
+\le
+\dim(\mathcal V_{\infty})-\dim(\mathcal T_0),
+$$
+
+以及
+
+$$
+\dim(\mathcal V_{\infty})-\dim(\mathcal T_0)
+\le
+ d^2-1-\dim(\mathcal T_0).
+$$
+
+更强的是，一旦某一步满足
+
+$$
+\mathcal T_m=\mathcal T_{m+1},
+$$
+
+以后所有层都保持相同；并且
+
+$$
+\mathcal V_{\infty}
+=\bigcup_{n\ge0}\mathcal T_n
+=\mathcal T_{\operatorname{sd}(H,E)}.
+$$
+
+因此，在固定有限维载体与固定线性 Heisenberg 作用下，“所有有限未来 effect”虽然以无限并集定义，却有一个有限深度的线性证书。这个证书的上界来自 traceless-Hermitian 载体维数，而不是来自 Zeckendorf 窗口长度本身。
+

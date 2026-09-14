@@ -1,0 +1,24 @@
+### 62.4 顺序词不是单时刻标签的重复
+
+令 `Alphabet` 是允许的仪器字母，令
+
+$$
+\mathsf E_w
+$$
+
+表示由字 $w$ 经过指定 instrument-dual 顺序折叠得到的 sequential word effect。对一个允许词集合
+
+$$
+\mathcal A\subseteq\operatorname{List}(\mathrm{Alphabet}),
+$$
+
+定义顺序可见空间
+
+$$
+\mathcal V_{\mathcal A}
+=\operatorname{span}_{\mathbb R}
+\{\mathsf E_w:w\in\mathcal A\}.
+$$
+
+顺序词记录了操作次序；它不应被替换成只保存每个单步标签的无序集合。不同词可能拥有相同的最终经典标签，却对应不同的 effect 和不同的后续响应。
+
