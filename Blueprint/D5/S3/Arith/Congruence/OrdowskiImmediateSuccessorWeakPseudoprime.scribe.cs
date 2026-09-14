@@ -32,7 +32,11 @@ internal sealed class OrdowskiImmediateSuccessorWeakPseudoprimeDocument
                         + "one equal to one; compositeness excludes the only boundary modulus "
                         + "two. The underlying casts, parity powers, and residue facts are "
                         + "pinned Mathlib material."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "oeis-a239293-ordowski-immediate-successor-weak-pseudoprime"),
+                    ResolutionKind.Proved)))));
 
     private static Formula ResultFormula()
     {

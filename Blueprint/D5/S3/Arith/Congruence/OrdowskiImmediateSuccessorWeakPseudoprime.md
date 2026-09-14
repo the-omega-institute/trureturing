@@ -10,6 +10,10 @@ $$\forall n \in \mathrm{Nat},\; (1 \le n) \Rightarrow ((((1 < n + 1) \land ((\ne
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Congruence/OrdowskiImmediateSuccessorWeakPseudoprime.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a239293-ordowski-immediate-successor-weak-pseudoprime` (proved) by `D5/S3/Arith/Congruence/OrdowskiImmediateSuccessorWeakPseudoprime.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a239293-ordowski-immediate-successor-weak-pseudoprime","declaration_gid":"D5/S3/Arith/Congruence/OrdowskiImmediateSuccessorWeakPseudoprime.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Robert Ferreol; Thomas Ordowski (2018). *OEIS A239293, Smallest composite c > n such that n^c == n (mod c)*. URL: <https://oeis.org/A239293>.
