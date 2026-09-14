@@ -91,6 +91,20 @@
       "source": "return some (witness .fieldAlias concrete)"
     },
     {
+      "id": "nominalFieldShape.8",
+      "function": "nominalFieldShape",
+      "rule_id": "fieldProjection",
+      "kind": "production",
+      "source": "return some (witness .fieldProjection concrete)"
+    },
+    {
+      "id": "nominalFieldShape.9",
+      "function": "nominalFieldShape",
+      "rule_id": "fieldAlias",
+      "kind": "production",
+      "source": "return some (witness .fieldAlias concrete)"
+    },
+    {
       "id": "nominalFieldShape.6",
       "function": "nominalFieldShape",
       "rule_id": "fieldConcrete",

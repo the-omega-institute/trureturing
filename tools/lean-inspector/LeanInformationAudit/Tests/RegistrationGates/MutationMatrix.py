@@ -135,7 +135,7 @@ def specification(label, original):
         description='Remove the declared PrimitiveBundle.Index representation boundary while retaining receiver data and nominal-field checks.'
     elif kind=='remove-arena-projected-carrier':
         TARGET='LeanInformationAudit.Tests.RegistrationGates.AllowlistBoundaries'
-        needle='    unless audited do return none'
+        needle='    unless audited do return none\n    let some receiver ← representationType receiver | return none'
         replacement='    return none'
         predicted=['ArenaProjectedCarrier','CatalogProjectedCarrier','BundleProjectedCarrier']
         description='Remove the audited rigid arena/signature carrier projection boundary; concrete statement payload rejection remains.'
@@ -219,6 +219,14 @@ def specification(label, original):
       return some (witness .fieldConcrete concrete)'''
         predicted=['AliasTypeHidden','AliasTypeClean','AliasPropHidden','AliasPropClean','AliasFamilyHidden','AliasFamilyClean']
         description='Treat an explicit nominal field type alias as an ordinary concrete shape without following its body. The six opaque carrier-slot fixtures must be admitted incorrectly; ordinary and proof aliases stay admitted.'
+    elif kind=='field-projection-boundary':
+        TARGET='LeanInformationAudit.Tests.RegistrationGates.FieldProjectionBoundary'
+        start=source.index('    if let .proj structureName index receiver := head then', source.index('private partial def nominalFieldShape'))
+        stop=source.index('    let .const name levels := head | return none', start)
+        needle=source[start:stop]
+        replacement='    if let .proj .. := head then return none\n'
+        predicted=['AuditedDependentOutput']
+        description='Remove nominal field-role recognition for the existing audited signature/arena carrier projections. All remaining aliases and ordinary fields keep their original checks.'
     elif kind=='nested-default-apart':
         TARGET='LeanInformationAudit.Tests.RegistrationGates.NestedStatementIdentity'
         needle='private def checkedStatementType (env : Environment) (type : Expr) :\n    WalkM (Option ProvenanceAdmissionWitness) := do'

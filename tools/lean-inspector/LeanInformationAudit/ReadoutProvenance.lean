@@ -392,7 +392,7 @@ inductive ProvenanceAllowRule where
   | quotientType | recursorType | enumRecursorType | aliasType | recursiveFamily | nominalFields
   | ordinaryData | typeFamily | scalarCarrier | rigidCarrier | functionCarrier
   | containerCarrier | subtypeCarrier | nullaryCarrier | nominalCarrier
-  | fieldProposition | fieldConcrete | fieldParameter | fieldFunction | fieldAlias | fieldAudited
+  | fieldProposition | fieldConcrete | fieldParameter | fieldFunction | fieldAlias | fieldAudited | fieldProjection
   | statementHeadApart | statementLiteralApart | statementDomainApart
   | statementBodyApart | statementArgumentApart | statementRigidApart | statementMetadataApart
   | proofBoundary | propositionBoundary | externalLeaf | syntaxLeaf
@@ -956,6 +956,31 @@ private partial def nominalFieldShape (env : Environment) (type : Expr)
       let some body ← aliasBody head args | return none
       let some _ ← nominalFieldShape env body parameters | return none
       -- admission-exit: nominalFieldShape.5 rule=fieldAlias
+      return some (witness .fieldAlias concrete)
+    if let .proj structureName index receiver := head then
+      -- These selectors are the existing audited arena/signature family. A
+      -- rigid receiver retains its checked family contract; a concrete receiver
+      -- must expose a concrete field which passes this same role check.
+      let audited := ReadoutFamily.carrierHeads.any fun selector =>
+        match env.getProjectionFnInfo? selector with
+        | some projection => projection.i == index &&
+          (env.find? projection.ctorName).any fun info =>
+            match info with
+            | .ctorInfo info => info.induct == structureName
+            | _ => false
+        | none => false
+      unless audited do return none
+      let some receiver ← representationType receiver | return none
+      if let .fvar id := receiver then
+        if (← id.getDecl).value? (allowNondep := true) |>.isNone then
+          -- admission-exit: nominalFieldShape.8 rule=fieldProjection
+          return some (witness .fieldProjection concrete)
+      let (decoded, work) := ReadoutFamily.carrier env concrete (← get).exprFuel
+      unless ← chargeTraversal work do return none
+      let some decoded := decoded | return none
+      if decoded == concrete then return none
+      let some _ ← nominalFieldShape env decoded parameters | return none
+      -- admission-exit: nominalFieldShape.9 rule=fieldAlias
       return some (witness .fieldAlias concrete)
     let .const name levels := head | return none
     let some declaration := env.find? name | return none
