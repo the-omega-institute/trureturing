@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import base64
 import contextlib
 import hashlib
 import json
@@ -15,11 +16,12 @@ import tarfile
 import tempfile
 import time
 
-from lean_cache import partition_path
+from lean_cache import manifest_mathlib, normalized_platform, partition_path
 from cache_material import sha
 
 ASSET = "lean-build.tgz"
 MANIFEST = "manifest.json"
+LEGACY_MANIFEST = "manifest.txt"
 REPO = os.environ.get("STRATALINT_CACHE_REPO", "the-omega-institute/trureturing")
 # Issue #6194, run 34119746844: Release assets must be strictly below 2 GiB.
 # Keep dev's 1.5 GiB headroom and two-digit, at-most-100-part inventory.
@@ -145,7 +147,7 @@ def archive_parts(stage, deadline):
     return [{"name": path.name, "sha256": archive_sha(path, deadline), "bytes": path.stat().st_size} for path in paths]
 
 
-def declared_parts(manifest):
+def declared_parts(manifest, maximum_bytes=CHUNK_BYTES):
     parts = manifest.get("parts")
     if not isinstance(parts, list) or not 1 <= len(parts) <= 100:
         raise ValueError("invalid archive parts inventory")
@@ -154,7 +156,7 @@ def declared_parts(manifest):
         if (not isinstance(part, dict) or set(part) != {"name", "sha256", "bytes"}
                 or part["name"] != name or not isinstance(part["sha256"], str)
                 or not re.fullmatch(r"[0-9a-f]{64}", part["sha256"])
-                or type(part["bytes"]) is not int or not 0 < part["bytes"] <= CHUNK_BYTES):
+                or type(part["bytes"]) is not int or not 0 < part["bytes"] <= maximum_bytes):
             raise ValueError("invalid archive parts inventory")
     if (type(manifest.get("archive_bytes")) is not int
             or sum(part["bytes"] for part in parts) != manifest["archive_bytes"]):
@@ -262,24 +264,94 @@ def publish(root, partition, verification=None):
     except ImportError as error:
         receipt("publish", "skipped", reason="POSIX cache locking unavailable: " + str(error))
         return 1 if verification is not None else 0
-    except (OSError, ValueError, subprocess.SubprocessError, tarfile.TarError) as error:
+    except (OSError, EOFError, ValueError, subprocess.SubprocessError, tarfile.TarError) as error:
         receipt("publish", "failed", reason=str(error))
         return 1 if verification is not None else 0
     return 0
 
 
+def legacy_tag(tag):
+    return re.fullmatch(r"lean-cache-v1-[A-Za-z0-9._-]+-[0-9a-f]{16}-[0-9a-f]{16}", tag) is not None
+
+
+def legacy_manifest(path, metadata, partition, tag, deadline):
+    """Adapt attributed cache data; never execute or use its source as a judge baseline."""
+    fields = {}
+    for line in path.read_text(encoding="utf-8").splitlines():
+        key, separator, value = line.partition("=")
+        if not separator or not key or key in fields:
+            raise ValueError("invalid legacy manifest field")
+        fields[key] = value
+    commit, run = fields.get("producer_commit_sha", ""), fields.get("workflow_run_id", "")
+    if (fields.get("tag") != tag or not re.fullmatch(r"[0-9a-f]{40}", commit)
+            or not re.fullmatch(r"[1-9][0-9]*", run) or metadata.get("target_commitish") != commit
+            or not isinstance(metadata.get("published_at"), str) or not metadata["published_at"]
+            or fields.get("asset") != ASSET):
+        raise ValueError("legacy snapshot source attribution mismatch")
+    system, machine = normalized_platform(fields.get("os", ""), fields.get("arch", ""))
+    if partition.split("/", 1)[1] != system + "-" + machine:
+        raise ValueError("legacy snapshot platform mismatch")
+    count = fields.get("parts", "1")
+    if not re.fullmatch(r"[1-9][0-9]*", count) or not 1 <= int(count) <= 100:
+        raise ValueError("invalid legacy archive parts inventory")
+    count = int(count)
+    assets = {asset["name"]: asset for asset in metadata["assets"]}
+    manifest = {"producer_commit_sha": commit, "workflow_run_id": run,
+        "archive_sha256": fields.get("archive_sha256", ""), "archive_bytes": int(fields.get("archive_bytes", "0")),
+        "parts": [{"name": ASSET if count == 1 else f"{ASSET}.part-{index:02d}",
+            "sha256": fields.get("archive_sha256" if count == 1 else f"part_sha256_{index}", ""),
+            "bytes": assets.get(ASSET if count == 1 else f"{ASSET}.part-{index:02d}", {}).get("size")}
+            for index in range(count)]}
+    # Historical unchunked assets used GitHub's strict <2 GiB limit (e.g.
+    # Release 383820945: 2,114,121,660 bytes); new/multipart writes keep 1.5 GiB.
+    declared_parts(manifest, 2147483647 if count == 1 else CHUNK_BYTES)
+    # Only legacy lacks a resolved mathlib field. These two requests establish
+    # cache provenance, not candidate/base semantics or another cache selector.
+    record = json.loads(gh(deadline, "api", f"repos/{REPO}/actions/runs/{run}"))
+    if (not isinstance(record, dict) or type(record.get("id")) is not int or record["id"] != int(run)
+            or record.get("event") != "schedule" or record.get("head_branch") != "dev"
+            or record.get("head_sha") != commit or record.get("path") != ".github/workflows/lean-cache-publish.yml"
+            or record.get("status") != "completed" or record.get("conclusion") != "success"
+            or not isinstance(record.get("repository"), dict) or record["repository"].get("full_name") != REPO):
+        raise ValueError("legacy snapshot has no matching successful scheduled dev producer")
+    source = json.loads(gh(deadline, "api", f"repos/{REPO}/contents/lake-manifest.json?ref={commit}"))
+    if (not isinstance(source, dict) or source.get("type") != "file" or source.get("path") != "lake-manifest.json"
+            or source.get("encoding") != "base64" or not isinstance(source.get("content"), str)):
+        raise ValueError("legacy producer lake-manifest is unavailable")
+    content = base64.b64decode("".join(source["content"].split()), validate=True)
+    blob = hashlib.sha1(b"blob " + str(len(content)).encode() + b"\0" + content).hexdigest()
+    if source.get("sha") != blob or type(source.get("size")) is not int or source["size"] != len(content):
+        raise ValueError("legacy producer lake-manifest blob mismatch")
+    if manifest_mathlib(json.loads(content)) + "/" + system + "-" + machine != partition:
+        raise ValueError("legacy snapshot mathlib partition mismatch")
+    # Legacy recorded the run but not its producing attempt. Do not invent one
+    # from the API's latest rerun, and do not emit a synthetic v3 publication.
+    return manifest
+
+
 def restore_snapshot(root, partition, tag, stage, deadline, verification=None):
     metadata = json.loads(gh(deadline, "api", f"repos/{REPO}/releases/tags/{tag}"))
-    if metadata.get("draft") is not False or metadata.get("tag_name") != tag:
+    if not isinstance(metadata, dict) or metadata.get("draft") is not False or metadata.get("tag_name") != tag:
         raise ValueError("snapshot is not published")
+    legacy = verification is None and legacy_tag(tag)
+    manifest_name = LEGACY_MANIFEST if legacy else MANIFEST
+    assets = metadata.get("assets", [])
+    if (not isinstance(assets, list) or any(not isinstance(asset, dict)
+            or not isinstance(asset.get("name"), str) for asset in assets)
+            or len({asset["name"] for asset in assets}) != len(assets)):
+        raise ValueError("snapshot asset set is incomplete")
+    recorded = {asset["name"]: asset.get("digest") for asset in assets}
     gh(deadline, "release", "download", tag, "--repo", REPO, "--dir", str(stage),
-       "--pattern", MANIFEST)
-    manifest = json.loads((stage / MANIFEST).read_text())
+       "--pattern", manifest_name)
+    if recorded.get(manifest_name) != "sha256:" + sha(stage / manifest_name):
+        raise ValueError("transferred asset digest mismatch")
+    manifest = (legacy_manifest(stage / manifest_name, metadata, partition, tag, deadline) if legacy
+                else json.loads((stage / manifest_name).read_text()))
     if not isinstance(manifest, dict):
         raise ValueError("snapshot manifest must be an object")
     commit, run, attempt = (manifest.get(field, "") for field in
         ("producer_commit_sha", "workflow_run_id", "workflow_run_attempt"))
-    if (manifest.get("schema") != "lean-release-seed-v3" or manifest.get("partition") != partition
+    if not legacy and (manifest.get("schema") != "lean-release-seed-v3" or manifest.get("partition") != partition
             or not isinstance(commit, str) or not re.fullmatch(r"[0-9a-f]{40}", commit)
             or not all(isinstance(value, str) and re.fullmatch(r"[0-9]+", value) for value in (run, attempt))
             or tag != prefix(partition, verification is not None) + run + "-" + attempt
@@ -287,14 +359,9 @@ def restore_snapshot(root, partition, tag, stage, deadline, verification=None):
         raise ValueError("snapshot partition or source attribution mismatch")
     if verification is not None and any(manifest.get(key) != value for key, value in verification.items()):
         raise ValueError("verification snapshot does not match this exact publication")
-    parts = declared_parts(manifest)
-    assets = metadata.get("assets", [])
-    if (not isinstance(assets, list) or any(not isinstance(asset, dict) for asset in assets)
-            or sorted(asset.get("name", "") for asset in assets) != sorted([MANIFEST, *[part["name"] for part in parts]])):
+    parts = manifest["parts"] if legacy else declared_parts(manifest)
+    if sorted(recorded) != sorted([manifest_name, *[part["name"] for part in parts]]):
         raise ValueError("snapshot asset set is incomplete")
-    recorded = {asset["name"]: asset.get("digest") for asset in assets}
-    if recorded[MANIFEST] != "sha256:" + sha(stage / MANIFEST):
-        raise ValueError("transferred asset digest mismatch")
     gh(deadline, "release", "download", tag, "--repo", REPO, "--dir", str(stage),
        *(argument for part in parts for argument in ("--pattern", part["name"])))
     for part in parts:
@@ -318,12 +385,27 @@ def restore_snapshot(root, partition, tag, stage, deadline, verification=None):
     installed = []
     with tarfile.open(stage / ASSET) as archive:
         members = archive.getmembers()
+        paths = {}
         for member in members:
             path = pathlib.PurePosixPath(member.name)
-            if (path.is_absolute() or ".." in path.parts or not path.parts
-                    or path.parts[0] not in ("build", "report-cache")
+            if (path.is_absolute() or ".." in path.parts or (not path.parts and not (legacy and member.isdir()))
+                    or (not legacy and path.parts[0] not in ("build", "report-cache"))
                     or not (member.isfile() or member.isdir())):
                 raise ValueError("archive contains an invalid cache member")
+            if legacy:
+                path = pathlib.PurePosixPath("build") / path
+                member.name = str(path)
+                member.pax_headers.pop("path", None)
+            if path in paths:
+                raise ValueError("archive contains an invalid cache member: duplicate path")
+            paths[path] = member
+        for path in paths:
+            if any(parent in paths and not paths[parent].isdir() for parent in path.parents):
+                raise ValueError("archive contains an invalid cache member: file ancestor")
+        # Tar's end marker precedes gzip's footer. Consume the remainder so a
+        # truncated/corrupt compressed stream cannot be installed as complete.
+        while archive.fileobj.read(1024 * 1024):
+            remaining(deadline)
         lake.mkdir(exist_ok=True)
         # Stage on the destination filesystem so installation only renames the
         # verified directories, without allocating a second unpacked build.
@@ -357,7 +439,7 @@ def fetch_verification(root, partition, identity):
         with cache_guard(root), tempfile.TemporaryDirectory(prefix="lean-fetch-verify-") as temporary:
             restore_snapshot(root, partition, tag, pathlib.Path(temporary), deadline, identity)
         return 0
-    except (OSError, ImportError, ValueError, KeyError, TypeError, subprocess.SubprocessError, tarfile.TarError) as error:
+    except (OSError, EOFError, ImportError, ValueError, KeyError, TypeError, subprocess.SubprocessError, tarfile.TarError) as error:
         receipt("fetch", "miss", mode="verification", reason=str(error), resolved=tag, partition=partition)
         return 1
 
@@ -382,14 +464,14 @@ def fetch_locked(root, partition, deadline):
             "--json", "tagName,createdAt,isDraft"))
         for release in sorted(releases, key=lambda item: item["createdAt"], reverse=True):
             tag = release.get("tagName", "")
-            if release.get("isDraft") is not False or not tag.startswith(prefix(partition)):
+            if release.get("isDraft") is not False or not (tag.startswith(prefix(partition)) or legacy_tag(tag)):
                 continue
             remaining(deadline)
             try:
                 with tempfile.TemporaryDirectory(prefix="lean-fetch-") as temporary:
                     restore_snapshot(root, partition, tag, pathlib.Path(temporary), deadline)
                 return 0
-            except (OSError, ValueError, KeyError, TypeError, subprocess.SubprocessError, tarfile.TarError) as error:
+            except (OSError, EOFError, ValueError, KeyError, TypeError, subprocess.SubprocessError, tarfile.TarError) as error:
                 reason = str(error)
                 receipt("fetch", "miss", reason=reason, resolved=tag, partition=partition)
                 if isinstance(error, (TimeoutError, subprocess.TimeoutExpired)):
@@ -407,7 +489,7 @@ def main():
     parser.add_argument("--mode", choices=("production", "verification"), default="production")
     parser.add_argument("--source-ref", default="")
     parser.add_argument("--source-commit", default="")
-    # Transition for the default dev ci.yml fetch caller; compatibility stays v3.
+    # Transition for the default dev ci.yml fetch caller; selection stays partitioned.
     # Remove after ci-push/ci-pr success and required-set migration, with its caller.
     parser.add_argument("--allow-seed", action="store_true", help=argparse.SUPPRESS)
     # Internal handoff from LeanArchiveFetch after its typed guard assertion.

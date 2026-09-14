@@ -300,6 +300,8 @@ engineering 与 Scribe 不按 base 选测。当前项目与检查义务由候选
 
 保留定时 Release 缓存发布;仅在 Actions 无可用种子时取**同分区成功快照**,删除 exact/config-prefix/same-toolchain 多级选择,不得跨分区借种。donor/stamp 使用同一分区;同 mathlib 的 metadata 改动不得删除 `.lake`。缺缓存、损坏、传输或保存失败须可诊断地降级为正常生产;真实 restore/build/Lean/测试/规则失败仍阻断。登记判为不需要缓存的资源不做缓存运输。
 
+正常生产 `lean-cache-v1-*` 与 `lean-cache-v2-*` 快照按同一新到旧顺序选择,不按格式设优先层。旧 `manifest.txt` 仅作已归属缓存数据过渡读取:核对 published Release、固定 producer commit、成功的 schedule/dev 生产 run、完整资产及摘要;其缺失的 mathlib 字段从该不可变 producer commit 的 `lake-manifest.json` 数据读取,复用当前结构解析器并校验 blob 身份,与显式 OS/arch 合成唯一分区。来源 SHA 只绑定缓存供给,不参与兼容选择,不进入 current 的语义 baseline,不执行旧代码。旧 manifest 未记 attempt 时不得从最新 rerun 伪造原产出 attempt。新格式不增加来源查询;旧 build-relative 归档在共用验证/安装入口映射到 build,在目标文件系统完整暂存后 rename,不另建手动转换/发布路径。该读取只恢复增量种子,不产报告或判词;Lean 与报告仍执行各自增量入口。
+
 可选缓存制作与保存共用早于 job 上限的截止时间,按真实 run/attempt/job 起始时间绑定;元数据不可用或时间不足则跳过缓存,不撤销已完成的业务判词。每层制作后立即保存,优先报告与检查证据,再处理项目与依赖层;不得让大层制作阻塞小层全部落存。快照只读取已登记层的材料,复制时校验字节与 mode,失败只清理本次私有 staging。缓存时限不改变检查时限,外部取消仍保留取消语义。
 
 需要 Lean/report 的路由在命中后仍进入各自增量入口,缓存只提供起点。报告增量器保留模块增删、source hash、反向依赖闭包与材料完整性失效检查;这是增量生产验证,不作为 CI 归属或输入的动态发现器。producer 兼容性只取 A14.9 的显式版本 token；代码字节变化不自动改变该 token。版本、Lean 选项或显式登记的实际语义环境变化在增量器内触发必要重算,不得进入远端兼容分区。相同 mathlib 下源码变化只重算受影响闭包;不影响登记语义输入的 metadata 变化为零 Lean 模块重编、零报告模块重检;同环境增量结果必须等于干净生产。
@@ -320,7 +322,7 @@ engineering 与 Scribe 不按 base 选测。当前项目与检查义务由候选
 | producer/Lean 选项/语义环境变化、模块增删、材料损坏 | 增量器完整失效,结果等于同环境干净生产,无陈旧报告残留。 |
 | absent/corrupt/transfer-failed/save-failed/concurrent caches | 所需生产继续,实际检查失败阻断;并发快照互不覆盖,缓存不提供判词。 |
 
-**分层落地与证据。** 通过 `make worktree` 隔离实施,依次以独立 PR 落地规范、入口/类型/谓词与 preflight、缓存、workflow 与其消费者原子迁移;可按职责继续拆小,每层须能独立通过当期 required checks,判官与内容不混 PR。接口首次改变时同步其实际调用者及行为测试,包括 Make help、agent/skill 调用链与对应说明;删除被替代的入口、重复判决、缓存层级与陈旧注释,不留 alias、stub 或双读。操作指导与实际行为同步,不把规范或本地测试通过冒充真实 CI 资格。
+**分层落地与证据。** 通过 `make worktree` 隔离实施,依次以独立 PR 落地规范、入口/类型/谓词与 preflight、缓存、workflow 与其消费者原子迁移;可按职责继续拆小,每层须能独立通过当期 required checks,判官与内容不混 PR。接口首次改变时同步其实际调用者及行为测试,包括 Make help、agent/skill 调用链与对应说明;删除被替代的入口、重复判决、缓存层级与陈旧注释,不留旧判决或旧缓存选择算法的 alias、stub 或双读;上述已归属缓存数据的格式适配不保留旧判决或旧选择算法。操作指导与实际行为同步,不把规范或本地测试通过冒充真实 CI 资格。
 
 **集成资格与交付。** CLAUDE.md §8.12 是唯一主责:最小 hotfix 直接普通 PR 到 dev;feature/重构先在 `integration-ci-<主题>-tests` 覆盖全部适用行为、真实事件及性能。原始 lane 保持 lane→dev 交付 Draft,实际测试分支保持 integration→dev 跟踪 Draft;资格达标前不转 Ready,跟踪 Draft 验后关闭不合入 dev。各层与修复经独立安装 PR 进入 integration,验证期间按依赖顺序**一个原始 dev PR 对应一个真实集成 PR**正常合入,完成该 PR 和首个 push 的判词、性能/缓存分析与必要复验后再继续。禁止 bulk merge dev、直推同步或要求追平 dev tip;不设小时/天数等待门槛。稳定条数、起算、重置与计入范围严格依 §8.12,不另造或复制资格规则。
 

@@ -11,7 +11,10 @@ import sys
 
 
 def resolved_mathlib(root: pathlib.Path) -> str:
-    manifest = json.loads((root / "lake-manifest.json").read_text(encoding="utf-8"))
+    return manifest_mathlib(json.loads((root / "lake-manifest.json").read_text(encoding="utf-8")))
+
+
+def manifest_mathlib(manifest: object) -> str:
     packages = manifest.get("packages") if isinstance(manifest, dict) else None
     if not isinstance(packages, list) or any(not isinstance(item, dict) for item in packages):
         raise ValueError("manifest packages must be an array of objects")
@@ -23,8 +26,11 @@ def resolved_mathlib(root: pathlib.Path) -> str:
 
 
 def binary_platform() -> tuple[str, str]:
-    system = platform.system().lower()
-    machine = platform.machine().lower()
+    return normalized_platform(platform.system(), platform.machine())
+
+
+def normalized_platform(system: str, machine: str) -> tuple[str, str]:
+    system, machine = system.lower(), machine.lower()
     return system, {"aarch64": "arm64", "x86_64": "x64", "amd64": "x64"}.get(machine, machine)
 
 
