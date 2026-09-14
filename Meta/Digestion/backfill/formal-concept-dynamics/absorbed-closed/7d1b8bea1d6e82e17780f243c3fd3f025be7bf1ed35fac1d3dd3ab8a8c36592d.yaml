@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:7d1b8bea1d6e82e17780f243c3fd3f025be7bf1ed35fac1d3dd3ab8a8c36592d
+  normalized_sha256: sha256:7d1b8bea1d6e82e17780f243c3fd3f025be7bf1ed35fac1d3dd3ab8a8c36592d
+cas_ref: sha256:7d1b8bea1d6e82e17780f243c3fd3f025be7bf1ed35fac1d3dd3ab8a8c36592d
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Control/ControlQuotientUniversalMinimality.control_quotient_universal_minimality
+    target_statement_id: sha256:3e9f9a57e930af8981260dea5fd7a09dd7b2eaf774cc28aeadbe718f188a05b6
+  - gid: D5/S3/ConceptDynamics/Interventions/DynamicClosureMinimality.concept_refines_dynamic_closure
+    target_statement_id: sha256:70704cd62987375748a542eb0f860a06dd63803b79586466c18400839bcefba4
+  - gid: D5/S3/ConceptDynamics/Interventions/DynamicClosureMinimality.dynamic_closure_is_intervention_closed
+    target_statement_id: sha256:ab5caa1ac1a9b813cbda58afffd8a2af862a17e81a7af6d095e3e6a666542a18
+  - gid: D5/S3/ConceptDynamics/Interventions/DynamicClosureMinimality.dynamic_closure_is_least
+    target_statement_id: sha256:acc56dac1a926b4ff9b5ef32d7babaa2f7574b9aa0a0ce4ec577abb2d576c9f8
+receipts:
+  unresolved_subitems: []
