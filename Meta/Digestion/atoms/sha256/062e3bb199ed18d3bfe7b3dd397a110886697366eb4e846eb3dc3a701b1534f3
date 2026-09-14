@@ -1,0 +1,7 @@
+**假设。** 再设 $|y(s)-z(s)|\leq Y$、$|b|Y>\eta>0$，并且窗口长度满足
+
+\[
+t-s\geq\frac1d\log\frac{|b|Y}{\eta}
+\tag{12.16}
+\]
+

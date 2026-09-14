@@ -1,0 +1,22 @@
+**定理。** 对常数 $c$，时间不变场
+
+$$
+u_*(x,y)=c\Phi_k(x,y)
+$$
+
+是外力 $f_*=\Gamma_kc\Phi_k$ 下的稳态解。若 $\rho\geq0$ 且
+
+$$
+a'=-\Gamma_k(a-c)+r,qquad |r(t)|\leq\rho,
+$$
+
+则对所有 $t\in[0,T]$、$(x,y)$ 及两个坐标分量 $i$，
+
+$$
+|u_{a,i}(t,x,y)-u_{*,i}(x,y)|
+\leq(1+k)\left[
+e^{-\Gamma_kt}|a(0)-c|
++\frac{\rho}{\Gamma_k}(1-e^{-\Gamma_kt})
+\right].
+$$
+

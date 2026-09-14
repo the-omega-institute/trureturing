@@ -1,0 +1,7 @@
+**定理。** $v_\lambda$ 关于时空变量光滑，并在两个空间方向上均为 $2\pi$ 周期；它无散度，且
+
+$$
+\mathcal R_H(v_\lambda)
+=\nu\bigl(4h_{00}k^2-8h_{01}k+4h_{11}-\lambda\bigr)v_\lambda.
+$$
+

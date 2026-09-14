@@ -1,0 +1,6 @@
+**定义。** 设 $L:H\to H$ 线性，$B:H\times H\to H$ 双线性，$f\in H$，定义
+
+$$
+F(x)=Lx-B(x,x)+f.
+$$
+

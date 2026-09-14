@@ -1,0 +1,20 @@
+**定理。** 设 $k\geq0$，并设
+
+$$
+U=\begin{pmatrix}a&b\\c&d\end{pmatrix}\in M_2(\mathbb Z).
+$$
+
+若 $C_kU=UD_k$，则
+
+$$
+c=2k((k+1)b-a),\qquad d=2(a-kb),
+$$
+
+且
+
+$$
+\det U=2\bigl(a^2-k(k+1)b^2\bigr).
+$$
+
+特别地，$\det U$ 为偶数，不存在 $\det U=\pm1$ 的整数交织子，所以 $C_k$ 与 $D_k$ 不在 $GL_2(\mathbb Z)$ 中共轭。
+

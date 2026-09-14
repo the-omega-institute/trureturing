@@ -1,0 +1,16 @@
+**定理。** 设 $M=A^n-I$ 且 $\det M\ne0$。则存在加法群同构
+
+$$
+R(A,n)\cong K(A,n).
+$$
+
+其逆可写为
+
+$$
+[x]\longmapsto[Mx]
+\quad\text{从}\quad
+M_{\mathbb R}^{-1}\mathbb Z^2/\mathbb Z^2
+\quad\text{到}\quad
+\mathbb Z^2/M\mathbb Z^2.
+$$
+

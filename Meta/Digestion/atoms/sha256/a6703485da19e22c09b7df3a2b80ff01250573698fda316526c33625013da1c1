@@ -1,0 +1,138 @@
+### TR.13 Hilbert 空间的耗散管与二次李雅普诺夫证书
+
+**假设。** 设 $H$ 为实内积空间，$u:[0,T]\to H$ 连续，并在 $[0,T)$ 具有右导数 $\dot u$。设 $\gamma>0$、$\rho\geq0$，且
+
+$$
+\langle u(t),\dot u(t)\rangle
+\leq-\gamma\|u(t)\|^2+\rho\|u(t)\|.
+$$
+
+**定理。** 对每个 $t\in[0,T]$，
+
+$$
+\|u(t)\|\leq e^{-\gamma t}\|u(0)\|
++\frac{\rho}{\gamma}\bigl(1-e^{-\gamma t}\bigr).
+$$
+
+特别地，当 $\rho=0$ 时，$\|u(t)\|\leq e^{-\gamma t}\|u(0)\|$。
+
+**证明。** 对 $\delta>0$ 定义
+
+$$
+z_\delta(t)=\sqrt{\|u(t)\|^2+\delta^2}.
+$$
+
+被开方数严格为正，故在 $u(t)=0$ 时链式法则仍适用。记 $n=\|u(t)\|$、$z=z_\delta(t)$，则 $z\geq n$、$z\geq\delta$，并且
+
+$$
+z_\delta'(t)=\frac{\langle u(t),\dot u(t)\rangle}{z_\delta(t)}
+\leq-\gamma z_\delta(t)+\rho+\gamma\delta.
+$$
+
+最后一个不等式可在乘以正数 $z$ 后由恒等式
+
+$$
+(-\gamma z+\rho+\gamma\delta)z-(-\gamma n^2+\rho n)
+=\rho(z-n)+\gamma\delta(z-\delta)
+$$
+
+得到。标量 Gronwall 比较给出
+
+$$
+z_\delta(t)\leq e^{-\gamma t}z_\delta(0)
++\frac{\rho+\gamma\delta}{\gamma}\bigl(1-e^{-\gamma t}\bigr).
+$$
+
+由 $\|u(t)\|\leq z_\delta(t)$，再令 $\delta\downarrow0$，利用平方根与指数函数的连续性即得结论。
+
+**定理。** 设 $\gamma>0$、$\rho\geq0$，$u:[0,T]\to H$ 连续且在 $[0,T)$ 具有右导数。设 $A(t):H\to H$ 为有界线性算子，$f:[0,T]\to H$ 连续，并且
+
+$$
+u'(t)=A(t)u(t)+f(t),\qquad
+\langle x,A(t)x\rangle\leq-\gamma\|x\|^2,qquad
+\|f(t)\|\leq\rho.
+$$
+
+则 $u$ 满足前一定理的同一指数管估计。
+
+**证明。** 由 Cauchy--Schwarz 不等式，
+
+$$
+\langle u,u'\rangle
+=\langle u,A(t)u\rangle+\langle u,f\rangle
+\leq-\gamma\|u\|^2+\rho\|u\|.
+$$
+
+应用前一定理。
+
+**定义。** 设 $L:H\to H$ 线性，$B:H\times H\to H$ 双线性，$f\in H$，定义
+
+$$
+F(x)=Lx-B(x,x)+f.
+$$
+
+**假设。** 对所有 $a,b,w\in H$，设
+
+$$
+\langle b,B(a,b)\rangle=0,qquad
+\langle w,Lw\rangle\leq-\mu\|w\|^2,qquad
+-\langle w,B(w,v)\rangle\leq G\|w\|^2,
+$$
+
+并设 $G<\mu$、$F(v)=0$。
+
+**定理。** 对所有 $w,x\in H$，
+
+$$
+\langle w,F(v+w)-F(v)\rangle
+=\langle w,Lw\rangle-\langle w,B(w,v)\rangle,
+$$
+
+以及
+
+$$
+\langle x-v,F(x)-F(v)\rangle
+\leq-(\mu-G)\|x-v\|^2.
+$$
+
+**证明。** 展开 $B(v+w,v+w)$。由假设，$\langle w,B(v,w)\rangle=0$ 与 $\langle w,B(w,w)\rangle=0$，只留下 $B(w,v)$。再代入关于 $L$ 与 $B(w,v)$ 的两个二次型上界。
+
+**定理。** 在上述假设下，对每个 $x\in H$，
+
+$$
+\|x-v\|\leq\frac{\|F(x)\|}{\mu-G}.
+$$
+
+并且 $v$ 是 $F$ 的唯一零点。
+
+**证明。** 若 $x=v$，结论显然。否则将前一定理与 $F(v)=0$ 合并，取相反数后用 Cauchy--Schwarz 不等式，得到
+
+$$
+(\mu-G)\|x-v\|^2
+\leq\|x-v\|\,\|F(x)\|.
+$$
+
+约去正数 $\|x-v\|$ 即得距离界。若再有 $F(x)=0$，右边为零，故 $x=v$。
+
+**定理。** 设 $\rho\geq0$，且 $u:[0,T]\to H$ 连续并在 $[0,T)$ 具有右导数。若轨迹满足
+
+$$
+u'(t)=F(u(t))+r(t),\qquad \|r(t)\|\leq\rho,
+$$
+
+则对 $t\in[0,T]$，
+
+$$
+\|u(t)-v\|\leq e^{-(\mu-G)t}\|u(0)-v\|
++\frac{\rho}{\mu-G}\bigl(1-e^{-(\mu-G)t}\bigr).
+$$
+
+**证明。** 令 $e=u-v$。前述负裕量和 Cauchy--Schwarz 不等式给出
+
+$$
+\langle e,e'\rangle
+\leq-(\mu-G)\|e\|^2+\rho\|e\|.
+$$
+
+应用 TR.13 的耗散管定理。
+

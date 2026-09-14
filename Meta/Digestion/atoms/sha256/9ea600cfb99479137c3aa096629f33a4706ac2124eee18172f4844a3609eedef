@@ -1,0 +1,7 @@
+**证明。** 由式 (11.4)、Poincare 不等式和 Cauchy--Schwarz 不等式，
+
+\[
+\frac12\frac{d}{dt}\|w\|_{L^2}^2
+\leq-\gamma\|w\|_{L^2}^2+\rho\|w\|_{L^2}.
+\]
+
