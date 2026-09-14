@@ -1,0 +1,27 @@
+### 84.5 对“稳定经典现实”的进一步限制
+
+互补上下文的正交补齐给出的是**信息完整性**，不是**经典吸引性**。即使
+
+$$
+\bigoplus_x\mathsf P_x
+=\operatorname{Herm}_0,
+$$
+
+仍需另外检查记录通道的非对角 Gram 系数是否满足严格收缩、隐藏关联是否会回流，以及当前保留结构是否对目标演化近似闭合。信息完整意味着“有一组上下文能够区分载体上的状态”；它不意味着一次记录后所有相干都会衰减，也不意味着不同记录会自动形成共同的经典父变量。
+
+因此当前研究对象可以写成三层条件的交集：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{几何完整：}&\quad&\sum_x\mathsf P_x=\operatorname{Herm}_0,\\
+&\text{动力学闭合：}&\quad&\mathcal E\Phi\approx\mathcal E\Phi\mathcal E,\\
+&\text{记录吸引：}&\quad&|R_{ij}|<1\text{（对需要经典化的关系）}.
+\end{aligned}}
+$$
+
+第一条回答“哪些上下文合起来足以测量”；第二条回答“丢掉的差异会不会在未来返回”；第三条回答“被记录的相干是否真的衰减”。只有把三条分别验证，才有资格把某个有限层次称为稳定的有效经典现实。
+
+本节直接复用 `complete_context_tomography` 与 `mutually_unbiased_diagonal_planes` 的现有条件性结果。$L=2,3$ 的 Zeckendorf 计数、正交平面维数相加以及三种协议的区分是组合推导；共同父 POVM 的一般存在性、具体 Zeckendorf Hamiltonian 和实验噪声模型仍保持开放。
+
+

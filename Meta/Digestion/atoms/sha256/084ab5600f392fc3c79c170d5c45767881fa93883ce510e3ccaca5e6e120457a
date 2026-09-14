@@ -1,0 +1,30 @@
+### 84.1 从预算下界到正交补齐
+
+第 83 节只给出了联合记录必须拥有多少个独立中心化方向的必要条件。现有的 `CompleteContextTomography` 与 `MutuallyUnbiasedDiagonalPlanes` 还给出一个更有结构的条件性实现：如果一个 $d$ 维物理载体存在 $d+1$ 个秩一上下文，并且任意两个不同上下文满足
+
+$$
+\operatorname{Tr}(P_{x,j}P_{y,k})=\frac1d
+\qquad(x\ne y),
+$$
+
+并且再加上一个载体识别条件：每个上下文的中心化对角平面确实等同于其 $d$ 维 trace-zero 对角载体。记第 $x$ 个平面为 $\mathsf P_x$，则在这个附加条件下，每个平面有 $d-1$ 个独立方向，而且不同上下文的这些平面彼此正交：
+
+$$
+\dim \mathsf P_x=d-1,
+$$
+
+$$
+\mathsf P_x\perp\mathsf P_y\quad(x\ne y),
+$$
+
+从而
+
+$$
+\dim\Bigl(\bigoplus_{x=0}^{d}\mathsf P_x\Bigr)
+=(d+1)(d-1)=d^2-1.
+$$
+
+右端正好是 trace-zero Hermitian 方向的维数。因此，在这些重叠条件和完整物理载体假设下，第 83 节的必要预算被恰好填满：单位方向由归一化提供，$d^2-1$ 个中心化方向由 $d+1$ 个互补上下文提供。
+
+这里的逻辑方向必须保持清楚。仓库定理证明的是：**给定**这些上下文和重叠假设，就能得到唯一分解、无共同不可见 trace-zero 残差，以及由所有上下文概率确定 Hermitian trace-one 矩阵。它没有证明任意维数都存在这样的物理仪器，也没有把一组形式上的 `RankOneContext` 自动解释成实验室中可实现的 POVM。
+
