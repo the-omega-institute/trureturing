@@ -35,6 +35,9 @@ theorem result : ∀ n : ℕ, 1 ≤ n → (inSequence n ↔ allMultiples n) := b
   · intro h
     simpa using h 1 (by decide)
 
+#print axioms modulus
+#print axioms inSequence
+#print axioms allMultiples
 #print axioms result
 
 end D5.S3.Arith.Congruence.KrizekAllMultiplesOfTheOrder
