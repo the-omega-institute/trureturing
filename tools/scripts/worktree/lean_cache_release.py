@@ -84,13 +84,17 @@ class GitHubCommandError(subprocess.CalledProcessError):
         return f"{super().__str__()} stderr: {self.stderr or '<empty>'}"
 
 
-def gh(deadline, *args):
+def checked_run(command, deadline):
     try:
-        return subprocess.run(["gh", *args], check=True, capture_output=True, text=True,
-                              timeout=remaining(deadline)).stdout
+        return subprocess.run(command, check=True, capture_output=True, text=True,
+                              timeout=remaining(deadline))
     except subprocess.CalledProcessError as error:
         raise GitHubCommandError(error.returncode, error.cmd,
                                  output=error.output, stderr=error.stderr) from error
+
+
+def gh(deadline, *args):
+    return checked_run(["gh", *args], deadline).stdout
 
 
 def receipt(verb, status, **fields):
@@ -111,10 +115,8 @@ def verification_identity(root, source_ref, source_commit, deadline):
             or not re.fullmatch(r"[0-9a-f]{40}", source_commit)
             or not all(re.fullmatch(r"[1-9][0-9]*", value) for value in (run, attempt))):
         raise ValueError("verification requires a native integration push with explicit matching source and run attribution")
-    head = subprocess.run(["git", "-C", str(root), "rev-parse", "--verify", "HEAD"],
-        check=True, capture_output=True, text=True, timeout=remaining(deadline)).stdout.strip()
-    dirty = subprocess.run(["git", "-C", str(root), "status", "--porcelain", "--untracked-files=no"],
-        check=True, capture_output=True, text=True, timeout=remaining(deadline)).stdout
+    head = checked_run(["git", "-C", str(root), "rev-parse", "--verify", "HEAD"], deadline).stdout.strip()
+    dirty = checked_run(["git", "-C", str(root), "status", "--porcelain", "--untracked-files=no"], deadline).stdout
     if head != source_commit or dirty:
         raise ValueError("verification requires the clean fixed source checkout")
     sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "workflow"))
