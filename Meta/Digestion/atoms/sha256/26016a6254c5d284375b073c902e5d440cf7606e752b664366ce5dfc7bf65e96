@@ -1,0 +1,3 @@
+Its optional Cayley formula also
+omitted adjoints: with A=I+P and C=P A^(-1), the correct identity is
+G=A(I-CC^*)A^*. That formula is not used by the lower bound. 
