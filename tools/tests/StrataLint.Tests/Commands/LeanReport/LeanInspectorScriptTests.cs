@@ -1,3 +1,4 @@
+using FixtureFile = StrataLint.TestSupport.TemporaryFileSystem.File;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
@@ -64,9 +65,9 @@ public sealed class LeanInspectorScriptTests
         Assert.Contains("LEAN_REPORT_DELTA " + deltaSummary, stdout);
         var output = Path.Combine(temporary.Path, "report.json");
         Assert.Equal(reuse ? "baseline" : "merged", File.ReadAllText(output));
-        Assert.Equal(reuse ? "baseline-materials" : "merged-materials", File.ReadAllText(output + ".materials.zip"));
+        Assert.Equal(reuse ? "baseline-materials" : "merged-materials", FixtureFile.ReadAllText(output + ".materials.zip"));
         var digest = Convert.ToHexString(SHA256.HashData(File.ReadAllBytes(output))).ToLowerInvariant();
-        Assert.Equal($"{digest}  report.json\n", File.ReadAllText(output + ".sha256"));
+        Assert.Equal($"{digest}  report.json\n", FixtureFile.ReadAllText(output + ".sha256"));
         Assert.Contains($"RAW_LEAN_REPORT file={output} content_address=sha256:{digest}", stdout);
 
         var logDirectory = output + ".logs";
@@ -74,8 +75,8 @@ public sealed class LeanInspectorScriptTests
         {
             AssertSuccessfulPhaseLogs(logDirectory, "reuse-report", "argv= cp ", "", "");
             AssertSuccessfulPhaseLogs(logDirectory, "reuse-materials", "argv= cp ", "", "");
-            Assert.Contains("baseline.json ", File.ReadAllText(Path.Combine(logDirectory, "reuse-report.command.log")));
-            Assert.Contains("baseline.json.materials.zip ", File.ReadAllText(Path.Combine(logDirectory, "reuse-materials.command.log")));
+            Assert.Contains("baseline.json ", FixtureFile.ReadAllText(Path.Combine(logDirectory, "reuse-report.command.log")));
+            Assert.Contains("baseline.json.materials.zip ", FixtureFile.ReadAllText(Path.Combine(logDirectory, "reuse-materials.command.log")));
         }
         else
         {
@@ -379,11 +380,11 @@ public sealed class LeanInspectorScriptTests
         foreach (var sidecar in new[] { "command", "stdout", "stderr", "exit" })
             Assert.True(File.Exists(Path.Combine(directory, $"{phase}.{sidecar}.log")),
                 $"missing phase log: {phase}.{sidecar}.log");
-        Assert.Contains("cwd=", File.ReadAllText(Path.Combine(directory, phase + ".command.log")));
-        Assert.Contains(command, File.ReadAllText(Path.Combine(directory, phase + ".command.log")));
-        Assert.Equal(stdout, File.ReadAllText(Path.Combine(directory, phase + ".stdout.log")));
-        Assert.Equal(stderr, File.ReadAllText(Path.Combine(directory, phase + ".stderr.log")));
-        Assert.Equal("0\n", File.ReadAllText(Path.Combine(directory, phase + ".exit.log")));
+        Assert.Contains("cwd=", FixtureFile.ReadAllText(Path.Combine(directory, phase + ".command.log")));
+        Assert.Contains(command, FixtureFile.ReadAllText(Path.Combine(directory, phase + ".command.log")));
+        Assert.Equal(stdout, FixtureFile.ReadAllText(Path.Combine(directory, phase + ".stdout.log")));
+        Assert.Equal(stderr, FixtureFile.ReadAllText(Path.Combine(directory, phase + ".stderr.log")));
+        Assert.Equal("0\n", FixtureFile.ReadAllText(Path.Combine(directory, phase + ".exit.log")));
     }
 
     private static void Write(string root, string relative, string contents)
