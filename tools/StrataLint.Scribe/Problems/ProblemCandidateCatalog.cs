@@ -182,9 +182,9 @@ internal sealed class ProblemCandidateCatalog
         var url = metadata.ContainsKey("url")
             ? LiteratureCitation.ParseStableUrl(RequiredLine(metadata, "url", relativePath))
             : null;
-        if ((doi is null) == (url is null))
+        if (doi is null && url is null)
         {
-            throw new FormatException($"{relativePath} requires exactly one DOI or URL");
+            throw new FormatException($"{relativePath} requires a DOI or URL");
         }
 
         var triage = RequiredLine(metadata, "triage", relativePath) switch
