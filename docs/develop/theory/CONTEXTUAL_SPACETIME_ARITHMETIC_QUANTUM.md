@@ -20771,13 +20771,13 @@ $$
 
 ### 86.3 未来误差是两个残差的相关
 
-对一个有限效果塔，令 $\mathcal V_m$ 为当前深度可见的 trace-zero 空间，$\mathcal R_m=\mathcal V_m^\perp$ 为隐藏残差空间。`future_probability_residual_correlation` 对一个未来 Heisenberg 效果 $F$ 给出：以可见投影构造线性预测代表后，预测误差满足
+对一个有限效果塔，令 $\mathcal V_m$ 为当前深度可见的 trace-zero 空间，$\mathcal R_m=\mathcal V_m^\perp$ 为隐藏残差空间。对密度态 $\rho$，记其中心化 trace-zero 坐标为 $s_\rho$；未来效果 $F$ 也指 Heisenberg 回拉得到的中心化 Hermitian 方向。`future_probability_residual_correlation` 给出：以可见投影构造线性预测代表后，预测误差满足
 
 $$
 \boxed{
 \operatorname{error}
 =\left\langle
-\Pi_{\mathcal R_m}(\rho_0),
+\Pi_{\mathcal R_m}(s_\rho),
 \Pi_{\mathcal R_m}(F)
 \right\rangle,
 }
@@ -20788,7 +20788,7 @@ $$
 $$
 |\operatorname{error}|
 \le
-\sqrt{\operatorname{residualMass}(\mathcal V_m,\rho_0)}
+\sqrt{\operatorname{residualMass}(\mathcal V_m,s_\rho)}
 \,\left\|\Pi_{\mathcal R_m}(F)\right\|.
 $$
 
