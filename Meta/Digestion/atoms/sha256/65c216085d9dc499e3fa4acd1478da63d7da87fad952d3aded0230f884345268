@@ -1,0 +1,36 @@
+### 70.2 逐步记录时的精确闭合缺陷
+
+假设每一步都执行同一个记录通道。定义两个从当前完整状态到下一次记录的通道：
+
+$$
+A=\mathcal E\Phi,
+\qquad
+B=\mathcal E\Phi\mathcal E.
+$$
+
+$A$ 先让完整状态演化再记录；$B$ 先丢弃当前记录看不见的部分，再演化和记录。若存在记录层通道 $\overline\Phi:\operatorname{im}\mathcal E\to\operatorname{im}\mathcal E$ 使
+
+$$
+A=\overline\Phi\mathcal E,
+$$
+
+则当前记录是这一步的封闭状态描述。由于 $\mathcal E^2=\mathcal E$，这等价于
+
+$$
+\boxed{
+\mathcal E\Phi=\mathcal E\Phi\mathcal E.
+}
+$$
+
+如果只要求有限精度，定义
+
+$$
+\delta
+=
+\sup_{\rho\in\mathsf D}
+D\!\left(\mathcal E\Phi(\rho),
+\mathcal E\Phi\mathcal E(\rho)\right),
+$$
+
+其中 $\mathsf D$ 是指定密度态集合，$D$ 是迹距离。这里的 $\delta$ 衡量当前删去的部分在下一次记录中重新显现的最大幅度。
+

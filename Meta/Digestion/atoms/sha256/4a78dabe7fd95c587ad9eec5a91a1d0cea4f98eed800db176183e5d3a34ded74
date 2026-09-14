@@ -1,0 +1,44 @@
+### 70.1 固定点、吸引子与记录闭合是三件事
+
+设 $\mathcal E$ 是一个有限维量子记录通道，$\Phi$ 是下一步系统演化。若记录是完整正交 pinching，则已有 `FiniteRecordPinchingIdempotence.finite_record_pinching_idempotent` 给出
+
+$$
+\mathcal E^2=\mathcal E.
+$$
+
+因此 $\operatorname{im}\mathcal E$ 是重复记录后不再改变的子空间。这个事实只说明记录结构是幂等的，不说明任意态会趋近它。
+
+在条件记录向量 $|r_i\rangle$ 的模型中，`EnvironmentMarginalChannel.environment_marginal_channel` 给出
+
+$$
+\mathcal E(\rho)_{ij}=R_{ij}\rho_{ij},
+\qquad
+R_{ij}=\langle r_j,r_i\rangle.
+$$
+
+`SingletonRecordClassicality.singleton_record_classicality` 在 $i\ne j$ 时只要求 $R_{ij}\ne1$，即可推出固定点中的相应非对角项为零。若进一步存在统一的
+
+$$
+|R_{ij}|\le q<1
+$$
+
+跨记录类界，`RepeatedRecordExponentialDecay.repeated_record_exponential_decay` 才给出到记录类 pinching 的收缩，例如
+
+$$
+\|\mathcal E^N(\rho)-\mathcal P(\rho)\|_F
+\le
+q^N\|\rho-\mathcal P(\rho)\|_F.
+$$
+
+所以应区分：
+
+$$
+\text{幂等固定结构}
+\quad\ne\quad
+\text{对它的吸引性}
+\quad\ne\quad
+\text{与下一步动力学的预测闭合}.
+$$
+
+当 $|R_{ij}|=1$ 而 $R_{ij}\ne1$ 时，非对角项可以只发生相位旋转；固定点可能是经典的，单次迭代却不收敛。这个边界不能用“已经发生记录”替代。
+

@@ -17468,3 +17468,234 @@ $$
 本节的精确可见性、最小范数标量证书及 Penrose 基础分别由所引项目模块定位；多输出任务范数、最坏有界噪声、物理上下文实例与近似任务预算为本节的连接推导。它们使用标准有限维线性代数和估计论结构，不主张文献新颖性；本节未新增 Lean 形式覆盖。
 
 ## 追加锚（新终端）
+
+## 70. 有限视界内的稳定记录、闭合缺陷与记忆容量
+
+第 69 节把“当前记录能否预测指定目标”写成了任务级核包含和噪声常数。本节再加入记录通道的动力学条件：记录是否在每一步被重新建立，隐藏关联是否会回流，以及完全区分历史需要多大的内部记忆。新增组合为 `repo-derived/open` 理论；所引 Lean 模块是现有冻结结果，本节没有新增 Lean 声明。
+
+### 70.1 固定点、吸引子与记录闭合是三件事
+
+设 $\mathcal E$ 是一个有限维量子记录通道，$\Phi$ 是下一步系统演化。若记录是完整正交 pinching，则已有 `FiniteRecordPinchingIdempotence.finite_record_pinching_idempotent` 给出
+
+$$
+\mathcal E^2=\mathcal E.
+$$
+
+因此 $\operatorname{im}\mathcal E$ 是重复记录后不再改变的子空间。这个事实只说明记录结构是幂等的，不说明任意态会趋近它。
+
+在条件记录向量 $|r_i\rangle$ 的模型中，`EnvironmentMarginalChannel.environment_marginal_channel` 给出
+
+$$
+\mathcal E(\rho)_{ij}=R_{ij}\rho_{ij},
+\qquad
+R_{ij}=\langle r_j,r_i\rangle.
+$$
+
+`SingletonRecordClassicality.singleton_record_classicality` 在 $i\ne j$ 时只要求 $R_{ij}\ne1$，即可推出固定点中的相应非对角项为零。若进一步存在统一的
+
+$$
+|R_{ij}|\le q<1
+$$
+
+跨记录类界，`RepeatedRecordExponentialDecay.repeated_record_exponential_decay` 才给出到记录类 pinching 的收缩，例如
+
+$$
+\|\mathcal E^N(\rho)-\mathcal P(\rho)\|_F
+\le
+q^N\|\rho-\mathcal P(\rho)\|_F.
+$$
+
+所以应区分：
+
+$$
+\text{幂等固定结构}
+\quad\ne\quad
+\text{对它的吸引性}
+\quad\ne\quad
+\text{与下一步动力学的预测闭合}.
+$$
+
+当 $|R_{ij}|=1$ 而 $R_{ij}\ne1$ 时，非对角项可以只发生相位旋转；固定点可能是经典的，单次迭代却不收敛。这个边界不能用“已经发生记录”替代。
+
+### 70.2 逐步记录时的精确闭合缺陷
+
+假设每一步都执行同一个记录通道。定义两个从当前完整状态到下一次记录的通道：
+
+$$
+A=\mathcal E\Phi,
+\qquad
+B=\mathcal E\Phi\mathcal E.
+$$
+
+$A$ 先让完整状态演化再记录；$B$ 先丢弃当前记录看不见的部分，再演化和记录。若存在记录层通道 $\overline\Phi:\operatorname{im}\mathcal E\to\operatorname{im}\mathcal E$ 使
+
+$$
+A=\overline\Phi\mathcal E,
+$$
+
+则当前记录是这一步的封闭状态描述。由于 $\mathcal E^2=\mathcal E$，这等价于
+
+$$
+\boxed{
+\mathcal E\Phi=\mathcal E\Phi\mathcal E.
+}
+$$
+
+如果只要求有限精度，定义
+
+$$
+\delta
+=
+\sup_{\rho\in\mathsf D}
+D\!\left(\mathcal E\Phi(\rho),
+\mathcal E\Phi\mathcal E(\rho)\right),
+$$
+
+其中 $\mathsf D$ 是指定密度态集合，$D$ 是迹距离。这里的 $\delta$ 衡量当前删去的部分在下一次记录中重新显现的最大幅度。
+
+**命题 70.1（逐步记录的有限视界误差）。** 令 $A=\mathcal E\Phi$、$B=\mathcal E\Phi\mathcal E$，两者均为量子通道，并假设每一步都在记录之后继续演化。若
+
+$$
+\sup_{\rho\in\mathsf D}D(A\rho,B\rho)\le\delta,
+$$
+
+则对任意初态 $\rho$ 和整数 $n\ge1$，
+
+$$
+D(A^n\rho,B^n\rho)\le n\delta.
+$$
+
+证明。通道的迹距离收缩性给出
+
+$$
+D(A\sigma,A\tau)\le D(\sigma,\tau),
+\qquad
+D(B\sigma,B\tau)\le D(\sigma,\tau).
+$$
+
+插入望远镜分解
+
+$$
+A^n-B^n
+=
+\sum_{k=0}^{n-1}A^{n-1-k}(A-B)B^k
+$$
+
+的逐步态版本。第 $k$ 项的距离贡献不超过 $\delta$，已有贡献不会被后续通道放大，故归纳得到
+
+$$
+e_{n+1}\le e_n+\delta,
+\qquad e_0=0.
+$$
+
+因此 $e_n\le n\delta$。证毕。
+
+当要求视界 $n$ 内的记录分布误差不超过 $\varepsilon$ 时，一个充分条件是
+
+$$
+\boxed{n\delta\le\varepsilon.}
+$$
+
+这个命题只适用于“每一步重新建立记录”的无记忆协议。若同一个记录单元被相干复用，旧关联会留在联合系统中，过程不再由固定的 $B$ 描述；第 55 节的相位回流模型已经给出相同单步作用可以周期性恢复相干的反例。此时必须把记录单元并入状态，或建立带记忆的多时误差界。
+
+### 70.3 完全区分历史的容量下界
+
+设记忆系统维数为 $d_M$，用一个 POVM $(E_j)_j$ 读取它。若有 $N$ 个历史被编码为密度矩阵 $\rho_1,\ldots,\rho_N$，并且满足
+
+$$
+\operatorname{Tr}(E_j\rho_i)=\mathbf 1_{i=j},
+$$
+
+则 `FiniteMemoryHistoryCapacity.finite_memory_history_capacity` 给出
+
+$$
+\boxed{N\le d_M.}
+$$
+
+证明的线性核心是：每个 $\rho_i$ 的支撑落在 $E_i$ 的值域，每个不同历史的支撑彼此正交；$d_M$ 维空间至多容纳 $d_M$ 个非零两两正交向量。
+
+若记忆由 $b$ 个量子比特构成，$d_M=2^b$，则完全区分 $N$ 个历史要求
+
+$$
+\boxed{b\ge\lceil\log_2N\rceil.}
+$$
+
+对长度 $L$、禁止相邻 $1$ 的 Zeckendorf 合法窗口，候选构型数为
+
+$$
+|\mathcal W_L|=F_{L+2}.
+$$
+
+若每个合法构型都必须在一次读取中被完全区分，记忆维数至少为 $F_{L+2}$。若实验族只区分这些构型的 $N$ 个未来响应类，则容量下界只对 $N$ 生效，而不是对全部 $F_{L+2}$ 个标签生效。
+
+这是编码容量和预测容量的区别：增加 Zeckendorf 合法字串会增加候选标签，但只有当它们落入不同的任务响应类时，才增加必须保留的记录数。近似区分时，$N\le d_M$ 不再是充分描述；需要改用记录态的迹距离、Gram 重叠或本节的闭合缺陷 $\delta$。
+
+### 70.4 投影动力学何时可以写成经典转移
+
+`ProjectedUnistochasticDynamics.projected_dynamics_is_unistochastic` 对每一步执行构型投影的协议给出
+
+$$
+K_{ij}=|U_{ij}|^2,
+$$
+
+以及
+
+$$
+\mathbf p_{n+1}=K\mathbf p_n.
+$$
+
+$K$ 是双随机矩阵。这个结论的前提是每一步确实插入了投影；未测量的连续幺正演化不自动服从同一个 $K$。源码中的 `initialWeights` 也没有自动假设非负和归一，所以只有另外加入概率向量条件时，$\mathbf p_n$ 才能直接称为概率分布。
+
+因此，经典转移矩阵不是从“有一个量子基底”自动得到的，而是从
+
+$$
+\text{指定投影协议}
++
+\text{幺正演化}
++
+\text{概率初始条件}
+$$
+
+共同得到的。更换为相干复用协议，或者把投影记录留在可访问环境中，都会改变有效过程。
+
+### 70.5 稳定经典对象的有限视界定义
+
+给定实验族 $\mathfrak T$、视界 $H$ 和容许误差 $\varepsilon$，对两个历史 $h,h'$ 定义
+
+$$
+ h\sim_{\mathfrak T,H,\varepsilon}h'
+$$
+
+当且仅当任意 $T\in\mathfrak T$、任意长度不超过 $H$ 的记录序列，其输出概率分布的总变差距离不超过 $\varepsilon$。
+
+这个关系把三种条件放在同一个对象定义中：
+
+$$
+\begin{aligned}
+&\text{当前读出足以区分哪些历史；}\\
+&\text{记录通道是否在视界内近似闭合；}\\
+&\text{隐藏历史是否通过回流在视界内重新可见。}
+\end{aligned}
+$$
+
+若固定记录通道满足 $|R_{ij}|\le q<1$，则第 70.1 节提供指数项 $q^H$；若逐步闭合缺陷为 $\delta$，则第 70.2 节提供 $H\delta$；若读数存在任务噪声，则第 69 节提供 $c_{\mathrm{task}}\nu$。在这些项都被转换到同一个输出距离后，可以使用
+
+$$
+\boxed{
+\text{总预测误差}
+\le
+\text{记录收缩尾项}
++
+\text{闭合缺陷项}
++
+\text{读出噪声项}
++
+\text{其余已标定的历史回流项}.
+}
+$$
+
+因此当前尺度上的“经典对象”是一个有限预测等价类，而不是脱离实验协议的绝对实体。更换允许的实验族、视界、记录访问范围或误差容限，可能细化或合并这些类。
+
+本节组合了现有记录通道、pinching 幂等性、有限记忆容量与投影动力学的边界；`StaticLossVersusReturnFlow` 仍只提供一般实线性回流反例，不能被当作量子通道定理。Zeckendorf 在这里提供合法构型的离散索引，尚未由本仓量子模块自动生成 Fibonacci 约束 Hilbert 空间或其 Hamiltonian。不从这些有限模型推出唯一测量结果、宇宙经典性或物理耦合常数。
+
+## 追加锚（新终端）
