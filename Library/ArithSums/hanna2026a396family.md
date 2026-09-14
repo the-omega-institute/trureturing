@@ -5,10 +5,11 @@ year: 2026
 title: "OEIS A396803, A396805 and A396806: iterated-exponential congruences"
 doi: null
 url: https://oeis.org/A396803
-claim: "For each of A396803, A396805 and A396806, a(n) is odd iff n is odd for n >= 1; for A396803, a(n) is congruent to n modulo 3."
+claim: "For each of A396803, A396805 and A396806, a(n) is odd iff n is odd for n >= 1; for A396803, a(n) is congruent to n modulo 3; for A396806, a(n) is congruent to n modulo 6."
 strata_touched:
   - D5/S1/Recurrence/Residue/IterateExponentialParity
   - D5/S1/Recurrence/Residue/IterateExponentialModThree
+  - D5/S1/Recurrence/Residue/IterateExponentialModSix
 license: citation-only
 triage: anchor
 ---
@@ -32,8 +33,11 @@ The A396803 entry also conjectures: "a(n) == [1,2,0] repeating (mod 3)
 for n >= 1." `IterateExponentialModThree.result` proves this statement for
 the same sequence. The entry's revision 16, retrieved September 15, 2026,
 still presents it as a conjecture; the proof is repository-derived.
-The further conjectures for A396805 (moduli 3 and 5) and A396806
-(moduli 3 and 6) remain outside these results.
+IterateExponentialModSix.result separately proves the A396806 congruence
+a(n) = n modulo six for every positive index, hence also its modulo-three
+congruence. A396805's modulo-three question remains open. Its modulo-five
+assertion has previously recorded non-kernel counterexamples and is not
+claimed by either result.
 
 ## Verified locator
 
