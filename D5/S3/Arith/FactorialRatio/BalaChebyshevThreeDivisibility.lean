@@ -4,8 +4,7 @@
    mirror-E: none(waiver:unbounded-prime-valuation-proof)
    anchors: []
    utility: none
-   digest: The Chebyshev factorial ratio is divisible by 3n+1; small-prime
-     binomial valuations repair the exceptional local floor deficits. -/
+   digest: The Chebyshev factorial ratio is divisible by 3n+1 at every natural n. -/
 
 import Mathlib.NumberTheory.Padics.PadicVal.Basic
 import Mathlib.Data.Nat.Factorization.Basic
@@ -109,7 +108,8 @@ theorem bala_three_integrality (n : Nat) :
   intro p hp
   letI : Fact p.Prime := ⟨hp⟩
   rw [Nat.factorization_def _ hp, Nat.factorization_def _ hp]
-  rw [padicValNat.mul (by positivity : (3*n+1)*(15*n).factorial*(10*n).factorial ≠ 0) (Nat.factorial_ne_zero (6*n)),
+  rw [padicValNat.mul (by positivity : (3*n+1)*(15*n).factorial*(10*n).factorial ≠ 0)
+      (Nat.factorial_ne_zero (6*n)),
     padicValNat.mul (by positivity : (3*n+1)*(15*n).factorial ≠ 0) (Nat.factorial_ne_zero (10*n)),
     padicValNat.mul (by omega : 3*n+1 ≠ 0) (Nat.factorial_ne_zero (15*n)),
     padicValNat.mul (Nat.factorial_ne_zero (30*n)) (Nat.factorial_ne_zero n)]
@@ -123,8 +123,7 @@ theorem bala_three_integrality (n : Nat) :
       ∑ j ∈ Finset.Ico 1 (30*n+2), floorDefect n (p^j) := by
     rw [vf (30*n) (by omega), vf n (by omega), vf (15*n) (by omega),
       vf (10*n) (by omega), vf (6*n) (by omega)]
-    push_cast
-    simp only [floorDefect, Finset.sum_add_distrib, Finset.sum_sub_distrib]
+    simp only [Nat.cast_sum, floorDefect, Finset.sum_add_distrib, Finset.sum_sub_distrib]
   have total_nonneg : 0 ≤ ∑ j ∈ Finset.Ico 1 (30*n+2), floorDefect n (p^j) :=
     Finset.sum_nonneg (fun j _ => (local_floor_bounds n (p^j) (pow_pos hp.pos j)).1)
   by_cases hpd : p ∣ 3*n+1
@@ -138,13 +137,16 @@ theorem bala_three_integrality (n : Nat) :
     rw [show 8*n-3*n = 5*n by omega] at hchoose
     have hc := congrArg (padicValNat 2) hchoose
     rw [padicValNat.mul
-      (mul_ne_zero (Nat.choose_ne_zero (n := 8*n) (k := 3*n) (by omega)) (Nat.factorial_ne_zero (3*n)))
+      (mul_ne_zero (Nat.choose_ne_zero (n := 8*n) (k := 3*n) (by omega))
+        (Nat.factorial_ne_zero (3*n)))
       (Nat.factorial_ne_zero (5*n)),
-      padicValNat.mul (Nat.choose_ne_zero (n := 8*n) (k := 3*n) (by omega)) (Nat.factorial_ne_zero (3*n))] at hc
+      padicValNat.mul (Nat.choose_ne_zero (n := 8*n) (k := 3*n) (by omega))
+        (Nat.factorial_ne_zero (3*n))] at hc
     have step := Nat.choose_succ_right_eq (8*n) (3*n)
     rw [show 8*n-3*n = 5*n by omega] at step
     have hs := congrArg (padicValNat 2) step
-    rw [padicValNat.mul (Nat.choose_ne_zero (n := 8*n) (k := 3*n+1) (by omega)) (by omega : 3*n+1 ≠ 0),
+    rw [padicValNat.mul (Nat.choose_ne_zero (n := 8*n) (k := 3*n+1) (by omega))
+        (by omega : 3*n+1 ≠ 0),
       padicValNat.mul (Nat.choose_ne_zero (n := 8*n) (k := 3*n) (by omega)) (by omega : 5*n ≠ 0),
       padicValNat.eq_zero_of_not_dvd hd] at hs
     have f15 := padicValNat_factorial_mul (p := 2) (15*n)
@@ -165,13 +167,16 @@ theorem bala_three_integrality (n : Nat) :
     rw [show 5*n-3*n = 2*n by omega] at hchoose
     have hc := congrArg (padicValNat 5) hchoose
     rw [padicValNat.mul
-      (mul_ne_zero (Nat.choose_ne_zero (n := 5*n) (k := 3*n) (by omega)) (Nat.factorial_ne_zero (3*n)))
+      (mul_ne_zero (Nat.choose_ne_zero (n := 5*n) (k := 3*n) (by omega))
+        (Nat.factorial_ne_zero (3*n)))
       (Nat.factorial_ne_zero (2*n)),
-      padicValNat.mul (Nat.choose_ne_zero (n := 5*n) (k := 3*n) (by omega)) (Nat.factorial_ne_zero (3*n))] at hc
+      padicValNat.mul (Nat.choose_ne_zero (n := 5*n) (k := 3*n) (by omega))
+        (Nat.factorial_ne_zero (3*n))] at hc
     have step := Nat.choose_succ_right_eq (5*n) (3*n)
     rw [show 5*n-3*n = 2*n by omega] at step
     have hs := congrArg (padicValNat 5) step
-    rw [padicValNat.mul (Nat.choose_ne_zero (n := 5*n) (k := 3*n+1) (by omega)) (by omega : 3*n+1 ≠ 0),
+    rw [padicValNat.mul (Nat.choose_ne_zero (n := 5*n) (k := 3*n+1) (by omega))
+        (by omega : 3*n+1 ≠ 0),
       padicValNat.mul (Nat.choose_ne_zero (n := 5*n) (k := 3*n) (by omega)) (by omega : 2*n ≠ 0),
       padicValNat.eq_zero_of_not_dvd hd] at hs
     have f6 := padicValNat_factorial_mul (p := 5) (6*n)
@@ -193,7 +198,8 @@ theorem bala_three_integrality (n : Nat) :
         apply Finset.sum_le_sum
         intro j hj
         obtain ⟨hj0, hjv⟩ := Finset.mem_Ico.mp hj
-        have hd : p^j ∣ 3*n+1 := (padicValNat_dvd_iff_le (by omega)).mpr (by dsimp [v] at hjv; omega)
+        have hd : p^j ∣ 3*n+1 :=
+          (padicValNat_dvd_iff_le (by omega)).mpr (by dsimp [v] at hjv; omega)
         have hsize : p^j = 7 ∨ 10 ≤ p^j := by
           obtain ⟨k, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : j ≠ 0)
           have hk : 1 ≤ p^k := Nat.succ_le_iff.mpr (pow_pos hp.pos k)
@@ -221,7 +227,5 @@ theorem bala_three_integrality (n : Nat) :
           exact (local_floor_bounds n (p^j) (pow_pos hp.pos j)).1
   dsimp [v] at low
   omega
-
-#print axioms bala_three_integrality
 
 end D5.S3.Arith.FactorialRatio.BalaChebyshevThreeDivisibility
