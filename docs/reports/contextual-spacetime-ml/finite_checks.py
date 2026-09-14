@@ -387,6 +387,61 @@ def lipschitz():
         record('lipschitz_box_pairs')
 
 
+def approximation_counterexamples():
+    """Exact witnesses separating stability, state error, and task output error."""
+    epsilon = F(1, 100)
+    squaring_cases = []
+    for initial, expected_e2 in zip((F(1), F(10), F(100)),
+                                   (F(301, 10000), F(20101, 10000), F(2000101, 10000))):
+        actual = approximate = initial
+        errors = [abs(actual-approximate)]
+        for _ in range(2):
+            actual = actual**2
+            approximate = approximate**2+epsilon
+            assert actual >= 0 and approximate >= 0
+            errors.append(abs(actual-approximate))
+        # At the second update the two inputs have this exact secant slope.
+        left, right = initial**2, initial**2+epsilon
+        slope = (right**2-left**2)/(right-left)
+        assert slope == 2*initial**2+epsilon
+        assert errors == [F(0), epsilon, expected_e2]
+        assert errors[2] == epsilon*(slope+1)
+        squaring_cases.append({'x0': str(initial), 'state_errors_h0_to_h2': list(map(str, errors)),
+                               'second_step_secant_slope': str(slope)})
+        record('regional_missing_stability_cases')
+
+    threshold_cases = []
+    output = lambda value: int(value > 0)
+    identity = lambda value: value
+    budget = F(1, 2)
+    for a in (F(1, 10), F(1, 100), F(1, 10000)):
+        actual, approximate = -a, a
+        state_errors, output_errors = [], []
+        for _ in range(3):
+            assert -1 <= actual <= 1 and -1 <= approximate <= 1
+            state_errors.append(abs(actual-approximate))
+            output_errors.append(abs(output(actual)-output(approximate)))
+            actual, approximate = identity(actual), identity(approximate)
+        assert state_errors == [2*a]*3
+        assert all(error < budget for error in state_errors)
+        assert output_errors == [1]*3 and all(error > budget for error in output_errors)
+        threshold_cases.append({'a': str(a), 'initial_exact': str(-a), 'initial_approximate': str(a),
+                                'state_errors_h0_to_h2': list(map(str, state_errors)),
+                                'output_errors_h0_to_h2': output_errors})
+        record('state_error_without_readout_regularity_cases')
+
+    return {
+        'regional_missing_stability': {
+            'domain': '[0,infinity)', 'regions': 1, 'actions': 1, 'guard': 'constant true',
+            'q': 'identity', 'T_and_F': 'x^2', 'Fhat': 'x^2+epsilon', 'output': 'x', 'cost': '0',
+            'delta_close': '0', 'delta_eval': str(epsilon), 'cases': squaring_cases},
+        'state_error_without_readout_regularity': {
+            'domain': '[-1,1]', 'regions': 1, 'actions': 1, 'guard': 'constant true',
+            'q_T_F_Fhat': 'identity', 'L': '1', 'delta_close': '0', 'delta_eval': '0',
+            'output': '1{x>0}', 'output_evaluation_error': '0',
+            'requested_output_budget_each_h0_to_h2': str(budget), 'cases': threshold_cases}}
+
+
 def counterexamples():
     eta = F(1, 10)
     def step(u, v):
@@ -441,11 +496,13 @@ def counterexamples():
                 'terminal_marginal_not_transcript', 'stationary_fiber_exception',
                 'optimizer_memory', 'coordinate_preconditioning', 'relu_region_exit',
                 'quotient_path_without_common_lift']
+    approximation = approximation_counterexamples()
+    families.extend(approximation)
     record('named_counterexample_families', len(families))
     return {'two_layer_next_w': [str(x), str(y)], 'pair_difference': str(x-y),
             'minimax_absolute_error': str((x-y)/2), 'ntk_Kdot': list(map(str, kdot)),
             'discrete_C_before_after': ['9', str(s1*s1-4*w1*w1)],
-            'families': families,
+            'families': families, 'approximation': approximation,
             'xor_accuracy': {k: str(v) for k, v in xor_accuracy.items()}}
 
 

@@ -85,6 +85,110 @@
     "two_layer_steps": 4
   },
   "counterexamples": {
+    "approximation": {
+      "regional_missing_stability": {
+        "Fhat": "x^2+epsilon",
+        "T_and_F": "x^2",
+        "actions": 1,
+        "cases": [
+          {
+            "second_step_secant_slope": "201/100",
+            "state_errors_h0_to_h2": [
+              "0",
+              "1/100",
+              "301/10000"
+            ],
+            "x0": "1"
+          },
+          {
+            "second_step_secant_slope": "20001/100",
+            "state_errors_h0_to_h2": [
+              "0",
+              "1/100",
+              "20101/10000"
+            ],
+            "x0": "10"
+          },
+          {
+            "second_step_secant_slope": "2000001/100",
+            "state_errors_h0_to_h2": [
+              "0",
+              "1/100",
+              "2000101/10000"
+            ],
+            "x0": "100"
+          }
+        ],
+        "cost": "0",
+        "delta_close": "0",
+        "delta_eval": "1/100",
+        "domain": "[0,infinity)",
+        "guard": "constant true",
+        "output": "x",
+        "q": "identity",
+        "regions": 1
+      },
+      "state_error_without_readout_regularity": {
+        "L": "1",
+        "actions": 1,
+        "cases": [
+          {
+            "a": "1/10",
+            "initial_approximate": "1/10",
+            "initial_exact": "-1/10",
+            "output_errors_h0_to_h2": [
+              1,
+              1,
+              1
+            ],
+            "state_errors_h0_to_h2": [
+              "1/5",
+              "1/5",
+              "1/5"
+            ]
+          },
+          {
+            "a": "1/100",
+            "initial_approximate": "1/100",
+            "initial_exact": "-1/100",
+            "output_errors_h0_to_h2": [
+              1,
+              1,
+              1
+            ],
+            "state_errors_h0_to_h2": [
+              "1/50",
+              "1/50",
+              "1/50"
+            ]
+          },
+          {
+            "a": "1/10000",
+            "initial_approximate": "1/10000",
+            "initial_exact": "-1/10000",
+            "output_errors_h0_to_h2": [
+              1,
+              1,
+              1
+            ],
+            "state_errors_h0_to_h2": [
+              "1/5000",
+              "1/5000",
+              "1/5000"
+            ]
+          }
+        ],
+        "delta_close": "0",
+        "delta_eval": "0",
+        "domain": "[-1,1]",
+        "guard": "constant true",
+        "output": "1{x>0}",
+        "output_evaluation_error": "0",
+        "q_T_F_Fhat": "identity",
+        "regions": 1,
+        "requested_output_budget_each_h0_to_h2": "1/2"
+      }
+    },
     "discrete_C_before_after": [
       "9",
       "5184/625"
@@ -101,7 +205,9 @@
       "optimizer_memory",
       "coordinate_preconditioning",
       "relu_region_exit",
-      "quotient_path_without_common_lift"
+      "quotient_path_without_common_lift",
+      "regional_missing_stability",
+      "state_error_without_readout_regularity"
     ],
     "minimax_absolute_error": "9/80",
     "ntk_Kdot": [
@@ -127,10 +233,12 @@
     "lipschitz_box_pairs": 108,
     "matrix_cases": 108,
     "momentum_trajectories": 60,
-    "named_counterexample_families": 12,
+    "named_counterexample_families": 14,
     "partition_horizon_comparisons": 1675,
     "quantum_word_cases": 1023,
+    "regional_missing_stability_cases": 3,
     "regression_trajectories": 48,
+    "state_error_without_readout_regularity_cases": 3,
     "stochastic_discounted_pairs": 27,
     "stochastic_iid_horizons": 36,
     "stochastic_joint_law_cases": 1,
@@ -140,7 +248,7 @@
   "result": "all finite assertions passed",
   "schema": "contextual-spacetime-ml-finite-checks-v1",
   "source": "docs/reports/contextual-spacetime-ml/finite_checks.py",
-  "source_sha256": "c02272d8745c4639f73525624b6039fe365b7537efa849cad06b6d995f3c1f4b",
+  "source_sha256": "3df005fe87c405794e2a3295686c4c31bde45de5c471f51a986c2e224fe4ff00",
   "stochastic_records": {
     "bernoulli_discounted_distance": "rho*abs(p-pprime); first random output at depth 1",
     "iid_state_contraction": "0",
