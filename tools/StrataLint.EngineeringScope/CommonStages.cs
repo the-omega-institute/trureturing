@@ -135,12 +135,15 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
         if (Directory.Exists(outputs)) Directory.Delete(outputs, recursive: true);
         // Captured restore/build calls own their nodes until the output closes.
         var roots = BuildRoots();
+        var logger = Environment.GetEnvironmentVariable("CI_CSC_LOGGER_ASSEMBLY");
+        string[] observation = File.Exists(logger) ? ["-logger:StrataLint.JudgeSeed.CscExecutionLogger," + logger] : [];
+        if (observation.Length == 0) output.WriteLine("JUDGE_CSC {\"status\":\"unavailable\",\"count\":null}");
         foreach (var target in roots)
         {
             Step("restore-StrataLint", "dotnet", ["restore", target, "--locked-mode", "-nr:false"]);
             Step("build", "dotnet", ["build", target, "--configuration", "Release", "--no-restore", "--warnaserror", "-nr:false",
                 "-p:CustomAfterMicrosoftCommonTargets=" + Path.Combine(root, "tools/scripts/ci-build-outputs.targets"),
-                "-p:CiRepositoryRoot=" + root, "-p:CiBuildOutputRoot=" + outputs]);
+                "-p:CiRepositoryRoot=" + root, "-p:CiBuildOutputRoot=" + outputs, .. observation]);
         }
         return CommonExecutionEvidence.SealBuild(root, candidate!, CommonBuildOutputs.Collect(root, roots), steps.ToArray(), roots, resourcePlan?.Retain(root));
     }
