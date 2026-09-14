@@ -46,6 +46,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Congruence/CloitreBernoulliIntegralityRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a090825-bernoulli-integrality-refutation` (refuted) by `D5/S3/Arith/Congruence/CloitreBernoulliIntegralityRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a090825-bernoulli-integrality-refutation","declaration_gid":"D5/S3/Arith/Congruence/CloitreBernoulliIntegralityRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Benoit Cloitre (2004). *OEIS A090825, nonprimes n such that (3/2)(1/n)(2n+1)(3^n+1)B(2n) is an integer*. URL: <https://oeis.org/A090825>.

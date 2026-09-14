@@ -60,7 +60,11 @@ internal sealed class CloitreBernoulliIntegralityRefutationDocument
                         + "minus one at 239, while every other factor has valuation zero. "
                         + "Thus F(833) is not an integer. The separate prime congruence "
                         + "clause and the subsequence question are untouched."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "oeis-a090825-bernoulli-integrality-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula FFormula()
     {
