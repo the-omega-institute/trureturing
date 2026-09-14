@@ -55,10 +55,11 @@ internal static partial class DigestionLedgerAligner
         RepositorySnapshot candidateSnapshot,
         RepositorySnapshot baselineSnapshot)
     {
+        var registeredInputs = EngineeringProjectRegistry.ReadRuleBuildInputs(candidateSnapshot);
         var paths = candidateSnapshot.Files.Keys
             .Concat(baselineSnapshot.Files.Keys)
             .Select(static path => path.Value)
-            .Where(IsAtomizerImplementationPath)
+            .Where(path => IsAtomizerImplementationPath(path, registeredInputs))
             .Distinct(StringComparer.Ordinal);
         return paths.All(path => FileBytesEqual(
             candidateSnapshot,
@@ -67,8 +68,8 @@ internal static partial class DigestionLedgerAligner
             path));
     }
 
-    internal static bool IsAtomizerImplementationPath(string path) =>
-        StrataLintEngineBuildInputs.Contains(path);
+    internal static bool IsAtomizerImplementationPath(string path, IReadOnlySet<string> registeredInputs) =>
+        StrataLintEngineBuildInputs.Contains(path, registeredInputs);
 
     private static bool FileBytesEqual(
         RepositorySnapshot candidateSnapshot,

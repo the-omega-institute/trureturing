@@ -529,6 +529,10 @@ public sealed class QuarantineAtomCommandTests
         }
 
         public ExplicitCommandResult CapacityAudit(IReadOnlyList<string> arguments) => throw Unsupported();
+        public ExplicitCommandResult CheckCurrent(IReadOnlyList<string> arguments) => throw new NotSupportedException();
+
+        public ExplicitCommandResult CheckDelta(IReadOnlyList<string> arguments) => throw new NotSupportedException();
+
         public AdmissionOutcome Check(IReadOnlyList<string> arguments) => throw Unsupported();
         public AdmissionTopologyOutcome Topology(IReadOnlyList<string> arguments) => throw Unsupported();
         public CommandResult Coverage(IReadOnlyList<string> arguments) => throw Unsupported();
@@ -549,7 +553,6 @@ public sealed class QuarantineAtomCommandTests
         public CommandResult AlignDigestionStatus(IReadOnlyList<string> arguments) => throw Unsupported();
         public CommandResult CoverAtom(IReadOnlyList<string> arguments) => throw Unsupported();
         public CommandResult CoverBatch(IReadOnlyList<string> arguments) => throw Unsupported();
-        public CommandResult StripScribeReceipts(IReadOnlyList<string> arguments) => throw Unsupported();
         public CommandResult Route(IReadOnlyList<string> arguments) => throw Unsupported();
         public CommandResult SelfTest(IReadOnlyList<string> arguments) => throw Unsupported();
         public CommandResult RenderDag(IReadOnlyList<string> arguments) => throw Unsupported();
