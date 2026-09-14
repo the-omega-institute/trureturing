@@ -5416,3 +5416,358 @@ $$
 在该例前两步后的实际权重都是 $p=1/4$，理想权重却分成 $q=1/10$ 与 $q=2/5$，对应平方重叠分别为 $k=9/400$ 与 $k=9/100$。后续读取分别使用这些已存历史上的候选三元组；累计标量 $E$ 不保留它们的分支权重与重叠结构。本章仍只处理丢弃最终系统、没有输入或输出参考的经典路径总变差任务。
 
 ## 追加锚（新终端）
+
+## 20. 实反馈的充分性与最终量子输出的价值
+
+**定理 20.1（任意有限经典历史的实反馈达到与一维递推）。** 沿用定义 19.1 的候选分支对、参数域 $\mathcal G$ 和延续代价 $V_{\boldsymbol\beta}$。对任意有限参数列 $\boldsymbol\beta\in[0,1]^n$ 以及任意实候选向量 $\psi,\phi\in\mathbb R^2$，完整 $U(2)$ 共同历史控制的最大值都由一个全部控制属于 $O(2)$ 的反馈表达到。向量可以未归一化、为零、正交或共线；不增加可访问量子记忆或参考系统。
+
+对 $(p,q,k)\in\mathcal G$ 且 $p>0$，定义
+
+$$
+v_\pm(u)=
+\frac{\left[\sqrt{ku}\pm\sqrt{(pq-k)(p-u)}\right]^2}{p^2},
+\qquad 0\le u\le p.
+$$
+
+使用定理 19.2 的后继映射 $G_0^\beta,G_1^\beta$，完整复取向域上的 Bellman 递推可以精确缩为
+
+$$
+\begin{aligned}
+V_{(\beta,\boldsymbol\gamma)}(p,q,k)
+&=\max_{\substack{0\le u\le p\\\sigma\in\{-,+\}}}
+\bigl[
+V_{\boldsymbol\gamma}
+\bigl(G_0^\beta(p,q,k;u,v_\sigma(u))\bigr)\\
+&\hspace{8em}
++V_{\boldsymbol\gamma}
+\bigl(G_1^\beta(p,q,k;u,v_\sigma(u))\bigr)
+\bigr].
+\end{aligned}
+$$
+
+每个节点只需优化一个实区间及两个符号，最大值达到。空参数列仍取 $V_\varnothing(p,q,k)=|p-q|$，零权重边界为
+
+$$
+V_{\boldsymbol\beta}(0,q,0)=q,
+\qquad
+V_{\boldsymbol\beta}(p,0,0)=p.
+$$
+
+因此定义 18.1 的原始任务
+
+$$
+T_N(\boldsymbol\beta)
+=\frac12V_{\boldsymbol\beta}(1,1,1)
+$$
+
+也可以用实纯初态和全实共同反馈表达到。
+
+这一结论限定于所给仪器族及最终只读取经典历史的目标。它给出存在一个最优实控制表，不要求复制任意给定复控制表的全部叶分布，也不意味着每个边界取向都最优。一维递推仍保留三参数分支状态和全部已存历史，没有把任意长度的最优值化为闭式，也不保证控制树的规模具有统一效率界。
+
+证明。 首先证明递推所需要的一条权重方向凸性。固定有限尾列 $\boldsymbol\gamma$、$P\ge0$ 和 $c\in[0,P]$，取
+
+$$
+\psi_c=\begin{pmatrix}\sqrt c\\\sqrt{P-c}\end{pmatrix},
+\qquad
+\phi_s=\sqrt s\,|0\rangle,
+\qquad s\ge0.
+$$
+
+该向量对的三参数是 $(P,s,cs)$。对一个固定的完整共同控制表 $\pi$，令 $A_w^\pi,B_w^\pi$ 分别是末端历史 $w$ 上实际与理想的分支算子乘积，并记
+
+$$
+a_w^\pi=\|A_w^\pi\psi_c\|^2,
+\qquad
+b_w^\pi=\|B_w^\pi|0\rangle\|^2.
+$$
+
+固定表的代价就是
+
+$$
+J_\pi(s)=\sum_w|a_w^\pi-sb_w^\pi|.
+$$
+
+每项都是仿射函数的绝对值，故 $J_\pi$ 关于 $s$ 凸。控制表在所有可能历史上都有定义，包括零概率历史；所有 $s$ 使用同一个控制表空间，虽然实现最优值的表可以随 $s$ 变化。因此对 $s,t\ge0$、$\lambda\in[0,1]$，有
+
+$$
+\begin{aligned}
+&V_{\boldsymbol\gamma}
+\bigl(P,\lambda s+(1-\lambda)t,
+c[\lambda s+(1-\lambda)t]\bigr)\\
+&\quad=\sup_\pi J_\pi(\lambda s+(1-\lambda)t)\\
+&\quad\le\lambda\sup_\pi J_\pi(s)
++(1-\lambda)\sup_\pi J_\pi(t).
+\end{aligned}
+$$
+
+于是 $s\mapsto V_{\boldsymbol\gamma}(P,s,cs)$ 凸。总分支权重守恒还给出 $J_\pi(s)\le P+s$，所以这些上确界有限；空尾列及 $P=c=0$ 也包括在内。这只建立所列方向的凸性，没有假设 $V$ 关于 $(p,q,k)$ 联合凸。
+
+接着确定共同酉可行域在固定 $u$ 时的完整切片。设 $p>0$。对一个实候选对，先用同一个实正交变换把 $\psi$ 送到 $\sqrt p|0\rangle$，再利用 $\phi$ 的无关整体符号和第二坐标的基反射，得到代表
+
+$$
+\psi=\begin{pmatrix}\sqrt p\\0\end{pmatrix},
+\qquad
+\phi=\begin{pmatrix}\sqrt{k/p}\\\sqrt{q-k/p}\end{pmatrix}.
+$$
+
+整体符号不改变候选密度算子或路径概率，这里不把它当作只对一个候选施加的物理控制。上述规范式也为每个 $p>0$ 的合法三元组提供实代表；由定理 19.2 的共同酉不变性，其完整复可行域就是该三元组的 $\mathcal F(p,q,k)$。
+
+固定实际第零坐标强度 $u\in[0,p]$。任何共同复酉的第一行在去掉无关行相位后，都可以写成
+
+$$
+r_\theta=
+\left(\sqrt{u/p},\ e^{i\theta}\sqrt{(p-u)/p}\right).
+$$
+
+在 $u=0$ 或 $u=p$ 时，消失坐标的相位任取。理想第零坐标强度为
+
+$$
+v(\theta)=
+\frac{ku+(pq-k)(p-u)
++2\sqrt{k(pq-k)u(p-u)}\cos\theta}{p^2}.
+$$
+
+任意单位复行向量都可以补成一个酉矩阵，因此定理 19.2 的完整可行域在此 $u$ 上恰为闭区间
+
+$$
+\{v:(u,v)\in\mathcal F(p,q,k)\}
+=[v_-(u),v_+(u)].
+$$
+
+区间内部由不同的 $\cos\theta$ 取得，两个端点则由实正交矩阵
+
+$$
+R_\pm(u)=
+\begin{pmatrix}
+\sqrt{u/p}&\pm\sqrt{(p-u)/p}\\
+\mp\sqrt{(p-u)/p}&\sqrt{u/p}
+\end{pmatrix}
+$$
+
+取得。由于根号项非负，$v_-(u)\le v_+(u)$；又因为它们是范数平方为 $q$ 的向量经酉变换后的一个坐标强度，所以两者均在 $[0,q]$ 中。把 $R_\pm(u)$ 与前述共同实基变换复合，就得到作用于原始实候选对的合法实控制。还原 $\phi$ 的整体符号不会改变强度，输出向量仍然为实。
+
+若 $q=0$、$k=0$、$k=pq$，或 $u$ 为区间端点，上式中相应交叉项为零，闭区间退化成单点，公式直接适用。若 $p=0$，则 $u=k=0$，可行切片为 $[0,q]$，实旋转同样能够把实向量 $\phi$ 的第零坐标强度取成 $0$ 或 $q$。
+
+现在固定第一步参数 $\beta\in[0,1]$ 和 $u$，记
+
+$$
+\begin{aligned}
+\mathsf p_0&=(1-\beta)u+\beta(p-u),
+&c_0&=(1-\beta)u,\\
+\mathsf p_1&=(1-\beta)(p-u)+\beta u,
+&c_1&=(1-\beta)(p-u).
+\end{aligned}
+$$
+
+这些量不随 $v$ 变化，并满足
+
+$$
+\mathsf p_0-c_0=\beta(p-u)\ge0,
+\qquad
+\mathsf p_1-c_1=\beta u\ge0.
+$$
+
+该 $u$ 上的 Bellman 目标为
+
+$$
+F_u(v)=V_{\boldsymbol\gamma}(\mathsf p_0,v,c_0v)
++V_{\boldsymbol\gamma}(\mathsf p_1,q-v,c_1(q-v)).
+$$
+
+已经证明的权重方向凸性分别用于 $c_0\le \mathsf p_0$ 和 $c_1\le \mathsf p_1$；第二项再与仿射映射 $v\mapsto q-v$ 复合，仍然凸。因此 $F_u$ 在 $[0,q]$ 上凸。任意可行 $v$ 都满足
+
+$$
+F_u(v)\le
+\max\{F_u(v_-(u)),F_u(v_+(u))\}.
+$$
+
+区间非退化时，这是把 $v$ 写成两端点凸组合后的凸性不等式；区间退化时直接相等。故在保持同一个实际强度 $u$ 的条件下，可以用一个实可达端点代替复内部点，并且不降低最优延续代价。结合定理 19.2 的完整递推，即得所陈述的一维双符号递推。最大值由该定理的连续性和 $[0,p]\times\{-,+\}$ 的紧性达到。
+
+最后对剩余长度归纳，证明整个最优控制表可以为实。空尾列代价为 $|p-q|$，无需控制。若 $p=0$，实际所有分支权重为零，任意控制表的代价都是理想总权重 $q$；同理 $q=0$ 时恒为 $p$。这也证明所列零权重边界。
+
+对非零实际候选，取一个达到 Bellman 最大值的第一步 $(u,v)$，用上述不减值端点替换后，它仍然达到完整最大值。用实共同控制实现该端点；由于实际 $K_{\beta,z}$ 与理想 $P_z$ 都是实矩阵，两种结果后的候选对仍然为实。在每个已存结果分支，归纳假设给出达到完整复控制延续值的实尾表。两个尾表可以按不同的已存结果分别指定，与第一步组合后就成为全实最优反馈表。
+
+该选择只使用固定候选模型、参数及已存历史，两实验始终调用同一张表。证明没有进行分支归一化，也没有除以 $\beta$ 或 $1-\beta$，因此零子分支和 $\beta=0,1$ 均被覆盖。取共同实初态 $|0\rangle$，再用定理 19.2 的 $T_N=V_{\boldsymbol\beta}(1,1,1)/2$，得到原始任务的实达到结论。证毕。
+
+**定理 20.2（最终量子输出的显式访问差距与等号分类）。** 在定义 18.1 的同一无量子记忆、无输入输出参考的控制类中，固定 $N\ge1$ 和 $\beta_t\in[0,1]$，令
+
+$$
+f=\beta_N,
+\qquad
+s=\prod_{t=1}^{N-1}\sqrt{1-\beta_t},
+\qquad
+E=1-s^2,
+$$
+
+其中空积为一。再定义
+
+$$
+U(E,f)=\frac{f+\sqrt{f^2+4(1-f)E}}2,
+\qquad
+\delta_N=\sqrt{1-(1-f)s^2}.
+$$
+
+若最终保留全部历史和活动量子比特 $H_N\otimes S$，则最优输出迹距离为 $\delta_N$：上界由定理 16.3 给出，定理 17.2 用实反馈和无参考的共同输入达到。若最终丢弃活动系统，只比较经典历史，则有统一上界
+
+$$
+T_N(\beta_1,\ldots,\beta_N)\le U(E,f).
+$$
+
+若所有 $\beta_t<1$ 且末次 $0<f<1$，则 $s>0$，并且
+
+$$
+T_N\le U(E,f)<\delta_N,
+\qquad
+\delta_N-T_N
+\ge\frac{f(1-f)s^2}{2(2-f)}>0.
+$$
+
+在完整参数域上，两个观察任务最优值相等的条件恰为
+
+$$
+T_N(\beta_1,\ldots,\beta_N)=\delta_N
+\quad\Longleftrightarrow\quad
+\bigl[\beta_N=0\ \text{或存在 }t\le N\text{ 使 }\beta_t=1\bigr].
+$$
+
+证明。 固定共同历史控制表。经典总变差是共同输入密度矩阵的凸函数，所以证明输入无关的上界时纯输入足够。取共同单位初态，在末次控制之前，对长度为 $N-1$ 的旧历史 $h$，记实际与理想的未归一化分支向量为 $\psi_h,\phi_h$。
+
+第 $t$ 次实际与理想结果算子满足
+
+$$
+\sum_{z=0}^1P_zK_{\beta_t,z}
+=\sqrt{1-\beta_t}\,I_2.
+$$
+
+因此，设该节点调用的共同控制为 $W_h$，便有
+
+$$
+\sum_z
+\langle P_zW_h\phi_h,K_{\beta_t,z}W_h\psi_h\rangle
+=\sqrt{1-\beta_t}\langle\phi_h,\psi_h\rangle.
+$$
+
+从共同初态的内积一开始，逐层对所有历史求和，得到
+
+$$
+\sum_{|h|=N-1}\langle\phi_h,\psi_h\rangle=s.
+$$
+
+这只约束全部历史上的内积之和，不要求每个分支内积单独为实或非负。$N=1$ 时只有空历史，该等式就是初态内积一。
+
+对最后共同控制 $W_h$，定义两种候选前缀若都接受完美指针读取时的经典分布
+
+$$
+P(h,z)=|\langle z|W_h\psi_h\rangle|^2,
+\qquad
+Q(h,z)=|\langle z|W_h\phi_h\rangle|^2.
+$$
+
+这里 $P$ 是用于比较的分布，未声称该完美读取已经在实际过程中执行；$Q$ 则恰好是理想全历史分布。两者总质量均为一。它们的 Bhattacharyya 重叠满足
+
+$$
+\begin{aligned}
+B(P,Q)
+&:=\sum_{h,z}\sqrt{P(h,z)Q(h,z)}\\
+&\ge\left|\sum_{h,z}
+\overline{\langle z|W_h\phi_h\rangle}
+\langle z|W_h\psi_h\rangle\right|\\
+&=\left|\sum_h\langle\phi_h,\psi_h\rangle\right|=s.
+\end{aligned}
+$$
+
+实际末次仪器的结果效应为
+
+$$
+K_{f,z}^\dagger K_{f,z}
+=(1-f)P_z+fP_{1-z}.
+$$
+
+所以实际全历史分布 $R$ 精确满足
+
+$$
+R(h,z)=(1-f)P(h,z)+fP(h,1-z).
+$$
+
+令 $\tau(h,z)=(h,1-z)$，则对任意经典事件 $A$，
+
+$$
+\begin{aligned}
+R(A)-Q(A)
+&=(1-f)P(A)+fP(\tau(A))-Q(A)\\
+&\le f+(1-f)P(A)-Q(A).
+\end{aligned}
+$$
+
+记 $a=1-f$。向量 $aP-Q$ 的元素之和为 $-f$，故其正部之和为
+
+$$
+\max_A\bigl[aP(A)-Q(A)\bigr]
+=\frac{\|aP-Q\|_1-f}{2}.
+$$
+
+概率分布的总变差等于正事件差的最大值，因此
+
+$$
+\operatorname{TV}(R,Q)
+\le\frac{f+\|aP-Q\|_1}{2}.
+$$
+
+对每个坐标分解平方差，再用 Cauchy--Schwarz 不等式，得到
+
+$$
+\begin{aligned}
+\|aP-Q\|_1
+&=\sum_{h,z}
+\left|\sqrt{aP(h,z)}-\sqrt{Q(h,z)}\right|
+\left(\sqrt{aP(h,z)}+\sqrt{Q(h,z)}\right)\\
+&\le\sqrt{\bigl(a+1-2\sqrt a\,B(P,Q)\bigr)
+\bigl(a+1+2\sqrt a\,B(P,Q)\bigr)}\\
+&=\sqrt{(a+1)^2-4aB(P,Q)^2}\\
+&\le\sqrt{(2-f)^2-4(1-f)s^2}\\
+&=\sqrt{f^2+4(1-f)E}.
+\end{aligned}
+$$
+
+于是每个固定策略和纯输入的代价都不超过 $U(E,f)$。对混合输入用同一策略下的凸性，再对全部共同策略取上确界，得到 $T_N\le U(E,f)$。推导使用完整 $U(2)$ 控制表，因此该界不依赖先将控制限制为实。
+
+现设 $s>0$ 且 $0<f<1$，简记 $U=U(E,f)$。它满足二次等式
+
+$$
+U^2-fU=(1-f)(1-s^2).
+$$
+
+由于 $s>0$，定义中的根式严格小于 $2-f$，所以 $0<U<1$。直接相减得到
+
+$$
+\delta_N^2-U^2=f(1-U)>0,
+$$
+
+因而 $U<\delta_N$。进一步，由同一个二次等式可得
+
+$$
+(1-U)(1+U-f)=(1-f)s^2,
+$$
+
+于是
+
+$$
+\begin{aligned}
+\delta_N-U
+&=\frac{f(1-f)s^2}
+{(\delta_N+U)(1+U-f)}\\
+&\ge\frac{f(1-f)s^2}{2(2-f)}>0.
+\end{aligned}
+$$
+
+这里两个分母因子均正，并且 $\delta_N,U\le1$。结合 $T_N\le U$，即得所述统一正差距。
+
+还需确定其余参数边界。若末次 $f=0$，则 $U(E,0)=\sqrt E=\delta_N$，命题 18.3 的最终完美读取构造达到这一值，故 $T_N=\delta_N$。
+
+若存在某个 $\beta_t=1$，则 $\delta_N=1$。取指针初态 $|0\rangle$，并在每个历史节点都用恒等控制。因为所有结果算子在指针基中对角，实际非零分支向量始终沿 $|0\rangle$ 方向；理想历史恒为全零，而在所选阶段 $t$，实际结果必为一。因此两种全历史分布的支撑不交，经典总变差达到一。这也包括末次 $f=1$。
+
+反过来，若末次参数不为零且没有参数等于一，则所有 $\beta_t<1$，同时 $0<f<1$，恰好属于已经证明的严格差距条件。因此其最优值不相等。参数域已被这几种情况穷尽，得到所陈述的充要分类。
+
+当 $N=1$ 时，$s=1$、$E=0$，上界给出 $U(0,f)=f$，由指针初态达到，因而一次经典结果的最优差异为 $f$；保留最终量子输出时则为 $\sqrt f$。一般有限步中，$E$ 只用于本定理的统一上界，没有取代第 19 章的分支三参数递推；命题 19.3 所排除的累计标量替代仍然不成立。证毕。
+
+## 追加锚（新终端）
