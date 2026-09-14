@@ -128,6 +128,50 @@ public sealed class LeanJobsDerivationTests
         }
     }
 
+    [Theory]
+    [InlineData("memory.max", true)]
+    [InlineData("memory.max", false)]
+    [InlineData("cpu.max", true)]
+    [InlineData("cpu.max", false)]
+    public void EveryVisibleCgroupMountContributesLimits(string limitedResource, bool narrowFirst)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new TemporaryDirectory();
+        var result = Run(fixture.Path,
+            """
+            python3 - "$@" <<'PY'
+            import ast
+            from pathlib import Path
+            import sys
+            source = Path(sys.argv[1]).read_text().split("<<'PY'\n", 1)[1].split('\nPY\n', 1)[0]
+            tree = ast.parse(source)
+            tree.body = [node for node in tree.body if not isinstance(node, ast.Try)]
+            ns = {}
+            exec(compile(tree, sys.argv[1], 'exec'), ns)
+            root = Path(sys.argv[2])
+            proc, narrow, broad = root / 'proc', root / 'narrow', root / 'broad'
+            (proc / 'self').mkdir(parents=True)
+            (proc / 'self/cgroup').write_text('0::/parent/child/leaf\n')
+            for directory in [narrow, narrow / 'leaf', broad, broad / 'parent',
+                              broad / 'parent/child', broad / 'parent/child/leaf']:
+                directory.mkdir(parents=True, exist_ok=True)
+                (directory / 'cpu.max').write_text('max 100000\n')
+                (directory / 'memory.max').write_text('max\n')
+            limit = '8257483648' if sys.argv[3] == 'memory.max' else '100000 100000'
+            (broad / 'parent' / sys.argv[3]).write_text(limit + '\n')
+            mounts = [f'30 20 0:28 /parent/child {narrow} rw - cgroup2 cgroup rw\n',
+                      f'31 20 0:28 / {broad} rw - cgroup2 cgroup rw\n']
+            if sys.argv[4] == 'False':
+                mounts.reverse()
+            (proc / 'self/mountinfo').write_text(''.join(mounts))
+            sys.exit(ns['derive']('8', '51027483648', *ns['cgroup_limits'](proc)))
+            PY
+            """, Path.Combine(TestRepositoryLayout.FindRoot(), Script), fixture.Path,
+            limitedResource, narrowFirst.ToString());
+        Assert.Equal(0, result.ExitCode);
+        Assert.EndsWith("jobs=1", result.StandardOutput.Trim());
+    }
+
     private static string Receipt(int cores, long memory, int qCpu, long qMem, int jobs) =>
         $"LEAN_JOBS_DERIVATION cores={cores} mem_total_bytes={memory} reserve_bytes={Reserve} "
         + $"per_process_bytes={Peak} q_cpu={qCpu} q_mem={qMem} jobs={jobs}";

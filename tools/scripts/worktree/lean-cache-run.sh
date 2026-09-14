@@ -38,7 +38,7 @@ def natural(value, name, positive=False):
 
 
 def cgroup_limits(proc):
-    # Locate our cgroup v2 mount, including delegated/container mount roots.
+    # Collect every matching visible v2 mount, including delegated roots.
     # Ancestor quotas apply even when the leaf itself says max. An absent v2
     # hierarchy means no v2 upper bound; malformed/unreadable inputs fail closed.
     memberships = [line.split(":", 2)[2] for line in
@@ -47,6 +47,8 @@ def cgroup_limits(proc):
     if not memberships:
         return [], []
     member = Path(memberships[0])
+    cpu, memory = [], []
+    matched = False
     for line in (proc / "self/mountinfo").read_text().splitlines():
         before, after = line.split(" - ", 1)
         if after.split()[0] != "cgroup2":
@@ -63,15 +65,17 @@ def cgroup_limits(proc):
         current = mount / relative
         if not current.is_dir():
             raise ValueError("cgroup membership directory is missing")
-        cpu, memory = [], []
+        matched = True
         while True:
             for name, values in [("cpu.max", cpu), ("memory.max", memory)]:
                 path = current / name
                 if path.exists():
                     values.append(path.read_text().strip())
             if current == mount:
-                return cpu, memory
+                break
             current = current.parent
+    if matched:
+        return cpu, memory
     raise ValueError("cgroup v2 membership has no visible matching mount")
 
 
