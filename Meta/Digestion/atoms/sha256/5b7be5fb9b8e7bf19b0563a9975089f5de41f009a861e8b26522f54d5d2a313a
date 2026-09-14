@@ -1,0 +1,40 @@
+## MF.5 无限记忆核与有限阶状态实现
+
+**定义。** 写
+
+$$
+x_n=(s_n+h_n,s_n-h_n,r_n),\qquad y_n=(s_n,r_n).
+$$
+
+则 PT6 的矩阵给出
+
+$$
+y_{n+1}=A_vy_n+B_vh_n,\qquad h_{n+1}=C_vy_n+\lambda h_n,
+$$
+
+其中
+
+$$
+A_v=\begin{pmatrix}1-b/2&b/2\\b&1-b\end{pmatrix},\quad
+B_v=\begin{pmatrix}b/2\\-b\end{pmatrix},\quad
+C_v=\begin{pmatrix}b/2&-b/2\end{pmatrix}.
+$$
+
+**命题。** 可见向量满足二阶递推
+
+$$
+\boxed{y_{n+2}=(A_v+\lambda I)y_{n+1}+(B_vC_v-\lambda A_v)y_n.}
+$$
+
+**证明。** 由 $B_vh_n=y_{n+1}-A_vy_n$，将隐藏更新代入下一步可见更新并整理。证毕。
+
+**命题。** 对黄金乘法 $a+e\varphi\mapsto e+(a+e)\varphi$，取可见量 $y=e$、隐藏量 $h=a$，则 $A=B=C=1,D=0$，从而
+
+$$
+\eta_0=a_0,\quad \eta_n=0\ (n>0),\quad M_0=1,\quad M_j=0\ (j>0),
+$$
+
+并且 $y_{n+1}=y_n+y_{n-1}$（$n\ge1$），$a_0=y_1-y_0$。
+
+**证明。** 把 $a+e\varphi$ 乘以 $\varphi$ 并用 $\varphi^2=\varphi+1$；其余各式代入 MF1 即得。证毕。
+

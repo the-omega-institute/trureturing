@@ -1,0 +1,29 @@
+## SM.2 群平均投影与零反馈
+
+**假设。** 设 $G$ 为有限群，$\rho$ 为特征零表示，并且 $K\rho(g)=\rho(g)K$。
+
+**定义。** 令
+
+$$
+P_G=\frac1{|G|}\sum_{g\in G}\rho(g),\qquad Q_G=I-P_G.
+$$
+
+**命题。** 有
+
+$$
+P_G^2=P_G,\qquad KP_G=P_GK,qquad
+Q_GKP_G=P_GKQ_G=0.
+$$
+
+**证明。** 对每个 $h\in G$，方程 $g_1g_2=h$ 恰有 $|G|$ 对解，故 $P_G^2=P_G$。交换性逐项求和得到 $KP_G=P_GK$，最后两式由 $Q_G=I-P_G$ 展开。证毕。
+
+**命题。** 若复表示分解为
+
+$$
+V=\bigoplus_\lambda W_\lambda\otimes M_\lambda,
+$$
+
+则与群作用交换的算子可在重数空间 $M_\lambda$ 内混合。因此两个算子都与群作用交换并不蕴含它们彼此交换。
+
+**证明。** 群只作用于不可约因子 $W_\lambda$；任意 $I_{W_\lambda}\otimes A_\lambda$ 都与群作用交换，而重数空间上的两个 $A_\lambda$ 不必交换。证毕。
+

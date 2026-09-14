@@ -1,0 +1,14 @@
+**命题。** 若另有 $0<\theta<1$ 与 $|w|\le\theta$，并把截断区间改成 $[-\theta,\theta]$，则
+
+$$
+|\widehat m_j-gw^j|
+\le3\epsilon\theta^j+11\epsilon j\theta^{j-1},
+$$
+
+其中 $j=0$ 时第二项取零，并且
+
+$$
+\sum_{j\ge0}|\widehat m_j-gw^j|
+\le\epsilon\left(\frac3{1-\theta}+\frac{11}{(1-\theta)^2}\right).
+$$
+

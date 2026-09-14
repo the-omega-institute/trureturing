@@ -1,0 +1,6 @@
+**定义。** 令 $\operatorname{shift}_k(r)$ 把每个槽号提高 $k$，并置
+
+$$
+v_k(r)=v(\operatorname{shift}_k(r)).
+$$
+
