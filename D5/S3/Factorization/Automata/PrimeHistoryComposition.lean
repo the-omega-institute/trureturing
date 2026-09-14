@@ -7,13 +7,12 @@
    digest: The exact history normal form composes by translated interval intersection and classifies contextual legality. -/
 
 import D5.S3.Factorization.Automata.PrimeHistoryNormalForm
-import D5.S3.Factorization.Automata.BoundedPrimeHorizon
 
 set_option autoImplicit false
 
 namespace D5.S3.Factorization.Automata.PrimeHistoryComposition
 
-open PrimeHistoryNormalForm WordExcursionLowerBound BoundedPrimeHorizon
+open PrimeHistoryNormalForm WordExcursionLowerBound
 open D5.S0.Automata.TypedPartialDFAOOverBase
 
 /-- Chronological composition: execute s first and t second. The actual domain
@@ -264,64 +263,7 @@ theorem normal_eq_iff_contextual_run (a : Nat) (v w : List Bool) :
       have hw : ¬ (0 ≤ x + low w ∧ x + high w ≤ (a : Int)) := by omega
       simp [evaluate_normal, hv, hw]
 
-/-- Even if the only output is success/failure, every contextual distinction of
-the exact partial map is observable. A suffix separates different live endpoints;
-the old exact horizon theorem supplies that suffix semantically. -/
-theorem normal_eq_iff_contextual_accepts (a : Nat) (v w : List Bool) :
-    normal a v = normal a w ↔
-      ∀ (before after : List Bool) (e : Fin (a + 1)),
-        accepts a e (before ++ v ++ after) = accepts a e (before ++ w ++ after) := by
-  constructor
-  · intro h before after e
-    exact congrArg Option.isSome
-      ((normal_eq_iff_contextual_run a v w).mp h before after e)
-  · intro h
-    apply (normal_eq_iff_contextual_run a v w).mpr
-    intro before after e
-    have htail (tail : List Bool) :
-        accepts a e ((before ++ v ++ after) ++ tail) =
-          accepts a e ((before ++ w ++ after) ++ tail) := by
-      simpa only [List.append_assoc] using h before (after ++ tail) e
-    cases hv : run a e (before ++ v ++ after) with
-    | none =>
-        cases hw : run a e (before ++ w ++ after) with
-        | none => rfl
-        | some f =>
-            have hh := h before after e
-            unfold accepts at hh
-            rw [hv, hw] at hh
-            simp at hh
-    | some f =>
-        cases hw : run a e (before ++ w ++ after) with
-        | none =>
-            have hh := h before after e
-            unfold accepts at hh
-            rw [hv, hw] at hh
-            simp at hh
-        | some g =>
-            have heq : f = g :=
-              by
-                have hkernel : ∀ tail : List Bool, tail.length ≤ a →
-                    accepts a f tail = accepts a g tail := by
-                  intro tail _
-                  have hh := htail tail
-                  have append_run (u z : List Bool) :
-                      run a e (u ++ z) = (run a e u).bind (fun q => run a q z) :=
-                    PartialDFA.evalFrom_append {start := e, step := step a} e u z
-                  unfold accepts at hh
-                  rw [append_run (before ++ v ++ after) tail,
-                    append_run (before ++ w ++ after) tail, hv, hw] at hh
-                  exact hh
-                have hc := (finite_horizon_kernel a a f g).mp hkernel
-                have hfBound := f.isLt
-                have hgBound := g.isLt
-                apply Fin.ext
-                dsimp [close] at hc
-                omega
-            simp [heq]
-
 #print axioms normal_append
 #print axioms normal_eq_iff_contextual_run
-#print axioms normal_eq_iff_contextual_accepts
 
 end D5.S3.Factorization.Automata.PrimeHistoryComposition
