@@ -86,7 +86,8 @@ theorem signed_series_fibres :
   have hd : alpha ^ 4 + alpha ^ 3 = alpha ^ 2 := by
     nlinarith [congrArg (fun z : ℝ => alpha ^ 2 * z) ha]
   let shift (x : LegalDigits) (n : ℕ) : LegalDigits :=
-    ⟨fun j => x.val (j + n), fun j => by simpa [Nat.add_assoc, Nat.add_comm, Nat.add_left_comm] using x.property (j + n)⟩
+    ⟨fun j => x.val (j + n), fun j => by
+      simpa [Nat.add_assoc, Nat.add_comm, Nat.add_left_comm] using x.property (j + n)⟩
   let B : Block → ℝ → ℝ
     | .zero, t => -alpha * t
     | .oneZero, t => -alpha ^ 2 + alpha ^ 2 * t
@@ -221,7 +222,10 @@ theorem signed_series_fibres :
       rightStream (c :: w) = prependBlock c (rightStream w) := ⟨rfl, rfl⟩
   have lrne (w : List Block) : leftStream w ≠ rightStream w := by
     induction w with
-    | nil => intro h; have hh := congrArg (fun z : LegalDigits => z.val 0) h; simp [leftStream, rightStream, prependWord, prependBlock] at hh
+    | nil =>
+      intro h
+      have hh := congrArg (fun z : LegalDigits => z.val 0) h
+      simp [leftStream, rightStream, prependWord, prependBlock] at hh
     | cons c w ih => exact fun h => ih (pinj c h)
   have separate (c d : Block) (s t : ℝ) (hne : c ≠ d)
       (hs : s ∈ Set.Ioo a b) (ht : t ∈ Set.Icc a b) : B c s ≠ B d t := by
