@@ -68,12 +68,15 @@ internal static partial class CommonExecutionEvidence
     {
         // Acceptance errors are fatal; only optional copying/saving may fail harmlessly.
         CommonCheckRecord? checks = null;
-        _ = stage == "engineering" ? ValidateEngineering(root) : stage == "current" ? ValidateCurrent(root, out checks)
+        TestExecutionRecord? tests = null;
+        _ = stage == "engineering" ? ValidateEngineering(root, out tests, out checks) : stage == "current" ? ValidateCurrent(root, out checks)
             : throw new InvalidDataException("invalid common seed stage: " + stage);
+        // Copying consumes the accepted records, never their source hash scope.
+        // Emit notifications only after both copies; output can invoke caller code.
+        using var messages = new StringWriter();
         var testMaterials = Array.Empty<string>();
-        if (stage == "engineering" && destination is null)
+        if (tests is not null && destination is null)
         {
-            var tests = ValidateTests(root);
             var seed = Path.Combine(root, TestSeedPath);
             var available = false;
             try
@@ -82,16 +85,16 @@ internal static partial class CommonExecutionEvidence
                 if (available) ValidateMaterials(seed, tests.Materials);
             }
             catch (Exception exception) when (exception is InvalidDataException or IOException or UnauthorizedAccessException) { available = false; }
-            if (available || ExportTestSeed(root, output))
+            if (available || CopyTestSeed(root, tests, messages))
                 testMaterials = tests.Materials.Select(material => TestSeedPath + "/" + material.Path).Append(TestSeedPath + "/tests.json").ToArray();
         }
-        return CopyCheckSeed(root, stage, output, destination, testMaterials, checks);
+        return CopyCheckSeed(root, stage, output, destination, testMaterials, checks, messages.ToString());
     }
 
     private static bool CopyCheckSeed(string root, string stage, TextWriter output, string? destination, string[] testMaterials,
-        CommonCheckRecord? accepted)
+        CommonCheckRecord? accepted, string testNotification)
     {
-        // Current validation just accepted these exact units, build and plan. Copy
+        // Stage validation just accepted these exact units, build and plan. Copy
         // that record; independent exports still enter full validation above.
         var record = accepted ?? ValidateChecks(root, stage, ValidateBuild(root), stage == "current" ? CurrentCheckIds(root) : null);
         destination ??= Path.Combine(root, CheckSeedPath(stage));
@@ -114,6 +117,7 @@ internal static partial class CommonExecutionEvidence
             if (destination == Path.Combine(root, CheckSeedPath(stage)))
                 WriteBundleList(root, stage + "-seed", materials.Select(material => CheckSeedPath(stage) + "/" + material.Path)
                     .Append(CheckSeedPath(stage) + "/checks.json").Append(CheckSeedPath(stage) + "/materials.json").Concat(testMaterials));
+            if (testNotification.Length != 0) output.Write(testNotification);
             output.WriteLine($"COMMON_CHECK_SEED_SAVED stage={stage}");
             return true;
         }

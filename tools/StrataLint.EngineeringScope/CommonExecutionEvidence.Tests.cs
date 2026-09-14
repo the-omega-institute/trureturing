@@ -144,7 +144,7 @@ internal static partial class CommonExecutionEvidence
     }
 
     private static TestExecutionRecord ValidateTests(string root, TestExecutionRecord record, string candidate,
-        RepositorySnapshot snapshot, IEnumerable<string>? requiredProjects = null)
+        RepositorySnapshot snapshot, IEnumerable<string>? requiredProjects = null, ValidationScope? validation = null)
     {
         if (record.Version != 2 || record.Candidate != candidate || !ValidRound(record.Round)
             || record.Projects is null || record.Materials is null)
@@ -155,7 +155,7 @@ internal static partial class CommonExecutionEvidence
             throw new InvalidDataException("engineering evidence does not cover every current test project exactly once");
         var bound = new List<string>();
         foreach (var project in record.Projects)
-            bound.AddRange(ValidateProject(root, record, project, inputs[project.Project]).Select(material => material.Path));
+            bound.AddRange(ValidateProject(root, record, project, inputs[project.Project], validation).Select(material => material.Path));
         if (!bound.Order(StringComparer.Ordinal).SequenceEqual(record.Materials.Select(material => material.Path).Order(StringComparer.Ordinal)))
             throw new InvalidDataException("engineering evidence contains unowned or duplicate TRX material");
         foreach (var project in requiredProjects ?? [])
@@ -168,7 +168,8 @@ internal static partial class CommonExecutionEvidence
         && round.All(character => char.IsAsciiLetterOrDigit(character) || character == '-');
     private static bool ValidCandidate(string? candidate) => candidate?.Length == 64 && candidate.All(char.IsAsciiHexDigit);
 
-    private static ExecutionMaterial[] ValidateProject(string root, TestExecutionRecord record, TestProjectExecution project, RegisteredTestInput input)
+    private static ExecutionMaterial[] ValidateProject(string root, TestExecutionRecord record, TestProjectExecution project, RegisteredTestInput input,
+        ValidationScope? validation = null)
     {
         if (project.Project != input.Project || project.InputFingerprint != input.Fingerprint)
             throw new InvalidDataException($"test input identity mismatch: {project.Project}");
@@ -187,7 +188,7 @@ internal static partial class CommonExecutionEvidence
             .OrderBy(material => material.Path, StringComparer.Ordinal).ToArray();
         if (actual.Length == 0 || !actual.SequenceEqual(materials.Select(material => material.Path)))
             throw new InvalidDataException($"missing or extra bound TRX material: {project.Project}");
-        ValidateMaterials(root, materials);
+        ValidateMaterials(root, materials, validation);
         var evidence = TestResultEvidence.Load(directory);
         if (evidence.Executed != project.Executed) throw new InvalidDataException($"TRX count mismatch: {project.Project}");
         if (evidence.CountAssembly(input.Assembly) == 0 || evidence.ExecutedTests.Any(test =>
@@ -265,8 +266,12 @@ internal static partial class CommonExecutionEvidence
     // acceptance errors are not swallowed as cache misses or save failures.
     internal static bool ExportTestSeed(string root, TextWriter output, string? destination = null)
     {
-        _ = ValidateEngineering(root);
-        var tests = ValidateTests(root);
+        _ = ValidateEngineering(root, out var tests, out _);
+        return CopyTestSeed(root, tests, output, destination);
+    }
+
+    private static bool CopyTestSeed(string root, TestExecutionRecord tests, TextWriter output, string? destination = null)
+    {
         destination ??= Path.Combine(root, TestSeedPath);
         var staging = destination + ".tmp-" + Guid.NewGuid().ToString("N");
         try

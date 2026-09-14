@@ -225,21 +225,28 @@ internal static partial class CommonExecutionEvidence
             .Where(path => path != BuildPath).Append(EngineeringPath));
     }
 
-    internal static CommonStageRecord ValidateEngineering(string root)
+    internal static CommonStageRecord ValidateEngineering(string root) => ValidateEngineering(root, out _, out _);
+
+    private static CommonStageRecord ValidateEngineering(string root, out TestExecutionRecord tests, out CommonCheckRecord checks)
     {
         var candidate = Candidate(root, out var snapshot);
-        return ValidateEngineering(root, ValidateBuild(root, candidate, null), snapshot);
+        var validation = new ValidationScope(snapshot);
+        return ValidateEngineering(root, ValidateBuild(root, candidate, null, validation), validation, out tests, out checks);
     }
 
     private static CommonStageRecord ValidateEngineering(string root, CommonStageRecord build,
-        RepositorySnapshot snapshot, IEnumerable<string>? baseProjects = null)
+        RepositorySnapshot snapshot, IEnumerable<string>? baseProjects = null) =>
+        ValidateEngineering(root, build, new ValidationScope(snapshot), out _, out _, baseProjects);
+
+    private static CommonStageRecord ValidateEngineering(string root, CommonStageRecord build,
+        ValidationScope validation, out TestExecutionRecord tests, out CommonCheckRecord checks, IEnumerable<string>? baseProjects = null)
     {
-        var tests = ValidateTests(root, Read<TestExecutionRecord>(root, TestsPath), build.Candidate, snapshot, baseProjects);
+        tests = ValidateTests(root, Read<TestExecutionRecord>(root, TestsPath), build.Candidate, validation.Snapshot, baseProjects, validation);
         if (tests.Round != build.Round) throw new InvalidDataException("tests belong to a different build round");
         var record = Read<CommonStageRecord>(root, EngineeringPath);
-        ValidateRecord(root, record, build.Candidate, build.Round);
+        ValidateRecord(root, record, build.Candidate, build.Round, validation);
         RequirePassed(record.Steps, EngineeringSteps);
-        _ = ValidateChecks(root, "engineering", build);
+        checks = ValidateChecks(root, "engineering", build, null, validation);
         if (!record.Materials.Any(material => material.Path == ChecksPath("engineering")))
             throw new InvalidDataException("engineering has no bound common check evidence");
         if (!record.Materials.Any(material => material.Path == TestsPath)
