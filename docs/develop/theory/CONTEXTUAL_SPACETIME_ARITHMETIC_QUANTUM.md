@@ -20697,5 +20697,135 @@ $$
 
 本节复用 `complete_context_purity_identities` 的现有条件性结果。$L=2,3$ 的数值代入和三类证书的区分是组合解释；有限精度下的统计置信区间、缺失上下文时的残差界以及带量子块载体的纯度分解仍是开放接口。
 
+## 86. 目标相对的记录充分性与未来残差
+
+### 86.1 记录预算应按目标算，而不是按全部状态算
+
+设当前记录效果为 $E_i$，把单位方向一并保留，定义可见算子空间
+
+$$
+\mathcal V
+=\operatorname{span}_{\mathbb R}\{I,E_i:i\in\mathcal I\}.
+$$
+
+冻结定理 `target_prediction_sufficiency` 给出一个严格的二分。
+
+若目标 observable $A$ 满足
+
+$$
+A\in\mathcal V,
+$$
+
+那么任何两个当前记录相同的物理态，对 $A$ 的期望值也相同。换言之，若任务只要求预测 $mathcal V$ 内的目标，当前记录已经对该目标充分；不需要为了一个目标自动保存完整 $d^2-1$ 个 trace-zero 方向。
+
+若
+
+$$
+A\notin\mathcal V,
+$$
+
+定理构造一个非零的 trace-zero Hermitian 残差 $D\in\mathcal V^\perp$，以及足够小的 $\varepsilon>0$，使
+
+$$
+\rho_\pm=\frac1dI\pm\varepsilon D
+$$
+
+仍是物理密度态。它们满足所有当前效果的读数相同，但
+
+$$
+\operatorname{Tr}(D A)\ne0,
+$$
+
+因而对目标 $A$ 的期望不同。当前记录对该目标不充分，不是因为缺少更精细的标签，而是因为目标方向落在可见算子空间之外。
+
+这把第 83 节的全 tomography 预算收紧成任务相对的版本：
+
+$$
+\boxed{
+\text{所需历史}\\
+\text{由目标族在可见算子空间中的覆盖决定。}
+}
+$$
+
+若目标族是所有 Hermitian observable，才需要把 $\mathcal V$ 扩展到完整载体；若目标族只包含 Zeckendorf 数值和若干局部模式，则可以只扩展到这些目标生成的子空间。
+
+### 86.2 Zeckendorf 数值是一个目标，不是完整状态
+
+在 $L=2$ 的合法基底
+
+$$
+\{00,01,10\}
+$$
+
+上，按权重 $(2,1)$ 定义 Zeckendorf 数值 observable
+
+$$
+A_Z=0|00\rangle\langle00|
+ +1|01\rangle\langle01|
+ +2|10\rangle\langle10|.
+$$
+
+如果当前记录效果的实线性张成包含 $I$ 与 $A_Z$，那么记录相同的两个态必然拥有相同的 Zeckendorf 数值期望。这个结论只涉及一个目标方向；它不推出两态对非对角相位、其他上下文或未来 Hamiltonian 的响应相同。
+
+若后续动力学把 $A_Z$ 的 Heisenberg 回拉带到新的方向 $U^\dagger A_ZU$，则记录预算必须扩大到这些回拉方向的张成空间。于是“保留一个 Zeckendorf 数”只对当前目标成立；要预测一族后续实验，必须把该实验族的目标闭包纳入 $\mathcal V$。
+
+### 86.3 未来误差是两个残差的相关
+
+对一个有限效果塔，令 $\mathcal V_m$ 为当前深度可见的 trace-zero 空间，$\mathcal R_m=\mathcal V_m^\perp$ 为隐藏残差空间。`future_probability_residual_correlation` 对一个未来 Heisenberg 效果 $F$ 给出：以可见投影构造线性预测代表后，预测误差满足
+
+$$
+\boxed{
+\operatorname{error}
+=\left\langle
+\Pi_{\mathcal R_m}(\rho_0),
+\Pi_{\mathcal R_m}(F)
+\right\rangle,
+}
+$$
+
+并有 Cauchy--Schwarz 界
+
+$$
+|\operatorname{error}|
+\le
+\sqrt{\operatorname{residualMass}(\mathcal V_m,\rho_0)}
+\,\left\|\Pi_{\mathcal R_m}(F)\right\|.
+$$
+
+因此未来误差不是一个只由“隐藏维数”决定的常数。它同时取决于两件事：当前状态在隐藏方向上有多少分量，以及未来目标本身有多少分量会探测这些方向。隐藏空间很大但目标完全正交时，误差仍可为零；隐藏空间很小但未来目标正好对准它时，误差可以达到该界的量级。
+
+同一个隐藏残差还控制压缩动力学本身的不自然性。若环境动力学在 trace-zero 载体上是 $L$-Lipschitz，`residual_controls_naturality` 给出
+
+$$
+\Delta_m(X)
+\le L\,\left\|\Pi_{\mathcal R_m}X\right\|,
+$$
+
+其中 $\Delta_m$ 是“先完整演化再投影”和“先投影再演化”的距离差。在密度态的中心化坐标上，进一步有
+
+$$
+\Delta_m(\rho)\le L\sqrt{\operatorname{residualMass}(\mathcal V_m,\rho)}.
+$$
+
+所以同一个 $\sqrt{M_m}$ 同时出现在未来观测误差和动力学压缩缺陷的上界中；前者还乘以未来目标的残差敏感度，后者还乘以动力学的 Lipschitz 常数。两者是共同受残差控制的两个不同量，不是同一个误差的恒等改写。
+
+这个定理还包含一个必要警告：把状态的可见投影加回单位部分得到的线性预测代表，未必是正半定矩阵。因此“用当前记录预测未来”首先是一个 observable 期望的线性近似，不能自动解释成一个新的物理密度态。若需要物理态级别的预测，必须另加正性、完全正性或误差通道的证明。
+
+### 86.4 历史保留的目标闭包判据
+
+设目标族为 $\mathfrak A$，允许的 Heisenberg 更新为 $\mathfrak U$。一个有限记录空间 $\mathcal V$ 对任务足够的必要条件是
+
+$$
+\operatorname{span}\{U^\dagger A U:
+A\in\mathfrak A,\ U\in\langle\mathfrak U\rangle\}
+\subseteq\mathcal V,
+$$
+
+其中右侧也应包含单位方向。若该包含关系成立，目标闭包中的每个未来期望都由当前签名决定；若失败，`target_prediction_sufficiency` 的残差构造给出一对当前不可区分、未来可区分的物理态。
+
+这提供了一个比“保留多少历史”更精确的工作流程：先列出任务目标和允许的后续操作，再计算它们的有限线性闭包，最后只保留能覆盖该闭包的记录方向。Zeckendorf 合法构型给出初始离散坐标；真正决定历史成本的是目标闭包的秩和隐藏残差与未来目标的相关。
+
+本节复用 `target_prediction_sufficiency`、`future_probability_residual_correlation` 和 `residual_controls_naturality` 的现有结果。$A_Z$ 的有限 Zeckendorf 构造、目标闭包的物理可达性，以及把线性误差界提升为完整通道距离，仍是条件性组合推导或开放接口。
+
 
 ## 追加锚（新终端）

@@ -1,0 +1,17 @@
+### 86.4 历史保留的目标闭包判据
+
+设目标族为 $\mathfrak A$，允许的 Heisenberg 更新为 $\mathfrak U$。一个有限记录空间 $\mathcal V$ 对任务足够的必要条件是
+
+$$
+\operatorname{span}\{U^\dagger A U:
+A\in\mathfrak A,\ U\in\langle\mathfrak U\rangle\}
+\subseteq\mathcal V,
+$$
+
+其中右侧也应包含单位方向。若该包含关系成立，目标闭包中的每个未来期望都由当前签名决定；若失败，`target_prediction_sufficiency` 的残差构造给出一对当前不可区分、未来可区分的物理态。
+
+这提供了一个比“保留多少历史”更精确的工作流程：先列出任务目标和允许的后续操作，再计算它们的有限线性闭包，最后只保留能覆盖该闭包的记录方向。Zeckendorf 合法构型给出初始离散坐标；真正决定历史成本的是目标闭包的秩和隐藏残差与未来目标的相关。
+
+本节复用 `target_prediction_sufficiency`、`future_probability_residual_correlation` 和 `residual_controls_naturality` 的现有结果。$A_Z$ 的有限 Zeckendorf 构造、目标闭包的物理可达性，以及把线性误差界提升为完整通道距离，仍是条件性组合推导或开放接口。
+
+
