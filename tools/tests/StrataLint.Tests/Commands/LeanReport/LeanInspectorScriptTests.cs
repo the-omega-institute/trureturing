@@ -14,6 +14,34 @@ public sealed class LeanInspectorScriptTests
     private const string CacheRunScript = "tools/scripts/worktree/lean-cache-run.sh";
 
     [Fact]
+    public void LakeBuildIsDeferredUntilASelectedInspection()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        var root = TestRepositoryLayout.FindRoot();
+        var script = File.ReadAllText(Path.Combine(root, InspectorScript));
+        var moduleTable = script.IndexOf("MODULE_TABLE=", StringComparison.Ordinal);
+        var planner = script.IndexOf("delta_status=\"fallback\"", StringComparison.Ordinal);
+        var inspector = script.IndexOf("invoke_inspector() {", StringComparison.Ordinal);
+        var invokeBodyEnd = script.IndexOf("\n}\n\nDELTA_SCRIPT=", inspector, StringComparison.Ordinal);
+        var helper = script.IndexOf("ensure_lake_build()", StringComparison.Ordinal);
+        var helperEnd = script.IndexOf("\n}\n", helper, StringComparison.Ordinal);
+        var ensure = script.IndexOf("  ensure_lake_build\n", inspector, StringComparison.Ordinal);
+        var build = script.IndexOf("run_phase build \"$CACHE_RUN\" \"$LAKE\" \"${lake_build_args[@]}\"", StringComparison.Ordinal);
+
+        Assert.True(moduleTable >= 0);
+        Assert.True(planner > moduleTable);
+        Assert.True(inspector > moduleTable);
+        Assert.True(invokeBodyEnd > ensure);
+        Assert.True(helperEnd > helper);
+        Assert.True(build > helper && build < helperEnd);
+        Assert.True(ensure > inspector);
+        Assert.Contains("if [[ \"$lake_build_done\" == \"0\" ]]", script, StringComparison.Ordinal);
+        Assert.Contains("build_targets+=(\"$module\")", script, StringComparison.Ordinal);
+        Assert.Contains("lake_build_args+=(\"${build_targets[@]}\")", script, StringComparison.Ordinal);
+        Assert.Contains("lake_build_done=0\n  invoke_inspector \"$OUTPUT\"", script, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void InspectorDefaultsToCompleteModuleEnumeration()
     {
         if (OperatingSystem.IsWindows()) return;
