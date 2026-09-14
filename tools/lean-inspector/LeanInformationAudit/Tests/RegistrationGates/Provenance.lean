@@ -87,14 +87,14 @@ elab "check_provenance " label:str " using " readout:ident " expects " reason:st
         else if let .ok names := fromJson? (α := Array String) json then
           unless names == names.qsort (· < ·) && names.toList.eraseDups.length == names.size &&
               names.contains n.toString do throwError "[FAIL] {label.getString}: canonical closure"
-        else throwError "[FAIL] {label.getString}: non-array closure"
+        else throwError "[FAIL] {label.getString}: non-array closure: {actual}"
       else throwError "[FAIL] {label.getString}: invalid JSON"
     unless ok do throwError "[FAIL] {label.getString}: {actual}"
     logInfo m!"[PASS] {label.getString}"
 
 check_provenance "TheoremTruth" using viaTruth expects "forbidden_dependency" for truth
 check_provenance "AppliedProof" using viaAppliedProof expects "clean" for truth
-check_provenance "ProofConstant" using viaProof expects "forbidden_dependency" for truth
+check_provenance "ProofConstant" using viaProof expects "unclassified_form" for truth
 check_provenance "StatementDecidable" using viaDecision expects "forbidden_dependency" for truth
 check_provenance "TheoremCertificate" using viaCertificate expects "clean" for truth
 check_provenance "StatementIdentity" using viaIdentity expects "clean" for truth

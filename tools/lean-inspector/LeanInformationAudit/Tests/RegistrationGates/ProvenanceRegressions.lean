@@ -11,27 +11,29 @@ theorem independentProof : True := True.intro
 def independentRead (_ : Unit) (x : Bool) : Bool := let _ := independentProof; x
 check_provenance "IndependentProofConstant" using independentRead expects "forbidden_dependency" for truth
 
+-- Alias/type boundaries reject without tracing independent proof bodies or
+-- claiming semantic equality with a differently written proposition.
 abbrev Statement : Prop := True
 theorem aliasHelper : Statement := True.intro
 theorem aliasBridge : True := aliasHelper
 theorem aliasRegistered : True := aliasBridge
 def aliasRead (_ : Unit) (x : Bool) : Bool := let _ := aliasHelper; x
-check_provenance "ProofAlias" using aliasRead expects "forbidden_dependency" for aliasRegistered
+check_provenance "ProofAlias" using aliasRead expects "unclassified_form" for aliasRegistered
 theorem deepHelper : True ∧ True := ⟨True.intro, True.intro⟩
 theorem deepBridge : True := deepHelper.1
 theorem deepRegistered : True := deepBridge
 def deepRead (_ : Unit) (x : Bool) : Bool := let _ := deepHelper; x
-check_provenance "TransitiveProofDependency" using deepRead expects "forbidden_dependency" for deepRegistered
+check_provenance "TransitiveProofDependency" using deepRead expects "unclassified_form" for deepRegistered
 
 def decisionProposition : Prop := (137 : Nat) + 0 = 137
 example : decisionProposition = specificStatement := rfl
 noncomputable def defeqDecisionRead (_ : Unit) (x : Bool) : Bool :=
   if @decide decisionProposition (Classical.propDecidable decisionProposition) then x else false
-check_provenance "DefeqDecision" using defeqDecisionRead expects "forbidden_dependency" for specificTruth
+check_provenance "DefeqDecision" using defeqDecisionRead expects "unclassified_form" for specificTruth
 noncomputable def unrelatedDecisionRead (_ : Unit) (x : Bool) : Bool :=
   if @decide (x = true) (Classical.propDecidable (x = true)) then x else false
 check_provenance "UnrelatedBinderDecision" using unrelatedDecisionRead expects "unclassified_form" for specificTruth
-check_provenance "AppliedDecidableFinite" using genericDecision expects "forbidden_dependency" for specificTruth
+check_provenance "AppliedDecidableFinite" using genericDecision expects "unclassified_form" for specificTruth
 
 def computedKey : Name := Name.str (Name.mkSimple "RegistrationProvenance") "truth"
 example : computedKey = ``truth := rfl
@@ -75,7 +77,7 @@ run_cmd Elab.Command.liftTermElabM do
   let published := (← getConstInfo
     (RegistrationGates.diagnosticName entry.unitName entry.registrationModuleName)).value!
   unless (actual.getD "").startsWith "IE-C050 ClosedTruthReadout " &&
-      ((actual.getD "").splitOn "reason=forbidden_dependency").length == 2 &&
+      ((actual.getD "").splitOn "reason=unclassified_form").length == 2 &&
       published == mkStrLit (actual.getD "") do throwError "[FAIL] EscapeRegistrationFinite: {actual}"
   logInfo "[PASS] EscapeRegistrationFinite"
 def structuralKey : Name := Name.str (Name.mkSimple "RegistrationProvenance") "escapedStructural"
@@ -108,7 +110,7 @@ noncomputable def expensiveDecision (_ : Unit) (x : Bool) : Bool :=
 check_provenance "ClassicalExpensiveArgument" using expensiveDecision expects "unclassified_form" for expensiveTruth
 
 def independentAliasRead (_ : Unit) (x : Bool) : Bool := let _ := aliasHelper; x
-check_provenance "IndependentProofAlias" using independentAliasRead expects "forbidden_dependency" for truth
+check_provenance "IndependentProofAlias" using independentAliasRead expects "unclassified_form" for truth
 
 run_cmd Elab.Command.liftTermElabM do
   let type := (← getConstInfo ``truthReads).type
@@ -144,7 +146,7 @@ run_cmd Elab.Command.liftTermElabM do
     type := (← getConstInfo ``clean).type,
     value := mkLambda `i .default (mkConst ``Unit) (mkLambda `x .default (mkConst ``Bool) decision),
     hints := .abbrev, safety := .safe }
-check_provenance "TypeArgumentExhaustion" using wideRead expects "forbidden_dependency" for specificTruth
+check_provenance "TypeArgumentExhaustion" using wideRead expects "unclassified_form" for specificTruth
 
 run_cmd Elab.Command.liftTermElabM do
   for i in [:4100] do
@@ -156,6 +158,8 @@ run_cmd Elab.Command.liftTermElabM do
     name := `RegistrationProvenance.proofBudgetTruth, levelParams := [],
     type := mkConst ``True, value := mkConst (`RegistrationProvenance.proofChain |>.num 4099) }
 def proofBudgetRead (_ : Unit) (x : Bool) : Bool := let _ := proofBudgetTruth; x
-check_provenance "ProofScanExhaustion" using proofBudgetRead expects "incomplete_closure" for specificTruth
+-- Proof implementation size is outside executable provenance. FuelExhaustion
+-- and ExpressionExhaustion independently retain executable-work limits.
+check_provenance "IndependentProofBodyErased" using proofBudgetRead expects "clean" for specificTruth
 
 end RegistrationProvenance

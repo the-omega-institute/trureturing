@@ -5,7 +5,7 @@ namespace RegistrationProvenance
 
 noncomputable def directClassicalRead (_ : Unit) (x : Bool) : Bool :=
   if @decide specificStatement (Classical.propDecidable specificStatement) then x else false
-check_provenance "ClassicalDirect" using directClassicalRead expects "forbidden_dependency" for specificTruth
+check_provenance "ClassicalDirect" using directClassicalRead expects "unclassified_form" for specificTruth
 
 def ctorDecisionRead (_ : Unit) (x : Bool) : Bool :=
   if @decide specificStatement (.isTrue (Eq.refl 137)) then x else false

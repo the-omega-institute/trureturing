@@ -23,7 +23,7 @@ structure Dispatcher where
 noncomputable def dispatcher : Dispatcher := ⟨Decidable, Classical.propDecidable⟩
 noncomputable def projectedDecision (_ : Unit) (x : Bool) : Bool :=
   if @decide specificStatement (dispatcher.choose specificStatement) then x else true
-check_provenance "DependentProjectionDecision" using projectedDecision expects "forbidden_dependency" for specificTruth
+check_provenance "DependentProjectionDecision" using projectedDecision expects "unclassified_form" for specificTruth
 
 def owner (s : String) : Name := .str (.str .anonymous "RegistrationProvenance") s
 def ownerCertificate : Certificate (owner "specificTruth") := ⟨true⟩
@@ -83,7 +83,7 @@ check_provenance "ClosedStatementInhabitant" using closedStatementRead expects "
 def openAliasFamily (_ : Bool) : Prop := specificStatement
 noncomputable def openAliasDecision (_ : Unit) (x : Bool) : Bool :=
   if @decide (openAliasFamily x) (Classical.propDecidable _) then x else false
-check_provenance "OpenAliasDecision" using openAliasDecision expects "forbidden_dependency" for specificTruth
+check_provenance "OpenAliasDecision" using openAliasDecision expects "unclassified_form" for specificTruth
 noncomputable def openAliasBinderControl := unrelatedDecisionRead
 check_provenance "OpenAliasBinderControl" using openAliasBinderControl expects "unclassified_form" for specificTruth
 
@@ -99,7 +99,7 @@ run_cmd Elab.Command.liftTermElabM do
   let .defnInfo template := (env.find? ``RegistrationStructural.good).get!
     | throwError "fixture template"
   for (readout, label, reason) in [
-      (``structuralAliasDecision, "OpenAliasDecisionStructural", "forbidden_dependency"),
+      (``structuralAliasDecision, "OpenAliasDecisionStructural", "unclassified_form"),
       (``structuralBinderDecision, "OpenAliasBinderControlStructural", "unclassified_form")] do
     let holder := readout.str "fixtureRealization"
     addDecl <| .defnDecl {

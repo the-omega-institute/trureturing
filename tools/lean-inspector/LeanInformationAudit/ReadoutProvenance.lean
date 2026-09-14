@@ -182,6 +182,8 @@ private def recordHead (env : Environment) : Nat → Expr → DecodeM Expr
     | _ => return e
 
 def carrierHeads : Array Name := #[
+  `D5.S3.ConceptDynamics.CIRPT.PrimitiveBundle.Index,
+  `D5.S3.ConceptDynamics.InformationEscape.Catalog.Index,
   `D5.S3.ConceptDynamics.InformationEscape.PrimitiveSignature.Index,
   `D5.S3.ConceptDynamics.InformationEscape.PrimitiveSignature.Output,
   `D5.S3.ConceptDynamics.InformationEscape.Arena.State,
@@ -597,7 +599,10 @@ private def queue (name : Name) (levels : List Level) : WalkM Unit := do
   let n := (name, levels)
   let s ← get
   if s.queued.contains n then return
-  if s.constFuel == 0 then modify fun s => { s with incomplete := true } else
+  if s.constFuel == 0 then
+    trace[InformationProvenance.check] "incomplete cause=constant_budget operation=constant_enqueue first={name} site={s.currentOrigin}"
+    modify fun s => { s with incomplete := true }
+  else
     modify fun s => { s with queued := s.queued.insert n, pending := List.cons n s.pending, constFuel := s.constFuel - 1 }
 
 -- No failed or exhausted Meta query can supply a positive allowlist verdict.
@@ -903,6 +908,25 @@ private partial def dataCarrier (env : Environment) (type : Expr)
   match type with
   | .sort _ => return false
   | .fvar id => return (← id.getDecl).value? (allowNondep := true) |>.isNone
+  | .proj structureName index receiver =>
+    -- Only registered arena/signature carrier selectors inherit the rigid
+    -- local parameter boundary. Concrete receivers expose their actual field,
+    -- which must pass the same carrier test (including Prop/payload fences).
+    let audited := ReadoutFamily.carrierHeads.any fun selector =>
+      match env.getProjectionFnInfo? selector with
+      | some projection => projection.i == index &&
+        (env.find? projection.ctorName).any fun info =>
+          match info with
+          | .ctorInfo info => info.induct == structureName
+          | _ => false
+      | none => false
+    unless audited do return false
+    let some receiver ← representationType receiver | return false
+    if let .fvar id := receiver then
+      if (← id.getDecl).value? (allowNondep := true) |>.isNone then return true
+    let some field ← statementStep env (.proj structureName index receiver) | return false
+    if field == type then return false
+    dataCarrier env field active
   | .forallE n domain body bi =>
     unless ← dataCarrier env domain active do return false
     Meta.withLocalDecl n bi domain fun x => do
@@ -1587,7 +1611,8 @@ private def safeCollect (env : Environment) (theoremName address : Name) (readou
       trace[InformationProvenance.check] "collection_failure: {ex.toMessageData}"
       pure { forbidden := false, unclassified := none, incomplete := true, walked := #[] })
 
-private def readoutClosureCurrent (theoremName : Name) (readout : Expr) : CoreM (Bool × Option (Array String)) := do
+/-- Query in the current environment, retaining only reusable syntax summaries. -/
+def readoutClosureCurrent (theoremName : Name) (readout : Expr) : CoreM (Bool × Option (Array String)) := do
   let env ← getEnv
   let r ← safeCollect env theoremName `readout readout
   if r.incomplete then return (false, none)

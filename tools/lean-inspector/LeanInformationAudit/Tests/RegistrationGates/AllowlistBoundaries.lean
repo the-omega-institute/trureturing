@@ -42,6 +42,12 @@ def proofField (_ : Unit) (state : Bool) : Bool := (CertifiedBit.mk state harmle
 def forbiddenArgument (_ : Unit) (state : Bool) : Bool := keep target state
 set_option linter.style.nameCheck false in
 theorem companion.__information_unit : True := True.intro
+theorem independentTargetImplementation : (2 : Nat) ∣ 4 := let _ := target; harmless
+theorem independentCompanionImplementation : (2 : Nat) ∣ 4 :=
+  let _ := companion.__information_unit
+  harmless
+def internalTargetRead (_ : Unit) (state : Bool) : Bool := keep independentTargetImplementation state
+def internalCompanionRead (_ : Unit) (state : Bool) : Bool := keep independentCompanionImplementation state
 def forbiddenCompanion (_ : Unit) (state : Bool) : Bool := keep companion.__information_unit state
 structure Hidden where
   bit : Bool
@@ -58,6 +64,29 @@ def erasedPredicateRead (_ : Unit) (state : Bool) : Bool :=
   let _ : Decidable (erasedScalar = erasedScalar) := .isTrue rfl
   state
 theorem erasedPredicateTarget : erasedScalar = erasedScalar := rfl
+
+def arenaCardRead (_ : Unit) (state : Bool) : Bool :=
+  let _ := (Arena.ofFintype Bool).card
+  state
+def catalogIndexCard {arena : Arena.{0}} (catalog : Catalog.{0,0,0} arena) : Nat :=
+  letI := catalog.indexFintype
+  Fintype.card catalog.Index
+def catalogCarrierRead (_ : Unit) (state : Bool) : Bool :=
+  let _ := @catalogIndexCard
+  state
+def bundleIndexCard (bundle : D5.S3.ConceptDynamics.CIRPT.PrimitiveBundle.{0,0} Bool) : Nat :=
+  letI := bundle.indexFintype
+  Fintype.card bundle.Index
+def bundleCarrierRead (_ : Unit) (state : Bool) : Bool :=
+  let _ := bundleIndexCard
+  state
+def hiddenArena : Arena where
+  State := PLift ((137 : Nat) = 137)
+  stateFintype := ⟨{⟨rfl⟩}, by intro ⟨h⟩; simp⟩
+  stateDecidableEq := fun a b => .isTrue (Subsingleton.elim a b)
+def hiddenArenaRead (_ : Unit) (state : Bool) : Bool :=
+  let _ := hiddenArena.card
+  state
 
 def nestedScalarRead (_ : Unit) (state : Bool) : Bool :=
   if Fintype.card ((Bool × Bool) ⊕ (Bool ⊕ Unit)) = 7 then state else false
@@ -168,6 +197,8 @@ private def assertQuery (label : String) (readout : Name) (reason : String) : Co
   if ok && exactSite then logInfo m!"[PASS] {label}: {actual}"
   else logError m!"[FAIL] {label}: expected {reason}; actual={actual}"
 
+run_cmd Elab.Command.liftCoreM <| assertQuery "InternalTargetProofErased" ``internalTargetRead "clean"
+run_cmd Elab.Command.liftCoreM <| assertQuery "InternalCompanionProofErased" ``internalCompanionRead "clean"
 run_cmd Elab.Command.liftCoreM <| assertQuery "ProofArgumentBoundary" ``proofArgument "clean"
 run_cmd Elab.Command.liftCoreM <| assertQuery "AlternativeProofBoundary" ``alternativeArgument "clean"
 run_cmd Elab.Command.liftCoreM <| assertQuery "ProofFieldBoundary" ``proofField "clean"
@@ -175,6 +206,10 @@ run_cmd Elab.Command.liftCoreM <| assertQuery "NumericAliasProofBoundary" ``alia
 run_cmd Elab.Command.liftCoreM <| assertQuery "TargetProofBoundary" ``forbiddenArgument "forbidden_dependency"
 run_cmd Elab.Command.liftCoreM <| assertQuery "CompanionProofBoundary" ``forbiddenCompanion "forbidden_dependency"
 run_cmd Elab.Command.liftCoreM <| assertQuery "HiddenStatementBoundary" ``hiddenPayload "reject"
+run_cmd Elab.Command.liftCoreM <| assertQuery "ArenaProjectedCarrier" ``arenaCardRead "clean"
+run_cmd Elab.Command.liftCoreM <| assertQuery "CatalogProjectedCarrier" ``catalogCarrierRead "clean"
+run_cmd Elab.Command.liftCoreM <| assertQuery "BundleProjectedCarrier" ``bundleCarrierRead "clean"
+run_cmd Elab.Command.liftCoreM <| assertQuery "ArenaProjectedStatementPayload" ``hiddenArenaRead "reject"
 run_cmd Elab.Command.liftCoreM <| assertQuery "NestedScalarCarrier" ``nestedScalarRead "clean"
 run_cmd Elab.Command.liftCoreM <| assertQuery "SubtypeScalarCarrier" ``subtypeScalarRead "clean"
 run_cmd Elab.Command.liftCoreM <| assertQuery "NativeSubtypePayload" ``nativeSubtypePayload "reject"
