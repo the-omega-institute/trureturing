@@ -2,14 +2,10 @@
    generality: I
    mirror-B: D5/B/S3/ArithSums/RatajczakGcdSumParityCharacterization
    mirror-E: none(waiver:symbolic-proof-no-numeric-artifact)
-   anchors: [mathlib/module/Mathlib.Algebra.BigOperators.Ring.Nat, mathlib/module/Mathlib.Data.Finset.Interval, mathlib/module/Mathlib.Data.Nat.GCD.Basic, mathlib/module/Mathlib.Data.Nat.Prime.Defs, mathlib/module/Mathlib.Data.ZMod.Basic]
+   anchors: [mathlib/module/Mathlib.Data.ZMod.Basic]
    utility: none
    digest: Both Ratajczak gcd-filtered sums are even exactly at positive multiples of eight. -/
 
-import Mathlib.Algebra.BigOperators.Ring.Nat
-import Mathlib.Data.Finset.Interval
-import Mathlib.Data.Nat.GCD.Basic
-import Mathlib.Data.Nat.Prime.Defs
 import Mathlib.Data.ZMod.Basic
 
 open scoped BigOperators
@@ -149,10 +145,6 @@ private theorem gcd_filter_sum_mod_two (f : ℕ → ℕ) (m : ℕ) (hm : 1 < m) 
     _ = (if 2 ∣ m ∧ m / 2 ≠ 1 then (f (m / 2) : ZMod 2) else 0) +
         (f m : ZMod 2) := by rw [hT]
     _ = _ := add_comm _ _
-
-#eval (G 8, L 8)
-#eval (G 16, L 16)
-#eval (G 24, L 24)
 
 theorem result : ∀ m : ℕ, 1 < m → ((Even (G m) ∧ Even (L m)) ↔ 8 ∣ m) := by
   intro m hm
