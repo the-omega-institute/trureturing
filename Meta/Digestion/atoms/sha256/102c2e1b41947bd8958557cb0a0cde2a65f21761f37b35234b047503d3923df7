@@ -1,0 +1,54 @@
+**定义 29.1（两步加权目标与保留活动系统的放宽）。** 在定义 28.1 的两步任务中，显式写出参数
+
+$$
+W_2(c;e,g),
+\qquad 0\le c,e\le1,\quad 0\le g\le\frac12,
+$$
+
+其中 $e=\beta_1$、$g=\beta_2$。共同输入、惰性参考、共同历史依赖系统 CPTP 控制和末端部分迹的约定均不变。令
+
+$$
+a=1-g,\qquad z=1-2g,
+\qquad K_i=\sqrt{1-e}\,P_i+\sqrt e\,P_{1-i}.
+$$
+
+定义系统退极化通道
+
+$$
+\mathcal D_g(\sigma)=z\sigma+g\operatorname{tr}(\sigma)I_S.
+$$
+
+由于 $\mathcal D_g$ 是恒等通道与完全退极化通道 $\sigma\mapsto\operatorname{tr}(\sigma)I_S/2$ 按权重 $1-2g,2g$ 的混合，它是 CPTP 映射。它满足任意系统幺正 $U$ 下的协变性
+
+$$
+\mathcal D_g(U\sigma U^\dagger)
+=U\mathcal D_g(\sigma)U^\dagger.
+$$
+
+以 $H_1$ 存储第一次结果，定义两个从 $S$ 到 $H_1S$ 的通道
+
+$$
+\mathcal A_{e,g}(\sigma)
+=\bigoplus_{i=0}^1\mathcal D_g(K_i\sigma K_i),
+\qquad
+\mathcal J_e(\sigma)
+=\bigoplus_{i=0}^1P_i\sigma P_i,
+$$
+
+以及 Hermitian 保持线性映射
+
+$$
+\mathcal F_c=c\mathcal A_{e,g}-\mathcal J_e.
+$$
+
+记保留 $H_1S$ 并允许惰性参考的加权差异为
+
+$$
+\mathcal B(c;e,g)
+=\sup_{\substack{1\le\dim R<\infty\\
+\omega_{SR}\ge0,\ \operatorname{tr}\omega_{SR}=1}}
+\left\|(\mathcal F_c\otimes\operatorname{id}_R)(\omega_{SR})\right\|_1.
+$$
+
+这里以保留 $H_1S$ 的固定通道定义放宽目标；其与原任务的关系由下述共同后处理建立，$\mathcal F_c$ 不再包含对控制表的优化。系数 $c$ 不是物理通道的成功概率，也不改变输入归一化。
+
