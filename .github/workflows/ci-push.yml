@@ -128,7 +128,7 @@ jobs:
   engineering:
     name: engineering
     needs: build
-    if: always() && (needs.build.result != 'success' || !cancelled())
+    if: ${{ !cancelled() }}
     env:
       CI_NEEDS: '{"build":{"result":${{ toJSON(needs.build.result) }}}}'
       CI_BUILD_ROUND: ${{ needs.build.outputs.round }}
@@ -260,7 +260,7 @@ jobs:
   current:
     name: current
     needs: build
-    if: always() && (needs.build.result != 'success' || !cancelled())
+    if: ${{ !cancelled() }}
     env:
       CI_NEEDS: '{"build":{"result":${{ toJSON(needs.build.result) }}}}'
     runs-on: ubuntu-24.04-arm

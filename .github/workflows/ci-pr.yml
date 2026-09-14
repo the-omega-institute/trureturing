@@ -43,7 +43,7 @@ jobs:
   push:
     name: push
     needs: resolve
-    if: always()
+    if: ${{ !cancelled() }}
     uses: ./.github/workflows/ci-push.yml
     with:
       candidate_sha: ${{ needs.resolve.outputs.candidate_sha }}
@@ -52,7 +52,7 @@ jobs:
   delta:
     name: delta
     needs: [resolve, push]
-    if: always() && (needs.resolve.result != 'success' || needs.push.result != 'success' || !cancelled())
+    if: ${{ !cancelled() }}
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 20
     env:
