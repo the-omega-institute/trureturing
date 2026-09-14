@@ -48,48 +48,22 @@ private def scalarMass (C : Set Pair) : NNReal :=
   (1 / 2 : NNReal) * (μ (edge false ⁻¹' C)).toNNReal +
   (1 / 2 : NNReal) * (μ (edge true ⁻¹' C)).toNNReal
 
-private theorem edge_mem (b : Bool) (t : unitInterval) : edge b t ∈ E := by
-  cases b <;> simp [edge, defectRelation, q, target]
-
-private theorem baseline_section (b : Bool) : edge b ⁻¹' E = univ :=
-  eq_univ_of_forall (edge_mem b)
-
-private theorem geometry : E = range (edge false) ∪ range (edge true) := by
-  ext ⟨⟨s, b⟩, ⟨t, c⟩⟩
-  cases b <;> cases c <;> simp [defectRelation, q, target, edge, eq_comm]
-
-private theorem lebesgue_sections (A : Set unitInterval) :
-    (NullMeasurableSet A μ ↔
-      NullMeasurableSet ((Subtype.val : unitInterval → ℝ) '' A) volume) ∧
-    μ A = volume ((Subtype.val : unitInterval → ℝ) '' A) := by
-  refine ⟨⟨fun h => Measure.NullMeasurableSet.subtype_coe nullMeasurableSet_Icc h, ?_⟩,
-    unitInterval.volume_apply⟩
-  intro h
-  simpa only [preimage_image_eq _ Subtype.val_injective] using
-    (h.mono_ac Measure.absolutelyContinuous_restrict).preimage
-      unitInterval.measurePreserving_coe.quasiMeasurePreserving
-
-private theorem section_ring : IsSetRing sectionAlgebra where
-  empty_mem := ⟨empty_subset _, fun _ => by simp⟩
-  union_mem {C D} hC hD := ⟨union_subset hC.1 hD.1, fun b => (hC.2 b).union (hD.2 b)⟩
-  sdiff_mem {C D} hC hD := ⟨sdiff_subset.trans hC.1, fun b => (hC.2 b).diff (hD.2 b)⟩
-
-private theorem baseline_mem : E ∈ sectionAlgebra :=
-  ⟨Subset.rfl, fun b => by rw [baseline_section]; exact nullMeasurableSet_univ⟩
-
-private theorem scalar_add {C D : Set Pair} (_hC : C ∈ sectionAlgebra)
-    (hD : D ∈ sectionAlgebra) (h : Disjoint C D) :
-    scalarMass (C ∪ D) = scalarMass C + scalarMass D := by
-  have section_add (b : Bool) : (μ (edge b ⁻¹' (C ∪ D))).toNNReal =
-      (μ (edge b ⁻¹' C)).toNNReal + (μ (edge b ⁻¹' D)).toNNReal := by
-    rw [preimage_union, measure_union₀ (hD.2 b) (h.preimage _).aedisjoint,
-      ENNReal.toNNReal_add (measure_ne_top _ _) (measure_ne_top _ _)]
-  simp only [scalarMass, section_add]
-  ring
-
 /-- The half-sum formula on all ambient sets, additive on the full section algebra. -/
-def edgeCharge : AddContent NNReal sectionAlgebra :=
-  section_ring.addContent_of_union scalarMass (by simp [scalarMass]) scalar_add
+def edgeCharge : AddContent NNReal sectionAlgebra := by
+  have section_ring : IsSetRing sectionAlgebra := {
+    empty_mem := ⟨empty_subset _, fun _ => by simp⟩
+    union_mem {C D} hC hD := ⟨union_subset hC.1 hD.1, fun b => (hC.2 b).union (hD.2 b)⟩
+    sdiff_mem {C D} hC hD := ⟨sdiff_subset.trans hC.1, fun b => (hC.2 b).diff (hD.2 b)⟩ }
+  have scalar_add {C D : Set Pair} (_hC : C ∈ sectionAlgebra)
+      (hD : D ∈ sectionAlgebra) (h : Disjoint C D) :
+      scalarMass (C ∪ D) = scalarMass C + scalarMass D := by
+    have section_add (b : Bool) : (μ (edge b ⁻¹' (C ∪ D))).toNNReal =
+        (μ (edge b ⁻¹' C)).toNNReal + (μ (edge b ⁻¹' D)).toNNReal := by
+      rw [preimage_union, measure_union₀ (hD.2 b) (h.preimage _).aedisjoint,
+        ENNReal.toNNReal_add (measure_ne_top _ _) (measure_ne_top _ _)]
+    simp only [scalarMass, section_add]
+    ring
+  exact section_ring.addContent_of_union scalarMass (by simp [scalarMass]) scalar_add
 
 /-- The real coercion of the same charge used by the canonical finite-selection spectrum. -/
 def escapeWeight : EscapeWeight Pair where
@@ -97,34 +71,12 @@ def escapeWeight : EscapeWeight Pair where
   empty_mass := by simp
   mass_nonnegative C := (edgeCharge C).coe_nonneg
 
-private theorem charge_mono : Monotone (fun C : Set Pair => edgeCharge C) := by
-  intro C D h
-  have hb (b : Bool) : (μ (edge b ⁻¹' C)).toNNReal ≤ (μ (edge b ⁻¹' D)).toNNReal :=
-    ENNReal.toNNReal_mono (measure_ne_top _ _) (measure_mono (preimage_mono h))
-  exact add_le_add (mul_le_mul_of_nonneg_left (hb false) (by positivity))
-    (mul_le_mul_of_nonneg_left (hb true) (by positivity))
-
-private theorem weight_mono : Monotone escapeWeight.mass :=
-  fun _ _ h => NNReal.coe_le_coe.mpr (charge_mono h)
-
-private theorem baseline_charge : edgeCharge E = 1 := by
-  change scalarMass E = 1
-  norm_num [scalarMass, baseline_section]
-
-private theorem cut_identity (i : language) : U i = {edge false i.1, edge true i.1} := by
-  ext ⟨⟨s, b⟩, ⟨t, c⟩⟩
-  cases b <;> cases c <;> by_cases hs : s = i.1 <;> by_cases ht : t = i.1 <;>
-    simp_all [defectRelation, conceptKernel, q, target, definitions, edge, eq_comm]
-
-private theorem cut_section (i : language) (b : Bool) : edge b ⁻¹' U i = {i.1} := by
-  rw [cut_identity]
-  ext t
-  cases b <;> simp [edge]
-
-private theorem cut_mem (i : language) : U i ∈ sectionAlgebra :=
-  ⟨inter_subset_left, fun b => by rw [cut_section]; exact nullMeasurableSet_singleton _⟩
-
 private theorem cover : (⋃ i : language, U i) = E := by
+  have edge_mem (b : Bool) (t : unitInterval) : edge b t ∈ E := by
+    cases b <;> simp [edge, defectRelation, q, target]
+  have geometry : E = range (edge false) ∪ range (edge true) := by
+    ext ⟨⟨s, b⟩, ⟨t, c⟩⟩
+    cases b <;> cases c <;> simp [defectRelation, q, target, edge, eq_comm]
   apply Subset.antisymm (iUnion_subset fun _ => inter_subset_left)
   intro p hp
   rw [geometry] at hp
@@ -153,22 +105,26 @@ private theorem residual_identity (S : Finset language) : R S = E \ (⋃ i ∈ S
       exact hS ⟨i, hi, ⟨hq, ht⟩, hn⟩
     · simp [hi]
 
-private theorem cut_union_section (S : Finset language) (b : Bool) :
-    edge b ⁻¹' (⋃ i ∈ S, U i) = removed S := by
-  ext t
-  simp only [preimage_iUnion, cut_section, mem_iUnion, mem_singleton_iff, mem_image,
-    Finset.mem_coe]
-  simp only [eq_comm]
-  exact ⟨fun ⟨i, hi, ht⟩ => ⟨i, hi, ht⟩, fun ⟨i, hi, ht⟩ => ⟨i, hi, ht⟩⟩
-
 private theorem residual_section (S : Finset language) (b : Bool) :
     edge b ⁻¹' R S = (removed S)ᶜ := by
+  have baseline_section (b : Bool) : edge b ⁻¹' E = univ := by
+    ext t
+    cases b <;> simp [edge, defectRelation, q, target]
+  have cut_section (i : language) (b : Bool) : edge b ⁻¹' U i = {i.1} := by
+    ext t
+    cases b <;> simp [edge, defectRelation, conceptKernel, q, target, definitions]
+  have cut_union_section (S : Finset language) (b : Bool) :
+      edge b ⁻¹' (⋃ i ∈ S, U i) = removed S := by
+    ext t
+    simp only [preimage_iUnion, cut_section, mem_iUnion, mem_singleton_iff, mem_image,
+      Finset.mem_coe]
+    simp only [eq_comm]
+    exact ⟨fun ⟨i, hi, ht⟩ => ⟨i, hi, ht⟩, fun ⟨i, hi, ht⟩ => ⟨i, hi, ht⟩⟩
   rw [residual_identity, preimage_sdiff, baseline_section, cut_union_section, compl_eq_univ_sdiff]
 
-private theorem removed_null (S : Finset language) : μ (removed S) = 0 :=
-  (S.finite_toSet.image Subtype.val).measure_zero μ
-
 private theorem residual_charge (S : Finset language) : edgeCharge (R S) = 1 := by
+  have removed_null (S : Finset language) : μ (removed S) = 0 :=
+    (S.finite_toSet.image Subtype.val).measure_zero μ
   have h (b : Bool) : μ (edge b ⁻¹' R S) = 1 := by
     rw [residual_section, measure_of_measure_compl_eq_zero (by simpa using removed_null S)]
     exact measure_univ
@@ -249,6 +205,58 @@ theorem uncountable_singleton_cut_countermodel :
       atTop (nhds (1 : ℝ)) ∧
     escapeWeight.mass B / escapeWeight.mass E = 0 ∧
     (1 : ℝ) ≠ escapeWeight.mass B / escapeWeight.mass E := by
+  have cut_identity (i : language) : U i = {edge false i.1, edge true i.1} := by
+    ext ⟨⟨s, b⟩, ⟨t, c⟩⟩
+    cases b <;> cases c <;> by_cases hs : s = i.1 <;> by_cases ht : t = i.1 <;>
+      simp_all [defectRelation, conceptKernel, q, target, definitions, edge, eq_comm]
+  have baseline_section (b : Bool) : edge b ⁻¹' E = univ := by
+    ext t
+    cases b <;> simp [edge, defectRelation, q, target]
+  have geometry : E = range (edge false) ∪ range (edge true) := by
+    ext ⟨⟨s, b⟩, ⟨t, c⟩⟩
+    cases b <;> cases c <;> simp [defectRelation, q, target, edge, eq_comm]
+  have lebesgue_sections (A : Set unitInterval) :
+      (NullMeasurableSet A μ ↔
+        NullMeasurableSet ((Subtype.val : unitInterval → ℝ) '' A) volume) ∧
+      μ A = volume ((Subtype.val : unitInterval → ℝ) '' A) := by
+    refine ⟨⟨fun h => Measure.NullMeasurableSet.subtype_coe nullMeasurableSet_Icc h, ?_⟩,
+      unitInterval.volume_apply⟩
+    intro h
+    simpa only [preimage_image_eq _ Subtype.val_injective] using
+      (h.mono_ac Measure.absolutelyContinuous_restrict).preimage
+        unitInterval.measurePreserving_coe.quasiMeasurePreserving
+  have section_ring : IsSetRing sectionAlgebra := {
+    empty_mem := ⟨empty_subset _, fun _ => by simp⟩
+    union_mem {C D} hC hD := ⟨union_subset hC.1 hD.1, fun b => (hC.2 b).union (hD.2 b)⟩
+    sdiff_mem {C D} hC hD := ⟨sdiff_subset.trans hC.1, fun b => (hC.2 b).diff (hD.2 b)⟩ }
+  have baseline_mem : E ∈ sectionAlgebra :=
+    ⟨Subset.rfl, fun b => by rw [baseline_section]; exact nullMeasurableSet_univ⟩
+  have charge_mono : Monotone (fun C : Set Pair => edgeCharge C) := by
+    intro C D h
+    have hb (b : Bool) : (μ (edge b ⁻¹' C)).toNNReal ≤ (μ (edge b ⁻¹' D)).toNNReal :=
+      ENNReal.toNNReal_mono (measure_ne_top _ _) (measure_mono (preimage_mono h))
+    exact add_le_add (mul_le_mul_of_nonneg_left (hb false) (by positivity))
+      (mul_le_mul_of_nonneg_left (hb true) (by positivity))
+  have weight_mono : Monotone escapeWeight.mass :=
+    fun _ _ h => NNReal.coe_le_coe.mpr (charge_mono h)
+  have baseline_charge : edgeCharge E = 1 := by
+    change scalarMass E = 1
+    norm_num [scalarMass, baseline_section]
+  have cut_section (i : language) (b : Bool) : edge b ⁻¹' U i = {i.1} := by
+    rw [cut_identity]
+    ext t
+    cases b <;> simp [edge]
+  have cut_mem (i : language) : U i ∈ sectionAlgebra :=
+    ⟨inter_subset_left, fun b => by rw [cut_section]; exact nullMeasurableSet_singleton _⟩
+  have cut_union_section (S : Finset language) (b : Bool) :
+      edge b ⁻¹' (⋃ i ∈ S, U i) = removed S := by
+    ext t
+    simp only [preimage_iUnion, cut_section, mem_iUnion, mem_singleton_iff, mem_image,
+      Finset.mem_coe]
+    simp only [eq_comm]
+    exact ⟨fun ⟨i, hi, ht⟩ => ⟨i, hi, ht⟩, fun ⟨i, hi, ht⟩ => ⟨i, hi, ht⟩⟩
+  have removed_null (S : Finset language) : μ (removed S) = 0 :=
+    (S.finite_toSet.image Subtype.val).measure_zero μ
   have hbase : escapeWeight.mass E = 1 := by
     change (edgeCharge E : ℝ) = 1
     rw [baseline_charge, NNReal.coe_one]
