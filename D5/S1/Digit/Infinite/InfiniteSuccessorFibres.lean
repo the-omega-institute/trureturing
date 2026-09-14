@@ -169,7 +169,68 @@ theorem next_fibres :
         omega⟩
       exact ⟨u, ((zero_fibre u).mpr (Or.inl rfl)).trans hy.symm⟩
     · exact predecessor y hy
+  have backward (a : LegalDigits) (i : ℕ)
+      (h00 : ¬ (a.val i = false ∧ a.val (i + 1) = false)) :
+      a.val i = !(a.val (i + 1)) := by
+    have h11 := a.property i
+    cases h0 : a.val i <;> cases h1 : a.val (i + 1) <;> simp_all
+  have prefix_unique : ∀ (k : ℕ) (a b : LegalDigits),
+      (∀ i < k, ¬ (a.val i = false ∧ a.val (i + 1) = false)) →
+      (∀ i < k, ¬ (b.val i = false ∧ b.val (i + 1) = false)) →
+      a.val k = b.val k → ∀ i ≤ k, a.val i = b.val i := by
+    intro k
+    induction k with
+    | zero =>
+      intro a b ha hb he i hi
+      have hi0 : i = 0 := by omega
+      subst i
+      exact he
+    | succ k ih =>
+      intro a b ha hb he i hi
+      have he' : a.val k = b.val k := by
+        rw [backward a k (ha k (by omega)), backward b k (hb k (by omega)), he]
+      by_cases hik : i ≤ k
+      · exact ih a b (fun j hj => ha j (by omega))
+          (fun j hj => hb j (by omega)) he' i hik
+      · have hi' : i = k + 1 := by omega
+        subst i
+        exact he
   refine ⟨lands, onto, zero_fibre, ?_⟩
-  sorry
+  intro y hne
+  obtain ⟨x, hx⟩ := onto y
+  refine ⟨x, hx, ?_⟩
+  intro z hz
+  have px : ∃ j, x.val j = false ∧ x.val (j + 1) = false := by
+    by_contra hp
+    exact hne (hx.symm.trans ((zero_iff x).mpr hp))
+  have pz : ∃ j, z.val j = false ∧ z.val (j + 1) = false := by
+    by_contra hp
+    exact hne (hz.symm.trans ((zero_iff z).mpr hp))
+  have outputs : next z.val = next x.val := hz.trans hx.symm
+  have same : Nat.find pz = Nat.find px := by
+    apply Nat.le_antisymm
+    · by_contra hle
+      have hlt : Nat.find px < Nat.find pz := by omega
+      have hi := congrFun outputs (Nat.find px)
+      simp only [next, dif_pos pz, dif_pos px, if_pos hlt, Nat.lt_irrefl,
+        if_false, if_true] at hi
+      contradiction
+    · by_contra hle
+      have hlt : Nat.find pz < Nat.find px := by omega
+      have hi := congrFun outputs (Nat.find pz)
+      simp only [next, dif_pos pz, dif_pos px, if_pos hlt, Nat.lt_irrefl,
+        if_false, if_true] at hi
+      contradiction
+  apply Subtype.ext
+  funext i
+  by_cases hi : i ≤ Nat.find pz
+  · apply prefix_unique (Nat.find pz) z x
+        (fun j hj => Nat.find_min pz hj)
+        (fun j hj => Nat.find_min px (by omega)) _ i hi
+    exact (Nat.find_spec pz).1.trans (by rw [same]; exact (Nat.find_spec px).1.symm)
+  · have hlt : ¬ i < Nat.find pz := by omega
+    have heq : i ≠ Nat.find pz := by omega
+    have he := congrFun outputs i
+    simpa only [next, dif_pos pz, dif_pos px, ← same, if_neg hlt, if_neg heq] using he
 
 end D5.S1.Digit.Infinite.InfiniteSuccessorFibres
