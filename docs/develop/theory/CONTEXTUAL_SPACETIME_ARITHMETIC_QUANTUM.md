@@ -13486,3 +13486,282 @@ $$
 
 
 ## 追加锚（新终端）
+## 52. 末端读取与无中间干预的累计预测界
+
+**定义 52.1（真实演化的末端读取与逐步记录模型）。** 设 $\mathcal H$ 为有限维 Hilbert 空间，$\Phi:\mathcal L(\mathcal H)\to\mathcal L(\mathcal H)$ 为 CPTP 映射，$\mathcal E$ 为同一算符空间上的幂等 CPTP 映射，$\mathcal E^2=\mathcal E$。记全部密度算符为 $\mathsf D(\mathcal H)$，记录态集为
+
+$$
+\mathcal R=\mathcal E\bigl(\mathsf D(\mathcal H)\bigr),
+\qquad
+T=\mathcal E\Phi\mathcal E,
+\qquad
+K=T|_{\mathcal R}.
+$$
+
+幂等性使 $\mathcal E(\sigma)=\sigma$ 对每个 $\sigma\in\mathcal R$ 成立，故 $K(\sigma)=\mathcal E\Phi(\sigma)$，且 $K$ 将记录态集映入自身。
+
+对任意共同初态 $\rho$，在不插入中间记录通道的演化中，真实状态与其第 $n$ 步末端读数分别为
+
+$$
+\sigma_n=\Phi^n(\rho),
+\qquad
+r_n=\mathcal E\Phi^n(\rho).
+$$
+
+仅用初始记录建立的闭合预测则是
+
+$$
+s_0=\mathcal E(\rho),
+\qquad
+s_{n+1}=K(s_n),
+\qquad
+s_n=T^n\mathcal E(\rho).
+$$
+
+这里同时写出各个 $r_n$ 是计算不同演化时刻的粗观察量，不要求在同一次实际运行中每一步都施加 $\mathcal E$。若在每一步 $\Phi$ 后实际施加记录通道，则相应状态为 $(\mathcal E\Phi)^n(\rho)$；它与 $\mathcal E\Phi^n(\rho)$ 是两种不同的通道复合。
+
+**定理 52.2（末端记录的累计闭合误差）。** 在定义 52.1 的模型中，令
+
+$$
+D(\rho,\sigma)=\frac12\|\rho-\sigma\|_1,
+$$
+
+$$
+\delta
+=\max_{\omega\in\mathsf D(\mathcal H)}
+D\bigl(\mathcal E\Phi(\omega),\mathcal E\Phi\mathcal E(\omega)\bigr).
+$$
+
+该最大值存在，且 $0\le\delta\le1$。对每个密度算符 $\rho$ 与整数 $n\ge0$，有
+
+$$
+\boxed{
+D\bigl(\mathcal E\Phi^n(\rho),T^n\mathcal E(\rho)\bigr)
+\le n\delta.
+}
+$$
+
+特别地，若 $\mathcal E\Phi=\mathcal E\Phi\mathcal E$，则末端记录由初始记录严格决定：
+
+$$
+\mathcal E\Phi^n(\rho)=K^n\mathcal E(\rho)
+\qquad(n\ge0).
+$$
+
+若另有 $0\le\kappa\le1$，使记录更新满足
+
+$$
+D(K\sigma,K\tau)\le\kappa D(\sigma,\tau)
+\qquad(\sigma,\tau\in\mathcal R),
+$$
+
+则有更强的界
+
+$$
+D\bigl(\mathcal E\Phi^n(\rho),T^n\mathcal E(\rho)\bigr)
+\le\delta\sum_{j=0}^{n-1}\kappa^j.
+$$
+
+当 $n=0$ 时空和为零；当 $\kappa<1$ 时，右端可写成 $\delta(1-\kappa^n)/(1-\kappa)$。上述结论不要求 $\Phi$ 保持 $\mathcal R$，也不要求 $\Phi\mathcal E=\mathcal E\Phi$。
+
+证明。有限维密度算符集合紧，两个通道及迹范数连续，所以定义中的上确界达到。两候选均为密度算符，其迹距离属于 $[0,1]$。
+
+采用定义 52.1 的 $\sigma_n,r_n,s_n$，并令 $e_n=D(r_n,s_n)$。初始时 $r_0=s_0=\mathcal E(\rho)$，故 $e_0=0$。幂等性给出
+
+$$
+T(r_n)
+=\mathcal E\Phi\mathcal E\bigl(\mathcal E(\sigma_n)\bigr)
+=\mathcal E\Phi\mathcal E(\sigma_n).
+$$
+
+又有 $r_{n+1}=\mathcal E\Phi(\sigma_n)$，其中 $\sigma_n$ 仍为密度算符，故一步缺陷的定义逐步适用：
+
+$$
+D\bigl(r_{n+1},T(r_n)\bigr)\le\delta.
+$$
+
+$r_n$ 与 $s_n$ 都位于 $\mathcal R$，而 $s_{n+1}=T(s_n)$。三角不等式和记录更新的收缩性给出
+
+$$
+\begin{aligned}
+e_{n+1}
+&\le D\bigl(r_{n+1},T(r_n)\bigr)
++D\bigl(T(r_n),T(s_n)\bigr)\\
+&\le\delta+\kappa e_n.
+\end{aligned}
+$$
+
+对这个标量递推归纳，由 $e_0=0$ 得
+
+$$
+e_n\le\delta\sum_{j=0}^{n-1}\kappa^j.
+$$
+
+$T$ 是 CPTP 映射，其限制 $K$ 总可取收缩上界 $\kappa=1$，于是得到 $n\delta$。严格闭合使 $\delta=0$，故全部 $e_n=0$。证明中的 $T(r_n)$ 只是把真实第 $n$ 步读数输入预测规则作比较，没有对真实状态 $\sigma_n$ 施加中间干预。
+
+与此区别，令 $A=\mathcal E\Phi$。对第 50.4 条比较的逐步记录通道，$A$ 与 $T$ 在 $\mathcal R$ 上相同，且 $A(\rho),T(\rho)$ 都在 $\mathcal R$。因此对每个 $n\ge1$，
+
+$$
+A^n(\rho)=K^{n-1}A(\rho),
+\qquad
+T^n(\rho)=K^{n-1}T(\rho),
+$$
+
+从而
+
+$$
+D\bigl(A^n(\rho),T^n(\rho)\bigr)
+\le\kappa^{n-1}\delta\le\delta.
+$$
+
+这里 $n=1$ 时空次迭代的系数为一。这一更强界适用于逐步记录的两种初始处理；它不把 $A^n$ 改写成 $\mathcal E\Phi^n$。证毕。
+
+**命题 52.3（中间去相干会改变后续记录）。** 对一个量子比特，取计算基去相干通道
+
+$$
+\mathcal E_Z(X)=P_0XP_0+P_1XP_1,
+\qquad P_j=|j\rangle\langle j|,
+$$
+
+以及 Hadamard 幺正通道
+
+$$
+\Phi(X)=H X H,\qquad
+H=\frac1{\sqrt2}\begin{pmatrix}1&1\\1&-1\end{pmatrix}.
+$$
+
+对初态 $\rho=P_0$ 和两步演化，
+
+$$
+\mathcal E_Z\Phi^2(P_0)=P_0,
+\qquad
+(\mathcal E_Z\Phi)^2(P_0)=\frac I2.
+$$
+
+因此末端读取与逐步记录的通道一般不同。在这个模型中，定义 52.2 的一步缺陷为 $\delta=1/2$，而末端记录与闭合预测的两步误差恰为 $1/2$。
+
+证明。$H^2=I$，所以第一式成立。另一方面，$\Phi(P_0)=|+\rangle\langle+|$，去相干后为 $I/2$；后者在 $\Phi$ 和 $\mathcal E_Z$ 下都不变，得到第二式。
+
+为计算一步缺陷，把任意态写成 Bloch 形式
+
+$$
+\omega=\frac12(I+xX+yY+zZ),
+\qquad x^2+y^2+z^2\le1.
+$$
+
+Hadamard 共轭将 $X$ 与 $Z$ 互换。于是
+
+$$
+\mathcal E_Z\Phi(\omega)=\frac12(I+xZ),
+\qquad
+\mathcal E_Z\Phi\mathcal E_Z(\omega)=\frac I2.
+$$
+
+两者迹距离为 $|x|/2$，其最大值 $1/2$ 由 $|+\rangle$ 达到。记录更新 $K$ 把所有计算基对角态映为 $I/2$，所以 $T^2\mathcal E_Z(P_0)=I/2$。末端误差为 $D(P_0,I/2)=1/2$；它符合定理 52.2，却不等同于逐步通道之间的误差。证毕。
+
+**定理 52.4（时变记录与逐步收缩系数）。** 设 $\mathcal H_0,\ldots,\mathcal H_n$ 均为有限维空间。对每个 $k=0,\ldots,n-1$，令
+
+$$
+\Phi_k:\mathcal L(\mathcal H_k)\to\mathcal L(\mathcal H_{k+1})
+$$
+
+为 CPTP 映射，并对每个 $k=0,\ldots,n$ 取幂等 CPTP 记录通道 $\mathcal E_k$。定义记录态集
+
+$$
+\mathcal R_k=\mathcal E_k\bigl(\mathsf D(\mathcal H_k)\bigr),
+$$
+
+一步记录更新
+
+$$
+K_k:\mathcal R_k\to\mathcal R_{k+1},
+\qquad
+K_k(\sigma)=\mathcal E_{k+1}\Phi_k(\sigma),
+$$
+
+以及一步缺陷
+
+$$
+\delta_k
+=\max_{\omega\in\mathsf D(\mathcal H_k)}
+D\bigl(\mathcal E_{k+1}\Phi_k(\omega),
+\mathcal E_{k+1}\Phi_k\mathcal E_k(\omega)\bigr).
+$$
+
+取任意满足
+
+$$
+D(K_k\sigma,K_k\tau)\le\kappa_k D(\sigma,\tau)
+\qquad(\sigma,\tau\in\mathcal R_k)
+$$
+
+的 $\kappa_k\in[0,1]$。令 $\sigma_0=\rho$、$\sigma_{k+1}=\Phi_k(\sigma_k)$，真实末端读数为 $r_k=\mathcal E_k(\sigma_k)$；闭合预测从 $s_0=\mathcal E_0(\rho)$ 出发，按 $s_{k+1}=K_k(s_k)$ 更新。则
+
+$$
+\boxed{
+D(r_n,s_n)
+\le\sum_{j=0}^{n-1}\delta_j
+\prod_{k=j+1}^{n-1}\kappa_k.
+}
+$$
+
+空积取一，$n=0$ 时空和取零。每个记录更新都可以选择 $\kappa_k=1$，从而始终有 $D(r_n,s_n)\le\sum_{j=0}^{n-1}\delta_j$。
+
+证明。$K_k$ 是 CPTP 映射 $\mathcal E_{k+1}\Phi_k$ 在记录态集上的限制，所以记录态集保持及收缩上界成立。真实状态 $\sigma_k$ 仍归一化；由 $r_k=\mathcal E_k(\sigma_k)$，可直接得到
+
+$$
+D\bigl(r_{k+1},K_k(r_k)\bigr)
+=D\bigl(\mathcal E_{k+1}\Phi_k(\sigma_k),
+\mathcal E_{k+1}\Phi_k\mathcal E_k(\sigma_k)\bigr)
+\le\delta_k.
+$$
+
+令 $e_k=D(r_k,s_k)$，三角不等式给出
+
+$$
+e_{k+1}\le\delta_k+\kappa_k e_k,
+\qquad e_0=0.
+$$
+
+归纳展开：$e_1\le\delta_0$；若第 $m$ 步已满足乘积和，则
+
+$$
+\begin{aligned}
+e_{m+1}
+&\le\delta_m+\kappa_m
+\sum_{j=0}^{m-1}\delta_j\prod_{k=j+1}^{m-1}\kappa_k\\
+&=\sum_{j=0}^{m}\delta_j\prod_{k=j+1}^{m}\kappa_k.
+\end{aligned}
+$$
+
+这正是陈述的第 $m+1$ 步形式。整个比较针对未经中间记录干预的真实通道序列 $\Phi_{n-1}\cdots\Phi_0$；变化的是各时刻的观察映射与预测规则，未把观察计算替换成物理测量。证毕。
+
+**推论 52.5（经典记录的原始预测式）。** 若记录通道为有限正交指针基中的完全去相干，
+
+$$
+\mathcal E(\rho)=\sum_i\operatorname{tr}(P_i\rho)P_i,
+\qquad P_i=|i\rangle\langle i|,
+$$
+
+令 $\pi(\rho)_i=\operatorname{tr}(P_i\rho)$，$\iota(p)=\sum_i p_iP_i$，以及列随机矩阵
+
+$$
+K_{ij}=\operatorname{tr}\bigl(P_i\Phi(P_j)\bigr).
+$$
+
+则
+
+$$
+D\bigl(\mathcal E\Phi^n(\rho),\iota(K^n\pi(\rho))\bigr)
+\le n\delta.
+$$
+
+等价地，真实末端读数分布与仅从初始读数预测出的 $K^n\pi(\rho)$ 之间，总变差距离不超过 $n\delta$。
+
+证明。每个 $K_{ij}\ge0$，且迹保持给出 $\sum_iK_{ij}=1$。直接代入得 $T\iota(p)=\iota(Kp)$，而 $\mathcal E(\rho)=\iota\pi(\rho)$，故 $T^n\mathcal E(\rho)=\iota(K^n\pi(\rho))$。两个对角密度算符的迹距离恰为其权重向量的总变差距离，应用定理 52.2 即得。证毕。
+
+所用迹范数收缩见 Watrous，*The Theory of Quantum Information*，[Corollary 3.40，式 (3.241)](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)。本章在有限维 CPTP 模型中用这一标准工具证明末端观察的递推界；一步缺陷的最大值遍历所声明系统的全部密度算符。若要对额外惰性参考上的任意纠缠输入给出统一保证，需要把缺陷改为扩展通道上的最大迹距离，或使用相应 diamond 范数界，不能由未扩展的 $\delta$ 自动推出。界中的 $n\delta$ 可以大于一，此时只有平凡的迹距离上界一更强。量子通道收缩和预测误差界均不指定某一次观测的唯一结果，也不要求把证明中的各次粗观察实现为实际中间测量。
+
+
+
+## 追加锚（新终端）

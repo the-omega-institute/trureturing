@@ -1,0 +1,32 @@
+**定义 52.1（真实演化的末端读取与逐步记录模型）。** 设 $\mathcal H$ 为有限维 Hilbert 空间，$\Phi:\mathcal L(\mathcal H)\to\mathcal L(\mathcal H)$ 为 CPTP 映射，$\mathcal E$ 为同一算符空间上的幂等 CPTP 映射，$\mathcal E^2=\mathcal E$。记全部密度算符为 $\mathsf D(\mathcal H)$，记录态集为
+
+$$
+\mathcal R=\mathcal E\bigl(\mathsf D(\mathcal H)\bigr),
+\qquad
+T=\mathcal E\Phi\mathcal E,
+\qquad
+K=T|_{\mathcal R}.
+$$
+
+幂等性使 $\mathcal E(\sigma)=\sigma$ 对每个 $\sigma\in\mathcal R$ 成立，故 $K(\sigma)=\mathcal E\Phi(\sigma)$，且 $K$ 将记录态集映入自身。
+
+对任意共同初态 $\rho$，在不插入中间记录通道的演化中，真实状态与其第 $n$ 步末端读数分别为
+
+$$
+\sigma_n=\Phi^n(\rho),
+\qquad
+r_n=\mathcal E\Phi^n(\rho).
+$$
+
+仅用初始记录建立的闭合预测则是
+
+$$
+s_0=\mathcal E(\rho),
+\qquad
+s_{n+1}=K(s_n),
+\qquad
+s_n=T^n\mathcal E(\rho).
+$$
+
+这里同时写出各个 $r_n$ 是计算不同演化时刻的粗观察量，不要求在同一次实际运行中每一步都施加 $\mathcal E$。若在每一步 $\Phi$ 后实际施加记录通道，则相应状态为 $(\mathcal E\Phi)^n(\rho)$；它与 $\mathcal E\Phi^n(\rho)$ 是两种不同的通道复合。
+
