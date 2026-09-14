@@ -1,5 +1,6 @@
 """Release orchestration consumes selected common bundles without a producer fallback."""
 import importlib
+import json
 import os
 import pathlib
 import subprocess
@@ -35,7 +36,7 @@ class ReleaseContracts(unittest.TestCase):
             evidence = owner.collect("owner/repo", COMMIT, {})
         self.assertEqual([], evidence["artifacts"]["22"])
 
-    def exercise(self, failures, composition_failure=False):
+    def exercise(self, failures, composition_failure=False, report_free_runs=()):
         owner = importlib.import_module("truth_release")
         candidates = [dict(publish_ready=True, source_commit=COMMIT, run_id=22, run_attempt=2, artifact_id=220),
                       dict(publish_ready=True, source_commit=COMMIT, run_id=21, run_attempt=1, artifact_id=210),
@@ -46,6 +47,17 @@ class ReleaseContracts(unittest.TestCase):
             restored.append(selected["run_id"])
             if selected["run_id"] in failures:
                 raise ValueError("missing or corrupt bundle")
+            # Synthetic evidence after the mocked native transport verification.
+            # This fixture checks release selection, not transport validity.
+            current = root / "build/ci/current.json"
+            current.parent.mkdir(parents=True, exist_ok=True)
+            steps = [] if selected["run_id"] in report_free_runs else [{
+                "name": "lean-report", "raw_exit": 0, "exit": 0,
+                "status": "executed", "log": "build/ci/fixture.log"}]
+            current.write_text(json.dumps({
+                "version": 2, "candidate": "e" * 64,
+                "round": f"fixture-{selected['run_id']}-{selected['run_attempt']}",
+                "steps": steps, "materials": []}), encoding="utf-8")
             return root
         with tempfile.TemporaryDirectory() as temporary:
             root = pathlib.Path(temporary)
@@ -80,6 +92,14 @@ class ReleaseContracts(unittest.TestCase):
         self.assertEqual([22, 21], restored)
         self.assertEqual(0, composed)
         self.assertFalse(output["publish_ready"])
+
+    def test_report_free_runs_are_skipped_without_composition(self):
+        for report_free_runs, expected_composed in [({22}, 1), ({22, 21}, 0)]:
+            with self.subTest(report_free_runs=report_free_runs):
+                restored, composed, output = self.exercise(set(), report_free_runs=report_free_runs)
+                self.assertEqual([22, 21], restored)
+                self.assertEqual(expected_composed, composed)
+                self.assertEqual(bool(expected_composed), output["publish_ready"])
 
     def test_real_release_check_failure_remains_terminal(self):
         restored, composed, _ = self.exercise(set(), composition_failure=True)

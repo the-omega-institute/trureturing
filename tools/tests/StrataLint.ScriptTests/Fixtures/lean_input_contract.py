@@ -1,4 +1,4 @@
-"""Direct legacy byte addresses and semantic report inputs are distinct contracts."""
+"""Resolved cache partitions and registered source/semantic report inputs."""
 import importlib.util
 import json
 import os
@@ -13,8 +13,6 @@ from lean_seed_contract import INPUT, ROOT, REV, OTHER, PartitionFixture, digest
 
 class PartitionTests(PartitionFixture, unittest.TestCase):
     def byte_manifest(self, paths):
-        # Preimage read as data from 7bab46b34852aa352dd437f088c6183db0c537bf;
-        # expectations hash candidate fixture bytes, never execute historical code.
         return digest(b"".join(
             (digest((self.root / path).read_bytes()) + "  " + path + "\n").encode("utf-8")
             for path in paths))
@@ -37,52 +35,76 @@ lean_cache_address
         self.assertRegex(result.stdout, r"^[0-9a-f]{64} [0-9a-f]{64}\n$")
         return result.stdout.split()
 
-    def test_legacy_dependency_address_hashes_only_pinned_file_bytes(self):
-        paths = ["lean-toolchain", "lake-manifest.json"]
+    def register_inspectors(self, paths):
+        for helper in ("producer_paths.py", "dotnet_producer.py"):
+            relative = "tools/scripts/report/" + helper
+            write(self.root / relative, (ROOT / relative).read_text())
+        write(self.root / "Meta/ReportProducers/lean-report.json", json.dumps({
+            "schema": "report-producer-scope-v1", "scripts": paths,
+            "projects": [], "materials": []}))
+
+    def test_dependency_address_hashes_only_resolved_partition(self):
         before = self.address("dependency-address")
-        self.assertEqual(self.byte_manifest(paths), before)
+        partition = self.run_input("partition-path")
+        self.assertEqual(0, partition.returncode, partition.stderr)
+        self.assertEqual(digest(partition.stdout.strip().encode()), before)
         write(self.root / "D5/A.lean", "def a := 2\n")
         write(self.root / "lakefile.toml", 'keywords = ["metadata"]\n')
         write(self.root / "lakefile.lean", "-- executable configuration\n")
         self.assertEqual(before, self.address("dependency-address"))
         self.manifest["packages"][0]["inputRev"] = "new-requested-ref"
         self.save_manifest()
-        changed = self.address("dependency-address")
-        self.assertEqual(self.byte_manifest(paths), changed)
-        self.assertNotEqual(before, changed)
+        self.assertEqual(before, self.address("dependency-address"))
         write(self.root / "lean-toolchain", "different-toolchain\n")
-        self.assertEqual(self.byte_manifest(paths), self.address("dependency-address"))
-        self.assertNotEqual(changed, self.address("dependency-address"))
+        self.assertEqual(before, self.address("dependency-address"))
+        self.manifest["packages"][0]["rev"] = OTHER
+        self.save_manifest()
+        self.assertEqual(digest(partition.stdout.strip().replace(REV, OTHER).encode()),
+                         self.address("dependency-address"))
+        self.assertNotEqual(before, self.address("dependency-address"))
 
-    def test_legacy_project_address_hashes_candidate_manifest_bytes(self):
+    def test_project_address_hashes_registered_sources_and_semantic_configuration(self):
         for path in ["D5/Z.lean", "D5/nested/B.lean", "tools/lean-inspector/Z.lean",
                      "tools/lean-inspector/A.lean"]:
             write(self.root / path, "-- " + path + "\n")
         sources = ["Trureturing.lean", "D5/A.lean", "D5/Z.lean", "D5/nested/B.lean",
                    "tools/lean-inspector/A.lean", "tools/lean-inspector/Z.lean"]
+        self.register_inspectors(["tools/lean-inspector/Z.lean", "tools/lean-inspector/A.lean"])
+        write(self.root / "tools/lean-inspector/Unregistered.lean", "-- not a producer input\n")
         for lakefiles in [["lakefile.toml"], ["lakefile.toml", "lakefile.lean"], ["lakefile.lean"]]:
             with self.subTest(lakefiles=lakefiles):
                 if "lakefile.lean" in lakefiles:
                     write(self.root / "lakefile.lean", "-- executable configuration\n")
                 if "lakefile.toml" not in lakefiles:
                     (self.root / "lakefile.toml").unlink()
-                expected = self.byte_manifest(sources) + " " + self.byte_manifest(
-                    ["lean-toolchain", "lake-manifest.json", *lakefiles])
+                lean = ({"leanOptions": {"maxRecDepth": 1000}, "libraries": []}
+                        if "lakefile.toml" in lakefiles else
+                        {"lakefile_program": digest(b"-- executable configuration\n")})
+                config = {"schema": "lean-semantic-config-v1",
+                          "packages": [{"name": "mathlib", "rev": REV}],
+                          "toolchain": "leanprover/lean4:v4.33.0", "lean": lean}
+                config_bytes = (json.dumps(config, sort_keys=True, separators=(",", ":")) + "\n").encode()
+                expected = self.byte_manifest(sources) + " " + digest(config_bytes)
+                self.assertEqual(expected, self.address())
+                self.assertEqual(expected.split(), self.semantic_input())
+                write(self.root / "tools/lean-inspector/Unregistered.lean", "-- still not an input\n")
                 self.assertEqual(expected, self.address())
 
-    def test_legacy_project_config_tracks_metadata_bytes(self):
+    def test_project_config_ignores_metadata_bytes(self):
         before = self.address().split()
         self.manifest["version"] = "new-metadata"
         self.save_manifest()
         write(self.root / "lakefile.toml", 'name = "renamed"\nkeywords = ["metadata"]\n[leanOptions]\nmaxRecDepth = 1000\n')
         after = self.address().split()
-        self.assertEqual(before[0], after[0])
-        self.assertNotEqual(before[1], after[1])
-        self.assertEqual(self.byte_manifest(["lean-toolchain", "lake-manifest.json", "lakefile.toml"]), after[1])
+        self.assertEqual(before, after)
 
-    def test_legacy_inputs_fail_without_required_files(self):
-        for command, paths in [("dependency-address", ["lean-toolchain", "lake-manifest.json"]),
-                               ("address", ["lean-toolchain", "lake-manifest.json", "lakefile.toml", "Trureturing.lean"])]:
+    def test_inputs_fail_without_required_files(self):
+        inspector = "tools/lean-inspector/A.lean"
+        write(self.root / inspector, "-- registered inspector\n")
+        self.register_inspectors([inspector])
+        for command, paths in [("dependency-address", ["lake-manifest.json"]),
+                               ("address", ["lean-toolchain", "lake-manifest.json", "lakefile.toml", "Trureturing.lean",
+                                            "Meta/ReportProducers/lean-report.json", inspector])]:
             for relative in paths:
                 with self.subTest(command=command, missing=relative):
                     path = self.root / relative
@@ -141,7 +163,7 @@ lean_cache_address
         write(self.root / "lean-toolchain", "changed\n")
         write(self.root / "lakefile.toml", '[leanOptions]\nmaxRecDepth = 2000\n')
         write(self.root / "D5/A.lean", "def a := 2\n")
-        second = keys("13", "2", "pull_request_target", "refs/heads/dev")
+        second = keys("13", "2", "pull_request", "refs/heads/dev")
         self.assertTrue(first["save_allowed"])
         self.assertFalse(second["save_allowed"])
         self.assertFalse(keys("14", "1", "push", "refs/heads/dev", "false")["save_allowed"])
