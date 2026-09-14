@@ -36,4 +36,7 @@ private theorem first_case : v 47 1 < u 47 1 := by
 private theorem fifteenth_case : v 47 15 < u 47 15 := by
   decide +kernel
 
+private theorem last_finite_case : v 47 118 < u 47 118 := by
+  decide +kernel
+
 end D5.S3.Factorization.ErdosConsecutiveProductSquarefreeFactorRefutation
