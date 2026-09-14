@@ -10098,3 +10098,463 @@ $$
 定理 37.1 将这项兼容性条件化为本任务可直接检查的行列式与对易子条件。这里的标签数和维数均只计算固定存储通道的输出；结论没有把一个量子比特等同于一位经典记录，也不对此前的控制器历史或多阶段协议总资源作相同计数。证毕。
 
 ## 追加锚（新终端）
+
+## 38. 高维无损存储的谱投影判据与输出维数
+
+**定理 38.1（可逆加权差的相容性与最少输出资源）。** 把第 36 节的固定存储任务推广到任意有限维 Hilbert 空间 $\mathcal H$，记 $\dim\mathcal H=d\ge1$。设 $A,J$ 为该空间上的密度矩阵，预先给定
+
+$$
+m\ge1,\qquad 0<c_1<\cdots<c_m,
+\qquad D_j=c_jA-J.
+$$
+
+假设每个 $D_j$ 都可逆，记 $P_j$ 为其正谱投影；允许 $P_j=0$ 或 $P_j=I$。所有候选输入使用同一个 CPTP 存储映射 $\Phi$，且该映射必须在实际权重揭示前固定。
+
+存在有限经典输出存储使
+
+$$
+\|\Phi(D_j)\|_1=\|D_j\|_1\qquad(j=1,\ldots,m)
+$$
+
+当且仅当正谱投影族两两对易：
+
+$$
+\boxed{P_iP_j=P_jP_i\qquad(1\le i,j\le m).}
+$$
+
+在此相容条件成立时，对 $s=(s_1,\ldots,s_m)\in\{0,1\}^m$ 定义联合符号投影
+
+$$
+R_s=\prod_{j=1}^m\bigl[s_jP_j+(1-s_j)(I-P_j)\bigr],
+\qquad
+\mathcal S=\{s:R_s\ne0\},\qquad N=|\mathcal S|.
+$$
+
+这些乘积与排列次序无关。逐项无损所需的最少非零经典输出标签数，以及允许一般量子存储时的最小输出 Hilbert 空间维数，均恰为
+
+$$
+\boxed{n_{\min}^{\mathrm{classical}}=d_{\min}^{\mathrm{quantum}}=N.}
+$$
+
+这里的维数结论只针对上述相容情形。此外，在本节递增的正权重表下，相容投影必满足
+
+$$
+P_1\le P_2\le\cdots\le P_m,
+\qquad 1\le N\le\min\{d,m+1\}.
+$$
+
+证明。先说明可逆性给出的等号刚性。对任意可逆 Hermitian 矩阵 $D$，写
+
+$$
+D=D_+-D_-,\qquad D_+,D_-\ge0,
+$$
+
+其中正、负部分支撑正交，正谱投影为 $P$。对 $0\le E\le I$ 有
+
+$$
+\operatorname{tr}(D_+)-\operatorname{tr}(ED)
+=\operatorname{tr}((I-E)D_+)+\operatorname{tr}(ED_-)\ge0.
+$$
+
+右端为零当且仅当 $E$ 在 $D_+$ 的支撑上等于恒等、在 $D_-$ 的支撑上等于零。事实上，对正矩阵 $B,C$，$\operatorname{tr}(BC)=0$ 强制 $B^{1/2}C^{1/2}=0$；把它分别应用于两项即可。可逆性使这两个支撑的直和等于整个输入空间，故最优效应唯一，恰为 $P$。特别地，
+
+$$
+\max_{0\le E\le I}\operatorname{tr}(ED)
+=\operatorname{tr}(D_+)
+=\frac{\|D\|_1+\operatorname{tr}D}{2}.
+$$
+
+现在设 $\Phi$ 为任意逐项无损的有限维输出 CPTP 映射。对每个 $j$，在输出空间选择一个达到 $\Phi(D_j)$ 的上述最大值的效应 $F_j$。输出加权差可以有零特征值，这里只需选择一个最优效应，不要求它唯一。伴随映射 $\Phi^*$ 保单位且完全正，故 $\Phi^*(F_j)$ 是输入空间上的合法效应。迹保持与范数等号给出
+
+$$
+\operatorname{tr}(\Phi^*(F_j)D_j)
+=\operatorname{tr}(F_j\Phi(D_j))
+=\frac{\|D_j\|_1+\operatorname{tr}D_j}{2}.
+$$
+
+由输入最优效应的唯一性，得到关键算子等式
+
+$$
+\boxed{\Phi^*(F_j)=P_j\qquad(j=1,\ldots,m).}
+$$
+
+若输出是有限经典标签，设对应输入 POVM 为 $(E_\ell)_\ell$。输出加权差是对角矩阵，可以选择其严格正对角元集合的指示效应作为 $F_j$。因此每个 $P_j$ 都是同一 POVM 的结果合并：
+
+$$
+P_j=\sum_{\ell\in B_j}E_\ell.
+$$
+
+对任意两个指标 $i,j$，把标签按是否属于 $B_i,B_j$ 分成四组，所得效应记作 $G_{ab}$，$a,b\in\{0,1\}$。它们满足
+
+$$
+P_i=G_{11}+G_{10},\qquad
+P_j=G_{11}+G_{01},\qquad
+0\le G_{ab}\le P_i^{(a)},P_j^{(b)},
+$$
+
+其中 $P^{(1)}=P$、$P^{(0)}=I-P$。正效应被投影 $P$ 支配时，其支撑包含在 $\operatorname{ran}P$ 中，因而 $PE=EP=E$。据此
+
+$$
+P_iP_j=P_i(G_{11}+G_{01})=G_{11}
+=P_jP_i.
+$$
+
+这证明经典逐项无损要求投影两两对易。
+
+反过来，设全部 $P_j$ 两两对易。其联合投影 $(R_s)_{s\in\mathcal S}$ 两两正交，且和为 $I$。对每个 $j$，$R_s$ 的值域完全落在 $D_j$ 的正谱子空间或负谱子空间内，取决于 $s_j$。因此
+
+$$
+\bigl|\operatorname{tr}(R_sD_j)\bigr|
+=(2s_j-1)\operatorname{tr}(R_sD_j).
+$$
+
+求和并使用 $\sum_s(2s_j-1)R_s=2P_j-I$，有
+
+$$
+\sum_{s\in\mathcal S}\bigl|\operatorname{tr}(R_sD_j)\bigr|
+=\operatorname{tr}((2P_j-I)D_j)=\|D_j\|_1.
+$$
+
+于是通道
+
+$$
+\Phi_{\rm sign}(\rho)
+=\sum_{s\in\mathcal S}\operatorname{tr}(R_s\rho)|s\rangle\langle s|
+$$
+
+同时保持所有加权差的迹范数。它有 $N$ 个非零经典标签，也给出输出维数为 $N$ 的一般量子存储上界。
+
+为证明任意量子存储都不能使用更小的输出维数，对每个 $s\in\mathcal S$ 选择单位向量 $v_s\in\operatorname{ran}R_s$，并对任意逐项无损 CPTP 映射定义
+
+$$
+\rho_s=\Phi(|v_s\rangle\langle v_s|).
+$$
+
+由前面已证的拉回等式，
+
+$$
+\operatorname{tr}(F_j\rho_s)
+=\langle v_s,P_jv_s\rangle=s_j.
+$$
+
+若密度矩阵 $\rho$ 对效应 $0\le F\le I$ 的期望为零，正性使 $\operatorname{supp}\rho\subseteq\ker F$；若期望为一，则对 $I-F$ 应用同一论证，得到 $\operatorname{supp}\rho\subseteq\ker(I-F)$。当 $s\ne t$ 时，至少存在一个 $j$ 使 $s_j\ne t_j$，故 $\rho_s$ 与 $\rho_t$ 分别支撑在 $F_j$ 的零和一本征空间内，二者正交。
+
+这样，输出空间包含 $N$ 个两两正交且非零的支撑，因为每个 $\rho_s$ 的迹都为一。输出维数至少为 $N$。这里不要求输出效应族 $(F_j)$ 彼此对易；每对不同输出状态只需由其中一个效应确定地区分。向量 $v_s$ 是检验同一 CPTP 映射的数学测试输入，并未给原判别任务增添候选态。任意有限经典输出也属于一般量子输出，故同一下界适用于其标签数。结合构造，两种最少资源都等于 $N$。
+
+最后核对投影嵌套。若 $i<j$，则
+
+$$
+D_j-D_i=(c_j-c_i)A\ge0.
+$$
+
+由于 $P_i,P_j$ 对易，若 $P_i(I-P_j)\ne0$，可在其值域中取单位向量 $v$。可逆性给出 $\langle v,D_iv\rangle>0$ 而 $\langle v,D_jv\rangle<0$，与上式矛盾。所以 $P_i\le P_j$。非零联合符号串只能由一段零接一段一组成，至多有 $m+1$ 种；两两正交的非零联合子空间数也不超过 $d$。这给出所列 $N$ 的上下界。
+
+兼容最优测量与后揭信息判别的联系沿用 Carmeli、Heinosaari 与 Toigo 的 [Theorem 1](https://arxiv.org/html/1804.09693)，第 37 节给出的归一化映射同样适用于本节任意有限维候选。锐测量可共同测量时必须对易及其联合投影形式，见 Heinosaari、Reitzner 与 Stano，*Notes on Joint Measurability of Quantum Observables*，[附录 Proposition 8](https://arxiv.org/abs/0811.0783)。本节给出了这些标准兼容性原则在指定加权差任务上的直接证明，并用输出正交支撑计算最少资源。输入可逆性用于保证最优效应唯一；带有零特征值的加权差不在本定理范围内。证毕。
+
+**命题 38.2（严格正定三维候选的非对易无损反例）。** 在 $\mathbb C^3$ 上取
+
+$$
+A=\frac1{12}\begin{pmatrix}
+4&1&0\\
+1&4&-1\\
+0&-1&4
+\end{pmatrix},
+\qquad
+J=\frac1{48}\begin{pmatrix}
+8&3&0\\
+3&16&-5\\
+0&-5&24
+\end{pmatrix},
+$$
+
+以及两个后揭权重
+
+$$
+c_1=\frac34,\qquad c_2=\frac54.
+$$
+
+这两个候选都是严格正定密度矩阵且 $[A,J]\ne0$。两个加权差 $D_1=c_1A-J$、$D_2=c_2A-J$ 均可逆不定，其正谱投影分别为
+
+$$
+P_1=\operatorname{diag}(1,0,0),\qquad
+P_2=\operatorname{diag}(1,1,0).
+$$
+
+它们不同且严格嵌套。因此存在共同经典存储逐项无损，且其最少非零标签数与一般量子存储的最小输出维数都恰为三。两项被保持的量子范数均为
+
+$$
+\|D_1\|_1=\|D_2\|_1=\frac5{12}.
+$$
+
+证明。两个矩阵的迹都为一。它们的顺序主子式分别为
+
+$$
+A:\quad\frac13,\ \frac5{48},\ \frac7{216};
+\qquad
+J:\quad\frac16,\ \frac{119}{2304},\ \frac{83}{3456}.
+$$
+
+这些数均严格为正，Sylvester 判据给出严格正定性。直接相乘得到
+
+$$
+[A,J]=\frac1{288}
+\begin{pmatrix}
+0&4&-1\\
+-4&0&-4\\
+1&4&0
+\end{pmatrix}\ne0.
+$$
+
+加权差为
+
+$$
+D_1=\frac1{24}
+\begin{pmatrix}
+2&0&0\\
+0&-2&1\\
+0&1&-6
+\end{pmatrix},
+\qquad
+D_2=\frac1{24}
+\begin{pmatrix}
+6&1&0\\
+1&2&0\\
+0&0&-2
+\end{pmatrix}.
+$$
+
+两个谱分别为
+
+$$
+\operatorname{spec}(D_1)
+=\left\{\frac1{12},\frac{-4+\sqrt5}{24},\frac{-4-\sqrt5}{24}\right\},
+$$
+
+$$
+\operatorname{spec}(D_2)
+=\left\{-\frac1{12},\frac{4+\sqrt5}{24},\frac{4-\sqrt5}{24}\right\}.
+$$
+
+因 $0<\sqrt5<4$，它们都无零特征值，且分别有一个与两个正特征值。上述分块形式同时确定了陈述中的 $P_1,P_2$；按符号求特征值绝对值之和得到两项范数 $5/12$。
+
+非零联合符号投影恰为
+
+$$
+R_{(1,1)}=|e_1\rangle\langle e_1|,\qquad
+R_{(0,1)}=|e_2\rangle\langle e_2|,\qquad
+R_{(0,0)}=|e_3\rangle\langle e_3|,
+$$
+
+而 $R_{(1,0)}=0$。定理 38.1 因而给出两种最少输出资源都为三。具体达到测量就是标准基上的三元投影测量；它在两个权重上的读数分别为
+
+$$
+\left(\frac1{12},-\frac1{12},-\frac14\right),
+\qquad
+\left(\frac14,\frac1{12},-\frac1{12}\right),
+$$
+
+各自的绝对值之和均为 $5/12$。
+
+这个反例说明定理 37.1 的候选态对易判据具有二维限制。在二维不定情形，每个加权差都是恒等矩阵与其正谱投影的线性组合，正谱投影对易便迫使加权差对易。在三维，一个正谱或负谱子空间可以有二维；不同加权差在这些子空间内部仍能不对易，而选定判别任务的正负谱投影已经相容。这里三个经典标签保存的是两问所需的联合符号信息，定理并未要求保存候选态的全部量子结构。证毕。
+
+## 追加锚（新终端）
+
+## 39. 两项不定判别量无损强制整个量子比特可恢复
+
+**定理 39.1（两权重等号与全输入可恢复性）。** 设 $A,J$ 为量子比特密度矩阵，且
+
+$$
+[A,J]\ne0,\qquad c,d>0,\qquad c\ne d.
+$$
+
+记 $D_t=tA-J$，并要求两个加权差都严格不定：
+
+$$
+\det D_c<0,\qquad \det D_d<0.
+$$
+
+令 $\Phi:\mathcal L(\mathbb C^2)\to\mathcal L(\mathcal H_B)$ 为 CPTP 映射，其中输出空间 $\mathcal H_B$ 有限维。则
+
+$$
+\boxed{
+\|\Phi(D_c)\|_1=\|D_c\|_1
+\quad\text{且}\quad
+\|\Phi(D_d)\|_1=\|D_d\|_1
+\quad\Longleftrightarrow\quad
+\exists\ \mathcal R\ \mathrm{CPTP},\quad
+\mathcal R\circ\Phi=\operatorname{id}_{\mathcal L(\mathbb C^2)}.
+}
+$$
+
+右端的恢复通道定义在整个 $\mathcal L(\mathcal H_B)$ 上，恢复所有量子比特输入；它是 $\Phi$ 的 CPTP 左逆，不要求 $\Phi$ 映满全部输出状态。
+
+这些条件还等价于下面的正交等距正规形：存在整数 $r\ge1$、正数 $\lambda_1,\ldots,\lambda_r$ 及等距映射 $V_a:\mathbb C^2\to\mathcal H_B$，满足
+
+$$
+\sum_{a=1}^r\lambda_a=1,\qquad
+V_a^\dagger V_b=\delta_{ab}I_2,
+\qquad
+\Phi(X)=\sum_{a=1}^r\lambda_aV_aXV_a^\dagger
+\quad\text{对全部 }X\in\mathcal L(\mathbb C^2).
+$$
+
+特别地，$2r\le\dim\mathcal H_B$。定义
+
+$$
+\omega=\sum_{a=1}^r\lambda_a|a\rangle\langle a|,\qquad
+W(|\psi\rangle\otimes|a\rangle)=V_a|\psi\rangle,
+$$
+
+则 $W:\mathbb C^2\otimes\mathbb C^r\to\mathcal H_B$ 是等距映射，且
+
+$$
+\boxed{\Phi(\rho)=W(\rho\otimes\omega)W^\dagger.}
+$$
+
+辅助态 $\omega$ 固定且与输入无关，可以是混合态。上述表达只占用输出空间中的一个子空间，不要求输出维数为偶数。
+
+证明。先由两个范数等号推出正规形。对 $t\in\{c,d\}$，将输入加权差写成
+
+$$
+D_t=\mu_{t,+}P_t-\mu_{t,-}(I_2-P_t),\qquad
+\mu_{t,+},\mu_{t,-}>0,
+$$
+
+其中 $P_t$ 为秩一正谱投影。令
+
+$$
+\rho_{t,+}=\Phi(P_t),\qquad
+\rho_{t,-}=\Phi(I_2-P_t).
+$$
+
+两者均为输出密度矩阵。有限维输出上存在最优二元判别效应 $0\le F_t\le I_B$。对任意 Hermitian 矩阵 $H$，有
+
+$$
+\|H\|_1=2\max_{0\le F\le I}\operatorname{tr}(FH)-\operatorname{tr}H.
+$$
+
+应用于 $H=\Phi(D_t)$，再用范数等号和迹保持性，得到
+
+$$
+\operatorname{tr}\!\left[F_t
+(\mu_{t,+}\rho_{t,+}-\mu_{t,-}\rho_{t,-})\right]
+=\mu_{t,+}.
+$$
+
+等价地，
+
+$$
+\mu_{t,+}\bigl(1-\operatorname{tr}(F_t\rho_{t,+})\bigr)
++\mu_{t,-}\operatorname{tr}(F_t\rho_{t,-})=0.
+$$
+
+两项非负且两个系数严格为正，故
+
+$$
+\operatorname{tr}(F_t\rho_{t,+})=1,\qquad
+\operatorname{tr}(F_t\rho_{t,-})=0.
+$$
+
+正性将这两个条件分别化为
+
+$$
+\operatorname{supp}\rho_{t,+}\subseteq\ker(I_B-F_t),\qquad
+\operatorname{supp}\rho_{t,-}\subseteq\ker F_t.
+$$
+
+因此，$D_t$ 的两个纯本征输入经 $\Phi$ 后仍有正交支撑。
+
+取 $\Phi$ 的任意有限 Kraus 表示
+
+$$
+\Phi(X)=\sum_{a=1}^N K_aXK_a^\dagger,\qquad
+\sum_{a=1}^N K_a^\dagger K_a=I_2.
+$$
+
+若 $|t,+\rangle,|t,-\rangle$ 是 $P_t,I_2-P_t$ 的单位本征向量，则 $K_a|t,+\rangle$ 与 $K_b|t,-\rangle$ 分别落在上述正交支撑内。对任意 $a,b$，于是
+
+$$
+\langle t,+|K_a^\dagger K_b|t,-\rangle=0,\qquad
+\langle t,-|K_a^\dagger K_b|t,+\rangle=0.
+$$
+
+所以 $K_a^\dagger K_b$ 在 $P_t$ 的本征基中对角；这个矩阵不必自伴，但两个非对角元都为零。
+
+另一方面，
+
+$$
+[D_c,D_d]=(d-c)[A,J]\ne0.
+$$
+
+由于每个 $D_t$ 都是 $P_t$ 的非退化仿射函数，可知 $[P_c,P_d]\ne0$。一个二阶矩阵若在 $P_c$ 的本征基中对角，就可写为 $xI_2+yP_c$；若还与 $P_d$ 对易，则 $y[P_c,P_d]=0$，从而 $y=0$。因此存在复数 $\alpha_{ab}$，使
+
+$$
+\boxed{K_a^\dagger K_b=\alpha_{ab}I_2\qquad(1\le a,b\le N).}
+$$
+
+矩阵 $\alpha=(\alpha_{ab})$ 自伴且半正定。事实上，对任意 $z\in\mathbb C^N$，
+
+$$
+\left(\sum_a z_aK_a\right)^\dagger
+\left(\sum_b z_bK_b\right)
+=(z^\dagger\alpha z)I_2\ge0.
+$$
+
+迹保持性又给出 $\sum_a\alpha_{aa}=1$。选取酉矩阵 $U$ 使 $U^\dagger\alpha U$ 对角，并置 $L_b=\sum_aU_{ab}K_a$。这些算子仍表示同一个通道，且
+
+$$
+L_a^\dagger L_b=\delta_{ab}\lambda_aI_2,
+\qquad \lambda_a\ge0,\qquad \sum_a\lambda_a=1.
+$$
+
+删去 $\lambda_a=0$ 的零算子，对剩余算子定义 $V_a=L_a/\sqrt{\lambda_a}$，即得到所述正交等距正规形。各 $V_a$ 的像空间两两正交且均为二维，故 $2r\le\dim\mathcal H_B$。由 $V_a^\dagger V_b=\delta_{ab}I_2$ 可直接核对 $W^\dagger W=I_2\otimes I_r$，以及固定辅助态表达。
+
+现在由正规形构造恢复通道。令
+
+$$
+Q=\sum_{a=1}^rV_aV_a^\dagger,
+$$
+
+它是 $\Phi$ 所占用输出子空间的正交投影。任选一个量子比特密度矩阵 $\tau$，定义
+
+$$
+\boxed{
+\mathcal R(X)=\sum_{a=1}^rV_a^\dagger XV_a
++\operatorname{tr}\bigl[(I_B-Q)X\bigr]\tau.
+}
+$$
+
+第一项为 Kraus 形式的完全正映射，第二项为一个测量后制备固定态的完全正映射。两项的迹分别为 $\operatorname{tr}(QX)$ 与 $\operatorname{tr}((I_B-Q)X)$，故 $\mathcal R$ 保持迹，且定义覆盖整个输出空间。对任意量子比特输入矩阵 $X$，正交等距关系给出
+
+$$
+\mathcal R(\Phi(X))
+=\sum_{a=1}^r\lambda_aX=X.
+$$
+
+最后，若已有 CPTP 左逆 $\mathcal R$，对任意 Hermitian 输入 $H$，迹范数收缩性给出
+
+$$
+\|H\|_1=\|\mathcal R(\Phi(H))\|_1
+\le\|\Phi(H)\|_1\le\|H\|_1.
+$$
+
+所以 $\Phi$ 保持全部 Hermitian 输入的迹范数，特别地保持 $D_c,D_d$。这完成全部等价关系。由于恢复的是整个输入空间上的恒等通道，张量一个任意有限维参考系统后仍有恒等关系；恢复也保留输入与该参考系统的纠缠，不要求访问参考系统。
+
+上面的 $K_a^\dagger K_b=\alpha_{ab}I_2$ 是以整个量子比特作为编码空间的标准 Knill–Laflamme 条件，见 Knill 与 Laflamme，*Theory of quantum error-correcting codes*，[Theorem 3.2 的式 (19)、(20) 及 Theorem 3.3](https://arxiv.org/html/quant-ph/9604034)。可恢复通道的正交等距及固定辅助态正规形也已有一般维数的结果，见 Nayak 与 Sen，*Invertible Quantum Operations and Perfect Encryption of Quantum States*，[Theorem 2.1 及其证明中的式 (2)、(3)](https://arxiv.org/html/quant-ph/0605041)。本节的两权重判据通过两个不兼容谱基的范数等号达到这些已有条件；它不把一般纠错条件或可恢复通道正规形另作新理论。证毕。
+
+**推论 39.2（二维输出时必须是酉通道）。** 在定理 39.1 的非对易、两个不同严格不定权重假设下，若还要求 $\mathcal H_B=\mathbb C^2$，则
+
+$$
+\|\Phi(D_c)\|_1=\|D_c\|_1
+\quad\text{且}\quad
+\|\Phi(D_d)\|_1=\|D_d\|_1
+\quad\Longleftrightarrow\quad
+\exists\ U\ \mathrm{unitary},\quad
+\Phi(X)=UXU^\dagger\ \text{对全部 }X.
+$$
+
+证明。定理 39.1 给出 $r\ge1$ 与 $2r\le2$，故 $r=1$、$\lambda_1=1$。唯一的等距映射 $V_1:\mathbb C^2\to\mathbb C^2$ 是酉矩阵，取 $U=V_1$ 即得结论。反向由酉共轭保持迹范数成立。
+
+这里不是用两个标量读数重建一个未知量子态，而是要求同一个 CPTP 通道在两个指定判别任务上都保持量子最优值。严格不定性使每个等号要求保留一整组正交本征输入的可区分性；非对易性使这两组谱基不兼容，进而约束整个通道。结论中的有限输出、非对易、不同权重及两个严格不定条件均保留，不由第 37 节中半定权重的自动无损情形代替。证毕。
+
+## 追加锚（新终端）
