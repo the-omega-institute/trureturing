@@ -313,3 +313,571 @@ Oddness of a valuation does not distinguish depth one from depth three, and even
 \]
 
 and the stronger assertion that there are infinitely many such primes remain distinct unproved statements here. The trace identities locate precisely where that missing depth information is preserved. A further proof must supply a constraint on these prime-index depths that is not already implied by their valuation parity.
+
+
+## JP. Jacobsthal 最终周期与不动点
+
+### JP.1 原递推、最终周期与从零时刻开始的周期
+
+**定义。** Jacobsthal 数列由
+
+$$
+J_0=0,\qquad J_1=1,\qquad J_{n+2}=J_{n+1}+2J_n
+$$
+
+确定。对正整数 $m$、正整数 $t$ 与自然数 $N$，定义
+
+$$
+\operatorname{TailPeriod}(m,N,t)
+\iff \forall n\ge N,\quad m\mid J_{n+t}-J_n.
+$$
+
+称 $t$ 为最终周期，若存在 $N$ 使上述关系成立。令 $\rho(m)$ 为最小正最终周期；令 $\mu(m)$ 为存在某个正周期的最早起始下标。最小值的存在性在下文证明。纯周期特指 $N=0$。
+
+**命题。** 对全部 $n\ge0$，
+
+$$
+3J_n=2^n-(-1)^n,\qquad
+J_{n+1}+J_n=2^n,\qquad
+J_{n+1}-2J_n=(-1)^n.\tag{JP1}
+$$
+
+**证明。** 令 $S_n=J_{n+1}+J_n$、$D_n=J_{n+1}-2J_n$。原递推给出 $S_{n+1}=2S_n$ 与 $D_{n+1}=-D_n$，且 $S_0=D_0=1$。因此后两式成立；相减得第一式。
+
+**命题。** 令 $G_L(c)$ 是长度 $L$、字母表 $\{0,\ldots,c\}$ 上无相邻非零字母的词数，则
+
+$$
+G_0(c)=1,\quad G_1(c)=c+1,\quad
+G_{L+2}(c)=G_{L+1}(c)+cG_L(c).
+$$
+
+特别地，
+
+$$
+G_L(1)=F_{L+2},\qquad G_L(2)=J_{L+2}.\tag{JP2}
+$$
+
+**证明。** 按首字母是否为零分解。非零首字母有 $c$ 种选择，第二个字母被迫为零。取基例后，对 $L$ 作二步归纳即得两项特化。
+
+### JP.2 从暂态中分离准确的最终周期
+
+**定理。** 写 $m=2^a u$，其中 $u$ 为正奇数。若 $m>2$ 且 $t>0$，则
+
+$$
+\boxed{
+\bigl(\exists N:\operatorname{TailPeriod}(m,N,t)\bigr)
+\iff 3u\mid 2^t-1.
+}\tag{JP3}
+$$
+
+右侧成立时，$\operatorname{TailPeriod}(m,a,t)$ 成立。
+
+**证明，必要性。** 取一个起始下标 $N$。将 $n=N$ 与 $n=N+1$ 的周期同余相减，使用 JP1 的第三式，得到
+
+$$
+m\mid (-1)^N\bigl((-1)^t-1\bigr).
+$$
+
+若 $t$ 为奇数，则 $m\mid2$，与 $m>2$ 矛盾。因此 $t$ 为偶数。JP1 的第一式遂给出
+
+$$
+3(J_{N+t}-J_N)=2^N(2^t-1).
+$$
+
+左侧被 $3m$ 整除，所以 $3u\mid2^N(2^t-1)$。由于 $u$ 为奇数，$\gcd(3u,2^N)=1$，可在整数整除关系中约去 $2^N$，得到所需结论。
+
+**证明，充分性。** 若 $3u\mid2^t-1$，则降模到 $3$ 可知 $t$ 为偶数。对任意 $n\ge a$，$2^a\mid2^n$，故
+
+$$
+3m=3\cdot2^a u\mid2^n(2^t-1)=3(J_{n+t}-J_n).
+$$
+
+在整数中约去 $3$ 即得 $m\mid J_{n+t}-J_n$。此处没有在模 $m$ 的环内对非单位 $3$ 作除法。
+
+**定理。** 对 $m=2^a u>2$，
+
+$$
+\boxed{\rho(m)=\operatorname{ord}_{3u}(2).}\tag{JP4}
+$$
+
+并且 $\rho(1)=\rho(2)=1$。
+
+**证明。** $2$ 与 $3u$ 互素。Euler 定理使得 $2^{\varphi(3u)}\equiv1\pmod{3u}$，所以正最终周期存在。JP3 使其最小值恰为所述乘法阶。模 $1$ 的数列为常数；模 $2$ 时 $J_0=0$，且 $J_n=1$ 对全部 $n\ge1$ 成立。
+
+### JP.3 暂态长度恰等于二进估值
+
+**定理。** 对全部正整数 $m$，
+
+$$
+\boxed{\mu(m)=v_2(m).}\tag{JP5}
+$$
+
+因此数列模 $m$ 存在纯周期，当且仅当 $m$ 为奇数。
+
+**证明。** JP3 在 $m>2$ 时提供起始下标 $a=v_2(m)$；$m=1,2$ 的上界由前节直接得到。反之，设某个正周期 $t$ 从 $N$ 开始。JP1 的第二式和相邻两个下标的周期同余给出
+
+$$
+m\mid2^{N+t}-2^N=2^N(2^t-1).
+$$
+
+因为 $2^t-1$ 为奇数，右侧的二进估值恰为 $N$，故 $v_2(m)\le N$。这证明最小起始下标。对于 $m>1$，纯周期情形没有不动点：奇数模数的最小周期由 JP3 为偶数，而偶数模数没有纯周期。
+
+### JP.4 三的幂上的精确阶
+
+**引理。** 对每个正整数 $h$，
+
+$$
+\boxed{v_3(4^h-1)=1+v_3(h).}\tag{JP6}
+$$
+
+**证明。** 写 $h=3^r w$，其中 $3\nmid w$。几何和
+
+$$
+\frac{4^w-1}{4-1}=1+4+\cdots+4^{w-1}\equiv w\not\equiv0\pmod3
+$$
+
+表明 $v_3(4^w-1)=1$。若 $x\equiv1\pmod3$，写 $x=1+3z$，则
+
+$$
+x^2+x+1=3(1+3z+3z^2),
+$$
+
+该因子的三进估值恰为一。因此从 $x-1$ 到 $x^3-1$ 的估值恰增加一。重复 $r$ 次即得结论。
+
+**定理。** 对每个 $b\ge0$，
+
+$$
+\boxed{\operatorname{ord}_{3^{b+1}}(2)=2\cdot3^b.}\tag{JP7}
+$$
+
+**证明。** 满足 $2^t\equiv1\pmod3$ 的正整数 $t$ 必为偶数，写成 $2h$。JP6 将 $3^{b+1}\mid2^t-1$ 等价为 $3^b\mid h$，故最小正 $t$ 恰为 $2\cdot3^b$。
+
+### JP.5 Benfield–Lippard 猜想 6.3 的最终周期分类
+
+**定理。** 对每个整数 $m>1$，
+
+$$
+\boxed{\rho(m)=m\iff\exists k\ge1:\ m=2\cdot3^k.}\tag{JP8}
+$$
+
+**证明，必要性。** $m=2$ 时 $\rho(m)=1$，故可设 $m>2$。由 JP3，$\rho(m)$ 为偶数。于是若 $\rho(m)=m$，可写
+
+$$
+m=2^a3^b v,\qquad a\ge1,\qquad \gcd(v,6)=1.
+$$
+
+由 JP4 与 Euler 定理，
+
+$$
+\begin{aligned}
+2^a3^b v
+&=\rho(m)\\
+&\le\varphi(3^{b+1}v)\\
+&=2\cdot3^b\varphi(v)\\
+&\le2\cdot3^b v\\
+&\le2^a3^b v.
+\end{aligned}
+$$
+
+每一步必须取等号。由于 $v\ge1$，最后一步迫使 $a=1$。又因 $\varphi(v)=v$ 只在正整数 $v=1$ 成立，故 $v=1$。排除 $m=2$ 后，得到 $b\ge1$。
+
+**证明，充分性。** 若 $m=2\cdot3^k$ 且 $k\ge1$，则 JP4 与 JP7 给出
+
+$$
+\rho(m)=\operatorname{ord}_{3^{k+1}}(2)=2\cdot3^k=m.
+$$
+
+这完成全部模数上的两个方向。最终周期约定与 JP.3 的纯周期结论必须分开使用。
+
+### JP.6 非不动点的减半律与迭代界
+
+**定理。** 若 $m$ 为正偶数且 $\rho(m)\ne m$，则
+
+$$
+\boxed{\rho(m)\le m/2.}\tag{JP9}
+$$
+
+若 $m>1$ 为奇数，则 $m=3^b$ 时 $\rho(m)=2m$ 且 $2m$ 已是不动点；否则 $\rho(m)<m$。
+
+**证明。** 写 $m=2^a3^b v$，$\gcd(v,6)=1$。若 $v>1$，Euler 定理和 $\varphi(v)$ 为偶数给出：指数
+
+$$
+E=3^b\varphi(v)
+$$
+
+同时是 $\operatorname{ord}_{3^{b+1}}(2)=2\cdot3^b$ 与 $\operatorname{ord}_v(2)$ 的倍数。由于两个模数互素，$2^E\equiv1\pmod{3^{b+1}v}$。因此
+
+$$
+\rho(m)\le E<3^b v=m/2^a.
+$$
+
+这同时处理奇数与偶数模数中的 $v>1$ 情形。若 $v=1$，$m>2$ 时 JP7 给出 $\rho(m)=2\cdot3^b$。在偶数非不动点情形，JP8 迫使 $a\ge2$，故 $\rho(m)\le m/2$。余下的 $m=2$ 直接有 $\rho(m)=1$。当 $a=0,b\ge1$，得到 $\rho(3^b)=2\cdot3^b$，而这个值由 JP8 已是不动点。
+
+**推论。** 每个正整数的 $\rho$ 迭代都到达
+
+$$
+\{1\}\cup\{2\cdot3^k:k\ge1\}
+$$
+
+中的一个不动点，不存在长度大于一的周期轨道。若 $T(m)$ 为首次到达不动点所需的迭代次数，则
+
+$$
+\boxed{T(m)\le1+\lfloor\log_2m\rfloor.}\tag{JP10}
+$$
+
+**证明。** 偶数轨道在到达不动点前每一步至少减半，且始终为正整数，故终止并至多经历 $\lfloor\log_2m\rfloor$ 步。奇数 $m>1$ 若是三的幂，一步即达不动点；否则第一步变成小于 $m$ 的偶数，再应用减半律。$m=1$ 时 $T(m)=0$。非平凡周期会包含严格下降的偶数步骤，故不可能存在。
+
+
+## GP3. 黄金三次幂层与 WSS 的素数间深度约束
+
+### GP3.1 经典三次幂层及其确切内容
+
+对 $j\ge1$，定义
+
+$$
+n_j=3^j,\qquad
+C_j=L_{n_j}^2+1.
+$$
+
+**定理。** 有
+
+$$
+\boxed{
+F_{3n_j}=F_{n_j}C_j,\qquad
+C_j+3=5F_{n_j}^2,\qquad
+\gcd(C_j,F_{n_j})=1.
+}\tag{GP31}
+$$
+
+并且
+
+$$
+C_1=17,\qquad C_{j+1}=C_j^3+3C_j^2-3.\tag{GP32}
+$$
+
+**证明。** 对奇数 $n$，黄金共轭满足 $\varphi^n\psi^n=-1$。展开三次幂差得
+
+$$
+F_{3n}=F_n(L_n^2+1).
+$$
+
+判别式恒等式 $L_n^2-5F_n^2=-4$ 给出第二式。两个因子的公因子因而整除三；但 $n$ 为奇数时
+
+$$
+\gcd(F_n,3)=\gcd(F_n,F_4)=F_{\gcd(n,4)}=F_1=1.
+$$
+
+故其最大公因子为一。三次幂和给出 $L_{3n}=L_n^3+3L_n$，再平方加一，得到
+
+$$
+(L_n^3+3L_n)^2+1=(L_n^2+1)^3+3(L_n^2+1)^2-3.
+$$
+
+首值来自 $L_3=4$。这也是经典序列 A002814 从第三项开始的部分：若该序列按 $a(0)=1,a(1)=2$ 编号，则 $C_j=a(j+1)$。
+
+**定理。** 每个 $C_j$ 为大于一的奇数、不是完全平方数，并且不同 $C_j$ 两两互素。
+
+**证明。** $L_3=4$ 为正偶数，递推 $L_{3n}=L_n^3+3L_n$ 保持正偶性，所以 $C_j$ 为奇数且
+
+$$
+L_{n_j}^2<C_j<(L_{n_j}+1)^2.
+$$
+
+若 $i<j$，则 $C_i\mid F_{3^{i+1}}\mid F_{3^j}$。GP31 使 $\gcd(C_i,C_j)=1$。这些性质属于经典三次幂数列的算术结构。
+
+### GP3.2 每一层全部素因子的出现秩
+
+令 $\alpha(p)$ 为素数 $p$ 在 Fibonacci 数列中的最小正零下标。
+
+**定理。** 若 $p\mid C_j$ 为素数，则
+
+$$
+\boxed{
+p\notin\{2,3,5\},\qquad
+\alpha(p)=3^{j+1},\qquad p\equiv1\pmod4.
+}\tag{GP33}
+$$
+
+**证明。** 奇性排除二；GP31 第二式模五为 $C_j\equiv2\pmod5$，排除五。模三同样可用 GP32：$C_1\equiv2$ 且 $2^3+3\cdot2^2-3\equiv2$，故排除三。
+
+由 GP31，$p\mid F_{3^{j+1}}$ 且 $p\nmid F_{3^j}$。出现秩整除任何零下标，因此 $\alpha(p)\mid3^{j+1}$，却不整除 $3^j$。三的幂的约数只有三的幂，故出现秩恰为 $3^{j+1}$。
+
+此外 $L_{n_j}^2\equiv-1\pmod p$。因为 $p$ 为奇素数，其乘法群中有阶为四的元素，因此 $4\mid p-1$。
+
+### GP3.3 实际 WSS 深度等于该层中的素因子重数
+
+记
+
+$$
+\epsilon_p=\left(\frac5p\right),\qquad
+N_p=p-\epsilon_p,\qquad
+s_p=v_p(F_{N_p}).
+$$
+
+使用标准 Fibonacci 出现秩定理和估值定理：$\alpha(p)\mid N_p$，且对 $p\ne2,5$，在 $p\mid F_d$ 时
+
+$$
+v_p(F_{dk})=v_p(F_d)+v_p(k).
+$$
+
+这里的初始估值不预设为一。
+
+**定理。** 对每个素数 $p\mid C_j$，
+
+$$
+\boxed{s_p=v_p(C_j).}\tag{GP34}
+$$
+
+因此
+
+$$
+\boxed{
+p\mid C_j\quad\Longrightarrow\quad
+\bigl(\mathrm{WSS}(p)\iff p^2\mid C_j\bigr).
+}\tag{GP35}
+$$
+
+**证明。** GP31 给出
+
+$$
+v_p(F_{3^{j+1}})=v_p(C_j).
+$$
+
+又由 GP33，$3^{j+1}=\alpha(p)$。令 $h=N_p/\alpha(p)$。因为 $p\nmid N_p$，故 $p\nmid h$。估值定理于是给出
+
+$$
+s_p=v_p(F_{\alpha(p)h})=v_p(F_{\alpha(p)})=v_p(C_j).
+$$
+
+标准 WSS 条件为 $s_p\ge2$，由此得到第二式。
+
+### GP3.4 每层强迫一个奇初始深度素数
+
+**定理。** 对每个 $j\ge1$，至少存在一个素数 $p_j$ 满足
+
+$$
+\boxed{
+p_j\mid C_j,\quad
+\alpha(p_j)=3^{j+1},\quad
+p_j\equiv1\pmod4,\quad s_{p_j}\text{ 为奇数}.
+}\tag{GP36}
+$$
+
+这些素数在不同层互不相同。
+
+**证明。** $C_j$ 不是完全平方数。唯一素因子分解中必有至少一个素数的指数为奇数。取这样的 $p_j$，由 GP33–GP34 得到全部结论。两两互素性或者不同的出现秩都保证各层所选素数不同。
+
+**定量推论。** 令 $\varphi=(1+\sqrt5)/2$。对 $X\ge\varphi^6$，至少有
+
+$$
+\left\lfloor\log_3\left(\frac{\log X}{2\log\varphi}\right)\right\rfloor
+\tag{GP37}
+$$
+
+个不超过 $X$ 的不同素数，具有三的纯幂出现秩、模四余一且 WSS 初始深度为奇数。
+
+**证明。** 对奇数 $n$，$L_n=\varphi^n-\varphi^{-n}$，故
+
+$$
+C_j=\varphi^{2\cdot3^j}+\varphi^{-2\cdot3^j}-1
+<\varphi^{2\cdot3^j}.
+$$
+
+令 GP37 中的整数为 $K$。对 $1\le j\le K$，有 $C_j<X$。GP36 在每个这样的层给出一个不同的素数 $p_j\le C_j<X$。
+
+### GP3.5 存在性边界
+
+GP36 强迫的是奇数深度，即 $1,3,5,\ldots$。它没有排除所有被选素数都具有深度一。因此 GP36–GP37 并不证明存在 WSS 素数，也不证明存在无穷多个非 WSS 素数。
+
+对本族有精确的受限存在性等价：
+
+$$
+\boxed{
+\exists j\ge1:\ C_j\text{ 非平方自由}
+\iff
+\exists p\text{ 为 WSS 素数}:\ \alpha(p)=3^k\text{ 对某个 }k\ge2.
+}\tag{GP38}
+$$
+
+**证明。** 左向由 GP35。反向若 $\alpha(p)=3^k$ 且 $k\ge2$，则 $p\mid F_{3^k}$ 且 $p\nmid F_{3^{k-1}}$。GP31 使 $p\mid C_{k-1}$，再由 GP34 与 $s_p\ge2$ 得 $p^2\mid C_{k-1}$。
+
+GP38 只处理纯三幂出现秩的素数，不能替代全部素数上的 WSS 存在问题。这条路线要得到 WSS 实例，仍须证明至少一个 $C_j$ 有重复素因子，或证明另一族的同等深度结论。单纯增加奇偶、平方类或固定素数提升恒等式，不能填补这个存在性步骤。
+
+## FD. Fibonacci 素数幂剩余密度的零聚点与 WSS 定量阈值
+
+### FD.1 剩余像与单调性
+
+对素数 p 和整数 k>=1，定义
+
+\[
+S_k(p)=\{F_n\bmod p^k:n\ge0\},\qquad
+D_k(p)=|S_k(p)|/p^k,\qquad
+\delta(p)=\lim_{k\to\infty}D_k(p).
+\]
+
+**引理。** 上述极限存在，并满足
+
+\[
+0\le\delta(p)\le D_{k+1}(p)\le D_k(p)\le D_1(p)\le\pi(p)/p.
+\tag{FD1}
+\]
+
+**证明。** 降模映射 S_(k+1)(p)->S_k(p) 满射，每个纤维至多有 p 个元素。故 |S_(k+1)(p)|<=p|S_k(p)|，得到单调性。数列非负，因而收敛。模 p 的全部 Fibonacci 值都在一个长度 pi(p) 的周期中出现，故最后一个不等式成立。
+
+Bragman 和 Rowland 在 *Limiting density of the Fibonacci sequence modulo powers of a prime*, Research in Number Theory 11, 88 (2025), DOI 10.1007/s40993-025-00667-1 的引言中问，是否存在使 delta(p) 任意小的素数。他们的定理 1 还证明每个 delta(p) 为严格正有理数。以下回答前一个问题，只确定零这个聚点。
+
+### FD.2 明确使用的最大素因子定理
+
+对非零整数 M，令 P(M) 为 |M| 的最大素因子，并约定 P(1)=1。记 Phi_n(A,B) 为齐次分圆多项式。Stewart 的定理断言：若 (A+B)^2 与 AB 为非零整数，且 A/B 不是单位根，则存在有效可计算的常数 n_0，使全部 n>n_0 满足
+
+\[
+P(\Phi_n(A,B))>
+n\exp\!\left(\frac{\log n}{104\log\log n}\right).
+\tag{FD2}
+\]
+
+这里使用 C. L. Stewart, *On divisors of Lucas and Lehmer numbers*, Acta Mathematica 211 (2013), 291-314, DOI 10.1007/s11511-013-0105-y；arXiv:1008.1274 的定理 1。FD2 是已有定理，不是下文重新证明的结论。
+
+取 A=phi=(1+sqrt(5))/2、B=psi=(1-sqrt(5))/2，则 (A+B)^2=1，AB=-1，且 |A/B|=phi^2>1。全部假设都成立。对 j>=1 令 r_j=3^(j+1)，GP3 中的 C_j 满足
+
+\[
+\Phi_{r_j}(\phi,\psi)
+=\frac{\phi^{3^{j+1}}-\psi^{3^{j+1}}}
+       {\phi^{3^j}-\psi^{3^j}}
+=\frac{F_{3^{j+1}}}{F_{3^j}}
+=C_j.
+\tag{FD3}
+\]
+
+分母非零，因为 phi/psi 不是单位根。第一式也可以由
+Phi_(3^(j+1))(A,B)=A^(2*3^j)+A^(3^j)B^(3^j)+B^(2*3^j)
+直接验证。
+
+### FD.3 零是一个聚点，且小密度对全部精度同时成立
+
+**定理。** 令 p_j=P(C_j)。这些素数互不相同，并满足
+
+\[
+\alpha(p_j)=r_j=3^{j+1},\qquad
+p_j\equiv1\pmod4,\qquad \pi(p_j)=4r_j.
+\tag{FD4}
+\]
+
+对全部充分大的 j 及全部 k>=1，
+
+\[
+0<\delta(p_j)\le D_k(p_j)
+<4\exp\!\left(-\frac{\log r_j}{104\log\log r_j}\right).
+\tag{FD5}
+\]
+
+特别地，
+
+\[
+\boxed{\inf_{p\ {\rm prime}}\delta(p)=0,
+\qquad \lim_{j\to\infty}\delta(p_j)=0.}
+\tag{FD6}
+\]
+
+**证明。** GP33 给出出现秩与模四条件，GP31 给出不同层的互素性，故 p_j 互不相同。令 r=r_j。模 p_j 时 Q^r=cI，其中 c=F_(r-1)，因为 F_r=0。取行列式得到 c^2=(-1)^r=-1，故 c 的阶为四。若 Q^t=I，则 r|t；写 t=rh 后有 Q^t=c^h I，因此四整除 h。这既证明 pi(p_j)=4r，又不引入新的周期约定。
+
+当 r_j>n_0 时，FD2-FD3 给出
+p_j>r_j exp(log r_j/(104 log log r_j))。再用 FD1 的
+D_k(p_j)<=pi(p_j)/p_j=4r_j/p_j，得到 FD5 的上界。严格正性来自 Bragman-Rowland 的定理 1。由于 log r_j/log log r_j 趋于无穷，右边趋于零，夹逼得到 FD6。
+
+**量词形式。** 对每个 eta>0 和每个素数界 B，都存在素数 p>B，使
+
+\[
+0<\delta(p)<\eta,
+\qquad \forall k\ge1,\quad D_k(p)<\eta.
+\tag{FD7}
+\]
+
+**证明。** FD2 使 p_j 趋于无穷，FD5 对 k 的上界独立于 k，故取足够大的同一个 j 即可。
+
+由于所有 delta(p)>0，零是聚点而不是密度值。证明没有假设存在无穷多个 Fibonacci 素数，没有假设所有 Wall 指数等于一，也没有确定全部聚点。
+
+### FD.4 Wall 指数处的周期与两个数值计数
+
+以下 p>=7 为素数，a=alpha(p)，epsilon=(5/p)，e=v_p(F_(p-epsilon))。由出现秩和 U.1，p 不整除 (p-epsilon)/a，因此
+
+\[
+e=v_p(F_a),\qquad e\ge1.\tag{FD8}
+\]
+
+在 R=Z/(p^e) 中 Q^a=cI，且 c^2=(-1)^a。若 a 为奇数，则 c^2=-1，所以 Q^(2a)=-I 且 pi(p^e)=pi(p)=4a。若 a=2 mod4，则 c=1 modp；由 (c-1)(c+1)=0 modp^e 及 c+1 为单位，得到 c=1 modp^e，故 pi(p^e)=pi(p)=a。若 4|a，则同理 c=-1 modp^e，故 pi(p^e)=pi(p)=2a。这些模 p 的周期三分律是 Vinson 的经典定理，也见 Bragman-Rowland 定理 7；降模保证所给周期没有进一步缩短。
+
+令 r=pi(p)。在 0<=i<r 中去掉 Lucas 零点 L_i=0 modp，记余下的指标集为 I。定义
+
+\[
+N_p=|\{F_i\bmod p^e:i\in I\}|.
+\]
+
+令 Z_p 为 Lucas 零点 i 的个数，其 F_i modp^e 没有在 I 中出现。Bragman-Rowland 定理 1 给出
+
+\[
+\delta(p)=\frac{N_p}{p^e}
++\frac{Z_p}{2p^{2e-1}(p+1)},\qquad 0\le Z_p\le2.
+\tag{FD9}
+\]
+
+这里 N_p 计不同的数值，Z_p 按该定理计指标，不能互换。Lucas 零点由其命题 9 分类：a 奇数时没有；a=2 mod4 时只有 a/2；4|a 时有 a/2 与 3a/2。
+
+### FD.5 奇偶配对给出严格的计数上界
+
+**定理。** 对每个素数 p>=7，
+
+\[
+1\le N_p\le p-1.\tag{FD10}
+\]
+
+**证明。** i=0 是 Lucas 非零点并提供值零，故 N_p>=1。由于 F_1,...,F_6 的素因子都不超过五，a>=7。以下全部数值同余都在 R=Z/(p^e) 中进行。使用整数恒等式 F_(-i)=(-1)^(i+1)F_i，将指标视为相应周期的剩余类。
+
+若 a 为奇数，r=4a 且 F_(i+2a)=-F_i。定义保持数值的对合
+
+\[
+T(i)=
+\begin{cases}
+2a-i\pmod{4a},&i\text{ 偶},\\
+-i\pmod{4a},&i\text{ 奇}.
+\end{cases}
+\]
+
+这个对合没有不动点：第一种固定方程要求 i=a 或 3a，与偶性矛盾；第二种要求 i=0 或 2a，与奇性矛盾。因此有 2a 个二元轨道。零值占据两个不同轨道 {0,2a} 与 {a,3a}；此外 F_1=F_2=1，指标一与二因奇偶不同而属于不同轨道。这是两项不同的数值重合，所以 N_p<=2a-2。又 a 为奇数且 a|(p-epsilon)，故 2a<=p-epsilon<=p+1，得到 N_p<=p-1。
+
+若 a=2 mod4，r=a，仅去掉一个 Lucas 零点 a/2。该点不是一或二，因为 a>=7。集合 I 有 a-1 个指标，其中 F_1=F_2，故 N_p<=a-2<=p-1。
+
+若 4|a，r=2a 且 F_(i+a)=-F_i。在偶指标处令 T(i)=a-i mod2a，在奇指标处令 T(i)=-i mod2a。保持数值的计算与第一种相同。其全部不动点恰为 a/2 和 3a/2，正好是删去的两个 Lucas 零点；所以 I 分成 a-1 个二元轨道。因为 a>=8，指标一与二都在 I 中，位于不同奇偶轨道，却有相同值一。于是 N_p<=a-2<=p-1。三种情形覆盖全部情况。
+
+### FD.6 WSS 与随素数移动的密度门槛
+
+**定理。** 对每个素数 p>=7，
+
+\[
+\boxed{\mathrm{WSS}(p)\iff e\ge2
+\iff \delta(p)<\frac1p.}\tag{FD11}
+\]
+
+**证明。** e=1 时，由 FD9、FD10 得 delta(p)>=N_p/p>=1/p。若 e>=2，则
+
+\[
+\delta(p)
+\le\frac{p-1}{p^2}+\frac{1}{p^3(p+1)}
+<\frac1p.
+\]
+
+这证明两方向。p=3 可由 F_4=3 和 delta(3)=1 独立处理，得到同一判断；p=2,5 不纳入这里的标准 WSS 定义。
+
+**推论。** 将 delta(p) 写成既约分数 A_p/B_p，B_p>0。对 p>=7，若 Z_p=0，则 v_p(B_p)=e；若 Z_p>0 且 e>=2，则 v_p(B_p)=2e-1；若 e=1，则 v_p(B_p)<=1。因此
+
+\[
+\boxed{\mathrm{WSS}(p)\iff p^2\mid B_p.}\tag{FD12}
+\]
+
+**证明。** Z_p=0 时，1<=N_p<p 保证 N_p 与 p 互素。Z_p>0 时，通分后的分子为
+2N_p p^(e-1)(p+1)+Z_p。
+当 e>=2，该分子模 p 为 Z_p，取值一或二，非零，故约分不移除任何 p 因子。当 e=1，原分母 2p(p+1) 的 p 指数为一，约分后至多为一。这些情形给出最后的等价式。
+
+FD6 的零聚点结论没有给出 FD11 所需的移动阈值：它使 delta(p_j) 趋于零，而 WSS 要求 p_j delta(p_j)<1。两者之间不能交换量词或省去因子 p_j。特别地，Stewart 的大小界没有强迫 C_j 出现重复素因子。WSS 存在性和无穷性没有在本节得到证明。
+
+FD3 的最大素因子选择不必等于 GP36 选出的奇重数素因子。本节不声称所选最大素因子的 Wall 指数为奇数。
