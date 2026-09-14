@@ -28,6 +28,55 @@ import native
 from test_native_support import *
 
 class NativeRecoveryTests:
+    def test_release_stage_and_verify_preserve_absent_lake(self):
+        self.build()
+        self.publish()
+        incoming = self.root / 'public.json'
+        with tempfile.TemporaryDirectory(prefix='inspector-release.') as directory:
+            directory = Path(directory)
+            temporary = directory / 'tmp'
+            temporary.mkdir()
+            for damage in ['none', 'missing', 'stale', 'stale-dependency']:
+                with self.subTest(damage=damage):
+                    root = directory / damage
+                    shutil.copytree(self.root, root, ignore=shutil.ignore_patterns('.lake', '.git'))
+                    subprocess.run(['git', 'init', '--quiet', str(root)], check=True,
+                        capture_output=True, timeout=120)
+                    bundle = incoming if damage != 'missing' else directory / 'absent.json'
+                    if damage == 'stale':
+                        source = root / 'D5/Alone.lean'
+                        source.write_text(source.read_text() + '-- changed input\n')
+                    elif damage == 'stale-dependency':
+                        (root / 'ClaimSupport.lean').write_text('def claimSupport : Prop := True\n')
+                    environment = dict(self.env, TMPDIR=str(temporary),
+                        STRATALINT_LEAN_INPUT_MEMO_ROOT=str(directory / 'verify-memo'))
+                    staged = directory / ('staged-' + damage) / publication.RAW
+                    stage = subprocess.run([sys.executable, '-B', str(root / 'tools/lean-inspector/publication.py'),
+                        'stage', '--bundle', str(bundle), '--staging-directory', str(staged.parent),
+                        '--repository', str(root)], cwd=directory, env=environment,
+                        text=True, capture_output=True, timeout=120)
+                    self.assertEqual(stage.returncode, 0 if damage == 'none' else 1, stage.stdout + stage.stderr)
+                    self.assertFalse((root / '.lake').exists(), 'stage must preserve whole-tree donor eligibility')
+                    self.assertEqual(list(temporary.iterdir()), [], 'stage must clean its input memo')
+                    verify = subprocess.run(['bash', str(root / 'tools/scripts/report/lean-report-input.sh'),
+                        'verify', '--repository', str(root), '--report', str(staged if damage == 'none' else bundle)],
+                        cwd=directory, env=environment, text=True, capture_output=True, timeout=120)
+                    self.assertEqual(verify.returncode,
+                        {'none': 0, 'missing': 2, 'stale': 2, 'stale-dependency': 1}[damage], verify.stdout + verify.stderr)
+                    if damage == 'none':
+                        self.assertEqual(staged.read_bytes(), incoming.read_bytes())
+                        self.assertEqual(publication.member(staged, '.materials.zip').read_bytes(),
+                            publication.member(incoming, '.materials.zip').read_bytes())
+                    else:
+                        self.assertFalse(staged.exists())
+                        diagnostic = {'missing': 'missing bundle member', 'stale': 'stale input/provenance',
+                                      'stale-dependency': 'stale dependency'}[damage]
+                        self.assertIn(diagnostic, stage.stderr)
+                    self.assertFalse((root / '.lake').exists(), 'verify must preserve whole-tree donor eligibility')
+                    self.assertEqual(list(temporary.iterdir()), [])
+                    self.record_result('release-' + damage, dict(stage_exit=stage.returncode,
+                        verify_exit=verify.returncode, lake_absent=True, temporary_clean=True))
+
     def test_native_recovers_outer_member_without_lzma(self):
         self.check_missing_lzma_recovery(nested=False)
 

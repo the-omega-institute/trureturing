@@ -7,6 +7,7 @@ source planner, remote transport, or persistent store.
 from __future__ import annotations
 
 import argparse
+from contextlib import nullcontext
 import hashlib
 import importlib.util
 import json
@@ -70,8 +71,13 @@ def digest(path):
 
 def coordinates(repository):
     helper = Path(repository) / 'tools/scripts/report/lean-report-input.sh'
-    env = dict(os.environ, STRATALINT_LEAN_INPUT_MEMO_ROOT=str(Path(repository) / '.lake/lean-input-memo'))
-    values = subprocess.check_output([str(helper), 'address', '--repository', str(repository)], text=True, env=env).strip().split(' ')
+    lake = Path(repository) / '.lake'
+    # Pre-ensure validation must leave an absent .lake eligible for whole-tree
+    # donor seeding. Existing trees keep their reusable input memo.
+    with (nullcontext(str(lake / 'lean-input-memo')) if lake.exists() else
+            tempfile.TemporaryDirectory(prefix='lean-report-input-memo.', dir=os.environ.get('TMPDIR'))) as memo:
+        env = dict(os.environ, STRATALINT_LEAN_INPUT_MEMO_ROOT=memo)
+        values = subprocess.check_output([str(helper), 'address', '--repository', str(repository)], text=True, env=env).strip().split(' ')
     if len(values) != 4 or any(not HEX.fullmatch(value) for value in values):
         raise ValueError('malformed repository input address')
     repository_id, producer, sources, config = values
