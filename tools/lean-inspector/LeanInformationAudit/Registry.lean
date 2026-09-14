@@ -994,6 +994,28 @@ def rawIdentity (params : List Name) (e : Expr) (fuel : Nat := 524288) : Except 
   let (_, state) ← action.run { remaining := min fuel 524288 }
   return (Sha256.hex state.bytes, state.bytes.size)
 
+/-- Complete binding evidence uses the same unambiguous, bounded wire format as
+plans. Dependency arrays are separate length-delimited inputs, not annotations
+outside the evidence identity. The evidence reference itself is not encoded. -/
+def bindingIdentity (statementIdentity : String) (certificate : TemplateBindingCertificate)
+    (fuel : Nat) : Except String (String × Nat) := do
+  let action : WireM Unit := do
+    emit "DTR-binding-evidence-v1"
+    for name in #[certificate.key.root, certificate.key.registrationModule,
+        certificate.key.theoremName, certificate.key.objectArena, certificate.key.catalog] do
+      wireName name
+    emit statementIdentity
+    emit certificate.planIdentity
+    emit certificate.descriptorIdentity
+    emit certificate.actualIdentity
+    for inputs in #[certificate.argumentInputs, certificate.extractionInputs] do
+      emit (toString inputs.size)
+      for input in inputs do
+        wireName input.name; wireName input.owner
+        emit input.typeIdentity; emit input.bodyIdentity
+  let (_, state) ← action.run { remaining := min fuel 524288 }
+  return (Sha256.hex state.bytes, state.bytes.size)
+
 def PlanNode.toExpr : PlanNode → Expr
   | .atom e | .supplied e | .proofLeaf _ e => e
   | .expanded _ checked => checked.toExpr
@@ -2025,16 +2047,21 @@ private def closed (e : Expr) : MetaM Unit := do
   if e.hasMVar || e.hasFVar || e.hasLooseBVars then
     throwError "incomplete_closure:dtr.descriptor_open"
 
-private def inputIdentity (name : Name) : MetaM DependencyIdentity := do
+private def inputIdentity (name : Name) : CompareM DependencyIdentity := do
+  debit
   let info ← getConstInfo name
   let owner := (RegistrationReifier.declaringModuleOf (← getEnv) name).getD (← getEnv).header.mainModule
-  let .ok (typeIdentity, _) := TemplateAudit.rawIdentity info.levelParams info.type
+  let .ok (typeIdentity, typeWork) := TemplateAudit.rawIdentity info.levelParams info.type (← get).remaining
     | throwError "incomplete_closure:dtr.input_identity"
-  let bodyIdentity ← match info.value? with
+  debit typeWork
+  -- A proof input retains its raw occurrence and full type identity. Its
+  -- implementation is outside the provenance/evidence boundary.
+  let bodyIdentity ← if ← isProp info.type then pure "" else match info.value? with
     | none => pure ""
     | some value =>
-      let .ok (identity, _) := TemplateAudit.rawIdentity info.levelParams value
+      let .ok (identity, bodyWork) := TemplateAudit.rawIdentity info.levelParams value (← get).remaining
         | throwError "incomplete_closure:dtr.input_identity"
+      debit bodyWork
       pure identity
   return { name, owner, typeIdentity, bodyIdentity }
 
@@ -2059,7 +2086,7 @@ private def validate (event : TemplateOccurrenceEvent) (descriptor : Expr) : Met
     | .error reason => throwError reason
   let actual ← extract event.realizationName
   closed actual
-  let compare : CompareM Unit := do
+  let compare : CompareM TemplateBindingCertificate := do
     debit plan.serializedBytes
     let mut body := levels plan.levelParams universeArgs plan.plan
     let mut type := levels plan.levelParams universeArgs plan.typePlan
@@ -2078,22 +2105,24 @@ private def validate (event : TemplateOccurrenceEvent) (descriptor : Expr) : Met
     let exposed ← forwardActual event.key.theoremName name actual
     if !(← equalRaw descriptor exposed) && !(← matchesPlan context body exposed) then
       throwError "unclassified_form:dtr.realization_mismatch"
-  let (_, comparison) ← compare.run { remaining := budget - argumentWork }
-  let .ok (descriptorIdentity, _) := TemplateAudit.rawIdentity [] descriptor
-    | throwError "incomplete_closure:dtr.descriptor_identity"
-  let .ok (actualIdentity, _) := TemplateAudit.rawIdentity [] actual
-    | throwError "incomplete_closure:dtr.actual_identity"
-  let argumentInputs ← argumentNames.mapM inputIdentity
-  let extractionInputs ← (comparison.extractionNames.insert event.realizationName).toArray.mapM inputIdentity
-  let identityMaterial := String.intercalate "\u0000" ["DTR-binding-v1", event.key.root.toString,
-    event.key.registrationModule.toString, event.key.theoremName.toString,
-    event.key.objectArena.toString, event.key.catalog.toString, event.statementIdentity,
-    plan.planIdentity, descriptorIdentity, actualIdentity]
-  return {
-    evidenceRef := Sha256.hex identityMaterial.toUTF8
-    key := event.key
-    planIdentity := plan.planIdentity
-    descriptorIdentity, actualIdentity, argumentInputs, extractionInputs }
+    let .ok (descriptorIdentity, descriptorWork) := TemplateAudit.rawIdentity [] descriptor (← get).remaining
+      | throwError "incomplete_closure:dtr.descriptor_identity"
+    debit descriptorWork
+    let .ok (actualIdentity, actualWork) := TemplateAudit.rawIdentity [] actual (← get).remaining
+      | throwError "incomplete_closure:dtr.actual_identity"
+    debit actualWork
+    let argumentInputs ← argumentNames.mapM inputIdentity
+    let extractionNames := ((← get).extractionNames.insert event.realizationName).toArray
+    let extractionInputs ← extractionNames.mapM inputIdentity
+    let certificate : TemplateBindingCertificate := {
+      evidenceRef := "", key := event.key, planIdentity := plan.planIdentity,
+      descriptorIdentity, actualIdentity, argumentInputs, extractionInputs }
+    let .ok (evidenceRef, evidenceWork) := bindingIdentity event.statementIdentity certificate (← get).remaining
+      | throwError "incomplete_closure:E8.evidence_identity"
+    debit evidenceWork
+    return { certificate with evidenceRef }
+  let (certificate, _) ← compare.run { remaining := budget - argumentWork }
+  return certificate
 
 private initialize assessmentEvents : EnvExtension (Array TemplateOccurrenceKey) ←
   registerEnvExtension (pure #[])

@@ -495,6 +495,9 @@ private structure WalkState where
   counters : ProvenanceCounters := {}
   visited : Std.HashSet (Expr × Position × Array Expr) := {}
   walked : NameHashSet := {}
+  /-- Raw constant occurrences, including independent proof heads. Retaining
+  their identity does not queue or inspect a proof implementation. -/
+  retainedInputs : NameHashSet := {}
   queued : Std.HashSet (Name × List Level) := {}
   pending : List (Name × List Level) := []
   typeChecks : Std.HashMap (Expr × Array Expr × Name) TypeClassification := {}
@@ -1966,7 +1969,9 @@ private partial def visitOccurrence (env : Environment) (pos : Position)
   unless ← chargeSummaryWork (fun c => { c with dispatchWork := c.dispatchWork + 1 }) do return
   let first := e.getAppFn.constName?.getD origin
   modify fun s => { s with currentFirst := first, currentOrigin := origin }
-  if let .const n _ := e.getAppFn then directConstant env n
+  if let .const n _ := e.getAppFn then
+    modify fun s => { s with retainedInputs := s.retainedInputs.insert n }
+    directConstant env n
   if let .proj n _ _ := e then directProjection env n
   if (← get).forbidden then return
   if ReadoutFamily.carrierHeads.contains first && e.isApp then
@@ -2113,6 +2118,7 @@ private structure WalkResult where
   admission : Option ProvenanceAdmissionWitness := none
   walked : Array String
   walkedNames : Array Name := #[]
+  inputNames : Array Name := #[]
 
 private def collectReadout (env : Environment) (theoremName address : Name) (readout : Expr) (extractionWork : Nat := 0) (extractionFailed : Bool := false) : CoreM WalkResult := do
   let scope := (moduleScopeCache.getState env).getD (classifyModules env)
@@ -2149,7 +2155,9 @@ private def collectReadout (env : Environment) (theoremName address : Name) (rea
       state.unclassified.isNone then
     some ⟨"unclassified_root", address, namespaceLabel env address, address⟩
     else state.unclassified
-  return ⟨state.forbidden, unclassified, state.incomplete, admission, names, state.walked.toArray⟩
+  let inputNames := state.walked.toArray.foldl (fun inputs n => inputs.insert n) state.retainedInputs
+  return ⟨state.forbidden, unclassified, state.incomplete, admission, names,
+    state.walked.toArray, inputNames.toArray⟩
 
 private def safeCollect (env : Environment) (theoremName address : Name) (readout : Expr)
     (extractionWork : Nat := 0) (extractionFailed : Bool := false) : CoreM WalkResult :=
@@ -2219,7 +2227,7 @@ def templateArgumentsCurrent (theoremName : Name) (arguments : Array Expr)
     if result.forbidden then return .error "forbidden_dependency:dtr.argument_audit"
     if result.unclassified.isSome || result.admission.isNone then
       return .error "unclassified_form:dtr.argument_audit"
-    for name in result.walkedNames do inputs := inputs.insert name
+    for name in result.inputNames do inputs := inputs.insert name
   return .ok (inputs.toArray, min 524288 availableWork - remaining)
 
 end LeanInformationAudit.RegistrationGates
