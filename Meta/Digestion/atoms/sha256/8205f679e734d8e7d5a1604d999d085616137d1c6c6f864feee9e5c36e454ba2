@@ -1,0 +1,46 @@
+### 命题 55.5（同一记录复用的有限模型）
+
+令
+
+$$
+A=\sum_{i\in I}a_i|i\rangle\langle i|,
+\qquad
+U_\theta=e^{-i\theta A\otimes Y},
+$$
+
+记录比特从 $|0\rangle$ 开始。连续作用 $m$ 次而不测量、不重置该比特后，系统边缘通道仍为 Schur 通道，并且
+
+$$
+R^{(m)}_{ij}
+=\langle0|e^{im\theta a_jY}e^{-im\theta a_iY}|0\rangle
+=\cos\!\bigl(m\theta(a_i-a_j)\bigr).
+$$
+
+因此
+
+$$
+V_m^{\mathrm{reuse}}(i,j)
+=\left|\cos\!\bigl(m\theta(a_i-a_j)\bigr)\right|,
+$$
+
+而一般不满足
+
+$$
+\mathcal C_{R^{(m+n)}}
+=\mathcal C_{R^{(m)}}\mathcal C_{R^{(n)}}.
+$$
+
+例如 $a_0=0,a_1=1,\theta=\pi/4$ 时，
+
+$$
+V_2^{\mathrm{fresh}}=\frac12,
+\quad V_2^{\mathrm{reuse}}=0,
+\qquad
+V_4^{\mathrm{fresh}}=\frac14,
+\quad V_4^{\mathrm{reuse}}=1.
+$$
+
+同样四次作用可以给出衰减到四分之一的独立记录，也可以给出完整回归的相干复用。差异来自旧记录仍在联合系统中携带相位，而不是来自“作用次数”这个整数本身。
+
+证明。由于 $A$ 在构型基底对角化，$U_\theta^m$ 对 $|i\rangle$ 条件地作用为 $e^{-im\theta a_iY}$。对记录比特取内积得到 $R^{(m)}_{ij}$；$e^{-isY}=\cos s\,I-i\sin s\,Y$ 且 $\langle0|Y|0\rangle=0$，故得到余弦式。数值等式由 $\cos(\pi/2)=0$、$\cos(\pi)=-1$ 以及独立通道的幂次直接得出。证毕。
+
