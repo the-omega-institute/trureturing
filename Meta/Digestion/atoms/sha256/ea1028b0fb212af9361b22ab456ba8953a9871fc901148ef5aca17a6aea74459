@@ -1,0 +1,35 @@
+**命题 54.7（近似充分记录的纤维判据）。** 若记录 $r:X\to R$ 满足每个纤维的 $d_H$ 直径不超过 $\varepsilon$，选定每个非空纤维的代表元 $x_u$ 并令
+
+$$
+\widehat p_i(\,\cdot\mid u)=p_i(\,\cdot\mid x_u),
+$$
+
+则对所有 $x$ 和 $i$，都有
+
+$$
+\operatorname{TV}\!\left(p_i(\,\cdot\mid x),
+\widehat p_i(\,\cdot\mid r(x))\right)\le\varepsilon.
+$$
+
+反过来，若某个预测器对每个 $x$ 的误差均不超过 $\alpha$，即
+
+$$
+\operatorname{TV}\!\left(p_i(\,\cdot\mid x),
+\widehat p_i(\,\cdot\mid r(x))\right)\le\alpha
+$$
+
+对所有 $i,x$ 成立，则每个记录纤维的 $d_H$ 直径不超过 $2\alpha$。
+
+证明。第一部分把 $x$ 与同一纤维代表元的总变差距离直接代入 $d_H$ 的定义。第二部分对同一纤维中的 $x,x'$ 使用三角不等式：
+
+$$
+\operatorname{TV}(p_i^x,p_i^{x'})
+\le\operatorname{TV}(p_i^x,\widehat p_i^{r(x)})
++\operatorname{TV}(\widehat p_i^{r(x')},p_i^{x'})
+\le2\alpha,
+$$
+
+其中 $r(x)=r(x')$。对 $i$ 取最大值得证。证毕。
+
+该命题是静态的有限任务压缩条件，和第 50、52 节的动态闭合误差不同：这里不假定存在一步记录通道，也不把误差按时间步累积；它只回答“在预先列出的实验族上，一个记录纤维内最多允许多大预测差异”。如果实验族以包含原实验族的方式扩张，$d_H$ 只能增大，原来的 $\varepsilon$-充分性可能失效。
+
