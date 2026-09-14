@@ -1,0 +1,81 @@
+**定理 14.3（对角规范不变性与循环相关矩阵的精确最优恢复）。** 对任意对角酉矩阵 $D_0$，都有
+
+$$
+\eta(D_0CD_0^\dagger)=\eta(C).
+$$
+
+进一步，设某个对角酉 $D_0$ 使 $C'=D_0CD_0^\dagger$ 在标准离散 Fourier 基下对角。明确地，令
+
+$$
+\omega=e^{2\pi i/d},
+\qquad
+v_k=(\omega^{kx})_{x=0}^{d-1},
+\qquad
+f_k=\frac{v_k}{\sqrt d},
+\qquad 0\le k<d,
+$$
+
+并假设 $C'f_k=\lambda_k f_k$。则
+
+$$
+\eta(C)=1-\frac{\max_k\lambda_k}d
+=1-\frac{\lambda_{\max}(C)}d.
+$$
+
+设 $k_*$ 是任意达到最大特征值的指标，定义
+
+$$
+Z=\operatorname{diag}(1,\omega,\ldots,\omega^{d-1}),
+\qquad
+\mathcal R_*
+=\operatorname{Ad}_{Z^{-k_*}D_0},
+\qquad
+\operatorname{Ad}_U(X)=UXU^\dagger.
+$$
+
+则 $\mathcal R_*$ 达到上述最小值。最优误差同时由不带参考的输入 $|s_d\rangle=d^{-1/2}\sum_x|x\rangle$ 达到。
+
+上述等式与达到协议以完整相关矩阵经对角规范变换后具有所列 Fourier 特征基为假设；对一般相关矩阵，定理 14.2 只给出恢复误差的下界。
+
+证明。 对角酉的矩阵元计算给出
+
+$$
+M_{D_0CD_0^\dagger}
+=\operatorname{Ad}_{D_0}\circ M_C.
+$$
+
+当 $\mathcal R$ 遍历全部 CPTP 恢复时，$\mathcal R\circ\operatorname{Ad}_{D_0}$ 也遍历全部 CPTP 恢复，因为右侧复合的逆由 $\operatorname{Ad}_{D_0^\dagger}$ 给出。这证明 $\eta$ 的对角规范不变性。
+
+Fourier 向量 $(f_k)_{k=0}^{d-1}$ 正交归一，因此
+
+$$
+C'=\sum_{k=0}^{d-1}\frac{\lambda_k}d v_kv_k^\dagger,
+\qquad
+p_k:=\frac{\lambda_k}d\ge0,
+\qquad
+\sum_kp_k=1.
+$$
+
+逐项使用 $(v_kv_k^\dagger)_{xy}=\omega^{k(x-y)}$，得到
+
+$$
+M_{C'}=\sum_{k=0}^{d-1}p_k\operatorname{Ad}_{Z^k}.
+$$
+
+故恢复后的通道为
+
+$$
+\mathcal R_*\circ M_C
+=\sum_{k=0}^{d-1}p_k\operatorname{Ad}_{Z^{k-k_*}},
+$$
+
+其中恒等通道的权重为 $p_{k_*}$。任意两个通道的 diamond 距离至多为 $2$，所以三角不等式给出
+
+$$
+\frac12\|\mathcal R_*\circ M_C-\operatorname{id}_S\|_\diamond
+\le\sum_{k\ne k_*}p_k
+=1-p_{k_*}.
+$$
+
+另一方面，向量 $(Z^{k-k_*}|s_d\rangle)_k$ 正交归一；对输入 $|s_d\rangle\langle s_d|$，恢复输出是这些正交纯态按 $p_k$ 的混合，目标 $|s_d\rangle\langle s_d|$ 对应指标 $k_*$。二者的迹距离恰为 $1-p_{k_*}$，故上界达到。定理 14.2 排除了任何其他 CPTP 恢复获得更小误差的可能性。证毕。
+

@@ -1,0 +1,117 @@
+**推论 16.9（有限全历史误差的充分副本数）。** 记 $R_m=(d-1)\mu^{2m}$。每阶段存在一个有限POVM，使每个标签及每个允许历史下的读取错误率均不超过
+$$
+b_m=\frac{R_m}{1+R_m}.
+$$
+因此定理16.3给出
+$$
+\frac12\|\mathcal H_{\rm actual}-\mathcal H_{\rm ideal}\|_\diamond
+\le\sqrt{1-(1-b_m)^N}
+=\sqrt{1-(1+R_m)^{-N}}.
+$$
+特别地，给定 $0<\varepsilon<1$，令
+$$
+b_*=1-(1-\varepsilon^2)^{1/N}.
+$$
+当 $0<\mu<1$ 时，以下整数条件足以使整个输出历史的误差不超过 $\varepsilon$：
+$$
+m\ge m_{\rm suff}
+:=\max\left\{1,\left\lceil
+\frac{\log((d-1)(1-b_*)/b_*)}{2\log(1/\mu)}
+\right\rceil\right\}.
+$$
+当 $\mu=0$ 时，$m=1$ 即可得到零误差。当 $0<\mu<1$ 时，选择 $m=m_{\rm suff}$ 的构造使用 $Nm_{\rm suff}$ 份新鲜条件记录；这是充分预算，不宣称最少副本数。
+
+更一般地，若第 $t$ 阶段全部既有历史下的条件记录Gram矩阵都满足非对角平方重叠行和至多为 $R_t\ge0$，则
+$$
+\frac12\|\mathcal H_{\rm actual}-\mathcal H_{\rm ideal}\|_\diamond
+\le\sqrt{1-\prod_{t=1}^N(1+R_t)^{-1}}.
+$$
+这项充分上界不超过 $\varepsilon$ 的充要条件为
+$$
+\sum_{t=1}^N\log(1+R_t)\le-\log(1-\varepsilon^2).
+$$
+例如第 $t$ 阶段使用 $m_t$ 份记录、单份重叠模统一至多为 $\mu_t$ 时，可以取 $R_t=(d-1)\mu_t^{2m_t}$。
+
+证明。先对任意有限单位记录族直接构造读取POVM，此处不要求记录向量线性无关。令 $f_x$ 为 $\mathbb C^d$ 的标准正交基，$Vf_x=e_x$，并记通常方向的Gram矩阵
+$$
+H=V^\dagger V,\qquad H_{yx}=\langle e_y,e_x\rangle,\qquad H_{xx}=1.
+$$
+取极分解 $V=U\sqrt H$，其中 $U$ 是从 $\operatorname{supp}H$ 到记录张成空间的部分等距映射，且在 $\ker H$ 上为零。因此
+$$
+U^\dagger U=P_{\operatorname{supp}H},\qquad
+UU^\dagger=P_{\operatorname{ran}V},\qquad
+U^\dagger V=\sqrt H.
+$$
+在记录环境 $\mathcal E$ 上选择
+$$
+M_x=U|f_x\rangle\langle f_x|U^\dagger
++\frac{I_{\mathcal E}-UU^\dagger}{d}.
+$$
+各项非负，且 $\sum_xM_x=I_{\mathcal E}$，所以它们构成POVM。这是均匀先验平方根测量在信号张成空间外的一种完成，沿用第7.3节所引的标准平方根测量方法；下面直接估计每个标签，而不假定实际标签分布均匀。
+
+由于 $e_x\in\operatorname{ran}V$，补空间项不贡献正确率，且
+$$
+q_x:=\langle e_x,M_xe_x\rangle
+=|\langle f_x,U^\dagger Vf_x\rangle|^2
+=\bigl((\sqrt H)_{xx}\bigr)^2.
+$$
+对上述成功率，采用[式(8)的逐标签平方根测量界](../../../Library/Quantum/montanaro2007distinguishability.md)。文献中的含先验Gram矩阵在均匀先验下为 $G=H/d$，第 $x$ 个标签对平均成功率的贡献为 $q_x/d$；将该式逐项乘以 $d$，得到此处的逐标签界。下面写出其在单位对角Gram矩阵上的推导。取谱分解 $H=\sum_j\lambda_j|u_j\rangle\langle u_j|$，其中 $\lambda_j\ge0$，并定义
+$$
+r_x=\sum_{y\ne x}|H_{yx}|^2,
+\qquad
+\nu_j=\lambda_j|\langle u_j,f_x\rangle|^2\quad(\lambda_j>0).
+$$
+由于 $H_{xx}=1$，正谱上的这些权重满足
+$$
+\sum_{\lambda_j>0}\nu_j=1,
+\qquad
+\sum_{\lambda_j>0}\nu_j\lambda_j
+=(H^2)_{xx}=1+r_x.
+$$
+函数 $s\mapsto s^{-1/2}$ 在 $s>0$ 上凸，因此Jensen不等式给出
+$$
+(\sqrt H)_{xx}
+=\sum_{\lambda_j>0}\nu_j\lambda_j^{-1/2}
+\ge\left(\sum_{\lambda_j>0}\nu_j\lambda_j\right)^{-1/2}
+=\frac1{\sqrt{1+r_x}}.
+$$
+从而逐标签有
+$$
+q_x\ge\frac1{1+r_x},\qquad
+1-q_x\le\frac{r_x}{1+r_x}.
+$$
+零特征值对 $\nu_j$ 的贡献为零；整个不等式只在正谱上求和，因此也适用于秩亏Gram矩阵。这一无秩条件的充分界不要求 $(d-1)\max_{x\ne y}|H_{xy}|<1$。
+
+现在将上述构造应用于每个阶段和历史下的乘积记录族。其Gram矩阵满足
+$$
+H^{(m)}_{yx}=\langle e_y,e_x\rangle^m,
+\qquad
+\sum_{y\ne x}|H^{(m)}_{yx}|^2\le(d-1)\mu^{2m}.
+$$
+由于 $r\mapsto r/(1+r)$ 在 $r\ge0$ 上不减，得到统一的 $b_m=R_m/(1+R_m)$。逐阶段、逐历史选择这些测量，再用定理16.3，就得到 $\sqrt{1-(1-b_m)^N}$。一般的 $R_t$ 同样给出 $1-\beta_t\ge(1+R_t)^{-1}$，代入该定理即得非均匀乘积式。对正量取对数，便得到所列分配条件。
+
+因为 $b_*\in(0,1)$，条件 $b_m\le b_*$ 等价于 $R_m\le b_* /(1-b_*)$，并保证
+$$
+1-(1-b_m)^N\le\varepsilon^2.
+$$
+对 $0<\mu<1$ 解这个标量不等式、取上整并满足 $m\ge1$，即得 $m_{\rm suff}$。这里对数分子可以为负，故保留与 $1$ 取最大值的条件。$\mu=0$ 时单份记录已两两正交，直接得到 $b_1=0$。证毕。
+
+如果只需更简单的充分表达，可利用
+$$
+1-\prod_t(1+R_t)^{-1}
+\le\sum_t\frac{R_t}{1+R_t}\le\sum_tR_t,
+$$
+因此 $\sum_tR_t\le\varepsilon^2$ 足够。等量副本时可以选择
+$$
+m\ge
+\left\lceil\frac{\log((d-1)N/\varepsilon^2)}{2\log(1/\mu)}\right\rceil
+\qquad(0<\mu<1).
+$$
+此式把误差预算分配为每阶段至多 $\varepsilon^2/N$，无需把单步平方根误差先按线性和累积。预算计入的是各阶段新准备的条件记录份数；同一环境反复参与相互作用不满足这里的乘积记录假设。
+
+对定理1.3的Zeckendorf开放窗口，取 $L\ge1$，其合法构型空间满足 $d=\dim\mathcal H_L=G_L=F_{L+2}$。若在该空间上的条件记录与共同控制满足本节假设，则同一充分条件直接写成
+$$
+N(G_L-1)\mu^{2m}\le\varepsilon^2.
+$$
+这里合法构型约束通过标签数 $G_L$ 进入历史误差预算；此项代入仍以本节的条件记录与共同控制假设为前提。
+

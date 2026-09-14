@@ -1,0 +1,15 @@
+**定义 16.7（历史事件及条件联合输出）。** 令 $\rho,\sigma$ 是同一有限经典历史寄存器 $H$ 与其余可访问系统 $Q$ 上的 cq 密度矩阵；$Q$ 可以包括最终系统、记忆及参考。对一个历史事件 $E$，令 $\Pi_E$ 为对应的历史投影，并记
+
+$$
+X=(\Pi_E\otimes I_Q)\rho(\Pi_E\otimes I_Q),
+\qquad
+Y=(\Pi_E\otimes I_Q)\sigma(\Pi_E\otimes I_Q),
+$$
+
+$$
+p=\operatorname{tr}X,
+\qquad q=\operatorname{tr}Y.
+$$
+
+当 $p>0$ 时定义实际条件态 $\rho_E=X/p$；当 $q>0$ 时定义理想条件态 $\sigma_E=Y/q$。概率为零时不定义相应归一化条件态。
+

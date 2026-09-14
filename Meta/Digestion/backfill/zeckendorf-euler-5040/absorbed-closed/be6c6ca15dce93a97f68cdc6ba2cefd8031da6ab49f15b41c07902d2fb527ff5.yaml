@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:be6c6ca15dce93a97f68cdc6ba2cefd8031da6ab49f15b41c07902d2fb527ff5
+  normalized_sha256: sha256:be6c6ca15dce93a97f68cdc6ba2cefd8031da6ab49f15b41c07902d2fb527ff5
+cas_ref: sha256:be6c6ca15dce93a97f68cdc6ba2cefd8031da6ab49f15b41c07902d2fb527ff5
+coverage_gids:
+  - gid: D5/S3/ArithSums/A025529PrimeCubeRefutation.prime_square_only_refuted
+    target_statement_id: sha256:3e15d677d84fdc04fdbfdc4e5be343d1d86eba7ddeec64b9588f0b5a71b34b21
+receipts:
+  unresolved_subitems: []
