@@ -1,0 +1,878 @@
+{
+  "schema": 1,
+  "rows": [
+    {
+      "id": "a11-computed-default-stop",
+      "kind": "behavioral",
+      "target": "LeanInformationAudit.Tests.RegistrationGates.Round7ComputedStatement",
+      "mutation": "Treat an unresolved registered statement head as a completed recognized stop, recreating the round-7 default admission.",
+      "before": "  return .unclassified \u27e8\"unclassified_statement_head\", name,\n    namespaceLabel (\u2190 getEnv) name, (\u2190 get).theoremName\u27e9",
+      "after": "  return .recognized (witness .statementInductive head)",
+      "predicted_red_names": [
+        "ComputedRegisteredProof",
+        "ComputedRegisteredNominalPayload",
+        "ComputedRegisteredDecision",
+        "ComputedRegisteredProofDiagnostic",
+        "ComputedRegisteredNominalPayloadDiagnostic",
+        "ComputedRegisteredDecisionDiagnostic"
+      ]
+    },
+    {
+      "id": "a11-carrier-default-kind",
+      "kind": "behavioral",
+      "target": "LeanInformationAudit.Tests.RegistrationGates.Round7PackedConsumer",
+      "mutation": "Default-admit nominal carrier-valued and abstract fields by their kind, recreating the round-7 unaudited external carrier boundary.",
+      "before": "            if carrierValued ||\n                (concrete.isFVar && !parameter && !auditedFamily) then",
+      "after": "            if false && (carrierValued ||\n                (concrete.isFVar && !parameter && !auditedFamily)) then",
+      "predicted_red_names": [
+        "PackedCarrierHidden",
+        "PackedCarrierOpaqueClean",
+        "PackedCarrierHiddenDiagnostic",
+        "PackedCarrierOpaqueCleanDiagnostic"
+      ]
+    },
+    {
+      "id": "a11-own-clean-prop-argument",
+      "kind": "behavioral",
+      "target": "LeanInformationAudit.Tests.RegistrationGates.AllowlistRules",
+      "mutation": "Classify every Prop-typed argument as allowlisted immediately after bounded inference, bypassing its statement type check. visitOccurrence still erases the proof body; direct application identity check is retained.",
+      "before": "    let some type \u2190 occurrenceType occurrence | return .incomplete\n    let exact \u2190 exactScalarStatement type",
+      "after": "    let some type \u2190 occurrenceType occurrence | return .incomplete\n    let some proof \u2190 boundedMeta (Meta.isProp type) `mutant_prop_clean | return .incomplete\n    if proof then return .allowlisted (witness .proofBoundary type)\n    let exact \u2190 exactScalarStatement type",
+      "predicted_red_names": [
+        "ImportedLibraryPrivateProof",
+        "IndependentProofConstant",
+        "ClosedStatementInhabitant",
+        "InlineClosedStatementInhabitant",
+        "NominalLiteral"
+      ]
+    },
+    {
+      "id": "a11-own-remove-classical-choice",
+      "kind": "behavioral",
+      "target": "LeanInformationAudit.Tests.RegistrationGates.AllowlistRules",
+      "mutation": "Remove executable Classical namespace rejection; retain the independent unlisted_decision_producer fallback. Predict diagnostic-class assertion reds, not false admission.",
+      "before": "    if pos == .dataPos && n.getRoot == `Classical then\n      noteUnclassified \u27e8\"classical_choice\", n, namespaceLabel env n, origin\u27e9",
+      "after": "    if false && pos == .dataPos && n.getRoot == `Classical then\n      noteUnclassified \u27e8\"classical_choice\", n, namespaceLabel env n, origin\u27e9",
+      "predicted_red_names": [
+        "ClassicalDirect",
+        "TypeBeforeClassicalData",
+        "UnclassifiedPayloadParses"
+      ]
+    },
+    {
+      "id": "default-admit-TypeClassification.flags.forward.1",
+      "kind": "source-contract",
+      "exit": "TypeClassification.flags.forward.1",
+      "rule_id": "retained-witness.rule",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.TypeClassification.flags.forward.1",
+        "CleanReturnInventory.MissingRuleId.TypeClassification.flags"
+      ]
+    },
+    {
+      "id": "default-admit-TypeClassification.witness?.forward.1",
+      "kind": "source-contract",
+      "exit": "TypeClassification.witness?.forward.1",
+      "rule_id": "retained-witness.rule",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.TypeClassification.witness?.forward.1",
+        "CleanReturnInventory.MissingRuleId.TypeClassification.witness?"
+      ]
+    },
+    {
+      "id": "default-admit-reuseWitness.1",
+      "kind": "source-contract",
+      "exit": "reuseWitness.1",
+      "rule_id": "retained-witness.rule",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.reuseWitness.1",
+        "CleanReturnInventory.MissingRuleId.reuseWitness"
+      ]
+    },
+    {
+      "id": "default-admit-bindWitnessSource.forward.1",
+      "kind": "source-contract",
+      "exit": "bindWitnessSource.forward.1",
+      "rule_id": "retained-witness.rule",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.bindWitnessSource.forward.1",
+        "CleanReturnInventory.MissingRuleId.bindWitnessSource"
+      ]
+    },
+    {
+      "id": "default-admit-checkedType.1",
+      "kind": "source-contract",
+      "exit": "checkedType.1",
+      "rule_id": "retained-witness.rule",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.checkedType.1",
+        "CleanReturnInventory.MissingRuleId.checkedType"
+      ]
+    },
+    {
+      "id": "default-admit-statementStep.1",
+      "kind": "source-contract",
+      "exit": "statementStep.1",
+      "rule_id": "statementForall",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.statementStep.1",
+        "CleanReturnInventory.MissingRuleId.statementStep"
+      ]
+    },
+    {
+      "id": "default-admit-statementStep.2",
+      "kind": "source-contract",
+      "exit": "statementStep.2",
+      "rule_id": "statementInductive",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.statementStep.2",
+        "CleanReturnInventory.MissingRuleId.statementStep"
+      ]
+    },
+    {
+      "id": "default-admit-statementOuter.1",
+      "kind": "source-contract",
+      "exit": "statementOuter.1",
+      "rule_id": "statementMembership",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.statementOuter.1",
+        "CleanReturnInventory.MissingRuleId.statementOuter"
+      ]
+    },
+    {
+      "id": "default-admit-statementOuter.2",
+      "kind": "source-contract",
+      "exit": "statementOuter.2",
+      "rule_id": "retained-witness.rule",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.statementOuter.2",
+        "CleanReturnInventory.MissingRuleId.statementOuter"
+      ]
+    },
+    {
+      "id": "default-admit-statementOuter.forward.1",
+      "kind": "source-contract",
+      "exit": "statementOuter.forward.1",
+      "rule_id": "retained-witness.rule",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.statementOuter.forward.1",
+        "CleanReturnInventory.MissingRuleId.statementOuter"
+      ]
+    },
+    {
+      "id": "default-admit-listStatementBoundary.1",
+      "kind": "source-contract",
+      "exit": "listStatementBoundary.1",
+      "rule_id": "listForall",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.listStatementBoundary.1",
+        "CleanReturnInventory.MissingRuleId.listStatementBoundary"
+      ]
+    },
+    {
+      "id": "default-admit-listStatementBoundary.2",
+      "kind": "source-contract",
+      "exit": "listStatementBoundary.2",
+      "rule_id": "listNegated",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.listStatementBoundary.2",
+        "CleanReturnInventory.MissingRuleId.listStatementBoundary"
+      ]
+    },
+    {
+      "id": "default-admit-listStatementBoundary.forward.1",
+      "kind": "source-contract",
+      "exit": "listStatementBoundary.forward.1",
+      "rule_id": "retained-witness.rule",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.listStatementBoundary.forward.1",
+        "CleanReturnInventory.MissingRuleId.listStatementBoundary"
+      ]
+    },
+    {
+      "id": "default-admit-listStatementBoundary.3",
+      "kind": "source-contract",
+      "exit": "listStatementBoundary.3",
+      "rule_id": "listPositive",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.listStatementBoundary.3",
+        "CleanReturnInventory.MissingRuleId.listStatementBoundary"
+      ]
+    },
+    {
+      "id": "default-admit-dataCarrier.1",
+      "kind": "source-contract",
+      "exit": "dataCarrier.1",
+      "rule_id": "rigidCarrier",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.dataCarrier.1",
+        "CleanReturnInventory.MissingRuleId.dataCarrier"
+      ]
+    },
+    {
+      "id": "default-admit-dataCarrier.2",
+      "kind": "source-contract",
+      "exit": "dataCarrier.2",
+      "rule_id": "carrierProjection",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.dataCarrier.2",
+        "CleanReturnInventory.MissingRuleId.dataCarrier"
+      ]
+    },
+    {
+      "id": "default-admit-dataCarrier.forward.1",
+      "kind": "source-contract",
+      "exit": "dataCarrier.forward.1",
+      "rule_id": "retained-witness.rule",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.dataCarrier.forward.1",
+        "CleanReturnInventory.MissingRuleId.dataCarrier"
+      ]
+    },
+    {
+      "id": "default-admit-dataCarrier.forward.2",
+      "kind": "source-contract",
+      "exit": "dataCarrier.forward.2",
+      "rule_id": "retained-witness.rule",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.dataCarrier.forward.2",
+        "CleanReturnInventory.MissingRuleId.dataCarrier"
+      ]
+    },
+    {
+      "id": "default-admit-dataCarrier.3",
+      "kind": "source-contract",
+      "exit": "dataCarrier.3",
+      "rule_id": "scalarCarrier",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.dataCarrier.3",
+        "CleanReturnInventory.MissingRuleId.dataCarrier"
+      ]
+    },
+    {
+      "id": "default-admit-dataCarrier.4",
+      "kind": "source-contract",
+      "exit": "dataCarrier.4",
+      "rule_id": "retained-witness.rule",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.dataCarrier.4",
+        "CleanReturnInventory.MissingRuleId.dataCarrier"
+      ]
+    },
+    {
+      "id": "default-admit-dataCarrier.5",
+      "kind": "source-contract",
+      "exit": "dataCarrier.5",
+      "rule_id": "retained-witness.rule",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.dataCarrier.5",
+        "CleanReturnInventory.MissingRuleId.dataCarrier"
+      ]
+    },
+    {
+      "id": "default-admit-dataCarrier.6",
+      "kind": "source-contract",
+      "exit": "dataCarrier.6",
+      "rule_id": "retained-witness.rule",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.dataCarrier.6",
+        "CleanReturnInventory.MissingRuleId.dataCarrier"
+      ]
+    },
+    {
+      "id": "default-admit-dataCarrier.forward.3",
+      "kind": "source-contract",
+      "exit": "dataCarrier.forward.3",
+      "rule_id": "retained-witness.rule",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.dataCarrier.forward.3",
+        "CleanReturnInventory.MissingRuleId.dataCarrier"
+      ]
+    },
+    {
+      "id": "default-admit-dataCarrier.7",
+      "kind": "source-contract",
+      "exit": "dataCarrier.7",
+      "rule_id": "nominalCarrier",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.dataCarrier.7",
+        "CleanReturnInventory.MissingRuleId.dataCarrier"
+      ]
+    },
+    {
+      "id": "default-admit-statementBoundary.1",
+      "kind": "source-contract",
+      "exit": "statementBoundary.1",
+      "rule_id": "retained-witness.rule",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.statementBoundary.1",
+        "CleanReturnInventory.MissingRuleId.statementBoundary"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.1",
+      "kind": "source-contract",
+      "exit": "inputType.1",
+      "rule_id": "retained-witness.rule",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.1",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.2",
+      "kind": "source-contract",
+      "exit": "inputType.2",
+      "rule_id": "retained-witness.rule",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.2",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.forward.1",
+      "kind": "source-contract",
+      "exit": "inputType.forward.1",
+      "rule_id": "retained-witness.rule",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.forward.1",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.3",
+      "kind": "source-contract",
+      "exit": "inputType.3",
+      "rule_id": "telescope",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.3",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.4",
+      "kind": "source-contract",
+      "exit": "inputType.4",
+      "rule_id": "letType",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.4",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.forward.2",
+      "kind": "source-contract",
+      "exit": "inputType.forward.2",
+      "rule_id": "retained-witness.rule",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.forward.2",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.5",
+      "kind": "source-contract",
+      "exit": "inputType.5",
+      "rule_id": "telescope",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.5",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.forward.3",
+      "kind": "source-contract",
+      "exit": "inputType.forward.3",
+      "rule_id": "retained-witness.rule",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.forward.3",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.6",
+      "kind": "source-contract",
+      "exit": "inputType.6",
+      "rule_id": "lambdaType",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.6",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.forward.4",
+      "kind": "source-contract",
+      "exit": "inputType.forward.4",
+      "rule_id": "retained-witness.rule",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.forward.4",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.7",
+      "kind": "source-contract",
+      "exit": "inputType.7",
+      "rule_id": "letType",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.7",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.8",
+      "kind": "source-contract",
+      "exit": "inputType.8",
+      "rule_id": "metadataType",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.8",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.9",
+      "kind": "source-contract",
+      "exit": "inputType.9",
+      "rule_id": "sortKind",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.9",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.10",
+      "kind": "source-contract",
+      "exit": "inputType.10",
+      "rule_id": "betaType",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.10",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.11",
+      "kind": "source-contract",
+      "exit": "inputType.11",
+      "rule_id": "scopedParameter",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.11",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.12",
+      "kind": "source-contract",
+      "exit": "inputType.12",
+      "rule_id": "auditedProjection",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.12",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.13",
+      "kind": "source-contract",
+      "exit": "inputType.13",
+      "rule_id": "equality",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.13",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.14",
+      "kind": "source-contract",
+      "exit": "inputType.14",
+      "rule_id": "naturalOrder",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.14",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.15",
+      "kind": "source-contract",
+      "exit": "inputType.15",
+      "rule_id": "rigidCarrier",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.15",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.16",
+      "kind": "source-contract",
+      "exit": "inputType.16",
+      "rule_id": "scalarCarrier",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.16",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.17",
+      "kind": "source-contract",
+      "exit": "inputType.17",
+      "rule_id": "nullaryCarrier",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.17",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.18",
+      "kind": "source-contract",
+      "exit": "inputType.18",
+      "rule_id": "listMetadata",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.18",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.19",
+      "kind": "source-contract",
+      "exit": "inputType.19",
+      "rule_id": "quotientType",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.19",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.20",
+      "kind": "source-contract",
+      "exit": "inputType.20",
+      "rule_id": "recursorType",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.20",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.21",
+      "kind": "source-contract",
+      "exit": "inputType.21",
+      "rule_id": "enumRecursorType",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.21",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.22",
+      "kind": "source-contract",
+      "exit": "inputType.22",
+      "rule_id": "aliasType",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.22",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.23",
+      "kind": "source-contract",
+      "exit": "inputType.23",
+      "rule_id": "recursiveFamily",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.23",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.forward.5",
+      "kind": "source-contract",
+      "exit": "inputType.forward.5",
+      "rule_id": "retained-witness.rule",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.forward.5",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.24",
+      "kind": "source-contract",
+      "exit": "inputType.24",
+      "rule_id": "nominalFields",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.24",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.25",
+      "kind": "source-contract",
+      "exit": "inputType.25",
+      "rule_id": "retained-witness.rule",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.25",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-typeFamilyArgument.1",
+      "kind": "source-contract",
+      "exit": "typeFamilyArgument.1",
+      "rule_id": "retained-witness.rule",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.typeFamilyArgument.1",
+        "CleanReturnInventory.MissingRuleId.typeFamilyArgument"
+      ]
+    },
+    {
+      "id": "default-admit-typeFamilyArgument.2",
+      "kind": "source-contract",
+      "exit": "typeFamilyArgument.2",
+      "rule_id": "retained-witness.rule",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.typeFamilyArgument.2",
+        "CleanReturnInventory.MissingRuleId.typeFamilyArgument"
+      ]
+    },
+    {
+      "id": "default-admit-typeFamilyArgument.forward.1",
+      "kind": "source-contract",
+      "exit": "typeFamilyArgument.forward.1",
+      "rule_id": "retained-witness.rule",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.typeFamilyArgument.forward.1",
+        "CleanReturnInventory.MissingRuleId.typeFamilyArgument"
+      ]
+    },
+    {
+      "id": "default-admit-typeFamilyArgument.3",
+      "kind": "source-contract",
+      "exit": "typeFamilyArgument.3",
+      "rule_id": "retained-witness.rule",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.typeFamilyArgument.3",
+        "CleanReturnInventory.MissingRuleId.typeFamilyArgument"
+      ]
+    },
+    {
+      "id": "default-admit-typeFamilyArgument.4",
+      "kind": "source-contract",
+      "exit": "typeFamilyArgument.4",
+      "rule_id": "typeFamily",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.typeFamilyArgument.4",
+        "CleanReturnInventory.MissingRuleId.typeFamilyArgument"
+      ]
+    },
+    {
+      "id": "default-admit-typeFamilyArgument.5",
+      "kind": "source-contract",
+      "exit": "typeFamilyArgument.5",
+      "rule_id": "retained-witness.rule",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.typeFamilyArgument.5",
+        "CleanReturnInventory.MissingRuleId.typeFamilyArgument"
+      ]
+    },
+    {
+      "id": "default-admit-typeFamilyArgument.forward.2",
+      "kind": "source-contract",
+      "exit": "typeFamilyArgument.forward.2",
+      "rule_id": "retained-witness.rule",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.typeFamilyArgument.forward.2",
+        "CleanReturnInventory.MissingRuleId.typeFamilyArgument"
+      ]
+    },
+    {
+      "id": "default-admit-typeFamilyArgument.6",
+      "kind": "source-contract",
+      "exit": "typeFamilyArgument.6",
+      "rule_id": "retained-witness.rule",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.typeFamilyArgument.6",
+        "CleanReturnInventory.MissingRuleId.typeFamilyArgument"
+      ]
+    },
+    {
+      "id": "default-admit-classifyOccurrence.1",
+      "kind": "source-contract",
+      "exit": "classifyOccurrence.1",
+      "rule_id": "retained-witness.rule",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.classifyOccurrence.1",
+        "CleanReturnInventory.MissingRuleId.classifyOccurrence"
+      ]
+    },
+    {
+      "id": "default-admit-classifyOccurrence.2",
+      "kind": "source-contract",
+      "exit": "classifyOccurrence.2",
+      "rule_id": "retained-witness.rule",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.classifyOccurrence.2",
+        "CleanReturnInventory.MissingRuleId.classifyOccurrence"
+      ]
+    },
+    {
+      "id": "default-admit-classifyOccurrence.3",
+      "kind": "source-contract",
+      "exit": "classifyOccurrence.3",
+      "rule_id": "retained-witness.rule",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.classifyOccurrence.3",
+        "CleanReturnInventory.MissingRuleId.classifyOccurrence"
+      ]
+    },
+    {
+      "id": "default-admit-visitOccurrence.1",
+      "kind": "source-contract",
+      "exit": "visitOccurrence.1",
+      "rule_id": "retained-witness.rule",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.visitOccurrence.1",
+        "CleanReturnInventory.MissingRuleId.visitOccurrence"
+      ]
+    },
+    {
+      "id": "default-admit-visitOccurrence.2",
+      "kind": "source-contract",
+      "exit": "visitOccurrence.2",
+      "rule_id": "retained-witness.rule",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.visitOccurrence.2",
+        "CleanReturnInventory.MissingRuleId.visitOccurrence"
+      ]
+    },
+    {
+      "id": "default-admit-visitOccurrence.forward.1",
+      "kind": "source-contract",
+      "exit": "visitOccurrence.forward.1",
+      "rule_id": "retained-witness.rule",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.visitOccurrence.forward.1",
+        "CleanReturnInventory.MissingRuleId.visitOccurrence"
+      ]
+    },
+    {
+      "id": "default-admit-visitOccurrence.3",
+      "kind": "source-contract",
+      "exit": "visitOccurrence.3",
+      "rule_id": "retained-witness.rule",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.visitOccurrence.3",
+        "CleanReturnInventory.MissingRuleId.visitOccurrence"
+      ]
+    },
+    {
+      "id": "default-admit-visitOccurrence.4",
+      "kind": "source-contract",
+      "exit": "visitOccurrence.4",
+      "rule_id": "retained-witness.rule",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.visitOccurrence.4",
+        "CleanReturnInventory.MissingRuleId.visitOccurrence"
+      ]
+    },
+    {
+      "id": "default-admit-visitOccurrence.5",
+      "kind": "source-contract",
+      "exit": "visitOccurrence.5",
+      "rule_id": "retained-witness.rule",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.visitOccurrence.5",
+        "CleanReturnInventory.MissingRuleId.visitOccurrence"
+      ]
+    },
+    {
+      "id": "default-admit-readoutClosureCurrent.1",
+      "kind": "source-contract",
+      "exit": "readoutClosureCurrent.1",
+      "rule_id": "retained-witness.rule",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.readoutClosureCurrent.1",
+        "CleanReturnInventory.MissingRuleId.readoutClosureCurrent"
+      ]
+    },
+    {
+      "id": "default-admit-provenanceErrorCurrent.1",
+      "kind": "source-contract",
+      "exit": "provenanceErrorCurrent.1",
+      "rule_id": "retained-witness.rule",
+      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
+      "predicted_red_names": [
+        "CleanReturnInventory.provenanceErrorCurrent.1",
+        "CleanReturnInventory.MissingRuleId.provenanceErrorCurrent"
+      ]
+    }
+  ],
+  "boundary": "A well-typed rule-less success is not expressible by the witness-bearing constructors. Source-contract rows reject that malformed admission surface; behavioral rows forge an existing rule or remove a fence and run the Lean fixtures."
+}

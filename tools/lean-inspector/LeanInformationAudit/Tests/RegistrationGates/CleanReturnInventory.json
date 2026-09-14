@@ -1,0 +1,529 @@
+{
+  "schema": 1,
+  "source": "../../ReadoutProvenance.lean",
+  "scope": "Every positive construction, typed forwarding exit, checked occurrence cutoff and public admission has a source marker. Forwarding preserves the specific rule ID in its incoming witness. Markers pin admission syntax only; diagnostics, counters and traversal bookkeeping are outside this contract.",
+  "entries": [
+    {
+      "id": "TypeClassification.flags.forward.1",
+      "function": "TypeClassification.flags",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "| .allowlisted _ => (false, false)"
+    },
+    {
+      "id": "TypeClassification.witness?.forward.1",
+      "function": "TypeClassification.witness?",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "| .allowlisted witness => some witness"
+    },
+    {
+      "id": "reuseWitness.1",
+      "function": "reuseWitness",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "return found"
+    },
+    {
+      "id": "bindWitnessSource.forward.1",
+      "function": "bindWitnessSource",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "| .allowlisted evidence => .allowlisted { evidence with sourceDependency := source }"
+    },
+    {
+      "id": "checkedType.1",
+      "function": "checkedType",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "return .allowlisted (witness rule type)",
+      "requires": [
+        "if mentions then return .statementMention",
+        "if unknown then return \u2190 unknownType type"
+      ]
+    },
+    {
+      "id": "statementStep.1",
+      "function": "statementStep",
+      "rule_id": "statementForall",
+      "kind": "production",
+      "source": "| .forallE .. => return .recognized (witness .statementForall current)"
+    },
+    {
+      "id": "statementStep.2",
+      "function": "statementStep",
+      "rule_id": "statementInductive",
+      "kind": "production",
+      "source": "| some (.inductInfo _) => return .recognized (witness .statementInductive current)"
+    },
+    {
+      "id": "statementOuter.1",
+      "function": "statementOuter",
+      "rule_id": "statementMembership",
+      "kind": "production",
+      "source": "return some (witness .statementMembership type)"
+    },
+    {
+      "id": "statementOuter.2",
+      "function": "statementOuter",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "| .recognized evidence => return some evidence"
+    },
+    {
+      "id": "statementOuter.forward.1",
+      "function": "statementOuter",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "statementOuter env next"
+    },
+    {
+      "id": "listStatementBoundary.1",
+      "function": "listStatementBoundary",
+      "rule_id": "listForall",
+      "kind": "production",
+      "source": "if twoDataBinders then return some (witness .listForall type)"
+    },
+    {
+      "id": "listStatementBoundary.2",
+      "function": "listStatementBoundary",
+      "rule_id": "listNegated",
+      "kind": "production",
+      "source": "return some (witness .listNegated type)"
+    },
+    {
+      "id": "listStatementBoundary.forward.1",
+      "function": "listStatementBoundary",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "listStatementBoundary env body (binders + 1)"
+    },
+    {
+      "id": "listStatementBoundary.3",
+      "function": "listStatementBoundary",
+      "rule_id": "listPositive",
+      "kind": "production",
+      "source": "return some (witness .listPositive type)"
+    },
+    {
+      "id": "dataCarrier.1",
+      "function": "dataCarrier",
+      "rule_id": "rigidCarrier",
+      "kind": "production",
+      "source": "return some (witness .rigidCarrier type)"
+    },
+    {
+      "id": "dataCarrier.2",
+      "function": "dataCarrier",
+      "rule_id": "carrierProjection",
+      "kind": "production",
+      "source": "return some (witness .carrierProjection type)"
+    },
+    {
+      "id": "dataCarrier.forward.1",
+      "function": "dataCarrier",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "dataCarrier env field active"
+    },
+    {
+      "id": "dataCarrier.forward.2",
+      "function": "dataCarrier",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "dataCarrier env body active"
+    },
+    {
+      "id": "dataCarrier.3",
+      "function": "dataCarrier",
+      "rule_id": "scalarCarrier",
+      "kind": "production",
+      "source": "return some (witness .scalarCarrier type)"
+    },
+    {
+      "id": "dataCarrier.4",
+      "function": "dataCarrier",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "return \u2190 dataCarrier env args[0]! active"
+    },
+    {
+      "id": "dataCarrier.5",
+      "function": "dataCarrier",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "return \u2190 dataCarrier env args[0]! active"
+    },
+    {
+      "id": "dataCarrier.6",
+      "function": "dataCarrier",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "return \u2190 dataCarrier env body (active.push type)"
+    },
+    {
+      "id": "dataCarrier.forward.3",
+      "function": "dataCarrier",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "dataCarrier env fieldType (active.push type)"
+    },
+    {
+      "id": "dataCarrier.7",
+      "function": "dataCarrier",
+      "rule_id": "nominalCarrier",
+      "kind": "production",
+      "source": "return some (witness .nominalCarrier type)"
+    },
+    {
+      "id": "statementBoundary.1",
+      "function": "statementBoundary",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "return (\u2190 get).recognizedStatement"
+    },
+    {
+      "id": "inputType.1",
+      "function": "inputType",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "return \u2190 inputType env decoded active"
+    },
+    {
+      "id": "inputType.2",
+      "function": "inputType",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "if let some cached \u2190 reuseWitness (\u2190 get).cleanTypes type then return .allowlisted cached"
+    },
+    {
+      "id": "inputType.forward.1",
+      "function": "inputType",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "inputType env body active)"
+    },
+    {
+      "id": "inputType.3",
+      "function": "inputType",
+      "rule_id": "telescope",
+      "kind": "production",
+      "source": "return \u2190 checkedType .telescope type (exact || decision || dm || bm) (du || bu)"
+    },
+    {
+      "id": "inputType.4",
+      "function": "inputType",
+      "rule_id": "letType",
+      "kind": "production",
+      "source": "return \u2190 checkedType .letType type (exact || decision || dm || vm || bm) (du || bu)"
+    },
+    {
+      "id": "inputType.forward.2",
+      "function": "inputType",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "inputType env body active)"
+    },
+    {
+      "id": "inputType.5",
+      "function": "inputType",
+      "rule_id": "telescope",
+      "kind": "production",
+      "source": "return \u2190 checkedType .telescope reduced (mentions || dm || bm) (du || bu)"
+    },
+    {
+      "id": "inputType.forward.3",
+      "function": "inputType",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "inputType env body active)"
+    },
+    {
+      "id": "inputType.6",
+      "function": "inputType",
+      "rule_id": "lambdaType",
+      "kind": "production",
+      "source": "return \u2190 checkedType .lambdaType reduced (mentions || dm || bm) (du || bu)"
+    },
+    {
+      "id": "inputType.forward.4",
+      "function": "inputType",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "inputType env body active) (nondep := nd))"
+    },
+    {
+      "id": "inputType.7",
+      "function": "inputType",
+      "rule_id": "letType",
+      "kind": "production",
+      "source": "return \u2190 checkedType .letType reduced (mentions || dm || vm || bm) (du || vu || bu)"
+    },
+    {
+      "id": "inputType.8",
+      "function": "inputType",
+      "rule_id": "metadataType",
+      "kind": "production",
+      "source": "return \u2190 checkedType .metadataType reduced (mentions || bm) bu"
+    },
+    {
+      "id": "inputType.9",
+      "function": "inputType",
+      "rule_id": "sortKind",
+      "kind": "production",
+      "source": "if reduced.isSort then return \u2190 checkedType .sortKind reduced mentions false"
+    },
+    {
+      "id": "inputType.10",
+      "function": "inputType",
+      "rule_id": "betaType",
+      "kind": "production",
+      "source": "return \u2190 checkedType .betaType reduced (mentions || bm) bu"
+    },
+    {
+      "id": "inputType.11",
+      "function": "inputType",
+      "rule_id": "scopedParameter",
+      "kind": "production",
+      "source": "return \u2190 checkedType .scopedParameter reduced (mentions || fm) (unclassified || fu)"
+    },
+    {
+      "id": "inputType.12",
+      "function": "inputType",
+      "rule_id": "auditedProjection",
+      "kind": "production",
+      "source": "return \u2190 checkedType .auditedProjection reduced (mentions || rm || pm) (ru || pu || unclassified)"
+    },
+    {
+      "id": "inputType.13",
+      "function": "inputType",
+      "rule_id": "equality",
+      "kind": "production",
+      "source": "return \u2190 checkedType .equality reduced mentions unclassified"
+    },
+    {
+      "id": "inputType.14",
+      "function": "inputType",
+      "rule_id": "naturalOrder",
+      "kind": "production",
+      "source": "return \u2190 checkedType .naturalOrder reduced mentions (unclassified || order)"
+    },
+    {
+      "id": "inputType.15",
+      "function": "inputType",
+      "rule_id": "rigidCarrier",
+      "kind": "production",
+      "source": "let mut carrierEvidence \u2190 if rigid then pure (some (witness .rigidCarrier carrier))"
+    },
+    {
+      "id": "inputType.16",
+      "function": "inputType",
+      "rule_id": "scalarCarrier",
+      "kind": "production",
+      "source": "else if carrier.isConstOf ``Nat then pure (some (witness .scalarCarrier carrier))"
+    },
+    {
+      "id": "inputType.17",
+      "function": "inputType",
+      "rule_id": "nullaryCarrier",
+      "kind": "production",
+      "source": "let evidence := witness .nullaryCarrier carrier"
+    },
+    {
+      "id": "inputType.18",
+      "function": "inputType",
+      "rule_id": "listMetadata",
+      "kind": "production",
+      "source": "if disjoint.isSome then return \u2190 checkedType .listMetadata reduced mentions unclassified"
+    },
+    {
+      "id": "inputType.19",
+      "function": "inputType",
+      "rule_id": "quotientType",
+      "kind": "production",
+      "source": "return \u2190 checkedType .quotientType reduced mentions unclassified"
+    },
+    {
+      "id": "inputType.20",
+      "function": "inputType",
+      "rule_id": "recursorType",
+      "kind": "production",
+      "source": "return \u2190 checkedType .recursorType reduced mentions unclassified"
+    },
+    {
+      "id": "inputType.21",
+      "function": "inputType",
+      "rule_id": "enumRecursorType",
+      "kind": "production",
+      "source": "return \u2190 checkedType .enumRecursorType reduced mentions unclassified"
+    },
+    {
+      "id": "inputType.22",
+      "function": "inputType",
+      "rule_id": "aliasType",
+      "kind": "production",
+      "source": "return \u2190 checkedType .aliasType reduced (mentions || um) (unclassified || uu)"
+    },
+    {
+      "id": "inputType.23",
+      "function": "inputType",
+      "rule_id": "recursiveFamily",
+      "kind": "production",
+      "source": "return \u2190 checkedType .recursiveFamily reduced mentions unclassified"
+    },
+    {
+      "id": "inputType.forward.5",
+      "function": "inputType",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "inputType env concrete nextActive)"
+    },
+    {
+      "id": "inputType.24",
+      "function": "inputType",
+      "rule_id": "nominalFields",
+      "kind": "production",
+      "source": "return \u2190 checkedType .nominalFields reduced mentions unclassified"
+    },
+    {
+      "id": "inputType.25",
+      "function": "inputType",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "return result"
+    },
+    {
+      "id": "typeFamilyArgument.1",
+      "function": "typeFamilyArgument",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "if let some cached \u2190 reuseWitness (\u2190 get).dataFunctionTypes type then return .data cached"
+    },
+    {
+      "id": "typeFamilyArgument.2",
+      "function": "typeFamilyArgument",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "return .family (.allowlisted cached)"
+    },
+    {
+      "id": "typeFamilyArgument.forward.1",
+      "function": "typeFamilyArgument",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "typeFamilyArgument env (mkApp value x) body active"
+    },
+    {
+      "id": "typeFamilyArgument.3",
+      "function": "typeFamilyArgument",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "let .family verdict := result | return result"
+    },
+    {
+      "id": "typeFamilyArgument.4",
+      "function": "typeFamilyArgument",
+      "rule_id": "typeFamily",
+      "kind": "production",
+      "source": "return .family (\u2190 checkedType .typeFamily value (dm || bm) (du || bu))"
+    },
+    {
+      "id": "typeFamilyArgument.5",
+      "function": "typeFamilyArgument",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "| .allowlisted evidence => return .data evidence"
+    },
+    {
+      "id": "typeFamilyArgument.forward.2",
+      "function": "typeFamilyArgument",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "| .data evidence => .data { evidence with sourceDependency := state.assumedProducer }"
+    },
+    {
+      "id": "typeFamilyArgument.6",
+      "function": "typeFamilyArgument",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "return result"
+    },
+    {
+      "id": "classifyOccurrence.1",
+      "function": "classifyOccurrence",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "if let some cached := (\u2190 get).typeChecks[key]? then return cached"
+    },
+    {
+      "id": "classifyOccurrence.2",
+      "function": "classifyOccurrence",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "return classification"
+    },
+    {
+      "id": "classifyOccurrence.3",
+      "function": "classifyOccurrence",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "return verdict"
+    },
+    {
+      "id": "visitOccurrence.1",
+      "function": "visitOccurrence",
+      "rule_id": "retained-witness.rule",
+      "kind": "checked-occurrence-boundary",
+      "source": "if decoded == some true then return"
+    },
+    {
+      "id": "visitOccurrence.2",
+      "function": "visitOccurrence",
+      "rule_id": "retained-witness.rule",
+      "kind": "checked-occurrence-boundary",
+      "source": "if (\u2190 get).visited.contains key then return"
+    },
+    {
+      "id": "visitOccurrence.forward.1",
+      "function": "visitOccurrence",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "| .allowlisted _ => pure ()"
+    },
+    {
+      "id": "visitOccurrence.3",
+      "function": "visitOccurrence",
+      "rule_id": "retained-witness.rule",
+      "kind": "checked-occurrence-boundary",
+      "source": "if proof == some true then return"
+    },
+    {
+      "id": "visitOccurrence.4",
+      "function": "visitOccurrence",
+      "rule_id": "retained-witness.rule",
+      "kind": "checked-occurrence-boundary",
+      "source": "else if inProtected env n then queue n levels"
+    },
+    {
+      "id": "visitOccurrence.5",
+      "function": "visitOccurrence",
+      "rule_id": "retained-witness.rule",
+      "kind": "checked-occurrence-boundary",
+      "source": "| .allowlisted _ => pure () -- syntaxLeaf: already inferred in its real binder context"
+    },
+    {
+      "id": "readoutClosureCurrent.1",
+      "function": "readoutClosureCurrent",
+      "rule_id": "retained-witness.rule",
+      "kind": "guarded-admission",
+      "source": "if r.admission.isSome then return (false, some r.walked)"
+    },
+    {
+      "id": "provenanceErrorCurrent.1",
+      "function": "provenanceErrorCurrent",
+      "rule_id": "retained-witness.rule",
+      "kind": "guarded-admission",
+      "source": "if result.admission.isSome && !result.forbidden && result.unclassified.isNone && !result.incomplete then return none"
+    }
+  ]
+}

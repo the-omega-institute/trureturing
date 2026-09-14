@@ -412,11 +412,13 @@ private inductive TypeClassification where
 private instance : Inhabited TypeClassification := ⟨.incomplete⟩
 
 private def TypeClassification.flags : TypeClassification → Bool × Bool
+  -- admission-exit: TypeClassification.flags.forward.1 rule=retained-witness.rule
   | .allowlisted _ => (false, false)
   | .statementMention | .forbidden => (true, false)
   | .unclassified _ | .incomplete => (false, true)
 
 private def TypeClassification.witness? : TypeClassification → Option ProvenanceAdmissionWitness
+  -- admission-exit: TypeClassification.witness?.forward.1 rule=retained-witness.rule
   | .allowlisted witness => some witness
   | _ => none
 
@@ -645,10 +647,12 @@ private def reuseWitness (cache : Std.HashMap (Expr × Option Name) ProvenanceAd
   let found := found.filter fun evidence => evidence.sourceDependency.all (· == source)
   if let some evidence := found then
     modify fun s => { s with assumedProducer := s.assumedProducer.or evidence.sourceDependency }
+  -- admission-exit: reuseWitness.1 rule=retained-witness.rule
   return found
 
 private def bindWitnessSource (verdict : TypeClassification) (source : Option Name) :
     TypeClassification := match verdict with
+  -- admission-exit: bindWitnessSource.forward.1 rule=retained-witness.rule
   | .allowlisted evidence => .allowlisted { evidence with sourceDependency := source }
   | other => other
 
@@ -666,6 +670,7 @@ private def checkedType (rule : ProvenanceAllowRule) (type : Expr)
     (mentions unknown : Bool) : WalkM TypeClassification := do
   if mentions then return .statementMention
   if unknown then return ← unknownType type
+  -- admission-exit: checkedType.1 rule=retained-witness.rule
   return .allowlisted (witness rule type)
 
 -- Only scan an explicit telescope. A failed reservation supplies no carrier
@@ -935,9 +940,11 @@ private def statementUnknown (head : Expr) : WalkM StatementStep := do
 private def statementStep (env : Environment) (current : Expr) : WalkM StatementStep := do
   let some (head, args) ← applicationParts current | return .incomplete
   match head with
+  -- admission-exit: statementStep.1 rule=statementForall
   | .forallE .. => return .recognized (witness .statementForall current)
   | .const n levels =>
     match env.find? n with
+    -- admission-exit: statementStep.2 rule=statementInductive
     | some (.inductInfo _) => return .recognized (witness .statementInductive current)
     | some (.defnInfo info) =>
       let value ← Core.instantiateValueLevelParams (.defnInfo info) levels
@@ -970,13 +977,16 @@ private partial def statementOuter (env : Environment) (type : Expr) :
     WalkM (Option ProvenanceAdmissionWitness) := do
   unless ← chargeTraversal do return none
   if type.getAppFn.isConstOf `Multiset.Mem then
+    -- admission-exit: statementOuter.1 rule=statementMembership
     return some (witness .statementMembership type)
   match ← statementStep env type with
+  -- admission-exit: statementOuter.2 rule=retained-witness.rule
   | .recognized evidence => return some evidence
   | .unclassified _ => return none
   | .incomplete => modify fun s => { s with incomplete := true }; return none
   | .next next =>
     if next == type then return none
+    -- admission-exit: statementOuter.forward.1 rule=retained-witness.rule
     statementOuter env next
 
 -- Equality-only List metadata has recursive List premises and disequalities
@@ -999,21 +1009,25 @@ private partial def listStatementBoundary (env : Environment) (type : Expr)
           let some secondProof ← boundedMeta (Meta.isProp secondDomain) `list_statement_domain
             | return false
           return !secondProof
+        -- admission-exit: listStatementBoundary.1 rule=listForall
         if twoDataBinders then return some (witness .listForall type)
     if body.isConstOf ``False then
       let some evidence ← statementOuter env domain | return none
       let domain := evidence.matchedType
       if domain.isForall || domain.getAppFn.constName?.any
           (#[``Exists, ``And, ``Or, ``List.Mem, `Multiset.Mem].contains ·) then
+        -- admission-exit: listStatementBoundary.2 rule=listNegated
         return some (witness .listNegated type)
       return none
     Meta.withLocalDecl n bi domain fun x => do
       let some body ← substitute body #[x] | return none
+      -- admission-exit: listStatementBoundary.forward.1 rule=retained-witness.rule
       listStatementBoundary env body (binders + 1)
   | _ =>
     let name := type.getAppFn.constName?.getD .anonymous
     if #[``And, ``Or, ``Exists, ``True, ``Eq, ``HEq, ``Nat.le].contains name ||
         (binders > 0 && #[``List.Mem, `Multiset.Mem].contains name) then
+      -- admission-exit: listStatementBoundary.3 rule=listPositive
       return some (witness .listPositive type)
     return none
 
@@ -1032,6 +1046,7 @@ private partial def dataCarrier (env : Environment) (type : Expr)
   | .sort _ => return none
   | .fvar id =>
     if (← id.getDecl).value? (allowNondep := true) |>.isNone then
+      -- admission-exit: dataCarrier.1 rule=rigidCarrier
       return some (witness .rigidCarrier type)
     return none
   | .proj structureName index receiver =>
@@ -1050,36 +1065,45 @@ private partial def dataCarrier (env : Environment) (type : Expr)
     let some receiver ← representationType receiver | return none
     if let .fvar id := receiver then
       if (← id.getDecl).value? (allowNondep := true) |>.isNone then
+        -- admission-exit: dataCarrier.2 rule=carrierProjection
         return some (witness .carrierProjection type)
     let .next field ← statementStep env (.proj structureName index receiver) | return none
     if field == type then return none
+    -- admission-exit: dataCarrier.forward.1 rule=retained-witness.rule
     dataCarrier env field active
   | .forallE n domain body bi =>
     unless (← dataCarrier env domain active).isSome do return none
     Meta.withLocalDecl n bi domain fun x => do
       let some body ← substitute body #[x] | return none
+      -- admission-exit: dataCarrier.forward.2 rule=retained-witness.rule
       dataCarrier env body active
   | _ =>
     let some (head, args) ← applicationParts type | return none
     let .const name levels := head | return none
     if #[``Nat, ``Int, `Rat, ``Fin, `ZMod].contains name then
+      -- admission-exit: dataCarrier.3 rule=scalarCarrier
       return some (witness .scalarCarrier type)
     if #[``List, `Multiset, `Finset].contains name && args.size == 1 then
+      -- admission-exit: dataCarrier.4 rule=retained-witness.rule
       return ← dataCarrier env args[0]! active
     if name == ``Subtype && args.size == 2 then
+      -- admission-exit: dataCarrier.5 rule=retained-witness.rule
       return ← dataCarrier env args[0]! active
     if active.contains type then return none
     if let some (.defnInfo info) := env.find? name then
       let value ← Core.instantiateValueLevelParams (.defnInfo info) levels
       let some body ← aliasBody value args | return none
+      -- admission-exit: dataCarrier.6 rule=retained-witness.rule
       return ← dataCarrier env body (active.push type)
     let some branches ← caseFields type | return none
     for (lctx, instances, fields) in branches do
       for field in fields do
         let clean ← Meta.withLCtx lctx instances do
           let some fieldType ← occurrenceType field | return none
+          -- admission-exit: dataCarrier.forward.3 rule=retained-witness.rule
           dataCarrier env fieldType (active.push type)
         unless clean.isSome do return none
+    -- admission-exit: dataCarrier.7 rule=nominalCarrier
     return some (witness .nominalCarrier type)
 
 -- Record explicit proposition-alias spellings only as rejection witnesses.
@@ -1105,6 +1129,7 @@ private def statementAliases (env : Environment) : WalkM Unit := do
 -- The final supported outer spelling is used for structural family fences.
 -- Computed operands remain untouched and cannot establish non-mention.
 private def statementBoundary : WalkM (Option ProvenanceAdmissionWitness) := do
+  -- admission-exit: statementBoundary.1 rule=retained-witness.rule
   return (← get).recognizedStatement
 
 -- A carrier alias is supported only when its explicit body is another named
@@ -1198,8 +1223,10 @@ private partial def inputType (env : Environment) (type : Expr)
     unless ← chargeTraversal work do return ← unknownType type
     let some decoded := decoded | return ← unknownType type
     if decoded == type then return ← unknownType type
+    -- admission-exit: inputType.1 rule=retained-witness.rule
     return ← inputType env decoded active
   let producerAllowed := carrierProducerAllowed env (← get).currentFirst
+  -- admission-exit: inputType.2 rule=retained-witness.rule
   if let some cached ← reuseWitness (← get).cleanTypes type then return .allowlisted cached
   unless ← chargeTraversal do return ← unknownType type
   let enclosingAssumptions := (← get).assumedFamilyDepth
@@ -1217,7 +1244,9 @@ private partial def inputType (env : Environment) (type : Expr)
       let (dm, du) := (← inputType env domain active).flags
       let (bm, bu) ← (TypeClassification.flags <$> Meta.withLocalDecl n bi domain fun x => do
         let some body ← substitute body #[x] | return ← unknownType type
+        -- admission-exit: inputType.forward.1 rule=retained-witness.rule
         inputType env body active)
+      -- admission-exit: inputType.3 rule=telescope
       return ← checkedType .telescope type (exact || decision || dm || bm) (du || bu)
     if let .letE _ domain value body _ := type then
       let exact ← compareCanonical type (← get).statement
@@ -1226,6 +1255,7 @@ private partial def inputType (env : Environment) (type : Expr)
       let vm ← typeMentions env value
       let some body ← substitute body #[value] | return ← unknownType type
       let (bm, bu) := (← inputType env body active).flags
+      -- admission-exit: inputType.4 rule=letType
       return ← checkedType .letType type (exact || decision || dm || vm || bm) (du || bu)
     let mut mentions ← typeMentions env type
     if ← compareCanonical type (← get).decision then mentions := true
@@ -1239,7 +1269,9 @@ private partial def inputType (env : Environment) (type : Expr)
       let (bm, bu) ← (TypeClassification.flags <$> Meta.withLocalDecl n bi domain fun x =>
         do
           let some body ← substitute body #[x] | return ← unknownType type
+          -- admission-exit: inputType.forward.2 rule=retained-witness.rule
           inputType env body active)
+      -- admission-exit: inputType.5 rule=telescope
       return ← checkedType .telescope reduced (mentions || dm || bm) (du || bu)
     | .lam n domain body bi =>
       -- Type-valued lambda expressions are generated by dependent recursors
@@ -1249,24 +1281,31 @@ private partial def inputType (env : Environment) (type : Expr)
       let (dm, du) := (← inputType env domain active).flags
       let (bm, bu) ← (TypeClassification.flags <$> Meta.withLocalDecl n bi domain fun x => do
         let some body ← substitute body #[x] | return ← unknownType type
+        -- admission-exit: inputType.forward.3 rule=retained-witness.rule
         inputType env body active)
+      -- admission-exit: inputType.6 rule=lambdaType
       return ← checkedType .lambdaType reduced (mentions || dm || bm) (du || bu)
     | .letE n domain value body nd =>
       let (dm, du) := (← inputType env domain active).flags
       let (vm, vu) := (← inputType env value active).flags
       let (bm, bu) ← (TypeClassification.flags <$> Meta.withLetDecl n domain value (fun x => do
         let some body ← substitute body #[x] | return ← unknownType type
+        -- admission-exit: inputType.forward.4 rule=retained-witness.rule
         inputType env body active) (nondep := nd))
+      -- admission-exit: inputType.7 rule=letType
       return ← checkedType .letType reduced (mentions || dm || vm || bm) (du || vu || bu)
     | .mdata _ body =>
       let (bm, bu) := (← inputType env body active).flags
+      -- admission-exit: inputType.8 rule=metadataType
       return ← checkedType .metadataType reduced (mentions || bm) bu
     | _ =>
+      -- admission-exit: inputType.9 rule=sortKind
       if reduced.isSort then return ← checkedType .sortKind reduced mentions false
       let some (head, args) ← applicationParts reduced | return ← checkedType .nominalFields type mentions true
       if let .lam .. := head then
         let some body ← aliasBody head args | return ← checkedType .nominalFields type mentions true
         let (bm, bu) := (← inputType env body active).flags
+        -- admission-exit: inputType.10 rule=betaType
         return ← checkedType .betaType reduced (mentions || bm) bu
       let mut unclassified := false
       for arg in args do
@@ -1286,6 +1325,7 @@ private partial def inputType (env : Environment) (type : Expr)
       if head.isFVar then
         let some neutralType ← occurrenceType reduced | return ← checkedType .nominalFields type mentions true
         let (fm, fu) := (← inputType env neutralType active).flags
+        -- admission-exit: inputType.11 rule=scopedParameter
         return ← checkedType .scopedParameter reduced (mentions || fm) (unclassified || fu)
       if let .proj _ _ receiver := head then
         -- Infer both the receiver and projection in the same context. Lean
@@ -1294,6 +1334,7 @@ private partial def inputType (env : Environment) (type : Expr)
         let (rm, ru) := (← inputType env receiverType active).flags
         let some projectionType ← occurrenceType head | return ← checkedType .auditedProjection type (mentions || rm) true
         let (pm, pu) := (← inputType env projectionType active).flags
+        -- admission-exit: inputType.12 rule=auditedProjection
         return ← checkedType .auditedProjection reduced (mentions || rm || pm) (ru || pu || unclassified)
       let .const name _ := head | return ← unknownType reduced
       directProjection env name
@@ -1356,6 +1397,7 @@ private partial def inputType (env : Environment) (type : Expr)
             if closed operand && !literal && !nullary then
               trace[InformationProvenance.check] "unsupported_equality_operand={repr operand} type={reduced}"
               unclassified := true
+        -- admission-exit: inputType.13 rule=equality
         return ← checkedType .equality reduced mentions unclassified
       -- Nat.le has only natural indices and recursive Nat.le premises. Check
       -- the actual operands above; if S is itself an order statement, reject
@@ -1368,6 +1410,7 @@ private partial def inputType (env : Environment) (type : Expr)
         let order := head.isConstOf ``Nat.le || head.isConstOf ``Nat.lt ||
           ((head.isConstOf ``LE.le || head.isConstOf ``LT.lt) &&
             statement.getAppArgs[0]?.any (·.isConstOf ``Nat))
+        -- admission-exit: inputType.14 rule=naturalOrder
         return ← checkedType .naturalOrder reduced mentions (unclassified || order)
       -- Membership and uniqueness proofs over checked data carriers contain
       -- only recursive Mem/Pairwise and equality/function proof forms. The
@@ -1385,7 +1428,9 @@ private partial def inputType (env : Environment) (type : Expr)
           | return ← checkedType .nominalFields type mentions true
         -- A rigid parameter is scoped to this occurrence. Applications and
         -- enclosing case substitutions get freshly inferred field types.
+        -- admission-exit: inputType.15 rule=rigidCarrier
         let mut carrierEvidence ← if rigid then pure (some (witness .rigidCarrier carrier))
+          -- admission-exit: inputType.16 rule=scalarCarrier
           else if carrier.isConstOf ``Nat then pure (some (witness .scalarCarrier carrier))
           else dataCarrier env args[0]!
         if carrierEvidence.isNone && level.isNeverZero then
@@ -1403,6 +1448,7 @@ private partial def inputType (env : Environment) (type : Expr)
               else
                 let some branches ← caseFields carrier | return ← checkedType .nominalFields type mentions true
                 if branches.all (fun (_, _, fields) => fields.isEmpty) then
+                  -- admission-exit: inputType.17 rule=nullaryCarrier
                   let evidence := witness .nullaryCarrier carrier
                   carrierEvidence := some evidence
                   unless ← chargeTraversal do return ← checkedType .nominalFields type mentions true
@@ -1417,6 +1463,7 @@ private partial def inputType (env : Environment) (type : Expr)
           let some statement ← representationType statement
             | return ← checkedType .nominalFields type mentions true
           let disjoint ← listStatementBoundary env statement
+          -- admission-exit: inputType.18 rule=listMetadata
           if disjoint.isSome then return ← checkedType .listMetadata reduced mentions unclassified
         trace[InformationProvenance.check] "unsupported_list_boundary type={reduced} carrier={carrier} allowed={carrierEvidence.isSome} relation={relationAllowed}"
         return ← checkedType .nominalFields type mentions true
@@ -1427,10 +1474,12 @@ private partial def inputType (env : Environment) (type : Expr)
       -- predicate to the same argument classifier; no predicate is a leaf.
       if let some (.quotInfo info) := env.find? name then
         if match info.kind with | .type | .lift => true | _ => false then
+          -- admission-exit: inputType.19 rule=quotientType
           return ← checkedType .quotientType reduced mentions unclassified
       if let some (.recInfo recursor) := env.find? name then
         if #[``Bool.rec, ``Nat.rec, ``List.rec, ``Prod.rec, ``Sum.rec, ``Option.rec,
             ``PUnit.rec, ``Fin.rec].contains name then
+          -- admission-exit: inputType.20 rule=recursorType
           return ← checkedType .recursorType reduced mentions unclassified
         -- A kernel recursor over one parameter-free, index-free enumeration
         -- has no abstract carrier or proof payload in its constructors. Its
@@ -1449,6 +1498,7 @@ private partial def inputType (env : Environment) (type : Expr)
                   | .ctorInfo constructor => constructor.numParams == 0 && constructor.numFields == 0
                   | _ => false
               if enumeration then
+                -- admission-exit: inputType.21 rule=enumRecursorType
                 return ← checkedType .enumRecursorType reduced mentions unclassified
         trace[InformationProvenance.check] "unclassified_recursor_head={name} type={reduced}"
         return ← unknownType reduced
@@ -1459,6 +1509,7 @@ private partial def inputType (env : Environment) (type : Expr)
         let some unfolded ← aliasBody value args | return ← checkedType .nominalFields type mentions true
         if unfolded == reduced then return ← checkedType .nominalFields type mentions true
         let (um, uu) := (← inputType env unfolded active).flags
+        -- admission-exit: inputType.22 rule=aliasType
         return ← checkedType .aliasType reduced (mentions || um) (unclassified || uu)
       let some (.inductInfo info) := env.find? name | return ← checkedType .nominalFields type mentions true
       for depth in [:active.size] do
@@ -1488,6 +1539,7 @@ private partial def inputType (env : Environment) (type : Expr)
             coveredIndices := (previous == current) && coveredIndices
           if sameParameters && coveredIndices then
             noteFamilyAssumption depth
+            -- admission-exit: inputType.23 rule=recursiveFamily
             return ← checkedType .recursiveFamily reduced mentions unclassified
           -- Different parameters are a fresh obligation, as in nested products.
       let some branches ← caseFields reduced | do
@@ -1532,9 +1584,11 @@ private partial def inputType (env : Environment) (type : Expr)
                 (concrete.isFVar && !parameter && !auditedFamily) then
               trace[InformationProvenance.check] "unclassified_abstract_carrier family={name} field_type={concrete} first={(← get).currentFirst}"
               return ← unknownType concrete "unclassified_abstract_carrier"
+            -- admission-exit: inputType.forward.5 rule=retained-witness.rule
             inputType env concrete nextActive)
           mentions := mentions || fm
           unclassified := unclassified || fu
+      -- admission-exit: inputType.24 rule=nominalFields
       return ← checkedType .nominalFields reduced mentions unclassified
 
   let result ← classify
@@ -1554,6 +1608,7 @@ private partial def inputType (env : Environment) (type : Expr)
         !state.incomplete && !state.forbidden && state.unclassified.isNone then
       unless ← chargeTraversal do return ← unknownType type
       modify fun s => { s with cleanTypes := s.cleanTypes.insert (type, evidence.sourceDependency) evidence }
+  -- admission-exit: inputType.25 rule=retained-witness.rule
   return result
 
 -- Probe the inferred telescope first. Only functions ending in Sort supply
@@ -1561,6 +1616,7 @@ private partial def inputType (env : Environment) (type : Expr)
 private partial def typeFamilyArgument (env : Environment) (value type : Expr)
     (active : Array Expr) : WalkM FamilyClassification := do
   unless ← chargeTraversal do return .family (← unknownType type)
+  -- admission-exit: typeFamilyArgument.1 rule=retained-witness.rule
   if let some cached ← reuseWitness (← get).dataFunctionTypes type then return .data cached
   let canCache := #[value, type].all fun e =>
     !e.hasLooseBVars && !e.hasMVar && !e.hasLevelMVar
@@ -1570,6 +1626,7 @@ private partial def typeFamilyArgument (env : Environment) (value type : Expr)
     modify fun s => { s with
       counters.familyMemoHits := s.counters.familyMemoHits + 1
       assumedProducer := s.assumedProducer.or cached.sourceDependency }
+    -- admission-exit: typeFamilyArgument.2 rule=retained-witness.rule
     return .family (.allowlisted cached)
   let enclosing := (← get).assumedFamilyDepth
   let enclosingProducer := (← get).assumedProducer
@@ -1581,10 +1638,13 @@ private partial def typeFamilyArgument (env : Environment) (value type : Expr)
       let result ← Meta.withLocalDecl n bi domain fun x => do
         let some body ← substitute body #[x] | return .family (← unknownType type)
         unless ← chargeTraversal do return .family (← unknownType type)
+        -- admission-exit: typeFamilyArgument.forward.1 rule=retained-witness.rule
         typeFamilyArgument env (mkApp value x) body active
+      -- admission-exit: typeFamilyArgument.3 rule=retained-witness.rule
       let .family verdict := result | return result
       let (bm, bu) := verdict.flags
       let (dm, du) := (← inputType env domain active).flags
+      -- admission-exit: typeFamilyArgument.4 rule=typeFamily
       return .family (← checkedType .typeFamily value (dm || bm) (du || bu))
     | .sort _ => return .family (← inputType env value active)
     | _ =>
@@ -1592,12 +1652,14 @@ private partial def typeFamilyArgument (env : Environment) (value type : Expr)
       -- A shape outside the type allowlist cannot become data by falling through.
       let verdict ← inputType env reduced active
       match verdict with
+      -- admission-exit: typeFamilyArgument.5 rule=retained-witness.rule
       | .allowlisted evidence => return .data evidence
       | _ => return .family verdict
   let result ← inspect
   let state ← get
   let result := match result with
     | .family verdict => .family (bindWitnessSource verdict state.assumedProducer)
+    -- admission-exit: typeFamilyArgument.forward.2 rule=retained-witness.rule
     | .data evidence => .data { evidence with sourceDependency := state.assumedProducer }
   modify fun s => { s with
     assumedFamilyDepth := mergeAssumptions enclosing state.assumedFamilyDepth
@@ -1614,6 +1676,7 @@ private partial def typeFamilyArgument (env : Environment) (value type : Expr)
       unless ← chargeTraversal do return .family (← unknownType type)
       modify fun s => { s with dataFunctionTypes := s.dataFunctionTypes.insert (type, evidence.sourceDependency) evidence }
   | _ => pure ()
+  -- admission-exit: typeFamilyArgument.6 rule=retained-witness.rule
   return result
 end
 
@@ -1624,6 +1687,7 @@ private def classifyOccurrence (env : Environment) (occurrence : Expr)
   let context := if occurrence.hasLooseBVars then context else #[]
   unless ← chargeTraversal (2 * context.size + 1) do return .incomplete
   let key := (occurrence, context, (← get).currentFirst)
+  -- admission-exit: classifyOccurrence.1 rule=retained-witness.rule
   if let some cached := (← get).typeChecks[key]? then return cached
   let verdict ← inBinderContext context fun locals => do
     let some occurrence ← substitute occurrence locals | return .incomplete
@@ -1639,12 +1703,14 @@ private def classifyOccurrence (env : Environment) (occurrence : Expr)
     if state.forbidden then return .forbidden
     if state.incomplete then return .incomplete
     if let some site := state.unclassified then return .unclassified site
+    -- admission-exit: classifyOccurrence.2 rule=retained-witness.rule
     return classification
   let verdict ← match verdict with
     | some verdict => pure verdict
     | none => if (← get).incomplete then pure .incomplete else unknownType occurrence
   unless ← chargeTraversal context.size do return .incomplete
   modify fun s => { s with typeChecks := s.typeChecks.insert key verdict }
+  -- admission-exit: classifyOccurrence.3 rule=retained-witness.rule
   return verdict
 
 -- Check a node before requesting its children. Independent Prop proofs are
@@ -1667,8 +1733,10 @@ private partial def visitOccurrence (env : Environment) (pos : Position)
       if value == actual then return false
       visitOccurrence env .typePos origin value
       return true
+    -- admission-exit: visitOccurrence.1 rule=retained-witness.rule
     if decoded == some true then return
   let key := (e, pos, context)
+  -- admission-exit: visitOccurrence.2 rule=retained-witness.rule
   if (← get).visited.contains key then return
   modify fun s => { s with visited := s.visited.insert key }
   let verdict ← classifyOccurrence env e context
@@ -1677,6 +1745,7 @@ private partial def visitOccurrence (env : Environment) (pos : Position)
   | .statementMention => noteUnclassified ⟨"statement_mentioning_type", first, namespaceLabel env first, origin⟩
   | .unclassified site => noteUnclassified site
   | .incomplete => modify fun s => { s with incomplete := true }; return
+  -- admission-exit: visitOccurrence.forward.1 rule=retained-witness.rule
   | .allowlisted _ => pure ()
   let actualContext := if e.hasLooseBVars then context else #[]
   let proof ← inBinderContext actualContext fun locals => do
@@ -1699,6 +1768,7 @@ private partial def visitOccurrence (env : Environment) (pos : Position)
       return true
     let some proof ← boundedMeta (Meta.isProp type) `proof_boundary | return false
     return proof
+  -- admission-exit: visitOccurrence.3 rule=retained-witness.rule
   if proof == some true then return
   let child := fun e context => visitOccurrence env pos origin e context
   match e with
@@ -1712,6 +1782,7 @@ private partial def visitOccurrence (env : Environment) (pos : Position)
           if decisionFamily.contains h && !listedProducers.contains n then
             noteUnclassified ⟨"unlisted_decision_producer", n, namespaceLabel env n, origin⟩
     if (env.find? n).isNone then modify fun s => { s with incomplete := true }
+    -- admission-exit: visitOccurrence.4 rule=retained-witness.rule
     else if inProtected env n then queue n levels
   | .app f a =>
     unless ← chargeSummaryWork (fun c => { c with spineArguments := c.spineArguments + 2 }) 2 do return
@@ -1741,6 +1812,7 @@ private partial def visitOccurrence (env : Environment) (pos : Position)
   | .mvar _ => modify fun s => { s with incomplete := true }
   | .lit _ | .sort _ | .fvar _ | .bvar _ =>
     match verdict with
+    -- admission-exit: visitOccurrence.5 rule=retained-witness.rule
     | .allowlisted _ => pure () -- syntaxLeaf: already inferred in its real binder context
     | _ => noteUnclassified ⟨"unclassified_syntax_leaf", first, namespaceLabel env first, origin⟩
 
@@ -1843,6 +1915,7 @@ def readoutClosureCurrent (theoremName : Name) (readout : Expr) : CoreM (Bool ×
   let r ← safeCollect env theoremName `readout readout
   if r.incomplete then return (false, none)
   if r.forbidden || r.unclassified.isSome then return (true, some r.walked)
+  -- admission-exit: readoutClosureCurrent.1 rule=retained-witness.rule
   if r.admission.isSome then return (false, some r.walked)
   return (true, some r.walked)
 
@@ -1863,6 +1936,7 @@ def provenanceErrorCurrent (root catalog theoremName realization : Name) : CoreM
   let result ← match readout with
     | some (e, _) => safeCollect env theoremName address e extractionWork
     | none => safeCollect env theoremName address (.sort .zero) extractionWork true
+  -- admission-exit: provenanceErrorCurrent.1 rule=retained-witness.rule
   if result.admission.isSome && !result.forbidden && result.unclassified.isNone && !result.incomplete then return none
   let reason := if result.incomplete then "incomplete_closure"
     else if result.forbidden then "forbidden_dependency" else "unclassified_form"
