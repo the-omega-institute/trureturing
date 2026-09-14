@@ -1,0 +1,6 @@
+## 64. 记录类、指数去相干与经典块的形成
+
+第 63 节说明偏迹后的不可见可以来自访问缺陷，而不是整体信息消灭。本节处理另一种更强的情形：当不同记录类的 Gram 重叠统一严格小于一时，重复记录会使跨类相干按明确速率收缩；同一记录类内部的矩阵元则被保留下来，极限是块对角的记录类结构。
+
+引用的冻结模块是 `RepeatedRecordExponentialDecay.lean` 的 `repeated_record_exponential_decay`，以及 `CoherenceDecay.lean` 的 `equal_superposition_coherence_tendsto_zero`。本节只解释这些有限矩阵结论，不新增 Lean 声明，也不把指数收缩推广到未满足 Gram 假设的任意开放系统。
+

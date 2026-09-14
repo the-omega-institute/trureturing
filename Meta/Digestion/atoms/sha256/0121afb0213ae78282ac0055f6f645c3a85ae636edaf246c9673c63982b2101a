@@ -1,0 +1,41 @@
+### 64.1 记录 Gram 系数与重复通道
+
+设有限系统标签为 $i\in\operatorname{Fin}(d)$，每个标签对应一个归一化环境记录向量
+
+$$
+r_i=\bigl(r_{i,a}\bigr)_{a\in\operatorname{Fin}(e)},
+$$
+
+满足
+
+$$
+\sum_a|r_{i,a}|^2=1.
+$$
+
+定义记录 Gram 系数
+
+$$
+G_{ij}=\langle r_j,r_i\rangle.
+$$
+
+一次记录通道逐项作用于系统矩阵：
+
+$$
+\mathcal C(\rho)_{ij}=G_{ij}\rho_{ij}.
+$$
+
+重复 $N$ 次后，冻结定理给出精确式
+
+$$
+\bigl(\mathcal C^N(\rho)\bigr)_{ij}
+=G_{ij}^{,N}\rho_{ij}.
+$$
+
+当 $i=j$ 时，归一化保证
+
+$$
+G_{ii}=1.
+$$
+
+因此对角概率不受这一记录通道改变；变化集中在非对角关系方向。
+

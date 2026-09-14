@@ -16201,3 +16201,212 @@ $$
 
 ## 追加锚（新终端）
 
+## 64. 记录类、指数去相干与经典块的形成
+
+第 63 节说明偏迹后的不可见可以来自访问缺陷，而不是整体信息消灭。本节处理另一种更强的情形：当不同记录类的 Gram 重叠统一严格小于一时，重复记录会使跨类相干按明确速率收缩；同一记录类内部的矩阵元则被保留下来，极限是块对角的记录类结构。
+
+引用的冻结模块是 `RepeatedRecordExponentialDecay.lean` 的 `repeated_record_exponential_decay`，以及 `CoherenceDecay.lean` 的 `equal_superposition_coherence_tendsto_zero`。本节只解释这些有限矩阵结论，不新增 Lean 声明，也不把指数收缩推广到未满足 Gram 假设的任意开放系统。
+
+### 64.1 记录 Gram 系数与重复通道
+
+设有限系统标签为 $i\in\operatorname{Fin}(d)$，每个标签对应一个归一化环境记录向量
+
+$$
+r_i=\bigl(r_{i,a}\bigr)_{a\in\operatorname{Fin}(e)},
+$$
+
+满足
+
+$$
+\sum_a|r_{i,a}|^2=1.
+$$
+
+定义记录 Gram 系数
+
+$$
+G_{ij}=\langle r_j,r_i\rangle.
+$$
+
+一次记录通道逐项作用于系统矩阵：
+
+$$
+\mathcal C(\rho)_{ij}=G_{ij}\rho_{ij}.
+$$
+
+重复 $N$ 次后，冻结定理给出精确式
+
+$$
+\bigl(\mathcal C^N(\rho)\bigr)_{ij}
+=G_{ij}^{,N}\rho_{ij}.
+$$
+
+当 $i=j$ 时，归一化保证
+
+$$
+G_{ii}=1.
+$$
+
+因此对角概率不受这一记录通道改变；变化集中在非对角关系方向。
+
+### 定理 64.1（跨记录类的指数收缩）
+
+假设存在
+
+$$
+q\in[0,1)
+$$
+
+使得只要 $r_i\ne r_j$，就有
+
+$$
+|G_{ij}|\le q.
+$$
+
+对每个记录值 $\lambda$ 定义记录类投影 $P_\lambda$，并令 pinching 映射为
+
+$$
+\Pi(\rho)
+=\sum_{\lambda}P_\lambda\rho P_\lambda.
+$$
+
+`repeated_record_exponential_decay` 同时证明三件事：
+
+$$
+\bigl(\mathcal C^N(\rho)\bigr)_{ij}
+=G_{ij}^{,N}\rho_{ij},
+$$
+
+$$
+\Pi(\rho)_{ij}
+=
+\begin{cases}
+\rho_{ij},&r_i=r_j,\\
+0,&r_i\ne r_j,
+\end{cases}
+$$
+
+以及 Frobenius 范数界
+
+$$
+\left\|
+\mathcal C^N(\rho)-\Pi(\rho)
+\right\|_F
+\le
+q^N
+\left\|
+\rho-\Pi(\rho)
+\right\|_F.
+$$
+
+所以极限保留的是每个记录类内部的矩阵块，而跨类相干以 $q^N$ 收缩。若记录向量两两正交，则 $q=0$，一次作用就完成跨类 pinching；若只知道 $|G_{ij}|<1$ 但没有统一有限维上界，仍需另行建立统一 $q$ 才能使用上述范数界。
+
+### 64.2 “经典化”是块结构，不一定是完全对角化
+
+若每个标签都有不同记录向量，记录类都是单点，$Pi(\rho)$ 是对角矩阵，此时
+
+$$
+\mathcal C^N(\rho)\longrightarrow\operatorname{diag}(\rho).
+$$
+
+但若存在 $i\ne j$ 满足
+
+$$
+r_i=r_j,
+$$
+
+则 $i,j$ 位于同一记录类，$\Pi(\rho)_{ij}=\rho_{ij}$。这些类内相干不会由该通道衰减。于是“固定点是经典的”只有在记录类全为单点时才意味着对角经典代数；一般极限是记录类块代数。
+
+这与第 55 节的相位反例相容：若条件记录只相差一个相位，物理记录射线可能相同，跨类收缩条件并不成立；不能用固定点的形式描述替代 Gram 模长的严格假设。
+
+`CoherenceDecay` 的 qubit 特例给出同一逻辑的极限版本：若相位阻尼系数 $c$ 满足
+
+$$
+0\le c<1,
+$$
+
+则等权叠加态的非对角矩阵元满足
+
+$$
+\bigl(\mathcal C^N(\rho)\bigr)_{01}
+=\frac12c^N
+\longrightarrow0.
+$$
+
+这里的严格不等式 $c<1$ 是收敛所需的条件；若 $|c|=1$，只能得到相位旋转或周期行为，不能推出衰减。
+
+### 64.3 与 Zeckendorf 合法构型的接口
+
+在合法窗口
+
+$$
+\mathcal W_L
+=\{w\in\{0,1\}^L:w_rw_{r+1}=0\}
+$$
+
+上，可以选择一个记录映射
+
+$$
+r:\mathcal W_L\longrightarrow\mathcal R.
+$$
+
+映射的纤维
+
+$$
+[w]_r=\{v\in\mathcal W_L:r(v)=r(w)\}
+$$
+
+决定极限块的边界。Zeckendorf 数值、激发数和局部模式都可以作为 $r$ 的候选，但它们的 Gram 重叠并不由编码本身决定。
+
+若 $r$ 把所有合法构型分开，并且记录向量满足统一 $q<1$，则
+
+$$
+\|\mathcal C^N(\rho)-\operatorname{diag}(\rho)\|_F
+\le
+q^N\|\rho-\operatorname{diag}(\rho)\|_F.
+$$
+
+若 $r$ 只记录 Zeckendorf 数值的某个粗粒化，例如多个来源历史共享同一数值，则极限保留这些历史对应的块内相干；要进一步把块内结构当作经典噪声，必须增加记录 effect 或引入另一个会区分块内方向的动力学。
+
+这给出一个比“编码有唯一表示”更严格的判据：唯一表示只说明离散标签层的规范性；经典化速度还需要记录 Gram 模长的统一谱隙
+
+$$
+1-q>0.
+$$
+
+### 64.4 作用量、误差与停止条件
+
+指数界可转写为达到目标 Frobenius 误差 $\varepsilon$ 的充分步数：若初始跨类残差满足
+
+$$
+\|\rho-\Pi(\rho)\|_F\le M,
+$$
+
+则只要
+
+$$
+q^N M\le\varepsilon,
+$$
+
+就有
+
+$$
+\|\mathcal C^N(\rho)-\Pi(\rho)\|_F\le\varepsilon.
+$$
+
+当 $0<q<1$ 且 $M>0$ 时，一个充分的整数条件是
+
+$$
+N\ge
+\left\lceil
+\frac{\log(M/\varepsilon)}{-\log q}
+\right\rceil.
+$$
+
+这个 $N$ 只控制跨记录类的 Frobenius 范数尾项；它不自动控制第 56 节隐藏回流、第 58 节 Zeckendorf 刻度误差、第 61 节观察残差或第 63 节访问受限的恢复误差。完整任务预算仍需把这些项按各自适用的距离和通道假设合并。
+
+因此，本节得到的“稳定经典现实”是一个带条件的操作性结论：在记录类固定、Gram 跨类重叠统一小于一、重复通道确实按同一有限模型作用的范围内，跨类相干以指数速度进入块对角结构；块内是否继续保留历史，则由更细的记录和后续动力学决定。
+
+本节为 `repo-derived/open` 理论追加；没有新增 Lean 声明、形式覆盖或冻结状态。
+
+## 追加锚（新终端）
+
