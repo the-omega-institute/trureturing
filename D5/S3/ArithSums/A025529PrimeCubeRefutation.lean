@@ -249,450 +249,139 @@ theorem prime_square_only_refuted : ¬ PrimeSquareOnly := by
   intro hclaim
   -- Balanced interval certificates: 64 disjoint leaves and 63 exact additions.
   have residue : (∑ k ∈ Ico (1 : ℕ) 16843, (k : ZMod (16843^3))⁻¹) = 0 := by
-    have r1_264 : (∑ k ∈ Ico (1 : ℕ) 264, (k : ZMod (16843^3))⁻¹) = 471428010868 := by
-      decide +kernel
-    have r264_527 : (∑ k ∈ Ico (264 : ℕ) 527, (k : ZMod (16843^3))⁻¹) = 1079740593648 := by
-      decide +kernel
-    have r1_527 : (∑ k ∈ Ico (1 : ℕ) 527, (k : ZMod (16843^3))⁻¹) = 1551168604516 :=
+    let S (a b : ℕ) : ZMod (16843^3) := ∑ k ∈ Ico a b, (k : ZMod (16843^3))⁻¹
+    have j {a b c : ℕ} {x y : ZMod (16843^3)} (h : decide (a ≤ b ∧ b ≤ c) = true)
+        (hx : S a b = x) (hy : S b c = y) : S a c = x + y :=
       (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 1 ≤ 264) (by decide : 264 ≤ 527)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r1_264 r264_527).trans
-          (by decide +kernel))
-    have r527_790 : (∑ k ∈ Ico (527 : ℕ) 790, (k : ZMod (16843^3))⁻¹) = 4525174035128 := by
-      decide +kernel
-    have r790_1053 : (∑ k ∈ Ico (790 : ℕ) 1053, (k : ZMod (16843^3))⁻¹) = 342026242703 := by
-      decide +kernel
-    have r527_1053 : (∑ k ∈ Ico (527 : ℕ) 1053, (k : ZMod (16843^3))⁻¹) = 89066048724 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 527 ≤ 790) (by decide : 790 ≤ 1053)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r527_790 r790_1053).trans
-          (by decide +kernel))
-    have r1_1053 : (∑ k ∈ Ico (1 : ℕ) 1053, (k : ZMod (16843^3))⁻¹) = 1640234653240 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 1 ≤ 527) (by decide : 527 ≤ 1053)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r1_527 r527_1053).trans
-          (by decide +kernel))
-    have r1053_1316 : (∑ k ∈ Ico (1053 : ℕ) 1316, (k : ZMod (16843^3))⁻¹) = 2259937017727 := by
-      decide +kernel
-    have r1316_1579 : (∑ k ∈ Ico (1316 : ℕ) 1579, (k : ZMod (16843^3))⁻¹) = 2712265615000 := by
-      decide +kernel
-    have r1053_1579 : (∑ k ∈ Ico (1053 : ℕ) 1579, (k : ZMod (16843^3))⁻¹) = 194068403620 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 1053 ≤ 1316) (by decide : 1316 ≤ 1579)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r1053_1316 r1316_1579).trans
-          (by decide +kernel))
-    have r1579_1842 : (∑ k ∈ Ico (1579 : ℕ) 1842, (k : ZMod (16843^3))⁻¹) = 250464687490 := by
-      decide +kernel
-    have r1842_2106 : (∑ k ∈ Ico (1842 : ℕ) 2106, (k : ZMod (16843^3))⁻¹) = 3928151190908 := by
-      decide +kernel
-    have r1579_2106 : (∑ k ∈ Ico (1579 : ℕ) 2106, (k : ZMod (16843^3))⁻¹) = 4178615878398 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 1579 ≤ 1842) (by decide : 1842 ≤ 2106)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r1579_1842 r1842_2106).trans
-          (by decide +kernel))
-    have r1053_2106 : (∑ k ∈ Ico (1053 : ℕ) 2106, (k : ZMod (16843^3))⁻¹) = 4372684282018 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 1053 ≤ 1579) (by decide : 1579 ≤ 2106)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r1053_1579 r1579_2106).trans
-          (by decide +kernel))
-    have r1_2106 : (∑ k ∈ Ico (1 : ℕ) 2106, (k : ZMod (16843^3))⁻¹) = 1234784706151 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 1 ≤ 1053) (by decide : 1053 ≤ 2106)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r1_1053 r1053_2106).trans
-          (by decide +kernel))
-    have r2106_2369 : (∑ k ∈ Ico (2106 : ℕ) 2369, (k : ZMod (16843^3))⁻¹) = 3682614178791 := by
-      decide +kernel
-    have r2369_2632 : (∑ k ∈ Ico (2369 : ℕ) 2632, (k : ZMod (16843^3))⁻¹) = 957741191781 := by
-      decide +kernel
-    have r2106_2632 : (∑ k ∈ Ico (2106 : ℕ) 2632, (k : ZMod (16843^3))⁻¹) = 4640355370572 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 2106 ≤ 2369) (by decide : 2369 ≤ 2632)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r2106_2369 r2369_2632).trans
-          (by decide +kernel))
-    have r2632_2895 : (∑ k ∈ Ico (2632 : ℕ) 2895, (k : ZMod (16843^3))⁻¹) = 4308946959374 := by
-      decide +kernel
-    have r2895_3158 : (∑ k ∈ Ico (2895 : ℕ) 3158, (k : ZMod (16843^3))⁻¹) = 1936715224557 := by
-      decide +kernel
-    have r2632_3158 : (∑ k ∈ Ico (2632 : ℕ) 3158, (k : ZMod (16843^3))⁻¹) = 1467527954824 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 2632 ≤ 2895) (by decide : 2895 ≤ 3158)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r2632_2895 r2895_3158).trans
-          (by decide +kernel))
-    have r2106_3158 : (∑ k ∈ Ico (2106 : ℕ) 3158, (k : ZMod (16843^3))⁻¹) = 1329749096289 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 2106 ≤ 2632) (by decide : 2632 ≤ 3158)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r2106_2632 r2632_3158).trans
-          (by decide +kernel))
-    have r3158_3421 : (∑ k ∈ Ico (3158 : ℕ) 3421, (k : ZMod (16843^3))⁻¹) = 1694777027943 := by
-      decide +kernel
-    have r3421_3684 : (∑ k ∈ Ico (3421 : ℕ) 3684, (k : ZMod (16843^3))⁻¹) = 3239055884524 := by
-      decide +kernel
-    have r3158_3684 : (∑ k ∈ Ico (3158 : ℕ) 3684, (k : ZMod (16843^3))⁻¹) = 155698683360 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 3158 ≤ 3421) (by decide : 3421 ≤ 3684)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r3158_3421 r3421_3684).trans
-          (by decide +kernel))
-    have r3684_3947 : (∑ k ∈ Ico (3684 : ℕ) 3947, (k : ZMod (16843^3))⁻¹) = 878290529986 := by
-      decide +kernel
-    have r3947_4211 : (∑ k ∈ Ico (3947 : ℕ) 4211, (k : ZMod (16843^3))⁻¹) = 28863366876 := by
-      decide +kernel
-    have r3684_4211 : (∑ k ∈ Ico (3684 : ℕ) 4211, (k : ZMod (16843^3))⁻¹) = 907153896862 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 3684 ≤ 3947) (by decide : 3947 ≤ 4211)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r3684_3947 r3947_4211).trans
-          (by decide +kernel))
-    have r3158_4211 : (∑ k ∈ Ico (3158 : ℕ) 4211, (k : ZMod (16843^3))⁻¹) = 1062852580222 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 3158 ≤ 3684) (by decide : 3684 ≤ 4211)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r3158_3684 r3684_4211).trans
-          (by decide +kernel))
-    have r2106_4211 : (∑ k ∈ Ico (2106 : ℕ) 4211, (k : ZMod (16843^3))⁻¹) = 2392601676511 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 2106 ≤ 3158) (by decide : 3158 ≤ 4211)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r2106_3158 r3158_4211).trans
-          (by decide +kernel))
-    have r1_4211 : (∑ k ∈ Ico (1 : ℕ) 4211, (k : ZMod (16843^3))⁻¹) = 3627386382662 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 1 ≤ 2106) (by decide : 2106 ≤ 4211)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r1_2106 r2106_4211).trans
-          (by decide +kernel))
-    have r4211_4474 : (∑ k ∈ Ico (4211 : ℕ) 4474, (k : ZMod (16843^3))⁻¹) = 4355925571167 := by
-      decide +kernel
-    have r4474_4737 : (∑ k ∈ Ico (4474 : ℕ) 4737, (k : ZMod (16843^3))⁻¹) = 4622792245918 := by
-      decide +kernel
-    have r4211_4737 : (∑ k ∈ Ico (4211 : ℕ) 4737, (k : ZMod (16843^3))⁻¹) = 4200583587978 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 4211 ≤ 4474) (by decide : 4474 ≤ 4737)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r4211_4474 r4474_4737).trans
-          (by decide +kernel))
-    have r4737_5000 : (∑ k ∈ Ico (4737 : ℕ) 5000, (k : ZMod (16843^3))⁻¹) = 1068420271104 := by
-      decide +kernel
-    have r5000_5263 : (∑ k ∈ Ico (5000 : ℕ) 5263, (k : ZMod (16843^3))⁻¹) = 4574005484936 := by
-      decide +kernel
-    have r4737_5263 : (∑ k ∈ Ico (4737 : ℕ) 5263, (k : ZMod (16843^3))⁻¹) = 864291526933 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 4737 ≤ 5000) (by decide : 5000 ≤ 5263)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r4737_5000 r5000_5263).trans
-          (by decide +kernel))
-    have r4211_5263 : (∑ k ∈ Ico (4211 : ℕ) 5263, (k : ZMod (16843^3))⁻¹) = 286740885804 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 4211 ≤ 4737) (by decide : 4737 ≤ 5263)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r4211_4737 r4737_5263).trans
-          (by decide +kernel))
-    have r5263_5526 : (∑ k ∈ Ico (5263 : ℕ) 5526, (k : ZMod (16843^3))⁻¹) = 4632508613183 := by
-      decide +kernel
-    have r5526_5789 : (∑ k ∈ Ico (5526 : ℕ) 5789, (k : ZMod (16843^3))⁻¹) = 337294221225 := by
-      decide +kernel
-    have r5263_5789 : (∑ k ∈ Ico (5263 : ℕ) 5789, (k : ZMod (16843^3))⁻¹) = 191668605301 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 5263 ≤ 5526) (by decide : 5526 ≤ 5789)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r5263_5526 r5526_5789).trans
-          (by decide +kernel))
-    have r5789_6052 : (∑ k ∈ Ico (5789 : ℕ) 6052, (k : ZMod (16843^3))⁻¹) = 2564753083555 := by
-      decide +kernel
-    have r6052_6316 : (∑ k ∈ Ico (6052 : ℕ) 6316, (k : ZMod (16843^3))⁻¹) = 2059706723211 := by
-      decide +kernel
-    have r5789_6316 : (∑ k ∈ Ico (5789 : ℕ) 6316, (k : ZMod (16843^3))⁻¹) = 4624459806766 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 5789 ≤ 6052) (by decide : 6052 ≤ 6316)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r5789_6052 r6052_6316).trans
-          (by decide +kernel))
-    have r5263_6316 : (∑ k ∈ Ico (5263 : ℕ) 6316, (k : ZMod (16843^3))⁻¹) = 37994182960 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 5263 ≤ 5789) (by decide : 5789 ≤ 6316)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r5263_5789 r5789_6316).trans
-          (by decide +kernel))
-    have r4211_6316 : (∑ k ∈ Ico (4211 : ℕ) 6316, (k : ZMod (16843^3))⁻¹) = 324735068764 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 4211 ≤ 5263) (by decide : 5263 ≤ 6316)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r4211_5263 r5263_6316).trans
-          (by decide +kernel))
-    have r6316_6579 : (∑ k ∈ Ico (6316 : ℕ) 6579, (k : ZMod (16843^3))⁻¹) = 4092072657436 := by
-      decide +kernel
-    have r6579_6842 : (∑ k ∈ Ico (6579 : ℕ) 6842, (k : ZMod (16843^3))⁻¹) = 3608764213878 := by
-      decide +kernel
-    have r6316_6842 : (∑ k ∈ Ico (6316 : ℕ) 6842, (k : ZMod (16843^3))⁻¹) = 2922702642207 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 6316 ≤ 6579) (by decide : 6579 ≤ 6842)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r6316_6579 r6579_6842).trans
-          (by decide +kernel))
-    have r6842_7105 : (∑ k ∈ Ico (6842 : ℕ) 7105, (k : ZMod (16843^3))⁻¹) = 1827926241833 := by
-      decide +kernel
-    have r7105_7369 : (∑ k ∈ Ico (7105 : ℕ) 7369, (k : ZMod (16843^3))⁻¹) = 3101728667931 := by
-      decide +kernel
-    have r6842_7369 : (∑ k ∈ Ico (6842 : ℕ) 7369, (k : ZMod (16843^3))⁻¹) = 151520680657 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 6842 ≤ 7105) (by decide : 7105 ≤ 7369)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r6842_7105 r7105_7369).trans
-          (by decide +kernel))
-    have r6316_7369 : (∑ k ∈ Ico (6316 : ℕ) 7369, (k : ZMod (16843^3))⁻¹) = 3074223322864 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 6316 ≤ 6842) (by decide : 6842 ≤ 7369)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r6316_6842 r6842_7369).trans
-          (by decide +kernel))
-    have r7369_7632 : (∑ k ∈ Ico (7369 : ℕ) 7632, (k : ZMod (16843^3))⁻¹) = 450618777288 := by
-      decide +kernel
-    have r7632_7895 : (∑ k ∈ Ico (7632 : ℕ) 7895, (k : ZMod (16843^3))⁻¹) = 2141764787583 := by
-      decide +kernel
-    have r7369_7895 : (∑ k ∈ Ico (7369 : ℕ) 7895, (k : ZMod (16843^3))⁻¹) = 2592383564871 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 7369 ≤ 7632) (by decide : 7632 ≤ 7895)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r7369_7632 r7632_7895).trans
-          (by decide +kernel))
-    have r7895_8158 : (∑ k ∈ Ico (7895 : ℕ) 8158, (k : ZMod (16843^3))⁻¹) = 3270514678745 := by
-      decide +kernel
-    have r8158_8422 : (∑ k ∈ Ico (8158 : ℕ) 8422, (k : ZMod (16843^3))⁻¹) = 4639327186057 := by
-      decide +kernel
-    have r7895_8422 : (∑ k ∈ Ico (7895 : ℕ) 8422, (k : ZMod (16843^3))⁻¹) = 3131707635695 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 7895 ≤ 8158) (by decide : 8158 ≤ 8422)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r7895_8158 r8158_8422).trans
-          (by decide +kernel))
-    have r7369_8422 : (∑ k ∈ Ico (7369 : ℕ) 8422, (k : ZMod (16843^3))⁻¹) = 945956971459 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 7369 ≤ 7895) (by decide : 7895 ≤ 8422)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r7369_7895 r7895_8422).trans
-          (by decide +kernel))
-    have r6316_8422 : (∑ k ∈ Ico (6316 : ℕ) 8422, (k : ZMod (16843^3))⁻¹) = 4020180294323 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 6316 ≤ 7369) (by decide : 7369 ≤ 8422)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r6316_7369 r7369_8422).trans
-          (by decide +kernel))
-    have r4211_8422 : (∑ k ∈ Ico (4211 : ℕ) 8422, (k : ZMod (16843^3))⁻¹) = 4344915363087 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 4211 ≤ 6316) (by decide : 6316 ≤ 8422)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r4211_6316 r6316_8422).trans
-          (by decide +kernel))
-    have r1_8422 : (∑ k ∈ Ico (1 : ℕ) 8422, (k : ZMod (16843^3))⁻¹) = 3194167516642 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 1 ≤ 4211) (by decide : 4211 ≤ 8422)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r1_4211 r4211_8422).trans
-          (by decide +kernel))
-    have r8422_8685 : (∑ k ∈ Ico (8422 : ℕ) 8685, (k : ZMod (16843^3))⁻¹) = 3706381942250 := by
-      decide +kernel
-    have r8685_8948 : (∑ k ∈ Ico (8685 : ℕ) 8948, (k : ZMod (16843^3))⁻¹) = 2397121131081 := by
-      decide +kernel
-    have r8422_8948 : (∑ k ∈ Ico (8422 : ℕ) 8948, (k : ZMod (16843^3))⁻¹) = 1325368844224 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 8422 ≤ 8685) (by decide : 8685 ≤ 8948)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r8422_8685 r8685_8948).trans
-          (by decide +kernel))
-    have r8948_9211 : (∑ k ∈ Ico (8948 : ℕ) 9211, (k : ZMod (16843^3))⁻¹) = 327266266689 := by
-      decide +kernel
-    have r9211_9474 : (∑ k ∈ Ico (9211 : ℕ) 9474, (k : ZMod (16843^3))⁻¹) = 1190193871107 := by
-      decide +kernel
-    have r8948_9474 : (∑ k ∈ Ico (8948 : ℕ) 9474, (k : ZMod (16843^3))⁻¹) = 1517460137796 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 8948 ≤ 9211) (by decide : 9211 ≤ 9474)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r8948_9211 r9211_9474).trans
-          (by decide +kernel))
-    have r8422_9474 : (∑ k ∈ Ico (8422 : ℕ) 9474, (k : ZMod (16843^3))⁻¹) = 2842828982020 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 8422 ≤ 8948) (by decide : 8948 ≤ 9474)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r8422_8948 r8948_9474).trans
-          (by decide +kernel))
-    have r9474_9737 : (∑ k ∈ Ico (9474 : ℕ) 9737, (k : ZMod (16843^3))⁻¹) = 4504229588705 := by
-      decide +kernel
-    have r9737_10000 : (∑ k ∈ Ico (9737 : ℕ) 10000, (k : ZMod (16843^3))⁻¹) = 2013446770584 := by
-      decide +kernel
-    have r9474_10000 : (∑ k ∈ Ico (9474 : ℕ) 10000, (k : ZMod (16843^3))⁻¹) = 1739542130182 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 9474 ≤ 9737) (by decide : 9737 ≤ 10000)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r9474_9737 r9737_10000).trans
-          (by decide +kernel))
-    have r10000_10263 : (∑ k ∈ Ico (10000 : ℕ) 10263, (k : ZMod (16843^3))⁻¹) = 5868525872 := by
-      decide +kernel
-    have r10263_10527 : (∑ k ∈ Ico (10263 : ℕ) 10527, (k : ZMod (16843^3))⁻¹) = 1345154869482 := by
-      decide +kernel
-    have r10000_10527 : (∑ k ∈ Ico (10000 : ℕ) 10527, (k : ZMod (16843^3))⁻¹) = 1351023395354 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 10000 ≤ 10263) (by decide : 10263 ≤ 10527)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r10000_10263 r10263_10527).trans
-          (by decide +kernel))
-    have r9474_10527 : (∑ k ∈ Ico (9474 : ℕ) 10527, (k : ZMod (16843^3))⁻¹) = 3090565525536 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 9474 ≤ 10000) (by decide : 10000 ≤ 10527)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r9474_10000 r10000_10527).trans
-          (by decide +kernel))
-    have r8422_10527 : (∑ k ∈ Ico (8422 : ℕ) 10527, (k : ZMod (16843^3))⁻¹) = 1155260278449 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 8422 ≤ 9474) (by decide : 9474 ≤ 10527)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r8422_9474 r9474_10527).trans
-          (by decide +kernel))
-    have r10527_10790 : (∑ k ∈ Ico (10527 : ℕ) 10790, (k : ZMod (16843^3))⁻¹) = 1209967556623 := by
-      decide +kernel
-    have r10790_11053 : (∑ k ∈ Ico (10790 : ℕ) 11053, (k : ZMod (16843^3))⁻¹) = 1977484134182 := by
-      decide +kernel
-    have r10527_11053 : (∑ k ∈ Ico (10527 : ℕ) 11053, (k : ZMod (16843^3))⁻¹) = 3187451690805 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 10527 ≤ 10790) (by decide : 10790 ≤ 11053)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r10527_10790 r10790_11053).trans
-          (by decide +kernel))
-    have r11053_11316 : (∑ k ∈ Ico (11053 : ℕ) 11316, (k : ZMod (16843^3))⁻¹) = 3233645395927 := by
-      decide +kernel
-    have r11316_11579 : (∑ k ∈ Ico (11316 : ℕ) 11579, (k : ZMod (16843^3))⁻¹) = 1406183036564 := by
-      decide +kernel
-    have r11053_11579 : (∑ k ∈ Ico (11053 : ℕ) 11579, (k : ZMod (16843^3))⁻¹) = 4639828432491 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 11053 ≤ 11316) (by decide : 11316 ≤ 11579)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r11053_11316 r11316_11579).trans
-          (by decide +kernel))
-    have r10527_11579 : (∑ k ∈ Ico (10527 : ℕ) 11579, (k : ZMod (16843^3))⁻¹) = 3049145894189 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 10527 ≤ 11053) (by decide : 11053 ≤ 11579)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r10527_11053 r11053_11579).trans
-          (by decide +kernel))
-    have r11579_11842 : (∑ k ∈ Ico (11579 : ℕ) 11842, (k : ZMod (16843^3))⁻¹) = 3555344733472 := by
-      decide +kernel
-    have r11842_12105 : (∑ k ∈ Ico (11842 : ℕ) 12105, (k : ZMod (16843^3))⁻¹) = 1615686948554 := by
-      decide +kernel
-    have r11579_12105 : (∑ k ∈ Ico (11579 : ℕ) 12105, (k : ZMod (16843^3))⁻¹) = 392897452919 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 11579 ≤ 11842) (by decide : 11842 ≤ 12105)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r11579_11842 r11842_12105).trans
-          (by decide +kernel))
-    have r12105_12368 : (∑ k ∈ Ico (12105 : ℕ) 12368, (k : ZMod (16843^3))⁻¹) = 3521765024464 := by
-      decide +kernel
-    have r12368_12632 : (∑ k ∈ Ico (12368 : ℕ) 12632, (k : ZMod (16843^3))⁻¹) = 1757956935794 := by
-      decide +kernel
-    have r12105_12632 : (∑ k ∈ Ico (12105 : ℕ) 12632, (k : ZMod (16843^3))⁻¹) = 501587731151 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 12105 ≤ 12368) (by decide : 12368 ≤ 12632)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r12105_12368 r12368_12632).trans
-          (by decide +kernel))
-    have r11579_12632 : (∑ k ∈ Ico (11579 : ℕ) 12632, (k : ZMod (16843^3))⁻¹) = 894485184070 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 11579 ≤ 12105) (by decide : 12105 ≤ 12632)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r11579_12105 r12105_12632).trans
-          (by decide +kernel))
-    have r10527_12632 : (∑ k ∈ Ico (10527 : ℕ) 12632, (k : ZMod (16843^3))⁻¹) = 3943631078259 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 10527 ≤ 11579) (by decide : 11579 ≤ 12632)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r10527_11579 r11579_12632).trans
-          (by decide +kernel))
-    have r8422_12632 : (∑ k ∈ Ico (8422 : ℕ) 12632, (k : ZMod (16843^3))⁻¹) = 320757127601 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 8422 ≤ 10527) (by decide : 10527 ≤ 12632)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r8422_10527 r10527_12632).trans
-          (by decide +kernel))
-    have r12632_12895 : (∑ k ∈ Ico (12632 : ℕ) 12895, (k : ZMod (16843^3))⁻¹) = 497723146169 := by
-      decide +kernel
-    have r12895_13158 : (∑ k ∈ Ico (12895 : ℕ) 13158, (k : ZMod (16843^3))⁻¹) = 2253459151348 := by
-      decide +kernel
-    have r12632_13158 : (∑ k ∈ Ico (12632 : ℕ) 13158, (k : ZMod (16843^3))⁻¹) = 2751182297517 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 12632 ≤ 12895) (by decide : 12895 ≤ 13158)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r12632_12895 r12895_13158).trans
-          (by decide +kernel))
-    have r13158_13421 : (∑ k ∈ Ico (13158 : ℕ) 13421, (k : ZMod (16843^3))⁻¹) = 2673285654648 := by
-      decide +kernel
-    have r13421_13684 : (∑ k ∈ Ico (13421 : ℕ) 13684, (k : ZMod (16843^3))⁻¹) = 27988817683 := by
-      decide +kernel
-    have r13158_13684 : (∑ k ∈ Ico (13158 : ℕ) 13684, (k : ZMod (16843^3))⁻¹) = 2701274472331 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 13158 ≤ 13421) (by decide : 13421 ≤ 13684)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r13158_13421 r13421_13684).trans
-          (by decide +kernel))
-    have r12632_13684 : (∑ k ∈ Ico (12632 : ℕ) 13684, (k : ZMod (16843^3))⁻¹) = 674322540741 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 12632 ≤ 13158) (by decide : 13158 ≤ 13684)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r12632_13158 r13158_13684).trans
-          (by decide +kernel))
-    have r13684_13947 : (∑ k ∈ Ico (13684 : ℕ) 13947, (k : ZMod (16843^3))⁻¹) = 4752014365119 := by
-      decide +kernel
-    have r13947_14210 : (∑ k ∈ Ico (13947 : ℕ) 14210, (k : ZMod (16843^3))⁻¹) = 323656884653 := by
-      decide +kernel
-    have r13684_14210 : (∑ k ∈ Ico (13684 : ℕ) 14210, (k : ZMod (16843^3))⁻¹) = 297537020665 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 13684 ≤ 13947) (by decide : 13947 ≤ 14210)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r13684_13947 r13947_14210).trans
-          (by decide +kernel))
-    have r14210_14473 : (∑ k ∈ Ico (14210 : ℕ) 14473, (k : ZMod (16843^3))⁻¹) = 783437645442 := by
-      decide +kernel
-    have r14473_14737 : (∑ k ∈ Ico (14473 : ℕ) 14737, (k : ZMod (16843^3))⁻¹) = 3228561547966 := by
-      decide +kernel
-    have r14210_14737 : (∑ k ∈ Ico (14210 : ℕ) 14737, (k : ZMod (16843^3))⁻¹) = 4011999193408 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 14210 ≤ 14473) (by decide : 14473 ≤ 14737)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r14210_14473 r14473_14737).trans
-          (by decide +kernel))
-    have r13684_14737 : (∑ k ∈ Ico (13684 : ℕ) 14737, (k : ZMod (16843^3))⁻¹) = 4309536214073 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 13684 ≤ 14210) (by decide : 14210 ≤ 14737)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r13684_14210 r14210_14737).trans
-          (by decide +kernel))
-    have r12632_14737 : (∑ k ∈ Ico (12632 : ℕ) 14737, (k : ZMod (16843^3))⁻¹) = 205724525707 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 12632 ≤ 13684) (by decide : 13684 ≤ 14737)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r12632_13684 r13684_14737).trans
-          (by decide +kernel))
-    have r14737_15000 : (∑ k ∈ Ico (14737 : ℕ) 15000, (k : ZMod (16843^3))⁻¹) = 698465562658 := by
-      decide +kernel
-    have r15000_15263 : (∑ k ∈ Ico (15000 : ℕ) 15263, (k : ZMod (16843^3))⁻¹) = 1121594262417 := by
-      decide +kernel
-    have r14737_15263 : (∑ k ∈ Ico (14737 : ℕ) 15263, (k : ZMod (16843^3))⁻¹) = 1820059825075 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 14737 ≤ 15000) (by decide : 15000 ≤ 15263)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r14737_15000 r15000_15263).trans
-          (by decide +kernel))
-    have r15263_15526 : (∑ k ∈ Ico (15263 : ℕ) 15526, (k : ZMod (16843^3))⁻¹) = 4037764149014 := by
-      decide +kernel
-    have r15526_15790 : (∑ k ∈ Ico (15526 : ℕ) 15790, (k : ZMod (16843^3))⁻¹) = 99180922428 := by
-      decide +kernel
-    have r15263_15790 : (∑ k ∈ Ico (15263 : ℕ) 15790, (k : ZMod (16843^3))⁻¹) = 4136945071442 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 15263 ≤ 15526) (by decide : 15526 ≤ 15790)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r15263_15526 r15526_15790).trans
-          (by decide +kernel))
-    have r14737_15790 : (∑ k ∈ Ico (14737 : ℕ) 15790, (k : ZMod (16843^3))⁻¹) = 1178870667410 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 14737 ≤ 15263) (by decide : 15263 ≤ 15790)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r14737_15263 r15263_15790).trans
-          (by decide +kernel))
-    have r15790_16053 : (∑ k ∈ Ico (15790 : ℕ) 16053, (k : ZMod (16843^3))⁻¹) = 318876092706 := by
-      decide +kernel
-    have r16053_16316 : (∑ k ∈ Ico (16053 : ℕ) 16316, (k : ZMod (16843^3))⁻¹) = 4276729385911 := by
-      decide +kernel
-    have r15790_16316 : (∑ k ∈ Ico (15790 : ℕ) 16316, (k : ZMod (16843^3))⁻¹) = 4595605478617 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 15790 ≤ 16053) (by decide : 16053 ≤ 16316)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r15790_16053 r16053_16316).trans
-          (by decide +kernel))
-    have r16316_16579 : (∑ k ∈ Ico (16316 : ℕ) 16579, (k : ZMod (16843^3))⁻¹) = 4475432042571 := by
-      decide +kernel
-    have r16579_16843 : (∑ k ∈ Ico (16579 : ℕ) 16843, (k : ZMod (16843^3))⁻¹) = 363845328773 := by
-      decide +kernel
-    have r16316_16843 : (∑ k ∈ Ico (16316 : ℕ) 16843, (k : ZMod (16843^3))⁻¹) = 61143142237 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 16316 ≤ 16579) (by decide : 16579 ≤ 16843)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r16316_16579 r16579_16843).trans
-          (by decide +kernel))
-    have r15790_16843 : (∑ k ∈ Ico (15790 : ℕ) 16843, (k : ZMod (16843^3))⁻¹) = 4656748620854 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 15790 ≤ 16316) (by decide : 16316 ≤ 16843)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r15790_16316 r16316_16843).trans
-          (by decide +kernel))
-    have r14737_16843 : (∑ k ∈ Ico (14737 : ℕ) 16843, (k : ZMod (16843^3))⁻¹) = 1057485059157 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 14737 ≤ 15790) (by decide : 15790 ≤ 16843)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r14737_15790 r15790_16843).trans
-          (by decide +kernel))
-    have r12632_16843 : (∑ k ∈ Ico (12632 : ℕ) 16843, (k : ZMod (16843^3))⁻¹) = 1263209584864 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 12632 ≤ 14737) (by decide : 14737 ≤ 16843)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r12632_14737 r14737_16843).trans
-          (by decide +kernel))
-    have r8422_16843 : (∑ k ∈ Ico (8422 : ℕ) 16843, (k : ZMod (16843^3))⁻¹) = 1583966712465 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 8422 ≤ 12632) (by decide : 12632 ≤ 16843)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r8422_12632 r12632_16843).trans
-          (by decide +kernel))
-    have r1_16843 : (∑ k ∈ Ico (1 : ℕ) 16843, (k : ZMod (16843^3))⁻¹) = 0 :=
-      (sum_Ico_consecutive (fun k : ℕ => (k : ZMod (16843^3))⁻¹)
-        (by decide : 1 ≤ 8422) (by decide : 8422 ≤ 16843)).symm.trans
-        ((congrArg₂ (fun a b : ZMod (16843^3) => a + b) r1_8422 r8422_16843).trans
-          (by decide +kernel))
-    exact r1_16843
+        (of_decide_eq_true h).1 (of_decide_eq_true h).2).symm.trans
+        (congrArg₂ (fun x y : ZMod (16843^3) => x + y) hx hy)
+    have r0 : S 1 264 = 471428010868 := by decide +kernel
+    have r1 : S 264 527 = 1079740593648 := by decide +kernel
+    have r2 : S 1 527 = 1551168604516 := (j rfl r0 r1).trans (by decide +kernel)
+    have r3 : S 527 790 = 4525174035128 := by decide +kernel
+    have r4 : S 790 1053 = 342026242703 := by decide +kernel
+    have r5 : S 527 1053 = 89066048724 := (j rfl r3 r4).trans (by decide +kernel)
+    have r6 : S 1 1053 = 1640234653240 := (j rfl r2 r5).trans (by decide +kernel)
+    have r7 : S 1053 1316 = 2259937017727 := by decide +kernel
+    have r8 : S 1316 1579 = 2712265615000 := by decide +kernel
+    have r9 : S 1053 1579 = 194068403620 := (j rfl r7 r8).trans (by decide +kernel)
+    have r10 : S 1579 1842 = 250464687490 := by decide +kernel
+    have r11 : S 1842 2106 = 3928151190908 := by decide +kernel
+    have r12 : S 1579 2106 = 4178615878398 := (j rfl r10 r11).trans (by decide +kernel)
+    have r13 : S 1053 2106 = 4372684282018 := (j rfl r9 r12).trans (by decide +kernel)
+    have r14 : S 1 2106 = 1234784706151 := (j rfl r6 r13).trans (by decide +kernel)
+    have r15 : S 2106 2369 = 3682614178791 := by decide +kernel
+    have r16 : S 2369 2632 = 957741191781 := by decide +kernel
+    have r17 : S 2106 2632 = 4640355370572 := (j rfl r15 r16).trans (by decide +kernel)
+    have r18 : S 2632 2895 = 4308946959374 := by decide +kernel
+    have r19 : S 2895 3158 = 1936715224557 := by decide +kernel
+    have r20 : S 2632 3158 = 1467527954824 := (j rfl r18 r19).trans (by decide +kernel)
+    have r21 : S 2106 3158 = 1329749096289 := (j rfl r17 r20).trans (by decide +kernel)
+    have r22 : S 3158 3421 = 1694777027943 := by decide +kernel
+    have r23 : S 3421 3684 = 3239055884524 := by decide +kernel
+    have r24 : S 3158 3684 = 155698683360 := (j rfl r22 r23).trans (by decide +kernel)
+    have r25 : S 3684 3947 = 878290529986 := by decide +kernel
+    have r26 : S 3947 4211 = 28863366876 := by decide +kernel
+    have r27 : S 3684 4211 = 907153896862 := (j rfl r25 r26).trans (by decide +kernel)
+    have r28 : S 3158 4211 = 1062852580222 := (j rfl r24 r27).trans (by decide +kernel)
+    have r29 : S 2106 4211 = 2392601676511 := (j rfl r21 r28).trans (by decide +kernel)
+    have r30 : S 1 4211 = 3627386382662 := (j rfl r14 r29).trans (by decide +kernel)
+    have r31 : S 4211 4474 = 4355925571167 := by decide +kernel
+    have r32 : S 4474 4737 = 4622792245918 := by decide +kernel
+    have r33 : S 4211 4737 = 4200583587978 := (j rfl r31 r32).trans (by decide +kernel)
+    have r34 : S 4737 5000 = 1068420271104 := by decide +kernel
+    have r35 : S 5000 5263 = 4574005484936 := by decide +kernel
+    have r36 : S 4737 5263 = 864291526933 := (j rfl r34 r35).trans (by decide +kernel)
+    have r37 : S 4211 5263 = 286740885804 := (j rfl r33 r36).trans (by decide +kernel)
+    have r38 : S 5263 5526 = 4632508613183 := by decide +kernel
+    have r39 : S 5526 5789 = 337294221225 := by decide +kernel
+    have r40 : S 5263 5789 = 191668605301 := (j rfl r38 r39).trans (by decide +kernel)
+    have r41 : S 5789 6052 = 2564753083555 := by decide +kernel
+    have r42 : S 6052 6316 = 2059706723211 := by decide +kernel
+    have r43 : S 5789 6316 = 4624459806766 := (j rfl r41 r42).trans (by decide +kernel)
+    have r44 : S 5263 6316 = 37994182960 := (j rfl r40 r43).trans (by decide +kernel)
+    have r45 : S 4211 6316 = 324735068764 := (j rfl r37 r44).trans (by decide +kernel)
+    have r46 : S 6316 6579 = 4092072657436 := by decide +kernel
+    have r47 : S 6579 6842 = 3608764213878 := by decide +kernel
+    have r48 : S 6316 6842 = 2922702642207 := (j rfl r46 r47).trans (by decide +kernel)
+    have r49 : S 6842 7105 = 1827926241833 := by decide +kernel
+    have r50 : S 7105 7369 = 3101728667931 := by decide +kernel
+    have r51 : S 6842 7369 = 151520680657 := (j rfl r49 r50).trans (by decide +kernel)
+    have r52 : S 6316 7369 = 3074223322864 := (j rfl r48 r51).trans (by decide +kernel)
+    have r53 : S 7369 7632 = 450618777288 := by decide +kernel
+    have r54 : S 7632 7895 = 2141764787583 := by decide +kernel
+    have r55 : S 7369 7895 = 2592383564871 := (j rfl r53 r54).trans (by decide +kernel)
+    have r56 : S 7895 8158 = 3270514678745 := by decide +kernel
+    have r57 : S 8158 8422 = 4639327186057 := by decide +kernel
+    have r58 : S 7895 8422 = 3131707635695 := (j rfl r56 r57).trans (by decide +kernel)
+    have r59 : S 7369 8422 = 945956971459 := (j rfl r55 r58).trans (by decide +kernel)
+    have r60 : S 6316 8422 = 4020180294323 := (j rfl r52 r59).trans (by decide +kernel)
+    have r61 : S 4211 8422 = 4344915363087 := (j rfl r45 r60).trans (by decide +kernel)
+    have r62 : S 1 8422 = 3194167516642 := (j rfl r30 r61).trans (by decide +kernel)
+    have r63 : S 8422 8685 = 3706381942250 := by decide +kernel
+    have r64 : S 8685 8948 = 2397121131081 := by decide +kernel
+    have r65 : S 8422 8948 = 1325368844224 := (j rfl r63 r64).trans (by decide +kernel)
+    have r66 : S 8948 9211 = 327266266689 := by decide +kernel
+    have r67 : S 9211 9474 = 1190193871107 := by decide +kernel
+    have r68 : S 8948 9474 = 1517460137796 := (j rfl r66 r67).trans (by decide +kernel)
+    have r69 : S 8422 9474 = 2842828982020 := (j rfl r65 r68).trans (by decide +kernel)
+    have r70 : S 9474 9737 = 4504229588705 := by decide +kernel
+    have r71 : S 9737 10000 = 2013446770584 := by decide +kernel
+    have r72 : S 9474 10000 = 1739542130182 := (j rfl r70 r71).trans (by decide +kernel)
+    have r73 : S 10000 10263 = 5868525872 := by decide +kernel
+    have r74 : S 10263 10527 = 1345154869482 := by decide +kernel
+    have r75 : S 10000 10527 = 1351023395354 := (j rfl r73 r74).trans (by decide +kernel)
+    have r76 : S 9474 10527 = 3090565525536 := (j rfl r72 r75).trans (by decide +kernel)
+    have r77 : S 8422 10527 = 1155260278449 := (j rfl r69 r76).trans (by decide +kernel)
+    have r78 : S 10527 10790 = 1209967556623 := by decide +kernel
+    have r79 : S 10790 11053 = 1977484134182 := by decide +kernel
+    have r80 : S 10527 11053 = 3187451690805 := (j rfl r78 r79).trans (by decide +kernel)
+    have r81 : S 11053 11316 = 3233645395927 := by decide +kernel
+    have r82 : S 11316 11579 = 1406183036564 := by decide +kernel
+    have r83 : S 11053 11579 = 4639828432491 := (j rfl r81 r82).trans (by decide +kernel)
+    have r84 : S 10527 11579 = 3049145894189 := (j rfl r80 r83).trans (by decide +kernel)
+    have r85 : S 11579 11842 = 3555344733472 := by decide +kernel
+    have r86 : S 11842 12105 = 1615686948554 := by decide +kernel
+    have r87 : S 11579 12105 = 392897452919 := (j rfl r85 r86).trans (by decide +kernel)
+    have r88 : S 12105 12368 = 3521765024464 := by decide +kernel
+    have r89 : S 12368 12632 = 1757956935794 := by decide +kernel
+    have r90 : S 12105 12632 = 501587731151 := (j rfl r88 r89).trans (by decide +kernel)
+    have r91 : S 11579 12632 = 894485184070 := (j rfl r87 r90).trans (by decide +kernel)
+    have r92 : S 10527 12632 = 3943631078259 := (j rfl r84 r91).trans (by decide +kernel)
+    have r93 : S 8422 12632 = 320757127601 := (j rfl r77 r92).trans (by decide +kernel)
+    have r94 : S 12632 12895 = 497723146169 := by decide +kernel
+    have r95 : S 12895 13158 = 2253459151348 := by decide +kernel
+    have r96 : S 12632 13158 = 2751182297517 := (j rfl r94 r95).trans (by decide +kernel)
+    have r97 : S 13158 13421 = 2673285654648 := by decide +kernel
+    have r98 : S 13421 13684 = 27988817683 := by decide +kernel
+    have r99 : S 13158 13684 = 2701274472331 := (j rfl r97 r98).trans (by decide +kernel)
+    have r100 : S 12632 13684 = 674322540741 := (j rfl r96 r99).trans (by decide +kernel)
+    have r101 : S 13684 13947 = 4752014365119 := by decide +kernel
+    have r102 : S 13947 14210 = 323656884653 := by decide +kernel
+    have r103 : S 13684 14210 = 297537020665 := (j rfl r101 r102).trans (by decide +kernel)
+    have r104 : S 14210 14473 = 783437645442 := by decide +kernel
+    have r105 : S 14473 14737 = 3228561547966 := by decide +kernel
+    have r106 : S 14210 14737 = 4011999193408 := (j rfl r104 r105).trans (by decide +kernel)
+    have r107 : S 13684 14737 = 4309536214073 := (j rfl r103 r106).trans (by decide +kernel)
+    have r108 : S 12632 14737 = 205724525707 := (j rfl r100 r107).trans (by decide +kernel)
+    have r109 : S 14737 15000 = 698465562658 := by decide +kernel
+    have r110 : S 15000 15263 = 1121594262417 := by decide +kernel
+    have r111 : S 14737 15263 = 1820059825075 := (j rfl r109 r110).trans (by decide +kernel)
+    have r112 : S 15263 15526 = 4037764149014 := by decide +kernel
+    have r113 : S 15526 15790 = 99180922428 := by decide +kernel
+    have r114 : S 15263 15790 = 4136945071442 := (j rfl r112 r113).trans (by decide +kernel)
+    have r115 : S 14737 15790 = 1178870667410 := (j rfl r111 r114).trans (by decide +kernel)
+    have r116 : S 15790 16053 = 318876092706 := by decide +kernel
+    have r117 : S 16053 16316 = 4276729385911 := by decide +kernel
+    have r118 : S 15790 16316 = 4595605478617 := (j rfl r116 r117).trans (by decide +kernel)
+    have r119 : S 16316 16579 = 4475432042571 := by decide +kernel
+    have r120 : S 16579 16843 = 363845328773 := by decide +kernel
+    have r121 : S 16316 16843 = 61143142237 := (j rfl r119 r120).trans (by decide +kernel)
+    have r122 : S 15790 16843 = 4656748620854 := (j rfl r118 r121).trans (by decide +kernel)
+    have r123 : S 14737 16843 = 1057485059157 := (j rfl r115 r122).trans (by decide +kernel)
+    have r124 : S 12632 16843 = 1263209584864 := (j rfl r108 r123).trans (by decide +kernel)
+    have r125 : S 8422 16843 = 1583966712465 := (j rfl r93 r124).trans (by decide +kernel)
+    exact (j rfl r62 r125).trans (by decide +kernel)
   have hp : Nat.Prime 16843 := by norm_num
   have hdiv : 16843^3 ∣ A (16843^3 - 1) := by
     apply prime_cube_divides 16843 hp (by norm_num)
@@ -708,5 +397,4 @@ theorem prime_square_only_refuted : ¬ PrimeSquareOnly := by
   have he : 16843 = q := (Nat.prime_dvd_prime_iff_eq hp hq).mp (hp.dvd_of_dvd_pow hd)
   rw [← he] at heq
   norm_num at heq
-
 end D5.S3.ArithSums.A025529PrimeCubeRefutation
