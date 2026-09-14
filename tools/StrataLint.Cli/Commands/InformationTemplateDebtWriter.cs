@@ -118,8 +118,9 @@ internal static class InformationTemplateDebtWriter
         using var guard = new FileStream(Path.Combine(git, "stratalint-information-template-debt.lock"),
             FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None);
         var directory = Path.Combine(root, InformationTemplateDebtStore.Root);
-        var actualPaths = Directory.Exists(directory) ? Directory.GetFiles(directory, "*", SearchOption.AllDirectories) : [];
-        if (actualPaths.Any(path => (File.GetAttributes(path) & FileAttributes.ReparsePoint) != 0)
+        RequireRegularDirectoryPath(root, directory);
+        var actualPaths = Directory.Exists(directory) ? Directory.GetFileSystemEntries(directory) : [];
+        if (actualPaths.Any(path => (File.GetAttributes(path) & (FileAttributes.ReparsePoint | FileAttributes.Directory)) != 0)
             || !actualPaths.Select(path => Path.GetRelativePath(root, path).Replace('\\', '/')).ToHashSet(StringComparer.Ordinal)
                 .SetEquals(before.Keys)
             || before.Any(pair => !File.ReadAllBytes(Path.Combine(root, pair.Key)).AsSpan().SequenceEqual(pair.Value.AsSpan())))
@@ -133,8 +134,11 @@ internal static class InformationTemplateDebtWriter
                 if (before.TryGetValue(path, out var old) && after.TryGetValue(path, out var next)
                     && old.AsSpan().SequenceEqual(next.AsSpan())) continue;
                 if (!path.StartsWith(InformationTemplateDebtStore.Root, StringComparison.Ordinal)
-                    || !RepoPath.TryCreate(path, out _)) throw new FormatException("DTR-DebtSchema: invalid writer path");
+                    || !RepoPath.TryCreate(path, out _)
+                    || path[InformationTemplateDebtStore.Root.Length..].Contains('/'))
+                    throw new FormatException("DTR-DebtSchema: invalid writer path");
                 var target = Path.Combine(root, path);
+                RequireRegularDirectoryPath(root, directory);
                 touched.Add(path);
                 if (after.TryGetValue(path, out var bytes))
                 {
@@ -157,6 +161,24 @@ internal static class InformationTemplateDebtWriter
                 catch (Exception rollback) when (rollback is not OutOfMemoryException) { failures.Add(rollback); }
             if (failures.Count > 1) throw new AggregateException("DTR-DebtSchema: rollback incomplete", failures);
             throw;
+        }
+    }
+
+    private static void RequireRegularDirectoryPath(string root, string directory)
+    {
+        var relative = Path.GetRelativePath(root, directory);
+        var current = Path.GetFullPath(root);
+        foreach (var component in relative.Split(Path.DirectorySeparatorChar).Prepend(""))
+        {
+            current = Path.Combine(current, component);
+            // GetAttributes also detects a dangling link; Exists would hide it.
+            FileAttributes attributes;
+            try { attributes = File.GetAttributes(current); }
+            catch (FileNotFoundException) { continue; }
+            catch (DirectoryNotFoundException) { continue; }
+            if ((attributes & FileAttributes.ReparsePoint) != 0
+                || (attributes & FileAttributes.Directory) == 0)
+                throw new IOException("DTR-DebtSchema: debt directory must be regular");
         }
     }
 

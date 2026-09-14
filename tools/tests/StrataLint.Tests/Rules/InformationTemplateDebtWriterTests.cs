@@ -78,4 +78,60 @@ public sealed class InformationTemplateDebtWriterTests
         Assert.Throws<FormatException>(() => InformationTemplateDebtWriter.Discharge(new(Seed, false), debt,
             Universe(InformationTemplateBindingState.DeclaredValidated)));
     }
+
+    [Theory]
+    [InlineData("Golden")]
+    [InlineData("Golden/InformationTemplateDebt")]
+    public void writer_rejects_directory_alias_before_publication(string alias)
+    {
+        var temporary = Directory.CreateTempSubdirectory("dtr-writer-");
+        try
+        {
+            var root = Path.Combine(temporary.FullName, "repo");
+            Directory.CreateDirectory(Path.Combine(root, ".git"));
+            var outside = Directory.CreateDirectory(Path.Combine(temporary.FullName, "outside"));
+            var link = Path.Combine(root, alias);
+            Directory.CreateDirectory(Path.GetDirectoryName(link)!);
+            Directory.CreateSymbolicLink(link, outside.FullName);
+            var outputs = new Dictionary<string, ImmutableArray<byte>>
+            {
+                [InformationTemplateDebtStore.ActivationPath] = InformationTemplateDebtStore.WriteActivation(new(Seed, false)),
+            };
+            Assert.Throws<IOException>(() => InformationTemplateDebtWriter.Apply(root,
+                new Dictionary<string, ImmutableArray<byte>>(), outputs, () => { }));
+            Assert.Empty(Directory.GetFileSystemEntries(outside.FullName));
+        }
+        finally { temporary.Delete(true); }
+    }
+
+    [Fact]
+    public void writer_restores_all_rows_after_partial_publication()
+    {
+        var temporary = Directory.CreateTempSubdirectory("dtr-writer-");
+        try
+        {
+            var root = temporary.FullName;
+            Directory.CreateDirectory(Path.Combine(root, ".git"));
+            var first = InformationTemplateDebtStore.Root + "a.json";
+            var second = InformationTemplateDebtStore.Root + "b.json";
+            var original = ImmutableArray.Create<byte>(1, 2, 3);
+            var before = new Dictionary<string, ImmutableArray<byte>> { [first] = original };
+            Directory.CreateDirectory(Path.GetDirectoryName(Path.Combine(root, first))!);
+            File.WriteAllBytes(Path.Combine(root, first), original.AsSpan());
+            var after = new Dictionary<string, ImmutableArray<byte>>
+            {
+                [first] = ImmutableArray.Create<byte>(4), [second] = ImmutableArray.Create<byte>(5),
+            };
+            var publications = 0;
+            Assert.Throws<IOException>(() => InformationTemplateDebtWriter.Apply(root, before, after, () => { },
+                (source, target) =>
+                {
+                    if (++publications == 2) throw new IOException("injected second publication failure");
+                    File.Move(source, target, true);
+                }));
+            Assert.Equal(original.ToArray(), File.ReadAllBytes(Path.Combine(root, first)));
+            Assert.False(File.Exists(Path.Combine(root, second)));
+        }
+        finally { temporary.Delete(true); }
+    }
 }
