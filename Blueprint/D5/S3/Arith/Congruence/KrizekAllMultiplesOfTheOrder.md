@@ -46,6 +46,10 @@ $$\forall n \in \mathrm{Nat},\; (1 \le n) \Rightarrow ((inSequence\left(n\right)
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Congruence/KrizekAllMultiplesOfTheOrder.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a260407-krizek-all-multiples-of-the-order` (proved) by `D5/S3/Arith/Congruence/KrizekAllMultiplesOfTheOrder.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a260407-krizek-all-multiples-of-the-order","declaration_gid":"D5/S3/Arith/Congruence/KrizekAllMultiplesOfTheOrder.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* M. F. Hasler; Jaroslav Krizek (2016). *OEIS A260407, Numbers n such that (n-1)^2+1 divides 2^(n-1)-1*. URL: <https://oeis.org/A260407>.

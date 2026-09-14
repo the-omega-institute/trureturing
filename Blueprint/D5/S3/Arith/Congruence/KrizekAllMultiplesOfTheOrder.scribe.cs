@@ -40,7 +40,11 @@ internal sealed class KrizekAllMultiplesOfTheOrderDocument
                     + "The converse takes k equal to one. At n equal to one, modulus(n) "
                     + "is one and both divisibility statements hold.",
                 "result", DescribeRole.Theorem,
-                AssessedProvenance.FromRepo(Source)))));
+                AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "oeis-a260407-krizek-all-multiples-of-the-order"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(
         string id,
@@ -49,10 +53,11 @@ internal sealed class KrizekAllMultiplesOfTheOrderDocument
         string prose,
         string declaration,
         DescribeRole role,
-        AssessedProvenance provenance) => Describe.Lean(
+        AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("a260407-" + id), DeclarationHandle.Create(Prefix + declaration),
             H(title), StatementSource.FromAuthor(formula), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula ModulusFormula()
     {
