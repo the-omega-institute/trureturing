@@ -1,0 +1,9 @@
+**定理 353.3。** 对 $X=X_A^{\rm cap}$ 或 $X=B_A^{\rm cap}$，取第 342 条在该域上相等的坐标、黄金拓扑 $\tau$，定义外部拓扑
+$$
+\tau^*=\{\operatorname{Enc}[U]:U\in\tau\}.
+$$
+则 $\operatorname{enc}_X:(X,\tau)\to(X^*,\tau^*)$ 是同胚，对每个 $L\subseteq X$ 有
+$$
+\overline{\operatorname{Enc}[L]}^{(X^*,\tau^*)}
+=\operatorname{Enc}[\overline L^{(X,\tau)}].
+$$

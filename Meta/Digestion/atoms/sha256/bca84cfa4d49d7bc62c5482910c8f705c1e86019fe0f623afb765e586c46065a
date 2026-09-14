@@ -1,0 +1,5 @@
+**定理 378.5。** 对每个指定拓扑空间 $(X,\tau_X)$，定义
+$$
+\tau_X^*=\{\operatorname{Enc}[U]:U\in\tau_X\}.
+$$
+则 $\operatorname{enc}_X:(X,\tau_X)\to(X^*,\tau_X^*)$ 是同胚。

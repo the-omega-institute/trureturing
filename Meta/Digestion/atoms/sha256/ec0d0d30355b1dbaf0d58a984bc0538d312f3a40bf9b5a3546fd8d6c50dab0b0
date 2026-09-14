@@ -1,0 +1,4 @@
+对每个上述 $f$，
+$$
+G_{f^*}=\{\langle\operatorname{Enc}(x),\operatorname{Enc}(f(x))\rangle:x\in D\},
+$$
