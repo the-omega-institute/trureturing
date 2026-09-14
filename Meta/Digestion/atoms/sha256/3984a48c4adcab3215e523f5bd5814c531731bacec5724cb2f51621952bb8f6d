@@ -1,0 +1,43 @@
+### 73.1 有限尾空间恰好等价于有限线性预测实现
+
+仓库的 `D5.S3.Observer.Hankel.SequenceHankelRealization` 已给出以下等价关系：
+
+$$
+\boxed{
+\mathcal T(m)\text{ 有限维}
+\iff
+\text{存在有限维线性系统完整重现 }m.
+}
+$$
+
+更具体地，若系统为
+
+$$
+(V,A,B,C),
+\qquad
+A:V\to V,\quad B:U\to V,\quad C:V\to Y,
+$$
+
+其 Markov 响应为
+
+$$
+ m_n=C A^n B,
+$$
+
+则每个未来尾都来自 $V$ 的像，所以
+
+$$
+\dim\mathcal T(m)\le\dim V.
+$$
+
+反向地，把尾空间本身作为状态空间，令左移成为动力学，当前坐标成为输出，就得到一个重现全部 $m_n$ 的有限实现。因此最小状态维数不是凭经验选出的记忆长度，而是
+
+$$
+\boxed{
+ d_{\mathrm{pred}}(m)
+=\operatorname{finrank}_K\mathcal T(m).
+}
+$$
+
+这个等式的适用范围是线性响应实现。它不声称任意非线性控制器、任意量子通道或任意带后选择的条件概率都能被同一个线性载体代表。
+
