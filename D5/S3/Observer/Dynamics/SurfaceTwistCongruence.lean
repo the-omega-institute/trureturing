@@ -132,6 +132,10 @@ abbrev Detector (extra m : ℕ) := (evaluation extra m).range
 def projection (extra m : ℕ) : Surface extra →* Detector extra m :=
   (evaluation extra m).rangeRestrict
 
+/-- A mixed word using one generator on each side of the separating curve. -/
+def crossingWord (extra : ℕ) : Surface extra :=
+  generator extra (Sum.inl 0) * (generator extra (Sum.inl 3))⁻¹
+
 /-- Finite characteristic detection of all powers, with an exact outer period.
 The last clause records complete blindness of every abelian representation.
 The innerness clause is the literal condition for the induced automorphism on
@@ -146,6 +150,10 @@ theorem finite_characteristic_twist_detector (extra m : ℕ) (hm : 0 < m) :
       (∃ z : Detector extra m, ∀ x : Surface extra,
         projection extra m (twistPower extra n x) =
           z * projection extra m x * z⁻¹) ↔ m ∣ n) ∧
+    (∀ n : ℕ,
+      (∃ z : Detector extra m,
+        projection extra m (twistPower extra n (crossingWord extra)) =
+          z * projection extra m (crossingWord extra) * z⁻¹) ↔ m ∣ n) ∧
     (∀ n : ℕ, m ∣ n → ∀ x : Surface extra,
       projection extra m (twistPower extra n x) = projection extra m x) ∧
     (∀ (A : Type) [CommGroup A] (f : Surface extra →* A),
@@ -349,6 +357,35 @@ theorem finite_characteristic_twist_detector (extra m : ℕ) (hm : 0 < m) :
       refine ⟨1, ?_⟩
       intro x
       simpa using hquotientPeriod n hn x
+  have hword : ∀ n : ℕ,
+      (∃ z : Detector extra m,
+        projection extra m (twistPower extra n (crossingWord extra)) =
+          z * projection extra m (crossingWord extra) * z⁻¹) ↔ m ∣ n := by
+    intro n
+    constructor
+    · rintro ⟨z, hz⟩
+      have h := congrArg (fun u : Detector extra m => u.1 ρ) hz
+      change ρ (twistPower extra n (crossingWord extra)) =
+        z.1 ρ * ρ (crossingWord extra) * (z.1 ρ)⁻¹ at h
+      have hzeroWord : ρ (crossingWord extra) = 1 := by
+        simp [crossingWord, hrho, images]
+      have htwistedWord : ρ (twistPower extra n (crossingWord extra)) =
+          DihedralGroup.r (-4 * (n : ZMod (4 * m))) := by
+        simp only [crossingWord, map_mul, map_inv, hfirst, hfixed,
+          DihedralGroup.inv_sr, DihedralGroup.sr_mul_sr]
+        congr 1
+        ring
+      rw [htwistedWord, hzeroWord] at h
+      have heq : DihedralGroup.r (-4 * (n : ZMod (4 * m))) = DihedralGroup.r 0 := by
+        simpa using h
+      have hnzero : ((4 * n : ℕ) : ZMod (4 * m)) = 0 := by
+        have hi := DihedralGroup.r.inj heq
+        push_cast
+        linear_combination -hi
+      obtain ⟨j, hj⟩ := (ZMod.natCast_eq_zero_iff _ _).mp hnzero
+      exact ⟨j, by nlinarith [hj]⟩
+    · intro hn
+      exact ⟨1, by simpa using hquotientPeriod n hn (crossingWord extra)⟩
   have hab : ∀ (A : Type) [CommGroup A] (f : Surface extra →* A),
       f.comp (twistHom extra 1) = f := by
     intro A _ f
@@ -361,7 +398,7 @@ theorem finite_characteristic_twist_detector (extra m : ℕ) (hm : 0 < m) :
     rcases i with i | i
     · fin_cases i <;> simp [twistImages, map_mul, map_inv, map_zpow, hb]
     · rfl
-  exact ⟨hfinite, hsurj, hinvariant, hbijective, houter, hquotientPeriod, hab⟩
+  exact ⟨hfinite, hsurj, hinvariant, hbijective, houter, hword, hquotientPeriod, hab⟩
 
 #print axioms finite_characteristic_twist_detector
 

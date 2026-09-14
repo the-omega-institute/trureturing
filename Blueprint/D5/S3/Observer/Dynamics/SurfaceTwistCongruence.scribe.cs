@@ -28,7 +28,7 @@ internal sealed class SurfaceTwistCongruenceDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(TheoremFormula()),
                 AssessedProvenance.FromRepo(),
                 Blocks(
-                    Paragraph(Text("FullInvariantKernel(q) means that for every group endomorphism f "
+                    Paragraph(Text("OrbitReturn(q,P_n,w) means that q(P_n(w)) and q(w) are conjugate in Q, where w=a d^-1. FullInvariantKernel(q) means that for every group endomorphism f "
                         + "of G_e and every x, q(x)=1 implies q(f(x))=1. Inner(q,P_n) means that "
                         + "there exists one z in Q such that q(P_n(x))=z q(x) z^-1 for every x. "
                         + "It is the literal innerness condition for the induced quotient automorphism, "
@@ -43,7 +43,9 @@ internal sealed class SurfaceTwistCongruenceDocument : IScribeDocumentDefinition
                         + "For the converse, map (a,b,c,d) to (s,r,r,s) and the extra generators to one. "
                         + "The surface relation holds. Under tau^n the first image is sr^(4n), "
                         + "while the fourth stays s. Since a and d initially have equal images, "
-                        + "one common conjugator can exist only when 4m divides 4n.")),
+                        + "one common conjugator can exist only when 4m divides 4n. "
+                        + "The mixed word w=a d^-1 has image one, while its nth image is r^(-4n). "
+                        + "Thus the same characteristic quotient detects its conjugacy-class orbit with exact period m.")),
                     Paragraph(Text("All abelian observations kill the boundary commutator and are "
                         + "unchanged by tau. The finite nonabelian detector therefore retains information "
                         + "lost by every abelian target. Klukowski, arXiv:2411.06867v2, Definition 3, "
@@ -70,6 +72,9 @@ internal sealed class SurfaceTwistCongruenceDocument : IScribeDocumentDefinition
             Seq(Call("Bijective", tau), Sp, Land),
             Seq(Open, Forall, Sp, n, Colon, Sp, Call("Nat"), Comma, Sp,
                 Call("Inner", q, pn), Sp, Call("iff"), Sp, Call("Divides", m, n), Close, Sp, Land),
+            Seq(Open, Forall, Sp, n, Colon, Sp, Call("Nat"), Comma, Sp,
+                Call("OrbitReturn", q, pn, F.Id("w")), Sp, Call("iff"), Sp,
+                Call("Divides", m, n), Close, Sp, Land),
             Seq(Open, Forall, Sp, n, Colon, Sp, Call("Nat"), Comma, Sp,
                 Call("Divides", m, n), Sp, Rightarrow, Sp,
                 Forall, Sp, x, Colon, Sp, F.Id("G"), Comma, Sp,
