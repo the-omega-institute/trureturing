@@ -12,13 +12,13 @@ motivation_gids:
 
 ## Problem
 
-Definition 16 (verbatim):
+Definition 16 (Unicode transcription, preserving the printed superscripts):
 
-> Definition 16. For a given set M ⊂ N define a sequence δⁿ(M) of sets recursively by δ⁰(M) := M, δ(M) := δ¹(M) := M \ S(M), δⁿ⁺¹(M) := δ(δⁿ(M)) and let ηₙ(M) := |S(δⁿ(M))|, η(M) := η₁(M).
+> Definition 16. For a given set M ⊂ N define a sequence δⁿ(M) of sets recursively by δ⁰(M) := M, δ(M) := δ¹(M) := M \ S(M), δⁿ⁺¹(M) := δ(δⁿ(M)) and let ηⁿ(M) := |S(δⁿ(M))|, η(M) := η¹(M).
 
-Conjecture 18 (verbatim):
+Conjecture 18 (Unicode transcription, preserving the printed superscripts):
 
-> Conjecture 18. There are only countably many infinite sets M ⊂ N with η(M) ≤ η₀(M). For all other sets we have ηₙ(M) → ∞.
+> Conjecture 18. There are only countably many infinite sets M ⊂ N with η(M) ≤ η⁰(M). For all other sets we have ηⁿ(M) → ∞.
 
 Kreh writes `N` for the positive integers, writes `x ⊳ y` when the decimal
 string of `x` is obtained from that of `y` by deleting zero or more digits,
@@ -31,9 +31,11 @@ The literal refuted statement is the second sentence: for every infinite set
 `B` eventually satisfies `B ≤ eta M k` at every later layer. This is exactly
 `claim`, including the explicit positivity premise. Lean's `Set.ncard` is zero
 on an infinite set, but that convention is never used in the refutation:
-every displayed minimal layer is proved to be a singleton or a pair. The first
-sentence, concerning countably many infinite sets with
-`η(M) ≤ η₀(M)`, is not claimed or refuted.
+every displayed minimal layer is proved to be a singleton or a pair. That
+theorem does not address the first sentence, concerning countably many
+infinite sets with `η(M) ≤ η⁰(M)`. A companion result for that sentence is
+described below; this dossier's resolution binding remains the divergence
+theorem.
 
 ## Motivation
 
@@ -110,6 +112,24 @@ The finite truncations expose the intended pattern but do not carry the
 theorem. The Lean proof classifies the decimal subsequence order and proves
 the tail invariant for every natural layer.
 
+### Related result for the first sentence
+
+`D5/S1/Digit/KrehMinimalSetCountabilityRefutation.result` states that the
+collection of infinite positive sets satisfying `eta M 1 ≤ eta M 0` is
+uncountable. For every `A : Set ℕ`, it uses
+`F_A={1,6} ∪ {16·10^(2n) : n ∈ ℕ} ∪ {16·10^(2n+1) : n ∈ A}`.
+The first two minimal sets are exactly `{1,6}` and `{16}`. The even indices
+ensure infinitude, and the odd indices recover `A`, giving the powerset
+injection required by Cantor's theorem.
+
+Theorem 14 and Examples 15 and 17 of the source already provide the two-seed
+chain mechanism with sizes `2,1,1,...`; the companion result adds the
+explicit powerset encoding and uncountability deduction. The shared
+`Library/Digit/kreh2015minimalsets.md` records that distinction and the
+bounded literature findings. This supplementary clause uses the same
+Conjecture 18 identity and adds no distinct-question count or second
+resolution binding.
+
 ## Triage
 
 `theorem`. The formal result refutes only the divergence sentence of
@@ -125,5 +145,10 @@ Google Scholar was blocked by a CAPTCHA, the arXiv API returned HTTP 503, and
 the OpenAlex quota was exhausted. The literature and repository searches were
 bounded. The orchestrator and probe numerical readings above were supplied by
 issue #7639 and were not recomputed by this implementation seat. No claim is
-made about the countability sentence, a general structure theorem for minimal
-sets, an OEIS binding, or priority.
+made by the divergence theorem about the countability sentence, a general
+structure theorem for minimal sets, an OEIS binding, or priority. For the
+companion countability result, the fully reviewed supplied 2016 preprint
+*Deleting Digits*, arXiv:1607.01548v1, contains no explicit resolution of
+this sentence. The 2017 version-of-record PDF (DOI 10.1017/mag.2017.6)
+returned HTTP 403 and its contents remain `ASSUMED-UNVERIFIED`; the read-scope
+finding does not certify absence of a later resolution or worldwide priority.
