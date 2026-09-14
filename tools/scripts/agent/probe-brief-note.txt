@@ -23,7 +23,7 @@
   非定义等价 / 活推导路径)逐项作答。**点不出满足四项的见证即 bind-only。**
 
 - **第 1 条硬要求恒为**:先尝试**只用**钉版 Mathlib 直接实例化 + 冻结件投影 + 规范化改写
-  (含 `sq_nonneg` + `linarith only`)重证目标,**成功即如实记 `bind-only` 并停手报告,不建模块**。
+  (含 `sq_nonneg` + `linarith only`)重证目标,**成功即如实记 `bind-only`;仓内 atom 靶则停手报告、不建模块;预登记的外部具名开放问题靶(CLAUDE.md 第 3.2 条「开放问题结算依据」)不停手——如实报 `proof_shape: bind-only`、`escape_witness: null`、`admission_basis: open-problem-resolution`,继续建模块、提交并推送**。
   **探针席的价值在尽早判掉,不在做出东西** —— 自报 `likely-bind-only` / `escape_witness: null`
   就是一次有效交付。
 
