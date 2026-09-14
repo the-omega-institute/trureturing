@@ -1,0 +1,24 @@
+**定理 PT6。** 对 $a,b\ge0$、$a+b\le1$，取
+
+$$
+K_{a,b}=\begin{pmatrix}
+1-a&a&0\\
+a&1-a-b&b\\
+0&b&1-b
+\end{pmatrix},\qquad
+P=\begin{pmatrix}
+1/2&1/2&0\\
+1/2&1/2&0\\
+0&0&1
+\end{pmatrix}.
+$$
+
+则 $K_{a,b}$ 非负、行和为一且对称，并对全部参数共享平衡分布 $(1/3,1/3,1/3)$。此外
+
+$$
+\Delta_2=\frac{b^2}{8}
+\begin{pmatrix}1&1&-2\\1&1&-2\\-2&-2&4\end{pmatrix}.
+$$
+
+因此 $\Delta_2(2,2)=b^2/2$，且观察空间闭合当且仅当 $b=0$。
+
