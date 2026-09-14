@@ -1,7 +1,7 @@
 /- GID: D5/S1/Recurrence/StephanA005590ZeroSetCharacterization
    generality: I
    mirror-B: D5/B/S1/Recurrence/StephanA005590ZeroSetCharacterization
-   mirror-E: none(waiver:unbounded-symbolic-proof)
+   mirror-E: none(waiver:symbolic-proof-no-numeric-artifact)
    anchors: [mathlib/module/Mathlib.Tactic.Linarith]
    utility: none
    digest: Stephan's A005590 zeros are exactly the binary words without adjacent ones. -/
