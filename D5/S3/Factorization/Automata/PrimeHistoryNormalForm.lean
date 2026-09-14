@@ -29,45 +29,21 @@ The record does not encode an unconstrained history or claim to preserve cost. -
 /-- The empty map is a separate normal form, so all everywhere-failing histories
 are identified and no meaningless displacement of an empty map is retained. -/
 def normal (a : Nat) (w : List Bool) : Option (IntervalMap a) :=
+  have bounds :
+      low w ≤ 0 ∧ 0 ≤ high w ∧ low w ≤ displacement w ∧ displacement w ≤ high w := by
+    induction w with
+    | nil => simp [low, high, displacement]
+    | cons b w ih => simp only [low, high, displacement]; omega
   if h : high w - low w ≤ (a : Int) then
     some {
       lo := -low w
       hi := (a : Int) - high w
       shift := displacement w
-      lo_nonneg := by
-        have hb : low w ≤ 0 := by
-          induction w with
-          | nil => simp [low]
-          | cons b w ih => simp only [low]; omega
-        omega
-      ordered := by
-        have hlo : low w ≤ 0 := by
-          induction w with
-          | nil => simp [low]
-          | cons b w ih => simp only [low]; omega
-        have hhi : 0 ≤ high w := by
-          induction w with
-          | nil => simp [high]
-          | cons b w ih => simp only [high]; omega
-        omega
-      hi_le := by
-        have hb : 0 ≤ high w := by
-          induction w with
-          | nil => simp [high]
-          | cons b w ih => simp only [high]; omega
-        omega
-      image_lo := by
-        have hb : low w ≤ displacement w := by
-          induction w with
-          | nil => simp [low, displacement]
-          | cons b w ih => simp only [low, displacement]; omega
-        omega
-      image_hi := by
-        have hb : displacement w ≤ high w := by
-          induction w with
-          | nil => simp [high, displacement]
-          | cons b w ih => simp only [high, displacement]; omega
-        omega }
+      lo_nonneg := by omega
+      ordered := by omega
+      hi_le := by omega
+      image_lo := by omega
+      image_hi := by omega }
   else none
 
 /-- Evaluation on integers; every defined input and output is in [0,a]. -/
@@ -97,12 +73,12 @@ theorem evaluate_injective (a : Nat) :
             by_cases hs : s.lo ≤ x ∧ x ≤ s.hi <;>
               by_cases ht : t.lo ≤ x ∧ x ≤ t.hi <;>
               simp [evaluate, hs, ht] at hx ⊢
-          have hstlo := (domain s.lo).mp ⟨le_rfl, s.ordered⟩
-          have hsthi := (domain s.hi).mp ⟨s.ordered, le_rfl⟩
-          have htslo := (domain t.lo).mpr ⟨le_rfl, t.ordered⟩
-          have htshi := (domain t.hi).mpr ⟨t.ordered, le_rfl⟩
-          have hlo : s.lo = t.lo := le_antisymm htslo.1 hstlo.1
-          have hhi : s.hi = t.hi := le_antisymm hsthi.2 htshi.2
+          have hstlo := (domain s.lo).mp ⟨by omega, s.ordered⟩
+          have hsthi := (domain s.hi).mp ⟨s.ordered, by omega⟩
+          have htslo := (domain t.lo).mpr ⟨by omega, t.ordered⟩
+          have htshi := (domain t.hi).mpr ⟨t.ordered, by omega⟩
+          have hlo : s.lo = t.lo := by omega
+          have hhi : s.hi = t.hi := by omega
           have hout := congrFun heq s.lo
           simp [evaluate, s.ordered, hstlo] at hout
           have hd : s.shift = t.shift := by omega
@@ -219,9 +195,11 @@ theorem normal_surjective (a : Nat) : Function.Surjective (normal a) := by
   | none =>
       refine ⟨List.replicate (a + 1) true, ?_⟩
       have h := replicate_signature (a + 1)
-      simp only [normal, h.2.2.2.2.1, h.2.2.2.2.2]
-      have hn : ¬ ((a + 1 : Nat) : Int) - 0 ≤ (a : Int) := by omega
-      simp [hn]
+      have hn : ¬ high (List.replicate (a + 1) true) -
+          low (List.replicate (a + 1) true) ≤ (a : Int) := by
+        rw [h.2.2.2.2.1, h.2.2.2.2.2]
+        omega
+      simp [normal, hn]
   | some t =>
       refine ⟨realize t, ?_⟩
       rcases realize_signature t with ⟨hl, hh, hd⟩
@@ -232,7 +210,13 @@ theorem normal_surjective (a : Nat) : Function.Surjective (normal a) := by
       unfold normal
       rw [dif_pos hc]
       apply congrArg some
-      apply IntervalMap.ext <;> simp [hl, hh, hd]
+      apply IntervalMap.ext
+      · change -low (realize t) = t.lo
+        omega
+      · change (a : Int) - high (realize t) = t.hi
+        omega
+      · change displacement (realize t) = t.shift
+        exact hd
 
 #print axioms evaluate_injective
 #print axioms realize_signature
