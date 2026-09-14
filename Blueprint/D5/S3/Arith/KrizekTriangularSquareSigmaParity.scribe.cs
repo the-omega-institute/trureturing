@@ -28,7 +28,11 @@ internal sealed class KrizekTriangularSquareSigmaParityDocument
                         + "proves the reverse direction. At n=0 the triangular number is zero "
                         + "and square, while its divisor sum is even, so positivity excludes "
                         + "that boundary."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "oeis-a001108-krizek-triangular-square-sigma-parity"),
+                    ResolutionKind.Proved)))));
 
     private static Formula ResultFormula()
     {

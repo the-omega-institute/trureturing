@@ -10,6 +10,10 @@ $$\forall n \in \mathbb{N},\; (n > 0) \Rightarrow ((IsSquare\left((n \cdot (n + 
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/KrizekTriangularSquareSigmaParity.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a001108-krizek-triangular-square-sigma-parity` (proved) by `D5/S3/Arith/KrizekTriangularSquareSigmaParity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a001108-krizek-triangular-square-sigma-parity","declaration_gid":"D5/S3/Arith/KrizekTriangularSquareSigmaParity.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Commentary.*
