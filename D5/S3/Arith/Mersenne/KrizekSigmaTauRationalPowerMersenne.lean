@@ -214,6 +214,160 @@ private theorem tau_power_two_of_same_prime_support (n : ℕ) (hn : 1 < n)
   have hr2 := hrPrime.two_le
   omega
 
+/-- The classical Sivaramakrishnan-Shallit classification, proved here as a prerequisite. -/
+private theorem mersenne_product_of_sigma_tau_pow_two (n c d : ℕ) (hn : 0 < n)
+    (htau : σ 0 n = 2 ^ c) (hsigma : σ 1 n = 2 ^ d) :
+    isMersenneProduct n := by
+  have hn0 : n ≠ 0 := hn.ne'
+  have hcard : σ 0 n = ∏ p ∈ n.primeFactors, (n.factorization p + 1) := by
+    rw [sigma_zero_apply, Nat.card_divisors hn0]
+  have exponent_one (p : ℕ) (hpMem : p ∈ n.primeFactors) : n.factorization p = 1 := by
+    have hpPrime : p.Prime := Nat.prime_of_mem_primeFactors hpMem
+    have hePos : 0 < n.factorization p :=
+      hpPrime.factorization_pos_of_dvd hn0 (Nat.dvd_of_mem_primeFactors hpMem)
+    have heTau : n.factorization p + 1 ∣ σ 0 n := by
+      rw [hcard]
+      exact Finset.dvd_prod_of_mem (fun r : ℕ => n.factorization r + 1) hpMem
+    rw [htau] at heTau
+    obtain ⟨h, _hhc, hePow⟩ := (Nat.dvd_prime_pow Nat.prime_two).mp heTau
+    have hhPos : 0 < h := by
+      by_contra hh
+      have : h = 0 := by omega
+      subst h
+      simp only [pow_zero] at hePow
+      omega
+    let e := n.factorization p
+    let G := ∑ i ∈ Finset.range (e + 1), p ^ i
+    have hGsigma : G ∣ σ 1 n := by
+      rw [sigma_eq_prod_primeFactors_sum_range_factorization_pow_mul hn0]
+      have hfactor :
+          (∑ i ∈ Finset.range (n.factorization p + 1), p ^ (i * 1)) ∣
+            ∏ r ∈ n.primeFactors,
+              ∑ i ∈ Finset.range (n.factorization r + 1), r ^ (i * 1) :=
+        Finset.dvd_prod_of_mem
+          (fun r : ℕ => ∑ i ∈ Finset.range (n.factorization r + 1), r ^ (i * 1)) hpMem
+      simpa only [G, e, mul_one] using hfactor
+    rw [hsigma] at hGsigma
+    obtain ⟨j, _hjd, hGPow⟩ := (Nat.dvd_prime_pow Nat.prime_two).mp hGsigma
+    have hsmall : 1 + p ≤ G := by
+      have he2 : 2 ≤ e + 1 := by dsimp only [e]; omega
+      have hle := Finset.sum_le_sum_of_subset_of_nonneg
+        (Finset.range_mono he2)
+        (fun _ _ _ => Nat.zero_le _)
+        (f := fun i : ℕ => p ^ i)
+      simpa [G, Finset.sum_range_succ] using hle
+    have hG1 : 1 < G := by
+      have hp2 := hpPrime.two_le
+      omega
+    have hjPos : 0 < j := by
+      by_contra hj
+      have : j = 0 := by omega
+      subst j
+      simp only [pow_zero] at hGPow
+      omega
+    have hpNeTwo : p ≠ 2 := by
+      intro hpTwo
+      subst p
+      have htwoG : 2 ∣ G := by
+        rw [hGPow]
+        exact dvd_pow_self 2 hjPos.ne'
+      have hGzero : (G : ZMod 2) = 0 :=
+        (ZMod.natCast_eq_zero_iff G 2).mpr htwoG
+      have hcast : (G : ZMod 2) = 1 := by
+        simp only [G, Nat.cast_sum, Nat.cast_pow]
+        rw [Finset.sum_eq_single 0]
+        · simp
+        · intro i hi hi0
+          have hbase : ((2 : ℕ) : ZMod 2) = 0 :=
+            (ZMod.natCast_eq_zero_iff 2 2).mpr dvd_rfl
+          rw [hbase, zero_pow hi0]
+        · simp [e]
+      have hOneCast : ((1 : ℕ) : ZMod 2) = 0 := by
+        simpa only [Nat.cast_one] using hcast.symm.trans hGzero
+      exact Nat.prime_two.not_dvd_one ((ZMod.natCast_eq_zero_iff 1 2).mp hOneCast)
+    have hpOdd : Odd p := hpPrime.odd_of_ne_two hpNeTwo
+    by_contra heNeOne
+    have hh2 : 2 ≤ h := by
+      by_contra hh
+      have : h = 1 := by omega
+      subst h
+      simp only [pow_one] at hePow
+      omega
+    have hfourExp : 4 ∣ e + 1 := by
+      have hpowDvd : 2 ^ 2 ∣ 2 ^ h := pow_dvd_pow 2 hh2
+      rw [hePow]
+      simpa using hpowDvd
+    let G4 := ∑ i ∈ Finset.range 4, p ^ i
+    have hG4divG : G4 ∣ G := by
+      have hpowDiv : p ^ 4 - 1 ∣ p ^ (e + 1) - 1 :=
+        Nat.pow_sub_one_dvd_pow_sub_one p hfourExp
+      have h4Geom : G4 * (p - 1) = p ^ 4 - 1 := by
+        exact geom_sum_mul_of_one_le hpPrime.one_le 4
+      have heGeom : G * (p - 1) = p ^ (e + 1) - 1 := by
+        exact geom_sum_mul_of_one_le hpPrime.one_le (e + 1)
+      rw [← h4Geom, ← heGeom] at hpowDiv
+      exact (mul_dvd_mul_iff_right (Nat.sub_ne_zero_of_lt hpPrime.one_lt)).mp hpowDiv
+    have hpSqDivG4 : p ^ 2 + 1 ∣ G4 := by
+      have hG4 : G4 = (p + 1) * (p ^ 2 + 1) := by
+        norm_num [G4, Finset.sum_range_succ]
+        ring
+      rw [hG4]
+      exact dvd_mul_left _ _
+    have hpSqDivPow : p ^ 2 + 1 ∣ 2 ^ j := by
+      rw [← hGPow]
+      exact hpSqDivG4.trans hG4divG
+    obtain ⟨k, _hkj, hpSqPow⟩ :=
+      (Nat.dvd_prime_pow Nat.prime_two).mp hpSqDivPow
+    have hk2 : 2 ≤ k := by
+      by_contra hk
+      interval_cases k <;> norm_num at hpSqPow <;> nlinarith [hpPrime.two_le]
+    have hfourDvd : 4 ∣ p ^ 2 + 1 := by
+      rw [hpSqPow]
+      have : 2 ^ 2 ∣ 2 ^ k := pow_dvd_pow 2 hk2
+      simpa using this
+    have hpModTwo : p % 2 = 1 := hpPrime.eq_two_or_odd.resolve_left hpNeTwo
+    rcases Nat.odd_mod_four_iff.mp hpModTwo with hpModFour | hpModFour
+    · have hmod : (p ^ 2 + 1) % 4 = 2 := by
+        simp [pow_two, Nat.add_mod, Nat.mul_mod, hpModFour]
+      exact (by simpa [Nat.dvd_iff_mod_eq_zero, hmod] using hfourDvd)
+    · have hmod : (p ^ 2 + 1) % 4 = 2 := by
+        simp [pow_two, Nat.add_mod, Nat.mul_mod, hpModFour]
+      exact (by simpa [Nat.dvd_iff_mod_eq_zero, hmod] using hfourDvd)
+  refine ⟨n.primeFactors, ?_, ?_⟩
+  · calc
+      n = ∏ p ∈ n.primeFactors, p ^ n.factorization p :=
+        Nat.prod_primeFactors_pow_factorization hn0
+      _ = ∏ p ∈ n.primeFactors, p := by
+        apply Finset.prod_congr rfl
+        intro p hpMem
+        rw [exponent_one p hpMem, pow_one]
+  · intro p hpMem
+    have hpPrime : p.Prime := Nat.prime_of_mem_primeFactors hpMem
+    have heOne := exponent_one p hpMem
+    have hpSigma : σ 1 (p ^ n.factorization p) ∣ σ 1 n := by
+      rw [sigma_eq_prod_primeFactors_sum_range_factorization_pow_mul hn0]
+      rw [sigma_one_apply_prime_pow hpPrime]
+      have hfactor :
+          (∑ i ∈ Finset.range (n.factorization p + 1), p ^ i) ∣
+            ∏ r ∈ n.primeFactors,
+              ∑ i ∈ Finset.range (n.factorization r + 1), r ^ (i * 1) := by
+        simpa only [mul_one] using
+          (Finset.dvd_prod_of_mem
+            (fun r : ℕ => ∑ i ∈ Finset.range (n.factorization r + 1), r ^ (i * 1)) hpMem)
+      exact hfactor
+    rw [sigma_one_apply_prime_pow hpPrime] at hpSigma
+    have hpPlusDvd : p + 1 ∣ σ 1 n := by
+      simpa [heOne, Finset.sum_range_succ, add_comm] using hpSigma
+    rw [hsigma] at hpPlusDvd
+    obtain ⟨k, hk, hpPow⟩ := (Nat.dvd_prime_pow Nat.prime_two).mp hpPlusDvd
+    refine ⟨hpPrime, k, ?_, hpPow⟩
+    by_contra hk0
+    have : k = 0 := by omega
+    subst k
+    simp only [pow_zero] at hpPow
+    have hp2 := hpPrime.two_le
+    omega
+
 #print axioms isMersenneProduct
 #print axioms ratPow
 
