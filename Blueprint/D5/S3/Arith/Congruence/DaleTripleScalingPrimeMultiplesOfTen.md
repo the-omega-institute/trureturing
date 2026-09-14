@@ -22,6 +22,10 @@ $$claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Congruence/DaleTripleScalingPrimeMultiplesOfTen.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a112041-dale-triple-scaling-prime-multiples-of-ten` (proved) by `D5/S3/Arith/Congruence/DaleTripleScalingPrimeMultiplesOfTen.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a112041-dale-triple-scaling-prime-multiples-of-ten","declaration_gid":"D5/S3/Arith/Congruence/DaleTripleScalingPrimeMultiplesOfTen.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Pierre Cami; Harvey P. Dale (2015). *OEIS A112041, Numbers k such that 1*k + 1, 3*k + 1, 9*k + 1, 27*k + 1 are all primes*. URL: <https://oeis.org/A112041>.

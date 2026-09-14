@@ -27,7 +27,11 @@ internal sealed class DaleTripleScalingPrimeMultiplesOfTenDocument
                     + "proper multiple of five, except when k is congruent to four and "
                     + "the prime k+1 equals five. The remaining residue class is divisible "
                     + "by both two and five.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "oeis-a112041-dale-triple-scaling-prime-multiples-of-ten"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(
         string name,
@@ -35,14 +39,16 @@ internal sealed class DaleTripleScalingPrimeMultiplesOfTenDocument
         Formula formula,
         string prose,
         DescribeRole role,
-        AssessedProvenance provenance) => Describe.Lean(
+        AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("a112041-" + name),
             DeclarationHandle.Create(Prefix + name),
             H(title),
             StatementSource.FromAuthor(formula),
             provenance,
             Blocks(Paragraph(Text(prose))),
-            role);
+            role,
+            resolution);
 
     private static Formula ClaimFormula()
     {
