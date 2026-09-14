@@ -199,6 +199,73 @@ syntax (name := registerInformationTheoremCmd)
     "primitives " term " realization " ident
     (" variation " ident)? (" sensitivity " ident)? : command
 
+syntax (name := registerInformationTheoremViaCmd)
+  "register_information_theorem " ident " via " term " in " ident (" output_evidence " term)? : command
+
+/-- Transaction boundary shared by registration and exception-injection controls. -/
+def registrationTransaction (action : CommandElabM Unit) : CommandElabM Unit := do
+  -- Command.tryCatch deliberately skips interrupts. At this boundary every
+  -- exception must restore the environment, including extension entries.
+  let _ : MonadExceptOf Exception CommandElabM := {
+    throw := throw
+    tryCatch := fun body handler ctx state =>
+      try body ctx state catch e => handler e ctx state }
+  let saved ← getEnv
+  let previousMessages := (← get).messages
+  modify fun s => { s with messages := {} }
+  try
+    action
+  catch e =>
+    setEnv saved
+    if e.isRuntime then throwError "P1.IncompleteCheck: {e.toMessageData}"
+    throw e
+  finally
+    let messages := (← get).messages
+    if messages.hasErrors then setEnv saved
+    let classify := fun (m : Message) =>
+      if m.severity == .error && (Exception.error .missing m.data).isRuntime then
+        { m with data := m!"P1.IncompleteCheck: {m.data}" }
+      else m
+    modify fun s => { s with messages := previousMessages ++ { messages with
+      reported := messages.reported.map classify, unreported := messages.unreported.map classify } }
+
+@[command_elab registerInformationTheoremViaCmd]
+private def elabRegisterInformationTheoremVia : CommandElab := fun stx => registrationTransaction do
+  let theoremId : TSyntax `ident := ⟨stx[1]⟩
+  let arenaName ← resolveArena ⟨stx[5]⟩
+  let arena ← liftTermElabM <| RegistrationReifier.freezeArena arenaName
+  liftTermElabM do
+    for provider in #[RegistrationReifier.pointwiseProvider,
+        RegistrationReifier.sensitivityProvider, RegistrationReifier.variationProvider] do
+      discard <| RegistrationReifier.checkedProvider provider
+  let descriptor ← liftTermElabM do
+    let value ← elabTerm stx[3] none
+    synthesizeSyntheticMVarsNoPostponing
+    let value ← instantiateMVars value
+    RegistrationReifier.closed value
+    return value
+  if (← get).messages.hasErrors then return
+  let outputEvidence ← liftTermElabM do
+    if stx[6].getNumArgs == 0 then return none
+    discard <| RegistrationReifier.semanticSource descriptor
+    let expected ← mkAppM ``Nontrivial #[descriptor.getAppArgs[1]!]
+    let value ← elabTerm stx[6][1] (some expected)
+    synthesizeSyntheticMVarsNoPostponing
+    let value ← instantiateMVars value
+    RegistrationReifier.closed value
+    return some value
+  if (← get).messages.hasErrors then return
+  let theoremName ← resolveTheorem theoremId
+  let unitName := localCompanionName (← getEnv) theoremName theoremUnitSuffix
+  let realizationName := localCompanionName (← getEnv) theoremName primitiveRealizationSuffix
+  let entry ← liftTermElabM <| prepareRegistrationEntry (← getEnv) {
+    theoremName, unitName, arenaName, realizationName,
+    statementIdentity := theoremStatementIdentity (← getEnv) theoremName }
+  ensureRegisterableName (← getEnv) entry
+  let entry ← liftTermElabM <| RegistrationReifier.derive entry arena descriptor outputEvidence
+  if (← get).messages.hasErrors then return
+  registerEntry entry
+
 @[command_elab registerInformationTheoremCmd]
 private def elabRegisterInformationTheorem : CommandElab := fun stx => do
     let theoremId : TSyntax `ident := ⟨stx[1]⟩
