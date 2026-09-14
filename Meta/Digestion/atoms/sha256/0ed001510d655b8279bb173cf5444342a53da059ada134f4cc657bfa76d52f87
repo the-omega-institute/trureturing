@@ -1,0 +1,32 @@
+### 66.4 Zeckendorf 构型中的压缩准则
+
+对合法窗口
+
+$$
+\mathcal W_L
+=\{w\in\{0,1\}^L:w_rw_{r+1}=0\},
+$$
+
+若每个构型或历史来源产生一个 effect $F_w$，可以先计算 centered 家族
+
+$$
+\widetilde F_w
+=F_w-\frac{\operatorname{Tr}(F_w)}{d}I_d.
+$$
+
+只有当某个新构型的 $\widetilde F_w$ 不在已有 span 中时，它才增加信息完备性证书的线性容量。Zeckendorf 的唯一规范表示保证离散标签没有字面重复，但不保证对应 effect 在线性上独立；相反，不同历史也可能产生相同 centered effect，从而在该任务中可被压缩为同一个读出方向。
+
+因此，对 Zeckendorf 编码的一个可执行压缩检查是：
+
+$$
+\widetilde F_{w_1},\ldots,\widetilde F_{w_k}
+$$
+
+逐步加入时，记录每次 span 的维数增量，直到达到任务所需维数。完整 tomography 的终点是
+
+$$
+\dim\operatorname{span}\{\widetilde F_w\}=d^2-1;
+$$
+
+目标预测的终点则只需包含目标 observable 所在的子空间。这个判据比按构型数或 Fibonacci 维数直接估计信息量更严格。
+

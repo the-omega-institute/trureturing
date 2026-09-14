@@ -1,0 +1,21 @@
+### 66.2 为什么 centered 化不丢失密度态信息
+
+对两个密度态，迹差为零：
+
+$$
+\operatorname{Tr}(\rho-\sigma)=0.
+$$
+
+因此对任意 effect $F$，有
+
+$$
+\operatorname{Tr}\left((\rho-\sigma)
+\left(F-\frac{\operatorname{Tr}(F)}{d}I_d\right)\right)
+=
+\operatorname{Tr}\bigl((\rho-\sigma)F\bigr).
+$$
+
+单位方向在状态差上没有贡献，centered effect 保留了区分密度态所需的全部线性信息。定理先把原始完备性转成 centered span 的完整性，再从有限维 span 中抽取至多 $d^2-1$ 个生成元；最后用上式把 centered 读数的单射性转回原始 effect 的单射性。
+
+这说明“保留全部历史”并不等于“保留全部原始记录条目”。若任务只是区分有限维密度态，可以删除所有落在已有 centered span 中的冗余 effect，而不改变该任务的预测能力。
+

@@ -16566,3 +16566,165 @@ $$
 
 ## 追加锚（新终端）
 
+## 66. 信息完备读出的有限证书
+
+第 65 节给出了多上下文完整读出的独立预算下界，但下界本身没有说明一个已经完备的无限或任意索引 effect 家族能否压缩成有限清单。本节使用 `FiniteInformationalEffectCertificate.lean` 的 `finite_informational_effect_certificate`，把这个压缩问题写成有限证书。
+
+本节仍限定在有限维 Hermitian 算子和密度态读出；“有限证书”表示存在一个有限子族，不表示任意实验都能自动找到该子族，也不把证书搜索过程当作物理动力学。正文为 `repo-derived/open`，没有新增 Lean 声明。
+
+### 定理 66.1（信息完备家族的有限子证书）
+
+令系统维数为
+
+$$
+d\in\mathbb N,
+$$
+
+并给定任意索引集上的 effect 家族
+
+$$
+\{F_i:i\in I\},
+$$
+
+其中每个 $F_i$ 是合法 effect。假设原始读出对密度态单射：
+
+$$
+\Bigl[
+\forall i,
+\quad
+\operatorname{Tr}(\rho F_i)
+=\operatorname{Tr}(\sigma F_i)
+\Bigr]
+\Longrightarrow
+\rho=\sigma.
+$$
+
+冻结定理 `finite_informational_effect_certificate` 保证存在有限子集
+
+$$
+S\subseteq I
+$$
+
+满足
+
+$$
+|S|\le d^2-1,
+$$
+
+并且 centered effect 张成完整 trace-zero Hermitian 载体：
+
+$$
+\operatorname{span}_{\mathbb R}
+\left\{
+F_i-\frac{\operatorname{Tr}(F_i)}{d}I_d:i\in S
+\right\}
+=\operatorname{Herm}_0(d).
+$$
+
+同一个子族的原始概率读出仍然单射：
+
+$$
+\Bigl[
+\forall i\in S,
+\quad
+\operatorname{Tr}(\rho F_i)
+=\operatorname{Tr}(\sigma F_i)
+\Bigr]
+\Longrightarrow
+\rho=\sigma.
+$$
+
+### 66.2 为什么 centered 化不丢失密度态信息
+
+对两个密度态，迹差为零：
+
+$$
+\operatorname{Tr}(\rho-\sigma)=0.
+$$
+
+因此对任意 effect $F$，有
+
+$$
+\operatorname{Tr}\left((\rho-\sigma)
+\left(F-\frac{\operatorname{Tr}(F)}{d}I_d\right)\right)
+=
+\operatorname{Tr}\bigl((\rho-\sigma)F\bigr).
+$$
+
+单位方向在状态差上没有贡献，centered effect 保留了区分密度态所需的全部线性信息。定理先把原始完备性转成 centered span 的完整性，再从有限维 span 中抽取至多 $d^2-1$ 个生成元；最后用上式把 centered 读数的单射性转回原始 effect 的单射性。
+
+这说明“保留全部历史”并不等于“保留全部原始记录条目”。若任务只是区分有限维密度态，可以删除所有落在已有 centered span 中的冗余 effect，而不改变该任务的预测能力。
+
+### 66.3 与第 65 节预算下界的夹逼
+
+第 65 节说明，任意完整的独立 outcome 家族必须满足
+
+$$
+\text{独立 outcome 总数}\ge d^2-1.
+$$
+
+本节说明，若已经存在一个信息完备 effect 家族，则总能找到一个规模不超过同一数量的有限子证书：
+
+$$
+\boxed{
+\text{完整读出的最小规模}
+\le d^2-1
+\le\text{任意完整读出的独立预算}.
+}
+$$
+
+当某个选出的子族恰好有 $d^2-1$ 个线性独立 centered effect 时，它同时达到维数下界。若原始 effect 含有额外归一化关系或重复方向，实际可用条目数可能更多，但多出的条目不增加 centered span。
+
+这里的“最小规模”应理解为存在性夹逼：定理保证一个不超过 $d^2-1$ 的证书，但没有声称任意给定索引排序的前 $d^2-1$ 项就构成证书，也没有提供一个通用实验搜索算法。
+
+### 66.4 Zeckendorf 构型中的压缩准则
+
+对合法窗口
+
+$$
+\mathcal W_L
+=\{w\in\{0,1\}^L:w_rw_{r+1}=0\},
+$$
+
+若每个构型或历史来源产生一个 effect $F_w$，可以先计算 centered 家族
+
+$$
+\widetilde F_w
+=F_w-\frac{\operatorname{Tr}(F_w)}{d}I_d.
+$$
+
+只有当某个新构型的 $\widetilde F_w$ 不在已有 span 中时，它才增加信息完备性证书的线性容量。Zeckendorf 的唯一规范表示保证离散标签没有字面重复，但不保证对应 effect 在线性上独立；相反，不同历史也可能产生相同 centered effect，从而在该任务中可被压缩为同一个读出方向。
+
+因此，对 Zeckendorf 编码的一个可执行压缩检查是：
+
+$$
+\widetilde F_{w_1},\ldots,\widetilde F_{w_k}
+$$
+
+逐步加入时，记录每次 span 的维数增量，直到达到任务所需维数。完整 tomography 的终点是
+
+$$
+\dim\operatorname{span}\{\widetilde F_w\}=d^2-1;
+$$
+
+目标预测的终点则只需包含目标 observable 所在的子空间。这个判据比按构型数或 Fibonacci 维数直接估计信息量更严格。
+
+### 66.5 与历史保留问题的边界
+
+有限证书只保证当前指定密度态读出的完备性。它不保证：
+
+$$
+\begin{aligned}
+&\text{环境记录已经被保留；}\\
+&\text{所有未来 Heisenberg 迭代都在该子族 span 内；}\\
+&\text{不相容测量可以同时赋予一份经典答案表；}\\
+&\text{第 63 节中约化不可见的联合相干已经可恢复。}
+\end{aligned}
+$$
+
+若后续动力学把目标带入新的 effect 方向，需要回到第 57、62 节扩张预测空间；若记录通道保留了同一块内相干，需要回到第 63、64 节分析访问范围和 Gram 收缩。有限证书因此是任务索引的：它压缩一个已声明读出任务的冗余，而不是宣布所有历史都已被安全删除。
+
+本节为 `repo-derived/open` 理论追加；没有新增 Lean 声明、形式覆盖或冻结状态。
+
+## 追加锚（新终端）
+
