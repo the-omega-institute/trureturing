@@ -64,6 +64,13 @@ atom-context:
 truth-export:
 	@dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- truth-export --out "$(OUT)" --candidate-lean-report "$(LEAN_REPORT)"
 
+.PHONY: truth-release-verify
+truth-release-verify: export TRUTH_SOURCE_REF := $(value SOURCE_REF)
+truth-release-verify: export TRUTH_SOURCE_COMMIT := $(value SOURCE_COMMIT)
+truth-release-verify: export TRUTH_VERIFY_OUT := $(if $(OUT),$(value OUT),build/truth-release-verification)
+truth-release-verify:
+	@python3 tools/scripts/workflow/truth_release.py verify-source --repository . --output "$${TRUTH_VERIFY_OUT}" --source-ref "$${TRUTH_SOURCE_REF}" --source-commit "$${TRUTH_SOURCE_COMMIT}"
+
 census:
 	@python3 tools/lean-inspector/Census/pipeline.py --output "$(CENSUS_OUT)" --lean-report "$(LEAN_REPORT)" --prefix "$(CENSUS_PREFIX)"
 

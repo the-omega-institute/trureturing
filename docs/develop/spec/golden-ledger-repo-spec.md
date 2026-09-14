@@ -286,6 +286,10 @@ engineering 与 Scribe 不按 base 选测。当前项目与检查义务由候选
 
 切换时原子迁移 watcher、`AdmissionTopology`、FILEMAP 与 truth-release,删除旧 job 名、旧拓扑及重复逻辑。临时 PR wrapper 的触发在正式入口安装时一并移除,定时 publisher 保留;同一候选不产生两套同名 required checks。`truth-release` 只消费明确指定 dev commit 的两个 push checks 成功及其报告 artifact,核对 artifact 绑定该 commit;不得追逐移动 dev tip、等待 push delta 或借用另一 commit 报告。报告 producer 的入口、项目、引用、脚本、材料与语义配置输入由 FILEMAP/登记 manifest **显式声明**,随接口同步维护;禁止从程序调用闭包、调用图或 workflow 文本切片动态推导,不得保留发现回退。
 
+**发布来源验证入口。** 已引导候选 EngineeringScope 后，`make truth-release-verify SOURCE_REF=refs/heads/<branch> SOURCE_COMMIT=<40-hex-sha> [OUT=dir]` 调用 `truth_release.py verify-source`；CLI 两个来源参数均必填，默认输出目录为 `build/truth-release-verification`。FILEMAP 的 `tools/scripts/**/*.py` 登记共用 `source_reference.py`；工程测试的 `tools/scripts/**` 显式输入覆盖该函数。来源验证只读取 GitHub API 数据：完整 branch ref 经 Git 格式校验，branch 名称与 `protected=true` 绑定一次取得的非零不可变 tip，再以固定 `source...tip` 比较证明 source 在该快照内；不追逐移动 tip，也不将集成来源改写为 dev。API 格式、保护或祖先证据不符即失败。
+
+`truth-release-select --input FILE` 的既有 JSON 输入新增 `source_ref`（缺省 `refs/heads/dev`）；它仅限定 push run 的真实 `head_branch`，不自行宣称分支受保护。成功选择输出保留 `source_ref/source_commit/run_id/run_attempt/artifact_id/artifact_name/required_checks`。验证入口与发布共用 collect、selector、restore 及候选 transport verifier，要求同 run/attempt/head 的 engineering/current 成功、完整材料和实际需要的 Lean report；无合格证据以退出码 2 失败，不重产报告。成功验证输出 `source_verified=true,publish_ready=false` 及上述真实来源身份、`source_tree`，止于验证，不调用 assembly、不使用 `--commit-on-protected-dev true`、不产出或发布 truth 资产。`prepare` 仍默认选择受保护 dev 的最近 40 个提交中的合格来源；显式 `--source-commit` 只验证该 dev SHA，禁止替换为其它提交，非 dev 来源不得进入 prepare。
+
 **缓存与增量报告。** 结构化读取 `lake-manifest.json` 中 mathlib 的 **resolved revision**。Lean 依赖、项目构建与报告缓存共用该逻辑分区,二进制另按 OS/arch 隔离;tag、请求的 ref、完整配置/源码指纹与 commit SHA 均不得筛选兼容种子,`elan` 安装缓存独立。Actions 以 run ID/attempt 区分不可覆盖的快照实例,后缀不参与兼容判定。PR 只 restore,dev push 仅在对应产出成功后 save,并发 run 不覆盖彼此快照。判官构建、测试与检查证据按登记材料接受并增量复用,缓存运输状态不代替其验证。
 
 保留定时 Release 缓存发布;仅在 Actions 无可用种子时取**同分区成功快照**,删除 exact/config-prefix/same-toolchain 多级选择,不得跨分区借种。donor/stamp 使用同一分区;同 mathlib 的 metadata 改动不得删除 `.lake`。缺缓存、损坏、传输或保存失败须可诊断地降级为正常生产;真实 restore/build/Lean/测试/规则失败仍阻断。登记判为不需要缓存的资源不做缓存运输。

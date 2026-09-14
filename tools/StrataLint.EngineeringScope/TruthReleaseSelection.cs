@@ -15,9 +15,10 @@ internal static class TruthReleaseSelection
         using var document = JsonDocument.Parse(File.ReadAllBytes(arguments[2]));
         var input = document.RootElement;
         var commit = input.GetProperty("source_commit").GetString()!;
+        var sourceRef = input.TryGetProperty("source_ref", out var source) ? source.GetString()! : "refs/heads/dev";
         var runs = input.GetProperty("runs").EnumerateArray().ToList();
         while (TruthReleasePushRunSelector.Select(commit, input.GetProperty("workflow"), runs,
-                   (id, attempt) => input.GetProperty("jobs").GetProperty($"{id}/{attempt}").EnumerateArray()) is { } selected)
+                   (id, attempt) => input.GetProperty("jobs").GetProperty($"{id}/{attempt}").EnumerateArray(), sourceRef) is { } selected)
         {
             var name = CiTransport.ArtifactName("current", selected.RunId, selected.RunAttempt);
             var artifacts = input.GetProperty("artifacts").GetProperty(selected.RunId.ToString(CultureInfo.InvariantCulture))
@@ -26,7 +27,7 @@ internal static class TruthReleaseSelection
             {
                 output.WriteLine(JsonSerializer.Serialize(new
                 {
-                    publish_ready = true, source_commit = commit, run_id = selected.RunId, run_attempt = selected.RunAttempt,
+                    publish_ready = true, source_ref = sourceRef, source_commit = commit, run_id = selected.RunId, run_attempt = selected.RunAttempt,
                     artifact_id = artifacts[0].GetProperty("id").GetInt64(), artifact_name = name,
                     required_checks = selected.RequiredChecks.Select(check => new { name = check.Name, conclusion = check.Conclusion }),
                 }));

@@ -4,8 +4,8 @@ using System.Text.Json;
 namespace Trureturing.Truth;
 
 /// <summary>
-/// Successful CI evidence for one dev source commit. This does not assert that the producer's
-/// report artifact is present or valid, nor that the source is on protected dev.
+/// Successful CI evidence for one source commit. This does not assert that the producer's
+/// report artifact is present or valid, nor that the source branch is protected.
 /// </summary>
 public sealed record TruthReleasePushRun(
     string SourceCommit,
@@ -19,22 +19,26 @@ public static class TruthReleasePushRunSelector
     public const string WorkflowPath = ".github/workflows/ci-push.yml";
 
     /// <summary>
-    /// Selects the newest successful dev push run for an exact source commit. The caller supplies
+    /// Selects the newest successful push run for an exact source commit and branch (default dev). The caller supplies
     /// the GitHub workflow response resolved by filename, workflow_runs rows (all supplied pages),
     /// and a reader for jobs of the requested run ID and attempt, including all pages. API failures
     /// propagate; malformed evidence throws FormatException; no qualifying run returns null.
-    /// The caller owns protected-dev history selection and must separately obtain and validate the
+    /// The caller owns protected-branch membership and must separately obtain and validate the
     /// selected run's producer artifact. Missing artifacts must not trigger report reproduction.
     /// </summary>
     public static TruthReleasePushRun? Select(
         string sourceCommit,
         JsonElement workflow,
         IEnumerable<JsonElement> runs,
-        Func<long, int, IEnumerable<JsonElement>> readJobs)
+        Func<long, int, IEnumerable<JsonElement>> readJobs,
+        string sourceRef = "refs/heads/dev")
     {
         TruthExportValidation.RequireGitObjectId(sourceCommit, nameof(sourceCommit));
         ArgumentNullException.ThrowIfNull(runs);
         ArgumentNullException.ThrowIfNull(readJobs);
+        if (!sourceRef.StartsWith("refs/heads/", StringComparison.Ordinal) || sourceRef.Length == "refs/heads/".Length)
+            throw new FormatException("truth release source_ref must be a full branch ref");
+        var sourceBranch = sourceRef["refs/heads/".Length..];
         if (Text(workflow, "path") != WorkflowPath)
         {
             throw new FormatException("truth release workflow does not resolve to " + WorkflowPath);
@@ -46,7 +50,7 @@ public static class TruthReleasePushRunSelector
             if (PositiveNumber(run, "workflow_id") != workflowId
                 || Text(run, "path") != WorkflowPath
                 || Text(run, "event") != "push"
-                || Text(run, "head_branch") != "dev"
+                || Text(run, "head_branch") != sourceBranch
                 || Text(run, "head_sha") != sourceCommit
                 || !Successful(run))
             {
