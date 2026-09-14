@@ -1,0 +1,7 @@
+**定义 12.1（矩阵两层损失）。** 给 $U\in\mathbb R^{m\times d},V\in\mathbb R^{k\times m}$，$m,d,k\ge1$，$W=VU$，损失 $\ell(W)$ 可微，矩阵梯度 $G=\nabla_W\ell(W)\in\mathbb R^{k\times d}$ 按 Frobenius 内积定义。置
+$$
+A=U^\top U,\qquad B=VV^\top,\qquad
+\mathcal G=\begin{pmatrix}A&W^\top\\W&B\end{pmatrix}.
+$$
+本节的 $A,B$ 为矩阵，与第8节标量二阶矩分别定型。
+

@@ -1,0 +1,2 @@
+**定义 1.1（丰富情境与读数）。** 采用[情境时空算术主卷](CONTEXTUAL_SPACETIME_ARITHMETIC.md)第1节定义1的集合载体：$C=(E,\prec,t,x,\sigma,\rho,\Omega)$，$E$ 为有限事件档案，$\prec$ 为严格偏序，$t:E\to\mathbb Z$ 沿偏序严格增加，$x:E\to\mathbb Z^d$，$\sigma:E\to\{-1,1\}$，$\rho$ 为来源树标记，$A\subseteq\Omega\subseteq E$，$X=(C,A)$。算术读数为 $q_{\rm ar}(X)=\sum_{e\in A}\sigma(e)$；在平衡载体另要求 $\sum_{e\in\Omega}\sigma(e)=0$。机器学习完整状态记为 $\xi\in\mathcal X$，可包含这样的情境以及参数、优化器变量和其他指定数学数据；不要求把实参数误作有限事件编码。离散时标和位置标签只定义此模型中的先后与位置，物理时间、长度、因果光锥若属问题，须另给测量映射、单位及动力学假设。
+

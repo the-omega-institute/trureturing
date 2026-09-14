@@ -1,0 +1,8 @@
+**定义 8.1（二次数据摘要）。** 给 $n\ge1$ 个实样本 $(x_i,y_i)$，预测 $f_w(x)=wx$，损失
+$$
+L(w)=\frac1{2n}\sum_i(wx_i-y_i)^2
+=\tfrac12Aw^2-Bw+\tfrac12C,
+\quad A=\frac1n\sum_i x_i^2,\ B=\frac1n\sum_i x_iy_i,\ C=\frac1n\sum_i y_i^2.
+$$
+全批量欧氏梯度下降以固定步长 $\eta\ge0$ 更新 $w$。字母 $C$ 在本节只表示数据二阶矩，不表示情境。
+
