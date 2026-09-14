@@ -1,0 +1,69 @@
+### 10.6 不可访问记录的相位阈值与反例
+
+若不可访问部分$B$上存在二输出测量，使等先验平均标签错误率不超过$0\le\beta<1/2$，则
+$$
+V_F\le2\sqrt{\beta(1-\beta)}.
+$$
+因此所有二标签输入满足
+$$
+\mathsf d\!\left(\operatorname{tr}_B(W\rho W^\dagger),
+\Delta_S\operatorname{tr}_B(W\rho W^\dagger)\right)
+\le2|\rho_{01}|\sqrt{\beta(1-\beta)}
+\le\sqrt{\beta(1-\beta)}.
+$$
+给定$0\le\nu<1$，充分条件
+$$
+\beta\le\frac{1-\sqrt{1-\nu^2}}2
+$$
+保证$V_F\le\nu$。这只给充分条件，记录数量不出现在阈值中。
+
+证明。令不可访问部分上的二输出效应为$M_0,M_1$，并定义$\varepsilon_0=\operatorname{tr}(M_1\tau_0^B)$、$\varepsilon_1=\operatorname{tr}(M_0\tau_1^B)$，其中$\tau_x^B=\operatorname{tr}_F|E_x\rangle\langle E_x|$；其平均值$\beta'=(\varepsilon_0+\varepsilon_1)/2\le\beta$。对任意$U_F$，插入$M_0+M_1=I_B$并对每一项使用Cauchy--Schwarz，得到
+$$
+\left|\langle E_1|(U_F\otimes I_B)E_0\rangle\right|
+\le\sqrt{(1-\varepsilon_0)\varepsilon_1}
+ +\sqrt{\varepsilon_0(1-\varepsilon_1)}
+\le2\sqrt{\beta'(1-\beta')}.
+$$
+取$U_F$的最大值即得$V_F\le2\sqrt{\beta(1-\beta)}$；再使用$|\rho_{01}|\le1/2$得到相干距离界，解二次不等式得到所列充分条件。证毕。
+
+三个有限反例说明数量本身不能替代任务覆盖：
+
+1. **完全关联的重复记录。** 对$0<\beta<1/2$和有限$r\ge2$，取
+$$
+E_0=\sqrt{1-\beta}|0\rangle^{\otimes r}+\sqrt\beta|1\rangle^{\otimes r},
+\qquad
+E_1=\sqrt\beta|0\rangle^{\otimes r}+\sqrt{1-\beta}|1\rangle^{\otimes r}.
+$$
+每个非空真片段$F$（$1\le|F|\le r-1$）都有读取错误$\beta$，但其相位访问量为$V_F=2\sqrt{\beta(1-\beta)}$，与片段大小无关；增加记录没有增加独立证据。若$F$取全部记录，则$B=\varnothing$且$V_F=1$，这是不同的端点。
+
+2. **大量独立但未约束目标自由度的约束。** 取
+$$
+\mathcal H=\mathbb C^2_L\otimes(\mathbb C^2)^{\otimes r},
+\qquad C_j=I_L\otimes Z_j.
+$$
+所有条件$C_j=+1$彼此独立并严格保持，但
+$$
+H=\frac{\pi\hbar}{2\tau_*}X_L\otimes I
+$$
+与它们交换，却在$\tau_*$翻转逻辑标签。约束数量任意大仍不能稳定未被约束的自由度。
+
+3. **完美粗标签遗漏内部相位。** 取
+$$
+Q_A=|0\rangle\langle0|+|1\rangle\langle1|,
+\qquad Q_B=|2\rangle\langle2|,
+$$
+以及$|\pm\rangle=(|0\rangle\pm|1\rangle)/\sqrt2$和
+$$
+H=\hbar\Omega(|2\rangle\langle+|+|+\rangle\langle2|),
+\qquad \tau_*=\frac{\pi}{2\Omega}.
+$$
+$|+\rangle$和$|−\rangle$具有相同粗标签和相同细基布居，但
+$$
+U(\tau_*)|+\rangle=-i|2\rangle,
+\qquad
+U(\tau_*)|−\rangle=|−\rangle.
+$$
+因此末端粗标签分布的总变差距离为$1$，任何数量的完美$A/B$记录都不能恢复$A$块内部的未来相位。
+
+这些反例分别隔离关联冗余、约束覆盖不足和粗标签内部信息缺失。它们说明稳定经典描述需要同时指定访问集合、未来读数、动力学比较律和误差预算；没有脱离这些数据的单一“所需约束数量”。本章所有对象仍为有限维、有限时段；不构造无限张量积态、不主张普适经典性、不提供实验或Lean结论，也不选择唯一全局结果。
+

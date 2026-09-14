@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:59d4d10db3a731c8bb1468fe9bedafce3049ab4c864784359188bb2f21ec8217
+  normalized_sha256: sha256:59d4d10db3a731c8bb1468fe9bedafce3049ab4c864784359188bb2f21ec8217
+cas_ref: sha256:59d4d10db3a731c8bb1468fe9bedafce3049ab4c864784359188bb2f21ec8217
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Aggregation/IndividualRationalityMajorityCycle.individual_rationality_majority_cycle
+    target_statement_id: sha256:60e2f557a122a8c488b2008c64953c992700d03bc2c49303a347c283b997ab13
+receipts:
+  unresolved_subitems: []

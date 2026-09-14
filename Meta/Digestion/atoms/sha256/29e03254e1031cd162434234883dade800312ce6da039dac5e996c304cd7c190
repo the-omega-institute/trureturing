@@ -1,0 +1,19 @@
+## 命题 531.2（非平凡 holonomy 不蕴含区分能力改变）
+
+在定义 7.2 的概念等价意义下，第 95 节的条件 \(H\ne\operatorname{id}\) 不足以推出 \(C^H\) 与 \(C\) 具有不同的分类核或区分能力。具体地，取
+
+\[
+X=B=\mathbf2=\{0,1\},\qquad C(b)=b,\qquad H(b)=1-b.
+\]
+
+则
+
+\[
+\boxed{
+H\ne\operatorname{id},\qquad
+C^H\ne C,\qquad
+\ker C^H=\ker C,\qquad
+C^H\simeq_{\mathrm{con}}C.
+}
+\]
+

@@ -1,0 +1,8 @@
+**命题 18.3（平均 TV 界及稀有状态反例，repo-derived）。** 令 $K_X=P(Y\mid X),K_C=P(Y\mid C)$，则
+$$
+\mathbb E\operatorname{TV}(K_X,K_C)\le\sqrt{I(Y;X\mid C)/2}.
+$$
+然而任意小的正条件互信息不保证每个摘要纤维内的 TV 差小。
+
+证明。对有限分布 $P,Q$，取 $A=\{y:P(y)\ge Q(y)\}$，则 $P(A)-Q(A)=\operatorname{TV}(P,Q)$。按 $A,A^c$ 合并的 log-sum 不等式给 $\operatorname{KL}(P\|Q)\ge\operatorname{kl}(p\|q)$。固定 $q\in(0,1)$，二项 KL 对 $p$ 的二阶导数为 $1/[p(1-p)]\ge4$，在 $p=q$ 的值及一阶导数为零，积分得 $\operatorname{kl}(p\|q)\ge2(p-q)^2$；端点以连续极限或无穷值处理。再以 Jensen 不等式及 KL 条件期望等于 CMI 得平均界。反向取 $P(X=1)=\varepsilon\in(0,1)$、$Y=X$、$C$ 恒定。$I(Y;X\mid C)=h(\varepsilon)\to0$，而两个状态的条件律是互异点质量，TV 恰为一。全支持也不能把平均界升级成均匀界或未指定干预族的界。证毕。
+

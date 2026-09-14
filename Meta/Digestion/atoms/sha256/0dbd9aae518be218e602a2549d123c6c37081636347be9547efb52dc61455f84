@@ -1,0 +1,168 @@
+**定理 22.2（精确记忆最优值及一次 SWAP 的达到）。** 对定义 22.1 的任意有限 $N\ge1$ 和完整参数域 $\beta_t\in[0,1]$，令
+
+$$
+f=\beta_N,\qquad a=1-f,\qquad
+s=\prod_{t=1}^{N-1}\sqrt{1-\beta_t},\qquad E=1-s^2,
+$$
+
+其中空积为一。使用第 20.2 条的函数
+
+$$
+U(E,f)=\frac{f+\sqrt{f^2+4(1-f)E}}2
+=\frac{f+\sqrt{(a+1)^2-4as^2}}2,
+$$
+
+有
+
+$$
+T_N^{\rm mem}(\boldsymbol\beta)=U(E,f).
+$$
+
+更强地，每个固定有限维记忆及共同控制表都满足
+
+$$
+\frac12\left\|
+\mathcal C_{{\rm A},N}^{\Pi}
+-\mathcal C_{{\rm J},N}^{\Pi}
+\right\|_\diamond\le U(E,f).
+$$
+
+一个初态为 $|0\rangle$ 的记忆量子比特即可达到等号：前 $N-1$ 步完全不操作记忆，只在活动比特上执行共同实反馈；末次仪器前把 $S$ 与 $M$ 作一次 SWAP。达到使用共同输入 $|0\rangle_S|0\rangle_M$，无需惰性参考。该结论给出此仪器族及保留输出的精确最优值，不断言每个参数选择都比无记忆经典历史任务更优。
+
+证明。先证明对任意记忆和参考一致的上界。给共同输入作纯化，并给实际、理想实验中的共同 CPTP 控制使用同一个 Stinespring 等距。每次仪器使用结果标签及其丢弃副本，实际、理想两种等距的交叉算子为
+
+$$
+\sum_zP_zK_{t,z}=\sqrt{1-\beta_t}\,I_S.
+$$
+
+共同历史控制保持完整纯化的内积，每次仪器则将其乘以所示标量。经过前 $N-1$ 次仪器及末次共同控制后，全部保留与纯化寄存器上的两个单位向量可以取为 $|A\rangle,|J\rangle$，满足
+
+$$
+\langle J|A\rangle=s.
+$$
+
+纯化中保留的丢弃寄存器只用于分析，不允许重新接回协议；惰性参考也始终不参与控制。
+
+在两候选上都假设末次作完美指针读取并丢弃 $S$，得到归一化经典量子态 $\mathsf P,\mathsf Q$，其空间为 $H_N\otimes M\otimes R$。它们是 $|A\rangle,|J\rangle$ 经同一通道的输出，而 $\mathsf Q$ 正好是理想最终态。对 Hermitian 算子的迹范数收缩及秩一差值公式给出
+
+$$
+\begin{aligned}
+\|a\mathsf P-\mathsf Q\|_1
+&\le\|a|A\rangle\langle A|-|J\rangle\langle J|\|_1\\
+&=\sqrt{(a+1)^2-4a|\langle J|A\rangle|^2}\\
+&=\sqrt{(a+1)^2-4as^2}.
+\end{aligned}
+$$
+
+令 $\tau$ 只翻转最后一个经典结果位，保持旧历史、记忆和参考不动。对末次仪器前任意历史块 $\omega_h$，实际结果 $z$ 的记忆参考块为
+
+$$
+\begin{aligned}
+&\operatorname{Tr}_S\bigl[
+(K_{N,z}\otimes I)\omega_h(K_{N,z}\otimes I)
+\bigr]\\
+&\qquad=a\langle z|\omega_h|z\rangle
++f\langle1-z|\omega_h|1-z\rangle.
+\end{aligned}
+$$
+
+两指针之间的交叉项在部分迹后为零，故实际最终态严格满足
+
+$$
+\mathsf R=a\mathsf P+f\tau(\mathsf P).
+$$
+
+因为 $\tau(\mathsf P)$ 是迹范数为一的密度矩阵，
+
+$$
+\begin{aligned}
+\frac12\|\mathsf R-\mathsf Q\|_1
+&\le\frac12\bigl(\|a\mathsf P-\mathsf Q\|_1+f\bigr)\\
+&\le U(E,f).
+\end{aligned}
+$$
+
+这对任意共同输入及参考一致，因而也是所述半 diamond 上界。
+
+为构造达到，把定理 17.2 的零对角递推用于不等初始权重。前缀中不操作记忆，实际与理想物理分支向量记为 $x_h,y_h$，初态均为 $|0\rangle$。只在控制表计算中引入
+
+$$
+\psi_h=\sqrt a\,x_h,\qquad\phi_h=y_h,
+$$
+
+并定义
+
+$$
+\begin{aligned}
+p_h&=\|\psi_h\|^2,&q_h&=\|\phi_h\|^2,
+&c_h&=\phi_h^{\mathsf T}\psi_h,\\
+r_k&=\frac{2\sqrt a}{a+1}
+\prod_{t=1}^k\sqrt{1-\beta_t}.
+\end{aligned}
+$$
+
+逐层构造共同实控制，使每个深度 $k$ 的历史满足
+
+$$
+2c_h=r_k(p_h+q_h).
+$$
+
+初始 $p=a,q=1,c=\sqrt a$，故关系成立。分母 $a+1$ 总为正，而且 $0\le r_k\le1$。
+
+固定一个深度 $t-1$ 的节点，暂略历史下标，写 $\alpha=\sqrt{1-\beta_t}$、$b=\sqrt{\beta_t}$、$r=r_{t-1}$。定义实对称矩阵
+
+$$
+X=\psi\phi^{\mathsf T}+\phi\psi^{\mathsf T}
+-r\bigl[(\alpha^2-b^2)\psi\psi^{\mathsf T}
++\phi\phi^{\mathsf T}\bigr]-rb^2pI_2.
+$$
+
+由归纳关系及 $\alpha^2+b^2=1$，
+
+$$
+\operatorname{tr}X
+=2c-r[(\alpha^2-b^2)p+q]-2rb^2p
+=2c-r(p+q)=0.
+$$
+
+按定理 17.2 的实对称谱基构造，取正交归一的 $v_0,v_1$ 使 $v_z^{\mathsf T}Xv_z=0$，并以 $v_z^{\mathsf T}$ 为共同控制矩阵的第 $z$ 行。$X=0$ 时任取实正交基。令 $u_z=v_z^{\mathsf T}\psi$、$w_z=v_z^{\mathsf T}\phi$，子分支满足
+
+$$
+p_{hz}=b^2p+(\alpha^2-b^2)u_z^2,
+\qquad q_{hz}=w_z^2,
+\qquad c_{hz}=\alpha u_zw_z.
+$$
+
+零对角关系等价于 $2u_zw_z=r(p_{hz}+q_{hz})$，两边乘以 $\alpha$ 即得
+
+$$
+2c_{hz}=r_t(p_{hz}+q_{hz}).
+$$
+
+这个递推没有除以 $a,\alpha,b,p,q$，所以零向量、零概率历史及 $\beta_t=0,1$ 都包括在内。$a=0$ 时加权实际向量全为零，但物理实际向量仍按同一个控制表定义；加权只用于选择控制，不要求从零向量反演物理分支。仪器完备性给出每层总权重 $\sum_hp_h=a$、$\sum_hq_h=1$。
+
+令 $\rho_A,\rho_J$ 是前 $N-1$ 步的历史加活动系统输出。逐历史使用秩一差值公式，得到
+
+$$
+\begin{aligned}
+\|a\rho_A-\rho_J\|_1
+&=\sum_{|h|=N-1}\sqrt{(p_h+q_h)^2-4c_h^2}\\
+&=\sum_{|h|=N-1}(p_h+q_h)\sqrt{1-r_{N-1}^2}\\
+&=\sqrt{(a+1)^2-4as^2}.
+\end{aligned}
+$$
+
+最后把活动比特与尚未参与、初态为 $|0\rangle$ 的记忆比特 $M$ 作 SWAP。前缀候选量子态进入记忆，两实验中的活动系统都成为 $|0\rangle$。末次实际结果零、一的概率为 $a,f$，理想结果恒为零。识别 SWAP 前后的比特空间，最终输出差关于末次经典结果的两个直和块恰为
+
+$$
+(a\rho_A-\rho_J)\ \oplus\ f\rho_A.
+$$
+
+所以最终迹距离为
+
+$$
+\frac12\bigl(\|a\rho_A-\rho_J\|_1+f\bigr)=U(E,f).
+$$
+
+无参考纯输入已达到参考一致上界，故该固定控制表的半 diamond 距离也达到同一值。$N=1$ 时前缀为空，结果为 $f$；$f=0$ 时为 $\sqrt{1-s^2}$；$f=1$ 或某个前缀参数为一时为一。有限反馈表按模型参数与已存历史预先计算，两实验始终使用同一表。证毕。
+

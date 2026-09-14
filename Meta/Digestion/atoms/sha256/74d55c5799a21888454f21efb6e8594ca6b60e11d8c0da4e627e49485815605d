@@ -1,0 +1,82 @@
+**定理 14.2（相关矩阵最大特征值给出的恢复障碍）。** 在定义 14.1 中，记 $\lambda_{\max}(C)$ 为 $C$ 的最大特征值。对每个允许的恢复通道 $\mathcal R$，都有
+
+$$
+\frac12\|\mathcal R\circ M_C-\operatorname{id}_S\|_\diamond
+\ge
+1-\frac{\lambda_{\max}(C)}d.
+$$
+
+从而
+
+$$
+\eta(C)\ge1-\frac{\lambda_{\max}(C)}d.
+$$
+
+此界允许 $\mathcal R$ 混合标签布居；不以对角反馈或布居保持为前提。
+
+证明。 取一个 $d$ 维参考系统 $A$ 及归一化最大纠缠态
+
+$$
+|\Omega_d\rangle
+=\frac1{\sqrt d}\sum_{x=0}^{d-1}|x\rangle_S|x\rangle_A.
+$$
+
+令 $(A_\alpha)_\alpha$ 为 $\mathcal R$ 的有限 Kraus 族，满足 $\sum_\alpha A_\alpha^\dagger A_\alpha=I_S$，并定义
+
+$$
+b_{\alpha,x}=\overline{(A_\alpha)_{xx}}.
+$$
+
+恢复输出与目标最大纠缠态的重叠为
+
+$$
+\begin{aligned}
+f_{\mathcal R}
+&=
+\langle\Omega_d|
+[(\mathcal R\circ M_C)\otimes\operatorname{id}_A]
+(|\Omega_d\rangle\langle\Omega_d|)
+|\Omega_d\rangle\\
+&=
+\frac1{d^2}\sum_{\alpha,x,y}
+C_{xy}(A_\alpha)_{xx}\overline{(A_\alpha)_{yy}}\\
+&=
+\frac1{d^2}\sum_\alpha b_\alpha^\dagger Cb_\alpha.
+\end{aligned}
+$$
+
+由 $C\preceq\lambda_{\max}(C)I_d$ 和 Kraus 完备关系，
+
+$$
+\begin{aligned}
+f_{\mathcal R}
+&\le
+\frac{\lambda_{\max}(C)}{d^2}
+\sum_{\alpha,x}|(A_\alpha)_{xx}|^2\\
+&\le
+\frac{\lambda_{\max}(C)}{d^2}
+\sum_{\alpha,x,y}|(A_\alpha)_{yx}|^2\\
+&=
+\frac{\lambda_{\max}(C)}{d^2}
+\operatorname{tr}\!\left(\sum_\alpha A_\alpha^\dagger A_\alpha\right)
+= \frac{\lambda_{\max}(C)}d.
+\end{aligned}
+$$
+
+对输出与 $|\Omega_d\rangle\langle\Omega_d|$ 施加二输出测量
+
+$$
+\{|\Omega_d\rangle\langle\Omega_d|,
+I_{SA}-|\Omega_d\rangle\langle\Omega_d|\},
+$$
+
+所得分布的总变差距离为 $1-f_{\mathcal R}$。量子态迹距离不小于此测量距离，而 diamond 距离的优化包含该最大纠缠输入。因此
+
+$$
+\frac12\|\mathcal R\circ M_C-\operatorname{id}_S\|_\diamond
+\ge1-f_{\mathcal R}
+\ge1-\frac{\lambda_{\max}(C)}d.
+$$
+
+对 $\mathcal R$ 取下确界得到结论。由于 $C\succeq0$ 且 $\operatorname{tr}C=d$，有 $1\le\lambda_{\max}(C)\le d$，故右端是非负的有限误差下界。证毕。
+

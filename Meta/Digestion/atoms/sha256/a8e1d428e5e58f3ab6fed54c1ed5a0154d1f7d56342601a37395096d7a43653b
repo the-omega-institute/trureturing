@@ -1,0 +1,12 @@
+且
+$$
+\operatorname{Enc}(G_f)
+=\operatorname{Pack}\{\langle h_D(c),h_Y(d)\rangle_Z:\langle c,d\rangle\in G_{f^d}\},
+$$
+$$
+\operatorname{Enc}(G_{f^d})
+=\operatorname{Pack}\{\langle\operatorname{Enc}(c),\operatorname{Enc}(d)\rangle_Z:
+\langle c,d\rangle\in G_{f^d}\}.
+$$
+这些式子分别编码原对象图与数字对象图，包括 $d$ 自身已经是某个码的情形。
+

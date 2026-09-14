@@ -17,7 +17,7 @@ internal static class DecomposeAtomCommand
     {
         try
         {
-            var (id, revision, dryRun, splitAt) = Parse(arguments);
+            var (id, revision, dryRun, reconcileChain, splitAt) = Parse(arguments);
             var raw = repository.ReadCurrent();
             _ = repository.ReadRevision(revision);
             var snapshot = Decode(raw);
@@ -35,7 +35,7 @@ internal static class DecomposeAtomCommand
             var atomizer = (atomizerResolver ?? (static name => AtomizerRegistry.Require(name).Atomize))(parent.Atomizer);
             var plan = DigestionDecomposition.Plan(parent, blob.RawBytes, atomizer, rules, snapshot, splitAt);
             var entries = ledger.RequireDigestionEntries().ToDictionary(static entry => entry.AtomId, StringComparer.Ordinal);
-            var writes = DigestionDecomposition.Materialize(parent, plan, entries);
+            var writes = DigestionDecomposition.Materialize(parent, plan, entries, reconcileChain, snapshot, rules);
             foreach (var child in plan.Children)
             {
                 var childId = child.Fingerprints.RawSha256[7..];
@@ -70,7 +70,7 @@ internal static class DecomposeAtomCommand
                     throw new FormatException($"ROUND_TRIP_FAILED atom_id={entry.AtomId}");
             }
             var ledgerUpdates = updates.ToImmutable();
-            var output = Render(id, plan, entries, writes.CasObjects, ledgerUpdates, dryRun);
+            var output = Render(id, plan, entries, writes.CasObjects, ledgerUpdates, dryRun, reconcileChain);
             if (!dryRun && (!ledgerUpdates.IsEmpty || !writes.CasObjects.IsEmpty))
                 apply(root, raw, writes.CasObjects, ledgerUpdates);
             return new CommandResult(true, output, string.Empty);
@@ -83,7 +83,7 @@ internal static class DecomposeAtomCommand
 
     private static string Render(string id, DigestionClausePlan plan,
         IReadOnlyDictionary<string, DigestionLedgerEntry> entries,
-        ImmutableArray<DigestionCasObject> cas, ImmutableArray<IngestCommand.LedgerUpdate> updates, bool dryRun)
+        ImmutableArray<DigestionCasObject> cas, ImmutableArray<IngestCommand.LedgerUpdate> updates, bool dryRun, bool reconcileChain)
     {
         var output = new StringBuilder();
         foreach (var segment in plan.Segments)
@@ -101,7 +101,7 @@ internal static class DecomposeAtomCommand
             output.AppendLine($"DECOMPOSE_WRITE path={item.RelativePath} sha256={item.Reference} bytes={item.Bytes.Length}");
         foreach (var item in updates)
             output.AppendLine($"DECOMPOSE_WRITE path={item.Path} sha256={DigestionCasStore.Capture(item.Bytes!.Value.AsSpan()).Reference} bytes={item.Bytes.Value.Length}");
-        output.AppendLine($"DECOMPOSE_WRITTEN atom_id={id} children={plan.Children.Length} cas_objects={cas.Length} ledger_updates={updates.Length} dry_run={dryRun.ToString().ToLowerInvariant()}");
+        output.AppendLine($"DECOMPOSE_WRITTEN atom_id={id} children={plan.Children.Length} cas_objects={cas.Length} ledger_updates={updates.Length} dry_run={dryRun.ToString().ToLowerInvariant()} reconcile_chain={reconcileChain.ToString().ToLowerInvariant()}");
         return output.ToString();
     }
 
@@ -116,13 +116,14 @@ internal static class DecomposeAtomCommand
         SnapshotDecodeOutcome.InfrastructureFailure failure => throw new FormatException(failure.Message),
     };
 
-    private static (string AtomId, string BaseRevision, bool DryRun, ImmutableArray<int> SplitAt) Parse(IReadOnlyList<string> arguments)
+    private static (string AtomId, string BaseRevision, bool DryRun, bool ReconcileChain, ImmutableArray<int> SplitAt) Parse(IReadOnlyList<string> arguments)
     {
         string? atom = null;
         string? revision = null;
         var dryRun = false;
+        var reconcileChain = false;
         var splitAt = ImmutableArray.CreateBuilder<int>();
-        var invalid = new FormatException("ARGUMENTS_INVALID USAGE: StrataLint decompose-atom --atom ATOM_ID --base REV [--split-at BYTE_OFFSET ...] [--dry-run]");
+        var invalid = new FormatException("ARGUMENTS_INVALID USAGE: StrataLint decompose-atom --atom ATOM_ID --base REV [--reconcile-chain] [--split-at BYTE_OFFSET ...] [--dry-run]");
         for (var index = 0; index < arguments.Count; index++)
         {
             switch (arguments[index])
@@ -130,6 +131,7 @@ internal static class DecomposeAtomCommand
                 case "--atom" when atom is null && index + 1 < arguments.Count: atom = arguments[++index]; break;
                 case "--base" when revision is null && index + 1 < arguments.Count: revision = arguments[++index]; break;
                 case "--dry-run" when !dryRun: dryRun = true; break;
+                case "--reconcile-chain" when !reconcileChain: reconcileChain = true; break;
                 case "--split-at":
                     if (index + 1 >= arguments.Count || !int.TryParse(arguments[++index], NumberStyles.None,
                             CultureInfo.InvariantCulture, out var offset) || offset <= 0)
@@ -142,6 +144,6 @@ internal static class DecomposeAtomCommand
         if (atom is null || !DigestionFingerprint.IsCanonicalSha256("sha256:" + atom)
             || string.IsNullOrWhiteSpace(revision) || revision != revision.Trim() || revision.StartsWith("--", StringComparison.Ordinal))
             throw invalid;
-        return (atom, revision, dryRun, splitAt.ToImmutable());
+        return (atom, revision, dryRun, reconcileChain, splitAt.ToImmutable());
     }
 }

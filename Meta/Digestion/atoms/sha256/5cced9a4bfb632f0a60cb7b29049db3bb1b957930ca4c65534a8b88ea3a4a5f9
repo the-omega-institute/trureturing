@@ -1,0 +1,6 @@
+**档位与文献核对**。第一档(新近小猜想)。核对对象为 OEIS **A025529** 条目正文,已逐字读取 `https://oeis.org/search?q=id:A025529&fmt=text`。定义(`%N`):
+
+> `a(n) = (1/1 + 1/2 + ... + 1/n)*lcm{1,2,...,n}.`
+
+即 \(a(n)=H_n\cdot L_n\),\(L_n=\operatorname{lcm}(1,\dots,n)\)。被反驳的断言(`%C`,Amiram Eldar 与 Thomas Ordowski,2019-08-07,逐字):
+

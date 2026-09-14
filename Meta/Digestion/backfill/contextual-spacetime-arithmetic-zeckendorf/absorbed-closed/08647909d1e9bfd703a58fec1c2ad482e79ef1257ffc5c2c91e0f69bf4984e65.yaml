@@ -1,0 +1,23 @@
+fingerprints:
+  raw_sha256: sha256:08647909d1e9bfd703a58fec1c2ad482e79ef1257ffc5c2c91e0f69bf4984e65
+  normalized_sha256: sha256:08647909d1e9bfd703a58fec1c2ad482e79ef1257ffc5c2c91e0f69bf4984e65
+cas_ref: sha256:08647909d1e9bfd703a58fec1c2ad482e79ef1257ffc5c2c91e0f69bf4984e65
+coverage_gids:
+  - gid: D5/S1/Digit/Carry/SuccessorShortest.successor_erasure_and_shortest
+    target_statement_id: sha256:af5e577567f49fc672db1099a74d81d242fcc1ab932d46b0924f19bf76bb65a7
+  - gid: D5/S1/Digit/Infinite/InfiniteSuccessorFibres.next_fibres
+    target_statement_id: sha256:531252e936dc26fa53d31c8628d05b5ca8499e0a326f9945ce6ee6e49d4f3073
+  - gid: D5/S1/Digit/Infinite/MultiplierObstruction.multiplier_obstruction
+    target_statement_id: sha256:baa6fa5f69ba47b6a34622869f8b3dbd3f8db84a1e7140955acadbe0ce72db06
+  - gid: D5/S1/Digit/Infinite/SignedSeriesFibres.signed_series_fibres
+    target_statement_id: sha256:27879c3be37e0f7363c407727614c2f2aa123a41648c38fb48f6bb4532006b8f
+  - gid: D5/S1/Digit/Infinite/SignedSeriesRange.signed_series_range
+    target_statement_id: sha256:9d47ee68a40e19a32785b1263984b7d633188221567107d16f3612d0578f9777
+  - gid: D5/S1/Digit/Infinite/SuccessorContinuity.infinite_successor_continuous
+    target_statement_id: sha256:1fe044a30b2003783433ffbafe7f7e4daf697a3e5cf0605aea218d117fb40f0d
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 96cb9d67f13dca1935e3e7ade405839917964eaddc989a2df84697b8528c4661
+    - 0d5b45794355fae7d393bb33d5e2acb7a399baec74953e4e0f14ba1316b5ab29
+    - 1b43f874abc659619490f2d7652d82e19c5e5861666eb7bed91633c4c36bc318

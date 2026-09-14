@@ -1,0 +1,14 @@
+**证明。** 对每个 $(h,q)$ 取一个目标条件风险最小化动作 $a_t^*(h,q)$。由命题31.2及源动作的最优性，
+$$
+\begin{aligned}
+r_t(a_s\mid h,q)-r_t(a_t^*\mid h,q)
+&\le [r_t(a_s)-r_s(a_s)]
+ +[r_s(a_s)-r_s(a_t^*)]
+ +[r_s(a_t^*)-r_t(a_t^*)]\\
+&\le M\delta(h,q)+0+M\delta(h,q).
+\end{aligned}
+$$
+对目标边缘取期望即得第一式。若密度比上界为 $\kappa$，则对非负函数 $\delta$ 有 $\mathbb E_t\delta\le\kappa\mathbb E_s\delta$，代入第一式得第二式。证毕。
+
+该定理的基准是目标上的全信息 Bayes 风险；它不是说任意源上的 $\phi$-最优读出在目标上仍是 $\phi$-最优。若要得到后者，还须另加目标条件核在每个 $\phi$-纤维上的不变性，或直接证明目标的最优动作也只依赖 $(Z,Q)$。
+

@@ -1,0 +1,36 @@
+**定理 8.3（复Gram乘子的完全正性与秩亏边界）。** 对任意复矩阵$C\in\mathbb C^{\mathcal I\times\mathcal I}$，映射$M_C(X)=C\odot X$完全正且保持迹，当且仅当$C$为Hermitian正半定矩阵并满足$C(i,i)=1$。此时$M_C$也保持恒等算符。定义8.1中的$G_t,\Gamma_D,C_{A;D}$都满足这些矩阵条件；特别地，$\Phi_A$是完全正且保持迹的通道。完全正性无需任何Gram矩阵可逆。
+
+证明。 先设$C\ge0$且对角元为一。有限谱分解给出$C=BB^\dagger$；只保留正特征值即可，允许$B$为$n\times r$矩阵，其中$r=\operatorname{rank}C$。令
+$$
+K_a=\sum_{i\in\mathcal I}B_{ia}P_i\quad(1\le a\le r).
+$$
+直接比较矩阵元得到
+$$
+\sum_aK_aXK_a^\dagger=C\odot X,\qquad
+\sum_aK_a^\dagger K_a=\sum_i C(i,i)P_i=I_S.
+$$
+任意有限辅助空间上的扩张同样是$(K_a\otimes I)$的共轭和，因此保持非负；这就是完全正性。第二个等式给保持迹。又$C\odot I_S=I_S$，故保持恒等算符。
+
+反之，令$|\Omega\rangle=\sum_i|i\rangle\otimes|i\rangle$。若$M_C$完全正，则
+$$
+(M_C\otimes\operatorname{id})(|\Omega\rangle\langle\Omega|)
+=\sum_{i,j}C(i,j)|ii\rangle\langle jj|\ge0.
+$$
+将此算符沿等距嵌入$|i\rangle\mapsto|ii\rangle$压缩，得到$C\ge0$。保持迹应用于$P_i$给$C(i,i)=1$。这同时证明了必要性。
+
+最后核对记录矩阵。固定每个环境的一组正交基，将$e_i^{(t)}$的坐标写为$a_{i\alpha}^{(t)}$，则
+$$
+G_t(i,j)=\sum_\alpha a_{i\alpha}^{(t)}\overline{a_{j\alpha}^{(t)}}.
+$$
+因此$G_t=B_tB_t^\dagger\ge0$，其对角元为一。若$C(i,j)=\sum_a b_{ia}\overline{b_{ja}}$、$F(i,j)=\sum_b d_{ib}\overline{d_{jb}}$，则
+$$
+(C\odot F)(i,j)=\sum_{a,b}(b_{ia}d_{ib})\overline{(b_{ja}d_{jb})},
+$$
+所以正半定矩阵的逐元素乘积仍正半定。重复使用这个Gram证明即得$\Gamma_D\ge0$；空积对应所有标签取同一个标量向量$1$。令$z_i=e^{i\Theta_i(A)}$，则
+$$
+C_{A;D}=\operatorname{diag}(z)\Gamma_D\operatorname{diag}(z)^\dagger,
+$$
+故正半定性与单位对角均保持。此处不对零特征值取逆，重复记录与线性相关记录全部允许。证毕。
+
+这一判据是有限维Schur乘子的标准结论，见 John Watrous，*The Theory of Quantum Information*（2018），[第4.1.3节，命题4.17、4.18，印刷页219、220](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)。上述证明将其直接写成Kraus分解及最大纠缠向量的压缩；相应完全正映射表示的对应见同书定理2.22。
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:5cf1a437236e48869580a15ce71d07f3441ed17c93471962af08bd880890f256
+  normalized_sha256: sha256:5cf1a437236e48869580a15ce71d07f3441ed17c93471962af08bd880890f256
+cas_ref: sha256:5cf1a437236e48869580a15ce71d07f3441ed17c93471962af08bd880890f256
+coverage_gids:
+  - gid: D5/S1/Digit/Infinite/InfiniteSuccessorFibres.next_fibres
+    target_statement_id: sha256:531252e936dc26fa53d31c8628d05b5ca8499e0a326f9945ce6ee6e49d4f3073
+receipts:
+  unresolved_subitems: []

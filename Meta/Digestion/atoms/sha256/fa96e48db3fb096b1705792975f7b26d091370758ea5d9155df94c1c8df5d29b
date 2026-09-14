@@ -1,0 +1,53 @@
+**命题 8.10（相关环境、复用环境与非对角Hamiltonian的反例）。** 去掉新鲜乘积条件、一次使用条件或固定标签演化条件，定理8.4的时间乘积律与定理8.5的单调性均不再是一般保证。以下为三个有限维的具体构造。
+
+证明。 （一）两个尚未与系统接触的环境单元也可以已有相关性。取两个二能级环境的初态
+$$
+|\Phi_+\rangle=\frac{|00\rangle+|11\rangle}{\sqrt2},\qquad
+|\Phi_-\rangle=\frac{|00\rangle-|11\rangle}{\sqrt2},
+$$
+系统初态为$|+\rangle=(|0\rangle+|1\rangle)/\sqrt2$。令$Z=|0\rangle\langle0|-|1\rangle\langle1|$，第$t=1,2$步分别实施$P_0\otimes I+P_1\otimes Z_t$，各自只接触一次对应环境单元。第一步后全局态为
+$$
+\frac{|0\rangle|\Phi_+\rangle+|1\rangle|\Phi_-\rangle}{\sqrt2},
+$$
+因$\langle\Phi_-,\Phi_+\rangle=0$，系统态为$I_2/2$。第二步中$Z_2|\Phi_-\rangle=|\Phi_+\rangle$，于是全局态回到$|+\rangle|\Phi_+\rangle$，系统相干完全恢复。
+
+这里每个环境边缘态为$I_2/2$，若把两个边缘误当作独立新鲜输入，各自的受控相位通道都会给相干乘子$\operatorname{tr}((I_2/2)Z)=0$，相乘仍为零。真实两步乘子却是
+$$
+\langle\Phi_+,(Z\otimes Z)\Phi_+\rangle=1,
+$$
+不等于两个单步边缘期望的乘积。第一步后各单环境在两个标签下的条件边缘态也都为$I_2/2$，信息在环境关联中；第二步仍访问携带该关联的另一因子。因此“每个单元只碰一次”不足以替代初始张量乘积假设。
+
+（二）复用一个环境可以撤销先前写入。取单个预备为$|0\rangle_E$的二能级环境及
+$$
+X=|0\rangle\langle1|+|1\rangle\langle0|,\qquad
+U=P_0\otimes I+P_1\otimes X.
+$$
+系统从$|+\rangle$出发。第一次作用给$(|00\rangle+|11\rangle)/\sqrt2$，系统约化态为$I_2/2$，预备输入上的记录重叠为零。但$U^2=I$，第二次作用于同一个环境后输出$|+\rangle|0\rangle_E$，系统态恢复为$|+\rangle\langle+|$。不能把第二次调用也按$U(|i\rangle|0\rangle)$的预备子空间公式处理：此时它的输入已与系统相关，且标签$1$分支的环境为$|1\rangle$。如果第一次就真正丢掉旧环境，第二步另备$|0\rangle$，系统态仍为$I_2/2$，不会得到上述恢复。
+
+（三）允许混合标签的系统Hamiltonian时，可以从指针对角态重新生成该基中的相干。取$p\in(0,1)$且$p\ne1/2$，从正交记录态
+$$
+|\Psi\rangle=\sqrt p\,|0\rangle|0\rangle_E
++\sqrt{1-p}\,|1\rangle|1\rangle_E
+$$
+得到系统约化态$\varrho_0=\operatorname{diag}(p,1-p)$。令$\omega>0$且系统Hamiltonian为$H=\hbar\omega X/2$，环境此后完全不动。由$X^2=I$，
+$$
+V(\tau)=e^{-iH\tau/\hbar}
+=\cos(\omega\tau/2)I-i\sin(\omega\tau/2)X.
+$$
+记$c=\cos(\omega\tau/2)$、$s=\sin(\omega\tau/2)$，则
+$$
+\varrho(\tau)=V(\tau)\varrho_0V(\tau)^\dagger
+=\begin{pmatrix}
+pc^2+(1-p)s^2&i(2p-1)cs\\
+-i(2p-1)cs&ps^2+(1-p)c^2
+\end{pmatrix}.
+$$
+因此
+$$
+\mathsf d(\varrho(\tau),\Delta(\varrho(\tau)))
+=\frac{|2p-1|}{2}|\sin(\omega\tau)|.
+$$
+此距离从零增加到$\tau=\pi/(2\omega)$时的$|2p-1|/2>0$，以后又可回到零。它是给定指针基中的相干再生，并未恢复迹掉环境所失去的原始相位信息，也未把系统混态变成纯态。$p=1/2$时系统为最大混态，此Hamiltonian不能生成相干，所以该参数已明确排除。这里$H$不与$P_0,P_1$对易，正好违反定义8.1的固定标签动力学条件。
+
+三个构造分别显示：跨时刻的初始环境关联可以破坏独立乘积律；与旧记录重新相互作用可以撤销记录；混合指针标签的系统动力学可以生成新的基相干。有限乘积定理的单调性依赖其明确的动力学假设，不能由记录数量单独推出。部分迹及最优判别只规定约化态和操作概率，不添加选择唯一全局分支的演化规则。证毕。
+

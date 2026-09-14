@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:4c4b10f13ed78bc9eaf4925351892d3d8485d553cc7331f5e0eef97caab9ada4
+  normalized_sha256: sha256:4c4b10f13ed78bc9eaf4925351892d3d8485d553cc7331f5e0eef97caab9ada4
+cas_ref: sha256:4c4b10f13ed78bc9eaf4925351892d3d8485d553cc7331f5e0eef97caab9ada4
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Epistemic/RobustKnowledgeRefinementMonotonicity.robust_knowledge_monotone_under_refinement
+    target_statement_id: sha256:6f48aadde44ed79cf63db5229b5a247d72589f230febf00214752bd883861efc
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:791283db9b83664a262a60ecfbc4762d351bac9e6dd95e26f8e650d31de7670d
+  normalized_sha256: sha256:791283db9b83664a262a60ecfbc4762d351bac9e6dd95e26f8e650d31de7670d
+cas_ref: sha256:791283db9b83664a262a60ecfbc4762d351bac9e6dd95e26f8e650d31de7670d
+coverage_gids:
+  - gid: D5/S3/Zeros/PochhammerDeformation/QuadraticInterval.quadratic_interval_closed_form
+    target_statement_id: sha256:78b78ec033f1cc777b3bdcbb5ea3aa752cd65c953f228b9ab56bff868488f42d
+receipts:
+  unresolved_subitems: []

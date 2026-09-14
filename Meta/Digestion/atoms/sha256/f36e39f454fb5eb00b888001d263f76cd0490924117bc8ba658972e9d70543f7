@@ -1,0 +1,7 @@
+
+
+对每个 $x\in K_{\rm infdig}$，
+$$
+\operatorname{Enc}(x)=\operatorname{Pack}
+\{\langle\operatorname{NatZ}(j),\operatorname{NatZ}(x_j)\rangle_Z:j\in\omega\}.
+$$

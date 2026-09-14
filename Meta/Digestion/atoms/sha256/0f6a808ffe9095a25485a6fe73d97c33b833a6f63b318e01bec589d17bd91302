@@ -1,0 +1,78 @@
+**定理 16.5（系统酉控制下的理想经典路径与实际全历史近似）。** 在定义 16.1 中取 $M=\mathbb C$，共同控制为系统酉 $U_{t,h}$。给定初始经典标签寄存器 $X_0$ 和有限参考 $R$，初态为
+
+$$
+\omega_{X_0SR}
+=\sum_{x_0\in\mathsf X}p_0(x_0)
+|x_0\rangle\langle x_0|_{X_0}\otimes P_{x_0}\otimes\tau_R^{x_0},
+$$
+
+其中 $p_0$ 是概率分布，各 $\tau_R^{x_0}$ 是密度矩阵。$X_0,R$ 保持不变，不参与控制。对历史 $h=z_{<t}$ 定义
+
+$$
+K_{t,h}(y\mid x)=|\langle y|U_{t,h}|x\rangle|^2,
+\qquad z_0=x_0.
+$$
+
+理想全历史及末端系统、参考的联合输出为
+
+$$
+\begin{aligned}
+\sigma_{X_0H_NSR}
+=\sum_{x_0,z_1,\ldots,z_N}
+&p_0(x_0)\prod_{t=1}^N K_{t,z_{<t}}(z_t\mid z_{t-1})\\
+&\cdot|x_0,z_1,\ldots,z_N\rangle\langle x_0,z_1,\ldots,z_N|_{X_0H_N}
+\otimes P_{z_N}\otimes\tau_R^{x_0}.
+\end{aligned}
+$$
+
+若 $U_{t,h}=U_t$ 不依赖历史，则 $X_0,Z_1,\ldots,Z_N$ 的理想路径分布为转移核 $K_t(y\mid x)=|\langle y|U_t|x\rangle|^2$ 的有限非齐次 Markov 链。一般历史反馈给出所列受历史控制的经典路径律，不自动退化为只依赖当前标签的 Markov 链。
+
+实际全输出 $\rho_{X_0H_NSR}$ 满足
+
+$$
+\frac12\|\rho_{X_0H_NSR}-\sigma_{X_0H_NSR}\|_1\le\delta_N.
+$$
+
+特别地，实际与理想的整个存储路径分布的总变差距离不超过 $\delta_N$，每个历史事件的概率误差也不超过 $\delta_N$。
+
+若还给定 $\kappa_t\in[0,1]$，使每个 $t,h,x$ 都满足
+
+$$
+K_{t,h}(x\mid x)\ge1-\kappa_t,
+$$
+
+则同时检验全部存储标签与末端指针读数都等于初始标签的效应
+
+$$
+E_{\rm stay}
+=\sum_x|x,x,\ldots,x\rangle\langle x,x,\ldots,x|_{X_0H_N}
+\otimes P_x\otimes I_R
+$$
+
+满足
+
+$$
+\operatorname{tr}(E_{\rm stay}\sigma)
+\ge\prod_{t=1}^N(1-\kappa_t),
+\qquad
+\operatorname{tr}(E_{\rm stay}\rho)
+\ge\max\left\{0,\prod_{t=1}^N(1-\kappa_t)-\delta_N\right\}.
+$$
+
+这里 $\beta_t$ 控制记录历史对指定经典过程的逼近，$\kappa_t$ 另行控制该过程保持同一标签的概率。
+
+证明。 对任意指针输入 $P_x$，先施加 $U_{t,h}$ 再取理想结果 $y$，未归一化系统输出为
+
+$$
+P_yU_{t,h}P_xU_{t,h}^\dagger P_y
+=K_{t,h}(y\mid x)P_y.
+$$
+
+该操作在 $R$ 上为恒等。按初始标签和随后结果归纳，逐步乘入相应 $K_{t,h}$，就得到所列联合态。每个核非负且对 $y$ 求和为一，因为 $U_{t,h}$ 为酉；故路径权重是归一化的有限经典概率律。无历史依赖时，条件转移只取决于上一步标签，给出 Markov 陈述。
+
+将 $X_0R$ 一同作为定理 16.3 的旁参考，得到联合迹距离界。再对系统及参考取部分迹，或读取任意经典历史事件，使用迹距离收缩性即得路径总变差和事件误差界。
+
+对理想态，$E_{\rm stay}$ 选中每个初始标签 $x_0=x$ 对应的常值路径 $z_1=\cdots=z_N=x$；其每个转移因子至少为 $1-\kappa_t$。对 $x$ 按 $p_0(x)$ 求和便得到乘积下界。实际与理想对同一效应的概率差至多为 $\delta_N$，再使用概率非负，得到实际下界。证毕。
+
+上述路径乘积只在本定理的无量子记忆、系统酉控制条件下使用。定理 16.3 的一般量子记忆仍可保留影响未来的自由度，不提供同一个单标签转移核公式。
+

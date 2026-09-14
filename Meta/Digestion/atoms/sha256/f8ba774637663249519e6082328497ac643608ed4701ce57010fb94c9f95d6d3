@@ -1,0 +1,10 @@
+直接取部分迹得到
+
+$$
+\sigma_0=\operatorname{diag}(9/10,1/10),
+\qquad
+\sigma_1=\operatorname{diag}(1/10,9/10),
+\qquad
+T=\frac3{10}I_2.
+$$
+

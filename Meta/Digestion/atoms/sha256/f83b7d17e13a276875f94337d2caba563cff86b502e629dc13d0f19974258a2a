@@ -1,0 +1,7 @@
+**定义 3.1（未来核塔）。** 将当前输出及所有必需查询合记为 $b=(o,(f)_{f\in\mathcal Q})$，严格动作词 $w=a_1\cdots a_j$ 的全部响应记为 $R_w$，空词读取当前 $b$。令
+$$
+\xi\equiv_h\eta\iff\forall |w|\le h,\ R_w(\xi)=R_w(\eta),\qquad
+\equiv_\infty=\bigcap_{h\ge0}\equiv_h.
+$$
+$h$ 包括零。对多元部分操作，动作包含每个槽位及全部固定参数；此时词就是有限一孔上下文的复合。
+

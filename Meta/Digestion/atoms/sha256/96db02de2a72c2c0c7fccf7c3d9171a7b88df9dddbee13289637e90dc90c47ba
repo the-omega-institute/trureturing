@@ -1,0 +1,139 @@
+**定理 13.5（乘积记录的精确联合前沿）。** 假设固定访问划分下的条件记录满足
+
+$$
+E_x=f_x\otimes b_x,
+\qquad
+s=|\langle f_1,f_0\rangle|,
+\qquad
+b=|\langle b_1,b_0\rangle|,
+$$
+
+各向量均为单位向量。固定一个未来二值读数，其 Heisenberg 效应为
+
+$$
+A_1=\frac{1-d}{2}P_0+\frac{1+d}{2}P_1,
+\qquad
+A_0=I_S-A_1,
+\qquad0\le d\le1.
+$$
+
+例如，先读取指针，再以概率 $(1-d)/2$ 翻转输出，就实现该任务。取预测误差上限 $0\le\varepsilon\le1/2$，令
+
+$$
+t=(d-2\varepsilon)_+,
+\qquad
+(u)_+=\max\{u,0\}.
+$$
+
+则预测要求可行当且仅当
+
+$$
+t\le\sqrt{1-s^2}.
+$$
+
+可行时，留下该经典预测输出后的精确最优值为
+
+$$
+\boxed{
+v^*(\varepsilon)=b\sqrt{1-t^2},
+\qquad
+\eta^*(\varepsilon)=\frac{1-b\sqrt{1-t^2}}2.
+}
+$$
+
+等价地，对 $0\le\nu\le1$，预测误差至多为 $\varepsilon$ 且恢复乘子至少为 $\nu$ 的充要条件是
+
+$$
+\boxed{
+s^2+t^2\le1,
+\qquad
+\nu^2\le b^2(1-t^2).
+}
+$$
+
+这里恢复乘子由最优反馈调成非负实数；后一目标等价于恢复误差至多为 $(1-\nu)/2$。
+
+证明。二输出预测器由效应 $M_1$ 给出。写 $q_x=\langle f_x,M_1f_x\rangle$。目标与预测效应均对角，故误差要求等价于
+
+$$
+\left|q_0-\frac{1-d}{2}\right|\le\varepsilon,
+\qquad
+\left|q_1-\frac{1+d}{2}\right|\le\varepsilon.
+$$
+
+当 $t>0$ 时，这迫使 $q_1-q_0\ge t$。测量输出的分布差不能超过两纯态的迹距离 $\sqrt{1-s^2}$，得到可行性的必要条件；当 $t=0$ 时，该必要条件自动成立。
+
+由于
+
+$$
+T=\langle b_1,b_0\rangle\,|f_0\rangle\langle f_1|,
+$$
+
+定理 13.3 给出
+
+$$
+v(M)=b\left[\sqrt{q_0q_1}+\sqrt{(1-q_0)(1-q_1)}\right].
+$$
+
+对任意概率分布 $p,q$，令
+
+$$
+\mathcal B(p,q)=\sum_z\sqrt{p_zq_z}.
+$$
+
+Cauchy–Schwarz 不等式给出
+
+$$
+\begin{aligned}
+\operatorname{TV}(p,q)
+&=\frac12\sum_z|\sqrt{p_z}-\sqrt{q_z}|(\sqrt{p_z}+\sqrt{q_z})\\
+&\le\sqrt{1-\mathcal B(p,q)^2}.
+\end{aligned}
+$$
+
+因此 $v(M)\le b\sqrt{1-t^2}$。当 $t=0$ 时，该上界就是 $b$。
+
+下面构造达到上界的同一仪器。令 $D=\sqrt{1-s^2}$。若 $D>0$，在两记录张成空间上取
+
+$$
+S=\operatorname{sign}\bigl(|f_0\rangle\langle f_0|-|f_1\rangle\langle f_1|\bigr),
+$$
+
+在其正交补上取零。括号内差矩阵在该二维空间的迹为零、行列式为 $-(1-s^2)$，故特征值为 $D,-D$。其符号矩阵等于差矩阵除以 $D$，从而
+
+$$
+\langle f_0,Sf_0\rangle=D,
+\qquad
+\langle f_1,Sf_1\rangle=-D.
+$$
+
+取
+
+$$
+M_0=\frac12\left(I_F+\frac tD S\right),
+\qquad
+M_1=\frac12\left(I_F-\frac tD S\right).
+$$
+
+由 $t\le D$，它们构成 POVM，并产生
+
+$$
+q_0=\frac{1-t}{2},
+\qquad
+q_1=\frac{1+t}{2}.
+$$
+
+预测误差为 $(d-t)/2\le\varepsilon$，两个输出分布的 $\mathcal B$ 值恰为 $\sqrt{1-t^2}$。再采用定理 13.3 的逐结果受控酉，即达到恢复上界。
+
+若 $D=0$，可行性要求 $t=0$，取 $M_0=M_1=I_F/2$。若 $b=0$，所有协议的最大恢复乘子为零，原式仍成立。证毕。
+
+当预测任务就是当前标签，或经已知标签置换后再将输出重标记为当前标签时，$d=1$。此时
+
+$$
+s^2\le4\varepsilon(1-\varepsilon),
+\qquad
+v^*(\varepsilon)=2b\sqrt{\varepsilon(1-\varepsilon)}.
+$$
+
+这条前沿同时计入已经不可访问的记录，以及本次必须留下的预测结果。
+
