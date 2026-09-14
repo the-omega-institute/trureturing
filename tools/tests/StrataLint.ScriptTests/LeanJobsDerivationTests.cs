@@ -85,6 +85,8 @@ public sealed class LeanJobsDerivationTests
     [Theory]
     [InlineData("lake", Reserve + 2 * Peak, "build", 97, "2")]
     [InlineData("/fixture/bin/lake", Reserve + 2 * Peak, "build", 97, "2")]
+    [InlineData("/fixture/bin/lake-wrapper", Reserve + 2 * Peak, "build", 97, "2")]
+    [InlineData("/fixture/bin/lake-wrapper", Reserve, "build", 1, null)]
     [InlineData("lake", Reserve, "build", 1, null)]
     [InlineData("lake", Reserve, "env", 97, "999")]
     public void AdapterAppliesDerivedEnvironmentAndPreservesWriterAndArguments(
@@ -170,6 +172,76 @@ public sealed class LeanJobsDerivationTests
             limitedResource, narrowFirst.ToString());
         Assert.Equal(0, result.ExitCode);
         Assert.EndsWith("jobs=1", result.StandardOutput.Trim());
+    }
+
+    [Theory]
+    [InlineData(Reserve + 2 * Peak, 97)]
+    [InlineData(Reserve, 1)]
+    public void CanonicalReportForwardsAlternateLakeBuildThroughCapacityGuard(long memory, int expectedExit)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new TemporaryDirectory();
+        foreach (var relative in new[] { Script, "tools/scripts/report/lean-report.sh", "tools/lean-inspector/inspect.sh" })
+        {
+            var destination = Path.Combine(fixture.Path, relative);
+            Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
+            File.Copy(Path.Combine(TestRepositoryLayout.FindRoot(), relative), destination);
+        }
+        var result = Run(fixture.Path,
+            """
+            mkdir -p bin tools/scripts/lib
+            real_python="$(command -v python3)"
+            export FIXTURE_MEMORY="$1" FIXTURE_PYTHON="$real_python"
+            cat > bin/python3 <<'SH'
+            #!/bin/bash
+            exec "$FIXTURE_PYTHON" - 8 "$FIXTURE_MEMORY" '' ''
+            SH
+            cat > bin/dotnet <<'SH'
+            #!/bin/bash
+            printf 'threads=%s\n' "$LEAN_NUM_THREADS"
+            printf '<%s>\n' "$@"
+            exit 97
+            SH
+            printf '#!/bin/bash\nexit 98\n' > bin/lake-wrapper
+            # The pair boundary is stubbed; both canonical entry scripts and
+            # the capacity adapter run unchanged. Stop at writer dispatch.
+            cat > tools/scripts/lean-report-pair.sh <<'SH'
+            #!/bin/bash
+            [[ "$1" == --producer && "$3" == --lake-bin && "$5" == --candidate-root && "$7" == --candidate-output ]] || exit 99
+            export LAKE_BIN="$4"
+            exec /bin/bash "$2" --repository "$6" --output "$8"
+            SH
+            cat > tools/scripts/report/lean-report-input.sh <<'SH'
+            #!/bin/bash
+            digest=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+            if [[ "$1" == compatibility-token ]]; then
+              printf '%s\n' "$digest"
+            else
+              printf '%s %s %s %s\n' "$digest" "$digest" "$digest" "$digest"
+            fi
+            SH
+            printf 'resource_observe() { :; }\n' > tools/scripts/lib/resource-observation-lib.sh
+            touch tools/lean-inspector/Inspector.lean
+            chmod +x bin/* tools/scripts/lean-report-pair.sh tools/scripts/report/lean-report-input.sh tools/scripts/worktree/lean-cache-run.sh
+            export PATH="$PWD/bin:$PATH" LAKE_BIN="$PWD/bin/lake-wrapper" LEAN_NUM_THREADS=999 CI=true
+            /bin/bash tools/scripts/report/lean-report.sh
+            """, memory.ToString());
+        Assert.Equal(expectedExit, result.ExitCode);
+        // inspect.sh replays failed phase output to stderr, including the
+        // diagnostic exit from the writer stub in the sufficient case.
+        Assert.Contains("LEAN_INSPECTOR_FAILED phase=build", result.StandardError);
+        if (expectedExit == 97)
+        {
+            Assert.Contains("threads=2", result.StandardError);
+            Assert.Contains("<worktree>\n<with-cache-writer>\n<-->\n", result.StandardError);
+            Assert.Contains("/bin/lake-wrapper>\n<build>", result.StandardError);
+            Assert.Contains("LEAN_JOBS_DERIVATION", result.StandardError);
+        }
+        else
+        {
+            Assert.Contains("LEAN_JOBS_CAPACITY_INSUFFICIENT", result.StandardError);
+            Assert.DoesNotContain("<with-cache-writer>", result.StandardError);
+        }
     }
 
     private static string Receipt(int cores, long memory, int qCpu, long qMem, int jobs) =>

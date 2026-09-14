@@ -145,9 +145,12 @@ PY
 }
 
 lean_cache_run() {
-  local root receipt command="${1:-}"
+  local root receipt
   root="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd -P)" || return
-  if [[ "${command##*/}" == lake && "${2:-}" == build ]]; then
+  # Canonical callers express build intent as EXECUTABLE build TARGETS... .
+  # LAKE_BIN accepts any executable name (including wrappers and symlinks).
+  # Guard that intent before writer dispatch, independently of the spelling.
+  if [[ "${2:-}" == build ]]; then
     receipt="$(lean_jobs_derive)" || return
     printf '%s\n' "$receipt" >&2
     # Lake 5.0.0 / Lean 4.33.0 has no build -j option. Its runtime task pool
