@@ -1305,6 +1305,10 @@ private partial def statementIdentityForm (env : Environment) (expression : Expr
   if (naturalLiteral expression).isSome ||
       expression.isConstOf ``Bool.true || expression.isConstOf ``Bool.false then
     return some expression
+  if let .const name _ := head then
+    if (env.find? name).any (fun info => match info with
+        | .ctorInfo c => c.induct == ``Nat
+        | _ => false) then return some expression
   match ← statementStep env expression with
   | .recognized evidence => return some evidence.matchedType
   | .next next => statementIdentityForm env next
@@ -1337,6 +1341,7 @@ private partial def statementApart (env : Environment) (left right : Expr) :
   let kernelHead := fun expression => expression.getAppFn.constName?.filter fun name =>
     (env.find? name).any fun info => match info with
       | .inductInfo _ => true
+      | .ctorInfo c => c.induct == ``Nat
       | _ => false
   let metadataFamily := fun e =>
     if e.getAppFn.isConstOf `Multiset.Nodup then some ``List.Pairwise
@@ -2229,5 +2234,66 @@ def templateArgumentsCurrent (theoremName : Name) (arguments : Array Expr)
       return .error "unclassified_form:dtr.argument_audit"
     for name in result.inputNames do inputs := inputs.insert name
   return .ok (inputs.toArray, min 524288 availableWork - remaining)
+
+-- Enrollment supplies the positive E2 grammar judgment. Consumption checks
+-- only statement identity in the retained, instantiated syntax and inferred
+-- proof types. Unknown identity remains unclassified; proof implementations stop.
+private partial def retainedTypeIdentity (env : Environment) (expression : Expr) : WalkM Unit := do
+  unless ← chargeTraversal do return
+  if let .const name _ := expression.getAppFn then directConstant env name
+  if let .proj name _ _ := expression then directProjection env name
+  let some type ← occurrenceType expression | return
+  let proposition := type == .sort .zero
+  let some proof ← boundedMeta (Meta.isProp type) `retained_proof_type | return
+  if proposition || proof then
+    let candidate := if proposition then expression else type
+    if candidate.equal (← get).statement then
+      modify fun s => { s with forbidden := true }
+    else if (← checkedStatementType env candidate).isNone then
+      noteUnclassified ⟨"unresolved_statement_identity", (← get).currentFirst,
+        "template", (← get).currentOrigin⟩
+  if proof then return
+  let child := retainedTypeIdentity env
+  match expression with
+  | .app f a => child f; child a
+  | .lam name domain body bi | .forallE name domain body bi =>
+    child domain
+    Meta.withLocalDecl name bi domain fun x => do
+      let some body ← substitute body #[x] | return
+      child body
+  | .letE _ type value body _ =>
+    child type
+    child value
+    let some body ← substitute body #[value] | return
+    child body
+  | .mdata _ body | .proj _ _ body => child body
+  | .mvar _ | .bvar _ => noteIncomplete `open_type_obligation `instantiated_type
+  | _ => pure ()
+
+/-- Consume retained type obligations in their original lexical contexts. This
+entry runs the occurrence-relative type judgment, never a template body or proof
+implementation. All obligations share one lower-only traversal budget. -/
+def templateTypesCurrent (theoremName : Name) (types : Array (Expr × Array Expr))
+    (availableWork : Nat) : CoreM (Except String Nat) := do
+  let env ← getEnv
+  let some info := env.find? theoremName
+    | return .error "incomplete_closure:dtr.instantiated_type"
+  let statement := info.type
+  let budget := min (min 524288 availableWork) (provenanceExpressionLimit.get (← getOptions))
+  let action : WalkM Unit := do
+    statementAliases env
+    for (type, context) in types do
+      let checked ← inBinderContext context fun locals => do
+        let some type ← substitute type locals | return false
+        retainedTypeIdentity env type
+        return true
+      if checked != some true then noteIncomplete `type_obligation `instantiated_type
+  let (_, state) ← Meta.MetaM.run' <| action.run {
+    theoremName, currentFirst := theoremName, currentOrigin := theoremName,
+    statement, decision := mkApp (mkConst ``Decidable) statement, exprFuel := budget }
+  if state.incomplete then return .error "incomplete_closure:dtr.instantiated_type"
+  if state.forbidden then return .error "forbidden_dependency:dtr.instantiated_type"
+  if state.unclassified.isSome then return .error "unclassified_form:dtr.instantiated_type"
+  return .ok (budget - state.exprFuel)
 
 end LeanInformationAudit.RegistrationGates

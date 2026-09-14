@@ -1018,7 +1018,7 @@ def bindingIdentity (statementIdentity : String) (certificate : TemplateBindingC
 
 def PlanNode.toExpr : PlanNode → Expr
   | .atom e | .supplied e | .proofLeaf _ e => e
-  | .expanded _ checked => checked.toExpr
+  | .expanded _ checked | .typeNode checked => checked.toExpr
   | .app f a => .app f.toExpr a.toExpr
   | .lam t b bi => .lam .anonymous t.toExpr b.toExpr bi
   | .forallE t b bi => .forallE .anonymous t.toExpr b.toExpr bi
@@ -1036,6 +1036,7 @@ private partial def wirePlan (params : List Name) (depth : Nat) (plan : PlanNode
   | .supplied _ => throw "incomplete_closure:E7.supplied_in_static_plan"
   | .expanded e body => emit "expanded"; raw e; child body
   | .proofLeaf type e => emit "proof-leaf"; raw type; raw e
+  | .typeNode checked => emit "type-node"; child checked
   | .app f a => emit "application"; child f; child a
   | .lam t b bi => emit "lambda"; emit (reprStr bi); child t; child b
   | .forallE t b bi => emit "forall"; emit (reprStr bi); child t; child b
@@ -1277,6 +1278,7 @@ private def PlanNode.abstractAt (x : Expr) (depth : Nat := 0) : PlanNode → Pla
   | .supplied e => .supplied (abstractLocal e x depth)
   | .expanded raw checked => .expanded (abstractLocal raw x depth) (checked.abstractAt x depth)
   | .proofLeaf t e => .proofLeaf (abstractLocal t x depth) (abstractLocal e x depth)
+  | .typeNode p => .typeNode (p.abstractAt x depth)
   | .app f a => .app (f.abstractAt x depth) (a.abstractAt x depth)
   | .lam t b bi => .lam (t.abstractAt x depth) (b.abstractAt x (depth + 1)) bi
   | .forallE t b bi => .forallE (t.abstractAt x depth) (b.abstractAt x (depth + 1)) bi
@@ -1321,7 +1323,7 @@ private def dependency (info : ConstantInfo) : CompileM Unit := do
   let .ok (typeId, typeBytes) := rawIdentity info.levelParams info.type state.remaining
     | throwError "incomplete_closure:E7.type_identity"
   charge typeBytes
-  let (bodyId, bodyBytes) ← match info.value? with
+  let (bodyId, bodyBytes) ← if ← isProp info.type then pure ("", 0) else match info.value? with
     | some body =>
       let .ok pair := rawIdentity info.levelParams body (← get).remaining
         | throwError "incomplete_closure:E7.body_identity"
@@ -1400,6 +1402,14 @@ private def staticIdentity (e : Expr) : CompileM Unit := do
 mutual
 private partial def compileExpr (e : Expr) (depth : Nat := 0)
     (typePosition : Bool := false) (templateBinders : Nat := 0) : CompileM PlanNode := do
+  let checked ← compileNode e depth typePosition templateBinders
+  if ← isType e then
+    rule "E7.type_obligation"
+    return .typeNode checked
+  return checked
+
+private partial def compileNode (e : Expr) (depth : Nat)
+    (typePosition : Bool) (templateBinders : Nat) : CompileM PlanNode := do
   charge
   if depth > 256 then throwError "incomplete_closure:E8.depth"
   if e.hasMVar then throwError "incomplete_closure:E7.metavariable"
@@ -1409,6 +1419,7 @@ private partial def compileExpr (e : Expr) (depth : Nat := 0)
   if (← isProof e) then
     let type ← inferType e
     let _ ← compileExpr type (depth + 1) true
+    if let some name := e.getAppFn.constName? then dependency (← getConstInfo name)
     rule "E5.proof_leaf"
     return .proofLeaf type e
   let child := fun value => compileExpr value (depth + 1) typePosition
@@ -1809,6 +1820,7 @@ private partial def liftPlan (p : PlanNode) (amount : Nat) (cutoff : Nat := 0) :
   | .atom e => return .atom (raw e)
   | .supplied e => return .supplied e
   | .proofLeaf t e => return .proofLeaf (raw t) (raw e)
+  | .typeNode p => return .typeNode (← liftPlan p amount cutoff)
   | .expanded e b => return .expanded (raw e) (← liftPlan b amount cutoff)
   | .app f a => return .app (← liftPlan f amount cutoff) (← liftPlan a amount cutoff)
   | .lam t b bi => return .lam (← liftPlan t amount cutoff) (← liftPlan b amount (cutoff + 1)) bi
@@ -1830,6 +1842,7 @@ private partial def substitute (p : PlanNode) (arg : PlanNode) (depth : Nat := 0
   | .atom e => return .atom (← raw e)
   | .supplied e => return .supplied e
   | .proofLeaf t e => return .proofLeaf (← raw t) (← raw e)
+  | .typeNode p => return .typeNode (← substitute p arg depth)
   | .expanded e b => return .expanded (← raw e) (← substitute b arg depth)
   | .app f a => return .app (← substitute f arg depth) (← substitute a arg depth)
   | .lam t b bi => return .lam (← substitute t arg depth) (← substitute b arg (depth + 1)) bi
@@ -1844,6 +1857,7 @@ private def levels (params : List Name) (values : List Level) : PlanNode → Pla
   | .atom e => .atom (e.instantiateLevelParams params values)
   | .supplied e => .supplied e
   | .proofLeaf t e => .proofLeaf (t.instantiateLevelParams params values) (e.instantiateLevelParams params values)
+  | .typeNode p => .typeNode (levels params values p)
   | .expanded e b => .expanded (e.instantiateLevelParams params values) (levels params values b)
   | .app f a => .app (levels params values f) (levels params values a)
   | .lam t b bi => .lam (levels params values t) (levels params values b) bi
@@ -1855,7 +1869,7 @@ private def levels (params : List Name) (values : List Level) : PlanNode → Pla
 private partial def applyPlan (plan : PlanNode) (arg : PlanNode) : CompareM PlanNode := do
   debit
   match plan with
-  | .expanded _ body => applyPlan body arg
+  | .expanded _ body | .typeNode body => applyPlan body arg
   | .lam _ body _ => substitute body arg
   | _ => throwError "unclassified_form:dtr.unsaturated_plan"
 
@@ -1936,13 +1950,43 @@ private partial def checkedHead (plan : PlanNode) (depth : Nat := 0) : CompareM 
   debit
   if depth > 256 then throwError "incomplete_closure:E8.extraction_depth"
   match plan with
-  | .expanded _ body => checkedHead body (depth + 1)
+  | .expanded _ body | .typeNode body => checkedHead body (depth + 1)
   | .app f a =>
     let f ← checkedHead f (depth + 1)
     match f with
     | .lam _ body _ => checkedHead (← substitute body a) (depth + 1)
     | _ => return .app f a
   | _ => return plan
+
+/-- Read already checked type/proof-leaf nodes after slot substitution. Plan
+lambda applications expose their instantiated obligations; supplied nodes are
+never inspected or normalized by this consumer. -/
+private partial def retainedTypes (plan : PlanNode) (context : Array Expr := #[])
+    (depth : Nat := 0) : CompareM (Array (Expr × Array Expr)) := do
+  debit
+  if depth > 256 then throwError "incomplete_closure:E8.type_obligation_depth"
+  let child := fun p => retainedTypes p context (depth + 1)
+  let obligation := fun type : Expr => (type, if type.hasLooseBVars then context else #[])
+  match plan with
+  | .atom _ | .supplied _ => return #[]
+  | .proofLeaf type _ => return #[obligation type]
+  | .typeNode checked => return #[obligation checked.toExpr] ++ (← child checked)
+  | .expanded _ checked => child checked
+  | .app f a =>
+    let head ← checkedHead f
+    if let .lam _ body _ := head then
+      return ← child (← substitute body a)
+    return (← child f) ++ (← child a)
+  | .lam domain body _ | .forallE domain body _ =>
+    let type := domain.toExpr
+    return #[obligation type] ++ (← child domain) ++
+      (← retainedTypes body (context.push type) (depth + 1))
+  | .letE type value body _ =>
+    -- Substitution here discharges dependent type obligations only. The
+    -- comparator still retains the original let/value/body without zeta.
+    return #[obligation type.toExpr] ++ (← child type) ++ (← child value) ++
+      (← child (← substitute body value))
+  | .mdata _ body | .proj _ _ body => child body
 
 private structure MatchContext where
   theoremName : Name
@@ -1983,6 +2027,7 @@ private partial def matchesPlan (context : MatchContext) (plan : PlanNode) (actu
   let child := fun p e => matchesPlan context p e (depth + 1)
   -- A supplied argument is an immutable comparison leaf. In particular, an
   -- apparent projection or forwarding application inside it is not reduced.
+  if let .typeNode checked := plan then return ← child checked actual
   if let .supplied raw := plan then return ← equalRaw raw actual
   if let some projection ← fixedProjection actual then
     if realizationInterfaces.contains projection.typeName then
@@ -2023,6 +2068,7 @@ private partial def matchesPlan (context : MatchContext) (plan : PlanNode) (actu
               unless ← equalRaw fields[i]! projection.parameters[i]! do parametersMatch := false
             if parametersMatch then return ← child plan fields[info.numParams + projection.index]!
   match plan with
+  | .typeNode checked => child checked actual
   | .expanded raw body =>
     if ← equalRaw raw actual then return true
     child body actual
@@ -2115,11 +2161,21 @@ private def validate (event : TemplateOccurrenceEvent) (descriptor : Expr) : Met
     debit plan.serializedBytes
     let mut body := levels plan.levelParams universeArgs plan.plan
     let mut type := levels plan.levelParams universeArgs plan.typePlan
+    let mut obligations : Array (Expr × Array Expr) := #[]
     for argument in arguments do
       body ← applyPlan body (.supplied argument)
-      match type with
-      | .forallE _ tail _ => type ← substitute tail (.supplied argument)
+      match ← checkedHead type with
+      | .forallE domain tail _ =>
+        obligations := obligations.push (domain.toExpr, #[])
+        type ← substitute tail (.supplied argument)
       | _ => throwError "unclassified_form:dtr.descriptor_telescope"
+    obligations := obligations.push (type.toExpr, #[])
+    obligations := obligations ++ (← retainedTypes type) ++ (← retainedTypes body)
+    let typeWork ← match ← RegistrationGates.templateTypesCurrent event.key.theoremName
+        obligations (← get).remaining with
+      | .ok work => pure work
+      | .error diagnostic => throwError diagnostic
+    debit typeWork
     let context : MatchContext := {
       theoremName := event.key.theoremName
       selected := name

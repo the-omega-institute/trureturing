@@ -31,6 +31,7 @@ inductive PlanNode where
   | expanded (raw : Expr) (checked : PlanNode)
   | supplied (raw : Expr)
   | proofLeaf (type raw : Expr)
+  | typeNode (checked : PlanNode)
   deriving Inhabited
 
 structure DependencyIdentity where
@@ -262,6 +263,7 @@ private partial def plan (depth : Nat := 0) : M PlanNode := do
   | "body" => return .atom (← raw)
   | "expanded" => return .expanded (← raw) (← child)
   | "proof-leaf" => return .proofLeaf (← raw) (← raw)
+  | "type-node" => return .typeNode (← child)
   | "application" => return .app (← child) (← child)
   | "lambda" =>
     let bi ← binderInfo
