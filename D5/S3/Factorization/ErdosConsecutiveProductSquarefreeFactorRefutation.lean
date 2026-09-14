@@ -32,7 +32,7 @@ def u (x k : ℕ) : ℕ :=
 def claim : Prop :=
   ∀ x : ℕ, 1 ≤ x → x ≠ 23 → ∃ k : ℕ, 1 ≤ k ∧ u x k < v x k
 
-private theorem finite_cases (k : ℕ) (hk : 1 ≤ k) (hk' : k ≤ 1) :
+private theorem finite_cases (k : ℕ) (hk : 1 ≤ k) (hk' : k ≤ 30) :
     v 47 k < u 47 k := by
   have hf : (P 47 k).factorization =
       ∑ i ∈ Finset.Icc 1 k, (47 + i).factorization := by
@@ -49,7 +49,8 @@ private theorem finite_cases (k : ℕ) (hk : 1 ≤ k) (hk' : k ≤ 1) :
         simp only [Finset.sum_insert hi, Finset.biUnion_insert, Finsupp.support_add_eq_union,
           Nat.support_factorization, ih]
   simp only [v, u, ← Nat.support_factorization, hf, hs]
-  interval_cases k <;> decide +kernel
+  interval_cases k
+  all_goals decide +kernel
 
 private theorem tail_cases (k : ℕ) (hk : 119 ≤ k) : v 47 k < u 47 k := by
   have hn : P 47 k ≠ 0 := by
