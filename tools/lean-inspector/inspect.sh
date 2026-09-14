@@ -249,6 +249,10 @@ invoke_inspector() {
 }
 
 DELTA_SCRIPT="$INSPECTOR_DIR/delta.py"
+python3 "$INSPECTOR_DIR/runtime_identity.py" \
+  --repository "$REPOSITORY" --lake "$LAKE" --validate-only || exit 2
+# Lake environment queries initialize .lake too; provision before the first one.
+run_phase cache-bootstrap "$CACHE_RUN" "$LAKE" --version || exit $?
 runtime_sha256="$(python3 "$INSPECTOR_DIR/runtime_identity.py" \
   --repository "$REPOSITORY" --lake "$LAKE")" || exit 2
 cache_partition="$("$REPOSITORY/tools/scripts/worktree/lean-cache-input.sh" partition-path --repository "$REPOSITORY")" || exit 2

@@ -26,13 +26,14 @@ public sealed partial class LeanInspectorScriptTests
         var (result, calls) = RunPlannedInspector(temporary.Path, mode);
 
         Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
-        Assert.Equal("runtime-prefix", calls[0][0]);
-        Assert.Equal("plan", calls[1][0]);
+        Assert.Equal("cache-bootstrap", calls[0][0]);
+        Assert.Equal("runtime-prefix", calls[1][0]);
+        Assert.Equal("plan", calls[2][0]);
         var builds = calls.Where(static call => call[0] == "build").ToArray();
         var inspections = calls.Where(static call => call[0] == "inspect").ToArray();
         if (mode is "reuse" or "delta-empty")
         {
-            Assert.Equal(new[] { "runtime-prefix", "plan", "merge" }, calls.Select(static call => call[0]));
+            Assert.Equal(new[] { "cache-bootstrap", "runtime-prefix", "plan", "merge" }, calls.Select(static call => call[0]));
             Assert.Empty(builds);
             Assert.Empty(inspections);
             Assert.Equal("baseline", File.ReadAllText(Path.Combine(temporary.Path, "report.json")));
@@ -49,6 +50,7 @@ public sealed partial class LeanInspectorScriptTests
     }
 
     [Theory]
+    [InlineData("cache-bootstrap", false)]
     [InlineData("utility-input-build", false)]
     [InlineData("utility-input", false)]
     [InlineData("utility-input", true)]
@@ -63,8 +65,8 @@ public sealed partial class LeanInspectorScriptTests
 
         Assert.Equal(17, result.ExitCode);
         string[] phases = prebuilt
-            ? ["runtime-prefix", "plan", "utility-input", "build", "inspect", "compact"]
-            : ["runtime-prefix", "plan", "utility-input-build", "utility-input", "build", "inspect", "compact"];
+            ? ["cache-bootstrap", "runtime-prefix", "plan", "utility-input", "build", "inspect", "compact"]
+            : ["cache-bootstrap", "runtime-prefix", "plan", "utility-input-build", "utility-input", "build", "inspect", "compact"];
         Assert.Equal(phases.Take(Array.IndexOf(phases, failedPhase) + 1), calls.Select(static call => call[0]));
         AssertNoReport(temporary.Path, result);
     }
@@ -95,7 +97,7 @@ public sealed partial class LeanInspectorScriptTests
         var (result, calls) = RunPlannedInspector(temporary.Path, "fallback", "build", alwaysFail: true);
 
         Assert.Equal(17, result.ExitCode);
-        Assert.Equal(new[] { "runtime-prefix", "plan", "utility-input-build", "utility-input", "build" },
+        Assert.Equal(new[] { "cache-bootstrap", "runtime-prefix", "plan", "utility-input-build", "utility-input", "build" },
             calls.Select(static call => call[0]));
         AssertNoReport(temporary.Path, result);
     }
@@ -121,6 +123,10 @@ public sealed partial class LeanInspectorScriptTests
     [Fact]
     public void ReportStagingDoesNotPreemptColdCacheProvisioning() =>
         LeanSeedProcessContract.Run("InspectorTests.test_report_staging_does_not_preempt_cold_cache_provisioning");
+
+    [Fact]
+    public void ColdInspectorRestoresReleaseBeforeLakeInitializesConfig() =>
+        LeanSeedProcessContract.Run("InspectorTests.test_cold_inspector_restores_release_before_lake_initializes_config");
 
     [Fact]
     public void DeclaredRuntimeDependenciesInvalidateModuleResults() =>
@@ -277,7 +283,7 @@ public sealed partial class LeanInspectorScriptTests
             args = sys.argv[1:]
             name = pathlib.Path(sys.argv[0]).name
             if name == 'lean':
-                phase = 'runtime-prefix' if '--print-prefix' in args else 'build' if args[0] == 'build' else 'inspect'
+                phase = 'cache-bootstrap' if args == ['--version'] else 'runtime-prefix' if '--print-prefix' in args else 'build' if args[0] == 'build' else 'inspect'
             elif name == 'dotnet':
                 phase = 'utility-input-build' if args[0] == 'build' else 'utility-input'
             else:

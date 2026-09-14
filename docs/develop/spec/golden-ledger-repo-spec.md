@@ -294,7 +294,7 @@ engineering 与 Scribe 不按 base 选测。当前项目与检查义务由候选
 
 **缓存与增量报告。** 结构化读取 `lake-manifest.json` 中 mathlib 的 **resolved revision**。Lean 依赖、项目构建与报告缓存共用该逻辑分区,二进制另按 OS/arch 隔离;tag、请求的 ref、完整配置/源码指纹与 commit SHA 均不得筛选兼容种子,`elan` 安装缓存独立。Actions 以 run ID/attempt 区分不可覆盖的快照实例,后缀不参与兼容判定。PR 只 restore,dev push 仅在对应产出成功后 save,并发 run 不覆盖彼此快照。判官构建、测试与检查证据按登记材料接受并增量复用,缓存运输状态不代替其验证。
 
-**集成发布验证。** `ci-publication-verify.yml` 仅由 `integration-ci-*-tests` 原生 push 的发布程序、配置和 workflow 路径触发,独立于 required CI;普通内容与 no-resource 文档不增加发布作业。路径过滤只选择该验证事件,不代替 required CI 的完整 FILEMAP 规划。两个作业使用生产对应 runner 和时限,truth 只读,cache 仅为隔离测试发布申请 contents-write,二者以 actions-read 查询真实运行身份。truth 调上述显式来源验证入口;源 push 尚未成功时须拒绝,在同 SHA 的 required push 成功后原生 rerun 验证,不得改写事件或借其它提交通过。
+**集成发布验证。** `ci-publication-verify.yml` 仅由 `integration-ci-*-tests` 原生 push 的发布程序、配置和 workflow 路径触发,独立于 required CI;普通内容与 no-resource 文档不增加发布作业。路径过滤只选择该验证事件,不代替 required CI 的完整 FILEMAP 规划。cache 作业使用生产对应 runner 和时限,仅为隔离测试发布申请 contents-write,以 actions-read 查询真实运行身份。truth 作业当前按用户要求临时停用,不申请离线 runner,停用不计为验证成功；恢复后仍使用生产对应 runner/时限与只读权限,调用上述显式来源验证入口;源 push 尚未成功时须拒绝,在同 SHA 的 required push 成功后原生 rerun 验证,不得改写事件或借其它提交通过。
 
 缓存验证用既有 `make lean-cache-to-github-without-mathlib` 的 `LEAN_CACHE_MODE=verification LEAN_CACHE_SOURCE_REF=<ref> LEAN_CACHE_SOURCE_COMMIT=<sha>` 参数,只接受真实 integration push 与干净 HEAD,核对 API 的仓库、受保护来源、run/attempt/ref/SHA。它复用生产 build、归档、manifest、分片、上传及恢复实现,标签固定为独立的 `lean-cache-verify-v1-<partition>-<run>-<attempt>`;上传后必须向空的私有目标完整下载、核验并安装,才能报告 published。对应 fetch 参数仅消费本轮精确标签,不受 Actions 命中短路,不替换已有 warm 目标。验证不覆盖生产标签、不执行生产 prune,生产 fallback 不选择验证标签。它证明集成事件下的发布运输与来源消费,不冒领 schedule/dev、生产 prune、truth assembly 或 OCI 发布已验证;这些边界仍须在相应真实事件核验。
 
@@ -304,7 +304,7 @@ engineering 与 Scribe 不按 base 选测。当前项目与检查义务由候选
 
 可选缓存制作与保存共用早于 job 上限的截止时间,按真实 run/attempt/job 起始时间绑定;元数据不可用或时间不足则跳过缓存,不撤销已完成的业务判词。每层制作后立即保存,优先报告与检查证据,再处理项目与依赖层;不得让大层制作阻塞小层全部落存。快照只读取已登记层的材料,复制时校验字节与 mode,失败只清理本次私有 staging。缓存时限不改变检查时限,外部取消仍保留取消语义。
 
-需要 Lean/report 的路由在命中后仍进入共用增量调度入口,缓存只提供起点。调度先核对登记输入、运行时身份与完整报告材料,按有效增量计划决定实际工作:无待检模块时仍执行报告复用与候选绑定,不启动 Lake build 或 Inspector;运行时身份所需的只读工具链查询保留。有待检模块时用显式 `+Module` 目标交给 Lake 构建其依赖,全量重检时构建完整模块集。只有种子或增量合并材料不可用才允许全量生产;真实 utility/build/inspect/compact 失败保留原始退出码并阻断,不得重试全量后覆盖该失败。报告增量器保留模块增删、source hash、反向依赖闭包与材料完整性失效检查;这是增量生产验证,不作为 CI 归属或输入的动态发现器。producer 兼容性只取 A14.9 的显式版本 token；代码字节变化不自动改变该 token。版本、Lean 选项或显式登记的实际语义环境变化在增量器内触发必要重算,不得进入远端兼容分区。相同 mathlib 下源码变化只重算受影响闭包;不影响登记语义输入的 metadata 变化为零 Lean 模块重编、零报告模块重检;同环境增量结果必须等于干净生产。
+需要 Lean/report 的路由在命中后仍进入共用增量调度入口,缓存只提供起点。候选报告配置与 runtime 登记通过结构校验后,报告侧首次调用 Lake（包括查询实际工具链的 `lake env`）之前必须经过共用缓存 reader 初始化；工具链查询可能生成 `.lake/config`,不得让该副作用先于缓存入口而误入缺 stamp 的既有目录分支、跳过可用 Release 种子。已有目录与缺 stamp 的保护不放宽；缓存初始化本身不构成 build、报告或检查成功。调度再核对运行时身份与完整报告材料,按有效增量计划决定实际工作:无待检模块时仍执行报告复用与候选绑定,不启动 Lake build 或 Inspector;运行时身份所需的工具链查询保留。有待检模块时用显式 `+Module` 目标交给 Lake 构建其依赖,全量重检时构建完整模块集。只有种子或增量合并材料不可用才允许全量生产;真实 cache-bootstrap/utility/build/inspect/compact 失败保留原始退出码并阻断,不得重试全量后覆盖该失败。报告增量器保留模块增删、source hash、反向依赖闭包与材料完整性失效检查;这是增量生产验证,不作为 CI 归属或输入的动态发现器。producer 兼容性只取 A14.9 的显式版本 token；代码字节变化不自动改变该 token。版本、Lean 选项或显式登记的实际语义环境变化在增量器内触发必要重算,不得进入远端兼容分区。相同 mathlib 下源码变化只重算受影响闭包;不影响登记语义输入的 metadata 变化为零 Lean 模块重编、零报告模块重检;同环境增量结果必须等于干净生产。
 
 **验收矩阵。** 程序行为先测后改,不新增 workflow 文本形状测试。至少覆盖下列放行与阻断边界,以实际义务、判词与材料验证,不只比较退出码:
 

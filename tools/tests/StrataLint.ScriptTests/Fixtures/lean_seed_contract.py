@@ -223,7 +223,8 @@ class PairFixture(PartitionFixture):
         self.addCleanup(self.supervisor.cleanup)
         shutil.copytree(ROOT / "tools/scripts", self.root / "tools/scripts",
                         ignore=shutil.ignore_patterns("bin", "obj", "__pycache__"))
-        shutil.copytree(ROOT / "tools/lean-inspector", self.root / "tools/lean-inspector")
+        shutil.copytree(ROOT / "tools/lean-inspector", self.root / "tools/lean-inspector",
+                        ignore=shutil.ignore_patterns("__pycache__"))
         write(self.root / "Meta/lean-report.toml",
               'compatibility_version = 1\nsource_patterns = ["Trureturing.lean", "D5/**/*.lean"]\n')
         self.producer = self.root / "tools/lean-inspector/inspect.sh"
@@ -609,6 +610,63 @@ class InspectorTests(PairFixture, unittest.TestCase):
         self.output = self.root / ".lake/build/stratalint/raw-lean-report.json"
         result = self.pair(LAKE_EXPECT_NO_LAKE="1")
         self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+
+    def test_cold_inspector_restores_release_before_lake_initializes_config(self):
+        # Exercise the real reader/EnsureLocked. Only Lake and Release transport
+        # are private processes; the seed must survive and feed the build.
+        reader = self.root / "tools/scripts/worktree/lean-cache-run.sh"
+        shutil.copyfile(ROOT / "tools/scripts/worktree/lean-cache-run.sh", reader)
+        write(self.root / ".gitignore", ".lake/\n**/__pycache__/\n**/bin/\n**/obj/\n")
+        write(self.root / "tools/scripts/worktree/lean-cache-publish.sh", '''#!/bin/bash
+set -euo pipefail
+exec python3 "$PWD/fixture-release.py" "$@"
+''')
+        write(self.root / "fixture-release.py", '''
+import json, pathlib, sys
+root = pathlib.Path.cwd()
+assert sys.argv[1:] == ["fetch", "--repository", str(root), "--writer-owned"]
+manifest = json.loads((root / "lake-manifest.json").read_text())
+assert manifest["packages"][0]["rev"] == "0123456789abcdef0123456789abcdef01234567"
+with (root / "release-fetches").open("a") as log: log.write("same-partition\\n")
+olean = root / ".lake/build/lib/lean/D5/A.olean"
+olean.parent.mkdir(parents=True, exist_ok=True)
+olean.write_text("release project seed")
+print('LEAN_CACHE_FETCH ' + json.dumps({"status":"unpacked", "mode":"partition",
+    "producer_commit_sha":"1111111111111111111111111111111111111111", "workflow_run_id":"1"}))
+''')
+        subprocess.run(["git", "-C", str(self.root), "add", "."], check=True, capture_output=True)
+        subprocess.run(["git", "-C", str(self.root), "-c", "user.name=Fixture", "-c",
+            "user.email=fixture@example.invalid", "commit", "--quiet", "-m", "fixture"],
+            check=True, capture_output=True)
+        producer = ROOT / "tools/StrataLint.Lean/bin/Release/net10.0/StrataLint.Lean.dll"
+        self.assertTrue(producer.is_file(), "build the registered candidate Lean producer before this contract")
+        self.assertFalse((self.root / ".lake").exists())
+        result = self.pair(STRATALINT_LEAN_PRODUCER_DLL=str(producer),
+                           LAKE_INITIALIZES_CONFIG="1")
+        diagnostics = result.stdout + result.stderr
+        self.assertEqual(0, result.returncode, diagnostics)
+        fetches = self.root / "release-fetches"
+        self.assertEqual(["same-partition"], fetches.read_text().splitlines() if fetches.exists() else [], diagnostics)
+        self.assertEqual("release project seed", (self.root / ".lake/build/lib/lean/D5/A.olean").read_text())
+        self.assertEqual(["reused"], (self.root / "project-builds").read_text().splitlines(), diagnostics)
+        self.assertEqual([{"seed_present": True, "release_fetches": 1}],
+            [json.loads(line) for line in (self.root / "project-build-observations").read_text().splitlines()], diagnostics)
+        bootstrap = pathlib.Path(str(self.output) + ".logs/cache-bootstrap.stdout.log")
+        receipts = [json.loads(line.removeprefix("LEAN_CACHE "))
+                    for line in bootstrap.read_text().splitlines() if line.startswith("LEAN_CACHE ")]
+        self.assertEqual(1, len(receipts))
+        self.assertEqual("unpacked", receipts[0]["archive_status"])
+        self.assertEqual(0, self.report_input("verify").returncode)
+        before = self.output.read_bytes()
+        commands = (self.root / "lake-runs").read_text().splitlines()
+        second = self.pair(STRATALINT_LEAN_PRODUCER_DLL=str(producer), LAKE_INITIALIZES_CONFIG="1")
+        self.assertEqual(0, second.returncode, second.stdout + second.stderr)
+        self.assertIn("LEAN_REPORT_DELTA mode=reuse changed=0 added=0 removed=0 recheck=0", second.stdout)
+        self.assertEqual(before, self.output.read_bytes())
+        new_commands = (self.root / "lake-runs").read_text().splitlines()[len(commands):]
+        self.assertFalse(any(command.startswith("build") or "--run" in command for command in new_commands), new_commands)
+        self.assertEqual(["same-partition"], fetches.read_text().splitlines())
+        self.assertEqual("release project seed", (self.root / ".lake/build/lib/lean/D5/A.olean").read_text())
 
     def test_declared_runtime_material_change_reinspects_inside_same_partition(self):
         first = self.pair()

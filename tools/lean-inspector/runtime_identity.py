@@ -45,10 +45,13 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--repository", type=pathlib.Path, required=True)
     parser.add_argument("--lake", required=True)
+    parser.add_argument("--validate-only", action="store_true")
     args = parser.parse_args()
     try:
         _, manifest = load_scope(args.repository.resolve(), "lean-report")
         runtime = runtime_registration(manifest)
+        if args.validate_only:
+            return 0
         # Resolve the installation actually selected by Lake; this does not select
         # dependencies. The manifest alone selects material within this root.
         prefix = subprocess.run([args.lake, "env", "lean", "--print-prefix"],

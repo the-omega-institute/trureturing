@@ -5,6 +5,25 @@ import json, os, pathlib, sys
 args = sys.argv[1:]
 root = pathlib.Path.cwd()
 with (root/"lake-runs").open("a") as log: log.write(" ".join(args)+"\\n")
+if args == ["--version"]: print("Lake version 5.0.0-src (Lean version 4.33.0)"); sys.exit(0)
+if os.environ.get("LAKE_INITIALIZES_CONFIG"):
+    if args == ["env", "lean", "--print-prefix"]:
+        config = root / ".lake/config/0"
+        config.mkdir(parents=True, exist_ok=True)
+        (config / "lakefile.olean").write_text("elaborated package configuration")
+        (config / "lakefile.olean.trace").write_text("package trace")
+    if args == ["exe", "cache", "get"]:
+        olean = root / ".lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Fixture.olean"
+        olean.parent.mkdir(parents=True, exist_ok=True)
+        olean.write_text("mathlib fixture cache")
+        sys.exit(0)
+    if args and args[0] == "build":
+        seeded = (root / ".lake/build/lib/lean/D5/A.olean").is_file()
+        with (root / "project-builds").open("a") as log: log.write(("reused" if seeded else "cold") + "\\n")
+        fetches = root / "release-fetches"
+        with (root / "project-build-observations").open("a") as log:
+            log.write(json.dumps({"seed_present": seeded,
+                "release_fetches": len(fetches.read_text().splitlines()) if fetches.exists() else 0}) + "\\n")
 if args and args[0] == "build":
     if os.environ.get("LAKE_EXPECT_NO_LAKE") and (root/".lake").exists(): sys.exit(29)
     sys.exit(int(os.environ.get("LAKE_BUILD_FAIL", "0")))

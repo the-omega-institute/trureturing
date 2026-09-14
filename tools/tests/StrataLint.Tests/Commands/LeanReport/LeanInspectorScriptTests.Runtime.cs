@@ -52,6 +52,34 @@ public sealed partial class LeanInspectorScriptTests
     }
 
     [Theory]
+    [InlineData("missing")]
+    [InlineData("malformed")]
+    [InlineData("duplicate")]
+    [InlineData("unknown-python")]
+    public void InvalidRuntimeRegistrationStopsBeforeCacheProvisioning(string defect)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new RuntimeFixture();
+        fixture.Edit(manifest =>
+        {
+            if (defect == "missing") manifest.AsObject().Remove("runtime");
+            if (defect == "malformed") manifest["runtime"] = "invalid runtime registration";
+            if (defect == "duplicate") manifest["runtime"]!["lean"]!.AsArray().Add("bin/lean");
+            if (defect == "unknown-python") manifest["runtime"]!["python"]!.AsArray().Add("version");
+        });
+        fixture.Write(CacheRunScript, "#!/bin/sh\nmkdir -p .lake\ntouch cache-provisioned\nexec \"$@\"\n");
+
+        var result = fixture.Inspect();
+
+        Assert.Equal(2, result.ExitCode);
+        Assert.Contains("runtime", Encoding.UTF8.GetString(result.StandardError), StringComparison.Ordinal);
+        Assert.False(Directory.Exists(Path.Combine(fixture.Root, ".lake")), "invalid registration reached cache provisioning");
+        Assert.False(File.Exists(Path.Combine(fixture.Root, "cache-provisioned")));
+        Assert.Empty(fixture.Commands);
+        Assert.False(File.Exists(fixture.Output));
+    }
+
+    [Theory]
     [InlineData("material", "lib/lean/Declared.olean")]
     [InlineData("glob", "lib/lean/libleanshared.*")]
     [InlineData("declaration", "runtime")]
@@ -193,6 +221,7 @@ public sealed partial class LeanInspectorScriptTests
             args = sys.argv[1:]
             root = pathlib.Path.cwd()
             with (root / "lake-runs").open("a") as log: log.write(" ".join(args) + "\n")
+            if args == ["--version"]: print("Lake fixture"); sys.exit(0)
             if args == ["build"]: sys.exit(0)
             if "--print-prefix" in args: print(pathlib.Path(__file__).parent.parent); sys.exit(0)
             if "--deps" in args: print(pathlib.Path(__file__).parent.parent / "lib/lean/Init.olean"); sys.exit(0)
