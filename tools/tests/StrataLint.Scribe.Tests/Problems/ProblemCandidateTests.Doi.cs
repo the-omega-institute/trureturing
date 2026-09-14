@@ -5,14 +5,60 @@ public sealed partial class ProblemCandidateTests
     [Theory]
     [InlineData("null", "http://example.org/source")]
     [InlineData("null", "/source")]
-    [InlineData("10.1000/sample", "https://example.org/source")]
-    public void LoaderRejectsInvalidOrAmbiguousUrlSources(string doi, string url) => WithCatalog(
+    [InlineData("10.1000/sample", "http://example.org/source")]
+    public void LoaderRejectsInvalidUrlSources(string doi, string url) => WithCatalog(
         new Dictionary<string, string>(StringComparer.Ordinal)
         {
-            ["sample-open-problem.md"] = DoiCandidate(doi).Replace(
-                $"doi: {doi}\n", $"doi: {doi}\nurl: {url}\n", StringComparison.Ordinal),
+            ["sample-open-problem.md"] = DoiAndUrlCandidate(doi, url),
         },
         root => Assert.Throws<FormatException>(() => ProblemCandidateCatalog.Load(root)));
+
+    [Fact]
+    public void LoaderKeepsBothDoiAndUrlSources() => WithCatalog(
+        new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            ["sample-open-problem.md"] = DoiAndUrlCandidate(
+                "10.1000/sample", "https://example.org/source"),
+        },
+        root =>
+        {
+            var candidate = Assert.Single(ProblemCandidateCatalog.Load(root).Candidates);
+            Assert.Equal("10.1000/sample", candidate.Doi!.Value);
+            Assert.Equal("https://example.org/source", candidate.Url!.AbsoluteUri);
+        });
+
+    [Theory]
+    [InlineData("10.1000/sample", "https://example.org/source")]
+    [InlineData("10.1000/sample", null)]
+    [InlineData("null", "https://example.org/source")]
+    public void ValidatorAcceptsCandidateSourcesCarriedByANoteWithDoiAndUrl(string doi, string? url) =>
+        WithRepository(
+            url is null ? DoiCandidate(doi) : DoiAndUrlCandidate(doi, url),
+            DoiAndUrlNote("10.1000/sample", "https://example.org/source"),
+            ["D5/S1/Phase/Basic"],
+            root => Assert.Empty(DescribeRepositoryValidator.Validate(root, [])),
+            ["D5/S1/Phase/Basic"]);
+
+    [Theory]
+    [InlineData("10.1000/sample", "https://example.org/different")]
+    [InlineData("10.1000/different", "https://example.org/source")]
+    public void ValidatorRejectsCandidateWhoseSecondSourceDisagreesWithTheNote(string doi, string url) =>
+        WithRepository(
+            DoiAndUrlCandidate(doi, url),
+            DoiAndUrlNote("10.1000/sample", "https://example.org/source"),
+            ["D5/S1/Phase/Basic"],
+            root => Assert.Equal("problem-source-mismatch",
+                Assert.Single(DescribeRepositoryValidator.Validate(root, [])).Code),
+            ["D5/S1/Phase/Basic"]);
+
+    [Fact]
+    public void ValidatorRejectsCandidateUrlThatTheNoteDoesNotCarry() => WithRepository(
+        DoiAndUrlCandidate("10.1000/sample", "https://example.org/source"),
+        Note("sos1957threegap", "10.1000/sample"),
+        ["D5/S1/Phase/Basic"],
+        root => Assert.Equal("problem-source-mismatch",
+            Assert.Single(DescribeRepositoryValidator.Validate(root, [])).Code),
+        ["D5/S1/Phase/Basic"]);
 
     [Fact]
     public void ValidatorAcceptsMatchingStableUrlsWithoutDois() => WithRepository(
@@ -164,6 +210,12 @@ public sealed partial class ProblemCandidateTests
         ["D5/S1/Phase/Basic"]);
 
     private static string DoiCandidate(string doi) => Candidate("sample-open-problem", doi: doi);
+
+    private static string DoiAndUrlCandidate(string doi, string url) => DoiCandidate(doi)
+        .Replace($"doi: {doi}\n", $"doi: {doi}\nurl: {url}\n", StringComparison.Ordinal);
+
+    private static string DoiAndUrlNote(string doi, string url) => Note("sos1957threegap", doi)
+        .Replace($"doi: {doi}\n", $"doi: {doi}\nurl: {url}\n", StringComparison.Ordinal);
 
     private static void WithDoiRepository(string doi, string noteDoi, Action<string> assertion) =>
         WithRepository(DoiCandidate(doi), Note("sos1957threegap", noteDoi),
