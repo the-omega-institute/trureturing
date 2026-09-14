@@ -1,0 +1,9 @@
+唯一满足
+\[
+\operatorname{Enc}(x)=
+\begin{cases}
+\operatorname{NatZ}(x),&x\in\omega,\\
+\langle1,\{\operatorname{Enc}(y):y\in x\}\rangle,&x\notin\omega.
+\end{cases}
+\tag{Z-ENC}
+\]
