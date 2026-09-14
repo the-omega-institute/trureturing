@@ -37,7 +37,8 @@ private theorem hiddenOrbit_eq (J : Nat) (theta : Real) (n i : Nat) :
           by_cases he : i-1 = n
           · have hei : i = n+1 := by omega
             subst i
-            simp [hi, pow_succ, mul_comm]
+            have hn : n < J := by omega
+            simp [hi, hn, pow_succ, mul_comm]
           · have hei : i ≠ n+1 := by omega
             simp [he, hei]
       · simp [hiddenStep, hi]
