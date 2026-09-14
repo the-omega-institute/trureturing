@@ -392,6 +392,8 @@ inductive ProvenanceAllowRule where
   | quotientType | recursorType | enumRecursorType | aliasType | recursiveFamily | nominalFields
   | ordinaryData | typeFamily | scalarCarrier | rigidCarrier | functionCarrier
   | containerCarrier | subtypeCarrier | nullaryCarrier | nominalCarrier
+  | statementHeadApart | statementLiteralApart | statementDomainApart
+  | statementBodyApart | statementArgumentApart | statementRigidApart | statementMetadataApart
   | proofBoundary | propositionBoundary | externalLeaf | syntaxLeaf
   | listForall | listNegated | listPositive | carrierAlias | carrierProjection
   deriving BEq, Repr
@@ -503,6 +505,9 @@ private structure WalkState where
   levelWeights : Std.HashMap Level Nat := {}
   applications : Std.HashMap Expr (Expr × Array Expr) := {}
   cleanTypes : Std.HashMap (Expr × Option Name) ProvenanceAdmissionWitness := {}
+  apartPropositions : Std.HashMap Expr ProvenanceAdmissionWitness := {}
+  identityFailureTraced : Bool := false
+  identityUnknown : Option Unclassified := none
   assumedFamilyDepth : Option Nat := none
   assumedProducer : Option Name := none
   inferredTypes : Std.HashMap Expr Expr := {}
@@ -1215,7 +1220,185 @@ private def noteFamilyAssumption (depth : Nat) : WalkM Unit := do
   unless ← chargeTraversal do return
   modify fun s => { s with assumedFamilyDepth := mergeAssumptions s.assumedFamilyDepth (some depth) }
 
+-- A hash mismatch never proves that two propositions have different statement
+-- identities. This bounded recognizer establishes an actual rigid distinction:
+-- different kernel heads, literals, domains, or a distinguishing live argument.
+-- Unknown/computed heads stop. It never evaluates a recursor or proof term.
+private partial def rigidStatementLocal (expression : Expr) : WalkM Bool := do
+  unless ← chargeTraversal do return false
+  match expression with
+  | .fvar id => return ((← id.getDecl).value? (allowNondep := true)).isNone
+  | .proj _ _ receiver => rigidStatementLocal receiver
+  | _ => return false
+
+private partial def statementIdentityForm (env : Environment) (expression : Expr) :
+    WalkM (Option Expr) := do
+  unless ← chargeTraversal do return none
+  let some expression ← representationType expression | return none
+  let some (head, args) ← applicationParts expression | return none
+  if let .fvar id := head then
+    if let some value := (← id.getDecl).value? (allowNondep := true) then
+      let some body ← aliasBody value args | return none
+      return ← statementIdentityForm env body
+    return some expression
+  if let .proj structureName index receiver := head then
+    -- A projection chain from an unassigned local record is rigid. A concrete
+    -- receiver still follows the audited constructor-field decoder below.
+    if let some localReceiver ← statementIdentityForm env receiver then
+      if ← rigidStatementLocal localReceiver then
+        return some (mkAppN (.proj structureName index localReceiver) args)
+  match expression with
+  | .sort _ | .lit _ | .lam .. => return some expression
+  | _ => pure ()
+  -- These quotient predicates have fixed proposition families after every
+  -- possible reduction: List.Pairwise and List.Mem respectively. They do not
+  -- expose an arbitrary proposition chosen by a carrier or callback.
+  if #[`Multiset.Nodup, `Multiset.Mem].contains (head.constName?.getD Name.anonymous) then
+    return some expression
+  if (naturalLiteral expression).isSome ||
+      expression.isConstOf ``Bool.true || expression.isConstOf ``Bool.false then
+    return some expression
+  match ← statementStep env expression with
+  | .recognized evidence => return some evidence.matchedType
+  | .next next => statementIdentityForm env next
+  | .unclassified site =>
+    if (← get).identityUnknown.isNone then modify fun s => { s with identityUnknown := some site }
+    return none
+  | .incomplete => noteIncomplete `incomplete_classification `statement_identity; return none
+
+private partial def statementApart (env : Environment) (left right : Expr) :
+    WalkM (Option ProvenanceAdmissionWitness) := do
+  unless ← chargeTraversal do return none
+  -- Equal fingerprints include possible collisions, so they never admit.
+  if hash left == hash right then return none
+  let some a ← statementIdentityForm env left | return none
+  let some b ← statementIdentityForm env right | return none
+  if hash a == hash b then return none
+  if let some x := naturalLiteral a then
+    if let some y := naturalLiteral b then
+      if x != y then
+        -- admission-exit: statementApart.1 rule=statementLiteralApart
+        return some (witness .statementLiteralApart left)
+  if (a.isConstOf ``Bool.true && b.isConstOf ``Bool.false) ||
+      (a.isConstOf ``Bool.false && b.isConstOf ``Bool.true) then
+    -- admission-exit: statementApart.2 rule=statementLiteralApart
+    return some (witness .statementLiteralApart left)
+  if let .lit x := a then
+    if let .lit y := b then
+      -- admission-exit: statementApart.3 rule=statementLiteralApart
+      if x != y then return some (witness .statementLiteralApart left)
+  let kernelHead := fun expression => expression.getAppFn.constName?.filter fun name =>
+    (env.find? name).any fun info => match info with
+      | .inductInfo _ => true
+      | _ => false
+  let metadataFamily := fun e =>
+    if e.getAppFn.isConstOf `Multiset.Nodup then some ``List.Pairwise
+    else if e.getAppFn.isConstOf `Multiset.Mem then some ``List.Mem else none
+  let am := metadataFamily a
+  let bm := metadataFamily b
+  let ah := am.orElse fun _ => kernelHead a
+  let bh := bm.orElse fun _ => kernelHead b
+  if let some an := ah then
+    if let some bn := bh then
+      if an != bn then
+        -- admission-exit: statementApart.4 rule=statementMetadataApart
+        if am.isSome || bm.isSome then return some (witness .statementMetadataApart left)
+        -- admission-exit: statementApart.5 rule=statementHeadApart
+        return some (witness .statementHeadApart left)
+      -- A shared metadata family is not evidence of identity or disjointness;
+      -- its quotient representation is deliberately left unresolved.
+      if am.isSome || bm.isSome then return none
+      let aa := a.getAppArgs
+      let ba := b.getAppArgs
+      unless aa.size == ba.size do return none
+      unless ← chargeTraversal aa.size do return none
+      for i in [:aa.size] do
+        if (← statementApart env aa[i]! ba[i]!).isSome then
+          -- admission-exit: statementApart.6 rule=statementArgumentApart
+          return some (witness .statementArgumentApart left)
+      return none
+  -- A rigid type parameter cannot reduce to a kernel inductive type head.
+  -- No distinct-proof-variable or proof-constructor comparison is permitted.
+  let rigidValue := fun e h => h.isSome || e.isForall || e.isSort ||
+    (naturalLiteral e).isSome || e.isConstOf ``Bool.true || e.isConstOf ``Bool.false
+  let an ← rigidStatementLocal a.getAppFn
+  let bn ← rigidStatementLocal b.getAppFn
+  if (an && rigidValue b bh) || (bn && rigidValue a ah) then
+    -- admission-exit: statementApart.7 rule=statementRigidApart
+    return some (witness .statementRigidApart left)
+  match a, b with
+  | .forallE n da ab bi, .forallE _ db bb _
+  | .lam n da ab bi, .lam _ db bb _ =>
+    if (← statementApart env da db).isSome then
+      -- admission-exit: statementApart.8 rule=statementDomainApart
+      return some (witness .statementDomainApart left)
+    -- Congruence is conditional on equal domains. In that case one shared
+    -- binder gives both well-typed bodies; unequal domains already distinguish
+    -- the binders. This does not decide domain equality or normalize a carrier.
+    Meta.withLocalDecl n bi da fun x => do
+      let some ab ← substitute ab #[x] | return none
+      let some bb ← substitute bb #[x] | return none
+      if (← statementApart env ab bb).isSome then
+        -- admission-exit: statementApart.9 rule=statementBodyApart
+        return some (witness .statementBodyApart left)
+      return none
+  | .forallE .., _ =>
+    -- admission-exit: statementApart.10 rule=statementMetadataApart
+    if bm.isSome then return some (witness .statementMetadataApart left)
+    -- admission-exit: statementApart.11 rule=statementHeadApart
+    if bh.isSome || b.isSort then return some (witness .statementHeadApart left)
+    return none
+  | _, .forallE .. =>
+    -- admission-exit: statementApart.12 rule=statementMetadataApart
+    if am.isSome then return some (witness .statementMetadataApart left)
+    -- admission-exit: statementApart.13 rule=statementHeadApart
+    if ah.isSome || a.isSort then return some (witness .statementHeadApart left)
+    return none
+  | .sort .zero, .sort (.succ _) | .sort (.succ _), .sort .zero =>
+    -- admission-exit: statementApart.14 rule=statementHeadApart
+    return some (witness .statementHeadApart left)
+  | .sort _, _ =>
+    -- admission-exit: statementApart.15 rule=statementHeadApart
+    if bh.isSome || b.isFVar then return some (witness .statementHeadApart left)
+    return none
+  | _, .sort _ =>
+    -- admission-exit: statementApart.16 rule=statementHeadApart
+    if ah.isSome || a.isFVar then return some (witness .statementHeadApart left)
+    return none
+  | _, _ => return none
+
+private def checkedStatementType (env : Environment) (type : Expr) :
+    WalkM (Option ProvenanceAdmissionWitness) := do
+  unless ← chargeTraversal do return none
+  -- admission-exit: checkedStatementType.1 rule=retained-witness.rule
+  if let some evidence := (← get).apartPropositions[type]? then return some evidence
+  modify fun s => { s with identityUnknown := none }
+  let evidence ← statementApart env type (← get).statement
+  if evidence.isNone then
+    if let some site := (← get).identityUnknown then noteUnclassified site
+  if evidence.isNone && !(← get).identityFailureTraced then
+    modify fun s => { s with identityFailureTraced := true }
+    trace[InformationProvenance.check]
+      "statement_identity_unresolved first={(← get).currentFirst} site={(← get).currentOrigin} type={type} registered={(← get).statement}"
+  if let some evidence := evidence then
+    if !type.hasLooseBVars && !type.hasMVar && !type.hasLevelMVar then
+      modify fun s => { s with apartPropositions := s.apartPropositions.insert type evidence }
+  -- admission-exit: checkedStatementType.2 rule=retained-witness.rule
+  return evidence
+
 mutual
+-- Compare a complete observed proof type, including the type of a nominal
+-- proof field. A quantified proof's open mathematical body is not another
+-- observed proof value; closed statement subtypes still pass the same guard.
+private partial def observedType (env : Environment) (type : Expr)
+    (active : Array Expr := #[]) : WalkM TypeClassification := do
+  let some kind ← occurrenceType type | return ← unknownType type
+  if kind == .sort .zero then
+    unless (← checkedStatementType env type).isSome do
+      return ← unknownType type "unresolved_statement_identity"
+  -- admission-exit: observedType.1 rule=retained-witness.rule
+  return ← inputType env type active
+
 -- One structural fold over inferred types and their type-valued arguments.
 -- Nominal fields are native occurrences specialized by constructor-index patterns.
 private partial def inputType (env : Environment) (type : Expr)
@@ -1233,6 +1416,13 @@ private partial def inputType (env : Environment) (type : Expr)
   let producerAllowed := carrierProducerAllowed env (← get).currentFirst
   -- admission-exit: inputType.2 rule=retained-witness.rule
   if let some cached ← reuseWitness (← get).cleanTypes type then return .allowlisted cached
+  -- Closed proposition subtypes can themselves contain statement identity.
+  -- Complete occurrence/field types, including open ones, use observedType.
+  if closed type then
+    let some kind ← occurrenceType type | return ← unknownType type
+    if kind == .sort .zero then
+      unless (← checkedStatementType env type).isSome do
+        return ← unknownType type "unresolved_statement_identity"
   unless ← chargeTraversal do return ← unknownType type
   let enclosingAssumptions := (← get).assumedFamilyDepth
   let enclosingProducer := (← get).assumedProducer
@@ -1590,7 +1780,7 @@ private partial def inputType (env : Environment) (type : Expr)
               trace[InformationProvenance.check] "unclassified_abstract_carrier family={name} field_type={concrete} first={(← get).currentFirst}"
               return ← unknownType concrete "unclassified_abstract_carrier"
             -- admission-exit: inputType.forward.5 rule=retained-witness.rule
-            inputType env concrete nextActive)
+            observedType env concrete nextActive)
           mentions := mentions || fm
           unclassified := unclassified || fu
       -- admission-exit: inputType.24 rule=nominalFields
@@ -1700,7 +1890,7 @@ private def classifyOccurrence (env : Environment) (occurrence : Expr)
     let exact ← exactScalarStatement type
     let decision ← if type.isAppOfArity ``Decidable 1 then
         exactScalarStatement type.getAppArgs[0]! else pure false
-    let classification ← inputType env type
+    let classification ← observedType env type
     let (mentions, _) := classification.flags
     if exact || decision then return .forbidden
     if mentions then return .statementMention
@@ -1764,7 +1954,7 @@ private partial def visitOccurrence (env : Environment) (pos : Position)
       -- Propositions are checked as statement-bearing types. Their mathematical
       -- operands are erased; executable decision dictionaries are visited on
       -- their own actual data occurrences.
-      let classification ← inputType env actual
+      let classification ← observedType env actual
       let (mentions, unknown) := classification.flags
       if mentions then
         noteUnclassified ⟨"statement_mentioning_type", first, namespaceLabel env first, origin⟩

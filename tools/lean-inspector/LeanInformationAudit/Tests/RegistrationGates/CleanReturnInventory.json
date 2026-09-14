@@ -183,214 +183,440 @@
       "source": "return (\u2190 get).recognizedStatement"
     },
     {
+      "id": "statementApart.1",
+      "function": "statementApart",
+      "rule_id": "statementLiteralApart",
+      "kind": "production",
+      "source": "return some (witness .statementLiteralApart left)"
+    },
+    {
+      "id": "statementApart.2",
+      "function": "statementApart",
+      "rule_id": "statementLiteralApart",
+      "kind": "production",
+      "source": "return some (witness .statementLiteralApart left)"
+    },
+    {
+      "id": "statementApart.3",
+      "function": "statementApart",
+      "rule_id": "statementLiteralApart",
+      "kind": "production",
+      "source": "if x != y then return some (witness .statementLiteralApart left)"
+    },
+    {
+      "id": "statementApart.4",
+      "function": "statementApart",
+      "rule_id": "statementMetadataApart",
+      "kind": "production",
+      "source": "if am.isSome || bm.isSome then return some (witness .statementMetadataApart left)"
+    },
+    {
+      "id": "statementApart.5",
+      "function": "statementApart",
+      "rule_id": "statementHeadApart",
+      "kind": "production",
+      "source": "return some (witness .statementHeadApart left)"
+    },
+    {
+      "id": "statementApart.6",
+      "function": "statementApart",
+      "rule_id": "statementArgumentApart",
+      "kind": "production",
+      "source": "return some (witness .statementArgumentApart left)"
+    },
+    {
+      "id": "statementApart.7",
+      "function": "statementApart",
+      "rule_id": "statementRigidApart",
+      "kind": "production",
+      "source": "return some (witness .statementRigidApart left)"
+    },
+    {
+      "id": "statementApart.8",
+      "function": "statementApart",
+      "rule_id": "statementDomainApart",
+      "kind": "production",
+      "source": "return some (witness .statementDomainApart left)"
+    },
+    {
+      "id": "statementApart.9",
+      "function": "statementApart",
+      "rule_id": "statementBodyApart",
+      "kind": "production",
+      "source": "return some (witness .statementBodyApart left)"
+    },
+    {
+      "id": "statementApart.10",
+      "function": "statementApart",
+      "rule_id": "statementMetadataApart",
+      "kind": "production",
+      "source": "if bm.isSome then return some (witness .statementMetadataApart left)"
+    },
+    {
+      "id": "statementApart.11",
+      "function": "statementApart",
+      "rule_id": "statementHeadApart",
+      "kind": "production",
+      "source": "if bh.isSome || b.isSort then return some (witness .statementHeadApart left)"
+    },
+    {
+      "id": "statementApart.12",
+      "function": "statementApart",
+      "rule_id": "statementMetadataApart",
+      "kind": "production",
+      "source": "if am.isSome then return some (witness .statementMetadataApart left)"
+    },
+    {
+      "id": "statementApart.13",
+      "function": "statementApart",
+      "rule_id": "statementHeadApart",
+      "kind": "production",
+      "source": "if ah.isSome || a.isSort then return some (witness .statementHeadApart left)"
+    },
+    {
+      "id": "statementApart.14",
+      "function": "statementApart",
+      "rule_id": "statementHeadApart",
+      "kind": "production",
+      "source": "return some (witness .statementHeadApart left)"
+    },
+    {
+      "id": "statementApart.15",
+      "function": "statementApart",
+      "rule_id": "statementHeadApart",
+      "kind": "production",
+      "source": "if bh.isSome || b.isFVar then return some (witness .statementHeadApart left)"
+    },
+    {
+      "id": "statementApart.16",
+      "function": "statementApart",
+      "rule_id": "statementHeadApart",
+      "kind": "production",
+      "source": "if ah.isSome || a.isFVar then return some (witness .statementHeadApart left)"
+    },
+    {
+      "id": "checkedStatementType.1",
+      "function": "checkedStatementType",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "if let some evidence := (\u2190 get).apartPropositions[type]? then return some evidence"
+    },
+    {
+      "id": "checkedStatementType.2",
+      "function": "checkedStatementType",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "return evidence"
+    },
+    {
+      "id": "observedType.1",
+      "function": "observedType",
+      "rule_id": "retained-witness.rule",
+      "kind": "witness-forwarding",
+      "source": "return \u2190 inputType env type active",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ]
+    },
+    {
       "id": "inputType.1",
       "function": "inputType",
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
-      "source": "return \u2190 inputType env decoded active"
+      "source": "return \u2190 inputType env decoded active",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ]
     },
     {
       "id": "inputType.2",
       "function": "inputType",
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
-      "source": "if let some cached \u2190 reuseWitness (\u2190 get).cleanTypes type then return .allowlisted cached"
+      "source": "if let some cached \u2190 reuseWitness (\u2190 get).cleanTypes type then return .allowlisted cached",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ]
     },
     {
       "id": "inputType.forward.1",
       "function": "inputType",
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
-      "source": "inputType env body active)"
+      "source": "inputType env body active)",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ]
     },
     {
       "id": "inputType.3",
       "function": "inputType",
       "rule_id": "telescope",
       "kind": "production",
-      "source": "return \u2190 checkedType .telescope type (exact || decision || dm || bm) (du || bu)"
+      "source": "return \u2190 checkedType .telescope type (exact || decision || dm || bm) (du || bu)",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ]
     },
     {
       "id": "inputType.4",
       "function": "inputType",
       "rule_id": "letType",
       "kind": "production",
-      "source": "return \u2190 checkedType .letType type (exact || decision || dm || vm || bm) (du || bu)"
+      "source": "return \u2190 checkedType .letType type (exact || decision || dm || vm || bm) (du || bu)",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ]
     },
     {
       "id": "inputType.forward.2",
       "function": "inputType",
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
-      "source": "inputType env body active)"
+      "source": "inputType env body active)",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ]
     },
     {
       "id": "inputType.5",
       "function": "inputType",
       "rule_id": "telescope",
       "kind": "production",
-      "source": "return \u2190 checkedType .telescope reduced (mentions || dm || bm) (du || bu)"
+      "source": "return \u2190 checkedType .telescope reduced (mentions || dm || bm) (du || bu)",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ]
     },
     {
       "id": "inputType.forward.3",
       "function": "inputType",
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
-      "source": "inputType env body active)"
+      "source": "inputType env body active)",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ]
     },
     {
       "id": "inputType.6",
       "function": "inputType",
       "rule_id": "lambdaType",
       "kind": "production",
-      "source": "return \u2190 checkedType .lambdaType reduced (mentions || dm || bm) (du || bu)"
+      "source": "return \u2190 checkedType .lambdaType reduced (mentions || dm || bm) (du || bu)",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ]
     },
     {
       "id": "inputType.forward.4",
       "function": "inputType",
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
-      "source": "inputType env body active) (nondep := nd))"
+      "source": "inputType env body active) (nondep := nd))",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ]
     },
     {
       "id": "inputType.7",
       "function": "inputType",
       "rule_id": "letType",
       "kind": "production",
-      "source": "return \u2190 checkedType .letType reduced (mentions || dm || vm || bm) (du || vu || bu)"
+      "source": "return \u2190 checkedType .letType reduced (mentions || dm || vm || bm) (du || vu || bu)",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ]
     },
     {
       "id": "inputType.8",
       "function": "inputType",
       "rule_id": "metadataType",
       "kind": "production",
-      "source": "return \u2190 checkedType .metadataType reduced (mentions || bm) bu"
+      "source": "return \u2190 checkedType .metadataType reduced (mentions || bm) bu",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ]
     },
     {
       "id": "inputType.9",
       "function": "inputType",
       "rule_id": "sortKind",
       "kind": "production",
-      "source": "if reduced.isSort then return \u2190 checkedType .sortKind reduced mentions false"
+      "source": "if reduced.isSort then return \u2190 checkedType .sortKind reduced mentions false",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ]
     },
     {
       "id": "inputType.10",
       "function": "inputType",
       "rule_id": "betaType",
       "kind": "production",
-      "source": "return \u2190 checkedType .betaType reduced (mentions || bm) bu"
+      "source": "return \u2190 checkedType .betaType reduced (mentions || bm) bu",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ]
     },
     {
       "id": "inputType.11",
       "function": "inputType",
       "rule_id": "scopedParameter",
       "kind": "production",
-      "source": "return \u2190 checkedType .scopedParameter reduced (mentions || fm) (unclassified || fu)"
+      "source": "return \u2190 checkedType .scopedParameter reduced (mentions || fm) (unclassified || fu)",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ]
     },
     {
       "id": "inputType.12",
       "function": "inputType",
       "rule_id": "auditedProjection",
       "kind": "production",
-      "source": "return \u2190 checkedType .auditedProjection reduced (mentions || rm || pm) (ru || pu || unclassified)"
+      "source": "return \u2190 checkedType .auditedProjection reduced (mentions || rm || pm) (ru || pu || unclassified)",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ]
     },
     {
       "id": "inputType.13",
       "function": "inputType",
       "rule_id": "equality",
       "kind": "production",
-      "source": "return \u2190 checkedType .equality reduced mentions unclassified"
+      "source": "return \u2190 checkedType .equality reduced mentions unclassified",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ]
     },
     {
       "id": "inputType.14",
       "function": "inputType",
       "rule_id": "naturalOrder",
       "kind": "production",
-      "source": "return \u2190 checkedType .naturalOrder reduced mentions (unclassified || order)"
+      "source": "return \u2190 checkedType .naturalOrder reduced mentions (unclassified || order)",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ]
     },
     {
       "id": "inputType.15",
       "function": "inputType",
       "rule_id": "rigidCarrier",
       "kind": "production",
-      "source": "let mut carrierEvidence \u2190 if rigid then pure (some (witness .rigidCarrier carrier))"
+      "source": "let mut carrierEvidence \u2190 if rigid then pure (some (witness .rigidCarrier carrier))",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ]
     },
     {
       "id": "inputType.16",
       "function": "inputType",
       "rule_id": "scalarCarrier",
       "kind": "production",
-      "source": "else if carrier.isConstOf ``Nat then pure (some (witness .scalarCarrier carrier))"
+      "source": "else if carrier.isConstOf ``Nat then pure (some (witness .scalarCarrier carrier))",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ]
     },
     {
       "id": "inputType.17",
       "function": "inputType",
       "rule_id": "nullaryCarrier",
       "kind": "production",
-      "source": "let evidence := witness .nullaryCarrier carrier"
+      "source": "let evidence := witness .nullaryCarrier carrier",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ]
     },
     {
       "id": "inputType.18",
       "function": "inputType",
       "rule_id": "listMetadata",
       "kind": "production",
-      "source": "if disjoint.isSome then return \u2190 checkedType .listMetadata reduced mentions unclassified"
+      "source": "if disjoint.isSome then return \u2190 checkedType .listMetadata reduced mentions unclassified",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ]
     },
     {
       "id": "inputType.19",
       "function": "inputType",
       "rule_id": "quotientType",
       "kind": "production",
-      "source": "return \u2190 checkedType .quotientType reduced mentions unclassified"
+      "source": "return \u2190 checkedType .quotientType reduced mentions unclassified",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ]
     },
     {
       "id": "inputType.20",
       "function": "inputType",
       "rule_id": "recursorType",
       "kind": "production",
-      "source": "return \u2190 checkedType .recursorType reduced mentions unclassified"
+      "source": "return \u2190 checkedType .recursorType reduced mentions unclassified",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ]
     },
     {
       "id": "inputType.21",
       "function": "inputType",
       "rule_id": "enumRecursorType",
       "kind": "production",
-      "source": "return \u2190 checkedType .enumRecursorType reduced mentions unclassified"
+      "source": "return \u2190 checkedType .enumRecursorType reduced mentions unclassified",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ]
     },
     {
       "id": "inputType.22",
       "function": "inputType",
       "rule_id": "aliasType",
       "kind": "production",
-      "source": "return \u2190 checkedType .aliasType reduced (mentions || um) (unclassified || uu)"
+      "source": "return \u2190 checkedType .aliasType reduced (mentions || um) (unclassified || uu)",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ]
     },
     {
       "id": "inputType.23",
       "function": "inputType",
       "rule_id": "recursiveFamily",
       "kind": "production",
-      "source": "return \u2190 checkedType .recursiveFamily reduced mentions unclassified"
+      "source": "return \u2190 checkedType .recursiveFamily reduced mentions unclassified",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ]
     },
     {
       "id": "inputType.forward.5",
       "function": "inputType",
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
-      "source": "inputType env concrete nextActive)"
+      "source": "observedType env concrete nextActive)",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ]
     },
     {
       "id": "inputType.24",
       "function": "inputType",
       "rule_id": "nominalFields",
       "kind": "production",
-      "source": "return \u2190 checkedType .nominalFields reduced mentions unclassified"
+      "source": "return \u2190 checkedType .nominalFields reduced mentions unclassified",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ]
     },
     {
       "id": "inputType.25",
       "function": "inputType",
       "rule_id": "retained-witness.rule",
       "kind": "witness-forwarding",
-      "source": "return result"
+      "source": "return result",
+      "requires": [
+        "unless (\u2190 checkedStatementType env type).isSome do"
+      ]
     },
     {
       "id": "typeFamilyArgument.1",

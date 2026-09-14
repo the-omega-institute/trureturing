@@ -2,12 +2,2104 @@
   "schema": 1,
   "rows": [
     {
+      "id": "default-admit-TypeClassification.flags.forward.1",
+      "exit": "TypeClassification.flags.forward.1",
+      "rule_id": "retained-witness.rule",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:418",
+      "predicted_red_names": [
+        "CleanReturnInventory.TypeClassification.flags.forward.1",
+        "CleanReturnInventory.MissingRuleId.TypeClassification.flags"
+      ]
+    },
+    {
+      "id": "default-admit-TypeClassification.witness?.forward.1",
+      "exit": "TypeClassification.witness?.forward.1",
+      "rule_id": "retained-witness.rule",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:424",
+      "predicted_red_names": [
+        "CleanReturnInventory.TypeClassification.witness?.forward.1",
+        "CleanReturnInventory.MissingRuleId.TypeClassification.witness?"
+      ]
+    },
+    {
+      "id": "default-admit-reuseWitness.1",
+      "exit": "reuseWitness.1",
+      "rule_id": "retained-witness.rule",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:661",
+      "predicted_red_names": [
+        "CleanReturnInventory.reuseWitness.1",
+        "CleanReturnInventory.MissingRuleId.reuseWitness"
+      ]
+    },
+    {
+      "id": "default-admit-bindWitnessSource.forward.1",
+      "exit": "bindWitnessSource.forward.1",
+      "rule_id": "retained-witness.rule",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:666",
+      "predicted_red_names": [
+        "CleanReturnInventory.bindWitnessSource.forward.1",
+        "CleanReturnInventory.MissingRuleId.bindWitnessSource"
+      ]
+    },
+    {
+      "id": "default-admit-checkedType.1",
+      "exit": "checkedType.1",
+      "rule_id": "retained-witness.rule",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:684",
+      "predicted_red_names": [
+        "CleanReturnInventory.checkedType.1",
+        "CleanReturnInventory.MissingRuleId.checkedType"
+      ]
+    },
+    {
+      "id": "default-admit-statementStep.1",
+      "exit": "statementStep.1",
+      "rule_id": "statementForall",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:954",
+      "predicted_red_names": [
+        "CleanReturnInventory.statementStep.1",
+        "CleanReturnInventory.MissingRuleId.statementStep"
+      ]
+    },
+    {
+      "id": "default-admit-statementStep.2",
+      "exit": "statementStep.2",
+      "rule_id": "statementInductive",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:958",
+      "predicted_red_names": [
+        "CleanReturnInventory.statementStep.2",
+        "CleanReturnInventory.MissingRuleId.statementStep"
+      ]
+    },
+    {
+      "id": "default-admit-statementOuter.1",
+      "exit": "statementOuter.1",
+      "rule_id": "statementMembership",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:991",
+      "predicted_red_names": [
+        "CleanReturnInventory.statementOuter.1",
+        "CleanReturnInventory.MissingRuleId.statementOuter"
+      ]
+    },
+    {
+      "id": "default-admit-statementOuter.2",
+      "exit": "statementOuter.2",
+      "rule_id": "retained-witness.rule",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:994",
+      "predicted_red_names": [
+        "CleanReturnInventory.statementOuter.2",
+        "CleanReturnInventory.MissingRuleId.statementOuter"
+      ]
+    },
+    {
+      "id": "default-admit-statementOuter.forward.1",
+      "exit": "statementOuter.forward.1",
+      "rule_id": "retained-witness.rule",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1000",
+      "predicted_red_names": [
+        "CleanReturnInventory.statementOuter.forward.1",
+        "CleanReturnInventory.MissingRuleId.statementOuter"
+      ]
+    },
+    {
+      "id": "default-admit-listStatementBoundary.1",
+      "exit": "listStatementBoundary.1",
+      "rule_id": "listForall",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1023",
+      "predicted_red_names": [
+        "CleanReturnInventory.listStatementBoundary.1",
+        "CleanReturnInventory.MissingRuleId.listStatementBoundary"
+      ]
+    },
+    {
+      "id": "default-admit-listStatementBoundary.2",
+      "exit": "listStatementBoundary.2",
+      "rule_id": "listNegated",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1030",
+      "predicted_red_names": [
+        "CleanReturnInventory.listStatementBoundary.2",
+        "CleanReturnInventory.MissingRuleId.listStatementBoundary"
+      ]
+    },
+    {
+      "id": "default-admit-listStatementBoundary.forward.1",
+      "exit": "listStatementBoundary.forward.1",
+      "rule_id": "retained-witness.rule",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1035",
+      "predicted_red_names": [
+        "CleanReturnInventory.listStatementBoundary.forward.1",
+        "CleanReturnInventory.MissingRuleId.listStatementBoundary"
+      ]
+    },
+    {
+      "id": "default-admit-listStatementBoundary.3",
+      "exit": "listStatementBoundary.3",
+      "rule_id": "listPositive",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1041",
+      "predicted_red_names": [
+        "CleanReturnInventory.listStatementBoundary.3",
+        "CleanReturnInventory.MissingRuleId.listStatementBoundary"
+      ]
+    },
+    {
+      "id": "default-admit-dataCarrier.1",
+      "exit": "dataCarrier.1",
+      "rule_id": "rigidCarrier",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1060",
+      "predicted_red_names": [
+        "CleanReturnInventory.dataCarrier.1",
+        "CleanReturnInventory.MissingRuleId.dataCarrier"
+      ]
+    },
+    {
+      "id": "default-admit-dataCarrier.2",
+      "exit": "dataCarrier.2",
+      "rule_id": "carrierProjection",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1079",
+      "predicted_red_names": [
+        "CleanReturnInventory.dataCarrier.2",
+        "CleanReturnInventory.MissingRuleId.dataCarrier"
+      ]
+    },
+    {
+      "id": "default-admit-dataCarrier.forward.1",
+      "exit": "dataCarrier.forward.1",
+      "rule_id": "retained-witness.rule",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1083",
+      "predicted_red_names": [
+        "CleanReturnInventory.dataCarrier.forward.1",
+        "CleanReturnInventory.MissingRuleId.dataCarrier"
+      ]
+    },
+    {
+      "id": "default-admit-dataCarrier.forward.2",
+      "exit": "dataCarrier.forward.2",
+      "rule_id": "retained-witness.rule",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1089",
+      "predicted_red_names": [
+        "CleanReturnInventory.dataCarrier.forward.2",
+        "CleanReturnInventory.MissingRuleId.dataCarrier"
+      ]
+    },
+    {
+      "id": "default-admit-dataCarrier.3",
+      "exit": "dataCarrier.3",
+      "rule_id": "scalarCarrier",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1095",
+      "predicted_red_names": [
+        "CleanReturnInventory.dataCarrier.3",
+        "CleanReturnInventory.MissingRuleId.dataCarrier"
+      ]
+    },
+    {
+      "id": "default-admit-dataCarrier.4",
+      "exit": "dataCarrier.4",
+      "rule_id": "retained-witness.rule",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1098",
+      "predicted_red_names": [
+        "CleanReturnInventory.dataCarrier.4",
+        "CleanReturnInventory.MissingRuleId.dataCarrier"
+      ]
+    },
+    {
+      "id": "default-admit-dataCarrier.5",
+      "exit": "dataCarrier.5",
+      "rule_id": "retained-witness.rule",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1101",
+      "predicted_red_names": [
+        "CleanReturnInventory.dataCarrier.5",
+        "CleanReturnInventory.MissingRuleId.dataCarrier"
+      ]
+    },
+    {
+      "id": "default-admit-dataCarrier.6",
+      "exit": "dataCarrier.6",
+      "rule_id": "retained-witness.rule",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1107",
+      "predicted_red_names": [
+        "CleanReturnInventory.dataCarrier.6",
+        "CleanReturnInventory.MissingRuleId.dataCarrier"
+      ]
+    },
+    {
+      "id": "default-admit-dataCarrier.forward.3",
+      "exit": "dataCarrier.forward.3",
+      "rule_id": "retained-witness.rule",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1114",
+      "predicted_red_names": [
+        "CleanReturnInventory.dataCarrier.forward.3",
+        "CleanReturnInventory.MissingRuleId.dataCarrier"
+      ]
+    },
+    {
+      "id": "default-admit-dataCarrier.7",
+      "exit": "dataCarrier.7",
+      "rule_id": "nominalCarrier",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1117",
+      "predicted_red_names": [
+        "CleanReturnInventory.dataCarrier.7",
+        "CleanReturnInventory.MissingRuleId.dataCarrier"
+      ]
+    },
+    {
+      "id": "default-admit-statementBoundary.1",
+      "exit": "statementBoundary.1",
+      "rule_id": "retained-witness.rule",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1143",
+      "predicted_red_names": [
+        "CleanReturnInventory.statementBoundary.1",
+        "CleanReturnInventory.MissingRuleId.statementBoundary"
+      ]
+    },
+    {
+      "id": "default-admit-statementApart.1",
+      "exit": "statementApart.1",
+      "rule_id": "statementLiteralApart",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1281",
+      "predicted_red_names": [
+        "CleanReturnInventory.statementApart.1",
+        "CleanReturnInventory.MissingRuleId.statementApart"
+      ]
+    },
+    {
+      "id": "default-admit-statementApart.2",
+      "exit": "statementApart.2",
+      "rule_id": "statementLiteralApart",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1285",
+      "predicted_red_names": [
+        "CleanReturnInventory.statementApart.2",
+        "CleanReturnInventory.MissingRuleId.statementApart"
+      ]
+    },
+    {
+      "id": "default-admit-statementApart.3",
+      "exit": "statementApart.3",
+      "rule_id": "statementLiteralApart",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1289",
+      "predicted_red_names": [
+        "CleanReturnInventory.statementApart.3",
+        "CleanReturnInventory.MissingRuleId.statementApart"
+      ]
+    },
+    {
+      "id": "default-admit-statementApart.4",
+      "exit": "statementApart.4",
+      "rule_id": "statementMetadataApart",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1305",
+      "predicted_red_names": [
+        "CleanReturnInventory.statementApart.4",
+        "CleanReturnInventory.MissingRuleId.statementApart"
+      ]
+    },
+    {
+      "id": "default-admit-statementApart.5",
+      "exit": "statementApart.5",
+      "rule_id": "statementHeadApart",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1307",
+      "predicted_red_names": [
+        "CleanReturnInventory.statementApart.5",
+        "CleanReturnInventory.MissingRuleId.statementApart"
+      ]
+    },
+    {
+      "id": "default-admit-statementApart.6",
+      "exit": "statementApart.6",
+      "rule_id": "statementArgumentApart",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1318",
+      "predicted_red_names": [
+        "CleanReturnInventory.statementApart.6",
+        "CleanReturnInventory.MissingRuleId.statementApart"
+      ]
+    },
+    {
+      "id": "default-admit-statementApart.7",
+      "exit": "statementApart.7",
+      "rule_id": "statementRigidApart",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1328",
+      "predicted_red_names": [
+        "CleanReturnInventory.statementApart.7",
+        "CleanReturnInventory.MissingRuleId.statementApart"
+      ]
+    },
+    {
+      "id": "default-admit-statementApart.8",
+      "exit": "statementApart.8",
+      "rule_id": "statementDomainApart",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1334",
+      "predicted_red_names": [
+        "CleanReturnInventory.statementApart.8",
+        "CleanReturnInventory.MissingRuleId.statementApart"
+      ]
+    },
+    {
+      "id": "default-admit-statementApart.9",
+      "exit": "statementApart.9",
+      "rule_id": "statementBodyApart",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1343",
+      "predicted_red_names": [
+        "CleanReturnInventory.statementApart.9",
+        "CleanReturnInventory.MissingRuleId.statementApart"
+      ]
+    },
+    {
+      "id": "default-admit-statementApart.10",
+      "exit": "statementApart.10",
+      "rule_id": "statementMetadataApart",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1347",
+      "predicted_red_names": [
+        "CleanReturnInventory.statementApart.10",
+        "CleanReturnInventory.MissingRuleId.statementApart"
+      ]
+    },
+    {
+      "id": "default-admit-statementApart.11",
+      "exit": "statementApart.11",
+      "rule_id": "statementHeadApart",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1349",
+      "predicted_red_names": [
+        "CleanReturnInventory.statementApart.11",
+        "CleanReturnInventory.MissingRuleId.statementApart"
+      ]
+    },
+    {
+      "id": "default-admit-statementApart.12",
+      "exit": "statementApart.12",
+      "rule_id": "statementMetadataApart",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1353",
+      "predicted_red_names": [
+        "CleanReturnInventory.statementApart.12",
+        "CleanReturnInventory.MissingRuleId.statementApart"
+      ]
+    },
+    {
+      "id": "default-admit-statementApart.13",
+      "exit": "statementApart.13",
+      "rule_id": "statementHeadApart",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1355",
+      "predicted_red_names": [
+        "CleanReturnInventory.statementApart.13",
+        "CleanReturnInventory.MissingRuleId.statementApart"
+      ]
+    },
+    {
+      "id": "default-admit-statementApart.14",
+      "exit": "statementApart.14",
+      "rule_id": "statementHeadApart",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1359",
+      "predicted_red_names": [
+        "CleanReturnInventory.statementApart.14",
+        "CleanReturnInventory.MissingRuleId.statementApart"
+      ]
+    },
+    {
+      "id": "default-admit-statementApart.15",
+      "exit": "statementApart.15",
+      "rule_id": "statementHeadApart",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1362",
+      "predicted_red_names": [
+        "CleanReturnInventory.statementApart.15",
+        "CleanReturnInventory.MissingRuleId.statementApart"
+      ]
+    },
+    {
+      "id": "default-admit-statementApart.16",
+      "exit": "statementApart.16",
+      "rule_id": "statementHeadApart",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1366",
+      "predicted_red_names": [
+        "CleanReturnInventory.statementApart.16",
+        "CleanReturnInventory.MissingRuleId.statementApart"
+      ]
+    },
+    {
+      "id": "default-admit-checkedStatementType.1",
+      "exit": "checkedStatementType.1",
+      "rule_id": "retained-witness.rule",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1374",
+      "predicted_red_names": [
+        "CleanReturnInventory.checkedStatementType.1",
+        "CleanReturnInventory.MissingRuleId.checkedStatementType"
+      ]
+    },
+    {
+      "id": "default-admit-checkedStatementType.2",
+      "exit": "checkedStatementType.2",
+      "rule_id": "retained-witness.rule",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1387",
+      "predicted_red_names": [
+        "CleanReturnInventory.checkedStatementType.2",
+        "CleanReturnInventory.MissingRuleId.checkedStatementType"
+      ]
+    },
+    {
+      "id": "default-admit-observedType.1",
+      "exit": "observedType.1",
+      "rule_id": "retained-witness.rule",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1400",
+      "predicted_red_names": [
+        "CleanReturnInventory.observedType.1",
+        "CleanReturnInventory.MissingRuleId.observedType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.1",
+      "exit": "inputType.1",
+      "rule_id": "retained-witness.rule",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1415",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.1",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.2",
+      "exit": "inputType.2",
+      "rule_id": "retained-witness.rule",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1418",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.2",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.forward.1",
+      "exit": "inputType.forward.1",
+      "rule_id": "retained-witness.rule",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1443",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.forward.1",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.3",
+      "exit": "inputType.3",
+      "rule_id": "telescope",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1445",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.3",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.4",
+      "exit": "inputType.4",
+      "rule_id": "letType",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1454",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.4",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.forward.2",
+      "exit": "inputType.forward.2",
+      "rule_id": "retained-witness.rule",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1468",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.forward.2",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.5",
+      "exit": "inputType.5",
+      "rule_id": "telescope",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1470",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.5",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.forward.3",
+      "exit": "inputType.forward.3",
+      "rule_id": "retained-witness.rule",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1480",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.forward.3",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.6",
+      "exit": "inputType.6",
+      "rule_id": "lambdaType",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1482",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.6",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.forward.4",
+      "exit": "inputType.forward.4",
+      "rule_id": "retained-witness.rule",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1489",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.forward.4",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.7",
+      "exit": "inputType.7",
+      "rule_id": "letType",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1491",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.7",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.8",
+      "exit": "inputType.8",
+      "rule_id": "metadataType",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1495",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.8",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.9",
+      "exit": "inputType.9",
+      "rule_id": "sortKind",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1498",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.9",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.10",
+      "exit": "inputType.10",
+      "rule_id": "betaType",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1504",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.10",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.11",
+      "exit": "inputType.11",
+      "rule_id": "scopedParameter",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1524",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.11",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.12",
+      "exit": "inputType.12",
+      "rule_id": "auditedProjection",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1533",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.12",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.13",
+      "exit": "inputType.13",
+      "rule_id": "equality",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1596",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.13",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.14",
+      "exit": "inputType.14",
+      "rule_id": "naturalOrder",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1609",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.14",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.15",
+      "exit": "inputType.15",
+      "rule_id": "rigidCarrier",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1627",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.15",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.16",
+      "exit": "inputType.16",
+      "rule_id": "scalarCarrier",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1629",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.16",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.17",
+      "exit": "inputType.17",
+      "rule_id": "nullaryCarrier",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1647",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.17",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.18",
+      "exit": "inputType.18",
+      "rule_id": "listMetadata",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1662",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.18",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.19",
+      "exit": "inputType.19",
+      "rule_id": "quotientType",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1673",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.19",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.20",
+      "exit": "inputType.20",
+      "rule_id": "recursorType",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1678",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.20",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.21",
+      "exit": "inputType.21",
+      "rule_id": "enumRecursorType",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1697",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.21",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.22",
+      "exit": "inputType.22",
+      "rule_id": "aliasType",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1708",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.22",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.23",
+      "exit": "inputType.23",
+      "rule_id": "recursiveFamily",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1738",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.23",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.forward.5",
+      "exit": "inputType.forward.5",
+      "rule_id": "retained-witness.rule",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1783",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.forward.5",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.24",
+      "exit": "inputType.24",
+      "rule_id": "nominalFields",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1787",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.24",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-inputType.25",
+      "exit": "inputType.25",
+      "rule_id": "retained-witness.rule",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1807",
+      "predicted_red_names": [
+        "CleanReturnInventory.inputType.25",
+        "CleanReturnInventory.MissingRuleId.inputType"
+      ]
+    },
+    {
+      "id": "default-admit-typeFamilyArgument.1",
+      "exit": "typeFamilyArgument.1",
+      "rule_id": "retained-witness.rule",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1815",
+      "predicted_red_names": [
+        "CleanReturnInventory.typeFamilyArgument.1",
+        "CleanReturnInventory.MissingRuleId.typeFamilyArgument"
+      ]
+    },
+    {
+      "id": "default-admit-typeFamilyArgument.2",
+      "exit": "typeFamilyArgument.2",
+      "rule_id": "retained-witness.rule",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1825",
+      "predicted_red_names": [
+        "CleanReturnInventory.typeFamilyArgument.2",
+        "CleanReturnInventory.MissingRuleId.typeFamilyArgument"
+      ]
+    },
+    {
+      "id": "default-admit-typeFamilyArgument.forward.1",
+      "exit": "typeFamilyArgument.forward.1",
+      "rule_id": "retained-witness.rule",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1837",
+      "predicted_red_names": [
+        "CleanReturnInventory.typeFamilyArgument.forward.1",
+        "CleanReturnInventory.MissingRuleId.typeFamilyArgument"
+      ]
+    },
+    {
+      "id": "default-admit-typeFamilyArgument.3",
+      "exit": "typeFamilyArgument.3",
+      "rule_id": "retained-witness.rule",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1839",
+      "predicted_red_names": [
+        "CleanReturnInventory.typeFamilyArgument.3",
+        "CleanReturnInventory.MissingRuleId.typeFamilyArgument"
+      ]
+    },
+    {
+      "id": "default-admit-typeFamilyArgument.4",
+      "exit": "typeFamilyArgument.4",
+      "rule_id": "typeFamily",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1843",
+      "predicted_red_names": [
+        "CleanReturnInventory.typeFamilyArgument.4",
+        "CleanReturnInventory.MissingRuleId.typeFamilyArgument"
+      ]
+    },
+    {
+      "id": "default-admit-typeFamilyArgument.5",
+      "exit": "typeFamilyArgument.5",
+      "rule_id": "retained-witness.rule",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1851",
+      "predicted_red_names": [
+        "CleanReturnInventory.typeFamilyArgument.5",
+        "CleanReturnInventory.MissingRuleId.typeFamilyArgument"
+      ]
+    },
+    {
+      "id": "default-admit-typeFamilyArgument.forward.2",
+      "exit": "typeFamilyArgument.forward.2",
+      "rule_id": "retained-witness.rule",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1858",
+      "predicted_red_names": [
+        "CleanReturnInventory.typeFamilyArgument.forward.2",
+        "CleanReturnInventory.MissingRuleId.typeFamilyArgument"
+      ]
+    },
+    {
+      "id": "default-admit-typeFamilyArgument.6",
+      "exit": "typeFamilyArgument.6",
+      "rule_id": "retained-witness.rule",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1875",
+      "predicted_red_names": [
+        "CleanReturnInventory.typeFamilyArgument.6",
+        "CleanReturnInventory.MissingRuleId.typeFamilyArgument"
+      ]
+    },
+    {
+      "id": "default-admit-classifyOccurrence.1",
+      "exit": "classifyOccurrence.1",
+      "rule_id": "retained-witness.rule",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1886",
+      "predicted_red_names": [
+        "CleanReturnInventory.classifyOccurrence.1",
+        "CleanReturnInventory.MissingRuleId.classifyOccurrence"
+      ]
+    },
+    {
+      "id": "default-admit-classifyOccurrence.2",
+      "exit": "classifyOccurrence.2",
+      "rule_id": "retained-witness.rule",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1902",
+      "predicted_red_names": [
+        "CleanReturnInventory.classifyOccurrence.2",
+        "CleanReturnInventory.MissingRuleId.classifyOccurrence"
+      ]
+    },
+    {
+      "id": "default-admit-classifyOccurrence.3",
+      "exit": "classifyOccurrence.3",
+      "rule_id": "retained-witness.rule",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1909",
+      "predicted_red_names": [
+        "CleanReturnInventory.classifyOccurrence.3",
+        "CleanReturnInventory.MissingRuleId.classifyOccurrence"
+      ]
+    },
+    {
+      "id": "default-admit-visitOccurrence.1",
+      "exit": "visitOccurrence.1",
+      "rule_id": "retained-witness.rule",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1932",
+      "predicted_red_names": [
+        "CleanReturnInventory.visitOccurrence.1",
+        "CleanReturnInventory.MissingRuleId.visitOccurrence"
+      ]
+    },
+    {
+      "id": "default-admit-visitOccurrence.2",
+      "exit": "visitOccurrence.2",
+      "rule_id": "retained-witness.rule",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1935",
+      "predicted_red_names": [
+        "CleanReturnInventory.visitOccurrence.2",
+        "CleanReturnInventory.MissingRuleId.visitOccurrence"
+      ]
+    },
+    {
+      "id": "default-admit-visitOccurrence.forward.1",
+      "exit": "visitOccurrence.forward.1",
+      "rule_id": "retained-witness.rule",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1944",
+      "predicted_red_names": [
+        "CleanReturnInventory.visitOccurrence.forward.1",
+        "CleanReturnInventory.MissingRuleId.visitOccurrence"
+      ]
+    },
+    {
+      "id": "default-admit-visitOccurrence.3",
+      "exit": "visitOccurrence.3",
+      "rule_id": "retained-witness.rule",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1967",
+      "predicted_red_names": [
+        "CleanReturnInventory.visitOccurrence.3",
+        "CleanReturnInventory.MissingRuleId.visitOccurrence"
+      ]
+    },
+    {
+      "id": "default-admit-visitOccurrence.4",
+      "exit": "visitOccurrence.4",
+      "rule_id": "retained-witness.rule",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:1981",
+      "predicted_red_names": [
+        "CleanReturnInventory.visitOccurrence.4",
+        "CleanReturnInventory.MissingRuleId.visitOccurrence"
+      ]
+    },
+    {
+      "id": "default-admit-visitOccurrence.5",
+      "exit": "visitOccurrence.5",
+      "rule_id": "retained-witness.rule",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:2011",
+      "predicted_red_names": [
+        "CleanReturnInventory.visitOccurrence.5",
+        "CleanReturnInventory.MissingRuleId.visitOccurrence"
+      ]
+    },
+    {
+      "id": "default-admit-readoutClosureCurrent.1",
+      "exit": "readoutClosureCurrent.1",
+      "rule_id": "retained-witness.rule",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:2117",
+      "predicted_red_names": [
+        "CleanReturnInventory.readoutClosureCurrent.1",
+        "CleanReturnInventory.MissingRuleId.readoutClosureCurrent"
+      ]
+    },
+    {
+      "id": "default-admit-provenanceErrorCurrent.1",
+      "exit": "provenanceErrorCurrent.1",
+      "rule_id": "retained-witness.rule",
+      "kind": "source-contract",
+      "fault": "Replace this typed positive/forwarding exit with a rule-less default admit. Such an exit is not representable by the typed success constructor; this source control rejects it before Lean elaboration.",
+      "location": "ReadoutProvenance.lean:2138",
+      "predicted_red_names": [
+        "CleanReturnInventory.provenanceErrorCurrent.1",
+        "CleanReturnInventory.MissingRuleId.provenanceErrorCurrent"
+      ]
+    },
+    {
+      "id": "a11-erase-level-instantiation",
+      "kind": "behavioral",
+      "target": "LeanInformationAudit.Tests.RegistrationGates.AllowlistRules",
+      "mutation": "Erase the actual constant universe instantiation before inference, replacing its levels by the declaration universe parameters.",
+      "mutation_site": {
+        "file": "LeanInformationAudit/ReadoutProvenance.lean",
+        "function": "occurrenceType",
+        "before": "  let some type \u2190 boundedMeta (Meta.inferType e) `infer_type | return none",
+        "related_inventory_exit_ids": [
+          "inputType.24",
+          "typeFamilyArgument.1"
+        ],
+        "scope_note": "Related witness exits in this function; exact mutation is the code below and specification() in MutationMatrix.py. Empty exit list denotes a nonadmission diagnostic/API control."
+      },
+      "before": "  let some type \u2190 boundedMeta (Meta.inferType e) `infer_type | return none",
+      "after": "  let some type \u2190 boundedMeta (do\n    let occurrence \u2190 match e with\n      | .const n _ => do\n        let declaration \u2190 getConstInfo n\n        pure (mkConst n (declaration.levelParams.map Level.param))\n      | _ => pure e\n    Meta.inferType occurrence) `infer_type | return none",
+      "additional_source_changes_before_needle": false,
+      "mutator": "MutationMatrix.specification",
+      "predicted_red_names": [
+        "UniverseBox.mk.{1}/PLift",
+        "NominalUniverseField"
+      ]
+    },
+    {
+      "id": "a11-reconstruct-constructor-type",
+      "kind": "behavioral",
+      "target": "LeanInformationAudit.Tests.RegistrationGates.AllowlistRules",
+      "mutation": "Classify fields from raw ConstantInfo.type for indexed constructors with no parameters, bypassing occurrence instantiation.",
+      "mutation_site": {
+        "file": "LeanInformationAudit/ReadoutProvenance.lean",
+        "function": "caseFields",
+        "before": "  let mut branches := #[]\n  for ctor in family.ctors do",
+        "related_inventory_exit_ids": [
+          "inputType.24"
+        ],
+        "scope_note": "Related witness exits in this function; exact mutation is the code below and specification() in MutationMatrix.py. Empty exit list denotes a nonadmission diagnostic/API control."
+      },
+      "before": "  let mut branches := #[]\n  for ctor in family.ctors do",
+      "after": "  if family.numParams == 0 && family.numIndices > 0 then\n    let mut contexts := #[]\n    for ctorName in family.ctors do\n      let declaration \u2190 getConstInfo ctorName\n      let some fields \u2190 boundedMeta (Meta.forallTelescope declaration.type fun fields _ => do\n        return (\u2190 getLCtx, \u2190 Meta.getLocalInstances, fields)) `mutant_generic_fields | return none\n      contexts := contexts.push fields\n    return some contexts\n  let mut branches := #[]\n  for ctor in family.ctors do",
+      "additional_source_changes_before_needle": false,
+      "mutator": "MutationMatrix.specification",
+      "predicted_red_names": [
+        "DirectIndexBare",
+        "CompositeIdentityBare",
+        "CompositeIdentityEta",
+        "CompositeSuccessorBare",
+        "CompositeSuccessorEta",
+        "NominalIndexedProofField",
+        "NominalRecursiveIndexedProofField",
+        "NominalLetIndexProofField"
+      ]
+    },
+    {
+      "id": "a11-generic-inferred-telescope",
+      "kind": "behavioral",
+      "target": "LeanInformationAudit.Tests.RegistrationGates.AllowlistRules",
+      "mutation": "Classify the generic inferred constructor telescope with correct occurrence universes but without resolving the result indices.",
+      "mutation_site": {
+        "file": "LeanInformationAudit/ReadoutProvenance.lean",
+        "function": "caseFields",
+        "before": "  let mut branches := #[]\n  for ctor in family.ctors do",
+        "related_inventory_exit_ids": [
+          "inputType.24"
+        ],
+        "scope_note": "Related witness exits in this function; exact mutation is the code below and specification() in MutationMatrix.py. Empty exit list denotes a nonadmission diagnostic/API control."
+      },
+      "before": "  let mut branches := #[]\n  for ctor in family.ctors do",
+      "after": "  if family.numParams == 0 && family.numIndices > 0 then\n    let mut contexts := #[]\n    for ctorName in family.ctors do\n      let declaration \u2190 getConstInfo ctorName\n      let some fields \u2190 boundedMeta (Meta.forallTelescope (\u2190 Meta.inferType (mkConst ctorName levels)) fun fields _ => do\n        return (\u2190 getLCtx, \u2190 Meta.getLocalInstances, fields)) `mutant_generic_fields | return none\n      contexts := contexts.push fields\n    return some contexts\n  let mut branches := #[]\n  for ctor in family.ctors do",
+      "additional_source_changes_before_needle": false,
+      "mutator": "MutationMatrix.specification",
+      "predicted_red_names": [
+        "DirectIndexBare",
+        "CompositeIdentityBare",
+        "CompositeIdentityEta",
+        "CompositeSuccessorBare",
+        "CompositeSuccessorEta",
+        "NominalIndexedProofField",
+        "NominalRecursiveIndexedProofField",
+        "NominalLetIndexProofField"
+      ]
+    },
+    {
+      "id": "a11-drop-list-relation-fence",
+      "kind": "behavioral",
+      "target": "LeanInformationAudit.Tests.RegistrationGates.AllowlistRules",
+      "mutation": "Admit arbitrary Pairwise predicates through the equality-only primitive instead of inferring their specialized case fields.",
+      "mutation_site": {
+        "file": "LeanInformationAudit/ReadoutProvenance.lean",
+        "function": "inputType",
+        "before": "let relationAllowed := args[1]! == relation || match args[1]! with",
+        "related_inventory_exit_ids": [
+          "inputType.1",
+          "inputType.2",
+          "inputType.forward.1",
+          "inputType.3",
+          "inputType.4",
+          "inputType.forward.2",
+          "inputType.5",
+          "inputType.forward.3",
+          "inputType.6",
+          "inputType.forward.4",
+          "inputType.7",
+          "inputType.8",
+          "inputType.9",
+          "inputType.10",
+          "inputType.11",
+          "inputType.12",
+          "inputType.13",
+          "inputType.14",
+          "inputType.15",
+          "inputType.16",
+          "inputType.17",
+          "inputType.18",
+          "inputType.19",
+          "inputType.20",
+          "inputType.21",
+          "inputType.22",
+          "inputType.23",
+          "inputType.forward.5",
+          "inputType.24",
+          "inputType.25"
+        ],
+        "scope_note": "Related witness exits in this function; exact mutation is the code below and specification() in MutationMatrix.py. Empty exit list denotes a nonadmission diagnostic/API control."
+      },
+      "before": "let relationAllowed := args[1]! == relation || match args[1]! with",
+      "after": "let relationAllowed := true || args[1]! == relation || match args[1]! with",
+      "additional_source_changes_before_needle": false,
+      "mutator": "MutationMatrix.specification",
+      "predicted_red_names": [
+        "PairwisePredicatePayload"
+      ]
+    },
+    {
+      "id": "a11-drop-list-carrier-fence",
+      "kind": "behavioral",
+      "target": "LeanInformationAudit.Tests.RegistrationGates.AllowlistRules",
+      "mutation": "Admit proposition-valued list elements through the natural-number uniqueness primitive.",
+      "mutation_site": {
+        "file": "LeanInformationAudit/ReadoutProvenance.lean",
+        "function": "inputType",
+        "before": "if carrierEvidence.isSome &&",
+        "related_inventory_exit_ids": [
+          "inputType.1",
+          "inputType.2",
+          "inputType.forward.1",
+          "inputType.3",
+          "inputType.4",
+          "inputType.forward.2",
+          "inputType.5",
+          "inputType.forward.3",
+          "inputType.6",
+          "inputType.forward.4",
+          "inputType.7",
+          "inputType.8",
+          "inputType.9",
+          "inputType.10",
+          "inputType.11",
+          "inputType.12",
+          "inputType.13",
+          "inputType.14",
+          "inputType.15",
+          "inputType.16",
+          "inputType.17",
+          "inputType.18",
+          "inputType.19",
+          "inputType.20",
+          "inputType.21",
+          "inputType.22",
+          "inputType.23",
+          "inputType.forward.5",
+          "inputType.24",
+          "inputType.25"
+        ],
+        "scope_note": "Related witness exits in this function; exact mutation is the code below and specification() in MutationMatrix.py. Empty exit list denotes a nonadmission diagnostic/API control."
+      },
+      "before": "if carrierEvidence.isSome &&",
+      "after": "if true &&",
+      "additional_source_changes_before_needle": false,
+      "mutator": "MutationMatrix.specification",
+      "predicted_red_names": []
+    },
+    {
+      "id": "a11-drop-list-statement-fence",
+      "kind": "behavioral",
+      "target": "LeanInformationAudit.Tests.RegistrationGates.AllowlistRules",
+      "mutation": "Admit the uniqueness primitive even when a proof field can match the registered function statement.",
+      "mutation_site": {
+        "file": "LeanInformationAudit/ReadoutProvenance.lean",
+        "function": "inputType",
+        "before": "          if disjoint.isSome then return \u2190 checkedType .listMetadata reduced mentions unclassified",
+        "related_inventory_exit_ids": [
+          "inputType.1",
+          "inputType.2",
+          "inputType.forward.1",
+          "inputType.3",
+          "inputType.4",
+          "inputType.forward.2",
+          "inputType.5",
+          "inputType.forward.3",
+          "inputType.6",
+          "inputType.forward.4",
+          "inputType.7",
+          "inputType.8",
+          "inputType.9",
+          "inputType.10",
+          "inputType.11",
+          "inputType.12",
+          "inputType.13",
+          "inputType.14",
+          "inputType.15",
+          "inputType.16",
+          "inputType.17",
+          "inputType.18",
+          "inputType.19",
+          "inputType.20",
+          "inputType.21",
+          "inputType.22",
+          "inputType.23",
+          "inputType.forward.5",
+          "inputType.24",
+          "inputType.25"
+        ],
+        "scope_note": "Related witness exits in this function; exact mutation is the code below and specification() in MutationMatrix.py. Empty exit list denotes a nonadmission diagnostic/API control."
+      },
+      "before": "          if disjoint.isSome then return \u2190 checkedType .listMetadata reduced mentions unclassified",
+      "after": "          return \u2190 checkedType .listMetadata reduced mentions unclassified",
+      "additional_source_changes_before_needle": false,
+      "mutator": "MutationMatrix.specification",
+      "predicted_red_names": [
+        "NodupFunctionPayload"
+      ]
+    },
+    {
+      "id": "a11-drop-order-statement-fence",
+      "kind": "behavioral",
+      "target": "LeanInformationAudit.Tests.RegistrationGates.AllowlistRules",
+      "mutation": "Admit primitive Nat.le even when the normalized registered statement belongs to its recursive proof family.",
+      "mutation_site": {
+        "file": "LeanInformationAudit/ReadoutProvenance.lean",
+        "function": "inputType",
+        "before": "if natOrder reduced && natOrder statement then return \u2190 checkedType .nominalFields type mentions true",
+        "related_inventory_exit_ids": [
+          "inputType.1",
+          "inputType.2",
+          "inputType.forward.1",
+          "inputType.3",
+          "inputType.4",
+          "inputType.forward.2",
+          "inputType.5",
+          "inputType.forward.3",
+          "inputType.6",
+          "inputType.forward.4",
+          "inputType.7",
+          "inputType.8",
+          "inputType.9",
+          "inputType.10",
+          "inputType.11",
+          "inputType.12",
+          "inputType.13",
+          "inputType.14",
+          "inputType.15",
+          "inputType.16",
+          "inputType.17",
+          "inputType.18",
+          "inputType.19",
+          "inputType.20",
+          "inputType.21",
+          "inputType.22",
+          "inputType.23",
+          "inputType.forward.5",
+          "inputType.24",
+          "inputType.25"
+        ],
+        "scope_note": "Related witness exits in this function; exact mutation is the code below and specification() in MutationMatrix.py. Empty exit list denotes a nonadmission diagnostic/API control."
+      },
+      "before": "if natOrder reduced && natOrder statement then return \u2190 checkedType .nominalFields type mentions true",
+      "after": "if false && natOrder reduced && natOrder statement then return \u2190 checkedType .nominalFields type mentions true",
+      "additional_source_changes_before_needle": true,
+      "mutator": "MutationMatrix.specification",
+      "predicted_red_names": [
+        "NatLeStatementFence",
+        "NatLtStatementFence"
+      ]
+    },
+    {
+      "id": "a11-resume-proof-implementations",
+      "kind": "behavioral",
+      "target": "LeanInformationAudit.Tests.RegistrationGates.AllowlistBoundaries",
+      "mutation": "Re-enter erased proof implementations after checking the occurrence boundary.",
+      "mutation_site": {
+        "file": "LeanInformationAudit/ReadoutProvenance.lean",
+        "function": "visitOccurrence",
+        "before": "  if proof == some true then return",
+        "related_inventory_exit_ids": [
+          "visitOccurrence.1",
+          "visitOccurrence.2",
+          "visitOccurrence.forward.1",
+          "visitOccurrence.3",
+          "visitOccurrence.4",
+          "visitOccurrence.5"
+        ],
+        "scope_note": "Related witness exits in this function; exact mutation is the code below and specification() in MutationMatrix.py. Empty exit list denotes a nonadmission diagnostic/API control."
+      },
+      "before": "  if proof == some true then return",
+      "after": "  if false && proof == some true then return",
+      "additional_source_changes_before_needle": true,
+      "mutator": "MutationMatrix.specification",
+      "predicted_red_names": [
+        "InternalTargetProofErased",
+        "InternalCompanionProofErased",
+        "ProofArgumentBoundary",
+        "AlternativeProofBoundary",
+        "ProofFieldBoundary",
+        "ErasedPredicateBoundary",
+        "BoundedNatInterfaceHead",
+        "ProofImplementationInvariance"
+      ]
+    },
+    {
+      "id": "a11-normalization-api",
+      "kind": "behavioral",
+      "target": "LeanInformationAudit.Tests.RegistrationGates.AllowlistBoundaries",
+      "mutation": "Call explicit definitional equality on the actual admission path; the API control must reject even a cheap comparison.",
+      "mutation_site": {
+        "file": "LeanInformationAudit/ReadoutProvenance.lean",
+        "function": "queue",
+        "before": "private def compareCanonical (a b : Expr) : WalkM Bool := do",
+        "related_inventory_exit_ids": [],
+        "scope_note": "Related witness exits in this function; exact mutation is the code below and specification() in MutationMatrix.py. Empty exit list denotes a nonadmission diagnostic/API control."
+      },
+      "before": "private def compareCanonical (a b : Expr) : WalkM Bool := do",
+      "after": "private def compareCanonical (a b : Expr) : WalkM Bool := do\n  let _ \u2190 Meta.isDefEq (mkConst ``True) (mkConst ``True)",
+      "additional_source_changes_before_needle": false,
+      "mutator": "MutationMatrix.specification",
+      "predicted_red_names": [
+        "NoSemanticNormalization"
+      ]
+    },
+    {
+      "id": "a11-remove-algebra-families",
+      "kind": "behavioral",
+      "target": "LeanInformationAudit.Tests.RegistrationGates.AllowlistBoundaries",
+      "mutation": "Remove algebra/order class heads uniformly, regardless of instance names.",
+      "mutation_site": {
+        "file": "LeanInformationAudit/ReadoutProvenance.lean",
+        "function": "inputType",
+        "before": "if Lean.isClass env name && !listedTypeClasses.contains name then",
+        "related_inventory_exit_ids": [
+          "inputType.1",
+          "inputType.2",
+          "inputType.forward.1",
+          "inputType.3",
+          "inputType.4",
+          "inputType.forward.2",
+          "inputType.5",
+          "inputType.forward.3",
+          "inputType.6",
+          "inputType.forward.4",
+          "inputType.7",
+          "inputType.8",
+          "inputType.9",
+          "inputType.10",
+          "inputType.11",
+          "inputType.12",
+          "inputType.13",
+          "inputType.14",
+          "inputType.15",
+          "inputType.16",
+          "inputType.17",
+          "inputType.18",
+          "inputType.19",
+          "inputType.20",
+          "inputType.21",
+          "inputType.22",
+          "inputType.23",
+          "inputType.forward.5",
+          "inputType.24",
+          "inputType.25"
+        ],
+        "scope_note": "Related witness exits in this function; exact mutation is the code below and specification() in MutationMatrix.py. Empty exit list denotes a nonadmission diagnostic/API control."
+      },
+      "before": "if Lean.isClass env name && !listedTypeClasses.contains name then",
+      "after": "if Lean.isClass env name && (!listedTypeClasses.contains name || #[`AddMonoidWithOne, `AddCommMonoid, `Semiring, `Distrib, `LinearOrder, `Field, `DivisionRing, `Fact, `CharP, `NonUnitalNonAssocCommRing, `NonUnitalCommRing].contains name) then",
+      "additional_source_changes_before_needle": false,
+      "mutator": "MutationMatrix.specification",
+      "predicted_red_names": [
+        "UniformMonoidHeads",
+        "UniformRingHeads",
+        "UniformOrderHeads",
+        "UniformFieldHeads",
+        "UniformCommutativeRingHeads",
+        "FunctionInterfaceHead"
+      ]
+    },
+    {
+      "id": "a11-incomplete-as-unsupported",
+      "kind": "behavioral",
+      "target": "LeanInformationAudit.Tests.RegistrationGates.AllowlistBoundaries",
+      "mutation": "Mislabel incomplete work as unsupported form while retaining the null payload.",
+      "mutation_site": {
+        "file": "LeanInformationAudit/ReadoutProvenance.lean",
+        "function": "provenanceErrorCurrent",
+        "before": "let reason := if result.incomplete then \"incomplete_closure\"",
+        "related_inventory_exit_ids": [
+          "provenanceErrorCurrent.1"
+        ],
+        "scope_note": "Related witness exits in this function; exact mutation is the code below and specification() in MutationMatrix.py. Empty exit list denotes a nonadmission diagnostic/API control."
+      },
+      "before": "let reason := if result.incomplete then \"incomplete_closure\"",
+      "after": "let reason := if result.incomplete then \"unclassified_form\"",
+      "additional_source_changes_before_needle": false,
+      "mutator": "MutationMatrix.specification",
+      "predicted_red_names": [
+        "NativeExhaustionRouting"
+      ]
+    },
+    {
+      "id": "a11-erase-applied-identity",
+      "kind": "behavioral",
+      "target": "LeanInformationAudit.Tests.RegistrationGates.AllowlistBoundaries",
+      "mutation": "Erase an applied proof before checking the identity of its application head.",
+      "mutation_site": {
+        "file": "LeanInformationAudit/ReadoutProvenance.lean",
+        "function": "visitOccurrence",
+        "before": "  if let .const n _ := e.getAppFn then directConstant env n\n  if let .proj n _ _ := e then directProjection env n",
+        "related_inventory_exit_ids": [
+          "visitOccurrence.1",
+          "visitOccurrence.2",
+          "visitOccurrence.forward.1",
+          "visitOccurrence.3",
+          "visitOccurrence.4",
+          "visitOccurrence.5"
+        ],
+        "scope_note": "Related witness exits in this function; exact mutation is the code below and specification() in MutationMatrix.py. Empty exit list denotes a nonadmission diagnostic/API control."
+      },
+      "before": "  if let .const n _ := e.getAppFn then directConstant env n\n  if let .proj n _ _ := e then directProjection env n",
+      "after": "  if let .const n _ := e then directConstant env n\n  if let .proj n _ _ := e then directProjection env n",
+      "additional_source_changes_before_needle": false,
+      "mutator": "MutationMatrix.specification",
+      "predicted_red_names": [
+        "AppliedTargetIdentity",
+        "AppliedCompanionIdentity"
+      ]
+    },
+    {
+      "id": "a11-remove-named-carrier-alias",
+      "kind": "behavioral",
+      "target": "LeanInformationAudit.Tests.RegistrationGates.AllowlistBoundaries",
+      "mutation": "Remove named carrier alias forwarding from both collection-boundary sites.",
+      "mutation_site": {
+        "file": "LeanInformationAudit/ReadoutProvenance.lean",
+        "function": "inputType",
+        "before": "let some carrier \u2190 namedCarrier env args[0]! | return \u2190 checkedType .nominalFields type mentions true",
+        "related_inventory_exit_ids": [
+          "inputType.1",
+          "inputType.2",
+          "inputType.forward.1",
+          "inputType.3",
+          "inputType.4",
+          "inputType.forward.2",
+          "inputType.5",
+          "inputType.forward.3",
+          "inputType.6",
+          "inputType.forward.4",
+          "inputType.7",
+          "inputType.8",
+          "inputType.9",
+          "inputType.10",
+          "inputType.11",
+          "inputType.12",
+          "inputType.13",
+          "inputType.14",
+          "inputType.15",
+          "inputType.16",
+          "inputType.17",
+          "inputType.18",
+          "inputType.19",
+          "inputType.20",
+          "inputType.21",
+          "inputType.22",
+          "inputType.23",
+          "inputType.forward.5",
+          "inputType.24",
+          "inputType.25"
+        ],
+        "scope_note": "Related witness exits in this function; exact mutation is the code below and specification() in MutationMatrix.py. Empty exit list denotes a nonadmission diagnostic/API control."
+      },
+      "before": "let some carrier \u2190 namedCarrier env args[0]! | return \u2190 checkedType .nominalFields type mentions true",
+      "after": "let some carrier \u2190 representationType args[0]! | return \u2190 checkedType .nominalFields type mentions true",
+      "additional_source_changes_before_needle": true,
+      "mutator": "MutationMatrix.specification",
+      "predicted_red_names": [
+        "ArenaProjectedCarrier",
+        "CatalogProjectedCarrier",
+        "BundleProjectedCarrier",
+        "NestedScalarCarrier",
+        "FiniteFunctionRange"
+      ]
+    },
+    {
+      "id": "a11-remove-statement-projection",
+      "kind": "behavioral",
+      "target": "LeanInformationAudit.Tests.RegistrationGates.AllowlistBoundaries",
+      "mutation": "Treat explicit record projection aliases as opaque when retaining statement rejection witnesses.",
+      "mutation_site": {
+        "file": "LeanInformationAudit/ReadoutProvenance.lean",
+        "function": "statementStep",
+        "before": "  | .proj structureName index receiver =>\n    let (record, work) := ReadoutFamily.carrier env receiver (\u2190 get).exprFuel",
+        "related_inventory_exit_ids": [
+          "statementStep.1",
+          "statementStep.2"
+        ],
+        "scope_note": "Related witness exits in this function; exact mutation is the code below and specification() in MutationMatrix.py. Empty exit list denotes a nonadmission diagnostic/API control."
+      },
+      "before": "  | .proj structureName index receiver =>\n    let (record, work) := ReadoutFamily.carrier env receiver (\u2190 get).exprFuel",
+      "after": "  | .proj structureName index receiver =>\n    return \u2190 statementUnknown (.proj structureName index receiver)\n    let (record, work) := ReadoutFamily.carrier env receiver (\u2190 get).exprFuel",
+      "additional_source_changes_before_needle": false,
+      "mutator": "MutationMatrix.specification",
+      "predicted_red_names": [
+        "SubsetMetadataBoundary",
+        "ProjectedStatementClean"
+      ]
+    },
+    {
+      "id": "a11-resume-proposition-operands",
+      "kind": "behavioral",
+      "target": "LeanInformationAudit.Tests.RegistrationGates.AllowlistBoundaries",
+      "mutation": "Traverse erased mathematical operands of propositions as executable data.",
+      "mutation_site": {
+        "file": "LeanInformationAudit/ReadoutProvenance.lean",
+        "function": "visitOccurrence",
+        "before": "    if type == .sort .zero then\n      -- Propositions are checked",
+        "related_inventory_exit_ids": [
+          "visitOccurrence.1",
+          "visitOccurrence.2",
+          "visitOccurrence.forward.1",
+          "visitOccurrence.3",
+          "visitOccurrence.4",
+          "visitOccurrence.5"
+        ],
+        "scope_note": "Related witness exits in this function; exact mutation is the code below and specification() in MutationMatrix.py. Empty exit list denotes a nonadmission diagnostic/API control."
+      },
+      "before": "    if type == .sort .zero then\n      -- Propositions are checked",
+      "after": "    if false && type == .sort .zero then\n      -- Propositions are checked",
+      "additional_source_changes_before_needle": false,
+      "mutator": "MutationMatrix.specification",
+      "predicted_red_names": [
+        "ErasedPredicateBoundary"
+      ]
+    },
+    {
+      "id": "a11-carrier-name-only-recursion",
+      "kind": "behavioral",
+      "target": "LeanInformationAudit.Tests.RegistrationGates.AllowlistBoundaries",
+      "mutation": "Conflate distinct instantiations of a nested carrier by retaining only its class name.",
+      "mutation_site": {
+        "file": "LeanInformationAudit/ReadoutProvenance.lean",
+        "function": "dataCarrier",
+        "before": "if active.contains type then return none",
+        "related_inventory_exit_ids": [
+          "dataCarrier.1",
+          "dataCarrier.2",
+          "dataCarrier.forward.1",
+          "dataCarrier.forward.2",
+          "dataCarrier.3",
+          "dataCarrier.4",
+          "dataCarrier.5",
+          "dataCarrier.6",
+          "dataCarrier.forward.3",
+          "dataCarrier.7"
+        ],
+        "scope_note": "Related witness exits in this function; exact mutation is the code below and specification() in MutationMatrix.py. Empty exit list denotes a nonadmission diagnostic/API control."
+      },
+      "before": "if active.contains type then return none",
+      "after": "if active.any (fun previous => previous.getAppFn.constName? == some name) then return none",
+      "additional_source_changes_before_needle": false,
+      "mutator": "MutationMatrix.specification",
+      "predicted_red_names": [
+        "NestedScalarCarrier"
+      ]
+    },
+    {
+      "id": "a11-remove-subtype-carrier",
+      "kind": "behavioral",
+      "target": "LeanInformationAudit.Tests.RegistrationGates.AllowlistBoundaries",
+      "mutation": "Remove the native subtype base-carrier boundary while retaining all predicate-type checks.",
+      "mutation_site": {
+        "file": "LeanInformationAudit/ReadoutProvenance.lean",
+        "function": "dataCarrier",
+        "before": "if name == ``Subtype && args.size == 2 then",
+        "related_inventory_exit_ids": [
+          "dataCarrier.1",
+          "dataCarrier.2",
+          "dataCarrier.forward.1",
+          "dataCarrier.forward.2",
+          "dataCarrier.3",
+          "dataCarrier.4",
+          "dataCarrier.5",
+          "dataCarrier.6",
+          "dataCarrier.forward.3",
+          "dataCarrier.7"
+        ],
+        "scope_note": "Related witness exits in this function; exact mutation is the code below and specification() in MutationMatrix.py. Empty exit list denotes a nonadmission diagnostic/API control."
+      },
+      "before": "if name == ``Subtype && args.size == 2 then",
+      "after": "if false && name == ``Subtype && args.size == 2 then",
+      "additional_source_changes_before_needle": false,
+      "mutator": "MutationMatrix.specification",
+      "predicted_red_names": [
+        "SubtypeScalarCarrier"
+      ]
+    },
+    {
+      "id": "a11-unfold-membership-boundary",
+      "kind": "behavioral",
+      "target": "LeanInformationAudit.Tests.RegistrationGates.AllowlistBoundaries",
+      "mutation": "Unfold past the supported membership terminal instead of recognizing its structural boundary.",
+      "mutation_site": {
+        "file": "LeanInformationAudit/ReadoutProvenance.lean",
+        "function": "statementOuter",
+        "before": "  if type.getAppFn.isConstOf `Multiset.Mem then\n    -- admission-exit: statementOuter.1 rule=statementMembership\n    return some (witness .statementMembership type)",
+        "related_inventory_exit_ids": [
+          "statementOuter.1",
+          "statementOuter.2",
+          "statementOuter.forward.1"
+        ],
+        "scope_note": "Related witness exits in this function; exact mutation is the code below and specification() in MutationMatrix.py. Empty exit list denotes a nonadmission diagnostic/API control."
+      },
+      "before": "  if type.getAppFn.isConstOf `Multiset.Mem then\n    -- admission-exit: statementOuter.1 rule=statementMembership\n    return some (witness .statementMembership type)",
+      "after": "  if false && type.getAppFn.isConstOf `Multiset.Mem then\n    -- admission-exit: statementOuter.1 rule=statementMembership\n    return some (witness .statementMembership type)",
+      "additional_source_changes_before_needle": false,
+      "mutator": "MutationMatrix.specification",
+      "predicted_red_names": [
+        "SubsetMetadataBoundary"
+      ]
+    },
+    {
+      "id": "a11-remove-collection-interfaces",
+      "kind": "behavioral",
+      "target": "LeanInformationAudit.Tests.RegistrationGates.AllowlistBoundaries",
+      "mutation": "Remove the observed collection and bounded-natural class interfaces uniformly by inferred class head.",
+      "mutation_site": {
+        "file": "LeanInformationAudit/ReadoutProvenance.lean",
+        "function": "inputType",
+        "before": "if Lean.isClass env name && !listedTypeClasses.contains name then",
+        "related_inventory_exit_ids": [
+          "inputType.1",
+          "inputType.2",
+          "inputType.forward.1",
+          "inputType.3",
+          "inputType.4",
+          "inputType.forward.2",
+          "inputType.5",
+          "inputType.forward.3",
+          "inputType.6",
+          "inputType.forward.4",
+          "inputType.7",
+          "inputType.8",
+          "inputType.9",
+          "inputType.10",
+          "inputType.11",
+          "inputType.12",
+          "inputType.13",
+          "inputType.14",
+          "inputType.15",
+          "inputType.16",
+          "inputType.17",
+          "inputType.18",
+          "inputType.19",
+          "inputType.20",
+          "inputType.21",
+          "inputType.22",
+          "inputType.23",
+          "inputType.forward.5",
+          "inputType.24",
+          "inputType.25"
+        ],
+        "scope_note": "Related witness exits in this function; exact mutation is the code below and specification() in MutationMatrix.py. Empty exit list denotes a nonadmission diagnostic/API control."
+      },
+      "before": "if Lean.isClass env name && !listedTypeClasses.contains name then",
+      "after": "if Lean.isClass env name && (!listedTypeClasses.contains name || #[`Append, `HAppend, `Union, `Nat.AtLeastTwo].contains name) then",
+      "additional_source_changes_before_needle": false,
+      "mutator": "MutationMatrix.specification",
+      "predicted_red_names": [
+        "CollectionAppendHeads",
+        "CollectionUnionHead",
+        "BoundedNatInterfaceHead"
+      ]
+    },
+    {
+      "id": "a11-remove-statement-let",
+      "kind": "behavioral",
+      "target": "LeanInformationAudit.Tests.RegistrationGates.AllowlistBoundaries",
+      "mutation": "Remove structural let forwarding from the registered-statement alias boundary.",
+      "mutation_site": {
+        "file": "LeanInformationAudit/ReadoutProvenance.lean",
+        "function": "statementStep",
+        "before": "  | .letE _ _ value body _ =>\n    let some body \u2190 substitute body #[value] | return .incomplete\n    let some body \u2190 aliasBody body args | return .incomplete\n    return .next body",
+        "related_inventory_exit_ids": [
+          "statementStep.1",
+          "statementStep.2"
+        ],
+        "scope_note": "Related witness exits in this function; exact mutation is the code below and specification() in MutationMatrix.py. Empty exit list denotes a nonadmission diagnostic/API control."
+      },
+      "before": "  | .letE _ _ value body _ =>\n    let some body \u2190 substitute body #[value] | return .incomplete\n    let some body \u2190 aliasBody body args | return .incomplete\n    return .next body",
+      "after": "  | .letE _ _ _ _ _ => return \u2190 statementUnknown current",
+      "additional_source_changes_before_needle": false,
+      "mutator": "MutationMatrix.specification",
+      "predicted_red_names": [
+        "RegisteredLetClean"
+      ]
+    },
+    {
+      "id": "a11-asymmetric-equality-boundary",
+      "kind": "behavioral",
+      "target": "LeanInformationAudit.Tests.RegistrationGates.AllowlistBoundaries",
+      "mutation": "Check only candidate equality operands, allowing a computed registered-statement spelling to escape the boundary.",
+      "mutation_site": {
+        "file": "LeanInformationAudit/ReadoutProvenance.lean",
+        "function": "inputType",
+        "before": "for operand in args.extract 1 3 ++ statement.getAppArgs.extract 1 3 do",
+        "related_inventory_exit_ids": [
+          "inputType.1",
+          "inputType.2",
+          "inputType.forward.1",
+          "inputType.3",
+          "inputType.4",
+          "inputType.forward.2",
+          "inputType.5",
+          "inputType.forward.3",
+          "inputType.6",
+          "inputType.forward.4",
+          "inputType.7",
+          "inputType.8",
+          "inputType.9",
+          "inputType.10",
+          "inputType.11",
+          "inputType.12",
+          "inputType.13",
+          "inputType.14",
+          "inputType.15",
+          "inputType.16",
+          "inputType.17",
+          "inputType.18",
+          "inputType.19",
+          "inputType.20",
+          "inputType.21",
+          "inputType.22",
+          "inputType.23",
+          "inputType.forward.5",
+          "inputType.24",
+          "inputType.25"
+        ],
+        "scope_note": "Related witness exits in this function; exact mutation is the code below and specification() in MutationMatrix.py. Empty exit list denotes a nonadmission diagnostic/API control."
+      },
+      "before": "for operand in args.extract 1 3 ++ statement.getAppArgs.extract 1 3 do",
+      "after": "for operand in args.extract 1 3 do",
+      "additional_source_changes_before_needle": false,
+      "mutator": "MutationMatrix.specification",
+      "predicted_red_names": [
+        "RegisteredComputedEquality",
+        "RegisteredComputedAlias"
+      ]
+    },
+    {
+      "id": "a11-remove-function-interface",
+      "kind": "behavioral",
+      "target": "LeanInformationAudit.Tests.RegistrationGates.AllowlistBoundaries",
+      "mutation": "Remove the function-coercion class interface while leaving receiver and nominal payload checks intact.",
+      "mutation_site": {
+        "file": "LeanInformationAudit/ReadoutProvenance.lean",
+        "function": "inputType",
+        "before": "if Lean.isClass env name && !listedTypeClasses.contains name then",
+        "related_inventory_exit_ids": [
+          "inputType.1",
+          "inputType.2",
+          "inputType.forward.1",
+          "inputType.3",
+          "inputType.4",
+          "inputType.forward.2",
+          "inputType.5",
+          "inputType.forward.3",
+          "inputType.6",
+          "inputType.forward.4",
+          "inputType.7",
+          "inputType.8",
+          "inputType.9",
+          "inputType.10",
+          "inputType.11",
+          "inputType.12",
+          "inputType.13",
+          "inputType.14",
+          "inputType.15",
+          "inputType.16",
+          "inputType.17",
+          "inputType.18",
+          "inputType.19",
+          "inputType.20",
+          "inputType.21",
+          "inputType.22",
+          "inputType.23",
+          "inputType.forward.5",
+          "inputType.24",
+          "inputType.25"
+        ],
+        "scope_note": "Related witness exits in this function; exact mutation is the code below and specification() in MutationMatrix.py. Empty exit list denotes a nonadmission diagnostic/API control."
+      },
+      "before": "if Lean.isClass env name && !listedTypeClasses.contains name then",
+      "after": "if Lean.isClass env name && (!listedTypeClasses.contains name || #[`DFunLike, `EquivLike].contains name) then",
+      "additional_source_changes_before_needle": false,
+      "mutator": "MutationMatrix.specification",
+      "predicted_red_names": [
+        "FunctionInterfaceHead",
+        "EquivalenceInterfaceHead"
+      ]
+    },
+    {
+      "id": "a11-remove-arena-projected-carrier",
+      "kind": "behavioral",
+      "target": "LeanInformationAudit.Tests.RegistrationGates.AllowlistBoundaries",
+      "mutation": "Remove the audited rigid arena/signature carrier projection boundary; concrete statement payload rejection remains.",
+      "mutation_site": {
+        "file": "LeanInformationAudit/ReadoutProvenance.lean",
+        "function": "dataCarrier",
+        "before": "    unless audited do return none",
+        "related_inventory_exit_ids": [
+          "dataCarrier.1",
+          "dataCarrier.2",
+          "dataCarrier.forward.1",
+          "dataCarrier.forward.2",
+          "dataCarrier.3",
+          "dataCarrier.4",
+          "dataCarrier.5",
+          "dataCarrier.6",
+          "dataCarrier.forward.3",
+          "dataCarrier.7"
+        ],
+        "scope_note": "Related witness exits in this function; exact mutation is the code below and specification() in MutationMatrix.py. Empty exit list denotes a nonadmission diagnostic/API control."
+      },
+      "before": "    unless audited do return none",
+      "after": "    return none",
+      "additional_source_changes_before_needle": false,
+      "mutator": "MutationMatrix.specification",
+      "predicted_red_names": [
+        "ArenaProjectedCarrier",
+        "CatalogProjectedCarrier",
+        "BundleProjectedCarrier"
+      ]
+    },
+    {
+      "id": "a11-remove-catalog-carrier",
+      "kind": "behavioral",
+      "target": "LeanInformationAudit.Tests.RegistrationGates.AllowlistBoundaries",
+      "mutation": "Remove the declared Catalog.Index representation boundary while retaining concrete carrier and nominal-field checks.",
+      "mutation_site": {
+        "file": "LeanInformationAudit/ReadoutProvenance.lean",
+        "function": "carrierHeads",
+        "before": "  `D5.S3.ConceptDynamics.InformationEscape.Catalog.Index,",
+        "related_inventory_exit_ids": [],
+        "scope_note": "Related witness exits in this function; exact mutation is the code below and specification() in MutationMatrix.py. Empty exit list denotes a nonadmission diagnostic/API control."
+      },
+      "before": "  `D5.S3.ConceptDynamics.InformationEscape.Catalog.Index,",
+      "after": "",
+      "additional_source_changes_before_needle": false,
+      "mutator": "MutationMatrix.specification",
+      "predicted_red_names": [
+        "CatalogProjectedCarrier"
+      ]
+    },
+    {
+      "id": "a11-remove-bundle-carrier",
+      "kind": "behavioral",
+      "target": "LeanInformationAudit.Tests.RegistrationGates.AllowlistBoundaries",
+      "mutation": "Remove the declared PrimitiveBundle.Index representation boundary while retaining receiver data and nominal-field checks.",
+      "mutation_site": {
+        "file": "LeanInformationAudit/ReadoutProvenance.lean",
+        "function": "carrierHeads",
+        "before": "  `D5.S3.ConceptDynamics.CIRPT.PrimitiveBundle.Index,",
+        "related_inventory_exit_ids": [],
+        "scope_note": "Related witness exits in this function; exact mutation is the code below and specification() in MutationMatrix.py. Empty exit list denotes a nonadmission diagnostic/API control."
+      },
+      "before": "  `D5.S3.ConceptDynamics.CIRPT.PrimitiveBundle.Index,",
+      "after": "",
+      "additional_source_changes_before_needle": false,
+      "mutator": "MutationMatrix.specification",
+      "predicted_red_names": [
+        "BundleProjectedCarrier"
+      ]
+    },
+    {
+      "id": "a11-nonadmission-trace-edit",
+      "kind": "behavioral",
+      "target": "LeanInformationAudit.Tests.RegistrationGates.AllowlistBoundaries",
+      "mutation": "Neutral control: edit only a trace string; no inventory or behavior assertion should fail.",
+      "mutation_site": {
+        "file": "LeanInformationAudit/ReadoutProvenance.lean",
+        "function": "safeCollect",
+        "before": "\"incomplete cause=collection_failure operation=collect_readout first={address} site={address}: {ex.toMessageData}\"",
+        "related_inventory_exit_ids": [],
+        "scope_note": "Related witness exits in this function; exact mutation is the code below and specification() in MutationMatrix.py. Empty exit list denotes a nonadmission diagnostic/API control."
+      },
+      "before": "\"incomplete cause=collection_failure operation=collect_readout first={address} site={address}: {ex.toMessageData}\"",
+      "after": "\"incomplete cause=collection_failure operation=collect_readout first={address} site={address} detail={ex.toMessageData}\"",
+      "additional_source_changes_before_needle": false,
+      "mutator": "MutationMatrix.specification",
+      "predicted_red_names": []
+    },
+    {
+      "id": "a11-own-clean-prop-argument",
+      "kind": "behavioral",
+      "target": "LeanInformationAudit.Tests.RegistrationGates.AllowlistRules",
+      "mutation": "Classify every Prop-typed argument as allowlisted immediately after bounded inference, bypassing its statement type check. visitOccurrence still erases the proof body; direct application identity check is retained.",
+      "mutation_site": {
+        "file": "LeanInformationAudit/ReadoutProvenance.lean",
+        "function": "classifyOccurrence",
+        "before": "    let some type \u2190 occurrenceType occurrence | return .incomplete\n    let exact \u2190 exactScalarStatement type",
+        "related_inventory_exit_ids": [
+          "classifyOccurrence.1",
+          "classifyOccurrence.2",
+          "classifyOccurrence.3"
+        ],
+        "scope_note": "Related witness exits in this function; exact mutation is the code below and specification() in MutationMatrix.py. Empty exit list denotes a nonadmission diagnostic/API control."
+      },
+      "before": "    let some type \u2190 occurrenceType occurrence | return .incomplete\n    let exact \u2190 exactScalarStatement type",
+      "after": "    let some type \u2190 occurrenceType occurrence | return .incomplete\n    let some proof \u2190 boundedMeta (Meta.isProp type) `mutant_prop_clean | return .incomplete\n    if proof then return .allowlisted (witness .proofBoundary type)\n    let exact \u2190 exactScalarStatement type",
+      "additional_source_changes_before_needle": false,
+      "mutator": "MutationMatrix.specification",
+      "predicted_red_names": [
+        "ImportedLibraryPrivateProof",
+        "IndependentProofConstant",
+        "ClosedStatementInhabitant",
+        "InlineClosedStatementInhabitant",
+        "NominalLiteral"
+      ]
+    },
+    {
+      "id": "a11-own-remove-classical-choice",
+      "kind": "behavioral",
+      "target": "LeanInformationAudit.Tests.RegistrationGates.AllowlistRules",
+      "mutation": "Remove executable Classical namespace rejection; retain the independent unlisted_decision_producer fallback. Predict diagnostic-class assertion reds, not false admission.",
+      "mutation_site": {
+        "file": "LeanInformationAudit/ReadoutProvenance.lean",
+        "function": "visitOccurrence",
+        "before": "    if pos == .dataPos && n.getRoot == `Classical then\n      noteUnclassified \u27e8\"classical_choice\", n, namespaceLabel env n, origin\u27e9",
+        "related_inventory_exit_ids": [
+          "visitOccurrence.1",
+          "visitOccurrence.2",
+          "visitOccurrence.forward.1",
+          "visitOccurrence.3",
+          "visitOccurrence.4",
+          "visitOccurrence.5"
+        ],
+        "scope_note": "Related witness exits in this function; exact mutation is the code below and specification() in MutationMatrix.py. Empty exit list denotes a nonadmission diagnostic/API control."
+      },
+      "before": "    if pos == .dataPos && n.getRoot == `Classical then\n      noteUnclassified \u27e8\"classical_choice\", n, namespaceLabel env n, origin\u27e9",
+      "after": "    if false && pos == .dataPos && n.getRoot == `Classical then\n      noteUnclassified \u27e8\"classical_choice\", n, namespaceLabel env n, origin\u27e9",
+      "additional_source_changes_before_needle": false,
+      "mutator": "MutationMatrix.specification",
+      "predicted_red_names": [
+        "ClassicalDirect",
+        "TypeBeforeClassicalData",
+        "UnclassifiedPayloadParses"
+      ]
+    },
+    {
       "id": "a11-computed-default-stop",
       "kind": "behavioral",
       "target": "LeanInformationAudit.Tests.RegistrationGates.Round7ComputedStatement",
       "mutation": "Treat an unresolved registered statement head as a completed recognized stop, recreating the round-7 default admission.",
+      "mutation_site": {
+        "file": "LeanInformationAudit/ReadoutProvenance.lean",
+        "function": "statementUnknown",
+        "before": "  return .unclassified \u27e8\"unclassified_statement_head\", name,\n    namespaceLabel (\u2190 getEnv) name, (\u2190 get).theoremName\u27e9",
+        "related_inventory_exit_ids": [
+          "statementStep.2"
+        ],
+        "scope_note": "Related witness exits in this function; exact mutation is the code below and specification() in MutationMatrix.py. Empty exit list denotes a nonadmission diagnostic/API control."
+      },
       "before": "  return .unclassified \u27e8\"unclassified_statement_head\", name,\n    namespaceLabel (\u2190 getEnv) name, (\u2190 get).theoremName\u27e9",
       "after": "  return .recognized (witness .statementInductive head)",
+      "additional_source_changes_before_needle": false,
+      "mutator": "MutationMatrix.specification",
       "predicted_red_names": [
         "ComputedRegisteredProof",
         "ComputedRegisteredNominalPayload",
@@ -22,8 +2114,48 @@
       "kind": "behavioral",
       "target": "LeanInformationAudit.Tests.RegistrationGates.Round7PackedConsumer",
       "mutation": "Default-admit nominal carrier-valued and abstract fields by their kind, recreating the round-7 unaudited external carrier boundary.",
+      "mutation_site": {
+        "file": "LeanInformationAudit/ReadoutProvenance.lean",
+        "function": "inputType",
+        "before": "            if carrierValued ||\n                (concrete.isFVar && !parameter && !auditedFamily) then",
+        "related_inventory_exit_ids": [
+          "inputType.1",
+          "inputType.2",
+          "inputType.forward.1",
+          "inputType.3",
+          "inputType.4",
+          "inputType.forward.2",
+          "inputType.5",
+          "inputType.forward.3",
+          "inputType.6",
+          "inputType.forward.4",
+          "inputType.7",
+          "inputType.8",
+          "inputType.9",
+          "inputType.10",
+          "inputType.11",
+          "inputType.12",
+          "inputType.13",
+          "inputType.14",
+          "inputType.15",
+          "inputType.16",
+          "inputType.17",
+          "inputType.18",
+          "inputType.19",
+          "inputType.20",
+          "inputType.21",
+          "inputType.22",
+          "inputType.23",
+          "inputType.forward.5",
+          "inputType.24",
+          "inputType.25"
+        ],
+        "scope_note": "Related witness exits in this function; exact mutation is the code below and specification() in MutationMatrix.py. Empty exit list denotes a nonadmission diagnostic/API control."
+      },
       "before": "            if carrierValued ||\n                (concrete.isFVar && !parameter && !auditedFamily) then",
       "after": "            if false && (carrierValued ||\n                (concrete.isFVar && !parameter && !auditedFamily)) then",
+      "additional_source_changes_before_needle": false,
+      "mutator": "MutationMatrix.specification",
       "predicted_red_names": [
         "PackedCarrierHidden",
         "PackedCarrierOpaqueClean",
@@ -32,863 +2164,52 @@
       ]
     },
     {
-      "id": "a11-own-clean-prop-argument",
-      "kind": "behavioral",
-      "target": "LeanInformationAudit.Tests.RegistrationGates.AllowlistRules",
-      "mutation": "Classify every Prop-typed argument as allowlisted immediately after bounded inference, bypassing its statement type check. visitOccurrence still erases the proof body; direct application identity check is retained.",
-      "before": "    let some type \u2190 occurrenceType occurrence | return .incomplete\n    let exact \u2190 exactScalarStatement type",
-      "after": "    let some type \u2190 occurrenceType occurrence | return .incomplete\n    let some proof \u2190 boundedMeta (Meta.isProp type) `mutant_prop_clean | return .incomplete\n    if proof then return .allowlisted (witness .proofBoundary type)\n    let exact \u2190 exactScalarStatement type",
-      "predicted_red_names": [
-        "ImportedLibraryPrivateProof",
-        "IndependentProofConstant",
-        "ClosedStatementInhabitant",
-        "InlineClosedStatementInhabitant",
-        "NominalLiteral"
-      ]
-    },
-    {
-      "id": "a11-own-remove-classical-choice",
-      "kind": "behavioral",
-      "target": "LeanInformationAudit.Tests.RegistrationGates.AllowlistRules",
-      "mutation": "Remove executable Classical namespace rejection; retain the independent unlisted_decision_producer fallback. Predict diagnostic-class assertion reds, not false admission.",
-      "before": "    if pos == .dataPos && n.getRoot == `Classical then\n      noteUnclassified \u27e8\"classical_choice\", n, namespaceLabel env n, origin\u27e9",
-      "after": "    if false && pos == .dataPos && n.getRoot == `Classical then\n      noteUnclassified \u27e8\"classical_choice\", n, namespaceLabel env n, origin\u27e9",
-      "predicted_red_names": [
-        "ClassicalDirect",
-        "TypeBeforeClassicalData",
-        "UnclassifiedPayloadParses"
-      ]
-    },
-    {
-      "id": "default-admit-TypeClassification.flags.forward.1",
-      "kind": "source-contract",
-      "exit": "TypeClassification.flags.forward.1",
-      "rule_id": "retained-witness.rule",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.TypeClassification.flags.forward.1",
-        "CleanReturnInventory.MissingRuleId.TypeClassification.flags"
-      ]
-    },
-    {
-      "id": "default-admit-TypeClassification.witness?.forward.1",
-      "kind": "source-contract",
-      "exit": "TypeClassification.witness?.forward.1",
-      "rule_id": "retained-witness.rule",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.TypeClassification.witness?.forward.1",
-        "CleanReturnInventory.MissingRuleId.TypeClassification.witness?"
-      ]
-    },
-    {
-      "id": "default-admit-reuseWitness.1",
-      "kind": "source-contract",
-      "exit": "reuseWitness.1",
-      "rule_id": "retained-witness.rule",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.reuseWitness.1",
-        "CleanReturnInventory.MissingRuleId.reuseWitness"
-      ]
-    },
-    {
-      "id": "default-admit-bindWitnessSource.forward.1",
-      "kind": "source-contract",
-      "exit": "bindWitnessSource.forward.1",
-      "rule_id": "retained-witness.rule",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.bindWitnessSource.forward.1",
-        "CleanReturnInventory.MissingRuleId.bindWitnessSource"
-      ]
-    },
-    {
-      "id": "default-admit-checkedType.1",
-      "kind": "source-contract",
-      "exit": "checkedType.1",
-      "rule_id": "retained-witness.rule",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.checkedType.1",
-        "CleanReturnInventory.MissingRuleId.checkedType"
-      ]
-    },
-    {
-      "id": "default-admit-statementStep.1",
-      "kind": "source-contract",
-      "exit": "statementStep.1",
-      "rule_id": "statementForall",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.statementStep.1",
-        "CleanReturnInventory.MissingRuleId.statementStep"
-      ]
-    },
-    {
-      "id": "default-admit-statementStep.2",
-      "kind": "source-contract",
-      "exit": "statementStep.2",
-      "rule_id": "statementInductive",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.statementStep.2",
-        "CleanReturnInventory.MissingRuleId.statementStep"
-      ]
-    },
-    {
-      "id": "default-admit-statementOuter.1",
-      "kind": "source-contract",
-      "exit": "statementOuter.1",
-      "rule_id": "statementMembership",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.statementOuter.1",
-        "CleanReturnInventory.MissingRuleId.statementOuter"
-      ]
-    },
-    {
-      "id": "default-admit-statementOuter.2",
-      "kind": "source-contract",
-      "exit": "statementOuter.2",
-      "rule_id": "retained-witness.rule",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.statementOuter.2",
-        "CleanReturnInventory.MissingRuleId.statementOuter"
-      ]
-    },
-    {
-      "id": "default-admit-statementOuter.forward.1",
-      "kind": "source-contract",
-      "exit": "statementOuter.forward.1",
-      "rule_id": "retained-witness.rule",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.statementOuter.forward.1",
-        "CleanReturnInventory.MissingRuleId.statementOuter"
-      ]
-    },
-    {
-      "id": "default-admit-listStatementBoundary.1",
-      "kind": "source-contract",
-      "exit": "listStatementBoundary.1",
-      "rule_id": "listForall",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.listStatementBoundary.1",
-        "CleanReturnInventory.MissingRuleId.listStatementBoundary"
-      ]
-    },
-    {
-      "id": "default-admit-listStatementBoundary.2",
-      "kind": "source-contract",
-      "exit": "listStatementBoundary.2",
-      "rule_id": "listNegated",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.listStatementBoundary.2",
-        "CleanReturnInventory.MissingRuleId.listStatementBoundary"
-      ]
-    },
-    {
-      "id": "default-admit-listStatementBoundary.forward.1",
-      "kind": "source-contract",
-      "exit": "listStatementBoundary.forward.1",
-      "rule_id": "retained-witness.rule",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.listStatementBoundary.forward.1",
-        "CleanReturnInventory.MissingRuleId.listStatementBoundary"
-      ]
-    },
-    {
-      "id": "default-admit-listStatementBoundary.3",
-      "kind": "source-contract",
-      "exit": "listStatementBoundary.3",
-      "rule_id": "listPositive",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.listStatementBoundary.3",
-        "CleanReturnInventory.MissingRuleId.listStatementBoundary"
-      ]
-    },
-    {
-      "id": "default-admit-dataCarrier.1",
-      "kind": "source-contract",
-      "exit": "dataCarrier.1",
-      "rule_id": "rigidCarrier",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.dataCarrier.1",
-        "CleanReturnInventory.MissingRuleId.dataCarrier"
-      ]
-    },
-    {
-      "id": "default-admit-dataCarrier.2",
-      "kind": "source-contract",
-      "exit": "dataCarrier.2",
-      "rule_id": "carrierProjection",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.dataCarrier.2",
-        "CleanReturnInventory.MissingRuleId.dataCarrier"
-      ]
-    },
-    {
-      "id": "default-admit-dataCarrier.forward.1",
-      "kind": "source-contract",
-      "exit": "dataCarrier.forward.1",
-      "rule_id": "retained-witness.rule",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.dataCarrier.forward.1",
-        "CleanReturnInventory.MissingRuleId.dataCarrier"
-      ]
-    },
-    {
-      "id": "default-admit-dataCarrier.forward.2",
-      "kind": "source-contract",
-      "exit": "dataCarrier.forward.2",
-      "rule_id": "retained-witness.rule",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.dataCarrier.forward.2",
-        "CleanReturnInventory.MissingRuleId.dataCarrier"
-      ]
-    },
-    {
-      "id": "default-admit-dataCarrier.3",
-      "kind": "source-contract",
-      "exit": "dataCarrier.3",
-      "rule_id": "scalarCarrier",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.dataCarrier.3",
-        "CleanReturnInventory.MissingRuleId.dataCarrier"
-      ]
-    },
-    {
-      "id": "default-admit-dataCarrier.4",
-      "kind": "source-contract",
-      "exit": "dataCarrier.4",
-      "rule_id": "retained-witness.rule",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.dataCarrier.4",
-        "CleanReturnInventory.MissingRuleId.dataCarrier"
-      ]
-    },
-    {
-      "id": "default-admit-dataCarrier.5",
-      "kind": "source-contract",
-      "exit": "dataCarrier.5",
-      "rule_id": "retained-witness.rule",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.dataCarrier.5",
-        "CleanReturnInventory.MissingRuleId.dataCarrier"
-      ]
-    },
-    {
-      "id": "default-admit-dataCarrier.6",
-      "kind": "source-contract",
-      "exit": "dataCarrier.6",
-      "rule_id": "retained-witness.rule",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.dataCarrier.6",
-        "CleanReturnInventory.MissingRuleId.dataCarrier"
-      ]
-    },
-    {
-      "id": "default-admit-dataCarrier.forward.3",
-      "kind": "source-contract",
-      "exit": "dataCarrier.forward.3",
-      "rule_id": "retained-witness.rule",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.dataCarrier.forward.3",
-        "CleanReturnInventory.MissingRuleId.dataCarrier"
-      ]
-    },
-    {
-      "id": "default-admit-dataCarrier.7",
-      "kind": "source-contract",
-      "exit": "dataCarrier.7",
-      "rule_id": "nominalCarrier",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.dataCarrier.7",
-        "CleanReturnInventory.MissingRuleId.dataCarrier"
-      ]
-    },
-    {
-      "id": "default-admit-statementBoundary.1",
-      "kind": "source-contract",
-      "exit": "statementBoundary.1",
-      "rule_id": "retained-witness.rule",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.statementBoundary.1",
-        "CleanReturnInventory.MissingRuleId.statementBoundary"
-      ]
-    },
-    {
-      "id": "default-admit-inputType.1",
-      "kind": "source-contract",
-      "exit": "inputType.1",
-      "rule_id": "retained-witness.rule",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.inputType.1",
-        "CleanReturnInventory.MissingRuleId.inputType"
-      ]
-    },
-    {
-      "id": "default-admit-inputType.2",
-      "kind": "source-contract",
-      "exit": "inputType.2",
-      "rule_id": "retained-witness.rule",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.inputType.2",
-        "CleanReturnInventory.MissingRuleId.inputType"
-      ]
-    },
-    {
-      "id": "default-admit-inputType.forward.1",
-      "kind": "source-contract",
-      "exit": "inputType.forward.1",
-      "rule_id": "retained-witness.rule",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.inputType.forward.1",
-        "CleanReturnInventory.MissingRuleId.inputType"
-      ]
-    },
-    {
-      "id": "default-admit-inputType.3",
-      "kind": "source-contract",
-      "exit": "inputType.3",
-      "rule_id": "telescope",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.inputType.3",
-        "CleanReturnInventory.MissingRuleId.inputType"
-      ]
-    },
-    {
-      "id": "default-admit-inputType.4",
-      "kind": "source-contract",
-      "exit": "inputType.4",
-      "rule_id": "letType",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.inputType.4",
-        "CleanReturnInventory.MissingRuleId.inputType"
-      ]
-    },
-    {
-      "id": "default-admit-inputType.forward.2",
-      "kind": "source-contract",
-      "exit": "inputType.forward.2",
-      "rule_id": "retained-witness.rule",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.inputType.forward.2",
-        "CleanReturnInventory.MissingRuleId.inputType"
-      ]
-    },
-    {
-      "id": "default-admit-inputType.5",
-      "kind": "source-contract",
-      "exit": "inputType.5",
-      "rule_id": "telescope",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.inputType.5",
-        "CleanReturnInventory.MissingRuleId.inputType"
-      ]
-    },
-    {
-      "id": "default-admit-inputType.forward.3",
-      "kind": "source-contract",
-      "exit": "inputType.forward.3",
-      "rule_id": "retained-witness.rule",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.inputType.forward.3",
-        "CleanReturnInventory.MissingRuleId.inputType"
-      ]
-    },
-    {
-      "id": "default-admit-inputType.6",
-      "kind": "source-contract",
-      "exit": "inputType.6",
-      "rule_id": "lambdaType",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.inputType.6",
-        "CleanReturnInventory.MissingRuleId.inputType"
-      ]
-    },
-    {
-      "id": "default-admit-inputType.forward.4",
-      "kind": "source-contract",
-      "exit": "inputType.forward.4",
-      "rule_id": "retained-witness.rule",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.inputType.forward.4",
-        "CleanReturnInventory.MissingRuleId.inputType"
-      ]
-    },
-    {
-      "id": "default-admit-inputType.7",
-      "kind": "source-contract",
-      "exit": "inputType.7",
-      "rule_id": "letType",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.inputType.7",
-        "CleanReturnInventory.MissingRuleId.inputType"
-      ]
-    },
-    {
-      "id": "default-admit-inputType.8",
-      "kind": "source-contract",
-      "exit": "inputType.8",
-      "rule_id": "metadataType",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.inputType.8",
-        "CleanReturnInventory.MissingRuleId.inputType"
-      ]
-    },
-    {
-      "id": "default-admit-inputType.9",
-      "kind": "source-contract",
-      "exit": "inputType.9",
-      "rule_id": "sortKind",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.inputType.9",
-        "CleanReturnInventory.MissingRuleId.inputType"
-      ]
-    },
-    {
-      "id": "default-admit-inputType.10",
-      "kind": "source-contract",
-      "exit": "inputType.10",
-      "rule_id": "betaType",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.inputType.10",
-        "CleanReturnInventory.MissingRuleId.inputType"
-      ]
-    },
-    {
-      "id": "default-admit-inputType.11",
-      "kind": "source-contract",
-      "exit": "inputType.11",
-      "rule_id": "scopedParameter",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.inputType.11",
-        "CleanReturnInventory.MissingRuleId.inputType"
-      ]
-    },
-    {
-      "id": "default-admit-inputType.12",
-      "kind": "source-contract",
-      "exit": "inputType.12",
-      "rule_id": "auditedProjection",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.inputType.12",
-        "CleanReturnInventory.MissingRuleId.inputType"
-      ]
-    },
-    {
-      "id": "default-admit-inputType.13",
-      "kind": "source-contract",
-      "exit": "inputType.13",
-      "rule_id": "equality",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.inputType.13",
-        "CleanReturnInventory.MissingRuleId.inputType"
-      ]
-    },
-    {
-      "id": "default-admit-inputType.14",
-      "kind": "source-contract",
-      "exit": "inputType.14",
-      "rule_id": "naturalOrder",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.inputType.14",
-        "CleanReturnInventory.MissingRuleId.inputType"
-      ]
-    },
-    {
-      "id": "default-admit-inputType.15",
-      "kind": "source-contract",
-      "exit": "inputType.15",
-      "rule_id": "rigidCarrier",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.inputType.15",
-        "CleanReturnInventory.MissingRuleId.inputType"
-      ]
-    },
-    {
-      "id": "default-admit-inputType.16",
-      "kind": "source-contract",
-      "exit": "inputType.16",
-      "rule_id": "scalarCarrier",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.inputType.16",
-        "CleanReturnInventory.MissingRuleId.inputType"
-      ]
-    },
-    {
-      "id": "default-admit-inputType.17",
-      "kind": "source-contract",
-      "exit": "inputType.17",
-      "rule_id": "nullaryCarrier",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.inputType.17",
-        "CleanReturnInventory.MissingRuleId.inputType"
-      ]
-    },
-    {
-      "id": "default-admit-inputType.18",
-      "kind": "source-contract",
-      "exit": "inputType.18",
-      "rule_id": "listMetadata",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.inputType.18",
-        "CleanReturnInventory.MissingRuleId.inputType"
-      ]
-    },
-    {
-      "id": "default-admit-inputType.19",
-      "kind": "source-contract",
-      "exit": "inputType.19",
-      "rule_id": "quotientType",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.inputType.19",
-        "CleanReturnInventory.MissingRuleId.inputType"
-      ]
-    },
-    {
-      "id": "default-admit-inputType.20",
-      "kind": "source-contract",
-      "exit": "inputType.20",
-      "rule_id": "recursorType",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.inputType.20",
-        "CleanReturnInventory.MissingRuleId.inputType"
-      ]
-    },
-    {
-      "id": "default-admit-inputType.21",
-      "kind": "source-contract",
-      "exit": "inputType.21",
-      "rule_id": "enumRecursorType",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.inputType.21",
-        "CleanReturnInventory.MissingRuleId.inputType"
-      ]
-    },
-    {
-      "id": "default-admit-inputType.22",
-      "kind": "source-contract",
-      "exit": "inputType.22",
-      "rule_id": "aliasType",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.inputType.22",
-        "CleanReturnInventory.MissingRuleId.inputType"
-      ]
-    },
-    {
-      "id": "default-admit-inputType.23",
-      "kind": "source-contract",
-      "exit": "inputType.23",
-      "rule_id": "recursiveFamily",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.inputType.23",
-        "CleanReturnInventory.MissingRuleId.inputType"
-      ]
-    },
-    {
-      "id": "default-admit-inputType.forward.5",
-      "kind": "source-contract",
-      "exit": "inputType.forward.5",
-      "rule_id": "retained-witness.rule",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.inputType.forward.5",
-        "CleanReturnInventory.MissingRuleId.inputType"
-      ]
-    },
-    {
-      "id": "default-admit-inputType.24",
-      "kind": "source-contract",
-      "exit": "inputType.24",
-      "rule_id": "nominalFields",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.inputType.24",
-        "CleanReturnInventory.MissingRuleId.inputType"
-      ]
-    },
-    {
-      "id": "default-admit-inputType.25",
-      "kind": "source-contract",
-      "exit": "inputType.25",
-      "rule_id": "retained-witness.rule",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.inputType.25",
-        "CleanReturnInventory.MissingRuleId.inputType"
-      ]
-    },
-    {
-      "id": "default-admit-typeFamilyArgument.1",
-      "kind": "source-contract",
-      "exit": "typeFamilyArgument.1",
-      "rule_id": "retained-witness.rule",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.typeFamilyArgument.1",
-        "CleanReturnInventory.MissingRuleId.typeFamilyArgument"
-      ]
-    },
-    {
-      "id": "default-admit-typeFamilyArgument.2",
-      "kind": "source-contract",
-      "exit": "typeFamilyArgument.2",
-      "rule_id": "retained-witness.rule",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.typeFamilyArgument.2",
-        "CleanReturnInventory.MissingRuleId.typeFamilyArgument"
-      ]
-    },
-    {
-      "id": "default-admit-typeFamilyArgument.forward.1",
-      "kind": "source-contract",
-      "exit": "typeFamilyArgument.forward.1",
-      "rule_id": "retained-witness.rule",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.typeFamilyArgument.forward.1",
-        "CleanReturnInventory.MissingRuleId.typeFamilyArgument"
-      ]
-    },
-    {
-      "id": "default-admit-typeFamilyArgument.3",
-      "kind": "source-contract",
-      "exit": "typeFamilyArgument.3",
-      "rule_id": "retained-witness.rule",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.typeFamilyArgument.3",
-        "CleanReturnInventory.MissingRuleId.typeFamilyArgument"
-      ]
-    },
-    {
-      "id": "default-admit-typeFamilyArgument.4",
-      "kind": "source-contract",
-      "exit": "typeFamilyArgument.4",
-      "rule_id": "typeFamily",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.typeFamilyArgument.4",
-        "CleanReturnInventory.MissingRuleId.typeFamilyArgument"
-      ]
-    },
-    {
-      "id": "default-admit-typeFamilyArgument.5",
-      "kind": "source-contract",
-      "exit": "typeFamilyArgument.5",
-      "rule_id": "retained-witness.rule",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.typeFamilyArgument.5",
-        "CleanReturnInventory.MissingRuleId.typeFamilyArgument"
-      ]
-    },
-    {
-      "id": "default-admit-typeFamilyArgument.forward.2",
-      "kind": "source-contract",
-      "exit": "typeFamilyArgument.forward.2",
-      "rule_id": "retained-witness.rule",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.typeFamilyArgument.forward.2",
-        "CleanReturnInventory.MissingRuleId.typeFamilyArgument"
-      ]
-    },
-    {
-      "id": "default-admit-typeFamilyArgument.6",
-      "kind": "source-contract",
-      "exit": "typeFamilyArgument.6",
-      "rule_id": "retained-witness.rule",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.typeFamilyArgument.6",
-        "CleanReturnInventory.MissingRuleId.typeFamilyArgument"
-      ]
-    },
-    {
-      "id": "default-admit-classifyOccurrence.1",
-      "kind": "source-contract",
-      "exit": "classifyOccurrence.1",
-      "rule_id": "retained-witness.rule",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.classifyOccurrence.1",
-        "CleanReturnInventory.MissingRuleId.classifyOccurrence"
-      ]
-    },
-    {
-      "id": "default-admit-classifyOccurrence.2",
-      "kind": "source-contract",
-      "exit": "classifyOccurrence.2",
-      "rule_id": "retained-witness.rule",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.classifyOccurrence.2",
-        "CleanReturnInventory.MissingRuleId.classifyOccurrence"
-      ]
-    },
-    {
-      "id": "default-admit-classifyOccurrence.3",
-      "kind": "source-contract",
-      "exit": "classifyOccurrence.3",
-      "rule_id": "retained-witness.rule",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.classifyOccurrence.3",
-        "CleanReturnInventory.MissingRuleId.classifyOccurrence"
-      ]
-    },
-    {
-      "id": "default-admit-visitOccurrence.1",
-      "kind": "source-contract",
-      "exit": "visitOccurrence.1",
-      "rule_id": "retained-witness.rule",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.visitOccurrence.1",
-        "CleanReturnInventory.MissingRuleId.visitOccurrence"
-      ]
-    },
-    {
-      "id": "default-admit-visitOccurrence.2",
-      "kind": "source-contract",
-      "exit": "visitOccurrence.2",
-      "rule_id": "retained-witness.rule",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.visitOccurrence.2",
-        "CleanReturnInventory.MissingRuleId.visitOccurrence"
-      ]
-    },
-    {
-      "id": "default-admit-visitOccurrence.forward.1",
-      "kind": "source-contract",
-      "exit": "visitOccurrence.forward.1",
-      "rule_id": "retained-witness.rule",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.visitOccurrence.forward.1",
-        "CleanReturnInventory.MissingRuleId.visitOccurrence"
-      ]
-    },
-    {
-      "id": "default-admit-visitOccurrence.3",
-      "kind": "source-contract",
-      "exit": "visitOccurrence.3",
-      "rule_id": "retained-witness.rule",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.visitOccurrence.3",
-        "CleanReturnInventory.MissingRuleId.visitOccurrence"
-      ]
-    },
-    {
-      "id": "default-admit-visitOccurrence.4",
-      "kind": "source-contract",
-      "exit": "visitOccurrence.4",
-      "rule_id": "retained-witness.rule",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.visitOccurrence.4",
-        "CleanReturnInventory.MissingRuleId.visitOccurrence"
-      ]
-    },
-    {
-      "id": "default-admit-visitOccurrence.5",
-      "kind": "source-contract",
-      "exit": "visitOccurrence.5",
-      "rule_id": "retained-witness.rule",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.visitOccurrence.5",
-        "CleanReturnInventory.MissingRuleId.visitOccurrence"
-      ]
-    },
-    {
-      "id": "default-admit-readoutClosureCurrent.1",
-      "kind": "source-contract",
-      "exit": "readoutClosureCurrent.1",
-      "rule_id": "retained-witness.rule",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.readoutClosureCurrent.1",
-        "CleanReturnInventory.MissingRuleId.readoutClosureCurrent"
-      ]
-    },
-    {
-      "id": "default-admit-provenanceErrorCurrent.1",
-      "kind": "source-contract",
-      "exit": "provenanceErrorCurrent.1",
-      "rule_id": "retained-witness.rule",
-      "mutation": "Replace the marked typed exit with a rule-less default admit; reject before elaboration.",
-      "predicted_red_names": [
-        "CleanReturnInventory.provenanceErrorCurrent.1",
-        "CleanReturnInventory.MissingRuleId.provenanceErrorCurrent"
-      ]
-    },
-    {
-      "id": "a11-drop-list-carrier-fence",
-      "kind": "behavioral",
-      "target": "LeanInformationAudit.Tests.RegistrationGates.AllowlistRules",
-      "mutation": "Admit proposition-valued list elements through the natural-number uniqueness primitive.",
-      "before": "if carrierEvidence.isSome &&",
-      "after": "if true &&",
-      "predicted_red_names": []
-    },
-    {
       "id": "a11-list-nominal-carrier-path",
       "kind": "behavioral",
       "target": "LeanInformationAudit.Tests.RegistrationGates.SurvivingListBoundaries",
       "mutation": "Remove only the nominal List abstract carrier fence; the old metadata fence still rejects, while all four exact diagnostic-path pins fail.",
+      "mutation_site": {
+        "file": "LeanInformationAudit/ReadoutProvenance.lean",
+        "function": "inputType",
+        "before": "            if carrierValued ||\n                (concrete.isFVar && !parameter && !auditedFamily) then",
+        "related_inventory_exit_ids": [
+          "inputType.1",
+          "inputType.2",
+          "inputType.forward.1",
+          "inputType.3",
+          "inputType.4",
+          "inputType.forward.2",
+          "inputType.5",
+          "inputType.forward.3",
+          "inputType.6",
+          "inputType.forward.4",
+          "inputType.7",
+          "inputType.8",
+          "inputType.9",
+          "inputType.10",
+          "inputType.11",
+          "inputType.12",
+          "inputType.13",
+          "inputType.14",
+          "inputType.15",
+          "inputType.16",
+          "inputType.17",
+          "inputType.18",
+          "inputType.19",
+          "inputType.20",
+          "inputType.21",
+          "inputType.22",
+          "inputType.23",
+          "inputType.forward.5",
+          "inputType.24",
+          "inputType.25"
+        ],
+        "scope_note": "Related witness exits in this function; exact mutation is the code below and specification() in MutationMatrix.py. Empty exit list denotes a nonadmission diagnostic/API control."
+      },
       "before": "            if carrierValued ||\n                (concrete.isFVar && !parameter && !auditedFamily) then",
       "after": "            if name != ``List && (carrierValued ||\n                (concrete.isFVar && !parameter && !auditedFamily)) then",
+      "additional_source_changes_before_needle": false,
+      "mutator": "MutationMatrix.specification",
       "predicted_red_names": [
         "PropositionNodupPayloadCarrierPath",
         "LetPropositionNodupPayloadCarrierPath",
@@ -901,11 +2222,92 @@
       "kind": "behavioral",
       "target": "LeanInformationAudit.Tests.RegistrationGates.AllowlistRules",
       "mutation": "Remove nominal List abstract-carrier and List metadata carrier fences together; indexed and membership payloads retain independent rejection paths.",
+      "mutation_site": {
+        "file": "LeanInformationAudit/ReadoutProvenance.lean",
+        "function": "inputType",
+        "before": "            if carrierValued ||\n                (concrete.isFVar && !parameter && !auditedFamily) then",
+        "related_inventory_exit_ids": [
+          "inputType.1",
+          "inputType.2",
+          "inputType.forward.1",
+          "inputType.3",
+          "inputType.4",
+          "inputType.forward.2",
+          "inputType.5",
+          "inputType.forward.3",
+          "inputType.6",
+          "inputType.forward.4",
+          "inputType.7",
+          "inputType.8",
+          "inputType.9",
+          "inputType.10",
+          "inputType.11",
+          "inputType.12",
+          "inputType.13",
+          "inputType.14",
+          "inputType.15",
+          "inputType.16",
+          "inputType.17",
+          "inputType.18",
+          "inputType.19",
+          "inputType.20",
+          "inputType.21",
+          "inputType.22",
+          "inputType.23",
+          "inputType.forward.5",
+          "inputType.24",
+          "inputType.25"
+        ],
+        "scope_note": "Related witness exits in this function; exact mutation is the code below and specification() in MutationMatrix.py. Empty exit list denotes a nonadmission diagnostic/API control."
+      },
       "before": "            if carrierValued ||\n                (concrete.isFVar && !parameter && !auditedFamily) then",
       "after": "            if name != ``List && (carrierValued ||\n                (concrete.isFVar && !parameter && !auditedFamily)) then",
+      "additional_source_changes_before_needle": true,
+      "mutator": "MutationMatrix.specification",
       "predicted_red_names": [
         "PropositionNodupPayload",
         "LetPropositionNodupPayload"
+      ]
+    },
+    {
+      "id": "a11-nested-default-apart",
+      "kind": "behavioral",
+      "target": "LeanInformationAudit.Tests.RegistrationGates.NestedStatementIdentity",
+      "mutation": "Default-admit every observed proposition at the checkedStatementType witness exit, bypassing positive statement distinction.",
+      "mutation_site": {
+        "file": "LeanInformationAudit/ReadoutProvenance.lean",
+        "function": "statementApart",
+        "before": "private def checkedStatementType (env : Environment) (type : Expr) :\n    WalkM (Option ProvenanceAdmissionWitness) := do",
+        "related_inventory_exit_ids": [
+          "statementApart.1",
+          "statementApart.2",
+          "statementApart.3",
+          "statementApart.4",
+          "statementApart.5",
+          "statementApart.6",
+          "statementApart.7",
+          "statementApart.8",
+          "statementApart.9",
+          "statementApart.10",
+          "statementApart.11",
+          "statementApart.12",
+          "statementApart.13",
+          "statementApart.14",
+          "statementApart.15",
+          "statementApart.16"
+        ],
+        "scope_note": "Related witness exits in this function; exact mutation is the code below and specification() in MutationMatrix.py. Empty exit list denotes a nonadmission diagnostic/API control."
+      },
+      "before": "private def checkedStatementType (env : Environment) (type : Expr) :\n    WalkM (Option ProvenanceAdmissionWitness) := do",
+      "after": "private def checkedStatementType (env : Environment) (type : Expr) :\n    WalkM (Option ProvenanceAdmissionWitness) := do\n  return some (witness .statementRigidApart type)",
+      "additional_source_changes_before_needle": false,
+      "mutator": "MutationMatrix.specification",
+      "predicted_red_names": [
+        "QuantifiedComputedIdentity",
+        "QuantifiedAliasIdentity",
+        "ConjoinedComputedIdentity",
+        "DisjoinedComputedIdentity",
+        "ExistentialComputedIdentity"
       ]
     }
   ],

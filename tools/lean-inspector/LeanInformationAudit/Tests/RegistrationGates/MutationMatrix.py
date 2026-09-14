@@ -204,12 +204,19 @@ def specification(label, original):
         replacement='            if false && (carrierValued ||\n                (concrete.isFVar && !parameter && !auditedFamily)) then'
         predicted=['PackedCarrierHidden','PackedCarrierOpaqueClean','PackedCarrierHiddenDiagnostic','PackedCarrierOpaqueCleanDiagnostic']
         description='Default-admit nominal carrier-valued and abstract fields by their kind, recreating the round-7 unaudited external carrier boundary.'
+    elif kind=='nested-default-apart':
+        TARGET='LeanInformationAudit.Tests.RegistrationGates.NestedStatementIdentity'
+        needle='private def checkedStatementType (env : Environment) (type : Expr) :\n    WalkM (Option ProvenanceAdmissionWitness) := do'
+        replacement=needle+'\n  return some (witness .statementRigidApart type)'
+        predicted=['QuantifiedComputedIdentity','QuantifiedAliasIdentity','ConjoinedComputedIdentity','DisjoinedComputedIdentity','ExistentialComputedIdentity']
+        description='Default-admit every observed proposition at the checkedStatementType witness exit, bypassing positive statement distinction.'
     else:raise ValueError(label)
     overrides={
       'drop-list-carrier-fence':[],
       'resume-proof-implementations':['InternalTargetProofErased','InternalCompanionProofErased','ProofArgumentBoundary','AlternativeProofBoundary','ProofFieldBoundary','ErasedPredicateBoundary','BoundedNatInterfaceHead','ProofImplementationInvariance'],
       'remove-algebra-families':['UniformMonoidHeads','UniformRingHeads','UniformOrderHeads','UniformFieldHeads','UniformCommutativeRingHeads','FunctionInterfaceHead'],
       'remove-named-carrier-alias':['ArenaProjectedCarrier','CatalogProjectedCarrier','BundleProjectedCarrier','NestedScalarCarrier','FiniteFunctionRange'],
-      'remove-statement-projection':['SubsetMetadataBoundary','ProjectedStatementAlias']}
+      'remove-statement-projection':['SubsetMetadataBoundary','ProjectedStatementClean'],
+      'remove-statement-let':['RegisteredLetClean']}
     predicted=overrides.get(kind,predicted)
     return TARGET, source, needle, replacement, predicted, description
