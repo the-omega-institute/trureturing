@@ -11673,3 +11673,518 @@ $$
 此例的经典无损并不来自某一项半正定而自动保范数：两项都不定，保留它们的最优判别仍需要三个输出维数。改变判据的是 $D_d$ 的零特征子空间；把它加入正谱投影后，最优效应成为能与第一项共同读取的 $Q_d$。证毕。
 
 ## 追加锚（新终端）
+
+## 44. 交叉支撑的定量损失界
+
+**定理 44.1（有序权重的显式经典损失下界）。** 沿用第 43 节的有限维任务：$A,J$ 为 $\mathbb C^D$ 上的密度矩阵，$D\ge1$，且
+
+$$
+m\ge2,\qquad 0<c_1<\cdots<c_m,\qquad D_k=c_kA-J.
+$$
+
+允许这些加权差奇异。固定 $i<j$，假设相关的正、负谱投影
+
+$$
+P=P_i^+=\mathbf1_{(0,\infty)}(D_i)\ne0,\qquad
+Q=P_j^-=\mathbf1_{(-\infty,0)}(D_j)\ne0.
+$$
+
+在这两个非零支撑上定义严格正的谱间隙
+
+$$
+\alpha=\min\{\lambda>0:\lambda\in\operatorname{spec}D_i\},
+\qquad
+\beta=\min\{-\lambda:\lambda<0,\ \lambda\in\operatorname{spec}D_j\}.
+$$
+
+令 $r_P=\operatorname{rank}P$、$r_Q=\operatorname{rank}Q$，并记
+
+$$
+\boxed{
+\mathsf B_{ij}=\alpha r_P+\beta r_Q-\|\alpha P-\beta Q\|_1.
+}
+$$
+
+对任意预先固定的有限经典输出 CPTP 通道 $\Phi$，令
+
+$$
+\delta_k(\Phi)=\|D_k\|_1-\|\Phi(D_k)\|_1.
+$$
+
+则
+
+$$
+\boxed{
+\delta_i(\Phi)+\delta_j(\Phi)\ge\mathsf B_{ij}\ge0,
+\qquad
+\mathsf B_{ij}>0\ \Longleftrightarrow\ PQ\ne0.
+}
+$$
+
+特别地，一对违反第 43 节交叉支撑条件的权重，就给出对所有有限经典存储统一有效的严格正总损失下界。它针对固定的候选对与权重表，不是跨任务的统一常数。
+
+若 $P,Q$ 都为秩一投影，记 $\chi=\operatorname{tr}(PQ)\in[0,1]$，则
+
+$$
+\boxed{
+\mathsf B_{ij}
+=\alpha+\beta-\sqrt{(\alpha+\beta)^2-4\alpha\beta\chi}.
+}
+$$
+
+若相关支撑之一为零，则不使用上述谱间隙定义；这一对权重的下界可直接记为零。$\mathsf B_{ij}$ 是整体判别损失的下界，未断言它等于最优总损失。
+
+证明。固定经典存储对应的有限 POVM $(E_\ell)_\ell$。对每个权重，选取它在经典输出上的正号决策并拉回输入：
+
+$$
+F_k=\sum_{\ell:\,c_k\operatorname{tr}(E_\ell A)-\operatorname{tr}(E_\ell J)>0}E_\ell.
+$$
+
+与第 43 节相同，各输出读数随 $c_k$ 不减，所以
+
+$$
+0\le F_i\le F_j\le I_D.
+$$
+
+这里的 $F_k$ 实现存储后的最优二元决策；不要求它在原输入上已经无损，也不要求它是投影。
+
+写 $D_k=D_{k,+}-D_{k,-}$。利用 $F_k$ 的经典最优性，单项损失有精确表达
+
+$$
+\begin{aligned}
+\delta_k(\Phi)
+&=\|D_k\|_1-2\operatorname{tr}(F_kD_k)+\operatorname{tr}D_k\\
+&=2\operatorname{tr}((I_D-F_k)D_{k,+})
++2\operatorname{tr}(F_kD_{k,-}).
+\end{aligned}
+$$
+
+右端两项都非负。谱间隙定义给出 $D_{i,+}\ge\alpha P$ 和 $D_{j,-}\ge\beta Q$，所以
+
+$$
+\delta_i(\Phi)+\delta_j(\Phi)
+\ge2\alpha\operatorname{tr}((I_D-F_i)P)
++2\beta\operatorname{tr}(F_jQ).
+$$
+
+再由 $F_i\le F_j$ 得到
+
+$$
+\begin{aligned}
+\delta_i(\Phi)+\delta_j(\Phi)
+&\ge2\left[\alpha\operatorname{tr}((I_D-F_i)P)
++\beta\operatorname{tr}(F_iQ)\right]\\
+&\ge2\min_{0\le F\le I_D}
+\left[\alpha\operatorname{tr}((I_D-F)P)
++\beta\operatorname{tr}(FQ)\right].
+\end{aligned}
+$$
+
+这个辅助最小值可以精确求出。令 $T=\alpha P-\beta Q$，由正谱投影达到的变分公式，有
+
+$$
+\max_{0\le F\le I_D}\operatorname{tr}(FT)
+=\operatorname{tr}T_+
+=\frac{\|T\|_1+\operatorname{tr}T}{2}.
+$$
+
+因而
+
+$$
+\begin{aligned}
+&2\min_{0\le F\le I_D}
+\left[\alpha\operatorname{tr}((I_D-F)P)
++\beta\operatorname{tr}(FQ)\right]\\
+&=2\alpha r_P-2\operatorname{tr}T_+
+=\alpha r_P+\beta r_Q-\|\alpha P-\beta Q\|_1
+=\mathsf B_{ij}.
+\end{aligned}
+$$
+
+这证明下界。辅助二元优化的精确性不使前面的谱间隙替换、丢去非负项及 $F_i\le F_j$ 的估计自动成为等号。
+
+接着判断何时严格为正。三角不等式给出
+
+$$
+\|\alpha P-\beta Q\|_1\le\alpha r_P+\beta r_Q.
+$$
+
+第 43 节已证明，对两个正矩阵，差的迹范数等于两迹之和，当且仅当它们的支撑正交。这里 $\alpha,\beta>0$，两个支撑正好是 $\operatorname{ran}P$ 与 $\operatorname{ran}Q$，所以
+
+$$
+\mathsf B_{ij}=0\ \Longleftrightarrow\ PQ=0.
+$$
+
+如果整组任务中存在 $P_i^+P_j^-\ne0$，这两个投影自动非零，可以使用本定理。其余单项损失也非负，因此整组总损失至少为该对权重的 $\mathsf B_{ij}>0$。这个显式结论直接排除了通过增加有限经典标签数而把总损失逼近零的方案。
+
+最后计算秩一情形。写 $P=|p\rangle\langle p|$、$Q=|q\rangle\langle q|$，其中 $p,q$ 为单位向量，则 $\chi=|\langle p,q\rangle|^2$。若 $\chi<1$，在二维空间 $\operatorname{span}\{p,q\}$ 上，$T$ 的迹与行列式分别为
+
+$$
+\operatorname{tr}T=\alpha-\beta,\qquad
+\det T=-\alpha\beta(1-\chi)<0.
+$$
+
+其两个非零特征值异号，故
+
+$$
+\|T\|_1
+=\sqrt{(\alpha-\beta)^2+4\alpha\beta(1-\chi)}
+=\sqrt{(\alpha+\beta)^2-4\alpha\beta\chi}.
+$$
+
+在正交补上只有零特征值。若 $\chi=1$，则 $P=Q$，有 $\|T\|_1=|\alpha-\beta|$，同一个根式仍成立，此时 $\mathsf B_{ij}=2\min\{\alpha,\beta\}$。这给出完整的秩一公式，包括 $\chi=0$ 时下界为零的情形。
+
+上述辅助优化是标准 Helstrom 二元判别公式的直接应用。具体令 $C=\alpha r_P+\beta r_Q$，把 $P/r_P$ 与 $Q/r_Q$ 视为两个密度矩阵，先验分别取 $\alpha r_P/C$ 与 $\beta r_Q/C$；其最小错误概率乘以 $2C$ 就是 $\mathsf B_{ij}$。该公式及正谱投影达到策略见 Ballester、Wehner 与 Winter，*State Discrimination with Post-Measurement Information*，[Theorem 2.1](https://arxiv.org/html/quant-ph/0608014)，其中明确归于 Helstrom。本节把第 43 节的有序决策效应与这个标准二元公式结合；不将辅助公式本身作为新结果。证毕。
+
+**命题 44.2（交叉支撑界与第 40 节下界互不支配）。** 在两者共同适用的量子比特任务中，定理 44.1 的 $\mathsf B_{ij}$ 与定理 40.1 的 $\mathsf L$ 没有普遍的大小顺序。
+
+具体地，取
+
+$$
+A=\begin{pmatrix}1&0\\0&0\end{pmatrix},\qquad
+J=\frac1{10}\begin{pmatrix}9&3\\3&1\end{pmatrix},
+\qquad c=\frac14,\quad d=4,
+\qquad \mu=\frac{\sqrt{265}-15}{40}>0.
+$$
+
+两候选不对易，两个加权差都严格不定。此时两个下界为
+
+$$
+\mathsf B_{cd}=\mu\left(5-\sqrt{\frac{677}{53}}\right),
+\qquad
+\mathsf L=2\mu\left(5-\sqrt{\frac{1125}{53}}\right),
+$$
+
+并且
+
+$$
+\boxed{0<\mathsf L<\mu<\mathsf B_{cd}.}
+$$
+
+另一方面，在命题 40.2 的混态例中，$\mathsf B_{12}=\mathsf L/2>0$，因此第 40 节的下界严格更强。
+
+证明。这里 $A$ 是秩一投影，$J=vv^\dagger/10$，其中 $v=(3,1)^{\mathsf T}$ 且 $v^\dagger v=10$，所以两者都是纯态密度矩阵。由于 $J$ 的非对角元非零，$[A,J]\ne0$。两个加权差为
+
+$$
+D_c=\frac1{20}\begin{pmatrix}-13&-6\\-6&-2\end{pmatrix},
+\qquad
+D_d=\frac1{10}\begin{pmatrix}31&-3\\-3&-1\end{pmatrix}.
+$$
+
+它们的行列式分别为 $-1/40$ 与 $-2/5$，因此都严格不定。迹分别为 $-3/4$ 与 $3$，迹范数分别为
+
+$$
+\|D_c\|_1=\frac{\sqrt{265}}{20},\qquad
+\|D_d\|_1=\frac{\sqrt{265}}5.
+$$
+
+按第 40 节的记号，正、负本征值绝对值中的较小者为 $\mu_c=\mu$、$\mu_d=4\mu$。由于 $c<1<d$，$D_c$ 的正本征值较小、$D_d$ 的负本征值绝对值较小，所以定理 44.1 中的两个谱间隙恰为
+
+$$
+\alpha=\mu,\qquad\beta=4\mu.
+$$
+
+再令 $S_t=2P_t^+-I_2$。直接去迹并除以相应的 $\|D_t\|_1/2$ 得到
+
+$$
+S_c=\frac1{\sqrt{265}}\begin{pmatrix}-11&-12\\-12&11\end{pmatrix},
+\qquad
+S_d=\frac1{\sqrt{265}}\begin{pmatrix}16&-3\\-3&-16\end{pmatrix}.
+$$
+
+因此
+
+$$
+\kappa=\frac12\operatorname{tr}(S_cS_d)=-\frac{28}{53},
+\qquad \eta=|\kappa|=\frac{28}{53},
+\qquad
+\chi=\operatorname{tr}(P_c^+P_d^-)=\frac{1-\kappa}{2}=\frac{81}{106}.
+$$
+
+代入两个定理，根式中的量分别化为
+
+$$
+(\alpha+\beta)^2-4\alpha\beta\chi
+=\mu^2\frac{677}{53},
+$$
+
+$$
+\mu_c^2+\mu_d^2+2\mu_c\mu_d\eta
+=\mu^2\frac{1125}{53}.
+$$
+
+这给出所列两个下界。它们的严格比较只需要有理数平方比较：
+
+$$
+\frac{1125}{53}<25,
+\qquad
+\frac{1125}{53}>\frac{81}{4},
+\qquad
+\frac{677}{53}<16.
+$$
+
+第一式给出 $\mathsf L>0$；第二式给出 $\mathsf L<2\mu(5-9/2)=\mu$；第三式给出 $\mathsf B_{cd}>\mu(5-4)=\mu$。又因 $265>15^2$，$\mu>0$，所有不等号方向确定。
+
+为得到反向的严格比较，取命题 40.2 的
+
+$$
+A=\begin{pmatrix}3/4&0\\0&1/4\end{pmatrix},\qquad
+J=\begin{pmatrix}1/2&1/4\\1/4&1/2\end{pmatrix},
+\qquad c=1,\quad d=2.
+$$
+
+该节已经算得
+
+$$
+\mu_c=\frac{\sqrt2}{4},\qquad
+\mu_d=\frac{\sqrt5-2}{4},\qquad
+\kappa=\eta=\frac3{\sqrt{10}}>0.
+$$
+
+此时同样有 $\alpha=\mu_c$、$\beta=\mu_d$。把 $\chi=(1-\kappa)/2$ 代入秩一公式，得到
+
+$$
+\mathsf B_{12}
+=\mu_c+\mu_d-\sqrt{\mu_c^2+\mu_d^2+2\mu_c\mu_d\kappa}
+=\frac{\mathsf L}{2}.
+$$
+
+由第 40 节的 $\mathsf L>0$，这是严格较小的下界。两个精确例子共同排除了任一方的普遍数值支配关系。
+
+第 44 节的界适用于任意有限输入维数及奇异加权差，第 40 节则同时给出两项量子比特任务的经典损失上下界。在共同适用处可以取两个下界的较大者；这里保留第 40 节的结论，没有用新界替代它，也未把上述纯态例中的任一下界宣称为实际最优损失。证毕。
+
+## 追加锚（新终端）
+
+## 45. 最优分数的连续性与精确存储维数的跳变
+
+**定理 45.1（固定存储预算下的迹范数扰动界）。** 固定整数 $D,m\ge1$ 与 $1\le q\le D$。对 $\mathbb C^D$ 上的任意有限 Hermitian 矩阵表
+
+$$
+\mathbf H=(H_1,\ldots,H_m),
+$$
+
+沿用第 42 节的存储域：通道输出至任意有限个免费经典标签，每个标签携带至多 $q$ 维量子系统，各分支输出不归一化且不作后选择。定义
+
+$$
+V_q(\mathbf H)=\sup_\Phi\sum_{j=1}^m\|\Phi(H_j)\|_1,
+\qquad
+B(\mathbf H)=\sum_{j=1}^m\|H_j\|_1,
+\qquad
+\Delta_q(\mathbf H)=B(\mathbf H)-V_q(\mathbf H).
+$$
+
+这里不同矩阵表上的最优通道可以不同，但允许的通道集合由同一组 $D,m,q$ 固定。对另一组同维同长矩阵表 $\mathbf H'=(H'_1,\ldots,H'_m)$，令
+
+$$
+d_1(\mathbf H,\mathbf H')=
+\sum_{j=1}^m\|H_j-H'_j\|_1.
+$$
+
+则
+
+$$
+\boxed{
+|V_q(\mathbf H)-V_q(\mathbf H')|
+\le d_1(\mathbf H,\mathbf H'),
+\qquad
+|\Delta_q(\mathbf H)-\Delta_q(\mathbf H')|
+\le2d_1(\mathbf H,\mathbf H').
+}
+$$
+
+不要求任何输入差可逆。若仅改变同一密度矩阵对 $A,J$ 的权重，令 $H_j=c_jA-J$、$H'_j=c'_jA-J$，则距离精确为
+
+$$
+d_1(\mathbf H,\mathbf H')=\sum_{j=1}^m|c_j-c'_j|.
+$$
+
+定义最小无损量子寄存器维数
+
+$$
+q_{\min}(\mathbf H)=
+\min\{q\in\{1,\ldots,D\}:\Delta_q(\mathbf H)=0\}.
+$$
+
+第 42 节的达到性使 $\Delta_q=0$ 等价于存在有限标签的逐项无损通道。对每个固定 $q$，集合 $\{\mathbf H:q_{\min}(\mathbf H)\le q\}$ 是闭集。因此 $q_{\min}$ 是下半连续的：在任意固定矩阵表处，足够小的扰动不能降低该处的最小无损量子维数，但可以使它升高。
+
+证明。首先，对 Hermitian 矩阵 $X=X_+-X_-$，正性与迹保持给出
+
+$$
+\|\Phi(X)\|_1
+\le\|\Phi(X_+)\|_1+\|\Phi(X_-)\|_1
+=\operatorname{tr}X_++\operatorname{tr}X_-
+=\|X\|_1.
+$$
+
+所以 $0\le V_q(\mathbf H)\le B(\mathbf H)$。对任一共同允许通道，反三角不等式与上述收缩性给出
+
+$$
+\begin{aligned}
+\left|\sum_j\|\Phi(H_j)\|_1
+-\sum_j\|\Phi(H'_j)\|_1\right|
+&\le\sum_j\|\Phi(H_j-H'_j)\|_1\\
+&\le d_1(\mathbf H,\mathbf H').
+\end{aligned}
+$$
+
+该界对整个允许通道集合一致。先取一侧上确界，再交换两组矩阵表，便得到 $V_q$ 的扰动界；这一步不要求两组最优通道相同，也不预先使用最大值达到性。对 $B$ 直接用反三角不等式同样得到
+
+$$
+|B(\mathbf H)-B(\mathbf H')|
+\le d_1(\mathbf H,\mathbf H').
+$$
+
+将两式相加即得 $\Delta_q$ 的系数二界。仅改变权重时，$H_j-H'_j=(c_j-c'_j)A$，而 $A\ge0$、$\operatorname{tr}A=1$，所以 $\|H_j-H'_j\|_1=|c_j-c'_j|$。
+
+预算从 $q$ 增大时，可以把原输出量子系统等距嵌入较大空间，故 $V_q$ 不减而 $\Delta_q$ 不增。恒等存储使用 $q=D$ 即可无损，所以 $q_{\min}$ 的定义集合非空。第 42 节的有限达到论证对任意有限 Hermitian 表都成立；各项范数损失非负，故达到的总损失为零，当且仅当每项损失为零。由此
+
+$$
+\{\mathbf H:q_{\min}(\mathbf H)\le q\}
+=\{\mathbf H:\Delta_q(\mathbf H)=0\}.
+$$
+
+右端是连续函数的零点集，因此闭，给出下半连续性。更具体地，若 $q_0=q_{\min}(\mathbf H)>1$，则 $\Delta_{q_0-1}(\mathbf H)>0$。只要
+
+$$
+d_1(\mathbf H,\mathbf H')
+<\frac12\Delta_{q_0-1}(\mathbf H),
+$$
+
+扰动界就保证 $\Delta_{q_0-1}(\mathbf H')>0$，从而 $q_{\min}(\mathbf H')\ge q_0$。若 $q_0=1$，同一结论由维数至少为一自动成立。
+
+这里的连续性控制最优分数与最优损失，没有把整数值的精确资源函数断言为连续。所用范数性质是 Schatten 迹范数的标准三角不等式与正算子迹公式；正且保迹映射的迹范数收缩性见 Watrous，*The Theory of Quantum Information*，[推论 3.40 及式 (3.241)](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)。免费经典标签上的有限达到性由第 42 节承担。证毕。
+
+**命题 45.2（奇异权重处的维数跳变与消失损失）。** 固定命题 43.2 中的严格正定密度矩阵
+
+$$
+A=\frac18\begin{pmatrix}2&3&0\\3&5&0\\0&0&1\end{pmatrix},
+\qquad
+J=\frac1{27}\begin{pmatrix}5&9&0\\9&17&0\\0&0&5\end{pmatrix},
+\qquad c=\frac89.
+$$
+
+对参数 $-1/2<s<1/2$，令
+
+$$
+d_s=\frac{8(4+s)}{27}>c,\qquad
+H_1=D_c=cA-J,\qquad H_2(s)=D_{d_s}=d_sA-J.
+$$
+
+对每个固定 $s$，存储可以依赖 $A,J,c,d_s$，但实际采用 $c$ 还是 $d_s$ 只在存储结束后揭示。按第 41 节的两种资源口径，最小逐项无损资源为
+
+$$
+\boxed{
+d_{\rm all}(s)=3\quad(-1/2<s<1/2),
+\qquad
+q_{\rm free}(s)=
+\begin{cases}
+2,&-1/2<s<0,\\
+1,&0\le s<1/2.
+\end{cases}
+}
+$$
+
+记 $V_1(s)$ 为最优经典存储的范数总分，$\Delta(s)=\|D_c\|_1+\|D_{d_s}\|_1-V_1(s)$。则
+
+$$
+\boxed{
+\begin{aligned}
+&\Delta(s)=0&& (0\le s<1/2),\\
+&0<\Delta(s)\le
+\frac{\sqrt{36+72s+45s^2}-6-7s}{27}
+&&(-1/2<s<0),
+\end{aligned}
+}
+$$
+
+从而 $\lim_{s\to0}\Delta(s)=0$，尽管精确无损的量子维数在 $s=0$ 发生跳变。更一般地，对任意 $q\in\{1,2,3\}$ 和同一区间中的 $s,t$，都有
+
+$$
+|V_q(s)-V_q(t)|\le\frac8{27}|s-t|,
+\qquad
+|\Delta_q(s)-\Delta_q(t)|\le\frac{16}{27}|s-t|.
+$$
+
+证明。候选矩阵的正定性与归一化已在命题 43.2 验证。代入得到
+
+$$
+27D_c=\operatorname{diag}(1,-2,-2),\qquad
+27D_{d_s}=G_s\oplus(s-1),
+$$
+
+其中
+
+$$
+G_s=\begin{pmatrix}
+3+2s&3+3s\\3+3s&3+5s
+\end{pmatrix},
+\qquad
+\det G_s=s(s+3),\qquad
+\operatorname{tr}G_s=6+7s>0.
+$$
+
+其特征值为
+
+$$
+\lambda_\pm(s)=
+\frac{6+7s\pm\sqrt{36+72s+45s^2}}2.
+$$
+
+当 $s<0$ 时，$\det G_s<0$，所以前二维含一正一负两个特征值，第三个标量 $s-1$ 也严格为负。两项加权差均可逆。令 $R_s$ 为 $G_s$ 的正谱投影；其非对角元为
+
+$$
+(R_s)_{12}=\frac{3+3s}{\sqrt{36+72s+45s^2}}\ne0.
+$$
+
+故 $P_c^+=|e_1\rangle\langle e_1|$ 与 $P_{d_s}^+=R_s\oplus0$ 不对易。它们的对易子平方在前二维是某个非零负数乘 $I_2$，在第三维为零；因此生成代数包含两个中央分区，并精确为 $M_2(\mathbb C)\oplus\mathbb C$。定理 41.1 给出 $q_{\rm free}=2$ 与 $d_{\rm all}=3$。
+
+当 $s>0$ 时，$G_s$ 的左上元与行列式都严格为正，因此 $G_s>0$，而 $s-1<0$。此时正谱投影为 $P_c^+=|e_1\rangle\langle e_1|$ 与 $P_{d_s}^+=I_2\oplus0$，生成三个一维简单块的交换代数。定理 41.1 因而给出 $q_{\rm free}=1$ 与 $d_{\rm all}=3$。$s=0$ 正是命题 43.2，其结论同样为 $q_{\rm free}=1$、$d_{\rm all}=3$，无需在奇异点使用第 41 节。
+
+在整个参数区间，$3+2s>0$、$3+5s>0$、$s-1<0$。因此固定的标准基测量对 $D_{d_s}$ 给出的范数为
+
+$$
+\frac{(3+2s)+(3+5s)+(1-s)}{27}
+=\frac{7+6s}{27},
+$$
+
+并始终保留 $\|D_c\|_1=5/27$。当 $s\ge0$ 时，$G_s$ 半正定，这个读数已经等于 $\|D_{d_s}\|_1$，故 $\Delta(s)=0$。
+
+当 $s<0$ 时，正负特征值的绝对值之和为
+
+$$
+\|D_{d_s}\|_1
+=\frac{\sqrt{36+72s+45s^2}+1-s}{27}.
+$$
+
+使用同一个标准基测量，得到其实际总损失为
+
+$$
+\frac{\sqrt{36+72s+45s^2}-6-7s}{27}.
+$$
+
+最优经典损失不大于该值。另一方面，这时精确无损要求 $q\ge2$，第 42 节的达到性排除了经典通道的最优损失为零，所以 $\Delta(s)>0$。所列上界严格为正，因为 $6+7s>0$ 且
+
+$$
+(36+72s+45s^2)-(6+7s)^2=-4s(s+3)>0.
+$$
+
+也可将它写成
+
+$$
+\frac{-4s(s+3)}
+{27\left(\sqrt{36+72s+45s^2}+6+7s\right)},
+$$
+
+其分母在 $s\to0^-$ 时趋于 $324$，分子趋于零。因此最优损失从负侧也趋于零。这个上界来自一个明确可行测量，没有声称该测量在 $s<0$ 时达到最佳经典总分。
+
+最后，对两个参数只有第二项加权差改变，并且
+
+$$
+H_2(s)-H_2(t)=\frac8{27}(s-t)A,
+\qquad
+d_1(\mathbf H(s),\mathbf H(t))=\frac8{27}|s-t|.
+$$
+
+定理 45.1 直接给出两条全区间扰动界。所有严格正损失均针对固定负参数；当参数接近奇异点时，这些损失没有共同的严格正下界。精确资源的整数跳变因而与最优分数的连续性相容。证毕。
+
+## 追加锚（新终端）
