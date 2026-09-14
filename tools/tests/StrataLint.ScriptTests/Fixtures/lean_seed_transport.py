@@ -517,6 +517,7 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
         self.assertIn("prune_error", result.stdout)
 
 
+
 FAKE_GH = '''#!/usr/bin/env python3
 import hashlib, json, os, pathlib, shutil, sys
 args = sys.argv[1:]
@@ -540,7 +541,7 @@ if args[0] == "api" and "FAKE_VERIFICATION_API" in os.environ:
 def option(name): return args[args.index(name)+1]
 def metadata(directory):
     value = json.loads((directory / "release.json").read_text())
-    value["assets"] = [{"name": p.name, "digest": "sha256:" + hashlib.sha256(p.read_bytes()).hexdigest()}
+    value["assets"] = [{"name": p.name, "size": p.stat().st_size, "digest": "sha256:" + hashlib.sha256(p.read_bytes()).hexdigest()}
                        for p in directory.iterdir() if p.name != "release.json"]
     return value
 if args[:2] == ["release", "list"]:
@@ -564,6 +565,14 @@ else:
         (directory / "release.json").write_text(json.dumps(value))
         if os.environ.get("FAKE_DAMAGE_AFTER_EDIT") == "1":
             (directory / "lean-build.tgz").write_bytes(b"damaged after upload")
+        if os.environ.get("FAKE_TRUNCATE_AFTER_EDIT") == "1":
+            archive = directory / "lean-build.tgz"
+            packed = archive.read_bytes()[:-8]; archive.write_bytes(packed)
+            manifest = json.loads((directory / "manifest.json").read_text())
+            digest = hashlib.sha256(packed).hexdigest()
+            manifest.update(archive_bytes=len(packed), archive_sha256=digest,
+                parts=[{"name": archive.name, "bytes": len(packed), "sha256": digest}])
+            (directory / "manifest.json").write_text(json.dumps(manifest))
     elif verb == "download":
         destination = pathlib.Path(option("--dir")); destination.mkdir(exist_ok=True)
         if not directory.exists():

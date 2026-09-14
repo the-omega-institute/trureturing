@@ -4,7 +4,7 @@ import pathlib
 import shutil
 import subprocess
 
-from lean_seed_support import ROOT, write
+from lean_seed_support import ROOT, digest, write
 
 
 class ReleaseVerificationCases:
@@ -163,6 +163,31 @@ class ReleaseVerificationCases:
         self.assertIn('"status":"failed"', result.stdout)
         self.assertNotIn('"status":"published"', result.stdout)
         self.assertEqual(["lean"], (self.root / "build-runs").read_text().splitlines())
+
+    def test_verification_truncated_gzip_normalizes_fetch_and_publish_failures(self):
+        self.verification_fixture()
+        self.assertEqual(0, self.verification("publish").returncode)
+        snapshot = next(self.remote.iterdir())
+        archive = snapshot / "lean-build.tgz"
+        packed = archive.read_bytes()[:-8]
+        archive.write_bytes(packed)
+        manifest = json.loads((snapshot / "manifest.json").read_text())
+        manifest.update(archive_bytes=len(packed), archive_sha256=digest(packed),
+            parts=[{"name": archive.name, "bytes": len(packed), "sha256": digest(packed)}])
+        write(snapshot / "manifest.json", json.dumps(manifest))
+        shutil.rmtree(self.root / ".lake/build")
+        result = self.verification("fetch")
+        self.assertEqual(1, result.returncode, result.stdout + result.stderr)
+        self.assertIn('"status":"miss"', result.stdout)
+        self.assertNotIn("Traceback", result.stderr)
+        self.assertFalse((self.root / ".lake/build").exists())
+        shutil.rmtree(snapshot)
+        write(self.root / ".lake/build/lib/lean/D5/A.olean", "locally-produced-olean")
+        result = self.verification("publish", FAKE_TRUNCATE_AFTER_EDIT="1")
+        self.assertEqual(1, result.returncode, result.stdout + result.stderr)
+        self.assertIn('"status":"failed"', result.stdout)
+        self.assertNotIn("Traceback", result.stderr)
+        self.assertNotIn('"status":"published"', result.stdout)
 
     def test_verification_fetch_binds_source_ref_and_attempt_without_fallback(self):
         self.verification_fixture()
