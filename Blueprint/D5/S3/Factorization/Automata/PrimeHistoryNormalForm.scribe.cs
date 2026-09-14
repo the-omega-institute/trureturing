@@ -53,8 +53,11 @@ internal sealed class PrimeHistoryNormalFormDocument : IScribeDocumentDefinition
                     "D5/S3/Factorization/Automata/PrimeHistoryNormalForm.normal_surjective"),
                 H("Every admissible interval translation is actually realizable"),
                 StatementSource.FromAuthor(Disp(Seq(
+                    Forall, Sp, F.Id("a"), Sp, InMacro, Sp,
+                    Mathbb, Grp(F.Id("N")), Comma, Sp,
                     F.Id("range"), Open, F.Id("normal"), Open, F.Id("a"), Close, Close,
-                    Sp, Eq, Sp, F.Id("allIntervalMaps")))),
+                    Sp, Eq, Sp, F.Id("Option"), Open,
+                    F.Id("IntervalMap"), Open, F.Id("a"), Close, Close))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "For a nonempty form [l,u] with shift d, run l divisions, a-u+l "
