@@ -1,0 +1,14 @@
+**定义。** 在两个空间坐标均以 $2\pi$ 为周期的平坦环面上，令
+
+$$
+u(t,X,Y)=(e^{-\nu t}\cos Y,0),qquad
+Q_k=P_k^{-1}=\begin{pmatrix}1&0\\k&1/2\end{pmatrix},
+$$
+
+并定义
+
+$$
+v(t,x,y)=Q_ku(t,P_k(x,y))
+=(1,k)e^{-\nu t}\cos(-2kx+2y).
+$$
+

@@ -265,250 +265,476 @@ LowModeReversalWitness -> ReversalWaveSynthesis
 
 [5] The Omega Institute. PR #6172, `CanonicalLiLocalExpansion`。本轮读取为已合并状态，列作后续 Li 路线的已有源对象，不是本组直接依赖。
 
-## 11. OpenAI 完整 NS 形式化的源核对与稳定性接入
+## 11. 耗散误差管与受迫剪切不动点
 
-### 11.1 原始结果和当前接入范围
+### 11.3 实 Hilbert 空间中的指数误差管
 
-2026-09-08，OpenAI 发布 Navier–Stokes 论文与完整 Lean 项目 `openai/NavierStokesAndEuler`。[6] 本轮读取的 main 为 `f9e8bc5b38b6e212696e8a30e3e91517af887bbd`，更新日期为 2026-09-10。其 `NavierStokes/ComparatorSolution.lean` 给出两项实际终端声明：对每个正黏性 nu，存在满足相应条件的光滑初值和外力，使 R³ 或周期 R³/Z³ 上所规定的全局光滑解不存在；全空间分支的解要求还含统一能量界。[7] 这是官方表述的 C、D 分支。外力变量及其条件属于原定理，不得删除；单独的无外力 Euler 项目也不能替代 NS 的量词。
-
-本轮核对了公开声明及相关证明模块，没有在当前环境重新构建完整上游工程，也没有宣称完成独立专家审查或奖项认证。完整上游项目存在，与本库是否已有全部依赖闭包，是不同事实。本库现役 `Cone/ConePositivity.lean` 已注明从上游 `8937a8f4cbc7abaab5e9e97d1cc7f5d2319d9538` 移植 `ConeAlgebra.lean`；它给出应力锥与二阶矩阵正定性的等价，没有给出任意 NS 流的全局吸引性。
-
-本库固定 Lean 4.33.0，上游固定 Lean 4.34.0-rc2。本轮保持既有 toolchain 和 mathlib revision 不变，选择有真实消费者的证明切片作署名移植。没有添加无法解析的外部 import，也没有把上游终端结论重述成 axiom。
-
-### 11.2 实际源模块的不同用途
-
-| 上游真源 | 核读的结论 | 本轮用途 |
-|---|---|---|
-| `NavierStokes/ComparatorSolution.lean` | 带规定外力的 C、D 终端结果 | 核对范围，不移植为稳定性假设 |
-| `NavierStokes/R3/H3Energy.lean` | 实际 L² 曲线求导、弱导数分部积分、两解之差的能量增长界和唯一性 | 保留真正 PDE 接入目标，尚未移植其全部 H³ 依赖 |
-| `NavierStokes/R3/ComparisonGronwall.lean` | 闭区间连续、内点可导下的误差界和空间截断耗尽 | 核对端点条件与正增长估计的边界 |
-| `NavierStokes/ViscousPropagator.lean` | 实 Hilbert 空间上，从实际右侧微分方程推导带强迫的范数界 | 三个私有证明切片已移植，并被新公开结论直接调用 |
-
-H³ 比较证明给出 E'≤2GE 一类上界，其中 G 非负。它用于初始差为零时的唯一性；不能通过更换解释，把正增长上界写成指数吸引。本轮使用 `ViscousPropagator` 的真正加权范数论证，并额外要求实际算子具有严格负的二次型界。
-
-三段移植的上游原名为 `hasDerivWithinAt_norm_of_ne_zero`、`norm_le_initial_add_integral`、`weighted_norm_le_initial_add_integral`。[8] 本地仅调整 namespace、私有可见性、辅助名称与所需 Mathlib imports；保留闭区间连续性、右导数与正权重条件。源代码保留 OpenAI 仓库、确切提交、文件路径及 Apache-2.0 归属。它们位于同一个具有后续实质结论的模块中，没有另建无人调用的包装库。
-
-### 11.3 来自真实方程的指数误差管
-
-新增 `D5/S3/FluidDynamics/Stability/OpenAIViscousAttraction.lean`，配套同名 Scribe。设 H 为实内积空间，实际轨迹满足
+**假设。** 设 $H$ 为实 Hilbert 空间，$T>0$，轨迹 $w:[0,T]\to H$ 连续并在 $[0,T)$ 上可右微；对每个 $t$，$A(t):H\to H$ 为线性算子，且
 
 \[
-w'(t)=A(t)w(t)+r(t),\qquad
-\langle z,A(t)z\rangle\leq-\gamma\|z\|^2,\quad\gamma>0,
-\qquad\|r(t)\|\leq\rho.
+w'(t)=A(t)w(t)+r(t).
 \]
 
-在所声明的闭时间区间内，证明
+**假设。** 存在常数 $\gamma>0$ 与 $\rho\geq 0$，使每个 $t\in[0,T)$ 及 $z\in H$ 都满足
+
+\[
+\langle z,A(t)z\rangle\leq-\gamma\|z\|^2,
+\qquad \|r(t)\|\leq\rho.
+\]
+
+**定理。** 在上述假设下，对每个 $t\in[0,T]$ 都有指数误差管
 
 \[
 \boxed{\|w(t)\|\leq e^{-\gamma t}\|w(0)\|
- +\frac{\rho}{\gamma}(1-e^{-\gamma t}).}
++\frac{\rho}{\gamma}(1-e^{-\gamma t}).}
 \tag{11.1}
 \]
 
-具体证明调用上游移植的加权范数定理，取 W(t)=exp(-gamma*t)。积分项由 rho*exp(gamma*t) 控制，再用显式原函数 (rho/gamma)*exp(gamma*t) 与微积分基本定理求出。初始误差、实际时间、负增长率及持续扰动均未被隐藏。轨迹过零的情形由上游右导数比较处理，没有除以零范数。
+**证明。** 在 $w(t)\neq0$ 时，范数的右导数满足
 
-公开声明是 `norm_le_exponential_tube`、`unforced_norm_contraction`、`scalar_equilibrium_tube`。最后一项将实际标量轨迹 a(t) 平移到误差 a(t)-c，适用于 a'=-gamma*(a-c)+r。持续误差允许的极限范围是 rho/gamma；rho=0 时得到指数衰减。全时间收敛仍要求轨迹全局存在，且同一个 gamma 在全部时间有效；有限区间估计自身不证明全局存在。
+\[
+\frac{d^+}{dt}\|w(t)\|
+=\frac{\langle w(t),w'(t)\rangle}{\|w(t)\|}
+\leq-\gamma\|w(t)\|+\rho.
+\]
 
-该一般模块的 A(t) 是有界连续线性算子。全空间 L² 上的 Stokes 算子通常无界，不能直接塞进这一类型。有限 Galerkin 系统、标量不变族可以直接消费本定理；一般 PDE 需要保留算子定义域及能量形式，或证明一致逼近后才能过渡。低维观察的趋零也不能替代这里实际状态范数的趋零。
+**证明。** 在 $w(t)=0$ 时，相同上界由范数的右上导数得到。乘以 $e^{\gamma t}$ 并在 $[0,t]$ 上积分，便有
 
-### 11.4 实际受迫 NS 不动点的消费者
+\[
+e^{\gamma t}\|w(t)\|-\|w(0)\|
+\leq\rho\int_0^t e^{\gamma s}\,ds
+=\frac{\rho}{\gamma}(e^{\gamma t}-1),
+\]
 
-新增 `D5/S3/FluidDynamics/Stability/ForcedShearFixedPoint.lean` 及同名 Scribe，直接复用同一 PR 的 `ToralIsogenyShearNS` 中真实波形、普通导数与完整 NS 残差。固定空间周期 2pi，令
+**证明。** 这与式 (11.1) 等价。
+
+**命题。** 若 $\rho=0$，则 $\|w(t)\|\leq e^{-\gamma t}\|w(0)\|$。若标量轨迹满足 $a'=-\gamma(a-c)+r$ 且 $|r|\leq\rho$，则
+
+\[
+|a(t)-c|\leq e^{-\gamma t}|a(0)-c|
++\frac{\rho}{\gamma}(1-e^{-\gamma t}).
+\]
+
+**证明。** 第一式是在式 (11.1) 中取 $\rho=0$；第二式对误差 $w=a-c$ 应用同一定理。
+
+### 11.4 受迫剪切流的残差、不动点与吸引界
+
+**定义。** 在二维环面 $\mathbb T^2=(\mathbb R/2\pi\mathbb Z)^2$ 上，取 $T>0$、$k\in\mathbb N$、$\nu>0$ 以及可微函数 $a:[0,T]\to\mathbb R$，并定义
 
 \[
 \Phi_k(x,y)=(1,k)\cos(-2kx+2y),\qquad
-\Gamma_k=4\nu(k^2+1),\qquad u_a(t,x,y)=a(t)\Phi_k(x,y).
+\Gamma_k=4\nu(k^2+1),\qquad
+u_a(t,x,y)=a(t)\Phi_k(x,y).
 \]
 
-普通求导证明 div(u_a)=0，且零压力 NS 残差为
+**命题。** 场 $u_a$ 无散度，并满足零压力 Navier--Stokes 残差恒等式
 
 \[
 \partial_tu_a+(u_a\cdot\nabla)u_a-\nu\Delta u_a
- =(a'+\Gamma_k a)\Phi_k.
+=(a'(t)+\Gamma_k a(t))\Phi_k.
 \tag{11.2}
 \]
 
-非线性对流的两个分量完整保留，随后由速度方向 (1,k) 与波矢 (-2k,2) 的配对为零而消去。没有从一张预设乘子表假定 PDE 成立。
+**证明。** 速度方向 $(1,k)$ 与波矢 $(-2k,2)$ 的内积为 $-2k+2k=0$，故 $\nabla\cdot u_a=0$ 且 $(u_a\cdot\nabla)u_a=0$。又有
 
-固定 c 后，真实场 u_*=c Phi_k 满足时间不变外力 f_*=Gamma_k*c*Phi_k 的 NS 方程。该不动点通过实际导数证明构造出来。若外力再加 r(t)Phi_k，实际幅度方程就是 a'=-Gamma_k*(a-c)+r。nu>0 推出 Gamma_k>0，因而可以直接调用式 (11.1)。结合每个实际分量的 |Phi_k,i|≤1+k，得到对所有 x,y 和两个分量同时成立的界
+\[
+\Delta\Phi_k=-4(k^2+1)\Phi_k,
+\qquad \partial_tu_a=a'(t)\Phi_k,
+\]
+
+**证明。** 代入即得式 (11.2)。
+
+**定义。** 固定 $c\in\mathbb R$，令
+
+\[
+u_*(x,y)=c\Phi_k(x,y),\qquad
+f_*(x,y)=\Gamma_kc\Phi_k(x,y).
+\]
+
+**定理。** 场 $u_*$ 是外力 $f_*$ 下的定常零压力解。
+
+**假设。** 设外力为 $f_*+r(t)\Phi_k$，其中 $|r(t)|\leq\rho$，并设幅度满足
+
+\[
+a'(t)=-\Gamma_k(a(t)-c)+r(t),
+\]
+
+**定理。** 在上述外力和幅度方程的假设下，对 $i\in\{1,2\}$、$t\in[0,T]$ 及 $(x,y)\in\mathbb T^2$，
 
 \[
 |u_{a,i}(t,x,y)-u_{*,i}(x,y)|\leq
 (1+k)\left[e^{-\Gamma_k t}|a(0)-c|
- +\frac{\rho}{\Gamma_k}(1-e^{-\Gamma_k t})\right].
++\frac{\rho}{\Gamma_k}(1-e^{-\Gamma_k t})\right].
 \tag{11.3}
 \]
 
-`amplitude_readout` 还证明 a(t)=u_a(t,0,0)_0，因此幅度确为原速度场上的读数。关键声明是 `field_equation`、`stationary_forced_solution`、`forced_shear_attraction`。空间界采用分量绝对值，没有擅自改写成连续 L² 范数。
+**证明。** 对常幅 $a=c$ 使用式 (11.2)，得到残差 $\Gamma_kc\Phi_k=f_*$。对一般 $a$，式 (11.2) 与幅度方程给出残差 $(\Gamma_kc+r)\Phi_k=f_*+r\Phi_k$。由于 $\Gamma_k>0$，式 (11.1) 作用于 $a-c$；再由 $|\Phi_{k,i}(x,y)|\leq1+k$ 得式 (11.3)。
 
-无扰动时，显式幅度 a(t)=c+(a(0)-c)exp(-Gamma_k*t) 给出全局趋近该不动点的普通解公式。本轮源码的主要认证结论是上述实际方程和有限区间误差界，没有额外声称已完成任意受迫 PDE 的解构造。稳定性范围为同一剪切不变族，任意非共线或三维扰动均未纳入。这里的时间不变外力也不等同于 C、D 分支中有指定时间衰减条件的外力；两类问题不能交换假设。
-
-### 11.5 一般稳定不动点需要补齐的分析链
-
-对同一固定外力下的候选稳态 u_*，设 w=u-u_*。在光滑周期、散度为零且压力正交等条件下，目标是从实际方程获得
+**命题。** 对每个 $t$ 都有 $a(t)=u_{a,1}(t,0,0)$。当 $r=0$ 时，
 
 \[
-\frac12\frac{d}{dt}\|w\|_{L^2}^2+\nu\|\nabla w\|_{L^2}^2
- =-\int w\cdot((w\cdot\nabla)u_*)+\int w\cdot r.
+a(t)=c+(a(0)-c)e^{-\Gamma_k t},
+\]
+
+**命题。** 若 $r=0$ 且 $a$ 的定义域为 $[0,\infty)$，则同一剪切不变族内的解全局趋近 $u_*$。
+
+**证明。** 因为 $\Phi_{k,1}(0,0)=1$，第一式成立。第二式是线性方程 $a'=-\Gamma_k(a-c)$ 的解；$\Gamma_k>0$ 蕴含指数项趋于零。
+
+### 11.5 周期 Navier--Stokes 稳态的扰动能量恒等式
+
+**假设。** 设 $u$ 与 $u_*$ 是光滑周期无散度向量场，$u$ 满足带外力 $f+r$ 的 Navier--Stokes 方程，$u_*$ 满足带外力 $f$ 的定常方程。令 $w=u-u_*$，并假设周期分部积分以及压力与无散度场的 $L^2$ 正交性成立。
+
+**命题。** 扰动 $w$ 满足
+
+\[
+\frac12\frac{d}{dt}\|w\|_{L^2}^2
++\nu\|\nabla w\|_{L^2}^2
+=-\int_{\mathbb T^d}w\cdot((w\cdot\nabla)u_*)
++\int_{\mathbb T^d}w\cdot r.
 \tag{11.4}
 \]
 
-这与已核读的上游 H³ 比较证明使用同一类分部积分和压力处理，但必须保留黏性耗散项。若实际零均值子空间满足 Poincare 下界 D≥lambda_1 E，且已验证的稳态伸长界为 G，则
+**证明。** 两个方程相减后，对 $w$ 作 $L^2$ 配对。周期边界与无散度条件使
 
 \[
-\gamma=\nu\lambda_1-G>0
+\int w\cdot((u_*\cdot\nabla)w)=0,
+\qquad
+\int w\cdot((w\cdot\nabla)w)=0,
 \]
 
-才是吸引证书的负增长裕量。可用完整梯度算子范数作 G 的充分上界，也可进一步证明对称梯度的更精确控制。零均值或固定均值条件不可省略，R³ 上也不能自动使用周期域的正谱隙。式 (11.4)、Poincare 接入与这些充分条件是下一轮待证明目标，本轮未将它们包装成已经完成的 PDE 结论。
+**证明。** 压力项也为零，而黏性项经分部积分成为 $\nu\|\nabla w\|_{L^2}^2$，余项即为式 (11.4)。
 
-实际路线因此是：复用上游弱导数和能量空间；为我们的同一速度场建立空间对象对应；保留耗散、压力和非线性项；验证稳态方程与正裕量；最后将估计传到真实观察或记忆核。若目标通过有限 Fourier 数据给出，还需认证未解析高频尾项与残差，而非假设截断解就是 PDE 稳态。
+**假设。** 再假设 $w$ 属于零均值子空间，并满足 Poincare 不等式
 
-OpenAI 的终端爆破结果说明，不能期望对所有允许外力和初值存在无条件的全局吸引固定点。可研究的目标应明确固定方程、外力、状态空间、对称性及吸引域。数学表示中的不动点、速度场演化的稳态、以及空间环面作用的固定点，是需要以实际映射连接的不同对象。
+\[
+\|\nabla w\|_{L^2}^2\geq\lambda_1\|w\|_{L^2}^2
+\]
 
-### 11.6 当前证据和文献归属
+**假设。** 同时假设
 
-本次交付为普通数学证明、署名源码移植、直接消费者及配套 Scribe。当前环境没有 Lean、Lake 或 .NET；没有新增内核认证、C# 编译、独立评审或完整上游重建。`#print axioms` 指令仅供后续执行。实际诊断包括 9 项符号恒等式和 1617 项精确整数幅度/强迫关系；另有源码占位扫描、Scribe 词法括号检查和本地/远端 Git blob 对照。有限诊断不替代全称证明的内核检查，临时诊断文件未提交。
+\[
+-\int_{\mathbb T^d}w\cdot((w\cdot\nabla)u_*)
+\leq G\|w\|_{L^2}^2,
+\qquad
+\gamma=\nu\lambda_1-G>0.
+\]
 
-本轮没有宣称新的外部开放问题解答。指数输入误差界和剪切解属于经典机制；新增价值是让上游实际证明成为本库实际状态和 NS 场的可复用依赖，并明确通往一般不动点稳定证书所缺的分析定理。
+**定理。** 若 $\|r(t)\|_{L^2}\leq\rho$，则 $\|w(t)\|_{L^2}$ 满足式 (11.1) 的指数误差管。
 
-[6] OpenAI. *On the Navier–Stokes Millennium Prize Problem*. 2026-09-08，页面更新至 2026-09-10。https://openai.com/index/navier-stokes-solution/ 。用于核对发布、范围与源码入口，不代表本轮完成独立证明审查。
+**证明。** 由式 (11.4)、Poincare 不等式和 Cauchy--Schwarz 不等式，
 
-[7] OpenAI. `NavierStokes/ComparatorSolution.lean`，提交 `f9e8bc5b38b6e212696e8a30e3e91517af887bbd`。https://github.com/openai/NavierStokesAndEuler/blob/f9e8bc5b38b6e212696e8a30e3e91517af887bbd/NavierStokes/ComparatorSolution.lean 。两项终端陈述及实际外力量词。
+\[
+\frac12\frac{d}{dt}\|w\|_{L^2}^2
+\leq-\gamma\|w\|_{L^2}^2+\rho\|w\|_{L^2}.
+\]
 
-[8] OpenAI. `NavierStokes/ViscousPropagator.lean`，同一提交，Apache-2.0。https://github.com/openai/NavierStokesAndEuler/blob/f9e8bc5b38b6e212696e8a30e3e91517af887bbd/NavierStokes/ViscousPropagator.lean 。本轮移植的三项 Hilbert 范数证明来源；没有添加虚构的单个作者署名。
+**证明。** 对 $\|w\|_{L^2}$ 应用第 11.3 节的比较论证即得结论。
 
-[9] OpenAI. `NavierStokes/R3/H3Energy.lean` 与 `NavierStokes/R3/ComparisonGronwall.lean`，同一提交。https://github.com/openai/NavierStokesAndEuler/blob/f9e8bc5b38b6e212696e8a30e3e91517af887bbd/NavierStokes/R3/H3Energy.lean ；https://github.com/openai/NavierStokesAndEuler/blob/f9e8bc5b38b6e212696e8a30e3e91517af887bbd/NavierStokes/R3/ComparisonGronwall.lean 。实际弱导数、能量比较和截断耗尽的后续依赖；本轮尚未移植其完整分析闭包。
+## 12. 正则化能量、二次平衡证书与记忆消元
 
-## 12. Mathlib 独立重证：耗散、稳态残差与记忆恢复
+### 12.2 零范数处的正则化能量比较
 
-### 12.1 当前证明来源及历史更正
+**假设。** 设 $H$ 为实 Hilbert 空间，轨迹 $u:[0,T]\to H$ 连续并在 $[0,T)$ 上有强右导数 $u'$。设 $\gamma>0$、$\rho\geq0$，且
 
-第 11 节记录 `e9ccb7a1` 阶段的源调查与移植方案。该阶段已由本节替代：PR 中的 `OpenAIViscousAttraction.lean` 及同名 Scribe 已删除；三段外部移植证明全部移出当前候选树。新 `DissipativeAttraction.lean` 采用独立的正则化能量证明，直接 import mathlib。`ForcedShearFixedPoint` 的实际场与方程不变，已改用新证明。第 11 节的旧文件名及“已移植”语句只描述历史状态。
+\[
+\langle u(t),u'(t)\rangle
+\leq-\gamma\|u(t)\|^2+\rho\|u(t)\|.
+\tag{12.1}
+\]
 
-当前外部形式化依赖只有仓库固定的 mathlib。本节复用本库自有数学对象，外部论文用于比较研究问题和限定新颖性，不作为证明前提。本次没有修改 toolchain、CI 或其他贡献者的既有 Cone 文件；该 Cone 文件不在本节新证明的依赖链中。这里没有声称重写了整个仓库或完整三维 NS 证明。
+**定义。** 对 $\delta>0$，定义正则化范数
 
-本节给出完整普通数学论证及候选 Lean 脚本。环境中未发现 Lean、Lake、dotnet，未执行内核、C# 编译或独立作者审稿。因此“源码中有证明”与“本轮已通过内核”仍分开记载。已推送的原始移植历史保留在 Git 历史中，来源记录没有被重新署名为独立成果。
+\[
+z_\delta(t)=\sqrt{\|u(t)\|^2+\delta^2}.
+\]
 
-### 12.2 独立的正则化能量比较
+**定理。** 在上述假设下，对每个 $t\in[0,T]$，
 
-设实内积空间中的实际轨迹 u 在 [0,T] 连续，在 [0,T) 有强右导数 du，且 gamma>0、rho>=0 满足
+\[
+\|u(t)\|\leq e^{-\gamma t}\|u(0)\|
++\frac{\rho}{\gamma}(1-e^{-\gamma t}).
+\tag{12.2}
+\]
 
-$$\langle u(t),du(t)\rangle\leq-\gamma\|u(t)\|^2+\rho\|u(t)\|.$$
+**证明。** 记 $n=\|u(t)\|$、$z=z_\delta(t)$。由于 $z>0$，链式法则在 $u(t)=0$ 时仍可使用。恒等式
 
-对任意 delta>0 定义 z_delta(t)=sqrt(||u(t)||²+delta²)。平方根的被开方数严格为正，所以普通链式求导合法，包括 u(t)=0 的时刻。记 n=||u(t)||、z=z_delta(t)，则 z>=n、z>=delta，且
+\[
+(-\gamma z+\rho+\gamma\delta)z-(-\gamma n^2+\rho n)
+=\rho(z-n)+\gamma\delta(z-\delta)
+-\gamma(z^2-n^2-\delta^2)
+\]
 
-$$z_\delta'(t)=\frac{\langle u(t),du(t)\rangle}{z_\delta(t)}
-\leq-\gamma z_\delta(t)+\rho+\gamma\delta.$$
+**证明。** 上式的末项为零，其余两项非负。因此式 (12.1) 给出
 
-关键代数差可精确展开为
+\[
+z_\delta'(t)
+=\frac{\langle u(t),u'(t)\rangle}{z_\delta(t)}
+\leq-\gamma z_\delta(t)+\rho+\gamma\delta.
+\]
 
-$$(-\gamma z+\rho+\gamma\delta)z-(-\gamma n^2+\rho n)
-=\rho(z-n)+\gamma\delta(z-\delta)-\gamma(z^2-n^2-\delta^2).$$
+**证明。** 标量比较于是得到
 
-最后一项为零，前两项非负。在负增长系数 -gamma 下调用 mathlib 的标量 Gronwall 定理，随后利用 delta 处的连续性令 delta 从正侧趋于零，得到式 (11.1) 的相同精确上界。完整证明不使用第 11 节的三个外部辅助引理，也不需要在零范数处定义范数导数。
+\[
+z_\delta(t)\leq e^{-\gamma t}z_\delta(0)
++\left(\frac{\rho}{\gamma}+\delta\right)(1-e^{-\gamma t}).
+\]
 
-新主声明 `norm_tube_of_energy` 直接接受真实轨迹的能量不等式；它不要求存在定义在整个 H 上的有界生成算子。因此，在线性有界方程之外，满足同样强导数条件的非线性轨迹或无界生成元定义域内的强解也可使用。弱解是否满足这些强导数条件仍须独立证明。`norm_le_exponential_tube`、`unforced_norm_contraction` 和 `scalar_equilibrium_tube` 是该新证明的直接消费者，原剪切稳态界保留。
+**证明。** 令 $\delta\downarrow0$，利用 $z_\delta(t)\to\|u(t)\|$，即得式 (12.2)。
 
-### 12.3 同一正裕量控制动态吸引和静态残差
+### 12.3 同一正裕量的动态与静态结论
 
-新增 `QuadraticEquilibriumCertificate.lean`。定义真实二次向量场 F(x)=Lx-B(x,x)+f，其中 L 线性、B 双线性，且
+**定义。** 设 $H$ 为实 Hilbert 空间，$L:H\to H$ 为线性映射，$B:H\times H\to H$ 为双线性映射，$f\in H$，并定义
 
-$$\langle b,B(a,b)\rangle=0\qquad\text{对全部 }a,b.$$
+\[
+F(x)=Lx-B(x,x)+f.
+\]
 
-完整展开而不要求 B 对称，得到
+**假设。** 对所有 $p,q\in H$，假设
 
-$$\langle w,F(v+w)-F(v)\rangle
-=\langle w,Lw\rangle-\langle w,B(w,v)\rangle.$$
+\[
+\langle q,B(p,q)\rangle=0.
+\tag{12.3}
+\]
 
-参考流输运项 B(v,w) 与扰动自作用 B(w,w) 的能量配对分别消失。若实际估计为
+**假设。** 再设 $v\in H$ 满足 $F(v)=0$。假设存在 $\mu,G\in\mathbb R$，使每个 $w\in H$ 都满足
 
-$$\langle w,Lw\rangle\leq-\mu\|w\|^2,\qquad
--\langle w,B(w,v)\rangle\leq G\|w\|^2,$$
+\[
+\langle w,Lw\rangle\leq-\mu\|w\|^2,
+\qquad
+-\langle w,B(w,v)\rangle\leq G\|w\|^2,
+\qquad
+\gamma=\mu-G>0.
+\tag{12.4}
+\]
 
-则 gamma=mu-G>0 给出严格负能量裕量。对于已验证 F(v)=0 的同一稳态，有两项结论：
+**命题。** 对每个 $w\in H$，有差能量恒等式
 
-$$\|u(t)-v\|\leq e^{-\gamma t}\|u(0)-v\|
- +\frac{\rho}{\gamma}(1-e^{-\gamma t})\quad(u'=F(u)+r,\ \|r\|\leq\rho),$$
+\[
+\langle w,F(v+w)-F(v)\rangle
+=\langle w,Lw\rangle-\langle w,B(w,v)\rangle.
+\tag{12.5}
+\]
 
-$$\boxed{\|x-v\|\leq\frac{\|F(x)\|}{\gamma}.}$$
+**证明。** 双线性展开给出
 
-第二项来自 -<x-v,F(x)> 的耗散下界与 Cauchy-Schwarz 上界，再约去非零误差范数；x=v 的情形单独处理。它还推出该模型内稳态的唯一性。小残差只在已经存在并通过所列条件验证的 v 周围给出距离认证，本轮没有从小残差推断未知稳态存在。
+\[
+B(v+w,v+w)=B(v,v)+B(v,w)+B(w,v)+B(w,w).
+\]
 
-主要声明：`difference_energy_identity`、`shifted_energy_bound`、`residual_controls_state`、`equilibrium_unique`、`nonlinear_equilibrium_tube`。这里是由实际双线性条件得到的通用代数/轨迹定理。应用到连续 NS 时，零均值、压力正交、Poincare 谱隙、函数空间和导数定义域仍需在真实对象上证明；不能把这些条件贴到任意低维模型后声称已认证 PDE。对有限 Fourier 候选，需要控制完整残差及未解析尾项，单独的投影残差可能漏掉隐藏方向。
+**证明。** 由式 (12.3)，$B(v,w)$ 与 $B(w,w)$ 对 $w$ 的配对均为零，故只余式 (12.5) 的两项。
 
-### 12.4 稳定耗散与可恢复性是两组不同的条件
+**定理。** 若轨迹 $u:[0,T]\to H$ 连续并在 $[0,T)$ 上有强右导数，且满足 $u'=F(u)+r$ 与 $\|r(t)\|\leq\rho$，则同一个正裕量 $\gamma$ 给出
 
-新增 `ObserverMemory/Dynamics/DampedExchangeMemory.lean`。本节使用一个实际可解的二状态系统作共同对象：
+\[
+\|u(t)-v\|\leq e^{-\gamma t}\|u(0)-v\|
++\frac{\rho}{\gamma}(1-e^{-\gamma t}).
+\tag{12.6}
+\]
 
-$$x'=-a x+b y,\qquad y'=-b x-d y.$$
+**定理。** 对每个 $x\in H$，同一个 $\gamma$ 还给出静态残差界
 
-其中 x 为可见状态，y 为隐藏状态，b 为实耦合常数。实际欧氏平方能量 E=x²+y² 满足
+\[
+\boxed{\|x-v\|\leq\frac{\|F(x)\|}{\gamma}.}
+\tag{12.7}
+\]
 
-$$E'=-2ax^2-2dy^2.$$
+**定理。** 特别地，$v$ 是 $F$ 的唯一零点。
 
-只要 a,d>=gamma>0，就有 E(t)<=E(0)exp(-2gamma*t)，对任意 b 成立。`state_energy_decay` 直接对实际坐标求导并调用 mathlib 标量比较，没有把谱稳定当成输入。
+**证明。** 令 $w=u-v$。由式 (12.4)--(12.5)，
 
-同一系统的真实状态和变化率给出
+\[
+\langle w,w'\rangle
+\leq-\gamma\|w\|^2+\rho\|w\|,
+\]
 
-$$y=\frac{x'+a x}{b}\quad(b\ne0).$$
+**证明。** 故式 (12.2) 给出式 (12.6)。对静态点令 $w=x-v$，则
 
-若读数误差分别为 epsilon_x 和 epsilon_v，实际重建满足
+\[
+\gamma\|w\|^2
+\leq-\langle w,F(x)\rangle
+\leq\|w\|\,\|F(x)\|.
+\]
 
-$$|\widehat y-y|\leq\frac{\epsilon_v+|a|\epsilon_x}{|b|}.$$
+**证明。** $w=0$ 时结论显然；$w\neq0$ 时约去 $\|w\|$ 得式 (12.7)。若 $F(x)=0$，式 (12.7) 强制 $x=v$。
 
-因此，固定正 a,d 并令 b 趋近零，可以保持同一个状态能量衰减率，而上述瞬时重建的条件数恶化。b=0 时 y 无法通过 x 及其变化率识别，但在 d>0 下隐藏状态自身仍会衰减。这是稳定性、可观测性与可检测性之间的具体区分，不把一个损失信息的观察趋零等同于全状态恢复。
+### 12.4 耗散稳定与瞬时恢复的条件分离
 
-主要声明：`exchange_energy_identity`、`state_energy_decay`、`exact_jet_recovery`、`noisy_jet_recovery`。此线性对象没有被宣称为原非线性 NS 的某个已识别截断。原环面矩阵参数 k、模 2 检测障碍与这里的实耦合 b 也没有被人为等同。
+**定义。** 设 $T>0$、$a,b,d\in\mathbb R$，并考虑可微的可见状态 $x:[0,T]\to\mathbb R$ 与隐藏状态 $y:[0,T]\to\mathbb R$ 构成的系统
 
-### 12.5 同一个系统产生精确记忆方程与有限历史误差界
+\[
+x'=-ax+by,
+\qquad
+y'=-bx-dy.
+\tag{12.8}
+\]
 
-对同一隐藏 ODE 乘以 exp(dt) 并实际求导，得到
+**命题。** 平方能量 $E=x^2+y^2$ 满足
 
-$$\frac{d}{dt}(e^{dt}y(t))=-b e^{dt}x(t).$$
+\[
+E'=-2ax^2-2dy^2.
+\tag{12.9}
+\]
 
-微积分基本定理给出
+**命题。** 若 $a,d\geq\gamma>0$，则对任意耦合 $b$，
 
-$$y(t)=e^{-dt}\left(y(0)-b\int_0^t e^{ds}x(s)\,ds\right).$$
+\[
+E(t)\leq E(0)e^{-2\gamma t}.
+\tag{12.10}
+\]
 
-代回实际 x 导数，得到精确 Volterra 方程
+**证明。** 对 $E$ 求导并代入式 (12.8)，两个交叉项 $2bxy$ 与 $-2bxy$ 抵消，得到式 (12.9)。再由 $E'\leq-2\gamma E$ 积分即得式 (12.10)。
 
-$$x'(t)=-a x(t)+b e^{-dt}y(0)+\int_0^t K(t-s)x(s)\,ds,$$
+**定理。** 若 $b\neq0$，则隐藏状态由可见状态及其导数精确恢复为
 
-$$\boxed{K(\tau)=-b^2e^{-d\tau}.}$$
+\[
+y=\frac{x'+ax}{b}.
+\tag{12.11}
+\]
 
-`memoryTerm_factored` 先在实际积分内验证指数因式分解；`hidden_history_formula` 从原 y 方程证明历史表达式；`resolved_memory_equation` 才将其接回原 x 方程。隐藏初值项没有删除。该负号来自当前反对称交换结构，不能推广为任意非线性 Mori-Zwanzig 核的符号规律。
+**假设。** 若观测量 $\widehat x,\widehat v$ 满足
 
-对于相同的给定可见输入 x，两个不同初始化的隐藏解 y,z 有
+\[
+|\widehat x-x|\leq\varepsilon_x,
+\qquad
+|\widehat v-x'|\leq\varepsilon_v,
+\]
 
-$$|b(y(t)-z(t))|\leq |b|e^{-dt}|y(0)-z(0)|.$$
+**定理。** 在上述误差假设下，令 $\widehat y=(\widehat v+a\widehat x)/b$，则
 
-这是 `hidden_restart_error`。将时间原点移到历史窗口左端，即得到同输入下重启隐藏记忆的定量误差。一个具体初始化上界 Y 与可容忍反馈误差 eta，在 |b|Y>eta 时给出普通数学的充分窗口长度 tau>=log(|b|Y/eta)/d。该对数重排尚未另写 Lean。完整闭环截断后，可见轨迹也会改变，所以还需要把输入变化反馈纳入误差方程，不能直接把同输入重启界宣称为全部降阶轨迹误差。
+\[
+|\widehat y-y|
+\leq\frac{\varepsilon_v+|a|\varepsilon_x}{|b|}.
+\tag{12.12}
+\]
 
-在静态层面，原 y 方程等于零意味着 y=-bx/d，原 x 右端随即变成 -(a+b²/d)x。`stationary_hidden_elimination` 因而把稳态 Schur 修正、记忆与瞬时恢复接到同一实际系统。这里没有将无限区间的核积分当作已形式化对象。
+**证明。** 式 (12.11) 由式 (12.8) 的第一式移项并除以 $b$ 得到。两种恢复式相减后应用三角不等式，即得式 (12.12)。
 
-### 12.6 下一项研究：保持耗散的更小记忆实现
+**命题。** 固定满足 $a,d\geq\gamma>0$ 的 $a,d$ 时，能量衰减率式 (12.10) 与 $b$ 无关，而恢复的误差放大系数 $1/|b|$ 随 $|b|\downarrow0$ 发散；当 $\varepsilon_v+|a|\varepsilon_x>0$ 固定时，式 (12.12) 的右端也随之发散。当 $b=0$ 时，$x'=-ax$ 与隐藏初值无关，因而 $x$ 及 $x'$ 不能确定 $y$；同时 $y'=-dy$ 仍使隐藏状态指数衰减。
 
-当前具体模型提示下一项应先证明有限维块系统
+**证明。** 第一项直接来自式 (12.10) 与式 (12.12)。当 $b=0$ 时，任取两个不同隐藏初值而保持同一可见初值，所得可见轨迹相同，隐藏轨迹却不同；又有 $y(t)=e^{-dt}y(0)$。
 
-$$\dot x=-Ax+B^*y,\qquad \dot y=-Bx-Dy,$$
+### 12.5 精确记忆方程与有限历史误差界
 
-在 A,D 的对称部分有正下界时，真实总能量的交叉项完全消去；消去 y 后的实际核为 -B^*exp(-Dt)B。这一有限维矩阵指数与积分的证明应从 mathlib 自行构建，并保留隐藏初值项。核的负号、对称性和度量一起决定稳定结构，不能通过只拟合少量轨迹来替代。
+**假设。** 设 $d>0$，且可微函数 $x,y$ 满足式 (12.8)。
 
-在进一步要求 D 自伴时，可研究由 D^j Bx 生成的实际 Krylov 子空间。要证明缩减隐藏空间后核完全不变、耗散下界保留，并明确给定观察能否恢复这个缩减对象。该路线与本库 Gramian、Hankel 和最小预测商的研究相接。最小状态维数、稳定裕量和观测条件数需要分别给出；不能只按衰减快慢删除状态，或只按当前观察是否可见来删除状态。
+**定理。** 隐藏状态具有精确历史表示
 
-再往实际 NS 推进，应固定真实正交 Fourier 投影，证明其双线性能量消去和完整残差界；随后处理非共线扰动、压力项与高频尾项。连续极限还要求统一估计及原对象识别。本节未完成这些 PDE 接口，也未给出新的学界开放问题解答。后续新价值应落在具体 NS 子空间中保持同一目标核和负耗散裕量的有效最小化，以及有限时间、有限精度下的恢复误差，而非重列已知线性消元结论。
+\[
+y(t)=e^{-dt}\left(y(0)-b\int_0^t e^{ds}x(s)\,ds\right).
+\tag{12.13}
+\]
 
-### 12.7 文献、独立实现与本轮核验
+**定理。** 因此可见状态满足精确 Volterra 方程
 
-本轮以 pinned mathlib 的 `Analysis/ODE/Gronwall.lean`、`Analysis/InnerProductSpace/Calculus.lean`、`MeasureTheory/Integral/IntervalIntegral/FundThmCalculus` 为外部形式化基础。源码检索未发现上述新端点的重复 owner；该检索范围不构成数学优先权证明。新增 Lean 均有同名 Scribe，配套说明原假设和真实消费者。
+\[
+x'(t)=-ax(t)+be^{-dt}y(0)
++\int_0^tK(t-s)x(s)\,ds,
+\qquad
+\boxed{K(\tau)=-b^2e^{-d\tau}.}
+\tag{12.14}
+\]
 
-外部数学背景与新颖性边界：Zhu-Dominy-Venturi 已研究短记忆与有限记忆近似的误差和收敛条件 [10]；Gouasmi-Parish-Duraisamy 明确区分可精确求出的线性核与非线性正交动力学近似 [11]；Zhu-Venturi 对特定随机系统的有效 Mori-Zwanzig 核给出指数收敛分析 [12]。这些文献说明记忆误差与稳定性已有成熟研究，本节具体线性结果不计为新开放问题解决。这里只核读了原始摘要和版本信息，没有声称逐页审阅这些论文或复现其全部结论。
+**证明。** 由隐藏方程，
 
-[10] Yuanran Zhu, Jason M. Dominy, Daniele Venturi. *On the estimation of the Mori-Zwanzig memory integral*. arXiv:1708.02235v3, 2018-05-15. https://arxiv.org/abs/1708.02235 。用于限定已有短记忆误差与收敛结果的范围；无外部 Lean 依赖。
+\[
+\frac{d}{dt}\bigl(e^{dt}y(t)\bigr)=-be^{dt}x(t).
+\]
 
-[11] Ayoub Gouasmi, Eric Parish, Karthik Duraisamy. *A Priori Estimation Of Memory Effects In Coarse-Grained Nonlinear Systems Using The Mori-Zwanzig Formalism*. arXiv:1611.06277v2, 2017-05-09. https://arxiv.org/abs/1611.06277 。本文实际线性消元不含其非线性近似假设。
+**证明。** 在 $[0,t]$ 上积分并乘以 $e^{-dt}$ 得式 (12.13)。将其代入 $x'=-ax+by$，并使用 $e^{-dt}e^{ds}=e^{-d(t-s)}$，即得式 (12.14)。
 
-[12] Yuanran Zhu, Daniele Venturi. *Hypoellipticity and the Mori-Zwanzig formulation of stochastic differential equations*. arXiv:2001.04565v3, 2021-08-29. https://arxiv.org/abs/2001.04565 。其随机/次椭圆假设没有被删去或替换成本节的确定性二维条件。
+**假设。** 给定同一个可见输入 $x$，设 $y$ 与 $z$ 分别满足
 
-实际执行的本轮诊断为 11 项符号恒等式与 180 组精确有理参数/状态检查。它们检查正则化差、非线性差能量、交换消去、一个解析输入的隐藏 ODE、记忆回代、噪声恢复及稳态消元。检查脚本仅保存在工作容器，未提交工程文件。没有执行 Lean 编译，因而本节所有新增源码仍需本地内核核验；不能把有限诊断计作形式化全称定理的机器证明。
+\[
+y'=-bx-dy,
+\qquad
+z'=-bx-dz,
+\]
+
+**定理。** 则对任意 $0\leq s\leq t$，
+
+\[
+|b(y(t)-z(t))|
+\leq |b|e^{-d(t-s)}|y(s)-z(s)|.
+\tag{12.15}
+\]
+
+**假设。** 再设 $|y(s)-z(s)|\leq Y$、$|b|Y>\eta>0$，并且窗口长度满足
+
+\[
+t-s\geq\frac1d\log\frac{|b|Y}{\eta}
+\tag{12.16}
+\]
+
+**定理。** 在上述窗口假设下，$|b(y(t)-z(t))|\leq\eta$。
+
+**证明。** 差 $h=y-z$ 满足 $h'=-dh$，故 $h(t)=e^{-d(t-s)}h(s)$，从而式 (12.15) 成立。把 $|h(s)|\leq Y$ 代入式 (12.15)，再对指数不等式取对数，即得式 (12.16) 的充分性。
+
+**命题。** 在静态隐藏约束 $0=-bx-dy$ 且 $d\neq0$ 下，
+
+\[
+y=-\frac bd x,
+\qquad
+-ax+by=-\left(a+\frac{b^2}{d}\right)x.
+\tag{12.17}
+\]
+
+**证明。** 第一式由静态隐藏约束直接解出，代入可见方程右端即得第二式。
+
+### 12.6 有限维块系统的耗散与记忆核
+
+**定义。** 设 $T>0$，$X,Y$ 为有限维实 Hilbert 空间，$A:X\to X$、$D:Y\to Y$、$B:X\to Y$ 为线性映射，$B^*:Y\to X$ 为 $B$ 的伴随。考虑可微轨迹 $x:[0,T]\to X$、$y:[0,T]\to Y$ 满足的块系统
+
+\[
+\dot x=-Ax+B^*y,
+\qquad
+\dot y=-Bx-Dy.
+\tag{12.18}
+\]
+
+**命题。** 系统 (12.18) 的总能量满足
+
+\[
+\frac{d}{dt}\bigl(\|x\|^2+\|y\|^2\bigr)
+=-2\langle x,Ax\rangle-2\langle y,Dy\rangle.
+\tag{12.19}
+\]
+
+**命题。** 若对所有 $\xi\in X$、$\eta\in Y$ 都有 $\langle \xi,A\xi\rangle\geq\alpha\|\xi\|^2$ 与 $\langle \eta,D\eta\rangle\geq\delta\|\eta\|^2$，其中 $\alpha,\delta>0$，则
+
+\[
+\|x(t)\|^2+\|y(t)\|^2
+\leq e^{-2\min\{\alpha,\delta\}t}
+\bigl(\|x(0)\|^2+\|y(0)\|^2\bigr).
+\]
+
+**证明。** 对总能量求导。由伴随关系，交叉项
+
+\[
+2\langle x,B^*y\rangle-2\langle y,Bx\rangle
+\]
+
+**证明。** 上述交叉项恰好抵消，得到式 (12.19)；下界随即给出
+
+\[
+\frac{d}{dt}\bigl(\|x\|^2+\|y\|^2\bigr)
+\leq-2\min\{\alpha,\delta\}
+\bigl(\|x\|^2+\|y\|^2\bigr).
+\]
+
+**命题。** 消去隐藏状态后，
+
+\[
+y(t)=e^{-tD}y(0)-\int_0^t e^{-(t-s)D}Bx(s)\,ds,
+\]
+
+**命题。** 将上述隐藏状态表示代入可见方程，则
+
+\[
+\dot x(t)=-Ax(t)+B^*e^{-tD}y(0)
++\int_0^tK(t-s)x(s)\,ds,
+\qquad
+K(\tau)=-B^*e^{-\tau D}B.
+\tag{12.20}
+\]
+
+**证明。** 对隐藏方程应用常系数线性方程的变参数公式，得到 $y(t)$ 的表示；将该表示代回可见方程，积分项的算子系数即为式 (12.20) 中的 $K$。

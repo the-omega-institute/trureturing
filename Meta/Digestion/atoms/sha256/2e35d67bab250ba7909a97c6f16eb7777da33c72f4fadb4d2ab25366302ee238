@@ -1,0 +1,14 @@
+**定义。** 对 $k\geq0$ 定义群同态
+
+$$
+\pi_C:\mathbb Z^2\to\mathbb Z/(4k),qquad
+\pi_C(x,y)=y\pmod{4k},
+$$
+
+以及
+
+$$
+\pi_D:\mathbb Z^2\to\mathbb Z/(2)\times\mathbb Z/(2k),qquad
+\pi_D(x,y)=\bigl(x\pmod2,\ y-kx\pmod{2k}\bigr).
+$$
+

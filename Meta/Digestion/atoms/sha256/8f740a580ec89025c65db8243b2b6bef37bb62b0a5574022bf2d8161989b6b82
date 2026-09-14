@@ -1,0 +1,8 @@
+**证明。** 两个方程相减后，对 $w$ 作 $L^2$ 配对。周期边界与无散度条件使
+
+\[
+\int w\cdot((u_*\cdot\nabla)w)=0,
+\qquad
+\int w\cdot((w\cdot\nabla)w)=0,
+\]
+

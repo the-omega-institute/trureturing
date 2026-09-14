@@ -1,0 +1,9 @@
+**定理。** 若 $a$ 可微，则 $u_a$ 无散度，且欧氏零压力残差满足
+
+$$
+\partial_tu_a+(u_a\cdot\nabla)u_a-\nu\Delta u_a
+=(a'+\Gamma_ka)\Phi_k.
+$$
+
+此外，$a(t)=u_a(t,0,0)_1$，其中下标 $1$ 表示第一坐标分量。
+
