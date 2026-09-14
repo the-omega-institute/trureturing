@@ -2,11 +2,10 @@
    generality: I
    mirror-B: D5/B/S3/ArithSums/BarryTriangleRowSumsOdd
    mirror-E: none(waiver:symbolic-proof-no-numeric-artifact)
-   anchors: [mathlib/module/Mathlib.Data.Nat.Choose.Sum, mathlib/module/Mathlib.Data.ZMod.Basic, mathlib/module/Mathlib.NumberTheory.ArithmeticFunction.Moebius]
+   anchors: [mathlib/module/Mathlib.Data.ZMod.Basic, mathlib/module/Mathlib.NumberTheory.ArithmeticFunction.Moebius]
    utility: none
    digest: OEIS A105595: every row sum of the A105594 triangle is odd. -/
 
-import Mathlib.Data.Nat.Choose.Sum
 import Mathlib.Data.ZMod.Basic
 import Mathlib.NumberTheory.ArithmeticFunction.Moebius
 
