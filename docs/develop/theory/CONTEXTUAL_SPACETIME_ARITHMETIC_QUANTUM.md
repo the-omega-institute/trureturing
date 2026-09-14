@@ -12666,3 +12666,1102 @@ $$
 所以每个纯最大纠缠有效输入的最佳值都严格小于一个允许的无参考协议值，不能达到原任务的最优值。上述论证没有给出 $W_2$ 等于该下界的上界证明，故不确定其完整值。证毕。
 
 ## 追加锚（新终端）
+## 48. 半错误首步下的一族精确参考优势区域
+
+**定义 48.1（Hadamard 与指针控制的 Schmidt 输入族）。** 沿用第 29 节的加权两步任务，固定第一步参数 $e=1/2$，并取
+
+$$
+0<c\le1,\qquad0<g<\frac12,\qquad0\le p\le1.
+$$
+
+准备一个活动系统量子比特及一个惰性参考量子比特，其共同有效输入为
+
+$$
+|\psi_p\rangle_{SR}
+=\sqrt p\,|00\rangle+\sqrt{1-p}\,|11\rangle.
+$$
+
+第一共同控制恒等；第一次结果为 $0$ 时，第二共同系统控制取 Hadamard 矩阵 $H$；第一次结果为 $1$ 时取恒等矩阵 $I_2$。后者也可换成 Pauli 矩阵 $X$，这只交换该历史的两个末次结果。两种候选使用同一控制表，参考从制备后到最终观察前始终不受操作，末端丢弃活动系统，保留全部经典历史与参考。记这个指定协议的加权迹范数分数为 $F(c,g,p)$。
+
+**定理 48.2（协议精确值与相对无参考最优值的完整优势判据）。** 在定义 48.1 的参数域内，令
+
+$$
+a=1-g,\qquad z=1-2g,\qquad b=1-ca>0,
+$$
+
+$$
+L(p)=1-\frac{cz}{2}-bp,
+\qquad
+R(p)=\left(\frac c2-p\right)^2
++p(1-p)\left[2c-c^2(1-z^2)\right].
+$$
+
+则协议分数精确为
+
+$$
+\boxed{F(c,g,p)=L(p)+\sqrt{R(p)}.}
+$$
+
+第 30 节的全部无参考输入及共同系统 CPTP 控制最优值在本切片化为
+
+$$
+\boxed{
+C(c,g):=W_2^{\mathrm{cl}}(c;1/2,g)
+=\max\{P,S\},
+\qquad
+P=1+cg,\quad S=\sqrt{1+c^2z^2}.
+}
+$$
+
+为比较两者，定义
+
+$$
+J=2g+ca(1-5g)>0,\qquad u=a(1-4g),
+\qquad h=\max\{0,S-P\},
+$$
+
+$$
+D=c^2u-2bh,\qquad
+\mathcal D=D^2-4cJh(c+h).
+$$
+
+对任意给定 $p\in[0,1]$，有精确等价
+
+$$
+\boxed{
+F(c,g,p)>C(c,g)
+\quad\Longleftrightarrow\quad
+-cJp^2+Dp-h(c+h)>0.
+}
+$$
+
+因此，存在严格优于全部无参考协议的输入参数 $p$，当且仅当
+
+$$
+\boxed{D>0\quad\text{且}\quad\mathcal D>0.}
+$$
+
+这两个条件成立时，全部严格优势参数恰为
+
+$$
+\boxed{
+p\in(p_-,p_+),\qquad
+p_\pm=\frac{D\pm\sqrt{\mathcal D}}{2cJ},
+\qquad0\le p_-<p_+<1.
+}
+$$
+
+若 $P\ge S$，判据进一步简化为
+
+$$
+\boxed{
+F(c,g,p)>C(c,g)
+\quad\Longleftrightarrow\quad
+0<g<\frac14,\qquad
+0<p<\frac{ca(1-4g)}{2g+ca(1-5g)}.
+}
+$$
+
+其中 $P\ge S$ 本身等价于
+
+$$
+2g\ge c(1-g)(1-3g).
+$$
+
+若 $g\ge1/4$，本协议族对任何 $c,p$ 都不能超过无参考最优值。这个结论只限制定义 48.1 的输入与控制族，不排除其他参考协议的优势，也未求出一般 $W_2(c;1/2,g)$ 的最优值。
+
+证明。因为 $e=1/2$，实际第一步的两个 Kraus 算子均为 $I_2/\sqrt2$，理想第一步的算子为指针投影 $P_i=|i\rangle\langle i|$。末次实际效应为 $gI_2+zP_j$。对给定系统控制 $U_i$，相应的初始系统差效应为
+
+$$
+M_{ij}=\frac c2U_i^\dagger(gI_2+zP_j)U_i
+-P_iU_i^\dagger P_jU_iP_i.
+$$
+
+记 $\rho_p=\operatorname{diag}(p,1-p)$。由 Schmidt 输入的直接展开，最终历史 $ij$ 的未归一化参考差块是
+
+$$
+N_{ij}=\sqrt{\rho_p}\,M_{ij}^{\mathsf T}\sqrt{\rho_p}.
+$$
+
+这里没有对任何分支重新归一化。不同经典历史的块正交，故 $F=\sum_{i,j}\|N_{ij}\|_1$。
+
+当第一结果为 $0$ 时，$U_0=H$ 给出
+
+$$
+N_{00}=\frac14\begin{pmatrix}
+(c-2)p&cz\sqrt{p(1-p)}\\
+cz\sqrt{p(1-p)}&c(1-p)
+\end{pmatrix},
+$$
+
+$$
+N_{01}=\frac14\begin{pmatrix}
+(c-2)p&-cz\sqrt{p(1-p)}\\
+-cz\sqrt{p(1-p)}&c(1-p)
+\end{pmatrix}.
+$$
+
+它们的行列式同为
+
+$$
+\frac{cp(1-p)}{16}\left[c(1-z^2)-2\right].
+$$
+
+由于 $0<c\le1$ 和 $0<z<1$，括号严格为负。对 $0<p<1$，两个矩阵都严格不定，迹范数等于特征值间距，因此
+
+$$
+\|N_{00}\|_1+\|N_{01}\|_1
+=\frac12\sqrt{\left[c+2(1-c)p\right]^2
++4c^2z^2p(1-p)}
+=\sqrt{R(p)}.
+$$
+
+最后一式由展开得到。在 $p=0,1$ 时，直接计算两个对角矩阵也给出同一公式。
+
+当第一结果为 $1$ 时，$U_1=I_2$ 给出
+
+$$
+N_{10}=\operatorname{diag}\left(\frac{cap}{2},\frac{cg(1-p)}2\right),
+$$
+
+$$
+N_{11}=\operatorname{diag}\left(\frac{cgp}{2},
+\left(\frac{ca}{2}-1\right)(1-p)\right).
+$$
+
+第一块半正定，第二块的两个对角元分别非负、非正。相加得到
+
+$$
+\|N_{10}\|_1+\|N_{11}\|_1
+=\frac{cp}{2}+\left(1-\frac{cz}{2}\right)(1-p)
+=L(p).
+$$
+
+若取 $U_1=X$，两个块只交换，迹范数之和不变。这证明协议的精确分数。四块的总迹为 $c-1$，与实际及理想完整输出的归一化一致；整个计算保留全部历史，没有后选择。
+
+接着计算无参考比较值。将 $e=1/2$ 代入定理 30.2，令该节的 $d=cz$，则 $0<d<1$，而 $r=0$、$v=1$，从而
+
+$$
+\eta=\frac{4(1-d)}{2-d}>0.
+$$
+
+因此该节的第三个内部候选不出现，无参考最优值就是其端点候选 $P=1+cg$ 与对称候选 $S=\sqrt{1+c^2z^2}$ 的最大值。两者都严格为正，直接平方得
+
+$$
+P^2-S^2
+=c\left[2g-c(1-g)(1-3g)\right].
+$$
+
+由 $c>0$，这给出陈述中的 $P\ge S$ 判据。
+
+为了安全地比较根式，注意
+
+$$
+C=P+h,\qquad
+C-L(p)=\frac c2+bp+h>0.
+$$
+
+因此 $F>C$ 等价于 $R(p)>(C-L(p))^2$，平方没有引入额外解。展开协议根式与端点比较值，得到
+
+$$
+R(p)-(P-L(p))^2
+=cp\left[ca(1-4g)-Jp\right].
+$$
+
+再把比较值从 $P$ 改为 $P+h$，便有
+
+$$
+\begin{aligned}
+R(p)-(C-L(p))^2
+&=cp\left[ca(1-4g)-Jp\right]
+-2h\left(\frac c2+bp\right)-h^2\\
+&=-cJp^2+Dp-h(c+h).
+\end{aligned}
+$$
+
+这证明逐 $p$ 的精确等价。
+
+还需证明二次不等式的参数条件确实与 $p\in[0,1]$ 相容。首先，
+
+$$
+J=2g(1-c)+c(1-4g+5g^2),\qquad
+1-4g+5g^2=5\left(g-\frac25\right)^2+\frac15>0,
+$$
+
+所以 $J>0$。相应二次函数严格凹，常数项为 $-h(c+h)\le0$。若 $D\le0$，它在 $p\ge0$ 上不可能为正；若 $D>0$ 而 $\mathcal D\le0$，其全实轴最大值也不为正。因而存在优势参数必须有 $D>0$、$\mathcal D>0$。
+
+反过来，假设这两个条件成立。由 $D=c^2u-2bh>0$、$b>0$、$h\ge0$，必有 $u>0$，即 $g<1/4$。定义
+
+$$
+p_P=\frac{cu}{J}=\frac{ca(1-4g)}{J}.
+$$
+
+它满足
+
+$$
+0<p_P<1,
+\qquad
+J-cu=g(2-ca)>0.
+$$
+
+二次函数的顶点在
+
+$$
+p_{\rm v}=\frac D{2cJ}\in\left(0,\frac{p_P}{2}\right].
+$$
+
+$\mathcal D>0$ 使顶点值严格为正，因此它已在 $(0,1)$ 内取得正值。两个实根为陈述中的 $p_-,p_+$。根的和为正、积为 $h(c+h)/(cJ)\ge0$，故 $p_-\ge0$。若 $h=0$，两根直接是 $0,p_P$；若 $h>0$，二次函数在 $p=p_P$ 处的值为
+
+$$
+-h(c+2bp_P+h)<0.
+$$
+
+结合顶点位于 $p_P/2$ 之前，可知 $0<p_-<p_+<p_P<1$。所以在所有情形下，严格优势参数精确为 $(p_-,p_+)$，并且无需与 $[0,1]$ 再作未知的截取。
+
+若 $P\ge S$，则 $h=0$。优势二次式退化为 $cp(cu-Jp)$，立即得到 $g<1/4$ 及 $0<p<p_P$ 的简化条件。若 $g\ge1/4$，则 $u\le0$、$D\le0$，故本协议不可能严格超过 $C$；这没有对优化域中其他参考控制作断言。
+
+也可核对几个退化边界。$p=0$ 时 $F=P\le C$，$p=1$ 时 $F=1<C$。连续延拓到 $c=0$ 时，$F=C=1$；此时不使用根区间中的除法。延拓到 $g=1/2$ 时，有 $F=1+c/2-cp/2\le C=1+c/2$。在 $g=0$ 时，第 29 节放宽上界与第 30 节无参考值同为 $\sqrt{1+c^2}$；已有无参考协议达到该值，所以本协议也不可能产生严格参考优势。这些边界核对没有把上述开参数域的根公式用于零分母。
+
+协议差块的构造沿用第 21 节的参考输出公式及第 23 节的二阶 Hermitian 迹范数计算；全部无参考优化由定理 30.2 承担。二元判别中迹范数与最优成功概率的标准关系见 Ballester、Wehner 与 Winter，*State Discrimination with Post-Measurement Information*，[Theorem 2.1](https://arxiv.org/html/quant-ph/0608014)，其中归于 Helstrom。本节精确比较的是一个明确参考协议族与已经优化的无参考任务，不把协议族的存在优势判据当作一般参考任务的完整分类。证毕。
+
+**推论 48.3（整段参数上的严格参考增益及三步应用）。** 令
+
+$$
+g_0=1-\frac{\sqrt6}{3}.
+$$
+
+对任意
+
+$$
+g_0\le g<\frac14,\qquad0<c\le1,
+$$
+
+都有 $C(c,g)=1+cg$，并且非空区间
+
+$$
+0<p<\frac{c(1-g)(1-4g)}
+{2g+c(1-g)(1-5g)}
+$$
+
+中的每个参数都给出
+
+$$
+W_2(c;1/2,g)\ge F(c,g,p)
+>W_2^{\mathrm{cl}}(c;1/2,g).
+$$
+
+特别地，$g=1/5$ 时，这个区间精确化为 $0<p<2c/5$。
+
+进一步，对任意 $g\in[g_0,1/4)$ 与末次参数 $f\in[1/2,1)$，三步系统 CPTP 任务满足
+
+$$
+\boxed{
+T_3^{\mathrm{ref,CPTP}}(1/2,g,f)
+>T_3^{\mathrm{cl,CPTP}}(1/2,g,f).
+}
+$$
+
+这里的参考仍然是惰性的，没有额外可操作量子记忆。对每个选定的参数，可以用上述一个参考量子比特的输入与控制族，再接第 28 节的共同尾段构造，得到严格优于全部无参考系统 CPTP 协议的三步值。
+
+证明。首先 $0<g_0<1/4$：前一式由 $\sqrt6<3$ 得到，后一式等价于 $\sqrt6>9/4$，平方后为 $6>81/16$。在所列区间内，$1-3g>0$。由于 $c\le1$，有
+
+$$
+\begin{aligned}
+2g-c(1-g)(1-3g)
+&\ge2g-(1-g)(1-3g)\\
+&=-1+6g-3g^2\ge0.
+\end{aligned}
+$$
+
+最后一步来自该二次式的较小根 $g_0$，且整个当前区间在较大根 $1+\sqrt6/3$ 之前。因此 $P\ge S$，即 $C=1+cg$。又因 $g<1/4$，定理 48.2 的 $p_P$ 严格为正且小于一，所列区间非空，并且每个其中的 $p$ 都产生严格优势。这个协议属于原参考优化域，所以 $W_2\ge F$。
+
+在 $g=1/5$ 时，$a=4/5$、$1-4g=1/5$、$1-5g=0$，因而 $p_P=2c/5$；相应的平方比较是
+
+$$
+R(p)-(P-L(p))^2=\frac{2cp(2c-5p)}{25}.
+$$
+
+这说明第 21 节的孤立优势构造位于一个连续参数族中。
+
+现在取 $f\in[1/2,1)$，令 $c=1-f\in(0,1/2]$。第 28 节的加权尾段归约与第 30 节的无参考版本分别给出
+
+$$
+T_3^{\mathrm{ref,CPTP}}(1/2,g,f)
+=\frac f2+\frac12W_2(1-f;1/2,g),
+$$
+
+$$
+T_3^{\mathrm{cl,CPTP}}(1/2,g,f)
+=\frac f2+\frac12C(1-f,g).
+$$
+
+对上面非空区间中的任意 $p$，将严格两步优势代入得到
+
+$$
+\begin{aligned}
+T_3^{\mathrm{ref,CPTP}}(1/2,g,f)
+&\ge\frac f2+\frac12F(1-f,g,p)\\
+&>\frac f2+\frac12C(1-f,g)
+=T_3^{\mathrm{cl,CPTP}}(1/2,g,f).
+\end{aligned}
+$$
+
+第 28 节的达到方向把这个指定两步协议接成允许的共同系统 CPTP 尾段，因此严格不等式对应可实现的参考协议。端点 $f=1$ 会使 $c=0$，已在前一定理的边界讨论中排除严格优势，故本推论不包含它。这里仍未求出三步参考任务的完整精确值。证毕。
+## 49. 两步惰性参考任务中两个固定读取轴不足的精确反例
+
+**定义 49.1（固定读取轴菜单）。** 沿用第 29 节的两步加权任务，取
+
+$$
+c=\frac45,\qquad e=\frac12,\qquad g=\frac1{20}.
+$$
+
+第一共同控制吸收进有效输入，允许任意有限惰性参考及任意归一化共同输入。末次共同系统控制限制为幺正，并要求每个第一历史 $i$ 对应的末次完美读取效应，只能选以下两种互补秩一 PVM 之一：
+
+$$
+\mathsf Z=\{P_0,P_1\},
+\qquad
+\mathsf X=\{|+\rangle\langle+|,|-\rangle\langle-|\}.
+$$
+
+每条第一历史独立选轴，末次结果可以重标记。完美读取效应指第 29 节将最后一次有误仪器改写成退极化后处理之后的效应；有误参数 $g=1/20$ 保留不变。活动系统最后丢弃，保留完整两次历史及参考。将这一菜单下的最优加权迹范数记为 $W_{\{\mathsf X,\mathsf Z\}}$。由于 $g\le1/2$，第 29 节的逐历史归约说明，在同一菜单效应约束下允许末次 CPTP 控制所得的值与允许共同系统幺正所得的值相同；以下直接使用幺正实现。
+
+**引理 49.2（固定控制表的纯化目标对系统边缘凹）。** 固定一个允许的历史控制表，并将对应实际与理想输出映射的加权差记为 Hermitian 保持映射 $\mathcal F$。对系统密度矩阵 $\rho$，令
+
+$$
+f_{\mathcal F}(\rho)
+=\| (\mathcal F\otimes\operatorname{id})(|\psi_\rho\rangle\langle\psi_\rho|)\|_1,
+$$
+
+其中 $|\psi_\rho\rangle$ 为任意纯化，纯化参考始终不受控制。则 $f_{\mathcal F}$ 良定义，并且为凹函数。
+
+证明。同一系统边缘的纯化之间可通过参考等距联系。所有协议映射只作用于系统，参考等距保留输出迹范数，因此选择纯化不影响数值。
+
+设 $\rho=\lambda\rho_0+(1-\lambda)\rho_1$，其中 $0\le\lambda\le1$。把两种纯化嵌入同一个有限参考空间，并引入一个仅用于纯化的二标签参考因子 $F$，取
+
+$$
+|\Omega\rangle
+=\sqrt\lambda\,|\psi_{\rho_0}\rangle|0\rangle_F
++\sqrt{1-\lambda}\,|\psi_{\rho_1}\rangle|1\rangle_F.
+$$
+
+它是 $\rho$ 的归一化纯化。在输出参考因子 $F$ 上去相干，产生两个权重分别为 $\lambda$、$1-\lambda$ 的直和块，故去相干后的迹范数为
+
+$$
+\lambda f_{\mathcal F}(\rho_0)+(1-\lambda)f_{\mathcal F}(\rho_1).
+$$
+
+去相干是 CPTP 映射，在 Hermitian 算子上收缩迹范数。因此
+
+$$
+f_{\mathcal F}(\rho)
+\ge\lambda f_{\mathcal F}(\rho_0)+(1-\lambda)f_{\mathcal F}(\rho_1).
+$$
+
+这里的参考去相干只用于比较两个输出范数，并未作为控制操作加入原协议。证毕。
+
+**定理 49.3（菜单的精确值与菜单外的严格增益）。** 在上述定义中，
+
+$$
+W_{\{\mathsf X,\mathsf Z\}}=\frac{\sqrt{949}}{25}.
+$$
+
+另有一个只用参考量子比特、纯有效输入及两个实幺正系统控制的允许协议，其值为
+
+$$
+\frac{\sqrt{479942241}+\sqrt{910376791}}{42250}
+>\frac{\sqrt{949}}{25}.
+$$
+
+因此，将两个末次系统读取轴限制为 $\mathsf X$、$\mathsf Z$ 会严格降低原任务的最优值，即使菜单内允许任意输入和任意有限惰性参考。这一结论不确定原任务的完整最优值，也不声称排除所有系统边缘对角的输入。
+
+证明。固定菜单内的一个控制表。最终加权差关于共同输入线性，迹范数凸，所以某个纯态分量的值不低于混合输入。纯输入的 Schmidt 秩至多二，可将参考等距压缩至量子比特，并用其系统边缘 $\rho$ 参数化。
+
+因为 $e=1/2$，第一次实际 Kraus 算子均为 $K_i=I/\sqrt2$。令 $z=1-2g=9/10$。对第一历史 $i$ 和末次效应 $E_{ij}$，定义初始系统差效应
+
+$$
+M_{ij}=\frac c2(gI+zE_{ij})-P_iE_{ij}P_i.
+$$
+
+选取规范纯化后，第 23 节的参考部分迹公式给出目标
+
+$$
+f(\rho)=\sum_{i,j}\|\sqrt\rho\,M_{ij}\sqrt\rho\|_1.
+$$
+
+参考输出中的转置不改变迹范数。这个 $f$ 正是引理中固定整个控制表的函数，因此对 $\rho$ 凹。
+
+令 $Z=\operatorname{diag}(1,-1)$。若第一历史 $i$ 选择 $\mathsf Z$，则 $ZM_{ij}Z=M_{ij}$。若它选择 $\mathsf X$，则 $ZE_{ij}Z=E_{i,1-j}$，且 $P_iE_{ij}P_i=P_i/2$，从而
+
+$$
+ZM_{ij}Z=M_{i,1-j}.
+$$
+
+所以对每个固定表都有 $f(Z\rho Z)=f(\rho)$：第一历史保持不变，仅在选择 $\mathsf X$ 的分支内互换末次结果。凹性给出
+
+$$
+f\left(\frac{\rho+Z\rho Z}{2}\right)\ge f(\rho).
+$$
+
+因此，每个固定菜单表的最优值都可用
+
+$$
+\rho_p=\operatorname{diag}(p,1-p),\qquad0\le p\le1
+$$
+
+达到。以下枚举的是全部四张菜单表及其连续输入优化。
+
+两条第一历史均选择 $\mathsf Z$ 时，全部参考差块对角，直接求绝对值之和得到
+
+$$
+f_{\mathsf Z\mathsf Z}(\rho_p)=1+cg=\frac{26}{25}.
+$$
+
+两条第一历史均选择 $\mathsf X$ 时，同时交换系统两个计算基向量只会交换第一历史，故
+
+$$
+f_{\mathsf X\mathsf X}(\rho_p)
+=f_{\mathsf X\mathsf X}(\rho_{1-p}).
+$$
+
+再用引理的凹性，其最大值在 $p=1/2$。在此输入上直接计算两阶块的两特征值间距，得到
+
+$$
+f_{\mathsf X\mathsf X}(I/2)
+=\sqrt{1+c^2z^2}=\frac{\sqrt{949}}{25}.
+$$
+
+如果第一历史 $0$ 选择 $\mathsf X$、第一历史 $1$ 选择 $\mathsf Z$，用二阶矩阵公式
+
+$$
+\|\sqrt\rho M\sqrt\rho\|_1
+=\sqrt{[\operatorname{tr}(\rho M)]^2-4\det\rho\det M}
+\quad\text{当 }\det M<0
+$$
+
+及半定块的绝对迹公式，得到
+
+$$
+f_{\mathsf X\mathsf Z}(\rho_p)
+=\frac{16-6p+\sqrt{-299p^2+424p+100}}{25}.
+$$
+
+具体地，$\mathsf X$ 分支的两个块各有相同的迹范数，其和为式中的根式除以 $25$；$\mathsf Z$ 分支的范数为 $(16-6p)/25$。交换两条第一历史对应 $p\leftrightarrow1-p$，所以另一张混合表具有同一最优值。
+
+对全部 $p\in[0,1]$，$14+6p>0$，并且
+
+$$
+\begin{aligned}
+(14+6p)^2-(-299p^2+424p+100)
+&=335p^2-256p+96\\
+&=335\left(p-\frac{128}{335}\right)^2
++\frac{15776}{335}>0.
+\end{aligned}
+$$
+
+故混合表的目标严格小于 $30/25$。由于
+
+$$
+26<30<\sqrt{949},
+$$
+
+四张表中最大值由 $\mathsf X\mathsf X$ 和 Bell 输入达到，为 $\sqrt{949}/25$。输入、参考和菜单控制的上界均已覆盖。 这里的凹性与 $Z$ 共轭只对每一张固定菜单表成立；先对控制表取上确界后所得函数不必仍然凹，因此该论证不外推到原任务的连续控制全体。
+
+现在构造菜单外的协议。取系统边缘
+
+$$
+\rho=\begin{pmatrix}\frac12&\frac7{20}\\\frac7{20}&\frac12\end{pmatrix},
+\qquad\det\rho=\frac{51}{400},
+$$
+
+并取其纯化
+
+$$
+|\psi\rangle
+=\sqrt{\frac{17}{20}}\,|++\rangle
++\sqrt{\frac3{20}}\,|--\rangle.
+$$
+
+这个态归一化，参考保持惰性。对第一历史 $0$，选择末次第零结果效应
+
+$$
+Q=\frac1{169}\begin{pmatrix}144&-60\\-60&25\end{pmatrix},
+$$
+
+另一效应为 $I-Q$。$Q$ 是实秩一投影，因为它投影到归一化向量 $(12,-5)^{\mathsf T}/13$。对第一历史 $1$ 选择效应 $XQX$、$I-XQX$，其中 $X$ 是 Pauli 交换矩阵。这些实秩一 PVM 均由允许的实幺正中间控制实现。
+
+第一历史 $0$ 的两个初始系统差效应为
+
+$$
+M_{00}=\frac1{8450}\begin{pmatrix}-4439&-1080\\-1080&619\end{pmatrix},
+\qquad
+M_{01}=\frac1{8450}\begin{pmatrix}-631&1080\\1080&2761\end{pmatrix}.
+$$
+
+它们的行列式分别是
+
+$$
+\det M_{00}=-\frac{3914141}{71402500},
+\qquad
+\det M_{01}=-\frac{2908591}{71402500},
+$$
+
+并且
+
+$$
+\operatorname{tr}(\rho M_{00})=-\frac{1333}{4225},
+\qquad
+\operatorname{tr}(\rho M_{01})=\frac{1821}{8450}.
+$$
+
+故二阶谱公式给出
+
+$$
+\|\sqrt\rho M_{00}\sqrt\rho\|_1
+=\frac{\sqrt{910376791}}{84500},
+\qquad
+\|\sqrt\rho M_{01}\sqrt\rho\|_1
+=\frac{\sqrt{479942241}}{84500}.
+$$
+
+$X\rho X=\rho$，而第一历史 $1$ 的两效应是第一历史 $0$ 的效应经过 $X$ 共轭的结果，所以两个第一历史的范数贡献相同。相加得到陈述的协议值。
+
+最后验证严格比较。所有根式均为正，将该协议值与 $\sqrt{949}/25$ 比较，平方并移项后等价于
+
+$$
+\sqrt{479942241\cdot910376791}>660059934.
+$$
+
+右端为正，再平方可用整数恒等式验证：
+
+$$
+479942241\cdot910376791-660059934^2
+=1249160754844275>0.
+$$
+
+因此这个菜单外的合法协议严格超过菜单内全体协议。原任务的一般连续控制优化仍未完成；本章只排除固定 $\mathsf X/\mathsf Z$ 两轴菜单已经达到原任务最优值这一简化命题。
+
+所用纯化等价与迹范数收缩见 Watrous，*The Theory of Quantum Information*，[Theorem 2.12 与 Corollary 3.40，式 (3.241)](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)。引理将这两个标准工具应用到同一个固定历史控制表；菜单上界与菜单外的严格比较由本证明的具体矩阵计算给出。证毕。
+## 50. 记录选择与后续预测闭合
+
+**定义 50.1（经典观察的后续闭合）。** 设 $X$ 为有限历史集合，$q:X\to Y$ 为当前读数，$F:X\to X$ 为允许的下一步操作。称 $q$ 对 $F$ 后续闭合，如果存在唯一的映射 $\bar F:q(X)\to q(X)$ 使
+
+$$
+q\circ F=\bar F\circ q.
+$$
+
+**定理 50.2（有限经典读数的闭合判据）。** 上述 $\bar F$ 存在，当且仅当
+
+$$
+q(x)=q(y)\Longrightarrow q(F(x))=q(F(y))
+\qquad(x,y\in X).
+$$
+
+在存在时，$\bar F(q(x)):=q(F(x))$ 给出唯一的闭合更新。
+
+证明。若 $\bar F$ 存在，对 $q(x)=q(y)$ 代入即可。反之，按右端公式定义 $\bar F$；条件保证它不依赖于代表元，且立即满足 $q\circ F=\bar F\circ q$。证毕。
+
+**定义 50.3（量子记录与一步闭合误差）。** 在同一有限维算符空间上，令 $\mathcal E$ 为幂等的量子记录通道，$\mathcal E^2=\mathcal E$，令 $\Phi$ 为一步量子通道。对密度算符定义迹距离
+
+$$
+D(\rho,\sigma)=\frac12\lVert\rho-\sigma\rVert_1,
+$$
+
+并定义
+
+$$
+\delta(\mathcal E,\Phi)
+=\sup_{\rho}D\bigl(\mathcal E\Phi(\rho),\nobreak\mathcal E\Phi\mathcal E(\rho)\bigr),
+$$
+
+其中上确界遍历全部密度算符。称记录对一步演化严格闭合，如果
+
+$$
+\mathcal E\Phi=\mathcal E\Phi\mathcal E,
+$$
+
+等价地，$\mathcal E\Phi(I-\mathcal E)=0$。
+
+**定理 50.4（量子记录的累计预测界）。** 假设记录的像空间由有限个经典记录 $\{P_i\}$ 张成，并且存在经典随机矩阵 $K$ 使
+
+$$
+\mathcal E\Phi\mathcal E(\rho)=\iota\!\left(K\,\pi(\rho)\right),
+$$
+
+其中 $\pi(\rho)$ 是 $\mathcal E(\rho)$ 在经典记录基下的权重向量，$\iota$ 将权重向量嵌回对角密度算符。令 $A=\mathcal E\Phi$、$B=\mathcal E\Phi\mathcal E$。则对每个密度算符 $\rho$ 及整数 $n\ge0$，
+
+$$
+D\bigl(A^n(\rho),B^n(\rho)\bigr)\le n\,\delta(\mathcal E,\Phi).
+$$
+
+因此以 $K^n\pi(\rho)$ 预测第 $n$ 步记录时，逐步粗读数分布的误差至多为 $n\delta$。
+
+证明。$A$ 与 $B$ 都是量子通道。望远镜分解与迹距离在量子通道下的收缩性给出
+
+$$
+D(A^n\rho,B^n\rho)
+\le\sum_{k=0}^{n-1}D\bigl(A(B^k\rho),B(B^k\rho)\bigr)
+\le n\delta.
+$$
+
+第二个不等式使用 $B^k\rho$ 仍为密度算符。对角记录上的 $B$ 正是 $K$ 的作用，所以其记录权重为 $K^n\pi(\rho)$。证毕。
+
+**定理 50.5（有限维生成元的闭合方向）。** 设 $\Phi_t=e^{t\mathcal L}$ 是有限维、时齐次量子半群，且 $\mathcal E^2=\mathcal E$。则全时严格闭合
+
+$$
+\mathcal E\Phi_t=\mathcal E\Phi_t\mathcal E\quad(t\ge0)
+$$
+
+当且仅当
+
+$$
+\mathcal E\mathcal L(I-\mathcal E)=0.
+$$
+
+在 $t\to0$ 时，闭合缺陷满足
+
+$$
+\mathcal E\Phi_t(I-\mathcal E)
+=t\,\mathcal E\mathcal L(I-\mathcal E)+O(t^2).
+$$
+
+条件 $(I-\mathcal E)\mathcal L\mathcal E=0$ 则是 $\mathcal L$ 保持 $\operatorname{Fix}(\mathcal E)$ 的另一方向，不能与前一条件混同。
+
+证明。矩阵指数展开给出后一式。若 $\mathcal E\mathcal L(I-\mathcal E)=0$，则对每个 $m\ge1$ 有 $\mathcal E\mathcal L^m(I-\mathcal E)=0$，因为 $\mathcal E\mathcal L=\mathcal E\mathcal L\mathcal E$，从而指数展开的全部项均为零。反向由对 $t=0$ 的导数得到该条件。对后一方向，若 $X=\mathcal E(Y)$，则 $\mathcal L X\in\operatorname{Fix}(\mathcal E)$ 正是 $(I-\mathcal E)\mathcal L\mathcal E=0$；这描述的是记录像空间的不变性，而不是隐藏部分对未来记录的不可见性。证毕。
+
+**命题 50.6（两种互补记录的共同固定点）。** 对量子比特，令 $\mathcal E_Z$ 与 $\mathcal E_X$ 分别为计算基和 Hadamard 基去相干通道。则
+
+$$
+\operatorname{Fix}(\mathcal E_Z)\cap\operatorname{Fix}(\mathcal E_X)=\mathbb C I.
+$$
+
+限制到密度算符后，交集只有 $I/2$。
+
+证明。$\mathcal E_Z$ 的固定矩阵为对角矩阵 $\operatorname{diag}(a,b)$。Hadamard 共轭后为
+
+$$
+\frac12\begin{pmatrix}a+b&a-b\\a-b&a+b\end{pmatrix}.
+$$
+
+它再次对角化当且仅当 $a=b$。归一化迹为一时即得 $I/2$。证毕。
+
+**命题 50.7（受约束编码的动力学检查）。** 设 $P_Z$ 投影到长度 $L$ 的无相邻 $1$ 合法字串空间
+
+$$
+\mathcal H_{Z,L}=\operatorname{span}\{|w\rangle:w_jw_{j+1}=0\}.
+$$
+
+若 $H$ 是 Hermitian Hamiltonian，则该空间在 $e^{-itH}$ 下无泄漏，当且仅当
+
+$$
+[H,P_Z]=0.
+$$
+
+因此，仅写出合法 Zeckendorf 叠加并不能保证编码与动力学相容；还须检查这个不变性条件。对一般非 Hermitian 生成元或 Lindblad 通道，必须改用相应的子空间不变性条件，不能直接以该对易式代替。
+
+证明。Hermitian 性使 $P_ZH(I-P_Z)=0$ 与其伴随 $(I-P_Z)HP_Z=0$ 等价；这正是 $H$ 与 $P_Z$ 对易。它又等价于 $e^{-itH}$ 保持 $\operatorname{ran}P_Z$。其余警示是定义域不同的动力学条件。证毕。
+
+**本批来源与边界。** 定理 50.2 是有限集合上的直接因子化证明。量子通道的迹距离收缩、有限维纯化与去相干固定点分别使用本卷既有的通道论证和仓库中的记录模型；其具体闭合判据、累计界、生成元方向区分及 Zeckendorf 子空间检验是本批在这些模型上的推导。本文不把这些命题写成 Lean 已验证结果，也不声称它们给出一般开放系统、无界生成元或全部量子测量的统一定理。对 Lindblad 情形，本批只保留“须另行检查子空间不变性”的边界，不替代该检查。
+
+证毕。
+
+## 追加锚（新终端）
+## 51. 退相干、冗余记录与经典稳定性阈值
+
+**定义 51.1（历史记录模型）。** 设系统 $S$ 的候选经典标签为 $a$，环境分解为
+
+$$
+E=E_1\otimes\cdots\otimes E_N,
+$$
+
+并取退相干型相互作用
+
+$$
+H_{\mathrm{int}}=\sum_a \Pi_a\otimes B_a,
+$$
+
+其中 $\{\Pi_a\}$ 是候选指针分解。若初态含有两个标签的相干项 $|a\rangle\langle b|$，在环境演化后其系统系数写成
+
+$$
+\rho_{ab}(t)=\rho_{ab}(0)\,\Gamma_{ab}(t).
+$$
+
+当环境片段独立耦合时，退相干因子分解为
+
+$$
+\Gamma_{ab}(t)=\prod_{k=1}^{N}\gamma_{ab}^{(k)}(t).
+$$
+
+**命题 51.2（经典稳定性的候选操作化条件）。** 给定误差容差 $\varepsilon>0$、信息亏损容差 $\delta>0$、形成后时间窗 $[t_{\mathrm{start}},T]$（$0<t_{\mathrm{start}}\le T$）和目标冗余度整数 $R_\ast\ge1$，以下三项构成候选指针记录的操作化条件：
+
+$$
+\sup_{t\in[t_{\mathrm{start}},T]}|\Gamma_{ab}(t)|\le\varepsilon
+\qquad(a\ne b),
+$$
+
+把指针标签 $A$ 视为经典变量，令 $p_a=\operatorname{tr}(\Pi_a\rho)$，并以联合态
+
+$$
+\rho_{AF}=\sum_a p_a\,|a\rangle\langle a|\otimes\rho_F^{(a)}
+$$
+
+定义互信息；要求存在 $R_\ast$ 个两两不交的环境片段 $F_1,\ldots,F_{R_\ast}\subseteq E$，使得对每个 $j$ 都有
+
+$$
+I(A:F_j)\ge(1-\delta)H(A),
+$$
+
+以及系统自身 Hamiltonian 满足附加稳定性条件
+
+$$
+\|[H_S,\Pi_a]\|\le\eta.
+$$
+
+这里最后一个条件只控制系统自身动力学；完整开放动力学还须另行检验相应 Lindblad 生成元对指针代数的近似不变性。因此，本命题把三项作为给定模型和误差阈值下的候选操作化条件，不声称它们是所有量子模型中的普适必要定理。只有再加上完整开放生成元对指针代数的近似不变性，并完成相应动力学验证时，才可在该具体模型内把这些条件作为充分判据。
+
+证明。第一式在形成后窗口内使不同标签之间的局部干涉项低于观测容差；不把 $t=0$ 的初始相干误称为已退相干。第二式表示每个选定环境片段都获得几乎全部指针标签信息；$R_\ast$ 个互不重叠片段同时满足它们，标签便可被独立读取，形成目标冗余记录。第三式限制系统自身动力学在形成后窗口内旋转指针代数的速率；开放系统还需要对其生成元作所述不变性检验。由此，三项分别约束相干性、可复制性和系统内禀稳定性，给出了可执行的候选经典记录判据。该推导只是在指定模型中的条件性结论，并未把“稳定经典现实”提升为无模型的本体定理。证毕。
+
+**定义 51.3（历史冗余度）。** 固定 $\delta$，定义
+
+$$
+R_\delta
+=
+\max\left\{r:\exists\ F_1,\ldots,F_r\ \text{两两不交},\ I(A:F_j)\ge(1-\delta)H(A)\right\}.
+$$
+
+在此定义下，“需要多少约束”应改写成：在给定 $\varepsilon,\delta,T$ 和允许的环境分解后，达到
+
+$$
+|\Gamma_{ab}|\le\varepsilon,
+\qquad
+R_\delta\ge R_\ast
+$$
+
+所需的最小有效耦合或记录通道数。$R_\ast$ 由任务要求决定，不是量子理论给出的普适常数。
+
+**推论 51.4（历史保留与经典化的条件性关系）。** 若环境保留了区分历史 $a,b$ 的可复制记录，并且命题 51.2 的阈值条件成立，则对只访问系统局部的观测者，相关相干项按 $\Gamma_{ab}$ 衰减，历史差异可作为稳定的经典标签读取；若所有记录都被擦除且系统与环境重新相干，局部干涉在相应可逆操作下原则上可以恢复。
+
+推导。前半句直接由定义 51.1 的退相干因子和命题 51.2 的冗余互信息条件得到：局部观测同时看见小相干项和多个可替代记录。后半句附带“在相应可逆操作下”的条件，因为只有当环境记录及其动力学均可控时，擦除才会恢复相干；单纯忽略环境并不会自动恢复干涉。故这里给出的是操作层面的可检验关系，不是关于单一经典世界的本体断言。来源：退相干与指针稳定性沿用 Zurek，*Rev. Mod. Phys.* **75**, 715 (2003)；互信息与冗余记录沿用 Ollivier、Poulin 与 Zurek，*Phys. Rev. Lett.* **93**, 220401 (2004)。阈值 $\varepsilon,\delta,T,R_\ast$ 是本章的操作化参数，不是上述文献中的普适常数。证毕。
+
+## 追加锚（新终端）
+## 53. 第 51 节候选条件的适用域更正
+
+**命题 53.1（退相干因子分解的假设）。** 第 51.1 节的乘积式
+
+$$
+\Gamma_{ab}(t)=\prod_k\gamma_{ab}^{(k)}(t)
+$$
+
+需要至少假设初态在所选环境分解下为
+
+$$
+\rho_{SE}(0)=\rho_S(0)\otimes\bigotimes_k\tau_k
+$$
+
+并且条件环境演化在每个标签 $a$ 下因子化为 $U_a(t)=\bigotimes_kU_{a,k}(t)$。在这些假设下，环境重叠给出
+
+$$
+\Gamma_{ab}(t)=\prod_k\operatorname{tr}\!\left(U_{a,k}(t)\tau_kU_{b,k}(t)^\dagger\right).
+$$
+
+若系统自身 Hamiltonian 混合不同的 $\Pi_a$ 子空间，则 $\rho_{ab}(t)=\rho_{ab}(0)\Gamma_{ab}(t)$ 一般只是相互作用表象或附加条件下的表达，不能直接当作完整动力学的恒等式。
+
+证明。因子化初态与条件演化使环境条件态分别为 $\bigotimes_kU_{a,k}\tau_kU_{a,k}^\dagger$。两个条件态的重叠是各片段重叠的乘积，得到第一式。若系统自身演化不保持指针分解，它会在不同 $a$ 之间产生额外转移项，故单一乘法因子不能代表完整演化。证毕。
+
+**命题 53.2（互信息条件的可读性边界）。** 第 51.2 节的条件
+
+$$
+I(A:F)\ge(1-\delta)H(A)
+$$
+
+只说明经典标签 $A$ 与片段 $F$ 的互信息接近标签熵。要把它解释为某个实际测量能够以小猜测误差读出 $A$，还须指定测量类并加入相应的可访问信息或猜测概率界；互信息条件单独不提供该测量界。
+
+证明。互信息是对允许测量前的量子—经典相关量的函数，而可读性还包含从 $F$ 到标签估计器的优化。二者只有在给定编码、测量类及相应信息—误差不等式后才能连接。因此本命题把第 51.2 节的第二项保留为冗余相关性指标，不把它冒充为单次读出定理。证毕。
+
+**推论 53.3（第 51 节结论的正确状态）。** 第 51 节的三项只能作为指定模型、形成后时间窗和误差阈值下的候选筛选条件。要在具体开放系统中把它们升级为充分判据，还须同时验证完整生成元对指针代数的时间窗内近似不变性，并给出该近似与目标读出误差之间的定量界。
+
+因此，“需要多少约束”仍由 $\varepsilon,\delta,T,R_\ast$、环境分解、可执行测量类和生成元参数共同决定；本批不赋予它一个普适整数。
+
+证明。命题 53.1 限定退相干分解的动力学假设，命题 53.2 限定冗余互信息的操作解释，完整生成元检验补足系统自身 Hamiltonian 条件未覆盖的开放动力学。三项边界合并后，所得只是可检验的模型内筛选标准。证毕。
+
+
+
+## 追加锚（新终端）
+## 52. 末端读取与无中间干预的累计预测界
+
+**定义 52.1（真实演化的末端读取与逐步记录模型）。** 设 $\mathcal H$ 为有限维 Hilbert 空间，$\Phi:\mathcal L(\mathcal H)\to\mathcal L(\mathcal H)$ 为 CPTP 映射，$\mathcal E$ 为同一算符空间上的幂等 CPTP 映射，$\mathcal E^2=\mathcal E$。记全部密度算符为 $\mathsf D(\mathcal H)$，记录态集为
+
+$$
+\mathcal R=\mathcal E\bigl(\mathsf D(\mathcal H)\bigr),
+\qquad
+T=\mathcal E\Phi\mathcal E,
+\qquad
+K=T|_{\mathcal R}.
+$$
+
+幂等性使 $\mathcal E(\sigma)=\sigma$ 对每个 $\sigma\in\mathcal R$ 成立，故 $K(\sigma)=\mathcal E\Phi(\sigma)$，且 $K$ 将记录态集映入自身。
+
+对任意共同初态 $\rho$，在不插入中间记录通道的演化中，真实状态与其第 $n$ 步末端读数分别为
+
+$$
+\sigma_n=\Phi^n(\rho),
+\qquad
+r_n=\mathcal E\Phi^n(\rho).
+$$
+
+仅用初始记录建立的闭合预测则是
+
+$$
+s_0=\mathcal E(\rho),
+\qquad
+s_{n+1}=K(s_n),
+\qquad
+s_n=T^n\mathcal E(\rho).
+$$
+
+这里同时写出各个 $r_n$ 是计算不同演化时刻的粗观察量，不要求在同一次实际运行中每一步都施加 $\mathcal E$。若在每一步 $\Phi$ 后实际施加记录通道，则相应状态为 $(\mathcal E\Phi)^n(\rho)$；它与 $\mathcal E\Phi^n(\rho)$ 是两种不同的通道复合。
+
+**定理 52.2（末端记录的累计闭合误差）。** 在定义 52.1 的模型中，令
+
+$$
+D(\rho,\sigma)=\frac12\|\rho-\sigma\|_1,
+$$
+
+$$
+\delta
+=\max_{\omega\in\mathsf D(\mathcal H)}
+D\bigl(\mathcal E\Phi(\omega),\mathcal E\Phi\mathcal E(\omega)\bigr).
+$$
+
+该最大值存在，且 $0\le\delta\le1$。对每个密度算符 $\rho$ 与整数 $n\ge0$，有
+
+$$
+\boxed{
+D\bigl(\mathcal E\Phi^n(\rho),T^n\mathcal E(\rho)\bigr)
+\le n\delta.
+}
+$$
+
+特别地，若 $\mathcal E\Phi=\mathcal E\Phi\mathcal E$，则末端记录由初始记录严格决定：
+
+$$
+\mathcal E\Phi^n(\rho)=K^n\mathcal E(\rho)
+\qquad(n\ge0).
+$$
+
+若另有 $0\le\kappa\le1$，使记录更新满足
+
+$$
+D(K\sigma,K\tau)\le\kappa D(\sigma,\tau)
+\qquad(\sigma,\tau\in\mathcal R),
+$$
+
+则有更强的界
+
+$$
+D\bigl(\mathcal E\Phi^n(\rho),T^n\mathcal E(\rho)\bigr)
+\le\delta\sum_{j=0}^{n-1}\kappa^j.
+$$
+
+当 $n=0$ 时空和为零；当 $\kappa<1$ 时，右端可写成 $\delta(1-\kappa^n)/(1-\kappa)$。上述结论不要求 $\Phi$ 保持 $\mathcal R$，也不要求 $\Phi\mathcal E=\mathcal E\Phi$。
+
+证明。有限维密度算符集合紧，两个通道及迹范数连续，所以定义中的上确界达到。两候选均为密度算符，其迹距离属于 $[0,1]$。
+
+采用定义 52.1 的 $\sigma_n,r_n,s_n$，并令 $e_n=D(r_n,s_n)$。初始时 $r_0=s_0=\mathcal E(\rho)$，故 $e_0=0$。幂等性给出
+
+$$
+T(r_n)
+=\mathcal E\Phi\mathcal E\bigl(\mathcal E(\sigma_n)\bigr)
+=\mathcal E\Phi\mathcal E(\sigma_n).
+$$
+
+又有 $r_{n+1}=\mathcal E\Phi(\sigma_n)$，其中 $\sigma_n$ 仍为密度算符，故一步缺陷的定义逐步适用：
+
+$$
+D\bigl(r_{n+1},T(r_n)\bigr)\le\delta.
+$$
+
+$r_n$ 与 $s_n$ 都位于 $\mathcal R$，而 $s_{n+1}=T(s_n)$。三角不等式和记录更新的收缩性给出
+
+$$
+\begin{aligned}
+e_{n+1}
+&\le D\bigl(r_{n+1},T(r_n)\bigr)
++D\bigl(T(r_n),T(s_n)\bigr)\\
+&\le\delta+\kappa e_n.
+\end{aligned}
+$$
+
+对这个标量递推归纳，由 $e_0=0$ 得
+
+$$
+e_n\le\delta\sum_{j=0}^{n-1}\kappa^j.
+$$
+
+$T$ 是 CPTP 映射，其限制 $K$ 总可取收缩上界 $\kappa=1$，于是得到 $n\delta$。严格闭合使 $\delta=0$，故全部 $e_n=0$。证明中的 $T(r_n)$ 只是把真实第 $n$ 步读数输入预测规则作比较，没有对真实状态 $\sigma_n$ 施加中间干预。
+
+与此区别，令 $A=\mathcal E\Phi$。对第 50.4 条比较的逐步记录通道，$A$ 与 $T$ 在 $\mathcal R$ 上相同，且 $A(\rho),T(\rho)$ 都在 $\mathcal R$。因此对每个 $n\ge1$，
+
+$$
+A^n(\rho)=K^{n-1}A(\rho),
+\qquad
+T^n(\rho)=K^{n-1}T(\rho),
+$$
+
+从而
+
+$$
+D\bigl(A^n(\rho),T^n(\rho)\bigr)
+\le\kappa^{n-1}\delta\le\delta.
+$$
+
+这里 $n=1$ 时空次迭代的系数为一。这一更强界适用于逐步记录的两种初始处理；它不把 $A^n$ 改写成 $\mathcal E\Phi^n$。证毕。
+
+**命题 52.3（中间去相干会改变后续记录）。** 对一个量子比特，取计算基去相干通道
+
+$$
+\mathcal E_Z(X)=P_0XP_0+P_1XP_1,
+\qquad P_j=|j\rangle\langle j|,
+$$
+
+以及 Hadamard 幺正通道
+
+$$
+\Phi(X)=H X H,\qquad
+H=\frac1{\sqrt2}\begin{pmatrix}1&1\\1&-1\end{pmatrix}.
+$$
+
+对初态 $\rho=P_0$ 和两步演化，
+
+$$
+\mathcal E_Z\Phi^2(P_0)=P_0,
+\qquad
+(\mathcal E_Z\Phi)^2(P_0)=\frac I2.
+$$
+
+因此末端读取与逐步记录的通道一般不同。在这个模型中，定义 52.2 的一步缺陷为 $\delta=1/2$，而末端记录与闭合预测的两步误差恰为 $1/2$。
+
+证明。$H^2=I$，所以第一式成立。另一方面，$\Phi(P_0)=|+\rangle\langle+|$，去相干后为 $I/2$；后者在 $\Phi$ 和 $\mathcal E_Z$ 下都不变，得到第二式。
+
+为计算一步缺陷，把任意态写成 Bloch 形式
+
+$$
+\omega=\frac12(I+xX+yY+zZ),
+\qquad x^2+y^2+z^2\le1.
+$$
+
+Hadamard 共轭将 $X$ 与 $Z$ 互换。于是
+
+$$
+\mathcal E_Z\Phi(\omega)=\frac12(I+xZ),
+\qquad
+\mathcal E_Z\Phi\mathcal E_Z(\omega)=\frac I2.
+$$
+
+两者迹距离为 $|x|/2$，其最大值 $1/2$ 由 $|+\rangle$ 达到。记录更新 $K$ 把所有计算基对角态映为 $I/2$，所以 $T^2\mathcal E_Z(P_0)=I/2$。末端误差为 $D(P_0,I/2)=1/2$；它符合定理 52.2，却不等同于逐步通道之间的误差。证毕。
+
+**定理 52.4（时变记录与逐步收缩系数）。** 设 $\mathcal H_0,\ldots,\mathcal H_n$ 均为有限维空间。对每个 $k=0,\ldots,n-1$，令
+
+$$
+\Phi_k:\mathcal L(\mathcal H_k)\to\mathcal L(\mathcal H_{k+1})
+$$
+
+为 CPTP 映射，并对每个 $k=0,\ldots,n$ 取幂等 CPTP 记录通道 $\mathcal E_k$。定义记录态集
+
+$$
+\mathcal R_k=\mathcal E_k\bigl(\mathsf D(\mathcal H_k)\bigr),
+$$
+
+一步记录更新
+
+$$
+K_k:\mathcal R_k\to\mathcal R_{k+1},
+\qquad
+K_k(\sigma)=\mathcal E_{k+1}\Phi_k(\sigma),
+$$
+
+以及一步缺陷
+
+$$
+\delta_k
+=\max_{\omega\in\mathsf D(\mathcal H_k)}
+D\bigl(\mathcal E_{k+1}\Phi_k(\omega),
+\mathcal E_{k+1}\Phi_k\mathcal E_k(\omega)\bigr).
+$$
+
+取任意满足
+
+$$
+D(K_k\sigma,K_k\tau)\le\kappa_k D(\sigma,\tau)
+\qquad(\sigma,\tau\in\mathcal R_k)
+$$
+
+的 $\kappa_k\in[0,1]$。令 $\sigma_0=\rho$、$\sigma_{k+1}=\Phi_k(\sigma_k)$，真实末端读数为 $r_k=\mathcal E_k(\sigma_k)$；闭合预测从 $s_0=\mathcal E_0(\rho)$ 出发，按 $s_{k+1}=K_k(s_k)$ 更新。则
+
+$$
+\boxed{
+D(r_n,s_n)
+\le\sum_{j=0}^{n-1}\delta_j
+\prod_{k=j+1}^{n-1}\kappa_k.
+}
+$$
+
+空积取一，$n=0$ 时空和取零。每个记录更新都可以选择 $\kappa_k=1$，从而始终有 $D(r_n,s_n)\le\sum_{j=0}^{n-1}\delta_j$。
+
+证明。$K_k$ 是 CPTP 映射 $\mathcal E_{k+1}\Phi_k$ 在记录态集上的限制，所以记录态集保持及收缩上界成立。真实状态 $\sigma_k$ 仍归一化；由 $r_k=\mathcal E_k(\sigma_k)$，可直接得到
+
+$$
+D\bigl(r_{k+1},K_k(r_k)\bigr)
+=D\bigl(\mathcal E_{k+1}\Phi_k(\sigma_k),
+\mathcal E_{k+1}\Phi_k\mathcal E_k(\sigma_k)\bigr)
+\le\delta_k.
+$$
+
+令 $e_k=D(r_k,s_k)$，三角不等式给出
+
+$$
+e_{k+1}\le\delta_k+\kappa_k e_k,
+\qquad e_0=0.
+$$
+
+归纳展开：$e_1\le\delta_0$；若第 $m$ 步已满足乘积和，则
+
+$$
+\begin{aligned}
+e_{m+1}
+&\le\delta_m+\kappa_m
+\sum_{j=0}^{m-1}\delta_j\prod_{k=j+1}^{m-1}\kappa_k\\
+&=\sum_{j=0}^{m}\delta_j\prod_{k=j+1}^{m}\kappa_k.
+\end{aligned}
+$$
+
+这正是陈述的第 $m+1$ 步形式。整个比较针对未经中间记录干预的真实通道序列 $\Phi_{n-1}\cdots\Phi_0$；变化的是各时刻的观察映射与预测规则，未把观察计算替换成物理测量。证毕。
+
+**推论 52.5（经典记录的原始预测式）。** 若记录通道为有限正交指针基中的完全去相干，
+
+$$
+\mathcal E(\rho)=\sum_i\operatorname{tr}(P_i\rho)P_i,
+\qquad P_i=|i\rangle\langle i|,
+$$
+
+令 $\pi(\rho)_i=\operatorname{tr}(P_i\rho)$，$\iota(p)=\sum_i p_iP_i$，以及列随机矩阵
+
+$$
+K_{ij}=\operatorname{tr}\bigl(P_i\Phi(P_j)\bigr).
+$$
+
+则
+
+$$
+D\bigl(\mathcal E\Phi^n(\rho),\iota(K^n\pi(\rho))\bigr)
+\le n\delta.
+$$
+
+等价地，真实末端读数分布与仅从初始读数预测出的 $K^n\pi(\rho)$ 之间，总变差距离不超过 $n\delta$。
+
+证明。每个 $K_{ij}\ge0$，且迹保持给出 $\sum_iK_{ij}=1$。直接代入得 $T\iota(p)=\iota(Kp)$，而 $\mathcal E(\rho)=\iota\pi(\rho)$，故 $T^n\mathcal E(\rho)=\iota(K^n\pi(\rho))$。两个对角密度算符的迹距离恰为其权重向量的总变差距离，应用定理 52.2 即得。证毕。
+
+所用迹范数收缩见 Watrous，*The Theory of Quantum Information*，[Corollary 3.40，式 (3.241)](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)。本章在有限维 CPTP 模型中用这一标准工具证明末端观察的递推界；一步缺陷的最大值遍历所声明系统的全部密度算符。若要对额外惰性参考上的任意纠缠输入给出统一保证，需要把缺陷改为扩展通道上的最大迹距离，或使用相应 diamond 范数界，不能由未扩展的 $\delta$ 自动推出。界中的 $n\delta$ 可以大于一，此时只有平凡的迹距离上界一更强。量子通道收缩和预测误差界均不指定某一次观测的唯一结果，也不要求把证明中的各次粗观察实现为实际中间测量。
+
+
+
+## 追加锚（新终端）
