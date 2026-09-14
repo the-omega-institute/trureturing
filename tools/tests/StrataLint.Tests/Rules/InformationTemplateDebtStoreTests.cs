@@ -81,4 +81,20 @@ public sealed class InformationTemplateDebtStoreTests
     [Fact]
     public void missing_activation_rejected() =>
         Assert.Throws<FormatException>(() => InformationTemplateDebtStore.ReadActivation(Snapshot()));
+    [Theory]
+    [InlineData("Fixture.α₁.lemma?")]
+    [InlineData("Fixture.«中文.name».value")]
+    [InlineData("Fixture.«».23")]
+    public void canonical_lean_name_roundtrip(string name) =>
+        Assert.Equal(name, InformationTemplateJson.Name(name));
+
+    [Theory]
+    [InlineData("Fixture.«alpha»")]
+    [InlineData("Fixture.中文")]
+    [InlineData("Fixture.α.01")]
+    [InlineData("Fixture.«missing")]
+    [InlineData("Fixture.«name»tail")]
+    [InlineData("Fixture.")]
+    public void noncanonical_lean_name_rejected(string name) =>
+        Assert.Throws<FormatException>(() => InformationTemplateJson.Name(name));
 }

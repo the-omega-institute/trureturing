@@ -31,6 +31,113 @@ internal sealed record DeclaredTemplateFinding(string Code, string Path, string 
 // observer is output-only: it cannot alter any predicate or supply an admission.
 internal static class DeclaredTemplateBindingRule
 {
+    internal static bool IsAffectedBy(RuleEvaluationContext context) =>
+        (context.Baseline.TryGetFile(InformationTemplateDebtStore.ActivationPath, out _)
+            || context.Current.TryGetFile(InformationTemplateDebtStore.ActivationPath, out _))
+        && (context.RuleImplementationChanged || context.Changes.Paths.Any(path =>
+            path.Value.StartsWith("D5/", StringComparison.Ordinal)
+            || path.Value.StartsWith(InformationTemplateDebtStore.Root, StringComparison.Ordinal)
+            || path.Value.StartsWith("Golden/Frozen/state/", StringComparison.Ordinal)
+            || path.Value == AdmissionPlanePolicy.FileMapPath));
+
+    internal static ImmutableArray<RuleFinding> Evaluate(RuleEvaluationContext context)
+    {
+        if (!IsAffectedBy(context)) return [];
+        try
+        {
+            var baseline = context.Baseline;
+            var candidate = context.Current;
+            if (!baseline.TryGetFile(InformationTemplateDebtStore.ActivationPath, out _))
+            {
+                // Installation validates candidate data but does not take it as
+                // effective authority. It takes effect only in a future protected base.
+                var installation = InformationTemplateDebtStore.ReadActivation(candidate);
+                if (installation.Activated || HasRows(candidate))
+                    throw new FormatException("DTR-Activation: installation must be inactive and row-free");
+                return [new(InformationTemplateDebtStore.ActivationPath,
+                    "DTR-Inactive installation; protected activation is absent", AdmissionEffect.Observe)];
+            }
+            var activation = InformationTemplateDebtStore.ReadActivation(baseline);
+            if (!candidate.TryGetFile(InformationTemplateDebtStore.ActivationPath, out var candidateActivation))
+                return [new(InformationTemplateDebtStore.ActivationPath, "DTR-Required activation mechanism deleted")];
+            var changed = context.Changes.Paths.Select(path => path.Value).ToHashSet(StringComparer.Ordinal);
+            CheckRouting(baseline, candidate, changed);
+            var after = InformationTemplateEvidence.Collect(candidate, context.Lean.Report);
+            if (!activation.Activated && !HasRows(baseline) && !HasRows(candidate))
+            {
+                var canonicalInactive = InformationTemplateDebtStore.WriteActivation(activation);
+                if (!candidateActivation.RawBytes.AsSpan().SequenceEqual(canonicalInactive.AsSpan()))
+                    throw new FormatException("DTR-Activation: seeding must precede activation");
+                if (after.Occurrences.Values.Any(o => o.State != InformationTemplateBindingState.Undeclared))
+                    throw new FormatException("DTR-Activation: declarations precede activation");
+                return [new(InformationTemplateDebtStore.ActivationPath,
+                    "DTR-Inactive complete producer; seed-only writer available", AdmissionEffect.Observe)];
+            }
+            var evidence = context.Lean.Report.TemplateEvidenceContext
+                ?? throw new FormatException("DTR-Evidence: historical evidence reader unavailable");
+            var seed = evidence.ReadHistorical(activation.SeedBase);
+            var seedUniverse = InformationTemplateEvidence.Collect(seed.Snapshot, seed.Report);
+            var protectedEvidence = evidence.ReadHistorical(evidence.ProtectedRevision);
+            var before = InformationTemplateEvidence.Collect(baseline, protectedEvidence.Report);
+            var baseDebt = InformationTemplateDebtStore.Load(baseline, activation, seed.Snapshot);
+            var headDebt = InformationTemplateDebtStore.Load(candidate, activation, seed.Snapshot);
+            if (!activation.Activated)
+                CheckSeed(activation, seed.Snapshot, seedUniverse, headDebt);
+            var findings = Evaluate(activation, baseline, candidate, baseDebt, headDebt,
+                before, after, changed).Select(f => new RuleFinding(f.Path, f.Code + " " + f.Detail)).ToImmutableArray();
+            return findings.Add(new(InformationTemplateDebtStore.ActivationPath,
+                activation.Activated ? "DTR-Domain completed declared-template consumer"
+                    : "DTR-Inactive seed relation checked", AdmissionEffect.Observe));
+        }
+        catch (Exception error) when (error is FormatException or IOException or InvalidOperationException)
+        {
+            return [new(InformationTemplateDebtStore.ActivationPath, "DTR-Evidence " + error.Message)];
+        }
+    }
+
+    internal static void CheckSeed(InformationTemplateActivation activation, RepositorySnapshot seed,
+        InformationTemplateUniverse universe,
+        ImmutableDictionary<InformationOccurrenceKey, InformationTemplateDebtRow> rows)
+    {
+        if (!universe.Inventory.SetEquals(universe.Occurrences.Keys)
+            || !universe.GovernedSources.SetEquals(universe.AssessedSources)
+            || !universe.Inventory.SetEquals(rows.Keys))
+            throw new FormatException("DTR-Seed: seed rows differ from complete original occurrence inventory");
+        foreach (var (key, occurrence) in universe.Occurrences)
+        {
+            if (occurrence.State != InformationTemplateBindingState.Undeclared
+                || !seed.TryGetFile(occurrence.RegistrationSourcePath, out var source))
+                throw new FormatException("DTR-Seed: original occurrence/source unavailable or already declared");
+            var expected = new InformationTemplateDebtRow(key, activation.SeedBase, occurrence.StatementIdentity,
+                InformationTemplateJson.Sha256(source.RawBytes.AsSpan()), occurrence.ContentInputs);
+            if (!InformationTemplateDebtStore.WriteRow(expected).AsSpan().SequenceEqual(
+                InformationTemplateDebtStore.WriteRow(rows[key]).AsSpan()))
+                throw new FormatException("DTR-Seed: row does not bind original statement/source/content inputs");
+        }
+    }
+
+    private static bool HasRows(RepositorySnapshot snapshot) => snapshot.Files.Keys.Any(path =>
+        path.Value.StartsWith(InformationTemplateDebtStore.Root, StringComparison.Ordinal)
+        && path.Value != InformationTemplateDebtStore.ActivationPath);
+
+    private static void CheckRouting(RepositorySnapshot baseline, RepositorySnapshot candidate,
+        IReadOnlySet<string> changed)
+    {
+        var content = changed.Where(path => path.StartsWith("D5/", StringComparison.Ordinal)
+            || path.StartsWith(InformationTemplateDebtStore.Root, StringComparison.Ordinal)
+                && path != InformationTemplateDebtStore.ActivationPath).ToArray();
+        if (content.Length == 0) return;
+        if (!baseline.TryGetFile(AdmissionPlanePolicy.FileMapPath, out var oldMap)
+            || !candidate.TryGetFile(AdmissionPlanePolicy.FileMapPath, out var newMap))
+            throw new FormatException("DTR-Routing: protected/candidate FILEMAP unavailable");
+        var before = AdmissionPlanePolicy.Evaluate(oldMap.RawBytes.AsSpan(), content);
+        var after = AdmissionPlanePolicy.Evaluate(newMap.RawBytes.AsSpan(), content);
+        if (!before.IsAdmissible || !after.IsAdmissible
+            || before.Classification != AdmissionPlaneClassification.ContentOnly
+            || after.Classification != before.Classification)
+            throw new FormatException("DTR-Routing: base/candidate content classification differs");
+    }
+
     internal static ImmutableArray<DeclaredTemplateFinding> Evaluate(
         InformationTemplateActivation activation,
         RepositorySnapshot baseline,

@@ -4,21 +4,21 @@ using System.Text.Json;
 
 namespace StrataLint.Engine;
 
-public sealed record InformationOccurrenceKey(
+internal sealed record InformationOccurrenceKey(
     string Root, string RegistrationModule, string Theorem, string ObjectArena, string Catalog);
 
-public sealed record InformationTemplateContentInput(string Path, string Sha256);
+internal sealed record InformationTemplateContentInput(string Path, string Sha256);
 
-public sealed record InformationTemplateDebtRow(
+internal sealed record InformationTemplateDebtRow(
     InformationOccurrenceKey Key,
     string SeedBase,
     string StatementIdentity,
     string RegistrationSourceSha256,
     ImmutableArray<InformationTemplateContentInput> ContentInputs);
 
-public sealed record InformationTemplateActivation(string SeedBase, bool Activated);
+internal sealed record InformationTemplateActivation(string SeedBase, bool Activated);
 
-public static class InformationTemplateDebtStore
+internal static class InformationTemplateDebtStore
 {
     public const string Root = "Golden/InformationTemplateDebt/";
     public const string ActivationPath = Root + "activation.json";

@@ -69,6 +69,8 @@ public sealed record LeanFileReport(
 {
     internal LeanRefutationEvidence? Refutation { get; init; }
 
+    internal InformationTemplateModuleEvidence? InformationTemplates { get; init; }
+
     // Null means the producer does not supply registration evidence. It is only
     // admissible outside the protected-base candidate delta.
     internal ImmutableArray<string>? InformationRegistrationErrors { get; init; } = [];
@@ -79,6 +81,8 @@ public sealed class LeanAxiomReport
     private LeanAxiomReport(ImmutableDictionary<RepoPath, LeanFileReport> files) => Files = files;
 
     public ImmutableDictionary<RepoPath, LeanFileReport> Files { get; }
+
+    internal InformationTemplateEvidenceContext? TemplateEvidenceContext { get; set; }
 
     public static LeanAxiomReport Create(IReadOnlyDictionary<string, LeanFileReport> reports)
     {
