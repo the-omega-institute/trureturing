@@ -46,6 +46,10 @@ $$\forall n \in \mathrm{Nat},\; (a\left(n + 1\right) - a\left(n\right) = 0 \lor 
 
 *Proof.* Machine-checked in Lean as `D5/S1/Deficit/Beatty/KimberlingRoundedHalfRootTwoDifference.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a049473-kimberling-rounded-half-root-two-difference` (proved) by `D5/S1/Deficit/Beatty/KimberlingRoundedHalfRootTwoDifference.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a049473-kimberling-rounded-half-root-two-difference","declaration_gid":"D5/S1/Deficit/Beatty/KimberlingRoundedHalfRootTwoDifference.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* N. J. A. Sloane; Clark Kimberling (2014). *OEIS A049473, Nearest integer to n/sqrt(2)*. URL: <https://oeis.org/A049473>.
