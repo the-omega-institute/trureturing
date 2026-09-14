@@ -57,6 +57,130 @@ public sealed partial class CommonCheckExecutionTests
         Assert.Empty(fixture.Calls);
     }
 
+    [Theory]
+    [InlineData("changed")]
+    [InlineData("missing")]
+    public void FreshSeedValidationRejectsPreviouslyAcceptedMaterialDamage(string damage)
+    {
+        using var fixture = new Fixture();
+        fixture.Run();
+        fixture.Seed();
+        var accepted = CommonExecutionEvidence.ValidateCheckSeedBundle(fixture.Tree.Root, "engineering");
+        var material = accepted.Units.SelectMany(unit => unit.Materials).First();
+        var path = Path.Combine(fixture.Tree.Root, CommonExecutionEvidence.CheckSeedPath("engineering"), material.Path);
+        if (damage == "changed")
+        {
+            File.AppendAllText(path, "changed after acceptance");
+            var error = Assert.Throws<InvalidDataException>(() => CommonExecutionEvidence.ValidateCheckSeedBundle(fixture.Tree.Root, "engineering"));
+            Assert.Contains(material.Path, error.Message, StringComparison.Ordinal);
+        }
+        else
+        {
+            File.Delete(path);
+            Assert.Throws<FileNotFoundException>(() => CommonExecutionEvidence.ValidateCheckSeedBundle(fixture.Tree.Root, "engineering"));
+        }
+    }
+
+    [Theory]
+    [InlineData("existing")]
+    [InlineData("missing")]
+    [InlineData("corrupt")]
+    public void EngineeringSeedTransportPreservesSourceAndProvenanceAcrossTestSeedStates(string state)
+    {
+        using var fixture = new Fixture();
+        var originalChecks = fixture.Run();
+        fixture.Seed();
+        var root = fixture.Tree.Root;
+        SharedBuildContractTests.Git(root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qam", "registered seed material");
+        var commit = SharedBuildContractTests.Git(root, "rev-parse", "HEAD");
+        var build = CommonExecutionEvidence.ValidateBuild(root);
+        var engineering = CommonExecutionEvidence.ValidateEngineering(root);
+        var tests = CommonExecutionEvidence.ValidateTests(root);
+        var source = build.Materials.Concat(engineering.Materials).Select(material => material.Path)
+            .Append(CommonExecutionEvidence.EngineeringPath).Distinct(StringComparer.Ordinal)
+            .ToDictionary(path => path, path => File.ReadAllBytes(Path.Combine(root, path)), StringComparer.Ordinal);
+        var testSeed = Path.Combine(root, CommonExecutionEvidence.TestSeedPath);
+        if (state == "missing") Directory.Delete(testSeed, recursive: true);
+        if (state == "corrupt") File.AppendAllText(Path.Combine(testSeed, tests.Materials[0].Path), "corrupt optional TRX");
+
+        var archive = Path.Combine(root, "build/seed-material.tgz");
+        using var output = new StringWriter();
+        string[] Options(string action) => [action, "--repository", root, "--stage", "engineering-seed",
+            "--commit", commit, "--run-id", "17", "--run-attempt", "2"];
+        Assert.Equal(0, Program.Run([.. Options("transport-pack"), "--archive", archive], TestResultEvidence.Load, output, output));
+        Assert.True(File.Exists(archive));
+        Assert.Equal(0, Program.Run(Options("transport-verify"), TestResultEvidence.Load, output, output));
+
+        Assert.Equal(build.Candidate, CommonExecutionEvidence.Candidate(root));
+        foreach (var (path, bytes) in source) Assert.Equal(bytes, File.ReadAllBytes(Path.Combine(root, path)));
+        var exportedChecks = CommonExecutionEvidence.ValidateCheckSeedBundle(root, "engineering");
+        Assert.Equal(originalChecks.Candidate, exportedChecks.Candidate);
+        Assert.Equal(originalChecks.Round, exportedChecks.Round);
+        Assert.Equal(File.ReadAllBytes(Path.Combine(root, CommonExecutionEvidence.ChecksPath("engineering"))),
+            File.ReadAllBytes(Path.Combine(root, CommonExecutionEvidence.CheckSeedPath("engineering"), "checks.json")));
+        var exportedTests = CommonExecutionEvidence.Read<TestExecutionRecord>(testSeed, "tests.json");
+        Assert.Equal(tests.Candidate, exportedTests.Candidate);
+        Assert.Equal(tests.Round, exportedTests.Round);
+        Assert.Equal(tests.Projects, exportedTests.Projects);
+        Assert.Equal(tests.Materials, exportedTests.Materials);
+        foreach (var material in tests.Materials)
+            Assert.Equal(source[material.Path], File.ReadAllBytes(Path.Combine(testSeed, material.Path)));
+    }
+
+    [Fact]
+    public void FallbackSeedNotificationFollowsCompleteCopyAndNextExportRechecksSource()
+    {
+        using var fixture = new Fixture();
+        var original = fixture.Run();
+        fixture.Seed();
+        var root = fixture.Tree.Root;
+        Directory.Delete(Path.Combine(root, CommonExecutionEvidence.TestSeedPath), recursive: true);
+        Directory.Delete(Path.Combine(root, CommonExecutionEvidence.CheckSeedPath("engineering")), recursive: true);
+        CommonCheckRecord? published = null;
+        Exception? notificationFailure = null;
+        using var output = new SeedExportObserver(() =>
+        {
+            notificationFailure = Record.Exception(() => { published = CommonExecutionEvidence.ValidateCheckSeedBundle(root, "engineering"); });
+            fixture.Tree.Write("fixtures/selftest.txt", "source changed after export notification");
+        });
+
+        Assert.True(CommonExecutionEvidence.ExportCheckSeed(root, "engineering", output));
+        Assert.True(output.Observed);
+        Assert.Null(notificationFailure);
+        Assert.NotNull(published);
+        Assert.Equal(original.Candidate, published.Candidate);
+        Assert.Equal(original.Round, published.Round);
+        Assert.NotEqual(original.Candidate, CommonExecutionEvidence.Candidate(root));
+        Assert.Throws<InvalidDataException>(() => CommonExecutionEvidence.ExportCheckSeed(root, "engineering", TextWriter.Null));
+    }
+
+    [Theory]
+    [InlineData("COMMON_CHECK_SEED_SAVED")]
+    [InlineData("ENGINEERING_TEST_SEED_SAVED")]
+    public void SeedNotificationIOExceptionDoesNotInvalidateEngineering(string notification)
+    {
+        using var fixture = new Fixture();
+        fixture.Run();
+        fixture.Seed();
+        var root = fixture.Tree.Root;
+        var accepted = CommonExecutionEvidence.ValidateEngineering(root);
+        if (notification == "ENGINEERING_TEST_SEED_SAVED")
+            Directory.Delete(Path.Combine(root, CommonExecutionEvidence.TestSeedPath), recursive: true);
+        using var output = new FailingSeedNotificationWriter(notification);
+        using var error = new StringWriter();
+
+        var exit = Program.Run(["check-seed-export", "--repository", root, "--stage", "engineering"],
+            TestResultEvidence.Load, output, error);
+
+        Assert.True(output.Failed);
+        Assert.True(exit == 0, error.ToString());
+        Assert.Contains("_SEED_NOT_SAVED", output.ToString(), StringComparison.Ordinal);
+        Assert.Empty(error.ToString());
+        var current = CommonExecutionEvidence.ValidateEngineering(root);
+        Assert.Equal(accepted.Candidate, current.Candidate);
+        Assert.Equal(accepted.Round, current.Round);
+    }
+
     [Fact]
     public void ActualRepositoryRegistrationReachesEngineeringSeedHandling()
     {
@@ -207,6 +331,33 @@ public sealed partial class CommonCheckExecutionTests
         fixture.ScribeMaterial = "{\"Version\":1,\"Records\":[],\"References\":[\"D5/S0/Carrier/Ring.goldenRing\"],\"Latex\":[]}";
         fixture.Run(checks => Assert.Equal(new[] { "SL-006", "SL-023" }, checks.Ids.Where(id => id.StartsWith("SL-", StringComparison.Ordinal) && checks.IsSelected(id))));
         Assert.Equal(new[] { "scribe-describe", "SL-006", "SL-023" }, fixture.Calls);
+    }
+
+    private sealed class FailingSeedNotificationWriter(string notification) : StringWriter
+    {
+        internal bool Failed { get; private set; }
+        public override void Write(string? value) { FailOnce(value); base.Write(value); }
+        public override void WriteLine(string? value) { FailOnce(value); base.WriteLine(value); }
+        private void FailOnce(string? value)
+        {
+            if (Failed || value is null || !value.Contains(notification, StringComparison.Ordinal)) return;
+            Failed = true;
+            throw new IOException("temporary seed notification write failure");
+        }
+    }
+
+    private sealed class SeedExportObserver(Action observed) : StringWriter
+    {
+        internal bool Observed { get; private set; }
+        public override void Write(char value) { base.Write(value); Observe(); }
+        public override void Write(string? value) { base.Write(value); Observe(); }
+        public override void WriteLine(string? value) { base.WriteLine(value); Observe(); }
+        private void Observe()
+        {
+            if (Observed || !ToString().Contains("ENGINEERING_TEST_SEED_SAVED" + NewLine, StringComparison.Ordinal)) return;
+            Observed = true;
+            observed();
+        }
     }
 
     private sealed class ReportInputsFixture : IDisposable

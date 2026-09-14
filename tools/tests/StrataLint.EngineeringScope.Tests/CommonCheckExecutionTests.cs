@@ -7,6 +7,30 @@ namespace StrataLint.EngineeringScope.Tests;
 public sealed partial class CommonCheckExecutionTests
 {
     [Fact]
+    public void NativeEngineeringSeedPackReadsCandidateOnce()
+    {
+        using var fixture = new Fixture();
+        fixture.Run();
+        fixture.Seed();
+        SharedBuildContractTests.Git(fixture.Tree.Root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qam", "registered checks");
+        var commit = SharedBuildContractTests.Git(fixture.Tree.Root, "rev-parse", "HEAD");
+        var trace = Path.Combine(fixture.Tree.Root, "build/git-trace.jsonl");
+        var runner = Path.Combine(TestRepositoryLayout.FindRoot(), CommonExecutionEvidence.RunnerPath);
+        var result = SharedBuildContractTests.Process(fixture.Tree.Root, "dotnet",
+            [runner, "transport-pack", "--repository", fixture.Tree.Root, "--stage", "engineering-seed", "--commit", commit,
+                "--run-id", "17", "--run-attempt", "2", "--archive", Path.Combine(fixture.Tree.Root, "build/optional.tgz")],
+            new Dictionary<string, string> { ["GIT_TRACE2_EVENT"] = trace });
+        Assert.True(result.Exit == 0, result.Text);
+        var commands = File.ReadLines(trace).Select(line => JsonNode.Parse(line)!)
+            .Where(row => row["event"]?.ToString() == "start")
+            .Select(row => row["argv"]!.AsArray().Select(value => value!.ToString()).ToArray())
+            .Where(arguments => arguments.Contains("ls-files", StringComparer.Ordinal)).ToArray();
+        Assert.Single(commands, arguments => arguments.Contains("--stage", StringComparer.Ordinal));
+        Assert.Single(commands, arguments => arguments.Contains("--others", StringComparer.Ordinal));
+        _ = CommonExecutionEvidence.ValidateCheckSeedBundle(fixture.Tree.Root, "engineering");
+    }
+
+    [Fact]
     public void NativeSeedBundleRejectsUndeclaredMaterial()
     {
         using var fixture = new Fixture();
