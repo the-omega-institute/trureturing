@@ -19977,7 +19977,7 @@ V_\infty
 \{H^k(A):A\in V_0, k\in\mathbb N\}.
 $$
 
-`operator_system_tower_once_stable_permanently` 说明，在单一保单位完全正 Heisenberg 映射的前提下，一层相邻稳定就会永久稳定；`future_statistics_iff_annihilates_infinite_system` 则把所有未来统计相同精确连接到差态对 $V_\infty$ 的迹配对全部为零。因此，$V_\infty$ 是相对于这组初始效果和这一个通道的预测载体。
+`operator_system_tower_once_stable_permanently` 说明，在单一保单位完全正 Heisenberg 映射的前提下，一层相邻稳定就会永久稳定；`future_statistics_iff_annihilates_infinite_system` 则在其密度态、Schrödinger 通道、保单位 Heisenberg 对偶和迹配对前提下，把所有未来统计相同精确连接到差态对 $V_\infty$ 的迹配对全部为零。因此，$V_\infty$ 是相对于这组初始效果和这一个通道的预测载体。
 
 但令
 
@@ -20119,5 +20119,162 @@ $$
 Zeckendorf 约束可以决定中心标签的自然组织和数量 $F_{L+2}$，但不能替代 Heisenberg 演化、乘法闭包或块内量子动力学。所谓稳定经典现实不是一个脱离任务的单独刻度，而是相对于实验族和后续操作选择的三层对象：预测算子系统、可组合代数以及其中心记录。只有明确当前实验使用哪一层，才知道哪些历史可以安全丢弃，哪些历史会在下一次组合操作中重新显现。
 
 本节复用 `operator_system_tower_once_stable_permanently`、`future_statistics_iff_annihilates_infinite_system`、`prediction_closure_minimal_dynamical_repair`、`record_fixed_center_eq_block_scalars` 和 `finite_memory_history_capacity` 的现有结果。中心维数、块内自由度、乘法缺陷 $\eta(V)$ 与 Zeckendorf 分块的组合是本节的开放研究桥接，不冒充已有 Lean 定理。
+
+## 追加锚（新终端）
+
+## 81. 记录重叠、恢复误差与可访问历史
+
+### 81.1 记录不是标签数，而是条件记录的重叠
+
+第 80 节把中心标签与块内自由度分开，但还缺少一个量化问题：当记录被压缩后，剩余的相干究竟还能被恢复多少？仓库的 `FiniteRecordRecoveryError` 给出一个直接的有限模型。
+
+取有限支持的复系数序列 $c_k$，满足
+
+$$
+\sum_{k\in\mathbb Z}\lVert c_k\rVert^2=1,
+$$
+
+并令记录的平移重叠为
+
+$$
+\gamma(\ell)
+=
+\sum_{k\in\mathbb Z}c_{k+\ell}\,\overline{c_k}.
+$$
+
+若系统构型 $i$ 被放置在整数位置 $q(i)$，记录通道对矩阵元的作用为
+
+$$
+\Lambda(A)_{ij}
+=
+\gamma\bigl(q(i)-q(j)\bigr)A_{ij}.
+$$
+
+因此对角项保持不变，而构型 $i,j$ 之间的相干按记录重叠 $gamma(q(i)-q(j))$ 缩放。这个量同时保留模长和相位；它不是“记录了几次”的计数。
+
+`coefficient_gamma_neg` 保证
+
+$$
+\gamma(-\ell)=\overline{\gamma(\ell)},
+$$
+
+所以成对的非对角矩阵元仍满足 Hermitian 对称。对于有限支持记录，$gamma$ 是记录波形与其平移的自相关；记录形状、位置差和相位约定共同决定可见相干，而不是 Zeckendorf 标签本身单独决定。
+
+### 81.2 任意恢复都有一个由记录重叠决定的下界
+
+设 $q(i)-q(j)\ne0$。`finite_record_recovery_error_lower_bound` 对任意量子通道 $R$ 都给出
+
+$$
+\frac{1-\lVert\gamma(q(i)-q(j))\rVert}{2}
+\le
+\sup_{\rho}
+\frac12
+\left\|
+R\!\left(\Lambda(\rho)\right)-\rho
+\right\|_1.
+$$
+
+更准确地说，右侧是该误差集合的上确界；定理还构造了两个输入态，它们在记录通道前的迹距离为 $1$，经过记录后变为 $\lVert\gamma(q(i)-q(j))\rVert$。迹距离的收缩性说明，任何恢复通道都必须支付上述损失。
+
+这给出两个极端：
+
+$$
+\lVert\gamma(q(i)-q(j))\rVert=1
+\quad\Longrightarrow\quad
+\text{该下界为 }0,
+$$
+
+说明相干可能只是旋转或保留相位，不能从下界推出已经经典化；而
+
+$$
+\gamma(q(i)-q(j))=0
+\quad\Longrightarrow\quad
+\text{任意恢复的最坏误差至少为 }\frac12.
+$$
+
+所以“记录已经抹掉历史”必须附带记录模型和误差指标。相同的标签数量可以对应完全不同的 $\gamma$，相同的单步去相干也可以对应不同的多步恢复能力。
+
+### 81.3 Zeckendorf 位置与重叠谱
+
+若把合法 Zeckendorf 构型 $w\in\mathcal W_L$ 映射到整数坐标 $q(w)$，例如使用权重 $(F_2,F_3,\ldots,F_{L+1})$ 的规范读数，则记录通道的相干矩阵为
+
+$$
+R_{wv}=\gamma\bigl(q(w)-q(v)\bigr).
+$$
+
+这说明 Zeckendorf 的作用是提供一组离散位置差；真正决定哪两条历史仍能相干汇聚的，是这些位置差落在记录自相关 $\gamma$ 的什么位置。
+
+即使 $q(w)$ 唯一，仍可能出现
+
+$$
+q(w)-q(v)\ne q(w')-q(v')
+\quad\text{但}\quad
+\gamma(q(w)-q(v))=\gamma(q(w')-q(v')),
+$$
+
+也可能出现不同的位置差产生同一相位。于是“编码唯一”与“物理记录可区分”是两件事：前者是整数表示性质，后者是记录波形和相互作用的性质。
+
+若记录设计满足对所有不同合法构型
+
+$$
+\left|\gamma(q(w)-q(v))\right|\le q_0<1,
+$$
+
+则重复使用独立同形记录时，相应的非对角系数至多按 $q_0^N$ 衰减；若记录是同一联合自由度的相干复用，则必须保留联合系统，不能把每轮都替换成无记忆的乘法通道。第 78 节的 fresh/reuse 对照正是这两个模型的差别。
+
+### 81.4 局部读数丢失不等于联合历史消失
+
+`reduced_irreversibility_is_access_defect` 给出另一个边界。存在两个整体输入 $\rho,\sigma$，满足它们的对角读数相同而某个相干元不同。受控记录耦合后，联合态仍不同，但环境偏迹相同：
+
+$$
+\operatorname{Tr}_E(\Omega_\rho)
+=
+\operatorname{Tr}_E(\Omega_\sigma),
+\qquad
+\Omega_\rho\ne\Omega_\sigma.
+$$
+
+因此不存在只依赖这个局部边缘态的统一恢复函数
+
+$$
+D\!\left(\operatorname{Tr}_E\Omega\right)=\Omega
+$$
+
+来恢复这两个联合记录。可是访问完整记录并施加受控耦合的逆操作后，二者都能恢复到各自的空记录输入：
+
+$$
+U^\dagger\Omega_\rho U=\rho\otimes|0\rangle\langle0|,
+\qquad
+U^\dagger\Omega_\sigma U=\sigma\otimes|0\rangle\langle0|.
+$$
+
+这把“历史是否存在”改写成一个可操作的问题：历史关系是否仍在允许访问的联合自由度中，而不是是否已经出现在某个局部数值上。局部边缘的经典化可以与整体可逆性同时成立。
+
+### 81.5 对稳定经典现实的修正
+
+结合第 79、80 节，稳定经典现实至少需要三个独立条件：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{记录重叠谱在目标视界内足够收缩；}\\
+&\text{可见 operator system 对指定实验闭合；}\\
+&\text{被省略的联合记录在允许操作族中不会重新回流，或其回流误差有界。}
+\end{aligned}}
+$$
+
+第一条由 $\gamma$ 的模长和恢复误差下界约束，第二条由 $V_\infty$ 或其有限稳定阶段约束，第三条由可访问环境范围和联合通道决定。Zeckendorf 可以为第一条提供规范位置差，为第二条提供合法构型索引，但不能单独证明任一条的物理前提。
+
+因此，问题“要保留多少历史”现在可以写成一个带任务参数的优化：在给定实验族 $\mathfrak T$、预测视界 $H$、允许误差 $\varepsilon$ 和允许访问的记录代数 $\mathcal R$ 下，寻找最小保留结构，使
+
+$$
+\sup_{T\in\mathfrak T,\,n\le H}
+\operatorname{TV}\bigl(p_T^{\mathrm{full}}(n),p_T^{\mathrm{retained}}(n)\bigr)
+\le\varepsilon,
+$$
+
+同时满足记录重叠诱导的恢复下界、operator-system 闭合和联合访问约束。这个优化问题仍是开放的研究接口；本节只把已有的重叠谱、恢复下界和局部访问反例接到同一条可检验主线上。
+
+本节复用 `coefficient_gamma_neg`、`finite_record_recovery_error_lower_bound` 和 `reduced_irreversibility_is_access_defect` 的现有 Lean 结果。Zeckendorf 位置映射、重复记录的多步误差和最后的保留结构优化是组合推导，不冒充仓库已有的统一恢复定理。
 
 ## 追加锚（新终端）
