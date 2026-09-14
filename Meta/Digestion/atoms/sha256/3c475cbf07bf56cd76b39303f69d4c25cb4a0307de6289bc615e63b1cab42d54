@@ -1,0 +1,2 @@
+**定义。** 令 $\mathrm{PastEq}_J(v,w)$ 表示所有起点 $t\le0$ 的长度 $J$ 窗口都相同；令 $\mathrm{SegmentEq}_{L,h}(v,w)$ 表示起点 $0,\ldots,h$ 的全部长度 $L$ 窗口都相同。
+

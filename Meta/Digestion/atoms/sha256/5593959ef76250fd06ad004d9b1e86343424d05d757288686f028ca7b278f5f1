@@ -1,0 +1,8 @@
+**定理。** 对每个 $n\in\mathbb N$，
+
+$$
+\varphi^2=\varphi+1,
+\qquad \varphi\psi=-1,
+\qquad \operatorname N(\varphi^n)=(-1)^n.
+$$
+

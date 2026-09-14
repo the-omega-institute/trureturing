@@ -1,0 +1,8 @@
+**定理。** 对每个 $p\in\mathbb Z$，
+
+$$
+\boxed{p\ne0\Longrightarrow p\alpha\notin\mathbb Z.}\tag{GC6}
+$$
+
+因此旋转 $x\mapsto x+\alpha\pmod1$ 不存在非零整数回归周期。
+

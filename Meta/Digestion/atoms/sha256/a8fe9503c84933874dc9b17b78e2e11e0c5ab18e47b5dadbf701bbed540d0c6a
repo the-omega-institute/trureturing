@@ -1,0 +1,6 @@
+**定义。** 若事件 $E$ 只依赖观察路径且 $\mathbb P_K(E)>0$，则端点或其他路径约束下的条件律为
+
+$$
+\mathbb P_K(\,cdot\mid E)=\frac{\mathbb P_K(E\cap\cdot)}{\mathbb P_K(E)}.
+$$
+

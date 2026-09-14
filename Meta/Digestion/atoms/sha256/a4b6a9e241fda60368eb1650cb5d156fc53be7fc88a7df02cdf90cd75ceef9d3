@@ -1,0 +1,4 @@
+**命题。** 若 $p$ 为素数、$p\ne2,5$ 且 $a\not\equiv0\pmod p$，则
+$\ker\overline B=0$。此外，对模 $p^2$ 的状态向量 $v$，旧周期后的差为
+$pBv$；若 $v\not\equiv0\pmod p$，则该差不为零。
+

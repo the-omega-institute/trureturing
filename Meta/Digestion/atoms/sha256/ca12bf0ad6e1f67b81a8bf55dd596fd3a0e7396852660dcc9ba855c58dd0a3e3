@@ -1,0 +1,7 @@
+**命题。** 若 FM1 的每个被测复矩阵元误差至多 $\epsilon$，令 $r_*=\max_\lambda r_\lambda$，则径向归一化后
+
+$$
+\boxed{\max_{0\le j\le H}\|\widehat M_j-M_j\|
+\le2r_*(2^{H+2}-1)\epsilon.}
+$$
+
