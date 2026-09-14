@@ -59,6 +59,55 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
     }
 
+    [Theory]
+    [InlineData("judge")]
+    [InlineData("content")]
+    public void CandidateCheckClassifiesDeletedFileAfterRegistrationRemoval(string deletedPlane)
+    {
+        const string deletedPath = "tools/retired.txt";
+        var fixture = TrustedFrozenFixture();
+        fixture.Baseline[deletedPath] = "retired component\n";
+        fixture.Baseline[FileMapPath] = Manifest(fixture.Baseline.Keys.Append(FileMapPath)
+            .Distinct(StringComparer.Ordinal)
+            .Select(path => (path, Plane: (string?)(path == FileMapPath ? "judge"
+                : path == deletedPath ? deletedPlane : "content"))).ToArray());
+        fixture.Files[FileMapPath] = Manifest(fixture.Files.Keys.Append(FileMapPath)
+            .Distinct(StringComparer.Ordinal)
+            .Select(static path => (path, Plane: (string?)(path == FileMapPath ? "judge" : "content")))
+            .ToArray());
+        var environment = new ProductionCliEnvironment(
+            "/repo",
+            new FakeRepositoryGateway(
+                RawChangeSet.CreateWithKinds(
+                [
+                    (FileMapPath, RawChangeKind.Modified),
+                    (deletedPath, RawChangeKind.Deleted),
+                ]),
+                Snapshot(fixture.Files),
+                Snapshot(fixture.Baseline)),
+            new FakeLeanReportSource(null));
+
+        var outcome = CheckWithReports(environment, fixture);
+
+        if (deletedPlane == "judge")
+        {
+            Assert.True(outcome is AdmissionOutcome.ProtectedSurfaceChange, outcome switch
+            {
+                AdmissionOutcome.RuleRejected rejected => string.Join('\n',
+                    rejected.Diagnostics.Select(static diagnostic => diagnostic.Render())),
+                AdmissionOutcome.InfrastructureFailure failure => failure.Message,
+                _ => outcome.GetType().FullName,
+            });
+        }
+        else
+        {
+            var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
+            Assert.Contains(rejected.Diagnostics, static item =>
+                item.RuleId == RuleId.CreateKnown(29)
+                && item.Message.Contains("ADMISSION-PLANE-MIXED", StringComparison.Ordinal));
+        }
+    }
+
     [Fact]
     public void AdmissionPlaneClassifiesNewJudgeFamilyFromCandidateFileMapInSameDelta()
     {
@@ -75,6 +124,7 @@ public sealed partial class ProductionEnvironmentTests
             new FakeLeanReportSource(null));
 
         var decision = AdmissionPlanePolicy.Evaluate(
+            Snapshot(fixture.Baseline),
             Snapshot(fixture.Files),
             [FileMapPath, newPath]);
         var outcome = CheckWithReports(environment, fixture);
@@ -105,6 +155,7 @@ public sealed partial class ProductionEnvironmentTests
             new FakeLeanReportSource(null));
 
         var decision = AdmissionPlanePolicy.Evaluate(
+            Snapshot(fixture.Baseline),
             Snapshot(fixture.Files),
             [FileMapPath, newPath]);
         var outcome = CheckWithReports(environment, fixture);
@@ -178,6 +229,7 @@ public sealed partial class ProductionEnvironmentTests
 
         var prepared = gateway.Prepare(baseline);
         var outcome = ProductionCliEnvironment.EvaluateAdmissionPlane(
+            gateway.ReadRevision(prepared.Revision),
             gateway.ReadCurrent(),
             prepared.Changes);
 
@@ -197,9 +249,11 @@ public sealed partial class ProductionEnvironmentTests
             ("content/destination.txt", RawChangeKind.Added),
         ]);
 
+        var manifest = RawRepositoryEntry.FromText(FileMapPath,
+            Manifest(("content/**", "content"), ("judge/**", "judge")));
         var outcome = ProductionCliEnvironment.EvaluateAdmissionPlane(
-            AdmissionPlaneSnapshot(Encoding.UTF8.GetBytes(
-                Manifest(("content/**", "content"), ("judge/**", "judge")))),
+            RawRepositorySnapshot.Create([manifest, RawRepositoryEntry.FromText("judge/source.txt", "renamed")]),
+            RawRepositorySnapshot.Create([manifest, RawRepositoryEntry.FromText("content/destination.txt", "renamed")]),
             changes);
 
         var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
@@ -211,6 +265,7 @@ public sealed partial class ProductionEnvironmentTests
     public void EmptyDeltaRemainsAdmissible()
     {
         var outcome = ProductionCliEnvironment.EvaluateAdmissionPlane(
+            RawRepositorySnapshot.Create([]),
             AdmissionPlaneSnapshot([0xff]),
             RawChangeSet.Create([]));
 
@@ -277,8 +332,9 @@ public sealed partial class ProductionEnvironmentTests
     public void AdmissionPlaneFailsClosedWhenCandidateFileMapIsUnavailable()
     {
         var candidate = AdmissionPlaneSnapshot(null);
-        var decision = AdmissionPlanePolicy.Evaluate(candidate, ["docs/change.md"]);
+        var decision = AdmissionPlanePolicy.Evaluate(RawRepositorySnapshot.Create([]), candidate, ["docs/change.md"]);
         var outcome = ProductionCliEnvironment.EvaluateAdmissionPlane(
+            RawRepositorySnapshot.Create([]),
             candidate,
             RawChangeSet.Create(["docs/change.md"]));
 
@@ -292,7 +348,7 @@ public sealed partial class ProductionEnvironmentTests
     public void AdmissionPlaneFailsClosedWhenCandidateFileMapIsUnparseable()
     {
         var candidate = AdmissionPlaneSnapshot(Encoding.UTF8.GetBytes("files = [\n"));
-        var decision = AdmissionPlanePolicy.Evaluate(candidate, ["docs/change.md"]);
+        var decision = AdmissionPlanePolicy.Evaluate(RawRepositorySnapshot.Create([]), candidate, ["docs/change.md"]);
         var outcome = EvaluateAdmissionPlane(
             "files = [\n",
             "docs/change.md");
@@ -307,8 +363,9 @@ public sealed partial class ProductionEnvironmentTests
     public void AdmissionPlaneFailsClosedWhenCandidateFileMapIsNotUtf8()
     {
         var candidate = AdmissionPlaneSnapshot([0xff, 0xfe]);
-        var decision = AdmissionPlanePolicy.Evaluate(candidate, [FileMapPath]);
+        var decision = AdmissionPlanePolicy.Evaluate(RawRepositorySnapshot.Create([]), candidate, [FileMapPath]);
         var outcome = ProductionCliEnvironment.EvaluateAdmissionPlane(
+            RawRepositorySnapshot.Create([]),
             candidate,
             RawChangeSet.Create([FileMapPath]));
 
@@ -337,6 +394,7 @@ public sealed partial class ProductionEnvironmentTests
             new FakeLeanReportSource(null));
 
         var decision = AdmissionPlanePolicy.Evaluate(
+            Snapshot(fixture.Baseline, addDefaultFileMap: false),
             Snapshot(fixture.Files),
             [FileMapPath, newPath]);
         var outcome = CheckWithReports(environment, fixture);
@@ -380,6 +438,7 @@ public sealed partial class ProductionEnvironmentTests
         string manifest,
         params string[] changedPaths) =>
         ProductionCliEnvironment.EvaluateAdmissionPlane(
+            RawRepositorySnapshot.Create([]),
             AdmissionPlaneSnapshot(Encoding.UTF8.GetBytes(manifest)),
             RawChangeSet.Create(changedPaths));
 
