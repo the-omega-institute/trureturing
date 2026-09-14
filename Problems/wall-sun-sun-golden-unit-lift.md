@@ -136,3 +136,156 @@ This is bridge validation, not evidence that the global existential is false.
   `GoldenInt` coordinate model.
 - Any novelty of the proposed bridge lemmas is unassessed and belongs to the
   theorist's search step.
+
+## PH. 固定黄金 Pell 曲线与初始 WSS 深度的高度预算
+
+### PH.1 原对象与精确秩成对分块
+
+**定义。** 保留原域 $K=\mathbb Q(\sqrt5)$、$\phi=(1+\sqrt5)/2$、$\psi=1-\phi$，以及 $F_n=(\phi^n-\psi^n)/(\phi-\psi)$、$L_n=\phi^n+\psi^n$。对素数 $p\ne2,5$，令 $r(p)$ 为 Fibonacci 首现秩，并令
+
+$$h_p=v_p(F_{r(p)})=v_p(F_{p-(5/p)}),\qquad q_p=F_{p-(5/p)}/p\pmod p.$$
+
+第二个等式由经典秩界 $r(p)\mid p-(5/p)$ 和估值提升公式得到；其指标倍率与 $p$ 互素。因此 $q_p=0$ 当且仅当 $h_p\ge2$。以下不假设 $h_p=1$。
+
+对每个素数 $\ell\ge7$，定义实际整数
+
+$$A_\ell=F_\ell,\quad B_\ell=L_\ell,\quad M_\ell=A_\ell B_\ell=F_{2\ell},\quad C_\ell=5A_\ell^2.$$
+
+**定理 PH1。** $A_\ell,B_\ell$ 是互素奇数，且 $\gcd(M_\ell,10)=1$。每个 $p\mid A_\ell$ 恰有 $r(p)=\ell$；每个 $p\mid B_\ell$ 恰有 $r(p)=2\ell$。对两种情形均有
+
+$$v_p(M_\ell)=h_p.$$
+
+不同素数指标 $\ell$ 给出的 $M_\ell$ 两两互素。
+
+**证明。** 黄金范数恒等式给出 $B_\ell^2-5A_\ell^2=-4$。Fibonacci 和 Lucas 的模二递推周期均为三，故两数为奇数。模五由 $L_n=2\cdot3^n$ 和 $F_n=n3^{n-1}$ 得二者都与五互素。共同奇素因子会整除四，故两数互素。
+
+由强整除性，$p\mid F_{2\ell}$ 蕴含 $r(p)\mid2\ell$；秩一和二不可能，因为 $F_1=F_2=1$。所以秩为 $\ell$ 或 $2\ell$，而互素分解将两个秩准确分配给两因子。秩界还排除 $p=\ell$。若秩为 $\ell$，从 $F_\ell$ 到 $F_{2\ell}$ 的倍率二不改变奇素数估值；若秩为 $2\ell$，定义直接给出初始深度。最后，$\gcd(F_{2\ell},F_{2\ell'})=F_2=1$ 对不同素数指标成立。
+
+### PH.2 几何等式与独立的高度假设
+
+**命题 PH2。** 对全部上述指标，
+
+$$B_\ell^2+4=C_\ell=5A_\ell^2,\qquad
+A_\ell<B_\ell<\sqrt5 A_\ell,$$
+
+且 $(B_\ell^2,4,C_\ell)$ 为两两互素的正整数加法三元组。记
+
+$$R_\ell=\operatorname{rad}(4B_\ell^2C_\ell),$$
+
+其中 $\operatorname{rad}$ 为不同素因子的乘积，则
+
+$$R_\ell=10\operatorname{rad}(M_\ell),\qquad C_\ell>\sqrt5 M_\ell.$$
+
+**证明。** 第一式由 $\phi\psi=-1$ 和奇指标得到。$L_\ell=F_\ell+2F_{\ell-1}>F_\ell$，而 Pell 等式给出右侧严格界。两数皆奇且 $B_\ell$ 与 $5A_\ell$ 互素，所以三元组两两互素；取根基得到最后的等式。由 $B_\ell<\sqrt5 A_\ell$ 得高度的严格下界。
+
+**定义。** 给定实数 $\kappa>1$，称这条素指标 Pell 族满足 $\mathrm{PH}(\kappa)$，若存在常数 $H>0$ 和 $\ell_0$，使全部素数 $\ell\ge\max(7,\ell_0)$ 满足
+
+$$\boxed{C_\ell\le H R_\ell^{\kappa}.}$$
+
+这是额外的统一算术假设。Pell 曲线方程本身不包含该不等式。对正互素三元组的有理数 abc 猜想会对每个 $\kappa>1$ 给出这个假设；以下条件性结论只需要所显示的限制族，而不假设一般数域 abc 或任意别的二次域结论。
+
+### PH.3 原始零集合的精确整数账目
+
+**定义。** 在同一个 $M_\ell$ 的实际素因子上，令
+
+$$U_\ell=\prod_{p\mid M_\ell,\ h_p=1}p,\qquad
+W_\ell=\prod_{p\mid M_\ell,\ h_p\ge2}p^{h_p},\qquad
+E_\ell=\prod_{p\mid M_\ell,\ h_p\ge3}p^{h_p-2}.$$
+
+空乘积为一。$W_\ell$ 恰好由原 WSS 初始商零集合、在精确秩 $\ell$ 和 $2\ell$ 上的实际贡献组成。它不是由后来的指标倍乘产生的平方因子。$U_\ell$ 只保留估值恰为一的素数，与按奇数估值定义的平方自由核不同。
+
+**定理 PH3。** 无条件地有
+
+$$\boxed{M_\ell=U_\ell W_\ell,\qquad
+R_\ell^2E_\ell=100M_\ell U_\ell,\qquad
+W_\ell E_\ell=100M_\ell^2/R_\ell^2.}$$
+
+对任意整数 $d\ge2$，进一步令 $W_{\ell,\ge d}=\prod_{p\mid M_\ell,h_p\ge d}p^{h_p}$，则
+
+$$\boxed{W_{\ell,\ge d}^{\,d-1}\le
+\left(M_\ell/\operatorname{rad}(M_\ell)\right)^d.}$$
+
+**证明。** 逐素数比较指数。估值为一时，$\operatorname{rad}(M)^2E$ 与 $MU$ 的指数均为二；估值为二时均为二；估值 $h\ge3$ 时均为 $h$。其余两个恒等式由分解与 PH2 得到。对于最后的不等式，若 $h\ge d$，有 $h(d-1)\le d(h-1)$；若 $h<d$，左侧该素数指数为零，右侧非负。将这些整数整除关系相乘即可。
+
+### PH.4 条件性异常深度质量界
+
+**定理 PH4。** 假设 $\mathrm{PH}(\kappa)$，取其常数 $H,\ell_0$。令
+
+$$K_{\kappa,H}=100(H/\sqrt5)^{2/\kappa}.$$
+
+则全部足够大的素数指标满足
+
+$$\boxed{
+W_\ell\le K_{\kappa,H}M_\ell^{\,2-2/\kappa}/E_\ell,
+\qquad
+U_\ell\ge K_{\kappa,H}^{-1}E_\ell M_\ell^{\,2/\kappa-1}.
+}$$
+
+更一般地，对每个整数 $d\ge2$，
+
+$$\boxed{
+W_{\ell,\ge d}\le
+\left(10(H/\sqrt5)^{1/\kappa}\right)^{d/(d-1)}
+M_\ell^{\,(1-1/\kappa)d/(d-1)}.
+}$$
+
+**证明。** 高度假设给出 $R_\ell\ge(C_\ell/H)^{1/\kappa}$。代入 PH3，并使用 $C_\ell>\sqrt5 M_\ell$，得到首个上界。用 $U_\ell=M_\ell/W_\ell$ 得下界。深度阈值版本使用 PH3 最后一式与同一个根基下界。常数对全部允许指标统一；未将逐点选择的常数当成统一高度界。
+
+**推论 PH5。** 如果对每个 $\kappa>1$ 都有 $\mathrm{PH}(\kappa)$，则
+
+$$\lim_{\ell\to\infty,\ \ell\ \mathrm{prime}}
+\frac{\sum_{p\mid F_{2\ell},\ q_p=0}h_p\log p}{\log F_{2\ell}}=0.$$
+
+**证明。** 分子恰为 $\log W_\ell\ge0$。对每个固定 $\kappa>1$，PH4 将上极限控制为 $2-2/\kappa$；让 $\kappa$ 从上方趋于一。这里是按整数因子大小加权的质量比例，不是 WSS 素数在全部素数中的自然密度或计数密度，也未假设不同素数独立。
+
+### PH.5 每个精确秩通道的条件性非零见证
+
+**定理 PH6。** 若对某个 $1<\kappa<2$ 有 $\mathrm{PH}(\kappa)$，则每个足够大的素数指标 $\ell$ 都有一个素数 $p$，满足
+
+$$r(p)\in\{\ell,2\ell\},\qquad q_p\ne0.$$
+
+若更强地 $1<\kappa<4/3$，则两个通道分别都有这样的素数：存在 $p_\ell\mid F_\ell$ 和 $s_\ell\mid L_\ell$，使
+
+$$\boxed{r(p_\ell)=\ell,\quad r(s_\ell)=2\ell,\quad
+q_{p_\ell}\ne0,\quad q_{s_\ell}\ne0.}$$
+
+可以同时得到实际简单素因子乘积的下界
+
+$$U(F_\ell)\ge c_1F_\ell^{\,4/\kappa-3},\qquad
+U(L_\ell)\ge c_2L_\ell^{\,4/\kappa-3},$$
+
+其中 $U(X)=\prod_{p\parallel X}p$，$c_1,c_2>0$ 与指标无关。
+
+**证明。** 当 $\kappa<2$ 时，PH4 中 $U_\ell$ 的幂指数为正，所以最终 $U_\ell>1$。对逐通道结论，置 $\delta=2-2/\kappa$。每个通道的异常部分都不超过 $W_\ell\le K_{\kappa,H}M_\ell^\delta$。PH2 给出 $M_\ell<\sqrt5 F_\ell^2$ 及 $M_\ell<L_\ell^2$。因此分别除以异常部分后，下界幂指数均为 $1-2\delta=4/\kappa-3>0$。两个简单素因子乘积最终均大于一，再由 PH1 识别其精确秩和原商非零性。
+
+**推论。** 在 PH6 的第二种假设下，这两族见证彼此无重复。Lucas 通道的每个见证均在原黄金域中分裂，并满足 $s_\ell\equiv1\pmod{2\ell}$。Fibonacci 通道的见证满足 $p_\ell\equiv1\pmod4$，但没有由此确定它分裂还是惰性。
+
+**证明。** 不同指标的块互素，同一指标的两通道也互素。Lucas 素因子满足 $5F_\ell^2\equiv4\pmod{s_\ell}$，其中 $F_\ell$ 可逆，故 $(5/s_\ell)=1$；秩界给出显示的同余。Fibonacci 素因子满足 $L_\ell^2\equiv-4\pmod{p_\ell}$，故 $-1$ 为平方。存在某个简单素因子不等于存在惰性的简单素因子。
+
+**具体强度。** 仅假设 $\mathrm{PH}(5/4)$，即可得到 $W_\ell\le K M_\ell^{2/5}$，以及两个通道各自的简单素因子乘积至少为常数乘其 $1/5$ 次幂。这些均为条件性结论。
+
+### PH.6 全异常覆盖会迫使怎样的高度反例
+
+**定义。** 对上述互素三元组，令 $\mathcal Q_\ell=\log C_\ell/\log R_\ell$。
+
+**定理 PH7。** 固定整数 $d\ge2$。若一个无界素数指标子族的 $M_\ell$ 的全部素因子均有 $h_p\ge d$，则沿该子族
+
+$$\liminf\mathcal Q_\ell\ge d.$$
+
+若只要求 $F_\ell$ 的全部素因子有 $h_p\ge d$，或只要求 $L_\ell$ 的全部素因子有 $h_p\ge d$，则相应子族满足
+
+$$\liminf\mathcal Q_\ell\ge\frac{2d}{d+1}.$$
+
+**证明。** 全块条件给出 $\operatorname{rad}(M_\ell)\le M_\ell^{1/d}$，所以 $R_\ell\le10M_\ell^{1/d}$，而 $C_\ell>\sqrt5 M_\ell$；取对数比值的下极限。
+
+若只有 Fibonacci 通道满足条件，则 $R_\ell\le10F_\ell^{1/d}L_\ell<10\sqrt5 F_\ell^{1+1/d}$，而 $C_\ell=5F_\ell^2$。Lucas 通道的情形使用 $R_\ell\le10F_\ell L_\ell^{1/d}<10L_\ell^{1+1/d}$ 与 $C_\ell=L_\ell^2+4$。两者均给出 $2/(1+1/d)$。
+
+取 $d=2$，全部原始零因子覆盖成对块会迫使质量至少二，只覆盖一个通道会迫使质量至少 $4/3$。这证明为何 PH6 的两个阈值不同，但未构造任何这样的全异常子族。
+
+### PH.7 不能从这一条件证明中删除的内容
+
+**命题。** PH1–PH3 和 PH7 无需高度猜想；PH4–PH6 明确依赖 $\mathrm{PH}(\kappa)$。这些结论均允许原 WSS 零集合为空，也允许它非空。上述条件性非零见证不能推出存在某个 $q_p=0$。
+
+**证明。** 零集合为空时所有 $W_\ell=E_\ell=1$，整数恒等式及质量上界仍成立；任何上界都不强制正贡献。若存在零，则它在相应块中的实际贡献受条件上界约束，但上界不指定或生成该素数。几何方程与统一高度不等式是不同命题，后者未由前者的代数恒等式或实嵌入的伸缩性推出。
+
+**边界实例。** 指标换成任意合数而不移除旧素因子，会破坏 PH1 的原始深度解释：$v_{13}(F_7)=1$，$v_{13}(F_{91})=2$，而 $F_{14}/13\equiv3\pmod{13}$。这里的平方来自指标乘以十三，十三仍非 WSS。固定素数指标的两通道选择正是为了排除此类自动提升。
