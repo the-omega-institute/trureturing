@@ -1056,7 +1056,7 @@ def sourcePath (name : Name) : String :=
   (if name.toString.startsWith "LeanInformationAudit." then "tools/lean-inspector/" else "") ++
     name.toString.replace "." "/" ++ ".lean"
 
-private def policyPaths : Array String := #[
+def policyPaths : Array String := #[
   "Meta/lean-report.toml", "lean-toolchain", "lake-manifest.json",
   "tools/lean-inspector/LeanInformationAudit/RegistryTypes.lean",
   "tools/lean-inspector/LeanInformationAudit/Registry.lean",
@@ -1929,12 +1929,45 @@ def declareSidecar (theoremName arena : Name) (catalog : Option Name)
   modifyEnv fun current => bindingRecords.addEntry (bindingClaims.addEntry current claim) record
   if let .declaredUnresolved diagnostic := record.result then logWarning diagnostic
 
+/-- A replayed event cannot acquire current source or statement identities by
+being exported from a new root. Check the original owner and retained bytes. -/
+private def validateEvent (event : TemplateOccurrenceEvent) : MetaM Unit := do
+  let env ← getEnv
+  unless event.registrationSource == sourcePath event.key.registrationModule &&
+      event.key.root == event.key.registrationModule do
+    throwError "incomplete_closure:dtr.event_owner"
+  let input ← TemplateAudit.readSourceInput event.registrationSource
+  unless input.sha256 == event.registrationSourceIdentity do
+    throwError "incomplete_closure:dtr.event_source"
+  let info ← getConstInfo event.key.theoremName
+  let .ok (identity, _) := TemplateAudit.rawIdentity info.levelParams info.type
+    | throwError "incomplete_closure:dtr.event_statement"
+  unless identity == event.statementIdentity && info.levelParams == event.levelParams &&
+      info.type.equal event.statement do
+    throwError "incomplete_closure:dtr.event_statement"
+  for name in #[event.unitName, event.realizationName] do
+    unless env.contains name &&
+        (RegistrationReifier.declaringModuleOf env name).getD env.header.mainModule ==
+          event.key.registrationModule do
+      throwError "incomplete_closure:dtr.event_unit_owner"
+
+/-- Snapshot for the complete imported join. Original provisional records are
+retained only for transport to the C# join; selected contains one final result. -/
+structure JoinedRecords where
+  selected : Array BindingRecord
+  originals : Array BindingRecord
+
 /-- Shared final assessment after the full imported claim set has been joined.
 Callers must establish complete governed sidecar inputs before claiming coverage. -/
 def assessJoined : MetaM (Array BindingRecord) := do
   let env ← getEnv
   let events := inventory env
   let claims := bindingClaims.getState env
+  for event in events do validateEvent event
+  for index in [:env.header.moduleNames.size] do
+    let owner := env.header.moduleNames[index]!
+    for claim in bindingClaims.getModuleEntries env index do
+      unless claim.owner == owner do throwError "incomplete_closure:dtr.claim_owner"
   for claim in claims do
     unless (events.filter (·.key == claim.key)).size == 1 do
       throwError "unclassified_form:dtr.dangling_claim"
@@ -1942,6 +1975,120 @@ def assessJoined : MetaM (Array BindingRecord) := do
     let selected := claims.filter (·.key == event.key)
     if selected.size > 1 then throwError "unclassified_form:dtr.duplicate_claim"
     assess event selected[0]?
+
+/-- Export always starts by joining the entire loaded declaration universe. -/
+def exportSnapshot : MetaM JoinedRecords := do
+  let selected ← assessJoined
+  let originals ← (inventory (← getEnv)).mapM fun event => do
+    let some original := (records (← getEnv)).find? (·.occurrence.key == event.key)
+      | throwError "incomplete_closure:dtr.original_inventory"
+    return original
+  return { selected, originals }
+
+def keyJson (key : TemplateOccurrenceKey) : Json := Json.mkObj [
+  ("root", toJson key.root.toString), ("registration_module", toJson key.registrationModule.toString),
+  ("theorem", toJson key.theoremName.toString), ("object_arena", toJson key.objectArena.toString),
+  ("catalog", toJson key.catalog.toString)]
+
+private def dependencyJson (input : TemplateAudit.DependencyIdentity) : Json := Json.mkObj [
+  ("name", toJson input.name.toString), ("owner", toJson input.owner.toString),
+  ("type_identity", toJson input.typeIdentity), ("body_identity", toJson input.bodyIdentity)]
+
+private def certificateJson (certificate : TemplateBindingCertificate) : Json := Json.mkObj [
+  ("key", keyJson certificate.key), ("evidence_ref", toJson certificate.evidenceRef),
+  ("plan_identity", toJson certificate.planIdentity),
+  ("descriptor_identity", toJson certificate.descriptorIdentity),
+  ("actual_identity", toJson certificate.actualIdentity),
+  ("argument_inputs", Json.arr (certificate.argumentInputs.map dependencyJson)),
+  ("extraction_inputs", Json.arr (certificate.extractionInputs.map dependencyJson))]
+
+private def isRepositoryModule (name : Name) : Bool :=
+  name.toString.startsWith "D5." || name.toString.startsWith "LeanInformationAudit."
+
+/-- Complete source inputs for this module, independent of registry membership.
+A missing imported source is incomplete rather than an empty declaration set. -/
+def moduleInputs (env : Environment) (root : Name) : CoreM (Array TemplateAudit.SourceInput) := do
+  let mut seen : NameSet := {}
+  let mut pending := [root]
+  let mut paths := TemplateAudit.policyPaths
+  while let name :: rest := pending do
+    pending := rest
+    if seen.contains name then continue
+    seen := seen.insert name
+    if !isRepositoryModule name then continue
+    let path := sourcePath name
+    unless paths.contains path do paths := paths.push path
+    let imports ← if name == env.header.mainModule then pure env.header.imports else do
+      let some index := env.getModuleIdx? name
+        | throwError "incomplete_closure:dtr.module_input:{name}"
+      pure env.header.moduleData[index.toNat]!.imports
+    pending := imports.toList.map (·.module) ++ pending
+  (paths.qsort (· < ·)).mapM TemplateAudit.readSourceInput
+
+/-- Content touches follow actual constant dependencies, including complete
+arena/realization types, while theorem proof implementations are never entered. -/
+private def contentInputs (record : BindingRecord) : MetaM (Array TemplateAudit.SourceInput) := do
+  let env ← getEnv
+  let mut pending := [record.occurrence.key.theoremName, record.occurrence.unitName,
+    record.occurrence.realizationName, record.occurrence.key.objectArena]
+  if let some descriptor := record.descriptor then
+    pending := descriptor.getUsedConstants.toList ++ pending
+  let mut seen : NameSet := {}
+  let mut paths := #[record.occurrence.registrationSource]
+  if let some owner := record.bindingOwner then paths := paths.push (sourcePath owner)
+  let mut remaining := 524288
+  while let name :: rest := pending do
+    pending := rest
+    if seen.contains name then continue
+    if remaining == 0 then throwError "incomplete_closure:dtr.content_inputs"
+    remaining := remaining - 1
+    seen := seen.insert name
+    let info ← getConstInfo name
+    let owner := (RegistrationReifier.declaringModuleOf env name).getD env.header.mainModule
+    if isRepositoryModule owner then
+      let path := sourcePath owner
+      unless paths.contains path || path.startsWith "tools/" do paths := paths.push path
+    pending := info.type.getUsedConstants.toList ++ pending
+    if !info.isTheorem then
+      if let some value := info.value? then pending := value.getUsedConstants.toList ++ pending
+  (paths.toList.eraseDups.toArray.qsort (· < ·)).mapM fun path => TemplateAudit.readSourceInput path
+
+private def inputJson (input : TemplateAudit.SourceInput) : Json := Json.mkObj [
+  ("path", toJson input.path), ("sha256", toJson input.sha256)]
+
+private def recordJson (record : BindingRecord) : MetaM Json := do
+  let (state, diagnostic, certificate) := match record.result with
+    | .undeclared => ("undeclared", Json.null, Json.null)
+    | .declaredUnresolved diagnostic => ("declared_unresolved", toJson diagnostic, Json.null)
+    | .declaredValidated certificate => ("declared_validated", Json.null, certificateJson certificate)
+  return Json.mkObj [
+    ("key", keyJson record.occurrence.key),
+    ("registration_source_path", toJson record.occurrence.registrationSource),
+    ("statement_identity", toJson record.occurrence.statementIdentity),
+    ("unit_name", toJson record.occurrence.unitName.toString),
+    ("realization_name", toJson record.occurrence.realizationName.toString),
+    ("content_inputs", Json.arr ((← contentInputs record).map inputJson)),
+    ("binding_source_path", record.bindingOwner.map (toJson ∘ sourcePath) |>.getD Json.null),
+    ("state", toJson state), ("diagnostic", diagnostic), ("certificate", certificate)]
+
+/-- Records are partitioned by their actual producing module. An original
+undeclared row and a sidecar overlay remain distinguishable until the final join. -/
+def moduleJson (snapshot : JoinedRecords) (moduleName : Name)
+    (registered : Array TemplateOccurrenceKey) : MetaM Json := do
+  let env ← getEnv
+  let originals := snapshot.originals.filter (·.occurrence.key.registrationModule == moduleName)
+  let overlays := snapshot.selected.filter fun row => row.bindingOwner == some moduleName &&
+    row.occurrence.key.registrationModule != moduleName
+  let rows ← (originals ++ overlays).mapM fun row => do
+    let some selected := snapshot.selected.find? (·.occurrence.key == row.occurrence.key)
+      | throwError "incomplete_closure:dtr.final_record"
+    recordJson (if selected.bindingOwner == some moduleName then selected else row)
+  return Json.mkObj [
+    ("schema_version", toJson (1 : Nat)), ("compatibility_version", toJson (4 : Nat)),
+    ("inventory", Json.arr ((inventory env).filter
+      (·.key.registrationModule == moduleName) |>.map (keyJson ∘ TemplateOccurrenceEvent.key))),
+    ("registered", Json.arr (registered.map keyJson)), ("records", Json.arr rows),
+    ("inputs", Json.arr ((← moduleInputs env moduleName).map inputJson))]
 
 end LeanInformationAudit.TemplateBinding
 

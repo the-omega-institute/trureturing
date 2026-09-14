@@ -315,3 +315,14 @@ structure StructuralProvenanceEntry where
 
 end DispositionCensus
 end LeanInformationAudit
+
+namespace LeanInformationAudit
+open Lean
+
+/-- Judge-owned semantic API for the lightweight standalone report driver.
+The inspector resolves one exact declaration/owner of this type. Content does
+not register producers, callbacks, policies or acceptance bits. -/
+structure InformationTemplateReportDriver where
+  generate : Array Name → MetaM (Array Json)
+
+end LeanInformationAudit

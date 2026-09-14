@@ -105,6 +105,8 @@ def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Pat
             module_keys = {"declarations", "imports", "module", "source_path", "source_sha256"}
             if "information_registration_errors" in raw_module:
                 module_keys.add("information_registration_errors")
+            if "information_templates" in raw_module:
+                module_keys.add("information_templates")
             if "utility_refutation" in raw_module:
                 module_keys.add("utility_refutation")
             module = require_keys(
@@ -128,6 +130,16 @@ def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Pat
                     or any(not isinstance(item, str) for item in registration_errors)
                     or registration_errors != sorted(set(registration_errors))):
                 raise ValueError("Inspector registration evidence is malformed")
+            information_templates = module.get("information_templates")
+            if information_templates is not None:
+                require_keys(information_templates,
+                             {"schema_version", "compatibility_version", "inventory", "registered", "records", "inputs"},
+                             "Inspector declared-template evidence")
+                if (information_templates["schema_version"] != 1
+                        or information_templates["compatibility_version"] != 4
+                        or any(not isinstance(information_templates[field], list)
+                               for field in ("inventory", "registered", "records", "inputs"))):
+                    raise ValueError("Inspector declared-template evidence is malformed")
             refutation = module.get("utility_refutation")
             if refutation is not None:
                 require_keys(refutation, {"claim_gid", "claim_source_path", "claim_source_sha256", "result_gid", "is_closed_negation"},
@@ -208,6 +220,8 @@ def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Pat
             }
             if registration_errors is not None:
                 report_module["information_registration_errors"] = registration_errors
+            if information_templates is not None:
+                report_module["information_templates"] = information_templates
             if refutation is not None:
                 report_module["utility_refutation"] = refutation
             modules.append(report_module)

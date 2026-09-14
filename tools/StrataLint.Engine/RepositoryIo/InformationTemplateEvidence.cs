@@ -57,7 +57,7 @@ internal static class InformationTemplateEvidence
             var registration = InformationTemplateJson.String(record, "registration_source_path");
             var unit = InformationTemplateJson.Name(InformationTemplateJson.String(record, "unit_name"));
             var realization = InformationTemplateJson.Name(InformationTemplateJson.String(record, "realization_name"));
-            if (key.RegistrationModule != LeanImportClosure.ModuleName(RepoPath.CreateKnown(registration)))
+            if (key.RegistrationModule != ModuleForSource(registration))
                 throw new FormatException("DTR-Evidence: registration module/source owner differs");
             var statement = InformationTemplateJson.Hash(InformationTemplateJson.String(record, "statement_identity"), 64);
             var contentInputs = InformationTemplateDebtStore.ReadInputs(record.GetProperty("content_inputs"), snapshot);
@@ -107,6 +107,16 @@ internal static class InformationTemplateEvidence
             records.Add(new(key, registration, statement, contentInputs, state, reference, diagnostic, binding, unit, realization));
         }
         return new(value.Clone(), inventory, records.ToImmutable(), registered, inputs);
+    }
+
+    // The inspector library has its own Lean source root in lakefile.toml.
+    // This also permits its real command fixtures to cross the same wire reader.
+    internal static string ModuleForSource(string path)
+    {
+        const string inspectorRoot = "tools/lean-inspector/";
+        var relative = path.StartsWith(inspectorRoot, StringComparison.Ordinal)
+            ? path[inspectorRoot.Length..] : path;
+        return LeanImportClosure.ModuleName(RepoPath.CreateKnown(relative));
     }
 
     internal static InformationTemplateUniverse Collect(RepositorySnapshot snapshot, LeanAxiomReport report)

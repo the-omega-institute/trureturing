@@ -214,7 +214,7 @@ invoke_inspector() {
     --project "$INSPECTOR_DIR/../StrataLint.Cli/StrataLint.Cli.csproj" \
     --configuration Release --no-build --no-restore --no-launch-profile -- lean-utility-input
   run_phase inspect \
-    "$CACHE_RUN" "$LAKE" env lean --run "$INSPECTOR" \
+    "$CACHE_RUN" "$LAKE" env lean --root="$INSPECTOR_DIR" --run "$INSPECTOR" \
     --output "$SPOOL_REPORT" --material-spool "$MATERIAL_SPOOL" \
     --utility-input "$LOG_DIR/utility-input.stdout.log" \
     "${inspector_arguments[@]}"

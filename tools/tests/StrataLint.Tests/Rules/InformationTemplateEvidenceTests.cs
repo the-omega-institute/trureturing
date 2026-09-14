@@ -59,6 +59,12 @@ public sealed class InformationTemplateEvidenceTests
             [new(Unit, "def", "fixture unit", []), new(Realization, "def", "fixture realization", [])])
         { InformationTemplates = evidence };
 
+    [Theory]
+    [InlineData("D5/S0/Carrier/Probe.lean", "D5.S0.Carrier.Probe")]
+    [InlineData("tools/lean-inspector/LeanInformationAudit/Tests/Probe.lean", "LeanInformationAudit.Tests.Probe")]
+    public void registration_owner_uses_lean_source_root(string path, string module) =>
+        Assert.Equal(module, InformationTemplateEvidence.ModuleForSource(path));
+
     [Fact]
     public void fresh_imported_record_accepted()
     {

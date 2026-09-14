@@ -818,3 +818,25 @@ def validateEvidence (root : Name) (inventory : DispositionInventory)
 end DispositionCensus
 
 end LeanInformationAudit
+
+namespace LeanInformationAudit
+open Lean Meta
+
+/-- One authoritative imported join shared by all requested report modules. -/
+def informationTemplateReportDriver : InformationTemplateReportDriver where
+  generate moduleNames := do
+    let env ← getEnv
+    let snapshot ← TemplateBinding.exportSnapshot
+    moduleNames.mapM fun moduleName => do
+      let finite := (InformationRegistry.entries env).filter
+        (·.registrationModuleName == moduleName) |>.map fun entry => {
+          root := moduleName, registrationModule := moduleName, theoremName := entry.theoremName,
+          objectArena := entry.canonicalObjectArenaName, «catalog» := entry.effectiveCatalogId :
+            TemplateOccurrenceKey }
+      let structural := (DispositionCensus.structuralProvenanceEntries env).filter
+        (·.registrationModule == moduleName) |>.map fun entry => {
+          root := moduleName, registrationModule := moduleName, theoremName := entry.theoremName,
+          objectArena := entry.canonicalArena, «catalog» := entry.canonicalArena : TemplateOccurrenceKey }
+      TemplateBinding.moduleJson snapshot moduleName (finite ++ structural)
+
+end LeanInformationAudit
