@@ -111,6 +111,14 @@ jobs:
           ref: ${{ github.sha }}
           fetch-depth: 0
           persist-credentials: false
+      - name: Install Python for the self-hosted truth runtime
+        uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6
+        with:
+          version: '0.10.12'
+          python-version: '3.12'
+          activate-environment: true
+          working-directory: ${{ runner.temp }}
+          enable-cache: false
       - env:
           CANDIDATE_SHA: ${{ github.sha }}
         run: python3 tools/scripts/workflow/ci.py checkout --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA"
