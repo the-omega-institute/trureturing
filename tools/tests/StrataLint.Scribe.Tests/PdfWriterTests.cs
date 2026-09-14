@@ -103,6 +103,12 @@ public sealed class PdfWriterTests
 
         var pdf = QuestPdfWriter.Write(document, citations: citations);
 
+        Assert.Equal(
+            "Citation. Vera T. Sos (1957). On the three gap theorem. "
+            + (useDoi ? "DOI: https://doi.org/10.1007/BF01389053." : string.Empty)
+            + (useDoi && useUrl ? " " : string.Empty)
+            + (useUrl ? "URL: https://example.org/source." : string.Empty),
+            QuestPdfWriter.AcademicReferenceLine("Citation", reference, citations));
         Assert.True(pdf.Length > 5);
         Assert.Equal("%PDF-", Encoding.ASCII.GetString(pdf.AsSpan()[..5]));
     }

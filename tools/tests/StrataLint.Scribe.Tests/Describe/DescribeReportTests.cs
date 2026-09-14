@@ -87,9 +87,12 @@ public sealed class DescribeReportTests
     }
 
     [Theory]
-    [InlineData(false)]
-    [InlineData(true)]
-    public void ReferencedLibraryNoteWithDoiAndUrlMustBindBothInItsLocator(bool bindsUrl)
+    [InlineData("DOI 10.1007/BF01389053, Theorem 1.", true)]
+    [InlineData("Source page https://example.org/source.", true)]
+    [InlineData("DOI 10.1007/BF01389053. Source page https://example.org/Source.", true)]
+    [InlineData("DOI 10.1007/BF01389053. Source page https://example.org/source.", false)]
+    [InlineData("DOI 10.1007/bf01389053. Source page https://example.org/source.", false)]
+    public void ReferencedLibraryNoteWithDoiAndUrlMustBindBothInItsLocator(string locator, bool incomplete)
     {
         WithRepository(root =>
         {
@@ -108,9 +111,7 @@ public sealed class DescribeReportTests
                 + "license: citation-only\n"
                 + "triage: anchor\n"
                 + "---\n"
-                + "\n## Verified locator\n\nDOI 10.1007/BF01389053, Theorem 1."
-                + (bindsUrl ? " Source page https://example.org/source." : string.Empty)
-                + "\n",
+                + "\n## Verified locator\n\n" + locator + "\n",
                 new UTF8Encoding(false, true));
             var literature = LibraryNoteRef.Create("D5/L/sos1957threegap");
             var document = ScribeDocument.Create(
@@ -133,13 +134,13 @@ public sealed class DescribeReportTests
 
             Assert.Empty(inspection.Findings);
             Assert.Single(inspection.Notes);
-            if (bindsUrl)
+            if (incomplete)
             {
-                Assert.Empty(findings);
+                Assert.Contains(findings, finding => finding.Code == "incomplete-library-locator");
             }
             else
             {
-                Assert.Contains(findings, finding => finding.Code == "incomplete-library-locator");
+                Assert.Empty(findings);
             }
         });
     }

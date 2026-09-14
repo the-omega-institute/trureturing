@@ -262,7 +262,7 @@ public static class QuestPdfWriter
             ref describeNumber);
     }
 
-    private static string AcademicReferenceLine(
+    internal static string AcademicReferenceLine(
         string label,
         LibraryNoteRef reference,
         IReadOnlyDictionary<string, LiteratureCitation>? citations)
