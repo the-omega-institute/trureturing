@@ -48,9 +48,10 @@ def prependWord : List Block → LegalDigits → LegalDigits
 /-- The signed contraction ratio. -/
 noncomputable def r : ℝ := -alpha
 
-/-- The finite signed digit sum evaluated in increasing digit order. -/
+/-- The finite signed sum of the expanded digits, indexed from zero. -/
 noncomputable def S (w : List Block) : ℝ :=
-  (digitsOf w).foldr (fun d z => -alpha ^ 2 * (if d then 1 else 0) + r * z) 0
+  ∑ j ∈ Finset.range (len w), (-1 : ℝ) ^ (j + 1) * alpha ^ (j + 2) *
+    (if (digitsOf w)[j]?.getD false then 1 else 0)
 
 /-- The affine action of a finite block word on series values. -/
 noncomputable def f (w : List Block) (t : ℝ) : ℝ := S w + r ^ len w * t
@@ -142,8 +143,33 @@ theorem signed_series_fibres :
     | oneZero =>
       rw [recval, h1, recval, h0]
       simp [prependBlock, B]; ring
+  let P (p : List Bool) : ℝ :=
+    ∑ j ∈ Finset.range p.length, (-1 : ℝ) ^ (j + 1) * alpha ^ (j + 2) *
+      (if p[j]?.getD false then 1 else 0)
+  have Pcons (d : Bool) (p : List Bool) :
+      P (d :: p) = -alpha ^ 2 * (if d then 1 else 0) + r * P p := by
+    dsimp [P]
+    rw [Finset.sum_range_succ']
+    simp only [List.getElem?_cons_zero, List.getElem?_cons_succ,
+      Option.getD_some, Nat.zero_add, pow_one, neg_mul, one_mul]
+    rw [Finset.mul_sum]
+    rw [add_comm]
+    congr 1
+    apply Finset.sum_congr rfl
+    intro j _
+    simp [pow_add, r]; ring
+  have Srec (c : Block) (w : List Block) : S (c :: w) = B c (S w) := by
+    cases c with
+    | zero =>
+      change P (false :: digitsOf w) = -alpha * P (digitsOf w)
+      rw [Pcons]; simp [r]
+    | oneZero =>
+      change P (true :: false :: digitsOf w) = -alpha ^ 2 + alpha ^ 2 * P (digitsOf w)
+      rw [Pcons, Pcons]; simp [r]; ring
   have frec (c : Block) (w : List Block) (t : ℝ) : f (c :: w) t = B c (f w t) := by
-    cases c <;> simp [f, S, len, digitsOf, expand, r, B, pow_add] <;> ring
+    dsimp [f]
+    rw [Srec]
+    cases c <;> simp [len, digitsOf, expand, r, B, pow_add] <;> ring
   have fempty (t : ℝ) : f [] t = t := by simp [f, S, len, digitsOf, expand]
   have valword (w : List Block) (x : LegalDigits) :
       signedValue (prependWord w x) = f w (signedValue x) := by
