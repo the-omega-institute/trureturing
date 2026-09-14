@@ -77,10 +77,13 @@ elab "observe_declared_template_plan_identity" : command => do
     ("summary_wrong_owner_rejected", { plan with enrollmentOwner := `WrongOwner }),
     ("summary_stale_policy_rejected", { plan with policyIdentity := String.ofList (List.replicate 64 'b') })]
   for (label, variant) in variants do
-    let index := TemplateIndex.addImported {} variant
+    let .ok payload := planEncoding variant | throwError "setup: mutation payload encoding failed"
+    let frame : TemplatePlanFrame := { key := plan.name.toString.toUTF8, payload, identity := plan.planIdentity }
+    let index := ({} : TemplateIndex).addFrame frame (← getEnv) plan.enrollmentOwner
     let result := index.lookup plan.name (pure () : Id Unit)
     logInfo m!"[{if result matches .error "incomplete_closure:E7.import_identity" then "PASS" else "FAIL"}] {label}"
-  let valid := TemplateIndex.addImported {} plan
+  let frame : TemplatePlanFrame := { key := plan.name.toString.toUTF8, payload := bytes, identity := plan.planIdentity }
+  let valid := ({} : TemplateIndex).addFrame frame (← getEnv) plan.enrollmentOwner
   logInfo m!"[{if (valid.lookup plan.name (pure () : Id Unit)).isOk then "PASS" else "FAIL"}] fresh_source_bound_plan_accepted"
   setEnv saved.env
 

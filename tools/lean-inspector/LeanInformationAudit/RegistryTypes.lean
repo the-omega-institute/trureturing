@@ -78,6 +78,272 @@ structure TemplatePlanData where
   serializedBytes : Nat
   deriving Inhabited
 
+/- Bounded decoder for the canonical length-prefixed plan payload. The
+persistent extension stores bytes, so none of these nodes exist before its
+framing and aggregate-budget checks. Allocation debit is conservative and
+includes token copies, collection slots and expression/plan constructors. -/
+namespace PlanDecoder
+
+private structure State where
+  bytes : ByteArray
+  offset : Nat := 0
+  allocationRemaining : Nat
+  levelParams : List Name := []
+  deriving Inhabited
+
+private abbrev M := StateT State (Except String)
+
+private def fail {α : Type} : M α := throw "incomplete_closure:E7.import_encoding"
+
+private def allocate (bytes : Nat) : M Unit := do
+  unless bytes ≤ (← get).allocationRemaining do
+    throw "incomplete_closure:E8.import_allocation"
+  modify fun s => { s with allocationRemaining := s.allocationRemaining - bytes }
+
+private def node (depth : Nat) : M Unit := do
+  if depth > 256 then throw "incomplete_closure:E8.import_depth"
+  allocate 96
+
+private def token : M String := do
+  let state ← get
+  let mut cursor := state.offset
+  let mut length := 0
+  let mut digits := 0
+  while cursor < state.bytes.size && state.bytes[cursor]! != 58 do
+    let c := state.bytes[cursor]!.toNat
+    unless 48 ≤ c && c ≤ 57 && digits < 5 do fail
+    if digits == 1 && length == 0 then fail
+    length := 10 * length + c - 48
+    cursor := cursor + 1
+    digits := digits + 1
+  unless digits > 0 && cursor < state.bytes.size &&
+      length ≤ state.bytes.size - (cursor + 1) do fail
+  allocate (3 * length + 64)
+  let some value := String.fromUTF8? (state.bytes.extract (cursor + 1) (cursor + 1 + length)) | fail
+  modify fun s => { s with offset := cursor + 1 + length }
+  return value
+
+private def expect (text : String) : M Unit := do
+  unless (← token) == text do fail
+
+private def natural (bound : Nat := 65536) : M Nat := do
+  let text ← token
+  let some n := text.toNat? | fail
+  unless toString n == text && n ≤ bound do fail
+  return n
+
+private def boolean : M Bool := do
+  match ← token with
+  | "true" => return true
+  | "false" => return false
+  | _ => fail
+
+private def sequence (bound : Nat) (action : M α) : M (Array α) := do
+  let count ← natural bound
+  allocate (24 * count + 32)
+  let mut values := #[]
+  for _ in [:count] do values := values.push (← action)
+  return values
+
+private partial def name (depth : Nat := 0) : M Name := do
+  node depth
+  match ← token with
+  | "anonymous" => return .anonymous
+  | "str" => return .str (← name (depth + 1)) (← token)
+  | "num" => return .num (← name (depth + 1)) (← natural)
+  | _ => fail
+
+private partial def level (depth : Nat := 0) : M Level := do
+  node depth
+  match ← token with
+  | "zero" => return .zero
+  | "succ" => return .succ (← level (depth + 1))
+  | "max" => return .max (← level (depth + 1)) (← level (depth + 1))
+  | "imax" => return .imax (← level (depth + 1)) (← level (depth + 1))
+  | "parameter" =>
+    let index ← natural
+    let some param := (← get).levelParams[index]? | fail
+    return .param param
+  | "rigid" =>
+    let value ← name
+    if (← get).levelParams.contains value then fail
+    return .param value
+  | _ => fail
+
+private def substring : M Substring.Raw := do
+  let str ← token
+  let start ← natural str.utf8ByteSize
+  let stop ← natural str.utf8ByteSize
+  unless start ≤ stop do fail
+  return ⟨str, ⟨start⟩, ⟨stop⟩⟩
+
+private def source : M SourceInfo := do
+  match ← token with
+  | "none" => return .none
+  | "synthetic" => return .synthetic ⟨← natural⟩ ⟨← natural⟩ (← boolean)
+  | "original" => return .original (← substring) ⟨← natural⟩ (← substring) ⟨← natural⟩
+  | _ => fail
+
+private def preresolved : M Syntax.Preresolved := do
+  node 0
+  match ← token with
+  | "namespace" => return .namespace (← name)
+  | "decl" => return .decl (← name) (← sequence 65536 token).toList
+  | _ => fail
+
+private partial def readSyntax (depth : Nat := 0) : M Syntax := do
+  node depth
+  match ← token with
+  | "missing" => return .missing
+  | "atom" => return .atom (← source) (← token)
+  | "node" => return .node (← source) (← name) (← sequence 65536 (readSyntax (depth + 1)))
+  | "ident" => return .ident (← source) (← substring) (← name) (← sequence 65536 preresolved).toList
+  | _ => fail
+
+private def dataValue (depth : Nat) : M DataValue := do
+  node depth
+  match ← token with
+  | "string" => return .ofString (← token)
+  | "bool" => return .ofBool (← boolean)
+  | "name" => return .ofName (← name)
+  | "nat" =>
+    let text ← token
+    let some n := text.toNat? | fail
+    unless toString n == text do fail
+    return .ofNat n
+  | "int" =>
+    let text ← token
+    let some n := text.toInt? | fail
+    unless toString n == text do fail
+    return .ofInt n
+  | "syntax" => return .ofSyntax (← readSyntax depth)
+  | _ => fail
+
+private def binderInfo : M BinderInfo := do
+  let text ← token
+  for value in #[BinderInfo.default, .implicit, .strictImplicit, .instImplicit] do
+    if reprStr value == text then return value
+  fail
+
+private partial def expr (depth : Nat := 0) : M Expr := do
+  node depth
+  let child := expr (depth + 1)
+  match ← token with
+  | "bvar" => return .bvar (← natural)
+  | "sort" => return .sort (← level)
+  | "const" => return .const (← name) (← sequence 64 level).toList
+  | "app" => return .app (← child) (← child)
+  | "lambda" =>
+    let bi ← binderInfo
+    return .lam .anonymous (← child) (← child) bi
+  | "forall" =>
+    let bi ← binderInfo
+    return .forallE .anonymous (← child) (← child) bi
+  | "let" =>
+    let nd ← boolean
+    return .letE .anonymous (← child) (← child) (← child) nd
+  | "natLiteral" =>
+    let text ← token
+    let some n := text.toNat? | fail
+    unless toString n == text do fail
+    return .lit (.natVal n)
+  | "stringLiteral" => return .lit (.strVal (← token))
+  | "metadata" =>
+    let entries ← sequence 65536 do return (← name, ← dataValue (depth + 1))
+    return .mdata ⟨entries.toList⟩ (← child)
+  | "projection" => return .proj (← name) (← natural) (← child)
+  | _ => fail
+
+private partial def plan (depth : Nat := 0) : M PlanNode := do
+  node depth
+  let child := plan (depth + 1)
+  let raw := expr (depth + 1)
+  match ← token with
+  | "body" => return .atom (← raw)
+  | "expanded" => return .expanded (← raw) (← child)
+  | "proof-leaf" => return .proofLeaf (← raw) (← raw)
+  | "application" => return .app (← child) (← child)
+  | "lambda" =>
+    let bi ← binderInfo
+    return .lam (← child) (← child) bi
+  | "forall" =>
+    let bi ← binderInfo
+    return .forallE (← child) (← child) bi
+  | "let" =>
+    let nd ← boolean
+    return .letE (← child) (← child) (← child) nd
+  | "metadata" =>
+    let .mdata m (.bvar 0) ← raw | fail
+    return .mdata m (← child)
+  | "projection" => return .proj (← name) (← natural) (← child)
+  | _ => fail
+
+private def slotKind : M SlotKind := do
+  let text ← token
+  for kind in #[SlotKind.carrier, .data, .function, .predicate, .dictionary, .proof, .interface] do
+    if reprStr kind == text then return kind
+  fail
+
+private def digest : M String := do
+  let value ← token
+  unless value.utf8ByteSize == 64 && value.all (fun c =>
+      ('0' ≤ c && c ≤ '9') || ('a' ≤ c && c ≤ 'f')) do fail
+  return value
+
+private def payload : M TemplatePlanData := do
+  expect "DTR-checked-plan-v1"
+  for version in #[1, 1, 1, 4] do unless (← natural) == version do fail
+  let compiler ← token
+  let toolchain ← token
+  let policyIdentity ← digest
+  let templateName ← name
+  let definitionOwner ← name
+  let enrollmentOwner ← name
+  let levelCount ← natural 64
+  allocate (64 * levelCount + 512)
+  let levelParams := (List.range levelCount).map (Name.num `_dtr_level)
+  modify fun s => { s with levelParams }
+  let typeIdentity ← digest
+  let bodyIdentity ← digest
+  let slots ← sequence 64 do
+    let kind ← slotKind
+    let bi ← binderInfo
+    let type ← expr
+    return { kind, binderInfo := bi, type : Slot }
+  let dependencies ← sequence 4096 do
+    let n ← name
+    let owner ← name
+    let typeIdentity ← digest
+    let bodyIdentity ← token
+    unless bodyIdentity.isEmpty || (bodyIdentity.utf8ByteSize == 64 &&
+        bodyIdentity.all (fun c => ('0' ≤ c && c ≤ '9') || ('a' ≤ c && c ≤ 'f'))) do fail
+    return { name := n, owner, typeIdentity, bodyIdentity : DependencyIdentity }
+  let sourceInputs ← sequence 4096 do
+    let path ← token
+    let sha256 ← digest
+    return { path, sha256 : SourceInput }
+  let rules ← sequence 4096 token
+  let work ← token
+  let some chargedWork := work.toNat? | fail
+  unless work.utf8ByteSize == 6 && work.all Char.isDigit && chargedWork ≤ 524288 do fail
+  let typePlan ← plan
+  let bodyPlan ← plan
+  return {
+    compiler, toolchain, policyIdentity, sourceInputs, name := templateName,
+    definitionOwner, enrollmentOwner, levelParams, slots, typeIdentity, bodyIdentity,
+    dependencies, plan := bodyPlan, typePlan, rules, chargedWork, planIdentity := "", serializedBytes := 0 }
+
+/-- Pure decoding cannot confer enrollment authority. The private persistent
+extension checks frame identity and actual imported ownership around this call. -/
+def decode (bytes : ByteArray) (allocationBudget : Nat) : Except String (TemplatePlanData × Nat) := do
+  if bytes.size == 0 || bytes.size > 65536 then throw "incomplete_closure:E8.import_framing"
+  let limit := min allocationBudget (32 * bytes.size)
+  let (value, state) ← payload.run { bytes, allocationRemaining := limit }
+  unless state.offset == bytes.size do throw "incomplete_closure:E7.import_encoding"
+  return ({ value with serializedBytes := bytes.size }, limit - state.allocationRemaining)
+
+end PlanDecoder
+
 end TemplateAudit
 
 structure TemplateOccurrenceKey where
