@@ -2,13 +2,11 @@
    generality: I
    mirror-B: D5/B/S1/Deficit/Beatty/KimberlingRoundedHalfRootTwoDifference
    mirror-E: none(waiver:symbolic-proof-no-numeric-artifact)
-   anchors: [mathlib/module/Mathlib.Algebra.Order.Round, mathlib/module/Mathlib.NumberTheory.Real.Irrational, mathlib/module/Mathlib.Tactic]
+   anchors: [mathlib/module/Mathlib.NumberTheory.Real.Irrational]
    utility: none
-   digest: The differences of round(n/sqrt 2) are zero or one at the two complementary shifted Beatty positions. -/
+   digest: Round(n/sqrt 2) changes by zero or one at complementary shifted Beatty positions. -/
 
-import Mathlib.Algebra.Order.Round
 import Mathlib.NumberTheory.Real.Irrational
-import Mathlib.Tactic
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -253,6 +251,9 @@ theorem result : ∀ n : ℕ,
       omega
   exact ⟨hvalues, hjump, hzero⟩
 
+#print axioms a
+#print axioms lower
+#print axioms upper
 #print axioms result
 
 end D5.S1.Deficit.Beatty.KimberlingRoundedHalfRootTwoDifference
