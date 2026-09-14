@@ -9,6 +9,7 @@ import Mathlib.Data.Nat.Fib.Basic
 import Mathlib.Data.Nat.Factorization.Basic
 import Mathlib.NumberTheory.LegendreSymbol.Basic
 import Mathlib.Tactic
+import D5.S3.ObserverMemory.Refinement.InvolutiveReadoutCompletion
 
 set_option autoImplicit false
 
@@ -179,5 +180,43 @@ theorem power_block_inert_witness (ell k : ℕ)
   have hh := mem_filter.mp hp
   exact ⟨p, Nat.prime_of_mem_primeFactors hh.1, Nat.dvd_of_mem_primeFactors hh.1,
     hh.2.1, hh.2.2⟩
+
+
+/-- Multiplication by a fixed inert number is an actual instance of the existing
+involutive readout carrier: the integer state changes, while chi flips sign. -/
+noncomputable def inertMultiplicationSystem (p : ℕ) (hp : chi p = -1) :
+    D5.S3.ObserverMemory.Refinement.InvolutiveReadoutCompletion.InvolutiveReadoutSystem ℕ ℤ where
+  step := fun M => p * M
+  readout := chi
+  flip := fun z => -z
+  flip_involutive := fun z => neg_neg z
+  readout_step := by
+    intro M
+    rw [chi_mul, hp, neg_one_mul]
+
+private lemma multiplication_iterate (p M k : ℕ) :
+    ((fun N : ℕ => p * N)^[k]) M = p ^ k * M := by
+  induction k with
+  | zero => simp
+  | succ k ih =>
+    rw [Function.iterate_succ_apply', ih, pow_succ]
+    ac_rfl
+
+/-- The prior odd/even readout theorems specialize to the actual quadratic character.
+Restored character does not assert restoration of the integer state. -/
+theorem inert_power_readout (p M k : ℕ) (hp : chi p = -1) :
+    (Even k → chi (p ^ k * M) = chi M) ∧
+    (Odd k → chi (p ^ k * M) = -chi M) := by
+  constructor
+  · intro he
+    have h := D5.S3.ObserverMemory.Refinement.InvolutiveReadoutCompletion.even_iterate_completes_readout
+      (inertMultiplicationSystem p hp) M he
+    change chi (((fun N : ℕ => p * N)^[k]) M) = chi M at h
+    simpa only [multiplication_iterate] using h
+  · intro ho
+    have h := D5.S3.ObserverMemory.Refinement.InvolutiveReadoutCompletion.odd_iterate_flips_readout
+      (inertMultiplicationSystem p hp) M ho
+    change chi (((fun N : ℕ => p * N)^[k]) M) = -chi M at h
+    simpa only [multiplication_iterate] using h
 
 end D5.S3.Arith.Congruence.GoldenInertBlockParity
