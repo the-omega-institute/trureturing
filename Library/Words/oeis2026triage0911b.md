@@ -57,7 +57,7 @@ triage: anchor
 | [A397265](https://oeis.org/A397265) | ∀n≥1，r₂(n,1)=A007808(n)−n!；r₂计数n个有标号对象的有序划分且恰一个大小≥2的块。 | out | published | high | yes | drop |
 | [A397244](https://oeis.org/A397244) | A(0)=a0=1,a1=1；∀n>1，2n[x^n]A^(2n)=(2n−1)[x^n]A^(2n+1)；∀n>0，Odd(a_n) iff ∃m≥0,n=2m+1且m&(m>>1)=0。 | 1 | unknown | med | yes | note-only |
 | [A396808](https://oeis.org/A396808) | 原隐式幂系数序列的两个模3支持猜想；奇偶子命题已证并排除。 | 1 | open | med | yes | dispatch |
-| [A396806](https://oeis.org/A396806) | A=Σ(n≥1)a_n x^n/n!, A=x exp(A^{∘6}), a0=0,a1=1；∀n≥1,Odd(a_n) iff Odd(n)，a_n≡n mod3及mod6。 | 1 | unknown | med | yes | note-only |
+| [A396806](https://oeis.org/A396806) | A=x exp(A^{∘6}) 的 EGF；∀n≥1，a_n≡n mod6，由 IterateExponentialModSix.result 证明，蕴含源 mod3；奇偶已有 parity_iterate_six。 | 1 | repo-derived | med | yes | theorem |
 | [A396805](https://oeis.org/A396805) | EGF A=x exp(A∘5)的奇偶和mod3剩余候选；mod5=a_n≡n已由n23反驳。 | 1 | unknown | med | yes | note-only |
 | [A396803](https://oeis.org/A396803) | A=x exp(A^{∘3})为EGF，a0=0,a1=1；∀n≥1,Odd(a_n) iff Odd(n)，且a_n≡n mod3。 | 1 | proved | med | yes | reuse |
 | [A396798](https://oeis.org/A396798) | A=x+(A∘4)(A∘5)的七条迭代mod8猜想；首条周期原起点n≥1已反驳。 | 1 | unknown | med | yes | note-only |
@@ -143,7 +143,25 @@ triage: anchor
 
 ### A396806
 
-精确目标：A=Σ(n≥1)a_n x^n/n!, A=x exp(A^{∘6}), a0=0,a1=1；∀n≥1,Odd(a_n) iff Odd(n)，a_n≡n mod3及mod6。 这是六次函数复合的EGF，不是 A(x)^6 的普通幂。目标限定全部n≥1的奇偶及模3；模6是两者的CRT合取，应合并而不能算第三条独立成果。已完整读 `IntegralEGFComposition.eCoeff_composition`、`composition_map` 的整系数链式递推证明；`QuarticEGFFixedPoint.A_equation`、`fixed_unique` 把复合次数写死为4；`QuarticEGFModFour.mod_four` 与 `linear_fourth_mod_four` 也只处理第四次迭代和模4，不能以换数字包装出本条。 还有更具体的危险：候选 F=x exp x 虽然EGF系数为n，但不能假设 F^{∘3} 或 F^{∘6} 在模3下就是x；本次辅助探针在第8次系数分别得到1和2。需要的是外层指数及因子n共同产生的消去，不能照抄四次迭代的整除证据。外部Google精确A号组合只有跳转页、Yahoo只有临时搜索失败，均已打开留档；完整源码及七份直接引用没有给此同余的论文证明，因此第一档仅指本次确实读过的范围，非全球无证明保证。整数EGF计算使用部分Bell多项式 B(m,k)=Σ(j=1..m−k+1)C(m−1,j−1)g_j B(m−j,k−1)，B(0,0)=1；复合系数为Σf_kB(m,k)。把严格前缀复合l次得g，再令 e_0=1、e_m=Σ(j=1..m)C(m−1,j−1)g_j e_(m−j)，a_n=n e_(n−1)。O(lN⁴)模运算、O(N²)存储，没有在有限特征内除n!，也不枚举排列。 可复制 `python3 probes.py A396806`，模30检查n=1..64，奇偶/mod3/mod6零差异，精确n≤16复现1,2,39,1804,139625。具体逃逸是证明整系数组合算子 Φ_l(f)_n=n·E(f^{∘l})_(n−1) 在F3下固定线性列f_n=n，分别l=3,6；证明需给出n不被3整除时的Bell系数消去，不能假设整体迭代为恒等。再用前缀收缩把它连接到原方程；这是尚待证明的新消去命题，现成库中未找到。停止条件：该消去式失败、只剩模6的CRT包装、或检索到相同EGF/同一l的既存定理。三次与六次可能共用消去引理，但目前没有逻辑等价证明；整个EGF族先给A396803代表至多1个候选席，本条从属验证，l=5的模3另有不同固定列，不能冒称全参数已解。全部直接A引用：A000169, A140054, A396799, A396800, A396803, A396804, A396805，每份文件全部字段、项目均已读完。复制数值时预计算C(m−1,j−1)三角并在模30中运行Bell、exp递推，系数数组始终是EGF的整数分子而非除过n!的普通系数；按n从小到大仅补新一阶，N64是本次实测范围。当前note-only，只与A396803共享一组潜在探针，不宣称两定理等价。其余未打开的源引文及页面均ASSUMED-UNVERIFIED。
+`D5/S1/Recurrence/Residue/IterateExponentialModSix.result` 证明全部正下标的
+`Nat.ModEq 6 (IterateExponentialParity.aK 6 n) n`，从而也结算原文模三子句。
+既有 `parity_iterate_six` 给奇偶结论。精确来源为 Paul D. Hanna 的 OEIS
+A396806，2026-06-09，revision 11；方程是 EGF `A=X exp(A^{[6]})`，
+`A^{[6]}` 表示六次函数复合，`a(n)=n![X^n]A`。既有 `AK`、`A_equation`、
+`fixed_unique` 和 `eCoeff_encode` 确定数列身份，不以有限前缀相合代替。
+
+证明在模三整 EGF 系数中令 l(n)=n，右复合变换 T 的任意 j 次迭代在
+3q 处为零、3q+1 处为 (j+1)^q。六次复合对应 j=5，余一子列除首项外
+消失。外层指数的三项区块递推消去任意余二数据，连同下标因子得到
+stepK 6 的线性固定列，再经全阶段归纳与既有模二定理合成模六。
+这是一个无界结果，不把模三、奇偶和 CRT 重复计为三个新增定理。
+
+对于比较级数 F=X exp X，强行假设 F^{[6]}=X 模三仍不成立：已有精确探针的第八个 EGF 系数余二。
+该边界不反驳原猜想，正式证明保留外层指数及下标因子。预登记与有界
+文献范围见 #7920，独立卷宗为
+`Problems/oeis-a396806-iterate-exponential-mod-six.md`。本次刷新 OEIS 与
+本仓 all-state 去重；复用先前直接引用、arXiv、MathOverflow、MSE 和
+GitHub 数列代码检索，不声称全球优先权。A396805 的模三问题仍独立开放。
 
 ### A396805
 
