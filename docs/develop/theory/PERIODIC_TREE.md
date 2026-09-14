@@ -29,7 +29,7 @@
 残核统计律;混居城真偶精判;$G$ 全群;$j$-密度;$d$-平方退化员;Markov 树层际字典(W-树3);Herglotz 虚姊妹;scl-刺客。
 
 ## 7. 施工日志(v1.0 首期)
-注册域 $m\le3000$;**141 类节点**(真偶 136、奇核 5);素性位:141/141 本原(城册按类去重后天然本原);$\Psi{=}0$ 节点 12;城色谱 $\{0{:}30,\ 3{:}45,\ 12{:}45,\ 27{:}21\}$——恰为定理 B 可实现残类 $\{0,3,12,27\}$ 之谱(其余残类 $8,23,32,35$ 于此域未现,与实现性条件一致)。注册表:PERIODIC_TREE_registry.jsonl(逐行 JSON,四标签全字段)。
+注册域 $m\le3000$;**141 类节点**(真偶 136、奇核 5);素性位:141/141 本原(城册按类去重后天然原);$\Psi{=}0$ 节点 12;城色谱 $\{0{:}30,\ 3{:}45,\ 12{:}45,\ 27{:}21\}$——恰为定理 B 可实现残类 $\{0,3,12,27\}$ 之谱(其余残类 $8,23,32,35$ 于此域未现,与实现性条件一致)。注册表:PERIODIC_TREE_registry.jsonl(逐行 JSON,四标签全字段)。
 
 ---
 
@@ -1465,3 +1465,167 @@ $$
 **证明。** 已选有限多个秩后，取 $X$ 足够大，使 $X^{4/35}$ 大于所有先前奇部的素因子。EMWS7 保证新集合非空。其任何秩的奇部全部由更大的素数组成，因此与先前全部奇部互素。递归选择完成证明。
 
 EMWS7 的前提是薄筛集上的相对计数条件。一般集合的下密度为零并不蕴含其计数为 $o(X/(\log X)^4)$，因此附录 EMW 的 $\underline d(\mathcal T)=0$ 不能单独替代本节前提。上述族没有限制出现秩为素数，也没有限制支持素数在黄金域中的分裂类型。
+
+
+## Appendix FDS. Exact Fibonacci-divisor spectra at square-plus-one values
+
+### FDS.1. A two-factor non-mixing theorem
+
+**Definition.** For a positive integer N, let D_F(N) be the set of distinct positive Fibonacci values dividing N. The value F_1=F_2=1 is included once. Let tau(N) be the number of positive divisors of N.
+
+**Lemma.** For positive K and nonnegative A,B,
+
+$$
+K\mid AB\quad\Longleftrightarrow\quad
+K\mid\gcd(K,A)\gcd(K,B).\tag{FDS1}
+$$
+
+**Proof.** For each prime power p^e exactly dividing K, the right side asserts min(e,v_p(A))+min(e,v_p(B))>=e. This is equivalent to v_p(A)+v_p(B)>=e. If A or B is zero, both divisibility statements hold, so those cases require no valuation at zero.
+
+**Lemma.** For k>=3,
+
+$$
+F_{\lfloor k/2\rfloor}^2<F_k.\tag{FDS2}
+$$
+
+**Proof.** The case k=3 is 1<2. Otherwise put m=floor(k/2)>=2. Fibonacci addition gives F_(2m)=F_(m-1)F_m+F_mF_(m+1)>F_m^2, using positivity and F_(m+1)>=F_m. Monotonicity and 2m<=k finish the proof.
+
+**Theorem.** For all natural a,b and all k>=3,
+
+$$
+\boxed{F_k\mid F_aF_b\quad\Longleftrightarrow\quad k\mid a\ \lor\ k\mid b.}\tag{FDS3}
+$$
+
+**Proof.** The reverse implication is Fibonacci divisibility. Suppose the left side holds, but neither index is divisible by k. Put d=gcd(k,a), e=gcd(k,b). These are positive proper divisors of k, hence d,e<=floor(k/2). By FDS1 and strong Fibonacci divisibility, F_k divides F_dF_e. This positive product is at most F_floor(k/2)^2, contradicting FDS2. No coprimality hypothesis is needed.
+
+**Boundary proposition.** FDS3 does not extend to three factors, and its lower bound on k cannot be dropped.
+
+**Proof.** F_6=8=F_3^3, although 6 does not divide 3. Also F_2=1 divides F_1F_1, although 2 does not divide 1.
+
+### FDS.2. The complete A340542 divisor set and count
+
+**Theorem.** For even n>=2 put (u,v)=(n-1,n+1); for odd n>=3 put (u,v)=(n-2,n+2). Then
+
+$$
+\boxed{D_F(F_n^2+1)=\{1\}\cup\{F_d:d\ge3,\ d\mid u\text{ or }d\mid v\},}\tag{FDS4}
+$$
+
+$$
+\boxed{|D_F(F_n^2+1)|=\tau(u)+\tau(v)-1.}\tag{FDS5}
+$$
+
+The values at n=0,1 are respectively 1,2.
+
+**Proof.** Cassini and the Fibonacci recurrence give F_(n-1)F_(n+1)=F_n^2+(-1)^n and F_(n-2)F_(n+2)=F_n^2-(-1)^n. Thus F_n^2+1=F_uF_v in the stated cases. Apply FDS3 to every k>=3; the value one is always a divisor. The u,v are positive odd coprime integers, so their positive divisor sets overlap only at one. All their remaining divisors are at least three, where Fibonacci values are distinct. Counting the union proves FDS5. At n=0 the target is one, and at n=1 it is two.
+
+These are explicit formulas for the sequence defined by Michel Lagneau in OEIS A340542, https://oeis.org/A340542 . The definition counts divisor values rather than Fibonacci indices.
+
+### FDS.3. The factor-five rigidity and even Lucas indices
+
+**Theorem.** If u,v are positive odd coprime integers and k>=3, then
+
+$$
+\boxed{F_k\mid5F_uF_v\quad\Longleftrightarrow\quad
+k=5\ \lor\ k\mid u\ \lor\ k\mid v.}\tag{FDS6}
+$$
+
+**Proof.** The reverse implication is immediate. If 5 does not divide F_k, cancel the factor five and apply FDS3. Otherwise the rank-five identity 5|F_k iff 5|k holds. Exclude k=5, so k>=10, and suppose neither u nor v is divisible by k. Set d=gcd(k,u), e=gcd(k,v). They are odd coprime proper divisors of k. Since F_u,F_v are coprime, the elementary prime-exponent formula for a gcd gives
+
+$$
+F_k=\gcd(F_k,5F_uF_v)
+\le5\gcd(F_k,F_uF_v)=5F_dF_e.\tag{FDS7}
+$$
+
+If d=1 or e=1, the remaining proper divisor is at most floor(k/2), so F_dF_e<=F_floor(k/2). Otherwise d,e are distinct odd integers at least three and five. Their product divides k, and 2(d+e-1)<=de<=k. Fibonacci addition yields F_dF_e<=F_(d+e-1)<=F_floor(k/2). Write m=floor(k/2)>=5. Since k>=m+4,
+
+$$
+F_k\ge F_{m+4}=3F_m+2F_{m+1}>5F_m,
+$$
+
+contradicting FDS7. This proves necessity.
+
+**Theorem.** For every even n>=2,
+
+$$
+\boxed{D_F(L_n^2+1)=D_F(F_n^2+1)\cup\{5\},}\tag{FDS8}
+$$
+
+$$
+\boxed{|D_F(L_n^2+1)|=
+\tau(n-1)+\tau(n+1)-1+\mathbf1_{5\nmid(n^2-1)}.}\tag{FDS9}
+$$
+
+At n=0 the count is two.
+
+**Proof.** The golden trace-norm identity gives L_n^2-5F_n^2=4 for even n, hence L_n^2+1=5(F_n^2+1). Use FDS6 with u=n-1,v=n+1 and compare with FDS4. The value five is already present exactly when 5 divides u or v, equivalently 5 divides n^2-1. At zero, L_0^2+1=5 has Fibonacci divisor values one and five.
+
+The modulo-five comparison in FDS8 is already recorded in OEIS A340542's comments, together with the comparison to A339669. FDS4-FDS9 give its full divisor-index derivation and explicit counts. The odd-index A339669 formulas proved separately are unchanged.
+
+
+## Appendix ZBD. Largest-index-prime descent and fully exceptional WSS blocks
+
+### ZBD.1. Preservation of actual initial depth
+
+**Definition.** For primes p other than two and five, let rho(p) be the least positive Fibonacci zero index, h_p=v_p(F_rho(p)), and q_p=F_(p-(5/p))/p modulo p. A prime-index block is the set of prime divisors of F_ell, where ell>=7 is prime. Call the block fully exceptional when every such divisor has q_p=0.
+
+The classical rank and valuation identities, as stated in U.1 and EMW.1, give rho(p)|p-(5/p), q_p=0 iff h_p>=2, and
+
+$$
+v_p(F_{dt})=v_p(F_d)+v_p(t)\quad\text{when }p\mid F_d.
+$$
+
+They retain the unknown initial depth.
+
+**Theorem.** Let m>1, and suppose its largest prime factor ell is at least seven. For every prime p dividing F_ell,
+
+$$
+\boxed{\rho(p)=\ell,\quad p>\ell,\quad p\nmid m,\quad
+v_p(F_m)=v_p(F_\ell)=h_p.}\tag{ZBD1}
+$$
+
+**Proof.** The prime ell is neither three nor five, so Fibonacci parity and the rank of five exclude p=2,5. Since rho(p)|ell and F_1=1, the rank is ell. The rank bound forces ell|p-1 or ell|p+1. If p<=ell, the first alternative is impossible, and the second forces p=ell-1, an even integer greater than two. Hence p>ell and p does not divide m. Apply the valuation formula to d=ell,t=m/ell. Its last summand vanishes.
+
+**Corollary.** Under ZBD1, if F_m is powerful, then F_ell is powerful and its entire prime-index block is fully exceptional.
+
+**Proof.** Every prime dividing F_ell also divides F_m. Its exponent is unchanged by ZBD1, so it is at least two. The equality with h_p and the standard initial-quotient criterion prove the final assertion.
+
+**Proposition.** Every powerful block F_ell with prime ell>=7 contains a prime p of rank ell and odd initial depth at least three.
+
+**Proof.** The classical Fibonacci square classification gives F_n square only at n=0,1,2,12. In particular F_ell is not square. Its prime factorization has an odd exponent; powerfulness makes that exponent at least three. ZBD1, or the prime-rank argument in its proof, identifies this exponent with h_p. The square theorem is the classical result stated in P. Ribenboim, *FFF: (Favorite Fibonacci Flowers)*, Fibonacci Quarterly 43(1) (2005), section 3.4, https://www.fq.math.ca/Papers1/43-1/paper43-1-1.pdf .
+
+### ZBD.2. Four fully exceptional blocks at a failing window
+
+Retain the definitions Q(k), y=X^(4/35), A_X, T_X and R_8(X) from EMWS. Let
+
+$$
+H(X)=\#\{\ell\text{ prime}:y\le\ell\le60X+1,\ F_\ell\text{ powerful}\}.
+$$
+
+**Theorem.** For sufficiently large X, each k counted by T_X forces four distinct fully exceptional prime-index blocks, at indices at least y. Each block contains an odd-depth-at-least-three WSS prime; these four witness primes are distinct.
+
+**Proof.** The four adjacent Fibonacci terms are powerful by EMW-C3. Take the largest prime factor of each of 60k-1,60k+1,30k-1,30k+1. The linear forms are pairwise coprime, so their four largest prime factors are distinct. All are at least y>5. For an adjacent even index, its largest prime factor is the largest prime factor of its odd half. Apply ZBD1 to the four adjacent indices and then its corollary. Distinct prime indices give coprime Fibonacci numbers by strong divisibility; alternatively a witness cannot have two different least ranks. The preceding proposition supplies the odd-depth witnesses.
+
+**Theorem.** For sufficiently large X,
+
+$$
+\boxed{4T_X\le\frac{8X}{y}H(X),}\tag{ZBD2}
+$$
+
+and consequently
+
+$$
+\boxed{8R_8(X)+2H(X)\ge\frac yX|\mathcal A_X|
+\ge c\frac{X^{4/35}}{(\log X)^4}.}\tag{ZBD3}
+$$
+
+**Proof.** Count all four distinct incidences from each failing window. A fixed ell>5 divides one of the four forms at no more than 4X/ell+4<=8X/y values of k. Only the H(X) fully exceptional indices can occur in these incidences. This proves ZBD2. Substitute T_X<=(2X/y)H(X) in EMWS6 and multiply by y/X. The final lower bound is EMWS4, which explicitly uses Franze's established four-dimensional lower-bound sieve.
+
+**Corollary.** If H(X)=o(X^(4/35)/(log X)^4), then R_8(X)>>X^(4/35)/(log X)^4, so the non-WSS prime-family bound EMWS8 follows without assuming EMW.
+
+**Proof.** Absorb 2H(X) in the rightmost lower bound of ZBD3 and apply the same passage from ranks to supporting primes as in EMWS.4.
+
+**Proposition.** Let D_3(X) count distinct prime indices ell in [y,60X+1] for which some p of rank ell has odd h_p>=3. Then H(X)<=D_3(X), and ZBD3 remains true with H(X) replaced by D_3(X).
+
+**Proof.** Each H block supplies such a witness by ZBD.1. This is an inclusion of sets of indices, so no repeated counting of supporting primes is involved.
+
+ZBD3 is a disjunction concerning the actual zero and nonzero initial-quotient supports. It does not assert that either term alone has the displayed order of growth. No estimate on H(X) or D_3(X) is assumed implicitly, and no failing window or WSS witness is asserted to exist by these implications.
