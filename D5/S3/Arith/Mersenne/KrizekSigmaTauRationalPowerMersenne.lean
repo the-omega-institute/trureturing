@@ -368,7 +368,108 @@ private theorem mersenne_product_of_sigma_tau_pow_two (n c d : ℕ) (hn : 0 < n)
     have hp2 := hpPrime.two_le
     omega
 
+/-- Krizek's 2013 characterization from OEIS A046528. -/
+theorem result : ∀ n : ℕ, 0 < n → (isMersenneProduct n ↔ ratPow n) := by
+  intro n hn
+  constructor
+  · rintro ⟨S, hnS, hS⟩
+    by_cases hSempty : S = ∅
+    · subst S
+      have hnOne : n = 1 := by simpa using hnS
+      subst n
+      exact ⟨1, 1, by norm_num, by norm_num, by simp⟩
+    have hSne : S.Nonempty := Finset.nonempty_iff_ne_empty.mpr hSempty
+    have hprimes : ∀ p ∈ S, p.Prime := fun p hp => (hS p hp).1
+    have hn0 : n ≠ 0 := hn.ne'
+    have hprimeFactors : n.primeFactors = S := by
+      rw [hnS, Nat.primeFactors_prod hprimes]
+    have hfac (p : ℕ) (hpMem : p ∈ S) : n.factorization p = 1 := by
+      rw [hnS, Nat.factorization_prod_apply (fun r hr => (hprimes r hr).ne_zero)]
+      have hpPrime := hprimes p hpMem
+      rw [Finset.sum_eq_single p]
+      · exact hpPrime.factorization_self
+      · intro q hq hqp
+        apply Nat.factorization_eq_zero_of_not_dvd
+        intro hdiv
+        exact hqp ((Nat.dvd_prime_two_le (hprimes q hq) hpPrime.two_le).mp hdiv).symm
+      · exact fun hp => (hp hpMem).elim
+    let k : ℕ → ℕ := fun p =>
+      if hp : p ∈ S then Classical.choose (hS p hp).2 else 0
+    have hk_spec (p : ℕ) (hpMem : p ∈ S) :
+        0 < k p ∧ p + 1 = 2 ^ k p := by
+      simp only [k, dif_pos hpMem]
+      exact Classical.choose_spec (hS p hpMem).2
+    let A := ∑ p ∈ S, k p
+    let B := S.card
+    have hApos : 0 < A := by
+      obtain ⟨p, hpMem⟩ := hSne
+      have hkp := (hk_spec p hpMem).1
+      have hle : k p ≤ ∑ r ∈ S, k r := Finset.single_le_sum
+        (fun _ _ => Nat.zero_le _) hpMem
+      dsimp only [A]
+      omega
+    have hBpos : 0 < B := by
+      dsimp only [B]
+      simpa only [Finset.card_pos] using hSne
+    have hsigmaPow : σ 1 n = 2 ^ A := by
+      rw [sigma_eq_prod_primeFactors_sum_range_factorization_pow_mul hn0,
+        hprimeFactors]
+      calc
+        (∏ p ∈ S, ∑ i ∈ Finset.range (n.factorization p + 1), p ^ (i * 1)) =
+            ∏ p ∈ S, (p + 1) := by
+              apply Finset.prod_congr rfl
+              intro p hpMem
+              rw [hfac p hpMem]
+              simp [Finset.sum_range_succ, add_comm]
+        _ = ∏ p ∈ S, 2 ^ k p := by
+              apply Finset.prod_congr rfl
+              intro p hpMem
+              exact (hk_spec p hpMem).2
+        _ = 2 ^ A := by
+              rw [Finset.prod_pow_eq_pow_sum]
+    have htauPow : σ 0 n = 2 ^ B := by
+      rw [sigma_eq_prod_primeFactors_sum_range_factorization_pow_mul hn0,
+        hprimeFactors]
+      calc
+        (∏ p ∈ S, ∑ i ∈ Finset.range (n.factorization p + 1), p ^ (i * 0)) =
+            ∏ _p ∈ S, 2 := by
+              apply Finset.prod_congr rfl
+              intro p hpMem
+              rw [hfac p hpMem]
+              norm_num [Finset.sum_range_succ]
+        _ = 2 ^ B := by simp [B]
+    refine ⟨A, B, hApos, hBpos, ?_⟩
+    rw [hsigmaPow, htauPow, ← pow_mul, ← pow_mul, Nat.mul_comm A B]
+  · intro hrat
+    by_cases hnOne : n = 1
+    · subst n
+      refine ⟨∅, by simp, ?_⟩
+      simp
+    have hnLarge : 1 < n := by omega
+    rcases hrat with ⟨a, b, ha, hb, hpow⟩
+    have hsupport : ∀ r : ℕ, r.Prime → (r ∣ σ 1 n ↔ r ∣ σ 0 n) := by
+      intro r hr
+      constructor
+      · intro hrsigma
+        apply hr.dvd_of_dvd_pow
+        rw [← hpow]
+        exact hrsigma.trans (dvd_pow (dvd_refl (σ 1 n)) hb.ne')
+      · intro hrtau
+        apply hr.dvd_of_dvd_pow
+        rw [hpow]
+        exact hrtau.trans (dvd_pow (dvd_refl (σ 0 n)) ha.ne')
+    obtain ⟨c, htauPow⟩ := tau_power_two_of_same_prime_support n hnLarge hsupport
+    have hsigma0 : σ 1 n ≠ 0 := (sigma_pos 1 n hn.ne').ne'
+    have hsigmaPow : σ 1 n = 2 ^ (σ 1 n).primeFactorsList.length := by
+      apply Nat.eq_prime_pow_of_unique_prime_dvd hsigma0
+      intro r hrPrime hrSigma
+      have hrTau : r ∣ σ 0 n := (hsupport r hrPrime).mp hrSigma
+      rw [htauPow] at hrTau
+      exact Nat.prime_eq_prime_of_dvd_pow hrPrime Nat.prime_two hrTau
+    exact mersenne_product_of_sigma_tau_pow_two n c _ hn htauPow hsigmaPow
+
 #print axioms isMersenneProduct
 #print axioms ratPow
+#print axioms result
 
 end D5.S3.Arith.Mersenne.KrizekSigmaTauRationalPowerMersenne
