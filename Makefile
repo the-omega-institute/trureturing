@@ -17,11 +17,16 @@ test:
 lean-cache-ensure:
 	@/bin/bash tools/scripts/worktree/lean-cache-ensure.sh
 
+# Optional integration verification is explicit and validated by the producer.
+lean-cache-to-github-without-mathlib lean-cache-from-github-without-mathlib: export LEAN_CACHE_MODE ?= production
+lean-cache-to-github-without-mathlib lean-cache-from-github-without-mathlib: export LEAN_CACHE_SOURCE_REF ?=
+lean-cache-to-github-without-mathlib lean-cache-from-github-without-mathlib: export LEAN_CACHE_SOURCE_COMMIT ?=
+
 lean-cache-to-github-without-mathlib:
-	@/bin/bash tools/scripts/worktree/lean-cache-publish.sh publish
+	@/bin/bash tools/scripts/worktree/lean-cache-publish.sh publish --mode "$$LEAN_CACHE_MODE" --source-ref "$$LEAN_CACHE_SOURCE_REF" --source-commit "$$LEAN_CACHE_SOURCE_COMMIT"
 
 lean-cache-from-github-without-mathlib:
-	@/bin/bash tools/scripts/worktree/lean-cache-publish.sh fetch
+	@/bin/bash tools/scripts/worktree/lean-cache-publish.sh fetch --mode "$$LEAN_CACHE_MODE" --source-ref "$$LEAN_CACHE_SOURCE_REF" --source-commit "$$LEAN_CACHE_SOURCE_COMMIT"
 
 warm-donor:
 	@/bin/bash tools/scripts/worktree/warm-donor.sh
