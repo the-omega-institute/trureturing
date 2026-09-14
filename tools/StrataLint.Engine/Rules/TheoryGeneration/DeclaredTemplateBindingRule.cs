@@ -122,7 +122,7 @@ internal static class DeclaredTemplateBindingRule
         path.Value.StartsWith(InformationTemplateDebtStore.Root, StringComparison.Ordinal)
         && path.Value != InformationTemplateDebtStore.ActivationPath);
 
-    private static void CheckRouting(RepositorySnapshot baseline, RepositorySnapshot candidate,
+    internal static void CheckRouting(RepositorySnapshot baseline, RepositorySnapshot candidate,
         IReadOnlySet<string> changed)
     {
         var content = changed.Where(path => path.StartsWith("D5/", StringComparison.Ordinal)
@@ -132,6 +132,12 @@ internal static class DeclaredTemplateBindingRule
         if (!baseline.TryGetFile(AdmissionPlanePolicy.FileMapPath, out var oldMap)
             || !candidate.TryGetFile(AdmissionPlanePolicy.FileMapPath, out var newMap))
             throw new FormatException("DTR-Routing: protected/candidate FILEMAP unavailable");
+        var baseDelta = AdmissionPlanePolicy.Evaluate(oldMap.RawBytes.AsSpan(), changed.ToArray());
+        var headDelta = AdmissionPlanePolicy.Evaluate(newMap.RawBytes.AsSpan(), changed.ToArray());
+        if (!baseDelta.IsAdmissible || !headDelta.IsAdmissible
+            || baseDelta.Classification != AdmissionPlaneClassification.ContentOnly
+            || headDelta.Classification != baseDelta.Classification)
+            throw new FormatException("DTR-Routing: mixed delta or base/candidate partition differs");
         var before = AdmissionPlanePolicy.Evaluate(oldMap.RawBytes.AsSpan(), content);
         var after = AdmissionPlanePolicy.Evaluate(newMap.RawBytes.AsSpan(), content);
         if (!before.IsAdmissible || !after.IsAdmissible
