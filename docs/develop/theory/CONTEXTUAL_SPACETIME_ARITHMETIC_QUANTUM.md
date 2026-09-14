@@ -19791,7 +19791,7 @@ $$
 V_N=V_{N+1},
 $$
 
-这时已有的 `operator_system_tower_once_stable_permanently`（其前提是一个明确给定的幺正完全正 Heisenberg 映射）保证后续塔保持不变。多个设置或自适应协议需要先给出打包后的单一通道，或另证族版本；不能由该定理直接推出。**代数闭合**则要求在复化后还满足
+这时已有的 `operator_system_tower_once_stable_permanently`（其前提是一个明确给定的保单位完全正 Heisenberg 映射）保证后续塔保持不变。多个设置或自适应协议需要先给出打包后的单一通道，或另证族版本；不能由该定理直接推出。**代数闭合**则要求在复化后还满足
 
 $$
 V_{\mathbb C}V_{\mathbb C}\subseteq V_{\mathbb C},
@@ -19813,7 +19813,7 @@ $$
 \mathcal R:\mathcal B(\mathcal H_S)\longrightarrow\mathcal B(\mathcal H_R),
 $$
 
-其中 $\iota$ 要求为 Heisenberg 意义下的幺正 $*$-单同态（若只给 UCP 映射，则还须另加 complete-order embedding 假设），$\mathcal R$ 是幺正完全正压缩，并满足
+其中 $\iota$ 要求为 Heisenberg 意义下的保单位 $*$-单同态（若只给 UCP 映射，则还须另加 complete-order embedding 假设），$\mathcal R$ 是保单位完全正映射，并满足
 
 $$
 \mathcal R\circ\iota=\operatorname{id}_{\mathcal B(\mathcal H_R)}.
