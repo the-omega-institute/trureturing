@@ -166,7 +166,61 @@ theorem enc_injective_and_left_inverse :
       · rintro ⟨y, hy, he⟩
         exact ⟨y, hy, by simpa only [dif_pos hy] using he⟩
   have natZ_inj : Function.Injective (NatZ : ℕ → ZFSet.{u}) := by
-    sorry
+    have list_facts : ∀ n : ℕ,
+        (Nat.zeckendorf n).Pairwise (fun a b => b + 2 ≤ a) ∧
+          (∀ k ∈ Nat.zeckendorf n, 2 ≤ k) := by
+      intro n
+      let : IsTrans ℕ (fun a b => b + 2 ≤ a) := ⟨by intros; omega⟩
+      have hp : (Nat.zeckendorf n ++ [0]).Pairwise (fun a b => b + 2 ≤ a) :=
+        List.isChain_iff_pairwise.mp (Nat.isZeckendorfRep_zeckendorf n)
+      obtain ⟨hs, _, hmin⟩ := List.pairwise_append.mp hp
+      exact ⟨hs, fun k hk => by simpa using hmin k hk 0 (by simp)⟩
+    have index_bounds : ∀ n k : ℕ, k ∈ Nat.zeckendorf n →
+        2 ≤ k ∧ k - 2 < wordLength n := by
+      intro n k hk
+      have hlow := (list_facts n).2 k hk
+      have hhigh : k ≤ (Nat.zeckendorf n).headD 1 := by
+        have hs := (list_facts n).1
+        cases hl : Nat.zeckendorf n with
+        | nil => simp [hl] at hk
+        | cons a l =>
+          rw [hl, List.pairwise_cons] at hs
+          rw [hl] at hk
+          simp only [List.headD_cons]
+          rcases List.mem_cons.mp hk with rfl | hk
+          · exact le_rfl
+          · have := hs.1 k hk
+            omega
+      exact ⟨hlow, by unfold wordLength; omega⟩
+    have transfer : ∀ m n : ℕ, (zeta m : ZFSet.{u}) = zeta n →
+        ∀ k ∈ Nat.zeckendorf m, k ∈ Nat.zeckendorf n := by
+      intro m n he k hk
+      obtain ⟨hmin, hlen⟩ := index_bounds m k hk
+      have hdigit : digit m (k - 2) = 1 := by
+        simp only [digit, Nat.sub_add_cancel hmin, if_pos hk]
+      have hedge : ZFSet.pair (natOrd (k - 2)) (natOrd 1) ∈ (zeta m : ZFSet.{u}) := by
+        have hg := ZFSet.mem_range_self (f := fun j : Fin (wordLength m) =>
+          (ZFSet.pair (natOrd j.val) (natOrd (digit m j.val)) : ZFSet.{u})) ⟨k - 2, hlen⟩
+        simpa only [zeta, hdigit] using hg
+      rw [he] at hedge
+      obtain ⟨j, hj⟩ := ZFSet.mem_range.mp hedge
+      have hpos := natOrd_inj (ZFSet.pair_inj.mp hj).1
+      have hval := natOrd_inj (ZFSet.pair_inj.mp hj).2
+      have hmem : j.val + 2 ∈ Nat.zeckendorf n := by
+        by_contra hnot
+        simp only [digit, if_neg hnot] at hval
+        exact Nat.zero_ne_one hval
+      simpa only [hpos, Nat.sub_add_cancel hmin] using hmem
+    intro m n he
+    have hz : (zeta m : ZFSet.{u}) = zeta n := (ZFSet.pair_inj.mp he).2
+    apply Nat.zeckendorfEquiv.injective
+    apply Subtype.ext
+    change Nat.zeckendorf m = Nat.zeckendorf n
+    have sorted : ∀ k : ℕ, (Nat.zeckendorf k).Pairwise (· > ·) := by
+      intro k
+      exact (list_facts k).1.imp (by intros; omega)
+    exact (sorted m).eq_of_mem_iff (sorted n)
+      (fun k => ⟨transfer m n hz k, transfer n m hz.symm k⟩)
   have tag_ne : (natOrd 0 : ZFSet.{u}) ≠ natOrd 1 := by
     intro h
     exact Nat.zero_ne_one (natOrd_inj h)
