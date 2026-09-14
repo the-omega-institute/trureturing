@@ -60,7 +60,7 @@ triage: anchor
 | [A396806](https://oeis.org/A396806) | A=x exp(A^{∘6}) 的 EGF；∀n≥1，a_n≡n mod6，由 IterateExponentialModSix.result 证明，蕴含源 mod3；奇偶已有 parity_iterate_six。 | 1 | repo-derived | med | yes | theorem |
 | [A396805](https://oeis.org/A396805) | EGF A=x exp(A∘5)：奇偶已证；n≥3的模3周期0,1,0由 IterateExponentialFiveModThree.result 证明。mod5保留n23的非kernel反例。 | 1 | repo-derived | med | yes | theorem |
 | [A396803](https://oeis.org/A396803) | A=x exp(A^{∘3})为EGF，a0=0,a1=1；∀n≥1,Odd(a_n) iff Odd(n)，且a_n≡n mod3。 | 1 | proved | med | yes | reuse |
-| [A396798](https://oeis.org/A396798) | OGF A=x+(A∘4)(A∘5)：仅第八条I8在n>1的系数模8为0由 IterateProductFourFiveEighthModEight.result 结算；第2–7条及修正版首条仍未结算。 | 1 | repo-derived | med | yes | theorem |
+| [A396798](https://oeis.org/A396798) | OGF A=x+(A∘4)(A∘5)：第四条 I4 在 n>2、第八条 I8 在 n>1 的系数模8为0分别由 IterateProductFourFiveFourthModEight.result、IterateProductFourFiveEighthModEight.result 结算；第2、3、5、6、7条及修正版首条仍未结算。 | 1 | repo-derived | med | yes | theorem |
 | [A393868](https://oeis.org/A393868) | A393866从常数项起的每个已结束极大奇偶游程长度为偶数。 | 1 | open | high | yes | note-only |
 | [A396493](https://oeis.org/A396493) | ∀n≥1，Sat4(n)=C(C(2n+2,3)+3,4)−n(16n^6+48n^5+340n^4+180n^3+2818n²−10011n+6789)/18；子句为3文字多重集，公式为4子句多重集，允许同义重复及重子句。 | out | unknown | high | yes | note-only |
 | [A396491](https://oeis.org/A396491) | ∀n≥1，n 个有标号变量、允许子句内重复文字及公式内重复子句的五子句 3-SAT 不可满足公式数，等于 %F 给定的十项二项式多项式。 | 1 | unknown | med | yes | note-only |
@@ -205,15 +205,15 @@ Math StackExchange及GitHub数列代码检索；本轮刷新OEIS和仓库全状�
 
 ### A396798
 
-源为零常数项整数普通生成函数 A=x+A^{∘4}A^{∘5}，a(n)=[x^n]A；所有 A^k 表示函数复合迭代，乘积才是普通乘法。OEIS revision12 的第八条逐字为“Conjecture: [x^n] A^8(x) == 0 (mod 8) for n > 1.”。`IterateProductFourFiveEighthModEight.result` 对全部 n>1 证明这一整除结论，只结算第八条；源条目、完整量词与范围见 `Problems/oeis-a396798-eighth-iterate-mod-eight.md` 和 `Library/Arith/hanna2026a396798.md`。本题属于 OGF，不属于 A396803/805/806 的指数生成函数族。
+源为零常数项整数普通生成函数 A=x+A^{∘4}A^{∘5}，a(n)=[x^n]A；所有 A^k 表示函数复合迭代，乘积才是普通乘法。OEIS revision12 的第四条逐字为“Conjecture: [x^n] A^4(x) == 0 (mod 8) for n > 2.”，第八条逐字为“Conjecture: [x^n] A^8(x) == 0 (mod 8) for n > 1.”。`IterateProductFourFiveFourthModEight.result` 对全部 n>2 证明第四条，`IterateProductFourFiveEighthModEight.result` 对全部 n>1 证明第八条。两个结论使用同一个 `IterateProductFourFiveEighthModEight.generatingSeries`。完整来源、量词与范围见 `Problems/oeis-a396798-fourth-iterate-mod-eight.md`、`Problems/oeis-a396798-eighth-iterate-mod-eight.md` 与 `Library/Arith/hanna2026a396798.md`。本题属于 OGF，不属于 A396803/805/806 的指数生成函数族。
 
-`generatingSeries` 按 H(F)=X+I4(F)I5(F) 的逐系数稳定构造真实整数源。唯一 result 内证明全次数稳定、源方程、常数项零、一次项一及交换环上的唯一性；其活实例在 ZMod4 识别 A=X/(1-X)，于是 I4(A)-X 的整数系数全部被4整除。精确商级数写成 I4(A)=X+4B，映入 ZMod8 后用既冻平方零迭代定理及复合次数重组得到 I8(A)=X。公开面只有必要定义与一个 result；判形为 bind-only，不声称逃逸见证，按探针前 issue #7943 的外部开放问题结算依据准入。它是无界符号结论，不是有限前缀认证。
+该源按 H(F)=X+I4(F)I5(F) 的逐系数稳定构造；来源桥给出全次数稳定、源方程、常数项零、一次项一及唯一性，并在 ZMod4 识别 A=X/(1-X)。第四条由此得到 I2(A)=X+2X² mod4；精确整数商使其模八像写成 G=X+2X²+4B。既冻 substitution annihilation 给出 4(B∘G-B)=0，环展开给出 2G²=2X²，故 G∘G=X+4X²。第八条则由 I4(A)=X+4B 的整数分解，经模八平方零迭代得到 I8(A)=X。两条都为全指标符号结论，不依赖有限前缀、完整有理式候选或第2条的模八强式；第四条没有另造源定义。
 
-原首条从 n≥1 排列 [1,1,5,5] 的版本在 a(3)=9 已错：9 mod8=1，而该周期要求5。这是既有源数据和独立递推的非kernel反例，本次不新增形式反驳。实际前缀模8为1,1,1,5,5,1,1,5,…；单列 a1=1 后从 n=2 排列 [1,1,5,5] 是另拟修正版，不能冒充原猜想。尚未结算的第2、6条要求 I2、I6 在 n>3 的系数为0 mod8；第4条要求 I4 在 n>2 为0；第3、5、7条要求 I3、I5、I7 在 n>1 从 n=2 起分别循环 [3,1,7,5]、[5,1,1,5]、[7,1,3,5]。本次第八条不证明这些六条或修正版首条。
+原首条从 n≥1 排列 [1,1,5,5] 的版本在 a(3)=9 已错：9 mod8=1，而该周期要求5。这是既有源数据和独立递推的非kernel反例，本次不新增形式反驳。实际前缀模8为1,1,1,5,5,1,1,5,…；单列 a1=1 后从 n=2 排列 [1,1,5,5] 是另拟修正版，不能冒充原猜想。尚未结算的第2、6条要求 I2、I6 在 n>3 的系数为0 mod8；第3、5、7条要求 I3、I5、I7 在 n>1 从 n=2 起分别循环 [3,1,7,5]、[5,1,1,5]、[7,1,3,5]。这五条与修正版首条没有被上述第四、第八条结算。
 
-既有 N=64 模运算与精确前缀16的 Horner 截断实验在原首条检出31个失败、最早 n=3，其余当时七条在各自域内零差异；该旧有限结果不替代本次证明，也不升级其余六条。保留的研究候选 R=x/(1-x)+4x^4/((1-x)(1+x^2)) 在 Z/8Z[[x]] 满足源式及完整迭代公式仍待验证；常数项为1的分母必须是单位，不能将该有理候选当已证前提。旧 `probes.py A396798` 与 `counterexamples.py` 的实验用途仍属这些有限读数。剩余范围共享同一源对象，不按各同余重复派同形任务。
+既有 N=64 模运算与精确前缀16的 Horner 截断实验在原首条检出31个失败、最早 n=3，其余当时七条在各自域内零差异；该旧有限结果不替代第四、第八条的证明，也不升级其余五条。保留的研究候选 R=x/(1-x)+4x^4/((1-x)(1+x^2)) 在 Z/8Z[[x]] 满足源式及完整迭代公式仍待验证；常数项为1的分母必须是单位，不能将该有理候选当已证前提。旧 `probes.py A396798` 与 `counterexamples.py` 的实验用途仍属这些有限读数。剩余范围共享同一源对象，不按各同余重复派同形任务。
 
-文献核对已读完整 revision12、直接引用 A213591/A396099/A396797/A396807，以及精确A号索引。已冻3/4、5/6与2/3定理属于不同源方程；本仓所有状态PR检索在登记前未见本第八条结算，旧 #6436/#6375 留有二次复合队列和转引。有效搜索范围内未找到先前证明；失败、验证码、JS或未读全文的广搜结果不作负证据，不主张全球优先权。剩余有理候选若遇同源已证结果、非单位分母或恒等式失败则停止该路线，不以额外目标等价假设替代证明。
+文献核对已读完整 revision12、直接引用 A213591/A396099/A396797/A396807，以及精确A号索引。已冻3/4、5/6与2/3定理属于不同源方程；第四、第八条的预登记分别为 #7950、#7943，旧 #6436/#6375 留有二次复合队列和转引。有效搜索范围内未找到这两条的先前证明；失败、验证码、JS或未读全文的广搜结果不作负证据，不主张全球优先权。剩余有理候选若遇同源已证结果、非单位分母或恒等式失败则停止该路线，不以额外目标等价假设替代证明。
 
 ### A393868
 
