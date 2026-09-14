@@ -1,0 +1,9 @@
+**证明。** 取
+
+$$
+P=\operatorname{diag}(1,0),\qquad
+K=\begin{pmatrix}0&0\\1&0\end{pmatrix}.
+$$
+
+则 $K^2=0$、$PKP=0$，所以 $\Delta_2=0$，但 $QKP=K\ne0$。证毕。
+

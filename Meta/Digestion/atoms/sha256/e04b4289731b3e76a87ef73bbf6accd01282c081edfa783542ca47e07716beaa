@@ -1,0 +1,8 @@
+**证明。** 这些矩阵元恰为约化可见响应 $R_\lambda(t)=P_\lambda K_\lambda^tP_\lambda$ 在其像上的全部条目。不同不可约块之间无交叉项，同一不可约因子中的其他方向因张量恒等因子给出相同响应。将各小矩阵代入 SM2 的有序因果恢复，得到 $M_{\lambda j}$，再还原
+
+$$
+\bigoplus_\lambda M_{\lambda j}\otimes I_{W_\lambda}.
+$$
+
+证毕。
+

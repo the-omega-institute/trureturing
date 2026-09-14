@@ -1,0 +1,9 @@
+**定理 RD2。** 对每个 $n\in\mathbb N$，
+
+$$
+\{\beta(r):v(r)=n\}
+=\{a+n\varphi:a\in\mathbb Z,\ a\le n\le2a\}.
+$$
+
+该集合中的 $a$ 从 $\lceil n/2\rceil$ 到 $n$ 取遍每个整数，因而黄金像的数量为 $\lfloor n/2\rfloor+1$。
+
