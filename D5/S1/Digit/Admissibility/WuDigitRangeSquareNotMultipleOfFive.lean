@@ -2,11 +2,10 @@
    generality: I
    mirror-B: D5/B/S1/Digit/Admissibility/WuDigitRangeSquareNotMultipleOfFive
    mirror-E: none(waiver:symbolic-proof-no-numeric-artifact)
-   anchors: [mathlib/module/Mathlib.Data.Nat.Digits.Lemmas, mathlib/module/Mathlib.Tactic.Ring]
+   anchors: [mathlib/module/Mathlib.Data.Nat.Digits.Lemmas]
    utility: none
    digest: Decimal digit extrema five and nine for a number and its square exclude divisibility by five. -/
 import Mathlib.Data.Nat.Digits.Lemmas
-import Mathlib.Tactic.Ring
 
 namespace D5.S1.Digit.Admissibility.WuDigitRangeSquareNotMultipleOfFive
 
