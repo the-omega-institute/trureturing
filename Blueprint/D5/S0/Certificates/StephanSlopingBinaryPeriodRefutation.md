@@ -58,6 +58,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/StephanSlopingBinaryPeriodRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a103585-sloping-binary-period-refutation` (refuted) by `D5/S0/Certificates/StephanSlopingBinaryPeriodRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a103585-sloping-binary-period-refutation","declaration_gid":"D5/S0/Certificates/StephanSlopingBinaryPeriodRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Benoit Cloitre; Philippe Deléham; Ralf Stephan (2005). *OEIS A103585, numbers k with (A102370(k)-k)/2 = 1, read mod 4*. URL: <https://oeis.org/A103585>.

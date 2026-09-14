@@ -40,7 +40,11 @@ internal sealed class StephanSlopingBinaryPeriodRefutationDocument
                     + "four and the 172nd entry with 513 modulo four. Hence a(129)=3 differs "
                     + "from a(172)=1. This refutes the period-43 claim without changing the "
                     + "definition of A102370 or asserting a true period.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "oeis-a103585-sloping-binary-period-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(
         string id,
@@ -48,10 +52,11 @@ internal sealed class StephanSlopingBinaryPeriodRefutationDocument
         Formula formula,
         string prose,
         DescribeRole role,
-        AssessedProvenance provenance) => Describe.Lean(
+        AssessedProvenance provenance,
+        OpenProblemResolutionClaim? claim = null) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + DeclarationName(id)),
             H(title), StatementSource.FromAuthor(formula), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, claim);
 
     private static string DeclarationName(string id) => id switch
     {
