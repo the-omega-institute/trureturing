@@ -1,0 +1,22 @@
+### 定理 61.1（观察精炼的三重等价）
+
+设 `one` 和 `two` 是两组有限维 Hermitian effect，`two` 至少包含 `one` 所提供的可见信息。仓库中的 `observer_refinement_visible_residual_equivalence` 给出以下等价关系：
+
+$$
+\begin{aligned}
+&\text{精细签名相同}\Rightarrow\text{粗签名相同}\\
+&\qquad\Longleftrightarrow\qquad
+\mathcal R_{\mathrm{two}}
+\subseteq
+\mathcal R_{\mathrm{one}}\\
+&\qquad\Longleftrightarrow\qquad
+\mathcal V_{\mathrm{one}}
+\subseteq
+\mathcal V_{\mathrm{two}}.
+\end{aligned}
+$$
+
+第一行的量词是对所有密度态对：如果两态的精细签名相等，则它们的粗签名也相等。第二行是残差包含关系；第三行是可见空间包含关系。形式化定理在有限维 Hermitian 载体上同时保留了这三个方向，因而不能把“更细”只理解成标签数量增加。
+
+这条等价解释了为什么残差方向是反变的：读出越丰富，可见空间越大，残差越小。若只改变标签名称而没有改变 effect span，三种关系都不变，也就没有获得新的预测能力。
+

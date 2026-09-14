@@ -1,0 +1,33 @@
+### 61.1 可见空间与残差空间
+
+令系统维数为
+
+$$
+d\in\mathbb N,
+$$
+
+并在实 Hermitian 算子空间中给定一族 effect。对一个 effect 集合
+
+$$
+E\subseteq\operatorname{Herm}(d),
+$$
+
+定义包含单位方向的可见空间
+
+$$
+\mathcal V(E)
+=
+\operatorname{span}_{\mathbb R}
+\bigl(\{I_d\}\cup E\bigr),
+$$
+
+以及其 Hilbert--Schmidt 正交残差
+
+$$
+\mathcal R(E)=\mathcal V(E)^{\perp}.
+$$
+
+单位方向单独列出，是因为密度态的归一化已经固定了迹；真正增加区分能力的是去掉单位方向以后新增的可见维数。这里的残差是相对于这组 effect 的算子空间残差，不是一个额外物理介质，也不是尚未证明存在的隐藏变量。
+
+若两个密度态在所有选定 effect 上读数相同，它们的状态差落在相应残差中。反过来，残差方向在这些线性读数中不可见；是否能在未来出现，还要再结合第 57 节的动力学闭包条件。
+

@@ -15605,3 +15605,193 @@ $$
 
 ## 追加锚（新终端）
 
+## 61. 观察精炼、商空间度量与容量守恒
+
+第 57 节把对象定义为全部指定未来统计下的预测等价类，第 59 节说明局部端口若不接触关联扇区，就不能凭空恢复关联信息，第 60 节则给出记录作用量和恢复误差的下界。本节把“增加约束或增加读出究竟保留了什么”写成一个有限维账本：观察精炼增加可见方向，同时减少不可见残差；在固定载体上，两者的总维数保持不变。
+
+本节使用以下冻结 Lean 结果：`ObserverRefinementVisibleResidualEquivalence.lean` 中的 `observer_refinement_visible_residual_equivalence`，`OperationalObservationKernel.lean` 中的 `operational_observation_kernel_and_metric`，以及 `ObserverCapacityConservation.lean` 中的 `observer_capacity_conservation`。正文仍是 `repo-derived/open` 解释，不新增 Lean 声明，也不把有限维结论提升为任意物理系统的普遍定律。
+
+### 61.1 可见空间与残差空间
+
+令系统维数为
+
+$$
+d\in\mathbb N,
+$$
+
+并在实 Hermitian 算子空间中给定一族 effect。对一个 effect 集合
+
+$$
+E\subseteq\operatorname{Herm}(d),
+$$
+
+定义包含单位方向的可见空间
+
+$$
+\mathcal V(E)
+=
+\operatorname{span}_{\mathbb R}
+\bigl(\{I_d\}\cup E\bigr),
+$$
+
+以及其 Hilbert--Schmidt 正交残差
+
+$$
+\mathcal R(E)=\mathcal V(E)^{\perp}.
+$$
+
+单位方向单独列出，是因为密度态的归一化已经固定了迹；真正增加区分能力的是去掉单位方向以后新增的可见维数。这里的残差是相对于这组 effect 的算子空间残差，不是一个额外物理介质，也不是尚未证明存在的隐藏变量。
+
+若两个密度态在所有选定 effect 上读数相同，它们的状态差落在相应残差中。反过来，残差方向在这些线性读数中不可见；是否能在未来出现，还要再结合第 57 节的动力学闭包条件。
+
+### 定理 61.1（观察精炼的三重等价）
+
+设 `one` 和 `two` 是两组有限维 Hermitian effect，`two` 至少包含 `one` 所提供的可见信息。仓库中的 `observer_refinement_visible_residual_equivalence` 给出以下等价关系：
+
+$$
+\begin{aligned}
+&\text{精细签名相同}\Rightarrow\text{粗签名相同}\\
+&\qquad\Longleftrightarrow\qquad
+\mathcal R_{\mathrm{two}}
+\subseteq
+\mathcal R_{\mathrm{one}}\\
+&\qquad\Longleftrightarrow\qquad
+\mathcal V_{\mathrm{one}}
+\subseteq
+\mathcal V_{\mathrm{two}}.
+\end{aligned}
+$$
+
+第一行的量词是对所有密度态对：如果两态的精细签名相等，则它们的粗签名也相等。第二行是残差包含关系；第三行是可见空间包含关系。形式化定理在有限维 Hermitian 载体上同时保留了这三个方向，因而不能把“更细”只理解成标签数量增加。
+
+这条等价解释了为什么残差方向是反变的：读出越丰富，可见空间越大，残差越小。若只改变标签名称而没有改变 effect span，三种关系都不变，也就没有获得新的预测能力。
+
+### 定理 61.2（观察半范数的核与商空间度量）
+
+给定有限 effect 索引集、严格正的权重和 centered effects，定义一个加权观察半范数。冻结结果 `operational_observation_kernel_and_metric` 的第一部分把它的核识别为 effect span 的正交补：
+
+$$
+\operatorname{ker}\|D\|_{\mathrm{obs}}
+=
+\operatorname{span}_{\mathbb R}
+\{E_i\}^{\perp}.
+$$
+
+因此，对密度态差
+
+$$
+D=\rho-\sigma,
+$$
+
+半范数为零，恰好表示当前 effect 家族无法区分这两个状态。它在状态空间上只给出伪距离；把零距离状态取商以后，诱导的 `operationalQuotientDistance` 满足非负性、对称性和三角不等式，并且
+
+$$
+\bar d([\rho],[\sigma])=0
+\iff
+[\rho]=[\sigma].
+$$
+
+这使“对象是一个读数等价类”获得了一个内部几何：距离不是预先附加的物理空间距离，而是由允许的 effect、权重和读出范数共同定义的操作距离。
+
+冻结结果还给出分离条件：若原状态空间上的伪距离已经是严格距离，则这组 effect 对密度态是 informationally complete。反之，存在非零残差就意味着至少有两个不同状态落入同一个操作类。这里的 `informationally complete` 只针对指定的密度态与 effect 集合，不能推出对任意序列仪器或任意开放系统都完备。
+
+### 定理 61.3（可见容量与残差容量守恒）
+
+对任意 effect 集合 $E$，令
+
+$$
+C(E)
+=
+\dim_{\mathbb R}\mathcal V(E)-1,
+\qquad
+Q(E)
+=
+\dim_{\mathbb R}\mathcal R(E).
+$$
+
+`observer_capacity_conservation` 证明，在固定的实 Hermitian 载体上：
+
+$$
+\boxed{
+C(E)+Q(E)=d^2-1.
+}
+$$
+
+其中 $d^2$ 是完整 Hermitian 载体的实维数，减去一维单位方向后得到 traceless 方向总数。若粗 effect 集合包含于细 effect 集合，则
+
+$$
+C(E_{\mathrm{coarse}})
+\le
+C(E_{\mathrm{fine}}),
+$$
+
+并且
+
+$$
+Q(E_{\mathrm{fine}})
+\le
+Q(E_{\mathrm{coarse}}).
+$$
+
+所以每增加一个真正独立的可见方向，残差容量至少相应减少；如果新增 effect 落在原有 span 中，两个容量都不改变。这个守恒式给出的是维数账本，不是信息熵守恒，也不是说每个新增 effect 都携带一个独立可读取的经典 bit。
+
+### 61.4 接到 Zeckendorf 合法构型
+
+令
+
+$$
+\mathcal W_L
+=
+\{w\in\{0,1\}^L:w_rw_{r+1}=0\},
+$$
+
+并把合法构型映到第 58 节的黄金坐标或某个指定的 effect 家族。若窗口扩大、记录端口增加，得到的不是自动的“更多历史”，而是一组新的 effect。应分别计算
+
+$$
+\mathcal V_L=\operatorname{span}_{\mathbb R}\bigl(\{I\}\cup E_L\bigr),
+\qquad
+\mathcal R_L=\mathcal V_L^{\perp},
+$$
+
+再比较
+
+$$
+C_L=\dim_{\mathbb R}\mathcal V_L-1,
+\qquad
+Q_L=\dim_{\mathbb R}\mathcal R_L.
+$$
+
+Zeckendorf 约束只规定合法构型集合及其离散坐标；它不自动规定 effect 的线性独立性，也不自动把窗口长度 $L$ 转成可见容量 $C_L$。若新增构型只改变编号、不改变读出 span，容量不变；若新增构型引入了新的可区分 effect，容量才增加。相应的相干与历史影响仍须用第 55、56 和 60 节的 Gram、回流和作用量计算。
+
+### 61.5 观察距离的任务依赖
+
+设实验族改变了 effect 集合或权重，则半范数、商空间和容量账本都会改变。于是两个状态可能满足
+
+$$
+\bar d_{\mathfrak T_1}([\rho],[\sigma])=0,
+$$
+
+而在更细任务上满足
+
+$$
+\bar d_{\mathfrak T_2}([\rho],[\sigma])>0.
+$$
+
+这不是逻辑矛盾，而是两个观察商不同。第 54 节的有限响应商、第 57 节的无限未来商和本节的线性 effect 商，只有在明确给出 effect、channel 与时间范围后才能比较。把它们不加条件地合并成一个“最终对象空间”，会丢掉它们各自的操作边界。
+
+因此，“用多少约束保留历史”可以拆成三个可测量问题：
+
+$$
+\begin{aligned}
+&\text{当前读出保留了多少可见维数？}\\
+&\text{剩余残差在指定未来动力学下是否闭合？}\\
+&\text{记录作用量和任务误差是否允许忽略该残差？}
+\end{aligned}
+$$
+
+第一问由 $C(E)$ 和 $Q(E)$ 结算，第二问由第 57 节的 observer closure 与第 59 节的扇区保持条件结算，第三问由第 56、58、60 节的误差预算结算。三者共同决定当前尺度上是否可以把某个操作等价类当作稳定对象。
+
+本节为 `repo-derived/open` 理论追加；没有新增 Lean 声明、形式覆盖或冻结状态。
+
+## 追加锚（新终端）
+
