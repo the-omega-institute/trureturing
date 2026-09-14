@@ -6,7 +6,7 @@
    digest: Prime fixed points of the actual norm-one Lucas recurrence are exactly the prime divisors of a-2; golden even iterates have an exact parity split, and a mixed-modulus family refutes Conjecture 6.5(v). -/
 
 import D5.S1.Recurrence.LucasCompanion
-import D5.S1.Scale.Lucas
+import D5.S1.Scale.LucasDoubling
 import Mathlib.LinearAlgebra.Matrix.Charpoly.FiniteField
 import Mathlib.Tactic
 
@@ -105,22 +105,11 @@ theorem prime_fixed_iff_dvd_parameter_sub_two (a : ℤ) (p : ℕ) (hp : p.Prime)
     ← ZMod.intCast_zmod_eq_zero_iff_dvd (a - 2) p]
   simp only [Int.cast_sub, Int.cast_ofNat, sub_eq_zero]
 
-private lemma trace_square (x : D5.S0.Carrier.GoldenInt) :
-    D5.S0.Carrier.trace (x ^ 2) =
-      D5.S0.Carrier.trace x ^ 2 - 2 * D5.S0.Carrier.norm x := by
-  simp [pow_two, D5.S0.Carrier.trace, D5.S0.Carrier.norm,
-    D5.S0.Carrier.a_mul, D5.S0.Carrier.b_mul]
-  ring
-
 /-- Parity in the original golden power decides the factorization of the critical-prime target. -/
 theorem golden_even_trace_excess (k : ℕ) :
     D5.S1.Scale.goldenLucas (2 * k) - 2 =
       if Even k then 5 * (Nat.fib k : ℤ) ^ 2 else D5.S1.Scale.goldenLucas k ^ 2 := by
-  have ht := trace_square (D5.S0.Carrier.phi ^ k)
-  rw [← pow_mul, D5.S0.Carrier.norm_phi_pow] at ht
-  change D5.S1.Scale.goldenLucas (k * 2) =
-    D5.S1.Scale.goldenLucas k ^ 2 - 2 * (-1 : ℤ) ^ k at ht
-  rw [Nat.mul_comm k 2] at ht
+  have ht := D5.S1.Scale.golden_lucas_two_mul k
   have hd := D5.S1.Scale.golden_lucas_discriminant k
   by_cases hk : Even k
   · rw [hk.neg_one_pow] at ht hd
