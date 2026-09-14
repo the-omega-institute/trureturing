@@ -37,7 +37,11 @@ internal sealed class CloitrePrimeGapDivisorCharacterizationRefutationDocument
                     + "prime, so Term(529) fails. This refutes only Cloitre's gap "
                     + "characterization; the sequence definition and the entry's other comments "
                     + "are untouched.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "oeis-a049591-prime-gap-divisor-characterization-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(
         string id,
@@ -45,10 +49,11 @@ internal sealed class CloitrePrimeGapDivisorCharacterizationRefutationDocument
         Formula formula,
         string prose,
         DescribeRole role,
-        AssessedProvenance provenance) => Describe.Lean(
+        AssessedProvenance provenance,
+        OpenProblemResolutionClaim? claim = null) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + DeclarationName(id)),
             H(title), StatementSource.FromAuthor(formula), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, claim);
 
     private static string DeclarationName(string id) => id switch
     {

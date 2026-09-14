@@ -46,6 +46,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/CloitrePrimeGapDivisorCharacterizationRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a049591-prime-gap-divisor-characterization-refutation` (refuted) by `D5/S0/Certificates/CloitrePrimeGapDivisorCharacterizationRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a049591-prime-gap-divisor-characterization-refutation","declaration_gid":"D5/S0/Certificates/CloitrePrimeGapDivisorCharacterizationRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Benoit Cloitre (2002). *OEIS A049591, Odd primes p such that p+2 is composite*. URL: <https://oeis.org/A049591>.
