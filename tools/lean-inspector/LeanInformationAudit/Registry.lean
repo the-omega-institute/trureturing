@@ -1208,10 +1208,12 @@ private def PlanNode.abstractAt (x : Expr) (depth : Nat := 0) : PlanNode → Pla
 
 private structure CompileState where
   remaining : Nat := 524288
-  active : NameSet := {}
   dependencies : Array DependencyIdentity := #[]
   rules : Array String := #[]
   constructorTypes : NameSet := {}
+  /-- Only original AST parameters and direct constructor fields carry descent
+  authority. An arbitrary local with the same type does not. -/
+  astVariables : FVarIdSet := {}
 
 private abbrev CompileM := StateT CompileState MetaM
 
@@ -1317,8 +1319,9 @@ private def staticIdentity (e : Expr) : CompileM Unit := do
       `Lean.Name, `String].contains name then
     throwError "forbidden_dependency:E6.closed_identity"
 
+mutual
 private partial def compileExpr (e : Expr) (depth : Nat := 0)
-    (typePosition : Bool := false) : CompileM PlanNode := do
+    (typePosition : Bool := false) (templateBinders : Nat := 0) : CompileM PlanNode := do
   charge
   if depth > 256 then throwError "incomplete_closure:E8.depth"
   if e.hasMVar then throwError "incomplete_closure:E7.metavariable"
@@ -1344,7 +1347,10 @@ private partial def compileExpr (e : Expr) (depth : Nat := 0)
     let tp ← compileExpr t (depth + 1) true
     rule "E3.lambda"
     binder n bi t fun x => do
-      let body ← child (b.instantiate1 x)
+      if templateBinders > 0 &&
+          (← get).constructorTypes.contains (t.getAppFn.constName?.getD .anonymous) then
+        modify fun s => { s with astVariables := s.astVariables.insert x.fvarId! }
+      let body ← compileExpr (b.instantiate1 x) (depth + 1) typePosition (templateBinders - 1)
       return .lam tp (body.abstractAt x) bi
   | .forallE n t b bi =>
     let tp ← compileExpr t (depth + 1) true
@@ -1396,9 +1402,24 @@ private partial def compileExpr (e : Expr) (depth : Nat := 0)
       | _ => false
     if recursiveCase then
       let .recInfo r := info | throwError "unclassified_form:E4c.recursor"
-      unless args.size > r.getMajorIdx && args[r.getMajorIdx]!.isFVar do
+      unless r.numMotives == 1 && r.numIndices == 0 && r.all.length == 1 &&
+          args.size > r.getMajorIdx && args[r.getMajorIdx]!.isFVar &&
+          (← get).astVariables.contains args[r.getMajorIdx]!.fvarId! do
         throwError "unclassified_form:E4c.structural_descent"
       rule "E4c.constructor_recursion_v1"
+      dependency info
+      let mut plan := PlanNode.atom head
+      for index in [:args.size] do
+        let arg := args[index]!
+        if index ≥ r.numParams + r.numMotives && index < r.getMajorIdx then
+          let some description := r.rules[index - r.numParams - r.numMotives]?
+            | throwError "incomplete_closure:E4c.branch_description"
+          -- The kernel minor premise has constructor fields first, followed by
+          -- induction hypotheses. Only direct AST fields are strict subterms.
+          plan := .app plan (← compileBranch arg description.nfields (depth + 1) typePosition)
+        else
+          plan := .app plan (← child arg)
+      return plan
     let fixedCase := match info with
       | .recInfo r => #[`Unit, `PUnit, `Bool, `Option, `Sum, `Prod, `Subtype].contains
           (r.all.headD .anonymous)
@@ -1422,7 +1443,9 @@ private partial def compileExpr (e : Expr) (depth : Nat := 0)
     | .thmInfo _ => throwError "forbidden_dependency:E6.executable_theorem:{name}"
     | .recInfo _ => throwError "unclassified_form:E4.recursion:{name}"
     | .defnInfo defn =>
-      if (← get).active.contains name || defn.all.length > 1 then
+      -- Nesting independent calls is not a definition dependency cycle. Lean's
+      -- declaration metadata identifies source recursion before substitution.
+      if (← isRecursiveDefinition name) || defn.all.length > 1 then
         throwError "unclassified_form:E5.recursive_definition"
       dependency info
       -- Check every raw argument before capture-avoiding expansion, including
@@ -1434,13 +1457,26 @@ private partial def compileExpr (e : Expr) (depth : Nat := 0)
         charge
         value := body.instantiate1 arg
       if value.isLambda then throwError "unclassified_form:E5.unsaturated_definition:{name}"
-      modify fun s => { s with active := s.active.insert name }
       let plan ← child value
-      modify fun s => { s with active := s.active.erase name }
       rule "E5.definition"
       return .expanded e plan
     | .opaqueInfo _ => throwError "unclassified_form:E5.opaque_definition"
     | _ => throwError "unclassified_form:E2.unknown_constant:{name}"
+
+private partial def compileBranch (expression : Expr) (fields depth : Nat)
+    (typePosition : Bool) : CompileM PlanNode := do
+  if fields == 0 then return ← compileExpr expression depth typePosition
+  charge
+  if depth > 256 then throwError "incomplete_closure:E8.depth"
+  let .lam n type body bi := expression
+    | throwError "unclassified_form:E4c.branch_lambda"
+  let domain ← compileExpr type (depth + 1) true
+  binder n bi type fun x => do
+    if (← get).constructorTypes.contains (type.getAppFn.constName?.getD .anonymous) then
+      modify fun s => { s with astVariables := s.astVariables.insert x.fvarId! }
+    let checked ← compileBranch (body.instantiate1 x) (fields - 1) (depth + 1) typePosition
+    return .lam domain (checked.abstractAt x) bi
+end
 
 end LeanInformationAudit.TemplateAudit
 
@@ -1469,21 +1505,30 @@ private partial def checkTelescope (type : Expr) (depth : Nat := 0) : CompileM (
   match type with
   | .forallE n domain body bi =>
     if domain == mkSort .zero then throwError "unclassified_form:E1.proposition_slot"
+    if bi == .instImplicit && !domain.isForall &&
+        !dictionaryTypes.contains (domain.getAppFn.constName?.getD .anonymous) then
+      throwError "unclassified_form:E1.instance_slot"
     let _ ← compileExpr domain 0 true
     let kind ← match domain with
       | .sort (.succ _) => pure SlotKind.carrier
       | .sort _ => throwError "unclassified_form:E1.carrier_universe"
       | _ =>
         if dictionaryTypes.contains (domain.getAppFn.constName?.getD .anonymous) then
-          if domain.isAppOf `Decidable && !domain.hasFVar then
+          if domain.isAppOf `Decidable then
             throwError "unclassified_form:E1.closed_decision_slot"
           pure .dictionary
         else if interfaceTypes.contains (domain.getAppFn.constName?.getD .anonymous) then pure .interface
         else if domain.isForall then
-          let predicate ← forallTelescope domain fun _ result => pure (result == mkSort .zero)
-          pure (if predicate then .predicate else .function)
+          forallTelescope domain fun fields result => do
+            if result.isAppOf `Decidable then
+              unless fields.any (fun x => (result.find? (· == x)).isSome) do
+                throwError "unclassified_form:E1.unindexed_decision_family"
+              pure .dictionary
+            else pure (if result == mkSort .zero then .predicate else .function)
         else if (← isProp domain) then pure .proof
         else pure .data
+    if bi == .instImplicit && kind != .dictionary then
+      throwError "unclassified_form:E1.instance_slot"
     binder n bi domain fun x => do
       let tail ← checkTelescope (body.instantiate1 x) (depth + 1)
       -- Stored domains use de Bruijn indices relative to earlier slots.
@@ -1506,6 +1551,8 @@ private def checkConstructorType (name : Name) : CompileM Unit := do
   if ind.all.length != 1 || ind.numIndices != 0 || dataTypes.contains name ||
       ind.isUnsafe || ind.ctors.isEmpty then
     throwError "unclassified_form:E4c.inductive_description"
+  forallTelescope ind.type fun _ result => do
+    if result == mkSort .zero then throwError "unclassified_form:E4c.proof_inductive"
   dependency (.inductInfo ind)
   modify fun s => { s with constructorTypes := s.constructorTypes.insert name }
   for ctor in ind.ctors do
@@ -1537,7 +1584,8 @@ can enter the persistent extension; public query data never grants insertion. -/
 private def compileTemplate (name : Name) (constructors : Array Name) : MetaM TemplatePlanData := do
   let env ← getEnv
   let .defnInfo info ← getConstInfo name | throwError "unclassified_form:E1.definition_kind"
-  if info.safety != .safe || info.all.length > 1 then throwError "unclassified_form:E1.recursive_definition"
+  if info.safety != .safe || info.all.length > 1 || (← isRecursiveDefinition name) then
+    throwError "unclassified_form:E1.recursive_definition"
   let some owner := ownerOf env name | throwError "incomplete_closure:E7.owner"
   if name.toString.utf8ByteSize > 1024 then throwError "incomplete_closure:E8.name_bytes"
   let limit := min 524288 (informationTemplate.work.get (← getOptions))
@@ -1546,8 +1594,7 @@ private def compileTemplate (name : Name) (constructors : Array Name) : MetaM Te
     for ast in constructors do checkConstructorType ast
     let slots ← checkTelescope info.type
     let typePlan ← compileExpr info.type 0 true
-    modify fun s => { s with active := s.active.insert name }
-    let plan ← compileExpr info.value
+    let plan ← compileExpr info.value 0 false slots.size
     return (slots, typePlan, plan)
   let ((slots, typePlan, plan), state) ← action.run { remaining := limit }
   let .ok (typeIdentity, typeBytes) := rawIdentity info.levelParams info.type state.remaining
