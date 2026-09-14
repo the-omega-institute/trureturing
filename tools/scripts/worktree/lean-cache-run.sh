@@ -4,6 +4,7 @@
 # the executable always reads static host limits, never an environment override.
 lean_jobs_derive() {
   python3 - "$@" <<'PY'
+import json
 import os
 from pathlib import Path
 import re
@@ -45,9 +46,9 @@ def cgroup_limits(proc):
                    (proc / "self/cgroup").read_text().splitlines()
                    if line.startswith("0::")]
     if not memberships:
-        return [], []
+        return [], [], []
     member = Path(memberships[0])
-    cpu, memory = [], []
+    cpu, memory, sources = [], [], []
     matched = False
     for line in (proc / "self/mountinfo").read_text().splitlines():
         before, after = line.split(" - ", 1)
@@ -71,11 +72,12 @@ def cgroup_limits(proc):
                 path = current / name
                 if path.exists():
                     values.append(path.read_text().strip())
+                    sources.append(str(path))
             if current == mount:
                 break
             current = current.parent
     if matched:
-        return cpu, memory
+        return cpu, memory, sorted(set(sources))
     raise ValueError("cgroup v2 membership has no visible matching mount")
 
 
@@ -83,7 +85,7 @@ def host_inputs():
     if sys.platform == "darwin":
         cores = subprocess.check_output(["sysctl", "-n", "hw.logicalcpu"], text=True).strip()
         memory = subprocess.check_output(["sysctl", "-n", "hw.memsize"], text=True).strip()
-        return cores, memory, [], []
+        return cores, memory, [], [], []
     if sys.platform == "linux":
         # GNU nproc respects affinity/cpuset; OpenMP preferences are not capacity.
         env = {k: v for k, v in os.environ.items()
@@ -95,18 +97,21 @@ def host_inputs():
             raise ValueError("MemTotal is missing or malformed")
         # Linux meminfo kB is KiB; this is a unit conversion, not a capacity cap.
         memory = str(int(match[1]) * 1024)
-        cpu_limits, memory_limits = cgroup_limits(proc)
-        return cores, memory, cpu_limits, memory_limits
+        return cores, memory, *cgroup_limits(proc)
     raise ValueError(f"unsupported host platform {sys.platform}")
 
 
-def derive(cores_text, memory_text, cpu_limits, memory_limits):
+def derive(cores_text, memory_text, cpu_limits, memory_limits, sources=None):
     # Legal domain: positive host cores/bytes and cpu.max period/quota; optional
     # limits are unsigned bytes or max. CPU quota/period is floored to whole
-    # cores (r_cpu = one core/job, R_cpu = zero). Memory uses exact integer floor,
+    # cores (R_cpu = zero). The inherited r_cpu = one core/job has no verified
+    # basis: ARCH-03 is blocked on a supported compiler profile or CPU receipt.
+    # The diagnostic records that open assumption; it is not a strong limit.
+    # Memory uses exact integer floor,
     # including negative capacity. No saturation to one is permitted.
     cores = natural(cores_text, "cores", positive=True)
-    memory = natural(memory_text, "mem_total_bytes", positive=True)
+    host_memory = natural(memory_text, "mem_total_bytes", positive=True)
+    memory = host_memory
     q_cpu = cores
     for limit in cpu_limits:
         quota, period = limit.split()
@@ -118,9 +123,14 @@ def derive(cores_text, memory_text, cpu_limits, memory_limits):
             memory = min(memory, natural(limit, "memory.max"))
     q_mem = (memory - LEAN_JOBS_RESERVE_BYTES) // LEAN_JOBS_PER_PROCESS_BYTES
     jobs = min(q_cpu, q_mem)
+    compact = lambda value: json.dumps(value, separators=(",", ":"))
     fields = (f"cores={cores} mem_total_bytes={memory} "
+              f"host_mem_total_bytes={host_memory} "
               f"reserve_bytes={LEAN_JOBS_RESERVE_BYTES} "
               f"per_process_bytes={LEAN_JOBS_PER_PROCESS_BYTES} "
+              f"r_cpu_cores=1 r_cpu_basis=ASSUMED-UNVERIFIED:ARCH-03 "
+              f"cpu_max={compact(cpu_limits)} memory_max={compact(memory_limits)} "
+              f"cgroup_sources={compact(sources if sources is not None else ['injected'])} "
               f"q_cpu={q_cpu} q_mem={q_mem} jobs={jobs}")
     if jobs < 1:
         print(f"LEAN_JOBS_CAPACITY_INSUFFICIENT {fields}", file=sys.stderr)

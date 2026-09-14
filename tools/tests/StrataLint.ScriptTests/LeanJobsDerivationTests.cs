@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.Json;
 
 namespace StrataLint.Tests;
 
@@ -51,7 +52,7 @@ public sealed class LeanJobsDerivationTests
         if (OperatingSystem.IsWindows()) return;
         var result = Derive("8", (Reserve + 8 * Peak).ToString(), cpu, memory);
         Assert.Equal(0, result.ExitCode);
-        Assert.Equal(Receipt(8, effectiveMemory, qCpu, qMem, jobs), result.StandardOutput.Trim());
+        Assert.Equal(Receipt(8, effectiveMemory, qCpu, qMem, jobs, cpu, memory, Reserve + 8 * Peak), result.StandardOutput.Trim());
     }
 
     [Theory]
@@ -172,6 +173,9 @@ public sealed class LeanJobsDerivationTests
             limitedResource, narrowFirst.ToString());
         Assert.Equal(0, result.ExitCode);
         Assert.EndsWith("jobs=1", result.StandardOutput.Trim());
+        Assert.Contains("cgroup_sources=", result.StandardOutput);
+        Assert.Contains("/narrow/", result.StandardOutput);
+        Assert.Contains("/broad/parent/" + limitedResource, result.StandardOutput);
     }
 
     [Theory]
@@ -244,9 +248,14 @@ public sealed class LeanJobsDerivationTests
         }
     }
 
-    private static string Receipt(int cores, long memory, int qCpu, long qMem, int jobs) =>
-        $"LEAN_JOBS_DERIVATION cores={cores} mem_total_bytes={memory} reserve_bytes={Reserve} "
-        + $"per_process_bytes={Peak} q_cpu={qCpu} q_mem={qMem} jobs={jobs}";
+    private static string Receipt(int cores, long memory, int qCpu, long qMem, int jobs,
+        string cpu = "", string cgroupMemory = "", long? hostMemory = null) =>
+        $"LEAN_JOBS_DERIVATION cores={cores} mem_total_bytes={memory} host_mem_total_bytes={hostMemory ?? memory} "
+        + $"reserve_bytes={Reserve} per_process_bytes={Peak} "
+        + "r_cpu_cores=1 r_cpu_basis=ASSUMED-UNVERIFIED:ARCH-03 "
+        + $"cpu_max={JsonSerializer.Serialize(cpu.Split('\n', StringSplitOptions.RemoveEmptyEntries))} "
+        + $"memory_max={JsonSerializer.Serialize(cgroupMemory.Split('\n', StringSplitOptions.RemoveEmptyEntries))} "
+        + $"cgroup_sources=[\"injected\"] q_cpu={qCpu} q_mem={qMem} jobs={jobs}";
 
     private static (int ExitCode, string StandardOutput, string StandardError) Derive(
         string cores, string memory, string cpu = "", string cgroupMemory = "") =>
