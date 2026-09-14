@@ -1452,6 +1452,11 @@ private partial def compileExpr (e : Expr) (depth : Nat := 0)
     | .thmInfo _ => throwError "forbidden_dependency:E6.executable_theorem:{name}"
     | .recInfo _ => throwError "unclassified_form:E4.recursion:{name}"
     | .defnInfo defn =>
+      -- The fixed E2 proposition constructors were handled above. A closed
+      -- proposition name cannot acquire a rule by spelling an admitted formula
+      -- in its body, even if that body is available and reducible.
+      if (← isProp e) && !e.hasFVar then
+        throwError "unclassified_form:E2.closed_proposition"
       -- Nesting independent calls is not a definition dependency cycle. Lean's
       -- declaration metadata identifies source recursion before substitution.
       if (← isRecursiveDefinition name) || defn.all.length > 1 then
@@ -1518,23 +1523,31 @@ private partial def checkTelescope (type : Expr) (depth : Nat := 0) : CompileM (
         !dictionaryTypes.contains (domain.getAppFn.constName?.getD .anonymous) then
       throwError "unclassified_form:E1.instance_slot"
     let _ ← compileExpr domain 0 true
+    -- These exact standard aliases describe indexed dictionaries. Classify
+    -- their Pi telescope too; an alias must not bypass the family obligation.
+    let shape ← if #[`DecidablePred, `DecidableRel].contains
+        (domain.getAppFn.constName?.getD .anonymous) then whnf domain else pure domain
     let kind ← match domain with
       | .sort (.succ _) => pure SlotKind.carrier
       | .sort _ => throwError "unclassified_form:E1.carrier_universe"
       | _ =>
-        if dictionaryTypes.contains (domain.getAppFn.constName?.getD .anonymous) then
+        if (← isProp domain) then pure .proof
+        else if shape.isForall then
+          forallTelescope shape fun fields result => do
+            if result.isAppOf `Decidable then
+              -- Typing normalization is confined to the dependency test. The
+              -- raw domain was checked above and remains in the retained plan.
+              -- In particular, a beta/let wrapper cannot manufacture an index.
+              let proposition ← whnf result.getAppArgs[0]!
+              unless fields.any (fun x => (proposition.find? (· == x)).isSome) do
+                throwError "unclassified_form:E1.unindexed_decision_family"
+              pure .dictionary
+            else pure (if result == mkSort .zero then .predicate else .function)
+        else if dictionaryTypes.contains (domain.getAppFn.constName?.getD .anonymous) then
           if domain.isAppOf `Decidable then
             throwError "unclassified_form:E1.closed_decision_slot"
           pure .dictionary
         else if interfaceTypes.contains (domain.getAppFn.constName?.getD .anonymous) then pure .interface
-        else if domain.isForall then
-          forallTelescope domain fun fields result => do
-            if result.isAppOf `Decidable then
-              unless fields.any (fun x => (result.find? (· == x)).isSome) do
-                throwError "unclassified_form:E1.unindexed_decision_family"
-              pure .dictionary
-            else pure (if result == mkSort .zero then .predicate else .function)
-        else if (← isProp domain) then pure .proof
         else pure .data
     if bi == .instImplicit && kind != .dictionary then
       throwError "unclassified_form:E1.instance_slot"
