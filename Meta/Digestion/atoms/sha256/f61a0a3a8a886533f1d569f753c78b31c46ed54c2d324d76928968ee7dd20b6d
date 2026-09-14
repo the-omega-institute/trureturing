@@ -1,0 +1,197 @@
+**定理 35.1（两个后揭权重的有限候选精确公式）。** 沿用定义 34.1 的固定存储任务，设两个候选是不同且非正交的纯量子比特态。记
+
+$$
+r=|\langle u,v\rangle|^2\in(0,1),
+\qquad c_1,c_2>0,\quad c_1\ne c_2,
+$$
+
+$$
+C=c_1+c_2,\qquad t=|c_1-c_2|,\qquad 0<t<C,
+\qquad \nu=1-r.
+$$
+
+共同酉变换和向量代表相位允许取
+
+$$
+A=\begin{pmatrix}1&0\\0&0\end{pmatrix},
+\qquad
+J=\begin{pmatrix}r&\sqrt{r\nu}\\\sqrt{r\nu}&\nu\end{pmatrix}.
+$$
+
+定义
+
+$$
+B=CA-2J,
+\qquad q=\|B\|_1=\sqrt{(C+2)^2-8Cr},
+$$
+
+并记所有有限经典存储上的最优和为
+
+$$
+V(C,t,r)=\sup_{\Phi\ \mathrm{classical}}
+\bigl[L_\Phi(c_1)+L_\Phi(c_2)\bigr].
+$$
+
+第一参数域有简单精确公式：
+
+$$
+t\le\frac{Cq}{C+2}
+\quad\Longrightarrow\quad V(C,t,r)=q.
+$$
+
+此时测量 $B$ 的正负谱投影即可达到。对其余参数域，以下三个显式矩阵给出完整精确公式。令
+
+$$
+Y_+=\frac{B+tA+|B-tA|}{2},
+\qquad
+Y_-=\frac{-B+tA+|B+tA|}{2}.
+$$
+
+再令
+
+$$
+k=\sqrt{\frac r\nu},
+\qquad h=\sqrt{\frac{C^2-t^2}{2C\nu}},
+\qquad w=k-h,
+\qquad y=\frac{2C\nu}{t},
+$$
+
+$$
+Y_3=\begin{pmatrix}t+yw^2&yw\\yw&y\end{pmatrix},
+\qquad
+R_3=\operatorname{tr}Y_3
+=\frac{C(C+2)-2\sqrt{2Cr(C^2-t^2)}}{t}.
+$$
+
+定义候选值
+
+$$
+R_+=\begin{cases}
+\operatorname{tr}Y_+,&Y_++B\ge0,\\
++\infty,&\text{否则},
+\end{cases}
+\qquad
+R_-=\begin{cases}
+\operatorname{tr}Y_-,&Y_--B\ge0,\\
++\infty,&\text{否则}.
+\end{cases}
+$$
+
+则在 $t>Cq/(C+2)$ 时，
+
+$$
+\boxed{V(C,t,r)=\min\{R_+,R_-,R_3\}.}
+$$
+
+这里的可行性检验只是两个显式二阶 Hermitian 矩阵的半正定检验，等价于其迹与行列式均非负，不含连续优化。全部矩阵绝对值也可直接写成根式：对 $\lambda>0$，
+
+$$
+Q_\lambda=\sqrt{(\lambda+2)^2-8\lambda r},
+$$
+
+$$
+|\lambda A-2J|
+=\frac{(\lambda-2)(\lambda A-2J)+4\lambda\nu I}{Q_\lambda}.
+$$
+
+特别地，若 $c_{\rm hi}=(C+t)/2$、$c_{\rm lo}=(C-t)/2$，两个二结果候选矩阵的迹为（是否保留仍由上述可行性检验决定）
+
+$$
+\operatorname{tr}Y_+=c_{\rm hi}-1+L(c_{\rm lo}),
+\qquad
+\operatorname{tr}Y_-=1-c_{\rm lo}+L(c_{\rm hi}),
+$$
+
+$$
+L(c)=\sqrt{(1+c)^2-4cr}.
+$$
+
+证明。不妨交换权重使 $c_1>c_2$。对任一 POVM 结果，两个带符号的迹之差是 $t\operatorname{tr}(E A)\ge0$。把原来的四种符号组合归并后，目标可以等价写成三结果优化
+
+$$
+\max_{E_+,E_-,E_0\ge0\,,\ E_++E_-+E_0=I}
+\operatorname{tr}(E_+B)-\operatorname{tr}(E_-B)
++t\operatorname{tr}(E_0A).
+$$
+
+其理由也可不依赖零迹的符号约定：对每个原结果，两个绝对值之和等于对 $B,-B,tA,-tA$ 四种系数矩阵取最大迹；$tA\ge-tA$ 使第四项冗余。选择一个达到最大值的标签并合并同标签结果，得到三结果 POVM。反过来，对任一三结果 POVM，原绝对值目标至少为所示线性目标，故两个最优值相等。结果为零时任取一个达到最大值的标签即可。
+
+这个三结果优化的对偶为
+
+$$
+\min\operatorname{tr}Y,
+\qquad Y\ge B,\quad Y\ge-B,\quad Y\ge tA.
+$$
+
+原问题的可行集紧，且 $E_+=E_-=E_0=I/3$ 严格可行；对偶取足够大的正数乘 $I$ 也严格可行。因此 Slater 强对偶成立，两边最优值都达到。所有系数矩阵都为实矩阵，对任一可行矩阵及其复共轭取平均，保持可行性和目标，所以原、对偶最优解都可取实对称。对最优解有互补松弛
+
+$$
+(Y-B)E_+=0,
+\qquad (Y+B)E_-=0,
+\qquad (Y-tA)E_0=0.
+$$
+
+先考虑仅有前两项约束时的唯一最小迹解 $Y_0=|B|$，其迹为 $q$。$B$ 的行列式是 $-2C\nu<0$，故 $|B|$ 正定。由二阶矩阵绝对值公式，
+
+$$
+\langle u,|B|^{-1}u\rangle=\frac{C+2}{Cq}.
+$$
+
+令 $z_0=|B|^{-1/2}u$。对正定矩阵作合同变换，$|B|\ge tA$ 等价于
+
+$$
+I\ge t|z_0\rangle\langle z_0|,
+$$
+
+也就是 $t(C+2)/(Cq)\le1$。这证明 $Y_0$ 的可行域恰为所列第一参数域。测量 $B$ 的谱投影使两个结果上的 $B$ 迹绝对值之和为 $q$；原目标逐结果不小于该和，而可行 $Y_0$ 又给出上界 $q$，所以这一测量达到原目标 $q$。
+
+以下证明剩余候选穷尽最优值。对任意可行 $Y$，三个差矩阵 $Y-B,Y+B,Y-tA$ 都不可能为零：前两种会要求不定矩阵 $B$ 或 $-B$ 半正定；第三种会要求 $tA\ge-B$，但在 $u^\perp$ 上左端为零、右端二次型为 $2\nu>0$。因此，每个奇异差矩阵都恰为秩一。
+
+一个最优 POVM 不可能只有一个非零效应，否则该效应为 $I$，互补松弛会迫使对应差矩阵为零。若它恰有两个非零效应，互补松弛使它们的秩均至多为一；两个非零正秩一矩阵相加为 $I$，必为一对互补正交投影。它们于是达到相应两个系数矩阵的二元最优值。
+
+对任意这里出现的二矩阵 $X_i,X_j$，差 $X_i-X_j$ 均可逆不定。二元最优效应是该差的唯一正谱投影，相应唯一最小迹上界是
+
+$$
+Y_{ij}=\frac{X_i+X_j+|X_i-X_j|}{2}.
+$$
+
+唯一性也由互补松弛直接得到：两个互补谱投影已固定，等式 $Y E_i=X_iE_i$、$Y E_j=X_jE_j$ 唯一确定 $Y$。所以两结果情形只能产生 $Y_0,Y_+,Y_-$ 中的一个；它还必须满足第三项约束。$Y_+$ 和 $Y_-$ 的剩余约束正是陈述中的两个可行性检验。
+
+若最优 POVM 的三个效应均非零，则三个差矩阵都必须奇异。写
+
+$$
+Y=\begin{pmatrix}x&z\\z&y\end{pmatrix}.
+$$
+
+对 $\det(Y-B)=\det(Y+B)=\det(Y-tA)=0$ 展开，有
+
+$$
+\det Y=2C\nu,
+\qquad y=\frac{2C\nu}{t},
+\qquad x=t+\frac{z^2}{y}.
+$$
+
+剩下的线性混合项等式是
+
+$$
+y(C-2r)-2\nu x+4\sqrt{r\nu}\,z=0.
+$$
+
+令 $w=z/y$，化简得到
+
+$$
+(w-k)^2=h^2.
+$$
+
+所以两个三重接触候选分别为 $w=k-h$ 和 $w=k+h$。它们都可行：$Y-tA=y(w,1)^{\mathsf T}(w,1)$ 半正定，而 $Y-B,Y+B$ 的行列式均为零，右下角分别为
+
+$$
+2\nu\left(\frac Ct+1\right)>0,
+\qquad
+2\nu\left(\frac Ct-1\right)>0.
+$$
+
+二者因此都是半正定矩阵。由于 $k,h>0$，$w=k-h$ 的迹严格小于 $w=k+h$ 的迹，故高迹候选不可能最优；低迹候选就是 $Y_3$。
+
+这样，至少一个最优解属于所列有限候选集合，而集合中的每个保留候选都可行。在第二参数域 $Y_0$ 已不可行，故精确最优值就是三个剩余候选迹的最小值。矩阵绝对值公式来自两个异号特征值上的线性插值；代入 $\lambda=C,C-t,C+t$ 即得陈述中的全部根式。证毕。
+
