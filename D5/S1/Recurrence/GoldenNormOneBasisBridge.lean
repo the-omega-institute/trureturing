@@ -31,7 +31,7 @@ theorem norm_one_intertwining (a b : R) (hn : a ^ 2 + a * b - b ^ 2 = 1) :
   ext i j
   fin_cases i <;> fin_cases j <;>
     simp [actionMatrix, basisMatrix, traceCompanion, Matrix.mul_apply, Fin.sum_univ_two] <;>
-    linear_combination -hn
+    first | ring | linear_combination -hn
 
 theorem power_intertwining (a b : R) (hn : a ^ 2 + a * b - b ^ 2 = 1) (t : ℕ) :
     actionMatrix a b ^ t * basisMatrix a b = basisMatrix a b * traceCompanion a b ^ t := by
@@ -53,12 +53,12 @@ theorem returns_iff_of_unit_coefficient (a b : R)
     ext i j
     fin_cases i <;> fin_cases j <;>
       simp [basisMatrix, S, Matrix.mul_apply, Fin.sum_univ_two] <;>
-      linear_combination hc
+      first | ring | linear_combination hc | linear_combination a * hc
   have hSP : S * basisMatrix a b = 1 := by
     ext i j
     fin_cases i <;> fin_cases j <;>
       simp [basisMatrix, S, Matrix.mul_apply, Fin.sum_univ_two] <;>
-      linear_combination hc
+      first | ring | linear_combination hc | linear_combination a * hc
   have h := power_intertwining a b hn t
   constructor
   · intro hA
@@ -119,7 +119,7 @@ theorem even_golden_returns_iff (k m t : ℕ)
     have hv := congrArg Units.val h
     simpa only [Units.val_pow, Units.val_one] using hv
 
-/-- The basis obstruction is the actual Fibonacci coefficient, for every nonzero even depth. -/
+/-- The basis obstruction is the actual Fibonacci coefficient, including depth zero. -/
 theorem even_golden_basis_determinant (k m : ℕ) :
     (basisMatrix (((phi ^ (2 * k)).a : ℤ) : ZMod m)
       (((phi ^ (2 * k)).b : ℤ) : ZMod m)).det = -(Nat.fib (2 * k) : ZMod m) := by
