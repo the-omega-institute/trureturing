@@ -20,8 +20,7 @@ internal sealed class PrimeHistoryNormalFormDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(
                     "D5/S3/Factorization/Automata/PrimeHistoryNormalForm.evaluate_injective"),
                 H("Evaluation determines an interval translation"),
-                StatementSource.FromAuthor(Disp(Seq(
-                    F.Id("Injective"), Open, F.Id("evaluate"), Close))),
+                StatementSource.FromAuthor(EvaluateInjectiveFormula()),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The defined and undefined inputs recover the source interval. Evaluating "
@@ -33,14 +32,7 @@ internal sealed class PrimeHistoryNormalFormDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(
                     "D5/S3/Factorization/Automata/PrimeHistoryNormalForm.realize_signature"),
                 H("The explicit realization has the prescribed signature"),
-                StatementSource.FromAuthor(Disp(Seq(
-                    F.Id("low"), Open, F.Id("realize"), Open, F.Id("t"), Close, Close,
-                    Sp, Eq, Sp, Neg, Sp, F.Id("lo"), Open, F.Id("t"), Close,
-                    Sp, Land, Sp,
-                    F.Id("high"), Open, F.Id("realize"), Open, F.Id("t"), Close, Close,
-                    Sp, Eq, Sp, F.Id("a"), Sp, Minus, Sp, F.Id("hi"), Open, F.Id("t"), Close,
-                    Sp, Land, Sp, F.Id("displacement"), Open, F.Id("realize"), Open,
-                    F.Id("t"), Close, Close, Sp, Eq, Sp, F.Id("shift"), Open, F.Id("t"), Close))),
+                StatementSource.FromAuthor(RealizeSignatureFormula()),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The three monotone legs visit the prescribed lower and upper extremes "
@@ -52,12 +44,7 @@ internal sealed class PrimeHistoryNormalFormDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(
                     "D5/S3/Factorization/Automata/PrimeHistoryNormalForm.normal_surjective"),
                 H("Every admissible interval translation is actually realizable"),
-                StatementSource.FromAuthor(Disp(Seq(
-                    Forall, Sp, F.Id("a"), Sp, InMacro, Sp,
-                    Mathbb, Grp(F.Id("N")), Comma, Sp,
-                    F.Id("range"), Open, F.Id("normal"), Open, F.Id("a"), Close, Close,
-                    Sp, Eq, Sp, F.Id("Option"), Open,
-                    F.Id("IntervalMap"), Open, F.Id("a"), Close, Close))),
+                StatementSource.FromAuthor(NormalSurjectiveFormula()),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "For a nonempty form [l,u] with shift d, run l divisions, a-u+l "
@@ -76,4 +63,59 @@ internal sealed class PrimeHistoryNormalFormDocument : IScribeDocumentDefinition
                 + "of the free inverse monoid universal property."))),
         [DocumentEdge.Dependency.Create(
             GidRef.Create("D5/S3/Factorization/Automata/WordExcursionLowerBound"))]));
+
+    private static Formula Call(string name, params Formula[] arguments) =>
+        new Formula.Apply(F.Id(name), [.. arguments]);
+
+    private static Formula QualifiedCall(
+        string prefix,
+        string name,
+        params Formula[] arguments) =>
+        new Formula.Apply(Seq(F.Id(prefix), Dot, F.Id(name)), [.. arguments]);
+
+    private static Formula Universal(string variable, Formula domain, Formula body) =>
+        new Formula.Bind(
+            FormulaQuantifier.ForAll,
+            FormulaIdentifier.Create(variable),
+            domain,
+            body);
+
+    private static Formula Equal(Formula left, Formula right) =>
+        new Formula.Relation(left, FormulaRelationOperator.Equal, right);
+
+    private static Formula And(Formula left, Formula right) =>
+        new Formula.Logic(left, FormulaLogicOperator.And, right);
+
+    private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
+
+    private static Formula Integers() => new Formula.Integers();
+
+    private static Formula IntervalMaps() => Call("IntervalMap", F.Id("a"));
+
+    private static Formula Field(string name) => Seq(F.Id("t"), Dot, F.Id(name));
+
+    private static Formula Realized() => Call("realize", F.Id("t"));
+
+    private static Formula IntCast(Formula value) =>
+        Seq(Open, value, Colon, Sp, Integers(), Close);
+
+    private static Formula EvaluateInjectiveFormula() => Disp(Universal("a", Naturals(),
+        QualifiedCall("Function", "Injective",
+            Call("evaluate", Seq(F.Id("a"), Sp, Colon, Eq, Sp, F.Id("a"))))));
+
+    private static Formula RealizeSignatureFormula() => Disp(Universal("a", Naturals(),
+        Universal("t", IntervalMaps(),
+            And(
+                Equal(Call("low", Realized()), new Formula.Negate(Field("lo"))),
+                And(
+                    Equal(
+                        Call("high", Realized()),
+                        new Formula.Binary(
+                            IntCast(F.Id("a")),
+                            FormulaBinaryOperator.Subtract,
+                            Field("hi"))),
+                    Equal(Call("displacement", Realized()), Field("shift")))))));
+
+    private static Formula NormalSurjectiveFormula() => Disp(Universal("a", Naturals(),
+        QualifiedCall("Function", "Surjective", Call("normal", F.Id("a")))));
 }
