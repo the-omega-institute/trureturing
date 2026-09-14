@@ -9438,3 +9438,464 @@ $$
 于是量子恒等存储的两问之和为 $\sqrt2+\sqrt5/2$。为验证严格比较，$2\sqrt2>14/5$ 来自 $2>49/25$，而 $\sqrt5>11/5$ 来自 $5>121/25$；两式相加得 $2\sqrt2+\sqrt5>5$。这同时证明正损失的陈述。证毕。
 
 ## 追加锚（新终端）
+
+## 35. 两种后揭权重的全参数经典最优值与三结果测量
+
+**定理 35.1（两个后揭权重的有限候选精确公式）。** 沿用定义 34.1 的固定存储任务，设两个候选是不同且非正交的纯量子比特态。记
+
+$$
+r=|\langle u,v\rangle|^2\in(0,1),
+\qquad c_1,c_2>0,\quad c_1\ne c_2,
+$$
+
+$$
+C=c_1+c_2,\qquad t=|c_1-c_2|,\qquad 0<t<C,
+\qquad \nu=1-r.
+$$
+
+共同酉变换和向量代表相位允许取
+
+$$
+A=\begin{pmatrix}1&0\\0&0\end{pmatrix},
+\qquad
+J=\begin{pmatrix}r&\sqrt{r\nu}\\\sqrt{r\nu}&\nu\end{pmatrix}.
+$$
+
+定义
+
+$$
+B=CA-2J,
+\qquad q=\|B\|_1=\sqrt{(C+2)^2-8Cr},
+$$
+
+并记所有有限经典存储上的最优和为
+
+$$
+V(C,t,r)=\sup_{\Phi\ \mathrm{classical}}
+\bigl[L_\Phi(c_1)+L_\Phi(c_2)\bigr].
+$$
+
+第一参数域有简单精确公式：
+
+$$
+t\le\frac{Cq}{C+2}
+\quad\Longrightarrow\quad V(C,t,r)=q.
+$$
+
+此时测量 $B$ 的正负谱投影即可达到。对其余参数域，以下三个显式矩阵给出完整精确公式。令
+
+$$
+Y_+=\frac{B+tA+|B-tA|}{2},
+\qquad
+Y_-=\frac{-B+tA+|B+tA|}{2}.
+$$
+
+再令
+
+$$
+k=\sqrt{\frac r\nu},
+\qquad h=\sqrt{\frac{C^2-t^2}{2C\nu}},
+\qquad w=k-h,
+\qquad y=\frac{2C\nu}{t},
+$$
+
+$$
+Y_3=\begin{pmatrix}t+yw^2&yw\\yw&y\end{pmatrix},
+\qquad
+R_3=\operatorname{tr}Y_3
+=\frac{C(C+2)-2\sqrt{2Cr(C^2-t^2)}}{t}.
+$$
+
+定义候选值
+
+$$
+R_+=\begin{cases}
+\operatorname{tr}Y_+,&Y_++B\ge0,\\
++\infty,&\text{否则},
+\end{cases}
+\qquad
+R_-=\begin{cases}
+\operatorname{tr}Y_-,&Y_--B\ge0,\\
++\infty,&\text{否则}.
+\end{cases}
+$$
+
+则在 $t>Cq/(C+2)$ 时，
+
+$$
+\boxed{V(C,t,r)=\min\{R_+,R_-,R_3\}.}
+$$
+
+这里的可行性检验只是两个显式二阶 Hermitian 矩阵的半正定检验，等价于其迹与行列式均非负，不含连续优化。全部矩阵绝对值也可直接写成根式：对 $\lambda>0$，
+
+$$
+Q_\lambda=\sqrt{(\lambda+2)^2-8\lambda r},
+$$
+
+$$
+|\lambda A-2J|
+=\frac{(\lambda-2)(\lambda A-2J)+4\lambda\nu I}{Q_\lambda}.
+$$
+
+特别地，若 $c_{\rm hi}=(C+t)/2$、$c_{\rm lo}=(C-t)/2$，两个二结果候选矩阵的迹为（是否保留仍由上述可行性检验决定）
+
+$$
+\operatorname{tr}Y_+=c_{\rm hi}-1+L(c_{\rm lo}),
+\qquad
+\operatorname{tr}Y_-=1-c_{\rm lo}+L(c_{\rm hi}),
+$$
+
+$$
+L(c)=\sqrt{(1+c)^2-4cr}.
+$$
+
+证明。不妨交换权重使 $c_1>c_2$。对任一 POVM 结果，两个带符号的迹之差是 $t\operatorname{tr}(E A)\ge0$。把原来的四种符号组合归并后，目标可以等价写成三结果优化
+
+$$
+\max_{E_+,E_-,E_0\ge0\,,\ E_++E_-+E_0=I}
+\operatorname{tr}(E_+B)-\operatorname{tr}(E_-B)
++t\operatorname{tr}(E_0A).
+$$
+
+其理由也可不依赖零迹的符号约定：对每个原结果，两个绝对值之和等于对 $B,-B,tA,-tA$ 四种系数矩阵取最大迹；$tA\ge-tA$ 使第四项冗余。选择一个达到最大值的标签并合并同标签结果，得到三结果 POVM。反过来，对任一三结果 POVM，原绝对值目标至少为所示线性目标，故两个最优值相等。结果为零时任取一个达到最大值的标签即可。
+
+这个三结果优化的对偶为
+
+$$
+\min\operatorname{tr}Y,
+\qquad Y\ge B,\quad Y\ge-B,\quad Y\ge tA.
+$$
+
+原问题的可行集紧，且 $E_+=E_-=E_0=I/3$ 严格可行；对偶取足够大的正数乘 $I$ 也严格可行。因此 Slater 强对偶成立，两边最优值都达到。所有系数矩阵都为实矩阵，对任一可行矩阵及其复共轭取平均，保持可行性和目标，所以原、对偶最优解都可取实对称。对最优解有互补松弛
+
+$$
+(Y-B)E_+=0,
+\qquad (Y+B)E_-=0,
+\qquad (Y-tA)E_0=0.
+$$
+
+先考虑仅有前两项约束时的唯一最小迹解 $Y_0=|B|$，其迹为 $q$。$B$ 的行列式是 $-2C\nu<0$，故 $|B|$ 正定。由二阶矩阵绝对值公式，
+
+$$
+\langle u,|B|^{-1}u\rangle=\frac{C+2}{Cq}.
+$$
+
+令 $z_0=|B|^{-1/2}u$。对正定矩阵作合同变换，$|B|\ge tA$ 等价于
+
+$$
+I\ge t|z_0\rangle\langle z_0|,
+$$
+
+也就是 $t(C+2)/(Cq)\le1$。这证明 $Y_0$ 的可行域恰为所列第一参数域。测量 $B$ 的谱投影使两个结果上的 $B$ 迹绝对值之和为 $q$；原目标逐结果不小于该和，而可行 $Y_0$ 又给出上界 $q$，所以这一测量达到原目标 $q$。
+
+以下证明剩余候选穷尽最优值。对任意可行 $Y$，三个差矩阵 $Y-B,Y+B,Y-tA$ 都不可能为零：前两种会要求不定矩阵 $B$ 或 $-B$ 半正定；第三种会要求 $tA\ge-B$，但在 $u^\perp$ 上左端为零、右端二次型为 $2\nu>0$。因此，每个奇异差矩阵都恰为秩一。
+
+一个最优 POVM 不可能只有一个非零效应，否则该效应为 $I$，互补松弛会迫使对应差矩阵为零。若它恰有两个非零效应，互补松弛使它们的秩均至多为一；两个非零正秩一矩阵相加为 $I$，必为一对互补正交投影。它们于是达到相应两个系数矩阵的二元最优值。
+
+对任意这里出现的二矩阵 $X_i,X_j$，差 $X_i-X_j$ 均可逆不定。二元最优效应是该差的唯一正谱投影，相应唯一最小迹上界是
+
+$$
+Y_{ij}=\frac{X_i+X_j+|X_i-X_j|}{2}.
+$$
+
+唯一性也由互补松弛直接得到：两个互补谱投影已固定，等式 $Y E_i=X_iE_i$、$Y E_j=X_jE_j$ 唯一确定 $Y$。所以两结果情形只能产生 $Y_0,Y_+,Y_-$ 中的一个；它还必须满足第三项约束。$Y_+$ 和 $Y_-$ 的剩余约束正是陈述中的两个可行性检验。
+
+若最优 POVM 的三个效应均非零，则三个差矩阵都必须奇异。写
+
+$$
+Y=\begin{pmatrix}x&z\\z&y\end{pmatrix}.
+$$
+
+对 $\det(Y-B)=\det(Y+B)=\det(Y-tA)=0$ 展开，有
+
+$$
+\det Y=2C\nu,
+\qquad y=\frac{2C\nu}{t},
+\qquad x=t+\frac{z^2}{y}.
+$$
+
+剩下的线性混合项等式是
+
+$$
+y(C-2r)-2\nu x+4\sqrt{r\nu}\,z=0.
+$$
+
+令 $w=z/y$，化简得到
+
+$$
+(w-k)^2=h^2.
+$$
+
+所以两个三重接触候选分别为 $w=k-h$ 和 $w=k+h$。它们都可行：$Y-tA=y(w,1)^{\mathsf T}(w,1)$ 半正定，而 $Y-B,Y+B$ 的行列式均为零，右下角分别为
+
+$$
+2\nu\left(\frac Ct+1\right)>0,
+\qquad
+2\nu\left(\frac Ct-1\right)>0.
+$$
+
+二者因此都是半正定矩阵。由于 $k,h>0$，$w=k-h$ 的迹严格小于 $w=k+h$ 的迹，故高迹候选不可能最优；低迹候选就是 $Y_3$。
+
+这样，至少一个最优解属于所列有限候选集合，而集合中的每个保留候选都可行。在第二参数域 $Y_0$ 已不可行，故精确最优值就是三个剩余候选迹的最小值。矩阵绝对值公式来自两个异号特征值上的线性插值；代入 $\lambda=C,C-t,C+t$ 即得陈述中的全部根式。证毕。
+
+**命题 35.2（达到测量及三结果必要的参数例）。** 定理 35.1 中，若最小值由可行的 $Y_+$ 达到，测量 $B-tA=2(c_{\rm lo}A-J)$ 的正负谱投影即可达到；若由 $Y_-$ 达到，测量 $B+tA=2(c_{\rm hi}A-J)$ 的正负谱投影即可达到。
+
+若 $Y_3$ 最优，其三结果达到测量可以显式写出。对二阶矩阵记 $\operatorname{adj}$ 为伴随矩阵，令
+
+$$
+S_\alpha=\frac{k}{yh},
+\qquad d_\alpha=\frac{w}{2\nu h},
+\qquad
+\alpha_0=\frac{2Ck-h(C+2)}{2\nu ht},
+$$
+
+$$
+\alpha_+=\frac{S_\alpha-\alpha_0-d_\alpha}{2},
+\qquad
+\alpha_-=\frac{S_\alpha-\alpha_0+d_\alpha}{2}.
+$$
+
+则
+
+$$
+E_+=\alpha_+\operatorname{adj}(Y_3-B),
+\quad
+E_-=\alpha_-\operatorname{adj}(Y_3+B),
+\quad
+E_0=\alpha_0\operatorname{adj}(Y_3-tA)
+$$
+
+是达到测量。当 $Y_3$ 最优时，这三个系数必非负；若只把 $Y_3$ 当作可行上界，不能省略这项非负性要求。特别地，$\alpha_0\ge0$ 恰好对应 $t\ge Cq/(C+2)$，但这一个条件本身不保证其余两个系数非负。
+
+取
+
+$$
+C=2,\qquad t=1,\qquad r=\frac9{10},
+$$
+
+即权重为 $3/2,1/2$，则精确最优值是
+
+$$
+V=8-\frac{6\sqrt{30}}5.
+$$
+
+三个系数恰为
+
+$$
+\alpha_0=4\sqrt{30}-20,
+\qquad
+\alpha_+=\frac{25}{2}-\frac{9\sqrt{30}}4,
+\qquad
+\alpha_-=\frac{15}{2}-\frac{5\sqrt{30}}4,
+$$
+
+均严格为正。这个例子的最优经典测量需要至少三个非零结果；两个结果不能达到最优值。
+
+证明。二结果候选的测量达到对应两项线性目标；第三项对偶约束已经验证可行，所以原绝对值目标也必须等于该候选迹。
+
+对三结果式，三个伴随矩阵都是非零正秩一矩阵，分别支撑于对应差矩阵的核。把 $E_++E_-+E_0=I$ 的三个实矩阵坐标展开，得到唯一解
+
+$$
+\alpha_++\alpha_-+\alpha_0=\frac{k}{yh},
+\qquad
+\alpha_--\alpha_+=\frac{w}{2\nu h},
+\qquad
+\alpha_0=\frac{2Ck-h(C+2)}{2\nu ht}.
+$$
+
+这里 $k,y,h,\nu,t$ 全部为正。更明确地，把三个伴随矩阵依次按 $(11,12,22)$ 坐标写成三列，其行列式为
+
+$$
+-4t\nu yh=-8C\nu^2h\ne0,
+$$
+
+所以解确实唯一。若系数非负，这些效应组成 POVM 并逐项满足互补松弛，直接给出目标 $\operatorname{tr}Y_3$。反过来，若 $Y_3$ 最优，强对偶保证存在最优 POVM；其每项都支撑于相应一维核，只能是所写伴随矩阵的非负倍数。唯一性迫使其系数正是上述公式。这证明最优时的非负性与达到构造。
+
+$\alpha_0$ 的阈值关系通过对 $h\le2Ck/(C+2)$ 平方并代入定义得到。具体例中，$5<\sqrt{30}<50/9<6$，所以三个系数都严格为正；代入 $R_3$ 得到所示精确值。该正系数 POVM 已达到可行对偶值，因而最优。任何其他最优 POVM 按三种系数矩阵分组后，都必须满足同一组互补松弛与完整性方程，因此三个组的系数也都是上述严格正数。只有两个非零原结果的测量至多产生两个非空组，不能满足这一要求。这证明三结果的必要性。
+
+所用任意 Hermitian 测量奖励的 POVM 优化及其对偶，见 Watrous，*The Theory of Quantum Information*，[§3.1.2，式 (3.33)–(3.42)](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)；同书定理 1.18 与命题 1.19 给出本证明所用的严格可行性、强对偶及互补松弛。这里的有限候选公式针对两种已知可能权重、存储后才揭示实际选择的任务，不把最终采用的权重在存储前已知时的单个 Helstrom 测量等同于对两问同时最优。
+
+同一任务也可写成测量后揭示信息的二态辨别。令子系综标签为 $i=1,2$，其概率为 $\pi_i=(1+c_i)/(C+2)$，标签内部的 $A,J$ 先验分别为 $c_i/(1+c_i)$ 与 $1/(1+c_i)$。只在经典存储结束后揭示 $i$，则该存储及随后最优猜测的平均成功概率恰为
+
+$$
+p_{\rm guess}^{\Phi}
+=\frac12+\frac{L_\Phi(c_1)+L_\Phi(c_2)}{2(C+2)}.
+$$
+
+因此本节优化与这个系综的后信息辨别只差固定正仿射变换。该一般框架见 Carmeli、Heinosaari、Toigo，[*State discrimination with post-measurement information and incompatibility of quantum measurements*（2018），§II.1、定理 1–2](https://arxiv.org/abs/1804.09693)。其定理 1 将事前与事后揭示信息时的最优值相同，刻画为存在兼容的各子系综最优测量；两个候选密度算子可以在不同子系综中重复出现，子系综标签仍互不混淆。这里的权重归一化与该映射明确保留了信息揭示的时点。证毕。
+
+## 追加锚（新终端）
+
+## 36. 任意有限个后揭权重的三标签经典最优存储
+
+**定理 36.1（有限权重表的三结果达到界）。** 沿用定义 34.1 的固定存储任务。允许 $A,J$ 为任意两个量子比特密度矩阵，即
+
+$$
+A,J\in\mathbb C^{2\times2},\qquad A,J\ge0,
+\qquad \operatorname{tr}A=\operatorname{tr}J=1,
+$$
+
+并预先给定任意有限个正权重
+
+$$
+m\ge1,\qquad 0<c_1<c_2<\cdots<c_m.
+$$
+
+共同存储通道可以依赖 $A,J$ 和整个权重表，但必须在实际权重揭示前固定。对任意有限经典输出通道 $\Phi$，记
+
+$$
+L_\Phi(c)=\|c\Phi(A)-\Phi(J)\|_1,
+\qquad
+V_m=\sup_{\Phi\ \mathrm{classical}}\sum_{j=1}^m L_\Phi(c_j).
+$$
+
+这里优化的是所写范数之和；把某个权重的读数换算为定义 34.1 的判别成功率时，仍须使用该权重对应的 $1+c_j$ 分母。
+
+对 $k=0,\ldots,m$ 定义 Hermitian 奖励矩阵
+
+$$
+G_k=
+\left(\sum_{j=k+1}^m c_j-\sum_{j=1}^k c_j\right)A
++(2k-m)J,
+$$
+
+其中空和为零。则
+
+$$
+\boxed{
+V_m=
+\max_{\substack{E_0,\ldots,E_m\ge0\\\sum_{k=0}^m E_k=I}}
+\sum_{k=0}^m\operatorname{tr}(E_kG_k)
+=\min_{\substack{Y=Y^\dagger\\Y\ge G_k\ (0\le k\le m)}}
+\operatorname{tr}Y.
+}
+$$
+
+两个最优值均达到，并且存在一组达到原范数总分 $V_m$ 的 POVM，其非零效应数至多为
+
+$$
+\boxed{\min\{m+1,3\}.}
+$$
+
+因此，无论这张有限权重表有多少项，最优经典存储总能只保留至多三个输出标签。权重揭示后再根据存储标签作相应的二元决策。
+
+证明。先核对从任意结果数到有限奖励表的归约。对一个任意 POVM 效应 $E\ge0$，令
+
+$$
+a=\operatorname{tr}(EA)\ge0,\qquad
+b=\operatorname{tr}(EJ)\ge0.
+$$
+
+序列 $c_ja-b$ 随 $j$ 不减。因此可以选择一个 $k\in\{0,\ldots,m\}$，使 $j\le k$ 时 $c_ja-b\le0$，$j>k$ 时 $c_ja-b\ge0$。零值可以置于分界的任一侧；若 $a=0$，取 $k=m$ 即可，不需除以 $a$。于是
+
+$$
+\sum_{j=1}^m|c_ja-b|
+=-\sum_{j=1}^k(c_ja-b)+\sum_{j=k+1}^m(c_ja-b)
+=\operatorname{tr}(EG_k).
+$$
+
+任何其他分界给出的带符号和都不超过绝对值之和，所以逐效应恒有
+
+$$
+\sum_{j=1}^m\bigl|\operatorname{tr}(E(c_jA-J))\bigr|
+=\max_{0\le k\le m}\operatorname{tr}(EG_k).
+$$
+
+给定任意有限 POVM $(M_\ell)_\ell$，为每个结果选择一个达到上述最大值的标签 $k(\ell)$，然后令
+
+$$
+E_k=\sum_{\ell:\,k(\ell)=k}M_\ell.
+$$
+
+这些效应组成 $m+1$ 标签的 POVM，其线性奖励恰等于原 POVM 的范数总分。因此，原问题在任意有限结果数上的上确界不超过所列线性奖励最大值。反过来，对任一这样的 $(E_k)$，逐效应的绝对值之和都不小于所选择的第 $k$ 项奖励，故其原范数总分不小于线性奖励。这给出反向不等式，两个最优值相等。
+
+线性奖励的可行集是有限维紧集：各 $E_k$ 满足 $0\le E_k\le I$，完整性与正性条件均闭。连续目标因而达到最大值。其半正定对偶就是陈述中的 $Y\ge G_k$；原问题取 $E_k=I/(m+1)$ 严格可行，对偶取足够大的正数乘 $I$ 也严格可行。Slater 强对偶给出两者值相等及对偶最优值达到。
+
+现在证明三个非零效应足够。先用共同酉变换将 $A$ 对角化，再施加保持 $A$ 对角的对角相位变换，使 $J$ 的非对角元变为实数；若该元为零，则无需第二步。即使 $A$ 简并，这个操作也成立。因此 $A,J$ 及全部 $G_k$ 都可取实对称矩阵。对一个最优 POVM 的每项作
+
+$$
+E_k\longmapsto\frac{E_k+\overline{E_k}}2,
+$$
+
+正性与完整性保持。由于 $G_k$ 实对称，$\operatorname{tr}(E_kG_k)$ 也保持，所以存在实对称最优 POVM。
+
+记其非零效应的指标集为 $\mathcal I$。实对称二阶矩阵构成三维实向量空间。若 $|\mathcal I|>3$，则存在不全为零的实数 $(a_k)_{k\in\mathcal I}$，使
+
+$$
+\sum_{k\in\mathcal I}a_kE_k=0.
+$$
+
+每个非零正效应的迹严格为正。对该等式取迹可知，系数 $a_k$ 必须既有正数也有负数。把系数在 $\mathcal I$ 外延拓为零，并选择
+
+$$
+0<\varepsilon<\frac1{\max_{k\in\mathcal I}|a_k|}.
+$$
+
+则两组
+
+$$
+E_k^{\pm}=(1\pm\varepsilon a_k)E_k
+$$
+
+都为合法 POVM。令
+
+$$
+\Delta=\sum_{k\in\mathcal I}a_k\operatorname{tr}(E_kG_k).
+$$
+
+两组线性奖励分别为 $V_m+\varepsilon\Delta$ 与 $V_m-\varepsilon\Delta$。最优性要求两者都不超过 $V_m$，故 $\Delta=0$。
+
+沿同一方向走到
+
+$$
+s_* =\min_{k:\,a_k<0}\frac{-1}{a_k}>0,
+\qquad
+\widetilde E_k=(1+s_*a_k)E_k.
+$$
+
+此时全部系数 $1+s_*a_k$ 非负，至少一个原非零效应变为零；矩阵和仍为 $I$，奖励仍为 $V_m+s_*\Delta=V_m$。这一步不要求效应为秩一。每次至少消去一个非零效应，有限次重复后便得到至多三个非零效应的最优奖励 POVM。
+
+最后把这组 POVM 用作经典存储。其原范数总分不小于 $V_m$，又由 $V_m$ 的定义不大于 $V_m$，所以原目标也达到。删去零效应后，通道可写为
+
+$$
+\Phi_*(\rho)=\sum_{\ell=1}^{n_*}
+\operatorname{tr}(E_\ell^*\rho)|\ell\rangle\langle\ell|,
+\qquad n_*\le\min\{m+1,3\}.
+$$
+
+所用线性依赖扰动是标准 POVM 极点方法，见 D'Ariano、Lo Presti 与 Perinotti，*Classical randomness in quantum measurements*，[推论 7 及其证明](https://arxiv.org/abs/quant-ph/0408115)。实对称空间的 $d(d+1)/2$ 维数界也用于实态系综的可访问信息优化，见 Sasaki 等，*Accessible information and optimal strategies for real symmetrical quantum sources*，[引理 5](https://arxiv.org/abs/quant-ph/9812062)；该文研究的是 Shannon 互信息，上面的奖励归约与保值消去步骤直接处理本节的范数总分。证毕。
+
+**推论 36.2（三标签统一界的锐性与纯态量子差距）。** 对定理 36.1 的全部候选对与有限权重表，统一的三标签上界不能改成两个。进一步，若
+
+$$
+A=|u\rangle\langle u|,\qquad J=|v\rangle\langle v|,
+\qquad \|u\|=\|v\|=1,
+\qquad 0<|\langle u,v\rangle|^2<1,
+$$
+
+且 $m\ge2$，则仍有严格差距
+
+$$
+V_m<\sum_{j=1}^m\|c_jA-J\|_1.
+$$
+
+证明。命题 35.2 中
+
+$$
+m=2,\qquad c_1=\frac12,\quad c_2=\frac32,
+\qquad |\langle u,v\rangle|^2=\frac9{10}
+$$
+
+的最优经典总分为 $8-6\sqrt{30}/5$，且任一达到测量都至少有三个非零结果。它属于本节任务，故排除了对全部有限权重表适用的二标签上界。
+
+对于所述纯态候选的严格差距，经典测量的迹范数收缩性逐项给出
+
+$$
+L_\Phi(c_j)\le\|c_jA-J\|_1.
+$$
+
+若总和取等，定理 36.1 保证存在达到该总和的有限经典存储，且每一项都必须取等。任选两个不同权重即与定理 34.2 矛盾。因此总和严格小于量子原值。恒等量子存储则同时保留右端各项。
+
+这里的三标签计数只针对这一次固定存储后留下的经典输出，保证给定权重表上的最佳经典总分。所用测量可以随权重表改变；结论既不要求保留各个权重的量子最优值，也不给此前多阶段仪器、控制器运行存储或完整历史档案设定三标签上界。证毕。
+
+## 追加锚（新终端）
