@@ -1950,7 +1950,7 @@ private partial def applyPlan (plan : PlanNode) (arg : PlanNode) : CompareM Plan
   match plan with
   | .expanded _ body | .typeNode body => applyPlan body arg
   | .audit input body => return .audit input (← applyPlan body arg)
-  | .lam _ body _ => substitute body arg
+  | .lam domain body _ => return .audit (.typeNode domain) (← substitute body arg)
   | _ => throwError "unclassified_form:dtr.unsaturated_plan"
 
 private def isRealizationType (type : Expr) : Bool :=
@@ -2060,10 +2060,11 @@ private partial def retainedTypes (plan : PlanNode) (context : Array Expr := #[]
       return pending ++ #[obligation domain.toExpr] ++ (← child domain) ++
         (← child a) ++ (← child (← substitute body a))
     return pending ++ (← child head) ++ (← child a)
-  | .lam domain body _ | .forallE domain body _ =>
+  | .lam domain body bi | .forallE domain body bi =>
     let type := domain.toExpr
+    let binder := Expr.forallE .anonymous type (.bvar 0) bi
     return #[obligation type] ++ (← child domain) ++
-      (← retainedTypes body (context.push type) (depth + 1))
+      (← retainedTypes body (context.push binder) (depth + 1))
   | .letE type value body _ =>
     -- Substitution here discharges dependent type obligations only. The
     -- comparator still retains the original let/value/body without zeta.
@@ -2281,6 +2282,7 @@ private def validate (event : TemplateOccurrenceEvent) (descriptor : Expr) : Met
       match ← checkedHead type with
       | .forallE domain tail _ =>
         obligations := obligations.push (domain.toExpr, #[])
+        obligations := obligations ++ (← retainedTypes domain)
         type ← substitute tail (.supplied argument)
       | _ => throwError "unclassified_form:dtr.descriptor_telescope"
     obligations := obligations.push (type.toExpr, #[])
