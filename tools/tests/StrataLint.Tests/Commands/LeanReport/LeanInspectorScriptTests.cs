@@ -47,13 +47,15 @@ public sealed class LeanInspectorScriptTests
     }
 
     [Theory]
-    [InlineData("reuse")]
-    [InlineData("removal-only")]
-    public void InspectorProducesPhaseLogsWithoutBuildOrInspection(string mode)
+    [InlineData("reuse", false)]
+    [InlineData("removal-only", false)]
+    [InlineData("reuse", true)]
+    [InlineData("removal-only", true)]
+    public void InspectorProducesPhaseLogsWithoutBuildOrInspection(string mode, bool relativeCacheRoot)
     {
         if (OperatingSystem.IsWindows()) return;
         using var temporary = new TemporaryDirectory();
-        var (result, calls) = RunPlannedInspector(temporary.Path, mode);
+        var (result, calls) = RunPlannedInspector(temporary.Path, mode, relativeCacheRoot: relativeCacheRoot);
 
         Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
         var reuse = mode == "reuse";
@@ -232,12 +234,13 @@ public sealed class LeanInspectorScriptTests
     // Execute the real shell controller with deterministic producer boundaries.
     // The planner's own baseline validation and merge semantics have separate tests.
     private static (ProcessOutput Result, string[][] Calls) RunPlannedInspector(
-        string temporary, string mode, string failedPhase = "", bool alwaysFail = false)
+        string temporary, string mode, string failedPhase = "", bool alwaysFail = false,
+        bool relativeCacheRoot = false)
     {
         if (OperatingSystem.IsWindows()) throw new PlatformNotSupportedException();
         var repository = CreateRepository(Path.Combine(temporary, "path with spaces"));
         var bin = Path.Combine(temporary, "stub bin");
-        var cache = Path.Combine(temporary, "cache");
+        var cache = Path.Combine(temporary, "cache store");
         Directory.CreateDirectory(cache);
         File.SetUnixFileMode(cache, UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
         var baseline = Path.Combine(cache, "baseline.json");
@@ -264,7 +267,7 @@ public sealed class LeanInspectorScriptTests
             if phase == 'plan':
                 mode = os.environ['STUB_PLAN']
                 pathlib.Path(args[-1]).write_text(json.dumps({'status': 'delta' if mode == 'removal-only' else mode,
-                    'baseline': os.environ['STUB_BASELINE'], 'recheck': ['D5.Probe'] if mode == 'delta' else [],
+                    'baseline': str(pathlib.Path(args[2]) / 'baseline.json'), 'recheck': ['D5.Probe'] if mode == 'delta' else [],
                     'changed': [], 'added': [], 'removed': ['D5.Removed'] if mode == 'removal-only' else []}))
             elif phase == 'inspect':
                 pathlib.Path(args[args.index('--output') + 1]).write_text('{"modules": []}')
@@ -272,9 +275,12 @@ public sealed class LeanInspectorScriptTests
                 shutil.copyfile(args[1], args[3])
                 pathlib.Path(args[3] + '.materials.zip').write_text('new-materials')
             elif phase == 'merge':
+                baseline = pathlib.Path(json.loads(pathlib.Path(args[1]).read_text())['baseline'])
+                baseline_report = baseline.read_text()
+                baseline_materials = pathlib.Path(str(baseline) + '.materials.zip').read_text()
                 if os.environ['STUB_PLAN'] == 'removal-only':
-                    pathlib.Path(args[3]).write_text('merged')
-                    pathlib.Path(args[3] + '.materials.zip').write_text('merged-materials')
+                    pathlib.Path(args[3]).write_text(baseline_report.replace('baseline', 'merged'))
+                    pathlib.Path(args[3] + '.materials.zip').write_text(baseline_materials.replace('baseline', 'merged'))
                 else:
                     shutil.copyfile(args[2], args[3])
                     shutil.copyfile(args[2] + '.materials.zip', args[3] + '.materials.zip')
@@ -292,9 +298,10 @@ public sealed class LeanInspectorScriptTests
         }
         var result = Run("/bin/bash", ["--noprofile", "--norc", "-c",
             "export PATH=\"$1:$PATH\"; shift; exec env \"$@\"", "inspector-fixture", bin,
-            $"LAKE_BIN={Path.Combine(bin, "lake")}", $"STRATALINT_REPORT_CACHE_ROOT={cache}",
+            $"LAKE_BIN={Path.Combine(bin, "lake")}",
+            $"STRATALINT_REPORT_CACHE_ROOT={(relativeCacheRoot ? Path.GetRelativePath(temporary, cache) : cache)}",
             $"STUB_EVENTS={events}", $"STUB_PLAN={mode}", $"STUB_FAILURE={failedPhase}",
-            $"STUB_ALWAYS_FAIL={(alwaysFail ? "1" : "0")}", $"STUB_BASELINE={baseline}",
+            $"STUB_ALWAYS_FAIL={(alwaysFail ? "1" : "0")}",
             "/bin/bash", "--noprofile", "--norc", Path.Combine(repository, InspectorScript),
             "--repository", repository, "--output", Path.Combine(temporary, "report.json")], temporary);
         return (result, File.Exists(events)
