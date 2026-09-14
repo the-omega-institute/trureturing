@@ -1,0 +1,46 @@
+### 72.2 幂等记录的强化范围
+
+一次性界只有在固定的累计空间上才可使用。令 $X$ 是包含系统、历史寄存器和活动工作记忆的固定有限维空间，另以 $R$ 表示未被过程直接操作的惰性参考系统；$P:X\to X$ 是 CPTP 且满足
+
+$$
+P^2=P.
+$$
+
+令 $A,B:X\to X$ 是 CPTP，并假设
+
+$$
+P\circ A=A,
+\qquad
+P\circ B=B,
+\qquad
+A\circ P=B\circ P
+$$
+
+最后一个等式要作为完全有界映射理解，即对任意参考系统 $R$ 都有
+
+$$
+(A\otimes\operatorname{id}_R)\circ(P\otimes\operatorname{id}_R)
+=
+(B\otimes\operatorname{id}_R)\circ(P\otimes\operatorname{id}_R).
+$$
+
+在这些条件下，归纳得到 $A^mP=B^mP$，并且对 $n\ge1$ 有
+
+$$
+A^n-B^n=A^{n-1}P(A-B).
+$$
+
+因此
+
+$$
+\boxed{
+\frac12\lVert A^n-B^n\rVert_\diamond
+\le
+\frac12\lVert A-B\rVert_\diamond.
+}
+$$
+
+这里的 $P$ 必须是固定累计空间上的 endomap。新鲜记录的抬升通常是 $S\to C\otimes S$，第二次作用已经改变了空间，不能直接写成 $P^2$；若每轮都追加新历史，应该使用 72.1 的完整轮次通道和式。若旧记录被相干地重新写入，也必须把它放进 $X$ 后重新检查完全有界的 $A\circ P=B\circ P$，不能只用系统态上的相等。
+
+这一区分解释了两个看似矛盾的事实：一次系统记录可以已经落在经典像空间，而完整历史过程仍然保留跨时关联；一次系统态的误差可以不随 $n$ 累积，而自适应控制器对整段记录的可区分误差仍然需要逐槽预算。
+

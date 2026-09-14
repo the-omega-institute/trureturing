@@ -1,0 +1,28 @@
+### 72.2 幂等记录的强化范围
+
+若每个槽都使用同一个固定维度的幂等记录投影 $\mathcal E$，并且两种候选通道在 $\operatorname{im}\mathcal E$ 上完全相同，那么系统态版本的初始缺陷强化可以推广到该固定抬升空间：
+
+$$
+\widehat A\sigma=\widehat B\sigma
+\qquad
+(\sigma\in\operatorname{im}\widehat{\mathcal E} )
+$$
+
+时，
+
+$$
+\frac12
+\left\|
+\widehat A^n-\widehat B^n
+\right\|_\diamond
+\le
+\frac12
+\left\|
+\widehat A-\widehat B
+\right\|_\diamond.
+$$
+
+这里必须同时满足三个条件：记录空间在每一步保持同一个固定类型；抬升后的记录通道本身是幂等的；后续槽不读取被省略的额外环境。若每一步都把一个新鲜寄存器追加到越来越长的历史，或允许旧记录被相干地重新写入，不能仅凭系统上的 $\mathcal E^2=\mathcal E$ 使用这个强化；此时使用 72.1 的一般槽和式，或者把全部记忆纳入扩展状态后重新计算 diamond 缺陷。
+
+这一区分解释了两个看似矛盾的事实：一次系统记录可以已经落在经典像空间，而完整历史过程仍然保留跨时关联；一次系统态的误差可以不随 $n$ 累积，而自适应控制器对整段记录的可区分误差仍然需要逐槽预算。
+
