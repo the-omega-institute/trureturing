@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:abbe43803d998719d3b314f63d1b8644d0b6be0733a57a0fcd6b48913cdac06a
+  normalized_sha256: sha256:abbe43803d998719d3b314f63d1b8644d0b6be0733a57a0fcd6b48913cdac06a
+cas_ref: sha256:abbe43803d998719d3b314f63d1b8644d0b6be0733a57a0fcd6b48913cdac06a
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/EscapeSpectrum/UncountableSingletonCutCountermodel.uncountable_singleton_cut_countermodel
+    target_statement_id: sha256:907d1434807c1596373a2255ada0f7dad47234a1faaef31ea51ff36f49c43b6e
+receipts:
+  unresolved_subitems: []

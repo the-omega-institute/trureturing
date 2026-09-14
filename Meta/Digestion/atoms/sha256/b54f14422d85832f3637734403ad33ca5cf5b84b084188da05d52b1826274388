@@ -1,0 +1,4 @@
+**面向2027的主动观察基准。** 每个基准应预先冻结隐藏状态、先验或模型族、实验通道、损失与费用单位、预算、最大视界，以及实验后允许读取的控制状态。至少报告无费用信息价值、净 VOI、$V_h$ 的视界曲线、后验表示的更新成本和停止/继续动作；若只记录后验均值而未证明损失闭合，实验选择结果应标为 `open`。这把“智能能否利用历史”落实为可检验的选择问题：系统是否知道何时值得观察，能否把观察转成动作，并在预算耗尽前保持状态闭合。
+
+本章的无成本风险支配与后验状态接口应与仓库已冻结的 `FiniteBayesRiskDominanceCriterion.finite_bayes_risk_dominance_iff_postprocessing`、`PosteriorHistoryCompression.posterior_history_compression` 及 `ExpectedPosteriorEntropyReduction.information_gain_eq_expected_entropy_reduction` 对读；这些声明分别约束有限决策风险、历史压缩和熵的信息增益，并不自动提供这里带费用的 VOI 或未知通道下的集合值递推。新增内容的范围是把这些接口接到主动实验选择，并明确固定通道、状态不变和零概率观测的边界。
+
