@@ -6,6 +6,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Text;
 using System.Text.Json;
 using System.Xml.Linq;
 using Microsoft.Build.Framework;
@@ -20,6 +21,7 @@ public sealed class CscExecutionLogger : ILogger
     private readonly TextWriter output;
     private readonly object sync = new object();
     private readonly Dictionary<string, int> projects = new Dictionary<string, int>(StringComparer.Ordinal);
+    private readonly Dictionary<string, CompilerReasons> reasons = new Dictionary<string, CompilerReasons>();
     private IEventSource events;
     private bool finished;
     private bool unavailable;
@@ -33,6 +35,9 @@ public sealed class CscExecutionLogger : ILogger
     public void Initialize(IEventSource eventSource) => Observe(() =>
     {
         events = eventSource;
+        events.TargetStarted += TargetStarted;
+        events.TargetFinished += TargetFinished;
+        events.MessageRaised += MessageRaised;
         events.TaskStarted += TaskStarted;
         events.BuildFinished += BuildFinished;
     });
@@ -46,8 +51,66 @@ public sealed class CscExecutionLogger : ILogger
             projects.TryGetValue(task.ProjectFile, out var previous);
             projects[task.ProjectFile] = previous + 1;
             count++;
-            Write(new { status = "task-started", project = task.ProjectFile });
+            var context = Context(task.BuildEventContext);
+            CompilerReasons captured = null;
+            if (context != null && reasons.TryGetValue(context, out captured)) reasons.Remove(context);
+            Write(new { status = "task-started", project = task.ProjectFile,
+                reasons_status = captured != null && captured.Messages.Count > 0 ? "captured" : "unavailable",
+                reasons = captured == null ? Array.Empty<string>() : captured.Messages.ToArray(),
+                reasons_truncated = captured != null && captured.Truncated });
         });
+    }
+
+    private static string Context(BuildEventContext context) => context == null ? null
+        : context.NodeId + "/" + context.ProjectContextId + "/" + context.TargetId;
+
+    private void TargetStarted(object sender, TargetStartedEventArgs target) => Observe(() =>
+    {
+        var context = Context(target.BuildEventContext);
+        if (target.TargetName == "_JudgeSdkCoreCompile" && context != null)
+            reasons[context] = new CompilerReasons();
+    });
+
+    private void TargetFinished(object sender, TargetFinishedEventArgs target) => Observe(() =>
+    {
+        var context = Context(target.BuildEventContext);
+        if (context != null) reasons.Remove(context);
+    });
+
+    private void MessageRaised(object sender, BuildMessageEventArgs message)
+    {
+        if (message.Importance != MessageImportance.Low) return;
+        Observe(() =>
+        {
+            // Keep native text only for the registered compiler target; do not
+            // format unrelated messages or infer compiler inputs from diagnostics.
+            if (reasons.Count == 0) return;
+            var context = Context(message.BuildEventContext);
+            if (context == null || !reasons.TryGetValue(context, out var captured)) return;
+            if (captured.Messages.Count == 8) { captured.Truncated = true; return; }
+            var text = message.Message;
+            if (text == null) return;
+            if (Encoding.UTF8.GetByteCount(text) > 2048)
+            {
+                var bytes = 0;
+                var characters = 0;
+                foreach (var rune in text.EnumerateRunes())
+                {
+                    if (bytes + rune.Utf8SequenceLength > 2048) break;
+                    bytes += rune.Utf8SequenceLength;
+                    characters += rune.Utf16SequenceLength;
+                }
+                text = text.Substring(0, characters);
+                captured.Truncated = true;
+            }
+            captured.Messages.Add(text);
+        });
+    }
+
+    private sealed class CompilerReasons
+    {
+        internal readonly List<string> Messages = new List<string>();
+        internal bool Truncated;
     }
 
     private void BuildFinished(object sender, BuildFinishedEventArgs build) => Observe(() =>
@@ -63,9 +126,13 @@ public sealed class CscExecutionLogger : ILogger
     {
         if (events != null)
         {
+            events.TargetStarted -= TargetStarted;
+            events.TargetFinished -= TargetFinished;
+            events.MessageRaised -= MessageRaised;
             events.TaskStarted -= TaskStarted;
             events.BuildFinished -= BuildFinished;
         }
+        reasons.Clear();
         if (!finished) WriteUnavailable();
     });
 

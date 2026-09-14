@@ -99,6 +99,9 @@ public sealed class JudgeSeedTests
 
         var warm = fixture.Build("csc-observed-warm", 0, logger);
         AssertCompilers(warm);
+        File.Delete(fixture.PathOf("tools/Consumer/obj/Release/net10.0/Consumer.dll"));
+        var missing = fixture.Build("csc-observed-missing-output", 1, logger);
+        AssertCompilers(missing, "Consumer.csproj");
         fixture.Write("tools/Consumer/Program.cs", "System.Console.WriteLine(Library.Value() + 1);\n");
         var changed = fixture.Build("csc-observed-changed", 1, logger);
         AssertCompilers(changed, "Consumer.csproj");
@@ -117,6 +120,15 @@ public sealed class JudgeSeedTests
             Assert.True(summary["build_succeeded"]!.GetValue<bool>());
             Assert.Equal(projects.Order(StringComparer.Ordinal), rows.Where(row => row["status"]!.GetValue<string>() == "task-started")
                 .Select(row => Path.GetFileName(row["project"]!.GetValue<string>())).Order(StringComparer.Ordinal));
+            foreach (var started in rows.Where(row => row["status"]!.GetValue<string>() == "task-started"))
+            {
+                Assert.Equal("captured", started["reasons_status"]!.GetValue<string>());
+                var reasons = started["reasons"]!.AsArray().Select(item => item!.GetValue<string>()).ToArray();
+                Assert.Contains(reasons, message => message.Contains("Building target \"_JudgeSdkCoreCompile\" completely.", StringComparison.Ordinal));
+                Assert.Contains(reasons, message => message.Contains("does not exist", StringComparison.Ordinal));
+                Assert.All(reasons, message => Assert.InRange(System.Text.Encoding.UTF8.GetByteCount(message), 0, 2048));
+                Assert.False(started["reasons_truncated"]!.GetValue<bool>());
+            }
         }
     }
 
