@@ -262,7 +262,7 @@ public static class QuestPdfWriter
             ref describeNumber);
     }
 
-    private static string AcademicReferenceLine(
+    internal static string AcademicReferenceLine(
         string label,
         LibraryNoteRef reference,
         IReadOnlyDictionary<string, LiteratureCitation>? citations)
@@ -274,10 +274,19 @@ public static class QuestPdfWriter
                 $"Academic citation is unavailable for {reference.Value}.");
         }
 
+        var sources = new List<string>(2);
+        if (citation.Doi is { } doi)
+        {
+            sources.Add($"DOI: https://doi.org/{doi.Value}.");
+        }
+
+        if (citation.Url is { } url)
+        {
+            sources.Add($"URL: {url.AbsoluteUri}.");
+        }
+
         return $"{label}. {citation.Authors} ({citation.Year}). {citation.Title}. "
-            + (citation.Doi is { } doi
-                ? $"DOI: https://doi.org/{doi.Value}."
-                : $"URL: {citation.Url!.AbsoluteUri}.");
+            + string.Join(' ', sources);
     }
 
     private static bool IsTheoremClass(DescribeKind kind) =>

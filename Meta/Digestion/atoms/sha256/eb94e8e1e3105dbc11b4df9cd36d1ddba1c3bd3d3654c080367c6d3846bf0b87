@@ -1,0 +1,238 @@
+**定理 29.2（两步解析上界、严格改进与精确参数区间）。** 对定义 29.1 的全部参数域，令
+
+$$
+B(c;e,g)
+=cg+\sqrt{
+\bigl[1-c(1-g)(1-2e)\bigr]^2
++4c^2(1-2g)^2e(1-e)}.
+$$
+
+则
+
+$$
+W_2(c;e,g)\le\mathcal B(c;e,g)=B(c;e,g).
+$$
+
+放宽目标 $\mathcal B$ 的上确界由一个参考量子比特和 Bell 输入
+
+$$
+|\Phi\rangle=\frac{|00\rangle+|11\rangle}{\sqrt2}
+$$
+
+达到；这不声称原目标 $W_2$ 达到 $B$。若另记
+
+$$
+A(c;e,g)
+=cg+\sqrt{\bigl[1-c(1-g)\bigr]^2+4c(1-g)e},
+$$
+
+则在全部参数域有 $B\le A$，且
+
+$$
+c>0,\quad 0<e<1,\quad 0<g\le\frac12
+\quad\Longrightarrow\quad B<A.
+$$
+
+在精确参数 $c=7/20$、$e=3/10$、$g=1/10$ 上，有
+
+$$
+\frac{\sqrt{534}}{25}
+\le W_2\left(\frac7{20};\frac3{10},\frac1{10}\right)
+\le\frac7{200}+\frac{\sqrt{207433}}{500}.
+$$
+
+结合定理 28.2，这给出相应三步任务的精确区间
+
+$$
+\frac{13}{40}+\frac{\sqrt{534}}{50}
+\le T_3^{\mathrm{ref,CPTP}}
+\left(\frac3{10},\frac1{10},\frac{13}{20}\right)
+\le\frac{137}{400}+\frac{\sqrt{207433}}{1000}.
+$$
+
+证明。先证明任意允许的两步协议都被 $\mathcal B$ 控制。第一共同系统 CPTP 控制的输出可吸收为自由共同输入。末次控制的低错误率幺正归约也适用于当前加权目标：在定理 27.2 的逐历史证明中，将实际未归一化分支 $\rho$ 换成 $c\rho$，保留理想分支 $P_i\otimes Q$。该证明只使用实际块的半正定性、效应的凸分解与迹范数三角不等式，没有使用分支归一化。具体地，以
+
+$$
+Y=c\langle i|\rho|i\rangle,
+\qquad Z=c\langle1-i|\rho|1-i\rangle,
+\qquad D=aY-Q
+$$
+
+代入，仍有
+
+$$
+\|D+aZ\|_1\le\|D+gZ\|_1+(a-g)\operatorname{tr}Z.
+$$
+
+因此两个常值效应被指针投影支配，任意末次共同 CPTP 控制均可换成一个使当前加权目标不减的共同系统幺正。该替换针对固定输入逐历史选择，允许依赖这一输入。
+
+对第一历史 $i$，把其末次共同幺正记作 $U_i$。在任意联合分支 $\rho_{SR}$ 上，第二次实际仪器产生的第 $j$ 个参考块为
+
+$$
+a\langle j|U_i\rho_{SR}U_i^\dagger|j\rangle
++g\langle1-j|U_i\rho_{SR}U_i^\dagger|1-j\rangle.
+$$
+
+这恰好等于先施加 $\mathcal D_g\otimes\operatorname{id}_R$，再施加 $U_i$ 并作完美指针读取所得的参考块；交叉项在系统部分迹后为零。理想候选同样在其第一分支上施加 $U_i$ 并完美读取。因此，原两步输出的加权差异由
+
+$$
+(\mathcal F_c\otimes\operatorname{id}_R)(\omega_{SR})
+$$
+
+经同一个依赖 $H_1$ 的 CPTP 后处理得到：调用 $U_i$、完美读取第二结果并丢弃 $S$。Hermitian 算子的迹范数在这一后处理下收缩，所以每个原协议的值不超过 $\mathcal B$，从而 $W_2\le\mathcal B$。
+
+下面直接证明 $\mathcal B$ 的 Bell 达到性。令 $X,Z$ 是系统 Pauli 矩阵，$X_H$ 交换历史基 $|0\rangle,|1\rangle$。从
+
+$$
+K_iZ=ZK_i,\qquad P_iZ=ZP_i,
+\qquad K_iX=XK_{1-i},\qquad P_iX=XP_{1-i}
+$$
+
+及 $\mathcal D_g$ 的协变性，得到
+
+$$
+\begin{aligned}
+\mathcal F_c(Z\sigma Z)
+&=(I_H\otimes Z)\mathcal F_c(\sigma)(I_H\otimes Z),\\
+\mathcal F_c(X\sigma X)
+&=(X_H\otimes X)\mathcal F_c(\sigma)(X_H\otimes X).
+\end{aligned}
+$$
+
+故对于四个系统 Pauli 算子 $V_p\in\{I,X,Z,XZ\}$，各存在输出幺正 $\widetilde V_p$，使 $\mathcal F_c(V_p\sigma V_p^\dagger)=\widetilde V_p\mathcal F_c(\sigma)\widetilde V_p^\dagger$。
+
+任取有限参考和归一化纯输入 $|\psi\rangle_{SR}$，以四维辅助参考 $F$ 构造
+
+$$
+|\Omega\rangle_{SRF}
+=\frac12\sum_{p=0}^3
+(V_p\otimes I_R)|\psi\rangle_{SR}\otimes|p\rangle_F.
+$$
+
+这个向量归一化。若 $\rho_S=\operatorname{Tr}_R|\psi\rangle\langle\psi|$，则
+
+$$
+\operatorname{Tr}_{RF}|\Omega\rangle\langle\Omega|
+=\frac14\sum_pV_p\rho_SV_p^\dagger=\frac{I_S}{2}.
+$$
+
+把 $\mathcal F_c$ 作用于 $S$，再对 $F$ 去相干，所得 Hermitian 算子是四个块的直和。每块为
+
+$$
+\frac14(\widetilde V_p\otimes I_R)
+(\mathcal F_c\otimes\operatorname{id}_R)
+(|\psi\rangle\langle\psi|)
+(\widetilde V_p^\dagger\otimes I_R).
+$$
+
+块迹范数相加与幺正不变性表明，去相干后的总迹范数恰等于原输入 $|\psi\rangle$ 的目标值。去相干是 CPTP 映射，所以去相干前、即输入 $|\Omega\rangle$ 的目标值不小于原值。
+
+另一方面，$|\Omega\rangle$ 是系统边缘为 $I_S/2$ 的纯态。其两个参考系数正交且模长均为 $1/\sqrt2$，故存在等距 $V:\mathbb C^2\to R\otimes F$，使
+
+$$
+|\Omega\rangle=(I_S\otimes V)|\Phi\rangle.
+$$
+
+映射只作用于 $S$，参考等距不改变输出迹范数，因此 $|\Omega\rangle$ 的值等于 Bell 输入的值。Bell 输入于是支配所有有限参考纯输入。对混合输入按纯态分解使用迹范数凸性，结论仍成立。Bell 输入本身可行，所以 $\mathcal B$ 的上确界确实由它达到。辅助标记 $F$ 仅用于这项放宽目标的证明，未被放回原协议作为可操作记忆。
+
+计算 Bell 输出。第一历史 $i$ 的实际、理想向量分别为
+
+$$
+|x_i\rangle
+=\frac{\sqrt{1-e}|ii\rangle+\sqrt e|1-i,1-i\rangle}{\sqrt2},
+\qquad
+|y_i\rangle=\frac{|ii\rangle}{\sqrt2}.
+$$
+
+该历史的放宽差块是
+
+$$
+c z|x_i\rangle\langle x_i|
++cg I_S\otimes\operatorname{Tr}_S|x_i\rangle\langle x_i|
+-|y_i\rangle\langle y_i|.
+$$
+
+在子空间 $\operatorname{span}\{|ii\rangle,|1-i,1-i\rangle\}$ 上，它的矩阵为
+
+$$
+M=\frac12
+\begin{pmatrix}
+ca(1-e)-1&cz\sqrt{e(1-e)}\\
+cz\sqrt{e(1-e)}&cae
+\end{pmatrix}.
+$$
+
+另外两个正交方向的特征值是 $cg(1-e)/2$ 与 $cge/2$，均非负。注意
+
+$$
+\det M
+=\frac{ce}{4}\bigl[cg(2-3g)(1-e)-(1-g)\bigr]\le0.
+$$
+
+事实上，括号内的负号由
+
+$$
+(1-g)-cg(2-3g)(1-e)
+\ge1-3g+3g^2
+=3\left(g-\frac12\right)^2+\frac14>0
+$$
+
+保证。因而 $ce>0$ 时 $M$ 的两特征值异号；$ce=0$ 时同一迹范数公式以连续性或直接计算成立。两特征值的间距给出
+
+$$
+\|M\|_1
+=\frac12\sqrt{[1-ca(1-2e)]^2+4c^2z^2e(1-e)}.
+$$
+
+每个第一历史的块范数为 $cg/2+\|M\|_1$，两历史的表达相同，相加得到 $\mathcal B=B$。
+
+比较两个解析表达，直接展开得
+
+$$
+\begin{aligned}
+(B-cg)^2
+&=(1-ca)^2+4cae
+-4c^2g(2-3g)e(1-e)\\
+&=(A-cg)^2-4c^2g(2-3g)e(1-e).
+\end{aligned}
+$$
+
+两个平方根均非负，减去的项在完整参数域非负，在陈述的严格域为正。因此 $B\le A$，并得到所述严格不等式。
+
+最后给出精确区间中的可实现下界。取无参考共同输入 $|+\rangle=(|0\rangle+|1\rangle)/\sqrt2$、第一控制恒等。令 $x_i=K_i|+\rangle$、$y_i=P_i|+\rangle$，并定义系统 Hermitian 矩阵
+
+$$
+D_i=cg\|x_i\|^2I_S+czx_ix_i^\dagger-y_iy_i^\dagger.
+$$
+
+选择每个第一历史的共同末次幺正 $U_i$，使 $U_iD_iU_i^\dagger$ 对角。其第二结果 $j$ 的加权实际概率减理想概率恰为该矩阵的第 $j$ 个对角元。因此这个合法协议的目标值为 $\sum_i\|D_i\|_1$。
+
+在指定参数上，直接得到
+
+$$
+D_0=\frac1{2000}
+\begin{pmatrix}
+-769&28\sqrt{21}\\
+28\sqrt{21}&119
+\end{pmatrix},
+\qquad D_1=XD_0X.
+$$
+
+$D_0$ 的行列式为负，其两特征值间距为
+
+$$
+\sqrt{\left(\frac{-888}{2000}\right)^2
++4\left(\frac{28\sqrt{21}}{2000}\right)^2}
+=\frac{\sqrt{534}}{50}.
+$$
+
+两历史相加得到 $\sqrt{534}/25$ 的可实现下界；它来自明确输入与共同控制，不依赖数值搜索。上界则将相同参数代入 $B$，使用
+
+$$
+cg=\frac7{200},
+\qquad
+[1-ca(1-2e)]^2+4c^2z^2e(1-e)=\frac{207433}{250000}.
+$$
+
+三步参数的高错误率末段为 $\beta_3=13/20$。定理 28.2 给出 $T_3^{\mathrm{ref,CPTP}}=13/40+W_2(7/20;3/10,1/10)/2$，代入两端即得最后一个区间。证毕。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8ba57704a0c40a8567c28ec37e4ceecfcfdd14ecd011d598c3b37f1fd5125cd4
+  normalized_sha256: sha256:8ba57704a0c40a8567c28ec37e4ceecfcfdd14ecd011d598c3b37f1fd5125cd4
+cas_ref: sha256:8ba57704a0c40a8567c28ec37e4ceecfcfdd14ecd011d598c3b37f1fd5125cd4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 标题片段。本子项由定理 372.2 陈述的字节切分产生，是定理标题「定理 372.2。」，不含命题；该定理的各命题子句分别由冻结声明覆盖或在存入中，见父项账目。
+    previous_atom_id: d9ae512cb952e51233185afe04b9a1011019071a7872757301ff90d2626ab276
+    next_atom_id: 93d26a4d162201af5b942ba94984ad873df5fe7d827e4406ce6a8461f47a400f

@@ -1,0 +1,18 @@
+原图码的语义域为单个 $\operatorname{Enc}(D)$。
+
+若另有指定双射 $b_D:D\to C_D,b_Y:Y\to C_Y$，令 $f^d=b_Y\circ f\circ b_D^{-1}$，并按定义 336.1 取
+$$
+h_D(c)=\operatorname{Enc}(b_D^{-1}(c)),\qquad
+h_Y(d)=\operatorname{Enc}(b_Y^{-1}(d)).
+$$
+则两个图码恰为
+$$
+\operatorname{Enc}(G_f)
+=\operatorname{Pack}\{\langle h_D(c),h_Y(d)\rangle_Z:
+\langle c,d\rangle\in G_{f^d}\},
+$$
+$$
+\operatorname{Enc}(G_{f^d})
+=\operatorname{Pack}\{\langle\operatorname{Enc}(c),\operatorname{Enc}(d)\rangle_Z:
+\langle c,d\rangle\in G_{f^d}\}.
+$$

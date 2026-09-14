@@ -91,7 +91,7 @@ read_verdicts() {
     --json name,state,bucket,link,workflow,event,startedAt,completedAt || rc=$?
   # gh returns 1 for failed checks and 8 for pending checks even with --json.
   case $rc in 0|1|8) ;; *) return 1 ;; esac
-  verdicts=$(jq -ce 'select(type == "array")' <<<"$output") || return 1
+  verdicts=$(jq -ce 'select(type == "array")' <<<"$output" 2>/dev/null) || return 1
 }
 watch_checks() {
   # The native watcher is the only wait for verdicts, but it exits early when

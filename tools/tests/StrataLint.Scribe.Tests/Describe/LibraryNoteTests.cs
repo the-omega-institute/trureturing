@@ -19,6 +19,26 @@ public sealed class LibraryNoteTests
             Assert.Equal("https://example.org/source", citation.Url!.AbsoluteUri);
         });
 
+    [Fact]
+    public void LibraryCatalogKeepsBothDoiAndUrl() => WithCatalog(
+        new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            ["sample2026paper.md"] = Note("sample2026paper", "A source", "10.1000/sample.2026")
+                .Replace("doi: 10.1000/sample.2026\n",
+                    "doi: 10.1000/sample.2026\nurl: https://example.org/source\n",
+                    StringComparison.Ordinal),
+        },
+        root =>
+        {
+            var catalog = LibraryNoteCatalog.Load(root);
+            var note = Assert.Single(catalog.Notes);
+            Assert.Equal("10.1000/sample.2026", note.Doi!.Value);
+            Assert.Equal("https://example.org/source", note.Url!.AbsoluteUri);
+            var citation = Assert.Single(catalog.Citations).Value;
+            Assert.Equal("10.1000/sample.2026", citation.Doi!.Value);
+            Assert.Equal("https://example.org/source", citation.Url!.AbsoluteUri);
+        });
+
     [Theory]
     [InlineData("http://example.org/source")]
     [InlineData("/source")]
@@ -34,11 +54,19 @@ public sealed class LibraryNoteTests
         root => Assert.Throws<FormatException>(() => LibraryNoteCatalog.Load(root)));
 
     [Fact]
-    public void CitationRejectsMissingAndAmbiguousLocators()
+    public void CitationRejectsMissingLocatorsAndKeepsBothDoiAndUrl()
     {
         Assert.Throws<ArgumentException>(() => LiteratureCitation.Create("A", 2026, "T", null));
         Assert.Throws<ArgumentException>(() => LiteratureCitation.Create(
-            "A", 2026, "T", "10.1000/sample", "https://example.org/source"));
+            "A", 2026, "T", "not-a-doi", "https://example.org/source"));
+        Assert.Throws<ArgumentException>(() => LiteratureCitation.Create(
+            "A", 2026, "T", "10.1000/sample", "http://example.org/source"));
+
+        var citation = LiteratureCitation.Create(
+            "A", 2026, "T", "10.1000/sample", "https://example.org/source");
+
+        Assert.Equal("10.1000/sample", citation.Doi!.Value);
+        Assert.Equal("https://example.org/source", citation.Url!.AbsoluteUri);
     }
 
     [Fact]

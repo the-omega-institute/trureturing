@@ -37,18 +37,19 @@ public sealed record LiteratureCitation
             throw new ArgumentOutOfRangeException(nameof(year));
         }
 
-        if (doi is null)
-        {
-            return new LiteratureCitation(authors, year, title, null,
-                ParseStableUrl(url ?? throw new ArgumentException("Citation requires a DOI or URL.")));
-        }
-
-        if (url is not null || !StrataLint.Engine.Doi.TryCreate(doi, out var parsedDoi))
+        Doi? parsedDoi = null;
+        if (doi is not null && !StrataLint.Engine.Doi.TryCreate(doi, out parsedDoi))
         {
             throw new ArgumentException("Citation DOI is not canonical.", nameof(doi));
         }
 
-        return new LiteratureCitation(authors, year, title, parsedDoi, null);
+        var parsedUrl = url is null ? null : ParseStableUrl(url);
+        if (parsedDoi is null && parsedUrl is null)
+        {
+            throw new ArgumentException("Citation requires a DOI or URL.");
+        }
+
+        return new LiteratureCitation(authors, year, title, parsedDoi, parsedUrl);
     }
 
     internal static Uri ParseStableUrl(string value)

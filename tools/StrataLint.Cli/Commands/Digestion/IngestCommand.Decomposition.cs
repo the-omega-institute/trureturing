@@ -25,7 +25,12 @@ internal static partial class IngestCommand
 
     internal static void ApplyDecompositionAtomically(string root, RawRepositorySnapshot current,
         ImmutableArray<DigestionCasObject> cas, ImmutableArray<LedgerUpdate> updates)
+        => ApplyDecompositionAtomically(root, current, cas, updates, commit: null);
+
+    internal static void ApplyDecompositionAtomically(string root, RawRepositorySnapshot current,
+        ImmutableArray<DigestionCasObject> cas, ImmutableArray<LedgerUpdate> updates,
+        Action<string, string>? commit)
         => ApplyDecompositionAtomically(root, current, cas, updates, WriteCasObjects,
-            static (directory, snapshot, changes) => ApplyLedgerUpdatesAtomically(directory, snapshot, changes),
+            (directory, snapshot, changes) => ApplyLedgerUpdatesAtomically(directory, snapshot, changes, commit),
             RollbackCasObjects);
 }

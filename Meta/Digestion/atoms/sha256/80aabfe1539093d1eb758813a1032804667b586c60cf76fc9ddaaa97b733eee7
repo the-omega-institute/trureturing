@@ -1,0 +1,68 @@
+**定理 8.7（一般有限标签族的联合读取界与零误差覆盖）。** 设$n\ge2$，固定有限时间集合$A\subseteq T$，并允许联合读取整个$\bigotimes_{t\in A}\mathcal E_t$。定义
+$$
+q_A=\max_{i\ne j}|\Gamma_A(i,j)|,\qquad
+\beta_A=\min_{\substack{M_i\ge0\\\sum_iM_i=I}}
+\max_i\left[1-\langle e_i^A,M_ie_i^A\rangle\right].
+$$
+则最优最坏标签错误率满足
+$$
+\beta_A\ge\frac{1-\sqrt{1-q_A^2}}2.
+$$
+若$u_A=(n-1)q_A<1$，则还有
+$$
+\beta_A\le\min\left\{1-\frac1n,\left(1-\sqrt{1-u_A}\right)^2\right\}.
+$$
+这个一般非对称记录族的上界由一个具体测量达到不超过该值的错误率，不宣称该测量必为精确最优。相应系统通道满足有限界
+$$
+\frac{q_A}{2}\le\sup_{\varrho}\mathsf d(\Phi_A(\varrho),\Delta(\varrho))
+\le\frac{n-1}{2}q_A,
+$$
+上确界取所有系统密度矩阵。因此对固定有限标签数，全部逐对重叠足够小会同时给出整个记录的联合可读性及系统边缘态的退相干界；不能在保留纯条件记录和完整联合访问的条件下把这两个结论任意割裂。
+
+以下三个有限条件等价：$\Phi_A=\Delta$；全部标签可由$A$的记录零错误联合判别；每个异标签对$i,j$都存在$t\in A$使$G_t(i,j)=0$。若记
+$$
+\mathcal P_t=\{\{i,j\}:i\ne j,\ G_t(i,j)=0\},
+$$
+则它们等价于
+$$
+\bigcup_{t\in A}\mathcal P_t=\{\{i,j\}:i\ne j\}.
+$$
+这是对有限标签对的覆盖条件，不要求某一个时间单元单独区分全部标签。
+
+证明。 有限维POVM的集合闭且有界，目标函数连续，所以定义中的最小值存在。任意$n$输出POVM若每个标签错误率均至多$b$，固定$i\ne j$，保持$i$输出而把其余输出统合为$j$，就得到对这两个标签错误率均至多$b$的二输出测量。定理8.6的最坏标签结论迫使$b\ge(1-\sqrt{1-|\Gamma_A(i,j)|^2})/2$。取重叠最大的标签对即得下界。
+
+为构造上界，令$v_i=e_i^A$，$V$以$v_i$为列，并使用通常方向的Gram矩阵
+$$
+H=V^\dagger V,\qquad H(i,j)=\langle v_i,v_j\rangle=\Gamma_A(j,i).
+$$
+$H-I$的每行绝对值之和不超过$u_A$。对任一特征向量，选择绝对值最大的坐标代入特征方程，得到$|\lambda-1|\le u_A$。当$u_A<1$时所有特征值为正，可以定义
+$$
+m_i=VH^{-1/2}|i\rangle,\qquad
+\Pi=VH^{-1}V^\dagger,\qquad
+M_i=|m_i\rangle\langle m_i|+\frac1n(I-\Pi).
+$$
+由于$(VH^{-1/2})^\dagger(VH^{-1/2})=I$，$m_i$正交归一，$\Pi$是其张成空间的正交投影，所列效应非负且和为恒等。$v_i$位于这个空间，且$\langle m_i,v_i\rangle=(\sqrt H)_{ii}$。由$H(i,i)=1$，
+$$
+1-\langle v_i,M_iv_i\rangle
+=1-(\sqrt H)_{ii}^2
+=\sum_{j\ne i}|(\sqrt H)_{ji}|^2
+\le\|\sqrt H-I\|^2.
+$$
+逐特征值有
+$$
+|\sqrt\lambda-1|=\frac{|\lambda-1|}{\sqrt\lambda+1}
+\le\frac{u_A}{\sqrt{1-u_A}+1}=1-\sqrt{1-u_A}.
+$$
+这给出逐标签上界；均匀猜测另给$1-1/n$。若$u_A\ge1$，这里的逆矩阵构造不作保证，但下界、随机猜测界和其余有限结论仍有效。秩亏记录族并未被排除出整个定理，只是在$u_A<1$这个充分条件下其记录自动线性无关。
+
+定理8.5给出系统距离不超过$\frac12q_A\sum_{i\ne j}|\varrho_{ij}|$。密度矩阵的二阶主子矩阵非负，故$|\varrho_{ij}|\le\sqrt{p_ip_j}$，从而
+$$
+\sum_{i\ne j}|\varrho_{ij}|
+\le\left(\sum_i\sqrt{p_i}\right)^2-1\le n-1.
+$$
+最后一步使用$\sum_i p_i=1$和Cauchy–Schwarz不等式。反向取达到$q_A$的标签对$i,j$及初态$(|i\rangle+|j\rangle)/\sqrt2$，二阶谱计算给距离$q_A/2$，得到上确界的下界。
+
+完整退相干等价于$C_A(i,j)=0$对每个$i\ne j$成立，相位非零使它等价于$\Gamma_A(i,j)=0$。有限乘积为零当且仅当至少一个因子为零，给出覆盖条件。若全部记录两两正交，投影测量可零错误区分，并可将未占据正交补任意分配给各效应；反之，零错误判别由已证二标签下界迫使所有重叠为零。故三个条件等价。$A=\varnothing$时$q_A=1$，所有条件记录相同，最优最坏错误率为$1-1/n$，完整退相干及零错误读取均不成立。$n=1$时无需取异标签最大值：通道本来就是恒等与$\Delta$，读取唯一标签的错误率为零，覆盖条件为空条件。证毕。
+
+上界采用平方根测量方法，方法来源见第7.3条所引 Eldar 与 Forney（2001）。这里直接证明的是一般有限复Gram矩阵的逐标签充分界；第7.3条对单一实等重叠模型的精确最优性不被用于任意非对称族。
+

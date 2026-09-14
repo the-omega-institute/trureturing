@@ -1,0 +1,14 @@
+### 13.3 一般关联记录的精确联合优化
+
+对事件 $B'\subseteq\mathsf Y_k$，定义
+
+$$
+A_{k,B'}=\sum_{b\in B'}A_{k,b},
+\qquad
+L_{k,B'}(M)=
+\sum_{x=0}^1
+\left(\sum_{z:z_k\in B'}\operatorname{tr}(M_z\sigma_x)\right)P_x.
+$$
+
+下文 $I_F$ 与 $I_S$ 分别表示两个空间的恒等算符，与记录指标集 $\mathsf I$ 不同。
+

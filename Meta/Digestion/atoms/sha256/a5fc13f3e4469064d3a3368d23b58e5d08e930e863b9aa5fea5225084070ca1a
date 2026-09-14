@@ -1,0 +1,18 @@
+**定义 51.3（历史冗余度）。** 固定 $\delta$，定义
+
+$$
+R_\delta
+=
+\max\left\{r:\exists\ F_1,\ldots,F_r\ \text{两两不交},\ I(A:F_j)\ge(1-\delta)H(A)\right\}.
+$$
+
+在此定义下，“需要多少约束”应改写成：在给定 $\varepsilon,\delta,T$ 和允许的环境分解后，达到
+
+$$
+|\Gamma_{ab}|\le\varepsilon,
+\qquad
+R_\delta\ge R_\ast
+$$
+
+所需的最小有效耦合或记录通道数。$R_\ast$ 由任务要求决定，不是量子理论给出的普适常数。
+

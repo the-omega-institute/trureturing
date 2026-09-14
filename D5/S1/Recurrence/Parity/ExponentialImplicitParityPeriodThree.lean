@@ -755,23 +755,23 @@ example : table 17 =
       905661982179, 69812320196385, 5999337450957816, 568724629221848817,
       58959671016467593233, 6635892489298476577488, 805834151277899880194361,
       105021896272478014882848507, 14621423624844610787449584876] := by
-  decide
+  decide +kernel
 set_option maxHeartbeats 2000000 in
-example : a 11 = 69812320196385 := by decide
+example : a 11 = 69812320196385 := by decide +kernel
 set_option maxHeartbeats 2000000 in
-example : a 12 = 5999337450957816 := by decide
+example : a 12 = 5999337450957816 := by decide +kernel
 set_option maxHeartbeats 2000000 in
-example : a 13 = 568724629221848817 := by decide
+example : a 13 = 568724629221848817 := by decide +kernel
 set_option maxHeartbeats 2000000 in
-example : a 14 = 58959671016467593233 := by decide
+example : a 14 = 58959671016467593233 := by decide +kernel
 set_option maxHeartbeats 2000000 in
-example : a 15 = 6635892489298476577488 := by decide
+example : a 15 = 6635892489298476577488 := by decide +kernel
 set_option maxHeartbeats 2000000 in
-example : a 16 = 805834151277899880194361 := by decide
+example : a 16 = 805834151277899880194361 := by decide +kernel
 set_option maxHeartbeats 2000000 in
-example : a 17 = 105021896272478014882848507 := by decide
+example : a 17 = 105021896272478014882848507 := by decide +kernel
 set_option maxHeartbeats 2000000 in
-example : a 18 = 14621423624844610787449584876 := by decide
+example : a 18 = 14621423624844610787449584876 := by decide +kernel
 -- Fidelity witnesses: the sequence domain is inhabited, and the OEIS hypothesis is satisfiable.
 example : Nat → Int := a
 end D5.S1.Recurrence.Parity.ExponentialImplicitParityPeriodThree

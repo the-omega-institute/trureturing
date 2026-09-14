@@ -1,0 +1,115 @@
+**命题 43.2（严格正定候选的奇异不定反例）。** 在 $\mathbb C^3$ 的标准基 $e_1,e_2,e_3$ 下取
+
+$$
+A=\frac18\begin{pmatrix}
+2&3&0\\3&5&0\\0&0&1
+\end{pmatrix},\qquad
+J=\frac1{27}\begin{pmatrix}
+5&9&0\\9&17&0\\0&0&5
+\end{pmatrix},
+\qquad c=\frac89,\quad d=\frac{32}{27}.
+$$
+
+这两个候选都是严格正定密度矩阵，$c<d$。令 $D_t=tA-J$，则
+
+$$
+D_c=\frac1{27}\begin{pmatrix}
+1&0&0\\0&-2&0\\0&0&-2
+\end{pmatrix},\qquad
+D_d=\frac1{27}\begin{pmatrix}
+3&3&0\\3&3&0\\0&0&-1
+\end{pmatrix}.
+$$
+
+两个差都不定，$D_c$ 可逆而 $D_d$ 奇异。它们的正谱投影不对易，但标准三结果 PVM 同时保留
+
+$$
+\|D_c\|_1=\frac5{27},\qquad
+\|D_d\|_1=\frac7{27}.
+$$
+
+对这两个任务，最少经典标签数和最小完整量子输出维数均为三；若经典标签免费，所需量子寄存器维数为一。
+
+证明。$A,J$ 的迹均为一。它们的顺序主子式分别为
+
+$$
+\left(\frac14,\frac1{64},\frac1{512}\right),\qquad
+\left(\frac5{27},\frac4{729},\frac{20}{19683}\right),
+$$
+
+全部严格为正，故二者严格正定。代入两个权重得到陈述中的加权差。$D_c$ 的特征值为 $1/27,-2/27,-2/27$；$D_d$ 的特征值为 $6/27,0,-1/27$，因此二者均含有严格正、负特征值，范数也是所列值。
+
+令
+
+$$
+u=\frac{e_1+e_2}{\sqrt2},\qquad
+w=\frac{e_1-e_2}{\sqrt2}.
+$$
+
+相应投影为
+
+$$
+P_c^+=|e_1\rangle\langle e_1|,\qquad
+P_d^+=|u\rangle\langle u|,\qquad
+P_d^-=|e_3\rangle\langle e_3|,\qquad
+Z_d=|w\rangle\langle w|.
+$$
+
+直接计算得
+
+$$
+[P_c^+,P_d^+]
+=\frac12\begin{pmatrix}0&1&0\\-1&0&0\\0&0&0\end{pmatrix}\ne0.
+$$
+
+但 $P_c^+P_d^-=0$，所以满足定理 43.1 的交叉支撑条件。其嵌套最优投影是
+
+$$
+Q_c=|e_1\rangle\langle e_1|,\qquad
+Q_d=|e_1\rangle\langle e_1|+|e_2\rangle\langle e_2|
+=P_d^++Z_d.
+$$
+
+对应 PVM 恰为三个标准基投影。测量两个差得到的未归一化对角读数分别为
+
+$$
+\frac1{27}(1,-2,-2),\qquad
+\frac1{27}(3,3,-1).
+$$
+
+绝对值之和分别为 $5/27$ 与 $7/27$，直接验证共同经典测量无损。
+
+现在证明整个输出至少需要三维。设任意有限维 CPTP 通道 $\Phi(X)=\sum_a K_aXK_a^\dagger$ 对这两项无损，并令
+
+$$
+\mathcal R_r=\operatorname{span}_a\{K_ae_r\},
+\qquad r=1,2,3.
+$$
+
+由迹保持，$\sum_a\|K_ae_r\|^2=1$，所以每个 $\mathcal R_r$ 都非零。对正矩阵 $B,C$，$\|B-C\|_1=\operatorname{tr}B+\operatorname{tr}C$ 当且仅当其支撑正交：取 $B-C$ 的最优正谱投影 $F$，等号要求 $\operatorname{tr}((I-F)B)=\operatorname{tr}(FC)=0$，分别将两个支撑置于 $F$ 的值域与核中；反向由正交分块成立。
+
+将这一条件用于 $D_c$ 的正负部分，无损性给出
+
+$$
+\mathcal R_1\perp\mathcal R_2,\qquad
+\mathcal R_1\perp\mathcal R_3.
+$$
+
+再用于 $D_d=(6|u\rangle\langle u|-|e_3\rangle\langle e_3|)/27$，得到对所有 $a,b$ 都有
+
+$$
+\langle K_a(e_1+e_2),K_be_3\rangle=0.
+$$
+
+其中 $\langle K_ae_1,K_be_3\rangle=0$ 已由第一项确定，相减可得 $\langle K_ae_2,K_be_3\rangle=0$。所以三个非零子空间 $\mathcal R_1,\mathcal R_2,\mathcal R_3$ 两两正交，整个输出空间至少三维。标准三标签通道达到该下界，也证明两个经典标签不够。免费标签的口径下，同一实现为纯经典输出，故最小量子寄存器维数为一。
+
+最后核对第 41 节公式的适用边界。此例的标准正谱投影生成
+
+$$
+C^*(I_3,P_c^+,P_d^+)=M_2(\mathbb C)\oplus\mathbb C.
+$$
+
+事实上，上面对易子的平方为 $-(I_2\oplus0)/4$，故两个中央分区投影都在生成代数中；在前二维内，两个不对易秩一投影生成全部 $M_2(\mathbb C)$，末尾为标量块。因此若删去第 41 节的可逆性前提而直接使用其最大块公式，会给出量子寄存器维数二，与这里已达到且最小的维数一矛盾。其完整输出公式在此恰好仍给出三，不能据这个例子声称该数值也失效。
+
+此例的经典无损并不来自某一项半正定而自动保范数：两项都不定，保留它们的最优判别仍需要三个输出维数。改变判据的是 $D_d$ 的零特征子空间；把它加入正谱投影后，最优效应成为能与第一项共同读取的 $Q_d$。证毕。
+

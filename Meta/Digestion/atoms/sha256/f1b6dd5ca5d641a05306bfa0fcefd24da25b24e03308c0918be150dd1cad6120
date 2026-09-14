@@ -1,0 +1,30 @@
+### 一个精确例子
+
+取：
+
+$$
+H=\frac{\hbar\omega}{2}X,
+\qquad
+\mathcal S=\operatorname{span}_{\mathbb R}\{I,Z\}.
+$$
+
+则：
+
+$$
+\mathcal L(Z)=\omega Y,
+\qquad
+\ell_H(\mathcal S)=|\omega|.
+$$
+
+两态：
+
+$$
+\rho_\pm=\frac{I\pm Y}{2}
+$$
+
+在当前接口上相同，但后续 \(Z\) 读数为：
+
+$$
+\langle Z\rangle_\pm(\tau)=\pm\sin\omega\tau.
+$$
+
