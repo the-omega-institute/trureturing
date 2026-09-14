@@ -46,7 +46,8 @@ def v : LegalDigits := ⟨fun i => decide (i % 2 = 1), by
   simp only [decide_eq_true_eq]
   omega⟩
 
-/-- The signed series fills the closed interval, and each endpoint has its unique alternating stream. -/
+/-- The signed series fills the closed interval, and each endpoint has its unique
+alternating stream. -/
 theorem signed_series_range : Set.range signedValue = Set.Icc a b ∧
     (∀ x : LegalDigits, signedValue x = a ↔ x = u) ∧
     (∀ x : LegalDigits, signedValue x = b ↔ x = v) := by
@@ -70,11 +71,12 @@ theorem signed_series_range : Set.range signedValue = Set.Icc a b ∧
     cases x.val j <;> simp [pow_add, mul_nonneg (pow_nonneg hp.le j) (sq_nonneg alpha)]
   have even_term (x : LegalDigits) (k : ℕ) :
       term x (2 * k) = -(alpha ^ 2) ^ k * alpha ^ 2 * (if x.val (2 * k) then 1 else 0) := by
-    simp [term, pow_add, pow_mul] <;> ring
+    simp [term, pow_add, pow_mul]
   have odd_term (x : LegalDigits) (k : ℕ) :
       term x (2 * k + 1) = (alpha ^ 2) ^ k * alpha ^ 3 *
         (if x.val (2 * k + 1) then 1 else 0) := by
-    simp [term, pow_add, pow_mul] <;> ring
+    simp [term, pow_add, pow_mul]
+    ring
   have value_u : signedValue u = a := by
     have he : HasSum (fun k => term u (2 * k)) (-alpha) := by
       convert! (hasSum_geometric_of_lt_one (sq_nonneg alpha) hsq).mul_left (-alpha ^ 2) using 1
@@ -139,6 +141,7 @@ theorem signed_series_range : Set.range signedValue = Set.Icc a b ∧
         nlinarith [congrArg (fun z : ℝ => alpha * z) ha]
       have hfour : alpha ^ 4 + alpha ^ 3 = alpha ^ 2 := by
         nlinarith [congrArg (fun z : ℝ => alpha ^ 2 * z) ha]
+      -- At the common endpoint, choose the branch whose first digit is zero.
       let q : ℝ := -(alpha ^ 3)
       let step (z : ℝ) : ℝ := if z < q then -(z + alpha ^ 2) / alpha else -z / alpha
       have step_interval (z : ℝ) (hz : z ∈ Set.Icc a b) :
@@ -178,6 +181,7 @@ theorem signed_series_range : Set.range signedValue = Set.Icc a b ∧
         induction n with
         | zero => exact ht
         | succ n ih => exact (step_interval (residual n) ih).1
+      -- A digit equal to one forces the next residual into the zero branch.
       let x : LegalDigits := by
         classical
         exact ⟨fun n => decide (residual n < q), by
