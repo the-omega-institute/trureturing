@@ -2,14 +2,12 @@
    generality: I
    mirror-B: D5/B/S3/Factorization/ErdosConsecutiveProductSquarefreeFactorRefutation
    mirror-E: none(waiver:kernel-checked-refutation)
-   anchors: [mathlib/module/Mathlib.Data.Nat.Factorization.Basic, mathlib/module/Mathlib.NumberTheory.Primorial, mathlib/module/Mathlib.Tactic.IntervalCases, mathlib/module/Mathlib.Tactic.NormNum]
-   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Factorization/ErdosConsecutiveProductSquarefreeFactorRefutation.claim; result=D5/S3/Factorization/ErdosConsecutiveProductSquarefreeFactorRefutation.result; claim=D5/S3/Factorization/ErdosConsecutiveProductSquarefreeFactorRefutation.claim
-   digest: The starting value 47 refutes uniqueness of Erdos's 23 in the consecutive-product question. -/
+   anchors: [mathlib/module/Mathlib.NumberTheory.Primorial, mathlib/module/Mathlib.Tactic.IntervalCases]
+   utility: none
+   digest: Starting value 47 refutes the proposed uniqueness of 23 for consecutive products. -/
 
-import Mathlib.Data.Nat.Factorization.Basic
 import Mathlib.NumberTheory.Primorial
 import Mathlib.Tactic.IntervalCases
-import Mathlib.Tactic.NormNum
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
