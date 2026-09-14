@@ -14972,3 +14972,244 @@ $$
 
 ## 追加锚（新终端）
 
+## 59. 局部读出不能凭空恢复关联方向
+
+第 54 节把有限实验族上的响应相同定义成一个预测商，第 57 节把所有有限 Heisenberg 迭代生成的统计放进无限 operator system，第 58 节再把观察深度和有限顺序词联系起来。本节补上一条不同的边界：
+
+> **如果读出端口只接触局部扇区，且 Heisenberg 动力学保持该局部扇区不变，那么增加局部读出次数不会凭空产生关联扇区的信息。**
+
+这不是“局部观察永远不能做 tomography”的普遍断言，而是一个带有明确扇区保持假设的条件定理。对应的现有 Lean 模块是 D5/S3/Quantum/PredictionDepth/LocalDynamicsNoTomography.lean，其冻结声明为 local_dynamics_no_tomography。本节所有解释仍标记为 repo-derived/open；没有新增 Lean 声明、形式覆盖或冻结状态。
+
+### 59.1 双系统的三种方向
+
+令两个有限维系统的局部维数分别为 $$m$$ 和 $$n$$。在双系统 traceless-Hermitian 算子空间中，仓库模块 BipartiteSectorDecomposition.lean 定义了：
+
+$$
+\mathcal L_A
+=
+\operatorname{traceZeroHermitian}(m)
+\otimes
+\operatorname{scalarHermitian}(n),
+$$
+
+$$
+\mathcal L_B
+=
+\operatorname{scalarHermitian}(m)
+\otimes
+\operatorname{traceZeroHermitian}(n),
+$$
+
+以及真正同时依赖两边的关联扇区：
+
+$$
+\mathcal C
+=
+\operatorname{traceZeroHermitian}(m)
+\otimes
+\operatorname{traceZeroHermitian}(n).
+$$
+
+在 Hilbert--Schmidt 实内积下，模块中的 bipartite_sector_decomposition 给出这些扇区的正交分解。相应维数为：
+
+$$
+\dim\mathcal L_A=m^2-1,
+\qquad
+\dim\mathcal L_B=n^2-1,
+$$
+
+$$
+\dim\mathcal C=(m^2-1)(n^2-1).
+$$
+
+因此无关联局部方向的维数与真正关联方向的维数是两笔不同的账。把局部边缘读数做得更精细，只是在前两笔账内增加可见方向；它不会自动把第三笔账转移到前两笔账。
+
+记局部可见扇区为：
+
+$$
+\mathcal V_{\mathrm{loc}}
+=
+\mathcal L_A+\mathcal L_B.
+$$
+
+由正交分解：
+
+$$
+\mathcal V_{\mathrm{loc}}\perp\mathcal C,
+\qquad
+\mathcal V_{\mathrm{loc}}\cap\mathcal C=\{0\}.
+$$
+
+这里的“方向”是算子空间中的方向，不是物理空间中的额外坐标轴。
+
+### 59.2 扇区保持给出严格的无生成结论
+
+设 $$H$$ 是作用在上述算子空间上的 Heisenberg 线性演化，并假设：
+
+$$
+H(\mathcal V_{\mathrm{loc}})
+\subseteq
+\mathcal V_{\mathrm{loc}}.
+$$
+
+那么对任意自然数 $$t$$：
+
+$$
+H^t(\mathcal V_{\mathrm{loc}})
+\subseteq
+\mathcal V_{\mathrm{loc}}.
+$$
+
+再因为局部扇区与关联扇区正交，有：
+
+$$
+H^t(\mathcal V_{\mathrm{loc}})\cap\mathcal C
+=
+\{0\}.
+$$
+
+这正是 local_dynamics_no_tomography 的两部分结论。证明只使用两步：先对 $$t$$ 做迭代归纳，得到局部扇区保持；再用正交性说明其与 $$\mathcal C$$ 的交只能是零。它没有使用“观察者在系统外部”或“意识选择结果”的假设。
+
+若状态差方向 $$D$$ 属于关联扇区，局部初始 effect $$x$$ 属于 $$\mathcal V_{\mathrm{loc}}$$，则所有局部未来读出都满足：
+
+$$
+\left\langle D,H^t x\right\rangle=0
+\qquad
+\text{对所有 }t\in\mathbb N.
+$$
+
+所以同一关联方向即使在整体状态中真实存在，也不会因为重复施加同一类局部 Heisenberg 读出而进入该读数。这里的“不能恢复”是相对于指定的局部 effect 族和指定的动力学而言的。
+
+### 59.3 一个两比特反例：局部边缘相同，关联读数相反
+
+取两个 qubit，令 $$Z$$ 为 Pauli 矩阵。对 $$0\le\varepsilon\le1$$ 定义：
+
+$$
+\rho_{\pm}
+=
+\frac14
+\left(
+I\otimes I
+\pm
+\varepsilon\,Z\otimes Z
+\right).
+$$
+
+这两个矩阵都是合法密度态。对任意 traceless 的局部 effect $$A\otimes I$$ 或 $$I\otimes B$$，有：
+
+$$
+\operatorname{Tr}\!\left(\rho_+(A\otimes I)\right)
+=
+\operatorname{Tr}\!\left(\rho_-(A\otimes I)\right),
+$$
+
+$$
+\operatorname{Tr}\!\left(\rho_+(I\otimes B)\right)
+=
+\operatorname{Tr}\!\left(\rho_-(I\otimes B)\right).
+$$
+
+但关联 effect $$Z\otimes Z$$ 给出：
+
+$$
+\operatorname{Tr}\!\left(\rho_+(Z\otimes Z)\right)=\varepsilon,
+\qquad
+\operatorname{Tr}\!\left(\rho_-(Z\otimes Z)\right)=-\varepsilon.
+$$
+
+因此，局部边缘读数不能区分 $$\rho_+$$ 与 $$\rho_-$$，而联合读数可以区分。这个例子是有限矩阵计算，不是对仓库中新建定理的声明；它具体展示了 $$\mathcal C$$ 中的方向如何落在局部签名的核内。
+
+仓库的 IncompleteObserverPhysicalCounterexample.lean 给出更一般的物理版本。冻结声明 incomplete_observer_physical_counterexample 表明：只要 identity 加上已选 centered effects 的可见空间存在非零正交残差，就能构造两个不同的 density states，它们对全部已选 effect 的读数相同。因而“当前签名相同”不能推出“整体状态相同”。
+
+### 59.4 目标在可见扇区内，才有签名充分性
+
+对给定 centered effects，令可见空间为：
+
+$$
+\mathcal V
+=
+\operatorname{span}
+\left(
+\{I\}\cup\{E_i\}
+\right).
+$$
+
+仓库的 TargetPredictionSufficiency.lean 中，冻结声明 target_prediction_sufficiency 将两件事放在同一命题中：
+
+$$
+A\in\mathcal V
+\Longrightarrow
+\text{所有 }E_i\text{ 的共同读数决定 }A\text{ 的期望值};
+$$
+
+而：
+
+$$
+A\notin\mathcal V
+\Longrightarrow
+\text{存在读数完全相同、但 }A\text{ 期望不同的两个物理态}.
+$$
+
+因此，局部读出是否足够，不能只问“测了多少次”，还要问目标 effect 是否落在局部可见空间及其动力学闭包中。若目标关联 effect 位于 $$\mathcal C$$，而 $$H$$ 满足局部扇区保持条件，那么所有迭代后的局部读出仍在 $$\mathcal V_{\mathrm{loc}}$$ 内，目标仍然位于该读出族的不可见残差。
+
+这也说明第 57 节的最小预测摘要必须带有任务索引。对局部任务，$$\rho_+$$ 与 $$\rho_-$$ 可以属于同一预测类；加入联合目标后，它们被拆分为不同类。对象的等价性随允许的 effect 和动力学改变，而不是由一个脱离任务的标签决定。
+
+### 59.5 何时可以恢复关联方向？
+
+要使关联方向进入可见响应，至少需要改变下列一项：
+
+1. 增加一个具有关联分量的 effect，例如 $$Z\otimes Z$$；
+2. 让 Heisenberg 演化违反局部扇区保持条件，使某个局部 effect 的迭代获得 $$\mathcal C$$ 分量；
+3. 引入与两边共同耦合的 ancilla、联合记录或其他可执行的非局部协议。
+
+第二种情形可写成：
+
+$$
+H(\mathcal V_{\mathrm{loc}})
+\not\subseteq
+\mathcal V_{\mathrm{loc}},
+$$
+
+但这只说明“有可能进入新的方向”，不自动保证已经完成 tomography。还必须计算由允许迭代生成的 visible span，并检查目标 effect 是否真的落入其中。第 57 节引用的 PredictionClosureDynamicalRepair.lean 提供了相应的最小动力学闭包框架：把初始 visible space 扩张到对演化不变的 observer closure，再在其正交残差上定义商。该框架使用有限维线性空间与伴随不变性；它不自动推广到任意开放量子系统。
+
+### 59.6 对“保留多少历史”的含义
+
+局部记录保留的是边缘方向；关联扇区中的差异属于当前任务的历史残差。若动力学把局部空间封闭，那么这部分残差不会通过未来局部读出回流：
+
+$$
+\mathcal R_{\mathrm{corr}}
+\subseteq
+\mathcal V_{\mathrm{loc}}^{\perp},
+\qquad
+\left\langle
+\mathcal R_{\mathrm{corr}},
+H^t\mathcal V_{\mathrm{loc}}
+\right\rangle=0.
+$$
+
+在这种条件下，继续增加同类局部记录不会减少关联残差；需要的是扩大端口或改变动力学。反之，若存在从关联扇区到局部扇区的耦合，则历史是否必须保留取决于该耦合在指定时间窗内产生的响应大小，不能仅由隐藏空间的维数决定。
+
+这把“稳定经典现实”的一个边界写成了可检验条件：
+
+$$
+\boxed{
+\text{局部读出足够}
+\iff
+\text{目标与允许未来统计都落在局部可见动力学闭包内};
+}
+$$
+
+$$
+\boxed{
+\text{局部读出不足}
+\iff
+\text{存在非零关联残差在全部允许局部统计中保持不可见}.
+}
+$$
+
+第二个判据是相对于指定读出族的判据，不是关于所有可能实验的本体论结论。加入联合测量、改变交互作用或扩大记录端口后，等价类和所需历史预算都可能改变。
+
+本节是 repo-derived/open 的理论追加；引用的 Lean 模块已有冻结状态，但本节没有新增 Lean 声明、形式覆盖或冻结状态。
+
+## 追加锚（新终端）
+

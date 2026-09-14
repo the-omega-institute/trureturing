@@ -1,0 +1,38 @@
+### 59.2 扇区保持给出严格的无生成结论
+
+设 $$H$$ 是作用在上述算子空间上的 Heisenberg 线性演化，并假设：
+
+$$
+H(\mathcal V_{\mathrm{loc}})
+\subseteq
+\mathcal V_{\mathrm{loc}}.
+$$
+
+那么对任意自然数 $$t$$：
+
+$$
+H^t(\mathcal V_{\mathrm{loc}})
+\subseteq
+\mathcal V_{\mathrm{loc}}.
+$$
+
+再因为局部扇区与关联扇区正交，有：
+
+$$
+H^t(\mathcal V_{\mathrm{loc}})\cap\mathcal C
+=
+\{0\}.
+$$
+
+这正是 local_dynamics_no_tomography 的两部分结论。证明只使用两步：先对 $$t$$ 做迭代归纳，得到局部扇区保持；再用正交性说明其与 $$\mathcal C$$ 的交只能是零。它没有使用“观察者在系统外部”或“意识选择结果”的假设。
+
+若状态差方向 $$D$$ 属于关联扇区，局部初始 effect $$x$$ 属于 $$\mathcal V_{\mathrm{loc}}$$，则所有局部未来读出都满足：
+
+$$
+\left\langle D,H^t x\right\rangle=0
+\qquad
+\text{对所有 }t\in\mathbb N.
+$$
+
+所以同一关联方向即使在整体状态中真实存在，也不会因为重复施加同一类局部 Heisenberg 读出而进入该读数。这里的“不能恢复”是相对于指定的局部 effect 族和指定的动力学而言的。
+

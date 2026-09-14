@@ -1,0 +1,41 @@
+### 59.3 一个两比特反例：局部边缘相同，关联读数相反
+
+取两个 qubit，令 $$Z$$ 为 Pauli 矩阵。对 $$0\le\varepsilon\le1$$ 定义：
+
+$$
+\rho_{\pm}
+=
+\frac14
+\left(
+I\otimes I
+\pm
+\varepsilon\,Z\otimes Z
+\right).
+$$
+
+这两个矩阵都是合法密度态。对任意 traceless 的局部 effect $$A\otimes I$$ 或 $$I\otimes B$$，有：
+
+$$
+\operatorname{Tr}\!\left(\rho_+(A\otimes I)\right)
+=
+\operatorname{Tr}\!\left(\rho_-(A\otimes I)\right),
+$$
+
+$$
+\operatorname{Tr}\!\left(\rho_+(I\otimes B)\right)
+=
+\operatorname{Tr}\!\left(\rho_-(I\otimes B)\right).
+$$
+
+但关联 effect $$Z\otimes Z$$ 给出：
+
+$$
+\operatorname{Tr}\!\left(\rho_+(Z\otimes Z)\right)=\varepsilon,
+\qquad
+\operatorname{Tr}\!\left(\rho_-(Z\otimes Z)\right)=-\varepsilon.
+$$
+
+因此，局部边缘读数不能区分 $$\rho_+$$ 与 $$\rho_-$$，而联合读数可以区分。这个例子是有限矩阵计算，不是对仓库中新建定理的声明；它具体展示了 $$\mathcal C$$ 中的方向如何落在局部签名的核内。
+
+仓库的 IncompleteObserverPhysicalCounterexample.lean 给出更一般的物理版本。冻结声明 incomplete_observer_physical_counterexample 表明：只要 identity 加上已选 centered effects 的可见空间存在非零正交残差，就能构造两个不同的 density states，它们对全部已选 effect 的读数相同。因而“当前签名相同”不能推出“整体状态相同”。
+

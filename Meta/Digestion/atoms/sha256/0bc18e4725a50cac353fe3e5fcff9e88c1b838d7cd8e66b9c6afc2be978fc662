@@ -1,0 +1,18 @@
+### 59.5 何时可以恢复关联方向？
+
+要使关联方向进入可见响应，至少需要改变下列一项：
+
+1. 增加一个具有关联分量的 effect，例如 $$Z\otimes Z$$；
+2. 让 Heisenberg 演化违反局部扇区保持条件，使某个局部 effect 的迭代获得 $$\mathcal C$$ 分量；
+3. 引入与两边共同耦合的 ancilla、联合记录或其他可执行的非局部协议。
+
+第二种情形可写成：
+
+$$
+H(\mathcal V_{\mathrm{loc}})
+\not\subseteq
+\mathcal V_{\mathrm{loc}},
+$$
+
+但这只说明“有可能进入新的方向”，不自动保证已经完成 tomography。还必须计算由允许迭代生成的 visible span，并检查目标 effect 是否真的落入其中。第 57 节引用的 PredictionClosureDynamicalRepair.lean 提供了相应的最小动力学闭包框架：把初始 visible space 扩张到对演化不变的 observer closure，再在其正交残差上定义商。该框架使用有限维线性空间与伴随不变性；它不自动推广到任意开放量子系统。
+

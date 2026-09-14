@@ -1,0 +1,8 @@
+## 59. 局部读出不能凭空恢复关联方向
+
+第 54 节把有限实验族上的响应相同定义成一个预测商，第 57 节把所有有限 Heisenberg 迭代生成的统计放进无限 operator system，第 58 节再把观察深度和有限顺序词联系起来。本节补上一条不同的边界：
+
+> **如果读出端口只接触局部扇区，且 Heisenberg 动力学保持该局部扇区不变，那么增加局部读出次数不会凭空产生关联扇区的信息。**
+
+这不是“局部观察永远不能做 tomography”的普遍断言，而是一个带有明确扇区保持假设的条件定理。对应的现有 Lean 模块是 D5/S3/Quantum/PredictionDepth/LocalDynamicsNoTomography.lean，其冻结声明为 local_dynamics_no_tomography。本节所有解释仍标记为 repo-derived/open；没有新增 Lean 声明、形式覆盖或冻结状态。
+
