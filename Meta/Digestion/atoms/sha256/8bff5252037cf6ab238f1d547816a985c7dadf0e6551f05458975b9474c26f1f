@@ -1,0 +1,9 @@
+**定义 494.1（实数求和函数与数值约定）。** 所有有限小数均指准确有理数，所有对数均为自然对数。令 $\mu$ 为原 Möbius 函数，
+$$
+M(x)=\sum_{1\le n\le x}\mu(n),\quad
+N(x)=\sum_{1\le n\le x}\mu(n)\log n,\quad
+\Psi(x)=\sum_{n\le x}\Lambda(n),\quad
+\rho(x)=\Psi(x)-\lfloor x\rfloor.
+$$
+其中 $\Lambda(p^\nu)=\log p$（$\nu\ge1$），其他自然数处为零。$x$ 始终允许为实数。这里的 $N(x)$ 是 El Marraki 的辅助函数，与原 CSA 消费者的整数输入 $N$ 无关。记 $L=2160535$。
+
