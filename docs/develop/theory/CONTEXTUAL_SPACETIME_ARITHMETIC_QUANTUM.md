@@ -20914,91 +20914,111 @@ $$
 本节复用 `finite_memory_history_capacity` 的现有结果。将 $d=F_{L+2}$ 代入是条件性 Zeckendorf 载体解释；近似区分、重复实验的总容量、带记忆环境的联合编码和块结构载体仍需分别建模。
 
 
-## 87. 一次经典记录能保存多少个可完美区分的历史
+## 88. 观测细化中的容量—残差守恒
 
-### 87.1 完美区分数受载体维数限制
+### 88.1 可见容量与不可见残差
 
-第 86 节讨论的是目标 observable 的线性覆盖；现在考虑更强的任务：用同一个 POVM 一次性、无误差地识别一组历史状态。设记忆 Hilbert 空间维数为 $d$，候选密度态为 $\rho_i$，记录效果为 $E_j$，满足
+设记忆载体为 $d$ 维 Hilbert 空间，当前效果集合为 $\mathcal E$。把单位效果也纳入后，定义
 
 $$
-E_j\succeq0,
+\mathcal V(\mathcal E)
+=
+\operatorname{span}_{\mathbb R}
+\bigl(\{I\}\cup\mathcal E\bigr),
+$$
+
+并令
+
+$$
+C(\mathcal E)
+=
+\dim_{\mathbb R}\mathcal V(\mathcal E)-1,
 \qquad
-\sum_jE_j=I,
+R(\mathcal E)
+=
+\dim_{\mathbb R}\mathcal V(\mathcal E)^\perp.
 $$
 
-并要求完美配对
+现有定理 observer_capacity_conservation 给出
 
 $$
-\operatorname{Tr}(E_j\rho_i)=\delta_{ij}.
+\boxed{
+C(\mathcal E)+R(\mathcal E)=d^2-1.
+}
 $$
 
-冻结定理 `finite_memory_history_capacity` 证明：若这些条件成立，候选历史数 $N$ 必须满足
+这里的 $d^2-1$ 是完整 trace-zero Hermitian 载体的总方向数，不是历史条数或 POVM outcome 数。若粗效果集满足
 
 $$
-\boxed{N\le d.}
+\mathcal E_{\mathrm{coarse}}
+\subseteq
+\mathcal E_{\mathrm{fine}},
 $$
 
-证明的几何核心是：每个 $\rho_i$ 的支撑落在 $E_i$ 的单位特征子空间中，并与其他效果的支撑正交；因此从每个非零密度态中选出的向量构成一组两两正交的记忆向量，数量不能超过 Hilbert 维数。
-
-这条界与第 82、83 节的 $d^2-1$ 方向预算承担不同任务：
+则
 
 $$
-\begin{aligned}
-&d^2-1 &&\text{控制连续量子状态的 trace-zero 参数方向；}\\\\
-&d &&\text{控制同一 POVM 一次可完美区分的经典历史标签数。}
-\end{aligned}
-$$
-
-一个 $d$ 维系统可以有 $d^2-1$ 个连续可观测方向，却不能用一次固定经典读出去完美区分超过 $d$ 个任意历史状态。把这两个数字混为同一个“记忆容量”会错误估算所需约束。
-
-### 87.2 Zeckendorf 合法载体的容量读法
-
-若长度为 $L$ 的禁止相邻 `11` 合法空间确实实现为一个完整正交载体，则
-
-$$
-d=D_L=F_{L+2}.
-$$
-
-在同一个一次性 POVM 下，完美可区分历史数满足
-
-$$
-\boxed{N\le F_{L+2}.}
-$$
-
-所以：
-
-$$
-L=2\Rightarrow N\le F_4=3,
+C(\mathcal E_{\mathrm{coarse}})
+\le
+C(\mathcal E_{\mathrm{fine}}),
 \qquad
-L=3\Rightarrow N\le F_5=5.
+R(\mathcal E_{\mathrm{fine}})
+\le
+R(\mathcal E_{\mathrm{coarse}}).
 $$
 
-这里的 $N$ 是可完美区分的密度态或记录历史数，不是合法字符串总数以外的额外物理自由度；它也不是可重建任意密度态所需的 $d^2-1$ 个概率方向。若每个 Zeckendorf 标签后面带有量子块，必须将 $d$ 换成实际联合 Hilbert 维数；仅用标签数量代入会低估一次性记录容量的需求。
+因此细化记录只把原先不可见的方向转移到当前可见空间；线性相关的新增标签不会增加容量。
 
-### 87.3 超过容量时，历史必须改变形态
+### 88.2 Zeckendorf 载体上的预算
 
-当候选历史数满足
-
-$$
-N>d,
-$$
-
-同一个记忆载体和同一个 POVM 不可能同时实现上述 Kronecker 配对。要继续区分这些历史，至少需要改变一个条件：
+若长度为 $L$ 的禁止相邻 11 合法空间明确实现为完整正交载体，则
 
 $$
-\begin{aligned}
-&\text{增加载体维数；}\\
-&\text{使用多个设置或多轮记录；}\\
-&\text{保留联合量子关联而延迟最终读出；}\\
-&\text{放宽为近似区分，并给出统计误差界。}
-\end{aligned}
+d=F_{L+2},
+\qquad
+C(\mathcal E)+R(\mathcal E)
+=
+(F_{L+2})^2-1.
 $$
 
-这不是说超过 $d$ 个历史就不能被任何实验区分。多轮协议可以把历史编码到更大的联合载体，多个上下文可以在可重复制备上完成层析，延迟测量可以保留不相容设置所需的相位。定理只限制“同一个有限记忆、同一个一次性完美 POVM”的协议。
+所以
 
-因此，稳定经典记录的历史成本至少有两种不同读法：若目标只是当前一次的无误标签，容量受 $d$ 限制；若目标是未来任意上下文的连续预测，成本由第 86 节的目标闭包和残差半径决定。增加标签数量不能替代增加可访问的量子载体或保留历史关联。
+$$
+L=2:\quad C+R=8,
+\qquad
+L=3:\quad C+R=24.
+$$
 
-本节复用 `finite_memory_history_capacity` 的现有结果。将 $d=F_{L+2}$ 代入是条件性 Zeckendorf 载体解释；近似区分、重复实验的总容量、带记忆环境的联合编码和块结构载体仍需分别建模。
+这与第 87 节的
 
+$$
+N\le F_{L+2}
+$$
+
+是不同容量：前者计算连续 Hermitian 方向，后者计算一次固定 POVM 可完美区分的离散历史态数。若合法构型后面带有量子块，或仪器只作用在受限 operator system 上，必须使用实际载体或任务空间的维数，不能只按 Zeckendorf 标签数代入。
+
+### 88.3 细化不制造总信息
+
+若某个差异仍位于
+
+$$
+\mathcal V(\mathcal E_{\mathrm{fine}})^\perp,
+$$
+
+则当前效果族仍无法区分它。要让它进入后续预测，必须加入能与之配对的效果，或让动力学把它旋转进可见空间。这把“保留更多历史”改写成一个线性选择问题：寻找能降低 $R(\mathcal E)$、并覆盖目标闭包的独立效果，而不是盲目保存更多原始词。
+
+精确维数守恒不等于近似预测误差已经足够小。残差维数为零时才得到完整线性可见性；残差非零时，误差仍由第 86 节的状态残差与未来目标残差相关界控制：
+
+$$
+|\operatorname{error}|
+\le
+\sqrt{\operatorname{residualMass}}
+\,
+\|\text{未来目标的残差分量}\|.
+$$
+
+反过来，残差维数很大也不必然造成当前任务误差，因为当前状态或目标可能在这些方向上的投影为零。因此稳定经典记录至少需要同时报告可见容量、残差容量和目标敏感度。
+
+本节复用 observer_capacity_conservation 的现有结果。将 $d=F_{L+2}$ 代入以及与第 86 节误差界的组合是条件性理论桥；近似容量、噪声成本和具体 Zeckendorf 物理仪器仍保持开放。
 
 ## 追加锚（新终端）
