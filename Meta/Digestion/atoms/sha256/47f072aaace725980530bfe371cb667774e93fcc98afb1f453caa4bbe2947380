@@ -1,0 +1,8 @@
+**证明。** 在 $w(t)\neq0$ 时，范数的右导数满足
+
+\[
+\frac{d^+}{dt}\|w(t)\|
+=\frac{\langle w(t),w'(t)\rangle}{\|w(t)\|}
+\leq-\gamma\|w(t)\|+\rho.
+\]
+
