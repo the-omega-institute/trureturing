@@ -4,6 +4,73 @@ namespace StrataLint.Tests;
 
 public sealed class JudgeSeedTests
 {
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void RestoredJudgeSeedSkipsNativeCscAfterPerProjectRestore(bool renewedNuGetImportTimes)
+    {
+        using var fixture = new JudgeSeedFixture();
+        fixture.Prepare();
+        var cold = fixture.BuildRegisteredProjects("per-project-cold");
+        Assert.Equal(2, CompilerCount(cold));
+        fixture.Snapshot();
+        fixture.Restore();
+        if (renewedNuGetImportTimes) fixture.RenewGeneratedNuGetImportTimes();
+
+        var warm = fixture.BuildRegisteredProjects("per-project-warm");
+
+        Assert.All(warm, result =>
+        {
+            Assert.Contains("\"status\": \"reused\"", result.Text, StringComparison.Ordinal);
+            Assert.DoesNotContain("\"status\": \"rebuild\"", result.Text, StringComparison.Ordinal);
+        });
+        Assert.Equal(0, CompilerCount(warm));
+    }
+
+    [Fact]
+    public void ChangedNuGetImportCompilerOptionRebuildsAndChangesRuntimeAfterSeedRestore()
+    {
+        using var fixture = new JudgeSeedFixture();
+        fixture.Write("tools/Library/Code.cs", """
+            public static class Library
+            {
+                public static int Value() =>
+            #if JUDGE_IMPORT_CHANGED
+                    2;
+            #else
+                    1;
+            #endif
+            }
+            """);
+        fixture.Prepare();
+        Assert.Equal(2, CompilerCount(fixture.BuildRegisteredProjects("import-option-cold")));
+        Assert.Equal("1", fixture.Dotnet([fixture.Dll("Consumer")]).Text.Trim());
+        fixture.Snapshot();
+        fixture.Restore();
+        const string import = "tools/Library/obj/Library.csproj.nuget.g.props";
+        var original = File.ReadAllText(fixture.PathOf(import));
+        fixture.WritePreservingTime(import, original.Replace("</Project>",
+            "<PropertyGroup><DefineConstants>$(DefineConstants);JUDGE_IMPORT_CHANGED</DefineConstants></PropertyGroup></Project>",
+            StringComparison.Ordinal));
+
+        var rebuilt = fixture.BuildRegisteredProjects("import-option-changed");
+
+        Assert.True(CompilerCount(rebuilt) > 0);
+        Assert.Contains("\"status\": \"rebuild\"", rebuilt[0].Text, StringComparison.Ordinal);
+        Assert.Equal("2", fixture.Dotnet([fixture.Dll("Consumer")]).Text.Trim());
+    }
+
+    private static int CompilerCount(JudgeSeedFixture.Invocation[] results) => results.Sum(result =>
+        {
+            var rows = result.Text.Split('\n').Where(line => line.StartsWith("JUDGE_CSC ", StringComparison.Ordinal))
+                .Select(line => JsonNode.Parse(line["JUDGE_CSC ".Length..])!).ToArray();
+            var summary = Assert.Single(rows, row => row["status"]!.GetValue<string>() == "complete");
+            Assert.True(summary["build_succeeded"]!.GetValue<bool>());
+            var count = summary["count"]!.GetValue<int>();
+            Assert.Equal(count, rows.Count(row => row["status"]!.GetValue<string>() == "task-started"));
+            return count;
+        });
+
     [Fact]
     public void FailedSeedPreparationCannotLeaveAStaleCompilerLoggerBlockingRebuild()
     {
