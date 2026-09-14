@@ -1,0 +1,105 @@
+**命题 34.3（两个后揭权重的精确经典和界）。** 在定义 34.1 中取
+
+$$
+A=|0\rangle\langle0|,
+\qquad J=|+\rangle\langle+|,
+\qquad |+\rangle=\frac{|0\rangle+|1\rangle}{\sqrt2},
+\qquad c_1=1,\quad c_2=\frac12.
+$$
+
+对任意有限经典存储，两个加权判别量的和满足精确界
+
+$$
+\sup_{\Phi\ \mathrm{classical}}
+\left[L_\Phi(1)+L_\Phi(1/2)\right]=\frac52.
+$$
+
+一个二元投影测量已经达到该上界，而量子比特恒等存储给出
+
+$$
+L(1)+L(1/2)=\sqrt2+\frac{\sqrt5}{2}>\frac52.
+$$
+
+所以两问之和的经典损失至少为
+
+$$
+\frac{2\sqrt2+\sqrt5-5}{2}>0.
+$$
+
+这里比较的是陈述中两个加权迹范数的和，不把它称为两个不同先验成功概率的未加权和。
+
+证明。用计算基写出
+
+$$
+D_1=\begin{pmatrix}1/2&-1/2\\-1/2&-1/2\end{pmatrix},
+\qquad
+D_{1/2}=\begin{pmatrix}0&-1/2\\-1/2&-1/2\end{pmatrix}.
+$$
+
+令
+
+$$
+B=D_1+D_{1/2}
+=\begin{pmatrix}1/2&-1\\-1&-1\end{pmatrix},
+\qquad
+D_1-D_{1/2}=\frac12 A,
+$$
+
+并取
+
+$$
+Y=\begin{pmatrix}11/10&1/5\\1/5&7/5\end{pmatrix}.
+$$
+
+$B$ 的特征值为 $1,-3/2$。直接相乘有 $Y^2=B^2$，且 $Y$ 正定，因此 $Y=|B|$，特别地 $Y\ge B$、$Y\ge-B$。此外
+
+$$
+Y-\frac12A
+=\begin{pmatrix}3/5&1/5\\1/5&7/5\end{pmatrix}>0,
+$$
+
+因为两个对角元为正、行列式为 $4/5>0$。由此也有 $Y\ge-\frac12A$。四种符号组合因此统一满足
+
+$$
+Y\ge sD_1+tD_{1/2},\qquad s,t\in\{-1,1\}.
+$$
+
+固定任意经典存储的 POVM $\{E_k\}$，对每个结果按两个实数 $\operatorname{tr}(E_kD_1)$、$\operatorname{tr}(E_kD_{1/2})$ 的符号选择 $s_k,t_k$；零值任取符号。正性给出
+
+$$
+\begin{aligned}
+L_\Phi(1)+L_\Phi(1/2)
+&=\sum_k\operatorname{tr}\bigl[E_k(s_kD_1+t_kD_{1/2})\bigr]\\
+&\le\sum_k\operatorname{tr}(E_kY)
+=\operatorname{tr}Y=\frac52.
+\end{aligned}
+$$
+
+这个上界与经典结果的数量无关。取二元测量
+
+$$
+E_+=\frac15\begin{pmatrix}4&-2\\-2&1\end{pmatrix},
+\qquad E_-=I-E_+.
+$$
+
+$E_+$ 是向量 $(2|0\rangle-|1\rangle)/\sqrt5$ 的秩一投影。四个输出差为
+
+$$
+\begin{aligned}
+\operatorname{tr}(E_+D_1)&=\frac7{10},&
+\operatorname{tr}(E_-D_1)&=-\frac7{10},\\
+\operatorname{tr}(E_+D_{1/2})&=\frac3{10},&
+\operatorname{tr}(E_-D_{1/2})&=-\frac45.
+\end{aligned}
+$$
+
+故该测量分别得到 $7/5$ 与 $11/10$，两者之和正是 $5/2$，证明经典界的达到性。
+
+两个加权秩一差的迹范数公式给出
+
+$$
+L(c)=\sqrt{(1+c)^2-2c}=\sqrt{1+c^2},
+$$
+
+于是量子恒等存储的两问之和为 $\sqrt2+\sqrt5/2$。为验证严格比较，$2\sqrt2>14/5$ 来自 $2>49/25$，而 $\sqrt5>11/5$ 来自 $5>121/25$；两式相加得 $2\sqrt2+\sqrt5>5$。这同时证明正损失的陈述。证毕。
+
