@@ -1723,15 +1723,27 @@ def enroll (name : Name) (constructors : Array Name := #[]) : CommandElabM (Exce
   if answer matches .error _ then setEnv saved
   return answer
 
+/-- Extraction helper types satisfy the same E2/E6 judgment. This examines a
+helper's type, not the selected template body, and returns its actual work debit. -/
+def checkExtractionType (type : Expr) (available : Nat) :
+    MetaM (Array DependencyIdentity × Nat) := do
+  let limit := min 524288 available
+  let (_, state) ← (compileExpr type 0 true).run { remaining := limit }
+  return (state.dependencies, limit - state.remaining)
+
 end LeanInformationAudit.TemplateAudit
 
 namespace LeanInformationAudit.TemplateBinding
 open Lean Meta TemplateAudit
 
-private abbrev CompareM := StateT Nat MetaM
+private structure CompareState where
+  remaining : Nat
+  extractionNames : NameSet := {}
+
+private abbrev CompareM := StateT CompareState MetaM
 private def debit (n : Nat := 1) : CompareM Unit := do
-  unless n ≤ (← get) do throwError "incomplete_closure:E8.comparison_work"
-  modify (· - n)
+  unless n ≤ (← get).remaining do throwError "incomplete_closure:E8.comparison_work"
+  modify fun state => { state with remaining := state.remaining - n }
 
 private partial def alpha (e : Expr) (depth : Nat := 0) : CompareM Expr := do
   debit
@@ -1825,10 +1837,147 @@ private partial def applyPlan (plan : PlanNode) (arg : PlanNode) : CompareM Plan
   | .lam _ body _ => substitute body arg
   | _ => throwError "unclassified_form:dtr.unsaturated_plan"
 
-private partial def matchesPlan (plan : PlanNode) (actual : Expr) (depth : Nat := 0) : CompareM Bool := do
+private def isRealizationType (type : Expr) : Bool :=
+  #[`D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization,
+    `LeanInformationAudit.StructuralPrimitiveRealization].contains (type.getAppFn.constName?.getD .anonymous)
+
+/-- Expose only a saturated forwarding spine. The parameter vector must contain
+every lambda variable exactly once, in its original order, as a whole argument.
+No beta reduction is performed inside an actual supplied argument. -/
+private def forwardActual (theoremName selected : Name) (initial : Expr) : CompareM Expr := do
+  let mut actual := initial
+  let mut visited : NameSet := {}
+  for _ in [:256] do
+    debit
+    let .const name universeArgs := actual.getAppFn | return actual
+    if name == selected then return actual
+    let some (.defnInfo info) := (← getEnv).find? name | return actual
+    unless isRealizationType info.type.getForallBody do return actual
+    if visited.contains name || info.safety != .safe ||
+        (← isRecursiveDefinition name) || info.all.length > 1 ||
+        ((← getEnv).getProjectionFnInfo? name).isSome ||
+        (Compiler.getImplementedBy? (← getEnv) name).isSome ||
+        (getExternAttrData? (← getEnv) name).isSome then
+      throwError "unclassified_form:dtr.extraction_kind"
+    let arguments := actual.getAppArgs
+    if actual.hasFVar || actual.hasLooseBVars || actual.hasMVar ||
+        universeArgs.length != info.levelParams.length then
+      throwError "incomplete_closure:dtr.extraction_open"
+    let mut body := info.value
+    let mut arity := 0
+    while let .lam _ _ tail _ := body do
+      debit
+      arity := arity + 1
+      body := tail
+    unless body.getAppFn.isConst && arity == arguments.size do return actual
+    let mut forwarded : Array Nat := #[]
+    for argument in body.getAppArgs do
+      debit
+      if argument.hasLooseBVars then
+        let .bvar index := argument | return actual
+        forwarded := forwarded.push index
+    unless forwarded == (List.range arity).reverse.toArray do return actual
+    let (dependencies, typeWork) ← checkExtractionType info.type (← get).remaining
+    debit typeWork
+    let (argumentNames, argumentWork) ← match ←
+        RegistrationGates.templateArgumentsCurrent theoremName arguments (← get).remaining with
+      | .ok result => pure result
+      | .error diagnostic => throwError diagnostic
+    debit argumentWork
+    let names := dependencies.map (·.name) ++ argumentNames
+    modify fun state =>
+      let extracted := names.foldl (fun found n => found.insert n)
+        (state.extractionNames.insert name)
+      { state with extractionNames := extracted }
+    let .ok (_, bodyWork) := rawIdentity info.levelParams info.value (← get).remaining
+      | throwError "incomplete_closure:E8.extraction_body"
+    debit bodyWork
+    let mut value := info.value.instantiateLevelParams info.levelParams universeArgs
+    for argument in arguments do
+      let .lam _ _ tail _ := value | throwError "incomplete_closure:dtr.extraction_telescope"
+      value ← rawSubstitute tail argument 0
+    visited := visited.insert name
+    actual := value
+  throwError "incomplete_closure:E8.extraction_depth"
+
+private def planSpine (plan : PlanNode) : PlanNode × Array PlanNode := Id.run do
+  let mut head := plan
+  let mut arguments := #[]
+  while let .app f a := head do
+    head := f
+    arguments := arguments.push a
+  return (head, arguments.reverse)
+
+/-- Only checked template lambda sites have administrative beta reduction.
+Arguments and constructor fields keep their original nodes and origins. -/
+private partial def checkedHead (plan : PlanNode) (depth : Nat := 0) : CompareM PlanNode := do
+  debit
+  if depth > 256 then throwError "incomplete_closure:E8.extraction_depth"
+  match plan with
+  | .expanded _ body => checkedHead body (depth + 1)
+  | .app f a =>
+    let f ← checkedHead f (depth + 1)
+    match f with
+    | .lam _ body _ => checkedHead (← substitute body a) (depth + 1)
+    | _ => return .app f a
+  | _ => return plan
+
+private structure MatchContext where
+  theoremName : Name
+  selected : Name
+  descriptor : Expr
+  body : PlanNode
+
+private structure FixedProjection where
+  typeName : Name
+  index : Nat
+  base : Expr
+  parameters : Array Expr := #[]
+  universeArgs : Option (List Level) := none
+
+private def fixedProjection (actual : Expr) : MetaM (Option FixedProjection) := do
+  match actual with
+  | .proj typeName index base => return some { typeName, index, base }
+  | _ =>
+    let .const name universeArgs := actual.getAppFn | return none
+    let some projection := (← getEnv).getProjectionFnInfo? name | return none
+    let arguments := actual.getAppArgs
+    unless arguments.size == projection.numParams + 1 do return none
+    return some {
+      typeName := projection.ctorName.getPrefix
+      index := projection.i
+      base := arguments[projection.numParams]!
+      parameters := arguments.extract 0 projection.numParams
+      universeArgs := some universeArgs }
+
+private def realizationInterfaces : Array Name := #[
+  `D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization,
+  `LeanInformationAudit.StructuralPrimitiveRealization]
+
+private partial def matchesPlan (context : MatchContext) (plan : PlanNode) (actual : Expr)
+    (depth : Nat := 0) : CompareM Bool := do
   debit
   if depth > 256 then throwError "incomplete_closure:E8.match_depth"
-  let child := fun p e => matchesPlan p e (depth + 1)
+  let child := fun p e => matchesPlan context p e (depth + 1)
+  -- A supplied argument is an immutable comparison leaf. In particular, an
+  -- apparent projection or forwarding application inside it is not reduced.
+  if let .supplied raw := plan then return ← equalRaw raw actual
+  if let some projection ← fixedProjection actual then
+    if realizationInterfaces.contains projection.typeName then
+      let base ← forwardActual context.theoremName context.selected projection.base
+      if ← equalRaw base context.descriptor then
+        let record ← checkedHead context.body
+        let (head, fields) := planSpine record
+        if let .atom (.const ctor universeArgs) := head then
+          if let some (.ctorInfo info) := (← getEnv).find? ctor then
+            if info.induct == projection.typeName && info.numParams + projection.index < fields.size &&
+                (projection.parameters.isEmpty || projection.parameters.size == info.numParams) &&
+                (projection.universeArgs.isNone || projection.universeArgs == some universeArgs) then
+              let mut parametersMatch := true
+              for i in [:projection.parameters.size] do
+                unless ← child fields[i]! projection.parameters[i]! do parametersMatch := false
+              if parametersMatch then
+                return ← child plan fields[info.numParams + projection.index]!.toExpr
   match plan with
   | .expanded raw body =>
     if ← equalRaw raw actual then return true
@@ -1859,10 +2008,6 @@ private partial def matchesPlan (plan : PlanNode) (actual : Expr) (depth : Nat :
     match actual with
     | .proj k j c => return n == k && i == j && (← child b c)
     | _ => return false
-
-private def isRealizationType (type : Expr) : Bool :=
-  #[`D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization,
-    `LeanInformationAudit.StructuralPrimitiveRealization].contains (type.getAppFn.constName?.getD .anonymous)
 
 private def extract (name : Name) : MetaM Expr := do
   let info ← getConstInfo name
@@ -1923,17 +2068,23 @@ private def validate (event : TemplateOccurrenceEvent) (descriptor : Expr) : Met
       match type with
       | .forallE _ tail _ => type ← substitute tail (.supplied argument)
       | _ => throwError "unclassified_form:dtr.descriptor_telescope"
+    let context : MatchContext := {
+      theoremName := event.key.theoremName
+      selected := name
+      descriptor
+      body }
     let actualType ← inferType actual
-    unless ← matchesPlan type actualType do throwError "unclassified_form:dtr.signature_mismatch"
-    if !(← equalRaw descriptor actual) && !(← matchesPlan body actual) then
+    unless ← matchesPlan context type actualType do throwError "unclassified_form:dtr.signature_mismatch"
+    let exposed ← forwardActual event.key.theoremName name actual
+    if !(← equalRaw descriptor exposed) && !(← matchesPlan context body exposed) then
       throwError "unclassified_form:dtr.realization_mismatch"
-  let (_, _) ← compare.run (budget - argumentWork)
+  let (_, comparison) ← compare.run { remaining := budget - argumentWork }
   let .ok (descriptorIdentity, _) := TemplateAudit.rawIdentity [] descriptor
     | throwError "incomplete_closure:dtr.descriptor_identity"
   let .ok (actualIdentity, _) := TemplateAudit.rawIdentity [] actual
     | throwError "incomplete_closure:dtr.actual_identity"
   let argumentInputs ← argumentNames.mapM inputIdentity
-  let extractionInputs ← #[event.realizationName].mapM inputIdentity
+  let extractionInputs ← (comparison.extractionNames.insert event.realizationName).toArray.mapM inputIdentity
   let identityMaterial := String.intercalate "\u0000" ["DTR-binding-v1", event.key.root.toString,
     event.key.registrationModule.toString, event.key.theoremName.toString,
     event.key.objectArena.toString, event.key.catalog.toString, event.statementIdentity,
