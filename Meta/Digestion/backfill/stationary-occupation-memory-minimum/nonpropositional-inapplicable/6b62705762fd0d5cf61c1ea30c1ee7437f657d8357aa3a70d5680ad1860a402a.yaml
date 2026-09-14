@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6b62705762fd0d5cf61c1ea30c1ee7437f657d8357aa3a70d5680ad1860a402a
+  normalized_sha256: sha256:6b62705762fd0d5cf61c1ea30c1ee7437f657d8357aa3a70d5680ad1860a402a
+cas_ref: sha256:6b62705762fd0d5cf61c1ea30c1ee7437f657d8357aa3a70d5680ad1860a402a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Records retention of the original envelope so its defects remain visible; this is document-preservation provenance with no mathematical assertion.
+    previous_atom_id: 515943dc3bbcbdc34edae3b4716d39c632232af69f86233c185ec74cf51d90e6
+    next_atom_id: 67179856edc71d738ed3bec6b3227dbd447a9f285be8e309279237471b6f239e
