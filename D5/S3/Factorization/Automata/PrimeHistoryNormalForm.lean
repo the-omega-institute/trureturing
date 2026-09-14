@@ -4,118 +4,15 @@
    mirror-E: none(waiver:all-command-words-all-capacities)
    anchors: []
    utility: none
-   digest: Prefix extrema and displacement give the exact partial map of every
-     guarded prime history; every admissible interval translation has a word. -/
+   digest: Frozen excursion coordinates encode guarded histories and realize every admissible interval translation. -/
 
-import D5.S3.Factorization.Automata.BoundedPrimeWalk
+import D5.S3.Factorization.Automata.WordExcursionLowerBound
 
 set_option autoImplicit false
 
 namespace D5.S3.Factorization.Automata.PrimeHistoryNormalForm
 
-open D5.S0.Automata.TypedPartialDFAOOverBase
-open BoundedPrimeWalk
-
-/-- True is multiplication by the fixed prime, false is exact division. -/
-def jump (b : Bool) : Int := if b then 1 else -1
-
-/-- Unrestricted displacement; legality is not inferred from this number alone. -/
-def displacement : List Bool → Int
-  | [] => 0
-  | b :: w => jump b + displacement w
-
-/-- Least prefix displacement, including the empty prefix. -/
-def low : List Bool → Int
-  | [] => 0
-  | b :: w => min 0 (jump b + low w)
-
-/-- Greatest prefix displacement, including the empty prefix. -/
-def high : List Bool → Int
-  | [] => 0
-  | b :: w => max 0 (jump b + high w)
-
-/-- The visited interval contains both the initial and final displacement. -/
-theorem excursion_bounds (w : List Bool) :
-    low w ≤ 0 ∧ 0 ≤ high w ∧ low w ≤ displacement w ∧ displacement w ≤ high w := by
-  induction w with
-  | nil => simp [low, high, displacement]
-  | cons b w ih =>
-      simp only [low, high, displacement]
-      omega
-
-/-- Chronological concatenation translates the second visited interval by the
-first displacement before taking the two extrema. -/
-theorem append_signature (v w : List Bool) :
-    displacement (v ++ w) = displacement v + displacement w ∧
-    low (v ++ w) = min (low v) (displacement v + low w) ∧
-    high (v ++ w) = max (high v) (displacement v + high w) := by
-  induction v with
-  | nil =>
-      have hb := excursion_bounds w
-      simp only [List.nil_append, displacement, low, high]
-      constructor
-      · omega
-      constructor <;> omega
-  | cons b v ih =>
-      simp only [List.cons_append, displacement, low, high]
-      rcases ih with ⟨hd, hl, hh⟩
-      rw [hd, hl, hh]
-      constructor
-      · omega
-      constructor <;> omega
-
-/-- Exact relation to the existing guarded runner. The two inequalities include
-every intermediate guard, and the equation gives the actual final exponent. -/
-theorem run_spec (a : Nat) (w : List Bool) (e f : Fin (a + 1)) :
-    run a e w = some f ↔
-      0 ≤ (e.val : Int) + low w ∧ (e.val : Int) + high w ≤ (a : Int) ∧
-        (f.val : Int) = (e.val : Int) + displacement w := by
-  induction w generalizing e f with
-  | nil =>
-      have he := e.isLt
-      simp only [run, runTransition, Option.some.injEq, low, high, displacement,
-        add_zero]
-      constructor
-      · intro h
-        subst f
-        omega
-      · rintro ⟨_, _, h⟩
-        apply Fin.ext
-        omega
-  | cons b w ih =>
-      have he := e.isLt
-      rcases excursion_bounds w with ⟨hlo, hhi, hld, hdh⟩
-      cases b with
-      | false =>
-          by_cases hpos : 0 < e.val
-          · let next : Fin (a + 1) := ⟨e.val - 1, by omega⟩
-            have hr : run a e (false :: w) = run a next w := by
-              simp [run, runTransition, step, hpos, next]
-            rw [hr, ih]
-            simp only [low, high, displacement, jump, reduceCtorEq,
-              if_false]
-            dsimp [next]
-            omega
-          · have hr : run a e (false :: w) = none := by
-              simp [run, runTransition, step, hpos]
-            rw [hr]
-            simp only [reduceCtorEq, low, high, displacement,
-              jump, reduceCtorEq, if_false]
-            omega
-      | true =>
-          by_cases hroom : e.val < a
-          · let next : Fin (a + 1) := ⟨e.val + 1, by omega⟩
-            have hr : run a e (true :: w) = run a next w := by
-              simp [run, runTransition, step, hroom, next]
-            rw [hr, ih]
-            simp only [low, high, displacement, jump, reduceCtorEq, if_true]
-            dsimp [next]
-            omega
-          · have hr : run a e (true :: w) = none := by
-              simp [run, runTransition, step, hroom]
-            rw [hr]
-            simp only [reduceCtorEq, low, high, displacement, jump, reduceCtorEq, if_true]
-            omega
+open WordExcursionLowerBound
 
 /-- Nonempty partial translation inside the actual capacity interval.
 The record does not encode an unconstrained history or claim to preserve cost. -/
@@ -137,55 +34,45 @@ def normal (a : Nat) (w : List Bool) : Option (IntervalMap a) :=
       lo := -low w
       hi := (a : Int) - high w
       shift := displacement w
-      lo_nonneg := by have := (excursion_bounds w).1; omega
-      ordered := by omega
-      hi_le := by have := (excursion_bounds w).2.1; omega
-      image_lo := by have := (excursion_bounds w).2.2.1; omega
-      image_hi := by have := (excursion_bounds w).2.2.2; omega }
+      lo_nonneg := by
+        have hb : low w ≤ 0 := by
+          induction w with
+          | nil => simp [low]
+          | cons b w ih => simp only [low]; omega
+        omega
+      ordered := by
+        have hlo : low w ≤ 0 := by
+          induction w with
+          | nil => simp [low]
+          | cons b w ih => simp only [low]; omega
+        have hhi : 0 ≤ high w := by
+          induction w with
+          | nil => simp [high]
+          | cons b w ih => simp only [high]; omega
+        omega
+      hi_le := by
+        have hb : 0 ≤ high w := by
+          induction w with
+          | nil => simp [high]
+          | cons b w ih => simp only [high]; omega
+        omega
+      image_lo := by
+        have hb : low w ≤ displacement w := by
+          induction w with
+          | nil => simp [low, displacement]
+          | cons b w ih => simp only [low, displacement]; omega
+        omega
+      image_hi := by
+        have hb : displacement w ≤ high w := by
+          induction w with
+          | nil => simp [high, displacement]
+          | cons b w ih => simp only [high, displacement]; omega
+        omega }
   else none
 
 /-- Evaluation on integers; every defined input and output is in [0,a]. -/
 def evaluate {a : Nat} (q : Option (IntervalMap a)) (x : Int) : Option Int :=
   q.bind fun t => if t.lo ≤ x ∧ x ≤ t.hi then some (x + t.shift) else none
-
-/-- The executable normal form retains exactly the original prefix constraints. -/
-theorem evaluate_normal (a : Nat) (w : List Bool) (x : Int) :
-    evaluate (normal a w) x =
-      if 0 ≤ x + low w ∧ x + high w ≤ (a : Int)
-      then some (x + displacement w) else none := by
-  unfold normal
-  split
-  · rename_i h
-    have hc : (-low w ≤ x ∧ x ≤ (a : Int) - high w) ↔
-        (0 ≤ x + low w ∧ x + high w ≤ (a : Int)) := by omega
-    simp [evaluate, hc]
-  · rename_i h
-    have hc : ¬ (0 ≤ x + low w ∧ x + high w ≤ (a : Int)) := by omega
-    simp [evaluate, hc]
-
-/-- All successes and failures of the existing arithmetic-transported runner
-are preserved. The output is the actual final exponent, not just acceptance. -/
-theorem normal_correct (a : Nat) (w : List Bool) (e : Fin (a + 1)) :
-    (run a e w).map (fun f => (f.val : Int)) =
-      evaluate (normal a w) (e.val : Int) := by
-  rw [evaluate_normal]
-  by_cases h : 0 ≤ (e.val : Int) + low w ∧ (e.val : Int) + high w ≤ (a : Int)
-  · rw [if_pos h]
-    have hb := excursion_bounds w
-    let z : Int := (e.val : Int) + displacement w
-    have hz0 : 0 ≤ z := by dsimp [z]; omega
-    have hza : z ≤ (a : Int) := by dsimp [z]; omega
-    let f : Fin (a + 1) := ⟨z.toNat, by omega⟩
-    have hf : (f.val : Int) = z := by dsimp [f]; omega
-    have hr : run a e w = some f := (run_spec a w e f).mpr ⟨h.1, h.2, hf⟩
-    rw [hr]
-    exact congrArg some hf
-  · rw [if_neg h]
-    cases hr : run a e w with
-    | none => rfl
-    | some f =>
-        have hs := (run_spec a w e f).mp hr
-        exact False.elim (h ⟨hs.1, hs.2.1⟩)
 
 /-- Extensional uniqueness of nonempty interval translations and the empty map. -/
 theorem evaluate_injective (a : Nat) :
@@ -221,30 +108,6 @@ theorem evaluate_injective (a : Nat) :
           have hd : s.shift = t.shift := by omega
           exact congrArg some (IntervalMap.ext hlo hhi hd)
 
-/-- Exact signatures of the two monotone words, used in the realization theorem. -/
-private theorem replicate_signature (n : Nat) :
-    displacement (List.replicate n false) = -(n : Int) ∧
-    low (List.replicate n false) = -(n : Int) ∧
-    high (List.replicate n false) = 0 ∧
-    displacement (List.replicate n true) = (n : Int) ∧
-    low (List.replicate n true) = 0 ∧
-    high (List.replicate n true) = (n : Int) := by
-  induction n with
-  | zero => simp [displacement, low, high]
-  | succ n ih =>
-      rcases ih with ⟨hd, hl, hh, hu, hul, huh⟩
-      simp only [List.replicate_succ, displacement, low, high, jump,
-        reduceCtorEq, if_false, if_true, hd, hl, hh, hu, hul, huh]
-      constructor
-      · omega
-      constructor
-      · omega
-      constructor
-      · omega
-      constructor
-      · omega
-      constructor <;> omega
-
 /-- A concrete word: go to the least displacement, then the greatest, then
 back to the specified final displacement. All lengths are proved nonnegative. -/
 def realize {a : Nat} (t : IntervalMap a) : List Bool :=
@@ -258,6 +121,52 @@ theorem realize_signature {a : Nat} (t : IntervalMap a) :
     low (realize t) = -t.lo ∧
     high (realize t) = (a : Int) - t.hi ∧
     displacement (realize t) = t.shift := by
+  have excursion_bounds : ∀ w : List Bool,
+      low w ≤ 0 ∧ 0 ≤ high w ∧ low w ≤ displacement w ∧ displacement w ≤ high w := by
+    intro w
+    induction w with
+    | nil => simp [low, high, displacement]
+    | cons b w ih => simp only [low, high, displacement]; omega
+  have append_signature (v w : List Bool) :
+      displacement (v ++ w) = displacement v + displacement w ∧
+      low (v ++ w) = min (low v) (displacement v + low w) ∧
+      high (v ++ w) = max (high v) (displacement v + high w) := by
+    induction v with
+    | nil =>
+        have hb := excursion_bounds w
+        simp only [List.nil_append, displacement, low, high]
+        constructor
+        · omega
+        constructor <;> omega
+    | cons b v ih =>
+        simp only [List.cons_append, displacement, low, high]
+        rcases ih with ⟨hd, hl, hh⟩
+        rw [hd, hl, hh]
+        constructor
+        · omega
+        constructor <;> omega
+  have replicate_signature (n : Nat) :
+      displacement (List.replicate n false) = -(n : Int) ∧
+      low (List.replicate n false) = -(n : Int) ∧
+      high (List.replicate n false) = 0 ∧
+      displacement (List.replicate n true) = (n : Int) ∧
+      low (List.replicate n true) = 0 ∧
+      high (List.replicate n true) = (n : Int) := by
+    induction n with
+    | zero => simp [displacement, low, high]
+    | succ n ih =>
+        rcases ih with ⟨hd, hl, hh, hu, hul, huh⟩
+        simp only [List.replicate_succ, displacement, low, high,
+          reduceCtorEq, if_false, if_true, hd, hl, hh, hu, hul, huh]
+        constructor
+        · omega
+        constructor
+        · omega
+        constructor
+        · omega
+        constructor
+        · omega
+        constructor <;> omega
   have ht0 := t.lo_nonneg
   have ht1 := t.ordered
   have ht2 := t.hi_le
@@ -283,6 +192,28 @@ theorem realize_signature {a : Nat} (t : IntervalMap a) :
 /-- Surjectivity includes the empty partial map, realized by capacity+1
 multiplications. It therefore does not merely give an upper bound on behaviors. -/
 theorem normal_surjective (a : Nat) : Function.Surjective (normal a) := by
+  have replicate_signature (n : Nat) :
+      displacement (List.replicate n false) = -(n : Int) ∧
+      low (List.replicate n false) = -(n : Int) ∧
+      high (List.replicate n false) = 0 ∧
+      displacement (List.replicate n true) = (n : Int) ∧
+      low (List.replicate n true) = 0 ∧
+      high (List.replicate n true) = (n : Int) := by
+    induction n with
+    | zero => simp [displacement, low, high]
+    | succ n ih =>
+        rcases ih with ⟨hd, hl, hh, hu, hul, huh⟩
+        simp only [List.replicate_succ, displacement, low, high,
+          reduceCtorEq, if_false, if_true, hd, hl, hh, hu, hul, huh]
+        constructor
+        · omega
+        constructor
+        · omega
+        constructor
+        · omega
+        constructor
+        · omega
+        constructor <;> omega
   intro q
   cases q with
   | none =>
@@ -303,8 +234,7 @@ theorem normal_surjective (a : Nat) : Function.Surjective (normal a) := by
       apply congrArg some
       apply IntervalMap.ext <;> simp [hl, hh, hd]
 
-#print axioms run_spec
-#print axioms normal_correct
+#print axioms evaluate_injective
 #print axioms realize_signature
 #print axioms normal_surjective
 

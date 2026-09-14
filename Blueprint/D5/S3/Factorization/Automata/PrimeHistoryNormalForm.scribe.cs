@@ -11,43 +11,41 @@ internal sealed class PrimeHistoryNormalFormDocument : IScribeDocumentDefinition
         H("Prime History Normal Forms"),
         Blocks(
             Paragraph(Text(
-                "A true command multiplies by the fixed prime, and a false command divides "
-                + "exactly. The existing BoundedPrimeWalk transports this execution to the "
-                + "exponent interval 0 through a. The new word data are the least and greatest "
+                "A true command raises the excursion by one, and a false command lowers it "
+                + "by one. The frozen word coordinates are the least and greatest "
                 + "prefix displacements, including the empty prefix, and the final displacement. "
                 + "These are not independently selected edge witnesses.")),
             Describe.Lean(
-                DescribeId.Create("prime-history-exact-run"),
+                DescribeId.Create("prime-history-evaluate-injective"),
                 DeclarationHandle.Create(
-                    "D5/S3/Factorization/Automata/PrimeHistoryNormalForm.run_spec"),
-                H("Every intermediate guard is captured by the prefix extrema"),
+                    "D5/S3/Factorization/Automata/PrimeHistoryNormalForm.evaluate_injective"),
+                H("Evaluation determines an interval translation"),
                 StatementSource.FromAuthor(Disp(Seq(
-                    F.Id("run"), Open, F.Id("a"), Comma, F.Id("e"), Comma, F.Id("w"), Close,
-                    Sp, Eq, Sp, F.Id("some"), Open, F.Id("f"), Close))),
+                    F.Id("Injective"), Open, F.Id("evaluate"), Close))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "The displayed success equation holds exactly when e+low(w)>=0, "
-                    + "e+high(w)<=a, and f=e+displacement(w). The proof is induction on the "
-                    + "actual repository runner, splitting both step guards. The statement "
-                    + "therefore includes intermediate failure, not only final feasibility."))),
+                    "The defined and undefined inputs recover the source interval. Evaluating "
+                    + "its lower endpoint then recovers the translation shift, while the empty "
+                    + "map is distinguished from every nonempty interval."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("prime-history-normal-correct"),
+                DescribeId.Create("prime-history-realize-signature"),
                 DeclarationHandle.Create(
-                    "D5/S3/Factorization/Automata/PrimeHistoryNormalForm.normal_correct"),
-                H("Canonical normal form preserves the exact partial execution"),
+                    "D5/S3/Factorization/Automata/PrimeHistoryNormalForm.realize_signature"),
+                H("The explicit realization has the prescribed signature"),
                 StatementSource.FromAuthor(Disp(Seq(
-                    F.Id("integerReadout"), Open, F.Id("run"), Open,
-                    F.Id("a"), Comma, F.Id("e"), Comma, F.Id("w"), Close, Close,
-                    Sp, Eq, Sp, F.Id("evaluate"), Open, F.Id("normal"), Open,
-                    F.Id("a"), Comma, F.Id("w"), Close, Comma, F.Id("e"), Close))),
+                    F.Id("low"), Open, F.Id("realize"), Open, F.Id("t"), Close, Close,
+                    Sp, Eq, Sp, Neg, Sp, F.Id("lo"), Open, F.Id("t"), Close,
+                    Sp, Land, Sp,
+                    F.Id("high"), Open, F.Id("realize"), Open, F.Id("t"), Close, Close,
+                    Sp, Eq, Sp, F.Id("a"), Sp, Minus, Sp, F.Id("hi"), Open, F.Id("t"), Close,
+                    Sp, Land, Sp, F.Id("displacement"), Open, F.Id("realize"), Open,
+                    F.Id("t"), Close, Close, Sp, Eq, Sp, F.Id("shift"), Open, F.Id("t"), Close))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "A realizable nonempty form has source interval [-low(w),a-high(w)] "
-                    + "and the final displacement as translation. When high(w)-low(w)>a, "
-                    + "the form is the unique empty map. Every legal exponent and every "
-                    + "failure outcome is preserved. Equality of these forms does not "
-                    + "preserve the exact original word, its length, or intermediate readings."))),
+                    "The three monotone legs visit the prescribed lower and upper extremes "
+                    + "and finish at the prescribed translation shift. Their nonnegative "
+                    + "lengths follow from the interval-map bounds."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("prime-history-constructive-realization"),
@@ -74,5 +72,5 @@ internal sealed class PrimeHistoryNormalFormDocument : IScribeDocumentDefinition
                 + "not a new discovery of that abstract normal form or a full formalization "
                 + "of the free inverse monoid universal property."))),
         [DocumentEdge.Dependency.Create(
-            GidRef.Create("D5/S3/Factorization/Automata/BoundedPrimeWalk"))]));
+            GidRef.Create("D5/S3/Factorization/Automata/WordExcursionLowerBound"))]));
 }
