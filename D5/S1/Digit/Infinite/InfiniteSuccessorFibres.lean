@@ -103,8 +103,73 @@ theorem next_fibres :
       · rw [hx] at hj hj1
         simp only [decide_eq_false_iff_not] at hj hj1
         omega
-  refine ⟨lands, ?_, zero_fibre, ?_⟩
-  · sorry
-  · sorry
+  have predecessor (y : LegalDigits) (hne : y.val ≠ (fun _ => false)) :
+      ∃ x : LegalDigits, next x.val = y.val := by
+    have hy : ∃ i, y.val i = true := by
+      by_contra h
+      apply hne
+      funext i
+      cases hi : y.val i
+      · rfl
+      · exact False.elim (h ⟨i, hi⟩)
+    let k := Nat.find hy
+    have hyk : y.val k = true := Nat.find_spec hy
+    have hyk1 : y.val (k + 1) = false := by
+      cases hi : y.val (k + 1)
+      · rfl
+      · exact False.elim (y.property k ⟨hyk, hi⟩)
+    let f : ℕ → Bool := fun i => if i ≤ k then decide (i % 2 ≠ k % 2) else y.val i
+    have fk : f k = false := by simp [f]
+    have fk1 : f (k + 1) = false := by simp [f, hyk1]
+    have legal : ∀ i, ¬ (f i = true ∧ f (i + 1) = true) := by
+      intro i ⟨hi, hi1⟩
+      by_cases hik1 : i + 1 ≤ k
+      · have hik : i ≤ k := by omega
+        simp only [f, if_pos hik, decide_eq_true_eq] at hi
+        simp only [f, if_pos hik1, decide_eq_true_eq] at hi1
+        omega
+      · by_cases hik : i ≤ k
+        · have heq : i = k := by omega
+          subst i
+          rw [fk] at hi
+          contradiction
+        · simp only [f, if_neg hik] at hi
+          simp only [f, if_neg hik1] at hi1
+          exact y.property i ⟨hi, hi1⟩
+    have minimal : ∀ i < k, ¬ (f i = false ∧ f (i + 1) = false) := by
+      intro i hik ⟨hi, hi1⟩
+      simp only [f, if_pos (show i ≤ k by omega), decide_eq_false_iff_not, not_not] at hi
+      simp only [f, if_pos (show i + 1 ≤ k by omega), decide_eq_false_iff_not,
+        not_not] at hi1
+      omega
+    have hp : ∃ i, f i = false ∧ f (i + 1) = false := ⟨k, fk, fk1⟩
+    have hfirst : Nat.find hp = k := (Nat.find_eq_iff hp).mpr ⟨⟨fk, fk1⟩, minimal⟩
+    refine ⟨⟨f, legal⟩, ?_⟩
+    funext i
+    change next f i = y.val i
+    simp only [next, dif_pos hp, hfirst]
+    by_cases hik : i < k
+    · rw [if_pos hik]
+      have hmin : y.val i ≠ true := Nat.find_min hy hik
+      cases hi : y.val i
+      · rfl
+      · exact False.elim (hmin hi)
+    · rw [if_neg hik]
+      by_cases heq : i = k
+      · subst i
+        simp only [if_true, hyk]
+      · rw [if_neg heq]
+        exact if_neg (show ¬ i ≤ k by omega)
+  have onto : ∀ y : LegalDigits, ∃ x : LegalDigits, next x.val = y.val := by
+    intro y
+    by_cases hy : y.val = (fun _ => false)
+    · let u : LegalDigits := ⟨fun i => decide (i % 2 = 0), by
+        intro i hi
+        simp only [decide_eq_true_eq] at hi
+        omega⟩
+      exact ⟨u, ((zero_fibre u).mpr (Or.inl rfl)).trans hy.symm⟩
+    · exact predecessor y hy
+  refine ⟨lands, onto, zero_fibre, ?_⟩
+  sorry
 
 end D5.S1.Digit.Infinite.InfiniteSuccessorFibres
