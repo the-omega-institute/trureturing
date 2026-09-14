@@ -531,3 +531,277 @@ $$\operatorname{im}(f,b_S)\cap(F\times\{1\})=\{(1,1)\}.$$
 **命题。** 本节仅给出这一类特征商的准确验收条件，并不证明对任意给定的 $f$ 必有某个 $S$ 达到该条件。即使一个序列中的单群曲面商能够分离全部曲面群元素，若其核都被映射类固定、诱导外作用平凡，该序列也不满足任何非平凡 $f$ 的因子化要求。
 
 **证明。** 验收条件以存在经实际置换像的满射为内容；有限性、状态分离和单群性本身均不提供该满射。对于后一种序列，第 19 节的条件满足时任意有限联合外作用仍平凡，故无法满射到非平凡的 $F$。
+
+
+## 22. 非分离扭转的标记与共轭类稳定条件
+
+**定义。** 对 $g\ge2$，令
+
+$$\Pi_g=\langle a_1,b_1,\ldots,a_g,b_g\mid\prod_{i=1}^g[a_i,b_i]=1\rangle.$$
+
+定义 $T$ 固定 $a_1$ 与所有 $a_i,b_i$（$i\ge2$），并满足 $T(b_1)=b_1a_1$。这取非分离 $a_1$ 曲线的一个有标记扭转方向；相反方向由 $T^{-1}$ 给出。
+
+**命题。** $T$ 是自同构，且对任意整数 $n$，$T^n(b_1)=b_1a_1^n$，其余生成元保持不变。
+
+**证明。** 恒等式 $[a,ba^n]=[a,b]$ 保证原关系在每个这样的生成元赋值下保持。正负指数相加给出复合，指数 $-1$ 给出逆。
+
+**定义。** 对同态 $\phi:\Pi_g\to F$，记 $A=\phi(a_1)$、$B=\phi(b_1)$。称 $T^n$ 标记稳定 $\phi$，若 $\phi T^n=\phi$；称其共轭类稳定 $\phi$，若存在一个 $z\in F$，使 $\phi(T^n x)=z\phi(x)z^{-1}$ 对全部 $x\in\Pi_g$ 同时成立。
+
+**定理。** 标记稳定的准确条件为
+
+$$\phi T^n=\phi\quad\Longleftrightarrow\quad A^n=1.$$
+
+**证明。** 在 $b_1$ 处比较得到 $BA^n=B$，可约去 $B$。反向由全部生成元像相等及生成性质得到。此结论不需要 $\phi$ 满射。
+
+## 23. 阶为八的满射实例
+
+**定义。** 令 $D_8=\langle r,s\mid r^4=s^2=1,\ srs=r^{-1}\rangle$，其中 $r$ 的阶恰为 $4$。在亏格二时定义生成元像
+
+$$(a_1,b_1,a_2,b_2)\longmapsto(r^2,s,r,1).$$
+
+**定理。** 这些像给出满射 $\phi:\Pi_2\twoheadrightarrow D_8$，并且
+
+$$\boxed{\phi(a_1)=r^2\ne1,\qquad\phi T=\operatorname{Ad}_r\phi.}$$
+
+因此共轭类稳定不推出曲线属于 $\ker\phi$。
+
+**证明。** $r^2$ 在 $D_8$ 中为中心元，所以两个关系交换子分别是 $[r^2,s]=1$ 与 $[r,1]=1$。$r,s$ 都出现于生成元的像，故同态满射。经过 $T$ 后四个像为 $(r^2,sr^2,r,1)$；对原四个像同时以 $r$ 共轭，利用 $rsr^{-1}=sr^{-2}=sr^2$，得到同一四元组。两个同态在全部生成元上相等，所以在整个曲面群上相等。$r$ 的准确阶保证 $r^2\ne1$。
+
+**命题。** 对每个整数 $n$，有 $\phi T^n=\operatorname{Ad}_{r^n}\phi$。其标记稳定指数集合为 $2\mathbb Z$，其共轭类稳定指数集合为全部 $\mathbb Z$。
+
+**证明。** $T$ 固定 $a_2$，而 $\phi(a_2)=r$，可将一步共轭公式对正负幂归纳。也可直接计算 $\phi(T^n b_1)=sr^{2n}$。标记相等恰在 $r^{2n}=1$ 时成立。
+
+**命题。** $\ker\phi$ 被 $T$ 保持，但不是 $\Pi_2$ 的特征子群。
+
+**证明。** 共轭类稳定保证 $T$ 及其逆都保持核。考虑交换两个把手的自同构 $J:a_1\leftrightarrow a_2,\ b_1\leftrightarrow b_2$。它保持曲面关系，因为 $[a_2,b_2][a_1,b_1]$ 是原关系的共轭，并且 $J^2=1$。现在 $a_1^2\in\ker\phi$，而 $\phi(J(a_1^2))=\phi(a_2^2)=r^2\ne1$，所以该核不被 $J$ 保持。
+
+## 24. 同一机制的无挠和任意模数版本
+
+**定义。** 对 $R=\mathbb Z$ 或 $R=\mathbb Z/m$，令 $H(R)$ 的元素是三元组 $(x,y,z)\in R^3$，乘法为
+
+$$(x,y,z)(x',y',z')=(x+x',y+y',z+z'+xy').$$
+
+其单位元为 $(0,0,0)$，逆元为 $(-x,-y,-z+xy)$。记 $X=(1,0,0)$、$Y=(0,1,0)$、$Z=(0,0,1)$，于是 $[X,Y]=Z$，且 $Z$ 为中心元。
+
+**定理。** 对所有 $g\ge2$，赋值
+
+$$(a_1,b_1,a_2,b_2)\longmapsto(Z,Y,X,1)$$
+
+并将其余生成元映为单位元，定义满射 $\phi_R:\Pi_g\twoheadrightarrow H(R)$。对每个整数 $n$，
+
+$$\boxed{\phi_R T^n=\operatorname{Ad}_{X^n}\phi_R.}$$
+
+当 $R=\mathbb Z$ 时 $\phi_R(a_1)\ne1$，且 $H(\mathbb Z)$ 无挠；当 $R=\mathbb Z/m$ 且 $m\ge2$ 时，$\phi_R(a_1)$ 的阶恰好为 $m$。
+
+**证明。** 两个关系交换子为 $[Z,Y]=[X,1]=1$。任意三元组可写为 $X^xY^yZ^{z-xy}$，使用整数代表给出模数情形的同一满射结论。共轭公式 $XYX^{-1}=YZ$ 与其他三个像被 $X$ 固定共同给出结论。整数情形，若 $(x,y,z)^k=1$ 且 $k\ne0$，前两坐标给出 $x=y=0$，第三坐标再给出 $z=0$，故群无挠。$Z$ 的阶由其第三坐标决定。
+
+**推论。** 在 $H(\mathbb Z)$ 中，非零扭转次数均改变标记表示，但不改变其共轭类。模 $m$ 时，标记表示的准确周期为 $m$，共轭类周期为 $1$。因此仅增加目标群无挠的假设，仍不能将共轭类稳定改成曲线像平凡。
+
+**证明。** 应用第 22 节的标记判据与本节共同共轭公式。
+
+## 25. 保留中心化子的准确修复
+
+**定义。** 对任意 $\phi:\Pi_g\to F$，令
+
+$$S=\langle\phi(a_1),\phi(a_2),\phi(b_2),\ldots,\phi(a_g),\phi(b_g)\rangle\le F.$$
+
+记 $C_F(S)=\{z\in F:zs=sz\text{ 对全部 }s\in S\}$，$Z(F)$ 为 $F$ 的中心。
+
+**定理。** 对每个整数 $n$，有
+
+$$\boxed{\phi T^n\sim\phi\quad\Longleftrightarrow\quad
+\exists z\in C_F(S),\ zBz^{-1}=BA^n.}$$
+
+等价地，右边可写为 $\exists z\in C_F(S),\ B^{-1}zBz^{-1}=A^n$。
+
+**证明。** 若存在整个表示的共同共轭元，它必须固定每个未改变的生成元像，因此属于 $C_F(S)$。在唯一改变的 $b_1$ 处得到显示方程。反之，中心化条件给出所有未改变生成元上的同态相等，显示方程给出 $b_1$ 处的相等，生成性质给出全群的相等。
+
+**推论。** 若 $C_F(S)\subseteq Z(F)$，则
+
+$$\phi T^n\sim\phi\quad\Longleftrightarrow\quad A^n=1.$$
+
+特别地，当固定生成元的像生成整个 $F$ 时，该条件成立。
+
+**证明。** 中心共轭元不能改变 $B$，所以必要性化为 $BA^n=B$。充分性取 $z=1$。当 $S=F$ 时 $C_F(S)=Z(F)$。
+
+## 26. 全部有限表示的特征商恢复准确指数
+
+**定义。** 固定有限群 $F$，令 $e=\exp(F)$，即使所有 $z\in F$ 都满足 $z^e=1$ 的最小正整数。定义
+
+$$E_F:\Pi_g\longrightarrow F^{\operatorname{Hom}(\Pi_g,F)},\qquad E_F(x)(\rho)=\rho(x),$$
+
+并令 $Q_F=\operatorname{im}E_F$，$q_F:\Pi_g\twoheadrightarrow Q_F$ 为像限制。允许非满射的表示作为评价坐标。
+
+**定理。** $Q_F$ 有限，$\ker q_F$ 在全部自同态下保持不变。$T$ 诱导的 $\overline T\in\operatorname{Aut}(Q_F)$ 对全部整数 $n$ 满足
+
+$$\boxed{\overline T^{\,n}\text{ 为内自同构}
+\quad\Longleftrightarrow\quad
+\overline T^{\,n}=1
+\quad\Longleftrightarrow\quad e\mid n.}$$
+
+**证明。** 同态由有限多个生成元像唯一决定，所以表示集合有限；预复合保持该集合，给出核的不变性。如果 $e\mid n$，则每个表示都满足 $\rho(a_1)^n=1$，因此 $T^n$ 对全部生成元的评价均不变。
+
+反之，假设诱导的 $n$ 次作用为内自同构。对每个 $z\in F$，取表示 $\rho_z(a_1)=z$、$\rho_z(b_1)=1$，并令其余像为单位元。每个关系交换子均平凡，故该表示存在。将假设的内共轭等式在此坐标及元素 $b_1$ 上读取，得到 $z^n=1$。因为这对全部 $z$ 成立，各元素阶均整除 $n$，所以其最小公倍数 $e$ 整除 $n$。负幂使用逆映射得到同一结论。
+
+**命题。** 在 $F=D_8$ 时，上述特征商中的外自同构阶为 $4$，尽管第 23 节的那个满射表示的共轭类已经在一步后返回。
+
+**证明。** $D_8$ 的指数为 $4$。具体地，另一满射表示 $(a_1,b_1,a_2,b_2)\mapsto(r,1,s,1)$ 在 $b_1$ 处看到 $r^n$，单位元的共轭不能消除这个读数。第 23 节只处理一个表示，未断言所有表示同时返回。
+
+**推论。** 取 $F=\mathbb Z/m$ 时，$Q_F$ 可识别为模 $m$ 的一阶同调商，非分离扭转在其上的准确阶为 $m$。
+
+**证明。** 所有交换目标同态经过阿贝尔化 $\Pi_g^{\mathrm{ab}}\cong\mathbb Z^{2g}$；各坐标模 $m$ 的读出共同核为 $m\mathbb Z^{2g}$。有限循环群的指数为 $m$，再用定理。这里的结论针对非分离扭转，不改变前述分离扭转或第二导出词所需的非交换观察深度。
+
+## 27. 固定特征覆盖上的一阶同调提升
+
+**定义。** 设 $\pi$ 为有限生成群，$N\le\pi$ 为有限指数特征子群，$S=\pi/N$ 为中心平凡的有限群。设 $\Lambda\le\operatorname{Out}(\pi)$ 在 $S$ 上的诱导外作用平凡。对素数 $\ell$，定义
+
+$$N_\ell=[N,N]N^\ell,\qquad V_\ell=N/N_\ell,\qquad Q_\ell=\pi/N_\ell.$$
+
+$N^\ell$ 表示由全部 $\ell$ 次幂生成的子群。$N_\ell$ 在 $\pi$ 中特征，$V_\ell$ 是有限维 $\mathbb F_\ell$ 向量空间，且有实际扩张
+
+$$1\longrightarrow V_\ell\longrightarrow Q_\ell\longrightarrow S\longrightarrow1.$$
+
+$S$ 在 $V_\ell$ 上的甲板作用记为 $\lambda$：取 $s$ 的任意提升 $x\in\pi$，令 $\lambda(s)[v]=[xvx^{-1}]$。改变提升只引入 $N$ 的内作用，在其阿贝尔化上为恒等，所以该作用良定义。
+
+**定理。** 对 $\gamma\in\Lambda$，任选代表 $\eta\in\operatorname{Aut}(\pi)$，记 $t_\eta$ 为它在 $V_\ell$ 上的作用，$s_\eta\in S$ 为满足 $\eta|_S=\operatorname{Ad}_{s_\eta}$ 的唯一元素。则
+
+$$\boxed{\Psi_\ell(\gamma)=\lambda(s_\eta)^{-1}t_\eta}$$
+
+与代表无关，并定义同态
+
+$$\Psi_\ell:\Lambda\longrightarrow\operatorname{Aut}_{\mathbb F_\ell[S]}(V_\ell).$$
+
+**证明。** 中心平凡性给出 $s_\eta$ 的唯一性。对 $s\in S$，有 $t_\eta\lambda(s)t_\eta^{-1}=\lambda(s_\eta s s_\eta^{-1})$，所以经修正后的作用与 $\lambda(S)$ 交换。若将 $\eta$ 换为 $\operatorname{Ad}_x\eta$，则 $t_\eta$ 左乘 $\lambda(\bar x)$，$s_\eta$ 左乘 $\bar x$，两项修正相消。对两个代表 $\eta,\zeta$，有 $s_{\eta\zeta}=s_\eta s_\zeta$；将 $t_\eta=\lambda(s_\eta)\Psi_\ell(\gamma)$ 代入，再用修正作用与甲板作用交换，即得乘法保持性。
+
+**命题。** 若 $\pi$ 来自闭可定向亏格 $g\ge2$ 的曲面，且 $\Lambda$ 保持曲面定向，则
+
+$$\dim_{\mathbb F_\ell}V_\ell=2+2(g-1)|S|,$$
+
+且 $\Psi_\ell(\Lambda)$ 保持覆盖曲面的一阶同调交叉形式。
+
+**证明。** 对应的连通覆盖度数为 $|S|$。欧拉示性数的覆盖公式给出覆盖亏格 $1+(g-1)|S|$。其一阶整数同调无挠且秩为亏格的两倍，模 $\ell$ 后得到维数。代表的提升与甲板变换都保持定向，因而都保持交叉形式，其复合也保持该形式。
+
+## 28. 修正同调作用的核与一阶上同调
+
+**定义。** 记 $a_\ell:\Lambda\to\operatorname{Out}(Q_\ell)$ 为实际外作用，$C_\ell=\ker a_\ell$，$K_\ell=\ker\Psi_\ell$。以加法记 $V_\ell$，令
+
+$$Z^1(S,V_\ell)=\{d:S\to V_\ell:d(st)=d(s)+s\cdot d(t)\},$$
+
+$$B^1(S,V_\ell)=\{s\mapsto b-s\cdot b:b\in V_\ell\},\qquad
+H^1(S,V_\ell)=Z^1(S,V_\ell)/B^1(S,V_\ell).$$
+
+**定理。** 有 $C_\ell\subseteq K_\ell$，且存在单射群同态
+
+$$\boxed{K_\ell/C_\ell\hookrightarrow H^1(S,V_\ell).}$$
+
+特别地，$K_\ell/C_\ell$ 是有限初等交换 $\ell$ 群。若 $\ell\nmid|S|$，则 $C_\ell=K_\ell$。
+
+**证明。** 若代表在 $Q_\ell$ 上是由 $x$ 给出的内自同构，它在 $V_\ell$ 上的作用就是 $\lambda(\bar x)$，因此修正作用为恒等。
+
+对 $\gamma\in K_\ell$，将其诱导自同构再复合以 $s_\eta$ 的一个提升的逆作内共轭，得到同时固定 $V_\ell$ 中每个元素、并在 $S$ 上为恒等的自同构 $\beta$。若 $y\in Q_\ell$ 提升 $s\in S$，令 $d_\beta(s)=\beta(y)y^{-1}\in V_\ell$。改变 $y$ 为同一陪集内的元素不改变该值；乘积公式给出余循环关系。反过来，任一余循环定义自同构 $y\mapsto d(\bar y)y$，其逆对应 $-d$。这一步不要求扩张分裂。
+
+改变归一化提升只使余循环增加 $b-s\cdot b$。两个归一化代表的复合对应余循环相加，故得到 $K_\ell\to H^1(S,V_\ell)$ 的同态。如果归一化后的作用是内自同构，其共轭元在 $S$ 上必须为中心元，因 $Z(S)=1$，该共轭元属于 $V_\ell$；其余循环恰是余边界。反向同样成立，所以核准确为 $C_\ell$。
+
+当 $\ell\nmid|S|$ 时，对余循环 $d$ 取 $b=|S|^{-1}\sum_{t\in S}d(t)$。由 $d(st)=d(s)+s\cdot d(t)$ 对 $t$ 求和并重排，得到 $d(s)=b-s\cdot b$。故 $H^1(S,V_\ell)=0$。
+
+**定理。** 设 $f:\Lambda\twoheadrightarrow F$ 满射到非交换有限单群。则对每个素数 $\ell$，包括整除 $|S|$ 的素数，都有
+
+$$\boxed{f\text{ 经 }a_\ell(\Lambda)\text{ 因子化}
+\quad\Longleftrightarrow\quad
+f\text{ 经 }\Psi_\ell(\Lambda)\text{ 因子化}.}$$
+
+**证明。** 左侧等价于 $f(C_\ell)=1$。在此条件下，$f(K_\ell)$ 是 $F$ 的正规 $\ell$ 子群，因为它是 $K_\ell/C_\ell$ 的同态像。非交换单群不具有非平凡正规 $\ell$ 子群，故 $f(K_\ell)=1$，得到右侧。反向使用 $C_\ell\subseteq K_\ell$。同一证明适用于任意没有非平凡正规 $\ell$ 子群的有限目标 $F$。
+
+**命题。** 当素数整除基群的阶时，不能对任意这样的扩张直接删去上同调误差。
+
+**证明。** 在扩张 $1\to C_2\to S_3\times C_2\to S_3\to1$ 中，映射 $(s,v)\mapsto(s,v+\varepsilon(s))$，其中 $\varepsilon:S_3\to C_2$ 为符号同态，是同时固定核与商的自同构。它不为内自同构，因为每个内自同构均保持第二坐标不变。这里 $Z(S_3)=1$，但 $H^1(S_3,C_2)\ne0$。这只是一般扩张的反例，不声称它是某个给定曲面覆盖的同调扩张。
+
+## 29. 相对 Frattini 核的素数幂结构
+
+**引理。** 设 $P$ 为有限 $\ell$ 群，$\Phi(P)$ 为其 Frattini 子群，则
+
+$$\Phi(P)=[P,P]P^\ell,$$
+
+且 $\operatorname{Aut}(P)\to\operatorname{Aut}(P/\Phi(P))$ 的核是有限 $\ell$ 群。
+
+**证明。** 有限 $\ell$ 群的每个极大真子群正规且指数为 $\ell$，故都包含 $[P,P]P^\ell$；反向在初等交换商 $P/[P,P]P^\ell$ 中，用不含指定非零向量的超平面分离该向量，拉回后得到极大子群。因此等式成立。取 $P/\Phi(P)$ 的一个有序基，并考虑它的全部有序提升。每个提升都生成 $P$，否则这些提升生成的真子群包含于某极大子群，与其在 Frattini 商上生成矛盾。若基长为 $d$，提升集合大小为 $|\Phi(P)|^d$。作用核在该集合上自由作用，因为固定一组生成元的自同构就是恒等。故核的阶整除这个 $\ell$ 次幂。
+
+**定理。** 设 $Q$ 为有限群，$P\triangleleft Q$ 为有限 $\ell$ 子群。令 $\mathcal B$ 为所有保持 $P$ 并在 $Q/\Phi(P)$ 上诱导恒等的自同构所成的群。则 $\mathcal B$ 是 $\ell$ 群。因此，任意保持 $P$ 的外自同构子群到 $\operatorname{Out}(Q/\Phi(P))$ 的映射，其核也是 $\ell$ 群。
+
+**证明。** 限制到 $P$ 后，$\mathcal B$ 的像属于上一引理中的 $\ell$ 群。限制映射的核由同时逐点固定 $P$、且模 $\Phi(P)$ 为恒等的自同构组成。对其中的 $\beta$，缺陷 $d(x)=\beta(x)x^{-1}$ 属于 $\Phi(P)$。因为 $\beta$ 固定 $P$，对 $xpx^{-1}$ 比较得到 $d(x)\in Z(P)$。该缺陷对 $P$ 的陪集不变，并给出
+
+$$d:Q/P\longrightarrow Z(P)\cap\Phi(P)$$
+
+的余循环。自同构复合对应余循环相加，且缺陷映射单射，所以限制核为一个有限交换 $\ell$ 群。$\mathcal B$ 是两个 $\ell$ 群的扩张，故亦为 $\ell$ 群。
+
+若一个保持 $P$ 的外自同构在 $Q/\Phi(P)$ 上为内自同构，将其代表复合一个提升的内自同构之逆，即可得到 $\mathcal B$ 中的代表。因此外作用核是 $\mathcal B$ 的像的子群，仍为 $\ell$ 群。这里仅使用保持 $P$ 的自同构，不要求 $P$ 对 $Q$ 的所有自同构都特征。
+
+## 30. 同一覆盖上全部有限素数幂提升的因子化能力
+
+**定义。** 设 $\pi$ 有限生成，$N\le\pi$ 为有限指数特征子群，$\Lambda\le\operatorname{Out}(\pi)$。这一节不要求 $\pi/N$ 中心平凡，也不要求其外作用平凡。固定素数 $\ell$，令 $N_\ell=[N,N]N^\ell$。设 $K$ 为 $\pi$ 的特征子群、$K\subseteq N_\ell$，且 $N/K$ 为有限 $\ell$ 群。记 $Q=\pi/K$，$Q_\ell=\pi/N_\ell$，并令 $A_Q,A_\ell$ 为同一个 $\Lambda$ 在两者上的实际外作用像。
+
+**定理。** 自然映射 $A_Q\twoheadrightarrow A_\ell$ 的核为有限 $\ell$ 群。对任意到非交换有限单群的满射 $f:\Lambda\twoheadrightarrow F$，
+
+$$\boxed{f\text{ 经 }A_Q\text{ 因子化}
+\quad\Longleftrightarrow\quad f\text{ 经 }A_\ell\text{ 因子化}.}$$
+
+**证明。** 对 $P=N/K$，上一节的公式给出 $\Phi(P)=N_\ell/K$，故 $Q/\Phi(P)=Q_\ell$。实际作用都保持 $P$，并且外作用映射由同一批 $\Lambda$ 元素诱导，故像间的映射满射。其核的 $\ell$ 群性质由上一节得到。若 $f=\theta a_Q$，该核经 $\theta$ 的像是 $F$ 的正规 $\ell$ 子群，因而平凡，$\theta$ 继续下降到 $A_\ell$。反向直接复合。
+
+**推论。** 若只假设 $K$ 为 $\pi$ 的特征子群、$K\subseteq N$、$N/K$ 是有限 $\ell$ 群，而不要求 $K\subseteq N_\ell$，那么只要 $f$ 经该商的外作用因子化，它也经 $A_\ell$ 因子化。因此，对固定的 $N,\ell,f$，存在某个有限 $\ell$ 群提升达到因子化，当且仅当首次同调提升 $Q_\ell$ 已达到因子化。
+
+**证明。** 用 $K\cap N_\ell$ 代替 $K$。$N/(K\cap N_\ell)$ 嵌入 $(N/K)\times(N/N_\ell)$，所以仍为有限 $\ell$ 群。这个更细的特征商映到原商，故继承已有的因子化。应用定理。反向直接选择 $K=N_\ell$。
+
+**命题。** 上述结论比较的是指定目标的因子化能力，不断言两层外作用核相同。
+
+**证明。** $C_8$ 的取逆自同构在 $C_8/\Phi(C_8)=C_2$ 上为恒等，在 $C_8$ 上却非恒等。交换群没有非平凡内自同构，故两层外核不同。其区别为 $2$ 群信息，正是非交换有限单群目标无法作为正规像保留的部分。
+
+## 31. 同一中心平凡基商上的有限多素数组合
+
+**引理。** 若 $B\le A_1\times\cdots\times A_t$ 对每侧满射，且 $\theta:B\twoheadrightarrow F$ 满射到非交换单群，则 $\theta$ 经至少一个坐标投影 $B\to A_i$ 因子化。
+
+**证明。** 两因素时，两个坐标投影的核彼此交换。它们在 $F$ 中的像都正规，所以各为 $1$ 或 $F$；不可能同时为 $F$，否则 $F$ 交换。因此至少一个坐标核被 $\theta$ 消去。有限多个因素时，将前 $t-1$ 个坐标的联合像视为一个因素，归纳即可。
+
+**定理。** 保留第 27 节的中心平凡、外作用平凡基商 $S=\pi/N$，固定满射 $f:\Lambda\twoheadrightarrow F$ 到非交换有限单群。令 $K_1,\ldots,K_t$ 为 $\pi$ 的有限指数特征子群，各 $K_i\subseteq N$，且 $N/K_i$ 分别为素数幂群，允许素数重复。令 $K=\bigcap_i K_i$。如果 $f$ 经 $\pi/K$ 的实际外作用像因子化，那么对其中至少一个素数 $\ell$，$f$ 已经经第 27 节的单个 $\Psi_\ell$ 因子化。
+
+**证明。** 合并相同素数的核，再将每个核与相应的 $N_\ell$ 取交。这只使观察更细，仍保持相应的素数幂性质。于是可假设素数两两不同且 $K_i\subseteq N_{\ell_i}$。不同素数幂群的直积中，每个逐坐标满射子群等于全直积：其阶被每个因素阶整除，也整除这些互素阶的乘积。因此
+
+$$P=N/K\cong\prod_i N/K_i,\qquad
+\Phi(P)=\prod_i\Phi(N/K_i).$$
+
+从 $\pi/K$ 到 $\pi/(\bigcap_iN_{\ell_i})$ 的外作用像之核可解。证明与第 29 节相同：限制到各特征 Sylow 子群的 Frattini 核是相应的素数幂群，限制核又嵌入以 $Z(P)\cap\Phi(P)$ 为系数的交换余循环群。所以给定的 $f$ 下降到联合首次同调商。
+
+联合首次同调商的核为 $\prod_iV_{\ell_i}$，中心平凡基商仍为 $S$。第 28 节的归一化余循环论证在这个有限交换系数群上同样成立：从实际外作用像到联合修正作用 $\operatorname{im}(\Psi_{\ell_1},\ldots,\Psi_{\ell_t})$ 的核为交换群的子群。非交换单群目标再次消去这个正规可解核。最后应用本节引理，$f$ 经某个单独的 $\Psi_{\ell_i}$ 因子化。
+
+**推论。** 对这个固定 $N$ 和目标 $f$，若每个素数的一次修正同调作用都不能实现 $f$，则任意有限多个覆盖核内的素数幂提升联合后也不能实现 $f$。若某个 $\Psi_\ell$ 实现 $f$，单个 $Q_\ell$ 就已经足够。
+
+**证明。** 必要性来自定理，充分性来自第 28 节。此结论不限制更换 $N$ 后的可能性，也不包括任意非素数幂扩张核。
+
+## 32. 实际曲线轨道的有限矩阵验收
+
+**定理。** 在第 27 节的条件下，令 $\Lambda$ 作用于 $X$，$\alpha\in X$，$H=\operatorname{Stab}_\Lambda(\alpha)$。固定满射 $f:\Lambda\twoheadrightarrow F$ 到非交换有限单群，且 $f(H)<F$，记 $\Gamma=\ker f$。对每个素数 $\ell$，令 $L_\ell=\Psi_\ell(\Lambda)$，$B_\ell=\operatorname{im}(f,\Psi_\ell)\le F\times L_\ell$。则
+
+$$\boxed{C_\ell\alpha\subseteq\Gamma\alpha
+\quad\Longleftrightarrow\quad
+B_\ell\cap(F\times\{1\})=\{(1,1)\}
+\quad\Longleftrightarrow\quad |B_\ell|=|L_\ell|.}$$
+
+**证明。** 第 18 节将轨道条件化为同一个 $f$ 经过实际外作用的因子化；第 28 节将后者化为经过修正同调作用的因子化。$B_\ell\to L_\ell$ 满射，其核就是显示的交，有限性给出阶数等价。条件失败时单性给出 $B_\ell=F\times L_\ell$，而非一个未指定的中间情形。
+
+**构造。** 对实际闭曲面有限覆盖，选择标准生成元 $x_1,\ldots,x_{2g}$ 及关系词 $r$。令 $q_0:\pi\to S$ 为覆盖商，在 $\mathbb F_\ell$ 上构造胞腔链复形
+
+$$\mathbb F_\ell[S]\xrightarrow{\partial_2}
+\mathbb F_\ell[S]^{2g}\xrightarrow{\partial_1}\mathbb F_\ell[S].$$
+
+顶点为 $v\in S$，边 $(v,j)$ 从 $v$ 到 $v q_0(x_j)$，二维胞腔边界按从 $v$ 开始提升关系词 $r$ 计算。因此 $V_\ell=\ker\partial_1/\operatorname{im}\partial_2$。若代表 $\eta$ 在 $S$ 上为 $\operatorname{Ad}_{s_\eta}$，其修正链映射将顶点 $v$ 送到 $v s_\eta^{-1}$，将边 $(v,j)$ 送到从 $v s_\eta^{-1}$ 出发的词 $\eta(x_j)$ 的提升路径。
+
+**命题。** 该链映射在同调上诱导的正是 $\Psi_\ell$，且与左甲板作用交换。若给定同一有限生成集 $\gamma_1,\ldots,\gamma_k$ 的实际源自同构词和实际 $f(\gamma_i)$，则 $B_\ell$ 由配对矩阵数据 $(f(\gamma_i),\Psi_\ell(\gamma_i))$ 生成。
+
+**证明。** 新路径的终点为
+
+$$v s_\eta^{-1}q_0(\eta(x_j))=v q_0(x_j)s_\eta^{-1},$$
+
+与端点的修正映射一致。关系词被源自同构保持，所以边界映到边界。该提升是原映射提升再复合甲板变换 $s_\eta^{-1}$，故在同调上为定义中的修正作用；顶点和路径的公式直接给出与左甲板作用交换。生成元像决定联合像，得到最后的配对生成结论。
+
+**命题。** 上述有限验收不从覆盖的存在、同调维数或单独的像大小推出一个满足条件的覆盖。对于第 17 节的固定 $(f,\Gamma,\alpha)$，要通过这一族解决其轨道问题，仍须找到一个中心平凡、外作用平凡的特征基商 $S$ 及素数 $\ell$，使显示的交确实平凡；或采用不在本族内的其他特征商。
+
+**证明。** 上述等价式右侧要求同一个 $f$ 与同一个实际同调作用之间存在因子化，而所述存在性和大小数据均未提供该关系。第 30–31 节只消去固定基商上的多余提升选择，没有给出更换基商后的统一存在定理。对一般有限指数 $\Gamma$，其正规核商也未必为非交换单群，故不能不加说明地使用这里的单性步骤。
