@@ -522,17 +522,6 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
-# Samples singular and full-rank states to probe covariance bounds.
-pattern = "docs/reports/covariancesumbound/random_probe.py"
-kind = "program"
-admission_plane = "content"
-produced_by = "none"
-consumed_by = ["agent"]
-verified_by = ["repository-policy"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
 # Compares exact raw ML dynamics, reduced updates, and finite future partitions.
 pattern = "docs/reports/contextual-spacetime-ml/finite_checks.py"
 kind = "program"
@@ -551,6 +540,17 @@ admission_plane = "content"
 produced_by = "none"
 consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+# Samples singular and full-rank states to probe covariance bounds.
+pattern = "docs/reports/covariancesumbound/random_probe.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
