@@ -93,6 +93,22 @@ internal sealed class GoldenInertBlockParityDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(WitnessFormula()),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For every odd inert natural base ell and every natural k, there exists a natural prime p dividing powerBlock ell k with chi p=-1 and odd actual factorization exponent. The declaration does not identify this exponent with initial WSS depth for composite bases. The separate ordinary prime-base argument proves that identification."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("golden-inert-inertMultiplicationSystem"),
+                DeclarationHandle.Create(Prefix + "inertMultiplicationSystem"),
+                H("The existing involutive readout carrier"),
+                StatementSource.FromAuthor(SystemFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every natural p with chi p=-1, instantiate the existing InvolutiveReadoutSystem with State=Nat and Readout=Int. Its step is M |-> p*M, its readout is chi, and its flip is integer negation. Multiplicativity proves readout_step and neg_neg proves involutivity. No statement about the original integer state returning is built into the carrier."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("golden-inert-inert-power-readout"),
+                DeclarationHandle.Create(Prefix + "inert_power_readout"),
+                H("Literal arithmetic specialization of odd and even readouts"),
+                StatementSource.FromAuthor(ReadoutFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every natural p,M,k with chi p=-1, even k implies chi(p^k*M)=chi M, and odd k implies chi(p^k*M)=-chi M. The proof invokes the existing even_iterate_completes_readout and odd_iterate_flips_readout on inertMultiplicationSystem, and proves that its actual k-step integer state is p^k*M. These parity statements concern the character only."))),
                 DescribeRole.Theorem))));
 
     private static Formula V(string n) => F.Id(n);
@@ -163,5 +179,26 @@ internal sealed class GoldenInertBlockParityDocument : IScribeDocumentDefinition
             Call("Divides", V("p"), Block()), Eqn(Chi(V("p")), MinusOne()),
             Call("Odd", Call("Nat.factorization", Block(), V("p"))));
         return Layer(ExN("p", body));
+    }
+
+    private static Formula SystemFormula()
+    {
+        var sys = Call("inertMultiplicationSystem", V("p"));
+        var data = Call("And", Eqn(Call("step", sys, V("M")), Mul(V("p"), V("M"))),
+            Eqn(Call("readout", sys, V("M")), Chi(V("M"))),
+            Eqn(Call("flip", sys, V("z")), Call("neg", V("z"))));
+        var overIntegers = Seq(Forall, Sp, V("z"), Sp, InMacro, Sp,
+            Seq(Mathbb, Grp(V("Z"))), Comma, Sp, data);
+        return Disp(AllN("p", Call("Implies", Eqn(Chi(V("p")), MinusOne()),
+            AllN("M", overIntegers))));
+    }
+    private static Formula ReadoutFormula()
+    {
+        var value = Chi(Mul(Pow(V("p"), V("k")), V("M")));
+        var clauses = Call("And",
+            Call("Implies", Call("Even", V("k")), Eqn(value, Chi(V("M")))),
+            Call("Implies", Call("Odd", V("k")), Eqn(value, Call("neg", Chi(V("M"))))));
+        return Disp(AllN("p", AllN("M", AllN("k",
+            Call("Implies", Eqn(Chi(V("p")), MinusOne()), clauses)))));
     }
 }
