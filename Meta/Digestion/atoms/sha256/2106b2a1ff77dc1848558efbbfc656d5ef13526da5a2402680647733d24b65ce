@@ -1,0 +1,13 @@
+### 15.4 固定访问范围的有限窗口预算
+
+在窗口起点 $m$ 固定 $R$，并在之后始终使用同一可访问空间 $S+E_R$。对 $m\le t<n$，定义
+$$
+\xi_t^{m,R}
+=\frac12\max_p
+\left\|D_p\bigl[G^{m,R}\odot F_{m,t}\odot(C_{t+1}-J)\bigr]D_p\right\|_1,
+$$
+以及单步完整扰动
+$$
+\kappa(C)=\frac12\max_p\left\|D_p(C-J)D_p\right\|_1.
+$$
+

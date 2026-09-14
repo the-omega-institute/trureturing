@@ -1,0 +1,2 @@
+**证明。** 正交归一性给出 $c_S=\sum_i|\langle\chi_S,e_i\rangle|^2$。对 $S$ 求和应用 Bessel 不等式得上界；等号当且仅当每个 $e_i$ 都属于 $W_0$，即 $V\subseteq W_0$。完备 Walsh 情形是该判据的直接特例。证毕。
+

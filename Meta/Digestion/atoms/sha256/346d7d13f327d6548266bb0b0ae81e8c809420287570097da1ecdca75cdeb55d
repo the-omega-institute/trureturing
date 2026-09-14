@@ -1,0 +1,38 @@
+**命题 16.8（全历史误差对正概率条件历史的控制）。** 在定义 16.7 中，若
+
+$$
+\frac12\|\rho-\sigma\|_1\le\varepsilon,
+\qquad q>\varepsilon,
+$$
+
+则 $p>0$，且
+
+$$
+\frac12\|\rho_E-\sigma_E\|_1
+\le\min\left\{1,\frac{\varepsilon}{q}\right\}.
+$$
+
+因此定理 16.3 或 16.5 的全输出界可用于任意理想概率大于 $\delta_N$ 的历史事件。仅有全输出小误差不保证所有稀有事件都有小条件误差，也不保证理想正概率事件在实际模型中必有正概率。
+
+证明。 记 $b=\|X-Y\|_1$。由于 $\rho,\sigma$ 在经典历史上分块，事件与补事件的块迹范数相加，而补事件块的迹差为 $q-p$。故
+
+$$
+b+|p-q|\le\|\rho-\sigma\|_1\le2\varepsilon.
+$$
+
+又有 $b\ge|p-q|$，所以 $|p-q|\le\varepsilon$，从而 $p\ge q-\varepsilon>0$。利用 $\|X\|_1=p$，得到
+
+$$
+\begin{aligned}
+\frac12\left\|\frac Xp-\frac Yq\right\|_1
+&=\frac12\left\|\frac{X-Y}{q}
++X\left(\frac1p-\frac1q\right)\right\|_1\\
+&\le\frac{b+|p-q|}{2q}
+\le\frac{\varepsilon}{q}.
+\end{aligned}
+$$
+
+两个密度矩阵的迹距离至多为一，给出所列截断界。
+
+稀有事件的限制可用有限 cq 态直接检验：取两个历史结果 $E,E^c$，在两模型中令事件 $E$ 都有概率 $q>0$，但其条件量子态分别为正交纯态；在 $E^c$ 上取完全相同的条件态及概率。全输出迹距离为 $q$，事件条件迹距离却为一。另一方面，把理想概率 $q$ 的整个 $E$ 块移到同一个量子态的 $E^c$ 块，得到全输出迹距离 $q$ 而实际 $p=0$ 的例子。故不能删除正概率条件及其 $q$ 依赖。证毕。
+
