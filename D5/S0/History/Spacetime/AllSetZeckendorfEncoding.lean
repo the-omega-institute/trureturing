@@ -120,7 +120,98 @@ def powerRawZ (c : ZFSet.{u}) : ZFSet.{u} :=
 theorem enc_injective_and_left_inverse :
     (∀ x y : ZFSet.{u}, Enc x = Enc y ↔ x = y) ∧
       (∀ x : ZFSet.{u}, Dec (encode x) = x) := by
-  sorry
+  have natOrd_inj : Function.Injective (natOrd : ℕ → ZFSet.{u}) := by
+    intro a b h
+    exact_mod_cast Ordinal.toZFSet_injective h
+  have nat_branch : ∀ x : ZFSet.{u}, x ∈ ZFSet.omega ↔ ∃ n : ℕ, natOrd n = x := by
+    have hn : ∀ n : ℕ, (natOrd n : ZFSet.{u}) = ZFSet.mk (PSet.ofNat n) := by
+      intro n
+      induction n with
+      | zero =>
+        simp only [natOrd, Nat.cast_zero, Ordinal.toZFSet_zero, PSet.ofNat]
+        rfl
+      | succ n ih =>
+        simp only [natOrd, Nat.cast_succ, Ordinal.toZFSet_add_one]
+        change insert (natOrd n) (natOrd n) =
+          insert (ZFSet.mk (PSet.ofNat n)) (ZFSet.mk (PSet.ofNat n))
+        rw [ih]
+    intro x
+    induction x using Quotient.inductionOn with
+    | _ px =>
+      change (∃ i : ULift ℕ, PSet.Equiv px (PSet.ofNat i.down)) ↔
+        ∃ n : ℕ, natOrd n = ZFSet.mk px
+      constructor
+      · rintro ⟨⟨n⟩, he⟩
+        exact ⟨n, (hn n).trans (ZFSet.sound he).symm⟩
+      · rintro ⟨n, he⟩
+        exact ⟨⟨n⟩, ZFSet.exact (he.symm.trans (hn n))⟩
+  have nat_index : ∀ n : ℕ, natIndex (natOrd n : ZFSet.{u}) = n :=
+    Function.leftInverse_invFun natOrd_inj
+  have enc_eq : ∀ x : ZFSet.{u},
+      Enc x = if x ∈ ZFSet.omega then NatZ (natIndex x)
+        else ZFSet.pair (natOrd 1) (ZFSet.image Enc x) := by
+    intro x
+    rw [show Enc x = encStep x (fun y _ => Enc y) from
+      WellFounded.fix_eq ZFSet.mem_wf encStep x]
+    unfold encStep
+    split
+    · rfl
+    · congr 1
+      apply ZFSet.ext
+      intro z
+      simp only [ZFSet.mem_image]
+      constructor
+      · rintro ⟨y, hy, he⟩
+        exact ⟨y, hy, by simpa only [dif_pos hy] using he⟩
+      · rintro ⟨y, hy, he⟩
+        exact ⟨y, hy, by simpa only [dif_pos hy] using he⟩
+  have natZ_inj : Function.Injective (NatZ : ℕ → ZFSet.{u}) := by
+    sorry
+  have tag_ne : (natOrd 0 : ZFSet.{u}) ≠ natOrd 1 := by
+    intro h
+    exact Nat.zero_ne_one (natOrd_inj h)
+  have enc_inj : Function.Injective (Enc : ZFSet.{u} → ZFSet.{u}) := by
+    intro x
+    induction x using ZFSet.mem_wf.induction with
+    | h x ih =>
+      intro y he
+      rw [enc_eq x, enc_eq y] at he
+      by_cases hx : x ∈ ZFSet.omega <;> by_cases hy : y ∈ ZFSet.omega
+      · rw [if_pos hx, if_pos hy] at he
+        obtain ⟨m, rfl⟩ := (nat_branch x).mp hx
+        obtain ⟨n, rfl⟩ := (nat_branch y).mp hy
+        rw [nat_index m, nat_index n] at he
+        exact congrArg natOrd (natZ_inj he)
+      · rw [if_pos hx, if_neg hy] at he
+        exact False.elim (tag_ne (ZFSet.pair_inj.mp he).1)
+      · rw [if_neg hx, if_pos hy] at he
+        exact False.elim (tag_ne (ZFSet.pair_inj.mp he).1.symm)
+      · rw [if_neg hx, if_neg hy] at he
+        have himage := (ZFSet.pair_inj.mp he).2
+        apply ZFSet.ext
+        intro z
+        constructor
+        · intro hz
+          have hcode : Enc z ∈ ZFSet.image Enc y := by
+            rw [← himage]
+            exact ZFSet.mem_image.mpr ⟨z, hz, rfl⟩
+          obtain ⟨w, hw, hew⟩ := ZFSet.mem_image.mp hcode
+          exact (ih z hz hew.symm).symm ▸ hw
+        · intro hz
+          have hcode : Enc z ∈ ZFSet.image Enc x := by
+            rw [himage]
+            exact ZFSet.mem_image.mpr ⟨z, hz, rfl⟩
+          obtain ⟨w, hw, hew⟩ := ZFSet.mem_image.mp hcode
+          exact (ih w hw hew) ▸ hw
+  constructor
+  · intro x y
+    exact ⟨fun h => enc_inj h, congrArg Enc⟩
+  · intro x
+    apply enc_inj
+    have hc : Valid (Enc x) := ⟨x, rfl⟩
+    change Enc (decodeRaw (Enc x)) = Enc x
+    rw [decodeRaw, dif_pos hc]
+    exact hc.choose_spec
 
 end
 end D5.S0.History.Spacetime.AllSetZeckendorfEncoding
