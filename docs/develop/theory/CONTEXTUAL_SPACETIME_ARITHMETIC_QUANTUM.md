@@ -17251,3 +17251,220 @@ $$
 因此，Zeckendorf 合法构型仍可作为离散索引和约束窗口；它不自动提供 POVM 正性、Hamiltonian、记录通道、全体未来完备性或环境恢复。所谓“保留多少历史”必须同时标明：使用的是哪一类 effect、是否已经 centered、动力学位于哪个 trace-zero 载体、记录通道的具体假设是什么，以及完备性是针对全部有限维密度态还是仅针对一个目标预测任务。
 
 ## 追加锚（新终端）
+
+## 69. 面向未来任务的稳定记录与最小噪声放大
+
+第 67 节对全部状态方向给出重建预算。但“足以预测后续相互作用”并不总是完整 tomography：有些状态差异与指定后续实验无关。对这些任务，要求全部方向都有统一正下帧界，会把无需恢复的隐藏信息也计入成本。本节把精确可见性收紧为带噪声的任务判据；新增连接为 `repo-derived/open`，不新增 Lean 声明或冻结状态。
+
+### 69.1 当前读出与未来任务必须分别指定
+
+令 $X,Y,Z$ 为有限维实 Hilbert 空间，当前读出为 $A:X\to Y$，未来任务为 $F:X\to Z$。它们都是线性映射。量子应用可取 $X=\operatorname{Herm}_0(d)$；任务的每个坐标是扣除已知参考后的未来期望值。若未来由已指定的通道 $\Phi$ 和读出方向 $E_j$ 构成，则
+
+$$
+F(D)_j=\operatorname{Tr}(E_j\Phi(D))
+=\operatorname{Tr}(\Phi^\ast(E_j)D).
+$$
+
+因此，“未来”通过实际操作的 Heisenberg 拉回进入 $F$。如果选择多个互不相容的实验，$F(D)$ 记录的是这些不同实验各自的统计响应，不是给单次系统同时指定所有实验的预存答案。
+
+`D5/S3/Observer/VisibleDescent/TargetObservabilityFourWayEquivalence.lean` 的 `target_observability_four_way_equivalence` 给出标量目标的纤维常值、核包含与 adjoint 像等价；`D5/S3/Quantum/PredictionDepth/TargetPredictionSufficiency.lean` 的 `target_prediction_sufficiency` 给出密度态上的可见 span 条件及其失败见证。这些判据解决精确可见性，尚需为数据误差指定数值代价。
+
+### 69.2 任务稳定常数与一个可检验的算子不等式
+
+**定理 69.1（任务读出的有限噪声放大判据）。** 对上述有限维线性映射，以下条件等价：
+
+$$
+\ker A\subseteq\ker F;
+$$
+
+$$
+\exists L_0:\operatorname{ran}A\to Z\text{ 线性},
+\qquad F=L_0A;
+$$
+
+$$
+\exists c\ge0,\quad
+\forall x\in X,\qquad\|Fx\|\le c\|Ax\|.
+$$
+
+第二式将 $A$ 的值视为 $\operatorname{ran}A$ 的元素，且 $L_0$ 唯一。把满足第三式的最小常数记为 $c_{\mathrm{task}}$，则
+
+$$
+\boxed{
+ c_{\mathrm{task}}=\|L_0\|
+ =\|FA^+\|_{\mathrm{op}}.
+}
+$$
+
+这里 $A^+$ 是 Moore–Penrose 逆。$A=0,F=0$ 时约定 $c_{\mathrm{task}}=0$。核包含不成立时，记任务代价为 $+\infty$，不把零分母按总定义除法解释为零代价。对给定 $c\ge0$，上述范数不等式又等价于
+
+$$
+\boxed{
+F^\ast F\preceq c^2A^\ast A,
+}
+$$
+
+其中 $\preceq$ 表示自伴算子的二次型偏序。
+
+证明。若核包含成立，定义 $L_0(Ax)=Fx$。相同读出的两个原像之差属于 $\ker A$，因此定义与代表无关；线性和唯一性随之成立。有限维使 $L_0$ 有有限算子范数，从而得到范数界。反之，把 $x\in\ker A$ 代入范数界立即得到 $Fx=0$。
+
+由 Penrose 恒等式 $AA^+A=A$，有 $A(A^+Ax-x)=0$，核包含推出
+
+$$
+F=FA^+A.
+$$
+
+令 $P=AA^+$。Penrose 恒等式还给出 $P^2=P=P^\ast$、$\operatorname{ran}P=\operatorname{ran}A$，因此 $P$ 是到读出像空间的正交投影；由 $A^+AA^+=A^+$ 得 $A^+P=A^+$。于是
+
+$$
+FA^+=L_0P.
+$$
+
+$P$ 不扩张范数，且在像空间上为恒等，故 $\|FA^+\|=\|L_0\|$。所有可用 $c$ 的最小值正是该范数。最后，平方范数界等价于对全部 $x$ 有
+
+$$
+\langle x,(c^2A^\ast A-F^\ast F)x\rangle\ge0,
+$$
+
+即所列半正定条件。证毕。
+
+`D5/S3/Observer/Hilbert/FiniteMoorePenroseInverse.lean` 的 `isMoorePenroseInverse_moorePenroseInverse` 及 `comp_moorePenroseInverse_comp` 提供所用的有限维 Penrose 基础。这里的任务因子化、最小算子范数及半正定判据是本节组合推导，不称为该模块已有的同名结果。
+
+### 69.3 这个常数直接控制预测误差
+
+**定理 69.2（任务预测与最坏有界噪声）。** 假设定理 69.1 的核包含成立，数据为 $b=Ax+\xi$，且 $\|\xi\|\le\nu$，$\nu\ge0$。定义预测
+
+$$
+\widehat f=FA^+b.
+$$
+
+则
+
+$$
+\boxed{
+\|\widehat f-Fx\|\le c_{\mathrm{task}}\nu.
+}
+$$
+
+对任意预测函数 $\Psi:Y\to Z$，定义确定性风险
+
+$$
+R_\nu(\Psi)
+=\sup_{x\in X,\,\|\xi\|\le\nu}
+\|\Psi(Ax+\xi)-Fx\|.
+$$
+
+在允许全部 $x\in X$ 和全部该范数球内噪声的线性问题中，
+
+$$
+\inf_{\Psi:Y\to Z}R_\nu(\Psi)=c_{\mathrm{task}}\nu.
+$$
+
+证明。因子化给出 $FA^+b-Fx=FA^+\xi$，得到上界。若 $c_{\mathrm{task}}\nu=0$，上界已经为零。否则，有限维单位球的紧性使像空间中存在单位向量 $y$，满足 $\|L_0y\|=c_{\mathrm{task}}$。取 $x_\ast$ 使 $Ax_\ast=\nu y$。输入 $x_\ast$ 配噪声 $-\nu y$，与输入 $-x_\ast$ 配噪声 $\nu y$，都产生 $b=0$。两者目标为 $\pm Fx_\ast$，相距 $2c_{\mathrm{task}}\nu$。任意同一预测值至少对其中一者误差不小于其半距。证毕。
+
+这一最小最坏结论针对整个线性载体，不自动是受限密度态集合上的全局下界。若采用 $\rho_\pm=I/d\pm x_\ast$ 的物理见证，必须另外满足 $x_\ast$ Hermitian、无迹及
+
+$$
+\|x_\ast\|_{\mathrm{op}}\le1/d.
+$$
+
+即使这两个状态合法，所用噪声 $\pm\nu y$ 还必须符合允许的数据域与采样模型；若读数被解释为概率，须检验相应概率约束。因此不能仅凭状态合法就声称达到了物理实验的最小最坏下界。上界则对允许状态的任何子集继续成立。无论是否达到线性最坏下界，$c_{\mathrm{task}}$ 都是一个可计算的充分误差系数。
+
+标量目标 $Fx=\langle f,x\rangle$ 还有直接的源码支点：`D5/S3/Observer/Conditioning/TargetVisibilityConditionCost.lean` 的 `target_visibility_condition_cost` 给出 $A^\ast a=f$ 的最小范数读出系数证书，并证明其二次条件成本。对这个 $a$，
+
+$$
+|\langle a,b\rangle-\langle f,x\rangle|
+\le\|a\|\,\|\xi\|.
+$$
+
+系数范数描述绝对误差放大；称它为通常的无量纲“条件数”还需要另行指定输入输出归一化。
+
+### 69.4 丢掉某个方向是否可接受，取决于未来操作
+
+**命题 69.3（同一记录对不同目标有不同成本）。** 取 $0<\varepsilon\le1$，在三维实坐标上定义
+
+$$
+A_\varepsilon(x,y,z)=(x,\varepsilon y,\varepsilon z).
+$$
+
+对目标 $F_x(x,y,z)=x$ 和 $F_y(x,y,z)=y$，分别有
+
+$$
+c_x=1,
+\qquad
+c_y=1/\varepsilon.
+$$
+
+当 $\varepsilon=0$ 时，$F_x$ 仍可精确预测，而 $F_y$ 的核包含条件失败。
+
+证明。$A_\varepsilon$ 可逆时，两个目标的系数行分别为 $(1,0,0)$ 和 $(0,1/\varepsilon,0)$，其 Euclidean 范数就是定理 69.1 的代价。$\varepsilon=0$ 时 $(0,1,0)\in\ker A_0$，却不在 $\ker F_y$ 中；$F_x$ 则直接是当前第一项读数。证毕。
+
+这个例子可以实现为三个不同 qubit 测量上下文。设 $(x,y,z)$ 为 Bloch 坐标，分别使用
+
+$$
+E_{k,\pm}=\frac{I\pm s_k\sigma_k}{2},
+\qquad
+(s_x,s_y,s_z)=(1,\varepsilon,\varepsilon).
+$$
+
+它们均满足正性与单位和条件；每个上下文的两个概率之差为 $s_k$ 乘以相应 Bloch 分量。按这三个差值组织数据，就得到 $A_\varepsilon$。这里使用 Euclidean Bloch 范数，与第 67 节的无迹 Hilbert–Schmidt 范数相差固定因子 $\sqrt2$；跨节转换时必须同步校准。三个上下文是在分别制备的同态样本上统计，不表示同时测得单个 qubit 的三个确定值。
+
+若未来只再读 $X$，第一项已经够用。若允许一个满足 $U^\ast XU=Y$ 的校准幺正操作，随后同样读取 $X$，则未来目标变成当前的 $Y$ 分量；例如可取 $U=e^{i\pi Z/4}$。原来没有进入第一项记录的相位方向，现在进入可见预测。因此，扩大允许操作族会改变所需记录及其稳定成本。
+
+### 69.5 近似任务与历史尾项应在相同输出尺度上记账
+
+精确核包含有时过强。对已指定的任务 $F$，可以选择当前读出可实现的近似任务 $F_0=L_0A$；令 $P$ 为到 $\operatorname{ran}A$ 的正交投影，取 $L=L_0P$。
+
+**命题 69.4（近似闭合与数据噪声的任务预算）。** 若
+
+$$
+\|F-F_0\|_{\mathrm{op}}\le\delta,
+\qquad
+\|x\|\le M,
+\qquad
+b=Ax+\xi,\quad\|\xi\|\le\nu,
+$$
+
+则预测 $Lb$ 满足
+
+$$
+\boxed{
+\|Lb-Fx\|\le\delta M+\|L\|\nu.
+}
+$$
+
+若实际后续读数 $f_{\mathrm{actual}}$ 还满足 $\|f_{\mathrm{actual}}-Fx\|\le\mu$，则总误差不超过
+
+$$
+\delta M+\|L\|\nu+\mu.
+$$
+
+证明。恒等式 $LA=F_0$ 给出 $Lb-Fx=(F_0-F)x+L\xi$；分别应用算子范数界和三角不等式，再加上实际输出的偏差即可。证毕。
+
+$\delta M$ 是任务不完全落在当前可见空间内的代价，$\|L\|\nu$ 是把读数噪声转换为预测误差的代价，$\mu$ 则容纳已单独证明的历史尾项或动力学失配。第 56、58 节的记忆尾界或刻度界，只有在转换成这里同一个任务输出范数后才能代入 $\mu$ 或 $\nu$。本式没有证明这些误差天然小，也没有赋予三个符号相互独立的概率意义。
+
+### 69.6 可预测对象的候选记录应怎样比较
+
+给定未来任务 $F$、误差容限 $\epsilon_\ast$ 和候选记录 $A_J$，可以先用
+
+$$
+\ker A_J\subseteq\ker F
+$$
+
+筛出精确足够的记录，再用
+
+$$
+F^\ast F\preceq c_J^2A_J^\ast A_J,
+\qquad
+c_J\nu_J\le\epsilon_\ast
+$$
+
+检验其数值稳定性。若只要求近似足够，则使用命题 69.4 的三项预算。$\nu_J$ 必须随记录方案一同标定；单纯增加权重或重复同一项，并不在固定资源下自动减少误差。
+
+因此，记录数、采样量、可访问环境范围、预测时间和误差容限共同约束可选方案。Zeckendorf 标签可以索引 $J$，但标签数量或整数差不能替代 $A_J$ 的线性作用与噪声标定。
+
+相对于这组任务，能够被删除的是那些不影响目标，或只在容许预算内影响目标的关系；需要保留的是会进入未来响应、且必须被稳定读取的方向。这是“保留哪些历史”的有限维任务版本。它仍需物理记录稳定性、实际环境访问条件与后续闭合共同支持，不能单凭线性预测界宣称选出了唯一经典结果。
+
+本节的精确可见性、最小范数标量证书及 Penrose 基础分别由所引项目模块定位；多输出任务范数、最坏有界噪声、物理上下文实例与近似任务预算为本节的连接推导。它们使用标准有限维线性代数和估计论结构，不主张文献新颖性；本节未新增 Lean 形式覆盖。
+
+## 追加锚（新终端）

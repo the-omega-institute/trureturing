@@ -1,0 +1,30 @@
+**命题 69.3（同一记录对不同目标有不同成本）。** 取 $0<\varepsilon\le1$，在三维实坐标上定义
+
+$$
+A_\varepsilon(x,y,z)=(x,\varepsilon y,\varepsilon z).
+$$
+
+对目标 $F_x(x,y,z)=x$ 和 $F_y(x,y,z)=y$，分别有
+
+$$
+c_x=1,
+\qquad
+c_y=1/\varepsilon.
+$$
+
+当 $\varepsilon=0$ 时，$F_x$ 仍可精确预测，而 $F_y$ 的核包含条件失败。
+
+证明。$A_\varepsilon$ 可逆时，两个目标的系数行分别为 $(1,0,0)$ 和 $(0,1/\varepsilon,0)$，其 Euclidean 范数就是定理 69.1 的代价。$\varepsilon=0$ 时 $(0,1,0)\in\ker A_0$，却不在 $\ker F_y$ 中；$F_x$ 则直接是当前第一项读数。证毕。
+
+这个例子可以实现为三个不同 qubit 测量上下文。设 $(x,y,z)$ 为 Bloch 坐标，分别使用
+
+$$
+E_{k,\pm}=\frac{I\pm s_k\sigma_k}{2},
+\qquad
+(s_x,s_y,s_z)=(1,\varepsilon,\varepsilon).
+$$
+
+它们均满足正性与单位和条件；每个上下文的两个概率之差为 $s_k$ 乘以相应 Bloch 分量。按这三个差值组织数据，就得到 $A_\varepsilon$。这里使用 Euclidean Bloch 范数，与第 67 节的无迹 Hilbert–Schmidt 范数相差固定因子 $\sqrt2$；跨节转换时必须同步校准。三个上下文是在分别制备的同态样本上统计，不表示同时测得单个 qubit 的三个确定值。
+
+若未来只再读 $X$，第一项已经够用。若允许一个满足 $U^\ast XU=Y$ 的校准幺正操作，随后同样读取 $X$，则未来目标变成当前的 $Y$ 分量；例如可取 $U=e^{i\pi Z/4}$。原来没有进入第一项记录的相位方向，现在进入可见预测。因此，扩大允许操作族会改变所需记录及其稳定成本。
+

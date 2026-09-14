@@ -1,0 +1,47 @@
+**定理 69.2（任务预测与最坏有界噪声）。** 假设定理 69.1 的核包含成立，数据为 $b=Ax+\xi$，且 $\|\xi\|\le\nu$，$\nu\ge0$。定义预测
+
+$$
+\widehat f=FA^+b.
+$$
+
+则
+
+$$
+\boxed{
+\|\widehat f-Fx\|\le c_{\mathrm{task}}\nu.
+}
+$$
+
+对任意预测函数 $\Psi:Y\to Z$，定义确定性风险
+
+$$
+R_\nu(\Psi)
+=\sup_{x\in X,\,\|\xi\|\le\nu}
+\|\Psi(Ax+\xi)-Fx\|.
+$$
+
+在允许全部 $x\in X$ 和全部该范数球内噪声的线性问题中，
+
+$$
+\inf_{\Psi:Y\to Z}R_\nu(\Psi)=c_{\mathrm{task}}\nu.
+$$
+
+证明。因子化给出 $FA^+b-Fx=FA^+\xi$，得到上界。若 $c_{\mathrm{task}}\nu=0$，上界已经为零。否则，有限维单位球的紧性使像空间中存在单位向量 $y$，满足 $\|L_0y\|=c_{\mathrm{task}}$。取 $x_\ast$ 使 $Ax_\ast=\nu y$。输入 $x_\ast$ 配噪声 $-\nu y$，与输入 $-x_\ast$ 配噪声 $\nu y$，都产生 $b=0$。两者目标为 $\pm Fx_\ast$，相距 $2c_{\mathrm{task}}\nu$。任意同一预测值至少对其中一者误差不小于其半距。证毕。
+
+这一最小最坏结论针对整个线性载体，不自动是受限密度态集合上的全局下界。若采用 $\rho_\pm=I/d\pm x_\ast$ 的物理见证，必须另外满足 $x_\ast$ Hermitian、无迹及
+
+$$
+\|x_\ast\|_{\mathrm{op}}\le1/d.
+$$
+
+即使这两个状态合法，所用噪声 $\pm\nu y$ 还必须符合允许的数据域与采样模型；若读数被解释为概率，须检验相应概率约束。因此不能仅凭状态合法就声称达到了物理实验的最小最坏下界。上界则对允许状态的任何子集继续成立。无论是否达到线性最坏下界，$c_{\mathrm{task}}$ 都是一个可计算的充分误差系数。
+
+标量目标 $Fx=\langle f,x\rangle$ 还有直接的源码支点：`D5/S3/Observer/Conditioning/TargetVisibilityConditionCost.lean` 的 `target_visibility_condition_cost` 给出 $A^\ast a=f$ 的最小范数读出系数证书，并证明其二次条件成本。对这个 $a$，
+
+$$
+|\langle a,b\rangle-\langle f,x\rangle|
+\le\|a\|\,\|\xi\|.
+$$
+
+系数范数描述绝对误差放大；称它为通常的无量纲“条件数”还需要另行指定输入输出归一化。
+
