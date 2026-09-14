@@ -1,0 +1,89 @@
+**定理 31.1（任意有限前缀的加权上界）。** 令 $W_j(c)$ 为定义 28.1 的共同系统 CPTP 前缀目标，允许任意有限维惰性参考，没有可操作量子记忆。对任意有限 $j\ge1$、$c\in[0,1]$ 和仪器参数 $\beta_1,\ldots,\beta_j\in[0,1]$，记
+
+$$
+b=\beta_j,\qquad a=1-b,
+\qquad s=\prod_{t=1}^{j-1}\sqrt{1-\beta_t},
+$$
+
+其中空积为一。则
+
+$$
+W_j(c)
+\le cb+\sqrt{(1+ca)^2-4ca s^2}.
+$$
+
+这个界同时适用于任意共同输入、有限参考和全部共同历史依赖系统 CPTP 控制；它不要求前缀幺正，也不声称一般参数下达到该加权上界。
+
+证明。当 $j=1$ 时，定理 28.2 的单步计算给出
+
+$$
+W_1(c)=1+c-2c(1-b)=cb+1-ca.
+$$
+
+由于 $0\le ca\le1$，这等于 $cb+\sqrt{(1+ca)^2-4ca}$，证明空前缀情形。
+
+以下设 $j\ge2$，固定任意共同输入、有限参考和共同 CPTP 控制表。给共同输入作纯化；每个共同控制使用同一个 Stinespring 等距实现，并在分析中保留其余系统。对不同旧历史使用的等距按历史作共同受控调用。控制余系统始终不重新接入协议；保留它们只是为了表示完整纯化，计算物理输出时仍将它们取部分迹。
+
+以 $B_t$ 存储本次新结果、$E_t$ 存储其丢弃副本，一次仪器可以由如下两种等距表示：
+
+$$
+V_{{\rm A},t}=\sum_{z=0}^1
+|z\rangle_{B_t}|z\rangle_{E_t}\otimes K_{t,z},
+\qquad
+V_{{\rm J},t}=\sum_{z=0}^1
+|z\rangle_{B_t}|z\rangle_{E_t}\otimes P_z.
+$$
+
+旧历史寄存器在此不变，$E_t$ 在物理协议中被丢弃。交叉算子满足
+
+$$
+V_{{\rm J},t}^\dagger V_{{\rm A},t}
+=\sum_zP_zK_{t,z}
+=\sqrt{1-\beta_t}\,I_S.
+$$
+
+共同受控等距保持完整纯化的内积，每个仪器则将该内积乘以上述标量。因此，经过前 $j-1$ 次仪器及第 $j$ 次共同 CPTP 控制后，完整纯化中的两候选可取为归一化向量 $|A\rangle,|J\rangle$，满足
+
+$$
+\langle J|A\rangle=s.
+$$
+
+惰性参考不参与控制。共同输入的纯化寄存器、控制余系统及历史副本只属于分析空间，不增加原协议的访问权限。
+
+在两候选上都假设最后作完美指针读取，存储最后一位历史并丢弃活动系统和全部分析余系统。所得归一化经典量子态记为 $\mathsf P,\mathsf Q$，输出空间是 $H_jR$。它们来自 $|A\rangle,|J\rangle$ 经同一个 CPTP 映射，其中 $\mathsf Q$ 正好是理想最终输出。令 $\tau$ 仅翻转最后一位经典结果，保持旧历史和参考不动。
+
+对第 $j$ 次控制后的任意实际联合历史分支 $\omega_h$，最后实际结果 $z$ 的参考块为
+
+$$
+\begin{aligned}
+&\operatorname{Tr}_S\bigl[
+(K_{j,z}\otimes I_R)\omega_h(K_{j,z}\otimes I_R)
+\bigr]\\
+&\qquad=a\langle z|\omega_h|z\rangle
++b\langle1-z|\omega_h|1-z\rangle.
+\end{aligned}
+$$
+
+两个指针间的交叉项在系统部分迹后为零，所以实际最终态严格等于
+
+$$
+\mathsf R=a\mathsf P+b\tau(\mathsf P).
+$$
+
+这里没有限制最后共同控制的形式。于是
+
+$$
+\begin{aligned}
+\|c\mathsf R-\mathsf Q\|_1
+&=\|ca\mathsf P-\mathsf Q+cb\tau(\mathsf P)\|_1\\
+&\le\|ca\mathsf P-\mathsf Q\|_1+cb\\
+&\le\bigl\|ca|A\rangle\langle A|-|J\rangle\langle J|\bigr\|_1+cb\\
+&=\sqrt{(1+ca)^2-4ca|\langle J|A\rangle|^2}+cb\\
+&=\sqrt{(1+ca)^2-4ca s^2}+cb.
+\end{aligned}
+$$
+
+第一项估计使用迹范数三角不等式及 $\|\tau(\mathsf P)\|_1=1$；第二项使用共同 CPTP 输出映射对 Hermitian 算子的迹范数收缩；最后使用两个加权秩一算子之差的迹范数公式。该公式也覆盖 $ca=0$，整个论证没有除以权重或分支概率。
+
+物理输出对历史分块，因此 $\|c\mathsf R-\mathsf Q\|_1=\sum_h\|cX_h-Q_h\|_1$。上界不依赖共同输入、参考维数或共同控制表，对所有允许协议取上确界即得结论。证毕。
+

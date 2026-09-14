@@ -8437,3 +8437,634 @@ $$
 这把第 26.1 条同一无参考幺正构造的可达下界提升为该任务的精确值，且没有扩大其参考或记忆访问权限。证毕。
 
 ## 追加锚（新终端）
+
+## 31. 高末次错误率下任意 CPTP 控制的记忆等号分类
+
+**定理 31.1（任意有限前缀的加权上界）。** 令 $W_j(c)$ 为定义 28.1 的共同系统 CPTP 前缀目标，允许任意有限维惰性参考，没有可操作量子记忆。对任意有限 $j\ge1$、$c\in[0,1]$ 和仪器参数 $\beta_1,\ldots,\beta_j\in[0,1]$，记
+
+$$
+b=\beta_j,\qquad a=1-b,
+\qquad s=\prod_{t=1}^{j-1}\sqrt{1-\beta_t},
+$$
+
+其中空积为一。则
+
+$$
+W_j(c)
+\le cb+\sqrt{(1+ca)^2-4ca s^2}.
+$$
+
+这个界同时适用于任意共同输入、有限参考和全部共同历史依赖系统 CPTP 控制；它不要求前缀幺正，也不声称一般参数下达到该加权上界。
+
+证明。当 $j=1$ 时，定理 28.2 的单步计算给出
+
+$$
+W_1(c)=1+c-2c(1-b)=cb+1-ca.
+$$
+
+由于 $0\le ca\le1$，这等于 $cb+\sqrt{(1+ca)^2-4ca}$，证明空前缀情形。
+
+以下设 $j\ge2$，固定任意共同输入、有限参考和共同 CPTP 控制表。给共同输入作纯化；每个共同控制使用同一个 Stinespring 等距实现，并在分析中保留其余系统。对不同旧历史使用的等距按历史作共同受控调用。控制余系统始终不重新接入协议；保留它们只是为了表示完整纯化，计算物理输出时仍将它们取部分迹。
+
+以 $B_t$ 存储本次新结果、$E_t$ 存储其丢弃副本，一次仪器可以由如下两种等距表示：
+
+$$
+V_{{\rm A},t}=\sum_{z=0}^1
+|z\rangle_{B_t}|z\rangle_{E_t}\otimes K_{t,z},
+\qquad
+V_{{\rm J},t}=\sum_{z=0}^1
+|z\rangle_{B_t}|z\rangle_{E_t}\otimes P_z.
+$$
+
+旧历史寄存器在此不变，$E_t$ 在物理协议中被丢弃。交叉算子满足
+
+$$
+V_{{\rm J},t}^\dagger V_{{\rm A},t}
+=\sum_zP_zK_{t,z}
+=\sqrt{1-\beta_t}\,I_S.
+$$
+
+共同受控等距保持完整纯化的内积，每个仪器则将该内积乘以上述标量。因此，经过前 $j-1$ 次仪器及第 $j$ 次共同 CPTP 控制后，完整纯化中的两候选可取为归一化向量 $|A\rangle,|J\rangle$，满足
+
+$$
+\langle J|A\rangle=s.
+$$
+
+惰性参考不参与控制。共同输入的纯化寄存器、控制余系统及历史副本只属于分析空间，不增加原协议的访问权限。
+
+在两候选上都假设最后作完美指针读取，存储最后一位历史并丢弃活动系统和全部分析余系统。所得归一化经典量子态记为 $\mathsf P,\mathsf Q$，输出空间是 $H_jR$。它们来自 $|A\rangle,|J\rangle$ 经同一个 CPTP 映射，其中 $\mathsf Q$ 正好是理想最终输出。令 $\tau$ 仅翻转最后一位经典结果，保持旧历史和参考不动。
+
+对第 $j$ 次控制后的任意实际联合历史分支 $\omega_h$，最后实际结果 $z$ 的参考块为
+
+$$
+\begin{aligned}
+&\operatorname{Tr}_S\bigl[
+(K_{j,z}\otimes I_R)\omega_h(K_{j,z}\otimes I_R)
+\bigr]\\
+&\qquad=a\langle z|\omega_h|z\rangle
++b\langle1-z|\omega_h|1-z\rangle.
+\end{aligned}
+$$
+
+两个指针间的交叉项在系统部分迹后为零，所以实际最终态严格等于
+
+$$
+\mathsf R=a\mathsf P+b\tau(\mathsf P).
+$$
+
+这里没有限制最后共同控制的形式。于是
+
+$$
+\begin{aligned}
+\|c\mathsf R-\mathsf Q\|_1
+&=\|ca\mathsf P-\mathsf Q+cb\tau(\mathsf P)\|_1\\
+&\le\|ca\mathsf P-\mathsf Q\|_1+cb\\
+&\le\bigl\|ca|A\rangle\langle A|-|J\rangle\langle J|\bigr\|_1+cb\\
+&=\sqrt{(1+ca)^2-4ca|\langle J|A\rangle|^2}+cb\\
+&=\sqrt{(1+ca)^2-4ca s^2}+cb.
+\end{aligned}
+$$
+
+第一项估计使用迹范数三角不等式及 $\|\tau(\mathsf P)\|_1=1$；第二项使用共同 CPTP 输出映射对 Hermitian 算子的迹范数收缩；最后使用两个加权秩一算子之差的迹范数公式。该公式也覆盖 $ca=0$，整个论证没有除以权重或分支概率。
+
+物理输出对历史分块，因此 $\|c\mathsf R-\mathsf Q\|_1=\sum_h\|cX_h-Q_h\|_1$。上界不依赖共同输入、参考维数或共同控制表，对所有允许协议取上确界即得结论。证毕。
+
+**定理 31.2（高末次错误率的完整等号域与最小可操作记忆）。** 对定义 27.1 的任意有限 $N\ge2$，假设最后参数
+
+$$
+f=\beta_N\in[1/2,1].
+$$
+
+记
+
+$$
+c=1-f,\qquad b=\beta_{N-1},\qquad a=1-b,
+\qquad s=\prod_{t=1}^{N-2}\sqrt{1-\beta_t},
+\qquad E=1-as^2.
+$$
+
+令 $U(E,f)$ 为定理 22.2 的可操作记忆最优值。在没有可操作记忆、允许任意有限惰性参考及所有共同历史依赖系统 CPTP 控制时，有完整等号分类
+
+$$
+T_N^{\mathrm{ref,CPTP}}(\boldsymbol\beta)=U(E,f)
+\quad\Longleftrightarrow\quad
+\beta_{N-1}=0
+\ \text{或}\ 
+\exists t\in\{1,\ldots,N\},\ \beta_t=1.
+$$
+
+进一步定义
+
+$$
+r=\sqrt{(1+ca)^2-4ca s^2},
+\qquad A=cb+r,
+\qquad C=\sqrt{(1+c)^2-4ca s^2}.
+$$
+
+则
+
+$$
+T_N^{\mathrm{ref,CPTP}}\le\frac{f+A}{2}
+\le\frac{f+C}{2}=U(E,f).
+$$
+
+在其余参数域，即 $b>0$ 且所有 $\beta_t<1$ 时，这个上界给出显式严格差距
+
+$$
+U(E,f)-T_N^{\mathrm{ref,CPTP}}
+\ge\frac{cb(1+ca-r)}{C+A}>0.
+$$
+
+考虑定义 22.1 的可操作记忆任务，允许任意共同 $SM$ CPTP 控制和额外任意有限维惰性参考 $R$，最终输出 $H_NMR$。以达到 $U(E,f)$ 为目标，所需非零可操作记忆 $M$ 的最小维数为
+
+$$
+d_{\min}(\boldsymbol\beta)=
+\begin{cases}
+1,&\beta_{N-1}=0\ \text{或存在 }t\text{ 使 }\beta_t=1,\\
+2,&\beta_{N-1}>0\ \text{且全部 }\beta_t<1.
+\end{cases}
+$$
+
+当 $N=1$ 时，在完整参数域另有 $T_1^{\mathrm{ref,CPTP}}(\beta_1)=U(0,\beta_1)=\beta_1$，且 $d_{\min}=1$。本条多步等号分类和最小记忆结论限定于 $f\ge1/2$，不判定 $f<1/2$ 下任意中间系统 CPTP 控制的等号域。
+
+证明。定理 27.2 对高末次错误率给出精确前缀表达
+
+$$
+T_N^{\mathrm{ref,CPTP}}(\boldsymbol\beta)
+=\frac f2+\frac12W_{N-1}(c).
+$$
+
+对这个任意 CPTP 前缀应用定理 31.1，得到 $W_{N-1}(c)\le cb+r=A$。这一步覆盖混合共同输入、任意有限参考及全部此前系统 CPTP 控制，不需要把中间控制替换为幺正。
+
+由 $E=1-as^2$ 和 $f=1-c$，可操作记忆值中的平方根满足
+
+$$
+f^2+4(1-f)E
+=(1+c)^2-4ca s^2=C^2,
+$$
+
+故 $U(E,f)=(f+C)/2$。直接展开得
+
+$$
+\begin{aligned}
+C^2-A^2
+&=(1+c)^2-(1+ca)^2-c^2b^2-2cbr\\
+&=2cb(1+ca-r).
+\end{aligned}
+$$
+
+所有系数非负，且 $r\le1+ca$，所以 $C^2\ge A^2$；由于 $C,A\ge0$，得到 $A\le C$。
+
+设 $b>0$ 且全部 $\beta_t<1$。由于 $f<1$，有 $c>0$；由于 $b<1$，有 $a>0$；此前每个参数也小于一，故 $s>0$。因此
+
+$$
+(1+ca)^2-r^2=4ca s^2>0,
+$$
+
+从而 $1+ca-r>0$。这使 $C^2-A^2>0$，即 $A<C$。此外 $C\ge1-c=f\ge1/2$，所以 $C+A>0$，且
+
+$$
+\begin{aligned}
+U(E,f)-T_N^{\mathrm{ref,CPTP}}
+&\ge\frac{C-A}{2}\\
+&=\frac{C^2-A^2}{2(C+A)}\\
+&=\frac{cb(1+ca-r)}{C+A}>0.
+\end{aligned}
+$$
+
+这是一条对所有允许协议统一成立的严格界，无需证明最优前缀达到。前面若有参数等于零，仍有 $s>0$，因此它们不被遗漏。
+
+反过来，若存在某个 $\beta_t=1$，取无参考指针初态 $|0\rangle$ 和所有控制恒等。理想历史确定全零，而实际在该时刻必输出一，因此两种完整历史支撑不交，半迹距离为一。此时 $U(E,f)=1$，所以无需参考或可操作记忆即达到等号。
+
+若 $\beta_{N-1}=0$，定理 22.3 已给出无参考、共同系统幺正控制达到 $U(E,f)$ 的构造。该协议包含于当前允许类中；结合统一上界，再次得到等号。这两个条件的补集恰为 $b>0$ 且全部 $\beta_t<1$，其严格不等式已证，故等号分类完整。
+
+最后确定记忆维数。$\dim M=1$ 时，对 $SM$ 的共同 CPTP 控制恰退化为系统 CPTP 控制，额外惰性参考和最终保留的 $R$ 完全对应 $T_N^{\mathrm{ref,CPTP}}$。在严格域，统一差距排除 $\dim M=1$ 达到 $U$。另一方面，定理 22.2 已用一个初始为 $|0\rangle$ 的记忆量子比特、末次前的一次 SWAP 和此前共同实反馈达到 $U$，不需要惰性参考，所以 $\dim M=2$ 足够。在等号域，上述无参考构造以 $\dim M=1$ 已经达到；非零记忆空间的维数不能更小，得到所述最小维数。
+
+$N=1$ 的共同系统 CPTP 控制可吸收为自由共同输入，定理 27.2 的单步值为 $\beta_1$；指针输入已经达到定理 22.2 的 $U(0,\beta_1)=\beta_1$。因此单步所需最小记忆维数为一，且不需要高错误率假设。证毕。
+
+## 追加锚（新终端）
+
+## 32. 低末次错误率下任意 CPTP 控制的严格记忆差距
+
+**定理 32.1（低末次错误率的完整 CPTP 等号分类）。** 对定义 27.1 的任意有限 $N\ge2$，设
+
+$$
+0<f=\beta_N<\frac12,
+\qquad a=1-f,
+\qquad s=\prod_{t=1}^{N-1}\sqrt{1-\beta_t},
+\qquad E=1-s^2.
+$$
+
+允许任意有限维惰性参考、共同联合输入和全部共同历史依赖系统 CPTP 控制，没有可操作量子记忆，最终丢弃活动系统。则
+
+$$
+T_N^{\mathrm{ref,CPTP}}(\boldsymbol\beta)=U(E,f)
+\quad\Longleftrightarrow\quad
+\beta_{N-1}=0
+\quad\text{或}\quad
+\exists t\in\{1,\ldots,N\},\ \beta_t=1,
+$$
+
+其中 $U(E,f)$ 是定理 22.2 的可操作记忆最优值。特别地，若 $\beta_{N-1}>0$ 且全部 $\beta_t<1$，则
+
+$$
+T_N^{\mathrm{ref,CPTP}}(\boldsymbol\beta)<U(E,f).
+$$
+
+这里的严格性覆盖任意中间系统 CPTP 控制；它不把这些控制逐一等同于系统幺正控制。结合第 31 章和末次完美读取的边界，等号条件与第 24 章的系统幺正参考任务一致。
+
+证明。先说明优化域的有限维归约与最大值存在性。第一共同系统 CPTP 控制的输出可以吸收为自由共同输入，并把第一控制取为恒等。固定余下共同控制表，最终差异的迹范数关于共同输入密度矩阵凸。因此，任意混合输入都有一个纯态分量，其目标不低于混合输入。这里选择的是另一个允许的共同输入，没有对仪器结果作后选择。
+
+活动系统为二维，纯输入的 Schmidt 秩至多为二。参考始终不被操作，故其 Schmidt 支撑可等距压缩到 $\mathbb C^2$，保持所有系统控制及最终迹范数不变；秩一情形补一个零坐标即可。因此全体有限参考的上确界等于参考固定为一个量子比特、共同输入为归一化纯态、第一控制恒等时的上确界。
+
+每个系统 CPTP 映射的 Choi 矩阵满足正半定与固定输出部分迹条件，构成有限维紧集。固定有限 $N$ 的历史树只有有限个控制节点，全部共同控制表属于这些紧集的有限乘积。归一化两比特纯态的单位球面也紧，而有限步输出及其迹范数连续。因此 $T_N^{\mathrm{ref,CPTP}}$ 的最大值在上述有限维域中达到。
+
+若 $\beta_{N-1}=0$ 或存在某个 $\beta_t=1$，定理 22.3 的无参考系统幺正构造已经达到 $U(E,f)$。它属于当前允许类，结合定理 22.2 的参考一致上界，即得等号的充分性。
+
+以下设 $\beta_{N-1}>0$ 且全部 $\beta_t<1$，所以
+
+$$
+a>0,\qquad f>0,\qquad s>0,
+\qquad 0<\beta_{N-1}<1.
+$$
+
+反设某个允许协议达到 $U(E,f)$。按上述归约，可取共同纯输入、参考维数至多二及第一控制恒等。定理 27.2 对低末次错误率允许逐历史把最后的共同 CPTP 控制换成系统幺正，使目标不减。由于所有协议仍受 $U(E,f)$ 上界约束，替换后也达到等号。记最后的共同系统幺正为 $W_h$，此前的系统 CPTP 控制仍完全任意。
+
+对前 $N-1$ 步使用共同受控 Stinespring 纯化，保留控制余系统及仪器的历史副本，仅在分析中使用这些寄存器。物理协议仍将它们丢弃且不重新访问。对每个长度 $N-1$ 的历史 $h$，把末次幺正之前的完整纯化分支记为
+
+$$
+|x_h\rangle,|y_h\rangle\in S\otimes R\otimes\mathcal E,
+$$
+
+其中 $\mathcal E$ 包含所有分析余系统；不同分支可补齐为同一个有限维空间。令
+
+$$
+p_h=\|x_h\|^2,\qquad q_h=\|y_h\|^2,
+\qquad \delta_h=\langle y_h,x_h\rangle,
+$$
+
+$$
+\rho_h^{\rm A}=\operatorname{Tr}_{\mathcal E}|x_h\rangle\langle x_h|,
+\qquad
+\rho_h^{\rm J}=\operatorname{Tr}_{\mathcal E}|y_h\rangle\langle y_h|.
+$$
+
+共同受控等距保持完整内积，每次实际、理想仪器的交叉算子为 $\sum_zP_zK_{t,z}=\sqrt{1-\beta_t}I$。因此
+
+$$
+\sum_hp_h=\sum_hq_h=1,
+\qquad \sum_h\delta_h=s.
+$$
+
+理想过程第一次读取后，每个非零物理分支已成为系统指针与纯参考向量的乘积。后续控制只作用于系统，不能改变该分支的纯参考因子；每次理想读取再把系统投影到秩一指针。所以末次控制之前
+
+$$
+\rho_h^{\rm J}=|\eta_h\rangle\langle\eta_h|,
+\qquad
+\eta_h=|i_h\rangle\otimes r_h,
+\qquad i_h=h_{N-1},
+$$
+
+允许 $\eta_h=0$。这项纯性来自纯共同输入与理想秩一仪器，不要求中间系统控制幺正。
+
+令
+
+$$
+G_h=\|a\rho_h^{\rm A}-\rho_h^{\rm J}\|_1,
+\qquad
+L_h=\sqrt{(ap_h+q_h)^2-4a|\delta_h|^2},
+\qquad \Gamma=\sum_h|\delta_h|.
+$$
+
+$L_h$ 是完整纯化上两个加权秩一算子之差的迹范数，因此部分迹收缩给出 $G_h\le L_h$。最后实际读取等于完美读取结果按权重 $a,f$ 保留或翻转；对共同末次幺正和完美读取使用迹范数收缩，再对翻转正项使用三角不等式，得到
+
+$$
+\begin{aligned}
+2T_N^{\mathrm{ref,CPTP}}
+&\le\sum_hG_h+f\\
+&\le\sum_hL_h+f\\
+&\le\sqrt{(a+1)^2-4a\Gamma^2}+f\\
+&\le\sqrt{(a+1)^2-4as^2}+f=2U(E,f).
+\end{aligned}
+$$
+
+第三步的理由是二维实向量 $(L_h,2\sqrt a|\delta_h|)$ 的范数为 $ap_h+q_h$，对这些向量应用欧氏三角不等式；第四步使用 $\Gamma\ge|\sum_h\delta_h|=s$。
+
+在假设的达到情形中，以上每一步都必须取等。因为 $a,s>0$，最后一步强制 $\Gamma=s$。欧氏三角不等式的等号又要求全部非零向量同向，故每个活历史，即 $p_h+q_h>0$ 的历史，都满足
+
+$$
+|\delta_h|=\frac{s(ap_h+q_h)}{a+1}>0.
+$$
+
+特别地，每个活历史都有 $p_h,q_h>0$。有限项不等式 $G_h\le L_h$ 也必须逐项取等。
+
+下面把这项环境部分迹等号转为物理纯性。固定一个活历史，省略下标。理想物理分支为纯态，故完整理想向量可分解为
+
+$$
+y=\eta\otimes e,
+\qquad \|e\|=1,
+\qquad \|\eta\|^2=q.
+$$
+
+把实际向量按同一个环境方向正交分解为
+
+$$
+x=\xi_0\otimes e+x_\perp,
+\qquad
+(I_{SR}\otimes\langle e|)x_\perp=0.
+$$
+
+令 $p_0=\|\xi_0\|^2$、$p_1=\|x_\perp\|^2$，则 $p=p_0+p_1$、$\delta=\langle\eta,\xi_0\rangle\ne0$，并有
+
+$$
+\rho^{\rm A}=|\xi_0\rangle\langle\xi_0|+\rho_\perp,
+\qquad \rho_\perp\ge0,
+\qquad \operatorname{tr}\rho_\perp=p_1.
+$$
+
+定义
+
+$$
+L_0=\sqrt{(ap_0+q)^2-4a|\delta|^2}.
+$$
+
+三角不等式给出 $G\le L_0+ap_1$，而直接相减得到
+
+$$
+\begin{aligned}
+L^2-(L_0+ap_1)^2
+&=2ap_1\bigl[ap_0+q-L_0\bigr].
+\end{aligned}
+$$
+
+因为 $a>0$ 且 $\delta\ne0$，方括号严格为正。如果 $p_1>0$，便有 $G<L$，与逐历史的部分迹等号矛盾。因此 $p_1=0$。恢复下标后，每个活历史都可写为
+
+$$
+x_h=\xi_h\otimes e_h,
+\qquad y_h=\eta_h\otimes e_h,
+\qquad \|e_h\|=1.
+$$
+
+于是实际物理分支也纯，并且
+
+$$
+\rho_h^{\rm A}=|\xi_h\rangle\langle\xi_h|,
+\qquad \delta_h=\langle\eta_h,\xi_h\rangle\ne0.
+$$
+
+这没有宣称中间 CPTP 控制可逆；它只是达到假设迫使末次前缀的两候选完整纯化共用同一个环境方向。
+
+接着使用第 24 章证明中的单分支末次严格估计。其准确前提是：实际物理向量 $\xi$ 具有 Schmidt 秩二，理想物理向量为非零 $|i\rangle\otimes r$，二者内积非零，$a,f>0$，末次控制是共同系统幺正。该局部估计不要求更早的控制幺正。下面在当前变量中展开其两种情形，以核对这些前提和结论的对应。
+
+假设某个活历史的 $\xi_h$ 具有 Schmidt 秩二。省略该历史下标，定义
+
+$$
+v_j=(\langle j|W\otimes I_R)\xi,
+\qquad c_j=|\langle j|W|i\rangle|,
+\qquad j=0,1.
+$$
+
+则 $v_0,v_1$ 线性无关，且 $c_0^2+c_1^2=1$。定义完美读取比较块及实际最终差块
+
+$$
+B_j=a|v_j\rangle\langle v_j|-c_j^2|r\rangle\langle r|,
+\qquad
+F_j=B_j+f|v_{1-j}\rangle\langle v_{1-j}|.
+$$
+
+若 $c_0c_1=0$，交换末次标签后可取 $c_0=1,c_1=0$。令 $p_j=\|v_j\|^2$、$q=\|r\|^2$、$k=|\langle r,v_0\rangle|^2$。Schmidt 秩二给出 $p_1>0$，共同幺正保持内积给出 $k=|\delta_h|^2>0$。完美读取后的范数和为
+
+$$
+J=\sqrt{(ap_0+q)^2-4ak}+ap_1.
+$$
+
+当前物理加权差块的范数为 $G_h=L_h$，并满足
+
+$$
+G_h^2-J^2
+=2ap_1\left[ap_0+q-\sqrt{(ap_0+q)^2-4ak}\right]>0.
+$$
+
+所以完美读取已经严格收缩，不能取等。
+
+若 $c_0,c_1>0$，参考空间至多二维，而 $v_0,v_1$ 独立，故存在复系数 $\ell,m$，使
+
+$$
+r=\ell v_0+mv_1.
+$$
+
+这两个展开系数独立于控制幅度 $c_0,c_1$。若 $\ell,m$ 均非零，可选择 $v_0,v_1$ 的代表相位使 $\ell,m>0$；这不改变任何参考投影或比较块。记
+
+$$
+A=\|v_0\|^2,\qquad B=\|v_1\|^2,
+\qquad C=\langle v_0,v_1\rangle,
+\qquad AB-|C|^2>0.
+$$
+
+此时
+
+$$
+\det B_0=-ac_0^2m^2(AB-|C|^2)<0,
+\qquad
+\det B_1=-ac_1^2\ell^2(AB-|C|^2)<0.
+$$
+
+第 24 章所用的迹范数等号事实是：对可逆不定 Hermitian 矩阵 $D$，若向它加一个非零正秩一算子仍在三角不等式中取等，则该正算子的向量必须属于 $D$ 的正谱子空间。这来自迹范数的 Hermitian 对偶收缩算子；可逆性使取到 $D$ 范数的算子唯一为 $\operatorname{sign}(D)$。
+
+若两个 $F_j$ 的正噪声三角不等式都取等，就必须有
+
+$$
+B_0v_1=\lambda_0v_1,\qquad
+B_1v_0=\lambda_1v_0,
+\qquad \lambda_0,\lambda_1>0.
+$$
+
+在独立基 $v_0,v_1$ 中比较系数，得到
+
+$$
+\lambda_0=-c_0^2m(\ell C+mB),
+\qquad
+\lambda_1=-c_1^2\ell(\ell A+m\overline C).
+$$
+
+两式的实正性迫使 $C$ 为实数，且
+
+$$
+C\le-\frac m\ell B,
+\qquad C\le-\frac\ell m A.
+$$
+
+这推出 $|C|^2\ge AB$，与向量独立性矛盾。
+
+若 $\ell=0$，则 $r=mv_1$ 且 $m\ne0$。此时 $B_0$ 可逆不定，而
+
+$$
+B_0v_1=aCv_0-c_0^2|m|^2Bv_1.
+$$
+
+让 $v_1$ 成为它的正特征向量，先要求 $C=0$，随后又得到负特征值 $-c_0^2|m|^2B$，矛盾。$m=0$ 的情形对 $B_1,v_0$ 对称。由于 $r\ne0$，两系数不会同时为零。因此 $c_0,c_1>0$ 时至少一个正噪声三角不等式严格。
+
+两种控制情形都给出
+
+$$
+\sum_j\|F_j\|_1<G_h+fp_h.
+$$
+
+这会使总目标严格小于 $U(E,f)$，与达到假设矛盾。因此，所有活历史中的实际纯物理向量都只能具有 Schmidt 秩一，即可以写成
+
+$$
+\xi_h=x_h^{S}\otimes r_h^{\rm A},
+\qquad
+\eta_h=y_h^{S}\otimes r_h^{\rm J},
+$$
+
+其中理想系统因子 $y_h^S$ 沿指针 $|i_h\rangle$。这里参考因子 $r_h^{\rm A},r_h^{\rm J}$ 可以不同。
+
+最后处理这些纯乘积分支。对共同末次幺正后的假想完美读取，定义纯参考向量
+
+$$
+u_{h,j}=\langle j|W_hx_h^S\rangle r_h^{\rm A},
+\qquad
+v_{h,j}=\langle j|W_hy_h^S\rangle r_h^{\rm J}.
+$$
+
+以 $k=(h,j)$ 简记最终经典坐标，并令
+
+$$
+P_k=\|u_k\|^2,\qquad Q_k=\|v_k\|^2,
+\qquad \gamma_k=\langle v_k,u_k\rangle.
+$$
+
+由于前缀的环境方向已逐历史相同，并且末次幺正与完美读取保持内积总和，
+
+$$
+\sum_kP_k=\sum_kQ_k=1,
+\qquad
+\sum_k\gamma_k=\sum_h\delta_h=s.
+$$
+
+记
+
+$$
+D_k=a|u_k\rangle\langle u_k|-|v_k\rangle\langle v_k|,
+\qquad
+\ell_k=\|D_k\|_1
+=\sqrt{(aP_k+Q_k)^2-4a|\gamma_k|^2}.
+$$
+
+实际最终差块为 $D_{h,j}+f|u_{h,1-j}\rangle\langle u_{h,1-j}|$。对最终坐标重复正噪声三角不等式、欧氏三角不等式及复数三角不等式，得到
+
+$$
+\begin{aligned}
+2T_N^{\mathrm{ref,CPTP}}
+&\le\sum_k\ell_k+f\\
+&\le\sqrt{(a+1)^2-4a\left(\sum_k|\gamma_k|\right)^2}+f\\
+&\le\sqrt{(a+1)^2-4as^2}+f=2U(E,f).
+\end{aligned}
+$$
+
+达到假设再次强制全部等号。因而每个活坐标 $P_k+Q_k>0$ 都满足
+
+$$
+|\gamma_k|=\frac{s(aP_k+Q_k)}{a+1}>0.
+$$
+
+所以 $P_k>0$ 当且仅当 $Q_k>0$，且活坐标上的两个参考向量内积非零。这是经典坐标的非零质量支撑相同，不要求两参考向量平行。
+
+另一方面，
+
+$$
+\sum_k\operatorname{tr}D_k=a-1=-f<0.
+$$
+
+因此存在一个坐标 $(h,j)$ 满足 $\operatorname{tr}D_{h,j}<0$。该坐标活跃，故 $u=u_{h,j}$、$v=v_{h,j}$ 都非零，且 $\langle v,u\rangle\ne0$。实际前缀的乘积结构保证 $u_{h,1-j}$ 与 $u$ 平行。
+
+若 $u,v$ 线性无关，则 $D=a|u\rangle\langle u|-|v\rangle\langle v|$ 在二维参考空间上可逆不定。如果 $u_{h,1-j}\ne0$，正噪声三角等号就要求 $u$ 为 $D$ 的正特征向量。然而
+
+$$
+Du=a\|u\|^2u-\langle v,u\rangle v
+$$
+
+不与 $u$ 平行，因为内积非零且 $u,v$ 独立，矛盾。若 $u,v$ 平行，负迹条件使 $D$ 成为非零负半定秩一算子；任何沿同方向的非零正噪声都会使标量三角不等式严格。因此两种情形都要求
+
+$$
+u_{h,1-j}=0.
+$$
+
+非零质量支撑相同再给出 $v_{h,1-j}=0$。选中坐标的两参考向量均非零，所以共同末次幺正之后的两个系统因子都沿 $|j\rangle$。共同系统幺正可逆，故控制之前的实际系统因子与理想系统因子平行，即实际物理分支的系统支撑为 $P_{i_h}$。
+
+把选中历史写成 $h=g\ell$，其中 $\ell=i_h$ 是倒数第二次结果。令 $\sigma_g^{\rm A}$ 为倒数第二次共同 CPTP 控制之后、该仪器之前的实际物理 $SR$ 分支。其结果算子
+
+$$
+K_\ell=\sqrt{1-\beta_{N-1}}\,P_\ell
++\sqrt{\beta_{N-1}}\,P_{1-\ell}
+$$
+
+可逆，并满足
+
+$$
+\rho_h^{\rm A}=(K_\ell\otimes I_R)
+\sigma_g^{\rm A}(K_\ell\otimes I_R).
+$$
+
+选中实际分支非零、纯且系统沿 $|\ell\rangle$。只反演这个仪器结果算子，得到
+
+$$
+\sigma_g^{\rm A}
+=\frac{1}{1-\beta_{N-1}}\rho_h^{\rm A}.
+$$
+
+因此该父分支也是纯乘积，系统仍沿同一指针。这一步没有反演或限制此前的 CPTP 控制。
+
+考察兄弟历史 $h'=g(1-\ell)$。实际分支为
+
+$$
+\rho_{h'}^{\rm A}
+=\frac{\beta_{N-1}}{1-\beta_{N-1}}\rho_h^{\rm A}\ne0,
+$$
+
+系统支撑仍为 $P_\ell$。理想兄弟分支如果为零，则其完整纯化与实际分支的内积为零；如果非零，则理想秩一读取使其系统支撑为 $P_{1-\ell}$，同样与实际系统支撑正交。因此无论哪一种情况，都有
+
+$$
+\delta_{h'}=\langle y_{h'},x_{h'}\rangle=0.
+$$
+
+但实际兄弟分支非零，使 $h'$ 成为活历史，违反前缀等号条件对每个活历史给出的 $|\delta_{h'}|>0$。矛盾。
+
+这排除了当前参数条件下任何达到 $U(E,f)$ 的协议。前面已经证明允许类的最大值存在，故其最优值严格小于 $U(E,f)$。与充分性结合，得到完整低末次错误率等号分类。证毕。
+
+**推论 32.2（全部参数域的 CPTP 等号分类与最小记忆维数）。** 对任意有限 $N\ge2$ 和全部参数 $\beta_t\in[0,1]$，令
+
+$$
+f=\beta_N,
+\qquad E=1-\prod_{t=1}^{N-1}(1-\beta_t).
+$$
+
+在定义 27.1 的系统 CPTP 与惰性参考任务中，完整等号条件为
+
+$$
+\begin{aligned}
+T_N^{\mathrm{ref,CPTP}}(\boldsymbol\beta)=U(E,f)
+\quad\Longleftrightarrow\quad
+&\beta_N=0\ \text{或}\ \beta_{N-1}=0\\
+&\text{或存在 }t\in\{1,\ldots,N\}\text{ 使 }\beta_t=1.
+\end{aligned}
+$$
+
+考虑允许任意共同 $SM$ CPTP 控制、额外任意有限维惰性参考 $R$、最终保留 $H_NMR$ 的可操作记忆任务。以达到定理 22.2 的 $U(E,f)$ 为目标，所需非零记忆 $M$ 的最小维数恰为
+
+$$
+d_{\min}(\boldsymbol\beta)=
+\begin{cases}
+1,&\beta_N=0\ \text{或}\ \beta_{N-1}=0\ \text{或某个 }\beta_t=1,\\
+2,&\beta_N>0,\ \beta_{N-1}>0\ \text{且全部 }\beta_t<1.
+\end{cases}
+$$
+
+当 $N=1$ 时，在全部参数域有 $T_1^{\mathrm{ref,CPTP}}(\beta_1)=U(0,\beta_1)=\beta_1$，且 $d_{\min}=1$。这些结论分类的是达到可操作记忆最优值所需的记忆维数，不断言任意中间系统 CPTP 控制与系统幺正控制的一般最优值相等。
+
+证明。$f=0$ 时，定理 22.3 的无参考共同系统幺正构造已经达到 $U(E,0)$，并由定理 22.2 的上界确定等号。$0<f<1/2$ 时应用定理 32.1；$1/2\le f\le1$ 时应用定理 31.2。三个互不重叠的参数范围穷尽 $f\in[0,1]$，给出所述完整等号条件。
+
+当 $\dim M=1$ 时，共同 $SM$ CPTP 控制就是系统 CPTP 控制，任意额外惰性参考与最终输出恰对应 $T_N^{\mathrm{ref,CPTP}}$。因此，在等号条件的补集上，严格不等式排除了维数一的记忆达到 $U$。定理 22.2 用一个初始为 $|0\rangle$ 的可操作记忆量子比特、末次前的一次 SWAP 及此前共同实反馈达到 $U$，不需要额外参考，所以维数二足够。在等号域，定理 22.3 的无参考系统幺正构造已以维数一达到；非零记忆的维数不能小于一。单步值由定理 27.2 与定理 22.2 给出，指针输入以维数一的记忆达到。这证明全部维数结论。证毕。
+
+## 追加锚（新终端）
