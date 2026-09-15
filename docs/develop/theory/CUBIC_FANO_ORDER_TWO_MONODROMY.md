@@ -943,3 +943,416 @@ result={'exact_filtration_checks':out,'lean_compiled':False,'proof_by_exhaustive
 Path('audit_filtration_results.json').write_text(json.dumps(result,indent=2))
 print(json.dumps(result,indent=2))
 ```
+
+## 19. 从真实 primitive 作用反推出自然算子
+
+本节开始的新增结果处理另一项先前未闭合的表示条件：此前第 8、16 节把自然算子 rank one 当作输入；现在从实际 primitive 外幂作用的平方为零推出它。几何八维 lift 的存在仍未被假定为已证。
+
+设 K 是域，I 是有限指标集，n=|I|，记
+
+\[
+F_{kl}=E_{kl}-E_{lk},\qquad
+\mathcal A_X(B)=XB+BX^t.
+\]
+
+当特征不为 2 时，交替系数矩阵 B 严格实现二阶外幂：向量 \(\sum_{i<j}B_{ij}e_i\wedge e_j\) 的导出作用就是 \(\mathcal A_X\)。该定义从实际矩阵乘法出发，没有输入一个宣称来自外幂的任意作用表。
+
+### 定理 19.1. 一次收缩和二次收缩
+
+对任意 X，不要求辛或幂零，均有
+
+\[
+\sum_j\mathcal A_X(F_{kj})_{ij}
+=(n-2)X_{ik}+\delta_{ik}\operatorname{tr}X,\tag{19.1}
+\]
+\[
+\sum_j\mathcal A_X^2(F_{kj})_{ij}
+=(n-4)(X^2)_{ik}+2\operatorname{tr}(X)X_{ik}
++\delta_{ik}\operatorname{tr}(X^2).\tag{19.2}
+\]
+
+**证明。** 展开矩阵单位得
+
+\[
+\mathcal A_X(F_{kl})_{ij}
+=X_{ik}\delta_{jl}-X_{il}\delta_{jk}
++\delta_{ik}X_{jl}-\delta_{il}X_{jk}.
+\]
+
+再由实际复合算出
+
+\[
+\mathcal A_X^2(B)=X^2B+2XBX^t+B(X^2)^t.
+\]
+
+其中 \((XF_{kl}X^t)_{ij}=X_{ik}X_{jl}-X_{il}X_{jk}\)。取 l=j 后对 j 求和，分别使用 \(\sum_jX_{ij}X_{jk}=(X^2)_{ik}\) 和对角求迹，即得两式。证毕。
+
+对应 Lean 源 `ExteriorSquareContraction.lean` 中的 `first_contraction`、`second_contraction`。该源码不是一个仅储存上述公式的结构，公式由矩阵单位和有限和证明。
+
+### 定理 19.2. 二次外幂幂零强制自然 rank-one 因子
+
+假设标量 2、n−2、n−4 在 K 中非零，tr X=0，且对所有 k,l 都有 \(\mathcal A_X^2(F_{kl})=0\)。则
+
+\[
+X^2=0,\qquad
+\exists u,v\in K^I:\ X_{ij}=u_iv_j,\quad \sum_jv_ju_j=0.\tag{19.3}
+\]
+
+因而非零 X 的秩恰为一。
+
+**证明。** 对 (19.2) 的对角再求和，得到
+
+\[
+2(n-2)\operatorname{tr}(X^2)=0.
+\]
+
+故 tr(X²)=0。回代所有条目得到 (n−4)X²=0，故 X²=0。此时未收缩的二次公式给出
+
+\[
+2(X_{ik}X_{jl}-X_{il}X_{jk})=0,
+\]
+
+所以全部二阶子式消失。若 X=0，取 u=v=0。否则选择真实非零枢轴 X_pq，定义
+
+\[
+u_i=X_{iq},\qquad v_j=X_{pj}/X_{pq}.
+\]
+
+用行 i,p 与列 j,q 的子式即得 X_ij=u_i v_j；同时
+
+\[
+\sum_jv_ju_j=(X^2)_{pq}/X_{pq}=0.
+\]
+
+证毕。这里没有把 nilpotent、rank one 或某个 Jordan 型写进输入。
+
+对应 Lean 声明为 `square_zero_and_minors`、`pivot_factorization` 和 `exterior_square_zero_rank_one`。n−4 条件是本收缩证明的边界，不声称 n=4 时存在相反实例。
+
+## 20. 从 primitive 子空间到全外幂的缺失一步已经补出
+
+令 J 可逆且 J^t=−J，X^tJ=−JX。定义实际子空间和投影
+
+\[
+W_J=\{B:B^t=-B,\ \operatorname{tr}(JB)=0\},
+\qquad
+\pi_J(B)=B-\frac{\operatorname{tr}(JB)}nJ^{-1}.\tag{20.1}
+\]
+
+普通辛收缩在这些系数上的表达式与 tr(JB) 相差非零常数 −2，因此核就是 primitive 二阶外幂。假设 n≠0。
+
+### 定理 20.1. 实际投影、实际限制与无损读回
+
+J⁻¹ 交替，\(\mathcal A_X(J^{-1})=0\)，\(\mathcal A_X(W_J)\subset W_J\)，并且对交替 B 有
+
+\[
+\pi_J(B)\in W_J,\qquad
+\mathcal A_X(\pi_J(B))=\mathcal A_X(B).\tag{20.2}
+\]
+
+**证明。** 转置 JJ⁻¹=1 并用 J^t=−J 得 (J⁻¹)^t=−J⁻¹。将 X^tJ=−JX 左右乘逆矩阵得 J⁻¹X^t=−XJ⁻¹，所以不变线被实际作用杀掉。
+\(\mathcal A_X(B)\) 的转置由 B 的交替性直接计算；迹循环性给出
+
+\[
+\operatorname{tr}(J\mathcal A_X(B))
+=\operatorname{tr}(JXB)+\operatorname{tr}(X^tJB)=0.
+\]
+
+最后 tr(JJ⁻¹)=n，代入投影定义得到其收缩为零，且删除不变线不改变作用。证毕。
+
+源码 `PrimitiveExteriorRecognition.lean` 先定义真实 `Submodule`，证明不变性，再定义其真实限制线性自映射 `primitiveAction`。不存在把“primitive 作用可延拓”为字段的步骤。
+
+### 定理 20.2. primitive 二次判据
+
+假设 2、n、n−2、n−4 非零。如果上述实际限制 \(P_X=\mathcal A_X|_{W_J}\) 满足 \(P_X^2=0\)，则结论 (19.3) 成立。
+
+**证明。** 从 X^tJ=−JX 和迹循环性推出 tr X=−tr X，故 tr X=0。对每个 F_kl 先使用 (20.2) 投影到 W_J。实际 P_X²=0 与被杀掉的不变线迫使 \(\mathcal A_X^2(F_{kl})=0\)，应用定理 19.2。证毕。
+
+对应 Lean 声明为 `primitive_square_zero_on_wedges`、`primitive_square_zero_rank_one`。`dimension_eight_recognition` 在特征零、I=Fin 8 时实际消去所有标量非零义务，结论给出 X²=0 和完整外积分解。
+
+维数 8 下，交替系数空间维数为 28，收缩因 tr(JJ⁻¹)=8 非零而满射，所以 dim W_J=27。这个维数计数是普通有限线性代数推导，尚未单独写成 Lean 声明。
+
+### 定理 20.3. primitive infinitesimal 作用的显式逆
+
+对实际 primitive 输入有
+
+\[
+\sum_j\mathcal A_X\bigl(\pi_J(F_{kj})\bigr)_{ij}=(n-2)X_{ik}.
+\]
+
+当 n−2≠0，右端可直接相除。特别地 n=8 时
+
+\[
+X_{ik}=\frac16\sum_j\mathcal A_X\bigl(\pi_J(F_{kj})\bigr)_{ij}.\tag{20.3}
+\]
+
+**证明。** (20.2) 将左边变成 (19.1)，再使用 tr X=0。证毕。
+
+对应源码为 `primitive_first_contraction`；源中的矩阵等式在更弱假设下也成立，而将投影输入解释为 W_J 的元素需同时使用已证明的 `project_mem_primitive`。式 (20.3) 是在已经指定自然空间与辛形式后求逆，不能为一个任意 27 维空间凭空选择未知的外幂坐标结构。
+
+## 21. 普通推论：必要性、充分性和局部 Jordan 类型
+
+本节的逆向和秩计数是普通证明，尚未单独写为 Lean 声明。
+
+对特征零八维辛 X，有
+
+\[
+P_X^2=0\quad\Longleftrightarrow\quad X^2=0\text{ 且 }\operatorname{rank}X\le1.\tag{21.1}
+\]
+
+必要性由定理 20.2。充分性中将 X=u v^t 代入，交替 B 满足 v^tBv=0，所以 XBX^t=0；再用实际二次展开即可。
+
+当 X≠0，可选辛基使其唯一非零基本作用为 f_1↦c e_1 (c≠0)。primitive 空间中的 f_1∧z (z∈span{e_2,...,e_4,f_2,...,f_4}) 分别映到 c e_1∧z，给出六个独立像方向，其余基本项均不增加像。因此
+
+\[
+\operatorname{rank}P_X=6,
+\qquad\text{Jordan 类型为 }2^6 1^{15}.\tag{21.2}
+\]
+
+更一般地，若 X²=0 且 rank X=r 在 n 维辛空间中，写 t=n−2r。自然表示作为 nilpotent Jordan 模由 r 个二维块与 t 个平凡块组成。二阶外幂中，每两个二维块贡献一个三维块与一个平凡块，每个二维块与一个平凡块贡献一个二维块，同一二维块的外幂为平凡块；primitive 部分再删除一个不变平凡块。这给出
+
+\[
+\#J_3=\binom r2,\quad \#J_2=rt,
+\quad \#J_1=r+\binom r2+\binom t2-1,
+\]
+\[
+\operatorname{rank}P_X=r(n-r-1),
+\qquad\operatorname{rank}P_X^2=\binom r2.\tag{21.3}
+\]
+
+这个分解可以通过对每个二维 Jordan 块的两个基向量直接求楔积得到。它解释了下面算例中 rank 2、3 的自然平方零算子仍会在 primitive 作用平方中留下秩 1、3，且不会被 (21.1) 错收为 rank one。此处不将经典 Jordan 张量分解单列为新发现。
+
+## 22. 群元素的完整识别必须保留中心符号
+
+以下是复数域上的普通代数表示证明，尚未形式化 Jordan 分解及 exp/log。令 \(\rho:\mathrm{Sp}_8\to\mathrm{GL}(W_J)\) 为真实 primitive 二阶外幂表示。
+
+### 定理 22.1. 不预设 unipotent 的群元素识别
+
+若 g∈Sp8，\(\Delta=\rho(g)-1\ne0\)，且 Δ²=0，则存在 ε∈{1,−1} 和非零 rank-one N，使
+
+\[
+g=\varepsilon(1+N),\quad N^2=0,
+\quad\Delta=\mathcal A_N|_{W_J}.\tag{22.1}
+\]
+
+**证明。** 先证明 kerρ={±1}。Sp8 固定由 J⁻¹ 张成的不变线，若它在 primitive 部分恒等，则全二阶外幂恒等。若 Λ²g=1，则 g 保持每个由 u,v 张成的二平面。固定非零 u，并取所有包含 u 的二平面之交，得到 gu∈Ku。故 g 是标量，外幂恒等迫使标量平方为 1。
+
+取 g 的乘法 Jordan 分解 g_sg_u。因为 ρ(g)=1+Δ 幂单，ρ(g_s)=1，故 g_s=ε1。令 X=log(g_u)，则 X∈sp8，表示与 exp/log 相容给出
+
+\[
+\mathcal A_X|_{W_J}=\log(1+\Delta)=\Delta.
+\]
+
+定理 20.2 推出 X²=0 且 rank X≤1。Δ非零推出 X非零，因此 rank X=1，g_u=exp X=1+X。证毕。
+
+特别地，若 g 本身已知幂单，ε=1。对于任意 primitive 观察，ε 不能恢复：ρ(g)=ρ(−g)。因此从 Δ²=0 直接声称 (g−1)²=0 是错误的；负号提升通常使 g−1 可逆。本轮的精确八维例子同时检验了两个中心符号。
+
+这个定理仍要求已知 g 所在的自然辛空间和真实表示 ρ。它移除了自然 rank-one 和自然幂单的先验条件，保留了几何 lift 本身的义务。
+
+## 23. 关联循环路线的对象核对与可用修正
+
+进一步核对 [IW14, §2 and §4] 后，应补充第 9 节中“选择通用嵌入”的具体含义。一般 A∈A4 的 Prym 纤维 S 是曲面；但参数化 theta 中 Prym-embedded curves 的自然空间 F→S 的纤维是曲线 λ(X-tilde)，所以 dim F=3。其 tautological curve family C→F 的总空间维数为 4。该文 Theorem 4.1 研究的是 H5(F)→H3(Theta) 的 Abel-Jacobi 像，不是我们需要的 H2(A)_prim→H2(S)_minus 比较。
+
+因此，原先的三维关联循环 Z⊂A×S 不能直接用这个自然四维全族代替。原文第 9 节已经保留了选择、下降和非零性义务；这里明确一个可用的修正：在这些实际族及适当紧化已经给定时，取 F 上相对 S 的 ample 除子类 η，设 r:C→F、p:F→S、e:C→A，则
+
+\[
+Z_\eta=(e,p\circ r)_*\bigl(r^*\eta\cap[C]\bigr)\in CH^3(A\times S)
+\]
+
+具有正确余维。可以由它定义
+
+\[
+\Psi_\eta(\alpha)=\frac{1-\tau^*}{2}(Z_\eta)_*(\theta\cup\alpha).
+\]
+
+这给出了修正后的具体候选，不证明其 primitive 反不变分量非零，也没有证明它在所需 moduli 基变换上的所有延拓与平坦性条件。特别不能由总族维数不同推断所有候选必为零，也不能把另一项 Abel-Jacobi 满射替代本问题的非零性。
+
+## 24. 本轮结果对公开问题增加了什么
+
+已完成的表示结论是：给定真实八维辛 lift，27 维 primitive infinitesimal 平方零条件足以构造自然 rank-one nilpotence；对群元素还精确保留 ±1 中心歧义。由此可以把此前输入中的 rank-one 条件改成一个实际 27×27 矩阵平方检查，再连接第 12–15 节的配对图生成论。
+
+未完成的关键仍是几何 lift 或非零平坦比较。没有把任意27维平方零算子都宣布具有辛外幂来源，没有用新矩阵实例宣称解决 [KLM26] 的阶二预期，也没有完成 Ψ_eta 的非零性。RC+ 与 RC− 的范围限制继续有效。
+
+下一项决定性研究对象现在是实际几何的局部 monodromy 及其相容的全局 intertwiner，或修正循环 Z_eta 在 primitive 反不变 Kunneth 分量上的计算。局部 Jordan 类型2^6 1^15本身不识别整个全局 monodromy 群。
+
+## 25. 新增文献、证明状态与精确算例
+
+[OM24] Ron Ofir and Michael Margaliot. *Multiplicative and additive compounds via Kronecker products and Kronecker sums*. arXiv:2401.02100. 本文借鉴其实际 compound/Kronecker 语境，不把外幂矩阵公式的存在宣称为新结果。
+https://arxiv.org/abs/2401.02100
+
+[DOG26] Debojyoti Dey, Ron Ofir and Christian Grussler. *Inversion of the Multiplicative Matrix Compound Operator*. arXiv:2605.27682v3, 15 July 2026. 该文研究乘法 compound 的逆问题；本文的 primitive infinitesimal 收缩与平方零识别是另一个明确陈述，不把乘法逆问题误作尚无人研究。
+https://arxiv.org/abs/2605.27682
+
+[IW14] Elham Izadi and Jie Wang. *The primitive cohomology of theta divisors*. arXiv:1410.5868v1. §2 的 Prym embeddings，§4 的三维参数空间 F 及 Theorem 4.1。它们只支持第 23 节所注明的具体对象与 Abel-Jacobi 结论。
+https://arxiv.org/abs/1410.5868
+
+本轮两份新增 Lean 真源均配有 Scribe，均未在此环境运行 Lean elaboration、kernel 检查或 Scribe 编译。数学证明完整性与实际编译状态分别记录；没有新增公理、sorry 或 admit 的文本检查不能替代编译。全局新颖性未确立，未计入解决公开猜想的数量。
+
+独立有理数核验从矩阵乘法构造作用及 primitive 基，不把上述公式作为测试定义。对维数3、4、6、8各一个一般矩阵检查全部一次和二次收缩条目；对维数6、8的实际 primitive 子空间，分别检查自然rank1、rank2、rank3平方零算子及一般非幂零辛算子。通过了全部 primitive 不变性、投影与逆恢复等式。八维结果如下：
+
+|自然算子|自然rank|自然平方rank|primitive rank|primitive平方rank|
+|---|---:|---:|---:|---:|
+|平方零rank1|1|0|6|0|
+|平方零rank2|2|0|10|1|
+|平方零rank3|3|0|12|3|
+|一般辛算子|8|8|24|24|
+
+另在真实群外幂上验证 1+N 与 −(1+N) 的 primitive 像相同、增量rank6且平方零，而负号提升减去单位阵的rank为8。最初的通用符号rank实现触及执行时限；改用有理数域矩阵消元后，完整核验和追加中心符号核验均执行成功。这是有限精确算例，不是穷尽搜索或 Lean 证明。
+
+### 本轮完整核验脚本
+
+将下列内容保存为 `audit_primitive_recognition.py` 后运行；输出 JSON 是脚本旁的实际计算结果。
+
+```python
+"""Exact coefficient-space checks; no Lean run and no geometric input."""
+from __future__ import annotations
+from itertools import combinations
+from pathlib import Path
+import json
+import random
+import sympy as s
+
+rng = random.Random(81462026091619)
+
+def exact_rank(M: s.Matrix) -> int:
+    return M.to_DM().rank()
+
+def wedge_unit(n: int, i: int, j: int) -> s.Matrix:
+    B = s.zeros(n)
+    B[i,j] += 1
+    B[j,i] -= 1
+    return B
+
+def action(X: s.Matrix, B: s.Matrix) -> s.Matrix:
+    return X*B + B*X.T
+
+def contractions(X: s.Matrix) -> tuple[s.Matrix, s.Matrix]:
+    n = X.rows
+    C1, C2 = s.zeros(n), s.zeros(n)
+    for k in range(n):
+        for j in range(n):
+            A = action(X, wedge_unit(n,k,j))
+            A2 = action(X,A)
+            for i in range(n):
+                C1[i,k] += A[i,j]
+                C2[i,k] += A2[i,j]
+    return C1,C2
+
+def canonical_j(n: int) -> s.Matrix:
+    if n % 2: raise ValueError('symplectic dimension must be even')
+    g=n//2
+    return s.zeros(g).row_join(s.eye(g)).col_join((-s.eye(g)).row_join(s.zeros(g)))
+
+def primitive(J: s.Matrix, X: s.Matrix):
+    n=J.rows
+    pairs=list(combinations(range(n),2))
+    units=[wedge_unit(n,i,j) for i,j in pairs]
+    c=s.Matrix([[s.trace(J*B) for B in units]])
+    pivot=next(j for j in range(len(pairs)) if c[j] != 0)
+    keep=[j for j in range(len(pairs)) if j != pivot]
+    basis=s.zeros(len(pairs),len(keep))
+    for col,j in enumerate(keep):
+        basis[j,col]=1
+        basis[pivot,col]=-c[j]/c[pivot]
+    columns=[action(X,B) for B in units]
+    full=s.Matrix(len(pairs),len(pairs),lambda r,k: columns[k][pairs[r][0],pairs[r][1]])
+    image=full*basis
+    restricted=image[keep,:]
+    assert c*basis==s.zeros(1,len(keep))
+    assert exact_rank(basis)==len(keep)
+    assert basis*restricted==image
+    return restricted
+
+arbitrary=[]
+for n in [3,4,6,8]:
+    X=s.Matrix(n,n,lambda i,j:rng.randint(-3,3))
+    C1,C2=contractions(X)
+    assert C1==(n-2)*X+s.trace(X)*s.eye(n)
+    assert C2==(n-4)*X**2+2*s.trace(X)*X+s.trace(X**2)*s.eye(n)
+    print('contractions', n, flush=True)
+    arbitrary.append({'n':n,'trace':str(s.trace(X)), 'all_first_and_second_entries_checked':True})
+
+cases=[]
+for n in [6,8]:
+    J0=canonical_j(n)
+    P=s.eye(n);P[0,1]=2;P[2,n-1]=3
+    J=P.T*J0*P
+    Q=J.inv()
+    examples=[]
+    for rank in [1,2,3]:
+        N=s.zeros(n)
+        for i in range(rank): N[i,:]=J0[i,:]
+        examples.append((f'square_zero_rank_{rank}',P.inv()*N*P))
+    S=s.Matrix(n,n,lambda i,j:rng.randint(-2,2)); S=S+S.T
+    examples.append(('general_symplectic',S*J))
+    for name,X in examples:
+        assert J.T==-J and J.det()!=0
+        assert X.T*J+J*X==s.zeros(n)
+        assert s.trace(X)==0
+        assert action(X,Q)==s.zeros(n)
+        recovered=s.zeros(n)
+        for k in range(n):
+            for j in range(n):
+                F=wedge_unit(n,k,j)
+                B=F-s.trace(J*F)/n*Q
+                assert B.T==-B and s.trace(J*B)==0
+                assert action(X,B)==action(X,F)
+                A=action(X,B)
+                for i in range(n): recovered[i,k]+=A[i,j]/(n-2)
+        assert recovered==X
+        W=primitive(J,X)
+        square=W**2
+        if name=='square_zero_rank_1':
+            assert square==s.zeros(W.rows)
+            assert X**2==s.zeros(n) and exact_rank(X)==1
+            p,q=next((i,j) for i in range(n) for j in range(n) if X[i,j]!=0)
+            u=X[:,q];v=X[p,:]/X[p,q]
+            assert X==u*v and (v*u)[0]==0
+            assert exact_rank(W)==n-2
+        if name in ['square_zero_rank_2','square_zero_rank_3']:
+            r=int(name[-1])
+            assert X**2==s.zeros(n) and exact_rank(X)==r
+            assert square!=s.zeros(W.rows) and exact_rank(square)==r*(r-1)//2
+        print('primitive', n, name, flush=True)
+        cases.append({'n':n,'case':name,'primitive_dimension':W.rows,
+                      'natural_rank':exact_rank(X),'natural_square_rank':exact_rank(X**2),
+                      'primitive_rank':exact_rank(W),'primitive_square_rank':exact_rank(square),
+                      'primitive_inverse_recovery_verified':True})
+
+out={'seed':81462026091619,'arbitrary_contraction_checks':arbitrary,
+     'primitive_cases':cases,'lean_compiled':False,
+     'geometric_monodromy_input':False,'proof_by_enumeration':False}
+path=Path(__file__).with_name('audit_primitive_recognition_results.json')
+path.write_text(json.dumps(out,indent=2))
+print(json.dumps(out,indent=2))
+
+# The group representation cannot distinguish the two central signs.
+n=8
+J=canonical_j(n)
+N=s.zeros(n); N[0,:]=J[0,:]
+pairs=list(combinations(range(n),2))
+c=s.Matrix([[s.trace(J*wedge_unit(n,i,j)) for i,j in pairs]])
+pivot=next(i for i in range(len(pairs)) if c[i])
+keep=[i for i in range(len(pairs)) if i!=pivot]
+B=s.zeros(28,27)
+for col,q in enumerate(keep): B[q,col]=1; B[pivot,col]=-c[q]/c[pivot]
+images=[]
+for sign in [1,-1]:
+    G=sign*(s.eye(n)+N)
+    assert G.T*J*G==J
+    C=s.Matrix(28,28,lambda r,q:
+        G[pairs[r][0],pairs[q][0]]*G[pairs[r][1],pairs[q][1]]-
+        G[pairs[r][0],pairs[q][1]]*G[pairs[r][1],pairs[q][0]])
+    R=(C*B)[keep,:]
+    assert B*R==C*B
+    Delta=R-s.eye(27)
+    assert Delta**2==s.zeros(27) and exact_rank(Delta)==6
+    assert Delta==primitive(J,N)
+    images.append(R)
+assert images[0]==images[1]
+assert exact_rank(-(s.eye(n)+N)-s.eye(n))==8
+out['group_central_sign_check']={'both_signs_have_same_primitive_image':True,
+    'primitive_increment_rank':6,'negative_lift_minus_identity_rank':8}
+path.write_text(json.dumps(out,indent=2))
+print('central sign check passed',flush=True)
+
+```
