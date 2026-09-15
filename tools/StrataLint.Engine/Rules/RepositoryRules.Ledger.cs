@@ -20,25 +20,14 @@ internal static partial class RepositoryRules
             DomainsPolicyPath,
             FileMapPolicyPath);
 
-    private static ImmutableArray<RuleFinding> Ledger(RuleEvaluationContext context)
+    private static ImmutableArray<RuleFinding> Ledger(CurrentRuleContext context)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
-        var judgeSourceChanged = JudgeSourceChanged(context);
-        var taskSetChanged = ChangedLeanTaskSet(context);
-        var policyDataChanged = PolicyDataChanged(context);
         HashSet<string>? tasks = null;
         foreach (var (path, file) in context.Current.Files)
         {
             var governed = IsGovernedStructured(path, context.Policy);
-            var pathAffected = context.IsBaseFactAffected(path.Value);
-            var replay = ShouldReplayLedgerArtifact(
-                context,
-                path.Value,
-                judgeSourceChanged,
-                taskSetChanged,
-                policyDataChanged);
-            var anomalyAffected = pathAffected || replay;
-            if (governed && pathAffected)
+            if (governed)
             {
                 if (file.HasBom)
                 {
@@ -67,18 +56,12 @@ internal static partial class RepositoryRules
 
             if (path.Value == TowerManifestPath)
             {
-                if (pathAffected
-                    && TowerManifestParser.Parse(file.RawBytes.AsSpan())
+                if (TowerManifestParser.Parse(file.RawBytes.AsSpan())
                     is TowerManifestParseOutcome.Invalid invalid)
                 {
                     findings.Add(new RuleFinding(path.Value, $"invalid TOWER schema: {invalid.Message}"));
                 }
 
-                continue;
-            }
-
-            if (!anomalyAffected)
-            {
                 continue;
             }
 
@@ -96,13 +79,13 @@ internal static partial class RepositoryRules
                         AddressSlot.Entry,
                         tasks,
                         findings,
-                        scanAnomalies: anomalyAffected,
-                        scanStrings: governed && anomalyAffected,
-                        enforceKeyOrder: governed && pathAffected);
+                        scanAnomalies: true,
+                        scanStrings: governed,
+                        enforceKeyOrder: governed);
                 }
                 catch (JsonException)
                 {
-                    if (governed && pathAffected)
+                    if (governed)
                     {
                         findings.Add(new RuleFinding(path.Value, "structured anomaly scan cannot parse JSON"));
                     }
@@ -116,9 +99,9 @@ internal static partial class RepositoryRules
                     file.Text,
                     tasks,
                     findings,
-                    scanAnomalies: anomalyAffected,
-                    enforceKeyOrder: governed && pathAffected,
-                    reportParseErrors: pathAffected);
+                    scanAnomalies: true,
+                    enforceKeyOrder: governed,
+                    reportParseErrors: true);
             }
             else if (path.Value.StartsWith("Chronicle/", StringComparison.Ordinal))
             {
@@ -127,57 +110,13 @@ internal static partial class RepositoryRules
                     file.Text,
                     tasks,
                     findings,
-                    scanAnomalies: anomalyAffected,
-                    reportParseErrors: pathAffected);
+                    scanAnomalies: true,
+                    reportParseErrors: true);
             }
         }
 
         return findings.ToImmutable();
     }
-
-    private static bool ChangedLeanTaskSet(RuleEvaluationContext context)
-    {
-        var currentTasks = CollectTaskCodes(context.Current);
-        var baselineTasks = CollectTaskCodes(context.Baseline);
-        return !currentTasks.SetEquals(baselineTasks);
-    }
-
-    private static bool PolicyDataChanged(RuleEvaluationContext context) =>
-        context.Changes.Paths.Any(path => IsLedgerPolicyDataPath(path.Value));
-
-    private static bool JudgeSourceChanged(RuleEvaluationContext context) =>
-        context.RuleImplementationChanged
-        || context.Changes.Paths.Any(path =>
-            StrataLintEngineBuildInputs.ContainsJudgeSource(path.Value));
-
-    /// <summary>
-    /// SL-019 may skip a stored artifact only when all four replay-contract conditions hold:
-    /// (a) the complete judge source closure is unchanged (<c>tools/</c>, excluding
-    /// <c>tools/tests/</c>, Blueprint scribe compile inputs, plus inherited build inputs); (b) none
-    /// of the closed policy or conservative wake paths changed; (c) the formal-file TASK-code set
-    /// is unchanged; and (d) this artifact is not an affected JSON, YAML, or Chronicle ledger path.
-    /// Conditions (a)-(c) replay the full corpus; condition (d) preserves the per-artifact scan for
-    /// affected paths.
-    /// </summary>
-    private static bool ShouldReplayLedgerArtifact(
-        RuleEvaluationContext context,
-        string path,
-        bool judgeSourceChanged,
-        bool taskSetChanged,
-        bool policyDataChanged) =>
-        judgeSourceChanged
-        || policyDataChanged
-        || taskSetChanged
-        || LedgerArtifactChanged(context, path);
-
-    private static bool LedgerArtifactChanged(RuleEvaluationContext context, string path) =>
-        context.IsBaseFactAffected(path) && IsStructuredLedgerArtifactPath(path);
-
-    private static bool IsStructuredLedgerArtifactPath(string path) =>
-        path.EndsWith(".json", StringComparison.Ordinal)
-        || path.EndsWith(".yaml", StringComparison.Ordinal)
-        || path.EndsWith(".yml", StringComparison.Ordinal)
-        || path.StartsWith("Chronicle/", StringComparison.Ordinal);
 
     internal static bool IsLedgerPolicyDataPath(string path) =>
         LedgerPolicyDataPaths.Contains(path);
