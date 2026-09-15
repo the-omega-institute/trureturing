@@ -2294,3 +2294,67 @@ $$
 [^rro11_grothendieck]: mathlib 固定提交 `db584cd6d46c92f209a44c0f1c829460d327499d`：[GrothendieckGroup.lean](https://raw.githubusercontent.com/leanprover-community/mathlib4/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/GroupTheory/MonoidLocalization/GrothendieckGroup.lean) 中，`Algebra.GrothendieckGroup` 是在全体元素处作局部化；`Algebra.GrothendieckGroup.of_injective` 在交换幺半群前提外显式要求 `IsCancelMul`，`Algebra.GrothendieckGroup.lift` 给出到任意交换群的同态扩张等价。[MonoidLocalization/Basic.lean](https://raw.githubusercontent.com/leanprover-community/mathlib4/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/GroupTheory/MonoidLocalization/Basic.lean) 的 `Localization.r_iff_exists` 与 `Localization.mk_eq_mk_iff` 在一般交换幺半群上保留属于所局部化子幺半群的稳定乘子；取全体元素组成的子幺半群并按加法记号翻译，即为定理 11.4 的稳定项等价。省去稳定项的 `Localization.mk_eq_mk_iff'` 另要求消去性，不能用于一般非消去情形。
 
 ## 追加锚（本行以下为增补区）
+
+## 12. 增补·闭像与原关系闭性的饱和条件
+
+**定义 12.0（饱和化）。** 设 $X,K$ 为拓扑空间，$j:X\to K$ 连续，$A\subseteq X$。定义 $A$ 关于 $j$ 的饱和化为
+
+$$
+\operatorname{Sat}_j(A)=j^{-1}(j[A])
+=\{x\in X:\exists a\in A,\ j(x)=j(a)\}.
+$$
+
+若 $A=\operatorname{Sat}_j(A)$，称 $A$ 关于 $j$ 饱和，即 $A$ 是完整 $j$ 纤维的并。子集均取子空间拓扑；“紧致”指每个开覆盖存在有限子覆盖，不附加 Hausdorff 条件。
+
+对第 7 节的关系记号，给 $X,Y,Z$ 指定拓扑，并假设每个 $q_n^U$ 连续；$Q_n^U$ 仍取有限离散拓扑，$K_U$ 取逆极限的子空间拓扑。于是 $\iota_U$ 连续。所有关系载体均取积拓扑，记
+
+$$
+j_{XY}=\iota_X\times\iota_Y:X\times Y\to K_X\times K_Y,
+\qquad
+j_{YZ}=\iota_Y\times\iota_Z:Y\times Z\to K_Y\times K_Z.
+$$
+
+对 $R\subseteq X\times Y$、$S\subseteq Y\times Z$，沿用 $R^0=j_{XY}[R]$、$S^0=j_{YZ}[S]$。“原关系相对闭”分别指在给定的 $X\times Y$、$Y\times Z$ 中闭。
+
+**定理 12.1（第7.3条闭性比较的更正）。** 第 7.3 条证明后的首句“关系像在完成空间中闭，比关系在原载体中相对闭强。”的无条件比较不成立，以如下条件命题替代。一般构件为标准点集拓扑复用；紧致性结论的数学引文附于本条。[^rro12_compact]
+
+1. 对任意连续映射 $j:X\to K$ 及任意 $A\subseteq X$，若 $j[A]$ 在 $K$ 中闭，则 $\operatorname{Sat}_j(A)$ 在 $X$ 中闭。若另有 $A=\operatorname{Sat}_j(A)$，则可据此推出 $A$ 在 $X$ 中闭；$j$ 单射是保证此饱和条件的一个充分条件。因此，$R^0$ 闭保证 $\operatorname{Sat}_{j_{XY}}(R)$ 闭，在 $R=\operatorname{Sat}_{j_{XY}}(R)$ 时推出 $R$ 闭；$S$ 的对应结论使用 $j_{YZ}$。这里要求的是关于整个关系积映射的饱和性，仅有中间映射 $\iota_Y$ 单射并不保证 $R$ 或 $S$ 满足该条件。
+2. 对任意连续映射 $j:X\to K$ 及任意紧致子集 $A\subseteq X$，$j[A]$ 紧致；若 $K$ 为 Hausdorff，则 $j[A]$ 闭。源空间 $X$ 紧致且 $A$ 在 $X$ 中闭，足以保证 $A$ 紧致。因此，在连续观察下，紧致关系 $R,S$ 的完成像 $R^0,S^0$ 闭；特别地，$X,Y,Z$ 紧致且 $R,S$ 在原乘积中闭足以保证该闭像条件。
+3. 即使原载体紧致 Hausdorff、所有观察连续且中间观察单射，闭关系像仍不必推出原关系相对闭。具体取通常拓扑的 $X=[0,1]$、单点空间 $Y=Z=\{*\}$，对每个 $U\in\{X,Y,Z\}$ 和每个 $n\in\mathbb N$ 令 $Q_n^U=\{*\}$，观察及过渡映射均为唯一的常值映射。取
+   $$
+   R=(0,1]\times\{*\},\qquad S=\{(*,*)\}.
+   $$
+   则 $R^0,S^0$ 是闭单点，$\iota_Y$ 单射，而 $R$ 在 $X\times Y$ 中不闭。
+4. 反向蕴含也不成立：原关系相对闭、所有观察连续并分离点，仍不保证完成像闭；第 7.4 条证明第三组已经给出此例。因此，在一般连续观察下，两种闭性不能无条件排序。
+
+第 7.3 条的闭像与中间代表条件、其紧致 Hausdorff 充分拓扑假设及证明均保留；上述替代只更正证明之后的无条件闭性比较。
+
+**证明。** 对第一项，连续性使闭集 $j[A]$ 的原像 $j^{-1}(j[A])$ 闭，这正是 $\operatorname{Sat}_j(A)$。若 $A$ 饱和，该原像就是 $A$。总有 $A\subseteq\operatorname{Sat}_j(A)$；若 $j$ 单射，任取 $x\in\operatorname{Sat}_j(A)$，存在 $a\in A$ 使 $j(x)=j(a)$，单射性给出 $x=a\in A$，故反向包含成立。这不需要假设 $j$ 为拓扑嵌入。对关系应用同一论证时，连续映射是 $j_{XY}$ 或 $j_{YZ}$，其纤维同时涉及两个坐标；中间坐标单射本身不排除另一坐标的观察纤维含有不同点。
+
+对第二项，$j|_A:A\to j[A]$ 连续且满射。任取 $j[A]$ 的开覆盖，其原像覆盖 $A$；$A$ 的紧致性给出有限子覆盖，满射性使相应有限个原开集覆盖 $j[A]$，所以 $j[A]$ 紧致。若 $K$ 为 Hausdorff，任取 $z\in K\setminus j[A]$。对每个 $b\in j[A]$，取分别包含 $b,z$ 的不交开邻域 $U_b,V_b$。有限个 $U_{b_1},\ldots,U_{b_m}$ 覆盖 $j[A]$，则 $V_{b_1}\cap\cdots\cap V_{b_m}$ 是 $z$ 的开邻域且与 $j[A]$ 不交。因此 $K\setminus j[A]$ 开，$j[A]$ 闭；$j[A]=\varnothing$ 时结论直接成立。
+
+若 $X$ 紧致且 $A$ 闭，将 $A$ 的任意子空间开覆盖写成 $A\cap U_i$，其中 $U_i$ 在 $X$ 中开；把 $X\setminus A$ 加入这些 $U_i$ 即得 $X$ 的开覆盖。有限子覆盖限制到 $A$，证明 $A$ 紧致。对关系而言，$j_{XY},j_{YZ}$ 连续，且第 7 节的 $K_X\times K_Y$、$K_Y\times K_Z$ 为 Hausdorff，故紧致 $R,S$ 有闭像。有限个紧致空间的乘积紧致，因而 $X,Y,Z$ 紧致且 $R,S$ 在原乘积中闭时，这两个关系均紧致，满足上述条件。[^rro12_product]
+
+对第三项，所有观察层均为单点，故每个 $K_U$ 也是单点；所有观察连续，过渡律成立。$R,S$ 均非空，所以 $R^0,S^0$ 各为整个单点乘积，因而闭。$Y$ 本身为单点，故 $\iota_Y$ 单射。但对每个整数 $k\ge1$，$(1/k,*)\in R$，且在给定积拓扑中
+
+$$
+(1/k,*)\longrightarrow(0,*),\qquad (0,*)\notin R.
+$$
+
+闭集必包含其内部序列在环境空间中的极限，因此 $R$ 不闭。该例中 $j_{XY}$ 恒值且 $R$ 非空，故
+
+$$
+\operatorname{Sat}_{j_{XY}}(R)=X\times Y\ne R.
+$$
+
+于是第一项保证的是整个原乘积闭，不能据此推出 $R$ 闭。
+
+对第四项，直接采用第 7.4 条证明第三组的 $Y=\{e_k:k\in\mathbb N\}$ 及其观察拓扑。该拓扑离散，前缀观察连续且分离点，原关系 $R=\{*\}\times B_{\mathrm{ev}}$、$S=B_{\mathrm{odd}}\times\{*\}$ 相对闭；但该组已证全零点 $p$ 属于 $B_{\mathrm{ev}}$、$B_{\mathrm{odd}}$ 在 $K_Y$ 中的闭包，并且 $p\notin Y$。故 $(\ast,p)$、$(p,\ast)$ 分别属于 $R^0,S^0$ 的闭包而不属于这些像，两个完成像均不闭。结合第三项即排除无条件的双向强弱比较。
+
+最后，第 7.3 条的证明从 $R^0,S^0$ 闭得到 $\widehat R=R^0$、$\widehat S=S^0$，再用中间单射性或该条所列的单侧纤维饱和性合并两个中间代表；这一步没有从闭像反推原关系闭。该条的充分拓扑假设则通过本条第二项从原闭关系的紧致性推出闭像，再使用观察分离点。因此上述反例与更正不改变第 7.3 条的充分条件及其证明。证毕。
+
+[^rro12_compact]: The Stacks Project, *Topology*：[引理 5.12.3，Tag 005C](https://stacks.math.columbia.edu/tag/005C)（紧致空间的闭子集紧致）；[引理 5.12.7(1)，Tag 04Z9](https://stacks.math.columbia.edu/tag/04Z9)（紧致空间的连续像紧致）；[引理 5.12.4(1)，Tag 08YB](https://stacks.math.columbia.edu/tag/08YB)（Hausdorff 空间的紧致子集闭）。这些条目中的 quasi-compact 对应定义 12.0 的紧致性。
+
+[^rro12_product]: The Stacks Project, *Topology*，[Tychonov 定理，Tag 08ZU](https://stacks.math.columbia.edu/tag/08ZU)：紧致空间的乘积紧致；此处仅使用有限乘积情形，紧致性按定义 12.0 的开覆盖意义理解。
+
+## 追加锚（本行以下为增补区）
