@@ -82,7 +82,10 @@ internal sealed class ExplicitNonTwoUniformDocument : IScribeDocumentDefinition
                 + "that equality of the two a/S projections is equivalent to equality of the "
                 + "two a/T projections. Hence a belongs to S exactly when it belongs to T. "
                 + "Finite-set extensionality gives S=T, contradicting distinctness. The two "
-                + "left restrictions may have different orders throughout this proof."),
+                + "left restrictions may have different orders throughout this proof.",
+                resolves: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("adamson-explicit-graph-outside-g2"),
+                    ResolutionKind.Proved)),
             Paragraph(Text("The pigeonhole step directly reuses "),
                 Ref("D5/S0/Diagonal/PigeonholeFiber.finite_reading_has_fiber"),
                 Text(". Count identities, finite cardinalities, marker injectivity and "
@@ -92,10 +95,11 @@ internal sealed class ExplicitNonTwoUniformDocument : IScribeDocumentDefinition
                     + "arithmetic does not enumerate words or graphs.")))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role = DescribeRole.Theorem, AssessedProvenance? provenance = null) =>
+        DescribeRole role = DescribeRole.Theorem, AssessedProvenance? provenance = null,
+        OpenProblemResolutionClaim? resolves = null) =>
         Describe.Lean(DescribeId.Create("u24-" + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-            provenance ?? AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role);
+            provenance ?? AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role, resolves);
 
     private static Formula X(string value) => F.Id(value);
     private static Formula Named(string value) => Seq(Operatorname, Grp(X(value)));

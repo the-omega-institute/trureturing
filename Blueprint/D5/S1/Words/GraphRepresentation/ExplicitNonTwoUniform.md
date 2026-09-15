@@ -94,6 +94,10 @@ $$\neg\exists w,v: \operatorname{List}\left(V\right), (\forall z: V, \operatorna
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/GraphRepresentation/ExplicitNonTwoUniform.u24_not_in_g2` (`✓ std3`). ∎
 
+*Resolves.* `Problems/adamson-explicit-graph-outside-g2` (proved) by `D5/S1/Words/GraphRepresentation/ExplicitNonTwoUniform.u24_not_in_g2`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"adamson-explicit-graph-outside-g2","declaration_gid":"D5/S1/Words/GraphRepresentation/ExplicitNonTwoUniform.u24_not_in_g2","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Duncan Adamson, Amanita Dietz, Pamela Fleischmann, Annika Huch, and Silas Cato Sacher (2026). *2-word-π-representable Graphs*. URL: <https://arxiv.org/abs/2605.27183v1>.
