@@ -3723,9 +3723,9 @@ D5/S3/Observer/AgencyHolonomy/ZeroLoopPotentialEquivalence.lean
 
 ---
 
-# 增补 RK：秩准入改变最小观察深度（2026-09-16，普通证明）
+# 增补 RK：秩准入改变最小观察深度
 
-本增补把第28节的动态概念核、第34节的域变化边界和第59节的记忆需求落实到同一个固定学习任务。续推 #8130；本轮登记为评论5685368331。以下给出普通数学证明，不标记为 Lean-closed，也不宣称已解决外部命名猜想。任务始终是固定 X=I_q、Y=0、损失 ||VU||_F²/2 的同步梯度下降，没有重置、标签干预或自由梯度。
+本增补把第28节的动态概念核、第34节的域变化边界和第59节的记忆需求落实到同一个固定学习任务。任务始终是固定 X=I_q、Y=0、损失 ||VU||_F²/2 的同步梯度下降，没有重置、标签干预或自由梯度。
 
 ## RK.1 模型、实际像与一步读数
 
@@ -3906,21 +3906,19 @@ $$c\frac{1023}{1024}\frac1{64}S_*.$$
 
 本节没有从数学 Gram 的密度矩阵归一化推导一般量子物理等价。量子滤波若要实现相同操作，仍需保留成功概率、尺度、制备和可执行读数。本节也没有把精确可识别性转换成未经证明的有噪声学习算法或一般神经网络结论。
 
-## RK.7 先有文献与验证范围
+## RK.7 文献与适用范围
 
-精确 Gram 更新与离散二次修正属于已有工具。Holzmüller–Steinwart，Training Two-Layer ReLU Networks with Gradient Descent is Inconsistent，JMLR23(181),1–82,2022；库内 Library/Dynamics/holzmueller2020training.md 保留附录定位。Kunin等，Neural Mechanics: Symmetry and Broken Conservation Laws in Deep Learning Dynamics，arXiv:2012.04728，研究有限学习率打破连续守恒律。这里不把它们归为本文的深度分类结论。
+精确 Gram 更新与离散二次修正属于已有工具；[Holzmüller–Steinwart](../../../Library/Dynamics/holzmueller2020training.md) 附录C命题C.2给出最近的精确离散合同递推先例。该文的三分量代理不是这里的固定输出观察纤维，也不蕴含本文的最小深度分类。
 
 非零实多项式零集的测度事实可由对变量数归纳与Fubini证明：除系数全部为零的低维零集外，每条一维切片仅有有限根。因此上述一般位置证明不依赖未给出的数值概率假设。
 
-本轮verify_rank_depth.py实际运行517项精确符号/有理断言通过。包括真实有理 U,V 的一步恢复、二次候选式、精确2^q达到族、所有维数见证公式的有限核对、q=2,3的完整观察秩、q=2,3,4的非零四次系数，以及恰需四步的正定竞争模型。它们补充普通证明，不替代全称论证。
-
-新定理尚未Lean化，未执行Lean/Lake、Scribe或独立审稿。未声称全球新颖性认证或解决某个已发表外部具名开放猜想。没有把标准Schur补、谱坐标换基或一次矩阵展开另立为新的形式化成果。
+RK.4 的所有维数结论由其非零多项式构造承担；RK.5 的固定有理矩阵只给出 q=2 的校准实例，不替代 RK.4 的全称论证。
 
 ---
 
 # 增补 IR：中间秩的端点规则、不可辨识骨架与稳定性边界
 
-本增补延续 RK 的同一个任务：固定输入 `X=I_q`、标签 `Y=0`、损失 `||VU||_F²/2`，同步梯度下降，已知非零步长，读取完整输出矩阵。竞争模型也遵守已知隐藏宽度上界 `m`。以下均为普通数学证明，未标记为 Lean 内核证明。主要问题是 `q<m<2q` 时两个训练步后全部相容初态的精确结构。单一秩数字不能决定每个初态的最短识别历史。
+本增补延续 RK 的同一个任务：固定输入 `X=I_q`、标签 `Y=0`、损失 `||VU||_F²/2`，同步梯度下降，已知非零步长，读取完整输出矩阵。竞争模型也遵守已知隐藏宽度上界 `m`。主要问题是 `q<m<2q` 时两个训练步后全部相容初态的精确结构。单一秩数字不能决定每个初态的最短识别历史。
 
 ## IR.1 观察图给出真实的不变分块
 
@@ -4170,13 +4168,13 @@ $$\max_{0\le n\le N}\|W_n^+(t)-W_n^-(t)\|_F\longrightarrow0.$$
 
 初始重谱、零谱及首步共振不由式(IR.2)处理；任意更深的所有例外也没有被归结为统一步数。这里没有宣称完成所有非线性模型、所有测量接口的状态识别问题，或建立统一的全噪声最优估计器。
 
-半正定锥的核性质、合同谱分析、隐函数定理属于经典工具。相关原始文献包括 Saunderson、Chandrasekaran、Parrilo、Willsky，*Diagonal and Low-Rank Matrix Decompositions, Correlation Matrices, and Ellipsoid Fitting*，arXiv:1204.1220；Bekker、ten Berge，*Generic global identification in factor analysis*，Linear Algebra and its Applications 264 (1997),255–263，doi:10.1016/S0024-3795(96)00363-1。这些文献讨论相关低秩识别结构，没有被当作本固定学习前缀定理的直接证明。既有 Gram 递推来源沿用 RK.7；未作全球优先权或外部具名开放猜想解决声明。
+半正定锥的核性质、合同谱分析和隐函数定理属于经典工具；它们不直接给出本固定学习前缀的端点分类。既有 Gram 递推的适用范围沿用 RK.7。
 
 ---
 
 # 增补 RS：重谱的四步识别、共振擦除与全时域稳定预测
 
-本增补沿用 RK、IR 的固定零标签两层实线性学习任务。所解决的退化情形是：初始正奇异值可以重复，特别是所有初始奇异值完全相同。完整初态识别、后继状态识别和目标未来预测分别声明。以下主结果为普通数学证明；配套 Lean 候选仅覆盖 RS.2 的精确两步交换子纤维，未编译。
+本增补沿用 RK、IR 的固定零标签两层实线性学习任务。所解决的退化情形是：初始正奇异值可以重复，特别是所有初始奇异值完全相同。完整初态识别、后继状态识别和目标未来预测分别声明。
 
 ## RS.1 固定任务与实际状态
 
@@ -4419,8 +4417,6 @@ RS.4 给出的足够小非零竞争方向保持正定，并在真实更新中共
 
 本增补没有把初始零奇异值的一般完整纤维、任意固定小宽度的重谱最小历史、或全部非共振模型的全时域稳定性一并宣布解决。RS1 允许重复正谱和首步共振；RS4 专门解决完全重谱的正定一般位置；RS5–RS7 提供真实共振预测商的完全闭合与稳定误差。这些范围不能相互偷换。
 
-## RS.10 来源与形式化对应
+## RS.10 文献与适用范围
 
-既有 Gram 更新与有限步/梯度流差异参照本卷 RK、IR，以及 Holzmüller–Steinwart, JMLR23(181),1–82 (2022), arXiv:2002.04861；Kunin et al., *Neural Mechanics: Symmetry and Broken Conservation Laws in Deep Learning Dynamics*, arXiv:2012.04728。Hilbert–Schmidt 函数演算估计属于已有谱理论，相关背景见 Caspers、Montgomery-Smith、Potapov、Sukochev, *The best constants for operator Lipschitz functions on Schatten classes*, JFA267(10),3557–3579 (2014), arXiv:1209.3948。这里没有将这些文献的不同任务直接等同于本节被动识别问题，也没有完成全球优先权认证。
-
-配套候选源为 `D5/S3/ObserverMemory/ControlledLearning/RepeatedSpectrumPassiveFiber.lean`，唯一公开定理 `two_step_outputs_iff_commuting_difference` 对应 RS1，匹配 Scribe 同名。其证明构造完整初态差并沿两次真实递推传输，允许重谱和共振；没有重新提交已关闭 #8029 的声明。RS4 的一般位置证明和 RS5–RS7 的全未来预测目前只有普通证明，不冒称已形式化。
+RS.1 的精确 Gram 更新与有限步、梯度流之别沿用本卷 RK、IR，并可与 [Holzmüller–Steinwart](../../../Library/Dynamics/holzmueller2020training.md) 附录C命题C.2的离散合同递推比较；该先例不蕴含 RS.2 的两步交换子纤维。RS.7 的 Hilbert–Schmidt 非扩张估计由正文中的特征基展开逐项证明，其适用域仍是所声明的 Frobenius 范数与谱区间。
