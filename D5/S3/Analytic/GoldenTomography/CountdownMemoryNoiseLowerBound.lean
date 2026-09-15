@@ -4,8 +4,7 @@
    mirror-E: none(waiver:unbounded-renewal-and-noise-lower-bound)
    anchors: []
    utility: none
-   digest: A nilpotent countdown realizes many weak memory taps that remain
-     indistinguishable from zero memory at every noisy observation time. -/
+   digest: A nilpotent countdown hides weak memory taps at every noisy observation time. -/
 
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Data.Real.Basic
@@ -56,7 +55,7 @@ theorem countdown_memory_eq (J : Nat) (delta theta : Real) (ht : theta ≠ 0)
   simp_rw [hiddenOrbit_eq]
   by_cases hn : n < J
   · rw [if_pos hn, Finset.sum_eq_single n]
-    · simp only [eq_self_iff_true, true_and, if_pos hn]
+    · simp only [true_and, if_pos hn]
       exact div_mul_cancel₀ delta (pow_ne_zero n ht)
     · intro i _ hin
       simp [hin]
@@ -84,7 +83,7 @@ termination_by n => n
 decreasing_by omega
 
 private theorem renewal_range (J : Nat) (delta : Real) (hd : 0 ≤ delta)
-    (hm : (J : Real)*delta ≤ 1/2) (n : Nat) :
+    (hm : (J : Real) * delta ≤ 1 / 2) (n : Nat) :
     0 ≤ renewalResponse J delta n ∧
       (n ≠ 0 → renewalResponse J delta n ≤ 2*delta) := by
   induction n using Nat.strong_induction_on with
@@ -142,7 +141,7 @@ natural time. Every possible estimate from that same data incurs loss at least
 J*delta/2 on one of the two actual memory targets. The statement quantifies over
 arbitrary J and all estimates; it is not a finite numerical counterexample. -/
 theorem countdown_noise_lower_bound (J : Nat) (delta theta : Real)
-    (hd : 0 ≤ delta) (ht : theta ≠ 0) (hm : (J : Real)*delta ≤ 1/2) :
+    (hd : 0 ≤ delta) (ht : theta ≠ 0) (hm : (J : Real) * delta ≤ 1 / 2) :
     ∃ y : Nat → Real,
       (∀ n : Nat,
         |y n - noReturnResponse n| ≤ delta ∧
