@@ -1,0 +1,6 @@
+**定理 PM9。** 设真实 $r_n$ 是任意 $[0,1]$ 概率测度的矩，并有 $|d_n-r_n|\le\epsilon$（$1\le n\le H_0+2$）。取 PM8 中 $N=H_0+2$ 的任一最小残差相容向量，再通过 PM6 恢复 $\widehat m_0,\ldots,\widehat m_{H_0}$。则
+
+$$
+\boxed{\max_{0\le j\le H_0}|\widehat m_j-m_j|\le8\epsilon.}
+$$
+

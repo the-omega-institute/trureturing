@@ -1,0 +1,14 @@
+**证明。** 先令 $r=n\bmod q$。整数部分由 $30+1=15+10+6$ 抵消，故 $f(n,q)=f(r,q)$。若 $q\mid5n+1$，则 $5r+1=tq$，其中 $t\in\{1,2,3,4\}$。当 $q\ge6$ 时，四个商 $\lfloor30r/q\rfloor,\lfloor15r/q\rfloor,\lfloor10r/q\rfloor,\lfloor6r/q\rfloor$ 依次为
+
+$$
+\begin{array}{c|rrrr}
+t&\lfloor30r/q\rfloor&\lfloor15r/q\rfloor&\lfloor10r/q\rfloor&\lfloor6r/q\rfloor\\
+1&5&2&1&1\\
+2&11&5&3&2\\
+3&17&8&5&3\\
+4&23&11&7&4
+\end{array}
+$$
+
+且 $\lfloor r/q\rfloor=0$，逐行相减得到一。对于第二项，$\lfloor n/q\rfloor,\lfloor6n/q\rfloor,\lfloor10n/q\rfloor$ 都为零。令 $k=\lfloor30n/q\rfloor\in\{1,2\}$，则 $\lfloor15n/q\rfloor=\lfloor k/2\rfloor$，所以 $f(n,q)=k-\lfloor k/2\rfloor=1$。证毕。
+
