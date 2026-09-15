@@ -2732,7 +2732,8 @@ private def contentInputs (record : BindingRecord) : MetaM (Array TemplateAudit.
 private def inputJson (input : TemplateAudit.SourceInput) : Json := Json.mkObj [
   ("path", toJson input.path), ("sha256", toJson input.sha256)]
 
-private def recordJson (record : BindingRecord) : MetaM Json := do
+/-- Shared record wire for the inspector and census authoritative snapshots. -/
+def recordJson (record : BindingRecord) : MetaM Json := do
   let (state, diagnostic, certificate) := match record.result with
     | .undeclared => ("undeclared", Json.null, Json.null)
     | .declaredUnresolved diagnostic => ("declared_unresolved", toJson diagnostic, Json.null)

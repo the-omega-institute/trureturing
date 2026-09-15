@@ -37,6 +37,64 @@ structure Index where
   structural : Array StructuralProvenanceEntry
   named : Std.HashMap Name (Array Name)
 
+/-- Missing governed sidecars make only the binding query incomplete. The
+mathematical disposition checker keeps its independent evidence contract. -/
+def prepareBindingSnapshot (evidenceModules : Array Name) :
+    MetaM (Except String TemplateBinding.JoinedRecords) := do
+  try
+    let env ← getEnv
+    for moduleName in evidenceModules do
+      unless moduleName == env.header.mainModule || (env.getModuleIdx? moduleName).isSome do
+        throwError "incomplete_closure:dtr.census_sidecar:{moduleName}"
+    return .ok (← TemplateBinding.exportSnapshot)
+  catch error => return .error (← error.toMessageData.toString)
+
+def incompleteBindingEvidence (diagnostic : String) : Json := Json.mkObj [
+  ("schema_version", toJson (1 : Nat)), ("compatibility_version", toJson (4 : Nat)),
+  ("query_completed", toJson false), ("diagnostic", toJson diagnostic),
+  ("records", Json.arr #[]), ("source_inputs", Json.arr #[])]
+
+/-- Select from the common full join and reconcile its inventory with the
+independent finite/structural registries. Absence is not an undeclared occurrence. -/
+def bindingEvidence (index : Index) (theoremName : Name)
+    (snapshot : Except String TemplateBinding.JoinedRecords) : MetaM Json := do
+  try
+    let snapshot ← ofExcept snapshot
+    let selected := snapshot.selected.filter fun row =>
+      row.occurrence.key.theoremName == theoremName &&
+        index.modules.contains row.occurrence.key.registrationModule
+    let finite := index.finite.filter (·.theoremName == theoremName) |>.map fun entry => {
+      root := entry.registrationModuleName, registrationModule := entry.registrationModuleName,
+      theoremName, objectArena := entry.canonicalObjectArenaName,
+      «catalog» := entry.effectiveCatalogId : TemplateOccurrenceKey }
+    let structural := index.structural.filter (·.theoremName == theoremName) |>.map fun entry => {
+      root := entry.registrationModule, registrationModule := entry.registrationModule,
+      theoremName, objectArena := entry.canonicalArena,
+      «catalog» := entry.canonicalArena : TemplateOccurrenceKey }
+    let registered := finite ++ structural
+    unless registered.size == selected.size &&
+        registered.all (fun key => selected.any (·.occurrence.key == key)) do
+      throwError "incomplete_closure:dtr.census_inventory"
+    let mut sources : Array TemplateAudit.SourceInput := #[]
+    let mut owners : NameSet := {}
+    for row in selected do
+      owners := owners.insert row.occurrence.key.registrationModule
+      if let some owner := row.bindingOwner then
+        unless index.modules.contains owner do
+          throwError "incomplete_closure:dtr.census_binding_scope:{owner}"
+        owners := owners.insert owner
+    for owner in owners.toArray.qsort Name.quickLt do
+      for input in ← TemplateBinding.moduleInputs (← getEnv) owner do
+        unless sources.contains input do sources := sources.push input
+    let rows ← selected.mapM TemplateBinding.recordJson
+    return Json.mkObj [
+      ("schema_version", toJson (1 : Nat)), ("compatibility_version", toJson (4 : Nat)),
+      ("query_completed", toJson true), ("diagnostic", Json.null),
+      ("records", Json.arr rows), ("source_inputs", Json.arr ((sources.qsort
+        (fun a b => a.path < b.path)).map fun input => Json.mkObj [
+          ("path", toJson input.path), ("sha256", toJson input.sha256)]))]
+  catch error => return incompleteBindingEvidence (← error.toMessageData.toString)
+
 /-- Fixture and elaborator queries enumerate ModuleData membership, including
 the current source's staged declarations. Production supplies the detached
 streamed index to the same assess function. -/
