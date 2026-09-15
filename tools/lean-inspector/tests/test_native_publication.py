@@ -276,6 +276,32 @@ class NativePublicationTests:
                     self.assertTrue(failed)
                     self.assertEqual(before, {suffix: publication.member(destination, suffix).read_bytes()
                                              for suffix in publication.SUFFIXES})
+    def test_native_compiler_seed_is_private(self):
+        self.assertFalse((self.root / '.lake').exists())
+        if self.compiler_seed is None:
+            stage = self.root / 'compiler-stage'
+            stage_compiler(stage)
+            self.compiler_seed = str(stage)
+        stage = Path(self.compiler_seed)
+        before = {path.name: (publication.digest(path), path.stat().st_mode)
+                  for path in stage.iterdir()}
+        self.run_lake('env', 'true')
+        # Unstage admits only compiler artifacts; each fixture still creates
+        # its own producer build, reports, utility inputs, and ensure stamp.
+        self.assertFalse((self.root / '.lake/build/lean-inspector').exists())
+        for name in before:
+            if name == 'outputs.jsonl':
+                continue
+            donor = stage / name
+            private = self.root / '.lake/artifact-cache/artifacts' / name
+            self.assertEqual(publication.digest(private), before[name][0])
+            self.assertFalse(os.path.samestat(donor.stat(), private.stat()))
+            self.assertEqual(donor.stat().st_mode & 0o222, 0)
+            private.unlink()
+            private.write_bytes(b'fixture-private damage')
+        self.assertEqual(before, {path.name: (publication.digest(path), path.stat().st_mode)
+                                  for path in stage.iterdir()})
+
     def test_native_producer_inputs(self):
         self.build()
         before = self.stamps()
