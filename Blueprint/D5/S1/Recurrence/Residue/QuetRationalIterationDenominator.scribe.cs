@@ -63,11 +63,7 @@ internal sealed class QuetRationalIterationDenominatorDocument
                         + "The reduced-form bridge identifies these denominators with the "
                         + "integer pair recurrence before the numerator recurrence yields "
                         + "the equation."))),
-                DescribeRole.Theorem,
-                new OpenProblemResolutionClaim(
-                    ProblemSlugRef.Create(
-                        "oeis-a079278-quet-rational-iteration-denominator-recurrence"),
-                    ResolutionKind.Proved)))));
+                DescribeRole.Theorem))));
 
     private static Formula NumFormula()
     {
