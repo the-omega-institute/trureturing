@@ -294,7 +294,8 @@ def stage_snapshot(root, keys, layer, staged, registry=None, *, current=None):
             inventory = files(staged / "data")
         else:
             inventory = snapshot_files(root / spec["target"], staged / "data",
-                                       materialize_links=layer == "dependency")
+                                       materialize_links=layer == "dependency",
+                                       exclude_vcs=layer == "dependency")
     manifest = {"schema": "lean-actions-seed-v1", "partition": keys["partition"], "layer": layer,
                 "key": spec["key"], "files": inventory}
     (staged / "manifest.json").write_text(json.dumps(manifest, sort_keys=True) + "\n")

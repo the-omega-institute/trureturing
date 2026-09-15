@@ -27,12 +27,19 @@ def copy_hash(path, destination):
     return value.hexdigest(), destination.stat().st_mode & 0o777
 
 
-def snapshot_files(directory, destination, *, materialize_links=False):
-    """Copy and inventory one registered layer directory in a single read."""
+def snapshot_files(directory, destination, *, materialize_links=False, exclude_vcs=False):
+    """Copy and inventory one registered layer directory in a single read.
+
+    ``exclude_vcs`` is reserved for dependency layers whose source tree
+    contains rebuildable package metadata. Excluded paths are never copied
+    into the manifest, so restore cannot recreate them accidentally.
+    """
     destination.mkdir()
     result, directories = [], [(directory, destination)]
     for path in sorted(directory.rglob("*")):
         relative = path.relative_to(directory)
+        if exclude_vcs and ".git" in relative.parts:
+            continue
         target = destination / relative
         source = path
         if path.is_symlink():
