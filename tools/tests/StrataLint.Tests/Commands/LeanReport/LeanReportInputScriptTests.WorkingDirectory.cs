@@ -6,34 +6,90 @@ namespace StrataLint.Tests;
 
 public sealed partial class LeanReportInputScriptTests
 {
+    [Theory]
+    [InlineData("producer-paths")]
+    [InlineData("scribe-producer-paths")]
+    public void CacheFetcherClosureIncludesTransitiveInputsAndRejectsMissingInputs(string command)
+    {
+        using var fixture = new LeanReportInputFixture();
+        const string dependency = "tools/scripts/worktree/fetch-input.sh";
+        fixture.WriteSource(dependency, "#!/usr/bin/env bash\n");
+        fixture.RegisterProducer(dependency);
+        fixture.Append(CachePublishScriptPath, "\nsource \"$SCRIPT_DIR/fetch-input.sh\"\n");
+
+        var complete = fixture.RunCommand(command);
+
+        Assert.Equal(0, complete.ExitCode);
+        Assert.Contains(CachePublishScriptPath, Lines(complete));
+        Assert.Contains(dependency, Lines(complete));
+        fixture.RemoveSource(dependency);
+        var missingDependency = fixture.RunCommand(command);
+        Assert.Equal(2, missingDependency.ExitCode);
+        Assert.Empty(missingDependency.StandardOutput);
+        Assert.Contains(dependency, Encoding.UTF8.GetString(missingDependency.StandardError));
+        fixture.RemoveSource(CachePublishScriptPath);
+        var missingFetcher = fixture.RunCommand(command);
+        Assert.Equal(2, missingFetcher.ExitCode);
+        Assert.Empty(missingFetcher.StandardOutput);
+        Assert.Contains(CachePublishScriptPath, Encoding.UTF8.GetString(missingFetcher.StandardError));
+    }
+
+    [Fact]
+    public void CompatibleCacheFetcherEditPreservesReportInputs()
+    {
+        using var fixture = new LeanReportInputFixture();
+        var before = fixture.RunCommand("address");
+        Assert.Equal(0, before.ExitCode);
+
+        fixture.Append(CachePublishScriptPath, "# fetch acceptance changed\n");
+        var after = fixture.RunCommand("address");
+
+        Assert.Equal(0, after.ExitCode);
+        Assert.Equal(Fields(before)[0], Fields(after)[0]);
+        Assert.Equal(Fields(before)[1], Fields(after)[1]);
+        Assert.Equal(Fields(before)[2..], Fields(after)[2..]);
+    }
+
     [Fact]
     public void AddressIsIndependentOfCallerWorkingDirectorySdk()
     {
         using var fixture = new LeanReportInputFixture();
         var fromRepository = fixture.AddressFromRepository();
+
         var fromForeignSdk = fixture.AddressFromForeignSdkDirectory();
+
         Assert.Equal(0, fromRepository.ExitCode);
         Assert.Equal(fromRepository.ExitCode, fromForeignSdk.ExitCode);
         Assert.Equal(fromRepository.StandardOutput, fromForeignSdk.StandardOutput);
     }
 
-    [Fact]
-    public void AddressDoesNotEvaluateDotnetProjectsOrSdk()
+    [Theory]
+    [InlineData("malformed")]
+    [InlineData("missing")]
+    public void AddressFailurePreservesProjectAndRawDiagnostic(string failure)
     {
         using var fixture = new LeanReportInputFixture();
-        var before = fixture.Address();
-        fixture.UseUnavailableRepositorySdk();
-        fixture.Append(CliProjectPath, "<");
-        Assert.Equal(before, fixture.Address());
+        if (failure == "malformed") fixture.BreakProducerClosureEvaluation();
+        else fixture.RemoveSource("lean-report-inputs.json");
+        var result = fixture.AddressFromRepository();
+        Assert.Equal(2, result.ExitCode);
+        Assert.Empty(result.StandardOutput);
+        Assert.Contains("lean-report-inputs.json", Encoding.UTF8.GetString(result.StandardError));
     }
 
     [Fact]
-    public void AddressMatchesIndependentVersionOnlyPreimage()
+    public void AddressFromRepositoryMatchesIndependentSemanticPreimage()
     {
         using var fixture = new LeanReportInputFixture();
+
         var result = fixture.AddressFromRepository();
+
         Assert.Equal(0, result.ExitCode);
-        Assert.Equal(fixture.ExpectedAddressBytes(), result.StandardOutput);
+        var expected = fixture.ExpectedAddressBytes();
+        if (!expected.SequenceEqual(result.StandardOutput))
+            Assert.Fail($"Expected: {Encoding.UTF8.GetString(expected)}"
+                + $"Actual: {Encoding.UTF8.GetString(result.StandardOutput)}"
+                + $"Inputs: {Encoding.UTF8.GetString(fixture.RunCommand("producer-paths").StandardOutput)}");
         Assert.Empty(result.StandardError);
     }
 
@@ -43,7 +99,9 @@ public sealed partial class LeanReportInputScriptTests
             "{\"sdk\":{\"version\":\"99.0.100\",\"rollForward\":\"disable\"}}\n";
 
         internal ProcessOutput AddressFromRepository() => Run("address", repository);
+
         internal void RemoveSource(string relativePath) => File.Delete(Path.Combine(repository, relativePath));
+
         internal ProcessOutput AddressFromForeignSdkDirectory()
         {
             var directory = Path.Combine(temporary.Path, "foreign sdk");
@@ -52,22 +110,10 @@ public sealed partial class LeanReportInputScriptTests
             return Run("address", directory);
         }
 
-        internal void UseUnavailableRepositorySdk() => Write("global.json", UnavailableSdk);
-        internal ProcessOutput CompiledCacheAddress()
-        {
-            var result = TestProcessRunner.Run("env",
-                [$"STRATALINT_LEAN_INPUT_MEMO_ROOT={MemoRoot}", "bash",
-                    Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/worktree/lean-cache-input.sh"),
-                    "address", "--repository", repository], temporary.Path,
-                BoundedProcessRunner.HangDetectionBudget, 1024 * 1024);
-            Assert.Equal(0, result.ExitCode);
-            return result;
-        }
-
         internal byte[] ExpectedAddressBytes()
         {
-            // Independently fixed contract preimage, never derived from the helper's output.
-            var producer = Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(
+            // The synthetic fixture's inputs are independent of the helper's output.
+            var producer = Convert.ToHexStringLower(SHA256.HashData(Encoding.ASCII.GetBytes(
                 "schema=stratalint-lean-report-compatibility\nversion=1\n")));
             var sources = ManifestHash("Trureturing.lean", "D5/Probe.lean");
             var config = ManifestHash("lean-toolchain", "lake-manifest.json", "lakefile.toml");

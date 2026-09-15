@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:a879017cc44e7d0acd52e83b3f4cce89f6a5cca7d8d9b20a836c7a25f30020c9
+  normalized_sha256: sha256:a879017cc44e7d0acd52e83b3f4cce89f6a5cca7d8d9b20a836c7a25f30020c9
+cas_ref: sha256:a879017cc44e7d0acd52e83b3f4cce89f6a5cca7d8d9b20a836c7a25f30020c9
+coverage_gids:
+  - gid: D5/S3/Weil/Mertens/CoprimeMobiusCertificateError.certificate_error
+    target_statement_id: sha256:3c7f3ad9187ed9506ee69c9e312e7e3469de3e3508c75e16d91cb8740c041da8
+receipts:
+  unresolved_subitems: []

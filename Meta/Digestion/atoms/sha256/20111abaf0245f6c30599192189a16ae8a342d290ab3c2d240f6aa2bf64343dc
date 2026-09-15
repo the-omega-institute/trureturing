@@ -1,0 +1,10 @@
+**命题 348.1。** 定义容量
+$$
+A^{\rm odd}_n=
+\begin{cases}
+1,&n=1,\\
+G_n-1,&n\ne1\text{ 且 }G_n\text{ 为奇数},\\
+0,&\text{其余情形}.
+\end{cases}
+$$
+则 $M_F(A^{\rm odd})=+\infty$

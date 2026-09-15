@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:a0cf52e9ec4dd12b8a7e2177929479003157651f49fa7aa1c82fce5bc8ccea85
+  normalized_sha256: sha256:a0cf52e9ec4dd12b8a7e2177929479003157651f49fa7aa1c82fce5bc8ccea85
+cas_ref: sha256:a0cf52e9ec4dd12b8a7e2177929479003157651f49fa7aa1c82fce5bc8ccea85
+coverage_gids:
+  - gid: D5/S3/Arith/GoldenResource/CoarseGrainShiftInjective.b_shift_injective
+    target_statement_id: sha256:902f2ac66d7d6f49a38913833eb1a3daa4e4cfb12c30b7381641743cf9bc16c5
+receipts:
+  unresolved_subitems: []

@@ -5,8 +5,9 @@ year: 2009
 title: Analytic Combinatorics
 doi: null
 url: https://algo.inria.fr/flajolet/Publications/book.pdf
-claim: Pringsheim positive-boundary obstruction for nonnegative power-series coefficients.
+claim: Pringsheim positive-boundary obstruction for nonnegative power-series coefficients, and Cauchy cycle-count weights for permutations.
 strata_touched:
+  - D5/S0/Asymptotics/WeightedProbability/DistinctCycleSizeLimit
   - D5/S3/Weil/Probability/CanonicalLiNonnegativeConverse
 license: citation-only
 triage: anchor
@@ -55,6 +56,25 @@ printed pp.239--242. This inherited source evidence is not independent proof
 review. The theorem paragraph is on printed p.240 / PDF p.256; the exponent
 discrepancy was separately observed in the original page image.
 
+## Permutation cycle weights
+
+Printed p.188 gives Cauchy's formula: a permutation with cycle multiplicities
+m_k satisfying sum_k k*m_k=n has n!/product_k(k^(m_k)*m_k!) realizations.
+Fixed points are included with k=1. Example III.9, printed pp.175-176,
+discusses cycle expectations; Note III.15, p.180, gives related moments.
+These classical formulas are background for the A398726 weighted-size limit.
+The local theorem's full-partition class-size proof uses the attributed
+TauCeti formulation in D5/L/tauceti2026classsizes.
+
+Additional inspected original passages are Note II.26 (p.137), Theorem VI.13
+and the distinct-cycle permutation example (p.435), the fixed-size cycle
+discussion and Example IX.23 (pp.674-675), and the multivariate discussion
+(pp.715-716). The number of distinct sizes, the probability of no repeated
+sizes, and a fixed-size cycle law are different claims from the sum of
+distinct sizes weighted by length. No complete application proving that exact
+weighted limit was located in these passages. This does not assert that it
+is absent from the complete book or the broader literature.
+
 ## Verified locator
 
 - https://algo.inria.fr/flajolet/Publications/book.pdf
@@ -64,3 +84,6 @@ discrepancy was separately observed in the original page image.
   body, with the print year and electronic-version date distinguished above.
 - Repository original A006 row:
   https://github.com/the-omega-institute/trureturing/blob/915a86bf19ec91fdbd690a70e75c84014d237b7d/docs/develop/theory/RH_RESEARCH_LANE_THEORY.md#L7514
+
+- Permutation locators: Cauchy cycle-count formula, printed p.188;
+  Example III.9, pp.175-176; Note III.15, p.180, in the same author PDF.
