@@ -9,6 +9,7 @@ structure Measurement where
   visits : Nat
   retainedBytes : Nat
   planIdentity : String
+  nativeInputs : Array String
   deriving Inhabited
 
 initialize measurements : SimplePersistentEnvExtension Measurement (Array Measurement) ←
@@ -32,12 +33,15 @@ elab "measure_imported_template_query " population:num selective:num : command =
   let (.ok plan, visits) := action.run 0 | throwError "setup: selected template missing"
   unless plan.name == `DTRIndex.A.selected && plan.slots.size == 2 do
     throwError "setup: selected plan changed"
+  liftTermElabM do
+    withCumulativeBudget <| NativeCoherence.validate #[plan.definitionOwner, plan.enrollmentOwner]
+  let nativeInputs := NativeCoherence.lastInputs (← getEnv)
   let retainedBytes := importedSummaryBytes env
   unless retainedBytes > 0 && retainedBytes ≤ 8388608 do
     throwError "setup: workload is not an admitted imported index"
   modifyEnv fun current => measurements.addEntry current {
     population := population.getNat, selective := selective.getNat == 1,
-    visits, retainedBytes, planIdentity := plan.planIdentity }
+    visits, retainedBytes, nativeInputs, planIdentity := plan.planIdentity }
 
 elab "check_imported_template_queries" : command => do
   let rows := measurements.getState (← getEnv)
@@ -51,13 +55,15 @@ elab "check_imported_template_queries" : command => do
     row.visits == first.visits && row.retainedBytes == first.retainedBytes)
   let bound := 2 * "DTRIndex.A.selected".utf8ByteSize + 1
   let within := all.all (·.visits ≤ bound)
+  let nativeStable := !first.nativeInputs.isEmpty && rows.all (·.nativeInputs == first.nativeInputs)
   let growing := all[0]!.retainedBytes < all[1]!.retainedBytes &&
     all[1]!.retainedBytes < all[2]!.retainedBytes
   unless growing do throwError "setup: All workload did not import a growing index"
   logInfo m!"[{if control then "PASS" else "FAIL"}] selective_n_scaling_control"
   logInfo m!"[{if stable then "PASS" else "FAIL"}] selected_query_result_accepted"
   logInfo m!"[{if within then "PASS" else "FAIL"}] selected_query_work_independent_of_n"
+  logInfo m!"[{if nativeStable then "PASS" else "FAIL"}] native_selected_inputs_independent_of_n"
   for row in rows do
-    logInfo m!"DTR_QUERY population={row.population} selective={row.selective} visits={row.visits} imported_bytes={row.retainedBytes} bound={bound}"
+    logInfo m!"DTR_QUERY population={row.population} selective={row.selective} visits={row.visits} imported_bytes={row.retainedBytes} native_inputs={row.nativeInputs.size} bound={bound}"
 
 end LeanInformationAudit.Tests.IndexWork

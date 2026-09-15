@@ -1116,7 +1116,8 @@ private structure Snapshot where
 
 
 private def repositoryModule (name : Name) : Bool :=
-  name.toString.startsWith "D5." || name.toString.startsWith "LeanInformationAudit."
+  name.toString.startsWith "D5." || name.toString.startsWith "LeanInformationAudit." ||
+    name == `Trureturing
 
 private def parseHash (text : String) : Except String UInt64 := do
   unless text.utf8ByteSize == 16 do throw "incomplete_closure:E7.native_trace_hash"
@@ -3011,7 +3012,8 @@ private def certificateJson (certificate : TemplateBindingCertificate) : Json :=
   ("extraction_inputs", Json.arr (certificate.extractionInputs.map dependencyJson))]
 
 private def isRepositoryModule (name : Name) : Bool :=
-  name.toString.startsWith "D5." || name.toString.startsWith "LeanInformationAudit."
+  name.toString.startsWith "D5." || name.toString.startsWith "LeanInformationAudit." ||
+    name == `Trureturing
 
 /-- Complete source inputs for this module, independent of registry membership.
 A missing imported source is incomplete rather than an empty declaration set. -/
