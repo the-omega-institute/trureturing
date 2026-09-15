@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:d8a4779fb9694fd836fdcdb4852c01b838cd11f04c8dca580854536fde57fc51
   normalized_sha256: sha256:d8a4779fb9694fd836fdcdb4852c01b838cd11f04c8dca580854536fde57fc51
 cas_ref: sha256:d8a4779fb9694fd836fdcdb4852c01b838cd11f04c8dca580854536fde57fc51
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S1/Phase/ContinuousAverage.continuous_average_tendsto_haar
+    target_statement_id: sha256:427c33da74c6578f59fab91f76681cdd0e592d955507161bc36e6761e592e0f8
 receipts:
   unresolved_subitems: []
