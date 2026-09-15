@@ -2,7 +2,9 @@ fingerprints:
   raw_sha256: sha256:73abd9d59a9b59ecabc5eb262be48bc32c014c9286433c8a6b77fd4a2b749c69
   normalized_sha256: sha256:73abd9d59a9b59ecabc5eb262be48bc32c014c9286433c8a6b77fd4a2b749c69
 cas_ref: sha256:73abd9d59a9b59ecabc5eb262be48bc32c014c9286433c8a6b77fd4a2b749c69
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S1/Phase/IntervalSampling.irrational_rotation_interval_sampling
+    target_statement_id: sha256:d48271f834a1c487e5cc5c8831e8a56d4a468514042fe55eeac51d008986ff2c
 receipts:
   unresolved_subitems: []
   chain_atoms:
