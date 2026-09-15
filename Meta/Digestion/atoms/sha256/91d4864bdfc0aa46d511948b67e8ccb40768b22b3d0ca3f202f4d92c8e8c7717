@@ -1,0 +1,42 @@
+### R.12 周期商与 Frobenius 商的准确比例
+
+**定理。** 对每个素数 $p\ne2,5$，
+
+$$
+\boxed{
+\eta_p=-r_pq_p\quad\text{于 }\mathbb F_p,\qquad
+-r_p\in\mathbb F_p^\times.
+}
+\tag{R14}
+$$
+
+**证明。** 在 R15 中取
+$x=\varphi^{r_p}$、$y=\varphi^{n_p}$、$k=n_p$、$l=r_p$；等幂前提来自
+$(\varphi^{r_p})^{n_p}=(\varphi^{n_p})^{r_p}$。由 R2 与 R.10，
+$x_a=1$、$y_a=\epsilon_p$ 于模 $p$，所以
+
+$$
+n_p\eta_p=r_p\epsilon_p^{r_p-1}q_p\pmod p.
+$$
+
+**证明。** R.6 表明 $r_p$ 为偶数，故
+$\epsilon_p^{r_p-1}=\epsilon_p$；又
+$n_p\equiv-\epsilon_p\pmod p$。约去单位 $\epsilon_p$ 即得
+$\eta_p=-r_pq_p$。R.10 已证明 $p\nmid r_p$，所以 $-r_p$ 是单位。
+
+**命题。** 对 $p=7$，有 $n_p=8$、$r_p=16$、$q_p=3$、$\eta_p=1$，且
+$-r_p\equiv5\pmod7$，从而 $\eta_p=(-r_p)q_p$。
+
+**证明。** 递推得 $F_8=21$、$F_{16}=987$；分别先除以 $7$ 再模 $7$，
+得到 $q_p=3$ 与 $\eta_p=1$，而 $-16\equiv5$ 且 $5\cdot3\equiv1$。
+
+**定理。** 对素数 $p\ne2,5$，
+
+$$
+\boxed{\pi(p^2)=\pi(p)\iff q_p=0.}
+\tag{R16}
+$$
+
+**证明。** R11 将左侧等价为 $\eta_p=0$；R14 中的系数 $-r_p$ 是单位，
+故 $\eta_p=0$ 当且仅当 $q_p=0$。
+

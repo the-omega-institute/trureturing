@@ -1,0 +1,16 @@
+**定理 21.6（随机近似闭包的完整记录界，repo-derived）。** 在定义17.1的有限载体与顺序生成律下，设 $q:\mathcal X\twoheadrightarrow Q_q$，摘要系统的联合核为 $\widehat P_a(z;y,z')$，两个系统具有相同的动作字母表 $\mathcal A$ 及观察字母表 $\mathcal Y$，且当前输出精确恢复为 $o=\bar o\circ q$。若对所有状态及动作都有
+$$
+\operatorname{TV}\!\left((\operatorname{id}_{\mathcal Y},q)_*P_a(\xi;\cdot,\cdot),\widehat P_a(q\xi;\cdot,\cdot)\right)\le\varepsilon,\qquad 0\le\varepsilon\le1,
+$$
+精确初态律为 $\mu$，摘要初态律为 $q_*\mu$，则对任意共同公开记录策略 $\pi$ 与整数 $H\ge0$，完整记录律满足
+$$
+\operatorname{TV}(\mathsf P_\mu^{\pi,H},\widehat{\mathsf P}_{q_*\mu}^{\pi,H})
+\le B_H:=1-(1-\varepsilon)^H\le H\varepsilon.
+$$
+约定 $(1-\varepsilon)^0=1$。若共同记录奖励 $r$ 有振幅 $\sup r-\inf r\le M$，$M\ge0$，则 $V^\pi=\mathbb E_{\mathsf P_\mu^{\pi,H}}r$ 与 $\widehat V^\pi=\mathbb E_{\widehat{\mathsf P}_{q_*\mu}^{\pi,H}}r$ 满足 $|V^\pi-\widehat V^\pi|\le MB_H$；对同一非空策略族 $\Pi$，还有
+$$
+\left|\sup_{\pi\in\Pi}V^\pi-\sup_{\pi\in\Pi}\widehat V^\pi\right|\le MB_H.
+$$
+
+证明。耦合初态为 $\xi_0\sim\mu$、$\widehat z_0=q\xi_0$，故当前公开输出相同。令 $E_t$ 表示直到第 $t$ 步公开记录及后继摘要始终匹配的事件，$E_0$ 必然成立。在 $E_t$ 上用同一策略核耦合出相同动作，再对精确的输出—后继摘要联合律与摘要核作条件最大耦合，匹配概率至少 $1-\varepsilon$；精确后继状态按原核给定该输出和摘要的条件律补采样，便保持精确系统的完整边缘律。有限性保证这些耦合及正概率条件律存在，零概率条件可任意定义；首次失配后任取保持各自核的耦合。对完整耦合历史条件化再求和，得 $\Pr(E_{t+1})\ge(1-\varepsilon)\Pr(E_t)$，无需各步失配事件独立。因此 $\Pr(E_H)\ge(1-\varepsilon)^H$，而 $E_H$ 蕴含完整记录相同，耦合不等式给第一个界；Bernoulli 不等式给第二个界。减去奖励下确界后其值域含于 $[0,M]$，TV 控制期望差，故得固定策略的奖励界。再由每个 $\pi$ 都有 $V^\pi\le\widehat V^\pi+MB_H$ 及反向不等式，分别取上确界，得到共同策略族的最优值界。证毕。
+

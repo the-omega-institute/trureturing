@@ -1,0 +1,2 @@
+**假设。** 设 $T\geq0$，$\Phi:[0,T]\times\mathbb T^2\to\mathbb T^2$ 连续，且 $\Phi_0=\operatorname{id}_{\mathbb T^2}$；对每个 $t$，记 $\Phi_t(x)=\Phi(t,x)$。
+

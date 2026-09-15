@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:0f426733a2503b865b0c4f17eef07a7bf7592260ce87c82496e571c83961c89f
+  normalized_sha256: sha256:0f426733a2503b865b0c4f17eef07a7bf7592260ce87c82496e571c83961c89f
+cas_ref: sha256:0f426733a2503b865b0c4f17eef07a7bf7592260ce87c82496e571c83961c89f
+coverage_gids:
+  - gid: D5/S1/Phase/Basic.goldenPhase_injective
+    target_statement_id: sha256:dbb071f95f0bf9c9ffcd1977920fdd7e147a287dca38a2e8c9b7692a73d168bf
+receipts:
+  unresolved_subitems: []

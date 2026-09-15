@@ -42,7 +42,6 @@ done < <(
 requires_projection_check=0
 requires_describe_check=0
 requires_markdown_check=0
-derive_producer_closure=0
 if [[ "${#CHANGED_PATHS[@]}" -gt 0 ]]; then
   for path in "${CHANGED_PATHS[@]}"; do
     case "$path" in
@@ -70,28 +69,25 @@ if [[ "${#CHANGED_PATHS[@]}" -gt 0 ]]; then
         requires_projection_check=1
         requires_describe_check=1
         ;;
-      *.cs|*.sh|*.csproj|*.props|*.targets|*/packages.lock.json)
-        derive_producer_closure=1
-        ;;
     esac
   done
 fi
 
-if [[ "$derive_producer_closure" == "1" ]]; then
-  producer_output="$(
-    "$REPO_ROOT/tools/scripts/report/lean-report-input.sh" scribe-producer-paths \
-      --repository "$REPO_ROOT"
-  )" || { echo "scribe-content-checks: Scribe producer closure is unavailable" >&2; exit 2; }
-  while IFS= read -r producer_path; do
-    for path in "${CHANGED_PATHS[@]}"; do
-      if [[ "$path" == "$producer_path" ]]; then
-        requires_projection_check=1
-        requires_describe_check=1
-        break 2
-      fi
-    done
-  done <<< "$producer_output"
-fi
+# Only explicitly registered supplemental inputs select these existing checks.
+# Patterns also match deleted paths; no Compile or script-call discovery remains.
+registered_patterns="$(
+  "$REPO_ROOT/tools/scripts/report/lean-report-input.sh" scribe-input-patterns \
+    --repository "$REPO_ROOT"
+)" || { echo "scribe-content-checks: registered inputs are unavailable" >&2; exit 2; }
+while IFS= read -r pattern; do
+  for path in ${CHANGED_PATHS[@]+"${CHANGED_PATHS[@]}"}; do
+    if [[ "$path" == $pattern ]]; then
+      requires_projection_check=1
+      requires_describe_check=1
+      break 2
+    fi
+  done
+done <<< "$registered_patterns"
 
 if [[ "$requires_projection_check" == "1" ]]; then
   run_scribe projections --check --report "$REPORT"

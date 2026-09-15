@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f1b6dd5ca5d641a05306bfa0fcefd24da25b24e03308c0918be150dd1cad6120
+  normalized_sha256: sha256:f1b6dd5ca5d641a05306bfa0fcefd24da25b24e03308c0918be150dd1cad6120
+cas_ref: sha256:f1b6dd5ca5d641a05306bfa0fcefd24da25b24e03308c0918be150dd1cad6120
+coverage_gids:
+  - gid: D5/S3/Quantum/FiniteDimensional.qubit_weyl_star
+    target_statement_id: sha256:be07b0533dfdb8741136a43d8272fd7a664770fb9b4a851805c5db573532362d
+  - gid: D5/S3/Quantum/Measurement/BasisMeasurementProjection.basis_measurement_is_orthogonal_projection
+    target_statement_id: sha256:a5457d5b540ea5af3b21af467147380cc60d834f9334d20ce359a218210fd5e8
+receipts:
+  unresolved_subitems: []

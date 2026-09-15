@@ -1,0 +1,5 @@
+对有效码 \(c,d\) 定义
+\[
+d\in_Zc\iff\operatorname{Dec}(d)\in\operatorname{Dec}(c),\qquad
+\operatorname{El}(c)=\{d\in\mathfrak V_Z:d\in_Zc\}.
+\]

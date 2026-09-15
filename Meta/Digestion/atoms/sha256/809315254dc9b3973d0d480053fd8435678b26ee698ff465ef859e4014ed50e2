@@ -1,0 +1,1 @@
+*梗概*。若素节点总数有限为 $S$,则由定理 2.8 每个 $\mathrm{Frozen}(L_t)\subseteq B(S)$,故 $\bigcup_t\mathrm{Frozen}(L_t)\subseteq B(S)\cap\mathrm{Thm}(\mathfrak A)\subsetneq\mathrm{Thm}(\mathfrak A)$,与穷尽矛盾。待补:「穷尽」的精确定义与链的极限账本。

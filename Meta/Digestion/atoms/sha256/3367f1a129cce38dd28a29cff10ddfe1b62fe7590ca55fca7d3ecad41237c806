@@ -1,0 +1,2 @@
+**定义 466.1。**$\mathcal P_X=\{p\le X:p\text{ 为素数}\}$，$S_X(\theta)=\sum_{p\in\mathcal P_X}e(p\theta)$。对 $k\ge0,N\in\mathbb Z$，$r_{k,X}(N)$ 计有序元组 $(p_1,\ldots,p_k)\in\mathcal P_X^k$ 满足 $\sum_i p_i=N$ 的个数，允许重复素数。$\mathcal P_X^0$ 只有空元组，空和零；约定 $S_X^0=1$，包括空素数集。
+

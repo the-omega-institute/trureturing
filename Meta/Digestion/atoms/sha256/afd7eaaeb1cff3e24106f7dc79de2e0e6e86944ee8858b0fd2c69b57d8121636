@@ -1,0 +1,10 @@
+**证明。** $\varphi^2=1+\varphi$ 的系数位于该锥。乘以 $\varphi$ 将 $(a,b)$ 变成 $(b,a+b)$；若 $0\le a\le b\le2a$，则 $0\le b\le a+b\le2b$。故所有 $\varphi^{i+2}$ 均在锥内，非负整数线性组合仍在锥内。
+
+反过来，置 $u=2a-b\ge0$、$w=b-a\ge0$，则
+
+$$
+u\varphi^2+w\varphi^3=(u+w)+(u+2w)\varphi=a+b\varphi.
+$$
+
+取 $r=u\delta_0+w\delta_1$。两个系数由 $u=2a-b,w=b-a$ 唯一决定，故这个两槽代表唯一。证毕。
+

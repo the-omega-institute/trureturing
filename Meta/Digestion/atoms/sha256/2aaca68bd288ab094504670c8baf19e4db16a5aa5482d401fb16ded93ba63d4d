@@ -1,0 +1,12 @@
+**推论 472.3（按素数值截止的次幂级完整表）。** 固定实数 $\eta>0$，对整数 $N\ge1$ 令
+$$
+y_N=\max(2,\lfloor\eta\log N\rfloor),\qquad Q_N=\prod_{p\le y_N}p,\qquad k_N=\pi(y_N).
+$$
+则 $k_N=O_\eta(\log N/\log\log N)$、$\log Q_N=O_\eta(\log N)$，因而
+$$
+2^{k_N}=N^{o(1)},\qquad
+|U_{Q_N}(N)-c_{Q_N}N|\le N^{o(1)},\qquad
+|W_{Q_N}(N)-\alpha_{Q_N}N|\le N^{1/2+o(1)}.
+$$
+包含全部约数、Möbius 符号、部分和、跳变、素数标签、必要首部和精确有理系数 $c_{Q_N},\zeta_R(2)\alpha_{Q_N}$ 的表，其长度及生成、排序、完整核对的位运算均为 $N^{o(1)}$。这里 $N^{o(1)}$ 的上界意为对每个固定 $\delta>0$，充分大 $N$ 时不超过 $N^\delta$；阈值可依赖 $\eta,\delta$。算法输入为整数 $y_N$，不把从任意实参数 $\eta$ 精确计算该 floor 计为免费步骤。
+

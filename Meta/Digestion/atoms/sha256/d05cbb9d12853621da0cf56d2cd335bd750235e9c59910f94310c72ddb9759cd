@@ -1,0 +1,2 @@
+**命题 4.8（容许变换下中道保持）**〔引 FPP 1.12〕。承 FPP 假设 1.12，对固定核、许可集及读出，任意 $T\in\mathfrak M$ 满足 $\operatorname{Middle}(P,L)\Rightarrow\operatorname{Middle}(P,T(L))$：依缘空不随账本变化，而从 $T(L)$ 出发的每次容许扩展仍保留其已有节点。
+

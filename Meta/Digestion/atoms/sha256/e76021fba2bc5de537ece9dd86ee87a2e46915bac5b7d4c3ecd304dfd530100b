@@ -1,0 +1,50 @@
+**定理 8.14（固定有限标签的有限前缀累积等价）。** 现在回到定义8.1的固定标签、新鲜时间因子模型。标签集$\mathsf X$固定且有限，令$d=|\mathsf X|\ge2$；取一列按$t\ge1$编号的新鲜记录，而所有陈述只在每个有限前缀$I_N=\{1,\ldots,N\}$上定义，不构造无限张量积态。这里$\gamma_t(x,y)=G_t(x,y)$沿用§8.1的单轮记录重叠，不引入定义8.11的统一$r<1$假设。令
+$$
+L_{xy}(N)=\sum_{t=1}^{N}-\log|\gamma_t(x,y)|,\qquad
+q_N=\max_{x\ne y}\prod_{t=1}^{N}|\gamma_t(x,y)|,
+$$
+其中零重叠贡献$+\infty$，并定义全部有限前缀记录的最优最坏标签错误率
+$$
+\beta_N=\min_{\substack{M_x\ge0\\\sum_xM_x=I}}
+\max_x\left[1-\langle e_x^{I_N},M_xe_x^{I_N}\rangle\right].
+$$
+以下四项等价：
+$$
+\left(\forall x\ne y,\ L_{xy}(N)\longrightarrow+\infty\right)
+\Longleftrightarrow q_N\longrightarrow0
+\Longleftrightarrow\sup_{\varrho}\mathsf d\!\left(\Phi_{I_N}(\varrho),\Delta(\varrho)\right)\longrightarrow0
+\Longleftrightarrow\beta_N\longrightarrow0.
+$$
+对每个有限$N$，有有限标签的平方根测量界
+$$
+\frac{1-\sqrt{1-q_N^2}}2\le\beta_N,
+$$
+且当$u_N=(d-1)q_N<1$时
+$$
+\beta_N\le\min\left\{1-\frac1d,\left(1-\sqrt{1-u_N}\right)^2\right\}.
+$$
+同时
+$$
+\frac{q_N}{2}\le\sup_{\varrho}\mathsf d\!\left(\Phi_{I_N}(\varrho),\Delta(\varrho)\right)
+\le\frac{d-1}{2}q_N.
+$$
+这些是有限前缀的陈述；极限只表示这些有限数列的极限，不表示存在一个无限时间的全局量子态。
+
+证明。 因为标签对只有有限多个，$\prod_t|\gamma_t(x,y)|=\exp[-L_{xy}(N)]$，故第一项与第二项等价。定理8.5给出系统上界；反向取达到$q_N$的标签对$x,y$以及初态$(|x\rangle+|y\rangle)/\sqrt2$，二阶谱计算给出距离$q_N/2$，所以系统距离趋零也蕴含$q_N\to0$。
+
+任意$d$输出POVM若所有标签错误率均不超过$b$，把所有非$x$输出合并为$y$，便得到对标签对$x,y$错误率均不超过$b$的二输出测量。定理8.6给出
+$$
+b\ge\frac{1-\sqrt{1-|\Gamma_{I_N}(x,y)|^2}}2.
+$$
+取最大重叠得到平方根下界。上界取记录向量为列的矩阵$V$，通常方向Gram矩阵$G=V^\dagger V$，令$u_N=(d-1)q_N$。当$u_N<1$时，Gershgorin型坐标估计给$1-u_N\le\lambda(G)\le1+u_N$。定义平方根测量
+$$
+m_x=VG^{-1/2}|x\rangle,\qquad M_x=|m_x\rangle\langle m_x|+\frac1d(I-\Pi),\qquad \Pi=VG^{-1}V^\dagger.
+$$
+它是POVM，且$\langle m_x,e_x^{I_N}\rangle=(\sqrt G)_{xx}$。因$G_{xx}=1$，逐标签错误率为
+$$
+1-((\sqrt G)_{xx})^2=\sum_{y\ne x}|(\sqrt G)_{yx}|^2\le\|\sqrt G-I\|^2\le(1-\sqrt{1-u_N})^2.
+$$
+随机猜测给出$1-1/d$。最后，定理8.5的上界为$(d-1)q_N/2$；下界仍由二标签初态达到。于是四项全等价。证毕。
+
+这里的平方根测量上界沿用Eldar--Forney（2001）的有限维方法；Watrous关于Schur通道和二态判别的结果、以及重复相互作用和Zeno文献均只作为背景或已明确核查的基础，不把任何未经逐式核查的文献陈述写成这些有限前缀常数的来源。
+

@@ -1,0 +1,207 @@
+**定理 42.1（免费经典标签的有限达到界）。** 设输入空间为 $\mathbb C^D$，$D\ge1$，$A,J$ 为该空间上的密度矩阵。给定有限正权重表
+
+$$
+m\ge1,\qquad 0<c_1<\cdots<c_m,
+\qquad D_j=c_jA-J,
+$$
+
+以及一个整数 $1\le q\le D$。存储阶段可以使用任意有限个免费经典标签，每个标签携带一个至多 $q$ 维的量子系统；不足 $q$ 维的分支可以补零嵌入 $\mathbb C^q$。通道预先固定，不能依赖后来揭示的实际权重。
+
+具体地，允许任意有限 $n\ge1$ 及完全正映射
+
+$$
+\Phi_\ell:\mathbb C^{D\times D}\longrightarrow
+\mathbb C^{q\times q},\qquad 1\le\ell\le n,
+$$
+
+满足
+
+$$
+\sum_{\ell=1}^n\operatorname{tr}\Phi_\ell(X)
+=\operatorname{tr}X,
+$$
+
+于是总体 CPTP 存储为
+
+$$
+\Phi(X)=\bigoplus_{\ell=1}^n\Phi_\ell(X).
+$$
+
+各分支保留其未归一化输出，所有标签均计入最终分数，不允许后选择。定义
+
+$$
+V_q=\sup_{\substack{n<\infty\\\Phi\ \mathrm{as\ above}}}
+\sum_{j=1}^m\|\Phi(D_j)\|_1
+=\sup_{\substack{n<\infty\\\Phi\ \mathrm{as\ above}}}
+\sum_{\ell=1}^n\sum_{j=1}^m
+\|\Phi_\ell(D_j)\|_1.
+$$
+
+则这个上确界由至多 $D^2$ 个非零经典分支达到，并有有限变分公式
+
+$$
+\boxed{
+V_q=
+\max_{\substack{E_1,\ldots,E_{D^2}\ge0\\
+\operatorname{rank}E_\ell\le q\ (1\le\ell\le D^2)\\
+\sum_{\ell=1}^{D^2}E_\ell=I_D}}
+\sum_{\ell=1}^{D^2}\sum_{j=1}^m
+\bigl\|\sqrt{E_\ell}\,D_j\sqrt{E_\ell}\bigr\|_1.
+}
+$$
+
+这里允许零效应。公式中的平方根取正平方根，优化变量均为输入空间上的效应；输出量子维数仍是 $q$，并未扩大到 $D$。
+
+进一步，若所有 $D_j$ 均可逆，令
+
+$$
+P_j=\mathbf1_{(0,\infty)}(D_j),\qquad
+\mathfrak A=C^*(I_D,P_1,\ldots,P_m)
+\cong\bigoplus_{k=1}^s
+\left(M_{d_k}(\mathbb C)\otimes I_{r_k}\right),
+\qquad q_*=\max_k d_k,
+$$
+
+其中 $r_k\ge1$ 为输入表示的重数。则
+
+$$
+\boxed{
+V_q=\sum_{j=1}^m\|D_j\|_1
+\quad\Longleftrightarrow\quad q\ge q_*.
+}
+$$
+
+因此，对每个固定的候选对、权重表与整数 $q<q_*$，存在严格正的最优总损失
+
+$$
+\Delta_q:=\sum_{j=1}^m\|D_j\|_1-V_q>0.
+$$
+
+增加有限经典标签数不能使这个损失趋于零。
+
+证明。先把每个分支的完全正映射写成有限 Kraus 和
+
+$$
+\Phi_\ell(X)=\sum_a K_{\ell a}XK_{\ell a}^\dagger,
+\qquad K_{\ell a}:\mathbb C^D\longrightarrow\mathbb C^q,
+\qquad
+\sum_{\ell,a}K_{\ell a}^\dagger K_{\ell a}=I_D.
+$$
+
+改用新的存储仪器，将 $(\ell,a)$ 作为经典标签，每个分支只使用一个 Kraus 算子：
+
+$$
+\widetilde\Phi(X)
+=\bigoplus_{\ell,a}K_{\ell a}XK_{\ell a}^\dagger.
+$$
+
+这是优化域内另一个合法 CPTP 通道。对每个 $j$，三角不等式给出
+
+$$
+\sum_\ell\|\Phi_\ell(D_j)\|_1
+\le\sum_{\ell,a}\|K_{\ell a}D_jK_{\ell a}^\dagger\|_1.
+$$
+
+故这个替换不降低目标值。它使用的是优化时重新选择仪器的自由；没有假定一个已经实现且丢弃环境的通道，还能事后取回其 Kraus 标签。全部新增标签仍保留在输出中，没有删去不利分支。
+
+对一个这样的算子 $K$，置
+
+$$
+E=K^\dagger K\ge0,\qquad \operatorname{rank}E\le q.
+$$
+
+极分解 $K=U\sqrt E$ 中，$U$ 在 $\operatorname{supp}E$ 上为等距映射。矩阵 $\sqrt E D_j\sqrt E$ 的支撑包含于该子空间，因此等距嵌入只增添零特征值，并有
+
+$$
+\|KD_jK^\dagger\|_1
+=\|U\sqrt E D_j\sqrt E U^\dagger\|_1
+=\|\sqrt E D_j\sqrt E\|_1.
+$$
+
+反过来，对任意有限效应表
+
+$$
+E_\ell\ge0,\qquad \operatorname{rank}E_\ell\le q,
+\qquad \sum_\ell E_\ell=I_D,
+$$
+
+为每个非零效应选择等距映射
+
+$$
+U_\ell:\operatorname{supp}E_\ell\longrightarrow\mathbb C^q,
+\qquad K_\ell=U_\ell\sqrt{E_\ell}.
+$$
+
+把 $U_\ell$ 在支撑外延拓为零，并对零效应取 $K_\ell=0$。于是 $K_\ell^\dagger K_\ell=E_\ell$，通道
+
+$$
+\Phi_E(X)=\bigoplus_\ell K_\ell X K_\ell^\dagger
+$$
+
+为 CPTP，且逐项达到效应表的范数目标。故原上确界精确等于所有有限秩受限效应表上
+
+$$
+\sum_\ell f(E_\ell),\qquad
+f(E)=\sum_{j=1}^m\|\sqrt E D_j\sqrt E\|_1
+$$
+
+的上确界。
+
+现在证明效应数可以统一限制为 $D^2$。函数 $f$ 在正半定矩阵上连续，且对每个 $t\ge0$ 有
+
+$$
+f(tE)=t f(E).
+$$
+
+从任意有限可行效应表出发，先删去零效应。若非零效应数大于 $D^2$，由于 $D$ 阶 Hermitian 矩阵构成 $D^2$ 维实向量空间，存在不全为零的实数 $a_\ell$，满足
+
+$$
+\sum_\ell a_\ell E_\ell=0.
+$$
+
+每个非零效应的迹严格为正。对该等式取迹可知，$a_\ell$ 必须同时含有正数和负数。把整组系数变号也保持该关系，故可以选择方向使
+
+$$
+b:=\sum_\ell a_\ell f(E_\ell)\ge0.
+$$
+
+沿该方向取
+
+$$
+t_*:=\min_{\ell:\,a_\ell<0}\frac{-1}{a_\ell}>0,
+\qquad
+E'_\ell=(1+t_*a_\ell)E_\ell.
+$$
+
+所有缩放系数非负，至少一个原非零效应变为零。正性、秩上界以及总和为 $I_D$ 的条件均保持；齐次性给出
+
+$$
+\sum_\ell f(E'_\ell)
+=\sum_\ell f(E_\ell)+t_*b
+\ge\sum_\ell f(E_\ell).
+$$
+
+每次至少删去一个非零效应，有限次重复后得到至多 $D^2$ 个效应，且目标不降。这一消去从任意有限方案开始，不预先假设上确界已经达到。
+
+把效应表补零至 $D^2$ 项。所列固定槽位可行集非空：选一个输入正交基的 $D$ 个秩一投影，再补零即可，因为 $q\ge1$。每个效应自动满足 $0\le E_\ell\le I_D$。正性、总和以及 $\operatorname{rank}E_\ell\le q$ 都是闭条件，后者可由所有 $(q+1)$ 阶子式为零表述。因此可行集在有限维实向量空间中闭且有界，故紧。正矩阵平方根与迹范数连续，所以目标达到最大值。结合前面的消去与物理实现，得到有限变分公式和至多 $D^2$ 个非零经典分支的达到结论。秩约束通常不凸；这个紧集公式不自动给出一般闭式或半正定规划。
+
+最后假设全部 $D_j$ 可逆。任意 CPTP 通道逐项满足
+
+$$
+\|\Phi(D_j)\|_1\le\|D_j\|_1.
+$$
+
+若 $q\ge q_*$，第 41 节的中心分支与重数偏迹构造使用免费经典标签和至多 $q_*$ 维量子分支，同时保留全部范数。将其分支嵌入 $\mathbb C^q$，得到 $V_q=\sum_j\|D_j\|_1$。
+
+若 $q<q_*$ 而两者相等，前面已经证明最大值由一个有限分支通道达到。各项损失均非负而总和为零，故这个通道对每项都有
+
+$$
+\|\Phi(D_j)\|_1=\|D_j\|_1.
+$$
+
+这与第 41 节的必要条件 $q\ge\max_k d_k$ 矛盾。因此 $\Delta_q>0$。严格差距来自达到性和精确无损障碍共同作用；只知道没有无损通道，还不足以排除一列损失趋于零的通道。
+
+上面的有限达到证明本身不要求任何 $D_j$ 可逆，也适用于任意固定有限组 Hermitian 输入差。可逆性只用于最后调用第 41 节的符号投影代数判据。这里没有给出跨候选对或权重表统一的正损失常数，也没有从小损失推出一般恢复误差界。
+
+所用标量依赖扰动与 D'Ariano、Lo Presti、Perinotti，*Classical randomness in quantum measurements*，[推论 7 及其证明](https://arxiv.org/abs/quant-ph/0408115) 中的标准 POVM 方法一致；本节利用目标的正齐次性选择不降方向，同时保持各效应的秩上界。Bluhm、Rauber、Wolf，*Quantum compression relative to a set of measurements*，[引理 5.2、引理 5.3 与定理 5.1](https://arxiv.org/abs/1708.04898) 也通过限制经典辅助规模与紧性证明压缩维数的稳定性，但其 $D^4$ 标签界用于在保持给定复合通道不变的条件下重构压缩与解压缩映射。本节只优化所列有限范数总分，允许更换存储仪器并在权重揭示后分别选择最终判别；$D^2$ 界不承担保持原复合通道或共同解压缩映射的要求。证毕。
+

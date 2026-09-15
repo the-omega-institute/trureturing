@@ -1,0 +1,8 @@
+**定理 464.3。**令 $P(X)$ 为不超过 $X$ 的最大素数。对 $P(X)\ge5$，有与 $X$ 无关的 $\delta_t>0$ 及一致指数尾
+$$
+\nu_{X,t}(P(X))\ge\delta_t,
+\qquad
+\nu_{X,t}\{p:P(X)-p>D\}\le\kappa_t^{-1}\sum_{d>D}\lambda_t^{-d}\quad(D\ge1).
+$$
+圆周上的每个弱子列极限均为纯原子概率。
+

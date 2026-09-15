@@ -1,0 +1,9 @@
+**定义。** 设 $T>0$、$a,b,d\in\mathbb R$，并考虑可微的可见状态 $x:[0,T]\to\mathbb R$ 与隐藏状态 $y:[0,T]\to\mathbb R$ 构成的系统
+
+\[
+x'=-ax+by,
+\qquad
+y'=-bx-dy.
+\tag{12.8}
+\]
+

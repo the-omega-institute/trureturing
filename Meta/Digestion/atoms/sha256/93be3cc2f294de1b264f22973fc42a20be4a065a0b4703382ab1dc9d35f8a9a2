@@ -1,0 +1,16 @@
+**定理 446.6（乘除的精确有限视界分类）。** 对固定约化盒定义
+$$
+D(a)=\sum_p(a_p-1)_+,\qquad
+g_h(a)=\bigl(\min(a_p,h),\min(A_p-a_p,h)\bigr)_{p\in P}.
+$$
+对 $h\ge1$，
+$$
+a\equiv_h^{\pm}b\quad\Longleftrightarrow\quad
+a=b\ \text{或}\ \bigl(D(a)>h, D(b)>h, g_h(a)=g_h(b)\bigr).
+$$
+因此类数为
+$$
+q_h^{\pm}=|\{a:D(a)\le h\}|+|\{g_h(a):D(a)>h\}|.
+$$
+$h=0$ 仍仅为 $\mu$ 的核。$5040$ 在深度零、一、二的类数为 $3,56,60$，全分离最小深度为二；$210,30030$ 的相应类数为 $2,16,16$ 与 $2,64,64$，最小深度为一。一般 $h\ge\lceil\max_pA_p/2\rceil$ 时，守卫本身已使 $g_h$ 单射；空盒在深度零就分离。
+

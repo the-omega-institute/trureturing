@@ -14,6 +14,37 @@ public sealed class LeanReportCacheTests(ITestOutputHelper output)
     private const string RawReportPath = "tools/StrataLint.Engine/Snapshot/RawLeanReportArtifact.cs";
     private const string CanonicalWriterPath = "tools/Trureturing.Truth/StructuredCanonicalWriter.cs";
     [Fact]
+    public void FixedVersionGeneratorEditsReuseWithoutProducerAndBumpMisses()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var world = new CacheWorld();
+        var first = world.RunPair();
+        Assert.Equal(0, first.ExitCode);
+        var address = world.AddressFrom(first);
+        foreach (var path in new[] { RawReportPath, CanonicalWriterPath,
+                     "tools/lean-inspector/inspect.sh", "tools/lean-inspector/Inspector.lean",
+                     "tools/scripts/report/lean-report-input.sh", ".github/workflows/ci.yml" })
+        {
+            File.AppendAllText(Path.Combine(world.Repo, path), "\n# fixed-version edit\n");
+        }
+        Directory.CreateDirectory(Path.Combine(world.Repo, "tools/lean-inspector/Unused"));
+        File.WriteAllText(Path.Combine(world.Repo, "tools/lean-inspector/Unused/Fixture.lean"), "-- unused\n");
+        var cached = world.RunPair();
+        Assert.True(cached.ExitCode == 0, Encoding.UTF8.GetString(cached.StandardError));
+        Assert.Equal(address, world.AddressFrom(cached));
+        Assert.Equal(1, world.ProducerRunCount);
+        Assert.Equal(1, world.SlotAcquireCount);
+
+        File.WriteAllText(Path.Combine(world.Repo, LeanReportInputScriptTests.CompatibilityPath),
+            "compatibility_version = 2\n" + LeanReportInputScriptTests.SourcePatterns);
+        var bumped = world.RunPair();
+        Assert.Equal(0, bumped.ExitCode);
+        Assert.NotEqual(address, world.AddressFrom(bumped));
+        Assert.Equal(2, world.ProducerRunCount);
+        Assert.Equal(2, world.SlotAcquireCount);
+    }
+
+    [Fact]
     public void SecondProductionOfTheSameAddressIsServedFromCacheWithoutSlotOrProducer()
     {
         if (OperatingSystem.IsWindows()) return;
@@ -387,6 +418,8 @@ public sealed class LeanReportCacheTests(ITestOutputHelper output)
             Directory.CreateDirectory(worktreeDir);
             Directory.CreateDirectory(Path.Combine(Repo, "D5"));
             Directory.CreateDirectory(bin);
+
+            LeanReportInputScriptTests.InstallReportConfiguration(Repo);
 
             // Minimal repository inputs that lean-report-input.sh hashes into the address.
             File.WriteAllText(Path.Combine(Repo, "Trureturing.lean"), "-- stub\n");

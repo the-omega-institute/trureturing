@@ -1,0 +1,18 @@
+## proposition 2: Lower bound
+
+Set R={r:0<=r<=a} and M(r)=|r|!/product_i(r_i!). Actual legal prefixes define
+unit residual memories phi_r: apply the remaining isometric evolution to a
+prefix memory and use injectivity to see that its normalization depends only
+on r, including phase. With phi_0=f and z_d=<phi_d,f>, their Gram entries are
+
+    G_rs = sqrt(M(s) M(r-s)/M(r)) z_(r-s)  if s<=r,
+
+zero for incomparable indices, with conjugate reverse entries and z_0=1.
+Thus G is PSD and rank G<=dim H. This necessity was also independently audited
+in the earlier Gram characterization.
+
+Let D_rr=sqrt(M(r)) and B=DGD. On nonzero r,s,
+
+    B_rs = sum_i B_(r-e_i,s-e_i),
+
+omitting zero coordinates. 

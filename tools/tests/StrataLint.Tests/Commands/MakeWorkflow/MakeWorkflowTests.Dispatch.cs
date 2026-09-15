@@ -150,7 +150,8 @@ public sealed partial class MakeWorkflowTests
         Assert.DoesNotContain("run_phase cache-get", inspector, StringComparison.Ordinal);
         Assert.DoesNotContain("run_phase build \"$LAKE\"", inspector, StringComparison.Ordinal);
         Assert.Contains(LeanCacheRunScriptPath, inspector, StringComparison.Ordinal);
-        Assert.Contains("run_phase build \"$CACHE_RUN\" \"$LAKE\" build", inspector, StringComparison.Ordinal);
+        Assert.Contains("local -a lake_build_args=(build)", inspector, StringComparison.Ordinal);
+        Assert.Contains("run_phase build \"$CACHE_RUN\" \"$LAKE\" \"${lake_build_args[@]}\"", inspector, StringComparison.Ordinal);
         Assert.Contains("\"$CACHE_RUN\" \"$LAKE\" env lean", inspector, StringComparison.Ordinal);
 
         int EnsureDependency(string target)
@@ -171,7 +172,8 @@ public sealed partial class MakeWorkflowTests
             inspector,
             "(?m)^(?!\\[\\[).*\\\"\\$CACHE_RUN\\\"",
             RegexOptions.CultureInvariant).Count;
-        // lean-report needs both wrapper calls: inspect.sh:107 builds and inspect.sh:130 inspects.
+        // lean-report needs both wrapper calls: inspect.sh builds lazily inside
+        // invoke_inspector and then runs the Inspector phase.
         var leanEnsures = EnsureDependency("lean") + leanCommands;
         var reportEnsures = EnsureDependency("lean-report") + reportCommands;
         var testEnsures = EnsureDependency("test") + leanEnsures + reportEnsures;

@@ -1,0 +1,14 @@
+**定理 13.2（十坐标动量闭包，repo-derived）。** 若 $g$ 仅依赖 $w$ 及已知动作，则
+$$
+X^+=XM,\qquad Q^+=M^\top QM,\qquad
+M=\begin{pmatrix}
+1&-\eta g&0&g\\
+-\eta g&1&g&0\\
+-\eta\beta&0&\beta&0\\
+0&-\eta\beta&0&\beta
+\end{pmatrix}.
+$$
+$Q$ 的十个对称条目在实际像 $Q\succeq0,\operatorname{rank}Q\le m$ 上给精确更新。
+
+证明。按 $M$ 的四列相乘，依次得到 $u-\eta gv-\eta\beta\mathbf p$、$v-\eta gu-\eta\beta\mathbf q$、$gv+\beta\mathbf p$、$gu+\beta\mathbf q$，正是定义13.1。Gram 的更新由转置乘法直接得到。实际像的充要性与不变性按定理12.2相同的因子分解证明。证毕。
+

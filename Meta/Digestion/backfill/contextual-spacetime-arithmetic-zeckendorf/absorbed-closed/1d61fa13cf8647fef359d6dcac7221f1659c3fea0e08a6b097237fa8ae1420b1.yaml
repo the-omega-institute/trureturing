@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:1d61fa13cf8647fef359d6dcac7221f1659c3fea0e08a6b097237fa8ae1420b1
+  normalized_sha256: sha256:1d61fa13cf8647fef359d6dcac7221f1659c3fea0e08a6b097237fa8ae1420b1
+cas_ref: sha256:1d61fa13cf8647fef359d6dcac7221f1659c3fea0e08a6b097237fa8ae1420b1
+coverage_gids:
+  - gid: D5/S0/Rewriting/GuardedBoxPathAttainment.exists_shortest_word
+    target_statement_id: sha256:2781dc1386e6e55e6496ada4d07675bf78779517818f1b5070bc01f17396e214
+receipts:
+  unresolved_subitems: []

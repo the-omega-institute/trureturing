@@ -1,0 +1,18 @@
+## 3. 所有可见负号的隐藏提升
+
+设实线性观察为 \(P:E\to F\)，状态操作为实线性 \(R:E\to E\)。本组证明
+
+\[
+\boxed{
+R^2=I\ \land\ PR=-P
+\quad\Longleftrightarrow\quad
+\exists H,\ H^2=H,\ PH=0,\ R=2H-I.
+}
+\]
+
+右侧的 \(H\) 由完整 \(R\) 唯一确定：
+
+\[
+H=\tfrac12(I+R).
+\]
+

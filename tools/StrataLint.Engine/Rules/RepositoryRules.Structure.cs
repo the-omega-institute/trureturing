@@ -65,7 +65,7 @@ internal static partial class RepositoryRules
 
     internal const int ArtifactSoftLineLimit = 800;
 
-    internal const int DirectoryFileLimit = 48;
+    internal const int DirectoryFileLimit = 96;
 
     // The repository-wide capacity net tolerates a band above the admission limit.
     // Capacity is pressure, not correctness: an overfull bucket is a signal to split
@@ -84,7 +84,12 @@ internal static partial class RepositoryRules
     // D5/S1/Digit both sat exactly at 24, so three atoms whose text assigns a module to one of
     // them had no path the rule would admit, and three lanes were rejected on placement with no
     // available fix. The band still stays one admission limit wide).
-    internal const int DirectoryToleranceLimit = 96;
+    // Raised again 48/96 -> 96/192 by the owner on 2026-09-13 (issue #7538: Library/Recurrence
+    // and Library/Arith both sat exactly at 48, so S1/Recurrence literature notes had no
+    // admissible path under their domain bucket and were parked in Library/Words, which the
+    // architecture seat rejected as "a spare-capacity bucket is not the semantic owner". The band
+    // still stays one admission limit wide).
+    internal const int DirectoryToleranceLimit = 192;
 
     // SL-003 capacity exclusions: theory inputs, the Lake manifest, the backfill
     // inventory, atomizer dialect registry, canonical CAS blobs, and generated Blueprint

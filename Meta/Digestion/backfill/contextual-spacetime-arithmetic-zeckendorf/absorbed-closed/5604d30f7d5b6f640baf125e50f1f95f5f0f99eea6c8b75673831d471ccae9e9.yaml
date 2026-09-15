@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:5604d30f7d5b6f640baf125e50f1f95f5f0f99eea6c8b75673831d471ccae9e9
+  normalized_sha256: sha256:5604d30f7d5b6f640baf125e50f1f95f5f0f99eea6c8b75673831d471ccae9e9
+cas_ref: sha256:5604d30f7d5b6f640baf125e50f1f95f5f0f99eea6c8b75673831d471ccae9e9
+coverage_gids:
+  - gid: D5/S1/Deficit/ChargedCarryPath.betaDigits_sub_chargedReduces
+    target_statement_id: sha256:704a1a057a9a52f8af86b0f01f0e03610b3339aa1a228a670dfc02ae8bec67d0
+  - gid: D5/S1/Deficit/ChargedCarryPath.charged_normal_form_unique
+    target_statement_id: sha256:9b1f5a8948f580d24b157eab8c04ff3f37f82397054e112c688653a228868569
+  - gid: D5/S1/Deficit/ChargedCarryPath.charged_normalize_exists
+    target_statement_id: sha256:e9b502c58671d244c1327ec61445df091056366845afe2c73cd49010761cecc3
+  - gid: D5/S1/Deficit/ZeckendorfDisplacementReading.displacement_decode_eq_beatty_floor
+    target_statement_id: sha256:a2a75eaa142e774e908b7d7fd9624f1c694238fadfa2febdb0a0178ad2919b5b
+  - gid: D5/S1/Digit/PrimeAxisAddition.prime_axis_addition_spec
+    target_statement_id: sha256:a23c639bb7d0b7244e8d237835a05fb4bf57833d8e54cab8f4b31cd62d7c497f
+receipts:
+  unresolved_subitems: []

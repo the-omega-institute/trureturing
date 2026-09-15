@@ -1,0 +1,5 @@
+source_id = "dependent-origination-ledger-theory"
+path = "docs/develop/theory/DEPENDENT_ORIGINATION_LEDGER_THEORY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:55acb86c08cb2eb768c7116565a70e228f650db482c4062bdfe6725a90fcd4fd
+  normalized_sha256: sha256:55acb86c08cb2eb768c7116565a70e228f650db482c4062bdfe6725a90fcd4fd
+cas_ref: sha256:55acb86c08cb2eb768c7116565a70e228f650db482c4062bdfe6725a90fcd4fd
+coverage_gids:
+  - gid: D5/S0/History/Spacetime/ArchiveCarrier.Archive
+    target_statement_id: sha256:68398975e18185ade9e842130995e305538d3523284b8d32d83856db8f8439a1
+  - gid: D5/S3/ConceptDynamics/Spacetime/ComplementCharge.charge_eq_signed_card
+    target_statement_id: sha256:e2ba152bf501e5796ae3170a88d5262fe15986babc6cc80ec7fb804ebabf2184
+receipts:
+  unresolved_subitems: []

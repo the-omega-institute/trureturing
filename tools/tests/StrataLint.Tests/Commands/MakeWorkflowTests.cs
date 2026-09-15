@@ -56,6 +56,7 @@ public sealed partial class MakeWorkflowTests
         "emit",
         "ingest",
         "align-digestion-status",
+        "refresh-source-registry",
         "mathlib-reanchor",
         "echo-residual-summary",
         "digestion-readiness",

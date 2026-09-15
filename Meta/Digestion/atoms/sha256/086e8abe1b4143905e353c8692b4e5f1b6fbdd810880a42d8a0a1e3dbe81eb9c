@@ -1,0 +1,10 @@
+**定义。** 设 $p$ 为奇素数，$\theta_p$ 是 $\mathcal P_p$ 的一个根，
+$K_p=\mathbb Q(\theta_p)$，而 $\mathcal O_{K_p}$ 是 $K_p$ 的整数环。
+当 $\mathcal P_p$ 是 $\theta_p$ 的最小多项式时，定义指定幂基的指数为
+
+$$
+I_p=[\mathcal O_{K_p}:\mathbb Z[\theta_p]].
+$$
+
+指定幂基是整数环的整基，依定义即为 $I_p=1$。
+

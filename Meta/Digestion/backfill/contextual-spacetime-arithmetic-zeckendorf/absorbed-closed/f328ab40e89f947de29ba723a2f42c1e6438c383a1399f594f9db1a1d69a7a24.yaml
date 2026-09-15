@@ -1,0 +1,22 @@
+fingerprints:
+  raw_sha256: sha256:f328ab40e89f947de29ba723a2f42c1e6438c383a1399f594f9db1a1d69a7a24
+  normalized_sha256: sha256:f328ab40e89f947de29ba723a2f42c1e6438c383a1399f594f9db1a1d69a7a24
+cas_ref: sha256:f328ab40e89f947de29ba723a2f42c1e6438c383a1399f594f9db1a1d69a7a24
+coverage_gids:
+  - gid: D5/S1/Digit/PrimeAxisAddition.prime_axis_addition_spec
+    target_statement_id: sha256:a23c639bb7d0b7244e8d237835a05fb4bf57833d8e54cab8f4b31cd62d7c497f
+  - gid: D5/S1/Digit/PrimeAxisEncoding.primeAxisEncoding
+    target_statement_id: sha256:6269035f14e166bcf156403561751185bdd5b7f7d73767f6bf8d194aa0587409
+  - gid: D5/S3/ConceptDynamics/Spacetime/TaggedPresentation.archiveOf
+    target_statement_id: sha256:7942dfdded058262022d1b14175e4781320e0b011216ccb7d55252114e9091cd
+  - gid: D5/S3/ConceptDynamics/Spacetime/TaggedPresentation.charge_map
+    target_statement_id: sha256:7820a61a4912147f9d4712e22ea5cc9865613c64c04b36acbc62369dc6e30a76
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/CumulativeInverse.TailCondition
+    target_statement_id: sha256:21685e75aebc9d1bb08ff5590b31b3149e0dcd13c80f82963fc020d2261f631e
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/CumulativeInverse.cumulative_add
+    target_statement_id: sha256:353767ffdbaf618702f6685cefd52859cba9a3db6a7ecc6e656d7c0cd3570173
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - feb34cc238afacf1cc684af3989d5277e59fa0af119b5753e698ed57ccc4e8b2
+    - 568f34520f2f2894f11b0c1fb4b91119b28444a21fc2381513da8753b946b641

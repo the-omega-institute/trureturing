@@ -1,0 +1,41 @@
+**定义 1.1（有限量子载体及记号分层）。** 沿用[《情境时空算术》（CSA）定义 1–6、20、22](CONTEXTUAL_SPACETIME_ARITHMETIC.md)的情境、丰富表示、平衡域及运算，以及[《情境时空算术的 Zeckendorf 扩展》（Z 卷）定义 1–4、9、11](CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md)的数位观察。特别地，$X=(C,A)$、$A\subseteq\Omega\subseteq E$，且选择不必向下闭；来源树记为$\rho$，密度矩阵另记$\varrho$。固定
+$$
+G_0=1,\quad G_1=2,\quad G_{j+2}=G_{j+1}+G_j,\qquad
+\lambda(p,j)=(p,j,0).
+$$
+对每个整数$L\ge0$，只使用有限开放窗口
+$$
+\mathcal W_L=\{(c_0,\ldots,c_{L-1})\in\{0,1\}^L:
+c_jc_{j+1}=0\text{ 当 }0\le j< L-1\},\qquad
+V(c)=\sum_{j=0}^{L-1}G_jc_j.
+$$
+所有字串均按低位到高位书写，第一位是第零位；不把两端相接。$\mathcal W_0$只有空字串；空和为零，空积为一。记$\widehat c:\mathbb N\to\mathbb N$为$c$在$j\ge L$补零的行，$s(a)$为自然数$a$的有限支撑规范行，$\mathcal R=\mathbb N^{(\operatorname{Pr}\times\mathbb N)}$。原始表与规范表的映射仍为
+$$
+V_p(r)=\sum_jG_jr(p,j),\quad D(r)=\prod_p p^{V_p(r)},\quad
+\nu(r)(p,\cdot)=s(V_p(r)),\quad K(n)(p,\cdot)=s(v_p(n)).
+$$
+$K(n)$以素数和数位的二元组为索引，$s(n)$只以数位为索引。原CSA未加权读数为$q(X)=\sum_{e\in A}\sigma(e)$；Z 卷的累积观察使用整数阈值$T$：
+$$
+r_X^T(p,j)=\sum_{t\le T}Z_X(t,\lambda(p,j)),\qquad
+N_X(T)=D(r_X^T).
+$$
+总表$r_X=\sum_t Z_X(t,\lambda(\cdot,\cdot))$、总读数$N_X=D(r_X)$及总估值$a_p^X=V_p(r_X)$区别于指定$T$的累积量。
+
+固定素数$p$和窗口$L$，定义丰富表示到配置的观察
+$$
+\begin{aligned}
+\mathcal X_{p,L}=\{X\in\mathcal B_\lambda^+:\;&r_X(p,j)=0\ (j\ge L),\quad
+r_X(p',j)=0\ (p'\ne p),\\
+&(r_X(p,0),\ldots,r_X(p,L-1))\in\mathcal W_L\},\\
+\pi_{p,L}:\mathcal X_{p,L}\longrightarrow\mathcal W_L,\qquad
+&\pi_{p,L}(X)=(r_X(p,0),\ldots,r_X(p,L-1)).
+\end{aligned}
+$$
+这是在原选择空间中取一个观察子域；同一配置可有不同的丰富表示。
+
+对非空有限集合$S$，令$\mathcal H_S=\mathbb C^S$，标准正交基为$\{|s\rangle:s\in S\}$，并规定
+$$
+\langle v,w\rangle=\sum_{s\in S}\overline{v_s}w_s.
+$$
+内积对第一变量共轭线性，对第二变量线性；$A^\dagger$表示共轭转置，$\|A\|$为算子范数，$[A,B]=AB-BA$。令$\mathcal H_L=\mathcal H_{\mathcal W_L}$，包括$\mathcal H_0\cong\mathbb C$。量子演化参数为$\tau\in\mathbb R$，与原CSA档案时刻$t(e)\in\mathbb Z$及累积阈值$T\in\mathbb Z$分别取型，不指定它们之间的等同关系。
+

@@ -96,7 +96,7 @@ jobs:
   #   且**不在**该闭包内(闭包只含 `ci.yml`,见 `lean-report-input.sh:108`),故零连带成本。
   #
   #   **已知的作用域限制**:本 job 跑在 `schedule` 事件下,而 C 门要用的核验发生在
-  #   `pull_request_target` 下。两者的配额桶是否同一个,正是本探测要回答的问题之一 ——
+  #   原生 `pull_request` 下。两者的配额桶是否同一个,正是本探测要回答的问题之一 ——
   #   读数里的 `X-RateLimit-Resource` 会说明它是按什么维度计的。**在读到之前不得假定相同。**
   publish:
     name: Publish the Lean build cache

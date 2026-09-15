@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:0c22603f3e483ca227c97e97f94a1588af427e6f132f4e22f513f52b9da792fa
+  normalized_sha256: sha256:0c22603f3e483ca227c97e97f94a1588af427e6f132f4e22f513f52b9da792fa
+cas_ref: sha256:0c22603f3e483ca227c97e97f94a1588af427e6f132f4e22f513f52b9da792fa
+coverage_gids:
+  - gid: D5/S3/Analytic/WeightedCapacity/CircleCharacterContinuity.mass_finite_of_continuousAt
+    target_statement_id: sha256:9330089d2931981d25c7a831d2954d143806ac308b8ba54e3a42c7fa18eb787c
+receipts:
+  unresolved_subitems: []

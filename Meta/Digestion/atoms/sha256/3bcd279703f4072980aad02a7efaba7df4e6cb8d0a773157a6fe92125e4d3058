@@ -1,0 +1,5 @@
+原等式
+$$
+q_C(\Omega\setminus A)=u(C)-q_C(A)
+$$
+仅在 $u(C)=0$ 时成为负读数。

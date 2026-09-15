@@ -1,0 +1,8 @@
+**定义 444.1（原平衡载体中的 Möbius 档案）。** 对 $N\in\mathbb N$，取全部两两不同的遗传有限出现标识 $e_n^+,e_n^-$（$1\le n\le N$），令
+$$
+E_N=\Omega_N=\{e_n^+,e_n^-:1\le n\le N\},\quad
+t(e_n^\pm)=n,\quad x(e_n^\pm)=(0,0,0),\quad
+\sigma(e_n^\pm)=\pm1,\quad\rho(e_n^\pm)=\operatorname{leaf}(n).
+$$
+偏序为 $e_n^s\prec e_m^{s'}$ 当且仅当 $n<m$。选集 $A_N$ 在 $\mu(n)=1$ 时选 $e_n^+$，在 $\mu(n)=-1$ 时选 $e_n^-$，在 $\mu(n)=0$ 时两个都不选。记所得完整原丰富表示为 $X_N=(C_N,A_N)$。这里用有符号观察，不将负的 $\mu$ 放入非负估值槽域。
+

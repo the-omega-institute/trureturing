@@ -1,0 +1,8 @@
+**假设。** 若观测量 $\widehat x,\widehat v$ 满足
+
+\[
+|\widehat x-x|\leq\varepsilon_x,
+\qquad
+|\widehat v-x'|\leq\varepsilon_v,
+\]
+

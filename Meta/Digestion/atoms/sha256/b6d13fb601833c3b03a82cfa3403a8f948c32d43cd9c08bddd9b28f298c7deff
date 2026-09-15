@@ -1,0 +1,14 @@
+**定理。** 对所有 $w,x\in H$，
+
+$$
+\langle w,F(v+w)-F(v)\rangle
+=\langle w,Lw\rangle-\langle w,B(w,v)\rangle,
+$$
+
+以及
+
+$$
+\langle x-v,F(x)-F(v)\rangle
+\leq-(\mu-G)\|x-v\|^2.
+$$
+

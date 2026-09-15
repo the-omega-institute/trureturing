@@ -1,0 +1,72 @@
+## FM.5 三矩有限精度恢复
+
+**假设。** 设 $|u|,|w|\le1$、$|u^2+v^2|\le1$，三个真实读数各有不超过 $\epsilon\ge0$ 的误差。把前两个测量值截断到 $[-1,1]$，记所得值及第三个测量值为 $\widehat s_1,\widehat s_2,\widehat s_3$，并置
+
+$$
+\widehat g=\widehat s_2-\widehat s_1^2,\qquad
+\widehat z=\widehat s_3-2\widehat s_1\widehat s_2+\widehat s_1^3,
+$$
+
+$$
+\widehat m_j=
+\begin{cases}
+0,&\widehat g\le0,\\
+\widehat g[\operatorname{clip}_{[-1,1]}(\widehat z/\widehat g)]^j,&\widehat g>0.
+\end{cases}
+$$
+
+**定理 FM4。** 对全部 $j\ge0$，
+
+$$
+\boxed{|\widehat m_j-v^2w^j|\le(3+11j)\epsilon.}
+$$
+
+**证明。** 在单位区间上 $|x^k-y^k|\le k|x-y|$，从而
+
+$$
+|\widehat g-g|\le3\epsilon,
+\qquad |\widehat z-gw|\le8\epsilon.
+$$
+
+若 $\widehat g\le0$，则 $0\le g\le3\epsilon$，结论成立。若 $\widehat g>0$，令 $\widehat w=\operatorname{clip}_{[-1,1]}(\widehat z/\widehat g)$。截断不增加到 $w$ 的距离，故
+
+$$
+\widehat g|\widehat w-w|
+\le|\widehat z-\widehat g w|
+\le8\epsilon+3\epsilon|w|\le11\epsilon.
+$$
+
+于是
+
+$$
+|\widehat g\widehat w^j-gw^j|
+\le\widehat g|\widehat w^j-w^j|+|\widehat g-g||w|^j
+\le11j\epsilon+3\epsilon.
+$$
+
+证毕。
+
+**命题。** 因 $P$ 是非零正交投影，FM4 的标量界等价地给出
+
+$$
+\|\widehat m_jP-M_j\|\le(3+11j)\epsilon.
+$$
+
+**证明。** 由 FM3，$M_j=v^2w^jP$；又 $\|P\|=1$，故标量乘积的算子范数等于标量绝对值。证毕。
+
+**命题。** 若另有 $0<\theta<1$ 与 $|w|\le\theta$，并把截断区间改成 $[-\theta,\theta]$，则
+
+$$
+|\widehat m_j-gw^j|
+\le3\epsilon\theta^j+11\epsilon j\theta^{j-1},
+$$
+
+其中 $j=0$ 时第二项取零，并且
+
+$$
+\sum_{j\ge0}|\widehat m_j-gw^j|
+\le\epsilon\left(\frac3{1-\theta}+\frac{11}{(1-\theta)^2}\right).
+$$
+
+**证明。** 重复 FM4 的加权差证明，并在幂差中保留 $\theta^{j-1}$；再分别求两个几何级数及其导数级数。证毕。
+

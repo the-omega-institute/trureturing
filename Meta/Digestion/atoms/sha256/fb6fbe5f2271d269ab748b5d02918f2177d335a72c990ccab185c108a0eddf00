@@ -1,0 +1,10 @@
+**充分性。** 对任意 \(x\) 令 \(a=Px\)、\(b=x-Px\)。由幂等性有 \(Pa=a\)、\(Pb=0\)。展开
+
+\[
+PV(a+b)-PV(a)=PLb-P(B(a,b)+B(b,a))-PB(b,b),
+\]
+
+三项均为零。取 \(f(y)=PV(y)\) 即得闭包。
+
+`quadratic_closure_iff` 承载两个方向的证明。`quadratic_fiber_criterion` 通过已有 `answerability_criterion` 将它接到观察纤维语言。它没有要求闭包函数线性，也没有把某个已知闭包放进前提。
+

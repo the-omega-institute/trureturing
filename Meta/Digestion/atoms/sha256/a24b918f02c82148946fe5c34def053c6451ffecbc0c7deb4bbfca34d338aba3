@@ -1,0 +1,10 @@
+**定理。** 设 $\gamma>0$、$\rho\geq0$，$u:[0,T]\to H$ 连续且在 $[0,T)$ 具有右导数。设 $A(t):H\to H$ 为有界线性算子，$f:[0,T]\to H$ 连续，并且
+
+$$
+u'(t)=A(t)u(t)+f(t),\qquad
+\langle x,A(t)x\rangle\leq-\gamma\|x\|^2,qquad
+\|f(t)\|\leq\rho.
+$$
+
+则 $u$ 满足前一定理的同一指数管估计。
+

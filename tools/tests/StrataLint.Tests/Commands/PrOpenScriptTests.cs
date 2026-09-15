@@ -244,11 +244,13 @@ public sealed class PrOpenScriptTests
         Assert.Equal(0, fixture.RunWatch42().ExitCode);
     }
     [Fact]
-    public void PrWatchReturnsGreenForMergedPullRequestWithoutObservedRed()
+    public void PrWatchDoesNotReturnGreenForMergedPullRequestWhileRequiredCheckIsPending()
     {
         using var fixture = new PrScriptFixture();
         fixture.SnapshotResponses(Ok(Snapshot("MERGED", Check("engineering", "IN_PROGRESS", null))));
-        Assert.Equal(0, fixture.RunWatch42().ExitCode);
+        var result = fixture.RunWatch42WithDeadline();
+        Assert.Equal(124, result.ExitCode);
+        Assert.Contains("outcome=timeout pending=1 missing=0", Text(result.StandardOutput), StringComparison.Ordinal);
     }
     [Fact]
     public void PrWatchRetriesTransientQueryFailureAndThenDecides()

@@ -1,0 +1,7 @@
+**证明。** 若轨迹先首次到达 $\operatorname{low}$ 再首次到达 $\operatorname{high}$，从 $0$ 到低点、再到高点、再到终点 $d$ 的总距离给出
+
+$$
+|w|\ge -\operatorname{low}+(\operatorname{high}-\operatorname{low})+(\operatorname{high}-d)
+=2(\operatorname{high}-\operatorname{low})-d.
+$$
+

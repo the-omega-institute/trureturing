@@ -1,0 +1,10 @@
+**定理。** 上述 $u$ 满足跨层恒等式
+
+$$
+\boxed{
+\frac{e\alpha-h}{d_{L+2}}=\frac{u}{\alpha^2},\qquad
+\frac{(e+B_L)\alpha-(h+C_L)}{d_{L+1}}
+=\frac{1-u}{\alpha}.
+}\tag{GC7}
+$$
+

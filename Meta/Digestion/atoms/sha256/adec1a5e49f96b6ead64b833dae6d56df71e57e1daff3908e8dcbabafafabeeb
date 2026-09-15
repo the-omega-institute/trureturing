@@ -1,0 +1,5 @@
+对一般实际宏域，定义 $D-q=\{x\in\mathbb Z^P:x+q\in D\}$，则精确公式为
+$$
+\operatorname{Dom}(w)=X_A\cap\bigcap_{h=1}^m(D_{\lambda_h}-q_{h-1}),\qquad w(x)=x+q_m.
+$$
+内部单位词的域由其全部单位前缀给出；只检查宏边界的端点一般会扩大定义域。

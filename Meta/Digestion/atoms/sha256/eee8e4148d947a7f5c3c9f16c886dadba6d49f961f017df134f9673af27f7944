@@ -1,0 +1,6 @@
+给定任意增量集 $\mathcal S\subseteq\mathsf V_{\rm reg}$ 和起点 $u_0$，若每个 $s,-s$ 在每个状态都允许、没有守卫，且仅允许有限词，则精确可达集为
+$$
+u_0+\langle\mathcal S\rangle_{\mathbb Z},
+$$
+其中生成子群只含有限整数线性组合。
+

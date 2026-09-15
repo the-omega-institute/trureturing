@@ -1,0 +1,7 @@
+If ell has nonzero coefficient c_i, a degree-n polynomial F(ell) has a nonzero
+x_i^n coefficient. Rectangular support forces n<=b=min_(c_i!=0)a_i. Excluding
+the constant direction bounds dim L<=b<=max_i a_i. Nullity0/1 satisfies the
+same bound for a nontrivial box; the all-zero box has G=[1]. Hence
+
+    rank G >= |R|-max_i a_i.
+

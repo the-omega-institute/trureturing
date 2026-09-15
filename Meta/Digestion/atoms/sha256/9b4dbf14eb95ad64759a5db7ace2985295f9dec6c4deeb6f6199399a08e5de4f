@@ -1,0 +1,27 @@
+## 4. 二次动力闭包的完整判据
+
+设 \(P:E\to E\) 为实线性幂等投影，\(L:E\to E\) 线性，\(B:E\times E\to E\) 双线性，不要求对称。定义
+
+\[
+V(x)=Lx-B(x,x).
+\]
+
+观察闭包意味着存在一个可为非线性的函数 \(f:E\to E\)，使
+
+\[
+PV(x)=f(Px)\qquad\text{对所有 }x\text{ 成立}.
+\]
+
+本组证明，该条件当且仅当下列三项同时成立：
+
+\[
+\begin{aligned}
+Pb=0&\Longrightarrow PLb=0,\\
+Pb=0&\Longrightarrow PB(b,b)=0,\\
+Pa=a,\ Pb=0&\Longrightarrow P\bigl(B(a,b)+B(b,a)\bigr)=0.
+\end{aligned}
+\tag{4.1}
+\]
+
+这是原稿动力纤维判据在二次向量场上的具体加强：它把整条闭包条件化为线性项、隐藏自作用和混合作用的实际系数条件。
+

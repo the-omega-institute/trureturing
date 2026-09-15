@@ -34,46 +34,27 @@ for suffix in '' .sha256 .input.attestation .provenance.json .materials.zip; do
   [[ -s "${BUNDLE}${suffix}" ]] || fallback "missing-bundle-member"
 done
 
-address="$(python3 - "$BUNDLE" <<'PY'
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
+address="$(python3 -B - "$BUNDLE" "$SCRIPT_DIR/../../lean-inspector" <<'PY'
 import hashlib
-import json
 import pathlib
-import re
 import sys
 
-report = pathlib.Path(sys.argv[1])
-digest = hashlib.sha256(report.read_bytes()).hexdigest()
-sidecar = pathlib.Path(str(report) + ".sha256").read_text(encoding="ascii").splitlines()
-attestation = pathlib.Path(str(report) + ".input.attestation").read_text(encoding="ascii").splitlines()
-provenance = json.loads(
-    pathlib.Path(str(report) + ".provenance.json").read_text(encoding="utf-8"))
-hex64 = re.compile(r"^[0-9a-f]{64}$")
-expected_keys = {
-    "schema", "side", "mode", "source_side", "input_address",
-    "producer_sha256", "repository_inspector_sha256", "lean_sources_sha256",
-    "lean_config_sha256", "report_sha256",
-}
-address = provenance.get("input_address", "")
-if (len(sidecar) != 1
-        or sidecar[0] != digest + "  raw-lean-report.json"
-        or len(attestation) != 4
-        or attestation[0] != "schema=stratalint-lean-report-input-attestation-v1"
-        or not re.fullmatch(r"repository_input_sha256=[0-9a-f]{64}", attestation[1])
-        or attestation[2] != "producer_sha256=" + provenance.get("producer_sha256", "")
-        or attestation[3] != "report_sha256=" + digest
-        or set(provenance) != expected_keys
-        or provenance.get("schema") != "stratalint-lean-report-provenance-v1"
-        or provenance.get("side") != "candidate"
-        or provenance.get("mode") not in ("produced", "cached")
-        or provenance.get("source_side") != "candidate"
-        or not address.startswith("sha256:")
-        or not hex64.fullmatch(address[7:])
-        or any(not hex64.fullmatch(provenance.get(field, "")) for field in (
-            "producer_sha256", "repository_inspector_sha256", "lean_sources_sha256",
-            "lean_config_sha256", "report_sha256"))
-        or provenance.get("report_sha256") != digest):
+sys.path.insert(0, sys.argv[2])
+from delta import baseline_identity
+
+try:
+    report = pathlib.Path(sys.argv[1])
+    provenance = baseline_identity(report)
+    digest = hashlib.sha256(report.read_bytes()).hexdigest()
+    sidecar = pathlib.Path(str(report) + ".sha256").read_text(encoding="ascii").splitlines()
+    if (sidecar != [digest + "  raw-lean-report.json"]
+            or provenance["report_sha256"] != digest):
+        raise ValueError("baseline report SHA does not match")
+except (OSError, UnicodeError, ValueError) as error:
+    print(f"lean-report-ci-baseline: {error}", file=sys.stderr)
     raise SystemExit(1)
-print(address[7:])
+print(provenance["input_address"][7:])
 PY
 )" || fallback "invalid-attestation"
 

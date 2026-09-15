@@ -1,0 +1,20 @@
+**定理 453.3（包含零时域的完整费用运输）。** 使用第69–79、440.1–440.8条的原 $\operatorname{Enc}$、$\operatorname{Dec}$、语义有序对、全部函数图及费用运算 $\oplus,\preceq_Z$，对定义453.1的全部数据按原精确定义域双向运输。记 $\mathcal P_T^*=\operatorname{Enc}[\mathcal P_T]$；编码侧初态费、每条实际边费及实际终端费均取所给函数的运输。则对每个 $p\in\mathcal P_T$，包括 $T=0$，都有
+$$
+G_{T,Z}(\operatorname{Enc}(p))=\operatorname{Enc}(G_T(p)).
+$$
+编码侧费用像和全部达到路径分别为
+$$
+\mathcal A_{T,Z}=\operatorname{Enc}[\mathcal A_T],\qquad
+\mathcal R_{T,Z}(\operatorname{Enc}(v))=\operatorname{Enc}[\mathcal R_T(v)]\quad(v\in V),
+$$
+$$
+\operatorname{Min}_Z\mathcal A_{T,Z}=\operatorname{Enc}[\operatorname{Min}\mathcal A_T].
+$$
+这里这些等式右边是外部成员像；相应单个集合码分别为 $\operatorname{Enc}(\mathcal A_T)$、$\operatorname{Enc}(\mathcal R_T(v))$ 与 $\operatorname{Enc}(\operatorname{Min}\mathcal A_T)$。特别地，在定理453.2的零时域上，
+$$
+G_{0,Z}(\operatorname{Enc}(p_s))
+=\operatorname{Enc}(\alpha(s))\oplus\operatorname{Enc}(h(s))
+=\operatorname{Enc}(\alpha(s)+h(s)).
+$$
+这以完整初态费加实际终端费替代第440.9条证明中零时域费用仅为终端费的无条件表述；原有完整路径运输的结论在此完整费用下成立。
+

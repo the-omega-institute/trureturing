@@ -1,0 +1,8 @@
+**命题。** 场 $u_a$ 无散度，并满足零压力 Navier--Stokes 残差恒等式
+
+\[
+\partial_tu_a+(u_a\cdot\nabla)u_a-\nu\Delta u_a
+=(a'(t)+\Gamma_k a(t))\Phi_k.
+\tag{11.2}
+\]
+

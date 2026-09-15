@@ -1,0 +1,2 @@
+**证明。** 展开 $B(v+w,v+w)$。由假设，$\langle w,B(v,w)\rangle=0$ 与 $\langle w,B(w,w)\rangle=0$，只留下 $B(w,v)$。再代入关于 $L$ 与 $B(w,v)$ 的两个二次型上界。
+

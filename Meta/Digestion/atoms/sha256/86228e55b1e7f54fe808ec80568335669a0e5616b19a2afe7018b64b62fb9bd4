@@ -1,0 +1,8 @@
+**定义。** 对任意自然数 $k$，定义 companion 族、balanced 族及其整数交织子
+
+$$
+C_k=\begin{pmatrix}4k+1&1\\4k&1\end{pmatrix},\qquad
+D_k=\begin{pmatrix}2k+1&2\\2k(k+1)&2k+1\end{pmatrix},\qquad
+P_k=\begin{pmatrix}1&0\\-2k&2\end{pmatrix}.
+$$
+

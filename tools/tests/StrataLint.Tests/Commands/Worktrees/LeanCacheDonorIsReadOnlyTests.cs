@@ -39,6 +39,11 @@ public sealed partial class LeanCacheEnsureCommandTests
             runner);
 
         Assert.True(result.Success, result.Error);
+        using var receipt = ParseReceipt(result.Output);
+        Assert.Equal("seeded", receipt.RootElement.GetProperty("status").GetString());
+        Assert.Equal(
+            LeanCacheGuard.PhysicalPath(repository.Path),
+            receipt.RootElement.GetProperty("donor").GetString());
         // 白名单而非黑名单:枚举 donor 上**允许**的调用,其余一律违规。
         // 黑名单要穷举写操作的写法,漏一种就漏一个洞。
         var forbidden = runner.Invocations
@@ -75,7 +80,7 @@ public sealed partial class LeanCacheEnsureCommandTests
             LeanCacheGuard.PhysicalPath(warm),
             receipt.RootElement.GetProperty("donor").GetString());
         var forbidden = runner.Invocations
-            .Where(call => call.WorkingDirectory.StartsWith(warm, StringComparison.Ordinal))
+            .Where(call => IsInsideDirectory(call, warm))
             .Select(static call => $"{call.FileName} {string.Join(' ', call.Arguments)}")
             .ToArray();
         Assert.Empty(forbidden);
@@ -89,8 +94,17 @@ public sealed partial class LeanCacheEnsureCommandTests
         WorktreeProcessInvocation call,
         string donor,
         string target) =>
-        call.WorkingDirectory.StartsWith(donor, StringComparison.Ordinal)
-        && !call.WorkingDirectory.StartsWith(target, StringComparison.Ordinal);
+        IsInsideDirectory(call, donor) && !IsInsideDirectory(call, target);
+
+    private static bool IsInsideDirectory(WorktreeProcessInvocation call, string root)
+    {
+        // Git reports physical paths; fixture roots may use a system temporary-directory alias.
+        var directory = LeanCacheGuard.PhysicalPath(call.WorkingDirectory)
+            .TrimEnd(Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar;
+        var boundary = LeanCacheGuard.PhysicalPath(root)
+            .TrimEnd(Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar;
+        return directory.StartsWith(boundary, StringComparison.Ordinal);
+    }
 
     /// <summary>
     /// donor 上唯一正当的调用:清点工作树列表以挑选货源。它不改动任何东西。

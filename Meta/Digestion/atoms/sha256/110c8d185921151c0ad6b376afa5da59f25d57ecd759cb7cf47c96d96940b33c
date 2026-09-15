@@ -1,0 +1,11 @@
+**假设。** 再设 $v\in H$ 满足 $F(v)=0$。假设存在 $\mu,G\in\mathbb R$，使每个 $w\in H$ 都满足
+
+\[
+\langle w,Lw\rangle\leq-\mu\|w\|^2,
+\qquad
+-\langle w,B(w,v)\rangle\leq G\|w\|^2,
+\qquad
+\gamma=\mu-G>0.
+\tag{12.4}
+\]
+

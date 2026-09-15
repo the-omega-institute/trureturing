@@ -1,0 +1,2 @@
+**命题 5.8（成员指标不变不蕴含三态寂静）**〔引 FPP 1.15、1.18、2.4〕。在 FPP 定理 1.18 的真值表模型中取 $P=p\land\neg p$ 和空账本 $L$，$P$ 不可证而 $\neg P$ 可证，故由 FPP 定理 1.15，$P$ 的成员指标对所有容许变换恒假而 $\neg P$ 可追加，再按 FPP 定义 2.4，追加使 $s_L(P)$ 从 $\mathsf{open}$ 变为 $\mathsf{refuted}$，故 $\operatorname{Quiet}(P,L)$ 不成立。
+

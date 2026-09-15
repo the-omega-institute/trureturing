@@ -14,7 +14,8 @@ internal static class FrozenLedgerDeltaPredicate
             && path.EndsWith(".lean", StringComparison.Ordinal);
 
     internal static bool IsDeltaDefinitionInput(string path) =>
-        path is ".github/workflows/ci.yml"
+        path is "Meta/lean-report.toml"
+            or ".github/workflows/ci.yml"
             or "tools/scripts/report/lean-report-input.sh"
             or "tools/lean-inspector/Inspector.lean"
             or "Directory.Build.props"

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:39eaf3eb8937ef97611db3fd933249a7a40bf12edc7fc06a49343fee4bc4028b
+  normalized_sha256: sha256:39eaf3eb8937ef97611db3fd933249a7a40bf12edc7fc06a49343fee4bc4028b
+cas_ref: sha256:39eaf3eb8937ef97611db3fd933249a7a40bf12edc7fc06a49343fee4bc4028b
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Postprocessing/PostprocessingStrictLossWitness.strict_loss_refutes_image_injectivity
+    target_statement_id: sha256:3072112799dc2bd9b7e5545d04b92e96c52a1d3d9fea188f8964d076c4052e85
+receipts:
+  unresolved_subitems: []

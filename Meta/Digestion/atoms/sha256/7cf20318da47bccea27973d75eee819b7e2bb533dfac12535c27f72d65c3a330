@@ -1,0 +1,14 @@
+**定义 470.2（固定素数背景）。** 沿用《情境时空算术的 Zeckendorf 扩展》第 69–70 条的低位先写规范字双射 $\zeta:\omega\to\mathsf W_Z$，以及第 95–96 条的素数标签集 $\mathsf{Pr}_Z=\zeta[\operatorname{Pr}]$。在全部自然数上定义关系
+$$
+\operatorname{NextPrime}(p,q)\iff p,q\in\operatorname{Pr}\ \land\ p<q\ \land\ \neg\exists r\in\operatorname{Pr}\ (p<r<q),
+$$
+$$
+\operatorname{Gap}(p,q,g)\iff\operatorname{NextPrime}(p,q)\land q=p+g.
+$$
+因此它们分别是 $\omega^2$、$\omega^3$ 的子集；非素数端点不满足关系，实际间距 $g$ 必为正数。数字关系逐位置使用 $\zeta$ 运输。先规定 $\operatorname{Gap}_Z\subseteq\mathsf W_Z^3$；仅对 $u,v,w\in\mathsf W_Z$ 定义
+$$
+\operatorname{Gap}_Z(u,v,w)\iff
+\operatorname{Gap}(\operatorname{val}u,\operatorname{val}v,\operatorname{val}w).
+$$
+固定有限标签集 $P$ 时，背景边取上述全素数关系在 $P$ 上的限制；它不把两个在 $P$ 中相邻、但中间另有未列素数的标签称为全素数后继。若另研究 $P$ 自身的顺序后继，须使用 $P$ 内的量词另定义该关系。
+

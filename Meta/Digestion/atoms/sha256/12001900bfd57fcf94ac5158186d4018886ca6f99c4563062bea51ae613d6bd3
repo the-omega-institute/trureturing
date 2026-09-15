@@ -1,0 +1,12 @@
+**定义 4.1（共同世界）。** 对局部状态函数 $\xi_i:\Gamma\to\mathcal X_i$，实际共同世界为非空集合 $\Gamma$，允许的联合摘要是
+$$
+J_q=\{(q_i(\xi_i(\gamma)))_i:\gamma\in\Gamma\},
+$$
+而非默认的 $\prod_i q_i[\xi_i[\Gamma]]$。来源标记重复引用相同变量时，必须使用同一世界赋值。集合相容性本身不蕴含概率独立。 对有限个局部载体上的部分组合 $F:D\subseteq\prod_i\mathcal X_i\to Y$，把完整相容条件并入 $D$，定义第 $i$ 个槽位的完整补全签名为函数
+$$
+\sigma_i(x_i):(x_j)_{j\ne i}\longmapsto
+\begin{cases}\operatorname{ok}(F(x_1,\ldots,x_n)),&(x_j)_j\in D,\\
+\bot,&(x_j)_j\notin D.\end{cases}
+$$
+若还须保留边界映射 $\beta_i$，则签名扩成 $(\beta_i,\sigma_i)$。所谓摘要保留完整边界、补全域及补全观察，精确定义为该签名经 $q_i$ 因子化。
+

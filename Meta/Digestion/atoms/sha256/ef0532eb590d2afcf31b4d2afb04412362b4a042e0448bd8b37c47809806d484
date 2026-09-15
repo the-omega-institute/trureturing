@@ -1,0 +1,7 @@
+**定理 442.2（无进位增长与布尔约数格）。** $K(P_{k+1})$ 由 $K(P_k)$ 在新的素数行添一个底槽一得到，无需进位。映射 $S\mapsto\prod_{i\in S}p_i$ 双射于 $\mathcal P(\{1,\ldots,k\})$ 与 $\operatorname{Div}(P_k)$，保包含与整除，并且
+$$
+\Theta_k=\log P_k,\quad
+E_k=\sum_{d\mid P_k}\frac{\mu(d)}d=\frac{\Phi(P_k)}{P_k},\quad
+\sum_{d\mid P_k}\mu(d)=\begin{cases}1,&k=0,\\0,&k\ge1.\end{cases}
+$$
+

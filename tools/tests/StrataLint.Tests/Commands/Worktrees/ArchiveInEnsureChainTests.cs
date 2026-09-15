@@ -149,21 +149,34 @@ public sealed partial class LeanCacheEnsureCommandTests
         "LEAN_CACHE_FETCH {\"status\":\"rejected\",\"stage\":\"provenance\",\"reason\":\"release author is nobody\"}\n",
         "rejected",
         "provenance: release author is nobody")]
+    [InlineData(
+        "LEAN_CACHE_FETCH {\"status\":\"unpacked\",\"mode\":\"exact\"}\n",
+        "failed",
+        "archive receipt says unpacked but the fetcher exited 1")]
     public void AnUnusableArchiveDegradesAndSaysWhy(string stub, string status, string reason)
     {
         using var repository = new TemporaryDirectory();
         var fixture = new EnsureArchiveFixture(repository.Path, $"degrade-{status}");
+        string? callbackRoot = null;
         // 脚本的约定是 miss/rejected 走非零退出;桩必须照这个约定回,否则测的就不是
         // 真实形状。ensure 侧现在校验判词与退出码自洽,桩若回 0 会被判 failed。
         var runner = new RecordingWorktreeProcessRunner
         {
             ArchiveReceipt = stub,
             ArchiveExitCode = 1,
+            AfterArchiveFetch = root => callbackRoot = root,
         };
 
         var receipt = fixture.Ensure(runner);
 
         Assert.Equal(1, runner.ArchiveInvocations);
+        var invocation = Assert.Single(runner.Invocations, static call => call.FileName == "/bin/bash");
+        Assert.Equal(
+            [Path.Combine(fixture.Target, "tools", "scripts", "worktree", "lean-cache-publish.sh"),
+                "fetch", "--repository", fixture.Target],
+            invocation.Arguments);
+        Assert.Equal(fixture.Target, invocation.WorkingDirectory);
+        Assert.Equal(fixture.Target, callbackRoot);
         Assert.Equal("present", receipt.GetProperty("status").GetString());
         Assert.Equal(status, receipt.GetProperty("archive_status").GetString());
         Assert.Equal(reason, receipt.GetProperty("archive_reason").GetString());
@@ -343,6 +356,8 @@ public sealed partial class LeanCacheEnsureCommandTests
         }
 
         private string Repository { get; }
+
+        internal string Target => target;
 
         internal void OccupyBuildRoot()
         {

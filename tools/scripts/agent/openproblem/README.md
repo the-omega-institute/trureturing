@@ -5,13 +5,15 @@ CLAUDE.md 5⁵(开放问题线三档律)的操作面。所有脚本以宿主后�
 
 ## 流程(每条 lane)
 1. **搜题**(nyxid-oracle,ChatGPT Pro):brief 必须写明**档位**(第一档新近小猜想 / 第二档计算前沿 / 第三档核心问题)与「文献是否已有此陈述」的核对要求;结果落 `results/rN.json`。
-2. **探针**(codex-cli,只读 worktree,scratch `/tmp/op-pNN/`):先用 Python 独立核算真假(可证伪预测写在跑之前),再 Lean 整证;`propose` 只认「主陈述以标准三公理编译且无 sorry」;`refuted` 也是结果。已知结果不派席(只 cover 或作前置桥)。
-3. **预登记**(理论卷增订 ingest):写档位、核对结果、逃逸见证与范围墙;`op-ingest-new-noalign.sh` 在新分支追加卷文并 ingest(绕开 issue #5606 的 align 重排问题)。
-4. **Stage A**(`op-resume-seat.sh … implementation`):模块 + Scribe 镜像 + `make lean`/`lean-report`/`emit`,**在任何门之前停下**(envelope `mirror-ready`)。brief 由 `gen_stage_briefs.py` 从实施 brief 切出;基底模板 `templates/impl-base-brief.md` 带产地类型化、import 最小化、公开面自觉、header 工具校验、emit 前刷新报告等块(`add_base_blocks.py` 可补进旧 brief)。
-5. **镜像核对**(只读 codex 席,`templates/mirror-check-template.md` 十二项):括号/合取/绑定变量/强制转换/整除/关系节点/完备性(公开 def 也要镜像或 private)/取值核对/header/定义保真/产地(FromLiterature 须有带 DOI 或 arXiv 的 L 平面注)/import 最小化。
-6. **Stage B**(`fill_mirror_fixes.py` 把核对结果填进 Stage B brief):先修镜像,改过镜像必做渲染检查(发射 md 无 `&&`/`||`/`==`;`make preflight` 中点名本模块的 `markdown red` 行即停),再 deposit + cover(锚 atom 也要 cover)、一个 builder commit、晚期去重、push、`make pr-open`(不挂 auto-merge)。
-7. **三席评审**(`gen_review.py`:tests/quality 走 codex,一席 nyxid 由 `od -An -N2 -tu2 /dev/urandom` 取 raw%2 抽签);正文冻结后再派复审;非阻断即 `op-sync-dev.sh`(合 dev、推、等三门)+ `gh pr merge --auto --merge`。
-8. **重做**:冻结后任何镜像/产地/import 修补都是全新 deposit(cover 收据绑定 Scribe 哈希);同一 lane 第三次非数学重做即停(第 20⁗ 条)。
+2. **靶清查**(`TARGET-GATES.md`;已判条目见 `SCREENED-OUT.md`,别重筛):派席前四关,按成本升序——① curl OEIS 原文查是否已被证(语料的 `research open` 标注只说明没人改过那个文件,实测滞后文献三个月);② 对象级去重,**先查钉版 mathlib** 再查本仓(上游一般定理会静默实例化、不留标识符痕迹);③ 档位(悬赏题、名题的精确等价物、只剩有限残余的已发表结果,全部出局);④ 从**定义**而非猜想模式算数值。四关各自独立,过三关不算过。
+3. **探针**(codex-cli,只读 worktree,scratch `/tmp/op-pNN/`):先用 Python 独立核算真假(可证伪预测写在跑之前),再 Lean 整证;`propose` 只认「主陈述以标准三公理编译且无 sorry」;`refuted` 也是结果。已知结果不派席(只 cover 或作前置桥)。
+4. **预登记**(理论卷增订 ingest):写档位、核对结果、逃逸见证与范围墙;`op-ingest-new-noalign.sh` 在新分支追加卷文并 ingest(绕开 issue #5606 的 align 重排问题)。
+5. **Stage A**(`op-resume-seat.sh … implementation`):模块 + Scribe 镜像 + `make lean`/`lean-report`/`emit`,**在任何门之前停下**(envelope `mirror-ready`)。brief 由 `gen_stage_briefs.py` 从实施 brief 切出;基底模板 `templates/impl-base-brief.md` 带产地类型化、import 最小化、公开面自觉、header 工具校验、emit 前刷新报告等块(`add_base_blocks.py` 可补进旧 brief)。
+6. **判形核对**(只读 codex 席,`templates/judgement-form-check-template.md`):逐声明判 §3.2 的 `content` / `bind-only`,并要求为每条 content 点名逃逸见证。与镜像核对同属**冻结之前**的只读阶段,理由相同:冻结后改 `.lean` 撞 SL-008,只能整条重做。两种最会藏的形状是「沿显然同构传输上游定理」与「把两元素 `decide` 当成内容」。同席顺带核对交付陈述与源句是否同强度(猜想说 `rank = 2`,只证 `∃ 两个生成元` 不算)。
+7. **镜像核对**(只读 codex 席,`templates/mirror-check-template.md` 十二项):括号/合取/绑定变量/强制转换/整除/关系节点/完备性(公开 def 也要镜像或 private)/取值核对/header/定义保真/产地(FromLiterature 须有带 DOI 或 arXiv 的 L 平面注)/import 最小化。
+8. **Stage B**(`fill_mirror_fixes.py` 把核对结果填进 Stage B brief):先修镜像,改过镜像必做渲染检查(发射 md 无 `&&`/`||`/`==`;`make preflight` 中点名本模块的 `markdown red` 行即停),再 deposit + cover(锚 atom 也要 cover)、一个 builder commit、晚期去重、push、`make pr-open`(不挂 auto-merge)。
+9. **三席评审**(`gen_review.py`:tests/quality 走 codex,一席 nyxid 由 `od -An -N2 -tu2 /dev/urandom` 取 raw%2 抽签);正文冻结后再派复审;非阻断即 `op-sync-dev.sh`(合 dev、推、等三门)+ `gh pr merge --auto --merge`。
+10. **重做**:冻结后任何镜像/产地/import 修补都是全新 deposit(cover 收据绑定 Scribe 哈希);同一 lane 第三次非数学重做即停(第 20⁗ 条)。
 
 ## 脚本
 - `op-resume-seat.sh FLIGHT ATTEMPT BRIEF WORKTREE STAGE [STAGGER] [MAX_CODEX]`:fail-closed 负载门(idle ≥ 20% ∧ lean ≤ 4 ∧ codex 进程 ≤ MAX,300 轮 × 60 s,超时不启动)+ sshx runner。

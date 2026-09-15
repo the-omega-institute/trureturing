@@ -1,0 +1,21 @@
+**定理。** 若 $m,k\in\mathbb Z$ 且
+
+$$
+\binom e h=M_L\binom m k,
+$$
+
+则
+
+$$
+\boxed{e\alpha-h=d_L(m\alpha-k).}\tag{GC1}
+$$
+
+并且整数逆映射为
+
+$$
+\boxed{
+m=(-1)^L(C_Le-B_Lh),\qquad
+k=(-1)^L(A_Lh-B_Le).
+}\tag{GC2}
+$$
+

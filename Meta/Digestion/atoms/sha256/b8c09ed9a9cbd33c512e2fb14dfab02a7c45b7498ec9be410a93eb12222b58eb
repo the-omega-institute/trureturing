@@ -1,0 +1,34 @@
+**定义 470.1（规范字、补零字与引用约定）。** 下文《情境时空算术的 Zeckendorf 扩展》简称 Z 卷，《情境时空算术》简称 CSA 卷；条款编号均指这两卷的原条款。沿用 Z 卷第 3、9–10、69–70 条：$\omega$ 为自然数集合，$\operatorname{Pr}$ 为全部素数，$G_0=1,G_1=2,G_{j+2}=G_{j+1}+G_j$。低位先写的规范字域为
+$$
+\mathsf W_Z=\{\varnothing\}\cup\bigcup_{\ell\ge1}\{w:\ell\to\{0,1\}:\forall j\ (j+1<\ell\Rightarrow w_jw_{j+1}=0),\quad w_{\ell-1}=1\}.
+$$
+$\operatorname{val}:\mathsf W_Z\to\omega$ 为 $w\mapsto\sum_{j<|w|}G_jw_j$，其逆为原 $\zeta$；$\zeta(0)=\varnothing$。$\operatorname{pad}(w):\omega\to\{0,1\}$ 在字域外补零。允许高位补零的有限合法字域 $\mathsf W_Z^{\rm pad}$ 去掉末位为一的要求，其值另用同一有限和定义，不以该值函数断言双射。例如字 $1,10,100$ 均值一，只有第一个为规范字。规范字、有限补零字、总补零函数各保留自己的完整图及定义域。
+
+Z 卷第 11–12 条的规范表双射，经第 69–70 条逐行截尾及第 95–96 条标签重索引，在全部素数背景和正整数域上写为：
+$$
+\mathsf F=\{A:\mathsf{Pr}_Z\to\mathsf W_Z:\{p\in\operatorname{Pr}:A(\zeta(p))\ne\zeta(0)\}\text{ 有限}\},\qquad
+A_N(\zeta(p))=\zeta(\nu_p(N))\quad(N\ge1),
+$$
+$$
+N\longmapsto A_N,\qquad A\longmapsto\prod_{p\in\operatorname{Pr}}p^{\operatorname{val}(A(\zeta(p)))}
+$$
+是所引条款中的双逆，乘积只有有限个非一因子。$\mathsf{Pr}_Z=\zeta[\operatorname{Pr}]$。每条 $\langle\zeta(p),A(\zeta(p))\rangle$ 都在总图中，包括全部零字值边。空支撑对应 $N=1$，$N=0$ 不在这个域中。
+
+原第 11 条的零一规范表以非零支撑表示，再经第 95–96 条重索引，稀疏域就是有限集合 $U\subseteq\mathsf{Pr}_Z\times\omega$，且每行的激活位置无相邻两个指标；逆向原表在且仅在 $(\zeta(p),j)\in U$ 时取一。相应字值正逆式为
+$$
+U(A)=\{(\zeta(p),j):(\operatorname{pad}(A(\zeta(p))))_j=1\},\qquad
+A_U(\zeta(p))=\zeta\!\left(\sum_{j:(\zeta(p),j)\in U}G_j\right).
+$$
+未列的每一行使用空和零并恢复其完整零值边。第 10、70 条的规范唯一性正是每行互逆所用的条件；$U(A_U)=U,A_{U(A)}=A$ 在以上两个完整域成立。这里的总图对无穷多个互异素数各有一条边，因此不遗传有限；第 72 条的遗传有限性双向式进一步给出其完整集合码也不遗传有限。固定背景及零补全给出的逆不包括独立另给的容量、关系或历史。第 240 条在固定配置内的历史恢复以及跨配置的反例、第 271 条的完整配置字段双逆仍各在原域使用。
+
+Z 卷第 12、120、134、166 条在正整数 $M,N$ 上给
+$$
+\nu_p(MN)=\nu_p(M)+\nu_p(N),\qquad
+M\mid N\iff\forall p\in\operatorname{Pr}\ \nu_p(M)\le\nu_p(N),
+$$
+$$
+\nu_p(\gcd(M,N))=\min(\nu_p(M),\nu_p(N)),\qquad
+\nu_p(\operatorname{lcm}(M,N))=\max(\nu_p(M),\nu_p(N)).
+$$
+其中有限配置条款的参数可取 $P=\{p:\nu_p(MN)>0\}$、$A_p=\nu_p(M)+\nu_p(N)$，两输入、乘积、最大公因数及最小公倍数均在该盒中；$P$ 外两输入估值均零。第 12 条的乘法式则直接使用全素数背景。数字字段用 $\zeta$、$\operatorname{val}$ 共轭这些自然数运算；逐素数指数相加可能需要该行内部的规范化。这里的 $p$ 是素数轴，$j$ 是指数行或标量字内部的数位轴。原第 25–27 条给出整数观察、指数表与 CSA 档案运算不能混同的反例；上述等式不把它们按同名符号识别。
+

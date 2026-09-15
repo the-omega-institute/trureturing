@@ -1,0 +1,42 @@
+**定理 443.11（固定证书的密度及显式误差）。** 记 $\zeta_R(2)=\sum_{n\ge1}n^{-2}$。对固定平方自由 $Q\ge1$，令
+$$
+S_Q(X)=\#\{1\le d\le X:d\text{ 平方自由},\ (d,Q)=1\},\quad
+\rho_Q=\frac1{\zeta_R(2)}\prod_{p\mid Q}\frac p{p+1}\quad(X\ge0).
+$$
+则
+$$
+|S_Q(X)-\rho_QX|\le(2^{\omega(Q)}+2)\sqrt X.
+$$
+对 $Q>1$ 使用 443.4 的约数及部分和，令
+$$
+\alpha_Q=\rho_Q\sum_{i<t}|b_i|(a_i^{-1}-a_{i+1}^{-1}),\qquad
+D_Q=(2^{\omega(Q)}+2)\sum_{i<t}|b_i|(a_i^{-1/2}+a_{i+1}^{-1/2}).
+$$
+则 $\alpha_Q>0$，且对全部 $N\ge0$，
+$$
+|W_Q(N)-\alpha_QN|\le D_Q\sqrt N.
+$$
+$Q=1$ 时取 $\alpha_1=1/\zeta_R(2)$，直接使用第一误差界。
+
+**证明。** 唯一素因子分解给平方自由指示式 $\mathbf1_{\rm sf}(d)=\sum_{a^2\mid d}\mu(a)$：每个估值至少二的素数贡献因子 $1-1$，没有这些素数时为空积一。因此
+$$
+S_Q(X)=\sum_{\substack{a\le\sqrt X\\(a,Q)=1}}\mu(a)C_Q(X/a^2).
+$$
+互素容斥给 $C_Q(Y)=e_QY+\varepsilon_Q(Y)$，$|\varepsilon_Q(Y)|\le2^{\omega(Q)}$；$Q=1$ 时这就是 floor 误差。设 $X\ge1,m=\lfloor\sqrt X\rfloor$。有限部分的误差至多 $2^{\omega(Q)}m$，将主项补成绝对收敛级数的尾误差至多
+$$
+X\sum_{a>m}a^{-2}\le X\int_m^\infty t^{-2}dt=X/m\le2\sqrt X,
+$$
+最后一步用 $m\ge\sqrt X/2$。主项系数为
+$$
+e_Q\sum_{(a,Q)=1}\frac{\mu(a)}{a^2}
+=e_Q\prod_{p\nmid Q}(1-p^{-2})
+=\frac1{\zeta_R(2)}\prod_{p\mid Q}\frac p{p+1}=\rho_Q.
+$$
+这里 Euler 积有完整的绝对收敛依据：$\sum_{n\ge1}n^{-2}$ 收敛；有限素数积展开后，逐项极限由该绝对可和上界控制，给 $\zeta_R(2)=\prod_p(1-p^{-2})^{-1}$ 及对应 Möbius 级数。因 $\sum_pp^{-2}<\infty$，且 $-\log(1-t)\le2t$ 于 $0\le t\le1/2$，这些正因子的无限积严格为正。$0\le X<1$ 时 $S_Q(X)=0$、$0<\rho_Q\le1$，故 $\rho_QX\le\sqrt X$；在 $X=0$ 为等号。这证明全域误差。
+
+按核阶梯分组的同一个半开区间公式给
+$$
+W_Q(N)=\sum_{i<t}|b_i|\bigl(S_Q(N/a_i)-S_Q(N/a_{i+1})\bigr).
+$$
+分别代入已证的两端误差并相加，得到 $D_Q$。首区间 $b_1=1,a_2>1$ 及 $\rho_Q>0$ 给 $\alpha_Q>0$。没有将固定 $Q$ 的常数宣称为随 $Q$ 一致的常数。证毕。
+

@@ -1,0 +1,8 @@
+**定理 5.2（预测伪超度量与精确阈值，repo-derived）。** $d_\rho$ 为伪超度量，且
+$$
+\xi\equiv_h\eta\iff D(\xi,\eta)>h\iff d_\rho(\xi,\eta)\le\rho^{h+1}.
+$$
+在 $\equiv_\infty$ 的商上它成为超度量；同一 $h$ 层通常仅沿动作映到 $h-1$ 层，除非分区已稳定。
+
+证明。若 $\xi,\eta$ 和 $\eta,\zeta$ 在所有长度小于 $k$ 的词上相同，则 $\xi,\zeta$ 也相同，故 $D(\xi,\zeta)\ge\min(D(\xi,\eta),D(\eta,\zeta))$。$\rho^t$ 递减给强三角不等式。长度取非负整数，所以 $D>h$ 等价于 $D\ge h+1$，也涵盖 $\infty$。加一个动作前缀消耗一层视界。已有一般结果见[定量对角化卷](QUANTITATIVE_DIAGONALIZATION_OBSERVER_COMPLETION.md)定理24.7及第24.4节；阈值不能误写成 $d<\rho^{h+1}$。证毕。
+

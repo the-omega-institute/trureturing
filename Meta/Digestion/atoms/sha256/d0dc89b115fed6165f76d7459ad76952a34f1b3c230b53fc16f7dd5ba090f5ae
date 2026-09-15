@@ -1,0 +1,55 @@
+### R.6 奇素数的迹约束与判别式方向
+
+**定理。** 若 $p$ 为奇素数，则 $r=\pi(p)$ 为偶数，并且 R.5 中的整数商满足
+
+$$
+\boxed{2b-a=-p(b^2-ab-a^2).}
+\tag{R10}
+$$
+
+**证明。** 因 $Q^r\equiv I\pmod p$，取行列式得
+$(-1)^r\equiv1\pmod p$。奇素数下 $1\not\equiv-1$，故 $r$ 为偶数。
+**证明。** 再由 R1 与 R.5 中 $a,b$ 的定义，在整数矩阵中计算
+
+$$
+1=\det Q^r
+=1+p(2b-a)+p^2(b^2-ab-a^2).
+$$
+
+**证明。** 在整数环中约去非零的 $p$，即得 R10。
+
+**定理。** 对奇素数 $p$，
+
+$$
+\boxed{\pi(p^2)=\pi(p)\iff p\mid F_{\pi(p)}/p.}
+\tag{R11}
+$$
+
+**证明。** R10 模 $p$ 给出 $2b=a$。由于 $2$ 在模 $p$ 下可逆，
+$p\mid a$ 当且仅当 $p\mid b$；再用 R9。
+
+**定义。** 在模 $p$ 下令
+
+$$
+H=\begin{pmatrix}1&2\\2&-1\end{pmatrix},\qquad
+\overline B=\begin{pmatrix}b&a\\a&b-a\end{pmatrix}.
+$$
+
+**定理。** 对奇素数 $p$，
+
+$$
+\boxed{2\overline B=aH,\qquad (2\overline B)^2=5a^2I.}
+\tag{R12}
+$$
+
+**证明。** 由 $2b=a$ 逐项比较得到第一式；直接相乘得 $H^2=5I$，
+从而得到第二式。
+
+**命题。** 若 $p$ 为素数、$p\ne2,5$ 且 $a\not\equiv0\pmod p$，则
+$\ker\overline B=0$。此外，对模 $p^2$ 的状态向量 $v$，旧周期后的差为
+$pBv$；若 $v\not\equiv0\pmod p$，则该差不为零。
+
+**证明。** 若 $\overline Bv=0$，R12 给出 $5a^2v=0$；$5a^2$ 可逆，故
+$v=0$。R7 给出 $Q^rv-v=pBv$。若后者在模 $p^2$ 下为零，则
+$\overline B(v\bmod p)=0$，由核为零得到 $v\equiv0\pmod p$，与假设矛盾。
+

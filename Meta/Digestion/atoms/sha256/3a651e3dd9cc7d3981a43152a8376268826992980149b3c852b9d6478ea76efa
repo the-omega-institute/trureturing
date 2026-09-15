@@ -1,0 +1,2 @@
+**定义 5.1（两种无常）**〔semantic〕。本卷以无常（anitya／anicca）命名两种不同的量化性质。命题 $P$ 在 $L$ 可动，指 $\exists T\in\mathfrak M,\ s_{T(L)}(P)\ne s_L(P)$。对已指定的容许链 $L_{t+1}=T_t(L_t)$，称 $P$ 沿此链必动，指 $\exists t\in\mathbb N,\ s_{L_t}(P)\ne s_{L_0}(P)$。“必动”只在这一条给定链上谈最终发生，不把存在某次合法变化混成每条轨迹都变化。
+

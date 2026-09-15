@@ -1,0 +1,32 @@
+**定理 472.5（素数尾支撑障碍与全素数边界）。** 对上述参数，
+$$
+W_Q(N),U_Q(N)\ge T_Q(N)\ge\max\{0,\pi(N)-\pi(N/2)-\omega(Q)\}.
+$$
+$N\ge3$ 时另有
+$$
+T_Q(N)\ge\max\left\{0,\pi(N)-\pi(N/2)-\frac{\log Q}{\log(N/2)}\right\}.
+$$
+若固定 $A>0,\delta>0$，某平方自由函数 $Q(N)$ 最终满足 $W_{Q(N)}(N)\le AN^{1-\delta}$，或满足同样的 $U$ 上界，则最终
+$$
+\omega(Q(N))\ge\pi(N)-\pi(N/2)-AN^{1-\delta},
+$$
+$$
+\log Q(N)\ge\bigl(\pi(N)-\pi(N/2)-AN^{1-\delta}\bigr)\log(N/2).
+$$
+由素数定理，必有
+$$
+\liminf_{N\to\infty}\frac{\omega(Q(N))\log N}{N}\ge\frac12,\qquad
+\liminf_{N\to\infty}\frac{\log Q(N)}N\ge\frac12.
+$$
+若 $Q(N)=\prod_{p\le y_N}p$、$2\le y_N\le N$，上述幂次上界强制 $y_N/N\to1$。全素数截止则对每个整数 $N\ge1$ 给
+$$
+B_{\prod_{p\le N}p}(N)=M(N),\qquad
+U_{\prod_{p\le N}p}(N)=W_{\prod_{p\le N}p}(N)=|M(N)|.
+$$
+
+**证明。** 每个 $p\in\mathcal P_Q(N)$ 满足 $1\le N/p<2$，所以 $B_Q(N/p)=1$。它在两个非负外层中各贡献一，在第 443.2 条的带符号和中贡献负一。窗内被 $Q$ 纳入的素数至多 $\omega(Q)$；若有 $s$ 个，则 $\log Q\ge s\log(N/2)$。分别计数和移项便得有限必要条件。
+
+素数定理给 $(\pi(N)-\pi(N/2))\log N/N\to1/2$，而 $N^{-\delta}\log N\to0$，故得到两个下极限。若 $y_N/N$ 不趋一，存在固定 $0<\xi<1$ 及无穷子列使 $y_N\le(1-\xi)N$。取 $a=\max(1/2,1-\xi)<1$，未纳入素数至少有 $\pi(N)-\pi(aN)\sim(1-a)N/\log N$ 个，与 $AN^{1-\delta}=o(N/\log N)$ 矛盾。
+
+全素数截止时，与该积互素且不超过 $N$ 的正整数只有一；所有不超过 $N$ 的平方自由整数都整除该积。原核因此等于 $M(N)$，两个外层只剩 $d=1$，给等式。$N=1$ 使用空素数积和原 $Q=1$ 分支。此时有符号抵消仍在核中，单项外层没有给出求值节省。证毕。
+

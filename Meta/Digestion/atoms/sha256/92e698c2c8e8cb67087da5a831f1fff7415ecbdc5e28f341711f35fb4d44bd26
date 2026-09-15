@@ -1,0 +1,9 @@
+**证明。** 当整数 $k\ne0$，$k\alpha$ 非整数，故 $\lceil k\alpha\rceil=\lfloor k\alpha\rfloor+1$。在 $t\notin\{m-1,m\}$ 时两个修正相消。在另外两个时刻，分别直接得到
+
+$$
+(\ell_m(m-1),\ell_m(m))=(1,0),\qquad
+(u_m(m-1),u_m(m))=(0,1).
+$$
+
+普通 floor 增量不等式给出下机械轨迹二值性，上轨迹由两点交换得到。
+

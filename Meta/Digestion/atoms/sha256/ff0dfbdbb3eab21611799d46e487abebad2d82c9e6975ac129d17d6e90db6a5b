@@ -1,0 +1,19 @@
+**定理 442.4（判据的域和正确符号）。** 记
+$$
+c_{\rm Nic}(n)=\left(\frac n{\Phi(n)}-e^\gamma\log\log n\right)\sqrt{\log n}\quad(n\in\mathbb Z,\ n\ge2),
+$$
+并对 $k\ge1$ 记 $F_k=e^\gamma E_k\log\Theta_k$。每个 $k\ge1$ 的原不等式等价于 $E_k\log\Theta_k<e^{-\gamma}$，且
+$$
+1-F_k=\frac{E_kc_{\rm Nic}(P_k)}{\sqrt{\Theta_k}}.
+$$
+当且仅当把域限于 $k\ge2$ 时，可进一步使用这些正量改写：
+$$
+E_k<\frac{e^{-\gamma}}{\log\Theta_k},\qquad
+F_k<1\ \Longleftrightarrow\ \log F_k<0,
+\qquad
+\log F_k=\gamma+\log E_k+\log\log\Theta_k.
+$$
+在 $H_{\rm Nic}$ 下，全称的上述合法改写与 RH 等价。
+
+**证明。** $P_k\ge2$，故 $\Theta_k=\log P_k>0$、$E_k>0$；乘原不等式以 $E_k$ 得第一式。展开 $c_{\rm Nic}$ 并乘以 $E_k/\sqrt{\Theta_k}$，立即得到 $1-F_k$ 的正向差式。$k=1$ 时 $0<\Theta_1=\log2<1$，所以 $\log\Theta_1<0$，而 $P_1/\Phi(P_1)=2>0$，原不等式自动成立；$F_1<0$，不得对它取实对数，也不得把除以负数的式子写成上述正量版本。$k\ge2$ 时 $P_k\ge6>e$，故 $\log\Theta_k>0$，可除以它，并用实对数严格递增性。$k=0$ 不使用 $\log\Theta_0$。假设只在把各个有限改写合成全称解析结论时使用。证毕。
+

@@ -1,0 +1,8 @@
+**定理 459.1。**对 $k\ge1$，
+$$
+\alpha F_k-F_{k-1}=(-1)^{k-1}\alpha^k.
+$$
+因此 $\varepsilon_j=\alpha G_j-F_{j+1}=(-1)^{j+1}\alpha^{j+2}$，$\varepsilon_{j+1}=-\alpha\varepsilon_j$，$\varepsilon_{j+2}=\alpha^2\varepsilon_j$，且
+$$
+\{\alpha n\}=\left\{\sum_{j\ge0}d_j(n)\varepsilon_j\right\}.
+$$

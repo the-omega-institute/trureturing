@@ -1,0 +1,26 @@
+**定义 484.4（一次删除及其实际逆记录域）。** 在同一全部 $\Gamma_{5040}$ 上定义
+$$
+\begin{aligned}
+E&=\{(\gamma,J,i):\gamma\in\Gamma_{5040},\
+J\subseteq B,\ |J|=3,\ i\in J\},\\
+E'&=\{(\gamma,I,i):\gamma\in\Gamma_{5040},\
+I\subseteq B,\ |I|=2,\ i\in B\setminus I\}.
+\end{aligned}
+\tag{484.4}
+$$
+给每点质量 $\nu(\gamma,J,i)=w(\gamma)/105$，以及 $\nu'(\gamma,I,i)=w(\gamma)/105$。定义
+$$
+\Phi:E\to E',\qquad
+\Phi(\gamma,J,i)=(\gamma,J\setminus\{i\},i),
+$$
+$$
+\Psi:E'\to E,\qquad
+\Psi(\gamma,I,i)=(\gamma,I\cup\{i\},i),
+$$
+以及两个原无序标记投影
+$$
+a:E\to\mathcal U_4,\quad a(\gamma,J,i)=(\gamma,J),\qquad
+b:E\to\mathcal U_3,\quad b(\gamma,J,i)=(\gamma,J\setminus\{i\}).
+\tag{484.5}
+$$
+

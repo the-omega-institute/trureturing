@@ -1,0 +1,12 @@
+**约定 2.1（承接的最小结构）**〔semantic〕。固定命题类型 $\mathcal P$ 及其否定运算 $P\mapsto\neg P$、证明项类型 $\Pi$、取值为接受或拒绝的核 $K(\pi,P)$、有限许可依赖读出 $\mathrm{ax}(\pi)$、有限直接引用读出 $\mathrm{refs}(\pi)\subseteq\mathcal P$，以及许可集 $\mathfrak A$（承 FPP 定义 1.1）。写 $\mathrm{Proved}(P)$ 当且仅当存在 $\pi$ 使 $K(\pi,P)=\mathsf{acc}$ 且 $\mathrm{ax}(\pi)\subseteq\mathfrak A$；$\mathrm{Thm}$ 是满足此式的命题集（承 FPP 定义 1.2）。称这样的 $\pi$ 为 $P$ 的合格证明项；称下述有限闭合见证整体为证书，以区别两种类型。
+
+账本 $L=(N,E,w,O)$ 的 $N\subseteq\mathcal P$ 有限，$w:N\to\Pi$ 给每个节点一个合格证明项，满足 $\mathrm{refs}(w(v))\subseteq N$；$E=\{(u,v):u\in\mathrm{refs}(w(v))\}$ 无环；$O\subseteq\mathcal P\setminus N$ 是登记前沿。记 $N_L=N=\mathrm{Frozen}(L)$；$\mathrm{Anc}_L(v)$、$\mathrm{Desc}_L(v)$ 分别是不含 $v$ 的祖先、后代集合；$\mathrm{depth}_L(v)$ 为以 $v$ 为终点的最长有向路径的边数（承 FPP 定义 1.5、1.6，定理 1.7）。变换是所有合法账本上的全函数，容许类 $\mathfrak M$ 由假设 2.5 给出（承 FPP 定义 1.11、假设 1.12）。
+
+状态函数 $s_L:\mathcal P\to\Sigma$ 的值域是 $\Sigma=\{\mathsf{frozen},\mathsf{refuted},\mathsf{open}\}$：$P\in N$ 时取 $\mathsf{frozen}$；否则 $\neg P\in N$ 时取 $\mathsf{refuted}$；两者均不在 $N$ 时取 $\mathsf{open}$，前两支在假设 2.3 下互斥（承 FPP 定义 2.4、定理 2.5）。记 $F^+(L)=\mathrm{Thm}\setminus N$；$F^0(L)=\{P\in O:\neg\mathrm{Proved}(P)\land\neg\mathrm{Proved}(\neg P)\}$（承 FPP 定义 1.16）。$F^+$ 是正向可入账前沿；$F^0$ 还要求登记，不能把所有双侧不可证命题自动算入 $O$。
+
+主张记录 $U$ 是有限序列，条目 $(k,P,\sigma)$ 的序号严格递增，$\sigma\in\widehat\Sigma=\Sigma\cup\{\mathsf{unverified}\}$；后续记录只向尾部追加。$\operatorname{last}_U(P)$ 在 $P\in\operatorname{dom}(U)$ 时给出最新状态，未出现时无定义；省略序号时写 $(P,\sigma)$。$\operatorname{Balanced}(U,L)$ 意指每个最新状态或者等于 $s_L(P)$，或者等于 $\mathsf{unverified}$（承 FPP 定义 3.1、3.2）。这里 $\mathsf{unverified}$ 是主张标签，不是账本的第四种状态。
+
+主体是 $\mathfrak S=(T,c,\operatorname{Adm})$，$c(L,U)$ 为有限追加主张序列，$\operatorname{Adm}(a,i)$ 为工件与提交者的准入谓词。主体“诚”指对所有账平输入保持账平，即 $\operatorname{Balanced}(U,L)\Rightarrow\operatorname{Balanced}(U\mathbin{+\!\!+}c(L,U),T(L))$；“恕”指固定工件时准入对提交者的任意置换不变；“善”指诚、恕和 $T\in\mathfrak M$ 三者合取（承 FPP 定义 4.1、假设 4.3、4.4、定义 4.5）。这些是主体的条件，不能无条件加给任意策略。
+
+表述 $\rho=(\tau,n,\pi)$ 有文本、名称和证明表述三个分量；解释给出 $\llbracket\tau\rrbracket\in\mathcal P$、$\llbracket\pi\rrbracket\in\Pi$，表述状态取 $s_L(\llbracket\tau\rrbracket)$，而核的接受判词取 $K(\llbracket\pi\rrbracket,\llbracket\tau\rrbracket)$（承 FPP 定义 5.1）。$h$ 表示固定内容域上的地址函数（承 FPP 假设 1.9、定义 9.1）；命题内容的地址与第 7 章整合前置地址的节点地址按各自输入区分。
+

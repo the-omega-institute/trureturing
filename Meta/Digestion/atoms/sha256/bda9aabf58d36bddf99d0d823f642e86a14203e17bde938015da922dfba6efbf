@@ -1,0 +1,23 @@
+**反例 9.2（最小非平凡记录）。** 取两个标签、一个新增记录单元，令$\theta_{0,1}=\theta_{1,1}=0$，并令
+$$
+\langle e_1^{(1)}|e_0^{(1)}\rangle=\mu,
+\qquad 0\le|\mu|<1.
+$$
+对初态$|+\rangle\langle+|$，$\rho_0=|+\rangle\langle+|$，而
+$$
+\operatorname{tr}_{E_1}\rho_1
+=\frac12
+\begin{pmatrix}
+1&\mu\\
+\overline\mu&1
+\end{pmatrix}
+\ne
+\frac12
+\begin{pmatrix}
+1&1\\
+1&1
+\end{pmatrix}
+=\rho_0.
+$$
+因此“保留更多记录后再把它删掉”并不会恢复此前的含系统态；删去记录与把记录从未写入过是两个不同操作。
+

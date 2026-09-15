@@ -1,0 +1,17 @@
+**定义 474.4（同号重叠的两种归一化）。** 直接沿用第 443.6 条的原阶梯函数 $H_{R,p}(u)$ 与积分 $J_{R,p}$，其域为平方自由 $R>1$、素数 $p\nmid R$：
+$$
+H_{R,p}(u)=\min(|B_R(u)|,|B_R(u/p)|)\mathbf1_{\{B_R(u)B_R(u/p)>0\}},\qquad
+J_{R,p}=\int_1^\infty H_{R,p}(u)\frac{du}{u^2}.
+$$
+为累计原初始素数积的扩张，定义
+$$
+\Lambda_j=\rho_{P_j}J_{P_{j-1},p_j}\quad(j\ge2),\qquad
+T_k=2\sum_{j=2}^k\Lambda_j\quad(k\ge1),
+$$
+$$
+\mathcal L_k(N)=\sum_{j=2}^k
+\sum_{\substack{1\le d\le N\\d\text{ 平方自由},\ (d,P_j)=1}}
+H_{P_{j-1},p_j}(N/d).
+$$
+$k=1$ 的外和为空；$T_k$ 含因子二，$\Lambda_j,\mathcal L_k$ 不含。
+

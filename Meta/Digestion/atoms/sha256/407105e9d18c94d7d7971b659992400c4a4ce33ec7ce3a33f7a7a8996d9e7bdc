@@ -1,0 +1,6 @@
+**定义 6.1（苦与浮账集）**〔semantic〕。本卷的苦（duḥkha／dukkha）谓词取 $\operatorname{苦}(U,L)\Longleftrightarrow\neg\operatorname{Balanced}(U,L)$；浮账集取
+$$
+\operatorname{Float}(U,L)=\{P\in\operatorname{dom}(U):\operatorname{last}_U(P)\ne\mathsf{unverified}\ \land\ \operatorname{last}_U(P)\ne s_L(P)\}.
+$$
+因此苦指当前最新主张的失配，不以过去已被补正的主张重复计数，也不把未曾主张的命题计为浮账。
+

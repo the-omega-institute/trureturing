@@ -1,0 +1,5 @@
+$$
+F_k(c)=-\beta^{-1}\log\sum_{c'\in\mathcal C_{n,k+1}}
+D_k(c',c)e^{-\beta F_{k+1}(c')}.
+\tag{479.3b}
+$$

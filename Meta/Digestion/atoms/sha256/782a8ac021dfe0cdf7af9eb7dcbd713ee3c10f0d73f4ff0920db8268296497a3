@@ -1,0 +1,45 @@
+**证明。** 平方自由性给 $b_i-b_{i-1}=\mu(a_i)\in\{-1,1\}$。整数增减一时绝对值恰改变一，故 $|\varepsilon_i|=1$。在全部 $u\ge0$ 上，有限望远镜和给
+$$
+|B_Q(u)|=\sum_{i=1}^{t}\varepsilon_i\mathbf1_{[a_i,\infty)}(u).
+$$
+$u<1$ 时和为空；$Q>1,u\ge Q$ 时和为 $|b_t|=0$；$Q=1$ 时和为 $\mathbf1_{[1,\infty)}(u)$。分别代入两个原外层并交换有限和，$a_i\le N/d$ 恰等价于 $d\le N/a_i$，得到 (472.2a)。原区间 $a_i\le N/d<a_{i+1}$ 始终对应 $N/a_{i+1}<d\le N/a_i$，未改变严格下端或闭上端。
+
+对 $Q>1$，$b_0=b_t=0$，有限分部求和给
+$$
+\sum_i\frac{\varepsilon_i}{a_i}
+=\sum_{i<t}|b_i|(a_i^{-1}-a_{i+1}^{-1}),
+$$
+即第 443.4、443.11 条主项的共同有限和；$Q=1$ 直接用其原单独分支，得到 (472.2b)。引用第 443.5、443.11 条对全部实数 $x\ge0$ 的原估计
+$$
+|C_Q(x)-e_Qx|\le2^k,\qquad
+|S_Q(x)-\rho_Qx|\le(2^k+2)\sqrt x.
+$$
+代入 (472.2a)，第一误差至多 $2^k\sum_i|\varepsilon_i|=4^k$；第二误差至多
+$$
+(2^k+2)\sqrt N\sum_{a\mid Q}a^{-1/2}
+=(2^k+2)\sqrt N\prod_{p\mid Q}(1+p^{-1/2}).
+$$
+最后是平方自由约数的有限积展开，故 (472.2c) 成立，包括 $N=0$。对 $Q>1$，将原 $D_Q$ 按端点重排，有
+$$
+\frac{D_Q}{2^k+2}
+=\sum_{i=1}^t\frac{|b_{i-1}|+|b_i|}{\sqrt{a_i}}
+\ge\sum_i\frac{\bigl||b_i|-|b_{i-1}|\bigr|}{\sqrt{a_i}}
+=\sum_{a\mid Q}a^{-1/2},
+$$
+从而 $D_Q\ge E_Q$。
+
+设素因子为 $q_1<\cdots<q_k$。由 $q_j\ge j+1$、$\log(1+x)\le x$ 及积分比较，
+$$
+\log\prod_{p\mid Q}(1+p^{-1/2})
+\le\sum_{j=1}^k(j+1)^{-1/2}
+\le\int_1^{k+1}x^{-1/2}\,dx
+=2(\sqrt{k+1}-1)\le2\sqrt k.
+$$
+空素数集也满足此式。若 $k\le(1/2-\epsilon)\log_2N$，两个相对误差分别至多
+$$
+N^{-2\epsilon},\qquad
+(N^{-\epsilon}+2N^{-1/2})
+\exp\bigl(2\sqrt{(1/2-\epsilon)\log_2N}\bigr).
+$$
+负的 $\log N$ 一次项支配 $\sqrt{\log N}$ 项，故后一式也趋零。这些界与素数标签无关，证明一致性。证毕。
+

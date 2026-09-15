@@ -380,6 +380,16 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
+pattern = "Meta/lean-report.toml"
+kind = "data"
+admission_plane = "judge"
+produced_by = "none"
+consumed_by = ["automation"]
+verified_by = ["LeanReportInput"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
 pattern = "Meta/registry.yaml"
 kind = "data"
 admission_plane = "judge"
@@ -512,6 +522,28 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
+# Compares exact raw ML dynamics, reduced updates, and finite future partitions.
+pattern = "docs/reports/contextual-spacetime-ml/finite_checks.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+# Supplies reproducible rational witnesses and finite-family closure results.
+pattern = "docs/reports/contextual-spacetime-ml/finite_results.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
 # Samples singular and full-rank states to probe covariance bounds.
 pattern = "docs/reports/covariancesumbound/random_probe.py"
 kind = "program"
@@ -536,6 +568,28 @@ runtime_disposition = "committed-source"
 [[files]]
 # Samples unitary families and measures their commutant dimensions.
 pattern = "docs/reports/crossspecies/commutant_probe.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+# Preserves exact interval bounds and margins for the conditional Mertens proof.
+pattern = "docs/reports/csa-mertens-auxiliary-domain/interval_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+# Checks exact interval propagation and rounding for the conditional Mertens bound.
+pattern = "docs/reports/csa-mertens-auxiliary-domain/interval_check.py"
 kind = "program"
 admission_plane = "content"
 produced_by = "none"

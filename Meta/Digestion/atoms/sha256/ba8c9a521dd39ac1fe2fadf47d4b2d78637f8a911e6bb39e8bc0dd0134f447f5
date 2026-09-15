@@ -1,0 +1,10 @@
+**定理 159（单位指令的端点观察商）。** 在固定起点 \(a\) 上，对成功词定义
+\[
+w\equiv_a v\iff\forall p\in P,\quad\eta_p(w)=\eta_p(v).
+\]
+置
+\[
+\operatorname{Path}_{P,A}(a,-)
+ =\{w\in\mathcal U_P^*: \operatorname{ev}_A(a,w)\text{ 有值}\}
+ =\bigcup_{b\in S(P,A)}\operatorname{Path}_{P,A}(a,b).
+\]

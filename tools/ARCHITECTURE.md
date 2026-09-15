@@ -5,10 +5,12 @@ Production harness projects, scripts, manifests, and architecture material live 
 `Meta/` is the data side of this boundary and contains no harness program directory.
 
 The admission judge is selected before candidate policy, assemblies, or helpers are read.
-The steady-state workflow is orchestrated by base-controlled `pull_request_target`, not
-the candidate's workflow definition; candidate checkout credentials are not persisted.
+The steady-state workflow uses the native `pull_request` event and is configured for
+read-only PR behavior. It runs the candidate workflow on GitHub's post-merge tree;
+candidate checkout credentials are not persisted. GitHub supplies `github.sha` as the
+merge commit `M`; merge conflicts suppress `pull_request` workflow runs.
 The baseline is resolved from the checked object itself, never from the event payload:
-both PR merge refs and `dev` push commits carry their protected base as the first parent,
+both PR merge commits and `dev` push commits carry their protected base as the first parent,
 so the baseline is `git -C candidate rev-parse HEAD^1` and the candidate is
 `git -C candidate rev-parse HEAD`. Only `head` and `base` are admissible git references. A Lean-native predecessor job builds the candidate tree and
 emits its source-bound canonical report. It uploads the report, SHA-256 sidecar, and
@@ -20,16 +22,16 @@ selftest are engineering signals only and cannot issue admission.
 
 ## D5-T0017: one-time bootstrap
 
-The first C# harness has no earlier C# judge, and a candidate-only
-`pull_request_target` workflow cannot run before that workflow exists on the actual
-default branch. Therefore the initial placement is not machine admission. It is a
+The first C# harness has no earlier C# judge. Native `pull_request` can run a
+candidate workflow before it exists on the default branch; that run provides no
+predecessor harness verification. Therefore the initial placement is not machine admission. It is a
 one-time, human-authorized trusted bootstrap: an admin places the harness and this
 workflow on `dev` without claiming predecessor harness verification. Any bootstrap push
 run that selects the candidate is only a post-injection observation and says so in its
 annotation and job summary.
 
 `StrataLint topology` queries `origin HEAD`, reads the workflow from that exact remote
-default-branch commit, and validates the `pull_request_target` trigger for that branch
+default-branch commit, and validates the `pull_request` trigger for that branch
 plus the `baseline-admission` job. Until those are reachable on `dev`, it exits through
 the human-gate path and reports
 `BOOTSTRAP-NOT-ACTIVE:baseline gate 尚未注入 dev,当前非机器门控态,须人类可信注入(D5-T0017)`.

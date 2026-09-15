@@ -1,0 +1,17 @@
+**定理 7.1（隐藏记忆的精确消元，repo-derived）。** 给实参数 $a,b,c,d$ 和任意初态，若
+$$
+x_{t+1}=ax_t+bh_t,\qquad h_{t+1}=cx_t+dh_t,
+$$
+则对所有 $t\ge0$，
+$$
+\begin{aligned}
+h_t&=d^t h_0+c\sum_{j=0}^{t-1}d^{t-1-j}x_j,\\
+x_{t+1}&=ax_t+bc\sum_{j=0}^{t-1}d^{t-1-j}x_j+bd^t h_0,\\
+x_{t+2}&=(a+d)x_{t+1}+(bc-ad)x_t.
+\end{aligned}
+$$
+两相邻可见值确定全部可见未来；由它们恢复 $h_t$ 还要求 $b\ne0$。
+
+证明。第一式对 $t$ 归纳，空和为零；将此 $h_t$ 的表达式代入 $x_{t+1}=ax_t+bh_t$，即得所示历史求和式。将 $h_{t+1}$ 代入下一步，再用 $bh_t=x_{t+1}-ax_t$，得到
+$x_{t+2}=ax_{t+1}+bcx_t+d(x_{t+1}-ax_t)$。这个消元不除以 $b$，故 $b=0$ 也成立。若 $b\ne0$，$h_t=(x_{t+1}-ax_t)/b$；若 $b=0$，任意两个不同隐藏初态给相同可见轨迹，故不能一般恢复。此为[证明拓扑卷](PROOF_TOPOLOGY_DIAGONAL_ESCAPE_THEORY.md)MF.2定理MF1及MF.5的标量专门化；经典记忆项不含量子振幅或 Born 规则。证毕。
+

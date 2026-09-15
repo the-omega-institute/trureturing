@@ -1,0 +1,8 @@
+**定理 21.2（含初始误差的有限时域界，repo-derived）。** 在定义21.1下，对 $0\le h\le H$，
+$$
+e_h\le L^h e_0+\delta\sum_{j=0}^{h-1}L^j.
+$$
+若输出 $o=\bar o q$ 且 $\bar o$ 为 $L_o$-Lipschitz，另有输出求值误差至多 $\varepsilon_o$，则输出误差至多 $L_oe_h+\varepsilon_o$。$L<1$ 时长期传播部分至多 $\delta/(1-L)$，$L=1$ 时为 $h\delta$；$L>1$ 时不可删除几何增长项。
+
+证明。沿同一实际动作，对 $qT_a\xi$、$F_a(q\xi)$、$F_a(\widehat z)$、$\widehat F_a(\widehat z)$ 连用三角不等式得 $e_{t+1}\le Le_t+\delta$。归纳展开此递推，空和为零、$L^0=1$。输出界再用一次三角不等式及 Lipschitz 性。此为定量对角化卷定理24.10、推论24.11的含初始误差与求值误差形式。证毕。
+

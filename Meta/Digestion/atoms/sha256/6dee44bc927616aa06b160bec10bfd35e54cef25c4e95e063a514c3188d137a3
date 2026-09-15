@@ -1,0 +1,20 @@
+**定义。** 写
+
+$$
+x_n=(s_n+h_n,s_n-h_n,r_n),\qquad y_n=(s_n,r_n).
+$$
+
+则 PT6 的矩阵给出
+
+$$
+y_{n+1}=A_vy_n+B_vh_n,\qquad h_{n+1}=C_vy_n+\lambda h_n,
+$$
+
+其中
+
+$$
+A_v=\begin{pmatrix}1-b/2&b/2\\b&1-b\end{pmatrix},\quad
+B_v=\begin{pmatrix}b/2\\-b\end{pmatrix},\quad
+C_v=\begin{pmatrix}b/2&-b/2\end{pmatrix}.
+$$
+

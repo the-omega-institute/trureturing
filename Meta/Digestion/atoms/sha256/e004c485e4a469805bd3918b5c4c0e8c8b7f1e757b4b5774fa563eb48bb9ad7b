@@ -1,0 +1,7 @@
+**定义 21.1（近似交换缺陷）。** 对同一动作序列 $a_0,\ldots,a_{H-1}$，精确状态为 $\xi_{t+1}=T_{a_t}\xi_t$，近似摘要为 $\widehat z_{t+1}=\widehat F_{a_t}(\widehat z_t)$。在所声明域中假设
+$$
+\|qT_a\xi-F_a(q\xi)\|\le\delta_{\rm close},\qquad
+\|\widehat F_a(z)-F_a(z)\|\le\delta_{\rm eval},
+$$
+$F_a$ 具有共同 Lipschitz 常数 $L\ge0$。置 $\delta=\delta_{\rm close}+\delta_{\rm eval}$、$e_t=\|q\xi_t-\widehat z_t\|$。这些不等式必须在实际精确及近似轨迹所在域上成立；可改成首次退出该域之前的停止结论。
+

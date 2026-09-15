@@ -1,0 +1,2 @@
+**定义 455.1。**$\mathbb N=\{0,1,\ldots\}$，$\operatorname{Pr}=\{p\in\mathbb N:p\ge2\text{ 且正因数恰为 }1,p\}$ 为全部素数的集合，$F_0=0,F_1=1,F_{k+2}=F_{k+1}+F_k$，$G_j=F_{j+2}$。$\mathcal W$ 为低位先写的有限函数 $u:\ell\to\{0,1\}$，满足无相邻一，且 $\ell=0$ 或 $u(\ell-1)=1$。零字唯一为空函数。$\operatorname{pad}(u)$ 在域外补零；$\operatorname{val}(u)=\sum_{j<\ell}u(j)G_j$。固定长度窗口允许高位零，规范字自身不允许高位零。任意长高位零的字若作为不同对象，则空字、$0$、$00$ 已有同值，故候选双射失败。
+

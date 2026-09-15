@@ -1,0 +1,24 @@
+**定理 462.3（所引证明的长度界）。**在 Walker 的 Proposition 6 证明中，取整数 $K\ge16$ 及正整数 $n,m$，满足 $K\le n<2K$、$1\le m\le\lfloor\frac1{10}\log(2K)\rfloor$，并记 $X_W=\frac12K\log K$。这些范围给 $nm\le X_W/2$。对实数 $y$ 记 $y_+=\max(y,0)$，奇异积分函数为 $J_W:\mathbb R\to\mathbb R_{\ge0}$、$J_W(d)=(X_W-|d|)_+$，因而 $J_W(nm)\ge X_W/2$。原文的 $nm\le X_W/5$ 不能由这些范围得到；此处使用上述足够界。
+
+**证明。**$K\ge16$ 给 $\log(2K)\le\frac54\log K$，所以
+$$
+nm<\frac15K\log(2K)\le\frac14K\log K=\frac12X_W.
+$$
+原奇异积分由 Fourier 反演等于 $\mathbf1_{[0,X_W]}*\mathbf1_{[-X_W,0]}$ 在 $d$ 处的值；这里卷积 $(f*g)(d)=\int_{\mathbb R}f(y)g(d-y)\,dy$。两区间重叠长度直接为 $(X_W-|d|)_+$，得到下界。
+
+原较强界的合法反例取 $K=2^{19},n=2K-1,m=1$。由 $\log2=\int_1^2x^{-1}\,dx$ 得 $1/2<\log2<1$，所以 $\frac1{10}\log(2K)=2\log2>1$，而 $X_W/5=\frac{19}{10}K\log2<\frac{19}{10}K<2K-1=nm$。故反例满足全部声明范围。
+
+为说明此界在该引用中的作用，保留该文 Theorem 5 的分析输入：对每个固定 $A>0$，除去至多 $O_A(X_W(\log X_W)^{-A})$ 个整数差 $1\le d\le X_W$ 后，
+$$
+r_W(d):=\sum_{\substack{p_1,p_2\in\operatorname{Pr}\\p_1,p_2\le X_W\\p_1-p_2=d}}\log p_1\log p_2
+=\mathfrak S_W(d)J_W(d)+O_A(X_W(\log X_W)^{-A}),
+$$
+其中奇数 $d$ 的 $\mathfrak S_W(d)=0$；偶数 $d$ 的值为
+$$
+\mathfrak S_W(d)=2\prod_{p\in\operatorname{Pr},\ p\ge3}\left(1-\frac1{(p-1)^2}\right)
+\prod_{\substack{p\in\operatorname{Pr},\ p\ge3\\p\mid d}}\frac{p-1}{p-2}.
+$$
+第一乘积收敛到正数，因为各减项小于一且其和由收敛的平方倒数和控制；第二乘积每因子至少一。因此全部偶数差具有共同正下界 $\mathfrak S_W(d)\ge\sigma_0>0$。
+
+每个乘积 $d=nm$ 在上述范围的原像数至多 $\lfloor\frac1{10}\log(2K)\rfloor$。先把该分析输入的指数 $A$ 取得足够大，便对任意固定 $B>0$ 得到仅 $O_B(K(\log K)^{-B})$ 个例外对，因而除去同阶数量的 $n$ 后，每个剩余 $n$ 的全部允许 $m$ 均无例外。对这些 $n$ 和偶数 $nm$，已证 $J_W(nm)\ge X_W/2$，故充分大 $K$ 时 $r_W(nm)\ge\sigma_0X_W/4$。每对素数的对数权至多 $(\log X_W)^2$，去权后表示数至少为 $\sigma_0X_W/(4(\log X_W)^2)$，这又至少为某个绝对正常数乘 $n/\log n$，因为 $K\le n<2K$ 且 $\log X_W$ 与 $\log K$ 同阶。$1\le m\le\lfloor\frac1{10}\log n\rfloor$ 中至少有常数乘 $\log n$ 个偶数 $m$，并且 $X_W\le\frac12n\log n$。把该文的正常数缩小，便仍得到 Proposition 6 的第二条件。Theorem 5 的例外集估计和该文 Theorem 4 引用的 Harman 逼近定理仍为分析输入。前者的证明转引 R. C. Vaughan，〈The Hardy–Littlewood Method〉，第二版（1997），§3.2，或 Iwaniec–Kowalski，〈Analytic Number Theory〉（2004），Chapter 19 中 Theorem 19.1 的证明；后者转引 Glyn Harman，〈Metric Number Theory〉（1998），Theorem 4.2，保留其正、非增且至多 $1/2$ 的逼近函数、发散和及 Lebesgue 几乎处处量词。这个修正不改变前述满测集量词，也不给指定黄金参数的新结论。证毕。
+

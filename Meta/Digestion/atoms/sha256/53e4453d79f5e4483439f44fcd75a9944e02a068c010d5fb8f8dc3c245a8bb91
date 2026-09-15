@@ -1,0 +1,9 @@
+**定义。** 对整数 $m,t$ 定义双向机械轨迹
+
+$$
+\ell_m(t)=\lfloor(t+1-m)\alpha\rfloor-\lfloor(t-m)\alpha\rfloor,
+$$
+$$
+u_m(t)=\lceil(t+1-m)\alpha\rceil-\lceil(t-m)\alpha\rceil.
+$$
+

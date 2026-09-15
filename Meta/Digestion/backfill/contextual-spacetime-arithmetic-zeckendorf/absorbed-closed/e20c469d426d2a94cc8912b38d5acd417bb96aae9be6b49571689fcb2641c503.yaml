@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:e20c469d426d2a94cc8912b38d5acd417bb96aae9be6b49571689fcb2641c503
+  normalized_sha256: sha256:e20c469d426d2a94cc8912b38d5acd417bb96aae9be6b49571689fcb2641c503
+cas_ref: sha256:e20c469d426d2a94cc8912b38d5acd417bb96aae9be6b49571689fcb2641c503
+coverage_gids:
+  - gid: D5/S3/Factorization/Combinatorics/DistinctPrimePrefixWordCount.distinct_prefix_count_factorial
+    target_statement_id: sha256:c759992fba2a6cec158f6cfa535a75438bf87b2290ea7c40ff3e5e89e3456c05
+receipts:
+  unresolved_subitems: []

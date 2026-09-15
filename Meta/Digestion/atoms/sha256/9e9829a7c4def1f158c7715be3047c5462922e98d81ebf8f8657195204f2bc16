@@ -1,0 +1,23 @@
+**定理 50.5（有限维生成元的闭合方向）。** 设 $\Phi_t=e^{t\mathcal L}$ 是有限维、时齐次量子半群，且 $\mathcal E^2=\mathcal E$。则全时严格闭合
+
+$$
+\mathcal E\Phi_t=\mathcal E\Phi_t\mathcal E\quad(t\ge0)
+$$
+
+当且仅当
+
+$$
+\mathcal E\mathcal L(I-\mathcal E)=0.
+$$
+
+在 $t\to0$ 时，闭合缺陷满足
+
+$$
+\mathcal E\Phi_t(I-\mathcal E)
+=t\,\mathcal E\mathcal L(I-\mathcal E)+O(t^2).
+$$
+
+条件 $(I-\mathcal E)\mathcal L\mathcal E=0$ 则是 $\mathcal L$ 保持 $\operatorname{Fix}(\mathcal E)$ 的另一方向，不能与前一条件混同。
+
+证明。矩阵指数展开给出后一式。若 $\mathcal E\mathcal L(I-\mathcal E)=0$，则对每个 $m\ge1$ 有 $\mathcal E\mathcal L^m(I-\mathcal E)=0$，因为 $\mathcal E\mathcal L=\mathcal E\mathcal L\mathcal E$，从而指数展开的全部项均为零。反向由对 $t=0$ 的导数得到该条件。对后一方向，若 $X=\mathcal E(Y)$，则 $\mathcal L X\in\operatorname{Fix}(\mathcal E)$ 正是 $(I-\mathcal E)\mathcal L\mathcal E=0$；这描述的是记录像空间的不变性，而不是隐藏部分对未来记录的不可见性。证毕。
+

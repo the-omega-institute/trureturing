@@ -69,12 +69,11 @@ internal static partial class IngestCommand
     private static CommandResult WriteResult(
         string repositoryRoot,
         IngestPreparation prepared,
-        RawRepositorySnapshot finalRaw,
+        ImmutableArray<LedgerUpdate> ledgerUpdates,
         BackfillInventoryDocument finalDocument,
         DigestionLedgerEvaluation evaluation,
         string backfillObservations)
     {
-        var ledgerUpdates = LedgerUpdates(prepared.CurrentRaw, finalRaw);
         var changed = ledgerUpdates.Length > 0;
         var openGenres = finalDocument.RequireDigestionSources()
             .SelectMany(static source => source.GenreRegistryCheck.UnregisteredGenres.Select(token =>
