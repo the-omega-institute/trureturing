@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:acd05ee75091b0fb9e46f733248881c23731f3b5754bf012e8de0618cec25bd1
   normalized_sha256: sha256:acd05ee75091b0fb9e46f733248881c23731f3b5754bf012e8de0618cec25bd1
 cas_ref: sha256:acd05ee75091b0fb9e46f733248881c23731f3b5754bf012e8de0618cec25bd1
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Factorization/Combinatorics/StrictDivisorChainMobius.chain_alternating_sum_eq_moebius
+    target_statement_id: sha256:fae8647d64c7239dc7982939953372724e75407443cc5af717452fc2ce2726d3
 receipts:
   unresolved_subitems: []
