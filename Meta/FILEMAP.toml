@@ -548,6 +548,15 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Exact scalar clipping boundaries and actual congruence capacity obstruction.
+pattern = "docs/reports/erdos7-odd-covering/fibre_scalar_boundary_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]] # Exact core congruences and rational dual weights refuting H73.
 pattern = "docs/reports/erdos7-odd-covering/h73_dual.json"
 kind = "data"
@@ -593,8 +602,26 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Exact layout distribution and pointwise potentials giving a true Gamma lower bound.
+pattern = "docs/reports/erdos7-odd-covering/random_tail_layout_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]] # Exact root weighting and prime-transfer bounds for the nonuniform repair.
 pattern = "docs/reports/erdos7-odd-covering/rectangular_family_nonuniform_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Exact tree potentials and a common layout mixture refuting the universal Gamma73 bound.
+pattern = "docs/reports/erdos7-odd-covering/star_survivor_obstruction_certificate.json"
 kind = "data"
 admission_plane = "content"
 produced_by = "none"
@@ -674,6 +701,15 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Checks actual equal-scalar laws with unequal fibre capacity and weighted layout moments.
+pattern = "docs/reports/erdos7-odd-covering/verify_fibre_scalar_boundary.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]] # Verifies the exact finite BBMST recurrence from its conditional Gamma seed.
 pattern = "docs/reports/erdos7-odd-covering/verify_finite_continuation.py"
 kind = "program"
@@ -737,6 +773,15 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Reconstructs random-tail layout potentials for every correlated survivor law.
+pattern = "docs/reports/erdos7-odd-covering/verify_random_tail_layout_certificate.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]] # Checks a nonuniform complete-survivor law for the rectangular obstruction family.
 pattern = "docs/reports/erdos7-odd-covering/verify_rectangular_family_nonuniform_law.py"
 kind = "program"
@@ -757,6 +802,15 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 [[files]] # Checks exact sufficient parameters for smoothed finite-height Gamma lifting.
 pattern = "docs/reports/erdos7-odd-covering/verify_smoothed_height_lifting.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Checks the star-family pointwise obstruction for all survivor probability laws.
+pattern = "docs/reports/erdos7-odd-covering/verify_star_survivor_obstruction.py"
 kind = "program"
 admission_plane = "content"
 produced_by = "none"

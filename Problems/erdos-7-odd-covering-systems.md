@@ -148,7 +148,8 @@ Similarly, [robin_seven_smooth](../D5/S3/Arith/Robin/SevenSmooth.lean) bounds
 `σ(N)/N` for `N=2^a3^b5^c7^d>5040` by Robin's logarithmic right-hand side.
 Neither statement controls arbitrary forbidden residues or their conditioned
 joint law. They supply arithmetic and coordinate tools; an implication from
-those optimization statements to the universal Γ73 bound has not been proved.
+those optimization statements cannot imply the proposed universal Γ73 bound:
+the complete star family refutes that bound.
 
 Two nearby measure constructions also have explicit limits here.
 [Divisor Gibbs factorization](../D5/S3/Arith/DivisorGibbs/HiddenArithmeticWeightFormula.lean)
@@ -163,13 +164,15 @@ missing support condition, with an actual empty-fibre counterexample.
 
 ## Gap
 
-The remaining sufficient target is a universal bound on the joint-load
-functional for complete survivors of an arbitrary small-prime head. The
-one-prime transfer below proves that Γ73 suffices for arbitrary later prime
-support. The height-lifting theorem further reduces a sufficient target to
-one explicit, but still unproved, finite exponent cap. Higher-support cofactors
-and the mass on complete survivors remain in both estimates. Three exact
-obstacles below exclude earlier omissions and the separate-cylinder head bound.
+The universal joint-load target Γ73 is false. The complete star family,
+with ternary height at least 31 and every other height at least 8, has explicit
+survivors but forces `Γ_Q(μ)>139.59>138.877` for every survivor probability,
+including correlated and nonuniform laws. The unrestricted Erdős #7 problem
+remains open. The conditional prime-tail transfer and height-lifting estimates
+remain valid, as does the restricted noncoverage theorem; their proposed
+universal head input and all eight displayed finite-base targets are refuted.
+A proof of #7 therefore needs a sufficient input that this star family does
+not contradict, rather than a sharper proof of the same universal inequality.
 
 **H73 — false**, with its universal candidate statement retained from
 [the target preregistration](https://github.com/the-omega-institute/trureturing/issues/8167):
@@ -192,7 +195,7 @@ correlated ones. One finite height refutes the arbitrary-exponent assertion.
 H73 is therefore unavailable as a sufficient input; it was never an equivalent
 restatement of #7.
 
-**Γ73 — unproved candidate**, preregistered at the same issue: for every
+**Γ73 — false**, preregistered at the same issue: for every
 such `Q` and residue family, a probability `μ` on its complete survivor set `R`
 satisfies
 
@@ -205,18 +208,249 @@ satisfies
 
 The maximum is over **one joint choice** of residues: each `b_d ∈ ℤ/dℤ` is
 chosen once for the whole square. Residues for different divisors need not be
-mutually compatible. This is a proposed replacement for the separate-cylinder
-cost, not a consequence of H73's failure. A lower bound for `κ_Q` gives no lower
+mutually compatible. This candidate replaced the separate-cylinder
+cost; it was not a consequence of H73's failure. A lower bound for `κ_Q` gives no lower
 bound for `Γ_Q`. The conditional transfer and finite-height calibration below do not establish Γ73.
 The stronger demand that this law always be uniform is false: the rectangular
 family below has uniform `Γ>142.3789923` but admits a nonuniform law with
-`Γ<134.121`. Thus it leaves the existential target open.
+`Γ<134.121`. That rectangular example alone does not refute the existential target;
+the star family does.
 
 ## Route
 
 The joint-load invariant retains actual residue intersections. Its transfer
-and the restricted noncoverage result are established below; a sufficient
-unrestricted head bound remains the missing input.
+and the restricted noncoverage result are established below. The star-family
+refutation identifies why the proposed universal unrestricted head input
+cannot complete the argument.
+
+### A complete star family refutes the unrestricted Gamma-73 bound
+
+Let P be the 20 odd primes at most 73. Choose H_3>=31 and H_p>=8 for
+p>=5, and put Q=product_(p in P) p^H_p. There is one actual forbidden
+residue for every nonunit divisor of Q, with a nonempty survivor set R,
+such that every probability mu supported on R satisfies
+
+    Gamma_Q(mu) > 13959/100 > 138877/1000.                  (1)
+
+Here Gamma_Q(mu) is the maximum over all complete test layouts
+b=(b_d mod d)_(d|Q) of the second moment of
+L_b(x)=sum_(d|Q) 1[x=b_d mod d], including d=1. The counterexample concerns
+this universal arbitrary-prime-power survivor-measure assertion. It does
+not refute the odd distinct covering-systems conjecture: the family
+below explicitly has survivors. The proof uses only coherent complete
+layouts for its lower bound, while mu may have arbitrary correlations.
+
+#### The actual complete forbidden assignment
+
+In the CRT p-coordinate define, for 1<=e<=H_p,
+
+    F_(p,e) = {x_p = p^(e-1)-1 mod p^e},
+    C_(p,e) = {x_p = 2p^(e-1)-1 mod p^e},
+    S_p = (Z/p^H_p Z) minus union_e F_(p,e),
+    C_p = union_e C_(p,e),       D_p = S_p minus C_p.
+
+For each pure-power divisor p^e forbid F_(p,e). For each divisor 3^i p^j
+with p>=5 and i,j positive, forbid the unique CRT residue specifying
+C_(3,i) and C_(p,j). For every other mixed divisor forbid zero. This
+specifies exactly one residue for each distinct nonunit divisor. The
+last classes are redundant: a zero mixed residue is already zero modulo
+one of its prime factors, and F_(p,1) forbids zero modulo p.
+
+Read digits from least significant to most significant. F_(p,e) has
+first e-1 digits p-1 and next digit zero. C_(p,e) has the same prefix
+and next digit one. Hence S_p consists of points whose first digit
+different from p-1 belongs to {1,...,p-2}, together with the all-(p-1)
+point. D_p has allowed first differing digits {2,...,p-2}, together with
+that same exceptional point. All C_(p,e) lie in S_p. In particular,
+
+    D_3={-1 mod 3^H_3},       S_3=C_3 disjoint-union D_3.
+
+For each p>=5, the union of all star rectangles is exactly C_3 times C_p.
+The actual complete survivor set consequently is
+
+    R = R_a disjoint-union R_b,
+    R_a = {-1 mod 3^H_3} times product_(p>=5) S_p,
+    R_b = C_3 times product_(p>=5) D_p.                    (2)
+
+There is no additional restriction from the remaining mixed divisors.
+The CRT point x_3=1 and x_p=2 for p>=5 lies in R_b, so R is nonempty.
+
+#### A constant-potential coordinate distribution
+
+For x,t modulo p^h, let ell(x,t) be the largest e in {0,...,h} for which
+x=t modulo p^e. The coherent coordinate kernel is
+
+    J_(p,h)(x,t)=(1+ell(x,t))^2
+      =1+sum_(e=1)^h (2e+1)1[x=t mod p^e].                (3)
+
+For 1<=k<=p-1, let T_(p,k,h) contain points whose first digit different
+from p-1 is in {p-k-1,...,p-2}, plus the all-(p-1) point. Define
+u_h=v_h=0, and for r=h-1,...,0, with w_r=2r+3, set
+
+    u_r=(w_r+u_(r+1))/p,
+    v_r=[k/(w_r+u_(r+1))+1/(w_r+v_(r+1))]^(-1),
+    V_(p,k,h)=1+v_0.                                      (4)
+
+At a node on the distinguished all-(p-1) path at depth r, give each of
+its k allowed side children probability v_r/(w_r+u_(r+1)); give its
+continuing child probability v_r/(w_r+v_(r+1)). These probabilities are
+positive and sum to one by (4). After taking a side child, choose all
+remaining digits uniformly. Continuing children follow the same rule,
+and the depth-h point terminates. This defines a finite probability
+lambda_(p,k,h) supported on T_(p,k,h).
+
+The expected remaining contribution of a uniform suffix is u_r. For
+any fixed admissible point below a distinguished node, only the matching
+child contributes beyond that node. If the point takes a side child,
+its contribution is
+[v_r/(w_r+u_(r+1))]*(w_r+u_(r+1))=v_r. If it continues along the
+distinguished path, induction gives the identical value with v_(r+1)
+in place of u_(r+1). Induction from depth h proves
+
+    E_(t~lambda_(p,k,h)) J_(p,h)(x,t)=V_(p,k,h)
+      for every x in T_(p,k,h).                           (5)
+
+This is a distribution of test centers, not a chosen survivor law.
+
+#### An exact depth-eight lower certificate
+
+Take h=8 and
+
+    B=V_(3,1,8) product_(p>=5) V_(p,p-3,8).
+
+The ternary factor is for S_3; the other factors are for D_p. To bound
+B using short integers, put M=10000 and initialize U_8=W_8=0. For
+r=7,...,0 compute
+
+    A_r=M(2r+3)+U_(r+1),   B_r=M(2r+3)+W_(r+1),
+    U_r=floor(A_r/p),
+    W_r=floor(A_r B_r/(A_r+k B_r)),
+    m_p=M+W_0.                                            (6)
+
+The functions a/p and ab/(a+kb) are increasing for positive a,b and
+k>=1. Thus induction gives U_r<=M u_r, W_r<=M v_r, and
+V_(p,k,8)>=m_p/M. Alternatively, every such inequality in this fixed
+certificate is checked directly against the exact fractions from (4).
+
+The integer table is
+
+    p:    3     5     7    11    13    17    19    23    29    31
+    m:44425 25593 17916 13925 13125 12215 11932 11539 11178 11092
+    p:   37    41    43    47    53    59    61    67    71    73
+    m:10897 10801 10761 10691 10607 10541 10522 10473 10445 10432.
+
+Exact integer multiplication gives
+
+    B >= product_p (m_p/10000)
+      = 88201253955139641252118098948566841488891779660937472668777730852992559
+        /625000000000000000000000000000000000000000000000000000000000000000000
+      > 141.                                              (7)
+
+The displayed rational is 141.12200632822342...; the full fraction
+recurrence gives B=141.2182001288544... . No floating approximation is
+used for any comparison in this proof or its certificate.
+
+#### Two legal complete-layout distributions
+
+A full CRT center t determines one coherent complete layout b_d=t mod d.
+For every x,
+
+    L_t(x)^2=product_(p in P) J_(p,H_p)(x_p,t_p).            (8)
+
+This follows by factoring the complete divisor index; each p-coordinate
+contributes exactly 1+ell(x_p,t_p). Test centers may be anywhere modulo
+Q and are not required to survive the forbidden assignment.
+
+For distribution Pi_a choose t_3=-1 modulo 3^H_3. For each p>=5 choose
+t_p independently and uniformly among the integer representatives
+1,...,p-1, regarded modulo p^H_p. If x is in R_a then its ternary kernel
+is (H_3+1)^2. Also x_p is nonzero modulo p, so
+
+    E_(Pi_a) J_(p,H_p)(x_p,t_p) >= 1+3/(p-1).
+
+Independence of these explicitly chosen test coordinates yields
+
+    E_(Pi_a) L_t(x)^2
+      >= (H_3+1)^2 product_(p>=5) (p+2)/(p-1)
+      >= 32^2 * 1796039511175/124554051584
+      > 14336,                   x in R_a.                (9)
+
+For Pi_b independently choose t_3 modulo 3^8 from lambda_(3,1,8), and
+t_p modulo p^8 from lambda_(p,p-3,8) for p>=5; set all higher digits of
+t to zero. If x is in R_b, its ternary depth-eight projection is in
+T_(3,1,8) and every other depth-eight projection is in T_(p,p-3,8).
+This remains true when the first non-(p-1) digit occurs after depth
+eight: the projection is the allowed all-(p-1) point. Higher matches
+can only increase (3), so (5), (7), and (8) give
+
+    E_(Pi_b) L_t(x)^2 >= B > 141,       x in R_b.            (10)
+
+These factorizations concern the test distributions; they impose no
+independence condition on mu.
+
+#### A pointwise dual bound for every survivor probability
+
+Use the one fixed normalized layout distribution
+
+    Pi=(1/100) Pi_a+(99/100) Pi_b.
+
+For x in R_a, (9) gives E_Pi L_t(x)^2>143.36. For x in R_b, (10) gives
+E_Pi L_t(x)^2>139.59. Nonnegative contributions from the other mixture
+component were only discarded. By the exact decomposition (2), every
+x in R satisfies the latter strict lower bound. Therefore for any
+probability mu on R, finite sums can be interchanged to obtain
+
+    Gamma_Q(mu) >= E_(t~Pi) E_(x~mu) L_t(x)^2
+                = E_(x~mu) E_(t~Pi) L_t(x)^2
+                > 13959/100 > 138877/1000.
+
+This proves (1). Keeping the exact rational (7) yields the stronger
+uniform certificate lower bound 139.7107862649412... for this same
+mixture; no optimization of its weight is necessary.
+
+#### Verification scope
+
+`verify_star_survivor_obstruction.py` uses only the Python standard library and
+explicit error checks that remain active under optimization. It
+reconstructs all 20 exact fraction recurrences, independently checks
+all pinned floor integers, verifies the rational product and both
+mixture-branch bounds, and compares its full output with `star_survivor_obstruction_certificate.json`.
+It constructs a full height-31/8 CRT witness and checks every pure and star
+exclusion, with all remaining mixed-zero exclusions ruled out by its nonzero
+prime coordinates. It also exhaustively checks the explicit leaf laws and their equal
+potentials for five small trees, and checks actual complete forbidden
+assignments against decomposition (2) on 11700 small-modulus points.
+Those small checks are regressions; the ordinary induction and CRT
+argument above prove the arbitrary-height statement. No full huge
+survivor enumeration, numerical optimization, or Lean kernel
+certification is claimed.
+
+#### Irredundancy does not repair the universal head target
+
+Delete all redundant mixed-zero classes, retaining only the pure classes and
+star rectangles. This family has the same survivors and least common multiple
+`Q`, and every retained class has an exclusive witness. For a star rectangle
+`C_(3,i) × C_(p,j)`, choose those two coordinates inside the indicated cylinders
+and every other coordinate equal to 2, which belongs to `D_q`. For a pure class
+`F_(p,j)` with `p>=5`, choose the ternary coordinate equal to -1 and all other
+outside coordinates equal to 2. For a pure ternary class choose every outside
+coordinate equal to 2. The first-differing-digit descriptions prove that each
+point belongs only to its designated retained class. Thus requiring an
+irredundant forbidden family does not repair Γ73 when Gamma still indexes all
+divisors of its least common multiple.
+
+This irredundant family is not a minimal cover: it does not cover. A genuine
+finite irredundant cover has an additional necessary fibre property. If
+`p^H` is the full p-part of its period Q and x is an exclusive point of a class
+of p-height H, the p points `x+kQ/p`, `0<=k<p`, must all be covered. No class
+of smaller p-height can meet this fibre: its membership is invariant on the
+fibre and it misses x. Each class of height H meets at most one fibre point,
+so at least p distinct such classes must meet the fibre. In the star family,
+for any `p>=5`, the pure `p^H` exclusive witness with ternary coordinate -1 gives a fibre
+whose other p-1 points are uncovered. This necessary property applies to an
+actual cover of the whole period; it cannot be imposed without proof on its
+73-smooth head alone, since later-prime classes may cover its missing fibres.
+
 
 ### Arbitrary-head transfer by the joint-load invariant
 
@@ -535,7 +769,7 @@ provide the congruence compatibility statements, and pinned Mathlib's
 The rectangle component of (W1) is formalized as stated above. The exact
 clipped-kernel formula (W2), its consequences (W3)–(W5), and the full
 divisor-layout embedding have not been formalized in Lean.
-A uniform accumulated improvement sufficient for Γ73 remains unproved.
+A uniform accumulated improvement yielding Γ73 is ruled out by the star family.
 
 ### Forced loss on an actual pure-prime forbidden root
 
@@ -667,10 +901,10 @@ or `1/lcm(d,e)`. Under a weighted root law, the actual weighted intersections
 must be retained. The matrix is positive semidefinite because
 `z^TGz=integral(sum_i z_i 1_Ai)²≥0`.
 
-The remaining sufficient input is a bound, uniform over the actual family
-and all complete test layouts, on the resulting subtraction together with
-the test load's deficit from the unconditioned maximum. No such bound
-strong enough for the unrestricted head is established here. These
+Using this identity as a quantitative upper estimate requires control of
+the subtraction and the test load's deficit from the unconditioned maximum,
+for the actual family and every complete test layout. The star family rules
+out obtaining the proposed universal Γ73 bound by this method. These
 projection identities are reused as tools; no new Lean wrapper is supplied.
 
 ### Exact saturation despite actual mixed deletion
@@ -792,7 +1026,7 @@ endpoint, the already checked positive denominators suffice.
 
 Consequently **Γ73 implies the unrestricted negative answer to Erdős #7**.
 The finite arithmetic and the general-head transfer are established as stated;
-the universal Γ73 existence bound is still unproved. This conditional result
+the universal Γ73 existence bound is false by the star family. This conditional result
 supplies no covering counterexample and no unrestricted proof by itself.
 
 ### Quantitative extension of the old prime powers
@@ -925,9 +1159,10 @@ dividing `∏_{3≤p≤73}p^{71}` admits a survivor probability of `Γ≤128` wo
 by (H1) and the preceding transfer, prove the negative answer to unrestricted
 Erdős #7. Lower heights in an arbitrary target family can be padded to 71
 without adding forbidden classes. The same applies to each other row.
-**None of these universal finite-base bounds has been proved.** In particular,
-the calibration is a sufficient implication, not a finite verification of all
-residue assignments. The height-lifting argument is not formalized in Lean.
+**Every universal finite-base bound in this table is false.** Its cap is at
+least 31, so the star construction directly applies and forces `Γ>139.59`,
+strictly above each proposed `C`. The calibration remains a correct sufficient
+implication; it is not a verification of all residue assignments. The height-lifting argument is not formalized in Lean.
 
 ### One-stage smoothing of the height lift
 
@@ -1077,8 +1312,9 @@ python3 -O docs/reports/erdos7-odd-covering/verify_smoothed_height_lifting.py
 
 For example, a universal survivor bound `Γ≤128` at common cap 52 would now
 suffice for unrestricted #7 through (S1) and the preceding prime-tail transfer.
-**Every universal finite-base bound in this table remains unproved.** The
-squarefree `Γ<138.874` result does not supply the cap-3118 hypothesis.
+**Every universal finite-base bound in this table is false.** All caps are
+at least 31, so the star construction forces `Γ>139.59` at each of them.
+The squarefree `Γ<138.874` result does not supply the cap-3118 hypothesis.
 The verifier checks the numerical implications, not all residue assignments;
 the smoothing theorem and its two-constant version have not been formalized
 in Lean.
@@ -3086,7 +3322,7 @@ above are ordinary mathematical proofs. No full Lean formalization of
 
 The reused local ingredients are the root-labelled finite-itinerary
 estimate and uniform cylinder budgets. The nonuniform-survivor linear
-program in [BBMST, section 5.3](../Library/Arith/balister2018covering.md)
+program in [BBMST, section 5.3](../Library/Arith/balister2019erdos.md)
 is a squarefree predecessor; it does not supply this arbitrary-power
 weighted-envelope certificate.
 
@@ -3226,8 +3462,8 @@ law to satisfy `Γ≤138877/1000` is false, already at height 5. Strict
 monotonicity makes the same family an obstruction at every `H≥5`.
 The construction does not refute the existence of a nonuniform survivor
 law with small Gamma, and it does not construct an odd covering system.
-The nonuniform existential Γ73 target remains open. The argument and exact
-arithmetic are not a Lean proof.
+The separate star family refutes the nonuniform existential Γ73 target.
+The present rectangular-family argument and exact arithmetic are not a Lean proof.
 
 
 ### A nonuniform law for the rectangular obstruction family
@@ -3507,6 +3743,672 @@ both fixed shapes; `--shape 2+2` or `--shape 3+1` selects one. This is an
 ordinary mathematical polytope reduction with exact integer verification;
 no Lean formalization or general tensorization theorem is claimed.
 
+### The boundary of scalar fibre reweighting
+
+The conditional-cap criterion alone does not improve the optimized T6
+recurrence. Within the scalar certificate described below, arbitrary
+reweighting of old fibres and the exact bounded second-moment inequality
+reduce to the BBMST clipping rule and its optimized T6 value. This is a
+limitation of that certificate, not an impossibility theorem for actual
+covering systems or for reweighting that retains joint-layout information.
+
+Moreover, for every prime p>=13 there is an actual distinct-modulus
+family and two old survivor laws with identical Gamma, R, exact density
+cap 16/15, and first two forbidden-fibre moments, but different feasibility
+for the same pair of old-marginal and conditional-density caps. Thus those
+scalars do not determine the missing capacity information even for actual
+congruence families.
+
+#### 1. The scalar certificate and its optimal weight
+
+Let mu be a probability on a finite old survivor carrier X, let U be
+uniform on Y=Z/p^H, and let B_x be the actual new forbidden union in row x.
+Write alpha(x)=U(B_x), s(x)=1-alpha(x), and Gamma(mu)<=G. As in T1, set
+a=sum_{e=1}^H (2e+1)p^{-e}, or use its infinite-height upper bound.
+
+Choose a nonnegative old-row multiplier h, zero on rows where s=0.
+Give each surviving point of row x raw density h(x)/s(x) relative to
+mu(x)U(y), and normalize by Z=E_mu h>0. The old marginal of the resulting
+complete-survivor law is h mu/Z. For a positive raw measure rho extend
+Gamma homogeneously: Gamma(rho)=max_L integral L^2 d rho.
+
+The weighted joint-layout transfer W1 gives
+
+    Gamma(new law) <= [Gamma(h mu)+a Gamma((h/s)mu)]/Z.       (1)
+
+The ratio h/s is defined to be zero on s=0. This follows by bounding each
+positive outside-prefix mass by p^{-e}/s(x), then retaining the weighted
+old-layout moment until the final step. It includes every old cofactor.
+No fibre with s=0 is assigned positive mass.
+
+Consider the scalar certificate that replaces the two weighted moments by
+
+    h<=1, h/s<=C, C>=1
+    ==> Gamma(new law) <= G(1+aC)/E h.                     (2)
+
+Here C bounds the raw joint-density multiplier h/s, not the normalized
+conditional multiplier 1/s. Clipping can keep a row with s<1/C by
+reducing its old mass. A law required to satisfy the conditional cap
+must instead remove that row, as in the separate capacity criterion.
+
+At fixed C its pointwise largest feasible h is
+
+    h_C(x)=min(1,C s(x)).                                 (3)
+
+Every competing weight satisfies h<=h_C, so (3) maximizes the denominator
+in (2) while preserving its numerator. It therefore gives the best value
+certified by (2) at fixed caps. This statement concerns the scalar bound:
+another h can have better actual weighted moments in (1).
+
+Write C=1/(1-delta), 0<=delta<1. Then
+
+    E h_C = 1 - E b_delta(alpha),
+    b_delta(t)=(t-delta)_+/(1-delta).                      (4)
+
+The raw surviving-point density is 1/(1-alpha) when alpha<=delta,
+and 1/(1-delta) otherwise. This is exactly the complete-survivor part
+of the BBMST clipped law, followed by normalization. Unlike the full
+BBMST law, this restricted law carries no forbidden points.
+
+#### 2. Sharp bounded second-moment loss and optimized T6
+
+Suppose 0<V<1 and E alpha^2<=V, with 0<=alpha<=1. The exact worst value
+of E b_delta(alpha) over all such scalar probability distributions is
+
+    q(V,delta) = V/[4delta(1-delta)]
+                 if 0<delta<=1/2 and V<=4delta^2;
+               = (sqrt(V)-delta)/(1-delta)
+                 if 0<=delta<=1/2 and V>=4delta^2;
+               = V
+                 if 1/2<=delta<1.                        (5)
+
+The formulas agree at their common boundaries, including delta=0.
+For delta<=1/2, view b_delta(t) as a function of u=t^2. Its least
+concave majorant is the line from (0,0) tangent at u=4delta^2, followed
+by (sqrt(u)-delta)/(1-delta). Jensen's inequality gives (5).
+For V<=4delta^2 equality is attained by alpha in {0,2delta}, with mass
+V/(4delta^2) at 2delta. For V>=4delta^2 equality is attained by the
+constant alpha=sqrt(V). For delta>=1/2, b_delta(t)<=t^2 on [0,1], and
+the distribution with mass V at alpha=1 and 1-V at zero gives equality.
+These extremizers certify the scalar moment problem; no realizability
+claim for every extremizer as a congruence family is made.
+
+Consequently the best guarantee from (2) and the bounded second moment is
+
+    inf_{0<=delta<1} G[1+a/(1-delta)]/[1-q(V,delta)].       (6)
+
+For 0<=delta<=sqrt(V)/2, the expression is
+
+    G(1-delta+a)/(1-sqrt(V)),
+
+which decreases as delta increases. For delta>=1/2 its denominator is
+1-V and its numerator increases. Hence the optimum is attained in
+[sqrt(V)/2,1/2], exactly the region where (5) is the ordinary quadratic
+BBMST loss. Thus (6) equals
+
+    min_{0<delta<=1/2}
+      G[1+a/(1-delta)]/[1-V/(4delta(1-delta))],             (7)
+
+where only positive denominators are admitted. No smaller threshold
+outside the interval can improve it: there the quadratic loss only
+overestimates (5), whose best boundary value already occurs inside.
+
+For a>0 the unique minimizing threshold solves
+
+    a delta^2 + (V/2)delta - (1+a)V/4 = 0,
+
+and is
+
+    delta_*=[sqrt(V^2+4a(1+a)V)-V]/(4a).                  (8)
+
+Substitution into the quadratic shows sqrt(V)/2<=delta_*<=1/2.
+If a=0 the endpoint delta=1/2 attains the minimum. Taking
+V=G/(p-1)^2 and a=(3p-1)/(p-1)^2 recovers optimized T6 exactly.
+
+This rules out a strict improvement merely from using the sharp bounded
+second-moment problem instead of t^2/(4delta), or from replacing BBMST
+clipping by another h certified only through the two supremum caps in (2).
+It does not rule out improvements from the known lower bound L^2>=1,
+the actual prefix occupancies, a first-moment constraint, or the weighted
+moments in (1). Those additional facts lie outside certificate (2).
+
+#### 3. Hard fibre trimming is dominated
+
+Keeping only rows alpha<=delta and making their conditional law uniform
+gives conditional density cap 1/(1-delta). Using only Markov's inequality
+from E alpha^2<=V certifies retained mass at least 1-V/delta^2, and hence
+
+    G[1+a/(1-delta)]/[1-V/delta^2].                        (9)
+
+For delta<=1/2, T6 at the same threshold has the same numerator and a
+larger denominator, since delta^2<4delta(1-delta). For delta>=1/2,
+T6 at threshold 1/2 improves both numerator and denominator: its loss
+is V, at most V/delta^2. Thus every positive-denominator hard-trimming
+certificate (9) is dominated by a T6 certificate. The result is unchanged
+if V came from multiplying a reference-law moment bound by an RN cap.
+
+#### 4. Concrete obstruction to scalar capacity closure
+
+Fix any prime p>=13. The old period is 15 and its only forbidden class
+is 0 mod 3. Identify its survivor carrier with {1,2} x Z/5 by CRT.
+The two old laws below are uniform on {1,2}; only their 5-coordinate
+weights differ.
+The 5-coordinate is an unused padded old coordinate: the old actual
+modulus lcm is 3. This is an arbitrary finite distinct-modulus family,
+not an assignment of a forbidden class to every nonunit divisor of 15.
+
+Let T=p^2+p+1, epsilon=1/(120pT), and define
+
+    v=(1,-T,pT,-p^3),
+    nu_+(0)=nu_-(0)=16/75,
+    nu_+(j)=59/300+epsilon v_j,
+    nu_-(j)=59/300-epsilon v_j,  j=1,2,3,4.               (10)
+
+The identities sum v_j=0 and |epsilon v_j|<=1/120 show that both are
+strictly positive probability laws; every j>0 weight is at most
+59/300+1/120=41/200<16/75. Hence they have the same maximum weight
+16/75, attained at zero.
+
+For the old period 15, the complete layout has the four divisors
+1,3,5,15. Every cylinder and every intersection is bounded by the
+appropriate product of the maximum ternary and quinary masses. These
+individual maxima are attained simultaneously by taking all test
+classes through one point of maximum mass. Therefore, for both laws,
+
+    Gamma = (1+3/2)(1+3*(16/75)) = 41/10,
+    R = 1/2+16/75+(1/2)(16/75) = 41/50,
+    max dmu/dU_old_survivors = 5*(16/75) = 16/15.          (11)
+
+Adjoin a p-coordinate of height four. Forbid 0 mod p, and for each
+j=1,2,3,4 forbid the CRT class
+
+    x_5=j mod 5,  y=1 mod p^j,
+
+whose modulus is 5p^j. These moduli and the old modulus 3 are distinct.
+The mixed classes are disjoint from the pure p exclusion because their
+p-residue is one. Within each old row their forbidden density is exactly
+
+    alpha(0)=1/p,
+    alpha(j)=1/p+p^{-j}, j=1,2,3,4.                       (12)
+
+There are no empty fibres; alpha<=2/p<1. The construction neither
+assumes nested test layouts nor introduces multiple classes per modulus.
+
+The four-vector in (10) obeys
+
+    sum_j v_j p^{-kj}=0, k=0,1,2.                        (13)
+
+For k=1,2, multiply by p^{4k}; the resulting polynomials vanish by
+direct expansion. Consequently both laws have the same E alpha and
+E alpha^2 as well as all three scalar invariants in (11). Their common
+moments are
+
+    E alpha = 1/p+(59/300)sum_{j=1}^4 p^{-j},
+    E alpha^2 = 1/p^2+(59/150p)sum_{j=1}^4 p^{-j}
+                       +(59/300)sum_{j=1}^4 p^{-2j}.     (14)
+
+Now require conditional density cap C=2p/(2p-3) at every depth and
+old-marginal reweight cap D=300/241. Since 1-1/C=3/(2p), the good set
+{s>=1/C} consists of exactly the rows with x_5!=1. Its two masses are
+
+    mu_+(good)=241/300-epsilon < 1/D,
+    mu_-(good)=241/300+epsilon > 1/D.                     (15)
+
+The corresponding raw weighted joint-layout moments also differ:
+
+    Gamma(1_good mu_+) = 433/120-(5/2)epsilon,
+    Gamma(1_good mu_-) = 433/120+(5/2)epsilon.              (16)
+
+Indeed the maximum quinary point weight remains 16/75, so the raw
+product moment is (5/2)[mu(good)+3*(16/75)]. This is a concrete instance
+of weighted information required in (1) that the listed scalars omit.
+
+The exact fibre-cap criterion therefore makes the requested law
+impossible for mu_+ and feasible for mu_-. In the feasible case restrict
+mu_- to good rows, normalize, then use the uniform conditional survivor
+law; its old density factor is 1/mu_-(good)<D. In the impossible case
+the singleton caps force support inside good, whose available old mass
+under the cap D is less than one.
+
+This is an actual-family distinction with identical Gamma, R, RN cap,
+and first two forbidden-fibre moments. It does not preclude a universal
+upper recurrence using worst-case values of those scalars. It proves
+that they cannot determine exact reweighting feasibility or reconstruct
+the weighted joint-layout profiles discarded in (2). No assertion is
+made that the two laws are the specific NC1 adaptive policy; they share
+its stated density bound, showing that this bound alone is insufficient.
+
+#### 5. Consequence at the current four-prime seed
+
+At G=4939031/47730 and p=13 put V=G/144 and a=19/72. Every admissible
+T6 value exceeds 256. After multiplying a proposed comparison with 256
+by its positive denominator and by 4delta, the excess numerator is
+
+    4(256-G)delta^2 + 4[(G-256)+aG]delta + 256V.
+
+Its global quadratic minimum is strictly positive, verified exactly in
+the accompanying certificate. Thus even the optimal scalar-fibre
+certificate (6) produces a bound greater than 16^2 at the first new
+prime. At the next prime 17 its implied second-moment bound is greater
+than one, so this certificate gives no positive universal retained mass.
+This failure concerns the supplied seed bound and this proof language,
+not the actual optimal measure or the Erdos #7 assertion.
+
+`verify_fibre_scalar_boundary.py`, with `fibre_scalar_boundary_certificate.json`, checks exact extremizing distributions for (5),
+the quadratic comparison at p=13, identities (10)-(16) for the requested
+primes 13 through 61, and the complete actual p=13 residue assignment.
+The continuous arguments and all-prime identities above carry the
+universal statements; finite checks are boundary verification, not proofs
+by enumeration over a bounded collection of families.
+
+The reusable starting points are the repository's weighted rectangle
+transfer W1 and the finite conditional-cap criterion. Public BBMST
+1811.03547, section 2, Lemmas 2.1-2.2 and 1901.11465 give the clipping
+kernel and its distortion bounds, but no weighted-layout correlation
+bound closing (1). Koperberg 2202.02092, Theorem 1, supplies the different
+global marginal Hall criterion. No new Lean declaration or full Lean
+formalization is asserted here.
+
+### Random tail extensions give pointwise layout certificates
+
+For the explicit complete height-four congruence family specified below,
+every probability mu on its actual survivor set satisfies
+
+    Gamma(mu) >= C = 121.54782913540919... .
+
+Here Gamma is the maximum second moment of one complete divisor layout.
+The fixed certificate gives C as an exact rational number and verifies a
+pointwise lower bound at all 791 coarse survivor residues. The number is
+below 138877/1000. It supplies neither an upper bound on Gamma nor a proof
+of the Gamma-73 assertion or its negation. The construction below is a
+reusable evaluator for finite distributions of layouts; no optimality of
+the supplied distribution is required.
+
+#### A random extension of an arbitrary complete layout
+
+Let P be a finite set of distinct primes, choose caps c_p>=1 and heights
+H_p>=c_p, and put
+
+    Q_c = product_p p^c_p,       Q_H = product_p p^H_p.
+
+A coarse layout assigns b_d modulo d to EVERY d dividing Q_c, including
+one. No compatibility between b_d and b_e is assumed. For D dividing Q_H,
+write d=clip(D)=gcd(D,Q_c). Independently for each prime choose a uniform
+T_p modulo p^(H_p-c_p). Define a residue for D in its p-coordinate by
+
+    b_d mod p^a                         if a=v_p(D)<=c_p,
+    (b_d mod p^c_p)+p^c_p T_p mod p^a  if a>c_p.
+
+CRT gives a unique residue b_D(T) modulo D. Thus each value of T gives
+one genuine complete fine layout. It restricts to b on the coarse
+divisors. There is no separate random choice for each test modulus or
+coarse root: one shared T_p suffices.
+
+For x modulo Q_H let x_0 be its reduction modulo Q_c, and set
+
+    I_d(x_0) = 1{x_0=b_d mod d},
+    L_b(x_0) = sum_{d|Q_c} I_d(x_0).
+
+Write L_p=H_p-c_p and
+
+    S_p = sum_{t=0}^{L_p} p^(-t),
+    V_p = sum_{t=0}^{L_p} (2t+1)p^(-t).
+
+For coarse divisors d,e define W_de as the product over p of the factor
+
+    1    if neither v_p(d) nor v_p(e) is c_p;
+    S_p  if exactly one is c_p;
+    V_p  if both are c_p.
+
+Then the exact random-extension identity is
+
+    E_T [L_{b(T)}(x)^2]
+       = sum_{d,e|Q_c} W_de I_d(x_0) I_e(x_0).             (1)
+
+To prove it, expand the square over ordered pairs of fine divisors D,E.
+If either coarse indicator is zero, the corresponding product is zero
+for every T. If both are one, every positive extra p-height t imposes
+
+    T_p = floor(x_p/p^c_p) mod p^t.
+
+The target is the same for both divisors, even though the original coarse
+layout was arbitrary. The two conditions have simultaneous probability
+p^(-max(t,u)). If only one fine divisor has positive extra height, the
+same formula applies with the other height zero. Across primes these
+probabilities multiply. Finally, the map from a fine divisor to its
+coarse divisor and allowed extra exponents is a bijection. Summing all
+extra exponents gives S_p in the one-capped case, and
+
+    sum_{t,u=0}^{L_p} p^(-max(t,u))
+       = sum_{t=0}^{L_p} (2t+1)p^(-t) = V_p
+
+in the two-capped case. This proves (1) and accounts for all fine
+divisors, all ordered cross terms, and the divisor-one term.
+
+For comparison, if the coarse layout is coherent, its top p-cylinder
+coefficient becomes
+
+    2c_p S_p+V_p
+      = sum_{e=c_p}^{H_p} (2e+1)p^{-(e-c_p)}.
+
+This recovers direct averaging of a coherent center's finer digits.
+Also V_p>=S_p^2: these are the second and first moments of the same
+random nested-prefix load. Neither fact assumes that arbitrary layout
+suprema tensorize.
+
+#### Exact center probabilities on a pure survivor tree
+
+For an outside prime p>=3, forbid exactly one class at each depth,
+
+    a_(p^e) = (p^(e-1)-1)/(p-1),        1<=e<=H.
+
+Its p-adic digits are e-1 copies of 1 followed by a 0. The forbidden
+classes are pairwise disjoint. The surviving tree has at every critical
+node one dead child (digit 0), p-2 complete children, and one continuing
+critical child (digit 1). Let S_p be the set of surviving leaves.
+
+A coherent center b has load
+
+    ell_b(x) = 1+sum_{e=1}^H 1{x=b mod p^e},
+
+and hence symmetric kernel
+
+    K_p(x,b)=ell_b(x)^2
+       =1+sum_{e=1}^H (2e+1)1{x=b mod p^e}.               (2)
+
+The following finite construction gives a probability nu_p supported on
+S_p whose potential sum_b nu_p(b)K_p(x,b) is exactly g_p for every x in
+S_p and at most g_p on all leaves. It does not assert that g_p is the
+minimum of the full, potentially incoherent layout objective.
+
+Let F_e,C_e be the equal-potential costs of complete and critical
+subtrees entered at depth e, including that depth's coefficient 2e+1.
+Initialize F_H=C_H=2H+1, then for e=H-1,...,1 use
+
+    F_e = (2e+1)+F_(e+1)/p,
+    C_e = (2e+1)+[(p-2)/F_(e+1)+1/C_(e+1)]^(-1).        (3)
+
+Finally set
+
+    g_p = 1+[(p-2)/F_1+1/C_1]^(-1).                     (4)
+
+All denominators are positive. The probability construction is explicit:
+in a complete node distribute mass equally among its p children; in a
+critical node whose live child costs are r_j, give child j the fraction
+
+    alpha_j = (1/r_j)/(sum_k 1/r_k).
+
+There are p-2 children of cost F and one of cost C. Thus the fractions
+sum to one and alpha_j r_j is the same number for every live child.
+Inductively the potential within each live subtree is constant; adding
+the common prefix coefficient proves (3). The root has common
+coefficient one and proves (4). A point in a dead branch receives no
+further contribution, so its potential is no larger. This proves the
+claimed equality on S_p and inequality off it.
+
+The same calculation is the elementary parallel-resistance identity
+
+    min_{alpha_j>=0, sum alpha_j=1} sum_j r_j alpha_j^2
+       = (sum_j 1/r_j)^(-1).
+
+Equality holds at the displayed fractions, and weighted Cauchy--Schwarz
+proves the lower inequality. Symmetry of (2) consequently shows that
+g_p is the exact value of the pure COHERENT-center game: use nu_p as a
+distribution of centers for its lower bound, and as the point law for its
+upper bound. The present certificate only needs its pointwise lower half.
+
+#### Combining the core and outside potentials
+
+Let R_c be any coarse survivor set. Choose a finite probability
+rho=(rho_j) on coarse complete layouts b^(j), and form
+
+    Phi(x_0)=sum_j rho_j sum_{d,e|Q_c}
+                    W_de I_d^(j)(x_0) I_e^(j)(x_0).
+
+Suppose Phi(x_0)>=m for every x_0 in R_c. Sample j and the shared tails
+T_p, and independently sample each outside center from nu_p. For a full
+divisor D=D_core D_out, take the CRT join of its extended core residue
+and the outside center residues. This again assigns one residue to every
+full divisor. For each realization its load factors exactly as
+
+    L_full(x)=L_core(x_core) product_{p outside} ell_(b_p)(x_p),
+
+because the complete divisor index is the Cartesian product of its core
+and outside divisor indices. Squaring and averaging this particular
+random construction, using (1)--(4), gives at every point with
+x_0 in R_c and x_p in S_p
+
+    E_layout L_full(x)^2 = Phi(x_0) product_{p outside} g_p
+                         >= m product_{p outside} g_p.    (5)
+
+The actual full survivor set may be a proper subset of these points;
+additional forbidden classes do not invalidate (5). For ANY probability
+mu on that actual survivor set, interchange the two finite averages and
+bound their layout average by the maximum over complete layouts:
+
+    Gamma(mu) >= E_layout E_mu L_full^2
+               >= m product_{p outside} g_p.              (6)
+
+There is no independence assumption on mu. Independence is used only
+for the explicitly constructed random layout, whose distribution is
+under our control.
+
+#### The fixed rational certificate
+
+The instance uses core caps (3,3),(5,2),(7,1), so Q_c=4725, and common
+full height H=4 at all 20 odd primes through 73. The JSON specifies all
+23 nonunit coarse forbidden residues. Direct enumeration leaves exactly
+791 coarse residues. All outside primes are at least 11 and use the
+pure classes in (2)'s construction.
+
+For definiteness this extends to a complete nonempty forbidden family.
+Choose w by CRT with w=3 modulo 4725 and w=-1 modulo the product of the
+outside fourth powers. Keep the coarse assignments and outside pure
+assignments, and for every other nonunit divisor d of the full modulus
+forbid (w+1) mod d. The point w survives: it survives the coarse and pure
+assignments, while equality with the last residue would imply d divides
+1. The verifier constructs and checks such a witness. In particular the
+lower bound is about actual probability laws on a nonempty survivor set.
+
+There are 738 listed coarse layouts with positive integer numerators
+summing to 10^10. The coherent all-zero layout has numerator 363; it
+completes the listed rational probability. All 24 coarse divisors,
+including one, appear in every row. The shared-tail random domain has
+cardinality 25725. The matrix W has common denominator 25725, and the
+verifier reconstructs it in two ways: the three local formulas and direct
+summation over all 125^2 ordered fine-core divisor pairs.
+
+`random_tail_layout_certificate.json` contains every coarse potential with common denominator
+10^10 times 25725. Exact evaluation gives
+
+    m = 413450618877603/21437500000000
+      = 19.28632624501938...,
+
+with the minimum attained at coarse residue 4134. Equations (3)--(4) give
+
+    product_{outside p} g_p = 6.302280050188326... .
+
+Multiplying by m gives
+
+    C = 121.54782913540919... < 138.877.
+
+The full fraction, all 791 potential numerators, every outside recurrence
+value and child probability, and the positive comparison margin
+138877/1000-C are stored and recomputed in the fixed certificate.
+
+verify_random_tail_layout_certificate.py uses only the Python standard
+library. It accepts an optional certificate path so that other coarse
+families and layout distributions can use the same evaluator. It reads
+no NPZ arrays, saved solver rows, numerical dual values, repository files,
+or external libraries. Normal, optimized (-O), and isolated (-I) runs all
+exit zero. The layout correspondence and tree induction above are ordinary
+mathematical proofs; no Lean kernel certification is claimed.
+
+The existing H73 lower bound exceeding 162.1563 concerns the separate
+cylinder-maxima quantity kappa. Since Gamma<=kappa, that result does not
+supply or dominate a Gamma lower bound. The existing uniform-survivor
+score above 142.3789923 concerns a different family and only its uniform
+law. It does not dominate the all-supported-laws conclusion (6). No
+stronger same-family Gamma lower bound is used or asserted here.
+
+### Canonical conflict resampling and the exact Shearer query ratio
+
+Let Omega be a finite product probability with strictly positive coordinate
+masses. Each bad event B_i fixes one assignment on a set I_i of coordinates.
+Join distinct i,j precisely when their required assignments disagree on
+I_i intersect I_j. Write V for the bad-event index set, p_i=Omega(B_i), and
+
+    Z_U = sum_{J independent in U} (-1)^|J| product_{j in J} p_j.
+
+The graph used in this polynomial has no loops; the algorithmic causality
+neighborhood of a bad event includes itself. Assume Z_U>0 for every U⊆V.
+Start from Omega, fix any history-dependent flaw-selection rule, and
+resample all coordinates of the selected true bad event independently.
+The rule is fixed throughout the conclusions below. Its terminal law is nu.
+
+For every canonical query E, let N(E) be the original bad events whose
+assignments conflict with E. Then
+
+    nu(E) <= Omega(E) Z_(V minus N(E)) / Z_V.                 (1)
+
+This is an ordinary mathematical consequence of the public theorem cited
+below, with the extension verified here. No Lean kernel certification is
+claimed, and (1) is a terminal-law bound, not an asserted exact hit bound.
+
+#### Structural hypotheses
+
+Nonconflicting i,j cannot newly cause one another: while B_i holds, their
+shared coordinates already have B_j's prescribed values; coordinates of
+B_j outside I_i remain unchanged. Thus the conflict graph with self
+neighborhoods is an undirected causality graph.
+
+For the full-coordinate resampling kernel rho_i, the charge is exactly
+
+    max_w [sum_(s in B_i) Omega(s) rho_i(s,w)] / Omega(w)
+      = Omega(B_i)=p_i.                                    (2)
+
+Indeed, only s matching w outside I_i contribute, and the factors on I_i
+separate. The initial distribution equals the reference distribution, so
+lambda_init=1.
+
+For nonconflicting events with coordinate sets I,J, suppose
+s --i--> t --j--> w is a valid trajectory. Define t' to equal s outside J,
+w on J minus I, and the common required assignment on I intersect J.
+Then s --j--> t' --i--> w is valid. Both products of transition
+probabilities coincide coordinate by coordinate: on I intersect J they
+are the mass of the common required value times the mass of w's value;
+on I minus J and J minus I they are the mass of w's value. The swap is
+injective since s,w recover t: t equals w on I minus J, the common
+required assignment on I intersect J, and s outside I. This verifies
+Iliopoulos Definition 2.1. The same proof holds after adjoining any
+canonical event on an additional set of product coordinates.
+
+#### Rare-query proof of (1)
+
+[Iliopoulos](../Library/Arith/iliopoulos2017commutative.md), arXiv:1704.02796v6, Theorem 3.2(1) and Remark 3.1, gives
+
+    E[number of addresses of flaw i] <= q_{ {i} } / q_empty
+
+under Shearer's condition. Here
+q_S=sum_(J independent, S⊆J) (-1)^(|J|-|S|) product_(j in J) p_j.
+Strict positivity of every Z_U implies q_empty=Z_V>0 and
+q_S=(product_(i in S)p_i) Z_(V minus N[S])>0 for independent S;
+nonindependent S have q_S=0. The theorem therefore applies and implies
+finite expected total addresses, hence almost-sure original termination.
+
+Adjoin an independent Bernoulli(epsilon) coordinate and the query flaw
+E_epsilon=E intersect {coin=1}, resampling its coordinates and the coin.
+Its charge is q=epsilon Omega(E), and its old neighbors are exactly N(E).
+For U⊆V, the induced polynomial including the new vertex is
+
+    Z_U - q Z_(U minus N(E)).
+
+All old induced polynomials are positive; finitely many inequalities
+therefore remain positive for every sufficiently small epsilon>0.
+The extended system satisfies the structural hypotheses just verified.
+
+Use a legal extended rule that first follows the original rule, ignoring
+the coin, as long as an original flaw remains. At its first original
+termination, address E_epsilon if present, and subsequently use any legal
+rule. Before that first termination no action touches the coin. Thus the
+expected total number of query addresses is at least epsilon nu(E).
+Applying the quoted resampling bound to the extended query vertex gives
+
+    epsilon nu(E)
+      <= q Z_(V minus N(E)) / [Z_V-q Z_(V minus N(E))].
+
+Divide by epsilon and let epsilon tend to zero. This proves (1) for the
+same original terminal law, independent of the choice of query E.
+
+#### One univariate ray checks every induced subgraph
+
+Set Z_U(t)=sum_(J independent in U)(-t)^|J| product_(j in J)p_j.
+If Z_V(t) has no zero on (0,1], then Z_U(1)>0 for every U⊆V.
+
+Public source: [Scott and Sokal](../Library/Arith/scottsokal2003repulsive.md), arXiv:cond-mat/0309352v2, Theorem 2.10(a)
+⇔ (b′), hard-core self-repulsion. Condition (a) asks for a positive path
+from 0 to -p in the negative orthant; the root-free ray supplies it since
+Z_V(0)=1. Condition (b′) is exactly positivity for every induced U.
+
+An elementary finite-polynomial verification is also available. Otherwise
+let t* in (0,1] be the earliest zero among all induced polynomials. Every
+Z_U(t*) is nonnegative. If Z_U(t*)=0 and v is outside U, deletion gives
+
+    Z_(U union {v})(t*)
+      = Z_U(t*) - t* p_v Z_(U minus N(v))(t*) <= 0.
+
+Its nonnegativity forces equality. Adding vertices propagates the zero
+to V, contradicting the assumed full-ray condition. Positivity merely at
+t=1 is not sufficient; the entire interval condition is essential.
+
+#### Congruence and complete-layout specialization
+
+Encode residues modulo Q=product p^H_p by independent uniform p-adic
+digits. A residue class modulo d|Q is a canonical event of probability
+1/d. Apply the foregoing construction to the actual forbidden classes.
+Every nonempty intersection of test classes C_d(b),C_e(b) from ONE fixed
+complete layout b is canonical, with probability 1/lcm(d,e). Thus
+
+    Gamma_Q(nu)
+      <= max_b sum_(d,e|Q, C_d(b) intersect C_e(b) nonempty)
+           Z_(V minus N(C_d(b) intersect C_e(b)))
+           / [lcm(d,e) Z_V].                               (3)
+
+The same nu is used for all pairs and all layouts. In (3), b assigns one
+residue for every divisor, including one; do not maximize separate
+summands. Strict Shearer feasibility for all required forbidden families
+and a sufficiently small bound on (3) remain separate obligations. No
+unrestricted numerical Gamma_73 bound follows from these conditional estimates.
+
+Before building the graph, remove any bad class contained in another bad
+class; the avoided union and survivor set are unchanged. With one class
+per distinct modulus, if d divides e then compatible assignments would
+imply B_e⊆B_d. Hence every independent set of the reduced conflict graph
+has moduli forming a divisor antichain. This connects its independence
+polynomial to the divisor poset. It supplies no global signed-polynomial
+bound by itself. Z_U uses products 1/d and is not the actual avoidance
+probability computed using CRT intersection probabilities 1/lcm.
+
+#### Exact public source locators
+
+- Fotis Iliopoulos, “Commutative Algorithms Approximate the
+  LLL-distribution”, arXiv:1704.02796v6 (2019-06-08; first version 2017).
+  Section 2.2 defines causality and charges; Definition 2.1 gives the
+  probability-preserving injective swap; Theorem 3.2(1) and Remark 3.1
+  give the Shearer resampling-count bound used above.
+  https://arxiv.org/html/1704.02796v6
+- Alexander D. Scott and Alan D. Sokal, “The repulsive lattice gas, the
+  independent-set polynomial, and the Lovász local lemma”,
+  arXiv:cond-mat/0309352v2 (2004-09-16; first version 2003),
+  Theorem 2.10(a), (b′), and (f).
+  https://arxiv.org/html/cond-mat/0309352v2
+- [David G. Harris](../Library/Arith/harris2016mosertardos.md), “New bounds for the Moser–Tardos distribution”,
+  arXiv:1610.09653v7 (2019-10-10; first version 2016), Proposition 3.4.
+  Its improved disjoint-union bound uses the ordinary shared-variable
+  graph defined in Section 1.1. Propositions 2.7 and 3.3 retain that graph.
+  It is not a cited justification for replacing it by the conflict graph.
+  https://arxiv.org/html/1610.09653v7
+
 ## Falsifier
 
 The [exact bridge program](../docs/reports/erdos7-odd-covering/bridge_checks.py)
@@ -3700,8 +4602,9 @@ open. The results include exact obstacles to earlier proof routes, a direct
 joint-load transfer into the BBMST continuation, and a quantitative reduction
 of the arbitrary-height sufficient condition to a finite exponent cap. A
 uniform four-prime head bound additionally proves the restricted noncoverage
-theorem (P1), allowing arbitrary prime support at or above 67. The universal
-finite-base bound needed for the full conjecture remains unproved.
+theorem (P1), allowing arbitrary prime support at or above 67. The star-family
+pointwise layout certificate refutes Γ73 and every displayed universal
+finite-base bound, while leaving the unrestricted conjecture open.
 `TernaryRootLoadTail.root_load_tail_le` formalizes the finite-itinerary
 component of the actual-layout improvement, and
 `TwoRootEventMoment.two_root_event_moment_le` proves the bound for the
@@ -3719,13 +4622,20 @@ three-factors-per-modulus theorem has the completed checks recorded in its
 Library note, but `hThree` remains essential; its paper-only largest-prime-cutoff
 extension is outside the Lean theorem. The joint-load transfer, exact finite
 recurrence and restricted noncoverage theorem (P1) are proved above;
-the universal Γ73 bound and the sufficient finite-base bounds remain unproved.
+the universal Γ73 bound and the displayed sufficient finite-base bounds are
+refuted by the complete star family.
 These residue-level mathematical arguments have not been fully formalized
 in Lean. The finite-itinerary and actual-event components are identified in (G2),
 and the weighted finite rectangle second-moment component after (W1).
 The nonuniform laws (N1)–(N10) and (NC1), sharp uniform bound (ZG1), shared-cofactor
 improvement (P2), rectangular uniform-law obstruction and its nonuniform
 repair (NR1) have ordinary mathematical proofs and exact rational checks,
-not complete Lean proofs.
-H73 is refuted and supplies no lower bound for Γ73. These finite checks do not
+not complete Lean proofs. The star-family refutation also has an ordinary
+mathematical proof and exact certificate, not a complete Lean formalization.
+H73 is refuted as a separate-cylinder claim. The random-tail layout certificate
+additionally gives a true Gamma lower bound above 121.5478 for every law on
+that family, below the sufficient threshold 138.877. Scalar-reweighting
+optimality and the conditional conflict-graph query bridge also have ordinary
+mathematical proofs, not complete Lean formalizations. Universal Shearer
+feasibility and its quantitative whole-layout bound remain unproved. These finite checks do not
 establish literature priority or an unrestricted proof or covering counterexample.
