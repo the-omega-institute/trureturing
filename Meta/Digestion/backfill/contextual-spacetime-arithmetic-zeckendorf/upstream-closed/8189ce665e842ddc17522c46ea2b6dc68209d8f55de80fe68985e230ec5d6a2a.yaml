@@ -5,3 +5,7 @@ cas_ref: sha256:8189ce665e842ddc17522c46ea2b6dc68209d8f55de80fe68985e230ec5d6a2a
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  upstream:
+    justification: trigger payload — deliberately incomplete receipt
+    declarations:
+      - Nat.fib_pos
