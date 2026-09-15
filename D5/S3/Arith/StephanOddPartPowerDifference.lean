@@ -2,13 +2,10 @@
    generality: G
    mirror-B: D5/B/S3/Arith/StephanOddPartPowerDifference
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [mathlib/module/Mathlib.Data.Nat.Factorization.Basic, mathlib/module/Mathlib.Data.ZMod.Basic, mathlib/module/Mathlib.GroupTheory.OrderOfElement, mathlib/module/Mathlib.Tactic]
+   anchors: [mathlib/module/Mathlib.Tactic]
    utility: none
    digest: Stephan's odd-part characterization is equivalent to the A023758 difference form. -/
 
-import Mathlib.Data.Nat.Factorization.Basic
-import Mathlib.Data.ZMod.Basic
-import Mathlib.GroupTheory.OrderOfElement
 import Mathlib.Tactic
 
 namespace D5.S3.Arith.StephanOddPartPowerDifference
