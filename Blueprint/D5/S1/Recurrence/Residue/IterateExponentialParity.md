@@ -56,7 +56,7 @@ $$\forall n: \mathbb{N}, (1 \le n) \implies ((\operatorname{Odd}\left(\operatorn
 
 <!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a396803-iterate-exponential-parity","declaration_gid":"D5/S1/Recurrence/Residue/IterateExponentialParity.parity_iterate_three","resolution_kind":"proved"} -->
 
-*Citation.* Paul D. Hanna (2026). *OEIS A396803, A396805 and A396806: iterated-exponential parity*. URL: <https://oeis.org/A396803>.
+*Citation.* Paul D. Hanna (2026). *OEIS A396803, A396805 and A396806: iterated-exponential congruences*. URL: <https://oeis.org/A396803>.
 
 *Commentary.*
 
@@ -72,7 +72,7 @@ $$\forall n: \mathbb{N}, (1 \le n) \implies ((\operatorname{Odd}\left(\operatorn
 
 <!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a396805-iterate-exponential-parity","declaration_gid":"D5/S1/Recurrence/Residue/IterateExponentialParity.parity_iterate_five","resolution_kind":"proved"} -->
 
-*Citation.* Paul D. Hanna (2026). *OEIS A396805: iterated-exponential parity at iterate count 5*. URL: <https://oeis.org/A396805>.
+*Citation.* Paul D. Hanna (2026). *OEIS A396805: iterated-exponential congruences at iterate count 5*. URL: <https://oeis.org/A396805>.
 
 *Commentary.*
 
@@ -88,7 +88,7 @@ $$\forall n: \mathbb{N}, (1 \le n) \implies ((\operatorname{Odd}\left(\operatorn
 
 <!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a396806-iterate-exponential-parity","declaration_gid":"D5/S1/Recurrence/Residue/IterateExponentialParity.parity_iterate_six","resolution_kind":"proved"} -->
 
-*Citation.* Paul D. Hanna (2026). *OEIS A396806: iterated-exponential parity at iterate count 6*. URL: <https://oeis.org/A396806>.
+*Citation.* Paul D. Hanna (2026). *OEIS A396806: iterated-exponential congruences*. URL: <https://oeis.org/A396806>.
 
 *Commentary.*
 

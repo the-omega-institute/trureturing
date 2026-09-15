@@ -1,0 +1,4 @@
+* 集合更新何时失去闭合，以及是否需要把控制器状态并入联合后验。
+
+这条路线与项目中 `PosteriorFuturePolicySufficiency`、`AdaptivePosteriorPolicySufficiency` 的点后验接口以及 `FORMAL_PRIME_OBSERVER_DYNAMICS.md` §249 的 robust-belief 方向相接，但本章的集合值函数和主动实验单调性仍是条件性、`repo-derived/open` 的研究对象。它把“系统能处理多少隐藏历史”改成了可反驳的四元问题：保留了哪些模型区别、能在多长未来上闭合、能保证多大风险裕量、为此付出多少成本。
+

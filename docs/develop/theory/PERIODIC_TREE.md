@@ -2496,3 +2496,167 @@ y=-\frac{b}{d}x,qquad
 $$
 
 **证明。** 第一式由稳态方程除以 $d$ 得到；代入可见方程右端并整理即得第二式。
+### TR.15 (a,−1)-Fibonacci 不动点与 Benfield–Lippard 猜想 6.5(v) 的反例
+
+#### 定义 15.1 序列、Pisano 周期与不动点
+
+对整数 $a$，定义 $(a,-1)$-Fibonacci 序列
+
+$$
+U_0=0,\qquad U_1=1,\qquad U_{n+2}=aU_{n+1}-U_n\quad(n\geq0).
+$$
+
+对整数 $m>1$，其 Pisano 周期 $\pi_{(a,-1)}(m)$ 是满足
+$(U_T,U_{T+1})\equiv(0,1)\pmod m$ 的最小正整数 $T$；若
+$\pi_{(a,-1)}(m)=m$，则称 $m$ 为不动点。
+递推在相邻两项上的变换可逆，因此模 $m$ 的序列从初始项起即为周期序列。
+令
+
+$$
+A_a=\begin{pmatrix}a&-1\\1&0\end{pmatrix}.
+$$
+
+由于 $\det A_a=1$，它模 $m$ 属于有限群 $\mathrm{SL}_2(\mathbb Z/m\mathbb Z)$。
+递推归纳给出，对 $n\geq1$，
+
+$$
+A_a^n=\begin{pmatrix}U_{n+1}&-U_n\\U_n&-U_{n-1}\end{pmatrix}.
+$$
+
+当 $(U_n,U_{n+1})\equiv(0,1)$ 时，递推还给出 $U_{n-1}\equiv-1$，
+故该返回条件等价于 $A_a^n\equiv I\pmod m$。
+因此 $\pi_{(a,-1)}(m)$ 也就是 $A_a$ 模 $m$ 的乘法阶。
+
+#### 引文 15.2 猜想的正参数第五分支与临界素数
+
+Benfield–Lippard，*Fixed points of K-Fibonacci sequences*，
+arXiv:2404.08194v2，§6「Final Thoughts」的猜想 6.5
+（文献条目 [benfieldlippard2024fixedpoints](../../../Library/ArithUnits/benfieldlippard2024fixedpoints.md)）
+先令 $p_1^{e_1}\cdots p_t^{e_t}$ 为 $a^2+4b$ 的素因数分解，取 $b=-1$、$a>2$。
+对每个 $m>1$ 及非负整数 $j_1,\ldots,j_t$，猜想以五个分支刻画
+$\pi_{(a,-1)}(m)=m$ 的充要条件。其中第 (v) 项原文为：
+
+> (v) $a \equiv -1 \pmod{6}$ and $m = p_i^{j_i}$ or $m = 6 \cdot p_1^{j_1+1} \cdots p_t^{j_t}$.
+
+这里 $p_i$ 均取自 $a^2-4$ 的素因数；第二种形式中的 $j_1+1$ 保留原文。
+因此这一分支的必要方向声称：当 $a>2$ 且 $a\equiv-1\pmod6$ 时，
+任何不动点 $m>1$ 都是一个素数幂，或是 $6$ 的倍数。
+
+紧接猜想的文字为：
+
+> It appears that in the previous conjecture, only one prime has powers that are fixed points for any given $a$; let this be the *critical prime* for the $(a,-1)$-Fibonacci sequence.
+
+作者继而指出这个素数不总是 $a^2-4$ 的最小或最大素因数，并说 $a=3$ 是没有临界素数的特殊情形。
+这一段是猜想之后的观察，不是已经证明的唯一性定理。
+
+#### 命题 15.3 混合模数十五的反例及其参数族
+
+对 $a=47$，有
+
+$$
+\pi_{(47,-1)}(15)=15,\qquad
+47\equiv-1\pmod6,\qquad 47^2-4=2205=3^2\cdot5\cdot7^2.
+$$
+
+不动点 $15$ 不属于引文 15.2 第 (v) 项列出的任何一种形式，
+所以该项的「仅当」方向为假。
+更一般地，每个满足 $a>2$ 且 $a\equiv47\pmod{30}$ 的整数 $a$
+都有 $\pi_{(a,-1)}(15)=15$，并给出同一分支的反例。
+
+证明。若 $a\equiv2\pmod r$，递推与初值归纳给出 $U_n\equiv n\pmod r$。
+对 $a=47$，模 $3$ 与模 $5$ 的剩余序列分别为
+
+$$
+\begin{aligned}
+(U_n\bmod3)_{n\geq0}&=0,1,2,0,1,2,\ldots,\\
+(U_n\bmod5)_{n\geq0}&=0,1,2,3,4,0,1,2,3,4,\ldots.
+\end{aligned}
+$$
+
+返回初始相邻对 $(0,1)$ 的正时刻分别恰为 $3$ 和 $5$ 的正倍数。
+由中国剩余定理，模 $15$ 返回等价于同时模 $3$、模 $5$ 返回，故
+
+$$
+\pi_{(47,-1)}(15)
+=\operatorname{lcm}\bigl(\pi_{(47,-1)}(3),\pi_{(47,-1)}(5)\bigr)
+=\operatorname{lcm}(3,5)=15.
+$$
+
+$15=3\cdot5$ 有两个不同素因数，不是任何单一素数的幂，且 $6\nmid15$；
+这同时排除了第 (v) 项的两种形式。
+若 $a\equiv47\pmod{30}$，则仍有 $a\equiv2\pmod{15}$ 及
+$a\equiv-1\pmod6$，相同的剩余序列与排除论证逐字适用。证毕。
+
+#### 命题 15.4 两个完整的素数幂不动点塔
+
+对每个整数 $e\geq1$，
+
+$$
+\pi_{(47,-1)}(3^e)=3^e,\qquad
+\pi_{(47,-1)}(5^e)=5^e.
+$$
+
+因此，同一参数 $a=47$ 下，两个不同素数 $3,5$ 的全部正整数次幂都是不动点；
+引文 15.2 的临界素数唯一性观察即使按完整幂塔理解也不成立。
+
+证明。写 $A=A_{47}$。直接整数矩阵乘法给出
+
+$$
+\begin{aligned}
+A^3&=I+3B_3,&
+B_3&=\begin{pmatrix}34576&-736\\736&-16\end{pmatrix},\\
+A^5&=I+5B_5,&
+B_5&=\begin{pmatrix}45785971&-974611\\974611&-20746\end{pmatrix}.
+\end{aligned}
+$$
+
+两个种子的左上角分别满足 $34576\equiv1\pmod3$ 与
+$45785971\equiv1\pmod5$，所以 $B_p$ 至少有一个元素不被 $p$ 整除。
+命题 15.3 的剩余序列还给出 $A$ 模 $p$ 的阶恰为 $p$，其中 $p=3,5$。
+
+以下提升论证适用于任意奇素数 $p$ 以及满足
+$A^p=I+pB$、$B\not\equiv0\pmod p$ 的整数矩阵 $A,B$。
+对每个整数 $r\geq1$，归纳构造整数矩阵 $D_r$，使得
+
+$$
+A^{p^r}=I+p^rD_r,\qquad D_r\equiv B\pmod p.
+$$
+
+$r=1$ 时取 $D_1=B$。若结论对 $r$ 成立，因 $I$ 与 $D_r$ 交换，
+普通二项式展开在它们生成的交换子环中给出
+
+$$
+A^{p^{r+1}}
+=(I+p^rD_r)^p
+=I+p^{r+1}D_r+\sum_{k=2}^{p}\binom pk p^{rk}D_r^k.
+$$
+
+当 $2\leq k\leq p-1$ 时，$p\mid\binom pk$ 且
+$rk+1\geq r+2$；当 $k=p$ 时，$rp\geq r+2$，这里使用 $p\geq3$。
+所以末项之和逐元素被 $p^{r+2}$ 整除，能够写成
+$p^{r+2}E_r$。取 $D_{r+1}=D_r+pE_r$ 即得归纳步。
+等价地，对每个 $j\geq0$ 存在整数矩阵 $C_j$ 使
+
+$$
+A^{p^{j+1}}=I+p^{j+1}(B+pC_j).
+$$
+
+于是 $A^{p^e}\equiv I\pmod{p^e}$，其阶整除 $p^e$。
+当 $e\geq2$ 时，$D_{e-1}\equiv B\not\equiv0\pmod p$，故
+$A^{p^{e-1}}-I=p^{e-1}D_{e-1}$ 不被 $p^e$ 逐元素整除。
+阶既整除 $p^e$ 又不整除 $p^{e-1}$，只能等于 $p^e$。
+$e=1$ 的阶已由剩余序列确定；分别代入两个种子即得全部结论。证毕。
+
+#### 注记 15.5 黄金坐标与 Wall–Sun–Sun 边界
+
+若 $\varphi^2=\varphi+1$，则 $\varphi^8=13+21\varphi$，其迹为
+$L_8=2\cdot13+21=47$；相应基矩阵
+$\left(\begin{smallmatrix}21&0\\13&-1\end{smallmatrix}\right)$ 的行列式为
+$-21=-F_8$，故只有在 $21$ 模 $m$ 可逆时它才是可逆基变换。
+
+经典 Wall–Sun–Sun 问题针对普通 Fibonacci 递推
+$F_0=0,F_1=1,F_{n+2}=F_{n+1}+F_n$，询问是否存在素数 $p\ne2,5$ 使
+$p^2\mid F_{p-(5/p)}$，其中 $(5/p)$ 为 Legendre 符号。
+命题 15.3 与 15.4 针对 $(47,-1)$ 递推，并未判定这一经典存在性问题。
+
+## 追加锚（本行以下为增补区）

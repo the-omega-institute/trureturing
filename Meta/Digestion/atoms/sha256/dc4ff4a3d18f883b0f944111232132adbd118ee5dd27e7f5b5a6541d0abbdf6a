@@ -1,0 +1,10 @@
+**定理 387.3。** 定义运输窗口的外部逆极限
+$$
+\widehat{\mathscr Q}=
+\left\{c\in\prod_{L\in\omega_{>0}}\mathsf X_L^*:
+\forall L\ge1,\ \pi_{L+1,L}^*(c_{L+1})=c_L\right\}.
+$$
+将 $\Psi_Y$ 用于 $A=\omega_{>0},Y_L=\mathsf X_L$，它的限制恰为同胚
+$$
+\Psi_Q:\widehat{\mathscr Q}\longleftrightarrow\mathscr Q^*.
+$$

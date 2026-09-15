@@ -21,11 +21,17 @@ SLAB_STATE ?= $(HOME)/.local/state/qgh-prime-slab-pilot-0909
 SLAB_INPUT ?= $(HERE)/../docs/reports/prime-slab-corner-order-0909.json
 SLAB_INPUT_SHA ?= 9d28055d5255580ed58274822359961483d1deecbb7b4e38ce497948a4808672
 SLAB_ENV = PYTHONDONTWRITEBYTECODE=1 PYTORCH_ENABLE_MPS_FALLBACK=0 uv run --python 3.12 --with torch==2.8.0 --with numpy==2.0.2 --with python-flint==0.8.0 python
+CPU_SLAB_INPUT ?=
+CPU_SLAB_SHA ?=
+CPU_SLAB_OUTPUT ?=
+CPU_SLAB_PHASE ?= pilot
+CPU_SLAB_BOXES ?= 64
+CPU_SLAB_DEADLINE ?=
 CHECK_FAST_FILTER := FullyQualifiedName~StrataLint.Tests.CapacityAuditCommandTests|FullyQualifiedName~StrataLint.ArchitectureTests.RepositoryIoAccessPolicyTests|FullyQualifiedName~StrataLint.ArchitectureTests.BannedApiCoverageTests|FullyQualifiedName=StrataLint.Tests.MakeWorkflowTests.CheckFastFilterIsNonEmptyAndPinsRequiredRepositoryChecks
-.PHONY: help settle-batch dotnet check-fast test engineering-tests selftest capacity-audit update-renderer-contract clean-lanes xi-quantization xi-quantization-test prime-slab-search prime-slab-test prime-slab-device-test prime-slab-verify prime-slab-mutation-test census-test census-frontier-performance
+.PHONY: help settle-batch dotnet check-fast test engineering-tests selftest capacity-audit update-renderer-contract clean-lanes xi-quantization xi-quantization-test prime-slab-search prime-slab-test prime-slab-device-test prime-slab-verify prime-slab-mutation-test prime-slab-cpu prime-slab-cpu-test prime-slab-cpu-mutation-test census-test census-frontier-performance
 
 help:
-	@printf '%s\n' 'make -C tools help                         Show this target list' 'make -C tools settle-batch REQUESTS=file [BASE=origin/dev]  Settle strict TOML [[requests]] in order; stop at the first failed record' 'make -C tools dotnet                       Restore and build .NET with warnings as errors' 'make -C tools check-fast                   Run the required fast repository structure checks' 'make -C tools test                         Run the full .NET harness test suite' 'make -C tools engineering-tests HEAD=sha BASE=sha  Run affected test projects' 'make -C tools selftest                     Run deterministic StrataLint selftest' 'make -C tools capacity-audit [REPOSITORY=path]  Audit the current git index against repository capacity limits' 'make -C tools update-renderer-contract     Update the fixed synthetic renderer contract' 'make -C tools clean-lanes [BASE=origin/dev] [FORCE=1]  List reclaimable lanes (dry-run); FORCE=1 removes them' 'make -C tools xi-quantization [XI_MODE=mps|cpu] [XI_REPORT=path]  Certify the fixed xi resolution prefix; default 1..1399999 on MPS' 'make -C tools xi-quantization-test         Run exact scientific behavior tests (no GPU)' 'make -C tools prime-slab-search SLAB_FIRST=id SLAB_LAST=id [SLAB_STATE=external-path] [SLAB_CHUNK=64] [SLAB_MAX_CHUNKS=0]  Bounded MPS prime slabs; 0 max-chunks means finish the explicit window' 'make -C tools prime-slab-test              Scientific and durable-state tests (CPU synthetic fixtures)' 'make -C tools prime-slab-device-test       Locked, bounded synthetic Metal correctness probes (no box search)' 'make -C tools prime-slab-verify SLAB_FIRST=id SLAB_LAST=id  Independently revalidate the saved GPU stream (no generation)' 'make -C tools prime-slab-mutation-test      Predict and verify named scientific test failures; receipts under SLAB_STATE' 'make -C tools census-test [CENSUS_TEST_OUT=dir]  Run census program tests and bounded Lean fixtures' 'make -C tools census-frontier-performance   Separate 1/128 MiB frontier RSS experiment (not a functional test)'
+	@printf '%s\n' 'make -C tools help                         Show this target list' 'make -C tools settle-batch REQUESTS=file [BASE=origin/dev]  Settle strict TOML [[requests]] in order; stop at the first failed record' 'make -C tools dotnet                       Restore and build .NET with warnings as errors' 'make -C tools check-fast                   Run the required fast repository structure checks' 'make -C tools test                         Run the full .NET harness test suite' 'make -C tools engineering-tests HEAD=sha BASE=sha  Run affected test projects' 'make -C tools selftest                     Run deterministic StrataLint selftest' 'make -C tools capacity-audit [REPOSITORY=path]  Audit the current git index against repository capacity limits' 'make -C tools update-renderer-contract     Update the fixed synthetic renderer contract' 'make -C tools clean-lanes [BASE=origin/dev] [FORCE=1]  List reclaimable lanes (dry-run); FORCE=1 removes them' 'make -C tools xi-quantization [XI_MODE=mps|cpu] [XI_REPORT=path]  Certify the fixed xi resolution prefix; default 1..1399999 on MPS' 'make -C tools xi-quantization-test         Run exact scientific behavior tests (no GPU)' 'make -C tools prime-slab-search SLAB_FIRST=id SLAB_LAST=id [SLAB_STATE=external-path] [SLAB_CHUNK=64] [SLAB_MAX_CHUNKS=0]  Bounded MPS prime slabs; 0 max-chunks means finish the explicit window' 'make -C tools prime-slab-test              Scientific and durable-state tests (CPU synthetic fixtures)' 'make -C tools prime-slab-device-test       Locked, bounded synthetic Metal correctness probes (no box search)' 'make -C tools prime-slab-verify SLAB_FIRST=id SLAB_LAST=id  Independently revalidate the saved GPU stream (no generation)' 'make -C tools prime-slab-mutation-test      Predict and verify named scientific test failures; receipts under SLAB_STATE' 'make -C tools prime-slab-cpu CPU_SLAB_INPUT=file CPU_SLAB_SHA=sha256 CPU_SLAB_OUTPUT=directory CPU_SLAB_PHASE=pilot|window CPU_SLAB_BOXES=count CPU_SLAB_DEADLINE=UTC  Foreground actual-prime CPU inquiry' 'make -C tools prime-slab-cpu-test          Exact-input, guard, resume and budget tests; no GPU' 'make -C tools prime-slab-cpu-mutation-test  Verify named CPU inquiry test failures with synthetic fixtures' 'make -C tools census-test [CENSUS_TEST_OUT=dir]  Run census program tests and bounded Lean fixtures' 'make -C tools census-frontier-performance   Separate 1/128 MiB frontier RSS experiment (not a functional test)'
 
 
 dotnet:
@@ -39,6 +45,21 @@ xi-quantization-test:
 
 prime-slab-test:
 	@$(SLAB_ENV) "$(HERE)/scripts/agent/test_prime_slab_search.py"
+
+prime-slab-cpu:
+	@$(SLAB_ENV) "$(HERE)/scripts/agent/prime_slab_cpu.py" --input "$${CPU_SLAB_INPUT}" --input-sha256 "$${CPU_SLAB_SHA}" --output "$${CPU_SLAB_OUTPUT}" --phase "$${CPU_SLAB_PHASE}" --max-boxes "$${CPU_SLAB_BOXES}" --deadline "$${CPU_SLAB_DEADLINE}"
+prime-slab-cpu: export CPU_SLAB_INPUT := $(value CPU_SLAB_INPUT)
+prime-slab-cpu: export CPU_SLAB_SHA := $(value CPU_SLAB_SHA)
+prime-slab-cpu: export CPU_SLAB_OUTPUT := $(value CPU_SLAB_OUTPUT)
+prime-slab-cpu: export CPU_SLAB_PHASE := $(value CPU_SLAB_PHASE)
+prime-slab-cpu: export CPU_SLAB_BOXES := $(value CPU_SLAB_BOXES)
+prime-slab-cpu: export CPU_SLAB_DEADLINE := $(value CPU_SLAB_DEADLINE)
+
+prime-slab-cpu-test:
+	@$(SLAB_ENV) "$(HERE)/scripts/agent/prime_slabs/test_cpu.py"
+
+prime-slab-cpu-mutation-test:
+	@$(SLAB_ENV) "$(HERE)/scripts/agent/prime_slabs/test_cpu.py" --mutation-check
 
 prime-slab-mutation-test:
 	@$(SLAB_ENV) "$(HERE)/scripts/agent/test_prime_slab_search.py" --mutation-dir "$(SLAB_STATE)"

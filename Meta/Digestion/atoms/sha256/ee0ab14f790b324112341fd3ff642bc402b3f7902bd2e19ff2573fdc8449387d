@@ -1,0 +1,15 @@
+**假设 38.3（全动作局部误差与共同单位，repo-derived/open）。** 使用定义38.1及命题38.2的在线摘要。记 $A_t(z)$ 为其精确合法动作集，并定义真实后继摘要律
+$$
+K_t^q(z'\mid h,a)
+=\sum_{y:q_{t+1}(hay)=z'}p_t(y\mid h,a),
+$$
+求和仅取正概率后继。给实际像 $Z_{t+1}$ 上的概率核 $\widehat K_t(z'\mid z,a)$、摘要报酬 $\widehat r_t(z,a)$ 和终端函数 $\widehat g:Z_H\to\mathbb R$。假设存在有限 $R,G\ge0$，使 $|r_t|,|\widehat r_t|\le R$、$|g|,|\widehat g|\le G$。给有限函数 $\rho_t(z,a)\ge0$、$0\le\epsilon_t(z,a)\le1$ 和 $b_H(z)\ge0$，要求对每个历史及每个合法动作逐项成立：
+$$
+\begin{aligned}
+|r_t(h,a)-\widehat r_t(q_t(h),a)|&\le\rho_t(q_t(h),a),\\
+\operatorname{TV}\!\left(K_t^q(\cdot\mid h,a),\widehat K_t(\cdot\mid q_t(h),a)\right)&\le\epsilon_t(q_t(h),a),\\
+|g(h)-\widehat g(q_H(h))|&\le b_H(q_H(h)).
+\end{aligned}
+$$
+TV 采用 $\tfrac12\sum|P-Q|$，这些是全纤维、全动作的确定上界，不是访问频率加权平均。若报酬已扣除读取、表示切换或计算费用，须预先固定非负价格向量，把同一任务费用在两侧用相同单位计入 $r_t,\widehat r_t$；未定价的资源坐标仍按第22节分别比较。本假设不把有限样本拟合误差认作全域上界。
+

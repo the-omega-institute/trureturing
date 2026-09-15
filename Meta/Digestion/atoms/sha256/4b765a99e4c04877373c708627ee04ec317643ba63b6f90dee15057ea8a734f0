@@ -1,0 +1,96 @@
+**定理 52.2（末端记录的累计闭合误差）。** 在定义 52.1 的模型中，令
+
+$$
+D(\rho,\sigma)=\frac12\|\rho-\sigma\|_1,
+$$
+
+$$
+\delta
+=\max_{\omega\in\mathsf D(\mathcal H)}
+D\bigl(\mathcal E\Phi(\omega),\mathcal E\Phi\mathcal E(\omega)\bigr).
+$$
+
+该最大值存在，且 $0\le\delta\le1$。对每个密度算符 $\rho$ 与整数 $n\ge0$，有
+
+$$
+\boxed{
+D\bigl(\mathcal E\Phi^n(\rho),T^n\mathcal E(\rho)\bigr)
+\le n\delta.
+}
+$$
+
+特别地，若 $\mathcal E\Phi=\mathcal E\Phi\mathcal E$，则末端记录由初始记录严格决定：
+
+$$
+\mathcal E\Phi^n(\rho)=K^n\mathcal E(\rho)
+\qquad(n\ge0).
+$$
+
+若另有 $0\le\kappa\le1$，使记录更新满足
+
+$$
+D(K\sigma,K\tau)\le\kappa D(\sigma,\tau)
+\qquad(\sigma,\tau\in\mathcal R),
+$$
+
+则有更强的界
+
+$$
+D\bigl(\mathcal E\Phi^n(\rho),T^n\mathcal E(\rho)\bigr)
+\le\delta\sum_{j=0}^{n-1}\kappa^j.
+$$
+
+当 $n=0$ 时空和为零；当 $\kappa<1$ 时，右端可写成 $\delta(1-\kappa^n)/(1-\kappa)$。上述结论不要求 $\Phi$ 保持 $\mathcal R$，也不要求 $\Phi\mathcal E=\mathcal E\Phi$。
+
+证明。有限维密度算符集合紧，两个通道及迹范数连续，所以定义中的上确界达到。两候选均为密度算符，其迹距离属于 $[0,1]$。
+
+采用定义 52.1 的 $\sigma_n,r_n,s_n$，并令 $e_n=D(r_n,s_n)$。初始时 $r_0=s_0=\mathcal E(\rho)$，故 $e_0=0$。幂等性给出
+
+$$
+T(r_n)
+=\mathcal E\Phi\mathcal E\bigl(\mathcal E(\sigma_n)\bigr)
+=\mathcal E\Phi\mathcal E(\sigma_n).
+$$
+
+又有 $r_{n+1}=\mathcal E\Phi(\sigma_n)$，其中 $\sigma_n$ 仍为密度算符，故一步缺陷的定义逐步适用：
+
+$$
+D\bigl(r_{n+1},T(r_n)\bigr)\le\delta.
+$$
+
+$r_n$ 与 $s_n$ 都位于 $\mathcal R$，而 $s_{n+1}=T(s_n)$。三角不等式和记录更新的收缩性给出
+
+$$
+\begin{aligned}
+e_{n+1}
+&\le D\bigl(r_{n+1},T(r_n)\bigr)
++D\bigl(T(r_n),T(s_n)\bigr)\\
+&\le\delta+\kappa e_n.
+\end{aligned}
+$$
+
+对这个标量递推归纳，由 $e_0=0$ 得
+
+$$
+e_n\le\delta\sum_{j=0}^{n-1}\kappa^j.
+$$
+
+$T$ 是 CPTP 映射，其限制 $K$ 总可取收缩上界 $\kappa=1$，于是得到 $n\delta$。严格闭合使 $\delta=0$，故全部 $e_n=0$。证明中的 $T(r_n)$ 只是把真实第 $n$ 步读数输入预测规则作比较，没有对真实状态 $\sigma_n$ 施加中间干预。
+
+与此区别，令 $A=\mathcal E\Phi$。对第 50.4 条比较的逐步记录通道，$A$ 与 $T$ 在 $\mathcal R$ 上相同，且 $A(\rho),T(\rho)$ 都在 $\mathcal R$。因此对每个 $n\ge1$，
+
+$$
+A^n(\rho)=K^{n-1}A(\rho),
+\qquad
+T^n(\rho)=K^{n-1}T(\rho),
+$$
+
+从而
+
+$$
+D\bigl(A^n(\rho),T^n(\rho)\bigr)
+\le\kappa^{n-1}\delta\le\delta.
+$$
+
+这里 $n=1$ 时空次迭代的系数为一。这一更强界适用于逐步记录的两种初始处理；它不把 $A^n$ 改写成 $\mathcal E\Phi^n$。证毕。
+
