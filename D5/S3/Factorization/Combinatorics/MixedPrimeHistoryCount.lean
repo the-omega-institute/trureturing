@@ -125,7 +125,119 @@ theorem history_recurrence (n : ℕ) (hn : 2 ≤ n) :
     historyCount n =
       (∑ q ∈ (Finset.range n).filter Nat.Prime, historyCount (n - q)) +
       (∑ q ∈ n.primeFactors, historyCount (n / q)) := by
-  sorry
+  classical
+  have run_append (u v : List PrimeLetter) (m : ℕ) :
+      runWord primeStep (u ++ v) m = runWord primeStep v (runWord primeStep u m) := by
+    induction u generalizing m with
+    | nil => rfl
+    | cons a u ih => simpa only [List.cons_append, runWord] using ih (primeStep a m)
+  have end_append (u : List PrimeLetter) (a : PrimeLetter) :
+      endpoint (u ++ [a]) = primeStep a (endpoint u) := by
+    exact run_append u [a] 1
+  have positive (u : List PrimeLetter) : 0 < endpoint u := by
+    have run_positive (v : List PrimeLetter) (m : ℕ) (hm : 0 < m) :
+        0 < runWord primeStep v m := by
+      induction v generalizing m with
+      | nil => exact hm
+      | cons a v ih =>
+          apply ih
+          cases a with
+          | inl q => exact Nat.add_pos_left hm q.val
+          | inr q => exact Nat.mul_pos q.property.pos hm
+    exact run_positive u 1 (by omega)
+  let A := {q : ℕ // q ∈ (Finset.range n).filter Nat.Prime}
+  let M := {q : ℕ // q ∈ n.primeFactors}
+  let Branch := (Σ q : A, historyFibre (n - q.val)) ⊕
+    (Σ q : M, historyFibre (n / q.val))
+  let join : Branch → historyFibre n := fun b =>
+    match b with
+    | .inl ⟨q, w⟩ =>
+        ⟨w.val ++ [.inl ⟨q.val, (Finset.mem_filter.mp q.property).2⟩], by
+          change endpoint (w.val ++ _) = n
+          rw [end_append]
+          change endpoint w.val + q.val = n
+          have hw : endpoint w.val = n - q.val := w.property
+          have hq : q.val < n := Finset.mem_range.mp (Finset.mem_filter.mp q.property).1
+          omega⟩
+    | .inr ⟨q, w⟩ =>
+        ⟨w.val ++ [.inr ⟨q.val, Nat.prime_of_mem_primeFactors q.property⟩], by
+          change endpoint (w.val ++ _) = n
+          rw [end_append]
+          change q.val * endpoint w.val = n
+          have hw : endpoint w.val = n / q.val := w.property
+          rw [hw, Nat.mul_div_cancel' (Nat.dvd_of_mem_primeFactors q.property)]⟩
+  have injective : Function.Injective join := by
+    intro x y h
+    have hw := congrArg Subtype.val h
+    rcases x with ⟨⟨p, hp⟩, u, hu⟩ | ⟨⟨p, hp⟩, u, hu⟩ <;>
+      rcases y with ⟨⟨q, hq⟩, v, hv⟩ | ⟨⟨q, hq⟩, v, hv⟩
+    · change u ++ [Sum.inl _] = v ++ [Sum.inl _] at hw
+      have parts := List.append_inj' hw (by rfl)
+      have labels := List.singleton_injective parts.2
+      have hpq : p = q := congrArg Subtype.val (Sum.inl.inj labels)
+      subst q
+      have huv := parts.1
+      subst v
+      rfl
+    · change u ++ [Sum.inl _] = v ++ [Sum.inr _] at hw
+      have parts := List.append_inj' hw (by rfl)
+      have labels := List.singleton_injective parts.2
+      cases labels
+    · change u ++ [Sum.inr _] = v ++ [Sum.inl _] at hw
+      have parts := List.append_inj' hw (by rfl)
+      have labels := List.singleton_injective parts.2
+      cases labels
+    · change u ++ [Sum.inr _] = v ++ [Sum.inr _] at hw
+      have parts := List.append_inj' hw (by rfl)
+      have labels := List.singleton_injective parts.2
+      have hpq : p = q := congrArg Subtype.val (Sum.inr.inj labels)
+      subst q
+      have huv := parts.1
+      subst v
+      rfl
+  have surjective : Function.Surjective join := by
+    intro w
+    rcases w.val.eq_nil_or_concat' with he | ⟨u, a, he⟩
+    · have hw : endpoint w.val = n := w.property
+      rw [he] at hw
+      change 1 = n at hw
+      omega
+    · have hw : primeStep a (endpoint u) = n := by
+        rw [← end_append, ← he]
+        exact w.property
+      have hu := positive u
+      cases a with
+      | inl q =>
+          change endpoint u + q.val = n at hw
+          have hq : q.val ∈ (Finset.range n).filter Nat.Prime :=
+            Finset.mem_filter.mpr ⟨Finset.mem_range.mpr (by omega), q.property⟩
+          have hp : endpoint u = n - q.val := by omega
+          refine ⟨.inl ⟨⟨q.val, hq⟩, ⟨u, hp⟩⟩, ?_⟩
+          apply Subtype.ext
+          exact he.symm
+      | inr q =>
+          change q.val * endpoint u = n at hw
+          have hd : q.val ∣ n := ⟨endpoint u, hw.symm⟩
+          have hq : q.val ∈ n.primeFactors :=
+            q.property.mem_primeFactors hd (by omega)
+          have hp : endpoint u = n / q.val := by
+            rw [← hw, Nat.mul_div_cancel_left _ q.property.pos]
+          refine ⟨.inr ⟨⟨q.val, hq⟩, ⟨u, hp⟩⟩, ?_⟩
+          apply Subtype.ext
+          exact he.symm
+  let e : Branch ≃ historyFibre n := Equiv.ofBijective join ⟨injective, surjective⟩
+  have afin (q : A) : (historyFibre (n - q.val)).Finite := by
+    have hq : q.val < n := Finset.mem_range.mp (Finset.mem_filter.mp q.property).1
+    exact (reachable_finite _ (by omega)).2
+  have mfin (q : M) : (historyFibre (n / q.val)).Finite := by
+    apply (reachable_finite _ ?_).2
+    exact Nat.div_pos (Nat.le_of_mem_primeFactors q.property)
+      (Nat.pos_of_mem_primeFactors q.property)
+  let (q : A) : Fintype (historyFibre (n - q.val)) := (afin q).fintype
+  let (q : M) : Fintype (historyFibre (n / q.val)) := (mfin q).fintype
+  change Nat.card (historyFibre n) = _
+  rw [← Nat.card_congr e, Nat.card_sum, Nat.card_sigma, Nat.card_sigma]
+  simp only [Nat.card_coe_set_eq, historyCount, Finset.sum_coe_sort]
 
 set_option maxHeartbeats 800000 in
 /-- Splitting at the last typed letter decreases the specified length by one. -/
