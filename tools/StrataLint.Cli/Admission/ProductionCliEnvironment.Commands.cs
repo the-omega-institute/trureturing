@@ -111,6 +111,9 @@ internal sealed partial class ProductionCliEnvironment
     public CommandResult SettleBatch(IReadOnlyList<string> arguments) =>
         SettleAtomCommand.RunBatch(repositoryRoot, repository, arguments);
 
+    public CommandResult SettleUpstream(IReadOnlyList<string> arguments) =>
+        SettleUpstreamCommand.Run(repositoryRoot, repository, arguments);
+
     public CommandResult SettleAtom(IReadOnlyList<string> arguments) =>
         SettleAtomCommand.Run(repositoryRoot, repository, arguments);
 
