@@ -5,6 +5,7 @@
    anchors: []
    digest: Partial contraction recovers a natural operator and detects rank-one nilpotence from its exterior-square square. -/
 
+import Mathlib.Data.Matrix.Basis
 import Mathlib.LinearAlgebra.Matrix.Trace
 import Mathlib.LinearAlgebra.Matrix.Bilinear
 import Mathlib.Tactic
@@ -52,9 +53,7 @@ def action (X : Matrix I I K) : Matrix I I K →ₗ[K] Matrix I I K where
 
 theorem wedgeUnit_skew (i j : I) :
     (wedgeUnit (K := K) i j).transpose = -wedgeUnit i j := by
-  ext r c
-  simp [wedgeUnit, Matrix.single, Matrix.transpose_apply]
-  ring
+  simp only [wedgeUnit, Matrix.transpose_sub, Matrix.transpose_single, neg_sub]
 
 private theorem left_wedge_entry (A : Matrix I I K) (k l i j : I) :
     (A * wedgeUnit k l) i j =
@@ -192,8 +191,8 @@ theorem pivot_factorization (X : Matrix I I K)
   constructor
   · intro i j
     have h := hminor i p j q
-    apply (eq_div_iff hpq).mpr at h
-    simpa [mul_div_assoc] using h
+    have h' : X i j = (X i q * X p j) / X p q := (eq_div_iff hpq).mpr h
+    simpa [mul_div_assoc] using h'
   · calc
       (∑ j, (X p j / X p q) * X j q) =
           (∑ j, X p j * X j q) / X p q := by
