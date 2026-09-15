@@ -52,7 +52,7 @@ public sealed partial class DigestionLedgerTests
     [Fact]
     public void MigrationAndTruthAlphabetsAreTotal()
     {
-        Assert.Equal(new[] { "residual", "partial", "absorbed", "nonpropositional", "upstream" },
+        Assert.Equal(new[] { "residual", "partial", "absorbed", "nonpropositional" },
             Enum.GetValues<DigestionMigrationState>().Select(DigestionStatusNames.Migration));
         Assert.Equal(new[] { "closed", "tail", "open", "inapplicable" },
             Enum.GetValues<DigestionTruthState>().Select(DigestionStatusNames.Truth));

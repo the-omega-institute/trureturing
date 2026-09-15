@@ -22,54 +22,6 @@ internal sealed record DigestionNonpropositional(
         && value.All(static character => character is >= '0' and <= '9' or >= 'a' and <= 'f');
 }
 
-internal sealed record DigestionUpstream(
-    string Justification,
-    ImmutableArray<string> Declarations,
-    string MathlibRev,
-    string ProbeSha256,
-    ImmutableArray<string> ProbeAxioms,
-    string? PreviousAtomId,
-    string? NextAtomId)
-{
-    private static readonly System.Text.RegularExpressions.Regex DeclarationPattern = new(
-        @"^[\p{L}_][\p{L}\p{N}_'′!?]*([.][\p{L}_][\p{L}\p{N}_'′!?]*)*\z",
-        System.Text.RegularExpressions.RegexOptions.CultureInvariant);
-
-    internal bool IsValid => ValidationError is null;
-
-    internal string? ValidationError
-    {
-        get
-        {
-            if (string.IsNullOrWhiteSpace(Justification))
-                return "justification must be a nonempty scalar";
-            if (Declarations.IsDefaultOrEmpty || !SortedDistinct(Declarations)
-                || !Declarations.All(IsDeclarationName))
-                return "declarations must be a non-empty ordinal-sorted distinct list of Lean declaration names";
-            if (MathlibRev.Length != 40
-                || !MathlibRev.All(static c => c is >= '0' and <= '9' or >= 'a' and <= 'f'))
-                return "mathlib_rev must be 40 lowercase hexadecimal characters";
-            if (!DigestionFingerprint.IsCanonicalSha256(ProbeSha256))
-                return "probe_sha256 must be sha256: followed by 64 lowercase hexadecimal characters";
-            if (ProbeAxioms.IsDefault || !SortedDistinct(ProbeAxioms)
-                || !ProbeAxioms.All(IsAllowedAxiom))
-                return "probe_axioms must be an ordinal-sorted distinct list drawn from Classical.choice, Quot.sound, propext";
-            if (PreviousAtomId is not null && !DigestionNonpropositional.IsAtomId(PreviousAtomId))
-                return "previous_atom_id must be a 64-character lowercase hexadecimal atom id or null";
-            if (NextAtomId is not null && !DigestionNonpropositional.IsAtomId(NextAtomId))
-                return "next_atom_id must be a 64-character lowercase hexadecimal atom id or null";
-            return null;
-        }
-    }
-
-    internal static bool IsDeclarationName(string name) => DeclarationPattern.IsMatch(name);
-
-    internal static bool IsAllowedAxiom(string name) => name is "propext" or "Classical.choice" or "Quot.sound";
-
-    private static bool SortedDistinct(ImmutableArray<string> values) =>
-        values.SequenceEqual(values.Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal));
-}
-
 internal sealed record DigestionQuarantine(
     string Justification,
     string ReentryCondition,
@@ -94,16 +46,14 @@ internal sealed record DigestionReceipts(
     DigestionExternalReceipt? TailAuthorization,
     DigestionQuarantine? Quarantine = null,
     DigestionCoverDisposition? CoverDisposition = null,
-    DigestionNonpropositional? Nonpropositional = null,
-    DigestionUpstream? Upstream = null)
+    DigestionNonpropositional? Nonpropositional = null)
 {
     internal bool IsEmptyForSourceRevision =>
         UnresolvedSubitems.IsEmpty
         && ChainAtoms.IsEmpty
         && TailAuthorization is null
         && Quarantine is null
-        && Nonpropositional is null
-        && Upstream is null;
+        && Nonpropositional is null;
 
     internal bool IsEmpty =>
         IsEmptyForSourceRevision
@@ -116,7 +66,6 @@ internal enum DigestionMigrationState
     Partial,
     Absorbed,
     Nonpropositional,
-    Upstream,
 }
 
 internal enum DigestionTruthState

@@ -228,11 +228,7 @@ internal static partial class DigestionStatusEvaluator
     {
         var gaps = new List<DigestionGap>();
         var structured = VerifyStructuredAlignment(entry, alignment, gaps, findings);
-        VerifyUpstreamProbe(entry, snapshot, changes, authorityChanged, gaps);
         var nonpropositional = HasNonpropositionalReceipt(entry);
-        var upstream = HasUpstreamReceipt(entry);
-        if (entry.Receipts.Upstream is not null && !upstream)
-            findings.Add($"entry {entry.AtomId} upstream receipt is invalid or conflicts with live obligations");
         if (entry.Receipts.Nonpropositional is not null && !nonpropositional)
             findings.Add($"entry {entry.AtomId} nonpropositional receipt is invalid or conflicts with live obligations");
         var targetStates = new List<(string Gid, TruthState State)>();
@@ -271,7 +267,7 @@ internal static partial class DigestionStatusEvaluator
             targetStates.Add((gidText, edge.State));
         }
 
-        if (entry.CoverageGids.Length == 0 && !nonpropositional && !upstream)
+        if (entry.CoverageGids.Length == 0 && !nonpropositional)
         {
             gaps.Add(new DigestionGap(
                 "coverage-gid-missing",
@@ -342,8 +338,7 @@ internal static partial class DigestionStatusEvaluator
         Func<string, bool>? isBaseFactAffected)
     {
         var changedSet = changes ?? RawChangeSet.Create([]);
-        if (changes is null || DigestionCasStore.EntryChanged(entry, changedSet)
-            || entry.Receipts.Upstream is not null && PathChanged(changedSet, UpstreamProbePath(entry)))
+        if (changes is null || DigestionCasStore.EntryChanged(entry, changedSet))
         {
             return true;
         }
@@ -415,7 +410,6 @@ internal static partial class DigestionStatusEvaluator
         {
             item.Migration = HasNonpropositionalReceipt(item.Entry)
                 ? DigestionMigrationState.Nonpropositional
-                : HasUpstreamReceipt(item.Entry) ? DigestionMigrationState.Upstream
                 : item.LocalComplete && item.Entry.Receipts.ChainAtoms.Length == 0
                 ? DigestionMigrationState.Absorbed
                 : item.HasProgress
@@ -465,7 +459,6 @@ internal static partial class DigestionStatusEvaluator
         RawChangeSet? changes)
     {
         if (HasNonpropositionalReceipt(item.Entry)) return DigestionTruthState.Inapplicable;
-        if (HasUpstreamReceipt(item.Entry)) return DigestionTruthState.Closed;
         if (item.HasUnresolvedCoverageTarget
             || item.TargetStates.Count == 0
             || item.TargetStates.Any(static target => target.State is TruthState.Open or TruthState.Semantic))

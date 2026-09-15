@@ -32,16 +32,6 @@ public sealed class CliVerbLinkageTests
     }
 
     [Fact]
-    public void UpstreamMakeTargetsLinkToRegisteredVerb()
-    {
-        Assert.Contains("settle-upstream", CliApplication.ImplementedCommands);
-        var makefile = File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), "Makefile"));
-        Assert.Equal(2, Regex.Matches(makefile, @"--\s+settle-upstream(?:\s|$)", RegexOptions.CultureInvariant).Count);
-        Assert.Matches(@"(?m)^settle-upstream:\r?\n\t@[^\r\n]*-- settle-upstream --request ", makefile);
-        Assert.Matches(@"(?m)^settle-upstream-clear:\r?\n\t@[^\r\n]*-- settle-upstream --clear ", makefile);
-    }
-
-    [Fact]
     public void AtomContextMakeTargetLinksToRegisteredVerb()
     {
         Assert.Contains("atom-context", CliApplication.ImplementedCommands);
