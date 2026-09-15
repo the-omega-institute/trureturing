@@ -65,8 +65,13 @@ run_phase() {
 
 # Validate required authored inputs before provisioning or consuming artifacts.
 run_phase inputs python3 "$SCRIPT_DIR/../scripts/report/lean-report-selection.py" validate --repository "$REPOSITORY"
-run_phase utility-input-build dotnet build "$SCRIPT_DIR/../StrataLint.Cli/StrataLint.Cli.csproj" \
-  --configuration Release --nologo --verbosity quiet
+if [[ -n "${STRATALINT_LEAN_PRODUCER_DLL:-}" ]]; then
+  [[ "$STRATALINT_LEAN_PRODUCER_DLL" == /* && -f "$STRATALINT_LEAN_PRODUCER_DLL" ]] \
+    || { echo 'inspect.sh: candidate Lean producer must be an existing absolute path' >&2; exit 2; }
+else
+  run_phase utility-input-build dotnet build "$SCRIPT_DIR/../StrataLint.Lean/StrataLint.Lean.csproj" \
+    --configuration Release --nologo --verbosity quiet
+fi
 run_phase ensure /bin/bash "$REPOSITORY/tools/scripts/worktree/lean-cache-ensure.sh"
 mkdir -p "$(dirname "$OUTPUT")" "$FINAL_LOG_DIR"
 mv -f -- "$STARTUP_LOG_DIR"/* "$FINAL_LOG_DIR/"

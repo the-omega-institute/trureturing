@@ -32,7 +32,7 @@ class NativeTestSupport:
             ['elan', 'which', 'lake'], cwd=ROOT, text=True).strip()
         cls.dotnet = shutil.which('dotnet')
         cls.cli = Path(os.environ.get('STRATALINT_NATIVE_DOTNET_CLI',
-            ROOT / 'tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll'))
+            ROOT / 'tools/StrataLint.Lean/bin/Release/net10.0/StrataLint.Lean.dll'))
         if not cls.dotnet or not cls.cli.is_file():
             raise RuntimeError('native fixtures require make -C tools dotnet first')
     def setUp(self):
@@ -45,6 +45,9 @@ defaultTargets = ["Fixture", "Audit"]
 [[require]]
 name = "leanInspector"
 path = "tools/lean-inspector"
+[[require]]
+name = "mathlib"
+path = "fixture-mathlib"
 [[lean_lib]]
 name = "Fixture"
 roots = ["Fixture", "D5"]
@@ -60,11 +63,15 @@ root = "Cache"
         # No external dependencies need downloading. Let the actual ensure
         # owner invoke this fixture cache provider before the first raw Lake
         # build; only that owner creates the stamp and admits donor seeding.
+        self.write('fixture-mathlib/lakefile.toml', 'name = "mathlib"\n')
+        self.write('fixture-mathlib/lake-manifest.json', '{"version":"1.2.0","packages":[]}\n')
         self.write('Cache.lean', 'def main : IO Unit := pure ()\n')
         self.write('lake-manifest.json', json.dumps(dict(version='1.2.0',
             packagesDir='.lake/packages', packages=[dict(type='path', scope='',
                 name='leanInspector', manifestFile='lake-manifest.json', inherited=False,
-                dir='tools/lean-inspector', configFile='lakefile.lean')],
+                dir='tools/lean-inspector', configFile='lakefile.lean'),
+                dict(type='path', scope='', name='mathlib', manifestFile='lake-manifest.json', inherited=False,
+                    dir='fixture-mathlib', configFile='lakefile.toml', rev='0123456789abcdef0123456789abcdef01234567')],
             name='fixture', lakeDir='.lake', fixedToolchain=False)))
         self.write('Fixture.lean', 'import D5.A\ntheorem result : ¬ False := fun h => h\n')
         self.write('D5/A.lean', 'import D5.B\ndef value : Nat := D5.hidden\n')
@@ -78,16 +85,18 @@ root = "Cache"
         for name in ['Inspector.lean', 'lakefile.lean', 'lake-manifest.json', 'native.py', 'publication.py', 'materials.py', 'inspect.sh']:
             self.copy('tools/lean-inspector/' + name)
         for name in ['tools/scripts/report/lean-report-selection.py', 'tools/scripts/report/lean-report-input.sh',
-                     'tools/scripts/worktree/lean-cache-input.sh', 'lean-toolchain', 'Makefile',
+                     'tools/scripts/worktree/lean-cache-input.sh', 'tools/scripts/worktree/lean_cache.py',
+                     'tools/scripts/worktree/cache_material.py', 'tools/scripts/worktree/cache_deadline.py',
+                     'lean-toolchain', 'Makefile',
                      'tools/scripts/worktree/lean-cache-ensure.sh', 'tools/scripts/worktree/lean-cache-run.sh',
                      'tools/scripts/report/lean-report.sh', 'tools/scripts/report/report-supervisor.sh',
                      'tools/scripts/lib/resource-observation-lib.sh',
-                     'tools/StrataLint.Cli/Commands/LeanUtilityInputCommand.cs']:
+                     'tools/StrataLint.Lean/Lean/LeanUtilityInputCommand.cs']:
             self.copy(name)
         self.write('bin/dotnet', '#!/usr/bin/env python3\nimport os, sys\nfrom pathlib import Path\n'
             + f'dotnet, cli = {self.dotnet!r}, {str(self.cli)!r}\n'
-            + 'if "worktree" in sys.argv:\n'
-            + '    os.execv(dotnet, [dotnet, cli, *sys.argv[sys.argv.index("worktree"):]])\n'
+            + 'operation = next((word for word in sys.argv if word in ("ensure-cache", "with-cache-writer", "with-cache-reader")), None)\n'
+            + 'if operation: os.execv(dotnet, [dotnet, cli, *sys.argv[sys.argv.index(operation):]])\n'
             + 'if sys.argv[1] == "build": raise SystemExit(0)  # utility input is fixture data\n'
             + 'if sys.argv[-1] != "lean-utility-input": raise SystemExit("unexpected fixture dotnet command")\n'
             + 'with Path("utility-calls").open("a") as out: out.write("call\\n")\n'
@@ -102,7 +111,7 @@ root = "Cache"
             producer_scopes={'lean-report': paths('lean-report-inputs.json', 'tools/scripts/report/lean-report-selection.py',
                 'tools/lean-inspector/Inspector.lean', 'tools/lean-inspector/lakefile.lean',
                 'tools/lean-inspector/native.py', 'tools/lean-inspector/publication.py', 'tools/lean-inspector/materials.py',
-                'tools/scripts/report/lean-report-input.sh', 'tools/StrataLint.Cli/Commands/LeanUtilityInputCommand.cs'),
+                'tools/scripts/report/lean-report-input.sh', 'tools/StrataLint.Lean/Lean/LeanUtilityInputCommand.cs'),
                 'scribe-content': dict(include=[], exclude=[])})
         self.write('lean-report-inputs.json', json.dumps(policy))
         self.env = dict(os.environ, PATH=str(self.root / 'bin') + os.pathsep + os.environ['PATH'], LAKE_BIN=self.lake,

@@ -122,23 +122,19 @@ class NativePackagingTests:
             self.publish()
             self.assertEqual(donor_bytes, {p.relative_to(donor): publication.digest(p)
                 for p in (donor / '.lake').rglob('*') if p.is_file()})
-    def test_snapshot_generation_preserves_lean_address(self):
-        self.write('Trureturing.lean', 'import Fixture\n')
-        self.write('lake-manifest.json', '{"version":"1.2.0","packages":[]}\n')
+    def test_snapshot_generation_preserves_mathlib_partition(self):
         helper = self.root / 'tools/scripts/worktree/lean-cache-input.sh'
-        def address(command):
-            return subprocess.check_output([str(helper), command, '--repository', str(self.root)],
+        def partition():
+            return subprocess.check_output([str(helper), 'partition', '--repository', str(self.root)],
                 cwd=self.root, env=self.env, text=True, timeout=120)
-        lean_before, snapshot_before = address('address'), address('build-snapshot-address')
+        before = partition()
         self.write('tools/lean-inspector/materials.py', '# changed producer bytes\n')
-        self.assertEqual(lean_before, address('address'))
-        self.assertEqual(snapshot_before, address('build-snapshot-address'))
+        self.assertEqual(before, partition())
         policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
         policy['report_semantic_version'] = 2
         self.write('lean-report-inputs.json', json.dumps(policy))
-        self.assertEqual(lean_before, address('address'))
-        self.assertNotEqual(snapshot_before, address('build-snapshot-address'))
-        (self.root / 'tools/lean-inspector/materials.py').unlink()
-        result = subprocess.run([str(helper), 'build-snapshot-address', '--repository', str(self.root)],
-            cwd=self.root, env=self.env, capture_output=True, timeout=120)
-        self.assertNotEqual(result.returncode, 0)
+        self.assertEqual(before, partition())
+        manifest = json.loads((self.root / 'lake-manifest.json').read_text())
+        next(package for package in manifest['packages'] if package['name'] == 'mathlib')['rev'] = 'f' * 40
+        self.write('lake-manifest.json', json.dumps(manifest))
+        self.assertNotEqual(before, partition())

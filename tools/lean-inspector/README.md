@@ -16,12 +16,12 @@ make lean-report LEAN_REPORT=.lake/build/stratalint/custom-report.json
 和 Python 3。[入口](inspect.sh)负责输入验证、utility 输入工具构建、Lean-cache
 ensure、原生 Lake 报告构建和发布。
 
-[CI](../../.github/workflows/ci.yml) 经候选侧的
-[pair 入口](../scripts/lean-report-pair.sh) 调用同一个 `inspect.sh`。
-[Release](../../.github/workflows/truth-release-publish.yml) 先尝试选定源码的 gate
-报告工件，经 inspector 的 `publication.py stage` 完整校验和当前输入验证后使用；
-工件不可用或校验失败时调用 `make lean-report`。这两条路径均消费 inspector 产物，
-不另建报告生成器或缓存命令。
+[CI](../../.github/workflows/ci-push.yml) 与本地 `make current` 共用入口，
+经 `make lean-report` 调用同一个 `inspect.sh`。工程阶段已验证的候选 Lean DLL
+通过 `STRATALINT_LEAN_PRODUCER_DLL` 传入，独立调用才构建 utility 输入工具。
+[Release](../../.github/workflows/truth-release-publish.yml) 选择指定 dev 源码的成功
+push engineering/current 及其报告工件，经共同交接入口校验候选、轮次和完整材料后使用。
+缺少该源码的合格报告工件时不能发布，不在消费者中重产报告。
 
 输出采用 `stratalint-raw-lean-report-v2`，同一文件名后附
 `.sha256`、`.input.attestation`、`.provenance.json`、`.materials.zip`。
@@ -39,14 +39,14 @@ Inspector 的可复用工件由 [Lake facets](lakefile.lean) 管理，均在当�
 | `inputs/`、`inputs.json`、`compatibility` | 从登记输入生成的模块输入、成员集合及兼容标识。 |
 
 这些是构建产物，不提交为源码。正常 Lean-cache 负责依赖物化和既有构建归档；
-[ensure](../StrataLint.Cli/Commands/Worktrees/LeanCacheEnsureCommand.cs) 按 donor
+[ensure](../StrataLint.Lean/Lean/LeanCacheEnsureCommand.cs) 按 donor
 规则播种当前工作树的私有 `.lake`，支持时使用 clonefile，复制后的写入与 donor 隔离。
 `.lake` 不使用 symlink；[writer 入口](../scripts/worktree/lean-cache-run.sh)
 以 `with-cache-writer` 持有当前 `.lake` 的写锁，覆盖 ensure 和原生 `lake build :report`。
 donor 只供播种，后续编译、报告写入和损坏恢复均发生在当前工作树。
 
-[stamp](../StrataLint.Cli/Runtime/LeanWorktreePins.cs) 由 cache producer 写入，绑定
-`lean-toolchain` 与 `lake-manifest.json` 的依赖 pin，不证明项目工件已齐全或报告仍有效。
+[stamp](../StrataLint.Lean/Lean/LeanWorktreePins.cs) 由 cache producer 写入，绑定
+`lake-manifest.json` 中 mathlib 的 resolved revision 与 OS/架构，不证明项目工件已齐全或报告仍有效。
 缺失或损坏的 stamp 不等于 pin 已变；ensure 按现有规则补齐或原地重产。
 缺 stamp、项目 olean 为冷且 `.lake/build` 不存在时，也可走 donor 的 missing-build 播种路径。
 报告是否可复用仍由 Lake trace 和 inspector 校验决定。正常入口在 ensure 前不创建
