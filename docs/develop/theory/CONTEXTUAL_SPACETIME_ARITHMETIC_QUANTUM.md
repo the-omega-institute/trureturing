@@ -21538,3 +21538,104 @@ $$
 本节复用 `complete_context_collision_conservation`。算子恒等式和碰撞—平方迹关系是在明确的有限维互补上下文假设下由 Lean 证明的；上下文在物理实验中的可实现性、有限样本误差、与热力学熵的关系，以及 Zeckendorf 载体上具体构造这些上下文，仍需额外模型与误差分析。
 
 ## 追加锚（新终端）
+
+## 93. 算术权重、对角固定点与有效热记录
+
+### 93.1 固定点先由记录基底决定
+
+设 $B$ 是 $d$ 维 Hilbert 空间上的秩一记录上下文，并假设其投影族满足 `IsRecordMeasurement`。项目中的 `basis_measurement_eq_self_iff` 给出固定点刻画：
+
+$$
+\boxed{
+\operatorname{basisMeasurement}_B(A)=A
+\iff
+A\in\operatorname{diagonalSubspace}(B).
+}
+$$
+
+这条等价式的重点不是某个特殊权重，而是记录机制先选定了一个对角子空间。被保留下来的信息是该上下文中的经典对角方向；其余非对角方向不会成为这个记录通道的固定信息。
+
+因此，“经典现实”在这个有限模型中的第一层含义可以写成：
+
+$$
+\text{稳定记录}
+=
+\text{被指定记录通道固定的算子子空间中的元素}.
+$$
+
+它仍然是相对于上下文 $B$ 的定义。更换记录基底，会更换 diagonalSubspace，也会更换哪些差异被视为稳定记录。
+
+### 93.2 有限 zeta 权重自动落入这个固定点
+
+对有限索引集 $S\subseteq\operatorname{Fin}(d)$，项目定义
+
+$$
+Z_s(S)=\sum_{n\in S}(n+1)^{-s},
+$$
+
+并构造加权算子
+
+$$
+\tau_{B,s,S}
+=
+\sum_{n\in S}
+\frac{(n+1)^{-s}}{Z_s(S)}P_{B,n}.
+$$
+
+`zeta_thermal_state_mem_diagonal` 证明
+
+$$
+\tau_{B,s,S}\in\operatorname{diagonalSubspace}(B),
+$$
+
+所以 `zeta_thermal_state_pinching_fixed` 给出
+
+$$
+\boxed{
+\operatorname{basisMeasurement}_B(\tau_{B,s,S})
+=\tau_{B,s,S}.
+}
+$$
+
+这里的“thermal”只表示一种有限 zeta 权重的构造命名。当前定理证明的是它属于指定上下文的对角子空间并被该测量固定；它没有单独证明 $Z_s(S)\ne0$、正迹归一化、某个 Hamiltonian 的 Gibbs 形式，或与实验温度的对应关系。若要把 $\tau_{B,s,S}$ 当作物理密度态，还必须另加这些条件。
+
+### 93.3 固定不等于由动力学达到
+
+第 89 节已经区分了去相位后的固定点与实际熵产生；本节提供一个算术权重的具体固定点例子，但不改变这个边界：
+
+$$
+\operatorname{basisMeasurement}_B(\tau)=\tau
+\quad\not\Rightarrow\quad
+\rho_k\longrightarrow\tau.
+$$
+
+要得到趋近结论，必须指定动力学 $\Phi$，并证明 $\tau$ 是 $\Phi$ 的吸引子，或者至少证明从给定初态出发的迭代误差界。固定点等式只说明“如果已经在这个记录子空间中，当前记录不会再改变它”。
+
+同样，两个不同的权重参数 $s$ 或两个不同的有限集 $S$ 可以给出不同的稳定对角状态；记录通道本身不会从固定点等价式中选出唯一的 $s$。选择参数属于模型或实验标定，而不是 Zeckendorf 编码的逻辑后果。
+
+### 93.4 与 Zeckendorf 刻度的关系
+
+若把有限合法 Zeckendorf 构型 $w\in\mathcal W_L$ 映射到上下文 $B$ 的正交基向量，并令索引集 $S$ 对应这些构型，则可以在 $	au_{B,s,S}$ 中使用 Fibonacci 标签、素数指数或其他离散坐标作为权重输入。可是，当前 zeta 固定点定理只使用有限索引 $n$、秩一投影和对角子空间；它没有证明
+
+$$
+(n+1)^{-s}
+$$
+
+必须等于某个 Fibonacci 能量，也没有证明 Zeckendorf 数值就是热力学能量。两者的安全连接是：Zeckendorf 提供合法离散索引，zeta 权重提供一种可计算的对角加权，记录测量负责规定这些加权态是否稳定可读。
+
+因此可以把三种角色分开：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{编码：}&w&\longmapsto\text{合法离散标签};\\
+&\text{加权：}&n&\longmapsto (n+1)^{-s};\\
+&\text{记录：}&B&\longmapsto\operatorname{diagonalSubspace}(B)\text{ 与其固定点}.
+\end{aligned}}
+$$
+
+只有在额外给出载体映射、归一化和动力学之后，才能讨论这些层是否共同形成一个可预测的有效热记录。
+
+本节复用 `basis_measurement_eq_self_iff`、`zeta_thermal_state_mem_diagonal` 和 `zeta_thermal_state_pinching_fixed`。Lean 已证明的是有限秩一记录上下文中的对角固定性；物理 Gibbs 态、热平衡、唯一吸引子、Zeckendorf 能量解释和无限 zeta 极限仍需额外假设与证明。
+
+## 追加锚（新终端）
