@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Exact survivor profiles with the first-ternary-fibre improvement.
+"""Exact survivor profiles with coupled two-root budgets.
 
 The mathematical proof is in Problems/erdos-7-odd-covering-systems.md.
 This program checks its rational arithmetic and exact infinite sums, then
@@ -67,7 +67,55 @@ def envelope_sums(s, c, b):
     return mass - 1, moment, cutoffs
 
 
-def recurrence(primes):
+def joint_pair_bounds(q):
+    """The two-root rational bound, including an absent-modulus-3 branch.
+
+    With modulus 3 present, w and v are the surviving fractions inside the
+    two remaining roots after pure higher ternary exclusions. Their triangle
+    has vertices (1/2,1), (1,1/2), (1,1). First-ternary mixed deletions alpha,
+    beta occupy a triangle with vertices (0,0), (y,0), (0,y). The pure-q
+    survivor density z lies in [1-y,1]. Higher mixed deletions are bounded by
+    y/6 and, for this upper bound, assigned entirely to the other root.
+
+    Both objectives are linear-fractional in each of the three blocks, with
+    a positive denominator throughout. Their maxima occur among 18 vertices.
+    The proof of this reduction and its probability interpretation is in
+    the dossier. These combined bounds need not equal the envelope sums.
+    """
+    y = F(1, q - 1)
+    a = F(3 * q - 1, (q - 1) ** 2)
+    r_values, k_values, denominators = [], [], []
+    for (w, v), (alpha, beta), z in product(
+            ((F(1, 2), F(1)), (F(1), F(1, 2)), (F(1), F(1))),
+            ((F(0), F(0)), (y, F(0)), (F(0), y)),
+            (1 - y, F(1))):
+        x = (w + v) / 3
+        n = w * (z - alpha) / 3
+        denominator = n + v * (z - beta) / 3 - y / 6
+        require(denominator > 0, "joint two-root denominator is not positive")
+        denominators.append(denominator)
+        r_values.append((n + z / 6 + x * y + y / 2) / denominator)
+        k_values.append(1 + (3 * n + z + a * x + 2 * a) / denominator)
+
+    # Without a pure modulus-3 class, the pure ternary density is >=5/6.
+    # The raw two-prime bounds decrease in x and z, so use their minima.
+    x, z = F(5, 6), 1 - y
+    absent_denominator = x * z - y / 2
+    require(absent_denominator > 0, "absent-modulus-3 denominator is not positive")
+    absent_r = (z / 2 + x * y + y / 2) / absent_denominator
+    absent_k = 1 + (2 * z + a * x + 2 * a) / absent_denominator
+    r_bound, k_bound = max(r_values + [absent_r]), max(k_values + [absent_k])
+    return r_bound, k_bound, {
+        "vertex_count": len(r_values),
+        "minimum_vertex_denominator": str(min(denominators)),
+        "present_modulus_3_R_bound": str(max(r_values)),
+        "present_modulus_3_K_bound": str(max(k_values)),
+        "absent_modulus_3_R_bound": str(absent_r),
+        "absent_modulus_3_K_bound": str(absent_k),
+    }
+
+
+def recurrence(primes, use_joint_budget=True):
     profiles = {(): ({(): F(1)}, {})}
     metrics = {(): (F(0), F(1), {})}
     deletion_bounds = {}
@@ -107,7 +155,12 @@ def recurrence(primes):
                 # 2(q-2)/(3q-8); b stores three times that mass.
                 b[(3,)] = min(b[(3,)], F(6 * (q - 2), 3 * q - 8))
             profiles[s] = c, b
-            metrics[s] = envelope_sums(s, c, b)
+            r, k, cutoffs = envelope_sums(s, c, b)
+            if use_joint_budget and size == 2 and 3 in s:
+                q = next(p for p in s if p != 3)
+                joint_r, joint_k, _ = joint_pair_bounds(q)
+                r, k = min(r, joint_r), min(k, joint_k)
+            metrics[s] = r, k, cutoffs
     return profiles, metrics, deletion_bounds
 
 
@@ -157,10 +210,9 @@ def main():
     profiles, metrics, deletions = recurrence(primes)
     require(len(profiles) == 16, "all four-prime subsets must have a profile")
     expected = {
-        (3, 5): (F(33, 14), F(429, 28)),
-        (3, 5, 7): (F(36903, 7585), F(336438, 7585)),
-        primes: (F(7621078040639947, 773234757691590),
-                 F(47039764798810808, 386617378845795)),
+        (3, 5): (F(13, 6), F(59, 4)),
+        (3, 5, 7): (F(9937, 2142), F(179315, 4284)),
+        primes: (F(1200449891, 129232735), F(28643873521, 258465470)),
     }
     for s, bound in expected.items():
         require(metrics[s][:2] == bound, "displayed profile bound mismatch")
@@ -175,31 +227,69 @@ def main():
             require(any(v < 1 for v in deletions[s].values()),
                     "survivor normalization is not certified")
 
+    _, baseline_metrics, _ = recurrence(primes, use_joint_budget=False)
+    for s, bounds in {
+            (3, 5): (F(33, 14), F(429, 28)),
+            (3, 5, 7): (F(36903, 7585), F(336438, 7585)),
+            primes: (F(7621078040639947, 773234757691590),
+                     F(47039764798810808, 386617378845795)),
+    }.items():
+        require(baseline_metrics[s][:2] == bounds, "first-ternary-fibre baseline changed")
+    joint_results = {}
+    for q, expected_pair in {
+            5: (F(13, 6), F(59, 4)),
+            7: (F(21, 13), F(29, 3)),
+            11: (F(33, 25), F(29, 4)),
+    }.items():
+        joint_r, joint_k, detail = joint_pair_bounds(q)
+        require((joint_r, joint_k) == expected_pair, "joint vertex bound mismatch")
+        pair_c, pair_b = profiles[(3, q)]
+        raw_r, raw_k, _ = envelope_sums((3, q), pair_c, pair_b)
+        joint_results[str(q)] = {
+            "combined_R_bound": str(metrics[(3, q)][0]),
+            "combined_K_bound": str(metrics[(3, q)][1]),
+            "raw_envelope_R": str(raw_r),
+            "raw_envelope_K": str(raw_k),
+            **detail,
+        }
+
     c, b = profiles[primes]
     heights = (12, 8, 6, 5)
     r_bracket, k_bracket = finite_box_bracket(primes, c, b, heights)
     r, k, cutoffs = metrics[primes]
-    require(r_bracket[0] <= r <= r_bracket[1], "R is outside independent bracket")
-    require(k_bracket[0] <= k <= k_bracket[1], "K is outside independent bracket")
-    require(k_bracket[1] < 122, "independent Gamma upper bound exceeds 122")
-    require(r / 11 < F(89601, 100000), "prime-13 deletion bound mismatch")
-    require(k < F(127225, 1000), "head exceeds the prime-73 continuation bridge")
-    p, delta = 73, F(27, 100)
-    a = F(3 * p - 1, (p - 1) ** 2)
-    survivor_mass = 1 - k / (4 * delta * (1 - delta) * (p - 1) ** 2)
-    continued_ratio = k * (1 + a / (1 - delta)) / survivor_mass
-    require(survivor_mass == F(23954544135062588143, 24689540460044007018),
-            "prime-73 survivor-mass lower bound mismatch")
-    require(survivor_mass > 0, "prime-73 survivor mass is not positive")
-    require(continued_ratio == F(15885128653558014915666, 119772720675312940715),
-            "prime-73 continued ratio mismatch")
+    raw_r, raw_k, _ = envelope_sums(primes, c, b)
+    require(r == raw_r and k == raw_k,
+            "the four-prime metric should equal its raw profile envelope")
+    require(r_bracket[0] <= raw_r <= r_bracket[1],
+            "raw R is outside independent bracket")
+    require(k_bracket[0] <= raw_k <= k_bracket[1],
+            "raw K is outside independent bracket")
+    require(k_bracket[1] < 111, "independent Gamma upper bound exceeds 111")
+    require(r / 11 < F(845, 1000), "prime-13 deletion bound mismatch")
+    continued_ratio = k
+    bridge = []
+    for p, delta in ((71, F(53, 200)), (73, F(27, 100))):
+        a = F(3 * p - 1, (p - 1) ** 2)
+        survivor_fraction = 1 - continued_ratio / (
+            4 * delta * (1 - delta) * (p - 1) ** 2)
+        require(survivor_fraction > 0, "continuation survivor fraction is not positive")
+        continued_ratio *= (1 + a / (1 - delta)) / survivor_fraction
+        bridge.append({
+            "prime": p,
+            "delta": str(delta),
+            "survivor_fraction_lower_bound": str(survivor_fraction),
+            "continued_ratio_upper_bound": str(continued_ratio),
+            "continued_ratio_decimal": float(continued_ratio),
+        })
     require(continued_ratio < F(138877, 1000),
-            "prime-73 continued ratio exceeds the tail seed")
+            "two-prime continued ratio exceeds the tail seed")
     print(json.dumps({
         "prime_support": primes,
         "cylinder_sum_bound": str(r),
         "Gamma_bound": str(k),
         "Gamma_bound_decimal": float(k),
+        "baseline_Gamma_without_joint_budget": str(baseline_metrics[primes][1]),
+        "two_root_joint_bounds": joint_results,
         "first_ternary_fibre_cap_for_3_5": "6/7",
         "cutoffs": cutoffs,
         "profile": {"*".join(map(str, t)) or "1": str(v) for t, v in c.items()},
@@ -208,14 +298,12 @@ def main():
         "last_prime_deletion_bounds": {str(p): str(v)
                                        for p, v in deletions[primes].items()},
         "prime_13_deletion_bound": str(r / 11),
-        "prime_73_bridge": {
-            "delta": str(delta),
-            "survivor_mass_lower_bound": str(survivor_mass),
-            "continued_ratio_upper_bound": str(continued_ratio),
-            "continued_ratio_decimal": float(continued_ratio),
+        "prime_71_73_bridge": {
+            "steps": bridge,
             "tail_seed": "138877/1000",
         },
         "independent_finite_box": {
+            "checks": "raw profile envelope; combined two-root metrics are separate",
             "heights": heights,
             "R_interval": list(map(str, r_bracket)),
             "K_interval": list(map(str, k_bracket)),

@@ -724,22 +724,21 @@ greater than one cannot cover the integers if every prime divisor of every
 modulus belongs to
 
 \[
- \{3,5,7,11\}\ \cup\ \{p:\ p\text{ prime},\ p\ge73\}.
+ \{3,5,7,11\}\ \cup\ \{p:\ p\text{ prime},\ p\ge71\}.
  \tag{P1}
 \]
 
 There is no bound on the exponents, the number of large prime divisors, or the
 number of prime divisors of a single modulus. Equivalently, any hypothetical
 distinct odd covering must use a modulus divisible by at least one of the
-primes from 13 through 71. This is a restricted theorem, not the full conjecture.
+primes from 13 through 67. This is a restricted theorem, not the full conjecture.
 
 The head estimate used to prove it is the following uniform statement.
 For any finite distinct-modulus family supported on `{3,5,7,11}`, its complete
 survivor set is nonempty, and the uniform survivor probability satisfies
 
 \[
- \boxed{\Gamma\le C_4:=\frac{47039764798810808}{386617378845795}
- <121.67008.}
+ \boxed{\Gamma\le C_4:=\frac{28643873521}{258465470}<110.82283.}
  \tag{P2}
 \]
 
@@ -930,7 +929,8 @@ envelope sums are
 | {3,5,7} | 36903/7585 | 336438/7585 |
 | {3,5,7,11} | 7621078040639947/773234757691590 | 47039764798810808/386617378845795 |
 
-The last row proves (P2). Its cutoffs remain `(2,1,0,0)`.
+The last row gives a uniform head bound; the joint budget below strengthens
+it to (P2). Its cutoffs remain `(2,1,0,0)`.
 The [refined profile verifier](../docs/reports/erdos7-odd-covering/verify_refined_head_profile.py)
 checks this recurrence with exact rational arithmetic and an independent
 finite-box sum with a geometric bound on the complement. The simpler
@@ -938,21 +938,151 @@ support-only estimate (P5) remains valid. Neither calculation enumerates
 residue assignments; universality follows from the two profile inductions
 and the root-fibre argument.
 
+**Joint deletion budget for the two ternary roots.** Individual cylinder
+bounds can be strengthened by bounding their entire weighted sum with the
+same family's deletion budget. For a `{3,q}` family let `X,Y` avoid the
+pure powers and put
+
+\[
+ x=|X|/3^H\ge\tfrac12,\quad z=|Y|/q^J\ge1-y,\quad
+ y=\frac1{q-1},\quad a_q=\frac{3q-1}{(q-1)^2},\quad
+ s=|S|/(3^Hq^J)\ge xz-y/2>0.
+\]
+
+Write `M(a,b)` for the maximum mass of a cylinder modulo `3^a q^b`.
+Counting its intersection with `X×Y` gives
+`M(a,0)≤z/(3^a s)`, `M(0,b)≤x/(q^b s)` and
+`M(a,b)≤1/(3^a q^b s)` for positive exponents. Retain the actual root
+maximum `ρ=M(1,0)` separately. Summing all other exponents geometrically
+bounds the finite nonunit cylinder sum `R_μ` and the finite weighted
+cylinder sum `K_μ` by
+
+\[
+ R_\mu\le\rho+\frac{z/6+xy+y/2}{s},\qquad
+ K_\mu\le1+3\rho+\frac{z+a_qx+2a_q}{s}.
+ \tag{P9}
+\]
+
+As before `Γ(μ)≤K_μ`. These sums are over the actual finite divisors;
+infinite geometric sums only supply upper bounds.
+
+Suppose first that the pure modulus-3 class is present. Of the other two
+roots designate one attaining `ρ` as the target. Let `w,v` be their
+relative pure-ternary survivor densities. Since the higher pure powers
+have total density at most `1/6` in the full ternary period,
+
+\[
+ \tfrac12\le w,v\le1,\quad w+v\ge\tfrac32,\quad x=(w+v)/3.
+\]
+
+Let `α,β` be the densities **inside `Y`**, measured against the full
+`q` period, of the unions forbidden by first-level mixed moduli `3q^b`
+in the two roots. Distinct moduli imply `α,β≥0` and `α+β≤y`.
+Let `t_1,t_2` be the actual additional full-period densities removed from
+the remaining sets by mixed moduli with ternary exponent at least two.
+Then `t_1,t_2≥0` and `t_1+t_2≤y/6`. The actual complete root densities are
+exactly
+
+\[
+ n=w(z-\alpha)/3-t_1,\quad m=v(z-\beta)/3-t_2,
+ \qquad s=n+m,\quad\rho=n/(n+m).
+\]
+
+Thus (P9) has numerators `n+C_R` and `3n+C_K`, where
+`C_R=z/6+xy+y/2>0` and `C_K=z+a_qx+2a_q>0`; the second fraction has
+an additional constant one. Move all `t_1` to the other root. This keeps
+the denominator fixed and increases `n`. Next increase the other-root
+deletion to `y/6`, keeping the numerators fixed and decreasing the
+denominator. Both changes increase the bounds. This is a relaxation of
+the actual budgets, with no claim that the altered parameters describe
+another residue family. All denominators remain positive: throughout the
+allowed region the resulting roots satisfy
+
+\[
+ n=w(z-\alpha)/3\ge(1-2y)/6>0,\qquad
+ m=v(z-\beta)/3-y/6\ge(1-3y)/6>0.
+\]
+
+It remains to maximize the two fractions at these relaxed `n,m`.
+With the other variables fixed, each is a ratio of affine functions of
+`(α,β)`, then of `(w,v)`, then of `z`, with positive denominator.
+The maxima therefore occur among the eighteen choices
+
+\[
+ (\alpha,\beta)\in\{(0,0),(y,0),(0,y)\},\quad
+ (w,v)\in\{(1/2,1),(1,1/2),(1,1)\},\quad z\in\{1-y,1\}.
+ \tag{P10}
+\]
+
+For completeness, if affine `N,D` have `D>0` and
+`u=∑_i θ_i u_i` is a convex combination of vertices, then
+`N(u)/D(u)=∑_i[θ_i D(u_i)/D(u)] [N(u_i)/D(u_i)]`.
+These are nonnegative weights summing to one, which proves each vertex
+reduction. Applying it successively proves (P10) without a numerical
+optimization assumption.
+
+If the modulus-3 class is absent, `x≥5/6`. The unsplit estimates instead give
+
+\[
+ R_\mu\le\frac{z/2+xy+y/2}{xz-y/2},\qquad
+ K_\mu\le1+\frac{2z+a_qx+2a_q}{xz-y/2}.
+ \tag{P11}
+\]
+
+Both decrease in `x` and `z`, so use `x=5/6,z=1−y`.
+For example, the derivative numerators of the first fraction are
+`−(y²+z²+zy)/2` and `−y/4−x²y−xy/2`; those of the second are
+`−a_qy/2−2z²−2a_qz` and `−y−a_qx²−2a_qx`, all strictly negative.
+The resulting bounds are below those of (P10):
+
+| `q` | Uniform `R_μ` bound | Uniform `K_μ` bound | Bounds if modulus 3 is absent |
+|---:|---:|---:|---:|
+| 5 | 13/6 | 59/4 | 17/12, 215/24 |
+| 7 | 21/13 | 29/3 | 23/22, 208/33 |
+| 11 | 33/25 | 29/4 | 5/6, 73/15 |
+
+For `q=5`, both maxima in (P10) occur at
+`w=1,v=1/2,z=3/4,α=1/4,β=0`, giving `n=1/6,m=1/12`.
+The same eighteen exact evaluations give the other rows.
+
+These are bounds for entire sums of the **same** uniform survivor law.
+In the profile recurrence use the smaller of its envelope bound and this
+joint `R_μ` bound for the next deletion cost `R/(p−2)`. Retain the
+individual `c,b` inequalities and similarly take the smaller valid
+whole-`K_μ` bound. The new `R` need not equal the sum of the old envelope.
+This strengthened induction gives
+
+\[
+ R_{\{3,5,7\}}\le\frac{9937}{2142},\quad
+ K_{\{3,5,7\}}\le\frac{179315}{4284},\qquad
+ R_{\{3,5,7,11\}}\le\frac{1200449891}{129232735},\quad
+ K_{\{3,5,7,11\}}\le\frac{28643873521}{258465470}.
+\]
+
+The last inequality proves (P2). The refined profile verifier checks
+the eighteen vertices, the absent-modulus branch, this induction and
+the two-step continuation below. Its independent finite-box calculation
+brackets the resulting profile envelope; it does not replace the proof
+of the joint deletion budget.
+
 **Conclusion of (P1).** Apply (P2) to the classes involving only `{3,5,7,11}`.
 For any missing small prime use an unused coordinate; this does not add a
 forbidden class, and the same head bound applies. Apply one step of (T6)
-at `p=73`, choosing `δ=27/100` and initial `G=C_4`, `s=1`. Exactly,
+at `p=71`, choosing `δ=53/200` and initial `G=C_4`, `s=1`, and then at
+`p=73` with `δ=27/100`. The two successive denominators in (T6) are
+`9580713200963/9867151936173` and
+`47498911479243786341/48946254183902205216`, both positive. Exactly,
 
 \[
- s'=\frac{23954544135062588143}{24689540460044007018}>0,\qquad
- F'=\frac{15885128653558014915666}{119772720675312940715}
+ F_{71}=\frac{11578741637267351}{95807132009630},\qquad
+ F_{73}=\frac{31280734730025808371666}{237494557396218931705}
  <\frac{138877}{1000}.
  \tag{P8}
 \]
 
-If 73 is absent it too may be an unused coordinate. Continue at prime 79,
+Either absent bridge prime may be an unused coordinate. Continue at prime 79,
 with absolute prime index 22, using the checked upper seed
-`F_21=138877/1000`. No prime from 13 through 71 needs to be inserted into
+`F_21=138877/1000`. No prime from 13 through 67 needs to be inserted into
 the head: the index specifies where the tail starts, while (T1) allows any
 coprime head. The exact continuation and BBMST's analytic termination leave
 positive mass on complete survivors. CRT and periodicity supply an integer
@@ -1164,7 +1294,7 @@ open. The results are three exact obstacles to earlier proof routes, a direct
 joint-load transfer into the BBMST continuation, and a quantitative reduction
 of the arbitrary-height sufficient condition to a finite exponent cap. A
 uniform four-prime head bound additionally proves the restricted noncoverage
-theorem (P1), allowing arbitrary prime support at or above 73. The universal
+theorem (P1), allowing arbitrary prime support at or above 71. The universal
 finite-base bound needed for the full conjecture remains unproved. No new
 Lean theorem, freeze, or problem-resolution binding is supplied.
 
