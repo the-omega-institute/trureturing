@@ -539,8 +539,26 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Verifies the exact finite BBMST recurrence from its conditional Gamma seed.
+pattern = "docs/reports/erdos7-odd-covering/verify_finite_continuation.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]] # Verifies the H73 dual and correlated-measure fibre-counting factors.
 pattern = "docs/reports/erdos7-odd-covering/verify_h73.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Checks exact sufficient parameters for lifting a hypothetical finite Gamma bound.
+pattern = "docs/reports/erdos7-odd-covering/verify_height_lifting_bounds.py"
 kind = "program"
 admission_plane = "content"
 produced_by = "none"
