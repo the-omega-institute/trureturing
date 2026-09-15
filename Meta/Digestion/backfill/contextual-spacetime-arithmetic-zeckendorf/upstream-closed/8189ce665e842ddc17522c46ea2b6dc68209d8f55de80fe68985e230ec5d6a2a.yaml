@@ -1,0 +1,20 @@
+fingerprints:
+  raw_sha256: sha256:8189ce665e842ddc17522c46ea2b6dc68209d8f55de80fe68985e230ec5d6a2a
+  normalized_sha256: sha256:8189ce665e842ddc17522c46ea2b6dc68209d8f55de80fe68985e230ec5d6a2a
+cas_ref: sha256:8189ce665e842ddc17522c46ea2b6dc68209d8f55de80fe68985e230ec5d6a2a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  upstream:
+    justification: trigger payload - valid shape, deliberately wrong probe hash
+    declarations:
+      - Nat.fib_add_two_strictMono
+      - Nat.fib_pos
+    mathlib_rev: db584cd6d46c92f209a44c0f1c829460d327499d
+    probe_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000
+    probe_axioms:
+      - Classical.choice
+      - Quot.sound
+      - propext
+    previous_atom_id: a620b351812e67e348874f4fa2e1ecee921fb94c94e9b53b518f2323df677a66
+    next_atom_id: 3b51b873151c4b9561653c3149c90eec5cf7e73ab066fe61b8bfb5f6d4401475
