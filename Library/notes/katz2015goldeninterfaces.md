@@ -5,23 +5,24 @@ year: 2015
 title: Wieferich past and future
 doi: 10.1090/conm/632/12632
 claim: Katz's torus equidistribution conjecture has an exact fixed-golden specialization; macroscopic equidistribution alone does not force a WSS zero.
+strata_touched: []
 license: citation-only
 triage: anchor
 ---
 
 # Original WSS arithmetic across geometric realizations
 
-## 1. The geometric equidistribution conjecture
+## Verified locator
 
 Nicholas M. Katz, *Wieferich past and future*, Contemporary Mathematics 632
 (2015), 253-270, DOI 10.1090/conm/632/12632.
-Author-hosted paper, reached through the actual bibliography:
+Author-hosted paper:
 https://web.math.princeton.edu/~nmk/wieferich42.pdf
 
-Read Sections 2-6 in the parsed primary PDF: Conjectures 3.1, 4.7 and 6.1,
-the Lie-algebra exact sequence, and Section 5's lattice warning. Screenshots
-of pages 6 and 7 failed with internal errors; no successful visual inspection
-of those pages is claimed. No diagram or unparsed table is used.
+## 1. The geometric equidistribution conjecture
+
+Source scope: Sections 2-6, including Conjectures 3.1, 4.7 and 6.1,
+the Lie-algebra exact sequence, and Section 5's lattice warning.
 
 Conjecture 4.7 concerns a torus over Z[1/N], a point generating a Zariski-dense
 cyclic subgroup, and an integral Lie lattice. It predicts Haar-equidistribution
@@ -54,13 +55,13 @@ arXiv:1902.04795.
 https://arxiv.org/abs/1902.04795
 https://arxiv.org/pdf/1902.04795
 
-Read Corollary 2.2, Remark 2.3, Proposition 3.2 and Theorem 3.4 in the primary
-PDF text, retaining discriminant and class-number conditions. For the fixed
+Source scope: Corollary 2.2, Remark 2.3, Proposition 3.2 and Theorem 3.4,
+with their discriminant and class-number conditions. For the fixed
 field Q(sqrt(5)), class number one and p>5 give: p is WSS iff the field is not
 p-rational. Corollary 2.2 also relates this to divisibility of L(2-p,chi_5).
 Nonvanishing of a p-adic logarithm is weaker than initial valuation exactly
 one and cannot settle WSS. In the split case O/pO is a product of fields;
-the new proofs explicitly use its norm-one group, not a falsely cyclic full
+CG.2-CG.4 use its norm-one group, not a falsely cyclic full
 unit group.
 
 CG.2-CG.4 prove their local formulas directly. Exactly one of the p lifts of
@@ -76,11 +77,9 @@ Rigoberto Florez, Robinson A. Higuita and Alexander Ramirez,
 Polynomials*, Journal of Integer Sequences 22 (2019), Article 19.4.4.
 https://cs.uwaterloo.ca/journals/JIS/VOL22/Florez/florez23.html
 
-The primary journal page confirms these three authors and publication on
-June 28, 2019. It provides classical polynomial-derivative context. CG.4
+The paper provides classical polynomial-derivative context. CG.4
 proves its displayed identity; no unverified theorem number or first-discovery
-claim is used. An uncertain third-author name in the immediately preceding
-Library commit was removed after this primary-page check.
+claim is used.
 
 ## 3. An exact integral-basis transfer
 
@@ -89,8 +88,8 @@ revised July 15, 2023; author PDF dated July 18, 2023.
 https://arxiv.org/abs/2302.10357
 https://arxiv.org/pdf/2302.10357
 
-Read the definition of polynomial monogenicity, Theorem 1.1, Proposition 2.5
-and the relevant index-criterion argument in primary PDF text. At k=1 the
+Source scope: the definition of polynomial monogenicity, Theorem 1.1,
+Proposition 2.5 and the index-criterion argument. At k=1 the
 hypotheses hold, giving
 
 `p is WSS iff X^(2p)-X^p-1 is non-monogenic`.
@@ -110,8 +109,9 @@ Alexandru Buium and Santiago R. Simanca, *Arithmetic partial differential
 equations*, arXiv:math/0605107v2.
 https://arxiv.org/abs/math/0605107
 
-Read the primary abstract, not the full technical development. It studies
-Fermat-quotient operators and usual derivations on arithmetic groups. CG.6
+The abstract describes Fermat-quotient operators and usual derivations on
+arithmetic groups; the full technical development is outside this note's
+source scope. CG.6
 defines delta_p(x)=(sigma_p(x)-x^p)/p on the unramified golden algebra,
 proves its multiplication law, and computes its value at phi as a unit
 multiple of original q_p. No arithmetic Ricci-flow theorem or WSS existence
@@ -135,7 +135,7 @@ This is a literal continuous three-manifold realization of the original WSS
 depth. No new bound on that depth follows merely from real hyperbolicity,
 entropy, or the topological identification.
 
-## 6. Adjacent open problems and accounting
+## 6. Related results and boundaries
 
 Nic Fellini and M. Ram Murty, *Wieferich primes in number fields and the
 conjectures of Ankeny-Artin-Chowla and Mordell*, arXiv:2508.08472v2.
@@ -145,34 +145,11 @@ Theorem 1.2 gives conditional non-Wieferich infinitude under number-field abc.
 Theorem 1.3 instead assumes finitely many super-Wieferich primes. Neither is
 an unconditional WSS-existence theorem. The same source reports AAC and
 Mordell counterexamples in VARYING quadratic fields; they are not fixed-golden
-WSS examples. The already recorded Pell-height route remains conditional and
+WSS examples. The Pell-height route remains conditional and
 points primarily toward non-WSS results.
 
-Bounded current searches found no verified resolution of classical WSS
-existence, Katz's general torus equidistribution conjecture, or its particular
-golden specialization. This is not exhaustive status or priority verification.
 The p-rational and integral-basis formulations are established transfers, not
-additional independent problems counted on top of WSS. A future arithmetic
-advance must restrict actual original q_p/h_p, produce a genuine witness,
-or prove a precise new global distribution theorem. Rephrasing the same
-unknown in multiple spaces is not counted as such an advance.
-
-## 7. Repository and execution scope
-
-Read actual dev 15e0a49477cda321e7d344ee62996bf18e34e838, the real
-GoldenApparition.lean source and #7895 head d4813880. CG.1-CG.8 are appended
-to the existing WSS problem document. Its entire 15488-byte previous content
-is retained unchanged; the updated blob is
-4dd07459cc1c0613ad94d205de539e196bd63b40. Historical Gap/Route paragraphs
-in the preserved prefix are not a fresh audit of all frozen sources.
-
-Executed exact diagnostics: 300 primes 5<p<=2000 for the derivative, predicted
-Hensel lift, Katz coordinate and arithmetic derivative; 1151 parameter lifts
-and 1151 norm-one lifts enumerated at primes through 101; 150 even-index
-integer matrix factorizations and Smith calculations. These test formulas,
-not a WSS example, new search bound or equidistribution theorem.
-
-No Lean/Scribe wrapper, CI change, registry, frozen marker or new theory
-volume is added. Ordinary proofs are supplied, not a Lean elaboration,
-p-adic analytic kernel certificate, independent-model review or novelty
-approval. New external open problems solved: zero.
+additional independent problems counted on top of WSS. The remaining
+arithmetic obligation is a constraint on actual original q_p/h_p, a WSS
+witness, or a new global distribution theorem. Rephrasing the same unknown
+in multiple spaces does not supply such a result.
