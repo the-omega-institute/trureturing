@@ -4163,3 +4163,325 @@ $U$ 单射推出 $s(u)=s(v)$，再应用 $P$ 得 $u=v$，矛盾。因此不存�
 综上，$P$ 以连续满射保留当前状态，$L$ 以全部相容过去提供可逆演化，但把每个当前状态连续地选成一条完整历史不可行；两条零历史各有稠密正向轨道并不改变这一截面障碍。证毕。
 
 ## 追加锚（本行以下为增补区）
+## 18. 增补·加法闭图的结合律与最细确定观察商
+
+**定义 18.0（关系复合、确定观察与因子化次序）。** 沿用定义16.0、16.3中的数字载体 $K$、有限核心 $Z$、零点 $0_K$、相位映射 $H:K\to\mathbb T$、加法闭图 $\Gamma$ 及分裂纤维的定向标记 $z_\theta^s$。特别，
+$$
+\mathbb T=\mathbb R/\mathbb Z,\qquad
+\Gamma=\overline{\{(Z(n),Z(m),Z(n+m)):n,m\in\mathbb N\}}^{K^3}.
+$$
+记
+$$
+E_m=[-m\phi]\quad(m\ge1),\qquad E=\{E_m:m\ge1\},\qquad \Sigma=\{-1,+1\}.
+$$
+若 $H(x)\notin E$，置 $\mathcal S(x)=\Sigma$；若 $x=z_\theta^s$ 且 $\theta\in E$，置 $\mathcal S(x)=\{s\}$。[^rro18_phase][^rro18_fibers]
+
+对 $A,B\subseteq K$，定义
+$$
+\Gamma(A,B)=\bigcup_{a\in A,\,b\in B}\Gamma(a,b).
+$$
+其中 $\Gamma(A,y)$、$\Gamma(x,B)$ 分别表示 $\Gamma(A,\{y\})$、$\Gamma(\{x\},B)$。再定义
+$$
+C(x)=\Gamma(0_K,x),\qquad C(A)=\bigcup_{x\in A}C(x),\qquad
+\Lambda(x,y)=H^{-1}(\{H(x)+H(y)\}),
+$$
+并以 $\Lambda$ 同时表示由这些输入纤维组成的三元关系。严格左单位是满足 $\Gamma(e,x)=\{x\}$ 对所有 $x\in K$ 成立的点 $e$；严格右单位作对称定义。弱左单位只要求 $x\in\Gamma(e,x)$。
+
+称连续满射 $q:K\to Q$ 为一个连续确定观察，若 $Q$ 是 Hausdorff 空间，且存在全函数 $D:Q^2\to Q$，满足
+$$
+\forall x,y\in K\ \forall z\in\Gamma(x,y),\qquad
+D(q(x),q(y))=q(z).
+$$
+此定义不预设 $D$ 连续、结合、交换或具有单位。对两个连续满射观察，记 $q_1\succeq q_2$，若存在连续映射 $r:Q_1\to Q_2$ 使 $q_2=r\circ q_1$；此时 $r$ 自动满射，称 $q_1$ 比 $q_2$ 精细。
+
+单值选择则是函数 $A:K^2\to K$，满足 $A(x,y)\in\Gamma(x,y)$，只要求选中一个输出，而不是将全部输出观察为同一点。另一个载体 $L$ 连同投影 $P:L\to K$ 属于状态提升的数据，其映射方向与观察商 $q:K\to Q$ 不同；以下结论不以这种提升为前提。
+
+**假设 18.1（相位前置与明确采用的闭图分类）。** 采用如下前提。$K$ 是紧致 Hausdorff 空间，$Z[\mathbb N]$ 在其中稠密，$H$ 连续满射且满足 $H(Z(n))=[n\phi]$。相位 $\theta\notin E$ 的纤维恰有一点，相位 $\theta\in E$ 的纤维恰为两个不同的点 $z_\theta^{+1},z_\theta^{-1}$，并且
+$$
+H^{-1}(\{0\})=\{0_K\},\qquad
+z_{E_1}^{+1}=u=(10)^\omega,\qquad z_{E_1}^{-1}=v=(01)^\omega,
+$$
+$$
+z_{E_2}^{+1}=0v,\qquad z_{E_2}^{-1}=10v.
+$$
+这里 $0v,10v$ 仍按低位到高位连接。上述相位与定向约定采用定理371.2、372.2—372.4及定义16.3。[^rro18_phase][^rro18_fibers]
+
+本节把定理16.4的完整输入纤维分类作为明确的数学前提。用定义18.0的符号，其等价写法是：令 $\theta=H(x)+H(y)$，当 $\theta\notin E$ 时，
+$$
+\Gamma(x,y)=H^{-1}(\{\theta\});
+$$
+当 $\theta\in E$ 时，
+$$
+\Gamma(x,y)=\{z_\theta^s:s\in\mathcal S(x)\cup\mathcal S(y)\}.
+$$
+这个写法与原分类一致，因为两个非空集合 $\mathcal S(x),\mathcal S(y)$ 的并恰为单点 $\{s\}$，当且仅当它们都等于 $\{s\}$；其余情形的并均为 $\Sigma$。以下命题及定理均在本假设下成立。[^rro18_fibers]
+
+**命题 18.2（集合值结合律与全部点单位的排除）。** $\Gamma$ 非空值且交换，并且对任意 $x,y,z\in K$，
+$$
+\bigcup_{w\in\Gamma(x,y)}\Gamma(w,z)
+=
+\bigcup_{w\in\Gamma(y,z)}\Gamma(x,w).
+$$
+更准确地，令
+$$
+\sigma=H(x)+H(y)+H(z),\qquad
+U=\mathcal S(x)\cup\mathcal S(y)\cup\mathcal S(z).
+$$
+若 $\sigma\notin E$，两边都等于单点纤维 $H^{-1}(\{\sigma\})$；若 $\sigma\in E$，两边都等于
+$$
+\{z_\sigma^s:s\in U\}.
+$$
+因此，最终相位分裂时，恰在三个输入全为同号分裂点时只保留该号，其余情形保留两个号。$0_K$ 是唯一弱左单位，也因交换性成为唯一弱右单位；但是 $K$ 中不存在严格左单位或严格右单位。[^rro18_fibers]
+
+**证明。** 首先，
+$$
+E_m+E_n=E_{m+n}\in E\qquad(m,n\ge1),
+$$
+所以 $E$ 对相位加法封闭。这并不使其补集封闭，也不阻止与补集相加后离开 $E$。例如 $[-\phi/2]\notin E$，但它与自身之和为 $E_1$；又有 $E_1+[\phi]=0\notin E$。第一个非归属断言若不成立，便有 $(2m-1)\phi\in2\mathbb Z$，与 $\phi$ 无理矛盾；零不属于 $E$ 也由无理性得到。
+
+假设18.1立即给出每个 $\Gamma(x,y)$ 非空，而且二元分类对 $x,y$ 对称，所以 $\Gamma$ 交换。关键是对所有输入均成立的符号传播等式
+$$
+\bigcup_{w\in\Gamma(x,y)}\mathcal S(w)
+=
+\mathcal S(x)\cup\mathcal S(y).
+$$
+为完整证明此式，分两种情况。若 $H(x)+H(y)\in E$，分类给出的输出恰为右侧所列符号对应的分裂点，而每个这种输出的符号集合是相应单点，取并即得等式。若 $H(x)+H(y)\notin E$，输出是非分裂相位的唯一点，故左侧为 $\Sigma$。此时 $H(x),H(y)$ 不可能都属于 $E$，否则由 $E+E\subseteq E$ 得到矛盾。因此至少一个输入的符号集合为 $\Sigma$，右侧也为 $\Sigma$。两种情况穷尽了所有中间相位，包括由非分裂输入进入 $E$ 及由混合输入离开 $E$ 的情况。
+
+现在比较两个括号方式。每个 $w\in\Gamma(x,y)$ 均满足 $H(w)=H(x)+H(y)$，每个 $w\in\Gamma(y,z)$ 均满足 $H(w)=H(y)+H(z)$。若 $\sigma\notin E$，两边的每个末次运算都给同一个单点纤维 $H^{-1}(\{\sigma\})$；中间纤维非空，所以两边的并都恰为此纤维。
+
+若 $\sigma\in E$，左边按末次运算的分类等于
+$$
+\left\{z_\sigma^s:
+ s\in\left(\bigcup_{w\in\Gamma(x,y)}\mathcal S(w)\right)\cup\mathcal S(z)
+\right\}
+=
+\{z_\sigma^s:s\in U\}.
+$$
+右边同样等于
+$$
+\left\{z_\sigma^s:
+ s\in\mathcal S(x)\cup\left(\bigcup_{w\in\Gamma(y,z)}\mathcal S(w)\right)
+\right\}
+=
+\{z_\sigma^s:s\in U\}.
+$$
+这里对两个中间和分别应用了已经覆盖 $E$ 内外全部情况的传播等式，没有要求二者具有相同的归属类型。这证明结合律及完整三输入分类。由于 $U$ 为单点当且仅当三个输入符号集合是同一个单点，关于唯一分支的断言也成立。
+
+最后，$H(0_K)=0\notin E$，故 $\mathcal S(0_K)=\Sigma$。分类使 $x\in\Gamma(0_K,x)$ 对每个 $x$ 成立，所以 $0_K$ 是弱左单位。反之，若 $e$ 是弱左单位，将 $x=0_K$ 代入，得到 $0_K\in\Gamma(e,0_K)$。相位等式迫使 $H(e)=0$，再由零相位的单点纤维得到 $e=0_K$。然而
+$$
+\Gamma(0_K,u)=\{u,v\}\ne\{u\}.
+$$
+因此这个唯一可能的严格左单位并不严格，严格左单位不存在；交换性给出全部右单位结论。证毕。
+
+**命题 18.3（零相位作用、纤维饱和与单值选择的区别）。** 对任意 $x,y\in K$，
+$$
+C(x)=H^{-1}(\{H(x)\}),\qquad C(C(x))=C(x),
+$$
+并且
+$$
+\Lambda(x,y)
+=C(\Gamma(x,y))
+=\Gamma(C(x),y)
+=\Gamma(x,C(y))
+=\Gamma(C(x),C(y)).
+$$
+原关系并不已经饱和：
+$$
+\Gamma(u,u)=\{0v\},\qquad
+\Lambda(u,u)=\{0v,10v\},\qquad
+\Gamma\subsetneq\Lambda.
+$$
+存在全域单值选择 $A:K^2\to K$，但不存在联合连续的这种选择。[^rro18_fibers][^rro18_phase]
+
+**证明。** 由于 $\mathcal S(0_K)=\Sigma$，假设18.1在分裂相位处给出全部两个输出，在非分裂相位处给出唯一输出。因此 $C(x)$ 恰为 $H(x)$ 的整个纤维。该纤维非空，且其中每个 $w$ 都满足 $C(w)=C(x)$，所以
+$$
+C(C(x))=\bigcup_{w\in C(x)}C(w)=C(x).
+$$
+对任意集合 $A\subseteq K$ 再取并，也得到 $C(C(A))=C(A)$，包括空集情形。
+
+固定 $x,y$，令 $\theta=H(x)+H(y)$。每个 $w\in\Gamma(x,y)$ 都满足 $C(w)=H^{-1}(\{\theta\})$，而 $\Gamma(x,y)$ 非空，故
+$$
+C(\Gamma(x,y))=H^{-1}(\{\theta\})=\Lambda(x,y).
+$$
+命题18.2的结合律给出
+$$
+\Gamma(C(x),y)
+=\Gamma(\Gamma(0_K,x),y)
+=\Gamma(0_K,\Gamma(x,y))
+=C(\Gamma(x,y)).
+$$
+交换性同样给出 $\Gamma(x,C(y))=\Lambda(x,y)$。最后，对每个 $y'\in C(y)$，有 $H(y')=H(y)$，于是
+$$
+\Gamma(C(x),C(y))
+=\bigcup_{y'\in C(y)}\Gamma(C(x),y')
+=\bigcup_{y'\in C(y)}\Lambda(x,y')
+=\Lambda(x,y).
+$$
+最后一个并取在非空集合上，且每项是同一纤维。
+
+由 $H(u)=E_1$、$\mathcal S(u)=\{+1\}$、$E_1+E_1=E_2$，分类给出 $\Gamma(u,u)=\{z_{E_2}^{+1}\}=\{0v\}$。但 $E_2$ 的整个纤维是 $\{0v,10v\}$，且这两个字不同。因此严格包含成立，不能把 $\Gamma$ 本身替换为饱和关系。
+
+逐点单值选择可以明确规定：输出相位不在 $E$ 时取唯一输出；输出相位在 $E$ 且正号被允许时取正号输出，否则取负号输出。分类保证每个输入对都恰落入一个这样的规定，且选中的点属于 $\Gamma(x,y)$。
+
+假设存在联合连续的单值选择 $A$。自然相位不属于 $E$，因为 $[n\phi]=[-m\phi]$、$n\ge0,m\ge1$ 将迫使 $(n+m)\phi\in\mathbb Z$。因此分类与 $H(Z(n))=[n\phi]$ 给出
+$$
+\Gamma(Z(n),Z(m))=\{Z(n+m)\},\qquad
+A(Z(n),Z(m))=Z(n+m).
+$$
+$A$ 的图在 $K^3$ 中闭：它是连续映射 $(x,y,z)\mapsto(A(x,y),z)$ 下的闭对角线的原像。这个闭图包含全部自然加法三元组，所以也包含其闭包 $\Gamma$。但 $\Gamma$ 同时包含 $(0_K,u,u)$ 和 $(0_K,u,v)$，与函数在输入 $(0_K,u)$ 处只能有一个值矛盾。这证明连续选择不存在；逐点选择的存在既不提供这种连续性，也没有断言该选择满足结合律或单位律。证毕。
+
+**定理 18.4（最细连续确定观察与全部允许的后处理）。** 给定连续满射 $q:K\to Q$，其中 $Q$ 是 Hausdorff 空间。以下条件等价。[^rro18_fibers][^rro18_quotient]
+
+（甲）存在全函数 $D:Q^2\to Q$，使
+$$
+\forall x,y\in K\ \forall z\in\Gamma(x,y),\qquad
+D(q(x),q(y))=q(z).
+$$
+
+（乙）存在连续满射 $p:\mathbb T\to Q$，使 $q=p\circ H$，并且其相等关系核是加法同余，即对所有 $a,a',b,b'\in\mathbb T$，
+$$
+p(a)=p(a'),\ p(b)=p(b')
+\quad\Longrightarrow\quad
+p(a+b)=p(a'+b').
+$$
+
+（丙）存在闭子群 $N\le\mathbb T$ 及同胚 $h:\mathbb T/N\to Q$，使
+$$
+q=h\circ\pi_N\circ H,
+$$
+其中 $\mathbb T/N$ 取商拓扑，$\pi_N(a)=a+N$。这里 $h$ 是空间同胚，不预设 $Q$ 上已有任何群运算。
+
+这些条件成立时，$p,N,h,D$ 均由给定的 $q$ 唯一确定，而且
+$$
+N=p^{-1}(\{p(0)\}),\qquad
+p(a)=p(b)\ \Longleftrightarrow\ a-b\in N,
+$$
+$$
+D(p(a),p(b))=p(a+b),\qquad
+e_Q=p(0)=q(0_K),\qquad
+\iota_Q(p(a))=p(-a).
+$$
+$D$ 与 $\iota_Q$ 自动连续；它们使 $Q$ 成为紧致交换拓扑群，$p$ 成为满射连续群同态。因此 $H$ 是因子化次序中最精细的连续确定观察。
+
+更具体地，允许的连续满射后处理 $p:\mathbb T\to Q$ 恰是满足乙中同余条件的那些映射，等价地，其纤维恰为某个闭子群的陪集。对任意闭子群 $N$，$q_N=\pi_N\circ H$ 都给出这种观察，并且
+$$
+q_{N_1}\succeq q_{N_2}
+\quad\Longleftrightarrow\quad N_1\subseteq N_2.
+$$
+并非每个连续满射后处理都允许确定运算；例如 $p([t])=\cos(2\pi t)$ 不允许。最后，$\Gamma$ 与 $\Lambda$ 具有完全相同的连续确定观察，尽管两关系严格不同。
+
+**证明。** 先证甲推出乙。命题18.3给出 $C(x)=H^{-1}(\{H(x)\})$，特别 $x\in C(x)$。对任何 $z\in C(x)=\Gamma(0_K,x)$，甲分别应用于输出 $x$ 和 $z$，得到
+$$
+q(z)=D(q(0_K),q(x))=q(x).
+$$
+因此 $q$ 在每个 $H$ 纤维上恒定。$H$ 满射，所以存在唯一的满射函数 $p:\mathbb T\to Q$，满足 $q=p\circ H$。
+
+这个因子映射连续，而不是额外假设连续。事实上，$H$ 是从紧致空间到 Hausdorff 空间的连续满射，所以是闭映射：每个闭集在 $K$ 中紧，其像在 $\mathbb T$ 中紧而闭。闭满射是商映射，因为若 $H^{-1}(V)$ 开，则
+$$
+\mathbb T\setminus V=H(K\setminus H^{-1}(V))
+$$
+闭，故 $V$ 开。于是对每个开集 $O\subseteq Q$，由
+$$
+H^{-1}(p^{-1}(O))=q^{-1}(O)
+$$
+开，得到 $p^{-1}(O)$ 开。
+
+任取 $a,b\in\mathbb T$，利用 $H$ 满射选择 $x,y$ 使 $H(x)=a,H(y)=b$，再利用非空值性选择 $z\in\Gamma(x,y)$。甲和相位等式给出
+$$
+D(p(a),p(b))=q(z)=p(a+b).
+$$
+因此若 $p(a)=p(a')$ 且 $p(b)=p(b')$，同一个 $D$ 值同时等于 $p(a+b)$ 和 $p(a'+b')$，得到乙的同余条件。$p$ 满射又说明这条公式已经唯一确定 $D$。
+
+反过来，若乙成立，规定 $D(p(a),p(b))=p(a+b)$。同余条件保证更换任一代表均不改变结果，满射性保证在 $Q^2$ 上处处有定义。对任意 $z\in\Gamma(x,y)$，有 $H(z)=H(x)+H(y)$，所以
+$$
+D(q(x),q(y))=p(H(x)+H(y))=p(H(z))=q(z).
+$$
+这证明乙推出甲。
+
+接着证明闭子群描述。乙中的双槽同余条件等价于所有平移都保持相等关系核：
+$$
+p(a)=p(b)\quad\Longrightarrow\quad
+p(a+t)=p(b+t)\qquad(t\in\mathbb T).
+$$
+双槽条件取相同的第二槽即得平移条件；反向先以平移条件替换第一槽，再利用加法交换性替换第二槽，即得双槽条件。
+
+置 $N=p^{-1}(\{p(0)\})$。$Q$ Hausdorff，使单点 $\{p(0)\}$ 闭，故 $N$ 闭。显然 $0\in N$。若 $n,m\in N$，同余条件给出 $p(n+m)=p(0+0)=p(0)$，所以 $n+m\in N$。若 $n\in N$，将 $p(n)=p(0)$ 平移 $-n$，得到 $p(0)=p(-n)$，所以 $-n\in N$。因此 $N$ 是闭子群。对任意 $a,b$，先平移 $-b$、反向再平移 $b$，得到
+$$
+p(a)=p(b)
+\quad\Longleftrightarrow\quad
+p(a-b)=p(0)
+\quad\Longleftrightarrow\quad a-b\in N.
+$$
+
+所以 $h(a+N)=p(a)$ 定义良好且双射。由于 $p=h\circ\pi_N$ 且 $\pi_N$ 是商映射，$h$ 连续。$\mathbb T/N$ 是紧空间的连续像，故紧；连续双射 $h$ 的目标 $Q$ Hausdorff，因此 $h$ 是闭映射，其逆连续。这证明乙推出丙。反向，若丙成立，令 $p=h\circ\pi_N$。它连续满射，而 $h$ 单射保证 $p(a)=p(b)$ 当且仅当 $a-b\in N$。子群对加法封闭，故这个关系是加法同余，得到乙。$p$ 已由 $q$ 唯一确定，$N$ 由显示的零纤维公式唯一确定，$h$ 又由 $h\circ\pi_N=p$ 唯一确定。
+
+现在证明全部群结构与连续性。$Q$ 是 $K$ 的连续像，故紧。任取 $a,b,c\in\mathbb T$，已经证明的公式给出
+$$
+D(D(p(a),p(b)),p(c))=p((a+b)+c)
+=p(a+(b+c))=D(p(a),D(p(b),p(c))).
+$$
+$ p $ 满射，因此 $D$ 结合。交换性同理由 $a+b=b+a$ 得到，单位律由 $a+0=0+a=a$ 得到。若 $p(a)=p(b)$，则 $a-b\in N$，从而 $(-a)-(-b)\in N$，故 $p(-a)=p(-b)$；所以 $\iota_Q(p(a))=p(-a)$ 定义良好。两侧乘积公式均给
+$$
+D(p(a),\iota_Q(p(a)))=D(\iota_Q(p(a)),p(a))=p(0).
+$$
+因此这些数据确实构成交换群，而不是只构成一个结合的二元运算。
+
+为证明联合连续性，考虑连续满射
+$$
+p\times p:\mathbb T^2\longrightarrow Q^2.
+$$
+其定义域紧，目标 Hausdorff，所以如前述论证一样，它是闭的商映射。圆周加法连续，且
+$$
+D\circ(p\times p)=p\circ +.
+$$
+右侧连续。对于任意开集 $O\subseteq Q$，
+$$
+(p\times p)^{-1}(D^{-1}(O))=(p\circ +)^{-1}(O)
+$$
+开，商映射性质遂给出 $D^{-1}(O)$ 开。这是 $D$ 的联合连续性证明，并未使用一般的两个商映射之积仍为商映射这一断言。取逆连续性同样由
+$$
+\iota_Q\circ p=p\circ(a\mapsto-a)
+$$
+以及 $p$ 是商映射得到。于是 $Q$ 为紧致交换拓扑群。显示的运算公式还说明 $p$ 保持运算和单位，故是连续群同态。
+
+为确认每个闭子群确实产生所列 Hausdorff 观察，固定任意闭子群 $N\le\mathbb T$。商映射 $\pi_N$ 是开映射：对开集 $V\subseteq\mathbb T$，
+$$
+\pi_N^{-1}(\pi_N(V))=V+N=\bigcup_{n\in N}(V+n)
+$$
+开。若 $a+N\ne b+N$，则 $d=a-b\notin N$。$N$ 闭，所以存在零的开邻域 $W$，使 $(d+W)\cap N=\varnothing$。由圆周减法在 $(0,0)$ 连续，可取零的开邻域 $V$，满足 $V-V\subseteq W$。开集 $\pi_N(a+V)$ 和 $\pi_N(b+V)$ 分别包含两个陪集，且互不相交；否则存在 $v,w\in V$ 使 $d+v-w\in N$，与 $(d+W)\cap N=\varnothing$ 矛盾。因此 $\mathbb T/N$ Hausdorff。它又是紧空间的连续像，故紧。$\pi_N$ 的相等关系核为陪集同余，所以将已证的乙推出甲及连续性结论应用于 $p=\pi_N$，即得 $q_N=\pi_N\circ H$ 是连续确定观察。
+
+$H$ 自身满足甲，只需取 $Q=\mathbb T$ 和圆周加法为 $D$。任意满足甲的 $q$ 均已证明唯一地连续因子化为 $p\circ H$，所以 $H\succeq q$；这正是所定义次序中的最精细性，而不是关于任意后处理的无条件断言。
+
+对规范商，若 $N_1\subseteq N_2$，则
+$$
+r(a+N_1)=a+N_2
+$$
+定义良好且满射。等式 $r\circ\pi_{N_1}=\pi_{N_2}$ 与 $\pi_{N_1}$ 的商映射性质保证 $r$ 连续，并且 $q_{N_2}=r\circ q_{N_1}$。反之，若这个观察因子化成立，$H$ 满射给出 $\pi_{N_2}=r\circ\pi_{N_1}$。任取 $n\in N_1$，有
+$$
+\pi_{N_2}(n)=r(\pi_{N_1}(n))=r(\pi_{N_1}(0))=\pi_{N_2}(0),
+$$
+所以 $n\in N_2$。这证明因子化次序的闭子群包含描述。
+
+为否定所有连续后处理都允许确定运算，取连续满射
+$$
+p:\mathbb T\to[-1,1],\qquad p([t])=\cos(2\pi t).
+$$
+令 $a=[1/4]$、$b=[-1/4]$、$t=[1/4]$，则
+$$
+p(a)=p(b)=p(t)=0,\qquad p(a+t)=-1,\qquad p(b+t)=1.
+$$
+相等关系核不被这个平移保持。等价地，任何所需运算都将同时被迫满足 $D(0,0)=-1$ 与 $D(0,0)=1$，故不存在。
+
+最后，若 $q,D$ 对 $\Gamma$ 满足甲，前面已证 $q$ 在每个 $C$ 纤维上恒定。对 $r\in\Lambda(x,y)$，取任意 $w\in\Gamma(x,y)$；命题18.3给出 $r\in C(w)$，因而
+$$
+q(r)=q(w)=D(q(x),q(y)).
+$$
+所以同一个 $q,D$ 对 $\Lambda$ 也确定。反向由 $\Gamma\subseteq\Lambda$ 立即成立。这只说明两关系具有相同的确定观察，并不消除命题18.3中的严格关系差异。商上的单位 $q(0_K)$ 来自对 $C$ 纤维的识别，也不使 $0_K$ 成为原关系的严格单位。证毕。
+
+[^rro18_phase]: 《CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF》，定理371.2、372.2—372.4及377.1；固定提交 c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb 的[相位前置文本](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md)。其中定理372.2—372.3给出两分支的实值域及公共前缀的奇偶定向，定理372.4给出全部圆周分裂纤维。
+
+[^rro18_fibers]: 第16节定义16.3及定理16.4：定向标记与加法闭图的完整输入纤维分类。本节在假设18.1中明确采用该分类；结合律及确定观察商的结论由命题18.2—定理18.4另行证明。
+
+[^rro18_quotient]: Nicolas Bourbaki, *General Topology: Chapters 1–4*，第I章 Topological Structures 与第III章 Topological Groups，Springer，DOI：[10.1007/978-3-642-61701-0](https://doi.org/10.1007/978-3-642-61701-0)。本节所需的商映射下降、闭子群陪集与连续群运算论证均在定理18.4的证明中给出。
+
+## 追加锚（本行以下为增补区）
