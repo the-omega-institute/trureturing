@@ -1,0 +1,10 @@
+### 16.4 定理：固定模态数的全时间尖锐幂指数
+
+对每个固定 $d\geq1$，存在正数 $c_d,C_d,\varepsilon_d$，只依赖 $d,E_-,E_+,\eta$，使
+
+\[
+\boxed{c_d\varepsilon^{1/(2d-1)}\leq\mathcal R_d(\varepsilon)
+\leq C_d\varepsilon^{1/(2d-1)}}\qquad(0<\varepsilon<\varepsilon_d).
+\tag{16.6}
+\]
+
