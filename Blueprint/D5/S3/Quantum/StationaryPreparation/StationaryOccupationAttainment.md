@@ -36,6 +36,7 @@ Initialize the memory at phi(a), blank all output registers with head, and use t
 
 - Truth anchor: `D5/S3/Quantum/StationaryPreparation/StationaryOccupationAttainment.stationary_attainment_full`
 - Dependency: [D5/S3/Quantum/Algebra/StationaryGramRank](../Algebra/StationaryGramRank.md)
+- Dependency: [D5/S3/Quantum/StationaryPreparation/PaddingCircuit](PaddingCircuit.md)
 - Dependency: [D5/S3/Quantum/StationaryPreparation/PaddingResidualAction](PaddingResidualAction.md)
 - Dependency: [D5/S3/Quantum/StationaryPreparation/PaddingResidualGram](PaddingResidualGram.md)
 - Dependency: [D5/S3/Quantum/StationaryPreparation/PaddingTransition](PaddingTransition.md)

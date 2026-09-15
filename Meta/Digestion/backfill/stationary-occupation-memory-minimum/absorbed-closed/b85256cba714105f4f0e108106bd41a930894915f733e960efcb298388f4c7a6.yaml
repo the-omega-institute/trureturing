@@ -2,17 +2,11 @@ fingerprints:
   raw_sha256: sha256:b85256cba714105f4f0e108106bd41a930894915f733e960efcb298388f4c7a6
   normalized_sha256: sha256:b85256cba714105f4f0e108106bd41a930894915f733e960efcb298388f4c7a6
 cas_ref: sha256:b85256cba714105f4f0e108106bd41a930894915f733e960efcb298388f4c7a6
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Quantum/StationaryPreparation/StationaryOccupationAttainment.stationary_attainment_full
+    target_statement_id: sha256:09800ec3e49de16a195dab6180ae37a3786de6bfc2008c5b1a1b69f9582251ad
 receipts:
   unresolved_subitems: []
-  cover_disposition:
-    outcome: partial-closed
-    gids:
-      - D5/S3/Quantum/StationaryPreparation/HeadAttainment.stationary_attainment
-      - D5/S3/Quantum/StationaryPreparation/HeadGram.head_gram_realization
-    gaps:
-      - code: chain-migration-incomplete
-        detail: 56f70f84815704e1655402657137a3adad45196d078fb61079807f357134ca2d
   chain_atoms:
     - a3e75f555219540181fab9bc1792588141059c7ac6e0578fb28cdc4a022c7c9e
     - a7e44cb40707b7b45daa3c2a12d11f7b6b0c11bea6f8dd80f01c86a8d6e9f2e9
