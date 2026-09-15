@@ -311,6 +311,15 @@ in place of u_(r+1). Induction from depth h proves
       for every x in T_(p,k,h).                           (5)
 
 This is a distribution of test centers, not a chosen survivor law.
+The general construction is formalized by
+[RestrictedSpineConstantPotential.restricted_spine_constant_potential](../D5/S3/Arith/Congruence/RestrictedSpineConstantPotential.lean).
+For any finite alphabet, a distinguished symbol excluded from its side set,
+and any finite list of positive real layer weights, the theorem proves
+nonnegativity, total mass one, support in the admissible words, and the exact
+constant potential of the explicitly recursive test law. Empty words and an
+empty side set are included. Taking weights `3,5,...,2h+1` supplies this tree
+calculation; the word-to-residue embedding, CRT product, numerical threshold
+and full star-family refutation are separate formalization obligations.
 
 #### An exact depth-eight lower certificate
 
@@ -449,7 +458,12 @@ so at least p distinct such classes must meet the fibre. In the star family,
 for any `p>=5`, the pure `p^H` exclusive witness with ternary coordinate -1 gives a fibre
 whose other p-1 points are uncovered. This necessary property applies to an
 actual cover of the whole period; it cannot be imposed without proof on its
-73-smooth head alone, since later-prime classes may cover its missing fibres.
+73-smooth head alone. For example, choose a new prime `q>73` and `H_3>=q`.
+The q distinct odd moduli `3^i q`, `1<=i<=q`, with CRT residues
+`-1 mod 3^i` and `i-1 mod q`, cover the entire exceptional ternary fibre
+`x_3=-1 mod 3^H_3` as its q-coordinate varies. This explicitly fills a fibre
+missed by the head. It is not a full cover: the ternary root `1 mod 3`
+misses every one of these new classes.
 
 
 ### Arbitrary-head transfer by the joint-load invariant
@@ -4376,8 +4390,9 @@ complete layout b is canonical, with probability 1/lcm(d,e). Thus
 
 The same nu is used for all pairs and all layouts. In (3), b assigns one
 residue for every divisor, including one; do not maximize separate
-summands. Strict Shearer feasibility for all required forbidden families
-and a sufficiently small bound on (3) remain separate obligations. No
+summands. For a particular forbidden family, strict Shearer feasibility and a useful
+bound on (3) are separate requirements. The star calculation below refutes
+universal strict feasibility at the uniform-product charges `1/d`. No
 unrestricted numerical Gamma_73 bound follows from these conditional estimates.
 
 Before building the graph, remove any bad class contained in another bad
@@ -4388,6 +4403,51 @@ has moduli forming a divisor antichain. This connects its independence
 polynomial to the divisor poset. It supplies no global signed-polynomial
 bound by itself. Z_U uses products 1/d and is not the actual avoidance
 probability computed using CRT intersection probabilities 1/lcm.
+
+#### The star family also defeats a universal conflict-Shearer head criterion
+
+Use precisely the pure+star classes from the complete star-family construction above after removing redundant
+mixed-zero classes. Let p run over the 20 odd primes through 73 and write
+
+    a_p=sum_(e=1)^H_p p^(-e),
+    B(z)=product_(p>=5) (1-z a_p).
+
+For the canonical assignment-conflict graph, the signed independent-set
+polynomial with activity z/d at modulus d is exactly
+
+    Z(z)=(1-z a_3)B(z)
+         +sum_(i=1)^H_3 [product_(p>=5)(1-z a_p(1+3^(-i)))-B(z)].  (1)
+
+Indeed, independent sets containing no star vertex choose at most one
+pure vertex for each prime, giving the first term. Star vertices in an
+independent set must all use the same ternary C_(3,i), since different
+such cylinders are disjoint. Once i is fixed, at each p>=5 one may choose
+a pure p-vertex, a star vertex at p, or neither, but not both; each of the
+two vertex groups is internally a clique. Their summed activities are
+z a_p and z3^(-i)a_p. Choices at different p are compatible. A star also
+conflicts with every pure ternary vertex. The product in the bracket
+therefore counts precisely these choices with pure ternary excluded;
+subtracting B(z) removes the no-star case. Different i correspond to
+disjoint nonempty-star choices, proving (1).
+
+At H_3=31 and H_p=8 for p>=5, exact rational evaluation of (1) gives
+
+    -7/1000 < Z(1) < -69/10000,
+    Z(1)=-0.006937138118224894... .
+
+Since Z(0)=1, its real probability ray has a zero in (0,1). In particular
+this actual, nonempty star survivor family is outside strict Shearer for
+the conflict graph. The conditional commutative-resampling query theorem
+remains valid, but its hypothesis cannot be asserted for all smooth
+heads. Adding the redundant mixed-zero vertices cannot restore Shearer,
+because the displayed failing graph remains an induced subgraph.
+
+[verify_star_conflict_polynomial.py](../docs/reports/erdos7-odd-covering/verify_star_conflict_polynomial.py) uses exact fractions for the numerical
+interval and independently compares (1) with all independent subsets of
+the directly reconstructed 14-vertex CRT conflict graph at three rational
+arguments for the height-two {3,5,7} case. This is an ordinary mathematical
+identity and exact arithmetic check, not a Lean kernel result or a new
+resolution of the odd covering problem.
 
 #### Exact public source locators
 
@@ -4612,6 +4672,9 @@ actual weighted event-load increment;
 `PrimeRectangleTransfer.prefix_weighted_rectangle_second_moment_le` formalizes
 the weighted finite rectangle second-moment estimate underlying (W1),
 with individual layer bounds retaining the shared zero layer.
+`RestrictedSpineConstantPotential.restricted_spine_constant_potential`
+formalizes the explicit constant-potential probability construction on arbitrary
+finite restricted prefix trees, including its normalization and support.
 No freeze or problem-resolution binding is supplied, and neither (P1) nor
 (G1) is a complete Lean theorem.
 
@@ -4631,11 +4694,14 @@ The nonuniform laws (N1)–(N10) and (NC1), sharp uniform bound (ZG1), shared-co
 improvement (P2), rectangular uniform-law obstruction and its nonuniform
 repair (NR1) have ordinary mathematical proofs and exact rational checks,
 not complete Lean proofs. The star-family refutation also has an ordinary
-mathematical proof and exact certificate, not a complete Lean formalization.
+mathematical proof and exact certificate, not a complete Lean formalization;
+its general restricted-tree probability construction is the Lean component
+identified after (5) in the star-family proof.
 H73 is refuted as a separate-cylinder claim. The random-tail layout certificate
 additionally gives a true Gamma lower bound above 121.5478 for every law on
 that family, below the sufficient threshold 138.877. Scalar-reweighting
 optimality and the conditional conflict-graph query bridge also have ordinary
-mathematical proofs, not complete Lean formalizations. Universal Shearer
-feasibility and its quantitative whole-layout bound remain unproved. These finite checks do not
+mathematical proofs, not complete Lean formalizations. Universal strict conflict-Shearer feasibility at charges `1/d` is false for
+the star family; the conditional query theorem remains valid. No replacement
+sufficient bound for unrestricted #7 is established here. These finite checks do not
 establish literature priority or an unrestricted proof or covering counterexample.

@@ -809,6 +809,15 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Checks the exact conflict polynomial of the actual irredundant star family.
+pattern = "docs/reports/erdos7-odd-covering/verify_star_conflict_polynomial.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]] # Checks the star-family pointwise obstruction for all survivor probability laws.
 pattern = "docs/reports/erdos7-odd-covering/verify_star_survivor_obstruction.py"
 kind = "program"
