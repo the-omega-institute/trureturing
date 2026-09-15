@@ -825,6 +825,7 @@ open Lean Meta
 /-- One authoritative imported join shared by all requested report modules. -/
 def informationTemplateReportDriver : InformationTemplateReportDriver := fun moduleNames => do
     let env ← getEnv
+    TemplateAudit.NativeCoherence.validate #[`LeanInformationAudit.DispositionEvidence]
     let snapshot ← TemplateBinding.exportSnapshot
     moduleNames.mapM fun moduleName => do
       let finite := (InformationRegistry.entries env).filter

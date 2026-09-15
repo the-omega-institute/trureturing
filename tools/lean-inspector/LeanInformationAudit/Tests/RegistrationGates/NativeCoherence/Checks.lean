@@ -1,4 +1,5 @@
 import LeanInformationAudit.Tests.RegistrationGates.NativeCoherence.Owner
+import LeanInformationAudit.Tests.RegistrationGates.NativeCoherence.Plain
 
 namespace LeanInformationAudit.Tests.NativeCoherence
 open Lean Meta Elab Command TemplateAudit
@@ -51,5 +52,28 @@ elab "observe_native_enrollment_coherence" : command => do
     logInfo m!"[{if ok then "PASS" else "FAIL"}] native_export_stale_source_rejected reason={reason}"
 
 observe_native_enrollment_coherence
+
+elab "observe_empty_report_driver_coherence" : command => do
+  let requested := `LeanInformationAudit.Tests.RegistrationGates.NativeCoherence.Plain
+  let observe (label : String) (expected : Option String) : CommandElabM Unit := do
+    let saved ← get
+    let actual ← try
+      let values ← liftTermElabM <| finiteInformationTemplateReportDriver #[requested]
+      unless values.size == 1 &&
+          (values[0]!.getObjValAs? (Array Json) "inventory").toOption.any (·.isEmpty) do
+        throwError "setup: expected exactly one empty inventory"
+      pure none
+    catch error => pure (some (← error.toMessageData.toString))
+    set saved
+    logInfo m!"[{if actual == expected then "PASS" else "FAIL"}] {label} actual={repr actual}"
+  observe "no_registration_current_driver_accepted" none
+  let owner := `LeanInformationAudit.Registry
+  let path : System.FilePath := sourcePath owner
+  let bytes ← IO.FS.readBinFile path
+  withFile path (bytes ++ "\n-- driver changed after import\n".toUTF8) do
+    observe "no_registration_stale_driver_rejected"
+      (some s!"incomplete_closure:E7.native_source:{owner}")
+
+observe_empty_report_driver_coherence
 
 end LeanInformationAudit.Tests.NativeCoherence

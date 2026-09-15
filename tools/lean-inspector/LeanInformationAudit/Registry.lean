@@ -3109,6 +3109,9 @@ def assessJoined : MetaM (Array BindingRecord) := do
 
 /-- Export always starts by joining the entire loaded declaration universe. -/
 def exportSnapshot : MetaM JoinedRecords := do
+  -- Empty inventories still execute this judge. Validate its compiled source
+  -- before collecting records or binding current source hashes to the export.
+  TemplateAudit.NativeCoherence.validate #[`LeanInformationAudit.Registry]
   let selected ← assessJoined
   let originals ← (inventory (← getEnv)).mapM fun event => do
     let some original := (records (← getEnv)).find? (·.occurrence.key == event.key)
