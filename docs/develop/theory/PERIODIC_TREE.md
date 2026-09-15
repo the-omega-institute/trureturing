@@ -1250,7 +1250,7 @@ d(E_D(M))\le
 \sum_{r\in\mathcal R_1(M_0)\setminus T}\frac1r<\frac\eta4.
 \]
 
-令 \(M=\operatorname{lcm}(M_0,T)\)。若 \(r\in\mathcal R_1(M)\)，则由 \(M_0\mid M\)，有 \(r\in\mathcal R_1(M_0)\)。它不可能属于 \(T\)，因为此时 \(r\mid M\)，而 \(r\ge3\) 会违反 \(\gcd(r,M)\le2\)。所以
+令 \(M=\operatorname{lcm}(M_0,T)\)。若 \(r\in\mathcal R_1(M)\)，则由 \(M_0\mid M\)，有 \(r\in\mathcal R_1(M_0)\)。它不可能属于 \(T\)，因为此时 \(r\mid M\) 且 \(r\ge3\) 会违反 \(\gcd(r,M)\le2\)。所以
 
 \[
 \mathcal R_1(M)\subseteq\mathcal R_1(M_0)\setminus T,
@@ -1536,7 +1536,7 @@ F_k=\gcd(F_k,5F_uF_v)
 \le5\gcd(F_k,F_uF_v)=5F_dF_e.\tag{FDS7}
 $$
 
-If d=1 or e=1, the remaining proper divisor is at most floor(k/2), so F_dF_e<=F_floor(k/2). Otherwise d,e are distinct odd numbers at least three and five. Their product divides k, and 2(d+e-1)<=de<=k. Fibonacci addition yields F_dF_e<=F_(d+e-1)<=F_floor(k/2). Write m=floor(k/2)>=5. Since k>=m+4,
+If d=1 or e=1, the remaining proper divisor is at most floor(k/2), so F_dF_e<=F_floor(k/2). Otherwise d,e are distinct odd integers at least three and five. Their product divides k, and 2(d+e-1)<=de<=k. Fibonacci addition yields F_dF_e<=F_(d+e-1)<=F_floor(k/2). Write m=floor(k/2)>=5. Since k>=m+4,
 
 $$
 F_k\ge F_{m+4}=3F_m+2F_{m+1}>5F_m,
