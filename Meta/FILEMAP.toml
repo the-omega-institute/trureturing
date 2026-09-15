@@ -539,6 +539,24 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Three nonnegative rational weights coupling the small-prime survivor densities.
+pattern = "docs/reports/erdos7-odd-covering/joint_density_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Four outside-support coefficients and the exact three-prime continuation.
+pattern = "docs/reports/erdos7-odd-covering/lcm_block_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]] # Verifies the exact finite BBMST recurrence from its conditional Gamma seed.
 pattern = "docs/reports/erdos7-odd-covering/verify_finite_continuation.py"
 kind = "program"
@@ -566,6 +584,24 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Verifies the shared-density dual and the resulting four-prime head bound.
+pattern = "docs/reports/erdos7-odd-covering/verify_joint_density_certificate.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Checks actual-layout transport through lcm blocks and the tail beginning at 67.
+pattern = "docs/reports/erdos7-odd-covering/verify_lcm_block_transport.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]] # Checks the refined root-fibre profile and its short bridge to the prime tail.
 pattern = "docs/reports/erdos7-odd-covering/verify_refined_head_profile.py"
 kind = "program"
@@ -577,6 +613,15 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 [[files]] # Checks exact sufficient parameters for smoothed finite-height Gamma lifting.
 pattern = "docs/reports/erdos7-odd-covering/verify_smoothed_height_lifting.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Checks actual-layout bounds retaining incompatibility between ternary roots.
+pattern = "docs/reports/erdos7-odd-covering/verify_two_root_gamma.py"
 kind = "program"
 admission_plane = "content"
 produced_by = "none"

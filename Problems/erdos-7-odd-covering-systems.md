@@ -46,7 +46,7 @@ These are separate restrictions. The three-factors source rebuild, axiom audits,
 and fresh kernel environment replay passed; the nine-prime source has no local
 kernel replay. The linked notes give the exact pins and verification boundaries.
 
-## Reuse of the 5040 and divisor-sum work
+### Reuse of the 5040 and divisor-sum work
 
 The connection to the project's 5040 work is the same finite prime-power
 coordinate system and reciprocal-divisor weights. In particular,
@@ -158,7 +158,13 @@ mutually compatible. This is a proposed replacement for the separate-cylinder
 cost, not a consequence of H73's failure. A lower bound for `κ_Q` gives no lower
 bound for `Γ_Q`. The conditional transfer and finite-height calibration below do not establish Γ73.
 
-## Arbitrary-head transfer by the joint-load invariant
+## Route
+
+The joint-load invariant retains actual residue intersections. Its transfer
+and the restricted noncoverage result are established below; a sufficient
+unrestricted head bound remains the missing input.
+
+### Arbitrary-head transfer by the joint-load invariant
 
 Let `Q` be a positive integer, `p` a prime not dividing `Q`, and `H ≥ 1`.
 A layout chooses one residue `b_d mod d` for each divisor `d | Q`, including
@@ -217,6 +223,13 @@ probability is at most `p^{-max(e,f)}/(1−δ)`. This bound holds separately for
 every pair, even when their new-prime residues depend on their old moduli.
 After applying it, sum the old indicators and use (T3). There are exactly
 `2t+1` ordered exponent pairs with maximum `t`. This proves (T1).
+
+The weighted rectangle theorem described after (W1) supplies the more general
+formal estimate. A constant prefix cap `M_t=p^{-t}/(1−δ)` recovers this
+coefficient; Mathlib's modular interval count supplies that cap from the
+pointwise bound on `K`. The divisor-layout embedding by CRT, the maximum
+defining `Γ`, and construction of the capped kernel remain separate
+formalization obligations.
 
 For the actual forbidden classes, their old conditions give partial loads
 `F_e`; distinct moduli ensure at most one class per old divisor in each group.
@@ -294,7 +307,7 @@ combinatorics files, and these BBMST papers supplied the component inequalities,
 but no exact joint-layout head theorem was identified. This bounded search does
 not establish literature priority. The argument here is not a Lean formalization.
 
-## Transfer retaining the actual forbidden-fibre geometry
+### Transfer retaining the actual forbidden-fibre geometry
 
 Extend `Γ_Q` homogeneously to finite positive measures. For an arbitrary
 normalized kernel `K_x` on `Z/p^H Z`, set
@@ -317,6 +330,27 @@ If `A_e,A_f` are their complete old loads, weighted Cauchy–Schwarz gives
 `∫M_t A_e A_f dμ≤Γ_Q(M_t μ)`. There are `2t+1` such ordered groups.
 The old-old contribution remains at most `Γ_Q(μ)`. All old cofactors,
 including 1, remain in these loads.
+
+The finite weighted rectangle estimate is formalized in
+[PrimeRectangleTransfer.prefix_weighted_rectangle_second_moment_le](../D5/S3/Arith/Congruence/PrimeRectangleTransfer.lean).
+For arbitrary finite `X,I`, nonnegative old weights `μ(x)` and coefficients
+`A(e,i,x)`, it takes a normalized nonnegative kernel `K(x,y)` and bounds
+on each actual single-prefix mass by `M_t(x)`. If the zero layer has second
+moment at most `G_0`, and every layer `e≤t` has second moment at most `G_t`
+under the weighted measure `μ M_t`, then the actual modular rectangle load
+has second moment at most
+
+\[
+ G_0+\sum_{t=1}^H(2t+1)G_t.
+\]
+
+The theorem includes `H=0`, permits correlation between `x` and the kernel,
+and does not require normalization of `μ`. It proves intersection bounds
+from single-prefix bounds, derives nonnegativity of the prefix envelope,
+and counts the exponent pairs by induction. Its compiled axiom closure
+contains only `propext`, `Classical.choice` and `Quot.sound`.
+It does not define the maximum `Γ`, construct `K`, or supply the CRT
+embedding of a divisor layout; those are still outside this Lean theorem.
 
 For the BBMST kernel take the current base law `U` to be uniform on
 `Z/p^H Z`, with **all** new forbidden classes, including pure powers, in
@@ -389,10 +423,12 @@ from pure-power classes cannot use the numerical `p^{-t}` factors unchanged.
 The project’s `CompatibleResidueJointImage` and `FiniteCompatibleCrt`
 provide the congruence compatibility statements, and pinned Mathlib's
 `InformationTheory/Coding/KraftMcMillan.lean` supplies prefix packing.
-These profile-sensitive inequalities have not been formalized in Lean.
+The rectangle component of (W1) is formalized as stated above. The exact
+clipped-kernel formula (W2), its consequences (W3)–(W5), and the full
+divisor-layout embedding have not been formalized in Lean.
 A uniform accumulated improvement sufficient for Γ73 remains unproved.
 
-## Exact continuation from the conditional 73-head seed
+### Exact continuation from the conditional 73-head seed
 
 [The finite continuation verifier](../docs/reports/erdos7-odd-covering/verify_finite_continuation.py)
 uses Python 3.9+ standard-library integer and rational arithmetic. It starts at
@@ -429,7 +465,7 @@ The finite arithmetic and the general-head transfer are established as stated;
 the universal Γ73 existence bound is still unproved. This conditional result
 supplies no covering counterexample and no unrestricted proof by itself.
 
-## Quantitative extension of the old prime powers
+### Quantitative extension of the old prime powers
 
 Let `P` be a finite prime set and
 `Q₀=∏_{p∈P}p^{H_p}`, `Q=∏_{p∈P}p^{K_p}`, where `K_p≥H_p≥1`.
@@ -563,7 +599,7 @@ without adding forbidden classes. The same applies to each other row.
 the calibration is a sufficient implication, not a finite verification of all
 residue assignments. The height-lifting argument is not formalized in Lean.
 
-## One-stage smoothing of the height lift
+### One-stage smoothing of the height lift
 
 Averaging the highest old digits before the final conditioning improves the
 height error to `O(H⁻²)`. Fix a finite prime set `P` and
@@ -717,28 +753,28 @@ The verifier checks the numerical implications, not all residue assignments;
 the smoothing theorem and its two-constant version have not been formalized
 in Lean.
 
-## A four-prime head and a restricted noncoverage theorem
+### A four-prime head and a restricted noncoverage theorem
 
 **Theorem.** A finite family of residue classes with distinct odd moduli
 greater than one cannot cover the integers if every prime divisor of every
 modulus belongs to
 
 \[
- \{3,5,7,11\}\ \cup\ \{p:\ p\text{ prime},\ p\ge71\}.
+ \{3,5,7,11\}\ \cup\ \{p:\ p\text{ prime},\ p\ge67\}.
  \tag{P1}
 \]
 
 There is no bound on the exponents, the number of large prime divisors, or the
 number of prime divisors of a single modulus. Equivalently, any hypothetical
 distinct odd covering must use a modulus divisible by at least one of the
-primes from 13 through 67. This is a restricted theorem, not the full conjecture.
+primes from 13 through 61. This is a restricted theorem, not the full conjecture.
 
 The head estimate used to prove it is the following uniform statement.
 For any finite distinct-modulus family supported on `{3,5,7,11}`, its complete
 survivor set is nonempty, and the uniform survivor probability satisfies
 
 \[
- \boxed{\Gamma\le C_4:=\frac{28643873521}{258465470}<110.82283.}
+ \boxed{\Gamma\le C_4:=\frac{168332}{1591}<105.802640.}
  \tag{P2}
 \]
 
@@ -1059,30 +1095,239 @@ This strengthened induction gives
  K_{\{3,5,7,11\}}\le\frac{28643873521}{258465470}.
 \]
 
-The last inequality proves (P2). The refined profile verifier checks
+This is an intermediate head estimate. The refined profile verifier checks
 the eighteen vertices, the absent-modulus branch, this induction and
-the two-step continuation below. Its independent finite-box calculation
-brackets the resulting profile envelope; it does not replace the proof
-of the joint deletion budget.
+continuation from this intermediate seed. Its independent finite-box
+calculation brackets that profile envelope. The stronger bound (P2) uses
+the nine-cell and coupled-density arguments below and their separate verifier.
 
-**Conclusion of (P1).** Apply (P2) to the classes involving only `{3,5,7,11}`.
-For any missing small prime use an unused coordinate; this does not add a
-forbidden class, and the same head bound applies. Apply one step of (T6)
-at `p=71`, choosing `δ=53/200` and initial `G=C_4`, `s=1`, and then at
-`p=73` with `δ=27/100`. The two successive denominators in (T6) are
-`9580713200963/9867151936173` and
-`47498911479243786341/48946254183902205216`, both positive. Exactly,
+**Joint budgets for the five surviving modulo-9 cells.** Retain the notation
+\(x,z,y,a_q,s,M\) of (P9). Suppose first that the family has a pure
+modulus-3 class and a pure modulus-9 class outside that forbidden root.
+Exactly five modulo-9 cells remain. Label their roots
+\(r(j)=(0,0,1,1,1)\), for \(j=1,\ldots,5\). Let \(w_j\) be the relative
+density in cell \(j\) remaining after all pure ternary exclusions. Since
+the pure powers \(3^a\), \(a\ge3\), have total ambient density at most
+\(1/18\),
 
 \[
- F_{71}=\frac{11578741637267351}{95807132009630},\qquad
- F_{73}=\frac{31280734730025808371666}{237494557396218931705}
+ \tfrac12\le w_j\le1,\qquad
+ \sum_j(1-w_j)\le\tfrac12,\qquad x=\tfrac19\sum_jw_j\ge\tfrac12.
+\]
+
+Let \(Y\) be the pure \(q\)-power survivor set, of density \(z\).
+For each good root \(r\), let \(A_r\) be the union of its \(q\)-coordinate
+exclusions from moduli \(3q^b\), and let
+\(\alpha_r=|A_r\cap Y|/q^J\). For each good modulo-9 cell \(j\), let
+\(B_j\) be the union from moduli \(9q^b\), and define the **additional**
+removed density
+\(\beta_j=|B_j\cap(Y\setminus A_{r(j)})|/q^J\).
+Thus the remaining \(q\)-coordinate density in cell \(j\) is exactly
+\(z-\alpha_{r(j)}-\beta_j\), and distinct moduli give the shared budgets
+
+\[
+ \alpha_r,\beta_j\ge0,\qquad \alpha_0+\alpha_1\le y,\qquad
+ \sum_j\beta_j\le y.
+\]
+
+Let \(t_j\) be the actual additional ambient density deleted in cell \(j\)
+by mixed classes with ternary exponent at least three. Then
+\(t_j\ge0\) and \(\sum_jt_j\le y/18\). The complete cell densities are
+therefore exactly
+
+\[
+ n_j=\frac{w_j(z-\alpha_{r(j)}-\beta_j)}9-t_j,\qquad
+ s=\sum_jn_j.
+\]
+
+All variables describe the same residue family. In particular the budgets
+are shared among cells. Put
+\(N_1=\max_r\sum_{j:r(j)=r}n_j\) and \(N_2=\max_jn_j\).
+These maxima may occur in different roots. Keeping both actual maxima
+and using the ordinary caps only at higher ternary exponents gives
+
+\[
+ R_\mu\le\frac{N_1+N_2+z/18+xy+y/2}{s},\qquad
+ K_\mu\le1+\frac{3N_1+5N_2+4z/9+a_qx+2a_q}{s}.
+ \tag{P12}
+\]
+
+Here \(\sum_{a\ge3}3^{-a}=1/18\) and
+\(\sum_{a\ge3}(2a+1)3^{-a}=4/9\); the pure-\(q\) and mixed terms are
+the same geometric sums as in (P9). This bounds the entire cylinder sums
+and hence also \(\Gamma\le K_\mu\).
+
+The relaxed parameter region given by these budgets contains every actual
+family. It has nonnegative cells and a uniformly positive denominator:
+
+\[
+ n_j\ge\frac{z-3y}{18}\ge\frac{1-4y}{18}\ge0,\qquad
+ s\ge xz-\frac y2\ge\frac12-y\ge\frac14.
+\]
+
+For the second inequality, first-level mixed deletion is at most \(y/3\),
+second-level deletion at most \(y/9\), and the remaining deletion at most
+\(y/18\). Their sum is \(y/2\). A cell can be empty when \(q=5\); the
+proof never conditions on that cell.
+
+For a fixed target root and target modulo-9 cell, the expressions in (P12)
+are linear-fractional separately in the five parameter groups
+\((1-w_j)_j\), \(\alpha\), \(\beta\), \(t\), and \(z\), with positive
+denominator throughout. The vertex identity used for (P10) therefore
+applies successively to each group. Taking maxima over target roots and
+cells commutes with taking parameter maxima. The budget simplexes have
+respectively \(6,3,6,6\) vertices, and \(z\in[1-y,1]\) has two endpoints,
+giving exactly \(6\cdot3\cdot6\cdot6\cdot2=1296\) rational evaluations.
+
+The missing-class cases require a separate bound. If modulus 3 is absent,
+\(x\ge5/6\). If it is present but modulus 9 is absent or its class is
+contained in the forbidden root, only powers with exponent at least three
+can remove more pure ternary mass, so \(x\ge2/3-1/18=11/18\).
+Both cases are covered by (P11) with \(x=11/18,z=1-y\), since those
+fractions decrease in \(x,z\). The exact bounds are:
+
+| \(q\) | \(R_\mu\) from (P12) | \(K_\mu\) from (P12) | Missing or ineffective pure classes: \(R_\mu,K_\mu\) |
+|---:|---:|---:|---:|
+| 5 | 15/7 | 173/12 | 47/24, 593/48 |
+| 7 | 21/13 | 19/2 | 65/46, 574/69 |
+| 11 | 33/25 | 181/25 | 101/90, 1411/225 |
+
+The missing-class bounds are smaller in every row. This also handles
+finite heights below two. In the recurrence, retain every individual
+\(c,b\) bound and use the smaller of the profile sum and the appropriate
+whole-sum bound for the next deletion cost. No identity between the new
+\(R_\mu\) bound and the old envelope sum is asserted.
+
+**Coupled densities of the three prime-pair subsystems.** Let \(\sigma_A\)
+be the ambient density avoiding the original classes supported on \(A\),
+and put \(z_p=\sigma_{\{p\}}\). These are subsets of the same fixed family.
+Define
+
+\[
+ \theta_{ij}=\frac{\sigma_{\{i,j\}}}{z_i z_j},\qquad
+ \lambda=\frac{\sigma_{\{3,5,7\}}}{z_3z_5z_7},\qquad
+ r_p=\frac1{(p-1)z_p}\le\frac1{p-2},\qquad
+ t=\lambda^{-1},\quad v_{ij}=\theta_{ij}/\lambda.
+\]
+
+The preceding recurrence proves positivity. The pair mixed-class union
+bound gives \(\theta_{35}\ge1-r_3r_5\ge2/3\).
+Adding prime 7 to the same uniform pair-survivor law, using
+\(R_{35}\le15/7\), gives
+\(\lambda\ge\theta_{35}(1-R_{35}r_7)\ge(4/7)\theta_{35}\).
+Consequently
+
+\[
+ \tfrac23t-v_{35}\le0,\qquad \tfrac47v_{35}\le1.
+\]
+
+Inside the product of pure survivors, the forbidden pair-support union
+has density at most
+\(\sum_{\{i,j,p\}=\{3,5,7\}}(z_i z_j-\sigma_{\{i,j\}})z_p\),
+where each unordered pair is counted once. The classes containing all
+three primes have total ambient density at most
+\(\prod_p1/(p-1)\). Hence
+
+\[
+ \lambda\ge\theta_{35}+\theta_{37}+\theta_{57}-2-r_3r_5r_7
+ \ge\theta_{35}+\theta_{37}+\theta_{57}-\tfrac{31}{15},
+\]
+\[
+ v_{35}+v_{37}+v_{57}-\tfrac{31}{15}t\le1.
+\]
+
+This uses the actual pair densities and a union bound; it does not assert
+independence of the three forbidden pair-support unions. Multiply the
+three displayed linear inequalities, in their order, by
+\(31/30,\ 49/40,\ 1/3\). The \(t\) and \(v_{35}\) coefficients cancel,
+and the nonnegative rational combination gives
+
+\[
+ \frac{v_{37}+v_{57}}3\le\frac{49}{40}+\frac13=\frac{187}{120}.
+ \tag{P13}
+\]
+
+For any cylinder supported on \(T\), survival still requires avoidance
+of all outside-only classes. Ambient product independence therefore gives
+
+\[
+ \mu_S(a\bmod d_T)\le\frac{\sigma_{S\setminus T}}{\sigma_Sd_T}.
+\]
+
+Applying this to pure ternary and quinary cylinders, using
+\(z_3\ge1/2,z_5\ge3/4\), yields
+
+\[
+ \sum_{e\ge2}\max_a\mu_S(a\bmod3^e)\le v_{57}/3,\qquad
+ \sum_{e\ge1}\max_a\mu_S(a\bmod5^e)\le v_{37}/3.
+\]
+
+These are disjoint groups of exponent vectors for the same law.
+The profile obtained from the nine-cell pair bounds has
+\(R_{\mathrm{envelope},357}=1663/360\),
+\(c(\{3\})=21/4\), and \(c(\{5\})=26/9\).
+On the two groups above its ordinary coefficients are below every
+projection cap, and its exact contributions are respectively
+\((21/4)\sum_{e\ge2}3^{-e}=7/8\) and
+\((26/9)\sum_{e\ge1}5^{-e}=13/18\).
+Keep the envelope on all other exponent vectors and replace these two
+groups by (P13). This proves
+
+\[
+ R_{\mu_{\{3,5,7\}}}\le
+ \frac{1663}{360}-\frac78-\frac{13}{18}+\frac{187}{120}
+ =\frac{1649}{360}.
+\]
+
+Using this whole-sum bound in the next deletion step preserves every
+individual cylinder inequality. Exact propagation to four primes gives
+
+\[
+ R_{\mu_{\{3,5,7,11\}}}\le\frac{5275731}{574351},\qquad
+ \Gamma(\mu_{\{3,5,7,11\}})\le
+ K_{\mathrm{envelope},35711}
+ =\frac{187719326}{1723053}<108.945765.
+ \tag{P14}
+\]
+
+This is the intermediate profile bound used by the actual-layout block
+argument below, which proves (P2). The
+[independent density verifier](../docs/reports/erdos7-odd-covering/verify_joint_density_certificate.py)
+and its
+[fixed sparse rational certificate](../docs/reports/erdos7-odd-covering/joint_density_certificate.json)
+check all 3888 nine-cell parameter vertices, the missing-class branches,
+the three-prime profile and exact infinite sums, the three nonnegative
+weights and zero residual in (P13), the four-prime recurrence, and a
+two-step continuation at 71 and 73 from this intermediate bound. They use Python 3.9+ standard-library
+arithmetic with no solver or residue-family enumeration. The mathematical
+arguments establish the meaning and universality of the checked
+inequalities; these arithmetic checks do not claim Lean certification.
+
+**Conclusion of (P1).** Apply (P2), proved by the block argument below, to
+all classes involving only `{3,5,7,11}`. For any missing small prime use an
+unused coordinate; this adds no forbidden class. Start (T6) with `G=C_4`
+and `s=1`. Take the three steps `p=67,71,73`, with respective thresholds
+`δ=1/4,53/200,27/100`. Their exact survivor-fraction lower bounds are
+
+\[
+ \frac{5029465}{5197797},\qquad
+ \frac{372336564907}{384008705787},\qquad
+ \frac{230403367852020953}{237775619695869828},
+\]
+
+all strictly positive. The corresponding ratios are
+
+\[
+ F_{67}=\frac{583607044}{5029465},\qquad
+ F_{71}=\frac{235912059003164}{1861682824535},\qquad
+ F_{73}=\frac{159332999398235438706}{1152016839260104765}
  <\frac{138877}{1000}.
  \tag{P8}
 \]
 
-Either absent bridge prime may be an unused coordinate. Continue at prime 79,
-with absolute prime index 22, using the checked upper seed
-`F_21=138877/1000`. No prime from 13 through 67 needs to be inserted into
+Any absent bridge prime may also be an unused coordinate. Continue at
+prime 79, with absolute prime index 22, using the checked upper seed
+`F_21=138877/1000`. No prime from 13 through 61 needs to be inserted into
 the head: the index specifies where the tail starts, while (T1) allows any
 coprime head. The exact continuation and BBMST's analytic termination leave
 positive mass on complete survivors. CRT and periodicity supply an integer
@@ -1094,12 +1339,231 @@ Mathlib congruence, probability and combinatorics files provide counting,
 finite sums and Cauchy–Schwarz, with no exact profile result identified.
 Hough–Nielsen's necessary factor 2 or 3, BBMST's odd-cover restriction involving
 9 or both 3 and 5, BBMST's squarefreeness at primes at most 73, and the
-three-prime density theorem in [arXiv:2605.18644, Theorem 1.9](https://arxiv.org/abs/2605.18644)
+density theorem for LCM `2^a3^b5^c` in [arXiv:2605.18644, Theorem 1.9](https://arxiv.org/abs/2605.18644)
 do not directly cover (P1). The separately verified three-factors-per-modulus
 theorem also has a different hypothesis: (P1) permits moduli divisible by four
 or more primes. No dominating theorem was identified in this searched scope;
 this is not a claim of literature priority. The theorem and its proof have
 not been formalized in Lean.
+
+### An actual-layout improvement from incompatible ternary roots
+
+For any finite `{3,q}` family as above, the uniform complete-survivor law
+satisfies the stronger bounds on the **actual joint-layout maximum**
+
+\[
+ \Gamma_{35}\le57/4,\qquad \Gamma_{37}\le123/13,\qquad
+ \Gamma_{3,11}\le181/25.
+ \tag{G1}
+\]
+
+In particular `57/4<59/4`. These bounds retain incompatible choices within
+one test layout. They do not lower `R` or the sum of separate cylinder maxima
+and are not substituted for either quantity in the profile recurrence.
+
+Suppose first that the actual modulus-3 class is present, leaving two
+possible survivor roots `A,B`. Use the same actual densities from the
+two-root budget: `n=w(z−α)/3−t_1`, `m=v(z−β)/3−t_2`, `s=n+m`, and
+`d_A=z−α,d_B=z−β`. Every depth-`k` ternary cylinder within root `A` has
+raw complete-survivor density at most `d_A/3^k`, and likewise for `B`.
+Thus the first-level mixed exclusions constrain the correct root even
+when bounding higher-depth test classes.
+
+Consider the pure ternary part `1,3,…,3^H` of a complete test layout.
+If its modulus-3 test class chooses `A`, its diagonal and its two ordered
+intersections with the constant class contribute exactly `3n` before
+normalization. At a later depth `k≥2`, let `a,b` count earlier positive
+test depths assigned to `A,B`. A class in `A` contributes at most
+`(3+2a)d_A/3^k`: its pairs with the other root have zero mass, while
+each earlier class in the same root contributes at most twice its own
+mass. The corresponding bound in `B` is `(3+2b)d_B/3^k`.
+
+The remaining scaled cost of every finite itinerary is bounded by
+
+\[
+ V(a,b)=3\max\{d_A(a+2),d_B(b+2)\}.
+ \tag{G2}
+\]
+
+Induct on the number of remaining choices. A choice of `A` contributes
+`(3+2a)d_A+V(a+1,b)/3`. If the latter maximum chooses `A`, this is
+exactly `3d_A(a+2)`. Otherwise it is at most
+`2d_A(a+2)+d_B(b+2)≤V(a,b)`. The other choice is symmetric, and the
+empty tail has cost zero. Selecting the actual forbidden root contributes
+zero and discounts the continuation by `1/3`, also preserving the bound.
+
+For two active choices, this finite-itinerary induction is proved in
+[TernaryRootLoadTail.root_load_tail_le](../D5/S3/Arith/Congruence/TernaryRootLoadTail.lean).
+The theorem allows arbitrary nonnegative real weights, arbitrary natural
+initial counts and any finite Boolean list. Its proof uses only the permitted
+`propext`, `Classical.choice` and `Quot.sound` axioms. It is a checked Lean
+component; the residue-layout mapping, forbidden-root case, normalization and
+remaining parts of (G1) are not thereby formalized.
+
+At depth two the initial counts are `(1,0)`, so (G2), multiplied by `1/9`,
+bounds the remaining contribution by `max(d_A,2d_B/3)`. The pure ternary
+part, excluding the constant diagonal, is therefore at most
+`3n+max(d_A,2d_B/3)`. If the modulus-3 test chooses `B`, swap the roles.
+If it chooses the forbidden root, its tail is at most
+`(2/3)max(d_A,d_B)`, which is no greater than these two-root upper bounds.
+
+Every other ordered pair in the full test-square expansion has positive
+`q` exponent in its least common multiple. Pairs with ternary lcm exponent
+zero contribute at most `a_q x`; pairs with both exponents positive
+contribute at most `2a_q`, using the complete geometric lcm counts.
+These include all crosses between pure ternary and positive-`q` test groups.
+No old cofactor or exponent group is omitted. Consequently
+
+\[
+ \Gamma(\mu)\le1+
+ \frac{\max\{3n+d_A,\ 3n+2d_B/3,\ 3m+d_B,\ 3m+2d_A/3\}
+       +a_qx+2a_q}{n+m}.
+ \tag{G3}
+\]
+
+By symmetry it suffices to maximize the first two branches. Move all actual
+higher-depth deletion to the unselected root and then enlarge it to `y/6`,
+as in the preceding budget argument. This increases each bound and keeps
+the denominator positive throughout. Each remaining branch is a ratio of
+affine functions in each parameter group of (P10). The same eighteen
+vertices, for each of two branches, suffice. Their exact maxima are (G1).
+For `q=5` the maximum occurs in the `d_A` branch at
+`w=1/2,v=1,α=0,β=1/4,z=3/4`. No actual residue family attaining this
+relaxation maximum is asserted.
+
+If the actual modulus-3 class is absent, the earlier unsplit bounds
+`215/24,208/33,73/15` for `q=5,7,11` are smaller than (G1).
+The [actual-layout verifier](../docs/reports/erdos7-odd-covering/verify_two_root_gamma.py)
+checks all 108 rational vertex values and the three absent-modulus branches,
+with explicit checks that remain active under optimized Python. The full
+two-prime congruence theorem (G1) is an ordinary mathematical proof with
+exact arithmetic verification; only the stated finite-itinerary component
+has been checked in Lean.
+
+### Transporting actual layouts through outside lcm blocks
+
+The actual two-prime estimate (G1), together with the common-family density
+bounds, improves the four-prime profile bound (P14) to (P2). Set
+`A={3,5}`, `B={7,11}`, and let `ρ_p` be uniform on the pure-`p` survivors
+of the original family. The same-family conditioning steps give
+
+\[
+ 1-\frac{R_{35}}{7-2}\ge\frac47,\qquad
+ 1-\frac{R_{357}}{11-2}\ge\frac{1591}{3240}.
+\]
+
+Both denominators are positive. The product probability
+`ν=μ_A×ρ_7×ρ_11` therefore dominates the final uniform survivor law
+pointwise as
+
+\[
+ \mu_{35711}\le D\nu,\qquad
+ D=\frac74\frac{3240}{1591}=\frac{5670}{1591}.
+ \tag{B1}
+\]
+
+This permits completely deleted fibres; it asserts no preservation of
+the earlier marginals. Each `ρ_p` has cylinder bound
+`ρ_p(r mod p^k)≤C_p/p^k`, where `C_p=(p−1)/(p−2)`.
+
+Fix one full test layout. Group its classes by the outside exponent vector
+`e=(e_7,e_11)`. Removing the outside factors gives, for every `e`, one
+complete old layout `L_e` on `A`, including divisor one. For a pair of
+outside exponent vectors `e,f`, put `b=max(e,f)` coordinatewise. Expand
+its contribution over old divisors `d,d′` before integrating the outside
+coordinates. The outside test residues may depend arbitrarily on both
+old divisors. For each pair their intersection has mass at most
+
+\[
+ k_p(b_p)=
+ \begin{cases}1,&b_p=0,\\ C_p p^{-b_p},&b_p>0.\end{cases}
+\]
+
+This cap is independent of `d,d′`. Summing the old indicators afterwards
+and using Cauchy–Schwarz under the same `μ_A` gives
+
+\[
+ \int_\nu \text{the ordered }(e,f)\text{ contribution}
+ \le\prod_{p\in B}k_p(b_p)\int L_eL_f\,d\mu_A
+ \le\prod_{p\in B}k_p(b_p)\,\Gamma_A(\mu_A).
+ \tag{B2}
+\]
+
+Thus test residues need not be independent of the old divisor, or mutually
+compatible across divisors. There are `N_B(b)=(2b_7+1)(2b_11+1)` ordered
+outside exponent pairs with maximum `b`. With `G=57/4` from (G1), the
+entire block under the final law is bounded by
+
+\[
+ T_b=DG\,N_B(b)\prod_{p\in B}k_p(b_p).
+ \tag{B3}
+\]
+
+The existing profile gives another bound on exactly that block:
+
+\[
+ P_b=N_B(b)\sum_{a_3,a_5\ge0}
+             (2a_3+1)(2a_5+1)u(a_3,a_5,b_7,b_{11}),
+ \tag{B4}
+\]
+
+where `u` is the full projection envelope from (P14). For this profile,
+the largest adjoining-coordinate ratio among both ordinary and
+first-ternary coefficients is `1344/361<7` at prime 7 and
+`3600/1591<11` at prime 11. Whenever an outside exponent is positive,
+including its coordinate in a projection therefore weakly improves that
+envelope term. Applying this to both coordinates shows that `P_b` factors
+exactly according to its positive support `J={p∈B:b_p>0}`:
+
+\[
+ P_b=C_J\prod_{p\in J}\frac{2b_p+1}{p^{b_p}},\qquad
+ T_b=T_J\prod_{p\in J}\frac{2b_p+1}{p^{b_p}},\qquad
+ T_J=DG\prod_{p\in J}C_p.
+ \tag{B5}
+\]
+
+The internal coefficient `C_J` is the exact weighted envelope sum on
+`{3,5}`, using ordinary coefficients `c(U∪J)` and first-ternary
+coefficients `b(U∪J)`. The finite/tail partition with cutoffs no larger than
+`a_3=2,a_5=1` evaluates all internal exponents. All four coefficients
+and the complete outside-height sums are:
+
+| Outside support `J` | Profile `C_J` | Actual-layout `T_J` | Height sum | Chosen bound |
+|---|---:|---:|---:|---|
+| empty | 67971/1591 | 161595/3182 | 1 | profile |
+| `{7}` | 37315227/574351 | 96957/1591 | 5/9 | actual layout |
+| `{11}` | 85450/1591 | 89775/1591 | 8/25 | profile |
+| `{7,11}` | 115830/1591 | 107730/1591 | 8/45 | actual layout |
+
+The height sums use `Σ_{k≥1}(2k+1)p^(−k)=(3p−1)/(p−1)²`.
+Summing the profile column with these weights recovers exactly
+`187719326/1723053`, providing a check that every old block is accounted
+for. For each actual layout take the smaller bound on each block, then
+sum. Since all terms are nonnegative, extending any finite heights to
+the full geometric sums remains valid, even when some blocks are absent.
+Consequently
+
+\[
+ \begin{aligned}
+ \Gamma_{35711}
+ &\le\frac{67971}{1591}
+      +\frac59\frac{96957}{1591}
+      +\frac8{25}\frac{85450}{1591}
+      +\frac8{45}\frac{107730}{1591}\\
+ &=\boxed{\frac{168332}{1591}<105.802640.}
+ \end{aligned}
+ \tag{B6}
+\]
+
+This proves (P2), including arbitrary finite exponents. It bounds the
+maximum of a joint layout square, and does not assert the same bound for
+the sum of separately maximized cylinders. The
+[block verifier](../docs/reports/erdos7-odd-covering/verify_lcm_block_transport.py)
+and [fixed certificate](../docs/reports/erdos7-odd-covering/lcm_block_certificate.json)
+reconstruct the profile, check the adjoining-coordinate ratios, both
+complete geometric sums, and the three positive-denominator steps in
+(P8). The block argument and its four-prime conclusion are not Lean
+formalized.
 
 ## Falsifier
 
@@ -1294,9 +1758,14 @@ open. The results are three exact obstacles to earlier proof routes, a direct
 joint-load transfer into the BBMST continuation, and a quantitative reduction
 of the arbitrary-height sufficient condition to a finite exponent cap. A
 uniform four-prime head bound additionally proves the restricted noncoverage
-theorem (P1), allowing arbitrary prime support at or above 71. The universal
-finite-base bound needed for the full conjecture remains unproved. No new
-Lean theorem, freeze, or problem-resolution binding is supplied.
+theorem (P1), allowing arbitrary prime support at or above 67. The universal
+finite-base bound needed for the full conjecture remains unproved.
+`TernaryRootLoadTail.root_load_tail_le` formalizes the finite-itinerary
+component of the actual-layout improvement;
+`PrimeRectangleTransfer.prefix_weighted_rectangle_second_moment_le` formalizes
+the weighted finite rectangle second-moment estimate underlying (W1).
+No freeze or problem-resolution binding is supplied, and neither (P1) nor
+(G1) is a complete Lean theorem.
 
 ## ASSUMED-UNVERIFIED
 
@@ -1306,6 +1775,8 @@ Library note, but `hThree` remains essential; its paper-only largest-prime-cutof
 extension is outside the Lean theorem. The joint-load transfer, exact finite
 recurrence and restricted noncoverage theorem (P1) are proved above;
 the universal Γ73 bound and the sufficient finite-base bounds remain unproved.
-These mathematical arguments have not been formalized in Lean.
+These residue-level mathematical arguments have not been fully formalized
+in Lean. The finite-itinerary component is identified in (G2), and the
+weighted finite rectangle second-moment component after (W1).
 H73 is refuted and supplies no lower bound for Γ73. These finite checks do not
 establish literature priority or an unrestricted proof or covering counterexample.

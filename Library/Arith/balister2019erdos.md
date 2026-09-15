@@ -28,5 +28,9 @@ starts with mass budget one but still needs a valid head-load bound. The
 separate-cylinder candidate H73 is false; its exact obstruction and the
 unproved joint-load candidate Γ73 are in
 [the canonical dossier](../../Problems/erdos-7-odd-covering-systems.md).
-The `138877/1000` numerical continuation has not been locally exactly certified
-or formalized. The general-head transfer is also unproved in this repository.
+The dossier proves the arbitrary-head transfer and supplies an exact rational
+verification of the `138877/1000` continuation through the analytic stopping
+threshold. The weighted finite rectangle second-moment estimate underlying that
+transfer is formalized in `PrimeRectangleTransfer`; the complete CRT and
+joint-load embedding, survivor-mass recurrence, and numerical continuation
+are not Lean formalized. The unrestricted universal head bound remains unproved.
