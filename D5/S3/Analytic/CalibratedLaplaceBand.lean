@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Analytic/CalibratedLaplaceBand
    mirror-E: none(waiver:exact-positive-measure-extremizers)
    anchors: []
+   utility: none
    digest: Calibrated band mass gives a linear noise bound, attained by normalized two-atom measures. -/
 
 import D5.S3.Analytic.PositiveLaplaceGap
@@ -33,6 +34,7 @@ noncomputable section
 namespace D5.S3.Analytic.CalibratedLaplaceBand
 
 open MeasureTheory Set ProbabilityTheory
+open scoped NNReal
 open D5.S3.Analytic.PositiveLaplaceGap
 
 /-- A positive threshold determines a single calibrated observation time. -/
@@ -103,6 +105,7 @@ theorem band_mass_lower (μ : Measure ℝ≥0) [IsFiniteMeasure μ]
     dsimp [g]
     rw [integral_indicator measurableSet_Iic]
     simp
+  simp only [Pi.add_apply] at hmono
   rw [integral_add hf hg, hfi, hgi] at hmono
   exact hmono
 
@@ -126,9 +129,10 @@ theorem normalized_band_feasible_iff_two_atoms (r R : ℝ≥0) (hrR : r < R)
     nlinarith
   · intro h
     refine ⟨bernoulliMeasure r R m, inferInstance, ?_, ?_, ?_⟩
-    · exact bernoulliMeasure_real_apply_of_mem_of_mem m measurableSet_Iic hrR.le le_rfl
+    · exact bernoulliMeasure_real_apply_of_mem_of_mem m measurableSet_Iic hrR.le
+        (mem_Iic.mpr le_rfl)
     · exact bernoulliMeasure_real_apply_of_mem_of_notMem m measurableSet_Iic
-        le_rfl (not_le.mpr hrR)
+        (mem_Iic.mpr le_rfl) (not_le.mpr hrR)
     · intro t ht
       simpa only [laplaceCorrelation, integral_bernoulliMeasure, smul_eq_mul] using h t ht
 
@@ -168,8 +172,9 @@ theorem normalized_half_band_sharp (r : ℝ≥0) (hr : 0 < (r : ℝ))
           (1 - (m : ℝ)) * Real.exp (-t * ((2 * r : ℝ≥0) : ℝ)) := by
     simp only [laplaceCorrelation, integral_bernoulliMeasure, smul_eq_mul]
   refine ⟨bernoulliMeasure_real_apply_of_mem_of_notMem m measurableSet_Iic
-    le_rfl (not_le.mpr hrR),
-    bernoulliMeasure_real_apply_of_mem_of_mem m measurableSet_Iic hrR.le le_rfl, ?_, ?_⟩
+    (mem_Iic.mpr le_rfl) (not_le.mpr hrR),
+    bernoulliMeasure_real_apply_of_mem_of_mem m measurableSet_Iic hrR.le
+      (mem_Iic.mpr le_rfl), ?_, ?_⟩
   · intro t ht
     let s := Real.exp (-t * (r : ℝ))
     have hs0 : 0 ≤ s := (Real.exp_pos _).le
