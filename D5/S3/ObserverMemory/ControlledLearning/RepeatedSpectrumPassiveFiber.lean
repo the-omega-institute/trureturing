@@ -4,9 +4,13 @@
    mirror-E: none(waiver:unbounded-exact-passive-observation-classification)
    anchors: []
    utility: none
-   digest: Two passive output steps identify the full symmetric commutant fiber even at repeated positive spectra and first-step resonance. -/
+   digest: Symmetric commutant fibers at repeated spectra and resonance. -/
 
-import Mathlib
+import Mathlib.Data.Matrix.Mul
+import Mathlib.Data.Real.Basic
+import Mathlib.Tactic.Abel
+import Mathlib.Tactic.Linarith
+import Mathlib.Tactic.Module
 
 /-!
 # Repeated positive spectra in passive two-layer learning
@@ -21,9 +25,9 @@ allows `1 - eta^2 * sigma(i)^2 = 0`. Thus resonant erased directions remain
 in the classification. PSD and width/rank restrictions can subsequently be
 intersected with this exact affine fiber.
 
-The all-dimensional generic FOUR-step result, actual factor realizability,
-resonance interpretation and stability statements are ordinary proofs in
-the associated theory, not assertions of this declaration.
+The conclusion is limited to symmetric-block recurrences. Positive
+semidefiniteness, width/rank realizability, later-step genericity, resonance
+collapse and stability require additional hypotheses.
 -/
 
 set_option autoImplicit false
@@ -93,7 +97,7 @@ theorem two_step_outputs_iff_commuting_difference
         inputStep A1 B1 S eta + D * X := by
     dsimp [inputStep, D]
     rw [hST]
-    simp only [Matrix.mul_sub, Matrix.sub_mul, Matrix.mul_smul,
+    simp only [Matrix.mul_sub, Matrix.sub_mul,
       Matrix.smul_mul, Matrix.one_mul, Matrix.mul_assoc, hXS]
     module
   have outputTransport (X : Matrix I I ℝ) (hXS : X * S = S * X) :
@@ -102,7 +106,7 @@ theorem two_step_outputs_iff_commuting_difference
     dsimp [gramOutputStep, D]
     rw [hST]
     simp only [Matrix.mul_add, Matrix.add_mul, Matrix.sub_mul,
-      Matrix.mul_smul, Matrix.smul_mul, Matrix.one_mul, Matrix.mul_assoc, hXS]
+      Matrix.smul_mul, Matrix.one_mul, Matrix.mul_assoc, hXS]
     module
   have signal (X : Matrix I I ℝ) (hXS : X * S = S * X) :
       twoStepOutput (A1 + X) (B1 - X) S eta tau -

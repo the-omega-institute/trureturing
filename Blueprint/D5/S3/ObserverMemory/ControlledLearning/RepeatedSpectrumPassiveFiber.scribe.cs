@@ -27,7 +27,7 @@ internal sealed class RepeatedSpectrumPassiveFiberDocument : IScribeDocumentDefi
                         + "X with A2=A1+X, B2=B1-X, X S=S X, and D X commuting with the first "
                         + "output, where D=I-eta-squared S-squared.")),
                     Paragraph(Text(
-                        "The live proof extracts the full first-step difference from symmetric "
+                        "The first-step equality determines the full difference of symmetric "
                         + "matrix entries. Positivity of the sum of two diagonal entries forces "
                         + "the two block differences to be opposite; the same equations then "
                         + "force commutation with S. Transport through the actual first step "
@@ -36,12 +36,11 @@ internal sealed class RepeatedSpectrumPassiveFiberDocument : IScribeDocumentDefi
                         + "assumption or inverse of D is used. Repeated eigenvalues and erased "
                         + "resonant directions are included.")),
                     Paragraph(Text(
-                        "The declaration classifies symmetric-block recurrences. "
+                        "The classification concerns symmetric-block recurrences. "
                         + "Physical Gram states additionally require positivity and a width "
-                        + "rank bound. Those realization conditions, the generic four-step "
-                        + "theorem, resonance collapse and quantitative prediction results "
-                        + "are separate ordinary proofs in the accompanying theory. This "
-                        + "document does not assert their Lean verification."))),
+                        + "rank bound. Generic four-step identification, resonance collapse "
+                        + "and quantitative prediction require additional hypotheses and are "
+                        + "not conclusions of this theorem."))),
                 DescribeRole.Theorem)),
         []));
 }
