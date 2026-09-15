@@ -177,17 +177,16 @@ public sealed class CapacityPolicyTests
     // the enforcement source is RepositoryRules.IsCapacityExcluded.
     private const string BackfillInventoryRelativePath = "Meta/BACKFILL.yaml";
 
-    // Pinned by the owner's 2026-08-30 ruling (放宽到 24、48): admission limit 24, repository
-    // tolerance 96. The tolerance band stays exactly one admission limit wide so that two PRs
-    // branched from the same base can each fill a bucket to the limit and their union still
-    // clears the repository-wide net (see DirectoryToleranceLimit in RepositoryRules.Structure.cs). The tolerance band stays exactly one admission limit wide so that two PRs
-    // branched from the same base can each fill a bucket to the limit and their union still
-    // clears the repository-wide net (see DirectoryToleranceLimit in RepositoryRules.Structure.cs).
+    // Pinned by the owner's rulings (2026-08-30: 24/48; 2026-09-08 #6405: 48/96; 2026-09-13
+    // #7538: 96/192): admission limit 96, repository tolerance 192. The tolerance band stays
+    // exactly one admission limit wide so that two PRs branched from the same base can each fill
+    // a bucket to the limit and their union still clears the repository-wide net (see
+    // DirectoryToleranceLimit in RepositoryRules.Structure.cs).
     [Fact]
     public void DirectoryCapacityThresholdsArePinnedToTheAdjudicatedValues()
     {
-        Assert.Equal(48, RepositoryRules.DirectoryFileLimit);
-        Assert.Equal(96, RepositoryRules.DirectoryToleranceLimit);
+        Assert.Equal(96, RepositoryRules.DirectoryFileLimit);
+        Assert.Equal(192, RepositoryRules.DirectoryToleranceLimit);
         Assert.Equal(2 * RepositoryRules.DirectoryFileLimit, RepositoryRules.DirectoryToleranceLimit);
     }
 }

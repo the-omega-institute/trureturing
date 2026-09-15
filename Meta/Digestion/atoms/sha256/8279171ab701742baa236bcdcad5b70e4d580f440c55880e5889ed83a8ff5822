@@ -1,0 +1,6 @@
+**定理。** 对 $H\in\mathbb N$，两个合法状态的剩余容量分别为 $r,s$。它们对全部长度不超过 $H$ 的乘法后缀具有相同合法性，当且仅当
+
+$$
+\boxed{\forall i\in I,\qquad \min(r_i,H)=\min(s_i,H).}
+$$
+

@@ -1,0 +1,7 @@
+**定理。** 在第 27 节的条件下，令 $\Lambda$ 作用于 $X$，$\alpha\in X$，$H=\operatorname{Stab}_\Lambda(\alpha)$。固定满射 $f:\Lambda\twoheadrightarrow F$ 到非交换有限单群，且 $f(H)<F$，记 $\Gamma=\ker f$。对每个素数 $\ell$，令 $L_\ell=\Psi_\ell(\Lambda)$，$B_\ell=\operatorname{im}(f,\Psi_\ell)\le F\times L_\ell$。则
+
+$$\boxed{C_\ell\alpha\subseteq\Gamma\alpha
+\quad\Longleftrightarrow\quad
+B_\ell\cap(F\times\{1\})=\{(1,1)\}
+\quad\Longleftrightarrow\quad |B_\ell|=|L_\ell|.}$$
+

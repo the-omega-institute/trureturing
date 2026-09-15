@@ -1,0 +1,10 @@
+**定理。** 令 $p$ 为奇素数、$r_p=\pi(p)$、
+$s_p=\nu_p(C_{r_p})$。对全部 $k\ge0$ 与 $e\ge1$，
+
+$$
+\boxed{
+p^e\mid C_{r_pk}\iff p^{\max(e-s_p,0)}\mid k.
+}
+\tag{R21}
+$$
+

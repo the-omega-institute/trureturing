@@ -1,0 +1,6 @@
+**证明。** 由隐藏方程，
+
+\[
+\frac{d}{dt}\bigl(e^{dt}y(t)\bigr)=-be^{dt}x(t).
+\]
+

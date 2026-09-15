@@ -1,0 +1,17 @@
+**定理 21.3（两层二次任务的显式常数，repo-derived）。** 第9节取 $g(w)=Aw-B$，$A,\eta\ge0$。在矩形 $|w|\le W,0\le s\le S$ 上，$W,S\ge0$，记 $G=AW+|B|$。更新 $F=(w^+,s^+)$ 关于最大范数的一个 Lipschitz 常数是
+$$
+L=\max\left\{
+1+\eta^2G^2+2\eta^2AGW+\eta AS+\eta G,
+\ 1+\eta^2G^2+2\eta^2AGS+4\eta AW+4\eta G
+\right\}.
+$$
+
+证明。两行偏导为
+$$
+\begin{aligned}
+\partial_wF_1&=1+\eta^2g^2+2\eta^2Agw-\eta As,&\partial_sF_1&=-\eta g,\\
+\partial_wF_2&=2\eta^2Ags-4\eta Aw-4\eta g,&\partial_sF_2&=1+\eta^2g^2.
+\end{aligned}
+$$
+矩形上 $|g|\le G$，故两行绝对值和分别不超过所写两式。连接任意两点的线段仍在矩形内，对导数沿线积分，得到最大范数 Lipschitz 界。该常数不证明矩形正向不变；使用定理21.2时须另证轨迹不退出，或在首次退出停止。证毕。
+

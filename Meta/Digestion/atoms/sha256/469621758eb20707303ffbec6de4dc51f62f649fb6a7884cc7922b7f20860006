@@ -1,0 +1,6 @@
+**证明。** 直接计算得
+$z_t\overline{w_t}=e^{-i\omega t}z\,e^{i\omega t}\overline w=z\overline w$，
+而
+$\mathcal C(\overline z,\overline w)=\overline z\,w
+=\overline{z\overline w}$。取虚部即得第二式。
+

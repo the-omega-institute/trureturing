@@ -1,0 +1,16 @@
+**定义 468.7。**给有限数值记录一个全部数值字段都使用 Zeckendorf 的明确费用实例。令 $L(n)=|\zeta(n)|$，以串连接定义自然数字段
+$$
+\operatorname{Fr}(n)=\zeta(L(n)+1)\,1\,\zeta(n),\qquad
+f(n)=|\operatorname{Fr}(n)|=L(n)+L(L(n)+1)+1.
+$$
+首部表示正自然数 $L(n)+1$，随后的一位一为界定符并计费；载荷正是原数值 $n$ 的规范字，包括 $n=0$ 的空载荷。操作类型值规定 $A:0,M:1$；素数地址字段表示原素数 $p$，不把地址改成枚举序号。词长 $k$ 的完整码为
+$$
+\operatorname{Fr}(k)\prod_{i=1}^k\bigl(\operatorname{Fr}(\mathrm{type}_i)\operatorname{Fr}(p_i)\bigr).
+$$
+若记录位索引 $j$、重复数、容量或其他自然字段，分别使用同一 $\operatorname{Fr}$；没有免费的一元长度头或额外类型字母。配置元数据按升序素数记录为
+$$
+\operatorname{Fr}(2)\operatorname{Fr}(r)
+\prod_{i=1}^r\bigl(\operatorname{Fr}(p_i)\operatorname{Fr}(A_{p_i})\bigr),
+$$
+其中二是配置记录类型，$r$ 是轴数；记录种类与操作种类按其所在语法域解释。
+

@@ -1,0 +1,6 @@
+**定义。** 设状态空间为 $X$，观察为 $q:X\to Y$，一步核为 $K:X\to\operatorname{PMF}(X)$，初始律为 $\mu$。长度 $n$ 的路径律定义为
+
+$$
+\mathbb P_K(x_0,\ldots,x_n)=\mu(x_0)\prod_{j=0}^{n-1}K(x_j)(x_{j+1}).
+$$
+

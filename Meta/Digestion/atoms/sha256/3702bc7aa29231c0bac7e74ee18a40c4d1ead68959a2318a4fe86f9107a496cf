@@ -1,0 +1,8 @@
+If h outside C[ell] exists in L, take its minimum degree and subtract
+h(0)p/p(0). This cannot increase degree and leaves h outside C[ell] with zero
+constant term. All its partials lie in L intersect C[ell]. For a tangent
+direction v with ell(v)=0 and u with ell(u)=1, commutation gives
+D_u D_v h=D_v D_u h=0. Thus D_v h is constant; membership in L makes it zero.
+All tangent derivatives vanish, contradicting h outside C[ell]. This uses
+complex directions and characteristic zero, with no positivity of c_i assumed.
+

@@ -1,0 +1,16 @@
+### 113.2 互信息数据处理不等式
+
+Lean 定理 coarse_graining_cannot_add_information 精确证明：
+
+$$
+\boxed{
+I_{p_c}(C_{\mathrm{past}};C_{\mathrm{future}})
+\le
+I_p(X_{\mathrm{past}};X_{\mathrm{future}}).
+}
+$$
+
+证明把右坐标的确定性映射写成一个 Markov channel，先应用一次互信息数据处理，再交换左右坐标并应用第二次。非负性与总质量为一是定理的必要输入，因为仓库中的 mutualInformation 是有限 Shannon 量。
+
+因此，若只是把历史标签重新命名、合并或忘掉部分坐标，就不会让过去与未来的经典互信息增加。粗粒化可能保留一部分相关，也可能把相关抹掉，但它不能从零生成新的经典相关。
+

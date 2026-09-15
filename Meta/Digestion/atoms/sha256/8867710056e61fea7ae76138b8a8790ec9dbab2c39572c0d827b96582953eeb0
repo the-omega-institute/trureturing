@@ -1,0 +1,9 @@
+**定义 469.13。**令 $m=\pi(X)$，固定 $s\ge0$，定义
+$$
+R_X^\nu(s)=m\sum_{\substack{p,q\le X\\p\ne q}}\nu(p)\nu(q)
+\mathbf1_{\|\alpha(p-q)\|\le s/m},
+\qquad
+c_X=\sup_{y\in\mathbb T}\mu_X\{x:\|x-y\|\le s/m\}.
+$$
+这来自独立抽两条完整历史，再排除相同终点；不同历史但同一素数不计作不同素数对。$R_X^{u_X}(s)=R_m(s;\alpha)$。
+

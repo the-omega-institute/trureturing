@@ -1,0 +1,47 @@
+### 104.2 每个边界方向的 Schmidt 权重
+
+源码进一步定义边界 $$b$$ 的 Schmidt 系数
+
+$$
+\\lambda_b
+=
+\\frac{
+\\sqrt{\\operatorname{multiplicity}(t,b)}
+\\sqrt{\\operatorname{multiplicity}(s,a-b)}
+}{
+\\sqrt{\\operatorname{multiplicity}(t+s,a)}
+}.
+$$
+
+`schmidt_coefficient_sq` 和 `schmidt_coefficient_sq_binomial` 证明
+
+$$
+\\boxed{
+\\lambda_b^2
+=
+\\frac{
+\\operatorname{multiplicity}(t,b)\\,\\operatorname{multiplicity}(s,a-b)
+}{
+\\operatorname{multiplicity}(t+s,a)
+}
+=
+\\frac{
+\\displaystyle\\prod_z
+\\binom{a(z)}{b(z)}
+}{
+\\binom{t+s}{t}
+}.
+}
+$$
+
+这些权重之和为一，因为它们来自完整均匀合法词的边界分解。于是一个切口有两个不同的复杂度量：
+
+$$
+\\begin{aligned}
+\\text{精确记忆维数}&=|\\operatorname{Boundary}(a,t)|,\\\\
+\\text{历史权重分布}&=(\\lambda_b^2)_b.
+\\end{aligned}
+$$
+
+前者回答“零误差地保留全部相干需要多少维”；后者回答“若只允许近似预测，哪些边界方向承载主要概率质量”。不能从第二个量的集中性直接推出第一个量可以在精确任务中减少。
+

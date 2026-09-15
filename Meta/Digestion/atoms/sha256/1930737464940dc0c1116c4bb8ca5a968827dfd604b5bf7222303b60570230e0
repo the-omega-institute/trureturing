@@ -1,0 +1,10 @@
+若完整容量为 $a=(a_p)$，则全部到达该容量角的此类词中，在第 $|b|=\sum_pb_p$ 步经过指定前缀状态 $0\le b\le a$ 的词数恰为
+$$
+\frac{|b|!}{\prod_pb_p!}\frac{(|a|-|b|)!}{\prod_p(a_p-b_p)!}.
+$$
+更一般，若一个实际合法历史集合 $\mathcal H$ 有投影 $\pi:\mathcal H\to D$，每条纤维 $\mathcal H_n$ 非空有限，则对任意 $f:D\to\mathbb Q$ 和有限 $D_0\subseteq D$，
+$$
+\sum_{n\in D_0}f(n)=\sum_{n\in D_0}\ \sum_{h\in\mathcal H_n}\frac{f(n)}{|\mathcal H_n|}.
+$$
+也可将 $1/|\mathcal H_n|$ 换为任何纤维上总和为一的有理权。
+

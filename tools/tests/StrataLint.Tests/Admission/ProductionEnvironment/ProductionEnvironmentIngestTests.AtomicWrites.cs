@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System.Text;
 using StrataLint.Cli;
 using StrataLint.Engine;
@@ -250,7 +251,7 @@ public sealed partial class ProductionEnvironmentTests
     public void IngestAtomizesNewSourceWhileUnrelatedReceiptIntegrityBacklogExistsAtBaseline()
     {
         const string newSourcePath = "docs/develop/theory/INGEST_SCOPE_NEW_SOURCE.md";
-        const string newSourceText = "# New source\n\n## Theorem 1.1\n\nClaim.\n";
+        const string newSourceText = "# New source\n\n## Theorem 1.1\n\nClaim.\n\n## Theorem 1.2\n\nSecond claim.\n";
         const string siblingModuleGid = "D5/S0/Carrier/CoverSibling";
         const string siblingGid = siblingModuleGid + ".sibling";
         var materialized = CoverWorld.Materialize(new CoverSpec
@@ -266,6 +267,17 @@ public sealed partial class ProductionEnvironmentTests
             "coverage-target-mismatch"));
         var withFrozenEvent = WithUnrelatedFrozenAcceptedEvent(inputs);
         inputs = withFrozenEvent.Inputs;
+        var sourceDocument = BackfillInventoryLoader.Load(
+            Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(Snapshot(inputs.Files))).Snapshot);
+        var originalSource = Assert.Single(sourceDocument.RequireDigestionSources(),
+            source => source.SourceId == "fixture-unrelated-source");
+        var acknowledged = sourceDocument.WithDigestionSources(sourceDocument.RequireDigestionSources()
+            .Select(source => source.SourceId == originalSource.SourceId
+                ? source with { AcknowledgedStale = [CoverWorld.UnrelatedAtomId] } : source).ToImmutableArray());
+        DirectoryLedgerTestSupport.ReplaceWithProjection(inputs.Files, acknowledged);
+        var newAtoms = AtomizerRegistry.Atomize(AtomizerRegistry.GenericId,
+            Encoding.UTF8.GetBytes(newSourceText), DigestionTestSupport.Rules).Claims;
+        Assert.Equal(2, newAtoms.Length);
         var files = new Dictionary<string, string>(inputs.Files, StringComparer.Ordinal)
         {
             [newSourcePath] = newSourceText,
@@ -273,12 +285,42 @@ public sealed partial class ProductionEnvironmentTests
         inputs = inputs with { Files = files };
         using var temporary = new TemporaryDirectory();
         DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
+        WritePhysicalCas(temporary, newAtoms[0]);
         var environment = BuildCoverEnvironment(
             temporary.Path,
             inputs,
             inputs.Files,
             RawChangeSet.Create([newSourcePath, withFrozenEvent.EventPath]));
 
+        var preview = ReadAlignmentPlan(environment, temporary);
+        var rows = preview.GetProperty("writes").EnumerateArray().ToArray();
+        var newSourceId = "ingest-scope-new-source";
+        var metadataPath = BackfillInventoryLoader.RootPath + originalSource.SourceId + "/source.toml";
+        AssertAlignmentWrite(preview, metadataPath, "change", Encoding.UTF8.GetBytes(inputs.Files[metadataPath]),
+            BackfillInventoryWriter.WriteSourceMetadata(originalSource).ToArray());
+        AssertAlignmentWrite(preview, DigestionCasStore.RootPath + AtomId(newAtoms[1]), "create",
+            null, newAtoms[1].RawBytes.ToArray());
+        Assert.DoesNotContain(rows, row => row.GetProperty("path").GetString()
+            == DigestionCasStore.RootPath + AtomId(newAtoms[0]));
+        var expectedPaths = new List<string>
+        {
+            metadataPath,
+            DigestionCasStore.RootPath + AtomId(newAtoms[1]),
+            BackfillInventoryLoader.RootPath + newSourceId + "/source.toml",
+            DirectoryAtomPath(originalSource.SourceId, CoverWorld.UnrelatedAtomId, "partial-closed"),
+            DirectoryAtomPath(originalSource.SourceId, CoverWorld.UnrelatedAtomId, "absorbed-closed"),
+        };
+        expectedPaths.AddRange(newAtoms.Select(atom => DirectoryAtomPath(newSourceId, AtomId(atom), "residual-open")));
+        Assert.Equal(expectedPaths.Order(StringComparer.Ordinal), rows.Select(row => row.GetProperty("path").GetString())
+            .Order(StringComparer.Ordinal));
+        var expectedRepaired = Assert.Single(originalSource.Entries) with
+        {
+            Coverage = [new DigestionCoverageEdge(siblingGid, FrozenStatementReceiptTestData.Resolve(inputs.Files, siblingGid))],
+            ProjectedStatus = new DigestionStatus(DigestionMigrationState.Absorbed, DigestionTruthState.Closed),
+        };
+        AssertAlignmentWrite(preview, DirectoryAtomPath(originalSource.SourceId, CoverWorld.UnrelatedAtomId, "absorbed-closed"),
+            "create", null, BackfillInventoryWriter.WriteAtom(expectedRepaired).ToArray());
+        var predictedImage = AlignmentPlanImage(temporary, preview);
         var result = environment.AlignDigestionStatus(["--base", "baseline"]);
 
         Assert.True(result.Success, result.Error);
@@ -288,13 +330,18 @@ public sealed partial class ProductionEnvironmentTests
         var newSource = Assert.Single(
             written.RequireDigestionSources(),
             static source => source.SourceId == "ingest-scope-new-source");
-        Assert.Single(newSource.Entries);
+        Assert.Equal(2, newSource.Entries.Length);
         var repaired = Assert.Single(
             written.RequireDigestionEntries(),
             entry => entry.AtomId == CoverWorld.UnrelatedAtomId);
         Assert.Equal(
             FrozenStatementReceiptTestData.Resolve(inputs.Files, siblingGid),
             Assert.Single(repaired.Coverage).TargetStatementId);
+        Assert.Equal(predictedImage, DirectoryLedgerTestSupport.RepositoryImage(temporary));
+        var next = BuildCoverEnvironment(temporary.Path, inputs, AlignmentCurrentFiles(temporary, inputs.Files));
+        Assert.Empty(ReadAlignmentPlan(next, temporary).GetProperty("writes").EnumerateArray());
+        Assert.True(next.AlignDigestionStatus(["--base", "baseline"]).Success);
+        Assert.Equal(predictedImage, DirectoryLedgerTestSupport.RepositoryImage(temporary));
     }
 
     [Fact]

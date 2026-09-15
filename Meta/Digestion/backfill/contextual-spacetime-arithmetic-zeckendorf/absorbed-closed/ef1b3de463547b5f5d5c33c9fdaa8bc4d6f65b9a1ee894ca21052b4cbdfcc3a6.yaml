@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:ef1b3de463547b5f5d5c33c9fdaa8bc4d6f65b9a1ee894ca21052b4cbdfcc3a6
+  normalized_sha256: sha256:ef1b3de463547b5f5d5c33c9fdaa8bc4d6f65b9a1ee894ca21052b4cbdfcc3a6
+cas_ref: sha256:ef1b3de463547b5f5d5c33c9fdaa8bc4d6f65b9a1ee894ca21052b4cbdfcc3a6
+coverage_gids:
+  - gid: D5/S1/Digit/Carry/SuccessorShortest.successor_erasure_and_shortest
+    target_statement_id: sha256:af5e577567f49fc672db1099a74d81d242fcc1ab932d46b0924f19bf76bb65a7
+  - gid: D5/S1/Digit/Infinite/InfiniteSuccessorFibres.next_fibres
+    target_statement_id: sha256:531252e936dc26fa53d31c8628d05b5ca8499e0a326f9945ce6ee6e49d4f3073
+  - gid: D5/S1/Digit/Infinite/SuccessorContinuity.infinite_successor_continuous
+    target_statement_id: sha256:1fe044a30b2003783433ffbafe7f7e4daf697a3e5cf0605aea218d117fb40f0d
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - ab6fa4b2918a94dbcc4f1c81c74f45e8c05ac999600efdaed606fcb241567a76
+    - 4a224fc08450c8b1a52a197354c1e35ad8abab110d661859e8932de9177f6926

@@ -1,0 +1,15 @@
+## 21.7 目标核与实际像上的因子
+
+**定义。** 设背景假设确定相容域 $\mathcal S_\Gamma$，读数与目标分别为 $E:\mathcal S_\Gamma\to Y$、$F:\mathcal S_\Gamma\to Z$。写 $\ker E=\{(v,w):E(v)=E(w)\}$，并将 $E$ 的值域限制为实际像 $E(\mathcal S_\Gamma)$。
+
+**定理。** 存在唯一映射 $f:E(\mathcal S_\Gamma)\to Z$ 使 $F=f\circ E$，当且仅当
+
+$$
+\ker(E|_{\mathcal S_\Gamma})\subseteq\ker(F|_{\mathcal S_\Gamma}),
+$$
+
+包括 $\mathcal S_\Gamma=\varnothing$ 的情形。
+
+**证明。** 若 $F=f\circ E$，则 $E(v)=E(w)$ 蕴含 $F(v)=F(w)$。反之，对实际像中的 $y=E(v)$ 定义 $f(y)=F(v)$；核包含保证此定义不依赖 $v$ 的选择，且每个 $y$ 都有原像，故 $f$ 唯一。空域时实际像为空，空映射仍存在且唯一。
+
+

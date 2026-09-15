@@ -1,0 +1,8 @@
+**定义。** 在每个 $W_\lambda$ 中固定单位向量 $e_\lambda$，并测量
+
+$$
+s_{\lambda ab}(t)=\langle e_a\otimes e_\lambda,
+K^t(e_b\otimes e_\lambda)\rangle,
+\quad1\le a,b\le r_\lambda,\quad1\le t\le H+2.
+$$
+

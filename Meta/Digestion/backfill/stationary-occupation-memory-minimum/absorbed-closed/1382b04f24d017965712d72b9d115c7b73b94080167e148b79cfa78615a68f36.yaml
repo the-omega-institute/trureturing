@@ -1,0 +1,21 @@
+fingerprints:
+  raw_sha256: sha256:1382b04f24d017965712d72b9d115c7b73b94080167e148b79cfa78615a68f36
+  normalized_sha256: sha256:1382b04f24d017965712d72b9d115c7b73b94080167e148b79cfa78615a68f36
+cas_ref: sha256:1382b04f24d017965712d72b9d115c7b73b94080167e148b79cfa78615a68f36
+coverage_gids:
+  - gid: D5/S3/Quantum/Algebra/RectangularPolynomialNullity.coeff_single_aeval_linear_form
+    target_statement_id: sha256:8e00ea72f740c621301667c01f48c6ad64d20f9380a628de5872fbeeb598541a
+  - gid: D5/S3/Quantum/Algebra/RectangularPolynomialNullity.finrank_le_pivot_capacity
+    target_statement_id: sha256:418cb7f1613c17356c8dfe89b14d9bda0fecf16d8a8d872073468592e18d070f
+  - gid: D5/S3/Quantum/Algebra/RectangularPolynomialNullity.nat_degree_le_of_rectangular_support
+    target_statement_id: sha256:718c98ef7c083c235ac303499c278c3f20eb319308f8f0864353296840fd8c18
+  - gid: D5/S3/Quantum/Algebra/RectangularPolynomialNullity.stationary_rectangular_nullity_bound
+    target_statement_id: sha256:27a3edd2580964fa75431ecca7b16b929370d9af7c46a9ead956bd87baf14b23
+  - gid: D5/S3/Quantum/Algebra/RectangularPolynomialNullity.submodule_eq_bot_of_zero_box
+    target_statement_id: sha256:d6c2a8e3280b9dd1f6b4b05f1b5ad343bf1517eb1ac70997b4709347fdbe20f2
+  - gid: D5/S3/Quantum/Algebra/StationaryGramRank.stationary_gram_rank_lower_bound
+    target_statement_id: sha256:6fe0bb547105dc87566836492d6e90d51b29b2b6f62808251179a663266217c8
+  - gid: D5/S3/Quantum/StationaryPreparation/PhysicalGram.physical_gram_from_exact_preparation
+    target_statement_id: sha256:eaf080ed3c855938529c7309811746900f4d99f6153c14e07d3cc487b23f297f
+receipts:
+  unresolved_subitems: []

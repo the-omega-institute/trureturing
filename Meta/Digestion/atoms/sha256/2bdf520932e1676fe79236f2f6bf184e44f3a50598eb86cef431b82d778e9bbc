@@ -1,0 +1,7 @@
+**定义。** 设 $p>0$，$r=\pi(p)$，并定义整数
+
+$$
+a=F_r/p,\qquad b=(F_{r+1}-1)/p,\qquad
+B=\begin{pmatrix}b&a\\a&b-a\end{pmatrix}.
+$$
+

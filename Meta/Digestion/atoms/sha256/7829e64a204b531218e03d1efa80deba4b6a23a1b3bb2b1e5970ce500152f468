@@ -1,0 +1,6 @@
+**定义。** 固定实数 $\omega\ne0$。对 $a,b\in\mathbb R$，采用负指数和定向积分约定，定义
+
+$$
+\mathcal F_\omega(a,b)=\int_a^b e^{-i\omega x}\,dx.
+$$
+

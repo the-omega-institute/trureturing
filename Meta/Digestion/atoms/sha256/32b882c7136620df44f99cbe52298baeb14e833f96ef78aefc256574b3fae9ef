@@ -1,0 +1,6 @@
+**定理。** 若 $p_i$ 两两不同且 $0\le e_i,f_i\le a_i$，则
+
+$$
+\prod_i p_i^{e_i}=\prod_i p_i^{f_i}\iff \forall i,\ e_i=f_i.
+$$
+

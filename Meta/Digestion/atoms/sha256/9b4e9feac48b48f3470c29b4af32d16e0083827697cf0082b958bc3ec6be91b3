@@ -1,0 +1,112 @@
+### 60.1 记录重叠的乘积与作用量
+
+设有限标签集为 $$
+I
+$$，第 $$
+r
+$$ 次记录给标签 $$
+i
+$$ 留下归一化环境向量 $$
+e_{r,i}
+$$。定义单步 Gram 系数
+
+$$
+g_r(i,j)=\langle e_{r,j},e_{r,i}\rangle .
+$$
+
+归一化与 Cauchy--Schwarz 不等式给出
+
+$$
+|g_r(i,j)|\le 1.
+$$
+
+若某个相干矩阵元在每一步都乘上这个系数，则 $$
+N
+$$ 次记录后的累计系数为
+
+$$
+C_N(i,j)=\prod_{r<N}g_r(i,j),
+$$
+
+从而
+
+$$
+|C_N(i,j)|=\prod_{r<N}|g_r(i,j)|.
+$$
+
+在非负扩展实数中定义记录作用量
+
+$$
+\mathsf A_N(i,j)=-\log |C_N(i,j)|.
+$$
+
+当某个因子为零时，右侧按扩展值解释为无穷；这正是一次完全正交记录把该相干坐标压到零的情形。冻结定理 RecordActionCoherenceSurvival.record_action_controls_coherence_survival 给出：
+
+$$
+\mathsf A_{N+1}(i,j)\ge \mathsf A_N(i,j),
+$$
+
+以及精确的相干存活关系
+
+$$
+|\rho_N(i,j)|
+=
+\exp\!\bigl(-\mathsf A_N(i,j)\bigr)
+|\rho_0(i,j)|.
+$$
+
+若记录作用量的平均率存在，即
+
+$$
+\lim_{N\to\infty}\frac{\mathsf A_N(i,j)}{N}=\lambda,
+$$
+
+并且初始相干非零，则相对相干的负对数率也是 $$
+\lambda
+$$：
+
+$$
+\lim_{N\to\infty}
+\frac{-\log\!\left(|\rho_N(i,j)|/|\rho_0(i,j)|\right)}{N}
+=
+\lambda.
+$$
+
+若每一步满足统一严格收缩界
+
+$$
+|g_r(i,j)|\le q<1,
+$$
+
+则
+
+$$
+|C_N(i,j)|\le q^N,
+\qquad
+\mathsf A_N(i,j)\ge -N\log q.
+$$
+
+这给出一个可计算的记录预算。相反，若某些步满足 $$
+|g_r(i,j)|=1
+$$，则该方向可能只发生相位旋转而没有模长衰减，甚至周期性返回。因此，固定点呈经典形式不能单独推出所有初态都会趋向经典；还必须检查非对角 Gram 系数的模长。
+
+把单步系数写成
+
+$$
+g_r(i,j)=|g_r(i,j)|\exp\!\bigl(\mathrm i\varphi_r(i,j)\bigr),
+$$
+
+则
+
+$$
+C_N(i,j)
+=
+\exp\!\left(
+-\mathsf A_N(i,j)
++
+\mathrm i\sum_{r<N}\varphi_r(i,j)
+\right).
+$$
+
+作用量只记账模长衰减；累计相位是另一项动力学数据。不能把作用量、Zeckendorf 坐标误差或 Fibonacci 权重直接解释为物理能量或 Hamiltonian 频率。
+

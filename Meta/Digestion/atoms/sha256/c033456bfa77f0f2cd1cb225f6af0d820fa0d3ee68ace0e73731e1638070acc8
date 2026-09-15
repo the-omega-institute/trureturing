@@ -1,0 +1,7 @@
+**定理 484.6（七个标记位置上的作用及其准确范围）。** 对称群 $\mathfrak S(B)\cong S_7$ 在 $\mathcal U_4,\mathcal U_3,E,E'$ 上分别作用为
+$$
+\sigma\cdot(\gamma,K)=(\gamma,\sigma K),\qquad
+\sigma\cdot(\gamma,K,i)=(\gamma,\sigma K,\sigma i).
+\tag{484.7}
+$$
+这些作用保持各自上述概率及携带的原词费用 $J(\gamma)$，$\Phi,\Psi,a,b$ 均等变。

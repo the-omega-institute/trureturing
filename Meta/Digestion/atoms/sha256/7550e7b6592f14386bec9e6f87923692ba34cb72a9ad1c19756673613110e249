@@ -1,0 +1,20 @@
+**定义 472.6（四个指定上界公式）。** 记 $z=\zeta_R(2)>1$。对平方自由 $Q>1$，置 $s_Q=\sum_{i<t}|b_i|$，定义
+$$
+E_U(Q,N)=c_QN+\min\{2\tau(Q),\Phi(Q)\}s_Q,
+$$
+$$
+E_W(Q,N)=\alpha_QN+D_Q\sqrt N,\qquad
+\widehat E_W(Q,N)=\alpha_QN+E_Q\sqrt N.
+$$
+对 $Q=1$ 单独规定
+$$
+E_U(1,N)=N,\qquad E_W(1,N)=\widehat E_W(1,N)=N/z+3\sqrt N.
+$$
+对全部平方自由 $Q\ge1$，再定义实际使用的跳变上界
+$$
+E_U^{\rm jump}(Q,N)=c_QN+4^{\omega(Q)};
+\qquad E_U^{\rm jump}(1,N)=N+1.
+$$
+这些是上界表达式，不是实际误差、实际证书值或执行费用。第 443.5、443.11 条和定理 472.2 分别给
+$U_Q\le E_U$、$U_Q\le E_U^{\rm jump}$、$W_Q\le E_W$、$W_Q\le\widehat E_W$；对 $Q=1$ 使用上述单独分支。
+

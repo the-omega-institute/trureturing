@@ -1,0 +1,50 @@
+### 9.2 完整整数纤维与乘法不下降
+
+**定理。** 对每个 $n\in\mathbb Z$，完整纤维为
+
+$$
+\boxed{\pi^{-1}(n)=\{k+n\varphi:k\in\mathbb Z\}.}\tag{GS1}
+$$
+
+此外，$\pi(x)=\pi(y)$ 当且仅当存在 $k\in\mathbb Z$ 使 $y=x+k$。
+
+**证明。** 写 $z=a+b\varphi$，则 $\pi(z)=n$ 等价于 $b=n$，
+此时且仅此时 $z=a+n\varphi$。对 $x,y$ 应用同一坐标比较即得后一结论。
+
+**定理。** 令 $u=c+d\varphi\in\mathcal O$。对任意 $k,n\in\mathbb Z$，
+
+$$
+\pi\bigl(u(k+n\varphi)\bigr)=(c+d)n+dk.
+$$
+
+并且乘法在整数纤维上下降为单值映射的充要条件是 $u$ 为普通整数：
+
+$$
+\boxed{
+\exists f:\mathbb Z\to\mathbb Z\ \forall z\in\mathcal O,
+\quad \pi(uz)=f(\pi z)
+\quad\Longleftrightarrow\quad d=0.
+}\tag{GS2}
+$$
+
+**证明。** 展开
+$u(k+n\varphi)$ 并使用 $\varphi^2=\varphi+1$，其 $\varphi$ 坐标即为
+$(c+d)n+dk$。若 $d=0$，取 $f(n)=cn$ 即可。反之，$0$ 与 $1$
+同属零纤维，而其乘积读出分别为 $0$ 与 $d$；单值性强制 $d=0$。
+
+**定理。** 若 $d\ne0$，则对每个固定的 $n$，映射
+
+$$
+k\longmapsto\pi\bigl(u(k+n\varphi)\bigr)
+$$
+
+是单射，因此每个纤维产生无限多个不同的一步输出。此时联合读出
+
+$$
+\boxed{z\longmapsto(\pi z,\pi(uz))\text{ 是单射}.}\tag{GS3}
+$$
+
+**证明。** 固定 $n$ 后，输出是斜率为非零整数 $d$ 的仿射函数，故对
+$k$ 单射。若联合读出相等，第一坐标先确定相同的 $n$，第二坐标再由该单射
+确定相同的 $k$；GS1 遂给出相同的 $z$。
+

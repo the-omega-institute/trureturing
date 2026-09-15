@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:318c3518c49f382ac3d4a647f86acfdbb09ac28ded5a5f4591bcc7fe03b8cc2b
+  normalized_sha256: sha256:318c3518c49f382ac3d4a647f86acfdbb09ac28ded5a5f4591bcc7fe03b8cc2b
+cas_ref: sha256:318c3518c49f382ac3d4a647f86acfdbb09ac28ded5a5f4591bcc7fe03b8cc2b
+coverage_gids:
+  - gid: D5/S1/Deficit/ZeckendorfDisplacementReading.displacement_decode_eq_beatty_floor
+    target_statement_id: sha256:a2a75eaa142e774e908b7d7fd9624f1c694238fadfa2febdb0a0178ad2919b5b
+  - gid: D5/S3/Observer/GoldenCoding/FiniteZeckendorfEulerIdentity.finite_zeckendorf_interval_and_euler
+    target_statement_id: sha256:54164db5d402f7eadf47d54eece74989ea8ef37e9cbbac2080191134a450921d
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,7 @@
+**定义。** 令 $F_0=0$、$F_1=1$、$F_{t+2}=F_{t+1}+F_t$，并令
+
+$$
+Q=\begin{pmatrix}1&1\\1&0\end{pmatrix},\qquad \det Q=-1,
+\qquad \mathcal O=\mathbb Z[\varphi],\quad \varphi^2=\varphi+1.
+$$
+

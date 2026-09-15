@@ -1,0 +1,10 @@
+**命题 341.3。** 第 312 条的指数状态 $u_{5040}=4\varepsilon_0+2\varepsilon_1+\varepsilon_2+\varepsilon_3$ 满足
+$$
+u_{5040}\in B_A^{\rm cap}
+\iff A_0\ge4,\ A_1\ge2,\ A_2\ge1,\ A_3\ge1.
+$$
+在此域上其标量为 $5040$，其二进读数为 $43/8$。若 $A=(4,2,1,1,0,\ldots)$，则 $B_A^{\rm cap}=X_A^{\rm cap}$ 与六十个正约数的配置双射，且
+$$
+M_A=\frac{43}{8},\qquad
+L_{A,43/8}=F_{A,43/8}=\{u_{5040}\}.
+$$

@@ -1,0 +1,7 @@
+**定义 18.4（风险与行动表示）。** 固定有限行动集 $A\ne\varnothing$ 和损失 $l:A\times Y\to\mathbb R$。令
+$$
+R(x)=(\mathbb E[l(a,Y)\mid X=x])_{a\in A},\qquad
+A^*(x)=\operatorname{argmin}_{a\in A}R_a(x).
+$$
+分布充分、风险充分、最优行动集充分，分别要求条件律、$R$、$A^*$ 经摘要因子化。
+

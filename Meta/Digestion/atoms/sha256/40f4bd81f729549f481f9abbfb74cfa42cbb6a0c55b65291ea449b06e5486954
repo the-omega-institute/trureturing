@@ -1,0 +1,8 @@
+**定理。** 对每个 $n\in\mathbb Z$，完整纤维为
+
+$$
+\boxed{\pi^{-1}(n)=\{k+n\varphi:k\in\mathbb Z\}.}\tag{GS1}
+$$
+
+此外，$\pi(x)=\pi(y)$ 当且仅当存在 $k\in\mathbb Z$ 使 $y=x+k$。
+

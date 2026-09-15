@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:15b5b53f32bfb54c550d8568b7591e5b9e6e68bbb1abf5971137c8b69f8a955e
+  normalized_sha256: sha256:15b5b53f32bfb54c550d8568b7591e5b9e6e68bbb1abf5971137c8b69f8a955e
+cas_ref: sha256:15b5b53f32bfb54c550d8568b7591e5b9e6e68bbb1abf5971137c8b69f8a955e
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Spacetime/InactiveArchiveFibers.infinite_fibre
+    target_statement_id: sha256:d9286e090f38eea1283524abb57c599024e7ffa80499ff41540ea68bbc19e410
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,18 @@
+**定义。** 令
+
+$$
+\mathcal O=\mathbb Z[\varphi]
+=\{a+b\varphi:a,b\in\mathbb Z\},
+\qquad \varphi^2=\varphi+1.
+$$
+
+对 $z=a+b\varphi\in\mathcal O$，定义两个实嵌入及整数坐标读出
+
+$$
+z_+=a+b\varphi,
+\qquad z_*=a+b\psi,
+\qquad \pi(z)=b,
+$$
+
+其中 $\psi=-\alpha$ 且 $\psi^2=\psi+1$。
+

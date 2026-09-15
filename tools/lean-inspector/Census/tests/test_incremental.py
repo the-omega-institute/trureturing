@@ -36,12 +36,14 @@ class IncrementalTests(unittest.TestCase):
         from incremental import candidate_batches
         graph = {"Init": [], "Command": ["Init"], "A": ["Init"], "B": ["Init"]}
         keys = [["A", "a", "id-a"], ["B", "b", "id-b"]]
-        batches = candidate_batches(keys, {"A": ["A", "Command"], "B": ["B", "Command"]}, graph, 3)
+        batches, skipped = candidate_batches(keys, {"A": ["A", "Command"], "B": ["B", "Command"]}, graph, 3)
+        self.assertEqual(skipped, [])
         self.assertEqual(len(batches), 2)
         self.assertEqual([batch["keys"] for batch in batches], [[keys[0]], [keys[1]]])
         self.assertTrue(all(len(batch["modules"]) <= 3 for batch in batches))
-        with self.assertRaisesRegex(ValueError, "IE-C044.*batch"):
-            candidate_batches(keys, {"A": ["A", "Command"], "B": ["B", "Command"]}, graph, 2)
+        batches, skipped = candidate_batches(keys, {"A": ["A", "Command"], "B": ["B", "Command"]}, graph, 2)
+        self.assertEqual(batches, [])
+        self.assertEqual([entry["owner"] for entry in skipped], ["A", "B"])
 
     def test_validation_cache_invalidates_only_changed_inputs(self):
         from incremental import validation_key
@@ -56,9 +58,108 @@ class IncrementalTests(unittest.TestCase):
     def test_one_large_owner_is_split_by_key_bound(self):
         from incremental import candidate_batches
         keys = [["A", str(i), str(i)] for i in range(257)]
-        batches = candidate_batches(keys, {"A": ["A"]}, {"A": []}, 1)
+        batches, skipped = candidate_batches(keys, {"A": ["A"]}, {"A": []}, 1)
+        self.assertEqual(skipped, [])
         self.assertEqual([len(batch["keys"]) for batch in batches], [128, 128, 1])
         self.assertEqual([key for batch in batches for key in batch["keys"]], keys)
+
+    @staticmethod
+    def mixed_owner_fixture():
+        from validation import COMMAND
+        graph = {"Init": [], COMMAND: ["Init"], "A": ["Extra"],
+                 "Extra": ["More"], "More": ["Init"], "B": ["Init"]}
+        keys = [["A", "ns(n0,1:a)", "sha256:" + "0" * 64]] + [
+            ["B", f"nn(n0,{i})", "sha256:" + format(i + 1, "064x")] for i in range(129)]
+        return graph, keys, {owner: [owner, COMMAND] for owner in ("A", "B")}
+
+    def test_over_bound_owner_is_recorded_while_other_owner_splits(self):
+        from incremental import candidate_batches
+        graph, keys, imports = self.mixed_owner_fixture()
+        batches, skipped = candidate_batches(keys, imports, graph, 4)
+        self.assertEqual([len(batch["keys"]) for batch in batches], [128, 1])
+        self.assertEqual([key for batch in batches for key in batch["keys"]], keys[1:])
+        self.assertTrue(all(len(batch["modules"]) == 3 for batch in batches))
+        self.assertEqual(skipped, [{"owner": "A", "modules": 5, "bound": 4, "keys": keys[:1],
+            "diagnostic": "IE-C044 candidate batch owner=A modules=5 bound=4"}])
+        self.assertNotIn("A", {module for batch in batches for module in batch["modules"]})
+        del graph["More"]
+        with self.assertRaisesRegex(ValueError, "IE-C044 missing import header: More"):
+            candidate_batches(keys, imports, graph, 4)
+
+    def test_skipped_owner_receipt_and_accounting_survive_cache_warmth(self):
+        import hashlib
+        import json
+        from emission import parse_name_key
+        from incremental import atomic_json
+        from phases import name_json
+        from streaming import canonical, closure
+        from validation import prepare, run_batches
+        graph, keys, imports = self.mixed_owner_fixture()
+        names = sorted(graph)
+        membership = {"candidate_keys": keys, "module_names": names,
+            "external_graph": sorted(graph.items()), "headers": [], "named": [], "evidence_modules": [],
+            "assignment": {owner: owner for owner in imports},
+            "scopes": [[owner, [names.index(m) for m in closure(graph, required)]]
+                       for owner, required in imports.items()]}
+        repository = pathlib.Path(__file__).resolve().parents[4]
+        with tempfile.TemporaryDirectory() as temporary:
+            directory = pathlib.Path(temporary)
+            cache = directory / "cache"
+            atomic_json(directory / "olean-hashes.json", [
+                [owner, "base", 1, "sha256:" + owner.lower() * 64] for owner in imports])
+            atomic_json(directory / "domain.json", {owner: owner + ".lean" for owner in imports})
+            atomic_json(directory / "report.json", {"source_commit": "fixture-head", "nodes": [
+                {"repo_path": owner + ".lean", "declarations": [
+                    {"statement_id": k[2]} for k in keys if k[0] == owner]} for owner in imports]})
+            request = {"head": "fixture-head", "keys": keys, "report": str(directory / "report.json")}
+            # A former assessment under a looser bound cannot bypass planning.
+            wider = prepare(repository, directory, membership, request, bound=5, cache=cache)
+            cache.mkdir()
+            (cache / (wider["addresses"][keys[0][2]][7:] + ".json")).write_text("unreadable old assessment")
+            plan = prepare(repository, directory, membership, request, bound=4, cache=cache)
+            self.assertEqual(plan["misses"], keys[1:])
+            self.assertNotIn(keys[0][2], plan["addresses"])
+            calls = []
+
+            def step(command, label, **kwargs):
+                folder = pathlib.Path(command[-1]).parent
+                batch_request = json.loads((folder / "request.json").read_bytes())
+                batch = plan["execute"][len(calls)]
+                calls.append(label)
+                rows = [{"theorem_name": parse_name_key(name), "statement_id": identity,
+                    "class": "observed", "payload": {"owning_module": name_json(owner),
+                        "root": name_json(owner), "import_scope": None, "query_completed": True,
+                        "candidates": [], "note": "fixture assessment"}}
+                    for owner, name, identity in batch_request["keys"]]
+                value = {"entries": rows, "source_inputs": [],
+                    "key_source_inputs": [[k[2], []] for k in batch_request["keys"]],
+                    "environment_modules": len(batch["modules"])}
+                atomic_json(folder / "candidates.json", value)
+                atomic_json(folder / "candidates.json.receipt.json", {
+                    "head": request["head"], "report_sha256": batch_request["report_sha256"],
+                    "environment_modules": value["environment_modules"],
+                    "rows_sha256": "sha256:" + hashlib.sha256(canonical(value)).hexdigest()})
+                return {"peak_rss_bytes": 4096}
+
+            result, record = run_batches(repository, directory, membership, request, plan, step, "fixture-lean")
+            self.assertEqual(len(calls), 2)
+            self.assertEqual(len(result["entries"]), len(keys))
+            self.assertEqual([e["peak_rss_bytes"] for e in record["executions"]], [4096, 4096])
+            skipped = record["receipt"]["skipped"]
+            self.assertEqual([(s["owner"], s["modules"], s["bound"]) for s in skipped], [("A", 5, 4)])
+            row = result["entries"][0]
+            self.assertEqual(row["statement_id"], keys[0][2])
+            self.assertEqual(row["class"], "observed")
+            self.assertFalse(row["payload"]["query_completed"])
+            self.assertEqual(row["payload"]["note"], skipped[0]["diagnostic"])
+            self.assertEqual(json.loads((directory / "validation.json").read_bytes())["receipt"]["skipped"], skipped)
+            warm = prepare(repository, directory, membership, request, bound=4, cache=cache)
+            self.assertEqual(warm["hits"], keys[1:])
+            self.assertEqual(warm["execute"], [])
+            replay, warm_record = run_batches(repository, directory, membership, request, warm,
+                lambda *args, **kwargs: self.fail("warm candidate Environment ran"), "fixture-lean")
+            self.assertEqual(replay, result)
+            self.assertEqual(warm_record["receipt"], record["receipt"])
 
     def test_upstream_header_memo_detects_same_size_rewrite(self):
         import json

@@ -1,0 +1,4 @@
+**证明。**固定有限区间 $[a,b]$，其中所含归一化格点数为 $O(\sqrt{L_X})$。取 $\varepsilon=1/4$，逐点累加局部误差的总量为 $O((\log X)^{-1/4})$。主项是网格间距 $1/\sqrt{vL_X}$ 的 Gaussian Riemann 和，收敛到 $\Phi(b)-\Phi(a)$。特别 $[-T,T]$ 的概率趋于 $\Phi(T)-\Phi(-T)$。先取 $T>|t|$，用此式控制区间外总质量，再让 $T\to\infty$，得到全部半直线概率的结论。证毕。
+
+分析假设。DS02 指 Michael Drmota、Wolfgang Steiner，〈The Zeckendorf expansion of polynomial sequences〉，Journal de Théorie des Nombres de Bordeaux **14** (2002), no. 2, 439–475，Theorems 2–3，[原文](https://www.numdam.org/item/JTNB_2002__14_2_439_0.pdf)。下列系统条件、均值与协方差公式及矩极限作为本节分析前提使用。DS02 Theorem 3 要求 $G$ 为 Theorem 2 的系统：$a\ge1$ 为整数，$G_0=1,G_1=a+1,G_{k+2}=aG_{k+1}+G_k$；$f$ 为 $G$-additive，$f_k(b)=f(bG_k)=O(1)$ 对 $b\in\{0,\ldots,a\}$ 成立，且 Theorem 2 的对角协方差统一正下界成立。其 $P$ 为整系数、正首项、次数 $r\ge1$ 的多项式；结论使用 $M(N^r),D_G(N^r)$，包括素数上的 CLT 及每个正整数阶的矩极限。负多项式值按 $f(P(n))=-f(-P(n))$ 延拓；正首项使该分支只有有限多个输入。此处只取 $a=1,f_k(0)=0,f_k(1)=1,P(n)=n$，不借用其他多项式的一致估计。
+

@@ -1,0 +1,10 @@
+**定理。** $\tau$ 在 $Q_{g,m}$ 上诱导自同构 $T_{g,m}$，满足
+
+$$T_{g,m}q_{g,m}=q_{g,m}\tau.$$
+
+对每个整数 $n$，有
+
+$$\boxed{T_{g,m}^n\text{ 为内自同构}\quad\Longleftrightarrow\quad m\mid n.}$$
+
+当 $m\mid n$ 时，$T_{g,m}^n$ 实际上为恒等映射。因此 $T_{g,m}$ 在自同构群以及外自同构群中的阶都恰为 $m$。
+

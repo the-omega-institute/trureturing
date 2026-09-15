@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:233826673d14f8be3b21e6564cebc841d61690504ad914e22576a29a0c6cc9d2
+  normalized_sha256: sha256:233826673d14f8be3b21e6564cebc841d61690504ad914e22576a29a0c6cc9d2
+cas_ref: sha256:233826673d14f8be3b21e6564cebc841d61690504ad914e22576a29a0c6cc9d2
+coverage_gids:
+  - gid: D5/S3/Weil/Analytic/BaezDuarteMertensKernel.baez_duarte_kernel_hasDerivAt
+    target_statement_id: sha256:2fa77fee1ee42edf83f0afef9c1234dc23cca5f55ec3588bcab418dc11b8f3a7
+  - gid: D5/S3/Weil/Analytic/BaezDuarteMertensTransfer.baez_duarte_abel_identity
+    target_statement_id: sha256:0db8cb7d39aa5f21f3debe0e8937a706f6ba10d78d9de6b024a53cd6fb2e28cf
+  - gid: D5/S3/Weil/ZetaBridge/RieszBaezDuarte.baezDuarte
+    target_statement_id: sha256:696dc2cb72d7e7b6eb453c7ef84fb915831040aed28f6d492681ba52eb483d67
+  - gid: D5/S3/Weil/ZetaBridge/RieszBaezDuarte.baez_duarte_hasSum_moebius
+    target_statement_id: sha256:9c59a43088ec877b518e715efbd2e3dfb096ab1863e4d486669e691d5c12ce39
+receipts:
+  unresolved_subitems: []

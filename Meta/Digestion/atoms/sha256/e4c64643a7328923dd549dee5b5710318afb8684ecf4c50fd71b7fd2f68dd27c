@@ -1,0 +1,2 @@
+**定义 464.5。**令 $P(z)=\sum_{q\in\operatorname{Pr}}z^q$，$z\in\mathbb C,\ |z|<1$；唯一的 $0<\rho_t<1$ 满足 $tP(\rho_t)=1$。
+

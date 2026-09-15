@@ -1,0 +1,5 @@
+** 令
+\[
+\mathfrak V_Z=\{c:\exists x\ \operatorname{Enc}(x)=c\}.
+\]
+\(\operatorname{Enc}\) 是到此类的双射。

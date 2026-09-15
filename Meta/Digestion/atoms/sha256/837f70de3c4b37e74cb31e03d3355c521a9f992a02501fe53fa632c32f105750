@@ -1,0 +1,2 @@
+**定理 455.2。**$\operatorname{val}:\mathcal W\to\mathbb N$ 为双射，其逆记为 $\zeta$；$d_j(n)=\operatorname{pad}(\zeta(n))_j$。
+

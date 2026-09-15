@@ -1,0 +1,22 @@
+**定理 12.5（有限支持模式的精确缘起实现）**〔证〕。对任意有限集 $X$ 及其上的有限支持模式 $\mathcal F$，定义 12.4 的核 $K_{\mathcal F}$ 可判定，满足假设 2.2 的核可靠性与证书存在性以及假设 2.3 的一致性，并且在该定义的读出与空许可集下有精确等式
+
+$$
+\mathcal A(K_{\mathcal F},\varnothing)=\{e[A]:A\in\mathcal F\}.
+$$
+
+*证明*。正向：取 $A\in\mathcal F$。若 $A=\varnothing$，空见证已满足定义 3.6。否则反复应用可达性，每步删去一个元素且仍在 $\mathcal F$ 内；基数每次减少一，故经过 $m=|A|$ 步到达空集。逆读此过程得到 $\varnothing=A_0\subsetneq A_1\subsetneq\cdots\subsetneq A_m=A$，其中 $A_i=A_{i-1}\cup\{y_i\}$、$y_i\notin A_{i-1}$，各 $A_i\in\mathcal F$。在 $e[A]$ 上选 $w(e(y_i))=\pi(A_{i-1},y_i)$。单射性与逐点加入保证这为每个节点恰选一个见证；各见证被核接受且许可依赖为空，其引用为 $e[A_{i-1}]\subseteq e[A]$。每条引用边从较小的加入序号指向较大的加入序号，所以没有环。这给出 $e[A]\in\mathcal A(K_{\mathcal F},\varnothing)$。
+
+反向：取任意 $Y\in\mathcal A(K_{\mathcal F},\varnothing)$ 及其见证 $w$。每个 $P\in Y$ 都有被接受的见证，由核的接受条件必有 $P=e(x)$，故 $Y\subseteq e[X]$。令 $A=e^{-1}[Y]$，于是 $Y=e[A]$。对每个 $x\in A$，其见证必为某个 $\pi(S_x,x)$，其中 $S_x\in\mathcal F$、$x\notin S_x$ 且 $S_x\cup\{x\}\in\mathcal F$；引用闭合给出 $e[S_x]\subseteq Y=e[A]$，由 $e$ 单射得 $S_x\subseteq A$。因此 $S_x\cup\{x\}\subseteq A$，并且
+
+$$
+A=\bigcup_{x\in A}(S_x\cup\{x\}).
+$$
+
+当 $A\ne\varnothing$ 时，右侧是 $\mathcal F$ 中成员的有限非空并，反复使用二元并封闭得 $A\in\mathcal F$；当 $A=\varnothing$ 时用第一条集合律。故 $Y=e[A]$ 属于右侧族，精确等式成立。
+
+可靠一致：任何被接受的公式都是某个 $e(x)=(p_i\to p_i)$，在所有赋值下为真，因而在空许可集的每个模型中成立，满足假设 2.2 的可靠性。若 $P$ 与 $\neg P$ 都可证，它们便在每个赋值下都真；取一个命题赋值即与否定的语义矛盾。因此假设 2.3 成立。
+
+证书存在：若 $P$ 可证，则某个被接受的配对为 $(\pi(S,x),P)$，其中 $P=e(x)$ 且 $S\cup\{x\}\in\mathcal F$。将正向构造用于 $S\cup\{x\}$，便得到含 $P$ 的有限、逐点合格、引用闭合且无环的证书。这满足假设 2.2 的证书存在性；该假设只要求存在证书，不要求证书在 $P$ 上选用最初给出的那个证明项。
+
+可判定：$X$ 有限，故 $\mathcal F\subseteq 2^X$ 有限，定义 12.4 的证明符号及接受配对均成有限表。按所选枚举编码 $X$ 及其子集，给定证明符号与公式，只需逐项比较该有限表；证明符号相等与有限公式的句法相等均可判定，故总能判出接受或拒绝。两种读出也由同一有限表给出。∎
+

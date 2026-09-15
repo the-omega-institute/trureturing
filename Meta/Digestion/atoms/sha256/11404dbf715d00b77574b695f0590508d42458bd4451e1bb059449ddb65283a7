@@ -1,0 +1,25 @@
+## 25. 保留中心化子的准确修复
+
+**定义。** 对任意 $\phi:\Pi_g\to F$，令
+
+$$S=\langle\phi(a_1),\phi(a_2),\phi(b_2),\ldots,\phi(a_g),\phi(b_g)\rangle\le F.$$
+
+记 $C_F(S)=\{z\in F:zs=sz\text{ 对全部 }s\in S\}$，$Z(F)$ 为 $F$ 的中心。
+
+**定理。** 对每个整数 $n$，有
+
+$$\boxed{\phi T^n\sim\phi\quad\Longleftrightarrow\quad
+\exists z\in C_F(S),\ zBz^{-1}=BA^n.}$$
+
+等价地，右边可写为 $\exists z\in C_F(S),\ B^{-1}zBz^{-1}=A^n$。
+
+**证明。** 若存在整个表示的共同共轭元，它必须固定每个未改变的生成元像，因此属于 $C_F(S)$。在唯一改变的 $b_1$ 处得到显示方程。反之，中心化条件给出所有未改变生成元上的同态相等，显示方程给出 $b_1$ 处的相等，生成性质给出全群的相等。
+
+**推论。** 若 $C_F(S)\subseteq Z(F)$，则
+
+$$\phi T^n\sim\phi\quad\Longleftrightarrow\quad A^n=1.$$
+
+特别地，当固定生成元的像生成整个 $F$ 时，该条件成立。
+
+**证明。** 中心共轭元不能改变 $B$，所以必要性化为 $BA^n=B$。充分性取 $z=1$。当 $S=F$ 时 $C_F(S)=Z(F)$。
+

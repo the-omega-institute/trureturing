@@ -1,0 +1,6 @@
+**定义。** 对实数 $\lambda$，令
+
+$$
+v_\lambda(t,x,y)=(1,k)e^{-\nu\lambda t}\cos(-2kx+2y).
+$$
+

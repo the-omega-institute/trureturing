@@ -1,0 +1,8 @@
+第 366.2 条的数值误差精确保留为
+$$
+\sup_{c\in B^*}d_{\mathbb T}^*
+\bigl((\chi_\theta|_B)^*(c),(\chi_{r^{(k)}}^{\rm cap}|_B)^*(c)\bigr)
+=\sup_{u\in B}d_{\mathbb T}\bigl(\chi_\theta(u),\chi_{r^{(k)}}^{\rm cap}(u)\bigr)
+\le2^{-k-1}.
+$$
+

@@ -17,6 +17,39 @@ namespace StrataLint.Tests;
 public sealed partial class LeanCacheEnsureCommandTests
 {
     [Fact]
+    public void PrivateReleaseFallbackPreservesDefaultThroughBoundedEnsureOwner()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        var target = AddWorktree(repository.Path, "private-release-default");
+        LeanCacheStamp.Write(Path.Combine(target, ".lake"), ReadPins(target));
+        var script = LeanArchiveFetch.ScriptPath(target);
+        Directory.CreateDirectory(Path.GetDirectoryName(script)!);
+        File.WriteAllText(script, """
+            #!/bin/sh
+            printf '%s\n' "$@" > fetch-arguments
+            for argument in "$@"; do
+              if [ "$argument" = --allow-seed ]; then
+                echo 'LEAN_CACHE_FETCH {"status":"unpacked","mode":"seed"}'
+                exit 0
+              fi
+            done
+            echo 'LEAN_CACHE_FETCH {"status":"miss","reason":"seed not allowed"}'
+            exit 1
+            """ + "\n");
+
+        var result = WorktreeCommand.Run(repository.Path, ["ensure-cache", "--path", target]);
+
+        Assert.True(result.Success, result.Error);
+        var receipt = ReadReceipt(result);
+        Assert.Equal("miss", receipt.GetProperty("archive_status").GetString());
+        Assert.Equal("seed not allowed", receipt.GetProperty("archive_reason").GetString());
+        Assert.Equal(["fetch", "--repository", target],
+            File.ReadAllLines(Path.Combine(target, "fetch-arguments")));
+    }
+
+    [Fact]
     public void ColdProjectWithAMatchingStampFetchesTheArchiveAndRecordsItsProducer()
     {
         using var repository = new TemporaryDirectory();
@@ -149,21 +182,34 @@ public sealed partial class LeanCacheEnsureCommandTests
         "LEAN_CACHE_FETCH {\"status\":\"rejected\",\"stage\":\"provenance\",\"reason\":\"release author is nobody\"}\n",
         "rejected",
         "provenance: release author is nobody")]
+    [InlineData(
+        "LEAN_CACHE_FETCH {\"status\":\"unpacked\",\"mode\":\"exact\"}\n",
+        "failed",
+        "archive receipt says unpacked but the fetcher exited 1")]
     public void AnUnusableArchiveDegradesAndSaysWhy(string stub, string status, string reason)
     {
         using var repository = new TemporaryDirectory();
         var fixture = new EnsureArchiveFixture(repository.Path, $"degrade-{status}");
+        string? callbackRoot = null;
         // 脚本的约定是 miss/rejected 走非零退出;桩必须照这个约定回,否则测的就不是
         // 真实形状。ensure 侧现在校验判词与退出码自洽,桩若回 0 会被判 failed。
         var runner = new RecordingWorktreeProcessRunner
         {
             ArchiveReceipt = stub,
             ArchiveExitCode = 1,
+            AfterArchiveFetch = root => callbackRoot = root,
         };
 
         var receipt = fixture.Ensure(runner);
 
         Assert.Equal(1, runner.ArchiveInvocations);
+        var invocation = Assert.Single(runner.Invocations, static call => call.FileName == "/bin/bash");
+        Assert.Equal(
+            [Path.Combine(fixture.Target, "tools", "scripts", "worktree", "lean-cache-publish.sh"),
+                "fetch", "--repository", fixture.Target],
+            invocation.Arguments);
+        Assert.Equal(fixture.Target, invocation.WorkingDirectory);
+        Assert.Equal(fixture.Target, callbackRoot);
         Assert.Equal("present", receipt.GetProperty("status").GetString());
         Assert.Equal(status, receipt.GetProperty("archive_status").GetString());
         Assert.Equal(reason, receipt.GetProperty("archive_reason").GetString());
@@ -343,6 +389,8 @@ public sealed partial class LeanCacheEnsureCommandTests
         }
 
         private string Repository { get; }
+
+        internal string Target => target;
 
         internal void OccupyBuildRoot()
         {

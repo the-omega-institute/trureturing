@@ -1,0 +1,10 @@
+**假设。** 对所有 $a,b,w\in H$，设
+
+$$
+\langle b,B(a,b)\rangle=0,qquad
+\langle w,Lw\rangle\leq-\mu\|w\|^2,qquad
+-\langle w,B(w,v)\rangle\leq G\|w\|^2,
+$$
+
+并设 $G<\mu$、$F(v)=0$。
+

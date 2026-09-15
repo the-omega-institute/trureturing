@@ -1,0 +1,15 @@
+**假设。** 设 $|u|,|w|\le1$、$|u^2+v^2|\le1$，三个真实读数各有不超过 $\epsilon\ge0$ 的误差。把前两个测量值截断到 $[-1,1]$，记所得值及第三个测量值为 $\widehat s_1,\widehat s_2,\widehat s_3$，并置
+
+$$
+\widehat g=\widehat s_2-\widehat s_1^2,\qquad
+\widehat z=\widehat s_3-2\widehat s_1\widehat s_2+\widehat s_1^3,
+$$
+
+$$
+\widehat m_j=
+\begin{cases}
+0,&\widehat g\le0,\\
+\widehat g[\operatorname{clip}_{[-1,1]}(\widehat z/\widehat g)]^j,&\widehat g>0.
+\end{cases}
+$$
+

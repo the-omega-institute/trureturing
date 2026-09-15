@@ -1,0 +1,6 @@
+对 $e_k,e_{k+1},a\in\mathbb Z^P$，有
+$$
+e_{k+1}=e_k+a
+\iff
+\varpi_P(e_{k+1})=\varpi_P(e_k)+\varpi_P(a).
+$$

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:82f6887d2d3754e402c9518ed27b45881936c3cfb262daa93d79c4e21013ee8d
+  normalized_sha256: sha256:82f6887d2d3754e402c9518ed27b45881936c3cfb262daa93d79c4e21013ee8d
+cas_ref: sha256:82f6887d2d3754e402c9518ed27b45881936c3cfb262daa93d79c4e21013ee8d
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Spacetime/SignedProfileRealization.exists_signed_profile
+    target_statement_id: sha256:90e24f8e340164cf7d6bdb889c33dc17d3326cf3c75111f119d39bd6f7e965f9
+receipts:
+  unresolved_subitems: []

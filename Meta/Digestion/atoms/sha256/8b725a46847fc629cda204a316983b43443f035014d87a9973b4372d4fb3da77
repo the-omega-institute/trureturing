@@ -1,0 +1,43 @@
+## SM.3 带群插入迹与观察记忆的分离
+
+**定义。** 令 $W$ 为非零有限维实空间，
+
+$$
+P=\begin{pmatrix}1&0\\0&0\end{pmatrix}\otimes I_W,
+\quad Q=I-P,
+$$
+
+并对 $a,b\in\mathbb R$ 置 $c=(a+b)/2,d=(a-b)/2$，
+
+$$
+K_0=\begin{pmatrix}a&0\\0&b\end{pmatrix}\otimes I_W,
+\qquad
+K_1=\begin{pmatrix}c&d\\d&c\end{pmatrix}\otimes I_W.
+$$
+
+**定理 SM1。** 对任意 $R\in\operatorname{End}(W)$，$K_0,K_1,P$ 均与 $I_2\otimes R$ 交换，且对全部 $k\ge0$，
+
+$$
+\operatorname{Tr}((I_2\otimes R)K_0^k)
+=\operatorname{Tr}((I_2\otimes R)K_1^k)
+=(a^k+b^k)\operatorname{Tr}(R).
+$$
+
+但若 $M_j(K)=(PKQ)(QKQ)^j(QKP)$，则
+
+$$
+\boxed{M_j(K_0)=0,\qquad M_j(K_1)=d^2c^jP\quad(j\ge0).}
+$$
+
+当 $a\ne b$ 时，二者的零滞后核不同。
+
+**证明。** Kronecker 乘法给出交换性。归纳得 $K_0^k=\operatorname{diag}(a^k,b^k)\otimes I$；$K_1^k$ 的对角项为 $(a^k+b^k)/2$，非对角项为 $(a^k-b^k)/2$。取迹并使用张量积的迹相乘公式得到迹等式。$K_0$ 的 $PK_0Q$ 为零；$K_1$ 的分块为 $A=cI,B=dI,C=dI,D=cI$，故 $BD^jC=d^2c^jI$。证毕。
+
+**命题。** $K_0,K_1$ 虽正交共轭，但在固定 $P$ 时具有不同记忆核；若把 $P$ 与动力学同时作同一基变换，记忆核相应共轭。
+
+**证明。** 第一项由 SM1。第二项把每个因子 $P,K,Q$ 同时共轭，乘积中的相邻逆变换消去。证毕。
+
+**命题。** 若 $0<b<a<1$，则 $K_0$ 与 $K_1$ 都自伴且严格收缩。
+
+**证明。** 两个矩阵均对称，且彼此正交共轭；其特征值均为 $a,b$，故算子范数为 $a<1$。证毕。
+

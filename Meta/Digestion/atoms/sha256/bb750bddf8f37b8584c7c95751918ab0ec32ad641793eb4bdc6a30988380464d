@@ -1,0 +1,67 @@
+### 8.5 嵌套返回的组合与定向进位
+
+**定义。** 令
+
+$$
+c_L=\begin{cases}0,&d_L>0,\\1,&d_L<0.\end{cases}
+$$
+
+**命题。** $c_0=0$、$c_{L+1}=1-c_L$；等价地，$L$ 为偶数时
+$c_L=0$，$L$ 为奇数时 $c_L=1$。
+
+**证明。** $d_L=(-\alpha)^{L+2}\ne0$，且相邻两层符号相反。
+
+**定理。** 对每个 $m\in\mathbb Z\setminus\{0\}$，
+
+$$
+\boxed{
+\lfloor T_L(m)\alpha\rfloor
+=B_Lm+C_L\lfloor m\alpha\rfloor-c_L.
+}\tag{GC10}
+$$
+
+**证明。** 令 $k=\lfloor m\alpha\rfloor$。GC1 给出
+
+$$
+T_L(m)\alpha-(B_Lm+C_Lk)=d_L(m\alpha-k).
+$$
+
+无理性保证 $0<m\alpha-k<1$。若 $d_L>0$，右端严格位于 $(0,1)$；
+若 $d_L<0$，右端严格位于 $(-1,0)$。分别取整即得所述修正项。
+
+**定理。** 完整格点变换满足
+
+$$
+\boxed{M_KM_L=M_{K+L+2}.}
+$$
+
+**证明。** 由 $M_J=Q^{J+2}$，有
+$M_KM_L=Q^{K+2}Q^{L+2}=Q^{K+L+4}=M_{K+L+2}$。
+
+**定理。** 对 $m\in\mathbb Z\setminus\{0\}$，嵌套返回满足
+
+$$
+\boxed{
+T_K(T_L(m))=T_{K+L+2}(m)-B_Kc_L.
+}\tag{GC11}
+$$
+
+因而
+
+$$
+\boxed{
+T_K(T_L(m))-T_L(T_K(m))=B_Lc_K-B_Kc_L.
+}\tag{GC12}
+$$
+
+**证明。** 将 GC10 给出的
+$\lfloor T_L(m)\alpha\rfloor$ 代入 $T_K(T_L(m))$，再使用
+$M_KM_L=M_{K+L+2}$，得到 GC11。交换 $K,L$ 后两式相减，得到 GC12。
+
+**命题。** GC12 的右端与非零输入 $m$ 无关。两层均为偶数时返回映射交换；
+一奇一偶时缺陷非零；两层均为奇数时缺陷为 $B_L-B_K$。
+此外 $T_L(0)=0$，但 GC11 的公式不把 $m=0$ 包含在内。
+
+**证明。** 将 $c_J=0$ 或 $1$ 代入 GC12 即得前三项。
+$B_J=F_{J+2}>0$ 给出一奇一偶时的非零性。最后由定义直接得到 $T_L(0)=0$。
+

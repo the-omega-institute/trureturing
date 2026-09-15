@@ -1,0 +1,53 @@
+### TR.5 companion 与 balanced 族的像核恒等式
+
+**定义。** 对 $k\geq0$ 定义群同态
+
+$$
+\pi_C:\mathbb Z^2\to\mathbb Z/(4k),qquad
+\pi_C(x,y)=y\pmod{4k},
+$$
+
+以及
+
+$$
+\pi_D:\mathbb Z^2\to\mathbb Z/(2)\times\mathbb Z/(2k),qquad
+\pi_D(x,y)=\bigl(x\pmod2,\ y-kx\pmod{2k}\bigr).
+$$
+
+**定理。** $\pi_C$ 满射，并且
+
+$$
+\ker\pi_C=(C_k-I)\mathbb Z^2.
+$$
+
+**证明。** 任意剩余类由 $(0,y)$ 映到，故 $\pi_C$ 满射。又
+
+$$
+(C_k-I)\binom pq=\binom{4kp+q}{4kp},
+$$
+
+所以其像包含于 $\ker\pi_C$。反之，若 $\pi_C(x,y)=0$，则 $y=4ka$；于是
+
+$$
+\binom xy=(C_k-I)\binom{a}{x-4ka}.
+$$
+
+**定理。** $\pi_D$ 满射，并且
+
+$$
+\ker\pi_D=(D_k-I)\mathbb Z^2.
+$$
+
+**证明。** 给定两个剩余类，取整数代表 $a,b$，则 $(a,b+ka)$ 映到它们。又
+
+$$
+(D_k-I)\binom pq
+=\binom{2kp+2q}{2k(k+1)p+2kq},
+$$
+
+其第一坐标为偶数，且第二坐标减去第一坐标的 $k$ 倍等于 $2kp$，故像包含于核。反之，若 $(x,y)$ 位于核，写 $x=2a$、$y-kx=2kb$，则
+
+$$
+\binom xy=(D_k-I)\binom{b}{a-kb}.
+$$
+

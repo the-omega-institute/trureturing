@@ -1,0 +1,5 @@
+$$
+W_Q(N)-W_{QR}(N)=U_Q(N)-U_{QR}(N)
+=s+|b|-|b-s|=2\min(s,\max(b,0)).
+\tag{475.1a}
+$$

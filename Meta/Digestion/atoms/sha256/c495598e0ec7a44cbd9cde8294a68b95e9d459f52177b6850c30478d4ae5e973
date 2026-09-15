@@ -1,0 +1,38 @@
+### 79.4 Zeckendorf 约束改变的是载体维数，不是动力学
+
+令
+
+$$
+\mathcal W_L=\{w\in\{0,1\}^L:w_jw_{j+1}=0\},
+\qquad
+\mathcal H_{Z,L}=\operatorname{span}\{|w\rangle:w\in\mathcal W_L\}.
+$$
+
+对 $L\ge2$，并取 $\mathcal W_0=\{\epsilon\}$、$\mathcal W_1=\{0,1\}$，分解首位可得
+
+$$
+\mathcal W_L=0\mathcal W_{L-1}\sqcup10\mathcal W_{L-2},
+$$
+
+从而
+
+$$
+\dim\mathcal H_{Z,L}=F_{L+2}.
+$$
+
+这一步只决定允许的基态数量。若 $P_Z$ 是投影到该空间的投影，实际 Hamiltonian $H$ 还必须满足
+
+$$
+[H,P_Z]=0
+$$
+
+才能保证合法构型空间在连续演化下保持不变；离散更新则需要
+
+$$
+UP_Z=P_ZUP_Z.
+$$
+
+否则，Zeckendorf 只是对初始构型的编号，演化会产生不在该刻度内的状态。仓库已有的 `prime_diagonal_saturation` 说明了相近但不同的边界：当可见观测属于素数占据生成的对角代数时，完全对角 pinching 不改变这些观测的迹配对；该结论没有把对角代数之外的相干宣称为不存在，也没有给出任意 Hamiltonian 的不变性。
+
+对 $L=2$，合法字串为 $00,01,10$。可把 $|01\rangle,|10\rangle$ 嵌入一个量子比特的两个基态，并把 $|00\rangle$ 作为剩余结果 $R$。这是一种任务特定的编码；它不等于把三维合法空间整体识别成二维量子比特。若后续操作能区分 $|00\rangle$ 与其余两态，$R$ 必须继续保留，否则该信息会在下一步回流中丢失。
+

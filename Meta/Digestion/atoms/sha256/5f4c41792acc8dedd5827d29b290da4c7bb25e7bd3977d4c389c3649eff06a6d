@@ -1,0 +1,6 @@
+## 65. 多上下文读出的独立预算下界
+
+第 61 节给出了单一观察族的可见容量守恒，第 62 节给出了顺序观测的有限稳定深度。本节问一个不同的问题：如果把读出分成多个上下文，每个上下文内部有一组归一化 outcome，那么为了让联合读出区分所有密度态，最少需要保留多少独立 outcome？
+
+冻结模块 `D5/S3/Quantum/PredictionDepth/MultiContextBudgetLowerBound.lean` 中的 `multi_context_budget_lower_bound` 给出一个一般下界。它只使用有限维 traceless-Hermitian 载体和 informational completeness 假设；本节的 Zeckendorf 解释是接口层推导，不是该 Lean 定理的额外前提。
+

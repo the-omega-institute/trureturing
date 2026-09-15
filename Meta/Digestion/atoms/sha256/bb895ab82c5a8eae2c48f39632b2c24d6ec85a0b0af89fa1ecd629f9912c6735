@@ -1,0 +1,6 @@
+**定理。** 对所有 $n\ge1$、$k\ne0$、$1\le h<g$，
+
+$$\boxed{H_1(M_{g,h,k}^{(n)};\mathbb Z)\cong\mathbb Z^{2g+1}.}$$
+
+相应的同调 monodromy 始终为恒等，特征多项式始终为 $(x-1)^{2g}$。
+

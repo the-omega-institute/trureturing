@@ -36,6 +36,9 @@ public sealed partial class ProductionEnvironmentTests
             new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
             new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
 
+        var preview = ReadAlignmentPlan(environment, temporary);
+        Assert.Equal("FullScan", preview.GetProperty("validation").GetProperty("scope").GetString());
+        Assert.Empty(preview.GetProperty("writes").EnumerateArray());
         var result = environment.AlignDigestionStatus(["--base", "baseline"]);
 
         Assert.True(result.Success, result.Error);
@@ -242,6 +245,7 @@ public sealed partial class ProductionEnvironmentTests
                 emissionHash),
         ]);
         var repairPath = DirectoryAtomPath(sourceId, atomIds[0], "absorbed-closed");
+        fixture.Files[repairPath] += "\n# preserve captured preimage bytes\r\n";
         using var temporary = new TemporaryDirectory();
         WriteDirectoryLedger(temporary.Path, fixture.Files);
         var first = new ProductionCliEnvironment(
@@ -253,6 +257,30 @@ public sealed partial class ProductionEnvironmentTests
             new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
             new FakeScribeEmissionVerifier(verified));
 
+        var preview = ReadAlignmentPlan(first, temporary);
+        Assert.Equal("ChangedSet", preview.GetProperty("validation").GetProperty("scope").GetString());
+        Assert.Equal(7, preview.GetProperty("writes").GetArrayLength());
+        AssertAlignmentWrite(preview, repairPath, "change",
+            Encoding.UTF8.GetBytes(fixture.Files[repairPath]),
+            BackfillInventoryWriter.WriteAtom(baselineEntries[0]).ToArray());
+        for (var index = 1; index < atomIds.Length; index++)
+        {
+            var oldPath = DirectoryAtomPath(sourceId, atomIds[index], "partial-closed");
+            var newPath = DirectoryAtomPath(sourceId, atomIds[index], "absorbed-closed");
+            var expected = baselineEntries[index] with
+            {
+                ProjectedStatus = baselineEntries[index].ProjectedStatus with
+                {
+                    Migration = DigestionMigrationState.Absorbed,
+                },
+            };
+            AssertAlignmentWrite(preview, oldPath, "delete", Encoding.UTF8.GetBytes(fixture.Files[oldPath]), null);
+            AssertAlignmentWrite(preview, newPath, "create", null, BackfillInventoryWriter.WriteAtom(expected).ToArray());
+            var created = preview.GetProperty("writes").EnumerateArray()
+                .Single(row => row.GetProperty("path").GetString() == newPath);
+            Assert.Equal(3 - index, created.GetProperty("durability_order").GetInt32());
+        }
+        var predictedImage = AlignmentPlanImage(temporary, preview);
         var firstResult = first.AlignDigestionStatus(["--base", "baseline"]);
 
         Assert.True(firstResult.Success, firstResult.Error);
@@ -262,6 +290,7 @@ public sealed partial class ProductionEnvironmentTests
         Assert.All(aligned, static entry =>
             Assert.Equal(DigestionMigrationState.Absorbed, entry.ProjectedStatus.Migration));
         var afterFirst = DirectoryLedgerTestSupport.RepositoryImage(temporary);
+        Assert.Equal(predictedImage, afterFirst);
         var alignedFiles = new Dictionary<string, string>(fixture.Files, StringComparer.Ordinal);
         DirectoryLedgerTestSupport.ReplaceWithProjection(alignedFiles, alignedDocument);
         var statusMovePaths = new List<string>();
@@ -282,6 +311,7 @@ public sealed partial class ProductionEnvironmentTests
             new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
             new FakeScribeEmissionVerifier(verified));
 
+        Assert.Empty(ReadAlignmentPlan(second, temporary).GetProperty("writes").EnumerateArray());
         var secondResult = second.AlignDigestionStatus(["--base", "baseline"]);
 
         Assert.True(secondResult.Success, secondResult.Error);
@@ -321,6 +351,11 @@ public sealed partial class ProductionEnvironmentTests
             new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
             new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
 
+        var preview = ReadAlignmentPlan(environment, temporary);
+        Assert.DoesNotContain(preview.GetProperty("writes").EnumerateArray(), row =>
+            row.GetProperty("path").GetString() == DirectoryAtomPath(AtomId(oldAtom), "residual-open"));
+        Assert.Equal(unchangedWriteTime, File.GetLastWriteTimeUtc(existingPath));
+        var predictedImage = AlignmentPlanImage(temporary, preview);
         var result = environment.AlignDigestionStatus(["--base", "baseline"]);
 
         Assert.True(result.Success, result.Error);
@@ -340,6 +375,12 @@ public sealed partial class ProductionEnvironmentTests
         Assert.All(atomFiles, path => Assert.Equal(
             "residual-open",
             Directory.GetParent(path)!.Name));
+        Assert.Equal(predictedImage, DirectoryLedgerTestSupport.RepositoryImage(temporary));
+        var next = AlignmentPlanEnvironment(temporary, fixture, AlignmentCurrentFiles(temporary, fixture.Files));
+        Assert.Empty(ReadAlignmentPlan(next, temporary).GetProperty("writes").EnumerateArray());
+        Assert.True(next.AlignDigestionStatus(["--base", "baseline"]).Success);
+        Assert.Equal(predictedImage, DirectoryLedgerTestSupport.RepositoryImage(temporary));
+        Assert.Equal(unchangedWriteTime, File.GetLastWriteTimeUtc(existingPath));
     }
 
     [Fact]
@@ -603,6 +644,10 @@ public sealed partial class ProductionEnvironmentTests
             new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
             new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
 
+        var preview = ReadAlignmentPlan(environment, temporary);
+        var warning = Assert.Single(preview.GetProperty("diagnostics").GetProperty("silent_zero_sources").EnumerateArray());
+        Assert.Equal("fixture-source", warning.GetProperty("source_id").GetString());
+        Assert.Equal(RuleFixture.FixtureDigestionSourcePath, warning.GetProperty("source_path").GetString());
         var result = environment.AlignDigestionStatus(["--base", "baseline"]);
 
         Assert.True(result.Success, result.Error);
@@ -642,6 +687,11 @@ public sealed partial class ProductionEnvironmentTests
             new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
             new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
 
+        var preview = ReadAlignmentPlan(environment, temporary);
+        var fallback = Assert.Single(preview.GetProperty("diagnostics").GetProperty("fallback_sources").EnumerateArray());
+        Assert.Equal("fixture-source", fallback.GetProperty("source_id").GetString());
+        Assert.Equal("atomizer recognition is incomplete or empty", fallback.GetProperty("reason").GetString());
+        var predictedImage = AlignmentPlanImage(temporary, preview);
         var result = environment.AlignDigestionStatus(["--base", "baseline"]);
 
         Assert.True(result.Success, result.Error);
@@ -660,6 +710,7 @@ public sealed partial class ProductionEnvironmentTests
             DigestionCasStore.RootPath.Replace('/', Path.DirectorySeparatorChar),
             coarse.CasRef["sha256:".Length..]);
         Assert.Equal(malformedBytes, File.ReadAllBytes(coarsePath));
+        Assert.Equal(predictedImage, DirectoryLedgerTestSupport.RepositoryImage(temporary));
 
         // The per-source line above is emitted before the status table, which runs to
         // thousands of lines, so on a terminal it is off-screen by the time the command

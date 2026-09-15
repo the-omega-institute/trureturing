@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:724de85500b5ff3dcabe756b8233d876d5abc476d9debaeae7d1764ed8a97499
+  normalized_sha256: sha256:724de85500b5ff3dcabe756b8233d876d5abc476d9debaeae7d1764ed8a97499
+cas_ref: sha256:724de85500b5ff3dcabe756b8233d876d5abc476d9debaeae7d1764ed8a97499
+coverage_gids:
+  - gid: D5/S1/Ledger/BoundedTimeSlice.time_slice_5040_capacities
+    target_statement_id: sha256:f7d27a4fd81b6db725f67a1b5ec2ba27d45062a234ee88d426f73f1ecde3d1ae
+receipts:
+  unresolved_subitems: []

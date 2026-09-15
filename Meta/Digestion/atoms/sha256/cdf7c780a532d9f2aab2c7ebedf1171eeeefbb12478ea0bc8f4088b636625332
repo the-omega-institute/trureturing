@@ -1,0 +1,18 @@
+**证明。** 仍记 $s_1=2a-b,s_2=2b-a-z,s_3=2u-v$。当每坐标改变至多 $\varepsilon$ 时，三余量分别至少为
+$$
+s_1-3\varepsilon,\qquad s_2-4\varepsilon,\qquad s_3-3\varepsilon.
+$$
+定理481.2遂给 $\varepsilon\le\rho_{\rm abs}$ 时的弱最优及 $\varepsilon<\rho_{\rm abs}$ 时的唯一性。
+
+为证明准确性，选取得最小比值的余量。第一余量的最不利方向为 $(\Delta a,\Delta b)=(-\eta,+\eta)$；第二为 $(\Delta b,\Delta a,\Delta z)=(-\eta,+\eta,+\eta)$；第三为 $(\Delta u,\Delta v)=(-\eta,+\eta)$；其余坐标不变。三种方向分别使所选余量减少 $3\eta,4\eta,3\eta$。对应边界值分别满足
+$$
+\frac{2a-b}{3}<a,\qquad
+\frac{2b-a-z}{4}<b,\qquad
+\frac{2u-v}{3}<u,
+$$
+因为原所有费用严格正。因此取 $\eta=\rho_{\rm abs}$ 时，被减小的坐标仍正，所选余量恰为零；其它余量由前述下界仍非负。定理481.2给原目标中的不同同价表示，所以在边界不能对全部扰动保证唯一。若 $\rho_{\rm abs}=0$，原参数自身已有这项同价见证。
+
+若 $\varepsilon>\rho_{\rm abs}$，可选 $\eta>\rho_{\rm abs}$，使 $\eta\le\varepsilon$ 且仍小于该方向中被减坐标的原值。所得参数全正而所选余量为负；对应目标四、十六或九的竞争行严格改进。故即使只允许正费用，半径也不能增大。
+
+最后，整个闭球中的每个坐标至少为其原值减 $\varepsilon$。全部点为正恰当 $\varepsilon<d_+$；在 $\varepsilon=d_+$，将取得最小值的坐标减到零即可到达非正边界。结合已证余量边界的距离，得到其余断言。证毕。
+

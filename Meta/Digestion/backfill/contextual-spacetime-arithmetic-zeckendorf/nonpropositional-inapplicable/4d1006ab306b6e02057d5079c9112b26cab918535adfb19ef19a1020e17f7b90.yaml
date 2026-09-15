@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4d1006ab306b6e02057d5079c9112b26cab918535adfb19ef19a1020e17f7b90
+  normalized_sha256: sha256:4d1006ab306b6e02057d5079c9112b26cab918535adfb19ef19a1020e17f7b90
+cas_ref: sha256:4d1006ab306b6e02057d5079c9112b26cab918535adfb19ef19a1020e17f7b90
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 证明子项。本条是其父项陈述的证明散文,不是命题;父项的全部陈述子项已由冻结声明覆盖,见父项账目。
+    previous_atom_id: 87700729954f548a5e44d548cd75cc0b013970d6b10e94fcb0e4614b652154be
+    next_atom_id: 69150c1069a98b818c89572de17a9d49683e9fb3742c7cbfb97a0be4b0dfd12e

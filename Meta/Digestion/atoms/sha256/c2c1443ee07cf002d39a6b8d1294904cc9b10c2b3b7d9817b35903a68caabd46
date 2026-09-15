@@ -1,0 +1,30 @@
+### 63.1 受控复制的联合演化
+
+令系统是一个 qubit，环境记录也是一个两态自由度。对系统矩阵 $\rho$，先把环境置于空白态，记为
+
+$$
+B(\rho).
+$$
+
+受控复制幺正 $U_{\mathrm{copy}}$ 把系统地址写入记录，得到
+
+$$
+U_{\mathrm{copy}}B(\rho)U_{\mathrm{copy}}^{\dagger}
+=
+J(\rho),
+$$
+
+其中 $J(\rho)$ 是带有 copied-address record 的联合态。`ReducedRecordAccessDefect` 明确构造了这个 permutation unitary，并证明其满足
+
+$$
+U_{\mathrm{copy}}^{\dagger}U_{\mathrm{copy}}=I.
+$$
+
+因此，联合系统的演化有显式逆
+
+$$
+U_{\mathrm{copy}}^{\dagger}J(\rho)=B(\rho).
+$$
+
+这一步只使用整体记录仍然可访问的假设；它没有说任何局部观察者都能访问环境。
+

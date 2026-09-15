@@ -1,0 +1,17 @@
+**定理 474.3（原系数的共同定量衰减）。** 固定文献定理中的 $K$，令
+$$
+F_K(y)=\frac{\tfrac12+K\left(1+\log\frac{\log y}{\log2}\right)}{\log y}\qquad(y\ge2).
+$$
+则对全部实数 $y\ge2$，
+$$
+0<\alpha_{\mathcal P(y)}\le c_{\mathcal P(y)}\le F_K(y),
+\qquad c_{\mathcal P(y)},\alpha_{\mathcal P(y)}
+=O_K\left(\frac{1+\log\log y}{\log y}\right)\quad(y\to\infty).
+\tag{474.3a}
+$$
+两系数沿 $y\to\infty$ 均趋零，因而第 443.13 条的原条件
+$$
+H_c:\quad\inf_{Q>1,\ Q\text{ 平方自由}}c_Q=0
+$$
+成立；亦有 $\inf_{Q\ge1,\ Q\text{ 平方自由}}\alpha_Q=0$。
+

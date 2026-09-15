@@ -1,0 +1,19 @@
+**证明。** 导数为
+
+$$
+\mathcal P_p'(X)=pX^{p-1}(2X^p-1).
+$$
+
+以 $Y=X^p$ 计算两个结果式，得到
+
+$$
+\operatorname{Res}(\mathcal P_p,X^{p-1})=1,
+\qquad
+\operatorname{Res}(\mathcal P_p,2X^p-1)=-5^p.
+$$
+
+由于 $\deg\mathcal P_p=2p$ 且 $p$ 为奇数，判别式与结果式的符号相消，
+从而得到第一式。第二式是基变换的判别式公式：
+$\mathbb Z[\theta_p]$ 到 $\mathcal O_{K_p}$ 的基变换行列式绝对值为 $I_p$，
+而判别式在基变换下乘以该行列式的平方。
+

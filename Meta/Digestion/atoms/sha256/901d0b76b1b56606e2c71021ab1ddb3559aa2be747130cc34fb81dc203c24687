@@ -1,0 +1,5 @@
+则 \(\operatorname{El}(c)\) 总为集合，并有
+\[
+\begin{gathered}
+\operatorname{Dec}(\operatorname{Enc}(x))=x,\qquad
+\operatorname{Enc}(\operatorname{Dec}(c))=c,\\

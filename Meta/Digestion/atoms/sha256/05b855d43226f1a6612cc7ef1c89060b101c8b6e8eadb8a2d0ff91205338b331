@@ -1,0 +1,39 @@
+**定理 474.6（同一增长截止的系数、误差与重叠）。** 固定实数 $0<\theta<1/2$。对全部整数 $N\ge1$，同时对所有满足 $\omega(Q)\le\theta\log_2N$ 的平方自由 $Q\ge1$，
+$$
+\left|\frac{U_Q(N)}N-c_Q\right|\le N^{2\theta-1},\qquad
+\left|\frac{W_Q(N)}N-\alpha_Q\right|
+\le3N^{\theta-1/2}\exp(2\sqrt{\theta\log_2N}).
+\tag{474.6a}
+$$
+在 $m_N=\lfloor\theta\log_2N\rfloor\ge2$ 的整数 $N$ 上，取
+$Q_N=\mathcal P(m_N)$、$k_N=\pi(m_N)$，则
+$$
+\frac{|M(N)|}N\le\frac{U_{Q_N}(N)}N
+\le F_K(m_N)+N^{2\theta-1}\longrightarrow0,
+\tag{474.6b}
+$$
+$$
+\frac{|M(N)|}N\le\frac{W_{Q_N}(N)}N
+\le F_K(m_N)+(N^\theta+2)N^{-1/2}e^{2\sqrt{\theta\log_2N}}
+\longrightarrow0,
+\tag{474.6c}
+$$
+$$
+\left|\frac{\mathcal L_{k_N}(N)}N-\frac1{6\zeta_R(2)}\right|
+\le\frac{F_K(m_N)}2+
+\frac{E_2+(N^\theta+2)e^{2\sqrt{\theta\log_2N}}}{2\sqrt N}
+\longrightarrow0.
+\tag{474.6d}
+$$
+其中 $F_K(m_N)=O_{K,\theta}((1+\log\log\log N)/\log\log N)$。这个选择在充分大 $N$ 时仍遗漏不超过 $N$ 的素数，故不是定理 472.5 的全素数截止。
+
+**证明。** 用 (472.2c)–(472.2d) 及 $2^k\le N^\theta$，并注意 $2^k+2\le3N^\theta$，即得 (474.6a)。$Q=1$ 也在同一证明域内，未调用 $D_1$。对所选支撑，$k_N\le m_N\le\theta\log_2N$，且定理 474.3 在 $y=m_N$ 处给两个系数都不超过 $F_K(m_N)$。结合原第 443.9 条的 $|M|\le W\le U$，得到 (474.6b)–(474.6c)。使用的是显式统一误差，没有把增长 $Q$ 代入一个隐常数未知的固定支撑渐近式。
+
+在 (474.5c) 中取 $k=k_N$，再加 $\alpha_{Q_N}/2\le F_K(m_N)/2$，得到 (474.6d)。无需假定 $m_N$ 本身为素数。由 $m_N\sim\theta\log_2N$ 得所列对数上界；又
+$$
+-(1/2-\theta)\log N+2\sqrt{\theta\log_2N}\longrightarrow-\infty,
+$$
+所以各相对误差趋零。写 $\epsilon=1/2-\theta$ 就得到 $N^{-2\epsilon}$ 与 $3N^{-\epsilon}e^{2\sqrt{(1/2-\epsilon)\log_2N}}$ 的同一域。$\theta=1/2$ 时这些粗界不能证明趋零，也不因此否定实际端点极限。
+
+钉版 `primorial_lt_four_pow` 给 $Q_N<4^{m_N}\le N^{2\theta}$。充分大 $N$ 有 $Q_N+1\le N$；任取 $Q_N+1$ 的素因子 $q$，则 $q\nmid Q_N$，同时 $m_N<q\le N$。所以原外层仍含 $d=1,q$，支撑确实不同于全素数截止。上述 $M(N)=o(N)$ 也是第 443.14 条在已证 $H_c$ 下的原后果。证毕。
+

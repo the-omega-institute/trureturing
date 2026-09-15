@@ -1,0 +1,26 @@
+**定理 472.5（素数尾支撑障碍与全素数边界）。** 对上述参数，
+$$
+W_Q(N),U_Q(N)\ge T_Q(N)\ge\max\{0,\pi(N)-\pi(N/2)-\omega(Q)\}.
+$$
+$N\ge3$ 时另有
+$$
+T_Q(N)\ge\max\left\{0,\pi(N)-\pi(N/2)-\frac{\log Q}{\log(N/2)}\right\}.
+$$
+若固定 $A>0,\delta>0$，某平方自由函数 $Q(N)$ 最终满足 $W_{Q(N)}(N)\le AN^{1-\delta}$，或满足同样的 $U$ 上界，则最终
+$$
+\omega(Q(N))\ge\pi(N)-\pi(N/2)-AN^{1-\delta},
+$$
+$$
+\log Q(N)\ge\bigl(\pi(N)-\pi(N/2)-AN^{1-\delta}\bigr)\log(N/2).
+$$
+由素数定理，必有
+$$
+\liminf_{N\to\infty}\frac{\omega(Q(N))\log N}{N}\ge\frac12,\qquad
+\liminf_{N\to\infty}\frac{\log Q(N)}N\ge\frac12.
+$$
+若 $Q(N)=\prod_{p\le y_N}p$、$2\le y_N\le N$，上述幂次上界强制 $y_N/N\to1$。全素数截止则对每个整数 $N\ge1$ 给
+$$
+B_{\prod_{p\le N}p}(N)=M(N),\qquad
+U_{\prod_{p\le N}p}(N)=W_{\prod_{p\le N}p}(N)=|M(N)|.
+$$
+

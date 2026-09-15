@@ -1,0 +1,7 @@
+**定义 469.6。**对 $X\ge2$ 的全素数终点任务，令 $\mathcal C_X$ 为 $\mathcal E_X$ 全部词访问的全部整数状态，包含初态一，定义
+$$
+A_p^*(X)=\max_{n\in\mathcal C_X}v_p(n),\qquad
+C^*(X)=\prod_pp^{A_p^*(X)}=\operatorname{lcm}(\mathcal C_X).
+$$
+用容量 $C$ 的约数盒承载原 P2 历史时，只增加每个实际前缀状态整除 $C$ 的容量检查；要求原全部词均可执行，原操作、输出及费用不变。
+
