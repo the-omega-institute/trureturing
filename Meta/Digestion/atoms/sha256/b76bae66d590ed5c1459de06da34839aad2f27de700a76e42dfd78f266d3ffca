@@ -1,0 +1,2 @@
+**定理。** 保留第 27 节的中心平凡、外作用平凡基商 $S=\pi/N$，固定满射 $f:\Lambda\twoheadrightarrow F$ 到非交换有限单群。令 $K_1,\ldots,K_t$ 为 $\pi$ 的有限指数特征子群，各 $K_i\subseteq N$，且 $N/K_i$ 分别为素数幂群，允许素数重复。令 $K=\bigcap_i K_i$。如果 $f$ 经 $\pi/K$ 的实际外作用像因子化，那么对其中至少一个素数 $\ell$，$f$ 已经经第 27 节的单个 $\Psi_\ell$ 因子化。
+

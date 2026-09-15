@@ -1,0 +1,5 @@
+**定义。** 设 R 为交换环，G≥r≥1。令 H=R^{2G}，取基 a_1,...,a_G,b_1,...,b_G，交叉形式满足 ⟨b_i,a_j⟩=δ_ij、⟨a_i,b_j⟩=-δ_ij，其余基配对为零。对对称矩阵 Q∈M_r(R)，定义 U_Q(a_i)=0，并令
+
+$$U_Q(b_j)=\sum_{i=1}^{r}Q_{ij}a_i\quad(j\le r),\qquad
+U_Q(b_j)=0\quad(j>r),\qquad A_Q=I+U_Q.$$
+

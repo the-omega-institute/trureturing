@@ -1,0 +1,5 @@
+**定义。** 固定 $\chi\in X$，记 $M_\chi$ 为其稳定子，$p_\chi$ 在此群上同样良定义。令
+
+$$\Gamma_{\chi,\ell}=\ker(p_\chi:M_\chi\to D_\ell),\qquad
+\Delta_\ell=\ker\mathcal R_\ell.$$
+

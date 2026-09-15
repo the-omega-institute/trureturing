@@ -1,0 +1,6 @@
+**定理。** 对每个 $g\ge3$，存在固定的有限指数正规子群 $\Gamma\triangleleft\mathcal M_g$ 和固定的本质分离简单闭曲线 $\alpha$，使对每个有限特征幂零商 $q:\pi\twoheadrightarrow Q$，都有
+
+$$\boxed{C_q\alpha\not\subseteq\Gamma\alpha.}$$
+
+同一个 $(\Gamma,\alpha)$ 对全部有限阶、全部幂零类及全部模数同时成立。
+
