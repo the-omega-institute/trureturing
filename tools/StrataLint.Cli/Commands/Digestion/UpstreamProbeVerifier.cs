@@ -236,10 +236,9 @@ internal sealed class UpstreamProbeVerifier(IUpstreamLeanProcessRunner runner, s
             inHeader = false;
             if (line[0] is ' ' or '\t')
             {
-                // Lean may still parse an indented declaration as a command. Indentation
-                // alone cannot exempt another declaration from the theorem inventory.
-                if (!inTheorem || Regex.IsMatch(line.TrimStart(),
-                        @"\A(?:theorem|open|def|noncomputable|abbrev|instance|lemma|example|structure|inductive|opaque|axiom|macro|elab|syntax|notation|set_option|namespace|section|end|variable|universe|attribute|private|protected|public|meta)\b|\A[#@]", Options))
+                // Keep structural checks here; CheckCommandTokens classifies commands
+                // using Lean identifier boundaries, including indented proof terms.
+                if (!inTheorem || line.TrimStart().StartsWith("@[", StringComparison.Ordinal))
                     throw Invalid("PROBE_DECLARATION_UNSUPPORTED", $"line={i + 1}: only theorem bodies may be indented");
                 continue;
             }

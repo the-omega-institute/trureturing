@@ -130,6 +130,44 @@ public sealed partial class UpstreamProbeVerifierTests
         Assert.Empty(f.Runner.Sources);
     }
 
+    [Theory]
+    [InlineData("def!", false)]
+    [InlineData("def!", true)]
+    [InlineData("def?", false)]
+    [InlineData("def?", true)]
+    [InlineData("def₁", false)]
+    [InlineData("def₁", true)]
+    [InlineData("theorem'", false)]
+    [InlineData("theorem'", true)]
+    public void ProofTermIdentifiersAreAcceptedAcrossLineBreaks(string name, bool indented)
+    {
+        using var f = new ProbeFixture();
+        var source = "import Mathlib\ntheorem probe (" + name + " : True) : True :="
+            + (indented ? "\n  " : " ") + name + "\n#print axioms probe\n";
+        Assert.Equal(3, f.Verify(source).Length);
+        Assert.Equal(source, f.Runner.Sources[0]);
+        Assert.Equal(2, f.Runner.Sources.Count);
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void ExplicitArgumentProofTermIsAcceptedAcrossLineBreaks(bool indented)
+    {
+        using var f = new ProbeFixture();
+        var source = "import Mathlib\ntheorem probe : True :="
+            + (indented ? "\n  " : " ") + "@True.intro\n#print axioms probe\n";
+        Assert.Equal(3, f.Verify(source).Length);
+        Assert.Equal(source, f.Runner.Sources[0]);
+        Assert.Equal(2, f.Runner.Sources.Count);
+    }
+
+    [Theory]
+    [InlineData("@[simp] theorem s : True := trivial")]
+    [InlineData("@[simp]")]
+    public void IndentedAttributeOpenersAreRejected(string attribute) => AssertDialectRejected(
+        "theorem probe : True := by\n  " + attribute + "\n  trivial\n#print axioms probe\n");
+
     [Fact]
     public void UnprintedDefinitionCannotHideItsAxioms()
     {
