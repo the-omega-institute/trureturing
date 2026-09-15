@@ -26921,3 +26921,473 @@ $$
 $$
 
 这使“保留多少历史”获得两个可审计的失败模式：没有双向模拟时，接口不能称为操作等价；没有满足预算的有限 $k$ 时，结论必须保持开放，而不是把更长的 Zeckendorf 标签自动当作充分历史。
+## 123. 逆极限中的幽灵历史与载体完备化
+
+第 122 节把记录深度写成相对于目标任务的缺陷预算。本节补上一个不同的边界：即使每个有限层都可实现，且层与层之间完全相容，也不保证这些有限记录来自原先的对象载体。逆极限会把所有有限层一致的塔组织起来；原载体能否覆盖这些塔，是一个独立的满射与完备化问题。
+
+### 123.1 有限接口塔与自然嵌入
+
+设有有限层接口 $q_n:X\to Q_n$，以及忘却映射 $\pi_n:Q_{n+1}\to Q_n$，满足
+
+$$
+\pi_n\circ q_{n+1}=q_n.
+$$
+
+定义兼容塔
+
+$$
+\varprojlim Q_n
+=
+\left\{(z_n)_n:\ \pi_n(z_{n+1})=z_n\ \text{对所有 }n\right\}.
+$$
+
+每个 $x\in X$ 给出一个塔
+
+$$
+\iota(x)=(q_n(x))_n.
+$$
+
+令
+
+$$
+R_\infty=\bigcap_n\ker(q_n),
+\qquad
+x\mathrel{R_\infty}y
+\Longleftrightarrow
+q_n(x)=q_n(y)\ \text{对所有 }n.
+$$
+
+则 $\iota$ 唯一因子化为
+
+$$
+\bar\iota:X/R_\infty\longrightarrow\varprojlim Q_n,
+$$
+
+并且 $\bar\iota$ 是单射。这里的单射只使用所有层读数同时相等才定义的商关系；它不要求原载体已经完备。
+
+### 123.2 满射缺陷不是逐层一致性能够消除的
+
+嵌入 $\bar\iota$ 满射，当且仅当每一个兼容塔 $(z_n)_n$ 都存在单个 $x\in X$，使
+
+$$
+q_n(x)=z_n
+\qquad\text{对所有 }n.
+$$
+
+因此，“每个有限层都有实现”只说明塔属于逆极限，不说明塔属于原像。定义载体的完备化缺陷为
+
+$$
+\operatorname{Ghost}(X;Q_\bullet)
+=
+\left(\varprojlim Q_n\right)\setminus\operatorname{im}(\bar\iota).
+$$
+
+这个集合为空，才可以说当前载体对这组有限接口是完备的；非空时，逆极限引入了原类型中没有的理想记录。这里的“幽灵”是表示边界的数学名称，不是额外物理实体。
+
+### 123.3 Zeckendorf 前缀的具体幽灵
+
+令 $X_{\mathrm{fs}}$ 为所有只有有限多个 $1$ 的无限合法串：
+
+$$
+X_{\mathrm{fs}}
+=
+\left\{x\in\{0,1\}^{\mathbb N}:x_ix_{i+1}=0,\ \exists N\ \forall i\ge N,\ x_i=0\right\}.
+$$
+
+令 $Q_n=\mathcal W_n$ 为长度 $n$ 的无相邻 $1$ 字串，$\pi_n$ 删除最后一位，$q_n$ 取前缀。兼容性给出
+
+$$
+\varprojlim Q_n
+\cong
+\left\{z\in\{0,1\}^{\mathbb N}:z_i z_{i+1}=0\right\},
+$$
+
+即所有无限合法串，而不仅是有限支持串。
+
+交替串
+
+$$
+z=1010101010\cdots
+$$
+
+的每个有限前缀都属于某个 $Q_n$，并且每个前缀都可由一个有限 Zeckendorf 整数实现；但不存在 $x\in X_{\mathrm{fs}}$ 同时实现全部前缀，因为 $x$ 最终必须全为 $0$。所以 $z$ 是逆极限中的元素，却不在 $\bar\iota$ 的像中。
+
+若把对象类型扩张为所有无限合法串
+
+$$
+\widehat X
+=
+\left\{x\in\{0,1\}^{\mathbb N}:x_ix_{i+1}=0\right\},
+$$
+
+则前缀映射对该逆系统满射。扩张载体解决了满射缺陷，但也改变了对象类型：它加入了有限整数模型没有的无限历史。不能把这一步描述成在原对象中发现了一个普通整数。
+
+### 123.4 动力学必须保持原像
+
+若每层有操作 $T_n:Q_n\to Q_n$，并满足
+
+$$
+\pi_n\circ T_{n+1}=T_n\circ\pi_n,
+$$
+
+则得到逆极限上的操作
+
+$$
+\widehat T((z_n)_n)=(T_n z_n)_n.
+$$
+
+若原载体上存在 $T:X\to X$，且
+
+$$
+q_n\circ T=T_n\circ q_n,
+$$
+
+则
+
+$$
+\widehat T\circ\iota=\iota\circ T.
+$$
+
+但层间相容本身不保证 $\widehat T$ 保持有限支持像。对 Hilbert 型有界线程，还需要统一的算子界
+
+$$
+\sup_n\|T_n\|\le M<\infty
+$$
+
+来保证逐层作用仍给出有界线程；没有这个界，层操作可能把可实现的线程推出载体。要让完备化后的动力学仍然代表原模型，必须另行证明
+
+$$
+\widehat T\bigl(\operatorname{im}(\bar\iota)\bigr)
+\subseteq
+\operatorname{im}(\bar\iota),
+$$
+
+或给出离开该像集的泄漏指标。否则，一个只在无限完备化中存在的幽灵历史，可能被层操作激活并进入后续读数；这不是原有限对象动力学的结论。
+
+### 123.5 与历史深度和量子接口的边界
+
+本节的逆极限问题与第 122 节的缺陷预算正交。缺陷衡量某个接口对目标实验的预测损失；逆极限满射衡量所有兼容有限记录是否能由同一原对象实现。一个载体可以在任务意义下具有很小缺陷，却仍有非空的完备化缺陷；反过来，载体完备也不保证记录足以闭合未来动力学。
+
+指定版本已经有两个直接相关的 Lean 支点。`D5/S3/Quantum/Completion/BoundedInverseLimitReconstruction.lean` 中的 `bounded_inverse_limit_reconstruction` 证明：单调子空间序列的有界、正交投影相容族，与累积闭子空间之间存在规范的线性等距双射；因此在 Hilbert 载体中，“逆极限线程”还必须带有统一有界性。`D5/S3/Quantum/Completion/CompatibleUnboundedCoordinates.lean` 中的 `compatible_unbounded_coordinates` 给出反例：`partialOnes n` 满足每个有限层的投影相容性，但
+
+$$
+\|\mathrm{partialOnes}(n)\|^2=n,
+$$
+
+故范数无界；它既不是某个 $\ell^2$ 向量的投影族，也不属于有界逆极限。这个例子把“逐层一致”与“存在一个实际状态”之间缺失的有界性条件具体化了。
+
+对量子接口，$Q_n$ 应替换为带态、相位和活动记忆的有限接口，忘却映射应替换为保持合法性的量子通道。逐层状态族的一致性仍不自动给出完整过程的可实现性；若后续实验能访问参考或旧记录，必须回到第 120 节的过程 diamond 缺陷。Gram 矩阵的正定性、通道的完全正性和像集不变性，都是额外的整体相容条件。
+
+本节的因子化、Zeckendorf 前缀反例和动力学像集条件是逆系统与有限字串上的普通数学推导；Hilbert 载体中的有界重建与无界线程反例则由上述两个已有 Lean 声明直接支撑。本节没有新增 Lean 声明，也不声称重建了物理时空的完备性。指定版本的项目已有上下文等价、有限接口和记录通道支点，但没有一个冻结定理把这些支点自动组合成 Zeckendorf 逆极限的满射定理。
+
+新增锚为
+
+$$
+\boxed{
+\text{逆极限组织所有有限层一致记录；原载体的可实现性还要求满射、完备性或有界性，动力学则必须额外保持该像集。}
+}
+$$
+
+因此，“无限递归”应当分成两个可检验问题：有限层是否相容，以及相容塔是否仍由当前对象类型承载。前者失败时要拒绝该关系网络；后者失败时要明确报告完备化新增的理想历史，并重新指定允许的动力学与测量范围。
+## 追加锚（本行以下为增补区）
+
+## 124. 有限前缀量子模拟与连续延拓
+
+本节固定一个经典数字载体和一个有限维量子输出空间，把第 122 节的前缀缺陷与第 123 节的完备化联系起来。目标是刻画何时有限前缀能一致逼近一个态制备任务；载体加入无限合法串，并不自动使任意任务连续。以下定义与证明均在通常数学中进行。
+
+**定义 124.1（合法串、有限核心与实际前缀像）。** 所有下标从 $0$ 开始，令
+$$
+\widehat X=\{x\in\{0,1\}^{\mathbb N}:\ \forall j\ge0,\ x_jx_{j+1}=0\},\qquad
+X_{\rm fs}=\{x\in\widehat X:\ \exists N\ \forall j\ge N,\ x_j=0\}.
+$$
+对 $k\in\mathbb N$，以同一符号 $q_k$ 表示两个域上的前缀限制，置
+$$
+q_kx=(x_0,\ldots,x_{k-1}),\qquad
+W_k=q_k[X_{\rm fs}]=q_k[\widehat X],\qquad
+F_{k,w}=\{x\in X_{\rm fs}:q_kx=w\}.
+$$
+$W_k$ 恰是全部长度 $k$ 的无相邻 $1$ 字串；任一这种字串补零即给两个域中的原像。因此每个 $F_{k,w}$ 非空，$W_k$ 有限非空，$W_0=\{\varnothing\}$。记 $\tau_kz$ 为 $z$ 保留前 $k$ 位后补零的串。
+取前缀距离
+$$
+p(x,y)=
+\begin{cases}
+0,&x=y,\\
+2^{-m},&x\ne y,\ m=\min\{j:x_j\ne y_j\}.
+\end{cases}
+$$
+这是 Z 卷定理 477.3 的 $d_{1/2}$。Z 卷定义 371.1 的距离另为 $d_K(x,y)=\sum_{j\ge0}2^{-j-1}|x_j-y_j|$，二者满足 $p/2\le d_K\le p$，并非同一数值公式。上述数字核心也不是 CSA 定义 1–3 的带事件、偏序、区域与选择的档案载体；CSA §§14–16 中的读数与语言仍保留各自的类型。
+
+**命题 124.2（紧完备载体与逐柱稠密性）。** $p$ 是给出二元离散乘积之子空间拓扑的超度量，$\widehat X$ 紧且完备，$X_{\rm fs}$ 在其中稠密。更精确地，对每个 $k,w$，$F_{k,w}$ 在柱集 $\widehat F_{k,w}=\{z\in\widehat X:q_kz=w\}$ 中稠密，且
+$$
+q_kx=q_ky\ \Longleftrightarrow\ p(x,y)\le2^{-k},\qquad
+p(\tau_kz,z)\le2^{-k}.
+$$
+证明。两对串共享的前缀长度取较小者，仍是第三对共享的前缀长度，故
+$p(x,z)\le\max\{p(x,y),p(y,z)\}$；分离性和对称性由定义得到。
+前缀柱集是有限个离散坐标条件的交；任意有限坐标条件又包含一个足够长的前缀条件。距离球与前缀柱集因而给出同一拓扑，所列等价含 $k=0$。
+
+违反合法性的串在某对相邻坐标上取值 $11$，这是一项开柱条件；所以 $\widehat X$ 在二元乘积中闭。为具体证明紧性，对任意序列依次选第 $0,1,2,\ldots$ 位恒定的无限子序列，再取对角子序列。各坐标最终恒定所得的极限仍无相邻 $1$，前缀距离保证收敛。度量空间的序列紧性给紧性。
+若序列是 Cauchy，对每个 $j$，距离最终小于 $2^{-j}$，故第 $j$ 位最终恒定；同一构造给合法极限并证明原序列收敛，故完备。
+
+补零不制造相邻 $1$，故 $\tau_mz\in X_{\rm fs}$ 且趋于 $z$。若 $z\in\widehat F_{k,w}$，则所有 $m\ge k$ 的截断都在 $F_{k,w}$，得到逐柱稠密性。若首差在 $j$，加权距离的首项为 $2^{-j-1}$、尾和至多 $2^{-j}$，也直接验证定义 124.1 的距离比较。这给 Z371.1–2、Z477.3 的载体在所选前缀距离下的具体实现。
+
+**定义 124.3（固定有限维的静态态制备任务）。** 固定整数 $d\ge1$，输出态空间与距离为
+$$
+\mathcal D_d=\{\rho\in M_d(\mathbb C):\rho=\rho^*,\ \rho\succeq0,\ \operatorname{tr}\rho=1\},\qquad
+D(\rho,\sigma)=\tfrac12\|\rho-\sigma\|_1.
+$$
+这里 $\|A\|_1=\operatorname{tr}\sqrt{A^*A}$，允许任意混态，不限于纯态。
+任务是任意总函数 $T:X_{\rm fs}\to\mathcal D_d$，起初不假定连续。
+
+深度 $k$ 的输入寄存器为 $\mathcal H_k=\mathbb C^{W_k}$，取以 $w\in W_k$ 标记的正交标准基，并置
+$$
+E_{k,x}=|q_kx\rangle\langle q_kx|.
+$$
+模拟器遍历所有 CPTP 映射 $\Lambda:M_{|W_k|}(\mathbb C)\to M_d(\mathbb C)$；它须对所有 $x$ 共用，只能从给定寄存器获得前缀。这里 $x$ 是经典制备标签，未给不相容量子可观测量预先指定共同测量结果。
+
+**命题 124.4（CPTP 模拟器与混态表的精确等价）。** 上述输入族上的全部可实现输出恰为任意混态表 $(\sigma_w)_{w\in W_k}\in\mathcal D_d^{W_k}$。每张表都可由
+$$
+\Lambda_\sigma(A)=\sum_{w\in W_k}\langle w|A|w\rangle\sigma_w
+$$
+实现，因此只对 $E_{k,x}$ 计算的最坏误差，在所有 CPTP 映射与所有混态表上取下确界相同。
+证明。任一 CPTP 映射给出密度态 $\sigma_w=\Lambda(|w\rangle\langle w|)$，于是输入 $x$ 的输出只依赖 $q_kx$。
+反向对每个 $w$ 作谱分解 $\sigma_w=\sum_{a=1}^d\lambda_{wa}|v_{wa}\rangle\langle v_{wa}|$，其中 $\lambda_{wa}\ge0$、$\sum_a\lambda_{wa}=1$。取 Kraus 算子
+$$
+K_{wa}=\sqrt{\lambda_{wa}}\,|v_{wa}\rangle\langle w|.
+$$
+则 $\sum_{w,a}K_{wa}^*K_{wa}=I_{\mathcal H_k}$，且 $\sum_{w,a}K_{wa}AK_{wa}^*=\Lambda_\sigma(A)$。Kraus 形式给完全正性，前一等式给保迹性，代入基态即得指定表。这个等价只规定输入族上的行为，不规定一般相干叠加输入上的通道行为。
+
+**定义 124.5（前缀缺陷、纤维振幅与半径）。** 对定义 124.3 的固定任务，令
+$$
+e_k(T)=\inf_{\Lambda\ {\rm CPTP}}\ \sup_{x\in X_{\rm fs}}
+D\bigl(T(x),\Lambda(E_{k,x})\bigr)
+=\inf_{\sigma\in\mathcal D_d^{W_k}}\ \sup_{x\in X_{\rm fs}}D\bigl(T(x),\sigma_{q_kx}\bigr),
+$$
+$$
+\omega_{k,w}(T)=\sup_{x,y\in F_{k,w}}D(T(x),T(y)),\qquad
+\omega_k(T)=\max_{w\in W_k}\omega_{k,w}(T),
+$$
+$$
+f_{k,w}(\sigma)=\sup_{x\in F_{k,w}}D(T(x),\sigma),\qquad
+r_{k,w}(T)=\inf_{\sigma\in\mathcal D_d}f_{k,w}(\sigma).
+$$
+所有上确界都在非空集上且取值于 $[0,1]$。纤维可以无限且不紧，$T$ 也可以不连续，所以这里没有把无限纤维上的上确界写成最大值。只有有限集合 $W_k$ 上使用最大值。
+
+**定理 124.6（精确纤维半径公式与最优表存在）。** $\mathcal D_d$ 在 $D$ 下紧且完备，任意两态间的距离属于 $[0,1]$。对任意 $T:X_{\rm fs}\to\mathcal D_d$ 及任意 $k$，每个纤维都有最优中心，且
+$$
+e_k(T)=\max_{w\in W_k}\ \min_{\sigma\in\mathcal D_d}
+\sup_{x\in F_{k,w}}D(T(x),\sigma)
+=\max_{w\in W_k}r_{k,w}(T).
+$$
+存在一张表达到 $e_k(T)$，并由命题 124.4 实现为 CPTP 模拟器。
+证明。Hermitian 矩阵组成有限维实向量空间，迹范数在该空间上给完备的度量。
+若一列密度矩阵趋于 $\rho$，则对每个 $v\in\mathbb C^d$，
+$$
+v^*\rho v=\lim_n v^*\rho_n v\ge0,\qquad
+\rho^*=\rho,\qquad \operatorname{tr}\rho=\lim_n\operatorname{tr}\rho_n=1.
+$$
+所以态空间闭。半正定矩阵的特征值非负，迹等于特征值之和，因此
+$$
+\|\rho\|_1=\operatorname{tr}\rho=1,\qquad
+\tfrac12\|\rho-\sigma\|_1\le\tfrac12(\|\rho\|_1+\|\sigma\|_1)=1.
+$$
+闭有界性在有限维给紧性，闭子集又继承完备性；迹范数的一半仍是度量。
+
+对任何 $\sigma,\eta\in\mathcal D_d$，逐点三角不等式及取上确界给
+$$
+f_{k,w}(\sigma)\le f_{k,w}(\eta)+D(\sigma,\eta),\qquad
+|f_{k,w}(\sigma)-f_{k,w}(\eta)|\le D(\sigma,\eta).
+$$
+故纤维目标函数对中心是 $1$-Lipschitz，尽管它对 $x$ 不要求连续。紧集 $\mathcal D_d$ 上的连续实函数达到最小值，取一个中心 $\sigma_w^*$。
+任意表的全局目标恰为 $\max_w f_{k,w}(\sigma_w)$，因为非空纤维有限个且分割 $X_{\rm fs}$。每一项至少为 $r_{k,w}$，故任何表的目标至少为 $\max_w r_{k,w}$；对有限个 $w$ 分别选取上述中心，便同时达到这个下界。
+证明不要求中心来自 $T[F_{k,w}]$，也不给中心唯一性或不同深度最优表之间的相容性。
+
+**命题 124.7（直径界、单调性与有限层精确性）。** 对所有 $k\ge0$，
+$$
+\tfrac12\omega_k(T)\le e_k(T)\le\omega_k(T),\qquad
+e_{k+1}(T)\le e_k(T),\qquad
+\omega_{k+1}(T)\le\omega_k(T).
+$$
+而且
+$$
+e_k(T)=0\quad\Longleftrightarrow\quad
+\exists t_k:W_k\to\mathcal D_d\ \forall x\in X_{\rm fs},\ T(x)=t_k(q_kx).
+$$
+证明。对同纤维的 $x,y$ 和任一中心 $\sigma$，有
+$D(T(x),T(y))\le D(T(x),\sigma)+D(T(y),\sigma)\le2f_{k,w}(\sigma)$。
+先对 $x,y$ 取上确界，再对中心取下确界，得 $\omega_{k,w}\le2r_{k,w}$。
+从非空纤维选一个 $x_w$，用 $T(x_w)$ 作中心，得 $r_{k,w}\le\omega_{k,w}$；定理 124.6 给全局两界。
+
+将深度 $k$ 的最优中心复制给每个具有相同父前缀的长度 $k+1$ 字串，新表逐点输出与旧表相同。因此新最优误差不增；新纤维包含于父纤维，也使 $\omega_k$ 不增。这个复制表不必是新层最优表。
+若 $e_k=0$，则 $\omega_k=0$，每个非空纤维上的 $T$ 恒定，按此值定义 $t_k$；反向因子化表逐点误差为零。所有结论也覆盖 $d=1$，此时态空间只有一个元素，全部缺陷恒为零。
+
+**定理 124.8（误差趋零与唯一连续延拓的等价）。** 对固定有限 $d\ge1$ 和任意 $T:X_{\rm fs}\to\mathcal D_d$，以下四项等价：
+
+1. $\lim_{k\to\infty}e_k(T)=0$。
+2. $\lim_{k\to\infty}\omega_k(T)=0$。
+3. $T:(X_{\rm fs},p)\to(\mathcal D_d,D)$ 一致连续，即
+$$
+\forall\varepsilon>0\ \exists\delta>0\ \forall x,y\in X_{\rm fs},\quad
+p(x,y)<\delta\ \Longrightarrow\ D(T(x),T(y))<\varepsilon.
+$$
+4. 存在唯一连续函数 $\widehat T:(\widehat X,p)\to(\mathcal D_d,D)$，使 $\widehat T|_{X_{\rm fs}}=T$。
+
+该延拓实际上是一致连续的。这里第三项的定义域是有限支持核心，第四项的定义域是全部无限合法串；不能把第三项降为核心上的逐点连续，也不能把第一项换成逐输入的误差极限。
+
+证明。命题 124.7 的两侧界直接给第一、二项等价。
+若第二项成立，给定 $\varepsilon>0$ 选 $K$ 使 $\omega_K<\varepsilon$。当 $p(x,y)<2^{-K}$ 时两点共享前 $K$ 位，故 $D(T(x),T(y))\le\omega_K<\varepsilon$，得到第三项。
+若第三项成立，先对 $\varepsilon/2$ 选一致连续性的 $\delta$，再选 $K$ 使 $2^{-K}<\delta$。对每个 $k\ge K$ 的同纤维两点，距离不超过 $2^{-k}<\delta$，故目标距离小于 $\varepsilon/2$。取上确界后 $\omega_k\le\varepsilon/2<\varepsilon$，得到第二项。
+
+现由第二项构造第四项。固定 $z\in\widehat X$，对 $m,n\ge K$，截断 $\tau_mz,\tau_nz$ 共享前 $K$ 位，故
+$$
+D\bigl(T(\tau_mz),T(\tau_nz)\bigr)\le\omega_K(T).
+$$
+因此这是一列 Cauchy 态；由 $\mathcal D_d$ 的完备性定义
+$$
+\widehat T(z)=\lim_{n\to\infty}T(\tau_nz)\in\mathcal D_d.
+$$
+它不依赖截断以外的近似选择：若 $x_n\in X_{\rm fs}$ 且 $p(x_n,z)\to0$，则对固定 $K$，充分大的 $n$ 有 $q_Kx_n=q_Kz$。同样对 $m\ge K$ 有 $q_K\tau_mz=q_Kz$，于是 $D(T(x_n),T(\tau_mz))\le\omega_K$。令 $m\to\infty$ 后仍有 $D(T(x_n),\widehat T(z))\le\omega_K$；再让 $K$ 增大，得到 $T(x_n)\to\widehat T(z)$。有限支持的 $z$ 最终等于自身截断，故延拓确实等于 $T$。
+
+若 $q_Kz=q_Kz'$，则 $n\ge K$ 时的两截断也共享该前缀，令 $n\to\infty$ 得
+$$
+D(\widehat T(z),\widehat T(z'))\le\omega_K(T).
+$$
+选 $\omega_K<\varepsilon$ 并取输入距离阈值 $2^{-K}$，这证明延拓一致连续，特别连续。
+任一连续延拓 $U$ 都满足 $U(z)=\lim_n U(\tau_nz)=\lim_n T(\tau_nz)=\widehat T(z)$，所以唯一。
+
+最后若第四项成立，命题 124.2 给紧域，Heine–Cantor 定理使连续的 $\widehat T$ 一致连续。
+这里也可直接证明所需的紧性步骤：若不一致连续，存在 $\varepsilon_0>0$ 和两列 $z_n,z_n'\in\widehat X$，满足
+$$
+p(z_n,z_n')<1/(n+1),\qquad
+D(\widehat T(z_n),\widehat T(z_n'))\ge\varepsilon_0.
+$$
+由紧性取 $z_n$ 的收敛子序列，沿同一下标的 $z_n'$ 也趋于同一点。连续性和目标距离三角不等式迫使输出距离趋零，矛盾。
+故限制到 $X_{\rm fs}$ 也一致连续，得到第三项。完备性在构造目标极限时使用，紧性在这个反向推导时使用；它们承担不同义务。
+
+**命题 124.9（连续延拓保持每个有限缺陷）。** 若存在连续延拓 $\widehat T:\widehat X\to\mathcal D_d$，把定义 124.5 中的定义域换成 $\widehat X$，而保持 $W_k$ 与模拟器类不变，则对每个 $k$ 有
+$$
+e_k(\widehat T)=e_k(T),\qquad \omega_k(\widehat T)=\omega_k(T).
+$$
+更强地，对每个 $w\in W_k$ 与每个中心 $\sigma\in\mathcal D_d$，
+$$
+\sup_{z\in\widehat F_{k,w}}D(\widehat T(z),\sigma)
+=\sup_{x\in F_{k,w}}D(T(x),\sigma).
+$$
+证明。核心包含于完备载体给右边不大于左边。任一 $z\in\widehat F_{k,w}$ 的截断 $\tau_nz$ 在 $n\ge k$ 时属于 $F_{k,w}$；连续性使其到中心的距离趋于 $D(\widehat T(z),\sigma)$，每项又不超过右侧上确界，故反向不等式成立。
+逐对截断同样证明每个柱上的直径上确界不变；对中心取下确界、对有限个柱取最大值便给两个结论。无限串可以使某个上确界真正达到，但不会在连续延拓下增大任何有限层最坏误差。
+
+**命题 124.10（连续而永无精确有限深度的量子比特任务）。** 本命题取 $d=2$，复用 Z477.3 的函数
+$$
+S(z)=\sum_{j\ge0}4^{-j-1}z_j,\qquad
+T_S(x)=\operatorname{diag}(1-S(x),S(x)),\qquad
+c_k=\tfrac4{15}4^{-k}.
+$$
+则 $0\le S(z)\le4/15$，$T_S$ 连续延拓到 $\widehat X$，且对每个 $k\ge0$，
+$$
+\omega_k(T_S)=c_k,\qquad e_k(T_S)=\tfrac12c_k=\tfrac2{15}4^{-k}>0.
+$$
+证明。若从位置 $k$ 开始的尾部首位不受前一位限制，每对位置 $k+2r,k+2r+1$ 至多一个 $1$，所以该对的加权贡献至多为 $4^{-(k+2r)-1}$。求几何级数得
+$$
+\sum_{j\ge k}4^{-j-1}z_j
+\le\sum_{r\ge0}4^{-(k+2r)-1}
+=\frac{4^{-k-1}}{1-4^{-2}}=c_k.
+$$
+交替尾 $1010\cdots$ 达到此值；其任意长的有限截断都合法，尾和趋于 $c_k$。取 $k=0$ 得全局范围，因此所写矩阵确为密度态。
+
+固定前缀 $w$，置 $s_w=\sum_{j<k}4^{-j-1}w_j$。当 $k=0$ 或 $w_{k-1}=0$ 时，尾部范围的下确界为 $0$、上确界为 $b_w=c_k$。当 $k\ge1$ 且 $w_{k-1}=1$ 时，第 $k$ 位被迫为零，位置 $k+1$ 起可自由接交替尾，故 $b_w=c_{k+1}$。下端用全零尾达到；上端由对应交替尾的有限截断逼近。
+有限支持串无法达到正的上端：达到成对求和界需要无限多对各自达到最大贡献。完备载体上的交替尾则达到上端。
+
+两对角态的迹距离等于第二个对角元之差的绝对值，因此纤维直径的上确界为 $b_w$。合法态
+$$
+\sigma_w=\operatorname{diag}\bigl(1-s_w-b_w/2,\ s_w+b_w/2\bigr)
+$$
+是两端态的中点，对整个纤维的误差至多 $b_w/2$；两端态合法，因为对应无限合法串的 $S$ 仍在 $[0,4/15]$。命题 124.7 的逐纤维下界又迫使任何中心，包括非对角中心，半径至少为 $b_w/2$。
+全零前缀（含空前缀）给 $b_w=c_k$，其余 $b_w\le c_k$，定理 124.6 因而给出精确缺陷。
+
+同前缀的 $S$ 差不超过 $c_k\to0$，所以无穷级数给出的对角态函数在 $\widehat X$ 连续，并由定理 124.8 唯一延拓核心任务。每个有限 $k$ 的缺陷仍严格为正；“任意小误差都有有限深度”不蕴含“某个有限深度误差为零”。
+
+**命题 124.11（逐输入最终正确仍有固定最坏缺陷）。** 本命题取 $d=2$，记 $P_a=|a\rangle\langle a|$，$a\in\{0,1\}$，以 $0^\infty$ 表示总零串。定义
+$$
+T_0(x)=\begin{cases}P_0,&x=0^\infty,\\P_1,&x\ne0^\infty.\end{cases}
+$$
+则对每个有限 $k$，$\omega_k(T_0)=1$、$e_k(T_0)=1/2$。但存在一列确定性前缀预测器，对每个固定输入最终完全正确。
+证明。全零前缀纤维同时包含 $0^\infty$ 和仅在某个 $j\ge k$ 取 $1$ 的合法串；它们的目标态距离为 $D(P_0,P_1)=1$。其余纤维若含已见 $1$，目标态恒为 $P_1$。故最大纤维直径为 $1$，一般下界给 $e_k\ge1/2$。
+对全零前缀输出 $(P_0+P_1)/2$，对已见 $1$ 的前缀输出 $P_1$，便把最坏误差控制在 $1/2$，证明等式。
+
+另取确定性表 $A_k(w)$：已经见到 $1$ 时输出 $P_1$，否则输出 $P_0$。总零输入在所有深度都正确；任一非零输入有首个 $1$ 的下标 $j$，从 $k=j+1$ 起永远正确。因此
+$$
+\forall x\in X_{\rm fs},\quad
+\lim_{k\to\infty}D(T_0(x),A_k(q_kx))=0,
+\qquad
+\forall k,\quad\sup_{x\in X_{\rm fs}}D(T_0(x),A_k(q_kx))=1.
+$$
+后式由每层尚未出现的单个 $1$ 实现。这个确定性表并非最优混态表，不能将其误差 $1$ 与最优缺陷 $1/2$ 混用；同样不能把纤维直径误写成 $1/2$。
+远处的单个 $1$ 趋于总零串，目标态却恒为 $P_1$，所以 $T_0$ 在核心的总零点不连续，更无连续延拓。
+
+**命题 124.12（任务逐个有限与整个任务族一致有限的区别）。** 本命题取 $d=2$，对每个 $j\ge0$ 定义坐标任务 $T_j(x)=P_{x_j}$，则
+$$
+e_k(T_j)=\begin{cases}0,&j<k,\\1/2,&j\ge k.\end{cases}
+$$
+若先提供前缀、再揭示任务 $j$，允许模拟器按 $(j,w)$ 选择态，但在所有 $j,x$ 上评价最坏误差，则
+$$
+E_k=\inf_{(\sigma_{j,w})\in\mathcal D_2^{\mathbb N\times W_k}}
+\sup_{j\in\mathbb N,\ x\in X_{\rm fs}}D(T_j(x),\sigma_{j,q_kx})=1/2
+$$
+对每个有限 $k$ 成立。这不是一次同时制备所有任务的联合量子态的要求。
+证明。$j<k$ 时该位已被记录，直接输出 $P_{w_j}$ 即精确。$j\ge k$ 时，总零串与仅第 $j$ 位为 $1$ 的串同属全零前缀纤维，迫使误差至少为 $1/2$；常值中点态表给上界。
+对任务族，任意表固定取 $j=k$，同一对串仍迫使最坏误差至少为 $1/2$。同时给所有已记录任务输出对应纯态、所有未记录任务输出中点态，达到该界。
+
+每个 $T_j$ 都连续延拓且在深度 $j+1$ 精确；有限非空任务集 $J$ 有共同精确深度 $1+\max J$，空任务集没有约束。然而对无限任务族，以下两个量词序列不同：
+$$
+\forall j\ \exists K\ \forall k\ge K,\ e_k(T_j)=0,
+\qquad
+\exists K\ \forall j\ \forall k\ge K,\ e_k(T_j)=0.
+$$
+本例满足前者而否定后者，甚至对任意小于 $1/2$ 的共同误差预算也否定后者的近似版本。
+一般固定有限维、由非空集合 $J$ 标记的任务族 $\{T_j:X_{\rm fs}\to\mathcal D_d\}_{j\in J}$，将上式的 $\mathbb N$ 换成 $J$ 定义共同缺陷。其趋零须由共同的一致连续性条件控制：
+$$
+\forall\varepsilon>0\ \exists\delta>0\ \forall j\in J\ \forall x,y\in X_{\rm fs},\quad
+p(x,y)<\delta\ \Longrightarrow\ D(T_j(x),T_j(y))<\varepsilon.
+$$
+在通常集合选择下，这也是充要条件：逐任务、逐纤维选择最优中心使共同缺陷等于 $\sup_j e_k(T_j)$；两侧直径界将其趋零化为 $\sup_j\omega_k(T_j)\to0$，再用定理 124.8 中相同的前缀阈值证明。仅有每个任务各自的一致连续性不提供这个共同模量。
+
+**命题 124.13（第 123 节逐层条件与线程完备性的勘注）。** 对第 123 节的逆系统，以下条件必须分开：$z_n\in q_n[X]$ 对每个 $n$ 成立；以及 $\pi_n(z_{n+1})=z_n$ 对每个 $n$ 成立。第 123.2 节“每个有限层都有实现”若被单独用来推出逆极限成员身份，须替换为这两项的合取。
+证明与精确定义。取 $X=\{0,1\}$，各层 $Q_n=X$，$q_n$ 和 $\pi_n$ 都是恒等映射。令 $z_n$ 依奇偶交替为 $0,1$；每一层都有实现，但相邻两层不相容，故不在逆极限。
+
+对非空 $X$，若使用实际像 $Q_n=q_n[X]$，每个 $Q_n$ 有限且取离散拓扑，连接映射由兼容读数限制而来，则自然像 $\iota[X]$ 在 $\varprojlim Q_n$ 中稠密。事实上，取线程 $z$ 的任一基本邻域，它只限制有限多个坐标；令 $m$ 为受限坐标的最大值，选 $x$ 使 $q_mx=z_m$。反复使用相容性，便有所有 $n\le m$ 的 $q_nx=z_n$，所以该像点在邻域中。没有坐标限制时任取 $x\in X$ 即可。
+因此这里定义
+$$
+\operatorname{Ghost}(X)=\left(\varprojlim q_n[X]\right)\setminus\iota[X]
+$$
+才能只计实际有限读数相容后仍无法实现的线程。若改用较大陪域，$X=\{0\}$、各层 $Q_n=\{0,1\}$、$q_n(0)=0$、$\pi_n={\rm id}$ 已给反例：常值 $1$ 线程从未在任何层命中，也不在自然像的闭包中。
+
+代数术语 $\operatorname{ThreadComplete}$ 的定义是 $\iota:X\to\varprojlim Q_n$ 满射；若各层不分离对象，也可等价说商嵌入 $\bar\iota$ 满射。它不是对任意给定拓扑或度量的完备性结论。例如在 $X_{\rm fs}$ 上改取离散距离，空间完备，但前缀线程仍含不属于核心的交替无限串。第 123.3 节与本节命题 124.2 指定前缀拓扑、稠密嵌入和完备载体，才把该具体线程空间识别为度量完备化。
+
+**命题 124.14（第 123.4 节 Hilbert 动力学界的充分条件）。** 设 $H$ 为 Hilbert 空间，$S_n\subseteq H$ 为递增闭子空间，$P_n:H\to S_n$ 为正交投影。每个 $T_n:S_n\to S_n$ 是有界线性算子，并满足对所有 $n\le m$ 和 $u\in S_m$，
+$$
+P_n(T_mu)=T_n(P_nu).
+$$
+若有有限 $M\ge0$ 使 $\sup_n\|T_n\|\le M$，则逐层作用保持有界相容线程，并有
+$$
+\sup_n\|T_nz_n\|\le M\sup_n\|z_n\|.
+$$
+证明。令 $B=\sup_n\|z_n\|<\infty$，则 $\|T_nz_n\|\le\|T_n\|\|z_n\|\le MB$。而线程相容性给
+$P_n(T_mz_m)=T_n(P_nz_m)=T_nz_n$，两项条件俱全。
+这将第 123.4 节的算子界明确为上述类型中的充分条件；本命题不把它断言为无条件必要条件，也不从它推出有限支持像保持。
+
+后一个限制可具体检验。取 $H=\ell^2(\mathbb N)$、$S_n$ 为前 $n$ 个坐标子空间，$v_j=2^{-j-1}$，则 $\|v\|^2=1/3$。令 $T_0=0$，$n\ge1$ 时置 $T_nu=u_0P_nv$。它们投影相容且 $\|T_n\|\le\|v\|$，但由有限支持向量 $e_0$ 所给的线程，经逐层作用后重建为无限支持的 $v$。故保持 Hilbert 有界线程与保持原有限支持载体是两项不同要求。
+
+**命题 124.15（第 123.5 节归一化记录 Gram 条件的勘注）。** 有限复矩阵 $G$ 能表示某个有限维 Hilbert 空间内一族归一化记录向量的 Gram 矩阵，当且仅当它是 Hermitian、半正定且对角元全为 $1$。若预先固定记录空间维数为 $r$，还须且只须 $\operatorname{rank}G\le r$；严格正定不是必要条件。
+证明。若 $G_{ab}=\langle v_a,v_b\rangle$，则 $c^*Gc=\|\sum_a c_av_a\|^2\ge0$，共轭对称性给 Hermitian 性，归一化给单位对角；秩不超过记录空间维数。
+反向由有限维谱分解取 $B$ 使 $G=B^*B$，$B$ 的各列即所需向量，对角条件使各列范数为 $1$。只保留非零特征值可在维数 $\operatorname{rank}G$ 中实现，再嵌入给定的 $r$ 维空间。
+至少两个记录全取同一单位向量时，Gram 矩阵全为 $1$，秩为 $1$，合法而奇异。因此第 123.5 节的“Gram 矩阵的正定性”在归一化记录意义下应读作上述半正定条件；它与通道完全正性、动力学像集不变性仍是不同类型的要求。
+
+**约定 124.16（来源、证明范围与后续问题）。** 本节所引 CSA、Z 与 Q 分别指 `CONTEXTUAL_SPACETIME_ARITHMETIC.md`、`CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md` 与本量子卷。CSA 定义 1–3、§§14–16，Z371.1–2、Z477.3，以及 Q54.7、Q57、Q120–122 的引用版本均为仓库提交 `58d94fb6c3b75e5f0fc33f184e510f46949efdca`；Q123 的引用版本为 `71d892f05c219488670b0a10ca6b9bf11b975cfe`。Q54.7 给纤维直径与近似预测的两侧界，Q57 固定特定未来实验族；Q120 使用含参考的过程 diamond 缺陷，Q121–122 的态族缺陷和 Q123 的线程问题各保留原类型。本节将历史参数集明确换成 $X_{\rm fs}$ 并使用上确界，所需证明已逐项给出。
+
+同一基线版本的 `D5/S3/Quantum/Completion/BoundedInverseLimitReconstruction.lean` 中，`bounded_inverse_limit_reconstruction` 在完备内积空间、单调且具有正交投影的子空间序列上，给累积闭子空间与有界相容线程的规范线性等距双射，并给最终残余商的同类表示。`D5/S3/Quantum/Completion/CompatibleUnboundedCoordinates.lean` 的 `compatible_unbounded_coordinates` 给实际 $\ell^2$ 坐标截断线程、范数平方为 $n$、无界及无法由单个 $\ell^2$ 向量投影实现等结论。`D5/S3/ConceptDynamics/RefinementGeometry/InverseLimitCompletion.lean` 的 `ThreadComplete` 定义为 `stateThread` 满射，`stateThread_bijective_iff_complete_and_separates` 对应线程完备与各层联合分离的合取，不带拓扑完备性的假设或结论。这些声明分别支持所写类型中的既有结果，不承载本节的新前缀缺陷桥。
+
+一般完备延拓与 Heine–Cantor 原理可见钉版 Mathlib（`lake-manifest.json` 的 mathlib 修订 `db584cd6d46c92f209a44c0f1c829460d327499d`，`v4.33.0`）：`Mathlib/Topology/UniformSpace/Completion.lean` 的 `UniformSpace.Completion.extension`、`extension_coe`、`uniformContinuous_extension`、`extension_unique`，以及 `Mathlib/Topology/UniformSpace/HeineCantor.lean` 的 `CompactSpace.uniformContinuous_of_continuous`。延拓的正确限制要求原映射一致连续；目标完备且分离时具有相应唯一性，不能仅凭对任意函数可写下 extension 定义就声称得到延拓。本节是结合这些通常原理与所引仓内模型的 `repo-derived` 普通证明，不提出新颖性或新增 Lean 认证主张。
+
+本节的静态制备模型只比较指定经典输入族的输出态，不保证隐藏参考关联、相干输入行为或自适应过程的模拟；这些要求须另指定联合态或完整过程。定理 124.8 的存在性不提供有效连续模量或高效求最优中心的算法，有限维紧性所得中心存在性也未推广到无限维态空间。下一项研究问题因此是：在增加参考或过程结构后，哪些可检验的连续性与紧性条件仍能给出相应缺陷的精确延拓判据。
+
+## 追加锚（本行以下为增补区）
