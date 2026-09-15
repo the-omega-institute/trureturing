@@ -2,7 +2,11 @@ fingerprints:
   raw_sha256: sha256:5bdb26c2859a7176c1944bb6df20c27e9912e682b6cc14e0a2ba0361fd776adc
   normalized_sha256: sha256:5bdb26c2859a7176c1944bb6df20c27e9912e682b6cc14e0a2ba0361fd776adc
 cas_ref: sha256:5bdb26c2859a7176c1944bb6df20c27e9912e682b6cc14e0a2ba0361fd776adc
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Arith/FactorialRatio/BalaChebyshevFiveDivisibility.local_five
+    target_statement_id: sha256:415fd37578df0f773da1315120d87d374d4e08e7145e029d9d316059f49ad493
+  - gid: D5/S3/Arith/FactorialRatio/BalaChebyshevFiveDivisibility.top_scale_unit
+    target_statement_id: sha256:a91be9f829ecf7b436fb6f47a558f4f0ee06e053ee4bed8e93e06965a70fbead
 receipts:
   unresolved_subitems: []
   chain_atoms:
