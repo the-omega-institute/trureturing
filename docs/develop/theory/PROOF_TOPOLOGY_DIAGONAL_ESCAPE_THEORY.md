@@ -1057,7 +1057,7 @@ $$
 
 ## 21.5 整个过去不能改善统一的覆盖阈值
 
-**定义。** 令 $\mathrm{PastEq}_J(v,w)$ 表示所有起点 $t\le0$ 的长度 $J$ 窗口都相同；令 $\mathrm{SegmentEq}_{L,h}$ 表示起点 $0,\ldots,h$ 的全部长度 $L$ 窗口都相同。
+**定义。** 令 $\mathrm{PastEq}_J(v,w)$ 表示所有起点 $t\le0$ 的长度 $J$ 窗口都相同；令 $\mathrm{SegmentEq}_{L,h}(v,w)$ 表示起点 $0,\ldots,h$ 的全部长度 $L$ 窗口都相同。
 
 **定理。** 在上一节的双侧边界轨迹族上，对 $J,h\in\mathbb N$、$L>0$，
 
@@ -2035,7 +2035,8 @@ $$
 
 $$
 \boxed{M_j=v^2w^jP
-=\begin{cases}0,&g=0,\\g(z/g)^jP,&g>0.\end{cases}}
+=\begin{cases}0,&g=0,\\g(z/g)^jP,&g>0.
+\end{cases}}
 $$
 
 **证明。** 计算二次、三次幂得到三个读数。隐藏块满足 $DC=wC$，故 $D^jC=w^jC$，再乘回 $B$ 得 $BD^jC=v^2w^jI$。若 $g>0$，则 $w=z/g$；若 $g=0$，核恒为零。证毕。
