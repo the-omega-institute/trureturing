@@ -530,6 +530,15 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Six common-density inequalities and exact infinite profile-cell certificate.
+pattern = "docs/reports/erdos7-odd-covering/common_density_head_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]] # Exact core congruences and rational dual weights refuting H73.
 pattern = "docs/reports/erdos7-odd-covering/h73_dual.json"
 kind = "data"
@@ -555,6 +564,33 @@ admission_plane = "content"
 produced_by = "none"
 consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Exact continuous-domain certificates for coherent nonuniform survivor laws.
+pattern = "docs/reports/erdos7-odd-covering/nonuniform_root_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Checks exact transfer saturation with positive actual deletion and distortion.
+pattern = "docs/reports/erdos7-odd-covering/verify_actual_union_saturation.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Checks shared-density layout bounds and exact continuation from prime 67.
+pattern = "docs/reports/erdos7-odd-covering/verify_common_density_head.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
 [[files]] # Verifies the exact finite BBMST recurrence from its conditional Gamma seed.
@@ -595,6 +631,15 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 [[files]] # Checks actual-layout transport through lcm blocks and the tail beginning at 67.
 pattern = "docs/reports/erdos7-odd-covering/verify_lcm_block_transport.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Verifies continuous two-root law bounds and coherent three-prime propagation.
+pattern = "docs/reports/erdos7-odd-covering/verify_nonuniform_root_law.py"
 kind = "program"
 admission_plane = "content"
 produced_by = "none"
