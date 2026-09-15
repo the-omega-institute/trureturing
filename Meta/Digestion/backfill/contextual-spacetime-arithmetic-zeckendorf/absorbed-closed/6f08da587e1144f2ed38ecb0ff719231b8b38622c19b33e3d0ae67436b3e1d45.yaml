@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:6f08da587e1144f2ed38ecb0ff719231b8b38622c19b33e3d0ae67436b3e1d45
+  normalized_sha256: sha256:6f08da587e1144f2ed38ecb0ff719231b8b38622c19b33e3d0ae67436b3e1d45
+cas_ref: sha256:6f08da587e1144f2ed38ecb0ff719231b8b38622c19b33e3d0ae67436b3e1d45
+coverage_gids:
+  - gid: D5/S1/Digit/Infinite/PhaseOrbitRelations.phase_orbit_relations
+    target_statement_id: sha256:4c9a663263b7e3cc69c4a36def358425c125323f2aed8d864a29ff009a06dd77
+receipts:
+  unresolved_subitems: []
