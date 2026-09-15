@@ -249,6 +249,135 @@ theorem length_recurrence (k n : ℕ) (hk : 1 ≤ k) (hn : 2 ≤ n) :
     lengthCount k n =
       (∑ q ∈ (Finset.range n).filter Nat.Prime, lengthCount (k - 1) (n - q)) +
       (∑ q ∈ n.primeFactors, lengthCount (k - 1) (n / q)) := by
-  sorry
+  classical
+  have run_append (u v : List PrimeLetter) (m : ℕ) :
+      runWord primeStep (u ++ v) m = runWord primeStep v (runWord primeStep u m) := by
+    induction u generalizing m with
+    | nil => rfl
+    | cons a u ih => simpa only [List.cons_append, runWord] using ih (primeStep a m)
+  have end_append (u : List PrimeLetter) (a : PrimeLetter) :
+      endpoint (u ++ [a]) = primeStep a (endpoint u) := by
+    exact run_append u [a] 1
+  have positive (u : List PrimeLetter) : 0 < endpoint u := by
+    have run_positive (v : List PrimeLetter) (m : ℕ) (hm : 0 < m) :
+        0 < runWord primeStep v m := by
+      induction v generalizing m with
+      | nil => exact hm
+      | cons a v ih =>
+          apply ih
+          cases a with
+          | inl q => exact Nat.add_pos_left hm q.val
+          | inr q => exact Nat.mul_pos q.property.pos hm
+    exact run_positive u 1 (by omega)
+  let L (j m : ℕ) := {w : List PrimeLetter // endpoint w = m ∧ w.length = j}
+  let A := {q : ℕ // q ∈ (Finset.range n).filter Nat.Prime}
+  let M := {q : ℕ // q ∈ n.primeFactors}
+  let Branch := (Σ q : A, L (k - 1) (n - q.val)) ⊕
+    (Σ q : M, L (k - 1) (n / q.val))
+  let join : Branch → L k n := fun b =>
+    match b with
+    | .inl ⟨q, w⟩ =>
+        ⟨w.val ++ [.inl ⟨q.val, (Finset.mem_filter.mp q.property).2⟩], by
+          constructor
+          · rw [end_append]
+            change endpoint w.val + q.val = n
+            have hw : endpoint w.val = n - q.val := w.property.1
+            have hq : q.val < n := Finset.mem_range.mp (Finset.mem_filter.mp q.property).1
+            omega
+          · simp only [List.length_append, List.length_singleton]
+            have hw := w.property.2
+            omega⟩
+    | .inr ⟨q, w⟩ =>
+        ⟨w.val ++ [.inr ⟨q.val, Nat.prime_of_mem_primeFactors q.property⟩], by
+          constructor
+          · rw [end_append]
+            change q.val * endpoint w.val = n
+            have hw : endpoint w.val = n / q.val := w.property.1
+            rw [hw, Nat.mul_div_cancel' (Nat.dvd_of_mem_primeFactors q.property)]
+          · simp only [List.length_append, List.length_singleton]
+            have hw := w.property.2
+            omega⟩
+  have injective : Function.Injective join := by
+    intro x y h
+    have hw := congrArg Subtype.val h
+    rcases x with ⟨⟨p, hp⟩, u, hu⟩ | ⟨⟨p, hp⟩, u, hu⟩ <;>
+      rcases y with ⟨⟨q, hq⟩, v, hv⟩ | ⟨⟨q, hq⟩, v, hv⟩
+    · change u ++ [Sum.inl _] = v ++ [Sum.inl _] at hw
+      have parts := List.append_inj' hw (by rfl)
+      have labels := List.singleton_injective parts.2
+      have hpq : p = q := congrArg Subtype.val (Sum.inl.inj labels)
+      subst q
+      have huv := parts.1
+      subst v
+      rfl
+    · change u ++ [Sum.inl _] = v ++ [Sum.inr _] at hw
+      have parts := List.append_inj' hw (by rfl)
+      have labels := List.singleton_injective parts.2
+      cases labels
+    · change u ++ [Sum.inr _] = v ++ [Sum.inl _] at hw
+      have parts := List.append_inj' hw (by rfl)
+      have labels := List.singleton_injective parts.2
+      cases labels
+    · change u ++ [Sum.inr _] = v ++ [Sum.inr _] at hw
+      have parts := List.append_inj' hw (by rfl)
+      have labels := List.singleton_injective parts.2
+      have hpq : p = q := congrArg Subtype.val (Sum.inr.inj labels)
+      subst q
+      have huv := parts.1
+      subst v
+      rfl
+  have surjective : Function.Surjective join := by
+    intro w
+    rcases w.val.eq_nil_or_concat' with he | ⟨u, a, he⟩
+    · have hw : endpoint w.val = n := w.property.1
+      rw [he] at hw
+      change 1 = n at hw
+      omega
+    · have hw : primeStep a (endpoint u) = n := by
+        rw [← end_append, ← he]
+        exact w.property.1
+      have hu := positive u
+      have hlen : u.length = k - 1 := by
+        have hl := w.property.2
+        rw [he, List.length_append, List.length_singleton] at hl
+        omega
+      cases a with
+      | inl q =>
+          change endpoint u + q.val = n at hw
+          have hq : q.val ∈ (Finset.range n).filter Nat.Prime :=
+            Finset.mem_filter.mpr ⟨Finset.mem_range.mpr (by omega), q.property⟩
+          have hp : endpoint u = n - q.val := by omega
+          refine ⟨.inl ⟨⟨q.val, hq⟩, ⟨u, hp, hlen⟩⟩, ?_⟩
+          apply Subtype.ext
+          exact he.symm
+      | inr q =>
+          change q.val * endpoint u = n at hw
+          have hd : q.val ∣ n := ⟨endpoint u, hw.symm⟩
+          have hq : q.val ∈ n.primeFactors :=
+            q.property.mem_primeFactors hd (by omega)
+          have hp : endpoint u = n / q.val := by
+            rw [← hw, Nat.mul_div_cancel_left _ q.property.pos]
+          refine ⟨.inr ⟨⟨q.val, hq⟩, ⟨u, hp, hlen⟩⟩, ?_⟩
+          apply Subtype.ext
+          exact he.symm
+  let e : Branch ≃ L k n := Equiv.ofBijective join ⟨injective, surjective⟩
+  have finite_length (j m : ℕ) (hm : 0 < m) :
+      ({w : List PrimeLetter | endpoint w = m ∧ w.length = j} : Set _).Finite :=
+    (reachable_finite m hm).2.subset (fun _ hw => hw.1)
+  let (q : A) : Fintype (L (k - 1) (n - q.val)) :=
+    (finite_length _ _ (by
+      have hq := Finset.mem_range.mp (Finset.mem_filter.mp q.property).1
+      omega)).fintype
+  let (q : M) : Fintype (L (k - 1) (n / q.val)) :=
+    (finite_length _ _ (Nat.div_pos (Nat.le_of_mem_primeFactors q.property)
+      (Nat.pos_of_mem_primeFactors q.property))).fintype
+  change Nat.card (L k n) = _
+  rw [← Nat.card_congr e, Nat.card_sum, Nat.card_sigma, Nat.card_sigma]
+  change (∑ q : A, lengthCount (k - 1) (n - q.val)) +
+    (∑ q : M, lengthCount (k - 1) (n / q.val)) = _
+  exact congrArg₂ Nat.add
+    (Finset.sum_coe_sort ((Finset.range n).filter Nat.Prime)
+      (fun q => lengthCount (k - 1) (n - q)))
+    (Finset.sum_coe_sort n.primeFactors (fun q => lengthCount (k - 1) (n / q)))
 
 end D5.S3.Factorization.Combinatorics.MixedPrimeHistoryCount
