@@ -1,0 +1,29 @@
+### 15.1 定义：有限矩观察与外部原子
+
+设 $N\geq1$，$x_1,\ldots,x_N$ 是两两不同的实数，$y$ 不等于任一节点。设 $\ell_i$ 为相应 Lagrange 基多项式，$c_i=\ell_i(y)$，$J=\{i:c_i>0\}$，并定义
+
+\[
+p=\sum_{i\in J}\ell_i,\quad P=p(y),\quad
+L=\sum_{k=1}^{N-1}|p_k|.
+\tag{15.1}
+\]
+
+定义 $d_0=0$；对 $k\geq1$，当 $p_k\geq0$ 时取 $d_k=1$，否则取 $d_k=-1$。再定义
+
+\[
+r_i=\sum_{k=0}^{N-1}d_k[\ell_i]_k,\qquad
+B=\sum_{i=1}^{N}\left|\frac LP-\frac{r_i}{c_i}\right|.
+\tag{15.2}
+\]
+
+所有 $c_i$ 均非零，$\sum_i c_i=1$，所以 $P=\sum_{i\in J}c_i\geq1$。记 $\mathcal W_\varepsilon(x,y)$ 为所有满足下列条件的 $w\geq0$ 构成的集合：存在 $u_i,v_i\geq0$，使
+
+\[
+w+\sum_i u_i=\sum_i v_i=1,\qquad
+\left|wy^k+\sum_i u_i x_i^k-\sum_i v_i x_i^k\right|\leq\varepsilon
+\quad(0\leq k<N).
+\tag{15.3}
+\]
+
+这些是实际概率测度 $\mu=w\delta_y+\sum_i u_i\delta_{x_i}$、$\nu=\sum_i v_i\delta_{x_i}$ 的矩约束。零次矩误差恒为零。
+
