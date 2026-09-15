@@ -36,6 +36,212 @@ inductive PlanNode where
   | audit (input body : PlanNode)
   deriving Inhabited
 
+/- Construction is bounded independently of typing. A step is charged before
+visiting or allocating a node; binder cutoffs are not traversal depths. Cached
+Expr flags permit immutable no-op reuse, never an uncharged transformation. -/
+namespace PlanTransform
+
+private abbrev WorkM := StateT Nat (Except String)
+
+private def step (depth : Nat) : WorkM Unit := do
+  if depth > 256 then throw "incomplete_closure:E8.construction_depth"
+  let remaining ← get
+  if remaining == 0 then throw "incomplete_closure:E8.construction_work"
+  set (remaining - 1)
+
+private def run (action : WorkM α) (fuel : Nat) : Except String (α × Nat) := do
+  let limit := min 524288 fuel
+  let (value, remaining) ← action.run limit
+  return (value, limit - remaining)
+
+private inductive Operation where
+  | lift (amount : Nat)
+  | substitute (argument : Expr)
+  | abstract (localId : FVarId)
+  | universes (parameters : List Name) (values : List Level)
+
+private partial def sameLevel (a b : Level) (depth : Nat) : WorkM Bool := do
+  step depth
+  match a, b with
+  | .zero, .zero => return true
+  | .param a, .param b => return a == b
+  | .mvar a, .mvar b => return a == b
+  | .succ a, .succ b => sameLevel a b (depth + 1)
+  | .max a b, .max c d | .imax a b, .imax c d =>
+    return (← sameLevel a c (depth + 1)) && (← sameLevel b d (depth + 1))
+  | _, _ => return false
+
+private partial def offset (u : Level) (depth : Nat) : WorkM (Level × Nat) := do
+  step depth
+  match u with
+  | .succ v =>
+    let (base, amount) ← offset v (depth + 1)
+    return (base, amount + 1)
+  | _ => return (u, 0)
+
+private partial def neverZero (u : Level) (depth : Nat) : WorkM Bool := do
+  step depth
+  match u with
+  | .succ _ => return true
+  | .max a b => return (← neverZero a (depth + 1)) || (← neverZero b (depth + 1))
+  | .imax _ b => neverZero b (depth + 1)
+  | _ => return false
+
+/-- Exactly the cheap universe simplifications performed by Lean's
+instantiateLevelParams (mkLevelMax'/mkLevelIMax'), with charged traversals.
+This is universe substitution, not term normalization or defeq comparison. -/
+private def maxLevel (u v : Level) (depth : Nat) : WorkM Level := do
+  step depth
+  if ← sameLevel u v depth then return u
+  if u.isZero then return v
+  if v.isZero then return u
+  let (ub, uo) ← offset u depth
+  let (vb, vo) ← offset v depth
+  let subsumes := fun a b bb bo ao => do
+    if bb.isZero && ao ≥ bo then return true
+    match a with
+    | .max a₁ a₂ => return (← sameLevel b a₁ depth) || (← sameLevel b a₂ depth)
+    | _ => return false
+  if ← subsumes u v vb vo uo then return u
+  if ← subsumes v u ub uo vo then return v
+  if ← sameLevel ub vb depth then return if uo ≥ vo then u else v
+  return .max u v
+
+private def imaxLevel (u v : Level) (depth : Nat) : WorkM Level := do
+  step depth
+  if ← neverZero v depth then return ← maxLevel u v depth
+  if v.isZero || u.isZero then return v
+  if ← sameLevel u v depth then return u
+  return .imax u v
+
+private partial def level (u : Level) (parameters : List Name) (values : List Level)
+    (depth : Nat) : WorkM Level := do
+  step depth
+  if !u.hasParam then return u
+  let child := fun v => level v parameters values (depth + 1)
+  match u with
+  | .param name =>
+    let rec lookup : List Name → List Level → WorkM Level
+      | p :: ps, v :: vs => do
+        step depth
+        if p == name then return v
+        lookup ps vs
+      | _, _ => pure u
+    lookup parameters values
+  | .succ v => return .succ (← child v)
+  | .max a b => maxLevel (← child a) (← child b) (depth + 1)
+  | .imax a b => imaxLevel (← child a) (← child b) (depth + 1)
+  | _ => return u
+
+private partial def raw (operation : Operation) (e : Expr) (cutoff depth : Nat) : WorkM Expr := do
+  step depth
+  match operation with
+  | .lift amount => if amount == 0 || !e.hasLooseBVars then return e
+  | .substitute _ => if !e.hasLooseBVars then return e
+  | .abstract _ => if !e.hasFVar then return e
+  | .universes parameters values =>
+    if parameters.isEmpty || values.isEmpty || !e.hasLevelParam then return e
+  let child := fun x => raw operation x cutoff (depth + 1)
+  let bound := fun x => raw operation x (cutoff + 1) (depth + 1)
+  match e with
+  | .bvar i =>
+    match operation with
+    | .lift amount => return .bvar (if i ≥ cutoff then i + amount else i)
+    | .substitute argument =>
+      if i == cutoff then return ← raw (.lift cutoff) argument 0 (depth + 1)
+      return .bvar (if i > cutoff then i - 1 else i)
+    | _ => return e
+  | .fvar id =>
+    match operation with
+    | .abstract localId => return if id == localId then .bvar cutoff else e
+    | _ => return e
+  | .sort u =>
+    match operation with
+    | .universes parameters values => return .sort (← level u parameters values (depth + 1))
+    | _ => return e
+  | .const name us =>
+    match operation with
+    | .universes parameters values =>
+      return .const name (← us.mapM fun u => level u parameters values (depth + 1))
+    | _ => return e
+  | .app f a => return .app (← child f) (← child a)
+  | .lam n t b bi => return .lam n (← child t) (← bound b) bi
+  | .forallE n t b bi => return .forallE n (← child t) (← bound b) bi
+  | .letE n t v b nd => return .letE n (← child t) (← child v) (← bound b) nd
+  | .mdata m b => return .mdata m (← child b)
+  | .proj n i b => return .proj n i (← child b)
+  | _ => return e
+
+private partial def materialize (p : PlanNode) (depth : Nat) : WorkM Expr := do
+  step depth
+  let child := fun q => materialize q (depth + 1)
+  match p with
+  | .atom e | .supplied e | .proofLeaf _ e => return e
+  | .expanded _ p | .typeNode p | .audit _ p => child p
+  | .app f a => return .app (← child f) (← child a)
+  | .lam t b bi => return .lam .anonymous (← child t) (← child b) bi
+  | .forallE t b bi => return .forallE .anonymous (← child t) (← child b) bi
+  | .letE t v b nd => return .letE .anonymous (← child t) (← child v) (← child b) nd
+  | .mdata m b => return .mdata m (← child b)
+  | .proj n i b => return .proj n i (← child b)
+
+private partial def transform (operation : Operation) (replacement : Option PlanNode)
+    (p : PlanNode) (cutoff depth : Nat) : WorkM PlanNode := do
+  step depth
+  let expr := fun e => raw operation e cutoff (depth + 1)
+  let child := fun q => transform operation replacement q cutoff (depth + 1)
+  let bound := fun q => transform operation replacement q (cutoff + 1) (depth + 1)
+  match p with
+  | .supplied _ => return p
+  | .atom (.bvar i) =>
+    if let .substitute _ := operation then
+      if i == cutoff then
+        let some argument := replacement | throw "incomplete_closure:E8.substitution_origin"
+        return ← transform (.lift cutoff) none argument 0 (depth + 1)
+    return .atom (← expr (.bvar i))
+  | .atom e => return .atom (← expr e)
+  | .proofLeaf t e => return .proofLeaf (← expr t) (← expr e)
+  | .expanded e p => return .expanded (← expr e) (← child p)
+  | .typeNode p => return .typeNode (← child p)
+  | .audit input body => return .audit (← child input) (← child body)
+  | .app f a => return .app (← child f) (← child a)
+  | .lam t b bi => return .lam (← child t) (← bound b) bi
+  | .forallE t b bi => return .forallE (← child t) (← bound b) bi
+  | .letE t v b nd => return .letE (← child t) (← child v) (← bound b) nd
+  | .mdata m b => return .mdata m (← child b)
+  | .proj n i b => return .proj n i (← child b)
+
+def substituteExpr (body argument : Expr) (cutoff : Nat := 0) (fuel : Nat := 524288) :=
+  run (raw (.substitute argument) body cutoff 0) fuel
+
+def liftExpr (e : Expr) (cutoff amount : Nat) (fuel : Nat := 524288) :=
+  run (raw (.lift amount) e cutoff 0) fuel
+
+def abstractExpr (e : Expr) (id : FVarId) (cutoff : Nat := 0) (fuel : Nat := 524288) :=
+  run (raw (.abstract id) e cutoff 0) fuel
+
+def instantiateExpr (e : Expr) (parameters : List Name) (values : List Level)
+    (fuel : Nat := 524288) :=
+  run (raw (.universes parameters values) e 0 0) fuel
+
+def toExpr (p : PlanNode) (fuel : Nat := 524288) := run (materialize p 0) fuel
+
+def abstractPlan (p : PlanNode) (id : FVarId) (fuel : Nat := 524288) :=
+  run (transform (.abstract id) none p 0 0) fuel
+
+def instantiatePlan (p : PlanNode) (parameters : List Name) (values : List Level)
+    (fuel : Nat := 524288) :=
+  run (transform (.universes parameters values) none p 0 0) fuel
+
+def substitutePlan (body argument : PlanNode) (fuel : Nat := 524288) :=
+  run (do
+    -- Materialize once, retaining the original plan for origin-preserving
+    -- replacement. Raw expansion/proof syntax uses the same charged value.
+    let expression ← materialize argument 0
+    transform (.substitute expression) (some argument) body 0 0) fuel
+
+end PlanTransform
+
 structure DependencyIdentity where
   name : Name
   owner : Name

@@ -1038,17 +1038,6 @@ def bindingIdentity (statementIdentity : String) (certificate : TemplateBindingC
   let (_, state) ← action.run { remaining := min fuel 524288 }
   return (Sha256.hex state.bytes, state.bytes.size)
 
-def PlanNode.toExpr : PlanNode → Expr
-  | .atom e | .supplied e | .proofLeaf _ e => e
-  | .expanded _ checked | .typeNode checked | .audit _ checked => checked.toExpr
-  | .app f a => .app f.toExpr a.toExpr
-  | .lam t b bi => .lam .anonymous t.toExpr b.toExpr bi
-  | .forallE t b bi => .forallE .anonymous t.toExpr b.toExpr bi
-  | .letE t v b nd => .letE .anonymous t.toExpr v.toExpr b.toExpr nd
-  | .mdata m b => .mdata m b.toExpr
-  | .proj n i b => .proj n i b.toExpr
-
-
 private partial def wirePlan (params : List Name) (depth : Nat) (plan : PlanNode) : WireM Unit := do
   if depth > 256 then throw "incomplete_closure:E8.plan_depth"
   let child := wirePlan params (depth + 1)
@@ -1288,34 +1277,6 @@ end LeanInformationAudit.TemplateAudit
 namespace LeanInformationAudit.TemplateAudit
 open Lean Meta
 
-/-- Abstract one local at its actual binder depth without substituting (and
-therefore decrementing) already abstracted outer variables. -/
-private partial def abstractLocal (e x : Expr) (depth : Nat) : Expr :=
-  if e == x then .bvar depth else
-  match e with
-  | .app f a => .app (abstractLocal f x depth) (abstractLocal a x depth)
-  | .lam n t b bi => .lam n (abstractLocal t x depth) (abstractLocal b x (depth + 1)) bi
-  | .forallE n t b bi => .forallE n (abstractLocal t x depth) (abstractLocal b x (depth + 1)) bi
-  | .letE n t v b nd => .letE n (abstractLocal t x depth) (abstractLocal v x depth)
-      (abstractLocal b x (depth + 1)) nd
-  | .mdata m b => .mdata m (abstractLocal b x depth)
-  | .proj n i b => .proj n i (abstractLocal b x depth)
-  | _ => e
-
-private def PlanNode.abstractAt (x : Expr) (depth : Nat := 0) : PlanNode → PlanNode
-  | .atom e => .atom (abstractLocal e x depth)
-  | .supplied e => .supplied (abstractLocal e x depth)
-  | .expanded raw checked => .expanded (abstractLocal raw x depth) (checked.abstractAt x depth)
-  | .proofLeaf t e => .proofLeaf (abstractLocal t x depth) (abstractLocal e x depth)
-  | .typeNode p => .typeNode (p.abstractAt x depth)
-  | .audit input body => .audit (input.abstractAt x depth) (body.abstractAt x depth)
-  | .app f a => .app (f.abstractAt x depth) (a.abstractAt x depth)
-  | .lam t b bi => .lam (t.abstractAt x depth) (b.abstractAt x (depth + 1)) bi
-  | .forallE t b bi => .forallE (t.abstractAt x depth) (b.abstractAt x (depth + 1)) bi
-  | .letE t v b nd => .letE (t.abstractAt x depth) (v.abstractAt x depth) (b.abstractAt x (depth + 1)) nd
-  | .mdata m b => .mdata m (b.abstractAt x depth)
-  | .proj n i b => .proj n i (b.abstractAt x depth)
-
 private structure CompileState where
   remaining : Nat := 524288
   dependencies : Array DependencyIdentity := #[]
@@ -1328,8 +1289,24 @@ private structure CompileState where
 private abbrev CompileM := StateT CompileState MetaM
 
 private def charge (work : Nat := 1) : CompileM Unit := do
+  Core.checkMaxHeartbeats "template construction"
   unless work ≤ (← get).remaining do throwError "incomplete_closure:E8.work"
   modify fun s => { s with remaining := s.remaining - work }
+
+/-- Pure construction shares the caller's remaining quota. The transformer
+fails before allocation when its quota or structural depth is exhausted. -/
+private def construct (action : Nat → Except String (α × Nat)) : CompileM α := do
+  let (result, work) ← match action (← get).remaining with
+    | .ok value => pure value
+    | .error reason => throwError reason
+  charge work
+  return result
+
+private def instantiate (body argument : Expr) : CompileM Expr :=
+  construct (fun fuel => PlanTransform.substituteExpr body argument 0 fuel)
+
+private def abstractPlan (body : PlanNode) (x : Expr) : CompileM PlanNode :=
+  construct (fun fuel => PlanTransform.abstractPlan body x.fvarId! fuel)
 
 private partial def sameLevel (a b : Level) : CompileM Bool := do
   charge
@@ -1539,21 +1516,21 @@ private partial def compileNode (e : Expr) (depth : Nat)
       if templateBinders > 0 &&
           (← get).constructorTypes.contains (t.getAppFn.constName?.getD .anonymous) then
         modify fun s => { s with astVariables := s.astVariables.insert x.fvarId! }
-      let body ← compileExpr (b.instantiate1 x) (depth + 1) typePosition (templateBinders - 1)
-      return .lam tp (body.abstractAt x) bi
+      let body ← compileExpr (← instantiate b x) (depth + 1) typePosition (templateBinders - 1)
+      return .lam tp (← abstractPlan body x) bi
   | .forallE n t b bi =>
     let tp ← compileExpr t (depth + 1) true
     binder n bi t fun x => do
-      let bp ← compileExpr (b.instantiate1 x) (depth + 1) true
+      let bp ← compileExpr (← instantiate b x) (depth + 1) true
       rule "E2.pi"
-      return .forallE tp (bp.abstractAt x) bi
+      return .forallE tp (← abstractPlan bp x) bi
   | .letE n t v b nd =>
     let tp ← compileExpr t (depth + 1) true
     let vp ← compileExpr v (depth + 1) false
     binder n .default t fun x => do
-      let bp ← child (b.instantiate1 x)
+      let bp ← child (← instantiate b x)
       rule "E3.let"
-      return .letE tp vp (bp.abstractAt x) nd
+      return .letE tp vp (← abstractPlan bp x) nd
   | .mdata m b => rule "E3.metadata"; return .mdata m (← child b)
   | .proj n i b =>
     unless interfaceTypes.contains n || #[`Prod, `Subtype].contains n do
@@ -1645,8 +1622,8 @@ private partial def compileNode (e : Expr) (depth : Nat)
       -- Check every raw argument before capture-avoiding expansion, including
       -- arguments unused by the definition body.
       let mut inputs ← args.mapM child
-      let mut value := defn.value.instantiateLevelParams defn.levelParams levels
-      let mut type := defn.type.instantiateLevelParams defn.levelParams levels
+      let mut value ← construct (fun fuel => PlanTransform.instantiateExpr defn.value defn.levelParams levels fuel)
+      let mut type ← construct (fun fuel => PlanTransform.instantiateExpr defn.type defn.levelParams levels fuel)
       for arg in args do
         let .lam _ bodyDomain body _ := value
           | throwError "unclassified_form:E5.unsaturated_definition:{name}"
@@ -1655,8 +1632,8 @@ private partial def compileNode (e : Expr) (depth : Nat)
         inputs := inputs.push (← compileExpr domain (depth + 1) true)
         inputs := inputs.push (← compileExpr bodyDomain (depth + 1) true)
         charge
-        type := tail.instantiate1 arg
-        value := body.instantiate1 arg
+        type ← instantiate tail arg
+        value ← instantiate body arg
       if value.isLambda then throwError "unclassified_form:E5.unsaturated_definition:{name}"
       inputs := inputs.push (← compileExpr type (depth + 1) true)
       let mut plan ← child value
@@ -1678,8 +1655,8 @@ private partial def compileBranch (expression : Expr) (fields depth : Nat)
   binder n bi type fun x => do
     if (← get).constructorTypes.contains (type.getAppFn.constName?.getD .anonymous) then
       modify fun s => { s with astVariables := s.astVariables.insert x.fvarId! }
-    let checked ← compileBranch (body.instantiate1 x) (fields - 1) (depth + 1) typePosition
-    return .lam domain (checked.abstractAt x) bi
+    let checked ← compileBranch (← instantiate body x) (fields - 1) (depth + 1) typePosition
+    return .lam domain (← abstractPlan checked x) bi
 end
 
 end LeanInformationAudit.TemplateAudit
@@ -1742,9 +1719,11 @@ private partial def checkTelescope (type : Expr) (depth : Nat := 0) : CompileM (
     if bi == .instImplicit && kind != .dictionary then
       throwError "unclassified_form:E1.instance_slot"
     binder n bi domain fun x => do
-      let tail ← checkTelescope (body.instantiate1 x) (depth + 1)
+      let tail ← checkTelescope (← instantiate body x) (depth + 1)
       -- Stored domains use de Bruijn indices relative to earlier slots.
-      let tail := tail.mapIdx fun index slot => { slot with type := abstractLocal slot.type x index }
+      let tail ← tail.mapIdxM fun index slot => do
+        let type ← construct (fun fuel => PlanTransform.abstractExpr slot.type x.fvarId! index fuel)
+        return { slot with type }
       return #[{ kind, binderInfo := bi, type := domain }] ++ tail
   | _ =>
     let name := type.getAppFn.constName?.getD .anonymous
@@ -1844,13 +1823,26 @@ def diagnosticFields (message : String) : String :=
       (Json.str (String.intercalate ":" site)).compress
   | _ => "reason=incomplete_closure rule=E8.exception site=" ++ (Json.str message).compress
 
+/-- Nested Meta boundaries may use their own initial heartbeat count. The
+outer boundary still settles all elapsed work, including the final subcall. -/
+def withCumulativeBudget (action : MetaM α) : MetaM α :=
+  withCurrHeartbeats <| withOptions (fun options =>
+    let configured := maxHeartbeats.get options
+    options.set `maxHeartbeats (if configured == 0 then 100000 else min 100000 configured)) do
+    let limit := Core.getMaxHeartbeats (← getOptions)
+    -- withOptions changes options/maxRecDepth, not Core's heartbeat field.
+    controlAt CoreM fun runInBase => withReader (fun context : Core.Context =>
+      { context with maxHeartbeats :=
+          if context.maxHeartbeats == 0 then limit else min limit context.maxHeartbeats }) do
+      let result ← runInBase action
+      Core.checkMaxHeartbeats "template cumulative budget"
+      return result
+
 /-- Unsupported enrollment leaves no summary. All budgets are lower-only. -/
 def enroll (name : Name) (constructors : Array Name := #[]) : CommandElabM (Except String Unit) := do
   let saved ← getEnv
   let answer ← liftTermElabM <| tryCatchRuntimeEx
-    (withCurrHeartbeats <| withOptions (fun options =>
-      let configured := maxHeartbeats.get options
-      options.set `maxHeartbeats (if configured == 0 then 100000 else min 100000 configured)) do
+    (withCumulativeBudget do
       let checkedPlan ← compileTemplate name constructors
       let current := templateIndexExt.getState (← getEnv)
       match current.lookup name (pure () : Id Unit) with
@@ -1888,8 +1880,19 @@ private structure CompareState where
 
 private abbrev CompareM := StateT CompareState MetaM
 private def debit (n : Nat := 1) : CompareM Unit := do
+  Core.checkMaxHeartbeats "template comparison"
   unless n ≤ (← get).remaining do throwError "incomplete_closure:E8.comparison_work"
   modify fun state => { state with remaining := state.remaining - n }
+
+private def construct (action : Nat → Except String (α × Nat)) : CompareM α := do
+  let (result, work) ← match action (← get).remaining with
+    | .ok value => pure value
+    | .error reason => throwError reason
+  debit work
+  return result
+
+private def materialize (plan : PlanNode) : CompareM Expr :=
+  construct (fun fuel => PlanTransform.toExpr plan fuel)
 
 private partial def alpha (e : Expr) (depth : Nat := 0) : CompareM Expr := do
   debit
@@ -1908,81 +1911,14 @@ private partial def alpha (e : Expr) (depth : Nat := 0) : CompareM Expr := do
 private def equalRaw (a b : Expr) : CompareM Bool := do
   return (← alpha a).equal (← alpha b)
 
-private partial def rawSubstitute (e arg : Expr) (depth : Nat) : CompareM Expr := do
-  debit
-  if depth > 256 then throwError "incomplete_closure:E8.substitution_depth"
-  let child := fun e => rawSubstitute e arg depth
-  match e with
-  | .bvar i =>
-    if i == depth then return arg.liftLooseBVars 0 depth
-    return .bvar (if i > depth then i - 1 else i)
-  | .app f a => return .app (← child f) (← child a)
-  | .lam _ t b bi => return .lam .anonymous (← child t) (← rawSubstitute b arg (depth + 1)) bi
-  | .forallE _ t b bi => return .forallE .anonymous (← child t) (← rawSubstitute b arg (depth + 1)) bi
-  | .letE _ t v b nd =>
-    return .letE .anonymous (← child t) (← child v)
-      (← rawSubstitute b arg (depth + 1)) nd
-  | .mdata m b => return .mdata m (← child b)
-  | .proj n i b => return .proj n i (← child b)
-  | _ => return e
+private def rawSubstitute (body argument : Expr) (cutoff : Nat) : CompareM Expr :=
+  construct (fun fuel => PlanTransform.substituteExpr body argument cutoff fuel)
 
-private partial def liftPlan (p : PlanNode) (amount : Nat) (cutoff : Nat := 0) : CompareM PlanNode := do
-  debit
-  let raw := fun e : Expr => e.liftLooseBVars cutoff amount
-  match p with
-  | .atom e => return .atom (raw e)
-  | .supplied e => return .supplied e
-  | .proofLeaf t e => return .proofLeaf (raw t) (raw e)
-  | .typeNode p => return .typeNode (← liftPlan p amount cutoff)
-  | .audit input body =>
-    return .audit (← liftPlan input amount cutoff) (← liftPlan body amount cutoff)
-  | .expanded e b => return .expanded (raw e) (← liftPlan b amount cutoff)
-  | .app f a => return .app (← liftPlan f amount cutoff) (← liftPlan a amount cutoff)
-  | .lam t b bi => return .lam (← liftPlan t amount cutoff) (← liftPlan b amount (cutoff + 1)) bi
-  | .forallE t b bi => return .forallE (← liftPlan t amount cutoff) (← liftPlan b amount (cutoff + 1)) bi
-  | .letE t v b nd =>
-    return .letE (← liftPlan t amount cutoff) (← liftPlan v amount cutoff)
-      (← liftPlan b amount (cutoff + 1)) nd
-  | .mdata m b => return .mdata m (← liftPlan b amount cutoff)
-  | .proj n i b => return .proj n i (← liftPlan b amount cutoff)
+private def substitute (body argument : PlanNode) : CompareM PlanNode :=
+  construct (fun fuel => PlanTransform.substitutePlan body argument fuel)
 
-private partial def substitute (p : PlanNode) (arg : PlanNode) (depth : Nat := 0) : CompareM PlanNode := do
-  debit
-  if depth > 256 then throwError "incomplete_closure:E8.substitution_depth"
-  let raw := fun e => rawSubstitute e arg.toExpr depth
-  match p with
-  | .atom (.bvar i) =>
-    if i == depth then return ← liftPlan arg depth
-    return .atom (.bvar (if i > depth then i - 1 else i))
-  | .atom e => return .atom (← raw e)
-  | .supplied e => return .supplied e
-  | .proofLeaf t e => return .proofLeaf (← raw t) (← raw e)
-  | .typeNode p => return .typeNode (← substitute p arg depth)
-  | .audit input body =>
-    return .audit (← substitute input arg depth) (← substitute body arg depth)
-  | .expanded e b => return .expanded (← raw e) (← substitute b arg depth)
-  | .app f a => return .app (← substitute f arg depth) (← substitute a arg depth)
-  | .lam t b bi => return .lam (← substitute t arg depth) (← substitute b arg (depth + 1)) bi
-  | .forallE t b bi => return .forallE (← substitute t arg depth) (← substitute b arg (depth + 1)) bi
-  | .letE t v b nd =>
-    return .letE (← substitute t arg depth) (← substitute v arg depth)
-      (← substitute b arg (depth + 1)) nd
-  | .mdata m b => return .mdata m (← substitute b arg depth)
-  | .proj n i b => return .proj n i (← substitute b arg depth)
-
-private def levels (params : List Name) (values : List Level) : PlanNode → PlanNode
-  | .atom e => .atom (e.instantiateLevelParams params values)
-  | .supplied e => .supplied e
-  | .proofLeaf t e => .proofLeaf (t.instantiateLevelParams params values) (e.instantiateLevelParams params values)
-  | .typeNode p => .typeNode (levels params values p)
-  | .audit input body => .audit (levels params values input) (levels params values body)
-  | .expanded e b => .expanded (e.instantiateLevelParams params values) (levels params values b)
-  | .app f a => .app (levels params values f) (levels params values a)
-  | .lam t b bi => .lam (levels params values t) (levels params values b) bi
-  | .forallE t b bi => .forallE (levels params values t) (levels params values b) bi
-  | .letE t v b nd => .letE (levels params values t) (levels params values v) (levels params values b) nd
-  | .mdata m b => .mdata m (levels params values b)
-  | .proj n i b => .proj n i (levels params values b)
+private def levels (params : List Name) (values : List Level) (plan : PlanNode) : CompareM PlanNode :=
+  construct (fun fuel => PlanTransform.instantiatePlan plan params values fuel)
 
 private partial def applyPlan (plan : PlanNode) (arg : PlanNode) : CompareM PlanNode := do
   debit
@@ -2047,7 +1983,7 @@ private def forwardActual (theoremName selected : Name) (initial : Expr) : Compa
     let .ok (_, bodyWork) := rawIdentity info.levelParams info.value (← get).remaining
       | throwError "incomplete_closure:E8.extraction_body"
     debit bodyWork
-    let mut value := info.value.instantiateLevelParams info.levelParams universeArgs
+    let mut value ← construct (fun fuel => PlanTransform.instantiateExpr info.value info.levelParams universeArgs fuel)
     for argument in arguments do
       let .lam _ _ tail _ := value | throwError "incomplete_closure:dtr.extraction_telescope"
       value ← rawSubstitute tail argument 0
@@ -2090,24 +2026,24 @@ private partial def retainedTypes (plan : PlanNode) (context : Array Expr := #[]
   match plan with
   | .atom _ | .supplied _ => return #[]
   | .proofLeaf type _ => return #[obligation type]
-  | .typeNode checked => return #[obligation checked.toExpr] ++ (← child checked)
+  | .typeNode checked => return #[obligation (← materialize checked)] ++ (← child checked)
   | .expanded _ checked => child checked
   | .audit input body => return (← child input) ++ (← child body)
   | .app f a =>
     let (head, pending) ← retainedHead f context (depth + 1)
     if let .lam domain body _ := head then
-      return pending ++ #[obligation domain.toExpr] ++ (← child domain) ++
+      return pending ++ #[obligation (← materialize domain)] ++ (← child domain) ++
         (← child a) ++ (← child (← substitute body a))
     return pending ++ (← child head) ++ (← child a)
   | .lam domain body bi | .forallE domain body bi =>
-    let type := domain.toExpr
+    let type ← materialize domain
     let binder := Expr.forallE .anonymous type (.bvar 0) bi
     return #[obligation type] ++ (← child domain) ++
       (← retainedTypes body (context.push binder) (depth + 1))
   | .letE type value body _ =>
     -- Substitution here discharges dependent type obligations only. The
     -- comparator still retains the original let/value/body without zeta.
-    return #[obligation type.toExpr] ++ (← child type) ++ (← child value) ++
+    return #[obligation (← materialize type)] ++ (← child type) ++ (← child value) ++
       (← child (← substitute body value))
   | .mdata _ body | .proj _ _ body => child body
 
@@ -2129,11 +2065,11 @@ private partial def retainedHead (plan : PlanNode) (context : Array Expr)
     return (head, pending ++ rest)
   | .typeNode checked =>
     let (head, rest) ← child checked
-    return (head, #[obligation checked.toExpr] ++ rest)
+    return (head, #[obligation (← materialize checked)] ++ rest)
   | .app f a =>
     let (head, pending) ← child f
     if let .lam domain body _ := head then
-      let inputs := #[obligation domain.toExpr] ++ (← types domain) ++ (← types a)
+      let inputs := #[obligation (← materialize domain)] ++ (← types domain) ++ (← types a)
       let (result, rest) ← child (← substitute body a)
       return (result, pending ++ inputs ++ rest)
     return (.app head a, pending)
@@ -2197,7 +2133,7 @@ private partial def matchesPlan (context : MatchContext) (plan : PlanNode) (actu
               for i in [:projection.parameters.size] do
                 unless ← child fields[i]! projection.parameters[i]! do parametersMatch := false
               if parametersMatch then
-                return ← child plan fields[info.numParams + projection.index]!.toExpr
+                return ← child plan (← materialize fields[info.numParams + projection.index]!)
       else if let .const ctor universeArgs := base.getAppFn then
         if let some (.ctorInfo info) := (← getEnv).find? ctor then
           let fields := base.getAppArgs
@@ -2313,18 +2249,18 @@ private def validate (event : TemplateOccurrenceEvent) (descriptor : Expr) : Met
   closed actual
   let compare : CompareM TemplateBindingCertificate := do
     debit plan.serializedBytes
-    let mut body := levels plan.levelParams universeArgs plan.plan
-    let mut type := levels plan.levelParams universeArgs plan.typePlan
+    let mut body ← levels plan.levelParams universeArgs plan.plan
+    let mut type ← levels plan.levelParams universeArgs plan.typePlan
     let mut obligations : Array (Expr × Array Expr) := #[]
     for argument in arguments do
       body ← applyPlan body (.supplied argument)
       match ← checkedHead type with
       | .forallE domain tail _ =>
-        obligations := obligations.push (domain.toExpr, #[])
+        obligations := obligations.push ((← materialize domain), #[])
         obligations := obligations ++ (← retainedTypes domain)
         type ← substitute tail (.supplied argument)
       | _ => throwError "unclassified_form:dtr.descriptor_telescope"
-    obligations := obligations.push (type.toExpr, #[])
+    obligations := obligations.push ((← materialize type), #[])
     obligations := obligations ++ (← retainedTypes type) ++ (← retainedTypes body)
     let typeWork ← match ← RegistrationGates.templateTypesCurrent event.key.theoremName
         obligations (← get).remaining with
@@ -2375,15 +2311,14 @@ def assess (event : TemplateOccurrenceEvent) (claim : Option TemplateBindingClai
   | none => return { occurrence := event, descriptor := none, bindingOwner := none, result := .undeclared }
   | some claim =>
     let result ← tryCatchRuntimeEx
-      (withCurrHeartbeats <| withOptions (fun options =>
-        let configured := maxHeartbeats.get options
-        options.set `maxHeartbeats (if configured == 0 then 100000 else min 100000 configured)) do
+      (withCumulativeBudget do
         unless claim.key == event.key && claim.arena.equal event.arena do
           throwError "unclassified_form:dtr.claim_occurrence"
         if let some diagnostic := claim.resolutionDiagnostic then throwError diagnostic
         let some descriptor := claim.descriptor
           | throwError "unclassified_form:dtr.missing_template"
-        pure <| TemplateBindingResult.declaredValidated (← validate event descriptor))
+        let certificate ← validate event descriptor
+        pure <| TemplateBindingResult.declaredValidated certificate)
       (fun error => do
         let message ← error.toMessageData.toString
         let reason := if message.startsWith "unclassified_form:" || message.startsWith "forbidden_dependency:"
