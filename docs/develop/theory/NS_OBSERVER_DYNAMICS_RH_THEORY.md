@@ -247,7 +247,7 @@ LowModeReversalWitness -> ReversalWaveSynthesis
 
 本组完成数学推导的自审和精确符号交叉核对。独立的 Laurent 多项式实现按空间导数构造对流，与源码的 16 对卷积产生的 9 个输出模式作 27 项分量比较；另有 100 组精确有理参数回归、真实余弦场合成检查、隐藏二次系数检查和既有 Weil 能量恒等式检查。这是同一作者的第二种实现，不冒充独立作者审稿。
 
-当前作者环境无 Lean、Lake 或 .NET。没有执行新的 elaboration、Lean 内核检查、公理闭包收集或 Scribe 发射。源码是经过逻辑检查的候选证明；词法上无新增 axiom、sorry、admit、native_decide，不足以替代编译及传递依赖检查。
+当前作者环境无 Lean、Lake 或 .NET。没有执行新的 elaboration、Lean 内核检查、公理闭包收集、Scribe 发射。源码是经过逻辑检查的候选证明；词法上无新增 axiom、sorry、admit、native_decide，不足以替代编译及传递依赖检查。
 
 下一项直接消费者是统一有限 Fourier 系数与实际空间微分的算子级识别，再把系数见证作为通用二次闭包定理的实例。之后才能严格接入局部解、记忆核和相应预测误差。原稿的 Schur–记忆积分、隐藏耗散、Gamma 尾项认证、canonical Li 增长到 RH、热变形零点运动等目标仍各有独立证明义务，未由本组完成。
 
@@ -428,7 +428,7 @@ a(t)=c+(a(0)-c)e^{-\Gamma_k t},
 \leq-\gamma\|w\|_{L^2}^2+\rho\|w\|_{L^2}.
 \]
 
-**证明。** 对 $\|w\|_{L^2}$ 应用第 11.3 节的比较论证即得结论。
+**证明。** 对 $\|w(t)\|_{L^2}$ 应用第 11.3 节的比较论证即得结论。
 
 ## 12. 正则化能量、二次平衡证书与记忆消元
 
@@ -738,3 +738,197 @@ K(\tau)=-B^*e^{-\tau D}B.
 \]
 
 **证明。** 对隐藏方程应用常系数线性方程的变参数公式，得到 $y(t)$ 的表示；将该表示代回可见方程，积分项的算子系数即为式 (12.20) 中的 $K$。
+
+## 16. 固定模态数、遗漏质量与谱底识别的阶数
+
+### 16.1 定义：单侧稀疏矩比较
+
+设 $d\geq1$，$x_i\in[0,1]$、$u_i\geq0$（$1\leq i\leq d$），并令 $\rho$ 为 $[0,1]$ 上总质量不超过 $\tau$ 的有限正测度。设 $\nu$ 为支撑于 $(-\infty,b]$ 的有限正测度，且本节所用矩有限。定义
+
+\[
+\mu=\sum_{i=1}^d u_i\delta_{x_i}+\rho,\qquad
+m_k(\sigma)=\int t^k\,\sigma(dt).
+\]
+
+假设 $b\geq0$，存在指标 $i_*$ 使 $x_*>b$、$u_{i_*}\geq\eta>0$，其中 $x_*=x_{i_*}$；并且
+
+\[
+|m_k(\mu)-m_k(\nu)|\leq\varepsilon\quad(0\leq k\leq2d-1),\qquad\varepsilon\geq0.
+\tag{16.1}
+\]
+
+节点可以重合，权重可以为零，不要求概率归一化。$\rho$ 是遗漏的正质量，不要求它只位于高能或低能一侧。
+
+### 16.2 定理：选择性消去与独立的尾误差代价
+
+令 $S=\{i:x_i\leq b\}$、$s=|S|$，则
+
+\[
+\eta(x_*-b)^{2s+1}\leq2^{2s+1}\varepsilon+\tau,
+\qquad
+\boxed{\eta(x_*-b)^{2d-1}\leq2^{2d-1}\varepsilon+\tau.}
+\tag{16.2}
+\]
+
+**证明。** 构造
+
+\[
+q(t)=(t-b)\prod_{i\in S}(t-x_i)^2,\qquad D=2s+1\leq2d-1.
+\]
+
+在保留节点中，$x_i\leq b$ 时 $q(x_i)=0$，$x_i>b$ 时 $q(x_i)\geq0$；在比较测度的支撑上 $q\leq0$。所有根都不大于 $b$，故 $q(x_*)\geq(x_*-b)^D$。由于 $0\leq b<x_*\leq1$，所有根与 $[0,1]$ 内的点的距离都不超过一，故 $\sup_{[0,1]}|q|\leq1$。因此
+
+\[
+\eta(x_*-b)^D\leq\int q\,d(\mu-\nu)+\tau.
+\tag{16.3}
+\]
+
+若线性泛函 $F$ 对次数至 $D$ 的单项式满足 $|F(t^k)|\leq\varepsilon$，每乘一个根 $a\in[0,1]$ 的线性因子，就有
+
+\[
+|F((t-a)t^k)|\leq |F(t^{k+1})|+a|F(t^k)|\leq2\varepsilon.
+\]
+
+对实际因子列表归纳，得 $|F(q)|\leq2^D\varepsilon$。把 $F(f)=\int f\,d(\mu-\nu)$ 代入式 (16.3) 即得第一式。最后由 $0<x_*-b\leq1$、$D\leq2d-1$ 得第二式。根的选择避免了让 $x_*$ 与同侧邻近节点之间的距离进入分母；只有位于比较阈值以下的保留节点被消去。多项式主次化和支撑控制的方法背景见 [16-A, §3, Lemma 15]，无分离稀疏矩恢复的算法背景见 [16-B]。
+
+**推论。** 当 $\rho=0$ 时，$x_*-b\leq2(\varepsilon/\eta)^{1/(2d-1)}$。当 $\rho\neq0$ 时，式 (16.2) 明确区分观察误差 $\varepsilon$ 与遗漏质量 $\tau$；有限观察本身不提供 $\tau$ 的独立上界。
+
+### 16.3 定义：被动 Laplace 观察的两个模型类
+
+固定 $0\leq E_-<E_+<\infty$、$0<\eta<1$。令 $\mathcal M_d$ 为 $[E_-,E_+]$ 上至多有 $d$ 个原子的概率测度，要求其最小支撑点 $g(\sigma)$ 的质量至少为 $\eta$。令 $\mathcal M_{\rm fin}=\bigcup_{j\geq1}\mathcal M_j$，并定义
+
+\[
+C_\sigma(t)=\int e^{-tE}\,\sigma(dE),\quad t\geq0,
+\qquad
+\mathcal R_d(\varepsilon)=\inf_{\widehat g}\sup_{\sigma\in\mathcal M_d}\sup_{\|Y-C_\sigma\|_\infty\leq\varepsilon}
+|\widehat g(Y)-g(\sigma)|.
+\tag{16.4}
+\]
+
+估计函数可读取所有非负时间的被动观测，没有相干量子查询或直接矩阵访问。另定义只有一侧具有模态数约束的可辨识直径
+
+\[
+\Omega_d(\varepsilon)=\sup\{|g(\mu)-g(\nu)|:\mu\in\mathcal M_d,\ \nu\in\mathcal M_{\rm fin},\ \|C_\mu-C_\nu\|_\infty\leq\varepsilon\}.
+\tag{16.5}
+\]
+
+这里上确界同时遍历稀疏侧的全部位置和权重，允许接近碰撞；它不等同于固定一个已分离矩阵后的局部误差。
+
+### 16.4 定理：固定模态数的全时间尖锐幂指数
+
+对每个固定 $d\geq1$，存在正数 $c_d,C_d,\varepsilon_d$，只依赖 $d,E_-,E_+,\eta$，使
+
+\[
+\boxed{c_d\varepsilon^{1/(2d-1)}\leq\mathcal R_d(\varepsilon)
+\leq C_d\varepsilon^{1/(2d-1)}}\qquad(0<\varepsilon<\varepsilon_d).
+\tag{16.6}
+\]
+
+**上界证明。** 取 $h=1/E_+$，推送 $x=e^{-hE}$，使所有节点属于 $[e^{-1},1]$。同一数据的两个相容模型在次数 $0,\ldots,2d-1$ 的矩差至多为 $2\varepsilon$。把具有较小最低能量、即较大最大 $x$ 的模型作为式 (16.2) 的稀疏侧，零权重补足 $d$ 个槽位。其最大节点权重至少为 $\eta$，得到节点差不超过 $2(2\varepsilon/\eta)^{1/(2d-1)}$。又有
+
+\[
+|g(\mu)-g(\nu)|=h^{-1}|\log x_{\max,\mu}-\log x_{\max,\nu}|
+\leq eE_+|x_{\max,\mu}-x_{\max,\nu}|.
+\]
+
+取相容谱底集合上下确界的中点为估计；空相容集任取 $E_-$。其最坏误差不超过上述直径的一半。这只是估计函数存在性；所用信息可缩至 $2d$ 个等间距时刻。
+
+**下界构造。** 先设 $d\geq2$，令 $n=2d-2$、$A_\eta=\operatorname{arcosh}(2/\eta-1)>0$、
+
+\[
+x_j=\tfrac12(1+\cos(j\pi/n)),\quad j=0,\ldots,n,
+\qquad y=\tfrac12(1+\cosh(A_\eta/n))>1.
+\]
+
+令 $\ell_j$ 为这些节点的 Lagrange 基，$c_j=\ell_j(y)$。乘积公式给 $\operatorname{sign}(c_j)=(-1)^j$。由于 $\sum c_j=1$，以及节点上的 $T_n(2x_j-1)=(-1)^j$，插值恒等式给
+
+\[
+P:=\sum_{j\ {\rm even}}c_j=\frac{1+T_n(2y-1)}2=\frac1\eta.
+\]
+
+因此
+
+\[
+\alpha=P^{-1}\delta_y+P^{-1}\sum_{j\ {\rm odd}}(-c_j)\delta_{x_j},\qquad
+\beta=P^{-1}\sum_{j\ {\rm even}}c_j\delta_{x_j}
+\tag{16.7}
+\]
+
+是两个各有 $d$ 个正原子的概率测度，匹配次数 $0,\ldots,2d-2$ 的矩。$\alpha$ 在 $y$ 上的质量为 $\eta$；$\beta$ 在最大节点 $1$ 上的质量为 $c_0/P>\eta$，因为 $c_0=\prod_{j\ne0}(y-x_j)/(1-x_j)>1$。这一步控制两个模型的端点权重，超出了仅有交错支撑矩匹配的存在陈述 [16-A, Lemma 30]。
+
+反射坐标 $\xi=y-x$ 后，两种分布支撑于 $[0,W]$，$W=y$，最小点分别为 $0$ 与 $\Delta=y-1>0$，前 $2d-1$ 个矩仍相同。取固定 $E_0\in(E_-,E_+)$ 且 $E_0>0$，将能量设为 $E=E_0+s\xi$，其中 $sW\leq E_+-E_0$。记 $q=2d-1$。对任意 $t\geq0$，在 $\xi=0$ 展开到 $q-1$ 阶，Taylor 余项的绝对值不超过 $(stW)^q/q!$。匹配的多项式部分积分相消，故
+
+\[
+|C_\alpha(t)-C_\beta(t)|\leq2e^{-E_0t}\frac{(stW)^q}{q!}
+\leq2\left(\frac{sW}{E_0}\right)^q.
+\tag{16.8}
+\]
+
+末步由 $e^{E_0t}\geq(E_0t)^q/q!$ 得出，对全部时间同时成立。取 $s=(E_0/W)\varepsilon^{1/q}$；对充分小的 $\varepsilon$ 能量仍在固定区间内。两条曲线之差至多为 $2\varepsilon$，而谱底差为 $s\Delta$。中点观测同时相容，任何估计在至少一侧的误差不小于 $s\Delta/2$，得下界。
+
+$d=1$ 时用 $\delta_{E_0}$ 与 $\delta_{E_0+s}$，并用 $e^{-E_0t}(1-e^{-st})\leq st e^{-E_0t}\leq s/E_0$。经典矩比较中的 $1/(2d-1)$ 指数已见 [16-A, Proposition 1]；这里给出的是固定最低态权重和全部时间绝对误差下的端点构造及上下界。
+
+### 16.5 定理：多允许一个隐藏模态的代价
+
+对每个固定 $d\geq1$，式 (16.5) 的直径满足
+
+\[
+\boxed{\Omega_d(\varepsilon)=\Theta_{d,E_-,E_+,\eta}(\varepsilon^{1/(2d)})}
+\qquad(\varepsilon\downarrow0).
+\tag{16.9}
+\]
+
+下界只需令竞争模型属于 $\mathcal M_{d+1}$，不需要任意大的模式数。
+
+**上界证明。** 仍取 $x=e^{-E/E_+}$。如果稀疏侧的最大节点更大，则式 (16.2) 给出更强的 $1/(2d-1)$ 阶，从而对 $\varepsilon/\eta\leq1$ 也给出 $1/(2d)$ 阶。如果竞争侧的最大节点 $y_*$ 大于稀疏侧的最大节点 $b$，构造
+
+\[
+Q(t)=\prod_{i=1}^d(t-x_i)^2.
+\]
+
+零权重槽位可补在 $b$。这个多项式在稀疏测度上积分为零，在竞争测度上非负，且 $Q(y_*)\geq(y_*-b)^{2d}$。因子归纳给其系数预算不超过 $2^{2d}$，所以
+
+\[
+\eta(y_*-b)^{2d}\leq\int Q\,d\nu\leq2^{2d}\varepsilon.
+\]
+
+再次应用对数的 Lipschitz 界，得到所需上界。平方消去的思想与 [16-A, Proposition 2 and Lemma 15] 一致。
+
+**下界证明。** 在式 (16.7) 的构造中改取 $n=2d-1$。奇偶计数给 $\alpha$ 有 $d+1$ 个原子、$\beta$ 有 $d$ 个原子，二者矩匹配至次数 $2d-1$，端点权重仍都至少为 $\eta$。在反射、能量平移与缩放后，式 (16.8) 改为 $q=2d$，得到全时间曲线差不超过 $\varepsilon$ 而端点差为 $c\varepsilon^{1/(2d)}$。例如取 $s=(E_0/W)(\varepsilon/2)^{1/(2d)}$ 即可。这对 $d=1$ 也有效。由于 $\beta\in\mathcal M_d$、$\alpha\in\mathcal M_{d+1}$，得到式 (16.9)。
+
+**推论。** 仅在 $\mathcal M_d$ 内有效的误差保证，不能在允许未排除的额外模式时直接声称同样精度。若一个区间估计必须对全部 $\mathcal M_{\rm fin}$ 及噪声半径 $\varepsilon/2$ 保持覆盖，则上述两条曲线的中点迫使它在某个 $d$ 模态真实模型上具有至少 $c\varepsilon^{1/(2d)}$ 的区间长度。该量词允许真实模型随精度变化，不否定额外分离条件下的点态适应性。
+
+### 16.6 定理：同时保留维数依赖的下界
+
+存在仅依赖 $E_-,E_+,\eta$ 的常数 $c>0$，使对所有整数 $d\geq1$ 及 $0<\varepsilon<1$，有
+
+\[
+\mathcal R_d(\varepsilon)\geq c\max_{1\leq m\leq d}\frac{\varepsilon^{1/(2m-1)}}{m^2}.
+\tag{16.10}
+\]
+
+**证明。** 固定 $E_0\in(E_-,E_+)$、$\kappa=\tfrac12\min\{E_0,E_+-E_0\}>0$。对任意 $m\geq2$，在式 (16.7) 取 $n=2m-2$。此时 $W=y\leq W_\eta=(1+\cosh A_\eta)/2$，并且
+
+\[
+\Delta=y-1\geq\frac{A_\eta^2}{4n^2}\geq\frac{A_\eta^2}{16m^2}.
+\]
+
+取 $s=\kappa\varepsilon^{1/(2m-1)}/W_\eta$，则所有能量位于固定区间内，式 (16.8) 右侧不超过 $2\varepsilon$。谱底间距至少为 $\kappa A_\eta^2\varepsilon^{1/(2m-1)}/(16W_\eta m^2)$。中点论证及 $\mathcal M_m\subseteq\mathcal M_d$ 给出每个 $m\leq d$ 的下界。$m=1$ 由上述 Dirac 构造给出；减小常数使其也成立，然后取最大值。
+
+### 16.7 问题：维数与精度的统一过渡
+
+在定义 (16.4) 的同一模型和固定 $E_-,E_+,\eta$ 下，是否存在与 $d$ 无关的常数 $C$ 和 $\varepsilon_0>0$，使
+
+\[
+\mathcal R_d(\varepsilon)\leq C\max_{1\leq m\leq d}\frac{\varepsilon^{1/(2m-1)}}{m^2}
+\qquad(d\geq1,\ 0<\varepsilon<\varepsilon_0)?
+\tag{16.11}
+\]
+
+式 (16.10) 已给出对应下界；固定 $d$ 的定理 (16.6) 没有给出这个统一上界。问题 (16.11) 明确区分固定维数常数与联合渐近，不将其作为已证命题或已发表具名猜想。另一项问题是，在只保证一个质量至少为 $1-\tau$ 的 $d$ 模态部分且要求目标最低态被该部分保留的模型中，求 $d,\varepsilon,\tau$ 的联合最优可辨识直径。
+
+### 16.8 引用
+
+[16-A] Yihong Wu and Pengkun Yang. *Optimal estimation of Gaussian mixtures via denoised method of moments*. Annals of Statistics 48(4), 1981–2007, 2020. DOI: 10.1214/19-AOS1873. https://arxiv.org/abs/1807.07237 . Proposition 1、Proposition 2、Lemma 15 和 Lemma 30 分别提供两侧稀疏与单侧稀疏矩比较、支撑多项式及交错正测度构造的成熟背景；本节不把这些方法或经典幂指数归为新发现。
+
+[16-B] Zhiyuan Fan and Jian Li. *Efficient Algorithms for Sparse Moment Problems without Separation*. COLT 2023, PMLR 195:3510–3565. https://proceedings.mlr.press/v195/fan23b.html . 分离无关的稀疏矩算法与误差分析。
