@@ -1,0 +1,24 @@
+**定义。** 对 PN3 的两模型，本节把隐藏坐标重标为 $1,\ldots,q$，可见坐标编号为 $0$。令 $r=3\kappa/4$、$h_0=1$，并对 $1\le i\le q$ 定义
+
+$$
+h_i=\frac{\sqrt{\delta|c_i|}}{r-\lambda_i}>0,\qquad
+Z_h=\sum_{i=0}^qh_i^2,\qquad \pi_i=h_i^2/Z_h.
+$$
+
+对两个模型使用同一个 $h$，并定义
+
+$$
+T^\pm_{ij}=K^\pm_{ij}\frac{h_j}{h_i},\qquad
+ d_i^\pm=1-\sum_jT^\pm_{ij},\qquad
+ Z_d^\pm=\sum_i\pi_i d_i^\pm,\qquad
+\alpha_j^\pm=\frac{\pi_jd_j^\pm}{Z_d^\pm}.
+$$
+
+在共同状态空间 $\{0,\ldots,q\}\times\{-1,+1\}$ 上令
+
+$$
+P_\pm((i,\sigma),(j,\tau))=
+\boldsymbol1_{\{\sigma=\tau\}}T^\pm_{ij}
++\frac12d_i^\pm\alpha_j^\pm.
+$$
+

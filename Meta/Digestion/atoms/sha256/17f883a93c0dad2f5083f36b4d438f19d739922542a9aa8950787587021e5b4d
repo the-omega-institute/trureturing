@@ -1,0 +1,48 @@
+## AT.6 从有噪声可见响应到全记忆核
+
+**假设。** 在标量可见空间与至多 $r$ 维实隐藏空间上，真实整体传播为
+
+$$
+K=\begin{pmatrix}a&b^*\\b&D\end{pmatrix},\qquad
+0\le K\le I,\qquad 0\le D\le\theta I,\quad \theta<1.
+$$
+
+记 $s_n=\langle e,K^n e\rangle$，$s_0=1$，$m_j=\langle b,D^j b\rangle$。另一个模型 $\widetilde K$ 满足同样的约束。设 $|s_i-\widetilde s_i|\le\eta$ 对 $1\le i\le L$ 成立。
+
+**引理。** 对 $0\le j\le L-2$，$|m_j-\widetilde m_j|\le4\eta$。
+
+**证明。** 分块消元给出形式幂级数恒等式
+
+$$
+R(z)=\sum_{n\ge0}s_nz^n,\qquad
+Q(z)=R(z)^{-1}=1-az-z^2\sum_{j\ge0}m_jz^j.
+$$
+
+由于 $D\ge0$，$m_j\ge0$。对 $I-K\ge0$ 使用 Schur 补，且 $I-D$ 可逆，得到
+
+$$
+a+\sum_{j\ge0}m_j
+=a+\langle b,(I-D)^{-1}b\rangle\le1.
+$$
+
+因此 $Q$ 的系数绝对和不超过 $2$，另一个模型同样成立。由
+
+$$
+\widetilde Q-Q=\widetilde Q\,(R-\widetilde R)\,Q,
+$$
+
+截至 $L$ 次的任一系数差不超过 $2\eta\cdot2$。第 $j+2$ 次系数正是负的记忆核差，得到结论。此证明要求两个响应序列均由相容的正收缩模型产生。证毕。
+
+**定义。** 对 $1\le i\le2r+1$ 的有噪声响应 $y_i$，假设 $|y_i-s_i|\le\epsilon$。在固定 $r+1$ 维矩阵空间中，把较低维模型补零，在上述正收缩约束集合上最小化 $\max_i|y_i-\langle e,\widetilde K^i e\rangle|$。
+
+**推论 AT6。** 该全局最小化问题有解，且任意全局最小解满足
+
+$$
+\boxed{\sum_{j\ge0}|\widetilde m_j-m_j|
+\le8\epsilon\,C_{2r}(\theta).}
+$$
+
+**证明。** 约束集合是非空紧集，目标函数连续。真实补零模型的目标值不超过 $\epsilon$，故最小解同样如此，两个模型的响应差不超过 $2\epsilon$。引理给出前 $2r$ 个记忆系数的误差至多 $8\epsilon$。两个隐藏自伴随矩阵各至多有 $r$ 个谱模态，应用 AT3。证毕。
+
+**注。** 这里证明了估计器的存在性与误差保证，没有证明全局最小化的多项式时间算法。独立逐项截断一个任意测量序列不保证它具有相容的正收缩实现。若只求得目标值至多 $\epsilon+\tau$ 的可行模型，上式中的 $8\epsilon$ 改为 $4(2\epsilon+\tau)$。
+

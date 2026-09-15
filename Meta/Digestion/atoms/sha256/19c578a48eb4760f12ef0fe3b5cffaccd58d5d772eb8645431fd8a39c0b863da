@@ -1,0 +1,21 @@
+**定义。** 对一般有限容量状态 $b_i\in\{0,\ldots,A_i\}$，$A_i\ge1$，定义能量和乘积 Gibbs 分布
+
+$$
+\mathcal E(b)=\log n(b)=\sum_i b_i\log p_i,
+\qquad
+\pi_\beta(b)=Z_\beta^{-1}n(b)^{-\beta},
+$$
+
+$$
+Z_\beta=\sum_{n\mid\prod_i p_i^{A_i}}n^{-\beta}
+=\prod_i\sum_{a=0}^{A_i}p_i^{-\beta a}.
+$$
+
+令 $H_i$ 把第 $i$ 个坐标重新抽样为分布
+
+$$
+\rho_i(a)=\frac{p_i^{-\beta a}}{\sum_{c=0}^{A_i}p_i^{-\beta c}},
+$$
+
+并保持其他坐标不变。定义 $K_\beta=m^{-1}\sum_i H_i$。
+
