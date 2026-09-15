@@ -344,8 +344,8 @@ def checkDiagnostic (diagnostic : String) : MetaM Unit := do
     throwError "P1.IncompleteCheck: {diagnostic}"
   throwError "P1.SemanticRejected: {diagnostic}"
 
-/-- Consume the completed registration-time scan, bound to the same immutable
-module as the checked unit. Publication never executes the runtime scanner. -/
+/-- Consume the completed registration-time semantic diagnostic, bound to the
+same immutable module as the unit. Publication does not repeat argument audits. -/
 def closedTruthExcluded (entry : InformationRegistryEntry) : MetaM Unit := bounded do
   let some cert := entry.derivedCertificate | throwError "P1.MissingEvidence: uniform source"
   discard <| exactUse entry.theoremName cert.arena cert.descriptor

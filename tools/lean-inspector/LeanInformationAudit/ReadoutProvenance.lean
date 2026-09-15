@@ -2190,7 +2190,14 @@ private def unclassifiedJson (u : Unclassified) (walked : Array String) : Json :
     ("namespace", Json.str u.namespaceName), ("site", Json.str u.siteName.toString),
     ("walked", Json.arr (walked.map Json.str))]
 
+private initialize wholeReadoutCalls : EnvExtension Nat ← registerEnvExtension (pure 0)
+
+/-- Output-only count of actual legacy whole-realization audit invocations. -/
+def observedWholeReadoutCalls : CoreM Nat :=
+  return wholeReadoutCalls.getState (← getEnv)
+
 def provenanceErrorCurrent (root catalog theoremName realization : Name) : CoreM (Option String) := do
+  modifyEnv fun env => wholeReadoutCalls.modifyState env (· + 1)
   let env ← getEnv
   let budget := min provenanceExpressionFuel (provenanceExpressionLimit.get (← getOptions))
   let (readout, extractionWork) := ReadoutFamily.extract env realization budget

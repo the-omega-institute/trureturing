@@ -60,7 +60,7 @@ elab "observe_semantic_insertion" : command => do
         (message.splitOn "reason=unclassified_form").length == 2 &&
         (if label == "reflexive_closed_truth" then
           (message.splitOn "rule=p1.reflexive_source").length == 2
-         else (message.splitOn "unclassified_statement_head").length == 2)
+         else (message.splitOn "rule=dtr.argument_audit").length == 2)
     set initial
     if !inserted && !rejected then throwError "unexpected semantic probe diagnostic: {label}"
     logInfo m!"[{if !inserted && rejected then "PASS" else "FAIL"}] {label}"
