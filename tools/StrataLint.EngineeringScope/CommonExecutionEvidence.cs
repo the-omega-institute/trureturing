@@ -14,7 +14,7 @@ internal sealed record ExecutionMaterial(string Path, string Sha256);
 internal sealed record TestExecutionRecord(int Version, string Candidate, string Round, TestProjectExecution[] Projects, ExecutionMaterial[] Materials);
 internal sealed record StageStep(string Name, int RawExit, int Exit, string Status, string Log);
 internal sealed record CommonStageRecord(int Version, string Candidate, string Round, StageStep[] Steps, ExecutionMaterial[] Materials, ResourcePlanBinding? Selection = null, string[]? Projects = null);
-internal sealed record RegisteredCheckReport(string Producer, string Artifact, string[] Materials);
+internal sealed record RegisteredCheckReport(string Producer, string Consumer, string Artifact, string[] Materials);
 internal sealed record RegisteredCommonCheck(string Id, string[] ProgramProjects, string[] Materials,
     string[] MaterialExcludes, string[] PathInventory, RegisteredCheckReport[] ReportInputs);
 internal sealed record CommonCheckManifest(string Schema, RegisteredCommonCheck[] Checks);
@@ -83,7 +83,7 @@ internal static partial class CommonExecutionEvidence
                 ?? throw new InvalidDataException("empty common check registration");
         }
         catch (JsonException exception) { throw new InvalidDataException($"invalid common check registration: {exception.Message}", exception); }
-        if (manifest.Schema != "ci-check-input-registration-v1" || manifest.Checks is null || manifest.Checks.Any(check => check is null))
+        if (manifest.Schema != "ci-check-input-registration-v2" || manifest.Checks is null || manifest.Checks.Any(check => check is null))
             throw new InvalidDataException("invalid common check registration schema");
         var expected = new[] { "SL-001", "SL-002", "SL-003", "SL-004", "SL-006", "SL-008", "SL-010", "SL-011", "SL-012", "SL-015", "SL-018", "SL-019", "SL-020", "SL-021", "SL-023", "SL-025", "SL-026", "selftest-pair", "capability-proof", "banned-api-proof", "scribe-projections", "scribe-describe", "scribe-markdown", "filemap" };
         if (!manifest.Checks.Select(check => check.Id).Order(StringComparer.Ordinal).SequenceEqual(expected.Order(StringComparer.Ordinal)))
@@ -109,13 +109,15 @@ internal static partial class CommonExecutionEvidence
             foreach (var report in check.ReportInputs)
             {
                 if (report is null) throw new InvalidDataException("missing report declaration: " + check.Id);
-                if (string.IsNullOrWhiteSpace(report.Producer) || report.Artifact is not ("raw-lean-report" or "VerifiedScribeEmissions")
+                if (string.IsNullOrWhiteSpace(report.Producer) || string.IsNullOrWhiteSpace(report.Consumer)
+                    || report.Artifact is not ("raw-lean-report" or "VerifiedScribeEmissions")
                     || report.Materials is null || report.Materials.Length == 0)
                     throw new InvalidDataException($"invalid report input registration: {check.Id}: {report.Artifact}: {report.Producer}");
                 if (!artifacts.Add(report.Artifact))
                     throw new InvalidDataException($"duplicate or conflicting report input: {check.Id}: {report.Artifact}: {report.Producer}");
                 if (!snapshot.Files.ContainsKey(RepoPath.CreateKnown(report.Producer)))
                     throw new InvalidDataException($"check {check.Id} references missing producer: {report.Producer}");
+                _ = ReadConsumer(snapshot, report, projects, check.Id);
                 ValidatePatterns(report.Materials, [], check.Id);
                 _ = EngineeringProjectRegistry.ExpandInputs(paths, report.Materials, [], check.Id);
             }
@@ -127,7 +129,8 @@ internal static partial class CommonExecutionEvidence
         {
             var input = check.ReportInputs.Single(report => report.Artifact == "VerifiedScribeEmissions");
             if (!check.Id.StartsWith("SL-", StringComparison.Ordinal)
-                || !describe.ReportInputs.Any(report => report.Artifact == "raw-lean-report" && report.Producer == input.Producer))
+                || !describe.ReportInputs.Any(report => report.Artifact == "raw-lean-report"
+                    && report.Producer == input.Producer && report.Consumer == input.Consumer))
                 throw new InvalidDataException($"conflicting Scribe producer registration: {check.Id}: {input.Producer}: scribe-describe");
         }
         return manifest.Checks;

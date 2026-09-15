@@ -272,6 +272,8 @@ CI/preflight 的阶段、候选报告/DLL/工程证据交接、退出与缓存�
 
 engineering 与 Scribe 不按 base 选测。当前项目与检查义务由候选登记确定;登记输入、编译依赖、材料、mode、执行环境及原成功证据验证一致时,允许增量复用原执行结果,并在本轮候选身份下接受。输入改变、证据损坏或无有效证据时执行受影响的登记项目/检查;selftest 与两项反证的实际执行和诊断义务不因缓存命中消失。delta 将 base 的测试项目集合仅作为数据读取,要求每个项目都具有**本轮候选已接受的成功覆盖**。新执行的 TRX 或经登记输入与完整性验证后接受的原成功 TRX 均须保留原执行来源及本轮候选绑定;裸历史 TRX、另一候选的绿、项目被删、漏跑或失败不能补证。delta 只验证证据,不重跑测试或引入 base 判官。base 尚无 manifest 时,候选 current/historical 显式登记寻址历史项目字节,不运行旧发现器。
 
+共同检查的 `Meta/ci-checks.json` 使用 `ci-check-input-registration-v2`；每个 `report_inputs` 必须显式登记 `producer`、`consumer`、`artifact`、`materials`。`consumer` 指向 FILEMAP 登记的 `report-consumer-inputs-v1` 清单，其封闭字段为 `schema/producer/projects/materials`：producer 须与引用一致，项目与材料须显式存在、无重复，项目须已登记；缺项、冲突和未知对象在检查执行前失败。报告消费者缓存地址绑定该消费清单、登记的消费项目闭包及材料、候选已验证报告内容、现有检查输入与执行环境；不包含仅负责生产或传输报告的脚本字节。生产清单仍完整验证，报告源码/内容/材料/兼容性/运行时身份验证不变；兼容配置 `Meta/lean-report.toml` 和消费者接受材料仍进入消费地址。Scribe 下游引用须与 describe 单元的 producer 和 consumer 一致，保留其实际材料与原执行来源校验。
+
 **测试分析退役。** 测试归属、编译输入及影响范围按 FILEMAP 或显式 manifest 登记,不以 Roslyn 调用图、仓库路径或 IO 效果推导补全。Scribe 方法映射从未承担当前测试调度权威;其唯一规则消费者 SL-003 的 parser-unknown 债务分支及 280/281 容量、身份收缩条款退役。SL-003 直接执行原有行数和目录容量谓词,其 no-growth、作用域与容量棘轮不变,测试项目拓扑及 base 项目执行地板保留。仅为映射推导服务的编译元数据导出、运输和加载一并退役;候选 DLL/二进制材料封印、轮次和候选身份、locked restore/build、真实 Scribe 内容编译、工程测试、selftest、两项反证编译和 TRX 校验继续执行。登记缺口由后续真实 CI 暴露后补最小登记与原生行为测试,不重建分析器。
 
 共享 build 的预期项目集合为工程登记中除 `compile-fail-proof` 外的项目（含 `ci=false` 的正常构建项目）。逐项读取 `build/ci/build-outputs/<仓根相对项目路径>.outputs`,缺失即失败;收据声明的项目路径和 PE 程序集身份必须匹配登记。邻近未选中收据不参与运输。编译器 FileWrites、TargetPath 与 ref 输出只验证已声明项目的产物。收据第四行 `packages=$(NuGetPackageRoot)` 提供同一绝对包根;`Meta/package-materials.json` 只展开一次,不以 assets.json 的包或文件清单发现运输材料。
