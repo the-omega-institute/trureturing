@@ -1,0 +1,13 @@
+**定理 4.4（有限精度逃逸与连续延拓等价）。** 以下条件等价：
+\[
+\forall n\ \exists m,\quad \mathcal E_{m,n}(F)=\varnothing;
+\]
+存在唯一连续映射 \(\widehat F:\widehat X\to\widehat Y\) 满足
+\[
+\widehat F\circ\iota_X=\iota_Y\circ F.
+\]
+
+**证明。** 先设第一条件成立。把每个选出的 \(m(n)\) 增大为非递减序列。由定理 2.2，对每个 \(n\) 存在唯一 \(F_n:Q_{m(n)}\to R_n\)，满足 \(F_nq_{m(n)}=r_nF\)。若 \(n<n'\)，取足够高的层 \(M\ge m(n),m(n')\)。对任意 \(u\in Q_M\)，由 \(q_M\) 满射取 \(x\) 使 \(q_M(x)=u\)。两种下投影分别等于 \(r_nF(x)\)，而 \(r_n\) 是 \(r_{n'}\) 的下投影，故输出坐标相容。于是对 \(z\in\widehat X\) 定义 \((\widehat Fz)_n=F_n(z_{m(n)})\)。这些坐标组成 \(\widehat Y\) 中的点；每个坐标只依赖一个有限坐标，故 \(\widehat F\) 连续。对 \(z=\iota_X(x)\)，定义立即给出 \(\widehat Fz=\iota_YF(x)\)。若另有连续映射满足同式，它们在稠密集 \(\iota_X[X]\) 上相等；\(\widehat Y\) Hausdorff，故二者相等。
+
+反设连续 \(\widehat F\) 存在。固定 \(n\)，坐标函数 \(\pi_n\widehat F:\widehat X\to R_n\) 连续且目标有限离散。对每个 \(z\) 存在柱邻域 \(U_z\)，使该坐标在 \(U_z\) 上恒定。紧致性给出有限子覆盖；取这些柱邻域所涉及层数的最大值 \(m\)。两个具有相同 \(m\)-坐标的点落入同一坐标常值块，故其第 \(n\) 个输出坐标相同。限制到 \(\iota_X[X]\) 得 \(q_m(x)=q_m(y)\Rightarrow r_n(Fx)=r_n(Fy)\)，即 \(\mathcal E_{m,n}(F)=\varnothing\)。
+
