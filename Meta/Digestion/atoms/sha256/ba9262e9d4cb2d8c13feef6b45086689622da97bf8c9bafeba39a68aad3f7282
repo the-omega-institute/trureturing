@@ -1,0 +1,5 @@
+**定义 469.1。**窗口深度 $L$ 一律取自然数，令
+$$
+\mathcal W_L=\{u:\{0,\ldots,L-1\}\to\{0,1\}:u(j)u(j+1)=0\text{ 对所有 }j\in\mathbb N,\ j+1<L\},\qquad
+\pi_L:\mathbb N\to\mathcal W_L,\quad \pi_L(n)=(d_0(n),\ldots,d_{L-1}(n)).
+$$
