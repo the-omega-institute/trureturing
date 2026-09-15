@@ -1,0 +1,14 @@
+**命题 AT1。** 对 $j\ge0$，其中第二项在 $j=0$ 时定义为零，
+
+$$
+|\widehat m_j-gw^j|
+\le 3\epsilon\theta^j+(8+3\theta)\epsilon j\theta^{j-1}.
+$$
+
+因此
+
+$$
+\boxed{\sum_{j=0}^{\infty}|\widehat m_j-gw^j|
+\le \frac{11\epsilon}{(1-\theta)^2}.}
+$$
+

@@ -1,0 +1,9 @@
+**假设。** 在标量可见空间与至多 $r$ 维实隐藏空间上，真实整体传播为
+
+$$
+K=\begin{pmatrix}a&b^*\\b&D\end{pmatrix},\qquad
+0\le K\le I,\qquad 0\le D\le\theta I,\quad \theta<1.
+$$
+
+记 $s_n=\langle e,K^n e\rangle$，$s_0=1$，$m_j=\langle b,D^j b\rangle$。另一个模型 $\widetilde K$ 满足同样的约束。设 $|s_i-\widetilde s_i|\le\eta$ 对 $1\le i\le L$ 成立。
+

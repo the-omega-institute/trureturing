@@ -1,0 +1,51 @@
+## PN.4 两个一致有界的正自伴随实现
+
+**假设。** 采用 PN.3 的节点，并取
+
+$$
+0<\delta S_q\le\kappa^2/64,
+\qquad w_i^\pm=\delta\max(\pm c_i,0),
+\qquad b_i^\pm=\sqrt{w_i^\pm}.
+$$
+
+**定义。** 令
+
+$$
+D=\operatorname{diag}(\lambda_i),\qquad
+K_\pm=\begin{pmatrix}\kappa/4&(b^\pm)^*\\b^\pm&D\end{pmatrix}.
+$$
+
+两个系统具有同一个可见方向、同一个可见即时项和同一个隐藏对角传播。
+
+**定理 PN3。** 有
+
+$$
+\frac\kappa8 I\le K_\pm\le\frac{5\kappa}8 I<\kappa I,
+$$
+
+以及
+
+$$
+m_n^+-m_n^-=\delta u_n,\qquad
+\sup_n|m_n^+-m_n^-|\le\delta,
+\qquad \sum_{n<q}|m_n^+-m_n^-|=q\delta.
+$$
+
+（文献：内部正性作为辨识侧信息，见 M. Khosravi, R. S. Smith, SIAM Journal on Control and Optimization 63(1) (2025), 26–56, doi:10.1137/23M1556095）
+
+**证明。** 去掉交叉块后的对角算子在 $[\kappa/4,\kappa/2]$ 内。交叉块 $\left(\begin{smallmatrix}0&b^*\\b&0\end{smallmatrix}\right)$ 的范数为 $\|b\|\le\sqrt{\delta S_q}\le\kappa/8$；二次型扰动界给出所述上下界。直接计算 $\langle b^\pm,D^nb^\pm\rangle=\sum_iw_i^\pm\lambda_i^n$，再用 PN1。证毕。
+
+**命题 PN4。** 两个可见响应在所有时刻满足
+
+$$
+\sup_{n\ge0}|s_n(K_+)-s_n(K_-)|\le\frac\delta{(1-\kappa)^2}.
+$$
+
+**证明。** 记 $R_\pm(z)=\sum_ns_n(K_\pm)z^n$、$M_\pm(z)=\sum_nm_n^\pm z^n$。分块消元与相同的即时项给出
+
+$$
+R_+(z)-R_-(z)=z^2R_+(z)[M_+(z)-M_-(z)]R_-(z).
+$$
+
+因为 $0\le K_\pm\le\kappa I$，有 $s_n(K_\pm)\ge0$ 且 $\sum_ns_n(K_\pm)\le(1-\kappa)^{-1}$。逐系数取绝对值，卷积两侧的绝对和与中间系数的上界 $\delta$ 相乘即得；这覆盖任意自然时刻，非有限截止后的外推。证毕。
+

@@ -1,0 +1,21 @@
+**证明。** 取唯一满足
+
+$$
+(E-\theta)^q u=0,\qquad u_i=(-1)^{q-1-i}\quad(0\le i<q)
+$$
+
+的序列。证明其从第 $q-1$ 项开始非负，并且尾和恰为 $T_q(\theta)$，对 $q$ 归纳。$q=1$ 时 $u_n=\theta^n$。若 $q\ge2$，令 $v=(E-\theta)u$，则
+
+$$
+v_i=(1+\theta)(-1)^{q-2-i}\quad(0\le i<q-1),
+\qquad (E-\theta)^{q-1}v=0.
+$$
+
+由归纳假设，$v_n\ge0$ 对 $n\ge q-2$ 成立。又 $u_{q-1}=1$，从而递推 $u_{n+1}=\theta u_n+v_n$ 使全部 $n\ge q-1$ 的 $u_n$ 非负。AT2 已经证明这些序列绝对可求和。对 $n\ge q-1$ 的递推求和，令 $U=\sum_{n\ge q}u_n$，得到
+
+$$
+U=\theta(1+U)+(1+\theta)T_{q-1}(\theta),
+$$
+
+故 $U=T_q(\theta)$。前 $q$ 项绝对值均为一，所以总绝对和为 $C_q(\theta)$。乘以任意 $\delta\ge0$ 即得相应尺度。证毕。
+

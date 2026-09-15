@@ -1,0 +1,8 @@
+**定理 PN6。** 对每个整数 $J\ge0$，仅使用 $s_1,\ldots,s_{J+1}$ 的误差不超过 $\epsilon$ 的读数，就存在估计器满足
+
+$$
+\boxed{\sup_{K,y}\sum_{j\ge0}|\widehat m_j-m_j(K)|
+\le2(1+\kappa)^2J\epsilon+
+\frac{\kappa^{J+2}}{4(1-\kappa)}.}
+$$
+
