@@ -32061,3 +32061,307 @@ $$
 对每个 $g\ge4$，在 $0111$ 与 $1110$ 前面同加 $0^{g-4}$，就得到两条不同的长度 $g$ 记录及相同的实际条件端点密度，故 $K_g<2^g$。所证的是该关系及其所有共同上下文中的保持性；没有断言这一条改写生成全部词关系，也没有由它确定一般正规形或 $K_g$ 的增长律。证毕。
 
 ## 追加锚（本行以下为增补区）
+## 145. 丢弃相关记忆后的逐结果延长与非选择物理闭合
+
+**命题 145.1（未知左滤波制备族的唯一代数延长、仪器障碍与非选择通道）。** 取命题 130.1、137.1 的纯边界生成器，在各个二维空间的正交标准基中令
+$$
+\alpha=\frac{\sqrt5-1}{2},\qquad s=\sqrt\alpha,\qquad
+\alpha+\alpha^2=1,\qquad 0<\alpha<1,
+$$
+$$
+m_0=s|0\rangle+\alpha|1\rangle,\qquad m_1=|0\rangle,\qquad
+T|j\rangle=|j\rangle_{\rm out}\otimes m_j\quad(j=0,1).
+$$
+从纯记忆 $m_0$ 恰好发出两个输出 $L,R$，记
+$$
+\Xi_2=(I_L\otimes T)Tm_0\in B_L\otimes B_R\otimes M,
+\qquad B_L=B_R=M=\mathbb C^2.
+$$
+本命题另行允许如下制备族：对任意复二阶矩阵 $F$，只要 $F^\dagger F\le I_2$，就在 $L$ 上施加单 Kraus 成功分支 $F$，保留未归一化联合向量
+$$
+\chi_F=(F\otimes I_R\otimes I_M)\Xi_2.
+$$
+成功旗标相同，滤波设置 $F$ 不作为后续仪器的可用标签。这里允许全部这样的复收缩，包括奇异矩阵与零矩阵；这是新增的制备假设，并非命题 138.1、139.1 的内部测量策略所已允许的端点操作。
+
+以 $\dagger$ 表示伴随，$\mathsf T$ 表示普通转置，沿用命题 137.1 的左行右列约定
+$$
+\operatorname{vec}_{LR}(C)=\sum_{i,j=0}^1C_{ij}|i\rangle_L|j\rangle_R,
+\qquad 00,01,10,11\text{ 为坐标次序}.
+$$
+定义
+$$
+J=\begin{pmatrix}1&1\\1&0\end{pmatrix},\qquad
+Z=\operatorname{diag}(1,-1),\qquad E_0=|0\rangle\langle0|,
+\qquad C_0=s^3J,\qquad C=FC_0,
+$$
+$$
+Q(C)=|\operatorname{vec}_{LR}(C)\rangle\langle\operatorname{vec}_{LR}(C)|
++\alpha|\operatorname{vec}_{LR}(CE_0)\rangle
+\langle\operatorname{vec}_{LR}(CE_0)|.
+$$
+此式对包括零在内的全部复矩阵 $C$ 定义。实际端点输入是 $\operatorname{Tr}_M|\chi_F\rangle\langle\chi_F|$；一旦取偏迹，端点仪器不得访问该记忆或其副本。
+
+比较协议则保留同一个 $\chi_F$ 中的原始相关记忆，对它施加 $T$ 再发出一个输出 $R'$，在旧 $R$ 上测量固定正交基
+$$
+|\eta_b\rangle=\frac{|0\rangle+(-1)^b|1\rangle}{\sqrt2},
+\qquad b\in\{0,1\},\qquad A_b=Z^bJ,
+$$
+保留结果 $b$、$L,R'$，对最终记忆 $M'$ 取偏迹。其未归一化向量和端点算子定义为
+$$
+\chi_{F,b}=(I_L\otimes\langle\eta_b|_R\otimes I_{R'}\otimes I_{M'})
+(I_{LR}\otimes T)\chi_F,
+\qquad Q_{F,b}=\operatorname{Tr}_{M'}|\chi_{F,b}\rangle\langle\chi_{F,b}|.
+$$
+$F$ 始终只作用于 $L$。将输入 $L,R$ 与输出 $L,R'$ 按标准基识别为 $\mathbb C^4$。端点二结果量子仪器在这里指一对定义于全部 $M_4(\mathbb C)$ 的复线性完全正映射 $\mathcal I_0,\mathcal I_1$，其和保迹；两映射固定而不依赖 $F$。
+
+则实际制备及比较分支满足
+$$
+\chi_F=\operatorname{vec}_{LR}(C)\otimes|0\rangle_M
++s\operatorname{vec}_{LR}(CE_0)\otimes|1\rangle_M,
+\qquad \operatorname{Tr}_M|\chi_F\rangle\langle\chi_F|=Q(C),
+$$
+$$
+C_b=\frac{s}{\sqrt2}CA_b,\qquad
+\chi_{F,b}=\operatorname{vec}_{LR'}(C_b)\otimes|0\rangle_{M'}
++s\operatorname{vec}_{LR'}(C_bE_0)\otimes|1\rangle_{M'},
+\qquad Q_{F,b}=\frac{\alpha}{2}Q(CA_b).
+$$
+两记忆列及其相对系数 $\alpha$ 均不可省略。设
+$$
+q_F=\operatorname{Tr}Q(C)=\|C\|_F^2+\alpha\|CE_0\|_F^2,\qquad
+q_{F,b}=\operatorname{Tr}Q_{F,b}
+=\frac{\alpha}{2}\bigl(\|CA_b\|_F^2+\alpha\|CA_bE_0\|_F^2\bigr).
+$$
+这里 $q_F\in[0,1]$ 是滤波成功概率，$q_{F,b}$ 是成功且报告 $b$ 的联合概率，$q_{F,0}+q_{F,1}=q_F$。若 $F\ne0$，则 $q_F,q_{F,0},q_{F,1}>0$，报告条件概率为 $q_{F,b}/q_F$，报告后的密度为 $Q_{F,b}/q_{F,b}$。若 $F=0$，全部算子和概率均为零，不定义条件密度。
+
+不存在上述端点仪器使
+$$
+\mathcal I_b(Q(FC_0))=Q_{F,b}
+\quad\text{对每个 }F\in M_2(\mathbb C),\ F^\dagger F\le I_2,
+\quad b=0,1
+$$
+同时成立。不过，去掉完全正性要求后，每个分支有唯一的复线性延拓。令
+$$
+P=I_L\otimes E_0,\qquad
+\mathcal L(X)=X+\alpha PXP,\qquad
+\mathcal L^{-1}(Y)=Y-\frac{\alpha}{1+\alpha}PYP,
+\qquad \operatorname{Ad}_B(X)=BXB^\dagger,
+$$
+则该延拓为
+$$
+\widehat{\mathcal I}_b
+=\frac{\alpha}{2}\mathcal L\circ
+\operatorname{Ad}_{I_L\otimes A_b^{\mathsf T}}\circ\mathcal L^{-1}
+=\operatorname{Id}_L\otimes\phi_b.
+$$
+其中对任意彼此独立的复数 $x,y,z,w$，令 $e=(-1)^b$，有
+$$
+\phi_b\!\begin{pmatrix}x&y\\z&w\end{pmatrix}
+=\frac12\begin{pmatrix}
+\alpha x+e(y+z)+w&\alpha^2x+e\alpha z\\
+\alpha^2x+e\alpha y&\alpha^2x
+\end{pmatrix},
+\qquad
+\operatorname{Tr}\phi_b(X)=\operatorname{Tr}(|\eta_b\rangle\langle\eta_b|X).
+$$
+所以只要求下一报告的概率时，端点测量 $I_L\otimes|\eta_b\rangle\langle\eta_b|$ 已能实现它；障碍在于同时保留正确报告及其条件输出。
+
+另一方面，忘掉报告后的唯一延拓是完全正保迹通道
+$$
+\widehat{\mathcal I}_0+\widehat{\mathcal I}_1
+=\operatorname{Id}_L\otimes\mathcal T,\qquad
+\mathcal T(X)=X_{00}\tau_0+X_{11}E_0,
+\qquad
+\tau_0=\begin{pmatrix}\alpha&\alpha^2\\\alpha^2&\alpha^2\end{pmatrix}.
+$$
+它在右端点测量计算基，随后分别制备 $\tau_0$ 或 $E_0$，消除 $L:R'$ 间的纠缠。它的有效 Kraus 分解不实现上面指定的两个逐结果分支。
+
+证明。由 $\|m_0\|^2=\alpha+\alpha^2=1$、$\|m_1\|^2=1$ 及输出标准基的正交性，$T^\dagger T=I_2$。直接应用两次等距得
+$$
+Tm_0=s|0\rangle m_0+\alpha|1\rangle m_1,
+\qquad
+\Xi_2=\alpha|00\rangle m_0+s\alpha|01\rangle m_1
++\alpha|10\rangle m_0.
+$$
+在正交记忆基上展开，利用 $s\alpha=s^3$、$\alpha^2=s^4$，得到
+$$
+\Xi_2=s^3(|00\rangle+|01\rangle+|10\rangle)|0\rangle_M
++s^4(|00\rangle+|10\rangle)|1\rangle_M
+=\operatorname{vec}_{LR}(C_0)|0\rangle_M
++s\operatorname{vec}_{LR}(C_0E_0)|1\rangle_M.
+$$
+对任意复矩阵 $F,C_0$，逐坐标有
+$$
+(F\otimes I_R)\operatorname{vec}_{LR}(C_0)=\operatorname{vec}_{LR}(FC_0).
+$$
+这给出 $\chi_F$ 的两列；对 $M$ 取偏迹时只消去正交记忆列之间的交叉项，第二列的外积系数是 $s^2=\alpha$，从而得到实际的 $Q(FC_0)$。这一步没有先把任意 $C$ 的代数定义当成物理制备。$F^\dagger F\le I_2$ 保证 $F$ 与 $\sqrt{I_2-F^\dagger F}$ 可组成完整制备操作，且
+$$
+q_F=\|\chi_F\|^2
+=\langle\Xi_2|(F^\dagger F\otimes I_R\otimes I_M)|\Xi_2\rangle\le1.
+$$
+
+为推导比较分支，把 $C$ 的两列记为 $u,v\in\mathbb C^2$，故
+$$
+\chi_F=(u|0\rangle_R+v|1\rangle_R)|0\rangle_M
++s u|0\rangle_R|1\rangle_M.
+$$
+这里 $u,v$ 属于 $L$，其系数可以为任意复数。对原始记忆应用 $T$，再用 $\langle\eta_b|$ 收缩旧 $R$，逐项得到
+$$
+\chi_{F,b}
+=\frac{s}{\sqrt2}\bigl((u+ev)|0\rangle_{R'}+u|1\rangle_{R'}\bigr)|0\rangle_{M'}
++\frac{\alpha}{\sqrt2}(u+ev)|0\rangle_{R'}|1\rangle_{M'}.
+$$
+由于
+$$
+A_b=\begin{pmatrix}1&1\\e&0\end{pmatrix},\qquad
+CA_b=(u+ev,\ u),\qquad s^2=\alpha,
+$$
+这恰是所列 $C_b$ 的两记忆列。$\eta_b$ 的分量为实数，bra 系数为 $1/\sqrt2,e/\sqrt2$；它不对 $u,v$ 取共轭。取最终记忆偏迹，外积才带复共轭，且两个分支都保留同一个因子 $s^2/2=\alpha/2$。$L$ 上的 $F$ 与这次发出和旧 $R$ 测量作用于不同张量因子，故也可在这些操作之后施加同一个 $F$。全过程没有更换或重置原始记忆。
+
+迹等于两列范数平方之和，给出全部概率式。比较协议中的等距保范数，两个 $\eta_b$ 完备，所以 $\sum_bq_{F,b}=\|\chi_F\|^2=q_F$。$C_0$ 与两个 $A_b$ 都可逆，因而 $F\ne0$ 时 $C\ne0$、$CA_b\ne0$，每个范数和严格为正。$F=0$ 时全部向量为零。这证明了包括奇异与零滤波在内的实际分支和归一化边界。
+
+现在才讨论端点线性延拓。$P^2=P$，展开两种复合时 $PXP$ 的额外系数均为
+$$
+\alpha-\frac{\alpha}{1+\alpha}-\frac{\alpha^2}{1+\alpha}=0,
+$$
+故所列 $\mathcal L^{-1}$ 确为代数逆。又有
+$$
+P\operatorname{vec}_{LR}(C)=\operatorname{vec}_{LR}(CE_0),\qquad
+\mathcal L(|\operatorname{vec}_{LR}(C)\rangle\langle\operatorname{vec}_{LR}(C)|)=Q(C).
+$$
+$\det C_0=-s^6\ne0$。对任意 $D\in M_2(\mathbb C)$，取实数
+$$
+t=\max\{1,\|DC_0^{-1}\|_{\rm op}\}>0,\qquad
+F=t^{-1}DC_0^{-1}.
+$$
+则 $F^\dagger F\le I_2$ 且 $D=tFC_0$。两个实际分支的公式都是二次齐次的：
+$$
+Q(tFC_0)=t^2Q(FC_0),\qquad
+Q(tFC_0A_b)=t^2Q(FC_0A_b).
+$$
+因此，一个线性映射若在全部允许的收缩 $F$ 上满足要求，就在全部 $D$ 上被迫满足
+$$
+\mathcal I_b(Q(D))=\frac{\alpha}{2}Q(DA_b).
+$$
+$D=0$ 对应 $F=0$，两边都为零，不需除以概率。
+
+为说明这一约束确定全部算子，令 $h_0,\ldots,h_3$ 为 $\mathbb C^4$ 标准基，$E_{jk}=|h_j\rangle\langle h_k|$。取下列 $16$ 个未归一化秩一外积：
+$$
+D_j=|h_j\rangle\langle h_j|\quad(0\le j\le3),\qquad
+D_{jk}^{+}=|h_j+h_k\rangle\langle h_j+h_k|,\qquad
+D_{jk}^{i}=|h_j+i h_k\rangle\langle h_j+i h_k|
+\quad(0\le j<k\le3).
+$$
+它们给出
+$$
+D_{jk}^{+}-D_j-D_k=E_{jk}+E_{kj},\qquad
+D_{jk}^{i}-D_j-D_k=-iE_{jk}+iE_{kj}.
+$$
+右边连同四个对角矩阵构成 Hermitian 矩阵空间的实基，所以这 $4+2\binom42=16$ 个外积在实数上张成全部 Hermitian 矩阵。每个向量都可唯一写成某个复二阶矩阵的 $\operatorname{vec}_{LR}$；上一段的正数缩放把它对应的 $Q$ 化为允许的实际输入的正倍数。可逆且保持 Hermitian 性的 $\mathcal L$ 因而把它们送到另一组实张成族。最后每个复矩阵 $X$ 都有分解
+$$
+X=\frac{X+X^\dagger}{2}
++i\frac{X-X^\dagger}{2i},
+$$
+两项中的矩阵均为 Hermitian，故复线性性确定全部 $M_4(\mathbb C)$ 上的值。这里用到的是全部未知复左收缩产生的张成族，而不是任意固定有限原始记录集的张成性。
+
+逐坐标的向量化恒等式为
+$$
+\operatorname{vec}_{LR'}(DA_b)
+=(I_L\otimes A_b^{\mathsf T})\operatorname{vec}_{LR}(D).
+$$
+因此 $\widehat{\mathcal I}_b$ 的所列复合确实把 $Q(D)$ 送到 $\alpha Q(DA_b)/2$，由刚证的唯一性，任何候选仪器都必须等于它。普通转置来自右乘的指标次序；伴随只出现在 $\operatorname{Ad}$ 中。特别地，$A_b$ 是实矩阵，但 $F,D$ 无须为实。
+
+写 $\mathcal L=\operatorname{Id}_L\otimes\lambda$，其中 $\lambda(X)=X+\alpha E_0XE_0$。由 $(1+\alpha)^{-1}=\alpha$，对独立复矩阵元有
+$$
+\lambda^{-1}\!\begin{pmatrix}x&y\\z&w\end{pmatrix}
+=\begin{pmatrix}\alpha x&y\\z&w\end{pmatrix},\qquad
+A_b^{\mathsf T}=\begin{pmatrix}1&e\\1&0\end{pmatrix}.
+$$
+两侧相乘，再施加 $\alpha\lambda/2$，就得到陈述中的 $\phi_b$，这里没有施加 $z=\overline y$ 的限制。利用 $\alpha+\alpha^2=1$ 取迹得
+$$
+\operatorname{Tr}\phi_b(X)=\frac{x+w+e(y+z)}2
+=\operatorname{Tr}(|\eta_b\rangle\langle\eta_b|X).
+$$
+在左端点各矩阵块上应用此式，得到对全部 $Y\in M_4(\mathbb C)$ 的迹恒等式
+$$
+\operatorname{Tr}\widehat{\mathcal I}_b(Y)
+=\operatorname{Tr}\bigl((I_L\otimes|\eta_b\rangle\langle\eta_b|)Y\bigr).
+$$
+两效应为正且和为恒等，因此实际 $Q(C)$ 上的报告概率确有端点测量实现。
+
+然而取合法端点密度
+$$
+Y=|0\rangle_L\langle0|\otimes|+\rangle_R\langle+|,
+\qquad |+\rangle=\frac{|0\rangle+|1\rangle}{\sqrt2}.
+$$
+在 $L=0$ 的右端点块上将 $x=y=z=w=1/2$、$b=1$ 代入，利用 $1-\alpha=\alpha^2$ 及 $\alpha-\alpha^2=\alpha^3$，得到
+$$
+\widehat{\mathcal I}_1(Y)
+=|0\rangle_L\langle0|\otimes
+\frac{\alpha^2}{4}\begin{pmatrix}-1&-\alpha\\-\alpha&1\end{pmatrix},
+\qquad
+\langle00|\widehat{\mathcal I}_1(Y)|00\rangle=-\frac{\alpha^2}{4}<0.
+$$
+因此这个唯一延拓连正映射都不是，更不可能完全正，所要求的端点仪器不存在。
+
+这个 $Y$ 不在实际制备域内，甚至不在该域所生成的正锥内。事实上，$\mathcal L^{-1}(Y)$ 在同一块上为
+$$
+\frac12\begin{pmatrix}\alpha&1\\1&1\end{pmatrix},\qquad
+\det\left(\frac12\begin{pmatrix}\alpha&1\\1&1\end{pmatrix}\right)
+=\frac{\alpha-1}{4}=-\frac{\alpha^2}{4}<0.
+$$
+若 $Y=\sum_k t_kQ(F_kC_0)$ 且 $t_k\ge0$，施加 $\mathcal L^{-1}$ 后右边是非负系数的秩一外积和，必为正半定，与此行列式矛盾；归一化兼容密度的有限正混合亦归入同一正锥。收敛的正混合或概率积分也不能给出 $Y$，因为施加连续线性映射 $\mathcal L^{-1}$ 后，每个向量上的二次型仍是非负数的极限或积分。该计算同时说明代数逆 $\mathcal L^{-1}$ 不是正的物理恢复映射。虽然 $Y$ 不是某个 $F$ 产生的输入，定义在全部端点算子上的量子仪器必须在它上面保持正性；制备族已把该仪器的线性取值唯一固定，所以这个域外密度是有效的否定依据。对每个实际制备，$Q_{F,b}$ 始终是两个正外积之和，没有物理联合过程把实际合法制备送成负算子。
+
+最后相加两个分支公式，含 $e$ 的项消去，得到
+$$
+(\phi_0+\phi_1)(X)
+=\begin{pmatrix}\alpha x+w&\alpha^2x\\\alpha^2x&\alpha^2x\end{pmatrix}
+=x\tau_0+wE_0.
+$$
+为明确在全部算子上的等式，令 $e_{ij}=|i\rangle\langle j|$ 为右端点四个矩阵单位。刚才的相加及以下 Kraus 和在这四个输入上的像分别均为
+$$
+e_{00}\longmapsto\tau_0,\qquad e_{11}\longmapsto E_0,\qquad
+ e_{01}\longmapsto0,\qquad e_{10}\longmapsto0.
+$$
+左因子保持不变，所以对 $|i\rangle_L\langle k|\otimes e_{jl}$ 的全部 $16$ 个矩阵单位等式成立，进而对每个复四阶矩阵成立。具体地，取
+$$
+K_0=\alpha(|0\rangle+|1\rangle)\langle0|,\qquad
+K_1=s^3|0\rangle\langle0|,\qquad K_2=|0\rangle\langle1|.
+$$
+直接乘法给
+$$
+\sum_{j=0}^2 K_jXK_j^\dagger
+=X_{00}\bigl(\alpha^2(|0\rangle+|1\rangle)(\langle0|+\langle1|)
++\alpha^3E_0\bigr)+X_{11}E_0=\mathcal T(X),
+$$
+因为 $\alpha^2+\alpha^3=\alpha$。而
+$$
+\tau_0=2\alpha^2|+\rangle\langle+|+\alpha^3E_0,
+\qquad 2\alpha^2+\alpha^3=1,
+\qquad \operatorname{Tr}\tau_0=1,\qquad \det\tau_0=\alpha^5>0,
+$$
+$$
+\sum_{j=0}^2K_j^\dagger K_j
+=(2\alpha^2+\alpha^3)E_0+|1\rangle\langle1|=I_2.
+$$
+Kraus 和在任意附加恒等因子后仍把正算子送到正算子，故完全正；最后一个等式给出保迹性。端点 Kraus 算子恰为 $I_L\otimes K_j$。对任意密度 $\rho_{LR}$，记其两个右对角块为
+$$
+\rho_L^{jj}=(I_L\otimes\langle j|)\rho_{LR}(I_L\otimes|j\rangle)\ge0.
+$$
+则
+$$
+(\operatorname{Id}_L\otimes\mathcal T)(\rho_{LR})
+=\rho_L^{00}\otimes\tau_0+\rho_L^{11}\otimes E_0,
+\qquad \operatorname{Tr}\rho_L^{00}+\operatorname{Tr}\rho_L^{11}=1.
+$$
+将非零左块按迹归一化，即为有限凸乘积密度和，证明 $L:R'$ 可分。这只消除该分割上的纠缠；若 $L$ 与另一个外部系统纠缠，这个结论不要求它们的纠缠消失。
+
+每个 $F$ 已有由原始相关记忆给出的正分支，且端点输入通过上述代数延拓确定它们。若只给定一个已知 $F\ne0$，还可定义依赖该设置的替换仪器
+$$
+\mathcal R_b^{F}(X)=\operatorname{Tr}(X)\,\frac{Q_{F,b}}{q_F}.
+$$
+若 $Q_{F,b}/q_F=\sum_j\lambda_j|v_j\rangle\langle v_j|$ 是谱分解，则 $\sqrt{\lambda_j}|v_j\rangle\langle h_k|$（$0\le k\le3$）给出该映射的 Kraus 算子，所以它完全正。由 $\sum_b\operatorname{Tr}(Q_{F,b}/q_F)=1$，两映射之和保迹，并在 $Q(FC_0)$ 上给 $Q_{F,b}$；但它随 $F$ 改变，故不满足同一未知设置族上的要求。同样，报告概率的端点测量、忘记报告后的 Kraus 通道以及任何该通道的其他有效 Kraus 分解，都不等于指定的 $\widehat{\mathcal I}_b$：若某个有效二结果分解在全部允许输入上给出这些分支，唯一性又会迫使其负的 $b=1$ 分支成立。保留原始相关记忆足以实施这个下一实验；只保留端点且不提供 $F$ 标签，不能对该整个制备族实施带报告的正确延长。关于已完成端点实验的预测等价和代数状态更新，因而不蕴含这种物理仪器闭合。证明不对固定有限原始记录族单独断言同样障碍，也不确定其他辅助资源的最小容量或任意环境干预的动力学。证毕。
+
+本命题所用仪器概念的成熟参考为 E. B. Davies、J. T. Lewis，*An operational approach to quantum probability*，Communications in Mathematical Physics 17，239–260（1970），[DOI:10.1007/BF01647093](https://doi.org/10.1007/BF01647093)。初始系统与环境相关、约化动力学的兼容域以及全空间正性要求之间的区分，参见 P. Pechukas，*Reduced Dynamics Need Not Be Completely Positive*，Physical Review Letters 73，1060–1062（1994），[DOI:10.1103/PhysRevLett.73.1060](https://doi.org/10.1103/PhysRevLett.73.1060)。测量后制备与破坏纠缠通道的术语参见 M. Horodecki、P. W. Shor、M. B. Ruskai，*Entanglement Breaking Channels*，Reviews in Mathematical Physics 15，629–641（2003），[DOI:10.1142/S0129055X03001709](https://doi.org/10.1142/S0129055X03001709)。这些引文提供概念背景；本命题的具体结论由所给 $T$、制备族、矩阵恒等式及负二次型推出。
+
+## 追加锚（本行以下为增补区）
