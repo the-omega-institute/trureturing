@@ -1,0 +1,61 @@
+{
+  "schema": "uniform-gamma-cofactor-coupling-v1",
+  "prime_support": [
+    3,
+    5
+  ],
+  "Gamma_bound": "55/4",
+  "same_law": "uniform complete survivor law",
+  "positive_lcm_coefficient": "7/8",
+  "zero_to_positive_coefficient": "1/4",
+  "remaining_Gamma_coefficient": "5/8",
+  "parameter_vertex_count": 18,
+  "affine_branch_count": 72,
+  "minimum_vertex_survivor_density": "1/4",
+  "maximizers": [
+    {
+      "w_v_alpha_beta_z": [
+        "1/2",
+        "1",
+        "0",
+        "1/4",
+        "3/4"
+      ],
+      "pure_branch": "selected",
+      "norm_branch": "other",
+      "value": "55/4"
+    },
+    {
+      "w_v_alpha_beta_z": [
+        "1",
+        "1/2",
+        "1/4",
+        "0",
+        "3/4"
+      ],
+      "pure_branch": "selected",
+      "norm_branch": "selected",
+      "value": "55/4"
+    },
+    {
+      "w_v_alpha_beta_z": [
+        "1",
+        "1/2",
+        "1/4",
+        "0",
+        "3/4"
+      ],
+      "pure_branch": "other",
+      "norm_branch": "selected",
+      "value": "55/4"
+    }
+  ],
+  "absent_modulus_3_bound": "215/24",
+  "absent_modulus_3_denominator": "1/2",
+  "old_budget_extremum": {
+    "old_envelope": "57/4",
+    "coupled_envelope": "55/4",
+    "n": "1/8",
+    "m": "1/8"
+  }
+}

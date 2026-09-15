@@ -197,6 +197,9 @@ chosen once for the whole square. Residues for different divisors need not be
 mutually compatible. This is a proposed replacement for the separate-cylinder
 cost, not a consequence of H73's failure. A lower bound for `κ_Q` gives no lower
 bound for `Γ_Q`. The conditional transfer and finite-height calibration below do not establish Γ73.
+The stronger demand that this law always be uniform is false: the rectangular
+family below has uniform `Γ>142.3789923` but admits a nonuniform law with
+`Γ<134.121`. Thus it leaves the existential target open.
 
 ## Route
 
@@ -376,13 +379,17 @@ The finite weighted rectangle estimate is formalized in
 For arbitrary finite `X,I`, nonnegative old weights `μ(x)` and coefficients
 `A(e,i,x)`, it takes a normalized nonnegative kernel `K(x,y)` and bounds
 on each actual single-prefix mass by `M_t(x)`. If the zero layer has second
-moment at most `G_0`, and every layer `e≤t` has second moment at most `G_t`
+moment at most `G_0`, and each layer `e≤t` has its own second-moment bound `G(t,e)`
 under the weighted measure `μ M_t`, then the actual modular rectangle load
 has second moment at most
 
 \[
- G_0+\sum_{t=1}^H(2t+1)G_t.
+ G_0+\sum_{t=1}^H\left[\sum_{e=0}^tG(t,e)+tG(t,t)\right].
 \]
+
+Taking `G(t,0)=D_t` and `G(t,e)=G_t` for positive `e` gives
+`D_t+2tG_t` at depth `t`; setting all layer bounds equal recovers (W1).
+Keeping the zero layer distinct is the formal ingredient used in (ZG2).
 
 The theorem includes `H=0`, permits correlation between `x` and the kernel,
 and does not require normalization of `μ`. It proves intersection bounds
@@ -551,7 +558,7 @@ For support {3,5,7,11}:
 
 These improve the bare deleted-mass bounds 661/10 and 320623/1591,
 respectively. They do not improve the existing survivor bounds 481/12
-and 5015891/47730. The absent-modulus-3 case uses the already stronger
+and 4939031/47730. The absent-modulus-3 case uses the already stronger
 existing unsplit branch. No new best head constant results.
 
 #### Why this does not automatically improve the pure-survivor base
@@ -1035,7 +1042,7 @@ For any finite distinct-modulus family supported on `{3,5,7,11}`, its complete
 survivor set is nonempty, and the uniform survivor probability satisfies
 
 \[
- \boxed{\Gamma\le C_4:=\frac{5015891}{47730}<105.088854.}
+ \boxed{\Gamma\le C_4:=\frac{4939031}{47730}<103.478546.}
  \tag{P2}
 \]
 
@@ -1565,24 +1572,24 @@ arithmetic with no solver or residue-family enumeration. The mathematical
 arguments establish the meaning and universality of the checked
 inequalities; these arithmetic checks do not claim Lean certification.
 
-**Conclusion of (P1).** Apply (P2), proved by the shared-density argument below, to
+**Conclusion of (P1).** Apply (P2), proved by the shared-cofactor density refinement below, to
 all classes involving only `{3,5,7,11}`. For any missing small prime use an
 unused coordinate; this adds no forbidden class. Start (T6) with `G=C_4`
 and `s=1`. Take the three steps `p=67,71,73`, with respective thresholds
 `δ=1/4,53/200,27/100`. Their exact survivor-fraction lower bounds are
 
 \[
- \frac{150918019}{155933910},\qquad
- \frac{55875302605721}{57614312015421},\qquad
- \frac{138335257526567659561}{142728766980895413936},
+ \frac{150994879}{155933910},\qquad
+ \frac{55931291964461}{57643654012161},\qquad
+ \frac{138545600701541742901}{142871787094690609776},
 \]
 
 all strictly positive. The corresponding ratios are
 
 \[
- F_{67}=\frac{17390094097}{150918019},\qquad
- F_{71}=\frac{7029615126924407}{55875302605721},\qquad
- F_{73}=\frac{18990969219984662521362}{138335257526567659561}
+ F_{67}=\frac{17123620477}{150994879},\qquad
+ F_{71}=\frac{6921898229038187}{55931291964461},\qquad
+ F_{73}=\frac{18699964911029778700842}{138545600701541742901}
  <\frac{138877}{1000}.
  \tag{P8}
 \]
@@ -1712,6 +1719,185 @@ two-prime congruence theorem (G1) is an ordinary mathematical proof with
 exact arithmetic verification; only the stated finite-itinerary component
 has been checked in Lean.
 
+### Coupling the shared zero-exponent layout
+
+For every finite distinct-modulus family supported on `{3,5}`, its uniform
+complete-survivor law satisfies
+
+\[
+ \boxed{\Gamma_{35}\le55/4.} \tag{ZG1}
+\]
+
+Together with the established bound on the same uniform law, this gives
+`(Γ35,R35)≤(55/4,15/7)`. The improvement comes from preserving the identity
+of the zero-five-exponent test layout in all its cross terms.
+
+Suppose first that an actual modulus-3 class is present. Use the actual
+two-root parameters from the earlier budget argument:
+
+\[
+ y=1/4,\quad a=7/8,\quad x=(w+v)/3,\quad
+ d=z-\alpha,\quad e=z-\beta,
+\]
+\[
+ n=wd/3-t_A,\qquad m=ve/3-t_B,\qquad s=n+m.
+\]
+
+Here `1/2≤w,v≤1`, `w+v≥3/2`, `3/4≤z≤1`, `α,β≥0`, `α+β≤y`, and
+`t_A,t_B≥0`, `t_A+t_B≤y/6`. Let `η` be the unnormalized uniform measure
+on the pure-ternary survivor set. Its total mass is `x`, its two root masses
+are `w/3,v/3`, and its depth-`j` cylinder caps are `3^{-j}` in either
+surviving root. Write `μ` for the uniform complete `{3,5}` survivor law.
+As positive measures on the full product period,
+
+\[
+ \mu\le s^{-1}(\eta\times U_5),
+\]
+
+where `U_5` is uniform on the whole finite 5-power coordinate. This
+inequality drops the pure-5 and mixed exclusions, and applies whether or
+not individual old fibres survive.
+
+Fix one complete test layout. For each 5-exponent `b≥0`, stripping the
+5-part of its divisors gives a complete pure-ternary layout with load
+`L_b`. These loads include divisor one and every old cofactor. The selected
+5-adic residue may depend on the old divisor. Put
+
+\[
+ A_0=\int L_0^2\,d\eta,\qquad B=\Gamma(\eta).
+\]
+
+The block with both 5-exponents zero contributes exactly
+`E_μ L_0²`, since `L_0` depends only on the ternary coordinate. For the
+two ordered blocks `(0,b),(b,0)` with `b>0`, each pair of outside cylinders
+has uniform intersection mass at most `5^{-b}`. Bound this separately for
+every old divisor pair, then sum and integrate the old indicators. The two
+blocks together contribute at most
+
+\[
+ \frac{2\cdot5^{-b}}s\int L_0L_b\,d\eta
+ \le\frac{5^{-b}}s(A_0+B),
+\]
+
+by the pointwise square inequality and `∫L_b²dη≤B`. Among pairs of
+strictly positive 5-exponents with maximum `b`, there are `2b−1` ordered
+pairs. Cauchy–Schwarz bounds each complete old cross moment by `B`.
+Summing these nonnegative bounds gives
+
+\[
+ E_\mu L^2\le E_\mu L_0^2+
+       \frac{yA_0+(a-y)B}s. \tag{ZG2}
+\]
+
+Indeed `∑_{b≥1}5^{-b}=y` and
+`∑_{b≥1}(2b−1)5^{-b}=a−2y=3/8`. Thus the coefficient of `B` is
+`y+(a−2y)=a−y=5/8`. At finite heights, only existing blocks are present;
+the infinite series provide upper bounds with nonnegative terms. No old
+cofactor, cross term or tail is omitted.
+
+The same `L_0` occurs in both terms of (ZG2). If its modulus-3 test
+chooses surviving root `A`, the existing root-labelled Bellman estimate gives
+
+\[
+ E_\mu L_0^2\le1+\frac{3n+\max(d,2e/3)}s,
+ \qquad A_0\le x+w+1.
+\]
+
+For any complete old layout, the same estimate under `η` gives
+`B≤x+max(w,v)+1`. Hence an `A`-selected layout satisfies
+
+\[
+ E_\mu L^2\le1+
+ \frac{3n+\max(d,2e/3)+y(x+w+1)
+                +(a-y)(x+\max(w,v)+1)}s.
+ \tag{ZG3}
+\]
+
+The corresponding `B`-selected bound swaps the two roots. These are
+consequences of the same finite-itinerary estimate used earlier: when the
+initial root is fixed, the later tail under `η` contributes at most one,
+while the initial diagonal and two constant crosses contribute `w` or `v`.
+The global `B` permits either initial root; `A_0` retains the actual one.
+
+If the modulus-3 test chooses the actual forbidden root, its event has zero
+mass under both measures. The remaining-tail bounds are
+
+\[
+ E_\mu L_0^2\le1+\frac{2\max(d,e)}{3s},\qquad
+ A_0\le x+2/3.
+\]
+
+This case is dominated by one of the surviving-root bounds. If `d≥e`,
+choose the bound whose initial root is `B`: its numerator includes
+`3m+max(e,2d/3)≥2d/3`, and its `η` cap `x+v+1` is at least `x+2/3`.
+If `e≥d`, use root `A` symmetrically. Thus no additional optimization
+assumption is needed for the forbidden-root test choice.
+
+To maximize (ZG3), move all deep mixed deletion from the selected root to
+the other root. This keeps `s` fixed and increases `n`; every other term
+is unchanged. Enlarge the other-root deletion to `y/6`. The numerator is
+positive and fixed during this enlargement, while the denominator decreases.
+It therefore suffices to take
+
+\[
+ n=w(z-\alpha)/3,\qquad
+ m=v(z-\beta)/3-y/6.
+\]
+
+Both roots remain positive: `n≥1/12`, `m≥1/24`. Expand the two maxima
+in (ZG3) into their four affine branches. For each branch, numerator and
+denominator are affine in each of `(α,β)`, `(w,v)` and `z` separately.
+A ratio of affine functions with positive denominator at a convex
+combination is the denominator-weighted average of its vertex ratios.
+Applying this successively leaves exactly the eighteen parameter vertices
+
+\[
+ (w,v)\in\{(1/2,1),(1,1/2),(1,1)\},\qquad
+ (\alpha,\beta)\in\{(0,0),(y,0),(0,y)\},\qquad z\in\{1-y,1\}.
+\]
+
+The fixed rational certificate checks all `18×4=72` branches. Their exact
+maximum is `55/4`, proving (ZG1) for an actual modulus-3 exclusion. Root
+exchange covers either surviving-root test choice. If the actual modulus-3
+class is absent, the established unsplit uniform bound is `215/24<55/4`;
+its normalization denominator is `1/2>0`. Missing higher pure classes,
+missing mixed classes and arbitrary finite prime heights are already allowed
+by the budgets and the nonnegative geometric-tail bounds above.
+
+The old extremal parameter point illustrates the gain. At
+`w=1/2,v=1,α=0,β=1/4,z=3/4,t_A=0,t_B=1/24`, one has `n=m=1/8`.
+The old envelope gave `57/4`. Its pure old contribution selects root `A`,
+while its independent positive-five bound can select root `B`. Retaining
+that first choice in `A_0≤x+w+1=2`, alongside `B≤5/2`, gives `55/4`.
+
+The parameter point itself is a genuine infinite-height limit, so it cannot
+be removed by asserting a forced overlap of pure-ternary and deep mixed
+exclusions. An explicit finite family with heights `H≥2,K≥1` is:
+
+- forbid `2 mod 3`;
+- for `2≤j≤H`, forbid `3^{j−1} mod 3^j` in root `A=0`;
+- for `1≤b≤K`, forbid `5^{b−1} mod 5^b`;
+- for each `3·5^b`, choose the CRT class `1 mod 3` and
+  `2·5^{b−1} mod 5^b`;
+- for each `3^j5^b` with `j≥2`, choose the CRT class
+  `1+3^{j−1} mod 3^j` and `3·5^{b−1} mod 5^b`.
+
+Every modulus is distinct. For any fixed prime, the displayed strings with
+first nonzero digit at different depths are disjoint. The three 5-adic
+colours `1,2,3` are also disjoint; pure higher ternary exclusions lie in
+root `A`, while the deep mixed ternary factors lie in root `B`. Therefore,
+with `r_H=∑_{j=2}^H3^{-j}` and `u_K=∑_{b=1}^K5^{-b}`, the exact parameters
+are `w=1−3r_H`, `v=1`, `z=1−u_K`, `α=0`, `β=u_K`, `t_A=0`,
+`t_B=r_Hu_K`. Their limits are exactly the old extremal parameters.
+This realizes the budget limit, not equality in the old second-moment
+bound; (ZG1) shows that the old bound is not tight for actual layouts.
+
+The [standalone verifier](../docs/reports/erdos7-odd-covering/verify_uniform_gamma_cofactor_coupling.py) checks
+all rational branches and missing-modulus normalization against
+the [fixed certificate](../docs/reports/erdos7-odd-covering/uniform_gamma_cofactor_certificate.json). The layout correspondence and
+continuous reduction above are ordinary mathematical arguments; no full
+Lean formalization of (ZG1) is claimed.
+
 ### Transporting actual layouts through outside lcm blocks
 
 The actual two-prime estimate (G1), together with the common-family density
@@ -1835,10 +2021,10 @@ and [fixed certificate](../docs/reports/erdos7-odd-covering/lcm_block_certificat
 reconstruct the profile, check the adjoining-coordinate ratios, both
 complete geometric sums, and three positive-denominator steps from the
 (B6) seed. The stronger seed and bridge in (P2) and (P8) are checked by the
-shared-density verifier below. The block argument and its four-prime
+shared-cofactor verifier below. The block argument and its four-prime
 conclusion are not Lean formalized.
 
-### Shared survivor densities improve the four-prime head (P2)
+### Intermediate four-prime bound from shared survivor densities
 
 For every finite distinct-modulus forbidden family supported on
 S={3,5,7,11}, let mu_S be its complete uniform survivor law. Then
@@ -2051,6 +2237,91 @@ cylinder inequalities are the sixteen used dual rows; no omitted solver
 state is needed to check the result. No Lean kernel certification is
 claimed for this mathematical proof.
 
+### Shared-cofactor refinement of the four-prime head (P2)
+
+For a finite distinct-modulus residue family supported on {3,5,7,11}, use
+its actual product of pure-prime survivor laws P. Let lambda_A be the
+P-probability of avoiding all mixed forbidden classes supported on A,
+t=1/lambda_35711, and v_A=lambda_A/lambda_35711. All densities and layout
+moments below concern this same family. The analytical two-prime input is
+the uniform complete-survivor layout theorem Gamma_35 <= 55/4.
+
+The common-density argument and its original cylinder profile give
+
+    Gamma_35711 <= C + L,        C = 332692/7955,
+    L = (704/6075)t + (671/54)v35 + (56/135)v37
+        + (32/45)v57 + (44/135)v711 + (16/45)v357
+        + (7/6)v3711 + (8/9)v5711.
+
+Indeed, the blocks of positive 7-lcm exponent contribute at most
+
+    (55/4) v35 (2/3)(61/45) = (671/54)v35.
+
+The zero-7-lcm blocks use the common-density cylinder proof's ten
+complement-density cells and thirteen remaining original-profile cells,
+with the unit term counted separately. Their exact infinite tail sums
+are unchanged. The proof of the positive-7 bound integrates the outside
+cylinders first and then applies Cauchy--Schwarz to the two complete
+{3,5} test layouts under the same mu35.
+
+Use the following six inequalities with nonnegative multipliers:
+
+| Left side <= right side | Multiplier |
+|---|---:|
+| (4/7)v35-v357 <= 0 | 854/45 |
+| v57-v357-(3/5)t <= 0 | 1/54 |
+| v35+v37+v57-v357-(31/15)t <= 0 | 56/135 |
+| (1591/3240)v357 <= 1 | 64044/1591 |
+| v35+v57+v3711-(97/45)t <= 1 | 5/18 |
+| v35+v3711+v5711-(19/9)t <= 1 | 8/9 |
+
+The first and fourth rows are the same-law prime-adjoining inequalities;
+the others are actual forbidden-union bounds. Their weighted sum has
+right side 64044/1591+7/6. Subtracting their weighted left sides from L
+leaves exactly
+
+    (21017/6075)t + (44/135)v711.
+
+Both variables lie in [0,8505/1591]. Therefore
+
+    Gamma_35711
+      <= 332692/7955 + 64044/1591 + 7/6
+         + (21017/6075+44/135)(8505/1591)
+       = 4939031/47730 = 103.4785459878483... .
+
+The exact decrease from the 57/4-input certificate is 2562/1591. The
+changed coefficients satisfy the two direct identities
+
+    (2135/108-854/45)(4/7) = 1159/90-671/54,
+    (66606/1591-64044/1591)(1591/3240) = 2135/108-854/45,
+
+so this refinement introduces no new density inequality.
+
+The fixed recurrence
+
+    F_next = F (1+(3p-1)/((p-1)^2(1-delta)))
+                 / (1-F/(4 delta (1-delta)(p-1)^2))
+
+has the following exact continuation, starting at F=4939031/47730:
+
+| p | delta | Positive survival denominator | Output F |
+|---:|---:|---:|---:|
+| 67 | 1/4 | 150994879/155933910 | 17123620477/150994879 |
+| 71 | 53/200 | 55931291964461/57643654012161 | 6921898229038187/55931291964461 |
+| 73 | 27/100 | 138545600701541742901/142871787094690609776 | 18699964911029778700842/138545600701541742901 |
+
+The final value is 134.973357626228... < 138877/1000, with positive margin
+
+    540832477598233928020177/138545600701541742901000.
+
+[The coupled-head verifier](../docs/reports/erdos7-odd-covering/verify_common_density_head_coupled.py)
+and its [fixed certificate](../docs/reports/erdos7-odd-covering/common_density_head_coupled_certificate.json)
+reconstruct the entire original profile, finite/tail cells, six-row
+certificate and this continuation using exact standard-library rational
+arithmetic. Normal, optimized (-O), and isolated (-I) invocations all
+exit 0. These checks certify the arithmetic implication of the stated
+analytical inputs; no Lean kernel certification is claimed.
+
 ### A positive atomic representation of the extremal three-prime densities
 
 The density coordinates used by the exact R357=1649/360 relaxation
@@ -2132,6 +2403,11 @@ not apply to matrices that additionally encode realizable congruence
 intersections or conditional root-residue profiles.
 
 ### Nonuniform two-root survivor laws
+
+The following two-prime constructions remain valid. The uniform law in
+(ZG1) now gives the stronger pair `(Γ35,R35)≤(55/4,15/7)`, which dominates
+both (N1) and (N2). Their weighted-root method also supplies the different
+nonuniform construction for the rectangular obstruction family below.
 
 For every finite family of distinct moduli supported on `{3,5}`, there is a
 probability law supported on its complete survivor set satisfying
@@ -2341,7 +2617,7 @@ The Gamma bound is below the earlier `653/16` transport bound. Its R bound
 is above the uniform-law `1649/360` bound; those two estimates concern
 different laws and cannot be combined. Continuing (N9)'s argument through
 prime 11 gives only `Γ35711≤350/3` for the hybrid law, above the established
-uniform four-prime bound `5015891/47730`. No four-prime or unrestricted
+uniform four-prime bound `4939031/47730`. No four-prime or unrestricted
 Erdős #7 improvement follows from the present propagation.
 
 [The nonuniform-law verifier](../docs/reports/erdos7-odd-covering/verify_nonuniform_root_law.py)
@@ -2362,6 +2638,309 @@ renormalization. That construction is squarefree and does not directly
 supply (N6)–(N10) for arbitrary powers. The new step here is the weighted
 complete-layout inequality and its continuous distinct-modulus budget
 certificate, not the general linear-programming method.
+
+### A uniform-survivor obstruction and sharpness at two primes
+
+Let P be the twenty odd primes from 3 through 73 and H>=1. Set
+Q_H=product_{p in P} p^H. Give every nonunit divisor exactly one forbidden
+class, according to its support:
+
+* p^e: residue p^(e-1)-1 modulo p^e;
+* 3^i 5^j: CRT residues 2*3^(i-1)-1 and 2*5^(j-1)-1;
+* all other mixed divisors: residue 0.
+
+These support cases are disjoint and exhaustive, with no duplicate modulus.
+The third class lies in 0 mod p for any prime p dividing that modulus;
+0 mod p is already the e=1 pure forbidden class. Thus all higher-support
+moduli are present but redundant. No antichain or nonredundancy hypothesis
+is required by the uniform-head statement being tested.
+
+#### Geometry for every finite height
+
+Write F_{p,e} and C_{p,e} for the cylinders with residues p^(e-1)-1 and
+2*p^(e-1)-1. If e<f, either depth-f residue reduces to -1 modulo p^e.
+Neither depth-e residue equals -1 modulo p^e for odd p: their differences
+from -1 are p^(e-1) and 2*p^(e-1). At equal depth F and C are distinct.
+Hence all 2H cylinders are mutually disjoint. Put
+
+    s_p=sum_{e=1}^H p^(-e), lambda_p=1-s_p,
+    S_p=(union_e F_{p,e})^c, C_p=union_e C_{p,e}.
+
+Then C_p is contained in S_p, U_p(C_p)=s_p and U_p(S_p)=lambda_p.
+The union of all support-{3,5} mixed classes is exactly C_3 x C_5.
+Consequently the complete survivor set is exactly
+
+    R_H=[(S_3 x S_5) minus (C_3 x C_5)] x product_{p>=7} S_p.
+
+Let u=3^(-H), v=5^(-H). Its {3,5} block has ambient mass
+
+    D=lambda_3 lambda_5-s_3 s_5=1-s_3-s_5=(1+2u+v)/4>1/4.
+
+The entire survivor density is D product_{p>=7}lambda_p, strictly above
+(1/4) product_{p>=7}(p-2)/(p-1)>0. No exceptional thin set or Dirac law is used.
+
+#### One whole test layout and its exact integral
+
+Take beta=2 at the 5-adic coordinate and beta=1 at every other prime,
+modulo the full p^H. CRT chooses a single beta_H modulo Q_H. At every
+divisor d, including 1, use its reduction beta_H mod d as the test class.
+Define ell_p=1+sum_{e=1}^H 1_{x_p=beta mod p^e}. Exact divisor expansion gives
+
+    L=product_p ell_p.
+
+The cylinders in each ell_p are nested. Therefore ell_p^2 equals
+1+sum_e(2e+1)1_{x_p=beta mod p^e}. Define W_p=sum_e(2e+1)p^(-e).
+Every such test cylinder lies in S_p: its first digit is different from
+0 and from -1. All positive-depth 3-adic test cylinders lie in C_{3,1};
+the 5-adic test cylinders avoid C_5 entirely. Thus
+
+    integral_{S_p} ell_p^2=lambda_p+W_p,
+    integral_{C_3} ell_3^2=s_3+W_3,
+    integral_{C_5} ell_5^2=s_5.
+
+Using the actual set difference, rather than independent {3,5} marginals,
+the exact block score is
+
+    g_H=[(lambda_3+W_3)(lambda_5+W_5)-(s_3+W_3)s_5]/D.
+
+The full coherent-layout score under the uniform COMPLETE survivor law is
+
+    G_H=g_H product_{p>=7}(1+W_p/lambda_p).
+
+Therefore Gamma(Unif R_H)>=G_H. No maximality of this particular test
+layout is assumed or needed.
+
+#### Strict monotonicity: exact positive numerators
+
+Put D'=1+2u+v. Algebra gives
+
+    g_H=1+2 A_H W_3+2 B_H W_5+4 C_H W_3 W_5,
+    A_H=(1+v)/D', B_H=(1+u)/D', C_H=1/D'.
+
+At H+1, u becomes u/3 and v becomes v/5. All denominators are positive.
+After putting each difference over D'_H D'_{H+1}, the exact numerators are
+
+    A_{H+1}-A_H: 4u(5-v)/15 >0,
+    B_{H+1}-B_H: 2u/3+4v/5+2uv/15 >0,
+    C_{H+1}-C_H: 4u/3+4v/5 >0.
+
+Here 0<v<=1/5 because H>=1. Also W_p strictly increases and lambda_p
+strictly decreases while staying positive. Hence both g_H and G_H strictly
+increase for every H>=1. In particular any exact H=5 lower bound persists
+for every H>=5; finite tests are not the basis of this assertion.
+
+#### Limit and sharpness of the uniform two-prime constant
+
+As H tends to infinity, W_3->2, W_5->7/8, and A_H,B_H,C_H->1. Therefore
+
+    g_H -> 1+4+7/4+7 =55/4.
+
+Together with the independently proved universal uniform Gamma35<=55/4,
+this proves that 55/4 is the sharp constant over finite families: every
+smaller proposed uniform constant is exceeded at a sufficiently large
+finite height. This does not claim that a finite family attains equality.
+
+The full limiting witness is
+
+    (55/4) product_{7<=p<=73}(1+(3p-1)/((p-1)(p-2))).
+
+Before the mixed rectangle is deleted the limiting {3,5} witness is
+5*(13/6)=65/6. The exact amplification ratio is (55/4)/(65/6)=33/26.
+
+For p=3 there is the sharper geometric explanation:
+S_3 is the disjoint union of C_3 and the final singleton -1 mod 3^H,
+because 2s_3+3^(-H)=1. Thus the mixed cofactors remove C_5 above nearly
+all of the pure-3 survivor set; on C_5 the selected 5-load is exactly 1.
+
+#### Scope of the conclusion
+
+At height 5 the exact arithmetic gives
+
+\[
+ g_5=\frac{2581475}{191467},\qquad
+ 142.3789923<G_5<142.3789924.
+\]
+
+The uniform survivor density at this height is approximately
+`0.11216643572445546`. At every height it exceeds
+`36779876601/330712481792>11/100`. The limiting score is approximately
+`145.21869889477725`. The [exact verifier](../docs/reports/erdos7-odd-covering/verify_uniform_survivor_obstruction.py)
+and its [fixed certificate](../docs/reports/erdos7-odd-covering/uniform_survivor_obstruction_certificate.json)
+recompute the finite sums, pairwise CRT disjointness and individual
+`3^5` and `5^5` coordinates by direct enumeration.
+
+Thus the universal strengthening requiring the uniform complete-survivor
+law to satisfy `Γ≤138877/1000` is false, already at height 5. Strict
+monotonicity makes the same family an obstruction at every `H≥5`.
+The construction does not refute the existence of a nonuniform survivor
+law with small Gamma, and it does not construct an odd covering system.
+The nonuniform existential Γ73 target remains open. The argument and exact
+arithmetic are not a Lean proof.
+
+
+### A nonuniform law for the rectangular obstruction family
+
+For the specified rectangular forbidden family on all odd primes through
+73, every common height `H≥5` admits a complete-survivor probability law
+with
+
+\[
+ \boxed{\Gamma\le
+ \frac{64245900555623296761826781321804225}
+      {479017695593451697408733725605888}
+ <134.121<138.877.} \tag{NR1}
+\]
+
+This is an existence statement for this family. It does not restore the
+uniform-law bound or establish the same existence statement for all
+forbidden-residue assignments.
+
+Let `P` be the odd primes at most 73 and `Q_H=∏_{p∈P}p^H`. On the
+`p`-power coordinate, with ambient uniform measure `U_p`, define
+
+\[
+ F_{p,e}=\{x:x\equiv p^{e-1}-1\pmod{p^e}\},\qquad
+ C_{p,e}=\{x:x\equiv2p^{e-1}-1\pmod{p^e}\},
+\]
+\[
+ S_p=(\mathbb Z/p^H)\setminus\bigcup_{e=1}^H F_{p,e},\qquad
+ C_p=\bigcup_{e=1}^H C_{p,e},\qquad
+ s_p=\sum_{e=1}^H p^{-e}=\frac{1-p^{-H}}{p-1}.
+\]
+
+The actual forbidden assignment uses `F_{p,e}` for pure powers, the CRT
+rectangle `C_{3,i}×C_{5,j}` for modulus `3^i5^j`, and residue zero for
+every other mixed divisor. At different depths the first nonterminal digit
+occurs in different positions; at equal depth the `F` and `C` digits are
+distinct. Hence these cylinders are pairwise disjoint and `C_p⊆S_p`, with
+`U_p(C_p)=s_p` and `U_p(S_p)=1−s_p`. The other mixed classes are redundant,
+since each is contained in an already forbidden pure residue `0 mod p`.
+Thus the complete survivor set is exactly
+
+\[
+ R_H=\bigl((S_3\times S_5)\setminus(C_3\times C_5)\bigr)
+             \times\prod_{7\le p\le73} S_p. \tag{NR2}
+\]
+
+We use the rectangular subset
+`C_3×(S_5\C_5)×∏_{p≥7}S_p` of this actual survivor set.
+
+**The ternary law.** The first cylinder `C_{3,1}` is the entire root
+`1 mod 3`, of ambient mass `1/3`. All remaining `C_{3,e}`, `e≥2`, lie
+in root `2 mod 3`; their total relative root width is
+
+\[
+ w_H=3\sum_{e=2}^H3^{-e}=\frac{1-3^{1-H}}2,
+ \qquad \frac{40}{81}\le w_H<\frac12\quad(H\ge5).
+\]
+
+Give the raw restricted measure `U_3|C_3` multiplier `h=1` on root 1
+and `k=4/3` on root 2. Its mass is
+
+\[
+ x_H=\frac{1+(4/3)w_H}{3}\ge\frac{403}{729}>0.
+\]
+
+The general weighted two-root event inequality applies to this finite
+positive measure: it needs only the two root masses and the depth-wise
+cylinder caps `h·3^{-e}`, `k·3^{-e}`. In particular it does not require
+`w_H≥1/2`, a condition used in the separate pure-survivor budget problem.
+The root masses here are `1/3` and `(4/3)w_H/3`. The root-labelled
+finite-itinerary estimate gives
+
+\[
+ \Gamma(\text{raw law})\le x_H+
+ \max\{2,\ 17/9,\ (4/3)(w_H+1),\ (4/3)w_H+2/3\}
+ \le x_H+2.
+\]
+
+A modulus-3 test in the zero-mass root contributes no event; its remaining
+weighted tail is at most `(2/3)max(h,k)=8/9`, also below 2. All later
+root choices, including nonnested choices, are covered by the event bound.
+After normalization, the resulting probability `μ_3` satisfies
+
+\[
+ \Gamma(\mu_3)\le1+\frac2{x_H}\le\frac{1861}{403}.
+ \tag{NR3}
+\]
+
+The finite-event inequality is supplied by the existing general weighted
+root theorem; the residue identification and normalization here are the
+ordinary mathematical application of that component.
+
+**The quinary law.** Let `μ_5` be uniform on `S_5\C_5`. Its ambient
+density is
+
+\[
+ 1-2s_5=\frac{1+5^{-H}}2>\frac12.
+\]
+
+Consequently every cylinder modulo `5^e` has `μ_5`-mass at most
+`2·5^{-e}`. For completeness, if a probability `ν` on a new `p`-power
+coordinate has every depth-`e` cylinder bounded by `C p^{-e}`, then for
+any old law `μ`, complete-layout grouping gives
+
+\[
+ \Gamma(\mu\times\nu)
+ \le\Gamma(\mu)\left(1+C\sum_{e\ge1}(2e+1)p^{-e}\right).
+ \tag{NR4}
+\]
+
+To see this, group ordered outside exponents by their maximum. Outside
+residues may depend on the old divisor, but every old divisor pair has
+outside intersection mass at most `C p^{-e}`. Sum the old indicators and
+use Cauchy–Schwarz for their two complete old layouts. The count is `2e+1`;
+the zero-exponent block has exactly the old bound. Finite-height sums are
+bounded by these nonnegative infinite sums. This is the cylinder-cap
+transfer; it assumes no general multiplicativity of actual Gamma.
+
+Since `∑_{e≥1}(2e+1)5^{-e}=7/8`, (NR3)–(NR4) give
+
+\[
+ \Gamma(\mu_3\times\mu_5)
+ \le\frac{1861}{403}\left(1+2\frac78\right)
+ =\frac{20471}{1612}. \tag{NR5}
+\]
+
+**The remaining primes and support.** For every `p≥7`, take `μ_p` uniform
+on `S_p`. Its ambient density is at least `(p−2)/(p−1)`, so its depth-`e`
+cylinder cap is `[(p−1)/(p−2)]p^{-e}`. Iterating (NR4), all normalizers
+remain positive and the transfer factor at `p` is
+
+\[
+ 1+\frac{3p-1}{(p-1)(p-2)}
+   =\frac{p^2+1}{(p-1)(p-2)}.
+\]
+
+The final law `μ_3×μ_5×∏_{p≥7}μ_p` is supported on (NR2): its ternary
+coordinate lies in `C_3`, its quinary coordinate avoids `C_5`, and every
+coordinate avoids all original pure forbidden classes. Therefore it also
+avoids the redundant mixed zero classes. No conditioning or uniform-law
+estimate from a different distribution is used.
+
+The exact remaining-prime product is
+
+\[
+ \prod_{\substack{7\le p\le73\\p\text{ prime}}}
+ \frac{p^2+1}{(p-1)(p-2)}
+ =\frac{34522246402806715078896712155725}
+        {3268731173404447066684907556864}.
+\]
+
+Multiplying by (NR5) proves (NR1). The exact margin below `138877/1000` is
+
+\[
+ \frac{284829994413561827400741536145585347}
+      {59877211949181462176091715700736000}>0.
+\]
+
+The standalone standard-library verifier
+[verify_rectangular_family_nonuniform_law.py](../docs/reports/erdos7-odd-covering/verify_rectangular_family_nonuniform_law.py) recomputes the root-width
+endpoints, affine weighted-root bounds, every prime and transfer factor,
+and the exact final inequality against
+[rectangular_family_nonuniform_certificate.json](../docs/reports/erdos7-odd-covering/rectangular_family_nonuniform_certificate.json). The bounds hold uniformly
+for all common heights `H≥5`; the program does not enumerate the full
+period. No complete Lean formalization of this family result is claimed.
 
 ### Exact tensorization for two fixed depth-two tree shapes
 
@@ -2665,7 +3244,7 @@ checked on macOS/Python 3.14; other platforms and Python 3.8 were not tested.
 ## Triage
 
 `wall`: user-selected third-tier core research. The unrestricted target remains
-open. The results are three exact obstacles to earlier proof routes, a direct
+open. The results include exact obstacles to earlier proof routes, a direct
 joint-load transfer into the BBMST continuation, and a quantitative reduction
 of the arbitrary-height sufficient condition to a finite exponent cap. A
 uniform four-prime head bound additionally proves the restricted noncoverage
@@ -2676,7 +3255,8 @@ component of the actual-layout improvement, and
 `TwoRootEventMoment.two_root_event_moment_le` proves the bound for the
 actual weighted event-load increment;
 `PrimeRectangleTransfer.prefix_weighted_rectangle_second_moment_le` formalizes
-the weighted finite rectangle second-moment estimate underlying (W1).
+the weighted finite rectangle second-moment estimate underlying (W1),
+with individual layer bounds retaining the shared zero layer.
 No freeze or problem-resolution binding is supplied, and neither (P1) nor
 (G1) is a complete Lean theorem.
 
@@ -2691,7 +3271,9 @@ the universal Γ73 bound and the sufficient finite-base bounds remain unproved.
 These residue-level mathematical arguments have not been fully formalized
 in Lean. The finite-itinerary and actual-event components are identified in (G2),
 and the weighted finite rectangle second-moment component after (W1).
-The nonuniform laws (N1)–(N10) and shared-density improvement (P2) have
-ordinary mathematical proofs and exact rational checks, not Lean proofs.
+The nonuniform laws (N1)–(N10), sharp uniform bound (ZG1), shared-cofactor
+improvement (P2), rectangular uniform-law obstruction and its nonuniform
+repair (NR1) have ordinary mathematical proofs and exact rational checks,
+not complete Lean proofs.
 H73 is refuted and supplies no lower bound for Γ73. These finite checks do not
 establish literature priority or an unrestricted proof or covering counterexample.

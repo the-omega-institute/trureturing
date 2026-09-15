@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Transfer weighted layer moments through actual residue-prefix kernel caps. -/
+   digest: Transfer individual weighted layer moments through actual residue-prefix kernel caps. -/
 
 import Mathlib.Data.Real.Basic
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
@@ -24,23 +24,25 @@ theorem prefix_weighted_rectangle_second_moment_le
     (b : Fin (H + 1) → I → ℕ)
     (K : X → Fin (p ^ H) → ℝ)
     (hK0 : ∀ x y, 0 ≤ K x y) (hKsum : ∀ x, ∑ y, K x y = 1)
-    (M : ℕ → X → ℝ) (G : ℕ → ℝ)
+    (M : ℕ → X → ℝ) (G₀ : ℝ) (G : ℕ → ℕ → ℝ)
     (hprefix : ∀ t, 1 ≤ t → t ≤ H → ∀ r x,
       (∑ y : Fin (p ^ H), K x y *
         (if y.val % p ^ t = r % p ^ t then 1 else 0)) ≤ M t x)
-    (hG0 : (∑ x, μ x * (∑ i, A 0 i x) ^ 2) ≤ G 0)
+    (hG0 : (∑ x, μ x * (∑ i, A 0 i x) ^ 2) ≤ G₀)
     (hG : ∀ t, 1 ≤ t → t ≤ H → ∀ e : Fin (H + 1), e.val ≤ t →
-      (∑ x, μ x * M t x * (∑ i, A e i x) ^ 2) ≤ G t) :
+      (∑ x, μ x * M t x * (∑ i, A e i x) ^ 2) ≤ G t e.val) :
     (∑ x, ∑ y : Fin (p ^ H), μ x * K x y *
       (∑ e : Fin (H + 1), ∑ i, A e i x *
         (if y.val % p ^ e.val = b e i % p ^ e.val then 1 else 0)) ^ 2) ≤
-      G 0 + ∑ t ∈ Finset.Icc 1 H, (2 * (t : ℝ) + 1) * G t := by
+      G₀ + ∑ t ∈ Finset.Icc 1 H,
+        ((∑ e ∈ Finset.range (t + 1), G t e) + (t : ℝ) * G t t) := by
   classical
   let D (e : Fin (H + 1)) (i : I) (y : Fin (p ^ H)) : ℝ :=
     if y.val % p ^ e.val = b e i % p ^ e.val then 1 else 0
   let F (e : Fin (H + 1)) (x : X) : ℝ := ∑ i, A e i x
   let Z (e : Fin (H + 1)) (x : X) (y : Fin (p ^ H)) : ℝ :=
     ∑ i, A e i x * D e i y
+  let B (t e : ℕ) : ℝ := if t = 0 then G₀ else G t e
   let W (t : ℕ) (x : X) : ℝ := if t = 0 then 1 else M t x
   have hW (t : ℕ) (ht : t ≤ H) (x : X) : 0 ≤ W t x := by
     by_cases ht0 : t = 0
@@ -52,14 +54,14 @@ theorem prefix_weighted_rectangle_second_moment_le
       apply mul_nonneg (hK0 x y)
       split_ifs <;> norm_num
   have square_bound (t : ℕ) (ht : t ≤ H) (e : Fin (H + 1)) (he : e.val ≤ t) :
-      (∑ x, μ x * W t x * F e x ^ 2) ≤ G t := by
+      (∑ x, μ x * W t x * F e x ^ 2) ≤ B t e.val := by
     by_cases ht0 : t = 0
     · have he0 : e = 0 := by
         apply Fin.ext
         simp only [Fin.val_zero]
         omega
-      simpa only [ht0, he0, W, if_true, mul_one, F] using hG0
-    · simpa only [W, if_neg ht0, F] using hG t (by omega) ht e he
+      simpa only [ht0, he0, W, B, if_true, mul_one, F] using hG0
+    · simpa only [W, B, if_neg ht0, F] using hG t (by omega) ht e he
   have coordinate (e f : Fin (H + 1)) (i j : I) (x : X) :
       (∑ y, K x y * D e i y * D f j y) ≤ W (max e.val f.val) x := by
     by_cases hzero : max e.val f.val = 0
@@ -125,7 +127,7 @@ theorem prefix_weighted_rectangle_second_moment_le
         ring
   have old_pair (e f : Fin (H + 1)) :
       (∑ x, μ x * W (max e.val f.val) x * (F e x * F f x)) ≤
-        G (max e.val f.val) := by
+        (B (max e.val f.val) e.val + B (max e.val f.val) f.val) / 2 := by
     have ht : max e.val f.val ≤ H := by omega
     calc
       _ ≤ ∑ x, (μ x * W (max e.val f.val) x * F e x ^ 2 +
@@ -137,13 +139,13 @@ theorem prefix_weighted_rectangle_second_moment_le
       _ = ((∑ x, μ x * W (max e.val f.val) x * F e x ^ 2) +
           (∑ x, μ x * W (max e.val f.val) x * F f x ^ 2)) / 2 := by
         rw [← Finset.sum_div, Finset.sum_add_distrib]
-      _ ≤ G (max e.val f.val) := by
+      _ ≤ (B (max e.val f.val) e.val + B (max e.val f.val) f.val) / 2 := by
         have he := square_bound _ ht e (le_max_left _ _)
         have hf := square_bound _ ht f (le_max_right _ _)
         linarith
   have pair (e f : Fin (H + 1)) :
       (∑ x, ∑ y, μ x * K x y * (Z e x y * Z f x y)) ≤
-        G (max e.val f.val) := by
+        (B (max e.val f.val) e.val + B (max e.val f.val) f.val) / 2 := by
     calc
       _ = ∑ x, μ x * (∑ y, K x y * (Z e x y * Z f x y)) := by
         simp only [Finset.mul_sum]
@@ -159,21 +161,21 @@ theorem prefix_weighted_rectangle_second_moment_le
       _ = ∑ x, μ x * W (max e.val f.val) x * (F e x * F f x) := by
         simp only [mul_assoc]
       _ ≤ _ := old_pair e f
-  have max_count (c : ℕ → ℝ) (N : ℕ) :
-      (∑ e ∈ Finset.range N, ∑ f ∈ Finset.range N, c (max e f)) =
-        ∑ t ∈ Finset.range N, (2 * (t : ℝ) + 1) * c t := by
+  have max_count (c : ℕ → ℕ → ℝ) (N : ℕ) :
+      (∑ e ∈ Finset.range N, ∑ f ∈ Finset.range N, c (max e f) e) =
+        ∑ t ∈ Finset.range N,
+          ((∑ e ∈ Finset.range (t + 1), c t e) + (t : ℝ) * c t t) := by
     induction N with
     | zero => simp
     | succ N ih =>
-        have column : (∑ e ∈ Finset.range N, c (max e N)) = (N : ℝ) * c N := by
-          have pointwise : ∀ e ∈ Finset.range N, c (max e N) = c N := by
-            intro e he
-            rw [max_eq_right (Nat.le_of_lt (Finset.mem_range.mp he))]
-          simp_rw [Finset.sum_congr rfl pointwise]
-          simp
-        have row : (∑ f ∈ Finset.range (N + 1), c (max N f)) =
-            ((N : ℝ) + 1) * c N := by
-          have pointwise : ∀ f ∈ Finset.range (N + 1), c (max N f) = c N := by
+        have column : (∑ e ∈ Finset.range N, c (max e N) e) =
+            ∑ e ∈ Finset.range N, c N e := by
+          apply Finset.sum_congr rfl
+          intro e he
+          rw [max_eq_right (Nat.le_of_lt (Finset.mem_range.mp he))]
+        have row : (∑ f ∈ Finset.range (N + 1), c (max N f) N) =
+            ((N : ℝ) + 1) * c N N := by
+          have pointwise : ∀ f ∈ Finset.range (N + 1), c (max N f) N = c N N := by
             intro f hf
             rw [max_eq_left (Nat.le_of_lt_succ (Finset.mem_range.mp hf))]
           rw [Finset.sum_congr rfl pointwise]
@@ -182,34 +184,54 @@ theorem prefix_weighted_rectangle_second_moment_le
         simp_rw [Finset.sum_range_succ]
         rw [Finset.sum_add_distrib, ih, column]
         rw [Finset.sum_range_succ] at row
-        simp only [max_self] at row
-        simp only [max_self]
+        simp only [max_self] at row ⊢
         rw [row]
+        simp_rw [Finset.sum_range_succ]
         ring
   have coefficient : (∑ e : Fin (H + 1), ∑ f : Fin (H + 1),
-      G (max e.val f.val)) =
-      G 0 + ∑ t ∈ Finset.Icc 1 H, (2 * (t : ℝ) + 1) * G t := by
+      (B (max e.val f.val) e.val + B (max e.val f.val) f.val) / 2) =
+      G₀ + ∑ t ∈ Finset.Icc 1 H,
+        ((∑ e ∈ Finset.range (t + 1), G t e) + (t : ℝ) * G t t) := by
+    have swap : (∑ e : Fin (H + 1), ∑ f : Fin (H + 1), B (max e.val f.val) f.val) =
+        ∑ e : Fin (H + 1), ∑ f : Fin (H + 1), B (max e.val f.val) e.val := by
+      rw [Finset.sum_comm]
+      apply Finset.sum_congr rfl
+      intro e _
+      apply Finset.sum_congr rfl
+      intro f _
+      rw [max_comm]
     calc
-      _ = ∑ e ∈ Finset.range (H + 1), ∑ f ∈ Finset.range (H + 1),
-          G (max e f) := by
-        have inner (e : ℕ) : (∑ f : Fin (H + 1), G (max e f.val)) =
-            ∑ f ∈ Finset.range (H + 1), G (max e f) :=
-          Fin.sum_univ_eq_sum_range (fun f : ℕ => G (max e f)) (H + 1)
+      _ = ∑ e : Fin (H + 1), ∑ f : Fin (H + 1), B (max e.val f.val) e.val := by
+        simp only [← Finset.sum_div, Finset.sum_add_distrib]
+        rw [swap]
+        ring
+      _ = ∑ e ∈ Finset.range (H + 1), ∑ f ∈ Finset.range (H + 1), B (max e f) e := by
+        have inner (e : ℕ) : (∑ f : Fin (H + 1), B (max e f.val) e) =
+            ∑ f ∈ Finset.range (H + 1), B (max e f) e :=
+          Fin.sum_univ_eq_sum_range (fun f : ℕ => B (max e f) e) (H + 1)
         simp_rw [inner]
         exact Fin.sum_univ_eq_sum_range (fun e : ℕ =>
-          ∑ f ∈ Finset.range (H + 1), G (max e f)) (H + 1)
-      _ = ∑ t ∈ Finset.range (H + 1), (2 * (t : ℝ) + 1) * G t :=
-        max_count G (H + 1)
+          ∑ f ∈ Finset.range (H + 1), B (max e f) e) (H + 1)
+      _ = ∑ t ∈ Finset.range (H + 1),
+          ((∑ e ∈ Finset.range (t + 1), B t e) + (t : ℝ) * B t t) :=
+        max_count B (H + 1)
       _ = _ := by
         have partition : Finset.range (H + 1) = insert 0 (Finset.Icc 1 H) := by
           ext t
           simp only [Finset.mem_range, Finset.mem_insert, Finset.mem_Icc]
           omega
         rw [partition, Finset.sum_insert (by simp)]
-        simp only [Nat.cast_zero, mul_zero, zero_add, one_mul]
+        simp only [B, if_true, Nat.cast_zero, zero_mul, add_zero,
+          zero_add, Finset.sum_range_one]
+        congr 1
+        apply Finset.sum_congr rfl
+        intro t ht
+        have ht0 : t ≠ 0 := by have := (Finset.mem_Icc.mp ht).1; omega
+        simp only [if_neg ht0]
   rw [← coefficient]
   change (∑ x, ∑ y, μ x * K x y * (∑ e, Z e x y) ^ 2) ≤
-    ∑ e : Fin (H + 1), ∑ f : Fin (H + 1), G (max e.val f.val)
+    ∑ e : Fin (H + 1), ∑ f : Fin (H + 1),
+      (B (max e.val f.val) e.val + B (max e.val f.val) f.val) / 2
   calc
     _ = ∑ e, ∑ f, ∑ x, ∑ y, μ x * K x y * (Z e x y * Z f x y) := by
       simp only [pow_two, Finset.sum_mul_sum]
@@ -218,7 +240,8 @@ theorem prefix_weighted_rectangle_second_moment_le
           (t := (Finset.univ : Finset (Fin (H + 1)))),
         Finset.sum_comm (s := (Finset.univ : Finset X))
           (t := (Finset.univ : Finset (Fin (H + 1))))]
-    _ ≤ ∑ e : Fin (H + 1), ∑ f : Fin (H + 1), G (max e.val f.val) := by
+    _ ≤ ∑ e : Fin (H + 1), ∑ f : Fin (H + 1),
+        (B (max e.val f.val) e.val + B (max e.val f.val) f.val) / 2 := by
       apply Finset.sum_le_sum
       intro e _
       apply Finset.sum_le_sum
