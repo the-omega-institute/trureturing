@@ -275,4 +275,7 @@ theorem result (n : ℕ) (hn : 6 < n) :
   rw [← evenMaximumBound_add_three n (by omega)]
   exact evenMaximumBound_isGreatest (n + 3) (by omega)
 
+#print axioms classicalMaximumProduct_isGreatest
+#print axioms result
+
 end D5.S1.Recurrence.Partitions.StephanEvenProductPartitionRecurrence
