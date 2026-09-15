@@ -1,0 +1,24 @@
+**定理 16.1（有限读数的紧致实现判据与忠实增强不可能性）。** 对任意有限离散集 $D$ 和 $f:\mathbb N\to D$，下列条件等价：
+
+（甲）$f$ 最终周期。
+
+（乙）存在紧致 Hausdorff 空间 $X$、映射 $j:\mathbb N\to X$ 和联合连续函数 $B:X\times X\to D$，使
+$$
+B(j(n),j(m))=f(n+m)\qquad(n,m\in\mathbb N).
+$$
+这里不要求 $j$ 单射、连续或具有稠密像。
+
+（丙）存在有限离散交换幺半群 $M$、满射幺半群同态 $\iota:(\mathbb N,+)\to M$ 和函数 $h:M\to D$，使 $h\circ\iota=f$。
+
+因此，若紧致 Hausdorff 空间 $L$ 上存在联合连续 $A:L\times L\to L$、连续 $h:L\to D$ 和映射 $j:\mathbb N\to L$，满足
+$$
+A(j(n),j(m))=j(n+m),\qquad h(j(n))=f(n),
+$$
+则 $f$ 必最终周期。若另有 $j[\mathbb N]$ 稠密，$A$ 自动满足结合律、交换律，并以 $j(0)$ 为单位。
+
+对于 $f=q_1$，上述实现全部不存在。尤其不存在紧致 Hausdorff 空间 $L$、稠密映射 $j:\mathbb N\to L$、连续 $P:L\to K$ 及联合连续 $A:L\times L\to L$ 同时满足
+$$
+P\circ j=Z,\qquad A(j(n),j(m))=j(n+m).
+$$
+此外，$\equiv_{q_1}$ 恰为相等关系；因而任何包含于 $\ker q_1$ 的加法同余都只能是相等关系。
+

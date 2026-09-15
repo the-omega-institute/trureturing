@@ -1,0 +1,1 @@
+**定义 460.1。**von Mangoldt 函数的域为 $\mathbb N_{\ge1}$：对素数 $p\in\operatorname{Pr}$ 和整数 $j\ge1$，令 $\Lambda(p^j)=\log p$；对其余正整数 $n$，令 $\Lambda(n)=0$，特别 $\Lambda(1)=0$。唯一素因数分解保证该定义单值。
