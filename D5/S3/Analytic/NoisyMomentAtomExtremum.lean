@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Analytic/NoisyMomentAtomExtremum
    mirror-E: none(waiver:constructive-sharp-moment-extremum)
    anchors: []
+   utility: none
    digest: Lagrange weights admit an explicit positivity-preserving worst-case noise perturbation attaining the exact exterior-atom optimum. -/
 
 import Mathlib.LinearAlgebra.Lagrange
@@ -222,7 +223,6 @@ theorem finite_noisy_exterior_atom_sharp [Nonempty ι]
   have hPJ : P = ∑ i ∈ J, c i := by
     dsimp [P]
     rw [hpJ, eval_finsetSum]
-    rfl
   have hPone : 1 ≤ P := by
     rw [hPJ, ← hcsum]
     change (∑ i, c i) ≤ ∑ i ∈ univ.filter (fun i => 0 < c i), c i
@@ -284,7 +284,7 @@ theorem finite_noisy_exterior_atom_sharp [Nonempty ι]
   have hB : 0 ≤ B := sum_nonneg fun i _ => abs_nonneg _
   have hslopes (i : ι) : ε * |L / P - r i / c i| ≤ (1 / P) / 2 := by
     have hterm : |L / P - r i / c i| ≤ B :=
-      single_le_sum (fun j _ => abs_nonneg _) (mem_univ i)
+      single_le_sum (fun j _ => abs_nonneg (L / P - r j / c j)) (mem_univ i)
     calc
       ε * |L / P - r i / c i| ≤ ε * B :=
         mul_le_mul_of_nonneg_left hterm hε
