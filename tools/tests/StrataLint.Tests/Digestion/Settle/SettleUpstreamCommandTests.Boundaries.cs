@@ -10,6 +10,72 @@ namespace StrataLint.Tests;
 public sealed partial class SettleUpstreamCommandTests
 {
     [Theory]
+    [InlineData("justification")]
+    [InlineData("atom_id")]
+    [InlineData("probe")]
+    [InlineData("declarations")]
+    [InlineData("previous_atom_id")]
+    [InlineData("next_atom_id")]
+    public void DuplicateRequestKeysAreRejectedWithoutWrites(string key)
+    {
+        using var f = new Fixture();
+        var duplicate = key == "justification" ? "justification = \"last duplicate silently wins\""
+            : f.Request.Split('\n').Single(line => line.StartsWith(key + " =", StringComparison.Ordinal));
+        RejectRequestWithoutWrites(f, f.Request + duplicate + "\n");
+    }
+
+    [Theory]
+    [InlineData("'justification'")]
+    [InlineData("\"justification\"")]
+    [InlineData("\"justific\\u0061tion\"")]
+    public void QuotedDuplicateRequestKeysAreRejectedWithoutWrites(string key)
+    {
+        using var f = new Fixture();
+        RejectRequestWithoutWrites(f, f.Request + key + " = 'last duplicate silently wins'\n");
+    }
+
+    [Theory]
+    [InlineData("a.b = 1\n")]
+    [InlineData("[x]\n")]
+    [InlineData("[[x]]\n")]
+    [InlineData("[x]\na = 1\na = 2\n")]
+    public void NonflatRequestKeysAreRejectedWithoutWrites(string extra)
+    {
+        using var f = new Fixture();
+        RejectRequestWithoutWrites(f, f.Request + extra);
+    }
+
+    [Theory]
+    [InlineData("{ a = 1, a = 2 }")]
+    [InlineData("{ outer = { a = 1, a = 2 } }")]
+    [InlineData("[{ a = 1, a = 2 }]")]
+    [InlineData("{ a.b = 1 }")]
+    public void NestedNoncanonicalRequestKeysAreRejectedWithoutWrites(string value)
+    {
+        using var f = new Fixture();
+        RejectRequestWithoutWrites(f, f.Request.Replace("justification = 'reason'", "justification = " + value, StringComparison.Ordinal));
+    }
+
+    private static void RejectRequestWithoutWrites(Fixture f, string request)
+    {
+        var before = TreeBytes();
+        var ledger = f.LedgerImage();
+        var result = f.Run(request);
+        Assert.Equal(before, TreeBytes());
+        Assert.Equal(ledger, f.LedgerImage());
+        Assert.False(File.Exists(Path.Combine(f.Root, f.ProbePath)));
+        Assert.Equal(0, f.ApplyCalls);
+        Assert.Empty(f.Runner.Sources);
+        Assert.False(result.Success, result.Output);
+        Assert.StartsWith("SETTLE_UPSTREAM_INVALID REQUEST_KEYS_INVALID ", result.Error, StringComparison.Ordinal);
+
+        string[] TreeBytes() => Directory.EnumerateFiles(f.Root, "*", SearchOption.AllDirectories)
+            .Order(StringComparer.Ordinal)
+            .Select(path => Path.GetRelativePath(f.Root, path) + ":" + Convert.ToHexString(File.ReadAllBytes(path)))
+            .ToArray();
+    }
+
+    [Theory]
     [InlineData("COVERAGE_PRESENT")]
     [InlineData("QUARANTINE_PRESENT")]
     [InlineData("DISPOSITION_PRESENT")]

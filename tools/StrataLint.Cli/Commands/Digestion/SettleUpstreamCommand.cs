@@ -3,6 +3,8 @@ using System.Text;
 using StrataLint.Engine;
 using Tomlyn;
 using Tomlyn.Model;
+using Tomlyn.Parsing;
+using Tomlyn.Syntax;
 
 namespace StrataLint.Cli;
 
@@ -137,7 +139,15 @@ internal static class SettleUpstreamCommand
         try { text = StrictUtf8.GetString(bytes.AsSpan()); }
         catch (DecoderFallbackException error) { throw Invalid("REQUEST_ENCODING_INVALID", error.Message); }
         TomlTable table;
-        try { table = TomlSerializer.Deserialize<TomlTable>(text) ?? throw new FormatException("empty request"); }
+        try
+        {
+            // Validate the flat request's keys before model conversion can overwrite duplicates.
+            var document = SyntaxParser.Parse(text, validate: false);
+            if (document.HasErrors) throw new FormatException(document.Diagnostics.ToString());
+            if (document.Tables.Any()) throw new FormatException("request cannot contain table headers");
+            RequireCanonicalKeys(document, new HashSet<string>(StringComparer.Ordinal));
+            table = TomlSerializer.Deserialize<TomlTable>(text) ?? throw new FormatException("empty request");
+        }
         catch (Exception error) when (error is not OutOfMemoryException) { throw Invalid("REQUEST_KEYS_INVALID", error.Message); }
         if (!table.Keys.ToHashSet(StringComparer.Ordinal).SetEquals(["atom_id", "justification", "declarations", "probe", "previous_atom_id", "next_atom_id"]))
             throw Invalid("REQUEST_KEYS_INVALID", "request keys are not canonical");
@@ -152,6 +162,23 @@ internal static class SettleUpstreamCommand
             throw Invalid("ARGUMENTS_INVALID", "declarations contain duplicates");
         return new(atomId, RequiredString(table, "justification"), declarations, RequiredString(table, "probe"),
             Neighbor(table, "previous_atom_id"), Neighbor(table, "next_atom_id"));
+    }
+
+    private static void RequireCanonicalKeys(SyntaxNode node, HashSet<string> keys)
+    {
+        if (node is KeySyntax key)
+        {
+            if (key.DotKeys.Any()) throw new FormatException("request cannot contain dotted keys");
+            var name = key.Key switch
+            {
+                BareKeySyntax bare => bare.Key?.Text,
+                StringValueSyntax quoted => quoted.Value,
+                _ => null,
+            } ?? throw new FormatException("request key is missing");
+            if (!keys.Add(name)) throw new FormatException($"duplicate request key: {name}");
+        }
+        for (var i = 0; i < node.ChildrenCount; i++)
+            if (node.GetChild(i) is { } child) RequireCanonicalKeys(child, keys);
     }
 
     private static byte[] ReadProbe(string root, string requested)
