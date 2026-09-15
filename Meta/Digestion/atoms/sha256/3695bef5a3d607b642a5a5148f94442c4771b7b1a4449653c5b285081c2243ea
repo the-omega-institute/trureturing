@@ -1,0 +1,6 @@
+**引理。** $I_{a-1}+J_{a-1}$ 与 $\operatorname{diag}(1,\ldots,1,a)$ 在整数左右可逆基变换下等价；前者有 $a-2$ 个单位 Smith 因子。因此 $Q$ 的 Smith 对角为
+
+$$1^{[c]},\qquad a^{[b-2]},\qquad b^{[a-2]},\qquad ab,$$
+
+上标方括号表示重数。
+

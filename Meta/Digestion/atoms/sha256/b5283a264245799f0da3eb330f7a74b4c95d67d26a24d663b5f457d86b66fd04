@@ -1,0 +1,21 @@
+**命题 67.4（凸投影与后续概率的误差）。** 设 $\rho$ 是真实密度矩阵，$\widehat\rho$ 是上述 Hilbert–Schmidt 最近点投影。若 $\|\rho_{\mathrm{raw}}-\rho\|_{\mathrm{HS}}\le r$，则
+
+$$
+\|\widehat\rho-\rho\|_{\mathrm{HS}}\le r.
+$$
+
+若此后施加同一个量子通道 $\Phi$ 和同一个有限 POVM，输出分布分别为 $p,\widehat p$，则
+
+$$
+\boxed{
+\operatorname{TV}(p,\widehat p)
+\le\frac12\|\Phi(\widehat\rho)-\Phi(\rho)\|_1
+\le\frac12\|\widehat\rho-\rho\|_1
+\le\frac{\sqrt d}{2}\,r.
+}
+$$
+
+证明。记 $u=\rho_{\mathrm{raw}}$、$v=\widehat\rho$。闭凸集的最近点条件给出 $\langle u-v,\rho-v\rangle_{\mathrm{HS}}\le0$。展开 $\|u-\rho\|_{\mathrm{HS}}^2$，得到它不小于 $\|v-\rho\|_{\mathrm{HS}}^2$。后续测量和通道的迹距离收缩分别给出前两条不等式；最后一条是对至多 $d$ 个奇异值应用 Cauchy–Schwarz。证毕。
+
+投影后的 $\widehat\rho-I/d$ 不必满足原正规方程；误差不增来自凸几何。上述后续通道必须是作用于该状态的同一个已指定通道。若真正后续还依赖未纳入状态的旧环境记录，就不能直接套用；应先扩大联合状态，或另计历史回流误差。
+

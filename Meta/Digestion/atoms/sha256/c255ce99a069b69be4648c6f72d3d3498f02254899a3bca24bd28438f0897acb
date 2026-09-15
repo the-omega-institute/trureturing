@@ -1,0 +1,18 @@
+## 60. 记录作用量、相干衰减与不可逆恢复下界
+
+> **状态：repo-derived/open。** 本节整理并连接已有 Lean 结果，没有新增声明、证明覆盖或冻结状态。引用的冻结模块包括 D5/S3/Quantum/Decoherence/RecordActionCoherenceSurvival.lean、D5/S3/Quantum/PureState/RecordCoherenceComplementarity.lean、D5/S3/Quantum/Decoherence/FiniteShiftedRecordChannel.lean 与 D5/S3/Quantum/Decoherence/FiniteRecordRecoveryError.lean。这里的“作用量”是有限记录模型中的数学量，不是一个已从项目推出的普适物理作用量。
+
+第 55 节已经给出单步记录的 Gram 系数。本节把它累积为记录作用量，再连接到有限移位记录模型中的恢复误差下界：
+
+$$
+\text{条件记录重叠}
+\longrightarrow
+\text{累计相干}
+\longrightarrow
+\text{记录作用量}
+\longrightarrow
+\text{恢复误差下界}.
+$$
+
+“不可逆”首先是操作意义上的：指定记录被丢弃以后，任何只作用于剩余系统的恢复通道，都不能把最坏情形误差压到下界以下。这不等于说包括环境在内的联合幺正演化不可逆。
+

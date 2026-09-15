@@ -1,0 +1,6 @@
+**定理。** 有 $C_\ell\subseteq K_\ell$，且存在单射群同态
+
+$$\boxed{K_\ell/C_\ell\hookrightarrow H^1(S,V_\ell).}$$
+
+特别地，$K_\ell/C_\ell$ 是有限初等交换 $\ell$ 群。若 $\ell\nmid|S|$，则 $C_\ell=K_\ell$。
+

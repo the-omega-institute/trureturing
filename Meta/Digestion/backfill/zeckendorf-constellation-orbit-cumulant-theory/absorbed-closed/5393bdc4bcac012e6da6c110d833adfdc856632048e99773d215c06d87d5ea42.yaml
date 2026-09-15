@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:5393bdc4bcac012e6da6c110d833adfdc856632048e99773d215c06d87d5ea42
+  normalized_sha256: sha256:5393bdc4bcac012e6da6c110d833adfdc856632048e99773d215c06d87d5ea42
+cas_ref: sha256:5393bdc4bcac012e6da6c110d833adfdc856632048e99773d215c06d87d5ea42
+coverage_gids:
+  - gid: D5/S3/Zeros/CompletedZeta.xi_reading_reflection
+    target_statement_id: sha256:5987317f7aaa874060c8599c4899fbc6e5c9b1e919fe048aa0942de850e23ba4
+receipts:
+  unresolved_subitems: []

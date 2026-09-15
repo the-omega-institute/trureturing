@@ -1,0 +1,8 @@
+The dispatcher retained and reran the independent exact checker with exit0:
+stationary-minimum56-exact-check.py, SHA256
+ac1bb764eb1ad30615aeca5af58114ddc7f916fa74457ad9146a202ea1d849c3.
+Its JSON output matches the reviewer's retained report, SHA256
+cffb081ab03cc8ca41de7cfaa0005fa169e5b0febfc7ae86a10554c57e3ad294.
+The existing sub56 GPU runs now provide numerical approximation research.
+They cannot establish an exact sub56 construction in this model, and their
+best fidelities are not proved global optima. 

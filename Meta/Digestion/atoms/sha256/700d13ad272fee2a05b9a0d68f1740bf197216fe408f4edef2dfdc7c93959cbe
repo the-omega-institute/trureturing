@@ -1,0 +1,30 @@
+### 103.2 同投影不等于同一连续可达类
+
+同一投影纤维中的两个点不一定能由连续路径连接。`visible_path_hidden_address_dichotomy` 给出
+
+$$
+\operatorname{Joined}(x,y)
+\iff
+\exists t\in\mathbb R,
+\quad
+ y=\operatorname{realFlow}(t)+x.
+$$
+
+更精确地说，底层 `same_fiber_path_orbit_criterion` 将同投影时的可达时间收缩到整数轨道；若两个点的隐藏坐标不同，分类定理构造出非零整数作用
+
+$$
+\operatorname{jump}:\mathbb Z\to\operatorname{HiddenAddress}
+$$
+
+并证明不存在连续加法流把整数嵌入延拓为该跳跃：
+
+$$
+\neg\exists\,\operatorname{flow}:\mathbb R\to\operatorname{HiddenAddress},
+\quad
+\operatorname{flow}|_{\mathbb Z}=\operatorname{jump}.
+$$
+
+因此跨扇区变化若要发生，必须由离散操作、显式记忆寄存器或改变实验协议来承担。它不能被悄悄解释成同一连续相位的更细刻度。
+
+这里有一个必须保留的拓扑限制：该结果说的是连续路径可达性与隐藏地址的刚性，不是说整个空间不连通。源码同时证明 UniversalSolenoid 连通而非道路连通；拓扑连通与连续路径可达是两种不同性质。
+

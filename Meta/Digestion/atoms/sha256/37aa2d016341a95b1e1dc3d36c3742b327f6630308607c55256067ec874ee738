@@ -1,0 +1,4 @@
+**证明。** 归纳。若 $f(J_c)=F$，由 $[J_c,J_c]\subseteq J_{c+1}$ 及同态保持交换子，得到
+
+$$F=[F,F]=[f(J_c),f(J_c)]=f([J_c,J_c])\subseteq f(J_{c+1})\subseteq F.$$
+

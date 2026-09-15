@@ -1,0 +1,5 @@
+**定理。** 设 $\Lambda$ 作用于 $X$，$\alpha\in X$，$H=\operatorname{Stab}_\Lambda(\alpha)$。令 $f:\Lambda\twoheadrightarrow F$ 为到非交换有限单群的满射，$\Gamma=\ker f$，并假设 $f(H)<F$。对任意同态 $a:\Lambda\to A$，令 $A_0=a(\Lambda)$、$C=\ker a$。则下列条件等价：
+
+$$C\alpha\subseteq\Gamma\alpha;\qquad C\subseteq\Gamma;\qquad
+\exists\,\theta:A_0\twoheadrightarrow F,\ f=\theta\circ a.$$
+

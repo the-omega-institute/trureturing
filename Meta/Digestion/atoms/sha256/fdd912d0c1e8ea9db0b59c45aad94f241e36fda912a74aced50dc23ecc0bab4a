@@ -1,0 +1,6 @@
+**定理。** 对上述 $f$、$\Gamma$ 和任意这样的 $q$，令 $A_q=a_q(\mathcal M_g)$。有
+
+$$\boxed{\operatorname{im}(f,a_q)=F\times A_q.}$$
+
+因此，对于每个 $v\in A_q$ 和每个 $y\in F$，存在同一个映射类 $x$ 满足 $a_q(x)=v$、$f(x)=y$。此外，$C_q\alpha$ 与整个 $\mathcal M_g\alpha$ 中每个 $\Gamma$ 轨道都相交。
+

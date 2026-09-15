@@ -1,0 +1,9 @@
+对 $Q>1$ 使用 443.4 的约数及部分和，令
+$$
+\alpha_Q=\rho_Q\sum_{i<t}|b_i|(a_i^{-1}-a_{i+1}^{-1}),\qquad
+D_Q=(2^{\omega(Q)}+2)\sum_{i<t}|b_i|(a_i^{-1/2}+a_{i+1}^{-1/2}).
+$$
+则 $\alpha_Q>0$，且对全部 $N\ge0$，
+$$
+|W_Q(N)-\alpha_QN|\le D_Q\sqrt N.
+$$

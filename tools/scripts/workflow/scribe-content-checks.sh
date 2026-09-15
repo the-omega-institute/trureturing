@@ -39,6 +39,7 @@ done < <(
   git ls-files --others --exclude-standard -z
 )
 
+PRODUCER_CHANGED_PATHS=()
 requires_projection_check=0
 requires_describe_check=0
 requires_markdown_check=0
@@ -62,32 +63,20 @@ if [[ "${#CHANGED_PATHS[@]}" -gt 0 ]]; then
       tools/lean-inspector/*|tools/scripts/report/lean-report-input.sh)
         requires_describe_check=1
         ;;
-      .github/workflows/ci.yml|Directory.Build.props|Directory.Build.targets|Directory.Packages.props|\
-      global.json|tools/StrataLint.Scribe/*|tools/StrataLint.Scribe.Documents/*|\
-      tools/StrataLint.Engine/*|tools/StrataLint.Cli/*|\
-      tools/Architecture/BannedSymbols*.txt|tools/scripts/workflow/scribe-content-checks.sh)
-        requires_projection_check=1
-        requires_describe_check=1
-        ;;
+      *) PRODUCER_CHANGED_PATHS+=("$path") ;;
     esac
   done
 fi
 
-# Only explicitly registered supplemental inputs select these existing checks.
-# Patterns also match deleted paths; no Compile or script-call discovery remains.
-registered_patterns="$(
-  "$REPO_ROOT/tools/scripts/report/lean-report-input.sh" scribe-input-patterns \
-    --repository "$REPO_ROOT"
-)" || { echo "scribe-content-checks: registered inputs are unavailable" >&2; exit 2; }
-while IFS= read -r pattern; do
-  for path in ${CHANGED_PATHS[@]+"${CHANGED_PATHS[@]}"}; do
-    if [[ "$path" == $pattern ]]; then
-      requires_projection_check=1
-      requires_describe_check=1
-      break 2
-    fi
-  done
-done <<< "$registered_patterns"
+# The scope query matches authored patterns, so deleted producer members and
+# manifest changes route exactly like present members. Registration errors are fatal.
+producer_affected="$(printf '%s\0' ${PRODUCER_CHANGED_PATHS[@]+"${PRODUCER_CHANGED_PATHS[@]}"} | python3 \
+  "$REPO_ROOT/tools/scripts/report/lean-report-selection.py" scribe-affected \
+  --repository "$REPO_ROOT")" || exit 2
+if [[ "$producer_affected" == "true" ]]; then
+  requires_projection_check=1
+  requires_describe_check=1
+fi
 
 if [[ "$requires_projection_check" == "1" ]]; then
   run_scribe projections --check --report "$REPORT"

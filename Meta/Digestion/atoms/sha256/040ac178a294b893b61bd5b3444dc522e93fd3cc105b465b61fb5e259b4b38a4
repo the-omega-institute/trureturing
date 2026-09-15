@@ -1,0 +1,2 @@
+**定理。** 固定一个满射 $f:M\twoheadrightarrow F$ 到非交换有限单群，并假设 $f(\mathcal I_g)=F$。令 $K_1,\ldots,K_t$ 为 $\pi$ 的特征子群，各 $K_i\subseteq N_2$，且 $N_2/K_i$ 为有限素数幂群。对联合特征商 $q:\pi\to\pi/\bigcap_iK_i$，$f$ 不能经实际外作用 $a_q(M)$ 因子化。
+

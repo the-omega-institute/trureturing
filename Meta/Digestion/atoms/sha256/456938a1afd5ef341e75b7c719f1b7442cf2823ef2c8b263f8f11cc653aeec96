@@ -1,0 +1,6 @@
+**约定 125.5（引用与证明范围）。** Q、Z、CSA 分别指本量子卷、`CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md`、`CONTEXTUAL_SPACETIME_ARITHMETIC.md`。本节所引 Q109、Q123–124、Z381.2、Z396.1、Z400.1、CSA 定义 1–3 及 `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY.md` 第1594部，均取仓库提交 `c225a37b44971d289ae51b8b324f5cef78e31b82` 的版本。Q123–124 的载体与相容性问题在这里落实为有限相干态、局部代数态和指定表示中的柱读数问题；所用局部极限不另申报 Q109 的有限 Schmidt 结论。
+
+同一版本 `D5/S1/Digit/Infinite/WindowCylinderPartition.lean` 的 `window_cylinder_partition` 给合法窗口的区间几何、准确弧长及定向端点纤维，其结论不含本节的量子态构造。`D5/S3/Quantum/Measurements/OrthogonalAdditivity.lean` 的 `orthogonal_additivity` 在 `SequentiallyNormal` 与 `strong_complete` 等假设下给正交投影族的可数可加性；命题 125.4 使用直接的正迹类论证，不把这些假设省略后援引该声明。
+
+钉版 Mathlib 修订 `db584cd6d46c92f209a44c0f1c829460d327499d` 的 `Mathlib/Analysis/CStarAlgebra/GelfandNaimarkSegal.lean` 提供 `PositiveLinearMap.gnsStarAlgHom`，该文件明确将单位循环向量的构造列为 TODO，故它不作为上文完整循环向量结论的现成证明；上文已独立给出通常 GNS 构造。本节为结合所引模型与标准概率、算子代数方法的 `repo-derived` 普通推导，不提出新颖性或新增 Lean 认证主张。
+

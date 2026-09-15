@@ -1,0 +1,30 @@
+### 101.2 标量相位的交换律会抹掉顺序
+
+对任意有限频率列表 $$(\omega_1,\ldots,\omega_m)$$，定义标量相位积
+
+$$
+\Pi(t)
+=\prod_{r=1}^{m}\exp(-i t\omega_r).
+$$
+
+`ordered_phase_product_collapse` 证明
+
+$$
+\boxed{
+\Pi(t)
+=\exp\!\left(-i t\sum_{r=1}^{m}\omega_r\right).
+}
+$$
+
+因此任意排列都给出同一个标量结果：
+
+$$
+\Pi_{(\omega_1,\ldots,\omega_m)}(t)
+=
+\Pi_{(\omega_{\pi(1)},\ldots,\omega_{\pi(m)})}(t).
+$$
+
+`adjacent_step_order_invisible` 将这个边界写成相邻两步的交换律。它不是说原始历史不存在，而是说**在只保留一个复标量相位的读出中，顺序没有可见坐标**。
+
+这与第 96 节的仪器反例相互补：第 96 节中，静态 POVM 丢掉了分支后的更新；本节中，标量相位读出丢掉了频率序列的排列信息。两者都说明当前读数相同不等于后续过程相同。
+

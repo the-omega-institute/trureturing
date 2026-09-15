@@ -1,0 +1,20 @@
+### 111.5 非负质量不是装饰性条件
+
+同一 Lean 文件中的 `nonnegative_mass_is_necessary` 给出带符号质量的反例：在两点状态上取质量 (2) 与 (-1)，identity memory 仍然是 exact predictive memory，但条件熵下界会失败。原因不是 canonical quotient 失去共轭性，而是 Shannon 熵的数据处理不等式需要非负、可归一化的质量。
+
+因此，以下三句话必须分开：
+
+$$
+\text{线性振幅可以是复数，}
+$$
+
+$$
+\text{形式上的 signed weight 可以用于代数恒等式，}
+$$
+
+$$
+\text{条件 Shannon 熵的输入必须是非负质量。}
+$$
+
+量子振幅的相位不能直接当作熵的概率权重。若要把第 111 节用于量子模型，必须先指定正的 Born 概率、密度矩阵对角分布，或其它明确的正测度。
+

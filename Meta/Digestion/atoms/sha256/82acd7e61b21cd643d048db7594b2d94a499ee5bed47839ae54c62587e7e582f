@@ -1,0 +1,56 @@
+### 102.3 两步交换曲率是顺序的最小见证
+
+对两个事件 $$P,Q$$，`time_ordered_two_event_swap_curvature` 证明：交换次序时，标量输出完全相同，而记忆坐标的差为
+
+$$
+\Delta_{P,Q}
+=
+(a-\lambda_Q)\widetilde b_P
+-
+(a-\lambda_P)\widetilde b_Q.
+$$
+
+也就是
+
+$$
+\boxed{
+M_a(PQ)-M_a(QP)=\Delta_{P,Q}.
+}
+$$
+
+如果初始记忆为 $$m$$，完整状态的第一坐标差为 $$\Delta_{P,Q}m$$；第二坐标相同。于是：
+
+$$
+\text{标量读出相同}
+\quad\not\Rightarrow\quad
+\text{联合状态相同}.
+$$
+
+`PrimeSwapCurvature.prime_swap_curvature_spec` 还证明三件事：
+
+$$
+\Delta_{Q,P}=-\Delta_{P,Q},
+$$
+
+记忆原点变换
+
+$$
+\widetilde b_r\mapsto
+\widetilde b_r+(a-\lambda_r)c
+$$
+
+不改变 $$\Delta_{P,Q}$$，并且在两个共振间隙非零时，
+
+$$
+\Delta_{P,Q}
+=
+(a-\lambda_P)(a-\lambda_Q)
+\left(
+\frac{\widetilde b_P}{a-\lambda_P}
+-
+\frac{\widetilde b_Q}{a-\lambda_Q}
+\right).
+$$
+
+因此交换曲率不是任意坐标选择造成的假象。它是一个对记忆原点平移不变的顺序缺陷；曲率为零，当且仅当两个事件给出的局部观测者原点估计相同（在非共振条件下）。
+

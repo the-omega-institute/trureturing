@@ -1,0 +1,30 @@
+### 98.1 边界不是标签，而是部分历史
+
+给定有限多重集 $$a$$，令 $$\operatorname{Boundary}(a,t)$$ 表示从 $$a$$ 中取出恰好 $$t$$ 个占据的部分历史。若当前边界为 $$b$$，下一步加入符号 $$i$$ 的合法条件是
+
+$$
+\operatorname{count}_b(i)<\operatorname{count}_a(i).
+$$
+
+项目定义转移矩阵
+
+$$
+N_t(i,c;b)
+=
+\begin{cases}
+\sqrt{\dfrac{\operatorname{count}_{a-b}(i)}{|a|-t}},
+&c=b+\{i\},\\[6pt]
+0,&\text{否则}.
+\end{cases}
+$$
+
+它保留了“哪些前缀历史仍可继续”以及“剩余占据给每个后继多少振幅”两种信息。对 $$t<|a|$$，Lean 定理 `next_step_gram` 给出
+
+$$
+\boxed{
+N_t^\dagger N_t=I.
+}
+$$
+
+所以每个合法一步都是等距的；`next_step_quantum_channel` 进一步构造了相应的有限维量子通道。这里的等距性不是说记忆已经被压成一个标量，而是说这一步在保留的边界载体上不丢失内积。
+

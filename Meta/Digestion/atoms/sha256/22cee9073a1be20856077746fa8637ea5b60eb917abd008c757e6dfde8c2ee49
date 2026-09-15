@@ -1,0 +1,47 @@
+### 102.2 时间有序事件的仿射记忆律
+
+在 `TimeOrderedPrimeMemoryCocycle` 中，一个带时间的事件包含局部标量因子 $$\lambda$$、基准注入 $$b$$、频率 $$\omega$$ 和时间 $$t$$。实际注入为
+
+$$
+\widetilde b
+=
+\exp(-i t\omega)b.
+$$
+
+给定稳定因子 $$a$$，它作用在二元状态 $$ (x,m) $$ 上的更新为
+
+$$
+(x,m)
+\longmapsto
+\bigl(a x+\widetilde b\,m,\;\lambda m\bigr).
+$$
+
+对事件列表 $$W=(e_1,\ldots,e_n)$$，源码定理 `time_ordered_evolution_affine` 证明整体作用仍是上三角仿射形式：
+
+$$
+(x,m)
+\longmapsto
+\left(
+ a^n x+M_a(W)m,
+ \Lambda(W)m
+\right),
+$$
+
+其中 $$\Lambda(W)=\prod_r\lambda_r$$ 是标量词，而 $$M_a(W)$$ 是记忆坐标的有序累积。
+
+对前后两段事件词，`time_ordered_cocycle_append_laws` 给出精确拼接律
+
+$$
+\Lambda(W_1W_2)=\Lambda(W_1)\Lambda(W_2),
+$$
+
+以及
+
+$$
+M_a(W_1W_2)
+=
+ a^{|W_2|}M_a(W_1)+M_a(W_2)\Lambda(W_1).
+$$
+
+第二式不是普通的交换乘法。后发生的词会把先发生的记忆注入乘上稳定传播因子；先发生的标量又会调制后续记忆。顺序因此进入一个半直积样的仿射结构，即使标量坐标本身仍然满足交换乘法。
+

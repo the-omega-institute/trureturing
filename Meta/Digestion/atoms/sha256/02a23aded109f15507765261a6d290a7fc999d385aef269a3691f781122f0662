@@ -1,0 +1,30 @@
+## 32. 实际曲线轨道的有限矩阵验收
+
+**定理。** 在第 27 节的条件下，令 $\Lambda$ 作用于 $X$，$\alpha\in X$，$H=\operatorname{Stab}_\Lambda(\alpha)$。固定满射 $f:\Lambda\twoheadrightarrow F$ 到非交换有限单群，且 $f(H)<F$，记 $\Gamma=\ker f$。对每个素数 $\ell$，令 $L_\ell=\Psi_\ell(\Lambda)$，$B_\ell=\operatorname{im}(f,\Psi_\ell)\le F\times L_\ell$。则
+
+$$\boxed{C_\ell\alpha\subseteq\Gamma\alpha
+\quad\Longleftrightarrow\quad
+B_\ell\cap(F\times\{1\})=\{(1,1)\}
+\quad\Longleftrightarrow\quad |B_\ell|=|L_\ell|.}$$
+
+**证明。** 第 18 节将轨道条件化为同一个 $f$ 经过实际外作用的因子化；第 28 节将后者化为经过修正同调作用的因子化。$B_\ell\to L_\ell$ 满射，其核就是显示的交，有限性给出阶数等价。条件失败时单性给出 $B_\ell=F\times L_\ell$，而非一个未指定的中间情形。
+
+**构造。** 对实际闭曲面有限覆盖，选择标准生成元 $x_1,\ldots,x_{2g}$ 及关系词 $r$。令 $q_0:\pi\to S$ 为覆盖商，在 $\mathbb F_\ell$ 上构造胞腔链复形
+
+$$\mathbb F_\ell[S]\xrightarrow{\partial_2}
+\mathbb F_\ell[S]^{2g}\xrightarrow{\partial_1}\mathbb F_\ell[S].$$
+
+顶点为 $v\in S$，边 $(v,j)$ 从 $v$ 到 $v q_0(x_j)$，二维胞腔边界按从 $v$ 开始提升关系词 $r$ 计算。因此 $V_\ell=\ker\partial_1/\operatorname{im}\partial_2$。若代表 $\eta$ 在 $S$ 上为 $\operatorname{Ad}_{s_\eta}$，其修正链映射将顶点 $v$ 送到 $v s_\eta^{-1}$，将边 $(v,j)$ 送到从 $v s_\eta^{-1}$ 出发的词 $\eta(x_j)$ 的提升路径。
+
+**命题。** 该链映射在同调上诱导的正是 $\Psi_\ell$，且与左甲板作用交换。若给定同一有限生成集 $\gamma_1,\ldots,\gamma_k$ 的实际源自同构词和实际 $f(\gamma_i)$，则 $B_\ell$ 由配对矩阵数据 $(f(\gamma_i),\Psi_\ell(\gamma_i))$ 生成。
+
+**证明。** 新路径的终点为
+
+$$v s_\eta^{-1}q_0(\eta(x_j))=v q_0(x_j)s_\eta^{-1},$$
+
+与端点的修正映射一致。关系词被源自同构保持，所以边界映到边界。该提升是原映射提升再复合甲板变换 $s_\eta^{-1}$，故在同调上为定义中的修正作用；顶点和路径的公式直接给出与左甲板作用交换。生成元像决定联合像，得到最后的配对生成结论。
+
+**命题。** 上述有限验收不从覆盖的存在、同调维数或单独的像大小推出一个满足条件的覆盖。对于第 17 节的固定 $(f,\Gamma,\alpha)$，要通过这一族解决其轨道问题，仍须找到一个中心平凡、外作用平凡的特征基商 $S$ 及素数 $\ell$，使显示的交确实平凡；或采用不在本族内的其他特征商。
+
+**证明。** 上述等价式右侧要求同一个 $f$ 与同一个实际同调作用之间存在因子化，而所述存在性和大小数据均未提供该关系。第 30–31 节只消去固定基商上的多余提升选择，没有给出更换基商后的统一存在定理。对一般有限指数 $\Gamma$，其正规核商也未必为非交换单群，故不能不加说明地使用这里的单性步骤。
+

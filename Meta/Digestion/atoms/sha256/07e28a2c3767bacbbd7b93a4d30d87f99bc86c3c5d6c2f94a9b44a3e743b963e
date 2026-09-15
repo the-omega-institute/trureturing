@@ -1,0 +1,20 @@
+### 77.5 本节对“稳定经典现实”的精确含义
+
+在这条接口上，“稳定的经典现实”可以写成三个同时满足的任务条件：
+
+$$
+\boxed{
+\text{签名商定义当前可区分对象}
+\;+
+\text{可见空间对目标足够}
+\;+
+\text{隐藏方向在指定动力学下不回流}
+}
+$$
+
+第一项由 $$\Sigma_H$$ 和 $$K_H$$ 给出；第二项由目标是否落在含单位方向的 effect span 决定；第三项需要真正的投影、对偶和下降条件。三项中任何一项缺失，当前读数都不能单独承担“以后仍然如此”的含义。
+
+因此，“要保留多少历史”没有一个脱离任务的整数答案。对有限 Zeckendorf 载体，先报告合法构型数量；对给定词族，再报告可见 span 与正交残差；对给定更新，最后检验目标回拉是否留在该 span，以及隐藏到可见的耦合是否为零。只有这些对象、操作和误差范围都被指定后，才可以说某一层记录已经足以支撑稳定的经典预测。
+
+本节复用 `unified_sequential_kernel`、`target_prediction_sufficiency`、`finite_time_observer_monotonicity` 和 `incomplete_observer_physical_counterexample` 的现有冻结声明，并把它们接到第 75、76 节的下降与有限关系塔。上述声明均在标准项目公理闭包下通过定向构建；本节没有新增 Lean 定理，也没有把线性 effect 结果提升为 CPTP、trace-distance 或 diamond 等价。
+

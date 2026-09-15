@@ -1,0 +1,45 @@
+### 121.1 经典记录的 Blackwell 预序
+
+设有限历史集为 $H$，有限记录集为 $Y,Z$。记录接口是条件概率核
+
+$$
+E(y\mid h),
+\qquad
+F(z\mid h),
+$$
+
+其中对每个 $h$ 有 $\sum_yE(y\mid h)=\sum_zF(z\mid h)=1$。随机退化核 $K(z\mid y)$ 作用为
+
+$$
+(K E)(z\mid h)=\sum_yK(z\mid y)E(y\mid h).
+$$
+
+定义 Blackwell 预序
+
+$$
+E\succeq_B F
+\quad\Longleftrightarrow\quad
+\exists K\;F=K\circ E.
+$$
+
+它是自反且传递的预序：自反性取恒等核；若 $F=K_1E$ 且 $G=K_2F$，则 $G=(K_2K_1)E$。互相可以退化的接口应视为同一个等价类；一般情况下预序不反对称，因此不能把所有记录接口排成一条全序链。
+
+对有限动作集 $A$、先验 $\pi$ 和损失 $0\le\ell(a,h)\le L$，记录 $E$ 的最优风险为
+
+$$
+R_E
+=
+\inf_\delta
+\sum_{h\in H}\pi(h)
+\sum_{y\in Y}E(y\mid h)
+\sum_{a\in A}\delta(a\mid y)\ell(a,h),
+$$
+
+其中 $\delta(a\mid y)$ 是从记录到动作的随机决策规则。若 $E\succeq_BF$，固定一个实现 $F=K E$。任意使用 $F$ 的决策规则都可在 $E$ 上先施加 $K$ 再执行，因此
+
+$$
+\boxed{R_E\le R_F.}
+$$
+
+该不等式对每个固定先验、动作集和有界损失分别成立；它不构成跨任务的单一风险全序，也不说明某条记录在未声明的动力学或自适应实验中仍然充分。
+

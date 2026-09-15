@@ -1,0 +1,6 @@
+**定义。** 对任意 $\phi:\Pi_g\to F$，令
+
+$$S=\langle\phi(a_1),\phi(a_2),\phi(b_2),\ldots,\phi(a_g),\phi(b_g)\rangle\le F.$$
+
+记 $C_F(S)=\{z\in F:zs=sz\text{ 对全部 }s\in S\}$，$Z(F)$ 为 $F$ 的中心。
+

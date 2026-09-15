@@ -1,0 +1,35 @@
+**定义 119.2（有限实验、共同决策与单向缺陷）。** 设隐藏参数集 $\Theta$、目标观察集 $Y$、保留观察集 $Z$、共同动作集 $A$ 均有限非空。参数 $\theta\in\Theta$ 固定而对决策者未知。实验由实值行概率给出：
+
+$$
+F(y\mid\theta)\ge0,\quad \sum_{y\in Y}F(y\mid\theta)=1,
+\qquad
+E(z\mid\theta)\ge0,\quad \sum_{z\in Z}E(z\mid\theta)=1.
+$$
+
+记相应概率行为 $F_\theta,E_\theta$。模拟器 $S:Z\to\mathcal P(Y)$ 表示从 $Z$ 到 $Y$ 的随机核，其中 $\mathcal P(Y)$ 是 $Y$ 上的概率单纯形，即 $S(y\mid z)\ge0$ 且 $\sum_yS(y\mid z)=1$；同一个 $S$ 用于所有 $\theta$，不能读取隐藏参数。复合律与全变差约定为
+
+$$
+(SE)_\theta(y)=\sum_z E(z\mid\theta)S(y\mid z),\qquad
+\operatorname{TV}(p,q)=\frac12\sum_i|p(i)-q(i)|.
+$$
+
+定义模拟误差及单向缺陷
+
+$$
+\varepsilon(S)=\max_{\theta\in\Theta}\operatorname{TV}(F_\theta,(SE)_\theta),
+\qquad
+\delta(F\mid E)=\inf_{S:Z\to\mathcal P(Y)}\varepsilon(S),
+$$
+
+方向是从保留实验 $E$ 模拟目标实验 $F$；“目标”与“保留”本身不预设信息次序。给定先验 $\mu(\theta)\ge0$、$\sum_\theta\mu(\theta)=1$ 及损失 $0\le\ell(\theta,a)\le1$，观察集为 $O$ 的实验 $G$ 上的随机决策为 $d:O\to\mathcal P(A)$，其代价及最优 Bayes 风险为
+
+$$
+\mathcal C_{\mu,\ell}(G,d)
+=\sum_{\theta\in\Theta}\mu(\theta)
+  \sum_{o\in O}\sum_{a\in A}G(o\mid\theta)d(a\mid o)\ell(\theta,a),
+\qquad
+R_{\mu,\ell}(G)=\inf_d\mathcal C_{\mu,\ell}(G,d).
+$$
+
+比较中始终使用同一 $\mu,\ell,A$，简记风险为 $R(G)$。这里 $E,F,S,d$ 均为非负归一的概率核，不能以任意带符号矩阵替代。
+

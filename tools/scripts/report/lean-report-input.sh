@@ -5,22 +5,53 @@ export LC_ALL=C
 
 COMMAND="${1:-}"
 if [[ -n "$COMMAND" ]]; then shift; fi
+# The repository (R) and pair provenance (A) are different canonical preimages.
+# Keep their byte definitions here for producers and bundle transport alike.
+input_coordinates() {
+  python3 - "$@" <<'PY'
+import hashlib
+import re
+import sys
+
+fields = sys.argv[1:]
+if len(fields) != 4 or any(not re.fullmatch(r"[0-9a-f]{64}", v) for v in fields):
+    raise SystemExit("lean-report-input: coordinates require producer, resident, sources, config SHA-256")
+producer, resident, sources, config = fields
+common = (f"repository_inspector_sha256={resident}\n"
+          f"lean_sources_sha256={sources}\nlean_config_sha256={config}\n")
+pair = "schema=stratalint-lean-report-input-v1\n" + f"producer_sha256={producer}\n" + common
+repository = "schema=stratalint-lean-report-repository-input-v1\n" + common
+print(hashlib.sha256(pair.encode("ascii")).hexdigest(),
+      hashlib.sha256(repository.encode("ascii")).hexdigest())
+PY
+}
+if [[ "$COMMAND" == "coordinates" ]]; then
+  input_coordinates "$@"
+  exit $?
+fi
 REPOSITORY=""
 REPORT=""
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    --repository) REPOSITORY="$2"; shift 2 ;;
-    --report) REPORT="$2"; shift 2 ;;
+    --repository|--report)
+      [[ $# -ge 2 && -n "$2" ]] || { echo "lean-report-input: $1 requires a value" >&2; exit 2; }
+      case "$1" in --repository) REPOSITORY="$2" ;; --report) REPORT="$2" ;; esac
+      shift 2 ;;
     *) echo "lean-report-input: unknown argument '$1'" >&2; exit 2 ;;
   esac
 done
 
 [[ "$COMMAND" == "address" || "$COMMAND" == "verify" || "$COMMAND" == "modules" \
-  || "$COMMAND" == "compatibility-token" || "$COMMAND" == "scribe-input-patterns" ]] \
-  || { echo "usage: lean-report-input.sh address|verify|modules|compatibility-token|scribe-input-patterns --repository DIR [--report FILE]" >&2; exit 2; }
+  || "$COMMAND" == "producer-paths" || "$COMMAND" == "scribe-producer-paths" ]] \
+  || { echo "usage: lean-report-input.sh address|verify|modules|producer-paths|scribe-producer-paths --repository DIR [--report FILE]" >&2; exit 2; }
 [[ -n "$REPOSITORY" && "$REPOSITORY" == /* && -d "$REPOSITORY" ]] \
   || { echo "lean-report-input: --repository requires an absolute directory" >&2; exit 2; }
 REPOSITORY="$(cd "$REPOSITORY" && pwd -P)"
+if [[ "$COMMAND" == "verify" ]]; then
+  [[ -n "$REPORT" && "$REPORT" == /* && -s "$REPORT" ]] \
+    || { echo "lean-report-input: raw Lean report is missing; run make lean-report first" >&2; exit 2; }
+fi
+
 TMP_ROOT="$(mktemp -d "${TMPDIR:-/tmp}/stratalint-report-input.XXXXXXXX")"
 cleanup() { rm -rf -- "$TMP_ROOT"; }
 trap cleanup EXIT
@@ -28,120 +59,42 @@ trap cleanup EXIT
 SCRIPT_DIRECTORY="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 source "$SCRIPT_DIRECTORY/../worktree/lean-cache-input.sh"
 
-# One canonical, dependency-free reader for the registered manifest. The closed
-# TOML subset is documented in the report contract; no SDK/MSBuild evaluation or
-# executable-byte discovery participates in report compatibility.
-python3 - "$REPOSITORY" "$COMMAND" "$TMP_ROOT" <<'PY' || exit 2
-import hashlib
-import json
-import pathlib
-import re
-import sys
+# The registered policy is validated before any command exposes inputs.
+SELECTION="$SCRIPT_DIRECTORY/lean-report-selection.py"
+[[ -r "$SELECTION" ]] || { echo "lean-report-input: selection loader is absent: $SELECTION" >&2; exit 2; }
+case "$COMMAND" in
+  modules|producer-paths|scribe-producer-paths)
+    python3 "$SELECTION" "$COMMAND" --repository "$REPOSITORY"
+    exit $?
+    ;;
+esac
+python3 "$SELECTION" snapshot --repository "$REPOSITORY" --output "$TMP_ROOT" || exit 2
 
-root = pathlib.Path(sys.argv[1])
-command = sys.argv[2]
-scratch = pathlib.Path(sys.argv[3])
-manifest = "Meta/lean-report.toml"
+registered_input_hash() {
+  local kind="$1" relative
+  local manifest="$TMP_ROOT/$kind.manifest"
+  : > "${manifest}.requests"
+  while IFS= read -r relative; do
+    append_manifest_entry "$manifest" "$relative" || return 2
+  done < "$TMP_ROOT/$kind-paths"
+  materialize_manifest "$manifest" || return 2
+  hash_file "$manifest"
+}
 
-try:
-    text = (root / manifest).read_bytes().decode("utf-8")
-    # Selectors cannot contain '#'; comments and whitespace have no identity.
-    text = re.sub(r"#[^\n]*", "", text)
-    values = {}
-    decoder = json.JSONDecoder()
-    while text.strip():
-        match = re.match(r"\s*([a-z_]+)[ \t]*=[ \t]*", text)
-        if match is None:
-            raise ValueError("invalid assignment")
-        key = match[1]
-        if key not in {"compatibility_version", "source_patterns", "scribe_check_inputs"} or key in values:
-            raise ValueError(f"unknown or duplicate key: {key}")
-        value_text = text[match.end():]
-        value, end = decoder.raw_decode(value_text)
-        if key == "compatibility_version" and not re.fullmatch(r"[1-9][0-9]*", value_text[:end]):
-            raise ValueError("compatibility_version must be a positive decimal integer")
-        values[key] = value
-        text = value_text[end:]
-        if text and not re.match(r"[ \t]*\r?\n", text):
-            raise ValueError(f"unexpected bytes after {key}")
-    version = values.get("compatibility_version")
-    if type(version) is not int or version <= 0:
-        raise ValueError("compatibility_version is missing or is not a positive integer")
-
-    def patterns(key):
-        items = values.get(key)
-        if (not isinstance(items, list) or not items
-                or any(not isinstance(item, str) or not item
-                       or not re.fullmatch(r"[A-Za-z0-9_./*?-]+", item)
-                       or item.startswith("/") or ".." in item.split("/")
-                       or "." in item.split("/") or "//" in item for item in items)
-                or len(items) != len(set(items))):
-            raise ValueError(f"{key} must register unique relative path patterns")
-        return items
-
-    sources = patterns("source_patterns")
-    token = hashlib.sha256(
-        f"schema=stratalint-lean-report-compatibility\nversion={version}\n".encode("utf-8")
-    ).hexdigest()
-    (scratch / "compatibility").write_text(token + "\n", encoding="ascii")
-    if command == "compatibility-token":
-        print(token)
-    elif command == "scribe-input-patterns":
-        try:
-            print("\n".join(patterns("scribe_check_inputs")))
-        except ValueError as error:
-            raise ValueError(f"scribe-content-checks: {error}") from error
-    else:
-        paths = []
-        for pattern in sources:
-            selected = sorted((path for path in root.glob(pattern)
-                               if path.is_file() and not path.is_symlink()),
-                              key=lambda path: path.as_posix().encode("utf-8"))
-            if not selected and not any(char in pattern for char in "*?"):
-                raise ValueError(f"registered report source is absent: {pattern}")
-            paths.extend(path.relative_to(root).as_posix() for path in selected)
-        if len(paths) != len(set(paths)):
-            raise ValueError("overlapping source_patterns")
-        if not paths or any(not path.endswith(".lean") or "\t" in path or "\n" in path for path in paths):
-            raise ValueError("source_patterns must select Lean module paths")
-        (scratch / "modules").write_text("".join(
-            path[:-5].replace("/", ".") + "\t" + path + "\n" for path in paths), encoding="utf-8")
-except (OSError, UnicodeError, ValueError) as error:
-    print(f"lean-report-input: {manifest} compatibility_version/config invalid: {error}", file=sys.stderr)
-    sys.exit(2)
-PY
-
-if [[ "$COMMAND" == "verify" ]]; then
-  [[ -n "$REPORT" && "$REPORT" == /* && -s "$REPORT" ]] \
-    || { echo "lean-report-input: raw Lean report is missing; run make lean-report first" >&2; exit 2; }
-fi
-
-# Digest-shaped producer/resident fields are the same version-derived token.
-# Report sources exclude Inspector; the Lean config preimage is shared with the
-# compiled-cache helper without changing its source scope or configuration.
+# The legacy producer/resident coordinate fields carry the manual semantic
+# compatibility token, never executable-byte evidence. Source/config inputs
+# remain selected by the single registered manifest.
 repository_address() {
-  local preimage="$TMP_ROOT/repository-input.preimage"
-  local sources_manifest="$TMP_ROOT/report-sources.manifest"
-  local resident_sha256 sources_sha256 config_sha256 module path
+  local resident_sha256 sources_sha256 config_sha256
 
-  resident_sha256="$(cat "$TMP_ROOT/compatibility")" || return 2
   prepare_memo
-  : > "${sources_manifest}.requests"
-  while IFS=$'\t' read -r module path; do
-    append_manifest_entry "$sources_manifest" "$path" || return 2
-  done < "$TMP_ROOT/modules"
-  materialize_manifest "$sources_manifest" || return 2
-  sources_sha256="$(hash_file "$sources_manifest")" || return 2
-  config_sha256="$(lean_config_sha256)" || return 2
+  resident_sha256="$(cat "$TMP_ROOT/compatibility")" || return 2
+  sources_sha256="$(registered_input_hash sources)" || return 2
+  config_sha256="$(registered_input_hash config)" || return 2
 
-  {
-    printf '%s\n' "schema=stratalint-lean-report-repository-input-v1"
-    printf 'repository_inspector_sha256=%s\n' "$resident_sha256"
-    printf 'lean_sources_sha256=%s\n' "$sources_sha256"
-    printf 'lean_config_sha256=%s\n' "$config_sha256"
-  } > "$preimage" || return 2
-  local address_sha256
-  address_sha256="$(hash_file "$preimage")" || return 2
+  local coordinates address_sha256
+  coordinates="$(input_coordinates "$resident_sha256" "$resident_sha256" "$sources_sha256" "$config_sha256")" || return 2
+  address_sha256="${coordinates#* }"
   store_memo_updates
   printf '%s %s %s %s\n' \
     "$address_sha256" "$resident_sha256" "$sources_sha256" "$config_sha256"
@@ -164,12 +117,6 @@ verify_report_sha() {
 case "$COMMAND" in
   address)
     repository_address
-    ;;
-  modules)
-    cat "$TMP_ROOT/modules"
-    ;;
-  compatibility-token|scribe-input-patterns)
-    # Already emitted by the canonical manifest reader above.
     ;;
   verify)
     verify_report_sha
@@ -206,5 +153,6 @@ case "$COMMAND" in
       || { echo "lean-report-input: raw Lean report producer is stale for current repository inputs; run make lean-report first" >&2; exit 2; }
     [[ "$declared" == "$address" ]] \
       || { echo "lean-report-input: raw Lean report is stale for current repository inputs; run make lean-report first" >&2; exit 2; }
+    python3 -B "$SCRIPT_DIRECTORY/../../lean-inspector/publication.py" verify-inputs "$REPORT" --repository "$REPOSITORY"
     ;;
 esac

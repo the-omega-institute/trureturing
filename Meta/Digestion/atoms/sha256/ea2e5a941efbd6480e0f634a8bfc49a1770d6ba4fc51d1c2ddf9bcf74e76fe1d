@@ -1,0 +1,7 @@
+**命题。** 设群 $\Lambda$ 作用于集合 $X$，$\alpha\in X$，$H=\operatorname{Stab}_\Lambda(\alpha)$。对任意子群 $\Gamma,\Delta\le\Lambda$，
+
+$$\Delta\alpha\subseteq\Gamma\alpha
+\quad\Longleftrightarrow\quad\Delta\subseteq\Gamma H.$$
+
+当 $\Gamma$ 正规时，$\Gamma H$ 本身为子群。
+

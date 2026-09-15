@@ -1,0 +1,22 @@
+## 47. 所有纯时间循环覆盖的一阶同调盲区
+
+**定义。** 对正整数 $n$，令 $M_{g,h,k}^{(n)}$ 为纤维化 $M_{g,h,k}\to S^1$ 沿 $S^1\xrightarrow{z\mapsto z^n}S^1$ 拉回的覆盖。它同胚于 $M_{g,h,nk}$。
+
+**定理。** 对所有 $n\ge1$、$k\ne0$、$1\le h<g$，
+
+$$\boxed{H_1(M_{g,h,k}^{(n)};\mathbb Z)\cong\mathbb Z^{2g+1}.}$$
+
+相应的同调 monodromy 始终为恒等，特征多项式始终为 $(x-1)^{2g}$。
+
+**证明。** 分离曲线的同调类为零，Dehn 扭转的同调转移公式给出 $T_{\alpha,*}=I$。映射环面的 Wang 正合列在一次同调处给出
+
+$$0\longrightarrow\operatorname{coker}(T_{\alpha,*}^{nk}-I)
+\longrightarrow H_1(M_{g,h,nk};\mathbb Z)
+\longrightarrow\mathbb Z\longrightarrow0.$$
+
+右端自由，扩张分裂；左端为 $\mathbb Z^{2g}$，故得结论。
+
+**推论。** 固定 $g,h$，全部时间循环覆盖的一阶整数同调群序列，不能区分无穷多个两两不同胚的 $M_{g,h,k}$。
+
+**证明。** 取全部正整数 $k$。第 46 节的 JSJ 斜率交数区分它们，而本节给出完全相同的群序列。这里所比较的是各层抽象一阶同调群及其纤维同调 monodromy，没有声称所有带任意附加结构的覆盖不变量均相同。
+

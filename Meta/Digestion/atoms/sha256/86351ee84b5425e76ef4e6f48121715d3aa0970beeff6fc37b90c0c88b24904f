@@ -1,0 +1,36 @@
+### 106.2 一步稳定即对所有控制词永久稳定
+
+`controlled_finite_stability` 证明，在 $$Y,U,O$$ 都有限、读出满射且非空的条件下，如果某个深度满足
+
+$$
+R_m^{\mathrm{ctrl}}=R_{m+1}^{\mathrm{ctrl}},
+$$
+
+那么对所有 $$r\ge0$$ 都有
+
+$$
+R_{m+r}^{\mathrm{ctrl}}=R_m^{\mathrm{ctrl}}.
+$$
+
+原因是一步稳定等价于关系对每一个输入更新都不变；之后任意控制词都只能在这个不变关系内部演化。
+
+完整受控关系还满足最大不动点刻画：
+
+$$
+R_\infty^{\mathrm{ctrl}}
+=
+\operatorname{gfp}(\mathcal R_{\mathrm{ctrl}}),
+$$
+
+其中 $$\mathcal R_{\mathrm{ctrl}}$$ 同时要求当前读出相同，并且对每个 $$u\in U$$ 将关系保持在自身中。它也是所有“细于当前读出且对每个控制更新不变的等价关系”中的最大者。
+
+因此，扩大操作族只会细化预测商：
+
+$$
+\mathfrak U_1\subseteq\mathfrak U_2
+\quad\Longrightarrow\quad
+R_\infty(\mathfrak U_2)\subseteq R_\infty(\mathfrak U_1).
+$$
+
+一个在单一动力学下看似经典的对象，可能在加入第二种脉冲或局部重排后被分裂。这正是“相对某个操作族稳定”的精确定义。
+

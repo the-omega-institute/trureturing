@@ -1,0 +1,22 @@
+#### 引文 15.2 猜想的正参数第五分支与临界素数
+
+Benfield–Lippard，*Fixed points of K-Fibonacci sequences*，
+arXiv:2404.08194v2，§6「Final Thoughts」的猜想 6.5
+（文献条目 [benfieldlippard2024fixedpoints](../../../Library/ArithUnits/benfieldlippard2024fixedpoints.md)）
+先令 $p_1^{e_1}\cdots p_t^{e_t}$ 为 $a^2+4b$ 的素因数分解，取 $b=-1$、$a>2$。
+对每个 $m>1$ 及非负整数 $j_1,\ldots,j_t$，猜想以五个分支刻画
+$\pi_{(a,-1)}(m)=m$ 的充要条件。其中第 (v) 项原文为：
+
+> (v) $a \equiv -1 \pmod{6}$ and $m = p_i^{j_i}$ or $m = 6 \cdot p_1^{j_1+1} \cdots p_t^{j_t}$.
+
+这里 $p_i$ 均取自 $a^2-4$ 的素因数；第二种形式中的 $j_1+1$ 保留原文。
+因此这一分支的必要方向声称：当 $a>2$ 且 $a\equiv-1\pmod6$ 时，
+任何不动点 $m>1$ 都是一个素数幂，或是 $6$ 的倍数。
+
+紧接猜想的文字为：
+
+> It appears that in the previous conjecture, only one prime has powers that are fixed points for any given $a$; let this be the *critical prime* for the $(a,-1)$-Fibonacci sequence.
+
+作者继而指出这个素数不总是 $a^2-4$ 的最小或最大素因数，并说 $a=3$ 是没有临界素数的特殊情形。
+这一段是猜想之后的观察，不是已经证明的唯一性定理。
+

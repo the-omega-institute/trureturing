@@ -1,0 +1,14 @@
+### 98.5 对“稳定经典现实”的补充
+
+这条结果把前面的预测闭合条件再细化了一层。若只要求当前概率标签，可能只需保存一个粗读数；若要求保留完整后续振幅，则每个切口必须保存足以承载系数矩阵秩的边界信息。两者对应不同任务：
+
+$$
+\text{标签预测任务}
+\not\equiv
+\text{完整相干历史制备任务}.
+$$
+
+Zeckendorf 可以继续提供合法构型的离散坐标，occupation chain 则给出在一个具体相干任务中这些历史怎样组合、怎样跨切口传输。只有把两者之间的编码映射、目标振幅和允许误差明确写出，才能把 Fibonacci 构型数量转换成实际量子记忆预算。
+
+本节复用 `next_step_gram`、`next_step_quantum_channel`、`contraction_eq_sector`、`sequential_memory_necessity`、`minimum_maximum_bond_characterization` 和 `history_5040_minimum_maximum_bond`。Lean 已证明的是有限多重集占据链的等距性、精确收缩和切口下界；Zeckendorf—occupation 同构、噪声容错记忆以及任意开放系统中的最优压缩仍是未完成接口。
+

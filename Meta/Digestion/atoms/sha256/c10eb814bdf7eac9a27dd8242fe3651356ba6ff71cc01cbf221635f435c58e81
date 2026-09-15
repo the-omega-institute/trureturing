@@ -1,0 +1,8 @@
+**证明。** 图连通意味着 $\operatorname{im}B=\operatorname{Div}^0(\mathcal D)$。记循环格 $Z_1=\ker B$、割格 $B^1=\operatorname{im}B^{\mathsf T}$。循环格本原，故它的任意整数线性泛函可扩张到 $\mathbb Z^e$。标准点积因而给出满射 $\mathbb Z^e\to Z_1^*$。该映射的核恰为割格：若整数边向量与全部基本循环垂直，沿生成树积分产生整数顶点势，其在非树边上的差由循环垂直性保证，所以该边向量等于 $B^{\mathsf T}$ 作用于这个势。
+
+于是 $\mathbb Z^e/B^1\cong Z_1^*$，而 $Z_1$ 到其对偶的嵌入由 $Q_{\mathcal D}$ 表示。另一方面，通过 $B$ 得到
+
+$$\mathbb Z^e/(Z_1+B^1)\cong\operatorname{Div}^0(\mathcal D)/\operatorname{im}(BB^{\mathsf T}).$$
+
+这给出第一项。第 40 节的同调块和 $U^2=0$ 给出 $A^n-I=nU$，包括负整数 $n$。对非零块取 Smith 形即得实际返回商。
+
