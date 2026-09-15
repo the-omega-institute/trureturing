@@ -2,8 +2,10 @@
 # 把当前 .lake/build 发布为内容寻址的 GitHub Release 资产,大归档分片上传。
 #
 # 命名空间与 spec A14 的 `E<n>` 发布 tag 严格分开：这些 tag 是构建缓存，不是版本发布。
-# tag 绑定 (toolchain, config_sha256, sources_sha256) 三元组；同一元组只发一次。
-# tag = <TAG_PREFIX>-<toolchain-slug>-<config16>-<sources16>.
+# New publications include a validated current Inspector report and its native
+# incremental artifacts in the root buildDir. The shared build-snapshot address
+# extends the old Lean-only tag; legacy releases remain compilation seeds.
+# tag = <TAG_PREFIX>-<toolchain-slug>-<config16>-<sources16>-<snapshot16>.
 #
 # 这个归档**不是权威**：它是一个加速器，不构成独立的 admission 证据。消费侧 (`fetch`)
 # 对 toolchain、归档完整性与摘要一律 fail-closed;默认只允许 sources 回退到同 config
@@ -38,9 +40,9 @@
 #   manifest 记 producer_commit_sha 与 workflow_run_id；缺这两个值时 publish 直接拒绝；
 #   workflow 侧显式写出 checkout 取的事件 SHA。
 #
-#   仍未落地（B 步）：**consumer 侧没有任何 provenance 核验** —— 上面这些字段现在
-#   写得出来，但没有人去核它们。**在 consumer 核验落地之前，ensure 不得自动 fetch
-#   本归档** —— 当前也确实没有，手工 target 只作诊断。
+#   Current consumers validate content/structure provenance below. Publisher identity
+#   restrictions were removed by the owner; scheduled CI and authorized manual
+#   publication use this same entry and retain the producer/run attribution fields.
 set -euo pipefail
 export LC_ALL=C
 
@@ -81,8 +83,8 @@ usage() {
   cat >&2 <<'USAGE'
 usage: lean-cache-publish.sh <address|publish|fetch> [--repository DIR] [--allow-seed]
 
-  address   打印当前工作树对应的缓存 tag 与其三元组，不做任何网络访问
-  publish   若该 tag 尚不存在，打包 .lake/build 并发布为该 tag 的资产
+  address   Print the current Lean + report snapshot tag and input addresses; offline
+  publish   Prepare/validate the current Inspector report, then pack and publish unless the snapshot tag exists
   fetch     精确地址优先,其次同 config 前缀;校验失败即 fail-closed
   --allow-seed  仅供 fetch:两级均无层时,允许同工具链最近的 project 层作种子
 USAGE
@@ -103,9 +105,9 @@ done
 [[ -n "$VERB" ]] || usage
 
 # ── 发布者身份 ────────────────────────────────────────────────────────────────
-# 自 PR #2818 起本归档的触发集合只有 `schedule`，即唯一合法发布者是 dev 上的定时
-# CI producer。consumer 侧的 provenance 核验要靠这两个值把资产绑回那次运行，故它们
-# 缺失或形状不对时**拒绝发布**：发不出资产，好过发一个事后无法归属的资产。
+# Scheduled CI supplies these attribution fields automatically; authorized manual
+# callers must provide them explicitly. Consumers retain shape/target validation,
+# without reinstating the retired author/uploader/workflow identity restrictions.
 # 这一段刻意早于 address 计算 —— 身份不成立就不必再算别的。
 if [[ "$VERB" == "publish" ]]; then
   producer_commit_sha="${GITHUB_SHA:-}"
@@ -117,7 +119,7 @@ if [[ "$VERB" == "publish" ]]; then
 fi
 
 # ── 身份 ──────────────────────────────────────────────────────────────────────
-# 两个哈希来自本仓既有的唯一真源，不另算一套。
+# Lean and complete-snapshot addresses come from the existing shared helper.
 helper="${repository}/tools/scripts/worktree/lean-cache-input.sh"
 [[ -x "$helper" ]] || die "input helper is absent: $helper"
 input_address="$("$helper" address --repository "$repository")" \
@@ -126,26 +128,19 @@ input_address="$("$helper" address --repository "$repository")" \
 read -r sources_sha256 config_sha256 <<< "$input_address"
 [[ "$sources_sha256" =~ ^[0-9a-f]{64}$ ]] || die "sources address is malformed"
 [[ "$config_sha256" =~ ^[0-9a-f]{64}$ ]] || die "config address is malformed"
+build_snapshot_sha256="$("$helper" build-snapshot-address --repository "$repository")" \
+  || die "Lean/report snapshot address is unavailable"
+[[ "$build_snapshot_sha256" =~ ^[0-9a-f]{64}$ ]] || die "build snapshot address is malformed"
 
 toolchain="$(tr -d '[:space:]' < "$repository/lean-toolchain")"
 [[ -n "$toolchain" ]] || die "lean-toolchain is empty"
-# olean 的兼容性跟 Lean 版本走而不跟平台走（mathlib 的 cache key 掺 lean-toolchain 而不掺
-# platform），但整包 buildDir 的可移植性是另一回事，只由 #2542 步骤 B 的实测支持：
-# Linux ARM64 产、macOS ARM64 消费，Built=0 而对照组 Built=2。
-# 那次实测覆盖的是同架构跨 OS，所以 arch 仍然进 tag —— 未测的组合不得静默复用。
+# The archive is a compilation seed across platforms. Inspector's native
+# executable may rebuild for the target platform; report reuse still requires
+# native traces and complete current-input/material validation.
 os="$(uname -s | tr '[:upper:]' '[:lower:]')"
 arch="$(uname -m)"
 slug="${toolchain//[^A-Za-z0-9]/-}"
-# tag 里不含平台维度。两条独立读数支持这一点：
-# ① mathlib 的缓存键（Cache/Hashing.lean:149）是 rootHash::pathHash::内容哈希::import 哈希，
-#    其下载 URL（Cache/Requests.lean:293）是 "{URL}/f/{repo}/{fileName}" —— 全无平台/架构；
-#    最大的 Lean 项目对所有平台发同一份 olean 缓存。
-# ② 本仓 .lake/build 实测不含任何平台相关二进制：*.o/*.so/*.dylib/*.a/*.dll 计数皆为 0，
-#    只有 olean/ilean/c/trace/hash/json，且 olean 的 file(1) 类型是 "data" 而非 Mach-O/ELF。
-# slug（toolchain）必须保留：不同 Lean 版本的 olean 确实不兼容。
-# 加上平台维度的后果是把主检出（darwin-arm64）挡在 CI 产物（linux-aarch64）之外，
-# 而 owner 的目标恰恰是「主 checkout 不用从 0 开始 build 热缓存」。
-tag="${TAG_PREFIX}-${slug}-${config_sha256:0:16}-${sources_sha256:0:16}"
+tag="${TAG_PREFIX}-${slug}-${config_sha256:0:16}-${sources_sha256:0:16}-${build_snapshot_sha256:0:16}"
 asset="lean-build.tgz"
 
 emit_address() {
@@ -155,6 +150,7 @@ emit_address() {
   printf 'arch=%s\n' "$arch"
   printf 'config_sha256=%s\n' "$config_sha256"
   printf 'sources_sha256=%s\n' "$sources_sha256"
+  printf 'build_snapshot_sha256=%s\n' "$build_snapshot_sha256"
   printf 'asset=%s\n' "$asset"
 }
 
@@ -164,7 +160,12 @@ case "$VERB" in
     ;;
 
   publish)
-    [[ -d "$repository/.lake/build" ]] || die "nothing to publish: $repository/.lake/build is absent"
+    # Inspector owns input validation, ensure-before-.lake creation, the private
+    # cache writer and native :report (including ordinary compiler defaults).
+    # Run even on an existing tag: invalid required inputs/builds must fail.
+    "$repository/tools/lean-inspector/inspect.sh" --repository "$repository" \
+      --output "$repository/.lake/build/stratalint/raw-lean-report.json"
+    [[ -d "$repository/.lake/build" ]] || die "Inspector produced no root buildDir"
     if gh release view "$tag" --repo "$REPO" >/dev/null 2>&1; then
       printf 'LEAN_CACHE_PUBLISH {"status":"exists","tag":"%s"}\n' "$tag"
       exit 0
@@ -213,8 +214,8 @@ case "$VERB" in
     #   不是一个并不存在的事后漂移。
     gh release create "$tag" --repo "$REPO" \
       --target "$producer_commit_sha" \
-      --title "Lean build cache ${config_sha256:0:8}/${sources_sha256:0:8} (${os}-${arch})" \
-      --notes "Lean build cache produced from ${toolchain} on ${os}-${arch} at ${producer_commit_sha} by run ${workflow_run_id}. An accelerator, not independent admission evidence." \
+      --title "Lean build cache ${config_sha256:0:8}/${build_snapshot_sha256:0:8} (${os}-${arch})" \
+      --notes "Lean build cache produced from ${toolchain} on ${os}-${arch} at ${producer_commit_sha} by run ${workflow_run_id}. Includes the current validated Inspector report and native incremental artifacts. An accelerator, not independent admission evidence." \
       "${archives[@]}" "$staged/manifest.txt" >/dev/null
     # 剪枝：稳态只留一份。fetch 的前缀回落是 `grep "^${prefix}" | head -1`，只取最新的
     # 一份，故同 config 的旧份边际收益为零；而 GitHub Releases **没有** Actions Cache 那样
@@ -350,6 +351,25 @@ case "$VERB" in
       [[ "$want" == "$got" ]] \
         || { printf 'LEAN_CACHE_FETCH {"status":"miss","tag":"%s","reason":"%s mismatch"}\n' "$tag" "$field"; exit 1; }
     done
+    # Bind the full manifest addresses to the resolved tag. Legacy Lean-only
+    # tags remain prefix/seed candidates, never a current complete exact hit.
+    got_sources="$(sed -n 's/^sources_sha256=//p' "$staged/manifest.txt")"
+    got_config="$(sed -n 's/^config_sha256=//p' "$staged/manifest.txt")"
+    got_snapshot="$(sed -n 's/^build_snapshot_sha256=//p' "$staged/manifest.txt")"
+    [[ "$got_sources" =~ ^[0-9a-f]{64}$ ]] \
+      || { printf 'LEAN_CACHE_FETCH {"status":"miss","tag":"%s","reason":"malformed sources address"}\n' "$resolved"; exit 1; }
+    manifest_tag="${TAG_PREFIX}-${slug}-${got_config:0:16}-${got_sources:0:16}"
+    if [[ -n "$got_snapshot" ]] || grep -q '^build_snapshot_sha256=' "$staged/manifest.txt"; then
+      [[ "$got_snapshot" =~ ^[0-9a-f]{64}$ ]] \
+        || { printf 'LEAN_CACHE_FETCH {"status":"miss","tag":"%s","reason":"malformed snapshot address"}\n' "$resolved"; exit 1; }
+      manifest_tag="${manifest_tag}-${got_snapshot:0:16}"
+    fi
+    [[ "$resolved" == "$manifest_tag" ]] \
+      || { printf 'LEAN_CACHE_FETCH {"status":"miss","tag":"%s","reason":"manifest addresses do not match release tag"}\n' "$resolved"; exit 1; }
+    if [[ "$mode" == exact ]]; then
+      [[ "$got_sources" == "$sources_sha256" && "$got_snapshot" == "$build_snapshot_sha256" ]] \
+        || { printf 'LEAN_CACHE_FETCH {"status":"miss","tag":"%s","reason":"exact snapshot address mismatch"}\n' "$resolved"; exit 1; }
+    fi
     # ── 产地核验 ────────────────────────────────────────────────────────────
     # 这段是 #2729 判决的 B 步前半。摘要与依赖层身份只证明「字节没坏、层对得上」，
     # 不证明**是谁产的**：manifest 与 payload 同处一个发布面，有写权者可一起替换而
@@ -438,11 +458,6 @@ fail_provenance() {
         || fail_provenance "archive bytes do not match the digest GitHub recorded for ${expected} (${github_digest:-<absent>})"
     done
 
-    # `head_branch=dev` + `event=schedule` + 该 run 成功，合起来说明该 commit 当时
-    # 就是默认分支的 tip。**残余**：dev 若被 force-push，历史上的 tip 可能已不在
-    # 当前历史里。此处不另做祖先查询——那要么依赖本机 fetch 状态（会随上次 fetch
-    # 何时发生而变），要么再加一次 API 往返。记为已知残余，不冒充已排除。
-
     # 解包只有这一个入口，且它在**产地核验之后**。做成具名函数不是修辞：
     # `VerifiedConsumptionHasASingleEntryPoint` 钉住脚本里 `lake unpack` 恰好出现一次
     # 且落在此函数体内，故将来任何新分支想解包都必须走这里，不能各写各的。
@@ -451,7 +466,6 @@ fail_provenance() {
     }
     consume_verified_archive \
       || { printf 'LEAN_CACHE_FETCH {"status":"miss","tag":"%s","reason":"archive could not be unpacked"}\n' "$resolved"; exit 1; }
-    got_sources="$(sed -n 's/^sources_sha256=//p' "$staged/manifest.txt")"
     seed_fields=""
     if [[ "$mode" == seed ]]; then
       seed_fields=",\"seed_config\":\"${seed_config}\",\"candidate_config\":\"${config_sha256}\""

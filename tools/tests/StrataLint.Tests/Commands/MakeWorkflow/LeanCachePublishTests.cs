@@ -439,8 +439,14 @@ public sealed partial class LeanCachePublishTests
             Directory.CreateDirectory(Path.GetDirectoryName(helper)!);
             WriteExecutable(
                 helper,
-                "#!/usr/bin/env bash\nprintf '%s %s\\n' "
+                "#!/usr/bin/env bash\nif [[ \"$1\" == build-snapshot-address ]]; then printf '%s\\n' "
+                    + $"\"{new string('5', 64)}\"; exit; fi\n"
+                    + "printf '%s %s\\n' "
                     + $"\"{new string('1', 64)}\" \"{new string('2', 64)}\"\n");
+
+            var inspector = Path.Combine(Repository, "tools", "lean-inspector", "inspect.sh");
+            Directory.CreateDirectory(Path.GetDirectoryName(inspector)!);
+            WriteExecutable(inspector, "#!/usr/bin/env bash\nexit 0\n");
 
             Directory.CreateDirectory(Bin);
             // release view 报「不存在」，脚本才会走到创建；create 把参数与 manifest 留证。
@@ -569,7 +575,9 @@ public sealed partial class LeanCachePublishTests
             Directory.CreateDirectory(Path.GetDirectoryName(helper)!);
             WriteExecutable(
                 helper,
-                "#!/usr/bin/env bash\nprintf '%s %s\\n' "
+                "#!/usr/bin/env bash\nif [[ \"$1\" == build-snapshot-address ]]; then printf '%s\\n' "
+                    + $"\"{new string('5', 64)}\"; exit; fi\n"
+                    + "printf '%s %s\\n' "
                     + $"\"{new string('3', 64)}\" \"{new string('4', 64)}\"\n");
 
             var producer = deviation == "no-producer" ? "" : $"producer_commit_sha={ProducerSha}\n";
@@ -592,7 +600,7 @@ public sealed partial class LeanCachePublishTests
             File.WriteAllText(
                 Path.Combine(payload, "manifest.txt"),
                 $"toolchain=leanprover/lean4:v4.31.0\nconfig_sha256={new string('4', 64)}\n"
-                    + $"sources_sha256={new string('3', 64)}\narchive_sha256={digest}\n"
+                    + $"sources_sha256={new string('3', 64)}\nbuild_snapshot_sha256={new string('5', 64)}\narchive_sha256={digest}\n"
                     + $"archive_bytes=14\n{producer}{runId}");
 
             var archiveDigest = deviation == "wrong-archive-digest"

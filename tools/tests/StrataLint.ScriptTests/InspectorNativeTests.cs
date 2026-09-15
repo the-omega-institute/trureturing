@@ -33,6 +33,8 @@ public sealed class InspectorNativeTests
     [InlineData("test_native.NativeTests.test_native_pack_unpack_reuses_complete_rows")]
     [InlineData("test_native.NativeTests.test_native_clonefile_seed_reuses_rows_and_keeps_donor_private")]
     [InlineData("test_native.NativeTests.test_snapshot_generation_preserves_lean_address")]
+    [InlineData("test_native.NativeTests.test_release_publisher_legacy_seed_current_pack_restore_and_unchanged")]
+    [InlineData("test_native.NativeTests.test_release_identity_tracks_report_semantics_and_selection")]
     public void InspectorArtifactBehavior(string suite)
     {
         if (OperatingSystem.IsWindows()) return;
