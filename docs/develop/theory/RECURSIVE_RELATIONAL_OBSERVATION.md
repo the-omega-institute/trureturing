@@ -4812,3 +4812,455 @@ $$
 所以 $M$ 联合连续。若所述 $q$ 存在，则 $q\circ M$ 分别连续，且在核心上等于 $f(n+m)$，违反定理 19.4。因此，被排除的不是一切紧空间上的加法实现，而是同时保留该连续最低位观察的分别连续实现。证毕。
 
 ## 追加锚（本行以下为增补区）
+## 20. Positional precision and arithmetic-time observation on the Zeckendorf compactum
+
+**Definition 20.1 (The carrier and the two observations).** Put
+$$
+\phi=\frac{1+\sqrt5}{2},\qquad
+\alpha=\phi^{-1},\qquad
+\beta=\alpha^2=1-\alpha,\qquad r=-\alpha,
+$$
+$$
+G_0=1,\qquad G_1=2,\qquad G_{j+2}=G_{j+1}+G_j.
+$$
+Use the low-to-high digit carrier
+$$
+K=\{x\in\{0,1\}^{\mathbb N}:x_jx_{j+1}=0\text{ for every }j\},
+$$
+with its product topology, and write $Z(n)$ for the finite Zeckendorf expansion of $n$, padded by zeros. The phase maps and rotation are
+$$
+F(x)=\sum_{j\ge0}(-1)^{j+1}\alpha^{j+2}x_j,\qquad
+H(x)=[F(x)],\qquad R(\theta)=\theta+[\phi].
+$$
+The successor $T$ replaces the alternating prefix before the first occurrence $x_jx_{j+1}=00$ by zeros and sets position $j$ to one, leaving higher positions unchanged; if there is no such occurrence, it sends the sequence to $Z(0)$. Set
+$$
+q_L(x)=(x_0,\ldots,x_{L-1}),\qquad f(x)=x_0,\qquad
+v_t(x)=(f(T^i x))_{0\le i<t}.
+$$
+Both $q_0$ and $v_0$ have the single value given by the empty word. Let $\mathcal Q_L$ and $\mathcal V_t$ be their partitions into nonempty fibers. For a map $g$, its equality kernel is
+$$
+\ker(g)=\{(x,y)\in K^2:g(x)=g(y)\}.
+$$
+Finally, positional deletion is the different map $\sigma:K\to K$ defined by $(\sigma x)_j=x_{j+1}$.
+
+The carrier, phase maps and successor are those of the Zeckendorf theory volume, §§371–375; in particular, the established properties used below are compactness, density of $Z(\mathbb N)$, continuity and surjectivity of $T$, and $TZ(n)=Z(n+1)$, $HT=RH$. ([raw.githubusercontent.com](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md))
+
+**theorem 20.2 (Exact positional cuts, including the split endpoints).** Write
+$$
+a=-\alpha,\qquad b=\beta,\qquad c=-\alpha^3,\qquad
+I=[a,b],\qquad u=(10)^\infty,\qquad v=(01)^\infty,
+$$
+and
+$$
+e_m=[-m\phi]\quad(m\ge1),\qquad E=\{e_m:m\ge1\}.
+$$
+There are exactly $G_L$ admissible words of length $L$. For such a word $p$, let $C_p=q_L^{-1}(\{p\})$ and
+$$
+S_p=\sum_{j<L}(-1)^{j+1}\alpha^{j+2}p_j.
+$$
+Its real phase interval is
+$$
+I_p=F[C_p]=
+\begin{cases}
+I,&L=0,\\
+S_p+r^L I,&L>0,\ p_{L-1}=0,\\
+S_p+r^{L+1}I,&L>0,\ p_{L-1}=1.
+\end{cases}
+$$
+The circle boundaries of these images are exactly
+$$
+B_0^{\mathrm{pos}}=\varnothing,\qquad
+B_L^{\mathrm{pos}}
+=\bigcup_p\partial_{\mathbb T}H[C_p]
+=\{e_1,\ldots,e_{G_L}\}\quad(L\ge1).
+$$
+These are boundaries in the circle, not boundaries of the clopen sets $C_p$ in $K$.
+
+Every phase outside $E$ has a singleton $H$-fiber, and each $e_m$ has exactly two lifts. Give these two lifts their negative-side and positive-side names $x_m^-,x_m^+$. At the circle seam they are
+$$
+x_1^-=v,\qquad x_1^+=u.
+$$
+For $m\ge2$, there is a unique finite word $w$ made of the blocks $0$ and $10$ such that, with digit length $d=|w|$ and $N_w=\sum_{j<d}G_jw_j$,
+$$
+m=G_{d+1}-N_w.
+$$
+For this word,
+$$
+(x_m^-,x_m^+)=
+\begin{cases}
+(w10v,w0v),&d\text{ even},\\
+(w0v,w10v),&d\text{ odd}.
+\end{cases}
+$$
+For every $L\ge1$, these two points have different $L$-digit prefixes exactly when $m\le G_L$.
+
+For every positive-depth cylinder, its phase image has an open arc interior $J_p$, and its full atom, with the correct split endpoints, satisfies
+$$
+C_p=\overline{\{Z(n):H(Z(n))\in J_p\}}^{\,K}.
+$$
+
+**Proof.** The finite value map $p\mapsto\sum_{j<L}G_jp_j$ is a bijection onto the integers from zero to $G_L-1$. At lengths zero and one this is immediate. For $L\ge2$, splitting according to the highest digit gives the disjoint value ranges
+$$
+[0,G_{L-1}-1]\cap\mathbb Z,\qquad
+[G_{L-1},G_{L-1}+G_{L-2}-1]\cap\mathbb Z.
+$$
+In the second range the preceding digit is forced to zero. Induction proves both exhaustiveness and uniqueness, hence the count.
+
+The interval formula is the exact cylinder formula of §372.3. Every positive-depth interval has positive length less than one. Distinct length-$L$ prefixes, completed by a forced zero when necessary, give incomparable block prefixes. The intersection classification of §372.3 therefore makes their interval interiors disjoint. They cover $I$, so they form consecutive intervals without gaps.
+
+For completeness, enumerate their endpoints using the full fibers of §372.2 rather than merely counting intervals. A finite block word $w$ acts on real phases by
+$$
+A_w(s)=S_w+r^d s.
+$$
+The internal double fiber at $A_w(c)$ consists of $w0v$ and $w10v$. The recurrence and its initial values give
+$$
+\eta_j=\phi G_j-G_{j+1}=(-1)^{j+1}\alpha^{j+2},
+\qquad r^d c=-\eta_{d+1}.
+$$
+Consequently,
+$$
+[A_w(c)]=[\phi(N_w-G_{d+1})]=e_{G_{d+1}-N_w}.
+$$
+The empty block word gives $d=0$ and $m=2$. For $d\ge1$, block words of digit length $d$ are exactly admissible words ending in zero. Removing this final zero and applying the finite value bijection shows that their values run once through
+$$
+0,\ldots,G_{d-1}-1.
+$$
+Their indices $m$ thus run once through
+$$
+G_d+1,\ldots,G_{d+1}.
+$$
+These disjoint successive ranges exhaust the integers at least three. The cited full-fiber classification has no other nonsingleton fibers beyond these internal pairs and the seam.
+
+An internal endpoint is precisely a phase whose two lifts belong to different cylinders: adjacent positive intervals meet there, whereas their interiors do not overlap. The two sequences $w0v,w10v$ first differ at digit $d$. Thus their prefixes of length $L$ differ exactly when $d<L$. The displayed index ranges show that the internal fibers separated at depth $L\ge1$ have exactly the indices $2,\ldots,G_L$. The remaining circle identification joins $a$ and $b$, whose unique real preimages are $u$ and $v$; they differ already at digit zero. Its index is $m=1$. Irrationality of $\phi$ makes all the $e_m$ distinct. This proves the stated cut set. At depth zero the image is the whole circle, which has empty boundary.
+
+Before application of $A_w$, the $10$ branch has real image $[a,c]$, while the $0$ branch has image $[c,b]$. The affine map $A_w$ preserves orientation for even $d$ and reverses it for odd $d$, giving the two oriented formulas. At the seam, approaching through $b$ gives $v$, and leaving through $a$ gives $u$.
+
+No other cylinder image can contain an interior point of $I_p$: its positive length would force an overlap of interval interiors. Hence the entire fiber above every point of $J_p$ belongs to $C_p$. Natural phases avoid $E$, since $[n\phi]=[-m\phi]$ would make $(n+m)\phi$ an integer. Therefore
+$$
+C_p\cap Z(\mathbb N)=\{Z(n):H(Z(n))\in J_p\}.
+$$
+The left-hand side is dense in $C_p$, because $C_p$ is open and closed and $Z(\mathbb N)$ is dense. This proves the closure formula.
+
+It also proves the asserted side interpretation. Choose a depth that separates the two points above $e_m$. Sufficiently close phases on either side belong to the corresponding adjacent cylinder. A convergent subsequence of their natural lifts has phase $e_m$ and lies in that cylinder, so it can have only the indicated one of the two limits. Compactness then gives convergence of the whole sequence. Such approaching natural phases exist because the continuous surjection $H$ takes the dense core to a dense subset of the circle. The same argument at the seam uses its two adjacent cylinders. This establishes the endpoint conventions on all of $K$. $\square$
+
+Attached reference: the cylinder and double-fiber inputs are precisely §§372.2–372.4 of the Zeckendorf volume. ([raw.githubusercontent.com](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md))
+
+**Definition 20.3 (Mechanical words and future coding).** For a real intercept $\rho$, define the lower and upper mechanical words of slope $\beta$ by
+$$
+M^{\mathrm{lo}}_\rho(n)
+=\lfloor\rho+(n+1)\beta\rfloor-\lfloor\rho+n\beta\rfloor,
+$$
+$$
+M^{\mathrm{up}}_\rho(n)
+=\lceil\rho+(n+1)\beta\rceil-\lceil\rho+n\beta\rceil
+\qquad(n\ge0).
+$$
+An integer change in $\rho$ changes neither word. The lower convention assigns digit one to $[1-\beta,1)$; the upper convention assigns it to $(1-\beta,1]$, with the circle point zero represented by one in the latter interval. Define
+$$
+\Phi(x)=(f(T^n x))_{n\ge0},
+\qquad
+S((y_n)_{n\ge0})=(y_{n+1})_{n\ge0}.
+$$
+Here $S$ is the ordinary one-sided shift on binary itineraries.
+
+Attached reference: Berstel, *Sturmian and Episturmian Words* (2007), §3.1, pp. 30–31, gives these lower/upper conventions and their rotation interpretation. ([ligm.univ-eiffel.fr](https://ligm.univ-eiffel.fr/~berstel/Articles/2007SturmianThessalonique.pdf))
+
+**theorem 20.4 (The exact mechanical coordinate and every split itinerary).** For $x\in K$, take any real lift $\rho$ of
+$$
+[\rho]=[\beta]-H(x).
+$$
+If $H(x)\notin E$, then
+$$
+\Phi(x)=M^{\mathrm{lo}}_\rho=M^{\mathrm{up}}_\rho.
+$$
+For every $m\ge1$, put $\rho_m=(1-m)\beta$. Then
+$$
+\Phi(x_m^-)=M^{\mathrm{lo}}_{\rho_m},
+\qquad
+\Phi(x_m^+)=M^{\mathrm{up}}_{\rho_m}.
+$$
+For $m=1$ these words differ only at coordinate zero, with respective digits zero and one. For $m\ge2$ they differ exactly at coordinates $m-2,m-1$, where the respective pairs are
+$$
+10\qquad\text{and}\qquad01.
+$$
+In particular, a length-$t$ itinerary separates the two members of the fiber above $e_m$ exactly when
+$$
+t\ge1\quad\text{and}\quad m\le t+1.
+$$
+The successor respects their orientation until the seam:
+$$
+Tx_m^\pm=x_{m-1}^\pm\quad(m\ge2),\qquad
+Tx_1^-=Tx_1^+=Z(0).
+$$
+On the natural core the chosen word is exactly
+$$
+w_n:=f(Z(n))
+=\lfloor(n+2)\beta\rfloor-\lfloor(n+1)\beta\rfloor,
+$$
+so $w=\Phi(Z(0))$ is the lower mechanical word with slope and intercept both equal to $\beta$.
+
+**Proof.** In real phase coordinates the one-digit intervals are $F[C_1]=[a,c]$ and $F[C_0]=[c,b]$. Under the reflected and translated coordinate $[\rho]=[\beta]-[F(x)]$, their interiors become respectively $(1-\beta,1)$ and $(0,1-\beta)$. Moreover,
+$$
+[\beta]-H(Tx)=[\beta]-H(x)-[\phi]=[\rho+\beta].
+$$
+Thus rotation by $[\phi]=[\alpha]$ becomes rotation by $[\beta]$ in this coordinate.
+
+If $H(x)\notin E$, its forward phase orbit never meets $e_1$ or $e_2$. Nor can any $\rho+n\beta$ be an integer: that would give
+$$
+H(x)=[(n+1)\beta]=e_{n+1}.
+$$
+Reading the two interval interiors therefore gives the lower formula at every time. The upper formula agrees, since neither endpoint of its difference is an integer.
+
+At a split phase, approach $x_m^-$ by natural lifts from the negative phase side, as established in Theorem 20.2. Reflection makes the corresponding intercepts approach $\rho_m$ from above. Every coordinate $f\circ T^n$ is continuous, and floors are right-continuous, so the limit is $M^{\mathrm{lo}}_{\rho_m}(n)$. Approaching $x_m^+$ reverses this direction. The identity
+$$
+\lim_{\varepsilon\downarrow0}\lfloor z-\varepsilon\rfloor=\lceil z\rceil-1
+$$
+makes the two subtracted constants cancel, giving the upper formula. This argument applies separately to every coordinate, including the seam coordinate.
+
+Set
+$$
+D_k=\lceil\rho_m+k\beta\rceil-\lfloor\rho_m+k\beta\rfloor.
+$$
+Irrationality gives $D_k=0$ precisely at $k=m-1$, and $D_k=1$ at every other nonnegative integer $k$. Since
+$$
+M^{\mathrm{up}}_{\rho_m}(n)-M^{\mathrm{lo}}_{\rho_m}(n)=D_{n+1}-D_n,
+$$
+the asserted differences and their exact positions follow. In particular there is no additional endpoint word obtained by choosing the two conventions independently at different times.
+
+For $m\ge2$, rotation sends a same-side sequence approaching $e_m$ to a same-side sequence approaching $e_{m-1}$. Apply continuity of $T$, its successor formula on the natural core, and the side-limit statement of Theorem 20.2. This gives the oriented successor identity. Both alternating sequences are sent to zero by the definition of $T$.
+
+Finally, $H(Z(n))=[n\phi]$ gives the intercept class $[(n+1)\beta]$. Substituting this lift into the time-zero formula yields the displayed formula for $w_n$. At $n=0$ the intercept is $\beta$, not zero. $\square$
+
+Attached reference: Berstel, §3.1, p. 31, calls the equal-slope-and-intercept word the characteristic word; the identification with this particular Zeckendorf observation follows from the proof above. ([ligm.univ-eiffel.fr](https://ligm.univ-eiffel.fr/~berstel/Articles/2007SturmianThessalonique.pdf))
+
+**theorem 20.5 (Exact temporal complexity and temporal phase cuts).** For every $t\ge0$,
+$$
+|v_t[K]|=t+1.
+$$
+The temporal phase cut set is
+$$
+B_0^{\mathrm{time}}=\varnothing,\qquad
+B_t^{\mathrm{time}}=\{e_1,\ldots,e_{t+1}\}\quad(t\ge1).
+$$
+For positive $t$, the atoms of $\mathcal V_t$ are exactly
+$$
+A_J=\overline{\{Z(n):H(Z(n))\in J\}}^{\,K},
+$$
+where $J$ runs through the open arcs complementary to $B_t^{\mathrm{time}}$. Different arcs give different words. Thus the count includes both members of every split fiber without adding singleton boundary atoms.
+
+**Proof.** The empty observation has one value. For $t\ge1$, the possible cuts of the successive readouts are
+$$
+\bigcup_{i=0}^{t-1}R^{-i}\{e_1,e_2\}
+=\bigcup_{i=0}^{t-1}\{e_{i+1},e_{i+2}\}
+=\{e_1,\ldots,e_{t+1}\}.
+$$
+It remains to prove that no two resulting arcs carry the same word; the cut count alone does not establish this.
+
+Use the intercept coordinate from Theorem 20.4 and a representative $0\le\rho<1$. The cuts become zero and the $t$ distinct points
+$$
+c_j=\{-j\beta\},\qquad1\le j\le t,
+$$
+where braces denote fractional part. Away from these cuts, the partial sums of the first $t$ lower mechanical digits are
+$$
+\sum_{i=0}^{j-1}M^{\mathrm{lo}}_\rho(i)
+=\lfloor\rho+j\beta\rfloor,\qquad1\le j\le t.
+$$
+As $\rho$ increases from zero to one, the $j$-th function increases exactly once, at $c_j$, and never decreases. Consequently two different intervals between the sorted cuts have different vectors of partial sums. The digit word determines, and is determined by, those partial sums. Hence these $t+1$ intervals carry $t+1$ different words, including the intervals adjacent to zero on its two sides.
+
+The natural phase orbit is dense and avoids all cuts, so all these words occur on the natural core. Conversely, $v_t$ is continuous with finite discrete target. Every nonempty fiber is open and therefore meets the dense core; there can be no additional word supported only on split points. Each fiber is also closed, and its core intersection is exactly the core phases in the unique arc carrying its word. Density in this clopen fiber proves the formula for $A_J$ and proves that these are all its atoms.
+
+At an endpoint $e_m$, Theorem 20.4 assigns its two lifts the words of the corresponding adjacent arcs whenever $m\le t+1$. For $m>t+1$ the two lifts have the same word and lie in one atom. Continuity and compactness give $H[A_J]=\overline J$: the image is contained in this closed arc and contains the dense natural phases in $J$. Its phase boundaries are therefore exactly the displayed cut set. $\square$
+
+Attached reference: the classical complexity characterization of Sturmian words is stated in Glen–Justin, *Episturmian Words: A Survey*, §1.1, p. 1; Berstel, §2.1, p. 25, Theorem 1 gives the associated eventual-periodicity threshold. The concrete arc distinction and endpoint count here are proved directly. ([arxiv.org](https://arxiv.org/pdf/0801.1655))
+
+**theorem 20.6 (Equal partitions, both exact moduli, and sharpness).** For all $L,t\ge0$,
+$$
+\mathcal Q_L=\mathcal V_{G_L-1},
+\qquad
+\ker(q_L)=\ker(v_{G_L-1}),
+$$
+and more generally
+$$
+\ker(v_t)\subseteq\ker(q_L)
+\quad\Longleftrightarrow\quad t\ge G_L-1,
+$$
+$$
+\ker(q_L)\subseteq\ker(v_t)
+\quad\Longleftrightarrow\quad t\le G_L-1.
+$$
+Thus the least length of consecutive lowest-digit observations determining the first $L$ positional digits is
+$$
+t_{\min}(L)=G_L-1,
+$$
+and the least positional depth determining a prescribed length-$t$ itinerary is
+$$
+L_{\min}(t)=\min\{L\ge0:G_L\ge t+1\}.
+$$
+In particular $L_{\min}(0)=0$, and for $L\ge1$,
+$$
+L_{\min}(t)=L
+\quad\Longleftrightarrow\quad
+G_{L-1}\le t\le G_L-1.
+$$
+
+**Proof.** At $L=0$ both relevant partitions have one atom. For $L\ge1$, put $s=G_L-1$. Theorems 20.2 and 20.5 give exactly the same circle cut set for $\mathcal Q_L$ and $\mathcal V_s$. Their atoms are also exactly the same closures of the same natural-core points in the complementary arcs. This proves equality on the full compact carrier, rather than only equality on its natural core. The orientation formulas assign each boundary lift to the same atom in both descriptions.
+
+There is an explicit relabeling. For an admissible prefix $p$, let $N_p=\sum_{j<L}G_jp_j$ and define
+$$
+A_L(p)=v_s(Z(N_p)).
+$$
+The point $Z(N_p)$ has prefix $p$. Equality of the two partitions makes $A_L$ a bijection from positional words to temporal words and gives
+$$
+v_s=A_L\circ q_L.
+$$
+If $t\le s$, truncate this equality to the first $t$ entries. If $t\ge s$, use
+$$
+q_L(x)=A_L^{-1}\bigl(\operatorname{pref}_s(v_t(x))\bigr).
+$$
+These are the required upper-bound factorizations, not cardinality arguments.
+
+For sharpness of the first implication, suppose $t<s$. Take $m=t+2\le G_L$. The pair $x_m^-,x_m^+$ is separated by $q_L$, but its first temporal difference is at index $m-2=t$, which is not included in a length-$t$ observation. Hence no shorter temporal observation determines $q_L$.
+
+For sharpness of the second implication, suppose $t>s$, and take $m=G_L+1$. The pair above $e_m$ has the same $L$-digit prefix, including the case $L=0$, but its first temporal difference is at index $G_L-1=s<t$. Thus $q_L$ cannot determine that longer itinerary. These two pairs establish both converses. Monotonicity and unboundedness of $G_L$ now give the least-index formulas.
+
+The first three depths have no exceptional convention. At depth zero there is one empty word and no circle cut. At depth one,
+$$
+G_1-1=1,\qquad q_1(x)=v_1(x)=(f(x)),
+$$
+and the phase cuts are $e_1,e_2$. At depth two the real cylinder intervals are
+$$
+F[C_{00}]=[c,\alpha^4],\qquad
+F[C_{01}]=[\alpha^4,b],\qquad
+F[C_{10}]=[a,c],
+$$
+with $[\alpha^4]=e_3$, and the relabeling is
+$$
+00\longmapsto01,\qquad
+01\longmapsto00,\qquad
+10\longmapsto10.
+$$
+These follow by substituting into the cylinder formula and the first-successor rule. Thus equality is equality of observation partitions, not generally equality of the word-valued maps. The alternating endpoints and all internal double fibers are already included by Theorems 20.2 and 20.4. $\square$
+
+**theorem 20.7 (Generating itinerary and one-sided Sturmian conjugacy).** Let
+$$
+w_n=\lfloor(n+2)\beta\rfloor-\lfloor(n+1)\beta\rfloor,\qquad
+X_\beta=\overline{\{S^n w:n\ge0\}}
+\subseteq\{0,1\}^{\mathbb N}.
+$$
+Then
+$$
+\Phi:K\longrightarrow X_\beta
+$$
+is a homeomorphism, and
+$$
+\Phi\circ T=S\circ\Phi.
+$$
+The space $X_\beta$ is the one-sided Sturmian subshift of slope $\beta$ with the endpoint conventions of Theorem 20.4. Every orbit in it is dense; its length-$t$ language has exactly $t+1$ words. Every point in it has limiting frequency of digit one equal to the irrational number $\beta$, and is not eventually periodic.
+
+Moreover, $X_\beta$ is a proper closed subset of the positional carrier $K$. The shift in this conjugacy is the restriction of positional deletion to $X_\beta$, not positional deletion on all of $K$.
+
+**Proof.** Each coordinate of $\Phi$ is continuous. If $\Phi(x)=\Phi(y)$, then $v_{G_L-1}(x)=v_{G_L-1}(y)$ for every $L$. Theorem 20.6 gives $q_L(x)=q_L(y)$ for every $L$, hence $x=y$. A continuous injection from compact $K$ into the Hausdorff binary sequence space is a homeomorphism onto its image: images of closed subsets are compact and therefore closed.
+
+Coordinatewise evaluation gives $\Phi(Tx)=S(\Phi(x))$. By continuity, compactness, and density of the natural core,
+$$
+\Phi[K]
+=\overline{\{\Phi(Z(n)):n\ge0\}}
+=\overline{\{S^n w:n\ge0\}}
+=X_\beta.
+$$
+Surjectivity of $T$ gives $S[X_\beta]=X_\beta$.
+
+Every finite temporal word occurs on the natural core because its fiber is nonempty and open. Since $T^nZ(0)=Z(n)$, these are exactly the factors of $w$. Theorem 20.5 therefore gives the language count. This is precisely Sturmian factor complexity.
+
+To prove minimality directly, choose any $x\in K$ and any nonempty positional cylinder. Its phase image has a nonempty open arc interior, all of whose fibers lie in that cylinder. The set
+$$
+\{R^nH(x):n\ge0\}
+=H(x)+\{[n\phi]:n\ge0\}
+$$
+is dense, being a translate of the dense natural phase orbit. Some iterate consequently enters that arc and the corresponding iterate of $x$ enters the cylinder. Cylinders form a basis, so every $T$-orbit is dense. The homeomorphism transfers this property to $X_\beta$.
+
+For either mechanical convention, the number of ones in a prefix of length $n$ differs from $n\beta$ by less than one, by telescoping its defining floor or ceiling differences. Theorem 20.4 supplies one of these formulas for every $x\in K$, including every split point. Hence every itinerary has frequency $\beta$. An eventually periodic binary word has rational limiting frequency, so none is eventually periodic.
+
+The depth-two calculation in Theorem 20.6 shows that no itinerary contains $11$: apply that calculation to $T^j x$ for each $j$. Thus $X_\beta\subseteq K$. The sequence $0^\infty$ belongs to $K$ but has frequency zero, so it does not belong to $X_\beta$. Finally, $S|_K=\sigma$ as coordinate deletion, while the target here is only $X_\beta$. In particular,
+$$
+\Phi(u)=1w,\qquad\Phi(v)=0w,\qquad
+S(1w)=S(0w)=w,
+$$
+which retains, rather than discards, the two distinct predecessors at the seam. $\square$
+
+Attached reference: Berstel, §3.1, p. 31, identifies irrational mechanical words with Sturmian words and specifies the characteristic intercept. The finite generator and the particular carrier conjugacy are established above. ([ligm.univ-eiffel.fr](https://ligm.univ-eiffel.fr/~berstel/Articles/2007SturmianThessalonique.pdf))
+
+**Definition 20.8 (Topological entropy).** For a continuous self-map $A$ of a compact space and a finite open cover $\mathcal U$, write
+$$
+\mathcal U_A^{(n)}
+=\bigvee_{j=0}^{n-1}A^{-j}\mathcal U,
+$$
+where the join consists of nonempty intersections. If $N(\mathcal U)$ is the least cardinality of a subcover, define, using natural logarithms,
+$$
+h_{\mathrm{top}}(A)
+=\sup_{\mathcal U}
+\limsup_{n\to\infty}\frac1n\log N(\mathcal U_A^{(n)}).
+$$
+For a finite partition, its number of nonempty atoms will be denoted by $\#\mathcal U$.
+
+**theorem 20.9 (Two different entropies on the same carrier).** The lowest-digit partition is a generating observation for each of the two dynamics, but their iterated observation partitions differ:
+$$
+h_{\mathrm{top}}(T)=0,\qquad
+h_{\mathrm{top}}(\sigma)=\log\phi.
+$$
+More precisely, for all $L,n\ge1$,
+$$
+\#\left(\bigvee_{j=0}^{n-1}T^{-j}\mathcal Q_L\right)
+=n+G_L-1,
+$$
+whereas
+$$
+\#\left(\bigvee_{j=0}^{n-1}\sigma^{-j}\mathcal Q_L\right)
+=G_{n+L-1}.
+$$
+The exact precision/history conversion also has the asymptotics
+$$
+t_{\min}(L)+1\sim\frac{\phi^{L+2}}{\sqrt5}\quad(L\to\infty),
+\qquad
+L_{\min}(t)=\log_\phi(t+1)+O(1)\quad(t\to\infty).
+$$
+
+**Proof.** Put $\mathcal P=\mathcal Q_1$. Since $f$ is its readout,
+$$
+\mathcal V_k=\bigvee_{i=0}^{k-1}T^{-i}\mathcal P.
+$$
+Theorem 20.6 gives $\mathcal Q_L=\mathcal V_s$ with $s=G_L-1\ge1$. Taking $n$ consecutive joins yields
+$$
+\bigvee_{j=0}^{n-1}T^{-j}\mathcal Q_L
+=\mathcal V_{n+s-1}.
+$$
+Theorem 20.5 counts its atoms as $n+s=n+G_L-1$. Since the $\mathcal Q_L$ form the cylinder basis, this also proves that the future iterates of $\mathcal P$ generate the topology for $T$.
+
+Every finite open cover of $K$ is refined by some $\mathcal Q_L$ with $L\ge1$: choose at each point a cylinder contained in one cover member, take a finite subcover of these cylinders, and increase all their depths to a common $L$. Its $n$-fold temporal join is then refined by the displayed join of $\mathcal Q_L$, so
+$$
+N(\mathcal U_T^{(n)})\le n+G_L-1.
+$$
+For every such cover, division of the logarithm by $n$ tends to zero. Nonnegativity of entropy proves $h_{\mathrm{top}}(T)=0$. Thus this conclusion uses a proved generator and all open covers, not merely the complexity of one potentially nongenerating readout.
+
+Positional deletion preserves the no11 constraint and is continuous, since each output coordinate is an input coordinate. Its joined windows reveal exactly the coordinates from zero through $n+L-2$. Therefore
+$$
+\bigvee_{j=0}^{n-1}\sigma^{-j}\mathcal Q_L
+=\mathcal Q_{n+L-1},
+$$
+which has $G_{n+L-1}$ atoms. In particular, $\mathcal P$ is a generator for $\sigma$ as well. The recurrence and its two initial values give
+$$
+G_k=\frac{\phi^{k+2}-(-\phi^{-1})^{k+2}}{\sqrt5},
+\qquad
+\lim_{k\to\infty}\frac{\log G_k}{k}=\log\phi.
+$$
+The cover $\mathcal P$ gives the entropy lower bound $\log\phi$, since its $n$-fold join consists of $G_n$ pairwise disjoint nonempty sets. For any open cover refined by $\mathcal Q_L$,
+$$
+N(\mathcal U_\sigma^{(n)})\le G_{n+L-1},
+$$
+giving the matching upper bound. This proves the second entropy formula directly for the one-sided carrier.
+
+The same closed form gives the stated asymptotic for $G_L=t_{\min}(L)+1$. If $L=L_{\min}(t)\ge1$, then $G_{L-1}\le t<G_L$; the closed form bounds both adjacent terms above and below by fixed positive multiples of $\phi^L$, giving the logarithmic inverse estimate. These statements compare positional depth with the number of consecutive successor observations. $\square$
+
+Attached reference: Schmieding, *Symbolic Dynamics and Subshifts of Finite Type*, §7, Definition 16 on p. 11, Theorem 20 on pp. 13–14, and its golden-mean example on p. 14, give the classical language-growth and spectral-radius entropy formulas. The open-cover argument above establishes the required one-sided formulas without assuming a nongenerating readout suffices. ([s-schmieding.github.io](https://s-schmieding.github.io/SDnotes.pdf))
+
+## 追加锚（本行以下为增补区）
