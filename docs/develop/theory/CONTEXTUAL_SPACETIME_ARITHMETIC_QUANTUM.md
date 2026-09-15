@@ -28458,3 +28458,167 @@ $K=0$ 时，$\rho_0=(1)$ 且 $\sigma^{\rm cut}_{0,1}=\tau=|0\rangle\langle0|$，
 最后，对每个固定 $K\ge1$，命题 128.1 的实际上界是 $0<g_{K,n}\le1-e_{K,n}<D_K\alpha^n$。右端随 $n\to\infty$ 趋零，故 $g_{K,n}\to0$；再用 $e_{K,n}\le1$ 得 $e_{K,n}\to1$，从而 $d_{\rm tr}(\rho_n,\sigma^{\rm cut}_{K,n})=e_{K,n}+g_{K,n}\to1$。这是固定 $K$ 的窗口序列；沿 $n=K+1$ 的窗口序列则有 $e_{K,K+1}\to1/\sqrt5<1$ 及上述正的下极限界。证毕。
 
 ## 追加锚（本行以下为增补区）
+## 130. 固定二维活动记忆的相干前缀生成与容量下界
+
+**命题 130.1（同一等距的逐位生成与受限最小容量）。** 取
+$$
+\alpha=\frac{\sqrt5-1}{2},\qquad 0<\alpha<1,\qquad \alpha+\alpha^2=1,
+$$
+并令 $B=M=\mathbb C^2$，两者均以 $|0\rangle,|1\rangle$ 为正交标准基。输出空间为完整张量积 $H_n=B^{\otimes n}$，$H_0=\mathbb C$。记 $W_n\subseteq\{0,1\}^n$ 为不含相邻 $11$ 的词集，$W_0=\{\varnothing\}$；对 $n\ge1$，令 $\ell(w)=w_{n-1}$ 为末位，并置
+$$
+s_n=\sum_{w\in W_n}|w\rangle,\qquad
+t_n=\sum_{\substack{w\in W_n\\\ell(w)=0}}|w\rangle,
+$$
+$$
+\rho_n=\alpha^{n+1}|s_n\rangle\langle s_n|
+       +\alpha^{n+2}|t_n\rangle\langle t_n|,\qquad \rho_0=(1).
+$$
+这里的 $\rho_n$ 是命题 125.1 的固定左边界相干局部态，作为 $H_n$ 上的算子取值。
+
+在活动记忆中定义
+$$
+m_1=|0\rangle,\qquad m_0=\sqrt\alpha\,|0\rangle+\alpha|1\rangle,
+$$
+并以基像定义线性映射 $T:M\to B\otimes M$：
+$$
+T|0\rangle=|0\rangle\otimes m_0,\qquad
+T|1\rangle=|1\rangle\otimes m_1.
+$$
+它是等距。令 $\Xi_0=m_0$，始终按输出在前、记忆在后的次序递推
+$$
+\Xi_{n+1}=(I_{H_n}\otimes T)\Xi_n\in H_{n+1}\otimes M
+\qquad(n\ge0).
+$$
+则所有 $\Xi_n$ 均为单位向量，且对每个 $n\ge1$，
+$$
+\Xi_n=\sum_{w\in W_n}\alpha^{(n+\ell(w))/2}|w\rangle\otimes m_{\ell(w)}
+=\alpha^{(n+1)/2}s_n\otimes|0\rangle
+ +\alpha^{(n+2)/2}t_n\otimes|1\rangle.
+$$
+因而在完整输出空间上，对所有 $n\ge0$ 有
+$$
+\operatorname{Tr}_M|\Xi_n\rangle\langle\Xi_n|=\rho_n.
+$$
+非法词对应的行、列均为零，等式包含全部非对角相干项。后续只作用于记忆与新输出的等距保持已发出前缀的约化态，所以同一递推同时给出全部有限前缀。
+
+这个 $T$ 可由同一个二比特幺正实现。令
+$$
+R=\begin{pmatrix}\sqrt\alpha&-\alpha\\\alpha&\sqrt\alpha\end{pmatrix},\qquad
+C_0(R)=|0\rangle\langle0|\otimes R+|1\rangle\langle1|\otimes I_M,
+\qquad W=C_0(R)\operatorname{SWAP}
+$$
+作用于 $B_{\rm new}\otimes M$，其中 $\operatorname{SWAP}(|b\rangle\otimes|c\rangle)=|c\rangle\otimes|b\rangle$，乘积中先作用 $\operatorname{SWAP}$。每次新输出取与已有系统独立的纯空白 $|0\rangle$，初始记忆为 $R|0\rangle=m_0$，则
+$$
+W(|0\rangle\otimes\psi)=T\psi\qquad(\psi\in M).
+$$
+
+最小活动记忆容量取 Hilbert 空间维数，且仅在如下类别中比较：记忆空间 $K$ 的维数固定为 $d$，初始记忆为纯态，每次引入独立纯空白；每步为顺序等距，已经发出的寄存器不再受作用；不存在未计入 $K$ 的环境、纯化参考、共享随机性或其它记忆。吸收纯空白的插入后，竞争映射可写作 $V_j:K\to B\otimes K$，允许随 $j$ 改变。若这种生成器精确实现全部 $\rho_n$，则 $d\ge2$；上述固定 $T$ 达到 $d=2$。该最小性只比较指定输出态族在此类别中的精确生成，等式所确定的是已发出前缀上的全部联合测量概率，不是任意记忆干预的过程等价或普适最小预测器。
+
+证明。首先 $\|m_1\|^2=1$、$\|m_0\|^2=\alpha+\alpha^2=1$，而
+$$
+\langle m_1,m_0\rangle=\sqrt\alpha.
+$$
+$T$ 的两列具有单位范数，其内积为
+$$
+\langle |0\rangle\otimes m_0,|1\rangle\otimes m_1\rangle
+=\langle0|1\rangle\langle m_0,m_1\rangle=0.
+$$
+因此 $T^*T=I_M$；这里使两列正交的是输出基，而非两个记忆标签。由线性性，
+$$
+Tm_0=\sqrt\alpha\,|0\rangle\otimes m_0+\alpha|1\rangle\otimes m_1,
+\qquad Tm_1=|0\rangle\otimes m_0.
+$$
+初态为单位向量，各步等距，故 $\|\Xi_n\|=1$，包括 $n=0$。
+
+对所列词展开从 $n=1$ 开始归纳，不为空词定义末位。$W_1=\{0,1\}$，$\Xi_1=Tm_0$ 的两个系数分别为 $\alpha^{1/2}$ 与 $\alpha$，正是公式。设公式对某个 $n\ge1$ 成立。若 $w\in W_n$ 末位为 $0$，它的项在下一步变为
+$$
+\alpha^{n/2}|w\rangle\otimes Tm_0
+=\alpha^{(n+1)/2}|w0\rangle\otimes m_0
+ +\alpha^{(n+2)/2}|w1\rangle\otimes m_1.
+$$
+这两个延长都合法，系数分别等于 $\alpha^{(n+1+\ell(w0))/2}$ 与 $\alpha^{(n+1+\ell(w1))/2}$。若 $w$ 末位为 $1$，只有附加 $0$ 合法，且
+$$
+\alpha^{(n+1)/2}|w\rangle\otimes Tm_1
+=\alpha^{(n+1)/2}|w0\rangle\otimes m_0.
+$$
+其系数同样是所需的 $\alpha^{(n+1+\ell(w0))/2}$，而附加 $1$ 的振幅为零。每个长度 $n+1$ 的合法词具有唯一长度 $n$ 前缀，故这些项无遗漏、无重复，归纳成立。
+
+将每项的记忆向量改写到正交计算基上。末位为 $0$ 的词给出的两个记忆列系数为
+$$
+\alpha^{n/2}\sqrt\alpha=\alpha^{(n+1)/2},\qquad
+\alpha^{n/2}\alpha=\alpha^{(n+2)/2};
+$$
+末位为 $1$ 的词只给记忆 $|0\rangle$ 列，系数也为 $\alpha^{(n+1)/2}$。因此得到陈述中的 $s_n,t_n$ 两列展开。对这两个正交记忆列取偏迹，交叉项为零，立即给
+$$
+\operatorname{Tr}_M|\Xi_n\rangle\langle\Xi_n|
+=\alpha^{n+1}|s_n\rangle\langle s_n|
+ +\alpha^{n+2}|t_n\rangle\langle t_n|=\rho_n\qquad(n\ge1).
+$$
+具体地，对所有 $u,v\in\{0,1\}^n$，完整矩阵元为
+$$
+\langle u|\rho_n|v\rangle=
+\begin{cases}
+\alpha^n,&u,v\in W_n,\ \ell(u)=\ell(v)=0,\\
+\alpha^{n+1},&u,v\in W_n,\ \text{至少一个末位为 }1,\\
+0,&u\notin W_n\ \text{或 }v\notin W_n.
+\end{cases}
+$$
+第一种情形使用 $\alpha^{n+1}+\alpha^{n+2}=\alpha^n$。这也直接核对了命题 125.1 的全部相干项。$n=0$ 时，对整个记忆取迹给 $\|m_0\|^2=1=\rho_0$，无需使用词展开。
+
+为核对已经发出的边际，取任意 $A\in\mathcal L(H_n)$。由 $T^*T=I_M$，
+$$
+\langle\Xi_{n+1},(A\otimes I_B\otimes I_M)\Xi_{n+1}\rangle
+=\langle\Xi_n,(A\otimes T^*T)\Xi_n\rangle
+=\operatorname{Tr}(\rho_nA).
+$$
+这对所有 $A$ 成立，所以再发出一位后前 $n$ 位的密度仍是 $\rho_n$。迭代即得对每个 $0\le k\le n$，
+$$
+\operatorname{Tr}_{B^{\otimes(n-k)}\otimes M}
+|\Xi_n\rangle\langle\Xi_n|=\rho_k.
+$$
+特别地，任意前缀上的联合 POVM $(E_a)_a$ 满足 $\Pr(a)=\operatorname{Tr}(\rho_kE_a)$。偏迹在此描述停止时的输出态；继续生成使用的是仍与旧输出相关联的同一记忆。
+
+两个条件记忆标签不能被当作可完美读取的经典标志。事实上，若效应 $0\le E\le I_M$ 满足 $\langle m_0,Em_0\rangle=1$、$\langle m_1,Em_1\rangle=0$，正性给 $(I_M-E)^{1/2}m_0=0$ 及 $E^{1/2}m_1=0$，于是 $Em_0=m_0$、$Em_1=0$。自伴性将给
+$$
+\sqrt\alpha=\langle m_1,m_0\rangle
+=\langle m_1,Em_0\rangle=\langle Em_1,m_0\rangle=0,
+$$
+矛盾。
+
+现核对显式幺正。由 $\alpha+\alpha^2=1$，直接相乘得 $R^*R=RR^*=I_M$。两个控制投影正交且和为 $I_B$，故
+$$
+C_0(R)^*C_0(R)=C_0(R)C_0(R)^*=I_{B\otimes M}.
+$$
+$\operatorname{SWAP}$ 置换正交标准基且平方为恒等，亦为幺正，因此 $W$ 在整个四维空间上幺正。任取 $\psi=a|0\rangle+b|1\rangle$，先交换、再施加零控制的 $R$，得到
+$$
+\begin{aligned}
+W(|0\rangle\otimes\psi)
+&=C_0(R)(\psi\otimes|0\rangle)\\
+&=a|0\rangle\otimes R|0\rangle+b|1\rangle\otimes|0\rangle\\
+&=a|0\rangle\otimes m_0+b|1\rangle\otimes m_1=T\psi.
+\end{aligned}
+$$
+这是整个输入记忆空间上的线性等式，与旧输出张量恒等后也成立，所以每次插入独立空白并作用同一 $W$ 就给上述递推。在固定纯空白上逐槽作用幺正，其有限链振幅由逐槽矩阵元收缩给出，单位初态的范数保持为一（[SequentialRegisterCircuit，circuit_initialized_coefficients 与 initialized_norm](../../../D5/S3/Quantum/Entanglement/SequentialRegisterCircuit.lean)）；这里所需的特殊基像由刚才的直接计算确定。
+
+最后证明限定类别中的下界。对任意竞争生成器，第一位输出后，输出与全部活动记忆的联合态为纯态 $\eta\in B\otimes K$，因为输入记忆与独立空白均纯，且第一步为等距。在 $K$ 的正交标准基 $e_1,\ldots,e_d$ 下写
+$$
+\eta=\sum_{j=1}^d x_j\otimes e_j,\qquad x_j\in B.
+$$
+其输出密度为 $\sum_{j=1}^d|x_j\rangle\langle x_j|$，像包含于 $\operatorname{span}\{x_1,\ldots,x_d\}$，所以若精确匹配第一位，必有 $\operatorname{rank}\rho_1\le d$。由目标公式，
+$$
+\rho_1=\begin{pmatrix}\alpha&\alpha^2\\\alpha^2&\alpha^2\end{pmatrix},\qquad
+\det\rho_1=\alpha^3-\alpha^4=\alpha^3(1-\alpha)=\alpha^5>0.
+$$
+故 $\operatorname{rank}\rho_1=2$，从而 $d\ge2$。上面的构造使用纯初始记忆、独立纯空白及固定幺正，没有其它环境，并达到 $d=2$。下界只用第一步，对时间依赖的竞争等距同样成立。
+
+固定活动容量与固定总档案是不同的资源条件：第 $n$ 步后保留的是 $n$ 个输出 qubit 加一个活动 qubit，联合空间为 $H_n\otimes M$，维数 $2^{n+1}$。输出寄存器随 $n$ 增加；有限个输出并未容纳一个无限词。若把这些有限前缀统一为命题 125.4 指定的 $\ell^2(X_{\rm fs})$ 上的单个正迹类密度，并沿用其柱投影 $C_u$，则全部柱读数须为 $\alpha^{|u|+\ell(u)}$（非空合法 $u$）。命题 125.4 排除了这样的密度；这里变化的输出空间并不提供该固定表示。
+
+同一 $T$ 也不使边界态移位平稳。由已证对角元，第一位与第二位为 $1$ 的概率分别为
+$$
+\Pr(w_0=1)=\alpha^2,\qquad
+\Pr(w_1=1)=\langle01|\rho_2|01\rangle+\langle11|\rho_2|11\rangle
+=\alpha^3\ne\alpha^2.
+$$
+这与命题 125.3 的固定左边界律一致。若第一步后丢弃记忆并独立重置，第二步后两位输出为乘积态；若还要保持上述两个单点概率，便会给 $\Pr(11)=\alpha^5>0$，而目标值为零。因此停止时取偏迹不能替代生成途中保留记忆关联。当 $n\ge1$ 时，命题 125.3 的经典 Markov 抽样在计算基中给 $\sum_{w\in W_n}\alpha^{n+\ell(w)}|w\rangle\langle w|$，只匹配对角元；例如目标的 $\langle0|\rho_1|1\rangle=\alpha^2>0$。这一比较限于抽样所得的对角态，不排除另带相干制备的经典控制协议，也不把本命题的容量下界推广到其假设以外的模型。证毕。
+
+## 追加锚（本行以下为增补区）
