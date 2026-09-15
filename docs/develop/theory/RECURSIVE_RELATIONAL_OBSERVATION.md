@@ -4485,3 +4485,330 @@ $$
 [^rro18_quotient]: Nicolas Bourbaki, *General Topology: Chapters 1–4*，第I章 Topological Structures 与第III章 Topological Groups，Springer，DOI：[10.1007/978-3-642-61701-0](https://doi.org/10.1007/978-3-642-61701-0)。本节所需的商映射下降、闭子群陪集与连续群运算论证均在定理18.4的证明中给出。
 
 ## 追加锚（本行以下为增补区）
+## 19. Zeckendorf 最低位的三角阵与分别连续紧实现障碍
+
+**定义 19.1（规范数字与最低位观察）。** 在通常 ZFC 中，取 $\mathbb N=\{0,1,\ldots\}$，并定义
+$$
+G_0=1,\qquad G_1=2,\qquad G_{j+2}=G_{j+1}+G_j.
+$$
+数字按低位到高位排列。令
+$$
+K=\{x\in\{0,1\}^{\mathbb N}:x_jx_{j+1}=0\text{ 对所有 }j\in\mathbb N\},
+$$
+其中 $\{0,1\}$ 取离散拓扑，$K$ 取乘积子空间拓扑。以 $Z(n)$ 表示 $n$ 的有限支撑规范数字向量，并在其后补零；亦即
+$$
+n=\sum_{j\ge0}G_jZ(n)_j.
+$$
+记 $e_i$ 为仅在位置 $i$ 取一的数字向量，并置
+$$
+d_0(x)=x_0,\qquad f(n)=d_0(Z(n)),\qquad o=Z(0),\qquad u=(10)^\infty,\qquad v=(01)^\infty.
+$$
+本节的 $f$ 专指最低位观察。再定义
+$$
+a_k=\sum_{j=0}^{k}G_{2j},\qquad b_l=G_{2l}\qquad(k,l\in\mathbb N).
+$$
+空和取零。数字向量的有限和按坐标作通常整数加法。载体及规范字的记号对应《情境时空算术：Zeckendorf》第 371.1 条。([raw.githubusercontent.com](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md))
+
+**定理 19.2（全部指标上的规范展开与严格三角公式）。** 对所有 $k,l\in\mathbb N$，有
+$$
+a_k=G_{2k+1}-1,\qquad G_{2l}-1=\sum_{j=0}^{l-1}G_{2j+1}.
+$$
+当 $k<l$ 时，准确的规范展开为
+$$
+Z(a_k+b_l)=\sum_{j=0}^{k}e_{2j}+e_{2l}.
+$$
+当 $k\ge l$ 时，准确的规范展开为
+$$
+Z(a_k+b_l)=e_{2k+1}+\sum_{j=0}^{l-1}e_{2j+1}.
+$$
+因此
+$$
+f(a_k+b_l)=1\quad\Longleftrightarrow\quad k<l.
+$$
+
+**证明。** 先说明检验规范性的唯一性依据。长度为 $L$ 的合法数字窗，经权值求和，恰好且不重复地表示 $0,\ldots,G_L-1$。当 $L=0$ 时只有空窗，其值为零；当 $L=1$ 时值为零或一。若 $L\ge2$，最高位为零的窗，由归纳假设恰给区间 $[0,G_{L-1}-1]$ 中的整数。最高位为一时，次高位必须为零，其余长度为 $L-2$ 的窗恰给
+$$
+G_{L-1}+[0,G_{L-2}-1]=[G_{L-1},G_L-1]
+$$
+中的整数。这两个整数区间不交，且并为全部目标区间，故存在性及唯一性同时归纳成立。由于 $G_L$ 无界，每个自然数都有有限规范展开；任意两个有限展开均可补零到同一长度，因而全局唯一。
+
+第一个求和恒等式在 $k=0$ 时为 $1=2-1$；若它对 $k$ 成立，则
+$$
+a_{k+1}=G_{2k+1}-1+G_{2k+2}=G_{2k+3}-1.
+$$
+第二个恒等式在 $l=0$ 时为 $G_0-1=0$；由 $l$ 到 $l+1$ 的归纳步为
+$$
+G_{2l}-1+G_{2l+1}=G_{2l+2}-1.
+$$
+
+若 $k<l$，原来的非零位置为 $0,2,\ldots,2k$，新位置为 $2l$。它与前一非零位置的距离至少为二，所以显示的向量各位均为零或一，且没有相邻的一。其权值正是 $a_k+b_l$，唯一性使它成为规范展开，最低位为一。
+
+若 $k\ge l$，两个恒等式给出
+$$
+a_k+b_l=G_{2k+1}+(G_{2l}-1)
+=G_{2k+1}+\sum_{j=0}^{l-1}G_{2j+1}.
+$$
+当 $l\ge1$ 时，下部非零位置为 $1,3,\ldots,2l-1$，最高位置为 $2k+1$，两部分之间的距离为 $2(k-l+1)\ge2$。因此该展开合法且规范，位置零取零。当 $l=0$ 时下部为空，所得展开仅在位置 $2k+1$ 取一，仍然最低位为零。特别地，$a_k+b_0=a_k+1=G_{2k+1}$，包括 $k=l=0$ 时的 $2=G_1$。
+
+当 $k=l$ 时，上述第二种展开准确化为
+$$
+Z(a_k+b_k)=\sum_{j=0}^{k}e_{2j+1},\qquad a_k+b_k=G_{2k+2}-1,
+$$
+所以对角线上同样为零。全部情形均已包含，三角公式成立。证毕。
+
+**定理 19.3（紧输入与分别连续映射的双极限必要条件）。** 设 $P,Q$ 为紧拓扑空间，$W$ 为 Hausdorff 空间，$C:P\times Q\to W$ 分别连续。输入空间不要求 Hausdorff，输出空间不要求紧。给定序列 $x_k\in P$、$y_l\in Q$，假定下列所有内层及外层极限均存在：
+$$
+r_k=\lim_{l\to\infty}C(x_k,y_l),\qquad
+s_l=\lim_{k\to\infty}C(x_k,y_l),
+$$
+$$
+r=\lim_{k\to\infty}r_k,\qquad
+s=\lim_{l\to\infty}s_l.
+$$
+则 $r=s$。
+
+**证明。** 对序列 $x_k$，令
+$$
+F_N=\overline{\{x_k:k\ge N\}}\subseteq P.
+$$
+这些非空闭集递减，由紧性得 $\bigcap_NF_N\ne\varnothing$。取其中一点 $x$。为明确使用子网而非子序列，令 $D_x$ 由满足 $x_k\in U$ 的二元组 $(k,U)$ 组成，其中 $U$ 是 $x$ 的开邻域，并规定
+$$
+(k,U)\preceq(k',U')\quad\Longleftrightarrow\quad k\le k'\text{ 且 }U'\subseteq U.
+$$
+因为 $x$ 属于每个尾集的闭包，任意两个这样的二元组，都有一个指标不小于二者、邻域包含于二者交集的共同上界。因此 $D_x$ 有向。投影 $(k,U)\mapsto k$ 保序且共尾，所得子网收敛到 $x$。同理，$y_l$ 有收敛到某个 $y\in Q$ 的子网。记这两个子网为 $x_{k(\alpha)}\to x$ 与 $y_{l(\beta)}\to y$。
+
+固定 $k$，第二变量的连续性给
+$$
+C(x_k,y)=\lim_\beta C(x_k,y_{l(\beta)})=r_k.
+$$
+最后一个等号使用原内层极限及其子网具有同一极限，并使用 $W$ 中极限的唯一性。同理，对每个固定 $l$，有
+$$
+C(x,y_l)=s_l.
+$$
+再分别沿两个已选子网取极限，得到
+$$
+C(x,y)=\lim_\alpha C(x_{k(\alpha)},y)
+=\lim_\alpha r_{k(\alpha)}=r,
+$$
+$$
+C(x,y)=\lim_\beta C(x,y_{l(\beta)})
+=\lim_\beta s_{l(\beta)}=s.
+$$
+所以 $r=s$。此证明没有要求任何输入序列存在收敛子序列。证毕。
+
+**定理 19.4（最低位加法表不存在任何分别连续紧实现）。** 不存在紧空间 $X$、集合映射 $j:\mathbb N\to X$ 及分别连续映射
+$$
+B:X\times X\to\{0,1\}
+$$
+使得
+$$
+B(j(n),j(m))=f(n+m)\qquad(n,m\in\mathbb N).
+$$
+这里不要求 $j$ 单射、连续或具有稠密像。
+
+更一般地，设 $Y$ 为任意拓扑空间，$W$ 为 Hausdorff 空间，$w_0,w_1\in W$ 且 $w_0\ne w_1$。不存在同时满足下列条件的数据：紧空间 $X$，集合映射 $j:\mathbb N\to X$，分别连续映射 $M:X\times X\to Y$，以及连续观察 $q:Y\to W$，使
+$$
+q(M(j(n),j(m)))=w_{f(n+m)}\qquad(n,m\in\mathbb N).
+$$
+特别地，将输出改为任意紧 Hausdorff 空间，并保留取值于离散二点集或实数的连续最低位观察，仍然不能得到这样的实现。若还存在 $h:\mathbb N\to Y$，满足 $q(h(n))=w_{f(n)}$，则要求 $M(j(n),j(m))=h(n+m)$ 更不可能。
+
+**证明。** 在较一般的情形中，$C=q\circ M$ 分别连续。取
+$$
+x_k=j(a_k),\qquad y_l=j(b_l).
+$$
+定理 19.2 给出：对每个固定 $k$，当 $l>k$ 时 $C(x_k,y_l)=w_1$；对每个固定 $l$，当 $k\ge l$ 时 $C(x_k,y_l)=w_0$。因此
+$$
+\lim_{k\to\infty}\lim_{l\to\infty}C(x_k,y_l)=w_1,
+\qquad
+\lim_{l\to\infty}\lim_{k\to\infty}C(x_k,y_l)=w_0.
+$$
+这与定理 19.3 矛盾。取 $Y=W=\{0,1\}$、$q$ 为恒等映射，即得第一项断言。证明只使用观察后的常值尾，不要求未观察输出在 $Y$ 中的任何迭代极限存在。证毕。
+
+**定理 19.5（任意紧标签及保留读数的紧历史扩张）。** 设 $A$ 为任意紧标签空间，$t:\mathbb N\to A$ 为任意集合映射，并令
+$$
+j(n)=(Z(n),t(n)).
+$$
+对任何包含 $j[\mathbb N]$ 的闭子空间 $X\subseteq K\times A$，定义连续读数
+$$
+r=d_0\circ\operatorname{pr}_K:X\to\{0,1\}.
+$$
+不存在分别连续的 $\mu:X\times X\to X$ 使
+$$
+r(\mu(j(n),j(m)))=f(n+m)\qquad(n,m\in\mathbb N).
+$$
+这包括整个 $K\times A$ 以及 $j[\mathbb N]$ 的闭包，也包括要求 $\mu(j(n),j(m))=j(n+m)$ 的更强情形。
+
+又设 $\widetilde X$ 为紧 Hausdorff 空间，$\pi:\widetilde X\to K$ 为连续满射。任取满足
+$$
+\pi(\widetilde j(n))=Z(n)
+$$
+的提升 $\widetilde j:\mathbb N\to\widetilde X$。不存在分别连续的 $\widetilde\mu:\widetilde X\times\widetilde X\to\widetilde X$，使得对全部 $n,m\in\mathbb N$ 有
+$$
+d_0\bigl(\pi(\widetilde\mu(\widetilde j(n),\widetilde j(m)))\bigr)=f(n+m).
+$$
+因而，仅要求
+$$
+\pi(\widetilde\mu(\widetilde j(n),\widetilde j(m)))=Z(n+m)
+$$
+而允许输出历史在该数字纤维内任意变化，也不能避开障碍。
+
+**证明。** 违反无相邻一条件的数字向量构成开柱集的并，所以 $K$ 是紧 Hausdorff 乘积 $\{0,1\}^{\mathbb N}$ 的闭子空间。坐标观察 $d_0$ 连续。故 $K\times A$ 紧，闭子空间 $X$ 紧，且所定义的 $r$ 连续。将 $q=r$ 代入定理 19.4，即得标签空间上的结论。
+
+历史扩张上，$d_0\circ\pi$ 同样连续。满射性在 ZFC 中保证可以选择所述提升，而定理 19.4 对每一种这样的选择均适用。证明不要求 $\pi$ 有连续截面，也不要求 $\widetilde\mu$ 结合、交换、有单位或可逆。证毕。
+
+**定理 19.6（逐个固定平移不能补成全参数分别连续运算）。** 令 $T:K\to K$ 为连续后继，满足 $T(Z(n))=Z(n+1)$。对每个固定 $h\in\mathbb N$，$T^h$ 连续，并且是 $Z(n)\mapsto Z(n+h)$ 的唯一连续延拓。然而
+$$
+Z(b_l)\longrightarrow o,\qquad
+T^{b_l}(u)=Z(b_l-1)\longrightarrow v\ne u=T^0(u).
+$$
+因此，逐个固定自然参数的连续平移族不能补成分别连续映射 $K\times K\to K$，使第二参数 $Z(h)$ 对应 $T^h$。连续后继的存在见《情境时空算术：Zeckendorf》第 375.2 条。([raw.githubusercontent.com](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md))
+
+**证明。** 任意 $x\in K$ 的有限前缀补零后仍合法，故由规范唯一性，它是某个自然数的 $Z$ 像。这些截断逐坐标收敛到 $x$，所以 $Z[\mathbb N]$ 在 $K$ 中稠密。连续复合及对 $h$ 的归纳给出 $T^h$ 的连续性与核心等式；两个连续映射若在该稠密集上相同，由目标的 Hausdorff 性便处处相同。
+
+由数字展开，$Z(a_k)\to u$，而 $a_k+1=G_{2k+1}$ 使
+$$
+T(Z(a_k))=Z(G_{2k+1})=e_{2k+1}\longrightarrow o.
+$$
+连续性给 $T(u)=o$。因此，对每个 $h\ge1$，
+$$
+T^h(u)=T^{h-1}(o)=Z(h-1).
+$$
+取 $h=b_l$，定理 19.2 的奇数位置求和式给
+$$
+T^{b_l}(u)=\sum_{j=0}^{l-1}e_{2j+1}\longrightarrow v.
+$$
+同时 $Z(b_l)=e_{2l}\to o$。
+
+若存在所述分别连续映射 $M$，则 $M(u,Z(b_l))=T^{b_l}(u)$，而 $M(u,o)=T^0(u)=u$。第二变量的连续性将迫使同一输出序列收敛到 $u$，与其极限 $v$ 不同矛盾。若只给定核心上的完整加法等式，则第一变量的连续性及稠密性已迫使每个切片 $M(\,·\,,Z(h))=T^h$，故同一矛盾仍成立。证毕。
+
+**定理 19.7（加法图闭包的一个精确二点纤维与选择障碍）。** 定义闭关系
+$$
+\Gamma=\overline{\{(Z(n),Z(m),Z(n+m)):n,m\in\mathbb N\}}\subseteq K^3,
+$$
+以及其输出纤维
+$$
+\Gamma(x,y)=\{z\in K:(x,y,z)\in\Gamma\}.
+$$
+每个 $\Gamma(x,y)$ 均为非空紧集，并有
+$$
+\Gamma(Z(n),Z(m))=\{Z(n+m)\},\qquad
+\Gamma(u,o)=\{u,v\}.
+$$
+不存在分别连续的选择 $s:K\times K\to K$ 满足 $s(x,y)\in\Gamma(x,y)$。
+
+**证明。** $\Gamma$ 是紧 Hausdorff 空间 $K^3$ 的闭子空间，因此紧。它向前两个坐标的投影是 $K^2$ 的紧闭子集，包含稠密集 $Z[\mathbb N]\times Z[\mathbb N]$，故投影为整个 $K^2$。这给出每个纤维的非空性；纤维在 $K$ 中闭，因而紧。
+
+取 $\phi=(1+\sqrt5)/2$、$\alpha=\phi^{-1}$，并令
+$$
+\theta(x)=\left[\sum_{j\ge0}(-1)^{j+1}\alpha^{j+2}x_j\right]\in\mathbb T=\mathbb R/\mathbb Z.
+$$
+由《情境时空算术：Zeckendorf》第 371.2、372.4 条，$\theta$ 连续，且
+$$
+\theta(Z(n))=[n\phi],\qquad
+\theta^{-1}(\{[n\phi]\})=\{Z(n)\}\quad(n\in\mathbb N),
+$$
+$$
+\theta(o)=0,\qquad
+\theta(u)=\theta(v)=[-\phi],\qquad
+\theta^{-1}(\{[-\phi]\})=\{u,v\}.
+$$
+这些是同一圆周映射在自然相位及接缝相位处的准确纤维。([raw.githubusercontent.com](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md))
+
+条件 $\theta(z)=\theta(x)+\theta(y)$ 在 $K^3$ 中定义闭集，且包含原始加法图，所以
+$$
+(x,y,z)\in\Gamma\quad\Longrightarrow\quad
+\theta(z)=\theta(x)+\theta(y).
+$$
+在输入 $(Z(n),Z(m))$ 处，输出因而属于自然相位 $[(n+m)\phi]$ 的单点纤维；原始图又包含 $Z(n+m)$，故得到第一个纤维等式。
+
+在输入 $(u,o)$ 处，相位条件给 $\Gamma(u,o)\subseteq\{u,v\}$。另一方面，
+$$
+a_k+b_{k+1}=a_{k+1}
+$$
+使原始图中的三元组 $(Z(a_k),Z(b_{k+1}),Z(a_{k+1}))$ 收敛到 $(u,o,u)$。定理 19.2 的对角展开又使
+$$
+(Z(a_k),Z(b_k),Z(a_k+b_k))\longrightarrow(u,o,v).
+$$
+因此两个输出都属于该闭包纤维，得到准确等式 $\Gamma(u,o)=\{u,v\}$。
+
+任意选择 $s$ 都因核心纤维的单点性而满足 $s(Z(n),Z(m))=Z(n+m)$。若它分别连续，$d_0\circ s$ 就违反定理 19.4。证毕。
+
+**定理 19.8（固定素数乘法上的同一障碍）。** 固定素数 $p$，令
+$$
+P_p=\{p^n:n\in\mathbb N\},\qquad f_p(p^n)=f(n).
+$$
+不存在紧空间 $X$、集合映射 $\iota:P_p\to X$ 及分别连续映射 $B:X\times X\to\{0,1\}$，使
+$$
+B(\iota(r),\iota(s))=f_p(rs)\qquad(r,s\in P_p).
+$$
+特别地，不存在同时具有连续读数 $d:X\to\{0,1\}$ 和分别连续乘法 $\mu:X\times X\to X$ 的紧实现，使
+$$
+d(\iota(p^n))=f(n),\qquad
+\mu(\iota(p^n),\iota(p^m))=\iota(p^{n+m}).
+$$
+
+**证明。** 素数幂的指数唯一，故 $f_p$ 定义良好。令 $j(n)=\iota(p^n)$。恒等式
+$$
+p^np^m=p^{n+m}
+$$
+将第一项假设变为 $B(j(n),j(m))=f(n+m)$，与定理 19.4 矛盾。第二项中的 $B=d\circ\mu$ 分别连续，并满足同一等式。其显式三角见证为
+$$
+f_p\bigl(p^{a_k}p^{b_l}\bigr)=1\quad\Longleftrightarrow\quad k<l.
+$$
+指数零对应乘法单位 $p^0=1$，其读数为 $f(0)=0$，不需排除该情形。证毕。
+
+**定义 19.9（弱殆周期函数与半拓扑紧化）。** 令 $E=\ell^\infty(\mathbb N;\mathbb C)$，赋予上确界范数，$E^*$ 为其连续线性对偶。对 $g\in E$ 定义
+$$
+(R_tg)(s)=g(s+t),\qquad \mathcal O(g)=\{R_tg:t\in\mathbb N\}.
+$$
+称 $g$ 为弱殆周期函数，若 $\mathcal O(g)$ 在弱拓扑 $\sigma(E,E^*)$ 中的闭包紧。紧 Hausdorff 半拓扑半群是具有结合运算、且该运算分别连续的紧 Hausdorff 空间。其作为 $(\mathbb N,+)$ 的半拓扑紧化时，另带一个具有稠密像的半群同态 $\eta:\mathbb N\to S$；不要求 $\eta$ 单射。弱殆周期的平移轨道定义见 Grothendieck 的命题 7；半拓扑紧化的通常范围见 Akbari Tootkaboni 的定理 2.2。([webusers.imj-prg.fr](https://webusers.imj-prg.fr/~leila.schneps/grothendieckcircle/AG/AG-6.pdf)) M. Akbari Tootkaboni, *Filters and the weakly almost periodic compactification of a semitopological semigroup*, [arXiv:1302.3204v1](https://arxiv.org/pdf/1302.3204v1), p. 1（半拓扑半群定义）及 p. 3（弱殆周期定义、定理 2.1–2.2）。
+
+**定理 19.10（最低位观察不是弱殆周期函数）。** 将 $f$ 视为 $E$ 的元素，则
+$$
+f\notin\operatorname{WAP}(\mathbb N,+).
+$$
+此外，对任意紧 Hausdorff 半拓扑半群 $S$ 及任意半群同态 $\eta:\mathbb N\to S$，不存在连续函数 $h:S\to\mathbb C$ 使 $h(\eta(n))=f(n)$。后一断言甚至不要求 $\eta$ 的像稠密。其经典双极限背景为 Grothendieck 的定理 6、命题 7，以及 Akbari Tootkaboni 的定理 2.1–2.2。([webusers.imj-prg.fr](https://webusers.imj-prg.fr/~leila.schneps/grothendieckcircle/AG/AG-6.pdf)) M. Akbari Tootkaboni, *Filters and the weakly almost periodic compactification of a semitopological semigroup*, [arXiv:1302.3204v1](https://arxiv.org/pdf/1302.3204v1), p. 1（半拓扑半群定义）及 p. 3（弱殆周期定义、定理 2.1–2.2）。
+
+**证明。** 定义线性子空间
+$$
+D=\{g\in E:\lim_{l\to\infty}g(b_l)\text{ 存在}\},
+$$
+以及有界线性泛函
+$$
+L_0(g)=\lim_{l\to\infty}g(b_l)\qquad(g\in D).
+$$
+由 $|L_0(g)|\le\|g\|_\infty$ 且常值一函数属于 $D$，有 $\|L_0\|=1$。Hahn–Banach 定理给出其连续线性延拓 $L\in E^*$。
+
+反设 $f$ 弱殆周期。取 $g_k=R_{a_k}f$。轨道的弱闭包紧，因此 $g_k$ 有弱收敛子网 $g_{k(\alpha)}\to g\in E$。对每个固定 $l$，点值泛函 $g\mapsto g(b_l)$ 属于 $E^*$，而三角公式使 $g_{k(\alpha)}(b_l)$ 最终为零，所以
+$$
+g(b_l)=0\qquad(l\in\mathbb N).
+$$
+于是 $g\in D$ 且 $L(g)=L_0(g)=0$。但对每个固定 $k$，同一三角公式给 $\lim_lg_k(b_l)=1$，故 $L(g_k)=1$。弱收敛又要求
+$$
+L(g)=\lim_\alpha L(g_{k(\alpha)})=1,
+$$
+矛盾。这一论证只用了弱紧性的子网、点值泛函及 Hahn–Banach 延拓。
+
+若后一断言中的 $h$ 存在，令 $C(s,t)=h(st)$。乘法分别连续且 $h$ 连续，所以 $C:S\times S\to\mathbb C$ 分别连续，并有
+$$
+C(\eta(n),\eta(m))=h(\eta(n+m))=f(n+m).
+$$
+将连续观察取为 $h$，定理 19.4 即给矛盾。证毕。
+
+**定理 19.11（删除连续最低位观察后，紧算术实现仍可存在）。** 令 $X=\mathbb T$，定义
+$$
+j(n)=[n\phi],\qquad M(s,t)=s+t.
+$$
+则 $X$ 紧 Hausdorff，$j$ 单射，$M$ 联合连续，且
+$$
+M(j(n),j(m))=j(n+m).
+$$
+但是不存在连续函数 $q:\mathbb T\to\mathbb R$ 满足 $q(j(n))=f(n)$。
+
+**证明。** 通常圆周是紧 Hausdorff 空间。若 $j(n)=j(m)$，则 $(n-m)\phi$ 是整数；由 $\phi$ 无理，必有 $n=m$。圆周加法保留所示核心等式，并且圆周距离满足
+$$
+\rho(s+t,s'+t')\le\rho(s,s')+\rho(t,t'),
+$$
+所以 $M$ 联合连续。若所述 $q$ 存在，则 $q\circ M$ 分别连续，且在核心上等于 $f(n+m)$，违反定理 19.4。因此，被排除的不是一切紧空间上的加法实现，而是同时保留该连续最低位观察的分别连续实现。证毕。
+
+## 追加锚（本行以下为增补区）
