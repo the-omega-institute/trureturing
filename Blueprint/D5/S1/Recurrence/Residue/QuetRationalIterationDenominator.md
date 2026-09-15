@@ -46,6 +46,10 @@ $$\forall m \in \mathrm{Nat},\; (2 \le m) \Rightarrow (((b\left(m - 1\right)).de
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Residue/QuetRationalIterationDenominator.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a079278-quet-rational-iteration-denominator-recurrence` (proved) by `D5/S1/Recurrence/Residue/QuetRationalIterationDenominator.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a079278-quet-rational-iteration-denominator-recurrence","declaration_gid":"D5/S1/Recurrence/Residue/QuetRationalIterationDenominator.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Leroy Quet; N. J. A. Sloane (2003). *OEIS A079278, denominators of the rational iteration b(n) = b(n-1) + 1/(1 + 1/b(n-1))*. URL: <https://oeis.org/A079278>.
