@@ -2244,6 +2244,59 @@ private def inputIdentity (name : Name) : CompareM DependencyIdentity := do
       pure identity
   return { name, owner, typeIdentity, bodyIdentity }
 
+private def dependencyJson (input : TemplateAudit.DependencyIdentity) : Json := Json.mkObj [
+  ("name", toJson input.name.toString), ("owner", toJson input.owner.toString),
+  ("type_identity", toJson input.typeIdentity), ("body_identity", toJson input.bodyIdentity)]
+
+private def failureSite (reason : String) : String :=
+  String.intercalate ":" ((reason.splitOn ":").drop 2)
+
+private def failureRule (reason : String) : String :=
+  (reason.splitOn ":")[1]?.getD "E8.exception"
+
+private def diagnosticMessage (key : TemplateOccurrenceKey) (reason : String)
+    (provenance : Json) : String :=
+  s!"IE-C050 ClosedTruthReadout key={key.root}/{key.catalog}/{key.theoremName} " ++
+    TemplateAudit.diagnosticFields reason ++ " readout=" ++ (toJson (failureSite reason)).compress ++
+    " provenance=" ++ provenance.compress
+
+/-- No descriptor means no supplied argument or extraction audit inputs. This
+diagnostic records the missing declaration and grants no provenance certificate. -/
+def missingDeclarationDiagnostic (key : TemplateOccurrenceKey) : String :=
+  diagnosticMessage key "unclassified_form:dtr.missing_declaration" <| Json.mkObj [
+    ("argument_inputs", Json.arr #[]), ("extraction_inputs", Json.arr #[]),
+    ("plan_identity", Json.null), ("rule", toJson "dtr.missing_declaration"),
+    ("site", toJson ""), ("template_key", Json.null)]
+
+/-- Failure provenance names the raw supplied input roots and the native
+extraction declaration. These identities describe the failing inputs, not an
+admitted closure. A missing identity or exhausted diagnostic walk yields null.
+The selected template's executable body is never scanned for this diagnostic. -/
+private def diagnosticProvenance (event : TemplateOccurrenceEvent)
+    (claim : TemplateBindingClaim) (reason : String) : MetaM Json := do
+  if reason.startsWith "incomplete_closure:" then return Json.null
+  try
+    let env ← getEnv
+    let descriptor := claim.descriptor
+    let name := descriptor.bind fun e => e.getAppFn.constName?
+    let plan := name.bind fun name => (selectedPlan env name).toOption
+    let action : CompareM Json := do
+      let mut names : NameSet := {}
+      for argument in descriptor.map Expr.getAppArgs |>.getD #[] do
+        for name in argument.getUsedConstants do names := names.insert name
+      let arguments ← (names.toArray.qsort Name.quickLt).mapM inputIdentity
+      let extraction ← inputIdentity event.realizationName
+      return Json.mkObj [
+        ("argument_inputs", Json.arr (arguments.map dependencyJson)),
+        ("extraction_inputs", Json.arr #[dependencyJson extraction]),
+        ("plan_identity", plan.map (toJson ∘ TemplatePlanData.planIdentity) |>.getD Json.null),
+        ("rule", toJson (failureRule reason)), ("site", toJson (failureSite reason)),
+        ("template_key", name.map (toJson ∘ Name.toString) |>.getD Json.null)]
+    let (provenance, _) ← withCumulativeBudget <| action.run {
+      remaining := min 524288 (TemplateAudit.informationTemplate.work.get (← getOptions)) }
+    return provenance
+  catch _ => return Json.null
+
 private def validate (event : TemplateOccurrenceEvent) (descriptor : Expr) : MetaM TemplateBindingCertificate := do
   closed descriptor
   let .const name universeArgs := descriptor.getAppFn
@@ -2341,7 +2394,8 @@ private def assessUncached (event : TemplateOccurrenceEvent) (claim : Option Tem
         let message ← error.toMessageData.toString
         let reason := if message.startsWith "unclassified_form:" || message.startsWith "forbidden_dependency:"
             || message.startsWith "incomplete_closure:" then message else "incomplete_closure:E8.assessment:" ++ message
-        return .declaredUnresolved s!"IE-C050 ClosedTruthReadout key={event.key.root}/{event.key.catalog}/{event.key.theoremName} {TemplateAudit.diagnosticFields reason}")
+        let provenance ← diagnosticProvenance event claim reason
+        return .declaredUnresolved (diagnosticMessage event.key reason provenance))
     return { occurrence := event, descriptor := claim.descriptor, bindingOwner := some claim.owner, result }
 
 private abbrev CacheSemantics := Bool × ReducibilityStatus × Option Name × Bool ×
@@ -2443,7 +2497,8 @@ def assess (event : TemplateOccurrenceEvent) (claim : Option TemplateBindingClai
     try
       retainAssessment record claim certificate
     catch error =>
-      let diagnostic := s!"IE-C050 ClosedTruthReadout key={event.key.root}/{event.key.catalog}/{event.key.theoremName} reason=incomplete_closure rule=dtr.cache_inputs site={← error.toMessageData.toString}"
+      let diagnostic := diagnosticMessage event.key
+        ("incomplete_closure:dtr.cache_inputs:" ++ (← error.toMessageData.toString)) Json.null
       return { record with result := .declaredUnresolved diagnostic }
   return record
 
@@ -2594,6 +2649,7 @@ def publishRegistration (entry : InformationRegistryEntry) : Elab.Command.Comman
   let record ← Elab.Command.liftTermElabM <| assess event claim
   modifyEnv fun current => bindingRecords.addEntry (occurrenceInventory.addEntry current event) record
   if let some claim := claim then modifyEnv (bindingClaims.addEntry · claim)
+  if record.result matches .undeclared then logWarning (missingDeclarationDiagnostic event.key)
   if let .declaredUnresolved diagnostic := record.result then logWarning diagnostic
 
 /-- Claims join by their exact occurrence identity before authoritative assessment.
@@ -2666,10 +2722,6 @@ def keyJson (key : TemplateOccurrenceKey) : Json := Json.mkObj [
   ("theorem", toJson key.theoremName.toString), ("object_arena", toJson key.objectArena.toString),
   ("catalog", toJson key.catalog.toString)]
 
-private def dependencyJson (input : TemplateAudit.DependencyIdentity) : Json := Json.mkObj [
-  ("name", toJson input.name.toString), ("owner", toJson input.owner.toString),
-  ("type_identity", toJson input.typeIdentity), ("body_identity", toJson input.bodyIdentity)]
-
 private def certificateJson (certificate : TemplateBindingCertificate) : Json := Json.mkObj [
   ("key", keyJson certificate.key), ("evidence_ref", toJson certificate.evidenceRef),
   ("plan_identity", toJson certificate.planIdentity),
@@ -2735,7 +2787,7 @@ private def inputJson (input : TemplateAudit.SourceInput) : Json := Json.mkObj [
 /-- Shared record wire for the inspector and census authoritative snapshots. -/
 def recordJson (record : BindingRecord) : MetaM Json := do
   let (state, diagnostic, certificate) := match record.result with
-    | .undeclared => ("undeclared", Json.null, Json.null)
+    | .undeclared => ("undeclared", toJson (missingDeclarationDiagnostic record.occurrence.key), Json.null)
     | .declaredUnresolved diagnostic => ("declared_unresolved", toJson diagnostic, Json.null)
     | .declaredValidated certificate => ("declared_validated", Json.null, certificateJson certificate)
   return Json.mkObj [

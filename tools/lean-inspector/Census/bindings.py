@@ -47,8 +47,16 @@ def validate(value):
             require(row["diagnostic"] is None)
         else:
             require(row["certificate"] is None)
-            if state == "declared_unresolved":
-                require(isinstance(row["diagnostic"], str) and bool(row["diagnostic"]))
+            require(isinstance(row["diagnostic"], str) and bool(row["diagnostic"]))
+            if state == "undeclared":
+                key = row["key"]
+                require(isinstance(key, dict) and all(isinstance(key.get(k), str)
+                        for k in ("root", "catalog", "theorem")))
+                expected = (f'IE-C050 ClosedTruthReadout key={key["root"]}/{key["catalog"]}/{key["theorem"]} '
+                            'reason=unclassified_form rule=dtr.missing_declaration site="" readout="" '
+                            'provenance={"argument_inputs":[],"extraction_inputs":[],"plan_identity":null,'
+                            '"rule":"dtr.missing_declaration","site":"","template_key":null}')
+                require(row["diagnostic"] == expected)
     seen = set()
     for source in value["source_inputs"]:
         require(isinstance(source, dict) and set(source) == {"path", "sha256"})

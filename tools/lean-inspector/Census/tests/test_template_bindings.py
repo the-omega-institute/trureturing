@@ -108,6 +108,21 @@ class TemplateBindingTests(unittest.TestCase):
                 validate(value)
         self.assertFalse(validate(incomplete("missing sidecar"))["query_completed"])
 
+    def test_census_undeclared_diagnostic_required(self):
+        value = self.evidence()
+        row = value["records"][0]
+        row.update(state="undeclared", certificate=None, diagnostic=None)
+        with self.assertRaises(ValueError, msg="[FAIL] census_undeclared_diagnostic_required"):
+            validate(value)
+        row["diagnostic"] = ('IE-C050 ClosedTruthReadout key=Owner/catalog/target '
+            'reason=unclassified_form rule=dtr.missing_declaration site="" readout="" '
+            'provenance={"argument_inputs":[],"extraction_inputs":[],"plan_identity":null,'
+            '"rule":"dtr.missing_declaration","site":"","template_key":null}')
+        self.assertIs(validate(value), value)
+        row["diagnostic"] = row["diagnostic"].replace("Owner/catalog/target", "Other/catalog/target")
+        with self.assertRaises(ValueError, msg="[FAIL] census_undeclared_diagnostic_required"):
+            validate(value)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -93,8 +93,8 @@ internal static class InformationTemplateEvidence
                 throw new FormatException("DTR-Evidence: unresolved/undeclared cannot carry a certificate");
             if (state == InformationTemplateBindingState.Undeclared)
             {
-                if (binding is not null || diagnostic is not null)
-                    throw new FormatException("DTR-Evidence: undeclared record carries a declaration");
+                if (binding is not null || diagnostic != MissingDeclarationDiagnostic(key))
+                    throw new FormatException("DTR-Evidence: undeclared declaration/diagnostic mismatch");
                 if (sourcePath != registration)
                     throw new FormatException("DTR-Evidence: undeclared record has wrong producer owner");
             }
@@ -108,6 +108,12 @@ internal static class InformationTemplateEvidence
         }
         return new(value.Clone(), inventory, records.ToImmutable(), registered, inputs);
     }
+
+    private static string MissingDeclarationDiagnostic(InformationOccurrenceKey key) =>
+        $"IE-C050 ClosedTruthReadout key={key.Root}/{key.Catalog}/{key.Theorem} "
+        + "reason=unclassified_form rule=dtr.missing_declaration site=\"\" readout=\"\" "
+        + "provenance={\"argument_inputs\":[],\"extraction_inputs\":[],\"plan_identity\":null,"
+        + "\"rule\":\"dtr.missing_declaration\",\"site\":\"\",\"template_key\":null}";
 
     // The inspector library has its own Lean source root in lakefile.toml.
     // This also permits its real command fixtures to cross the same wire reader.

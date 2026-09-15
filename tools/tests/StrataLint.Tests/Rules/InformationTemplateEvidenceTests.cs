@@ -19,6 +19,11 @@ public sealed class InformationTemplateEvidenceTests
         ModuleA + ".target", ModuleA + ".arena", ModuleA + ".catalog");
     private static readonly string Unit = ModuleA + ".target.__information_unit";
     private static readonly string Realization = ModuleA + ".target.__primitive_realization";
+    private const string MissingDiagnostic = "IE-C050 ClosedTruthReadout "
+        + "key=D5.S0.Carrier.Probe/D5.S0.Carrier.Probe.catalog/D5.S0.Carrier.Probe.target "
+        + "reason=unclassified_form rule=dtr.missing_declaration site=\"\" readout=\"\" "
+        + "provenance={\"argument_inputs\":[],\"extraction_inputs\":[],\"plan_identity\":null,"
+        + "\"rule\":\"dtr.missing_declaration\",\"site\":\"\",\"template_key\":null}";
     private static string Hash(string text) => InformationTemplateJson.Sha256(Encoding.UTF8.GetBytes(text));
     private static object Input(string path, string text) => new { path, sha256 = Hash(text) };
 
@@ -40,7 +45,7 @@ public sealed class InformationTemplateEvidenceTests
                 content_inputs = new[] { Input(PathA, TextA) },
                 binding_source_path = declared ? sidecar ? PathB : PathA : null,
                 state = declared ? "declared_validated" : "undeclared",
-                diagnostic = (string?)null,
+                diagnostic = declared ? null : MissingDiagnostic,
                 certificate = declared ? new
                 {
                     key = InformationTemplateDebtStore.KeyJson(Key),
@@ -107,6 +112,25 @@ public sealed class InformationTemplateEvidenceTests
         Assert.Single(universe.Inventory);
         Assert.Equal(InformationTemplateBindingState.Undeclared, universe.Occurrences[Key].State);
         Assert.Null(universe.Occurrences[Key].EvidenceRef);
+        Assert.Equal(MissingDiagnostic, universe.Occurrences[Key].Diagnostic);
+    }
+
+    [Fact]
+    public void undeclared_diagnostic_required()
+    {
+        var wire = JsonSerializer.SerializeToNode(Wire())!.AsObject();
+        wire["records"]![0]!["diagnostic"] = null;
+        Assert.Throws<FormatException>(() => InformationTemplateEvidence.Read(
+            JsonSerializer.SerializeToElement(wire), PathA, Snapshot((PathA, TextA))));
+    }
+
+    [Fact]
+    public void undeclared_diagnostic_cannot_retarget_occurrence()
+    {
+        var wire = JsonSerializer.SerializeToNode(Wire())!.AsObject();
+        wire["records"]![0]!["diagnostic"] = MissingDiagnostic.Replace(".target ", ".other ", StringComparison.Ordinal);
+        Assert.Throws<FormatException>(() => InformationTemplateEvidence.Read(
+            JsonSerializer.SerializeToElement(wire), PathA, Snapshot((PathA, TextA))));
     }
 
     [Fact]
