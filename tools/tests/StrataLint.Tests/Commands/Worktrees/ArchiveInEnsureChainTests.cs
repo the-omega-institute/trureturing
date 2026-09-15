@@ -38,7 +38,7 @@ public sealed partial class LeanCacheEnsureCommandTests
         var receipt = ReadReceipt(result);
         Assert.Equal("miss", receipt.GetProperty("archive_status").GetString());
         Assert.Equal("seed not allowed", receipt.GetProperty("archive_reason").GetString());
-        Assert.Equal(["fetch", "--repository", target],
+        Assert.Equal(["fetch", "--repository", target, "--writer-owned"],
             File.ReadAllLines(Path.Combine(target, "fetch-arguments")));
     }
 

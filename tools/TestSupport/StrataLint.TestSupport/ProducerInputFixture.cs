@@ -22,7 +22,23 @@ internal static class ProducerInputFixture
         var source = TestRepositoryLayout.FindRoot();
         var manifest = JsonNode.Parse(File.ReadAllText(Path.Combine(source, ProjectRegistrationPath)))!.AsObject();
         var rows = manifest["projects"]!.AsArray();
-        var inventory = TestProcessRunner.Run("git", ["ls-files", "--cached", "-z", "--"], source,
+        var scopes = new[] { LeanRegistrationPath, ScribeRegistrationPath }.ToDictionary(path => path,
+            path => JsonNode.Parse(File.ReadAllText(Path.Combine(source, path)))!.AsObject(), StringComparer.Ordinal);
+        var selections = scopes.Values.Select(scope =>
+        {
+            var path = scope["registration"]!.GetValue<string>();
+            var inputs = JsonNode.Parse(File.ReadAllText(Path.Combine(source, path)))!;
+            return (Path: path, Value: inputs["producer_scopes"]![scope["scope"]!.GetValue<string>()]!);
+        }).ToArray();
+        // Restrict Git's output to declared inputs before the bounded reader sees it.
+        var inventoryPatterns = rows.Select(row => row!["path"]!.GetValue<string>())
+            .Concat(rows.SelectMany(row => row!["include"]!.AsArray().Concat(row["exclude"]!.AsArray()))
+                .Select(path => path!.GetValue<string>()))
+            .Concat(selections.SelectMany(selection => selection.Value["include"]!.AsArray())
+                .Select(item => item!["pattern"]!.GetValue<string>()))
+            .Concat(manifest["rule_build_inputs"]!.AsArray().Select(path => path!.GetValue<string>()))
+            .Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal).Select(pattern => ":(glob)" + pattern).ToArray();
+        var inventory = TestProcessRunner.Run("git", ["ls-files", "--cached", "-z", "--", .. inventoryPatterns], source,
             TestBudgets.ScriptProcessHangGuard, 4 * 1024 * 1024);
         Assert.True(inventory.ExitCode == 0, Encoding.UTF8.GetString(inventory.StandardError));
         // Expand registered tool source globs only. BatchWorld supplies its own Blueprint
@@ -31,8 +47,6 @@ internal static class ProducerInputFixture
             .Where(path => File.Exists(Path.Combine(source, path))).ToArray();
         var registry = EngineeringProjectRegistry.Read(available.Select(path => new EngineeringSource(path, string.Empty))
             .Prepend(new EngineeringSource(ProjectRegistrationPath, manifest.ToJsonString())).ToArray());
-        var scopes = new[] { LeanRegistrationPath, ScribeRegistrationPath }.ToDictionary(path => path,
-            path => JsonNode.Parse(File.ReadAllText(Path.Combine(source, path)))!.AsObject(), StringComparer.Ordinal);
         var roots = scopes.Values.SelectMany(scope => scope["projects"]!.AsArray())
             .Select(path => path!.GetValue<string>()).Append(CliProjectPath);
         var paths = registry.ProjectInputs(roots, available.Where(path => path.StartsWith("tools/", StringComparison.Ordinal)).ToArray(), []).ToHashSet(StringComparer.Ordinal);
@@ -40,14 +54,14 @@ internal static class ProducerInputFixture
             .Select(row => row!.DeepClone()).ToArray());
         manifest["historical_projects"] = new JsonArray();
         paths.UnionWith(manifest["rule_build_inputs"]!.AsArray().Select(path => path!.GetValue<string>()));
-        foreach (var (path, scope) in scopes)
+        paths.UnionWith(scopes.Keys);
+        foreach (var (inputPath, selection) in selections)
         {
-            paths.Add(path);
-            var inputPath = scope["registration"]!.GetValue<string>();
             paths.Add(inputPath);
-            var inputs = JsonNode.Parse(File.ReadAllText(Path.Combine(source, inputPath)))!;
-            var selection = inputs["producer_scopes"]![scope["scope"]!.GetValue<string>()]!;
-            var includes = selection["include"]!.AsArray().Select(item => item!["pattern"]!.GetValue<string>()).ToArray();
+            var includes = selection["include"]!.AsArray()
+                .Select(item => (Pattern: item!["pattern"]!.GetValue<string>(), Optional: item["optional"]!.GetValue<bool>()))
+                .Where(item => !item.Optional || item.Pattern.Contains('*') || available.Contains(item.Pattern, StringComparer.Ordinal))
+                .Select(item => item.Pattern).ToArray();
             var excludes = selection["exclude"]!.AsArray().Select(item => item!.GetValue<string>()).Append("Blueprint/**").ToArray();
             paths.UnionWith(EngineeringProjectRegistry.ExpandInputs(available, includes, excludes, inputPath));
         }
