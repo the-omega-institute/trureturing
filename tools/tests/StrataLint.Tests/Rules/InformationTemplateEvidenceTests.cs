@@ -135,9 +135,16 @@ public sealed class InformationTemplateEvidenceTests
             Snapshot((PathA, TextA + "-- changed\n"))));
 
     [Fact]
-    public void persisted_replay_rejected() =>
-        Assert.Throws<FormatException>(() => InformationTemplateEvidence.Read(Wire(declared: true), PathB,
-            Snapshot((PathA, TextA), (PathB, TextB))));
+    public void persisted_replay_rejected()
+    {
+        // Both source files are present and correctly hashed. The producer
+        // cannot replay A's inline binding merely by adding B to its inputs.
+        var wire = JsonSerializer.SerializeToNode(Wire(declared: true))!.AsObject();
+        wire["inputs"] = JsonSerializer.SerializeToNode(new[] { Input(PathB, TextB), Input(PathA, TextA) });
+        var error = Assert.Throws<FormatException>(() => InformationTemplateEvidence.Read(
+            JsonSerializer.SerializeToElement(wire), PathB, Snapshot((PathA, TextA), (PathB, TextB))));
+        Assert.Equal("DTR-Evidence: binding owner/diagnostic is missing or wrong", error.Message);
+    }
 
     [Fact]
     public void binding_producer_cannot_disappear()
