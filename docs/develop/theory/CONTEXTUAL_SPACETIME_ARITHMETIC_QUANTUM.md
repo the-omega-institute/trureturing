@@ -31452,3 +31452,337 @@ $$
 可分密度的右偏转置必为正半定，因为有限凸乘积和逐项变为正矩阵与其正转置的张量积。因此 $g=1,2$ 的 NPT 排除可分性。对 $g\ge3$，$\rho_{g,b}$ 已由实际分支和及正概率归一化为完整 $\mathbb C^2\otimes\mathbb C^2$ 上的密度，适用命题 141.1 所引并使用的二维 PPT 充分性：M. Horodecki、P. Horodecki、R. Horodecki，*Separability of Mixed States: Necessary and Sufficient Conditions*，[arXiv:quant-ph/9605038v2，定理 3，PDF 第 8 页](https://arxiv.org/pdf/quant-ph/9605038v2)，Physics Letters A 223，1–8（1996），[DOI:10.1016/S0375-9601(96)00706-2](https://doi.org/10.1016/S0375-9601(96)00706-2)。该文可分态闭包定义与本卷有限凸和定义的一致性已在命题 141.1 证明，故这里得到的正是陈述中的可分性。命题 137.1 对所有完整加减基记录给出的纠缠性，并不使同一奇偶事件内的经典混合仍然纠缠；以上实际事件算子与统一 Schur 界给出了该混合的精确范围。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 143. 确定性一位记录的两内部位唯一性与三内部位全划分障碍
+
+**命题 143.1（全部布尔二分下的条件端点纠缠）。** 沿用命题 130.1、137.1 的纯边界生成器，取
+$$
+\alpha=\frac{\sqrt5-1}{2},\qquad s=\sqrt\alpha,\qquad
+t=1+\alpha,\qquad t^2=t+1,\qquad 1<t<2,
+$$
+$$
+B=M=\mathbb C^2,\qquad
+m_0=s|0\rangle+\alpha|1\rangle,\qquad m_1=|0\rangle,
+\qquad T|j\rangle=|j\rangle\otimes m_j\quad(j=0,1),
+$$
+$$
+\Xi_0=m_0,\qquad
+\Xi_{n+1}=(I_{B^{\otimes n}}\otimes T)\Xi_n.
+$$
+各空间取正交标准基。对有限整数 $g\ge1$，先恰好发出 $g+2$ 个输出，次序为
+$$
+B_L\otimes B_1\otimes\cdots\otimes B_g\otimes B_R\otimes M.
+$$
+$L,R$ 分别为第一个和最后一个已发出的单量子比特因子，端点的联合空间始终是完整的 $B_L\otimes B_R=\mathbb C^2\otimes\mathbb C^2$；左端点之前没有被忽略的前缀。生成过程中不读取、测量或重置记忆，最终记忆取偏迹且不可访问。每个内部输出在事先固定的加减基
+$$
+|\eta_{r_k}\rangle=\frac{|0\rangle+(-1)^{r_k}|1\rangle}{\sqrt2}
+\quad(r_k\in\{0,1\})
+$$
+中测量一次。全部测量完成、结果成为经典记录 $r=(r_1,\ldots,r_g)$ 后，仅保留事先指定的确定性满射
+$$
+f:\{0,1\}^g\longrightarrow\{0,1\}
+$$
+的值，不附加随机通道。测后的内部系统、原始记录及报告的其他副本均不可访问；结果不用于反馈、后续选基或端点操作，不允许环境重新耦合或记录的相干重组。
+
+以 $\operatorname{adj}$ 表示共轭转置，$\operatorname{outer}(v)=v\operatorname{adj}(v)$，并取命题 137.1 的逐行向量化约定
+$$
+\operatorname{vec}_{LR}(C)=\sum_{i,j=0}^1 C_{ij}|i\rangle_L\otimes|j\rangle_R,
+\qquad 00,01,10,11\text{ 为坐标次序}.
+$$
+记
+$$
+J=\begin{pmatrix}1&1\\1&0\end{pmatrix},\qquad
+Z=\operatorname{diag}(1,-1),\qquad E_0=\operatorname{diag}(1,0),\qquad
+\kappa_g=s^{g+3}2^{-g/2}>0,
+$$
+$$
+C_r=\kappa_g JZ^{r_1}J\cdots Z^{r_g}J,
+\qquad
+Q_r=\operatorname{outer}(\operatorname{vec}_{LR}(C_r))
++\alpha\operatorname{outer}(\operatorname{vec}_{LR}(C_rE_0)),
+\qquad q_r=\operatorname{Tr}Q_r.
+$$
+这里 $Q_r$ 正是实际测量分支对最终记忆取偏迹所得的算子，两个外积保留两条未读记忆列及其原权重。对非空记录集 $S\subseteq\{0,1\}^g$，先定义
+$$
+Q_S=\sum_{r\in S}Q_r,\qquad q_S=\operatorname{Tr}Q_S=\sum_{r\in S}q_r,
+$$
+再在 $q_S>0$ 时定义 $\theta_S=Q_S/q_S$。可分性采用命题 132.1 的有限凸乘积密度和定义，纠缠指不可分；右偏转置为
+$$
+\operatorname{PT}_R(|ij\rangle\langle kl|)=|il\rangle\langle kj|.
+$$
+右偏转置正半定称为 PPT，否则称为 NPT。两个报告的记录集为 $S_b=f^{-1}(b)$。将 $f$ 与 $1-f$ 视为同一个无标号二分，则有以下结论。
+
+对所有有限 $g\ge1$，每个非空 $S$ 都有 $q_S>0$，且
+$$
+\theta_S=\sum_{r\in S}\frac{q_r}{q_S}\theta_{\{r\}},\qquad
+q_{S_0}+q_{S_1}=1.
+$$
+集合的基数不作为其概率。当 $g=1$ 时，唯一二分 $\{0\}\mid\{1\}$ 的两个报告均 NPT。当 $g=2$ 时，全部七个二分中恰有一个使两个报告均纠缠，即
+$$
+\{00,11\}\mid\{01,10\};
+$$
+等价地，成功的满射恰为 $f(r)=r_1\mathbin{\oplus}r_2$ 及其补。其余六个二分中，四个 $1\mid3$ 二分恰有一个纠缠报告，两个非奇偶 $2\mid2$ 二分的两个报告均可分。当 $g=3$ 时，任意至少含四条记录的 $S$ 均给可分密度 $\theta_S$；因此全部 $127$ 个二分均不能使两个报告同时纠缠，其中 $35$ 个 $4\mid4$ 二分的两个报告均可分。特别地，断言
+$$
+\forall g\ge1\ \exists\text{满射 }f:\{0,1\}^g\to\{0,1\},\quad
+\theta_{f^{-1}(0)}\text{ 与 }\theta_{f^{-1}(1)}\text{ 均纠缠}
+$$
+被 $g=3$ 反驳。本命题不判定各个 $g\ge4$ 是否存在这样的满射；命题 142.1 在这些长度对总奇偶函数的结论仍限于该函数。
+
+证明。命题 137.1 的实际分支公式在上述加减基上给出
+$$
+\chi_r=\operatorname{vec}_{LR}(C_r)\otimes|0\rangle_M
++s\operatorname{vec}_{LR}(C_rE_0)\otimes|1\rangle_M.
+$$
+对两条正交记忆列取偏迹正是所定义的 $Q_r$。$J,Z$ 均可逆且 $\kappa_g>0$，故每个 $C_r$ 可逆，从而
+$$
+q_r=\|C_r\|_F^2+\alpha\|C_rE_0\|_F^2>0,
+\qquad \sum_{r\in\{0,1\}^g}q_r=1.
+$$
+后一式由该完整测量的正交完备性及 $\|\Xi_{g+2}\|=1$ 得到。记录已成为经典数据，合并事件只求 $Q_r$ 之和，没有不同记录间的振幅交叉项。于是每个非空事件的概率为正，满射的两报告均有正概率，归一化权重恰为陈述中的 $q_r/q_S$。
+
+为处理整个记录集，使用同一个代数合同
+$$
+F=J^{-1}\otimes I_{B_R},\qquad
+N_r=\kappa_g^{-1}J^{-1}C_r=Z^{r_1}J\cdots Z^{r_g}J.
+$$
+若
+$$
+v_r=\operatorname{vec}_{LR}(N_r)=(a,b,c,d)^{\mathsf T},\qquad
+w_r=(a,0,c,0)^{\mathsf T},\qquad
+P_r=\operatorname{outer}(v_r)+\alpha\operatorname{outer}(w_r),
+$$
+则
+$$
+P(S):=\sum_{r\in S}P_r
+=\kappa_g^{-2}FQ_S\operatorname{adj}(F),\qquad
+R(S):=\operatorname{PT}_R(P(S)).
+$$
+这是对整个事件的共同正数缩放与可逆左局部合同，没有分别归一化记录。其迹不替代实际概率 $q_S$。可逆局部合同及其逆均保持有限个正乘积算子之和，而右偏转置与左局部合同交换。因此 $Q_S$ 与 $P(S)$ 及各自的正迹归一化具有相同的可分性与 PPT 分类。$F$ 仅用于代数论证，协议没有增加端点操作。
+
+所有 $N_r$ 都是实矩阵。直接对单条记录取右偏转置得
+$$
+R(\{r\})=
+\begin{pmatrix}
+ta^2&ab&tac&bc\\
+ab&b^2&ad&bd\\
+tac&ad&tc^2&cd\\
+bc&bd&cd&d^2
+\end{pmatrix}.
+$$
+记
+$$
+H=\begin{pmatrix}
+0&0&0&-1\\
+0&0&1&0\\
+0&1&0&0\\
+-1&0&0&0
+\end{pmatrix}.
+$$
+偏转置只把 $\operatorname{outer}(v_r)$ 的 $00,11$ 与 $01,10$ 位置及其对称位置互换，变化分别为 $-\det N_r$ 和 $\det N_r$。另一方面，$w_r=(a,c)^{\mathsf T}\otimes|0\rangle$，故记忆项 $\alpha\operatorname{outer}(w_r)$ 在右偏转置下不变。由 $\det J=\det Z=-1$，得到适用于任意记录集的恒等式
+$$
+R(S)=P(S)+\left(\sum_{r\in S}\det N_r\right)H,
+\qquad \det N_r=(-1)^{g+r_1+\cdots+r_g}.
+$$
+因此，只要 $S$ 中 $r_1+\cdots+r_g$ 为偶数与奇数的记录数相等，就有 $R(S)=P(S)\ge0$。这里平衡的是行列式的计数，并不要求原始 Born 概率相等。该正半定结论允许奇异矩阵。
+
+翻转第一条记录位，记作 $\tau(r)=(1-r_1,r_2,\ldots,r_g)$，给出
+$$
+N_{\tau(r)}=ZN_r,\qquad
+P(\tau S)=(Z\otimes I)P(S)(Z\otimes I),\qquad
+R(\tau S)=(Z\otimes I)R(S)(Z\otimes I).
+$$
+故这对记录集保持分类。对 $g=3$，若以二进制整数表示记录，$\tau$ 就是与 $4$ 作异或。
+
+每个原始记录的 NPT 可直接使用命题 137.1 的可逆分支论证。具体地，令 $G_r=C_r^{-1}\otimes I$、$z=(|01\rangle-|10\rangle)/\sqrt2$，则
+$$
+\operatorname{PT}_R\bigl(G_rQ_r\operatorname{adj}(G_r)\bigr)
+=\begin{pmatrix}
+t&0&0&0\\
+0&0&1&0\\
+0&1&0&0\\
+0&0&0&1
+\end{pmatrix},\qquad
+\operatorname{adj}(z)\operatorname{PT}_R\bigl(G_rQ_r\operatorname{adj}(G_r)\bigr)z=-1.
+$$
+因左局部合同与右偏转置交换，$x_r=\operatorname{adj}(G_r)z$ 满足
+$$
+\operatorname{adj}(x_r)\operatorname{PT}_R(Q_r)x_r=-1,
+\qquad
+\operatorname{adj}(x_r)\operatorname{PT}_R(\theta_{\{r\}})x_r=-\frac1{q_r}<0.
+$$
+这证明所有单点事件 NPT，特别是 $g=1$ 的唯一二分成功。
+
+现完整处理 $g=2$。由 $N_r=Z^{r_1}JZ^{r_2}J$ 得
+$$
+\begin{array}{c|rrrr}
+r&a&b&c&d\\\hline
+00&2&1&1&1\\
+01&0&1&1&1\\
+10&2&1&-1&-1\\
+11&0&1&-1&-1
+\end{array}.
+$$
+对偶事件 $E_2=\{00,11\}$，上述公共矩阵公式给出
+$$
+R(E_2)=\begin{pmatrix}
+4t&2&2t&0\\
+2&2&2&0\\
+2t&2&2t&2\\
+0&0&2&2
+\end{pmatrix},\qquad
+\det R(E_2)=-32(t-1)=-32\alpha<0.
+$$
+负的全阶主子式排除正半定性，奇事件 $\{01,10\}=\tau E_2$ 亦然。这与命题 140.1（C）的奇偶 NPT 结论一致。由于 $\det F=(\det J^{-1})^2=1$，对两个实际归一化报告分别有
+$$
+\det\operatorname{PT}_R(\theta_S)
+=\frac{\kappa_2^8}{q_S^4}(-32\alpha)<0.
+$$
+另两个 $2\mid2$ 二分恰为
+$$
+\{00,01\}\mid\{10,11\},\qquad
+\{00,10\}\mid\{01,11\}.
+$$
+其每个块都有一条偶记录与一条奇记录，故由平衡恒等式均 PPT；这也符合命题 140.1（A）的固定原始坐标删除结论。
+
+四个 $1\mid3$ 二分的单点侧已证 NPT。将三元块按其缺失记录标识，第一位翻转把缺失 $10$、$11$ 分别化为缺失 $00$、$01$。两代表的矩阵为
+$$
+R(\{01,10,11\})=\begin{pmatrix}
+4t&2&-2t&-1\\
+2&3&-2&-1\\
+-2t&-2&3t&3\\
+-1&-1&3&3
+\end{pmatrix},\qquad
+R(\{00,10,11\})=\begin{pmatrix}
+8t&4&0&-1\\
+4&3&0&-1\\
+0&0&3t&3\\
+-1&-1&3&3
+\end{pmatrix}.
+$$
+以 $\Delta_k(M)$ 表示按固定次序取 $M$ 左上角 $k\times k$ 主子矩阵的行列式，两行完整顺序主子式为
+$$
+\begin{array}{c|rrrr}
+\text{缺失记录}&\Delta_1&\Delta_2&\Delta_3&\Delta_4\\\hline
+00&4t&12t-4&12t+24&80-25t\\
+01&8t&24t-16&24t+72&336-153t
+\end{array}.
+$$
+这些值由行列式展开及 $t^2=t+1$ 得到。$1<t<2$ 使每项严格为正，故两矩阵均由 Sylvester 判据正定，第一位翻转覆盖另两组三元块。
+
+下面处理 $g=3$ 的全部四元块。把四条偶记录记为 $e_A,e_B,e_C,e_D$，并按第一位翻转的对应次序记四条奇记录为 $o_A,o_B,o_C,o_D$。直接乘 $Z^{r_1}JZ^{r_2}JZ^{r_3}J$ 所得八个整数向量为
+$$
+\begin{array}{c|c|rrrr}
+\text{标记}&r&a&b&c&d\\\hline
+e_A&000&3&2&2&1\\
+e_B&101&1&2&0&-1\\
+e_C&110&1&0&-2&-1\\
+e_D&011&-1&0&0&1\\\hline
+o_A&100&3&2&-2&-1\\
+o_B&001&1&2&0&1\\
+o_C&010&1&0&2&1\\
+o_D&111&-1&0&0&-1
+\end{array}.
+$$
+置 $E=\{e_A,e_B,e_C,e_D\}$、$O=\{o_A,o_B,o_C,o_D\}$。全部四元子集按所含偶记录数分成
+$$
+\binom84=70
+=\underbrace{\binom42\binom42}_{36}
++\underbrace{2}_{E,O}
++\underbrace{\binom43\binom41}_{16}
++\underbrace{\binom41\binom43}_{16}.
+$$
+其中 $36$ 个平衡块已经由 $R(S)=P(S)\ge0$ 处理，无需其主子式严格为正。第一位翻转交换 $E,O$，并交换最后两类。故剩余只需处理 $E$ 及全部十六个
+$$
+S_{ij}=(E\setminus\{e_i\})\cup\{o_j\},\qquad i,j\in\{A,B,C,D\}.
+$$
+令 $M_E=R(E)/2$、$M_{ij}=R(S_{ij})/2$。公共矩阵项已由 $R(\{r\})$ 给出，具体说，对这些四元块 $S$，
+$$
+M_S=\frac12\sum_{r\in S}
+\begin{pmatrix}
+ta_r^2&a_rb_r&ta_rc_r&b_rc_r\\
+a_rb_r&b_r^2&a_rd_r&b_rd_r\\
+ta_rc_r&a_rd_r&tc_r^2&c_rd_r\\
+b_rc_r&b_rd_r&c_rd_r&d_r^2
+\end{pmatrix},\qquad
+M_E=\begin{pmatrix}
+6t&4&2t&2\\
+4&4&0&0\\
+2t&0&4t&2\\
+2&0&2&2
+\end{pmatrix}.
+$$
+下列十七行逐一标明矩阵，并列出其全部四个顺序主子式：
+$$
+\begin{array}{c|rrrr}
+M&\Delta_1&\Delta_2&\Delta_3&\Delta_4\\\hline
+M_E&6t&24t-16&16t+80&224-64t\\
+M_{AA}&6t&24t-16&10t+32&4t+36\\
+M_{AB}&2t&8t-4&6t+12&4t+28\\
+M_{AC}&2t&4t-1&10t+16&4t+28\\
+M_{AD}&2t&4t-1&4t+6&3t+10\\
+M_{BA}&10t&40t-36&22t+236&796-316t\\
+M_{BB}&6t&24t-16&26t+80&116-28t\\
+M_{BC}&6t&12t-9&12t+54&130-45t\\
+M_{BD}&6t&12t-9&10t+40&76-8t\\
+M_{CA}&10t&60t-49&34t+240&636-172t\\
+M_{CB}&6t&36t-25&18-8t&42-21t\\
+M_{CC}&6t&24t-16&32-6t&100-44t\\
+M_{CD}&6t&24t-16&12-2t&28-12t\\
+M_{DA}&10t&60t-49&64t+354&1090-453t\\
+M_{DB}&6t&36t-25&34t+120&284-40t\\
+M_{DC}&6t&24t-16&30t+108&316-108t\\
+M_{DD}&6t&24t-16&26t+80&196-44t
+\end{array}.
+$$
+为给出各行的统一展开式，写
+$$
+M=\begin{pmatrix}
+tx&y&tp&h\\
+y&z&k&u\\
+tp&k&tv&w\\
+h&u&w&2
+\end{pmatrix},\qquad
+A=xv-p^2,\qquad D=2z-u^2,
+$$
+$$
+C=v(2y^2-2uyh+zh^2)+x(2k^2-2ukw+zw^2)
+-2p\bigl(2yk-u(yw+hk)+zhw\bigr).
+$$
+这里各 $M$ 的右下角为 $2$，因为八个向量都满足 $d_r^2=1$。逐阶展开得到
+$$
+\begin{aligned}
+\Delta_1&=tx,\\
+\Delta_2&=txz-y^2,\\
+\Delta_3&=t^2zA-t(xk^2+vy^2-2pyk),\\
+\Delta_4&=t^2AD-tC+(yw-hk)^2.
+\end{aligned}
+$$
+将八个向量按相应 $S$ 代入公共矩阵项，再用 $t^2=t+1$ 约化，即逐行得到上表。两组三元块及此十七行中的每个主子式都是一次式 $L(t)$；所列系数均满足 $L(1)\ge0$、$L(2)\ge0$ 且两者不同时为零。因此
+$$
+L(t)=(2-t)L(1)+(t-1)L(2)>0\qquad(1<t<2).
+$$
+例如 $42-21t=21(2-t)>0$，其在 $t=2$ 的零值不属于参数范围。故这十七个实对称矩阵全由 Sylvester 判据正定，翻转合同覆盖其余十七个非平衡块；加上 $36$ 个平衡块，全部 $70$ 个四元块都 PPT。
+
+这里的实矩阵判据确实作用于所需的复 Hermitian 正性：对实对称 $A$ 与任意复向量 $x+iy$，有
+$$
+(x+iy)^*A(x+iy)=x^{\mathsf T}Ax+y^{\mathsf T}Ay.
+$$
+因而实二次型的非负性等价于复二次型的非负性，实正定也给出复正定。平衡块的正半定性则直接来自正外积之和。可分复密度的偏转置必正半定，因为正乘积项 $U\otimes V$ 变为 $U\otimes V^{\mathsf T}\ge0$，故前面的 NPT 均排除可分性。对所有已证 PPT 的块，$\theta_S$ 是完整 $\mathbb C^2\otimes\mathbb C^2$ 上的正迹一密度，可使用命题 141.1 已采用的二维 PPT 充分性，得到可分性。所用结果为 M. Horodecki、P. Horodecki、R. Horodecki，*Separability of Mixed States: Necessary and Sufficient Conditions*，[arXiv:quant-ph/9605038v2，定理 3，PDF 第 8 页](https://arxiv.org/pdf/quant-ph/9605038v2)，Physics Letters A 223，1–8（1996），[DOI:10.1016/S0375-9601(96)00706-2](https://doi.org/10.1016/S0375-9601(96)00706-2)。该文的闭包定义与此处有限凸和定义的一致性已由命题 141.1 的有限维紧性论证给出。因此上述三元块、平衡块与全部四元块得到的都是本命题所定义的可分性。
+
+最后，把 $g=3$ 的四元块结论推广到较大记录集。若 $S\subseteq\{0,1\}^3$ 且 $n=|S|\ge4$，则未归一化算子有恒等式
+$$
+Q_S=\binom{n-1}{3}^{-1}
+\sum_{\substack{A\subseteq S\\|A|=4}}Q_A.
+$$
+事实上，固定 $r\in S$ 后，包含 $r$ 的四元子集由其余 $n-1$ 条记录中任选三条唯一确定，恰有 $\binom{n-1}{3}$ 个。将右边每个 $Q_A$ 展开为原始 $Q_r$ 之和，每个 $Q_r$ 的系数因而恰为一。已证每个 $Q_A$ 属于有限正乘积和组成的可分正锥，该锥对有限求和与非负数乘法封闭，所以 $Q_S$ 也在该锥内。由 $q_S>0$，$\theta_S$ 可分。这一步使用已可分四元块的正组合；它不以向一个 PPT 算子添加任意原始正算子为封闭性依据。
+
+每个八记录二分必有一块的基数至少为四，故至少一个报告可分。为明确穷尽范围，把含 $000$ 的块作为第一块，并要求其补非空，恰有 $2^7-1=127$ 个无标号非平凡二分；按较小块的基数计数为
+$$
+\begin{array}{c|rrrr}
+\text{块大小}&1\mid7&2\mid6&3\mid5&4\mid4\\\hline
+\text{二分数}&8&28&56&35
+\end{array},\qquad 8+28+56+35=127.
+$$
+全部 $127$ 个二分都由上述至少四元块的结论排除两个报告同时纠缠，$4\mid4$ 的两块则均可分。同理，四记录的无标号二分共有 $2^3-1=7$ 个，前面列出的三个 $2\mid2$ 与四个 $1\mid3$ 已穷尽它们，得到恰一个成功、四个单侧纠缠、两个双侧可分的分类。$g=3$ 的全二分障碍即给陈述中的全有限长度存在断言的反例。证毕。
+
+## 追加锚（本行以下为增补区）
