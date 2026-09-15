@@ -1,0 +1,19 @@
+**命题 27.2（独立定义的模式 Gram 代理）。** 对每个 $s\in\mathcal S$，令 $p=d+k$，按该组初始行定义
+$$
+Z_{s,0}=[U_{s,0},V_{s,0}^{\mathsf T}],\qquad
+Q_{s,0}=Z_{s,0}^{\mathsf T}Z_{s,0}
+ =\begin{pmatrix}A_{s,0}&W_{s,0}^{\mathsf T}\\W_{s,0}&B_{s,0}\end{pmatrix}.
+$$
+在任意给定动作词上，先独立于真实未来门控定义代理递推
+$$
+F_t=\sum_s W_{s,t}XD_s,\qquad
+G_{s,t}=(F_t-Y)\operatorname{diag}(\lambda_{a_t})D_sX^{\mathsf T},
+$$
+$$
+M_{s,t}=\begin{pmatrix}I_d&-\eta_{a_t}G_{s,t}^{\mathsf T}\\-\eta_{a_t}G_{s,t}&I_k\end{pmatrix},\qquad
+Q_{s,t+1}=M_{s,t}^{\mathsf T}Q_{s,t}M_{s,t}.
+$$
+此递推对全部有理对称块矩阵均有定义；固定动作的 $Q\mapsto Q^+$ 次数至多三。若某一步参数的实际模式确为 $s$，且块矩阵为其组 Gram，则该步同步梯度更新的行等于 $Z_sM_s$，其未重新分组的 Gram 正是上式。这个条件恒等式本身不保证下一步的模式。
+
+证明。在固定模式的代理损失中，输出为 $F=\sum_sW_sXD_s$，对 $W_s$ 的梯度为所列 $G_s$。定理12.2的链式法则逐组给出 $U_s^+=U_s-\eta V_s^{\mathsf T}G_s$、$V_s^+=V_s-\eta G_sU_s^{\mathsf T}$，合成行更新及合同式。各 $G_s$ 经共同的 $F$ 耦合，且是所有 $Q_s$ 的仿射函数，故三次界成立。严格模式处原损失与代理损失局部相同，梯度相同。固定激活代理已有 [Holzmüller–Steinwart](../../../Library/Dynamics/holzmueller2020training.md) 附录B定义B.1、引理B.2与定义B.3的先例；其命题C.2在含偏置的标量输入输出情形给出分组二阶矩的精确合同式，保留离散二次交叉项，附录D注D.1明确给出不依赖宽度的闭系统。这里复用该框架和本卷定理12.2的矩阵代数，不将模式 Gram 传播或固定激活代理作为新结论。证毕。
+

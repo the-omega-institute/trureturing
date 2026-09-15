@@ -1,0 +1,13 @@
+### 69.1 当前读出与未来任务必须分别指定
+
+令 $X,Y,Z$ 为有限维实 Hilbert 空间，当前读出为 $A:X\to Y$，未来任务为 $F:X\to Z$。它们都是线性映射。量子应用可取 $X=\operatorname{Herm}_0(d)$；任务的每个坐标是扣除已知参考后的未来期望值。若未来由已指定的通道 $\Phi$ 和读出方向 $E_j$ 构成，则
+
+$$
+F(D)_j=\operatorname{Tr}(E_j\Phi(D))
+=\operatorname{Tr}(\Phi^\ast(E_j)D).
+$$
+
+因此，“未来”通过实际操作的 Heisenberg 拉回进入 $F$。如果选择多个互不相容的实验，$F(D)$ 记录的是这些不同实验各自的统计响应，不是给单次系统同时指定所有实验的预存答案。
+
+`D5/S3/Observer/VisibleDescent/TargetObservabilityFourWayEquivalence.lean` 的 `target_observability_four_way_equivalence` 给出标量目标的纤维常值、核包含与 adjoint 像等价；`D5/S3/Quantum/PredictionDepth/TargetPredictionSufficiency.lean` 的 `target_prediction_sufficiency` 给出密度态上的可见 span 条件及其失败见证。这些判据解决精确可见性，尚需为数据误差指定数值代价。
+

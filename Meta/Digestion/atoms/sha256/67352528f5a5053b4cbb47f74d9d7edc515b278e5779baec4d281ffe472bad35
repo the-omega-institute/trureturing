@@ -1,0 +1,66 @@
+### 114.1 两层记录生成两个预测空间
+
+设底层状态空间为
+
+$$
+X,
+$$
+
+带有测度
+
+$$
+\mu,
+$$
+
+并设当前记录生成的 sigma 代数为
+
+$$
+\mathcal G_c,
+$$
+
+加入更多历史或未来记录后得到更细的 sigma 代数
+
+$$
+\mathcal G_f.
+$$
+
+它们满足
+
+$$
+\mathcal G_c\le\mathcal G_f\le\mathcal A,
+$$
+
+其中
+
+$$
+\mathcal A
+$$
+
+是环境的 ambient measurable space。给定一个实值平方可积目标
+
+$$
+Y\in L^2(\mu),
+$$
+
+定义两种条件期望预测：
+
+$$
+\widehat Y_c=\mathbb E[Y\mid\mathcal G_c],
+\qquad
+\widehat Y_f=\mathbb E[Y\mid\mathcal G_f].
+$$
+
+在 Zeckendorf 模型中，可以把
+
+$$
+\mathcal G_c
+$$
+
+理解为当前合法构型读出生成的记录，而把
+
+$$
+\mathcal G_f
+$$
+
+理解为加入若干历史位、余数记录或后续可访问接口后的记录。这里的 sigma 代数是一个抽象的可测结构；它没有自动等同于量子 Hilbert 子空间。
+

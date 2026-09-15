@@ -1,0 +1,1 @@
+**定理 378.3。** $\operatorname{enc}_X$ 是双射，逆恰为 $\operatorname{Dec}|_{X^*}$。

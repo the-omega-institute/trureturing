@@ -1,0 +1,32 @@
+### 68.1 受控复制的恢复必须是左右共轭
+
+第 63.1 节原先写成
+
+$$
+U_{\mathrm{copy}}^{\dagger}J(\rho)=B(\rho).
+$$
+
+这条写法应撤回。源码 `D5/S3/Quantum/Decoherence/ReducedRecordAccessDefect.lean` 的 `unitaryEvolution` 是左右乘法；定理 `reduced_irreversibility_is_access_defect` 的恢复分支实际断言
+
+$$
+\operatorname{unitaryEvolution}
+\bigl(U_{\mathrm{copy}}^{\dagger},J(\rho)\bigr)
+=B(\rho),
+$$
+
+亦即
+
+$$
+\boxed{
+U_{\mathrm{copy}}^{\dagger}J(\rho)U_{\mathrm{copy}}=B(\rho)
+}.
+$$
+
+对 $\sigma$ 同样有
+
+$$
+U_{\mathrm{copy}}^{\dagger}J(\sigma)U_{\mathrm{copy}}=B(\sigma).
+$$
+
+保留的结论是：包括记录自由度的受控复制仍由显式幺正控制，访问联合记录并施加逆耦合可以恢复；只访问偏迹后的系统矩阵，则不能由同一个函数恢复两个不同联合矩阵。这里的左右共轭是矩阵演化的必要部分，不能删去。
+

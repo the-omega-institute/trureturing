@@ -1,0 +1,7 @@
+完整编码的距离为
+$$
+d^*:(X\times X)^*\to\mathbb R^*,\qquad
+d^*(\chi_{X,X}(c,c'))=\operatorname{Enc}(d_{\rm ext}(c,c')).
+$$
+其零、加法及序均取实数结构的运输；解码后才是上述普通实值度量。
+

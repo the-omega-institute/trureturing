@@ -1,0 +1,24 @@
+### 116.2 它确实对每个允许干预闭合
+
+若 $$x,y$$ 的动态轨迹相同，则对任意干预 $$u$$ 和任意后续词 $$w$$，有
+
+$$
+\operatorname{Dyn}_I(c)(I(u,x))(w)
+=
+\operatorname{Dyn}_I(c)(x)(u::w)
+=
+\operatorname{Dyn}_I(c)(y)(u::w)
+=
+\operatorname{Dyn}_I(c)(I(u,y))(w).
+$$
+
+所以
+
+$$
+\boxed{
+\operatorname{Dyn}_I(c)\text{ 对 }I\text{ 的每一个干预都闭合}.
+}
+$$
+
+这里的关键不是把状态变成一个更长的静态标签，而是把干预前缀加入响应坐标。任何可能使两个状态分开的下一步，都已经成为轨迹中的一个坐标。
+

@@ -1,0 +1,58 @@
+**命题 78.11（合法窗口内的支撑转移及全载体可见空间）。** 沿用本卷定义 1.1 及 Zeckendorf 扩展的开放窗口约定，
+
+$$
+\mathcal W_2=\{00,01,10\},\qquad
+\mathcal H_{\mathcal W_2}=\operatorname{span}_{\mathbb C}\{|00\rangle,|01\rangle,|10\rangle\}.
+$$
+
+定义等距嵌入 $U:\mathbb C^2\to\mathcal H_{\mathcal W_2}$ 为 $U|0\rangle=|00\rangle$、$U|1\rangle=|01\rangle$，并令
+
+$$
+Q=UU^\dagger=|00\rangle\langle00|+|01\rangle\langle01|,
+\quad R=I_3-Q=|10\rangle\langle10|,
+\quad\widehat X=UXU^\dagger,\quad\widehat Z=UZU^\dagger.
+$$
+
+每个设置 $b\in\{X,Z\}$ 使用三个投影
+
+$$
+\widehat P_s^b=\frac{Q+s\widehat b}{2}\quad(s=\pm1),
+\qquad R,
+$$
+
+及相应的压缩分支 $A\mapsto\widehat P_s^b A\widehat P_s^b$、$A\mapsto RAR$。对支撑在 $Q$ 的输入，命题 78.5 的序列统计、命题 78.8 的精确存储不可能性及定理 78.10 的二元代价 $e_*$ 全部原值转移。对整个三维载体和含补空间结果的全部词族，长度至少一的实可见空间为
+
+$$
+\widehat V_H=\operatorname{span}_{\mathbb R}\{Q,R,\widehat X,\widehat Z\}
+\quad(H\ge1),
+$$
+
+而长度零的空间为 $\operatorname{span}_{\mathbb R}\{I_3\}$。
+
+证明。两位二进制词中，开放相邻约束只排除 $11$，故合法词恰为上述三个。所选基向量正交，给出 $U^\dagger U=I$、$UU^\dagger=Q$、$RU=0$。因此
+
+$$
+\widehat X^2=\widehat Z^2=Q,\qquad
+\widehat X\widehat Z+\widehat Z\widehat X=0,\qquad
+\widehat P_s^b=UP_s^bU^\dagger.
+$$
+
+于是 $\widehat P_+^b,\widehat P_-^b,R$ 两两正交、各自幂等、自伴随，且和为 $I_3$。命题 78.5 的单 Kraus 正性与迹求和论证逐项适用，证明每个设置分别归一化。
+
+支撑在 $Q$ 的密度矩阵唯一为 $\widehat\rho=U\rho U^\dagger$，其中 $\rho=U^\dagger\widehat\rho U$ 是量子比特密度矩阵。直接计算
+
+$$
+\widehat P_s^b\widehat\rho\widehat P_s^b
+=U(P_s^b\rho P_s^b)U^\dagger,
+\qquad R\widehat\rho R=0,
+\qquad
+\operatorname{tr}(\widehat\rho\widehat P_s^b)
+=\operatorname{tr}(\rho P_s^b).
+$$
+
+因此全部支撑内序列递推相同。若三维父 POVM 为 $(M_\lambda)_\lambda$，则 $(U^\dagger M_\lambda U)_\lambda$ 是量子比特父 POVM，保留同一译码后，在所有支撑内输入上的二元概率完全相同；故精确不可能性和 $e_*$ 下界都转移。反向把最优量子比特父 POVM 扩为 $(UG_{su}^{\rm opt}U^\dagger)_{s,u}$ 加上 $R$，并在结果 $R$ 上任选归一化二元译码。支撑内输入对 $R$ 的概率为零，故上界也原值转移。这一二元比较的输入域严格限定在 $Q$ 上。
+
+在整个载体上，长度一的效果含 $\widehat P_\pm^X,\widehat P_\pm^Z,R$；它们的和与差给出 $Q,\widehat X,\widehat Z,R$。四者实线性独立：限制到 $Q$ 后由 $I,X,Z$ 独立性得前三个系数为零，限制到 $R$ 得最后系数为零。所有这些投影均秩一，命题 78.5 的压缩归纳仍使每个非空词效果为首个投影的标量倍数，故更长词不增加方向。空词效果 $I_3=Q+R$ 也在该空间内。这证明完整可见空间的等式，不能把它写成只有三个实方向的量子比特空间。证毕。
+
+这里的 Zeckendorf 结构提供合法标签及一个明确的等距嵌入。仪器由所写投影指定；没有从 Fibonacci 权重推导自然能谱、实验耦合、普适几何或经典性，也没有改变支撑内的一次查询存储界。
+

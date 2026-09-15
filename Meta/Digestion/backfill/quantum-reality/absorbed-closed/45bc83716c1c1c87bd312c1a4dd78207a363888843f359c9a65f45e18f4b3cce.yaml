@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:45bc83716c1c1c87bd312c1a4dd78207a363888843f359c9a65f45e18f4b3cce
+  normalized_sha256: sha256:45bc83716c1c1c87bd312c1a4dd78207a363888843f359c9a65f45e18f4b3cce
+cas_ref: sha256:45bc83716c1c1c87bd312c1a4dd78207a363888843f359c9a65f45e18f4b3cce
+coverage_gids:
+  - gid: D5/S3/Observer/HiddenFlow/VisibleHiddenProjectionCriteria.hiddenProjection_eq_one_sub_visibleProjection
+    target_statement_id: sha256:16a436b1136d5388a7d042c7a219887052d056da2708031bfca50184bf3b7d7a
+  - gid: D5/S3/Observer/HiddenFlow/VisibleHiddenProjectionCriteria.visible_invariant_iff_hidden_visible_block_eq_zero
+    target_statement_id: sha256:0bb47217a456fb19af69046d5cfa68caa8a22a6c4b5313bae6387cb1428b3e36
+receipts:
+  unresolved_subitems: []

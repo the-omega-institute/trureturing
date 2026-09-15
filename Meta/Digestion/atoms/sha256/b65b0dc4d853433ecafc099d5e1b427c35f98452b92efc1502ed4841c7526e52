@@ -1,0 +1,41 @@
+### 95.3 有限窗口给出严格的余弦地板
+
+令
+
+$$
+ d=|\ell|,
+\qquad
+ m=\left\lfloor\frac{N}{d}\right\rfloor.
+$$
+
+`coefficient_gamma_le_cosine` 对有限支撑的每个非零整数移位给出
+
+$$
+|\gamma(\ell)|
+\le
+\cos\!\left(\frac{\pi}{m+2}\right).
+$$
+
+因此 `finite_record_cosine_obstruction` 进一步得到
+
+$$
+\boxed{
+\frac{1-\cos\!\left(\frac{\pi}{m+2}\right)}{2}
+\le
+\sup_{\rho}
+D\!\left(R(C(\rho)),\rho\right),
+\qquad
+\frac{1-\cos\!\left(\frac{\pi}{m+2}\right)}{2}>0.
+}
+$$
+
+余弦上界来自把整数索引按模 $d$ 分成 residue blocks；每个长度为 $m+1$ 的实非负范数序列满足最近邻二次型的有限路径上界，再把各块的质量相加。它是统一上界，由此产生严格正的误差地板；当前定理没有为每个 $c$ 提供达到该上界的等号见证，因此不把这个恢复下界称为普适 sharp 常数。
+
+两个边界值得保留：如果所有 $q_i$ 都相同，则不存在非零标签差，定理的量化条件为空；如果 $d>N$ 或 $N=0$，则 $m=0$，地板为
+
+$$
+\frac{1-\cos(\pi/2)}{2}=\frac12.
+$$
+
+当 $m$ 增大时，地板可以变小；这只说明更长的有限窗口可以降低该特定模型的下界，不表示已经得到无限记录极限或任意通道的无误恢复。
+

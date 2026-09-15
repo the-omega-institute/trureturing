@@ -1,0 +1,170 @@
+**定理 20.1（任意有限经典历史的实反馈达到与一维递推）。** 沿用定义 19.1 的候选分支对、参数域 $\mathcal G$ 和延续代价 $V_{\boldsymbol\beta}$。对任意有限参数列 $\boldsymbol\beta\in[0,1]^n$ 以及任意实候选向量 $\psi,\phi\in\mathbb R^2$，完整 $U(2)$ 共同历史控制的最大值都由一个全部控制属于 $O(2)$ 的反馈表达到。向量可以未归一化、为零、正交或共线；不增加可访问量子记忆或参考系统。
+
+对 $(p,q,k)\in\mathcal G$ 且 $p>0$，定义
+
+$$
+v_\pm(u)=
+\frac{\left[\sqrt{ku}\pm\sqrt{(pq-k)(p-u)}\right]^2}{p^2},
+\qquad 0\le u\le p.
+$$
+
+使用定理 19.2 的后继映射 $G_0^\beta,G_1^\beta$，完整复取向域上的 Bellman 递推可以精确缩为
+
+$$
+\begin{aligned}
+V_{(\beta,\boldsymbol\gamma)}(p,q,k)
+&=\max_{\substack{0\le u\le p\\\sigma\in\{-,+\}}}
+\bigl[
+V_{\boldsymbol\gamma}
+\bigl(G_0^\beta(p,q,k;u,v_\sigma(u))\bigr)\\
+&\hspace{8em}
++V_{\boldsymbol\gamma}
+\bigl(G_1^\beta(p,q,k;u,v_\sigma(u))\bigr)
+\bigr].
+\end{aligned}
+$$
+
+每个节点只需优化一个实区间及两个符号，最大值达到。空参数列仍取 $V_\varnothing(p,q,k)=|p-q|$，零权重边界为
+
+$$
+V_{\boldsymbol\beta}(0,q,0)=q,
+\qquad
+V_{\boldsymbol\beta}(p,0,0)=p.
+$$
+
+因此定义 18.1 的原始任务
+
+$$
+T_N(\boldsymbol\beta)
+=\frac12V_{\boldsymbol\beta}(1,1,1)
+$$
+
+也可以用实纯初态和全实共同反馈表达到。
+
+这一结论限定于所给仪器族及最终只读取经典历史的目标。它给出存在一个最优实控制表，不要求复制任意给定复控制表的全部叶分布，也不意味着每个边界取向都最优。一维递推仍保留三参数分支状态和全部已存历史，没有把任意长度的最优值化为闭式，也不保证控制树的规模具有统一效率界。
+
+证明。 首先证明递推所需要的一条权重方向凸性。固定有限尾列 $\boldsymbol\gamma$、$P\ge0$ 和 $c\in[0,P]$，取
+
+$$
+\psi_c=\begin{pmatrix}\sqrt c\\\sqrt{P-c}\end{pmatrix},
+\qquad
+\phi_s=\sqrt s\,|0\rangle,
+\qquad s\ge0.
+$$
+
+该向量对的三参数是 $(P,s,cs)$。对一个固定的完整共同控制表 $\pi$，令 $A_w^\pi,B_w^\pi$ 分别是末端历史 $w$ 上实际与理想的分支算子乘积，并记
+
+$$
+a_w^\pi=\|A_w^\pi\psi_c\|^2,
+\qquad
+b_w^\pi=\|B_w^\pi|0\rangle\|^2.
+$$
+
+固定表的代价就是
+
+$$
+J_\pi(s)=\sum_w|a_w^\pi-sb_w^\pi|.
+$$
+
+每项都是仿射函数的绝对值，故 $J_\pi$ 关于 $s$ 凸。控制表在所有可能历史上都有定义，包括零概率历史；所有 $s$ 使用同一个控制表空间，虽然实现最优值的表可以随 $s$ 变化。因此对 $s,t\ge0$、$\lambda\in[0,1]$，有
+
+$$
+\begin{aligned}
+&V_{\boldsymbol\gamma}
+\bigl(P,\lambda s+(1-\lambda)t,
+c[\lambda s+(1-\lambda)t]\bigr)\\
+&\quad=\sup_\pi J_\pi(\lambda s+(1-\lambda)t)\\
+&\quad\le\lambda\sup_\pi J_\pi(s)
++(1-\lambda)\sup_\pi J_\pi(t).
+\end{aligned}
+$$
+
+于是 $s\mapsto V_{\boldsymbol\gamma}(P,s,cs)$ 凸。总分支权重守恒还给出 $J_\pi(s)\le P+s$，所以这些上确界有限；空尾列及 $P=c=0$ 也包括在内。这只建立所列方向的凸性，没有假设 $V$ 关于 $(p,q,k)$ 联合凸。
+
+接着确定共同酉可行域在固定 $u$ 时的完整切片。设 $p>0$。对一个实候选对，先用同一个实正交变换把 $\psi$ 送到 $\sqrt p|0\rangle$，再利用 $\phi$ 的无关整体符号和第二坐标的基反射，得到代表
+
+$$
+\psi=\begin{pmatrix}\sqrt p\\0\end{pmatrix},
+\qquad
+\phi=\begin{pmatrix}\sqrt{k/p}\\\sqrt{q-k/p}\end{pmatrix}.
+$$
+
+整体符号不改变候选密度算子或路径概率，这里不把它当作只对一个候选施加的物理控制。上述规范式也为每个 $p>0$ 的合法三元组提供实代表；由定理 19.2 的共同酉不变性，其完整复可行域就是该三元组的 $\mathcal F(p,q,k)$。
+
+固定实际第零坐标强度 $u\in[0,p]$。任何共同复酉的第一行在去掉无关行相位后，都可以写成
+
+$$
+r_\theta=
+\left(\sqrt{u/p},\ e^{i\theta}\sqrt{(p-u)/p}\right).
+$$
+
+在 $u=0$ 或 $u=p$ 时，消失坐标的相位任取。理想第零坐标强度为
+
+$$
+v(\theta)=
+\frac{ku+(pq-k)(p-u)
++2\sqrt{k(pq-k)u(p-u)}\cos\theta}{p^2}.
+$$
+
+任意单位复行向量都可以补成一个酉矩阵，因此定理 19.2 的完整可行域在此 $u$ 上恰为闭区间
+
+$$
+\{v:(u,v)\in\mathcal F(p,q,k)\}
+=[v_-(u),v_+(u)].
+$$
+
+区间内部由不同的 $\cos\theta$ 取得，两个端点则由实正交矩阵
+
+$$
+R_\pm(u)=
+\begin{pmatrix}
+\sqrt{u/p}&\pm\sqrt{(p-u)/p}\\
+\mp\sqrt{(p-u)/p}&\sqrt{u/p}
+\end{pmatrix}
+$$
+
+取得。由于根号项非负，$v_-(u)\le v_+(u)$；又因为它们是范数平方为 $q$ 的向量经酉变换后的一个坐标强度，所以两者均在 $[0,q]$ 中。把 $R_\pm(u)$ 与前述共同实基变换复合，就得到作用于原始实候选对的合法实控制。还原 $\phi$ 的整体符号不会改变强度，输出向量仍然为实。
+
+若 $q=0$、$k=0$、$k=pq$，或 $u$ 为区间端点，上式中相应交叉项为零，闭区间退化成单点，公式直接适用。若 $p=0$，则 $u=k=0$，可行切片为 $[0,q]$，实旋转同样能够把实向量 $\phi$ 的第零坐标强度取成 $0$ 或 $q$。
+
+现在固定第一步参数 $\beta\in[0,1]$ 和 $u$，记
+
+$$
+\begin{aligned}
+\mathsf p_0&=(1-\beta)u+\beta(p-u),
+&c_0&=(1-\beta)u,\\
+\mathsf p_1&=(1-\beta)(p-u)+\beta u,
+&c_1&=(1-\beta)(p-u).
+\end{aligned}
+$$
+
+这些量不随 $v$ 变化，并满足
+
+$$
+\mathsf p_0-c_0=\beta(p-u)\ge0,
+\qquad
+\mathsf p_1-c_1=\beta u\ge0.
+$$
+
+该 $u$ 上的 Bellman 目标为
+
+$$
+F_u(v)=V_{\boldsymbol\gamma}(\mathsf p_0,v,c_0v)
++V_{\boldsymbol\gamma}(\mathsf p_1,q-v,c_1(q-v)).
+$$
+
+已经证明的权重方向凸性分别用于 $c_0\le \mathsf p_0$ 和 $c_1\le \mathsf p_1$；第二项再与仿射映射 $v\mapsto q-v$ 复合，仍然凸。因此 $F_u$ 在 $[0,q]$ 上凸。任意可行 $v$ 都满足
+
+$$
+F_u(v)\le
+\max\{F_u(v_-(u)),F_u(v_+(u))\}.
+$$
+
+区间非退化时，这是把 $v$ 写成两端点凸组合后的凸性不等式；区间退化时直接相等。故在保持同一个实际强度 $u$ 的条件下，可以用一个实可达端点代替复内部点，并且不降低最优延续代价。结合定理 19.2 的完整递推，即得所陈述的一维双符号递推。最大值由该定理的连续性和 $[0,p]\times\{-,+\}$ 的紧性达到。
+
+最后对剩余长度归纳，证明整个最优控制表可以为实。空尾列代价为 $|p-q|$，无需控制。若 $p=0$，实际所有分支权重为零，任意控制表的代价都是理想总权重 $q$；同理 $q=0$ 时恒为 $p$。这也证明所列零权重边界。
+
+对非零实际候选，取一个达到 Bellman 最大值的第一步 $(u,v)$，用上述不减值端点替换后，它仍然达到完整最大值。用实共同控制实现该端点；由于实际 $K_{\beta,z}$ 与理想 $P_z$ 都是实矩阵，两种结果后的候选对仍然为实。在每个已存结果分支，归纳假设给出达到完整复控制延续值的实尾表。两个尾表可以按不同的已存结果分别指定，与第一步组合后就成为全实最优反馈表。
+
+该选择只使用固定候选模型、参数及已存历史，两实验始终调用同一张表。证明没有进行分支归一化，也没有除以 $\beta$ 或 $1-\beta$，因此零子分支和 $\beta=0,1$ 均被覆盖。取共同实初态 $|0\rangle$，再用定理 19.2 的 $T_N=V_{\boldsymbol\beta}(1,1,1)/2$，得到原始任务的实达到结论。证毕。
+

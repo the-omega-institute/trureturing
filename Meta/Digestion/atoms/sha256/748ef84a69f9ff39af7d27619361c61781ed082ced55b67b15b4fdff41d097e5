@@ -1,0 +1,20 @@
+### 105.5 与 Zeckendorf 和量子记忆的接口
+
+若把长度 $$L$$ 的 Zeckendorf 合法构型作为初始状态集 $$Y=\mathcal W_L$$，并把一个具体量子或经典更新协议投影成 $$\tau$$ 与 $$q$$，则历史预算应按以下顺序计算：
+
+$$
+\boxed{
+\begin{aligned}
+\text{合法构型数}&=F_{L+2},\\
+\text{未来预测商大小}&=|\mathcal W_L/R_\infty|,\\
+\text{有限停止深度}&=\min\{m:R_m=R_\infty\},\\
+\text{量子精确载体}&\text{还需满足相应切口秩、POVM 或完全正编码约束}.
+\end{aligned}
+}
+$$
+
+第一行是 Zeckendorf 的组合计数；第二、三行依赖实际更新和读出，不能由 Fibonacci 数自动给出；第四行又把预测商与量子可实现性区分开来。若记录通道留下共享相干，经典商可能过早合并状态；若所有未来读出都已在商上闭合，则继续保留更细的历史只增加成本，不增加该任务的预测力。
+
+因此，对“用多少约束保留历史才能得到稳定经典现实”的最精确回答是：先计算允许实验族的完整未来核，再取其最大前向不变商；只有在这个商还能由物理记忆、测量和动力学实现时，它才是一个可交付的经典接口。
+
+本节复用 `finite_horizon_kernel_succ_iff`、`finite_horizon_kernel_antitone`、`complete_kernel_eq_iInf_finite_horizon`、`finite_horizon_stabilizes_at_completionDepth`、`predictive_completion_maximal_invariant_quotient`、`predictive_memory_minimal_quotient`、`prediction_completion_universality` 与 `future_readout_quotient_is_coarsest_with_unique_dynamics`。Lean 已证明的是这些有限状态和有限维线性模型中的核、商与唯一因子关系；将其具体实例化到 Zeckendorf 受限量子通道、噪声环境和实验成本函数，仍是后续形式化目标。

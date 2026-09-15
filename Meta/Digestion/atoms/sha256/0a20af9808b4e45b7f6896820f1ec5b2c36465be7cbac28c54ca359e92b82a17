@@ -1,0 +1,8 @@
+**证明。** 对每个坐标 $j$，把解码器固定为 $I=j$ 即得到由 $(Z,W)$ 预测 $H_j$ 的估计量。二元 Fano 界给出 $H(H_j\mid Z,W)\le h_2(\varepsilon_j)$，其中 $\varepsilon_j$ 是该坐标错误率。条件熵次可加性和 $h_2$ 的凹性给
+$$
+H(H\mid Z,W)\le\sum_j h_2(\varepsilon_j)\le n h_2(\varepsilon).
+$$
+又 $I(H;Z\mid W)=H(H\mid W)-H(H\mid Z,W)$，而条件像大小约束给 $I(H;Z\mid W)\le b$，合并即得。令 $W$ 为空且 $H(H)=n$ 得第一式。证毕。
+
+命题 28.2 只计摘要位数；索引、时钟、共享随机性、外部读取和解码运算仍按第22节分别计费。它也不替代零误差的状态类计数下界：当 $\varepsilon=0$ 时两者一致，当允许错误时则给出连续的记忆—误差权衡。
+

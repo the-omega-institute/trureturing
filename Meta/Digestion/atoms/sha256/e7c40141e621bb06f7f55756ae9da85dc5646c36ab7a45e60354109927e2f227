@@ -1,0 +1,16 @@
+## 15. 可访问旧记录、完整扰动与控制范围
+
+沿用第8、9章的有限新鲜记录假设。除第15.5节另行允许控制外，系统始终在同一指针基上受控写入，旧记录不再参与相互作用。所有Hilbert空间、测量结果集和时间窗口均有限；比较的是分别选定的记录前缀节点上的无条件态。令标签集为 $\mathsf X$、$d=|\mathsf X|\ge2$，$J$ 为全一矩阵。第 $t$ 步的单位对角相关矩阵 $C_t=(c_{xy}^{t})$ 与累计系统相位为
+$$
+c_{xy}^{t}
+=e^{i(\theta_{x,t}-\theta_{y,t})}\langle e_y^{(t)},e_x^{(t)}\rangle,
+\qquad
+\Theta_x(m)=\sum_{t=1}^{m}\theta_{x,t}.
+$$
+记
+$$
+A_N=C_1\odot\cdots\odot C_N,\qquad A_0=J,
+\qquad F_{m,n}=C_{m+1}\odot\cdots\odot C_n,\qquad F_{m,m}=J.
+$$
+系统边缘仍为 $\sigma_N(\rho)=M_{A_N}(\rho)$。算子范数记为 $\|\cdot\|_\infty$，迹范数记为 $\|\cdot\|_1$，迹距离为 $\mathsf d(\rho,\sigma)=\|\rho-\sigma\|_1/2$。
+

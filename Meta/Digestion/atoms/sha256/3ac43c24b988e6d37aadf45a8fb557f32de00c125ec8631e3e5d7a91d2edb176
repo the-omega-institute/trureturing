@@ -1,0 +1,66 @@
+**反例 13.8（相同读取前标量不足以决定联合前沿）。** 两个模型均取二维 $F$ 与二维 $B$，预测当前标签，容许最坏预测误差为 $1/10$。
+
+模型甲取
+
+$$
+E_0=\frac{3|00\rangle+|11\rangle}{\sqrt{10}},
+\qquad
+E_1=\frac{|00\rangle+3|11\rangle}{\sqrt{10}}.
+$$
+
+直接取部分迹得到
+
+$$
+\sigma_0=\operatorname{diag}(9/10,1/10),
+\qquad
+\sigma_1=\operatorname{diag}(1/10,9/10),
+\qquad
+T=\frac3{10}I_2.
+$$
+
+读取前的两个标量为
+
+$$
+D_F:=\frac12\|\sigma_0-\sigma_1\|_1=\frac45,
+\qquad
+V_F:=\|T\|_1=\frac35.
+$$
+
+计算基读取对两个标签的错误均为 $1/10$；对任何 POVM，
+
+$$
+v(M)=\sum_z\left\|\frac3{10}M_z\right\|_1
+=\frac3{10}\operatorname{tr}I_2
+=\frac35.
+$$
+
+因此模型甲的精确联合最优值为
+
+$$
+v_A^*\!\left(\frac1{10}\right)=\frac35,
+\qquad
+\eta_A^*=\frac15.
+$$
+
+模型乙取乘积记录
+
+$$
+f_0=b_0=|0\rangle,
+\qquad
+f_1=b_1=\frac35|0\rangle+\frac45|1\rangle,
+\qquad
+E_x=f_x\otimes b_x.
+$$
+
+它同样满足 $D_F=4/5$、$V_F=3/5$，但定理 13.5 给出
+
+$$
+v_B^*\!\left(\frac1{10}\right)
+=\frac35\sqrt{1-\left(\frac45\right)^2}
+=\frac9{25},
+\qquad
+\eta_B^*=\frac8{25}.
+$$
+
+两个模型具有相同的可访问标签迹距离与读取前相位访问量，而且都能达到指定的最坏预测误差，却具有不同的精确联合恢复误差。差别来自 $T$ 与读取效应的相对结构：甲的 $T$ 是正的标量矩阵，乙的 $T$ 是不同记录向量之间的秩一算子。因此，一般关联记录的联合预算不能只由 $D_F$、$V_F$ 或记录数量决定。
+

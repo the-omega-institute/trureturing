@@ -1,0 +1,17 @@
+**定义 78.1（按设置归一化的序列任务）。** 设 $d\ge1$，$\operatorname{Herm}_d$ 为 $d$ 阶 Hermitian 矩阵的实向量空间，内积为 $\langle A,B\rangle=\operatorname{tr}(AB)$。物理输入取密度矩阵 $\rho\ge0$、$\operatorname{tr}\rho=1$。对每个可选设置 $b$，分别给定有限个复线性、完全正且迹不增的分支 $\mathcal J_{b,s}$，并要求
+
+$$
+\sum_s\mathcal J_{b,s}\quad\text{对每个固定的 }b\text{ 都迹保持。}
+$$
+
+令 $\mathcal J_{b,s}^*$ 为 Hilbert--Schmidt 伴随。按时间顺序记录词 $w=((b_1,s_1),\ldots,(b_n,s_n))$，定义
+
+$$
+E_\varnothing=I_d,\qquad
+E_w=\mathcal J_{b_1,s_1}^*\cdots\mathcal J_{b_n,s_n}^*(I_d),
+\qquad
+p_\rho(w)=\operatorname{tr}(\rho E_w).
+$$
+
+设置是外部选择；若设置也随机化，其概率由另行指定的归一化策略给出，不把不同设置的全部分支直接合成一个仪器。
+

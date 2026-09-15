@@ -1,0 +1,6 @@
+且外部商到原商成员像的桥为双射
+$$
+X^*/R^*\longrightarrow(X/R)^*,\qquad
+[\operatorname{Enc}(x)]_{R^*}\longmapsto
+\operatorname{Enc}([x]_R)=\operatorname{Pack}([\operatorname{Enc}(x)]_{R^*}).
+$$

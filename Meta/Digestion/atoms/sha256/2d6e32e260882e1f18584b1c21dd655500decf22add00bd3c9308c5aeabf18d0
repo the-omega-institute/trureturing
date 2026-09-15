@@ -1,0 +1,18 @@
+### 12.4 固定时刻之后的有限窗口预算
+
+定义端点比较
+$$
+\alpha_Q(N,M)=\sup_\rho\operatorname{TV}
+\bigl(C_Q(\sigma_M),C_Q(\sigma_N)\bigr),\qquad N<M.
+$$
+定理12.1的同一对偶计算直接给出
+$$
+\alpha_Q(N,M)=\max_B
+\left\|\overline{A_N}\odot
+(\overline{C_{N+1}\odot\cdots\odot C_M}-J)\odot Q_B\right\|_\infty.
+$$
+由同一初态轨迹上的三角不等式还有
+$$
+\alpha_Q(N,M)\le\min\left\{1,\sum_{t=N}^{M-1}\alpha_{Q,t}\right\}.
+$$
+

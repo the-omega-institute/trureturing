@@ -1,0 +1,31 @@
+**定义 22.1（丢弃活动系统而保留可操作记忆）。** 沿用定义 17.1 的二结果仪器族。活动系统 $S=\mathbb C^2$，参数 $\beta_t\in[0,1]$，实际与理想结果算子分别为
+
+$$
+K_{t,z}=\sqrt{1-\beta_t}\,P_z+\sqrt{\beta_t}\,P_{1-z},
+\qquad P_z=|z\rangle\langle z|,
+\qquad z\in\{0,1\}.
+$$
+
+允许一个任意非零有限维可操作量子记忆 $M$。每次仪器之前，可以根据全部已存经典历史，在 $S\otimes M$ 上调用预先指定的共同 CPTP 控制；实际和理想实验调用同一张控制表。仪器只作用于 $S$，每次读取的经典结果追加到 $H_t$，旧历史保持不变。已丢弃的控制余系统或仪器余系统不再耦合，无后选择。末次仪器之后丢弃 $S$，输出为 $H_N\otimes M$。
+
+固定 $M$ 和共同控制表 $\Pi$ 后，这定义实际与理想通道
+
+$$
+\mathcal C_{{\rm A},N}^{\Pi},\mathcal C_{{\rm J},N}^{\Pi}:
+\mathcal L(S\otimes M)\longrightarrow\mathcal L(H_N\otimes M).
+$$
+
+记无参考共同输入的最优输出差异为
+
+$$
+T_N^{\rm mem}(\boldsymbol\beta)
+=\sup_{\substack{1\le\dim M<\infty,\,\Pi\\
+\rho\ge0,\,\operatorname{tr}\rho=1}}
+\frac12\left\|
+\mathcal C_{{\rm A},N}^{\Pi}(\rho)
+-\mathcal C_{{\rm J},N}^{\Pi}(\rho)
+\right\|_1.
+$$
+
+输入 $\rho$ 位于 $S\otimes M$。对固定通道还可以使用惰性参考 $R$ 定义 diamond 距离，此时控制不作用于 $R$，最终同时保留 $R$。$M$ 允许与活动系统耦合；这一访问权限不同于仅保留一个始终不可操作的参考系统。
+

@@ -1,0 +1,5 @@
+对函数 $f:D\to Y$，域 $D$ 取已指定的拓扑或相应子空间拓扑，对每个 $O\subseteq Y$ 及 $S\subseteq X$ 有
+$$
+(f^*)^{-1}(\operatorname{Enc}[O])=\operatorname{Enc}[f^{-1}(O)],\qquad
+\overline{\operatorname{Enc}[S]}^{\tau_X^*}=\operatorname{Enc}[\overline S^{\tau_X}].
+$$
