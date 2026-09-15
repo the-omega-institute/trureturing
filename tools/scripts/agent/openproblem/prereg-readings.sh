@@ -83,14 +83,26 @@ for e in d:
 fi
 
 # ---------- 3. arXiv ----------
+# http://export.arxiv.org answers 301 with an empty body and `curl -fsS` exits 0 on it, so a naive
+# `grep -c "<entry>"` prints 0 for a request that never reached the API. That is the shape CLAUDE.md
+# §2.9 and the `unmeasured-must-not-look-like-zero` judgement forbid, and it is why this block uses
+# https, follows redirects, asserts HTTP 200, and reads opensearch:totalResults rather than counting
+# <entry> elements (which are capped by max_results and so cannot distinguish "none" from "many").
 printf '### arXiv\n\n'
 Q="$(python3 -c 'import urllib.parse,sys; print(urllib.parse.quote("all:\"%s\"" % sys.argv[1]))' "$ANUM")"
-printf '```\n$ curl -s "http://export.arxiv.org/api/query?search_query=%s&max_results=20" | grep -c "<entry>"\n' "$Q"
-AX="$(curl -fsS "http://export.arxiv.org/api/query?search_query=$Q&max_results=20" 2>/dev/null)"; AX_RC=$?
-if [ "$AX_RC" -ne 0 ]; then
-  printf '```\n\n'; note_unavailable "arXiv 取回失败(curl exit $AX_RC)"
+AX_URL="https://export.arxiv.org/api/query?search_query=$Q&max_results=20"
+printf '```\n$ curl -sL -w "%%{http_code}" "%s"\n' "$AX_URL"
+AX_BODY="$(mktemp)"; trap 'rm -f "$AX_BODY"' EXIT
+AX_CODE="$(curl -sL -o "$AX_BODY" -w '%{http_code}' "$AX_URL" 2>/dev/null)"; AX_RC=$?
+AX_TOTAL="$(grep -oE '<opensearch:totalResults[^>]*>[0-9]+' "$AX_BODY" 2>/dev/null | grep -oE '[0-9]+$' | head -1)"
+if [ "$AX_RC" -ne 0 ] || [ "$AX_CODE" != "200" ] || [ -z "$AX_TOTAL" ]; then
+  printf 'http_code=%s curl_exit=%s totalResults=%s\n```\n\n' "$AX_CODE" "$AX_RC" "${AX_TOTAL:-<absent>}"
+  note_unavailable "arXiv 未返回可解析的 200 响应(http_code=$AX_CODE, curl exit=$AX_RC);**不得把它记成 0 命中**"
 else
-  printf '%s\nEXIT=%d\n```\n\n' "$(printf '%s\n' "$AX" | grep -c '<entry>' || true)" "$AX_RC"
+  printf 'http_code=200  opensearch:totalResults=%s\n```\n\n' "$AX_TOTAL"
+  printf -- '- 读的是 `opensearch:totalResults`,不是 `<entry>` 元素数——后者被 `max_results` 截断,\n'
+  printf -- '  区分不了「零」与「很多」。HTTP 状态码单独断言,因为 `http://export.arxiv.org` 会以 301\n'
+  printf -- '  空响应作答,而空响应 grep 出来同样是 0。\n'
   printf -- '- 按 A 号查 arXiv 命中少是常态;它不能替代按**数学内容**的检索,后者须另行申报。\n\n'
 fi
 
