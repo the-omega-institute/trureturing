@@ -496,3 +496,450 @@ out={'seed':260420970,'random_exact_normal_forms_and_length9_words':count,
 Path('audit_results.json').write_text(json.dumps(out,indent=2))
 print(json.dumps(out,indent=2))
 ```
+
+## 11. 几何范围修正：Prym 比较只直接覆盖偶二阶分量
+
+本节修正第 2、9 节中未写出的必要范围。[Don92, §5.1, Theorems 5.2–5.3] 使用
+
+\[
+RC=RC^+\sqcup RC^-,\qquad \chi:A_4\dashrightarrow RC^+.
+\]
+
+χ 的目标是带偶二阶点的分量。[LNR22, §6, p.15] 明确将 RC+ 写成满足偶性条件的 (V,δ)，其中 δ 不在中间 Jacobian 的规范 theta 除子上。因此，第 9 节通过 A4 构造八维候选 U 及 Prym 关联循环的路线，目前只适用于相应 RC+ 共同开集。RC− 不能由这项识别自动纳入。
+
+这不构成对 [KLM26] 阶二预期的反证。它修正的是本研究所用文献的适用范围。还不能把 Prym 纤维上的 λ 未经证明地解释为阿贝尔簇 A 上的取负映射；仅凭二阶外幂在取负下不变，不能推断第 9 节候选 Ψ 的反不变投影为零。
+
+本轮新增两个 Lean 源 `TransvectionLieGeneration.lean`、`TransvectionLieFiltration.lean` 及对应 Scribe，仍未在此环境执行 Lean 或 Scribe 编译。以下声明为普通数学证明与待编译形式化源；有限矩阵核验的状态另列。
+
+## 12. 连通配对图强制生成整个辛李代数
+
+设 K 是特征不为 2 的域，H 是 n×n 交替矩阵，N_i=e_iH_i。定义实际配对图 Γ：不同 i,j 之间有边当且仅当 H_ij≠0。令
+
+\[
+C_{ij}=(E_{ij}+E_{ji})H=e_iH_j+e_jH_i.
+\]
+
+这里 C_ii=2N_i。直接相乘得到两个恒等式：
+
+\[
+[N_i,N_j]=H_{ij}C_{ij},\tag{12.1}
+\]
+\[
+[C_{ij},N_k]=H_{jk}C_{ik}+H_{ik}C_{jk}.\tag{12.2}
+\]
+
+### 定理 12.1. 连通生成
+
+若 det H≠0 且 Γ 连通，则
+
+\[
+\operatorname{Lie}_K\langle N_i\rangle
+=\mathfrak{sp}(H)
+:=\{X:X^tH=-HX\}.
+\]
+
+**证明。** 每个 N_i 都属于右侧，故生成代数包含于右侧。
+对 Γ 的一条边，式 (12.1) 及非零 H_ij 给出 C_ij。若从 i 到 j 的 C_ij 已经生成，且 j,k 是一条边，则 C_jk 已生成，并由
+
+\[
+C_{ik}=H_{jk}^{-1}\bigl([C_{ij},N_k]-H_{ik}C_{jk}\bigr)\tag{12.3}
+\]
+
+继续生成 C_ik。按路径长度归纳，得到全部 C_ij。
+任取 X∈sp(H)，令 S=XH^{-1}。从 H^t=-H 及 X^tH=-HX 推出 S^t=S，故
+
+\[
+X=SH=\frac12\sum_{i,j}S_{ij}C_{ij}.
+\]
+
+因此 X 也在生成代数中。证毕。
+
+路径传播本身不需要 det H≠0；非退化性只用于证明全部 skew-adjoint 矩阵均有上述对称因子。Lean 源直接使用 Mathlib 的 `LieSubalgebra.lieSpan` 和 `skewAdjointMatricesLieSubalgebra`，没有预先给定的生成性字段。对应主声明为 `generated_eq_skewAdjoint`。
+
+### 推论 12.2. 观察所重构的矩阵也具有完整生成性
+
+继续第 4 节的 R,J。若 p 的非锚点坐标非零、t 交替且 det R≠0，则
+
+\[
+\operatorname{Lie}_K\langle N_i(R)\rangle=\mathfrak{sp}(J).
+\]
+
+**证明。** J=diag(μ)R 的各 μ_i 非零，N_i(J)=μ_iN_i(R)，故两个实际生成元集合的 Lie 闭包相同。J 的锚点行均为 1，其配对图连通。定理 4.3 给出 det J≠0，应用定理 12.1。证毕。
+
+对应 Lean 声明为 `generated_row_scale` 和 `recovered_generated_eq_skewAdjoint`。此处不声称两组离散群生成元的抽象群相同。
+
+文献边界：[Yel21, Proposition 3.1 and Remark 3.4] 已在 l-adic transvection 生成中使用连通配对图及图直径。因此连通性方法本身不登记为新发现；下面进一步求出每一级的精确线性空间及匹配下界。
+
+## 13. 更强的精确结果：Lie 生成层等于图距离带
+
+定义实际的线性生成过程
+
+\[
+L_0=\operatorname{span}_K\{N_i\},\qquad
+L_{k+1}=L_k+\operatorname{span}_K\{[X,N_i]:X\in L_k\}.
+\]
+
+L_k 使用至多 k+1 次原始生成元。独立地，令 B_k 为所有由至多 k 条 Γ 边连接的 C_ij 所张成的空间；长度零路径允许 i=j。
+
+### 定理 13.1. 全层相等
+
+对任意交替 H、任意 k≥0，不要求非退化或连通，均有
+
+\[
+L_k=B_k.\tag{13.1}
+\]
+
+**证明。** k=0 时用 C_ii=2N_i。
+若 L_k=B_k，由 (12.2)，[C_ij,N_v] 的每个非零项，都将一条已有路径延长一条实际非零边；另一项使用反向路径。因此 L_(k+1)⊆B_(k+1)。
+反向取一条至多 k+1 边的路径。若已有至多 k 边，则由归纳假设获得对应 cross。否则去掉最后的边 u,j，从 L_k 中的 C_iu 出发，用式 (12.3) 生成 C_ij。所减去的 C_uj 已在 L_1⊆L_(k+1)，所有除数均为真实路径上的非零配对。于是 B_(k+1)⊆L_(k+1)。证毕。
+
+对应完整 Lean 声明为 `TransvectionLieFiltration.layer_eq_band`。两边在源中独立定义：左边从矩阵、线性张成和交换子递推；右边从实际非零配对的有限路径定义，不把结论放入左边的定义。
+
+### 定理 13.2. 最早出现时刻的匹配下界
+
+进一步假设 det H≠0。若 X∈L_k，而 r,c 之间没有长度至多 k 的路径，则
+
+\[
+(XH^{-1})_{rc}=0.\tag{13.2}
+\]
+
+对不同 i,j，特别有
+
+\[
+C_{ij}\in L_k\quad\Longleftrightarrow\quad d_\Gamma(i,j)\le k.\tag{13.3}
+\]
+
+不连通时距离记为无穷。
+
+**证明。** 每个 C_ijH^{-1}=E_ij+E_ji。由 (13.1)，L_k 中任意线性组合的系数矩阵在距离大于 k 的条目均为零。但 C_ijH^{-1} 的 (i,j) 条目为 1，所以该方向不可能更早出现。反向由路径构造给出。证毕。
+
+对应 Lean 声明为 `layer_support` 和 `cross_mem_layer_iff`。
+
+### 推论 13.3. 精确维数曲线与最短充分长度
+
+取指标集上的任意全序。如果 det H≠0，则
+
+\[
+\dim L_k=n+\#\{i<j:d_\Gamma(i,j)\le k\}.\tag{13.4}
+\]
+
+因此，当 Γ 连通且 n≥2 时，达到完整 sp(H) 所需的最小生成元出现次数为
+
+\[
+1+\operatorname{diam}(\Gamma).\tag{13.5}
+\]
+
+**证明。** 右乘 H^{-1} 将 B_k 的生成族变成对角矩阵单位与距离带内的对称矩阵单位，它们线性独立。计数给出 (13.4)，最远点对给出 (13.5) 的必要性与充分性。证毕。
+
+这两个计数推论尚未单独成为 Lean 声明。任意 Lie 括号排布的有界长度张成与上述右延长过程相同，普通证明由 Jacobi 恒等式逐步将右侧复合括号展开为对单个生成元的右延长，保持生成元出现次数；这个自由 Lie 排布比较也尚未形式化。
+
+上界中的图直径已有 [Yel21, Remark 3.4] 的相关先例；这里得到的对象是完整的线性层、逐条目的零约束及下界。没有找到同一精确陈述的直接来源，但检索不构成全球新颖性认证，也不把它计为一个已解决的公开猜想。
+
+## 14. 星形情况下的三次显式证书及锐性
+
+若 H_ai,H_aj 非零，则式 (12.1)–(12.2) 给出
+
+\[
+C_{ij}=-\frac{[N_i,[N_a,N_j]]}{H_{ai}H_{aj}}
++\frac{H_{ij}}{H_{ai}^{2}}[N_a,N_i].\tag{14.1}
+\]
+
+该恒等式允许 i=j，也允许叶子之间 H_ij=0；只除以锚点边。对应 Lean 声明 `cross_cubic_certificate` 已给出逐项证明。
+
+若 H 非退化，下列 n(n+1)/2 个矩阵形成 sp(H) 的一组基：所有 N_i，全部 n−1 个 [N_a,N_i]，以及每个非锚点无序对 i<j 对应的 [N_i,[N_a,N_j]]。
+
+**证明。** N_i 对应对角对称矩阵单位，锚点交换子给出 C_ai。每个双交换子由 (14.1) 给出一个非零倍的独有 C_ij，加上已列出的 C_ai 方向。这是相对于完整对称矩阵单位基的可逆三角变换。证毕。基数与独立性推论尚未单独写为 Lean 声明。
+
+一个八维锐性实例是：H_0j=1 (1≤j≤7)，H_12=H_34=H_56=1，其他上三角条目为零，下三角由交替性决定。其 det H=1，配对图有 10 条边且直径为 2。故各层维数为
+
+\[
+\dim L_0=8,\quad \dim L_1=18,\quad \dim L_2=36.
+\]
+
+长度二不够，长度三恰好足够。
+对八顶点带权路径 H_(i,i+1)=i+1，维数曲线则为
+
+\[
+8,15,21,26,30,33,35,36.
+\]
+
+这些是定理 (13.4) 的具体实例，并已用独立有理数消元逐层核验。这里的长度是 Lie 词中的生成元出现次数，不是群的 Cayley 图直径，也不是数值积分的物理时间。
+
+## 15. 特征零下的完整 Zariski 稠密性推论
+
+以下是普通代数群证明，尚未作为 Lean 代数群声明输出。
+在复数域上，取 det H≠0 且配对图连通的交替 H。则
+
+\[
+\overline{\langle1+N_i\rangle}^{\mathrm{Zar}}=\mathrm{Sp}(H).\tag{15.1}
+\]
+
+**证明。** N_i^2=0，且 1+N_i 保持 H，所以左侧 G 包含于右侧。对每个 i，整数幂为 (1+N_i)^m=1+mN_i。整数在复仿射直线上 Zariski 稠密，因此 G 包含整个一参数子群 1+tN_i，故 Lie(G) 包含每个 N_i。定理 12.1 迫使 Lie(G)=sp(H)。Sp(H) 连通，特征零代数群光滑，故 G 的单位连通分量与 Sp(H) 同维，从而等于 Sp(H)。证毕。
+
+这是经典 nilpotent-exponential 论证；[DdG19, Proposition 3.1] 对两个幂零生成元写出同样机制，任意有限族的证明完全相同。有限正特征不适用上述整数点论证，不能从完整 Lie 生成性直接推出离散有限群的 Zariski 稠密性。
+
+对第 4 节已重构且非退化的 R，推论 12.2 以同样论证给出 Sp(J)。如果真实几何表示已经被证明是该八维表示的 primitive 外幂，才可进一步推出其 27 维连通像为 PSp8。目前这一几何比较仍是额外义务。
+
+## 16. 实际构造 27 维 primitive 空间的独立精确实例
+
+前一轮只构造了 28 维二阶外幂。本轮对第 14 节稀疏八维 H，实际构造收缩映射
+
+\[
+c_H:\Lambda^2K^8\to K,\qquad c_H(e_i\wedge e_j)=H_{ij},
+\]
+
+并求出 W=ker(c_H) 的一个显式 27 维基。若收缩行的非零枢轴为 p，则其余每个基向量 q 取
+
+\[
+b_q=e_q-\frac{(c_H)_q}{(c_H)_p}e_p.
+\]
+
+基矩阵记为 B。独立构造真正的 Λ²(1+N_i) 后，在此基上求出 Δ_i 并逐一验证
+
+\[
+B\Delta_i=(\Lambda^2(1+N_i)-1)B,
+\quad \Delta_i^2=0,
+\quad\operatorname{rank}\Delta_i=6.
+\]
+
+在这些真实 27×27 矩阵上，全部不同指标的二阶迹及五组三阶迹通过因子 6 检验；由 8+7+21 个短 Lie 词构成的系数矩阵秩恰为 36。
+
+这是一组完整的有理数计算实例，证明本轮表示证书有非空的真实外幂实例。它们是我们构造的矩阵，尚不是从 Fano 几何中导出的 monodromy 矩阵。未将这些算例冒称为全称 Lean 证明或几何猜想的验证。
+
+## 17. 经本轮定理约束后的研究前沿
+
+本轮在已经验证的八维 transvection 标架上，去掉了“生成整个辛李代数”这一额外假设，并计算了生成所需的精确层数。几何层仍须完成以下实际比较：
+
+1. RC+ 共同开集上的候选 U 是否给出一个非零平坦映射 Ψ:Λ²₀U→(R²覆盖族)_minus。第 9 节的关联循环还没有非零性证明。
+2. 若走矩阵路线，要从实际几何退化构造 Δ_i，证明它们与候选 Λ²₀(1+N_i) 存在同一个可逆 intertwiner。二三阶迹一致本身不够。
+3. RC− 需要独立几何来源或专门比较，不能复制 RC+ 的 Prym 身份。
+
+若第 1 项或第 2 项完成并覆盖所需生成元，本轮的连通图定理即可供给相应的辛密度结论。当前精确 Lie 滤过结果没有单独约束尚未输入的几何表示，因此不把阶二 Fano 预期标为已解决。
+
+## 18. 本轮新增参考文献与核验
+
+[Yel21] Jeffrey Yelton. *Boundedness results for 2-adic Galois images associated to hyperelliptic Jacobians*. arXiv:1703.10917v5. Mathematische Nachrichten 294 (2021), 1629–1643. Proposition 3.1 and Remark 3.4. 图连通性及直径生成界是已有方法。
+https://arxiv.org/abs/1703.10917
+
+[DdG19] A. S. Detinko and W. A. de Graaf. *2-Generation of simple Lie algebras and free dense subgroups of algebraic groups*. arXiv:1905.01853v2. Proposition 3.1. 幂零 Lie 生成到指数子群 Zariski 稠密性的经典证明。
+https://arxiv.org/abs/1905.01853
+
+[LNR22] Martí Lahoz, Juan Carlos Naranjo, Andrés Rojas. *Geometry of Prym semicanonical pencils and an application to cubic threefolds*. arXiv:2106.08683v2. §6, printed p.15, RC+ 的偶二阶点条件。
+https://arxiv.org/abs/2106.08683
+
+本轮读取 dev `e88a14f641522c8f73dab28c1d4da1a37ea5d7b2`，并核对它相对前轮 base 的 23-commit 差异；没有重写已有数学源，也没有修改工程文件。新源未编译，`#print axioms` 未执行，有限测试不能替代它们。
+
+以下两段脚本分别保存为 Python 文件运行，依赖 SymPy。它们从实际矩阵计算，不把本轮数学结论作为测试定义。第一段检验路径证书、三次基和真实 primitive 外幂；第二段独立迭代交换子空间，并与图距离带比较，包括不连通和退化实例。它们均已执行成功。
+
+### audit_lie_generation.py
+
+```python
+"""Exact checks. Neither an exhaustive search nor a Lean compilation."""
+from __future__ import annotations
+from collections import deque
+from itertools import combinations
+from pathlib import Path
+import json
+import random
+import sympy as s
+
+rng = random.Random(814620260916)
+
+def inc(H, i):
+    N = s.zeros(H.rows)
+    N[i, :] = H[i, :]
+    return N
+
+def cross(H, i, j):
+    C = s.zeros(H.rows)
+    C[i, :] += H[j, :]
+    C[j, :] += H[i, :]
+    return C
+
+def bracket(X,Y): return X*Y-Y*X
+
+def rank(mats):
+    if not mats: return 0
+    return s.Matrix.hstack(*(s.Matrix(list(M)) for M in mats)).rank()
+
+def paths(H, start):
+    out = {start: [start]}
+    q=deque([start])
+    while q:
+        i=q.popleft()
+        for j in range(H.rows):
+            if H[i,j] and j not in out:
+                out[j]=out[i]+[j];q.append(j)
+    if len(out)!=H.rows: raise ValueError('disconnected pairing graph')
+    return out
+
+def verify(H):
+    n=H.rows
+    assert H.T==-H and H.det()!=0
+    N=[inc(H,i) for i in range(n)]
+    all_C=[]
+    for i in range(n):
+        for j,path in paths(H,i).items():
+            C=2*N[i]
+            for u,v in zip(path,path[1:]):
+                edge=bracket(N[u],N[v])/H[u,v]
+                C=(bracket(C,N[v])-H[i,v]*edge)/H[u,v]
+            assert C==cross(H,i,j)
+            all_C.append(C)
+    for i in range(n):
+        assert N[i]**2==s.zeros(n)
+        assert N[i].T*H+H*N[i]==s.zeros(n)
+    # Universal symmetric-factor decomposition sampled using independently chosen S.
+    U=s.Matrix(n,n,lambda i,j:rng.randint(-4,4));S=U+U.T; X=S*H
+    assert X.T*H+H*X==s.zeros(n)
+    assert X*H.inv()==S
+    reconstructed=s.zeros(n)
+    for i in range(n):
+        for j in range(n):reconstructed+=s.Rational(1,2)*S[i,j]*cross(H,i,j)
+    assert reconstructed==X
+    assert rank(all_C)==n*(n+1)//2
+    return N
+
+def star(n):
+    # Anchor edges plus disjoint pairs among the first n-2 leaves.
+    H=s.zeros(n)
+    for j in range(1,n): H[0,j]=1;H[j,0]=-1
+    for i in range(1,n-1,2):H[i,i+1]=1;H[i+1,i]=-1
+    return H
+
+results=[]
+for n in (2,4,6,8):
+    H=s.zeros(n)
+    for i in range(n-1): H[i,i+1]=i+1;H[i+1,i]=-(i+1)
+    N=verify(H)
+    results.append({'kind':'path','n':n,'det':str(H.det()),'full_lie_dimension':n*(n+1)//2})
+    H=star(n);N=verify(H)
+    for i in range(1,n):
+        for j in range(1,n):
+            cubic=-bracket(N[i],bracket(N[0],N[j]))/(H[0,i]*H[0,j])
+            cubic+=H[i,j]*bracket(N[0],N[i])/H[0,i]**2
+            assert cubic==cross(H,i,j)
+    selected=N+[bracket(N[0],N[i]) for i in range(1,n)]
+    selected += [bracket(N[i],bracket(N[0],N[j])) for i,j in combinations(range(1,n),2)]
+    d2=rank(N+[bracket(N[i],N[j]) for i,j in combinations(range(n),2)])
+    d3=rank(selected)
+    assert len(selected)==d3==n*(n+1)//2
+    if n>=4: assert d2<d3
+    results.append({'kind':'sparse-star','n':n,'det':str(H.det()),'length_le_2_dimension':d2,
+                    'selected_length_le_3_count':len(selected),'length_le_3_dimension':d3})
+
+# Actual primitive exterior square, constructed as a kernel, with its own basis.
+H=star(8);N=[inc(H,i) for i in range(8)]
+pairs=list(combinations(range(8),2));at={pair:i for i,pair in enumerate(pairs)}
+
+def wedge(T):
+    return s.Matrix(28,28,lambda r,c:T[pairs[r][0],pairs[c][0]]*T[pairs[r][1],pairs[c][1]]-
+                                          T[pairs[r][0],pairs[c][1]]*T[pairs[r][1],pairs[c][0]])
+
+def derivative(X):
+    M=s.zeros(28)
+    def add(i,j,col,x):
+        if i==j:return
+        if i>j:i,j=j,i;x=-x
+        M[at[i,j],col]+=x
+    for col,(i,j) in enumerate(pairs):
+        for k in range(8):add(k,j,col,X[k,i]);add(i,k,col,X[k,j])
+    return M
+
+contraction=s.Matrix([[H[i,j] for i,j in pairs]])
+pivot=next(i for i in range(28) if contraction[i])
+keep=[i for i in range(28) if i!=pivot]
+B=s.zeros(28,27)
+for col,q in enumerate(keep):B[q,col]=1;B[pivot,col]=-contraction[q]/contraction[pivot]
+assert contraction*B==s.zeros(1,27) and B.rank()==27
+L=[]
+for Ni in N:
+    Li=derivative(Ni)
+    assert wedge(s.eye(8)+Ni)==s.eye(28)+Li
+    restricted=(Li*B)[keep,:]
+    assert B*restricted==Li*B and restricted**2==s.zeros(27)
+    assert restricted.rank()==6
+    L.append(restricted)
+for i,j in combinations(range(8),2):
+    assert (L[i]*L[j]).trace()==6*(N[i]*N[j]).trace()
+for i,j,k in [(0,1,2),(0,2,3),(3,4,5),(0,0,1),(1,3,6)]:
+    assert (L[i]*L[j]*L[k]).trace()==6*(N[i]*N[j]*N[k]).trace()
+selected27=L+[bracket(L[0],L[i]) for i in range(1,8)]
+selected27 += [bracket(L[i],bracket(L[0],L[j])) for i,j in combinations(range(1,8),2)]
+assert rank(selected27)==36
+out={'seed':814620260916,'connected_frame_checks':results,
+     'primitive_space_dimension':27,'primitive_increment_ranks':[M.rank() for M in L],
+     'primitive_lie_certificate_rank':36,'pair_and_triple_factor':6,
+     'lean_compiled':False,'geometric_monodromy_matrices_supplied':False}
+Path('audit_lie_generation_results.json').write_text(json.dumps(out,indent=2))
+print(json.dumps(out,indent=2))
+```
+
+### audit_filtration.py
+
+```python
+"""Independently iterate actual commutator spaces and compare with graph bands."""
+from collections import deque
+from itertools import combinations
+from pathlib import Path
+import json
+import sympy as s
+
+def inc(H,i):
+    M=s.zeros(H.rows);M[i,:]=H[i,:];return M
+
+def cross(H,i,j):
+    M=s.zeros(H.rows);M[i,:]+=H[j,:];M[j,:]+=H[i,:];return M
+
+def basis(mats):
+    A=s.Matrix.hstack(*(s.Matrix(list(M)) for M in mats))
+    return [mats[i] for i in A.rref()[1]]
+
+def distances(H):
+    n=H.rows;D={}
+    for a in range(n):
+        seen={a:0};q=deque([a])
+        while q:
+            u=q.popleft()
+            for v in range(n):
+                if H[u,v]!=0 and v not in seen:seen[v]=seen[u]+1;q.append(v)
+        for b,d in seen.items():D[a,b]=d
+    return D
+
+def check(H,name):
+    n=H.rows;N=[inc(H,i) for i in range(n)];D=distances(H)
+    B=basis(N);profile=[];inv=H.inv() if H.det()!=0 else None
+    for k in range(n):
+        target=[cross(H,i,j) for i in range(n) for j in range(i,n) if D.get((i,j),n+1)<=k]
+        TB=basis(target)
+        assert len(B)==len(TB)==len(basis(B+TB))
+        if inv is not None:
+            predicted=n+sum(D.get((i,j),n+1)<=k for i,j in combinations(range(n),2))
+            assert len(B)==predicted
+            for X in B:
+                S=X*inv
+                assert S==S.T
+                assert all(S[i,j]==0 for i in range(n) for j in range(n) if D.get((i,j),n+1)>k)
+        profile.append(len(B))
+        B=basis(B+[X*Ni-Ni*X for X in B for Ni in N])
+    return {'name':name,'n':n,'det':str(H.det()),'ranks_by_generator_length_1_to_n':profile}
+
+out=[]
+for n in [4,6,8]:
+    H=s.zeros(n)
+    for i in range(n-1):H[i,i+1]=i+1;H[i+1,i]=-(i+1)
+    out.append(check(H,'weighted_path'))
+    H=s.zeros(n)
+    for i in range(1,n):H[0,i]=1;H[i,0]=-1
+    for i in range(1,n-1,2):H[i,i+1]=1;H[i+1,i]=-1
+    out.append(check(H,'sparse_star'))
+H=s.zeros(8)
+for start in [0,4]:
+    for i in range(start,start+3):H[i,i+1]=1;H[i+1,i]=-1
+out.append(check(H,'two_disconnected_path_blocks'))
+H=s.Matrix(5,5,lambda i,j:0 if i==j else 1 if i<j else -1)
+out.append(check(H,'singular_odd_complete_graph'))
+result={'exact_filtration_checks':out,'lean_compiled':False,'proof_by_exhaustive_search':False}
+Path('audit_filtration_results.json').write_text(json.dumps(result,indent=2))
+print(json.dumps(result,indent=2))
+```
