@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f32113a0c2e3992242334292393b2b01f09a011b9923c0f5a01189046e19fe85
+  normalized_sha256: sha256:f32113a0c2e3992242334292393b2b01f09a011b9923c0f5a01189046e19fe85
+cas_ref: sha256:f32113a0c2e3992242334292393b2b01f09a011b9923c0f5a01189046e19fe85
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 由 abs_le 和 mul_nonneg 得到三槽独立扰动盒内的完整余量下界，并逐一验证正文三个端点可行且达到等号，原全部系数与符号均保持；仓内无冻结 GID。
+    previous_atom_id: f2d892a2dd6e249e4588f518b60acf272bb1e29a178e03e21810b23c942f9d14
+    next_atom_id: 5d0d3a644b6f1f26287b93cedf342c4271e8f03f72a7ce1d6c83e8d5b3f528fa
