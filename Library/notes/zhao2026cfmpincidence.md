@@ -134,3 +134,83 @@ CI result. No binding-only formal wrapper is added for an existing flow
 result. The unrestricted degree-eight target and original CFMP conjecture
 remain open in this work. The restricted theorem has no numerical hypothesis
 left unproved; its additional hypotheses are the explicit incidence rules.
+
+## Second increment: exact identification constraints and nonvacuous families
+
+Sections 5-9 were appended without changing Sections 1-4.
+
+Section 5 retains the actual equality of a local edge with its opposite when
+both represent the same global edge. The upper-face calculation must then
+use the SAME cap for both, not independently set the opposite one to its
+lower endpoint. With caps two for degrees eight/nine and 19/10 for degrees
+at least ten, realization follows if each degree-eight edge has at least six
+opposite-identified occurrences, and each degree-nine edge has at least two.
+The strict angular sums are certified by exact triple/seven-angle polynomial
+identities. This equality constraint need not survive passage to a covering
+triangulation, so no such cover-stability claim is made.
+
+Section 6 allows every edge degree at least six, provided each occurrence
+of an edge below degree twenty has four adjacent edges of degree at least
+twenty. Caps two and 61/50 give exact cosine bounds 2471/4971<1/2 and
+389/411<cos(pi/10), respectively. There is no bound on the number of
+four-dimensional length coordinates or tetrahedra; the length space dimension
+is the actual number of GLOBAL edges, not four times the tetrahedron count.
+Here 'four-dimensional length coordinates' should be read only as no fixed
+dimension restriction; no four-dimensional manifold is involved.
+
+Section 7 gives two fully specified actual face-pairings, with odd gluing
+permutations, no reversal of an edge, and closed orientable vertex links:
+four tetrahedra with edge degrees (8,16) and one genus-three boundary; six
+tetrahedra with edge degrees (6,6,24) and one genus-four boundary. Their local
+color conditions are verified. Taking cyclic covers produces unbounded,
+pairwise nonhomeomorphic families by Euler characteristic. This is a proof
+of nonvacuity and unbounded scope, not a claim that the four-tetrahedron
+example was previously unknown: CFMP itself reports experimental checks of
+all triangulations with at most four tetrahedra. The equal-valence regular
+construction is also old and explicitly credited.
+
+Section 8 proves a limitation of the independent-opposite-endpoint cap test.
+At a global minimum cap b, every local cosine lower bound is at least
+f(b)=(2b^3+b^2+1)/(2b^3+3b^2-1)>=7/9. Therefore the Section 3 certificate
+cannot succeed on ANY all-eight or all-nine triangulation, even with
+nonuniform caps in (1,2]. Such constant-valence triangulations are nevertheless
+geometric by the classical regular-tetrahedron construction. This is a
+counterexample to a proposed proof mechanism, not to CFMP or to all possible
+coupled barriers. It justifies keeping true equalities and seeking additional
+joint constraints instead of tuning the same incomplete cap scheme.
+
+Section 9 uses the exact remaining variational obligation. In a minimum-eight
+triangulation the assignment 2pi/d(e) is a strict angle structure. Luo-Yang
+Theorems 1.4 and 6.3 already give a unique maximum-volume angle structure and
+a positive GENERALIZED length realization. Its only nongeometric tetrahedra
+have angles (0,0,0,0,pi,pi), with the pi angles opposite. The full original
+PDF was now retrieved and the theorem/Section 6.3 text inspected. A screenshot
+of PDF page index one (printed page two, including Theorem 1.4) succeeded.
+No claim of independently rechecking the entire paper is made. Excluding
+these flat tetrahedra in the maximum is the missing full-eight existence
+step; positive angle feasibility or energy monotonicity does not exclude them.
+
+## Exact checks actually executed, outside the repository delta
+
+The local verification script checks the derivative numerator identity,
+seven displayed cosine evaluations, the squared three-high bound, all exact
+triple/seven-angle inequalities, and the rational no-go factorization.
+Numerical radian margins are display-only; the strict signs have rational
+polynomial certificates. A two-variable floating-point root was also explored
+for the four-tetrahedron example; its success is not used as an existence
+proof or certified geometric root.
+
+Three face-pairing packets were checked. Two are the stated (8,16) and
+(6,6,24) examples. The third is a second (8,16) packet with an opposite-pair
+low edge, checking the Section 5 condition. The initial searches used exact
+union-find bookkeeping. A separate graph-component implementation, with no
+use of the searcher's output classes, rechecked complete face pairing,
+orientation parity, connectedness, oriented-edge reversal, circular normal
+links, vertex-link Euler characteristics and all incidence hypotheses. Both
+implementations are local diagnostics authored in this session; they are not
+independent human reviews, a Regina/SnapPy certificate or Lean certification.
+
+No tests of finitely many pairings establish the unrestricted conjecture.
+The mathematical theorems quantify over all actual triangulations satisfying
+the displayed incidence rules and use the complete analytical proof. Their
+priority has not been established by an exhaustive literature review.
