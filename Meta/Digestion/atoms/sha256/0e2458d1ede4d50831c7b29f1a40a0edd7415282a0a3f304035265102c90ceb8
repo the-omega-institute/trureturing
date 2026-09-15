@@ -1,0 +1,74 @@
+## AT.2 稳定消去多项式与尾部常数
+
+**定义。** 对序列 $u=(u_n)_{n\ge0}$，令移位算子 $(Eu)_n=u_{n+1}$。对 $0\le\theta<1$ 和整数 $q\ge0$ 定义
+
+$$
+T_q(\theta)=\frac12\left[\left(\frac{1+\theta}{1-\theta}\right)^q-1\right],
+\qquad C_q(\theta)=q+T_q(\theta).
+$$
+
+**假设。** $u_n$ 取值于复赋范空间，存在 $q$ 个复数 $\lambda_1,\ldots,\lambda_q$，允许重复，满足 $|\lambda_i|\le\theta$ 以及
+
+$$
+\prod_{i=1}^q(E-\lambda_i)u=0.
+$$
+
+空乘积按恒等算子解释，因此 $q=0$ 的假设表示 $u$ 恒为零。设 $\delta\ge0$，且 $\|u_i\|\le\delta$ 对 $0\le i<q$ 成立。
+
+**定理 AT2。** 对每个 $N\ge0$，
+
+$$
+\sum_{n=0}^{N-1}\|u_{q+n}\|\le T_q(\theta)\delta.
+$$
+
+特别地，范数序列可求和，并且
+
+$$
+\boxed{\sum_{n\ge0}\|u_n\|\le C_q(\theta)\delta.}
+$$
+
+（文献：N. G. de Bruijn, Acta Math. Acad. Sci. Hungar. 11 (1960) 213–216, §§3–5）
+
+**证明。** 对消去多项式的次数归纳。零次情形显然。设次数为 $q+1$，选取一个根 $a$，令 $v=(E-a)u$。移位与标量乘法交换，所以 $v$ 被剩余的 $q$ 个因子消去。对 $i<q$，
+
+$$
+\|v_i\|\le \|u_{i+1}\|+|a|\|u_i\|\le(1+\theta)\delta.
+$$
+
+归纳假设给出
+
+$$
+\sum_{n<N}\|v_{q+n}\|\le T_q(\theta)(1+\theta)\delta.
+$$
+
+固定有限 $N$，记
+
+$$
+S_N=\sum_{n<N}\|u_{q+1+n}\|,\qquad
+P_N=\sum_{n<N}\|u_{q+n}\|.
+$$
+
+有限和的移位恒等式与 $\|u_q\|\le\delta$ 给出 $P_N\le\delta+S_N$。又由 $u_{n+1}=a u_n+v_n$，
+
+$$
+S_N\le\theta P_N+T_q(\theta)(1+\theta)\delta.
+$$
+
+因此
+
+$$
+(1-\theta)S_N\le
+[\theta+(1+\theta)T_q(\theta)]\delta.
+$$
+
+$T_0=0$，且所定义的常数直接满足
+
+$$
+T_{q+1}(\theta)=
+\frac{\theta+(1+\theta)T_q(\theta)}{1-\theta}.
+$$
+
+这证明全部有限尾和的界。加上前 $q+1$ 项各自的观测界，得到全部有限部分和有界。非负部分和单调收敛，遂得可求和性与无穷和界。归纳过程中没有预先假设可求和性，也没有对根差、模态权重或特征向量矩阵求逆。证毕。
+
+**注。** 有理生成函数的系数控制与 Turán 型幂和不等式之间的关系见 Batenkov 与 Yomdin，*Taylor Domination, Turán lemma, and Poincaré-Perron Sequences*，arXiv:1301.6033；Contemporary Mathematics 659 (2016), 1–15。AT2 在此给出直接的有限尾和证明。
+

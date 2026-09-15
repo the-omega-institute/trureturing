@@ -1,0 +1,19 @@
+**命题。** 对分块线性演化
+
+$$
+y_{n+1}=Ay_n+Bh_n,\qquad h_{n+1}=Cy_n+Dh_n,
+$$
+
+有
+
+$$
+y_{n+1}=Ay_n+BD^nh_0+\sum_{k=0}^{n-1}M_{n-1-k}y_k.
+$$
+
+若 $\sup_k\|y_k\|\le Y$，则沿同一给定历史，把 $M$ 换为 $\widetilde M$ 后，记忆卷积项的变化满足
+
+$$
+\sup_n\left\|\sum_{k=0}^{n-1}(\widetilde M_{n-1-k}-M_{n-1-k})y_k\right\|
+\le Y\sum_{j\ge0}\|\widetilde M_j-M_j\|.
+$$
+

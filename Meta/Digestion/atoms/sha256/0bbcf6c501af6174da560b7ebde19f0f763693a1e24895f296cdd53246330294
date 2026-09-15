@@ -1,0 +1,7 @@
+**定义。** 对 $q\ge1$ 和不同的 $\lambda_1,\ldots,\lambda_q\in(0,1)$，令
+
+$$
+c_i=\prod_{\ell\ne i}\frac{1-\lambda_\ell}{\lambda_i-\lambda_\ell},
+\qquad u_n=\sum_{i=1}^q c_i\lambda_i^n.
+$$
+

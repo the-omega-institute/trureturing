@@ -1,0 +1,8 @@
+**假设。** 在 AT.10 中取 $A_i=1$，$m\ge2$，互异素数标签，观察仍为 $F=\boldsymbol1_{\{|b|=1\}}$。令
+
+$$
+x_i=p_i^{-\beta},\quad
+P_0=\prod_i(1+x_i)^{-1},\quad
+p_F=P_0\sum_i x_i.
+$$
+
