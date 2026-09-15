@@ -77,7 +77,7 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains(LeanCacheRunScriptPath, inspector, StringComparison.Ordinal);
         Assert.Contains("local -a lake_build_args=(build)", inspector, StringComparison.Ordinal);
         Assert.Contains("run_phase build \"$CACHE_RUN\" \"$LAKE\" \"${lake_build_args[@]}\"", inspector, StringComparison.Ordinal);
-        Assert.Contains("\"$CACHE_RUN\" \"$LAKE\" env lean", inspector, StringComparison.Ordinal);
+        Assert.Contains("\"$CACHE_RUN\" \"$LAKE\" env \"$LEAN\"", inspector, StringComparison.Ordinal);
 
         int EnsureDependency(string target)
         {

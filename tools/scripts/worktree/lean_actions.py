@@ -78,9 +78,10 @@ def receipt(layer, status, **fields):
     print("LEAN_ACTIONS_CACHE " + json.dumps({"layer": layer, "status": status, **fields}, sort_keys=True))
 
 
-def snapshot_report(root, partition, destination):
+def accepted_current(root, partition):
+    """Consume the current producer's accepted handoff without rerunning it."""
     sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[2] / "lean-inspector"))
-    from report_cache import SUFFIXES, copy_bundle, member, seed_identity
+    from report_cache import SUFFIXES
     from delta import validate_report_sha
 
     transport = json.loads((root / "build/ci/current-transport.json").read_text())
@@ -130,15 +131,18 @@ def snapshot_report(root, partition, destination):
             or any(step.get("raw_exit") != 0 or step.get("exit") != 0
                    or not (step.get("status") == "executed" or step.get("status") == "reused"
                            and step.get("name") in ("scribe", "filemap", "check-current")) for step in current["steps"])
-            or "lean-report" not in required_steps
-            or summary.get("report") != ".lake/build/stratalint/raw-lean-report.json"):
-        raise ValueError("current report requires complete selected obligations")
-    relative = summary["report"]
-    if pathlib.PurePosixPath(relative).is_absolute() or any(part in ("", ".", "..") for part in relative.split("/")):
-        raise ValueError("invalid current report path")
+            or summary.get("report") != (".lake/build/stratalint/raw-lean-report.json"
+                if "lean-report" in required_steps else None)):
+        raise ValueError("current requires complete selected obligations")
+    clean_current_candidate(root, transport["commit"])
     accepted = {item["path"]: item["sha256"] for item in current["materials"]}
     if len(accepted) != len(current["materials"]):
         raise ValueError("duplicate current material")
+    if "lean-report" not in required_steps:
+        return transport, current, None, accepted
+    relative = summary["report"]
+    if pathlib.PurePosixPath(relative).is_absolute() or any(part in ("", ".", "..") for part in relative.split("/")):
+        raise ValueError("invalid current report path")
     for suffix in SUFFIXES:
         path = relative + suffix
         full = root / path
@@ -152,7 +156,28 @@ def snapshot_report(root, partition, destination):
     seed = json.loads(bound_bytes(relative + ".seed.json"))
     if not isinstance(seed, dict) or seed.get("partition") != partition:
         raise ValueError("current report partition mismatch")
+    if seed.get("materials_sha256") != accepted[relative + ".materials.zip"]:
+        raise ValueError("current report material digest mismatch")
+    bound_bytes(relative + ".input.attestation")
     bound_bytes(relative + ".provenance.json")
+    return transport, current, report, accepted
+
+
+def clean_current_candidate(root, commit):
+    for args, expected_output in ((["rev-parse", "HEAD"], commit),
+                                  (["status", "--porcelain", "--untracked-files=all"], "")):
+        result = subprocess.run(["git", "-C", str(root), *args], capture_output=True, text=True)
+        if result.returncode or result.stdout.strip() != expected_output:
+            raise ValueError("current snapshot requires the exact clean candidate commit")
+
+
+def snapshot_report(root, partition, destination):
+    sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[2] / "lean-inspector"))
+    from report_cache import SUFFIXES, copy_bundle, member, seed_identity
+    transport, _, report, accepted = accepted_current(root, partition)
+    if report is None:
+        raise ValueError("current report requires a selected report obligation")
+    relative = report.relative_to(root).as_posix()
     destination.mkdir(mode=0o700)
     staged = destination / partition / seed_identity(report) / "raw-lean-report.json"
     copy_bundle(report, staged)
@@ -163,11 +188,7 @@ def snapshot_report(root, partition, destination):
         f"{accepted[relative]}  {staged.name}\n".encode()).hexdigest()
     if {item["path"]: item["sha256"] for item in inventory} != expected:
         raise ValueError("staged report differs from accepted current material")
-    for args, expected_output in ((["rev-parse", "HEAD"], transport["commit"]),
-                                  (["status", "--porcelain", "--untracked-files=all"], "")):
-        result = subprocess.run(["git", "-C", str(root), *args], capture_output=True, text=True)
-        if result.returncode or result.stdout.strip() != expected_output:
-            raise ValueError("report snapshot requires the exact clean candidate commit")
+    clean_current_candidate(root, transport["commit"])
     return inventory
 
 
@@ -285,9 +306,14 @@ def validate_judge_registration(root, layers):
         return project_registry(root)
 
 
-def stage_snapshot(root, keys, layer, staged, registry=None):
+def stage_snapshot(root, keys, layer, staged, registry=None, *, current=None):
     """Produce a private layer; only the parent may publish it and report ready."""
     spec = keys[layer]
+    if current is not None and layer in ("dependency", "project"):
+        if not current_built_lean(root, *current):
+            metrics = {"save_disabled_reason": "current did not execute a successful Lean build"}
+            (staged / "metrics.json").write_text(json.dumps(metrics) + "\n")
+            return metrics
     with cache_guard(root, shared=True):
         if layer in EXECUTION_LAYERS:
             inventory = snapshot_execution(root, layer, keys, staged / "data")
@@ -314,32 +340,31 @@ def stage_snapshot(root, keys, layer, staged, registry=None):
 
 def current_built_lean(root, plan, commit):
     """Bind heavy current snapshots to accepted work from this execution."""
+    step = "lean-report" if "lean-report" in plan["execution"]["steps"] else "lean"
+    if step not in plan["execution"]["steps"]:
+        return False
+    directory = os.environ.get("STRATALINT_LEAN_REPORT_PREPARATION")
+    if step == "lean-report" and not directory:
+        raise ValueError("heavy snapshot requires this execution's Lean build result")
+    transport, current, report, accepted = accepted_current(root, partition_path(root))
+    if transport["commit"] != commit:
+        raise ValueError("current Lean build belongs to another candidate")
     if "lean-report" in plan["execution"]["steps"]:
-        directory = os.environ.get("STRATALINT_LEAN_REPORT_PREPARATION")
-        if not directory:
-            raise ValueError("heavy snapshot requires this execution's Lean build result")
         sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[2] / "lean-inspector"))
         from preparation import validate_result
         result = validate_result(root, pathlib.Path(directory), root / ".lake/build/stratalint/raw-lean-report.json")
+        if report is None or result["report_sha256"] != accepted[report.relative_to(root).as_posix()]:
+            raise ValueError("Lean build result differs from the accepted current report")
         if not result["lean_build_executed"] or not result["lean_build_succeeded"]:
             return False
-    elif "lean" not in plan["execution"]["steps"]:
-        return False
-    runner = root / "tools/StrataLint.EngineeringScope/bin/Release/net10.0/StrataLint.EngineeringScope.dll"
-    completed = subprocess.run(["dotnet", str(runner), "transport-verify", "--repository", str(root), "--stage", "current",
-        "--commit", commit, "--run-id", os.environ["GITHUB_RUN_ID"], "--run-attempt", os.environ["GITHUB_RUN_ATTEMPT"]],
-        cwd=root, capture_output=True, text=True)
-    if completed.returncode:
-        raise ValueError("current Lean build evidence rejected: " + (completed.stderr or completed.stdout).strip())
-    current = json.loads((root / "build/ci/current.json").read_text())
-    step = "lean-report" if "lean-report" in plan["execution"]["steps"] else "lean"
     return any(item["name"] == step and item["status"] == "executed" and item["raw_exit"] == 0
         and item["exit"] == 0 for item in current["steps"])
 
 
-def bounded_snapshot(root, layer, staged, seconds):
+def bounded_snapshot(root, layer, staged, seconds, *, current=False):
     command = [sys.executable, str(pathlib.Path(__file__).resolve()), "snapshot", "--repository", str(root),
-               "--layers", layer, "--snapshot-directory", str(staged)]
+               *(["--stage", "current", "--layer", layer] if current else ["--layers", layer]),
+               "--snapshot-directory", str(staged)]
     env = dict(os.environ)
     env.pop("GITHUB_OUTPUT", None)
     handlers = {signum: signal.getsignal(signum) for signum in (signal.SIGTERM, signal.SIGINT)}
@@ -374,7 +399,7 @@ def bounded_snapshot(root, layer, staged, seconds):
                     signal.signal(signum, handler)
 
 
-def snapshot(root, keys, layers=LAYERS, registry=None, *, deadline=None):
+def snapshot(root, keys, layers=LAYERS, registry=None, *, deadline=None, current=None):
     registry = registry if registry is not None else validate_judge_registration(root, layers)
     for layer in layers:
         ready, committed, save_minutes = False, False, 1
@@ -393,13 +418,16 @@ def snapshot(root, keys, layers=LAYERS, registry=None, *, deadline=None):
             with tempfile.TemporaryDirectory(prefix=".snapshot-", dir=target.parent) as temporary:
                 staged = pathlib.Path(temporary)
                 if deadline is None:
-                    metrics = stage_snapshot(root, keys, layer, staged, registry)
+                    metrics = stage_snapshot(root, keys, layer, staged, registry, current=current)
                 else:
-                    bounded_snapshot(root, layer, staged, seconds)
+                    bounded_snapshot(root, layer, staged, seconds, current=current is not None)
                     save_minutes = deadline.save_timeout_minutes()
                     if not save_minutes:
                         raise ValueError("snapshot left no cache save window")
                     metrics = json.loads((staged / "metrics.json").read_text())
+                if "save_disabled_reason" in metrics:
+                    receipt(layer, "save-disabled", reason=metrics["save_disabled_reason"])
+                    continue
                 with cache_guard(root), tempfile.TemporaryDirectory(prefix=".snapshot-backup-", dir=target.parent) as backup:
                     previous = pathlib.Path(backup) / "previous"
                     if target.exists():
@@ -508,7 +536,8 @@ def main():
         parser.error("--phase requires keys or restore with --stage")
     if args.bounded_cache and (args.command != "snapshot" or not args.layer or args.stage not in ("build", "engineering", "current")):
         parser.error("--bounded-cache requires snapshot with --stage and --layer")
-    if args.snapshot_directory and (args.command != "snapshot" or args.stage or args.bounded_cache or len(args.layers) != 1):
+    if args.snapshot_directory and (args.command != "snapshot" or args.bounded_cache
+            or not (args.stage == "current" and args.layer or not args.stage and len(args.layers) == 1)):
         parser.error("snapshot worker requires exactly one explicit layer")
     if args.stage:
         # Routing is required input validation, outside optional-cache failure handling.
@@ -548,23 +577,7 @@ def main():
                 output(values)
         if not args.layers:
             return 0
-        if args.command == "snapshot" and args.stage == "current" and any(layer in ("dependency", "project") for layer in args.layers):
-            try:
-                built = current_built_lean(root, plan, commit)
-                reason = "current did not execute a successful Lean build"
-            except (OSError, ValueError, TypeError, KeyError, subprocess.SubprocessError) as error:
-                built, reason = False, str(error)
-            if not built:
-                retained = []
-                for layer in args.layers:
-                    if layer in ("dependency", "project"):
-                        receipt(layer, "save-disabled", reason=reason)
-                        output({layer + "_ready": False, **({"save_timeout_minutes": 1} if args.bounded_cache else {})})
-                    else:
-                        retained.append(layer)
-                args.layers = retained
-                if not args.layers:
-                    return 0
+    current = (plan, commit) if args.command == "snapshot" and args.stage == "current" else None
     elan = "elan" in args.layers or args.stage is None
     args.layers = [layer for layer in args.layers if layer != "elan"]
     sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "report"))
@@ -573,7 +586,7 @@ def main():
         registry = validate_judge_registration(args.repository, args.layers) if args.command != "keys" else None
         keys = actions_keys(args.repository)
         if args.snapshot_directory:
-            stage_snapshot(args.repository, keys, args.layers[0], args.snapshot_directory, registry)
+            stage_snapshot(args.repository, keys, args.layers[0], args.snapshot_directory, registry, current=current)
         elif args.command == "keys":
             values = {}
             values.update({key: keys[key] for key in
@@ -592,7 +605,7 @@ def main():
             if args.bounded_cache:
                 from cache_deadline import load_deadline
                 deadline = load_deadline(args.repository, args.stage)
-            snapshot(args.repository, keys, args.layers, registry, deadline=deadline)
+            snapshot(args.repository, keys, args.layers, registry, deadline=deadline, current=current)
         return 0
     except ProjectRegistrationError as error:
         print(str(error), file=sys.stderr)

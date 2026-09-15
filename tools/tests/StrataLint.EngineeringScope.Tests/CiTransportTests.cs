@@ -11,6 +11,79 @@ namespace StrataLint.EngineeringScope.Tests;
 [Collection("Engineering scope process boundary")]
 public sealed class CiTransportTests
 {
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void CurrentSnapshotAcceptanceUsesTheRemainingOptionalWorkerWindow(bool available)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new ResourceRouteTests.ResourceFixture(["lean"]);
+        var root = fixture.Root;
+        fixture.Write("lake-manifest.json", "{\"packages\":[{\"name\":\"mathlib\",\"rev\":\"0123456789012345678901234567890123456789\"}]}");
+        var map = File.ReadAllText(Path.Combine(root, "Meta/FILEMAP.toml"));
+        fixture.Write("Meta/FILEMAP.toml", string.Join('\n', map.Split('\n').Select(line =>
+            line.Contains("id = \"lean\"", StringComparison.Ordinal)
+                ? line.Replace("cache_layers = [], cache_activation = {}",
+                    "cache_layers = [\"project\"], cache_activation = {project = \"lean-production\"}", StringComparison.Ordinal) : line)));
+        fixture.CommitPlan();
+        fixture.Write(".lake/build/new.olean", "new build output");
+        fixture.Write("build/lean-cache/project/manifest.json", "previous accepted snapshot");
+        var environment = new Dictionary<string, string> {
+            ["GITHUB_EVENT_NAME"] = "push", ["GITHUB_REF"] = "refs/heads/dev", ["GITHUB_RUN_ID"] = "17", ["GITHUB_RUN_ATTEMPT"] = "2",
+            ["CANDIDATE_SHA"] = fixture.Commit, ["CI_PLAN_PATH"] = fixture.Plan, ["CI_CHANGES_PATH"] = fixture.Changes,
+            ["CI_WORKFLOW_INPUTS"] = JsonSerializer.Serialize(new { candidate_sha = fixture.Commit }),
+            ["STRATALINT_CACHE_WRITES"] = "true", ["STRATALINT_CHECK_SUCCEEDED"] = "true",
+            ["GITHUB_OUTPUT"] = Path.Combine(root, "build/cache-output") };
+        var result = SharedBuildContractTests.Process(root, "python3", ["-B", "-c", """
+            import os, pathlib, subprocess, sys, time
+            repository, root = map(pathlib.Path, sys.argv[1:3])
+            available = sys.argv[3] == 'true'
+            sys.path.insert(0, str(repository / 'tools/scripts/worktree'))
+            import cache_deadline, lean_actions
+            marker = root / 'build/acceptance-entered'
+            def outside(*args):
+                raise AssertionError('optional acceptance ran outside the bounded snapshot worker')
+            lean_actions.current_built_lean = outside
+            cache_deadline.load_deadline = lambda *_: cache_deadline.CacheDeadline(
+                time.monotonic() + (68 if available else 0))
+            launch = subprocess.Popen
+            child = '''
+            import importlib.util, os, pathlib, signal, sys
+            script = pathlib.Path(sys.argv[1])
+            sys.path.insert(0, str(script.parent))
+            spec = importlib.util.spec_from_file_location('lean_actions', script)
+            owner = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(owner)
+            def slow(root, *args):
+                (root / 'build/acceptance-entered').write_text(str(os.getpid()))
+                signal.pause()
+            owner.current_built_lean = slow
+            sys.argv = [str(script), *sys.argv[2:]]
+            raise SystemExit(owner.main())
+            '''
+            import textwrap
+            def start(command, **options):
+                if '--snapshot-directory' in command:
+                    command = [command[0], '-B', '-c', textwrap.dedent(child), *command[1:]]
+                return launch(command, **options)
+            lean_actions.subprocess.Popen = start
+            sys.argv = ['lean_actions.py', 'snapshot', '--repository', str(root),
+                '--stage', 'current', '--layer', 'project', '--bounded-cache']
+            assert lean_actions.main() == 0
+            assert marker.exists() == available
+            if available:
+                try: os.kill(int(marker.read_text()), 0)
+                except ProcessLookupError: pass
+                else: raise AssertionError('timed out acceptance worker remains alive')
+            assert (root / 'build/lean-cache/project/manifest.json').read_text() == 'previous accepted snapshot'
+            assert not list((root / 'build/lean-cache').glob('.snapshot-*'))
+            """, TestRepositoryLayout.FindRoot(), root, available.ToString().ToLowerInvariant()], environment,
+            TestBudgets.WorkflowProcessHangGuard);
+        Assert.True(result.Exit == 0, result.Text);
+        Assert.Contains("project_ready=false", result.Text, StringComparison.Ordinal);
+        Assert.DoesNotContain("project_ready=true", result.Text, StringComparison.Ordinal);
+    }
+
     [Fact]
     public void ReportBuildAndWarmReuseControlTheAcceptedCurrentProjectSnapshot()
     {
@@ -107,13 +180,49 @@ public sealed class CiTransportTests
             Assert.All(modules, module => Assert.NotEmpty(module.GetProperty("declarations").EnumerateArray()));
             Call("dotnet", CommonExecutionEvidence.RunnerPath, "transport-pack", "--repository", root, "--stage", "current",
                 "--commit", fixture.Commit, "--run-id", runId, "--run-attempt", "2", "--archive", Path.Combine(root, "build/current.tgz"));
-            var exported = Call("python3", "-B", "tools/scripts/worktree/lean_actions.py", "snapshot",
-                "--repository", root, "--stage", "current", "--layer", "project");
+            var exported = Snapshot();
             Assert.Contains("project_ready=" + built.ToString().ToLowerInvariant(), exported, StringComparison.Ordinal);
             if (built) savedSnapshot = File.ReadAllBytes(snapshot);
             else Assert.Equal(savedSnapshot, File.ReadAllBytes(snapshot));
+            if (built)
+            {
+                foreach (var defect in new[] { "run", "candidate", "current", "material" })
+                {
+                    var damaged = Path.Combine(root, defect switch {
+                        "candidate" => "D5/A.lean", "current" => CommonExecutionEvidence.CurrentPath,
+                        _ => CommonExecutionEvidence.ReportPath + ".materials.zip" });
+                    var before = File.ReadAllBytes(damaged);
+                    try
+                    {
+                        if (defect == "run") environment["GITHUB_RUN_ID"] = "19";
+                        else File.AppendAllText(damaged, "changed accepted material");
+                        Assert.Contains("project_ready=false", Snapshot(), StringComparison.Ordinal);
+                        Assert.Equal(savedSnapshot, File.ReadAllBytes(snapshot));
+                    }
+                    finally
+                    {
+                        File.WriteAllBytes(damaged, before);
+                        environment["GITHUB_RUN_ID"] = runId;
+                    }
+                }
+            }
             Assert.Equal(1, File.ReadAllLines(Path.Combine(root, "lake-runs")).Count(line => line == "build"));
             Assert.Equal("", Git(root, "status", "--porcelain", "--untracked-files=all"));
+
+            string Snapshot() => Call("python3", "-B", "-c", """
+                import pathlib, sys
+                root = pathlib.Path(sys.argv[1])
+                sys.path.insert(0, str(root / 'tools/scripts/worktree'))
+                import lean_actions
+                run = lean_actions.subprocess.run
+                def accepted_only(command, **options):
+                    if command[0] == 'dotnet' and 'transport-verify' in command:
+                        raise AssertionError('accepted current must not repeat native report semantic validation')
+                    return run(command, **options)
+                lean_actions.subprocess.run = accepted_only
+                sys.argv = ['lean_actions.py', 'snapshot', '--repository', str(root), '--stage', 'current', '--layer', 'project']
+                raise SystemExit(lean_actions.main())
+                """, root);
 
             string Call(string executable, params string[] arguments)
             {
@@ -149,6 +258,7 @@ public sealed class CiTransportTests
     public void HeavySnapshotRequiresThisExecutionToHaveBuiltLean(string layer)
     {
         using var fixture = new ResourceRouteTests.ResourceFixture(["current"]);
+        fixture.Write("lake-manifest.json", "{\"packages\":[{\"name\":\"mathlib\",\"rev\":\"0123456789012345678901234567890123456789\"}]}");
         var map = File.ReadAllText(Path.Combine(fixture.Root, "Meta/FILEMAP.toml"));
         fixture.Write("Meta/FILEMAP.toml", string.Join('\n', map.Split('\n').Select(line =>
             line.Contains("id = \"current\"", StringComparison.Ordinal)

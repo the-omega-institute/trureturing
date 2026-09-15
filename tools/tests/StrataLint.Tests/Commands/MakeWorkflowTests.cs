@@ -50,6 +50,7 @@ public sealed partial class MakeWorkflowTests
         "warm-donor",
         "lean",
         "lean-report",
+        "lean-report-prepare",
         "build",
         "emit",
         "ingest",
