@@ -11,15 +11,15 @@ internal sealed class TransvectionLieFiltrationDocument : IScribeDocumentDefinit
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The actual Lie-generation filtration equals the independently constructed "
-            + "pairing-graph distance bands. Nondegeneracy gives a matching lower "
-            + "bound for the first appearance of every off-diagonal direction.",
+            + "pairing-graph distance bands. Nondegeneracy gives a coefficientwise "
+            + "support obstruction beyond each band.",
         H("Exact Pairing-Graph Filtration of Transvection Generators"),
         Blocks(
             Paragraph(Text(
                 "Let K be a field with 2 nonzero, I a finite index type with "
                     + "decidable equality, and H a skew-symmetric I-by-I matrix. "
-                    + "Use N_i=e_i H(i,*) and C_ij=(E_ij+E_ji)H from the preceding "
-                    + "modules. All edges are tested by H(i,j) being nonzero.")),
+                    + "Define N_i=e_i H(i,*) and C_ij=(E_ij+E_ji)H. All edges "
+                    + "are tested by H(i,j) being nonzero.")),
             Paragraph(Text(
                 "L_0 is the linear span of the actual N_i. Recursively L_(k+1) "
                     + "is L_k plus the span of the actual commutators [X,N_i] "
@@ -54,35 +54,12 @@ internal sealed class TransvectionLieFiltrationDocument : IScribeDocumentDefinit
                 Blocks(Paragraph(Text(
                     "If det(H) is nonzero and X belongs to L_k, then the (r,c) "
                         + "entry of X H-inverse is zero whenever no pairing walk "
-                        + "of at most k edges joins r to c. The source computes "
+                        + "of at most k edges joins r to c. The proof computes "
                         + "C_ij H-inverse=E_ij+E_ji from the actual inverse identity "
                         + "and extends the resulting zero-entry property through "
                         + "linear combinations. This is a lower bound from a "
                         + "genuine matrix coefficient, not a declared complexity label."))),
                 DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("cross-mem-layer-iff"),
-                DeclarationHandle.Create(Prefix + "cross_mem_layer_iff"),
-                H("Exact first appearance of a prescribed cross direction"),
-                StatementSource.FromAuthor(Onset()),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "For i different from j and det(H) nonzero, C_ij belongs "
-                        + "to L_k exactly when Within(H,k,i,j). The forward "
-                        + "implication uses the support theorem at entry (i,j), "
-                        + "where C_ij H-inverse has coefficient one. The reverse "
-                        + "implication is the constructive band equality. "
-                        + "The companion theory derives the exact dimension "
-                        + "profile and diameter-plus-one full-generation length; "
-                        + "these dimension statements are not separately exported "
-                        + "as Lean declarations here."))),
-                DescribeRole.Theorem),
-            Paragraph(Text(
-                "For arbitrary Lie bracketings, the ordinary Jacobi straightening "
-                    + "argument identifies their bounded-length span with this "
-                    + "iterated right-extension filtration. That comparison is "
-                    + "explained in the theory text; the formal definition in "
-                    + "this module remains the explicit recursive L_k.")),
             Paragraph(Text(
                 "Yelton, arXiv:1703.10917v5, Remark 3.4, is prior art for "
                     + "diameter-dependent transvection-generation bounds in an "
@@ -108,26 +85,17 @@ internal sealed class TransvectionLieFiltrationDocument : IScribeDocumentDefinit
 
     private static Formula Layers() => Disp(Seq(
         Call("Skew", F.Id("H")), Sp, Land, Sp,
-        Call("Nonzero", F.Id("2")), Sp, Rightarrow, Sp,
+        Call("Nonzero", D(2)), Sp, Rightarrow, Sp,
         Forall, Sp, F.Id("k"), Comma, Sp,
         Eq(Call("layer", F.Id("H"), F.Id("k")),
             Call("band", F.Id("H"), F.Id("k")))));
 
     private static Formula Support() => Disp(Seq(
         Call("Skew", F.Id("H")), Sp, Land, Sp,
-        Call("Nonzero", F.Id("2")), Sp, Land, Sp,
+        Call("Nonzero", D(2)), Sp, Land, Sp,
         Call("Nonzero", Call("det", F.Id("H"))), Sp, Land, Sp,
         Call("Member", F.Id("X"), Call("layer", F.Id("H"), F.Id("k"))),
         Sp, Land, Sp, Call("NoWalkWithin", F.Id("H"), F.Id("k"), F.Id("r"), F.Id("c")),
         Sp, Rightarrow, Sp,
-        Eq(Call("inverseCoefficient", F.Id("X"), F.Id("H"), F.Id("r"), F.Id("c")), F.Id("0"))));
-
-    private static Formula Onset() => Disp(Seq(
-        Call("Skew", F.Id("H")), Sp, Land, Sp,
-        Call("Nonzero", F.Id("2")), Sp, Land, Sp,
-        Call("Nonzero", Call("det", F.Id("H"))), Sp, Land, Sp,
-        Call("Distinct", F.Id("i"), F.Id("j")), Sp, Rightarrow, Sp,
-        Eq(Call("Member", Call("C", F.Id("i"), F.Id("j")),
-                Call("layer", F.Id("H"), F.Id("k"))),
-            Call("Within", F.Id("H"), F.Id("k"), F.Id("i"), F.Id("j")))));
+        Eq(Call("inverseCoefficient", F.Id("X"), F.Id("H"), F.Id("r"), F.Id("c")), D(0))));
 }
