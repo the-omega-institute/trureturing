@@ -1,0 +1,9 @@
+**定义。** 令
+
+$$
+D=\operatorname{diag}(\lambda_i),\qquad
+K_\pm=\begin{pmatrix}\kappa/4&(b^\pm)^*\\b^\pm&D\end{pmatrix}.
+$$
+
+两个系统具有同一个可见方向、同一个可见即时项和同一个隐藏对角传播。
+

@@ -1,0 +1,24 @@
+**定义。** 固定 $0<\kappa<1$。令 $\mathcal C_\kappa$ 为全部有限维实自伴随分块算子与指定单位可见方向组成的类，
+
+$$
+K=\begin{pmatrix}a&b^*\\b&D\end{pmatrix},\qquad 0\le K\le\kappa I.
+$$
+
+隐藏维数不设统一上界。观察与目标分别为
+
+$$
+s_n(K)=\langle e,K^n e\rangle,\qquad s_0=1,
+\qquad m_j(K)=\langle b,D^j b\rangle.
+$$
+
+观察数据 $y=(y_n)_{n\ge1}$ 满足 $\sup_{n\ge1}|y_n-s_n(K)|\le\epsilon$。估计器可使用整个无限数据序列；其损失定义为 $\sum_{j\ge0}|\widehat m_j(y)-m_j(K)|$，发散时取 $+\infty$。令
+
+$$
+\mathfrak R_\kappa(\epsilon)=
+\inf_{\widehat m}\sup_{K\in\mathcal C_\kappa}
+\sup_{\|y-s(K)\|_\infty\le\epsilon}
+\sum_{j\ge0}|\widehat m_j(y)-m_j(K)|.
+$$
+
+这是逐坐标有界、可对抗的相关读数误差模型。它没有赋予估计器完整转移矩阵、所有隐藏状态、所有高阶轨迹分布或任意干预读数。
+

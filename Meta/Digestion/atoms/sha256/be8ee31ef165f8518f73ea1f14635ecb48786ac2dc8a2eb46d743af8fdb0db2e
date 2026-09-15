@@ -1,0 +1,28 @@
+**证明。** 对活跃隐藏坐标，$T^\pm$ 的行和为 $\lambda_i+(r-\lambda_i)=r$；对不活跃坐标为 $\lambda_i\le r$。可见行和至多
+
+$$
+\kappa/4+\sum_i\frac{w_i^\pm}{r-\lambda_i}
+\le\kappa/4+(4/\kappa)(\kappa^2/64)=5\kappa/16<r.
+$$
+
+因此所有 $d_i^\pm\ge1-r>0$。$\pi_iT^\pm_{ij}=h_ih_jK^\pm_{ij}/Z_h$ 对 $i,j$ 对称；补充项的平衡流为 $\pi_i d_i^\pm\pi_j d_j^\pm/(4Z_d^\pm)$，也对称。行和为一且补充项严格为正，所以两个链不可约、非周期，并具有所述共同平稳分布。
+
+分解符号偶、奇两个子空间。奇子空间上的传播为 $T^\pm$，在等距坐标 $f\mapsto(h_if_i/\sqrt{Z_h})_i$ 中等于 $K_\pm$。偶子空间的对称坐标矩阵为
+
+$$
+J_\pm=K_\pm+
+\frac{v_\pm v_\pm^*}{h^*v_\pm},
+\qquad v_\pm=(I-K_\pm)h.
+$$
+
+分母 $h^*(I-K_\pm)h$ 严格为正，故 $J_\pm\ge K_\pm\ge\kappa I/8$。并且 $J_\pm h=h$。这个秩一正更新至多产生一个超过 $5\kappa/8$ 的特征值：若存在两个，取其张成空间内一个正交于 $v_\pm$ 的非零向量，该向量的 Rayleigh 商既超过 $5\kappa/8$ 又等于 $K_\pm$ 的 Rayleigh 商，矛盾。因特征值一已经存在，其余偶谱都不超过 $5\kappa/8$。奇谱使用 PN3 即得。
+
+观察 $e$ 属于奇子空间；在上述等距坐标中恰为第零个标准基向量，所以全部响应相同。奇偶子空间均约化，可见方向只在奇子空间中，消去偶子空间没有交叉贡献；故目标核仍是 $\langle b^\pm,D^nb^\pm\rangle$。最后
+
+$$
+Z_h\le1+(16/\kappa^2)\delta S_q\le5/4,
+\qquad \|e\|_\infty=\sqrt{Z_h},
+$$
+
+得到统一观察幅度界。证毕。
+
