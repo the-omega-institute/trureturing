@@ -1,0 +1,36 @@
+### 120.2 缺陷支配后续决策风险
+
+在上述有限参数、共同输入空间、CPTP 后处理和单位区间损失的条件下，有
+
+$$
+\boxed{
+R^*(\widetilde I)
+\le
+R^*(I)+\delta_\diamond(I\mid\widetilde I).
+}
+$$
+
+证明只使用通道范数的定义和测量的收缩性。固定任意模拟器 $$S$$、输入 $$\rho$$ 与完整过程读出 $$D$$，把 $$D\circ S$$ 作为压缩过程上的决策。若
+
+$$
+\frac12\left\|I_\theta-S\circ\widetilde I_\theta\right\|_\diamond
+\le\varepsilon
+$$
+
+对所有 $$\theta$$ 成立，则对该输入及任意参考系统，输出态的迹距离至多为 $$\varepsilon$$；再经 $$D$$ 后，经典总变差距离仍至多为 $$\varepsilon$$。单位区间损失的期望差至多为同一数值，对 $$\mu$$ 加权后仍至多为 $$\varepsilon$$。先对策略取下确界，再对 $$S$$ 取下确界，得到所示不等式。
+
+若反向缺陷也有定义，则同时应用两次上界，得到
+
+$$
+\boxed{
+\left|R^*(I)-R^*(\widetilde I)\right|
+\le
+\max\left\{
+\delta_\diamond(I\mid\widetilde I),
+\delta_\diamond(\widetilde I\mid I)
+\right\}.
+}
+$$
+
+该结论的量词顺序很重要：模拟器不能依赖于未知参数，且缺陷控制的是所有输入、所有参考和所有允许后处理。只比较某一次实验的输出概率，不能推出这个统一风险界。
+
