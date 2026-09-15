@@ -190,6 +190,90 @@ theorem squarefree_coprime_count_error (Q : ℕ) (X : ℝ) (hQ : Squarefree Q) (
     rw [hset, ← Int.cast_sum, ← ArithmeticFunction.coe_mul_zeta_apply,
       ArithmeticFunction.moebius_mul_coe_zeta, ArithmeticFunction.one_apply]
     simp [hiff]
+  let M : ℕ := ⌊Real.sqrt X⌋₊
+  let A : Finset ℕ := Icc 1 M
+  have hsf_window (n : ℕ) (hn : n ∈ Icc 1 ⌊X⌋₊) :
+      (if Squarefree n then (1 : ℝ) else 0) =
+        ∑ a ∈ A, if a ^ 2 ∣ n then (ArithmeticFunction.moebius a : ℝ) else 0 := by
+    have hn0 : 0 < n := (mem_Icc.mp hn).1
+    have hnX : (n : ℝ) ≤ X := (Nat.le_floor_iff hX).mp (mem_Icc.mp hn).2
+    rw [hsf_indicator n hn0, ← sum_filter]
+    congr 1
+    ext a
+    simp only [mem_filter]
+    constructor
+    · rintro ⟨ha, had⟩
+      have ha0 := Nat.pos_of_mem_divisors ha
+      have hsq : (a : ℝ) ^ 2 ≤ X := by
+        exact (by exact_mod_cast Nat.le_of_dvd hn0 had : (a : ℝ) ^ 2 ≤ n).trans hnX
+      exact ⟨mem_Icc.mpr ⟨ha0, (Nat.le_floor_iff (Real.sqrt_nonneg X)).mpr
+        (Real.le_sqrt_of_sq_le hsq)⟩, had⟩
+    · rintro ⟨ha, had⟩
+      exact ⟨Nat.mem_divisors.mpr ⟨dvd_trans (dvd_pow_self a (by omega)) had, hn0.ne'⟩, had⟩
+  have hcount_mul (k : ℕ) (hk : 0 < k) (hc : k.Coprime Q) :
+      (((Icc 1 ⌊X⌋₊).filter (fun n => n.Coprime Q ∧ k ∣ n)).card : ℝ) =
+        C Q (X / k) := by
+    rw [C]
+    apply congrArg (fun n : ℕ => (n : ℝ))
+    symm
+    apply card_bij (fun m _ => k * m)
+    · intro m hm
+      obtain ⟨hmI, hmc⟩ := mem_filter.mp hm
+      obtain ⟨hm1, hmX⟩ := mem_Icc.mp hmI
+      have hkR : (0 : ℝ) < k := Nat.cast_pos.mpr hk
+      have hmR := (Nat.le_floor_iff (div_nonneg hX hkR.le)).mp hmX
+      refine mem_filter.mpr ⟨mem_Icc.mpr ⟨Nat.mul_pos hk hm1, ?_⟩,
+        (Nat.coprime_mul_iff_left).mpr ⟨hc, hmc⟩, dvd_mul_right k m⟩
+      apply (Nat.le_floor_iff hX).mpr
+      push_cast
+      simpa [mul_comm] using (le_div_iff₀ hkR).mp hmR
+    · intro m hm n hn heq
+      exact Nat.eq_of_mul_eq_mul_left hk heq
+    · intro n hn
+      obtain ⟨hnI, hnc, hkn⟩ := mem_filter.mp hn
+      obtain ⟨hn1, hnX⟩ := mem_Icc.mp hnI
+      refine ⟨n / k, mem_filter.mpr ⟨mem_Icc.mpr ⟨?_, ?_⟩, ?_⟩, ?_⟩
+      · exact Nat.div_pos (Nat.le_of_dvd hn1 hkn) hk
+      · apply (Nat.le_floor_iff (div_nonneg hX (Nat.cast_nonneg k))).mpr
+        rw [Nat.cast_div hkn (Nat.cast_ne_zero.mpr hk.ne')]
+        exact div_le_div_of_nonneg_right ((Nat.le_floor_iff hX).mp hnX) (Nat.cast_nonneg k)
+      · exact hnc.of_dvd_left (Nat.div_dvd_of_dvd hkn)
+      · exact Nat.mul_div_cancel' hkn
+  have hexpansion : S Q X =
+      ∑ a ∈ A.filter (fun a => a.Coprime Q),
+        (ArithmeticFunction.moebius a : ℝ) * C Q (X / (a : ℝ) ^ 2) := by
+    rw [S, natCast_card_filter]
+    calc
+      _ = ∑ n ∈ Icc 1 ⌊X⌋₊, ∑ a ∈ A,
+          if n.Coprime Q ∧ a ^ 2 ∣ n then (ArithmeticFunction.moebius a : ℝ) else 0 := by
+        apply sum_congr rfl
+        intro n hn
+        by_cases hc : n.Coprime Q
+        · calc
+            _ = (if Squarefree n then (1 : ℝ) else 0) := by rw [ite_and, if_pos hc]
+            _ = _ := (hsf_window n hn).trans (sum_congr rfl (fun a _ => by rw [ite_and, if_pos hc]))
+        · simp [hc]
+      _ = ∑ a ∈ A, (ArithmeticFunction.moebius a : ℝ) *
+          (((Icc 1 ⌊X⌋₊).filter (fun n => n.Coprime Q ∧ a ^ 2 ∣ n)).card : ℝ) := by
+        rw [sum_comm]
+        apply sum_congr rfl
+        intro a ha
+        rw [← sum_filter]
+        simp [mul_comm]
+      _ = _ := by
+        rw [sum_filter]
+        apply sum_congr rfl
+        intro a ha
+        have ha0 : 0 < a := (mem_Icc.mp ha).1
+        by_cases hc : a.Coprime Q
+        · rw [if_pos hc, hcount_mul (a ^ 2) (pow_pos ha0 2) (hc.pow_left 2)]
+          norm_cast
+        · rw [if_neg hc]
+          have hempty : (Icc 1 ⌊X⌋₊).filter (fun n => n.Coprime Q ∧ a ^ 2 ∣ n) = ∅ := by
+            apply filter_eq_empty_iff.mpr
+            intro n hn h
+            exact hc (h.1.of_dvd_left (dvd_trans (dvd_pow_self a (by omega)) h.2))
+          simp [hempty]
   sorry
 
 end D5.S3.Weil.Mertens.CoprimeSquarefreeDensity
