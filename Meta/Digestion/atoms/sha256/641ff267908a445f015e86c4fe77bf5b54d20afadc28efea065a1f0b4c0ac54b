@@ -1,0 +1,19 @@
+**证明。** $A,D$ 是正收缩压缩，故 $BD^jB^*\ge0$。令 $H_m=\sum_{j=0}^mD^j$。由于这些幂互相交换，
+
+$$
+H_m(I-D)H_m=H_m-H_mD^{m+1}\le H_m.
+$$
+
+在 $I-K\ge0$ 的二次型中代入 $(v,H_mB^*v)$，得到
+
+$$
+\begin{aligned}
+0&\le\langle v,(I-A)v\rangle
+-2\langle B^*v,H_mB^*v\rangle
++\langle H_mB^*v,(I-D)H_mB^*v\rangle\\
+&\le\langle v,(I-A-BH_mB^*)v\rangle.
+\end{aligned}
+$$
+
+所以 $A+\sum_{j=0}^mM_j\le I$，而 $N=1$ 由 $A\le I$。证毕。
+

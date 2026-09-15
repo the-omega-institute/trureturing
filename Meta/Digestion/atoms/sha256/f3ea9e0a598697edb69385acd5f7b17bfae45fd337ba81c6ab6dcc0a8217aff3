@@ -1,0 +1,2 @@
+For the Boolean benefit query q=1[(Y0,Y1)=(0,1)] and retained features (Y0,Y1), choose beta=(-1/2,1/2). The residual is `(0,1/2,1/2,0)` in the established four-cell ordering, so its oscillation is 1/2. The equal-weight diagonal and anti-diagonal laws have identical marginals (1/2,1/2) and benefit values zero and 1/2. These witnesses match the residual certificate, giving universal ambiguity exactly 1/2. This supplies a consistency bridge to the original benefit nonidentification example without replacing its sharper data-dependent Frechet interval.
+

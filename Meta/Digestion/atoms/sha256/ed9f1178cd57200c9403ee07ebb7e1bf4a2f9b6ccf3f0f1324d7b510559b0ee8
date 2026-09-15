@@ -1,0 +1,69 @@
+### 72.1 完整历史的通道距离
+
+设 $\Phi_k$ 是第 $k$ 个时间槽的物理演化，$\widehat A_k$ 和 $\widehat B_k$ 是同一记录协议下的两种候选槽通道。例如，未先丢弃当前不可见部分的候选可以写成
+
+$$
+\widehat A_k
+=
+\widehat{\mathcal E}_k\Phi_k,
+$$
+
+而先执行当前粗粒化的候选写成
+
+$$
+\widehat B_k
+=
+\widehat{\mathcal E}_k\Phi_k\mathcal E_k.
+$$
+
+这里的帽号表示：槽通道同时更新系统和历史寄存器；它不是只对系统矩阵取一个偏迹。令
+
+$$
+\eta_k
+=
+\frac12
+\left\|
+\widehat A_k-\widehat B_k
+\right\|_\diamond,
+$$
+
+其中 diamond 范数已经对任意有限维参考系统取上确界。设 $\widehat A_{1:n}$ 与 $\widehat B_{1:n}$ 是由这些槽按同一历史寄存器协议组成的 $n$ 步过程通道，则通道范数的望远镜展开给出
+
+$$
+\boxed{
+\frac12
+\left\|
+\widehat A_{1:n}-\widehat B_{1:n}
+\right\|_\diamond
+\le
+\sum_{k=1}^{n}\eta_k.
+}
+$$
+
+在均匀界 $\eta_k\le\eta$ 下，这变成 $n\eta$。证明只使用每个槽的三角不等式、其余槽通道的 diamond 收缩性，以及望远镜分解；因此它比较的是完整抬升过程，而不是把系统末态距离误称为历史分布距离。
+
+对任意初始联合态 $\rho_{RS}$，有
+
+$$
+\frac12
+\left\|
+\widehat A_{1:n}(\rho_{RS})
+-
+\widehat B_{1:n}(\rho_{RS})
+\right\|_1
+\le
+\sum_{k=1}^{n}\eta_k.
+$$
+
+再对系统、参考或量子寄存器取偏迹，并对 $C$ 做任意经典读出，距离只能下降。因此，对完整记录序列的概率分布 $p_{1:n}$、$q_{1:n}$，总变差距离满足
+
+$$
+\boxed{
+\operatorname{TV}(p_{1:n},q_{1:n})
+\le
+\sum_{k=1}^{n}\eta_k.
+}
+$$
+
+这个结论给出了“保留的历史是否足以区分两种过程”的直接判据：必须先指定记录寄存器和参考系统，再计算抬升过程的通道距离。
+

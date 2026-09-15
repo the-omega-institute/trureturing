@@ -1,0 +1,21 @@
+fingerprints:
+  raw_sha256: sha256:ff5a29d6bb752d329d09dc000fb171ec0626e313f24bf3d6cce02a5ad645b217
+  normalized_sha256: sha256:ff5a29d6bb752d329d09dc000fb171ec0626e313f24bf3d6cce02a5ad645b217
+cas_ref: sha256:ff5a29d6bb752d329d09dc000fb171ec0626e313f24bf3d6cce02a5ad645b217
+coverage_gids:
+  - gid: D5/S3/Weil/Separator/ArchimedeanConvergence.archimedeanConvergent_of_weilTestFunction
+    target_statement_id: sha256:686b2d2ac8ec9c3bc18656b5965808c78e0fcc2e8aa1d7569d93b6a7dd352aee
+  - gid: D5/S3/Weil/Separator/ArchimedeanConvergence.rh_iff_primeSidePositivity
+    target_statement_id: sha256:980e47d3ebc3608bd9e0921667aed0a3fc99eb4d1d51f693387991b46809fb81
+  - gid: D5/S3/Weil/Separator/ExplicitFormulaWeilCriterion.explicitFormula_weilSquare
+    target_statement_id: sha256:fddf15661b31f337acbe6bf6ad4953879860cb7603b8b9277d6e1086d2a3f16b
+  - gid: D5/S3/Weil/ZeroData/UnconditionalCanonicalZeroData.zetaZeroData
+    target_statement_id: sha256:986e7bc0fad340e7c0ed69b916c9e698a0509e307cf8065ec34c13ad6412332a
+  - gid: D5/S3/Weil/ZeroData/UnconditionalCanonicalZeroData.zetaZeroData_exhaustiveUnique
+    target_statement_id: sha256:69619fdf83bdcc55acf5103bb4f739db63051a27f6dcdebe54b91dc66a5300c9
+  - gid: D5/S3/Weil/ZetaBridge/ClassicExplicitFormula.weil_explicit_formula
+    target_statement_id: sha256:d0ab27a1af6591536c6381fffd1c6808499c0426820445c6d7c3eae0f07825b1
+  - gid: D5/S3/Weil/ZetaExplicit/Main.EF_lit_zetaZeroConfig
+    target_statement_id: sha256:ec65507874db0ade4af5c8c28dc8ec3b8b8cdafcd19de74a7be91c308fcb9ed4
+receipts:
+  unresolved_subitems: []

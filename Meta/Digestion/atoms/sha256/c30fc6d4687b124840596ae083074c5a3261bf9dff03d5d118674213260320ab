@@ -1,0 +1,17 @@
+**命题 40.2（逐坐标加权损失上包络与归一化反例；repo-derived）。** 在定义40.1的条件下，令
+$$
+u_m(y)=p_m(y)c_m^\pi(y),\qquad
+J_{\mathcal M}(\pi)=\max_{m\in\mathcal M}\sum_y u_m(y),\qquad
+J_{\square}(\pi)=\sum_y\max_{m\in\mathcal M}u_m(y).
+$$
+则 $J_{\mathcal M}(\pi)\le J_{\square}(\pi)$；若一个模型在每个坐标同时达到最大值，则等号成立。旧数值 $J_{\square}$ 是逐坐标加权损失上包络，差值记为
+$$
+\Delta_{\square}(\pi)=J_{\square}(\pi)-J_{\mathcal M}(\pi)\ge0.
+$$
+此差值一般只是数值包络差，不是实际矩形化惩罚。具体地，取 $Y=\{L,R\}$、两个模型
+$$
+p_1=(1,0),\qquad p_2=(0,1),\qquad
+c_1^\pi=c_2^\pi=(1,1).
+$$
+则 $J_{\mathcal M}=1$、$J_{\square}=2$，而条件损失恒为 $(1,1)$ 的任何归一化模型的期望都是 $1$。
+

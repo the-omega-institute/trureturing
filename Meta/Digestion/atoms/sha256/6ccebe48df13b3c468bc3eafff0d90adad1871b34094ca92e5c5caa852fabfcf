@@ -1,0 +1,7 @@
+Finite LP strong duality therefore gives
+
+```text
+Delta_S(phi,q) = min_beta [ max_i(q(i)-beta.phi(i)) - min_i(q(i)-beta.phi(i)) ]
+              = 2 * min_{alpha,beta} max_i abs(q(i)-alpha-beta.phi(i)).
+```
+

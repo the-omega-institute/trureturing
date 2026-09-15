@@ -1,0 +1,8 @@
+**定理。** 对 $\gamma\in\Lambda$，任选代表 $\eta\in\operatorname{Aut}(\pi)$，记 $t_\eta$ 为它在 $V_\ell$ 上的作用，$s_\eta\in S$ 为满足 $\eta|_S=\operatorname{Ad}_{s_\eta}$ 的唯一元素。则
+
+$$\boxed{\Psi_\ell(\gamma)=\lambda(s_\eta)^{-1}t_\eta}$$
+
+与代表无关，并定义同态
+
+$$\Psi_\ell:\Lambda\longrightarrow\operatorname{Aut}_{\mathbb F_\ell[S]}(V_\ell).$$
+

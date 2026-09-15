@@ -14,6 +14,10 @@ name = "mathlib"
 scope = "leanprover-community"
 rev = "v4.33.0"
 
+[[require]]
+name = "leanInspector"
+path = "tools/lean-inspector"
+
 [[lean_lib]]
 name = "Trureturing"
 roots = ["Trureturing", "D5"]

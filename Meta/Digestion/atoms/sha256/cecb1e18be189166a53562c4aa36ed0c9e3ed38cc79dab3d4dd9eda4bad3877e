@@ -1,0 +1,28 @@
+### 105.3 任何精确历史接口都因子化到预测商
+
+设另一个记忆摘要为 $$r:Y\to M$$，并且当前读出与更新都通过它因子化：
+
+$$
+q=\bar q\circ r,
+\qquad
+r\circ\tau=\bar\tau\circ r.
+$$
+
+`predictive_memory_minimal_quotient` 证明存在唯一映射
+
+$$
+\theta:\operatorname{range}(r)\to Y_{\mathrm{pred}}
+$$
+
+使得 canonical projection 满足
+
+$$
+\operatorname{completionProjection}
+=
+\theta\circ\operatorname{rangeFactorization}(r).
+$$
+
+因此，任何能够精确预测所有未来读出的记忆接口，都会唯一映射到 canonical predictive state。这个结论比“某个编码看起来够用”更严格：它给出所有 exact predictive memories 的共同目标，而不要求先指定哪一个内部标签才是真实对象。
+
+`prediction_completion_universality` 还说明，若当前读出和一步更新已经通过某个粗状态半共轭因子化，那么完整未来 itinerary 自动通过同一个粗状态因子化。换句话说，真正的闭合条件一旦成立，不需要为每个未来时刻重新发明一个独立记录。
+

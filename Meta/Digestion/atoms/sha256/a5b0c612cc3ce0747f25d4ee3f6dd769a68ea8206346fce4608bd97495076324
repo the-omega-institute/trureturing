@@ -1,0 +1,2 @@
+**证明依据。** Masbaum–Reid 的量子表示与强逼近构造给出 $\mathcal M_g$ 到任意大维数的一族 $\operatorname{PSL}(N,q)$ 的满射。Torelli 群正规，故其在同一个满射下的像为平凡群或整个单群。若像平凡，该满射将经 $\operatorname{Sp}(2g,\mathbb Z)$ 因子化；对构造中足够大的 $N$，辛群的合同子群性质排除了这一可能。这里需要的是同一个 $f$ 的限制满射，单独存在某个 Torelli 群商不够。
+

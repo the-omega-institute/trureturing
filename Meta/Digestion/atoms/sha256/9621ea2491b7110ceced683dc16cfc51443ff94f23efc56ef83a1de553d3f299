@@ -1,0 +1,5 @@
+**定理。** 自然映射 $A_Q\twoheadrightarrow A_\ell$ 的核为有限 $\ell$ 群。对任意到非交换有限单群的满射 $f:\Lambda\twoheadrightarrow F$，
+
+$$\boxed{f\text{ 经 }A_Q\text{ 因子化}
+\quad\Longleftrightarrow\quad f\text{ 经 }A_\ell\text{ 因子化}.}$$
+

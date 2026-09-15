@@ -1,0 +1,15 @@
+**定义 119.1（原历史载体与有限观察的取域）。** 原情境仍取[《情境时空算术》定义 1–6](CONTEXTUAL_SPACETIME_ARITHMETIC.md)的
+
+$$
+C=(E_C,\prec,t,x,\sigma,\rho,\Omega),\qquad
+\eta=(C,A_{\rm sel}),\qquad A_{\rm sel}\subseteq\Omega\subseteq E_C,
+$$
+
+其中 $E_C$ 是有限事件出现集，$\prec$ 是严格偏序，$t:E_C\to\mathbb Z$、$x:E_C\to\mathbb Z^3$、$\sigma:E_C\to\{+1,-1\}$ 及来源树映射 $\rho$ 保留原类型，且 $e\prec f$ 蕴含 $t(e)<t(f)$。算术载体仍要求 $\sum_{e\in\Omega}\sigma(e)=0$，读数为 $q_{\rm CSA}(\eta)=\sum_{e\in A_{\rm sel}}\sigma(e)$。选择是当前区域的任意子集；若任务还使用各阶段的选择或区域快照，就将这些快照另列为历史数据。时间复合的原定义域仍为
+
+$$
+\forall e\in E_{C_1}\ \forall f\in E_{C_2},\qquad t_1(e)<t_2(f).
+$$
+
+用于下述有限观察比较的历史族，是预先指定的原合法对象或合法执行历史的有限非空族；每条执行路径分别满足其操作守卫。有限标签及其概率律是这个族的观察数据，不替换档案、来源、绝对时间、偏序、当前区域或选择。若只讨论抽象统计实验，则直接使用定义 119.2，不预设其标签已实现为原历史。
+

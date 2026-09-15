@@ -1,0 +1,10 @@
+**证明。** 对任意 $a\ne a_s$，命题31.2给出
+$$
+\begin{aligned}
+r_t(a\mid h,q)-r_t(a_s\mid h,q)
+&\ge [r_s(a\mid h,q)-r_s(a_s\mid h,q)]-2M\delta(h,q)\\
+&\ge \gamma_s(h,q)-2M\delta(h,q)>0.
+\end{aligned}
+$$
+故所有其他动作的目标风险严格更大。证毕。
+

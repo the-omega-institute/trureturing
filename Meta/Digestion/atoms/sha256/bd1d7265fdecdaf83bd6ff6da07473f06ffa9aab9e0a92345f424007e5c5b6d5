@@ -1,0 +1,9 @@
+**定理 30.3（有限后验的动态闭合）。** 令有限假设集 $\mathcal S$、先验 $\pi(s)>0$ 及标签通道 $K(y\mid s,x)$ 给定。定义未归一化权重
+$$
+w_{0}(s)=\pi(s),\qquad w_{t+1}(s)=w_t(s)K(y_t\mid s,x_t),
+$$
+并在总权重非零时令 $\mu_t(s)=w_t(s)/\sum_{s'}w_t(s')$。在定义30.1的非泄露自适应协议下，$\mu_t$ 对未来任意有限示范记录的 Bayes 预测和 Bayes 动作是充分状态；新查询的预测为
+$$
+P(y\mid q,D_t)=\sum_{s\in\mathcal S}\mu_t(s)K(y\mid s,q).
+$$
+

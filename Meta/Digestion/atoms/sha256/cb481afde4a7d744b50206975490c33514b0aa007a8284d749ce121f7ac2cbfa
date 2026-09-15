@@ -1,0 +1,9 @@
+**定理 443.11（固定证书的密度及显式误差）。** 记 $\zeta_R(2)=\sum_{n\ge1}n^{-2}$。对固定平方自由 $Q\ge1$，令
+$$
+S_Q(X)=\#\{1\le d\le X:d\text{ 平方自由},\ (d,Q)=1\},\quad
+\rho_Q=\frac1{\zeta_R(2)}\prod_{p\mid Q}\frac p{p+1}\quad(X\ge0).
+$$
+则
+$$
+|S_Q(X)-\rho_QX|\le(2^{\omega(Q)}+2)\sqrt X.
+$$

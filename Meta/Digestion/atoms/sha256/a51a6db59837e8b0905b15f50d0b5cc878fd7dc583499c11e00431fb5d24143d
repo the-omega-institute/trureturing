@@ -1,0 +1,30 @@
+### 108.3 合法性商何时可以成为经典对象
+
+设 $$q_{\mathrm{legal}}$$ 只读出自动机状态，$$q_{\mathrm{value}}$$ 读出完整 Fibonacci 数值，$$q_{\mathrm{phase}}$$ 读出后续相位响应。一般有
+
+$$
+\ker q_{\mathrm{value}}
+\subseteq
+\ker q_{\mathrm{legal}},
+\qquad
+\ker q_{\mathrm{phase}}
+\subseteq
+\ker q_{\mathrm{legal}},
+$$
+
+因为数值和相位任务会区分更多前缀。只有当允许的后续实验族确实只查询合法性，并且更新不把被合并的前缀重新分开时，二状态商才满足第 105、106 节的预测闭合条件。
+
+若加入算术读数、黄金 Euler 相位或量子干涉，必须重新计算完整未来核：
+
+$$
+R_\infty^{\mathrm{legal}}
+\supseteq
+R_\infty^{\mathrm{value}},
+\qquad
+R_\infty^{\mathrm{legal}}
+\supseteq
+R_\infty^{\mathrm{phase}}.
+$$
+
+商关系越小，所需历史接口越细。于是“约束减少了状态”只对指定观察任务成立；换一个任务，原先被约掉的历史可能重新成为可见差异。
+

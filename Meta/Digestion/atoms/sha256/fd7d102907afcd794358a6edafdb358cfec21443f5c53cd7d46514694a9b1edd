@@ -1,0 +1,64 @@
+### 77.2 目标预测的充分性与不可见见证
+
+对一族实际效应 $$E_i$$，定义含单位方向的可见空间
+
+$$
+V
+=
+\operatorname{span}_{\mathbb R}
+\bigl(\{I\}\cup\{E_i\}_i\bigr).
+$$
+
+单位方向必须显式加入，因为密度态的迹已经固定；没有它，效应签名不能自动控制标量部分。
+
+这里的 $$E_i$$ 必须先满足源码中的物理效应条件：它们是 Hermitian、正半定，且 $$I-E_i$$ 也正半定。`target_prediction_sufficiency` 的第一半可表述为：若目标算子子空间 $$T$$ 满足
+
+$$
+T\subseteq V,
+$$
+
+那么两个密度态对全部 $$E_i$$ 的 trace 读数相同，就对每个 $$A\in T$$ 给出相同的目标期望。对 Hermitian 矩阵，仓库中的实内积与 trace 公式通过实部对应；该对应需要在具体有限维载体中明确，不能把两种配对无条件混写。
+
+第二半给出相反方向的物理见证。若
+
+$$
+A\notin V,
+$$
+
+则存在非零 Hermitian 方向 $$D\in V^{\perp}$$、某个 $$\varepsilon>0$$ 以及两个合法密度态
+
+$$
+\rho_{\pm}
+=
+\frac{I}{d}\pm\varepsilon D
+$$
+
+使得对每个已选效应 $$E_i$$，
+
+$$
+\operatorname{tr}(\rho_+E_i)
+=
+\operatorname{tr}(\rho_-E_i),
+$$
+
+但目标读数满足
+
+$$
+\operatorname{tr}(\rho_+A)
+-
+\operatorname{tr}(\rho_-A)
+=
+2\varepsilon\operatorname{tr}(DA)
+\ne0.
+$$
+
+这说明当前签名对该目标并不充分。它是一个存在性见证：源码只保证某个正 $$\varepsilon$$ 存在，不给出统一的数值下界；结论也不是迹距离或 diamond 距离下界。
+
+若目标是第 $$n$$ 步的效应 $$B$$，应先把 Heisenberg 回拉
+
+$$
+A=(\Phi^*)^n(B)
+$$
+
+放入目标空间，再检查 $$A\in V$$。当前读出空间只含 $$B$$ 而不含其回拉，并不能推出当前签名足以预测未来的 $$B$$ 读数。
+

@@ -1,0 +1,6 @@
+**引理。** 设 $L\triangleleft M$ 满足 $L\subseteq M[2]\cap M[\ell]$，令
+
+$$R_L=L\cap\bigcap_{\chi\in X}\ker p_\chi.$$
+
+则 $a(R_L)$ 是 $a(M)$ 的正规初等交换二群。
+

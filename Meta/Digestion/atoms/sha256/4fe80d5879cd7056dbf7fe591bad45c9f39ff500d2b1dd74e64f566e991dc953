@@ -1,0 +1,6 @@
+**定理。** 若 $f$ 经 $\Psi_\ell$ 的实际像因子化，则对每条这样的 $\beta$，
+
+$$\boxed{t_\beta\mid d_\beta e_{\beta,\ell}.}$$
+
+若此整除条件对某条 $\beta$ 失败，则 $f(C_\ell)=F$。对任意固定简单曲线 $\alpha_0$ 满足 $f(\operatorname{Stab}(\alpha_0))<F$，该候选 $Q_\ell$ 均不能满足 $C_\ell\alpha_0\subseteq(\ker f)\alpha_0$。
+

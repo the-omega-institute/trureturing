@@ -1,0 +1,19 @@
+**命题 119.5（真实经典粗化的双边风险界与必要方向）。** 若另有一个与 $\theta$ 无关的随机核 $C:Y\to\mathcal P(Z)$ 满足
+
+$$
+E_\theta(z)=(CF)_\theta(z)=\sum_yF_\theta(y)C(z\mid y)
+\qquad(\theta\in\Theta),
+$$
+
+则
+
+$$
+0\le R(E)-R(F)\le\delta(F\mid E).
+$$
+
+若只给定义 119.2 的两个实验，则 $R(F)\le R(E)$ 不必成立，定理 119.4 的单向风险界仍成立。
+
+证明。任取 $E$ 上的决策 $d_E$，令 $d_F(a\mid y)=\sum_z C(z\mid y)d_E(a\mid z)$。它是随机核，且 $d_FF=d_EE$，所以两代价相等。对所有 $d_E$ 取下确界给出 $R(F)\le R(E)$，再用定理 119.4 得到双边界。
+
+为证明没有粗化关系时左界可以失败，取 $\Theta=Z=A=\{0,1\}$、$Y=\{*\}$、均匀先验和 $\ell(\theta,a)=\mathbf1_{\{a\ne\theta\}}$，令 $E_\theta=\delta_\theta$、$F_\theta=\delta_*$。观察 $E$ 后选 $a=\theta$ 给 $R(E)=0$。只观察 $*$ 的任意决策成功率均为 $\tfrac12(d(0\mid*)+d(1\mid*))=1/2$，故 $R(F)=1/2$。丢弃 $E$ 的输出能精确模拟 $F$，所以 $\delta(F\mid E)=0$；单向不等式为 $0\le1/2$，而左界失败。证毕。
+

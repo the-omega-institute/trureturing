@@ -1,0 +1,4 @@
+**定理。** 设 $q_A:\pi\twoheadrightarrow A$ 与 $q_P:\pi\twoheadrightarrow P$ 是有限特征商，其中 $A$ 可解、$P$ 完美。设某群 $\Lambda\le\operatorname{Out}(\pi)$ 在 $P$ 上的诱导外作用平凡。令 $q$ 为两商的联合像投影，则该联合像为 $A\times P$，且
+
+$$\boxed{\ker a_q=\ker a_{q_A}.}$$
+

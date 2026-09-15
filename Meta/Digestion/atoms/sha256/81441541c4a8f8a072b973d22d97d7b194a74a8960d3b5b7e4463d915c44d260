@@ -1,0 +1,14 @@
+**定义 31.1（源目标条件核与表示读出）。** 令 $H,Q,Y,A$ 为有限集合，$M>0$，损失 $\ell:A\times Y\to[0,M]$，摘要为 $Z=\phi(H,Q)$。源与目标分布在 $(H,Q)$ 上的条件核分别写为 $P_s(y\mid h,q)$ 和 $P_t(y\mid h,q)$，并假定目标支持包含于源支持。对 $\nu\in\{s,t\}$ 定义
+$$
+r_\nu(a\mid h,q)=\sum_y P_\nu(y\mid h,q)\ell(a,y),
+\qquad
+R_\nu(\alpha)=\mathbb E_\nu[\ell(\alpha(H,Q),Y)].
+$$
+令
+$$
+R_t^*=\mathbb E_t\min_{a\in A}r_t(a\mid H,Q),
+\qquad
+\delta(h,q)=\operatorname{TV}(P_t(\cdot\mid h,q),P_s(\cdot\mid h,q)).
+$$
+令源读出诱导的完整动作函数为 $\alpha_s(h,q)=a_s(\phi(h,q),q)$。
+

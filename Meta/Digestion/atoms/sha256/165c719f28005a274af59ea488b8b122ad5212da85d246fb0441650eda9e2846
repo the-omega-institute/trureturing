@@ -1,0 +1,33 @@
+### 94.1 局部扇区在迭代下保持封闭
+
+继续使用第 91 节的双系统分解。令
+
+$$
+L=L_A\oplus L_B
+$$
+
+表示两个局部扇区的和，令 $C$ 表示相关扇区。设 Heisenberg 演化是一个实线性映射
+
+$$
+\mathsf H:
+\operatorname{BipartiteHermitian}(m,n)
+\longrightarrow
+\operatorname{BipartiteHermitian}(m,n),
+$$
+
+并假设
+
+$$
+\mathsf H(L)\subseteq L.
+$$
+
+`local_dynamics_no_tomography` 证明对任意离散时间 $t$，
+
+$$
+\boxed{
+\mathsf H^{t}(L)\subseteq L.
+}
+$$
+
+这是一个纯粹的迭代闭合结论：如果一步演化不离开局部可见空间，那么重复应用它也不会从局部方向产生新的相关方向。
+

@@ -1,0 +1,45 @@
+### 89.4 反复记录时，熵增是每一步相对熵的和
+
+考虑一个固定的幺正矩阵 $U$，以及满足
+
+$$
+\rho_{k+1}
+=
+\operatorname{basisPinchingState}
+\left(U\rho_kU^\dagger\right)
+$$
+
+的离散协议。项目中的 `entropy_production_coherence_deletion_identity` 证明每一步的熵差为
+
+$$
+\boxed{
+S(\rho_{k+1})-S(\rho_k)
+=
+D\!\left(
+U\rho_kU^\dagger
+\middle\|
+\operatorname{basisPinchingState}(U\rho_kU^\dagger)
+\right)
+\ge 0.
+}
+$$
+
+并且对任意 $N$ 有望远镜求和：
+
+$$
+\boxed{
+S(\rho_N)-S(\rho_0)
+=
+\sum_{k=0}^{N-1}
+D\!\left(
+U\rho_kU^\dagger
+\middle\|
+\operatorname{basisPinchingState}(U\rho_kU^\dagger)
+\right).
+}
+$$
+
+这里的非负性来自每一步去相位相对于幺正演化后状态的量子相对熵；幺正共轭本身保持 von Neumann 熵。于是，重复记录协议中的可见熵增加可以逐步结算为“本轮被删除的相干”之和。
+
+这条公式同时给出一个停止条件：如果某一步的相对熵项为零，则该步的幺正后状态已经位于所选基底的去相位固定点；若所有后续步骤都保持这一条件，记录熵不再增加。反过来，固定点集合是经典对角态并不保证任意初态都会到达它；还需检查实际动力学是否持续把非对角分量送入被去相位的方向。
+

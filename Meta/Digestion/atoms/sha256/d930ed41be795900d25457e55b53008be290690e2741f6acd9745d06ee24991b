@@ -1,0 +1,58 @@
+## 128. 尾零量子最优者的唯一性与短窗口保真的代价
+
+固定整数 $n>K\ge0$，取 $\alpha=(\sqrt5-1)/2$、$F_0=0,F_1=1,F_{j+2}=F_{j+1}+F_j$。窗口从第 $0$ 位向右延伸，记
+$$
+W_j=\{w\in\{0,1\}^j:w_iw_{i+1}=0\ \text{对所有 }0\le i<j-1\},
+\qquad W_0=\{\varnothing\},
+\qquad D_K=|W_K|=F_{K+2}.
+$$
+完整载体与其中的合法词子空间分别为
+$$
+\mathcal K_j=(\mathbb C^2)^{\otimes j},
+\qquad
+\mathcal L_j=\operatorname{span}\{|w\rangle:w\in W_j\}\subseteq\mathcal K_j,
+\qquad \mathcal K_0=\mathcal L_0=\mathbb C.
+$$
+目标是 Q125.1、Q127.1 所指定的相干态族：$\rho_0=(1)$，而对 $j\ge1$，
+$$
+s_j=\sum_{w\in W_j}|w\rangle,
+\qquad
+t_j=\sum_{\substack{w\in W_j\\w_{j-1}=0}}|w\rangle,
+\qquad
+\rho_j=\alpha^{j+1}|s_j\rangle\langle s_j|
+       +\alpha^{j+2}|t_j\rangle\langle t_j|.
+$$
+这里 $s_j,t_j$ 未归一化，$\rho_j$ 是完整 $\mathcal K_j$ 上的密度算子，非法词方向上的行、列为零。补零等距映射及可行域为
+$$
+V=V_{K,n}:\mathcal L_K\longrightarrow\mathcal K_n,
+\qquad V|w\rangle=|w0^{n-K}\rangle,
+\qquad P=VV^*,
+$$
+$$
+\mathcal F_{K,n}
+=\{\sigma\text{ 为 }\mathcal K_n\text{ 上的密度算子}:\sigma=P\sigma P\}.
+$$
+因此固定的是 $\{w0^{n-K}:w\in W_K\}$ 的具体尾零支撑，允许该支撑内的混合及任意相干。置
+$$
+|\Psi_K\rangle=D_K^{-1/2}\sum_{w\in W_K}|w\rangle,
+\qquad |a\rangle=V|\Psi_K\rangle,
+\qquad \tau=\tau_{K,n}=|a\rangle\langle a|,
+\qquad Q=P-\tau.
+$$
+采用半迹范数 $d_{\rm tr}(\rho,\sigma)=\tfrac12\|\rho-\sigma\|_1$。Q127.1 的普通证明给出
+$$
+e=e_{K,n}=d_{\rm tr}(\rho_n,\tau)
+=\min_{\sigma\in\mathcal F_{K,n}}d_{\rm tr}(\rho_n,\sigma)
+>1-D_K\alpha^n>0,
+$$
+并给出 $H=\rho_n-\tau$ 的负谱子空间恰为一维。取其中单位向量 $\zeta$，使 $H\zeta=-e\zeta$，定义
+$$
+r=r_{K,n}=\|P\zeta\|^2.
+$$
+谱投影 $|\zeta\rangle\langle\zeta|$ 及 $r$ 均与 $\zeta$ 的相位选择无关。对 $K\ge1$ 再记
+$$
+B_K=F_{K+1},\qquad C_K=F_K,\qquad D_K=B_K+C_K,
+\qquad \kappa_K=\alpha^{K+2}\frac{B_KC_K}{D_K},
+$$
+并单独定义 $\kappa_0=0$；空词不使用末位分类。
+

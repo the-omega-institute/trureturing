@@ -1,0 +1,28 @@
+### 81.4 局部读数丢失不等于联合历史消失
+
+`reduced_irreversibility_is_access_defect` 给出另一个边界。存在两个整体输入 $\rho,\sigma$，满足它们的对角读数相同而某个相干元不同。受控记录耦合后，联合态仍不同，但环境偏迹相同：
+
+$$
+\operatorname{Tr}_E(\Omega_\rho)
+=
+\operatorname{Tr}_E(\Omega_\sigma),
+\qquad
+\Omega_\rho\ne\Omega_\sigma.
+$$
+
+因此不存在只依赖这个局部边缘态的统一恢复函数
+
+$$
+D\!\left(\operatorname{Tr}_E\Omega\right)=\Omega
+$$
+
+来恢复这两个联合记录。可是访问完整记录并施加受控耦合的逆操作后，二者都能恢复到各自的空记录输入：
+
+$$
+U^\dagger\Omega_\rho U=\rho\otimes|0\rangle\langle0|,
+\qquad
+U^\dagger\Omega_\sigma U=\sigma\otimes|0\rangle\langle0|.
+$$
+
+这把“历史是否存在”改写成一个可操作的问题：历史关系是否仍在允许访问的联合自由度中，而不是是否已经出现在某个局部数值上。局部边缘的经典化可以与整体可逆性同时成立。
+

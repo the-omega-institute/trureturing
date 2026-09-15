@@ -1,0 +1,52 @@
+### 77.4 何时能接回第 76 节的有限商预算
+
+若选定一个有限物理状态样本
+
+$$
+X\subseteq\operatorname{DensityState},
+$$
+
+有确定更新 $$\tau:X\to X$$，并且第 $$k$$ 步的输出正好等于指定签名坐标，那么可定义
+
+$$
+x\sim_Hx'
+\quad\Longleftrightarrow\quad
+\Sigma_H(x)=\Sigma_H(x').
+$$
+
+这时才能把 $$x\sim_Hx'$$ 与第 76 节的 $$R_H$$ 对齐，并使用有限商类数和稳定深度界。若状态空间是全部密度态，集合通常是连续的，应该报告
+
+$$
+\dim V_H,
+\qquad
+\dim K_H,
+$$
+
+或 centered trace-zero 塔，而不是报告 $$|X/R_H|$$ 的有限数值。
+
+同样，Zeckendorf 合法字串的数量
+
+$$
+|\mathcal W_L|=F_{L+2}
+$$
+
+只在明确指定
+
+$$
+w\longmapsto s_w,
+\qquad
+\tau:\mathcal W_L\to\mathcal W_L,
+\qquad
+q:\mathcal W_L\to O
+$$
+
+以及实际的序列仪器后，才是一个合法的有限载体大小。它不能自动等于
+
+$$
+\dim V_H,
+\qquad
+d^2-1,
+$$
+
+也不能自动等于量子记忆维数、Hankel 秩或 Hamiltonian 不变子空间的维数。Zeckendorf 负责组织合法标签；effect、仪器和更新负责决定哪些标签差异进入可见响应。
+

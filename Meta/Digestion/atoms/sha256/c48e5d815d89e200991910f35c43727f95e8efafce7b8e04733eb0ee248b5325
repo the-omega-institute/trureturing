@@ -1,0 +1,2 @@
+**定义。** 对同态 $\phi:\Pi_g\to F$，记 $A=\phi(a_1)$、$B=\phi(b_1)$。称 $T^n$ 标记稳定 $\phi$，若 $\phi T^n=\phi$；称其共轭类稳定 $\phi$，若存在一个 $z\in F$，使 $\phi(T^n x)=z\phi(x)z^{-1}$ 对全部 $x\in\Pi_g$ 同时成立。
+
