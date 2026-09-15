@@ -1,0 +1,102 @@
+### 15.6 定理：全时间绝对噪声下的谱底 minimax 阶
+
+固定 $0\leq E_-<E_+<\infty$ 与 $0<\eta<1$。令 $\mathcal M$ 为所有支撑于 $[E_-,E_+]$ 的概率测度 $\sigma$，要求其最低支撑点
+
+\[
+g(\sigma)=\min\operatorname{supp}\sigma
+\]
+
+具有质量 $\sigma(\{g(\sigma)\})\geq\eta$。观察为任意函数 $Y:[0,\infty)\to\mathbb R$，满足
+
+\[
+\sup_{t\geq0}|Y(t)-C_\sigma(t)|\leq\varepsilon,
+\qquad C_\sigma(t)=\int e^{-tE}\,\sigma(dE).
+\]
+
+对任意估计函数 $\widehat g$，定义统一最坏误差及 minimax 误差
+
+\[
+\mathcal R(\varepsilon)=\inf_{\widehat g}\ \sup_{\sigma\in\mathcal M}
+\sup_{\|Y-C_\sigma\|_\infty\leq\varepsilon}
+|\widehat g(Y)-g(\sigma)|.
+\tag{15.11}
+\]
+
+存在只依赖固定参数的正数 $c,C,\varepsilon_0$，使
+
+\[
+\boxed{
+\frac{c}{\log^2(1/\varepsilon)}
+\leq\mathcal R(\varepsilon)
+\leq\frac{C}{\log^2(1/\varepsilon)}
+\qquad(0<\varepsilon<\varepsilon_0).
+}
+\tag{15.12}
+\]
+
+下界可以只用有限原子测度实现，但其原子数随精度增加；定理不规定一个固定维数上限。
+
+**上界证明。** 取 $h=1/E_+$、$a=e^{-1}$、$b_0=e^{-E_-/E_+}$、$a_0=a/2$。推送 $x=e^{-hE}$ 把所有测度支撑送入 $[a,b_0]$。考虑两个能与同一 $Y$ 相容的测度，其最大 $x$ 支撑点分别为 $y>b$。它们在时间 $kh$ 的读数差不超过 $2\varepsilon$。
+
+令 $A_b(x)=(2x-a_0-b)/(b-a_0)$，并取
+
+\[
+p_n(x)=\frac{1+T_n(A_b(x))}{2}.
+\]
+
+该多项式在第一测度的支撑上非负，在第二测度的支撑上位于 $[0,1]$。由于 $b\geq a$，其仿射内层系数范数满足
+
+\[
+\|A_b\|_{\mathrm{coef},1}=\frac{2+a_0+b}{b-a_0}
+\leq S:=\frac{2+a_0+b_0}{a-a_0}.
+\]
+
+设 $Q=2S+1>1$。由 $T_{k+1}=2A_bT_k-T_{k-1}$，归纳得到 $\|T_n(A_b)\|_{\mathrm{coef},1}\leq Q^n$。常数项由总质量抵消，于是
+
+\[
+\eta p_n(y)\leq1+\varepsilon Q^n.
+\]
+
+对足够小的 $\varepsilon$ 取 $n=\lfloor\log(1/\varepsilon)/(2\log Q)\rfloor\geq1$。则 $\varepsilon Q^n\leq1$，所以令 $A_\eta=\operatorname{arcosh}(4/\eta-1)$，有
+
+\[
+y-b\leq\frac{b-a_0}{2}[\cosh(A_\eta/n)-1]
+\leq\frac{b_0A_\eta^2\cosh(A_\eta)}{4n^2}.
+\]
+
+最后使用 $h^{-1}\log(y/b)\leq(y-b)/(ha)$，得到同一噪声数据的所有相容最低能量构成的集合直径为 $O(\log^{-2}(1/\varepsilon))$。以该集合上下确界的中点为估计，若集合为空则任取 $E_-$，即可得到统一上界。这是估计函数的存在性证明，不附带计算复杂度结论；所用信息实际上只是 $O(\log(1/\varepsilon))$ 个等间距样本。
+
+**下界证明。** 选固定 $a<A<B<Y<b_0$，并记 $D_\eta=\operatorname{arcosh}(2/\eta-1)>0$。对足够大的偶数 $n$，令
+
+\[
+y_n=B+\frac{B-A}{2}[\cosh(D_\eta/n)-1]<Y.
+\]
+
+用区间 $[A,B]$ 上的式 (15.8) 取等构造，得到支撑于 $[A,Y]$ 的概率对，匹配次数 $0,\ldots,n$ 的矩，最大支撑点分别为 $y_n$ 与 $B$，且两端原子质量都至少为 $\eta$。
+
+选择固定 $\rho>1$，使区间 $[A,Y]$ 的闭 Bernstein 椭圆完全包含于开集 $\{z:\operatorname{Re}z>0,\ |z|<1\}$。这样的 $\rho$ 存在，因为 $[A,Y]$ 紧含于 $(0,1)$。对所有 $s\geq0$，主值分支 $f_s(z)=\exp(s\operatorname{Log}z)$ 在此椭圆的邻域解析，并且 $|f_s(z)|=|z|^s\leq1$。Bernstein--Chebyshev 估计 [15-C] 给出一个次数不超过 $n$ 的多项式 $q_{n,s}$，满足
+
+\[
+\sup_{x\in[A,Y]}|x^s-q_{n,s}(x)|\leq\frac{2\rho^{-n}}{\rho-1}
+\quad\text{对所有 }s\geq0.
+\]
+
+两种测度对 $q_{n,s}$ 的积分完全相同。各自总质量为一，所以其 $x^s$ 积分之差最多为 $4\rho^{-n}/(\rho-1)$。取 $s=t/h$，得到真正的全时间估计
+
+\[
+\sup_{t\geq0}|C_1(t)-C_0(t)|\leq\frac{4\rho^{-n}}{\rho-1}.
+\tag{15.13}
+\]
+
+选最小的足够大偶数 $n$ 使右侧不超过 $2\varepsilon$；于是 $n=O(\log(1/\varepsilon))$。两个最低能量之差满足
+
+\[
+\frac1h\log\frac{y_n}{B}
+\geq\frac{y_n-B}{hY}
+\geq\frac{(B-A)D_\eta^2}{4hY n^2}.
+\]
+
+两条全时间读数的中点同时与二者在误差 $\varepsilon$ 内相容，任意估计函数在至少一个模型上的误差不小于该能量差的一半，得到式 (15.12) 的下界。
+
+**推论。** 在上述维数不受统一限制的模型类中，不存在统一的 $O(\varepsilon^\alpha)$ 谱底恢复保证，其中 $\alpha>0$ 任意。因为 $\varepsilon^\alpha\log^2(1/\varepsilon)\to0$。最低态权重在构造中始终至少为固定 $\eta$；下界不依赖让该权重趋于零。
+

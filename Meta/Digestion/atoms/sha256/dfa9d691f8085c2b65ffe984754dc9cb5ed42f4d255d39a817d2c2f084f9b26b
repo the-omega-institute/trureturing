@@ -1,0 +1,2 @@
+**注。** 无分离条件下的稀疏矩恢复已有相关研究：Fan 与 Li，*Efficient Algorithms for Sparse Moment Problems without Separation*，COLT 2023，PMLR 195:3510–3565，arXiv:2207.13008。该文讨论混合分布的运输距离恢复；AT3 的目标是整个输出序列的绝对误差和。
+
