@@ -1,0 +1,218 @@
+**命题 133.1（相关输入的间隔分解与交替衰减的平稳协方差）。** 沿用命题 130.1 的同一个固定等距及命题 131.1 的记忆通道。取
+$$
+\alpha=\frac{\sqrt5-1}{2},\qquad 0<\alpha<1,\qquad \alpha+\alpha^2=1,
+\qquad B=M=\mathbb C^2,\qquad H_n=B^{\otimes n},\qquad H_0=\mathbb C,
+$$
+$$
+m_0=\sqrt\alpha\,|0\rangle+\alpha|1\rangle,\qquad
+m_1=|0\rangle,\qquad P_j=|m_j\rangle\langle m_j|,\qquad
+T|j\rangle=|j\rangle\otimes m_j\quad(j=0,1).
+$$
+两份二维空间均取正交标准基 $|0\rangle,|1\rangle$。以 $\dagger$ 表示伴随，$I_K$ 表示空间 $K$ 上的恒等算子，$\operatorname{Id}_K$ 表示算子空间 $\mathcal L(K)$ 上的恒等超算子。输出在前、记忆在后的顺序固定为
+$$
+T_0=I_M,\qquad T_{n+1}=(I_{H_n}\otimes T)T_n,
+\qquad T^\dagger T=I_M,
+$$
+$$
+\mathcal M(X)=\operatorname{Tr}_B(TXT^\dagger)=X_{00}P_0+X_{11}P_1,
+\qquad \Gamma_n(X)=\operatorname{Tr}_M(T_nXT_n^\dagger),
+\qquad \mathcal M^0=\operatorname{Id}_M.
+$$
+这里 $M$ 是 Hilbert 空间，$\mathcal M$ 是记忆通道。再记
+$$
+\pi_0=\frac1{1+\alpha^2},\qquad \pi_1=\frac{\alpha^2}{1+\alpha^2},\qquad
+\sigma_*=\pi_0P_0+\pi_1P_1,\qquad
+\eta_n=\Gamma_n(\sigma_*),\qquad \rho_n=\Gamma_n(P_0).
+$$
+命题 131.1 给出 $\mathcal M(\sigma_*)=\sigma_*$ 及 $\eta$ 的平稳边缘相容性。
+
+第一，设 $L$ 为任意有限维复 Hilbert 空间，$\Omega$ 为 $L\otimes M$ 上任意密度，允许两因子相关或纠缠。旧因子 $L$ 始终不受作用。对整数 $g,b\ge1$，依序发出 $g$ 个被忽略的中间输出及 $b$ 个保留的右侧输出；完整次序为 $L\otimes H_g\otimes H_b\otimes M$。保留态定义为实际联合态的偏迹
+$$
+\omega_{LR}
+=\operatorname{Tr}_{H_g,M}\bigl[
+(I_L\otimes T_{g+b})\Omega(I_L\otimes T_{g+b}^\dagger)
+\bigr]\in\mathcal L(L\otimes H_b).
+$$
+令
+$$
+A_j=(I_L\otimes\langle j|)\Omega(I_L\otimes|j\rangle),
+\qquad w_j=\operatorname{Tr}A_j\quad(j=0,1).
+$$
+则 $A_j\ge0$、$w_j\ge0$、$w_0+w_1=1$，并且
+$$
+\begin{aligned}
+\omega_{LR}
+&=\bigl(\operatorname{Id}_L\otimes(\Gamma_b\circ\mathcal M^g)\bigr)(\Omega)\\
+&=\sum_{j=0}^1 A_j\otimes\Gamma_b\bigl(\mathcal M^{g-1}(P_j)\bigr)\\
+&=\sum_{\substack{j=0,1\\w_j>0}}
+w_j\,\frac{A_j}{w_j}\otimes\Gamma_b\bigl(\mathcal M^{g-1}(P_j)\bigr).
+\end{aligned}
+$$
+复合中先作用 $\mathcal M^g$，再作用 $\Gamma_b$。每个右因子均为 $H_b$ 上的密度；$w_j=0$ 时 $A_j=0$，不对此项归一化。最后一式是在完整 $L\mid H_b$ 张量分割上的有限凸乘积态分解，因而 $\omega_{LR}$ 可分。$g=1$ 时右因子就是 $\Gamma_b(P_j)$，此结论不包含 $g=0$ 的可分性断言。任意有限维且不受作用的参考系统均可并入 $L$；假设只允许所写的固定顺序等距及无条件偏迹，不包含联合控制、读取间隔记录、条件化或恢复间隔的操作。
+
+特别地，对 $X=\sigma_*$ 或 $X=P_0$、整数 $r\ge0$ 及 $a,g,b\ge1$，按 $H_r\otimes H_a\otimes H_g\otimes H_b$ 分组的
+$$
+\theta^X_{r;a,g,b}
+=\operatorname{Tr}_{H_r,H_g}\Gamma_{r+a+g+b}(X)
+$$
+在完整 $H_a\mid H_b$ 分割上可分。这里左块之前恰有 $r$ 个被忽略输出，两块之间恰有 $g$ 个被忽略输出；再生成任意有限个右侧输出并忽略它们，也不改变此保留态。
+
+第二，仅对平稳族 $\eta$，将输出从 $0$ 编号。在 $H_{d+1}$ 上令
+$$
+N_i=I_{H_i}\otimes|1\rangle\langle1|\otimes I_{H_{d-i}}
+\qquad(0\le i\le d).
+$$
+对每个整数 $d\ge1$，两处占据均值均为 $\pi_1$，且
+$$
+\operatorname{Cov}_d
+:=\operatorname{Tr}(\eta_{d+1}N_0N_d)-\pi_1^2
+=\pi_0\pi_1(-\alpha^2)^d.
+$$
+此值在每个有限 $d$ 均非零，奇数距离为负、偶数距离为正，绝对值 $\pi_0\pi_1\alpha^{2d}$ 趋于零。对 $d\ge2$，忽略中间 $g=d-1\ge1$ 个位置后的双位置态可分，却不是乘积态；更一般地，任何相隔 $g\ge1$ 个被忽略位置的非空平稳有限块也不是乘积态。
+
+证明。先在相关联合态上识别被忽略输出的作用。按记忆标准基展开
+$$
+\Omega=\sum_{i,k=0}^1\Omega_{ik}\otimes|i\rangle\langle k|,
+\qquad
+\Omega_{ik}=(I_L\otimes\langle i|)\Omega(I_L\otimes|k\rangle).
+$$
+真实的一步等距给出 $L\otimes B\otimes M$ 上的算子
+$$
+(I_L\otimes T)\Omega(I_L\otimes T^\dagger)
+=\sum_{i,k=0}^1\Omega_{ik}\otimes|i\rangle\langle k|
+\otimes|m_i\rangle\langle m_k|.
+$$
+新输出因子的 $|i\rangle\langle k|$ 的迹是 $\delta_{ik}$，故取该输出的偏迹恰好消去 $i\ne k$ 项，得到
+$$
+\operatorname{Tr}_B\bigl[(I_L\otimes T)\Omega(I_L\otimes T^\dagger)\bigr]
+=\sum_{j=0}^1A_j\otimes P_j
+=(\operatorname{Id}_L\otimes\mathcal M)(\Omega).
+$$
+这保留了 $\Omega$ 的两个对角算子块，并未以两边的边缘态替换 $\Omega$。
+
+为在以后各步沿用此等式，直接使用命题 131.1 的相关偏迹恒等式并保留旁观因子 $L$。具体地，设 $E$ 为已发出而待忽略的因子，$Z$ 为 $L\otimes E\otimes M$ 上的算子，取 $E$ 的正交基 $(e_u)$ 并写
+$$
+D_{uv}=(I_L\otimes\langle e_u|\otimes I_M)
+Z(I_L\otimes|e_v\rangle\otimes I_M)
+\in\mathcal L(L\otimes M).
+$$
+在 $L\otimes E\otimes H_\ell\otimes M$ 的顺序下，取 $E$ 的对角块后求和给
+$$
+\begin{aligned}
+&\operatorname{Tr}_E\bigl[
+(I_L\otimes I_E\otimes T_\ell)Z
+(I_L\otimes I_E\otimes T_\ell^\dagger)\bigr]\\
+&\quad=\sum_u(I_L\otimes T_\ell)D_{uu}(I_L\otimes T_\ell^\dagger)\\
+&\quad=(I_L\otimes T_\ell)(\operatorname{Tr}_E Z)
+(I_L\otimes T_\ell^\dagger).
+\end{aligned}
+$$
+所以先取旧因子的偏迹与继续只作用记忆的等距可交换。由一步公式归纳，
+$$
+\operatorname{Tr}_{H_g}\bigl[
+(I_L\otimes T_g)\Omega(I_L\otimes T_g^\dagger)\bigr]
+=(\operatorname{Id}_L\otimes\mathcal M^g)(\Omega)
+=\sum_{j=0}^1A_j\otimes\mathcal M^{g-1}(P_j)
+\qquad(g\ge1).
+$$
+再按顺序分组
+$$
+T_{g+b}=(I_{H_g}\otimes T_b)T_g,
+$$
+应用刚才的偏迹交换式，最后取记忆偏迹，便得到陈述中的 $\omega_{LR}$ 两个线性表达式。
+
+对任意 $v\in L$，
+$$
+\langle v,A_jv\rangle
+=(\langle v|\otimes\langle j|)\Omega(|v\rangle\otimes|j\rangle)\ge0,
+\qquad \sum_j\operatorname{Tr}A_j=\operatorname{Tr}\Omega=1.
+$$
+因此 $A_j$ 正半定；若其迹为零，所有非负特征值之和为零，故 $A_j=0$。正权重项的 $A_j/w_j$ 是密度。命题 131.1 的记忆通道及输出通道均由等距共轭与偏迹给出，保持正性与迹；$P_j$ 是密度，故 $\Gamma_b(\mathcal M^{g-1}(P_j))$ 也是密度。由此得到所述有限凸分解，包括仅一个权重为正的情形。
+
+这一步所用的测量后制备可分性是成熟的纠缠破坏通道数学：Michael Horodecki、Peter W. Shor、Mary Beth Ruskai，[General Entanglement Breaking Channels，arXiv:quant-ph/0302031v2](https://arxiv.org/abs/quant-ph/0302031v2)（该版本 PDF 的题头为 Entanglement Breaking Channels），定理 4 的 (A)、(B)、(D) 分别给出测量后制备表示、纠缠破坏性质及秩一 Kraus 表示的等价性。其保迹资格在这里由测量效应 $|j\rangle\langle j|$ 构成 POVM 以及
+$$
+C_j=|m_j\rangle\langle j|,\qquad
+\mathcal M(X)=\sum_{j=0}^1 C_jXC_j^\dagger,\qquad
+\sum_{j=0}^1 C_j^\dagger C_j=I_M
+$$
+落实；制备态为单位迹的 $P_j$。上面的相关算子块计算是该等价性在此固定生成器中的直接应用。
+
+现在取 $L=H_a$、$\Omega=T_aXT_a^\dagger$。在 $H_a\otimes H_g\otimes H_b\otimes M$ 上，迭代的分组恒等式把此后的联合态识别为 $T_{a+g+b}XT_{a+g+b}^\dagger$，故前述 $\omega_{LR}$ 正是 $\Gamma_{a+g+b}(X)$ 忽略中间 $g$ 位后的首 $a$ 位、末 $b$ 位约化态。若还有被忽略的前缀 $r\ge0$，先按 $H_r\otimes H_a\otimes M$ 分组；命题 131.1 的同一偏迹恒等式给
+$$
+\Omega^{(r,a)}
+:=\operatorname{Tr}_{H_r}(T_{r+a}XT_{r+a}^\dagger)
+=T_a\mathcal M^r(X)T_a^\dagger.
+$$
+于是保留左块之前的实际记忆输入是 $\mathcal M^r(X)$，而左块发出后的实际输入是相关密度 $\Omega^{(r,a)}$。将其代入第一部分即得 $\theta^X_{r;a,g,b}$ 的可分性。$r=0$ 时 $H_0=\mathbb C$，式子同样成立。最后，命题 130.1 的已发出前缀不变性，或命题 131.1 的末位边缘相容恒等式，说明继续生成再忽略任意有限后缀保持所有这些约化态。这同时适用于纯边界族与平稳族。
+
+下面计算平稳占据关联。令 $Y_i\in\{0,1\}$ 表示第 $i$ 个输出在计算基中的测量值，并用未归一化分支映射
+$$
+\mathcal J_j(X)=C_jXC_j^\dagger=X_{jj}P_j.
+$$
+它确实来自实际发出输出的投影，因为 $(\langle j|\otimes I_M)T=C_j$。旧输出上的投影可与以后仅作用记忆及新输出的步骤交换；依次收缩各个输出因子，对任意词 $w=(j_0,\ldots,j_{n-1})$ 有
+$$
+(\langle w|\otimes I_M)T_n=C_{j_{n-1}}\cdots C_{j_0},
+$$
+$$
+\langle w|\eta_n|w\rangle
+=\operatorname{Tr}\bigl[
+(\mathcal J_{j_{n-1}}\circ\cdots\circ\mathcal J_{j_0})(\sigma_*)
+\bigr].
+$$
+故这些分支的迹是完整相干态 $\eta_n$ 的实际对角概率，而非以去相干态代替原联合态所得的假设。
+
+$\sigma_*$ 的两个对角元为
+$$
+(\sigma_*)_{00}=\pi_0\alpha+\pi_1=\pi_0,
+\qquad (\sigma_*)_{11}=\pi_0\alpha^2=\pi_1.
+$$
+因此首次概率为 $(\pi_0,\pi_1)$；任一正概率分支发出 $j$ 后，归一化记忆为 $P_j$。由
+$$
+\operatorname{diag}P_0=(\alpha,\alpha^2),\qquad
+\operatorname{diag}P_1=(1,0)
+$$
+得到以旧值标行、新值标列的转移矩阵
+$$
+K=\begin{pmatrix}\alpha&\alpha^2\\1&0\end{pmatrix},
+\qquad \pi=(\pi_0,\pi_1),\qquad \pi K=\pi.
+$$
+更明确地，$\mathcal J_k(P_j)=K_{jk}P_k$，所以对所有词，包括概率为零的词，都有
+$$
+(\mathcal J_{j_{n-1}}\circ\cdots\circ\mathcal J_{j_0})(\sigma_*)
+=\pi_{j_0}\left(\prod_{t=1}^{n-1}K_{j_{t-1}j_t}\right)P_{j_{n-1}},
+$$
+$$
+\Pr(Y_0=j_0,\ldots,Y_{n-1}=j_{n-1})
+=\pi_{j_0}\prod_{t=1}^{n-1}K_{j_{t-1}j_t}\qquad(n\ge1).
+$$
+空乘积取一。这一未归一化恒等式处理零分支而无需除以零，且给出实际计算基词律的平稳 Markov 递推。
+
+由于 $\pi_1>0$，可定义
+$$
+q_d=\Pr(Y_d=1\mid Y_0=1),\qquad q_0=1.
+$$
+转移到 $1$ 的概率从 $0$ 出发为 $\alpha^2$，从 $1$ 出发为零，故
+$$
+q_{d+1}=\alpha^2(1-q_d),\qquad
+\pi_1=\alpha^2(1-\pi_1),\qquad
+q_{d+1}-\pi_1=-\alpha^2(q_d-\pi_1).
+$$
+从 $q_0-\pi_1=\pi_0$ 归纳得到
+$$
+q_d=\pi_1+\pi_0(-\alpha^2)^d\qquad(d\ge0).
+$$
+每个位置的占据均值由 $\pi K=\pi$ 等于 $\pi_1$；$N_0N_d$ 的联合均值则为
+$$
+\operatorname{Tr}(\eta_{d+1}N_0N_d)
+=\Pr(Y_0=1,Y_d=1)=\pi_1q_d.
+$$
+减去 $\pi_1^2$ 即得协方差公式。特别地，$q_1=0$，且
+$$
+\operatorname{Cov}_1=-\pi_0\pi_1\alpha^2=-\pi_1^2,
+$$
+与相邻词 $11$ 的概率为零一致。$0<\alpha<1$ 及 $\pi_0\pi_1>0$ 给出所有有限距离的非零性、符号交替与衰减极限。
+
+若 $d\ge2$，第一部分取 $a=b=1$、$g=d-1$、$X=\sigma_*$ 即得端点态可分；乘积态上两个局部占据算子的期望乘法分解，协方差必为零，故这里的端点态不是乘积态。对两个非空平稳块，取左块末位与右块首位，距离为 $g+1$；平稳边缘相容性给出同一个非零协方差，因而两块也不是乘积态。
+
+这里 $\langle m_0,m_1\rangle=\sqrt\alpha\ne0$，分解指标 $j$ 不构成可完美读取的记忆标志。上述可分性不蕴含零量子失协、固定乘积基中的对角性或量子条件独立性，也不判定整个多位置态的多体纠缠；占据协方差的非零尾不等于纠缠，亦不给出所有关联的有限支撑。$d$ 只计输出位置间距，不表示物理长度或时间。结合命题 132.1 的 $\eta_2$ 及每个 $\beta_{n,2}$ 的相邻纠缠，同一生成器中相邻输出纠缠、平稳族在每个有限距离的非零衰减占据关联，与无条件忽略任意含 $g\ge1$ 个输出的间隔后两侧有限块的可分性同时成立。证毕。
+

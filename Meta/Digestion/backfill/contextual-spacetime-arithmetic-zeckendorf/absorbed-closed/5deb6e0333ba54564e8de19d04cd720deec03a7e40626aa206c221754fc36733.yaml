@@ -2,7 +2,13 @@ fingerprints:
   raw_sha256: sha256:5deb6e0333ba54564e8de19d04cd720deec03a7e40626aa206c221754fc36733
   normalized_sha256: sha256:5deb6e0333ba54564e8de19d04cd720deec03a7e40626aa206c221754fc36733
 cas_ref: sha256:5deb6e0333ba54564e8de19d04cd720deec03a7e40626aa206c221754fc36733
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Factorization/Combinatorics/MarkedPrimeWordSnapshotFiber.snapshot_fiber_equiv_and_forced_marks
+    target_statement_id: sha256:2d628f2f4e721b53df6cf430d2322a50835ee676d28815efc202caad16ae2e95
+  - gid: D5/S3/Factorization/Combinatorics/StrictDivisorChainCount.strict_divisor_chain_count
+    target_statement_id: sha256:37111772775aeadb9fbc1831daf27a4c9221f7bc53e1921787c2069ce41f9b5c
+  - gid: D5/S3/Factorization/Combinatorics/StrictDivisorChainMobius.chain_alternating_sum_eq_moebius
+    target_statement_id: sha256:fae8647d64c7239dc7982939953372724e75407443cc5af717452fc2ce2726d3
 receipts:
   unresolved_subitems: []
   chain_atoms:
