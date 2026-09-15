@@ -2,14 +2,12 @@
    generality: I
    mirror-B: D5/B/S1/Recurrence/Partitions/StephanEvenProductPartitionRecurrence
    mirror-E: none(waiver:symbolic-proof-no-numeric-artifact)
-   anchors: [mathlib/module/Mathlib.Combinatorics.Enumerative.Partition.Basic, mathlib/module/Mathlib.Algebra.Ring.Parity, mathlib/module/Mathlib.Tactic.IntervalCases, mathlib/module/Mathlib.Tactic.NormNum]
+   anchors: [mathlib/module/Mathlib.Combinatorics.Enumerative.Partition.Basic, mathlib/module/Mathlib.Tactic.IntervalCases]
    utility: none
    digest: The maximum even product of partitions triples when the partitioned integer increases by three. -/
 
 import Mathlib.Combinatorics.Enumerative.Partition.Basic
-import Mathlib.Algebra.Ring.Parity
 import Mathlib.Tactic.IntervalCases
-import Mathlib.Tactic.NormNum
 
 namespace D5.S1.Recurrence.Partitions.StephanEvenProductPartitionRecurrence
 
