@@ -44,7 +44,6 @@ theorem coefficient_recurrence (R p : ℕ) (hR : Squarefree R) (hR1 : 1 < R)
     simp only [e, Nat.totient_mul hcop, Nat.totient_prime hp, Nat.cast_mul,
       Nat.cast_sub hp.one_lt.le, Nat.cast_one]
     field_simp [hp0.ne', hR0]
-    <;> ring
   have hsplit (u : ℝ) : B (R * p) u = B R u - B R (u / p) := by
     have hd : (R * p).divisors = R.divisors ∪ R.divisors.image (p * ·) := by
       rw [Nat.divisors_mul]
@@ -90,7 +89,7 @@ theorem coefficient_recurrence (R p : ℕ) (hR : Squarefree R) (hR1 : 1 < R)
         by_cases hs : 0 < x * y
         · simp [hs, abs_of_nonneg hx', abs_of_nonneg hy', min_eq_left hxy',
             Int.cast_sub, abs_of_nonpos (sub_nonpos.mpr hxy')]
-          <;> ring
+          ring
         · have hz : x = 0 ∨ y = 0 := mul_eq_zero.mp
             (le_antisymm (not_lt.mp hs) (mul_nonneg hx hy))
           rcases hz with rfl | rfl <;> simp_all
@@ -100,7 +99,7 @@ theorem coefficient_recurrence (R p : ℕ) (hR : Squarefree R) (hR1 : 1 < R)
         by_cases hs : 0 < x * y
         · simp [hs, abs_of_nonneg hx', abs_of_nonneg hy', min_eq_right hxy',
             Int.cast_sub, abs_of_nonneg (sub_nonneg.mpr hxy')]
-          <;> ring
+          ring
         · have hz : x = 0 ∨ y = 0 := mul_eq_zero.mp
             (le_antisymm (not_lt.mp hs) (mul_nonneg hx hy))
           rcases hz with rfl | rfl <;> simp_all
@@ -110,25 +109,25 @@ theorem coefficient_recurrence (R p : ℕ) (hR : Squarefree R) (hR1 : 1 < R)
         (le_of_not_ge hy))
       simp [hs, Int.cast_sub, abs_of_nonneg hx', abs_of_nonpos hy',
         abs_of_nonneg (sub_nonneg.mpr (hy'.trans hx'))]
-      <;> ring
+      ring
     · have hx' : (x : ℝ) ≤ 0 := by exact_mod_cast (le_of_not_ge hx)
       have hy' : (0 : ℝ) ≤ y := by exact_mod_cast hy
       have hs : ¬ 0 < x * y := not_lt.mpr (mul_nonpos_of_nonpos_of_nonneg
         (le_of_not_ge hx) hy)
       simp [hs, Int.cast_sub, abs_of_nonpos hx', abs_of_nonneg hy',
         abs_of_nonpos (sub_nonpos.mpr (hx'.trans hy'))]
-      <;> ring
+      ring
     · have hx' : (x : ℝ) ≤ 0 := by exact_mod_cast (le_of_not_ge hx)
       have hy' : (y : ℝ) ≤ 0 := by exact_mod_cast (le_of_not_ge hy)
       have hs : 0 < x * y := mul_pos_of_neg_of_neg (lt_of_not_ge hx) (lt_of_not_ge hy)
       by_cases hxy : (x : ℝ) ≤ y
       · simp [hs, Int.cast_sub, abs_of_nonpos hx', abs_of_nonpos hy',
           min_eq_right (neg_le_neg hxy), abs_of_nonpos (sub_nonpos.mpr hxy)]
-        <;> ring
+        ring
       · simp [hs, Int.cast_sub, abs_of_nonpos hx', abs_of_nonpos hy',
           min_eq_left (neg_le_neg (le_of_not_ge hxy)),
           abs_of_nonneg (sub_nonneg.mpr (le_of_not_ge hxy))]
-        <;> ring
+        ring
   have hweight (a : ℝ) (ha : 0 < a) :
       IntegrableOn (fun u : ℝ => (u ^ 2)⁻¹) (Ioi a) := by
     have hi := integrableOn_Ioi_rpow_of_lt (by norm_num : (-2 : ℝ) < -1) ha
