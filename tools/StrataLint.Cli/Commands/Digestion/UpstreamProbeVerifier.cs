@@ -107,8 +107,9 @@ internal sealed class UpstreamProbeVerifier(IUpstreamLeanProcessRunner runner, s
         var theorems = Regex.Matches(code, @"^[ \t]*theorem[ \t]+(" + Name + @")(?=[ \t\r\n:({])", Options)
             .Select(match => match.Groups[1].Value).ToArray();
         var prints = Regex.Matches(code, @"^[ \t]*#print[ \t]+axioms[ \t]+(" + Name + @")[ \t]*\r?$", Options);
-        if (theorems.Length == 0 || theorems.Distinct(StringComparer.Ordinal).Count() != theorems.Length
-            || Regex.IsMatch(code, @"^[ \t]*(?:example|lemma|namespace|section)\b", Options)
+        if (theorems.Length == 0 || Regex.Matches(code, @"\btheorem\b", Options).Count != theorems.Length
+            || theorems.Distinct(StringComparer.Ordinal).Count() != theorems.Length
+            || Regex.IsMatch(code, @"\b(?:example|lemma|namespace|section)\b", Options)
             || !theorems.Order(StringComparer.Ordinal).SequenceEqual(prints.Select(match => match.Groups[1].Value).Order(StringComparer.Ordinal))
             || prints.Count == 0
             || !Regex.IsMatch(code[prints[0].Index..], @"\A(?:[ \t\r\n]*#print[ \t]+axioms[ \t]+" + Name + @"[ \t]*(?:\r?\n|\z))+\s*\z", Options))
@@ -116,7 +117,7 @@ internal sealed class UpstreamProbeVerifier(IUpstreamLeanProcessRunner runner, s
         var parsed = new HashSet<string>(StringComparer.Ordinal);
         var union = new SortedSet<string>(StringComparer.Ordinal);
         foreach (Match match in Regex.Matches(stdout,
-                     @"^'(?<name>[^'\r\n]+)' (?:depends on axioms: \[(?<axioms>[^\]\r\n]*)\]|does not depend on any axioms)[ \t]*\r?$", Options))
+                     @"^'(?<name>[^\r\n]+)' (?:depends on axioms: \[(?<axioms>[^\]\r\n]*)\]|does not depend on any axioms)[ \t]*\r?$", Options))
         {
             if (!theorems.Contains(match.Groups["name"].Value, StringComparer.Ordinal)) continue;
             if (!parsed.Add(match.Groups["name"].Value)) throw Invalid("PROBE_AXIOMS", "duplicate axiom output");

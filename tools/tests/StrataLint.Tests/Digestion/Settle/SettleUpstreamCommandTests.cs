@@ -8,7 +8,7 @@ using static StrataLint.Tests.UpstreamProbeVerifierTests;
 
 namespace StrataLint.Tests;
 
-public sealed class SettleUpstreamCommandTests
+public sealed partial class SettleUpstreamCommandTests
 {
     [Theory]
     [InlineData("atom_id")]

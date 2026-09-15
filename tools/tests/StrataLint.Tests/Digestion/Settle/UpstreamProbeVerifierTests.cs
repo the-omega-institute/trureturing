@@ -5,7 +5,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
-public sealed class UpstreamProbeVerifierTests
+public sealed partial class UpstreamProbeVerifierTests
 {
     internal const string Source = "import Mathlib\ntheorem probe : True := by trivial\n#print axioms probe\n";
     internal const string Output = "'probe' depends on axioms: [propext, Classical.choice, Quot.sound]\n";
