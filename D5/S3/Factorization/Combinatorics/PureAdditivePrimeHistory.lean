@@ -9,6 +9,7 @@
 import D5.S3.Factorization.Combinatorics.MixedPrimeHistoryCount
 import Mathlib.NumberTheory.PrimeCounting
 import Mathlib.Data.List.OfFn
+import Mathlib.Algebra.BigOperators.Fin
 
 set_option autoImplicit false
 
@@ -42,11 +43,51 @@ theorem pure_additive_run (qs : List Nat.Primes) (m : ℕ) :
     rw [ih]
     omega
 
+set_option backward.isDefEq.respectTransparency false in
 /-- Additive words starting at one are counted by tuples whose sum is one less than the endpoint. -/
 theorem additive_tuple_count (X k : ℕ) (N : ℕ) :
     Nat.card {w : List PrimeLetter //
       (∃ a : PrimeTuple X k, tupleWord a = w) ∧ endpoint w = N} =
         tupleCount X k ((N : ℤ) - 1) := by
-  sorry
+  classical
+  have injective : Function.Injective (@tupleWord X k) := by
+    intro a b hab
+    have h : (fun i => (Sum.inl
+        ⟨(a i).val, Nat.prime_of_mem_primesLE (a i).property⟩ : PrimeLetter)) =
+        (fun i => (Sum.inl
+          ⟨(b i).val, Nat.prime_of_mem_primesLE (b i).property⟩ : PrimeLetter)) :=
+      List.ofFn_injective hab
+    funext i
+    apply Subtype.ext
+    exact congrArg (fun q : Nat.Primes => q.val) (Sum.inl.inj (congrFun h i))
+  have endpoint_sum (a : PrimeTuple X k) :
+      (endpoint (tupleWord a) : ℤ) = 1 + tupleSum a := by
+    have h := pure_additive_run (List.ofFn (fun i : Fin k =>
+      (⟨(a i).val, Nat.prime_of_mem_primesLE (a i).property⟩ : Nat.Primes))) 1
+    have hh : endpoint (tupleWord a) = 1 + ∑ i, (a i).val := by
+      rw [List.map_ofFn, List.map_ofFn, List.sum_ofFn] at h
+      exact h
+    unfold tupleSum
+    exact_mod_cast hh
+  let encode : {a : PrimeTuple X k // tupleSum a = (N : ℤ) - 1} →
+      {w : List PrimeLetter //
+        (∃ a : PrimeTuple X k, tupleWord a = w) ∧ endpoint w = N} := fun a =>
+    ⟨tupleWord a.val, ⟨a.val, rfl⟩, by
+      have he := endpoint_sum a.val
+      have hs := a.property
+      have hn : (endpoint (tupleWord a.val) : ℤ) = (N : ℤ) := by omega
+      exact_mod_cast hn⟩
+  have encode_injective : Function.Injective encode := by
+    intro a b hab
+    apply Subtype.ext
+    exact injective (congrArg Subtype.val hab)
+  have encode_surjective : Function.Surjective encode := by
+    rintro ⟨w, ⟨a, rfl⟩, hw⟩
+    refine ⟨⟨a, ?_⟩, rfl⟩
+    have he := endpoint_sum a
+    rw [hw] at he
+    omega
+  exact Nat.card_congr (Equiv.ofBijective encode
+    ⟨encode_injective, encode_surjective⟩).symm
 
 end D5.S3.Factorization.Combinatorics.PureAdditivePrimeHistory
