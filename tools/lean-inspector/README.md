@@ -38,9 +38,25 @@ Inspector 的可复用工件由 [Lake facets](lakefile.lean) 管理，均在当�
 | `report.zip` | 汇总后的完整规范报告 bundle。 |
 | `inputs/`、`inputs.json`、`compatibility` | 从登记输入生成的模块输入、成员集合及兼容标识。 |
 
-这些是构建产物，不提交为源码。正常 Lean-cache 负责依赖物化和既有构建归档；
-[ensure](../StrataLint.Cli/Commands/Worktrees/LeanCacheEnsureCommand.cs) 按 donor
-规则播种当前工作树的私有 `.lake`，支持时使用 clonefile，复制后的写入与 donor 隔离。
+这些是构建产物，不提交为源码。正常 Lean-cache 发布（定时 workflow 与手动
+`make lean-cache-to-github-without-mathlib`）必须通过同一 `inspect.sh` 入口生成或
+复用并完整校验当前报告，然后由 `lake pack` 打包根 buildDir；不另跑一轮完整
+`lake build`。输入、生成或校验失败即发布失败，即使对应 tag 已存在也不能跳过。
+只有已发布的 exact release 才返回 `exists`；上传中的可读 draft 或无效发布元数据
+会明确报错，不接管、删除或修改其他发布者的 release。
+手动发布仍须显式提供 `GITHUB_SHA`（产出提交的 40 位 SHA）和 `GITHUB_RUN_ID`
+（归属编号），以及 GitHub 发布凭据；本地需要钉版 Lean、.NET SDK 和 Python 3。
+
+新 tag 在既有 toolchain/config/sources 后追加共享 `build-snapshot-address`，该地址
+同时覆盖 Lean 输入及报告语义版本、报告输入与配置；没有新增手动版本。
+`manifest.txt` 记录完整 `build_snapshot_sha256`。旧的可选报告归档只能作为前缀或
+显式同工具链 seed 回落，不能成为新完整快照的 exact 命中或阻止其首次发布。
+取回仍校验摘要、manifest/tag 地址和现有内容/结构来源字段；归档是编译种子，
+当前报告由 Inspector 的原生 trace、当前输入及完整 materials 校验判定。
+归档携带根 buildDir 中的 Inspector 可执行文件、模块/report facets、规范报告、
+materials、origin 和 attestation。目标平台可重建 native executable；同输入且工件
+有效时报告模块和汇总复用。依赖包仍由正常 Lean-cache ensure 物化。
+
 `.lake` 不使用 symlink；[writer 入口](../scripts/worktree/lean-cache-run.sh)
 以 `with-cache-writer` 持有当前 `.lake` 的写锁，覆盖 ensure 和原生 `lake build :report`。
 donor 只供播种，后续编译、报告写入和损坏恢复均发生在当前工作树。

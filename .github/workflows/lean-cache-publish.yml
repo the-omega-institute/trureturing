@@ -10,12 +10,12 @@
 #
 # 为什么是独立文件而不是 ci.yml 里的一个 job：
 # project build 层只走 Releases：本 workflow 先取同 config 的上一份 Release 作增量种子，
-# 再用 `lake build` 校准到本次 schedule 对应的 dev commit，最后发布新的内容地址。
+# 再由 Inspector 的 `:report` 完成默认编译、报告及校验，发布新的完整快照地址。
 # Release 不存在或不可用时，`lake exe cache get` 加冷构建仍能建立第一份归档。
 # 它不读写 Actions project-build cache，避免每个 sources 地址占一份约 1.8 GB 的仓库缓存。
 #
 # Report input selection is owned by the registered lean-report-inputs.json manifest.
-# This scheduled publisher only requires Lean products; report production is optional.
+# Publication requires a current complete Inspector report; native Lake facets own reuse.
 name: Lean build cache publication
 
 # 【触发形态：2026-08-21 owner 定「做成定时的就行」】
@@ -167,6 +167,11 @@ jobs:
           "$GITHUB_WORKSPACE/candidate/tools/scripts/workflow/install-lean-toolchain.sh" \
             "${TOOLCHAIN_FILE}" --github-path "$GITHUB_PATH"
 
+      - name: Install the pinned .NET SDK for Inspector
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: candidate/global.json
+
       - name: Resolve this commit's Lean input addresses
         id: addr
         shell: bash
@@ -214,25 +219,10 @@ jobs:
             echo "hit=false" >> "$GITHUB_OUTPUT"
           fi
 
-      # 即使 Release 精确命中也运行 Lake 自己的有效性检查；前缀命中时它补齐差量。
-      # `compiled_targets` 是新鲜度读数，不是门槛。`lake build` 成功后才允许发布。
-      - name: Build and verify the current Lean project layer
-        id: build
-        shell: bash
-        working-directory: candidate
-        env:
-          BUILD_LOG: ${{ runner.temp }}/verify-build.txt
-        run: |
-          set -euo pipefail
-          if [[ "${{ steps.release-seed.outputs.hit }}" != "true" ]]; then
-            lake exe cache get || printf '%s\n' "mathlib cache get returned nonzero; lake build will fill the gaps"
-          fi
-          lake build 2>&1 | tee "${BUILD_LOG}"
-          compiled="$(grep -cE '(Built|Building|Compiling) ' "${BUILD_LOG}" || true)"
-          printf 'compiled_targets=%s\n' "${compiled}"
-          printf 'olean=%s\n' "$(find .lake/build -name '*.olean' | wc -l | tr -d ' ')"
-
-      - name: Publish the build cache under its content address
+      # Inspector's ensure and native :report perform dependency provisioning,
+      # all ordinary default builds and report validation through the private writer.
+      # The publisher invokes that entry once before either packing or returning exists.
+      - name: Prepare the current report and publish the complete build snapshot
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

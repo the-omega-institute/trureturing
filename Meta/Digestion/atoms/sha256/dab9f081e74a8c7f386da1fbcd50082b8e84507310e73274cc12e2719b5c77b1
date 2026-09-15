@@ -1,0 +1,44 @@
+**命题 7.2（关系复合与完备化交换的确切阶段判据）。** 对每个 $n\in\mathbb N$，
+
+$$
+\pi_n^{XZ}[P]=\bigcap_{m\ge n}p_{m,n}^{XZ}[D_m].
+$$
+
+右侧在有限集合中递减，故存在 $m_0\ge n$，使所有 $m\ge m_0$ 都满足 $p_{m,n}^{XZ}[D_m]=\pi_n^{XZ}[P]$。因此
+
+$$
+\widehat C=P
+\ \Longleftrightarrow\
+\forall n\in\mathbb N\ \exists m\ge n,\quad
+p_{m,n}^{XZ}[D_m]=C_n.
+$$
+
+令
+
+$$
+E_n=\{(a,b,c)\in Q_n^X\times Q_n^Y\times Q_n^Z:
+(a,b)\in R_n\land(b,c)\in S_n\},\qquad
+W_n=(q_n^X\times q_n^Y\times q_n^Z)[W].
+$$
+
+保留中间见证的交换判据为
+
+$$
+\widehat W=T
+\ \Longleftrightarrow\
+\forall n\in\mathbb N\ \exists m\ge n,\quad
+p_{m,n}^{XYZ}[E_m]=W_n.
+$$
+
+端点判据的实际元素量词版为：对每个 $n$，存在 $m\ge n$，对所有 $x\in X$、$y_0,y_1\in Y$、$z\in Z$，若
+
+$$
+R(x,y_0)\land S(y_1,z)\land q_m^Y(y_0)=q_m^Y(y_1),
+$$
+
+则存在 $(x',y,z')\in W$，使
+
+$$
+q_n^X(x')=q_n^X(x),\qquad q_n^Z(z')=q_n^Z(z).
+$$
+

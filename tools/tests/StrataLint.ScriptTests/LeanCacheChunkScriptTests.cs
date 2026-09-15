@@ -89,12 +89,14 @@ public sealed class LeanCacheChunkScriptTests
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new LeanCacheChunkFixture();
-        fixture.AddRelease(fixture.Tag, chunked: false, oldManifest: true);
+        var legacyTag = fixture.CandidateTag('4', '3');
+        fixture.AddRelease(legacyTag, chunked: false, oldManifest: true);
+        fixture.ListReleases(legacyTag);
 
         fixture.AssertSuccess(fixture.Fetch());
 
         Assert.Equal(LeanCacheChunkFixture.Archive, fixture.Unpacked);
-        Assert.Equal(new[] { "manifest.txt", "lean-build.tgz" }, fixture.DownloadPatterns);
+        Assert.Equal(new[] { "manifest.txt", "lean-build.tgz" }, fixture.DownloadPatterns.TakeLast(2));
     }
 
     [Theory]
@@ -104,6 +106,10 @@ public sealed class LeanCacheChunkScriptTests
     [InlineData("bad-whole", "digest mismatch")]
     [InlineData("invalid-parts", "invalid parts count")]
     [InlineData("empty-parts", "invalid parts count")]
+    [InlineData("missing-snapshot", "manifest addresses do not match release tag")]
+    [InlineData("malformed-snapshot", "malformed snapshot address")]
+    [InlineData("stale-snapshot", "exact snapshot address mismatch")]
+    [InlineData("stale-sources", "exact snapshot address mismatch")]
     public void CorruptChunkedCandidateFailsClosed(string deviation, string reason)
     {
         if (OperatingSystem.IsWindows()) return;

@@ -1,0 +1,29 @@
+**定义 14.0b（逆向运算、严格总响应与目标拓扑）。** 以下取 $K=K_I$，并通过定理 14.1 的同胚识别另一完成，记 $\iota=\iota_I$。定义截断减法
+$$
+F(n,m)=\max\{n-m,0\}.
+$$
+令
+$$
+K^\perp=\{\perp\}\sqcup\operatorname{ok}(K)
+$$
+取拓扑不交并，其中 $\operatorname{ok}:K\to\operatorname{ok}(K)$ 为同胚；两个分量都开闭，且 $\perp$ 为孤立点。严格部分减法的总响应定义为
+$$
+D(n,m)=
+\begin{cases}
+\operatorname{ok}(\iota(n-m)),&n\ge m,\\
+\perp,&n<m.
+\end{cases}
+$$
+其延拓要求在整个 $K^2$ 上定义，并与所有实际自然数输入的成功或失败响应相符。特别地，$\operatorname{ok}(\iota(0))\ne\perp$。
+
+有限严格输出空间与投影定义为
+$$
+Q_\alpha^\perp=\{\perp\}\sqcup\operatorname{ok}(Q_\alpha),
+\qquad
+\pi_\alpha^\perp(\perp)=\perp,
+\qquad
+\pi_\alpha^\perp(\operatorname{ok}(x))
+=\operatorname{ok}(\pi_\alpha(x)).
+$$
+所谓分别连续延拓，是指每个固定 $x\in K$ 的第二槽切片以及每个固定 $y\in K$ 的第一槽切片都连续；这里固定参数遍历整个完成，不限于实际自然数像。
+
