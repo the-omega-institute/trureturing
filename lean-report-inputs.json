@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "report_semantic_version": 4,
+  "report_modules": {"include": [{"pattern": "Trureturing.lean", "optional": false}, {"pattern": "D5/**/*.lean", "optional": true}], "exclude": []},
+  "inspector_sources": {"include": [{"pattern": "tools/lean-inspector/**/*.lean", "optional": true}], "exclude": ["**/.lake/**"]},
+  "dependency_sources": {"include": [{"pattern": "tools/lean-inspector/**/*.lean", "optional": true}], "exclude": ["**/.lake/**"]},
+  "config_inputs": {"include": [{"pattern": "lean-toolchain", "optional": false}, {"pattern": "lake-manifest.json", "optional": false}, {"pattern": "lakefile.toml", "optional": false}, {"pattern": "lakefile.lean", "optional": true}], "exclude": []},
+  "producer_scopes": {
+    "lean-report": {
+      "include": [
+        {"pattern": "lean-report-inputs.json", "optional": false},
+        {"pattern": "tools/scripts/report/lean-report-selection.py", "optional": false},
+        {"pattern": "tools/StrataLint.Cli/**/*.cs", "optional": false},
+        {"pattern": "tools/StrataLint.Engine/**/*.cs", "optional": false},
+        {"pattern": "tools/Trureturing.Truth/**/*.cs", "optional": false},
+        {"pattern": "tools/StrataLint.Cli/StrataLint.Cli.csproj", "optional": false},
+        {"pattern": "tools/StrataLint.Engine/StrataLint.Engine.csproj", "optional": false},
+        {"pattern": "tools/Trureturing.Truth/Trureturing.Truth.csproj", "optional": false},
+        {"pattern": "tools/StrataLint.Cli/packages.lock.json", "optional": false},
+        {"pattern": "tools/StrataLint.Engine/packages.lock.json", "optional": false},
+        {"pattern": "tools/Trureturing.Truth/packages.lock.json", "optional": false},
+        {"pattern": "Directory.Build.props", "optional": false},
+        {"pattern": "Directory.Packages.props", "optional": false},
+        {"pattern": "global.json", "optional": false},
+        {"pattern": ".editorconfig", "optional": false},
+        {"pattern": "tools/Architecture/BannedSymbols.txt", "optional": false},
+        {"pattern": "tools/Architecture/BannedSymbols.Determinism.txt", "optional": false},
+        {"pattern": "tools/Architecture/BannedSymbols.Guid.txt", "optional": false},
+        {"pattern": "tools/lean-inspector/Inspector.lean", "optional": false},
+        {"pattern": "tools/lean-inspector/inspect.sh", "optional": false},
+        {"pattern": "tools/lean-inspector/materials.py", "optional": false},
+        {"pattern": "tools/scripts/report/lean-report.sh", "optional": false},
+        {"pattern": "tools/scripts/report/lean-report-input.sh", "optional": false},
+        {"pattern": "tools/scripts/report/report-consumer.sh", "optional": false},
+        {"pattern": "tools/scripts/report/report-supervisor.sh", "optional": false},
+        {"pattern": "tools/scripts/lean-report-pair.sh", "optional": false},
+        {"pattern": "tools/scripts/lib/resource-observation-lib.sh", "optional": false},
+        {"pattern": "tools/scripts/worktree/lean-cache-input.sh", "optional": false},
+        {"pattern": "tools/scripts/worktree/lean-cache-ensure.sh", "optional": false},
+        {"pattern": "tools/scripts/worktree/lean-cache-run.sh", "optional": false},
+        {"pattern": "tools/scripts/worktree/lean-cache-publish.sh", "optional": false},
+        {"pattern": "tools/scripts/workflow/install-lean-toolchain.sh", "optional": false},
+        {"pattern": "tools/scripts/workflow/judge-content-address.sh", "optional": false},
+        {"pattern": "Directory.Build.targets", "optional": true},
+        {"pattern": "tools/lean-inspector/native.py", "optional": false},
+        {"pattern": "tools/lean-inspector/publication.py", "optional": false},
+        {"pattern": "tools/lean-inspector/lake-manifest.json", "optional": false},
+        {"pattern": "tools/lean-inspector/lakefile.lean", "optional": false}
+      ],
+      "exclude": ["**/bin/**", "**/obj/**"]
+    },
+    "scribe-content": {
+      "include": [
+        {"pattern": "tools/StrataLint.Scribe/**/*.cs", "optional": false},
+        {"pattern": "tools/StrataLint.Scribe.Documents/**/*.cs", "optional": false},
+        {"pattern": "tools/StrataLint.Scribe/StrataLint.Scribe.csproj", "optional": false},
+        {"pattern": "tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj", "optional": false},
+        {"pattern": "tools/StrataLint.Scribe/packages.lock.json", "optional": false},
+        {"pattern": "tools/StrataLint.Scribe.Documents/packages.lock.json", "optional": false},
+        {"pattern": "tools/StrataLint.Scribe/Vendor/Katex/katex.min.js", "optional": false},
+        {"pattern": "tools/scripts/workflow/scribe-content-checks.sh", "optional": false},
+        {"pattern": "Blueprint/**/*.scribe.cs", "optional": true}
+      ],
+      "exclude": ["**/bin/**", "**/obj/**"]
+    }
+  }
+}

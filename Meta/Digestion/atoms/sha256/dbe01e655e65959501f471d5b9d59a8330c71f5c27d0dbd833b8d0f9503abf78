@@ -1,0 +1,12 @@
+**推论。** 对任意素数 $\ell$，
+
+$$\boxed{\operatorname{rank}_{\mathbb F_\ell}(A-I)
+=b-\dim_{\mathbb F_\ell}\mathcal K(\mathcal D)[\ell]
+=\#\{i:\ell\nmid s_i\}.}$$
+
+对任意正整数 $m$，$A$ 在 $H_1(Y;\mathbb Z/m)$ 上的准确阶为
+
+$$\boxed{\operatorname{ord}(A\bmod m)=m/\gcd(m,s_1)\quad(b>0).}$$
+
+$b=0$ 时阶为 $1$。循环矩阵满秩在模素数后可能失效；只有当 $\ell$ 整除全部 $s_i$，即整除 $s_1$ 时，整个同调作用才为恒等。
+

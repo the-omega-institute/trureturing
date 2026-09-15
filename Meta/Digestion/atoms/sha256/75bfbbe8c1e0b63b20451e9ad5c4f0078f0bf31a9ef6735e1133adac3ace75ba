@@ -1,0 +1,2 @@
+**证明。** $S^r$ 的自同构置换其最小正规子群，即各简单因素；固定各因素的自同构逐因素来自 $\operatorname{Aut}(S)$。除以内自同构后，因素置换的核为 $\operatorname{Out}(S)^r$。因此 $a_S(\Lambda)$ 到 $b_S(\Lambda)$ 的核可解且正规。若存在满射 $\theta:a_S(\Lambda)\twoheadrightarrow F$ 给出 $f$，该核的像是 $F$ 的可解正规子群，单性强制其平凡；$\theta$ 因而继续经过置换像因子化。反向直接复合。可解性在此作为明确前提保留。
+

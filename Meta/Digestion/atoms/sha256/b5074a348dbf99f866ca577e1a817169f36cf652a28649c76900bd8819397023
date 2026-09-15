@@ -1,0 +1,47 @@
+## 41. 图临界群、实际返回商与所有模数的周期
+
+**定义。** 令图临界群为
+
+$$\mathcal K(\mathcal D)=\operatorname{Div}^0(\mathcal D)/\operatorname{im}(BB^{\mathsf T}),$$
+
+其中 $\operatorname{Div}^0(\mathcal D)$ 为顶点整数系数和为零的格。当 $b>0$ 时，记 $Q_{\mathcal D}$ 的正 Smith 不变量为 $s_1\mid\cdots\mid s_b$，保留其中等于 $1$ 的项。
+
+**定理。** 有
+
+$$\operatorname{coker}Q_{\mathcal D}\cong\mathcal K(\mathcal D).$$
+
+因此，对任意非零整数 $n$，实际整数返回商满足
+
+$$\boxed{H_1(Y;\mathbb Z)/(A^n-I)H_1(Y;\mathbb Z)
+\cong\mathbb Z^{2G-b}\oplus\bigoplus_{i=1}^b\mathbb Z/(|n|s_i).}$$
+
+$b=0$ 时直接为 $\mathbb Z^{2G}$。$n=0$ 时也直接为 $\mathbb Z^{2G}$，不把它纳入非零时间的有限挠部表达式。
+
+**证明。** 图连通意味着 $\operatorname{im}B=\operatorname{Div}^0(\mathcal D)$。记循环格 $Z_1=\ker B$、割格 $B^1=\operatorname{im}B^{\mathsf T}$。循环格本原，故它的任意整数线性泛函可扩张到 $\mathbb Z^e$。标准点积因而给出满射 $\mathbb Z^e\to Z_1^*$。该映射的核恰为割格：若整数边向量与全部基本循环垂直，沿生成树积分产生整数顶点势，其在非树边上的差由循环垂直性保证，所以该边向量等于 $B^{\mathsf T}$ 作用于这个势。
+
+于是 $\mathbb Z^e/B^1\cong Z_1^*$，而 $Z_1$ 到其对偶的嵌入由 $Q_{\mathcal D}$ 表示。另一方面，通过 $B$ 得到
+
+$$\mathbb Z^e/(Z_1+B^1)\cong\operatorname{Div}^0(\mathcal D)/\operatorname{im}(BB^{\mathsf T}).$$
+
+这给出第一项。第 40 节的同调块和 $U^2=0$ 给出 $A^n-I=nU$，包括负整数 $n$。对非零块取 Smith 形即得实际返回商。
+
+**推论。** 对任意素数 $\ell$，
+
+$$\boxed{\operatorname{rank}_{\mathbb F_\ell}(A-I)
+=b-\dim_{\mathbb F_\ell}\mathcal K(\mathcal D)[\ell]
+=\#\{i:\ell\nmid s_i\}.}$$
+
+对任意正整数 $m$，$A$ 在 $H_1(Y;\mathbb Z/m)$ 上的准确阶为
+
+$$\boxed{\operatorname{ord}(A\bmod m)=m/\gcd(m,s_1)\quad(b>0).}$$
+
+$b=0$ 时阶为 $1$。循环矩阵满秩在模素数后可能失效；只有当 $\ell$ 整除全部 $s_i$，即整除 $s_1$ 时，整个同调作用才为恒等。
+
+**证明。** Smith 形在模 $\ell$ 后将秩问题化为各对角项是否为零；临界群的 $\ell$ 挠子群维数就是被 $\ell$ 整除的项数。$A^n=I+nU$，故模 $m$ 恒等恰当且仅当 $m\mid ns_i$ 对所有 $i$ 成立。因 $s_1$ 整除其余项，条件等价于 $m\mid ns_1$，最小正解如式。
+
+**推论。** 若 $M_W$ 是实际多扭转 $W$ 的三维映射环面，则
+
+$$\operatorname{Tor}H_1(M_W;\mathbb Z)\cong\mathcal K(\mathcal D).$$
+
+**证明。** 映射环面的同调精确序列给出 $0\to\operatorname{coker}(A-I)\to H_1(M_W;\mathbb Z)\to\mathbb Z\to0$。最后一项自由，故序列分裂。取挠部并用定理。
+

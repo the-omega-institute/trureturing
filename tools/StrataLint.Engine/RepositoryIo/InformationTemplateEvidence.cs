@@ -26,7 +26,7 @@ internal static class InformationTemplateEvidence
     internal static RepositorySnapshot HistoricalInputs(RepositorySnapshot historical, RepositorySnapshot current)
     {
         static bool ProducerInput(string path) => path.StartsWith("tools/lean-inspector/", StringComparison.Ordinal)
-            || path is "Meta/lean-report.toml" or "lean-toolchain" or "lake-manifest.json" or "lakefile.toml";
+            || path is "Meta/lean-report.toml" or "lean-report-inputs.json" or "lean-toolchain" or "lake-manifest.json" or "lakefile.toml";
         var files = historical.Files.RemoveRange(historical.Files.Keys.Where(path => ProducerInput(path.Value)))
             .SetItems(current.Files.Where(pair => ProducerInput(pair.Key.Value)));
         return RepositorySnapshot.Create(files);
@@ -142,7 +142,7 @@ internal static class InformationTemplateEvidence
             var requiredInputs = LeanImportClosure.RepositoryPaths(report, RepoPath.CreateKnown(source));
             if (!requiredInputs.All(path => evidence.Inputs.Any(input => input.Path == path.Value)))
                 throw new FormatException("DTR-Evidence: omitted imported source input");
-            foreach (var policy in new[] { "Meta/lean-report.toml", "lean-toolchain", "lake-manifest.json" })
+            foreach (var policy in new[] { "lean-report-inputs.json", "lean-toolchain", "lake-manifest.json" })
                 if (snapshot.TryGetFile(policy, out _) && !evidence.Inputs.Any(input => input.Path == policy))
                     throw new FormatException("DTR-Evidence: omitted compiler/policy input " + policy);
             assessed.Add(source);

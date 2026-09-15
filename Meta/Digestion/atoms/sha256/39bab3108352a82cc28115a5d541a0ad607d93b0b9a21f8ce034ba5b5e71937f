@@ -1,0 +1,2 @@
+**证明。** 映射环面的同调精确序列给出 $0\to\operatorname{coker}(A-I)\to H_1(M_W;\mathbb Z)\to\mathbb Z\to0$。最后一项自由，故序列分裂。取挠部并用定理。
+

@@ -1,0 +1,2 @@
+**证明。** 先选 $x_0$ 使 $a_q(x_0)=v$，再由 $f(C_q)=F$ 选 $c\in C_q$ 满足 $f(c)=y f(x_0)^{-1}$。取 $x=cx_0$ 即可。对于轨道结论，正规性给出 $\Gamma\backslash\mathcal M_g/H\cong F/f(H)$；而 $f(C_q)=F$，所以 $C_q$ 的元素达到全部这些陪集。轨道数恰为 $[F:f(H)]\ge[F:C_F(z)]>1$，没有把 $f(H)$ 与 $C_F(z)$ 当成相等。
+

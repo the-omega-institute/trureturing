@@ -1,0 +1,52 @@
+**命题 125.1（固定左窗口的约化极限）。** 固定整数 $n\ge1$，令 $L=n+m$，$m\ge1$，并在完整张量积上定义
+$$
+\rho_n^{(L)}=\operatorname{Tr}_{\{n,\ldots,L-1\}}
+|\Omega_L\rangle\langle\Omega_L|.
+$$
+对 $u,v\in W_n$，有
+$$
+(\rho_n^{(L)})_{uv}=
+\begin{cases}
+D_m/D_L,&u_{n-1}=v_{n-1}=0,\\
+D_{m-1}/D_L,&\text{其余合法前缀对}.
+\end{cases}
+$$
+含非法前缀的行或列全为零。置
+$$
+s_n=\sum_{u\in W_n}|u\rangle,\qquad
+t_n=\sum_{\substack{u\in W_n\\u_{n-1}=0}}|u\rangle.
+$$
+当 $L\to\infty$ 且 $n$ 固定时，$\rho_n^{(L)}$ 在迹范数下收敛到
+$$
+\rho_n=\alpha^{n+1}|s_n\rangle\langle s_n|
+       +\alpha^{n+2}|t_n\rangle\langle t_n|.
+$$
+每个 $\rho_n$ 都正、迹为 $1$、秩恰为 $2$，且在完整 qubit 空间之间满足
+$$
+\operatorname{Tr}_{\{n\}}\rho_{n+1}=\rho_n.
+$$
+
+证明。偏迹的矩阵元是使 $uz$ 与 $vz$ 同时合法的长度 $m$ 尾字 $z$ 的数量除以 $D_L$。若两个前缀末位均为 $0$，任意 $z\in W_m$ 均可；否则 $z$ 的首位必须为 $0$，余下 $m-1$ 位任意合法，数量为 $D_{m-1}$。这个计数也含 $m=1$ 的情形。非法前缀不可能被延长为合法字，故相应行列为零。
+
+由 Binet 公式 $F_k=(\varphi^k-(-\varphi^{-1})^k)/\sqrt5$，固定 $n$ 时有
+$$
+\lim_{m\to\infty}\frac{D_m}{D_{m+n}}=\alpha^n,
+\qquad
+\lim_{m\to\infty}\frac{D_{m-1}}{D_{m+n}}=\alpha^{n+1}.
+$$
+两前缀末位均为 $0$ 时，所列 $\rho_n$ 的矩阵元为 $\alpha^{n+1}+\alpha^{n+2}=\alpha^n$；其余合法对为 $\alpha^{n+1}$，所以它正是逐元极限。固定维数 $2^n$ 下，矩阵元收敛给 Hilbert–Schmidt 范数收敛，再由 $\|B\|_1\le\sqrt{2^n}\|B\|_{\rm HS}$ 给迹范数收敛。
+
+两个系数严格为正，故 $\rho_n$ 正且其核为 $s_n^\perp\cap t_n^\perp$。向量 $t_n$ 非零；合法词 $0^{n-1}1$ 在 $s_n$ 中的系数为 $1$，在 $t_n$ 中为 $0$，而 $0^n$ 在两者中的系数都为 $1$，故两向量线性独立，秩恰为 $2$。这里直接计算极限的秩，并未假定取极限保持有限态的秩。
+
+为核对偏迹，对任意长度 $n$ 的前缀对求
+$$
+(\operatorname{Tr}_{\{n\}}\rho_{n+1})_{uv}
+=\sum_{a\in\{0,1\}}(\rho_{n+1})_{ua,va}.
+$$
+若 $u,v$ 合法且末位均为 $0$，附 $0$ 与附 $1$ 两项分别是 $\alpha^{n+1}$、$\alpha^{n+2}$，和为 $\alpha^n$。其余合法对只有共同附 $0$ 的项非零，为 $\alpha^{n+1}$。含非法前缀的两项均为零。这证明全矩阵偏迹相容。最后
+$$
+\rho_1=\begin{pmatrix}\alpha&\alpha^2\\\alpha^2&\alpha^2\end{pmatrix},
+\qquad \operatorname{Tr}\rho_1=\alpha+\alpha^2=1;
+$$
+偏迹保持迹，逐层得到全部归一化。Q109 的有限 Schmidt 秩与谱公式在此只作为既有有限态背景。
+

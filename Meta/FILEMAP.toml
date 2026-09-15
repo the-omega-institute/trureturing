@@ -14,15 +14,6 @@ verified_by = ["make-gate"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
 [[files]]
-pattern = "*.json"
-kind = "program"
-admission_plane = "judge"
-produced_by = "none"
-consumed_by = ["automation"]
-verified_by = ["make-gate"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-[[files]]
 pattern = "*.lean"
 kind = "truth"
 admission_plane = "content"
@@ -497,15 +488,6 @@ verified_by = ["RegistryLoader"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
 [[files]]
-pattern = "Meta/lean-report.toml"
-kind = "data"
-admission_plane = "judge"
-produced_by = "none"
-consumed_by = ["automation"]
-verified_by = ["LeanReportInput"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-[[files]]
 pattern = "Meta/registry.yaml"
 kind = "data"
 admission_plane = "judge"
@@ -604,8 +586,7 @@ consumed_by = ["IngestCommand"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-[[files]]
-# Checks partition parity boundaries and the printed odd-rule counterexample.
+[[files]] # Checks partition parity boundaries and the printed odd-rule counterexample.
 pattern = "docs/reports/a110037-0910/BoundaryProbe.lean"
 kind = "program"
 admission_plane = "content"
@@ -614,8 +595,7 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-[[files]]
-# Enumerates recurrence coefficients and tests conjectured ternary support.
+[[files]] # Enumerates recurrence coefficients and tests conjectured ternary support.
 pattern = "docs/reports/a396808-implementation-0911/numeric_probe.py"
 kind = "program"
 admission_plane = "content"
@@ -624,8 +604,7 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-[[files]]
-# Compares exact raw ML dynamics, reduced updates, and finite future partitions.
+[[files]] # Compares exact raw ML dynamics, reduced updates, and finite future partitions.
 pattern = "docs/reports/contextual-spacetime-ml/finite_checks.py"
 kind = "program"
 admission_plane = "content"
@@ -634,8 +613,7 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-[[files]]
-# Supplies reproducible rational witnesses and finite-family closure results.
+[[files]] # Supplies reproducible rational witnesses and finite-family closure results.
 pattern = "docs/reports/contextual-spacetime-ml/finite_results.json"
 kind = "data"
 admission_plane = "content"
@@ -644,8 +622,7 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-[[files]]
-# Samples singular and full-rank states to probe covariance bounds.
+[[files]] # Samples singular and full-rank states to probe covariance bounds.
 pattern = "docs/reports/covariancesumbound/random_probe.py"
 kind = "program"
 admission_plane = "content"
@@ -654,8 +631,7 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-[[files]]
-# Enumerates a Young-diagram game graph with two independent Grundy computations.
+[[files]] # Enumerates a Young-diagram game graph with two independent Grundy computations.
 pattern = "docs/reports/crim-grundy-0910/recompute.py"
 kind = "program"
 admission_plane = "content"
@@ -664,8 +640,7 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-[[files]]
-# Samples unitary families and measures their commutant dimensions.
+[[files]] # Samples unitary families and measures their commutant dimensions.
 pattern = "docs/reports/crossspecies/commutant_probe.py"
 kind = "program"
 admission_plane = "content"
@@ -674,8 +649,7 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-[[files]]
-# Preserves exact interval bounds and margins for the conditional Mertens proof.
+[[files]] # Preserves exact interval bounds and margins for the conditional Mertens proof.
 pattern = "docs/reports/csa-mertens-auxiliary-domain/interval_certificate.json"
 kind = "data"
 admission_plane = "content"
@@ -684,8 +658,7 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-[[files]]
-# Checks exact interval propagation and rounding for the conditional Mertens bound.
+[[files]] # Checks exact interval propagation and rounding for the conditional Mertens bound.
 pattern = "docs/reports/csa-mertens-auxiliary-domain/interval_check.py"
 kind = "program"
 admission_plane = "content"
@@ -694,8 +667,7 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-[[files]]
-# Compares correlated and product states in the energy-information identity.
+[[files]] # Compares correlated and product states in the energy-information identity.
 pattern = "docs/reports/energyinfo164/numerical_check.py"
 kind = "program"
 admission_plane = "content"
@@ -704,8 +676,7 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-[[files]]
-# Preserves license terms for the imported partial-trace results.
+[[files]] # Preserves license terms for the imported partial-trace results.
 pattern = "docs/reports/inoutbalance/physlib-LICENSE.txt"
 kind = "data"
 admission_plane = "content"
@@ -714,8 +685,7 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-[[files]]
-# Supplies prime-corner ordering and constants to the slab search tools.
+[[files]] # Supplies prime-corner ordering and constants to the slab search tools.
 pattern = "docs/reports/prime-slab-corner-order-0909.json"
 kind = "data"
 admission_plane = "content"
@@ -724,8 +694,7 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-[[files]]
-# Documents exact-row decoding, inspection queries, provenance, and numerical measurement limits.
+[[files]] # Documents exact-row decoding, inspection queries, provenance, and numerical measurement limits.
 pattern = "docs/reports/prime-slab-q23-q29-q31-20260914/README.md"
 kind = "data"
 admission_plane = "content"
@@ -734,8 +703,7 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-[[files]]
-# Retains the exact slab question, input definitions, completion counts, cumulative costs, and producer identities.
+[[files]] # Retains the exact slab question, input definitions, completion counts, cumulative costs, and producer identities.
 pattern = "docs/reports/prime-slab-q23-q29-q31-20260914/experiment.json"
 kind = "data"
 admission_plane = "content"
@@ -744,8 +712,7 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-[[files]]
-# Preserves the executed corrected CPU resume driver for interpreting the zero-evaluation measurement.
+[[files]] # Preserves the executed corrected CPU resume driver for interpreting the zero-evaluation measurement.
 pattern = "docs/reports/prime-slab-q23-q29-q31-20260914/producer-sources/13d048d0945741bef862c0c69e08d38a32f6c088fd5f36d24d15487bf5268626.py"
 kind = "program"
 admission_plane = "content"
@@ -754,8 +721,7 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-[[files]]
-# Preserves the executed arithmetic-run store defining persisted keys, tier states, and cost accounting.
+[[files]] # Preserves the executed arithmetic-run store defining persisted keys, tier states, and cost accounting.
 pattern = "docs/reports/prime-slab-q23-q29-q31-20260914/producer-sources/5206648613c5ff98c26f2579138066e9388a7ff7fca2d6d573e1910c67d4b495.py"
 kind = "program"
 admission_plane = "content"
@@ -764,8 +730,7 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-[[files]]
-# Preserves the executed CPU window driver that produced the completed q23/q29/q31 node results.
+[[files]] # Preserves the executed CPU window driver that produced the completed q23/q29/q31 node results.
 pattern = "docs/reports/prime-slab-q23-q29-q31-20260914/producer-sources/55118eb525226981b01a3b544c1091ae93b0bf9932c0c5d366842e0ad7d740c1.py"
 kind = "program"
 admission_plane = "content"
@@ -774,8 +739,7 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-[[files]]
-# Preserves the executed CPU pilot driver for the retained pilot domain and measurement semantics.
+[[files]] # Preserves the executed CPU pilot driver for the retained pilot domain and measurement semantics.
 pattern = "docs/reports/prime-slab-q23-q29-q31-20260914/producer-sources/560f910e49d1540a437c99a9a8e3951b9b5d5e5b9ee147a18ceaea21f3b33002.py"
 kind = "program"
 admission_plane = "content"
@@ -784,8 +748,7 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-[[files]]
-# Preserves the executed exact CPU node definitions, eligibility guards, and Arb evaluator interface.
+[[files]] # Preserves the executed exact CPU node definitions, eligibility guards, and Arb evaluator interface.
 pattern = "docs/reports/prime-slab-q23-q29-q31-20260914/producer-sources/aeb0733a1e38239cdf54a0ef9e1e2e5e88eb195e74c0c63135748be4b1ce165f.py"
 kind = "program"
 admission_plane = "content"
@@ -794,8 +757,7 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-[[files]]
-# Preserves the executed pure Arb expression used to enclose the slab residual without changing definitions.
+[[files]] # Preserves the executed pure Arb expression used to enclose the slab residual without changing definitions.
 pattern = "docs/reports/prime-slab-q23-q29-q31-20260914/producer-sources/d6888215edf92923b2c27dbd2e2a5dc2a18ff1b9e28e45dee80d22a4dfb3285e.py"
 kind = "program"
 admission_plane = "content"
@@ -804,8 +766,7 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-[[files]]
-# Preserves the executed corrected resume store for interpreting whole-command and search-phase costs.
+[[files]] # Preserves the executed corrected resume store for interpreting whole-command and search-phase costs.
 pattern = "docs/reports/prime-slab-q23-q29-q31-20260914/producer-sources/ddf7b04b786192600002e9689fbcd96f9bcf28a7028b63473c7720c88330064d.py"
 kind = "program"
 admission_plane = "content"
@@ -814,8 +775,7 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-[[files]]
-# Retains every original (2,3,23) box/node cell for exact-key reuse, interval inspection, and reversible reconstruction.
+[[files]] # Retains every original (2,3,23) box/node cell for exact-key reuse, interval inspection, and reversible reconstruction.
 pattern = "docs/reports/prime-slab-q23-q29-q31-20260914/q23.rows.jsonl.xz.b64"
 kind = "data"
 admission_plane = "content"
@@ -824,8 +784,7 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-[[files]]
-# Retains every original (2,3,29) box/node cell for exact-key reuse, interval inspection, and reversible reconstruction.
+[[files]] # Retains every original (2,3,29) box/node cell for exact-key reuse, interval inspection, and reversible reconstruction.
 pattern = "docs/reports/prime-slab-q23-q29-q31-20260914/q29.rows.jsonl.xz.b64"
 kind = "data"
 admission_plane = "content"
@@ -834,8 +793,7 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-[[files]]
-# Retains every original (2,3,31) box/node cell for exact-key reuse, interval inspection, and reversible reconstruction.
+[[files]] # Retains every original (2,3,31) box/node cell for exact-key reuse, interval inspection, and reversible reconstruction.
 pattern = "docs/reports/prime-slab-q23-q29-q31-20260914/q31.rows.jsonl.xz.b64"
 kind = "data"
 admission_plane = "content"
@@ -844,8 +802,7 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-[[files]]
-# Probes entropy-divergence identities with sign and basis controls.
+[[files]] # Probes entropy-divergence identities with sign and basis controls.
 pattern = "docs/reports/qdualaccount/numerical_check.py"
 kind = "program"
 admission_plane = "content"
@@ -854,8 +811,7 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-[[files]]
-# Preserves license terms for the imported quantum information results.
+[[files]] # Preserves license terms for the imported quantum information results.
 pattern = "docs/reports/qmutualinfo/csd-lean4-LICENSE.txt"
 kind = "data"
 admission_plane = "content"
@@ -864,8 +820,7 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-[[files]]
-# Preserves the 5,7,11 search window and eight reflected interval records.
+[[files]] # Preserves the 5,7,11 search window and eight reflected interval records.
 pattern = "docs/reports/quantized-gh/prime-slab-5711-window-0910.json"
 kind = "data"
 admission_plane = "content"
@@ -874,8 +829,7 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-[[files]]
-# Preserves the 2,3,5 search window and three reflected interval records.
+[[files]] # Preserves the 2,3,5 search window and three reflected interval records.
 pattern = "docs/reports/quantized-gh/prime-slab-mps-pilot-0909.json"
 kind = "data"
 admission_plane = "content"
@@ -884,8 +838,7 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-[[files]]
-# Checks entropy equality boundaries with a deliberate opposite-claim control.
+[[files]] # Checks entropy equality boundaries with a deliberate opposite-claim control.
 pattern = "docs/reports/quantumobs2/numerical_probe.py"
 kind = "program"
 admission_plane = "content"
@@ -894,8 +847,7 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-[[files]]
-# Preserves license terms for the imported projective-angle results.
+[[files]] # Preserves license terms for the imported projective-angle results.
 pattern = "docs/reports/recordtimebound/Lean-QIT-LICENSE.txt"
 kind = "data"
 admission_plane = "content"
@@ -904,8 +856,7 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-[[files]]
-# Computes exact divisor-sum witnesses and approximate Robin thresholds.
+[[files]] # Computes exact divisor-sum witnesses and approximate Robin thresholds.
 pattern = "docs/reports/robin-smooth-general-0909-witnesses.mjs"
 kind = "program"
 admission_plane = "content"
@@ -914,8 +865,7 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-[[files]]
-# Enumerates seven-smooth integers with rational bounds on the Robin margin.
+[[files]] # Enumerates seven-smooth integers with rational bounds on the Robin margin.
 pattern = "docs/reports/robin7smooth-0909/measure.py"
 kind = "program"
 admission_plane = "content"
@@ -924,8 +874,7 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-[[files]]
-# Compares mutual information for orthogonal and overlapping quantum states.
+[[files]] # Compares mutual information for orthogonal and overlapping quantum states.
 pattern = "docs/reports/sbsconsensus/numeric_probe.py"
 kind = "program"
 admission_plane = "content"
@@ -934,8 +883,7 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
-[[files]]
-# Enumerates occupation words and computes phase, rank and entropy witnesses.
+[[files]] # Enumerates occupation words and computes phase, rank and entropy witnesses.
 pattern = "docs/reports/schmidt-theta-0909-witnesses.mjs"
 kind = "program"
 admission_plane = "content"
@@ -944,6 +892,36 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]]
+pattern = "global.json"
+kind = "program"
+admission_plane = "judge"
+produced_by = "none"
+consumed_by = ["automation"]
+verified_by = ["make-gate"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+pattern = "lake-manifest.json"
+kind = "program"
+admission_plane = "judge"
+produced_by = "none"
+consumed_by = ["automation"]
+verified_by = ["make-gate"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+pattern = "lean-report-inputs.json"
+kind = "data"
+admission_plane = "judge"
+produced_by = "none"
+consumed_by = ["lean-inspector"]
+verified_by = ["LeanReportSelection"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
 [[files]]
 pattern = "lean-toolchain"
 kind = "program"
@@ -1126,6 +1104,16 @@ consumed_by = ["dotnet"]
 verified_by = ["dotnet-test"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]]
+pattern = "tools/tests/StrataLint.ScriptTests/lean_report_selection_fixture.py"
+kind = "program"
+admission_plane = "judge"
+produced_by = "none"
+consumed_by = ["dotnet"]
+verified_by = ["dotnet-test"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
 [[files]]
 pattern = "tools/tests/StrataLint.Tests/Fixtures/fixture-registry.yaml"
 kind = "data"

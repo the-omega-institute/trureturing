@@ -66,6 +66,85 @@ def encodeStatement (info : ConstantInfo) : String :=
       | none => header ++ ",value=missing)"
   | _ => header ++ ")"
 
+/-- Statement-v1 wire output. The bounded buffer amortizes small syntactic
+fragments; no complete encoded expression or statement is retained. -/
+structure StatementOutput where
+  stream : IO.FS.Stream
+  buffer : IO.Ref ByteArray
+
+def StatementOutput.flush (out : StatementOutput) : IO Unit := do
+  let bytes ← out.buffer.get
+  out.buffer.set ByteArray.empty
+  unless bytes.isEmpty do out.stream.write bytes
+
+def StatementOutput.put (out : StatementOutput) (text : String) : IO Unit := do
+  let bytes := text.toUTF8
+  let used := (← out.buffer.get).size
+  if used + bytes.size < 65536 then
+    out.buffer.modify fun buffer => bytes.copySlice 0 buffer used bytes.size false
+  else
+    let mut offset := 0
+    while offset < bytes.size do
+      let used := (← out.buffer.get).size
+      let count := min (65536 - used) (bytes.size - offset)
+      out.buffer.modify fun buffer => bytes.copySlice offset buffer used count false
+      offset := offset + count
+      if used + count == 65536 then out.flush
+
+partial def writeLevel (out : StatementOutput) : Level → IO Unit
+  | .zero => out.put "l0"
+  | .succ level => do out.put "ls("; writeLevel out level; out.put ")"
+  | .max left right => do
+      out.put "lm("; writeLevel out left; out.put ","; writeLevel out right; out.put ")"
+  | .imax left right => do
+      out.put "li("; writeLevel out left; out.put ","; writeLevel out right; out.put ")"
+  | .param name => out.put s!"lp({encodeName name})"
+  | .mvar id => out.put s!"lv({encodeName id.name})"
+
+partial def writeExpr (out : StatementOutput) : Expr → IO Unit
+  | .bvar index => out.put s!"eb({index})"
+  | .fvar id => out.put s!"ef({encodeName id.name})"
+  | .mvar id => out.put s!"em({encodeName id.name})"
+  | .sort level => do out.put "es("; writeLevel out level; out.put ")"
+  | .const name levels => do
+      out.put s!"ec({encodeName name},["
+      let mut first := true
+      for level in levels do
+        unless first do out.put ","
+        first := false
+        writeLevel out level
+      out.put "])"
+  | .app function argument => do
+      out.put "ea("; writeExpr out function; out.put ","; writeExpr out argument; out.put ")"
+  | .lam _ type body binderInfo => do
+      out.put s!"el({encodeBinderInfo binderInfo},"
+      writeExpr out type; out.put ","; writeExpr out body; out.put ")"
+  | .forallE _ type body binderInfo => do
+      out.put s!"ep({encodeBinderInfo binderInfo},"
+      writeExpr out type; out.put ","; writeExpr out body; out.put ")"
+  | .letE _ type value body nondependent => do
+      out.put s!"ee({if nondependent then "1" else "0"},"
+      writeExpr out type; out.put ","; writeExpr out value
+      out.put ","; writeExpr out body; out.put ")"
+  | .lit (.strVal value) => do
+      out.put s!"ei(lt({value.utf8ByteSize}:"; out.put value; out.put "))"
+  | .lit literal => out.put s!"ei({encodeLiteral literal})"
+  | .mdata _ body => do out.put "ed("; writeExpr out body; out.put ")"
+  | .proj name index body => do
+      out.put s!"ej({encodeName name},{index},"; writeExpr out body; out.put ")"
+
+def writeStatement (out : StatementOutput) (info : ConstantInfo) : IO Unit := do
+  out.put s!"statement-v1(uparams=[{String.intercalate "," (info.levelParams.map encodeName)}],type="
+  writeExpr out info.type
+  match info with
+  | .defnInfo _ | .opaqueInfo _ =>
+    match info.value? (allowOpaque := true) with
+    | some value => do out.put ",value="; writeExpr out value
+    | none => out.put ",value=missing"
+  | _ => pure ()
+  out.put ")"
+  out.flush
+
 structure ModuleInput where
   moduleName : String
   sourcePath : String
@@ -252,9 +331,15 @@ elab "informationMaterialWriterProgram" : term => do
 abbrev MaterialWriter := IO.Process.Child {
   stdin := .piped, stdout := .piped, stderr := .inherit }
 
-def writeMaterial (writer : MaterialWriter) (statement : String) : IO Unit := do
-  writer.stdin.putStr s!"{statement.utf8ByteSize}\n"
-  writer.stdin.write statement.toUTF8
+def writeMaterial (writer : MaterialWriter) (info : ConstantInfo) : IO Unit := do
+  writer.stdin.putStr "chunks\n"
+  let stream : IO.FS.Stream := { (default : IO.FS.Stream) with
+    write := fun bytes => do
+      writer.stdin.putStr s!"{bytes.size}\n"
+      writer.stdin.write bytes
+      writer.stdin.flush }
+  writeStatement ⟨stream, ← IO.mkRef ByteArray.empty⟩ info
+  writer.stdin.putStr "0\n"
   writer.stdin.flush
   unless (← writer.stdout.getLine) == "ok\n" do
     throw <| IO.userError "statement spool writer did not acknowledge the material"
@@ -264,6 +349,8 @@ def inspectModule (env : Environment) (cache : IO.Ref AxiomClosureState)
     (utilities : Array UtilityInput)
     (informationTemplates : Json)
     (input : ModuleInput) : IO ModuleReport := do
+  let profiling := (← IO.getEnv "STRATALINT_INSPECTOR_PROFILE") == some "1"
+  let enumerationStart ← if profiling then IO.monoNanosNow else pure 0
   let moduleName := input.moduleName.toName
   let some moduleIdx := env.getModuleIdx? moduleName
     | throw <| IO.userError s!"module not loaded: {input.moduleName}"
@@ -285,15 +372,21 @@ def inspectModule (env : Environment) (cache : IO.Ref AxiomClosureState)
   informationRegistrationErrors := sortedUnique informationRegistrationErrors
   let names := (moduleData.constNames.filter (!metadata.contains ·)).qsort fun left right =>
     encodeName left < encodeName right
+  let enumerationEnd ← if profiling then IO.monoNanosNow else pure 0
+  let sccNanos ← IO.mkRef 0
+  let encodingNanos ← IO.mkRef 0
   let declarations ← names.mapM fun name => do
     let some info := environment.find? name
       | throw <| IO.userError s!"declaration missing: {name}"
+    let sccStart ← if profiling then IO.monoNanosNow else pure 0
     let axioms ← collectAxiomsShared environment cache name
-    let statement := encodeStatement info
+    let encodeStart ← if profiling then IO.monoNanosNow else pure 0
+    sccNanos.modify (· + (encodeStart - sccStart))
     let materialIndex ← materialCounter.get
     materialCounter.set (materialIndex + 1)
     let materialFile := s!"{materialIndex}.statement.gz"
-    writeMaterial writer statement
+    writeMaterial writer info
+    if profiling then encodingNanos.modify (· + ((← IO.monoNanosNow) - encodeStart))
     return {
       axioms := sortedUnique (axioms.map Name.toString)
       includeInStatement := includeInStatement name info
@@ -302,6 +395,8 @@ def inspectModule (env : Environment) (cache : IO.Ref AxiomClosureState)
       name := name.toString
       nameKey := encodeName name
     }
+  if profiling then
+    (← IO.getStderr).putStrLn s!"LEAN_INSPECTOR_PROFILE module={input.moduleName} declarations={names.size} enumeration_ns={enumerationEnd - enumerationStart} scc_ns={← sccNanos.get} statement_encoding_ns={← encodingNanos.get} scc_constants={(← cache.get).counter}"
   let obligations := utilities.filter (·.modulePath == input.sourcePath)
   if obligations.size > 1 then
     throw <| IO.userError s!"duplicate utility obligation: {input.sourcePath}"
@@ -510,6 +605,10 @@ private unsafe def templateBindings (env : Environment) (inputs : Array ModuleIn
   throw <| IO.userError "IE-C050 reason=incomplete_closure rule=dtr.report_producer"
 
 unsafe def main (args : List String) : IO Unit := do
+  let args ← match args with
+    | ["--request-file", path] =>
+        IO.ofExcept (Json.parse (← IO.FS.readFile path) >>= fromJson? (α := List String))
+    | _ => pure args
   if let ["--dependencies", manifest, destination, mode] := args then
     dependencies manifest destination mode
     return
@@ -540,29 +639,44 @@ unsafe def main (args : List String) : IO Unit := do
     selectedUtilities.map (·.claimModule) ++
     (if statementOnly then #[] else #["LeanInformationAudit.Registry"]))
   let imports := moduleNames.map fun moduleName => { module := moduleName.toName }
+  let profiling := (← IO.getEnv "STRATALINT_INSPECTOR_PROFILE") == some "1"
+  let importStart ← if profiling then IO.monoNanosNow else pure 0
   enableInitializersExecution
   let env ← importModules imports {} (trustLevel := 0) (loadExts := true)
-  let cache ← IO.mkRef ({} : AxiomClosureState)
-  let materialCounter ← IO.mkRef 0
-  let bindings ← if statementOnly then pure (inputs.map fun _ => Json.null) else
-    templateBindings env inputs
-  unless bindings.size == inputs.size do
-    throw <| IO.userError "IE-C050 reason=incomplete_closure rule=dtr.report_partition"
-  let writer ← IO.Process.spawn {
-    cmd := "python3", args := #["-I", informationMaterialWriterProgram, "stream",
-      materialSpool.toString], stdin := .piped, stdout := .piped, stderr := .inherit }
   try
-    let reports ← (inputs.zip bindings).mapM fun (input, binding) =>
-      inspectModule env cache writer materialCounter utilities binding input
-    writer.stdin.putStr "done\n"
-    writer.stdin.flush
-    unless (← writer.stdout.getLine) == "done\n" && (← writer.wait) == 0 do
-      throw <| IO.userError "statement spool writer did not complete"
-    IO.FS.writeFile reportOutput (renderReport reports)
-  catch error =>
-    try writer.kill catch _ => pure ()
-    try discard <| writer.wait catch _ => pure ()
-    throw error
+    if profiling then
+      (← IO.getStderr).putStrLn s!"LEAN_INSPECTOR_PROFILE import_ns={(← IO.monoNanosNow) - importStart} imported_modules={env.header.moduleNames.size}"
+    let cache ← IO.mkRef ({} : AxiomClosureState)
+    let materialCounter ← IO.mkRef 0
+    let bindings ← if statementOnly then pure (inputs.map fun _ => Json.null) else
+      templateBindings env inputs
+    unless bindings.size == inputs.size do
+      throw <| IO.userError "IE-C050 reason=incomplete_closure rule=dtr.report_partition"
+    -- Compiled executables can move between private build trees. Prefer the
+    -- current repository's writer; a standalone statement probe can instead
+    -- use the writer adjacent to its directly elaborated source.
+    let localWriter := System.FilePath.mk "tools/lean-inspector/materials.py"
+    let writerProgram := if (← localWriter.pathExists) || !statementOnly then
+      localWriter.toString else informationMaterialWriterProgram
+    let writer ← IO.Process.spawn {
+      cmd := "python3", args := #["-I", writerProgram, "stream",
+        materialSpool.toString], stdin := .piped, stdout := .piped, stderr := .inherit }
+    try
+      let reports ← (inputs.zip bindings).mapM fun (input, binding) =>
+        inspectModule env cache writer materialCounter utilities binding input
+      writer.stdin.putStr "done\n"
+      writer.stdin.flush
+      unless (← writer.stdout.getLine) == "done\n" && (← writer.wait) == 0 do
+        throw <| IO.userError "statement spool writer did not complete"
+      let renderStart ← if profiling then IO.monoNanosNow else pure 0
+      IO.FS.writeFile reportOutput (renderReport reports)
+      if profiling then
+        (← IO.getStderr).putStrLn s!"LEAN_INSPECTOR_PROFILE render_ns={(← IO.monoNanosNow) - renderStart}"
+    catch error =>
+      try writer.kill catch _ => pure ()
+      try discard <| writer.wait catch _ => pure ()
+      throw error
+  finally env.freeRegions
 
 end LeanInformationAudit.InspectorProducer
 

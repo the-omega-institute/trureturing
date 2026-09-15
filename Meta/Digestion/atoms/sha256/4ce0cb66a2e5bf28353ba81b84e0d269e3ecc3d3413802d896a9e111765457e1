@@ -1,0 +1,16 @@
+**定义 124.5（前缀缺陷、纤维振幅与半径）。** 对定义 124.3 的固定任务，令
+$$
+e_k(T)=\inf_{\Lambda\ {\rm CPTP}}\ \sup_{x\in X_{\rm fs}}
+D\bigl(T(x),\Lambda(E_{k,x})\bigr)
+=\inf_{\sigma\in\mathcal D_d^{W_k}}\ \sup_{x\in X_{\rm fs}}D\bigl(T(x),\sigma_{q_kx}\bigr),
+$$
+$$
+\omega_{k,w}(T)=\sup_{x,y\in F_{k,w}}D(T(x),T(y)),\qquad
+\omega_k(T)=\max_{w\in W_k}\omega_{k,w}(T),
+$$
+$$
+f_{k,w}(\sigma)=\sup_{x\in F_{k,w}}D(T(x),\sigma),\qquad
+r_{k,w}(T)=\inf_{\sigma\in\mathcal D_d}f_{k,w}(\sigma).
+$$
+所有上确界都在非空集上且取值于 $[0,1]$。纤维可以无限且不紧，$T$ 也可以不连续，所以这里没有把无限纤维上的上确界写成最大值。只有有限集合 $W_k$ 上使用最大值。
+

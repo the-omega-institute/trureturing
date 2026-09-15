@@ -1,0 +1,4 @@
+**命题 59.4。** 本命题给出 §49 中以「实例」陈述的断言的命题形式与证明；该断言以本命题为准。对 §48 中 $g=2$、$p=2$ 的指定横向覆盖，令 $k\in\mathbb Z\setminus\{0\}$、$q=|k|$。则 $D=16$、$G=17$、$a=b=4$，并且
+$$H_1(\widetilde M;\mathbb Z)\cong\mathbb Z^{26}\oplus(\mathbb Z/q)^4\oplus(\mathbb Z/(4q))^4\oplus\mathbb Z/(16q).$$
+原流形的全部时间循环覆盖的一阶同调均为 $\mathbb Z^5$，而这个十六重横向覆盖的挠子群指数为 $16|k|$。
+

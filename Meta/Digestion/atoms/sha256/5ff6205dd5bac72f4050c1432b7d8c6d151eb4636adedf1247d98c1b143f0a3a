@@ -1,0 +1,16 @@
+**定理。** 对全部上述参数，实际覆盖映射环面满足
+
+$$\boxed{
+H_1(\widetilde M_{g,h,k,p};\mathbb Z)
+\cong\mathbb Z^R
+\oplus(\mathbb Z/q)^c
+\oplus(\mathbb Z/(qa))^{b-2}
+\oplus(\mathbb Z/(qb))^{a-2}
+\oplus\mathbb Z/(qab).
+}$$
+
+约定 $\mathbb Z/1$ 是平凡群。因此其挠子群的指数和阶分别为
+
+$$\boxed{\exp\operatorname{Tor}H_1=qD,\qquad
+|\operatorname{Tor}H_1|=q^\beta a^{b-1}b^{a-1}.}$$
+

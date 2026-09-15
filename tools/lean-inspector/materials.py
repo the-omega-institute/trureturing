@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import gzip
 import hashlib
+import codecs
 import json
 import os
 import pathlib
@@ -13,7 +14,9 @@ import shutil
 import stat
 import sys
 import tempfile
+import time
 import zipfile
+from typing import BinaryIO, Iterable
 
 
 SPOOL_SCHEMA = "stratalint-lean-inspector-spool-v1"
@@ -22,6 +25,7 @@ STATEMENT_DOMAIN = b"trureturing:statement:v1\0"
 MATERIAL_FILE = re.compile(r"^[0-9]+\.statement(?:\.gz)?$")
 SUPPLEMENTARY_SCALAR = re.compile(r"[\U00010000-\U0010FFFF]")
 ARCHIVE_TIMESTAMP = (1980, 1, 1, 0, 0, 0)
+BUFFER_BYTES = 64 * 1024
 
 
 def escape_supplementary_scalar(match: re.Match[str]) -> str:
@@ -45,7 +49,26 @@ def canonical_json(value: object) -> bytes:
 
 
 def statement_address(material: bytes) -> str:
-    return "sha256:" + hashlib.sha256(STATEMENT_DOMAIN + material).hexdigest()
+    return _statement_address((material,))
+
+
+def _statement_address(blocks: Iterable[bytes]) -> str:
+    digest = hashlib.sha256(STATEMENT_DOMAIN)
+    for block in blocks:
+        digest.update(block)
+    return "sha256:" + digest.hexdigest()
+
+
+def verify_material(source: BinaryIO, address: str, target: BinaryIO | None = None) -> None:
+    """Verify a material stream, optionally copying it into a private staging sink."""
+    def blocks() -> Iterable[bytes]:
+        for block in iter(lambda: source.read(1024 * 1024), b""):
+            if target is not None:
+                target.write(block)
+            yield block
+
+    if _statement_address(blocks()) != address:
+        raise ValueError(f"statement material address mismatch: {address}")
 
 
 def declaration_statement_id(source_path: str, kind: str, name_key: str, material: str) -> str:
@@ -57,6 +80,49 @@ def declaration_statement_id(source_path: str, kind: str, name_key: str, materia
         "schema": "declaration-statement-v1",
         "statement_material": material,
     }))
+
+
+def material_identities(source: BinaryIO, source_path: str, kind: str, name_key: str,
+                        chunk_size: int = BUFFER_BYTES) -> tuple[str, str]:
+    """Hash both identities in one bounded, strictly decoded UTF-8 pass.
+
+    The canonical declaration JSON has its material as its last field. JSON
+    escaping is scalar-local; the incremental decoder retains only an incomplete
+    UTF-8 scalar between reads, including at EOF.
+    """
+    prefix = canonical_json({
+        "declaration_name_key": name_key, "kind": kind, "module_path": source_path,
+        "schema": "declaration-statement-v1", "statement_material": "",
+    })[:-3]
+    raw = hashlib.sha256(STATEMENT_DOMAIN)
+    declaration = hashlib.sha256(STATEMENT_DOMAIN + prefix)
+    decoder = codecs.getincrementaldecoder("utf-8")("strict")
+    while True:
+        block = source.read(chunk_size)
+        raw.update(block)
+        text = decoder.decode(block, final=not block)
+        if text:
+            # Use the same string encoder as JSONEncoder without constructing
+            # an encoder for each chunk. Only supplementary scalars need the
+            # canonical surrogate rewrite. UTF-16 counts them in native code,
+            # avoiding a regex scan of every ordinary ASCII/BMP material.
+            encoded = json.encoder.encode_basestring(text)[1:-1]
+            if not text.isascii() and len(text.encode("utf-16-le")) != 2 * len(text):
+                encoded = SUPPLEMENTARY_SCALAR.sub(escape_supplementary_scalar, encoded)
+            declaration.update(encoded.encode("utf-8"))
+        if not block:
+            break
+    declaration.update(b'"}\n')
+    return "sha256:" + raw.hexdigest(), "sha256:" + declaration.hexdigest()
+
+
+def streams_equal(left: BinaryIO, right: BinaryIO) -> bool:
+    while True:
+        block = left.read(BUFFER_BYTES)
+        if block != right.read(BUFFER_BYTES):
+            return False
+        if not block:
+            return True
 
 
 def require_keys(value: object, expected: set[str], context: str) -> dict:
@@ -104,21 +170,38 @@ def stream_spool(spool: pathlib.Path) -> None:
         if header == b"done\n":
             print("done", flush=True)
             return
-        if not re.fullmatch(rb"[1-9][0-9]*\n", header):
+        chunked = header == b"chunks\n"
+        if not chunked and not re.fullmatch(rb"[1-9][0-9]*\n", header):
             raise ValueError("invalid or missing material frame length")
-        remaining = int(header)
+        remaining = 0 if chunked else int(header)
         path = spool / f"{index}.statement.gz"
         temporary = spool / f"{index}.statement.gz.tmp"
         try:
             with temporary.open("xb") as raw:
                 with gzip.GzipFile(filename="", mode="wb", fileobj=raw,
                                    compresslevel=6, mtime=0) as writer:
-                    while remaining:
-                        block = sys.stdin.buffer.read(min(remaining, 1024 * 1024))
-                        if not block:
-                            raise ValueError("truncated material frame")
-                        writer.write(block)
-                        remaining -= len(block)
+                    total = 0
+                    while True:
+                        if chunked:
+                            size = sys.stdin.buffer.readline(32)
+                            if not re.fullmatch(rb"(?:0|[1-9][0-9]*)\n", size):
+                                raise ValueError("invalid or missing material chunk length")
+                            remaining = int(size)
+                            if remaining > BUFFER_BYTES:
+                                raise ValueError("material chunk exceeds writer buffer")
+                        if not remaining:
+                            if not total:
+                                raise ValueError("empty material frame")
+                            break
+                        while remaining:
+                            block = sys.stdin.buffer.read(min(remaining, BUFFER_BYTES))
+                            if not block:
+                                raise ValueError("truncated material frame")
+                            writer.write(block)
+                            remaining -= len(block)
+                            total += len(block)
+                        if not chunked:
+                            break
             os.replace(temporary, path)
         finally:
             temporary.unlink(missing_ok=True)
@@ -126,7 +209,19 @@ def stream_spool(spool: pathlib.Path) -> None:
         print("ok", flush=True)
 
 
+def validate_template_evidence(value: object) -> None:
+    evidence = require_keys(value,
+        {"schema_version", "compatibility_version", "inventory", "registered", "records", "inputs"},
+        "Inspector declared-template evidence")
+    if (type(evidence["schema_version"]) is not int or evidence["schema_version"] != 1
+            or type(evidence["compatibility_version"]) is not int or evidence["compatibility_version"] != 4
+            or any(not isinstance(evidence[field], list)
+                   for field in ("inventory", "registered", "records", "inputs"))):
+        raise ValueError("Inspector declared-template evidence is malformed")
+
+
 def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Path) -> None:
+    started = time.perf_counter_ns()
     root = json.loads(spool_report.read_text(encoding="utf-8"))
     require_keys(root, {"modules", "schema"}, "Inspector spool")
     if root["schema"] != SPOOL_SCHEMA or not isinstance(root["modules"], list):
@@ -172,14 +267,7 @@ def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Pat
                 raise ValueError("Inspector registration evidence is malformed")
             information_templates = module.get("information_templates")
             if information_templates is not None:
-                require_keys(information_templates,
-                             {"schema_version", "compatibility_version", "inventory", "registered", "records", "inputs"},
-                             "Inspector declared-template evidence")
-                if (information_templates["schema_version"] != 1
-                        or information_templates["compatibility_version"] != 4
-                        or any(not isinstance(information_templates[field], list)
-                               for field in ("inventory", "registered", "records", "inputs"))):
-                    raise ValueError("Inspector declared-template evidence is malformed")
+                validate_template_evidence(information_templates)
             refutation = module.get("utility_refutation")
             if refutation is not None:
                 require_keys(refutation, {"claim_gid", "claim_source_path", "claim_source_sha256", "result_gid", "is_closed_negation"},
@@ -222,22 +310,22 @@ def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Pat
                     raise ValueError(f"statement material spool is reused: {material_file}")
                 referenced_spools.add(material_file)
                 material_path = regular_spool_file(spool, material_file)
-                material = read_material(material_path)
+
                 try:
-                    material.decode("utf-8", errors="strict")
+                    with open_material(material_path) as source:
+                        type_sha256, declaration_id = material_identities(source, source_path, kind, name_key)
+                        decoded_bytes = source.tell()
                 except UnicodeDecodeError as error:
                     raise ValueError(
                         f"statement material spool is not strict UTF-8: {material_file}") from error
-                type_sha256 = statement_address(material)
-                declaration_id = declaration_statement_id(source_path, kind, name_key, material.decode("utf-8"))
                 address = type_sha256[7:]
                 if address in material_sources:
-                    if read_material(material_sources[address]) != material:
-                        raise ValueError(
-                            f"statement material address collision: {type_sha256}")
+                    with open_material(material_sources[address]) as left, open_material(material_path) as right:
+                        if not streams_equal(left, right):
+                            raise ValueError(f"statement material address collision: {type_sha256}")
                 else:
                     material_sources[address] = material_path
-                    material_bytes += len(material)
+                    material_bytes += decoded_bytes
                 declarations.append({
                     "axioms": require_sorted_strings(
                         declaration["axioms"], "Inspector spool declaration axioms"),
@@ -309,6 +397,12 @@ def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Pat
             f"declarations={declaration_count} unique_bytes={material_bytes} "
             f"report_bytes={len(report_bytes)}"
         )
+        if os.environ.get("STRATALINT_INSPECTOR_PROFILE") == "1":
+            import resource
+            rss = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+            if sys.platform != "darwin":
+                rss *= 1024
+            print(f"LEAN_INSPECTOR_PROFILE compact_ns={time.perf_counter_ns() - started} max_process_rss_bytes={rss}")
     finally:
         shutil.rmtree(staged_root, ignore_errors=True)
 

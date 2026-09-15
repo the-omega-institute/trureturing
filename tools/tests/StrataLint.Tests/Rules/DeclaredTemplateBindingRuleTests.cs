@@ -95,7 +95,7 @@ public sealed class DeclaredTemplateBindingRuleTests
     public void judge_only_change_preserves_untouched_debt()
     {
         var universe = Universe(Occurrence(A, InformationTemplateBindingState.Undeclared));
-        Assert.Empty(Evaluate(Rows(A), Rows(A), universe, universe, ["Meta/lean-report.toml"]));
+        Assert.Empty(Evaluate(Rows(A), Rows(A), universe, universe, ["lean-report-inputs.json"]));
     }
 
     [Fact]

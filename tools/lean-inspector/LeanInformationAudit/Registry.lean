@@ -1098,7 +1098,7 @@ def sourcePath (name : Name) : String :=
     name.toString.replace "." "/" ++ ".lean"
 
 def policyPaths : Array String := #[
-  "Meta/lean-report.toml", "lean-toolchain", "lake-manifest.json",
+  "lean-report-inputs.json", "lean-toolchain", "lake-manifest.json",
   "tools/lean-inspector/LeanInformationAudit/RegistryTypes.lean",
   "tools/lean-inspector/LeanInformationAudit/Registry.lean",
   "tools/lean-inspector/LeanInformationAudit/ReadoutProvenance.lean",

@@ -60,7 +60,7 @@ internal static class FileMapPolicy
             ["InformationTemplateDebtStore"] = "tools/StrataLint.Engine/RepositoryIo/InformationTemplateDebtStore.cs",
             ["DeclaredTemplateBindingRule"] = "tools/StrataLint.Engine/Rules/TheoryGeneration/DeclaredTemplateBindingRule.cs",
             ["LibraryNoteCatalog"] = LibraryNoteCatalogPath,
-            ["LeanReportInput"] = "tools/scripts/report/lean-report-input.sh",
+            ["LeanReportSelection"] = "tools/scripts/report/lean-report-selection.py",
             ["ProblemCandidateCatalog"] = ProblemCandidateCatalogPath,
             ["RegistryLoader"] = RegistryLoaderPath,
             ["ScribeEmitter"] = ScribeEmitterPath,
