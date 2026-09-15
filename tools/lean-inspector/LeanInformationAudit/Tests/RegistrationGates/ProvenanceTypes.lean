@@ -92,24 +92,38 @@ noncomputable def structuralAliasDecision (_ : Unit) (x : Nat) : Nat :=
   if @decide (structuralAliasFamily x) (Classical.propDecidable _) then x else 0
 noncomputable def structuralBinderDecision (_ : Unit) (x : Nat) : Nat :=
   if @decide (x = 138) (Classical.propDecidable _) then x else 0
+
+-- Structural witness validation no longer audits an undeclared realization.
+-- Assess exact applications against an existing declared structural occurrence.
+-- These noncomputable negative providers are inspected, never executed.
+noncomputable def structuralAliasRealization := structuralTemplate structuralAliasDecision
+noncomputable def structuralBinderRealization := structuralTemplate structuralBinderDecision
+def structuralAliasClean := structuralTemplate (fun _ x => x)
+
 run_cmd Elab.Command.liftTermElabM do
-  let env ← getEnv
-  let entry := ((DispositionCensus.structuralProvenanceEntries env).find?
-    (·.theoremName == ``RegistrationStructural.positive)).get!
-  let .defnInfo template := (env.find? ``RegistrationStructural.good).get!
-    | throwError "fixture template"
-  for (readout, label, reason) in [
-      (``structuralAliasDecision, "OpenAliasDecisionStructural", "unclassified_form"),
-      (``structuralBinderDecision, "OpenAliasBinderControlStructural", "unclassified_form")] do
-    let holder := readout.str "fixtureRealization"
-    addDecl <| .defnDecl {
-      name := holder, levelParams := [], type := template.type
-      value := mkAppN template.value.getAppFn (template.value.getAppArgs.set! 2 (mkConst readout))
-      hints := .abbrev, safety := .safe }
-    let actual ← RegistrationGates.validateStructural
-      { entry with theoremName := ``specificTruth, realizationConst := holder }
-    let ok := (actual.getD "").startsWith "IE-C050 ClosedTruthReadout " &&
-      ((actual.getD "").splitOn s!" reason={reason} provenance=").length == 2
+  let some source := (TemplateBinding.records (← getEnv)).find?
+      (·.occurrence.key.theoremName == ``cleanStructural)
+    | throwError "setup: missing declared structural occurrence"
+  for (name, label, rejected) in [
+      (``structuralAliasRealization, "OpenAliasDecisionStructural", true),
+      (``structuralBinderRealization, "OpenAliasBinderControlStructural", true),
+      (``structuralAliasClean, "OpenAliasStructuralClean", false)] do
+    let .defnInfo info ← getConstInfo name
+      | throwError "setup: missing structural provider {name}"
+    let claim : TemplateBindingClaim := {
+      key := source.occurrence.key, arena := source.occurrence.arena,
+      descriptor := some info.value, owner := (← getEnv).header.mainModule }
+    let row ← TemplateBinding.assess { source.occurrence with realizationName := name }
+      (some claim)
+    let ok := match row.result, rejected with
+      | .declaredUnresolved diagnostic, true =>
+          diagnostic.contains "reason=unclassified_form rule=dtr.argument_audit"
+      | .declaredValidated _, false => true
+      | _, _ => false
+    let actual := match row.result with
+      | .declaredUnresolved diagnostic => diagnostic
+      | .declaredValidated _ => "validated"
+      | .undeclared => "undeclared"
     if ok then logInfo m!"[PASS] {label}"
     else logError m!"[FAIL] {label}: {actual}"
 
