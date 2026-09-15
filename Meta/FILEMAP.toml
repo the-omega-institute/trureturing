@@ -575,6 +575,15 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Exact adaptive root-law certificate improving the sharp uniform two-prime constant.
+pattern = "docs/reports/erdos7-odd-covering/nonuniform_coupled_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]] # Exact continuous-domain certificates for coherent nonuniform survivor laws.
 pattern = "docs/reports/erdos7-odd-covering/nonuniform_root_certificate.json"
 kind = "data"
@@ -611,6 +620,15 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Symbolic interval certificate for the uniform joint-layout envelope at every outside prime.
+pattern = "docs/reports/erdos7-odd-covering/uniform_gamma_prime_parameter_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]] # Exact coherent-layout score and survivor densities for the rectangular obstruction.
 pattern = "docs/reports/erdos7-odd-covering/uniform_survivor_obstruction_certificate.json"
 kind = "data"
@@ -640,6 +658,15 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 [[files]] # Checks the four-prime head using the shared-cofactor bound and exact continuation.
 pattern = "docs/reports/erdos7-odd-covering/verify_common_density_head_coupled.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Checks a complete residue family whose old uniform law cannot preserve its marginal.
+pattern = "docs/reports/erdos7-odd-covering/verify_fibre_coupling_obstruction.py"
 kind = "program"
 admission_plane = "content"
 produced_by = "none"
@@ -685,6 +712,15 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 [[files]] # Checks actual-layout transport through lcm blocks and the tail beginning at 67.
 pattern = "docs/reports/erdos7-odd-covering/verify_lcm_block_transport.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Exact adaptive root-law certificate improving the sharp uniform two-prime constant.
+pattern = "docs/reports/erdos7-odd-covering/verify_nonuniform_coupled_law.py"
 kind = "program"
 admission_plane = "content"
 produced_by = "none"
@@ -748,6 +784,15 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 [[files]] # Checks the sharp uniform two-prime bound retaining its zero-exponent layout.
 pattern = "docs/reports/erdos7-odd-covering/verify_uniform_gamma_cofactor_coupling.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Symbolic interval certificate for the uniform joint-layout envelope at every outside prime.
+pattern = "docs/reports/erdos7-odd-covering/verify_uniform_gamma_prime_parameter.py"
 kind = "program"
 admission_plane = "content"
 produced_by = "none"
