@@ -152,11 +152,9 @@ triangulation, so no such cover-stability claim is made.
 Section 6 allows every edge degree at least six, provided each occurrence
 of an edge below degree twenty has four adjacent edges of degree at least
 twenty. Caps two and 61/50 give exact cosine bounds 2471/4971<1/2 and
-389/411<cos(pi/10), respectively. There is no bound on the number of
-four-dimensional length coordinates or tetrahedra; the length space dimension
-is the actual number of GLOBAL edges, not four times the tetrahedron count.
-Here 'four-dimensional length coordinates' should be read only as no fixed
-dimension restriction; no four-dimensional manifold is involved.
+389/411<cos(pi/10), respectively. There is no bound on the dimension of the
+length space or the tetrahedron count. The length space dimension is the
+actual number of GLOBAL edges, and the manifolds are three-dimensional.
 
 Section 7 gives two fully specified actual face-pairings, with odd gluing
 permutations, no reversal of an edge, and closed orientable vertex links:
@@ -214,3 +212,30 @@ No tests of finitely many pairings establish the unrestricted conjecture.
 The mathematical theorems quantify over all actual triangulations satisfying
 the displayed incidence rules and use the complete analytical proof. Their
 priority has not been established by an exhaustive literature review.
+
+## Third increment: nineteen is sharp for the specified two-cap scheme
+
+Section 10 strengthens the isolated-low-edge result from threshold twenty to
+nineteen, with exact caps 2 and 153/125. The low cosine is
+31193/62443<1/2. The high cosine is 243/257<cos(2pi/19); the proof uses
+pi<22/7 and a sixth-order Taylor lower bound at 44/133, whose rational
+margin is 15920790096478/64011128373838485. It has no unproved numerical
+sign assumption. The previous six-tetrahedron example and all its cyclic
+covers satisfy the strengthened rule.
+
+The same section proves nineteen is the smallest threshold attainable by
+that SPECIFIED uniform two-cap, independent-opposite-endpoint, per-occurrence
+scheme. The scheme permits both low cap b and high cap c to vary in (1,2],
+with c<=b. The low requirement forces c^2<3(b-1)/2. Differentiating
+(sqrt(3(b-1)/2)-1)/b^2 proves its maximum occurs at b=2, so the best high
+cosine is still greater than 47/50>cos(pi/9). Thus threshold eighteen or
+smaller cannot satisfy the two simultaneous inequalities. This is a limitation
+of that estimate, not a nonrealizability claim at degree eighteen and not
+an exclusion of more detailed incidence, positive lower, or nonrectangular
+barriers.
+
+The final diagnostic run also verifies the two new cosine values, the exact
+Taylor margin, the derivative identity for the two-cap extremum, and the
+positive-integral formula for 22/7-pi. The graph checker rechecks the new
+nineteen-neighbor criterion on the same actual packets. No new mathematical
+independence or kernel certification is inferred from using a second program.
