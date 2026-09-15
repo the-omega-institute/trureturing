@@ -1,0 +1,47 @@
+### 80.1 预测算子系统与代数闭包
+
+第 79 节的 $X/Z$ 例子说明，预测闭合和乘法闭合是不同要求。设一个固定的 Heisenberg 映射为 $H$，初始效果族为 $S$，定义
+
+$$
+V_0=\operatorname{span}_{\mathbb R}(\{I\}\cup S),
+\qquad
+V_{n+1}=V_n+H(V_n).
+$$
+
+全体有限回拉的实线性空间为
+
+$$
+V_\infty
+=\operatorname{span}_{\mathbb R}
+\{H^k(A):A\in V_0, k\in\mathbb N\}.
+$$
+
+`operator_system_tower_once_stable_permanently` 说明，在单一保单位完全正 Heisenberg 映射的前提下，一层相邻稳定就会永久稳定；`future_statistics_iff_annihilates_infinite_system` 则把所有未来统计相同精确连接到差态对 $V_\infty$ 的迹配对全部为零。因此，$V_\infty$ 是相对于这组初始效果和这一个通道的预测载体。
+
+但令
+
+$$
+\mathcal A_\infty
+=\operatorname{Alg}^{\ast}_{\mathbb C}(V_\infty)
+$$
+
+表示包含 $V_\infty$ 的最小含单位复 $\ast$-子代数。一般只有
+
+$$
+V_\infty\subseteq (\mathcal A_\infty)_{\mathrm{sa}},
+$$
+
+而没有等号。两个可见效果的乘积、交换子或条件组合，可能产生原始未来词中没有出现的新方向。特别地，$V_{XZ}=\operatorname{span}_{\mathbb R}\{I,X,Z\}$ 对第 78 节指定仪器足以预测，却因为 $XZ=iY$ 而不是代数。
+
+因此必须区分：
+
+$$
+V_\infty=\text{对指定未来统计最小的线性预测载体},
+$$
+
+$$
+\mathcal A_\infty=\text{对指定可组合操作最小的代数载体}.
+$$
+
+若后续实验只查询原先的效果，加入所有乘积可能是过度保留；若后续实验允许先施加一个可见操作再查询另一个效果，则乘积会进入新的响应，不能只依靠 $V_\infty$ 上的读数。`prediction_closure_minimal_dynamical_repair` 给出相应的线性最小不变闭包，但没有把该闭包提升为乘法代数。
+

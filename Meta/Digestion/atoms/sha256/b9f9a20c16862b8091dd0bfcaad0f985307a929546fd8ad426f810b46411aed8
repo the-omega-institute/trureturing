@@ -1,0 +1,29 @@
+#### 定义 15.1 序列、Pisano 周期与不动点
+
+对整数 $a$，定义 $(a,-1)$-Fibonacci 序列
+
+$$
+U_0=0,\qquad U_1=1,\qquad U_{n+2}=aU_{n+1}-U_n\quad(n\geq0).
+$$
+
+对整数 $m>1$，其 Pisano 周期 $\pi_{(a,-1)}(m)$ 是满足
+$(U_T,U_{T+1})\equiv(0,1)\pmod m$ 的最小正整数 $T$；若
+$\pi_{(a,-1)}(m)=m$，则称 $m$ 为不动点。
+递推在相邻两项上的变换可逆，因此模 $m$ 的序列从初始项起即为周期序列。
+令
+
+$$
+A_a=\begin{pmatrix}a&-1\\1&0\end{pmatrix}.
+$$
+
+由于 $\det A_a=1$，它模 $m$ 属于有限群 $\mathrm{SL}_2(\mathbb Z/m\mathbb Z)$。
+递推归纳给出，对 $n\geq1$，
+
+$$
+A_a^n=\begin{pmatrix}U_{n+1}&-U_n\\U_n&-U_{n-1}\end{pmatrix}.
+$$
+
+当 $(U_n,U_{n+1})\equiv(0,1)$ 时，递推还给出 $U_{n-1}\equiv-1$，
+故该返回条件等价于 $A_a^n\equiv I\pmod m$。
+因此 $\pi_{(a,-1)}(m)$ 也就是 $A_a$ 模 $m$ 的乘法阶。
+

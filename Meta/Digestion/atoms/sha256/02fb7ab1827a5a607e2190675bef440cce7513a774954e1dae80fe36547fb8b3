@@ -1,0 +1,37 @@
+### 定义 58.3（任务响应的刻度 Lipschitz 条件）
+
+固定有限历史集合 $R$、规范化后的整数读数
+
+$$
+N:R\longrightarrow\mathbb N
+$$
+
+以及有限实验族 $\mathfrak T=\{\tau_i:1\le i\le m\}$。对每个实验，设输出分布为 $p_i(\,\cdot\mid r)$。若存在定义在包含所有 $N(r)$ 与 $\gamma_Z(N(r))$ 的实区间上的映射
+
+$$
+\kappa_i:\mathbb R\longrightarrow\Delta(Y_i)
+$$
+
+满足
+
+$$
+p_i(\,\cdot\mid r)=\kappa_i(N(r))
+$$
+
+以及某个 $L_i<\infty$ 使
+
+$$
+\operatorname{TV}\!\left(\kappa_i(x),\kappa_i(y)\right)
+\le L_i|x-y|,
+$$
+
+则称该实验在这组历史上满足 $L_i$-刻度 Lipschitz 条件。它要求响应确实经由 $N$ 因子化；若不同原始历史具有同一个 $N$ 却有不同后续响应，该条件不成立。
+
+用黄金坐标构造预测器
+
+$$
+\widehat p_i(\,\cdot\mid r)
+=
+\kappa_i\!\left(\gamma_Z(N(r))\right).
+$$
+

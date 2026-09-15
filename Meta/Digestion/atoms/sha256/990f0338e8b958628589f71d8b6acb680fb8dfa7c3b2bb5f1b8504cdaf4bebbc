@@ -1,0 +1,28 @@
+### 109.2 精确 Schmidt 秩恒为二
+
+只要 $$t,s\ge1$$，四个边界计数都为正，且
+
+$$
+\det M_{t,s}
+=
+-\frac{\sqrt{a_0a_1b_0b_1}}{D_L}
+\ne0.
+$$
+
+所以
+
+$$
+\boxed{
+\operatorname{SchmidtRank}(|\Psi_L\rangle;t|s)=2
+\qquad(1\le t,s<L).
+}
+$$
+
+这给出一个很强的容量分离：合法构型总数随长度按
+
+$$
+D_L=F_{L+2}\sim\frac{\varphi^{L+2}}{\sqrt5}
+$$
+
+增长，但均匀态跨任意内部切口只需一个两维 bond。Fibonacci 数量描述的是全局标签空间大小；局部相干历史只需记录切口的两个边界状态。
+

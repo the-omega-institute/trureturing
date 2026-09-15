@@ -1,0 +1,39 @@
+### Zeckendorf 前缀作为一个有误差界的预测摘要
+
+Zeckendorf 卷定理 459.2 给出一个可直接接入本节的有限精度例子。设 $q_L(n)$ 读取自然数 $n$ 的低 $L$ 位合法 Zeckendorf 字串，设 $\alpha$ 为该卷相位定义中的黄金共轭数。若
+
+$$
+q_L(n)=q_L(m),
+$$
+
+则
+
+$$
+\left\|\alpha(n-m)\right\|\le\alpha^L,
+$$
+
+其中左侧是到最近整数的圆周距离。于是可以定义一个明确的相位记录模型
+
+$$
+|\psi_n\rangle
+=\frac{|0\rangle+e^{2\pi i\alpha n}|1\rangle}{\sqrt2}.
+$$
+
+两条同前缀历史对应的纯态迹距离满足
+
+$$
+D\bigl(|\psi_n\rangle\langle\psi_n|,
+|\psi_m\rangle\langle\psi_m|\bigr)
+=\left|\sin\bigl(\pi\alpha(n-m)\bigr)\right|
+\le\min\{1,\pi\alpha^L\}.
+$$
+
+因此，对这个特定的相位读出和任意后续 POVM，低 $L$ 位可以作为误差为 $\pi\alpha^L$ 的近似预测摘要；要让单次读出误差不超过 $\varepsilon$，一个充分条件是
+
+$$
+L\ge
+\left\lceil\frac{\log(\pi/\varepsilon)}{-\log\alpha}\right\rceil.
+$$
+
+这只是一个指定记录模型中的任务界。Zeckendorf 卷定理 469.5 同时指出，同前缀相位的 Wasserstein 或 Lipschitz 误差界不自动给出总变差收敛；某些端点读出仍可把两个同前缀历史完全分开。故“前缀足够”必须连同读出类别和误差度量一起声明，不能从相位逼近直接推出完整历史已经被压缩。
+

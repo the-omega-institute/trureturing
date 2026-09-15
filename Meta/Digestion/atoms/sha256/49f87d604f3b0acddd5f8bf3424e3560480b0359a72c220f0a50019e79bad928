@@ -1,0 +1,4 @@
+**引理。** 对前述特征覆盖，任意非单位甲板变换 $s\in H_1(\Sigma_g;\mathbb F_p)$ 在 $H_1(Y;\mathbb F_p)$ 上满足
+
+$$\operatorname{rank}(s_*-I)=\frac{2D(g-1)(p-1)}p\ge D.$$
+

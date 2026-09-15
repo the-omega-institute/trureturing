@@ -1,0 +1,35 @@
+## 28. 修正同调作用的核与一阶上同调
+
+**定义。** 记 $a_\ell:\Lambda\to\operatorname{Out}(Q_\ell)$ 为实际外作用，$C_\ell=\ker a_\ell$，$K_\ell=\ker\Psi_\ell$。以加法记 $V_\ell$，令
+
+$$Z^1(S,V_\ell)=\{d:S\to V_\ell:d(st)=d(s)+s\cdot d(t)\},$$
+
+$$B^1(S,V_\ell)=\{s\mapsto b-s\cdot b:b\in V_\ell\},\qquad
+H^1(S,V_\ell)=Z^1(S,V_\ell)/B^1(S,V_\ell).$$
+
+**定理。** 有 $C_\ell\subseteq K_\ell$，且存在单射群同态
+
+$$\boxed{K_\ell/C_\ell\hookrightarrow H^1(S,V_\ell).}$$
+
+特别地，$K_\ell/C_\ell$ 是有限初等交换 $\ell$ 群。若 $\ell\nmid|S|$，则 $C_\ell=K_\ell$。
+
+**证明。** 若代表在 $Q_\ell$ 上是由 $x$ 给出的内自同构，它在 $V_\ell$ 上的作用就是 $\lambda(\bar x)$，因此修正作用为恒等。
+
+对 $\gamma\in K_\ell$，将其诱导自同构再复合以 $s_\eta$ 的一个提升的逆作内共轭，得到同时固定 $V_\ell$ 中每个元素、并在 $S$ 上为恒等的自同构 $\beta$。若 $y\in Q_\ell$ 提升 $s\in S$，令 $d_\beta(s)=\beta(y)y^{-1}\in V_\ell$。改变 $y$ 为同一陪集内的元素不改变该值；乘积公式给出余循环关系。反过来，任一余循环定义自同构 $y\mapsto d(\bar y)y$，其逆对应 $-d$。这一步不要求扩张分裂。
+
+改变归一化提升只使余循环增加 $b-s\cdot b$。两个归一化代表的复合对应余循环相加，故得到 $K_\ell\to H^1(S,V_\ell)$ 的同态。如果归一化后的作用是内自同构，其共轭元在 $S$ 上必须为中心元，因 $Z(S)=1$，该共轭元属于 $V_\ell$；其余循环恰是余边界。反向同样成立，所以核准确为 $C_\ell$。
+
+当 $\ell\nmid|S|$ 时，对余循环 $d$ 取 $b=|S|^{-1}\sum_{t\in S}d(t)$。由 $d(st)=d(s)+s\cdot d(t)$ 对 $t$ 求和并重排，得到 $d(s)=b-s\cdot b$。故 $H^1(S,V_\ell)=0$。
+
+**定理。** 设 $f:\Lambda\twoheadrightarrow F$ 满射到非交换有限单群。则对每个素数 $\ell$，包括整除 $|S|$ 的素数，都有
+
+$$\boxed{f\text{ 经 }a_\ell(\Lambda)\text{ 因子化}
+\quad\Longleftrightarrow\quad
+f\text{ 经 }\Psi_\ell(\Lambda)\text{ 因子化}.}$$
+
+**证明。** 左侧等价于 $f(C_\ell)=1$。在此条件下，$f(K_\ell)$ 是 $F$ 的正规 $\ell$ 子群，因为它是 $K_\ell/C_\ell$ 的同态像。非交换单群不具有非平凡正规 $\ell$ 子群，故 $f(K_\ell)=1$，得到右侧。反向使用 $C_\ell\subseteq K_\ell$。同一证明适用于任意没有非平凡正规 $\ell$ 子群的有限目标 $F$。
+
+**命题。** 当素数整除基群的阶时，不能对任意这样的扩张直接删去上同调误差。
+
+**证明。** 在扩张 $1\to C_2\to S_3\times C_2\to S_3\to1$ 中，映射 $(s,v)\mapsto(s,v+\varepsilon(s))$，其中 $\varepsilon:S_3\to C_2$ 为符号同态，是同时固定核与商的自同构。它不为内自同构，因为每个内自同构均保持第二坐标不变。这里 $Z(S_3)=1$，但 $H^1(S_3,C_2)\ne0$。这只是一般扩张的反例，不声称它是某个给定曲面覆盖的同调扩张。
+

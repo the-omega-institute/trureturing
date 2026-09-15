@@ -1,0 +1,7 @@
+**定理。** 对每个整数 $n$，有
+
+$$\boxed{\phi T^n\sim\phi\quad\Longleftrightarrow\quad
+\exists z\in C_F(S),\ zBz^{-1}=BA^n.}$$
+
+等价地，右边可写为 $\exists z\in C_F(S),\ B^{-1}zBz^{-1}=A^n$。
+

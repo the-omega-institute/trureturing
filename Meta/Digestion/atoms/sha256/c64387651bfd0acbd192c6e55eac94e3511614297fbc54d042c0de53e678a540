@@ -1,0 +1,6 @@
+**定义。** 固定有限群 $F$，令 $e=\exp(F)$，即使所有 $z\in F$ 都满足 $z^e=1$ 的最小正整数。定义
+
+$$E_F:\Pi_g\longrightarrow F^{\operatorname{Hom}(\Pi_g,F)},\qquad E_F(x)(\rho)=\rho(x),$$
+
+并令 $Q_F=\operatorname{im}E_F$，$q_F:\Pi_g\twoheadrightarrow Q_F$ 为像限制。允许非满射的表示作为评价坐标。
+

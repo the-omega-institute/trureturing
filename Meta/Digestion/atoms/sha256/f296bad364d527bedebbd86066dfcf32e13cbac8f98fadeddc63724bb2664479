@@ -1,0 +1,42 @@
+### 105.2 完整未来核与最大的前向不变关系
+
+把所有未来读出合并为完整 itinerary：
+
+$$
+\operatorname{Itin}(y)
+=
+\bigl(q(y),q(\tau y),q(\tau^2y),\ldots\bigr).
+$$
+
+完整未来核为
+
+$$
+R_\infty(y,y')
+\iff
+\operatorname{Itin}(y)=\operatorname{Itin}(y').
+$$
+
+`complete_kernel_eq_iInf_finite_horizon` 证明它是有限未来核的无穷交：
+
+$$
+R_\infty=\bigcap_{m\ge0}R_m.
+$$
+
+更强的 `predictive_completion_maximal_invariant_quotient` 把它刻画为当前读出核中的最大前向不变关系：
+
+$$
+R_\infty
+=
+\operatorname{gfp}(\mathcal R),
+$$
+
+其中 $$\mathcal R$$ 保留当前读出相同，并要求关系在 $$\tau$$ 下继续保持。于是 canonical quotient
+
+$$
+Y_{\mathrm{pred}}=Y/R_\infty
+$$
+
+携带唯一下降的读出与更新。它正是“相对于这组更新和读出，未来响应完全相同”的最粗状态空间。
+
+这里的“最粗”有明确方向：若两个状态在 $$Y_{\mathrm{pred}}$$ 中被识别，它们所有未来读出都相同；若一个摘要仍能精确预测全部未来读出，则它必须细于或等价于这个商。
+

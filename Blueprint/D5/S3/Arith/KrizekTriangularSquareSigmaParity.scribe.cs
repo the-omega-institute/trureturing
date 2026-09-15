@@ -19,7 +19,8 @@ internal sealed class KrizekTriangularSquareSigmaParityDocument
                 DeclarationHandle.Create(Prefix + "result"),
                 H("The triangular-square divisor-sum characterization"),
                 StatementSource.FromAuthor(ResultFormula()),
-                AssessedProvenance.FromRepo(),
+                AssessedProvenance.FromRepo(
+                    LibraryNoteRef.Create("D5/L/Arith/sloane2016a001108")),
                 Blocks(Paragraph(Text(
                     "The classical divisor-sum parity characterization reduces each odd "
                         + "divisor sum to a square-or-twice-square alternative. A "

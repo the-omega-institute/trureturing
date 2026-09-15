@@ -146,7 +146,6 @@ pr_watch_main() {
       now="$(date +%s)"
       if (( now >= deadline )); then printf 'PR_WATCH_RESULT pr=%s outcome=timeout pending=%s missing=%s\n' "$number" "$pending" "$missing"; return 124; fi
       if [[ -n "$red_check" ]]; then printf 'PR_WATCH_RESULT pr=%s outcome=red check=%s state=%s\n' "$number" "$red_check" "$red_state"; return 1; fi
-      if [[ "$state" == MERGED ]]; then printf 'PR_WATCH_RESULT pr=%s outcome=green\n' "$number"; return 0; fi
       if [[ "$state" == CLOSED ]]; then printf 'PR_WATCH_RESULT pr=%s outcome=closed\n' "$number"; return 4; fi
       if (( pending == 0 && missing == 0 )); then printf 'PR_WATCH_RESULT pr=%s outcome=green\n' "$number"; return 0; fi
       receipt "PR_WATCH_PROGRESS pr=$number state=$state pending=$pending missing=$missing"

@@ -1,0 +1,6 @@
+**定义。** 固定 $g\ge3$，保留第 1 节的群 $\Pi_g$、边界词 $h$ 和自同构 $\tau$。令
+
+$$u=[[a_1,a_2],[b_1,b_3]],\qquad \delta=\tau(u)u^{-1}.$$
+
+令 $\gamma_1G=G$，$\gamma_{j+1}G=[G,\gamma_jG]$ 为下中心列。于是 $u\in\Pi_g''\subseteq\gamma_4\Pi_g$。
+

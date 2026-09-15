@@ -1,0 +1,8 @@
+### 100.5 与 Zeckendorf 记录的接口
+
+若把有限 Zeckendorf 合法构型分配到多个记录份额，必须先指定编码映射与可访问集合。Fibonacci 合法性只约束哪些构型标签存在；它不自动决定一份记录是否隐藏、两份是否恢复，也不自动产生阈值共享的线性解码器。
+
+可以把三 qutrit 结果作为一个设计模板：选择份额映射，使单份效果落入当前可见空间的核，而联合份额的效果进入目标闭包。随后再用前面的 `all_future_statistics_sufficiency` 或 `future_statistics_iff_annihilates_infinite_system` 检验联合访问是否足以覆盖所需未来统计。
+
+本节复用 `qutrit_single_share_maximally_mixed`、`qutrit_two_share_reconstruction` 和 `qutrit_matrix_unit_marginal`。Lean 已证明的是该三 qutrit 编码的精确偏迹与两份解码；它没有证明任意 Zeckendorf 编码都存在同样的阈值，也没有给出噪声下的最优份额数。
+

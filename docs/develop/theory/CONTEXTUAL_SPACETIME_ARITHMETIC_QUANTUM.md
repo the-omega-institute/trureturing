@@ -1954,6 +1954,7 @@ $$
 本节明确区分两类模型：前者依赖一个固定标签的有限产品记录，后者是“自由演化—新鲜固定标签Schur通道—取迹、无反馈”的交错递推。重复相互作用背景可参见Francesco Ciccarello、Salvatore Lorenzo、Vittorio Giovannetti、G. Massimo Palma，*Quantum collision models: open system dynamics from repeated interactions*，*Physics Reports* 954（2022）1--70，arXiv:2106.11974v2；Zeno背景可参见P. Facchi、S. Pascazio，*Quantum Zeno subspaces*，*Physical Review Letters* 89（2002）080401，arXiv:quant-ph/0201115v2。除已直接核查的Schur判据和二态判别基础外，不宣称这些背景文献给出本节常数或本节命题的优先性。本文没有实验、Lean或唯一结果的断言。
 
 ## 追加锚（新终端）
+
 ## 9. 有限前缀的项目一致性与辅助系统稳定性
 
 ### 9.1 固定标签模型的前缀态
@@ -13765,3 +13766,14859 @@ $$
 
 
 ## 追加锚（新终端）
+
+## 54. 有限实验族的预测等价与最小充分记录
+
+前面的闭合条件研究的是一个已经选定的记录通道能否独立推进。这里把问题换成静态的有限任务：在只允许一组有限实验、且每个实验最多运行有限步时，哪些历史必须被区分，哪些历史可以合法地合并？这个问题不要求给不相容测量预先填写一张共同答案表；每个实验协议都有自己的结果分布。
+
+**定义 54.1（有限实验族）。** 设 $X$ 是非空有限的候选历史集合，且 $m\ge1$。固定一个有限实验族
+
+$$
+\mathfrak T_H=\{\tau_1,\ldots,\tau_m\},
+$$
+
+其中每个协议 $\tau_i$ 的运行长度不超过 $H$，可以包含基于先前结果选择后续操作的有限自适应分支，终端结果集合 $Y_i$ 有限。对 $x\in X$，记该协议的结果分布为
+
+$$
+p_i(\,\cdot\mid x)=p_{\tau_i}(\,\cdot\mid x)\in\Delta(Y_i).
+$$
+
+记录值只需取在 $r(X)$ 中；对每个 $u\in r(X)$，相应的预测器取值于 $\Delta(Y_i)$。
+
+在量子模型中，$x$ 可以代表一个候选密度算符或带有历史标签的状态，$p_{\tau_i}(y\mid x)$ 由该协议的通道复合与末端 POVM 按 Born 规则给出。实验族中的每个 $\tau_i$ 是一个固定的可执行协议（必要时含有限分支）；不同 $\tau_i$ 之间不要求、也不默认存在联合结果分布。
+
+**定义 54.2（$H$ 步预测等价）。** 定义
+
+$$
+x\mathrel{\sim_H}x'
+\quad\Longleftrightarrow\quad
+p_i(\,\cdot\mid x)=p_i(\,\cdot\mid x')
+\quad\text{对所有 }i=1,\ldots,m.
+$$
+
+把
+
+$$
+S_H(x)=\bigl(p_1(\,\cdot\mid x),\ldots,p_m(\,\cdot\mid x)\bigr)
+$$
+
+称为预测响应签名，并令 $Q_H=X/{\sim_H}$。因为 $X$ 有限，$\sim_H$ 是有限个等价类。
+
+**定理 54.3（有限实验族的最小充分记录）。** 令 $r:X\to R$ 是一个记录。以下两件事等价：
+
+1. 对每个实验 $\tau_i$，存在只依赖记录值的分布 $\widehat p_i(\,\cdot\mid r)$，使
+
+   $$
+   p_i(\,\cdot\mid x)=\widehat p_i(\,\cdot\mid r(x))
+   \qquad(x\in X).
+   $$
+
+2. $r$ 的每个纤维都包含在一个 $\sim_H$ 等价类中，即
+
+   $$
+   r(x)=r(x')\Longrightarrow x\sim_H x'.
+   $$
+
+因此 $S_H$（等价地，商映射 $q_H:X\to Q_H$）是这组实验的最小充分记录：任意充分记录都能区分 $\sim_H$ 的不同类，而 $q_H$ 本身保留恰好足以重建全部 $p_i$ 的信息。达到 $|Q_H|$ 个有效记录值的充分记录，其每个非空纤维恰为一个 $\sim_H$ 类，因而在把记录值作双射重标记的意义下唯一；允许多余记录值时，充分记录可以严格细化这些类。并且
+
+$$
+|Q_H|=\bigl|\{S_H(x):x\in X\}\bigr|.
+$$
+
+证明。若第 1 条成立且 $r(x)=r(x')$，则对每个 $i$ 都有
+
+$$
+p_i(\,\cdot\mid x)=\widehat p_i(\,\cdot\mid r(x))
+=\widehat p_i(\,\cdot\mid r(x'))=p_i(\,\cdot\mid x'),
+$$
+
+故 $x\sim_Hx'$。反过来，若第 2 条成立，对每个非空记录纤维的记录值 $u$ 选一个代表元 $x_u$，定义
+
+$$
+\widehat p_i(\,\cdot\mid u):=p_i(\,\cdot\mid x_u).
+$$
+
+第 2 条保证同一纤维中的任意 $x$ 与 $x_u$ 预测等价，所以该定义与代表元选择无关，并满足第 1 条。取 $r=q_H$ 即得到充分记录。若另有充分记录 $r$，已证其纤维不能跨越 $\sim_H$ 类，因此它至少有 $|Q_H|$ 个有效值；$q_H$ 达到该下界。若有效值数也等于 $|Q_H|$，每个类只能对应一个纤维，纤维对应遂给出记录值与 $Q_H$ 之间的双射。证毕。
+
+这个定理给出一个可直接检查的“对象”判据：在指定实验族和 $H$ 步上限后，对象不是当前数值相同的所有历史，而是响应签名相同的历史类。改变实验族会改变等价关系；增加实验只能细化记录，不能把两个已经可区分的响应重新合并。
+
+**推论 54.4（有限协议组合的因子化）。** 若先以固定概率 $\lambda_i\ge0$ 选择协议 $\tau_i$，满足 $\sum_i\lambda_i=1$，并对其终端结果施加随机核 $K_i:Y_i\to\Delta(Y)$，其中 $Y$ 是共同有限结果集，则组合实验的结果分布为
+
+$$
+p(y\mid x)=\sum_{i=1}^{m}\lambda_i
+\sum_{z\in Y_i}K_i(y\mid z)p_i(z\mid x).
+$$
+
+它只依赖于 $S_H(x)$，因而也只依赖于 $q_H(x)$。这给出有限实验族对随机菜单和经典读出的封闭性；它没有把不同不相容协议的结果拼成一个联合样本。
+
+证明。右端只含各个 $p_i(\cdot\mid x)$，而这些分布由 $S_H(x)$ 确定。证毕。
+
+**推论 54.5（实验族扩张的单调性与有限稳定化）。** 若
+
+$$
+\mathfrak T_H\subseteq\mathfrak T_{H+1}
+$$
+
+（例如加入长度为 $H+1$ 的协议），则
+
+$$
+x\sim_{H+1}x'\Longrightarrow x\sim_Hx',
+\qquad
+|Q_H|\le |Q_{H+1}|.
+$$
+
+对有限 $X$，每次严格细化至少使等价类数增加一；所以这条链至多发生 $|X|-1$ 次严格细化。达到某个 $H_0$ 后若 $Q_{H_0}=Q_{H_0+1}$，这只说明在所声明的有限扩张中没有新区别；它不推出未列入实验族的协议也无法区分这些类。
+
+证明。第一式是实验条件包含关系的直接应用；第二式由商集细化得到。严格细化会把至少一个类拆成两个，故有限性给出次数上界。证毕。
+
+**定义 54.6（有限实验族的预测伪距离）。** 在不要求 $X$ 有限时，令
+
+$$
+d_H(x,x')
+=\max_{1\le i\le m}
+\operatorname{TV}\!\left(p_i(\,\cdot\mid x),p_i(\,\cdot\mid x')\right),
+$$
+
+其中
+
+$$
+\operatorname{TV}(p,q)=\frac12\sum_{y}|p(y)-q(y)|.
+$$
+
+在任意 $X$ 上仍用“所有 $p_i(\cdot\mid x)$ 相等”定义 $\sim_H$；当 $X$ 有限时，这与定义 54.2 完全一致。
+
+则 $d_H$ 是伪度量：它非负、对称，满足三角不等式，但不同状态可能有 $d_H=0$。零距离关系正好是 $\sim_H$；并令 $Q_H:=X/{\sim_H}$，于是 $Q_H$ 是把有限任务下不可区分状态取商得到的预测空间。
+
+对每个 $i$ 再施加一个随机后处理 $K_i$ 时，数据处理不等式给出
+
+$$
+\operatorname{TV}(K_ip_i^x,K_ip_i^{x'})
+\le \operatorname{TV}(p_i^x,p_i^{x'}),
+$$
+
+故后处理后的预测伪距离不超过 $d_H$。三角不等式则逐个 $i$ 应用总变差距离的三角不等式，再取最大值。这些收缩性只涉及已列出的协议结果，不涉及不相容测量的联合赋值。
+
+具体地，对任意 $x,y,z$ 有
+
+$$
+\begin{aligned}
+d_H(x,z)
+&=\max_i\operatorname{TV}(p_i^x,p_i^z)\\
+&\le\max_i\bigl[\operatorname{TV}(p_i^x,p_i^y)+\operatorname{TV}(p_i^y,p_i^z)\bigr]\\
+&\le d_H(x,y)+d_H(y,z),
+\end{aligned}
+$$
+
+其中 $p_i^x$ 简写为 $p_i(\cdot\mid x)$。这同时说明 $d_H$ 的三角不等式不依赖于任何跨协议联合赋值。
+
+**命题 54.7（近似充分记录的纤维判据）。** 若记录 $r:X\to R$ 满足每个纤维的 $d_H$ 直径不超过 $\varepsilon$，选定每个非空纤维的代表元 $x_u$ 并令
+
+$$
+\widehat p_i(\,\cdot\mid u)=p_i(\,\cdot\mid x_u),
+$$
+
+则对所有 $x$ 和 $i$，都有
+
+$$
+\operatorname{TV}\!\left(p_i(\,\cdot\mid x),
+\widehat p_i(\,\cdot\mid r(x))\right)\le\varepsilon.
+$$
+
+反过来，若某个预测器对每个 $x$ 的误差均不超过 $\alpha$，即
+
+$$
+\operatorname{TV}\!\left(p_i(\,\cdot\mid x),
+\widehat p_i(\,\cdot\mid r(x))\right)\le\alpha
+$$
+
+对所有 $i,x$ 成立，则每个记录纤维的 $d_H$ 直径不超过 $2\alpha$。
+
+证明。第一部分把 $x$ 与同一纤维代表元的总变差距离直接代入 $d_H$ 的定义。第二部分对同一纤维中的 $x,x'$ 使用三角不等式：
+
+$$
+\operatorname{TV}(p_i^x,p_i^{x'})
+\le\operatorname{TV}(p_i^x,\widehat p_i^{r(x)})
++\operatorname{TV}(\widehat p_i^{r(x')},p_i^{x'})
+\le2\alpha,
+$$
+
+其中 $r(x)=r(x')$。对 $i$ 取最大值得证。证毕。
+
+该命题是静态的有限任务压缩条件，和第 50、52 节的动态闭合误差不同：这里不假定存在一步记录通道，也不把误差按时间步累积；它只回答“在预先列出的实验族上，一个记录纤维内最多允许多大预测差异”。如果实验族以包含原实验族的方式扩张，$d_H$ 只能增大，原来的 $\varepsilon$-充分性可能失效。
+
+**例 54.8（增加一个实验会拆分对象）。** 取四个候选历史 $X=\{a,b,c,d\}$。第一实验 $\tau_1$ 和第二实验 $\tau_2$ 都是二结果协议，令结果 $1$ 的概率表为
+
+$$
+\begin{array}{c|cccc}
+ &a&b&c&d\\ \hline
+\tau_1&0&0&1&1\\
+\tau_2&0&1&0&1
+\end{array}
+$$
+
+只允许 $\tau_1$ 时，最小充分记录有两个类：$\{a,b\}$ 与 $\{c,d\}$。加入 $\tau_2$ 后，四个响应签名分别为 $(0,0),(0,1),(1,0),(1,1)$，所以 $Q_H$ 变成四个单点类。一个具体实现是在 $\mathbb C^4$ 的基 $|00\rangle,|01\rangle,|10\rangle,|11\rangle$ 上分别读取第一和第二个经典比特；两行在这个实现中相容。该表的作用是展示商结构，而不是声称任意量子实验都能同时实现不相容读数。
+
+**量子相容性边界。** 在量子应用中，$\mathfrak T_H$ 应理解为一组具体协议，每个协议内部的测量顺序和控制已经固定。定义 $S_H$ 只收集各协议的边缘结果分布，不产生跨不相容协议的联合概率。因而“$x\sim_Hx'$”的含义是：在这组可执行协议上统计不可区分；它不等价于存在一张同时写好所有测量答案的经典表。若实验族包含连续控制参数，有限的 $H$ 步上限本身仍不使 $\mathfrak T_H$ 有限；此时应改用上确界型伪距离，或先给控制菜单和精度预算，再使用本节的有限版本。
+
+**本节边界。** 定理 54.3 处理有限候选历史和有限实验族，证明的是响应分布的因子化与最小性；命题 54.7 给出有限任务下的近似压缩误差。它们不声称记录一定能由一个物理仪器无损实现，也不替代第 50、52 节关于实际通道闭合和时间累计误差的检验。若要把 $Q_H$ 实现为物理记录，还需另外给出仪器、扰动和后续实验的动力学模型，并检查它是否保持所需的响应精度。
+
+本节是 repo-derived/open 的理论追加；没有新增 Lean 声明、形式覆盖或冻结状态。
+
+## 追加锚（新终端）
+
+## 55. 有限记录的 Gram 谱、相位回流与复用协议
+
+前面已经分别给出了预测等价、去相干固定点以及末端预测误差。本节把“记录怎样参与后续演化”压缩成一个有限维可计算对象：条件记录向量的 Gram 矩阵。它同时给出相干模式的衰减因子和相位因子，但不能单独决定记录是否真的被读取，也不能把带记忆的复用协议当成每步独立的无记忆通道。
+
+本节所有结论都是有限维模型中的 `repo-derived/open` 推导；没有新增 Lean 声明、形式覆盖或冻结状态。
+
+### 定义 55.1（条件记录与 Gram 记录通道）
+
+设构型标签集 $I$ 有限，系统空间为
+
+$$
+\mathcal H_S=\operatorname{span}\{|i\rangle:i\in I\},
+$$
+
+记录空间为 $\mathcal H_R$。固定记录初态 $|m_\ast\rangle$，并假设内部耦合在这些输入上满足
+
+$$
+|i\rangle|m_\ast\rangle\longmapsto |i\rangle|r_i\rangle,
+\qquad \langle r_i|r_i\rangle=1.
+$$
+
+定义 Gram 矩阵
+
+$$
+R_{ij}:=\langle r_j|r_i\rangle.
+$$
+
+对系统算符定义记录后的局部通道
+
+$$
+\mathcal C_R(\rho)=R\circ\rho,
+\qquad
+(R\circ\rho)_{ij}=R_{ij}\rho_{ij}.
+$$
+
+这里的 $\circ$ 是逐项乘积。因为 $R$ 是单位对角的半正定矩阵，Schur 乘积定理给出 $\mathcal C_R$ 完全正且保持迹；它正是上述联合幺正演化后对记录空间取偏迹得到的通道。
+
+### 命题 55.2（Gram 谱就是相干模式的响应谱）
+
+令 $E_{ij}=|i\rangle\langle j|$。则
+
+$$
+\mathcal C_R(E_{ij})=R_{ij}E_{ij}.
+$$
+
+因此在矩阵单位基下，记录通道的特征值（按代数重数计）就是 $\{R_{ij}:i,j\in I\}$。对 $R_{ij}\neq0$，给定记录间隔 $\tau>0$ 可写成
+
+$$
+R_{ij}=e^{-\Gamma_{ij}\tau+i\omega_{ij}\tau},
+$$
+
+其中
+
+$$
+\Gamma_{ij}=-\frac{\log|R_{ij}|}{\tau},
+\qquad
+\omega_{ij}=\frac{\arg R_{ij}}{\tau}\pmod{\frac{2\pi}{\tau}}.
+$$
+
+故模长描述该相干模式的单次衰减，辐角描述相对相位旋转。这个“谱”属于记录耦合与选定标签的组合，不是孤立构型预先携带的普适频率。
+
+证明。第一式由逐项乘积直接得到；矩阵单位构成全体矩阵空间的基，故特征值列表如上。指数参数化只是对非零复数的模长和辐角作定义。证毕。
+
+### 推论 55.3（趋于经典与仅有经典固定点是两件事）
+
+设 $|I|\ge2$，并令
+
+$$
+q:=\max_{i\neq j}|R_{ij}|.
+$$
+
+则对任意 $N\ge1$，
+
+$$
+(\mathcal C_R^N\rho)_{ij}=R_{ij}^{N}\rho_{ij}.
+$$
+
+若 $q<1$，则所有非对角元趋于零，且 $\mathcal C_R^N(\rho)$ 收敛到 $\rho$ 的指针基对角部分。若存在 $i\neq j$ 使 $|R_{ij}|=1$，则该模式不会衰减；它可以周期旋转，也可以保持不变。一般地，固定点空间由满足 $R_{ij}=1$ 的矩阵单位张成；条件 $|R_{ij}|=1$ 本身只说明记录向量同射线，不能说明它们携带可区分记录。对纯记录态，二者的迹距离为 $\sqrt{1-|R_{ij}|^2}$。
+
+若所有 $i\ne j$ 都满足 $R_{ij}=1$ 或 $|R_{ij}|<1$，则逐项极限存在，并等于保留 $R_{ij}=1$ 的矩阵单位的投影；若存在 $|R_{ij}|=1$ 且 $R_{ij}\ne1$，则通常只有 Cesàro 平均才会消除该周期相位，而单次迭代不收敛。
+
+特别地，取
+
+$$
+|r_0\rangle=|0\rangle,
+\qquad |r_1\rangle=-|0\rangle,
+$$
+
+则
+
+$$
+R=\begin{pmatrix}1&-1\\-1&1\end{pmatrix},
+\qquad
+\mathcal C_R(\rho)=Z\rho Z.
+$$
+
+其固定点满足 $\rho_{01}=0$，因而固定点全是对角的；但是
+
+$$
+\mathcal C_R^2=\operatorname{id}.
+$$
+
+所以“固定点代数是经典的”不推出“动力学趋向经典”。趋近经典需要严格的谱隙条件 $q<1$，而不是仅仅要求 $R_{ij}\neq1$。
+
+证明。逐次应用第一式即可。$q<1$ 时有限维任意矩阵范数中的非对角部分都趋于零；反例直接代入 Schur 乘积公式。证毕。
+
+### 定义 55.4（独立新记录与相干复用）
+
+设每次记录都使用一个与系统和旧记录无关的空白单元，则 $N$ 次局部通道为 $\mathcal C_R^N$，其模式 $E_{ij}$ 的可见度为
+
+$$
+V_N^{\mathrm{fresh}}(i,j)=|R_{ij}|^N.
+$$
+
+若同一个记录单元保留相干并再次参与联合演化，则不能直接把每次作用替换成 $\mathcal C_R$；需要从联合幺正演化重新计算当前记录向量的 Gram 矩阵。
+
+### 命题 55.5（同一记录复用的有限模型）
+
+令
+
+$$
+A=\sum_{i\in I}a_i|i\rangle\langle i|,
+\qquad
+U_\theta=e^{-i\theta A\otimes Y},
+$$
+
+记录比特从 $|0\rangle$ 开始。连续作用 $m$ 次而不测量、不重置该比特后，系统边缘通道仍为 Schur 通道，并且
+
+$$
+R^{(m)}_{ij}
+=\langle0|e^{im\theta a_jY}e^{-im\theta a_iY}|0\rangle
+=\cos\!\bigl(m\theta(a_i-a_j)\bigr).
+$$
+
+因此
+
+$$
+V_m^{\mathrm{reuse}}(i,j)
+=\left|\cos\!\bigl(m\theta(a_i-a_j)\bigr)\right|,
+$$
+
+而一般不满足
+
+$$
+\mathcal C_{R^{(m+n)}}
+=\mathcal C_{R^{(m)}}\mathcal C_{R^{(n)}}.
+$$
+
+例如 $a_0=0,a_1=1,\theta=\pi/4$ 时，
+
+$$
+V_2^{\mathrm{fresh}}=\frac12,
+\quad V_2^{\mathrm{reuse}}=0,
+\qquad
+V_4^{\mathrm{fresh}}=\frac14,
+\quad V_4^{\mathrm{reuse}}=1.
+$$
+
+同样四次作用可以给出衰减到四分之一的独立记录，也可以给出完整回归的相干复用。差异来自旧记录仍在联合系统中携带相位，而不是来自“作用次数”这个整数本身。
+
+证明。由于 $A$ 在构型基底对角化，$U_\theta^m$ 对 $|i\rangle$ 条件地作用为 $e^{-im\theta a_iY}$。对记录比特取内积得到 $R^{(m)}_{ij}$；$e^{-isY}=\cos s\,I-i\sin s\,Y$ 且 $\langle0|Y|0\rangle=0$，故得到余弦式。数值等式由 $\cos(\pi/2)=0$、$\cos(\pi)=-1$ 以及独立通道的幂次直接得出。证毕。
+
+### 记忆回流的有限表达
+
+为了把“旧历史重新回来”与上述复用例子分开，考虑任意有限维线性演化的可见—隐藏分块：
+
+$$
+x_{n+1}=Ax_n+By_n,
+\qquad
+y_{n+1}=Cx_n+Dy_n.
+$$
+
+这里 $x_n$ 是当前记录保留的坐标，$y_n$ 是被省略但仍在整体中演化的坐标；不假定 $y_n$ 自身是量子态。
+
+### 命题 55.6（隐藏块诱导的历史回流核）
+
+对 $n\ge0$，消去 $y_n$ 得
+
+$$
+x_{n+1}
+=Ax_n+BD^ny_0
++\sum_{k=0}^{n-1}BD^{n-1-k}Cx_k.
+$$
+
+其中 $BD^ny_0$ 是初始隐藏差异的后效，$BD^{n-1-k}C$ 是从时刻 $k$ 的可见变化进入隐藏块、再返回当前读数的回流核。
+
+若在某个次乘范数下 $\|D^r\|\le\eta_r$，则相距 $r$ 步以上的回流项范数至多按
+
+$$
+\|B\|\,\eta_r\,\|C\|\,\|x_k\|
+$$
+
+控制。只有在给定预测窗口和误差容限下这些尾项足够小，才可以把 $x_n$ 近似当作无记忆状态。该条件是对隐藏动力学的谱或范数假设，不由“当前读数已经稳定”自动推出。
+
+证明。由第二式递归展开
+
+$$
+y_n=D^ny_0+\sum_{k=0}^{n-1}D^{n-1-k}Cx_k,
+$$
+
+代回第一式即得。尾项界由次乘范数和三角不等式给出。证毕。
+
+### Zeckendorf 约束窗口中的记录混叠
+
+取长度 $L$ 的合法字串集合
+
+$$
+\mathcal W_L=\{w\in\{0,1\}^L:w_jw_{j+1}=0\},
+$$
+
+并令 $a(w)$ 是其 Zeckendorf 权重读数。以三位窗口为例，合法构型为
+
+$$
+000,001,010,100,101,
+$$
+
+对应 $a(w)=0,1,2,3,4$。在该有限集合上使用命题 55.5 的记录耦合，得到
+
+$$
+R_{wv}=\cos\!\bigl(\theta(a(w)-a(v))\bigr).
+$$
+
+于是
+
+$$
+R_{wv}=0
+\iff
+\theta(a(w)-a(v))\in\frac\pi2+\pi\mathbb Z,
+$$
+
+表示两条条件记录正交；而
+
+$$
+|R_{wv}|=1
+\iff
+\theta(a(w)-a(v))\in\pi\mathbb Z,
+$$
+
+表示它们至多相差一个相位符号，局部记录不能稳定地区分二者。故 Zeckendorf 刻度差大并不自动意味着可读信息增加；还必须检查实际耦合角度造成的 Gram 谱是否混叠。
+
+这个构造只规定了合法构型和一个明确记录模型。它没有把 Fibonacci 权重解释为物理能量，也没有声称仓库现有 `WindowRegister` 已经实现该受约束量子空间。
+
+### 与前面章节的边界
+
+命题 55.2–55.3 研究一次固定记录通道的谱和渐近行为；它们不替代第 50 节的粗变量闭合条件。命题 55.5 比较两种联合协议，说明第 52 节的逐步无记忆界不能直接套用于相干复用；命题 55.6 给出有限线性模型中的回流核，但不自动保证某个开放量子系统的生成元具有该分块形式。第 54 节的预测等价仍然按预先声明的实验族定义对象；本节只说明同一记录值在不同记录协议下可能拥有不同 Gram 谱和历史后效。项目已有的跨记录类指数衰减结果要求相应重叠统一小于一；本节的周期反例属于同一记录射线只差相位的情形，因此不满足那个收缩假设。
+
+因此，“保留多少历史”在这个有限模型中至少由三项共同决定：记录 Gram 谱中模长小于一的谱隙、相位复用产生的回流、以及任务允许的预测窗口。不存在脱离协议、读出和误差容限的普适整数答案。
+
+## 追加锚（新终端）
+
+## 56. 任务依赖的记忆视界与有效阶数
+
+第 54 节把对象定义为指定实验族上的预测响应类，第 55 节说明记录复用会把旧关联重新带回可见演化。本节把“还要保留多少历史”写成一个可计算的任务量。关键区别是：记忆视界由输入—隐藏—输出的通道共同决定，而不是由隐藏空间的维数或某个全局谱单独决定。
+
+### 定义 56.1（有限线性记忆实现与任务核）
+
+考虑有限维线性实现
+
+$$
+x_{n+1}=Ax_n+By_n,
+\qquad
+y_{n+1}=Cx_n+Dy_n,
+$$
+
+其中 $x_n$ 是当前记录保留的坐标，$y_n$ 是未写入记录但仍在整体中演化的坐标。给定线性任务读出 $G$，实际比较的量为 $z_n=Gx_n$。取次乘范数，并令
+
+$$
+K_r:=GBD^{r-1}C\quad(r\ge1),
+\qquad
+b_n:=GBD^ny_0.
+$$
+
+由第 55.6 节的消元式，输出满足
+
+$$
+z_{n+1}
+=GAx_n+b_n+
+\sum_{r=1}^{n}K_r x_{n-r}.
+$$
+
+$K_r$ 是相隔 $r$ 步的任务记忆核；它只记录能够从可见端口进入隐藏块、再由读出端口返回的部分。隐藏方向若被 $G B$ 消掉，即使在整体中长时间存在，也不属于这个任务的可见记忆。
+
+### 定义 56.2（$\varepsilon$-记忆视界）
+
+固定任务时间窗 $T$、可见轨道界 $\|x_k\|\le X$ 和初始隐藏界 $\|y_0\|\le Y$。整数 $h$ 满足 $0\le h<T$ 时，称其为 $(T,\varepsilon)$-记忆视界，如果对每个 $n$ 满足 $h\le n<T$，都有
+
+$$
+\|b_n\|
++X\sum_{r=h+1}^{n}\|K_r\|
+\le\varepsilon.
+$$
+
+最小这样的 $h$ 记为 $h_{\varepsilon,T}$；若没有这样的整数，则记为 $\infty$。它给出一个直接的任务判据：把 $n-h$ 步以前的可见历史以及尚未释放的初始隐藏差异删去时，下一次任务读出的误差至多为 $\varepsilon$。这里的误差是任务读出所选的范数；若 $G$ 最后产生概率分布，则可再用相应的数据处理收缩把它换成总变差界。
+
+这个定义不同于第 52 节的逐步闭合误差。第 52 节把每一步粗粒化误差沿无记忆迭代累积；这里直接计算被隐藏动力学传播后的尾核，允许同一记录被相干复用，也允许不同延迟的记忆项发生抵消。它因此是“任务需要保留多长历史”的视界，而不是每步误差的重新命名。
+
+### 命题 56.3（几何隐藏衰减给出可计算视界）
+
+设存在 $M\ge1$ 和 $0\le\alpha<1$，使得
+
+$$
+\|D^r\|\le M\alpha^r\qquad(r\ge0).
+$$
+
+令 $g=\|G\|$、$b=\|B\|$、$c=\|C\|$。则任意 $h$ 都满足
+
+$$
+\|b_n\|+X\sum_{r=h+1}^{n}\|K_r\|
+\le
+gbM\alpha^h\left(Y+\frac{cX}{1-\alpha}\right)
+\qquad(n\ge h).
+$$
+
+因此，只要 $0<\varepsilon<gbM(Y+cX/(1-\alpha))$，取
+
+$$
+h\ge
+\left\lceil
+\frac{\log\!\left(\varepsilon/[gbM(Y+cX/(1-\alpha))]\right)}{\log\alpha}
+\right\rceil
+$$
+
+就得到一个 $(T,\varepsilon)$-记忆视界；当右端常数为零时，视界为 $0$。若 $\alpha=0$，则 $D^r=0$（$r\ge1$），记忆核在有限步内严格截断。
+
+证明。由次乘性，$\|b_n\|\le gbM\alpha^nY\le gbM\alpha^hY$。并且
+
+$$
+\|K_r\|\le gbcM\alpha^{r-1},
+$$
+
+所以
+
+$$
+X\sum_{r=h+1}^{n}\|K_r\|
+\le gbcMX\sum_{r=h+1}^{\infty}\alpha^{r-1}
+=\frac{gbcM X\alpha^h}{1-\alpha}.
+$$
+
+两式相加即得。对 $0<\alpha<1$ 取对数并注意 $\log\alpha<0$，得到给出的整数条件。证毕。
+
+### 推论 56.4（有效阶数与精确有限记忆）
+
+在上述条件下，$h_{\varepsilon,T}$ 随 $\varepsilon$ 只按对数增长：其上界为
+
+$$
+O\!\left(\frac{\log(1/\varepsilon)}{-\log\alpha}\right).
+$$
+
+当存在 $q$ 使
+
+$$
+GBD^rC=0\quad(r>q),
+\qquad
+GBD^ny_0=0\quad(n>q)\quad\text{（对当前给定的初始隐藏态 $y_0$）},
+$$
+
+则 $q$ 是该任务的记忆阶数上界；若第 $q$ 延迟项实际非零，它就是精确阶数。所有超过 $q$ 的历史对任务输出都没有作用。特别地，$D^q=0$ 是一个与任务无关的充分条件，但不是必要条件，因为端口 $GB$ 或 $C$ 可能消灭长寿命隐藏方向。
+
+在有限任务窗 $T$ 内，只有 $r<T$ 的核会出现；因此即使 $h_{\varepsilon,\infty}=\infty$，有限实验族仍可能有有限的 $h_{\varepsilon,T}$。这与第 54 节的有限实验族一致：有限视界上的对象只需对声明过的实验和长度负责。
+
+### 反例 56.5（没有谱隙就没有普适有限视界）
+
+若 $D$ 在某个可见端口方向上是单位模旋转，例如 $D=-I$ 且 $GB\ne0$、$C\ne0$，则
+
+$$
+K_r=GB(-I)^{r-1}C
+$$
+
+的范数不衰减。对适当的有界轨道，任意固定 $h$ 的尾和都不能由几何级数压到任意小；于是 $h_{\varepsilon,\infty}=\infty$（除非端口耦合恰好相消）。这正是第 55 节相干复用的周期回流在记忆核语言中的表现：同一记录被再次访问时，单次 Gram 因子 $|R_{ij}|<1$ 的“新记录”结论不能直接套用。
+
+反过来，$D$ 的谱半径小于一也不足以给出一个仅由谱半径决定的短视界。非正规矩阵
+
+$$
+D=\begin{pmatrix}\alpha&L\\0&\alpha\end{pmatrix},
+\qquad 0<\alpha<1,
+$$
+
+有
+
+$$
+D^r=\begin{pmatrix}\alpha^r&rL\alpha^{r-1}\\0&\alpha^r\end{pmatrix}.
+$$
+
+当 $L$ 很大时，短期回流可先放大再衰减。故需要的是可验证的范数包络（或带条件数的 Jordan 估计），不能只报告渐近谱半径。
+
+### 命题 56.6（任务端口决定记忆，而非隐藏维数）
+
+设隐藏空间分解为 $Y=Y_{\mathrm{seen}}\oplus Y_{\mathrm{dark}}$，且 $C$ 的像和 $GB$ 的行空间都落在 $Y_{\mathrm{seen}}$ 的相应端口闭包中。若 $D$ 在 $Y_{\mathrm{dark}}$ 上任意（甚至是幺正），则所有 $K_r=GBD^{r-1}C$ 对 $Y_{\mathrm{dark}}$ 的分量均为零；该暗子空间不增加 $h_{\varepsilon,T}$。
+
+相反，隐藏空间可以只有一个维度而取 $D=\alpha$、$\alpha$ 任意接近一，从而使
+
+$$
+K_r=GB\,\alpha^{r-1}C
+$$
+
+保持很长的有效尾。于是“保留多少历史”既不由隐藏自由度数量决定，也不由当前记录值的数量决定，而由任务允许的输入端口、输出端口、误差和时间窗共同决定。
+
+证明。若 $C$ 不把可见扰动送入 $Y_{\mathrm{dark}}$，且 $GB$ 不从该子空间读出，则每个乘积 $GBD^{r-1}C$ 在该分量上为零。后一断言直接取一维 $D=\alpha$ 代入定义。证毕。
+
+### 与第 54、55 节的连接和边界
+
+第 54 节的 $H$ 步预测等价检验“在已列实验族上能否区分历史”；本节的 $h_{\varepsilon,T}$ 检验“删去多早以前的历史后，指定读出在 $T$ 步内还差多少”。增加实验协议可能使静态商细化，即使原来的记忆视界不变；改变端口或记录复用协议也可能使同一静态商获得不同的回流核。
+
+第 55 节的 Gram 谱给出一次记录对相干模式的模长和相位。只有在每次记录使用独立空白单元并满足相应因子化假设时，$|R_{ij}|^N$ 才能直接作为衰减律；相干复用必须通过联合实现的 $D$ 和端口核重新计算。因而 Gram 谱的谱隙、隐藏块的范数衰减与任务端口的可见性是三个相关但不等同的量。
+
+本节也不声称任何开放量子系统都具有给定的 $(A,B,C,D)$ 分块，或把一般非马尔可夫过程自动压成有限阶经典递推。量子应用必须先给出联合通道、记录初始化和任务 POVM，再证明这些线性界适用于所选算子空间。若环境有初始相关、控制依赖历史或任务读出本身变化，应把相应记录并入状态；否则有限视界结论没有适用依据。
+
+因此，“稳定经典现实”在这个模型中的可计算版本是：对给定实验族、端口和误差容限，存在有限 $h_{\varepsilon,T}$，使更早历史通过回流核对后续记录的影响低于 $\varepsilon$。它是任务依赖的有效阶数，而不是脱离观测协议的宇宙常数。
+
+本节为 `repo-derived/open` 理论追加；没有新增 Lean 声明、形式覆盖或冻结状态。
+
+## 追加锚（新终端）
+
+## 57. 无限未来统计、预测商与最小动力学修复
+
+第 54 节把对象定义在有限实验族上，第 55–56 节把记录复用和隐藏回流写成有限记忆模型。若允许继续进行同一类后续操作，还需要回答一个更强的问题：**当前记录是否足以决定所有有限次未来读数？** 这一节用 Heisenberg 迭代生成的可观测空间回答它。
+
+本节使用仓库中已冻结的 `AllFutureStatisticsSufficiency`、`FutureStatisticsEquivalence`、`MinimalPredictiveSummary`、`OperationalReadoutQuotientRepresentation` 与 `PredictionClosureDynamicalRepair` 结果。这里的“所有未来”指给定有限初始 effect 家族、给定离散 Heisenberg 演化下的所有有限迭代；它不表示任意连续控制或任意物理实验都已包含。
+
+### 定义 57.1（未来可见空间与预测投影）
+
+令 $\mathcal V_0$ 是当前选定的有限 effect 家族在 traceless-Hermitian 载体中的实线性 span，令 $H$ 是 Heisenberg 迭代的实线性作用。定义
+
+$$
+\mathcal V_{\infty}
+=
+\operatorname{span}_{\mathbb R}
+\{H^n E_i:n\in\mathbb N,\ i\in I\}.
+$$
+
+记 $P_{\infty}$ 为到 $\mathcal V_{\infty}$ 的正交投影。它只保留会在某个有限未来时刻进入所选 effect 读数的方向。
+
+### 定理 57.2（全部未来统计的充要预测表示）
+
+对两个 traceless-Hermitian 状态坐标 $\rho,\sigma$，有
+
+$$
+P_{\infty}\rho=P_{\infty}\sigma
+\iff
+\forall n\in\mathbb N,\ \forall i\in I,
+\quad
+\langle\rho,H^nE_i\rangle
+=
+\langle\sigma,H^nE_i\rangle.
+$$
+
+证明思路是把投影差为零转化为 $\rho-\sigma\in\mathcal V_{\infty}^{\perp}$，再用 span induction 将生成元上的内积相等推广到整个空间；反向则把每个 $H^nE_i$ 看作生成元。形式化定理为 `all_future_statistics_sufficiency`。
+
+这一定义比单次读数严格：两个状态可以有相同当前概率，却在某个未来 Heisenberg 迭代的 effect 上分开。相反，若投影相同，则在这套实验协议允许的任意有限延迟下都不能分开。
+
+### 定理 57.3（Schrödinger 读数与无限 Heisenberg span）
+
+设 $\Phi$ 是有限维量子通道，$H$ 是其 Heisenberg 对偶，$\mathcal A_0$ 是当前 operator system。令
+
+$$
+\mathcal V_{\infty}
+=\operatorname{span}_{\mathbb R}
+\{H^k A:A\in\mathcal A_0,\ k\in\mathbb N\}.
+$$
+
+则两个密度态的所有未来 operator-system readout 相等，当且仅当
+
+$$
+\rho-\sigma\in\mathcal V_{\infty}^{\perp_{\operatorname{tr}}},
+$$
+
+即
+
+$$
+\left[\forall k,\quad
+R_{\mathcal A_0}(\Phi^k\rho)
+=
+R_{\mathcal A_0}(\Phi^k\sigma)\right]
+\iff
+\left[\forall A\in\mathcal V_{\infty},\quad
+\operatorname{Tr}\bigl((\rho-\sigma)A\bigr)=0\right].
+$$
+
+形式化定理为 `future_statistics_iff_annihilates_infinite_system`。它把“历史被丢掉”精确改写为：历史差异是否落入全部未来读数的正交核。这个核依赖初始 effect 家族和 channel 对偶，不能被称为绝对不可观测部分。
+
+### 定理 57.4（预测充分 summary 的唯一因子化和维数下界）
+
+令 $S$ 是当前状态的线性 summary，并假设
+
+$$
+S(x)=S(y)
+\Longrightarrow
+\langle x,H^nE_i\rangle
+=
+\langle y,H^nE_i\rangle
+$$
+
+对所有 $n,i$ 成立。则存在唯一线性映射 $L$，使
+
+$$
+P_{\infty}=L\circ S_{\rm range},
+$$
+
+并且
+
+$$
+\operatorname{finrank}(\mathcal V_{\infty})
+\le
+\operatorname{finrank}(\operatorname{range}S).
+$$
+
+形式化定理为 `minimal_predictive_summary`。因此“保留多少历史”在该线性模型中有一条必要条件：summary 的可达维数不能小于未来预测空间的维数。summary 可以包含额外不可见坐标，但这些坐标对当前声明的未来任务不是必要的。
+
+### 定理 57.5（操作读数商的规范代表）
+
+定义
+
+$$
+\rho\sim_{\mathcal A_0}\sigma
+\iff
+R_{\mathcal A_0}(\rho)=R_{\mathcal A_0}(\sigma).
+$$
+
+则商空间 $\mathrm{States}/\!\sim_{\mathcal A_0}$ 规范等价于实际 readout 的 range。该等价把每个状态类送到它的 readout，并保持二元密度混合：
+
+$$
+R(t\rho+(1-t)\sigma)
+=tR(\rho)+(1-t)R(\sigma),
+\qquad 0\le t\le1.
+$$
+
+这是 `operational_readout_quotient_representation` 的内容。故当前尺度上的“对象”可以取为操作商中的一个类；它不是脱离指定 readout 的本体标签。
+
+### 定理 57.6（最小动力学修复）
+
+仅有当前 visible space $\mathcal V$ 时，$\mathcal V^{\perp}$ 未必对后续演化保持不变；于是两个当前不可区分状态的差异可能在未来重新出现。令
+
+$$
+\overline{\mathcal V}
+=\operatorname{span}\{(H^*)^n v:v\in\mathcal V,\ n\in\mathbb N\},
+\qquad
+\mathcal R=\overline{\mathcal V}^{\perp}.
+$$
+
+则 $\overline{\mathcal V}$ 是包含 $\mathcal V$ 且对 observable evolution 不变的最小扩张，$\mathcal R$ 对 adjoint evolution 不变，并且存在商上的线性演化 $\overline H$ 满足
+
+$$
+\overline H\circ\pi
+=
+\pi\circ H^*.
+$$
+
+形式化定理为 `prediction_closure_minimal_dynamical_repair`。这给第 50 节的经典闭合判据一个线性算子版本：若当前记录没有形成演化同余，就把可见空间闭包到最小不变空间，再在残差商上定义演化。
+
+### Zeckendorf 前缀作为一个有误差界的预测摘要
+
+Zeckendorf 卷定理 459.2 给出一个可直接接入本节的有限精度例子。设 $q_L(n)$ 读取自然数 $n$ 的低 $L$ 位合法 Zeckendorf 字串，设 $\alpha$ 为该卷相位定义中的黄金共轭数。若
+
+$$
+q_L(n)=q_L(m),
+$$
+
+则
+
+$$
+\left\|\alpha(n-m)\right\|\le\alpha^L,
+$$
+
+其中左侧是到最近整数的圆周距离。于是可以定义一个明确的相位记录模型
+
+$$
+|\psi_n\rangle
+=\frac{|0\rangle+e^{2\pi i\alpha n}|1\rangle}{\sqrt2}.
+$$
+
+两条同前缀历史对应的纯态迹距离满足
+
+$$
+D\bigl(|\psi_n\rangle\langle\psi_n|,
+|\psi_m\rangle\langle\psi_m|\bigr)
+=\left|\sin\bigl(\pi\alpha(n-m)\bigr)\right|
+\le\min\{1,\pi\alpha^L\}.
+$$
+
+因此，对这个特定的相位读出和任意后续 POVM，低 $L$ 位可以作为误差为 $\pi\alpha^L$ 的近似预测摘要；要让单次读出误差不超过 $\varepsilon$，一个充分条件是
+
+$$
+L\ge
+\left\lceil\frac{\log(\pi/\varepsilon)}{-\log\alpha}\right\rceil.
+$$
+
+这只是一个指定记录模型中的任务界。Zeckendorf 卷定理 469.5 同时指出，同前缀相位的 Wasserstein 或 Lipschitz 误差界不自动给出总变差收敛；某些端点读出仍可把两个同前缀历史完全分开。故“前缀足够”必须连同读出类别和误差度量一起声明，不能从相位逼近直接推出完整历史已经被压缩。
+
+### 与第 54–56 节的边界
+
+第 54 节的有限实验族只要求在已声明的协议上响应相同；本节的 $\mathcal V_{\infty}$ 把协议固定后允许任意有限迭代，因此条件更强。第 56 节的 $h_{\varepsilon,T}$ 是给定时间窗与误差的近似记忆视界；本节给出的是精确的线性预测商，未引入范数误差或有限时间截断。实际应用中可以先取后续章节的有限稳定深度，再用第 56 节的尾核界控制截断误差。
+
+这些定理不声称任意开放量子系统都有给定的有限维 Heisenberg 对偶，也不声称所有连续控制已被枚举；它们只在文件中明确的有限维、线性、指定 effect/channel 假设下成立。本节新增理论叙述应标记为 `repo-derived/open`；不新增 Lean 声明，也不把解释层的“客体”表述升级为普适物理定律。
+
+## 追加锚（新终端）
+## 58. Zeckendorf 黄金读数的误差预算与预测响应接口
+
+第 54--56 节已经把对象、响应和记忆视界分开：第 54 节按指定实验族取预测等价类，第 55 节区分独立新记录与相干复用，第 56 节用输入端口、隐藏演化和输出端口定义记忆尾项。本节补上 Zeckendorf 刻度与这三个量之间的一个有限、可检验接口。
+
+关键限制先写明。Zeckendorf 规范化给出离散整数的唯一表示；黄金读数给出一个实数嵌入。它的误差界只适用于已经规范的有限 Zeckendorf 行。对含有重复槽位的原始行，不能把同一个界直接套到未规范的字面系数上。规范化也不自动保留历史：不同原始表可能有同一个规范整数，而第 54 节的后续实验仍能将它们分开。
+
+### 定义 58.1（规范黄金读数与刻度残差）
+
+令
+
+$$
+\phi=\frac{1+\sqrt5}{2},\qquad
+G_j=F_{j+2},
+$$
+
+并令 $s(n)$ 是低位到高位的规范 Zeckendorf 行。置
+
+$$
+\Lambda_Z(s(n))
+=
+\sum_{j\ge0}\phi^{j+2}s(n)_j,
+\qquad
+\gamma_Z(n)
+=
+\frac{\Lambda_Z(s(n))}{\sqrt5},
+$$
+
+其中和因 $s(n)$ 有限支撑而有限；这正是 Z 卷定义 19 的黄金值 $\beta$ 在单行规范数字上的限制。定义刻度残差
+
+$$
+\eta_Z(n)=\gamma_Z(n)-n.
+$$
+
+这里的 $\gamma_Z$ 是一个读数坐标，不是新的整数运算，也不是物理能量或 Hamiltonian 的定义。
+
+### 命题 58.2（黄金读数的统一误差界）
+
+对所有 $n\in\mathbb N$，
+
+$$
+\left|\eta_Z(n)\right|<\frac1{\sqrt5}.
+$$
+
+因而在任意有限窗口 $0\le n<G_L$ 上，误差上界相同；窗口长度只限制可出现的规范构型数，不会把这个读数误差自动改成零。
+
+证明。Binet 恒等式在本索引约定下为
+
+$$
+\phi^{j+2}
+=
+\sqrt5\,G_j+(-\phi^{-1})^{j+2}.
+$$
+
+将 $s(n)$ 代入并除以 $\sqrt5$，得到
+
+$$
+\eta_Z(n)
+=
+\frac1{\sqrt5}
+\sum_{j\ge0}s(n)_j(-\phi^{-1})^{j+2}.
+$$
+
+规范行只有有限个非零位，所以
+
+$$
+\left|\sum_{j\ge0}s(n)_j(-\phi^{-1})^{j+2}\right|
+<
+\sum_{j\ge0}\phi^{-(j+2)}
+=1.
+$$
+
+最后一个严格不等式来自有限支撑；故得到所列界。这个证明只使用规范行和有限支撑，未把原始重复槽位当作规范数字。证毕。
+
+### 定义 58.3（任务响应的刻度 Lipschitz 条件）
+
+固定有限历史集合 $R$、规范化后的整数读数
+
+$$
+N:R\longrightarrow\mathbb N
+$$
+
+以及有限实验族 $\mathfrak T=\{\tau_i:1\le i\le m\}$。对每个实验，设输出分布为 $p_i(\,\cdot\mid r)$。若存在定义在包含所有 $N(r)$ 与 $\gamma_Z(N(r))$ 的实区间上的映射
+
+$$
+\kappa_i:\mathbb R\longrightarrow\Delta(Y_i)
+$$
+
+满足
+
+$$
+p_i(\,\cdot\mid r)=\kappa_i(N(r))
+$$
+
+以及某个 $L_i<\infty$ 使
+
+$$
+\operatorname{TV}\!\left(\kappa_i(x),\kappa_i(y)\right)
+\le L_i|x-y|,
+$$
+
+则称该实验在这组历史上满足 $L_i$-刻度 Lipschitz 条件。它要求响应确实经由 $N$ 因子化；若不同原始历史具有同一个 $N$ 却有不同后续响应，该条件不成立。
+
+用黄金坐标构造预测器
+
+$$
+\widehat p_i(\,\cdot\mid r)
+=
+\kappa_i\!\left(\gamma_Z(N(r))\right).
+$$
+
+### 定理 58.4（刻度误差到有限预测误差的传输）
+
+在定义 58.3 的条件下，对所有 $r\in R$ 和 $i$，
+
+$$
+\operatorname{TV}\!\left(
+p_i(\,\cdot\mid r),
+\widehat p_i(\,\cdot\mid r)
+\right)
+<
+\frac{L_i}{\sqrt5}.
+$$
+
+令 $L_{\mathfrak T}=\max_iL_i$，则全部实验输出的最坏总变差误差满足
+
+$$
+\max_{r\in R,\,i\le m}
+\operatorname{TV}\left(
+p_i(\,\cdot\mid r),\widehat p_i(\,\cdot\mid r)
+\right)
+<
+\frac{L_{\mathfrak T}}{\sqrt5}.
+$$
+
+证明。对每个 $i,r$ 使用 Lipschitz 条件和命题 58.2：
+
+$$
+\operatorname{TV}\!\left(
+\kappa_i(N(r)),
+\kappa_i(\gamma_Z(N(r)))
+\right)
+\le
+L_i\left|N(r)-\gamma_Z(N(r))\right|
+<
+\frac{L_i}{\sqrt5}.
+$$
+
+对 $i$ 取最大值即得。证毕。
+
+这个定理只控制“同一个规范整数的实数刻度近似”。它不控制规范化纤维内部的历史差异，也不证明 $\gamma_Z$ 是一个足够状态。
+
+### 定义 58.5（规范化纤维缺陷）
+
+不假设响应经由 $N$ 因子化。对每个实验定义规范化纤维缺陷
+
+$$
+\varepsilon_{\mathrm{fib},i}
+=
+\sup_{\substack{r,r'\in R\\N(r)=N(r')}}
+\operatorname{TV}\!\left(
+p_i(\,\cdot\mid r),
+p_i(\,\cdot\mid r')
+\right),
+$$
+
+并令
+
+$$
+\varepsilon_{\mathrm{fib}}
+=
+\max_i\varepsilon_{\mathrm{fib},i}.
+$$
+
+它是第 54 节预测伪距离在规范化纤维上的直径；当纤维中没有两个不同元素时，其上确界取 $0$。$\varepsilon_{\mathrm{fib}}=0$ 才表示在所列实验族上，规范化整数已经足以代表历史。
+
+对每个 $i$，从每个非空纤维选一个代表 $r_u$，置
+
+$$
+\bar\kappa_i(u)=p_i(\,\cdot\mid r_u).
+$$
+
+若 $\bar\kappa_i$ 在同一实区间上有 $L_i$-刻度 Lipschitz 延拓，定义代表黄金预测器
+
+$$
+\widehat p_i(\,\cdot\mid r)
+=
+\bar\kappa_i\!\left(\gamma_Z(N(r))\right).
+$$
+
+### 定理 58.6（历史纤维、黄金刻度与任务误差的三项分解）
+
+在上述有限条件下，对所有 $r$ 和 $i$，
+
+$$
+\operatorname{TV}\!\left(
+p_i(\,\cdot\mid r),
+\widehat p_i(\,\cdot\mid r)
+\right)
+<
+\varepsilon_{\mathrm{fib},i}
++
+\frac{L_i}{\sqrt5}.
+$$
+
+因此全部实验输出的最坏总变差误差满足
+
+$$
+\max_{r\in R,\,i\le m}
+\operatorname{TV}\left(
+p_i(\,\cdot\mid r),\widehat p_i(\,\cdot\mid r)
+\right)
+<
+\varepsilon_{\mathrm{fib}}
++
+\frac{L_{\mathfrak T}}{\sqrt5}.
+$$
+
+证明。令 $u=N(r)$，取该纤维代表 $r_u$。三角不等式给出
+
+$$
+\operatorname{TV}\!\left(
+p_i(\,\cdot\mid r),
+\bar\kappa_i(u)
+\right)
+\le
+\varepsilon_{\mathrm{fib},i}.
+$$
+
+另一方面，命题 58.2 和 $\bar\kappa_i$ 的 Lipschitz 条件给出
+
+$$
+\operatorname{TV}\!\left(
+\bar\kappa_i(u),
+\bar\kappa_i(\gamma_Z(u))
+\right)
+<
+\frac{L_i}{\sqrt5}.
+$$
+
+两式相加即得；再对 $i$ 和 $r$ 取最大值。证毕。
+
+该分解把两个常被混淆的损失分开：
+
+$$
+\underbrace{\varepsilon_{\mathrm{fib}}}_{\text{规范化抹去的历史仍可被实验看见}}
+\quad+\quad
+\underbrace{\frac{L_{\mathfrak T}}{\sqrt5}}_{\text{黄金实数刻度的近似误差}}.
+$$
+
+第一项即使整数读数完全精确也可能存在；第二项即使历史恰好经由整数闭合也仍可能存在。更换实验族会改变第一项和各 $L_i$，所以没有脱离任务的单一“黄金现实精度”。
+
+### 命题 58.7（与记忆视界的合并预算）
+
+设第 56 节的 $(T,h)$ 截断在同一任务输出度量下有尾误差 $\tau_{h,T}$；也就是说，把 $n-h$ 步以前的历史和初始隐藏差异删除后，对所有 $n<T$ 的输出改变至多为 $\tau_{h,T}$。若定理 58.6 的黄金代表预测器再用于该截断模型，则总误差满足
+
+$$
+\varepsilon_{\mathrm{total}}(h,T)
+<
+\varepsilon_{\mathrm{fib},T}
++
+\frac{L_T}{\sqrt5}
++
+\tau_{h,T},
+$$
+
+其中 $\varepsilon_{\mathrm{fib},T}$ 和 $L_T$ 分别取长度不超过 $T$ 的全部实验与读出中的最大值。
+
+若第 56 节的线性输出先经过一个以 $c_{\mathrm{out}}$ 为收缩常数的概率读出，则应取
+
+$$
+\tau_{h,T}
+=
+c_{\mathrm{out}}
+\max_{n<T}
+\left(
+\|b_n\|+
+X\sum_{r=h+1}^{n}\|K_r\|
+\right).
+$$
+
+证明。先以真实历史与其规范化纤维代表比较，误差至多 $\varepsilon_{\mathrm{fib},T}$；再以代表的精确整数坐标与黄金坐标比较，误差至多 $L_T/\sqrt5$；最后以完整隐藏演化与 $h$-截断演化比较，误差至多 $\tau_{h,T}$。三次使用总变差的三角不等式即可。若线性尾项先在另一范数中给出，应用读出收缩性得到所列 $c_{\mathrm{out}}$ 因子。证毕。
+
+这条合并预算的解释是：
+
+$$
+\text{总任务误差}
+\le
+\text{规范化纤维缺陷}
++
+\text{黄金刻度误差}
++
+\text{记忆尾项}.
+$$
+
+若给定目标 $\varepsilon$，只有在
+
+$$
+\varepsilon_{\mathrm{fib},T}
++
+\frac{L_T}{\sqrt5}
++
+\tau_{h,T}
+\le\varepsilon
+$$
+
+时，才可把当前 Zeckendorf 读数、$h$-步历史截断和指定实验族一起当作一个满足该预算的有效对象。此判据仍是充分的预算检验，不是必要条件，也不是无条件的物理定律。
+
+### 推论 58.8（响应分离的安全裕量）
+
+设有限标签集 $U$ 的代表响应满足
+
+$$
+\Delta_T
+=
+\min_{\substack{u\ne v\\u,v\in U}}
+\max_{i\le m}
+\operatorname{TV}\!\left(
+\bar\kappa_i(u),\bar\kappa_i(v)
+\right)>0.
+$$
+
+若
+
+$$
+2\left(
+\frac{L_T}{\sqrt5}
++
+\tau_{h,T}
+\right)
++
+2\varepsilon_{\mathrm{fib},T}
+<
+\Delta_T,
+$$
+
+则任意两个不同代表在实际完整任务响应中的分离仍为正；黄金刻度与记忆截断不会在该预算内把它们保证可分的响应合并成同一个预测分布。
+
+证明。对每个代表的近似误差用定理 58.6 和命题 58.7 控制，再对两个代表应用总变差三角不等式的反向形式：
+
+$$
+\operatorname{TV}(p_u,p_v)
+\ge
+\operatorname{TV}(\bar\kappa(u),\bar\kappa(v))
+-
+\operatorname{TV}(p_u,\bar p_u)
+-
+\operatorname{TV}(p_v,\bar p_v).
+$$
+
+由假设右端为正。证毕。
+
+这里“分离仍为正”只表示在所选实验族和预算下不会被这个近似模型保证为同一分布；它不保证一次有限样本实验必然正确判别，也不产生不相容量子测量的全局答案表。
+
+### 命题 58.9（规范化电荷的相位商）
+
+沿用 Z 卷定理 21。若一条有限实际进位路径把原始行 $r$ 送到 $r'$，记其总电荷为 $z$，则
+
+$$
+\beta(r)-\beta(r')=z\in\mathbb Z.
+$$
+
+因此相位读出
+
+$$
+\chi(r)=\exp\!\left(2\pi i\,\beta(r)\right)
+$$
+
+满足
+
+$$
+\chi(r)=\chi(r').
+$$
+
+更一般地，若记录使用相位尺度 $\vartheta$，置 $\chi_{\vartheta}(r)=e^{i\vartheta\beta(r)}$，则
+
+$$
+\frac{\chi_{\vartheta}(r)}{\chi_{\vartheta}(r')}
+=e^{i\vartheta z}.
+$$
+
+当 $\vartheta/(2\pi)\in\mathbb Z$ 时，所有规范化电荷都被该相位商抹去；当 $\vartheta/(2\pi)=a/b$ 为既约有理数时，只能看到 $z$ 模 $b$ 的信息；当 $\vartheta/(2\pi)$ 无理时，$e^{i\vartheta z}=1$ 当且仅当 $z=0$，所以不同整数电荷不会因这个相位因子相等。
+
+证明。第一式是 Z 卷定理 21 的黄金值差公式。将其代入指数函数即得三种情形；有理情形使用 $e^{i2\pi az/b}=1$ 当且仅当 $b\mid z$，无理情形则由 $\vartheta z\in2\pi\mathbb Z$ 推出 $z=0$。证毕。
+
+这说明“规范化前后相位相同”不是无条件事实，而是读出尺度的选择。相位只记录 $\beta$ 的某个商；若选取把整数电荷识别为零的尺度，规范化历史在该读数中严格不可见，但连续黄金值或另一相位尺度仍可能看见它。这个相位商应作为第 55 节 Gram 相位的一个明确输入参数，而不能从 Zeckendorf 唯一性自动推出。
+
+### 与现有章节的关系和边界
+
+第 54 节的 $d_H$ 衡量指定实验族上的预测差异；本节给出一个由 Zeckendorf 规范行到该伪距离的充分上界。第 55 节的 Gram 特征值决定记录相干的衰减与相位回流；本节的 $\eta_Z$ 是数值坐标读数误差，两者不属于同一谱，也不能用黄金误差替代 Gram 谱隙。第 56 节的 $K_r$ 和 $\tau_{h,T}$ 衡量隐藏历史回流；本节只把其尾项与规范化纤维缺陷、刻度误差用三角不等式合并，未重新假设隐藏动力学是无记忆的。
+
+若原始表尚未规范，必须先使用 $\nu$ 或明确给出其输入行的系数界；否则 $\Lambda_Z$ 的有限误差界不适用。若环境有初始关联、实验控制依赖完整历史、或代表响应不存在 Lipschitz 延拓，则定理 58.6--58.7 的相应项只能标为未验证，不能把 $1/\sqrt5$ 冒称为总误差。若 $\varepsilon_{\mathrm{fib},T}>0$，增加数值刻度精度也不能消除被规范化抹去的历史；应扩展记录或缩小实验族。
+
+因此，Zeckendorf 在这条主线中的作用可以精确表述为：
+
+$$
+\boxed{
+\text{规范行提供离散状态，}
+\quad
+\gamma_Z\text{ 提供有界误差的实数坐标，}
+\quad
+\varepsilon_{\mathrm{fib}}\text{ 测量规范化的历史损失，}
+\quad
+\tau_{h,T}\text{ 测量有限记忆截断的损失。}
+}
+$$
+
+稳定的经典对象只有在这三项共同落入任务误差预算时才获得操作性支持。它不要求保留全部历史，也不允许仅凭一个漂亮的黄金刻度宣称历史已经消失。
+
+本节为 repo-derived/open 理论追加；没有新增 Lean 声明、形式覆盖或冻结状态。
+
+## 追加锚（新终端）
+
+## 59. 局部读出不能凭空恢复关联方向
+
+第 54 节把有限实验族上的响应相同定义成一个预测商，第 57 节把所有有限 Heisenberg 迭代生成的统计放进无限 operator system，第 58 节再把观察深度和有限顺序词联系起来。本节补上一条不同的边界：
+
+> **如果读出端口只接触局部扇区，且 Heisenberg 动力学保持该局部扇区不变，那么增加局部读出次数不会凭空产生关联扇区的信息。**
+
+这不是“局部观察永远不能做 tomography”的普遍断言，而是一个带有明确扇区保持假设的条件定理。对应的现有 Lean 模块是 D5/S3/Quantum/PredictionDepth/LocalDynamicsNoTomography.lean，其冻结声明为 local_dynamics_no_tomography。本节所有解释仍标记为 repo-derived/open；没有新增 Lean 声明、形式覆盖或冻结状态。
+
+### 59.1 双系统的三种方向
+
+令两个有限维系统的局部维数分别为 $$m$$ 和 $$n$$。在双系统 traceless-Hermitian 算子空间中，仓库模块 BipartiteSectorDecomposition.lean 定义了：
+
+$$
+\mathcal L_A
+=
+\operatorname{traceZeroHermitian}(m)
+\otimes
+\operatorname{scalarHermitian}(n),
+$$
+
+$$
+\mathcal L_B
+=
+\operatorname{scalarHermitian}(m)
+\otimes
+\operatorname{traceZeroHermitian}(n),
+$$
+
+以及真正同时依赖两边的关联扇区：
+
+$$
+\mathcal C
+=
+\operatorname{traceZeroHermitian}(m)
+\otimes
+\operatorname{traceZeroHermitian}(n).
+$$
+
+在 Hilbert--Schmidt 实内积下，模块中的 bipartite_sector_decomposition 给出这些扇区的正交分解。相应维数为：
+
+$$
+\dim\mathcal L_A=m^2-1,
+\qquad
+\dim\mathcal L_B=n^2-1,
+$$
+
+$$
+\dim\mathcal C=(m^2-1)(n^2-1).
+$$
+
+因此无关联局部方向的维数与真正关联方向的维数是两笔不同的账。把局部边缘读数做得更精细，只是在前两笔账内增加可见方向；它不会自动把第三笔账转移到前两笔账。
+
+记局部可见扇区为：
+
+$$
+\mathcal V_{\mathrm{loc}}
+=
+\mathcal L_A+\mathcal L_B.
+$$
+
+由正交分解：
+
+$$
+\mathcal V_{\mathrm{loc}}\perp\mathcal C,
+\qquad
+\mathcal V_{\mathrm{loc}}\cap\mathcal C=\{0\}.
+$$
+
+这里的“方向”是算子空间中的方向，不是物理空间中的额外坐标轴。
+
+### 59.2 扇区保持给出严格的无生成结论
+
+设 $$H$$ 是作用在上述算子空间上的 Heisenberg 线性演化，并假设：
+
+$$
+H(\mathcal V_{\mathrm{loc}})
+\subseteq
+\mathcal V_{\mathrm{loc}}.
+$$
+
+那么对任意自然数 $$t$$：
+
+$$
+H^t(\mathcal V_{\mathrm{loc}})
+\subseteq
+\mathcal V_{\mathrm{loc}}.
+$$
+
+再因为局部扇区与关联扇区正交，有：
+
+$$
+H^t(\mathcal V_{\mathrm{loc}})\cap\mathcal C
+=
+\{0\}.
+$$
+
+这正是 local_dynamics_no_tomography 的两部分结论。证明只使用两步：先对 $$t$$ 做迭代归纳，得到局部扇区保持；再用正交性说明其与 $$\mathcal C$$ 的交只能是零。它没有使用“观察者在系统外部”或“意识选择结果”的假设。
+
+若状态差方向 $$D$$ 属于关联扇区，局部初始 effect $$x$$ 属于 $$\mathcal V_{\mathrm{loc}}$$，则所有局部未来读出都满足：
+
+$$
+\left\langle D,H^t x\right\rangle=0
+\qquad
+\text{对所有 }t\in\mathbb N.
+$$
+
+所以同一关联方向即使在整体状态中真实存在，也不会因为重复施加同一类局部 Heisenberg 读出而进入该读数。这里的“不能恢复”是相对于指定的局部 effect 族和指定的动力学而言的。
+
+### 59.3 一个两比特反例：局部边缘相同，关联读数相反
+
+取两个 qubit，令 $$Z$$ 为 Pauli 矩阵。对 $$0\le\varepsilon\le1$$ 定义：
+
+$$
+\rho_{\pm}
+=
+\frac14
+\left(
+I\otimes I
+\pm
+\varepsilon\,Z\otimes Z
+\right).
+$$
+
+这两个矩阵都是合法密度态。对任意 traceless 的局部 effect $$A\otimes I$$ 或 $$I\otimes B$$，有：
+
+$$
+\operatorname{Tr}\!\left(\rho_+(A\otimes I)\right)
+=
+\operatorname{Tr}\!\left(\rho_-(A\otimes I)\right),
+$$
+
+$$
+\operatorname{Tr}\!\left(\rho_+(I\otimes B)\right)
+=
+\operatorname{Tr}\!\left(\rho_-(I\otimes B)\right).
+$$
+
+但关联 effect $$Z\otimes Z$$ 给出：
+
+$$
+\operatorname{Tr}\!\left(\rho_+(Z\otimes Z)\right)=\varepsilon,
+\qquad
+\operatorname{Tr}\!\left(\rho_-(Z\otimes Z)\right)=-\varepsilon.
+$$
+
+因此，局部边缘读数不能区分 $$\rho_+$$ 与 $$\rho_-$$，而联合读数可以区分。这个例子是有限矩阵计算，不是对仓库中新建定理的声明；它具体展示了 $$\mathcal C$$ 中的方向如何落在局部签名的核内。
+
+仓库的 IncompleteObserverPhysicalCounterexample.lean 给出更一般的物理版本。冻结声明 incomplete_observer_physical_counterexample 表明：只要 identity 加上已选 centered effects 的可见空间存在非零正交残差，就能构造两个不同的 density states，它们对全部已选 effect 的读数相同。因而“当前签名相同”不能推出“整体状态相同”。
+
+### 59.4 目标在可见扇区内，才有签名充分性
+
+对给定 centered effects，令可见空间为：
+
+$$
+\mathcal V
+=
+\operatorname{span}
+\left(
+\{I\}\cup\{E_i\}
+\right).
+$$
+
+仓库的 TargetPredictionSufficiency.lean 中，冻结声明 target_prediction_sufficiency 将两件事放在同一命题中：
+
+$$
+A\in\mathcal V
+\Longrightarrow
+\text{所有 }E_i\text{ 的共同读数决定 }A\text{ 的期望值};
+$$
+
+而：
+
+$$
+A\notin\mathcal V
+\Longrightarrow
+\text{存在读数完全相同、但 }A\text{ 期望不同的两个物理态}.
+$$
+
+因此，局部读出是否足够，不能只问“测了多少次”，还要问目标 effect 是否落在局部可见空间及其动力学闭包中。若目标关联 effect 位于 $$\mathcal C$$，而 $$H$$ 满足局部扇区保持条件，那么所有迭代后的局部读出仍在 $$\mathcal V_{\mathrm{loc}}$$ 内，目标仍然位于该读出族的不可见残差。
+
+这也说明第 57 节的最小预测摘要必须带有任务索引。对局部任务，$$\rho_+$$ 与 $$\rho_-$$ 可以属于同一预测类；加入联合目标后，它们被拆分为不同类。对象的等价性随允许的 effect 和动力学改变，而不是由一个脱离任务的标签决定。
+
+### 59.5 何时可以恢复关联方向？
+
+要使关联方向进入可见响应，至少需要改变下列一项：
+
+1. 增加一个具有关联分量的 effect，例如 $$Z\otimes Z$$；
+2. 让 Heisenberg 演化违反局部扇区保持条件，使某个局部 effect 的迭代获得 $$\mathcal C$$ 分量；
+3. 引入与两边共同耦合的 ancilla、联合记录或其他可执行的非局部协议。
+
+第二种情形可写成：
+
+$$
+H(\mathcal V_{\mathrm{loc}})
+\not\subseteq
+\mathcal V_{\mathrm{loc}},
+$$
+
+但这只说明“有可能进入新的方向”，不自动保证已经完成 tomography。还必须计算由允许迭代生成的 visible span，并检查目标 effect 是否真的落入其中。第 57 节引用的 PredictionClosureDynamicalRepair.lean 提供了相应的最小动力学闭包框架：把初始 visible space 扩张到对演化不变的 observer closure，再在其正交残差上定义商。该框架使用有限维线性空间与伴随不变性；它不自动推广到任意开放量子系统。
+
+### 59.6 对“保留多少历史”的含义
+
+局部记录保留的是边缘方向；关联扇区中的差异属于当前任务的历史残差。若动力学把局部空间封闭，那么这部分残差不会通过未来局部读出回流：
+
+$$
+\mathcal R_{\mathrm{corr}}
+\subseteq
+\mathcal V_{\mathrm{loc}}^{\perp},
+\qquad
+\left\langle
+\mathcal R_{\mathrm{corr}},
+H^t\mathcal V_{\mathrm{loc}}
+\right\rangle=0.
+$$
+
+在这种条件下，继续增加同类局部记录不会减少关联残差；需要的是扩大端口或改变动力学。反之，若存在从关联扇区到局部扇区的耦合，则历史是否必须保留取决于该耦合在指定时间窗内产生的响应大小，不能仅由隐藏空间的维数决定。
+
+这把“稳定经典现实”的一个边界写成了可检验条件：
+
+$$
+\boxed{
+\text{局部读出足够}
+\iff
+\text{目标与允许未来统计都落在局部可见动力学闭包内};
+}
+$$
+
+$$
+\boxed{
+\text{局部读出不足}
+\iff
+\text{存在非零关联残差在全部允许局部统计中保持不可见}.
+}
+$$
+
+第二个判据是相对于指定读出族的判据，不是关于所有可能实验的本体论结论。加入联合测量、改变交互作用或扩大记录端口后，等价类和所需历史预算都可能改变。
+
+本节是 repo-derived/open 的理论追加；引用的 Lean 模块已有冻结状态，但本节没有新增 Lean 声明、形式覆盖或冻结状态。
+
+## 追加锚（新终端）
+
+## 60. 记录作用量、相干衰减与不可逆恢复下界
+
+> **状态：repo-derived/open。** 本节整理并连接已有 Lean 结果，没有新增声明、证明覆盖或冻结状态。引用的冻结模块包括 D5/S3/Quantum/Decoherence/RecordActionCoherenceSurvival.lean、D5/S3/Quantum/PureState/RecordCoherenceComplementarity.lean、D5/S3/Quantum/Decoherence/FiniteShiftedRecordChannel.lean 与 D5/S3/Quantum/Decoherence/FiniteRecordRecoveryError.lean。这里的“作用量”是有限记录模型中的数学量，不是一个已从项目推出的普适物理作用量。
+
+第 55 节已经给出单步记录的 Gram 系数。本节把它累积为记录作用量，再连接到有限移位记录模型中的恢复误差下界：
+
+$$
+\text{条件记录重叠}
+\longrightarrow
+\text{累计相干}
+\longrightarrow
+\text{记录作用量}
+\longrightarrow
+\text{恢复误差下界}.
+$$
+
+“不可逆”首先是操作意义上的：指定记录被丢弃以后，任何只作用于剩余系统的恢复通道，都不能把最坏情形误差压到下界以下。这不等于说包括环境在内的联合幺正演化不可逆。
+
+### 60.1 记录重叠的乘积与作用量
+
+设有限标签集为 $$
+I
+$$，第 $$
+r
+$$ 次记录给标签 $$
+i
+$$ 留下归一化环境向量 $$
+e_{r,i}
+$$。定义单步 Gram 系数
+
+$$
+g_r(i,j)=\langle e_{r,j},e_{r,i}\rangle .
+$$
+
+归一化与 Cauchy--Schwarz 不等式给出
+
+$$
+|g_r(i,j)|\le 1.
+$$
+
+若某个相干矩阵元在每一步都乘上这个系数，则 $$
+N
+$$ 次记录后的累计系数为
+
+$$
+C_N(i,j)=\prod_{r<N}g_r(i,j),
+$$
+
+从而
+
+$$
+|C_N(i,j)|=\prod_{r<N}|g_r(i,j)|.
+$$
+
+在非负扩展实数中定义记录作用量
+
+$$
+\mathsf A_N(i,j)=-\log |C_N(i,j)|.
+$$
+
+当某个因子为零时，右侧按扩展值解释为无穷；这正是一次完全正交记录把该相干坐标压到零的情形。冻结定理 RecordActionCoherenceSurvival.record_action_controls_coherence_survival 给出：
+
+$$
+\mathsf A_{N+1}(i,j)\ge \mathsf A_N(i,j),
+$$
+
+以及精确的相干存活关系
+
+$$
+|\rho_N(i,j)|
+=
+\exp\!\bigl(-\mathsf A_N(i,j)\bigr)
+|\rho_0(i,j)|.
+$$
+
+若记录作用量的平均率存在，即
+
+$$
+\lim_{N\to\infty}\frac{\mathsf A_N(i,j)}{N}=\lambda,
+$$
+
+并且初始相干非零，则相对相干的负对数率也是 $$
+\lambda
+$$：
+
+$$
+\lim_{N\to\infty}
+\frac{-\log\!\left(|\rho_N(i,j)|/|\rho_0(i,j)|\right)}{N}
+=
+\lambda.
+$$
+
+若每一步满足统一严格收缩界
+
+$$
+|g_r(i,j)|\le q<1,
+$$
+
+则
+
+$$
+|C_N(i,j)|\le q^N,
+\qquad
+\mathsf A_N(i,j)\ge -N\log q.
+$$
+
+这给出一个可计算的记录预算。相反，若某些步满足 $$
+|g_r(i,j)|=1
+$$，则该方向可能只发生相位旋转而没有模长衰减，甚至周期性返回。因此，固定点呈经典形式不能单独推出所有初态都会趋向经典；还必须检查非对角 Gram 系数的模长。
+
+把单步系数写成
+
+$$
+g_r(i,j)=|g_r(i,j)|\exp\!\bigl(\mathrm i\varphi_r(i,j)\bigr),
+$$
+
+则
+
+$$
+C_N(i,j)
+=
+\exp\!\left(
+-\mathsf A_N(i,j)
++
+\mathrm i\sum_{r<N}\varphi_r(i,j)
+\right).
+$$
+
+作用量只记账模长衰减；累计相位是另一项动力学数据。不能把作用量、Zeckendorf 坐标误差或 Fibonacci 权重直接解释为物理能量或 Hamiltonian 频率。
+
+### 60.2 记录重叠同时限制可区分性与可见相干
+
+对两个归一化纯记录 $$
+e_L,e_R
+$$，令
+
+$$
+c=\langle e_L,e_R\rangle,
+\qquad
+\mathsf V=|c|,
+\qquad
+\mathsf D=\sqrt{1-|c|^2}.
+$$
+
+冻结定理 PureState.RecordCoherenceComplementarity.pure_record_distinguishability_coherence_complementarity 证明
+
+$$
+\mathsf D^2+\mathsf V^2=1.
+$$
+
+于是正交记录满足
+
+$$
+c=0
+\quad\Longrightarrow\quad
+\mathsf D=1,\quad \mathsf V=0,
+$$
+
+而同一量子态射线上的记录满足
+
+$$
+|c|=1
+\quad\Longrightarrow\quad
+\mathsf D=0,\quad \mathsf V=1.
+$$
+
+这项等式只适用于声明中的归一化纯记录，不能无条件推广到混合记录或任意开放系统。对有限记录链，可把每一步的可见度相乘：
+
+$$
+\mathsf V_N(i,j)=|C_N(i,j)|=\exp\!\bigl(-\mathsf A_N(i,j)\bigr).
+$$
+
+因此，标签差异本身不决定可区分性。两个 Zeckendorf 合法构型即使数值不同，也可能留下同一条记录射线；反过来，是否正交取决于实际记录向量，而不取决于标签名称。
+
+### 60.3 有限移位记录通道
+
+FiniteShiftedRecordChannel.lean 给出一个具体有限实现。令
+
+$$
+c:\mathbb Z\to\mathbb C
+$$
+
+在区间 $$
+0,\ldots,N
+$$ 外为零，并满足
+
+$$
+\sum_{n=0}^{N}|c(n)|^2=1.
+$$
+
+给每个系统标签 $$
+i
+$$ 一个整数位置 $$
+q_i
+$$。平移后的系数产生有限环境记录，其自相关函数为
+
+$$
+\gamma(\ell)
+=
+\sum_{n=0}^{N}c(n+\ell)\,\overline{c(n)}.
+$$
+
+相应通道在矩阵元上的作用为
+
+$$
+\Lambda(A)_{kl}
+=
+\gamma(q_k-q_l)A_{kl}.
+$$
+
+所以对角元不变，非对角元按标签位移的自相关系数缩放。该模块证明此构造来自有限维等距嵌入并实现量子通道；它没有额外证明空间局域性、指定 Hamiltonian 的守恒律、零操作成本或任意设备上的普适性。
+
+若
+
+$$
+|\gamma(q_i-q_j)|<1,
+$$
+
+该相干方向经过一次记录即收缩；若模长等于一，则它可能只获得相位。相同的 Zeckendorf 数值差在不同记录波形下也可以对应不同的自相关值，因此离散刻度不决定记录强度。
+
+### 60.4 恢复误差的不可绕过下界
+
+考虑任意候选恢复通道 $$
+R
+$$。冻结定理 FiniteRecordRecoveryError.finite_record_recovery_error_lower_bound 假设有限支持、系数归一化，以及选定的非零位移
+
+$$
+q_i-q_j\ne0.
+$$
+
+对所有密度态取最坏情形迹距离误差，得到
+
+$$
+\boxed{
+\sup_{\rho}
+D\!\left(R\circ\Lambda(\rho),\rho\right)
+\ge
+\frac{1-|\gamma(q_i-q_j)|}{2}.
+}
+$$
+
+定理源码把左侧表示为误差集合的上确界，并使用迹距离的收缩性证明该不等式。
+
+见证态是 $$
+i,j
+$$ 两个标签上的对称与反对称叠加：
+
+$$
+|+\rangle=\frac{|i\rangle+|j\rangle}{\sqrt2},
+\qquad
+|-\rangle=\frac{|i\rangle-|j\rangle}{\sqrt2}.
+$$
+
+记录前两态的距离为
+
+$$
+D(|+\rangle\langle+|,\ |-\rangle\langle-|)=1,
+$$
+
+记录后距离变为
+
+$$
+D\!\left(
+\Lambda(|+\rangle\langle+|),
+\Lambda(|-\rangle\langle-|)\right)
+=
+|\gamma(q_i-q_j)|.
+$$
+
+任何量子通道都不会增加迹距离；将收缩性与三角不等式用于恢复后的两态，就得到上述下界。记录已经降低的这部分区分度，不能由只访问记录后系统的统一恢复无条件补回。
+
+特别地，
+
+$$
+\gamma(q_i-q_j)=0
+\quad\Longrightarrow\quad
+\sup_{\rho}D(R\circ\Lambda(\rho),\rho)\ge\frac12.
+$$
+
+而
+
+$$
+|\gamma(q_i-q_j)|\approx1
+$$
+
+只表示这个下界接近零，并不保证存在零误差恢复。若恢复端还可以访问未丢弃的环境记录，问题已经变成联合系统上的恢复任务，不能继续套用只在系统端恢复的同一结论。
+
+### 60.5 作用量、恢复下界与 Zeckendorf 接口
+
+设有限合法 Zeckendorf 构型集合为
+
+$$
+\mathcal W_L
+=
+\left\{
+w\in\{0,1\}^{L}:w_rw_{r+1}=0
+\right\},
+$$
+
+并给每个构型一个整数标签 $$
+q(w)
+$$。为每个构型选择条件记录 $$
+e_{r,w}
+$$，便得到
+
+$$
+g_r(w,v)=\langle e_{r,v},e_{r,w}\rangle,
+\qquad
+C_N(w,v)=\prod_{r<N}g_r(w,v).
+$$
+
+这一步只把合法构型接入记录模型；它没有指定记录向量的制备，也没有把 Fibonacci 权重自动变成能量。若采用移位记录接口，还必须给出整数标签 $$
+q(w)
+$$、有限波形 $$
+c
+$$ 及其支持条件，才能使用 $$
+\gamma(q(w)-q(v))
+$$ 的恢复定理。
+
+在该接口上，可以分别记录两种损失：
+
+$$
+\mathsf A_N(w,v)=-\log|C_N(w,v)|,
+$$
+
+以及有限移位模型中的恢复下界
+
+$$
+\varepsilon_{\mathrm{rec}}^{\mathrm{lb}}(w,v)
+=
+\frac{1-|\gamma(q(w)-q(v))|}{2}.
+$$
+
+前者是多步相干存活的对数记账，后者是特定一次通道的恢复障碍。两者不是同一个量，不能相加，也不能互相替代。
+
+若每一步都有
+
+$$
+|g_r(w,v)|\le q<1,
+$$
+
+则
+
+$$
+\mathsf A_N(w,v)\ge-N\log q
+$$
+
+给出长期收缩的充分条件；若存在单位模重叠，则该方向可能持续回流。因此，判断一个记录是否足以支持稳定的经典预测，必须同时指定：
+
+$$
+\text{记录波形}
+\;+\;
+\text{可访问的环境范围}
+\;+\;
+\text{允许的恢复操作}
+\;+\;
+\text{预测时间窗}.
+$$
+
+仅知道 Zeckendorf 标签数量或记录次数，不足以确定这些量。
+
+### 60.6 与前面章节的衔接和边界
+
+第 55 节的 Gram 谱给出单步模长收缩与相位信息；本节把模长收缩累积为作用量，并用有限移位实例给出恢复下界。第 56 节的记忆视界描述隐藏变量怎样回流到读出；本节的乘积公式只适用于记录向量和相干坐标已按给定协议组成的有限链，不能替代有记忆联合演化。第 57 节的无限未来预测商决定全部指定未来统计下的不可区分类；本节只针对特定记录通道给出相干与恢复量，不等同于无限实验族的操作商。
+
+适用边界可写成：
+
+$$
+\begin{aligned}
+&\text{记录作用量：归一化记录与有限步乘积；非零初始相干用于速率商；}\\
+&\text{互补关系：归一化纯记录，不自动推广到混合记录；}\\
+&\text{恢复下界：有限移位记录、有限支持、非零标签位移；}\\
+&\text{物理解释：不推出 Hamiltonian、空间局域性或普适恢复定理。}
+\end{aligned}
+$$
+
+因此，本节支持的研究命题是：
+
+$$
+\boxed{
+\text{记录作用量量化相干被削弱的累计程度，}
+\quad
+\text{记录自相关给出有限模型中不可逆恢复的下界。}
+}
+$$
+
+它把“保留多少历史才能得到稳定现实”改写成可检验的问题：在给定 Zeckendorf 合法构型、记录协议和预测视界下，哪些相干方向的作用量已经足够大，哪些方向仍可由可访问关联恢复，以及恢复误差是否超过任务容限。
+
+本节为 repo-derived/open 理论追加；没有新增 Lean 声明、形式覆盖或冻结状态。
+
+## 追加锚（新终端）
+
+## 61. 观察精炼、商空间度量与容量守恒
+
+第 57 节把对象定义为全部指定未来统计下的预测等价类，第 59 节说明局部端口若不接触关联扇区，就不能凭空恢复关联信息，第 60 节则给出记录作用量和恢复误差的下界。本节把“增加约束或增加读出究竟保留了什么”写成一个有限维账本：观察精炼增加可见方向，同时减少不可见残差；在固定载体上，两者的总维数保持不变。
+
+本节使用以下冻结 Lean 结果：`ObserverRefinementVisibleResidualEquivalence.lean` 中的 `observer_refinement_visible_residual_equivalence`，`OperationalObservationKernel.lean` 中的 `operational_observation_kernel_and_metric`，以及 `ObserverCapacityConservation.lean` 中的 `observer_capacity_conservation`。正文仍是 `repo-derived/open` 解释，不新增 Lean 声明，也不把有限维结论提升为任意物理系统的普遍定律。
+
+### 61.1 可见空间与残差空间
+
+令系统维数为
+
+$$
+d\in\mathbb N,
+$$
+
+并在实 Hermitian 算子空间中给定一族 effect。对一个 effect 集合
+
+$$
+E\subseteq\operatorname{Herm}(d),
+$$
+
+定义包含单位方向的可见空间
+
+$$
+\mathcal V(E)
+=
+\operatorname{span}_{\mathbb R}
+\bigl(\{I_d\}\cup E\bigr),
+$$
+
+以及其 Hilbert--Schmidt 正交残差
+
+$$
+\mathcal R(E)=\mathcal V(E)^{\perp}.
+$$
+
+单位方向单独列出，是因为密度态的归一化已经固定了迹；真正增加区分能力的是去掉单位方向以后新增的可见维数。这里的残差是相对于这组 effect 的算子空间残差，不是一个额外物理介质，也不是尚未证明存在的隐藏变量。
+
+若两个密度态在所有选定 effect 上读数相同，它们的状态差落在相应残差中。反过来，残差方向在这些线性读数中不可见；是否能在未来出现，还要再结合第 57 节的动力学闭包条件。
+
+### 定理 61.1（观察精炼的三重等价）
+
+设 `one` 和 `two` 是两组有限维 Hermitian effect，`two` 至少包含 `one` 所提供的可见信息。仓库中的 `observer_refinement_visible_residual_equivalence` 给出以下等价关系：
+
+$$
+\begin{aligned}
+&\text{精细签名相同}\Rightarrow\text{粗签名相同}\\
+&\qquad\Longleftrightarrow\qquad
+\mathcal R_{\mathrm{two}}
+\subseteq
+\mathcal R_{\mathrm{one}}\\
+&\qquad\Longleftrightarrow\qquad
+\mathcal V_{\mathrm{one}}
+\subseteq
+\mathcal V_{\mathrm{two}}.
+\end{aligned}
+$$
+
+第一行的量词是对所有密度态对：如果两态的精细签名相等，则它们的粗签名也相等。第二行是残差包含关系；第三行是可见空间包含关系。形式化定理在有限维 Hermitian 载体上同时保留了这三个方向，因而不能把“更细”只理解成标签数量增加。
+
+这条等价解释了为什么残差方向是反变的：读出越丰富，可见空间越大，残差越小。若只改变标签名称而没有改变 effect span，三种关系都不变，也就没有获得新的预测能力。
+
+### 定理 61.2（观察半范数的核与商空间度量）
+
+给定有限 effect 索引集、严格正的权重和 centered effects，定义一个加权观察半范数。冻结结果 `operational_observation_kernel_and_metric` 的第一部分把它的核识别为 effect span 的正交补：
+
+$$
+\operatorname{ker}\|D\|_{\mathrm{obs}}
+=
+\operatorname{span}_{\mathbb R}
+\{E_i\}^{\perp}.
+$$
+
+因此，对密度态差
+
+$$
+D=\rho-\sigma,
+$$
+
+半范数为零，恰好表示当前 effect 家族无法区分这两个状态。它在状态空间上只给出伪距离；把零距离状态取商以后，诱导的 `operationalQuotientDistance` 满足非负性、对称性和三角不等式，并且
+
+$$
+\bar d([\rho],[\sigma])=0
+\iff
+[\rho]=[\sigma].
+$$
+
+这使“对象是一个读数等价类”获得了一个内部几何：距离不是预先附加的物理空间距离，而是由允许的 effect、权重和读出范数共同定义的操作距离。
+
+冻结结果还给出分离条件：若原状态空间上的伪距离已经是严格距离，则这组 effect 对密度态是 informationally complete。反之，存在非零残差就意味着至少有两个不同状态落入同一个操作类。这里的 `informationally complete` 只针对指定的密度态与 effect 集合，不能推出对任意序列仪器或任意开放系统都完备。
+
+### 定理 61.3（可见容量与残差容量守恒）
+
+对任意 effect 集合 $E$，令
+
+$$
+C(E)
+=
+\dim_{\mathbb R}\mathcal V(E)-1,
+\qquad
+Q(E)
+=
+\dim_{\mathbb R}\mathcal R(E).
+$$
+
+`observer_capacity_conservation` 证明，在固定的实 Hermitian 载体上：
+
+$$
+\boxed{
+C(E)+Q(E)=d^2-1.
+}
+$$
+
+其中 $d^2$ 是完整 Hermitian 载体的实维数，减去一维单位方向后得到 traceless 方向总数。若粗 effect 集合包含于细 effect 集合，则
+
+$$
+C(E_{\mathrm{coarse}})
+\le
+C(E_{\mathrm{fine}}),
+$$
+
+并且
+
+$$
+Q(E_{\mathrm{fine}})
+\le
+Q(E_{\mathrm{coarse}}).
+$$
+
+所以每增加一个真正独立的可见方向，残差容量至少相应减少；如果新增 effect 落在原有 span 中，两个容量都不改变。这个守恒式给出的是维数账本，不是信息熵守恒，也不是说每个新增 effect 都携带一个独立可读取的经典 bit。
+
+### 61.4 接到 Zeckendorf 合法构型
+
+令
+
+$$
+\mathcal W_L
+=
+\{w\in\{0,1\}^L:w_rw_{r+1}=0\},
+$$
+
+并把合法构型映到第 58 节的黄金坐标或某个指定的 effect 家族。若窗口扩大、记录端口增加，得到的不是自动的“更多历史”，而是一组新的 effect。应分别计算
+
+$$
+\mathcal V_L=\operatorname{span}_{\mathbb R}\bigl(\{I\}\cup E_L\bigr),
+\qquad
+\mathcal R_L=\mathcal V_L^{\perp},
+$$
+
+再比较
+
+$$
+C_L=\dim_{\mathbb R}\mathcal V_L-1,
+\qquad
+Q_L=\dim_{\mathbb R}\mathcal R_L.
+$$
+
+Zeckendorf 约束只规定合法构型集合及其离散坐标；它不自动规定 effect 的线性独立性，也不自动把窗口长度 $L$ 转成可见容量 $C_L$。若新增构型只改变编号、不改变读出 span，容量不变；若新增构型引入了新的可区分 effect，容量才增加。相应的相干与历史影响仍须用第 55、56 和 60 节的 Gram、回流和作用量计算。
+
+### 61.5 观察距离的任务依赖
+
+设实验族改变了 effect 集合或权重，则半范数、商空间和容量账本都会改变。于是两个状态可能满足
+
+$$
+\bar d_{\mathfrak T_1}([\rho],[\sigma])=0,
+$$
+
+而在更细任务上满足
+
+$$
+\bar d_{\mathfrak T_2}([\rho],[\sigma])>0.
+$$
+
+这不是逻辑矛盾，而是两个观察商不同。第 54 节的有限响应商、第 57 节的无限未来商和本节的线性 effect 商，只有在明确给出 effect、channel 与时间范围后才能比较。把它们不加条件地合并成一个“最终对象空间”，会丢掉它们各自的操作边界。
+
+因此，“用多少约束保留历史”可以拆成三个可测量问题：
+
+$$
+\begin{aligned}
+&\text{当前读出保留了多少可见维数？}\\
+&\text{剩余残差在指定未来动力学下是否闭合？}\\
+&\text{记录作用量和任务误差是否允许忽略该残差？}
+\end{aligned}
+$$
+
+第一问由 $C(E)$ 和 $Q(E)$ 结算，第二问由第 57 节的 observer closure 与第 59 节的扇区保持条件结算，第三问由第 56、58、60 节的误差预算结算。三者共同决定当前尺度上是否可以把某个操作等价类当作稳定对象。
+
+本节为 `repo-derived/open` 理论追加；没有新增 Lean 声明、形式覆盖或冻结状态。
+
+## 追加锚（新终端）
+
+## 62. 有限观察深度、稳定塔与顺序词完备性
+
+第 61 节给出了静态观察精炼的容量守恒，但“增加一次后续操作”还需要一个时间方向的版本。本节把初始 effect 在 Heisenberg 作用下的前 $n$ 次迭代组成观察塔，证明可见空间随深度单调增加、残差反向减少，并在有限维条件下得到稳定深度。随后把同一思想推广到 sequential instrument words。
+
+使用的冻结模块是 `FiniteTimeObserverMonotonicity.lean` 的 `finite_time_observer_monotonicity`、`CenteredEffectStabilityDepthBound.lean` 的 `centered_effect_stability_depth_bound`、`FiniteSequentialCompletenessDepth.lean` 的 `finite_sequential_completeness_depth`，以及 `UnifiedSequentialKernel.lean` 的 `unified_sequential_kernel`。本节仍为 `repo-derived/open` 理论解释，没有新增 Lean 声明。
+
+### 定义 62.1（有限 Heisenberg 观察塔）
+
+令 $H$ 是 Hermitian 载体上的 Heisenberg 线性作用，初始 effect 家族为
+
+$$
+E_0=\{E_i: i\in I\}.
+$$
+
+定义 horizon 为 $n$ 的可见空间
+
+$$
+\mathcal V_n
+=
+\operatorname{span}_{\mathbb R}
+\left(
+\{I\}\cup
+\{H^tE_i:t<n,\ i\in I\}
+\right),
+$$
+
+以及有限深度残差
+
+$$
+\mathcal R_n=\mathcal V_n^{\perp}.
+$$
+
+这里的 $n$ 是允许的后续迭代次数，不是物理时间单位；是否存在连续时间生成元需要另外的动力学假设。
+
+### 定理 62.2（观察深度的单调性）
+
+冻结结果 `finite_time_observer_monotonicity` 证明对每个 $n$：
+
+$$
+\mathcal V_n\subseteq\mathcal V_{n+1},
+$$
+
+并且正交残差满足反向包含
+
+$$
+\mathcal R_{n+1}subseteq\mathcal R_n.
+$$
+
+证明只使用 $t<n$ 蕴含 $t<n+1$，以及正交补对包含关系的反变性。它给出一个可计算的观察偏序：增加允许的后续操作不会让已经可见的线性方向消失，但会缩小当前任务仍无法区分的残差。
+
+对两个状态坐标差 $D$，若
+
+$$
+D\in\mathcal R_n,
+$$
+
+则所有深度小于 $n$ 的 effect 读数都相同。若在某个更大深度首次有
+
+$$
+D\notin\mathcal R_{n+1},
+$$
+
+这说明新加入的一步确实把该历史差异带入了可见响应。这个结论是线性读数的结论，不等于一次有限样本实验必然识别出该差异。
+
+### 定理 62.3（有限维稳定深度）
+
+在 trace-zero Hermitian 载体上，令 `towerSpace` 表示由初始 centered effects 和前面各层的 Heisenberg 像递归生成的空间，令 `predictiveSpace` 是所有有限迭代的 span。冻结结果 `centered_effect_stability_depth_bound` 定义最小一步稳定深度
+
+$$
+\operatorname{sd}(H,E)
+=\min\{m:\mathcal T_m=\mathcal T_{m+1}\}.
+$$
+
+它给出
+
+$$
+\operatorname{sd}(H,E)
+\le
+\dim(\mathcal V_{\infty})-\dim(\mathcal T_0),
+$$
+
+以及
+
+$$
+\dim(\mathcal V_{\infty})-\dim(\mathcal T_0)
+\le
+ d^2-1-\dim(\mathcal T_0).
+$$
+
+更强的是，一旦某一步满足
+
+$$
+\mathcal T_m=\mathcal T_{m+1},
+$$
+
+以后所有层都保持相同；并且
+
+$$
+\mathcal V_{\infty}
+=\bigcup_{n\ge0}\mathcal T_n
+=\mathcal T_{\operatorname{sd}(H,E)}.
+$$
+
+因此，在固定有限维载体与固定线性 Heisenberg 作用下，“所有有限未来 effect”虽然以无限并集定义，却有一个有限深度的线性证书。这个证书的上界来自 traceless-Hermitian 载体维数，而不是来自 Zeckendorf 窗口长度本身。
+
+### 62.4 顺序词不是单时刻标签的重复
+
+令 `Alphabet` 是允许的仪器字母，令
+
+$$
+\mathsf E_w
+$$
+
+表示由字 $w$ 经过指定 instrument-dual 顺序折叠得到的 sequential word effect。对一个允许词集合
+
+$$
+\mathcal A\subseteq\operatorname{List}(\mathrm{Alphabet}),
+$$
+
+定义顺序可见空间
+
+$$
+\mathcal V_{\mathcal A}
+=\operatorname{span}_{\mathbb R}
+\{\mathsf E_w:w\in\mathcal A\}.
+$$
+
+顺序词记录了操作次序；它不应被替换成只保存每个单步标签的无序集合。不同词可能拥有相同的最终经典标签，却对应不同的 effect 和不同的后续响应。
+
+### 定理 62.5（统一顺序核）
+
+冻结结果 `unified_sequential_kernel` 给出：对任意状态表示 $s$、$s'$，所有允许顺序词的统计相等，当且仅当状态差落在顺序可见空间的正交残差中：
+
+$$
+\begin{aligned}
+&\forall w\in\mathcal A,
+\quad
+\langle s,\mathsf E_w\rangle
+=
+\langle s',\mathsf E_w\rangle\\
+&\qquad\Longleftrightarrow\\
+&s-s'\in\mathcal V_{\mathcal A}^{\perp}.
+\end{aligned}
+$$
+
+因此，历史压缩的安全条件不是“最终标签相同”，而是所有允许顺序词对这两个历史给出相同统计。若再加入一个新词，空间变为
+
+$$
+\mathcal V_{\mathcal A\cup\{w_0\}},
+$$
+
+残差只会缩小或保持不变；新词是否真正增加信息，要看 $\mathsf E_{w_0}$ 是否已经落在旧 span 中。
+
+### 定理 62.6（顺序词的有限完备深度）
+
+若所有有限 sequential word effects 在完整实 Hermitian 载体中张成单位空间，即
+
+$$
+\operatorname{span}_{\mathbb R}
+\{\mathsf E_w:w\text{ 为任意有限词}\}
+=\operatorname{Herm}(d),
+$$
+
+则 `finite_sequential_completeness_depth` 保证存在某个
+
+$$
+N\le d^2-1
+$$
+
+使长度不超过 $N$ 的 sequential words 已经张成完整 Hermitian 可见空间：
+
+$$
+\operatorname{span}_{\mathbb R}
+\{\mathsf E_w:\lvert w\rvert\le N\}
+=\operatorname{Herm}(d).
+$$
+
+这里的完备性是假设了所有有限词的总 span 已经完整；定理只把这个无界假设压缩成一个有限深度证书，不声称任意给定仪器族自动满足它。它也不说单个时间片的 POVM 必然 informationally complete。
+
+### 62.7 接到 Zeckendorf 窗口和记忆视界
+
+对合法 Zeckendorf 构型集合
+
+$$
+\mathcal W_L
+=\{w\in\{0,1\}^L:w_rw_{r+1}=0\},
+$$
+
+可以把窗口内每个构型映射成初始 effect，或映射成允许的 sequential word。此时有三种彼此不同的深度参数：
+
+$$
+\begin{aligned}
+&L: \text{合法离散构型窗口长度},\\
+&N: \text{观察词的最大操作长度},\\
+&h: \text{第 56 节隐藏历史的截断深度}.
+\end{aligned}
+$$
+
+$L$ 增大可能增加构型数，但不保证 $\mathcal V_L$ 增维；$N$ 增大只在新增 effect 不在旧 span 时增加可见方向；$h$ 增大控制的是隐藏回流尾，而不是线性 effect span 的稳定深度。将三者混成一个“观察深度”会把离散编码、操作次序和环境记忆混为一谈。
+
+因此，在任务误差 $\varepsilon$ 下，一个可检查的停止判据可以写成：先找到 $N$ 使线性观察塔稳定，再估计第 56 节的记忆尾和第 58、60 节的刻度与记录误差，要求合并预算不超过 $\varepsilon$。只有在这个复合条件下，才可以把有限深度摘要作为当前任务的有效对象。
+
+本节为 `repo-derived/open` 理论追加；没有新增 Lean 声明、形式覆盖或冻结状态。
+
+## 追加锚（新终端）
+
+## 63. 约化不可见、整体可逆与恢复误差下界
+
+第 60 节已经把记录作用量与恢复下界分开。本节进一步区分两种常被混称为“不可逆”的现象：一是只访问约化态时无法从同一个输入恢复不同的联合记录；二是包括记录自由度在内的整体演化是否真的不可逆。仓库中的可逆复制模型给出一个明确反例：前者可以成立，而后者仍然完全可逆。
+
+本节引用 `ReducedRecordAccessDefect.lean` 的 `reduced_irreversibility_is_access_defect`、`CanonicalRecordAccessRecovery.lean` 的 canonical-record 包装，以及 `FiniteRecordRecoveryError.lean` 的 `finite_record_recovery_error_lower_bound`。这些结果都是有限矩阵和有限通道命题，正文继续标记为 `repo-derived/open`。
+
+### 63.1 受控复制的联合演化
+
+令系统是一个 qubit，环境记录也是一个两态自由度。对系统矩阵 $\rho$，先把环境置于空白态，记为
+
+$$
+B(\rho).
+$$
+
+受控复制幺正 $U_{\mathrm{copy}}$ 把系统地址写入记录，得到
+
+$$
+U_{\mathrm{copy}}B(\rho)U_{\mathrm{copy}}^{\dagger}
+=
+J(\rho),
+$$
+
+其中 $J(\rho)$ 是带有 copied-address record 的联合态。`ReducedRecordAccessDefect` 明确构造了这个 permutation unitary，并证明其满足
+
+$$
+U_{\mathrm{copy}}^{\dagger}U_{\mathrm{copy}}=I.
+$$
+
+因此，联合系统的演化有显式逆
+
+$$
+U_{\mathrm{copy}}^{\dagger}J(\rho)=B(\rho).
+$$
+
+这一步只使用整体记录仍然可访问的假设；它没有说任何局部观察者都能访问环境。
+
+### 定理 63.1（约化访问缺陷）
+
+设两个系统态 $\rho,\sigma$ 满足相同的对角元
+
+$$
+\forall i,\qquad \rho_{ii}=\sigma_{ii},
+$$
+
+但存在非对角位置 $i\ne j$ 使
+
+$$
+\rho_{ij}\ne\sigma_{ij}.
+$$
+
+冻结定理 `reduced_irreversibility_is_access_defect` 给出以下同时成立的事实：
+
+$$
+\operatorname{Tr}_{E}J(\rho)
+=
+\operatorname{Tr}_{E}J(\sigma),
+$$
+
+但
+
+$$
+J(\rho)\ne J(\sigma),
+$$
+
+并且不存在只依赖约化态的函数 $F$，同时满足
+
+$$
+F(\operatorname{Tr}_{E}J(\rho))=J(\rho),
+\qquad
+F(\operatorname{Tr}_{E}J(\sigma))=J(\sigma).
+$$
+
+另一方面，访问完整记录并施加逆耦合时，分别有
+
+$$
+U_{\mathrm{copy}}^{\dagger}J(\rho)=B(\rho),
+\qquad
+U_{\mathrm{copy}}^{\dagger}J(\sigma)=B(\sigma).
+$$
+
+所以这里真正失败的是访问范围：相同的约化输入被要求映到两个不同联合输出，任何约化态函数都无法完成；整体联合演化仍保留了区分，并且有明确的逆。
+
+### 63.2 与经典记录的关系
+
+对角元相同的条件意味着，受控复制后对环境做偏迹会抹掉该模型中的非对角相干。若把环境记录也纳入整体，非对角差异并没有从联合态中消失；它只是被转移到系统—记录关联中。因而必须区分：
+
+$$
+\begin{aligned}
+&\text{局部约化不可见},\\
+&\text{联合态仍然不同},\\
+&\text{访问联合记录后可逆恢复}.
+\end{aligned}
+$$
+
+`CanonicalRecordAccessRecovery` 把同一个结论接到项目的 canonical `copiedAddressRecord`，说明这不是两个定义方向造成的记号差异。它仍然是特定 qubit 复制模型的结果，不是任意偏迹通道都可逆的断言。
+
+这个例子也修正了“去相干就是历史删除”的说法。若记录被丢弃，历史对该局部读出不可见；若记录保留并可控，历史差异仍可能恢复。是否称为“消失”，必须先指定访问的代数和允许的恢复操作。
+
+### 63.3 有限移位记录的通道系数
+
+令有限记录振幅为
+
+$$
+c:\mathbb Z\longrightarrow\mathbb C,
+$$
+
+其支撑位于有限区间并满足归一化
+
+$$
+\sum_{k\in\mathbb Z}|c(k)|^2=1.
+$$
+
+定义记录自相关
+
+$$
+\gamma(\ell)
+=
+\sum_{k\in\mathbb Z}c(k+\ell)\,\overline{c(k)}.
+$$
+
+给每个系统标签 $i$ 一个整数位置 $q(i)$，则 `FiniteShiftedRecordChannel` 产生的 Heisenberg 作用按逐项乘法写成
+
+$$
+\Lambda(A)_{ij}
+=
+\gamma\bigl(q(i)-q(j)\bigr)A_{ij}.
+$$
+
+因此，对角元保持不变，非对角元由记录自相关调节。这里的 $\gamma$ 是有限移位模型的输入，不是任意记录通道都必须具有的普适函数。
+
+`finite_record_pair_witnesses` 构造两个只在 $i,j$ 位置有相反相干符号的纯态，使其初始迹距离为
+
+$$
+D(\rho,\sigma)=1,
+$$
+
+而经过 $\Lambda$ 后的距离恰为
+
+$$
+D(\Lambda\rho,\Lambda\sigma)
+=|\gamma(q(i)-q(j))|.
+$$
+
+这个见证把 Gram 或自相关系数直接连接到一个可测的最坏方向：不是所有初态都按同一个相干速率衰减，至少有一对相位方向实现该系数。
+
+### 定理 63.2（有限记录恢复的误差下界）
+
+对任意候选量子通道 $R$ 作为恢复操作，冻结定理 `finite_record_recovery_error_lower_bound` 给出
+
+$$
+\sup_{\tau}
+D\bigl(R\Lambda(\tau),\tau\bigr)
+\ge
+\frac{1-|\gamma(q(i)-q(j))|}{2},
+$$
+
+其中 $q(i)-q(j)\ne0$，上确界遍历该有限标签空间的密度态。若记录完全区分这两个位置，使
+
+$$
+\gamma(q(i)-q(j))=0,
+$$
+
+则这个模型中的任何恢复都存在至少 $1/2$ 的最坏迹距离误差；若
+
+$$
+|\gamma(q(i)-q(j))|=1,
+$$
+
+该下界变为零，但这只表示该见证方向没有给出正的恢复障碍，不表示任意通道都可被完美恢复。
+
+这个下界和第 60 节的记录作用量承担不同工作：作用量描述相干模长的累计损失；这里的下界描述在指定有限通道族中，丢弃记录后恢复误差至少有多大。二者不能互相替代。
+
+### 63.4 接到 Zeckendorf 历史与访问预算
+
+若把合法 Zeckendorf 构型 $w$ 映到整数位置 $q(w)$，则记录自相关只看位置差
+
+$$
+q(w)-q(v),
+$$
+
+而不自动保留完整的规范化来源。两个不同历史可以有相同位置差，因而拥有相同的该通道系数；这并不说明它们在第 54 节的全部实验族上等价。要把它们合并，仍须检查所有允许读出和后续操作。
+
+恢复能力可以用三项预算描述：
+
+$$
+\begin{aligned}
+&\text{局部可访问记录的范围},\\
+&\text{记录自相关的模长 }|\gamma(\ell)|,\\
+&\text{允许恢复通道的类别}.
+\end{aligned}
+$$
+
+扩大访问范围可能把约化不可见变成联合可见；改变记录分布会改变 $\gamma$ 和第 60 节的作用量；限制恢复通道则会提高可达到的最坏误差。单独知道 Zeckendorf 标签的数量或记录次数，不能决定这三项。
+
+因此，对“多少约束足以形成稳定经典现实”的一个更精确表述是：在指定访问代数和恢复通道类下，约化不可见的历史残差是否已经低于任务误差；若未低于，则需要保留记录关联或扩大可访问端口，而不是仅仅增加数值刻度精度。
+
+本节为 `repo-derived/open` 理论追加；没有新增 Lean 声明、形式覆盖或冻结状态。
+
+## 追加锚（新终端）
+
+## 64. 记录类、指数去相干与经典块的形成
+
+第 63 节说明偏迹后的不可见可以来自访问缺陷，而不是整体信息消灭。本节处理另一种更强的情形：当不同记录类的 Gram 重叠统一严格小于一时，重复记录会使跨类相干按明确速率收缩；同一记录类内部的矩阵元则被保留下来，极限是块对角的记录类结构。
+
+引用的冻结模块是 `RepeatedRecordExponentialDecay.lean` 的 `repeated_record_exponential_decay`，以及 `CoherenceDecay.lean` 的 `equal_superposition_coherence_tendsto_zero`。本节只解释这些有限矩阵结论，不新增 Lean 声明，也不把指数收缩推广到未满足 Gram 假设的任意开放系统。
+
+### 64.1 记录 Gram 系数与重复通道
+
+设有限系统标签为 $i\in\operatorname{Fin}(d)$，每个标签对应一个归一化环境记录向量
+
+$$
+r_i=\bigl(r_{i,a}\bigr)_{a\in\operatorname{Fin}(e)},
+$$
+
+满足
+
+$$
+\sum_a|r_{i,a}|^2=1.
+$$
+
+定义记录 Gram 系数
+
+$$
+G_{ij}=\langle r_j,r_i\rangle.
+$$
+
+一次记录通道逐项作用于系统矩阵：
+
+$$
+\mathcal C(\rho)_{ij}=G_{ij}\rho_{ij}.
+$$
+
+重复 $N$ 次后，冻结定理给出精确式
+
+$$
+\bigl(\mathcal C^N(\rho)\bigr)_{ij}
+=G_{ij}^{,N}\rho_{ij}.
+$$
+
+当 $i=j$ 时，归一化保证
+
+$$
+G_{ii}=1.
+$$
+
+因此对角概率不受这一记录通道改变；变化集中在非对角关系方向。
+
+### 定理 64.1（跨记录类的指数收缩）
+
+假设存在
+
+$$
+q\in[0,1)
+$$
+
+使得只要 $r_i\ne r_j$，就有
+
+$$
+|G_{ij}|\le q.
+$$
+
+对每个记录值 $\lambda$ 定义记录类投影 $P_\lambda$，并令 pinching 映射为
+
+$$
+\Pi(\rho)
+=\sum_{\lambda}P_\lambda\rho P_\lambda.
+$$
+
+`repeated_record_exponential_decay` 同时证明三件事：
+
+$$
+\bigl(\mathcal C^N(\rho)\bigr)_{ij}
+=G_{ij}^{,N}\rho_{ij},
+$$
+
+$$
+\Pi(\rho)_{ij}
+=
+\begin{cases}
+\rho_{ij},&r_i=r_j,\\
+0,&r_i\ne r_j,
+\end{cases}
+$$
+
+以及 Frobenius 范数界
+
+$$
+\left\|
+\mathcal C^N(\rho)-\Pi(\rho)
+\right\|_F
+\le
+q^N
+\left\|
+\rho-\Pi(\rho)
+\right\|_F.
+$$
+
+所以极限保留的是每个记录类内部的矩阵块，而跨类相干以 $q^N$ 收缩。若记录向量两两正交，则 $q=0$，一次作用就完成跨类 pinching；若只知道 $|G_{ij}|<1$ 但没有统一有限维上界，仍需另行建立统一 $q$ 才能使用上述范数界。
+
+### 64.2 “经典化”是块结构，不一定是完全对角化
+
+若每个标签都有不同记录向量，记录类都是单点，$Pi(\rho)$ 是对角矩阵，此时
+
+$$
+\mathcal C^N(\rho)\longrightarrow\operatorname{diag}(\rho).
+$$
+
+但若存在 $i\ne j$ 满足
+
+$$
+r_i=r_j,
+$$
+
+则 $i,j$ 位于同一记录类，$\Pi(\rho)_{ij}=\rho_{ij}$。这些类内相干不会由该通道衰减。于是“固定点是经典的”只有在记录类全为单点时才意味着对角经典代数；一般极限是记录类块代数。
+
+这与第 55 节的相位反例相容：若条件记录只相差一个相位，物理记录射线可能相同，跨类收缩条件并不成立；不能用固定点的形式描述替代 Gram 模长的严格假设。
+
+`CoherenceDecay` 的 qubit 特例给出同一逻辑的极限版本：若相位阻尼系数 $c$ 满足
+
+$$
+0\le c<1,
+$$
+
+则等权叠加态的非对角矩阵元满足
+
+$$
+\bigl(\mathcal C^N(\rho)\bigr)_{01}
+=\frac12c^N
+\longrightarrow0.
+$$
+
+这里的严格不等式 $c<1$ 是收敛所需的条件；若 $|c|=1$，只能得到相位旋转或周期行为，不能推出衰减。
+
+### 64.3 与 Zeckendorf 合法构型的接口
+
+在合法窗口
+
+$$
+\mathcal W_L
+=\{w\in\{0,1\}^L:w_rw_{r+1}=0\}
+$$
+
+上，可以选择一个记录映射
+
+$$
+r:\mathcal W_L\longrightarrow\mathcal R.
+$$
+
+映射的纤维
+
+$$
+[w]_r=\{v\in\mathcal W_L:r(v)=r(w)\}
+$$
+
+决定极限块的边界。Zeckendorf 数值、激发数和局部模式都可以作为 $r$ 的候选，但它们的 Gram 重叠并不由编码本身决定。
+
+若 $r$ 把所有合法构型分开，并且记录向量满足统一 $q<1$，则
+
+$$
+\|\mathcal C^N(\rho)-\operatorname{diag}(\rho)\|_F
+\le
+q^N\|\rho-\operatorname{diag}(\rho)\|_F.
+$$
+
+若 $r$ 只记录 Zeckendorf 数值的某个粗粒化，例如多个来源历史共享同一数值，则极限保留这些历史对应的块内相干；要进一步把块内结构当作经典噪声，必须增加记录 effect 或引入另一个会区分块内方向的动力学。
+
+这给出一个比“编码有唯一表示”更严格的判据：唯一表示只说明离散标签层的规范性；经典化速度还需要记录 Gram 模长的统一谱隙
+
+$$
+1-q>0.
+$$
+
+### 64.4 作用量、误差与停止条件
+
+指数界可转写为达到目标 Frobenius 误差 $\varepsilon$ 的充分步数：若初始跨类残差满足
+
+$$
+\|\rho-\Pi(\rho)\|_F\le M,
+$$
+
+则只要
+
+$$
+q^N M\le\varepsilon,
+$$
+
+就有
+
+$$
+\|\mathcal C^N(\rho)-\Pi(\rho)\|_F\le\varepsilon.
+$$
+
+当 $0<q<1$ 且 $M>0$ 时，一个充分的整数条件是
+
+$$
+N\ge
+\left\lceil
+\frac{\log(M/\varepsilon)}{-\log q}
+\right\rceil.
+$$
+
+这个 $N$ 只控制跨记录类的 Frobenius 范数尾项；它不自动控制第 56 节隐藏回流、第 58 节 Zeckendorf 刻度误差、第 61 节观察残差或第 63 节访问受限的恢复误差。完整任务预算仍需把这些项按各自适用的距离和通道假设合并。
+
+因此，本节得到的“稳定经典现实”是一个带条件的操作性结论：在记录类固定、Gram 跨类重叠统一小于一、重复通道确实按同一有限模型作用的范围内，跨类相干以指数速度进入块对角结构；块内是否继续保留历史，则由更细的记录和后续动力学决定。
+
+本节为 `repo-derived/open` 理论追加；没有新增 Lean 声明、形式覆盖或冻结状态。
+
+## 追加锚（新终端）
+
+## 65. 多上下文读出的独立预算下界
+
+第 61 节给出了单一观察族的可见容量守恒，第 62 节给出了顺序观测的有限稳定深度。本节问一个不同的问题：如果把读出分成多个上下文，每个上下文内部有一组归一化 outcome，那么为了让联合读出区分所有密度态，最少需要保留多少独立 outcome？
+
+冻结模块 `D5/S3/Quantum/PredictionDepth/MultiContextBudgetLowerBound.lean` 中的 `multi_context_budget_lower_bound` 给出一个一般下界。它只使用有限维 traceless-Hermitian 载体和 informational completeness 假设；本节的 Zeckendorf 解释是接口层推导，不是该 Lean 定理的额外前提。
+
+### 65.1 上下文、归一化与独立 outcome
+
+令系统 Hilbert 空间维数为
+
+$$
+d\in\mathbb N,
+$$
+
+每个上下文属于有限集合
+
+$$
+X\in\mathcal X.
+$$
+
+上下文 $x$ 有 $m_x+1$ 个 outcome effect，记为
+
+$$
+E_{x,0},E_{x,1},\ldots,E_{x,m_x}.
+$$
+
+归一化条件是 centered effect 的和为零：
+
+$$
+\sum_{j=0}^{m_x}E_{x,j}=0.
+$$
+
+因此最后一个 outcome 由前 $m_x$ 个决定：
+
+$$
+E_{x,m_x}
+=-\sum_{j=0}^{m_x-1}E_{x,j}.
+$$
+
+真正计入预算的是每个上下文的独立数量 $m_x$，而不是把归一化约束后的全部 outcome 数量重复相加。
+
+### 定理 65.1（多上下文 informational completeness 下界）
+
+若联合读出对密度态是单射，即
+
+$$
+\rho\ne\sigma
+\Longrightarrow
+\exists x,j,
+\quad
+\operatorname{Tr}(\rho E_{x,j})
+e
+\operatorname{Tr}(\sigma E_{x,j}),
+$$
+
+则冻结定理 `multi_context_budget_lower_bound` 证明
+
+$$
+\boxed{
+ d^2-1
+\le
+\sum_{x\in\mathcal X}m_x.
+}
+$$
+
+证明的线性核心是：所有上下文 outcome 的 span 必须覆盖完整的 traceless-Hermitian 载体，其实维数为
+
+$$
+\dim_{\mathbb R}\operatorname{Herm}_0(d)=d^2-1.
+$$
+
+每个上下文删去一个由归一化关系决定的 outcome 后，剩余独立 outcome 总数为
+
+$$
+\sum_xm_x.
+$$
+
+一个有限 spanning family 的基数不可能小于载体维数，于是得到下界。该结论不要求上下文彼此正交，也不要求它们来自同一个物理装置；只要求联合读出确实 informationally complete。
+
+### 65.2 对 qubit 与受约束构型的含义
+
+当 $d=2$ 时，
+
+$$
+d^2-1=3.
+$$
+
+因此，任何 informationally complete 的多上下文 qubit 读出至少需要三项独立的 traceless 方向。把它们写成三个 Pauli 方向只是一个常见实现；下界本身不依赖具体坐标选择。
+
+对 Zeckendorf 合法窗口
+
+$$
+\mathcal W_L
+=\{w\in\{0,1\}^L:w_rw_{r+1}=0\},
+$$
+
+可以把构型集合分成上下文
+
+$$
+\mathcal W_L=\bigsqcup_{x\in\mathcal X}\mathcal W_{L,x},
+$$
+
+并为每个上下文指定一组 effect。合法构型数量
+
+$$
+|\mathcal W_L|=F_{L+2}
+$$
+
+本身不是 informational completeness 的预算；它只告诉我们有多少离散基底候选。要判断这些候选是否真的提供独立读出，必须计算对应 effect 的 span，并检查是否覆盖任务所需的 traceless 方向。
+
+因此，增加 Zeckendorf 窗口长度可能增加标签，却不一定满足
+
+$$
+\sum_xm_x\ge d^2-1.
+$$
+
+反过来，较短窗口若配备线性独立的多个上下文，也可能达到指定有限维载体的完备性。编码容量和观测容量是两笔不同的账。
+
+### 65.3 与观察精炼和顺序深度的关系
+
+第 61 节中的容量守恒对单个 effect span 给出
+
+$$
+C+Q=d^2-1.
+$$
+
+本节给出的多上下文下界则说明，若目标是把残差降到零，跨上下文累积的独立方向至少要填满同一个 $d^2-1$ 维 traceless 载体。第 62 节的顺序词可以提供这些方向，但每一个顺序词是否增加新维数仍要由 effect span 检验；重复一个已在 span 内的词不会增加预算。
+
+若只要求某个目标 observable $A$ 的预测，而不是完整 informational completeness，则不必支付整个 $d^2-1$ 的预算。只要
+
+$$
+A\in\mathcal V_{\mathrm{task}},
+$$
+
+目标就由任务可见空间决定；这正是第 59 节 `TargetPredictionSufficiency` 的边界。因而本下界是完整 tomography 的必要条件，不是所有预测任务的普遍最小成本。
+
+### 65.4 上下文预算与历史保留
+
+把“历史保留多少”改写成上下文预算时，需要区分三层：
+
+$$
+\begin{aligned}
+&\text{离散层：保留哪些 Zeckendorf 合法构型；}\\
+&\text{上下文层：允许哪些读出方式和操作顺序；}\\
+&\text{线性层：这些读出在 traceless 载体中提供多少独立方向。}
+\end{aligned}
+$$
+
+若联合读出不是 informationally complete，剩余方向仍可能在第 57 节的未来动力学或第 63 节的完整记录访问中重新出现；不能仅因当前上下文预算不足就宣称这些方向不存在。若联合读出达到完整性，则在该有限维、指定 effect 模型内，当前密度态被唯一确定，但这仍不等于所有环境历史或所有不相容未来实验都已被编码。
+
+所以一个可检验的预算流程是：先列出上下文及其 outcome 归一化关系，再计算独立 outcome 总数和 effect span，最后根据任务是完整 tomography 还是目标预测选择下界。Zeckendorf 只提供合法构型组织，不替代这三步线性核验。
+
+本节为 `repo-derived/open` 理论追加；没有新增 Lean 声明、形式覆盖或冻结状态。
+
+## 追加锚（新终端）
+
+## 66. 信息完备读出的有限证书
+
+第 65 节给出了多上下文完整读出的独立预算下界，但下界本身没有说明一个已经完备的无限或任意索引 effect 家族能否压缩成有限清单。本节使用 `FiniteInformationalEffectCertificate.lean` 的 `finite_informational_effect_certificate`，把这个压缩问题写成有限证书。
+
+本节仍限定在有限维 Hermitian 算子和密度态读出；“有限证书”表示存在一个有限子族，不表示任意实验都能自动找到该子族，也不把证书搜索过程当作物理动力学。正文为 `repo-derived/open`，没有新增 Lean 声明。
+
+### 定理 66.1（信息完备家族的有限子证书）
+
+令系统维数为
+
+$$
+d\in\mathbb N,
+$$
+
+并给定任意索引集上的 effect 家族
+
+$$
+\{F_i:i\in I\},
+$$
+
+其中每个 $F_i$ 是合法 effect。假设原始读出对密度态单射：
+
+$$
+\Bigl[
+\forall i,
+\quad
+\operatorname{Tr}(\rho F_i)
+=\operatorname{Tr}(\sigma F_i)
+\Bigr]
+\Longrightarrow
+\rho=\sigma.
+$$
+
+冻结定理 `finite_informational_effect_certificate` 保证存在有限子集
+
+$$
+S\subseteq I
+$$
+
+满足
+
+$$
+|S|\le d^2-1,
+$$
+
+并且 centered effect 张成完整 trace-zero Hermitian 载体：
+
+$$
+\operatorname{span}_{\mathbb R}
+\left\{
+F_i-\frac{\operatorname{Tr}(F_i)}{d}I_d:i\in S
+\right\}
+=\operatorname{Herm}_0(d).
+$$
+
+同一个子族的原始概率读出仍然单射：
+
+$$
+\Bigl[
+\forall i\in S,
+\quad
+\operatorname{Tr}(\rho F_i)
+=\operatorname{Tr}(\sigma F_i)
+\Bigr]
+\Longrightarrow
+\rho=\sigma.
+$$
+
+### 66.2 为什么 centered 化不丢失密度态信息
+
+对两个密度态，迹差为零：
+
+$$
+\operatorname{Tr}(\rho-\sigma)=0.
+$$
+
+因此对任意 effect $F$，有
+
+$$
+\operatorname{Tr}\left((\rho-\sigma)
+\left(F-\frac{\operatorname{Tr}(F)}{d}I_d\right)\right)
+=
+\operatorname{Tr}\bigl((\rho-\sigma)F\bigr).
+$$
+
+单位方向在状态差上没有贡献，centered effect 保留了区分密度态所需的全部线性信息。定理先把原始完备性转成 centered span 的完整性，再从有限维 span 中抽取至多 $d^2-1$ 个生成元；最后用上式把 centered 读数的单射性转回原始 effect 的单射性。
+
+这说明“保留全部历史”并不等于“保留全部原始记录条目”。若任务只是区分有限维密度态，可以删除所有落在已有 centered span 中的冗余 effect，而不改变该任务的预测能力。
+
+### 66.3 与第 65 节预算下界的夹逼
+
+第 65 节说明，任意完整的独立 outcome 家族必须满足
+
+$$
+\text{独立 outcome 总数}\ge d^2-1.
+$$
+
+本节说明，若已经存在一个信息完备 effect 家族，则总能找到一个规模不超过同一数量的有限子证书：
+
+$$
+\boxed{
+\text{完整读出的最小规模}
+\le d^2-1
+\le\text{任意完整读出的独立预算}.
+}
+$$
+
+当某个选出的子族恰好有 $d^2-1$ 个线性独立 centered effect 时，它同时达到维数下界。若原始 effect 含有额外归一化关系或重复方向，实际可用条目数可能更多，但多出的条目不增加 centered span。
+
+这里的“最小规模”应理解为存在性夹逼：定理保证一个不超过 $d^2-1$ 的证书，但没有声称任意给定索引排序的前 $d^2-1$ 项就构成证书，也没有提供一个通用实验搜索算法。
+
+### 66.4 Zeckendorf 构型中的压缩准则
+
+对合法窗口
+
+$$
+\mathcal W_L
+=\{w\in\{0,1\}^L:w_rw_{r+1}=0\},
+$$
+
+若每个构型或历史来源产生一个 effect $F_w$，可以先计算 centered 家族
+
+$$
+\widetilde F_w
+=F_w-\frac{\operatorname{Tr}(F_w)}{d}I_d.
+$$
+
+只有当某个新构型的 $\widetilde F_w$ 不在已有 span 中时，它才增加信息完备性证书的线性容量。Zeckendorf 的唯一规范表示保证离散标签没有字面重复，但不保证对应 effect 在线性上独立；相反，不同历史也可能产生相同 centered effect，从而在该任务中可被压缩为同一个读出方向。
+
+因此，对 Zeckendorf 编码的一个可执行压缩检查是：
+
+$$
+\widetilde F_{w_1},\ldots,\widetilde F_{w_k}
+$$
+
+逐步加入时，记录每次 span 的维数增量，直到达到任务所需维数。完整 tomography 的终点是
+
+$$
+\dim\operatorname{span}\{\widetilde F_w\}=d^2-1;
+$$
+
+目标预测的终点则只需包含目标 observable 所在的子空间。这个判据比按构型数或 Fibonacci 维数直接估计信息量更严格。
+
+### 66.5 与历史保留问题的边界
+
+有限证书只保证当前指定密度态读出的完备性。它不保证：
+
+$$
+\begin{aligned}
+&\text{环境记录已经被保留；}\\
+&\text{所有未来 Heisenberg 迭代都在该子族 span 内；}\\
+&\text{不相容测量可以同时赋予一份经典答案表；}\\
+&\text{第 63 节中约化不可见的联合相干已经可恢复。}
+\end{aligned}
+$$
+
+若后续动力学把目标带入新的 effect 方向，需要回到第 57、62 节扩张预测空间；若记录通道保留了同一块内相干，需要回到第 63、64 节分析访问范围和 Gram 收缩。有限证书因此是任务索引的：它压缩一个已声明读出任务的冗余，而不是宣布所有历史都已被安全删除。
+
+本节为 `repo-derived/open` 理论追加；没有新增 Lean 声明、形式覆盖或冻结状态。
+
+## 追加锚（新终端）
+
+
+## 67. 有限读出的条件数、稳定重建与噪声预算
+
+第 66 节的有限证书回答哪些读出足以唯一确定指定有限维密度态读出任务中的每个状态。本节再问：读数有误差、耦合的标定也有误差时，这种唯一性是否仍能支持稳定预测？本节把帧下界、最小二乘误差与标定扰动接到同一预算中。新增连接为 `repo-derived/open` 理论推导，不增加 Lean 声明或冻结状态。
+
+### 67.1 读出方向的数目与最弱可见方向
+
+取 $d>1$，令实内积空间
+
+$$
+\mathsf H_0=\operatorname{Herm}_0(d)
+$$
+
+由无迹 Hermitian 矩阵组成，使用 Hilbert–Schmidt 内积与范数。给定有限指标集 $I$、权重 $w_i\ge0$ 和 Hermitian 读出方向 $E_i$，定义
+
+$$
+A:\mathsf H_0\longrightarrow\mathbb R^I,
+\qquad
+A(D)_i=\sqrt{w_i}\,\langle D,E_i\rangle_{\mathrm{HS}}.
+$$
+
+这里的 $E_i$ 首先是线性读出方向。只有另行满足 $0\le E_i\le I$、适当归一化以及物理测量实现条件时，才能赋予其概率 effect 的解释。若 $D=\rho-\rho_\ast$，$A(D)$ 表示扣除已知参考读数后的加权差值，而非未经中心化的一份概率分布。
+
+令 $G=A^\ast A$，并记
+
+$$
+\alpha=\lambda_{\min}(G),
+\qquad
+\beta=\lambda_{\max}(G).
+$$
+
+源码 `D5/S3/Observer/Linear/RobustFrameBounds.lean` 的 `robust_observer_frame_bounds` 给出这一载体上的谱帧界及单射性条件：
+
+$$
+\alpha\|D\|_{\mathrm{HS}}^2
+\le\|A(D)\|_2^2
+\le\beta\|D\|_{\mathrm{HS}}^2,
+\qquad
+A\text{ 单射}\iff\alpha>0.
+$$
+
+在 $\alpha>0$ 的范围，奇异值条件数为
+
+$$
+\kappa(A)=\sqrt{\frac{\beta}{\alpha}}.
+$$
+
+源码排除 $d=1$，因为这时无迹载体为零维，其构造没有最小特征值。源码使用 Lean 的总定义除法；$\alpha=0$ 时写出的形式商不能解释为通常数值分析中有限的可逆条件数。本节所有可逆条件数与除以 $\sqrt\alpha$ 的公式都明确要求 $\alpha>0$。
+
+同一个有限维读出一旦单射就有正的 $\alpha$；但对一族不同读出而言，单射性不提供共同的正下界。稳定预算需要的是
+
+$$
+\alpha\ge\alpha_0>0,
+$$
+
+并且需要说明使用的坐标尺度、权重和噪声范数。
+
+### 67.2 完备读出可以任意病态
+
+**命题 67.1（线性完备不提供统一抗噪裕量）。** 在二维实内积载体上，取 $\varepsilon>0$ 和
+
+$$
+A_\varepsilon=
+\begin{pmatrix}
+1&0\\
+1&\varepsilon
+\end{pmatrix}.
+$$
+
+每个 $A_\varepsilon$ 都单射，但其 Gram 特征值为
+
+$$
+\lambda_\pm(\varepsilon)
+=\frac{2+\varepsilon^2\pm\sqrt{4+\varepsilon^4}}{2},
+$$
+
+且 $\lambda_-(\varepsilon)\to0$、$\kappa(A_\varepsilon)\to\infty$ 当 $\varepsilon\to0^+$。不存在对这整个族统一有效的正下帧界。
+
+证明。行列式为 $\varepsilon$，故单射；直接计算
+
+$$
+A_\varepsilon^\ast A_\varepsilon
+=\begin{pmatrix}2&\varepsilon\\\varepsilon&\varepsilon^2\end{pmatrix},
+$$
+
+其特征多项式为 $\lambda^2-(2+\varepsilon^2)\lambda+\varepsilon^2$，得到所列特征值。为避免把两个接近数相减，用等价形式
+
+$$
+\lambda_-(\varepsilon)
+=\frac{2\varepsilon^2}
+{2+\varepsilon^2+\sqrt{4+\varepsilon^4}}.
+$$
+
+于是 $\lambda_-/\varepsilon^2\to1/2$、$\lambda_+\to2$，推出结论。更直接地，对真实向量零施加观测噪声 $(0,\nu)$，精确求解得到重建向量 $(0,\nu/\varepsilon)$；其误差为 $|\nu|/\varepsilon$。证毕。
+
+这是一般线性读出的反例，也可以作用在 qubit 无迹空间中任意指定的二维子空间上；它本身不是一个完整 qubit POVM。两项读出接近同一方向，虽然仍线性独立，却不能稳定地区分垂直于该方向的差异。
+
+条件数和绝对灵敏度还必须分别记账。若 $s>0$，把 $A$ 换成 $sA$，则
+
+$$
+\alpha\longmapsto s^2\alpha,
+\qquad
+\beta\longmapsto s^2\beta,
+\qquad
+\kappa(sA)=\kappa(A).
+$$
+
+同一绝对读数噪声下，重建放大因子却变成 $1/(s\sqrt\alpha)$。若只是改写单位，噪声也须同步乘以 $s$，物理预算不因此改善；若真的改变耦合，则必须重新标定噪声，不能仅凭形式缩放声称获取了更多信息。
+
+### 67.3 最小二乘中的噪声如何进入重建
+
+**命题 67.2（有参考读数的重建预算）。** 设 $A$ 满足下帧界 $\alpha>0$，数据模型为
+
+$$
+b=A(D)+\xi,
+$$
+
+且重建 $\widehat D$ 满足正规方程
+
+$$
+A^\ast(A\widehat D-b)=0.
+$$
+
+则
+
+$$
+\boxed{
+\|\widehat D-D\|_{\mathrm{HS}}
+\le\frac{\|\xi\|_2}{\sqrt\alpha}.
+}
+$$
+
+证明。令 $e=\widehat D-D$。正规方程给出 $A^\ast(Ae-\xi)=0$，从而
+
+$$
+\|Ae\|_2^2=\langle Ae,\xi\rangle
+\le\|Ae\|_2\|\xi\|_2.
+$$
+
+若 $Ae=0$，下帧界推出 $e=0$；否则约去 $\|Ae\|_2$。两种情形均有 $\sqrt\alpha\|e\|_{\mathrm{HS}}\le\|\xi\|_2$。这一推导的抽象有限维内积空间版本由 `D5/S3/Observer/Linear/LeastSquaresReconstructionNoiseBound.lean` 的 `least_squares_reconstruction_noise_bound` 承担。证毕。
+
+这个命题不自行给出 $\xi$ 的统计分布或有限采样置信度。若采样、刻度近似和其他建模误差已在同一个加权数据范数中分别有界，才能用三角不等式合并。第 58 节的黄金刻度误差只有经过该节要求的响应正则性或另行证明的范数转换，才能作为这里的输入噪声界。
+
+### 67.4 耦合标定误差与噪声共用一个预算
+
+**定理 67.3（扰动读出的稳定裕量）。** 设 $A$ 满足帧界 $0<\alpha\le\beta$，实际用于重建的标定映射为
+
+$$
+\widehat A=A+\Delta,
+\qquad
+\|\Delta\|_{\mathrm{op}}\le\eta<\sqrt\alpha.
+$$
+
+则对全部 $D\in\mathsf H_0$，
+
+$$
+(\sqrt\alpha-\eta)\|D\|_{\mathrm{HS}}
+\le\|\widehat A D\|_2
+\le(\sqrt\beta+\eta)\|D\|_{\mathrm{HS}}.
+$$
+
+所以 $\widehat A$ 单射，且
+
+$$
+\kappa(\widehat A)
+\le\frac{\sqrt\beta+\eta}{\sqrt\alpha-\eta}.
+$$
+
+若真实数据仍为 $b=AD+\xi$，而 $\widehat D$ 满足
+
+$$
+\widehat A^\ast(\widehat A\widehat D-b)=0,
+$$
+
+则
+
+$$
+\boxed{
+\|\widehat D-D\|_{\mathrm{HS}}
+\le
+\frac{\|\xi\|_2+\eta\|D\|_{\mathrm{HS}}}
+{\sqrt\alpha-\eta}.
+}
+$$
+
+证明。上下界分别来自反三角不等式和三角不等式：$\|AD\|-\|\Delta D\|\le\|\widehat AD\|\le\|AD\|+\|\Delta D\|$。正的下界保证单射，极端奇异值之比给出条件数估计。再把数据改写为
+
+$$
+b=\widehat A D+(\xi-\Delta D).
+$$
+
+以 $\widehat A$ 的下帧界 $(\sqrt\alpha-\eta)^2$ 应用命题 67.2，并用 $\|\xi-\Delta D\|_2\le\|\xi\|_2+\eta\|D\|_{\mathrm{HS}}$，即得结论。证毕。
+
+这里 $A$ 是数据真实遵循的读出，$\widehat A$ 是重建采用的标定模型；两者的角色不能在误差公式中静默互换。严格条件 $\eta<\sqrt\alpha$ 也有内容：在最弱奇异方向上，大小恰为 $\sqrt\alpha$ 的扰动就能把该方向完全消掉。
+
+若真实状态为密度矩阵，选择参考 $\rho_\ast=I/d$，则
+
+$$
+D=\rho-I/d,
+\qquad
+\|D\|_{\mathrm{HS}}^2
+=\operatorname{Tr}(\rho^2)-\frac1d
+\le1-\frac1d.
+$$
+
+在参考读数的误差也已计入 $\xi$ 的条件下，$\|\xi\|_2\le\nu$ 给出统一预算
+
+$$
+\boxed{
+\|\widehat D-D\|_{\mathrm{HS}}
+\le
+\frac{\nu+\eta\sqrt{1-1/d}}{\sqrt\alpha-\eta}.
+}
+$$
+
+这是有限维、指定读出、确定性范数误差下的结论；$\nu$ 和 $\eta$ 必须由实际采样与标定程序提供。
+
+### 67.5 从线性重建到合法状态与可见预测
+
+无约束最小二乘只保证 $\rho_{\mathrm{raw}}=I/d+\widehat D$ 是迹为一的 Hermitian 矩阵，不保证正半定。可在 Hilbert–Schmidt 距离下把它投影到密度矩阵的闭凸集，得到 $\widehat\rho$。这一步与求解正规方程是两个不同操作。
+
+**命题 67.4（凸投影与后续概率的误差）。** 设 $\rho$ 是真实密度矩阵，$\widehat\rho$ 是上述 Hilbert–Schmidt 最近点投影。若 $\|\rho_{\mathrm{raw}}-\rho\|_{\mathrm{HS}}\le r$，则
+
+$$
+\|\widehat\rho-\rho\|_{\mathrm{HS}}\le r.
+$$
+
+若此后施加同一个量子通道 $\Phi$ 和同一个有限 POVM，输出分布分别为 $p,\widehat p$，则
+
+$$
+\boxed{
+\operatorname{TV}(p,\widehat p)
+\le\frac12\|\Phi(\widehat\rho)-\Phi(\rho)\|_1
+\le\frac12\|\widehat\rho-\rho\|_1
+\le\frac{\sqrt d}{2}\,r.
+}
+$$
+
+证明。记 $u=\rho_{\mathrm{raw}}$、$v=\widehat\rho$。闭凸集的最近点条件给出 $\langle u-v,\rho-v\rangle_{\mathrm{HS}}\le0$。展开 $\|u-\rho\|_{\mathrm{HS}}^2$，得到它不小于 $\|v-\rho\|_{\mathrm{HS}}^2$。后续测量和通道的迹距离收缩分别给出前两条不等式；最后一条是对至多 $d$ 个奇异值应用 Cauchy–Schwarz。证毕。
+
+投影后的 $\widehat\rho-I/d$ 不必满足原正规方程；误差不增来自凸几何。上述后续通道必须是作用于该状态的同一个已指定通道。若真正后续还依赖未纳入状态的旧环境记录，就不能直接套用；应先扩大联合状态，或另计历史回流误差。
+
+### 67.6 这给历史保留问题增加了哪一个约束
+
+Zeckendorf 合法窗口确定候选构型载体，实际耦合与读出标定确定 $E_i$；权重还包含统计加权等分析选择。两者共同确定最弱可见方向及 $\alpha$。对基底作纯标签重排会给出等距的坐标变换，奇异值不变；把 Fibonacci 数值直接改当物理耦合强度，则是在改变 $A$，必须重新计算谱界。
+
+有限证书解决的是“保留的读出是否足够”；$\alpha$ 解决的是“这些读出是否足够敏感”；$\eta$ 和 $\nu$ 解决的是“标定及采样是否准确到可以使用这种敏感度”。在完整状态重建的任务中，给定重建误差容限 $r_\ast$，一个充分条件为
+
+$$
+\eta<\sqrt\alpha,
+\qquad
+\nu+\eta\sqrt{1-1/d}
+\le r_\ast(\sqrt\alpha-\eta).
+$$
+
+稳定预测还需后续演化对所选状态描述闭合，或者另有已校准的回流误差界。若只预测少数目标读数，则不必要求完整状态重建，所需的稳定常数应只针对那些目标；完整 tomography 的最弱方向不能自动成为所有任务的成本下界。
+
+本节的谱帧界与最小二乘基础按上述两份项目源码定位；扰动、凸投影及任务解释属于本节的有限维连接推导。所用线性代数、最小二乘和迹距离收缩为标准数学结构，`repo-derived` 表示本卷中的组合与适用域，不声称发明这些结构。本节没有从编码推导物理耦合、采样置信度、唯一测量结果或宇宙的经典性，也没有新增 Lean 形式化或覆盖。
+
+## 追加锚（新终端）
+
+## 68. 适用域校准与读出约束
+
+第 61–66 节的有限维结论可以继续使用，但需要把矩阵记号、读出类型和任务范围校准到源码实际证明的假设。本节只修正适用域，不新增 Lean 声明；正文状态为 `repo-derived/open`。
+
+### 68.1 受控复制的恢复必须是左右共轭
+
+第 63.1 节原先写成
+
+$$
+U_{\mathrm{copy}}^{\dagger}J(\rho)=B(\rho).
+$$
+
+这条写法应撤回。源码 `D5/S3/Quantum/Decoherence/ReducedRecordAccessDefect.lean` 的 `unitaryEvolution` 是左右乘法；定理 `reduced_irreversibility_is_access_defect` 的恢复分支实际断言
+
+$$
+\operatorname{unitaryEvolution}
+\bigl(U_{\mathrm{copy}}^{\dagger},J(\rho)\bigr)
+=B(\rho),
+$$
+
+亦即
+
+$$
+\boxed{
+U_{\mathrm{copy}}^{\dagger}J(\rho)U_{\mathrm{copy}}=B(\rho)
+}.
+$$
+
+对 $\sigma$ 同样有
+
+$$
+U_{\mathrm{copy}}^{\dagger}J(\sigma)U_{\mathrm{copy}}=B(\sigma).
+$$
+
+保留的结论是：包括记录自由度的受控复制仍由显式幺正控制，访问联合记录并施加逆耦合可以恢复；只访问偏迹后的系统矩阵，则不能由同一个函数恢复两个不同联合矩阵。这里的左右共轭是矩阵演化的必要部分，不能删去。
+
+### 68.2 正权重改变的是度量尺度，不自动改变观察商
+
+第 61.5 节原先说“改变 effect 集合或权重，则半范数、商空间和容量账本都会改变”。其中关于权重的部分需要撤回并加条件。
+
+在固定 centered effect 家族、且所有权重仍满足
+
+$$
+\forall i,\qquad w_i>0,
+$$
+
+时，`D5/S3/Quantum/Measurement/OperationalObservationKernel.lean` 中的 私有引理 `operational_seminorm_kernel` 表明
+
+$$
+\ker\|D\|_{\mathrm{obs}}
+=
+\operatorname{span}_{\mathbb R}\{E_i\}^{\perp}
+$$
+
+与正权重的具体数值无关。加权读出只是对每个坐标乘以非零因子 $\sqrt{w_i}$；因此状态的零距离关系、`OperationalStateQuotient` 的商以及由 effect span 定义的
+
+$$
+C(E)=\dim\operatorname{span}(\{I\}\cup E)-1,
+\qquad
+Q(E)=\dim\operatorname{span}(\{I\}\cup E)^{\perp}
+$$
+
+保持不变。`ObserverCapacityConservation.lean` 的 `observer_capacity_conservation` 没有权重参数，正是这一点的源码边界。
+
+应保留的校准说法是：改变严格正权重通常改变半范数和距离的数值尺度；改变 effect 集合可能改变 kernel、商和容量。若允许某些权重降为零，kernel 与商应对有效家族
+
+$$
+E_{\mathrm{eff}}=\{E_i:w_i>0\}
+$$
+
+重新计算；此时由有效家族定义的容量才可能改变，而把全部未加权 effect 仍计入 $C(E),Q(E)$ 的名义账本则不会自动改变。若权重不再严格为正，`operational_observation_kernel_and_metric` 的正权重假设不再适用。
+
+### 68.3 多上下文预算使用的是 centered 方向
+
+第 65.1 节中单射条件的显示式有一个排版错误：理论正文中的孤立字符 `e` 应改为数学关系符号 $\ne$。
+
+$$
+\rho\ne\sigma
+\Longrightarrow
+\exists x,j,
+\quad
+\operatorname{Tr}(\rho E_{x,j})
+\ne
+\operatorname{Tr}(\sigma E_{x,j}).
+$$
+
+此外，第 65 节不能把源码中的 `effect` 自动称为物理 POVM outcome。`multi_context_budget_lower_bound` 的参数类型是
+
+$$
+\operatorname{effect}(x,j):\operatorname{traceZeroHermitian}(d),
+$$
+
+并且只假设
+
+$$
+\sum_j\operatorname{effect}(x,j)=0.
+$$
+
+这表达的是 centered effect 方向的线性归一化关系；源码没有为这些项加入正半定性、$0\le E\le I$ 或原始 POVM 的
+
+$$
+\sum_jE_{x,j}=I
+$$
+
+条件。因此需撤回“这些项本身就是概率 outcome”的表述。
+
+若从合法 POVM $(E_{x,j})_j$ 出发，应先定义
+
+$$
+\widetilde E_{x,j}
+=E_{x,j}-\frac{\operatorname{Tr}(E_{x,j})}{d}I_d.
+$$
+
+原 POVM 的归一化会给出
+
+$$
+\sum_j\widetilde E_{x,j}=0,
+$$
+
+而状态差上的读数满足
+
+$$
+\operatorname{Tr}\bigl((\rho-\sigma)\widetilde E_{x,j}\bigr)
+=
+\operatorname{Tr}\bigl((\rho-\sigma)E_{x,j}\bigr).
+$$
+
+所以第 65.1 节的下界应保留为 centered 线性读出预算：
+
+$$
+d^2-1\le\sum_xm_x,
+$$
+
+其中 $m_x$ 是每个上下文删去一个由零和关系决定的项后，剩余 centered 方向的项数。源码虽把参数命名为 `independentCount`，却未假设这些剩余方向线性独立；它们的 span 维数只保证不超过 $m_x$。要把它解释为物理概率测量，还必须另外提供原始 POVM 的正性和单位和条件。
+
+### 68.4 第 63 节的裸矩阵定理与密度态见证分开
+
+`reduced_irreversibility_is_access_defect` 及其 canonical bridge 的输入是
+
+$$
+\rho,\sigma:\operatorname{QubitMatrix},
+$$
+
+源码假设只有对角元相等和某个非对角元不同；没有在该定理的参数中要求 Hermitian、正半定或迹为 $1$。因此第 63.1 节把任意参数直接称为“两个密度态”的说法应撤回，改为“两个 qubit 矩阵的线性见证”。
+
+文件末尾的具体例子取 $\rho=|+\rangle\langle+|$、$\sigma=|-\rangle\langle-|$。从这两个归一化向量的外积可直接检验正性和迹为一；该 Lean `example` 的结论本身只记录对角相等及非对角不同。因此可以在上述合法性检验后保留如下物理实例：在这个例子中，偏迹相同、联合矩阵不同，并且联合逆耦合可恢复。一般的密度态版本需要显式加入
+
+$$
+\rho\succeq0,\quad \sigma\succeq0,
+\qquad
+\operatorname{Tr}\rho=\operatorname{Tr}\sigma=1,
+$$
+
+或直接引用该具体见证。
+
+同样，第 63.3 节的恢复误差下界不是任意记录通道的定理。`FiniteRecordRecoveryError.lean` 的 `finite_record_recovery_error_lower_bound` 固定了有限支撑振幅 $c:\mathbb Z\to\mathbb C$、归一化、整数标签 $q$、非零位移 $q(i)-q(j)$，并对由 `FiniteShiftedRecordChannel` 构造的具体通道 $\Lambda$ 以及任意恢复通道 $R$ 给出
+
+$$
+\sup_{\tau}D\bigl(R\Lambda(\tau),\tau\bigr)
+\ge
+\frac{1-|\gamma(q(i)-q(j))|}{2}.
+$$
+
+因此应保留“该有限移位记录模型中的恢复下界”，撤回任何对任意记录通道、任意环境或普适物理恢复的外推。
+
+### 68.5 稳定深度的维数必须区分 identity 与 centered predictive space
+
+第 62.3 节前面定义的 $\mathcal V_n$ 包含单位方向 $I$，而源码 `CenteredEffectStabilityDepthBound.lean` 的 `towerSpace` 与 `predictiveSpace` 都位于 trace-zero Hermitian 载体。源码定理 `centered_effect_stability_depth_bound` 的精确上界是
+
+$$
+\operatorname{sd}(H,E)
+\le
+\dim\mathcal P_{\infty}-\dim\mathcal T_0,
+$$
+
+其中
+
+$$
+\mathcal P_{\infty}=\operatorname{predictiveSpace}(H,E),
+\qquad
+\mathcal T_0=\operatorname{towerSpace}(H,E,0).
+$$
+
+它还给出
+
+$$
+\dim\mathcal P_{\infty}-\dim\mathcal T_0
+\le
+d^2-1-\dim\mathcal T_0.
+$$
+
+因此原先写成 $\dim(\mathcal V_{\infty})-\dim(\mathcal T_0)$ 的公式应撤回，除非明确重新定义 $\mathcal V_{\infty}$ 为 centered predictive space。若保留第 62.1 节含单位的全 Hermitian 观察塔，在另行假定单位方向被单列且动力学保持相应 trace-zero 子空间时，可写
+
+$$
+\mathcal V_{\infty}=\mathbb RI\oplus\mathcal P_{\infty};
+$$
+
+此时单位方向不计入 trace-zero 稳定深度。保留的结论是：固定有限维载体和固定线性 Heisenberg 作用下，某一步 tower 稳定后以后永久稳定，并存在有限深度证书。
+
+### 68.6 有限 effect 证书分离全部密度态
+
+第 66.5 节把有限证书说成“当前指定密度态读出的完备性”，范围过窄。`FiniteInformationalEffectCertificate.lean` 的 `finite_informational_effect_certificate` 假设的是整个映射
+
+$$
+\rho\longmapsto
+\bigl(\operatorname{Tr}(\rho F_i)\bigr)_{i\in I}
+$$
+
+在全部 $\operatorname{DensityState}(\operatorname{Fin}d)$ 上 injective。它抽取有限 $S\subseteq I$，满足
+
+$$
+|S|\le d^2-1
+$$
+
+以及
+
+$$
+\operatorname{span}_{\mathbb R}
+\left\{
+F_i-\frac{\operatorname{Tr}(F_i)}{d}I_d:i\in S
+\right\}
+=\operatorname{Herm}_0(d),
+$$
+
+并且同一子族仍分离全部密度态：
+
+$$
+\left[
+\forall i\in S,
+\quad
+\operatorname{Tr}(\rho F_i)=\operatorname{Tr}(\sigma F_i)
+\right]
+\Longrightarrow
+\rho=\sigma.
+$$
+
+所以应把旧说法改为“指定有限维密度态读出任务的全体状态完备性”。它仍然是任务索引的：不保证环境记录已保留，不保证未来 Heisenberg 方向仍在该子族 span 内，也不保证约化不可见的联合相干可以恢复。
+
+### 68.7 校准后的使用规则
+
+六项边界合并后，当前可安全使用的推理链是
+
+$$
+\begin{aligned}
+&\text{centered effect span}
+\longrightarrow
+\text{当前读出商与残差},\\
+&\text{trace-zero predictive tower}
+\longrightarrow
+\text{有限观察深度},\\
+&\text{具体记录通道}
+\longrightarrow
+\text{具体相干衰减与恢复下界},\\
+&\text{联合幺正}
+\longrightarrow
+\text{左右共轭的整体恢复}.
+\end{aligned}
+$$
+
+因此，Zeckendorf 合法构型仍可作为离散索引和约束窗口；它不自动提供 POVM 正性、Hamiltonian、记录通道、全体未来完备性或环境恢复。所谓“保留多少历史”必须同时标明：使用的是哪一类 effect、是否已经 centered、动力学位于哪个 trace-zero 载体、记录通道的具体假设是什么，以及完备性是针对全部有限维密度态还是仅针对一个目标预测任务。
+
+## 追加锚（新终端）
+
+## 69. 面向未来任务的稳定记录与最小噪声放大
+
+第 67 节对全部状态方向给出重建预算。但“足以预测后续相互作用”并不总是完整 tomography：有些状态差异与指定后续实验无关。对这些任务，要求全部方向都有统一正下帧界，会把无需恢复的隐藏信息也计入成本。本节把精确可见性收紧为带噪声的任务判据；新增连接为 `repo-derived/open`，不新增 Lean 声明或冻结状态。
+
+### 69.1 当前读出与未来任务必须分别指定
+
+令 $X,Y,Z$ 为有限维实 Hilbert 空间，当前读出为 $A:X\to Y$，未来任务为 $F:X\to Z$。它们都是线性映射。量子应用可取 $X=\operatorname{Herm}_0(d)$；任务的每个坐标是扣除已知参考后的未来期望值。若未来由已指定的通道 $\Phi$ 和读出方向 $E_j$ 构成，则
+
+$$
+F(D)_j=\operatorname{Tr}(E_j\Phi(D))
+=\operatorname{Tr}(\Phi^\ast(E_j)D).
+$$
+
+因此，“未来”通过实际操作的 Heisenberg 拉回进入 $F$。如果选择多个互不相容的实验，$F(D)$ 记录的是这些不同实验各自的统计响应，不是给单次系统同时指定所有实验的预存答案。
+
+`D5/S3/Observer/VisibleDescent/TargetObservabilityFourWayEquivalence.lean` 的 `target_observability_four_way_equivalence` 给出标量目标的纤维常值、核包含与 adjoint 像等价；`D5/S3/Quantum/PredictionDepth/TargetPredictionSufficiency.lean` 的 `target_prediction_sufficiency` 给出密度态上的可见 span 条件及其失败见证。这些判据解决精确可见性，尚需为数据误差指定数值代价。
+
+### 69.2 任务稳定常数与一个可检验的算子不等式
+
+**定理 69.1（任务读出的有限噪声放大判据）。** 对上述有限维线性映射，以下条件等价：
+
+$$
+\ker A\subseteq\ker F;
+$$
+
+$$
+\exists L_0:\operatorname{ran}A\to Z\text{ 线性},
+\qquad F=L_0A;
+$$
+
+$$
+\exists c\ge0,\quad
+\forall x\in X,\qquad\|Fx\|\le c\|Ax\|.
+$$
+
+第二式将 $A$ 的值视为 $\operatorname{ran}A$ 的元素，且 $L_0$ 唯一。把满足第三式的最小常数记为 $c_{\mathrm{task}}$，则
+
+$$
+\boxed{
+ c_{\mathrm{task}}=\|L_0\|
+ =\|FA^+\|_{\mathrm{op}}.
+}
+$$
+
+这里 $A^+$ 是 Moore–Penrose 逆。$A=0,F=0$ 时约定 $c_{\mathrm{task}}=0$。核包含不成立时，记任务代价为 $+\infty$，不把零分母按总定义除法解释为零代价。对给定 $c\ge0$，上述范数不等式又等价于
+
+$$
+\boxed{
+F^\ast F\preceq c^2A^\ast A,
+}
+$$
+
+其中 $\preceq$ 表示自伴算子的二次型偏序。
+
+证明。若核包含成立，定义 $L_0(Ax)=Fx$。相同读出的两个原像之差属于 $\ker A$，因此定义与代表无关；线性和唯一性随之成立。有限维使 $L_0$ 有有限算子范数，从而得到范数界。反之，把 $x\in\ker A$ 代入范数界立即得到 $Fx=0$。
+
+由 Penrose 恒等式 $AA^+A=A$，有 $A(A^+Ax-x)=0$，核包含推出
+
+$$
+F=FA^+A.
+$$
+
+令 $P=AA^+$。Penrose 恒等式还给出 $P^2=P=P^\ast$、$\operatorname{ran}P=\operatorname{ran}A$，因此 $P$ 是到读出像空间的正交投影；由 $A^+AA^+=A^+$ 得 $A^+P=A^+$。于是
+
+$$
+FA^+=L_0P.
+$$
+
+$P$ 不扩张范数，且在像空间上为恒等，故 $\|FA^+\|=\|L_0\|$。所有可用 $c$ 的最小值正是该范数。最后，平方范数界等价于对全部 $x$ 有
+
+$$
+\langle x,(c^2A^\ast A-F^\ast F)x\rangle\ge0,
+$$
+
+即所列半正定条件。证毕。
+
+`D5/S3/Observer/Hilbert/FiniteMoorePenroseInverse.lean` 的 `isMoorePenroseInverse_moorePenroseInverse` 及 `comp_moorePenroseInverse_comp` 提供所用的有限维 Penrose 基础。这里的任务因子化、最小算子范数及半正定判据是本节组合推导，不称为该模块已有的同名结果。
+
+### 69.3 这个常数直接控制预测误差
+
+**定理 69.2（任务预测与最坏有界噪声）。** 假设定理 69.1 的核包含成立，数据为 $b=Ax+\xi$，且 $\|\xi\|\le\nu$，$\nu\ge0$。定义预测
+
+$$
+\widehat f=FA^+b.
+$$
+
+则
+
+$$
+\boxed{
+\|\widehat f-Fx\|\le c_{\mathrm{task}}\nu.
+}
+$$
+
+对任意预测函数 $\Psi:Y\to Z$，定义确定性风险
+
+$$
+R_\nu(\Psi)
+=\sup_{x\in X,\,\|\xi\|\le\nu}
+\|\Psi(Ax+\xi)-Fx\|.
+$$
+
+在允许全部 $x\in X$ 和全部该范数球内噪声的线性问题中，
+
+$$
+\inf_{\Psi:Y\to Z}R_\nu(\Psi)=c_{\mathrm{task}}\nu.
+$$
+
+证明。因子化给出 $FA^+b-Fx=FA^+\xi$，得到上界。若 $c_{\mathrm{task}}\nu=0$，上界已经为零。否则，有限维单位球的紧性使像空间中存在单位向量 $y$，满足 $\|L_0y\|=c_{\mathrm{task}}$。取 $x_\ast$ 使 $Ax_\ast=\nu y$。输入 $x_\ast$ 配噪声 $-\nu y$，与输入 $-x_\ast$ 配噪声 $\nu y$，都产生 $b=0$。两者目标为 $\pm Fx_\ast$，相距 $2c_{\mathrm{task}}\nu$。任意同一预测值至少对其中一者误差不小于其半距。证毕。
+
+这一最小最坏结论针对整个线性载体，不自动是受限密度态集合上的全局下界。若采用 $\rho_\pm=I/d\pm x_\ast$ 的物理见证，必须另外满足 $x_\ast$ Hermitian、无迹及
+
+$$
+\|x_\ast\|_{\mathrm{op}}\le1/d.
+$$
+
+即使这两个状态合法，所用噪声 $\pm\nu y$ 还必须符合允许的数据域与采样模型；若读数被解释为概率，须检验相应概率约束。因此不能仅凭状态合法就声称达到了物理实验的最小最坏下界。上界则对允许状态的任何子集继续成立。无论是否达到线性最坏下界，$c_{\mathrm{task}}$ 都是一个可计算的充分误差系数。
+
+标量目标 $Fx=\langle f,x\rangle$ 还有直接的源码支点：`D5/S3/Observer/Conditioning/TargetVisibilityConditionCost.lean` 的 `target_visibility_condition_cost` 给出 $A^\ast a=f$ 的最小范数读出系数证书，并证明其二次条件成本。对这个 $a$，
+
+$$
+|\langle a,b\rangle-\langle f,x\rangle|
+\le\|a\|\,\|\xi\|.
+$$
+
+系数范数描述绝对误差放大；称它为通常的无量纲“条件数”还需要另行指定输入输出归一化。
+
+### 69.4 丢掉某个方向是否可接受，取决于未来操作
+
+**命题 69.3（同一记录对不同目标有不同成本）。** 取 $0<\varepsilon\le1$，在三维实坐标上定义
+
+$$
+A_\varepsilon(x,y,z)=(x,\varepsilon y,\varepsilon z).
+$$
+
+对目标 $F_x(x,y,z)=x$ 和 $F_y(x,y,z)=y$，分别有
+
+$$
+c_x=1,
+\qquad
+c_y=1/\varepsilon.
+$$
+
+当 $\varepsilon=0$ 时，$F_x$ 仍可精确预测，而 $F_y$ 的核包含条件失败。
+
+证明。$A_\varepsilon$ 可逆时，两个目标的系数行分别为 $(1,0,0)$ 和 $(0,1/\varepsilon,0)$，其 Euclidean 范数就是定理 69.1 的代价。$\varepsilon=0$ 时 $(0,1,0)\in\ker A_0$，却不在 $\ker F_y$ 中；$F_x$ 则直接是当前第一项读数。证毕。
+
+这个例子可以实现为三个不同 qubit 测量上下文。设 $(x,y,z)$ 为 Bloch 坐标，分别使用
+
+$$
+E_{k,\pm}=\frac{I\pm s_k\sigma_k}{2},
+\qquad
+(s_x,s_y,s_z)=(1,\varepsilon,\varepsilon).
+$$
+
+它们均满足正性与单位和条件；每个上下文的两个概率之差为 $s_k$ 乘以相应 Bloch 分量。按这三个差值组织数据，就得到 $A_\varepsilon$。这里使用 Euclidean Bloch 范数，与第 67 节的无迹 Hilbert–Schmidt 范数相差固定因子 $\sqrt2$；跨节转换时必须同步校准。三个上下文是在分别制备的同态样本上统计，不表示同时测得单个 qubit 的三个确定值。
+
+若未来只再读 $X$，第一项已经够用。若允许一个满足 $U^\ast XU=Y$ 的校准幺正操作，随后同样读取 $X$，则未来目标变成当前的 $Y$ 分量；例如可取 $U=e^{i\pi Z/4}$。原来没有进入第一项记录的相位方向，现在进入可见预测。因此，扩大允许操作族会改变所需记录及其稳定成本。
+
+### 69.5 近似任务与历史尾项应在相同输出尺度上记账
+
+精确核包含有时过强。对已指定的任务 $F$，可以选择当前读出可实现的近似任务 $F_0=L_0A$；令 $P$ 为到 $\operatorname{ran}A$ 的正交投影，取 $L=L_0P$。
+
+**命题 69.4（近似闭合与数据噪声的任务预算）。** 若
+
+$$
+\|F-F_0\|_{\mathrm{op}}\le\delta,
+\qquad
+\|x\|\le M,
+\qquad
+b=Ax+\xi,\quad\|\xi\|\le\nu,
+$$
+
+则预测 $Lb$ 满足
+
+$$
+\boxed{
+\|Lb-Fx\|\le\delta M+\|L\|\nu.
+}
+$$
+
+若实际后续读数 $f_{\mathrm{actual}}$ 还满足 $\|f_{\mathrm{actual}}-Fx\|\le\mu$，则总误差不超过
+
+$$
+\delta M+\|L\|\nu+\mu.
+$$
+
+证明。恒等式 $LA=F_0$ 给出 $Lb-Fx=(F_0-F)x+L\xi$；分别应用算子范数界和三角不等式，再加上实际输出的偏差即可。证毕。
+
+$\delta M$ 是任务不完全落在当前可见空间内的代价，$\|L\|\nu$ 是把读数噪声转换为预测误差的代价，$\mu$ 则容纳已单独证明的历史尾项或动力学失配。第 56、58 节的记忆尾界或刻度界，只有在转换成这里同一个任务输出范数后才能代入 $\mu$ 或 $\nu$。本式没有证明这些误差天然小，也没有赋予三个符号相互独立的概率意义。
+
+### 69.6 可预测对象的候选记录应怎样比较
+
+给定未来任务 $F$、误差容限 $\epsilon_\ast$ 和候选记录 $A_J$，可以先用
+
+$$
+\ker A_J\subseteq\ker F
+$$
+
+筛出精确足够的记录，再用
+
+$$
+F^\ast F\preceq c_J^2A_J^\ast A_J,
+\qquad
+c_J\nu_J\le\epsilon_\ast
+$$
+
+检验其数值稳定性。若只要求近似足够，则使用命题 69.4 的三项预算。$\nu_J$ 必须随记录方案一同标定；单纯增加权重或重复同一项，并不在固定资源下自动减少误差。
+
+因此，记录数、采样量、可访问环境范围、预测时间和误差容限共同约束可选方案。Zeckendorf 标签可以索引 $J$，但标签数量或整数差不能替代 $A_J$ 的线性作用与噪声标定。
+
+相对于这组任务，能够被删除的是那些不影响目标，或只在容许预算内影响目标的关系；需要保留的是会进入未来响应、且必须被稳定读取的方向。这是“保留哪些历史”的有限维任务版本。它仍需物理记录稳定性、实际环境访问条件与后续闭合共同支持，不能单凭线性预测界宣称选出了唯一经典结果。
+
+本节的精确可见性、最小范数标量证书及 Penrose 基础分别由所引项目模块定位；多输出任务范数、最坏有界噪声、物理上下文实例与近似任务预算为本节的连接推导。它们使用标准有限维线性代数和估计论结构，不主张文献新颖性；本节未新增 Lean 形式覆盖。
+
+## 追加锚（新终端）
+
+## 70. 有限视界内的稳定记录、闭合缺陷与记忆容量
+
+第 69 节把“当前记录能否预测指定目标”写成了任务级核包含和噪声常数。本节再加入记录通道的动力学条件：记录是否在每一步被重新建立，隐藏关联是否会回流，以及完全区分历史需要多大的内部记忆。新增组合为 `repo-derived/open` 理论；所引 Lean 模块是现有冻结结果，本节没有新增 Lean 声明。
+
+### 70.1 固定点、吸引子与记录闭合是三件事
+
+设 $\mathcal E$ 是一个有限维量子记录通道，$\Phi$ 是下一步系统演化。若记录是完整正交 pinching，则已有 `FiniteRecordPinchingIdempotence.finite_record_pinching_idempotent` 给出
+
+$$
+\mathcal E^2=\mathcal E.
+$$
+
+因此 $\operatorname{im}\mathcal E$ 是重复记录后不再改变的子空间。这个事实只说明记录结构是幂等的，不说明任意态会趋近它。
+
+在条件记录向量 $|r_i\rangle$ 的模型中，`EnvironmentMarginalChannel.environment_marginal_channel` 给出
+
+$$
+\mathcal E(\rho)_{ij}=R_{ij}\rho_{ij},
+\qquad
+R_{ij}=\langle r_j,r_i\rangle.
+$$
+
+`SingletonRecordClassicality.singleton_record_classicality` 在 $i\ne j$ 时只要求 $R_{ij}\ne1$，即可推出固定点中的相应非对角项为零。若进一步存在统一的
+
+$$
+|R_{ij}|\le q<1
+$$
+
+跨记录类界，`RepeatedRecordExponentialDecay.repeated_record_exponential_decay` 才给出到记录类 pinching 的收缩，例如
+
+$$
+\|\mathcal E^N(\rho)-\mathcal P(\rho)\|_F
+\le
+q^N\|\rho-\mathcal P(\rho)\|_F.
+$$
+
+所以应区分：
+
+$$
+\text{幂等固定结构}
+\quad\ne\quad
+\text{对它的吸引性}
+\quad\ne\quad
+\text{与下一步动力学的预测闭合}.
+$$
+
+当 $|R_{ij}|=1$ 而 $R_{ij}\ne1$ 时，非对角项可以只发生相位旋转；固定点可能是经典的，单次迭代却不收敛。这个边界不能用“已经发生记录”替代。
+
+### 70.2 逐步记录时的精确闭合缺陷
+
+假设每一步都执行同一个记录通道。定义两个从当前完整状态到下一次记录的通道：
+
+$$
+A=\mathcal E\Phi,
+\qquad
+B=\mathcal E\Phi\mathcal E.
+$$
+
+$A$ 先让完整状态演化再记录；$B$ 先丢弃当前记录看不见的部分，再演化和记录。若存在记录层通道 $\overline\Phi:\operatorname{im}\mathcal E\to\operatorname{im}\mathcal E$ 使
+
+$$
+A=\overline\Phi\mathcal E,
+$$
+
+则当前记录是这一步的封闭状态描述。由于 $\mathcal E^2=\mathcal E$，这等价于
+
+$$
+\boxed{
+\mathcal E\Phi=\mathcal E\Phi\mathcal E.
+}
+$$
+
+如果只要求有限精度，定义
+
+$$
+\delta
+=
+\sup_{\rho\in\mathsf D}
+D\!\left(\mathcal E\Phi(\rho),
+\mathcal E\Phi\mathcal E(\rho)\right),
+$$
+
+其中 $\mathsf D$ 是指定密度态集合，$D$ 是迹距离。这里的 $\delta$ 衡量当前删去的部分在下一次记录中重新显现的最大幅度。
+
+**命题 70.1（逐步记录的有限视界误差）。** 令 $A=\mathcal E\Phi$、$B=\mathcal E\Phi\mathcal E$，两者均为量子通道，并假设每一步都在记录之后继续演化。若
+
+$$
+\sup_{\rho\in\mathsf D}D(A\rho,B\rho)\le\delta,
+$$
+
+则对任意初态 $\rho$ 和整数 $n\ge1$，
+
+$$
+D(A^n\rho,B^n\rho)\le n\delta.
+$$
+
+证明。通道的迹距离收缩性给出
+
+$$
+D(A\sigma,A\tau)\le D(\sigma,\tau),
+\qquad
+D(B\sigma,B\tau)\le D(\sigma,\tau).
+$$
+
+插入望远镜分解
+
+$$
+A^n-B^n
+=
+\sum_{k=0}^{n-1}A^{n-1-k}(A-B)B^k
+$$
+
+的逐步态版本。第 $k$ 项的距离贡献不超过 $\delta$，已有贡献不会被后续通道放大，故归纳得到
+
+$$
+e_{n+1}\le e_n+\delta,
+\qquad e_0=0.
+$$
+
+因此 $e_n\le n\delta$。证毕。
+
+当要求视界 $n$ 内的记录分布误差不超过 $\varepsilon$ 时，一个充分条件是
+
+$$
+\boxed{n\delta\le\varepsilon.}
+$$
+
+这个命题只适用于“每一步重新建立记录”的无记忆协议。若同一个记录单元被相干复用，旧关联会留在联合系统中，过程不再由固定的 $B$ 描述；第 55 节的相位回流模型已经给出相同单步作用可以周期性恢复相干的反例。此时必须把记录单元并入状态，或建立带记忆的多时误差界。
+
+### 70.3 完全区分历史的容量下界
+
+设记忆系统维数为 $d_M$，用一个 POVM $(E_j)_j$ 读取它。若有 $N$ 个历史被编码为密度矩阵 $\rho_1,\ldots,\rho_N$，并且满足
+
+$$
+\operatorname{Tr}(E_j\rho_i)=\mathbf 1_{i=j},
+$$
+
+则 `FiniteMemoryHistoryCapacity.finite_memory_history_capacity` 给出
+
+$$
+\boxed{N\le d_M.}
+$$
+
+证明的线性核心是：每个 $\rho_i$ 的支撑落在 $E_i$ 的值域，每个不同历史的支撑彼此正交；$d_M$ 维空间至多容纳 $d_M$ 个非零两两正交向量。
+
+若记忆由 $b$ 个量子比特构成，$d_M=2^b$，则完全区分 $N$ 个历史要求
+
+$$
+\boxed{b\ge\lceil\log_2N\rceil.}
+$$
+
+对长度 $L$、禁止相邻 $1$ 的 Zeckendorf 合法窗口，候选构型数为
+
+$$
+|\mathcal W_L|=F_{L+2}.
+$$
+
+若每个合法构型都必须在一次读取中被完全区分，记忆维数至少为 $F_{L+2}$。若实验族只区分这些构型的 $N$ 个未来响应类，则容量下界只对 $N$ 生效，而不是对全部 $F_{L+2}$ 个标签生效。
+
+这是编码容量和预测容量的区别：增加 Zeckendorf 合法字串会增加候选标签，但只有当它们落入不同的任务响应类时，才增加必须保留的记录数。近似区分时，$N\le d_M$ 不再是充分描述；需要改用记录态的迹距离、Gram 重叠或本节的闭合缺陷 $\delta$。
+
+### 70.4 投影动力学何时可以写成经典转移
+
+`ProjectedUnistochasticDynamics.projected_dynamics_is_unistochastic` 对每一步执行构型投影的协议给出
+
+$$
+K_{ij}=|U_{ij}|^2,
+$$
+
+以及
+
+$$
+\mathbf p_{n+1}=K\mathbf p_n.
+$$
+
+$K$ 是双随机矩阵。这个结论的前提是每一步确实插入了投影；未测量的连续幺正演化不自动服从同一个 $K$。源码中的 `initialWeights` 也没有自动假设非负和归一，所以只有另外加入概率向量条件时，$\mathbf p_n$ 才能直接称为概率分布。
+
+因此，经典转移矩阵不是从“有一个量子基底”自动得到的，而是从
+
+$$
+\text{指定投影协议}
++
+\text{幺正演化}
++
+\text{概率初始条件}
+$$
+
+共同得到的。更换为相干复用协议，或者把投影记录留在可访问环境中，都会改变有效过程。
+
+### 70.5 稳定经典对象的有限视界定义
+
+给定实验族 $\mathfrak T$、视界 $H$ 和容许误差 $\varepsilon$，对两个历史 $h,h'$ 定义
+
+$$
+ h\sim_{\mathfrak T,H,\varepsilon}h'
+$$
+
+当且仅当任意 $T\in\mathfrak T$、任意长度不超过 $H$ 的记录序列，其输出概率分布的总变差距离不超过 $\varepsilon$。
+
+这个关系把三种条件放在同一个对象定义中：
+
+$$
+\begin{aligned}
+&\text{当前读出足以区分哪些历史；}\\
+&\text{记录通道是否在视界内近似闭合；}\\
+&\text{隐藏历史是否通过回流在视界内重新可见。}
+\end{aligned}
+$$
+
+若固定记录通道满足 $|R_{ij}|\le q<1$，则第 70.1 节提供指数项 $q^H$；若逐步闭合缺陷为 $\delta$，则第 70.2 节提供 $H\delta$；若读数存在任务噪声，则第 69 节提供 $c_{\mathrm{task}}\nu$。在这些项都被转换到同一个输出距离后，可以使用
+
+$$
+\boxed{
+\text{总预测误差}
+\le
+\text{记录收缩尾项}
++
+\text{闭合缺陷项}
++
+\text{读出噪声项}
++
+\text{其余已标定的历史回流项}.
+}
+$$
+
+因此当前尺度上的“经典对象”是一个有限预测等价类，而不是脱离实验协议的绝对实体。更换允许的实验族、视界、记录访问范围或误差容限，可能细化或合并这些类。
+
+本节组合了现有记录通道、pinching 幂等性、有限记忆容量与投影动力学的边界；`StaticLossVersusReturnFlow` 仍只提供一般实线性回流反例，不能被当作量子通道定理。Zeckendorf 在这里提供合法构型的离散索引，尚未由本仓量子模块自动生成 Fibonacci 约束 Hilbert 空间或其 Hamiltonian。不从这些有限模型推出唯一测量结果、宇宙经典性或物理耦合常数。
+
+## 71. 幂等记录的有限视界强化与近似记忆容量
+
+第 70 节给出的逐步误差界
+
+$$
+D(A^n\rho,B^n\rho)\le n\delta
+$$
+
+适用于一般的逐步通道比较，但在本卷当前采用的 pinching 协议中，还可以利用记录映射的幂等性得到更强的结论。令
+
+重复施加记录映射本身满足 $\mathcal E^n=\mathcal E$（$n\ge1$），所以它在一次作用后就到达自己的固定像空间。这里需要区分的是：幂等性不保证一个另行指定的未记录演化 $\Phi$ 会把完整状态吸引到这个像空间，也不保证记录对 $\Phi$ 之后的预测闭合。
+
+$$
+A=\mathcal E\Phi,
+\qquad
+B=\mathcal E\Phi\mathcal E,
+\qquad
+\mathcal E^2=\mathcal E.
+$$
+
+由于 $\mathcal E$ 是记录后的 pinching，$A\rho$ 和 $B\rho$ 都属于 $\operatorname{im}\mathcal E$。若 $\sigma\in\operatorname{im}\mathcal E$，则 $\mathcal E\sigma=\sigma$，从而
+
+$$
+A\sigma
+=\mathcal E\Phi\sigma
+=\mathcal E\Phi\mathcal E\sigma
+=B\sigma.
+$$
+
+也就是说，$A$ 与 $B$ 在第一次记录之后限制为同一个像空间内的通道。设
+
+$$
+\delta
+=
+\sup_{\rho\in\mathsf D}
+D(A\rho,B\rho),
+$$
+
+其中现在明确取 $\mathsf D$ 为全部有限维密度态，且假设 $\mathcal E$ 与 $\Phi$ 都是保持密度态域的 CPTP 通道，$\mathcal E$ 还满足幂等性。若只在一个真子集上取上确界，则还必须另加条件 $B^k(\rho)\in\mathsf D$，才能把同一上界用于后续轨道。
+
+则对任意 $n\ge1$，迹距离收缩性给出
+
+$$
+\boxed{
+D(A^n\rho,B^n\rho)
+\le
+D(A\rho,B\rho)
+\le
+\delta.
+}
+$$
+
+证明可以写成一行递归。令 $C$ 为 $A$ 与 $B$ 在 $\operatorname{im}\mathcal E$ 上共同的限制，则
+
+$$
+A^n\rho=C^{n-1}A\rho,
+\qquad
+B^n\rho=C^{n-1}B\rho.
+$$
+
+于是
+
+$$
+D(A^n\rho,B^n\rho)
+=D(C^{n-1}A\rho,C^{n-1}B\rho)
+\le D(A\rho,B\rho).
+$$
+
+因此，在固定、无记忆、每步都重新 pinching 的协议中，$n\delta$ 是通用的累积上界，而
+
+$$
+\boxed{
+D(A^n\rho,B^n\rho)\le\delta\quad(n\ge1)
+}
+$$
+
+是利用幂等记录结构得到的强化。这个强化不适用于相干复用同一个记录单元的协议：那时完整联合态未必在每一步落入同一个无记忆像空间，旧关联可以沿联合动力学返回可见部分。故“误差是否随视界线性累积”本身也是协议相关的性质。
+
+### 71.1 完全容量与近似容量必须分开
+
+第 70 节的
+
+$$
+N\le d_M
+$$
+
+有一个不可省略的前提：同一个记忆 POVM 必须**完美区分**所编码的 $N$ 个状态，即存在结果标签 $j$ 满足
+
+$$
+\operatorname{Tr}(E_j\rho_i)=\mathbf 1_{i=j}.
+$$
+
+这个条件推出不同记忆态支撑两两正交，所以 $N$ 不得超过记忆 Hilbert 空间维数 $d_M$。若记忆由 $b$ 个 qubit 构成，才可进一步得到
+
+$$
+b\ge\lceil\log_2N\rceil.
+$$
+
+因此，Zeckendorf 合法窗口的数量
+
+$$
+|\mathcal W_L|=F_{L+2}
+$$
+
+只有在**每一个合法构型都必须由一次读取完全区分**时，才给出
+
+$$
+d_M\ge F_{L+2}.
+$$
+
+若实验只要求区分 $N$ 个未来响应类，容量下界只在**同一个记忆 POVM 能完美恢复这 $N$ 个类的标签**时作用于这 $N$ 类。仅仅有不同的未来概率律，并不推出一次读取就能完美区分它们。如果若干合法字串在允许实验族中产生相同响应，它们可以共享同一条记录，不需要为每个 Zeckendorf 标签配置独立记忆。
+
+完全区分之外，还有两个不同的近似问题。
+
+第一，可以要求不同记忆态的迹距离至少为某个阈值：
+
+$$
+D(\rho_i^M,\rho_j^M)\ge 1-\varepsilon.
+$$
+
+这给出有限误差下的可区分性问题，容量不再由一个整数 $N\le d_M$ 单独刻画，而要同时依赖 $d_M$、$\varepsilon$ 和允许的测量族。
+
+第二，可以直接控制记录态的 Gram 矩阵
+
+$$
+G_{ij}=\langle r_j|r_i\rangle.
+$$
+
+其中 $|G_{ij}|$ 小表示两条记录的相干重叠小，$G_{ij}$ 接近单位模则表示它们即使带有不同相位，也没有形成稳定的可区分记录。对于条件记录通道，非对角系统项按
+
+$$
+\rho_{ij}\longmapsto G_{ij}\rho_{ij}
+$$
+
+变化。因此，近似记录应同时报告：
+
+$$
+\text{状态可区分度 }D(\rho_i^M,\rho_j^M),
+\qquad
+\text{相干重叠 }|G_{ij}|,
+\qquad
+\text{视界内闭合缺陷 }\delta.
+$$
+
+它们分别回答“能否读出”“相干还剩多少”和“被省略的部分会不会回来”。把这三个量压成单一的历史条数，会丢掉协议与时间尺度的信息。
+
+### 71.2 对稳定经典对象的修正定义
+
+给定实验族 $\mathfrak T$、预测视界 $H$、误差容限 $\varepsilon$ 和记录访问范围 $\mathfrak R$，可以定义当前对象的有限响应**容差关系**：
+
+$$
+h\sim_{\mathfrak T,H,\varepsilon,\mathfrak R}h'
+$$
+
+当且仅当对所有 $T\in\mathfrak T$，所有长度不超过 $H$ 的记录序列，以及所有允许的记录访问操作 $R\in\mathfrak R$，两段历史给出的输出分布总变差距离不超过 $\varepsilon$。当 $\varepsilon=0$ 时它才是严格的输出等价关系；当 $\varepsilon>0$ 时一般不传递，不能直接把它称为等价类。若需要有限误差下的类，必须另行指定聚类规则或先取精确等价商再定义近似邻域。
+
+在这个定义下，“需要保留多少历史”不是一个脱离协议的常数，而是以下数据的函数：
+
+$$
+\boxed{
+\text{所需记忆}
+=
+\text{响应类数量}
++
+\text{记录态的近似区分成本}
++
+\text{视界内的回流与闭合误差}.
+}
+$$
+
+若实验族缩小、访问范围减少或视界变短，原先不同的历史可能落入同一个容差邻域；若允许更强的联合操作或更长的视界，它们又可能被重新区分。这种相对性有明确的操作索引，并不等于任意描述都同样有效。闭合缺陷 $\delta$ 也不是独立的近似判别误差；要谈近似容量，还需指定要判别的标签、允许的 POVM 和错误准则。
+
+因此，本卷目前能够支持的最严格表述是：
+
+$$
+\boxed{
+\text{稳定的经典现实}
+=
+\text{在指定实验族、记录访问范围和有限视界内，}
+\text{对后续响应近似闭合的有限记录类}.
+}
+$$
+
+这一定义保留了三条边界。记录通道的固定点可以是经典的，但不保证具有吸引性；完全记忆容量只在完美区分前提下给出维数下界；Zeckendorf 的 Fibonacci 计数只统计候选合法构型，不自动等于必须保留的物理记忆数。第 70 节的收缩尾项、闭合缺陷项和噪声项只有在它们分别比较同一协议中的相应端点、所有需要的前缀以及联合历史寄存器（必要时还包括参考系统）时，才能合成为一个输出误差界；当前写法应读作带这些条件的三角不等式模板，而不是已经证明的多时自适应记录定理。后续若要把这条主线推进为新的 Lean 内容，最小的可复用目标是分别形式化幂等像空间上的一次性误差界，以及带 Gram/迹距离阈值和明确判别任务的近似记忆容量，而不是把它们合并成一个无条件的“经典化定理”。
+
+## 72. 仪器级历史误差、参考系统与自适应读出
+
+第 70–71 节的 $\delta$ 比较的是系统末态：它可以说明一次记录后系统态相差多少，却不能自动说明完整的多时记录分布相差多少。要把“历史是否被保留”放到可检验的对象上，需要把记录仪器和它写下的经典寄存器一起纳入通道。
+
+设 $\{\mathcal I_y\}_{y\in Y}$ 是一个有限结果的量子仪器。每个 $\mathcal I_y$ 是完全正的无迹非增映射，非选择通道为
+
+$$
+\mathcal N=\sum_{y\in Y}\mathcal I_y.
+$$
+
+以下假设 $\mathcal N$ 是 CPTP；因此 $\mathcal I_y$ 是一组合法的仪器分支。若实际模型只给出一个未归一化的 CP 分支，必须另外保留其发生概率，不能直接把条件化后的态代入下面的无条件距离界。
+
+用经典寄存器 $C$ 保存结果，定义仪器的非选择抬升：
+
+$$
+\widehat{\mathcal I}(\rho)
+=
+\sum_{y\in Y}
+|y\rangle\langle y|_C\otimes\mathcal I_y(\rho).
+$$
+
+若 $R$ 是没有被仪器直接读取的参考系统，则抬升到联合系统的通道为
+
+$$
+\widehat{\mathcal I}_R
+=
+\operatorname{id}_R\otimes\widehat{\mathcal I}.
+$$
+
+这一步不是给系统添加一个外部观察者。$C$ 是整体内部的一部分，$R$ 则表示我们允许在检验时保留的关联自由度。只对系统取边缘，或者只看单步的 $\mathcal N(\rho)$，都会忘掉这两个寄存器中的可用区别。
+
+### 72.1 完整历史的通道距离
+
+设 $\Phi_k$ 是第 $k$ 个时间槽的物理演化，$\widehat A_k$ 和 $\widehat B_k$ 是同一记录协议下的两种候选槽通道。例如，未先丢弃当前不可见部分的候选可以写成
+
+$$
+\widehat A_k
+=
+\widehat{\mathcal I}_k\Phi_k,
+$$
+
+而先执行当前粗粒化的候选写成
+
+$$
+\widehat B_k
+=
+\widehat{\mathcal I}_k\Phi_k\mathcal E_k.
+$$
+
+这里的帽号表示：槽通道同时更新系统和历史寄存器；它不是只对系统矩阵取一个偏迹。令
+
+严格地说，$\widehat A_k$、$\widehat B_k$ 应是同一累计协议中的完整轮次通道：它们把
+
+$$
+X_k=H_{k-1}\otimes S_k\otimes M_k
+$$
+
+映到共同的
+
+$$
+X_{k+1}=H_k\otimes S_{k+1}\otimes M_{k+1},
+$$
+
+旧历史由恒等或共同控制保留，必要时对 codomain 做 padding。$\eta_k$ 是这两个完整映射的半 diamond 距离；这样 $\widehat A_{1:n}=\widehat A_n\circ\cdots\circ\widehat A_1$ 的复合才有类型。只定义 $S\to C\otimes S$ 的单槽映射还不足以直接写望远镜复合。
+
+$$
+\eta_k
+=
+\frac12
+\left\|
+\widehat A_k-\widehat B_k
+\right\|_\diamond,
+$$
+
+其中 diamond 范数已经对任意有限维参考系统取上确界。设 $\widehat A_{1:n}$ 与 $\widehat B_{1:n}$ 是由这些槽按同一历史寄存器协议组成的 $n$ 步过程通道，则通道范数的望远镜展开给出
+
+$$
+\boxed{
+\frac12
+\left\|
+\widehat A_{1:n}-\widehat B_{1:n}
+\right\|_\diamond
+\le
+\min\!\left\{1,\sum_{k=1}^{n}\eta_k\right\}.
+}
+$$
+
+在均匀界 $\eta_k\le\eta$ 下，这给出 $\min\{1,n\eta\}$。证明只使用每个槽的三角不等式、其余槽通道的 diamond 收缩性，以及望远镜分解；因此它比较的是完整抬升过程，而不是把系统末态距离误称为历史分布距离。
+
+对任意初始联合态 $\rho_{RS}$，有
+
+$$
+\frac12
+\left\|
+\bigl(\operatorname{id}_R\otimes\widehat A_{1:n}\bigr)(\rho_{RS})
+-
+\bigl(\operatorname{id}_R\otimes\widehat B_{1:n}\bigr)(\rho_{RS})
+\right\|_1
+\le
+\min\!\left\{1,\sum_{k=1}^{n}\eta_k\right\}.
+$$
+
+再对系统、参考或量子寄存器取偏迹，并对 $C$ 做任意经典读出，距离只能下降。因此，对完整记录序列的概率分布 $p_{1:n}$、$q_{1:n}$，总变差距离满足
+
+$$
+\boxed{
+\operatorname{TV}(p_{1:n},q_{1:n})
+\le
+\min\!\left\{1,\sum_{k=1}^{n}\eta_k\right\}.
+}
+$$
+
+这个结论给出了“保留的历史是否足以区分两种过程”的直接判据：必须先指定记录寄存器和参考系统，再计算抬升过程的通道距离。
+
+### 72.2 幂等记录的强化范围
+
+一次性界只有在固定的累计空间上才可使用。令 $X$ 是包含系统、历史寄存器和活动工作记忆的固定有限维空间，另以 $R$ 表示未被过程直接操作的惰性参考系统；$P:X\to X$ 是 CPTP 且满足
+
+$$
+P^2=P.
+$$
+
+令 $A,B:X\to X$ 是 CPTP，并假设
+
+$$
+P\circ A=A,
+\qquad
+P\circ B=B,
+\qquad
+A\circ P=B\circ P
+$$
+
+最后一个等式要作为完全有界映射理解，即对任意参考系统 $R$ 都有
+
+$$
+(A\otimes\operatorname{id}_R)\circ(P\otimes\operatorname{id}_R)
+=
+(B\otimes\operatorname{id}_R)\circ(P\otimes\operatorname{id}_R).
+$$
+
+在这些条件下，归纳得到 $A^mP=B^mP$，并且对 $n\ge1$ 有
+
+$$
+A^n-B^n=A^{n-1}P(A-B).
+$$
+
+因此
+
+$$
+\boxed{
+\frac12\lVert A^n-B^n\rVert_\diamond
+\le
+\frac12\lVert A-B\rVert_\diamond.
+}
+$$
+
+这里的 $P$ 必须是固定累计空间上的 endomap。新鲜记录的抬升通常是 $S\to C\otimes S$，第二次作用已经改变了空间，不能直接写成 $P^2$；若每轮都追加新历史，应该使用 72.1 的完整轮次通道和式。若旧记录被相干地重新写入，也必须把它放进 $X$ 后重新检查完全有界的 $A\circ P=B\circ P$，不能只用系统态上的相等。
+
+这一区分解释了两个看似矛盾的事实：一次系统记录可以已经落在经典像空间，而完整历史过程仍然保留跨时关联；一次系统态的误差可以不随 $n$ 累积，而自适应控制器对整段记录的可区分误差仍然需要逐槽预算。
+
+### 72.3 自适应协议与参考系统不能被省略
+
+若第 $k+1$ 个操作根据前面记录 $y_{1:k}$ 选择不同的 $\Phi_{k+1,y_{1:k}}$，则过程不再是一个与历史无关的固定幂。可以把经典控制器并入 $C$，把每个分支的控制动作写进一条抬升通道；对所有分支统一取 diamond 范数后，72.1 的望远镜界仍可使用。这里要求实际协议和理想协议使用同一个控制器；若控制器本身也随协议改变，其差异必须计入相应的 $\eta_k$。若控制器还保有会在后续操作中参与的量子记忆，则必须把该记忆并入活动系统和通道；只有从整个过程中始终不被操作的辅助系统，才可作为惰性参考 $R$。否则只比较系统边缘会漏掉可重新参与的相位。对经典历史寄存器逐分支取最大误差，只能在每一步先去相干、输入确实是经典块对角时替代整合通道的 diamond 范数。
+
+因此，对任意长度不超过 $H$ 的前缀都要分别检查
+
+$$
+\operatorname{TV}(p_{1:k},q_{1:k})
+\le
+\sum_{j=1}^{k}\eta_j,
+\qquad
+1\le k\le H,
+$$
+
+不能用终点 $k=H$ 的界替代所有前缀，也不能把只对 $\mathcal E^H$ 成立的 $q^H$ 衰减直接套到交错的 $\mathcal E\Phi$ 过程。若研究的是联合历史、参考系统和自适应策略的最坏情况，所需对象是过程或 comb 的距离；系统态的单步闭合缺陷只是其中一个输入量。
+
+### 72.4 与 Zeckendorf 合法构型的连接
+
+对长度 $L$ 的无相邻 $1$ 合法窗口
+
+$$
+\mathcal W_L
+=
+\{w\in\{0,1\}^L:w_jw_{j+1}=0\},
+\qquad
+|\mathcal W_L|=F_{L+2},
+$$
+
+可以把 $w$ 作为仪器输入标签，把记录结果 $y_w$ 作为内部历史寄存器的一个槽，并假设这些标签两两不同、来自同一个 POVM。只有在同一个槽的 POVM 对所需的构型或未来响应类满足
+
+$$
+\Pr(y=y_w\mid w')
+=
+\mathbf 1_{w=w'}
+$$
+
+时，才可以把 $F_{L+2}$ 直接代入完美记忆容量下界。若仪器只保留 Zeckendorf 数值的某个函数，或只需预测后续任务 $F(w)$，则应先按仪器级响应分组，再对真正需要区分的标签数使用容量定理。
+
+在近似情形，给定容许错误 $\epsilon$，应报告
+
+$$
+\operatorname{TV}(p_{1:H},q_{1:H}),
+\qquad
+D(\rho_w^M,\rho_{w'}^M),
+\qquad
+\left|\langle r_{w'}\mid r_w\rangle\right|,
+$$
+
+并说明它们对应的是完整历史、记忆态还是单步相干。最后一个 Gram 重叠只适用于条件记录是纯态 $|r_w\rangle$ 的情形；若记录态是混态，应改报迹距离、保真度或明确选定的广义 Gram 量。三者不能互相替代。于是，Zeckendorf 提供的是合法输入的递归索引；仪器抬升决定哪些索引进入历史；diamond 或过程距离决定这些历史在允许参考系统和控制器下是否仍可被区分。
+
+若记忆态或参考系统本身可被后续操作访问，它们必须计入活动系统的维数与通道；若它们被声明为不可访问环境，则只能在明确取迹后使用收缩性。对后选择分支，归一化会除以分支概率，可能放大条件误差，所以必须使用未归一化 CP 分支的距离，或另给出统一的分支概率下界。
+
+本节还需要一个编码层面的限定。`FiniteMemoryHistoryCapacity` 的有限索引结论适用于同一个 POVM 完美区分 $N$ 个密度态；把 $|\mathcal W_L|=F_{L+2}$ 代入它，还需要给出合法窗口与 $\operatorname{Fin}(F_{L+2})$ 的明确枚举或双射。若只知道构型计数而没有这条重索引，不能直接把 Fibonacci 数写成定理中的 $N$。若记忆可访问的是联合 $M\otimes R$，容量维数也应取联合空间；多轮自适应协议可以使用较小的瞬时记忆，不能从单轮的 $F_{L+2}$ 计数推出每一轮都需要同样大小的记忆。
+
+上述 diamond 望远镜、过程抬升和自适应控制边界是本卷在已有记录、偏迹和容量结果上的新组合；它们不是当前仓库已经冻结的单一 Lean 定理。涉及具体仪器时，仍需在选定的有限维通道、Kraus 数据、记录空间和 axiom 闭包下单独形式化与构建。
+
+本节把“历史回流”从系统末态的比喻改写成了一个可计算的过程级问题：先固定仪器、记录寄存器、参考系统和控制策略，再对完整过程取距离。没有这些对象，单个 $\delta$、单个 $q^H$ 或单个历史条数都不足以证明稳定的经典预测。
+
+## 73. 预测尾空间的最小维数与 Zeckendorf 记录压缩
+
+第 71 节的记忆容量回答的是“要一次完全区分多少个记录态”，第 72 节的过程距离回答的是“两个完整仪器协议相差多少”。两者之间还缺一个更贴近预测的问题：如果我们只要求重现允许实验的全部未来响应，当前状态描述的最小线性维数是多少？
+
+设 $K$ 是一个域，$U$ 是输入方向空间，$Y$ 是读出方向空间，给定一列线性响应
+
+$$
+ m=(m_n)_{n\ge0},
+ \qquad
+ m_n:U\to Y.
+$$
+
+这里的 $m_n$ 可以是第 $n$ 步的记录期望、中心化 effect 的坐标，或固定实验族下的线性概率响应。它不是自动等于完整密度矩阵；若原始概率带有归一化约束，应先明确选取线性坐标和剩余的归一化条件。
+
+定义所有未来尾的线性空间：
+
+$$
+\mathcal T(m)
+=
+\operatorname{span}_K
+\left\{
+ i\longmapsto m_{i+j}(u):
+ j\in\mathbb N,\ u\in U
+\right\}
+\subseteq(\mathbb N\to Y).
+$$
+
+它保留的不是历史词的身份，而是历史在所有未来时刻和允许输入方向下能够产生的响应形状。相同的当前读数但不同的未来尾，会在这个空间中留下不同方向。
+
+### 73.1 有限尾空间恰好等价于有限线性预测实现
+
+仓库的 `D5.S3.Observer.Hankel.SequenceHankelRealization` 已给出以下等价关系：
+
+$$
+\boxed{
+\mathcal T(m)\text{ 有限维}
+\iff
+\text{存在有限维线性系统完整重现 }m.
+}
+$$
+
+更具体地，若系统为
+
+$$
+(V,A,B,C),
+\qquad
+A:V\to V,\quad B:U\to V,\quad C:V\to Y,
+$$
+
+其 Markov 响应为
+
+$$
+ m_n=C A^n B,
+$$
+
+则每个未来尾都来自 $V$ 的像，所以
+
+$$
+\dim\mathcal T(m)\le\dim V.
+$$
+
+反向地，把尾空间本身作为状态空间，令左移成为动力学，当前坐标成为输出，就得到一个重现全部 $m_n$ 的有限实现。因此最小状态维数不是凭经验选出的记忆长度，而是
+
+$$
+\boxed{
+ d_{\mathrm{pred}}(m)
+=\operatorname{finrank}_K\mathcal T(m).
+}
+$$
+
+这个等式的适用范围是线性响应实现。它不声称任意非线性控制器、任意量子通道或任意带后选择的条件概率都能被同一个线性载体代表。
+
+### 73.2 低于尾空间维数的压缩必然留下未来见证
+
+若 $\mathcal T(m)$ 有限维，取一个线性压缩
+
+$$
+Q:\mathcal T(m)\to W
+$$
+
+并假设
+
+$$
+\operatorname{finrank}W
+<
+\operatorname{finrank}\mathcal T(m),
+$$
+
+则仓库定理 `smaller_compression_has_future_witness` 给出某个非零尾方向 $x$，满足
+
+$$
+Qx=0,
+$$
+
+但存在有限时刻 $n$ 使
+
+$$
+\operatorname{out}(A^n x)\ne0.
+$$
+
+因此，压缩器当前看不到的方向，会在某个有限未来实验中重新出现。这个结论把“历史回流”改成了有限见证：不需要假定无限复杂的过去，只要压缩低于尾空间秩，就存在一个可定位的未来读出将其分开。
+
+它也给出了与第 71 节不同的容量概念：
+
+$$
+\text{完美记录容量}
+\quad\ne\quad
+\text{线性预测维数}.
+$$
+
+前者要求一次 POVM 区分记录态；后者只要求对指定响应族重现未来输出。很多原始历史可以共享一个预测状态，只要它们在全部允许的未来尾上相同。
+
+### 73.3 有限 Hankel 窗口与可执行校准
+
+对行数 $r$、列数 $c$ 定义有限数据 Hankel 映射
+
+$$
+H_{r,c}(u_0,\ldots,u_{c-1})
+=
+\left(
+\sum_{j=0}^{c-1}m_{i+j}(u_j)
+\right)_{0\le i<r}.
+$$
+
+当 $r,c$ 都不小于 $\operatorname{finrank}\mathcal T(m)$ 时，已有定理 `dataHankel_rank_eq_tailSpace` 给出
+
+$$
+\operatorname{rank}H_{r,c}
+=
+\operatorname{finrank}\mathcal T(m).
+$$
+
+这把“需要观察多深”变成了可校准的有限窗口条件。若实际数据带误差，不能直接把观测矩阵的数值秩当成精确秩；应使用第 67 节的条件数和最小二乘噪声界，并声明截断阈值、误差模型与任务容限。
+
+第 72 节的 diamond 距离控制的是完整仪器过程；Hankel 尾空间控制的是选定线性响应坐标。两者的连接需要一个明确的读出映射：先由过程产生记录分布或 effect 期望，再把它们送入 $Y$。没有这个映射，不能用一个状态空间秩替代过程级历史距离。
+
+### 73.4 Zeckendorf 合法构型只给输入索引，不直接给预测维数
+
+令
+
+$$
+\mathcal W_L
+=
+\{w\in\{0,1\}^L:w_jw_{j+1}=0\},
+\qquad
+|\mathcal W_L|=F_{L+2}.
+$$
+
+可以把每个 $w\in\mathcal W_L$ 作为一个输入标签，构造一个输入空间 $U$。但从标签集合到线性空间还需要指定编码：例如选择基向量 $e_w$，再给出每个未来实验对 $e_w$ 的响应 $m_n(e_w)$。只有在这些响应方向线性独立、并且全部时间移位都落在这组方向所张成的同一个预测载体中时，才会得到
+
+$$
+\operatorname{finrank}\mathcal T(m)=F_{L+2}.
+$$
+
+合法标签本身并不给出无条件的 $\operatorname{finrank}\mathcal T(m)\le F_{L+2}$：时间移位可能产生额外的动力学方向，使尾空间维数大于瞬时输入标签数。只有在另有一个维数至多为 $F_{L+2}$ 的预测载体，并且所有移位尾都通过它因子化时，才能推出这个上界。反过来，在指定任务的全部未来响应中，不同 Zeckendorf 字串也可能落入同一个尾方向，使实际预测维数严格小于标签数；如果允许的响应还包含未编码的相位、参考关联或历史寄存器，预测空间则可能大于单个 Zeckendorf 数值的像。
+
+所以，Fibonacci 数量、完美记忆维数和预测 Hankel 秩分别回答三个问题：
+
+$$
+\begin{aligned}
+&F_{L+2}: &&\text{有多少个合法输入构型？}\\
+&d_M: &&\text{一次读取能完美区分多少个记忆态？}\\
+&d_{\mathrm{pred}}: &&\text{指定未来响应需要多少个线性预测方向？}
+\end{aligned}
+$$
+
+把三者直接相等，必须额外给出编码双射、同一 POVM 的完美区分以及未来响应方向的独立性。否则 Zeckendorf 只是适配约束的坐标尺，不是自动生成的物理记忆大小。
+
+本节复用的是仓库已冻结的 Hankel 尾空间与最小实现结果；将其解释为量子过程的预测维数仍需明确线性读出、状态域和仪器协议。具体量子模型若要得到新的 Lean 结论，应先固定有限维通道和 effect 坐标，再分别证明过程到 $m_n$ 的映射、尾空间有限性及其噪声稳定性。
+
+## 74. 投影残差、有限视界误差与可接受的历史压缩
+
+第 73 节给出了预测尾空间的最小维数，但实际记录通常还要压缩。压缩是否可接受，不能只看状态维数下降了多少；需要计算压缩动力学与完整动力学在指定视界内产生的输出差异。
+
+取实赋范线性空间
+
+$$
+V,W,U,Y
+$$
+
+完整线性实现为
+
+$$
+ x_{n+1}=Ax_n+Bu_n,
+ \qquad
+ y_n=Cx_n.
+$$
+
+选择一个压缩映射和一个提升映射
+
+$$
+P:V\to W,
+\qquad
+J:W\to V,
+$$
+
+并用实际压缩动力学
+
+$$
+\widetilde A=PAJ,
+\qquad
+\widetilde B=PB,
+\qquad
+\widetilde C=CJ
+$$
+
+生成近似输出。这里不要求
+
+$$
+PJ=I_W.
+$$
+
+如果它不是回缩投影，下面的残差仍然有定义，但不能把这两个映射自动称为同一个子空间的正交投影。
+
+定义动力学和输入残差：
+
+$$
+R_A=AJ-J\widetilde A,
+\qquad
+R_B=B-J\widetilde B.
+$$
+
+它们分别测量提升后的压缩一步与完整一步的差，以及输入没有被压缩提升完整保留的差。令完整状态和压缩状态从零初值出发，定义
+
+$$
+e_n=x_n-J\widetilde x_n.
+$$
+
+由实际递推直接得到
+
+$$
+ e_{n+1}
+=
+Ae_n+R_A\widetilde x_n+R_Bu_n.
+$$
+
+### 74.1 有限视界的残差和界
+
+仓库的 `D5.S3.Observer.Hankel.ProjectedRealizationError` 已证明，在任意有限步
+
+$$
+n
+$$
+
+有
+
+$$
+\boxed{
+\|e_n\|
+\le
+\sum_{k=0}^{n-1}
+\|A\|^{n-1-k}
+\left(
+\|R_A\|\,\|\widetilde x_k\|
++
+\|R_B\|\,\|u_k\|
+\right).
+}
+$$
+
+再由输出映射得到
+
+$$
+\boxed{
+\|y_n-\widetilde y_n\|
+\le
+\|C\|
+\sum_{k=0}^{n-1}
+\|A\|^{n-1-k}
+\left(
+\|R_A\|\,\|\widetilde x_k\|
++
+\|R_B\|\,\|u_k\|
+\right).
+}
+$$
+
+这条界说明“删除历史”造成的误差具有时间方向：较早的残差会被后续完整动力学反复传播，传播权重是
+
+$$
+\|A\|^{n-1-k}.
+$$
+
+因此，相同的静态压缩维数在不同的预测视界和动力学下可以有完全不同的可靠性。
+
+如果输入满足
+
+$$
+\|u_k\|\le M,
+$$
+
+且压缩动力学和完整动力学分别满足
+
+$$
+\|\widetilde A\|<1,
+\qquad
+\|A\|<1,
+$$
+
+则已有的 uniform 结果给出一个与
+
+$$
+n
+$$
+
+无关的充分界：
+
+$$
+\boxed{
+\|y_n-\widetilde y_n\|
+\le
+\|C\|
+\frac{
+\|R_A\|
+\dfrac{\|\widetilde B\|M}{1-\|\widetilde A\|}
++
+\|R_B\|M
+}{1-\|A\|}.
+}
+$$
+
+这个结论的稳定性假设是范数收缩，而不是仅仅谱半径小于一。若只有谱半径信息，还需要另一个范数转换或暂态增长界；不能直接把上式套用。
+
+### 74.2 任务误差与历史压缩的停止条件
+
+给定预测视界
+
+$$
+H
+$$
+
+、任务输出容限
+
+$$
+\varepsilon_{\mathrm{task}}
+$$
+
+和输入界
+
+$$
+M\ge0
+$$
+
+，可以把压缩接受条件写成
+
+$$
+\max_{0\le n\le H}
+\|y_n-\widetilde y_n\|
+\le
+\varepsilon_{\mathrm{task}}.
+$$
+
+有限视界时，直接使用 74.1 的残差和界即可；若需要所有未来时刻的统一保证，则需使用 74.1 的收缩条件或独立的尾项可和性证明。这个停止条件保留的是任务所需的响应精度，而不是任意恢复完整原始历史。
+
+第 73 节的低维压缩见证与这里的残差界互补：
+
+$$
+\begin{aligned}
+&\text{若压缩载体维数小于 }d_{\mathrm{pred}}(m)\text{，且对同一完整响应族的全部允许输入与时刻残差为零}
+&&\Longrightarrow\text{违反第 73 节的最小实现性；}\\
+&\text{压缩载体维数下降但残差有界}
+&&\Longrightarrow\text{只在给定 }H,M,\varepsilon_{\mathrm{task}}\text{ 内可接受；}\\
+&\text{残差上界无界或任务容限趋于零}
+&&\Longrightarrow\text{该上界本身不能证成预测等价。}
+\end{aligned}
+$$
+
+这里的第一行要求零残差覆盖整个指定响应族；若只对一个输入序列或一个时刻为零，最多得到该任务实例的精确复现，不能推出尾空间维数矛盾。
+
+因此，“稳定经典对象”可以采用一个带误差的预测接口：接口不保留所有历史方向，但对指定输入界和视界给出可核验的输出误差。
+
+### 74.3 量子读出与 Zeckendorf 编码的适用边界
+
+若量子过程先经过一个明确的线性读出映射
+
+$$
+L:\rho\longmapsto x(\rho)\in V,
+$$
+
+再用
+
+$$
+C
+$$
+
+读取目标响应，那么 74.1 可以用于这组坐标。要把坐标误差转成量子态的迹距离或概率误差，还必须给出
+
+$$
+L,
+$$
+
+和
+
+$$
+C
+$$
+
+与所选距离之间的范数转换；第 67 节的帧下界和第 72 节的 diamond 距离分别承担不同层面的稳定性，不能互相替代。
+
+对 Zeckendorf 合法构型
+
+$$
+\mathcal W_L
+=\{w\in\{0,1\}^L:w_jw_{j+1}=0\},
+$$
+
+若合法字串的基向量
+
+$$
+e_w\in U
+$$
+
+作为输入坐标送入动力学，则压缩输入是
+
+$$
+\widetilde B e_w=PB e_w,
+$$
+
+而不是在没有给定类型识别时直接写成 $$P e_w$$。只有另有注入
+
+$$
+I:U\to V
+$$
+
+时，才可以把状态空间中的压缩写成 $$P I(e_w)$$。若两个合法字串在压缩后相同，并且在同一后续输入协议、同一初态约定下的未来响应差异超过
+
+$$
+2\varepsilon_{\mathrm{task}},
+$$
+
+则不存在一个同时使两者误差不超过 $$\varepsilon_{\mathrm{task}}$$ 的共同近似接口；仅超过 $$\varepsilon_{\mathrm{task}}$$ 还不足以推出这一点。若它们的全部指定响应差异被残差界覆盖，则可以在该有限任务中共享一个预测接口。
+
+这里不把
+
+$$
+|\mathcal W_L|=F_{L+2}
+$$
+
+直接当作压缩后的维数。Fibonacci 计数只给合法输入构型数；实际可接受的预测维数由
+
+$$
+P, A, B, C
+$$
+
+、输入界、视界和误差容限共同决定。若压缩还要保留纯态相位或可访问参考关联，则这些方向必须进入
+
+$$
+V
+$$
+
+，否则实线性残差界没有覆盖它们。
+
+本节直接复用 `ProjectedRealizationError` 的有限残差和、输出误差和收缩统一界；这些声明针对实赋范线性系统。将它们提升为量子通道的 trace/diamond 界，需要另外证明读出嵌入、完全正性、参考系统和距离转换，不能由线性公式自动推出。
+
+## 75. 精确下降的选择性：投影态先精确，读出还需因子化
+
+第 74 节的残差界允许完整状态和压缩状态之间存在误差，并用有限视界控制这种误差。仓库还给出了一个更强、但适用范围更窄的结果：如果动力学先在选定投影下精确下降，且目标读出只依赖这个投影，那么目标输出可以逐步完全相同，即使提升回完整空间的状态仍有残差。
+
+令完整系统、压缩系统和读出分别由
+
+$$
+A:V\to V,
+\qquad
+B:U\to V,
+\qquad
+C:V\to Y,
+$$
+
+以及
+
+$$
+P:V\to W,
+\qquad
+J:W\to V
+$$
+
+给出，并定义
+
+$$
+\widetilde A=PAJ,
+\qquad
+\widetilde B=PB,
+\qquad
+\widetilde C=CJ.
+$$
+
+对零初态和任意输入序列，完整状态与压缩状态满足
+
+$$
+ x_{n+1}=Ax_n+Bu_n,
+ \qquad
+ \widetilde x_{n+1}=\widetilde A\widetilde x_n+\widetilde B u_n.
+$$
+
+`D5.S3.Observer.Hankel.ProjectedExactDescent` 的第一条条件是
+
+$$
+PA=(PAJ)P.
+$$
+
+它表示下一步的投影状态只依赖当前投影状态。对任意输入序列和每个有限时刻，源码证明
+
+$$
+\boxed{
+Px_n=\widetilde x_n.
+}
+$$
+
+这是一条精确的投影态结论。它不需要输入有界，也不需要
+
+$$
+\|A\|<1
+\qquad\text{或}\qquad
+\|\widetilde A\|<1.
+$$
+
+不过它还没有说明任意读出都相同。要让目标读出也完全下降，还必须增加因子化条件
+
+$$
+C=(CJ)P.
+$$
+
+在这个附加条件下，源码的 `outputs_eq_of_descent` 给出
+
+$$
+\boxed{
+Cx_n=\widetilde C\widetilde x_n
+}
+$$
+
+对同一输入序列和每个时刻都成立。这里是充分条件；该声明没有把因子化判据说成必要条件。
+
+### 75.1 可见输出精确，不等于完整状态精确
+
+第 74 节的两个残差在这里写成
+
+$$
+R_A=AJ-JPAJ,
+\qquad
+R_B=B-JPB.
+$$
+
+它们可以非零。因子化条件直接推出
+
+$$
+CR_A=0,
+\qquad
+CR_B=0.
+$$
+
+因此，提升后的完整状态可以沿着压缩状态没有表示的方向变化，但这些变化被当前选定的读出湮灭。这里应说“对该输出不可见”，不能在没有附加投影假设时把它称为正交投影遗漏。
+
+源码没有要求
+
+$$
+PJ=I_W.
+$$
+
+如果另行加入这个回缩条件，则可以进一步得到
+
+$$
+PR_A=0,
+\qquad
+PR_B=0,
+$$
+
+从而把残差放入投影核；但这仍然不等于残差在某个给定内积下正交。没有回缩条件时，连这个投影核解释也不能直接使用。
+
+一个两坐标例子把区别写得很清楚。取
+
+$$
+V=\mathbb R^2,
+\qquad
+W=U=Y=\mathbb R,
+$$
+
+并令
+
+$$
+P(x,h)=x,
+\qquad
+J(w)=(w,0),
+\qquad
+C(x,h)=x,
+$$
+
+$$
+A=
+\begin{pmatrix}
+ a&0\\
+ c&d
+\end{pmatrix},
+\qquad
+B u=
+\begin{pmatrix}
+ b_1u\\
+ b_2u
+\end{pmatrix}.
+$$
+
+此时
+
+$$
+PA=(PAJ)P,
+\qquad
+C=(CJ)P.
+$$
+
+所以第一坐标的压缩递推和完整递推完全一致。但只要
+
+$$
+ c\ne0
+ \qquad\text{或}\qquad
+ b_2\ne0,
+$$
+
+就有
+
+$$
+R_A(w)=(0,cw),
+\qquad
+R_B(u)=(0,b_2u),
+$$
+
+它们不是零。可见输出仍然精确，而隐藏坐标可以持续接收来自可见坐标或外部输入的变化。
+
+这也说明“没有隐藏到可见回流”与“没有可见到隐藏泄漏”是两个方向。仓库的 `VisibleAutonomyCriterion` 对幂等投影把可见下降等价于
+
+$$
+P T(1-P)=0
+$$
+
+等条件，同时保留一个反例：可见到隐藏的反向块仍可非零。稳定对象所需的是前一个方向不回流到任务读出，而不是完整联合状态永远停留在提升像中。
+
+### 75.2 与有限视界残差界的关系
+
+第 74 节回答的是：当压缩不精确时，完整状态和目标输出的误差上界怎样随视界增长。第 75 节回答的是一个更窄的情形：当选定投影满足全局下降、且读出因子化时，目标输出误差直接为零。
+
+因此，两节的逻辑关系是
+
+$$
+\begin{aligned}
+&\text{全局下降}+\text{读出因子化}
+&&\Longrightarrow
+\text{指定输出的逐步精确闭合};\\
+&\text{残差有界但不满足因子化}
+&&\Longrightarrow
+\text{使用第 74 节的有限视界误差界};\\
+&\text{没有输出因子化}
+&&\Longrightarrow
+\text{投影态精确不保证目标读出精确}.
+\end{aligned}
+$$
+
+精确输出不等于完整状态可恢复，也不等于参考系统或环境中的关联已经消失。若后续任务改变读出，或允许访问此前未读的记录，原先的因子化条件可能不再适用。对非零初态，源码中的零初态归纳还需要把压缩初态明确设为
+
+$$
+\widetilde x_0=Px_0
+$$
+
+并重新检查零时刻的输出因子化；不能把源码的零初态结论无条件推广到任意初态。
+
+### 75.3 对量子记录与 Zeckendorf 的边界
+
+若量子过程先被送入一个明确的线性坐标空间，再选定一个任务读出，上述精确下降可以作为该坐标任务的模型。但它仍然是实线性算子结论，不自动给出量子态的迹距离、参考系统上的完全有界距离或 diamond 距离界；这些量需要另行指定算子空间、通道结构和范数转换。
+
+同样，若把 Zeckendorf 合法字串映为输入坐标，两个字串被同一个 $$P$$ 或相应的 $$PB$$ 输入映射合并，只能说明它们在当前投影坐标中相同。只有当目标任务的读出满足因子化，并且后续动力学满足下降条件时，这种合并才是该任务中的精确压缩。Fibonacci 数
+
+$$
+F_{L+2}
+$$
+
+仍然只是合法标签数，不是自动的完整记忆维数，也不证明任何物理 Hamiltonian 保持该合法子空间。
+
+所以，对“多少约束足以形成稳定经典现实”的更细回答是：首先要求当前记录对指定动力学形成可见下降；然后要求真正关心的读出因子化；只有在这两条失败时，才需要用第 74 节的残差、视界和误差容限计算还要保留多少历史。
+
+本节复用 `ProjectedExactDescent` 与 `VisibleAutonomyCriterion` 的精确下降结果，并把它们与第 74 节的残差界连接起来。它没有把可见任务的精确闭合提升为全态恢复、量子通道等价或唯一的经典现实。
+
+## 76. 有限未来关系塔的终止、类预算与 Zeckendorf 标签边界
+
+第 75 节说明了一个选定读出何时可以由压缩状态精确产生。下一步要问的是：需要观察多少个未来时刻，才足以确定这个任务的全部未来响应？对有限状态载体，仓库已有一个不依赖收缩率的答案。
+
+设 $$X$$ 是有限状态载体，
+
+$$
+\tau:X\to X,
+\qquad
+q:X\to O
+$$
+
+分别是更新和当前读出。对每个有限深度 $$m$$，定义
+
+$$
+x\sim_m x'
+\quad\Longleftrightarrow\quad
+\forall k\le m,
+\ q\bigl(\tau^{[k]}x\bigr)=q\bigl(\tau^{[k]}x'\bigr),
+$$
+
+并定义完全未来关系
+
+$$
+ x\sim_\infty x'
+ \quad\Longleftrightarrow\quad
+ \forall k,
+ \ q\bigl(\tau^{[k]}x\bigr)=q\bigl(\tau^{[k]}x'\bigr).
+$$
+
+这里的 $$\tau^{[k]}$$ 表示迭代 $$k$$ 次。源码中的 `finiteFutureRelation` 和 `infiniteFutureRelation` 正是这两种关系。记
+
+$$
+R_m=\sim_m,
+\qquad
+R_\infty=\sim_\infty,
+$$
+
+并记相应商类数为
+
+$$
+C_m=\lvert X/R_m\rvert,
+\qquad
+C_\infty=\lvert X/R_\infty\rvert.
+$$
+
+### 76.1 相邻稳定已经足够确定全部未来
+
+`FiniteEquivalenceDescent` 给出有限未来关系的递归
+
+$$
+R_0=\ker q,
+$$
+
+$$
+R_{m+1}
+=
+\left\{(x,x')\in R_0:
+(\tau x,\tau x')\in R_m\right\},
+$$
+
+以及有限交表示
+
+$$
+R_m
+=
+\bigcap_{0\le k\le m}
+\left\{(x,x'):
+q\bigl(\tau^{[k]}x\bigr)=q\bigl(\tau^{[k]}x'\bigr)
+\right\}.
+$$
+
+因此关系塔只能变细，商类数只能增加：
+
+$$
+C_m\le C_{m+1}.
+$$
+
+`FiniteStabilityClassBound` 定义最小相邻稳定深度
+
+$$
+ d=\min\left\{m:R_m=R_{m+1}\right\}.
+$$
+
+它证明
+
+$$
+\boxed{
+R_d=R_{d+1}=R_\infty.
+}
+$$
+
+并且对任意满足
+
+$$
+R_n=R_{n+1}
+$$
+
+的 $$n$$，都有
+
+$$
+ d\le n.
+$$
+
+所以在有限载体上，“再看一个时刻没有产生新区分”已经足以推出全部未来读出相同。这个结论不需要范数收缩、谱隙、输入振幅界或量子通道结构；它是有限关系塔的组合稳定性。它也不是说任意系统都有一个与任务无关的稳定深度：$$d$$ 依赖更新 $$\tau$$ 和读出 $$q$$。
+
+### 76.2 稳定深度消耗的是商类预算
+
+初始类数不是状态数本身，而是当前读出能够区分的商类数：
+
+$$
+C_0
+=
+\left\lvert X/\ker q\right\rvert
+=
+\left\lvert\operatorname{range}q\right\rvert.
+$$
+
+完全未来类数为 $$C_\infty$$。在源码的自然数减法语境下，`finite_stability_class_bound` 给出两段类预算
+
+$$
+\boxed{
+ d\le C_\infty-C_0,
+}
+$$
+
+以及
+
+$$
+\boxed{
+ C_\infty-C_0
+ \le
+ \lvert X\rvert-C_0.
+}
+$$
+
+这表示每次关系塔严格细化，都必须消耗至少一个新的商类；它不是说每一步一定恰好增加一个类，也不是最小线性预测维数定理。若 $$q$$ 满射到有限字母表 $$O$$，则
+
+$$
+C_0=\lvert O\rvert,
+$$
+
+从而得到
+
+$$
+ d\le C_\infty-\lvert O\rvert
+ \le
+ \lvert X\rvert-\lvert O\rvert.
+$$
+
+更一般地，若初始关系不是当前读出的核，而是任意有限载体上的 Setoid $$R$$，`finite_equivalence_descent_and_stability_bound` 给出相应的形式
+
+$$
+ d\le C_\infty-\lvert Y/R\rvert
+ \le
+ \lvert Y\rvert-\lvert Y/R\rvert.
+$$
+
+所以“需要保留多少历史”在这个有限确定性模型中首先表现为一个商类预算：不是保存每条历史词，而是继续细分那些仍会在未来读出中分开的类。
+
+### 76.3 Zeckendorf 标签只提供载体大小
+
+取长度为 $$L$$、禁止相邻两个 $$1$$ 的合法字串集合
+
+$$
+\mathcal W_L
+=
+\left\{w\in\{0,1\}^L:
+ w_jw_{j+1}=0\right\}.
+$$
+
+其合法构型数为
+
+$$
+\lvert\mathcal W_L\rvert=F_{L+2}.
+$$
+
+只有在更新和读出真的定义在同一个有限载体
+
+$$
+\tau:\mathcal W_L\to\mathcal W_L,
+\qquad
+q:\mathcal W_L\to O
+$$
+
+上时，才可以把上一节的类预算代入为
+
+$$
+ d\le C_\infty-C_0
+ \le
+ F_{L+2}-C_0.
+$$
+
+若 $$q$$ 满射到 $$O$$，则右侧可写成
+
+$$
+ d\le C_\infty-\lvert O\rvert
+ \le
+ F_{L+2}-\lvert O\rvert.
+$$
+
+这只是把有限载体大小代入稳定深度上界。它不把 Fibonacci 数自动变成预测维数。反例很直接：若 $$q$$ 在 $$\mathcal W_L$$ 上单射，则
+
+$$
+C_0=F_{L+2},
+\qquad
+ d=0,
+$$
+
+但载体仍有 $$F_{L+2}$$ 个状态。相反，若所有未来读出都相同，则
+
+$$
+C_\infty=C_0=1,
+\qquad
+ d=0,
+$$
+
+即使合法标签很多，也不需要更深的未来窗口来区分任务响应。
+
+因此应分开报告三种量：
+
+$$
+\boxed{
+\text{合法标签载体大小 }F_{L+2},
+\qquad
+\text{完全未来商类数 }C_\infty,
+\qquad
+\text{稳定深度 }d.
+}
+$$
+
+Hankel 预测维数还取决于未来响应的线性秩，量子模型则可能需要算符空间、相位方向、可访问记录和参考系统。它们都不能仅由 $$F_{L+2}$$ 的离散计数推出。即使有限未来商已经稳定，也只说明指定经典更新和读出上的确定性响应已经闭合；它不自动证明密度算符相等、迹距离为零、diamond 距离为零或某个物理 Hamiltonian 保持合法 Zeckendorf 子空间。
+
+第 76 节把“稳定经典接口”进一步拆成了三个可测层次：载体允许哪些合法构型，完全未来还能区分多少类，以及需要看到多深才达到全部未来等价。只有在额外证明编码、更新、读出和预测实现之间的同构时，才可以把其中两个量合并；一般情况下，Fibonacci 标签数只是适用载体的大小，而不是世界必须保留的历史长度。
+
+本节复用 `FiniteEquivalenceDescent`、`FiniteStabilityClassBound` 和 `StableDepthCardinalityBounds` 的既有声明；它们适用于有限确定性更新与读出关系。将这套关系塔解释为量子通道的过程记忆，需要另行给出量子状态空间、仪器协议和距离转换。
+
+## 77. 量子任务的可见商、序列核与不可见物理状态
+
+第 62 节已经给出顺序词效果的正交残差，第 59 节已经给出目标可见性的充分性与失败见证。第 75 节则把状态坐标上的投影下降接到输出因子化，第 76 节把有限确定性载体上的未来关系塔接到稳定深度。本节只做它们之间的接口：说明量子任务中的“同一个对象”应当由允许词的统计签名定义，并列出把这个签名接成动力学商时必须补上的条件。
+
+### 77.1 允许词的量子签名
+
+固定有限矩阵维数 $$d$$、字母表 $$\mathsf A$$、允许词族
+
+$$
+\mathcal A\subseteq \operatorname{List}(\mathsf A),
+$$
+
+以及每个字母对应的 Heisenberg 线性作用
+
+$$
+\mathsf I_a:
+\operatorname{Herm}_d
+\longrightarrow
+\operatorname{Herm}_d.
+$$
+
+令 $$E_w$$ 表示仓库 `sequentialWordEffect` 对词 $$w$$ 产生的 Hermitian effect。定义允许词的可见空间、不可见残差和统计签名：
+
+$$
+V_{\mathcal A}
+=
+\operatorname{span}_{\mathbb R}
+\{E_w:w\in\mathcal A\},
+$$
+
+$$
+K_{\mathcal A}=V_{\mathcal A}^{\perp},
+$$
+
+$$
+\Sigma_{\mathcal A}(s)
+=
+\bigl(
+\langle s,E_w\rangle_{\mathbb R}
+\bigr)_{w\in\mathcal A}.
+$$
+
+这里的内积是 Hermitian 空间上的实内积；它只记录所选词效果的实线性响应。它不是完整密度矩阵，也不是自动包含参考系统或环境的联合状态。
+
+`unified_sequential_kernel` 给出精确等价：
+
+$$
+\boxed{
+\Sigma_{\mathcal A}(s)
+=
+\Sigma_{\mathcal A}(s')
+\quad\Longleftrightarrow\quad
+s-s'\in K_{\mathcal A}.
+}
+$$
+
+因此，量子任务中的当前对象应先定义为签名的纤维，而不是把所有物理态直接认作同一个点。若增加允许词族
+
+$$
+\mathcal A_H\subseteq\mathcal A_{H+1},
+$$
+
+则
+
+$$
+V_{\mathcal A_H}
+\subseteq
+V_{\mathcal A_{H+1}},
+\qquad
+K_{\mathcal A_{H+1}}
+\subseteq
+K_{\mathcal A_H}.
+$$
+
+这是第 76 节未来关系塔
+
+$$
+R_{H+1}\subseteq R_H
+$$
+
+的线性量子对应：观察视界扩大时，允许区分的方向增加，不可见残差减少。这里得到的是子空间包含关系，不能直接改写成有限商类数；全体密度态是连续集合，不能套用有限载体的基数界。
+
+### 77.2 目标预测的充分性与不可见见证
+
+对一族实际效应 $$E_i$$，定义含单位方向的可见空间
+
+$$
+V
+=
+\operatorname{span}_{\mathbb R}
+\bigl(\{I\}\cup\{E_i\}_i\bigr).
+$$
+
+单位方向必须显式加入，因为密度态的迹已经固定；没有它，效应签名不能自动控制标量部分。
+
+这里的 $$E_i$$ 必须先满足源码中的物理效应条件：它们是 Hermitian、正半定，且 $$I-E_i$$ 也正半定。`target_prediction_sufficiency` 的第一半可表述为：若目标算子子空间 $$T$$ 满足
+
+$$
+T\subseteq V,
+$$
+
+那么两个密度态对全部 $$E_i$$ 的 trace 读数相同，就对每个 $$A\in T$$ 给出相同的目标期望。对 Hermitian 矩阵，仓库中的实内积与 trace 公式通过实部对应；该对应需要在具体有限维载体中明确，不能把两种配对无条件混写。
+
+第二半给出相反方向的物理见证。若
+
+$$
+A\notin V,
+$$
+
+则存在非零 Hermitian 方向 $$D\in V^{\perp}$$、某个 $$\varepsilon>0$$ 以及两个合法密度态
+
+$$
+\rho_{\pm}
+=
+\frac{I}{d}\pm\varepsilon D
+$$
+
+使得对每个已选效应 $$E_i$$，
+
+$$
+\operatorname{tr}(\rho_+E_i)
+=
+\operatorname{tr}(\rho_-E_i),
+$$
+
+但目标读数满足
+
+$$
+\operatorname{tr}(\rho_+A)
+-
+\operatorname{tr}(\rho_-A)
+=
+2\varepsilon\operatorname{tr}(DA)
+\ne0.
+$$
+
+这说明当前签名对该目标并不充分。它是一个存在性见证：源码只保证某个正 $$\varepsilon$$ 存在，不给出统一的数值下界；结论也不是迹距离或 diamond 距离下界。
+
+若目标是第 $$n$$ 步的效应 $$B$$，应先把 Heisenberg 回拉
+
+$$
+A=(\Phi^*)^n(B)
+$$
+
+放入目标空间，再检查 $$A\in V$$。当前读出空间只含 $$B$$ 而不含其回拉，并不能推出当前签名足以预测未来的 $$B$$ 读数。
+
+### 77.3 从可见空间到动力学下降的附加条件
+
+不能把 effect 空间 $$V$$ 与状态空间上的投影自动视为同一个算子。前者在 Heisenberg 的 Hermitian 算子空间，后者在 Schrödinger 状态坐标；需要有限维 Hilbert--Schmidt 对偶识别、明确的 adjoint，以及一个真正幂等的状态投影 $$P_H$$。
+
+在这些额外结构已经给定后，若 Schrödinger 作用为 $$T_a$$，并且其 Hilbert--Schmidt 对偶满足
+
+$$
+T_a^*=\mathsf I_a,
+$$
+
+再假设允许所有长度不超过 $$H$$ 的词，并且该词空间已经稳定：
+
+$$
+V_H=V_{H+1},
+$$
+
+则对任意 $$k\in V_H^{\perp}$$ 和 $$v\in V_H$$，
+
+$$
+\langle T_a k,v\rangle
+=
+\langle k,T_a^*v\rangle
+=0.
+$$
+
+所以
+
+$$
+T_a(V_H^{\perp})
+\subseteq
+V_H^{\perp},
+$$
+
+等价地，若 $$P_H$$ 是 $$V_H$$ 的正交投影，则
+
+$$
+P_HT_a(I-P_H)=0.
+$$
+
+这是 `VisibleAutonomyCriterion` 所需的 hidden-to-visible 不泄漏条件。由它可得到可见递推的因子化；再加上第 75 节 `ProjectedExactDescent` 的投影动力学条件，才可对任意输入历时推出
+
+$$
+P_Hx_n=\widetilde x_n
+$$
+
+以及在输出因子化条件下的
+
+$$
+Cx_n=\widetilde C\widetilde x_n.
+$$
+
+这里必须保留三条限制：没有 $$P_H^2=P_H$$，不能称为投影下降；没有 state/effect 对偶与 adjoint，不能从 effect span 推出状态不变性；没有量子正性、迹保持和通道假设，这些等式仍只是线性系统结论。
+
+若 $$V_H=V_{H+1}$$ 只是在任意集合中偶然相等，而允许词族没有前缀闭合性，则不能推出更长词仍在 $$V_H$$。永久稳定需要词族对前缀扩展闭合，或另行证明全部后续 Heisenberg 效果仍落在该空间。
+
+### 77.4 何时能接回第 76 节的有限商预算
+
+若选定一个有限物理状态样本
+
+$$
+X\subseteq\operatorname{DensityState},
+$$
+
+有确定更新 $$\tau:X\to X$$，并且第 $$k$$ 步的输出正好等于指定签名坐标，那么可定义
+
+$$
+x\sim_Hx'
+\quad\Longleftrightarrow\quad
+\Sigma_H(x)=\Sigma_H(x').
+$$
+
+这时才能把 $$x\sim_Hx'$$ 与第 76 节的 $$R_H$$ 对齐，并使用有限商类数和稳定深度界。对于包含多条分支或多字母选择的词族，不能直接把它写成单一的 $$q(\tau^{[k]}x)$$；必须固定字母调度，或把分支与历史并入扩大的确定状态。若状态空间是全部密度态，集合通常是连续的，应该报告
+
+$$
+\dim V_H,
+\qquad
+\dim K_H,
+$$
+
+或 centered trace-zero 塔，而不是报告 $$|X/R_H|$$ 的有限数值。
+
+同样，Zeckendorf 合法字串的数量
+
+$$
+|\mathcal W_L|=F_{L+2}
+$$
+
+只在明确指定
+
+$$
+w\longmapsto s_w,
+\qquad
+\tau:\mathcal W_L\to\mathcal W_L,
+\qquad
+q:\mathcal W_L\to O
+$$
+
+以及实际的序列仪器后，才是一个合法的有限载体大小。它不能自动等于
+
+$$
+\dim V_H,
+\qquad
+d^2-1,
+$$
+
+也不能自动等于量子记忆维数、Hankel 秩或 Hamiltonian 不变子空间的维数。Zeckendorf 负责组织合法标签；effect、仪器和更新负责决定哪些标签差异进入可见响应。
+
+### 77.5 本节对“稳定经典现实”的精确含义
+
+在这条接口上，“稳定的经典现实”可以写成三个同时满足的任务条件：
+
+$$
+\boxed{
+\text{签名商定义当前可区分对象}
+\;+
+\text{可见空间对目标足够}
+\;+
+\text{隐藏方向在指定动力学下不回流}
+}
+$$
+
+第一项由 $$\Sigma_H$$ 和 $$K_H$$ 给出；第二项由目标是否落在含单位方向的 effect span 决定；第三项需要真正的投影、对偶和下降条件。三项中任何一项缺失，当前读数都不能单独承担“以后仍然如此”的含义。
+
+因此，“要保留多少历史”没有一个脱离任务的整数答案。对有限 Zeckendorf 载体，先报告合法构型数量；对给定词族，再报告可见 span 与正交残差；对给定更新，最后检验目标回拉是否留在该 span，以及隐藏到可见的耦合是否为零。只有这些对象、操作和误差范围都被指定后，才可以说某一层记录已经足以支撑稳定的经典预测。
+
+本节复用 `unified_sequential_kernel`、`target_prediction_sufficiency`、`finite_time_observer_monotonicity` 和 `incomplete_observer_physical_counterexample` 的现有冻结声明，并把它们接到第 75、76 节的下降与有限关系塔。上述声明均在标准项目公理闭包下通过定向构建；本节没有新增 Lean 定理，也没有把线性 effect 结果提升为 CPTP、trace-distance 或 diamond 等价。
+
+## 追加锚（新终端）
+
+## 78. 精确预测闭合与后揭测量的共同经典存储障碍
+
+### 78.1 序列统计、目标充分性与下降的适用条件
+
+**定义 78.1（按设置归一化的序列任务）。** 设 $d\ge1$，$\operatorname{Herm}_d$ 为 $d$ 阶 Hermitian 矩阵的实向量空间，内积为 $\langle A,B\rangle=\operatorname{tr}(AB)$。物理输入取密度矩阵 $\rho\ge0$、$\operatorname{tr}\rho=1$。对每个可选设置 $b$，分别给定有限个复线性、完全正且迹不增的分支 $\mathcal J_{b,s}$，并要求
+
+$$
+\sum_s\mathcal J_{b,s}\quad\text{对每个固定的 }b\text{ 都迹保持。}
+$$
+
+令 $\mathcal J_{b,s}^*$ 为 Hilbert--Schmidt 伴随。按时间顺序记录词 $w=((b_1,s_1),\ldots,(b_n,s_n))$，定义
+
+$$
+E_\varnothing=I_d,\qquad
+E_w=\mathcal J_{b_1,s_1}^*\cdots\mathcal J_{b_n,s_n}^*(I_d),
+\qquad
+p_\rho(w)=\operatorname{tr}(\rho E_w).
+$$
+
+设置是外部选择；若设置也随机化，其概率由另行指定的归一化策略给出，不把不同设置的全部分支直接合成一个仪器。
+
+**命题 78.2（第 77 节线性接口的物理限定）。** 第 77.1 节的签名核等价只需实 Hermitian 线性作用；把其中的响应解释为物理序列概率，须另加定义 78.1 的输入和仪器假设。第 77.2 节的目标充分性适用于 $d\ge1$ 及含单位方向的空间
+
+$$
+V=\operatorname{span}_{\mathbb R}\bigl(\{I_d\}\cup\{E_i\}_i\bigr),
+\qquad 0\le E_i\le I_d.
+$$
+
+其中加入 $I_d$ 是利用已知的迹一约束，不要求额外测量单位算子；对任何标量目标 $aI_d$，期望已经恒等于 $a$。若 $A\notin V$，则有对所有 $E_i$ 同读数、对 $A$ 异读数的两个密度矩阵。
+
+证明。Hermitian 矩阵满足
+
+$$
+\overline{\operatorname{tr}(AB)}
+=\operatorname{tr}((AB)^\dagger)
+=\operatorname{tr}(BA)=\operatorname{tr}(AB),
+$$
+
+故所写内积为实数。对任何实线性词效果族，所有配对相等当且仅当状态差正交于这些效果的实张成空间；这就是第 77.1 节 `unified_sequential_kernel` 的线性内容，它不包含密度输入、完全正性或归一化假设。在定义 78.1 下，分支复合把正输入送到正矩阵，其迹给出非负分支概率；对每个已经选定的设置，将该步的结果求和保持输入迹。逐步求和即得每个有限策略树的概率归一化。一般实线性作用没有这些保证，例如作用 $A\mapsto2A$ 从单位效果产生 $2I_d$，对迹一输入的响应为二。
+
+若 $A=aI_d+\sum_i a_iE_i$，其中只有有限个 $a_i$ 非零，则
+
+$$
+\operatorname{tr}(\rho A)=a+\sum_i a_i\operatorname{tr}(\rho E_i),
+$$
+
+直接给出充分性。反向令 $D=A-\operatorname{proj}_V A$。于是 $D\ne0$、$D\perp V$、$\operatorname{tr}D=0$，且
+
+$$
+\operatorname{tr}(DA)=\operatorname{tr}(D^2)>0.
+$$
+
+取 $0<\varepsilon<1/(d\|D\|_{\rm op})$，则 $\rho_\pm=I_d/d\pm\varepsilon D$ 的最小特征值至少为 $1/d-\varepsilon\|D\|_{\rm op}>0$，迹为一。正交性给出相同的 $E_i$ 读数，而两态的 $A$ 读数相差 $2\varepsilon\operatorname{tr}(D^2)>0$。这也是第 77.2 节 `target_prediction_sufficiency` 中正维数假设和单位方向的作用；原节关于标量部分的说明应以迹一约束所给的上述公式为准。证毕。
+
+**命题 78.3（全自由词稳定性与确定下降的限定）。** 对任意实线性生成作用 $(L_a)_a$，令 $E_\varnothing=I_d$、$E_{aw}=L_aE_w$，并用全部长度不超过 $H$ 的词定义 $V_H=\operatorname{span}_{\mathbb R}\{E_w:|w|\le H\}$。若 $V_H=V_{H+1}$，则每个生成作用都保持 $V_H$，且 $V_m=V_H$ 对所有 $m\ge H$ 成立。任意前缀闭合的允许子集，或把词族固定截断后得到的相邻相等，不具有这一推论。
+
+第 77.3 节引用的受驱下降等式具有如下精确形式。给定线性映射 $A,B,P,J,C$，令
+
+$$
+\widetilde A=PAJ,\quad\widetilde B=PB,\quad\widetilde C=CJ,
+\qquad PA=\widetilde A P,
+$$
+
+$$
+x_0=0,\quad x_{n+1}=Ax_n+Bu_n,
+\qquad
+\widetilde x_0=0,\quad\widetilde x_{n+1}=\widetilde A\widetilde x_n+\widetilde B u_n.
+$$
+
+则 $Px_n=\widetilde x_n$；若另有 $C=\widetilde C P$，则 $Cx_n=\widetilde C\widetilde x_n$。这些是零初态的受驱响应等式；任意密度制备并非它们的初态假设。
+
+证明。对 $|w|\le H$，有 $L_aE_w=E_{aw}\in V_{H+1}=V_H$。线性性把这个包含推广到整个 $V_H$，再对词长归纳，所有词效果都在 $V_H$ 中。与 $V_H\subseteq V_m$ 合用即得永久稳定。这是第 77.3 节所涉及的 `sequential_visible_space_once_stable_permanently` 的生成元不变性论证；不需要在全自由词假设之外再加一条前缀条件。若 $T_a^*=L_a$，同一论证还给出
+
+$$
+\langle T_ak,v\rangle=\langle k,L_av\rangle=0
+\quad(k\in V_H^\perp,\ v\in V_H),
+$$
+
+故 $T_a(V_H^\perp)\subseteq V_H^\perp$。对于删去某些扩展的允许子集，上述 $aw$ 未必被允许，不能作这一步推导；命题 78.5 给出一个物理分支反例。
+
+受驱响应在 $n=0$ 时满足 $Px_0=0=\widetilde x_0$。若第 $n$ 步等式成立，则
+
+$$
+Px_{n+1}=PAx_n+PBu_n
+=\widetilde A\widetilde x_n+\widetilde B u_n
+=\widetilde x_{n+1}.
+$$
+
+输出等式由 $C=\widetilde C P$ 代入。这正是 `ProjectedExactDescent` 中 `projectedState_eq_of_descent` 与 `outputs_eq_of_descent` 所用的零初态 `drivenState` 和全局下降条件。对另行指定的非零初态，相同归纳还需要 $\widetilde x_0=Px_0$；它不是任意两个初态之间的结论。证毕。
+
+第 77.4 节接用第 76 节的有限商预算时，增广后的载体必须实际为有限集，更新必须是该集上的同一个时间齐次确定映射。把任意长历史、无界时钟或随机结果添作坐标，本身不满足这一假设：前两者可以产生无限多坐标值，后者仍需给定确定的更新规则。只有明确构造出有限且封闭的确定增广系统，才可使用第 76 节的有限类数和稳定深度界。第 77.5 节的三项条件在这些限定内给出所选任务的精确预测接口；它们不能作为“稳定经典现实”或一个可物理取得的共同经典记录的充分条件。以下同一模型同时满足预测闭合与共同经典存储不可能性。
+
+### 78.2 两个 Lüders 设置的精确可见闭合
+
+**定义 78.4（量子比特任务及未归一化坐标）。** 在计算基 $|0\rangle=(1,0)^T$、$|1\rangle=(0,1)^T$ 中取
+
+$$
+I=\begin{pmatrix}1&0\\0&1\end{pmatrix},\quad
+X=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+Y=\begin{pmatrix}0&-i\\i&0\end{pmatrix},\quad
+Z=\begin{pmatrix}1&0\\0&-1\end{pmatrix}.
+$$
+
+对 $b\in\{X,Z\}$、$s\in\{+1,-1\}$，定义
+
+$$
+P_s^b=\frac{I+sb}{2},\qquad
+\mathcal J_{b,s}(A)=P_s^bAP_s^b.
+$$
+
+任意 Hermitian $A$ 唯一写为
+
+$$
+A=\frac{tI+xX+yY+zZ}{2},
+\qquad (t,x,y,z)\in\mathbb R^4,
+\qquad t=\operatorname{tr}A.
+$$
+
+允许的操作只有这些分支；有限策略可以依赖已记录的设置和结果选择下一设置或停止，并可使用与输入独立的经典随机数。策略不插入任意旋转、不补充新的量子输入，也不测量外部参考系统。
+
+**命题 78.5（分支递推与所有有限词的闭合）。** 每个固定 $b$ 的二分支族是 Lüders 仪器。分支在可见坐标 $(t,x,z)$ 上的作用恰为
+
+$$
+\mathcal J_{X,s}:\ (t,x,z)\longmapsto
+\left(\frac{t+sx}{2},\frac{st+x}{2},0\right),
+$$
+
+$$
+\mathcal J_{Z,s}:\ (t,x,z)\longmapsto
+\left(\frac{t+sz}{2},0,\frac{st+z}{2}\right).
+$$
+
+密度输入恰满足 $t=1$、$x^2+y^2+z^2\le1$。对全部长度不超过 $H$ 的词效果，其实可见空间与稳定正交残差为
+
+$$
+V_0=\operatorname{span}_{\mathbb R}\{I\},\qquad
+V_H=V=\operatorname{span}_{\mathbb R}\{I,X,Z\}\quad(H\ge1),
+\qquad K=V^\perp=\operatorname{span}_{\mathbb R}\{Y\}.
+$$
+
+这些递推精确决定定义 78.4 内全部有限策略的记录概率。
+
+证明。矩阵相乘给出 $X^2=Y^2=Z^2=I$，不同 Pauli 矩阵反对易，且 $I,X,Y,Z$ 两两 Hilbert--Schmidt 正交、平方范数均为二。这证明坐标表示的唯一性。无迹部分满足
+
+$$
+(xX+yY+zZ)^2=(x^2+y^2+z^2)I,
+$$
+
+故 $A$ 的特征值为 $(t\pm\sqrt{x^2+y^2+z^2})/2$，得到所述密度条件。
+
+每个 $P_s^b$ 都是迹一的正交投影，且 $P_+^b+P_-^b=I$。若 $P=|v\rangle\langle v|$、$\|v\|=1$，则对任意矩阵 $A$，
+
+$$
+PAP=\langle v,Av\rangle P=\operatorname{tr}(AP)P.
+$$
+
+因此
+
+$$
+\mathcal J_{X,s}(A)=\frac{t+sx}{2}P_s^X,
+\qquad
+\mathcal J_{Z,s}(A)=\frac{t+sz}{2}P_s^Z,
+$$
+
+展开投影即得坐标递推，并且分支后的 $y$ 坐标为零。对任意辅助空间和任意正矩阵 $B$，
+
+$$
+(\mathcal J_{b,s}\otimes\mathrm{id})(B)
+=(P_s^b\otimes I)B(P_s^b\otimes I)\ge0,
+$$
+
+所以分支完全正。对 $A\ge0$，其迹为 $\operatorname{tr}(AP_s^b)\in[0,\operatorname{tr}A]$；固定 $b$ 后对 $s$ 求和等于 $\operatorname{tr}A$。这证明每个设置的仪器性质。反之，将两个设置的四个分支不加权相加，输出迹为 $2\operatorname{tr}A$，并非归一化仪器。
+
+这些分支关于 Hilbert--Schmidt 配对自伴随。对非空词 $w=(a_1,\ldots,a_n)$，写 $P_j=P_{s_j}^{b_j}$。秩一压缩逐次给出
+
+$$
+E_w=
+\left(\prod_{j=1}^{n-1}\operatorname{tr}(P_jP_{j+1})\right)P_1,
+$$
+
+其中空积为一。事实上 $E_{(a_n)}=P_n$；若后缀效果为 $cP_{j+1}$，则 $P_j(cP_{j+1})P_j=c\operatorname{tr}(P_jP_{j+1})P_j$，倒序归纳即得公式。同一设置的相邻投影重叠为 $\delta_{s_j,s_{j+1}}$，不同设置的重叠为 $1/2$，因为
+
+$$
+\operatorname{tr}(P_s^bP_u^c)
+=\frac{1+su\,\delta_{b,c}}2.
+$$
+
+故所有词效果在 $V$ 内，长度一的效果已通过 $P_+^X-P_-^X=X$、$P_+^Z-P_-^Z=Z$ 张成 $V$，空词给出 $I$。Pauli 正交性给出 $K$。特别地，每个分支都消去 $Y$，所以隐藏方向不会回流到可见坐标。
+
+这也提供命题 78.3 所需的子集反例：只允许全部 $X$ 设置的词，是整个 $X,Z$ 字母表中的前缀闭合子集；其长度一及长度二的可见空间均为 $\operatorname{span}_{\mathbb R}\{I,X\}$，但 $\mathcal J_{Z,+}^*(I)=(I+Z)/2$ 不在其中。只保留这些词的长度一截断，仍有同样的相邻相等和失败。
+
+最后，对一条终止记录 $h$，令 $q_h$ 是沿记录各次设置选择及终止决定的策略概率的乘积；确定策略时它等于零或一。因策略只依赖已有记录，$q_h$ 不依赖隐藏的输入坐标。该记录的概率是 $q_h\operatorname{tr}(\rho E_h)$，而各节点的分支迹按已证的递推求出。有限树上的求和及停止记录均因此精确确定。全程保存未归一化的 $t$；零迹的正分支必为零矩阵，继续递推仍为零，不在零概率记录上除以 $t$。证毕。
+
+这里的精确经典数值预测以输入的精确 $x,z$ 已作为数值资料给定为前提；它没有提供从一份未知量子态中取得这两个数值的测量方法。
+
+### 78.3 可见正投影的完全正性障碍
+
+**命题 78.6（正而非完全正的预测投影）。** 在全复矩阵空间 $M_2(\mathbb C)$ 上，以计算基转置定义复线性映射
+
+$$
+\Pi(A)=\frac{A+A^T}{2}.
+$$
+
+它正、迹保持、保单位且幂等。在实 Hermitian 空间上，它是到 $V$ 的 Hilbert--Schmidt 正交投影；在全复矩阵空间上的像则为 $\operatorname{span}_{\mathbb C}\{I,X,Z\}$。它保持定义 78.4 的全部有限策略统计，却不是完全正映射。
+
+证明。$I^T=I$、$X^T=X$、$Y^T=-Y$、$Z^T=Z$，故 $\Pi$ 恰好删去 $Y$ 坐标。实 Hermitian 限制上的正交性由 Pauli 正交基给出；一般复矩阵也有唯一的复 Pauli 展开，因此其复像是所写复张成空间，不能与实空间 $V$ 等同。
+
+若 $A\ge0$，则 $A^T=\overline A$，且对任意复向量 $v$，
+
+$$
+v^\dagger A^T v
+=\overline{\overline v^{\,\dagger}A\overline v}\ge0.
+$$
+
+右边被共轭的数本来就是非负实数，所以转置保持正性，平均映射 $\Pi$ 也正。记转置作用为 $T(A)=A^T$；它保持迹和单位，且 $T^2=\mathrm{id}$，因此
+
+$$
+\operatorname{tr}\Pi(A)=\operatorname{tr}A,\qquad
+\Pi(I)=I,\qquad
+\Pi^2=\tfrac14(\mathrm{id}+2T+T^2)=\Pi.
+$$
+
+又因 $A-\Pi(A)$ 在 Hermitian 空间上属于 $K$，命题 78.5 的所有词效果对该差配对为零，所有允许策略统计都被保持。
+
+令
+
+$$
+|\Phi\rangle=\frac{|00\rangle+|11\rangle}{\sqrt2},\quad
+\rho_\Phi=|\Phi\rangle\langle\Phi|,\quad
+F=\sum_{i,j=0}^1|ij\rangle\langle ji|.
+$$
+
+由 $\rho_\Phi=\tfrac12\sum_{i,j}|i\rangle\langle j|\otimes|i\rangle\langle j|$ 得到
+
+$$
+(T\otimes\mathrm{id})(\rho_\Phi)=\frac F2,\qquad
+(\Pi\otimes\mathrm{id})(\rho_\Phi)=\frac{\rho_\Phi}{2}+\frac F4.
+$$
+
+归一化反对称向量 $|\Psi^-\rangle=(|01\rangle-|10\rangle)/\sqrt2$ 与 $|\Phi\rangle$ 正交，并满足 $F|\Psi^-\rangle=-|\Psi^-\rangle$，所以
+
+$$
+\langle\Psi^-|(\Pi\otimes\mathrm{id})(\rho_\Phi)|\Psi^-\rangle=-\frac14.
+$$
+
+因此 $\Pi\otimes\mathrm{id}$ 不保持正性，$\Pi$ 非完全正。完全正性、Choi 正性及 Kraus 表示的标准等价见 John Watrous，*The Theory of Quantum Information*，Cambridge University Press，2018，[Theorem 2.22](https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf)；这里的归一化 Bell 见证直接算出了负期望。证毕。
+
+这个见证排除的是把 $\Pi$ 本身当作量子通道；它没有排除其他编码。参考系统在这里用于检验完全正性，并未成为定义 78.4 的可查询对象。任意共同经典编码的障碍由下一命题单独证明。
+
+### 78.4 后揭设置前不存在精确共同经典存储
+
+**定义 78.7（单份输入的后揭二元查询）。** 存储者收到一份未知量子比特密度矩阵 $\rho$，在请求的设置 $b\in\{X,Z\}$ 揭示之前，固定使用任意有限父 POVM
+
+$$
+M_\lambda\ge0,\qquad\sum_{\lambda\in\Lambda}M_\lambda=I,
+$$
+
+只保留经典结果 $\lambda$。设置揭示后只允许归一化随机译码
+
+$$
+k_b(s\mid\lambda)\ge0,\qquad\sum_{s=\pm1}k_b(s\mid\lambda)=1.
+$$
+
+其有效效应与输出概率为
+
+$$
+E_s^b=\sum_\lambda k_b(s\mid\lambda)M_\lambda,
+\qquad p_{M,k}(s\mid\rho,b)=\operatorname{tr}(\rho E_s^b).
+$$
+
+同一 $M,k$ 必须对所有密度输入和两个设置适用。任务只有一个后揭查询，不允许保留量子输出、再次取得输入副本或依输入改变存储方案。
+
+**命题 78.8（任意有限父 POVM 的精确存储不可能性）。** 定义 78.7 中不存在满足
+
+$$
+\operatorname{tr}(\rho E_s^b)=\operatorname{tr}(\rho P_s^b)
+\quad\text{对全部 }\rho,b,s
+$$
+
+的存储和译码方案。
+
+证明。对任意这样的方案，定义四个正效应
+
+$$
+G_{su}=\sum_\lambda k_X(s\mid\lambda)k_Z(u\mid\lambda)M_\lambda.
+$$
+
+由两个译码核的归一化，
+
+$$
+\sum_{s,u}G_{su}=I,\qquad
+\sum_uG_{su}=E_s^X,\qquad
+\sum_sG_{su}=E_u^Z.
+$$
+
+这是构造联合边缘的数学乘积耦合，不要求同时运行两次实际查询。若假设中的全部密度态读数相等，则 $E_s^b=P_s^b$：Hermitian 差若非零，其某个非零特征值的单位本征向量所定义的纯态就给出非零读数，矛盾。因此
+
+$$
+0\le G_{su}\le P_s^X,\qquad0\le G_{su}\le P_u^Z.
+$$
+
+沿用第 38 节的正效应支撑论证：若 $0\le G\le P$ 且 $P$ 是正交投影，对 $v\in\ker P$ 有
+
+$$
+0\le\langle v,Gv\rangle\le\langle v,Pv\rangle=0.
+$$
+
+因 $\langle v,Gv\rangle=\|G^{1/2}v\|^2$，有 $Gv=0$。再由自伴随性，$\operatorname{ran}G\subseteq(\ker P)^\perp=\operatorname{ran}P$。这里 $P_s^X$ 的值域由 $(|0\rangle+s|1\rangle)/\sqrt2$ 张成，而 $P_u^Z$ 的值域由 $|0\rangle$ 或 $|1\rangle$ 张成；它们的交为零。故每个 $G_{su}=0$，与 $\sum_{s,u}G_{su}=I$ 矛盾。
+
+这一支撑原则也是 Heinosaari、Reitzner、Stano，*Notes on Joint Measurability of Quantum Observables*，[arXiv:0811.0783，附录 Proposition 8](https://arxiv.org/abs/0811.0783) 中处理任意联合 POVM 的关键：一个锐边缘已强制相容性。此处直接使用值域交为零的量子比特特例，不以“联合测量本身也是锐测量”为前提。证毕。
+
+**命题 78.9（首次实际查询后的有限标签模拟）。** 若第一次设置已经揭示并实际执行其 Lüders 测量，则每个正概率结果 $(b,s)$ 后的归一化状态恰为 $P_s^b$。此后定义 78.4 的任意有限策略，可把量子状态替换为四个标签 $(X,+1),(X,-1),(Z,+1),(Z,-1)$ 并作经典随机更新，精确模拟后续记录。策略控制仍可使用已记录的完整经典历史；四个标签只替代量子状态，不声称压缩策略自身的记忆。
+
+证明。秩一压缩给出 $\mathcal J_{b,s}(\rho)=\operatorname{tr}(\rho P_s^b)P_s^b$；只在该系数为正时归一化。若当前标签为 $(b,s)$，下一设置为 $c$，结果 $u$ 的概率为
+
+$$
+\operatorname{tr}(P_s^bP_u^c)=\frac{1+su\,\delta_{b,c}}2,
+$$
+
+发生后把标签改为 $(c,u)$。与已记录历史所决定的策略选择结合，对步骤数归纳即得整个后续记录分布。标签是在首次实际查询之后取得，不是定义 78.7 要求的设置揭示之前的共同存储。证毕。
+
+### 78.5 共同经典存储的精确极小极大代价
+
+**定理 78.10（后揭 $X,Z$ 查询的二元总变差最优值）。** 对定义 78.7 的任意有限父 POVM 和随机译码，定义
+
+$$
+e(M,k)=\sup_{\rho,\,b\in\{X,Z\}}
+\frac12\sum_{s=\pm1}
+\left|\operatorname{tr}(\rho P_s^b)-\operatorname{tr}(\rho E_s^b)\right|.
+$$
+
+则在所有这类方案上，
+
+$$
+\inf_{M,k}e(M,k)=e_*=
+\frac{1-1/\sqrt2}{2},
+$$
+
+且下确界由一个四结果 POVM 达到。下界不要求边缘无偏，也不预设父 POVM 的结果数。
+
+证明。固定任意方案，记 $e=e(M,k)$，并使用命题 78.8 的乘积耦合 $G_{su}$。取四个等概率测试输入 $P_s^X,P_u^Z$，在存储后揭示其所属设置。在输入 $P_s^b$ 上，理想二元输出确定为 $s$，故总变差恰为 $1-\operatorname{tr}(P_s^bE_s^b)$。因此每个正确标签概率至少为 $1-e$，平均成功率满足
+
+$$
+\begin{aligned}
+1-e\le S
+&=\frac14\sum_s\operatorname{tr}(P_s^XE_s^X)
++\frac14\sum_u\operatorname{tr}(P_u^ZE_u^Z)\\
+&=\sum_{s,u}\operatorname{tr}(G_{su}R_{su}),
+\qquad R_{su}=\frac{P_s^X+P_u^Z}{4}.
+\end{aligned}
+$$
+
+采用第 40 节的谱奖励上界方法。因为 $XZ+ZX=0$，
+
+$$
+(sX+uZ)^2=2I,\qquad
+R_{su}=\frac I4+\frac{sX+uZ}{8}.
+$$
+
+$sX+uZ$ 无迹、Hermitian，故特征值为 $\pm\sqrt2$，从而
+
+$$
+R_{su}\le cI,\qquad
+c=\frac{1+1/\sqrt2}{4}.
+$$
+
+正性给出 $\operatorname{tr}(G_{su}(cI-R_{su}))\ge0$；这也可写成正矩阵 $G_{su}^{1/2}(cI-R_{su})G_{su}^{1/2}$ 的迹。因此，对所有有限父 POVM 与随机译码，
+
+$$
+S\le c\sum_{s,u}\operatorname{tr}G_{su}
+=c\operatorname{tr}I=2c,
+\qquad
+ e\ge1-2c=e_*.
+$$
+
+为证明达到该界，取父 POVM
+
+$$
+G_{su}^{\rm opt}=\frac14\left(I+\frac{sX+uZ}{\sqrt2}\right),
+\qquad s,u\in\{+1,-1\}.
+$$
+
+由同一平方恒等式，其特征值为零和 $1/2$，故各项正；对四个符号求和，非单位项相消，得到 $\sum_{s,u}G_{su}^{\rm opt}=I$。请求 $X$ 时输出 $s$，请求 $Z$ 时输出 $u$，其边缘恰为
+
+$$
+E_s^b=\frac{I+sb/\sqrt2}{2}.
+$$
+
+对任意密度输入，两个结果的概率差符号相反，故实际二元总变差为
+
+$$
+\frac12\sum_{s=\pm1}
+\left|\operatorname{tr}\!\left(\rho\frac{s(1-1/\sqrt2)b}{2}\right)\right|
+=e_*|\operatorname{tr}(\rho b)|\le e_*.
+$$
+
+最后一个不等式来自 $b$ 的谱为 $\{+1,-1\}$；在 $b$ 的任一本征态上取等号。因此该方案的上确界为 $e_*$，与下界相同。误差是对所有态统一有界，并非每个态都等于 $e_*$；例如 $\rho=I/2$ 时为零。证毕。
+
+Heinosaari、Reitzner、Stano 的上述论文 Proposition 1、式 (5) 给出无偏二元量子比特效应的判据 $\|a+b\|+\|a-b\|\le2$；取两个正交方向及共同收缩系数 $\eta\ge0$，它化为 $2\sqrt2\eta\le2$，与构造中的 $\eta=1/\sqrt2$ 一致。该无偏判据并不代替上面对任意有偏译码的下界。Carmeli、Heinosaari、Toigo，*State discrimination with post-measurement information and incompatibility of quantum measurements*，[arXiv:1804.09693，§V.2，式 (27)](https://arxiv.org/abs/1804.09693) 给出两个等概率量子比特本征基的平均后测量信息成功率
+
+$$
+\frac12\left(1+\sqrt{\frac{1+|\cos\theta|}{2}}\right).
+$$
+
+在 $\theta=\pi/2$ 时，该值为 $2c=1-e_*$。本定理从四态测试得到极小极大下界，再用构造的逐态误差得到一致上界，补足平均成功率与最坏态代价之间的桥接。$e_*$ 只是在定义 78.7 资源约束下的一次后揭查询最优值，不是可见闭合缺陷、退相干速率或跨任务的普适阈值。
+
+### 78.6 三个 Zeckendorf 标签中的等距嵌入
+
+**命题 78.11（合法窗口内的支撑转移及全载体可见空间）。** 沿用本卷定义 1.1 及 Zeckendorf 扩展的开放窗口约定，
+
+$$
+\mathcal W_2=\{00,01,10\},\qquad
+\mathcal H_{\mathcal W_2}=\operatorname{span}_{\mathbb C}\{|00\rangle,|01\rangle,|10\rangle\}.
+$$
+
+定义等距嵌入 $U:\mathbb C^2\to\mathcal H_{\mathcal W_2}$ 为 $U|0\rangle=|00\rangle$、$U|1\rangle=|01\rangle$，并令
+
+$$
+Q=UU^\dagger=|00\rangle\langle00|+|01\rangle\langle01|,
+\quad R=I_3-Q=|10\rangle\langle10|,
+\quad\widehat X=UXU^\dagger,\quad\widehat Z=UZU^\dagger.
+$$
+
+每个设置 $b\in\{X,Z\}$ 使用三个投影
+
+$$
+\widehat P_s^b=\frac{Q+s\widehat b}{2}\quad(s=\pm1),
+\qquad R,
+$$
+
+及相应的压缩分支 $A\mapsto\widehat P_s^b A\widehat P_s^b$、$A\mapsto RAR$。对支撑在 $Q$ 的输入，命题 78.5 的序列统计、命题 78.8 的精确存储不可能性及定理 78.10 的二元代价 $e_*$ 全部原值转移。对整个三维载体和含补空间结果的全部词族，长度至少一的实可见空间为
+
+$$
+\widehat V_H=\operatorname{span}_{\mathbb R}\{Q,R,\widehat X,\widehat Z\}
+\quad(H\ge1),
+$$
+
+而长度零的空间为 $\operatorname{span}_{\mathbb R}\{I_3\}$。
+
+证明。两位二进制词中，开放相邻约束只排除 $11$，故合法词恰为上述三个。所选基向量正交，给出 $U^\dagger U=I$、$UU^\dagger=Q$、$RU=0$。因此
+
+$$
+\widehat X^2=\widehat Z^2=Q,\qquad
+\widehat X\widehat Z+\widehat Z\widehat X=0,\qquad
+\widehat P_s^b=UP_s^bU^\dagger.
+$$
+
+于是 $\widehat P_+^b,\widehat P_-^b,R$ 两两正交、各自幂等、自伴随，且和为 $I_3$。命题 78.5 的单 Kraus 正性与迹求和论证逐项适用，证明每个设置分别归一化。
+
+支撑在 $Q$ 的密度矩阵唯一为 $\widehat\rho=U\rho U^\dagger$，其中 $\rho=U^\dagger\widehat\rho U$ 是量子比特密度矩阵。直接计算
+
+$$
+\widehat P_s^b\widehat\rho\widehat P_s^b
+=U(P_s^b\rho P_s^b)U^\dagger,
+\qquad R\widehat\rho R=0,
+\qquad
+\operatorname{tr}(\widehat\rho\widehat P_s^b)
+=\operatorname{tr}(\rho P_s^b).
+$$
+
+因此全部支撑内序列递推相同。若三维父 POVM 为 $(M_\lambda)_\lambda$，则 $(U^\dagger M_\lambda U)_\lambda$ 是量子比特父 POVM，保留同一译码后，在所有支撑内输入上的二元概率完全相同；故精确不可能性和 $e_*$ 下界都转移。反向把最优量子比特父 POVM 扩为 $(UG_{su}^{\rm opt}U^\dagger)_{s,u}$ 加上 $R$，并在结果 $R$ 上任选归一化二元译码。支撑内输入对 $R$ 的概率为零，故上界也原值转移。这一二元比较的输入域严格限定在 $Q$ 上。
+
+在整个载体上，长度一的效果含 $\widehat P_\pm^X,\widehat P_\pm^Z,R$；它们的和与差给出 $Q,\widehat X,\widehat Z,R$。四者实线性独立：限制到 $Q$ 后由 $I,X,Z$ 独立性得前三个系数为零，限制到 $R$ 得最后系数为零。所有这些投影均秩一，命题 78.5 的压缩归纳仍使每个非空词效果为首个投影的标量倍数，故更长词不增加方向。空词效果 $I_3=Q+R$ 也在该空间内。这证明完整可见空间的等式，不能把它写成只有三个实方向的量子比特空间。证毕。
+
+这里的 Zeckendorf 结构提供合法标签及一个明确的等距嵌入。仪器由所写投影指定；没有从 Fibonacci 权重推导自然能谱、实验耦合、普适几何或经典性，也没有改变支撑内的一次查询存储界。
+
+## 79. 可见算子系统、可编码子系统与 Zeckendorf 记忆成本
+
+### 79.1 预测闭合不等于代数闭合
+
+第 78 节中的 $X/Z$ 任务给出一个最小反例。其所有有限词效果都落在
+
+$$
+V_{XZ}=\operatorname{span}_{\mathbb R}\{I,X,Z\},
+$$
+
+并且 $Y$ 方向不会回流到这些读数。因而 $V_{XZ}$ 对这组仪器是预测闭合的。然而
+
+$$
+XZ=iY\notin V_{XZ}.
+$$
+
+所以 $V_{XZ}$ 不是复矩阵代数，也不是一个可以直接当作独立量子系统的乘法闭子空间。
+
+这一区分可以写成两个不同的要求。先取一个已经固定的、单一的 Heisenberg 更新 $H$ 和初始效果族 $S$，令
+
+$$
+V_0=\operatorname{span}_{\mathbb R}(\{I\}\cup S),
+\qquad
+V_{n+1}=V_n+H(V_n).
+$$
+
+**预测闭合**是在某个 $N$ 后满足
+
+$$
+V_N=V_{N+1},
+$$
+
+这时已有的 `operator_system_tower_once_stable_permanently`（其前提是一个明确给定的保单位完全正 Heisenberg 映射）保证后续塔保持不变。多个设置或自适应协议需要先给出打包后的单一通道，或另证族版本；不能由该定理直接推出。**代数闭合**则要求在复化后还满足
+
+$$
+V_{\mathbb C}V_{\mathbb C}\subseteq V_{\mathbb C},
+\qquad
+V_{\mathbb C}^{\ast}=V_{\mathbb C}.
+$$
+
+前者保证指定实验的未来统计可由当前坐标预测；后者只说明存在一个有限维含单位的 $*$-子代数候选载体。要把它解释成独立的 $C^*$ 子系统，仍需另给编码、恢复和动力学交换图。前者不推出后者。
+
+证明 $V_{XZ}$ 的失败只需计算 $XZ=iY$。这也解释了第 78 节正投影 $\Pi$ 的地位：它可以在实 Hermitian 读数上保持全部指定统计，却不能直接当作完全正的量子通道。若要求一个物理编码，必须额外提供完全正的嵌入、压缩和其相容的动力学；仅有线性正投影不足以完成这一步。
+
+### 79.2 物理编码的最小接口
+
+设 $\mathcal H_S$ 是完整系统，$\mathcal H_R$ 是候选记忆空间。下面把一个“可独立访问的量子记忆”作为额外的强假设，定义为一对映射
+
+$$
+\iota:\mathcal B(\mathcal H_R)\longrightarrow\mathcal B(\mathcal H_S),
+\qquad
+\mathcal R:\mathcal B(\mathcal H_S)\longrightarrow\mathcal B(\mathcal H_R),
+$$
+
+其中 $\iota$ 要求为 Heisenberg 意义下的保单位 $*$-单同态（若只给 UCP 映射，则还须另加 complete-order embedding 假设），$\mathcal R$ 是保单位完全正映射，并满足
+
+$$
+\mathcal R\circ\iota=\operatorname{id}_{\mathcal B(\mathcal H_R)}.
+$$
+
+若只要求把完整演化商到记忆上，要求某个记忆演化 $H_R$ 满足
+
+$$
+\mathcal R\circ H=H_R\circ\mathcal R.
+$$
+
+这三条分别保证代数嵌入、Heisenberg 商的可定义性和预测闭合；它们是定义中的额外条件，不是由 operator system 自动得到的。若要求记忆内部作为完整子系统演化，还要加强为
+
+$$
+H\circ\iota=\iota\circ H_R.
+$$
+
+在 Schrödinger 对偶方向，这些 UCP 条件对应相应的 CPTP 编码与解码条件。它们比“$V$ 是一个稳定实向量空间”严格得多。
+
+在有限维情形，若只要求任务效果而非整个矩阵代数，则可以把 $\mathcal R$ 的像限制为一个含单位的 Hermitian operator system；这正是第 77--78 节可见空间的适用范围。若要求任意后续量子操作都能在记忆内实现，则必须进一步验证乘法闭合或给出一个更大的代数载体。因而“对象”至少有两层：
+
+$$
+\text{任务对象}=\text{对指定实验闭合的 operator system},
+$$
+
+$$
+\text{量子子系统}=\text{带完全正编码与回收的代数对象}.
+$$
+
+把第一层直接称为第二层，会把预测充分性误报成物理可实现性。
+
+### 79.3 共享经典存储的成本不是只数当前标签
+
+设 $N$ 个历史在目标实验族中要求精确区分，并且它们必须被一次性写入一个 $d$ 维量子记忆。仓库的 `finite_memory_history_capacity` 在明确假设“$N$ 个密度态由同一个 POVM 一次性完美区分”时给出
+
+$$
+N\le d.
+$$
+
+若记忆由 $b$ 个量子比特组成，则 $d=2^b$，因此
+
+$$
+ b\ge \lceil\log_2N\rceil.
+$$
+
+对长度为 $L$、禁止相邻两个 $1$ 的 Zeckendorf 合法构型，
+
+$$
+|\mathcal W_L|=F_{L+2}.
+$$
+
+若每个合法构型先被编码成记忆 Hilbert 空间中的一个密度态，且任务要求同一个 POVM 一次性完美区分所有这些态，便得到必要条件
+
+$$
+ b\ge \left\lceil\log_2 F_{L+2}\right\rceil.
+$$
+
+这只是完美区分的下界。若只需预测一个目标族，历史可以按未来响应合并，所需维数由响应等价类数量决定，而不由原始构型总数决定。反过来，若两个当前标签在当前测量下相同、但在后续实验中可分开，则把它们合并会破坏闭合，即使当前标签数已经很小。
+
+因此记忆预算应写成三元组，而不是一个整数：
+
+$$
+(\text{响应类数},\ \text{闭合误差},\ \text{可回收关联}).
+$$
+
+第一项控制需要多少可区分记录，第二项控制有限预测视界内的近似程度，第三项控制暂时不可见的相干是否可能重新出现。
+
+### 79.4 Zeckendorf 约束改变的是载体维数，不是动力学
+
+令
+
+$$
+\mathcal W_L=\{w\in\{0,1\}^L:w_jw_{j+1}=0\},
+\qquad
+\mathcal H_{Z,L}=\operatorname{span}\{|w\rangle:w\in\mathcal W_L\}.
+$$
+
+对 $L\ge2$，并取 $\mathcal W_0=\{\epsilon\}$、$\mathcal W_1=\{0,1\}$，分解首位可得
+
+$$
+\mathcal W_L=0\mathcal W_{L-1}\sqcup10\mathcal W_{L-2},
+$$
+
+从而
+
+$$
+\dim\mathcal H_{Z,L}=F_{L+2}.
+$$
+
+这一步只决定允许的基态数量。若 $P_Z$ 是投影到该空间的投影，实际 Hamiltonian $H$ 还必须满足
+
+$$
+[H,P_Z]=0
+$$
+
+才能保证合法构型空间在连续演化下保持不变；离散更新则需要
+
+$$
+UP_Z=P_ZUP_Z.
+$$
+
+否则，Zeckendorf 只是对初始构型的编号，演化会产生不在该刻度内的状态。仓库已有的 `prime_diagonal_saturation` 说明了相近但不同的边界：当可见观测属于素数占据生成的对角代数时，完全对角 pinching 不改变这些观测的迹配对；该结论没有把对角代数之外的相干宣称为不存在，也没有给出任意 Hamiltonian 的不变性。
+
+对 $L=2$，合法字串为 $00,01,10$。可把 $|01\rangle,|10\rangle$ 嵌入一个量子比特的两个基态，并把 $|00\rangle$ 作为剩余结果 $R$。这是一种任务特定的编码；它不等于把三维合法空间整体识别成二维量子比特。若后续操作能区分 $|00\rangle$ 与其余两态，$R$ 必须继续保留，否则该信息会在下一步回流中丢失。
+
+### 79.5 可检验的“稳定经典现实”条件
+
+结合前面各节，可以把一个有限任务上的稳定对象**提议**定义为四元组
+
+$$
+\mathfrak O=(V,\mathfrak T,H,\varepsilon),
+$$
+
+其中 $V$ 是含单位的可见 operator system，$\mathfrak T$ 是允许的实验族，$H$ 是预测视界，$\varepsilon$ 是允许误差。其候选精度条件应写成：对所有密度矩阵 $\rho,\sigma$，若
+
+$$
+\forall A\in V,\quad \operatorname{tr}(\rho A)=\operatorname{tr}(\sigma A),
+$$
+
+则要求
+
+$$
+\sup_{T\in\mathfrak T,\,|w|\le H}
+\operatorname{TV}\bigl(p_T(w\mid\rho),p_T(w\mid\sigma)\bigr)
+\le\varepsilon.
+$$
+
+实验族 $\mathfrak T$ 应包含所允许的设置选择、记录和自适应停止规则。记录通道与动力学的闭合缺陷还须另行定义并纳入同一预算；这里的条件是研究接口，不是仓库现有的一个单独 Lean 判据。若再要求一个真正的量子子系统，则追加完全正的 $\iota,\mathcal R$ 及交换图条件。
+
+因此问题“保留多少历史才得到经典现实”没有独立于任务的答案。精确形式是：寻找最小的 $V$，使其在给定 $\mathfrak T$、$H$ 和 $\varepsilon$ 下闭合，同时满足所需的物理编码条件。在明确给出成本函数和闭合缺陷定义后，才可把它写成如下研究中的受约束优化问题：
+
+$$
+\min_V\ \operatorname{cost}(V)
+\quad\text{subject to}\quad
+\operatorname{closure\_defect}(V;\mathfrak T,H)\le\varepsilon,
+$$
+
+这里的 $\operatorname{cost}$ 和 $\operatorname{closure\_defect}$ 都是待定义的研究量；物理版本还须追加“存在完全正编码、恢复和交换图”的约束，不能把它替换成尚未定义的标量等式。
+
+这把“相对性”限制在明确的实验族、时间范围和误差预算内：换实验族会改变最小 $V$，增加预测视界会暴露原先隐藏的方向，要求物理可编码又会排除只有线性闭合而没有完全正回收的候选空间。
+
+本节使用的永久稳定、可见维数、有限记忆容量和对角饱和均来自现有 Lean 模块；`FutureStatisticsEquivalence` 还把“所有未来读数相同”精确连接到差态对无限 Heisenberg 生成 operator system 的湮灭。$X/Z$ 的非代数例子、完全正编码接口和 Zeckendorf 投影不变条件是对这些结果的组合解释。它们给出可形式化的后续目标，但不宣称仓库已经证明任意 operator system 都有物理回收映射，也不把任务特定的二维嵌入提升为普遍量子存储定理。
+
+## 追加锚（新终端）
+
+## 80. 中心标签、块内自由度与可组合历史
+
+### 80.1 预测算子系统与代数闭包
+
+第 79 节的 $X/Z$ 例子说明，预测闭合和乘法闭合是不同要求。设一个固定的 Heisenberg 映射为 $H$，初始效果族为 $S$，定义
+
+$$
+V_0=\operatorname{span}_{\mathbb R}(\{I\}\cup S),
+\qquad
+V_{n+1}=V_n+H(V_n).
+$$
+
+全体有限回拉的实线性空间为
+
+$$
+V_\infty
+=\operatorname{span}_{\mathbb R}
+\{H^k(A):A\in V_0, k\in\mathbb N\}.
+$$
+
+`operator_system_tower_once_stable_permanently` 说明，在单一保单位完全正 Heisenberg 映射的前提下，一层相邻稳定就会永久稳定；`future_statistics_iff_annihilates_infinite_system` 则在其密度态、Schrödinger 通道、保单位 Heisenberg 对偶和迹配对前提下，把所有未来统计相同精确连接到差态对 $V_\infty$ 的迹配对全部为零。因此，$V_\infty$ 是相对于这组初始效果和这一个通道的预测载体。
+
+但令
+
+$$
+\mathcal A_\infty
+=\operatorname{Alg}^{\ast}_{\mathbb C}(V_\infty)
+$$
+
+表示包含 $V_\infty$ 的最小含单位复 $\ast$-子代数。一般只有
+
+$$
+V_\infty\subseteq (\mathcal A_\infty)_{\mathrm{sa}},
+$$
+
+而没有等号。两个可见效果的乘积、交换子或条件组合，可能产生原始未来词中没有出现的新方向。特别地，$V_{XZ}=\operatorname{span}_{\mathbb R}\{I,X,Z\}$ 对第 78 节指定仪器足以预测，却因为 $XZ=iY$ 而不是代数。
+
+因此必须区分：
+
+$$
+V_\infty=\text{对指定未来统计最小的线性预测载体},
+$$
+
+$$
+\mathcal A_\infty=\text{对指定可组合操作最小的代数载体}.
+$$
+
+若后续实验只查询原先的效果，加入所有乘积可能是过度保留；若实际协议的组合观测明确包含某个乘积（例如把 $AB$ 作为新的效应或关联观测），该乘积才会进入新的响应，不能只依靠 $V_\infty$ 上的读数。一般序列仪器的响应仍由具体 instrument 和 Heisenberg 共轭决定。`prediction_closure_minimal_dynamical_repair` 给出相应的线性最小不变闭包，但没有把该闭包提升为乘法代数。
+
+### 80.2 固定代数的中心与块内量子自由度
+
+设 $\Lambda$ 有限、每个 $n_\lambda$ 有限，并先选定一个代数同构，使有限维固定代数具有块分解
+
+$$
+\mathcal A
+\cong
+\prod_{\lambda\in\Lambda}M_{n_\lambda}(\mathbb C).
+$$
+
+仓库的 `record_fixed_center_eq_block_scalars` 精确给出规范乘积代数的中心；经上述同构输运后得到这里的中心公式：
+
+$$
+Z(\mathcal A)
+=
+\left\{(c_\lambda I_{n_\lambda})_{\lambda\in\Lambda}:c_\lambda\in\mathbb C\right\}.
+$$
+
+因此（维数公式使用有限直积的标准线性代数维数计算）
+
+$$
+\dim_{\mathbb C}Z(\mathcal A)=|\Lambda|,
+\qquad
+\dim_{\mathbb C}\mathcal A=\sum_{\lambda\in\Lambda}n_\lambda^2.
+$$
+
+只有当所有 $n_\lambda=1$ 时，代数才交换，中心才等于整个代数。若某个 $n_\lambda>1$，同一个中心标签仍允许一个非平凡的块内量子系统；把标签 $\lambda$ 当成完整经典对象，会把这部分可由后续操作恢复的关系一并丢掉。
+
+这给“经典记录”的含义加上一个边界：在给定记录通道确实固定这些中心投影、且允许观测族只读取它们时，中心投影才可作为稳定的经典标签；抽象代数的中心本身不自动给出物理记录通道。中心标签的数量不等于完整联合系统的 Hilbert 维数，也不等于可组合算子的维数。`FiniteMemoryHistoryCapacity.finite_memory_history_capacity` 的 $N\le d$ 也只在 $N$ 个密度态被同一个 POVM 一次性完美区分时成立，不能把中心标签数自动解释成所有物理记忆的维数。
+
+### 80.3 Zeckendorf 标签只决定中心数量的特殊情形
+
+取禁止相邻 $11$ 的合法集合
+
+$$
+\mathcal W_L
+=\{w\in\{0,1\}^L:w_jw_{j+1}=0\},
+\qquad
+|\mathcal W_L|=F_{L+2}.
+$$
+
+若每个合法字串只对应一个一维块，则得到纯经典代数
+
+$$
+\mathcal A_Z
+=\bigoplus_{w\in\mathcal W_L}\mathbb C,
+$$
+
+其中心维数、代数维数和标签数都等于 $F_{L+2}$。这正是 Zeckendorf 刻度与经典记录完全吻合的特殊情况。
+
+若每个标签后面仍保留大小为 $n_w$ 的块，则
+
+$$
+\mathcal A_Z^{\mathrm{block}}
+=\bigoplus_{w\in\mathcal W_L}M_{n_w}(\mathbb C),
+$$
+
+并且
+
+$$
+\dim_{\mathbb C}Z(\mathcal A_Z^{\mathrm{block}})=F_{L+2},
+\qquad
+\dim_{\mathbb C}\mathcal A_Z^{\mathrm{block}}
+=\sum_{w\in\mathcal W_L}n_w^2.
+$$
+
+若物理 Hilbert 空间是一个有限维表示，并在第 $w$ 个块上含有重数 $m_w$（且这些重数满足所选表示的忠实性要求），其载体维数则为
+
+$$
+\dim\mathcal H=\sum_{w\in\mathcal W_L}m_wn_w.
+$$
+
+这三个数分别回答三个问题：合法标签有多少，可组合的算子有多少，实际联合载体有多少。因此不能从 $F_{L+2}$ 单独推出量子记忆维数、可见算子维数或未来统计的 Hankel 秩。
+
+第 78 节的三构型嵌入已经展示了同一组合法字串在加入补空间后会出现额外记录方向；这里的块分解把“标签之外仍有内部状态”写成了统一公式。若后续实验只访问中心，块内状态可以暂时隐藏；若允许块内操作，隐藏部分必须继续保留在模型中。
+
+### 80.4 近似乘法闭包与历史预算
+
+对一个有限维预测截断 $V\subseteq V_\infty$，先选定矩阵范数，并令距离取该范数到子空间的距离；定义乘法缺陷
+
+$$
+\eta(V)
+=
+\sup_{\substack{A,B\in V\\\|A\|,\|B\|\le1}}
+\operatorname{dist}(AB,V+iV).
+$$
+
+这里 $V+iV$ 是 $V$ 的复化；有限维保证该子空间闭合。若 $\eta(V)=0$，则所有单位范数以内的可见乘积都落在复化空间中，因而该截断对这些乘积精确闭合。若 $\eta(V)>0$，至少有一对当前可见关系的组合产生了新的方向。这个量是研究定义，不是已冻结的物理误差；研究上有两种不同处理：
+
+$$
+\begin{aligned}
+&\text{扩大记录，加入产生该乘积的历史关系；}\\
+&\text{固定允许误差，把 }\eta(V)\text{ 纳入预测误差预算。}
+\end{aligned}
+$$
+
+$\eta(V)$ 只量化一步的乘法缺口，不自动给出任意多步实验的误差界。多步控制、参考系统和有记忆环境仍需使用联合通道距离或相应的序列误差界；本节没有把 $\eta$ 宣称为一个已冻结的物理误差定理。
+
+因此，对“保留多少历史才能得到稳定经典现实”的问题，三层结构可以写成
+
+$$
+\boxed{
+\begin{gathered}
+\text{只预测指定未来读数：保留 }V_\infty;\\
+\text{允许可组合后续操作：保留 }\mathcal A_\infty;\\
+\text{只读取稳定经典标签：保留 }Z(\mathcal A_\infty);\\
+\text{存在量子块时：还要保留每个中心块的内部自由度。}
+\end{gathered}}
+$$
+
+Zeckendorf 约束可以决定中心标签的自然组织和数量 $F_{L+2}$，但不能替代 Heisenberg 演化、乘法闭包或块内量子动力学。所谓稳定经典现实不是一个脱离任务的单独刻度，而是相对于实验族和后续操作选择的三层对象：预测算子系统、可组合代数以及其中心记录。只有明确当前实验使用哪一层，才知道哪些历史可以安全丢弃，哪些历史会在下一次组合操作中重新显现。
+
+本节复用 `operator_system_tower_once_stable_permanently`、`future_statistics_iff_annihilates_infinite_system`、`prediction_closure_minimal_dynamical_repair`、`record_fixed_center_eq_block_scalars` 和 `finite_memory_history_capacity` 的现有结果。中心维数、块内自由度、乘法缺陷 $\eta(V)$ 与 Zeckendorf 分块的组合是本节的开放研究桥接，不冒充已有 Lean 定理。
+
+## 追加锚（新终端）
+
+## 81. 记录重叠、恢复误差与可访问历史
+
+### 81.1 记录不是标签数，而是条件记录的重叠
+
+第 80 节把中心标签与块内自由度分开，但还缺少一个量化问题：当记录被压缩后，剩余的相干究竟还能被恢复多少？仓库的 `FiniteRecordRecoveryError` 给出一个直接的有限模型。
+
+取有限支持的复系数序列 $c_k$，满足
+
+$$
+\sum_{k\in\mathbb Z}\lVert c_k\rVert^2=1,
+$$
+
+并令记录的平移重叠为
+
+$$
+\gamma(\ell)
+=
+\sum_{k\in\mathbb Z}c_{k+\ell}\,\overline{c_k}.
+$$
+
+若系统构型 $i$ 被放置在整数位置 $q(i)$，记录通道对矩阵元的作用为
+
+$$
+\Lambda(A)_{ij}
+=
+\gamma\bigl(q(i)-q(j)\bigr)A_{ij}.
+$$
+
+因此对角项保持不变，而构型 $i,j$ 之间的相干按记录重叠 $gamma(q(i)-q(j))$ 缩放。这个量同时保留模长和相位；它不是“记录了几次”的计数。
+
+`coefficient_gamma_neg` 保证
+
+$$
+\gamma(-\ell)=\overline{\gamma(\ell)},
+$$
+
+所以成对的非对角矩阵元仍满足 Hermitian 对称。对于有限支持记录，$gamma$ 是记录波形与其平移的自相关；记录形状、位置差和相位约定共同决定可见相干，而不是 Zeckendorf 标签本身单独决定。
+
+### 81.2 任意恢复都有一个由记录重叠决定的下界
+
+设 $q(i)-q(j)\ne0$。`finite_record_recovery_error_lower_bound` 对任意量子通道 $R$ 都给出
+
+$$
+\frac{1-\lVert\gamma(q(i)-q(j))\rVert}{2}
+\le
+\sup_{\rho}
+\frac12
+\left\|
+R\!\left(\Lambda(\rho)\right)-\rho
+\right\|_1.
+$$
+
+更准确地说，右侧是该误差集合的上确界；定理还构造了两个输入态，它们在记录通道前的迹距离为 $1$，经过记录后变为 $\lVert\gamma(q(i)-q(j))\rVert$。迹距离的收缩性说明，任何恢复通道都必须支付上述损失。
+
+这给出两个极端：
+
+$$
+\lVert\gamma(q(i)-q(j))\rVert=1
+\quad\Longrightarrow\quad
+\text{该下界为 }0,
+$$
+
+说明相干可能只是旋转或保留相位，不能从下界推出已经经典化；而
+
+$$
+\gamma(q(i)-q(j))=0
+\quad\Longrightarrow\quad
+\text{任意恢复的最坏误差至少为 }\frac12.
+$$
+
+所以“记录已经抹掉历史”必须附带记录模型和误差指标。相同的标签数量可以对应完全不同的 $\gamma$，相同的单步去相干也可以对应不同的多步恢复能力。
+
+### 81.3 Zeckendorf 位置与重叠谱
+
+若把合法 Zeckendorf 构型 $w\in\mathcal W_L$ 映射到整数坐标 $q(w)$，例如使用权重 $(F_2,F_3,\ldots,F_{L+1})$ 的规范读数，则记录通道的相干矩阵为
+
+$$
+R_{wv}=\gamma\bigl(q(w)-q(v)\bigr).
+$$
+
+这说明 Zeckendorf 的作用是提供一组离散位置差；真正决定哪两条历史仍能相干汇聚的，是这些位置差落在记录自相关 $\gamma$ 的什么位置。
+
+即使 $q(w)$ 唯一，仍可能出现
+
+$$
+q(w)-q(v)\ne q(w')-q(v')
+\quad\text{但}\quad
+\gamma(q(w)-q(v))=\gamma(q(w')-q(v')),
+$$
+
+也可能出现不同的位置差产生同一相位。于是“编码唯一”与“物理记录可区分”是两件事：前者是整数表示性质，后者是记录波形和相互作用的性质。
+
+若记录设计满足对所有不同合法构型
+
+$$
+\left|\gamma(q(w)-q(v))\right|\le q_0<1,
+$$
+
+则重复使用独立同形记录时，相应的非对角系数至多按 $q_0^N$ 衰减；若记录是同一联合自由度的相干复用，则必须保留联合系统，不能把每轮都替换成无记忆的乘法通道。第 78 节的 fresh/reuse 对照正是这两个模型的差别。
+
+### 81.4 局部读数丢失不等于联合历史消失
+
+`reduced_irreversibility_is_access_defect` 给出另一个边界。存在两个整体输入 $\rho,\sigma$，满足它们的对角读数相同而某个相干元不同。受控记录耦合后，联合态仍不同，但环境偏迹相同：
+
+$$
+\operatorname{Tr}_E(\Omega_\rho)
+=
+\operatorname{Tr}_E(\Omega_\sigma),
+\qquad
+\Omega_\rho\ne\Omega_\sigma.
+$$
+
+因此不存在只依赖这个局部边缘态的统一恢复函数
+
+$$
+D\!\left(\operatorname{Tr}_E\Omega\right)=\Omega
+$$
+
+来恢复这两个联合记录。可是访问完整记录并施加受控耦合的逆操作后，二者都能恢复到各自的空记录输入：
+
+$$
+U^\dagger\Omega_\rho U=\rho\otimes|0\rangle\langle0|,
+\qquad
+U^\dagger\Omega_\sigma U=\sigma\otimes|0\rangle\langle0|.
+$$
+
+这把“历史是否存在”改写成一个可操作的问题：历史关系是否仍在允许访问的联合自由度中，而不是是否已经出现在某个局部数值上。局部边缘的经典化可以与整体可逆性同时成立。
+
+### 81.5 对稳定经典现实的修正
+
+结合第 79、80 节，稳定经典现实至少需要三个独立条件：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{记录重叠谱在目标视界内足够收缩；}\\
+&\text{可见 operator system 对指定实验闭合；}\\
+&\text{被省略的联合记录在允许操作族中不会重新回流，或其回流误差有界。}
+\end{aligned}}
+$$
+
+第一条由 $\gamma$ 的模长和恢复误差下界约束，第二条由 $V_\infty$ 或其有限稳定阶段约束，第三条由可访问环境范围和联合通道决定。Zeckendorf 可以为第一条提供规范位置差，为第二条提供合法构型索引，但不能单独证明任一条的物理前提。
+
+因此，问题“要保留多少历史”现在可以写成一个带任务参数的优化：在给定实验族 $\mathfrak T$、预测视界 $H$、允许误差 $\varepsilon$ 和允许访问的记录代数 $\mathcal R$ 下，寻找最小保留结构，使
+
+$$
+\sup_{T\in\mathfrak T,\,n\le H}
+\operatorname{TV}\bigl(p_T^{\mathrm{full}}(n),p_T^{\mathrm{retained}}(n)\bigr)
+\le\varepsilon,
+$$
+
+同时满足记录重叠诱导的恢复下界、operator-system 闭合和联合访问约束。这个优化问题仍是开放的研究接口；本节只把已有的重叠谱、恢复下界和局部访问反例接到同一条可检验主线上。
+
+本节复用 `coefficient_gamma_neg`、`finite_record_recovery_error_lower_bound` 和 `reduced_irreversibility_is_access_defect` 的现有 Lean 结果。Zeckendorf 位置映射、重复记录的多步误差和最后的保留结构优化是组合推导，不冒充仓库已有的统一恢复定理。
+
+## 追加锚（新终端）
+
+## 82. 有限预测深度、完整证书与 Zeckendorf 载体
+
+### 82.1 深度不是时间长度，而是可见空间的秩增量
+
+第 80 节中的 $V_\infty$ 是所有有限 Heisenberg 回拉的线性闭包。对一个有限维载体，真正需要观察多深，不等于实验运行了多少物理时间，而取决于这条回拉链还能增加多少个线性独立方向。
+
+设 $d\ge1$，固定一个字母表和一个单一的 instrumentDual，并令 $V_n$ 为长度不超过 $n$ 的 sequential word effects 的实线性张成。若所有有限词效果最终张成整个 Hermitian 载体，则 `finite_sequential_completeness_depth` 给出某个
+
+$$
+N\le d^2-1
+$$
+
+使得长度不超过 $N$ 的词已经张成全部 Hermitian 效果空间。
+
+这个上界来自实 Hermitian 维数的有限性：去掉由迹固定的单位方向后，trace-zero Hermitian 方向至多有 $d^2-1$ 个独立维度。每一步若还没有稳定，中心化空间至少增加一个维度；因此不可能在超过这个维数增量后继续严格增加。它不是任意效果标签数或物理时间长度的普遍上界。
+
+这里的 $N$ 是一个最坏情形证书深度，不是任意系统的实际最小深度。若初始效果已经包含很多方向，实际深度可能远小于 $d^2-1$；若词族不能张成完整 Hermitian 空间，则该完整性定理的前提不成立，不能从维数直接宣称所有状态都可区分。多设置、自适应协议或参考系统必须先并入同一个有限载体和固定协议，不能直接套用这个单一 instrumentDual 的结论。
+
+### 82.2 稳定深度与终端预测空间
+
+对 trace-zero Hermitian 载体上的一个固定线性 Heisenberg 更新，`centered_effect_stability_depth_bound` 给出更精细的形式：若 $T_n$ 是该固定更新下的中心化效果塔，$T_0$ 的维数为 $r_0$，终端预测空间的维数为 $r_\infty$，则最小一步稳定深度满足
+
+$$
+\operatorname{depth}_{\mathrm{stable}}
+\le r_\infty-r_0
+\le d^2-1-r_0.
+$$
+
+一旦某一层满足
+
+$$
+T_N=T_{N+1},
+$$
+
+该层就等于所有后续层的并空间：
+
+$$
+T_N=\bigvee_{n\ge0}T_n.
+$$
+
+这把“递归观察最终会不会停”变成了一个可检查的秩条件。它不要求先找到一个无限历史的终点；只要在有限维空间中检测到相邻层维数不再增加，就可以把当前层作为永久稳定候选。这里的深度是固定线性更新的词层数，不是任意物理时间，也不直接适用于未中心化的原始效果塔。
+
+但这条结论仍然相对于一个固定线性更新和一个固定效果族。改变允许设置、引入自适应仪器、增加参考系统，都会改变 $T_n$ 的载体和相应的稳定深度；不能把一个任务的 $d^2-1$ 上界当作所有观察协议的普遍历史长度。
+
+### 82.3 信息完整性也有有限证书
+
+若一个由正 effect 组成、且每个 $1-E$ 也为正的效果族，对所有密度态的原始概率读数是单射的，`finite_informational_effect_certificate` 进一步给出有限子族 $S$，满足
+
+$$
+|S|\le d^2-1,
+$$
+
+并且其中心化效果已经张成全部 trace-zero Hermitian 空间。原始效果在这个有限子族上的概率读数仍然可以区分所有密度态。
+
+因此“保留多少个历史读数”与“保留多少个线性方向”不是同一个问题。一个无限的候选效果族可能只需要至多 $d^2-1$ 个精心选择的效果作为信息完整证书；但这不意味着任意抽取的 $d^2-1$ 个标签都足够，也不意味着这些效果在物理实验中可以同时、无噪声地获得。
+
+对纯经典的 $D$ 个状态，信息完整记录通常只需区分 $D$ 个中心标签；对完整量子载体，状态空间的实参数维数为 $D^2-1$。这正是第 80 节必须区分中心标签数与块内自由度的原因：Zeckendorf 合法构型数 $F_{L+2}$ 可以是中心标签数，但若每个标签仍带量子块，完整预测证书的规模按块结构而非只按标签数计算。
+
+### 82.4 对 Zeckendorf 合法空间的条件上界
+
+令
+
+$$
+D_L=|\mathcal W_L|=F_{L+2},
+\qquad
+\mathcal H_{Z,L}=\operatorname{span}\{|w\rangle:w\in\mathcal W_L\}.
+$$
+
+若明确把 $\mathcal H_{Z,L}$ 作为一个 $D_L$ 维物理 Hilbert 空间，并且所选仪器的 Heisenberg 效果在这个空间上满足完整性前提，那么把 $d=D_L$ 代入上述定理得到条件上界
+
+$$
+N_Z\le D_L^2-1
+=(F_{L+2})^2-1.
+$$
+
+同样，信息完整效果族存在一个至多
+
+$$
+(F_{L+2})^2-1
+$$
+
+个效果的有限证书。
+
+这只是一个载体维数上界。它没有从 Zeckendorf 递推自动推出实际 Hamiltonian、仪器完备性或实验可达性。若系统只允许某个受限 operator system，或存在块分解
+
+$$
+\mathcal A_Z^{\mathrm{block}}
+=\bigoplus_w M_{n_w}(\mathbb C),
+$$
+
+则可见深度取决于实际 Heisenberg 作用在该空间上的秩增长；不能只把 $F_{L+2}$ 代入 $d$ 而跳过物理载体的构造。
+
+### 82.5 这给“保留多少历史”增加了一个可检验预算
+
+对于给定载体、仪器和目标实验族，可以把历史保留预算拆为
+
+$$
+\boxed{
+\begin{aligned}
+&\text{结构预算：}\quad d^2-1\text{ 个 trace-zero 方向的最坏上界；}\\
+&\text{深度预算：}\quad r_\infty-r_0\text{ 个实际秩增量；}\\
+&\text{证书预算：}\quad \le d^2-1\text{ 个信息完整效果；}\\
+&\text{恢复预算：}\quad \gamma\text{ 谱给出的不可恢复误差下界。}
+\end{aligned}}
+$$
+
+第一项只由载体维数控制，第二项由具体动力学控制，第三项由任务的读出选择控制，第四项在第 81 节的具体记录模型和迹距离误差定义下由记录耦合与可访问环境控制。它们互相不能替代：较小的中心标签数不会消除块内维数，有限证书也不会保证记录通道可逆，深度稳定更不会自动产生经典吸引子。
+
+所以，对用户最初的命题，一个更严格的有限版本是：在给定 Zeckendorf 合法载体、仪器族、预测视界和恢复访问范围后，保留的历史必须至少支撑任务所需的可见秩、有限证书和恢复误差预算；只有在这些条件同时满足时，才可以把当前层称为稳定的有效经典记录。
+
+本节复用 `finite_sequential_completeness_depth`、`centered_effect_stability_depth_bound` 和 `finite_informational_effect_certificate` 的现有 Lean 结果。将 $d=F_{L+2}$ 代入 Zeckendorf 载体是条件性组合推导，不是仓库已经证明的受约束量子系统构造。
+
+## 追加锚（新终端）
+
+## 83. 多上下文记录的独立预算
+
+### 83.1 一个上下文只能暴露一个有限切面
+
+第 82 节给出了完整量子载体的维数界，但实际记录通常被分成多个上下文：同一系统可以在不同设置、不同基底或不同局部协议下留下不同结果。设上下文集合为有限集 $X$，上下文 $x$ 有 $m_x$ 个结果。去掉单位方向并把结果写成中心化效果后，每个上下文最多提供
+
+$$
+\operatorname{independentCount}(x)=m_x-1
+$$
+
+个独立结果方向。
+
+这不是说一个上下文的所有结果都没有物理意义；被去掉的最后一个中心化效果由其余效果的和决定。这里计数的是能独立增加状态区分能力的实线性方向，不是 $m_x-1$ 个经典 bit，也不是一个可执行仪器的自动成本。仓库的 `SingleContextVisibleRemainderDimension` 在秩一基底上下文满足 `IsRecordMeasurement` 的条件下给出了相同的几何边界：单个完整基底的概率方向只有 $d-1$ 个独立中心化方向，剩余的 trace-zero Hermitian 方向仍需其他上下文或其他效应补足。
+
+### 83.2 联合信息完整性的下界
+
+`multi_context_budget_lower_bound` 的假设是：每个上下文的中心化效果满足
+
+$$
+\sum_{j=1}^{m_x}E_{x,j}=0
+$$
+
+（单位方向已剥离；这些 $E_{x,j}$ 不是定理中自动带有正性的 POVM outcome），并且所有上下文的联合读数对密度态是单射的。若输入 Hilbert 空间维数为 $d\ge1$，则定理给出
+
+$$
+\boxed{
+ d^2-1
+ \le
+ \sum_{x\in X}(m_x-1).
+}
+$$
+
+证明的结构很直接：每个上下文删去一个由归一化决定的结果，剩余效果仍必须张成整个 trace-zero Hermitian 空间；该空间的实维数是 $d^2-1$，所以独立效果总数不能更少。这里是必要条件，不是充分条件；达到这个计数并不保证效果彼此独立、正性成立或存在一个可执行的仪器。
+
+对第 78 节的三构型合法空间，如果明确把 $00,01,10$ 构造成一个三维正交 Hilbert 基，并要求多个上下文联合地完整区分任意密度态，则
+
+$$
+ d=3,qquad
+\sum_x(m_x-1)\ge 8.
+$$
+
+若每个上下文只有两个结果，这个必要条件变成至少八个独立二元上下文方向。它不能被误读成“八次测量一定足够”：上下文之间的线性关系、完全正性和实际序列仪器仍需单独验证。
+
+### 83.3 Zeckendorf 长度下的条件预算
+
+若长度为 $L$ 的合法字串空间被明确实现为一个完整物理载体，并且
+
+$$
+D_L=|\mathcal W_L|=F_{L+2},
+$$
+
+并且所选中心化效果满足逐上下文求和为零、联合读数对该载体上的全部密度态是单射，则联合信息完整的多上下文记录必须满足
+
+$$
+\boxed{
+(F_{L+2})^2-1
+\le
+\sum_{x\in X}(m_x-1).
+}
+$$
+
+这个式子把两种“尺度”接起来：Zeckendorf 递推给出合法构型的载体维数，量子上下文预算则给出分辨其全部密度态所需的独立中心化方向数。它只在合法构型确实成为正交物理基、上下文效果满足归一化、联合读数对所有密度态单射时成立。
+
+若每个 Zeckendorf 标签后面带有量子块，则应将 $D_L$ 替换为实际联合 Hilbert 维数，或改用第 80 节的块代数和所选 operator system 的真实维数。只把 $F_{L+2}$ 当成总维数，会漏掉块内自由度；只把上下文结果数相加，又可能重复计算线性相关的效果。
+
+### 83.4 父记录、上下文专用记录与量子保留
+
+这个下界还揭示三种存储方案的差别。
+
+第一，**上下文专用记录**可以在设置 $x$ 已知后，只保存该上下文的 $m_x-1$ 个独立线性读出方向；这不是说需要 $m_x-1$ 个经典 bit，实际编码成本还取决于读数精度和物理实现。
+
+第二，**共同经典记录**必须在设置尚未揭示时同时支持所有上下文的联合读数。这是额外的 parent-record 问题，不能由本节的线性计数下界单独推出父 POVM 不可能；第 78 节的 $X/Z$ 二元模型才给出了一个具体的完全精确父 POVM no-go。计数下界只说明联合完整读数所需的独立中心化方向不能凭空消失。
+
+第三，**保留量子载体**不必预先把所有上下文结果写成经典标签，而是保留足够的量子自由度，在设置揭示后再选择测量。这样可以避免把不相容结果同时写入一个经典表格，但其物理成本转移为保存 Hilbert 空间、控制相互作用和限制环境回流。
+
+因此，“保留多少历史”必须先说明设置何时揭示：
+
+$$
+\begin{aligned}
+&\text{设置先揭示：}\quad\text{可以使用上下文专用记录；}\\
+&\text{设置后揭示：}\quad\text{需要共同父记录，或保留量子载体；}\\
+&\text{允许有限误差：}\quad\text{需要把上下文缺陷和读出距离纳入预算。}
+\end{aligned}
+$$
+
+多上下文预算不推翻第 80 节关于中心和块的区分，也不替代第 81 节的恢复误差下界。它补充的是另一项必要条件：即使没有任何隐藏回流，联合完整记录本身也需要足够多的独立中心化方向。若任务只预测一个受限 observable system，而不是区分全部密度态，则应改用该任务空间的维数，不能直接套用 $d^2-1$ 的全 tomography 下界。
+
+本节复用 `multi_context_budget_lower_bound` 和 `single_context_visible_remainder_dimension` 的现有结果。将 $d=F_{L+2}$ 代入得到的 Zeckendorf 预算是条件性组合推导；共同父 POVM 的精确不可能性仍由第 78 节的具体二元模型承担，不把计数下界冒充为一般 no-go 定理。
+
+## 84. 互补上下文怎样补齐剩余方向
+
+### 84.1 从预算下界到正交补齐
+
+第 83 节只给出了联合记录必须拥有多少个独立中心化方向的必要条件。现有的 `CompleteContextTomography` 与 `MutuallyUnbiasedDiagonalPlanes` 还给出一个更有结构的条件性实现：如果一个 $d$ 维物理载体存在 $d+1$ 个秩一上下文，并且任意两个不同上下文满足
+
+$$
+\operatorname{Tr}(P_{x,j}P_{y,k})=\frac1d
+\qquad(x\ne y),
+$$
+
+并且再加上一个载体识别条件：每个上下文的中心化对角平面确实等同于其 $d$ 维 trace-zero 对角载体。记第 $x$ 个平面为 $\mathsf P_x$，则在这个附加条件下，每个平面有 $d-1$ 个独立方向，而且不同上下文的这些平面彼此正交：
+
+$$
+\dim \mathsf P_x=d-1,
+$$
+
+$$
+\mathsf P_x\perp\mathsf P_y\quad(x\ne y),
+$$
+
+从而
+
+$$
+\dim\Bigl(\bigoplus_{x=0}^{d}\mathsf P_x\Bigr)
+=(d+1)(d-1)=d^2-1.
+$$
+
+右端正好是 trace-zero Hermitian 方向的维数。因此，在这些重叠条件和完整物理载体假设下，第 83 节的必要预算被恰好填满：单位方向由归一化提供，$d^2-1$ 个中心化方向由 $d+1$ 个互补上下文提供。
+
+这里的逻辑方向必须保持清楚。仓库定理证明的是：**给定**这些上下文和重叠假设，就能得到唯一分解、无共同不可见 trace-zero 残差，以及由所有上下文概率确定 Hermitian trace-one 矩阵。它没有证明任意维数都存在这样的物理仪器，也没有把一组形式上的 `RankOneContext` 自动解释成实验室中可实现的 POVM。
+
+### 84.2 互补不是额外标签，而是剩余空间的几何补偿
+
+一个上下文的去相位通道可以写成
+
+$$
+\mathcal D_x(X)=\sum_j\operatorname{Tr}(P_{x,j}X)P_{x,j}.
+$$
+
+它把 $X$ 保留在第 $x$ 个对角平面和单位方向上，而把与该平面正交的方向压到当前读数不可见。若 $x\ne y$ 的两个上下文互补，则现有定理给出，对 Hermitian $X$：
+
+$$
+\mathcal D_x\mathcal D_y(X)
+=\frac{\operatorname{Tr}(X)}{d}I,
+$$
+
+以及交换次序后的同样等式。特别地，对 trace-zero 部分 $X_0$ 有
+
+$$
+\mathcal D_x\mathcal D_y(X_0)=0.
+$$
+
+这不是说第二次观测把整体量子信息从宇宙中删除；它说的是：在只保留第一次和第二次去相位之后的系统边缘记录时，两个互补切面连续作用会把 trace-zero 方向都压到单位方向，当前这组经典记录看不到原来的方向。若环境或记录寄存器仍可访问，联合系统可以保留更多信息；因此“消失”必须带有访问范围的下标。
+
+这也说明为什么“上下文数量”不能直接等同于“历史长度”。两个上下文可以提供互相正交的新方向，也可以在连续去相位协议中抹掉此前可见的方向。真正的资源是记录代数中保留下来的独立方向和仍可访问的联合关联。
+
+### 84.3 三种协议的区别
+
+设设置变量为 $x$，系统状态为 $\rho$。
+
+**上下文先揭示。** 若 $x$ 在相互作用前已知，可以只实施 $\mathcal D_x$，并保存该上下文的 $d-1$ 个独立中心化读数。对于只预测该上下文后续响应的任务，这可以是足够的有效记录；它不承诺对未选择的上下文仍然可回答。
+
+**设置后揭示。** 若 $x$ 在记录之后才揭示，则一份共同的经典记录必须同时支撑各个 $\mathcal D_x$ 的统计预测。这是共同父记录问题。第 84.1 节的正交分解说明在完整量子载体上怎样用多上下文效果补齐信息，但它不构造一个预先写好所有不相容答案的经典表，也不由维数等式单独推出共同父 POVM 的存在或不存在。
+
+**延迟测量。** 若设置尚未揭示而又不要求立即产生经典标签，可以保留 $\rho$ 或一个足够大的联合量子载体，待 $x$ 确定后再实施相应测量。代价转移为保存载体、抑制环境回流并控制联合演化；收益是没有把不相容上下文强行压缩成同一份经典记录。
+
+因此，“保留多少历史”的答案依赖设置揭示顺序：
+
+$$
+\begin{array}{c|c|c}
+\text{设置时序}&\text{可保留结构}&\text{主要约束}\\
+\hline
+\text{先揭示}&\text{上下文专用经典记录}&d-1\text{ 个中心化方向}\\
+\text{后揭示}&\text{共同父记录或量子载体}&\text{上下文兼容性与联合访问}\\
+\text{允许延迟}&\text{未去相位的量子关联}&\text{载体保存与环境回流}
+\end{array}
+$$
+
+### 84.4 Zeckendorf 合法空间的两个小模型
+
+取禁止相邻 `11` 的合法空间 $\mathcal H_{Z,L}$，并明确假设每个合法字串对应一个正交物理基态。
+
+当 $L=2$ 时，合法构型为
+
+$$
+\mathcal W_2=\{00,01,10\},
+\qquad d=|\mathcal W_2|=F_4=3.
+$$
+
+若要在这个三维载体上做完整态层析，$d+1=4$ 个互补三结果上下文每个提供 $d-1=2$ 个中心化方向，总数为
+
+$$
+4\times2=8=3^2-1.
+$$
+
+这与第 78 节的三构型模型相容：一个上下文只能看到二维的概率差，另外六个 trace-zero 方向必须由其他设置补足。这里的“四个上下文”是满足互补重叠假设时的条件性层析设计，不是声称仓库已经为该 Zeckendorf 模型构造了具体实验 Hamiltonian。
+
+当 $L=3$ 时，合法构型为
+
+$$
+\mathcal W_3=\{000,001,010,100,101\},
+\qquad d=|\mathcal W_3|=F_5=5.
+$$
+
+相应的完整互补上下文条件需要 $d+1=6$ 个五结果上下文，每个有 $4$ 个独立中心化方向，总预算为
+
+$$
+6\times4=24=5^2-1.
+$$
+
+Zeckendorf 在这里提供的是合法载体和离散索引；它没有决定这六个上下文的投影矩阵、相互作用角度或记录噪声。若实际系统只允许其中一部分局部效果，预算应改用可达 operator system 的真实维数，不能继续套用 $d^2-1$。
+
+### 84.5 对“稳定经典现实”的进一步限制
+
+互补上下文的正交补齐给出的是**信息完整性**，不是**经典吸引性**。即使
+
+$$
+\bigoplus_x\mathsf P_x
+=\operatorname{Herm}_0,
+$$
+
+仍需另外检查记录通道的非对角 Gram 系数是否满足严格收缩、隐藏关联是否会回流，以及当前保留结构是否对目标演化近似闭合。信息完整意味着“有一组上下文能够区分载体上的状态”；它不意味着一次记录后所有相干都会衰减，也不意味着不同记录会自动形成共同的经典父变量。
+
+因此当前研究对象可以写成三层条件的交集：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{几何完整：}&\quad&\sum_x\mathsf P_x=\operatorname{Herm}_0,\\
+&\text{动力学闭合：}&\quad&\mathcal E\Phi\approx\mathcal E\Phi\mathcal E,\\
+&\text{记录吸引：}&\quad&|R_{ij}|<1\text{（对需要经典化的关系）}.
+\end{aligned}}
+$$
+
+第一条回答“哪些上下文合起来足以测量”；第二条回答“丢掉的差异会不会在未来返回”；第三条回答“被记录的相干是否真的衰减”。只有把三条分别验证，才有资格把某个有限层次称为稳定的有效经典现实。
+
+本节直接复用 `complete_context_tomography` 与 `mutually_unbiased_diagonal_planes` 的现有条件性结果。$L=2,3$ 的 Zeckendorf 计数、正交平面维数相加以及三种协议的区分是组合推导；共同父 POVM 的一般存在性、具体 Zeckendorf Hamiltonian 和实验噪声模型仍保持开放。
+
+## 85. 完备上下文的纯度证书与经典化边界
+
+### 85.1 互补记录可以测出纯度，但纯度不是状态本身
+
+在第 84 节的完整互补上下文假设下，仓库已有 `complete_context_purity_identities`。令
+
+$$
+p_{l,j}=\operatorname{Tr}(\rho P_{l,j}),
+\qquad d=\dim\mathcal H,
+$$
+
+并假设 $\rho$ 是正半定且迹为一。该恒等式给出
+
+$$
+\boxed{
+\sum_{l=0}^{d}\sum_{j=0}^{d-1}
+\left(p_{l,j}-\frac1d\right)^2
+=\operatorname{Tr}(\rho^2)-\frac1d.
+}
+$$
+
+等价地，所有上下文概率平方和满足
+
+$$
+\boxed{
+\sum_{l=0}^{d}\sum_{j=0}^{d-1}p_{l,j}^2
+=1+\operatorname{Tr}(\rho^2).
+}
+$$
+
+因此，完备互补记录不仅能在原则上重建状态，还能把纯度写成一个直接的记录能量。最大混合态的中心化能量为零；纯态的中心化能量为 $1-1/d$。
+
+但纯度只是一个标量不变量。不同的密度态可以拥有相同的 $\operatorname{Tr}(\rho^2)$，所以这两条恒等式本身不能替代第 84 节的全状态层析，也不能把“纯度已经测出”说成“历史已经唯一恢复”。它们提供的是一个低成本的完整性检查：若重建的概率不满足该恒等式，记录、归一化、正性或上下文重叠假设至少有一项不相容。
+
+### 85.2 Zeckendorf 小载体上的数值刻度
+
+在 $L=2$ 的三构型载体中，$d=F_4=3$。若状态为纯态，则
+
+$$
+\sum_{l,j}\left(p_{l,j}-\frac13\right)^2=\frac23;
+$$
+
+若状态为最大混合态，则该和为零。在 $L=3$ 的五构型载体中，$d=F_5=5$，相应的纯态值为
+
+$$
+\sum_{l,j}\left(p_{l,j}-\frac15\right)^2=\frac45.
+$$
+
+这些数值只使用合法构型数作为明确的 Hilbert 维数，并把互补上下文假设作为输入。Zeckendorf 权重本身不决定纯度；它只决定被记录的离散基态如何编号。
+
+若实际系统只实现受限的 observable system，平方和应改成该系统内的投影能量，并重新证明相应恒等式。不能把全空间公式直接套到缺失上下文或带量子块的模型。
+
+### 85.3 纯度证书不能替代动力学闭合
+
+纯度证书回答的是“当前记录是否携带了足够的二次信息来检验一个状态不变量”。它不回答：
+
+$$
+\mathcal E\Phi=\mathcal E\Phi\mathcal E
+$$
+
+是否成立，也不回答非对角 Gram 系数是否严格小于一。一个过程可以保持纯度而在不同上下文之间相干旋转；也可以在记录后纯度下降，却因隐藏记录仍可访问而保持整体可逆。
+
+因此，在当前研究主线上，至少要分开三种证书：
+
+$$
+\begin{aligned}
+&\text{层析证书：}&\quad&\{p_{l,j}\}\text{ 是否唯一确定目标载体上的状态；}\\
+&\text{纯度证书：}&\quad&\sum_{l,j}(p_{l,j}-1/d)^2\text{ 是否与 }\operatorname{Tr}(\rho^2)-1/d\text{ 一致；}\\
+&\text{动力学证书：}&\quad&\mathcal E\Phi\approx\mathcal E\Phi\mathcal E\text{ 且隐藏回流误差是否受控。}
+\end{aligned}
+$$
+
+只有第一项和第二项成立时，我们得到的是“可测且可校验的当前状态”；加入第三项后，才得到“在指定预测视界内可作为有效对象使用的记录”。这正是“稳定经典现实”不能由单一观测次数或单一纯度数值定义的原因。
+
+本节复用 `complete_context_purity_identities` 的现有条件性结果。$L=2,3$ 的数值代入和三类证书的区分是组合解释；有限精度下的统计置信区间、缺失上下文时的残差界以及带量子块载体的纯度分解仍是开放接口。
+
+## 86. 目标相对的记录充分性与未来残差
+
+### 86.1 记录预算应按目标算，而不是按全部状态算
+
+设当前记录效果为 $E_i$，把单位方向一并保留，定义可见算子空间
+
+$$
+\mathcal V
+=\operatorname{span}_{\mathbb R}\{I,E_i:i\in\mathcal I\}.
+$$
+
+冻结定理 `target_prediction_sufficiency` 给出一个严格的二分。
+
+若目标 observable $A$ 满足
+
+$$
+A\in\mathcal V,
+$$
+
+那么任何两个当前记录相同的物理态，对 $A$ 的期望值也相同。换言之，若任务只要求预测 $\mathcal V$ 内的目标，当前记录已经对该目标充分；不需要为了一个目标自动保存完整 $d^2-1$ 个 trace-zero 方向。
+
+若
+
+$$
+A\notin\mathcal V,
+$$
+
+定理构造一个非零的 trace-zero Hermitian 残差 $D\in\mathcal V^\perp$，以及足够小的 $\varepsilon>0$，使
+
+$$
+\rho_\pm=\frac1dI\pm\varepsilon D
+$$
+
+仍是物理密度态。它们满足所有当前效果的读数相同，但
+
+$$
+\operatorname{Tr}(D A)\ne0,
+$$
+
+因而对目标 $A$ 的期望不同。当前记录对该目标不充分，不是因为缺少更精细的标签，而是因为目标方向落在可见算子空间之外。
+
+这把第 83 节的全 tomography 预算收紧成任务相对的版本：
+
+$$
+\boxed{
+\text{所需历史}\\
+\text{由目标族在可见算子空间中的覆盖决定。}
+}
+$$
+
+若目标族是所有 Hermitian observable，才需要把 $\mathcal V$ 扩展到完整载体；若目标族只包含 Zeckendorf 数值和若干局部模式，则可以只扩展到这些目标生成的子空间。
+
+### 86.2 Zeckendorf 数值是一个目标，不是完整状态
+
+在 $L=2$ 的合法基底
+
+$$
+\{00,01,10\}
+$$
+
+上，按权重 $(2,1)$ 定义 Zeckendorf 数值 observable
+
+$$
+A_Z=0|00\rangle\langle00|
+ +1|01\rangle\langle01|
+ +2|10\rangle\langle10|.
+$$
+
+如果当前记录效果的实线性张成包含 $I$ 与 $A_Z$，那么记录相同的两个态必然拥有相同的 Zeckendorf 数值期望。这个结论只涉及一个目标方向；它不推出两态对非对角相位、其他上下文或未来 Hamiltonian 的响应相同。
+
+若后续动力学把 $A_Z$ 的 Heisenberg 回拉带到新的方向 $U^\dagger A_ZU$，则记录预算必须扩大到这些回拉方向的张成空间。于是“保留一个 Zeckendorf 数”只对当前目标成立；要预测一族后续实验，必须把该实验族的目标闭包纳入 $\mathcal V$。
+
+### 86.3 未来误差是两个残差的相关
+
+对一个有限效果塔，令 $\mathcal V_m$ 为当前深度可见的 trace-zero 空间，$\mathcal R_m=\mathcal V_m^\perp$ 为隐藏残差空间。对密度态 $\rho$，记其中心化 trace-zero 坐标为 $s_\rho$；未来效果 $F$ 也指 Heisenberg 回拉得到的中心化 Hermitian 方向。`future_probability_residual_correlation` 给出：以可见投影构造线性预测代表后，预测误差满足
+
+$$
+\boxed{
+\operatorname{error}
+=\left\langle
+\Pi_{\mathcal R_m}(s_\rho),
+\Pi_{\mathcal R_m}(F)
+\right\rangle,
+}
+$$
+
+并有 Cauchy--Schwarz 界
+
+$$
+|\operatorname{error}|
+\le
+\sqrt{\operatorname{residualMass}(\mathcal V_m,s_\rho)}
+\,\left\|\Pi_{\mathcal R_m}(F)\right\|.
+$$
+
+因此未来误差不是一个只由“隐藏维数”决定的常数。它同时取决于两件事：当前状态在隐藏方向上有多少分量，以及未来目标本身有多少分量会探测这些方向。隐藏空间很大但目标完全正交时，误差仍可为零；隐藏空间很小但未来目标正好对准它时，误差可以达到该界的量级。
+
+同一个隐藏残差还控制压缩动力学本身的不自然性。若环境动力学在 trace-zero 载体上是 $L$-Lipschitz，`residual_controls_naturality` 给出
+
+$$
+\Delta_m(X)
+\le L\,\left\|\Pi_{\mathcal R_m}X\right\|,
+$$
+
+其中 $\Delta_m$ 是“先完整演化再投影”和“先投影再演化”的距离差。在密度态的中心化坐标上，进一步有
+
+$$
+\Delta_m(s_\rho)\le L\sqrt{\operatorname{residualMass}(\mathcal V_m,s_\rho)}.
+$$
+
+所以同一个 $\sqrt{M_m}$ 同时出现在未来观测误差和动力学压缩缺陷的上界中；前者还乘以未来目标的残差敏感度，后者还乘以动力学的 Lipschitz 常数。两者是共同受残差控制的两个不同量，不是同一个误差的恒等改写。
+
+这个定理还包含一个必要警告：把状态的可见投影加回单位部分得到的线性预测代表，未必是正半定矩阵。因此“用当前记录预测未来”首先是一个 observable 期望的线性近似，不能自动解释成一个新的物理密度态。若需要物理态级别的预测，必须另加正性、完全正性或误差通道的证明。
+
+### 86.4 历史保留的目标闭包判据
+
+设目标族为 $\mathfrak A$，允许的 Heisenberg 更新为 $\mathfrak U$。一个有限记录空间 $\mathcal V$ 对任务足够的必要条件是
+
+$$
+\operatorname{span}\{U^\dagger A U:
+A\in\mathfrak A,\ U\in\langle\mathfrak U\rangle\}
+\subseteq\mathcal V,
+$$
+
+其中右侧也应包含单位方向。若该包含关系成立，目标闭包中的每个未来期望都由当前签名决定；若失败，`target_prediction_sufficiency` 的残差构造给出一对当前不可区分、未来可区分的物理态。
+
+这提供了一个比“保留多少历史”更精确的工作流程：先列出任务目标和允许的后续操作，再计算它们的有限线性闭包，最后只保留能覆盖该闭包的记录方向。Zeckendorf 合法构型给出初始离散坐标；真正决定历史成本的是目标闭包的秩和隐藏残差与未来目标的相关。
+
+本节复用 `target_prediction_sufficiency`、`future_probability_residual_correlation` 和 `residual_controls_naturality` 的现有结果。$A_Z$ 的有限 Zeckendorf 构造、目标闭包的物理可达性，以及把线性误差界提升为完整通道距离，仍是条件性组合推导或开放接口。
+
+## 87. 一次经典记录能保存多少个可完美区分的历史
+
+### 87.1 完美区分数受载体维数限制
+
+第 86 节讨论的是目标 observable 的线性覆盖；现在考虑更强的任务：用同一个 POVM 一次性、无误差地识别一组历史状态。设记忆 Hilbert 空间维数为 $d$，候选密度态为 $\rho_i$，记录效果为 $E_j$，满足
+
+$$
+E_j\succeq0,
+\qquad
+\sum_jE_j=I,
+$$
+
+并要求完美配对
+
+$$
+\operatorname{Tr}(E_j\rho_i)=\delta_{ij}.
+$$
+
+冻结定理 `finite_memory_history_capacity` 证明：若这些条件成立，候选历史数 $N$ 必须满足
+
+$$
+\boxed{N\le d.}
+$$
+
+证明的几何核心是：每个 $\rho_i$ 的支撑落在 $E_i$ 的单位特征子空间中，并与其他效果的支撑正交；因此从每个非零密度态中选出的向量构成一组两两正交的记忆向量，数量不能超过 Hilbert 维数。
+
+这条界与第 82、83 节的 $d^2-1$ 方向预算承担不同任务：
+
+$$
+\begin{aligned}
+&d^2-1 &&\text{控制连续量子状态的 trace-zero 参数方向；}\\
+&d &&\text{控制同一 POVM 一次可完美区分的经典历史标签数。}
+\end{aligned}
+$$
+
+一个 $d$ 维系统可以有 $d^2-1$ 个连续可观测方向，却不能用一次固定经典读出去完美区分超过 $d$ 个任意历史状态。把这两个数字混为同一个“记忆容量”会错误估算所需约束。
+
+### 87.2 Zeckendorf 合法载体的容量读法
+
+若长度为 $L$ 的禁止相邻 `11` 合法空间确实实现为一个完整正交载体，则
+
+$$
+d=D_L=F_{L+2}.
+$$
+
+在同一个一次性 POVM 下，完美可区分历史数满足
+
+$$
+\boxed{N\le F_{L+2}.}
+$$
+
+所以：
+
+$$
+L=2\Rightarrow N\le F_4=3,
+\qquad
+L=3\Rightarrow N\le F_5=5.
+$$
+
+这里的 $N$ 是可完美区分的密度态或记录历史数，不是合法字符串总数以外的额外物理自由度；它也不是可重建任意密度态所需的 $d^2-1$ 个概率方向。若每个 Zeckendorf 标签后面带有量子块，必须将 $d$ 换成实际联合 Hilbert 维数；仅用标签数量代入会低估一次性记录容量的需求。
+
+### 87.3 超过容量时，历史必须改变形态
+
+当候选历史数满足
+
+$$
+N>d,
+$$
+
+同一个记忆载体和同一个 POVM 不可能同时实现上述 Kronecker 配对。要继续区分这些历史，至少需要改变一个条件：
+
+$$
+\begin{aligned}
+&\text{增加载体维数；}\\
+&\text{使用多个设置或多轮记录；}\\
+&\text{保留联合量子关联而延迟最终读出；}\\
+&\text{放宽为近似区分，并给出统计误差界。}
+\end{aligned}
+$$
+
+这不是说超过 $d$ 个历史就不能被任何实验区分。多轮协议可以把历史编码到更大的联合载体，多个上下文可以在可重复制备上完成层析，延迟测量可以保留不相容设置所需的相位。定理只限制“同一个有限记忆、同一个一次性完美 POVM”的协议。
+
+因此，稳定经典记录的历史成本至少有两种不同读法：若目标只是当前一次的无误标签，容量受 $d$ 限制；若目标是未来任意上下文的连续预测，成本由第 86 节的目标闭包和残差半径决定。增加标签数量不能替代增加可访问的量子载体或保留历史关联。
+
+本节复用 `finite_memory_history_capacity` 的现有结果。将 $d=F_{L+2}$ 代入是条件性 Zeckendorf 载体解释；近似区分、重复实验的总容量、带记忆环境的联合编码和块结构载体仍需分别建模。
+
+
+## 88. 观测细化中的容量—残差守恒
+
+### 88.1 可见容量与不可见残差
+
+设记忆载体为 $d$ 维 Hilbert 空间，当前效果集合为 $\mathcal E$。把单位效果也纳入后，定义
+
+$$
+\mathcal V(\mathcal E)
+=
+\operatorname{span}_{\mathbb R}
+\bigl(\{I\}\cup\mathcal E\bigr),
+$$
+
+并令
+
+$$
+C(\mathcal E)
+=
+\dim_{\mathbb R}\mathcal V(\mathcal E)-1,
+\qquad
+R(\mathcal E)
+=
+\dim_{\mathbb R}\mathcal V(\mathcal E)^\perp.
+$$
+
+现有定理 observer_capacity_conservation 给出
+
+$$
+\boxed{
+C(\mathcal E)+R(\mathcal E)=d^2-1.
+}
+$$
+
+这里的 $d^2-1$ 是完整 trace-zero Hermitian 载体的总方向数，不是历史条数或 POVM outcome 数。若粗效果集满足
+
+$$
+\mathcal E_{\mathrm{coarse}}
+\subseteq
+\mathcal E_{\mathrm{fine}},
+$$
+
+则
+
+$$
+C(\mathcal E_{\mathrm{coarse}})
+\le
+C(\mathcal E_{\mathrm{fine}}),
+\qquad
+R(\mathcal E_{\mathrm{fine}})
+\le
+R(\mathcal E_{\mathrm{coarse}}).
+$$
+
+因此细化记录只把原先不可见的方向转移到当前可见空间；线性相关的新增标签不会增加容量。
+
+### 88.2 Zeckendorf 载体上的预算
+
+若长度为 $L$ 的禁止相邻 11 合法空间明确实现为完整正交载体，则
+
+$$
+d=F_{L+2},
+\qquad
+C(\mathcal E)+R(\mathcal E)
+=
+(F_{L+2})^2-1.
+$$
+
+所以
+
+$$
+L=2:\quad C+R=8,
+\qquad
+L=3:\quad C+R=24.
+$$
+
+这与第 87 节的
+
+$$
+N\le F_{L+2}
+$$
+
+是不同容量：前者计算连续 Hermitian 方向，后者计算一次固定 POVM 可完美区分的离散历史态数。若合法构型后面带有量子块，或仪器只作用在受限 operator system 上，必须使用实际载体或任务空间的维数，不能只按 Zeckendorf 标签数代入。
+
+### 88.3 细化不制造总信息
+
+若某个差异仍位于
+
+$$
+\mathcal V(\mathcal E_{\mathrm{fine}})^\perp,
+$$
+
+则当前效果族仍无法区分它。要让它进入后续预测，必须加入能与之配对的效果，或让动力学把它旋转进可见空间。这把“保留更多历史”改写成一个线性选择问题：寻找能降低 $R(\mathcal E)$、并覆盖目标闭包的独立效果，而不是盲目保存更多原始词。
+
+精确维数守恒不等于近似预测误差已经足够小。残差维数为零时才得到完整线性可见性；残差非零时，误差仍由第 86 节的状态残差与未来目标残差相关界控制：
+
+$$
+|\operatorname{error}|
+\le
+\sqrt{\operatorname{residualMass}}
+\,
+\|\text{未来目标的残差分量}\|.
+$$
+
+反过来，残差维数很大也不必然造成当前任务误差，因为当前状态或目标可能在这些方向上的投影为零。因此稳定经典记录至少需要同时报告可见容量、残差容量和目标敏感度。
+
+本节复用 observer_capacity_conservation 的现有结果。将 $d=F_{L+2}$ 代入以及与第 86 节误差界的组合是条件性理论桥；近似容量、噪声成本和具体 Zeckendorf 物理仪器仍保持开放。
+
+## 追加锚（新终端）
+
+## 89. 记录关联、熵增与可恢复历史
+
+### 89.1 预测量把相干搬到联合系统，而不是把它直接抹掉
+
+设系统的密度态为 $\rho$，记录自由度起初为空白。项目中的 `coherentCopyState` 给出一个有限维的理想预测量模型：输入矩阵的每个条目被放置在相关基底向量之间，特别是
+
+$$
+\bigl(\operatorname{coherentCopyState}(\rho)\bigr)_{(i,i),(j,j)}
+=
+\rho_{ij}.
+$$
+
+因此，联合态仍然保留原来的非对角条目。若只看其中一边，另一边被偏迹掉，则两个边缘态都变成同一个基底去相位态：
+
+$$
+\rho_S
+=
+\rho_E
+=
+\operatorname{basisPinchingState}(\rho).
+$$
+
+这给“历史消失”一个更严格的解释：
+
+> 对局部访问而言，非对角历史不再出现在边缘矩阵中；对整体联合态而言，它仍可能保存在系统—记录关联的相关条目里。
+
+项目还证明相干复制是等距扩张，联合态的 von Neumann 熵保持不变：
+
+$$
+S\!\left(\operatorname{coherentCopyState}(\rho)\right)=S(\rho).
+$$
+
+所以这里没有把一个可逆的整体过程直接等同为无条件的热力学熵增。增加的是局部可见的经典记录以及系统与记录之间的相关，而不是由这条等距复制定理单独推出的总熵增加。
+
+### 89.2 关联的“成本”由记录熵和相干删除项共同组成
+
+对同一个联合态，项目中的 `coherent_copy_correlation_tax` 给出精确分解：
+
+$$
+\boxed{
+I(S:E)
+=
+S\!\left(\operatorname{basisPinchingState}(\rho)\right)
++D\!\left(
+\rho\middle\|\operatorname{basisPinchingState}(\rho)
+\right).
+}
+$$
+
+右侧第一项是去相位后保留下来的记录熵；第二项是原态相对于去相位态的量子相对熵。对本节这个基底去相位特例，若采用相对熵非负这一有限维性质，则系统—记录互信息至少包含记录边缘的熵，并且还包含一项由原始相干与局部经典化之间的差异贡献的项。这里的非负性不是 `coherent_copy_correlation_tax` 等式本身额外返回的独立结论；重复协议的公开定理在第 89.4 节明确给出相应每步项的非负性。
+
+这里的“成本”是信息论分解中的成本，不能直接改写成实验室中的热量、功或不可逆熵产生。要作热力学解释，还需要指定温度、能量、环境初态和实际耗散通道。当前定理只处理有限维密度矩阵、偏迹、基底去相位和相对熵。
+
+这一区分也修正了一个容易混淆的说法：
+
+$$
+\text{局部读数变得经典}
+\not\Rightarrow
+\text{整体信息已经销毁}.
+$$
+
+在联合描述中，关联承担了原先由局部非对角项承担的部分信息；只有当记录自由度不可访问、被进一步偏迹，或者动力学把这些关联真正带出允许的联合操作范围时，才可以在给定任务上把它视为不可恢复。
+
+### 89.3 可恢复性取决于访问范围，而不是只取决于边缘读数
+
+`CanonicalRecordAccessRecovery` 提供了一个二能级的具体边界。取两个状态 $\rho$ 和 $\sigma$，假设它们在选定基底上的对角元完全相同，但存在某个非对角元不同：
+
+$$
+\forall i,\ \rho_{ii}=\sigma_{ii},
+\qquad
+\exists i\ne j,\ \rho_{ij}\ne\sigma_{ij}.
+$$
+
+一个可逆受控耦合可以把两者写成不同的联合记录态；对记录做偏迹后，两者得到相同的局部约化态，因此不存在一个只接受该约化态、就能同时恢复两个联合记录的函数。可是，如果仍能访问记录，并施加该耦合的伴随操作，则两个联合态都可以恢复到各自的空白记录输入。
+
+这说明“不可恢复”必须带有访问限定：
+
+$$
+\text{不可由当前边缘恢复}
+\ne
+\text{在整个联合系统中不可逆}.
+$$
+
+对稳定经典现实的研究，因而不能只问“相干是否变成零”，还必须问：允许的后续操作是否包括记录寄存器、环境的某个子系统或联合控制？改变可访问范围，会改变哪些历史仍然能够影响未来。
+
+### 89.4 反复记录时，熵增是每一步相对熵的和
+
+考虑一个固定的幺正矩阵 $U$，以及满足
+
+$$
+\rho_{k+1}
+=
+\operatorname{basisPinchingState}
+\left(U\rho_kU^\dagger\right)
+$$
+
+的离散协议。项目中的 `entropy_production_coherence_deletion_identity` 证明每一步的熵差为
+
+$$
+\boxed{
+S(\rho_{k+1})-S(\rho_k)
+=
+D\!\left(
+U\rho_kU^\dagger
+\middle\|
+\operatorname{basisPinchingState}(U\rho_kU^\dagger)
+\right)
+\ge 0.
+}
+$$
+
+并且对任意 $N$ 有望远镜求和：
+
+$$
+\boxed{
+S(\rho_N)-S(\rho_0)
+=
+\sum_{k=0}^{N-1}
+D\!\left(
+U\rho_kU^\dagger
+\middle\|
+\operatorname{basisPinchingState}(U\rho_kU^\dagger)
+\right).
+}
+$$
+
+这里的非负性来自每一步去相位相对于幺正演化后状态的量子相对熵；幺正共轭本身保持 von Neumann 熵。于是，重复记录协议中的可见熵增加可以逐步结算为“本轮被删除的相干”之和。
+
+这条公式同时给出一个停止条件：如果某一步的相对熵项为零，则该步的幺正后状态已经位于所选基底的去相位固定点；若所有后续步骤都保持这一条件，记录熵不再增加。反过来，固定点集合是经典对角态并不保证任意初态都会到达它；还需检查实际动力学是否持续把非对角分量送入被去相位的方向。
+
+### 89.5 Zeckendorf 只提供合法索引，不决定关联与熵
+
+若把长度为 $L$ 的禁止相邻 `11` 合法串作为构型标签，并令
+
+$$
+d=F_{L+2},
+$$
+
+则可以把这些标签映射到一个 $d$ 维正交载体，再在其上定义 $\rho$、$U$、基底去相位和记录寄存器。此时第 88 节的容量守恒给出
+
+$$
+C(\mathcal E)+R(\mathcal E)=d^2-1=(F_{L+2})^2-1.
+$$
+
+但本节的互信息、相对熵和熵产生公式还需要额外指定：
+
+$$
+\text{构型到 Hilbert 基底的映射},
+\quad
+\text{记录耦合},
+\quad
+\text{幺正动力学},
+\quad
+\text{去相位基底}.
+$$
+
+Zeckendorf 权重本身不决定 $U$，也不决定记录 Gram 矩阵、互信息或相对熵。它只说明哪些有限构型作为离散载体是合法的，以及如何给这些构型提供规范编号。若更换局部约束，合法载体维数和适合的索引递推也会改变；若保留同一标签而更换记录耦合，关联谱和熵变化同样会改变。
+
+因此，对“保留多少历史才能得到稳定经典现实”的当前回答应写成：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{整体层：保留联合态中的记录关联；}\\
+&\text{局部层：只保留给定任务可访问的边缘记录；}\\
+&\text{动力学层：结算每一步相对熵和未来回流；}\\
+&\text{编码层：用 Zeckendorf 组织合法构型，但不把编码当作动力学。}
+\end{aligned}}
+$$
+
+“历史消失”于是被拆成三个可检验问题：边缘是否已经去相位、联合关联是否仍可访问、以及允许的后续操作是否能把关联重新转回目标读数。只有在指定实验族、访问范围和误差容限下，这三个问题都给出稳定答案时，才可以把该层记录称为有效的经典现实。
+
+本节复用 `coherentCopyState_correlated_entry`、`marginalRight_coherentCopyState`、`marginalLeft_coherentCopyState`、`vonNeumannEntropy_coherentCopyState`、`coherent_copy_correlation_tax` 和 `entropy_production_coherence_deletion_identity`。关于“相对熵就是实际热力学熵产生”、任意 Zeckendorf 物理实现、无限环境中的恢复能力，以及对所有未来实验的经典闭合，仍需额外模型与证明；本节不把这些条件性组合推导冒充为仓库已有结论。
+
+## 追加锚（新终端）
+
+## 90. 记录重叠、可区分性与复制边界
+
+### 90.1 记录重叠给出一条精确的可见性预算
+
+设两个归一化纯记录为 $|r_0\rangle$ 和 $|r_1\rangle$，令
+
+$$
+c=\langle r_0|r_1\rangle,
+\qquad
+V=|c|,
+\qquad
+D=\sqrt{1-V^2}.
+$$
+
+项目中的 `pure_record_distinguishability_coherence_complementarity` 证明：
+
+$$
+\boxed{D^2+V^2=1.}
+$$
+
+这里的 $V$ 是两条记录之间仍保留的相干可见度；$D$ 是由这两个记录向量的重叠所定义的几何区分度。它们不是两个可以独立增加的预算：在记录向量已经归一化的条件下，提高一个就必然降低另一个。
+
+两个端点尤其清楚：
+
+$$
+\begin{aligned}
+&c=0
+&&\Longrightarrow
+&&D=1,\quad V=0;\\
+&V=1
+&&\Longrightarrow
+&&D=0.
+\end{aligned}
+$$
+
+第一种情形是正交记录；在允许相应投影测量时，它们可以完全区分。第二种情形在归一化向量的标准 Hilbert 空间几何中对应同一条量子态射线，只留下整体相位约定，不能提供区分信息。这里形式化结果直接保证的是 $V=1$ 时几何区分度为零。若 $D=1$，则 $c=0$，任何后续振幅乘上 $c$ 都被消除；若 $V=1$，几何区分度为零。
+
+这把第 89 节的关联公式进一步具体化：记录 Gram 矩阵中的非对角元就是这种重叠。对每一对候选历史，$|R_{ij}|$ 越接近零，局部记录越能把它们分开；$|R_{ij}|$ 越接近一，越多相干仍可在联合演化中保留。不能只报告记录的数量，还要报告记录向量之间的重叠谱。
+
+### 90.2 完美复制只适用于正交或相同的历史
+
+设 $U$ 是同一 Hilbert 空间张量平方上的复线性等距等价，并设三个向量都归一化：输入历史为 $\psi,\phi$，空白记录为 $b$。若同一个 $U$ 满足
+
+$$
+U(\psi\otimes b)=\psi\otimes\psi,
+\qquad
+U(\phi\otimes b)=\phi\otimes\phi,
+$$
+
+则 `no_cloning_inner_product_criterion` 给出
+
+$$
+\langle\phi|\psi\rangle
+=
+\langle\phi|\psi\rangle^2.
+$$
+
+因此
+
+$$
+\boxed{
+\phi=\psi
+\quad\text{或}\quad
+\langle\phi|\psi\rangle=0.
+}
+$$
+
+证明的核心只是等距映射保持内积，而张量积把重叠相乘。这个结果的适用范围必须保留：它针对同一个线性等距复制过程、同一个归一化空白记录和两个精确复制方程。它不是说任何形式的近似记录、带噪声记录或任务相关压缩都不可能。
+
+对历史档案而言，结论是：任意两个非正交量子历史不能被一个固定的可逆过程无损复制成两份独立副本。若试图把每个历史都写入新的独立记录，就必须满足记录态之间的正交条件，或接受近似误差、改变任务、保留联合关联而不宣称已经产生两份副本。
+
+### 90.3 Zeckendorf 标签可以复制，标签上的任意叠加不能任意复制
+
+若长度为 $L$ 的合法 Zeckendorf 字符串被实现为一组正交计算基态
+
+$$
+\{|w\rangle:w\in\mathcal W_L\},
+$$
+
+则对不同 $w\ne v$ 有
+
+$$
+\langle w|v\rangle=0.
+$$
+
+在这个离散基底上，受控复制可以把经典标签写入空白寄存器；这与第 90.2 节并不冲突，因为被复制的是一组彼此正交的基态。可是，对叠加态
+
+$$
+|\Psi\rangle=\sum_{w\in\mathcal W_L}a_w|w\rangle
+$$
+
+不能把同一个过程解释为对任意未知 $|\Psi\rangle$ 都实现
+
+$$
+|\Psi\rangle|0\rangle\longmapsto|\Psi\rangle|\Psi\rangle.
+$$
+
+线性演化会把基态复制协议延伸为纠缠的相干复制态，而不是右侧所写的非线性平方。于是，Zeckendorf 的合法性约束只决定可用的正交标签集合；它不能绕过量子态重叠的复制边界，也不能把标签复制自动升级为历史的独立物理副本。
+
+### 90.4 稳定经典记录需要区分“复制标签”和“保留关联”
+
+由前两节可以把记录协议分成三种情形：
+
+$$
+\begin{aligned}
+&|R_{ij}|=0
+&&\Rightarrow&&
+\text{该对历史可被当前记录完全区分；}\\
+&0<|R_{ij}|<1
+&&\Rightarrow&&
+\text{记录获得部分区分，同时保留部分相干；}\\
+&|R_{ij}|=1
+&&\Rightarrow&&
+\text{当前记录没有区分这对历史的能力。}
+\end{aligned}
+$$
+
+第一种情形适合形成可复制的经典标签；第二种情形必须把后续相位、访问范围和恢复操作纳入模型；第三种情形若仍要预测两条历史的差异，就不能把当前记录当作充分状态。
+
+因此，“稳定经典现实”不能定义为把所有历史都复制到无限多个寄存器。更精确的条件是：对指定目标实验族，相关历史已经落入可区分的记录扇区，且被省略的联合关联在预测视界内不会重新进入目标读数。正交复制解决的是一次无误标签任务；它不自动解决未来动力学闭合。
+
+### 90.5 与 Zeckendorf 刻度的组合边界
+
+对合法构型集合 $\mathcal W_L$，Zeckendorf 数值只提供一个离散坐标
+
+$$
+\nu(w)=\sum_j F_{j+2}w_j.
+$$
+
+若记录耦合另行定义为 $|w\rangle\mapsto|r_w\rangle$，真正进入局部预测的是
+
+$$
+R_{wv}=\langle r_w|r_v\rangle,
+$$
+
+而不是 $\nu(w)-\nu(v)$ 本身。两个 Zeckendorf 数值相差很大，记录向量仍可能重合；两个数值相邻，也可能被特定耦合映射到正交记录。必须同时给出编码、记录态和允许操作，才能判断历史是否已经成为稳定的经典标签。
+
+本节复用 `pure_record_distinguishability_coherence_complementarity` 与 `no_cloning_inner_product_criterion`。由它们得到的等式和正交/相同二分是 Lean 已证明的有限 Hilbert 空间结果；把它们推广到近似复制、带噪声环境、无限记录链或具体 Zeckendorf 里德伯动力学，仍需额外的通道模型和误差界。
+
+## 追加锚（新终端）
+
+## 91. 局部边缘的相关盲区与历史容量
+
+### 91.1 双系统的无读相关扇区
+
+设两个有限 Hilbert 因子的维数分别为 $m,n$，并在双系统的 trace-zero Hermitian 空间中区分三个子空间：第一因子的局部扇区 $L_A$、第二因子的局部扇区 $L_B$，以及相关扇区 $C$。`local_marginal_correlation_blind_spot` 给出它们的正交分解：
+
+$$
+\boxed{
+L_A\oplus^{\perp}L_B\oplus^{\perp}C
+=
+\operatorname{bipartiteTraceZero}(m,n).
+}
+$$
+
+完整局部边缘能够看到的方向数为
+
+$$
+\dim(L_A\oplus L_B)
+=(m^2-1)+(n^2-1),
+$$
+
+而相关扇区的维数为
+
+$$
+\boxed{
+\dim C=(m^2-1)(n^2-1).
+}
+$$
+
+总的 trace-zero 方向数是 $(mn)^2-1$，所以相关盲区占比为
+
+$$
+\boxed{
+\frac{\dim C}{\dim\operatorname{bipartiteTraceZero}(m,n)}
+=
+\frac{(m^2-1)(n^2-1)}{m^2n^2-1}.
+}
+$$
+
+这里的“盲”有严格范围：$C$ 与两个局部扇区在 Hilbert—Schmidt 配对下正交，因此只使用完整的两个局部边缘时，$C$ 中的差异不会改变这些局部线性读数。它不表示相关差异在联合系统中不存在，也不表示任何允许联合操作的实验都无法恢复它。
+
+### 91.2 两个量子态可以有相同边缘而不同整体
+
+项目同时构造两个二能级双系统状态。一个是 Bell 纯态密度矩阵 $\rho_{\mathrm{Bell}}$，另一个是只在 $00$ 与 $11$ 上各占一半的经典相关混合 $\rho_{\mathrm{cl}}$。它们满足
+
+$$
+\operatorname{Tr}_A(\rho_{\mathrm{Bell}})
+=
+\operatorname{Tr}_A(\rho_{\mathrm{cl}}),
+\qquad
+\operatorname{Tr}_B(\rho_{\mathrm{Bell}})
+=
+\operatorname{Tr}_B(\rho_{\mathrm{cl}}),
+$$
+
+但
+
+$$
+\rho_{\mathrm{Bell}}\ne\rho_{\mathrm{cl}}.
+$$
+
+Lean 还保留了两者的结构差异：Bell 密度矩阵的秩为 $1$，而经典相关混合不是幂等矩阵。因此，完整边缘读数相同并不意味着联合态相同；被局部观察删去的正是相关扇区中的信息。
+
+这给第 89 节的“访问范围”提供了一个有限维反例：若只访问两个边缘，无法从边缘函数恢复这两种联合记录；若允许联合测量，则可以选择与相关扇区有非零配对的效果来区分它们。后半句是由正交分解得到的操作性组合解释，不是该定理额外证明了某个特定 POVM 的实现。
+
+### 91.3 两个量子比特的数值预算
+
+取 $m=n=2$，则
+
+$$
+\dim\operatorname{bipartiteTraceZero}(2,2)=2^4-1=15,
+$$
+
+局部可见方向为
+
+$$
+(2^2-1)+(2^2-1)=6,
+$$
+
+相关盲区为
+
+$$
+(2^2-1)(2^2-1)=9,
+$$
+
+占比为
+
+$$
+\frac{9}{15}=\frac35.
+$$
+
+这说明“两个局部系统各自都被完整读出”仍只覆盖 $6$ 个独立的 trace-zero 方向；剩下的 $9$ 个方向不是两个边缘容量的简单相加可以得到的。它们需要联合效果、联合动力学，或保留跨系统记录。
+
+### 91.4 与 Zeckendorf 载体的边界
+
+若要把本节代入 Zeckendorf 合法载体，必须先给出双系统分解。例如可以额外假设
+
+$$
+ m=F_{L_A+2},
+\qquad
+ n=F_{L_B+2},
+$$
+
+并把两组合法构型分别实现为两个正交载体。此时才可形式上写出
+
+$$
+\dim C
+=
+\bigl(F_{L_A+2}^2-1\bigr)
+\bigl(F_{L_B+2}^2-1\bigr).
+$$
+
+单独知道一个长度为 $L$ 的合法空间有 $F_{L+2}$ 个标签，并不能自动把它分解成维数为 $m$ 与 $n$ 的两个物理子系统；更不能从单一 Fibonacci 标签数直接推出相关扇区的维数。编码、张量分解和局部读出必须分别指定。
+
+因此，本节把“历史保留多少”再收紧一层：如果任务只访问局部边缘，相关扇区可以暂时留在不可见残差中；如果未来任务允许联合操作，相关扇区必须进入目标闭包，或者给出忽略它所造成的误差界。
+
+本节复用 `local_marginal_correlation_blind_spot`。其正交分解、维数公式和 Bell/经典相关混合的等边缘反例是 Lean 已证明的有限维结果；把相关盲区解释为具体实验中的不可恢复信息、把 Zeckendorf 标签实现为双系统载体，以及把联合效果提升为物理仪器，仍需额外模型与验证。
+
+## 追加锚（新终端）
+
+## 92. 完备互补上下文中的碰撞统计与纯度
+
+### 92.1 互补记录把算子信息压缩成碰撞和
+
+设系统维数为 $n+1$，有 $n+2$ 个秩一记录上下文。每个上下文都满足记录测量条件，并假设同一上下文内的投影正交、不同上下文之间满足
+
+$$
+\operatorname{Tr}(P_{l,j}P_{k,r})
+=
+\begin{cases}
+\delta_{jr},&l=k,\\[2pt]
+\dfrac{1}{n+1},&l\ne k.
+\end{cases}
+$$
+
+这是一组有限维的完备互补上下文条件。`complete_context_collision_conservation` 在这些假设下证明算子恒等式
+
+$$
+\boxed{
+\sum_{l,j}P_{l,j}\otimes P_{l,j}
+=I+\operatorname{Swap}.
+}
+$$
+
+右侧的交换算子说明：这些上下文的联合记录不只是把每个结果标签分别列出来，而是在二次张量层面覆盖了交换对称的方向。它因此能够把状态的二次信息投影到一个可计算的碰撞统计量。
+
+### 92.2 碰撞概率直接读出纯度
+
+对满足正半定和单位迹条件的密度矩阵 $\rho$，令
+
+$$
+ p_{l,j}=\operatorname{basisProbability}(\rho,\text{context }l,j).
+$$
+
+同一定理给出
+
+$$
+\boxed{
+\sum_{l,j}p_{l,j}^{\,2}
+=
+1+\operatorname{Re}\operatorname{Tr}(\rho^2).
+}
+$$
+
+因此，在这组完备互补上下文中，所有结果概率的平方和不是任意的“记录总量”，而是状态平方迹的一个平移。若另有条件使 $\operatorname{Tr}(\rho^2)=1$，则碰撞和等于 $2$；一般情况下仍应保留右侧的平方迹，而不能仅凭上下文数量把状态称为纯态。
+
+这条关系把第 89 节的关联记录和第 91 节的相关盲区连接起来：单个局部边缘只能看到局部扇区，而完备互补上下文的整体碰撞和可以对全局二次结构敏感。它仍然不是说一次实验同时读取了所有不相容上下文；这些概率来自在可重复制备上分别执行各上下文，再把统计结果组合起来。
+
+### 92.3 记录细化的代价与收益
+
+完备上下文增加了可访问的读出方向，但它并没有免费消除历史成本。每个上下文仍有自己的结果标签和实验设置；要估计碰撞和，需要在相应设置下积累统计数据。若只保留一个上下文的结果，通常不能从该单一切面恢复右侧的完整平方迹；若保留全部上下文的概率表，才可以使用上式形成纯度证书。
+
+所以“保留多少历史”在这里有两个不同层次：
+
+$$
+\begin{aligned}
+&\text{状态方向预算：}&d^2-1&\text{ 个连续 trace-zero 方向；}\\
+&\text{碰撞证书预算：}&\sum_{l,j}p_{l,j}^2&\text{ 所需的多上下文统计记录。}
+\end{aligned}
+$$
+
+第二项是一个任务特定的标量证书，不等于保存了完整密度矩阵，也不等于已经构造出一个无记忆的经典状态。不同状态可以共享某个单一统计量；若任务还要求预测未来效果，仍需检查第 86 节的目标闭包和残差条件。
+
+### 92.4 Zeckendorf 载体只能作为附加实现假设
+
+如果要把这条碰撞守恒放到 Zeckendorf 合法空间上，必须先选择一个 $L$，令合法构型数满足
+
+$$
+ d=F_{L+2},
+$$
+
+再额外构造一族作用在该 $d$ 维空间上的 $d+1$ 个互补秩一上下文，并验证每对投影的重叠条件。Zeckendorf 递推本身只提供 $d$ 个离散标签；它不自动产生完备上下文、交换算子恒等式或碰撞统计。
+
+相应地，若系统被分成两个载体，必须同时满足张量维数分解 $d=mn$，并分别说明局部上下文和联合上下文。第 91 节的相关扇区不会因为给每个构型附上 Fibonacci 编号就自动消失。
+
+本节复用 `complete_context_collision_conservation`。算子恒等式和碰撞—平方迹关系是在明确的有限维互补上下文假设下由 Lean 证明的；上下文在物理实验中的可实现性、有限样本误差、与热力学熵的关系，以及 Zeckendorf 载体上具体构造这些上下文，仍需额外模型与误差分析。
+
+## 追加锚（新终端）
+
+## 93. 算术权重、对角固定点与有效热记录
+
+### 93.1 固定点先由记录基底决定
+
+设 $B$ 是 $d$ 维 Hilbert 空间上的秩一记录上下文，并假设其投影族满足 `IsRecordMeasurement`。项目中的 `basis_measurement_eq_self_iff` 给出固定点刻画：
+
+$$
+\boxed{
+\operatorname{basisMeasurement}_B(A)=A
+\iff
+A\in\operatorname{diagonalSubspace}(B).
+}
+$$
+
+这条等价式的重点不是某个特殊权重，而是记录机制先选定了一个对角子空间。被保留下来的信息是该上下文中的经典对角方向；其余非对角方向不会成为这个记录通道的固定信息。
+
+因此，“经典现实”在这个有限模型中的第一层含义可以写成：
+
+$$
+\text{稳定记录}
+=
+\text{被指定记录通道固定的算子子空间中的元素}.
+$$
+
+它仍然是相对于上下文 $B$ 的定义。更换记录基底，会更换 diagonalSubspace，也会更换哪些差异被视为稳定记录。
+
+### 93.2 有限 zeta 权重自动落入这个固定点
+
+对有限索引集 $S\subseteq\operatorname{Fin}(d)$，项目定义
+
+$$
+Z_s(S)=\sum_{n\in S}(n+1)^{-s},
+$$
+
+并构造加权算子
+
+$$
+\tau_{B,s,S}
+=
+\sum_{n\in S}
+\frac{(n+1)^{-s}}{Z_s(S)}P_{B,n}.
+$$
+
+`zeta_thermal_state_mem_diagonal` 证明
+
+$$
+\tau_{B,s,S}\in\operatorname{diagonalSubspace}(B),
+$$
+
+所以 `zeta_thermal_state_pinching_fixed` 给出
+
+$$
+\boxed{
+\operatorname{basisMeasurement}_B(\tau_{B,s,S})
+=\tau_{B,s,S}.
+}
+$$
+
+这里的“thermal”只表示一种有限 zeta 权重的构造命名。当前定理证明的是它属于指定上下文的对角子空间并被该测量固定；它没有单独证明 $Z_s(S)\ne0$、正迹归一化、某个 Hamiltonian 的 Gibbs 形式，或与实验温度的对应关系。若要把 $\tau_{B,s,S}$ 当作物理密度态，还必须另加这些条件。
+
+### 93.3 固定不等于由动力学达到
+
+第 89 节已经区分了去相位后的固定点与实际熵产生；本节提供一个算术权重的具体固定点例子，但不改变这个边界：
+
+$$
+\operatorname{basisMeasurement}_B(\tau)=\tau
+\quad\not\Rightarrow\quad
+\rho_k\longrightarrow\tau.
+$$
+
+要得到趋近结论，必须指定动力学 $\Phi$，并证明 $\tau$ 是 $\Phi$ 的吸引子，或者至少证明从给定初态出发的迭代误差界。固定点等式只说明“如果已经在这个记录子空间中，当前记录不会再改变它”。
+
+同样，两个不同的权重参数 $s$ 或两个不同的有限集 $S$ 可以给出不同的稳定对角状态；记录通道本身不会从固定点等价式中选出唯一的 $s$。选择参数属于模型或实验标定，而不是 Zeckendorf 编码的逻辑后果。
+
+### 93.4 与 Zeckendorf 刻度的关系
+
+若把有限合法 Zeckendorf 构型 $w\in\mathcal W_L$ 映射到上下文 $B$ 的正交基向量，并令索引集 $S$ 对应这些构型，则可以在 $	au_{B,s,S}$ 中使用 Fibonacci 标签、素数指数或其他离散坐标作为权重输入。可是，当前 zeta 固定点定理只使用有限索引 $n$、秩一投影和对角子空间；它没有证明
+
+$$
+(n+1)^{-s}
+$$
+
+必须等于某个 Fibonacci 能量，也没有证明 Zeckendorf 数值就是热力学能量。两者的安全连接是：Zeckendorf 提供合法离散索引，zeta 权重提供一种可计算的对角加权，记录测量负责规定这些加权态是否稳定可读。
+
+因此可以把三种角色分开：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{编码：}&w&\longmapsto\text{合法离散标签};\\
+&\text{加权：}&n&\longmapsto (n+1)^{-s};\\
+&\text{记录：}&B&\longmapsto\operatorname{diagonalSubspace}(B)\text{ 与其固定点}.
+\end{aligned}}
+$$
+
+只有在额外给出载体映射、归一化和动力学之后，才能讨论这些层是否共同形成一个可预测的有效热记录。
+
+本节复用 `basis_measurement_eq_self_iff`、`zeta_thermal_state_mem_diagonal` 和 `zeta_thermal_state_pinching_fixed`。Lean 已证明的是有限秩一记录上下文中的对角固定性；物理 Gibbs 态、热平衡、唯一吸引子、Zeckendorf 能量解释和无限 zeta 极限仍需额外假设与证明。
+
+## 追加锚（新终端）
+
+## 94. 局部动力学不能自动填补相关盲区
+
+### 94.1 局部扇区在迭代下保持封闭
+
+继续使用第 91 节的双系统分解。令
+
+$$
+L=L_A\oplus L_B
+$$
+
+表示两个局部扇区的和，令 $C$ 表示相关扇区。设 Heisenberg 演化是一个实线性映射
+
+$$
+\mathsf H:
+\operatorname{BipartiteHermitian}(m,n)
+\longrightarrow
+\operatorname{BipartiteHermitian}(m,n),
+$$
+
+并假设
+
+$$
+\mathsf H(L)\subseteq L.
+$$
+
+`local_dynamics_no_tomography` 证明对任意离散时间 $t$，
+
+$$
+\boxed{
+\mathsf H^{t}(L)\subseteq L.
+}
+$$
+
+这是一个纯粹的迭代闭合结论：如果一步演化不离开局部可见空间，那么重复应用它也不会从局部方向产生新的相关方向。
+
+### 94.2 局部读数不能靠自身迭代完成联合层析
+
+同一定理还给出更强的交集结论：若 $x\in L$ 且某次迭代同时落入相关扇区，
+
+$$
+\mathsf H^t x\in C,
+$$
+
+则
+
+$$
+\boxed{
+\mathsf H^t x=0.
+}
+$$
+
+原因是 $L$ 与 $C$ 在 Hilbert—Schmidt 几何下正交；保持局部扇区的迭代结果既属于 $L$，又属于 $C$，只能落在零交集。这把“局部边缘看不见相关历史”改成了一个动力学判据：只使用保持 $L$ 的局部 Heisenberg 操作，不能把相关扇区拉回局部坐标，也不能用局部数据完成联合层析。
+
+这里的条件非常具体。定理没有说任何物理动力学都保持 $L$，也没有说相关扇区对所有联合操作都不可见；它只约束满足上述线性不变性假设的演化族。只要加入一个把局部方向送入相关方向的联合相互作用，或者允许直接测量 $C$ 中的效果，结论的适用范围就改变。
+
+### 94.3 对“保留多少历史”的影响
+
+第 91 节给出相关扇区的维数
+
+$$
+\dim C=(m^2-1)(n^2-1).
+$$
+
+第 94 节说明：若未来实验族的 Heisenberg 闭包仍满足 $\mathsf H(L)\subseteq L$，那么这些相关方向不会被局部动力学主动暴露。对只回答局部目标的问题，可以把 $C$ 留在残差空间；对需要联合目标的任务，则必须在实验族中加入能够离开 $L$ 的操作，或直接保留联合记录。
+
+因此，历史预算不只由静态维数决定，还由动力学的扇区不变性决定：
+
+$$
+\boxed{
+\text{局部预算足够}
+\iff
+\text{目标闭包仍在 }L\text{ 中};
+\qquad
+\text{联合目标需要 }C\text{ 的访问或生成机制}.
+}
+$$
+
+这个判据与第 86 节的目标闭包条件相容，但不能替代对具体目标族和误差容限的计算。若演化只近似保持 $L$，则需要额外的 Lipschitz 或泄漏范数来给出近似版本；当前定理只给出精确离散不变性。
+
+### 94.4 Zeckendorf 双载体的边界
+
+若两个局部载体分别由 Zeckendorf 合法空间实现，必须先给出
+
+$$
+ m=F_{L_A+2},
+\qquad
+ n=F_{L_B+2},
+$$
+
+以及一个实际作用在 $m\times n$ 联合空间上的 Heisenberg 映射。只有在验证该映射保持 $L_A\oplus L_B$ 后，才能应用上述闭合结论。Fibonacci 计数本身既不保证局部扇区不变，也不保证相关扇区一定能被某个物理相互作用访问。
+
+本节复用 `local_dynamics_no_tomography`。Lean 已证明的是实线性、精确扇区保持下的迭代闭合和零交集结论；近似局部动力学、开放系统通道、有限样本误差和具体 Zeckendorf Hamiltonian 仍需额外模型。
+
+## 追加锚（新终端）
+
+## 95. 有限移位记录的余弦误差地板
+
+第 81 节已经给出有限移位记录中以 $|\gamma(\ell)|$ 表示的恢复下界。本节的新增内容是对同一个特定通道证明有限窗口的余弦估计，从而把未知的自相关系数替换成显式的标签间距和窗口长度界。
+
+### 95.1 一个可计算的有限记录通道
+
+设 $c:\mathbb Z\to\mathbb C$ 只支撑在有限窗口 $0,1,\ldots,N$，并满足
+
+$$
+\sum_{k\in\mathbb Z}|c_k|^2=1.
+$$
+
+给每个系统标签 $i$ 一个整数位置 $q_i$，定义移位相关函数
+
+$$
+\gamma(t)
+=
+\sum_{k\in\mathbb Z}c_{k+t}\,\overline{c_k}.
+$$
+
+`finite_record_cosine_obstruction` 构造了一个具体的有限记录通道 $C$。在它的系统边缘作用上，矩阵元按标签差异衰减为
+
+$$
+\boxed{
+\Lambda(A)_{ij}
+=
+\gamma(q_i-q_j)A_{ij}.
+}
+$$
+
+这把记录重叠写成了一个离散自相关函数：对角元不变，标签间距为 $t$ 的相干项乘上 $\gamma(t)$。这里的 $C$ 是定理在给定有限窗口、整数标签和记录向量后构造出的特定通道；不能把这个存在性结论改写成任意有限记录装置都具有同一形式。
+
+### 95.2 任意系统端恢复都有一个最坏误差下界
+
+若存在一对标签满足
+
+$$
+q_i-q_j=\ell\ne0,
+$$
+
+对任意只作用在系统端的恢复通道 $R$，定理对所有输入密度态取最坏误差上确界，得到
+
+$$
+\boxed{
+\frac{1-|\gamma(\ell)|}{2}
+\le
+\sup_{\rho\in\mathrm{DensityState}}
+D\!\left(R(C(\rho)),\rho\right).
+}
+$$
+
+更精确地，Lean 结论把左侧误差集合写成一个非空有界集合的上确界，并同时证明它与对应的矩阵迹范数误差集合相等。这个量是“对所有输入状态的最坏误差”，不是说每个输入态都达到该下界，也不是说该下界在所有通道中都是最佳常数。
+
+下界的来源是一个成对的相干见证：可以选取只在 $i,j$ 两个标签上有相反相位的两个纯态，它们输入时迹距离为 $1$，记录通道后只剩下由 $\gamma(q_i-q_j)$ 缩放的非对角差异；迹距离收缩和三角不等式迫使任意恢复保留这项误差。
+
+### 95.3 有限窗口给出严格的余弦地板
+
+令
+
+$$
+ d=|\ell|,
+\qquad
+ m=\left\lfloor\frac{N}{d}\right\rfloor.
+$$
+
+`coefficient_gamma_le_cosine` 对有限支撑的每个非零整数移位给出
+
+$$
+|\gamma(\ell)|
+\le
+\cos\!\left(\frac{\pi}{m+2}\right).
+$$
+
+因此 `finite_record_cosine_obstruction` 进一步得到
+
+$$
+\boxed{
+\frac{1-\cos\!\left(\frac{\pi}{m+2}\right)}{2}
+\le
+\sup_{\rho}
+D\!\left(R(C(\rho)),\rho\right),
+\qquad
+\frac{1-\cos\!\left(\frac{\pi}{m+2}\right)}{2}>0.
+}
+$$
+
+余弦上界来自把整数索引按模 $d$ 分成 residue blocks；每个长度为 $m+1$ 的实非负范数序列满足最近邻二次型的有限路径上界，再把各块的质量相加。它是统一上界，由此产生严格正的误差地板；当前定理没有为每个 $c$ 提供达到该上界的等号见证，因此不把这个恢复下界称为普适 sharp 常数。
+
+两个边界值得保留：如果所有 $q_i$ 都相同，则不存在非零标签差，定理的量化条件为空；如果 $d>N$ 或 $N=0$，则 $m=0$，地板为
+
+$$
+\frac{1-\cos(\pi/2)}{2}=\frac12.
+$$
+
+当 $m$ 增大时，地板可以变小；这只说明更长的有限窗口可以降低该特定模型的下界，不表示已经得到无限记录极限或任意通道的无误恢复。
+
+### 95.4 与 Zeckendorf 历史预算的关系
+
+若把合法 Zeckendorf 构型映射为整数标签 $q_i$，则本节告诉我们：标签间距、记录窗口长度 $N$ 和自相关 $\gamma$ 共同决定系统端恢复成本。仅增加合法标签的数量并不能保证历史可恢复；还必须指定这些标签如何嵌入有限记录序列，以及记录寄存器是否仍可被联合访问。
+
+因此，对一个给定的非零间距 $\ell$，可以把
+
+$$
+\varepsilon_{N,\ell}
+=
+\frac{1-\cos\!\left(\frac{\pi}{\lfloor N/|\ell|\rfloor+2}\right)}{2}
+$$
+
+作为该有限移位记录模型中的保守恢复预算。它是标签族和记录协议的函数，不是 Zeckendorf 数值本身的普适误差，也不是对所有环境或恢复操作的定律。
+
+本节复用 `finite_record_cosine_obstruction`、`coefficient_gamma_le_cosine` 和 `finite_record_recovery_error_lower_bound`。Lean 已证明的是有限支撑、归一化记录序列、整数标签和系统端恢复通道下的具体下界；联合访问记录环境、近似无限窗口、其他编码和物理 Hamiltonian 仍需分别建模。
+
+## 追加锚（新终端）
+
+## 96. 静态效果相同，仪器历史仍可不同
+
+前面的不完整观察者结果已经说明：当前效果族存在正交残差时，不同密度态可以拥有完全相同的单次读数。本节补上一个更具体的物理桥：即使当前 POVM 的每个效果都完全相同，**仪器在分支后怎样更新状态**仍会改变下一次读数。
+
+### 96.1 同一个 POVM 不决定同一个仪器
+
+在一个量子比特上，令
+
+$$
+P_0=|0\rangle\langle0|,
+\qquad
+P_1=I-P_0,
+\qquad
+X=|0\rangle\langle1|+|1\rangle\langle0|.
+$$
+
+考虑两组单 Kraus 分支：
+
+$$
+K_b=P_b,
+\qquad
+L_b=XP_b,
+\qquad b\in\{0,1\}.
+$$
+
+它们的静态效果完全相同，因为
+
+$$
+K_b^\dagger K_b=P_b,
+$$
+
+而
+
+$$
+L_b^\dagger L_b
+=P_bX^\dagger XP_b
+=P_b.
+$$
+
+两组效果都满足
+
+$$
+\sum_{b=0}^1P_b=I.
+$$
+
+因此，只看当前一次测量的 outcome 概率，无法区分这两台仪器。
+
+### 96.2 下一步联合统计却相反
+
+取共同初态 $$\rho=P_0$$，并比较第一步得到 $$b=0$$ 后、第二步读取效果 $$P_1$$ 的概率。
+
+对于第一台仪器，分支态为
+
+$$
+K_0\rho K_0^\dagger=P_0,
+$$
+
+所以第二步的未归一化权重为
+
+$$
+\operatorname{Tr}(P_1P_0)=0.
+$$
+
+对于第二台仪器，分支态为
+
+$$
+L_0\rho L_0^\dagger
+=XP_0X^\dagger
+=P_1,
+$$
+
+所以第二步权重为
+
+$$
+\operatorname{Tr}(P_1P_1)=1.
+$$
+
+项目定理 `same_effects_different_two_step_joint_law` 已在有限矩阵中同时证明了四件事：两组分支效果逐 outcome 相等、两组效果都归一化，以及上述第二步概率分别为 $$0$$ 和 $$1$$。
+
+于是得到一个比“当前边缘读数不完整”更强的结论：
+
+$$
+\boxed{
+\text{相同 POVM 效果}
+\not\Rightarrow
+\text{相同后续过程}.
+}
+$$
+
+静态效果只记录 $$K_b^\dagger K_b$$；它没有记录 Kraus 分支留下的状态变换。后续实验访问的正是这部分历史。
+
+### 96.3 需要保留的不是全部过去，而是分支更新
+
+设当前记录只保存 outcome $$b$$，却丢弃分支后的更新算子。上面的两台仪器在当前记录层完全相同，但它们的下一步响应不同。因此，把对象压成
+
+$$
+\text{当前 outcome 分布}
+$$
+
+不足以支撑未来预测；至少要保留下面三者之一：
+
+$$
+\boxed{
+\text{分支更新 }\mathcal J_b,
+\quad
+\text{足以模拟未来的预测摘要},
+\quad或
+\quad
+\text{可访问的联合记录}.
+}
+$$
+
+这正是“保留多少历史”的操作性版本：历史预算由未来实验能否重建分支后的状态决定，而不是由已经读出的标签数量决定。若允许的未来目标只属于当前效果的线性张成，已有的 `target_prediction_sufficiency` 可以给出签名充分性；若目标包含分支更新产生的新方向，则必须扩大到相应的序列效果或 Heisenberg 闭包。
+
+### 96.4 与 Zeckendorf 构型的接法
+
+把 Zeckendorf 合法字串 $$w$$ 当作系统标签时，静态读出可以先定义为
+
+$$
+P_w=|w\rangle\langle w|,
+$$
+
+但这只指定了“读到哪个构型”。若构型读出后还允许执行条件更新 $$\mathcal J_w$$，则未来统计由
+
+$$
+E_{w_1\cdots w_n}
+=
+\mathcal J_{w_1}^*\cdots
+\mathcal J_{w_n}^*(I)
+$$
+
+决定，而不由 Zeckendorf 数值 $$a(w)$$ 单独决定。不同的 $$\mathcal J_w$$ 可以共享相同的单步效果，却产生不同的多步响应。
+
+因此，Zeckendorf 继续承担离散构型的合法编号；仪器分支和后续动力学承担历史如何回流。要声称某个合法字串的当前标签已经足够，必须先证明所有允许的未来词效果都由该标签因子化，或给出未因子化部分的误差界。
+
+本节复用 `same_effects_different_two_step_joint_law`，并与已有的 `target_prediction_sufficiency`、`unified_sequential_kernel` 和 `all_future_statistics_sufficiency` 相接。Lean 已证明的是明确二能级单 Kraus 仪器的有限矩阵反例；它没有证明任意 POVM 都具有该差异，也没有替具体 Zeckendorf Hamiltonian 选择唯一的分支更新。
+
+## 97. 用反向搜索计算最早未来分离深度
+
+第 76 节给出了有限未来关系塔的稳定深度，但没有指定怎样从一个具体的有限更新表中计算每一对状态的首次分离时刻。项目的 `reverse_bfs_correct_and_quadratic` 提供了一个直接算法。
+
+### 97.1 定义成对的未来分离距离
+
+设 $$Y$$ 是有限状态集，
+
+$$
+\tau:Y\to Y,
+\qquad
+q:Y\to O
+$$
+
+分别是确定性更新和当前读出。对有序状态对 $$(x,y)$$，定义
+
+$$
+\delta(x,y)
+=
+\min\left\{n\in\mathbb N:
+q(\tau^n x)\ne q(\tau^n y)\right\},
+$$
+
+若不存在这样的时刻则记为 $$\delta(x,y)=\infty$$。这正是源码中的 `exactSeparationDepth`：它返回 `some n` 或 `none`，而不是把永远不可分的状态强行赋予一个有限距离。
+
+$$
+\boxed{
+\delta(x,y)=\infty
+\iff
+x,y\text{ 对全部未来读数保持等价}.
+}
+$$
+
+因此，稳定对象的边界可以按对区分：有限距离表示还需要保留一个有限未来窗口，$$\infty$$ 表示在指定更新和读出下无需再区分。
+
+### 97.2 反向 BFS 的正确性
+
+把状态对写成一个成对节点
+
+$$
+(x,y)\longmapsto(\tau x,\tau y).
+$$
+
+先把当前读数不同的节点放入源集合：
+
+$$
+M_0
+=\{(x,y):q(x)\ne q(y)\}.
+$$
+
+再沿成对更新边反向扩张：
+
+$$
+M_{k+1}
+=
+M_k
+\cup
+\left\{(x,y):(\tau x,\tau y)\in M_k\right\}.
+$$
+
+第 $$k$$ 层恰好包含那些在不超过 $$k$$ 步的未来某个时刻会分离的状态对。因而反向搜索首次访问层数满足
+
+$$
+\operatorname{reverseBfsDistance}(x,y)
+=
+\delta(x,y).
+$$
+
+这不是启发式搜索；Lean 定理逐对证明了它与源语义 `exactSeparationDepth` 的相等。
+
+### 97.3 历史预算的可计算上界
+
+显式保存每个有序状态对的一条反向边，边数恰为
+
+$$
+|Y|^2.
+$$
+
+项目定理给出
+
+$$
+\boxed{
+T\le 2|Y|^2,
+\qquad
+S\le 3|Y|^2,
+}
+$$
+
+其中 $$T$$ 是该显式表和逐对访问的单位成本上界，$$S$$ 是边表、距离表和队列的存储上界。这个界没有使用收缩率或概率近似；它只依赖有限状态和确定性更新。
+
+若所有有限的 $$\delta(x,y)$$ 中取最大值
+
+$$
+H_*=
+\max\{\delta(x,y):\delta(x,y)<\infty\},
+$$
+
+那么观察到 $$H_*$$ 的未来窗口后，所有本来会被分开的状态对都已经分开；剩下的对在整个未来中保持同一读数。若不存在任何分离对，可约定 $$H_*=0$$。
+
+这给出“需要保留多少历史”的一个可执行版本：在这个经典有限模型里，保留到 $$H_*$$ 就足够完成指定读出族的未来分类；不需要保留每一条更长历史。
+
+### 97.4 Zeckendorf 窗口与量子边界
+
+若合法 Zeckendorf 构型集 $$\mathcal W_L$$ 被明确赋予
+
+$$
+\tau:\mathcal W_L\to\mathcal W_L,
+\qquad
+q:\mathcal W_L\to O,
+$$
+
+则
+
+$$
+|Y|=|\mathcal W_L|=F_{L+2}
+$$
+
+代入上面的算法预算，得到二次于合法构型数量的校准成本。这里的 $$F_{L+2}$$ 只是载体大小；$$H_*$$ 仍由实际更新和读出表决定。
+
+这条反向 BFS 结论属于有限确定性模型。对量子通道，状态空间通常是连续的，且未来区分可能是概率差异而非精确标签不等式；此时应使用前面的效果闭包、预测投影或误差距离，而不能把 $$|Y|^2$$ 的枚举界直接宣称为量子记忆复杂度。
+
+本节复用 `reverse_bfs_correct_and_quadratic`。Lean 已证明的是有限状态、确定性更新、有限读出字母表下的精确分离深度与预算；Zeckendorf 映射、量子概率阈值和噪声鲁棒版本仍需另行指定。
+
+## 追加锚（新终端）
+
+## 98. 占据历史链的精确振幅与最小记忆债务
+
+第 97 节处理有限确定性状态表的未来分离。另一条更接近“历史怎样被压缩”的项目结果来自 `SequentialOccupationHistory`：它把一个有限占据多重集的逐步生成写成量子等距链，并直接计算每个切口必须保留的记忆维数。
+
+### 98.1 边界不是标签，而是部分历史
+
+给定有限多重集 $$a$$，令 $$\operatorname{Boundary}(a,t)$$ 表示从 $$a$$ 中取出恰好 $$t$$ 个占据的部分历史。若当前边界为 $$b$$，下一步加入符号 $$i$$ 的合法条件是
+
+$$
+\operatorname{count}_b(i)<\operatorname{count}_a(i).
+$$
+
+项目定义转移矩阵
+
+$$
+N_t(i,c;b)
+=
+\begin{cases}
+\sqrt{\dfrac{\operatorname{count}_{a-b}(i)}{|a|-t}},
+&c=b+\{i\},\\[6pt]
+0,&\text{否则}.
+\end{cases}
+$$
+
+它保留了“哪些前缀历史仍可继续”以及“剩余占据给每个后继多少振幅”两种信息。对 $$t<|a|$$，Lean 定理 `next_step_gram` 给出
+
+$$
+\boxed{
+N_t^\dagger N_t=I.
+}
+$$
+
+所以每个合法一步都是等距的；`next_step_quantum_channel` 进一步构造了相应的有限维量子通道。这里的等距性不是说记忆已经被压成一个标量，而是说这一步在保留的边界载体上不丢失内积。
+
+### 98.2 多步收缩精确等于占据扇区振幅
+
+对一个词 $$w$$，把所有合法边界路径的局部转移振幅相乘并求和，得到 `contraction`。项目定理 `contraction_eq_sector` 证明：当剩余长度与切口满足
+
+$$
+|a|=t+n,
+$$
+
+时，逐步收缩恰好等于占据扇区向量的分量：
+
+$$
+\boxed{
+\operatorname{contraction}(a,n,t,w,b)
+=
+\operatorname{sectorVector}_n(a-b,w).
+}
+$$
+
+从初始空边界出发，`history_sequential_preparation` 因而给出整个合法占据历史的精确制备振幅。这个等式把“历史求和”落实为有限矩阵乘法；中间边界是被保留的历史接口，末端扇区向量是完整输出。
+
+### 98.3 每个切口都有一个不可绕开的秩下界
+
+把长度 $$t+s$$ 的完整振幅按切口拆成前缀和后缀，定义系数矩阵 $$C_a^{t,s}$$。任意一个有限链若能精确产生同一个扇区振幅，`sequential_coefficient_factorization` 给出
+
+$$
+C_a^{t,s}=P_tQ_s,
+$$
+
+其中中间指标空间就是该切口的 bond carrier。因此
+
+$$
+\operatorname{rank}(C_a^{t,s})
+\le
+\dim(\text{bond at }t).
+$$
+
+项目进一步把扇区系数矩阵的秩写成边界数量，得到 `sequential_memory_necessity`：
+
+$$
+\boxed{
+|\operatorname{Boundary}(a,t)|
+\le
+\dim(\text{任何精确链在切口 }t\text{ 的记忆} ) .
+}
+$$
+
+这是一条比“历史越长，内存越多”更精确的说法。真正的债务由前缀与后缀振幅的线性秩决定；大量字面不同的历史如果在系数矩阵中线性相关，可以共享记忆，而线性独立的边界不能被同一个更小的切口载体精确表示。
+
+### 98.4 5040 的精确实例
+
+项目中的 `occupation5040` 与算术卷中的 5040 具有同一数值对象，但两者承担的编码角色不同。算术卷给出
+
+$$
+5040=2^4\cdot3^2\cdot5\cdot7
+$$
+
+及其 Zeckendorf 指数行；量子占据链把一个具体多重集的逐步历史写成振幅链。对这个占据多重集，源码证明
+
+$$
+|a|=8,
+$$
+
+并且所有精确制备链的最大 bond 都满足
+
+$$
+\boxed{
+\max_t\dim(\text{bond at }t)\ge12.
+}
+$$
+
+`history_5040_minimum_maximum_bond` 证明下界可达；`history_5040_occupation_chain_attainment` 同时给出链长为 $$8$$、最大 bond 为 $$12$$，并且每个长度八的词振幅都精确等于对应扇区向量。
+
+因此，这个实例给出一个完整的“约束—历史—量子记忆”数值链：
+
+$$
+\text{固定占据约束}
+\longrightarrow
+\text{合法边界族}
+\longrightarrow
+\text{切口秩}
+\longrightarrow
+\text{最小记忆 }12.
+$$
+
+但必须保留编码边界：源码没有证明 Zeckendorf 合法字串空间与这个 occupation boundary 空间同构，也没有证明 12 是所有能完成同一物理任务的任意量子协议的普适记忆维数。它是该多重集、该精确振幅目标和该有限链模型下的最小最大 bond。
+
+### 98.5 对“稳定经典现实”的补充
+
+这条结果把前面的预测闭合条件再细化了一层。若只要求当前概率标签，可能只需保存一个粗读数；若要求保留完整后续振幅，则每个切口必须保存足以承载系数矩阵秩的边界信息。两者对应不同任务：
+
+$$
+\text{标签预测任务}
+\not\equiv
+\text{完整相干历史制备任务}.
+$$
+
+Zeckendorf 可以继续提供合法构型的离散坐标，occupation chain 则给出在一个具体相干任务中这些历史怎样组合、怎样跨切口传输。只有把两者之间的编码映射、目标振幅和允许误差明确写出，才能把 Fibonacci 构型数量转换成实际量子记忆预算。
+
+本节复用 `next_step_gram`、`next_step_quantum_channel`、`contraction_eq_sector`、`sequential_memory_necessity`、`minimum_maximum_bond_characterization` 和 `history_5040_minimum_maximum_bond`。Lean 已证明的是有限多重集占据链的等距性、精确收缩和切口下界；Zeckendorf—occupation 同构、噪声容错记忆以及任意开放系统中的最优压缩仍是未完成接口。
+
+## 追加锚（新终端）
+
+## 99. 单素数轴读数与多素数相关残差
+
+算术卷中的 $$K(n)(p,j)$$ 把每个素数轴上的指数写成一行 Zeckendorf 字串。若把这些轴进一步放进一个有限张量模型，项目的 `single_prime_visible_space` 给出一个精确边界：所有逐轴 Hermitian 读数只能看到空支撑和单轴支撑，不能自动看到两个或更多素数轴之间的相关方向。
+
+### 99.1 扇区分解
+
+设有限索引集为 $$\iota$$，第 $$i$$ 个局部因子维数为 $$d_i$$。对每个有限支撑集 $$S\subseteq\iota$$，定义一个扇区：在 $$S$$ 上取局部 trace-zero Hermitian 方向，在 $$S$$ 外取标量恒等方向。记该扇区为 $$\mathcal V_S$$。
+
+于是全局 Hermitian 张量空间按支撑集合分解为
+
+$$
+\mathsf{Herm}_{\mathrm{global}}
+=\bigoplus_{S\subseteq\iota}\mathcal V_S.
+$$
+
+空支撑 $$S=\varnothing$$ 是整体恒等方向；单点支撑 $$S=\{i\}$$ 是第 $$i$$ 条局部轴的中心化读数；$$|S|\ge2$$ 则表示跨轴相关方向。
+
+### 99.2 逐轴读数的完整像
+
+令 `singlePrimeVisibleSpace` 表示由常数和所有完整单因子 Hermitian effect 生成的可见空间。Lean 定理 `single_prime_visible_space` 证明
+
+$$
+\boxed{
+\mathsf V_{\mathrm{single}}
+=\mathcal V_{\varnothing}
+\oplus
+\bigoplus_{i\in\iota}\mathcal V_{\{i\}}.
+}
+$$
+
+如果每个扇区维数满足
+
+$$
+\dim_{\mathbb R}\mathcal V_S
+=\prod_{j\in S}(d_j^2-1),
+$$
+
+则逐轴可见空间的维数为
+
+$$
+\boxed{
+\dim_{\mathbb R}\mathsf V_{\mathrm{single}}
+=1+\sum_{i\in\iota}(d_i^2-1).
+}
+$$
+
+它是逐轴读数的完整线性容量；不是全部全局 Hermitian 空间的维数。
+
+### 99.3 多轴相关方向的精确盲区
+
+同一定理给出可见空间正交残差
+
+$$
+\mathsf R_{\mathrm{multi}}
+=\bigoplus_{\substack{S\subseteq\iota\\|S|\ge2}}\mathcal V_S,
+$$
+
+以及
+
+$$
+\boxed{
+\dim_{\mathbb R}\mathsf R_{\mathrm{multi}}
+=\left(\prod_{i\in\iota}d_i\right)^2
+-1
+-\sum_{i\in\iota}(d_i^2-1).
+}
+$$
+
+因此，只要这个数非零，就存在全局 Hermitian 差异，它对每条单轴读数都为零，却可能在联合 effect 上有非零响应。两因子情形退化为
+
+$$
+(d_1^2-1)(d_2^2-1),
+$$
+
+与前面二分系统的相关扇区维数一致。
+
+这说明“逐素数轴都读过了”仍不等于“整体历史已经被读出”。逐轴记录保存的是一阶轴向信息；多素数耦合、联合进位或跨轴相位可以落在 $$\mathsf R_{\mathrm{multi}}$$ 中。
+
+### 99.4 与 $$K(n)$$ 的准确接口
+
+把 $$\iota$$ 取作一个有限素数集合时，可以把算术记录的每条 $$K(n)(p,\cdot)$$ 视为第 $$p$$ 轴的离散标签。但要把上面的维数公式用于量子模型，必须额外指定一个映射
+
+$$
+K(n)(p,\cdot)
+\longmapsto
+\text{第 }p\text{ 个局部 Hilbert 空间中的状态或 effect}.
+$$
+
+仓库当前定理只处理给定局部维数、给定扇区分解和给定单因子 Hermitian 读数；它没有从 Zeckendorf 行自动构造这些 Hilbert 空间，也没有把算术乘法的进位自动变成跨因子 Hamiltonian。
+
+所以，若当前任务只询问每个素数轴的指数，单轴可见空间可能足够；若任务询问乘积、规范化进位、跨素数联合概率或联合相位，就必须加入至少一个 $$|S|\ge2$$ 的扇区，或者给出该相关残差对目标读数的误差界。
+
+### 99.5 对稳定经典接口的后果
+
+本节把“保留多少约束”改写成一个可量化选择：
+
+$$
+\boxed{
+\text{逐轴经典接口}
+\quad\text{vs.}\quad
+\text{包含多轴相关的联合接口}.
+}
+$$
+
+前者的容量是 $$1+\sum_i(d_i^2-1)$$；后者还要承担 $$\mathsf R_{\mathrm{multi}}$$ 中的方向。若后续动力学始终保持单轴可见空间不变，相关残差可以对该任务保持隐藏；若动力学或目标 effect 进入多轴扇区，当前逐轴记录就不再预测闭合。
+
+这与两份算术卷的边界一致：Zeckendorf 唯一表示保证每条轴上的规范坐标，但不保证跨轴联合记录的唯一性、可见性或物理可逆性。稳定的经典现实因此不能由“每条轴都有合法刻度”单独推出，还必须说明哪些跨轴相关是任务允许继续访问的。
+
+本节复用 `single_prime_visible_space`。Lean 已证明的是有限张量族、Hermitian 扇区和完整单因子读数下的可见空间及残差维数；素数轴到物理局部系统的编码、算术进位的联合动力学以及具体 Zeckendorf Hamiltonian 仍是待建接口。
+
+## 追加锚（新终端）
+
+## 100. 记录份额的阈值：一份隐藏，两份恢复
+
+前面的章节主要按可见算子空间或历史秩计量信息。本节补上一个离散而完整的访问阈值实例：`QutritThresholdSharing` 构造三份 qutrit 记录，使任意单份边缘完全没有输入信息，而任意两份联合访问可以恢复输入振幅。
+
+### 100.1 三份编码
+
+输入标签取 $$s\in\mathbb Z/3\mathbb Z$$。对每个 $$s$$，编码支持在三元组
+
+$$
+(j,\,j+s,\,j+2s),
+\qquad j\in\mathbb Z/3\mathbb Z,
+$$
+
+上，并以 $$1/\sqrt3$$ 归一化。对任意输入振幅函数 $$\psi(s)$$，这给出一个三 qutrit 联合态。
+
+编码的关键是：单个坐标只保留一个线性组合后的 qutrit，而两坐标的差值携带 $$s$$。这不是把每个记录份额单独写成完整输入副本。
+
+### 100.2 任意单份边缘完全混合
+
+项目定理 `qutrit_single_share_maximally_mixed` 证明，对任意输入密度态 $$\rho$$ 和任意份额索引 $$i\in\{0,1,2\}$$，取其余两坐标的偏迹后都有
+
+$$
+\boxed{
+\rho_i
+=\frac13 I_3.
+}
+$$
+
+因此单份记录对输入标签、输入相位和输入混合权重都不携带可读信息。这个结论是完整密度矩阵等式，而不是只比较某一个统计量。
+
+它给出了“当前局部读数相同但整体不同”的一个编码实例：不同 $$\rho$$ 的每个单份边缘都相同，但三份联合态仍然可以不同。
+
+### 100.3 任意两份的显式恢复
+
+对任意循环相邻的两份，项目定义置换解码
+
+$$
+(a,b)\longmapsto(b-a,\,2b-a).
+$$
+
+`qutrit_two_share_reconstruction` 证明，应用该置换后，两份联合振幅可写成
+
+$$
+\psi(a)
+\times
+\left[
+\frac1{\sqrt3}
+\sum_j
+\mathbf 1_{(b,r)=(j,j)}
+\right],
+$$
+
+其中第二因子是与输入无关的固定纠缠因子。于是输入振幅 $$\psi$$ 被恢复到第一解码坐标，剩余坐标只保留固定辅助态。
+
+因此该具体编码满足
+
+$$
+\boxed{
+\text{任意一份：完全隐藏};
+\qquad
+\text{任意两份：可逆恢复}.
+}
+$$
+
+### 100.4 对历史预算的含义
+
+这个实例说明，“保留几份记录”不能脱离访问协议回答。若未来任务只允许访问一份，所需的经典接口只能报告一个与输入无关的最大混合态；若允许访问两份，联合差分结构立即恢复输入。记录数相同但访问集合不同，也会产生不同的可预测性。
+
+它还区分了三种资源：
+
+$$
+\text{份额数量}
+\not\equiv
+\text{单份边缘信息量}
+\not\equiv
+\text{联合恢复能力}.
+$$
+
+三 qutrit 代码中每份边缘的信息量为零，但两份的联合恢复能力是完整的。故不能用“每份都看不见”推出“整体没有历史”，也不能用“总 Hilbert 维数”直接代替任务所需的最小访问份额。
+
+### 100.5 与 Zeckendorf 记录的接口
+
+若把有限 Zeckendorf 合法构型分配到多个记录份额，必须先指定编码映射与可访问集合。Fibonacci 合法性只约束哪些构型标签存在；它不自动决定一份记录是否隐藏、两份是否恢复，也不自动产生阈值共享的线性解码器。
+
+可以把三 qutrit 结果作为一个设计模板：选择份额映射，使单份效果落入当前可见空间的核，而联合份额的效果进入目标闭包。随后再用前面的 `all_future_statistics_sufficiency` 或 `future_statistics_iff_annihilates_infinite_system` 检验联合访问是否足以覆盖所需未来统计。
+
+本节复用 `qutrit_single_share_maximally_mixed`、`qutrit_two_share_reconstruction` 和 `qutrit_matrix_unit_marginal`。Lean 已证明的是该三 qutrit 编码的精确偏迹与两份解码；它没有证明任意 Zeckendorf 编码都存在同样的阈值，也没有给出噪声下的最优份额数。
+
+## 追加锚（新终端）
+
+## 101. Zeckendorf 频率相位与顺序遗失
+
+前面的记录模型说明历史差异可以藏在相位或相关中。本节把算术卷的 Zeckendorf 位直接接到仓库已有的素数频率相位模块，得到一个明确的边界：刻度位可以选择相位频率，但单一标量相位会忘掉步骤顺序。
+
+### 101.1 Zeckendorf 位选择两种黄金步长
+
+对素数 $$p$$ 和层数 $$\ell$$，项目定义一步频率增量
+
+$$
+\omega_{p,\ell}
+=
+\operatorname{primeLayerFrequency}(p,\ell+1)
+-
+\operatorname{primeLayerFrequency}(p,\ell).
+$$
+
+`prime_step_frequency_zeckendorf` 证明，最低 Zeckendorf 位决定两种频率之一：
+
+$$
+\boxed{
+\begin{aligned}
+2\notin\operatorname{wdigits}(\ell)
+&\Longrightarrow
+\omega_{p,\ell}=\varphi^2\log p,\\
+2\in\operatorname{wdigits}(\ell)
+&\Longrightarrow
+\omega_{p,\ell}=\varphi\log p.
+\end{aligned}
+}
+$$
+
+相应的单位圆相位为
+
+$$
+\Phi_{p,\ell}(t)
+=
+\exp\!\left(i\,t\,\omega_{p,\ell}\right).
+$$
+
+`prime_step_phase_euler` 和 `prime_step_phase_norm` 给出
+
+$$
+\Phi_{p,\ell}(t)
+=\cos(t\omega_{p,\ell})+i\sin(t\omega_{p,\ell}),
+\qquad
+|\Phi_{p,\ell}(t)|=1.
+$$
+
+所以在这个明确模型中，Zeckendorf 位改变的是旋转速度；它本身不产生衰减。长步还满足
+
+$$
+\exp(i t\varphi^2\log p)
+=
+\exp(i t\varphi\log p)\,
+\exp(i t\log p),
+$$
+
+因为 $$\varphi^2=\varphi+1$$。这是一条频率分解，不是说物理系统必然存在两个独立的记录寄存器。
+
+### 101.2 标量相位的交换律会抹掉顺序
+
+对任意有限频率列表 $$(\omega_1,\ldots,\omega_m)$$，定义标量相位积
+
+$$
+\Pi(t)
+=\prod_{r=1}^{m}\exp(-i t\omega_r).
+$$
+
+`ordered_phase_product_collapse` 证明
+
+$$
+\boxed{
+\Pi(t)
+=\exp\!\left(-i t\sum_{r=1}^{m}\omega_r\right).
+}
+$$
+
+因此任意排列都给出同一个标量结果：
+
+$$
+\Pi_{(\omega_1,\ldots,\omega_m)}(t)
+=
+\Pi_{(\omega_{\pi(1)},\ldots,\omega_{\pi(m)})}(t).
+$$
+
+`adjacent_step_order_invisible` 将这个边界写成相邻两步的交换律。它不是说原始历史不存在，而是说**在只保留一个复标量相位的读出中，顺序没有可见坐标**。
+
+这与第 96 节的仪器反例相互补：第 96 节中，静态 POVM 丢掉了分支后的更新；本节中，标量相位读出丢掉了频率序列的排列信息。两者都说明当前读数相同不等于后续过程相同。
+
+### 101.3 “共振”必须区分相位与振幅
+
+`PrimeGoldenComplexMode` 将一个素数模式写成
+
+$$
+M_p(\sigma,t)
+=
+\exp\!\left(-\sigma\,\lambda_p\right)
+\exp\!\left(i t\lambda_p\right),
+$$
+
+其中 $$\lambda_p$$ 是指定的黄金素数谱值。于是
+
+$$
+|M_p(\sigma,t)|=\exp(-\sigma\lambda_p).
+$$
+
+当 $$\sigma>0$$ 时，源码定理 `first_golden_complex_mode_injective_of_pos` 证明模长读出对素数保持单射；当 $$\sigma=0$$ 时，所有模式模长都等于一，而 `finite_zero_sigma_complex_mode_recurrence` 证明有限素数集的相位可以在任意晚时间重新接近完全相干：
+
+$$
+\forall\varepsilon>0,\ \forall B>0,
+\quad
+\exists t>B,
+\quad
+|M_p(0,t)-1|<\varepsilon
+\quad\text{对有限个 }p.
+$$
+
+因此“出现振荡”不等于“出现可区分记录”：
+
+$$
+\boxed{
+\text{振幅衰减提供可校准的大小差异；}
+\quad
+\text{纯相位运动可以长期回归而不留下单调记录。}
+}
+$$
+
+### 101.4 需要什么才能保留历史顺序
+
+若任务只关心总频率 $$\sum_r\omega_r$$，标量相位足够；若任务关心 Zeckendorf 步骤的先后、素数轴切换或进位路径，则至少需要下列一种扩展：
+
+$$
+\boxed{
+\text{时间分辨的连续读出},
+\quad
+\text{非交换算子乘积},
+\quad
+\text{或可再次访问的记忆寄存器}.
+}
+$$
+
+在非交换升格中，两个步骤一般是
+
+$$
+U_2U_1\ne U_1U_2,
+$$
+
+顺序才会进入可观测量；在标量 $$U(1)$$ 层，交换律会把这部分信息全部压掉。这个区别与第 97 节的未来分离深度、第 98 节的切口 bond、第 100 节的联合份额访问共同说明：历史预算取决于允许的读出代数，而不是只取决于合法 Zeckendorf 标签的数量。
+
+本节复用 `prime_step_frequency_zeckendorf`、`prime_step_phase_euler`、`long_step_phase_factorization`、`ordered_phase_product_collapse`、`adjacent_step_order_invisible` 和 `complex_mode_amplitude_phase_dichotomy`。Lean 已证明的是这些显式频率—相位模型中的代数关系；它没有证明物理系统必然采用该频率定义，也没有把标量相位自动升级为量子 Hamiltonian 或实验共振谱。
+
+## 102. 时间有序记忆曲率：顺序何时重新进入观测
+
+第 101 节给出一个严格边界：如果每一步只留下一个复标量相位，那么不同频率的乘积落入交换的 $$U(1)$$，步骤排列会被压成总频率。仓库中另一个更强的构造说明，顺序信息并不必然消失；它可以转移到一个被保留、并再次参与演化的记忆坐标。
+
+### 102.1 同一个完整寄存器上的逐槽演化
+
+`SequentialRegisterCircuit` 把寄存器写成
+
+$$
+\operatorname{Register}(A,K,n)=(\operatorname{Fin}(n)\to A)\times K.
+$$
+
+第一因子保存已经访问过的物理槽，第二因子是共享记忆。`firstGate` 和 `tailGate` 都是同一个完整 Hilbert 空间上的幺正等距同构；`partial_circuit_succ_gate` 进一步给出：第 $$m+1$$ 步是在保留全部槽的空间上，追加一个明确的局部门
+
+$$
+\operatorname{partialCircuit}(U,n,m+1,t)
+=
+\operatorname{partialCircuit}(U,n,m,t)\circ
+\operatorname{slotGate}(U(t+m),n,m).
+$$
+
+因此，未被当前读出的槽并没有从整体动力学中删除。它们仍可在以后门中参与作用。对空白初态，`circuit_blank_succ` 与 `circuit_basis_coefficients` 将最终振幅递归为有限链的系数；这正是“历史被保留为可再次访问的寄存器”而不是“历史已经被重新命名为一个当前数值”的形式化版本。
+
+这一区别很重要：若每一步都把旧寄存器替换成新的无记忆环境，可以得到逐步通道的乘法衰减；若同一寄存器继续参与，后续门会看到旧的相关性，顺序效应就可能返回。
+
+### 102.2 时间有序事件的仿射记忆律
+
+在 `TimeOrderedPrimeMemoryCocycle` 中，一个带时间的事件包含局部标量因子 $$\lambda$$、基准注入 $$b$$、频率 $$\omega$$ 和时间 $$t$$。实际注入为
+
+$$
+\widetilde b
+=
+\exp(-i t\omega)b.
+$$
+
+给定稳定因子 $$a$$，它作用在二元状态 $$ (x,m) $$ 上的更新为
+
+$$
+(x,m)
+\longmapsto
+\bigl(a x+\widetilde b\,m,\;\lambda m\bigr).
+$$
+
+对事件列表 $$W=(e_1,\ldots,e_n)$$，源码定理 `time_ordered_evolution_affine` 证明整体作用仍是上三角仿射形式：
+
+$$
+(x,m)
+\longmapsto
+\left(
+ a^n x+M_a(W)m,
+ \Lambda(W)m
+\right),
+$$
+
+其中 $$\Lambda(W)=\prod_r\lambda_r$$ 是标量词，而 $$M_a(W)$$ 是记忆坐标的有序累积。
+
+对前后两段事件词，`time_ordered_cocycle_append_laws` 给出精确拼接律
+
+$$
+\Lambda(W_1W_2)=\Lambda(W_1)\Lambda(W_2),
+$$
+
+以及
+
+$$
+M_a(W_1W_2)
+=
+ a^{|W_2|}M_a(W_1)+M_a(W_2)\Lambda(W_1).
+$$
+
+第二式不是普通的交换乘法。后发生的词会把先发生的记忆注入乘上稳定传播因子；先发生的标量又会调制后续记忆。顺序因此进入一个半直积样的仿射结构，即使标量坐标本身仍然满足交换乘法。
+
+### 102.3 两步交换曲率是顺序的最小见证
+
+对两个事件 $$P,Q$$，`time_ordered_two_event_swap_curvature` 证明：交换次序时，标量输出完全相同，而记忆坐标的差为
+
+$$
+\Delta_{P,Q}
+=
+(a-\lambda_Q)\widetilde b_P
+-
+(a-\lambda_P)\widetilde b_Q.
+$$
+
+也就是
+
+$$
+\boxed{
+M_a(PQ)-M_a(QP)=\Delta_{P,Q}.
+}
+$$
+
+如果初始记忆为 $$m$$，完整状态的第一坐标差为 $$\Delta_{P,Q}m$$；第二坐标相同。于是：
+
+$$
+\text{标量读出相同}
+\quad\not\Rightarrow\quad
+\text{联合状态相同}.
+$$
+
+`PrimeSwapCurvature.prime_swap_curvature_spec` 还证明三件事：
+
+$$
+\Delta_{Q,P}=-\Delta_{P,Q},
+$$
+
+记忆原点变换
+
+$$
+\widetilde b_r\mapsto
+\widetilde b_r+(a-\lambda_r)c
+$$
+
+不改变 $$\Delta_{P,Q}$$，并且在两个共振间隙非零时，
+
+$$
+\Delta_{P,Q}
+=
+(a-\lambda_P)(a-\lambda_Q)
+\left(
+\frac{\widetilde b_P}{a-\lambda_P}
+-
+\frac{\widetilde b_Q}{a-\lambda_Q}
+\right).
+$$
+
+因此交换曲率不是任意坐标选择造成的假象。它是一个对记忆原点平移不变的顺序缺陷；曲率为零，当且仅当两个事件给出的局部观测者原点估计相同（在非共振条件下）。
+
+### 102.4 Zeckendorf 频率进入记忆，而不仅是标量相位
+
+把第 101 节的 Zeckendorf 频率选择接入事件频率：
+
+$$
+\omega_{p,\ell}
+=
+\begin{cases}
+\varphi^2\log p,&2\notin\operatorname{wdigits}(\ell),\\
+\varphi\log p,&2\in\operatorname{wdigits}(\ell).
+\end{cases}
+$$
+
+则两个事件的有效注入为
+
+$$
+\widetilde b_{p,\ell}
+=
+\exp(-it\omega_{p,\ell})b_{p,\ell}.
+$$
+
+Zeckendorf 位仍只决定局部旋转速度；顺序是否可见，取决于这些旋转后的注入是否进入共享记忆，以及稳定因子与局部因子是否产生非零曲率：
+
+$$
+\Delta_{P,Q}
+=
+(a-\lambda_Q)e^{-it_P\omega_P}b_P
+-
+(a-\lambda_P)e^{-it_Q\omega_Q}b_Q.
+$$
+
+所以同一组 Zeckendorf 标签可以有两种完全不同的接口：
+
+$$
+\Delta_{P,Q}=0
+\quad\Longrightarrow\quad
+\text{该记忆读出对这次交换不可见},
+$$
+
+而
+
+$$
+\Delta_{P,Q}\ne0
+\quad\Longrightarrow\quad
+\text{在访问记忆坐标的后续实验中，顺序可被区分}.
+$$
+
+这把“历史是否存在”改写成了可计算问题：不是问标签是否记录了先后，而是问允许的读出是否包含一个对交换曲率敏感的记忆坐标。
+
+### 102.5 对“需要保留多少历史”的新结论
+
+现在至少可以区分三个层次：
+
+$$
+\boxed{
+\begin{aligned}
+\text{只保留标量相位}
+&\Rightarrow\text{顺序按交换律折叠};\\
+\text{保留共享记忆的一维坐标}
+&\Rightarrow\text{两步顺序由 }\Delta_{P,Q}\text{ 检验};\\
+\text{保留完整寄存器与访问协议}
+&\Rightarrow\text{可继续检验更长词的历史回流}.
+\end{aligned}
+}
+$$
+
+因此，“稳定经典现实”所需的历史预算不能只按记录次数或 Zeckendorf 合法字串数量计数。对一个给定实验族，最小预算至少要保留所有会在预测窗口内产生非零交换曲率、回流核或联合恢复效应的坐标。若任务只问总频率，标量接口可能已经闭合；若任务问路径顺序、素数轴切换或可逆恢复，就必须保留共享记忆，或保留足以重建它的寄存器子空间。
+
+本节直接复用 `SequentialRegisterCircuit` 的逐槽幺正组合、`time_ordered_evolution_affine` 的仿射演化、`time_ordered_cocycle_append_laws` 的时间有序拼接律、`time_ordered_two_event_swap_curvature` 的交换缺陷，以及 `prime_swap_curvature_spec` 的反对称性与规范不变性。Lean 已证明这些有限列表和有限寄存器模型中的精确代数关系；它没有证明所有物理系统都具有该记忆坐标，也没有把非零曲率自动等同于实验上已经完成的测量。后者仍取决于实际可访问的读出、噪声模型和预测时间窗。
+
+## 103. 连续可见流与离散隐藏扇区
+
+时间有序记忆说明了“已有记忆怎样让顺序返回”。Solenoid 模块补上另一个边界：有些隐藏差异不是被连续动力学慢慢抹平，而是根本不属于同一个连续路径扇区。
+
+### 103.1 每条连续历史的唯一分解
+
+`universal_solenoid_visible_hidden_motion_classification` 证明，任意连续历史 $$\gamma:\mathbb R\to\operatorname{UniversalSolenoid}$$ 都有唯一数据
+
+$$
+(a,h)\in C(\mathbb R,\mathbb R)\times\operatorname{projection.ker}
+$$
+
+使得
+
+$$
+\boxed{
+\gamma(t)=\operatorname{realFlow}(a(t))+h.
+}
+$$
+
+其中 $$a(t)$$ 是可见的实流坐标，而 $$h$$ 是恒定的隐藏偏移；`frozen_streamline_throat_component_constant` 进一步把对应隐藏地址写成恒定的 $$\operatorname{hiddenKernelAddEquiv}^{-1}(h)$$。于是，在只允许连续实流操作的实验族中，状态自然分解为
+
+$$
+\text{可见相位流}\times\text{隐藏扇区标签}.
+$$
+
+这给出了一个比“历史可能存在”更严格的闭合候选：如果任务只允许沿 $$\operatorname{realFlow}(t)$$ 演化，那么隐藏扇区可以作为守恒的块索引；若只看投影，则它是一个潜变量。
+
+### 103.2 同投影不等于同一连续可达类
+
+同一投影纤维中的两个点不一定能由连续路径连接。`visible_path_hidden_address_dichotomy` 给出
+
+$$
+\operatorname{Joined}(x,y)
+\iff
+\exists t\in\mathbb R,
+\quad
+ y=\operatorname{realFlow}(t)+x.
+$$
+
+更精确地说，底层 `same_fiber_path_orbit_criterion` 将同投影时的可达时间收缩到整数轨道；若两个点的隐藏坐标不同，分类定理构造出非零整数作用
+
+$$
+\operatorname{jump}:\mathbb Z\to\operatorname{HiddenAddress}
+$$
+
+并证明不存在连续加法流把整数嵌入延拓为该跳跃：
+
+$$
+\neg\exists\,\operatorname{flow}:\mathbb R\to\operatorname{HiddenAddress},
+\quad
+\operatorname{flow}|_{\mathbb Z}=\operatorname{jump}.
+$$
+
+因此跨扇区变化若要发生，必须由离散操作、显式记忆寄存器或改变实验协议来承担。它不能被悄悄解释成同一连续相位的更细刻度。
+
+这里有一个必须保留的拓扑限制：该结果说的是连续路径可达性与隐藏地址的刚性，不是说整个空间不连通。源码同时证明 UniversalSolenoid 连通而非道路连通；拓扑连通与连续路径可达是两种不同性质。
+
+### 103.3 对经典接口的影响
+
+设粗观察只保留投影 $$\pi(x)$$，而不保留隐藏商坐标
+
+$$
+ c(x)=\operatorname{QuotientAddGroup.mk'}(\operatorname{range}(\operatorname{realFlowHom}))(x).
+$$
+
+对仅由连续实流组成的操作族，有
+
+$$
+ c(\gamma(t))=c(\gamma(0)).
+$$
+
+所以这类操作下，丢掉 $$c$$ 不会在同一连续扇区内立即造成预测分裂；它只是把不同扇区压进同一个粗标签。可是，一旦实验族加入离散 jump、可访问的隐藏寄存器，或第 102 节中的共享记忆回流，两个原先相同的粗读数就可能在后续被分开。
+
+因此预测闭合必须带有操作族下标：
+
+$$
+\text{closure}\bigl(\pi,\mathfrak T_{\mathrm{continuous}}\bigr)
+\ne
+\text{closure}\bigl(\pi,\mathfrak T_{\mathrm{continuous}}\cup
+\mathfrak T_{\mathrm{jump}}\bigr).
+$$
+
+这把“保留多少历史”具体化为：先规定允许的时间操作，再判断隐藏扇区是否可以安全商掉。若未来协议允许跨扇区访问，当前的经典接口必须补回 $$c$$，或保留一个能恢复它的记忆寄存器。
+
+本节使用 `visible_path_hidden_address_dichotomy` 与 `universal_solenoid_visible_hidden_motion_classification` 的现成结论。Lean 已证明的是 UniversalSolenoid、连续路径和 HiddenAddress 之间的这些结构关系；它没有证明现实物理系统必然采用该拓扑模型，也没有把“隐藏扇区”自动识别成实验中的某个具体粒子或场。
+
+## 104. 切口 Schmidt 谱：记忆维数之外还要保留哪些历史权重
+
+第 98 节给出了精确相干制备的切口秩下界。`CoherentHistorySchmidt` 进一步计算这个切口中每个边界扇区的权重，因此可以区分“必须保留多少个正交方向”和“哪些方向对当前任务贡献最大”。
+
+### 104.1 完整历史矩阵按边界因子化
+
+取一个有限占据多重集 $$a$$，把总长度写成
+
+$$
+|a|=t+s.
+$$
+
+令 $$u$$ 是长度 $$t$$ 的前缀，$$v$$ 是长度 $$s$$ 的后缀。源码定义完整合法词的系数矩阵
+
+$$
+C_a^{t,s}(u,v)
+=
+\\begin{cases}
+\\operatorname{multiplicity}(|a|,a)^{-1/2},
+&\\operatorname{occupation}(u\\mathbin{+!!+}v)=a,\\\\
+0,&\\text{否则}.
+\\end{cases}
+$$
+
+`coefficient_factorization` 证明它可以经过边界集合分解：
+
+$$
+C_a^{t,s}=P_{a,t}Q_{a,t,s},
+$$
+
+其中中间指标 $$b\\in\\operatorname{Boundary}(a,t)$$ 记录前缀占据，后缀占据被确定为 $$a-b$$。这说明切口记忆不是任意压缩标签，而是前缀与后缀仍然能够匹配的边界扇区。
+
+选取每个边界的代表词后，`coefficient_diagonal_restriction` 给出一个对角子矩阵：
+
+$$
+C_a^{t,s}(u_b,v_c)
+=
+\\begin{cases}
+\\operatorname{multiplicity}(|a|,a)^{-1/2},&b=c,\\\\
+0,&b\\ne c.
+\\end{cases}
+$$
+
+所以 `coefficient_rank` 得到精确等式
+
+$$
+\\boxed{
+\\operatorname{rank}(C_a^{t,s})
+=
+|\\operatorname{Boundary}(a,t)|.
+}
+$$
+
+第 98 节的 bond 下界因此可以被理解为 Schmidt 秩下界：任何精确实现同一纯历史振幅的切口，都必须至少携带这么多彼此独立的边界方向。
+
+### 104.2 每个边界方向的 Schmidt 权重
+
+源码进一步定义边界 $$b$$ 的 Schmidt 系数
+
+$$
+\\lambda_b
+=
+\\frac{
+\\sqrt{\\operatorname{multiplicity}(t,b)}
+\\sqrt{\\operatorname{multiplicity}(s,a-b)}
+}{
+\\sqrt{\\operatorname{multiplicity}(t+s,a)}
+}.
+$$
+
+`schmidt_coefficient_sq` 和 `schmidt_coefficient_sq_binomial` 证明
+
+$$
+\\boxed{
+\\lambda_b^2
+=
+\\frac{
+\\operatorname{multiplicity}(t,b)\\,\\operatorname{multiplicity}(s,a-b)
+}{
+\\operatorname{multiplicity}(t+s,a)
+}
+=
+\\frac{
+\\displaystyle\\prod_z
+\\binom{a(z)}{b(z)}
+}{
+\\binom{t+s}{t}
+}.
+}
+$$
+
+这些权重之和为一，因为它们来自完整均匀合法词的边界分解。于是一个切口有两个不同的复杂度量：
+
+$$
+\\begin{aligned}
+\\text{精确记忆维数}&=|\\operatorname{Boundary}(a,t)|,\\\\
+\\text{历史权重分布}&=(\\lambda_b^2)_b.
+\\end{aligned}
+$$
+
+前者回答“零误差地保留全部相干需要多少维”；后者回答“若只允许近似预测，哪些边界方向承载主要概率质量”。不能从第二个量的集中性直接推出第一个量可以在精确任务中减少。
+
+### 104.3 精确压缩与近似压缩的边界
+
+若任务要求保留完整纯态的所有振幅，任何丢弃一个 $$\\lambda_b\\ne0$$ 的边界方向都会降低切口 Schmidt 秩，因此不可能由同一较小 bond 精确实现。若任务只要求某个有限观测族的近似预测，可以按权重排序选取一个子集 $$S$$，并定义被丢弃的质量
+
+$$
+\\varepsilon_S^2
+=
+\\sum_{b\\notin S}\\lambda_b^2.
+$$
+
+在标准纯态 Schmidt 截断解释下，$$\\varepsilon_S$$ 是态向量级别的尾部范数；但把它转成具体测量概率、迹距离或多步预测误差，还需要指定归一化、测量族和后续动力学。仓库当前定理证明了 $$\\lambda_b$$ 的精确公式，没有自动证明任意截断协议的统一实验误差界。
+
+因此可以把“历史保留多少”拆成两个问题：
+
+$$
+\\boxed{
+\\begin{aligned}
+\\text{精确相干任务:}&\\quad
+\\text{保留全部非零边界方向};\\\\
+\\text{有限精度任务:}&\\quad
+\\text{给定预测族后控制被丢弃 Schmidt 尾部及其回流}.
+\\end{aligned}
+}
+$$
+
+第二行仍要与第 79、86 节的未来 observable 闭包结合。一个很大的 Schmidt 尾部如果完全落在实验不可见方向，未必造成可见误差；一个很小的尾部若被后续操作放大或回流，也不能仅凭当前质量安全丢弃。
+
+### 104.4 与 Zeckendorf 合法空间的严格接口
+
+对禁止相邻两个 $$1$$ 的 Zeckendorf 合法集合 $$\\mathcal W_L$$，可以把每个合法字串按切口分成前缀和后缀，并令边界集合只保留满足跨切口相邻约束的占据模式。若能证明该受限系数矩阵具有与某个 occupation sector 相同的因子化，则可以把上面的边界秩和 Schmidt 权重转移到 Zeckendorf 模型。
+
+但这一步目前不能直接从 `CoherentHistorySchmidt` 得出。现有定理的词空间是由有限多重集占据约束定义的；它没有证明“禁止相邻 $$11$$”与某个固定多重集 sector 的系数矩阵同构，也没有给出受限边界的闭式 Schmidt 谱。因此目前只能保留如下条件性桥：
+
+$$
+\\text{若给定 Zeckendorf 振幅能因子化为边界扇区，}
+\\quad
+\\text{则其精确切口记忆下界等于该边界矩阵的秩。}
+$$
+
+这正是下一步可形式化的具体目标：构造一个带相邻约束的系数矩阵，证明其切口因子化，再比较其秩与 Fibonacci 合法构型数 $$F_{L+2}$$。不能把一般 occupation 的 Schmidt 权重直接冒充 Zeckendorf 量子模型的实验谱。
+
+本节复用 `coefficient_factorization`、`coefficient_rank`、`schmidt_coefficient_sq`、`schmidt_coefficient_sq_binomial` 和 `normalized_coefficient_factorization`。Lean 已证明的是有限占据 sector 的精确切口分解、秩和权重；Zeckendorf 相邻约束的 Schmidt 理论、近似截断的多步误差以及对应的物理编码仍保持为条件性或开放问题。
+
+## 105. 预测商：稳定对象是未来响应的最大不变商
+
+前几节分别给出了切口记忆、共享寄存器和隐藏扇区的例子。它们可以被一个更一般的有限状态构造统一：不是先猜一个“真正对象”的内部标签，而是从当前读出和更新规则反复检查哪些历史在未来仍会分开。
+
+### 105.1 有限未来关系逐步细化
+
+设状态空间为 $$Y$$，更新为 $$\tau:Y\to Y$$，当前读出为 $$q:Y\to O$$。定义长度 $$m$$ 的未来关系
+
+$$
+R_m(y,y')
+\iff
+q(\tau^k y)=q(\tau^k y')
+\quad\text{对所有 }0\le k\le m.
+$$
+
+`finite_horizon_kernel_succ_iff` 精确给出
+
+$$
+R_{m+1}(y,y')
+\iff
+R_m(y,y')
+\land
+q(\tau^{m+1}y)=q(\tau^{m+1}y').
+$$
+
+所以每增加一个未来坐标，关系只会细化，不会重新合并：
+
+$$
+m\le n\quad\Longrightarrow\quad R_n\subseteq R_m.
+$$
+
+若某一对状态在前 $$m$$ 步相同、在第 $$m+1$$ 步第一次不同，`finite_horizon_first_new_coordinate_strict` 证明
+
+$$
+R_{m+1}\subsetneq R_m.
+$$
+
+这把“隐藏历史何时重新出现”变成一个可枚举的首次分离深度，而不是一句关于无限历史的直觉。
+
+### 105.2 完整未来核与最大的前向不变关系
+
+把所有未来读出合并为完整 itinerary：
+
+$$
+\operatorname{Itin}(y)
+=
+\bigl(q(y),q(\tau y),q(\tau^2y),\ldots\bigr).
+$$
+
+完整未来核为
+
+$$
+R_\infty(y,y')
+\iff
+\operatorname{Itin}(y)=\operatorname{Itin}(y').
+$$
+
+`complete_kernel_eq_iInf_finite_horizon` 证明它是有限未来核的无穷交：
+
+$$
+R_\infty=\bigcap_{m\ge0}R_m.
+$$
+
+更强的 `predictive_completion_maximal_invariant_quotient` 把它刻画为当前读出核中的最大前向不变关系：
+
+$$
+R_\infty
+=
+\operatorname{gfp}(\mathcal R),
+$$
+
+其中 $$\mathcal R$$ 保留当前读出相同，并要求关系在 $$\tau$$ 下继续保持。于是 canonical quotient
+
+$$
+Y_{\mathrm{pred}}=Y/R_\infty
+$$
+
+携带唯一下降的读出与更新。它正是“相对于这组更新和读出，未来响应完全相同”的最粗状态空间。
+
+这里的“最粗”有明确方向：若两个状态在 $$Y_{\mathrm{pred}}$$ 中被识别，它们所有未来读出都相同；若一个摘要仍能精确预测全部未来读出，则它必须细于或等价于这个商。
+
+### 105.3 任何精确历史接口都因子化到预测商
+
+设另一个记忆摘要为 $$r:Y\to M$$，并且当前读出与更新都通过它因子化：
+
+$$
+q=\bar q\circ r,
+\qquad
+r\circ\tau=\bar\tau\circ r.
+$$
+
+`predictive_memory_minimal_quotient` 证明存在唯一映射
+
+$$
+\theta:\operatorname{range}(r)\to Y_{\mathrm{pred}}
+$$
+
+使得 canonical projection 满足
+
+$$
+\operatorname{completionProjection}
+=
+\theta\circ\operatorname{rangeFactorization}(r).
+$$
+
+因此，任何能够精确预测所有未来读出的记忆接口，都会唯一映射到 canonical predictive state。这个结论比“某个编码看起来够用”更严格：它给出所有 exact predictive memories 的共同目标，而不要求先指定哪一个内部标签才是真实对象。
+
+`prediction_completion_universality` 还说明，若当前读出和一步更新已经通过某个粗状态半共轭因子化，那么完整未来 itinerary 自动通过同一个粗状态因子化。换句话说，真正的闭合条件一旦成立，不需要为每个未来时刻重新发明一个独立记录。
+
+### 105.4 有限状态何时可以停止继续保留历史
+
+若 $$Y$$ 有限，`finite_horizon_stabilizes_at_completionDepth` 给出某个有限深度 $$H_*$$，使
+
+$$
+R_{H_*}=R_\infty.
+$$
+
+`FiniteHistoryPermanentStability` 的对应结论更局部：如果某一步的相等关系已经不再细化，即
+
+$$
+R_m=R_{m+1},
+$$
+
+则对所有 $$r\ge0$$ 都有
+
+$$
+R_{m+r}=R_m.
+$$
+
+所以“现在没有新分离”只有在这个等式对全部状态成立时才是停止证据；一条样本轨迹暂时没有分开，不能推出全局闭合。
+
+在线性有限维模型中，`FutureReadoutQuotient` 给出同一结构的商版本。对状态空间 $$V$$、线性更新 $$T$$ 和读出 $$C$$，隐藏子空间为
+
+$$
+\mathcal N_\infty
+=
+\bigcap_{k\ge0}\ker(C\circ T^k).
+$$
+
+商空间 $$V/\mathcal N_\infty$$ 携带唯一诱导动力学，并恢复所有未来读出。`MaximalUnobservableSubspace.future_kernel_is_maximal_invariant` 进一步说明 $$\mathcal N_\infty$$ 是当前不可见空间中最大的 $$T$$-不变部分；这正是“不会在未来回流到可见读出”的隐藏方向，而不是所有当前看不见方向的简单集合。
+
+### 105.5 与 Zeckendorf 和量子记忆的接口
+
+若把长度 $$L$$ 的 Zeckendorf 合法构型作为初始状态集 $$Y=\mathcal W_L$$，并把一个具体量子或经典更新协议投影成 $$\tau$$ 与 $$q$$，则历史预算应按以下顺序计算：
+
+$$
+\boxed{
+\begin{aligned}
+\text{合法构型数}&=F_{L+2},\\
+\text{未来预测商大小}&=|\mathcal W_L/R_\infty|,\\
+\text{有限停止深度}&=\min\{m:R_m=R_\infty\},\\
+\text{量子精确载体}&\text{还需满足相应切口秩、POVM 或完全正编码约束}.
+\end{aligned}
+}
+$$
+
+第一行是 Zeckendorf 的组合计数；第二、三行依赖实际更新和读出，不能由 Fibonacci 数自动给出；第四行又把预测商与量子可实现性区分开来。若记录通道留下共享相干，经典商可能过早合并状态；若所有未来读出都已在商上闭合，则继续保留更细的历史只增加成本，不增加该任务的预测力。
+
+因此，对“用多少约束保留历史才能得到稳定经典现实”的最精确回答是：先计算允许实验族的完整未来核，再取其最大前向不变商；只有在这个商还能由物理记忆、测量和动力学实现时，它才是一个可交付的经典接口。
+
+本节复用 `finite_horizon_kernel_succ_iff`、`finite_horizon_kernel_antitone`、`complete_kernel_eq_iInf_finite_horizon`、`finite_horizon_stabilizes_at_completionDepth`、`predictive_completion_maximal_invariant_quotient`、`predictive_memory_minimal_quotient`、`prediction_completion_universality` 与 `future_readout_quotient_is_coarsest_with_unique_dynamics`。Lean 已证明的是这些有限状态和有限维线性模型中的核、商与唯一因子关系；将其具体实例化到 Zeckendorf 受限量子通道、噪声环境和实验成本函数，仍是后续形式化目标。
+
+## 106. 操作族扩大后的历史预算：从单一路径到受控闭合
+
+第 105 节固定了一个更新 $$\tau$$。真实的实验协议通常还允许选择输入、脉冲或局部门；此时只检查自然时间序列会低估历史债务。`ControlledFiniteStability` 把未来关系改为对所有有限控制词同时检查。
+
+### 106.1 控制词关系
+
+令有限状态为 $$Y$$，输入字母为 $$U$$，读出为 $$q:Y\to O$$，每个输入 $$u$$ 给出更新
+
+$$
+F_u:Y\to Y.
+$$
+
+对输入词 $$w=(u_1,\ldots,u_k)$$，记
+
+$$
+F_w=F_{u_k}\circ\cdots\circ F_{u_1}.
+$$
+
+深度 $$m$$ 的受控关系定义为
+
+$$
+R_m^{\mathrm{ctrl}}(y,y')
+\iff
+q(F_w(y))=q(F_w(y'))
+\quad\text{对所有 }|w|\le m.
+$$
+
+空词包含当前读出，所以每个 $$R_m^{\mathrm{ctrl}}$$ 都细于当前读出核。完整关系为
+
+$$
+R_\infty^{\mathrm{ctrl}}(y,y')
+\iff
+q(F_w(y))=q(F_w(y'))
+\quad\text{对所有有限控制词 }w.
+$$
+
+这比单一 $$\tau$$ 的 itinerary 更强：两个历史可能沿默认路径永远相同，但只要存在一个可执行输入词把它们分开，它们就不能在受控预测商中合并。
+
+### 106.2 一步稳定即对所有控制词永久稳定
+
+`controlled_finite_stability` 证明，在 $$Y,U,O$$ 都有限、读出满射且非空的条件下，如果某个深度满足
+
+$$
+R_m^{\mathrm{ctrl}}=R_{m+1}^{\mathrm{ctrl}},
+$$
+
+那么对所有 $$r\ge0$$ 都有
+
+$$
+R_{m+r}^{\mathrm{ctrl}}=R_m^{\mathrm{ctrl}}.
+$$
+
+原因是一步稳定等价于关系对每一个输入更新都不变；之后任意控制词都只能在这个不变关系内部演化。
+
+完整受控关系还满足最大不动点刻画：
+
+$$
+R_\infty^{\mathrm{ctrl}}
+=
+\operatorname{gfp}(\mathcal R_{\mathrm{ctrl}}),
+$$
+
+其中 $$\mathcal R_{\mathrm{ctrl}}$$ 同时要求当前读出相同，并且对每个 $$u\in U$$ 将关系保持在自身中。它也是所有“细于当前读出且对每个控制更新不变的等价关系”中的最大者。
+
+因此，扩大操作族只会细化预测商：
+
+$$
+\mathfrak U_1\subseteq\mathfrak U_2
+\quad\Longrightarrow\quad
+R_\infty(\mathfrak U_2)\subseteq R_\infty(\mathfrak U_1).
+$$
+
+一个在单一动力学下看似经典的对象，可能在加入第二种脉冲或局部重排后被分裂。这正是“相对某个操作族稳定”的精确定义。
+
+### 106.3 深度预算由商类增长支付
+
+定义深度商类数
+
+$$
+C_m=|Y/R_m^{\mathrm{ctrl}}|,
+\qquad
+C_\infty=|Y/R_\infty^{\mathrm{ctrl}}|.
+$$
+
+源码证明 $$C_m$$ 单调不减，并给出最小稳定深度 $$H_{\mathrm{ctrl}}$$ 的界：
+
+$$
+\boxed{
+H_{\mathrm{ctrl}}
+\le
+C_\infty-|O|
+\le
+|Y|-|O|.
+}
+$$
+
+这里使用了读出满射，因此深度零的商类数正好是 $$|O|$$；每一个尚未稳定的深度至少增加一个商类。这个界不是量子 Hilbert 维数界，也不是时间步数的物理定律，而是有限确定性控制模型中的结构预算。
+
+若把长度 $$L$$ 的 Zeckendorf 合法集合作为有限状态集，则
+
+$$
+|Y|=|\mathcal W_L|=F_{L+2}.
+$$
+
+在一个具体受控更新族上，能够得到的只是
+
+$$
+H_{\mathrm{ctrl}}
+\le
+F_{L+2}-|O|,
+$$
+
+以及更精确的 $$C_\infty-|O|$$ 界。不能把 $$F_{L+2}$$ 直接解释成所需历史深度；如果许多合法构型对所有允许控制词都具有相同响应，预测商会远小于原始构型集。
+
+### 106.4 对经典现实的操作性结论
+
+现在“稳定”必须带有操作族标记：
+
+$$
+\boxed{
+\text{稳定对象}
+=
+\text{受控完整响应的最大不变等价类}.
+}
+$$
+
+如果只允许连续实流，103 节的隐藏扇区可以作为不被跨越的块索引；如果加入离散 jump，它们必须在受控关系中重新测试；如果加入共享量子记忆，控制词还要作用在联合寄存器上，而不能只作用在局部粗读数上。
+
+所以增加约束并不自动产生更稳定的经典现实。约束减少初始合法构型数，操作族却可能增加未来可区分的方向。真正的历史预算是二者的交点：
+
+$$
+\text{可行历史接口}
+=
+\text{合法构型空间}
+\big/\text{对全部允许控制词的响应等价}.
+$$
+
+本节复用 `controlled_finite_stability` 的最大不变关系、永久稳定和商类深度界。Lean 已证明的是有限状态、有限输入字母和满射读出下的受控闭合；将控制输入提升为连续脉冲、量子仪器序列或含噪声的完全正通道，需要另外定义相应的控制关系和误差度量。
+
+## 107. 黄金禁词相位：局部约束保留，标量端点仍会遗失顺序
+
+第 101 节只说明 Zeckendorf 位可以选择两种相位频率。`GoldenEulerGapWordConstraints` 进一步证明，这些频率并非任意二字母串：Zeckendorf 的局部结构把它们组织成一个带禁词的时间序列。
+
+### 107.1 两种频率字母
+
+对素数 $$p$$ 和层数 $$\ell$$，定义短、长两种步长
+
+$$
+S_p=\varphi\log p,
+\qquad
+L_p=\varphi^2\log p.
+$$
+
+`golden_true_selects_long_frequency` 与 `golden_false_selects_short_frequency` 证明
+
+$$
+\operatorname{goldenWord}(\ell)=\mathrm{true}
+\Longrightarrow
+\omega_{p,\ell}=L_p,
+$$
+
+$$
+\operatorname{goldenWord}(\ell)=\mathrm{false}
+\Longrightarrow
+\omega_{p,\ell}=S_p.
+$$
+
+因此 Zeckendorf 位不是被动标签，而是频率字母的选择器。
+
+### 107.2 禁词从位约束传递到相位约束
+
+项目已有的黄金词性质给出两条局部规则：
+
+$$
+S_pS_p\quad\text{不会出现},
+$$
+
+$$
+L_pL_pL_p\quad\text{不会出现}.
+$$
+
+`short_frequency_forces_next_long` 证明每个短步之后必为长步；`two_long_frequencies_force_next_short` 证明连续两个长步之后下一步必为短步。通过 `short_phase_forces_next_long` 和 `two_long_phases_force_next_short`，同样的规则传递到
+
+$$
+\Phi_{p,\ell}(t)=\exp(i t\omega_{p,\ell})
+$$
+
+构成的相位字母：
+
+$$
+S\text{-phase}\,\Longrightarrow\,L\text{-phase},
+\qquad
+LL\text{-phase}\,\Longrightarrow\,S\text{-phase}.
+$$
+
+这给出一个比“黄金比例出现了”更严格的结构：合法时间序列属于一个局部受限语言。它与第 102、106 节的历史预算直接相连，因为预测下一步至少需要知道当前的局部禁词上下文。
+
+### 107.3 局部禁词不等于标量端点可恢复
+
+尽管相位字母满足禁词，若只保留所有步的标量乘积，则
+
+$$
+\prod_{r=1}^{m}\exp(i t\omega_r)
+=
+\exp\left(i t\sum_{r=1}^{m}\omega_r\right).
+$$
+
+由交换律，所有满足相同字母计数的排列给出同一端点相位。于是存在这样的情形：两个序列都满足
+
+$$
+SS\text{ 不出现},
+\qquad
+LLL\text{ 不出现},
+$$
+
+并且包含相同数量的 $$S$$ 与 $$L$$，但其局部先后不同；它们的标量端点读出仍然相同。
+
+所以局部约束保存了“哪些序列合法”，却没有自动保存“合法序列究竟按什么顺序发生”。要让顺序进入结果，至少要加入一种非交换或有记忆的读出：
+
+$$
+\boxed{
+\text{时间分辨相位序列}
+\quad\text{或}\quad
+\text{共享记忆中的有序注入}
+\quad\text{或}\quad
+\text{非交换事件算子}.
+}
+$$
+
+第 102 节的交换曲率正是第二种机制；它把相位旋转后的注入带入共享记忆坐标，使两个排列的差异不再被标量交换律抹掉。
+
+### 107.4 与禁止相邻 $$11$$ 的 Zeckendorf 空间不要混同
+
+本节的黄金相位字母满足的是
+
+$$
+SS\text{ 禁止},
+\qquad
+LLL\text{ 禁止},
+$$
+
+而第 79、98、104 节使用的有限 Zeckendorf 构型空间满足的是二进制约束
+
+$$
+11\text{ 禁止}.
+$$
+
+两者都来自 Fibonacci 型递归，但字母表、状态含义和可实现动力学不同。不能因为它们都出现 Fibonacci 数，就把黄金频率时间序列直接识别成一个禁止相邻激发的量子 Hilbert 空间。
+
+可以建立一个条件性桥：若给定实验把 $$S/L$$ 相位字母编码为合法构型，并且联合更新保持该编码空间，那么第 105、106 节的预测商和受控稳定深度可以应用于这个有限语言。现有 Lean 结果只证明了相位字母的频率选择和禁词继承；它没有证明该相位语言存在唯一的物理寄存器编码，也没有证明其商类数等于某个 Fibonacci Hilbert 维数。
+
+本节复用 `zeckendorf_selects_layer_gap_phase`、`golden_true_selects_long_frequency`、`golden_false_selects_short_frequency`、`short_frequency_forces_next_long`、`two_long_frequencies_force_next_short`、`short_phase_forces_next_long` 和 `two_long_phases_force_next_short`。Lean 已证明的是黄金词约束到频率与相位的精确传递；标量端点的顺序不可见性来自交换乘法，顺序恢复、物理编码和量子噪声下的稳定深度仍需另建模型。
+
+## 108. 合法性记忆不等于历史记忆
+
+前面已经区分了合法构型数、预测商和量子载体维数。`GoldenZeckendorfLanguage` 给出一个最小的反例：判断一个输入是否属于 Zeckendorf 合法语言，只需要记住前一个符号是否为一；但这远远不够回答该输入代表哪个整数、产生哪种相位或怎样参与后续干涉。
+
+### 108.1 两状态自动机只负责检查局部约束
+
+源码中的状态为
+
+$$
+Q=\{\mathrm{clear},\mathrm{previousOne}\}.
+$$
+
+转移规则是
+
+$$
+\begin{aligned}
+\mathrm{clear}\xrightarrow{0}&\mathrm{clear},
+&\mathrm{clear}\xrightarrow{1}&\mathrm{previousOne},\\
+\mathrm{previousOne}\xrightarrow{0}&\mathrm{clear},
+&\mathrm{previousOne}\xrightarrow{1}&\text{非法}.
+\end{aligned}
+$$
+
+`zeckendorfMSDWord_noAdjacentOnes` 证明任意自然数的规范密集 Zeckendorf 字都满足这个语言约束；`zeckendorfMSDWord_base_success` 则证明这些字都能在该部分自动机中成功执行。
+
+因此，对任务
+
+$$
+\text{“当前前缀后面还能不能接一个一？”}
+$$
+
+两状态确实是一个充分的有限接口。它保存的是局部合法性所需的最小上下文，而不是完整输入的数值。
+
+### 108.2 三种不同的“记忆维数”
+
+同一个 Zeckendorf 字可以对应至少三种不同的资源量：
+
+$$
+\boxed{
+\begin{aligned}
+\text{合法性记忆}&=|Q|=2,\\
+\text{有限窗口构型载体}&=|\mathcal W_L|=F_{L+2},\\
+\text{任务预测或相干记忆}&=\text{由未来商、切口秩和物理编码决定}.
+\end{aligned}
+}
+$$
+
+第一项只回答语言接受问题；第二项列出窗口中可能出现的合法基态；第三项还要考虑允许的更新、测量、相位和恢复操作。把第一项当成第二项，或者把第二项当成第三项，都会低估历史债务。
+
+例如，两个前缀都处于 $$\mathrm{clear}$$ 状态时，它们都允许下一位为一；但它们已经累积的 Fibonacci 权重可能不同，之后的数值读数、素数频率或共享记忆注入也可能不同。自动机状态把这些前缀合并，只在“合法性”这个观察族下闭合。
+
+### 108.3 合法性商何时可以成为经典对象
+
+设 $$q_{\mathrm{legal}}$$ 只读出自动机状态，$$q_{\mathrm{value}}$$ 读出完整 Fibonacci 数值，$$q_{\mathrm{phase}}$$ 读出后续相位响应。一般有
+
+$$
+\ker q_{\mathrm{value}}
+\subseteq
+\ker q_{\mathrm{legal}},
+\qquad
+\ker q_{\mathrm{phase}}
+\subseteq
+\ker q_{\mathrm{legal}},
+$$
+
+因为数值和相位任务会区分更多前缀。只有当允许的后续实验族确实只查询合法性，并且更新不把被合并的前缀重新分开时，二状态商才满足第 105、106 节的预测闭合条件。
+
+若加入算术读数、黄金 Euler 相位或量子干涉，必须重新计算完整未来核：
+
+$$
+R_\infty^{\mathrm{legal}}
+\supseteq
+R_\infty^{\mathrm{value}},
+\qquad
+R_\infty^{\mathrm{legal}}
+\supseteq
+R_\infty^{\mathrm{phase}}.
+$$
+
+商关系越小，所需历史接口越细。于是“约束减少了状态”只对指定观察任务成立；换一个任务，原先被约掉的历史可能重新成为可见差异。
+
+### 108.4 对量子实现的边界
+
+两状态自动机可以作为一个经典控制器，决定某个量子门是否允许施加；它本身不构成把所有合法字编码为两个正交量子态的物理实现。若要求保留合法构型的相干叠加，至少还要给出
+
+$$
+\mathcal H_{Z,L}
+=
+\operatorname{span}\{|w\rangle:w\in\mathcal W_L\}
+$$
+
+的编码、在该空间上保持合法性的联合演化，以及测量和恢复的完全正映射。自动机状态可以附加在寄存器上，但不能替代第 98、104 节中由切口秩决定的相干 bond。
+
+所以一个更准确的分工是：
+
+$$
+\text{自动机}
+\longrightarrow
+\text{约束可执行性},
+\qquad
+\text{预测商}
+\longrightarrow
+\text{未来响应闭合},
+\qquad
+\text{量子寄存器}
+\longrightarrow
+\text{相干历史与可恢复关联}.
+$$
+
+本节复用 `ZeckendorfBaseState`、`zeckendorfBaseStep`、`zeckendorfMSDWord_noAdjacentOnes` 和 `zeckendorfMSDWord_base_success`。Lean 已证明的是规范 Zeckendorf 字的局部合法性和两状态部分自动机的成功执行；它没有证明两状态自动机足以承载数值、相位或任意量子预测任务。
+
+## 109. 禁止相邻 `11` 的均匀态：Fibonacci 标签与 bond 维数分离
+
+现在可以对第 104 节留下的受限 Schmidt 问题做一个完全有限的计算模型。令
+
+$$
+\mathcal W_L
+=
+\{w\in\{0,1\}^L:w_jw_{j+1}=0\},
+\qquad
+D_L=|\mathcal W_L|=F_{L+2},
+$$
+
+并取均匀纯态
+
+$$
+|\Psi_L\rangle
+=
+\frac1{\sqrt{D_L}}
+\sum_{w\in\mathcal W_L}|w\rangle.
+$$
+
+这一步是一个明确指定的有限量子模型；它不是声称仓库已有的 occupation sector 定理已经覆盖了相邻约束。
+
+### 109.1 切口只看到两种边界状态
+
+把字串切成长度 $$t$$ 与 $$s$$ 的前后两段，其中 $$t+s=L$$ 且 $$t,s\ge1$$。定义
+
+$$
+a_0=\#\{u\in\mathcal W_t:u\text{ 以 }0\text{ 结尾}\},
+\qquad
+a_1=\#\{u\in\mathcal W_t:u\text{ 以 }1\text{ 结尾}\},
+$$
+
+以及
+
+$$
+b_0=\#\{v\in\mathcal W_s:v\text{ 以 }0\text{ 开头}\},
+\qquad
+b_1=\#\{v\in\mathcal W_s:v\text{ 以 }1\text{ 开头}\}.
+$$
+
+每个前缀和后缀的内部约束已经在 $$\mathcal W_t$$、$$\mathcal W_s$$ 中满足；跨切口唯一新增的条件是
+
+$$
+u\text{ 以 }1\text{ 结尾}
+\quad\text{且}\quad
+v\text{ 以 }1\text{ 开头}
+\quad\Longrightarrow\quad
+uv\text{ 非法}.
+$$
+
+因此，把所有相同边界类型的前缀、后缀分别归一化后，完整系数矩阵等价于
+
+$$
+M_{t,s}
+=
+\frac1{\sqrt{D_L}}
+\begin{pmatrix}
+\sqrt{a_0b_0}&\sqrt{a_0b_1}\\
+\sqrt{a_1b_0}&0
+\end{pmatrix}.
+$$
+
+这不是把所有合法字串粗暴合并成一个标签；它是把矩阵中真正相同的行、列向量正交化后得到的精确边界表示。
+
+### 109.2 精确 Schmidt 秩恒为二
+
+只要 $$t,s\ge1$$，四个边界计数都为正，且
+
+$$
+\det M_{t,s}
+=
+-\frac{\sqrt{a_0a_1b_0b_1}}{D_L}
+\ne0.
+$$
+
+所以
+
+$$
+\boxed{
+\operatorname{SchmidtRank}(|\Psi_L\rangle;t|s)=2
+\qquad(1\le t,s<L).
+}
+$$
+
+这给出一个很强的容量分离：合法构型总数随长度按
+
+$$
+D_L=F_{L+2}\sim\frac{\varphi^{L+2}}{\sqrt5}
+$$
+
+增长，但均匀态跨任意内部切口只需一个两维 bond。Fibonacci 数量描述的是全局标签空间大小；局部相干历史只需记录切口的两个边界状态。
+
+### 109.3 两个 Schmidt 权重的闭式表达
+
+由于 $M_{t,s}$ 的 Frobenius 范数为一，其两个 Schmidt 权重的平方是 $M_{t,s}M_{t,s}^{\ast}$ 的两个特征值。令
+
+$$
+\Delta_{t,s}
+=
+\frac{a_0a_1b_0b_1}{D_L^2}.
+$$
+
+则
+
+$$
+\boxed{
+\lambda_\pm^2
+=
+\frac{1\pm\sqrt{1-4\Delta_{t,s}}}{2}.
+}
+$$
+
+例如，中心切口的直接计算给出：
+
+$$
+\begin{array}{c|c|c|c}
+L&D_L&\text{切口}&(\lambda_+^2,\lambda_-^2)\\
+\hline
+2&3&1|1&(0.872677996,\ 0.127322004)\\
+3&5&1|2&(0.912310563,\ 0.087689437)\\
+4&8&2|2&(0.933012702,\ 0.066987298)\\
+5&13&2|3&(0.923076923,\ 0.076923077)\\
+6&21&3|3&(0.910325903,\ 0.089674097)\\
+8&55&4|4&(0.919070203,\ 0.080929797)\\
+10&144&5|5&(0.915739710,\ 0.084260290)
+\end{array}
+$$
+
+数值表只用于展示这个明确矩阵模型的谱；它不是对真实实验参数的测量，也不是当前 Lean 中的认证数值定理。
+
+### 109.4 这对历史预算意味着什么
+
+若任务是精确制备均匀合法态并允许任意切口上的相干恢复，则两维 bond 已经足够承载这个特定态族的全部跨切口相关；不需要为每个 $$F_{L+2}$$ 个合法字串分配一个独立的切口记忆槽。
+
+若任务改为区分每个合法字串、读取完整 Fibonacci 数值，或允许能访问字串内部位置的控制操作，则预测商会变细，所需接口可能重新随 $$L$$ 增长。于是必须区分
+
+$$
+\text{均匀态的相干 bond}
+\quad\ne\quad
+\text{所有构型的可区分记录容量}.
+$$
+
+这也解释了第 108 节的两状态自动机为何不矛盾：自动机和两维 bond 都只是在特定任务中保留边界信息；它们都没有声称能完成所有数值和量子任务。
+
+### 109.5 形式化边界
+
+本节的矩阵 $M_{t,s}$、秩为二和谱公式是从有限集合的直接计数与 $2\times2$ 线性代数得到的组合推导，目前没有冒充为仓库已有 Lean 声明。下一步若要把它纳入唯一真源，需要在 D5 中定义相邻约束词空间、前后缀边界计数和对应系数矩阵，再证明其行列因子化与行列式非零。
+
+一旦完成这一步，才能把
+
+$$
+F_{L+2}\quad\text{与}\quad 2
+$$
+
+的分离从一个可复算模型升级为形式化定理；在此之前，它只承担研究报告中的明确、可检验桥接。
+
+## 110. 同一 Zeckendorf 语言的任务依赖状态复杂度
+
+第 108 节的两状态自动机只检查“是否出现相邻两个一”。仓库还给出一个任务复杂度完全不同的对照：对同一类规范 Zeckendorf 输入，若任务是计算黄金比例的稀疏 radix-4 输出，则状态下界可以大得多。
+
+### 110.1 合法性任务只需两状态
+
+`ZeckendorfBaseState` 只有
+
+$$
+\{\mathrm{clear},\mathrm{previousOne}\},
+$$
+
+因此验证局部合法性只需保存一个比特级上下文：前一位是否为一。`zeckendorfMSDWord_base_success` 证明每个规范 Zeckendorf 输入都能在这个部分自动机中成功运行。
+
+这个自动机并不输出输入代表的整数，也不计算黄金比例的 radix-4 数字。它的闭合任务只有语言成员关系。
+
+### 110.2 算术输出任务需要保存更多可区分前缀
+
+`GoldenBase4AutomataOracle` 定义了另一项任务：输入是
+
+$$
+\operatorname{zeckendorfMSDWord}(4^i),
+$$
+
+输出是
+
+$$
+\left\lfloor 4^{i+1}\varphi\right\rfloor
+-4\left\lfloor4^i\varphi\right\rfloor,
+$$
+
+的 radix-4 数字。此时前缀不仅要保持合法性，还要保留足以决定未来输出的算术信息。
+
+源码中的 `phi_base4_twenty_two_state_minimality` 给出条件性最小性结论：若存在一个 22 状态全局模型，并且对 21 状态模型的指定有限前缀反驳已经由 LRAT 证书提供，则
+
+$$
+\operatorname{IsMinimalStateCount}(\operatorname{base4Problem},22).
+$$
+
+对应的 M16 定理直接排除至多 21 状态的模型，但它的使用条件仍是显式的有限反驳证书。这里不能把“22”脱离这些前提写成无条件的现实物理常数。
+
+### 110.3 这与量子历史预算是同一类区别
+
+两种任务的状态数对照为
+
+$$
+\begin{array}{c|c|c}
+\text{任务}&\text{必须保留的关系}&\text{现有状态规模}\\
+\hline
+\text{检查 Zeckendorf 合法性}&\text{最近一位的局部约束}&2\\
+\text{计算稀疏黄金 radix-4 输出}&\text{未来算术输出等价类}&\text{条件性至少 }22\\
+\text{均匀禁止相邻态的局部相干}&\text{切口边界}&2\\
+\text{完整量子预测}&\text{未来 effect/仪器词闭包}&\text{由商空间与载体决定}
+\end{array}
+$$
+
+因此“约束只产生两个状态”和“这个系统只需要两个状态”是不同命题。前者只关于一个局部语言；后者必须对指定的所有后续操作和输出任务成立。
+
+### 110.4 对稳定经典现实的修正
+
+如果观察者只问一个局部约束问题，二状态摘要可以是稳定经典对象。若观察者随后要求数值解码、黄金相位预测、不同控制词下的输出，二状态摘要通常不再满足第 105、106 节的预测闭合条件。对应的最小对象应改为
+
+$$
+\text{当前前缀}/\text{未来任务响应等价},
+$$
+
+而不是
+
+$$
+\text{当前前缀}/\text{局部合法性等价}.
+$$
+
+量子模型中完全相同：一个两维边界 bond 可以精确承载第 109 节的均匀相干态，但不能因此承载所有合法构型的任意数值、相位和恢复协议。任务一旦扩大，预测商会细化，必须重新计算历史预算。
+
+本节复用 `zeckendorfMSDWord_base_success`、`m16_phi_base4_exclude_at_most_twenty_one` 和 `phi_base4_twenty_two_state_minimality`。Lean 已证明的是两状态合法性执行以及带上界模型和 LRAT 反驳前提的状态最小性接口；它没有把 22 状态结论无条件推广到所有 Zeckendorf 任务，也没有把自动机状态数等同于量子 Hilbert 维数。
+
+## 111. 预测商的条件熵下界：标签、bond 与信息成本
+
+前几节已经区分了三种容易混淆的数量：合法构型的总数、一个特定量子态跨切口所需的 Schmidt bond，以及为未来预测而必须保留的状态数。仓库中的 `PredictiveMemoryEntropyLowerBound.lean` 再增加一个可以直接比较的量：**在当前读出已经给定以后，记忆还必须携带多少条件熵。**
+
+### 111.1 精确预测记忆的定义
+
+设有限状态集合为
+
+$$
+X
+$$
+
+当前读出为
+
+$$
+q:X\to O,
+$$
+
+一步更新为
+
+$$
+F:X\to X,
+$$
+
+候选记忆接口为
+
+$$
+r:X\to M.
+$$
+
+源码中的 `IsExactPredictiveMemory q F r` 要求存在两个因子化：当前读出可以由记忆恢复，且更新后的记忆仍只依赖旧记忆。用普通数学语言写成，就是存在
+
+$$
+\bar q:M\to O,
+\qquad
+\bar F:M\to M
+$$
+
+使得
+
+$$
+q=\bar q\circ r,
+\qquad
+r\circ F=\bar F\circ r.
+$$
+
+第一条保证当前观测不会被记忆丢掉；第二条保证记忆接口对下一步操作闭合。它把前面讨论的预测闭合落实为记忆接口条件：
+
+$$
+r\circ F=\bar F\circ r.
+$$
+
+这里还显式保留当前读出因子化条件。
+
+### 111.2 canonical predictive quotient 是所有 exact memory 的共同下界
+
+由更新和当前读出共同决定的 canonical predictive projection 记作
+
+$$
+\pi_{F,q}:X\to Q_{F,q}.
+$$
+
+它把两个状态归并，当且仅当它们在当前读出下相同，并且在所有后续迭代中都保持相同的可预测响应。`MinimalPredictiveCompletionQuotient.lean` 以最大 forward congruence 的商实现了这一构造：它保持当前读出，承载更新，并且其投影能够因子化通过任意满足相同闭合条件的商。
+
+因此，对于任意 `IsExactPredictiveMemory q F r`，canonical projection 在每个记忆纤维上都是常值的。于是它在实现的记忆像
+
+$$
+r(X)\subseteq M
+$$
+
+上因子化为
+
+$$
+g:r(X)\to Q_{F,q},
+\qquad
+\pi_{F,q}=g\circ r.
+$$
+
+若另加非空状态假设，或只讨论非零质量分支，可以选择一个延拓到整个记忆类型的函数；零状态情形不应无条件声称存在这样的全域函数。这句话的方向很重要：canonical predictive state 是候选记忆中必然包含的预测信息，而不是任意标签都能替代它。若两个历史在
+
+$$
+\pi_{F,q}
+$$
+
+中不同，任何 exact memory 都必须把它们放在可区分的记忆纤维中；否则某个后续读出会把它们分开。
+
+### 111.3 条件熵下界
+
+给定一个非负质量函数
+
+$$
+\mu:X\to\mathbb R,
+\qquad
+0\le\mu(x),
+$$
+
+定义当前读出与记忆状态的联合质量
+
+$$
+J_{q,s}(o,z)
+=
+\sum_{x:(q(x),s(x))=(o,z)}\mu(x).
+$$
+
+那么仓库定理 `predictive_memory_entropy_lower_bound` 精确证明：
+
+$$
+\boxed{
+H\bigl(\pi_{F,q}\mid q\bigr)
+\le
+H\bigl(r\mid q\bigr).
+}
+$$
+
+这里的熵是由上述联合质量计算的条件 Shannon 熵；定理允许质量函数只是非负而未预先归一化。总质量为零时两边都退化为零；总质量为正时，证明把该质量函数归一化，应用条件熵的数据处理不等式，再乘回总质量。因而这不是把“概率”偷偷扩展成任意带符号的线性权重。
+
+定理中的数学关系可以压缩成：
+
+$$
+\pi_{F,q}=g\circ r
+\quad\Longrightarrow\quad
+H(\pi_{F,q}\mid q)\le H(r\mid q).
+$$
+
+右侧记忆可能包含额外的、对预测无用的历史；左侧只保留在未来实验中不可省略的部分。于是 canonical quotient 不只是商类最粗，还在这个有限质量模型中给出条件熵意义下的最低记忆成本。
+
+### 111.4 与 Fibonacci 构型数和 Schmidt bond 的三重分离
+
+对禁止相邻两个一的长度
+
+$$
+L
+$$
+
+合法语言，构型总数是
+
+$$
+|\mathcal W_L|=F_{L+2}.
+$$
+
+第 109 节的均匀态在任意非平凡切口上只有二维有效边界矩阵，所以其 Schmidt rank 为
+
+$$
+\operatorname{SchmidtRank}=2.
+$$
+
+而第 111 节的预测商条件熵是另一种量：它取决于选定的当前读出、更新、允许的未来操作族，以及质量函数。即使把质量函数归一化为概率，使指数熵具有无量纲解释，也一般不存在等式
+
+$$
+F_{L+2}
+=
+2
+=
+\exp H(\pi_{F,q}\mid q).
+$$
+
+这三个量分别回答不同问题：
+
+$$
+\begin{array}{c|c}
+\text{量}&\text{回答的问题}\\
+\hline
+F_{L+2}&\text{有多少个合法构型}\\
+2&\text{这个特定均匀态跨切口需要多少相干边界维度}\\
+H(\pi_{F,q}\mid q)&\text{当前读出已知后，为预测未来还需保留多少平均信息}
+\end{array}
+$$
+
+例如，若当前读出已经把所有合法字串区分开，则
+
+$$
+H(\pi_{F,q}\mid q)=0,
+$$
+
+即使合法构型数仍为
+
+$$
+F_{L+2}
+$$
+
+因为当前读出已经携带了全部预测商信息。反过来，若当前质量所支持的历史都落在同一个当前读出纤维中，而更新把它们送到当前读出可以区分的后续状态，则预测商可以在该支持上分成
+
+$$
+k
+$$
+
+个等质量的未来响应类。质量归一化为概率后，条件熵可以达到
+
+$$
+H(\pi_{F,q}\mid q)=\log k.
+$$
+
+这时任何 exact memory 的条件熵都至少为
+
+$$
+\log k.
+$$
+
+这里的
+
+$$
+k
+$$
+
+与 Fibonacci 构型总数没有必然相等关系。
+
+### 111.5 非负质量不是装饰性条件
+
+同一 Lean 文件中的 `nonnegative_mass_is_necessary` 给出带符号质量的反例：在两点状态上取质量
+
+$$
+2
+$$
+
+与
+
+$$
+-1,
+$$
+
+identity memory 仍然是 exact predictive memory，但条件熵下界会失败。原因不是 canonical quotient 失去共轭性，而是 Shannon 熵的数据处理不等式需要非负、可归一化的质量。
+
+因此，以下三句话必须分开：
+
+$$
+\text{线性振幅可以是复数，}
+$$
+
+$$
+\text{形式上的 signed weight 可以用于代数恒等式，}
+$$
+
+$$
+\text{条件 Shannon 熵的输入必须是非负质量。}
+$$
+
+量子振幅的相位不能直接当作熵的概率权重。若要把第 111 节用于量子模型，必须先指定正的 Born 概率、密度矩阵对角分布，或其它明确的正测度。
+
+### 111.6 对“需要保留多少历史”的精确回答
+
+结合前面的 Zeckendorf 约束、Schmidt 分解和预测闭合，当前问题可以写成四步：
+
+$$
+\text{合法构型空间}
+\longrightarrow
+\text{选定读出 }q
+\longrightarrow
+\text{计算未来响应商 }\pi_{F,q}
+\longrightarrow
+\text{比较 }H(\pi_{F,q}\mid q)\text{ 与候选记忆成本}.
+$$
+
+若候选接口
+
+$$
+r
+$$
+
+达到 exact predictive memory 条件，并且其条件熵等于 canonical 下界，则在这个质量与任务下，它没有产生额外的条件熵成本；这不单独排除零质量纤维上的冗余标签。若严格大于下界，说明在这个质量和任务下存在额外的平均记忆成本；若小于下界，则它不可能仍然精确预测全部指定未来读出。
+
+这给“稳定经典现实”一个可计算的有限版本：不是要求记忆保存全部历史，也不是只保存当前整数标签，而是保存足以使
+
+$$
+\pi_{F,q}=g\circ r
+$$
+
+成立的那部分关系，并在给定误差预算下使剩余回流可以忽略。Zeckendorf 的
+
+$$
+F_{L+2}
+$$
+
+只规定合法构型的组合规模；Schmidt bond 只规定某个态族的跨切口相干规模；条件熵下界才开始回答当前观察已经给定以后，未来预测还必须保留多少历史信息。
+
+### 111.7 形式化边界与下一步
+
+本节直接复用仓库已有的 `minimal_predictive_completion_quotient`、`predictive_memory_entropy_lower_bound` 与 `nonnegative_mass_is_necessary`。Lean 已证明的是有限类型、确定性更新、非负有限质量和精确记忆接口下的条件熵下界，以及带符号质量会破坏该不等式。它没有证明任意无限链、任意量子通道或任意实验噪声下都存在同一个有限熵预算。
+
+要把它接到前面的 Zeckendorf 量子模型，还需额外指定并分别验证：
+
+$$
+\text{合法字串状态 }X,
+\qquad
+\text{实际更新 }F\text{ 或量子通道的有效状态更新},
+$$
+
+$$
+\text{当前读出 }q,
+\qquad
+\text{非负的 Born 质量（总质量可为零） }\mu,
+$$
+
+以及未来操作族是否比单一步更新更丰富。若未来允许的控制词不止迭代更新，就必须把它们加入预测商的定义；不能把单一步闭合误报成对所有仪器和所有历史协议的闭合。上面的熵例子也只是在指定质量支持和后续读出结构下的条件性组合，不是对全局常数读出的断言。
+
+所以，当前最稳固的研究命题是：
+
+$$
+\boxed{
+\text{在固定读出、更新和非负有限质量之后，}
+\text{canonical predictive quotient 给出 exact memory 的条件熵下界。}
+}
+$$
+
+它把“保留多少历史才能得到稳定现实”从一个总量问题，改写成了一个可逐任务计算的问题：先确定未来响应等价，再测量任何候选记忆相对于当前读出的剩余信息成本。
+
+
+## 112. 保留模数的乘积容量：算术记录何时足以恢复历史
+
+第 111 节给出了预测任务下的条件熵下界。另一个更离散的问题是：如果记录接口只保留若干个模数余数，什么时候这些记录足以把一个有限状态集合完全恢复出来？仓库中的 RetainedResidueRecoveryCriterion.lean 给出一个精确的双向判据。
+
+### 112.1 联合余数记录
+
+设有限索引集合为
+
+$$
+\iota,
+$$
+
+每个索引携带一个正模数
+
+$$
+m:\iota\to\mathbb N,
+\qquad
+0<m(i),
+$$
+
+并假设这些模数两两互素：
+
+$$
+\operatorname{Pairwise}\bigl(\operatorname{Nat.Coprime}\;\mathrm{on}\;m\bigr).
+$$
+
+对状态区间
+
+$$
+\operatorname{Fin}(K)=\{0,1,\ldots,K-1\},
+$$
+
+保留的记录是联合余数读出
+
+$$
+R(x)
+=
+\bigl(x\bmod m(i)\bigr)_{i\in\iota}.
+$$
+
+在 Lean 中，这个读出由 jointReadout 组织，余数坐标以
+
+$$
+\mathbb Z/m(i)\mathbb Z
+$$
+
+表示。它不是把原始历史直接写回，而是把历史压缩到一组可组合的局部记录中。
+
+### 112.2 精确恢复的充要条件
+
+retained_residue_recovery_iff_product_capacity 证明：
+
+$$
+\boxed{
+R\text{ 在 }\operatorname{Fin}(K)\text{ 上单射}
+\quad\Longleftrightarrow\quad
+K\le\prod_{i\in\iota}m(i).
+}
+$$
+
+正向部分只是有限单射导致的基数不超过目标基数。反向部分使用有限模数的乘积同构：两两互素使联合余数同构于乘积模数，若
+
+$$
+0\le x,y<K\le\prod_i m(i)
+$$
+
+且所有保留余数相同，那么
+
+$$
+x\equiv y\pmod{\prod_i m(i)}.
+$$
+
+由于 x 和 y 都落在一个完整模周期内，只能有
+
+$$
+x=y.
+$$
+
+这里的“容量”是乘积，而不是模数个数。增加一个与已有模数互素的新记录通道，会把可无歧义恢复的状态范围按该模数倍增；但若新通道与已有通道不互素，不能直接使用同一个乘积公式。
+
+### 112.3 与 Zeckendorf 合法构型的连接
+
+长度参数为 L 的禁止相邻两个一语言有
+
+$$
+|\mathcal W_L|=F_{L+2}
+$$
+
+个合法构型。若先给这些构型一个双射标签
+
+$$
+e:\mathcal W_L\to\operatorname{Fin}(K),
+\qquad
+K=F_{L+2},
+$$
+
+再用保留模数记录标签，那么由第 112 节的判据，完整恢复所有合法构型的充分且必要条件是
+
+$$
+F_{L+2}
+\le
+\prod_{i\in\iota}m(i).
+$$
+
+这只是一个条件性组合桥：它要求先固定一个有限编码
+
+$$
+e
+$$
+
+以及实际使用的余数记录。Lean 定理本身证明的是任意有限区间
+
+$$
+\operatorname{Fin}(K)
+$$
+
+上的恢复，不自动构造 Zeckendorf 语言到区间的双射，也不说明物理系统真的读取这些模数。
+
+在最小例子中，
+
+$$
+\mathcal W_3=\{000,001,010,100,101\},
+\qquad
+|\mathcal W_3|=5.
+$$
+
+保留模数
+
+$$
+2,\quad3
+$$
+
+时乘积为
+
+$$
+6,
+$$
+
+因此任何先编码为
+
+$$
+\operatorname{Fin}(K),
+\qquad
+K\le6,
+$$
+
+的有限状态都可以由这两个余数联合恢复。若只保留模数
+
+$$
+2,
+$$
+
+容量只有
+
+$$
+2,
+$$
+
+最多只能无歧义表示两个状态；五个合法构型不能全部由单个二模余数区分。
+
+### 112.4 这不是 Hilbert 维数，也不是预测熵
+
+乘积容量回答的是一个严格的可逆编码问题：
+
+$$
+\text{给定记录，能否唯一恢复有限标签？}
+$$
+
+它不等同于以下数量：
+
+$$
+F_{L+2},
+\qquad
+\operatorname{SchmidtRank},
+\qquad
+H(\pi_{F,q}\mid q).
+$$
+
+前者统计合法构型；Schmidt rank 描述特定量子态跨切口的线性相关维度；条件熵下界描述给定当前读出后未来预测所需的平均信息。模数乘积则描述一套离散记录接口的最坏情形无歧义容量。
+
+例如，若当前任务只需判断一个局部约束是否合法，二状态自动机可能已经闭合；若任务要求恢复所有
+
+$$
+F_{L+2}
+$$
+
+个合法构型，就必须检查记录容量是否达到该数值。若任务只要求预测后续动力学，完整恢复甚至可能过度，因为不同构型可能属于同一个未来响应类。于是：
+
+$$
+\text{完整历史恢复容量}
+\quad\ge\quad
+\text{任务预测所需容量}
+$$
+
+一般只是任务依赖的比较关系，不是普适的数值等式。
+
+### 112.5 与素数指数档案的边界
+
+项目中的
+
+$$
+K(n)(p,j)=s\bigl(v_p(n)\bigr)_j
+$$
+
+把每个素数轴上的指数写成 Zeckendorf 行。第 112 节的余数读出可以作为另一种有限记录协议，例如对选定的状态标签保留若干互素模数；但它没有把素数指数轴自动变成余数轴，也没有证明某个具体的
+
+$$
+K(n)
+$$
+
+在余数记录下可逆。
+
+要建立这样的桥，至少还需指定：
+
+$$
+\text{原始档案空间},
+\qquad
+\text{有限截断范围},
+\qquad
+\text{余数记录作用在哪个数值或标签上}.
+$$
+
+只有在这些数据固定后，才能把
+
+$$
+K\le\prod_i m(i)
+$$
+
+解释为该档案截断的恢复条件。否则把“素数轴很多”直接等同于“历史记录容量很大”，会把坐标数量误当成可逆信息量。
+
+### 112.6 对稳定经典现实的补充判据
+
+第 111 节说，稳定对象应当保留未来预测所需的 canonical quotient。第 112 节补充了一个更强、也更昂贵的选择：如果要求对象保留全部有限标签，而不是只保留预测等价类，那么必须提供一个对该标签集单射的记录接口。
+
+因此可以区分两种预算：
+
+$$
+\text{预测预算}
+=
+\text{使未来响应可闭合的最小记忆},
+$$
+
+$$
+\text{恢复预算}
+=
+\text{使目标历史标签可逆的最小记录容量}.
+$$
+
+对余数协议，恢复预算由
+
+$$
+\prod_i m(i)
+$$
+
+控制；对预测协议，预算由
+
+$$
+H(\pi_{F,q}\mid q)
+$$
+
+及其误差版本控制。恢复预算通常更高，因为它拒绝把未来行为相同的历史合并。
+
+这使“用多少约束才能得到稳定经典现实”有了两层可检验答案：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{若只要求稳定预测：计算 canonical predictive quotient；}\\
+&\text{若要求完整历史可恢复：检查记录容量是否覆盖目标标签集。}
+\end{aligned}
+}
+$$
+
+两者都不自动给出物理 Hamiltonian 或量子测量定律；它们分别刻画关系结构的预测闭合和离散记录的可逆性。
+
+### 112.7 形式化边界
+
+Lean 已证明的是正的两两互素模数、有限索引族和有限状态区间上的精确单射充要条件。它没有证明 Zeckendorf 合法语言的某个具体物理实现会采用这些模数，也没有把乘积容量转译成 Hilbert 空间维数、实验信道容量或量子纠错阈值。
+
+因此第 112 节当前最强的可复用结论是：
+
+$$
+\boxed{
+\text{在两两互素的保留余数协议中，}
+\operatorname{Fin}(K)\text{ 可被精确恢复}
+\iff
+K\le\prod_i m(i).
+}
+$$
+
+把它应用于 Fibonacci 合法构型、素数指数档案或量子记录，都必须另外给出编码、读出和物理实现的桥接假设。
+
+
+## 113. 粗粒化不能凭空增加经典互信息
+
+第 112 节讨论的是保留记录是否仍然可逆。第 113 节处理另一种更弱的要求：即使不要求恢复全部历史，确定性的粗粒化也不应凭空制造原始记录中没有的经典相关。仓库中的 CoarseGrainingCannotAddInformation.lean 对有限、归一化的联合律给出了这个方向的不等式。
+
+### 113.1 从微观联合律到粗记录
+
+设微观状态为有限集合
+
+$$
+X,
+$$
+
+两次相邻记录的联合质量为
+
+$$
+p:X\times X\to\mathbb R,
+$$
+
+并满足
+
+$$
+p(z)\ge0,
+\qquad
+\sum_z p(z)=1.
+$$
+
+设确定性的记录压缩为
+
+$$
+c:X\to C.
+$$
+
+粗粒化后的联合律把所有具有相同粗标签的微观对相加：
+
+$$
+p_c(a,b)
+=
+\sum_{\substack{x,y\in X\\c(x)=a,\ c(y)=b}}p(x,y).
+$$
+
+在项目定义中，这个对象叫作 coarseGrainedJoint。它描述的是同一份经典联合记录经过确定性标签压缩后的统计，而不是一次新的物理相互作用。
+
+### 113.2 互信息数据处理不等式
+
+Lean 定理 coarse_graining_cannot_add_information 精确证明：
+
+$$
+\boxed{
+I_{p_c}(C_{\mathrm{past}};C_{\mathrm{future}})
+\le
+I_p(X_{\mathrm{past}};X_{\mathrm{future}}).
+}
+$$
+
+证明把右坐标的确定性映射写成一个 Markov channel，先应用一次互信息数据处理，再交换左右坐标并应用第二次。非负性与总质量为一是定理的必要输入，因为仓库中的 mutualInformation 是有限 Shannon 量。
+
+因此，若只是把历史标签重新命名、合并或忘掉部分坐标，就不会让过去与未来的经典互信息增加。粗粒化可能保留一部分相关，也可能把相关抹掉，但它不能从零生成新的经典相关。
+
+### 113.3 与“观测改变现实”的边界
+
+这条不等式不能推出“任何观测都没有物理影响”。它只描述一个特定操作：
+
+$$
+\text{同一份经典联合律}
+\longrightarrow
+\text{确定性标签映射}
+\longrightarrow
+\text{新的边缘化联合律}.
+$$
+
+如果中间步骤实际施加了量子通道、写入环境记录、重置仪器，或改变了后续 Hamiltonian，那么后续联合律已经不是原来的
+
+$$
+p
+$$
+
+经过单纯标签函数得到的
+
+$$
+p_c.
+$$
+
+此时应把相互作用本身纳入新的通道模型，再分别计算输入和输出的互信息。第 113 节只阻止把“压缩标签”误报成“凭空增加信息”，不阻止物理操作改变系统的相关结构。
+
+### 113.4 与预测商和余数容量的关系
+
+第 111 节的 canonical predictive quotient 追问：
+
+$$
+\text{为了预测未来，最少要保留哪些区别？}
+$$
+
+第 112 节的乘积容量追问：
+
+$$
+\text{为了可逆恢复目标标签，记录接口能承载多少状态？}
+$$
+
+第 113 节追问：
+
+$$
+\text{把这些标签粗粒化以后，还剩多少过去—未来相关？}
+$$
+
+三者作用不同。一个粗标签映射可能满足
+
+$$
+I(p_c)<I(p),
+$$
+
+但仍然保留完整的预测商；也可能因为把预测上必需的纤维合并而破坏后续闭合。反过来，一个足容量的余数接口可以保持标签可逆，却携带远超当前预测任务所需的冗余信息。
+
+因此不能从互信息单调性单独推出最小记忆，也不能从记录容量单独推出预测充分性。需要同时检查：
+
+$$
+\text{可逆性},
+\qquad
+\text{预测闭合},
+\qquad
+\text{相关信息损失}.
+$$
+
+### 113.5 一个零相关的边界例子
+
+若微观联合律是独立律
+
+$$
+p(x,y)=p_1(x)p_2(y),
+$$
+
+则
+
+$$
+I_p(X_{\mathrm{past}};X_{\mathrm{future}})=0.
+$$
+
+确定性粗粒化后仍有
+
+$$
+I_{p_c}(C_{\mathrm{past}};C_{\mathrm{future}})=0.
+$$
+
+这说明粗粒化不能把没有的经典相关变出来。它不表示粗粒化后的变量没有意义；它们仍可能对某个单时刻任务有用，只是不能被解释成过去对未来的额外共享信息。
+
+### 113.6 形式化边界
+
+Lean 已证明的是有限类型、非负归一化联合律和同一个确定性粗粒化映射作用于两个坐标时的互信息不增。它没有证明量子互信息在任意测量协议下的完整演化，也没有把经典互信息直接等同于第 111 节的条件熵成本或第 112 节的可逆容量。
+
+所以，第 113 节当前可复用的结论是：
+
+$$
+\boxed{
+\text{确定性经典粗粒化不能增加有限联合律的互信息；}
+}
+$$
+
+而“观测是否改变现实”仍需另外指定观测通道、环境记录和后续动力学。把标签压缩、物理测量和量子退相干写成同一个动作，会丢掉它们之间最关键的区别。
+
+
+## 114. 记录细化的创新能量：从条件熵到预测风险
+
+第 111 节的条件熵比较的是记忆接口平均携带多少离散信息。第 114 节换一个问题：对于一个具体的实值目标，加入更多记录后，最小平方预测误差到底减少了多少？仓库中的条件期望模块给出了一个正交分解。
+
+### 114.1 两层记录生成两个预测空间
+
+设底层状态空间为
+
+$$
+X,
+$$
+
+带有测度
+
+$$
+\mu,
+$$
+
+并设当前记录生成的 sigma 代数为
+
+$$
+\mathcal G_c,
+$$
+
+加入更多历史或未来记录后得到更细的 sigma 代数
+
+$$
+\mathcal G_f.
+$$
+
+它们满足
+
+$$
+\mathcal G_c\le\mathcal G_f\le\mathcal A,
+$$
+
+其中
+
+$$
+\mathcal A
+$$
+
+是环境的 ambient measurable space。给定一个实值平方可积目标
+
+$$
+Y\in L^2(\mu),
+$$
+
+定义两种条件期望预测：
+
+$$
+\widehat Y_c=\mathbb E[Y\mid\mathcal G_c],
+\qquad
+\widehat Y_f=\mathbb E[Y\mid\mathcal G_f].
+$$
+
+在 Zeckendorf 模型中，可以把
+
+$$
+\mathcal G_c
+$$
+
+理解为当前合法构型读出生成的记录，而把
+
+$$
+\mathcal G_f
+$$
+
+理解为加入若干历史位、余数记录或后续可访问接口后的记录。这里的 sigma 代数是一个抽象的可测结构；它没有自动等同于量子 Hilbert 子空间。
+
+### 114.2 Pythagoras 分解
+
+conditional_expectation_refinement_pythagoras 精确证明：
+
+$$
+\boxed{
+\|Y-\widehat Y_c\|_2^2
+=
+\|Y-\widehat Y_f\|_2^2
++
+\|\widehat Y_f-\widehat Y_c\|_2^2.
+}
+$$
+
+同时有
+
+$$
+\|Y-\widehat Y_f\|_2^2
+\le
+\|Y-\widehat Y_c\|_2^2.
+$$
+
+最后一项
+
+$$
+\Delta_{\mathrm{refine}}
+=
+\|\widehat Y_f-\widehat Y_c\|_2^2
+$$
+
+可以称作记录细化的创新能量。它不是一个新的 Lean 定义，而是上述分解中已经出现的平方范数项。它的解释是：
+
+$$
+\text{细化后新增的可预测部分}
+=
+\text{细化前后预测器之间的距离}.
+$$
+
+如果
+
+$$
+\Delta_{\mathrm{refine}}=0,
+$$
+
+则两层记录给出的 L^2 预测器相同；这说明新增记录对这个目标和这个测度没有带来平方风险上的改进。这个等价解释只针对该目标、该测度和该二次损失，不能推广成新增记录在所有任务中都无用。
+
+### 114.3 与第 111 节的条件熵成本互补
+
+第 111 节给出的是
+
+$$
+H(\pi_{F,q}\mid q)
+\le
+H(r\mid q),
+$$
+
+它回答候选记忆还携带多少平均离散信息。第 114 节给出的是
+
+$$
+\|Y-\widehat Y_f\|_2^2
+\le
+\|Y-\widehat Y_c\|_2^2,
+$$
+
+它回答加入记录后一个指定目标的预测误差减少多少。
+
+两者可能朝不同方向变化：
+
+$$
+\text{记忆条件熵增加}
+\quad\not\Rightarrow\quad
+\text{指定目标风险一定下降},
+$$
+
+因为新增记录可能只包含与该目标无关的历史；同样，
+
+$$
+\text{指定目标风险下降}
+\quad\not\Rightarrow\quad
+\text{全部未来响应都已闭合}.
+$$
+
+因此，稳定对象的记忆预算至少有两个坐标：
+
+$$
+\begin{array}{c|c}
+\text{坐标}&\text{测量内容}\\
+\hline
+\text{预测记忆熵}&\text{当前读出已知后还保留多少离散预测信息}\\
+\text{创新能量}&\text{细化记录对指定平方损失目标减少多少误差}
+\end{array}
+$$
+
+这也是为什么不能用单一的“历史长度”替代所有任务的成本描述。
+
+### 114.4 零风险的可测性判据
+
+zero_prediction_risk_iff_ae_observation_measurable 给出一个更强的边界。设
+
+$$
+\operatorname{obs}:X\to O
+$$
+
+是可测观测，且
+
+$$
+Y:X\to\mathbb R
+$$
+
+属于
+
+$$
+L^2(\mu).
+$$
+
+在概率测度条件下，定理证明：
+
+$$
+\boxed{
+\int
+\left(
+Y-
+\mathbb E[Y\mid\sigma(\operatorname{obs})]
+\right)^2
+\,d\mu
+=0
+\quad\Longleftrightarrow\quad
+Y\text{ 在 }\sigma(\operatorname{obs})\text{ 上几乎处处可测}.
+}
+$$
+
+这里的
+
+$$
+\sigma(\operatorname{obs})
+$$
+
+由观测映射的 comap 构造。左侧是零平方预测风险，右侧表示观测已经保留了足以重建该目标的全部信息，允许测度零集合上的差异。
+
+因此，如果当前 Zeckendorf 读出生成的 sigma 代数已经使目标可测，那么继续保存更多历史不会降低这个目标的平方误差。反之，只要目标还含有当前记录不可测的部分，零风险就不可能由该记录单独达到。
+
+### 114.5 一个有限离散化的解释
+
+在有限状态且均匀概率的模型中，可以把 sigma 代数看成状态划分。当前记录把状态分成若干纤维，条件期望在每个纤维上取目标平均值。加入更细记录就是把纤维进一步拆分：
+
+$$
+\text{粗纤维}
+\longrightarrow
+\text{细纤维}
+\longrightarrow
+\text{更准确的纤维内平均}.
+$$
+
+Pythagoras 分解说明，粗预测误差中有一部分正好等于“细平均”与“粗平均”的平方差。若新增历史只是在每个粗纤维内部加入与目标无关的标签，那么
+
+$$
+\widehat Y_f=\widehat Y_c,
+$$
+
+创新能量为零；只有当细化后的纤维条件均值确实偏离对应的粗纤维均值时，创新能量才为正。仅仅把目标值不同的状态拆开，并不保证这一点，因为正负偏差可能在纤维平均中抵消。
+
+这个解释与第 113 节的互信息不增并不冲突。粗粒化的互信息定理比较的是过去—未来联合相关；条件期望定理比较的是一个指定目标的平方风险。它们对不同函数和不同损失进行测量。
+
+### 114.6 与量子模型的边界
+
+第 114 节使用的是：
+
+$$
+\mathbb R\text{-值目标},
+\qquad
+L^2\text{ 范数},
+\qquad
+\text{条件期望},
+\qquad
+\text{概率测度}.
+$$
+
+它没有直接处理复振幅、密度矩阵的 von Neumann 熵、非交换观测或量子通道。要把创新能量接到前面的量子记录模型，必须额外选择一个正的经典输出或 POVM 统计量，把它作为实值目标
+
+$$
+Y
+$$
+
+再指定观测生成的 sigma 代数。未经这一步，不能把
+
+$$
+\|\widehat Y_f-\widehat Y_c\|_2^2
+$$
+
+解释成普适的量子相干衰减量。
+
+因此，当前可以安全使用的桥是：
+
+$$
+\boxed{
+\text{记录细化的预测收益}
+=
+\text{条件期望的正交创新能量};
+}
+$$
+
+而量子物理解释仍需另外证明记录通道如何产生这些经典统计和测度。
+
+### 114.7 对稳定现实的进一步约束
+
+把第 111–114 节合起来，历史保留问题可以写成一个三重约束：
+
+$$
+\begin{aligned}
+&\text{预测闭合：}&
+\pi_{F,q}&=g\circ r,\\
+&\text{信息成本：}&
+H(\pi_{F,q}\mid q)&\le H(r\mid q),\\
+&\text{目标风险：}&
+\|Y-\widehat Y_f\|_2^2&\le\|Y-\widehat Y_c\|_2^2.
+\end{aligned}
+$$
+
+若要求某个目标达到零风险，还必须满足
+
+$$
+Y
+$$
+
+在当前记录生成的 sigma 代数上几乎处处可测。若要求完整历史可恢复，还要另行满足第 112 节的乘积容量判据。于是“稳定经典现实”不是由一项单独的状态数决定，而是由任务、观测和误差准则共同决定。
+
+### 114.8 形式化边界
+
+Lean 已证明的是有限或测度论的实值
+
+$$
+L^2
+$$
+
+条件期望分解、细化不增加平方预测风险，以及概率测度下零风险与观测可测性的等价。它没有证明这些对象自动来自 Zeckendorf Hamiltonian，也没有把二次预测风险与量子互信息或退相干率等同。
+
+下一步若要继续形式化桥接，应先固定一个有限合法字串空间、一个实际读出函数和一个正的目标统计量，再把其离散划分映射到 sigma 代数或有限条件期望模型。只有这样，创新能量才会成为该具体量子记录协议的可计算量。
+
+## 115. 行动闭合：公开状态相同但所需动作不同的硬反例
+
+第 111 节把稳定对象定义为对未来预测足够的记忆商；第 114 节把记录细化带来的预测收益写成条件期望的创新能量。但“能预测一个目标”还不是“能作为一个行动状态”。如果系统下一步必须选择动作，那么当前记录还必须足以决定在允许的情境下应采取什么行动。
+
+仓库中的 `D5/S3/ConceptDynamics/Policy/MemorylessActionObstruction.lean` 给出了这个要求的最小形式化。设
+
+$$
+q:T\to S
+$$
+
+是时间或历史到公开状态的读出，设
+
+$$
+\alpha:T\to A
+$$
+
+是实际要求的动作。如果存在两个时刻 $$t,u$$ 满足
+
+$$
+q(t)=q(u),
+\qquad
+\alpha(t)\ne\alpha(u),
+$$
+
+则不存在一个只看公开状态的策略
+
+$$
+\pi:S\to A
+$$
+
+使得对所有时刻都有
+
+$$
+\pi(q(v))=\alpha(v).
+$$
+
+证明只有一行内积式的等式传递：若这样的策略存在，则
+
+$$
+\alpha(t)
+=\pi(q(t))
+=\pi(q(u))
+=\alpha(u),
+$$
+
+与动作不同矛盾。Lean 已经在任意类型 $$T,S,A$$ 上编译并证明了这个命题；它没有引入量子假设，因此是一个比具体物理模型更基础的行动闭合障碍。
+
+### 115.1 从预测闭合到控制闭合
+
+第 111 节的预测商只要求：在指定未来操作族中，当前记忆能决定未来读数。行动闭合增加了一个不同的要求：同一个公开状态必须允许同一个策略动作。可以把两者写成两个因子化条件。
+
+令 $$r$$ 是保留的记忆接口，令 $$q$$ 是当前公开读出。预测闭合要求
+
+$$
+q=\overline q\circ r,
+\qquad
+r\circ F=\overline F\circ r,
+$$
+
+其中 $$F$$ 是状态更新；控制闭合要求实际行动 $$\alpha$$ 满足
+
+$$
+\alpha=\pi\circ r.
+$$
+
+前两式说“先演化再压缩”和“先压缩再用有效更新”一致，并且当前读出可以由记忆接口恢复；后一式说“所需行动”本身能够由压缩后的状态决定。当前状态分类即使满足预测闭合，也可能不满足控制闭合，因为行动可能依赖没有进入 $$r$$ 的历史变量。
+
+因此，稳定经典对象至少要通过两道检查：
+
+$$
+\boxed{
+\text{预测闭合} + \text{控制闭合}.
+}
+$$
+
+如果研究目标只有被动预测，控制闭合可以暂不要求；如果对象要参与反馈、干预或实验设计，控制闭合就是必要条件。
+
+### 115.2 与第 111 节 canonical quotient 的关系
+
+令 $$r:T\to M$$ 是某个保留的记忆接口。若所有允许的预测和动作都只依赖 $$r$$，则存在函数 $$g_F$$ 与 $$\pi$$ 使得
+
+$$
+q(F(t))=g_F(r(t)),
+\qquad
+\alpha(t)=\pi(r(t)).
+$$
+
+第 111 节的 canonical predictive quotient 只对第一类函数取共同商；第 115 节说明，若要得到可执行对象，商必须再细化到能够因子化所有相关动作的程度。换句话说，预测等价关系
+
+$$
+ t\sim_{\mathrm{pred}}u
+$$
+
+只在所有未来读数相同的历史之间合并；控制等价关系还要求
+
+$$
+\alpha(t)=\alpha(u)
+$$
+
+对所有被合并的历史成立。若动作不同，两个历史必须继续分开，即使它们当前所有公开读数都相同。
+
+这给出“需要保留多少历史”的一个更强答案：
+
+$$
+\boxed{
+\text{所需记忆至少要区分所有会导致不同未来动作的历史。}
+}
+$$
+
+条件熵下界仍然适用，但现在的任务族扩大了。若 $$\Pi$$ 表示允许的策略动作集合，应该以同时支配预测读出与动作的最小商来定义记忆，而不能只根据一个目标变量计算成本。
+
+### 115.3 一个有限反例：同一个 Zeckendorf 粗读数（奇偶）对应不同动作
+
+取长度为三、禁止相邻两个一的合法构型
+
+$$
+000,\quad001,\quad010,\quad100,\quad101,
+$$
+
+并用权重 $$3,2,1$$ 读出 Zeckendorf 数值。这个读出把五个构型标成 $$0,1,2,3,4$$。现在假定公开接口只保留奇偶性
+
+$$
+q(w)=a(w)\bmod 2,
+$$
+
+其中 $$a(w)$$ 是上述数值；于是 $$001$$ 与 $$100$$ 都读成公开状态 $$1$$。
+
+如果控制任务规定：数值为 $$1$$ 时执行动作 $$A_1$$，数值为 $$3$$ 时执行动作 $$A_3$$，且 $$A_1\ne A_3$$，那么公开奇偶状态无法支持正确策略。两个历史具有相同的公开值，却要求不同动作。要恢复控制闭合，至少必须保留一个能区分这两个构型的额外记录，例如完整数值、最高位位置，或直接保留它们所属的预测—动作等价类。
+
+这个例子不说明奇偶记录“错误”。它只说明记录的适用范围：它可以足以回答某些二元问题，却不足以承担这个控制任务。Zeckendorf 刻度提供合法构型的组织方式；究竟要保留多少位，则由预测目标、动作集合和允许误差共同决定。
+
+### 115.4 量子边界：策略依赖记录，不等于预先填写所有测量答案
+
+在量子模型中，行动闭合必须相对于一个实际可访问的记录系统来表述。若记录通道为
+
+$$
+\mathcal C(\rho)_{ij}=R_{ij}\rho_{ij},
+$$
+
+则一个控制器可以依赖当前记录寄存器、系统的允许操作和已建立的相关，而不能自动依赖被环境保留但控制器无法访问的完整历史。
+
+这不意味着为所有不相容测量预先填写一张经典答案表。控制闭合只要求：在明确给定的实验协议和可访问记录下，存在一个实现动作的映射。更换可访问记录、测量上下文或联合操作，可能改变可实现的策略集合。`WindowCharacter` 所表达的非交换障碍仍然保留：不能把所有相容性关系压成一个保乘法的复数读数，再把该读数当成万能控制状态。
+
+一个最小的相位反例来自合法基态 $$|01\rangle,|10\rangle$$。令
+
+$$
+|B\rangle=\frac{|01\rangle+|10\rangle}{\sqrt 2},\qquad
+|D\rangle=\frac{|01\rangle-|10\rangle}{\sqrt 2}.
+$$
+
+计算基底读出对二者给出相同分布，但若允许的后续耦合在该子空间中满足
+
+$$
+H|01\rangle=g|00\rangle,\qquad H|10\rangle=g|00\rangle,\qquad
+H|00\rangle=g(|01\rangle+|10\rangle),
+$$
+
+则
+
+$$
+H|B\rangle=\sqrt 2g|00\rangle,\qquad H|D\rangle=0.
+$$
+
+因此，相同当前读数不能保证相同控制响应；把这个耦合加入任务族后，动作完备的记录必须保留相对相位所区分的历史。
+
+同样，局部读数相同也不代表联合状态相同。若控制器能够访问记录自由度并执行允许的联合操作，`CanonicalRecordAccessRecovery` 所刻画的恢复机制可能重新暴露被局部读出隐藏的区别；若记录不可访问，则该区别对当前控制器仍然是隐藏变量，并可能通过历史回流影响后续行动。
+
+### 115.5 与第 114 节预测风险的合并
+
+把目标预测误差和行动错误分别记为
+
+$$
+\mathcal R_Y(q)=\mathbb E\left[(Y-\widehat Y_q)^2\right],
+$$
+
+以及一个动作损失
+
+$$
+\mathcal R_A(q)=\mathbb E\left[\ell(\alpha,\widehat\alpha_q)\right].
+$$
+
+第 114 节的 Pythagoras 分解说明，记录细化带来的目标风险下降等于新增条件均值的平方能量。第 115 节补充一个离散的零风险边界：若同一公开状态上存在不同必需动作，则任何确定性无记忆策略的动作风险都不可能为零。即使目标 $$Y$$ 已经可以被当前读出无误预测，动作风险仍可能保持正值。
+
+因此，一个面向行动的稳定现实应同时满足
+
+$$
+\mathcal R_Y(q)\le\varepsilon_Y,
+\qquad
+\mathcal R_A(q)\le\varepsilon_A,
+$$
+
+并且在零误差的确定性情形满足
+
+$$
+\alpha=\pi\circ q.
+$$
+
+若允许随机策略，确定性障碍会转化为条件动作分布必须在同一公开状态上相同；不同历史诱导不同的最优动作分布时，仍需保留能区分它们的记录。这个推广需要额外的概率化 Lean 定理，当前仓库只冻结了确定性命题。
+
+### 115.6 对“稳定经典现实”的更新定义
+
+到这里，“稳定”不能只理解为某个记录通道的固定点是对角的，也不能只理解为某个目标的预测误差很小。更完整的有限任务定义是：给定允许的读出、演化和行动族，一个记录接口 $$q$$ 满足
+
+$$
+\begin{aligned}
+& q\circ F=g_F\circ q &&\text{对相关预测操作成立},\\
+& \alpha=\pi\circ q &&\text{对相关控制任务成立},\\
+& \mathcal R_Y(q)\le\varepsilon_Y,\\
+& \mathcal R_A(q)\le\varepsilon_A.
+\end{aligned}
+$$
+
+若量子记录还会被重复复用，则必须把记录的可访问性和历史回流一并放进允许操作族；不能只按“观测次数”估算记忆成本。若进一步展开内部结构不会改变这些预测与行动，或改变量低于给定误差界，当前接口才可以作为该尺度上的有效对象。
+
+所以第 115 节把此前的问题推进了一步：
+
+$$
+\boxed{
+\text{稳定现实不仅要能回答“接下来会看到什么”，还要能决定“接下来能做什么”。}
+}
+$$
+
+公开状态相同而所需动作不同，是一个可机器验证的反例，说明任何声称“当前读数已经构成完整对象”的理论，都必须说明它保留了哪些行动相关历史，以及这些历史在什么操作族中可以被忽略。
+
+### 115.7 形式化边界
+
+Lean 已证明的是任意类型上的确定性记忆无关策略障碍：重复公开状态若对应不同动作，则不存在只依赖公开状态的全局策略。它没有证明某个具体 Zeckendorf 读出在物理实验中必须承担哪一种控制任务，也没有把确定性策略自动推广为随机、量子反馈或有记忆环境中的最优控制。
+
+当前可复用的桥是：
+
+$$
+\boxed{
+\text{预测闭合控制未来读数，行动闭合控制未来干预；两者必须按同一任务族分别检验。}
+}
+$$
+
+下一步若继续形式化，应固定一个有限合法构型空间、一个可访问记录映射和一个有限动作集合，再证明该记录对指定动作族的因子化条件，最后把动作风险与第 114 节的预测风险放在同一个有限概率模型中比较。
+
+## 116. 干预闭包的最小修复：把可执行历史组织成响应轨迹
+
+第 115 节给出了行动闭合失败的最小障碍：相同公开状态可能要求不同动作。下一步不是无条件恢复全部历史，而是问：给定一族允许干预，怎样构造一个刚好足以保持闭合的细化接口？仓库中的 `D5/S3/ConceptDynamics/Interventions/DynamicClosureMinimality.lean` 给出了一个一般答案。
+
+设原始概念读出为
+
+$$
+ c:X\to A,
+$$
+
+允许的干预族为
+
+$$
+ I:U\to X\to X.
+$$
+
+若两个状态被当前概念归为同一类，即
+
+$$
+ c(x)=c(y),
+$$
+
+那么概念对干预族闭合，是指对每个干预 $$u$$ 都有
+
+$$
+ c(I(u,x))=c(I(u,y)).
+$$
+
+这正是“当前合并掉的历史，不会在下一次允许操作后重新显现”的形式化条件。
+
+### 116.1 动态闭包记录什么
+
+对一个有限干预词
+
+$$
+ w=[u_1,\ldots,u_k]\in U^*,
+$$
+
+令 $$I_w(x)$$ 表示从 $$x$$ 出发依次执行这些干预。动态闭包读出为
+
+$$
+ \operatorname{Dyn}_I(c)(x)(w)=c(I_w(x)).
+$$
+
+因此
+
+$$
+\operatorname{Dyn}_I(c):X\to(U^*\to A)
+$$
+
+不是只保存当前标签，而是保存“在所有有限干预词之后会看到什么”的响应轨迹。空词给出原始读出：
+
+$$
+\operatorname{Dyn}_I(c)(x)([]) = c(x).
+$$
+
+这立即说明动态闭包细化了原始概念。若两个状态在动态闭包下相同，它们在空词下当然相同；反方向一般不成立。
+
+### 116.2 它确实对每个允许干预闭合
+
+若 $$x,y$$ 的动态轨迹相同，则对任意干预 $$u$$ 和任意后续词 $$w$$，有
+
+$$
+\operatorname{Dyn}_I(c)(I(u,x))(w)
+=
+\operatorname{Dyn}_I(c)(x)(u::w)
+=
+\operatorname{Dyn}_I(c)(y)(u::w)
+=
+\operatorname{Dyn}_I(c)(I(u,y))(w).
+$$
+
+所以
+
+$$
+\boxed{
+\operatorname{Dyn}_I(c)\text{ 对 }I\text{ 的每一个干预都闭合}.
+}
+$$
+
+这里的关键不是把状态变成一个更长的静态标签，而是把干预前缀加入响应坐标。任何可能使两个状态分开的下一步，都已经成为轨迹中的一个坐标。
+
+### 116.3 最小性：所有闭合细化都必须包含它
+
+设另一个接口
+
+$$
+ d:X\to B
+$$
+
+满足两个条件：
+
+$$
+ c=\bar c\circ d,
+$$
+
+即 $$d$$ 至少保留原始概念；并且 $$d$$ 对所有干预闭合，即
+
+$$
+ d(x)=d(y)
+\Longrightarrow
+ d(I(u,x))=d(I(u,y)).
+$$
+
+那么仓库中的 `dynamic_closure_is_least` 证明：存在一个从 $$d$$ 到动态闭包的因子，使得动态闭包不会保留任何一个所有闭合细化都可以安全丢掉的坐标。按项目中的 `Refines` 方向写成：
+
+$$
+\boxed{
+ d\text{ 闭合且细化 }c
+\Longrightarrow
+ d\text{ 细化 }\operatorname{Dyn}_I(c).
+}
+$$
+
+等价地说，动态闭包是所有干预闭合细化的最小公共要求。证明沿干预词归纳：闭合性把单步等价逐步传播到任意有限词；原始概念因子化则把每一条轨迹坐标从候选接口恢复出来。
+
+这一步把第 115 节的“必须保留额外历史”变成了一个可构造的最小方案：只保留那些会在允许干预轨迹中显现的差异。
+
+### 116.4 与预测商的精确关系
+
+第 111 节的 predictive quotient 由指定未来读出族决定；第 116 节把未来族具体化为所有有限干预词。若未来任务只允许观测而不允许干预，动态闭包退化为相应的观测响应商。若加入一个新的可执行干预 $$u_*$$，任务族变为
+
+$$
+\mathfrak T' = \mathfrak T\cup\{u_*\},
+$$
+
+动态闭包会加入以 $$u_*$$ 开头的响应坐标。于是原先可以合并的两个状态，可能因为
+
+$$
+ c(I(u_*,x))\ne c(I(u_*,y))
+$$
+
+而被分开。
+
+因此，记忆需求不是只由当前读出决定，而是由三元组共同决定：
+
+$$
+\boxed{
+(\text{当前读出},\ \text{允许干预族},\ \text{预测任务族}).
+}
+$$
+
+扩大实验能力会细化等价类；缩小实验能力可能允许更粗的有效对象。这里的“相对性”具有明确的单调方向，而不是任意描述都同样有效。
+
+### 116.5 Zeckendorf 合法空间中的有限截断
+
+在长度 $$L$$、禁止相邻两个一的合法空间中，令
+
+$$
+\mathcal W_L=\{w\in\{0,1\}^L:w_jw_{j+1}=0\},
+$$
+
+并令 $$c(w)$$ 是 Zeckendorf 数值或某个局部记录。若干预是保持合法性的局部翻转族
+
+$$
+ I_u:\mathcal W_L\to\mathcal W_L,
+$$
+
+则动态闭包可以在有限干预深度 $$N$$ 截断为
+
+$$
+\operatorname{Dyn}_{I,N}(c)(w)
+=
+\bigl(c(I_v(w))\bigr)_{|v|\le N}.
+$$
+
+对于固定 $$L,N$$，这仍然是有限记录接口，可以直接枚举和比较。它回答的是有限实验范围内的闭合问题：两个合法构型若在所有长度不超过 $$N$$ 的允许干预下都有相同读出，就可以在该实验预算内合并；若某条长度至多 $$N$$ 的词把它们分开，则当前接口不闭合。
+
+但有限截断不等于无限闭包。若只证明
+
+$$
+\operatorname{Dyn}_{I,N}(c)(x)=\operatorname{Dyn}_{I,N}(c)(y),
+$$
+
+不能推出对所有更长干预词都相同。这个边界正是“有限预测范围”和“全局可恢复历史”的区别。第 112 节的完整恢复容量条件也因此不能由一个有限截断自动替代。
+
+### 116.6 量子版本的边界
+
+在量子系统中，不能直接把 $$I_u$$ 当作任意函数；它应由允许的量子通道、幺正演化或测量—反馈协议给出，并且当前读出应由一个明确的 POVM 或记录通道产生。若用 $$\mathcal C$$ 表示记录，$$\Phi_u$$ 表示干预后的通道，那么有限响应轨迹的坐标可以写成
+
+$$
+\mathcal C\circ\Phi_{u_k}\circ\cdots\circ\Phi_{u_1}(\rho).
+$$
+
+这只是把动态闭包的结构翻译到量子通道语言；它没有自动证明这些坐标彼此可同时读取，也没有把量子态压成一张预先填写所有不相容测量答案的经典表。不同轨迹坐标可能依赖不同上下文，必须保留测量机制和允许的联合操作。
+
+对于前文的 Zeckendorf 受约束 Hilbert 空间，若投影到合法子空间的投影为 $$P_Z$$，还要分别检查：
+
+$$
+[H,P_Z]=0
+$$
+
+是否保证连续演化保持合法空间，以及每个测量或反馈通道是否把合法密度矩阵送回合法状态集合。动态闭包只描述“哪些响应需要保留”，不替代物理实现条件。
+
+### 116.7 对稳定经典现实的进一步定义
+
+结合第 115 节，稳定接口不再只是满足一个静态固定点，而应满足：
+
+$$
+\begin{aligned}
+&\text{当前读出可由接口恢复},\\
+&\text{接口对允许更新和干预闭合},\\
+&\text{指定预测与动作在接口上因子化},\\
+&\text{截断或近似时给出明确误差界}.
+\end{aligned}
+$$
+
+动态闭包提供了一个极端但清楚的上界：保留全部有限响应轨迹，必然不会遗漏允许干预能暴露的差异。其最小性定理又说明，在同一任务族中，任何安全的闭合接口都必须至少保留这些响应信息。
+
+实际研究通常会在动态闭包与更便宜的近似接口之间选择。第 111 节的条件熵、第 114 节的创新能量和第 115 节的动作风险，可以用来衡量删去哪些轨迹坐标后仍满足给定精度；删去后若出现新的干预分离，则由动态闭合条件给出精确反例。
+
+因此，“保留多少历史”现在有一个可执行的答案：
+
+$$
+\boxed{
+\text{保留到允许干预族下的响应轨迹闭合；若只做有限实验，就保留到指定深度并报告截断误差。}
+}
+$$
+
+### 116.8 形式化边界
+
+Lean 已证明的是纯确定性概念动力学中的三件事：原始概念被动态闭包细化；动态闭包对每个干预闭合；任何闭合且细化原概念的候选接口都细化动态闭包。证明使用任意类型和有限列表干预词，不依赖概率、Hilbert 空间或量子公理。
+
+它没有证明无限干预族的有限表示一定存在，也没有证明某个具体 Zeckendorf 翻转规则对应真实物理 Hamiltonian，更没有证明量子通道的非交换响应可以无损地嵌入一个经典轨迹函数。那些桥接仍然开放，必须在固定有限构型、通道、测量和误差指标后分别验证。
+
+当前可复用的最强桥是：
+
+$$
+\boxed{
+\text{动态闭包是指定干预族下保持预测与行动闭合的最小响应细化。}
+}
+$$
+
+这使“对象”获得了一个更严格的操作性判据：它不是当前读数的名字，而是对允许实验族足够闭合的响应接口。
+
+## 117. 有限时域控制的下沉：预测闭合还必须保留价值递归
+
+第 116 节说明，若只要求响应对干预闭合，可以用动态闭包构造最小细化。但行动任务通常还有一个更强的问题：不是只问“允许什么动作”，而是问“在有限未来时域内，哪个动作最优”。这要求记录接口不仅保持状态更新，还要保持奖励和终值的结构。
+
+仓库中的 `D5/S3/ConceptDynamics/DecisionValueScale/FiniteHorizonValueFactorization.lean` 形式化了这个桥。设微观状态、宏观状态和动作分别为
+
+$$
+S_{\mathrm{micro}},\qquad S_{\mathrm{macro}},\qquad A,
+$$
+
+有一个抽象映射
+
+$$
+\alpha:S_{\mathrm{micro}}\to S_{\mathrm{macro}}.
+$$
+
+微观转移和宏观转移为
+
+$$
+T_m:A\times S_{\mathrm{micro}}\to S_{\mathrm{micro}},
+\qquad
+T_M:A\times S_{\mathrm{macro}}\to S_{\mathrm{macro}}.
+$$
+
+若对每个动作和微观状态都有
+
+$$
+\alpha(T_m(a,s))=T_M(a,\alpha(s)),
+$$
+
+则抽象与受控动力学相容。
+
+### 117.1 奖励和终值也必须因子化
+
+仅有状态转移相容还不够。有限时域最优控制还使用阶段奖励和终端价值。设
+
+$$
+r_m:S_{\mathrm{micro}}\times A\to\mathbb R,
+\qquad
+r_M:S_{\mathrm{macro}}\times A\to\mathbb R,
+$$
+
+以及终端价值
+
+$$
+V^0_m:S_{\mathrm{micro}}\to\mathbb R,
+\qquad
+V^0_M:S_{\mathrm{macro}}\to\mathbb R.
+$$
+
+需要同时满足
+
+$$
+ r_m(s,a)=r_M(\alpha(s),a),
+$$
+
+以及
+
+$$
+ V^0_m(s)=V^0_M(\alpha(s)).
+$$
+
+这三个条件分别保证：执行同一个动作后的状态一致、即时收益一致、停止时的价值一致。缺少任意一个条件，宏观读出都可能无法承担控制价值。
+
+### 117.2 Bellman 值逐时域因子化
+
+对有限动作集，定义 Bellman 值
+
+$$
+V_0(s)=V^0(s),
+$$
+
+并递归为
+
+$$
+V_{n+1}(s)
+=
+\max_{a\in A}
+\left(r(s,a)+V_n(T(a,s))\right).
+$$
+
+Lean 定理 `finite_horizon_value_factorization` 证明：在上一节的三项相容条件下，对每个有限时域 $$n$$ 都有
+
+$$
+\boxed{
+V^{\mathrm{micro}}_n(s)
+=
+V^{\mathrm{macro}}_n(\alpha(s)).
+}
+$$
+
+证明对 $$n$$ 做归纳。零时域就是终值因子化；后继时域中，每个动作的即时奖励和递归续值逐项相等，因此有限动作集合上的最大值也相等。
+
+这比“一步更新可预测”更强：它说明相同宏观状态的微观历史，在整个指定有限时域内拥有相同的最优价值。
+
+### 117.3 最优动作集合也下沉
+
+令有限时域 $$n$$ 下的最优动作集合为
+
+$$
+\operatorname{Opt}_n(s)
+=
+\left\{
+ a:\ r(s,a)+V_n(T(a,s))
+ \text{达到所有动作中的最大值}
+\right\}.
+$$
+
+仓库中的 `finite_horizon_optimal_actions_descend` 进一步证明
+
+$$
+\boxed{
+\operatorname{Opt}^{\mathrm{micro}}_n(s)
+=
+\operatorname{Opt}^{\mathrm{macro}}_n(\alpha(s)).
+}
+$$
+
+因此，抽象接口不仅能计算宏观价值，还能准确给出所有最优动作。若微观状态 $$s,t$$ 满足
+
+$$
+\alpha(s)=\alpha(t),
+$$
+
+那么在这些假设下，它们的有限时域最优动作集合完全相同。这里的“行动闭合”不再只是存在某个动作函数，而是整个有限时域 Bellman 递归在接口上闭合。
+
+### 117.4 对第 115 节障碍的精确修复条件
+
+第 115 节的障碍是：
+
+$$
+q(s)=q(t),
+\qquad
+\text{但所需动作不同}.
+$$
+
+第 117 节给出一个可验证的充分条件，保证这种分离不会发生在有限时域最优控制中：抽象 $$\alpha$$ 必须同时保持转移、奖励和终值。此时不是把动作差异强行抹去，而是证明它们在任务定义下本来就不构成差异：
+
+$$
+\alpha(s)=\alpha(t)
+\Longrightarrow
+\operatorname{Opt}_n(s)=\operatorname{Opt}_n(t).
+$$
+
+如果实际系统出现两个同一抽象类中的状态，却有不同的最优动作集合，那么至少有一项因子化假设失败。具体可能是：转移没有闭合，奖励读出了隐藏历史，或终端目标依赖被丢弃的变量。此时应增加记录，或者缩小允许任务族，不能继续声称当前抽象是控制完备的。
+
+### 117.5 Zeckendorf 约束空间中的解释
+
+取合法构型空间
+
+$$
+\mathcal W_L=\{w\in\{0,1\}^L:w_jw_{j+1}=0\},
+$$
+
+把 $$w$$ 作为微观状态，把某个 Zeckendorf 粗读出作为宏观状态。若局部更新保持合法空间，并且满足
+
+$$
+\alpha(T_m(a,w))=T_M(a,\alpha(w)),
+$$
+
+那么还必须检查阶段奖励和终端目标是否只依赖 $$\alpha(w)$$。例如，若奖励是完整 Zeckendorf 数值的函数，而宏观接口只保留最后一位或奇偶性，则通常不能直接使用值函数下沉定理；需要证明该奖励在每个宏观纤维上相同，或扩展宏观状态。
+
+反过来，若任务只奖励“是否仍为合法构型”，局部有限状态接口可能已经足够。由此可见，合法语言的最小自动机状态数、数值读出所需记忆、有限时域控制所需状态数和量子 Hilbert 空间维数仍然是不同的量。
+
+### 117.6 与量子记录模型的边界
+
+Bellman 因子化定理是有限动作、确定性转移和实值奖励的经典定理。它可以用于量子实验的经典输出层：先固定一个 POVM 或记录通道，把每次实验的输出和代价定义成实值函数，再检查这些输出是否在选定记录接口上因子化。
+
+但它没有直接证明量子通道的密度矩阵、复振幅或非交换观测满足 Bellman 递归。若动作本身是量子通道，或者状态只以概率分布给出，必须另外选择随机控制、部分可观测控制或量子控制的数学模型。不能把有限经典 $$\max$$ 自动解释成量子测量中的普适优化规则。
+
+同样，值函数相等不等于完整历史相等。两个微观状态可以在指定有限时域和奖励下具有相同价值，却在加入新的测量、不同终值或更长时域后被区分。值函数因子化是任务相对的闭合结果，不是本体论上的全局同一。
+
+### 117.7 对稳定经典现实的更新
+
+目前“稳定”的条件可以按强度分层：
+
+$$
+\begin{aligned}
+&\text{读出闭合}: && q=\bar q\circ r,\\
+&\text{状态闭合}: && r\circ T=\bar T\circ r,\\
+&\text{行动闭合}: && \operatorname{Opt}_n=\overline{\operatorname{Opt}}_n\circ r,\\
+&\text{价值闭合}: && V_n=\bar V_n\circ r.
+\end{aligned}
+$$
+
+第 116 节给出对指定干预族的最小响应细化；第 117 节说明，当任务还带有奖励和终值时，真正需要的是 Bellman 价值与最优动作的共同下沉。于是“保留多少历史”可按任务逐层增加，而不是一开始就保留全部微观状态。
+
+如果只要求一步读出，读出闭合可能足够；如果要求有限时域行动，就必须验证值函数闭合；如果新增动作、奖励或终值使因子化失败，就必须细化接口或明确任务边界。
+
+### 117.8 形式化边界
+
+Lean 已证明的是有限动作集、非空动作类型、确定性转移、实值阶段奖励和实值终端函数下的有限时域 Bellman 值因子化，以及最优动作集合的精确相等。定向构建确认 `finite_horizon_value_factorization` 使用标准公理闭包
+
+$$
+[\texttt{propext},\texttt{Classical.choice},\texttt{Quot.sound}].
+$$
+
+这些定理没有证明无限时域极限、随机策略、部分可观测控制或量子通道的最优性。它们提供的可复用桥是：
+
+$$
+\boxed{
+\text{若转移、奖励和终值都尊重同一抽象，有限时域价值和最优动作就完全下沉到该抽象。}
+}
+$$
+
+这把第 115 节的行动闭合从一步逻辑障碍推进到有限未来的控制递归，并给出了一个可以直接检验的历史保留准则。
+## 118. 响应闭合的适用条件：支持集、有限视野与动作选择
+
+**定义 118.1（原档案载体与两种数位索引）。** 沿用[《情境时空算术》定义 1–6](CONTEXTUAL_SPACETIME_ARITHMETIC.md)，完整表示为
+
+$$
+\mathbf x=(C,A_{\rm sel}),\qquad
+C=(E,\prec,t,x,\sigma,\rho,\Omega),\qquad
+A_{\rm sel}\subseteq\Omega\subseteq E.
+$$
+
+其中 $E$ 是有限事件出现集，$\prec$ 是严格偏序，整数时刻沿偏序严格增加，位置取值于 $\mathbb Z^3$，符号取值于 $\{+1,-1\}$，来源取值于有限来源树。档案、当前区域和当前选择是不同数据；本节的状态集 $X$ 可取这些完整表示的指定集合，或另行明确的状态描述集合。一个表示的档案有限不意味着全部表示组成有限集合。原数值读数为
+
+$$
+q_{\rm CSA}(\mathbf x)=\sum_{e\in A_{\rm sel}}\sigma(e).
+$$
+
+[《情境时空算术的 Zeckendorf 观察》定义 3、4、9、11](CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md)中的权重与两种索引分别为
+
+$$
+G_0=1,\quad G_1=2,\quad G_{j+2}=G_{j+1}+G_j,
+\qquad a(c)=\sum_jG_jc_j,
+$$
+
+$$
+a_p(r)=\sum_jG_jr(p,j),\qquad N(r)=\prod_p p^{a_p(r)}.
+$$
+
+单个自然数的规范行 $c=(c_0,c_1,\ldots)$ 与正整数的素数指数表 $r=(r(p,j))$ 不同；$a(c)$、$a_p(r)$、$N(r)$ 也不与 $q_{\rm CSA}$ 混同。源卷的字串按低位到高位书写。第 115.3 节的三位字串采用反向书写约定：其字串为 $c_2c_1c_0$，从左到右的权重恰为
+
+$$
+(G_2,G_1,G_0)=(3,2,1).
+$$
+
+因此该节的 $001$ 与 $100$ 分别是数值一与三；若按源卷低位到高位书写，同两行分别写为 $100$ 与 $001$。这里只交换书写方向，不交换素数标签与数位索引。概率分布是额外数据，重复来源标签本身不规定概率或独立性。
+
+**假设 118.2（部分操作的定义域与失败观察）。** 第 116、117 节使用总更新时，须固定当前读出 $c:X\to O$ 及如下操作解释。每个字母 $u\in U$ 指定一个原操作的确定部分映射
+
+$$
+I_u:D_u\subseteq X\longrightarrow X.
+$$
+
+多元原操作通过固定其他参数及孔的位置给出这样的映射；$D_u$ 保留原定义域。例如原时间复合的守卫仍为
+
+$$
+\forall e\in E_{\mathbf x}\ \forall f\in E_{\mathbf y},
+\qquad t_{\mathbf x}(e)<t_{\mathbf y}(f).
+$$
+
+应用总更新结论时，或者限制到一个非空不变域 $X_0$，使每个允许字母在全部 $X_0$ 上合法且 $I_u(X_0)\subseteq X_0$；或者使用带不交失败标签的扩张
+
+$$
+X_\bot=X\sqcup\{\bot\},\qquad
+\widehat I_u(z)=
+\begin{cases}
+I_u(z),&z\in D_u,\\
+\bot,&z\in X\setminus D_u\text{ 或 }z=\bot,
+\end{cases}
+$$
+
+$$
+\widehat c(z)=
+\begin{cases}
+\operatorname{ok}(c(z)),&z\in X,\\
+\operatorname{fail},&z=\bot,
+\end{cases}
+\qquad \operatorname{fail}\notin\operatorname{ok}(c[X]).
+$$
+
+成功后继须仍在所选 $X$ 内；失败严格传播。此扩张与[原卷定义 16 的严格观察](CONTEXTUAL_SPACETIME_ARITHMETIC.md)及[Zeckendorf 卷定义 446.1](CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md)一致。若还要优化控制，须对失败规定终止、奖励和终值，或只使用在全域合法的共同动作集；不能以固定动作集上的最大值代替未说明的状态依赖合法动作域。
+
+**命题 118.3（第 115 节开篇的等式论证）。** 设 $q:T\to S$，$b:T\to A$，且有
+
+$$
+q(t)=q(u),\qquad b(t)\ne b(u).
+$$
+
+则不存在满足下式的全局确定性策略：
+
+$$
+\pi:S\to A,\qquad \forall v\in T,\quad \pi(q(v))=b(v).
+$$
+
+第 115 节开篇“内积式的等式传递”应理解为函数对相等的保持及等式传递；该命题不要求内积、概率或量子结构。这里 $b(v)$ 是任务规定必须实现的标签，不是从多个最优标签中任意挑出的一个标签。
+
+证明。若 $\pi$ 存在，对 $q(t)=q(u)$ 应用 $\pi$，得到
+
+$$
+b(t)=\pi(q(t))=\pi(q(u))=b(u),
+$$
+
+与假设矛盾。这正是[无记忆动作障碍](../../../D5/S3/ConceptDynamics/Policy/MemorylessActionObstruction.lean)的等式论证。
+
+**定义 118.4（有限任务的期望动作风险）。** 取有限非空集合 $T,A$、函数 $q:T\to S$ 与必须实现的标签 $b:T\to A$，并令 $S=q[T]$。给定概率质量
+
+$$
+\mu:T\to[0,1],\qquad \sum_{v\in T}\mu(v)=1,
+\qquad T_+=\{v\in T:\mu(v)>0\}.
+$$
+
+随机策略是 $K:S\to\Delta(A)$，其中 $\Delta(A)$ 是 $A$ 上概率向量的集合；确定性策略 $\pi$ 对应 $K_s=\delta_{\pi(s)}$。零一损失及其风险定义为
+
+$$
+\ell_{01}(v,a)=\mathbf 1_{\{a\ne b(v)\}},
+\qquad
+\mathcal R_{01}(K)=
+\sum_{v\in T}\mu(v)\sum_{a\in A}K_{q(v)}(a)\ell_{01}(v,a).
+$$
+
+所有策略只能依赖 $q(v)$；这里的随机化不包含额外获知 $v$ 的旁信息。
+
+**命题 118.5（第 115.5 节的支持集修正）。** 在定义 118.4 下，若 $q(t)=q(u)$ 且 $b(t)\ne b(u)$，则每个确定性或随机策略满足
+
+$$
+\mathcal R_{01}(K)\ge\min\{\mu(t),\mu(u)\}.
+$$
+
+因此这对碰撞给出严格正的下界，须有 $\mu(t)>0$ 且 $\mu(u)>0$。存在零风险策略当且仅当 $b$ 在每个 $q$ 纤维与 $T_+$ 的交上恒定；存在处处正确的确定性策略当且仅当 $b$ 在每个完整 $q$ 纤维上恒定。第 115.5 节“存在不同必需动作，则任何确定性无记忆策略的动作风险都不可能为零”须以上述支持集与损失条件代替。
+
+证明。记共同记录为 $s$，$m=\min\{\mu(t),\mu(u)\}$。损失非负，且不同标签的概率之和至多一，故
+
+$$
+\begin{aligned}
+\mathcal R_{01}(K)
+&\ge\mu(t)(1-K_s(b(t)))+\mu(u)(1-K_s(b(u)))\\
+&\ge m\bigl(2-K_s(b(t))-K_s(b(u))\bigr)\ge m.
+\end{aligned}
+$$
+
+风险为零时，每个正质量点的非负项都为零，因此 $K_{q(v)}(b(v))=1$。同一纤维不能以概率一输出两个不同标签。反之，若每个正质量纤维的标签相同，令策略输出该标签；无正质量点的纤维任选 $A$ 中一个标签，风险即为零。把 $T_+$ 换成 $T$，同一逐纤维构造与命题 118.3 给出处处正确的充要条件。
+
+零质量反例为
+
+$$
+T=A=\{0,1\},\quad S=\{*\},\quad q(0)=q(1)=*,
+\quad b(v)=v,\quad \mu(0)=1,\quad\mu(1)=0.
+$$
+
+常策略 $\pi(*)=0$ 的期望风险为零，却在点一错误；全局正确策略不存在。由此，几乎处处零风险与全局可实现性不能互换。
+
+**命题 118.6（一般损失所需的分离）。** 保持定义 118.4 的有限集合与概率，改取有限实值损失 $\ell:T\times A\to[0,\infty)$，并按同一公式定义 $\mathcal R_\ell$。若 $t\ne u$、$q(t)=q(u)$，且存在 $\eta>0$ 使
+
+$$
+\forall a\in A,\qquad \ell(t,a)+\ell(u,a)\ge\eta,
+$$
+
+则所有只依赖 $q$ 的随机策略满足
+
+$$
+\mathcal R_\ell(K)\ge\eta\min\{\mu(t),\mu(u)\}.
+$$
+
+仅有不同标签而没有损失分离不蕴含此结论。
+
+证明。非负性允许删去其余状态的风险项，再将两质量分别降低到其最小值。共同动作分布的总质量为一，所以
+
+$$
+\mathcal R_\ell(K)
+\ge\min\{\mu(t),\mu(u)\}
+\sum_{a\in A}K_{q(t)}(a)\bigl(\ell(t,a)+\ell(u,a)\bigr)
+\ge\eta\min\{\mu(t),\mu(u)\}.
+$$
+
+若 $\ell$ 恒零，即使 $t,u$ 都有正质量且指定标签不同，每个策略仍有零风险。若损失可取负值，其余状态的负贡献又能抵消碰撞代价，因此非负性也不能无条件删除。
+
+**命题 118.7（第 116.3 节最小性的准确方向）。** 对总更新 $I_u:X\to X$ 及读出 $c:X\to O$，令空词作用为恒等，非空词先执行首字母，再执行尾词，并定义
+
+$$
+\operatorname{Dyn}_I(c)(x)(w)=c(I_w(x)),\qquad w\in U^*.
+$$
+
+细化关系的方向固定为
+
+$$
+\operatorname{Refines}(c,d)
+\quad\Longleftrightarrow\quad
+\exists f:D\to O,\quad c=f\circ d,
+\qquad d:X\to D.
+$$
+
+若 $d$ 保留 $c$ 且每个 $I_u$ 保持 $d$ 的纤维，则
+
+$$
+\operatorname{Refines}(\operatorname{Dyn}_I(c),d),
+\quad\text{即}\quad
+\exists g:D\to(U^*\to O),\quad \operatorname{Dyn}_I(c)=g\circ d.
+$$
+
+这保留当前 $c$ 及全部未来 $c$，不包含任何未进入读出的独立动作要求。
+
+证明。直接应用[动态闭包最小性定理](../../../D5/S3/ConceptDynamics/Interventions/DynamicClosureMinimality.lean)，其前提正是 $c=f\circ d$ 与纤维保持，结论正是所列 $g$。空词求值给出 $c(x)=\operatorname{Dyn}_I(c)(x)([])$。该结论中的全部响应坐标均为 $c\circ I_w$，没有未指定的动作读出。
+
+**命题 118.8（行动完备所需的联合读出）。** 第 115.2 节把预测商用于行动时，以及第 116.3 节末段和第 116.8 节“保持预测与行动闭合的最小响应细化”的表述，须相对于指定的必须动作读出 $b:X\to A$ 使用
+
+$$
+\widetilde c(x)=(c(x),b(x)).
+$$
+
+$\operatorname{Dyn}_I(\widetilde c)$ 是同时保留 $c,b$ 的干预闭合细化中的最小者；其空词坐标恢复当前必须动作。若仍使用 $\operatorname{Dyn}_I(c)$，则当前行动完备需要另外假设存在
+
+$$
+\beta:\operatorname{Dyn}_I(c)[X]\to A,
+\qquad b=\beta\circ\operatorname{Dyn}_I(c),
+$$
+
+其中复合使用动态闭包到其实际像的映射。
+
+证明。干预后任意词的响应等于干预前加上该首字母的词响应，故动态闭包的纤维被每次干预保持。联合读出的两投影恢复 $c,b$；任何同时保留两者的接口 $d$ 都通过配对因子保留 $\widetilde c$，再应用命题 118.7 的最小性。原读出单独不足的反例是
+
+$$
+X=A=\{0,1\},\quad O=\{*\},\quad U=\{e\},
+\quad I_e=\operatorname{id},\quad c(x)=*,\quad b(x)=x.
+$$
+
+此时 $\operatorname{Dyn}_I(c)$ 恒定，不能恢复 $b$；而 $\operatorname{Dyn}_I(\widetilde c)$ 的空词已经区分两个状态。故独立动作要求不能由原动态闭包自动获得。若有多个必须动作或其他任务读出，应将它们的乘积一起纳入初始读出，结论按同一投影与配对适用。
+
+**命题 118.9（第 116.4 节的整个操作语言与被动演化）。** 若 $u_*\notin U$ 是新增字母，旧字母的更新保持原样，则响应坐标的指标集由 $U^*$ 扩为
+
+$$
+(U')^*=(U\cup\{u_*\})^*,
+\qquad
+(U')^*\setminus U^*=\{w\in (U')^*:w\text{ 至少含一次 }u_*\}.
+$$
+
+新增字母可在词的任意位置出现，也可重复出现；不只增加以 $u_*$ 开头的词。因此完整响应等价满足
+
+$$
+\ker\operatorname{Dyn}_{I'}(c)
+\subseteq\ker\operatorname{Dyn}_I(c).
+$$
+
+若没有输入字母，或所有允许更新均为恒等，则动态闭包与当前 $c$ 有相同纤维。若“没有干预”仍包含被动演化 $F$，则须把 $F$ 明确纳入更新或任务族，才会要求保留 $c(F^n(x))$。
+
+证明。有限词属于 $(U')^*$ 而不属于 $U^*$，恰当其中出现了新字母。将扩充响应函数限制到旧词，即恢复旧响应，给出核的包含。空字母表只有空词；恒等更新的任意复合也是恒等，所以这两个情形均只比较当前 $c$。被动 $F$ 未列入时，所定义的词作用中没有 $F$，因而不能从该定义推出其未来读数相同。
+
+**命题 118.10（第 116.5 节的剩余视野与稳定条件）。** 在固定的总更新模型上定义
+
+$$
+E_N(x,y)\quad\Longleftrightarrow\quad
+\forall w\in U^*,\ |w|\le N\Longrightarrow c(I_w(x))=c(I_w(y)).
+$$
+
+有限深度接口恰保留被查询的这些响应；其正确递归为
+
+$$
+E_0(x,y)\Longleftrightarrow c(x)=c(y),
+$$
+
+$$
+E_{N+1}(x,y)
+\Longleftrightarrow
+c(x)=c(y)\ \land\ \forall u\in U,\ E_N(I_u(x),I_u(y)).
+$$
+
+所以
+
+$$
+E_{N+1}\subseteq E_N,\qquad
+E_{N+1}(x,y)\Longrightarrow E_N(I_u(x),I_u(y)),
+$$
+
+$$
+N\ge1,\ E_N(x,y)\Longrightarrow E_{N-1}(I_u(x),I_u(y)).
+$$
+
+这些式子不宣称 $E_N$ 被一步更新保持在同一深度。若整个二元关系满足 $E_N=E_{N+1}$，则该层对全部更新稳定，并永久等于全部有限词的响应关系。这里需要关系在所有状态对上的相等，不能以一个状态对在相邻两层都成立来代替。
+
+证明。将非空词唯一分成首字母与尾词，尾词长度减少一，得到递归；缩小查询词集得到包含。由全关系相等和递归，$E_N$ 的每对后继仍在 $E_N$ 中；沿词归纳，得到任意长度响应相等。这是第 106.2 节所用的永久稳定原理。在 $X,U,O$ 固定有限非空、更新为总函数且 $c:X\to O$ 满射时，直接使用第 106.3 节及[ControlledFiniteStability](../../../D5/S3/ObserverMemory/Algorithms/ControlledFiniteStability.lean)的已有结论：存在最小稳定深度 $H$，并有
+
+$$
+H\le |X/E_\infty|-|O|\le |X|-|O|,
+\qquad E_\infty=\bigcap_{n\ge0}E_n.
+$$
+
+应用该界时可把 $O$ 限制为实际像 $c[X]$，以满足满射条件；该有限性条件不能由只固定一个查询深度代替。递减视野的部分操作版本亦见[Zeckendorf 卷定理 446.2](CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md)。
+
+同层闭合与逐对稳定的反例可同时取
+
+$$
+X=\{0,1,2,3,4\},\quad U=\{e\},\quad
+I_e(i)=\min\{i+1,4\},\quad c(i)=\mathbf 1_{\{i=4\}}.
+$$
+
+状态零与一在深度一及二的响应都相同，但三次更新后的读数分别为零与一。因此 $E_1(0,1)$ 与 $E_2(0,1)$ 都成立，不蕴含完整等价；同时 $E_2(0,1)$ 成立而 $E_2(I_e(0),I_e(1))=E_2(1,2)$ 不成立。
+
+若某个记录 $q$ 合并 $x,y$，而某词 $w$ 使 $c(I_w(x))\ne c(I_w(y))$，该词证明任务 $c\circ I_w$ 不能经 $q$ 因子化。第 116.5 节“某条长度至多 $N$ 的词把它们分开，则当前接口不闭合”应按这一任务不足解释；它本身不证明深度 $N$ 接口违反同层更新不变性，后者须另检验上面的后继关系。
+
+**命题 118.11（第 117.3、117.4 节的时域及共同选择）。** 固定共同的有限非空动作集 $A$、确定性总转移 $T$、实值奖励 $r$ 与终值 $V^0$，令
+
+$$
+V_0=V^0,\qquad
+Q_n(s,a)=r(s,a)+V_n(T(a,s)),
+\qquad V_{n+1}(s)=\max_{a\in A}Q_n(s,a),
+$$
+
+$$
+\operatorname{Opt}_n(s)=\operatorname*{arg\,max}_{a\in A}Q_n(s,a).
+$$
+
+第 117.3 节的下标 $n$ 计续接的 $n$ 个阶段；再加当前动作，所优化的总阶段数是 $n+1$。若微观与宏观模型通过 $\alpha$ 同时满足第 117.1 节的转移、奖励和终值三项因子化，则对同一个 $n$ 有
+
+$$
+Q_n^{m}(s,a)=Q_n^{M}(\alpha(s),a),\qquad
+\operatorname{Opt}_n^{m}(s)=\operatorname{Opt}_n^{M}(\alpha(s)).
+$$
+
+这些集合非空。固定 $A$ 上一个全序，取每个集合的最小元素，就得到只依赖 $\alpha(s)$ 与剩余阶段数的共同确定性最优选择。它不要求不同历史任意挑出的最优标签相等。
+
+证明。由[有限时域值因子化](../../../D5/S3/ConceptDynamics/DecisionValueScale/FiniteHorizonValueFactorization.lean)恢复续值，再用奖励与转移相容，得到各动作分数相同；[最优动作下沉](../../../D5/S3/ConceptDynamics/DecisionValue/FiniteHorizonOptimalActionDescent.lean)给出集合相等。有限非空实值集合有最大值，其最大化动作集合因此非空；相同非空集合在固定全序下有同一最小元素。
+
+更一般地，对任意记录 $q$ 和同一时域的最优集合，只要求存在共同最优策略的准确条件是
+
+$$
+\forall z\in q[X],\qquad
+\bigcap_{s\in q^{-1}(z)}\operatorname{Opt}_n(s)\ne\varnothing.
+$$
+
+策略的共同输出给出交集中的元素；反向在每个交集中按固定全序取最小元素即可。故集合相等是足够条件，单纯两个选择标签不同不是障碍判据。若在共同动作、同一时域和同一任务下，确有同一抽象纤维的最优集合不同，才可据前述因子化定理断定三项相容条件不能全部成立。第 117.7 节“如果要求有限时域行动，就必须验证值函数闭合”仅适用于任务还要求恢复最优价值的情形；仅选择一个最优动作时，上述非空交集已是准确判据。例如两状态使用恒等转移、单一动作、零终值，阶段奖励分别为零与一，常记录仍支持唯一动作，但正时域 $n$ 的值分别为零与 $n$。
+
+**命题 118.12（并列最优及跨时域选择的两个反例）。** 第 117.4 节“保证这种分离不会发生”仅排除在其假设下最优集合的分离，不排除任意最优标签选择的分离；第 115.5 节末段所说“不同的最优动作分布”也不能仅凭分布不同排除共同最优策略。各时域最优集合在抽象纤维上相同，还不保证存在对所有时域都最优的、与剩余阶段数无关的平稳策略。
+
+证明。第一个例子取微观状态 $\{0,1\}$、宏观状态 $\{*\}$、常抽象、动作 $A=\{L,R\}$。两层每个动作的转移均为恒等，全部奖励与终值均为零。三项因子化全部成立，且
+
+$$
+\forall n,s,\qquad V_n(s)=0,\qquad\operatorname{Opt}_n(s)=\{L,R\}.
+$$
+
+在状态零选择 $L$、在状态一选择 $R$，两者都是最优动作；对应的两个点质量分布也都最优。固定选 $L$ 仍是共同最优策略。若另把这两个不同标签规定成必须实现的 $b(0),b(1)$，那是命题 118.3 的另一个任务，不能与只要求最优混同。
+
+第二个例子取状态 $\{s,g\}$、动作 $\{W,H\}$、恒等抽象与零终值。规定
+
+$$
+T(W,s)=s,\quad r(s,W)=1,\qquad
+T(H,s)=g,\quad r(s,H)=0,
+$$
+
+$$
+T(a,g)=g,\quad r(g,a)=2\qquad(a\in\{W,H\}).
+$$
+
+恒等抽象满足全部因子化。一步时在 $s$ 的分数为一与零，故 $\operatorname{Opt}_0(s)=\{W\}$；两步值为 $V_2(s)=2,V_2(g)=4$，三步的当前分数为三与四，故 $\operatorname{Opt}_2(s)=\{H\}$。同一平稳选择不能同时满足这两个单点要求。
+
+**命题 118.13（值相等不能反推全部控制因子）。** 第 117.6 节的值相等只给指定任务的数值结论。即使所有有限时域的值都在同一纤维上相等，也不蕴含最优动作集合、转移或奖励因子化；只给一个正时域的值相等，还不能推出终值因子化。若相等的时域包含零，则终值因子化由 $V_0=V^0$ 直接成立，但仍不推出另外两项。
+
+证明。先取两个状态 $x,y$、常记录、动作 $\{L,R\}$、恒等转移和零终值，令
+
+$$
+r(x,L)=r(y,R)=1,\qquad r(x,R)=r(y,L)=0.
+$$
+
+于是 $V_n(x)=V_n(y)=n$，而对每个 $n\ge0$，最优集合分别为 $\{L\}$ 与 $\{R\}$；奖励也不经常记录因子化。
+
+再取三个状态 $x,y,z$，$\alpha(x)=\alpha(y)=0,\alpha(z)=1$，一个动作 $a$，零奖励与零终值，令
+
+$$
+T(a,x)=x,\qquad T(a,y)=z,\qquad T(a,z)=z.
+$$
+
+全部值恒零，但同一抽象初值零有抽象后继零与一，不存在相容的宏观转移。
+
+最后取两个状态、常记录、一个动作与恒等转移，令
+
+$$
+r(x,a)=0,\quad V^0(x)=0,\qquad
+r(y,a)=-1,\quad V^0(y)=1.
+$$
+
+一步值均为零，终值却不同。三个例子分别排除所述逆推；关于零时域的限定直接来自递归初值。
+
+**命题 118.14（有限构型与密度矩阵的不同载体）。** 第 115.4、116.6、117.6 节的量子解释不由经典构型有限性自动成立。即使合法构型集 $\mathcal W_L$ 有限，若
+
+$$
+\mathcal H_Z=\operatorname{span}\{|w\rangle:w\in\mathcal W_L\},
+\qquad \dim\mathcal H_Z\ge2,
+$$
+
+其全部密度矩阵集合 $\mathcal D(\mathcal H_Z)$ 仍为无限集。对指定通道词 $\Phi_w$ 与 POVM $\{M_o\}_o$，可以定义抽象响应函数
+
+$$
+\rho\longmapsto
+\left(\operatorname{tr}(M_o\Phi_w(\rho))\right)_{w,o},
+\qquad M_o\ge0,\quad\sum_oM_o=\mathbf 1.
+$$
+
+这是每个指定实验的概率函数族。第 116.8 节关于“经典轨迹函数”的量子边界须区分此集合论函数与物理编码：前者可以如此定义，后者不由定义给出。该函数不自动给出一个物理 CPTP 编码，也不自动给出从同一次制备中同时读出这些概率精确值的经典寄存器。
+
+证明。取两个正交合法基态 $|e_0\rangle,|e_1\rangle$，则
+
+$$
+\rho_p=p|e_0\rangle\langle e_0|+(1-p)|e_1\rangle\langle e_1|,
+\qquad 0\le p\le1
+$$
+
+彼此不同，已构成连续一族密度矩阵。故有限 Hilbert 维数并非有限状态集合的基数。
+
+抽象函数与物理精确标签编码的区别甚至在此对角族上存在。若某通道 $\mathcal E$ 能把 $p=0,\tfrac12,1$ 的精确概率标签输出为三个互相正交的确定经典旗标，则既要求
+
+$$
+\mathcal E(\rho_{1/2})=|f_{1/2}\rangle\langle f_{1/2}|,
+$$
+
+又由通道的仿射性要求
+
+$$
+\mathcal E(\rho_{1/2})
+=\tfrac12|f_0\rangle\langle f_0|+\tfrac12|f_1\rangle\langle f_1|.
+$$
+
+两式的支持子空间不同，矛盾。抽象地写出各响应概率不受此限制，因为它没有宣称存在这种确定标签通道。抽样获得一个结果、在重复制备下估计概率、以及一次制备输出概率的精确标签，是不同的输出任务。
+
+**命题 118.15（第 115.4 节相位响应的物理假设与行动边界）。** 在指定的有限维正交基下，若使用该节的 Schur 形式作为记录通道，须要求同阶记录矩阵 $R$ 半正定且 $R_{ii}=1$；此时
+
+$$
+\mathcal C(\rho)_{ij}=R_{ij}\rho_{ij}
+$$
+
+确为 CPTP 映射。若使用该节的三态耦合，取 $g\in\mathbb R\setminus\{0\}$，在合法子空间 $\operatorname{span}\{|00\rangle,|01\rangle,|10\rangle\}$ 上规定
+
+$$
+H=g\bigl(|00\rangle\langle01|+|00\rangle\langle10|
++|01\rangle\langle00|+|10\rangle\langle00|\bigr).
+$$
+
+取 $\hbar=1$；若嵌入更大的空间，要求自伴扩张满足 $[H,P_Z]=0$，其他允许通道也须保持合法态域。则对该节的 $|B\rangle,|D\rangle$，时间 $\tau$ 后测量 $|00\rangle\langle00|$ 的概率分别为
+
+$$
+p_B(\tau)=\sin^2(\sqrt2g\tau),\qquad p_D(\tau)=0.
+$$
+
+当 $\sin^2(\sqrt2g\tau)>0$ 时，这是不同实验响应的见证；要进一步推出必须动作或最优动作不同，还须指定相应任务或奖励，不能只用耦合差异推出行动标签差异。
+
+证明。半正定矩阵分解给出系数 $v_{i\lambda}$ 满足
+
+$$
+R_{ij}=\sum_\lambda v_{i\lambda}\overline{v_{j\lambda}},
+\qquad \sum_\lambda|v_{i\lambda}|^2=1.
+$$
+
+对角 Kraus 算子 $K_\lambda=\operatorname{diag}(v_{i\lambda})$ 实现 $\mathcal C$，且 $\sum_\lambda K_\lambda^\dagger K_\lambda=\mathbf1$。相位耦合的 $H$ 自伴，并满足
+
+$$
+H|B\rangle=\sqrt2g|00\rangle,\quad
+H|00\rangle=\sqrt2g|B\rangle,\quad H|D\rangle=0.
+$$
+
+因此
+
+$$
+e^{-i\tau H}|B\rangle
+=\cos(\sqrt2g\tau)|B\rangle-i\sin(\sqrt2g\tau)|00\rangle,
+\qquad e^{-i\tau H}|D\rangle=|D\rangle.
+$$
+
+Born 规则给出所列概率。另一方面，若所有动作奖励和终值均为零，任何允许动作均最优，故响应不同并不强制最优标签不同。
+
+**命题 118.16（重复测量与反馈的条件性经典描述）。** 第 117.6 节“先固定一个 POVM 或记录通道”不足以直接得到确定性 Bellman 模型。设动作集 $A$ 与结果集 $O$ 有限非空，对每个动作给定量子仪器
+
+$$
+\{\mathcal J_{a,o}:o\in O\},
+\qquad \mathcal J_{a,o}\text{ 完全正且不增迹},
+\qquad \sum_o\mathcal J_{a,o}\text{ 保迹}.
+$$
+
+每个分支须保持指定合法子空间；若有可回流的环境记忆，态描述须包含它或足以预测其影响的信息。仪器给出
+
+$$
+p(o\mid\rho,a)=\operatorname{tr}\mathcal J_{a,o}(\rho),
+\qquad
+\rho'_{a,o}=\frac{\mathcal J_{a,o}(\rho)}{p(o\mid\rho,a)}
+\quad\text{仅在 }p(o\mid\rho,a)>0\text{ 时定义}.
+$$
+
+若另有一个非空有限经典状态描述集 $Z$，控制器在决策前能由实际可访问记录确定 $z$，每个动作在每个可达描述处均允许，且在同一当前描述 $z$ 下的所有可达历史，对每个动作均有相同的后继描述与结果联合分布
+
+$$
+P_a(z',o\mid z),\qquad
+\sum_{z',o}P_a(z',o\mid z)=1,
+$$
+
+并且阶段奖励和终值分别由实值函数 $r(z,a,z',o)$ 与 $V^0(z)$ 给出，则有限时域的期望价值递归为
+
+$$
+V_0(z)=V^0(z),\qquad
+V_{n+1}(z)=\max_{a\in A}
+\sum_{z',o}P_a(z',o\mid z)
+\bigl(r(z,a,z',o)+V_n(z')\bigr).
+$$
+
+此结论以所列受控 Markov 充分性为假设；当前输出字母有限、记录寄存器维数有限或给定一个 POVM，都不单独蕴含该假设。若每个 $(z,a)$ 的后继描述边缘集中在一个 $T(a,z)$，并定义
+
+$$
+\bar r(z,a)=\sum_{z',o}P_a(z',o\mid z)r(z,a,z',o),
+$$
+
+则在这一确定后继描述下，上式化为
+
+$$
+V_{n+1}(z)=\max_{a\in A}\bigl(\bar r(z,a)+V_n(T(a,z))\bigr).
+$$
+
+使用第 117 节的确定性因子化结论时，还须对这个 $T,\bar r,V^0$ 验证同一抽象的三项条件。
+
+证明。完全正与迹条件使各分支概率非负且总和为一；正概率分支的归一化输出为密度矩阵，零概率分支不要求定义后验。给定受控 Markov 充分性，先条件于当前动作，再条件于下一描述与结果，有限期望的全概率分解及剩余时域归纳给出递归。有限非空动作集保证最大值可达，随机化当前动作只形成动作价值的凸组合，不能超过其最大值。若后继描述边缘为点质量，续值项从求和中提出，即得最后一式。
+
+随机后继的直接例子是对 $|+\rangle=(|0\rangle+|1\rangle)/\sqrt2$ 作计算基底投影测量。两结果各有概率 $1/2$；记录结果的两个后继历史不同，条件态也分别为 $|0\rangle\langle0|$ 与 $|1\rangle\langle1|$。因此重复或反馈测量一般产生随机受控核。将结果平均后的通道作为密度矩阵上的确定函数，是另一个明确的状态描述；它不自动保留可按结果分支的反馈策略。经典核的风险与价值结论由所指定实验及其经典描述承担，不把该核认同为全部相干量子动力学。
+
+## 追加锚（本行以下为增补区）
+## 119. 记录模拟的缺陷与决策风险：从保留历史到可执行误差界
+
+**定义 119.1（原历史载体与有限观察的取域）。** 原情境仍取[《情境时空算术》定义 1–6](CONTEXTUAL_SPACETIME_ARITHMETIC.md)的
+
+$$
+C=(E_C,\prec,t,x,\sigma,\rho,\Omega),\qquad
+\eta=(C,A_{\rm sel}),\qquad A_{\rm sel}\subseteq\Omega\subseteq E_C,
+$$
+
+其中 $E_C$ 是有限事件出现集，$\prec$ 是严格偏序，$t:E_C\to\mathbb Z$、$x:E_C\to\mathbb Z^3$、$\sigma:E_C\to\{+1,-1\}$ 及来源树映射 $\rho$ 保留原类型，且 $e\prec f$ 蕴含 $t(e)<t(f)$。算术载体仍要求 $\sum_{e\in\Omega}\sigma(e)=0$，读数为 $q_{\rm CSA}(\eta)=\sum_{e\in A_{\rm sel}}\sigma(e)$。选择是当前区域的任意子集；若任务还使用各阶段的选择或区域快照，就将这些快照另列为历史数据。时间复合的原定义域仍为
+
+$$
+\forall e\in E_{C_1}\ \forall f\in E_{C_2},\qquad t_1(e)<t_2(f).
+$$
+
+用于下述有限观察比较的历史族，是预先指定的原合法对象或合法执行历史的有限非空族；每条执行路径分别满足其操作守卫。有限标签及其概率律是这个族的观察数据，不替换档案、来源、绝对时间、偏序、当前区域或选择。若只讨论抽象统计实验，则直接使用定义 119.2，不预设其标签已实现为原历史。
+
+**定义 119.2（有限实验、共同决策与单向缺陷）。** 设隐藏参数集 $\Theta$、目标观察集 $Y$、保留观察集 $Z$、共同动作集 $A$ 均有限非空。参数 $\theta\in\Theta$ 固定而对决策者未知。实验由实值行概率给出：
+
+$$
+F(y\mid\theta)\ge0,\quad \sum_{y\in Y}F(y\mid\theta)=1,
+\qquad
+E(z\mid\theta)\ge0,\quad \sum_{z\in Z}E(z\mid\theta)=1.
+$$
+
+记相应概率行为 $F_\theta,E_\theta$。模拟器 $S:Z\to\mathcal P(Y)$ 表示从 $Z$ 到 $Y$ 的随机核，其中 $\mathcal P(Y)$ 是 $Y$ 上的概率单纯形，即 $S(y\mid z)\ge0$ 且 $\sum_yS(y\mid z)=1$；同一个 $S$ 用于所有 $\theta$，不能读取隐藏参数。复合律与全变差约定为
+
+$$
+(SE)_\theta(y)=\sum_z E(z\mid\theta)S(y\mid z),\qquad
+\operatorname{TV}(p,q)=\frac12\sum_i|p(i)-q(i)|.
+$$
+
+定义模拟误差及单向缺陷
+
+$$
+\varepsilon(S)=\max_{\theta\in\Theta}\operatorname{TV}(F_\theta,(SE)_\theta),
+\qquad
+\delta(F\mid E)=\inf_{S:Z\to\mathcal P(Y)}\varepsilon(S),
+$$
+
+方向是从保留实验 $E$ 模拟目标实验 $F$；“目标”与“保留”本身不预设信息次序。给定先验 $\mu(\theta)\ge0$、$\sum_\theta\mu(\theta)=1$ 及损失 $0\le\ell(\theta,a)\le1$，观察集为 $O$ 的实验 $G$ 上的随机决策为 $d:O\to\mathcal P(A)$，其代价及最优 Bayes 风险为
+
+$$
+\mathcal C_{\mu,\ell}(G,d)
+=\sum_{\theta\in\Theta}\mu(\theta)
+  \sum_{o\in O}\sum_{a\in A}G(o\mid\theta)d(a\mid o)\ell(\theta,a),
+\qquad
+R_{\mu,\ell}(G)=\inf_d\mathcal C_{\mu,\ell}(G,d).
+$$
+
+比较中始终使用同一 $\mu,\ell,A$，简记风险为 $R(G)$。这里 $E,F,S,d$ 均为非负归一的概率核，不能以任意带符号矩阵替代。
+
+**命题 119.3（有限实值极值与扩展非负实数的对应）。** 在定义 119.2 下，$R(E),R(F),\delta(F\mid E)$ 都是 $[0,1]$ 中的实数，其下确界均可取到。把非负实数嵌入 $[0,\infty]$ 后，这些值分别等于同一随机核族上的扩展非负实数下确界。此对应适用于[有限实验风险与缺陷的定义及定理 `deficiency_risk_bound`](../../../D5/S3/Estimation/SequentialDecisionRisk/FiniteDeficiencyRiskTransfer.lean)所采用的下确界约定。
+
+证明。概率行的全变差在 $[0,1]$ 内，且每个代价是 $[0,1]$ 中损失值的概率加权和。非空输出集提供常值确定性核，所以各优化域非空。有限个概率单纯形的乘积是非空紧集；代价是连续函数，模拟误差是有限个连续全变差函数的最大值，亦连续。因此三种下确界均为取得的有限最小值。非负实数的嵌入保持这些值的次序及最小元，故在 $[0,\infty]$ 中取下确界得到同一个嵌入值。证毕。
+
+**定理 119.4（缺陷控制有界决策风险）。** 在定义 119.2 的全部假设下，
+
+$$
+R(E)\le R(F)+\delta(F\mid E).
+$$
+
+这是[定理 `deficiency_risk_bound`](../../../D5/S3/Estimation/SequentialDecisionRisk/FiniteDeficiencyRiskTransfer.lean)在上述有限实值约定下的风险转移结论；固定模拟器的风险比较见[定理 `bounded_loss_risk_stability_of_simulator`](../../../D5/S3/Estimation/DecisionRisk/BoundedRiskSimulatorTransport.lean)。
+
+证明。先给出两个有限概率不等式。若 $p,q$ 是同一有限集上的概率，$h_i=p(i)-q(i)$，则 $\sum_i h_i=0$，从而
+
+$$
+\sum_{h_i>0}h_i=\sum_{h_i<0}(-h_i)=\frac12\sum_i|h_i|.
+$$
+
+对 $0\le f(i)\le1$，丢掉非正项并以一控制正项，得到 $\sum_i h_i f(i)\le\operatorname{TV}(p,q)$；交换 $p,q$ 得
+
+$$
+\left|\sum_i p(i)f(i)-\sum_i q(i)f(i)\right|
+\le\operatorname{TV}(p,q).
+$$
+
+因此 $[0,1]$ 损失对应的系数是一。其次，任一共同随机核 $K$ 满足
+
+$$
+\begin{aligned}
+\operatorname{TV}(Kp,Kq)
+&=\frac12\sum_j\left|\sum_i(p(i)-q(i))K(j\mid i)\right|\\
+&\le\frac12\sum_i|p(i)-q(i)|\sum_jK(j\mid i)
+=\operatorname{TV}(p,q).
+\end{aligned}
+$$
+
+现在固定模拟器 $S$ 和基于 $F$ 的任意决策 $d_F$，在 $E$ 上执行
+
+$$
+d_E(a\mid z)=\sum_y S(y\mid z)d_F(a\mid y).
+$$
+
+各项非负，且 $\sum_a d_E(a\mid z)=\sum_yS(y\mid z)=1$，所以 $d_E$ 是合法决策。有限和交换给出 $d_EE_\theta=d_F(SE)_\theta$。对每个 $\theta$，随机后处理的全变差收缩及上述损失不等式给
+
+$$
+\begin{aligned}
+\sum_a(d_EE)_\theta(a)\ell(\theta,a)
+&\le\sum_a(d_FF)_\theta(a)\ell(\theta,a)
+   +\operatorname{TV}(d_F(SE)_\theta,d_FF_\theta)\\
+&\le\sum_a(d_FF)_\theta(a)\ell(\theta,a)+\varepsilon(S).
+\end{aligned}
+$$
+
+以非负的 $\mu(\theta)$ 加权求和，并使用 $\sum_\theta\mu(\theta)=1$，得到
+
+$$
+R(E)\le\mathcal C_{\mu,\ell}(E,d_E)
+\le\mathcal C_{\mu,\ell}(F,d_F)+\varepsilon(S).
+$$
+
+任取 $\eta>0$，分别选取代价小于 $R(F)+\eta/2$ 的决策和误差小于 $\delta(F\mid E)+\eta/2$ 的模拟器。两者的优化域独立，故 $R(E)<R(F)+\delta(F\mid E)+\eta$。对所有 $\eta>0$ 成立即得结论；此步只需下确界逼近，不依赖选择最优核。证毕。
+
+**命题 119.5（真实经典粗化的双边风险界与必要方向）。** 若另有一个与 $\theta$ 无关的随机核 $C:Y\to\mathcal P(Z)$ 满足
+
+$$
+E_\theta(z)=(CF)_\theta(z)=\sum_yF_\theta(y)C(z\mid y)
+\qquad(\theta\in\Theta),
+$$
+
+则
+
+$$
+0\le R(E)-R(F)\le\delta(F\mid E).
+$$
+
+若只给定义 119.2 的两个实验，则 $R(F)\le R(E)$ 不必成立，定理 119.4 的单向风险界仍成立。
+
+证明。任取 $E$ 上的决策 $d_E$，令 $d_F(a\mid y)=\sum_z C(z\mid y)d_E(a\mid z)$。它是随机核，且 $d_FF=d_EE$，所以两代价相等。对所有 $d_E$ 取下确界给出 $R(F)\le R(E)$，再用定理 119.4 得到双边界。
+
+为证明没有粗化关系时左界可以失败，取 $\Theta=Z=A=\{0,1\}$、$Y=\{*\}$、均匀先验和 $\ell(\theta,a)=\mathbf1_{\{a\ne\theta\}}$，令 $E_\theta=\delta_\theta$、$F_\theta=\delta_*$。观察 $E$ 后选 $a=\theta$ 给 $R(E)=0$。只观察 $*$ 的任意决策成功率均为 $\tfrac12(d(0\mid*)+d(1\mid*))=1/2$，故 $R(F)=1/2$。丢弃 $E$ 的输出能精确模拟 $F$，所以 $\delta(F\mid E)=0$；单向不等式为 $0\le1/2$，而左界失败。证毕。
+
+**定理 119.6（确定性标签压缩的精确缺陷）。** 设 $X$ 为有限非空标签集，$q:X\to B$ 满射到其实际像 $B$。取 $\Theta=Y=X$、$Z=B$，并令
+
+$$
+F_x=\delta_x,\qquad E_x=\delta_{q(x)},\qquad
+X_b=q^{-1}(b),\qquad m_b=|X_b|,\qquad m_{\max}=\max_{b\in B}m_b.
+$$
+
+则 $m_b\ge1$，且
+
+$$
+\delta(F\mid E)=1-\frac1{m_{\max}}.
+$$
+
+证明。对任意模拟器 $S:B\to\mathcal P(X)$，记 $S_b(x)=S(x\mid b)$。概率归一性给
+
+$$
+\operatorname{TV}(\delta_x,S_{q(x)})
+=\frac12\left(1-S_{q(x)}(x)+\sum_{u\ne x}S_{q(x)}(u)\right)
+=1-S_{q(x)}(x).
+$$
+
+取最大纤维 $X_{b_*}$。由于 $\sum_{x\in X_{b_*}}S_{b_*}(x)\le1$，其中至少一个 $x$ 满足 $S_{b_*}(x)\le1/m_{\max}$，所以每个模拟器的最坏参数误差至少为 $1-1/m_{\max}$。反向定义只依赖保留标签的模拟器
+
+$$
+S(x\mid b)=
+\begin{cases}
+1/m_b,&q(x)=b,\\
+0,&q(x)\ne b.
+\end{cases}
+$$
+
+每行在非空纤维上均匀且总和为一。参数 $x\in X_b$ 的误差恰为 $1-1/m_b$，其最大值为 $1-1/m_{\max}$。上下界相合，得精确公式。这个模拟器只读取 $b$，并未读取真正的 $x$。证毕。
+
+**定理 119.7（任意先验下的完整标签重建风险）。** 沿用定理 119.6，另取动作 $A=X$、损失 $\ell(x,a)=\mathbf1_{\{a\ne x\}}$ 及任意概率先验 $\mu$，允许任意标签的先验质量为零。则
+
+$$
+R(F)=0,\qquad
+R(E)=1-\sum_{b\in B}\max_{x\in X_b}\mu(x).
+$$
+
+证明。细观察直接给出 $x$，选 $a=x$ 即得零代价，非负性给 $R(F)=0$。粗观察决策 $d$ 的总成功率为
+
+$$
+\operatorname{Succ}(d)=\sum_{b\in B}\sum_{x\in X_b}\mu(x)d(x\mid b).
+$$
+
+令 $M_b=\max_{x\in X_b}\mu(x)$。每个纤维对成功率的贡献是动作概率对系数 $\mu(a)\mathbf1_{\{a\in X_b\}}$ 的凸组合，故
+
+$$
+\sum_{x\in X_b}\mu(x)d(x\mid b)
+\le M_b\sum_{x\in X_b}d(x\mid b)\le M_b.
+$$
+
+在每个非空有限纤维中选择一个达到 $M_b$ 的代表 $x_b$，并令 $d(x_b\mid b)=1$，则同时达到所有上界。失败风险等于一减成功率，得到所述公式。即使 $M_b=0$，任一代表仍达到上界，证明无需按该纤维质量做条件归一化。证毕。
+
+**命题 119.8（三位合法行的奇偶压缩）。** 取[Zeckendorf 源卷定义 3、9、11](CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md)的权重 $G_0=1,G_1=2,G_2=3$。本条显示字 $w=w_2w_1w_0$ 按高位到低位书写，是该源定义 9 中低位到高位次序 $(c_0,c_1,c_2)$ 的反转。令
+
+$$
+X=\{000,001,010,100,101\},\qquad
+V(w)=3w_2+2w_1+w_0,\qquad q(w)=V(w)\bmod2.
+$$
+
+这是单行数值观察：源中的 $s(n)$ 是整数 $n$ 自身的规范行，而 $K(n)(p,j)=s(v_p(n))_j$ 是正整数的逐素数指数表；本条的 $V$ 与 $q$ 不把这两个编码认作同一对象。对 $F_w=\delta_w$、$E_w=\delta_{q(w)}$，有
+
+$$
+\delta(F\mid E)=\frac23.
+$$
+
+在 $X$ 上取均匀先验、完整标签重建动作及零一损失，则
+
+$$
+R(F)=0,\qquad R(E)=\frac35.
+$$
+
+证明。三个位置没有相邻两个一的全部合法字恰为所列五字，其 $V$ 值依次为 $0,1,2,3,4$。因此
+
+$$
+X_0=\{000,010,101\},\qquad X_1=\{001,100\},
+\qquad m_0=3,\quad m_1=2.
+$$
+
+定理 119.6 给出 $1-1/3=2/3$。均匀先验使两个纤维的最大单点质量都为 $1/5$，定理 119.7 给出 $1-1/5-1/5=3/5$。这些公式已对全部随机决策取最优值；$3/5$ 是该先验和重建任务的平均风险，$2/3$ 是不依赖先验的最坏参数模拟缺陷。证毕。
+
+**命题 119.9（任务相对性与资源量的独立性）。** 若存在共同动作 $a_*\in A$，满足
+
+$$
+\ell(\theta,a_*)=\min_{a\in A}\ell(\theta,a)
+\qquad(\theta\in\Theta),
+$$
+
+则对定义 119.2 的任意实验 $G$，
+
+$$
+R(G)=\sum_\theta\mu(\theta)\ell(\theta,a_*).
+$$
+
+因而即使 $\delta(F\mid E)>0$，也可以有 $R(E)-R(F)=0$；完整标签重建的缺陷不强制等于某个指定预测或动作任务的风险损失。另给每个核任意正实数值的执行时间或资源费用函数，在保持 $E,F,\mu,\ell$ 不变时，定义 119.2 的缺陷与风险均不变。
+
+证明。对固定 $\theta$，任意随机动作的期望损失至少为 $\ell(\theta,a_*)$。加权求和给出风险下界；不看观察而总选 $a_*$ 达到它。取命题 119.8 的实验，并取具有恒零损失的共同动作，得到缺陷为 $2/3$ 而风险差为零的实例。最后，缺陷和风险的定义只用实验概率、先验、损失及随机核族；所附执行时间和费用不出现在这些表达式中，改变它们不改变表达式的值。因此仅凭纤维基数和这些风险公式，不能推出物理时间、存储或耗散的数值关系。证毕。
+
+**假设 119.10（固定量子制备、实际测量与记录层）。** 取有限维非零复 Hilbert 空间 $\mathcal H$ 和有限非空制备标签集 $\Theta$。每个 $\theta$ 指定密度算子 $\varrho_\theta\ge0$、$\operatorname{tr}\varrho_\theta=1$。给定实际采用的固定有限 POVM
+
+$$
+H_y\ge0,\quad\sum_{y\in Y}H_y=I_{\mathcal H},
+\qquad
+G_z\ge0,\quad\sum_{z\in Z}G_z=I_{\mathcal H},
+$$
+
+其中 $Y,Z$ 非空，且两族效应不依赖未知 $\theta$。采用 Born 律定义
+
+$$
+F_\theta(y)=\operatorname{tr}(\varrho_\theta H_y),\qquad
+E_\theta(z)=\operatorname{tr}(\varrho_\theta G_z).
+$$
+
+这里 $\theta$ 是制备标签，不预设为未知计算基底标签；允许 $\varrho_\theta$ 在合法 Zeckendorf 子空间内具有相干非对角项。若要把 $E$ 称为已形成细记录的实际经典压缩，另假设先形成 $y$，随后仅用与 $\theta$ 无关的随机核 $C(z\mid y)$ 产生 $z$。此时该压缩的效应为 $G_z=\sum_yC(z\mid y)H_y$。单独的效应等式只规定当前概率，不规定输出的量子后态或测量仪器。
+
+**命题 119.11（固定 Born 实验的风险界及联合样本的非唯一性）。** 在假设 119.10 下，$E,F$ 满足定义 119.2 的行概率条件。故对同一有限非空动作集、概率先验及 $[0,1]$ 损失，定理 119.4 适用；若另有该假设中的实际经典压缩，则命题 119.5 的双边风险界适用。给定这两个当前实验的概率行，并不唯一确定它们之间的联合样本律，更不提供不相容测量在同一次运行中的反事实样本值。
+
+证明。$\operatorname{tr}(\varrho_\theta H_y)=\operatorname{tr}(\varrho_\theta^{1/2}H_y\varrho_\theta^{1/2})\ge0$，对 $y$ 求和为 $\operatorname{tr}\varrho_\theta=1$；$G$ 同理。实际经典压缩时由全概率公式得到 $E=CF$，所以直接应用对应的风险界。上述论证不要求密度算子在某一基底对角。
+
+联合律的非唯一性已在一个制备标签、两个均匀二元边缘上出现：令 $J_1(0,0)=J_1(1,1)=1/2$、其余为零，或令四个 $J_2(y,z)=1/4$，两者边缘相同而联合律不同。这只是概率律之间两种数学耦合，不断言任一耦合是两个不相容量子测量的共同物理实现。模拟器同样只构造目标概率律，不能由此识别为另一测量在同次运行中本会产生的结果。证毕。
+
+**命题 119.12（同奇偶效应、零当前缺陷与不同的两阶段辨识风险）。** 取命题 119.8 的高位到低位合法三位集合 $X$，令
+
+$$
+\mathcal H_Z=\operatorname{span}\{|w\rangle:w\in X\},\qquad
+P_w=|w\rangle\langle w|,\qquad
+Q_b=\sum_{w\in X_b}P_w\quad(b\in\{0,1\}),
+$$
+
+其中所列基正交归一，$I$ 表示 $\mathcal H_Z$ 上的恒等算子。考虑两种理想投影测量仪器的未归一分支：粗奇偶 Lüders 仪器
+
+$$
+\mathcal L_b(\varrho)=Q_b\varrho Q_b
+$$
+
+与完整基底测量后只在经典层忘记细标签的仪器
+
+$$
+\mathcal M_b(\varrho)=\sum_{w\in X_b}P_w\varrho P_w.
+$$
+
+它们的每个分支均完全正且不增迹，全部分支之和保迹，并有相同的奇偶效应 $Q_b$，所以对每个密度算子给出相同的即时奇偶概率。令隐藏制备标签为 $\theta\in\{+,-\}$，取
+
+$$
+|\psi_+\rangle=\frac{|000\rangle+|010\rangle}{\sqrt2},\qquad
+|\psi_-\rangle=\frac{|000\rangle-|010\rangle}{\sqrt2},\qquad
+\varrho_\theta=|\psi_\theta\rangle\langle\psi_\theta|.
+$$
+
+记第一阶段粗 Lüders 奇偶记录的实验为 $E$，完整基底记录的实验为 $F$。则
+
+$$
+E_+=E_-=\delta_0,\qquad
+F_+=F_-=\tfrac12\delta_{000}+\tfrac12\delta_{010},\qquad
+\delta(F\mid E)=\delta(E\mid F)=0.
+$$
+
+这里的参数是制备标签 $\{+,-\}$，不同于命题 119.8 中待完整重建的基底标签 $X$；两个缺陷公式属于不同的实验族。令 $P_+=|\psi_+\rangle\langle\psi_+|$，在上述两种仪器之后都对残余系统实际执行第二次测量 $\{P_+,I-P_+\}$，以 $r=1$ 记 $P_+$ 结果，则
+
+$$
+\Pr_{\mathcal L}(r=1\mid+) =1,\qquad
+\Pr_{\mathcal L}(r=1\mid-) =0,\qquad
+\Pr_{\mathcal M}(r=1\mid\theta)=\frac12\quad(\theta=+,-).
+$$
+
+因此在均匀先验、动作 $\{+,-\}$ 和零一辨识损失下，以完整两阶段经典记录作决策的风险分别为
+
+$$
+R(\mathcal L\hbox{ 的两阶段记录})=0,\qquad
+R(\mathcal M\hbox{ 的两阶段记录})=\frac12.
+$$
+
+此命题是“相同即时效应不决定两步联合律”的一个合法三位实例；另一明确的二维仪器分离结论见[定理 `same_effects_different_two_step_joint_law`](../../../D5/S3/Quantum/Measurement/StaticEffectSequentialSeparation.lean)。
+
+证明。$Q_0,Q_1$ 是互相正交且和为 $I$ 的投影。$\mathcal L$ 的 Kraus 算子为 $Q_b$，$\mathcal M$ 的分支 Kraus 算子为 $\{P_w:w\in X_b\}$；分别有 $Q_b^*Q_b=Q_b$ 与 $\sum_{w\in X_b}P_w^*P_w=Q_b$。故两仪器完全正，分支不增迹，全部分支之和保迹，且
+
+$$
+\operatorname{tr}\mathcal L_b(\varrho)
+=\operatorname{tr}(\varrho Q_b)
+=\operatorname{tr}\mathcal M_b(\varrho)
+$$
+
+对全部 $\varrho$ 成立。$000,010$ 都在偶纤维中，故 $Q_0\psi_\theta=\psi_\theta$、$Q_1\psi_\theta=0$，而两个非零基底振幅的模平方均为 $1/2$，得到所述第一阶段行概率。由 $S(\cdot\mid b)=\tfrac12\delta_{000}+\tfrac12\delta_{010}$（对两个 $b$ 都取此行）可从 $E$ 精确模拟 $F$；由确定性奇偶核可从 $F$ 精确模拟 $E$。这些核与 $\theta$ 无关，故两个单向缺陷均为零。
+
+两种仪器的第一阶段实际后态则为
+
+$$
+\mathcal L_0(\varrho_\theta)=\varrho_\theta,\qquad
+\mathcal M_0(\varrho_\theta)=\tau:=\frac{P_{000}+P_{010}}2,
+\qquad
+\mathcal L_1(\varrho_\theta)=\mathcal M_1(\varrho_\theta)=0.
+$$
+
+由于偶结果概率为一，零分支以外不需要再归一。正交关系 $\langle\psi_+,\psi_-\rangle=0$ 给出 $\operatorname{tr}(P_+\varrho_+)=1$、$\operatorname{tr}(P_+\varrho_-)=0$，而
+
+$$
+\operatorname{tr}(P_+\tau)
+=\frac12\bigl(|\langle\psi_+,000\rangle|^2+|\langle\psi_+,010\rangle|^2\bigr)=\frac12.
+$$
+
+因此 $\mathcal L$ 的两阶段记录 $(b,r)$ 完全区分两种制备，按 $r=1$ 选 $+$、$r=0$ 选 $-$ 得零风险。$\mathcal M$ 的两阶段记录在两种制备下具有同一律 $J$；任意决策的均匀先验成功率为
+
+$$
+\frac12\sum_{b,r}J(b,r)\bigl(d(+\mid b,r)+d(-\mid b,r)\bigr)=\frac12,
+$$
+
+所以其风险恰为 $1/2$。即使保留完整基底的第一阶段标签 $w$，第二协议的联合概率也为 $\Pr(w,r\mid\theta)=1/4$，其中 $w\in\{000,010\}$、$r\in\{0,1\}$，仍与 $\theta$ 无关；该额外经典标签不能恢复已消去的相干项。
+
+第一阶段的 $E,F$ 只含当前经典记录，未包含测量后的量子载体与相位敏感未来，故两个当前缺陷为零与两阶段风险不同并不冲突。将第二次实际测量结果纳入观察后，两阶段行律已有上述区别，应对这些完整记录律重新计算缺陷；若还允许选择后续反馈操作，则需给定相应的路径核或量子过程及可访问载体。单步律的模拟关系并不是经典结果与量子后态联合对象的模拟关系，也不把这里的理想仪器假设推成不可逆坍缩、观察者客观性或唯一结果的结论。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 120. 量子仪器缺陷与后续决策风险
+
+第 119 节把“保留多少历史”写成有限经典实验的缺陷与风险界。本节把同一问题提升到完整量子仪器：被丢弃的部分可以包含活动记忆、参考系和尚未读取的历史寄存器，因此只比较一次测量的边缘分布是不够的。需要比较整个过程在任意输入和任意保留参考上的可区分性。
+
+### 120.1 完整过程与保留过程
+
+设参数集为有限集合 $\Theta$，先验为 $\mu$。令 $X,Y,\widetilde Y$ 为有限维算子空间；对每个 $\theta\in\Theta$，令
+
+$$
+I_\theta:X\longrightarrow Y
+$$
+
+是共同输入空间 $X$ 与共同输出空间 $Y$ 上、各参数同型的完整 $n$ 槽量子过程（固定槽接线后视为一个 CPTP 通道）。输出空间 $Y$ 包含全部仍可访问的历史寄存器与活动记忆；惰性的外部参考系统记为任意有限维 $R$，在比较时以 $I_\theta\otimes\operatorname{id}_R$ 处理。压缩后的过程为
+
+$$
+\widetilde I_\theta:X\longrightarrow \widetilde Y.
+$$
+
+压缩不是把 $Y$ 的坐标重新命名，而是实际丢弃了一部分过程输出。设 $S:\widetilde Y\to Y$ 是与 $\theta$、输入以及后续决策均无关的 CPTP 模拟器。定义过程缺陷
+
+$$
+\boxed{
+\delta_\diamond(I\mid\widetilde I)
+=
+\inf_S\;\sup_{\theta\in\Theta}
+\frac12\left\|I_\theta-S\circ\widetilde I_\theta\right\|_\diamond .
+}
+$$
+
+diamond 范数的辅助系统量化了最坏情形下保留参考的影响；因此这里的缺陷不是某个选定初态上的迹距离。允许实验者选择共同输入 $\rho_{XR}$ 和读出 $D:Y\otimes R\to A$，其中 $D$ 是量子到经典的 CPTP 映射；模拟器在参考上作用为 $S\otimes\operatorname{id}_R$。若模型固定无参考输入，则取一维 $R$ 即可。
+
+对损失函数
+
+$$
+0\le \ell(\theta,a)\le 1
+$$
+
+定义完整过程的最优 Bayes 风险
+
+$$
+R^*(I)
+=
+\inf_{R,\rho_{XR},D}
+\sum_{\theta\in\Theta}
+\mu(\theta)\,
+\mathbb E_{a\sim D((I_\theta\otimes\operatorname{id}_R)(\rho_{XR}))}
+[\ell(\theta,a)],
+$$
+
+并以同样方式定义 $R^*(\widetilde I)$。这里的后处理可以包含任意对输出记忆的量子控制，但模拟器 $S$ 必须在所有参数之间共用。
+
+### 120.2 缺陷支配后续决策风险
+
+在上述有限参数、共同输入空间、CPTP 后处理和单位区间损失的条件下，有
+
+$$
+\boxed{
+R^*(\widetilde I)
+\le
+R^*(I)+\delta_\diamond(I\mid\widetilde I).
+}
+$$
+
+证明只使用通道范数的定义和测量的收缩性。固定任意模拟器 $S$、输入 $\rho_{XR}$ 与完整过程读出 $D$，把 $D\circ(S\otimes\operatorname{id}_R)$ 作为压缩过程上的决策。若
+
+$$
+\frac12\left\|I_\theta-S\circ\widetilde I_\theta\right\|_\diamond
+\le\varepsilon
+$$
+
+对所有 $\theta$ 成立，则对该输入及任意参考系统，输出态的迹距离至多为 $\varepsilon$；再经 $D$ 后，经典总变差距离仍至多为 $\varepsilon$。单位区间损失的期望差至多为同一数值，对 $\mu$ 加权后仍至多为 $\varepsilon$。先对策略取下确界，再对 $S$ 取下确界，得到所示不等式。
+
+若反向缺陷也有定义，则同时应用两次上界，得到
+
+$$
+\boxed{
+\left|R^*(I)-R^*(\widetilde I)\right|
+\le
+\max\left\{
+\delta_\diamond(I\mid\widetilde I),
+\delta_\diamond(\widetilde I\mid I)
+\right\}.
+}
+$$
+
+该结论的量词顺序很重要：模拟器不能依赖于未知参数，且缺陷控制的是所有输入、所有参考和所有允许后处理。只比较某一次实验的输出概率，不能推出这个统一风险界。
+
+### 120.3 逐槽误差与历史保留
+
+若完整过程由固定接线后的 $n$ 个槽组成，并且第 $k$ 槽存在与输入、记忆和参考兼容的抬升模拟误差 $\eta_k$，且各槽模拟器可以复合为同一输出空间上的全局模拟器 $S$（共同余域时可取相应的恒等填充），则第 72.1 节的望远镜不等式给出
+
+$$
+\boxed{
+\delta_\diamond(I\mid\widetilde I)
+\le
+\min\left\{1,\sum_{k=1}^{n}\eta_k\right\}.
+}
+$$
+
+与第 72.1 节相同，这要求逐槽抬升在同一复合空间上比较，并把中间记忆保留下来。若后续干预可以在各槽之间交错，完整对象应视为 comb 或 strategy；此时不能把 comb 无条件当作一个普通末态通道，而应改用相应的 strategy 范数，或先完成逐槽抬升再应用本节界。
+
+这给出一个可操作的历史预算：在预测时域 $n$ 内，若允许总风险误差为 $\varepsilon$，则满足
+
+$$
+\sum_{k=1}^{n}\eta_k\le\varepsilon
+$$
+
+足以保证任何单位区间损失的后续决策风险增加不超过 $\varepsilon$。该预算只对所声明的过程族、参考系统和后处理有效，不是对所有未来实验的宇宙级保证。
+
+### 120.4 即时统计相同仍可能有后续风险
+
+Zeckendorf 合法构型空间可取为
+
+$$
+\mathcal W_L
+=
+\{w\in\{0,1\}^L:w_jw_{j+1}=0\}.
+$$
+
+令 $P_w=|w\rangle\langle w|$，并按某个粗读出 $q:\mathcal W_L\to Q$ 定义两种过程。第一种是粗 Lüders 过程
+
+$$
+L_q(\rho)
+=
+\sum_{r\in Q}Q_r\rho Q_r,
+\qquad
+Q_r=\sum_{q(w)=r}P_w;
+$$
+
+第二种是先精确记录构型再忘记标签
+
+$$
+M_q(\rho)
+=
+\sum_{r\in Q}\sum_{q(w)=r}P_w\rho P_w.
+$$
+
+二者在当前粗标签的经典概率上相同，但保留的后态不同。若把标签写入经典寄存器，两个仪器对结果 $r$ 的概率都为 $\operatorname{Tr}(Q_r\rho)$；差异出现在条件后态及其可供后续操作访问的相干。取三位合法构型中的 $000$ 与 $010$，并令
+
+$$
+|\psi_\pm\rangle
+=
+\frac{|000\rangle\pm|010\rangle}{\sqrt2}.
+$$
+
+若粗读出把这两个构型归入同一类，则在过程缺陷定义中取参数集为单元素，并令完整通道为 $L_q$、压缩通道为 $M_q$；diamond 范数的上确界对输入取值，下面的两个态只是其中的测试输入：
+
+$$
+M_q(|\psi_+\rangle\langle\psi_+|)
+=
+M_q(|\psi_-\rangle\langle\psi_-|)
+=\tau,
+$$
+
+而 $L_q$ 保留两个相反相位的纯态。两者满足
+
+$$
+D\!\left(L_q(|\psi_+\rangle\langle\psi_+|),L_q(|\psi_-\rangle\langle\psi_-|)\right)=1,
+\qquad
+D\!\left(M_q(|\psi_+\rangle\langle\psi_+|),M_q(|\psi_-\rangle\langle\psi_-|)\right)=0.
+$$
+
+因此对任意不依赖参数的模拟器 $S$，若其半 diamond 误差至多为 $\varepsilon$，则特别地，对两个制备输入有 $D\!\left(L_q(|\psi_\pm\rangle\langle\psi_\pm|),S\tau\right)\le\varepsilon$，三角不等式给出
+
+$$
+1
+\le
+D\!\left(L_q(|\psi_+\rangle\langle\psi_+|),S\tau\right)
++
+D\!\left(S\tau,L_q(|\psi_-\rangle\langle\psi_-|)\right)
+\le2\varepsilon,
+$$
+
+从而
+
+$$
+\boxed{
+\delta_\diamond(L_q\mid M_q)\ge\frac12.
+}
+$$
+
+这说明“即时经典统计完全相同”并不意味着过程缺陷为零。被遗忘的相位在后续联合操作中仍可转回可见读数；风险界必须针对完整过程，而不是单步标签分布。这里的例子把第 96 节和第 119 节的边界现象放进同一个过程缺陷框架。
+
+### 120.5 Zeckendorf 刻度的正确位置
+
+Zeckendorf 编码在本节中承担的是参数与输入构型的离散组织。它决定合法窗口的索引、粗读出纤维 $q^{-1}(r)$ 以及可能被丢弃的历史分支；它不决定通道的 Hamiltonian、CPTP 结构、记录强度或 diamond 范数。
+
+例如，三位合法构型
+
+$$
+000,\quad001,\quad010,\quad100,\quad101
+$$
+
+按权重 $3,2,1$ 读为 $0,1,2,3,4$。若只保留奇偶性，构型会被分成两个纤维；但过程缺陷仍需比较这些纤维在后态、活动记忆和参考上的可模拟程度。不能用合法构型数 $F_{L+2}$、单步 Gram 系数或一个整数标签，替代完整过程的缺陷计算。
+
+因此，历史保留量不是一个只由编码长度决定的数字，而是相对于三项共同确定的预算：允许的过程族、可执行的后续策略和容许风险误差。改变其中任一项，最小充分记录都可能改变。
+
+### 120.6 研究命题与形式化边界
+
+本节提出的可检验命题是：对于给定过程族和后续策略类，存在一个过程缺陷 $\delta$，它统一上界任何单位区间损失的 Bayes 风险增量；若缺陷按逐槽误差累积，则历史预算可由望远镜界给出。该命题是有限维 CPTP 数学推导，与仓库已有的有限 Kraus 通道、迹距离收缩、过程望远镜和投影动力学结果相容。
+
+指定版本尚无一个直接给出“diamond 缺陷蕴含后续 Bayes 风险界”的单一 Lean 定理；本节的组合证明因此保留为普通数学推导，不能冒充新增 kernel 证明。可继续的形式化任务是：先在有限维矩阵上定义带辅助系统的过程缺陷，再分别形式化风险函数、测量收缩和下确界传递；最后把 Zeckendorf 合法窗口作为参数族接入，而不是把编码本身当作物理动力学。
+
+由此，对“用多少约束和历史才能得到稳定经典现实”的回答获得一个强度受控的版本：在给定实验与误差预算内，只需保留使 $\delta_\diamond\le\varepsilon$ 的过程信息；若更换后续操作、允许访问旧记忆或扩大参考系统，原有预算必须重新计算。稳定性是过程相对于任务的近似闭合，而不是所有未来关系都已被证明消失。
+
+### 120.7 追加锚
+
+本节新增的边界固定为：
+
+$$
+\boxed{
+\text{即时读数的相同性只约束当前统计；}
+\quad
+\text{过程 diamond 缺陷才统一约束任意后续决策风险。}
+}
+$$
+
+后续章节可以在这一锚上研究三类问题：不同记忆结构下的缺陷复合律、comb/strategy 范数的逐槽推广，以及 Zeckendorf 粗读出在给定实验族中的最小充分记录。若没有这些额外假设，不得把“记录看起来经典”升级为“整体过程已经经典”。
+## 121. 记录接口的 Blackwell 偏序与缺陷复合
+
+第 120 节用过程 diamond 缺陷控制任意后续量子决策风险。本节固定一个历史参数集，研究不同记录接口之间的可模拟关系：若较粗记录可以由较细记录通过与历史无关的退化得到，则较细记录对所有固定任务都不劣；若只能近似退化，则缺陷沿记录链次可加。这给“保留多少历史”提供一个偏序，而不是单一标量。
+
+### 121.1 经典记录的 Blackwell 预序
+
+设有限历史集为 $H$，有限记录集为 $Y,Z$。记录接口是条件概率核
+
+$$
+E(y\mid h),
+\qquad
+F(z\mid h),
+$$
+
+其中对每个 $h$ 有 $\sum_yE(y\mid h)=\sum_zF(z\mid h)=1$。随机退化核 $K(z\mid y)$ 作用为
+
+$$
+(K E)(z\mid h)=\sum_yK(z\mid y)E(y\mid h).
+$$
+
+定义 Blackwell 预序
+
+$$
+E\succeq_B F
+\quad\Longleftrightarrow\quad
+\exists K\;F=K\circ E.
+$$
+
+它是自反且传递的预序：自反性取恒等核；若 $F=K_1E$ 且 $G=K_2F$，则 $G=(K_2K_1)E$。互相可以退化的接口应视为同一个等价类；一般情况下预序不反对称，因此不能把所有记录接口排成一条全序链。
+
+对有限动作集 $A$、先验 $\pi$ 和损失 $0\le\ell(a,h)\le L$，记录 $E$ 的最优风险为
+
+$$
+R_E
+=
+\inf_\delta
+\sum_{h\in H}\pi(h)
+\sum_{y\in Y}E(y\mid h)
+\sum_{a\in A}\delta(a\mid y)\ell(a,h),
+$$
+
+其中 $\delta(a\mid y)$ 是从记录到动作的随机决策规则。若 $E\succeq_BF$，固定一个实现 $F=K E$。任意使用 $F$ 的决策规则都可在 $E$ 上先施加 $K$ 再执行，因此
+
+$$
+\boxed{R_E\le R_F.}
+$$
+
+该不等式对每个固定先验、动作集和有界损失分别成立；它不构成跨任务的单一风险全序，也不说明某条记录在未声明的动力学或自适应实验中仍然充分。
+
+### 121.2 经典近似缺陷的复合律
+
+定义从 $E$ 模拟 $F$ 的最坏行总变差缺陷
+
+$$
+\delta_B(F\mid E)
+=
+\inf_K\max_{h\in H}
+\operatorname{TV}\bigl(F_h,(K E)_h\bigr),
+$$
+
+其中 $E_h$、$F_h$ 表示固定历史 $h$ 的记录分布。设有第三个接口 $G$，且记录空间允许复合相应随机核。对任意 $K_1,K_2$，由三角不等式和随机核对总变差距离的收缩性，得到
+
+$$
+\operatorname{TV}\bigl(G_h,(K_2K_1E)_h\bigr)
+\le
+\operatorname{TV}\bigl(G_h,(K_2F)_h\bigr)
++
+\operatorname{TV}\bigl((K_2F)_h,(K_2K_1E)_h\bigr)
+\le
+\operatorname{TV}\bigl(G_h,(K_2F)_h\bigr)
++
+\operatorname{TV}\bigl(F_h,(K_1E)_h\bigr).
+$$
+
+取历史最坏值和两个核的下确界，得到
+
+$$
+\boxed{
+\delta_B(G\mid E)
+\le
+\delta_B(F\mid E)+\delta_B(G\mid F).
+}
+$$
+
+因此沿接口链 $E_0\succeq_B E_1\succeq_B\cdots\succeq_B E_m$，若第 $i$ 步近似缺陷为 $\varepsilon_i$，则端点缺陷至多为 $\sum_i\varepsilon_i$。对单位区间损失，记录风险的相应偏差至多为同一数值；对上界为 $L$ 的损失，乘以 $L$。
+
+### 121.3 量子记录接口
+
+经典核的退化对应量子记录态族之间的 CPTP 模拟。设每个历史 $h$ 在接口 $E$、$F$ 下分别产生密度算子 $\rho_h^E$、$\rho_h^F$。定义
+
+$$
+E\succeq_QF
+\quad\Longleftrightarrow\quad
+\exists\Lambda\ \text{CPTP},
+\quad
+\rho_h^F=\Lambda(\rho_h^E)\quad(\forall h).
+$$
+
+量子接口的状态族模拟缺陷为
+
+$$
+\delta_Q(F\mid E)
+=
+\inf_{\Lambda\ \mathrm{CPTP}}
+\max_{h\in H}
+\frac12\left\|\rho_h^F-\Lambda(\rho_h^E)\right\|_1.
+$$
+
+CPTP 映射保持迹距离收缩，因此 $E\succeq_QF$ 时，对任意 POVM 决策和有界损失都有 $R_E\le R_F$；近似情形下，被模拟方向满足 $R_E\le R_F+L\,\delta_Q(F\mid E)$。近似缺陷还满足复合律
+
+$$
+\boxed{
+\delta_Q(G\mid E)
+\le
+\delta_Q(F\mid E)+\delta_Q(G\mid F).
+}
+$$
+
+证明与经典情形相同：对近似模拟器 $\Lambda_1:E\to F$、$\Lambda_2:F\to G$ 复合，并使用
+
+$$
+\frac12\left\|\Lambda_2(\sigma)-\Lambda_2(\tau)\right\|_1
+\le
+\frac12\left\|\sigma-\tau\right\|_1.
+$$
+
+这里的量子预序只比较一组状态族和一次 CPTP 读出。若后续实验可以访问多槽活动记忆、插入自适应控制或保留参考，应回到第 120 节的过程缺陷；单次状态族的 $\delta_Q$ 不自动支配 comb 或 strategy 的风险。
+
+### 121.4 历史保留的操作判据
+
+令 $E_k$ 表示保留深度为 $k$ 的记录接口，且忘却核满足
+
+$$
+E_{k+1}\succeq_BE_k
+$$
+
+或其量子对应 $E_{k+1}\succeq_QE_k$。给定目标未来接口 $T$、损失上界 $L$ 和容许风险误差 $\varepsilon$，若存在满足条件的 $k$，则可以选择最小的 $k$ 使
+
+$$
+L\,\delta(T\mid E_k)\le\varepsilon,
+$$
+
+其中 $\delta$ 取与任务匹配的 $\delta_B$、$\delta_Q$ 或第 120 节的过程 diamond 缺陷。这个 $k$ 是相对于历史参数集、后续决策类和误差预算的最小充分记录深度；改变任一项都可能改变它。
+
+该判据不声称存在跨所有任务的唯一“客观历史长度”。Blackwell 预序提供的是可比较性：一条记录若能无损模拟另一条，就对所有固定任务支配；两条记录若互不可退化，则需要指定先验、损失或后续实验才能比较。
+
+### 121.5 与 Zeckendorf 构型的连接
+
+在合法语言
+
+$$
+\mathcal W_L
+=\{w\in\{0,1\}^L:w_jw_{j+1}=0\}
+$$
+
+上，可把 $h=w$ 作为历史参数，把 Zeckendorf 数值、奇偶性或局部模式作为不同记录接口。当 $E_k$ 是 $E_{k+1}$ 的历史无关粗粒化（由函数或随机核给出）时，存在忘却核，因而 $E_{k+1}\succeq_BE_k$。但若记录接口还包含相位、活动记忆或参考，粗粒度函数未必能由经典核模拟；必须把这些量纳入量子状态族并计算 $\delta_Q$，或回到第 120 节的过程缺陷。
+
+这解释了为什么同一组合法构型可以有不同的“现实稳定度”：稳定度不是由 Fibonacci 维数 $F_{L+2}$ 单独决定，而是由所选记录接口在 Blackwell 预序中的位置及其对目标未来的缺陷共同决定。
+
+### 121.6 形式化边界与追加锚
+
+本节的经典预序、总变差复合律、量子 CPTP 预序和状态族迹距离复合律是有限集合与有限维量子态上的普通数学推导。指定版本的 Lean 库已有随机核、有限 Kraus 通道和迹距离收缩等支点；其中 `FiniteDeficiencyTriangle.lean` 与 `FiniteDeficiencyRiskTransfer.lean` 分别提供有限缺陷三角和有界损失风险传递。Blackwell 命名、接口预序与量子状态族的统一组合尚无一个单一冻结定理；本节不冒充新增 kernel 证明。多槽自适应过程仍应使用第 120 节的过程级范数。
+
+新增锚为
+
+$$
+\boxed{
+\text{记录的充分性形成 Blackwell 预序；缺陷沿可复合的退化链次可加；在模拟方向上，风险增加至多为损失上界乘以缺陷。}
+}
+$$
+
+因此，“需要保留多少历史”可以先问三个可计算问题：哪些记录可以无损退化，近似退化的缺陷如何沿链累加，以及给定未来任务的风险预算允许多大的端点缺陷。只有在这三个量都被指定后，稳定经典现实才有可检验的记录深度。
+
+## 122. 双向缺陷、操作等价与历史深度
+
+第 121 节给出了有向的 Blackwell 缺陷：较细接口能否模拟较粗接口，以及模拟误差如何沿链累加。本节补上两个边界。第一，若要称两个接口“同一现实接口”，需要同时控制两个方向；第二，嵌套历史接口只有在忘却核与任务缺陷相容时，才会产生可证明的最小保留深度。
+
+### 122.1 双向缺陷不是标签相等
+
+对经典接口定义
+
+$$
+\Delta_B(E,F)
+=
+\max\left\{\delta_B(F\mid E),\delta_B(E\mid F)\right\},
+$$
+
+对量子状态族定义
+
+$$
+\Delta_Q(E,F)
+=
+\max\left\{\delta_Q(F\mid E),\delta_Q(E\mid F)\right\}.
+$$
+
+第 121 节的有向次可加律立即给出三角不等式
+
+$$
+\Delta_B(E,G)
+\le
+\Delta_B(E,F)+\Delta_B(F,G),
+$$
+
+以及量子对应式
+
+$$
+\Delta_Q(E,G)
+\le
+\Delta_Q(E,F)+\Delta_Q(F,G).
+$$
+
+两者都满足自反性，但一般不满足严格的同一性判别：若两个接口可以在所有历史上互相近似退化，可能仍然不是字节相等、标签相等或通道同构。它们只是在指定历史实验族下操作等价。因此 $\Delta_B$ 与 $\Delta_Q$ 更准确地说是伪度量；在互相零缺陷的接口等价类上，才得到真正的度量结构。 在有限接口且模拟器集合紧的条件下，定义 $E\sim F\iff\Delta(E,F)=0$ 得到等价关系，商空间上的诱导距离才是度量；若只给定部分任务族，只能称为任务相对等价。
+
+若 $\Delta(E,F)\le\varepsilon$ 且 $\Delta(F,G)\le\varepsilon$，只能推出 $\Delta(E,G)\le2\varepsilon$。所以“误差不超过 $\varepsilon$ 的等价”本身不是传递等价关系；跨多层接口时必须把预算累加，或提高允许阈值。
+
+### 122.2 双向缺陷与任务风险
+
+若损失上界为 $L$，第 121 节的单向结论分别给出
+
+$$
+R_E\le R_F+L\,\delta(F\mid E),
+\qquad
+R_F\le R_E+L\,\delta(E\mid F).
+$$
+
+因此
+
+$$
+\boxed{
+\left|R_E-R_F\right|
+\le
+L\,\Delta(E,F).
+}
+$$
+
+这里的风险必须针对同一个先验、动作集和损失函数；改变任务后，$\Delta$ 仍可作为接口距离，但这条风险界需要重新代入新的 $L$ 与决策类。量子状态族的 POVM 决策同样满足该双向界，迹距离收缩是唯一使用的量子性质。
+
+### 122.3 嵌套历史接口的单调性
+
+设 $E_k$ 是保留前 $k$ 层历史的接口。若存在与历史无关的忘却核 $W_k$，满足
+
+$$
+E_k=W_k\circ E_{k+1},
+$$
+
+则有精确 Blackwell 关系
+
+$$
+E_{k+1}\succeq_BE_k.
+$$
+
+对任意目标接口 $T$，把从 $E_k$ 到 $T$ 的近似模拟器与 $W_k$ 复合，得到
+
+$$
+\boxed{
+\delta_B(T\mid E_{k+1})
+\le
+\delta_B(T\mid E_k).
+}
+$$
+
+量子状态族在存在 CPTP 忘却映射时满足完全相同的单调性：若 $\rho_h^{E_k}=\Lambda_k(\rho_h^{E_{k+1}})$，则
+
+$$
+\delta_Q(T\mid E_{k+1})
+\le
+\delta_Q(T\mid E_k).
+$$
+
+单调性只说明增加可模拟的历史不会变差；它不保证缺陷严格下降，也不保证任意“看起来更长”的记录都存在这样的忘却核。嵌套性必须由接口的实际构造给出。
+
+### 122.4 有限历史深度与开放边界
+
+给定目标未来接口 $T$、容许接口缺陷 $\varepsilon$ 和损失上界 $L$，定义
+
+$$
+k_\varepsilon(T)
+=
+\min\left\{k:\ L\,\delta(T\mid E_k)\le\varepsilon\right\},
+$$
+
+但只有集合非空时该最小值才存在。若对所有可用 $k$ 都不满足条件，应保留“无有限深度”的开放状态，不能以增加计算预算代替缺失的历史信息。
+
+当 $E_k$ 嵌套且存在忘却核时，上一节单调性保证可行深度集合是向上的：一旦某个 $k$ 满足预算，所有更深层接口也满足。于是 $k_\varepsilon(T)$ 的含义是明确的最小充分记录深度，而不是任意截断点。 若令 $e_k=\delta(T\mid E_k)$、$e_\infty=\inf_k e_k$，则严格满足 $\varepsilon>L e_\infty$ 时可由单调收敛得到某个有限可行 $k$；$\varepsilon<L e_\infty$ 时不存在可行深度；等号情形只有在某个有限 $k$ 达到极限时才可行，否则仍是开放边界。
+
+第 120 节的过程 diamond 缺陷可直接替换这里的 $\delta$，但需要把 $E_k$ 视为完整过程接口并保留参考与活动记忆。若只用单次状态族的 $\delta_Q$，则所得深度只对一阶段 POVM 任务有效。
+
+### 122.5 Zeckendorf 合法空间中的实例化
+
+在
+
+$$
+\mathcal W_L
+=\{w\in\{0,1\}^L:w_jw_{j+1}=0\}
+$$
+
+中，令 $E_k$ 保留 Zeckendorf 合法字串的前 $k$ 个坐标，令 $W_k$ 忘却其余坐标。只要粗读出确实是这些坐标的函数，$E_k=W_k\circ E_{k+1}$ 成立，因而形成 Blackwell 链。
+
+若目标任务读取完整数值、相位或跨坐标历史，坐标前缀未必足够；此时应把目标接口 $T$ 的后态与记忆纳入缺陷计算。合法构型总数 $F_{L+2}$ 只给出状态空间规模，不决定 $k_\varepsilon(T)$。
+
+因此，同一个 Zeckendorf 刻度可以在一个任务上很快达到小缺陷，在另一个任务上始终有非零缺陷。差异来自目标实验族和可访问关联，而不是编码是否唯一。
+
+### 122.6 形式化边界与追加锚
+
+本节的双向伪度量、风险绝对差界和嵌套接口单调性，均由第 121 节的有向缺陷复合与 CPTP/随机核收缩推出。指定版本的 Lean 支点仍是有限缺陷三角、风险传递和通道收缩；本节未新增 Lean 声明，也没有把这些普通数学组合冒充 kernel 已证结果。
+
+新增锚为
+
+$$
+\boxed{
+\text{“同一现实接口”只能表示指定实验族下的双向小缺陷；历史深度只有在忘却核、任务和误差预算同时给定时才可计算。}
+}
+$$
+
+这使“保留多少历史”获得两个可审计的失败模式：没有双向模拟时，接口不能称为操作等价；没有满足预算的有限 $k$ 时，结论必须保持开放，而不是把更长的 Zeckendorf 标签自动当作充分历史。
+## 123. 逆极限中的幽灵历史与载体完备化
+
+第 122 节把记录深度写成相对于目标任务的缺陷预算。本节补上一个不同的边界：即使每个有限层都可实现，且层与层之间完全相容，也不保证这些有限记录来自原先的对象载体。逆极限会把所有有限层一致的塔组织起来；原载体能否覆盖这些塔，是一个独立的满射与完备化问题。
+
+### 123.1 有限接口塔与自然嵌入
+
+设有有限层接口 $q_n:X\to Q_n$，以及忘却映射 $\pi_n:Q_{n+1}\to Q_n$，满足
+
+$$
+\pi_n\circ q_{n+1}=q_n.
+$$
+
+定义兼容塔
+
+$$
+\varprojlim Q_n
+=
+\left\{(z_n)_n:\ \pi_n(z_{n+1})=z_n\ \text{对所有 }n\right\}.
+$$
+
+每个 $x\in X$ 给出一个塔
+
+$$
+\iota(x)=(q_n(x))_n.
+$$
+
+令
+
+$$
+R_\infty=\bigcap_n\ker(q_n),
+\qquad
+x\mathrel{R_\infty}y
+\Longleftrightarrow
+q_n(x)=q_n(y)\ \text{对所有 }n.
+$$
+
+则 $\iota$ 唯一因子化为
+
+$$
+\bar\iota:X/R_\infty\longrightarrow\varprojlim Q_n,
+$$
+
+并且 $\bar\iota$ 是单射。这里的单射只使用所有层读数同时相等才定义的商关系；它不要求原载体已经完备。
+
+### 123.2 满射缺陷不是逐层一致性能够消除的
+
+嵌入 $\bar\iota$ 满射，当且仅当每一个兼容塔 $(z_n)_n$ 都存在单个 $x\in X$，使
+
+$$
+q_n(x)=z_n
+\qquad\text{对所有 }n.
+$$
+
+因此，“每个有限层都有实现”只说明塔属于逆极限，不说明塔属于原像。定义载体的完备化缺陷为
+
+$$
+\operatorname{Ghost}(X;Q_\bullet)
+=
+\left(\varprojlim Q_n\right)\setminus\operatorname{im}(\bar\iota).
+$$
+
+这个集合为空，才可以说当前载体对这组有限接口是完备的；非空时，逆极限引入了原类型中没有的理想记录。这里的“幽灵”是表示边界的数学名称，不是额外物理实体。
+
+### 123.3 Zeckendorf 前缀的具体幽灵
+
+令 $X_{\mathrm{fs}}$ 为所有只有有限多个 $1$ 的无限合法串：
+
+$$
+X_{\mathrm{fs}}
+=
+\left\{x\in\{0,1\}^{\mathbb N}:x_ix_{i+1}=0,\ \exists N\ \forall i\ge N,\ x_i=0\right\}.
+$$
+
+令 $Q_n=\mathcal W_n$ 为长度 $n$ 的无相邻 $1$ 字串，$\pi_n$ 删除最后一位，$q_n$ 取前缀。兼容性给出
+
+$$
+\varprojlim Q_n
+\cong
+\left\{z\in\{0,1\}^{\mathbb N}:z_i z_{i+1}=0\right\},
+$$
+
+即所有无限合法串，而不仅是有限支持串。
+
+交替串
+
+$$
+z=1010101010\cdots
+$$
+
+的每个有限前缀都属于某个 $Q_n$，并且每个前缀都可由一个有限 Zeckendorf 整数实现；但不存在 $x\in X_{\mathrm{fs}}$ 同时实现全部前缀，因为 $x$ 最终必须全为 $0$。所以 $z$ 是逆极限中的元素，却不在 $\bar\iota$ 的像中。
+
+若把对象类型扩张为所有无限合法串
+
+$$
+\widehat X
+=
+\left\{x\in\{0,1\}^{\mathbb N}:x_ix_{i+1}=0\right\},
+$$
+
+则前缀映射对该逆系统满射。扩张载体解决了满射缺陷，但也改变了对象类型：它加入了有限整数模型没有的无限历史。不能把这一步描述成在原对象中发现了一个普通整数。
+
+### 123.4 动力学必须保持原像
+
+若每层有操作 $T_n:Q_n\to Q_n$，并满足
+
+$$
+\pi_n\circ T_{n+1}=T_n\circ\pi_n,
+$$
+
+则得到逆极限上的操作
+
+$$
+\widehat T((z_n)_n)=(T_n z_n)_n.
+$$
+
+若原载体上存在 $T:X\to X$，且
+
+$$
+q_n\circ T=T_n\circ q_n,
+$$
+
+则
+
+$$
+\widehat T\circ\iota=\iota\circ T.
+$$
+
+但层间相容本身不保证 $\widehat T$ 保持有限支持像。对 Hilbert 型有界线程，还需要统一的算子界
+
+$$
+\sup_n\|T_n\|\le M<\infty
+$$
+
+来保证逐层作用仍给出有界线程；没有这个界，层操作可能把可实现的线程推出载体。要让完备化后的动力学仍然代表原模型，必须另行证明
+
+$$
+\widehat T\bigl(\operatorname{im}(\bar\iota)\bigr)
+\subseteq
+\operatorname{im}(\bar\iota),
+$$
+
+或给出离开该像集的泄漏指标。否则，一个只在无限完备化中存在的幽灵历史，可能被层操作激活并进入后续读数；这不是原有限对象动力学的结论。
+
+### 123.5 与历史深度和量子接口的边界
+
+本节的逆极限问题与第 122 节的缺陷预算正交。缺陷衡量某个接口对目标实验的预测损失；逆极限满射衡量所有兼容有限记录是否能由同一原对象实现。一个载体可以在任务意义下具有很小缺陷，却仍有非空的完备化缺陷；反过来，载体完备也不保证记录足以闭合未来动力学。
+
+指定版本已经有两个直接相关的 Lean 支点。`D5/S3/Quantum/Completion/BoundedInverseLimitReconstruction.lean` 中的 `bounded_inverse_limit_reconstruction` 证明：单调子空间序列的有界、正交投影相容族，与累积闭子空间之间存在规范的线性等距双射；因此在 Hilbert 载体中，“逆极限线程”还必须带有统一有界性。`D5/S3/Quantum/Completion/CompatibleUnboundedCoordinates.lean` 中的 `compatible_unbounded_coordinates` 给出反例：`partialOnes n` 满足每个有限层的投影相容性，但
+
+$$
+\|\mathrm{partialOnes}(n)\|^2=n,
+$$
+
+故范数无界；它既不是某个 $\ell^2$ 向量的投影族，也不属于有界逆极限。这个例子把“逐层一致”与“存在一个实际状态”之间缺失的有界性条件具体化了。
+
+对量子接口，$Q_n$ 应替换为带态、相位和活动记忆的有限接口，忘却映射应替换为保持合法性的量子通道。逐层状态族的一致性仍不自动给出完整过程的可实现性；若后续实验能访问参考或旧记录，必须回到第 120 节的过程 diamond 缺陷。Gram 矩阵的正定性、通道的完全正性和像集不变性，都是额外的整体相容条件。
+
+本节的因子化、Zeckendorf 前缀反例和动力学像集条件是逆系统与有限字串上的普通数学推导；Hilbert 载体中的有界重建与无界线程反例则由上述两个已有 Lean 声明直接支撑。本节没有新增 Lean 声明，也不声称重建了物理时空的完备性。指定版本的项目已有上下文等价、有限接口和记录通道支点，但没有一个冻结定理把这些支点自动组合成 Zeckendorf 逆极限的满射定理。
+
+新增锚为
+
+$$
+\boxed{
+\text{逆极限组织所有有限层一致记录；原载体的可实现性还要求满射、完备性或有界性，动力学则必须额外保持该像集。}
+}
+$$
+
+因此，“无限递归”应当分成两个可检验问题：有限层是否相容，以及相容塔是否仍由当前对象类型承载。前者失败时要拒绝该关系网络；后者失败时要明确报告完备化新增的理想历史，并重新指定允许的动力学与测量范围。
+## 追加锚（本行以下为增补区）
+
+## 124. 有限前缀量子模拟与连续延拓
+
+本节固定一个经典数字载体和一个有限维量子输出空间，把第 122 节的前缀缺陷与第 123 节的完备化联系起来。目标是刻画何时有限前缀能一致逼近一个态制备任务；载体加入无限合法串，并不自动使任意任务连续。以下定义与证明均在通常数学中进行。
+
+**定义 124.1（合法串、有限核心与实际前缀像）。** 所有下标从 $0$ 开始，令
+$$
+\widehat X=\{x\in\{0,1\}^{\mathbb N}:\ \forall j\ge0,\ x_jx_{j+1}=0\},\qquad
+X_{\rm fs}=\{x\in\widehat X:\ \exists N\ \forall j\ge N,\ x_j=0\}.
+$$
+对 $k\in\mathbb N$，以同一符号 $q_k$ 表示两个域上的前缀限制，置
+$$
+q_kx=(x_0,\ldots,x_{k-1}),\qquad
+W_k=q_k[X_{\rm fs}]=q_k[\widehat X],\qquad
+F_{k,w}=\{x\in X_{\rm fs}:q_kx=w\}.
+$$
+$W_k$ 恰是全部长度 $k$ 的无相邻 $1$ 字串；任一这种字串补零即给两个域中的原像。因此每个 $F_{k,w}$ 非空，$W_k$ 有限非空，$W_0=\{\varnothing\}$。记 $\tau_kz$ 为 $z$ 保留前 $k$ 位后补零的串。
+取前缀距离
+$$
+p(x,y)=
+\begin{cases}
+0,&x=y,\\
+2^{-m},&x\ne y,\ m=\min\{j:x_j\ne y_j\}.
+\end{cases}
+$$
+这是 Z 卷定理 477.3 的 $d_{1/2}$。Z 卷定义 371.1 的距离另为 $d_K(x,y)=\sum_{j\ge0}2^{-j-1}|x_j-y_j|$，二者满足 $p/2\le d_K\le p$，并非同一数值公式。上述数字核心也不是 CSA 定义 1–3 的带事件、偏序、区域与选择的档案载体；CSA §§14–16 中的读数与语言仍保留各自的类型。
+
+**命题 124.2（紧完备载体与逐柱稠密性）。** $p$ 是给出二元离散乘积之子空间拓扑的超度量，$\widehat X$ 紧且完备，$X_{\rm fs}$ 在其中稠密。更精确地，对每个 $k,w$，$F_{k,w}$ 在柱集 $\widehat F_{k,w}=\{z\in\widehat X:q_kz=w\}$ 中稠密，且
+$$
+q_kx=q_ky\ \Longleftrightarrow\ p(x,y)\le2^{-k},\qquad
+p(\tau_kz,z)\le2^{-k}.
+$$
+证明。两对串共享的前缀长度取较小者，仍是第三对共享的前缀长度，故
+$p(x,z)\le\max\{p(x,y),p(y,z)\}$；分离性和对称性由定义得到。
+前缀柱集是有限个离散坐标条件的交；任意有限坐标条件又包含一个足够长的前缀条件。距离球与前缀柱集因而给出同一拓扑，所列等价含 $k=0$。
+
+违反合法性的串在某对相邻坐标上取值 $11$，这是一项开柱条件；所以 $\widehat X$ 在二元乘积中闭。为具体证明紧性，对任意序列依次选第 $0,1,2,\ldots$ 位恒定的无限子序列，再取对角子序列。各坐标最终恒定所得的极限仍无相邻 $1$，前缀距离保证收敛。度量空间的序列紧性给紧性。
+若序列是 Cauchy，对每个 $j$，距离最终小于 $2^{-j}$，故第 $j$ 位最终恒定；同一构造给合法极限并证明原序列收敛，故完备。
+
+补零不制造相邻 $1$，故 $\tau_mz\in X_{\rm fs}$ 且趋于 $z$。若 $z\in\widehat F_{k,w}$，则所有 $m\ge k$ 的截断都在 $F_{k,w}$，得到逐柱稠密性。若首差在 $j$，加权距离的首项为 $2^{-j-1}$、尾和至多 $2^{-j}$，也直接验证定义 124.1 的距离比较。这给 Z371.1–2、Z477.3 的载体在所选前缀距离下的具体实现。
+
+**定义 124.3（固定有限维的静态态制备任务）。** 固定整数 $d\ge1$，输出态空间与距离为
+$$
+\mathcal D_d=\{\rho\in M_d(\mathbb C):\rho=\rho^*,\ \rho\succeq0,\ \operatorname{tr}\rho=1\},\qquad
+D(\rho,\sigma)=\tfrac12\|\rho-\sigma\|_1.
+$$
+这里 $\|A\|_1=\operatorname{tr}\sqrt{A^*A}$，允许任意混态，不限于纯态。
+任务是任意总函数 $T:X_{\rm fs}\to\mathcal D_d$，起初不假定连续。
+
+深度 $k$ 的输入寄存器为 $\mathcal H_k=\mathbb C^{W_k}$，取以 $w\in W_k$ 标记的正交标准基，并置
+$$
+E_{k,x}=|q_kx\rangle\langle q_kx|.
+$$
+模拟器遍历所有 CPTP 映射 $\Lambda:M_{|W_k|}(\mathbb C)\to M_d(\mathbb C)$；它须对所有 $x$ 共用，只能从给定寄存器获得前缀。这里 $x$ 是经典制备标签，未给不相容量子可观测量预先指定共同测量结果。
+
+**命题 124.4（CPTP 模拟器与混态表的精确等价）。** 上述输入族上的全部可实现输出恰为任意混态表 $(\sigma_w)_{w\in W_k}\in\mathcal D_d^{W_k}$。每张表都可由
+$$
+\Lambda_\sigma(A)=\sum_{w\in W_k}\langle w|A|w\rangle\sigma_w
+$$
+实现，因此只对 $E_{k,x}$ 计算的最坏误差，在所有 CPTP 映射与所有混态表上取下确界相同。
+证明。任一 CPTP 映射给出密度态 $\sigma_w=\Lambda(|w\rangle\langle w|)$，于是输入 $x$ 的输出只依赖 $q_kx$。
+反向对每个 $w$ 作谱分解 $\sigma_w=\sum_{a=1}^d\lambda_{wa}|v_{wa}\rangle\langle v_{wa}|$，其中 $\lambda_{wa}\ge0$、$\sum_a\lambda_{wa}=1$。取 Kraus 算子
+$$
+K_{wa}=\sqrt{\lambda_{wa}}\,|v_{wa}\rangle\langle w|.
+$$
+则 $\sum_{w,a}K_{wa}^*K_{wa}=I_{\mathcal H_k}$，且 $\sum_{w,a}K_{wa}AK_{wa}^*=\Lambda_\sigma(A)$。Kraus 形式给完全正性，前一等式给保迹性，代入基态即得指定表。这个等价只规定输入族上的行为，不规定一般相干叠加输入上的通道行为。
+
+**定义 124.5（前缀缺陷、纤维振幅与半径）。** 对定义 124.3 的固定任务，令
+$$
+e_k(T)=\inf_{\Lambda\ {\rm CPTP}}\ \sup_{x\in X_{\rm fs}}
+D\bigl(T(x),\Lambda(E_{k,x})\bigr)
+=\inf_{\sigma\in\mathcal D_d^{W_k}}\ \sup_{x\in X_{\rm fs}}D\bigl(T(x),\sigma_{q_kx}\bigr),
+$$
+$$
+\omega_{k,w}(T)=\sup_{x,y\in F_{k,w}}D(T(x),T(y)),\qquad
+\omega_k(T)=\max_{w\in W_k}\omega_{k,w}(T),
+$$
+$$
+f_{k,w}(\sigma)=\sup_{x\in F_{k,w}}D(T(x),\sigma),\qquad
+r_{k,w}(T)=\inf_{\sigma\in\mathcal D_d}f_{k,w}(\sigma).
+$$
+所有上确界都在非空集上且取值于 $[0,1]$。纤维可以无限且不紧，$T$ 也可以不连续，所以这里没有把无限纤维上的上确界写成最大值。只有有限集合 $W_k$ 上使用最大值。
+
+**定理 124.6（精确纤维半径公式与最优表存在）。** $\mathcal D_d$ 在 $D$ 下紧且完备，任意两态间的距离属于 $[0,1]$。对任意 $T:X_{\rm fs}\to\mathcal D_d$ 及任意 $k$，每个纤维都有最优中心，且
+$$
+e_k(T)=\max_{w\in W_k}\ \min_{\sigma\in\mathcal D_d}
+\sup_{x\in F_{k,w}}D(T(x),\sigma)
+=\max_{w\in W_k}r_{k,w}(T).
+$$
+存在一张表达到 $e_k(T)$，并由命题 124.4 实现为 CPTP 模拟器。
+证明。Hermitian 矩阵组成有限维实向量空间，迹范数在该空间上给完备的度量。
+若一列密度矩阵趋于 $\rho$，则对每个 $v\in\mathbb C^d$，
+$$
+v^*\rho v=\lim_n v^*\rho_n v\ge0,\qquad
+\rho^*=\rho,\qquad \operatorname{tr}\rho=\lim_n\operatorname{tr}\rho_n=1.
+$$
+所以态空间闭。半正定矩阵的特征值非负，迹等于特征值之和，因此
+$$
+\|\rho\|_1=\operatorname{tr}\rho=1,\qquad
+\tfrac12\|\rho-\sigma\|_1\le\tfrac12(\|\rho\|_1+\|\sigma\|_1)=1.
+$$
+闭有界性在有限维给紧性，闭子集又继承完备性；迹范数的一半仍是度量。
+
+对任何 $\sigma,\eta\in\mathcal D_d$，逐点三角不等式及取上确界给
+$$
+f_{k,w}(\sigma)\le f_{k,w}(\eta)+D(\sigma,\eta),\qquad
+|f_{k,w}(\sigma)-f_{k,w}(\eta)|\le D(\sigma,\eta).
+$$
+故纤维目标函数对中心是 $1$-Lipschitz，尽管它对 $x$ 不要求连续。紧集 $\mathcal D_d$ 上的连续实函数达到最小值，取一个中心 $\sigma_w^*$。
+任意表的全局目标恰为 $\max_w f_{k,w}(\sigma_w)$，因为非空纤维有限个且分割 $X_{\rm fs}$。每一项至少为 $r_{k,w}$，故任何表的目标至少为 $\max_w r_{k,w}$；对有限个 $w$ 分别选取上述中心，便同时达到这个下界。
+证明不要求中心来自 $T[F_{k,w}]$，也不给中心唯一性或不同深度最优表之间的相容性。
+
+**命题 124.7（直径界、单调性与有限层精确性）。** 对所有 $k\ge0$，
+$$
+\tfrac12\omega_k(T)\le e_k(T)\le\omega_k(T),\qquad
+e_{k+1}(T)\le e_k(T),\qquad
+\omega_{k+1}(T)\le\omega_k(T).
+$$
+而且
+$$
+e_k(T)=0\quad\Longleftrightarrow\quad
+\exists t_k:W_k\to\mathcal D_d\ \forall x\in X_{\rm fs},\ T(x)=t_k(q_kx).
+$$
+证明。对同纤维的 $x,y$ 和任一中心 $\sigma$，有
+$D(T(x),T(y))\le D(T(x),\sigma)+D(T(y),\sigma)\le2f_{k,w}(\sigma)$。
+先对 $x,y$ 取上确界，再对中心取下确界，得 $\omega_{k,w}\le2r_{k,w}$。
+从非空纤维选一个 $x_w$，用 $T(x_w)$ 作中心，得 $r_{k,w}\le\omega_{k,w}$；定理 124.6 给全局两界。
+
+将深度 $k$ 的最优中心复制给每个具有相同父前缀的长度 $k+1$ 字串，新表逐点输出与旧表相同。因此新最优误差不增；新纤维包含于父纤维，也使 $\omega_k$ 不增。这个复制表不必是新层最优表。
+若 $e_k=0$，则 $\omega_k=0$，每个非空纤维上的 $T$ 恒定，按此值定义 $t_k$；反向因子化表逐点误差为零。所有结论也覆盖 $d=1$，此时态空间只有一个元素，全部缺陷恒为零。
+
+**定理 124.8（误差趋零与唯一连续延拓的等价）。** 对固定有限 $d\ge1$ 和任意 $T:X_{\rm fs}\to\mathcal D_d$，以下四项等价：
+
+1. $\lim_{k\to\infty}e_k(T)=0$。
+2. $\lim_{k\to\infty}\omega_k(T)=0$。
+3. $T:(X_{\rm fs},p)\to(\mathcal D_d,D)$ 一致连续，即
+$$
+\forall\varepsilon>0\ \exists\delta>0\ \forall x,y\in X_{\rm fs},\quad
+p(x,y)<\delta\ \Longrightarrow\ D(T(x),T(y))<\varepsilon.
+$$
+4. 存在唯一连续函数 $\widehat T:(\widehat X,p)\to(\mathcal D_d,D)$，使 $\widehat T|_{X_{\rm fs}}=T$。
+
+该延拓实际上是一致连续的。这里第三项的定义域是有限支持核心，第四项的定义域是全部无限合法串；不能把第三项降为核心上的逐点连续，也不能把第一项换成逐输入的误差极限。
+
+证明。命题 124.7 的两侧界直接给第一、二项等价。
+若第二项成立，给定 $\varepsilon>0$ 选 $K$ 使 $\omega_K<\varepsilon$。当 $p(x,y)<2^{-K}$ 时两点共享前 $K$ 位，故 $D(T(x),T(y))\le\omega_K<\varepsilon$，得到第三项。
+若第三项成立，先对 $\varepsilon/2$ 选一致连续性的 $\delta$，再选 $K$ 使 $2^{-K}<\delta$。对每个 $k\ge K$ 的同纤维两点，距离不超过 $2^{-k}<\delta$，故目标距离小于 $\varepsilon/2$。取上确界后 $\omega_k\le\varepsilon/2<\varepsilon$，得到第二项。
+
+现由第二项构造第四项。固定 $z\in\widehat X$，对 $m,n\ge K$，截断 $\tau_mz,\tau_nz$ 共享前 $K$ 位，故
+$$
+D\bigl(T(\tau_mz),T(\tau_nz)\bigr)\le\omega_K(T).
+$$
+因此这是一列 Cauchy 态；由 $\mathcal D_d$ 的完备性定义
+$$
+\widehat T(z)=\lim_{n\to\infty}T(\tau_nz)\in\mathcal D_d.
+$$
+它不依赖截断以外的近似选择：若 $x_n\in X_{\rm fs}$ 且 $p(x_n,z)\to0$，则对固定 $K$，充分大的 $n$ 有 $q_Kx_n=q_Kz$。同样对 $m\ge K$ 有 $q_K\tau_mz=q_Kz$，于是 $D(T(x_n),T(\tau_mz))\le\omega_K$。令 $m\to\infty$ 后仍有 $D(T(x_n),\widehat T(z))\le\omega_K$；再让 $K$ 增大，得到 $T(x_n)\to\widehat T(z)$。有限支持的 $z$ 最终等于自身截断，故延拓确实等于 $T$。
+
+若 $q_Kz=q_Kz'$，则 $n\ge K$ 时的两截断也共享该前缀，令 $n\to\infty$ 得
+$$
+D(\widehat T(z),\widehat T(z'))\le\omega_K(T).
+$$
+选 $\omega_K<\varepsilon$ 并取输入距离阈值 $2^{-K}$，这证明延拓一致连续，特别连续。
+任一连续延拓 $U$ 都满足 $U(z)=\lim_n U(\tau_nz)=\lim_n T(\tau_nz)=\widehat T(z)$，所以唯一。
+
+最后若第四项成立，命题 124.2 给紧域，Heine–Cantor 定理使连续的 $\widehat T$ 一致连续。
+这里也可直接证明所需的紧性步骤：若不一致连续，存在 $\varepsilon_0>0$ 和两列 $z_n,z_n'\in\widehat X$，满足
+$$
+p(z_n,z_n')<1/(n+1),\qquad
+D(\widehat T(z_n),\widehat T(z_n'))\ge\varepsilon_0.
+$$
+由紧性取 $z_n$ 的收敛子序列，沿同一下标的 $z_n'$ 也趋于同一点。连续性和目标距离三角不等式迫使输出距离趋零，矛盾。
+故限制到 $X_{\rm fs}$ 也一致连续，得到第三项。完备性在构造目标极限时使用，紧性在这个反向推导时使用；它们承担不同义务。
+
+**命题 124.9（连续延拓保持每个有限缺陷）。** 若存在连续延拓 $\widehat T:\widehat X\to\mathcal D_d$，把定义 124.5 中的定义域换成 $\widehat X$，而保持 $W_k$ 与模拟器类不变，则对每个 $k$ 有
+$$
+e_k(\widehat T)=e_k(T),\qquad \omega_k(\widehat T)=\omega_k(T).
+$$
+更强地，对每个 $w\in W_k$ 与每个中心 $\sigma\in\mathcal D_d$，
+$$
+\sup_{z\in\widehat F_{k,w}}D(\widehat T(z),\sigma)
+=\sup_{x\in F_{k,w}}D(T(x),\sigma).
+$$
+证明。核心包含于完备载体给右边不大于左边。任一 $z\in\widehat F_{k,w}$ 的截断 $\tau_nz$ 在 $n\ge k$ 时属于 $F_{k,w}$；连续性使其到中心的距离趋于 $D(\widehat T(z),\sigma)$，每项又不超过右侧上确界，故反向不等式成立。
+逐对截断同样证明每个柱上的直径上确界不变；对中心取下确界、对有限个柱取最大值便给两个结论。无限串可以使某个上确界真正达到，但不会在连续延拓下增大任何有限层最坏误差。
+
+**命题 124.10（连续而永无精确有限深度的量子比特任务）。** 本命题取 $d=2$，复用 Z477.3 的函数
+$$
+S(z)=\sum_{j\ge0}4^{-j-1}z_j,\qquad
+T_S(x)=\operatorname{diag}(1-S(x),S(x)),\qquad
+c_k=\tfrac4{15}4^{-k}.
+$$
+则 $0\le S(z)\le4/15$，$T_S$ 连续延拓到 $\widehat X$，且对每个 $k\ge0$，
+$$
+\omega_k(T_S)=c_k,\qquad e_k(T_S)=\tfrac12c_k=\tfrac2{15}4^{-k}>0.
+$$
+证明。若从位置 $k$ 开始的尾部首位不受前一位限制，每对位置 $k+2r,k+2r+1$ 至多一个 $1$，所以该对的加权贡献至多为 $4^{-(k+2r)-1}$。求几何级数得
+$$
+\sum_{j\ge k}4^{-j-1}z_j
+\le\sum_{r\ge0}4^{-(k+2r)-1}
+=\frac{4^{-k-1}}{1-4^{-2}}=c_k.
+$$
+交替尾 $1010\cdots$ 达到此值；其任意长的有限截断都合法，尾和趋于 $c_k$。取 $k=0$ 得全局范围，因此所写矩阵确为密度态。
+
+固定前缀 $w$，置 $s_w=\sum_{j<k}4^{-j-1}w_j$。当 $k=0$ 或 $w_{k-1}=0$ 时，尾部范围的下确界为 $0$、上确界为 $b_w=c_k$。当 $k\ge1$ 且 $w_{k-1}=1$ 时，第 $k$ 位被迫为零，位置 $k+1$ 起可自由接交替尾，故 $b_w=c_{k+1}$。下端用全零尾达到；上端由对应交替尾的有限截断逼近。
+有限支持串无法达到正的上端：达到成对求和界需要无限多对各自达到最大贡献。完备载体上的交替尾则达到上端。
+
+两对角态的迹距离等于第二个对角元之差的绝对值，因此纤维直径的上确界为 $b_w$。合法态
+$$
+\sigma_w=\operatorname{diag}\bigl(1-s_w-b_w/2,\ s_w+b_w/2\bigr)
+$$
+是两端态的中点，对整个纤维的误差至多 $b_w/2$；两端态合法，因为对应无限合法串的 $S$ 仍在 $[0,4/15]$。命题 124.7 的逐纤维下界又迫使任何中心，包括非对角中心，半径至少为 $b_w/2$。
+全零前缀（含空前缀）给 $b_w=c_k$，其余 $b_w\le c_k$，定理 124.6 因而给出精确缺陷。
+
+同前缀的 $S$ 差不超过 $c_k\to0$，所以无穷级数给出的对角态函数在 $\widehat X$ 连续，并由定理 124.8 唯一延拓核心任务。每个有限 $k$ 的缺陷仍严格为正；“任意小误差都有有限深度”不蕴含“某个有限深度误差为零”。
+
+**命题 124.11（逐输入最终正确仍有固定最坏缺陷）。** 本命题取 $d=2$，记 $P_a=|a\rangle\langle a|$，$a\in\{0,1\}$，以 $0^\infty$ 表示总零串。定义
+$$
+T_0(x)=\begin{cases}P_0,&x=0^\infty,\\P_1,&x\ne0^\infty.\end{cases}
+$$
+则对每个有限 $k$，$\omega_k(T_0)=1$、$e_k(T_0)=1/2$。但存在一列确定性前缀预测器，对每个固定输入最终完全正确。
+证明。全零前缀纤维同时包含 $0^\infty$ 和仅在某个 $j\ge k$ 取 $1$ 的合法串；它们的目标态距离为 $D(P_0,P_1)=1$。其余纤维若含已见 $1$，目标态恒为 $P_1$。故最大纤维直径为 $1$，一般下界给 $e_k\ge1/2$。
+对全零前缀输出 $(P_0+P_1)/2$，对已见 $1$ 的前缀输出 $P_1$，便把最坏误差控制在 $1/2$，证明等式。
+
+另取确定性表 $A_k(w)$：已经见到 $1$ 时输出 $P_1$，否则输出 $P_0$。总零输入在所有深度都正确；任一非零输入有首个 $1$ 的下标 $j$，从 $k=j+1$ 起永远正确。因此
+$$
+\forall x\in X_{\rm fs},\quad
+\lim_{k\to\infty}D(T_0(x),A_k(q_kx))=0,
+\qquad
+\forall k,\quad\sup_{x\in X_{\rm fs}}D(T_0(x),A_k(q_kx))=1.
+$$
+后式由每层尚未出现的单个 $1$ 实现。这个确定性表并非最优混态表，不能将其误差 $1$ 与最优缺陷 $1/2$ 混用；同样不能把纤维直径误写成 $1/2$。
+远处的单个 $1$ 趋于总零串，目标态却恒为 $P_1$，所以 $T_0$ 在核心的总零点不连续，更无连续延拓。
+
+**命题 124.12（任务逐个有限与整个任务族一致有限的区别）。** 本命题取 $d=2$，对每个 $j\ge0$ 定义坐标任务 $T_j(x)=P_{x_j}$，则
+$$
+e_k(T_j)=\begin{cases}0,&j<k,\\1/2,&j\ge k.\end{cases}
+$$
+若先提供前缀、再揭示任务 $j$，允许模拟器按 $(j,w)$ 选择态，但在所有 $j,x$ 上评价最坏误差，则
+$$
+E_k=\inf_{(\sigma_{j,w})\in\mathcal D_2^{\mathbb N\times W_k}}
+\sup_{j\in\mathbb N,\ x\in X_{\rm fs}}D(T_j(x),\sigma_{j,q_kx})=1/2
+$$
+对每个有限 $k$ 成立。这不是一次同时制备所有任务的联合量子态的要求。
+证明。$j<k$ 时该位已被记录，直接输出 $P_{w_j}$ 即精确。$j\ge k$ 时，总零串与仅第 $j$ 位为 $1$ 的串同属全零前缀纤维，迫使误差至少为 $1/2$；常值中点态表给上界。
+对任务族，任意表固定取 $j=k$，同一对串仍迫使最坏误差至少为 $1/2$。同时给所有已记录任务输出对应纯态、所有未记录任务输出中点态，达到该界。
+
+每个 $T_j$ 都连续延拓且在深度 $j+1$ 精确；有限非空任务集 $J$ 有共同精确深度 $1+\max J$，空任务集没有约束。然而对无限任务族，以下两个量词序列不同：
+$$
+\forall j\ \exists K\ \forall k\ge K,\ e_k(T_j)=0,
+\qquad
+\exists K\ \forall j\ \forall k\ge K,\ e_k(T_j)=0.
+$$
+本例满足前者而否定后者，甚至对任意小于 $1/2$ 的共同误差预算也否定后者的近似版本。
+一般固定有限维、由非空集合 $J$ 标记的任务族 $\{T_j:X_{\rm fs}\to\mathcal D_d\}_{j\in J}$，将上式的 $\mathbb N$ 换成 $J$ 定义共同缺陷。其趋零须由共同的一致连续性条件控制：
+$$
+\forall\varepsilon>0\ \exists\delta>0\ \forall j\in J\ \forall x,y\in X_{\rm fs},\quad
+p(x,y)<\delta\ \Longrightarrow\ D(T_j(x),T_j(y))<\varepsilon.
+$$
+在通常集合选择下，这也是充要条件：逐任务、逐纤维选择最优中心使共同缺陷等于 $\sup_j e_k(T_j)$；两侧直径界将其趋零化为 $\sup_j\omega_k(T_j)\to0$，再用定理 124.8 中相同的前缀阈值证明。仅有每个任务各自的一致连续性不提供这个共同模量。
+
+**命题 124.13（第 123 节逐层条件与线程完备性的勘注）。** 对第 123 节的逆系统，以下条件必须分开：$z_n\in q_n[X]$ 对每个 $n$ 成立；以及 $\pi_n(z_{n+1})=z_n$ 对每个 $n$ 成立。第 123.2 节“每个有限层都有实现”若被单独用来推出逆极限成员身份，须替换为这两项的合取。
+证明与精确定义。取 $X=\{0,1\}$，各层 $Q_n=X$，$q_n$ 和 $\pi_n$ 都是恒等映射。令 $z_n$ 依奇偶交替为 $0,1$；每一层都有实现，但相邻两层不相容，故不在逆极限。
+
+对非空 $X$，若使用实际像 $Q_n=q_n[X]$，每个 $Q_n$ 有限且取离散拓扑，连接映射由兼容读数限制而来，则自然像 $\iota[X]$ 在 $\varprojlim Q_n$ 中稠密。事实上，取线程 $z$ 的任一基本邻域，它只限制有限多个坐标；令 $m$ 为受限坐标的最大值，选 $x$ 使 $q_mx=z_m$。反复使用相容性，便有所有 $n\le m$ 的 $q_nx=z_n$，所以该像点在邻域中。没有坐标限制时任取 $x\in X$ 即可。
+因此这里定义
+$$
+\operatorname{Ghost}(X)=\left(\varprojlim q_n[X]\right)\setminus\iota[X]
+$$
+才能只计实际有限读数相容后仍无法实现的线程。若改用较大陪域，$X=\{0\}$、各层 $Q_n=\{0,1\}$、$q_n(0)=0$、$\pi_n={\rm id}$ 已给反例：常值 $1$ 线程从未在任何层命中，也不在自然像的闭包中。
+
+代数术语 $\operatorname{ThreadComplete}$ 的定义是 $\iota:X\to\varprojlim Q_n$ 满射；若各层不分离对象，也可等价说商嵌入 $\bar\iota$ 满射。它不是对任意给定拓扑或度量的完备性结论。例如在 $X_{\rm fs}$ 上改取离散距离，空间完备，但前缀线程仍含不属于核心的交替无限串。第 123.3 节与本节命题 124.2 指定前缀拓扑、稠密嵌入和完备载体，才把该具体线程空间识别为度量完备化。
+
+**命题 124.14（第 123.4 节 Hilbert 动力学界的充分条件）。** 设 $H$ 为 Hilbert 空间，$S_n\subseteq H$ 为递增闭子空间，$P_n:H\to S_n$ 为正交投影。每个 $T_n:S_n\to S_n$ 是有界线性算子，并满足对所有 $n\le m$ 和 $u\in S_m$，
+$$
+P_n(T_mu)=T_n(P_nu).
+$$
+若有有限 $M\ge0$ 使 $\sup_n\|T_n\|\le M$，则逐层作用保持有界相容线程，并有
+$$
+\sup_n\|T_nz_n\|\le M\sup_n\|z_n\|.
+$$
+证明。令 $B=\sup_n\|z_n\|<\infty$，则 $\|T_nz_n\|\le\|T_n\|\|z_n\|\le MB$。而线程相容性给
+$P_n(T_mz_m)=T_n(P_nz_m)=T_nz_n$，两项条件俱全。
+这将第 123.4 节的算子界明确为上述类型中的充分条件；本命题不把它断言为无条件必要条件，也不从它推出有限支持像保持。
+
+后一个限制可具体检验。取 $H=\ell^2(\mathbb N)$、$S_n$ 为前 $n$ 个坐标子空间，$v_j=2^{-j-1}$，则 $\|v\|^2=1/3$。令 $T_0=0$，$n\ge1$ 时置 $T_nu=u_0P_nv$。它们投影相容且 $\|T_n\|\le\|v\|$，但由有限支持向量 $e_0$ 所给的线程，经逐层作用后重建为无限支持的 $v$。故保持 Hilbert 有界线程与保持原有限支持载体是两项不同要求。
+
+**命题 124.15（第 123.5 节归一化记录 Gram 条件的勘注）。** 有限复矩阵 $G$ 能表示某个有限维 Hilbert 空间内一族归一化记录向量的 Gram 矩阵，当且仅当它是 Hermitian、半正定且对角元全为 $1$。若预先固定记录空间维数为 $r$，还须且只须 $\operatorname{rank}G\le r$；严格正定不是必要条件。
+证明。若 $G_{ab}=\langle v_a,v_b\rangle$，则 $c^*Gc=\|\sum_a c_av_a\|^2\ge0$，共轭对称性给 Hermitian 性，归一化给单位对角；秩不超过记录空间维数。
+反向由有限维谱分解取 $B$ 使 $G=B^*B$，$B$ 的各列即所需向量，对角条件使各列范数为 $1$。只保留非零特征值可在维数 $\operatorname{rank}G$ 中实现，再嵌入给定的 $r$ 维空间。
+至少两个记录全取同一单位向量时，Gram 矩阵全为 $1$，秩为 $1$，合法而奇异。因此第 123.5 节的“Gram 矩阵的正定性”在归一化记录意义下应读作上述半正定条件；它与通道完全正性、动力学像集不变性仍是不同类型的要求。
+
+**约定 124.16（来源、证明范围与后续问题）。** 本节所引 CSA、Z 与 Q 分别指 `CONTEXTUAL_SPACETIME_ARITHMETIC.md`、`CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md` 与本量子卷。CSA 定义 1–3、§§14–16，Z371.1–2、Z477.3，以及 Q54.7、Q57、Q120–122 的引用版本均为仓库提交 `58d94fb6c3b75e5f0fc33f184e510f46949efdca`；Q123 的引用版本为 `71d892f05c219488670b0a10ca6b9bf11b975cfe`。Q54.7 给纤维直径与近似预测的两侧界，Q57 固定特定未来实验族；Q120 使用含参考的过程 diamond 缺陷，Q121–122 的态族缺陷和 Q123 的线程问题各保留原类型。本节将历史参数集明确换成 $X_{\rm fs}$ 并使用上确界，所需证明已逐项给出。
+
+同一基线版本的 `D5/S3/Quantum/Completion/BoundedInverseLimitReconstruction.lean` 中，`bounded_inverse_limit_reconstruction` 在完备内积空间、单调且具有正交投影的子空间序列上，给累积闭子空间与有界相容线程的规范线性等距双射，并给最终残余商的同类表示。`D5/S3/Quantum/Completion/CompatibleUnboundedCoordinates.lean` 的 `compatible_unbounded_coordinates` 给实际 $\ell^2$ 坐标截断线程、范数平方为 $n$、无界及无法由单个 $\ell^2$ 向量投影实现等结论。`D5/S3/ConceptDynamics/RefinementGeometry/InverseLimitCompletion.lean` 的 `ThreadComplete` 定义为 `stateThread` 满射，`stateThread_bijective_iff_complete_and_separates` 对应线程完备与各层联合分离的合取，不带拓扑完备性的假设或结论。这些声明分别支持所写类型中的既有结果，不承载本节的新前缀缺陷桥。
+
+一般完备延拓与 Heine–Cantor 原理可见钉版 Mathlib（`lake-manifest.json` 的 mathlib 修订 `db584cd6d46c92f209a44c0f1c829460d327499d`，`v4.33.0`）：`Mathlib/Topology/UniformSpace/Completion.lean` 的 `UniformSpace.Completion.extension`、`extension_coe`、`uniformContinuous_extension`、`extension_unique`，以及 `Mathlib/Topology/UniformSpace/HeineCantor.lean` 的 `CompactSpace.uniformContinuous_of_continuous`。延拓的正确限制要求原映射一致连续；目标完备且分离时具有相应唯一性，不能仅凭对任意函数可写下 extension 定义就声称得到延拓。本节是结合这些通常原理与所引仓内模型的 `repo-derived` 普通证明，不提出新颖性或新增 Lean 认证主张。
+
+本节的静态制备模型只比较指定经典输入族的输出态，不保证隐藏参考关联、相干输入行为或自适应过程的模拟；这些要求须另指定联合态或完整过程。定理 124.8 的存在性不提供有效连续模量或高效求最优中心的算法，有限维紧性所得中心存在性也未推广到无限维态空间。下一项研究问题因此是：在增加参考或过程结构后，哪些可检验的连续性与紧性条件仍能给出相应缺陷的精确延拓判据。
+
+## 追加锚（本行以下为增补区）
+
+## 125. 均匀相干态的局部极限与表示边界
+
+本节复用 Q109 的有限均匀态及定义 124.1 的零下标合法串 $W_L$、紧载体 $\widehat X$ 和有限支持核心 $X_{\rm fs}$。固定左端第 $0$ 位而向右增加长度，取 $\varphi=(1+\sqrt5)/2$、$\alpha=\varphi^{-1}$，于是 $0<\alpha<1$ 且 $\alpha+\alpha^2=1$。记 $D_L=|W_L|=F_{L+2}$，其中 $F_0=0,F_1=1$，特别地 $D_0=1$。在完整 qubit 空间 $\mathcal K_L=(\mathbb C^2)^{\otimes L}$ 中沿用
+$$
+|\Omega_L\rangle=|\Psi_L\rangle
+=D_L^{-1/2}\sum_{w\in W_L}|w\rangle.
+$$
+所讨论的是这一个指定态族的局部极限及其柱读数的表示条件；数字载体仍区别于 CSA 定义 1–3 的事件档案。以下均为普通数学定义与证明。
+
+**命题 125.1（固定左窗口的约化极限）。** 固定整数 $n\ge1$，令 $L=n+m$，$m\ge1$，并在完整张量积上定义
+$$
+\rho_n^{(L)}=\operatorname{Tr}_{\{n,\ldots,L-1\}}
+|\Omega_L\rangle\langle\Omega_L|.
+$$
+对 $u,v\in W_n$，有
+$$
+(\rho_n^{(L)})_{uv}=
+\begin{cases}
+D_m/D_L,&u_{n-1}=v_{n-1}=0,\\
+D_{m-1}/D_L,&\text{其余合法前缀对}.
+\end{cases}
+$$
+含非法前缀的行或列全为零。置
+$$
+s_n=\sum_{u\in W_n}|u\rangle,\qquad
+t_n=\sum_{\substack{u\in W_n\\u_{n-1}=0}}|u\rangle.
+$$
+当 $L\to\infty$ 且 $n$ 固定时，$\rho_n^{(L)}$ 在迹范数下收敛到
+$$
+\rho_n=\alpha^{n+1}|s_n\rangle\langle s_n|
+       +\alpha^{n+2}|t_n\rangle\langle t_n|.
+$$
+每个 $\rho_n$ 都正、迹为 $1$、秩恰为 $2$，且在完整 qubit 空间之间满足
+$$
+\operatorname{Tr}_{\{n\}}\rho_{n+1}=\rho_n.
+$$
+
+证明。偏迹的矩阵元是使 $uz$ 与 $vz$ 同时合法的长度 $m$ 尾字 $z$ 的数量除以 $D_L$。若两个前缀末位均为 $0$，任意 $z\in W_m$ 均可；否则 $z$ 的首位必须为 $0$，余下 $m-1$ 位任意合法，数量为 $D_{m-1}$。这个计数也含 $m=1$ 的情形。非法前缀不可能被延长为合法字，故相应行列为零。
+
+由 Binet 公式 $F_k=(\varphi^k-(-\varphi^{-1})^k)/\sqrt5$，固定 $n$ 时有
+$$
+\lim_{m\to\infty}\frac{D_m}{D_{m+n}}=\alpha^n,
+\qquad
+\lim_{m\to\infty}\frac{D_{m-1}}{D_{m+n}}=\alpha^{n+1}.
+$$
+两前缀末位均为 $0$ 时，所列 $\rho_n$ 的矩阵元为 $\alpha^{n+1}+\alpha^{n+2}=\alpha^n$；其余合法对为 $\alpha^{n+1}$，所以它正是逐元极限。固定维数 $2^n$ 下，矩阵元收敛给 Hilbert–Schmidt 范数收敛，再由 $\|B\|_1\le\sqrt{2^n}\|B\|_{\rm HS}$ 给迹范数收敛。
+
+两个系数严格为正，故 $\rho_n$ 正且其核为 $s_n^\perp\cap t_n^\perp$。向量 $t_n$ 非零；合法词 $0^{n-1}1$ 在 $s_n$ 中的系数为 $1$，在 $t_n$ 中为 $0$，而 $0^n$ 在两者中的系数都为 $1$，故两向量线性独立，秩恰为 $2$。这里直接计算极限的秩，并未假定取极限保持有限态的秩。
+
+为核对偏迹，对任意长度 $n$ 的前缀对求
+$$
+(\operatorname{Tr}_{\{n\}}\rho_{n+1})_{uv}
+=\sum_{a\in\{0,1\}}(\rho_{n+1})_{ua,va}.
+$$
+若 $u,v$ 合法且末位均为 $0$，附 $0$ 与附 $1$ 两项分别是 $\alpha^{n+1}$、$\alpha^{n+2}$，和为 $\alpha^n$。其余合法对只有共同附 $0$ 的项非零，为 $\alpha^{n+1}$。含非法前缀的两项均为零。这证明全矩阵偏迹相容。最后
+$$
+\rho_1=\begin{pmatrix}\alpha&\alpha^2\\\alpha^2&\alpha^2\end{pmatrix},
+\qquad \operatorname{Tr}\rho_1=\alpha+\alpha^2=1;
+$$
+偏迹保持迹，逐层得到全部归一化。Q109 的有限 Schmidt 秩与谱公式在此只作为既有有限态背景。
+
+**命题 125.2（完整局部代数上的态及局部弱星极限）。** 令 $\mathcal A_n=M_{2^n}(\mathbb C)$，嵌入为 $A\mapsto A\otimes I_2$，以 $\mathcal A_{\rm loc}$ 表示按这些嵌入识别后的代数并，$\mathcal A$ 为其算子范数完备化，即单侧 qubit UHF 代数。存在唯一态 $\omega:\mathcal A\to\mathbb C$ 满足
+$$
+\omega(A)=\operatorname{Tr}(\rho_n A)\qquad(A\in\mathcal A_n).
+$$
+将每个有限态 $|\Omega_L\rangle\langle\Omega_L|$ 接上全零乘积尾态，得到 $\mathcal A$ 上的态 $\widetilde\omega_L$，则
+$$
+\widetilde\omega_L(A)\longrightarrow\omega(A)\qquad(A\in\mathcal A).
+$$
+这里弱星收敛指 $\sigma(\mathcal A^*,\mathcal A)$ 下逐可观测量收敛。任意其它态延拓，只要在前 $L$ 位与该有限密度一致，也有同一极限。上述代数嵌入不由合法空间上的压缩自动给出。
+
+证明。令 $\omega_n(A)=\operatorname{Tr}(\rho_n A)$。命题 125.1 给
+$$
+\omega_{n+1}(A\otimes I_2)=\omega_n(A),\qquad
+|\omega_n(A)|\le\|A\|,\qquad \omega_n(I)=1.
+$$
+所以这些泛函在 $\mathcal A_{\rm loc}$ 上定义一个良定、范数为 $1$ 的线性泛函，并唯一连续延拓到 $\mathcal A$。为核对延拓的正性，给定 $B\in\mathcal A$，取局部 $B_j\to B$，则 $B_j^*B_j\to B^*B$ 且 $\omega(B_j^*B_j)\ge0$，故 $\omega(B^*B)\ge0$。$\mathcal A$ 是 $C^*$ 代数，每个正元都是其正平方根的平方，故延拓为正；其单位值仍为 $1$，即为态。稠密性也给唯一性。
+
+全零尾延拓可具体按有限层定义：前 $k\le L$ 位取 $|\Omega_L\rangle\langle\Omega_L|$ 的约化密度，前 $k>L$ 位取
+$$
+|\Omega_L\rangle\langle\Omega_L|
+\otimes|0^{k-L}\rangle\langle0^{k-L}|.
+$$
+这组密度正、归一且偏迹相容，故由刚才的延拓论证给 $\widetilde\omega_L$。固定 $A\in\mathcal A_n$，当 $L\ge n+1$ 时，
+$$
+|\widetilde\omega_L(A)-\omega(A)|
+\le\|\rho_n^{(L)}-\rho_n\|_1\|A\|\longrightarrow0.
+$$
+对一般 $A\in\mathcal A$ 及 $\varepsilon>0$，取局部 $B$ 使 $\|A-B\|<\varepsilon$。两态范数均为 $1$，故差值不超过 $2\varepsilon+|\widetilde\omega_L(B)-\omega(B)|$，得到逐点收敛。同一论证只用前 $L$ 位的密度和态范数为 $1$，因而适用于所说的任何延拓。固定窗口的迹范数收敛与这里的弱星收敛，不给出全局密度的迹范数收敛结论。
+
+压缩的区别已有两位反例。令 $Q$ 为 $\mathcal K_2$ 到 $\operatorname{span}\{|00\rangle,|01\rangle,|10\rangle\}$ 的正交投影，$X=\begin{pmatrix}0&1\\1&0\end{pmatrix}$，定义 $\kappa(A)=Q(A\otimes I_2)Q$，视为合法子空间上的算子。因为 $(X\otimes I_2)|01\rangle=|11\rangle$，有
+$$
+\kappa(X)^2|01\rangle=0,
+\qquad
+\kappa(X^2)|01\rangle=|01\rangle.
+$$
+所以这条压缩不是乘法同态，不能用它把 $M_{|W_n|}(\mathbb C)$ 自动组成通常张量嵌入塔。这只否定所写压缩方案，不排除其它受约束代数的构造，也不规定完整局部代数的所有动力学保持无相邻 $1$ 的约束。
+
+**命题 125.3（固定左边界柱律与 Z 圆周概率）。** 对 $u\in\{0,1\}^n$，$n\ge1$，记 $[u]=\{x\in\widehat X:q_nx=u\}$，并约定 $[\varnothing]=\widehat X$。存在唯一 Borel 概率 $\mu$ 满足
+$$
+\mu([u])=\omega(|u\rangle\langle u|)=
+\begin{cases}
+\alpha^{n+u_{n-1}},&u\in W_n,\\
+0,&u\notin W_n.
+\end{cases}
+$$
+在 Q124.1 对 Z 卷载体 $K$ 与 $\widehat X$ 的相同数字及 Borel 结构的识别下，$\mu=(s_Z)_*\lambda$，其中 $\lambda$ 是 Z396.1 的圆周长度概率，$s_Z:\mathbb T\to K$ 是 Z400.1 的 Borel 截面。此柱律的初始分布与行随机转移矩阵为
+$$
+q=(\alpha,\alpha^2),\qquad
+P=\begin{pmatrix}\alpha&\alpha^2\\1&0\end{pmatrix}.
+$$
+它等同于虚拟左邻位固定 $x_{-1}=0$ 后由 $P$ 生成的边界律，而非以
+$$
+\pi=\frac{(\varphi^2,1)}{\varphi^2+1}
+$$
+为初始分布的平稳 Parry 律。
+
+证明。命题 125.1 的对角元给显示的柱读数。为建立其 Borel 概率实现而不只保留一组有限分布，记 Z 卷相位映射为 $H_Z$，则 $H_Zs_Z=\operatorname{id}_{\mathbb T}$。$s_Z$ 为 Borel，故 $\nu=(s_Z)_*\lambda$ 是 $K$ 上的 Borel 概率。
+
+将 Z381.2 对应于合法词 $u$ 的柱集和定向开弧分别记作 $C_u^Z$、$A_u^Z$；其两个端点为 $E_i,E_j$，该条定向弧的长度为 $\alpha^{n+u_{n-1}}$。那里的完整端点公式给
+$$
+C_u^Z=H_Z^{-1}(A_u^Z)\cup\{e_i^+,e_j^-\}.
+$$
+由于截面逐点落在相应相位纤维中，这个等式蕴含
+$$
+s_Z^{-1}(C_u^Z)\mathbin{\triangle}A_u^Z
+\subseteq\{E_i,E_j\}.
+$$
+Z396.1 给两个端点的质量均为零，开弧的质量等于其长度，因而
+$$
+\nu(C_u^Z)=\lambda(s_Z^{-1}(C_u^Z))
+=\lambda(A_u^Z)=\alpha^{n+u_{n-1}}.
+$$
+非法柱为空，空前缀柱为整个载体，故可取 $\mu=\nu$。前缀柱集连同空集构成生成 Borel 集的 $\pi$ 系统：交集或为空、或为其中更深的柱集，且这些柱集是可数拓扑基。概率测度的唯一性定理遂使任意具有全部相同柱读数的 Borel 概率都等于 $\nu$。这里不需要 $H_Z$ 或 $s_Z$ 为双射，也不忽略开弧内部可能存在的分裂纤维。
+
+每个合法柱都具有正质量，可以逐柱计算条件概率。若 $u_{n-1}=0$，则
+$$
+\frac{\mu([u0])}{\mu([u])}=\alpha,
+\qquad
+\frac{\mu([u1])}{\mu([u])}=\alpha^2.
+$$
+若 $u_{n-1}=1$，则 $u1$ 非法，而
+$$
+\frac{\mu([u0])}{\mu([u])}
+=\frac{\alpha^{n+1}}{\alpha^{n+1}}=1,
+\qquad
+\frac{\mu([u1])}{\mu([u])}=0.
+$$
+初始一位柱质量给 $q$，上述比值只依赖末位，证明 Markov 性及所列 $P$；$q$ 正好是 $P$ 的第 $0$ 行。由 $\pi_1=\pi_0\alpha^2$ 与 $\pi_0+\pi_1=1$，得到所列唯一平稳分布，亦即 `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY.md` 第1594部的分布。
+
+明确地，对数字左移 $\sigma(x)_j=x_{j+1}$，有
+$$
+\mu(\sigma^{-1}[1])=(qP)_1=\alpha^3
+\ne\alpha^2=\mu([1]).
+$$
+所以非平稳性是相对于数字左移而言；它不把数字左移与 Z 卷的算术后继或圆周旋转认作同一变换。与 Z 概率相同的只是对角柱数据，不能据此认定整个量子态相同：例如 $\langle0|\rho_1|1\rangle=\alpha^2>0$，是柱概率本身未指定的相干读数。
+
+**命题 125.4（有限支持基上的 normal 密度障碍及其表示边界）。** 在 $H_{\rm fs}=\ell^2(X_{\rm fs})$ 中取标准基 $(e_x)_{x\in X_{\rm fs}}$，对每个有限词 $u$ 定义柱投影
+$$
+C_ue_x=\mathbf1_{\{q_{|u|}x=u\}}e_x.
+$$
+不存在正迹类算子 $R$ 满足 $\operatorname{Tr}R=1$ 且同时对所有有限词有 $\operatorname{Tr}(RC_u)=\mu([u])$。尽管每个有限深度的全部柱读数都可由该空间上的有限秩密度精确实现，这些实现不能由一个这样的 $R$ 统一承担。此外，$\mu$ 的每个单点质量均为零，$\mu(X_{\rm fs})=0$。局部态 $\omega$ 仍有 GNS 表示及其中的秩一密度实现。
+
+证明。有限支持核心可写为
+$$
+X_{\rm fs}=\bigcup_{N\ge0}\{u0^\infty:u\in W_N\},
+$$
+故它可数；补零保持合法性。对任意 $x\in\widehat X$，递减的柱集 $[q_nx]$ 的交恰为 $\{x\}$，由概率测度的从上连续性有
+$$
+\mu(\{x\})=\lim_{n\to\infty}\mu([q_nx])
+\le\lim_{n\to\infty}\alpha^n=0.
+$$
+单点为闭集，可数个这样的单点给 $X_{\rm fs}$ 为 Borel 零测集。
+
+假设所说的 $R$ 存在。对每个 $x\in X_{\rm fs}$ 及 $n\ge1$，秩一投影满足 $|e_x\rangle\langle e_x|\le C_{q_nx}$。正迹类算子定义正迹泛函；具体地，对正有界 $B$ 有 $\operatorname{Tr}(RB)=\operatorname{Tr}(R^{1/2}BR^{1/2})\ge0$。所以
+$$
+0\le\langle e_x,Re_x\rangle
+\le\operatorname{Tr}(RC_{q_nx})
+=\mu([q_nx])\le\alpha^n\longrightarrow0.
+$$
+每个基对角元均为零，而正迹类算子的迹等于任意可数正交标准基上的对角元之和，得到
+$$
+1=\operatorname{Tr}R
+=\sum_{x\in X_{\rm fs}}\langle e_x,Re_x\rangle=0,
+$$
+矛盾。证明没有要求 $R$ 对角化或与柱投影对易，也没有假定整个 UHF 代数在 $H_{\rm fs}$ 上具有某个自然表示。
+
+为给出有限深度的准确对照，对固定 $N\ge1$ 定义
+$$
+R_N=\sum_{u\in W_N}\mu([u])
+|e_{u0^\infty}\rangle\langle e_{u0^\infty}|.
+$$
+这些不同的补零串是正交基标记，系数非负且和为 $1$，故 $R_N$ 为正归一有限秩密度。对 $|v|\le N$，深度 $N$ 的细柱分割 $[v]$，从而
+$$
+\operatorname{Tr}(R_NC_v)
+=\sum_{\substack{u\in W_N\\u|_{|v|}=v}}\mu([u])
+=\mu([v]).
+$$
+这里仅匹配对角柱读数，没有把 $R_N$ 与 Q109 的相干纯态或其约化矩阵认作同一密度。
+
+最后直接给 $\omega$ 的通常 GNS 构造。取
+$$
+\mathcal N_\omega=\{B\in\mathcal A:\omega(B^*B)=0\},
+\qquad
+\langle[B],[C]\rangle=\omega(B^*C)
+$$
+并以第二变量线性的内积约定使用此式。正性作用于 $(B+zC)^*(B+zC)$ 给 Cauchy–Schwarz 不等式，故零半范数元与所有元正交，商 $\mathcal A/\mathcal N_\omega$ 上的内积良定。由 $A^*A\le\|A\|^2I$ 得
+$$
+\omega(B^*A^*AB)\le\|A\|^2\omega(B^*B).
+$$
+因此 $\mathcal N_\omega$ 是左理想，左乘 $[B]\mapsto[AB]$ 良定且范数至多 $\|A\|$；它延拓到商内积空间的完备化 $H_\omega$，记作 $\pi_\omega(A)$。左乘保持乘法和单位，且由内积公式其伴随为 $\pi_\omega(A^*)$，所以 $\pi_\omega$ 是幺星表示。向量 $\xi=[I]$ 的范数为 $1$，$\pi_\omega(A)\xi=[A]$ 的线性张成稠密，故 $\xi$ 循环，且
+$$
+\omega(A)=\langle\xi,\pi_\omega(A)\xi\rangle
+=\operatorname{Tr}_{H_\omega}
+\bigl(|\xi\rangle\langle\xi|\,\pi_\omega(A)\bigr).
+$$
+秩一密度位于 $B(H_\omega)$，其向量态限制到 $\pi_\omega(\mathcal A)$ 不因此必为纯态。normal 实现依赖指定的可观测量与表示，不能只由抽象 Hilbert 空间的基数判断。因而本命题给的是有限支持基及上述柱投影的实现障碍，同时保留了全局代数态及其它 Hilbert 表示的实现。
+
+**约定 125.5（引用与证明范围）。** Q、Z、CSA 分别指本量子卷、`CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md`、`CONTEXTUAL_SPACETIME_ARITHMETIC.md`。本节所引 Q109、Q123–124、Z381.2、Z396.1、Z400.1、CSA 定义 1–3 及 `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY.md` 第1594部，均取仓库提交 `c225a37b44971d289ae51b8b324f5cef78e31b82` 的版本。Q123–124 的载体与相容性问题在这里落实为有限相干态、局部代数态和指定表示中的柱读数问题；所用局部极限不另申报 Q109 的有限 Schmidt 结论。
+
+同一版本 `D5/S1/Digit/Infinite/WindowCylinderPartition.lean` 的 `window_cylinder_partition` 给合法窗口的区间几何、准确弧长及定向端点纤维，其结论不含本节的量子态构造。`D5/S3/Quantum/Measurements/OrthogonalAdditivity.lean` 的 `orthogonal_additivity` 在 `SequentiallyNormal` 与 `strong_complete` 等假设下给正交投影族的可数可加性；命题 125.4 使用直接的正迹类论证，不把这些假设省略后援引该声明。
+
+钉版 Mathlib 修订 `db584cd6d46c92f209a44c0f1c829460d327499d` 的 `Mathlib/Analysis/CStarAlgebra/GelfandNaimarkSegal.lean` 提供 `PositiveLinearMap.gnsStarAlgHom`，该文件明确将单位循环向量的构造列为 TODO，故它不作为上文完整循环向量结论的现成证明；上文已独立给出通常 GNS 构造。本节为结合所引模型与标准概率、算子代数方法的 `repo-derived` 普通推导，不提出新颖性或新增 Lean 认证主张。
+
+## 追加锚（本行以下为增补区）
+
+## 126. 固定尾零载体上的事件组合预算与精确最优误差
+
+固定非负整数 $K,N$ 与正整数 $M$，令 $\alpha=(\sqrt5-1)/2$，$F_0=0,F_1=1,F_{j+2}=F_{j+1}+F_j$。沿用 Q123–125 的前缀方向，以
+$$
+X=\{x\in\{0,1\}^{\mathbb N}:x_jx_{j+1}=0\ \text{对所有 }j\ge0\},
+\qquad W_n=q_n[X],\qquad W_0=\{\varnothing\}
+$$
+表示完整合法流及其长度 $n$ 前缀，$q_nx=(x_0,\ldots,x_{n-1})$。记 $[u]=\{x\in X:q_nx=u\}$，$[\varnothing]=X$，并固定尾零载体
+$$
+S_K=\{w0^\infty:w\in W_K\},\qquad
+D_K=|S_K|=|W_K|=F_{K+2}.
+$$
+$\operatorname{Prob}(S_K)$ 指集中在这个指定集合上的全部概率，允许个别原子质量为零；$U_K$ 为每点质量 $1/D_K$ 的均匀概率，即 Q109 有限均匀态的基测量分布补零后的概率。
+
+目标取 Q125.3 的固定虚拟左邻位为零的边界律，其全部柱读数在此明确为
+$$
+\mu([\varnothing])=1,\qquad
+\mu([u])=
+\begin{cases}
+\alpha^{n+u_{n-1}},&u\in W_n,\ n\ge1,\\
+0,&u\notin W_n.
+\end{cases}
+$$
+这些权重由 $\alpha+\alpha^2=1$ 相容：末位为零的柱分成权重比为 $\alpha,\alpha^2$ 的两柱，末位为一的柱只能接零且质量不变；初层质量之和为一。因此通常的相容有限分布延拓与柱集唯一性给出 $X$ 上的唯一 Borel 概率。该律不对数字左移平稳，因为 $\mu(x_1=1)=\alpha^3\ne\alpha^2=\mu(x_0=1)$。这里的数字流与概率事件保留各自类型，不与 CSA 定义 1–3 的情境档案混同。
+
+**命题 126.1（同层柱集组合预算的精确极小极大值）。** 对 $\nu\in\operatorname{Prob}(S_K)$ 定义
+$$
+d_M(\nu,\mu)=\sup_{n\ge1}\,
+\max_{\substack{J\subseteq W_n\\|J|\le M}}
+\left|\nu\left(\bigcup_{u\in J}[u]\right)
+      -\mu\left(\bigcup_{u\in J}[u]\right)\right|.
+$$
+每个 $J$ 中的柱集必须有同一个深度 $n$，空 $J$ 允许。则
+$$
+\min_{\nu\in\operatorname{Prob}(S_K)}d_M(\nu,\mu)
+=\min\left(1,\frac{M}{D_K}\right).
+$$
+若 $M<D_K$，唯一经典最优分布是 $U_K$；若 $M\ge D_K$，全部 $\nu$ 的误差均为 $1$。后一情形在 $K\ge1$ 时不唯一，在 $K=0$ 时定义域本身只有 $\delta_{0^\infty}=U_0$。对 $U_K$，任一有限深度的上述事件差都严格小于所列上确界，故不能把对深度的 $\sup$ 换成 $\max$。
+
+证明。将 $D=D_K$ 个原子质量排序为 $p_1\ge\cdots\ge p_D\ge0$，令 $m=\min(M,D)$、$T_m=\sum_{i=1}^mp_i$。在每个 $n>K$，前 $m$ 个原子的深度 $n$ 前缀给两两不交的隔离柱，每柱在 $\mu$ 下均有质量 $\alpha^n$，故
+$$
+d_M(\nu,\mu)\ge |T_m-m\alpha^n|.
+$$
+令 $n\to\infty$，得到 $d_M(\nu,\mu)\ge T_m\ge m/D$，最后一步是最大 $m$ 个质量的平均值不小于全部质量的平均值。
+
+下面证明 $U_K$ 的上界。若 $1\le n\le K$、$u\in W_n$ 且 $b=u_{n-1}$，合法延长计数给
+$$
+U_K([u])=\frac{F_{K-n+2-b}}{D_K}.
+$$
+末位零时可接任意长度 $K-n$ 的合法尾字；末位一且仍需延长时，下一位被迫为零。这两种计数也包含 $n=K$ 时的空延长，分别为 $F_2=F_1=1$。置 $r=K-n+2-b$、$s=K+2$，则 $1\le r<s$、$s-r=n+b$。Binet 公式给
+$$
+F_r-\alpha^{s-r}F_s
+=\frac{-(-\alpha)^r+\alpha^{s-r}(-\alpha)^s}{\sqrt5},
+\qquad
+\left|F_r-\alpha^{s-r}F_s\right|
+\le\frac{2\alpha}{\sqrt5}<1.
+$$
+因此每个这样的柱误差严格小于 $1/D_K$。
+
+若 $n>K$，每个柱在 $U_K$ 下的质量为零或 $1/D_K$，而
+$$
+0<\mu([u])\le\alpha^n\le\alpha^{K+1}<\frac1{D_K}
+\qquad(u\in W_n).
+$$
+最后一个严格不等式在 $K=0$ 时是 $\alpha<1$；在 $K\ge1$ 时，深度 $K$ 的柱权重 $\alpha^K$ 与 $\alpha^{K+1}$ 均出现且总和为一，故其平均值满足
+$$
+\alpha^{K+1}<\frac1{D_K}<\alpha^K.
+$$
+这也使每个深柱误差严格小于 $1/D_K$。同层柱集互不相交，对至多 $M$ 项求和并用三角不等式，得到事件差至多 $M/D_K$；概率差又至多为一。结合下界即得最优值。$M<D_K$ 时，有限深度事件差严格小于 $M/D_K$；$M\ge D_K$ 时，有限层的 $\mu_n$ 对每个合法词赋正质量，所以不存在两概率相差为一的事件，仍严格小于上确界一。
+
+当 $M<D$ 且 $\nu$ 最优时，下界迫使 $T_M=M/D$。于是
+$$
+\sum_{i\le M<j}(p_i-p_j)=D T_M-M=0.
+$$
+每项非负，故所有跨越分界的差均为零；两侧均非空，遂使全部质量相等，证明唯一性。若 $M\ge D$，下界已为一，概率上界给每个 $\nu$ 都取一，包括 $K=0$ 的单点定义域。
+
+**命题 126.2（有限窗口总变差及截断的最优者）。** 记 $\nu_n=(q_n)_*\nu$、$\mu_n=(q_n)_*\mu$，在有限集 $W_n$ 上取
+$$
+\operatorname{TV}(p,q)=\frac12\sum_{u\in W_n}|p(u)-q(u)|.
+$$
+则
+$$
+\min_{\nu\in\operatorname{Prob}(S_K)}
+\max_{0\le n\le N}\operatorname{TV}(\nu_n,\mu_n)
+=\begin{cases}
+0,&N\le K,\\
+1-D_K\alpha^N,&N>K.
+\end{cases}
+$$
+$N\le K$ 时最优者恰为满足 $\nu_N=\mu_N$ 的分布；$N>K$ 时最优者恰为原子质量
+$$
+p_w=\nu(\{w0^\infty\})\ge\alpha^N
+\qquad(w\in W_K)
+$$
+的分布。令 $\tau_Kx=(q_Kx)0^\infty$、$\nu^{\rm cut}=(\tau_K)_*\mu$，则 $\nu^{\rm cut}$ 是唯一同时对所有非负整数 $N$ 最优的分布。$U_K$ 与 $\nu^{\rm cut}$ 都对每个固定 $N>K$ 最优，但
+$$
+d_1(\nu^{\rm cut},\mu)=\alpha^K,
+\qquad
+\alpha^K>\frac1{D_K}\quad(K\ge1).
+$$
+$K=0$ 时两分布相同，$N=0$ 的误差为零，$N>0$ 的最优误差为 $1-\alpha^N$，而 $d_1=1$。
+
+证明。前缀投影收缩总变差，故对每个固定 $\nu$ 有
+$$
+\max_{0\le n\le N}\operatorname{TV}(\nu_n,\mu_n)
+=\operatorname{TV}(\nu_N,\mu_N).
+$$
+当 $N\le K$ 时，$q_N:S_K\to W_N$ 满射，任意目标前缀都可补零至长度 $K$，因此可以给这些原像分配质量以精确实现 $\mu_N$；总变差为零当且仅当两有限分布相同。这也包括 $N=0$，此时所有概率的空前缀分布相同。
+
+当 $N>K$ 时，$\nu_N$ 集中在
+$$
+A_{K,N}=\{w0^{N-K}:w\in W_K\}\subseteq W_N,
+\qquad |A_{K,N}|=D_K
+$$
+上，其中每个词在 $\mu_N$ 下的质量都是 $a=\alpha^N$。有限概率的重叠质量公式遂给出精确式
+$$
+\operatorname{TV}(\nu_N,\mu_N)
+=1-\sum_{w\in W_K}\min(p_w,a)
+\ge1-D_Ka.
+$$
+逐项 $\min(p_w,a)\le a$，等号成立当且仅当每项 $p_w\ge a$。命题 126.1 证明中的 $a\le\alpha^{K+1}<1/D_K$ 说明这些条件可由 $U_K$ 同时满足，故下界可达。
+
+截断概率在所有 $n\le K$ 精确保持柱读数，且其原子质量为
+$$
+\nu^{\rm cut}(\{w0^\infty\})=
+\begin{cases}
+\alpha^{K+w_{K-1}},&K\ge1,\\
+1,&K=0.
+\end{cases}
+$$
+$K\ge1$ 时每项至少为 $\alpha^{K+1}$，$K=0$ 时唯一质量为一，所以它也满足每个 $N>K$ 的等号条件。反过来，同时最优必在 $N=K$ 精确实现 $\mu_K$；$q_K:S_K\to W_K$ 是双射，故原子质量被唯一确定为截断概率。这证明全部窗口同时最优的唯一性，并不把固定深窗口的两类最优者分开。
+
+为计算截断概率的 $d_1$，$n\le K$ 的柱误差为零。$K\ge1$ 且 $n>K$ 时，含有支撑原子的柱误差为 $p_w-\alpha^n$，其中 $\alpha^{K+1}\le p_w\le\alpha^K$；不含支撑原子的柱误差至多为 $\alpha^n\le\alpha^{K+1}$。故 $d_1\le\alpha^K$，而 $[0^n]$ 上的差为 $\alpha^K-\alpha^n$，趋于 $\alpha^K$，证明等号。$K=0$ 时同一柱上的差为 $1-\alpha^n$，上确界为一。命题 126.1 中的严格平均值界给 $K\ge1$ 时与 $1/D_K$ 的严格差异。因此，精确保留截至 $K$ 的读数与优化全深度的受限事件误差是不同任务，虽然后者的均匀最优者与截断概率都优化每个 $N>K$ 的固定窗口。
+
+由命题 126.1，固定 $M$ 时最优误差随 $K\to\infty$ 趋于零；若正整数预算 $M_K$ 随 $K$ 变化，则该误差趋零当且仅当 $M_K/D_K\to0$。$M$ 只计一次事件表达允许使用的同深度柱集数，不是运行时间、能量或物理存储量。若完全取消这个数目的限制，有限层事件变分式给全层事件差的最大值为 $\operatorname{TV}(\nu_n,\mu_n)$；对任意固定 $K$ 与 $\nu\in\operatorname{Prob}(S_K)$，事件 $A_{K,n}$ 的差为 $1-D_K\alpha^n$，故全部深度上的上确界为一。这是 Z458.5 的有限或可数支撑对无原子概率的既有分离机制在前缀事件中的体现，不另作为新增结论。
+
+量子读数只给如下带条件的下界。固定 $n>K$，在 $\mathcal K_n=(\mathbb C^2)^{\otimes n}$ 的计算基上，令 $P_{K,n}$ 为投到 $\operatorname{span}\{|u\rangle:u\in A_{K,n}\}$ 的正交投影。设 $\sigma_n,\rho_n$ 为密度算子，且
+$$
+\sigma_n=P_{K,n}\sigma_nP_{K,n},\qquad
+\langle u|\rho_n|u\rangle=\mu_n(u)
+\quad(u\in\{0,1\}^n),
+$$
+其中非法词的目标对角质量为零。以 $D(\sigma,\rho)=\tfrac12\|\sigma-\rho\|_1$ 记迹距，则
+$$
+D(\sigma_n,\rho_n)
+\ge\left|\operatorname{Tr}\bigl(P_{K,n}(\sigma_n-\rho_n)\bigr)\right|
+=1-D_K\alpha^n.
+$$
+证明此测量界只需将迹零 Hermitian 算子 $H=\sigma_n-\rho_n$ 写成正负谱部分 $H_+-H_-$：两部分的迹均为 $\|H\|_1/2$，而 $0\le P_{K,n}\le I$ 使 $\operatorname{Tr}(P_{K,n}H)$ 位于这两个相反界之间。支撑条件使 $\operatorname{Tr}(P_{K,n}\sigma_n)=1$，指定对角律使另一迹为 $D_K\alpha^n$。若每个 $n>K$ 的前缀都满足所列条件，则由迹距至多为一得到全深度上确界一。仅有秩或 Hilbert 空间维数不能推出这里的支撑条件；经典最优等式也不直接给量子迹距的等号或相干态最优者唯一性。
+
+本节引用的 Q109、Q123–124、Z381.2（柱弧）、Z396.1（长度概率）、Z400.1（Borel 截面）、Z458.5 及 CSA 定义 1–3，取仓库提交 `ca874c0d5f5c42b3546795595814b36df13d1013`；Q125.3 的正文版本为 `7af72f9910546ca2aa0bfa3a6bbaed4d8a393efb`。前一提交的 `D5/S3/TotalVariation/Metric.lean` 中 `total_variation_eq_sup_event_gap` 给等质量有限函数的事件变分式，`D5/S3/TotalVariation/DataProcessing.lean` 中 `total_variation_channel_le` 给随机通道收缩，`D5/S1/Scale/FibonacciErrorRatio.lean` 中 `fibonacci_golden_residual` 给相邻 Fibonacci 数的黄金残差。这些是所用既有输入；本节的两条最优性命题及条件量子界为 `repo-derived` 普通数学推导，不据此提出外部新颖性、Lean 准入或完整 Lean 认证主张。
+
+## 追加锚（本行以下为增补区）
+
+## 127. 固定尾零支撑下相干局部态的精确迹距离
+
+固定整数 $n>K\ge0$，令 $\alpha=(\sqrt5-1)/2$、$F_0=0,F_1=1,F_{j+2}=F_{j+1}+F_j$，并沿用从第 $0$ 位向右的前缀方向。记
+$$
+W_j=\{w\in\{0,1\}^j:w_iw_{i+1}=0\ \text{对所有 }0\le i<j-1\},
+\qquad W_0=\{\varnothing\},
+\qquad \mathcal K_n=(\mathbb C^2)^{\otimes n}.
+$$
+在完整 $n$ qubit 空间的计算基上，取未归一化向量及指定目标
+$$
+s_n=\sum_{u\in W_n}|u\rangle,
+\qquad
+t_n=\sum_{\substack{u\in W_n\\u_{n-1}=0}}|u\rangle,
+\qquad
+\rho_n=\alpha^{n+1}|s_n\rangle\langle s_n|
+       +\alpha^{n+2}|t_n\rangle\langle t_n|.
+$$
+这正是 Q125.1 的相干局部极限；非法词方向上的行、列均为零。预算固定的是具体计算基支撑
+$$
+A=A_{K,n}=\{w0^{n-K}:w\in W_K\},
+\qquad
+P=P_{K,n}=\sum_{u\in A}|u\rangle\langle u|,
+\qquad
+\mathcal F_{K,n}=\{\sigma\ge0:\operatorname{Tr}\sigma=1,\ \sigma=P\sigma P\}.
+$$
+可行态允许混合及支撑内的任意相干。以
+$$
+d_{\rm tr}(\rho,\sigma)=\frac12\|\rho-\sigma\|_1,
+\qquad \|X\|_1=\operatorname{Tr}\sqrt{X^*X}
+$$
+采用半迹范数约定，字母 $D$ 只用于计数。以下简记
+$$
+D=F_{K+2},\qquad B=F_{n+1},\qquad C=F_n,\qquad b=B-D,
+$$
+$$
+m=D\alpha^n,\qquad
+\delta=\alpha^{2n+3}BC,\qquad
+\eta=\alpha^{2n+3}bC,\qquad
+c=1-m-\delta,
+$$
+并置
+$$
+|a\rangle=D^{-1/2}\sum_{u\in A}|u\rangle,
+\qquad \tau_{K,n}=|a\rangle\langle a|.
+$$
+
+**命题 127.1（指定相干目标的尾零最优误差）。** 对所有整数 $n>K\ge0$，$\tau_{K,n}$ 达到
+$$
+e_{K,n}=\min_{\sigma\in\mathcal F_{K,n}}d_{\rm tr}(\rho_n,\sigma).
+$$
+精确值 $e_{K,n}$ 是三次方程
+$$
+x^3-cx-\eta=0
+$$
+的唯一严格正实根。边界为
+$$
+e_{K,K+1}=\alpha^{K+2}\sqrt{F_{K+1}F_{K+3}},
+\qquad e_{0,1}=\sqrt2\,\alpha^2.
+$$
+若 $\mu_n(u)=\langle u|\rho_n|u\rangle$ 为计算基读数，在全部集中于 $A$ 的经典概率 $\nu$ 上取
+$$
+\operatorname{TV}(\nu,\mu_n)
+=\frac12\sum_{u\in\{0,1\}^n}|\nu(u)-\mu_n(u)|,
+$$
+则有严格比较
+$$
+e_{K,n}>1-m
+=\min_{\nu:\,\nu(A)=1}\operatorname{TV}(\nu,\mu_n).
+$$
+其中经典最小值由 $\tau_{K,n}$ 的对角分布达到。固定 $K$ 后，同一个有限均匀态
+$$
+|\Psi_K\rangle=D^{-1/2}\sum_{w\in W_K}|w\rangle
+$$
+接上全零尾部，给出所有 $n>K$ 的上述量子最优者，因为
+$$
+\tau_{K,n}=|\Psi_K\rangle\langle\Psi_K|
+\otimes|0^{n-K}\rangle\langle0^{n-K}|.
+$$
+$K=0$ 时 $|\Psi_0\rangle$ 按空张量积的单位向量理解。
+
+证明。先核对计数与归一化。长度 $n\ge1$ 的合法词中，末位零、末位一的数量分别是 $B=F_{n+1}$、$C=F_n$：末位零可由任意长度 $n-1$ 合法词接零得到；末位一在 $n\ge2$ 时由长度 $n-2$ 合法词接 $01$ 得到，$n=1$ 时两类各有一词。连同 $|W_0|=1,|W_1|=2$，这给 $|W_j|=F_{j+2}$。补零把 $W_K$ 单射到末位零的一类，故 $|A|=D\le B$、$b\ge0$，且 $C,D>0$。Fibonacci 数从下标 $2$ 起严格递增，所以在本参数域内 $b=0$ 当且仅当 $n=K+1$。
+
+由 $\alpha+\alpha^2=1$，$\rho_n$ 的合法对角元为
+$$
+\mu_n(u)=
+\begin{cases}
+\alpha^n,&u_{n-1}=0,\\
+\alpha^{n+1},&u_{n-1}=1.
+\end{cases}
+$$
+非法词的对角元为零。恒等式
+$$
+\alpha^n(F_{n+1}+\alpha F_n)=1
+$$
+在 $n=1$ 时是 $\alpha(1+\alpha)=1$；若它在 $n$ 成立，则
+$$
+\alpha^{n+1}(F_{n+2}+\alpha F_{n+1})
+=\alpha^n\bigl(\alpha(1+\alpha)F_{n+1}+\alpha F_n\bigr)
+=\alpha^n(F_{n+1}+\alpha F_n)=1.
+$$
+因此所列正算子 $\rho_n$ 的迹为一，而且
+$$
+\operatorname{Tr}(P\rho_n)=m,
+\qquad 0<m\le B\alpha^n=1-C\alpha^{n+1}<1.
+$$
+
+现在证明最优性。在本证明内简写 $\tau=\tau_{K,n}$。由于 $A$ 的全部词都以零结尾，
+$$
+Ps_n=Pt_n=\sqrt D\,|a\rangle.
+$$
+$Q=P-\tau$ 是正交投影，$R=I-Q$ 也是正交投影，且 $Qs_n=Qt_n=0$。取 $\operatorname{ran}Q$ 的正交标准基 $(q_j)_{j=1}^{D-1}$，以 $R$ 及 $|a\rangle\langle q_j|$ 为 Kraus 算子。它们满足
+$$
+R^*R+\sum_{j=1}^{D-1}
+\bigl(|a\rangle\langle q_j|\bigr)^*
+\bigl(|a\rangle\langle q_j|\bigr)
+=R+Q=I,
+$$
+故
+$$
+\Phi(X)=RXR+\operatorname{Tr}(QX)\tau
+$$
+是完全正保迹通道。$Q\rho_n=\rho_nQ=0$ 使 $\Phi(\rho_n)=\rho_n$。另一方面，$RP=PR=\tau$，所以每个 $\sigma\in\mathcal F_{K,n}$ 都满足
+$$
+R\sigma R=\langle a|\sigma|a\rangle\tau,
+\qquad
+\operatorname{Tr}(Q\sigma)=1-\langle a|\sigma|a\rangle,
+\qquad \Phi(\sigma)=\tau.
+$$
+这里 $D=1$ 时 $Q=0$，Kraus 求和为空，等式仍成立。由迹距离在通道下的收缩性，
+$$
+d_{\rm tr}(\rho_n,\tau)
+=d_{\rm tr}(\Phi(\rho_n),\Phi(\sigma))
+\le d_{\rm tr}(\rho_n,\sigma).
+$$
+收缩性也可直接从正负谱部分核对：对 Hermitian 算子 $Y=Y_+-Y_-$，正性、保迹性与三角不等式给
+$$
+\|\Phi(Y)\|_1
+\le\operatorname{Tr}\Phi(Y_+)+\operatorname{Tr}\Phi(Y_-)
+=\operatorname{Tr}Y_++\operatorname{Tr}Y_-=\|Y\|_1.
+$$
+$\tau$ 本身可行，故最小值确由它达到。$\Phi$ 在这里是比较态的数学通道，不以它属于某个物理可实现的制备资源集为前提。
+
+为求这个最小值，置 $H=\rho_n-\tau$。将合法词分成三个互不相交的词组：$A$、末位零但不在 $A$ 的词、末位一的词。$H$ 在各非空词组的均匀向量张成空间之外为零。由于 $C>0$，始终定义
+$$
+|v\rangle=C^{-1/2}\sum_{\substack{u\in W_n\\u_{n-1}=1}}|u\rangle.
+$$
+当 $b>0$ 时再定义
+$$
+|z\rangle=b^{-1/2}\sum_{\substack{u\in W_n\setminus A\\u_{n-1}=0}}|u\rangle.
+$$
+此时 $(a,z,v)$ 是正交标准组，其上的实际三维压缩为
+$$
+H_3=\alpha^n
+\begin{pmatrix}
+D&\sqrt{Db}&\alpha\sqrt{DC}\\
+\sqrt{Db}&b&\alpha\sqrt{bC}\\
+\alpha\sqrt{DC}&\alpha\sqrt{bC}&\alpha C
+\end{pmatrix}
+-\operatorname{diag}(1,0,0).
+$$
+当 $b=0$ 时不定义空词组的归一化向量 $z$，只用 $(a,v)$，实际二维压缩为
+$$
+H_2=\alpha^n
+\begin{pmatrix}
+D&\alpha\sqrt{DC}\\
+\alpha\sqrt{DC}&\alpha C
+\end{pmatrix}
+-\operatorname{diag}(1,0).
+$$
+在两种情形下都有 $\operatorname{Tr}H=0$。对 $y\perp a$，
+$$
+\langle y|H|y\rangle=\langle y|\rho_n|y\rangle\ge0,
+\qquad
+\langle a|H|a\rangle=m-1<0.
+$$
+若负谱子空间至少二维，它与 $a^\perp$ 有非零交，便同时给出严格负和非负的二次型值，矛盾。因此 $H$ 恰有一个负特征值，记为 $-e$，其中 $e>0$。迹为零使正特征值之和为 $e$，从而 $\|H\|_1/2=e=e_{K,n}$。
+
+接着计算不变量。$\rho_n$ 在整个末位零类与末位一类的两个归一化均匀向量上具有矩阵
+$$
+\alpha^n
+\begin{pmatrix}
+B&\alpha\sqrt{BC}\\
+\alpha\sqrt{BC}&\alpha C
+\end{pmatrix}.
+$$
+其行列式为
+$$
+\alpha^{2n}(\alpha-\alpha^2)BC
+=\alpha^{2n+3}BC=\delta>0,
+$$
+其中 $\alpha-\alpha^2=\alpha^3$。这个二维矩阵之外 $\rho_n$ 为零，且其迹为一，所以
+$$
+\operatorname{Tr}\rho_n^2=1-2\delta,
+\qquad
+\operatorname{Tr}H^2
+=\operatorname{Tr}\rho_n^2-2\langle a|\rho_n|a\rangle+1
+=2(1-m-\delta)=2c.
+$$
+$H\ne0$ 为 Hermitian 算子，故 $c>0$。
+
+当 $b>0$ 时，$\rho_n$ 的三维压缩秩为二、行列式为零。将它的第一对角元减去一，行列式恰减去对应的余子式，得到
+$$
+\det H_3
+=-\alpha^{2n}(\alpha-\alpha^2)bC
+=-\eta.
+$$
+迹零三维矩阵的二次基本对称式为 $-\operatorname{Tr}H_3^2/2=-c$，于是
+$$
+\det(\lambda I_3-H_3)=\lambda^3-c\lambda+\eta.
+$$
+代入唯一负特征值 $\lambda=-e$ 得 $e^3-ce-\eta=0$。反过来，每个严格正实根 $x$ 都使 $-x$ 成为 $H_3$ 的负特征值，故严格正实根唯一。
+
+当 $b=0$ 时使用实际的 $H_2$：它的迹为零、平方迹为 $2c$，所以
+$$
+\det H_2=-c,\qquad
+\operatorname{spec}(H_2)=\{-\sqrt c,\sqrt c\}.
+$$
+此时 $\eta=0$，三次方程是 $x(x^2-c)=0$，唯一严格正实根仍是 $e=\sqrt c$；二维行列式是 $-c$，不是三维补零矩阵的零行列式。
+
+在边界 $n=K+1$，有 $D=B$，归一化恒等式进一步把实际二维矩阵写成
+$$
+H_2=\alpha^{n+1}
+\begin{pmatrix}
+-C&\sqrt{DC}\\
+\sqrt{DC}&C
+\end{pmatrix}.
+$$
+因此
+$$
+e_{K,K+1}^2=\alpha^{2n+2}C(C+D)
+=\alpha^{2K+4}F_{K+1}F_{K+3},
+$$
+由 $e_{K,K+1}>0$ 即得所列平方根。$K=0$ 时 $D=1$，可行支撑为 $|0^n\rangle$ 张成的一维空间，上述通道与谱论证对每个 $n>0$ 仍适用；其中 $n=1$ 给 $C=D=1$，故 $e_{0,1}=\sqrt2\,\alpha^2$。
+
+最后核对经典最优值与严格差距。显式对角律在 $A$ 上每词赋质量 $\alpha^n$，总质量为 $m$。对任意 $\nu(A)=1$，总变差的事件界给
+$$
+\operatorname{TV}(\nu,\mu_n)\ge|\nu(A)-\mu_n(A)|=1-m.
+$$
+该事件界直接来自差函数总和为零，其正部、负部之和各等于总变差。令 $\nu$ 在 $A$ 上均匀，则 $m<1$ 给 $1/D>\alpha^n$，从而 $A$ 内外的绝对差之和分别为
+$$
+\sum_{u\in A}\left(\frac1D-\alpha^n\right)=1-m,
+\qquad
+\sum_{u\notin A}\mu_n(u)=1-m.
+$$
+半和恰为 $1-m$，这既证明经典最优值，也说明 $\tau$ 的对角分布达到它。
+
+量子严格性则来自 $H$ 的非对角作用。无论 $b$ 是否为零，末位一类的均匀向量 $v$ 都已定义且与 $a$ 正交，并满足
+$$
+\langle v|H|a\rangle=\alpha^{n+1}\sqrt{DC}>0.
+$$
+因此 $a$ 不是 $H$ 的特征向量。Rayleigh 商达到最小特征值当且仅当向量属于相应特征空间，故
+$$
+-e_{K,n}=\lambda_{\min}(H)
+<\langle a|H|a\rangle=m-1,
+$$
+即 $e_{K,n}>1-m$。张量积公式直接由 $A$ 的定义得到，证明固定的 $|\Psi_K\rangle$ 接全零尾部同时给出每个 $n>K$ 的最优者。证毕。
+
+这里的差距比较完整 POVM 所能取得的态区分总变差与只读计算基的总变差。它依赖所列相干目标及固定尾零支撑，不是对所有目标或每种受限测量的结论，也不是过程的 diamond 范数界。它不表示最优值依赖计算基的相位角：任意计算基对角酉算子 $U$ 都与 $P$ 对易，共轭使 $\mathcal F_{K,n}$ 双射到自身，迹范数的酉不变性便给
+$$
+\min_{\sigma\in\mathcal F_{K,n}}d_{\rm tr}(U\rho_nU^*,\sigma)=e_{K,n}.
+$$
+固定支撑也不能换成仅有维数的预算；若 $K\ge1$，则 $D\ge2$，而上面的正二维行列式给 $\operatorname{rank}\rho_n=2$，允许任选 $D$ 维子空间就能令其包含 $\operatorname{ran}\rho_n$，以 $\sigma=\rho_n$ 达到零误差。
+
+本节的 Q109、Q125.1、Q125.3 取仓库提交 `7af72f9910546ca2aa0bfa3a6bbaed4d8a393efb`；Q126.2 的固定尾零载体及经典窗口比较取提交 `dc4af5d3b06e66c8be5fe63ffd5fc1ace63e2c7e`，这里已从显式对角律独立证明所需经典最优值。迹距离的数据处理是既有标准结论，前一提交的 `D5/S3/Quantum/Foundation/FiniteTraceDistance.lean` 中 `traceDistance_contract` 对应所用收缩性，其范围不包含本节完整最优化。命题 127.1 为 `repo-derived` 普通数学推导，不提出外部新颖性或完整 Lean 认证主张。
+
+## 追加锚（本行以下为增补区）
+
+## 128. 尾零量子最优者的唯一性与短窗口保真的代价
+
+固定整数 $n>K\ge0$，取 $\alpha=(\sqrt5-1)/2$、$F_0=0,F_1=1,F_{j+2}=F_{j+1}+F_j$。窗口从第 $0$ 位向右延伸，记
+$$
+W_j=\{w\in\{0,1\}^j:w_iw_{i+1}=0\ \text{对所有 }0\le i<j-1\},
+\qquad W_0=\{\varnothing\},
+\qquad D_K=|W_K|=F_{K+2}.
+$$
+完整载体与其中的合法词子空间分别为
+$$
+\mathcal K_j=(\mathbb C^2)^{\otimes j},
+\qquad
+\mathcal L_j=\operatorname{span}\{|w\rangle:w\in W_j\}\subseteq\mathcal K_j,
+\qquad \mathcal K_0=\mathcal L_0=\mathbb C.
+$$
+目标是 Q125.1、Q127.1 所指定的相干态族：$\rho_0=(1)$，而对 $j\ge1$，
+$$
+s_j=\sum_{w\in W_j}|w\rangle,
+\qquad
+t_j=\sum_{\substack{w\in W_j\\w_{j-1}=0}}|w\rangle,
+\qquad
+\rho_j=\alpha^{j+1}|s_j\rangle\langle s_j|
+       +\alpha^{j+2}|t_j\rangle\langle t_j|.
+$$
+这里 $s_j,t_j$ 未归一化，$\rho_j$ 是完整 $\mathcal K_j$ 上的密度算子，非法词方向上的行、列为零。补零等距映射及可行域为
+$$
+V=V_{K,n}:\mathcal L_K\longrightarrow\mathcal K_n,
+\qquad V|w\rangle=|w0^{n-K}\rangle,
+\qquad P=VV^*,
+$$
+$$
+\mathcal F_{K,n}
+=\{\sigma\text{ 为 }\mathcal K_n\text{ 上的密度算子}:\sigma=P\sigma P\}.
+$$
+因此固定的是 $\{w0^{n-K}:w\in W_K\}$ 的具体尾零支撑，允许该支撑内的混合及任意相干。置
+$$
+|\Psi_K\rangle=D_K^{-1/2}\sum_{w\in W_K}|w\rangle,
+\qquad |a\rangle=V|\Psi_K\rangle,
+\qquad \tau=\tau_{K,n}=|a\rangle\langle a|,
+\qquad Q=P-\tau.
+$$
+采用半迹范数 $d_{\rm tr}(\rho,\sigma)=\tfrac12\|\rho-\sigma\|_1$。Q127.1 的普通证明给出
+$$
+e=e_{K,n}=d_{\rm tr}(\rho_n,\tau)
+=\min_{\sigma\in\mathcal F_{K,n}}d_{\rm tr}(\rho_n,\sigma)
+>1-D_K\alpha^n>0,
+$$
+并给出 $H=\rho_n-\tau$ 的负谱子空间恰为一维。取其中单位向量 $\zeta$，使 $H\zeta=-e\zeta$，定义
+$$
+r=r_{K,n}=\|P\zeta\|^2.
+$$
+谱投影 $|\zeta\rangle\langle\zeta|$ 及 $r$ 均与 $\zeta$ 的相位选择无关。对 $K\ge1$ 再记
+$$
+B_K=F_{K+1},\qquad C_K=F_K,\qquad D_K=B_K+C_K,
+\qquad \kappa_K=\alpha^{K+2}\frac{B_KC_K}{D_K},
+$$
+并单独定义 $\kappa_0=0$；空词不使用末位分类。
+
+**命题 128.1（投影余量、唯一最优者与短窗口保真冲突）。** 对所有上述整数 $n>K\ge0$，有 $0<r_{K,n}<1$。每个 $\sigma\in\mathcal F_{K,n}$ 若记 $p=\langle a|\sigma|a\rangle$，则
+$$
+d_{\rm tr}(\rho_n,\sigma)
+\ge e_{K,n}+(1-r_{K,n})(1-p).
+$$
+因而 $\tau_{K,n}$ 是该可行域内唯一的迹距离最优者。
+
+每个可行态唯一写成 $\sigma=V\theta V^*$，其中 $\theta$ 是 $\mathcal L_K$ 上的密度算子；把 $\theta$ 在非法词方向延零，视为完整 $\mathcal K_K$ 上的算子，则其完整张量积偏迹为
+$$
+\operatorname{Tr}_{\{K,\ldots,n-1\}}\sigma=\theta.
+$$
+所以精确保留前 $K$ 位目标 $\rho_K$ 的唯一可行延拓是
+$$
+\sigma^{\rm cut}_{K,n}=V\rho_KV^*
+=\rho_K\otimes|0^{n-K}\rangle\langle0^{n-K}|.
+$$
+乘积 $V\rho_KV^*$ 中的 $\rho_K$ 取其在 $\mathcal L_K$ 上的限制，右端及偏迹仍在完整 qubit 空间中解释。此延拓也精确保留所有 $0\le j\le K$ 的目标前缀 $\rho_j$。令
+$$
+p_K=\langle\Psi_K|\rho_K|\Psi_K\rangle.
+$$
+对 $K\ge1$，有
+$$
+p_K=\alpha^{K+1}D_K+\alpha^{K+2}\frac{B_K^2}{D_K},
+\qquad 1-p_K=\kappa_K>0,
+$$
+以及严格的长窗口额外误差
+$$
+g_{K,n}:=d_{\rm tr}(\rho_n,\sigma^{\rm cut}_{K,n})-e_{K,n}
+\ge(1-r_{K,n})\kappa_K>0.
+$$
+对 $K=0$，$p_0=1$，唯一可行态就是 $\tau_{0,n}=\sigma^{\rm cut}_{0,n}$，没有这种冲突。
+
+更一般地，任取非负容差 $\varepsilon_{\rm short},\varepsilon_{\rm large}$。若某个可行态及其短窗口 $\theta$ 同时满足
+$$
+d_{\rm tr}(\theta,\rho_K)\le\varepsilon_{\rm short},
+\qquad
+d_{\rm tr}(\rho_n,\sigma)\le e_{K,n}+\varepsilon_{\rm large},
+$$
+则必有
+$$
+\varepsilon_{\rm large}
+\ge(1-r_{K,n})\max\{\kappa_K-\varepsilon_{\rm short},0\}.
+$$
+这只是必要条件，一般并不充分，也不是可达误差对的精确 Pareto 边界。
+
+对每个固定的 $K\ge1$，各有限 $n>K$ 的冲突严格为正，但实际差距满足
+$$
+0<g_{K,n}\le1-e_{K,n}<D_K\alpha^n\longrightarrow0
+\qquad(n\to\infty).
+$$
+因而不存在对所有 $n>K$ 统一成立的正差距下界。投影余量的系数也退化：
+$$
+e_{K,n}\le r_{K,n}<1,
+\qquad
+0<1-r_{K,n}\le1-e_{K,n}<D_K\alpha^n\longrightarrow0.
+$$
+
+证明。先构造实际用于余量界的测量。由于支撑中的每个词均以零结尾，
+$$
+Ps_n=Pt_n=\sqrt{D_K}\,|a\rangle.
+$$
+$Q=P-\tau$ 是正交投影，且 $Qs_n=Qt_n=0$，故 $Q\rho_n=\rho_nQ=0$ 及 $QH=HQ=0$。由
+$$
+0=QH\zeta=-eQ\zeta
+$$
+和 $e>0$ 得 $Q\zeta=0$。于是
+$$
+P\zeta=\tau\zeta=\langle a|\zeta\rangle a,
+\qquad r=|\langle a|\zeta\rangle|^2.
+$$
+若 $r=0$，则
+$$
+-e=\langle\zeta|H|\zeta\rangle
+=\langle\zeta|\rho_n|\zeta\rangle\ge0,
+$$
+矛盾。若 $r=1$，则单位向量 $\zeta$ 属于 $\operatorname{ran}P$，结合 $Q\zeta=0$ 可知它与 $a$ 平行，故 $a$ 必为 $H$ 的特征向量。然而 Q127.1 中始终非空的末位一词组给单位向量
+$$
+|v\rangle=F_n^{-1/2}\sum_{\substack{u\in W_n\\u_{n-1}=1}}|u\rangle,
+\qquad v\perp\operatorname{ran}P,
+$$
+并且由显式目标直接有
+$$
+\langle v|H|a\rangle
+=\alpha^{n+1}\sqrt{D_KF_n}>0.
+$$
+这与 $a$ 为特征向量矛盾，故 $0<r<1$。这里 $F_n>0$ 对每个 $n>K\ge0$ 成立，$n=K+1$ 也无需引入任何空词组的归一化向量。
+
+由 $Q\zeta=0$，两个正交投影 $|\zeta\rangle\langle\zeta|$ 与 $Q$ 的乘积在两个方向上均为零，因此
+$$
+E=|\zeta\rangle\langle\zeta|+Q,
+\qquad E^*=E,\qquad E^2=E,\qquad 0\le E\le I.
+$$
+它与 $I-E$ 构成二元投影测量。对任意可行 $\sigma$，支撑条件和 $P\zeta=\langle a|\zeta\rangle a$ 给
+$$
+\operatorname{Tr}(E\sigma)
+=\langle\zeta|\sigma|\zeta\rangle+\operatorname{Tr}(Q\sigma)
+=rp+1-p.
+$$
+另一方面，$Q\rho_n=0$ 及 $H\zeta=-e\zeta$ 给
+$$
+\operatorname{Tr}(E\rho_n)
+=\langle\zeta|\rho_n|\zeta\rangle
+=\langle\zeta|(H+\tau)|\zeta\rangle=r-e.
+$$
+在本次应用中，将迹零 Hermitian 算子 $Y=\sigma-\rho_n$ 写成正负谱部分 $Y_+-Y_-$；两部分的迹都是 $\|Y\|_1/2$，且 $0\le\operatorname{Tr}(EY_\pm)\le\operatorname{Tr}Y_\pm$，所以
+$$
+|\operatorname{Tr}(EY)|\le\tfrac12\|Y\|_1=d_{\rm tr}(\rho_n,\sigma).
+$$
+两个期望相减恰为 $e+(1-r)(1-p)>0$，这便证明投影余量界。
+
+Q127.1 已给 $\tau$ 达到最小值 $e$。若 $\sigma$ 也达到该值，$1-r>0$ 与 $0\le p\le1$ 迫使 $p=1$。此时
+$$
+\operatorname{Tr}\bigl((I-\tau)\sigma(I-\tau)\bigr)=1-p=0.
+$$
+括号中的算子为正，迹零使它为零，消去了 $a^\perp$ 内的全部方向。对任意 $x\perp a$，正算子的 Cauchy–Schwarz 不等式又给
+$$
+|\langle x|\sigma|a\rangle|^2
+\le\langle x|\sigma|x\rangle\langle a|\sigma|a\rangle=0,
+$$
+其共轭交叉项也为零。因此 $\sigma=p\tau=\tau$，唯一性成立；这里并未使用迹范数的严格凸性。
+
+下面核对短窗口及其唯一延拓。$V^*V=I_{\mathcal L_K}$，故可行态给出密度算子 $\theta=V^*\sigma V$，且 $V\theta V^*=P\sigma P=\sigma$；反向乘以 $V^*,V$ 也证明 $\theta$ 唯一。按合法词基展开，
+$$
+V\theta V^*
+=\sum_{w,u\in W_K}\theta_{wu}
+  |w\rangle\langle u|\otimes|0^{n-K}\rangle\langle0^{n-K}|.
+$$
+尾部秩一投影的迹为一，故在完整张量积上取尾部偏迹正好得到延零后的 $\theta$，并非在较小的合法空间上另定义偏迹。特别地，短窗口等于 $\rho_K$ 当且仅当 $\theta=\rho_K$，得到所列唯一的 $\sigma^{\rm cut}_{K,n}$。Q125.1 的完整偏迹相容性逐层迭代，使该态的前 $j$ 位等于 $\rho_j$，$1\le j\le K$；空窗口为标量迹一，即 $\rho_0$。
+
+对 $K\ge1$，末位零、末位一的词数分别为 $B_K,C_K$，两者均正。由未归一化向量的定义，
+$$
+\langle\Psi_K|s_K\rangle=\sqrt{D_K},
+\qquad
+\langle\Psi_K|t_K\rangle=\frac{B_K}{\sqrt{D_K}},
+$$
+从而得到陈述中的 $p_K$。归一化在同一记号下为
+$$
+1=\operatorname{Tr}\rho_K
+=\alpha^{K+1}D_K+\alpha^{K+2}B_K.
+$$
+两式相减，利用 $D_K-B_K=C_K$，即得
+$$
+1-p_K
+=\alpha^{K+2}\left(B_K-\frac{B_K^2}{D_K}\right)
+=\alpha^{K+2}\frac{B_KC_K}{D_K}=\kappa_K>0.
+$$
+$\sigma^{\rm cut}_{K,n}$ 的 $p$ 正是 $p_K$，代入余量界给严格额外误差。$K=0$ 时 $\mathcal L_0$ 一维，唯一密度为 $\rho_0=(1)$，$\Psi_0$ 是单位空张量；因此 $p_0=1$、$\kappa_0=0$ 及全部无冲突结论直接成立。
+
+对容差结论，$\sigma=V\theta V^*$ 给 $p=\langle\Psi_K|\theta|\Psi_K\rangle$。对完整 $\mathcal K_K$ 上的迹零算子 $\theta-\rho_K$ 应用刚才的正负部分论证，并取投影 $|\Psi_K\rangle\langle\Psi_K|$，得到
+$$
+|p-p_K|\le d_{\rm tr}(\theta,\rho_K)\le\varepsilon_{\rm short}.
+$$
+由于 $p\le1$，这蕴含
+$$
+1-p\ge\max\{\kappa_K-\varepsilon_{\rm short},0\}.
+$$
+与长窗口余量界和假设的长窗口上界合并，便是所列必要条件，$K=0$ 时右端为零。
+
+为验证它一般不充分，取 $K=1$、任意 $n>1$，以及 $\varepsilon_{\rm large}=0$、$\varepsilon_{\rm short}=\kappa_1$。这对预算满足所列必要不等式。若有可行态满足两项预算，长窗口预算及唯一性却迫使它为 $\tau_{1,n}$，短窗口只能是 $|\Psi_1\rangle\langle\Psi_1|$。此时 $\kappa_1=\alpha^3/2=\alpha-1/2>0$，由 Q125.1 的一位矩阵得到
+$$
+|\Psi_1\rangle\langle\Psi_1|-\rho_1
+=\frac12\begin{pmatrix}1&1\\1&1\end{pmatrix}
+ -\begin{pmatrix}\alpha&\alpha^2\\\alpha^2&\alpha^2\end{pmatrix}
+=\kappa_1\begin{pmatrix}-1&1\\1&1\end{pmatrix}.
+$$
+这个迹零矩阵的特征值为 $\pm\sqrt2\,\kappa_1$，故短窗口迹距离是 $\sqrt2\,\kappa_1>\varepsilon_{\rm short}$，矛盾。这给出了必要条件与可达性的严格区别。
+
+最后，任意两个密度算子的迹距离至多为一，所以对 $K\ge1$，已证的严格性与 Q127.1 的 $e_{K,n}>1-D_K\alpha^n$ 共同给
+$$
+0<g_{K,n}\le1-e_{K,n}<D_K\alpha^n.
+$$
+固定 $K$ 时右端趋零，夹逼的是实际差距本身。又因 $E$ 与 $\rho_n$ 均为正算子，
+$$
+0\le\operatorname{Tr}(E\rho_n)=r_{K,n}-e_{K,n},
+$$
+故 $r_{K,n}\ge e_{K,n}$，同时 $r_{K,n}<1$，得到所列系数退化界。证毕。
+
+本命题刻画指定相干目标与准确尾零支撑下的静态窗口相容性。Q126.2 中经典截断概率与均匀概率均优化每个固定深窗口的总变差；这里的唯一量子最优者则在 $K\ge1$ 时不能同时精确保留 $\rho_K$。投影 $E$ 是完整 $n$ 窗口上允许任意联合测量时的数学效应，未附加局域性、实施成本或可访问性条件。所证范围不包含时间演化、动态预测、任意维数预算、一般目标态或形而上必然性。
+
+本节的 Q125.1、Q126.2、Q127.1 均取[仓库不可变提交 `ac40238901406b5bba4518e306d5bb2da9fe8ba1` 的量子卷](https://github.com/the-omega-institute/trureturing/blob/ac40238901406b5bba4518e306d5bb2da9fe8ba1/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_QUANTUM.md)，依其显式普通证明使用。测量期望受迹距离控制属于 Helstrom 变分框架；Q127.1 所引同仓 `D5/S3/Quantum/Foundation/FiniteTraceDistance.lean` 提供既有有限迹距离数据处理，其覆盖范围不是本节的完整唯一性与保真冲突。命题 128.1 是 `repo-derived` 普通数学推导，不主张外部新颖性或 Lean 认证。
+
+## 追加锚（本行以下为增补区）
+
+## 129. 移动边界下的非消失尾零代价
+
+取 $\alpha=(\sqrt5-1)/2$、$F_0=0,F_1=1,F_{j+2}=F_{j+1}+F_j$，在完整 qubit 载体中记
+$$
+\mathcal K_j=(\mathbb C^2)^{\otimes j},
+\qquad
+W_j=\{w\in\{0,1\}^j:w_iw_{i+1}=0\ \text{对所有 }0\le i<j-1\},
+\qquad W_0=\{\varnothing\},
+$$
+$$
+\mathcal L_j=\operatorname{span}\{|w\rangle:w\in W_j\}\subseteq\mathcal K_j,
+\qquad \mathcal K_0=\mathcal L_0=\mathbb C.
+$$
+目标取命题 125.1 的指定密度算子 $\rho_0=(1)$ 及
+$$
+\rho_j=\alpha^{j+1}|s_j\rangle\langle s_j|
+       +\alpha^{j+2}|t_j\rangle\langle t_j|\quad(j\ge1),
+\qquad
+|s_j\rangle=\sum_{w\in W_j}|w\rangle,
+\qquad
+|t_j\rangle=\sum_{\substack{w\in W_j\\w_{j-1}=0}}|w\rangle.
+$$
+对每个整数 $K\ge0$ 取 $n=K+1$，置
+$$
+C=F_{K+1},\qquad D=F_{K+2},\qquad s=\alpha^{K+2},
+$$
+$$
+A=\{w0:w\in W_K\},
+\qquad P=\sum_{u\in A}|u\rangle\langle u|,
+\qquad
+\mathcal F_{K,K+1}=\{\sigma\ge0:\operatorname{Tr}\sigma=1,\ \sigma=P\sigma P\},
+$$
+其中 $\sigma$ 作用于完整 $\mathcal K_{K+1}$。定义精确尾零等距映射与向量
+$$
+V:\mathcal L_K\longrightarrow\mathcal K_{K+1},
+\qquad V|w\rangle=|w0\rangle,
+\qquad
+|\Psi_K\rangle=D^{-1/2}\sum_{w\in W_K}|w\rangle,
+$$
+$$
+|a\rangle=V|\Psi_K\rangle,
+\qquad \tau=|a\rangle\langle a|,
+\qquad
+|v\rangle=C^{-1/2}\sum_{\substack{u\in W_{K+1}\\u_K=1}}|u\rangle,
+\qquad \mathcal M=\operatorname{span}\{a,v\}.
+$$
+采用半迹范数约定，并以命题 127.1 的可行域定义最优误差：
+$$
+d_{\rm tr}(\rho,\sigma)=\frac12\|\rho-\sigma\|_1,
+\qquad \|X\|_1=\operatorname{Tr}\sqrt{X^*X},
+\qquad
+e_{K,K+1}=\min_{\sigma\in\mathcal F_{K,K+1}}d_{\rm tr}(\rho_{K+1},\sigma).
+$$
+记 $H=\rho_{K+1}-\tau$，令 $\Pi_-$ 为 $H$ 在完整载体上的负谱投影，定义
+$$
+r_{K,K+1}=\langle a|\Pi_-|a\rangle,
+\qquad
+\sigma^{\rm cut}_{K,K+1}=V(\rho_K|_{\mathcal L_K})V^*,
+\qquad
+g_K=d_{\rm tr}(\rho_{K+1},\sigma^{\rm cut}_{K,K+1})-e_{K,K+1}.
+$$
+这里乘积中的 $\rho_K$ 识别为它在合法支撑 $\mathcal L_K$ 上的限制；$\rho_K$ 本身仍指完整 $\mathcal K_K$ 上、在非法词方向延零的算子。对 $K\ge1$ 沿用命题 128.1 的记号
+$$
+\kappa_K=\alpha^{K+2}\frac{F_{K+1}F_K}{F_{K+2}}.
+$$
+
+**命题 129.1（移动边界的非消失尾零代价）。** 对上述指定目标与具体尾零支撑，对所有整数 $K\ge0$，在完整载体上有
+$$
+\sigma^{\rm cut}_{K,K+1}=\rho_K\otimes|0\rangle\langle0|,
+\qquad
+e_{K,K+1}=d_{\rm tr}(\rho_{K+1},\tau)=s\sqrt{C(C+D)}>0.
+$$
+$H$ 在正交标准基 $(a,v)$ 上的矩阵及其平方为
+$$
+H_2=s\begin{pmatrix}-C&\sqrt{CD}\\\sqrt{CD}&C\end{pmatrix},
+\qquad H_2^2=e_{K,K+1}^2I_2.
+$$
+$H$ 在 $\mathcal M^\perp$ 上为零，其完整负谱投影为二维负谱投影的延零：
+$$
+\Pi_{-,2}=\frac{I_2-H_2/e_{K,K+1}}2,
+\qquad \Pi_-=\Pi_{-,2}\oplus0_{\mathcal M^\perp}.
+$$
+当 $K\ge1$ 时，$\dim\ker H=2^{K+1}-2>0$，而 $(I_{\rm full}-H/e_{K,K+1})/2$ 在此核上作用为单位算子的一半，故不是负谱投影。当 $K=0$ 时，$\mathcal K_1=\mathcal M$，该完整单位算子表达式成立。对所有 $K\ge0$，重叠量为
+$$
+r_{K,K+1}=\frac{1+\sqrt{F_{K+1}/F_{K+3}}}{2}.
+$$
+取 $\kappa_0=0$，则 $g_0=0$；对 $K\ge1$ 有
+$$
+g_K\ge(1-r_{K,K+1})\kappa_K>0.
+$$
+沿 $n=K+1$ 令 $K\to\infty$，有三个极限
+$$
+e_{K,K+1}\longrightarrow\frac1{\sqrt5},
+\qquad
+1-r_{K,K+1}\longrightarrow\frac{1-\alpha}{2}=\frac{\alpha^2}{2},
+\qquad
+\kappa_K\longrightarrow\frac{\alpha^3}{\sqrt5},
+$$
+以及
+$$
+\liminf_{K\to\infty}g_K\ge L:=\frac{\alpha^5}{2\sqrt5}>0.
+$$
+另一方面，固定任意整数 $K\ge1$，令 $n>K$ 增大，并沿用命题 127.1、128.1 在具体支撑 $A_{K,n}=\{w0^{n-K}:w\in W_K\}$ 上的最优误差 $e_{K,n}$，记
+$$
+D_K=F_{K+2},
+\qquad
+\sigma^{\rm cut}_{K,n}=\rho_K\otimes|0^{n-K}\rangle\langle0^{n-K}|,
+\qquad
+g_{K,n}=d_{\rm tr}(\rho_n,\sigma^{\rm cut}_{K,n})-e_{K,n}.
+$$
+则
+$$
+0<g_{K,n}\le1-e_{K,n}<D_K\alpha^n,
+\qquad
+g_{K,n}\longrightarrow0,
+\qquad
+e_{K,n}\longrightarrow1,
+\qquad
+d_{\rm tr}(\rho_n,\sigma^{\rm cut}_{K,n})\longrightarrow1.
+$$
+
+证明。按合法词基展开 $\rho_K|_{\mathcal L_K}$，每个矩阵单位 $|w\rangle\langle u|$ 经 $V$ 变为 $|w0\rangle\langle u0|$，即 $|w\rangle\langle u|\otimes|0\rangle\langle0|$。在非法词方向延零，得到陈述中的完整载体等式。
+
+命题 127.1 的计数给 $|A|=D$、末位一合法词数为 $C$，且 $C,D>0$。当 $n=K+1$ 时，$A$ 恰为全部末位零合法词，故 $(a,v)$ 正交归一，且
+$$
+|s_{K+1}\rangle=\sqrt D\,|a\rangle+\sqrt C\,|v\rangle,
+\qquad |t_{K+1}\rangle=\sqrt D\,|a\rangle.
+$$
+因此 $H$ 在 $\mathcal M^\perp$ 上为零。将这两式代入目标公式，并用命题 127.1 的归一化恒等式 $\alpha^{K+1}(D+\alpha C)=1$，即得所列 $H_2$。直接相乘，
+$$
+H_2^2=s^2
+\begin{pmatrix}C^2+CD&0\\0&CD+C^2\end{pmatrix}
+=s^2C(C+D)I_2.
+$$
+$H_2$ 的迹为零，其特征值为 $\pm s\sqrt{C(C+D)}$。命题 127.1 给 $\tau$ 达到可行域上的最小值，半迹范数遂给 $e_{K,K+1}=s\sqrt{C(C+D)}>0$。两特征值非零，故 $\ker H=\mathcal M^\perp$。有限维谱分解给 $\Pi_{-,2}=(I_2-H_2/e_{K,K+1})/2$，在正交补上延零才是完整负谱投影。$K\ge1$ 时正交补维数 $2^{K+1}-2>0$，完整单位算子表达式在该补空间上为一半；$K=0$ 时完整空间只有两维、正交补为零，因而该表达式有效。
+
+负谱为一维，取其单位向量 $\zeta$。由于 $Pa=a$、$Pv=0$ 且 $\zeta\in\mathcal M$，这里的 $r_{K,K+1}$ 与命题 128.1 的 $\|P\zeta\|^2=|\langle a|\zeta\rangle|^2$ 相同。二维投影的第一个对角元为
+$$
+r_{K,K+1}=\langle a|\Pi_-|a\rangle
+=\frac12\left(1+\frac{sC}{e_{K,K+1}}\right)
+=\frac12\left(1+\sqrt{\frac{C}{C+D}}\right).
+$$
+用 $C+D=F_{K+3}$ 即得对所有 $K\ge0$ 的重叠公式，且 $0<r_{K,K+1}<1$。
+
+令 $h_j=\alpha^jF_j$。命题 125.1 所用 Binet 公式在本参数下给精确残差
+$$
+h_j=\frac{1-(-\alpha^2)^j}{\sqrt5},
+\qquad h_j\longrightarrow\frac1{\sqrt5},
+$$
+因为 $0<\alpha<1$。边界误差、重叠比值和 $\kappa_K$ 满足三个缩放恒等式：
+$$
+e_{K,K+1}^2=\alpha^{2K+4}F_{K+1}F_{K+3}=h_{K+1}h_{K+3},
+$$
+$$
+\frac{F_{K+1}}{F_{K+3}}=\alpha^2\frac{h_{K+1}}{h_{K+3}},
+$$
+$$
+\kappa_K=\alpha^{K+2}\frac{F_{K+1}F_K}{F_{K+2}}
+=\alpha^3\frac{h_{K+1}h_K}{h_{K+2}}.
+$$
+最后一式的指数抵消为 $K+2-(K+1)-K+(K+2)=3$；它在 $K=0$ 时也因 $F_0=h_0=0$ 与定义 $\kappa_0=0$ 一致。各分母的极限严格为正，取正平方根、商及乘积的极限，结合 $1-\alpha=\alpha^2$，得到陈述中的三个极限。
+
+命题 128.1 对此 cut 态给 $1-\langle a|\sigma^{\rm cut}_{K,K+1}|a\rangle=\kappa_K$，并由其投影余量界得到
+$$
+g_K\ge(1-r_{K,K+1})\kappa_K>0\qquad(K\ge1).
+$$
+因此
+$$
+\liminf_{K\to\infty}g_K
+\ge\lim_{K\to\infty}(1-r_{K,K+1})\kappa_K
+=\frac{\alpha^2}{2}\frac{\alpha^3}{\sqrt5}
+=\frac{\alpha^5}{2\sqrt5}>0.
+$$
+$K=0$ 时，$\rho_0=(1)$ 且 $\sigma^{\rm cut}_{0,1}=\tau=|0\rangle\langle0|$，故 $g_0=0$；改变这一有限项不影响下极限。
+
+最后，对每个固定 $K\ge1$，命题 128.1 的实际上界是 $0<g_{K,n}\le1-e_{K,n}<D_K\alpha^n$。右端随 $n\to\infty$ 趋零，故 $g_{K,n}\to0$；再用 $e_{K,n}\le1$ 得 $e_{K,n}\to1$，从而 $d_{\rm tr}(\rho_n,\sigma^{\rm cut}_{K,n})=e_{K,n}+g_{K,n}\to1$。这是固定 $K$ 的窗口序列；沿 $n=K+1$ 的窗口序列则有 $e_{K,K+1}\to1/\sqrt5<1$ 及上述正的下极限界。证毕。
+
+## 追加锚（本行以下为增补区）
+## 130. 固定二维活动记忆的相干前缀生成与容量下界
+
+**命题 130.1（同一等距的逐位生成与受限最小容量）。** 取
+$$
+\alpha=\frac{\sqrt5-1}{2},\qquad 0<\alpha<1,\qquad \alpha+\alpha^2=1,
+$$
+并令 $B=M=\mathbb C^2$，两者均以 $|0\rangle,|1\rangle$ 为正交标准基。输出空间为完整张量积 $H_n=B^{\otimes n}$，$H_0=\mathbb C$。记 $W_n\subseteq\{0,1\}^n$ 为不含相邻 $11$ 的词集，$W_0=\{\varnothing\}$；对 $n\ge1$，令 $\ell(w)=w_{n-1}$ 为末位，并置
+$$
+s_n=\sum_{w\in W_n}|w\rangle,\qquad
+t_n=\sum_{\substack{w\in W_n\\\ell(w)=0}}|w\rangle,
+$$
+$$
+\rho_n=\alpha^{n+1}|s_n\rangle\langle s_n|
+       +\alpha^{n+2}|t_n\rangle\langle t_n|,\qquad \rho_0=(1).
+$$
+这里的 $\rho_n$ 是命题 125.1 的固定左边界相干局部态，作为 $H_n$ 上的算子取值。
+
+在活动记忆中定义
+$$
+m_1=|0\rangle,\qquad m_0=\sqrt\alpha\,|0\rangle+\alpha|1\rangle,
+$$
+并以基像定义线性映射 $T:M\to B\otimes M$：
+$$
+T|0\rangle=|0\rangle\otimes m_0,\qquad
+T|1\rangle=|1\rangle\otimes m_1.
+$$
+它是等距。令 $\Xi_0=m_0$，始终按输出在前、记忆在后的次序递推
+$$
+\Xi_{n+1}=(I_{H_n}\otimes T)\Xi_n\in H_{n+1}\otimes M
+\qquad(n\ge0).
+$$
+则所有 $\Xi_n$ 均为单位向量，且对每个 $n\ge1$，
+$$
+\Xi_n=\sum_{w\in W_n}\alpha^{(n+\ell(w))/2}|w\rangle\otimes m_{\ell(w)}
+=\alpha^{(n+1)/2}s_n\otimes|0\rangle
+ +\alpha^{(n+2)/2}t_n\otimes|1\rangle.
+$$
+因而在完整输出空间上，对所有 $n\ge0$ 有
+$$
+\operatorname{Tr}_M|\Xi_n\rangle\langle\Xi_n|=\rho_n.
+$$
+非法词对应的行、列均为零，等式包含全部非对角相干项。后续只作用于记忆与新输出的等距保持已发出前缀的约化态，所以同一递推同时给出全部有限前缀。
+
+这个 $T$ 可由同一个二比特幺正实现。令
+$$
+R=\begin{pmatrix}\sqrt\alpha&-\alpha\\\alpha&\sqrt\alpha\end{pmatrix},\qquad
+C_0(R)=|0\rangle\langle0|\otimes R+|1\rangle\langle1|\otimes I_M,
+\qquad W=C_0(R)\operatorname{SWAP}
+$$
+作用于 $B_{\rm new}\otimes M$，其中 $\operatorname{SWAP}(|b\rangle\otimes|c\rangle)=|c\rangle\otimes|b\rangle$，乘积中先作用 $\operatorname{SWAP}$。每次新输出取与已有系统独立的纯空白 $|0\rangle$，初始记忆为 $R|0\rangle=m_0$，则
+$$
+W(|0\rangle\otimes\psi)=T\psi\qquad(\psi\in M).
+$$
+
+最小活动记忆容量取 Hilbert 空间维数，且仅在如下类别中比较：记忆空间 $K$ 的维数固定为 $d$，初始记忆为纯态，每次引入独立纯空白；每步为顺序等距，已经发出的寄存器不再受作用；不存在未计入 $K$ 的环境、纯化参考、共享随机性或其它记忆。吸收纯空白的插入后，竞争映射可写作 $V_j:K\to B\otimes K$，允许随 $j$ 改变。若这种生成器精确实现全部 $\rho_n$，则 $d\ge2$；上述固定 $T$ 达到 $d=2$。该最小性只比较指定输出态族在此类别中的精确生成，等式所确定的是已发出前缀上的全部联合测量概率，不是任意记忆干预的过程等价或普适最小预测器。
+
+证明。首先 $\|m_1\|^2=1$、$\|m_0\|^2=\alpha+\alpha^2=1$，而
+$$
+\langle m_1,m_0\rangle=\sqrt\alpha.
+$$
+$T$ 的两列具有单位范数，其内积为
+$$
+\langle |0\rangle\otimes m_0,|1\rangle\otimes m_1\rangle
+=\langle0|1\rangle\langle m_0,m_1\rangle=0.
+$$
+因此 $T^*T=I_M$；这里使两列正交的是输出基，而非两个记忆标签。由线性性，
+$$
+Tm_0=\sqrt\alpha\,|0\rangle\otimes m_0+\alpha|1\rangle\otimes m_1,
+\qquad Tm_1=|0\rangle\otimes m_0.
+$$
+初态为单位向量，各步等距，故 $\|\Xi_n\|=1$，包括 $n=0$。
+
+对所列词展开从 $n=1$ 开始归纳，不为空词定义末位。$W_1=\{0,1\}$，$\Xi_1=Tm_0$ 的两个系数分别为 $\alpha^{1/2}$ 与 $\alpha$，正是公式。设公式对某个 $n\ge1$ 成立。若 $w\in W_n$ 末位为 $0$，它的项在下一步变为
+$$
+\alpha^{n/2}|w\rangle\otimes Tm_0
+=\alpha^{(n+1)/2}|w0\rangle\otimes m_0
+ +\alpha^{(n+2)/2}|w1\rangle\otimes m_1.
+$$
+这两个延长都合法，系数分别等于 $\alpha^{(n+1+\ell(w0))/2}$ 与 $\alpha^{(n+1+\ell(w1))/2}$。若 $w$ 末位为 $1$，只有附加 $0$ 合法，且
+$$
+\alpha^{(n+1)/2}|w\rangle\otimes Tm_1
+=\alpha^{(n+1)/2}|w0\rangle\otimes m_0.
+$$
+其系数同样是所需的 $\alpha^{(n+1+\ell(w0))/2}$，而附加 $1$ 的振幅为零。每个长度 $n+1$ 的合法词具有唯一长度 $n$ 前缀，故这些项无遗漏、无重复，归纳成立。
+
+将每项的记忆向量改写到正交计算基上。末位为 $0$ 的词给出的两个记忆列系数为
+$$
+\alpha^{n/2}\sqrt\alpha=\alpha^{(n+1)/2},\qquad
+\alpha^{n/2}\alpha=\alpha^{(n+2)/2};
+$$
+末位为 $1$ 的词只给记忆 $|0\rangle$ 列，系数也为 $\alpha^{(n+1)/2}$。因此得到陈述中的 $s_n,t_n$ 两列展开。对这两个正交记忆列取偏迹，交叉项为零，立即给
+$$
+\operatorname{Tr}_M|\Xi_n\rangle\langle\Xi_n|
+=\alpha^{n+1}|s_n\rangle\langle s_n|
+ +\alpha^{n+2}|t_n\rangle\langle t_n|=\rho_n\qquad(n\ge1).
+$$
+具体地，对所有 $u,v\in\{0,1\}^n$，完整矩阵元为
+$$
+\langle u|\rho_n|v\rangle=
+\begin{cases}
+\alpha^n,&u,v\in W_n,\ \ell(u)=\ell(v)=0,\\
+\alpha^{n+1},&u,v\in W_n,\ \text{至少一个末位为 }1,\\
+0,&u\notin W_n\ \text{或 }v\notin W_n.
+\end{cases}
+$$
+第一种情形使用 $\alpha^{n+1}+\alpha^{n+2}=\alpha^n$。这也直接核对了命题 125.1 的全部相干项。$n=0$ 时，对整个记忆取迹给 $\|m_0\|^2=1=\rho_0$，无需使用词展开。
+
+为核对已经发出的边际，取任意 $A\in\mathcal L(H_n)$。由 $T^*T=I_M$，
+$$
+\langle\Xi_{n+1},(A\otimes I_B\otimes I_M)\Xi_{n+1}\rangle
+=\langle\Xi_n,(A\otimes T^*T)\Xi_n\rangle
+=\operatorname{Tr}(\rho_nA).
+$$
+这对所有 $A$ 成立，所以再发出一位后前 $n$ 位的密度仍是 $\rho_n$。迭代即得对每个 $0\le k\le n$，
+$$
+\operatorname{Tr}_{B^{\otimes(n-k)}\otimes M}
+|\Xi_n\rangle\langle\Xi_n|=\rho_k.
+$$
+特别地，任意前缀上的联合 POVM $(E_a)_a$ 满足 $\Pr(a)=\operatorname{Tr}(\rho_kE_a)$。偏迹在此描述停止时的输出态；继续生成使用的是仍与旧输出相关联的同一记忆。
+
+两个条件记忆标签不能被当作可完美读取的经典标志。事实上，若效应 $0\le E\le I_M$ 满足 $\langle m_0,Em_0\rangle=1$、$\langle m_1,Em_1\rangle=0$，正性给 $(I_M-E)^{1/2}m_0=0$ 及 $E^{1/2}m_1=0$，于是 $Em_0=m_0$、$Em_1=0$。自伴性将给
+$$
+\sqrt\alpha=\langle m_1,m_0\rangle
+=\langle m_1,Em_0\rangle=\langle Em_1,m_0\rangle=0,
+$$
+矛盾。
+
+现核对显式幺正。由 $\alpha+\alpha^2=1$，直接相乘得 $R^*R=RR^*=I_M$。两个控制投影正交且和为 $I_B$，故
+$$
+C_0(R)^*C_0(R)=C_0(R)C_0(R)^*=I_{B\otimes M}.
+$$
+$\operatorname{SWAP}$ 置换正交标准基且平方为恒等，亦为幺正，因此 $W$ 在整个四维空间上幺正。任取 $\psi=a|0\rangle+b|1\rangle$，先交换、再施加零控制的 $R$，得到
+$$
+\begin{aligned}
+W(|0\rangle\otimes\psi)
+&=C_0(R)(\psi\otimes|0\rangle)\\
+&=a|0\rangle\otimes R|0\rangle+b|1\rangle\otimes|0\rangle\\
+&=a|0\rangle\otimes m_0+b|1\rangle\otimes m_1=T\psi.
+\end{aligned}
+$$
+这是整个输入记忆空间上的线性等式，与旧输出张量恒等后也成立，所以每次插入独立空白并作用同一 $W$ 就给上述递推。在固定纯空白上逐槽作用幺正，其有限链振幅由逐槽矩阵元收缩给出，单位初态的范数保持为一（[SequentialRegisterCircuit，circuit_initialized_coefficients 与 initialized_norm](../../../D5/S3/Quantum/Entanglement/SequentialRegisterCircuit.lean)）；这里所需的特殊基像由刚才的直接计算确定。
+
+最后证明限定类别中的下界。对任意竞争生成器，第一位输出后，输出与全部活动记忆的联合态为纯态 $\eta\in B\otimes K$，因为输入记忆与独立空白均纯，且第一步为等距。在 $K$ 的正交标准基 $e_1,\ldots,e_d$ 下写
+$$
+\eta=\sum_{j=1}^d x_j\otimes e_j,\qquad x_j\in B.
+$$
+其输出密度为 $\sum_{j=1}^d|x_j\rangle\langle x_j|$，像包含于 $\operatorname{span}\{x_1,\ldots,x_d\}$，所以若精确匹配第一位，必有 $\operatorname{rank}\rho_1\le d$。由目标公式，
+$$
+\rho_1=\begin{pmatrix}\alpha&\alpha^2\\\alpha^2&\alpha^2\end{pmatrix},\qquad
+\det\rho_1=\alpha^3-\alpha^4=\alpha^3(1-\alpha)=\alpha^5>0.
+$$
+故 $\operatorname{rank}\rho_1=2$，从而 $d\ge2$。上面的构造使用纯初始记忆、独立纯空白及固定幺正，没有其它环境，并达到 $d=2$。下界只用第一步，对时间依赖的竞争等距同样成立。
+
+固定活动容量与固定总档案是不同的资源条件：第 $n$ 步后保留的是 $n$ 个输出 qubit 加一个活动 qubit，联合空间为 $H_n\otimes M$，维数 $2^{n+1}$。输出寄存器随 $n$ 增加；有限个输出并未容纳一个无限词。若把这些有限前缀统一为命题 125.4 指定的 $\ell^2(X_{\rm fs})$ 上的单个正迹类密度，并沿用其柱投影 $C_u$，则全部柱读数须为 $\alpha^{|u|+\ell(u)}$（非空合法 $u$）。命题 125.4 排除了这样的密度；这里变化的输出空间并不提供该固定表示。
+
+同一 $T$ 也不使边界态移位平稳。由已证对角元，第一位与第二位为 $1$ 的概率分别为
+$$
+\Pr(w_0=1)=\alpha^2,\qquad
+\Pr(w_1=1)=\langle01|\rho_2|01\rangle+\langle11|\rho_2|11\rangle
+=\alpha^3\ne\alpha^2.
+$$
+这与命题 125.3 的固定左边界律一致。若第一步后丢弃记忆并独立重置，第二步后两位输出为乘积态；若还要保持上述两个单点概率，便会给 $\Pr(11)=\alpha^5>0$，而目标值为零。因此停止时取偏迹不能替代生成途中保留记忆关联。当 $n\ge1$ 时，命题 125.3 的经典 Markov 抽样在计算基中给 $\sum_{w\in W_n}\alpha^{n+\ell(w)}|w\rangle\langle w|$，只匹配对角元；例如目标的 $\langle0|\rho_1|1\rangle=\alpha^2>0$。这一比较限于抽样所得的对角态，不排除另带相干制备的经典控制协议，也不把本命题的容量下界推广到其假设以外的模型。证毕。
+
+## 追加锚（本行以下为增补区）

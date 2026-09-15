@@ -1,0 +1,6 @@
+**证明。** 固定第 16 节的 $f$。因为 $f(\mathcal J_2)=F\ne1$ 且 $\mathcal J_2$ 由分离扭转生成，存在本质分离曲线 $\alpha$ 使 $z=f(T_\alpha)\ne1$。非交换单群的中心平凡，所以 $C_F(z)<F$。令 $H=\operatorname{Stab}_{\mathcal M_g}(\alpha)$。对于 $h\in H$，曲面定向保持性给出 $hT_\alpha h^{-1}=T_\alpha$，故
+
+$$f(H)\subseteq C_F(z)<F.$$
+
+若 $Q$ 的幂零类至多为 $c\ge1$，则 $q$ 消去 $\gamma_{c+1}\pi$。$\mathcal J_c$ 中的元素在 $\pi/\gamma_{c+1}\pi$ 上以内自同构作用，因而在 $Q$ 上也以内自同构作用。因此 $\mathcal J_c\subseteq C_q$，继而 $f(C_q)=F$。如果 $C_q\alpha\subseteq\Gamma\alpha$，第 9 节给出 $C_q\subseteq\Gamma H$，取 $f$ 的像将得到 $F\subseteq f(H)$，矛盾。平凡目标也可取 $c=1$。
+

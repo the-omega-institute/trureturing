@@ -1,0 +1,11 @@
+**定理。** 保留第 27 节的中心平凡、外作用平凡基商 $S=\pi/N$，并令 $\pi$ 来自闭亏格 $g\ge2$ 曲面。设 $\ell\nmid|S|$，取有限分裂域 $k/\mathbb F_\ell$。对于每个不可约 $k[S]$ 模 $U_\chi$，令 $d_\chi=\dim_kU_\chi$，$M_\chi=\operatorname{Hom}_{k[S]}(U_\chi,V_\ell\otimes k)$。则
+
+$$V_\ell\otimes k\cong\bigoplus_\chi U_\chi\otimes_kM_\chi,\qquad
+\dim_kM_\chi=(2g-2)d_\chi+2\mathbf1_{\chi=1}.$$
+
+修正作用 $\Psi_\ell$ 保持每个同型分块，并给出 $\psi_\chi:\Lambda\to\operatorname{GL}(M_\chi)$。对同一个非交换有限单群满射 $f:\Lambda\twoheadrightarrow F$，
+
+$$\boxed{f\text{ 经 }\Psi_\ell(\Lambda)\text{ 因子化}
+\quad\Longleftrightarrow\quad
+f\text{ 经某个 }\psi_\chi(\Lambda)\text{ 因子化}.}$$
+

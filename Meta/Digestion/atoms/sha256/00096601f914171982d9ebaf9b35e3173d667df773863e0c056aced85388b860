@@ -1,0 +1,3 @@
+**证明。** 每个合同子群都包含相应的主合同核，故从轨道包含可以缩小到主核；反向取 $\Delta=C$ 即可。交于循环子群的条件只限制该循环子群中的元素，未限制 $C$ 在其余陪集中的元素。作为纯群作用的例子，令 $\Lambda=\mathbb Z^2$ 通过平移作用于自身，$\alpha=0$，$\Gamma=2\mathbb Z\times2\mathbb Z$，$A=\mathbb Z\times\{0\}$，$C=2\mathbb Z\times\mathbb Z$；则 $C\cap A\subseteq\Gamma$，但 $C\not\subseteq\Gamma$。这里 $\Gamma,C$ 均为有限指数子群；该例只说明给定 $C$ 的交集条件不足以推出所需包含，不否定其他主核的存在。
+
+

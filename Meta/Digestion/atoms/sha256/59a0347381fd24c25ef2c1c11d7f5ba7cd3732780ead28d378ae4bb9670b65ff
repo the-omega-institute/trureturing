@@ -1,0 +1,46 @@
+### 114.4 零风险的可测性判据
+
+zero_prediction_risk_iff_ae_observation_measurable 给出一个更强的边界。设
+
+$$
+\operatorname{obs}:X\to O
+$$
+
+是可测观测，且
+
+$$
+Y:X\to\mathbb R
+$$
+
+属于
+
+$$
+L^2(\mu).
+$$
+
+在概率测度条件下，定理证明：
+
+$$
+\boxed{
+\int
+\left(
+Y-
+\mathbb E[Y\mid\sigma(\operatorname{obs})]
+\right)^2
+\,d\mu
+=0
+\quad\Longleftrightarrow\quad
+Y\text{ 在 }\sigma(\operatorname{obs})\text{ 上几乎处处可测}.
+}
+$$
+
+这里的
+
+$$
+\sigma(\operatorname{obs})
+$$
+
+由观测映射的 comap 构造。左侧是零平方预测风险，右侧表示观测已经保留了足以重建该目标的全部信息，允许测度零集合上的差异。
+
+因此，如果当前 Zeckendorf 读出生成的 sigma 代数已经使目标可测，那么继续保存更多历史不会降低这个目标的平方误差。反之，只要目标还含有当前记录不可测的部分，零风险就不可能由该记录单独达到。
+

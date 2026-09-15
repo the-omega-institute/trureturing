@@ -1,0 +1,12 @@
+### 110.1 合法性任务只需两状态
+
+`ZeckendorfBaseState` 只有
+
+$$
+\{\mathrm{clear},\mathrm{previousOne}\},
+$$
+
+因此验证局部合法性只需保存一个比特级上下文：前一位是否为一。`zeckendorfMSDWord_base_success` 证明每个规范 Zeckendorf 输入都能在这个部分自动机中成功运行。
+
+这个自动机并不输出输入代表的整数，也不计算黄金比例的 radix-4 数字。它的闭合任务只有语言成员关系。
+

@@ -1,0 +1,6 @@
+**命题。** 在保留曲面纤维和其映射类标记的条件下，分离曲线扭转的共轭与所构造三维粘合相容：若 $\gamma\in\operatorname{Mod}^{+}(\Sigma_g)$，则
+
+$$\gamma T_\alpha^k\gamma^{-1}=T_{\gamma(\alpha)}^k,$$
+
+且由 $\gamma\times\operatorname{id}$ 诱导对应映射环面之间的纤维保持同胚。这个事实本身不提供任意有限指数子群的曲线轨道控制。
+
