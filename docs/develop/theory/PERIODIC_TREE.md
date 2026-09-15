@@ -1536,7 +1536,7 @@ F_k=\gcd(F_k,5F_uF_v)
 \le5\gcd(F_k,F_uF_v)=5F_dF_e.\tag{FDS7}
 $$
 
-If d=1 or e=1, the remaining proper divisor is at most floor(k/2), so F_dF_e<=F_floor(k/2). Otherwise d,e are distinct odd integers at least three and five. Their product divides k, and 2(d+e-1)<=de<=k. Fibonacci addition yields F_dF_e<=F_(d+e-1)<=F_floor(k/2). Write m=floor(k/2)>=5. Since k>=m+4,
+If d=1 or e=1, the remaining proper divisor is at most floor(k/2), so F_dF_e<=F_floor(k/2). Otherwise d,e are distinct odd numbers at least three and five. Their product divides k, and 2(d+e-1)<=de<=k. Fibonacci addition yields F_dF_e<=F_(d+e-1)<=F_floor(k/2). Write m=floor(k/2)>=5. Since k>=m+4,
 
 $$
 F_k\ge F_{m+4}=3F_m+2F_{m+1}>5F_m,
@@ -1753,3 +1753,225 @@ $$
 $$
 
 **Proof.** The even indices are obtained from positive odd squares s by n=s+1 or n=s-1, excluding s=1 from the second family. They contribute O(X-1)+O(X+1)-1. The odd indices at least three are n=s+2 or n=s-2, excluding s=1 from the second family, contributing O(X-2)+O(X+2)-1. The index n=1 contributes one. These families are disjoint: opposite parities cannot meet, while a same-parity overlap would give odd squares differing by two or four. Summing gives the exact formula. Since O(t)=sqrt(t)/2+O(1), the asymptotic follows with a bounded error.
+
+
+### FDS.4. Fibonacci-valued divisor sums at Fibonacci centres
+
+**Definition.** For a positive integer N, retain the distinct-value divisor set D_F(N) from FDS.1 and put
+
+$$
+\sigma_F(N)=\sum_{d\in D_F(N)}d.
+$$
+
+The value one is counted once. Let \(\mathcal F_+=\{F_n:n\ge2\}\).
+
+**Lemma.** If a finite subset S of \(\mathcal F_+\) contains one and has Fibonacci sum, then either S={1}, or for some r>=2,
+
+$$
+S=\{1,F_3,F_5,\ldots,F_{2r-1}\},\qquad \sum S=F_{2r}.
+\tag{FDS10}
+$$
+
+**Proof.** This is the finite-set statement FSP2. A direct proof is as follows. The sum of F_2 through F_(n-2) is F_n-2 for n>=3. Thus an anchored set summing to F_n must contain F_(n-1), since it cannot contain F_n itself along with the additional positive term one. At n=3 such a set is impossible. For n>=4 remove F_(n-1); the remaining set still contains one and sums to F_(n-2). Induction terminates at F_2=1 and forces precisely the stated alternating shape. Conversely its sum telescopes by the recurrence. In the nonsingleton case its largest index is 2r-1.
+
+**Theorem.** For every n>=0,
+
+$$
+\boxed{\sigma_F(F_n^2+1)\in\mathcal F_+
+\quad\Longleftrightarrow\quad n\in\{0,1,2,4\}.}
+\tag{FDS11}
+$$
+
+At these indices the sums are respectively 1,3,3,8.
+
+**Proof.** For n>=2 let u,v be the two odd coprime indices from FDS4, with u<v. The divisor set contains F_v and contains no larger Fibonacci value. If its sum is Fibonacci, FDS10 forces all odd indices from 3 through v to occur.
+
+If n is odd, then v=n+2>=5 and u=v-4. The required index v-2 is larger than u and cannot divide v, since it is an odd integer at least three and would have to divide two. This contradicts FDS4.
+
+If n is even and n>=6, then v=n+1>=7 and u=v-2. The required index d=v-4 is an odd integer at least three. It cannot divide u=d+2 or v=d+4, since that would make it divide two or four. Again FDS4 gives a contradiction.
+
+The remaining cases have actual divisor sets {1} at n=0, {1,2} at n=1,2, and {1,2,5} at n=4. Their sums prove sufficiency and the asserted values.
+
+### FDS.5. Fibonacci-valued divisor sums at Lucas centres
+
+**Lemma.** For every odd n>=1,
+
+$$
+D_F(L_n^2+1)=
+\begin{cases}
+\{1\},&3\mid n,\\
+\{1,2\},&3\nmid n.
+\end{cases}
+\tag{FDS12}
+$$
+
+**Proof.** Put M=L_n^2+1. The golden identities give F_(3n)=F_n M and M+3=5F_n^2. Any common divisor of F_n and M divides three, while strong divisibility gives gcd(F_n,3)=gcd(F_n,F_4)=F_gcd(n,4)=1. Hence gcd(F_n,M)=1.
+
+If k>=3 and F_k|M, then F_k|F_(3n), so strong divisibility and strict Fibonacci growth give k|3n. Also F_gcd(k,n)=gcd(F_k,F_n)=1. Since n is odd, gcd(k,n) is odd and must be one. Therefore k|3, so k=3 and F_k=2. Finally M+3=5F_n^2 modulo two shows 2|M exactly when F_n is odd, equivalently 3 does not divide n. This rederives the previously established odd-Lucas classification.
+
+**Theorem.** For every n>=0,
+
+$$
+\boxed{\sigma_F(L_n^2+1)\in\mathcal F_+
+\quad\Longleftrightarrow\quad n\text{ is odd}\ \text{or}\ n\in\{2,4,8\}.}
+\tag{FDS13}
+$$
+
+For odd n the sum is one when 3|n and three otherwise. At n=2,4,8 the sums are respectively 8,8,55.
+
+**Proof.** FDS12 settles all odd n. At n=0 the actual sum is 1+5=6, not Fibonacci. At n=2,4 the divisor set is {1,2,5}, giving eight. For even n>=6 set v=n+1 and u=v-2. By FDS8 the largest divisor index is v, and the allowed non-unit indices are divisors of u or v together with the additional index five. FDS10 would require the index d=v-4. This odd d>=3 divides neither u nor v, by their differences two and four. Therefore d must equal five, forcing v=9 and n=8. Conversely, at n=8 the divisor set is {1,2,5,13,34}, whose sum is 55=F_10.
+
+FDS11 and FDS13 are consequences of the full divisor spectra and anchored-sum rigidity. They classify the two subsequences obtained by evaluating OEIS A339621 at Fibonacci and Lucas arguments. They do not assert a new solution to its already treated even-index conjecture.
+
+### FDS.6. No Fibonacci divisor-sum at a minus-one Fibonacci square
+
+**Theorem.** For every n>=3,
+
+$$
+\boxed{\sigma_F(F_n^2-1)\notin\mathcal F_+.}
+\tag{FDS14}
+$$
+
+**Proof.** For odd n, Cassini gives F_n^2-1=F_(n-1)F_(n+1); for even n it gives F_n^2-1=F_(n-2)F_(n+2). In both cases the factor indices u<v are positive and even, and v>=4. FDS3 shows that the largest Fibonacci divisor is F_v and that there is no larger Fibonacci divisor. The nonsingleton anchored-set classification FDS10 requires its largest Fibonacci index to be odd if the sum is Fibonacci. This contradicts the evenness of v.
+
+### PBC.5. Collective depths in a fully exceptional prime block
+
+**Theorem.** For every prime ell>=7,
+
+$$
+\boxed{\gcd\{h_p:p\mid F_\ell,\ p\text{ prime}\}=1.}\tag{PBC8}
+$$
+
+Consequently a powerful F_ell has at least two distinct WSS prime divisors, and at least one has odd initial depth at least three.
+
+**Proof.** All its prime divisors have rank ell, so F_ell=product p^h_p. A common divisor d>=2 of the exponents would make F_ell a perfect d-th power. The established perfect-power theorem of Bugeaud, Mignotte and Siksek excludes this: its only Fibonacci values are 0,1,8,144, occurring at indices 0,1,2,6,12. None occurs at a prime ell>=7. In a powerful block all h_p>=2. A singleton support would then have exponent gcd at least two; all-even exponents would have the same defect. This proves the conclusions. The theorem used is *Classical and modular approaches to exponential Diophantine equations I. Fibonacci and Lucas perfect powers*, Annals of Mathematics 163 (2006), 969-1018, DOI 10.4007/annals.2006.163.969, https://annals.math.princeton.edu/2006/163-3/p05 . It classifies perfect powers, not all powerful Fibonacci integers. Collective gcd one does not assert pairwise coprimality of the depths.
+
+**Corollary.** For every k>=1, if F_(60k)^2-1,F_(60k)^2,F_(60k)^2+1 are powerful, at least eight distinct WSS primes occur in four distinct prime-rank blocks, including at least four primes with odd depth at least three.
+
+**Proof.** EMW-C3 makes all four neighbouring Fibonacci terms powerful. The four positive odd numbers 60k-1,60k+1,30k-1,30k+1 are pairwise coprime and coprime to 30. Their largest prime factors are therefore four distinct primes at least seven. Apply ZBD1 to each neighbouring index, using the same largest prime for an even index and its odd half. This produces four powerful prime-index blocks. Their Fibonacci values are pairwise coprime. Apply PBC8 in each block. No sieve condition on k is needed, and the antecedent is not asserted to hold.
+
+**Corollary.** Let N_0(x) and N_Z(x) count non-WSS and WSS primes p<=x, respectively, whose actual Fibonacci ranks are prime and at least seven. For x>=128,
+
+$$
+\boxed{N_0(x)+\tfrac12N_Z(x)\ge\pi(\lfloor\log_2x\rfloor)-3.}\tag{PBC9}
+$$
+
+**Proof.** Set Y=floor(log_2 x). Every prime ell in [7,Y] has either a simple prime divisor of F_ell or a powerful block. In the first case choose one non-WSS prime; in the second choose two WSS primes by PBC8. Distinct indices give disjoint prime supports. All chosen primes are at most F_Y<=2^Y<=x. Each index contributes at least one to the weighted left side. This strengthens the counting consequence of PBC5 but does not select the zero or nonzero alternative. No bound on the exceptional-block count follows from this inequality alone.
+
+
+## Appendix LFO. Powerful residue classes and finite-prime observation at prime ranks
+
+### LFO.1. Exact residue compatibility
+
+**Definition.** For M>=1, let C(M) be the set of residue classes modulo M containing a positive powerful integer. The residue of an integer a is denoted [a]_M. A positive integer is powerful exactly when it has a representation x^2 y^3 with positive integers x,y: in its prime factorization, an even exponent is assigned wholly to the square, and an odd exponent at least three is assigned three to the cube and the remaining even exponent to the square.
+
+**Theorem.** For every integer a and M>=1,
+
+$$
+\boxed{[a]_M\in C(M)\quad\Longleftrightarrow\quad
+\forall p\text{ prime},\ p^2\mid M\Longrightarrow
+(p\nmid a\ \lor\ p^2\mid a).}\tag{LFO1}
+$$
+
+In particular every unit residue class belongs to C(M), and every residue class does so when M is squarefree.
+
+**Proof.** If p^2|M and p divides a exactly once, every integer in the residue class has exponent exactly one at p. This proves necessity.
+
+For sufficiency write e_p=v_p(M) for p|M and let t_p be the largest t<=e_p for which p^t|a. Thus t_p=e_p if a is zero modulo p^e_p; no valuation of zero is taken. Choose nu_p=0 when t_p=0, nu_p=t_p when 0<t_p<e_p, and nu_p=max(e_p,2) when t_p=e_p. The hypothesis ensures that every positive nu_p is at least two. Hence D=product_{p|M}p^nu_p is powerful.
+
+There is a unit u modulo M with Du congruent to a. At t_p<e_p, the congruence reduces to
+
+$$
+u\equiv(a/p^{t_p})(D/p^{t_p})^{-1}\pmod{p^{e_p-t_p}}.
+$$
+
+Both factors on the right are units at p; choose any unit lift modulo p^e_p. At t_p=e_p the original congruence is automatic, and choose u=1 modulo p^e_p. The Chinese remainder theorem combines these unit classes. Choose positive x,y representing u^(-1),u modulo M. Then N=Dx^2y^3 is powerful and N congruent to Du=a modulo M. When M=1 take D=x=y=1.
+
+### LFO.2. Compatibility survives non-perfect-power and finite-support constraints
+
+**Theorem.** Suppose [a]_M belongs to C(M). Given any integer B>=1, the class contains infinitely many positive powerful integers N which are not perfect powers and have no prime divisor p<=B with p not dividing M. At two distinct auxiliary primes r,s>B not dividing M, their exponents may be fixed to be exactly two and three, respectively.
+
+**Proof.** Use the D and unit u from LFO1. Infinitude of primes supplies distinct r,s>B outside the prime support of M. Let R be the product of primes p<=B with p not dividing M. The moduli M,R,r^2,s^2 are pairwise coprime. The Chinese remainder theorem gives positive x,y with
+
+$$
+\begin{array}{c|cccc}
+ &\bmod M&\bmod R&\bmod r^2&\bmod s^2\\
+x&u^{-1}&1&r&1\\
+y&u&1&1&s
+\end{array}
+$$
+
+and N=Dx^2y^3 is powerful, congruent to a modulo M, and divisible by none of the stated small primes. Since r,s do not divide D, its exponents at r,s are exactly two and three. A perfect-power exponent would divide both, which is impossible. Replace x by x+jL for j>=0, where L=MRr^2s^2, to obtain infinitely many distinct examples with all conditions unchanged. Congruences modulo one are vacuous. The elementary construction does not use a theorem on primes in arithmetic progressions.
+
+**Corollary.** Imposing the additional requirement that a powerful integer is not a perfect power does not change its image modulo any positive M.
+
+**Proof.** The preceding theorem gives the reverse inclusion; the other inclusion is immediate. In the constructed examples the collective gcd of the prime exponents is one because exponents two and three occur.
+
+**Proposition.** For fixed compatible a,M,B, there are constants C,T_0>0 such that every real T>=T_0 has one of these examples in [T,T+C sqrt(T)].
+
+**Proof.** Keep D,y,L and the residue of x from the preceding proof. Put A=Dy^3. Select the first positive x_j=x+jL with x_j>=sqrt(T/A). For sufficiently large T this choice has x_j<sqrt(T/A)+L. Thus
+
+$$
+T\le Ax_j^2<T+2L\sqrt{AT}+AL^2.
+$$
+
+For T>=1 the last two terms are bounded by C sqrt(T), with C=2L sqrt(A)+AL^2. All congruence and exponent conditions remain unchanged. The constants depend on the fixed residue data; no estimate uniform in a growing modulus is asserted.
+
+Squarefull numbers in arithmetic progressions have an extensive classical literature, including M. Munsch, I. E. Shparlinski and K. H. Yau, *Smooth squarefree and squarefull integers in arithmetic progressions*, Mathematika 66 (2020), 56-70, DOI 10.1112/mtk.12012, https://arxiv.org/abs/1810.02573 . The claims here use the explicit elementary construction rather than an unproved distribution assumption.
+
+### LFO.3. The exact proportion of locally admissible residues
+
+**Theorem.** For every M>=1,
+
+$$
+\boxed{\frac{|C(M)|}{M}
+=\prod_{p^2\mid M}\left(1-\frac1p+\frac1{p^2}\right).}\tag{LFO2}
+$$
+
+**Proof.** At a prime power p^e with e=1 all classes are admissible. For e>=2, precisely p^(e-1)-p^(e-2) classes have valuation one. Subtract them from p^e, divide by p^e and multiply over the independent prime-power factors using the Chinese remainder theorem. Empty products equal one, including M=1.
+
+### LFO.4. What fixed value-prime probes can see in a prime-index block
+
+**Theorem.** Let ell>=7 be prime. Every prime divisor p of F_ell satisfies
+
+$$
+\rho(p)=\ell,\quad p\equiv1\pmod4,\quad
+\begin{cases}
+p\ge4\ell+1,&(5/p)=1,\\
+p\ge2\ell-1,&(5/p)=-1.
+\end{cases}\tag{LFO3}
+$$
+
+These are classical rank and golden-norm consequences.
+
+**Proof.** The ranks of two and five exclude them from F_ell. The rank of any other prime divisor divides ell and is greater than one, so it equals ell. At this odd index the norm identity gives L_ell^2-5F_ell^2=-4. Modulo p, L_ell/2 is a square root of minus one, so p=1 modulo four. The rank bound gives ell|p-(5/p). For a split prime, both ell and four divide p-1, giving 4ell|p-1. For an inert prime, the positive integer (p+1)/ell is even, giving p>=2ell-1. More precisely that integer is two modulo four.
+
+**Corollary.** Let P(M) be the largest prime factor of M, with P(1)=1. If 2ell-1>P(M), then gcd(F_ell,M)=1. Thus [F_ell]_M belongs to C(M) and contains the non-perfect powerful examples of LFO.2. Increasing the exponents on the same finite prime support does not alter this assertion.
+
+**Proof.** A common prime divisor would contradict LFO3. Apply LFO1 and LFO.2 to the resulting unit class.
+
+**Definition.** A residue-only rejection rule at modulus M is called sound for nonpowerfulness if it rejects a residue class only when every positive integer in that class is nonpowerful.
+
+**Theorem.** Every such sound rule accepts F_ell whenever ell is prime, ell>=7, and 2ell-1>P(M). A finite collection of residue-only rules can be combined at their least-common-multiple modulus and has the same eventual acceptance property. In particular, on prime indices ell in [Y,2Y] with Y>=7, probes supported only on value primes below 2Y-1 reject no index.
+
+**Proof.** The corollary provides a positive powerful integer in the same class. Rejecting it would violate soundness. Equality modulo the least common multiple preserves all the individual residues. Apply the same corollary once to that modulus.
+
+This theorem concerns the specified residue-only information. It does not assert that every arithmetic argument involving congruences is powerless, nor does it apply to moduli whose prime support is allowed to grow past the stated cutoff. Replacing F_ell by a compatible powerful integer preserves polynomial congruences in the numerical Fibonacci/Lucas coordinates at those fixed moduli. It does not preserve the exact integer norm equation, the actual recurrence value, or exact ranks of the replacement integer's prime factors.
+
+### LFO.5. The exact finite set of exclusions
+
+**Theorem.** For every positive M and prime ell>=7,
+
+$$
+\boxed{[F_\ell]_M\notin C(M)
+\quad\Longleftrightarrow\quad
+\exists p\text{ prime}:\ p^2\mid M,\ \rho(p)=\ell,\ q_p\ne0.}\tag{LFO4}
+$$
+
+Consequently the prime indices excluded by M are exactly the distinct prime ranks at least seven of the non-WSS primes whose squares divide M. This is a finite set, contained in [7,(P(M)+1)/2].
+
+**Proof.** By LFO1, exclusion is equivalent to p dividing F_ell exactly once for some p^2|M. Such p is different from two and five and has rank ell by LFO3; its exponent is its initial depth. EMW-B3 makes exponent one equivalent to q_p nonzero. These steps reverse to prove both implications. Finally p<=P(M) and p>=2ell-1 give the bound on ell.
+
+**Proposition.** The integers F_7=13 and N=29^2*37^3=42599173 have the same residue four modulo nine. The latter is powerful, is not a perfect power, and its two prime divisors exceed thirteen and are both one modulo four.
+
+**Proof.** The displayed factorizations and residues are exact integer calculations, and the exponents two and three have gcd one. The primes twenty-nine and thirty-seven do not divide F_7 and are not asserted to have rank seven. This example records the distinction between residue compatibility and membership in an actual prime-index Fibonacci block.
