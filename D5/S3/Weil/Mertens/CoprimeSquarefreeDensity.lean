@@ -7,8 +7,6 @@
    digest: Count squarefree integers coprime to a fixed squarefree modulus with an explicit square-root error. -/
 
 import D5.S3.Weil.Mertens.CoprimeMobiusCertificateError
-import Mathlib.Analysis.Real.Sqrt
-import Mathlib.NumberTheory.EulerProduct.DirichletLSeries
 import D5.S3.Weil.Mertens.Third
 
 set_option autoImplicit false
