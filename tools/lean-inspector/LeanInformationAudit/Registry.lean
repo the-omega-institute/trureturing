@@ -1217,7 +1217,12 @@ private partial def exports (env : Environment) (name : Name)
   let artifact ← moduleFile env name
   let tracePath := artifact.withExtension "trace"
   if !(← tracePath.pathExists) then
-    let lib ← getLibDir (← getBuildDir)
+    -- Lake supplies the compiler prefix to relocated inspector executables.
+    -- Inside Lean itself the SDK build directory remains the fallback.
+    let sysroot ← match ← IO.getEnv "LEAN_SYSROOT" with
+      | some path => pure (System.FilePath.mk path)
+      | none => getBuildDir
+    let lib ← getLibDir sysroot
     unless (← IO.FS.realPath artifact).toString.startsWith ((← IO.FS.realPath lib).toString ++ "/") do
       throwError "incomplete_closure:E7.native_trace_missing:{name}"
     return (none, memo)

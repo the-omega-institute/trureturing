@@ -84,11 +84,11 @@ root = "Cache"
         # their reports cannot satisfy the declared-template admission reader.
         inspector = self.root / 'tools/lean-inspector/Inspector.lean'
         source = inspector.read_text()
-        entry = '  LeanInformationAudit.InspectorProducer.main args'
+        entry = '  let statementOnly := args.head? == some "--statements-only"'
         if source.count(entry) != 1:
             raise RuntimeError('statement fixture inspector entry is missing')
         inspector.write_text(source.replace(entry,
-            '  LeanInformationAudit.InspectorProducer.main ("--statements-only" :: args)'))
+            '  let args := "--statements-only" :: args\n' + entry))
         for name in ['tools/scripts/report/lean-report-selection.py', 'tools/scripts/report/lean-report-input.sh',
                      'tools/scripts/worktree/lean-cache-input.sh', 'lean-toolchain', 'Makefile',
                      'tools/scripts/worktree/lean-cache-ensure.sh', 'tools/scripts/worktree/lean-cache-run.sh',

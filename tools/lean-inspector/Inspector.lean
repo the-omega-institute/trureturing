@@ -623,7 +623,7 @@ unsafe def main (args : List String) : IO Unit := do
     | .ok parsed => pure parsed
     | .error message => throw <| IO.userError message
   IO.FS.createDirAll materialSpool
-  initSearchPath (← getBuildDir)
+  initSearchPath (← findSysroot)
   let utilities : Array UtilityInput ← match utilityInput with
     | none => pure #[]
     | some path => do
@@ -642,7 +642,9 @@ unsafe def main (args : List String) : IO Unit := do
   let profiling := (← IO.getEnv "STRATALINT_INSPECTOR_PROFILE") == some "1"
   let importStart ← if profiling then IO.monoNanosNow else pure 0
   enableInitializersExecution
-  let env ← importModules imports {} (trustLevel := 0) (loadExts := true)
+  -- Extension initialization can leave imported expressions in the interpreter.
+  -- Keep this process-lifetime environment alive through interpreter teardown.
+  let env ← importModules imports {} (trustLevel := 0) (leakEnv := true) (loadExts := true)
   let produce : IO Unit := do
     if profiling then
       (← IO.getStderr).putStrLn s!"LEAN_INSPECTOR_PROFILE import_ns={(← IO.monoNanosNow) - importStart} imported_modules={env.header.moduleNames.size}"
@@ -676,7 +678,7 @@ unsafe def main (args : List String) : IO Unit := do
       try writer.kill catch _ => pure ()
       try discard <| writer.wait catch _ => pure ()
       throw error
-  try produce finally env.freeRegions
+  produce
 
 end LeanInformationAudit.InspectorProducer
 

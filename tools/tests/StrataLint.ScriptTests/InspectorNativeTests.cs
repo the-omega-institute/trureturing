@@ -4,6 +4,8 @@ namespace StrataLint.Tests;
 
 public sealed class InspectorNativeTests
 {
+    [InlineData("test_native.NativeTests.test_native_facet_supplies_toolchain_environment")]
+    [InlineData("test_native.NativeTests.test_binding_driver_environment_survives_interpreter_shutdown")]
     [Theory]
     [InlineData("test_streaming")]
     [InlineData("test_native.NativeTests.test_input_verification_is_read_only")]

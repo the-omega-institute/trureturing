@@ -10,6 +10,7 @@ package leanInspector where
 
 lean_exe reportInspector where
   root := `Inspector
+  supportInterpreter := true
 
 private def inspectorDir (pkg : Package) : FilePath := pkg.dir / "tools" / "lean-inspector"
 
@@ -177,7 +178,7 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
   -- identity is not a report-semantic dependency.
   let inspector ← reportInspector.fetch
   let workspace ← getWorkspace
-  let env := #[ ("LEAN_PATH", some workspace.leanPath.toString) ]
+  let env := workspace.augmentedEnvVars
   let file := pkg.buildDir / "lean-inspector" / "modules" / s!"{mod.name}.zip"
   (deps.add (Job.mixArray exports) |>.add inspector).mapM fun _ => do
     -- Inspector's private import mode reads transitive private values, also
@@ -251,7 +252,7 @@ private def runBatch (pkg : Package) (requests : Array (String × Array String))
   let requestFile := pkg.buildDir / "lean-inspector" / "batch.json"
   let resultFile := pkg.buildDir / "lean-inspector" / "batch-results.json"
   IO.FS.writeFile requestFile (Lean.toJson requests).compress
-  let env := #[("LEAN_PATH", some (← getWorkspace).leanPath.toString)]
+  let env := (← getWorkspace).augmentedEnvVars
   try
     let result ← IO.Process.output { (nativeCommand pkg #["batch", requestFile.toString, resultFile.toString]) with env }
     unless result.stdout.isEmpty do logInfo result.stdout
