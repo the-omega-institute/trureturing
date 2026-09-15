@@ -141,4 +141,7 @@ theorem result : ∀ n k : ℕ, 1 ≤ n →
   · exact Nat.mod_eq_zero_of_dvd
       (dvd_pow (factorial_dvd_triangular_of_not_odd_prime hn hbranch) (by omega))
 
+#print axioms factorial_dvd_triangular_of_not_odd_prime
+#print axioms result
+
 end D5.S3.Arith.Congruence.LaymanOddPowerFactorialResidue
