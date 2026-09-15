@@ -26,7 +26,7 @@ noncomputable def clipPositive (J : ℕ) (f : Polynomial ℕ) : Polynomial ℕ :
 /-- Iterate prime addition and multiplication on exponents, retaining degrees one through J. -/
 noncomputable def mixedPolynomial (J : ℕ) : ℕ → Polynomial ℕ
   | 0 => X
-  | k+1 => clipPositive J (∑ q ∈ Nat.primesLE J,
+  | k + 1 => clipPositive J (∑ q ∈ Nat.primesLE J,
       (X ^ q * mixedPolynomial J k + (mixedPolynomial J k).comp (X ^ q)))
 
 /-- Sum history length weights at positive endpoints, with value zero at endpoint zero. -/
@@ -51,9 +51,9 @@ theorem mixed_coefficient (J k n : ℕ) (hn : 1 ≤ n) (hnJ : n ≤ J) :
     simp [clipPositive, finsetSum_coeff, coeff_monomial, Finset.mem_Icc, h1, hJ]
   have last_letter_coeff (J n : ℕ) (f : Polynomial ℕ)
       (hf : f.coeff 0 = 0) (hn : 1 ≤ n) (hJ : n ≤ J) :
-      (clipPositive J (∑ q ∈ Nat.primesLE J, (X^q * f + f.comp (X^q)))).coeff n =
-        (∑ q ∈ (Finset.range n).filter Nat.Prime, f.coeff (n-q)) +
-        (∑ q ∈ n.primeFactors, f.coeff (n/q)) := by
+      (clipPositive J (∑ q ∈ Nat.primesLE J, (X ^ q * f + f.comp (X ^ q)))).coeff n =
+        (∑ q ∈ (Finset.range n).filter Nat.Prime, f.coeff (n - q)) +
+        (∑ q ∈ n.primeFactors, f.coeff (n / q)) := by
     classical
     rw [clip_coeff J n _ hn hJ]
     simp only [finsetSum_coeff, coeff_add, Finset.sum_add_distrib]
@@ -131,10 +131,10 @@ theorem mixed_coefficient (J k n : ℕ) (hn : 1 ≤ n) (hnJ : n ≤ J) :
         exact hn he.symm
     rw [hs]
     split_ifs <;> simp
-  have length_succ_one (k : ℕ) : lengthCount (k+1) 1 = 0 := by
+  have length_succ_one (k : ℕ) : lengthCount (k + 1) 1 = 0 := by
     classical
-    change ({w : List PrimeLetter | endpoint w = 1 ∧ w.length = k+1} : Set _).ncard = 0
-    have hs : ({w : List PrimeLetter | endpoint w = 1 ∧ w.length = k+1} : Set _) = ∅ := by
+    change ({w : List PrimeLetter | endpoint w = 1 ∧ w.length = k + 1} : Set _).ncard = 0
+    have hs : ({w : List PrimeLetter | endpoint w = 1 ∧ w.length = k + 1} : Set _) = ∅ := by
       ext w
       simp only [Set.mem_ofPred_eq, Set.mem_empty_iff_false, iff_false, endpoint_one]
       rintro ⟨rfl, h⟩
@@ -158,27 +158,27 @@ theorem mixed_coefficient (J k n : ℕ) (hn : 1 ≤ n) (hnJ : n ≤ J) :
     · subst n
       simp [length_succ_one, Nat.not_prime_zero]
     · have hn2 : 2 ≤ n := by omega
-      rw [length_recurrence (k+1) n (by omega) hn2, Nat.add_sub_cancel]
+      rw [length_recurrence (k + 1) n (by omega) hn2, Nat.add_sub_cancel]
       apply congrArg₂ Nat.add
       · apply Finset.sum_congr rfl
         intro q hq
         have hqn := Finset.mem_range.mp (Finset.mem_filter.mp hq).1
-        exact ih (n-q) (by omega) (by omega)
+        exact ih (n - q) (by omega) (by omega)
       · apply Finset.sum_congr rfl
         intro q hq
-        exact ih (n/q)
+        exact ih (n / q)
           (Nat.div_pos (Nat.le_of_mem_primeFactors hq) (Nat.pos_of_mem_primeFactors hq))
           (le_trans (Nat.div_le_self n q) hnJ)
 
 /-- Every nonempty prime history ends at least twice its length. -/
 theorem sharp_length_bound (w : List PrimeLetter) (hw : w ≠ []) :
     2 * w.length ≤ endpoint w := by
-  have step (a : PrimeLetter) (m : ℕ) (hm : 2 ≤ m) : m+2 ≤ primeStep a m := by
+  have step (a : PrimeLetter) (m : ℕ) (hm : 2 ≤ m) : m + 2 ≤ primeStep a m := by
     cases a with
-    | inl q => have hq := q.property.two_le; change m+2 ≤ m+q.val; omega
-    | inr q => have hq := q.property.two_le; change m+2 ≤ q.val*m; nlinarith
+    | inl q => have hq := q.property.two_le; change m + 2 ≤ m + q.val; omega
+    | inr q => have hq := q.property.two_le; change m + 2 ≤ q.val * m; nlinarith
   have bound (v : List PrimeLetter) (m : ℕ) (hm : 2 ≤ m) :
-      m + 2*v.length ≤ runWord primeStep v m := by
+      m + 2 * v.length ≤ runWord primeStep v m := by
     induction v generalizing m with
     | nil => simp [runWord]
     | cons a v ih =>
@@ -191,10 +191,10 @@ theorem sharp_length_bound (w : List PrimeLetter) (hw : w ≠ []) :
   | cons a v =>
     have first : 2 ≤ primeStep a 1 := by
       cases a with
-      | inl q => have hq := q.property.two_le; change 2 ≤ 1+q.val; omega
+      | inl q => have hq := q.property.two_le; change 2 ≤ 1 + q.val; omega
       | inr q => simpa [primeStep] using q.property.two_le
     have h := bound v (primeStep a 1) first
     simpa only [endpoint, runWord, List.length_cons] using
-      (show 2*(v.length+1) ≤ runWord primeStep v (primeStep a 1) by omega)
+      (show 2 * (v.length + 1) ≤ runWord primeStep v (primeStep a 1) by omega)
 
 end D5.S3.Factorization.Combinatorics.MixedPrimeHistoryGenerating
