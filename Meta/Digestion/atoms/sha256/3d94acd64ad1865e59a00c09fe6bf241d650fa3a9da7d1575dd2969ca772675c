@@ -1,0 +1,5 @@
+**定理。** 对每个整数 $n$，
+
+$$\boxed{q_{g,m}(\tau^n(w))\text{ 与 }q_{g,m}(w)\text{ 共轭}
+\quad\Longleftrightarrow\quad m\mid n.}$$
+

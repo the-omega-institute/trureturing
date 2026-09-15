@@ -1,0 +1,2 @@
+**定义。** 对正整数 $n$，令 $M_{g,h,k}^{(n)}$ 为纤维化 $M_{g,h,k}\to S^1$ 沿 $S^1\xrightarrow{z\mapsto z^n}S^1$ 拉回的覆盖。它同胚于 $M_{g,h,nk}$。
+

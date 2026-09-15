@@ -1,0 +1,8 @@
+**实例。** 对 $g=2$、$p=2$，有 $D=16$、$G=17$、$a=b=4$。对于任意非零 $k$，$q=|k|$，
+
+$$H_1(\widetilde M;\mathbb Z)
+\cong\mathbb Z^{26}\oplus(\mathbb Z/q)^4
+\oplus(\mathbb Z/(4q))^4\oplus\mathbb Z/(16q).$$
+
+原流形的全部时间循环覆盖一律具有 $\mathbb Z^5$ 的一阶同调，而这个十六重横向覆盖的挠指数为 $16|k|$。
+

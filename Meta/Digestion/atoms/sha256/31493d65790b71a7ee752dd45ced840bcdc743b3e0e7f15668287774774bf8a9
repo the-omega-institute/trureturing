@@ -1,0 +1,2 @@
+**定义。** 设 $q_0:\pi_1(\Sigma_g)\twoheadrightarrow S$ 给出连通正则有限无分歧覆盖 $Y\to\Sigma_g$。令 $\alpha$ 为本质分离简单闭曲线，两侧子曲面群的像为 $A_0,B_0\le S$，边界循环群像为 $C_0=\langle q_0(\alpha)\rangle$，记 $d=|C_0|$。对偶图有顶点集 $S/A_0\sqcup S/B_0$，边集 $S/C_0$，边 $sC_0$ 连接 $sA_0$ 与 $sB_0$。
+

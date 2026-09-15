@@ -1,0 +1,5 @@
+**命题。** 如果 $f\in\operatorname{Aut}(\Pi_g)$ 在 $\Pi_g/\Pi_g''$ 上诱导恒等映射，那么它在每个 $Q_{g,m}$ 上也诱导恒等映射。如果它在 $\Pi_g/\Pi_g''$ 上诱导内自同构，那么它在每个 $Q_{g,m}$ 上亦诱导内自同构。特别地，
+
+$$\ker\left(\operatorname{Out}(\Pi_g)\to\operatorname{Out}(\Pi_g/\Pi_g'')\right)
+\subseteq\bigcap_{m\ge1}\ker\left(\operatorname{Out}(\Pi_g)\to\operatorname{Out}(Q_{g,m})\right).$$
+

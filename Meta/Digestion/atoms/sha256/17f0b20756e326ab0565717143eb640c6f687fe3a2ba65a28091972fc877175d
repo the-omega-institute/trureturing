@@ -1,0 +1,2 @@
+**定义。** 保留第 27–32 节的基商及作用假设，并固定满射 $f:\Lambda\twoheadrightarrow F$ 到非交换有限单群。对一条 $T_\beta\in\Lambda$ 的本质分离曲线，令 $t_\beta=\operatorname{ord}f(T_\beta)$、$d_\beta=\operatorname{ord}q_0(\beta)$。从其实际陪集图计算 $b_\beta$ 及循环格首个 Smith 不变量 $s_{1,\beta}$；$b_\beta=0$ 时单独处理。令 $e_{\beta,\ell}=1$，若 $b_\beta=0$ 或 $\ell\mid s_{1,\beta}$，否则令 $e_{\beta,\ell}=\ell$。
+

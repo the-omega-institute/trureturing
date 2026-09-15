@@ -1,0 +1,12 @@
+**定理。** 对每个 $\sigma:\Pi_g\to V_m$ 及每个整数 $n$，
+
+$$\sigma(\tau^n(u))=\sigma(u)\sigma(\delta)^n,$$
+
+其中 $\sigma(\delta)$ 位于中心，且其 $m$ 次幂为单位元。故对全部整数 $p,n$，
+
+$$\boxed{q^{\rm ut}_{g,m}(\tau^n(u))\sim
+q^{\rm ut}_{g,m}(\tau^p(u))
+\quad\Longleftrightarrow\quad n\equiv p\pmod m.}$$
+
+该共轭类轨道恰有 $m$ 个元素。
+

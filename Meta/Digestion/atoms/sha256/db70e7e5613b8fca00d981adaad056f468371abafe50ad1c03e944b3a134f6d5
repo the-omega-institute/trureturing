@@ -1,0 +1,2 @@
+**证明。** 第 42 节给出 $\Psi_\ell(T_\beta)^{d_\beta}$ 的准确阶为 $e_{\beta,\ell}$。因子化保持幂关系，故 $f(T_\beta)^{d_\beta e_{\beta,\ell}}=1$。若失败，则 $T_\beta^{d_\beta e_{\beta,\ell}}\in K_\ell=\ker\Psi_\ell$，但其 $f$ 像非单位。$K_\ell$ 正规及 $F$ 单，强制 $f(K_\ell)=F$。若 $f(C_\ell)=1$，则 $f(K_\ell)$ 是第 28 节的交换 $\ell$ 群 $K_\ell/C_\ell$ 的像，矛盾。单性遂给出 $f(C_\ell)=F$；稳定子像为真子群立即排除所需轨道包含。
+

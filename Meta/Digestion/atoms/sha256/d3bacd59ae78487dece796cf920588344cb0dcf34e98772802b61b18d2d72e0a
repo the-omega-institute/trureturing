@@ -1,0 +1,10 @@
+**证明。** $K_g$ 是全部到 $\mathbb Z/2$ 的同态之核的交，故为特征子群。交换子子群和幂子群均为 $K_g$ 的特征子群，因此 $L_{g,m}$ 在 $\Pi_g$ 的自同构下保持不变。
+
+对任意 $\rho:\Pi_g\to D_m$，复合 $D_m\to D_m/\langle r\rangle\cong\mathbb Z/2$ 可经定义 $K_g$ 的映射因子化，所以 $\rho(K_g)\subseteq\langle r\rangle$。旋转群交换且指数为 $4m$，因此 $\rho$ 消去 $[K_g,K_g]$ 和 $K_g^{4m}$。对全部 $\rho$ 取交，得到 $L_{g,m}\subseteq N_{g,m}$。
+
+$K_g/L_{g,m}$ 是由至多 $s_g$ 个元素生成、指数整除 $4m$ 的交换群，所以它是 $(\mathbb Z/(4m))^{s_g}$ 的商，阶至多为 $(4m)^{s_g}$。由 $[\Pi_g:K_g]=d_g$，得到
+
+$$|\Pi_g/L_{g,m}|\le d_g(4m)^{s_g}.$$
+
+而 $Q_{g,m}$ 是 $\Pi_g/L_{g,m}$ 的商，故具有同一个上界。此论证只用中间商控制大小；没有断言 $\tau$ 在中间商 $\Pi_g/L_{g,m}$ 上恰有阶 $m$。
+

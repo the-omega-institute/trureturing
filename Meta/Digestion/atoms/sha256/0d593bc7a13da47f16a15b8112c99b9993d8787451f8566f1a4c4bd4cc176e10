@@ -1,0 +1,8 @@
+**证明。** 分离曲线的同调类为零，Dehn 扭转的同调转移公式给出 $T_{\alpha,*}=I$。映射环面的 Wang 正合列在一次同调处给出
+
+$$0\longrightarrow\operatorname{coker}(T_{\alpha,*}^{nk}-I)
+\longrightarrow H_1(M_{g,h,nk};\mathbb Z)
+\longrightarrow\mathbb Z\longrightarrow0.$$
+
+右端自由，扩张分裂；左端为 $\mathbb Z^{2g}$，故得结论。
+

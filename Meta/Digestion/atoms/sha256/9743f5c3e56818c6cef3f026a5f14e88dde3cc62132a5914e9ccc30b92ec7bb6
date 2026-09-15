@@ -1,0 +1,11 @@
+**定义。** 固定整数 $g\ge2$，令
+
+$$\Pi_g=\langle a_1,b_1,\ldots,a_g,b_g\mid
+[a_1,b_1]\cdots[a_g,b_g]=1\rangle,$$
+
+其中 $[u,v]=uvu^{-1}v^{-1}$，乘积按指标递增排列。记 $h=[a_1,b_1]$，定义生成元上的映射
+
+$$\tau(a_1)=ha_1h^{-1},\qquad \tau(b_1)=hb_1h^{-1},$$
+
+$$\tau(a_i)=a_i,\qquad\tau(b_i)=b_i\quad(2\le i\le g).$$
+
