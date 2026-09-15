@@ -62,7 +62,11 @@ internal sealed class QuetRationalIterationDenominatorDocument
                         + "exact. Writing a reduced rational as p/q turns the iteration "
                         + "into the pair step (p,q) to (p(p+2q),q(p+q)); coprimality "
                         + "is preserved, and the numerator recurrence yields the equation."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "oeis-a079278-quet-rational-iteration-denominator-recurrence"),
+                    ResolutionKind.Proved)))));
 
     private static Formula NumFormula()
     {
