@@ -868,7 +868,7 @@ T(i)=
 
 这证明两方向。p=3 可由 F_4=3 和 delta(3)=1 独立处理，得到同一判断；p=2,5 不纳入这里的标准 WSS 定义。
 
-**推论。** 将 delta(p) 写成既约分数 A_p/B_p，B_p>0。对 p>=7，若 Z_p=0，则 v_p(B_p)=e；若 Z_p>0 且 e>=2，则 v_p(B_p)=2e-1；若 e=1，则 v_p(B_p)<=1。因此
+**推论。** 将 delta(p) 写成既约分数 A_p/B_p，B_p>0。对 p>=7，若 Z_p=0，则 v_p(B_p)=e；若 Z_p>0 且 e>=2，则 v_p(B_p)<=1。因此
 
 \[
 \boxed{\mathrm{WSS}(p)\iff p^2\mid B_p.}\tag{FD12}
@@ -1250,7 +1250,7 @@ d(E_D(M))\le
 \sum_{r\in\mathcal R_1(M_0)\setminus T}\frac1r<\frac\eta4.
 \]
 
-令 \(M=\operatorname{lcm}(M_0,T)\)。若 \(r\in\mathcal R_1(M)\)，则由 \(M_0\mid M\)，有 \(r\in\mathcal R_1(M_0)\)。它不可能属于 \(T\)，因为此时 \(r\mid M\) 且 \(r\ge3\) 会违反 \(\gcd(r,M)\le2\)。所以
+令 \(M=\operatorname{lcm}(M_0,T)\)。若 \(r\in\mathcal R_1(M)\)，则由 \(M_0\mid M\)，有 \(r\in\mathcal R_1(M_0)\)。它不可能属于 \(T\)，因为此时 \(r\mid M\)，而 \(r\ge3\) 会违反 \(\gcd(r,M)\le2\)。所以
 
 \[
 \mathcal R_1(M)\subseteq\mathcal R_1(M_0)\setminus T,
