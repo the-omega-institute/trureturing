@@ -31786,3 +31786,278 @@ $$
 全部 $127$ 个二分都由上述至少四元块的结论排除两个报告同时纠缠，$4\mid4$ 的两块则均可分。同理，四记录的无标号二分共有 $2^3-1=7$ 个，前面列出的三个 $2\mid2$ 与四个 $1\mid3$ 已穷尽它们，得到恰一个成功、四个单侧纠缠、两个双侧可分的分类。$g=3$ 的全二分障碍即给陈述中的全有限长度存在断言的反例。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 144. 全端点预测的射影历史商与共同前后缀下的记录合并
+
+**命题 144.1（两记忆列的标量射线判据与精确充分记录）。** 沿用命题 130.1、137.1 的纯边界过程，取
+$$
+\alpha=\frac{\sqrt5-1}{2},\qquad s=\sqrt\alpha,\qquad
+0<\alpha<1,\qquad \alpha^2+\alpha=1,\qquad B=M=\mathbb C^2,
+$$
+$$
+m_0=s|0\rangle+\alpha|1\rangle,\qquad m_1=|0\rangle,\qquad
+T|j\rangle=|j\rangle\otimes m_j\quad(j=0,1),
+$$
+$$
+\Xi_0=m_0,\qquad
+\Xi_{n+1}=(I_{B^{\otimes n}}\otimes T)\Xi_n.
+$$
+各空间取正交标准基。对任意有限整数 $g\ge0$，从这个纯初态恰好发出 $g+2$ 个输出，在全部生成之后测量内部位置；完整次序为
+$$
+B_L\otimes B_1\otimes\cdots\otimes B_g\otimes B_R\otimes M.
+$$
+$L,R$ 是第一个和最后一个已发出的 qubit，端点空间始终为完整的 $B_L\otimes B_R=\mathbb C^2\otimes\mathbb C^2$，左端点之前没有被忽略的前缀。最终记忆取偏迹且不可访问，生成途中不读取、测量或重置记忆。每个内部位置仅在事先固定的加减基
+$$
+|\eta_b\rangle=\frac{|0\rangle+(-1)^b|1\rangle}{\sqrt2}
+\quad(b=0,1)
+$$
+中测量一次，全部结果成为原始经典记录 $r=(r_1,\ldots,r_g)\in\{0,1\}^g$。生成及内部测量没有反馈、端点操作或记录的相干重组。测后的内部系统与最终记忆均不可再访问；对已完成记录作确定性经典处理后，除所声明的保留标签外，不访问原始记录及其他副本。以下端点预测指这一制备完成后的实验，不要求重建旧的经典词或被测位置的仪器。
+
+以 $\dagger$ 表示伴随，$\operatorname{outer}(x)=xx^\dagger$，并按左行右列约定
+$$
+\operatorname{vec}_{LR}(C)=\sum_{i,j=0}^1 C_{ij}|i\rangle_L\otimes|j\rangle_R,
+\qquad 00,01,10,11\text{ 为坐标次序}.
+$$
+记
+$$
+J=\begin{pmatrix}1&1\\1&0\end{pmatrix},\qquad
+Z=\operatorname{diag}(1,-1),\qquad E_0=\operatorname{diag}(1,0),\qquad
+\kappa_g=s^{g+3}2^{-g/2},
+$$
+$$
+N_r=Z^{r_1}J\cdots Z^{r_g}J,\qquad N_\varnothing=I_2,
+\qquad C_r=\kappa_g JN_r.
+$$
+直接采用命题 137.1 的实际分支公式：
+$$
+\chi_r=\operatorname{vec}_{LR}(C_r)\otimes|0\rangle_M
++s\operatorname{vec}_{LR}(C_rE_0)\otimes|1\rangle_M,
+$$
+$$
+Q_r=\operatorname{Tr}_M\operatorname{outer}(\chi_r)
+=\operatorname{outer}(\operatorname{vec}_{LR}(C_r))
++\alpha\operatorname{outer}(\operatorname{vec}_{LR}(C_rE_0)),
+\qquad q_r=\operatorname{Tr}Q_r>0,\qquad \theta_r=Q_r/q_r.
+$$
+两个记忆列及其相对系数 $\alpha$ 都保留，$q_r$ 是该完整记录的实际 Born 概率，$\sum_rq_r=1$。对任意非零复二阶矩阵 $C$，也用同一代数式定义
+$$
+Q(C)=\operatorname{outer}(\operatorname{vec}_{LR}(C))
++\alpha\operatorname{outer}(\operatorname{vec}_{LR}(CE_0)),\qquad
+\operatorname{Tr}Q(C)=\|C\|_F^2+\alpha\|CE_0\|_F^2>0.
+$$
+称两个非零矩阵射影相同，是指它们相差一个非零复标量。对每个 $N_r$，选取 $N_r,-N_r$ 中按逐行次序遇到的第一个非零元素为正的那个，记为整数矩阵签名 $\sigma(r)$。
+
+固定 $g$，定义完整记录的精确端点预测等价为
+$$
+r\sim_g v
+\quad\Longleftrightarrow\quad
+\operatorname{Tr}(E\theta_r)=\operatorname{Tr}(E\theta_v)
+\quad\text{对每个 }E\in\mathcal L(B_L\otimes B_R),\ 0\le E\le I.
+$$
+这也就是每个有限端点 POVM 的全部结果分布相同。对确定性函数 $f:\{0,1\}^g\to\mathcal B$，仅考虑其有限像中的标签 $b$，定义实际事件及条件密度
+$$
+Q_b=\sum_{r:f(r)=b}Q_r,\qquad
+q_b=\operatorname{Tr}Q_b=\sum_{r:f(r)=b}q_r>0,\qquad
+\theta_b=Q_b/q_b.
+$$
+称 $f$ 逐记录精确充分，是指对每个端点效应 $E$，存在仅依赖保留标签的预测值 $\widehat p_E(b)\in[0,1]$，满足
+$$
+\widehat p_E(f(r))=\operatorname{Tr}(E\theta_r)
+\qquad\text{对每条完整记录 }r.
+$$
+这一要求保留每条原始记录所条件化的概率，而不只是给出合并事件的平均概率。
+
+则对任意非零 $C,D\in\mathbb C^{2\times2}$，包括奇异矩阵，均有标量射线判据
+$$
+\frac{Q(D)}{\operatorname{Tr}Q(D)}=\frac{Q(C)}{\operatorname{Tr}Q(C)}
+\quad\Longleftrightarrow\quad
+D=zC\quad\text{存在 }z\in\mathbb C\setminus\{0\}.
+$$
+因此，对每个固定 $g\ge0$ 及 $r,v\in\{0,1\}^g$，
+$$
+r\sim_g v
+\quad\Longleftrightarrow\quad \theta_r=\theta_v
+\quad\Longleftrightarrow\quad N_v=\pm N_r
+\quad\Longleftrightarrow\quad \sigma(v)=\sigma(r).
+$$
+这些条件成立时还满足 $C_v=\pm C_r$、$Q_v=Q_r$、$q_v=q_r$。$f$ 逐记录精确充分当且仅当每个非空纤维中的 $\theta_r$ 全部相同；此时实际 Born 加权的 $\theta_b$ 就是该共同密度。签名 $\sigma$ 因而是此任务的最粗充分有限标签，在有效标签双射重命名的意义下唯一，其标签数恰为
+$$
+K_g=\bigl|\{\sigma(r):r\in\{0,1\}^g\}\bigr|,
+$$
+即不同射影整数矩阵的个数。两个相同端点密度也保持对同一后续端点 CPTP 操作及测量的预测相同，所用协议只能访问端点和已保留标签。
+
+进一步有
+$$
+(ZJ)^3=-I_2,\qquad N_{0111}=N_{1110}=-J.
+$$
+固定长度 $g=0,1,2,3$ 时没有不同记录的射影碰撞，首次碰撞发生于 $g=4$。任意有限二进制词 $u,r,v$ 满足
+$$
+N_{urv}=N_uN_rN_v.
+$$
+故中间词的射影相同在任意共同前缀 $u$ 与共同后缀 $v$ 下保持。特别地，若中间词 $r,w$ 等长且 $N_w=\pm N_r$，则在内部长度同为 $G=|u|+|r|+|v|$ 的两个完整协议中，
+$$
+Q_{uwv}=Q_{urv},\qquad q_{uwv}=q_{urv},\qquad
+\theta_{uwv}=\theta_{urv}.
+$$
+因此每个 $g\ge4$ 都有不同完整记录可无损合并，$K_g<2^g$。这里的上下文是完整协议内的共同测量标签词；结论没有给出仅作用于已保留端点态的逐步闭合动力学，也不授予访问已丢弃记忆或内部系统的能力。
+
+证明。加减基在命题 137.1 中给 $D_k=2^{-1/2}Z^{r_k}$，代入该命题即得所列 $C_r$、$\chi_r$ 及 $Q_r$。由 $\det J=\det Z=-1$，
+$$
+N_r\in\operatorname{GL}_2(\mathbb Z),\qquad
+\det N_r=(-1)^{g+\sum_k r_k},\qquad \kappa_g>0.
+$$
+所以所有 $C_r$ 非零且可逆，命题 137.1 的迹公式给 $q_r>0$，完整测量的完备性给 $\sum_rq_r=1$，包括 $g=0$ 的空记录。这里没有把第二记忆列并入第一列或各自重新归一化。
+
+先证一般的标量射线判据。令 $P=I_{B_L}\otimes E_0$，则 $P=P^\dagger=P^2$，且
+$$
+P\operatorname{vec}_{LR}(C)=\operatorname{vec}_{LR}(CE_0).
+$$
+在全部四阶复矩阵的线性空间上定义
+$$
+\mathcal L(X)=X+\alpha PXP,\qquad
+\mathcal R(Y)=Y-\frac{\alpha}{1+\alpha}PYP.
+$$
+利用 $P^2=P$ 展开两种复合，均有
+$$
+\begin{aligned}
+\mathcal R(\mathcal L(X))
+&=X+\left(\alpha-\frac{\alpha}{1+\alpha}
+-\frac{\alpha^2}{1+\alpha}\right)PXP=X,\\
+\mathcal L(\mathcal R(Y))
+&=Y+\left(\alpha-\frac{\alpha}{1+\alpha}
+-\frac{\alpha^2}{1+\alpha}\right)PYP=Y.
+\end{aligned}
+$$
+故 $\mathcal L$ 代数可逆，$\mathcal L^{-1}=\mathcal R$。置 $c=\operatorname{vec}_{LR}(C)$、$d=\operatorname{vec}_{LR}(D)$，便有 $Q(C)=\mathcal L(cc^\dagger)$、$Q(D)=\mathcal L(dd^\dagger)$。若两个归一化密度相同，取正数
+$$
+\lambda=\frac{\operatorname{Tr}Q(D)}{\operatorname{Tr}Q(C)}>0,
+$$
+则 $Q(D)=\lambda Q(C)$。施加线性的 $\mathcal R$ 得 $dd^\dagger=\lambda cc^\dagger$。对任意非零向量 $h$，$hh^\dagger$ 的像恰为 $\mathbb C h$：它的每个像向量是 $h$ 的倍数，而 $hh^\dagger h=\|h\|^2h\ne0$。于是 $d=zc$，其中 $z\ne0$，再比较外积得 $|z|^2=\lambda$。向量化单射，故 $D=zC$。反之，$D=zC$ 直接给 $Q(D)=|z|^2Q(C)$ 及相同的归一化密度。证明只用 $c,d$ 非零，没有要求 $C,D$ 可逆。
+
+这个逆仅用于代数比较。事实上，取标准基 $e_0=|00\rangle$、$e_1=|01\rangle$ 及正迹一算子
+$$
+Y=\operatorname{outer}\left(\frac{e_0+e_1}{\sqrt2}\right).
+$$
+由于 $Pe_0=e_0$、$Pe_1=0$，$\mathcal R(Y)$ 在这两个坐标上的主子矩阵及其行列式为
+$$
+\frac12\begin{pmatrix}(1+\alpha)^{-1}&1\\1&1\end{pmatrix},\qquad
+-\frac{\alpha}{4(1+\alpha)}<0,
+\qquad \operatorname{Tr}\mathcal R(Y)=1-\frac{\alpha}{2(1+\alpha)}\ne1.
+$$
+因此 $\mathcal R$ 不是正映射，也不是完全正或保迹映射，不能作为任意输入态的物理恢复通道。
+
+对固定长度的两条记录，刚证的判据及 $J$ 可逆、$\kappa_g>0$ 给
+$$
+\theta_v=\theta_r\quad\Longleftrightarrow\quad
+N_v=zN_r\quad(z\ne0).
+$$
+$N_r$ 至少有一个非零实元素，比较该处元素说明 $z$ 为实数。再取行列式，
+$$
+z^2=\frac{\det N_v}{\det N_r}\in\{1,-1\}.
+$$
+实非零 $z$ 的平方为正，故 $z^2=1$、$z=\pm1$。反向蕴含直接成立。两个 $C$ 的尺度 $\kappa_g$ 相同，所以连未归一化 $Q$ 及其迹也相同。选首个非零元素为正恰好消去这个符号歧义，得到签名等价式。
+
+现在识别预测任务。密度相同显然给所有效应的 Born 概率相同。若 $\Delta=\theta_r-\theta_v$ 为非零 Hermitian 矩阵，则 $\operatorname{Tr}\Delta=0$。其非零实特征值不可能全同号，所以至少有一个正特征值。令 $E_+$ 为全部正特征空间的正交投影，就有
+$$
+0\le E_+\le I,\qquad
+\operatorname{Tr}(E_+\theta_r)-\operatorname{Tr}(E_+\theta_v)
+=\operatorname{Tr}(E_+\Delta)
+=\sum_{\lambda_j(\Delta)>0}\lambda_j(\Delta)>0.
+$$
+这给出区分效应，故所有效应相同当且仅当密度相同。每个效应属于二结果 POVM $(E,I-E)$，每个有限 POVM 又由效应组成，因而两种预测表述等价。
+
+为逐字适用定理 54.3 的有限实验族，取 $X=\{0,1\}^g$、实验长度上限 $H=1$，在端点的四个标准基向量 $e_0,e_1,e_2,e_3$ 上选取下列 $16$ 个秩一投影作为二元测量的第一个效应：
+$$
+\begin{gathered}
+F_j=\operatorname{outer}(e_j)\quad(0\le j\le3),\\
+F_{jk}^{+}=\operatorname{outer}\left(\frac{e_j+e_k}{\sqrt2}\right),\qquad
+F_{jk}^{i}=\operatorname{outer}\left(\frac{e_j+i e_k}{\sqrt2}\right)
+\quad(0\le j<k\le3).
+\end{gathered}
+$$
+每个协议是 $(F,I-F)$，共 $4+2\binom42=16$ 个协议。若 $\theta_{jk}=\langle e_j|\theta|e_k\rangle$，则其第一个结果概率满足
+$$
+\begin{aligned}
+p_j&=\theta_{jj},\\
+p_{jk}^{+}&=\frac{\theta_{jj}+\theta_{kk}}2+\operatorname{Re}\theta_{jk},\\
+p_{jk}^{i}&=\frac{\theta_{jj}+\theta_{kk}}2-\operatorname{Im}\theta_{jk}.
+\end{aligned}
+$$
+所以这 $16$ 个数确定全部对角元和全部非对角元的实、虚部，下三角由 Hermitian 性确定。该有限菜单的响应签名相同恰等价于密度相同，因而恰等价于全部端点效应的预测相同。这里的信息完备性是这些显式公式的结论；信息完备测量的一般术语参见 G. M. D'Ariano、P. Perinotti、M. F. Sacchi，*Informationally Complete Measurements and Group Representation*，Journal of Optics B: Quantum and Semiclassical Optics 6，S487–S491（2004），[DOI:10.1088/1464-4266/6/6/005](https://doi.org/10.1088/1464-4266/6/6/005)。菜单收集各个二元实验的分布，不要求不同实验存在联合结果分布。
+
+定理 54.3 现在直接适用于这个有限菜单：$f$ 充分当且仅当其纤维不跨越响应签名类，而这里的类已被识别为 $\theta_r$ 相同的类，亦即 $\sigma(r)$ 相同的类。对实际事件，经典结果合并的线性性给 $Q_b=\sum_{f(r)=b}Q_r$，且没有不同 $r$ 的振幅交叉项；因此
+$$
+\theta_b=\sum_{r:f(r)=b}\frac{q_r}{q_b}\theta_r,\qquad
+\sum_{r:f(r)=b}\frac{q_r}{q_b}=1.
+$$
+若纤维中的密度共同等于 $\theta$，这个实际 Born 加权和就等于 $\theta$，取 $\widehat p_E(b)=\operatorname{Tr}(E\theta_b)$ 即满足每条记录的要求。若同一纤维包含不同密度，刚才的区分效应给出两个不同概率，一个共同预测值不可能同时等于它们。合并后的平均概率仍存在，但不满足逐记录要求。故由定理 54.3 的最小性结论，任意充分标签都必须细化 $\sigma$ 的纤维，$\sigma$ 本身充分且恰有 $K_g$ 个有效值；达到这个数的充分标签恰与 $\sigma$ 双射重命名。这没有以纤维大小代替其 Born 权重。
+
+若 $\theta_r=\theta_v$，对同一个端点 CPTP 映射 $\Phi$ 及其输出上的任意效应 $F$，有
+$$
+\operatorname{Tr}(F\Phi(\theta_r))=\operatorname{Tr}(F\Phi(\theta_v)).
+$$
+有限次端点操作与测量也逐分支保持这个结论：每条指定结果路径的未归一化算子由同一串线性测量分支映射和通道得到，相同输入给相同算子及其迹。协议若根据先前端点结果或共同保留标签选取后续操作，逐路径仍用同一个映射。此论证的输入只是所保留的端点密度与标签，不包括已丢弃记录、被测内部系统或最终记忆。
+
+为了明确严格于只保留纠缠这一性质，取 $g=2$ 的记录 $00$ 与 $11$。由上面的矩阵乘积，亦即命题 140.1（C）的同一分支，
+$$
+\kappa_2^{-1}C_{00}=\begin{pmatrix}3&2\\2&1\end{pmatrix},\qquad
+\kappa_2^{-1}C_{11}=\begin{pmatrix}-1&0\\0&1\end{pmatrix}.
+$$
+两条记忆列的迹分别给 $q_{00}=\kappa_2^2(18+13\alpha)$、$q_{11}=\kappa_2^2(2+\alpha)$。效应 $E=|01\rangle\langle01|$ 因而满足
+$$
+\operatorname{Tr}(E\theta_{00})=\frac4{18+13\alpha}>0,
+\qquad \operatorname{Tr}(E\theta_{11})=0.
+$$
+两条分支均由命题 137.1 纠缠，却能由端点实验区分。命题 140.1（C）已经证明合并为奇偶报告仍保留条件纠缠，但这两个同为偶记录的概率不同，所以该报告不满足此处的精确预测充分性。
+
+最后处理词关系。直接相乘得
+$$
+ZJ=\begin{pmatrix}1&1\\-1&0\end{pmatrix},\qquad
+(ZJ)^2=\begin{pmatrix}0&1\\-1&-1\end{pmatrix},\qquad
+(ZJ)^3=\begin{pmatrix}-1&0\\0&-1\end{pmatrix}=-I_2.
+$$
+于是
+$$
+N_{0111}=J(ZJ)^3=-J=(ZJ)^3J=N_{1110}.
+$$
+对较短长度，把 $N_r$ 的四个元素按逐行次序记为 $(a,b,c,d)$。从空词的 $I_2$ 出发，附加一位的整数乘法为
+$$
+N_{r0}=\begin{pmatrix}a+b&a\\c+d&c\end{pmatrix},\qquad
+N_{r1}=\begin{pmatrix}a-b&a\\c-d&c\end{pmatrix}.
+$$
+这给出长度不超过三的全部值：
+$$
+\begin{array}{c|c|rrrr}
+g&r&a&b&c&d\\\hline
+0&\varnothing&1&0&0&1\\\hline
+1&0&1&1&1&0\\
+1&1&1&1&-1&0\\\hline
+2&00&2&1&1&1\\
+2&01&0&1&1&1\\
+2&10&2&1&-1&-1\\
+2&11&0&1&-1&-1\\\hline
+3&000&3&2&2&1\\
+3&001&1&2&0&1\\
+3&010&1&0&2&1\\
+3&011&-1&0&0&1\\
+3&100&3&2&-2&-1\\
+3&101&1&2&0&-1\\
+3&110&1&0&-2&-1\\
+3&111&-1&0&0&-1
+\end{array}.
+$$
+各长度的 $2^g$ 条记录均已列出；在每个固定长度内，选首个非零元素为正后，四元组两两不同。因此 $g\le3$ 没有射影碰撞，而所列两条长度四的不同记录给出首次碰撞。
+
+按定义连接有限乘积，结合律立即给 $N_{urv}=N_uN_rN_v$，空词情形也成立。若 $N_w=zN_r$，则
+$$
+N_{uwv}=N_u(zN_r)N_v=zN_{urv}.
+$$
+故射影关系在任意共同上下文中保持。若 $|r|=|w|$，前面已证 $z=\pm1$，两条完整记录的内部长度同为 $G$，于是
+$$
+C_{uwv}=\kappa_G JN_{uwv}=\pm\kappa_G JN_{urv}=\pm C_{urv}.
+$$
+分别对两记忆列取外积，符号同时消去，便得到相同的实际 $Q$、$q$ 及 $\theta$。这些式子比较的是从 $m_0$ 开始、各自恰好发出 $G+2$ 位的完整协议；共同前缀是其中已测内部位置的标签，并非左端点之前被忽略的输出，共同后缀也不是作用于旧右端点的通道。因而该乘法恒等式不提供在擦除最终记忆后继续生成的状态更新律。
+
+对每个 $g\ge4$，在 $0111$ 与 $1110$ 前面同加 $0^{g-4}$，就得到两条不同的长度 $g$ 记录及相同的实际条件端点密度，故 $K_g<2^g$。所证的是该关系及其所有共同上下文中的保持性；没有断言这一条改写生成全部词关系，也没有由它确定一般正规形或 $K_g$ 的增长律。证毕。
+
+## 追加锚（本行以下为增补区）
