@@ -57,9 +57,7 @@ internal sealed class DivisorPowerUnionRefutationDocument : IScribeDocumentDefin
                         + "uses A095848's all-sufficiently-low-power definition with "
                         + "real exponents: one negative real threshold, and every real "
                         + "exponent below it. The threshold may depend on n. No "
-                        + "lexicographic equivalence is assumed. The complete iff was "
-                        + "preregistered in public issue 8081 on September 15, 2026, "
-                        + "at 11:22:40 UTC, before numerical or Lean probes."))),
+                        + "lexicographic equivalence is assumed."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("a396596-divisor-power-union-refuted"),
@@ -97,16 +95,7 @@ internal sealed class DivisorPowerUnionRefutationDocument : IScribeDocumentDefin
                             + "full-domain argument. No floating-point proof or "
                             + "prime-signature completeness assumption is used. "
                             + "There is no minimality claim or claim that all "
-                            + "superabundant numbers fall outside either class.")),
-                    Paragraph(Text(
-                        "Semantic assessment: proof_shape content; computational "
-                            + "kind certified-instance, also bounded-enumeration; "
-                            + "utility refutes the displayed claim; admission_basis "
-                            + "open-problem-resolution; escape_witness none. The "
-                            + "closed refutation preserves the exact original claim. "
-                            + "No direct frozen project dependency or atom coverage "
-                            + "is asserted. The source note and Problems dossier "
-                            + "retain the bounded search and attribution limits."))),
+                            + "superabundant numbers fall outside either class."))),
                 DescribeRole.Theorem,
                 new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("oeis-a396596-divisor-power-union"),

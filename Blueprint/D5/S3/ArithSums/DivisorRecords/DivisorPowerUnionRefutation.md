@@ -40,7 +40,7 @@ $$(claim) \Leftrightarrow (\forall n \in \mathbb{N},\; (0 < n) \Rightarrow ((\ex
 
 *Commentary.*
 
-Switkay's selected sentence is: We conjecture that the present sequence can be constructed simply as a union of highly composite numbers and deeply composite numbers. The latter uses A095848's all-sufficiently-low-power definition with real exponents: one negative real threshold, and every real exponent below it. The threshold may depend on n. No lexicographic equivalence is assumed. The complete iff was preregistered in public issue 8081 on September 15, 2026, at 11:22:40 UTC, before numerical or Lean probes.
+Switkay's selected sentence is: We conjecture that the present sequence can be constructed simply as a union of highly composite numbers and deeply composite numbers. The latter uses A095848's all-sufficiently-low-power definition with real exponents: one negative real threshold, and every real exponent below it. The threshold may depend on n. No lexicographic equivalence is assumed.
 
 **Theorem 1.4 (Negation of the complete union claim).**
 
@@ -65,8 +65,6 @@ A nonmultiple misses d and 2d for some 1 <= d <= 19. A local telescoping recipro
 At zero, the smaller predecessor 27935107200 ties N's 3072 divisors, excluding a strict record. For every real x <= -1000, predecessor 26771144400 wins: N-only divisors are at least 27, whereas 25 divides the predecessor but not N, and N*27^x < 25^x. For arbitrary real B < 0, min(B,-1000) therefore defeats the eventual-record alternative.
 
 Empirical candidate discovery is separate from the exact full-domain argument. No floating-point proof or prime-signature completeness assumption is used. There is no minimality claim or claim that all superabundant numbers fall outside either class.
-
-Semantic assessment: proof_shape content; computational kind certified-instance, also bounded-enumeration; utility refutes the displayed claim; admission_basis open-problem-resolution; escape_witness none. The closed refutation preserves the exact original claim. No direct frozen project dependency or atom coverage is asserted. The source note and Problems dossier retain the bounded search and attribution limits.
 
 ## References
 
