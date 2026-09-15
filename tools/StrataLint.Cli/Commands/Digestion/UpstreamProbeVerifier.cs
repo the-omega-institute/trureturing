@@ -42,6 +42,10 @@ internal sealed class UpstreamProbeVerifier(IUpstreamLeanProcessRunner runner, s
         var code = WithoutComments(text);
         var imports = Regex.Matches(code, @"^[ \t]*import[ \t]+([^\r\n]+)", Options)
             .Select(match => match.Groups[1].Value.Trim()).ToArray();
+        // Any import outside the recognized single-line dialect remains unverified.
+        // In particular, public/meta or line-broken imports must not evade the D5 guard.
+        if (Regex.Matches(code, @"\bimport\b", Options).Count != imports.Length)
+            throw Invalid("PROBE_IMPORTS_PROJECT", "use canonical single-line import commands");
         var modules = imports.SelectMany(line => line.Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries)).ToArray();
         if (modules.Length == 0 || modules.Any(module => module == "D5" || module.StartsWith("D5.", StringComparison.Ordinal)))
             throw Invalid("PROBE_IMPORTS_PROJECT", "probe must import pinned upstream modules and cannot import D5");

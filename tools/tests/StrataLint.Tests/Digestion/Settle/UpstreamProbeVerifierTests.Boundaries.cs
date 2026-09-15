@@ -37,6 +37,18 @@ public sealed partial class UpstreamProbeVerifierTests
         Assert.Equal(3, f.Verify(Source.Replace("probe", "probe'", StringComparison.Ordinal)).Length);
     }
 
+    [Theory]
+    [InlineData("meta import D5.Injected\n")]
+    [InlineData("public import D5.Injected\n")]
+    [InlineData("import\n D5.Injected\n")]
+    public void UnrecognizedImportSyntaxCannotHideAProjectImport(string import)
+    {
+        using var f = new ProbeFixture();
+        var error = Assert.Throws<UpstreamSettlementException>(() => f.Verify(Source.Replace("theorem probe", import + "theorem probe", StringComparison.Ordinal)));
+        Assert.Equal("PROBE_IMPORTS_PROJECT", error.Code);
+        Assert.Empty(f.Runner.Sources);
+    }
+
     [Fact]
     public void RejectsUnknownAxiom()
     {
