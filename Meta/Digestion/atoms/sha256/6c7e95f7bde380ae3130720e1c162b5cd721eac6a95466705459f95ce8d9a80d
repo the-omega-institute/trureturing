@@ -1,0 +1,7 @@
+**定理。** $Q_F$ 有限，$\ker q_F$ 在全部自同态下保持不变。$T$ 诱导的 $\overline T\in\operatorname{Aut}(Q_F)$ 对全部整数 $n$ 满足
+
+$$\boxed{\overline T^{\,n}\text{ 为内自同构}
+\quad\Longleftrightarrow\quad
+\overline T^{\,n}=1
+\quad\Longleftrightarrow\quad e\mid n.}$$
+

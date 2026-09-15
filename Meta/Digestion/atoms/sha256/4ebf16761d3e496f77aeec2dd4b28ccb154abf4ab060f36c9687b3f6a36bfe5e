@@ -1,0 +1,29 @@
+**定理 124.6（精确纤维半径公式与最优表存在）。** $\mathcal D_d$ 在 $D$ 下紧且完备，任意两态间的距离属于 $[0,1]$。对任意 $T:X_{\rm fs}\to\mathcal D_d$ 及任意 $k$，每个纤维都有最优中心，且
+$$
+e_k(T)=\max_{w\in W_k}\ \min_{\sigma\in\mathcal D_d}
+\sup_{x\in F_{k,w}}D(T(x),\sigma)
+=\max_{w\in W_k}r_{k,w}(T).
+$$
+存在一张表达到 $e_k(T)$，并由命题 124.4 实现为 CPTP 模拟器。
+证明。Hermitian 矩阵组成有限维实向量空间，迹范数在该空间上给完备的度量。
+若一列密度矩阵趋于 $\rho$，则对每个 $v\in\mathbb C^d$，
+$$
+v^*\rho v=\lim_n v^*\rho_n v\ge0,\qquad
+\rho^*=\rho,\qquad \operatorname{tr}\rho=\lim_n\operatorname{tr}\rho_n=1.
+$$
+所以态空间闭。半正定矩阵的特征值非负，迹等于特征值之和，因此
+$$
+\|\rho\|_1=\operatorname{tr}\rho=1,\qquad
+\tfrac12\|\rho-\sigma\|_1\le\tfrac12(\|\rho\|_1+\|\sigma\|_1)=1.
+$$
+闭有界性在有限维给紧性，闭子集又继承完备性；迹范数的一半仍是度量。
+
+对任何 $\sigma,\eta\in\mathcal D_d$，逐点三角不等式及取上确界给
+$$
+f_{k,w}(\sigma)\le f_{k,w}(\eta)+D(\sigma,\eta),\qquad
+|f_{k,w}(\sigma)-f_{k,w}(\eta)|\le D(\sigma,\eta).
+$$
+故纤维目标函数对中心是 $1$-Lipschitz，尽管它对 $x$ 不要求连续。紧集 $\mathcal D_d$ 上的连续实函数达到最小值，取一个中心 $\sigma_w^*$。
+任意表的全局目标恰为 $\max_w f_{k,w}(\sigma_w)$，因为非空纤维有限个且分割 $X_{\rm fs}$。每一项至少为 $r_{k,w}$，故任何表的目标至少为 $\max_w r_{k,w}$；对有限个 $w$ 分别选取上述中心，便同时达到这个下界。
+证明不要求中心来自 $T[F_{k,w}]$，也不给中心唯一性或不同深度最优表之间的相容性。
+

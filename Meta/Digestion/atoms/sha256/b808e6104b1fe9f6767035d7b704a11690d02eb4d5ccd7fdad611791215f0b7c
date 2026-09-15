@@ -1,0 +1,11 @@
+**定理。** 有
+
+$$\operatorname{coker}Q_{\mathcal D}\cong\mathcal K(\mathcal D).$$
+
+因此，对任意非零整数 $n$，实际整数返回商满足
+
+$$\boxed{H_1(Y;\mathbb Z)/(A^n-I)H_1(Y;\mathbb Z)
+\cong\mathbb Z^{2G-b}\oplus\bigoplus_{i=1}^b\mathbb Z/(|n|s_i).}$$
+
+$b=0$ 时直接为 $\mathbb Z^{2G}$。$n=0$ 时也直接为 $\mathbb Z^{2G}$，不把它纳入非零时间的有限挠部表达式。
+

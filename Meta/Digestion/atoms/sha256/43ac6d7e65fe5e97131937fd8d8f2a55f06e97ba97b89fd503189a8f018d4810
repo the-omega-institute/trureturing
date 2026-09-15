@@ -1,0 +1,6 @@
+**推论 AT5。**
+
+$$
+\sum_{j\ge0}\|M_j-\widetilde M_j\|\le C_{d+e}(\theta)\delta.
+$$
+

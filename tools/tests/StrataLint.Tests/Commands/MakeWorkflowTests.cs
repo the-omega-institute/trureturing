@@ -109,6 +109,7 @@ public sealed partial class MakeWorkflowTests
         "prime-slab-cpu-test",
         "prime-slab-cpu-mutation-test",
         "census-test",
+        "census-frontier-performance",
     ];
 
     [Fact]
@@ -241,14 +242,15 @@ public sealed partial class MakeWorkflowTests
     {
         var root = TestRepositoryLayout.FindRoot();
         var supervisorName = Path.GetFileName(ReportSupervisorScriptPath);
-        var pairName = Path.GetFileName(LeanReportPairScriptPath);
         var producer = File.ReadAllText(Path.Combine(root, LeanReportScriptPath));
-        var pair = File.ReadAllText(Path.Combine(root, LeanReportPairScriptPath));
+        var inspector = File.ReadAllText(Path.Combine(root, "tools/lean-inspector/inspect.sh"));
         var consumer = File.ReadAllText(Path.Combine(root, ReportConsumerScriptPath));
 
-        Assert.Contains(pairName, producer, StringComparison.Ordinal);
-        Assert.Contains(supervisorName, pair, StringComparison.Ordinal);
-        Assert.Contains("--lean-slot", pair, StringComparison.Ordinal);
+        // Pair argument forwarding and failure propagation are exercised by LeanReportPairScriptTests.
+        // Inspector owns the producer slot for both public entries and direct callers.
+        Assert.Contains("tools/lean-inspector/inspect.sh", producer, StringComparison.Ordinal);
+        Assert.Contains(supervisorName, inspector, StringComparison.Ordinal);
+        Assert.Contains("--lean-slot", inspector, StringComparison.Ordinal);
         Assert.Contains(supervisorName, consumer, StringComparison.Ordinal);
         Assert.Contains(LeanReportInputScriptPath, consumer, StringComparison.Ordinal);
         Assert.DoesNotContain("mktemp", producer, StringComparison.Ordinal);

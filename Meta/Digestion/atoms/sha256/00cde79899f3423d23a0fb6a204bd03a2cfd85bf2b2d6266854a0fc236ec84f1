@@ -1,0 +1,139 @@
+**命题 134.1（纯边界的指定纠缠分支与无条件可分平均）。** 沿用命题 130.1 的固定生成器，取
+$$
+\alpha=\frac{\sqrt5-1}{2},\qquad s=\sqrt\alpha,\qquad
+\alpha+\alpha^2=1,\qquad B=M=\mathbb C^2,
+$$
+$$
+m_0=s|0\rangle+\alpha|1\rangle,\qquad m_1=|0\rangle,\qquad
+T|j\rangle=|j\rangle\otimes m_j\quad(j=0,1).
+$$
+两份二维空间均取正交标准基 $|0\rangle,|1\rangle$，$\dagger$ 表示伴随。记
+$$
+H_n=B^{\otimes n},\qquad H_0=\mathbb C,\qquad
+T_0=I_M,\qquad T_{n+1}=(I_{H_n}\otimes T)T_n,\qquad
+\Xi_n=T_nm_0.
+$$
+对整数 $g\ge0$，从纯初始记忆 $m_0$ 恰好生成 $n=g+2$ 个输出，按
+$$
+B_L\otimes H_g\otimes B_R\otimes M
+$$
+分组：$L$、$R$ 分别是第一个、最后一个已发出的输出 qubit，$M$ 是生成结束后的活动记忆。左端点之前没有被忽略的输出前缀。假设生成结束后可以分别测量每个内部输出及最终活动记忆，并可访问这些测量的经典结果记录以选择分支；两个端点均保留。
+
+在内部输出上使用正交基
+$$
+|+\rangle=\frac{|0\rangle+|1\rangle}{\sqrt2},\qquad
+|-\rangle=\frac{|0\rangle-|1\rangle}{\sqrt2},
+$$
+在最终活动记忆上使用计算基。对全部 $\varepsilon\in\{+,-\}^g$、$k\in\{0,1\}$，令 $|\varepsilon\rangle=|\varepsilon_1\rangle\otimes\cdots\otimes|\varepsilon_g\rangle$，定义实际联合向量的收缩
+$$
+v_{\varepsilon,k}
+=(I_{B_L}\otimes\langle\varepsilon|\otimes I_{B_R}\otimes\langle k|)\Xi_{g+2}
+\in B_L\otimes B_R.
+$$
+$g=0$ 时内部字符串为空，$|\varepsilon\rangle=1\in H_0$，其 bra 为恒等收缩。各个被测因子上的物理投影彼此交换，其联合投影为
+$$
+Q_{\varepsilon,k}
+=I_{B_L}\otimes|\varepsilon\rangle\langle\varepsilon|
+ \otimes I_{B_R}\otimes|k\rangle\langle k|.
+$$
+
+选择全部内部结果为 $+$ 且最终记忆结果为 $0$，记 $v_g=v_{(+,\ldots,+),0}$。令
+$$
+J=\begin{pmatrix}1&1\\1&0\end{pmatrix},\qquad
+v_g=\sum_{i,j=0}^1 C_g(i,j)|i\rangle_L\otimes|j\rangle_R,
+$$
+其中系数矩阵以左端点位值为行、右端点位值为列。则
+$$
+C_g=\frac{s^{g+3}}{(\sqrt2)^g}J^{g+1},\qquad
+C_0=\alpha sJ,\qquad
+\det C_g=-\alpha^3\left(-\frac\alpha2\right)^g\ne0.
+$$
+该联合事件的 Born 概率及条件密度为
+$$
+p_g=\|v_g\|^2=\operatorname{Tr}(C_gC_g^\dagger),\qquad
+0<p_g<1,\qquad
+\theta_g=\frac{|v_g\rangle\langle v_g|}{p_g}.
+$$
+这里可分性始终指完整 $B_L\otimes B_R=\mathbb C^2\otimes\mathbb C^2$ 上的有限凸可分性：密度 $\omega$ 可分，当且仅当存在有限个权重 $\lambda_a\ge0$、$\sum_a\lambda_a=1$ 及各自二维空间上的密度 $\sigma_a,\tau_a$，使
+$$
+\omega=\sum_a\lambda_a\,\sigma_a\otimes\tau_a.
+$$
+对每个有限 $g\ge0$，$\theta_g$ 均不可分；它的密度算子秩为 $1$，而其系数矩阵秩、亦即 Schmidt 秩为 $2$。
+
+对完整测量的每个结果令 $p_{\varepsilon,k}=\|v_{\varepsilon,k}\|^2$，仅在 $p_{\varepsilon,k}>0$ 时定义 $\theta_{\varepsilon,k}=|v_{\varepsilon,k}\rangle\langle v_{\varepsilon,k}|/p_{\varepsilon,k}$。则
+$$
+\begin{aligned}
+\Theta_g
+&:=\operatorname{Tr}_{H_g,M}|\Xi_{g+2}\rangle\langle\Xi_{g+2}|\\
+&=\sum_{\varepsilon\in\{+,-\}^g}\sum_{k=0}^1
+ |v_{\varepsilon,k}\rangle\langle v_{\varepsilon,k}|\\
+&=\sum_{\substack{\varepsilon\in\{+,-\}^g,\ k\in\{0,1\}\\p_{\varepsilon,k}>0}}
+ p_{\varepsilon,k}\theta_{\varepsilon,k},\qquad
+\sum_{\varepsilon,k}p_{\varepsilon,k}=1.
+\end{aligned}
+$$
+零概率项在未归一化求和中为零。对 $g\ge1$，此无条件端点密度 $\Theta_g$ 可分；这一可分性结论不包含 $g=0$。
+
+证明。记 $W_n$ 为长度 $n$ 的不含相邻 $11$ 的二进制词集，$W_n^0$ 为其中末位为 $0$ 的词集。命题 130.1 在完整输出与最终记忆空间上给出
+$$
+\Xi_n
+=s^{n+1}\sum_{w\in W_n}|w\rangle\otimes|0\rangle
+ +s^{n+2}\sum_{w\in W_n^0}|w\rangle\otimes|1\rangle
+\qquad(n\ge1).
+$$
+取 $n=g+2$。最终记忆的 $\langle0|$ 选出第一列；每个内部计算基位值与 $\langle+|$ 的内积均为 $1/\sqrt2$，所以
+$$
+C_g(i,j)=\frac{s^{g+3}}{(\sqrt2)^g}
+\#\{u\in\{0,1\}^g:(i,u,j)\in W_{g+2}\}.
+$$
+这是对完整联合向量的线性收缩。这里的 $1/\sqrt2$ 是基向量的内积，不是单次结果具有概率 $1/2$ 或结果相互独立的假设。
+
+$J_{ab}$ 恰为相邻位值 $a,b$ 的相容性指示数。展开矩阵乘法，固定 $x_0=i$、$x_{g+1}=j$，有
+$$
+(J^{g+1})_{ij}
+=\sum_{(x_1,\ldots,x_g)\in\{0,1\}^g}
+ \prod_{t=0}^{g}J_{x_tx_{t+1}}.
+$$
+每个乘积在对应整词合法时为 $1$，否则为 $0$，故此式正好计数上面的内部词。$g=0$ 时求和只有空内部词这一项，乘积为 $J_{ij}$，从而同样得到 $C_0=s^3J=\alpha sJ$。于是所有 $g\ge0$ 的系数矩阵公式成立。由于 $\det J=-1$，行列式的乘法性给
+$$
+\det C_g
+=\frac{s^{2g+6}}{2^g}(\det J)^{g+1}
+=\frac{\alpha^{g+3}}{2^g}(-1)^{g+1}
+=-\alpha^3\left(-\frac\alpha2\right)^g.
+$$
+$\alpha>0$，故任意有限 $g$ 下该行列式均不为零，特别地 $v_g\ne0$。
+
+命题 130.1 给 $\|\Xi_{g+2}\|=1$。正交投影是压缩，且所选测量因子均为单位向量，故
+$$
+p_g=\langle\Xi_{g+2},Q_{(+,\ldots,+),0}\Xi_{g+2}\rangle
+=\|v_g\|^2\le1.
+$$
+按端点正交基展开范数，得到 $\|v_g\|^2=\sum_{i,j}|C_g(i,j)|^2=\operatorname{Tr}(C_gC_g^\dagger)$；$v_g\ne0$ 给 $p_g>0$。为证严格上界，在上面的第二记忆列中，全零输出词的系数为 $s^{g+4}$。因此最终记忆为 $1$ 的边缘概率至少为 $s^{2g+8}>0$，而所选事件要求记忆为 $0$，所以
+$$
+p_g\le\Pr(M=0)=1-\Pr(M=1)\le1-s^{2g+8}<1.
+$$
+这个边缘概率下界来自联合向量的正交基展开，无需测量保留的端点。归一化后，$\theta_g$ 为正、迹为 $1$，其像恰为 $\mathbb Cv_g$，所以密度秩为 $1$。
+
+现证明这种纯密度不可能具有有限凸乘积分解。设 $\psi=v_g/\sqrt{p_g}$，并反设 $|\psi\rangle\langle\psi|=\sum_a\lambda_a\sigma_a\otimes\tau_a$。对每个二维密度作有限谱分解，再展开张量积并删去零权重项，便得到
+$$
+|\psi\rangle\langle\psi|
+=\sum_{b=1}^{N}q_b|a_b\otimes b_b\rangle\langle a_b\otimes b_b|,
+\qquad q_b>0,\qquad\sum_{b=1}^{N}q_b=1,
+$$
+其中 $a_b,b_b$ 为各自空间中的单位向量，$N$ 有限。对任意 $z\perp\psi$ 测试二次型，
+$$
+0=\sum_{b=1}^{N}q_b\,|\langle z,a_b\otimes b_b\rangle|^2.
+$$
+每项非负，故每个正权重乘积向量都与全部 $\psi^\perp$ 正交，从而属于同一条射线 $\mathbb C\psi$。由于至少有一个正权重项，$\psi$ 本身必为乘积向量。非零乘积向量的系数矩阵为两个非零列向量的外积 $ab^{\mathsf T}$，秩为 $1$；但 $\psi$ 的系数矩阵为 $C_g/\sqrt{p_g}$，其行列式不为零，秩为 $2$，矛盾。因此 $\theta_g$ 不可分。上述论证使用的是两个完整输出因子的张量分割；合法词集只规定联合向量的支撑，不另给合法支撑赋予张量分解。
+
+最后，$\{|\varepsilon\rangle\otimes|k\rangle\}_{\varepsilon,k}$ 是全部被测因子 $H_g\otimes M$ 的正交标准基。各局部投影作用于互不相同的因子，故彼此交换，并满足 $\sum_{\varepsilon,k}Q_{\varepsilon,k}=I$。按此基展开实际 $\Xi_{g+2}$，其每个端点系数向量就是 $v_{\varepsilon,k}$；在 $H_g,M$ 上取偏迹时，不同基指标的交叉项消失，遂得
+$$
+\operatorname{Tr}_{H_g,M}|\Xi_{g+2}\rangle\langle\Xi_{g+2}|
+=\sum_{\varepsilon,k}|v_{\varepsilon,k}\rangle\langle v_{\varepsilon,k}|.
+$$
+取迹给全部联合 Born 概率之和为 $1$，对正概率项再归一化即得陈述中的加权平均。这个恒等式对所有结果求和；归一化分支的均匀平均或仅对所选成功结果作平均，均不是此偏迹恒等式。
+
+令 $P_0=|m_0\rangle\langle m_0|$。由命题 130.1，$\operatorname{Tr}_M|\Xi_{g+2}\rangle\langle\Xi_{g+2}|=\rho_{g+2}=\Gamma_{g+2}(P_0)$。因而在相同的输出分组下，$\Theta_g=\operatorname{Tr}_{H_g}\rho_{g+2}$ 正是命题 133.1 中取 $X=P_0$、$r=0$、$a=b=1$ 的 $\theta^{P_0}_{0;1,g,1}$。该命题对 $g\ge1$ 给出完整 $B_L\mid B_R$ 分割上的有限凸乘积态分解，故这里同一纯边界族的 $\Theta_g$ 可分。
+
+可分性的量词是存在一个有限凸乘积态分解，并不要求一个密度的每个纯态系综都由乘积向量组成。因此，对 $g\ge1$，可依据完整经典测量记录选择正概率的纠缠分支 $\theta_g$，与忘却全部记录后得到可分的 Born 平均 $\Theta_g$ 相容。证毕。
+

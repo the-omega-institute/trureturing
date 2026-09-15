@@ -1,0 +1,42 @@
+### 123.4 动力学必须保持原像
+
+若每层有操作 $T_n:Q_n\to Q_n$，并满足
+
+$$
+\pi_n\circ T_{n+1}=T_n\circ\pi_n,
+$$
+
+则得到逆极限上的操作
+
+$$
+\widehat T((z_n)_n)=(T_n z_n)_n.
+$$
+
+若原载体上存在 $T:X\to X$，且
+
+$$
+q_n\circ T=T_n\circ q_n,
+$$
+
+则
+
+$$
+\widehat T\circ\iota=\iota\circ T.
+$$
+
+但层间相容本身不保证 $\widehat T$ 保持有限支持像。对 Hilbert 型有界线程，还需要统一的算子界
+
+$$
+\sup_n\|T_n\|\le M<\infty
+$$
+
+来保证逐层作用仍给出有界线程；没有这个界，层操作可能把可实现的线程推出载体。要让完备化后的动力学仍然代表原模型，必须另行证明
+
+$$
+\widehat T\bigl(\operatorname{im}(\bar\iota)\bigr)
+\subseteq
+\operatorname{im}(\bar\iota),
+$$
+
+或给出离开该像集的泄漏指标。否则，一个只在无限完备化中存在的幽灵历史，可能被层操作激活并进入后续读数；这不是原有限对象动力学的结论。
+

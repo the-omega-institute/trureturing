@@ -1,0 +1,15 @@
+**定理 3.4（联合关系的有限观察闭包）。** 令 \(I\) 为有限集合。对每个 \(i\in I\)，给定有限集合 \(Q_{i,n}\)、满射 \(q_{i,n}:X_i\to Q_{i,n}\) 及相容映射 \(p_{i,n}:Q_{i,n+1}\to Q_{i,n}\)，满足 \(q_{i,n}=p_{i,n}q_{i,n+1}\)。令
+\[
+K_i=\varprojlim_n Q_{i,n},\qquad \iota_i(x)=(q_{i,n}(x))_n,
+\]
+并令 \(\eta=\prod_{i\in I}\iota_i\)。对任意关系 \(R\subseteq\prod_iX_i\)，写
+\[
+R_n=\{(q_{i,n}(x_i))_{i\in I}:(x_i)_{i\in I}\in R\}.
+\]
+则
+\[
+\overline{\eta[R]}=
+\bigcap_{n\ge0}\pi_n^{-1}(R_n),
+\]
+其中闭包取 \(\prod_iK_i\) 的逆极限拓扑，\(\pi_n=\prod_i\pi_{i,n}\)。
+

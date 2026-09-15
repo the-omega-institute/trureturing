@@ -1,0 +1,9 @@
+**假设。** 给定有限群的已知复酉等型分解
+
+$$
+\mathcal H=\bigoplus_\lambda\left(V_\lambda\otimes W_\lambda\right),
+\qquad \rho(g)=\bigoplus_\lambda(I\otimes\rho_\lambda(g)),
+$$
+
+其中 $W_\lambda$ 是两两不等价的有限维不可约表示，重数空间 $V_\lambda$ 可含任意多个隐藏方向。设 $0\le K\le I$，且 $K,P$ 均与群作用交换；$P$ 在第 $\lambda$ 个重数空间保留 $r_\lambda<\infty$ 维，非零 $r_\lambda$ 仅有限多个。固定这些分解与观察坐标。
+

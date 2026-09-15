@@ -1,0 +1,7 @@
+**定义。** 令 $\rho_m:\Pi_g\to D_m$ 的生成元像为
+
+$$\rho_m(a_1)=s,\quad\rho_m(b_1)=r,\quad
+\rho_m(a_2)=r,\quad\rho_m(b_2)=s,$$
+
+其余生成元的像为单位元。
+

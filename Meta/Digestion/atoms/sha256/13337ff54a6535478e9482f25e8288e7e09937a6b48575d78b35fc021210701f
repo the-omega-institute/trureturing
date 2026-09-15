@@ -1,0 +1,18 @@
+**命题 59.3。** 本命题给出 §43 中以「例」陈述的断言的命题形式与证明；该断言以本命题为准。对典范特征同调覆盖及分离曲线，分别有：当 $(g,p,h)=(2,2,1)$ 时，覆盖度为 $16$，同调维数为 $34$，对偶图循环秩为 $9$，扭转的模 $2$ 秩为 $4$，而对每个素数 $\ell\ne2$ 的秩为 $9$；当 $(g,p,h)=(3,2,1)$ 时，覆盖度为 $64$，同调维数为 $258$，模 $2$ 秩为 $28$，而对每个素数 $\ell\ne2$ 的秩为 $45$。这些秩均为正，故秩下降不等于整个作用消失。
+
+**证明。** §43 给出
+$$D=p^{2g},\qquad \widetilde g=1+D(g-1),\qquad \dim_{\mathbb F_\ell}H_1(Y;\mathbb F_\ell)=2\widetilde g,$$
+并令 $a=p^{2h}$、$b=p^{2(g-h)}$。当 $(g,p,h)=(2,2,1)$ 时，
+$$D=2^4=16,\quad \widetilde g=1+16(2-1)=17,\quad \dim_{\mathbb F_\ell}H_1(Y;\mathbb F_\ell)=2\cdot17=34,$$
+$$a=b=2^2=4,\quad \operatorname{rank}_{\mathbb Z}H_1(\mathcal D;\mathbb Z)= (a-1)(b-1)=3\cdot3=9.$$
+§43 的秩公式给出
+$$\operatorname{rank}_{\mathbb F_2}(W_*-I)=(a-2)(b-2)=2\cdot2=4,$$
+而对 $\ell\ne2$ 有
+$$\operatorname{rank}_{\mathbb F_\ell}(W_*-I)=(a-1)(b-1)=9.$$
+当 $(g,p,h)=(3,2,1)$ 时，
+$$D=2^6=64,\quad \widetilde g=1+64(3-1)=129,\quad \dim_{\mathbb F_\ell}H_1(Y;\mathbb F_\ell)=2\cdot129=258,$$
+$$a=2^2=4,\quad b=2^4=16,\quad \operatorname{rank}_{\mathbb Z}H_1(\mathcal D;\mathbb Z)=3\cdot15=45,$$
+$$\operatorname{rank}_{\mathbb F_2}(W_*-I)=(4-2)(16-2)=2\cdot14=28,$$
+$$\operatorname{rank}_{\mathbb F_\ell}(W_*-I)=(4-1)(16-1)=3\cdot15=45\quad(\ell\ne2).$$
+上述模 $2$ 秩分别为 $4$ 与 $28$，均不为零，故相应作用没有消失。证毕。
+

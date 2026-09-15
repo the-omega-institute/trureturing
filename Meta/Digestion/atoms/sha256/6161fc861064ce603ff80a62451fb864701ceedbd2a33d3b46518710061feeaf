@@ -1,0 +1,32 @@
+## 17. 一条真实简单曲线对全部有限幂零观察的障碍
+
+**定义。** 对有限特征商 $q:\pi\twoheadrightarrow Q$，记实际诱导外作用为 $a_q:\mathcal M_g\to\operatorname{Out}(Q)$，主合同核为 $C_q=\ker a_q$。这里的幂零性指 $Q$，不指其自同构群或外自同构群。
+
+**定理。** 对每个 $g\ge3$，存在固定的有限指数正规子群 $\Gamma\triangleleft\mathcal M_g$ 和固定的本质分离简单闭曲线 $\alpha$，使对每个有限特征幂零商 $q:\pi\twoheadrightarrow Q$，都有
+
+$$\boxed{C_q\alpha\not\subseteq\Gamma\alpha.}$$
+
+同一个 $(\Gamma,\alpha)$ 对全部有限阶、全部幂零类及全部模数同时成立。
+
+**证明。** 固定第 16 节的 $f$。因为 $f(\mathcal J_2)=F\ne1$ 且 $\mathcal J_2$ 由分离扭转生成，存在本质分离曲线 $\alpha$ 使 $z=f(T_\alpha)\ne1$。非交换单群的中心平凡，所以 $C_F(z)<F$。令 $H=\operatorname{Stab}_{\mathcal M_g}(\alpha)$。对于 $h\in H$，曲面定向保持性给出 $hT_\alpha h^{-1}=T_\alpha$，故
+
+$$f(H)\subseteq C_F(z)<F.$$
+
+若 $Q$ 的幂零类至多为 $c\ge1$，则 $q$ 消去 $\gamma_{c+1}\pi$。$\mathcal J_c$ 中的元素在 $\pi/\gamma_{c+1}\pi$ 上以内自同构作用，因而在 $Q$ 上也以内自同构作用。因此 $\mathcal J_c\subseteq C_q$，继而 $f(C_q)=F$。如果 $C_q\alpha\subseteq\Gamma\alpha$，第 9 节给出 $C_q\subseteq\Gamma H$，取 $f$ 的像将得到 $F\subseteq f(H)$，矛盾。平凡目标也可取 $c=1$。
+
+**推论。** 用任意有限多个有限特征幂零商作联合观察仍有同一障碍。
+
+**证明。** 联合像是有限个幂零群直积的子群，其幂零类至多为这些类的最大值，投影核是各特征核的交。应用定理。这里不需要、也不假设联合像的主合同核等于各主合同核的交；不同投影的内共轭元可能不相容。
+
+**定理。** 对上述 $f$、$\Gamma$ 和任意这样的 $q$，令 $A_q=a_q(\mathcal M_g)$。有
+
+$$\boxed{\operatorname{im}(f,a_q)=F\times A_q.}$$
+
+因此，对于每个 $v\in A_q$ 和每个 $y\in F$，存在同一个映射类 $x$ 满足 $a_q(x)=v$、$f(x)=y$。此外，$C_q\alpha$ 与整个 $\mathcal M_g\alpha$ 中每个 $\Gamma$ 轨道都相交。
+
+**证明。** 先选 $x_0$ 使 $a_q(x_0)=v$，再由 $f(C_q)=F$ 选 $c\in C_q$ 满足 $f(c)=y f(x_0)^{-1}$。取 $x=cx_0$ 即可。对于轨道结论，正规性给出 $\Gamma\backslash\mathcal M_g/H\cong F/f(H)$；而 $f(C_q)=F$，所以 $C_q$ 的元素达到全部这些陪集。轨道数恰为 $[F:f(H)]\ge[F:C_F(z)]>1$，没有把 $f(H)$ 与 $C_F(z)$ 当成相等。
+
+**推论。** 在由全部有限特征幂零曲面商的主合同核定义的群拓扑中，$\Gamma$ 的每个陪集都稠密；$f$ 到离散有限群 $F$ 不连续。
+
+**证明。** 主核在有限交下有来自联合像的更小主核，因而构成单位元邻域基。上一项定理说明每个这样的邻域的每个平移都与 $f^{-1}(y)$ 相交。$\Gamma$ 是真子群却稠密，故它不开放，$f$ 不连续。此拓扑是曲面幂零商所诱导的合同拓扑，不是对映射类群本身直接取幂零商所定义的拓扑。
+

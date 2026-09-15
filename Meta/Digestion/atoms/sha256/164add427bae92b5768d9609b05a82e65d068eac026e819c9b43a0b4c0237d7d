@@ -1,0 +1,19 @@
+## 30. 同一覆盖上全部有限素数幂提升的因子化能力
+
+**定义。** 设 $\pi$ 有限生成，$N\le\pi$ 为有限指数特征子群，$\Lambda\le\operatorname{Out}(\pi)$。这一节不要求 $\pi/N$ 中心平凡，也不要求其外作用平凡。固定素数 $\ell$，令 $N_\ell=[N,N]N^\ell$。设 $K$ 为 $\pi$ 的特征子群、$K\subseteq N_\ell$，且 $N/K$ 为有限 $\ell$ 群。记 $Q=\pi/K$，$Q_\ell=\pi/N_\ell$，并令 $A_Q,A_\ell$ 为同一个 $\Lambda$ 在两者上的实际外作用像。
+
+**定理。** 自然映射 $A_Q\twoheadrightarrow A_\ell$ 的核为有限 $\ell$ 群。对任意到非交换有限单群的满射 $f:\Lambda\twoheadrightarrow F$，
+
+$$\boxed{f\text{ 经 }A_Q\text{ 因子化}
+\quad\Longleftrightarrow\quad f\text{ 经 }A_\ell\text{ 因子化}.}$$
+
+**证明。** 对 $P=N/K$，上一节的公式给出 $\Phi(P)=N_\ell/K$，故 $Q/\Phi(P)=Q_\ell$。实际作用都保持 $P$，并且外作用映射由同一批 $\Lambda$ 元素诱导，故像间的映射满射。其核的 $\ell$ 群性质由上一节得到。若 $f=\theta a_Q$，该核经 $\theta$ 的像是 $F$ 的正规 $\ell$ 子群，因而平凡，$\theta$ 继续下降到 $A_\ell$。反向直接复合。
+
+**推论。** 若只假设 $K$ 为 $\pi$ 的特征子群、$K\subseteq N$、$N/K$ 是有限 $\ell$ 群，而不要求 $K\subseteq N_\ell$，那么只要 $f$ 经该商的外作用因子化，它也经 $A_\ell$ 因子化。因此，对固定的 $N,\ell,f$，存在某个有限 $\ell$ 群提升达到因子化，当且仅当首次同调提升 $Q_\ell$ 已达到因子化。
+
+**证明。** 用 $K\cap N_\ell$ 代替 $K$。$N/(K\cap N_\ell)$ 嵌入 $(N/K)\times(N/N_\ell)$，所以仍为有限 $\ell$ 群。这个更细的特征商映到原商，故继承已有的因子化。应用定理。反向直接选择 $K=N_\ell$。
+
+**命题。** 上述结论比较的是指定目标的因子化能力，不断言两层外作用核相同。
+
+**证明。** $C_8$ 的取逆自同构在 $C_8/\Phi(C_8)=C_2$ 上为恒等，在 $C_8$ 上却非恒等。交换群没有非平凡内自同构，故两层外核不同。其区别为 $2$ 群信息，正是非交换有限单群目标无法作为正规像保留的部分。
+

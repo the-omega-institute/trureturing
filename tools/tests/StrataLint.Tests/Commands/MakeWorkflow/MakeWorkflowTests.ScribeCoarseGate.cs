@@ -153,12 +153,12 @@ public sealed partial class MakeWorkflowTests
 
     [Fact]
     [UnsupportedOSPlatform("windows")]
-    public void ScribeCoarseGateUsesRegisteredSupplementalInputs()
+    public void ScribeCoarseGateUsesTheDerivedProducerClosure()
     {
         if (OperatingSystem.IsWindows()) return;
 
         using var fixture = new ScribeCoarseGateFixture();
-        fixture.Change(ScribeCoarseGateFixture.RegisteredInputPath);
+        fixture.Change(ScribeCoarseGateFixture.DerivedProducerPath);
 
         var result = fixture.Run();
 
@@ -193,7 +193,7 @@ public sealed partial class MakeWorkflowTests
     [UnsupportedOSPlatform("windows")]
     private sealed class ScribeCoarseGateFixture : IDisposable
     {
-        internal const string RegisteredInputPath = "tools/custom/DerivedProducer.cs";
+        internal const string DerivedProducerPath = "tools/custom/DerivedProducer.cs";
 
         private readonly TemporaryDirectory temporary = new();
         private readonly string binDirectory;
@@ -228,16 +228,15 @@ public sealed partial class MakeWorkflowTests
                 script,
                 UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
 
-            var inputHelper = Path.Combine(
-                Repository,
-                "tools",
-                "scripts",
-                "report",
-                "lean-report-input.sh");
-            Directory.CreateDirectory(Path.GetDirectoryName(inputHelper)!);
-            WriteExecutable(
-                inputHelper,
-                $"#!/usr/bin/env bash\n[[ \"${{1:-}}\" == scribe-input-patterns ]] || exit 2\nprintf '%s\\n' '{RegisteredInputPath}'\n");
+            LeanReportRegistrationFixture.Install(Repository);
+            foreach (var relative in new[] { "Trureturing.lean", "lean-toolchain", "lake-manifest.json",
+                         "lakefile.toml", "tools/scripts/worktree/lean-cache-publish.sh", DerivedProducerPath })
+            {
+                var path = Path.Combine(Repository, relative);
+                Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+                File.WriteAllText(path, "fixture\n", new UTF8Encoding(false));
+            }
+            LeanReportRegistrationFixture.RegisterProducer(Repository, DerivedProducerPath, "scribe-content");
             WriteExecutable(
                 Path.Combine(binDirectory, "dotnet"),
                 "#!/usr/bin/env bash\nprintf '%s\\n' \"$*\" >> \"$SCRIBE_LOG\"\n");

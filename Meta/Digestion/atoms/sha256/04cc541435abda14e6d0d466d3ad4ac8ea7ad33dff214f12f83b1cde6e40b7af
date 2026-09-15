@@ -1,0 +1,8 @@
+**定理 443.5（未过滤的精确式、显式误差和系数）。** 对固定平方自由 $R>1$、所有 $N\ge0$，
+$$
+C_R(x)=\sum_{a\mid R}\mu(a)\lfloor x/a\rfloor,
+\quad
+U_R(N)=\sum_{i<t}|b_i|\bigl(C_R(N/a_i)-C_R(N/a_{i+1})\bigr),
+$$
+$$
+|M(N)|\le U_R(N),\quad c_R>0,\quad

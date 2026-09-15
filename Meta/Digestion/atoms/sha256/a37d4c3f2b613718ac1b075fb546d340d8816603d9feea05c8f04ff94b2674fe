@@ -1,0 +1,20 @@
+## 45. 对指定有限单群因子化的素数筛选
+
+**定义。** 保留第 27–32 节的基商及作用假设，并固定满射 $f:\Lambda\twoheadrightarrow F$ 到非交换有限单群。对一条 $T_\beta\in\Lambda$ 的本质分离曲线，令 $t_\beta=\operatorname{ord}f(T_\beta)$、$d_\beta=\operatorname{ord}q_0(\beta)$。从其实际陪集图计算 $b_\beta$ 及循环格首个 Smith 不变量 $s_{1,\beta}$；$b_\beta=0$ 时单独处理。令 $e_{\beta,\ell}=1$，若 $b_\beta=0$ 或 $\ell\mid s_{1,\beta}$，否则令 $e_{\beta,\ell}=\ell$。
+
+**定理。** 若 $f$ 经 $\Psi_\ell$ 的实际像因子化，则对每条这样的 $\beta$，
+
+$$\boxed{t_\beta\mid d_\beta e_{\beta,\ell}.}$$
+
+若此整除条件对某条 $\beta$ 失败，则 $f(C_\ell)=F$。对任意固定简单曲线 $\alpha_0$ 满足 $f(\operatorname{Stab}(\alpha_0))<F$，该候选 $Q_\ell$ 均不能满足 $C_\ell\alpha_0\subseteq(\ker f)\alpha_0$。
+
+**证明。** 第 42 节给出 $\Psi_\ell(T_\beta)^{d_\beta}$ 的准确阶为 $e_{\beta,\ell}$。因子化保持幂关系，故 $f(T_\beta)^{d_\beta e_{\beta,\ell}}=1$。若失败，则 $T_\beta^{d_\beta e_{\beta,\ell}}\in K_\ell=\ker\Psi_\ell$，但其 $f$ 像非单位。$K_\ell$ 正规及 $F$ 单，强制 $f(K_\ell)=F$。若 $f(C_\ell)=1$，则 $f(K_\ell)$ 是第 28 节的交换 $\ell$ 群 $K_\ell/C_\ell$ 的像，矛盾。单性遂给出 $f(C_\ell)=F$；稳定子像为真子群立即排除所需轨道包含。
+
+**推论。** 写 $r_\beta=t_\beta/\gcd(t_\beta,d_\beta)$。如果 $r_\beta>1$，一个可能成功的素数必须满足 $r_\beta=\ell$，且该素数处的图循环格秩非零。因此：若某个 $r_\beta$ 为合数，或 $r_\beta$ 为素数却使相应秩为零，则在这个固定基商上没有任何素数的首次同调层能够实现 $f$。若两条曲线强制两个不同的素数，同样没有可用素数。第 31 节进一步排除固定基商上任意有限多素数幂提升的联合补救。
+
+**证明。** $t_\beta\mid d_\beta e_{\beta,\ell}$ 等价于 $r_\beta\mid e_{\beta,\ell}$；后者仅为 $1$ 或素数 $\ell$。逐项得到排除结论，再应用固定基商的多素数因子化定理。
+
+**命题。** 满足以上所有单个扭转的整除测试，仍不推出 $f$ 经 $\Psi_\ell$ 因子化。第 44 节的准确外阶也不证明 Klukowski 的一般曲线轨道包含。
+
+**证明。** 整除测试仅检查一族循环子群上的幂关系，没有证明第 32 节要求的联合像交 $\operatorname{im}(f,\Psi_\ell)\cap(F\times\{1\})$ 平凡。特别地，当 $m$ 为 $p$ 的幂时，第 44 节的 $Q_{p,m}$ 本身为有限 $p$ 群；它虽准确检测所有分离扭转的规定幂，却仍受第 17 节针对固定真实曲线和固定有限指数子群的全部幂零商障碍。正向的局部检测与全局因子化是不同结论。
+

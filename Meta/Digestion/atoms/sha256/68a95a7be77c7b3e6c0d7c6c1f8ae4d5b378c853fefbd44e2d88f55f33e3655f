@@ -1,0 +1,6 @@
+**定义。** 固定闭可定向曲面 $\Sigma_g$，$g\ge3$，令 $\pi=\pi_1(\Sigma_g)$、$M=\operatorname{Mod}^{+}(\Sigma_g)$，并定义
+
+$$N_2=[\pi,\pi]\pi^2=\ker(\pi\to H_1(\Sigma_g;\mathbb F_2)),\qquad S=\pi/N_2\cong(\mathbb Z/2)^{2g}.$$
+
+这里 $N_2$ 在 $\pi$ 中特征。对奇素数 $\ell$，令 $V=H_1(N_2;\mathbb F_\ell)$、$Q=\pi/[N_2,N_2]N_2^\ell$，并记实际外作用 $a:M\to\operatorname{Out}(Q)$。设 $\widehat S=\operatorname{Hom}(S,\{\pm1\})$，$X=\widehat S\setminus\{1\}$，$r=|X|=4^g-1$。对 $\chi\in\widehat S$，记 $W_\chi$ 为甲板作用的 $\chi$ 特征空间。
+
