@@ -1,0 +1,17 @@
+**假设 119.10（固定量子制备、实际测量与记录层）。** 取有限维非零复 Hilbert 空间 $\mathcal H$ 和有限非空制备标签集 $\Theta$。每个 $\theta$ 指定密度算子 $\varrho_\theta\ge0$、$\operatorname{tr}\varrho_\theta=1$。给定实际采用的固定有限 POVM
+
+$$
+H_y\ge0,\quad\sum_{y\in Y}H_y=I_{\mathcal H},
+\qquad
+G_z\ge0,\quad\sum_{z\in Z}G_z=I_{\mathcal H},
+$$
+
+其中 $Y,Z$ 非空，且两族效应不依赖未知 $\theta$。采用 Born 律定义
+
+$$
+F_\theta(y)=\operatorname{tr}(\varrho_\theta H_y),\qquad
+E_\theta(z)=\operatorname{tr}(\varrho_\theta G_z).
+$$
+
+这里 $\theta$ 是制备标签，不预设为未知计算基底标签；允许 $\varrho_\theta$ 在合法 Zeckendorf 子空间内具有相干非对角项。若要把 $E$ 称为已形成细记录的实际经典压缩，另假设先形成 $y$，随后仅用与 $\theta$ 无关的随机核 $C(z\mid y)$ 产生 $z$。此时该压缩的效应为 $G_z=\sum_yC(z\mid y)H_y$。单独的效应等式只规定当前概率，不规定输出的量子后态或测量仪器。
+

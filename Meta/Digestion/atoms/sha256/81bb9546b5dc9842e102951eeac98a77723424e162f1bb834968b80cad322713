@@ -1,0 +1,14 @@
+### 94.4 Zeckendorf 双载体的边界
+
+若两个局部载体分别由 Zeckendorf 合法空间实现，必须先给出
+
+$$
+ m=F_{L_A+2},
+\qquad
+ n=F_{L_B+2},
+$$
+
+以及一个实际作用在 $m\times n$ 联合空间上的 Heisenberg 映射。只有在验证该映射保持 $L_A\oplus L_B$ 后，才能应用上述闭合结论。Fibonacci 计数本身既不保证局部扇区不变，也不保证相关扇区一定能被某个物理相互作用访问。
+
+本节复用 `local_dynamics_no_tomography`。Lean 已证明的是实线性、精确扇区保持下的迭代闭合和零交集结论；近似局部动力学、开放系统通道、有限样本误差和具体 Zeckendorf Hamiltonian 仍需额外模型。
+

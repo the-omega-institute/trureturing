@@ -1,0 +1,31 @@
+### 99.2 逐轴读数的完整像
+
+令 `singlePrimeVisibleSpace` 表示由常数和所有完整单因子 Hermitian effect 生成的可见空间。Lean 定理 `single_prime_visible_space` 证明
+
+$$
+\boxed{
+\mathsf V_{\mathrm{single}}
+=\mathcal V_{\varnothing}
+\oplus
+\bigoplus_{i\in\iota}\mathcal V_{\{i\}}.
+}
+$$
+
+如果每个扇区维数满足
+
+$$
+\dim_{\mathbb R}\mathcal V_S
+=\prod_{j\in S}(d_j^2-1),
+$$
+
+则逐轴可见空间的维数为
+
+$$
+\boxed{
+\dim_{\mathbb R}\mathsf V_{\mathrm{single}}
+=1+\sum_{i\in\iota}(d_i^2-1).
+}
+$$
+
+它是逐轴读数的完整线性容量；不是全部全局 Hermitian 空间的维数。
+

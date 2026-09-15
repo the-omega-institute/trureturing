@@ -87,9 +87,12 @@ The single result settles only the third comment under
 and no escape witness claimed. Its unbounded symbolic proof has
 `utility.kind: none`.
 The fourth, fifth and eighth comments have separate existing results.
-Comments 2,6,7 and the proposed repair of the first comment retain their
-own obligations. The original first-comment contradiction remains
-non-kernel evidence and is not a new formal refutation here.
+`IterateProductFourFiveSeventhModEight.result` separately settles the seventh
+comment for every n>1, with period 7,1,3,5 from n=2, using the same source
+and (n-2)%4.
+Comments 2 and 6 remain with #6436 (and the #6375 referral); the proposed
+repair of the first comment retains its own obligation. The original
+first-comment contradiction remains non-kernel evidence and is not a new formal refutation here.
 
 ## ASSUMED-UNVERIFIED
 

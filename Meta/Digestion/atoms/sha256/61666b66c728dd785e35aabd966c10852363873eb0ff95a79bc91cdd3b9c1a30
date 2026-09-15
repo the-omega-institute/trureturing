@@ -1,0 +1,40 @@
+**定义 54.6（有限实验族的预测伪距离）。** 在不要求 $X$ 有限时，令
+
+$$
+d_H(x,x')
+=\max_{1\le i\le m}
+\operatorname{TV}\!\left(p_i(\,\cdot\mid x),p_i(\,\cdot\mid x')\right),
+$$
+
+其中
+
+$$
+\operatorname{TV}(p,q)=\frac12\sum_{y}|p(y)-q(y)|.
+$$
+
+在任意 $X$ 上仍用“所有 $p_i(\cdot\mid x)$ 相等”定义 $\sim_H$；当 $X$ 有限时，这与定义 54.2 完全一致。
+
+则 $d_H$ 是伪度量：它非负、对称，满足三角不等式，但不同状态可能有 $d_H=0$。零距离关系正好是 $\sim_H$；并令 $Q_H:=X/{\sim_H}$，于是 $Q_H$ 是把有限任务下不可区分状态取商得到的预测空间。
+
+对每个 $i$ 再施加一个随机后处理 $K_i$ 时，数据处理不等式给出
+
+$$
+\operatorname{TV}(K_ip_i^x,K_ip_i^{x'})
+\le \operatorname{TV}(p_i^x,p_i^{x'}),
+$$
+
+故后处理后的预测伪距离不超过 $d_H$。三角不等式则逐个 $i$ 应用总变差距离的三角不等式，再取最大值。这些收缩性只涉及已列出的协议结果，不涉及不相容测量的联合赋值。
+
+具体地，对任意 $x,y,z$ 有
+
+$$
+\begin{aligned}
+d_H(x,z)
+&=\max_i\operatorname{TV}(p_i^x,p_i^z)\\
+&\le\max_i\bigl[\operatorname{TV}(p_i^x,p_i^y)+\operatorname{TV}(p_i^y,p_i^z)\bigr]\\
+&\le d_H(x,y)+d_H(y,z),
+\end{aligned}
+$$
+
+其中 $p_i^x$ 简写为 $p_i(\cdot\mid x)$。这同时说明 $d_H$ 的三角不等式不依赖于任何跨协议联合赋值。
+
