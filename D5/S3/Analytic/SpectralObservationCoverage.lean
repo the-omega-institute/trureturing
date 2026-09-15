@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Analytic/SpectralObservationCoverage
    mirror-E: none(waiver:exact-observation-and-positive-measure-boundary)
    anchors: []
+   utility: none
    digest: Dense observations certify a bounded low-energy map; normalized atomic measures defeat noisy gap classification. -/
 
 import D5.S3.Analytic.PositiveLaplaceGap
@@ -31,6 +32,7 @@ noncomputable section
 namespace D5.S3.Analytic.SpectralObservationCoverage
 
 open MeasureTheory Set ProbabilityTheory
+open scoped NNReal
 open D5.S3.Analytic.PositiveLaplaceGap
 
 /-- A total observation family suffices once the actual low-energy
