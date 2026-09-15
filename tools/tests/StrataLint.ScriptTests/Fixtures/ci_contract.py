@@ -607,6 +607,64 @@ if pathlib.Path(sys.argv[0]).name == "lean_actions.py":
                 self.assertEqual(b"new source", (source / "a.olean").read_bytes())
                 self.assertFalse(list(cached.parent.glob(".snapshot-*")))
 
+    def test_same_filesystem_restore_moves_validated_material_without_copy(self):
+        owner = self.restore_owner()
+        source, cached, manifest = self.restore_fixture("project", {"a.olean": b"cached", "nested/z.olean": b"tail"})
+        identities = {path.relative_to(cached / "data").as_posix():
+                      (path.stat().st_dev, path.stat().st_ino)
+                      for path in (cached / "data").rglob("*") if path.is_file()}
+        with mock.patch.dict(os.environ, self.env), contextlib.redirect_stdout(io.StringIO()) as receipts:
+            owner.restore(self.root, owner.actions_keys(self.root), {"project": manifest["key"]}, ["project"])
+        self.assertIn('"status": "restored"', receipts.getvalue())
+        self.assertFalse((cached / "data").exists())
+        self.assertFalse((source / "current-only").exists())
+        for relative, inode in identities.items():
+            restored = source / relative
+            self.assertEqual(inode, (restored.stat().st_dev, restored.stat().st_ino))
+
+    def test_same_filesystem_restore_rejects_extra_member_before_publication(self):
+        owner = self.restore_owner()
+        source, cached, manifest = self.restore_fixture("project", {"a.olean": b"cached"})
+        (cached / "data/extra.olean").write_bytes(b"unregistered")
+        before = {path.relative_to(source).as_posix(): path.read_bytes()
+                  for path in source.rglob("*") if path.is_file()}
+        with mock.patch.dict(os.environ, self.env), contextlib.redirect_stdout(io.StringIO()) as receipts:
+            owner.restore(self.root, owner.actions_keys(self.root), {"project": manifest["key"]}, ["project"])
+        self.assertIn('"status": "miss"', receipts.getvalue())
+        self.assertEqual(before, {path.relative_to(source).as_posix(): path.read_bytes()
+                                  for path in source.rglob("*") if path.is_file()})
+        self.assertTrue((cached / "data/extra.olean").is_file())
+
+    def test_same_filesystem_restore_allows_unlisted_empty_directory(self):
+        owner = self.restore_owner()
+        source, cached, manifest = self.restore_fixture("project", {"a.olean": b"cached"})
+        (cached / "data/empty-directory").mkdir()
+        with mock.patch.dict(os.environ, self.env), contextlib.redirect_stdout(io.StringIO()) as receipts:
+            owner.restore(self.root, owner.actions_keys(self.root), {"project": manifest["key"]}, ["project"])
+        self.assertIn('"status": "restored"', receipts.getvalue())
+        self.assertTrue((source / "empty-directory").is_dir())
+        self.assertFalse((cached / "data").exists())
+
+    def test_same_filesystem_restore_rolls_back_install_failure_and_source(self):
+        owner = self.restore_owner()
+        source, cached, manifest = self.restore_fixture("project", {"a.olean": b"cached"})
+        before = {path.relative_to(source).as_posix(): path.read_bytes()
+                  for path in source.rglob("*") if path.is_file()}
+        original_rename = pathlib.Path.rename
+        def fail_install(path, target):
+            if path.name == "data" and target == source:
+                raise OSError(errno.EIO, "fixture install failure")
+            return original_rename(path, target)
+        with mock.patch.dict(os.environ, self.env), \
+             mock.patch.object(pathlib.Path, "rename", fail_install), \
+             contextlib.redirect_stdout(io.StringIO()) as receipts:
+            owner.restore(self.root, owner.actions_keys(self.root), {"project": manifest["key"]}, ["project"])
+        self.assertIn('"status": "miss"', receipts.getvalue())
+        self.assertEqual(before, {path.relative_to(source).as_posix(): path.read_bytes()
+                                  for path in source.rglob("*") if path.is_file()})
+        self.assertTrue((cached / "data").is_dir())
+        self.assertFalse(list(source.parent.glob(".actions-*")))
+
     def restore_fixture(self, layer, material):
         source = self.root / (".lake/packages" if layer == "dependency" else ".lake/build")
         for relative, data in material.items():
@@ -663,11 +721,17 @@ if pathlib.Path(sys.argv[0]).name == "lean_actions.py":
 
                 # Observe bytes through the portable stream path, including copy2's reads.
                 # Fast-copy syscalls bypass Python stream instrumentation.
+                original_rename = pathlib.Path.rename
+                def force_cross_device(path, target):
+                    if path == cached / "data":
+                        raise OSError(errno.EXDEV, "fixture cross-device cache")
+                    return original_rename(path, target)
                 with mock.patch.dict(os.environ, self.env), \
                      mock.patch.object(io, "open", side_effect=instrument(io.open)), \
                      mock.patch.object(builtins, "open", side_effect=instrument(builtins.open)), \
                      mock.patch.object(shutil, "_HAS_FCOPYFILE", False, create=True), \
                      mock.patch.object(shutil, "_USE_CP_SENDFILE", False, create=True), \
+                     mock.patch.object(pathlib.Path, "rename", force_cross_device), \
                      contextlib.redirect_stdout(io.StringIO()) as receipts:
                     owner.restore(self.root, owner.actions_keys(self.root), {layer: manifest["key"]}, [layer])
                 self.assertIn('"status": "restored"', receipts.getvalue())
@@ -727,7 +791,14 @@ if pathlib.Path(sys.argv[0]).name == "lean_actions.py":
 
                     fault = (mock.patch.object(shutil, "copystat", side_effect=copy_failure)
                              if failure == "copy-error" else contextlib.nullcontext())
-                    with mock.patch.dict(os.environ, self.env), fault, contextlib.redirect_stdout(io.StringIO()) as receipts:
+                    original_rename = pathlib.Path.rename
+                    def force_cross_device(path, target):
+                        if path == cached / "data":
+                            raise OSError(errno.EXDEV, "fixture cross-device cache")
+                        return original_rename(path, target)
+                    rename_fault = (mock.patch.object(pathlib.Path, "rename", force_cross_device)
+                                    if failure == "copy-error" else contextlib.nullcontext())
+                    with mock.patch.dict(os.environ, self.env), fault, rename_fault, contextlib.redirect_stdout(io.StringIO()) as receipts:
                         owner.restore(self.root, owner.actions_keys(self.root), {layer: manifest["key"]}, [layer])
                     self.assertIn('"status": "miss"', receipts.getvalue())
                     self.assertEqual(b"current material", (source / "current-only").read_bytes())
@@ -863,11 +934,8 @@ if pathlib.Path(sys.argv[0]).name == "lean_actions.py":
             self.assertEqual(data, path.read_bytes())
             self.assertEqual(mode, path.stat().st_mode & 0o777)
         (source / "batteries/docs/README.md").write_bytes(b"changed consumer bytes")
-        self.assertEqual(expected["batteries/docs/README.md"][0],
-                         (cached / "data/batteries/docs/README.md").read_bytes())
-        self.assertEqual(expected["batteries/README.md"][0], (source / "batteries/README.md").read_bytes())
-        (cached / "data/batteries/README.md").write_bytes(b"changed cache bytes")
-        self.assertEqual(expected["batteries/README.md"][0], (source / "batteries/README.md").read_bytes())
+        self.assertEqual(b"changed consumer bytes", (source / "batteries/docs/README.md").read_bytes())
+        self.assertFalse((cached / "data").exists())
 
     def test_corrupt_dependency_seed_falls_back_without_replacing_current_material(self):
         source, _ = self.dependency_files()
@@ -900,10 +968,10 @@ if pathlib.Path(sys.argv[0]).name == "lean_actions.py":
                                  KEY=key, PRODUCER_EXIT=production_exit), capture_output=True, text=True)
                     self.assertEqual(production_exit == "0", result.returncode == 0, result.stdout + result.stderr)
                     if corruption == "extra":
-                        # A cache neighbour is not registered material and must not be copied.
-                        self.assertIn('"status": "restored"', result.stdout)
-                        self.assertEqual(original, (source / "batteries/README.md").read_bytes())
-                        self.assertFalse((source / "batteries/extra").exists())
+                        # A same-filesystem move rejects unregistered members
+                        # instead of publishing them into the target tree.
+                        self.assertIn('"status": "miss"', result.stdout)
+                        self.assertEqual(b"current material", (source / "batteries/README.md").read_bytes())
                         self.assertEqual(b"unlisted", (saved.parent / "extra").read_bytes())
                     else:
                         self.assertIn('"layer": "dependency", "reason":', result.stdout)

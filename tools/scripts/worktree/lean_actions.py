@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import errno
 import hashlib
 import json
 import os
@@ -276,15 +277,70 @@ def validate_judge_registration(root, layers):
         return project_registry(root)
 
 
-def replace_restored_directory(staged, target, rollback_root):
-    """Install a validated directory while retaining the previous target.
+def validate_cache_directory(directory, expected):
+    """Validate a complete cache data directory before publishing it.
 
-    ``staged`` is on the same filesystem as ``target`` (the caller creates
-    both under ``target.parent``), so the two renames are the publication
-    boundary. Keep the old target in a private rollback slot until the new
-    directory has been published; a failed second rename, including
-    ``EXDEV`` from a filesystem or test fault, must leave the old cache usable.
+    ``files(..., expected=...)`` validates the declared bytes and modes but
+    intentionally ignores unlisted neighbours because its copy mode only
+    materializes declared members.  A same-filesystem move would otherwise
+    publish those neighbours, so inspect the regular-file shape separately
+    while keeping the declared member hash pass to one read. Empty directories
+    are permitted because snapshot manifests intentionally register files only.
     """
+    if directory.is_symlink() or not directory.is_dir():
+        raise ValueError("cache data is not a private directory")
+    inventory = files(directory, expected=expected)
+    declared = {item["path"] for item in inventory}
+    actual = set()
+    for path in directory.rglob("*"):
+        relative = path.relative_to(directory).as_posix()
+        if path.is_symlink():
+            raise ValueError("cache data contains a symlink: " + relative)
+        if path.is_dir():
+            continue
+        if not path.is_file():
+            raise ValueError("cache data member is not a regular file: " + relative)
+        actual.add(relative)
+    if actual != declared:
+        extra = sorted(actual - declared)
+        missing = sorted(declared - actual)
+        detail = []
+        if extra:
+            detail.append("extra=" + ",".join(extra[:3]))
+        if missing:
+            detail.append("missing=" + ",".join(missing[:3]))
+        raise ValueError("cache data members differ from manifest (" + ";".join(detail) + ")")
+    return inventory
+
+
+def move_validated_cache_data(cached, staged, expected):
+    """Move a same-filesystem cache payload into private staging.
+
+    The move removes the large second copy used by the old restore path.  The
+    payload is validated after moving, so a byte race cannot publish unchecked
+    data; a validation failure moves it back to the Actions cache directory.
+    Cross-device filesystems retain the old copy-and-hash fallback.
+    """
+    try:
+        cached.rename(staged)
+    except OSError as error:
+        if error.errno not in (errno.EXDEV, errno.EACCES, errno.EPERM):
+            raise
+        files(cached, expected=expected, copy_to=staged)
+        return False
+    try:
+        validate_cache_directory(staged, expected)
+    except BaseException:
+        try:
+            staged.rename(cached)
+        except OSError as rollback_error:
+            raise ValueError("cache validation failed and source rollback failed") from rollback_error
+        raise
+    return True
+
+
+def replace_restored_directory(staged, target, rollback_root):
+    """Atomically publish a validated directory while retaining old target."""
     previous = rollback_root / "previous"
     had_target = target.exists() or target.is_symlink()
     if had_target:
@@ -469,13 +525,18 @@ def restore(root, keys, matched, layers=LAYERS, registry=None):
                 target.parent.mkdir(parents=True, exist_ok=True)
                 with tempfile.TemporaryDirectory(prefix=".actions-", dir=target.parent) as temporary:
                     staged = pathlib.Path(temporary) / "data"
-                    # Stage exactly the declared manifest; unlisted neighbours
-                    # cannot introduce projects or executable seed material.
-                    staged.mkdir()
+                    direct = False
                     if stream_copy:
-                        # Hash the bytes being copied; these large layers need only one read.
-                        inventory = files(cached / "data", expected=manifest.get("files"), copy_to=staged)
+                        # Actions puts a manifest beside ``data``.  Consume the
+                        # data directory by rename on the normal same-device
+                        # runner; this avoids a second 25 GB copy before Lake.
+                        direct = move_validated_cache_data(cached / "data", staged, manifest.get("files"))
                     else:
+                        # Execution seeds must remain independently validated
+                        # material because their native verifier consumes the
+                        # complete staged bundle.
+                        staged.mkdir()
+                        inventory = files(cached / "data", expected=manifest.get("files"))
                         for item in inventory:
                             destination = staged / item["path"]
                             destination.parent.mkdir(parents=True, exist_ok=True)
@@ -483,7 +544,14 @@ def restore(root, keys, matched, layers=LAYERS, registry=None):
                     if layer in EXECUTION_LAYERS:
                         restore_execution(root, layer, keys, staged)
                     else:
-                        replace_restored_directory(staged, target, pathlib.Path(temporary) / "rollback")
+                        try:
+                            replace_restored_directory(staged, target, pathlib.Path(temporary) / "rollback")
+                        except BaseException:
+                            # A failed publication must not consume a valid
+                            # same-filesystem Actions payload.
+                            if direct and staged.exists() and not (cached / "data").exists():
+                                staged.rename(cached / "data")
+                            raise
             project_seeded |= layer == "project"
             receipt(layer, "restored", key=key, partition=keys["partition"])
         except (OSError, ValueError, TypeError, KeyError, subprocess.CalledProcessError) as error:
