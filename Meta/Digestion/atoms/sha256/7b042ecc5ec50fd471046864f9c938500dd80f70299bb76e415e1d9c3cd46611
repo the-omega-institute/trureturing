@@ -1,0 +1,13 @@
+**定义。** 固定素数 $p$，令
+
+$$N_p=\ker(\pi\to H_1(\Sigma_g;\mathbb F_p)),\qquad D=p^{2g},\qquad G=1+D(g-1).$$
+
+因为 $T_\alpha$ 在模 $p$ 同调上为恒等，赋值 $\pi\to\pi/N_p$、$t\mapsto0$ 定义满射 $\Pi_{g,h,k}\to(\mathbb Z/p)^{2g}$。令 $\widetilde M_{g,h,k,p}$ 为其核对应的 $D$ 重覆盖。它是亏格 $G$ 的曲面覆盖上、固定所选基点提升的 monodromy 的映射环面。
+
+按大小排列
+
+$$a=p^{2\min(h,g-h)},\qquad b=p^{2\max(h,g-h)},\qquad
+\beta=(a-1)(b-1),\quad c=(a-2)(b-2),\quad R=2G+1-\beta.$$
+
+有 $ab=D$、$a\mid b$、$a,b\ge4$。记 $q=|k|$。
+

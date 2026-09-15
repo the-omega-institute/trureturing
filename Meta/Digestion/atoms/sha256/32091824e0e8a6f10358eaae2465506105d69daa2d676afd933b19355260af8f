@@ -1,0 +1,30 @@
+## 27. 固定特征覆盖上的一阶同调提升
+
+**定义。** 设 $\pi$ 为有限生成群，$N\le\pi$ 为有限指数特征子群，$S=\pi/N$ 为中心平凡的有限群。设 $\Lambda\le\operatorname{Out}(\pi)$ 在 $S$ 上的诱导外作用平凡。对素数 $\ell$，定义
+
+$$N_\ell=[N,N]N^\ell,\qquad V_\ell=N/N_\ell,\qquad Q_\ell=\pi/N_\ell.$$
+
+$N^\ell$ 表示由全部 $\ell$ 次幂生成的子群。$N_\ell$ 在 $\pi$ 中特征，$V_\ell$ 是有限维 $\mathbb F_\ell$ 向量空间，且有实际扩张
+
+$$1\longrightarrow V_\ell\longrightarrow Q_\ell\longrightarrow S\longrightarrow1.$$
+
+$S$ 在 $V_\ell$ 上的甲板作用记为 $\lambda$：取 $s$ 的任意提升 $x\in\pi$，令 $\lambda(s)[v]=[xvx^{-1}]$。改变提升只引入 $N$ 的内作用，在其阿贝尔化上为恒等，所以该作用良定义。
+
+**定理。** 对 $\gamma\in\Lambda$，任选代表 $\eta\in\operatorname{Aut}(\pi)$，记 $t_\eta$ 为它在 $V_\ell$ 上的作用，$s_\eta\in S$ 为满足 $\eta|_S=\operatorname{Ad}_{s_\eta}$ 的唯一元素。则
+
+$$\boxed{\Psi_\ell(\gamma)=\lambda(s_\eta)^{-1}t_\eta}$$
+
+与代表无关，并定义同态
+
+$$\Psi_\ell:\Lambda\longrightarrow\operatorname{Aut}_{\mathbb F_\ell[S]}(V_\ell).$$
+
+**证明。** 中心平凡性给出 $s_\eta$ 的唯一性。对 $s\in S$，有 $t_\eta\lambda(s)t_\eta^{-1}=\lambda(s_\eta s s_\eta^{-1})$，所以经修正后的作用与 $\lambda(S)$ 交换。若将 $\eta$ 换为 $\operatorname{Ad}_x\eta$，则 $t_\eta$ 左乘 $\lambda(\bar x)$，$s_\eta$ 左乘 $\bar x$，两项修正相消。对两个代表 $\eta,\zeta$，有 $s_{\eta\zeta}=s_\eta s_\zeta$；将 $t_\eta=\lambda(s_\eta)\Psi_\ell(\gamma)$ 代入，再用修正作用与甲板作用交换，即得乘法保持性。
+
+**命题。** 若 $\pi$ 来自闭可定向亏格 $g\ge2$ 的曲面，且 $\Lambda$ 保持曲面定向，则
+
+$$\dim_{\mathbb F_\ell}V_\ell=2+2(g-1)|S|,$$
+
+且 $\Psi_\ell(\Lambda)$ 保持覆盖曲面的一阶同调交叉形式。
+
+**证明。** 对应的连通覆盖度数为 $|S|$。欧拉示性数的覆盖公式给出覆盖亏格 $1+(g-1)|S|$。其一阶整数同调无挠且秩为亏格的两倍，模 $\ell$ 后得到维数。代表的提升与甲板变换都保持定向，因而都保持交叉形式，其复合也保持该形式。
+

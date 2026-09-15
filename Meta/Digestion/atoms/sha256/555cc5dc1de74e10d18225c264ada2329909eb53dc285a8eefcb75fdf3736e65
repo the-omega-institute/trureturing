@@ -1,0 +1,5 @@
+**定理。** 曲线类生成一个秩为 $b$ 的本原迷向子格 $L\subset H_1(Y;\mathbb Z)$。存在整数辛基，使 $U$ 唯一可能非零的块为 $Q_{\mathcal D}$，从 $b$ 个对偶基向量映向 $L$。特别地，
+
+$$U^2=0,\qquad \operatorname{rank}_{\mathbb Q}U=b,\qquad
+U(x)=\sum_e\langle x,[c_e]\rangle[c_e].$$
+

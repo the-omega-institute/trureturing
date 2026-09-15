@@ -1,0 +1,7 @@
+**构造。** 对实际闭曲面有限覆盖，选择标准生成元 $x_1,\ldots,x_{2g}$ 及关系词 $r$。令 $q_0:\pi\to S$ 为覆盖商，在 $\mathbb F_\ell$ 上构造胞腔链复形
+
+$$\mathbb F_\ell[S]\xrightarrow{\partial_2}
+\mathbb F_\ell[S]^{2g}\xrightarrow{\partial_1}\mathbb F_\ell[S].$$
+
+顶点为 $v\in S$，边 $(v,j)$ 从 $v$ 到 $v q_0(x_j)$，二维胞腔边界按从 $v$ 开始提升关系词 $r$ 计算。因此 $V_\ell=\ker\partial_1/\operatorname{im}\partial_2$。若代表 $\eta$ 在 $S$ 上为 $\operatorname{Ad}_{s_\eta}$，其修正链映射将顶点 $v$ 送到 $v s_\eta^{-1}$，将边 $(v,j)$ 送到从 $v s_\eta^{-1}$ 出发的词 $\eta(x_j)$ 的提升路径。
+
