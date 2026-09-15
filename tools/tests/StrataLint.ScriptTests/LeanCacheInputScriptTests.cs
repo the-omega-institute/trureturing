@@ -8,47 +8,20 @@ namespace StrataLint.Tests;
 
 public sealed class LeanCacheInputScriptTests
 {
-    [Fact]
-    public void AddressSurvivesReportHelperFailure()
+    [Theory]
+    [InlineData("address")]
+    [InlineData("fetch")]
+    [InlineData("publish")]
+    public void CompleteSnapshotRejectsReportAddressFailure(string verb)
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new LeanInputFixture();
 
-        var result = fixture.RunPublisher("address");
+        var result = fixture.RunPublisher(verb);
 
-        fixture.AssertIndependentSuccess(result);
-        Assert.Contains($"sources_sha256={fixture.ExpectedSources}", result.Text, StringComparison.Ordinal);
-        Assert.Contains($"config_sha256={fixture.ExpectedConfig}", result.Text, StringComparison.Ordinal);
-        Assert.Contains($"tag={fixture.Tag}", result.Text, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void FetchSurvivesReportHelperFailure()
-    {
-        if (OperatingSystem.IsWindows()) return;
-        using var fixture = new LeanInputFixture();
-
-        var result = fixture.RunPublisher("fetch");
-
-        fixture.AssertIndependentSuccess(result);
-        Assert.Contains("\"status\":\"unpacked\"", result.Text, StringComparison.Ordinal);
-        Assert.Equal(new[] { "unpack" }, fixture.LakeCalls);
-    }
-
-    [Fact]
-    public void PublishSurvivesReportHelperFailure()
-    {
-        if (OperatingSystem.IsWindows()) return;
-        using var fixture = new LeanInputFixture();
-
-        var result = fixture.RunPublisher("publish");
-
-        fixture.AssertIndependentSuccess(result);
-        Assert.Contains("\"status\":\"published\"", result.Text, StringComparison.Ordinal);
-        Assert.Equal(new[] { "pack" }, fixture.LakeCalls);
-        Assert.Contains($"sources_sha256={fixture.ExpectedSources}\n", fixture.PublishedManifest, StringComparison.Ordinal);
-        Assert.Contains($"config_sha256={fixture.ExpectedConfig}\n", fixture.PublishedManifest, StringComparison.Ordinal);
-        Assert.Contains($"producer_commit_sha={LeanInputFixture.ProducerSha}\n", fixture.PublishedManifest, StringComparison.Ordinal);
+        Assert.NotEqual(0, result.ExitCode);
+        Assert.Contains("snapshot address is unavailable", result.Text, StringComparison.Ordinal);
+        Assert.Empty(fixture.LakeCalls);
     }
 
     [Fact]
