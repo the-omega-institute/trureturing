@@ -1,0 +1,16 @@
+## 57. Paper derivation: optimal residual width equals universal moment ambiguity
+
+This section is a finite linear-programming derivation; the strong-duality equality has not yet been added as a Lean theorem. Fix a nonempty finite allowed carrier S, rational feature columns phi(i), and a rational query q(i). Consider the worst query difference between probability laws on S sharing the same feature moments:
+
+```text
+Delta_S(phi,q) = max { abs(E_u[q]-E_v[q]) : u,v in simplex(S), E_u[phi]=E_v[phi] }.
+```
+
+Swapping u and v shows that the absolute-value maximum equals the maximum of the signed difference. The primal linear program has objective `q.u - q.v`, constraints `1.u=1`, `1.v=1`, `Phi.u-Phi.v=0`, and nonnegative u,v. Its dual minimizes alpha+gamma subject to
+
+```text
+alpha + beta.phi(i) >= q(i),
+gamma - beta.phi(i) >= -q(i)  for every i in S.
+```
+
+For fixed beta, the least alpha is the maximum of q-beta.phi and the least gamma is minus its minimum. 
