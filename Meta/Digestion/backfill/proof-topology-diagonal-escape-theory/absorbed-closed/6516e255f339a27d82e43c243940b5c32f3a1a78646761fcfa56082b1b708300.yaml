@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:6516e255f339a27d82e43c243940b5c32f3a1a78646761fcfa56082b1b708300
   normalized_sha256: sha256:6516e255f339a27d82e43c243940b5c32f3a1a78646761fcfa56082b1b708300
 cas_ref: sha256:6516e255f339a27d82e43c243940b5c32f3a1a78646761fcfa56082b1b708300
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Factorization/Automata/PrimeHistoryGeodesic.shortest_realization
+    target_statement_id: sha256:e6ef6430f87e7f7861328004dddcfd9b1370edce1648d81aa466f5844dd06c78
 receipts:
   unresolved_subitems: []
