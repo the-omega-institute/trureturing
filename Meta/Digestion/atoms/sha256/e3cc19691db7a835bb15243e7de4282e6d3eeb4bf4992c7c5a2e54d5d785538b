@@ -1,0 +1,7 @@
+**定理 PM11。** 在 PM7 的两个系统中，若另有 $\|D\|,\|\widehat D\|\le\theta<1$，其中 $0\le\theta<1$，则
+
+$$
+\sum_{j\ge0}\|\widehat M_j-M_j\|
+\le(H_0+1)(d+1)^2\eta+\frac{2\theta^{H_0+1}}{1-\theta}.
+$$
+

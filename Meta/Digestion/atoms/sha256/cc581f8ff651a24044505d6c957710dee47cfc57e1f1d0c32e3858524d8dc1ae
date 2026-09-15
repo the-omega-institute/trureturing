@@ -1,0 +1,8 @@
+**假设。** 设 $\mathcal H=V\oplus H$ 为复 Hilbert 空间的正交分解，其中 $1\le d=\dim V<\infty$，$H$ 可为无限维。设固定有界算子满足 $0\le K\le I$，并写
+
+$$
+K=\begin{pmatrix}A&B\\B^*&D\end{pmatrix},\qquad
+R_n=\operatorname{pr}_V K^n|_V,\qquad
+M_j=BD^jB^*.
+$$
+

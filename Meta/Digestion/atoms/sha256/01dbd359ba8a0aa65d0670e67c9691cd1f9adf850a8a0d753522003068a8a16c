@@ -1,0 +1,2 @@
+**证明。** 对 PM5 的单调有界部分和取极限，逆级数的常数项为一，其余项为 $-F_n$。证毕。这与 Kaluza 的倒数级数符号判据及更新级数结构相容；参见 Á. Baricz, J. Vesti, M. Vuorinen, *On Kaluza's sign criterion for reciprocal power series*, Ann. Univ. Mariae Curie-Skłodowska Sect. A 65(2) (2011), 1–16, [arXiv:1010.5337](https://arxiv.org/abs/1010.5337)。
+

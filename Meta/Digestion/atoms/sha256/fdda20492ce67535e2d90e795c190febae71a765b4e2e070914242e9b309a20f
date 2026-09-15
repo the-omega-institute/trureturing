@@ -1,0 +1,71 @@
+## PM.1 Bala 的五倍指标整除
+
+**定义。** 沿用 FM.6 的阶乘比
+
+$$
+A(n)=\frac{(30n)!n!}{(15n)!(10n)!(6n)!},\qquad n\in\mathbb N,
+$$
+
+并对正整数 $q$ 置
+
+$$
+f(n,q)=\left\lfloor\frac{30n}{q}\right\rfloor+\left\lfloor\frac n q\right\rfloor-
+\left\lfloor\frac{15n}{q}\right\rfloor-\left\lfloor\frac{10n}{q}\right\rfloor-
+\left\lfloor\frac{6n}{q}\right\rfloor.
+$$
+
+**定理 PM1。** 若 $q\ge6$ 且 $q\mid5n+1$，则 $f(n,q)=1$。此外，对 $n>0$，若 $10n<q\le30n$，则同样有 $f(n,q)=1$。
+
+**证明。** 先令 $r=n\bmod q$。整数部分由 $30+1=15+10+6$ 抵消，故 $f(n,q)=f(r,q)$。若 $q\mid5n+1$，则 $5r+1=tq$，其中 $t\in\{1,2,3,4\}$。当 $q\ge6$ 时，四个商 $\lfloor30r/q\rfloor,\lfloor15r/q\rfloor,\lfloor10r/q\rfloor,\lfloor6r/q\rfloor$ 依次为
+
+$$
+\begin{array}{c|rrrr}
+t&\lfloor30r/q\rfloor&\lfloor15r/q\rfloor&\lfloor10r/q\rfloor&\lfloor6r/q\rfloor\\
+1&5&2&1&1\\
+2&11&5&3&2\\
+3&17&8&5&3\\
+4&23&11&7&4
+\end{array}
+$$
+
+且 $\lfloor r/q\rfloor=0$，逐行相减得到一。对于第二项，$\lfloor n/q\rfloor,\lfloor6n/q\rfloor,\lfloor10n/q\rfloor$ 都为零。令 $k=\lfloor30n/q\rfloor\in\{1,2\}$，则 $\lfloor15n/q\rfloor=\lfloor k/2\rfloor$，所以 $f(n,q)=k-\lfloor k/2\rfloor=1$。证毕。
+
+**定理 PM2。** 对全部自然数 $n$，
+
+$$
+\boxed{(5n+1)(15n)!(10n)!(6n)!\mid(30n)!n!.}
+$$
+
+这是 Peter Bala 在 OEIS A211417 的 2025 年 8 月 28 日评注中提出的 $A(n)/(5n+1)$ 整性条款；不等同于该条目的 $3n+1$ 或 $30n-1$ 条款。来源：[OEIS A211417](https://oeis.org/A211417)。
+
+**证明。** $n=0$ 显然。设 $n>0$。由 FM5 已知分母 $(15n)!(10n)!(6n)!$ 整除分子，故 $A(n)$ 是正整数。FM.7 的余数计算给出 $f(n,q)\ge0$，而 Legendre 公式给出
+
+$$
+v_p(A(n))=\sum_{j\ge1}f(n,p^j).
+$$
+
+对 $p\ge7$，每个整除 $5n+1$ 的 $p^j$ 都满足 PM1，故各贡献一个单位。素数五不整除 $5n+1$。若 $p\nmid5n+1$，则 $v_p(A(n))\ge0=v_p(5n+1)$。
+
+对素数二，由 $v_2((2m)!)=m+v_2(m!)$ 反复化简，
+
+$$
+v_2(A(n))=7n+v_2(n!)-v_2((5n)!)-v_2((3n)!)
+=v_2\binom{8n}{5n}.
+$$
+
+若 $2\mid5n+1$，则 $n$ 为奇数，$3n$ 是二进单位。恒等式
+
+$$
+(5n+1)\binom{8n}{5n+1}=3n\binom{8n}{5n}
+$$
+
+遂给出 $v_2(A(n))\ge v_2(5n+1)$。
+
+对素数三，令 $v=v_3(5n+1)$。若 $v=0$，结论显然。否则 $3^j$ 对 $2\le j\le v$ 各贡献一，共 $v-1$ 个单位；不把 $j=1$ 的贡献假定为一。另取
+
+$$
+k=\lfloor\log_3(10n)\rfloor+1,\qquad q=3^k.
+$$
+
+则 $10n<q\le30n$，PM1 给出 $f(n,q)=1$。又 $q>5n+1$，而 $3^v\le5n+1$，故 $k>v$，这项未被前面的 $2,\ldots,v$ 重复计入。总计至少 $v$ 个单位。全部素数赋值均满足所需不等式，唯一分解给出整除。证毕。
+
