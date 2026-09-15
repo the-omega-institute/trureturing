@@ -16,19 +16,7 @@ Lean statement: `D5/S3/Arith/FactorialRatio/BalaChebyshevFiveDivisibility.local_
 
 For every positive modulus q, the floor defect is nonnegative; for q at least six dividing 5n+1, it equals one.
 
-**Theorem 1.2 (Top-scale unit defect).**
-
-Lean statement: `D5/S3/Arith/FactorialRatio/BalaChebyshevFiveDivisibility.top_scale_unit`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/FactorialRatio/BalaChebyshevFiveDivisibility.top_scale_unit` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For positive n and 10n < q <= 30n, the floor defect equals one.
-
-**Theorem 1.3 (Bala's 5n+1 integrality clause).**
+**Theorem 1.2 (Bala's 5n+1 integrality clause).**
 
 Lean statement: `D5/S3/Arith/FactorialRatio/BalaChebyshevFiveDivisibility.bala_five_integrality`
 
@@ -46,5 +34,4 @@ The known 3n+1 theorem supplies base factorial-ratio integrality. For prime powe
 
 - Truth anchor: `D5/S3/Arith/FactorialRatio/BalaChebyshevFiveDivisibility.bala_five_integrality`
 - Truth anchor: `D5/S3/Arith/FactorialRatio/BalaChebyshevFiveDivisibility.local_five`
-- Truth anchor: `D5/S3/Arith/FactorialRatio/BalaChebyshevFiveDivisibility.top_scale_unit`
 - Dependency: [D5/S3/Arith/FactorialRatio/BalaChebyshevThreeDivisibility](BalaChebyshevThreeDivisibility.md)

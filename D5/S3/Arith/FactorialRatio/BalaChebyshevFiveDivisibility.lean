@@ -91,24 +91,6 @@ theorem local_five (n q : Nat) (hq : 0 < q) :
       have h6 : 6*r/q = 4 := (Nat.div_eq_iff hq).mpr (by omega)
       norm_num [defect, h30, h15, h10, h6, Nat.div_eq_of_lt hr]
 
-/-- A top-scale contribution compensates for the missing modulus-three term.
-It lies strictly above every prime power dividing 5n+1. -/
-theorem top_scale_unit (n q : Nat) (hn : 0 < n)
-    (hl : 10*n < q) (hu : q ≤ 30*n) : defect n q = 1 := by
-  have hq : 0 < q := by omega
-  have hnq : n < q := by omega
-  have h6q : 6*n < q := by omega
-  have half : 15*n/q = (30*n/q)/2 := by
-    symm
-    rw [Nat.div_div_eq_div_mul, show 30*n = (15*n)*2 by ring,
-      Nat.mul_div_mul_right _ _ (by decide : 0 < 2)]
-  have hklo : 1 ≤ 30*n/q := (Nat.le_div_iff_mul_le hq).mpr (by omega)
-  have hkhi : 30*n/q < 3 := (Nat.div_lt_iff_lt_mul hq).mpr (by omega)
-  unfold defect
-  rw [Nat.div_eq_of_lt hnq, Nat.div_eq_of_lt hl,
-    Nat.div_eq_of_lt h6q, half]
-  omega
-
 /-- Bala's distinct August 2025 conjecture A211417: A(n)/(5n+1) is integral.
 The division-free statement uses the exact factorial ratio and includes n=0. -/
 theorem bala_five_integrality (n : Nat) :
@@ -217,7 +199,21 @@ theorem bala_five_integrality (n : Nat) :
     have units : ∀ j ∈ insert k (Finset.Ico 2 (v+1)), defect n ((3:Nat)^j) = 1 := by
       intro j hj
       rcases Finset.mem_insert.mp hj with rfl | hj
-      · exact top_scale_unit n (3^k) hn qlo qhi
+      · have htop : defect n ((3:Nat)^k) = 1 := by
+          have hq : 0 < (3:Nat)^k := by omega
+          have hnq : n < (3:Nat)^k := by omega
+          have h6q : 6*n < (3:Nat)^k := by omega
+          have half : 15*n/((3:Nat)^k) = (30*n/((3:Nat)^k))/2 := by
+            symm
+            rw [Nat.div_div_eq_div_mul, show 30*n = (15*n)*2 by ring,
+              Nat.mul_div_mul_right _ _ (by decide : 0 < 2)]
+          have hklo : 1 ≤ 30*n/((3:Nat)^k) := (Nat.le_div_iff_mul_le hq).mpr (by omega)
+          have hkhi : 30*n/((3:Nat)^k) < 3 := (Nat.div_lt_iff_lt_mul hq).mpr (by omega)
+          unfold defect
+          rw [Nat.div_eq_of_lt hnq, Nat.div_eq_of_lt qlo,
+            Nat.div_eq_of_lt h6q, half]
+          omega
+        exact htop
       · obtain ⟨hj2, hjv⟩ := Finset.mem_Ico.mp hj
         have hsize : 6 ≤ (3:Nat)^j := by
           have hh : (3:Nat)^2 ≤ 3^j := Nat.pow_le_pow_right (by norm_num) hj2

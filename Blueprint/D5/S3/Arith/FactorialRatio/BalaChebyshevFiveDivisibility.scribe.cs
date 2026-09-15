@@ -21,17 +21,6 @@ internal sealed class BalaChebyshevFiveDivisibilityDocument : IScribeDocumentDef
                     + "for q at least six dividing 5n+1, it equals one."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("top-scale-unit"),
-                DeclarationHandle.Create(
-                    "D5/S3/Arith/FactorialRatio/"
-                    + "BalaChebyshevFiveDivisibility.top_scale_unit"),
-                H("Top-scale unit defect"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "For positive n and 10n < q <= 30n, the floor defect equals one."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("bala-five-integrality"),
                 DeclarationHandle.Create(
                     "D5/S3/Arith/FactorialRatio/"
