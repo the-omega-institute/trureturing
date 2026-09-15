@@ -42,7 +42,11 @@ internal sealed class BarryTriangleRowSumsOddDocument : IScribeDocumentDefinitio
                     + "Modulo two only j=0 remains, and its coefficient is the absolute "
                     + "Moebius value at one, which equals one.",
                 DescribeRole.Theorem,
-                AssessedProvenance.FromRepo(Source)))));
+                AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "oeis-a105595-barry-triangle-row-sums-odd"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(
         string name,

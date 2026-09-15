@@ -34,6 +34,10 @@ $$\forall n \in \mathbb{N},\; \operatorname{Odd}\left(\operatorname{rowSum}\left
 
 *Proof.* Machine-checked in Lean as `D5/S3/ArithSums/BarryTriangleRowSumsOdd.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a105595-barry-triangle-row-sums-odd` (proved) by `D5/S3/ArithSums/BarryTriangleRowSumsOdd.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a105595-barry-triangle-row-sums-odd","declaration_gid":"D5/S3/ArithSums/BarryTriangleRowSumsOdd.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul Barry (2005). *OEIS A105595, Row sums of number triangle A105594*. URL: <https://oeis.org/A105595>.
