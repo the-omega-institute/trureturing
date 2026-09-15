@@ -28,9 +28,9 @@ def H (R p : ℕ) (u : ℝ) : ℝ :=
 /-- The inverse-square integral of the same-sign overlap over real numbers greater than one. -/
 def J (R p : ℕ) : ℝ := ∫ u in Set.Ioi (1 : ℝ), H R p u / u ^ 2
 
+set_option maxHeartbeats 800000 in
 /-- Adjoining a prime outside a squarefree modulus gives an exact coefficient recurrence
 and strictly decreases the coefficient. -/
-set_option maxHeartbeats 800000 in
 theorem coefficient_recurrence (R p : ℕ) (hR : Squarefree R) (hR1 : 1 < R)
     (hp : p.Prime) (hpR : ¬ p ∣ R) :
     c (R * p) = (1 - ((p : ℝ)⁻¹) ^ 2) * c R -
@@ -49,19 +49,19 @@ theorem coefficient_recurrence (R p : ℕ) (hR : Squarefree R) (hR1 : 1 < R)
     have hd : (R * p).divisors = R.divisors ∪ R.divisors.image (p * ·) := by
       rw [Nat.divisors_mul]
       ext d
-      simp only [Finset.mem_mul, mem_union, mem_image]
+      simp only [Finset.mem_mul, Finset.mem_union, Finset.mem_image]
       constructor
       · rintro ⟨a, ha, b, hb, rfl⟩
-        rcases hp.eq_one_or_self_of_dvd (Nat.dvd_of_mem_divisors hb) with rfl | rfl
+        rcases hp.eq_one_or_self_of_dvd b (Nat.dvd_of_mem_divisors hb) with rfl | rfl
         · exact Or.inl (by simpa using ha)
-        · exact Or.inr ⟨a, ha, mul_comm p a⟩
+        · exact Or.inr ⟨a, ha, by ac_rfl⟩
       · rintro (hd | ⟨a, ha, rfl⟩)
         · exact ⟨d, hd, 1, Nat.one_mem_divisors.mpr hp.ne_zero, mul_one d⟩
         · exact ⟨a, ha, p, Nat.mem_divisors_self p hp.ne_zero, mul_comm a p⟩
     have hdis : Disjoint R.divisors (R.divisors.image (p * ·)) := by
-      apply disjoint_left.mpr
+      apply Finset.disjoint_left.mpr
       intro d hd him
-      obtain ⟨a, ha, rfl⟩ := mem_image.mp him
+      obtain ⟨a, ha, rfl⟩ := Finset.mem_image.mp him
       exact hpR ((dvd_mul_right p a).trans (Nat.dvd_of_mem_divisors hd))
     simp only [B, sum_filter]
     rw [hd, sum_union hdis, sum_image]
@@ -76,7 +76,8 @@ theorem coefficient_recurrence (R p : ℕ) (hR : Squarefree R) (hR1 : 1 < R)
         ArithmeticFunction.moebius_apply_prime hp]
       have hle : (↑(p * a) : ℝ) ≤ u ↔ (a : ℝ) ≤ u / p := by
         rw [le_div_iff₀ hp0, Nat.cast_mul, mul_comm]
-      by_cases h : (a : ℝ) ≤ u / p <;> simp [hle, h]
+      simp only [hle]
+      by_cases h : (a : ℝ) ≤ u / p <;> simp [h]
     · intro a ha b hb hab
       exact Nat.eq_of_mul_eq_mul_left hp.pos hab
   have habs (x y : ℤ) : |((x - y : ℤ) : ℝ)| = |(x : ℝ)| + |(y : ℝ)| -
@@ -132,6 +133,7 @@ theorem coefficient_recurrence (R p : ℕ) (hR : Squarefree R) (hR1 : 1 < R)
       IntegrableOn (fun u : ℝ => (u ^ 2)⁻¹) (Ioi a) := by
     have hi := integrableOn_Ioi_rpow_of_lt (by norm_num : (-2 : ℝ) < -1) ha
     exact hi.congr_fun (fun u hu => by
+      dsimp only
       rw [Real.rpow_neg (le_of_lt (ha.trans hu)), Real.rpow_two]) measurableSet_Ioi
   have hkernel (Q q : ℕ) (a : ℝ) (ha : 0 < a) :
       IntegrableOn (fun u : ℝ => |(B Q (u / q) : ℝ)| / u ^ 2) (Ioi a) := by
@@ -153,8 +155,11 @@ theorem coefficient_recurrence (R p : ℕ) (hR : Squarefree R) (hR1 : 1 < R)
             |(ArithmeticFunction.moebius d : ℝ)| := abs_sum_le_sum_abs _ _
         _ ≤ _ := sum_le_sum_of_subset_of_nonneg (filter_subset _ _)
           (fun _ _ _ => abs_nonneg _)
-    simpa only [div_eq_mul_inv] using (hweight a ha).bdd_mul
-      hmeas.abs.aestronglyMeasurable (ae_of_all _ (fun u => by simpa using hbound u))
+    have hmabs : Measurable (fun u : ℝ => |(B Q (u / q) : ℝ)|) := by
+      simpa only [Real.norm_eq_abs] using hmeas.norm
+    simpa only [IntegrableOn, div_eq_mul_inv] using (hweight a ha).bdd_mul
+      hmabs.aestronglyMeasurable (ae_of_all _ (fun u => by
+        simpa only [Real.norm_eq_abs, abs_abs, div_eq_mul_inv] using hbound u))
   have hrepr (Q : ℕ) (hQ : Squarefree Q) (hQ1 : 1 < Q) :
       c Q = e Q * ∫ u in Ioi (1 : ℝ), |(B Q u : ℝ)| / u ^ 2 := by
     have hQ0 : Q ≠ 0 := hQ.ne_zero
@@ -269,8 +274,10 @@ theorem coefficient_recurrence (R p : ℕ) (hR : Squarefree R) (hR1 : 1 < R)
         · simp [hu, hQu]
     have hstepInt (a : ℕ) : IntegrableOn
         (fun u : ℝ => (if (a : ℝ) ≤ u then (1 : ℝ) else 0) / u ^ 2) (Ioi 1) := by
-      convert (hweight 1 zero_lt_one).indicator (s := Ici (a : ℝ)) measurableSet_Ici using 1
-      ext u
+      apply ((hweight 1 zero_lt_one).indicator (t := Ici (a : ℝ))
+        measurableSet_Ici).congr_fun ?_ measurableSet_Ioi
+      intro u hu
+      dsimp only
       by_cases h : (a : ℝ) ≤ u <;> simp [Set.indicator, h]
     have hstep (a : ℕ) (ha : 1 ≤ a) :
         (∫ u in Ioi (1 : ℝ), (if (a : ℝ) ≤ u then (1 : ℝ) else 0) / u ^ 2) =
@@ -286,16 +293,17 @@ theorem coefficient_recurrence (R p : ℕ) (hR : Squarefree R) (hR1 : 1 < R)
             simp [Set.indicator, h, h']
         _ = ∫ u in Ioi (a : ℝ), (u ^ 2)⁻¹ := by
           rw [setIntegral_indicator measurableSet_Ioi,
-            inter_eq_right.mpr (Ioi_subset_Ioi (Nat.one_le_cast.mpr ha))]
+            Set.inter_eq_right.mpr (Set.Ioi_subset_Ioi (Nat.one_le_cast.mpr ha))]
         _ = (a : ℝ)⁻¹ := by
           have hi := integral_Ioi_rpow_of_lt (by norm_num : (-2 : ℝ) < -1) ha0
           have heq : (∫ u in Ioi (a : ℝ), u ^ (-2 : ℝ)) =
               ∫ u in Ioi (a : ℝ), (u ^ 2)⁻¹ := by
             apply setIntegral_congr_fun measurableSet_Ioi
             intro u hu
+            dsimp only
             rw [Real.rpow_neg (ha0.trans hu).le, Real.rpow_two]
           rw [heq] at hi
-          norm_num at hi
+          norm_num [Real.rpow_neg_one] at hi
           exact hi
     let F : (ℕ × ℕ) → ℝ → ℝ := fun ab u => |(B Q ab.1 : ℝ)| *
       ((if (ab.1 : ℝ) ≤ u then 1 else 0) / u ^ 2 -
@@ -318,6 +326,7 @@ theorem coefficient_recurrence (R p : ℕ) (hR : Squarefree R) (hR1 : 1 < R)
         _ = ∫ u in Ioi (1 : ℝ), ((pairs Q).map (fun ab => F ab u)).sum := by
           apply setIntegral_congr_fun measurableSet_Ioi
           intro u hu
+          dsimp only
           rw [hpoint u hu.le, div_eq_mul_inv, ← List.sum_map_mul_right]
           congr 1
           apply List.map_congr_left
@@ -349,7 +358,7 @@ theorem coefficient_recurrence (R p : ℕ) (hR : Squarefree R) (hR1 : 1 < R)
     have hdom : (∫ u in Ioi (p : ℝ)⁻¹, |(B R u : ℝ)| / u ^ 2) =
         ∫ u in Ioi (1 : ℝ), |(B R u : ℝ)| / u ^ 2 := by
       apply setIntegral_eq_of_subset_of_ae_sdiff_eq_zero measurableSet_Ioi.nullMeasurableSet
-        (Ioi_subset_Ioi ((inv_lt_one₀ hp0).mpr hp1).le)
+        (Set.Ioi_subset_Ioi ((inv_lt_one₀ hp0).mpr hp1).le)
       filter_upwards [volume.ae_ne (1 : ℝ)] with u hu hmem
       have hu1 : u < 1 := lt_of_le_of_ne (not_lt.mp hmem.2) hu
       simp [hlow u hu1]
@@ -360,10 +369,12 @@ theorem coefficient_recurrence (R p : ℕ) (hR : Squarefree R) (hR1 : 1 < R)
         apply setIntegral_congr_fun measurableSet_Ioi
         intro u hu
         have hu0 : u ≠ 0 := ne_of_gt (zero_lt_one.trans hu)
+        dsimp only
         rw [div_eq_inv_mul u (p : ℝ)]
         field_simp [hp0.ne', hu0]
       _ = (p : ℝ)⁻¹ * ∫ u in Ioi (p : ℝ)⁻¹, |(B R u : ℝ)| / u ^ 2 := by
-        rw [integral_comp_mul_left_Ioi _ 1 (inv_pos.mpr hp0)]
+        rw [integral_comp_mul_left_Ioi (fun u : ℝ => |(B R u : ℝ)| / u ^ 2)
+          1 (inv_pos.mpr hp0)]
         simp only [inv_inv, mul_one, smul_eq_mul]
         field_simp [hp0.ne']
       _ = _ := by rw [hdom]
@@ -389,7 +400,7 @@ theorem coefficient_recurrence (R p : ℕ) (hR : Squarefree R) (hR1 : 1 < R)
       refine ⟨?_, hu.1⟩
       have hf : R.divisors.filter (fun d : ℕ => (d : ℝ) ≤ u) = {1} := by
         ext d
-        simp only [mem_filter, mem_singleton]
+        simp only [mem_filter, Finset.mem_singleton]
         constructor
         · rintro ⟨hd, hdu⟩
           have hd1 := Nat.pos_of_mem_divisors hd
@@ -414,9 +425,13 @@ theorem coefficient_recurrence (R p : ℕ) (hR : Squarefree R) (hR1 : 1 < R)
       rw [hsplit, habs]
       unfold H
       ring
+    have hiadd : IntegrableOn (fun u : ℝ => |(B R u : ℝ)| / u ^ 2 +
+        |(B R (u / p) : ℝ)| / u ^ 2) (Ioi 1) := hi₁.add hi₂
+    have hiraw : IntegrableOn (fun u : ℝ => (|(B R u : ℝ)| / u ^ 2 +
+        |(B R (u / p) : ℝ)| / u ^ 2 - |(B (R * p) u : ℝ)| / u ^ 2) / 2)
+        (Ioi 1) := (hiadd.sub hi₃).div_const 2
     have hJi : IntegrableOn (fun u : ℝ => H R p u / u ^ 2) (Ioi 1) :=
-      (((hi₁.add hi₂).sub hi₃).div_const 2).congr_fun
-        (fun u _ => (hpoint u).symm) measurableSet_Ioi
+      hiraw.congr_fun (fun u _ => (hpoint u).symm) measurableSet_Ioi
     have hsum : (∫ u in Ioi (1 : ℝ), |(B (R * p) u : ℝ)| / u ^ 2) =
         (1 + (p : ℝ)⁻¹) * (∫ u in Ioi (1 : ℝ), |(B R u : ℝ)| / u ^ 2) -
           2 * J R p := by
@@ -429,7 +444,7 @@ theorem coefficient_recurrence (R p : ℕ) (hR : Squarefree R) (hR1 : 1 < R)
           have hh := hpoint u
           linarith
         _ = _ := by
-          rw [integral_sub (hi₁.add hi₂) (hJi.const_mul 2),
+          rw [integral_sub hiadd (hJi.const_mul 2),
             integral_add hi₁ hi₂, integral_const_mul, hdilate]
           unfold J
           ring
@@ -447,8 +462,8 @@ theorem coefficient_recurrence (R p : ℕ) (hR : Squarefree R) (hR1 : 1 < R)
   rw [hrec]
   nlinarith
 
-/-- A positive same-sign overlap at one point forces its inverse-square integral to be positive. -/
 set_option maxHeartbeats 800000 in
+/-- A positive same-sign overlap at one point forces its inverse-square integral to be positive. -/
 theorem overlap_integral_pos (R p : ℕ) (hR : Squarefree R) (hR1 : 1 < R)
     (hp : p.Prime) {u₀ : ℝ} (hu₀ : 1 ≤ u₀)
     (hsign : 0 < B R u₀ * B R (u₀ / p)) : 0 < J R p := by
@@ -470,11 +485,14 @@ theorem overlap_integral_pos (R p : ℕ) (hR : Squarefree R) (hR1 : 1 < R)
       have heq : {u : ℝ | 0 < B R u * B R (u / p)} =
           {u : ℝ | (0 : ℝ) < (B R u : ℝ) * (B R (u / p) : ℝ)} := by
         ext u
-        simp only [mem_setOf_eq]
+        simp only [mem_ofPred_eq]
         norm_cast
       rw [heq]
       exact measurableSet_lt measurable_const (hm₁.mul (hmeas p))
-    exact Measurable.ite hs (hm₁.abs.min (hmeas p).abs) measurable_const
+    unfold H
+    apply Measurable.ite hs
+    · simpa only [Real.norm_eq_abs] using hm₁.norm.min (hmeas p).norm
+    · exact measurable_const
   have hHnonneg (u : ℝ) : 0 ≤ H R p u := by unfold H; split_ifs <;> positivity
   have hHbound (u : ℝ) : H R p u ≤ |(B R u : ℝ)| := by
     unfold H
@@ -486,6 +504,7 @@ theorem overlap_integral_pos (R p : ℕ) (hR : Squarefree R) (hR1 : 1 < R)
       have hi := integrableOn_Ioi_rpow_of_lt (by norm_num : (-2 : ℝ) < -1)
         (by norm_num : (0 : ℝ) < 1)
       exact hi.congr_fun (fun u hu => by
+        dsimp only
         rw [Real.rpow_neg (le_of_lt (zero_lt_one.trans hu)), Real.rpow_two]) measurableSet_Ioi
     have hbound (u : ℝ) : |(B R u : ℝ)| ≤
         ∑ d ∈ R.divisors, |(ArithmeticFunction.moebius d : ℝ)| := by
@@ -495,7 +514,7 @@ theorem overlap_integral_pos (R p : ℕ) (hR : Squarefree R) (hR1 : 1 < R)
             |(ArithmeticFunction.moebius d : ℝ)| := abs_sum_le_sum_abs _ _
         _ ≤ _ := sum_le_sum_of_subset_of_nonneg (filter_subset _ _)
           (fun _ _ _ => abs_nonneg _)
-    simpa only [div_eq_mul_inv] using hweight.bdd_mul hmH.aestronglyMeasurable
+    simpa only [IntegrableOn, div_eq_mul_inv] using hweight.bdd_mul hmH.aestronglyMeasurable
       (ae_of_all _ (fun u => by
         rw [Real.norm_eq_abs, abs_of_nonneg (hHnonneg u)]
         exact (hHbound u).trans (hbound u)))
