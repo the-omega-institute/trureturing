@@ -4,6 +4,7 @@ import LeanInformationAudit.Sha256
 import LeanInformationAudit.FixedSnapshot
 import LeanInformationAudit.FrozenBaseline
 import Lean
+import Std.Sync.Mutex
 
 -- Reifier validation shares the registry module to preserve the seal import closure.
 namespace LeanInformationAudit.RegistrationReifier
@@ -1104,17 +1105,43 @@ def policyPaths : Array String := #[
   "tools/lean-inspector/LeanInformationAudit/ReadoutProvenance.lean",
   "tools/lean-inspector/LeanInformationAudit/Syntax.lean"]
 
+private abbrev HashWorker := IO.Process.Child {
+  stdin := .piped, stdout := .piped, stderr := .null }
+
+private initialize hashWorker : Std.Mutex (Option HashWorker) ← Std.Mutex.new none
+
+/-- Reuse only the fixed worker process, never a file digest. Requests carry the
+caller's current directory because isolated source fixtures may change it. The
+mutex keeps each request/response together; any failure retires the stream. -/
 private def fileHashes (paths : Array String) : IO (Array String) := do
   if paths.isEmpty then return #[]
-  let result ← IO.Process.output { cmd := "python3", args := #["-I", "-c",
-    "import hashlib,pathlib,sys; [print(hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest()) for p in sys.argv[1:]]"] ++ paths }
-  unless result.exitCode == 0 do throw <| IO.userError "incomplete_closure:E7.native_hash"
-  let hashes := result.stdout.trimAscii.toString.splitOn "\n" |>.toArray
-  unless hashes.size == paths.size && hashes.all (fun hash => hash.length == 64 &&
-      hash.toList.all (fun c => c.isDigit || ('a' ≤ c && c ≤ 'f'))) do
-    throw <| IO.userError "incomplete_closure:E7.native_hash"
-  return hashes
-
+  let request := Json.arr #[toJson (← IO.currentDir).toString, toJson paths]
+  hashWorker.atomically do
+    try
+      let child ← match ← get with
+        | some child => pure child
+        | none => do
+          let child ← IO.Process.spawn {
+            cmd := "python3", stdin := .piped, stdout := .piped, stderr := .null,
+            args := #["-I", "-c",
+              "import hashlib,json,pathlib,sys\nfor line in sys.stdin.buffer:\n try:\n  root,paths=json.loads(line)\n  result=[hashlib.sha256((pathlib.Path(root)/p).read_bytes()).hexdigest() for p in paths]\n except Exception:\n  result=None\n print(json.dumps(result,separators=(',',':')),flush=True)"] }
+          set (some child)
+          pure child
+      child.stdin.putStr (request.compress ++ "\n")
+      child.stdin.flush
+      let hashes : Array String ← IO.ofExcept <|
+        Json.parse (← child.stdout.getLine) >>= fromJson?
+      unless hashes.size == paths.size && hashes.all (fun hash => hash.length == 64 &&
+          hash.toList.all (fun c => c.isDigit || ('a' ≤ c && c ≤ 'f'))) do
+        throw <| IO.userError "incomplete_closure:E7.native_hash"
+      return hashes
+    catch _ =>
+      let child : Option HashWorker ← get
+      set (none : Option HashWorker)
+      if let some child := child then
+        try child.kill catch _ => pure ()
+        try discard <| child.wait catch _ => pure ()
+      throw <| IO.userError "incomplete_closure:E7.native_hash"
 
 /-- Hash every supplied current file in order, including repeated paths. The
 fixed native worker avoids interpreting SHA-256 separately for every byte. -/
