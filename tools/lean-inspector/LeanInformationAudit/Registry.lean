@@ -2365,28 +2365,61 @@ def withDeclaration (declaration : ResolvedDeclaration)
 def inventory (env : Environment) : Array TemplateOccurrenceEvent := occurrenceInventory.getState env
 def records (env : Environment) : Array BindingRecord := bindingRecords.getState env
 
+/-- Origin labels come from the native extension container, separately from
+the owner asserted in a claim. Local claims have the current module as origin. -/
+private def ownedClaims (env : Environment) : Array (Name × TemplateBindingClaim) := Id.run do
+  let mut result := #[]
+  for index in [:env.header.moduleNames.size] do
+    let owner := env.header.moduleNames[index]!
+    for claim in bindingClaims.getModuleEntries env index do
+      result := result.push (owner, claim)
+  for claim in bindingClaims.getEntries env do
+    result := result.push (env.header.mainModule, claim)
+  return result
+
+private def ownedEvents (env : Environment) : Array (Name × TemplateOccurrenceEvent) := Id.run do
+  let mut result := #[]
+  for index in [:env.header.moduleNames.size] do
+    let owner := env.header.moduleNames[index]!
+    for event in occurrenceInventory.getModuleEntries env index do
+      result := result.push (owner, event)
+  for event in (occurrenceInventory.getEntries env).reverse do
+    result := result.push (env.header.mainModule, event)
+  return result
+
+/-- Pure join validation grants no insertion or certification capability.
+Both publication and authoritative assessment consume this same relation. -/
+def joinClaims (events : Array (Name × TemplateOccurrenceEvent))
+    (claims : Array (Name × TemplateBindingClaim)) :
+    Except String (Array (TemplateOccurrenceEvent × Option TemplateBindingClaim)) := do
+  let mut indexed : Std.HashMap TemplateOccurrenceKey TemplateOccurrenceEvent := {}
+  for (producer, event) in events do
+    unless producer == event.key.registrationModule do throw "incomplete_closure:dtr.event_owner"
+    if indexed.contains event.key then throw "incomplete_closure:dtr.duplicate_occurrence"
+    indexed := indexed.insert event.key event
+  let mut selected : Std.HashMap TemplateOccurrenceKey TemplateBindingClaim := {}
+  for (producer, claim) in claims do
+    unless producer == claim.owner do throw "incomplete_closure:dtr.claim_owner"
+    unless indexed.contains claim.key do throw "unclassified_form:dtr.dangling_claim"
+    if selected.contains claim.key then throw "unclassified_form:dtr.duplicate_claim"
+    if let some event := indexed[claim.key]? then
+      unless claim.arena.equal event.arena do throw "unclassified_form:dtr.claim_occurrence"
+    selected := selected.insert claim.key claim
+  return events.map fun (_, event) => (event, selected[event.key]?)
+
 /-- Reuse producer-issued results for mathematical publication in this immutable
 environment. This join issues no certificate and makes no claim about subsequent
 filesystem changes. The authoritative report rechecks source inputs and assesses
 the full join through `assessJoined` before admission can consume its evidence. -/
 def cachedJoinedRecords (env : Environment) : Except String (Array BindingRecord) := do
-  let events := inventory env
-  let claims := bindingClaims.getState env
+  let joined ← joinClaims (ownedEvents env) (ownedClaims env)
   let retained := records env
-  for claim in claims do
-    unless (events.filter (·.key == claim.key)).size == 1 do
-      throw "incomplete_closure:dtr.cached_claim_occurrence"
   for index in [:env.header.moduleNames.size] do
     let owner := env.header.moduleNames[index]!
     for record in bindingRecords.getModuleEntries env index do
       unless record.bindingOwner.getD record.occurrence.key.registrationModule == owner do
         throw "incomplete_closure:dtr.cached_record_owner"
-  events.mapM fun event => do
-    unless (events.filter (·.key == event.key)).size == 1 do
-      throw "incomplete_closure:dtr.cached_duplicate_occurrence"
-    let selected := claims.filter (·.key == event.key)
-    if selected.size > 1 then throw "unclassified_form:dtr.duplicate_claim"
-    let claim := selected[0]?
+  joined.mapM fun (event, claim) => do
     let owner := claim.map (·.owner)
     let candidates := retained.filter fun record =>
       record.occurrence.key == event.key && record.bindingOwner == owner
@@ -2502,20 +2535,11 @@ structure JoinedRecords where
 Callers must establish complete governed sidecar inputs before claiming coverage. -/
 def assessJoined : MetaM (Array BindingRecord) := do
   let env ← getEnv
-  let events := inventory env
-  let claims := bindingClaims.getState env
-  for event in events do validateEvent event
-  for index in [:env.header.moduleNames.size] do
-    let owner := env.header.moduleNames[index]!
-    for claim in bindingClaims.getModuleEntries env index do
-      unless claim.owner == owner do throwError "incomplete_closure:dtr.claim_owner"
-  for claim in claims do
-    unless (events.filter (·.key == claim.key)).size == 1 do
-      throwError "unclassified_form:dtr.dangling_claim"
-  events.mapM fun event => do
-    let selected := claims.filter (·.key == event.key)
-    if selected.size > 1 then throwError "unclassified_form:dtr.duplicate_claim"
-    assess event selected[0]?
+  let joined ← match joinClaims (ownedEvents env) (ownedClaims env) with
+    | .ok joined => pure joined
+    | .error reason => throwError reason
+  for (event, _) in joined do validateEvent event
+  joined.mapM fun (event, claim) => assess event claim
 
 /-- Export always starts by joining the entire loaded declaration universe. -/
 def exportSnapshot : MetaM JoinedRecords := do
