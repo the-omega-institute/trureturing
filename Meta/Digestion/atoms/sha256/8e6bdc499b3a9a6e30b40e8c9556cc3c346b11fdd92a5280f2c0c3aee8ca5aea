@@ -1,0 +1,6 @@
+## 57. 无限未来统计、预测商与最小动力学修复
+
+第 54 节把对象定义在有限实验族上，第 55–56 节把记录复用和隐藏回流写成有限记忆模型。若允许继续进行同一类后续操作，还需要回答一个更强的问题：**当前记录是否足以决定所有有限次未来读数？** 这一节用 Heisenberg 迭代生成的可观测空间回答它。
+
+本节使用仓库中已冻结的 `AllFutureStatisticsSufficiency`、`FutureStatisticsEquivalence`、`MinimalPredictiveSummary`、`OperationalReadoutQuotientRepresentation` 与 `PredictionClosureDynamicalRepair` 结果。这里的“所有未来”指给定有限初始 effect 家族、给定离散 Heisenberg 演化下的所有有限迭代；它不表示任意连续控制或任意物理实验都已包含。
+

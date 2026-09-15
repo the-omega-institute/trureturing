@@ -1,0 +1,24 @@
+### 93.1 固定点先由记录基底决定
+
+设 $B$ 是 $d$ 维 Hilbert 空间上的秩一记录上下文，并假设其投影族满足 `IsRecordMeasurement`。项目中的 `basis_measurement_eq_self_iff` 给出固定点刻画：
+
+$$
+\boxed{
+\operatorname{basisMeasurement}_B(A)=A
+\iff
+A\in\operatorname{diagonalSubspace}(B).
+}
+$$
+
+这条等价式的重点不是某个特殊权重，而是记录机制先选定了一个对角子空间。被保留下来的信息是该上下文中的经典对角方向；其余非对角方向不会成为这个记录通道的固定信息。
+
+因此，“经典现实”在这个有限模型中的第一层含义可以写成：
+
+$$
+\text{稳定记录}
+=
+\text{被指定记录通道固定的算子子空间中的元素}.
+$$
+
+它仍然是相对于上下文 $B$ 的定义。更换记录基底，会更换 diagonalSubspace，也会更换哪些差异被视为稳定记录。
+

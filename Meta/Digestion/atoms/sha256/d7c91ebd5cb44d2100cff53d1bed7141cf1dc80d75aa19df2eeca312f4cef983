@@ -1,0 +1,41 @@
+**命题 118.14（有限构型与密度矩阵的不同载体）。** 第 115.4、116.6、117.6 节的量子解释不由经典构型有限性自动成立。即使合法构型集 $\mathcal W_L$ 有限，若
+
+$$
+\mathcal H_Z=\operatorname{span}\{|w\rangle:w\in\mathcal W_L\},
+\qquad \dim\mathcal H_Z\ge2,
+$$
+
+其全部密度矩阵集合 $\mathcal D(\mathcal H_Z)$ 仍为无限集。对指定通道词 $\Phi_w$ 与 POVM $\{M_o\}_o$，可以定义抽象响应函数
+
+$$
+\rho\longmapsto
+\left(\operatorname{tr}(M_o\Phi_w(\rho))\right)_{w,o},
+\qquad M_o\ge0,\quad\sum_oM_o=\mathbf 1.
+$$
+
+这是每个指定实验的概率函数族。第 116.8 节关于“经典轨迹函数”的量子边界须区分此集合论函数与物理编码：前者可以如此定义，后者不由定义给出。该函数不自动给出一个物理 CPTP 编码，也不自动给出从同一次制备中同时读出这些概率精确值的经典寄存器。
+
+证明。取两个正交合法基态 $|e_0\rangle,|e_1\rangle$，则
+
+$$
+\rho_p=p|e_0\rangle\langle e_0|+(1-p)|e_1\rangle\langle e_1|,
+\qquad 0\le p\le1
+$$
+
+彼此不同，已构成连续一族密度矩阵。故有限 Hilbert 维数并非有限状态集合的基数。
+
+抽象函数与物理精确标签编码的区别甚至在此对角族上存在。若某通道 $\mathcal E$ 能把 $p=0,\tfrac12,1$ 的精确概率标签输出为三个互相正交的确定经典旗标，则既要求
+
+$$
+\mathcal E(\rho_{1/2})=|f_{1/2}\rangle\langle f_{1/2}|,
+$$
+
+又由通道的仿射性要求
+
+$$
+\mathcal E(\rho_{1/2})
+=\tfrac12|f_0\rangle\langle f_0|+\tfrac12|f_1\rangle\langle f_1|.
+$$
+
+两式的支持子空间不同，矛盾。抽象地写出各响应概率不受此限制，因为它没有宣称存在这种确定标签通道。抽样获得一个结果、在重复制备下估计概率、以及一次制备输出概率的精确标签，是不同的输出任务。
+

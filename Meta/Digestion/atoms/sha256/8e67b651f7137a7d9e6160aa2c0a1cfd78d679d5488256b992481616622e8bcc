@@ -1,0 +1,55 @@
+### 77.3 从可见空间到动力学下降的附加条件
+
+不能把 effect 空间 $$V$$ 与状态空间上的投影自动视为同一个算子。前者在 Heisenberg 的 Hermitian 算子空间，后者在 Schrödinger 状态坐标；需要有限维 Hilbert--Schmidt 对偶识别、明确的 adjoint，以及一个真正幂等的状态投影 $$P_H$$。
+
+在这些额外结构已经给定后，若 Schrödinger 作用为 $$T_a$$，并且其 Hilbert--Schmidt 对偶满足
+
+$$
+T_a^*=\mathsf I_a,
+$$
+
+再假设允许所有长度不超过 $$H$$ 的词，并且该词空间已经稳定：
+
+$$
+V_H=V_{H+1},
+$$
+
+则对任意 $$k\in V_H^{\perp}$$ 和 $$v\in V_H$$，
+
+$$
+\langle T_a k,v\rangle
+=
+\langle k,T_a^*v\rangle
+=0.
+$$
+
+所以
+
+$$
+T_a(V_H^{\perp})
+\subseteq
+V_H^{\perp},
+$$
+
+等价地，若 $$P_H$$ 是 $$V_H$$ 的正交投影，则
+
+$$
+P_HT_a(I-P_H)=0.
+$$
+
+这是 `VisibleAutonomyCriterion` 所需的 hidden-to-visible 不泄漏条件。由它可得到可见递推的因子化；再加上第 75 节 `ProjectedExactDescent` 的投影动力学条件，才可对任意输入历时推出
+
+$$
+P_Hx_n=\widetilde x_n
+$$
+
+以及在输出因子化条件下的
+
+$$
+Cx_n=\widetilde C\widetilde x_n.
+$$
+
+这里必须保留三条限制：没有 $$P_H^2=P_H$$，不能称为投影下降；没有 state/effect 对偶与 adjoint，不能从 effect span 推出状态不变性；没有量子正性、迹保持和通道假设，这些等式仍只是线性系统结论。
+
+若 $$V_H=V_{H+1}$$ 只是在任意集合中偶然相等，而允许词族没有前缀闭合性，则不能推出更长词仍在 $$V_H$$。永久稳定需要词族对前缀扩展闭合，或另行证明全部后续 Heisenberg 效果仍落在该空间。
+

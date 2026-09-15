@@ -1,0 +1,44 @@
+### 112.1 联合余数记录
+
+设有限索引集合为
+
+$$
+\iota,
+$$
+
+每个索引携带一个正模数
+
+$$
+m:\iota\to\mathbb N,
+\qquad
+0<m(i),
+$$
+
+并假设这些模数两两互素：
+
+$$
+\operatorname{Pairwise}\bigl(\operatorname{Nat.Coprime}\circ m\bigr).
+$$
+
+对状态区间
+
+$$
+\operatorname{Fin}(K)=\{0,1,\ldots,K-1\},
+$$
+
+保留的记录是联合余数读出
+
+$$
+R(x)
+=
+\bigl(x\bmod m(i)\bigr)_{i\in\iota}.
+$$
+
+在 Lean 中，这个读出由 jointReadout 组织，余数坐标以
+
+$$
+\mathbb Z/m(i)\mathbb Z
+$$
+
+表示。它不是把原始历史直接写回，而是把历史压缩到一组可组合的局部记录中。
+
