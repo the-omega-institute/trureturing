@@ -28,8 +28,9 @@
     </PropertyGroup>
     <PropertyGroup>
       <_JudgeSeedCaptureFile>$([MSBuild]::NormalizePath('$(MSBuildProjectDirectory)', '$(IntermediateOutputPath)', 'judge-seed-inputs.xml'))</_JudgeSeedCaptureFile>
+      <_JudgeSeedValidatedInputs>$([MSBuild]::NormalizePath('$(MSBuildProjectDirectory)', '$(IntermediateOutputPath)', 'judge-seed-validated-inputs'))</_JudgeSeedValidatedInputs>
     </PropertyGroup>
-    <!-- Byte validation and incremental timestamps share the registered compiler inputs. -->
+    <!-- All registered compiler inputs are byte-validated before the local incremental stamp is accepted. -->
     <ItemGroup>
       <_JudgeSeedCompileInputs Include="$(MSBuildProjectFullPath);@(Compile);@(_CoreCompileResourceInputs);@(CompiledLicenseFile);@(ReferencePathWithRefAssemblies);@(AdditionalFiles);@(EmbeddedFiles);@(Analyzer);@(EditorConfigFiles);@(AddModules);@(LinkResource);$(AppConfigForCompiler);$(ResolvedCodeAnalysisRuleSet);$(KeyOriginatorFile);$(ApplicationIcon);$(Win32Manifest);$(Win32Resource);$(SourceLink);@(CustomAdditionalCompileInputs);@(_JudgeSeedRegisteredMaterial);$(JudgeSeedRoot)/build/judge-seed/compiler.json;$(JudgeSeedOwner);$(JudgeSeedHook)" />
     </ItemGroup>
@@ -137,7 +138,7 @@
       <NonExistentFile>$(IntermediateOutputPath)judge-seed-missing-output</NonExistentFile>
     </PropertyGroup>
   </Target>
-  <Target Name="_JudgeSdkCoreCompile" Inputs="@(_JudgeSeedCompileInputs)" Outputs="@(DocFileItem);                    @(IntermediateAssembly);                    @(IntermediateRefAssembly);                    @(_DebugSymbolsIntermediatePath);                    $(NonExistentFile);                    @(CustomAdditionalCompileOutputs)" Returns="@(CscCommandLineArgs)" DependsOnTargets="_JudgeSeedCapture">
+  <Target Name="_JudgeSdkCoreCompile" Inputs="$(_JudgeSeedValidatedInputs)" Outputs="@(DocFileItem);                    @(IntermediateAssembly);                    @(IntermediateRefAssembly);                    @(_DebugSymbolsIntermediatePath);                    $(NonExistentFile);                    @(CustomAdditionalCompileOutputs)" Returns="@(CscCommandLineArgs)" DependsOnTargets="_JudgeSeedCapture">
     <Csc Condition="'%(_CoreCompileResourceInputs.WithCulture)' != 'true'"
       AdditionalLibPaths="$(AdditionalLibPaths)"
       AddModules="@(AddModules)"
