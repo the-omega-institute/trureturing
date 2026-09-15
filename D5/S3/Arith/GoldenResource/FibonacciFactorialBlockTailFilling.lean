@@ -8,8 +8,6 @@
 import D5.S3.Arith.GoldenResource.RationalCapacityTailRealization
 import Mathlib.Data.Nat.Fib.Basic
 import Mathlib.Data.Nat.Factorial.Basic
-import Mathlib.Data.Set.Card
-import Mathlib.Data.Finset.Card
 import Mathlib.Data.ZMod.Basic
 import Mathlib.Dynamics.PeriodicPts.Lemmas
 
@@ -50,7 +48,7 @@ theorem factorial_block_tail_filling :
     exact Nat.fib_pos.mpr (by omega)
   have hcof : ∀ d : ℕ, 0 < d → ∀ N : ℕ, ∃ n : ℕ, N < n ∧ d ∣ G n := by
     intro d hd N
-    letI : NeZero d := ⟨hd.ne'⟩
+    let : NeZero d := ⟨hd.ne'⟩
     let T : ZMod d × ZMod d → ZMod d × ZMod d := fun x => (x.2, x.1 + x.2)
     let f : ℕ × ℕ → ℕ × ℕ := fun x => (x.2, x.1 + x.2)
     let C : ℕ × ℕ → ZMod d × ZMod d := fun x => (x.1, x.2)
