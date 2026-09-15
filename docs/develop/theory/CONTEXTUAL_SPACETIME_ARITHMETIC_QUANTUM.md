@@ -22109,3 +22109,139 @@ $$
 这条反向 BFS 结论属于有限确定性模型。对量子通道，状态空间通常是连续的，且未来区分可能是概率差异而非精确标签不等式；此时应使用前面的效果闭包、预测投影或误差距离，而不能把 $$|Y|^2$$ 的枚举界直接宣称为量子记忆复杂度。
 
 本节复用 `reverse_bfs_correct_and_quadratic`。Lean 已证明的是有限状态、确定性更新、有限读出字母表下的精确分离深度与预算；Zeckendorf 映射、量子概率阈值和噪声鲁棒版本仍需另行指定。
+
+## 追加锚（新终端）
+
+## 98. 占据历史链的精确振幅与最小记忆债务
+
+第 97 节处理有限确定性状态表的未来分离。另一条更接近“历史怎样被压缩”的项目结果来自 `SequentialOccupationHistory`：它把一个有限占据多重集的逐步生成写成量子等距链，并直接计算每个切口必须保留的记忆维数。
+
+### 98.1 边界不是标签，而是部分历史
+
+给定有限多重集 $$a$$，令 $$\operatorname{Boundary}(a,t)$$ 表示从 $$a$$ 中取出恰好 $$t$$ 个占据的部分历史。若当前边界为 $$b$$，下一步加入符号 $$i$$ 的合法条件是
+
+$$
+\operatorname{count}_b(i)<\operatorname{count}_a(i).
+$$
+
+项目定义转移矩阵
+
+$$
+N_t(i,c;b)
+=
+\begin{cases}
+\sqrt{\dfrac{\operatorname{count}_{a-b}(i)}{|a|-t}},
+&c=b+\{i\},\\[6pt]
+0,&\text{否则}.
+\end{cases}
+$$
+
+它保留了“哪些前缀历史仍可继续”以及“剩余占据给每个后继多少振幅”两种信息。对 $$t<|a|$$，Lean 定理 `next_step_gram` 给出
+
+$$
+\boxed{
+N_t^\dagger N_t=I.
+}
+$$
+
+所以每个合法一步都是等距的；`next_step_quantum_channel` 进一步构造了相应的有限维量子通道。这里的等距性不是说记忆已经被压成一个标量，而是说这一步在保留的边界载体上不丢失内积。
+
+### 98.2 多步收缩精确等于占据扇区振幅
+
+对一个词 $$w$$，把所有合法边界路径的局部转移振幅相乘并求和，得到 `contraction`。项目定理 `contraction_eq_sector` 证明：当剩余长度与切口满足
+
+$$
+|a|=t+n,
+$$
+
+时，逐步收缩恰好等于占据扇区向量的分量：
+
+$$
+\boxed{
+\operatorname{contraction}(a,n,t,w,b)
+=
+\operatorname{sectorVector}_n(a-b,w).
+}
+$$
+
+从初始空边界出发，`history_sequential_preparation` 因而给出整个合法占据历史的精确制备振幅。这个等式把“历史求和”落实为有限矩阵乘法；中间边界是被保留的历史接口，末端扇区向量是完整输出。
+
+### 98.3 每个切口都有一个不可绕开的秩下界
+
+把长度 $$t+s$$ 的完整振幅按切口拆成前缀和后缀，定义系数矩阵 $$C_a^{t,s}$$。任意一个有限链若能精确产生同一个扇区振幅，`sequential_coefficient_factorization` 给出
+
+$$
+C_a^{t,s}=P_tQ_s,
+$$
+
+其中中间指标空间就是该切口的 bond carrier。因此
+
+$$
+\operatorname{rank}(C_a^{t,s})
+\le
+\dim(\text{bond at }t).
+$$
+
+项目进一步把扇区系数矩阵的秩写成边界数量，得到 `sequential_memory_necessity`：
+
+$$
+\boxed{
+|\operatorname{Boundary}(a,t)|
+\le
+\dim(\text{任何精确链在切口 }t\text{ 的记忆} ) .
+}
+$$
+
+这是一条比“历史越长，内存越多”更精确的说法。真正的债务由前缀与后缀振幅的线性秩决定；大量字面不同的历史如果在系数矩阵中线性相关，可以共享记忆，而线性独立的边界不能被同一个更小的切口载体精确表示。
+
+### 98.4 5040 的精确实例
+
+项目中的 `occupation5040` 与算术卷中的 5040 具有同一数值对象，但两者承担的编码角色不同。算术卷给出
+
+$$
+5040=2^4\cdot3^2\cdot5\cdot7
+$$
+
+及其 Zeckendorf 指数行；量子占据链把一个具体多重集的逐步历史写成振幅链。对这个占据多重集，源码证明
+
+$$
+|a|=8,
+$$
+
+并且所有精确制备链的最大 bond 都满足
+
+$$
+\boxed{
+\max_t\dim(\text{bond at }t)\ge12.
+}
+$$
+
+`history_5040_minimum_maximum_bond` 证明下界可达；`history_5040_occupation_chain_attainment` 同时给出链长为 $$8$$、最大 bond 为 $$12$$，并且每个长度八的词振幅都精确等于对应扇区向量。
+
+因此，这个实例给出一个完整的“约束—历史—量子记忆”数值链：
+
+$$
+\text{固定占据约束}
+\longrightarrow
+\text{合法边界族}
+\longrightarrow
+\text{切口秩}
+\longrightarrow
+\text{最小记忆 }12.
+$$
+
+但必须保留编码边界：源码没有证明 Zeckendorf 合法字串空间与这个 occupation boundary 空间同构，也没有证明 12 是所有能完成同一物理任务的任意量子协议的普适记忆维数。它是该多重集、该精确振幅目标和该有限链模型下的最小最大 bond。
+
+### 98.5 对“稳定经典现实”的补充
+
+这条结果把前面的预测闭合条件再细化了一层。若只要求当前概率标签，可能只需保存一个粗读数；若要求保留完整后续振幅，则每个切口必须保存足以承载系数矩阵秩的边界信息。两者对应不同任务：
+
+$$
+\text{标签预测任务}
+\not\equiv
+\text{完整相干历史制备任务}.
+$$
+
+Zeckendorf 可以继续提供合法构型的离散坐标，occupation chain 则给出在一个具体相干任务中这些历史怎样组合、怎样跨切口传输。只有把两者之间的编码映射、目标振幅和允许误差明确写出，才能把 Fibonacci 构型数量转换成实际量子记忆预算。
+
+本节复用 `next_step_gram`、`next_step_quantum_channel`、`contraction_eq_sector`、`sequential_memory_necessity`、`minimum_maximum_bond_characterization` 和 `history_5040_minimum_maximum_bond`。Lean 已证明的是有限多重集占据链的等距性、精确收缩和切口下界；Zeckendorf—occupation 同构、噪声容错记忆以及任意开放系统中的最优压缩仍是未完成接口。
