@@ -43,6 +43,37 @@ theorem factorial_block_tail_filling :
       FillsRationalTails G (blockCapacity I) ∧
       Filter.Tendsto (fun n => (blockCapacity I n : ℝ) / G n) Filter.atTop (nhds 0) ∧
       ¬ CofinalDivisibleCapacity G (blockCapacity I) := by
+  classical
+  have hG : ∀ n, 0 < G n := by
+    intro n
+    exact Nat.fib_pos.mpr (by omega)
+  have hcof : ∀ d : ℕ, 0 < d → ∀ N : ℕ, ∃ n : ℕ, N < n ∧ d ∣ G n := by
+    intro d hd N
+    letI : NeZero d := ⟨hd.ne'⟩
+    let T : ZMod d × ZMod d → ZMod d × ZMod d := fun x => (x.2, x.1 + x.2)
+    let f : ℕ × ℕ → ℕ × ℕ := fun x => (x.2, x.1 + x.2)
+    let C : ℕ × ℕ → ZMod d × ZMod d := fun x => (x.1, x.2)
+    have hi : Function.Injective T := by
+      intro a b h
+      have h₁ := congrArg Prod.fst h
+      have h₂ := congrArg Prod.snd h
+      dsimp [T] at h₁ h₂
+      apply Prod.ext
+      · exact add_right_cancel (h₁ ▸ h₂)
+      · exact h₁
+    have hc : Function.Semiconj C f T := by
+      intro x
+      simp [C, f, T]
+    have hcast (n : ℕ) : (Nat.fib n : ZMod d) = (T^[n] (0, 1)).1 := by
+      have h := congrArg Prod.fst (hc.iterate_right n (0, 1))
+      simpa [Nat.fib, f, C] using h
+    obtain ⟨p, hp, hreturn⟩ := hi.mem_periodicPts (0, 1)
+    have hz : (Nat.fib p : ZMod d) = 0 := by
+      rw [hcast, hreturn.eq]
+    have hdvd : d ∣ Nat.fib p := (ZMod.natCast_eq_zero_iff _ _).mp hz
+    refine ⟨(N + 3) * p - 2, by omega, ?_⟩
+    rw [Nat.sub_add_cancel (by omega : 2 ≤ (N + 3) * p)]
+    exact hdvd.trans (Nat.fib_dvd p ((N + 3) * p) (dvd_mul_left p (N + 3)))
   sorry
 
 end D5.S3.Arith.GoldenResource.FibonacciFactorialBlockTailFilling
