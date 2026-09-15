@@ -85,11 +85,10 @@ def twistHom (extra : ℕ) (s : ℤ) : Surface extra →* Surface extra := by
     | cons i xs ih =>
         simp only [List.map_cons, List.prod_cons, map_mul, ih]
         congr 1
-        simp [F, p, bracket, twistImages, generator, PresentedGroup.of]
   have hfirst : F
       (bracket (FreeGroup.of (Sum.inl 0)) (FreeGroup.of (Sum.inl 1))) =
       boundary extra := by
-    simp only [bracket, map_mul, map_inv, FreeGroup.lift_apply_of]
+    simp only [F, bracket, map_mul, map_inv, FreeGroup.lift_apply_of]
     change
       (boundary extra ^ s * generator extra (Sum.inl 0) * (boundary extra ^ s)⁻¹) *
       (boundary extra ^ s * generator extra (Sum.inl 1) * (boundary extra ^ s)⁻¹) *
@@ -104,13 +103,17 @@ def twistHom (extra : ℕ) (s : ℤ) : Surface extra →* Surface extra := by
   intro w hw
   rcases Set.mem_singleton_iff.mp hw with rfl
   change F (surfaceRelator extra) = 1
-  rw [surfaceRelator, map_mul, map_mul, hfirst, htail]
+  change F ((bracket (FreeGroup.of (Sum.inl 0)) (FreeGroup.of (Sum.inl 1))) *
+    bracket (FreeGroup.of (Sum.inl 2)) (FreeGroup.of (Sum.inl 3)) * extraWord extra) = 1
+  rw [map_mul, map_mul, hfirst, htail]
   have hsecond : F
       (bracket (FreeGroup.of (Sum.inl 2)) (FreeGroup.of (Sum.inl 3))) =
       p (bracket (FreeGroup.of (Sum.inl 2)) (FreeGroup.of (Sum.inl 3))) := by
     simp [F, p, bracket, twistImages, generator, PresentedGroup.of]
   rw [hsecond]
-  simpa [surfaceRelator, boundary, bracket, p, generator, PresentedGroup.of] using hrel
+  change p ((bracket (FreeGroup.of (Sum.inl 0)) (FreeGroup.of (Sum.inl 1))) *
+    bracket (FreeGroup.of (Sum.inl 2)) (FreeGroup.of (Sum.inl 3)) * extraWord extra) = 1 at hrel
+  simpa only [boundary, bracket, generator, PresentedGroup.of, map_mul, map_inv] using hrel
 
 /-- Genuine repeated composition of the single step. -/
 def twistPower (extra : ℕ) : ℕ → Surface extra →* Surface extra
@@ -163,7 +166,7 @@ theorem finite_characteristic_twist_detector (extra m : ℕ) (hm : 0 < m) :
   have hgens : ∀ (s : ℤ) (i : Generator extra),
       twistHom extra s (generator extra i) = twistImages extra s i := by
     intro s i
-    exact PresentedGroup.toGroup.of _
+    simp only [twistHom, generator, PresentedGroup.toGroup.of]
   have hboundary : ∀ s : ℤ, twistHom extra s (boundary extra) = boundary extra := by
     intro s
     unfold boundary bracket
@@ -304,7 +307,8 @@ theorem finite_characteristic_twist_detector (extra m : ℕ) (hm : 0 < m) :
       induction xs with
       | nil => simp
       | cons i xs ih =>
-          simp [List.map_cons, List.prod_cons, map_mul, ih, bracket, images]
+          simp only [List.map_cons, List.prod_cons, map_mul, ih]
+          simp [bracket, images]
     simp [surfaceRelator, map_mul, bracket, htail, images]
   let ρ : Representation extra m := PresentedGroup.toGroup htargetRel
   have hrho : ∀ i, ρ (generator extra i) = images i := by
@@ -312,6 +316,7 @@ theorem finite_characteristic_twist_detector (extra m : ℕ) (hm : 0 < m) :
     exact PresentedGroup.toGroup.of _
   have hrhoBoundary : ρ (boundary extra) = DihedralGroup.r (-2) := by
     simp [boundary, bracket, hrho, images]
+    ring
   have hfirst : ∀ n : ℕ,
       ρ (twistPower extra n (generator extra (Sum.inl 0))) =
         DihedralGroup.sr (4 * (n : ZMod (4 * m))) := by
