@@ -2,7 +2,9 @@ fingerprints:
   raw_sha256: sha256:6bd42e414bcae06720bbfe8c0dee8a6845dc0dac16128c10cedd7a653f335c05
   normalized_sha256: sha256:6bd42e414bcae06720bbfe8c0dee8a6845dc0dac16128c10cedd7a653f335c05
 cas_ref: sha256:6bd42e414bcae06720bbfe8c0dee8a6845dc0dac16128c10cedd7a653f335c05
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S1/Digit/Infinite/WindowCylinderPartition.window_cylinder_partition
+    target_statement_id: sha256:99a45c0281146aa85c4abb581fdb6e19844ed3d8da4050332419cf1f97aca900
 receipts:
   unresolved_subitems: []
   chain_atoms:
