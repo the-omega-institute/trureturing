@@ -22447,3 +22447,156 @@ $$
 可以把三 qutrit 结果作为一个设计模板：选择份额映射，使单份效果落入当前可见空间的核，而联合份额的效果进入目标闭包。随后再用前面的 `all_future_statistics_sufficiency` 或 `future_statistics_iff_annihilates_infinite_system` 检验联合访问是否足以覆盖所需未来统计。
 
 本节复用 `qutrit_single_share_maximally_mixed`、`qutrit_two_share_reconstruction` 和 `qutrit_matrix_unit_marginal`。Lean 已证明的是该三 qutrit 编码的精确偏迹与两份解码；它没有证明任意 Zeckendorf 编码都存在同样的阈值，也没有给出噪声下的最优份额数。
+
+## 追加锚（新终端）
+
+## 101. Zeckendorf 频率相位与顺序遗失
+
+前面的记录模型说明历史差异可以藏在相位或相关中。本节把算术卷的 Zeckendorf 位直接接到仓库已有的素数频率相位模块，得到一个明确的边界：刻度位可以选择相位频率，但单一标量相位会忘掉步骤顺序。
+
+### 101.1 Zeckendorf 位选择两种黄金步长
+
+对素数 $$p$$ 和层数 $$\ell$$，项目定义一步频率增量
+
+$$
+\omega_{p,\ell}
+=
+\operatorname{primeLayerFrequency}(p,\ell+1)
+-
+\operatorname{primeLayerFrequency}(p,\ell).
+$$
+
+`prime_step_frequency_zeckendorf` 证明，最低 Zeckendorf 位决定两种频率之一：
+
+$$
+\boxed{
+\begin{aligned}
+2\notin\operatorname{wdigits}(\ell)
+&\Longrightarrow
+\omega_{p,\ell}=\varphi^2\log p,\\
+2\in\operatorname{wdigits}(\ell)
+&\Longrightarrow
+\omega_{p,\ell}=\varphi\log p.
+\end{aligned}
+}
+$$
+
+相应的单位圆相位为
+
+$$
+\Phi_{p,\ell}(t)
+=
+\exp\!\left(i\,t\,\omega_{p,\ell}\right).
+$$
+
+`prime_step_phase_euler` 和 `prime_step_phase_norm` 给出
+
+$$
+\Phi_{p,\ell}(t)
+=\cos(t\omega_{p,\ell})+i\sin(t\omega_{p,\ell}),
+\qquad
+|\Phi_{p,\ell}(t)|=1.
+$$
+
+所以在这个明确模型中，Zeckendorf 位改变的是旋转速度；它本身不产生衰减。长步还满足
+
+$$
+\exp(i t\varphi^2\log p)
+=
+\exp(i t\varphi\log p)\,
+\exp(i t\log p),
+$$
+
+因为 $$\varphi^2=\varphi+1$$。这是一条频率分解，不是说物理系统必然存在两个独立的记录寄存器。
+
+### 101.2 标量相位的交换律会抹掉顺序
+
+对任意有限频率列表 $$(\omega_1,\ldots,\omega_m)$$，定义标量相位积
+
+$$
+\Pi(t)
+=\prod_{r=1}^{m}\exp(-i t\omega_r).
+$$
+
+`ordered_phase_product_collapse` 证明
+
+$$
+\boxed{
+\Pi(t)
+=\exp\!\left(-i t\sum_{r=1}^{m}\omega_r\right).
+}
+$$
+
+因此任意排列都给出同一个标量结果：
+
+$$
+\Pi_{(\omega_1,\ldots,\omega_m)}(t)
+=
+\Pi_{(\omega_{\pi(1)},\ldots,\omega_{\pi(m)})}(t).
+$$
+
+`adjacent_step_order_invisible` 将这个边界写成相邻两步的交换律。它不是说原始历史不存在，而是说**在只保留一个复标量相位的读出中，顺序没有可见坐标**。
+
+这与第 96 节的仪器反例相互补：第 96 节中，静态 POVM 丢掉了分支后的更新；本节中，标量相位读出丢掉了频率序列的排列信息。两者都说明当前读数相同不等于后续过程相同。
+
+### 101.3 “共振”必须区分相位与振幅
+
+`PrimeGoldenComplexMode` 将一个素数模式写成
+
+$$
+M_p(\sigma,t)
+=
+\exp\!\left(-\sigma\,\lambda_p\right)
+\exp\!\left(i t\lambda_p\right),
+$$
+
+其中 $$\lambda_p$$ 是指定的黄金素数谱值。于是
+
+$$
+|M_p(\sigma,t)|=\exp(-\sigma\lambda_p).
+$$
+
+当 $$\sigma>0$$ 时，源码定理 `first_golden_complex_mode_injective_of_pos` 证明模长读出对素数保持单射；当 $$\sigma=0$$ 时，所有模式模长都等于一，而 `finite_zero_sigma_complex_mode_recurrence` 证明有限素数集的相位可以在任意晚时间重新接近完全相干：
+
+$$
+\forall\varepsilon>0,\ \forall B>0,
+\quad
+\exists t>B,
+\quad
+|M_p(0,t)-1|<\varepsilon
+\quad\text{对有限个 }p.
+$$
+
+因此“出现振荡”不等于“出现可区分记录”：
+
+$$
+\boxed{
+\text{振幅衰减提供可校准的大小差异；}
+\quad
+\text{纯相位运动可以长期回归而不留下单调记录。}
+}
+$$
+
+### 101.4 需要什么才能保留历史顺序
+
+若任务只关心总频率 $$\sum_r\omega_r$$，标量相位足够；若任务关心 Zeckendorf 步骤的先后、素数轴切换或进位路径，则至少需要下列一种扩展：
+
+$$
+\boxed{
+\text{时间分辨的连续读出},
+\quad
+\text{非交换算子乘积},
+\quad
+\text{或可再次访问的记忆寄存器}.
+}
+$$
+
+在非交换升格中，两个步骤一般是
+
+$$
+U_2U_1\ne U_1U_2,
+$$
+
+顺序才会进入可观测量；在标量 $$U(1)$$ 层，交换律会把这部分信息全部压掉。这个区别与第 97 节的未来分离深度、第 98 节的切口 bond、第 100 节的联合份额访问共同说明：历史预算取决于允许的读出代数，而不是只取决于合法 Zeckendorf 标签的数量。
+
+本节复用 `prime_step_frequency_zeckendorf`、`prime_step_phase_euler`、`long_step_phase_factorization`、`ordered_phase_product_collapse`、`adjacent_step_order_invisible` 和 `complex_mode_amplitude_phase_dichotomy`。Lean 已证明的是这些显式频率—相位模型中的代数关系；它没有证明物理系统必然采用该频率定义，也没有把标量相位自动升级为量子 Hamiltonian 或实验共振谱。
