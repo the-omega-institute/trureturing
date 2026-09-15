@@ -38,6 +38,10 @@ $$\forall n \in \mathrm{Nat},\; (6 < n) \Rightarrow (\exists a \in \mathrm{Nat},
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Partitions/StephanEvenProductPartitionRecurrence.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a091915-stephan-even-product-partition-recurrence` (proved) by `D5/S1/Recurrence/Partitions/StephanEvenProductPartitionRecurrence.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a091915-stephan-even-product-partition-recurrence","declaration_gid":"D5/S1/Recurrence/Partitions/StephanEvenProductPartitionRecurrence.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Jon Perry; Ralf Stephan (2004). *OEIS A091915, Maximum of even products of partitions of n*. URL: <https://oeis.org/A091915>.
