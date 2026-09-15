@@ -27617,3 +27617,1540 @@ $$
 钉版 Mathlib 修订 `db584cd6d46c92f209a44c0f1c829460d327499d` 的 `Mathlib/Analysis/CStarAlgebra/GelfandNaimarkSegal.lean` 提供 `PositiveLinearMap.gnsStarAlgHom`，该文件明确将单位循环向量的构造列为 TODO，故它不作为上文完整循环向量结论的现成证明；上文已独立给出通常 GNS 构造。本节为结合所引模型与标准概率、算子代数方法的 `repo-derived` 普通推导，不提出新颖性或新增 Lean 认证主张。
 
 ## 追加锚（本行以下为增补区）
+
+## 126. 固定尾零载体上的事件组合预算与精确最优误差
+
+固定非负整数 $K,N$ 与正整数 $M$，令 $\alpha=(\sqrt5-1)/2$，$F_0=0,F_1=1,F_{j+2}=F_{j+1}+F_j$。沿用 Q123–125 的前缀方向，以
+$$
+X=\{x\in\{0,1\}^{\mathbb N}:x_jx_{j+1}=0\ \text{对所有 }j\ge0\},
+\qquad W_n=q_n[X],\qquad W_0=\{\varnothing\}
+$$
+表示完整合法流及其长度 $n$ 前缀，$q_nx=(x_0,\ldots,x_{n-1})$。记 $[u]=\{x\in X:q_nx=u\}$，$[\varnothing]=X$，并固定尾零载体
+$$
+S_K=\{w0^\infty:w\in W_K\},\qquad
+D_K=|S_K|=|W_K|=F_{K+2}.
+$$
+$\operatorname{Prob}(S_K)$ 指集中在这个指定集合上的全部概率，允许个别原子质量为零；$U_K$ 为每点质量 $1/D_K$ 的均匀概率，即 Q109 有限均匀态的基测量分布补零后的概率。
+
+目标取 Q125.3 的固定虚拟左邻位为零的边界律，其全部柱读数在此明确为
+$$
+\mu([\varnothing])=1,\qquad
+\mu([u])=
+\begin{cases}
+\alpha^{n+u_{n-1}},&u\in W_n,\ n\ge1,\\
+0,&u\notin W_n.
+\end{cases}
+$$
+这些权重由 $\alpha+\alpha^2=1$ 相容：末位为零的柱分成权重比为 $\alpha,\alpha^2$ 的两柱，末位为一的柱只能接零且质量不变；初层质量之和为一。因此通常的相容有限分布延拓与柱集唯一性给出 $X$ 上的唯一 Borel 概率。该律不对数字左移平稳，因为 $\mu(x_1=1)=\alpha^3\ne\alpha^2=\mu(x_0=1)$。这里的数字流与概率事件保留各自类型，不与 CSA 定义 1–3 的情境档案混同。
+
+**命题 126.1（同层柱集组合预算的精确极小极大值）。** 对 $\nu\in\operatorname{Prob}(S_K)$ 定义
+$$
+d_M(\nu,\mu)=\sup_{n\ge1}\,
+\max_{\substack{J\subseteq W_n\\|J|\le M}}
+\left|\nu\left(\bigcup_{u\in J}[u]\right)
+      -\mu\left(\bigcup_{u\in J}[u]\right)\right|.
+$$
+每个 $J$ 中的柱集必须有同一个深度 $n$，空 $J$ 允许。则
+$$
+\min_{\nu\in\operatorname{Prob}(S_K)}d_M(\nu,\mu)
+=\min\left(1,\frac{M}{D_K}\right).
+$$
+若 $M<D_K$，唯一经典最优分布是 $U_K$；若 $M\ge D_K$，全部 $\nu$ 的误差均为 $1$。后一情形在 $K\ge1$ 时不唯一，在 $K=0$ 时定义域本身只有 $\delta_{0^\infty}=U_0$。对 $U_K$，任一有限深度的上述事件差都严格小于所列上确界，故不能把对深度的 $\sup$ 换成 $\max$。
+
+证明。将 $D=D_K$ 个原子质量排序为 $p_1\ge\cdots\ge p_D\ge0$，令 $m=\min(M,D)$、$T_m=\sum_{i=1}^mp_i$。在每个 $n>K$，前 $m$ 个原子的深度 $n$ 前缀给两两不交的隔离柱，每柱在 $\mu$ 下均有质量 $\alpha^n$，故
+$$
+d_M(\nu,\mu)\ge |T_m-m\alpha^n|.
+$$
+令 $n\to\infty$，得到 $d_M(\nu,\mu)\ge T_m\ge m/D$，最后一步是最大 $m$ 个质量的平均值不小于全部质量的平均值。
+
+下面证明 $U_K$ 的上界。若 $1\le n\le K$、$u\in W_n$ 且 $b=u_{n-1}$，合法延长计数给
+$$
+U_K([u])=\frac{F_{K-n+2-b}}{D_K}.
+$$
+末位零时可接任意长度 $K-n$ 的合法尾字；末位一且仍需延长时，下一位被迫为零。这两种计数也包含 $n=K$ 时的空延长，分别为 $F_2=F_1=1$。置 $r=K-n+2-b$、$s=K+2$，则 $1\le r<s$、$s-r=n+b$。Binet 公式给
+$$
+F_r-\alpha^{s-r}F_s
+=\frac{-(-\alpha)^r+\alpha^{s-r}(-\alpha)^s}{\sqrt5},
+\qquad
+\left|F_r-\alpha^{s-r}F_s\right|
+\le\frac{2\alpha}{\sqrt5}<1.
+$$
+因此每个这样的柱误差严格小于 $1/D_K$。
+
+若 $n>K$，每个柱在 $U_K$ 下的质量为零或 $1/D_K$，而
+$$
+0<\mu([u])\le\alpha^n\le\alpha^{K+1}<\frac1{D_K}
+\qquad(u\in W_n).
+$$
+最后一个严格不等式在 $K=0$ 时是 $\alpha<1$；在 $K\ge1$ 时，深度 $K$ 的柱权重 $\alpha^K$ 与 $\alpha^{K+1}$ 均出现且总和为一，故其平均值满足
+$$
+\alpha^{K+1}<\frac1{D_K}<\alpha^K.
+$$
+这也使每个深柱误差严格小于 $1/D_K$。同层柱集互不相交，对至多 $M$ 项求和并用三角不等式，得到事件差至多 $M/D_K$；概率差又至多为一。结合下界即得最优值。$M<D_K$ 时，有限深度事件差严格小于 $M/D_K$；$M\ge D_K$ 时，有限层的 $\mu_n$ 对每个合法词赋正质量，所以不存在两概率相差为一的事件，仍严格小于上确界一。
+
+当 $M<D$ 且 $\nu$ 最优时，下界迫使 $T_M=M/D$。于是
+$$
+\sum_{i\le M<j}(p_i-p_j)=D T_M-M=0.
+$$
+每项非负，故所有跨越分界的差均为零；两侧均非空，遂使全部质量相等，证明唯一性。若 $M\ge D$，下界已为一，概率上界给每个 $\nu$ 都取一，包括 $K=0$ 的单点定义域。
+
+**命题 126.2（有限窗口总变差及截断的最优者）。** 记 $\nu_n=(q_n)_*\nu$、$\mu_n=(q_n)_*\mu$，在有限集 $W_n$ 上取
+$$
+\operatorname{TV}(p,q)=\frac12\sum_{u\in W_n}|p(u)-q(u)|.
+$$
+则
+$$
+\min_{\nu\in\operatorname{Prob}(S_K)}
+\max_{0\le n\le N}\operatorname{TV}(\nu_n,\mu_n)
+=\begin{cases}
+0,&N\le K,\\
+1-D_K\alpha^N,&N>K.
+\end{cases}
+$$
+$N\le K$ 时最优者恰为满足 $\nu_N=\mu_N$ 的分布；$N>K$ 时最优者恰为原子质量
+$$
+p_w=\nu(\{w0^\infty\})\ge\alpha^N
+\qquad(w\in W_K)
+$$
+的分布。令 $\tau_Kx=(q_Kx)0^\infty$、$\nu^{\rm cut}=(\tau_K)_*\mu$，则 $\nu^{\rm cut}$ 是唯一同时对所有非负整数 $N$ 最优的分布。$U_K$ 与 $\nu^{\rm cut}$ 都对每个固定 $N>K$ 最优，但
+$$
+d_1(\nu^{\rm cut},\mu)=\alpha^K,
+\qquad
+\alpha^K>\frac1{D_K}\quad(K\ge1).
+$$
+$K=0$ 时两分布相同，$N=0$ 的误差为零，$N>0$ 的最优误差为 $1-\alpha^N$，而 $d_1=1$。
+
+证明。前缀投影收缩总变差，故对每个固定 $\nu$ 有
+$$
+\max_{0\le n\le N}\operatorname{TV}(\nu_n,\mu_n)
+=\operatorname{TV}(\nu_N,\mu_N).
+$$
+当 $N\le K$ 时，$q_N:S_K\to W_N$ 满射，任意目标前缀都可补零至长度 $K$，因此可以给这些原像分配质量以精确实现 $\mu_N$；总变差为零当且仅当两有限分布相同。这也包括 $N=0$，此时所有概率的空前缀分布相同。
+
+当 $N>K$ 时，$\nu_N$ 集中在
+$$
+A_{K,N}=\{w0^{N-K}:w\in W_K\}\subseteq W_N,
+\qquad |A_{K,N}|=D_K
+$$
+上，其中每个词在 $\mu_N$ 下的质量都是 $a=\alpha^N$。有限概率的重叠质量公式遂给出精确式
+$$
+\operatorname{TV}(\nu_N,\mu_N)
+=1-\sum_{w\in W_K}\min(p_w,a)
+\ge1-D_Ka.
+$$
+逐项 $\min(p_w,a)\le a$，等号成立当且仅当每项 $p_w\ge a$。命题 126.1 证明中的 $a\le\alpha^{K+1}<1/D_K$ 说明这些条件可由 $U_K$ 同时满足，故下界可达。
+
+截断概率在所有 $n\le K$ 精确保持柱读数，且其原子质量为
+$$
+\nu^{\rm cut}(\{w0^\infty\})=
+\begin{cases}
+\alpha^{K+w_{K-1}},&K\ge1,\\
+1,&K=0.
+\end{cases}
+$$
+$K\ge1$ 时每项至少为 $\alpha^{K+1}$，$K=0$ 时唯一质量为一，所以它也满足每个 $N>K$ 的等号条件。反过来，同时最优必在 $N=K$ 精确实现 $\mu_K$；$q_K:S_K\to W_K$ 是双射，故原子质量被唯一确定为截断概率。这证明全部窗口同时最优的唯一性，并不把固定深窗口的两类最优者分开。
+
+为计算截断概率的 $d_1$，$n\le K$ 的柱误差为零。$K\ge1$ 且 $n>K$ 时，含有支撑原子的柱误差为 $p_w-\alpha^n$，其中 $\alpha^{K+1}\le p_w\le\alpha^K$；不含支撑原子的柱误差至多为 $\alpha^n\le\alpha^{K+1}$。故 $d_1\le\alpha^K$，而 $[0^n]$ 上的差为 $\alpha^K-\alpha^n$，趋于 $\alpha^K$，证明等号。$K=0$ 时同一柱上的差为 $1-\alpha^n$，上确界为一。命题 126.1 中的严格平均值界给 $K\ge1$ 时与 $1/D_K$ 的严格差异。因此，精确保留截至 $K$ 的读数与优化全深度的受限事件误差是不同任务，虽然后者的均匀最优者与截断概率都优化每个 $N>K$ 的固定窗口。
+
+由命题 126.1，固定 $M$ 时最优误差随 $K\to\infty$ 趋于零；若正整数预算 $M_K$ 随 $K$ 变化，则该误差趋零当且仅当 $M_K/D_K\to0$。$M$ 只计一次事件表达允许使用的同深度柱集数，不是运行时间、能量或物理存储量。若完全取消这个数目的限制，有限层事件变分式给全层事件差的最大值为 $\operatorname{TV}(\nu_n,\mu_n)$；对任意固定 $K$ 与 $\nu\in\operatorname{Prob}(S_K)$，事件 $A_{K,n}$ 的差为 $1-D_K\alpha^n$，故全部深度上的上确界为一。这是 Z458.5 的有限或可数支撑对无原子概率的既有分离机制在前缀事件中的体现，不另作为新增结论。
+
+量子读数只给如下带条件的下界。固定 $n>K$，在 $\mathcal K_n=(\mathbb C^2)^{\otimes n}$ 的计算基上，令 $P_{K,n}$ 为投到 $\operatorname{span}\{|u\rangle:u\in A_{K,n}\}$ 的正交投影。设 $\sigma_n,\rho_n$ 为密度算子，且
+$$
+\sigma_n=P_{K,n}\sigma_nP_{K,n},\qquad
+\langle u|\rho_n|u\rangle=\mu_n(u)
+\quad(u\in\{0,1\}^n),
+$$
+其中非法词的目标对角质量为零。以 $D(\sigma,\rho)=\tfrac12\|\sigma-\rho\|_1$ 记迹距，则
+$$
+D(\sigma_n,\rho_n)
+\ge\left|\operatorname{Tr}\bigl(P_{K,n}(\sigma_n-\rho_n)\bigr)\right|
+=1-D_K\alpha^n.
+$$
+证明此测量界只需将迹零 Hermitian 算子 $H=\sigma_n-\rho_n$ 写成正负谱部分 $H_+-H_-$：两部分的迹均为 $\|H\|_1/2$，而 $0\le P_{K,n}\le I$ 使 $\operatorname{Tr}(P_{K,n}H)$ 位于这两个相反界之间。支撑条件使 $\operatorname{Tr}(P_{K,n}\sigma_n)=1$，指定对角律使另一迹为 $D_K\alpha^n$。若每个 $n>K$ 的前缀都满足所列条件，则由迹距至多为一得到全深度上确界一。仅有秩或 Hilbert 空间维数不能推出这里的支撑条件；经典最优等式也不直接给量子迹距的等号或相干态最优者唯一性。
+
+本节引用的 Q109、Q123–124、Z381.2（柱弧）、Z396.1（长度概率）、Z400.1（Borel 截面）、Z458.5 及 CSA 定义 1–3，取仓库提交 `ca874c0d5f5c42b3546795595814b36df13d1013`；Q125.3 的正文版本为 `7af72f9910546ca2aa0bfa3a6bbaed4d8a393efb`。前一提交的 `D5/S3/TotalVariation/Metric.lean` 中 `total_variation_eq_sup_event_gap` 给等质量有限函数的事件变分式，`D5/S3/TotalVariation/DataProcessing.lean` 中 `total_variation_channel_le` 给随机通道收缩，`D5/S1/Scale/FibonacciErrorRatio.lean` 中 `fibonacci_golden_residual` 给相邻 Fibonacci 数的黄金残差。这些是所用既有输入；本节的两条最优性命题及条件量子界为 `repo-derived` 普通数学推导，不据此提出外部新颖性、Lean 准入或完整 Lean 认证主张。
+
+## 追加锚（本行以下为增补区）
+
+## 127. 固定尾零支撑下相干局部态的精确迹距离
+
+固定整数 $n>K\ge0$，令 $\alpha=(\sqrt5-1)/2$、$F_0=0,F_1=1,F_{j+2}=F_{j+1}+F_j$，并沿用从第 $0$ 位向右的前缀方向。记
+$$
+W_j=\{w\in\{0,1\}^j:w_iw_{i+1}=0\ \text{对所有 }0\le i<j-1\},
+\qquad W_0=\{\varnothing\},
+\qquad \mathcal K_n=(\mathbb C^2)^{\otimes n}.
+$$
+在完整 $n$ qubit 空间的计算基上，取未归一化向量及指定目标
+$$
+s_n=\sum_{u\in W_n}|u\rangle,
+\qquad
+t_n=\sum_{\substack{u\in W_n\\u_{n-1}=0}}|u\rangle,
+\qquad
+\rho_n=\alpha^{n+1}|s_n\rangle\langle s_n|
+       +\alpha^{n+2}|t_n\rangle\langle t_n|.
+$$
+这正是 Q125.1 的相干局部极限；非法词方向上的行、列均为零。预算固定的是具体计算基支撑
+$$
+A=A_{K,n}=\{w0^{n-K}:w\in W_K\},
+\qquad
+P=P_{K,n}=\sum_{u\in A}|u\rangle\langle u|,
+\qquad
+\mathcal F_{K,n}=\{\sigma\ge0:\operatorname{Tr}\sigma=1,\ \sigma=P\sigma P\}.
+$$
+可行态允许混合及支撑内的任意相干。以
+$$
+d_{\rm tr}(\rho,\sigma)=\frac12\|\rho-\sigma\|_1,
+\qquad \|X\|_1=\operatorname{Tr}\sqrt{X^*X}
+$$
+采用半迹范数约定，字母 $D$ 只用于计数。以下简记
+$$
+D=F_{K+2},\qquad B=F_{n+1},\qquad C=F_n,\qquad b=B-D,
+$$
+$$
+m=D\alpha^n,\qquad
+\delta=\alpha^{2n+3}BC,\qquad
+\eta=\alpha^{2n+3}bC,\qquad
+c=1-m-\delta,
+$$
+并置
+$$
+|a\rangle=D^{-1/2}\sum_{u\in A}|u\rangle,
+\qquad \tau_{K,n}=|a\rangle\langle a|.
+$$
+
+**命题 127.1（指定相干目标的尾零最优误差）。** 对所有整数 $n>K\ge0$，$\tau_{K,n}$ 达到
+$$
+e_{K,n}=\min_{\sigma\in\mathcal F_{K,n}}d_{\rm tr}(\rho_n,\sigma).
+$$
+精确值 $e_{K,n}$ 是三次方程
+$$
+x^3-cx-\eta=0
+$$
+的唯一严格正实根。边界为
+$$
+e_{K,K+1}=\alpha^{K+2}\sqrt{F_{K+1}F_{K+3}},
+\qquad e_{0,1}=\sqrt2\,\alpha^2.
+$$
+若 $\mu_n(u)=\langle u|\rho_n|u\rangle$ 为计算基读数，在全部集中于 $A$ 的经典概率 $\nu$ 上取
+$$
+\operatorname{TV}(\nu,\mu_n)
+=\frac12\sum_{u\in\{0,1\}^n}|\nu(u)-\mu_n(u)|,
+$$
+则有严格比较
+$$
+e_{K,n}>1-m
+=\min_{\nu:\,\nu(A)=1}\operatorname{TV}(\nu,\mu_n).
+$$
+其中经典最小值由 $\tau_{K,n}$ 的对角分布达到。固定 $K$ 后，同一个有限均匀态
+$$
+|\Psi_K\rangle=D^{-1/2}\sum_{w\in W_K}|w\rangle
+$$
+接上全零尾部，给出所有 $n>K$ 的上述量子最优者，因为
+$$
+\tau_{K,n}=|\Psi_K\rangle\langle\Psi_K|
+\otimes|0^{n-K}\rangle\langle0^{n-K}|.
+$$
+$K=0$ 时 $|\Psi_0\rangle$ 按空张量积的单位向量理解。
+
+证明。先核对计数与归一化。长度 $n\ge1$ 的合法词中，末位零、末位一的数量分别是 $B=F_{n+1}$、$C=F_n$：末位零可由任意长度 $n-1$ 合法词接零得到；末位一在 $n\ge2$ 时由长度 $n-2$ 合法词接 $01$ 得到，$n=1$ 时两类各有一词。连同 $|W_0|=1,|W_1|=2$，这给 $|W_j|=F_{j+2}$。补零把 $W_K$ 单射到末位零的一类，故 $|A|=D\le B$、$b\ge0$，且 $C,D>0$。Fibonacci 数从下标 $2$ 起严格递增，所以在本参数域内 $b=0$ 当且仅当 $n=K+1$。
+
+由 $\alpha+\alpha^2=1$，$\rho_n$ 的合法对角元为
+$$
+\mu_n(u)=
+\begin{cases}
+\alpha^n,&u_{n-1}=0,\\
+\alpha^{n+1},&u_{n-1}=1.
+\end{cases}
+$$
+非法词的对角元为零。恒等式
+$$
+\alpha^n(F_{n+1}+\alpha F_n)=1
+$$
+在 $n=1$ 时是 $\alpha(1+\alpha)=1$；若它在 $n$ 成立，则
+$$
+\alpha^{n+1}(F_{n+2}+\alpha F_{n+1})
+=\alpha^n\bigl(\alpha(1+\alpha)F_{n+1}+\alpha F_n\bigr)
+=\alpha^n(F_{n+1}+\alpha F_n)=1.
+$$
+因此所列正算子 $\rho_n$ 的迹为一，而且
+$$
+\operatorname{Tr}(P\rho_n)=m,
+\qquad 0<m\le B\alpha^n=1-C\alpha^{n+1}<1.
+$$
+
+现在证明最优性。在本证明内简写 $\tau=\tau_{K,n}$。由于 $A$ 的全部词都以零结尾，
+$$
+Ps_n=Pt_n=\sqrt D\,|a\rangle.
+$$
+$Q=P-\tau$ 是正交投影，$R=I-Q$ 也是正交投影，且 $Qs_n=Qt_n=0$。取 $\operatorname{ran}Q$ 的正交标准基 $(q_j)_{j=1}^{D-1}$，以 $R$ 及 $|a\rangle\langle q_j|$ 为 Kraus 算子。它们满足
+$$
+R^*R+\sum_{j=1}^{D-1}
+\bigl(|a\rangle\langle q_j|\bigr)^*
+\bigl(|a\rangle\langle q_j|\bigr)
+=R+Q=I,
+$$
+故
+$$
+\Phi(X)=RXR+\operatorname{Tr}(QX)\tau
+$$
+是完全正保迹通道。$Q\rho_n=\rho_nQ=0$ 使 $\Phi(\rho_n)=\rho_n$。另一方面，$RP=PR=\tau$，所以每个 $\sigma\in\mathcal F_{K,n}$ 都满足
+$$
+R\sigma R=\langle a|\sigma|a\rangle\tau,
+\qquad
+\operatorname{Tr}(Q\sigma)=1-\langle a|\sigma|a\rangle,
+\qquad \Phi(\sigma)=\tau.
+$$
+这里 $D=1$ 时 $Q=0$，Kraus 求和为空，等式仍成立。由迹距离在通道下的收缩性，
+$$
+d_{\rm tr}(\rho_n,\tau)
+=d_{\rm tr}(\Phi(\rho_n),\Phi(\sigma))
+\le d_{\rm tr}(\rho_n,\sigma).
+$$
+收缩性也可直接从正负谱部分核对：对 Hermitian 算子 $Y=Y_+-Y_-$，正性、保迹性与三角不等式给
+$$
+\|\Phi(Y)\|_1
+\le\operatorname{Tr}\Phi(Y_+)+\operatorname{Tr}\Phi(Y_-)
+=\operatorname{Tr}Y_++\operatorname{Tr}Y_-=\|Y\|_1.
+$$
+$\tau$ 本身可行，故最小值确由它达到。$\Phi$ 在这里是比较态的数学通道，不以它属于某个物理可实现的制备资源集为前提。
+
+为求这个最小值，置 $H=\rho_n-\tau$。将合法词分成三个互不相交的词组：$A$、末位零但不在 $A$ 的词、末位一的词。$H$ 在各非空词组的均匀向量张成空间之外为零。由于 $C>0$，始终定义
+$$
+|v\rangle=C^{-1/2}\sum_{\substack{u\in W_n\\u_{n-1}=1}}|u\rangle.
+$$
+当 $b>0$ 时再定义
+$$
+|z\rangle=b^{-1/2}\sum_{\substack{u\in W_n\setminus A\\u_{n-1}=0}}|u\rangle.
+$$
+此时 $(a,z,v)$ 是正交标准组，其上的实际三维压缩为
+$$
+H_3=\alpha^n
+\begin{pmatrix}
+D&\sqrt{Db}&\alpha\sqrt{DC}\\
+\sqrt{Db}&b&\alpha\sqrt{bC}\\
+\alpha\sqrt{DC}&\alpha\sqrt{bC}&\alpha C
+\end{pmatrix}
+-\operatorname{diag}(1,0,0).
+$$
+当 $b=0$ 时不定义空词组的归一化向量 $z$，只用 $(a,v)$，实际二维压缩为
+$$
+H_2=\alpha^n
+\begin{pmatrix}
+D&\alpha\sqrt{DC}\\
+\alpha\sqrt{DC}&\alpha C
+\end{pmatrix}
+-\operatorname{diag}(1,0).
+$$
+在两种情形下都有 $\operatorname{Tr}H=0$。对 $y\perp a$，
+$$
+\langle y|H|y\rangle=\langle y|\rho_n|y\rangle\ge0,
+\qquad
+\langle a|H|a\rangle=m-1<0.
+$$
+若负谱子空间至少二维，它与 $a^\perp$ 有非零交，便同时给出严格负和非负的二次型值，矛盾。因此 $H$ 恰有一个负特征值，记为 $-e$，其中 $e>0$。迹为零使正特征值之和为 $e$，从而 $\|H\|_1/2=e=e_{K,n}$。
+
+接着计算不变量。$\rho_n$ 在整个末位零类与末位一类的两个归一化均匀向量上具有矩阵
+$$
+\alpha^n
+\begin{pmatrix}
+B&\alpha\sqrt{BC}\\
+\alpha\sqrt{BC}&\alpha C
+\end{pmatrix}.
+$$
+其行列式为
+$$
+\alpha^{2n}(\alpha-\alpha^2)BC
+=\alpha^{2n+3}BC=\delta>0,
+$$
+其中 $\alpha-\alpha^2=\alpha^3$。这个二维矩阵之外 $\rho_n$ 为零，且其迹为一，所以
+$$
+\operatorname{Tr}\rho_n^2=1-2\delta,
+\qquad
+\operatorname{Tr}H^2
+=\operatorname{Tr}\rho_n^2-2\langle a|\rho_n|a\rangle+1
+=2(1-m-\delta)=2c.
+$$
+$H\ne0$ 为 Hermitian 算子，故 $c>0$。
+
+当 $b>0$ 时，$\rho_n$ 的三维压缩秩为二、行列式为零。将它的第一对角元减去一，行列式恰减去对应的余子式，得到
+$$
+\det H_3
+=-\alpha^{2n}(\alpha-\alpha^2)bC
+=-\eta.
+$$
+迹零三维矩阵的二次基本对称式为 $-\operatorname{Tr}H_3^2/2=-c$，于是
+$$
+\det(\lambda I_3-H_3)=\lambda^3-c\lambda+\eta.
+$$
+代入唯一负特征值 $\lambda=-e$ 得 $e^3-ce-\eta=0$。反过来，每个严格正实根 $x$ 都使 $-x$ 成为 $H_3$ 的负特征值，故严格正实根唯一。
+
+当 $b=0$ 时使用实际的 $H_2$：它的迹为零、平方迹为 $2c$，所以
+$$
+\det H_2=-c,\qquad
+\operatorname{spec}(H_2)=\{-\sqrt c,\sqrt c\}.
+$$
+此时 $\eta=0$，三次方程是 $x(x^2-c)=0$，唯一严格正实根仍是 $e=\sqrt c$；二维行列式是 $-c$，不是三维补零矩阵的零行列式。
+
+在边界 $n=K+1$，有 $D=B$，归一化恒等式进一步把实际二维矩阵写成
+$$
+H_2=\alpha^{n+1}
+\begin{pmatrix}
+-C&\sqrt{DC}\\
+\sqrt{DC}&C
+\end{pmatrix}.
+$$
+因此
+$$
+e_{K,K+1}^2=\alpha^{2n+2}C(C+D)
+=\alpha^{2K+4}F_{K+1}F_{K+3},
+$$
+由 $e_{K,K+1}>0$ 即得所列平方根。$K=0$ 时 $D=1$，可行支撑为 $|0^n\rangle$ 张成的一维空间，上述通道与谱论证对每个 $n>0$ 仍适用；其中 $n=1$ 给 $C=D=1$，故 $e_{0,1}=\sqrt2\,\alpha^2$。
+
+最后核对经典最优值与严格差距。显式对角律在 $A$ 上每词赋质量 $\alpha^n$，总质量为 $m$。对任意 $\nu(A)=1$，总变差的事件界给
+$$
+\operatorname{TV}(\nu,\mu_n)\ge|\nu(A)-\mu_n(A)|=1-m.
+$$
+该事件界直接来自差函数总和为零，其正部、负部之和各等于总变差。令 $\nu$ 在 $A$ 上均匀，则 $m<1$ 给 $1/D>\alpha^n$，从而 $A$ 内外的绝对差之和分别为
+$$
+\sum_{u\in A}\left(\frac1D-\alpha^n\right)=1-m,
+\qquad
+\sum_{u\notin A}\mu_n(u)=1-m.
+$$
+半和恰为 $1-m$，这既证明经典最优值，也说明 $\tau$ 的对角分布达到它。
+
+量子严格性则来自 $H$ 的非对角作用。无论 $b$ 是否为零，末位一类的均匀向量 $v$ 都已定义且与 $a$ 正交，并满足
+$$
+\langle v|H|a\rangle=\alpha^{n+1}\sqrt{DC}>0.
+$$
+因此 $a$ 不是 $H$ 的特征向量。Rayleigh 商达到最小特征值当且仅当向量属于相应特征空间，故
+$$
+-e_{K,n}=\lambda_{\min}(H)
+<\langle a|H|a\rangle=m-1,
+$$
+即 $e_{K,n}>1-m$。张量积公式直接由 $A$ 的定义得到，证明固定的 $|\Psi_K\rangle$ 接全零尾部同时给出每个 $n>K$ 的最优者。证毕。
+
+这里的差距比较完整 POVM 所能取得的态区分总变差与只读计算基的总变差。它依赖所列相干目标及固定尾零支撑，不是对所有目标或每种受限测量的结论，也不是过程的 diamond 范数界。它不表示最优值依赖计算基的相位角：任意计算基对角酉算子 $U$ 都与 $P$ 对易，共轭使 $\mathcal F_{K,n}$ 双射到自身，迹范数的酉不变性便给
+$$
+\min_{\sigma\in\mathcal F_{K,n}}d_{\rm tr}(U\rho_nU^*,\sigma)=e_{K,n}.
+$$
+固定支撑也不能换成仅有维数的预算；若 $K\ge1$，则 $D\ge2$，而上面的正二维行列式给 $\operatorname{rank}\rho_n=2$，允许任选 $D$ 维子空间就能令其包含 $\operatorname{ran}\rho_n$，以 $\sigma=\rho_n$ 达到零误差。
+
+本节的 Q109、Q125.1、Q125.3 取仓库提交 `7af72f9910546ca2aa0bfa3a6bbaed4d8a393efb`；Q126.2 的固定尾零载体及经典窗口比较取提交 `dc4af5d3b06e66c8be5fe63ffd5fc1ace63e2c7e`，这里已从显式对角律独立证明所需经典最优值。迹距离的数据处理是既有标准结论，前一提交的 `D5/S3/Quantum/Foundation/FiniteTraceDistance.lean` 中 `traceDistance_contract` 对应所用收缩性，其范围不包含本节完整最优化。命题 127.1 为 `repo-derived` 普通数学推导，不提出外部新颖性或完整 Lean 认证主张。
+
+## 追加锚（本行以下为增补区）
+
+## 128. 尾零量子最优者的唯一性与短窗口保真的代价
+
+固定整数 $n>K\ge0$，取 $\alpha=(\sqrt5-1)/2$、$F_0=0,F_1=1,F_{j+2}=F_{j+1}+F_j$。窗口从第 $0$ 位向右延伸，记
+$$
+W_j=\{w\in\{0,1\}^j:w_iw_{i+1}=0\ \text{对所有 }0\le i<j-1\},
+\qquad W_0=\{\varnothing\},
+\qquad D_K=|W_K|=F_{K+2}.
+$$
+完整载体与其中的合法词子空间分别为
+$$
+\mathcal K_j=(\mathbb C^2)^{\otimes j},
+\qquad
+\mathcal L_j=\operatorname{span}\{|w\rangle:w\in W_j\}\subseteq\mathcal K_j,
+\qquad \mathcal K_0=\mathcal L_0=\mathbb C.
+$$
+目标是 Q125.1、Q127.1 所指定的相干态族：$\rho_0=(1)$，而对 $j\ge1$，
+$$
+s_j=\sum_{w\in W_j}|w\rangle,
+\qquad
+t_j=\sum_{\substack{w\in W_j\\w_{j-1}=0}}|w\rangle,
+\qquad
+\rho_j=\alpha^{j+1}|s_j\rangle\langle s_j|
+       +\alpha^{j+2}|t_j\rangle\langle t_j|.
+$$
+这里 $s_j,t_j$ 未归一化，$\rho_j$ 是完整 $\mathcal K_j$ 上的密度算子，非法词方向上的行、列为零。补零等距映射及可行域为
+$$
+V=V_{K,n}:\mathcal L_K\longrightarrow\mathcal K_n,
+\qquad V|w\rangle=|w0^{n-K}\rangle,
+\qquad P=VV^*,
+$$
+$$
+\mathcal F_{K,n}
+=\{\sigma\text{ 为 }\mathcal K_n\text{ 上的密度算子}:\sigma=P\sigma P\}.
+$$
+因此固定的是 $\{w0^{n-K}:w\in W_K\}$ 的具体尾零支撑，允许该支撑内的混合及任意相干。置
+$$
+|\Psi_K\rangle=D_K^{-1/2}\sum_{w\in W_K}|w\rangle,
+\qquad |a\rangle=V|\Psi_K\rangle,
+\qquad \tau=\tau_{K,n}=|a\rangle\langle a|,
+\qquad Q=P-\tau.
+$$
+采用半迹范数 $d_{\rm tr}(\rho,\sigma)=\tfrac12\|\rho-\sigma\|_1$。Q127.1 的普通证明给出
+$$
+e=e_{K,n}=d_{\rm tr}(\rho_n,\tau)
+=\min_{\sigma\in\mathcal F_{K,n}}d_{\rm tr}(\rho_n,\sigma)
+>1-D_K\alpha^n>0,
+$$
+并给出 $H=\rho_n-\tau$ 的负谱子空间恰为一维。取其中单位向量 $\zeta$，使 $H\zeta=-e\zeta$，定义
+$$
+r=r_{K,n}=\|P\zeta\|^2.
+$$
+谱投影 $|\zeta\rangle\langle\zeta|$ 及 $r$ 均与 $\zeta$ 的相位选择无关。对 $K\ge1$ 再记
+$$
+B_K=F_{K+1},\qquad C_K=F_K,\qquad D_K=B_K+C_K,
+\qquad \kappa_K=\alpha^{K+2}\frac{B_KC_K}{D_K},
+$$
+并单独定义 $\kappa_0=0$；空词不使用末位分类。
+
+**命题 128.1（投影余量、唯一最优者与短窗口保真冲突）。** 对所有上述整数 $n>K\ge0$，有 $0<r_{K,n}<1$。每个 $\sigma\in\mathcal F_{K,n}$ 若记 $p=\langle a|\sigma|a\rangle$，则
+$$
+d_{\rm tr}(\rho_n,\sigma)
+\ge e_{K,n}+(1-r_{K,n})(1-p).
+$$
+因而 $\tau_{K,n}$ 是该可行域内唯一的迹距离最优者。
+
+每个可行态唯一写成 $\sigma=V\theta V^*$，其中 $\theta$ 是 $\mathcal L_K$ 上的密度算子；把 $\theta$ 在非法词方向延零，视为完整 $\mathcal K_K$ 上的算子，则其完整张量积偏迹为
+$$
+\operatorname{Tr}_{\{K,\ldots,n-1\}}\sigma=\theta.
+$$
+所以精确保留前 $K$ 位目标 $\rho_K$ 的唯一可行延拓是
+$$
+\sigma^{\rm cut}_{K,n}=V\rho_KV^*
+=\rho_K\otimes|0^{n-K}\rangle\langle0^{n-K}|.
+$$
+乘积 $V\rho_KV^*$ 中的 $\rho_K$ 取其在 $\mathcal L_K$ 上的限制，右端及偏迹仍在完整 qubit 空间中解释。此延拓也精确保留所有 $0\le j\le K$ 的目标前缀 $\rho_j$。令
+$$
+p_K=\langle\Psi_K|\rho_K|\Psi_K\rangle.
+$$
+对 $K\ge1$，有
+$$
+p_K=\alpha^{K+1}D_K+\alpha^{K+2}\frac{B_K^2}{D_K},
+\qquad 1-p_K=\kappa_K>0,
+$$
+以及严格的长窗口额外误差
+$$
+g_{K,n}:=d_{\rm tr}(\rho_n,\sigma^{\rm cut}_{K,n})-e_{K,n}
+\ge(1-r_{K,n})\kappa_K>0.
+$$
+对 $K=0$，$p_0=1$，唯一可行态就是 $\tau_{0,n}=\sigma^{\rm cut}_{0,n}$，没有这种冲突。
+
+更一般地，任取非负容差 $\varepsilon_{\rm short},\varepsilon_{\rm large}$。若某个可行态及其短窗口 $\theta$ 同时满足
+$$
+d_{\rm tr}(\theta,\rho_K)\le\varepsilon_{\rm short},
+\qquad
+d_{\rm tr}(\rho_n,\sigma)\le e_{K,n}+\varepsilon_{\rm large},
+$$
+则必有
+$$
+\varepsilon_{\rm large}
+\ge(1-r_{K,n})\max\{\kappa_K-\varepsilon_{\rm short},0\}.
+$$
+这只是必要条件，一般并不充分，也不是可达误差对的精确 Pareto 边界。
+
+对每个固定的 $K\ge1$，各有限 $n>K$ 的冲突严格为正，但实际差距满足
+$$
+0<g_{K,n}\le1-e_{K,n}<D_K\alpha^n\longrightarrow0
+\qquad(n\to\infty).
+$$
+因而不存在对所有 $n>K$ 统一成立的正差距下界。投影余量的系数也退化：
+$$
+e_{K,n}\le r_{K,n}<1,
+\qquad
+0<1-r_{K,n}\le1-e_{K,n}<D_K\alpha^n\longrightarrow0.
+$$
+
+证明。先构造实际用于余量界的测量。由于支撑中的每个词均以零结尾，
+$$
+Ps_n=Pt_n=\sqrt{D_K}\,|a\rangle.
+$$
+$Q=P-\tau$ 是正交投影，且 $Qs_n=Qt_n=0$，故 $Q\rho_n=\rho_nQ=0$ 及 $QH=HQ=0$。由
+$$
+0=QH\zeta=-eQ\zeta
+$$
+和 $e>0$ 得 $Q\zeta=0$。于是
+$$
+P\zeta=\tau\zeta=\langle a|\zeta\rangle a,
+\qquad r=|\langle a|\zeta\rangle|^2.
+$$
+若 $r=0$，则
+$$
+-e=\langle\zeta|H|\zeta\rangle
+=\langle\zeta|\rho_n|\zeta\rangle\ge0,
+$$
+矛盾。若 $r=1$，则单位向量 $\zeta$ 属于 $\operatorname{ran}P$，结合 $Q\zeta=0$ 可知它与 $a$ 平行，故 $a$ 必为 $H$ 的特征向量。然而 Q127.1 中始终非空的末位一词组给单位向量
+$$
+|v\rangle=F_n^{-1/2}\sum_{\substack{u\in W_n\\u_{n-1}=1}}|u\rangle,
+\qquad v\perp\operatorname{ran}P,
+$$
+并且由显式目标直接有
+$$
+\langle v|H|a\rangle
+=\alpha^{n+1}\sqrt{D_KF_n}>0.
+$$
+这与 $a$ 为特征向量矛盾，故 $0<r<1$。这里 $F_n>0$ 对每个 $n>K\ge0$ 成立，$n=K+1$ 也无需引入任何空词组的归一化向量。
+
+由 $Q\zeta=0$，两个正交投影 $|\zeta\rangle\langle\zeta|$ 与 $Q$ 的乘积在两个方向上均为零，因此
+$$
+E=|\zeta\rangle\langle\zeta|+Q,
+\qquad E^*=E,\qquad E^2=E,\qquad 0\le E\le I.
+$$
+它与 $I-E$ 构成二元投影测量。对任意可行 $\sigma$，支撑条件和 $P\zeta=\langle a|\zeta\rangle a$ 给
+$$
+\operatorname{Tr}(E\sigma)
+=\langle\zeta|\sigma|\zeta\rangle+\operatorname{Tr}(Q\sigma)
+=rp+1-p.
+$$
+另一方面，$Q\rho_n=0$ 及 $H\zeta=-e\zeta$ 给
+$$
+\operatorname{Tr}(E\rho_n)
+=\langle\zeta|\rho_n|\zeta\rangle
+=\langle\zeta|(H+\tau)|\zeta\rangle=r-e.
+$$
+在本次应用中，将迹零 Hermitian 算子 $Y=\sigma-\rho_n$ 写成正负谱部分 $Y_+-Y_-$；两部分的迹都是 $\|Y\|_1/2$，且 $0\le\operatorname{Tr}(EY_\pm)\le\operatorname{Tr}Y_\pm$，所以
+$$
+|\operatorname{Tr}(EY)|\le\tfrac12\|Y\|_1=d_{\rm tr}(\rho_n,\sigma).
+$$
+两个期望相减恰为 $e+(1-r)(1-p)>0$，这便证明投影余量界。
+
+Q127.1 已给 $\tau$ 达到最小值 $e$。若 $\sigma$ 也达到该值，$1-r>0$ 与 $0\le p\le1$ 迫使 $p=1$。此时
+$$
+\operatorname{Tr}\bigl((I-\tau)\sigma(I-\tau)\bigr)=1-p=0.
+$$
+括号中的算子为正，迹零使它为零，消去了 $a^\perp$ 内的全部方向。对任意 $x\perp a$，正算子的 Cauchy–Schwarz 不等式又给
+$$
+|\langle x|\sigma|a\rangle|^2
+\le\langle x|\sigma|x\rangle\langle a|\sigma|a\rangle=0,
+$$
+其共轭交叉项也为零。因此 $\sigma=p\tau=\tau$，唯一性成立；这里并未使用迹范数的严格凸性。
+
+下面核对短窗口及其唯一延拓。$V^*V=I_{\mathcal L_K}$，故可行态给出密度算子 $\theta=V^*\sigma V$，且 $V\theta V^*=P\sigma P=\sigma$；反向乘以 $V^*,V$ 也证明 $\theta$ 唯一。按合法词基展开，
+$$
+V\theta V^*
+=\sum_{w,u\in W_K}\theta_{wu}
+  |w\rangle\langle u|\otimes|0^{n-K}\rangle\langle0^{n-K}|.
+$$
+尾部秩一投影的迹为一，故在完整张量积上取尾部偏迹正好得到延零后的 $\theta$，并非在较小的合法空间上另定义偏迹。特别地，短窗口等于 $\rho_K$ 当且仅当 $\theta=\rho_K$，得到所列唯一的 $\sigma^{\rm cut}_{K,n}$。Q125.1 的完整偏迹相容性逐层迭代，使该态的前 $j$ 位等于 $\rho_j$，$1\le j\le K$；空窗口为标量迹一，即 $\rho_0$。
+
+对 $K\ge1$，末位零、末位一的词数分别为 $B_K,C_K$，两者均正。由未归一化向量的定义，
+$$
+\langle\Psi_K|s_K\rangle=\sqrt{D_K},
+\qquad
+\langle\Psi_K|t_K\rangle=\frac{B_K}{\sqrt{D_K}},
+$$
+从而得到陈述中的 $p_K$。归一化在同一记号下为
+$$
+1=\operatorname{Tr}\rho_K
+=\alpha^{K+1}D_K+\alpha^{K+2}B_K.
+$$
+两式相减，利用 $D_K-B_K=C_K$，即得
+$$
+1-p_K
+=\alpha^{K+2}\left(B_K-\frac{B_K^2}{D_K}\right)
+=\alpha^{K+2}\frac{B_KC_K}{D_K}=\kappa_K>0.
+$$
+$\sigma^{\rm cut}_{K,n}$ 的 $p$ 正是 $p_K$，代入余量界给严格额外误差。$K=0$ 时 $\mathcal L_0$ 一维，唯一密度为 $\rho_0=(1)$，$\Psi_0$ 是单位空张量；因此 $p_0=1$、$\kappa_0=0$ 及全部无冲突结论直接成立。
+
+对容差结论，$\sigma=V\theta V^*$ 给 $p=\langle\Psi_K|\theta|\Psi_K\rangle$。对完整 $\mathcal K_K$ 上的迹零算子 $\theta-\rho_K$ 应用刚才的正负部分论证，并取投影 $|\Psi_K\rangle\langle\Psi_K|$，得到
+$$
+|p-p_K|\le d_{\rm tr}(\theta,\rho_K)\le\varepsilon_{\rm short}.
+$$
+由于 $p\le1$，这蕴含
+$$
+1-p\ge\max\{\kappa_K-\varepsilon_{\rm short},0\}.
+$$
+与长窗口余量界和假设的长窗口上界合并，便是所列必要条件，$K=0$ 时右端为零。
+
+为验证它一般不充分，取 $K=1$、任意 $n>1$，以及 $\varepsilon_{\rm large}=0$、$\varepsilon_{\rm short}=\kappa_1$。这对预算满足所列必要不等式。若有可行态满足两项预算，长窗口预算及唯一性却迫使它为 $\tau_{1,n}$，短窗口只能是 $|\Psi_1\rangle\langle\Psi_1|$。此时 $\kappa_1=\alpha^3/2=\alpha-1/2>0$，由 Q125.1 的一位矩阵得到
+$$
+|\Psi_1\rangle\langle\Psi_1|-\rho_1
+=\frac12\begin{pmatrix}1&1\\1&1\end{pmatrix}
+ -\begin{pmatrix}\alpha&\alpha^2\\\alpha^2&\alpha^2\end{pmatrix}
+=\kappa_1\begin{pmatrix}-1&1\\1&1\end{pmatrix}.
+$$
+这个迹零矩阵的特征值为 $\pm\sqrt2\,\kappa_1$，故短窗口迹距离是 $\sqrt2\,\kappa_1>\varepsilon_{\rm short}$，矛盾。这给出了必要条件与可达性的严格区别。
+
+最后，任意两个密度算子的迹距离至多为一，所以对 $K\ge1$，已证的严格性与 Q127.1 的 $e_{K,n}>1-D_K\alpha^n$ 共同给
+$$
+0<g_{K,n}\le1-e_{K,n}<D_K\alpha^n.
+$$
+固定 $K$ 时右端趋零，夹逼的是实际差距本身。又因 $E$ 与 $\rho_n$ 均为正算子，
+$$
+0\le\operatorname{Tr}(E\rho_n)=r_{K,n}-e_{K,n},
+$$
+故 $r_{K,n}\ge e_{K,n}$，同时 $r_{K,n}<1$，得到所列系数退化界。证毕。
+
+本命题刻画指定相干目标与准确尾零支撑下的静态窗口相容性。Q126.2 中经典截断概率与均匀概率均优化每个固定深窗口的总变差；这里的唯一量子最优者则在 $K\ge1$ 时不能同时精确保留 $\rho_K$。投影 $E$ 是完整 $n$ 窗口上允许任意联合测量时的数学效应，未附加局域性、实施成本或可访问性条件。所证范围不包含时间演化、动态预测、任意维数预算、一般目标态或形而上必然性。
+
+本节的 Q125.1、Q126.2、Q127.1 均取[仓库不可变提交 `ac40238901406b5bba4518e306d5bb2da9fe8ba1` 的量子卷](https://github.com/the-omega-institute/trureturing/blob/ac40238901406b5bba4518e306d5bb2da9fe8ba1/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_QUANTUM.md)，依其显式普通证明使用。测量期望受迹距离控制属于 Helstrom 变分框架；Q127.1 所引同仓 `D5/S3/Quantum/Foundation/FiniteTraceDistance.lean` 提供既有有限迹距离数据处理，其覆盖范围不是本节的完整唯一性与保真冲突。命题 128.1 是 `repo-derived` 普通数学推导，不主张外部新颖性或 Lean 认证。
+
+## 追加锚（本行以下为增补区）
+
+## 129. 移动边界下的非消失尾零代价
+
+取 $\alpha=(\sqrt5-1)/2$、$F_0=0,F_1=1,F_{j+2}=F_{j+1}+F_j$，在完整 qubit 载体中记
+$$
+\mathcal K_j=(\mathbb C^2)^{\otimes j},
+\qquad
+W_j=\{w\in\{0,1\}^j:w_iw_{i+1}=0\ \text{对所有 }0\le i<j-1\},
+\qquad W_0=\{\varnothing\},
+$$
+$$
+\mathcal L_j=\operatorname{span}\{|w\rangle:w\in W_j\}\subseteq\mathcal K_j,
+\qquad \mathcal K_0=\mathcal L_0=\mathbb C.
+$$
+目标取命题 125.1 的指定密度算子 $\rho_0=(1)$ 及
+$$
+\rho_j=\alpha^{j+1}|s_j\rangle\langle s_j|
+       +\alpha^{j+2}|t_j\rangle\langle t_j|\quad(j\ge1),
+\qquad
+|s_j\rangle=\sum_{w\in W_j}|w\rangle,
+\qquad
+|t_j\rangle=\sum_{\substack{w\in W_j\\w_{j-1}=0}}|w\rangle.
+$$
+对每个整数 $K\ge0$ 取 $n=K+1$，置
+$$
+C=F_{K+1},\qquad D=F_{K+2},\qquad s=\alpha^{K+2},
+$$
+$$
+A=\{w0:w\in W_K\},
+\qquad P=\sum_{u\in A}|u\rangle\langle u|,
+\qquad
+\mathcal F_{K,K+1}=\{\sigma\ge0:\operatorname{Tr}\sigma=1,\ \sigma=P\sigma P\},
+$$
+其中 $\sigma$ 作用于完整 $\mathcal K_{K+1}$。定义精确尾零等距映射与向量
+$$
+V:\mathcal L_K\longrightarrow\mathcal K_{K+1},
+\qquad V|w\rangle=|w0\rangle,
+\qquad
+|\Psi_K\rangle=D^{-1/2}\sum_{w\in W_K}|w\rangle,
+$$
+$$
+|a\rangle=V|\Psi_K\rangle,
+\qquad \tau=|a\rangle\langle a|,
+\qquad
+|v\rangle=C^{-1/2}\sum_{\substack{u\in W_{K+1}\\u_K=1}}|u\rangle,
+\qquad \mathcal M=\operatorname{span}\{a,v\}.
+$$
+采用半迹范数约定，并以命题 127.1 的可行域定义最优误差：
+$$
+d_{\rm tr}(\rho,\sigma)=\frac12\|\rho-\sigma\|_1,
+\qquad \|X\|_1=\operatorname{Tr}\sqrt{X^*X},
+\qquad
+e_{K,K+1}=\min_{\sigma\in\mathcal F_{K,K+1}}d_{\rm tr}(\rho_{K+1},\sigma).
+$$
+记 $H=\rho_{K+1}-\tau$，令 $\Pi_-$ 为 $H$ 在完整载体上的负谱投影，定义
+$$
+r_{K,K+1}=\langle a|\Pi_-|a\rangle,
+\qquad
+\sigma^{\rm cut}_{K,K+1}=V(\rho_K|_{\mathcal L_K})V^*,
+\qquad
+g_K=d_{\rm tr}(\rho_{K+1},\sigma^{\rm cut}_{K,K+1})-e_{K,K+1}.
+$$
+这里乘积中的 $\rho_K$ 识别为它在合法支撑 $\mathcal L_K$ 上的限制；$\rho_K$ 本身仍指完整 $\mathcal K_K$ 上、在非法词方向延零的算子。对 $K\ge1$ 沿用命题 128.1 的记号
+$$
+\kappa_K=\alpha^{K+2}\frac{F_{K+1}F_K}{F_{K+2}}.
+$$
+
+**命题 129.1（移动边界的非消失尾零代价）。** 对上述指定目标与具体尾零支撑，对所有整数 $K\ge0$，在完整载体上有
+$$
+\sigma^{\rm cut}_{K,K+1}=\rho_K\otimes|0\rangle\langle0|,
+\qquad
+e_{K,K+1}=d_{\rm tr}(\rho_{K+1},\tau)=s\sqrt{C(C+D)}>0.
+$$
+$H$ 在正交标准基 $(a,v)$ 上的矩阵及其平方为
+$$
+H_2=s\begin{pmatrix}-C&\sqrt{CD}\\\sqrt{CD}&C\end{pmatrix},
+\qquad H_2^2=e_{K,K+1}^2I_2.
+$$
+$H$ 在 $\mathcal M^\perp$ 上为零，其完整负谱投影为二维负谱投影的延零：
+$$
+\Pi_{-,2}=\frac{I_2-H_2/e_{K,K+1}}2,
+\qquad \Pi_-=\Pi_{-,2}\oplus0_{\mathcal M^\perp}.
+$$
+当 $K\ge1$ 时，$\dim\ker H=2^{K+1}-2>0$，而 $(I_{\rm full}-H/e_{K,K+1})/2$ 在此核上作用为单位算子的一半，故不是负谱投影。当 $K=0$ 时，$\mathcal K_1=\mathcal M$，该完整单位算子表达式成立。对所有 $K\ge0$，重叠量为
+$$
+r_{K,K+1}=\frac{1+\sqrt{F_{K+1}/F_{K+3}}}{2}.
+$$
+取 $\kappa_0=0$，则 $g_0=0$；对 $K\ge1$ 有
+$$
+g_K\ge(1-r_{K,K+1})\kappa_K>0.
+$$
+沿 $n=K+1$ 令 $K\to\infty$，有三个极限
+$$
+e_{K,K+1}\longrightarrow\frac1{\sqrt5},
+\qquad
+1-r_{K,K+1}\longrightarrow\frac{1-\alpha}{2}=\frac{\alpha^2}{2},
+\qquad
+\kappa_K\longrightarrow\frac{\alpha^3}{\sqrt5},
+$$
+以及
+$$
+\liminf_{K\to\infty}g_K\ge L:=\frac{\alpha^5}{2\sqrt5}>0.
+$$
+另一方面，固定任意整数 $K\ge1$，令 $n>K$ 增大，并沿用命题 127.1、128.1 在具体支撑 $A_{K,n}=\{w0^{n-K}:w\in W_K\}$ 上的最优误差 $e_{K,n}$，记
+$$
+D_K=F_{K+2},
+\qquad
+\sigma^{\rm cut}_{K,n}=\rho_K\otimes|0^{n-K}\rangle\langle0^{n-K}|,
+\qquad
+g_{K,n}=d_{\rm tr}(\rho_n,\sigma^{\rm cut}_{K,n})-e_{K,n}.
+$$
+则
+$$
+0<g_{K,n}\le1-e_{K,n}<D_K\alpha^n,
+\qquad
+g_{K,n}\longrightarrow0,
+\qquad
+e_{K,n}\longrightarrow1,
+\qquad
+d_{\rm tr}(\rho_n,\sigma^{\rm cut}_{K,n})\longrightarrow1.
+$$
+
+证明。按合法词基展开 $\rho_K|_{\mathcal L_K}$，每个矩阵单位 $|w\rangle\langle u|$ 经 $V$ 变为 $|w0\rangle\langle u0|$，即 $|w\rangle\langle u|\otimes|0\rangle\langle0|$。在非法词方向延零，得到陈述中的完整载体等式。
+
+命题 127.1 的计数给 $|A|=D$、末位一合法词数为 $C$，且 $C,D>0$。当 $n=K+1$ 时，$A$ 恰为全部末位零合法词，故 $(a,v)$ 正交归一，且
+$$
+|s_{K+1}\rangle=\sqrt D\,|a\rangle+\sqrt C\,|v\rangle,
+\qquad |t_{K+1}\rangle=\sqrt D\,|a\rangle.
+$$
+因此 $H$ 在 $\mathcal M^\perp$ 上为零。将这两式代入目标公式，并用命题 127.1 的归一化恒等式 $\alpha^{K+1}(D+\alpha C)=1$，即得所列 $H_2$。直接相乘，
+$$
+H_2^2=s^2
+\begin{pmatrix}C^2+CD&0\\0&CD+C^2\end{pmatrix}
+=s^2C(C+D)I_2.
+$$
+$H_2$ 的迹为零，其特征值为 $\pm s\sqrt{C(C+D)}$。命题 127.1 给 $\tau$ 达到可行域上的最小值，半迹范数遂给 $e_{K,K+1}=s\sqrt{C(C+D)}>0$。两特征值非零，故 $\ker H=\mathcal M^\perp$。有限维谱分解给 $\Pi_{-,2}=(I_2-H_2/e_{K,K+1})/2$，在正交补上延零才是完整负谱投影。$K\ge1$ 时正交补维数 $2^{K+1}-2>0$，完整单位算子表达式在该补空间上为一半；$K=0$ 时完整空间只有两维、正交补为零，因而该表达式有效。
+
+负谱为一维，取其单位向量 $\zeta$。由于 $Pa=a$、$Pv=0$ 且 $\zeta\in\mathcal M$，这里的 $r_{K,K+1}$ 与命题 128.1 的 $\|P\zeta\|^2=|\langle a|\zeta\rangle|^2$ 相同。二维投影的第一个对角元为
+$$
+r_{K,K+1}=\langle a|\Pi_-|a\rangle
+=\frac12\left(1+\frac{sC}{e_{K,K+1}}\right)
+=\frac12\left(1+\sqrt{\frac{C}{C+D}}\right).
+$$
+用 $C+D=F_{K+3}$ 即得对所有 $K\ge0$ 的重叠公式，且 $0<r_{K,K+1}<1$。
+
+令 $h_j=\alpha^jF_j$。命题 125.1 所用 Binet 公式在本参数下给精确残差
+$$
+h_j=\frac{1-(-\alpha^2)^j}{\sqrt5},
+\qquad h_j\longrightarrow\frac1{\sqrt5},
+$$
+因为 $0<\alpha<1$。边界误差、重叠比值和 $\kappa_K$ 满足三个缩放恒等式：
+$$
+e_{K,K+1}^2=\alpha^{2K+4}F_{K+1}F_{K+3}=h_{K+1}h_{K+3},
+$$
+$$
+\frac{F_{K+1}}{F_{K+3}}=\alpha^2\frac{h_{K+1}}{h_{K+3}},
+$$
+$$
+\kappa_K=\alpha^{K+2}\frac{F_{K+1}F_K}{F_{K+2}}
+=\alpha^3\frac{h_{K+1}h_K}{h_{K+2}}.
+$$
+最后一式的指数抵消为 $K+2-(K+1)-K+(K+2)=3$；它在 $K=0$ 时也因 $F_0=h_0=0$ 与定义 $\kappa_0=0$ 一致。各分母的极限严格为正，取正平方根、商及乘积的极限，结合 $1-\alpha=\alpha^2$，得到陈述中的三个极限。
+
+命题 128.1 对此 cut 态给 $1-\langle a|\sigma^{\rm cut}_{K,K+1}|a\rangle=\kappa_K$，并由其投影余量界得到
+$$
+g_K\ge(1-r_{K,K+1})\kappa_K>0\qquad(K\ge1).
+$$
+因此
+$$
+\liminf_{K\to\infty}g_K
+\ge\lim_{K\to\infty}(1-r_{K,K+1})\kappa_K
+=\frac{\alpha^2}{2}\frac{\alpha^3}{\sqrt5}
+=\frac{\alpha^5}{2\sqrt5}>0.
+$$
+$K=0$ 时，$\rho_0=(1)$ 且 $\sigma^{\rm cut}_{0,1}=\tau=|0\rangle\langle0|$，故 $g_0=0$；改变这一有限项不影响下极限。
+
+最后，对每个固定 $K\ge1$，命题 128.1 的实际上界是 $0<g_{K,n}\le1-e_{K,n}<D_K\alpha^n$。右端随 $n\to\infty$ 趋零，故 $g_{K,n}\to0$；再用 $e_{K,n}\le1$ 得 $e_{K,n}\to1$，从而 $d_{\rm tr}(\rho_n,\sigma^{\rm cut}_{K,n})=e_{K,n}+g_{K,n}\to1$。这是固定 $K$ 的窗口序列；沿 $n=K+1$ 的窗口序列则有 $e_{K,K+1}\to1/\sqrt5<1$ 及上述正的下极限界。证毕。
+
+## 追加锚（本行以下为增补区）
+## 130. 固定二维活动记忆的相干前缀生成与容量下界
+
+**命题 130.1（同一等距的逐位生成与受限最小容量）。** 取
+$$
+\alpha=\frac{\sqrt5-1}{2},\qquad 0<\alpha<1,\qquad \alpha+\alpha^2=1,
+$$
+并令 $B=M=\mathbb C^2$，两者均以 $|0\rangle,|1\rangle$ 为正交标准基。输出空间为完整张量积 $H_n=B^{\otimes n}$，$H_0=\mathbb C$。记 $W_n\subseteq\{0,1\}^n$ 为不含相邻 $11$ 的词集，$W_0=\{\varnothing\}$；对 $n\ge1$，令 $\ell(w)=w_{n-1}$ 为末位，并置
+$$
+s_n=\sum_{w\in W_n}|w\rangle,\qquad
+t_n=\sum_{\substack{w\in W_n\\\ell(w)=0}}|w\rangle,
+$$
+$$
+\rho_n=\alpha^{n+1}|s_n\rangle\langle s_n|
+       +\alpha^{n+2}|t_n\rangle\langle t_n|,\qquad \rho_0=(1).
+$$
+这里的 $\rho_n$ 是命题 125.1 的固定左边界相干局部态，作为 $H_n$ 上的算子取值。
+
+在活动记忆中定义
+$$
+m_1=|0\rangle,\qquad m_0=\sqrt\alpha\,|0\rangle+\alpha|1\rangle,
+$$
+并以基像定义线性映射 $T:M\to B\otimes M$：
+$$
+T|0\rangle=|0\rangle\otimes m_0,\qquad
+T|1\rangle=|1\rangle\otimes m_1.
+$$
+它是等距。令 $\Xi_0=m_0$，始终按输出在前、记忆在后的次序递推
+$$
+\Xi_{n+1}=(I_{H_n}\otimes T)\Xi_n\in H_{n+1}\otimes M
+\qquad(n\ge0).
+$$
+则所有 $\Xi_n$ 均为单位向量，且对每个 $n\ge1$，
+$$
+\Xi_n=\sum_{w\in W_n}\alpha^{(n+\ell(w))/2}|w\rangle\otimes m_{\ell(w)}
+=\alpha^{(n+1)/2}s_n\otimes|0\rangle
+ +\alpha^{(n+2)/2}t_n\otimes|1\rangle.
+$$
+因而在完整输出空间上，对所有 $n\ge0$ 有
+$$
+\operatorname{Tr}_M|\Xi_n\rangle\langle\Xi_n|=\rho_n.
+$$
+非法词对应的行、列均为零，等式包含全部非对角相干项。后续只作用于记忆与新输出的等距保持已发出前缀的约化态，所以同一递推同时给出全部有限前缀。
+
+这个 $T$ 可由同一个二比特幺正实现。令
+$$
+R=\begin{pmatrix}\sqrt\alpha&-\alpha\\\alpha&\sqrt\alpha\end{pmatrix},\qquad
+C_0(R)=|0\rangle\langle0|\otimes R+|1\rangle\langle1|\otimes I_M,
+\qquad W=C_0(R)\operatorname{SWAP}
+$$
+作用于 $B_{\rm new}\otimes M$，其中 $\operatorname{SWAP}(|b\rangle\otimes|c\rangle)=|c\rangle\otimes|b\rangle$，乘积中先作用 $\operatorname{SWAP}$。每次新输出取与已有系统独立的纯空白 $|0\rangle$，初始记忆为 $R|0\rangle=m_0$，则
+$$
+W(|0\rangle\otimes\psi)=T\psi\qquad(\psi\in M).
+$$
+
+最小活动记忆容量取 Hilbert 空间维数，且仅在如下类别中比较：记忆空间 $K$ 的维数固定为 $d$，初始记忆为纯态，每次引入独立纯空白；每步为顺序等距，已经发出的寄存器不再受作用；不存在未计入 $K$ 的环境、纯化参考、共享随机性或其它记忆。吸收纯空白的插入后，竞争映射可写作 $V_j:K\to B\otimes K$，允许随 $j$ 改变。若这种生成器精确实现全部 $\rho_n$，则 $d\ge2$；上述固定 $T$ 达到 $d=2$。该最小性只比较指定输出态族在此类别中的精确生成，等式所确定的是已发出前缀上的全部联合测量概率，不是任意记忆干预的过程等价或普适最小预测器。
+
+证明。首先 $\|m_1\|^2=1$、$\|m_0\|^2=\alpha+\alpha^2=1$，而
+$$
+\langle m_1,m_0\rangle=\sqrt\alpha.
+$$
+$T$ 的两列具有单位范数，其内积为
+$$
+\langle |0\rangle\otimes m_0,|1\rangle\otimes m_1\rangle
+=\langle0|1\rangle\langle m_0,m_1\rangle=0.
+$$
+因此 $T^*T=I_M$；这里使两列正交的是输出基，而非两个记忆标签。由线性性，
+$$
+Tm_0=\sqrt\alpha\,|0\rangle\otimes m_0+\alpha|1\rangle\otimes m_1,
+\qquad Tm_1=|0\rangle\otimes m_0.
+$$
+初态为单位向量，各步等距，故 $\|\Xi_n\|=1$，包括 $n=0$。
+
+对所列词展开从 $n=1$ 开始归纳，不为空词定义末位。$W_1=\{0,1\}$，$\Xi_1=Tm_0$ 的两个系数分别为 $\alpha^{1/2}$ 与 $\alpha$，正是公式。设公式对某个 $n\ge1$ 成立。若 $w\in W_n$ 末位为 $0$，它的项在下一步变为
+$$
+\alpha^{n/2}|w\rangle\otimes Tm_0
+=\alpha^{(n+1)/2}|w0\rangle\otimes m_0
+ +\alpha^{(n+2)/2}|w1\rangle\otimes m_1.
+$$
+这两个延长都合法，系数分别等于 $\alpha^{(n+1+\ell(w0))/2}$ 与 $\alpha^{(n+1+\ell(w1))/2}$。若 $w$ 末位为 $1$，只有附加 $0$ 合法，且
+$$
+\alpha^{(n+1)/2}|w\rangle\otimes Tm_1
+=\alpha^{(n+1)/2}|w0\rangle\otimes m_0.
+$$
+其系数同样是所需的 $\alpha^{(n+1+\ell(w0))/2}$，而附加 $1$ 的振幅为零。每个长度 $n+1$ 的合法词具有唯一长度 $n$ 前缀，故这些项无遗漏、无重复，归纳成立。
+
+将每项的记忆向量改写到正交计算基上。末位为 $0$ 的词给出的两个记忆列系数为
+$$
+\alpha^{n/2}\sqrt\alpha=\alpha^{(n+1)/2},\qquad
+\alpha^{n/2}\alpha=\alpha^{(n+2)/2};
+$$
+末位为 $1$ 的词只给记忆 $|0\rangle$ 列，系数也为 $\alpha^{(n+1)/2}$。因此得到陈述中的 $s_n,t_n$ 两列展开。对这两个正交记忆列取偏迹，交叉项为零，立即给
+$$
+\operatorname{Tr}_M|\Xi_n\rangle\langle\Xi_n|
+=\alpha^{n+1}|s_n\rangle\langle s_n|
+ +\alpha^{n+2}|t_n\rangle\langle t_n|=\rho_n\qquad(n\ge1).
+$$
+具体地，对所有 $u,v\in\{0,1\}^n$，完整矩阵元为
+$$
+\langle u|\rho_n|v\rangle=
+\begin{cases}
+\alpha^n,&u,v\in W_n,\ \ell(u)=\ell(v)=0,\\
+\alpha^{n+1},&u,v\in W_n,\ \text{至少一个末位为 }1,\\
+0,&u\notin W_n\ \text{或 }v\notin W_n.
+\end{cases}
+$$
+第一种情形使用 $\alpha^{n+1}+\alpha^{n+2}=\alpha^n$。这也直接核对了命题 125.1 的全部相干项。$n=0$ 时，对整个记忆取迹给 $\|m_0\|^2=1=\rho_0$，无需使用词展开。
+
+为核对已经发出的边际，取任意 $A\in\mathcal L(H_n)$。由 $T^*T=I_M$，
+$$
+\langle\Xi_{n+1},(A\otimes I_B\otimes I_M)\Xi_{n+1}\rangle
+=\langle\Xi_n,(A\otimes T^*T)\Xi_n\rangle
+=\operatorname{Tr}(\rho_nA).
+$$
+这对所有 $A$ 成立，所以再发出一位后前 $n$ 位的密度仍是 $\rho_n$。迭代即得对每个 $0\le k\le n$，
+$$
+\operatorname{Tr}_{B^{\otimes(n-k)}\otimes M}
+|\Xi_n\rangle\langle\Xi_n|=\rho_k.
+$$
+特别地，任意前缀上的联合 POVM $(E_a)_a$ 满足 $\Pr(a)=\operatorname{Tr}(\rho_kE_a)$。偏迹在此描述停止时的输出态；继续生成使用的是仍与旧输出相关联的同一记忆。
+
+两个条件记忆标签不能被当作可完美读取的经典标志。事实上，若效应 $0\le E\le I_M$ 满足 $\langle m_0,Em_0\rangle=1$、$\langle m_1,Em_1\rangle=0$，正性给 $(I_M-E)^{1/2}m_0=0$ 及 $E^{1/2}m_1=0$，于是 $Em_0=m_0$、$Em_1=0$。自伴性将给
+$$
+\sqrt\alpha=\langle m_1,m_0\rangle
+=\langle m_1,Em_0\rangle=\langle Em_1,m_0\rangle=0,
+$$
+矛盾。
+
+现核对显式幺正。由 $\alpha+\alpha^2=1$，直接相乘得 $R^*R=RR^*=I_M$。两个控制投影正交且和为 $I_B$，故
+$$
+C_0(R)^*C_0(R)=C_0(R)C_0(R)^*=I_{B\otimes M}.
+$$
+$\operatorname{SWAP}$ 置换正交标准基且平方为恒等，亦为幺正，因此 $W$ 在整个四维空间上幺正。任取 $\psi=a|0\rangle+b|1\rangle$，先交换、再施加零控制的 $R$，得到
+$$
+\begin{aligned}
+W(|0\rangle\otimes\psi)
+&=C_0(R)(\psi\otimes|0\rangle)\\
+&=a|0\rangle\otimes R|0\rangle+b|1\rangle\otimes|0\rangle\\
+&=a|0\rangle\otimes m_0+b|1\rangle\otimes m_1=T\psi.
+\end{aligned}
+$$
+这是整个输入记忆空间上的线性等式，与旧输出张量恒等后也成立，所以每次插入独立空白并作用同一 $W$ 就给上述递推。在固定纯空白上逐槽作用幺正，其有限链振幅由逐槽矩阵元收缩给出，单位初态的范数保持为一（[SequentialRegisterCircuit，circuit_initialized_coefficients 与 initialized_norm](../../../D5/S3/Quantum/Entanglement/SequentialRegisterCircuit.lean)）；这里所需的特殊基像由刚才的直接计算确定。
+
+最后证明限定类别中的下界。对任意竞争生成器，第一位输出后，输出与全部活动记忆的联合态为纯态 $\eta\in B\otimes K$，因为输入记忆与独立空白均纯，且第一步为等距。在 $K$ 的正交标准基 $e_1,\ldots,e_d$ 下写
+$$
+\eta=\sum_{j=1}^d x_j\otimes e_j,\qquad x_j\in B.
+$$
+其输出密度为 $\sum_{j=1}^d|x_j\rangle\langle x_j|$，像包含于 $\operatorname{span}\{x_1,\ldots,x_d\}$，所以若精确匹配第一位，必有 $\operatorname{rank}\rho_1\le d$。由目标公式，
+$$
+\rho_1=\begin{pmatrix}\alpha&\alpha^2\\\alpha^2&\alpha^2\end{pmatrix},\qquad
+\det\rho_1=\alpha^3-\alpha^4=\alpha^3(1-\alpha)=\alpha^5>0.
+$$
+故 $\operatorname{rank}\rho_1=2$，从而 $d\ge2$。上面的构造使用纯初始记忆、独立纯空白及固定幺正，没有其它环境，并达到 $d=2$。下界只用第一步，对时间依赖的竞争等距同样成立。
+
+固定活动容量与固定总档案是不同的资源条件：第 $n$ 步后保留的是 $n$ 个输出 qubit 加一个活动 qubit，联合空间为 $H_n\otimes M$，维数 $2^{n+1}$。输出寄存器随 $n$ 增加；有限个输出并未容纳一个无限词。若把这些有限前缀统一为命题 125.4 指定的 $\ell^2(X_{\rm fs})$ 上的单个正迹类密度，并沿用其柱投影 $C_u$，则全部柱读数须为 $\alpha^{|u|+\ell(u)}$（非空合法 $u$）。命题 125.4 排除了这样的密度；这里变化的输出空间并不提供该固定表示。
+
+同一 $T$ 也不使边界态移位平稳。由已证对角元，第一位与第二位为 $1$ 的概率分别为
+$$
+\Pr(w_0=1)=\alpha^2,\qquad
+\Pr(w_1=1)=\langle01|\rho_2|01\rangle+\langle11|\rho_2|11\rangle
+=\alpha^3\ne\alpha^2.
+$$
+这与命题 125.3 的固定左边界律一致。若第一步后丢弃记忆并独立重置，第二步后两位输出为乘积态；若还要保持上述两个单点概率，便会给 $\Pr(11)=\alpha^5>0$，而目标值为零。因此停止时取偏迹不能替代生成途中保留记忆关联。当 $n\ge1$ 时，命题 125.3 的经典 Markov 抽样在计算基中给 $\sum_{w\in W_n}\alpha^{n+\ell(w)}|w\rangle\langle w|$，只匹配对角元；例如目标的 $\langle0|\rho_1|1\rangle=\alpha^2>0$。这一比较限于抽样所得的对角态，不排除另带相干制备的经典控制协议，也不把本命题的容量下界推广到其假设以外的模型。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 131. 活动记忆的边界遗忘与平稳窗口的构型相干
+
+**命题 131.1（精确记忆衰减、统一未来窗口界与保留首记录的正下界）。** 沿用命题 130.1 的固定等距，取
+$$
+\alpha=\frac{\sqrt5-1}{2},\qquad 0<\alpha<1,\qquad \alpha+\alpha^2=1,
+\qquad B=M=\mathbb C^2,\qquad H_\ell=B^{\otimes\ell},\qquad H_0=\mathbb C.
+$$
+$B$ 与 $M$ 均取正交标准基 $|0\rangle,|1\rangle$。令
+$$
+m_0=\sqrt\alpha\,|0\rangle+\alpha|1\rangle,\qquad
+m_1=|0\rangle,\qquad P_j=|m_j\rangle\langle m_j|\quad(j=0,1),
+$$
+$$
+T:M\longrightarrow B\otimes M,\qquad T|j\rangle=|j\rangle\otimes m_j.
+$$
+每步对已发出输出张量恒等，始终按输出在前、活动记忆在后的次序定义
+$$
+T_0=I_M,\qquad T_{\ell+1}=(I_{H_\ell}\otimes T)T_\ell:
+M\longrightarrow H_{\ell+1}\otimes M.
+$$
+对 $X\in\mathcal L(M)$ 定义记忆通道与输出通道
+$$
+\mathcal M(X)=\operatorname{Tr}_B(TXT^*),\qquad
+\Gamma_\ell(X)=\operatorname{Tr}_M(T_\ell XT_\ell^*),\qquad
+\Gamma_0(X)=\operatorname{Tr}X.
+$$
+原初记忆为纯态 $\sigma_0=P_0$，记
+$$
+\sigma_n=\mathcal M^n(P_0),\qquad
+\Omega_n=T_nP_0T_n^*,\qquad
+\rho_n=\Gamma_n(P_0)\quad(n\ge0).
+$$
+这里 $\rho_n$ 是命题 125.1 的完整相干密度，由命题 130.1 的等式识别；$\rho_0=1$。任意同一有限维空间上的两个密度采用半迹范数距离
+$$
+D(\theta,\vartheta)=\frac12\|\theta-\vartheta\|_1,
+\qquad \|A\|_1=\operatorname{Tr}\sqrt{A^*A}.
+$$
+令
+$$
+\mathrm{den}=1+\alpha^2,\qquad
+\pi_0=\frac1{\mathrm{den}},\qquad
+\pi_1=\frac{\alpha^2}{\mathrm{den}},\qquad
+\sigma_*=\pi_0P_0+\pi_1P_1.
+$$
+则记忆通道的显式形式、唯一不动密度及从指定初态出发的轨道满足
+$$
+\mathcal M(X)=X_{00}P_0+X_{11}P_1,\qquad
+\mathcal M(\sigma_*)=\sigma_*,
+$$
+$$
+\sigma_n=(1-p_n)P_0+p_nP_1,\qquad
+p_0=0,\qquad p_{n+1}=\alpha^2(1-p_n),\qquad
+p_n=\pi_1\bigl(1-(-\alpha^2)^n\bigr).
+$$
+带符号的系数偏差 $p_n-\pi_1=-\pi_1(-\alpha^2)^n$ 在偶数 $n$ 时严格为负，在奇数 $n$ 时严格为正；它是两个非正交密度的混合系数偏差，不是可完美读取的记忆标志概率。对所有整数 $n\ge0$，精确记忆距离为
+$$
+D(\sigma_n,\sigma_*)=
+\frac{\alpha^3}{\mathrm{den}}\alpha^{2n}.
+$$
+
+对整数 $n\ge0,\ell\ge1$，在 $H_\ell$ 上定义无条件未来窗口和比较密度
+$$
+\beta_{n,\ell}=\operatorname{Tr}_{\text{前 }n\text{ 位}}\rho_{n+\ell},
+\qquad \eta_\ell=\Gamma_\ell(\sigma_*),\qquad \eta_0=1.
+$$
+此前 $n$ 位输出及最终记忆均被忽略；允许的未来窗口效应在联合空间上形如 $I_{H_n}\otimes E\otimes I_M$，其中 $0\le E\le I_{H_\ell}$。此范围不含读取旧记录、按旧记录条件化、访问纯化参考、反馈或任意记忆干预。则
+$$
+\beta_{n,\ell}=\Gamma_\ell(\sigma_n),\qquad
+D(\beta_{n,\ell},\eta_\ell)
+\le\frac{\alpha^3}{\mathrm{den}}\alpha^{2n}
+\quad(n\ge0,\ \ell\ge1),
+$$
+其中同一个上界适用于每个有限 $\ell$。对所有整数 $\ell\ge0$，比较族左右边缘均相容：
+$$
+\operatorname{Tr}_{\text{末位}}\eta_{\ell+1}=\eta_\ell,
+\qquad
+\operatorname{Tr}_{\text{首位}}\eta_{\ell+1}=\eta_\ell.
+$$
+特别地，对所有整数 $r,s,\ell\ge0$，将剩余输出依序识别为 $H_\ell$ 后，
+$$
+\operatorname{Tr}_{\text{前 }r\text{ 位与后 }s\text{ 位}}
+\eta_{r+\ell+s}=\eta_\ell.
+$$
+
+在所指定的记忆基与输出构型基中，矩阵分别为
+$$
+\Gamma_1(X)=
+\begin{pmatrix}X_{00}&\sqrt\alpha\,X_{01}\\
+\sqrt\alpha\,X_{10}&X_{11}\end{pmatrix},
+\qquad
+\sigma_*=
+\frac1{\mathrm{den}}
+\begin{pmatrix}1&\alpha\sqrt\alpha\\
+\alpha\sqrt\alpha&\alpha^2\end{pmatrix},
+$$
+$$
+\eta_1=\frac1{\mathrm{den}}
+\begin{pmatrix}1&\alpha^2\\\alpha^2&\alpha^2\end{pmatrix},
+\qquad
+\langle0|\eta_1|1\rangle=\frac{\alpha^2}{\mathrm{den}}>0,
+\qquad
+\det\sigma_*=\frac{\alpha^4}{\mathrm{den}^2}>0.
+$$
+若以 $\Delta_B(Y)=\sum_{j=0}^1|j\rangle\langle j|Y|j\rangle\langle j|$ 表示该输出基中的完全去相干，则 $\Delta_B(\eta_1)\ne\eta_1$。此单位置结论只判定给定基中的去相干，不给出纠缠、情境性或 Bell 非局域性的判据。比较族的此项构造使用秩二的混合初始记忆 $\sigma_*$，不属于命题 130.1 比较最小容量时限定的纯初态类别；这里不对 $\eta_\ell$ 在该类别中的可达性或最小容量作断言。
+
+最后，若比较保留首记录的完整窗口，则对每个整数 $\ell\ge1$ 有
+$$
+D(\rho_\ell,\eta_\ell)\ge
+\frac{\sqrt2\,\alpha^4}{\mathrm{den}}>0.
+$$
+上述未来窗口上界与完整窗口下界均是在各自有限空间 $H_\ell$ 内的距离不等式，不是把增长中的窗口视为同一空间中的范数极限；$n$ 表示略去的输出位数，不是物理时间。
+
+证明。命题 130.1 给 $T^*T=I_M$，故由递推 $T_\ell^*T_\ell=I_M$。各 $\Gamma_\ell$ 将密度映为密度，包括 $\ell=0$ 的标量密度。对矩阵单位直接展开，
+$$
+TXT^*=\sum_{i,j=0}^1X_{ij}|i\rangle\langle j|\otimes|m_i\rangle\langle m_j|.
+$$
+对输出基取偏迹，只保留 $i=j$ 项，得到
+$$
+\mathcal M(X)=X_{00}P_0+X_{11}P_1.
+$$
+密度 $X$ 的两个对角元非负且和为 $1$，故任何不动密度都必须落在 $P_0,P_1$ 的凸混合像中。这两密度不同，因而其混合系数唯一。设 $X=(1-p)P_0+pP_1$、$0\le p\le1$，则
+$$
+X_{11}=\alpha^2(1-p),\qquad
+X_{00}=\alpha(1-p)+p=1-\alpha^2(1-p).
+$$
+因此 $\mathcal M(X)$ 的 $P_1$ 系数是 $\alpha^2(1-p)$。不动点方程为
+$$
+p=\alpha^2(1-p),\qquad
+p=\frac{\alpha^2}{1+\alpha^2}=\pi_1,
+$$
+所以 $\sigma_*$ 存在且是不动密度中的唯一者。从 $p_0=0$ 归纳，递推保持 $p_n\in[0,1]$；减去不动点方程得
+$$
+p_{n+1}-\pi_1=-\alpha^2(p_n-\pi_1),\qquad
+p_n-\pi_1=-\pi_1(-\alpha^2)^n.
+$$
+这证明轨道公式及奇偶符号。又 $\langle m_1,m_0\rangle=\sqrt\alpha\ne0$。若效应 $E$ 能以概率 $1$ 区分这两个纯态，则交换标签后可设 $Em_0=m_0$、$Em_1=0$：这些等式由 $E$ 与 $I_M-E$ 的正性推出。自伴性却会给
+$$
+\sqrt\alpha=\langle m_1,m_0\rangle
+=\langle m_1,Em_0\rangle=\langle Em_1,m_0\rangle=0,
+$$
+矛盾，故混合分量不是可完美读取的标志。
+
+为计算精确距离，在记忆基中有
+$$
+P_1-P_0=
+\begin{pmatrix}\alpha^2&-\alpha\sqrt\alpha\\
+-\alpha\sqrt\alpha&-\alpha^2\end{pmatrix},
+\qquad \operatorname{Tr}(P_1-P_0)=0,
+$$
+$$
+(P_1-P_0)^2=(\alpha^4+\alpha^3)I_M=\alpha^2I_M.
+$$
+末式使用 $\alpha+\alpha^2=1$。此自伴矩阵的两个特征值为 $\alpha,-\alpha$，故 $D(P_0,P_1)=\alpha$。于是对 $n\ge0$，
+$$
+\sigma_n-\sigma_*=(p_n-\pi_1)(P_1-P_0),\qquad
+D(\sigma_n,\sigma_*)=|p_n-\pi_1|\alpha
+=\frac{\alpha^3}{\mathrm{den}}\alpha^{2n}.
+$$
+特别地，$n=0$ 给 $D(P_0,\sigma_*)=\pi_1\alpha=\alpha^3/\mathrm{den}$。
+
+现从实际联合态求未来窗口。递推并保留张量次序，归纳得到
+$$
+T_{n+\ell}=(I_{H_n}\otimes T_\ell)T_n
+\qquad(n,\ell\ge0).
+$$
+对任意 $A\in\mathcal L(H_n\otimes M)$，在 $H_n$ 的正交标准基中写 $A=\sum_{u,v}|u\rangle\langle v|\otimes A_{uv}$，便有
+$$
+\operatorname{Tr}_{H_n}
+\bigl[(I_{H_n}\otimes T_\ell)A(I_{H_n}\otimes T_\ell^*)\bigr]
+=\sum_uT_\ell A_{uu}T_\ell^*
+=T_\ell(\operatorname{Tr}_{H_n}A)T_\ell^*.
+$$
+这个恒等式适用于相关联合态。取 $\ell=1$，再对新输出取偏迹，并从 $\Omega_0=P_0$ 归纳，得到
+$$
+\operatorname{Tr}_{H_n}\Omega_n=\mathcal M^n(P_0)=\sigma_n.
+$$
+现在取 $A=\Omega_n$，再对最终记忆取偏迹，结合命题 130.1 对完整相干输出的识别，得到
+$$
+\begin{aligned}
+\beta_{n,\ell}
+&=\operatorname{Tr}_{H_n\otimes M}
+\bigl[(I_{H_n}\otimes T_\ell)\Omega_n(I_{H_n}\otimes T_\ell^*)\bigr]\\
+&=\operatorname{Tr}_M(T_\ell\sigma_nT_\ell^*)
+=\Gamma_\ell(\sigma_n).
+\end{aligned}
+$$
+这里没有把 $\Omega_n$ 分解成旧输出与记忆的乘积；被忽略的旧输出是通过偏迹消去的。
+
+以下使用有限维迹距离的效应变分式（参见 John Watrous，[The Theory of Quantum Information](https://cs.uwaterloo.ca/~watrous/TQI/)，Cambridge University Press，2018，量子态判别部分）。为同时处理不同输入、输出维数，直接给出所需推导。任意有限维空间 $K$ 上的两个密度 $\theta,\vartheta$ 之差 $A=\theta-\vartheta$ 自伴且迹零。取正、负谱部分 $A_+,A_-$，则
+$$
+A=A_+-A_-,\qquad A_+A_-=0,\qquad
+\operatorname{Tr}A_+=\operatorname{Tr}A_-=\tfrac12\|A\|_1.
+$$
+对 $0\le E\le I_K$，正性给 $0\le\operatorname{Tr}(EA_\pm)\le\operatorname{Tr}A_\pm$，所以
+$$
+|\operatorname{Tr}(EA)|\le\tfrac12\|A\|_1.
+$$
+取 $E$ 为 $A$ 的正谱投影即达到右端，因而
+$$
+D(\theta,\vartheta)=\sup_{0\le E\le I_K}
+|\operatorname{Tr}(E(\theta-\vartheta))|.
+$$
+对输出空间 $H_\ell$ 上任意效应 $E$，回拉为记忆空间上的
+$$
+F=T_\ell^*(E\otimes I_M)T_\ell.
+$$
+由于 $T_\ell$ 等距，
+$$
+F\ge0,\qquad
+I_M-F=T_\ell^*((I_{H_\ell}-E)\otimes I_M)T_\ell\ge0.
+$$
+故对 $M$ 上的两个密度 $\theta,\vartheta$，偏迹的定义与迹的循环性给
+$$
+\begin{aligned}
+|\operatorname{Tr}(E(\Gamma_\ell(\theta)-\Gamma_\ell(\vartheta)))|
+&=|\operatorname{Tr}(F(\theta-\vartheta))|\\
+&\le D(\theta,\vartheta).
+\end{aligned}
+$$
+在 $H_\ell$ 上对 $E$ 取上确界，得到
+$$
+D(\Gamma_\ell(\theta),\Gamma_\ell(\vartheta))
+\le D(\theta,\vartheta).
+$$
+这一步不要求 $\dim H_\ell=\dim M$。取 $\theta=\sigma_n,\vartheta=\sigma_*$，便得所述未来窗口界，右端与 $\ell$ 无关。
+
+为证明边缘相容，先取任意记忆密度 $X$ 与 $A\in\mathcal L(H_\ell)$。由最后一步 $T_{\ell+1}=(I_{H_\ell}\otimes T)T_\ell$，
+$$
+\begin{aligned}
+\operatorname{Tr}\bigl[(A\otimes I_B)\Gamma_{\ell+1}(X)\bigr]
+&=\operatorname{Tr}\bigl[T_\ell XT_\ell^*(A\otimes T^*T)\bigr]\\
+&=\operatorname{Tr}\bigl[A\Gamma_\ell(X)\bigr].
+\end{aligned}
+$$
+因这对所有 $A$ 成立，$\operatorname{Tr}_{\text{末位}}\Gamma_{\ell+1}(X)=\Gamma_\ell(X)$。另一方面，按第一步分组为 $T_{\ell+1}=(I_B\otimes T_\ell)T$，利用刚才的偏迹交换恒等式得
+$$
+\operatorname{Tr}_{\text{首位}}\Gamma_{\ell+1}(X)
+=\operatorname{Tr}_M\bigl[T_\ell\operatorname{Tr}_B(TXT^*)T_\ell^*\bigr]
+=\Gamma_\ell(\mathcal M(X)).
+$$
+两式在 $\ell=0$ 时均为取整个单点密度的迹，值为 $1$。取 $X=\sigma_*$ 并用 $\mathcal M(\sigma_*)=\sigma_*$，即得左右相容；反复略去末位与首位给所有平移窗口的同一密度 $\eta_\ell$。
+
+对 $TXT^*$ 的展开改为取记忆偏迹，矩阵元变为 $X_{ij}\langle m_j,m_i\rangle$。两记忆向量均为单位向量，交叉内积为 $\sqrt\alpha$，所以得到所列 $\Gamma_1(X)$。再将 $\pi_0,\pi_1$ 代入 $\sigma_*$：
+$$
+\sigma_*=
+\frac1{\mathrm{den}}
+\begin{pmatrix}\alpha+\alpha^2&\alpha\sqrt\alpha\\
+\alpha\sqrt\alpha&\alpha^2\end{pmatrix}
+=\frac1{\mathrm{den}}
+\begin{pmatrix}1&\alpha\sqrt\alpha\\
+\alpha\sqrt\alpha&\alpha^2\end{pmatrix}.
+$$
+应用 $\Gamma_1$ 得 $\eta_1$ 的非对角元 $\sqrt\alpha\,\alpha\sqrt\alpha/\mathrm{den}=\alpha^2/\mathrm{den}$，严格为正，故 $\eta_1\ne\Delta_B(\eta_1)$。同时
+$$
+\det\sigma_*=
+\frac{\alpha^2-\alpha^3}{\mathrm{den}^2}
+=\frac{\alpha^2(1-\alpha)}{\mathrm{den}^2}
+=\frac{\alpha^4}{\mathrm{den}^2}>0.
+$$
+$\sigma_*$ 为密度且秩二，故此比较族确实使用混合初态。
+
+最后，由命题 125.1 的单点矩阵，令 $c=\alpha^4/\mathrm{den}>0$，则
+$$
+\rho_1=\begin{pmatrix}\alpha&\alpha^2\\\alpha^2&\alpha^2\end{pmatrix},\qquad
+\rho_1-\eta_1=c\begin{pmatrix}-1&1\\1&1\end{pmatrix}.
+$$
+右边矩阵的平方为 $2c^2I_B$ 且迹零，特征值为 $\sqrt2c,-\sqrt2c$，所以 $D(\rho_1,\eta_1)=\sqrt2c$。命题 130.1 的前缀相容与已证 $\eta$ 的末位相容给
+$$
+\operatorname{Tr}_{\text{后 }\ell-1\text{ 位}}\rho_\ell=\rho_1,
+\qquad
+\operatorname{Tr}_{\text{后 }\ell-1\text{ 位}}\eta_\ell=\eta_1.
+$$
+在效应变分式中将单点效应 $E$ 提升为 $E\otimes I_{H_{\ell-1}}$，即得偏迹收缩；因此
+$$
+D(\rho_\ell,\eta_\ell)\ge D(\rho_1,\eta_1)
+=\frac{\sqrt2\,\alpha^4}{\mathrm{den}}>0
+\qquad(\ell\ge1).
+$$
+故略去左端记录后，所有有限未来窗口的距离都受随 $n$ 趋零的同一上界控制；保留旧首记录的窗口则始终具有上述正的可区分度下界。证毕。
+
+## 追加锚（本行以下为增补区）
+## 132. 边界遗忘下的相邻输出纠缠与统一有限位置见证
+
+**命题 132.1（平稳双位置纠缠及同一轨道的严格负见证界）。** 沿用命题 130.1 的固定等距及命题 131.1 的记号：
+$$
+\alpha=\frac{\sqrt5-1}{2},\qquad 0<\alpha<1,\qquad \alpha+\alpha^2=1,
+\qquad \mathrm{den}=1+\alpha^2,\qquad
+\pi_0=\frac1{\mathrm{den}},\qquad \pi_1=\frac{\alpha^2}{\mathrm{den}}.
+$$
+取 $B=M=\mathbb C^2$，均以 $|0\rangle,|1\rangle$ 为正交标准基，并令
+$$
+m_0=\sqrt\alpha\,|0\rangle+\alpha|1\rangle,\qquad
+m_1=|0\rangle,\qquad P_j=|m_j\rangle\langle m_j|,\qquad
+T|j\rangle=|j\rangle\otimes m_j\quad(j=0,1).
+$$
+顺序始终为输出在前、记忆在后；$T_0=I_M$，$T_{\ell+1}=(I_{B^{\otimes\ell}}\otimes T)T_\ell$，且
+$$
+\Gamma_\ell(X)=\operatorname{Tr}_M(T_\ell XT_\ell^*),\qquad
+\sigma_*=\pi_0P_0+\pi_1P_1,\qquad
+\eta_\ell=\Gamma_\ell(\sigma_*),\qquad
+\rho_\ell=\Gamma_\ell(P_0).
+$$
+命题 131.1 给出的 $\sigma_*$ 是秩二混合不动密度，$\eta_\ell$ 为平稳比较族；原族 $\rho_\ell$ 仍从纯记忆 $P_0$ 出发。此混合比较初态不改变命题 130.1 的纯初态容量定理及其适用类别。
+
+以下张量分割为两个实际发出位置的完整空间 $B_1\otimes B_2=\mathbb C^2\otimes\mathbb C^2$。称其上的密度 $\theta$ 可分，是指存在有限分解
+$$
+\theta=\sum_{r=1}^N q_r A_r\otimes C_r,\qquad
+q_r\ge0,\qquad \sum_{r=1}^N q_r=1,
+$$
+其中 $A_r,C_r$ 分别为 $B_1,B_2$ 上的密度，即正半定且迹为一的算子。不满足此定义者称为纠缠态。合法支撑 $\operatorname{span}\{|00\rangle,|01\rangle,|10\rangle\}$ 只是完整空间的子空间，不另赋予它一个张量分割。
+
+在字典序 $00,01,10,11$ 下，平稳双位置密度为
+$$
+\eta_2=\pi_0
+\begin{pmatrix}
+\alpha&\alpha^2&\alpha^2&0\\
+\alpha^2&\alpha^2&\alpha^3&0\\
+\alpha^2&\alpha^3&\alpha^2&0\\
+0&0&0&0
+\end{pmatrix}.
+$$
+定义 Hermitian 算子
+$$
+W_{\rm ent}=\alpha^4|00\rangle\langle00|+|11\rangle\langle11|
+-\alpha^2\bigl(|01\rangle\langle10|+|10\rangle\langle01|\bigr).
+$$
+则对每个可分密度 $\theta$ 有 $\operatorname{Tr}(W_{\rm ent}\theta)\ge0$，而
+$$
+\operatorname{Tr}(W_{\rm ent}\eta_2)=-\pi_0\alpha^5<0.
+$$
+因此 $\eta_2$ 在两个发出位置之间纠缠。$W_{\rm ent}$ 有负特征值，因而不是正的 POVM 效应；这里使用的是其期望值作为纠缠见证。
+
+同一命题还适用于原纯初态轨道的每个有限位置。对整数 $n\ge0$，令
+$$
+\beta_{n,2}=\operatorname{Tr}_{\text{前 }n\text{ 位}}\rho_{n+2}.
+$$
+这些窗口均忽略前 $n$ 位及最终记忆，不作条件化、反馈或其它干预。命题 131.1 的实际相关前缀恒等式与递推给
+$$
+\beta_{n,2}=\Gamma_2(\sigma_n),\qquad
+\sigma_n=(1-p_n)P_0+p_nP_1,\qquad
+p_0=0,\qquad p_{n+1}=\alpha^2(1-p_n).
+$$
+同一个 $W_{\rm ent}$ 满足
+$$
+\operatorname{Tr}(W_{\rm ent}\beta_{n,2})
+=\alpha^5\bigl((\alpha-2)+(3-\alpha)p_n\bigr)
+\le-2\alpha^8<0\qquad(n\ge0),
+$$
+且 $n=1$ 时等号成立。故原族的每个平移相邻窗口也纠缠；$-2\alpha^8$ 是此固定见证沿指定轨道的期望最大值，不是对所有态或见证优化的纠缠量。
+
+证明。由 $T$ 的基像及顺序递推，
+$$
+T_2|0\rangle=\sqrt\alpha\,|00\rangle\otimes m_0
++\alpha|01\rangle\otimes m_1,\qquad
+T_2|1\rangle=|10\rangle\otimes m_0.
+$$
+为核对全部矩阵元，对 $u\in\{00,01,10,11\}$ 定义记忆系数映射
+$$
+L_u=(\langle u|\otimes I_M)T_2,\qquad
+L_{00}=\sqrt\alpha\,|m_0\rangle\langle0|,\quad
+L_{01}=\alpha|m_1\rangle\langle0|,\quad
+L_{10}=|m_0\rangle\langle1|,\quad L_{11}=0.
+$$
+于是对任意 $X\in\mathcal L(M)$ 及任意 $u,v$，
+$$
+\langle u|\Gamma_2(X)|v\rangle=\operatorname{Tr}(L_uXL_v^*).
+$$
+两个记忆向量的实际内积为
+$$
+\langle m_0,m_0\rangle=\langle m_1,m_1\rangle=1,\qquad
+\langle m_0,m_1\rangle=\langle m_1,m_0\rangle=\sqrt\alpha.
+$$
+具体地，对非零的三个 $L_u=c_u|m_{k_u}\rangle\langle j_u|$，上式等于
+$$
+c_uc_vX_{j_uj_v}\langle m_{k_v},m_{k_u}\rangle,
+\qquad
+(c_u,j_u,k_u)=
+\begin{cases}
+(\sqrt\alpha,0,0),&u=00,\\
+(\alpha,0,1),&u=01,\\
+(1,1,0),&u=10.
+\end{cases}
+$$
+任一指标为 $11$ 时则为零。三个对角元依次是 $\alpha X_{00},\alpha^2X_{00},X_{11}$；三个上三角非对角元依次是
+$$
+\sqrt\alpha\,\alpha X_{00}\langle m_1,m_0\rangle=\alpha^2X_{00},\qquad
+\sqrt\alpha\,X_{01}\langle m_0,m_0\rangle=\sqrt\alpha\,X_{01},\qquad
+\alpha X_{01}\langle m_0,m_1\rangle=\alpha\sqrt\alpha\,X_{01}.
+$$
+反向指标仍由同一公式给出，无需假设 $X$ 自伴。因此全部十六个矩阵元为
+$$
+\Gamma_2(X)=
+\begin{pmatrix}
+\alpha X_{00}&\alpha^2X_{00}&\sqrt\alpha\,X_{01}&0\\
+\alpha^2X_{00}&\alpha^2X_{00}&\alpha\sqrt\alpha\,X_{01}&0\\
+\sqrt\alpha\,X_{10}&\alpha\sqrt\alpha\,X_{10}&X_{11}&0\\
+0&0&0&0
+\end{pmatrix}.
+$$
+这里的相干项来自记忆向量的内积，非法扇区的整行整列由 $L_{11}=0$ 消失，并非只计算经典转移概率。
+
+将命题 131.1 的矩阵
+$$
+\sigma_*=\pi_0
+\begin{pmatrix}1&\alpha\sqrt\alpha\\
+\alpha\sqrt\alpha&\alpha^2\end{pmatrix}
+$$
+代入，便得到陈述中的完整 $\eta_2$。它由密度 $\sigma_*$ 经等距及偏迹得到，故为正半定；同时
+$$
+\operatorname{Tr}\eta_2=\pi_0(\alpha+2\alpha^2)
+=\pi_0(1+\alpha^2)=1.
+$$
+命题 131.1 的左右边缘相容性已保证，这也是该平稳比较族中任意两个相邻位置的密度。
+
+现证明见证对全部可分态非负。任取复向量
+$$
+a=a_0|0\rangle+a_1|1\rangle\in B_1,\qquad
+b=b_0|0\rangle+b_1|1\rangle\in B_2,
+$$
+不要求归一化，也不限制其乘积向量的支撑。直接展开给
+$$
+\begin{aligned}
+\langle a\otimes b,W_{\rm ent}(a\otimes b)\rangle
+&=\alpha^4|a_0b_0|^2+|a_1b_1|^2
+-2\alpha^2\operatorname{Re}\bigl(\overline{a_0b_1}\,a_1b_0\bigr)\\
+&=\left|a_1\overline{b_1}-\alpha^2a_0\overline{b_0}\right|^2\ge0.
+\end{aligned}
+$$
+第二个因子的共轭不可省略：该等式使用任意复坐标，而非实向量的限制。若 $A,C$ 为两个因子上的密度，有限维谱分解给
+$$
+A=\sum_r\lambda_r|a^{(r)}\rangle\langle a^{(r)}|,\qquad
+C=\sum_s\mu_s|b^{(s)}\rangle\langle b^{(s)}|,\qquad
+\lambda_r,\mu_s\ge0,
+$$
+其中谱向量为单位向量，两组特征值各自和为一。按张量积及迹的线性性，
+$$
+\operatorname{Tr}\bigl(W_{\rm ent}(A\otimes C)\bigr)
+=\sum_{r,s}\lambda_r\mu_s
+\left|a^{(r)}_1\overline{b^{(s)}_1}
+-\alpha^2a^{(r)}_0\overline{b^{(s)}_0}\right|^2\ge0.
+$$
+再对可分密度的有限凸组合应用线性性，即得 $\operatorname{Tr}(W_{\rm ent}\theta)\ge0$。这正是块正算子在可分锥上配对非负的成熟可分性数学（[CompositeConeDuality，blockPositive_iff_forall_separable_pairing_nonneg](../../../D5/S3/Resource/CompositeConeDuality.lean)）。
+
+此见证的偏转置来源也可直接表示为
+$$
+W_{\rm ent}=\operatorname{PT}_2\bigl(|v\rangle\langle v|\bigr),\qquad
+v=|11\rangle-\alpha^2|00\rangle,\qquad
+\operatorname{PT}_2(|ij\rangle\langle kl|)=|il\rangle\langle kj|,
+$$
+其中 $\operatorname{PT}_2$ 按此基公式线性延伸。偏转置的可分性判据见 Asher Peres，Separability Criterion for Density Matrices，Physical Review Letters 77，1413–1415（1996），[DOI:10.1103/PhysRevLett.77.1413](https://doi.org/10.1103/PhysRevLett.77.1413)，[arXiv:quant-ph/9604005](https://arxiv.org/abs/quant-ph/9604005)。这里仅使用其数学含义，不把偏转置当作物理操作；所需非负性已由平方模及谱分解直接证明。
+
+$W_{\rm ent}$ 的两个交叉项互为伴随，故它自伴。而
+$$
+W_{\rm ent}(|01\rangle+|10\rangle)
+=-\alpha^2(|01\rangle+|10\rangle),
+$$
+所以它不是正半定算子，也不满足 POVM 效应所需的 $0\le E\le I$。由 $\eta_2$ 的上述矩阵元，
+$$
+\begin{aligned}
+\operatorname{Tr}(W_{\rm ent}\eta_2)
+&=\alpha^4\langle00|\eta_2|00\rangle
++\langle11|\eta_2|11\rangle
+-\alpha^2\bigl(\langle10|\eta_2|01\rangle+\langle01|\eta_2|10\rangle\bigr)\\
+&=\pi_0\alpha^5-2\pi_0\alpha^5=-\pi_0\alpha^5<0.
+\end{aligned}
+$$
+这与可分密度的非负性矛盾，证明平稳双位置态纠缠。
+
+最后处理同一纯初态轨道的有限位置。将
+$$
+P_0=\begin{pmatrix}\alpha&\alpha\sqrt\alpha\\
+\alpha\sqrt\alpha&\alpha^2\end{pmatrix},\qquad
+P_1=\begin{pmatrix}1&0\\0&0\end{pmatrix}
+$$
+代入已求出的 $\Gamma_2$，得到
+$$
+G_0:=\Gamma_2(P_0)=
+\begin{pmatrix}
+\alpha^2&\alpha^3&\alpha^2&0\\
+\alpha^3&\alpha^3&\alpha^3&0\\
+\alpha^2&\alpha^3&\alpha^2&0\\
+0&0&0&0
+\end{pmatrix},
+$$
+$$
+G_1:=\Gamma_2(P_1)=|0\rangle\langle0|\otimes\rho_1
+=\begin{pmatrix}
+\alpha&\alpha^2&0&0\\
+\alpha^2&\alpha^2&0&0\\
+0&0&0&0\\
+0&0&0&0
+\end{pmatrix},\qquad
+\rho_1=\begin{pmatrix}\alpha&\alpha^2\\\alpha^2&\alpha^2\end{pmatrix}.
+$$
+由命题 131.1 已在相关联合态上证明的窗口恒等式与 $\Gamma_2$ 的线性性，
+$$
+\beta_{n,2}=(1-p_n)G_0+p_nG_1.
+$$
+因而
+$$
+\operatorname{Tr}(W_{\rm ent}G_0)=\alpha^6-2\alpha^5
+=\alpha^5(\alpha-2),\qquad
+\operatorname{Tr}(W_{\rm ent}G_1)=\alpha^5,
+$$
+$$
+\operatorname{Tr}(W_{\rm ent}\beta_{n,2})
+=\alpha^5\bigl((\alpha-2)+(3-\alpha)p_n\bigr).
+$$
+递推映射 $p\mapsto\alpha^2(1-p)$ 将闭区间 $[0,\alpha^2]$ 映到
+$$
+[\alpha^2(1-\alpha^2),\alpha^2]=[\alpha^3,\alpha^2]
+\subseteq[0,\alpha^2].
+$$
+从 $p_0=0$ 归纳得 $0\le p_n\le\alpha^2$ 对所有 $n\ge0$ 成立，且 $p_1=\alpha^2$。用 $\alpha+\alpha^2=1$ 化简，有
+$$
+(\alpha-2)+(3-\alpha)\alpha^2=-2\alpha^3,
+$$
+$$
+\operatorname{Tr}(W_{\rm ent}\beta_{n,2})+2\alpha^8
+=\alpha^5(3-\alpha)(p_n-\alpha^2)\le0.
+$$
+由于 $\alpha>0$、$3-\alpha>0$，这给出陈述中的统一严格负界，并在 $n=1$ 达到等号。每个 $\beta_{n,2}$ 因此均不可分。命题 130.1 的已发出前缀不变性还保证，继续生成任意有限个后续输出再忽略它们，不改变这一对已发出位置的边际。
+
+同时，直接引用命题 131.1 在同一无条件窗口上的结论，
+$$
+D(\beta_{n,2},\eta_2)\le\frac{\alpha^3}{\mathrm{den}}\alpha^{2n}
+\longrightarrow0\qquad(n\longrightarrow\infty).
+$$
+因此此固定生成器的边界遗忘与相邻输出纠缠同时成立。这里在单位置的指定基相干之外，进一步判定了跨两个输出因子的不可分性；此结论不蕴含 Bell 非局域性或情境性，不量化所有平稳态，也不构成物理空间的推导、最优负性或距离的断言。证毕。
+
+## 追加锚（本行以下为增补区）

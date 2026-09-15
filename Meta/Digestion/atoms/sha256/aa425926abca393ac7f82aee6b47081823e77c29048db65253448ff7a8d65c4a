@@ -1,0 +1,25 @@
+**证明。** 写 $Q(z)=R(z)^{-1}$、$\widehat Q(z)=\widehat R(z)^{-1}$。PM5 与半正定矩阵的 $\|F_n\|\le\operatorname{tr}F_n$ 给出对每个 $N$，
+
+$$
+\sum_{n=0}^{N}\|Q_n\|
+=1+\sum_{n=1}^{N}\|F_n\|
+\le1+\operatorname{tr}\left(\sum_{n=1}^{N}F_n\right)\le1+d,
+$$
+
+第二个系统同理。在非交换形式级数环中，
+
+$$
+\widehat Q-Q=\widehat Q(R-\widehat R)Q.
+$$
+
+比较第 $j+2$ 个系数；每个响应差的指标不超过 $j+2\le H_0+2$，零阶响应差为零。使用次乘法性并扩张有限求和区域，得到
+
+$$
+\|\widehat Q_{j+2}-Q_{j+2}\|
+\le\eta\left(\sum_{a=0}^{j+2}\|\widehat Q_a\|\right)
+\left(\sum_{b=0}^{j+2}\|Q_b\|\right)
+\le(d+1)^2\eta.
+$$
+
+而 $Q_{j+2}=-M_j$、$\widehat Q_{j+2}=-\widehat M_j$。证明没有分离特征值、除以耦合或选择隐藏坐标。证毕。
+

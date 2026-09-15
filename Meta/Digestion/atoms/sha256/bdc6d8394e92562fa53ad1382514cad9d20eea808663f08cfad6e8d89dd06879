@@ -1,0 +1,16 @@
+**命题 AT8。** 隐藏传播 $D=QKQ|_{\operatorname{ran}Q}$ 满足
+
+$$
+0\le D\le(1-1/m)I.
+$$
+
+中心化响应满足
+
+$$
+\boxed{\langle e,K^t e\rangle=
+\sum_{k=1}^m
+\frac{\binom mk(m-2k)^2}{m(2^m-m)}\left(1-\frac km\right)^t.}
+$$
+
+$t=0$ 时采用 $0^0=1$ 的幂约定。若 $m$ 为偶数，则 $k=m/2$ 项的权重恰为零。
+

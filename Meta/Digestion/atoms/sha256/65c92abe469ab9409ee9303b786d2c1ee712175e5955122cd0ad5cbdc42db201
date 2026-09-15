@@ -1,0 +1,2 @@
+**定义。** 对 $1\le i\le2r+1$ 的有噪声响应 $y_i$，假设 $|y_i-s_i|\le\epsilon$。在固定 $r+1$ 维矩阵空间中，把较低维模型补零，在上述正收缩约束集合上最小化 $\max_i|y_i-\langle e,\widetilde K^i e\rangle|$。
+

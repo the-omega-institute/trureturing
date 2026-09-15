@@ -1,0 +1,10 @@
+**证明。** 取 $\delta=2(1-\kappa)^2\epsilon$。PN2 和 $B_\kappa^{q-1}\le A_\kappa/\epsilon$ 给出 $\delta S_q\le\kappa^2/64$，故 PN3 的两模型合法。PN4 给出全部响应差不超过 $2\epsilon$。同一数据
+
+$$
+y_n=\frac{s_n(K_+)+s_n(K_-)}2
+$$
+
+与两模型的误差均不超过 $\epsilon$。对任意估计器，令 $L_\pm=\sum_{j<q}|\widehat m_j(y)-m_j^\pm|$。逐项三角不等式给出 $L_++L_-\ge q\delta$，故至少一个损失不小于 $q\delta/2=(1-\kappa)^2q\epsilon$。全部绝对损失不小于这个有限前缀损失。由于 $q\to\infty$ 当 $\epsilon\downarrow0$，线性率被排除。证毕。
+
+此下界在所有响应时刻都被提供时成立。它不依赖缺少足够长的观察时间、接近单位圆的隐藏根、Jordan 块、非正规放大或无界耦合范数。
+

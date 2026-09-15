@@ -1,0 +1,8 @@
+**假设。** 采用 PN.3 的节点，并取
+
+$$
+0<\delta S_q\le\kappa^2/64,
+\qquad w_i^\pm=\delta\max(\pm c_i,0),
+\qquad b_i^\pm=\sqrt{w_i^\pm}.
+$$
+

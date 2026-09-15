@@ -1,0 +1,17 @@
+**证明。** FM.5 的估计给出 $|\widehat g-g|\le3\epsilon$ 和 $|\widehat z-gw|\le8\epsilon$。若 $\widehat g\le0$，则 $g\le3\epsilon$，逐项误差不超过 $3\epsilon\theta^j$。若 $\widehat g>0$，截断的非扩张性给出
+
+$$
+\widehat g|\widehat w-w|
+\le |\widehat z-\widehat g w|
+\le (8+3\theta)\epsilon.
+$$
+
+利用 $|x^j-y^j|\le j\theta^{j-1}|x-y|$，分解幅度误差和传播误差即得逐项界。求和后，系数为
+
+$$
+\frac3{1-\theta}+\frac{8+3\theta}{(1-\theta)^2}
+=\frac{11}{(1-\theta)^2}.
+$$
+
+证明不需要对 $g$ 或 $\widehat g$ 设正下界。证毕。
+

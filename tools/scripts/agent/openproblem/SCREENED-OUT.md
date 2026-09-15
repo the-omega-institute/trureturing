@@ -77,3 +77,76 @@ Tom Adamczewski, "OEIS Open: How many conjectures can language models turn into 
 arXiv:2608.11941, builds a benchmark of 492 open OEIS conjectures formalized in Lean from
 google-deepmind/formal-conjectures and reports 147 resolved. Entries are now acquiring comments
 that record such work. Expect a candidate drawn from that corpus to have been attempted.
+
+## Screened 2026-09-15 (rounds R30 and R31)
+
+Both rounds ran exact-integer checks and returned `abstain` with reasons rather than silence. The
+eliminations below are recorded so that neither round's work is repeated.
+
+### Already settled, with the settlement named
+
+| entry | what settles it |
+| --- | --- |
+| A008676 | John W. Layman's 2009 floor conjecture is *identically equal* to Tani Akinari's 2013 formula in the same entry: for every `n >= 0` both equal `1 + floor(2n/5) - ceil(n/3)`. Checked against an independent coin-change dynamic program over `0 <= n <= 10^6`, zero mismatches. An entry still displaying `Conjecture:` is not by itself evidence of openness. |
+| A001951 | Stephan's conjecture is recorded as proved by Sela Fried; OEIS comment 2025-10-24, JIS 2026 Article 26.1.8. Independently checked `n = 0..10^6`, zero mismatches. |
+| A064170 | Wolfdieter Lang's 2020-05-26 proof is in the entry and the old conjecture line points at it. |
+| A051293 | A later OEIS comment signed Ralf Stephan, 2026-06-18, records a proof by an autonomous AI agent and links the proof file. This is the arXiv:2608.11941 corpus effect in action. |
+| A062771 | Charles R. Bower's 2005-05-20 comment confirms the old conjecture and supplies the formula. |
+| A120737 / A070226 | **Settled inside this repository.** `D5/S3/Arith/DivisorCountRadicalCoincidence.radical_eq_card_divisors_of_dvd` is Ctibor O. Zizka's conjecture, and its docstring names both entries. R31 independently produced a complete Omega-counting proof and a million-term check before the repository search closed it — effort that this row exists to prevent. |
+
+### Known erratum in the source, not an open problem
+
+| entry | what it is |
+| --- | --- |
+| Stephan 2004, item (33) / A056777 | The printed `n ≡ 64 (mod 72)` is a known typo. Exact check over `2 <= n <= 10^6` finds exactly five numbers satisfying the premise — 65, 209, 11009, 38009, 680609 — all refuting the printed congruence. arXiv:2606.10331v3 (2026-07-22) states the typo on its first page and gives 65 as the least solution; the corrected version is A056777. |
+| Stephan 2004, items (111) and (112) / A065359 / A036556 | Both rest on a definition Sloane corrected on 2007-01-09. A036556 is `{k : s_2(3k) odd}`, not `{k : 3 | k and s_2(k) odd}`. Under the literal printed set the checks fail at `n = 21` and `n = 63` respectively — that is the stale definition showing, not a new refutation. |
+| Stephan 2004, item (35) / A063880 | The object is A063880, whose entry already carries Stephan's own 2003-07-07 congruence observation. A paper's item number is not a second open problem. |
+
+### Boundary-value-only refutations, and why they were not promoted
+
+| entry | reading |
+| --- | --- |
+| A069198 / A069197 | Cloitre's parameterized sentence "if a(2)=m, different from 2 or 5, sequence diverges" is literally false at `m = 1`, which is a fixed point (`F(2) = 1`, so the orbit is constant). But this refutes neither entry's own initial value (6 and 4), and the historical parameter domain could not be read from the revision history. R31 also found that the entry's own comment about the `m = 5` cycle disagrees with the recurrence as printed: the actual cycle is a rotation of `(5,4,3,7)`. Calibrate the source statement before treating a missing boundary value as a settlement. |
+
+### Numerically verified, no proof route
+
+| entry | reading |
+| --- | --- |
+| A076905 | Exact check `1 <= n <= 10^6` with rational root bracketing at denominator `10^40`, zero mismatches and no ambiguous rounding — but no general argument and no verified short Lean route. Numeric agreement is not a proof-type candidate. |
+
+### Family exclusion: Paul D. Hanna's generating-function conjectures
+
+Another driver has worked this family systematically — `dev` carries roughly eighty public
+`hanna_conjecture*` theorems. More importantly, that driver's Library notes record, in prose, that
+a given conjecture already follows from frozen content and is therefore *deliberately not stated*
+as a theorem; see `Library/Arith/hanna2026a393856.md` and `Library/Recurrence/hanna2026a396846.md`.
+Such an entry is not an available target even though OEIS still labels it `Conjecture`. The same
+notes give a family argument: modulo two, `A(x - x*A(k*x)/k) = x` loses every term with `j >= 2`
+whenever `k` is even, so the whole even-scaling branch shares one reduced object and a different
+A-number in that branch is not a different target.
+
+## How large a numeric check has to be
+
+Search briefs long asked for "at least 10^4 exact checks". That is the wrong shape of rule: it is
+infeasible for fast-growing sequences and it caused A079278 (Quet 2003) to be held back although
+its recurrence had been verified exactly as far as anyone can compute. Scale the requirement to the
+sequence's growth:
+
+- linear or polynomial growth — 10^4 to 10^6 exact checks;
+- exponential growth — as far as is affordable, reporting the exact range;
+- doubly exponential growth (digit count doubling per step or faster) — **a dozen or two exact
+  big-integer checks is appropriate evidence**; state that N is the ceiling at that scale rather
+  than reporting the run as incomplete.
+
+A079278's denominators illustrate the point: digit counts run
+`1, 1, 2, 3, 6, 12, 25, 50, 100, 200, 401, 803, 1606, 3213, 6427, 12855, 25711, 51422, 102845, 205690, 411381`,
+so `a(21)` alone has 411381 digits. The test is whether the reported range would convince a sceptic,
+not whether it reaches a fixed number.
+
+## What a browser-oracle search seat cannot do
+
+A `nyxid-oracle` seat has no filesystem and cannot run `git grep`, so asking it to exclude
+candidates that already have an equivalent public theorem in this repository asks for something it
+physically cannot check. Repository deduplication is the orchestrator's step. Give such a seat the
+fullest possible do-not-report list instead, and have it flag candidates for the repository check
+rather than claim to have performed it.
