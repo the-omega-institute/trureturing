@@ -44,7 +44,7 @@ internal sealed record DigestionUpstream(
             if (string.IsNullOrWhiteSpace(Justification))
                 return "justification must be a nonempty scalar";
             if (Declarations.IsDefaultOrEmpty || !SortedDistinct(Declarations)
-                || !Declarations.All(static name => DeclarationPattern.IsMatch(name)))
+                || !Declarations.All(IsDeclarationName))
                 return "declarations must be a non-empty ordinal-sorted distinct list of Lean declaration names";
             if (MathlibRev.Length != 40
                 || !MathlibRev.All(static c => c is >= '0' and <= '9' or >= 'a' and <= 'f'))
@@ -52,7 +52,7 @@ internal sealed record DigestionUpstream(
             if (!DigestionFingerprint.IsCanonicalSha256(ProbeSha256))
                 return "probe_sha256 must be sha256: followed by 64 lowercase hexadecimal characters";
             if (ProbeAxioms.IsDefault || !SortedDistinct(ProbeAxioms)
-                || !ProbeAxioms.All(static name => name is "propext" or "Classical.choice" or "Quot.sound"))
+                || !ProbeAxioms.All(IsAllowedAxiom))
                 return "probe_axioms must be an ordinal-sorted distinct list drawn from Classical.choice, Quot.sound, propext";
             if (PreviousAtomId is not null && !DigestionNonpropositional.IsAtomId(PreviousAtomId))
                 return "previous_atom_id must be a 64-character lowercase hexadecimal atom id or null";
@@ -61,6 +61,10 @@ internal sealed record DigestionUpstream(
             return null;
         }
     }
+
+    internal static bool IsDeclarationName(string name) => DeclarationPattern.IsMatch(name);
+
+    internal static bool IsAllowedAxiom(string name) => name is "propext" or "Classical.choice" or "Quot.sound";
 
     private static bool SortedDistinct(ImmutableArray<string> values) =>
         values.SequenceEqual(values.Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal));

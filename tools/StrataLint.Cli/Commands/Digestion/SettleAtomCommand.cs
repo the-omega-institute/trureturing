@@ -128,7 +128,7 @@ internal static partial class SettleAtomCommand
         return newPath;
     }
 
-    private static string[] CoveredAncestors(BackfillInventoryDocument document, string atomId)
+    internal static string[] CoveredAncestors(BackfillInventoryDocument document, string atomId)
     {
         var visited = new HashSet<string>(StringComparer.Ordinal) { atomId };
         var ancestors = new HashSet<string>(StringComparer.Ordinal);
