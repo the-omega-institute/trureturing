@@ -1,0 +1,5 @@
+**定义。** 固定 $1\le r<g$。对 $1\le i\le r$，令 $h_i=[a_i,b_i]$，并定义 $\tau_i$ 将第 $i$ 对生成元以 $h_i$ 共轭、固定其余生成元。第 $r+1$ 个把手保持不动，作为共同参照。记
+
+$$\tau^{\boldsymbol n}=\tau_1^{n_1}\cdots\tau_r^{n_r},\qquad
+\boldsymbol n\in\mathbb Z^r.$$
+

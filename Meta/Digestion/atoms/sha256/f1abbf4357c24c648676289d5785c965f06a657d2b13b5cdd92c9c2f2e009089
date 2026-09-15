@@ -1,0 +1,7 @@
+**定义。** 记 $a_\ell:\Lambda\to\operatorname{Out}(Q_\ell)$ 为实际外作用，$C_\ell=\ker a_\ell$，$K_\ell=\ker\Psi_\ell$。以加法记 $V_\ell$，令
+
+$$Z^1(S,V_\ell)=\{d:S\to V_\ell:d(st)=d(s)+s\cdot d(t)\},$$
+
+$$B^1(S,V_\ell)=\{s\mapsto b-s\cdot b:b\in V_\ell\},\qquad
+H^1(S,V_\ell)=Z^1(S,V_\ell)/B^1(S,V_\ell).$$
+

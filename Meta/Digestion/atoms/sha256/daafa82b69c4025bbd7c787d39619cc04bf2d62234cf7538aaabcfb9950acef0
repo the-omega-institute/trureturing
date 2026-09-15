@@ -1,0 +1,21 @@
+**证明。** 阶乘的相邻项比给出
+
+$$
+\frac{r_{n+1}}{r_n}
+=\frac{\prod_{j=1}^{30}(n+j/30)(n+1)}
+{\prod_{j=1}^{15}(n+j/15)\prod_{j=1}^{10}(n+j/10)\prod_{j=1}^{6}(n+j/6)}.
+$$
+
+约去公共因子，分子留下八个 $n+\alpha_i$，分母留下八个 $n+\beta_i$；两边在零处都为一，归纳得到第一式。
+
+逐项有 $0<\alpha_i<\beta_i$。取相互独立的随机变量 $X_i$，其密度为
+
+$$
+\frac{x^{\alpha_i-1}(1-x)^{\beta_i-\alpha_i-1}}
+{\mathrm B(\alpha_i,\beta_i-\alpha_i)},\qquad0<x<1.
+$$
+
+Beta 积分给出 $\mathbb E[X_i^n]=(\alpha_i)_n/(\beta_i)_n$。令 $X=\prod_iX_i$，其分布 $\mu$ 便满足矩等式。每个因子密度在 $(0,1)$ 为正；对任意 $x\in(0,1)$，取八个因子均在 $x^{1/8}$ 附近的充分小开区间，其乘积落在 $x$ 的指定邻域，联合概率为正。因此 $\mu$ 在每个非空开区间上有正质量。证毕。
+
+阶乘比与超几何参数消去的背景见 J. W. Bober, *Factorial ratios, hypergeometric series, and a family of step functions*, J. London Math. Soc. 79 (2009), 422–444, [arXiv:0709.1977](https://arxiv.org/abs/0709.1977)。Gamma 型矩与阶乘比 Hausdorff 矩问题见 M. Wang, *Moments of Gamma type and three-parametric Mittag-Leffler function*, [arXiv:2410.19330](https://arxiv.org/abs/2410.19330)。PM3 的具体参数与概率构造由上面的约分和独立乘积给出。
+

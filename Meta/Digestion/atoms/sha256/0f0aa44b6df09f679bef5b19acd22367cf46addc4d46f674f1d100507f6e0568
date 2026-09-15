@@ -1,0 +1,37 @@
+### 121.2 经典近似缺陷的复合律
+
+定义从 $E$ 模拟 $F$ 的最坏行总变差缺陷
+
+$$
+\delta_B(F\mid E)
+=
+\inf_K\max_{h\in H}
+\operatorname{TV}\bigl(F_h,(K E)_h\bigr),
+$$
+
+其中 $E_h$、$F_h$ 表示固定历史 $h$ 的记录分布。设有第三个接口 $G$，且记录空间允许复合相应随机核。对任意 $K_1,K_2$，由三角不等式和随机核对总变差距离的收缩性，得到
+
+$$
+\operatorname{TV}\bigl(G_h,(K_2K_1E)_h\bigr)
+\le
+\operatorname{TV}\bigl(G_h,(K_2F)_h\bigr)
++
+\operatorname{TV}\bigl((K_2F)_h,(K_2K_1E)_h\bigr)
+\le
+\operatorname{TV}\bigl(G_h,(K_2F)_h\bigr)
++
+\operatorname{TV}\bigl(F_h,(K_1E)_h\bigr).
+$$
+
+取历史最坏值和两个核的下确界，得到
+
+$$
+\boxed{
+\delta_B(G\mid E)
+\le
+\delta_B(F\mid E)+\delta_B(G\mid F).
+}
+$$
+
+因此沿接口链 $E_0\succeq_B E_1\succeq_B\cdots\succeq_B E_m$，若第 $i$ 步近似缺陷为 $\varepsilon_i$，则端点缺陷至多为 $\sum_i\varepsilon_i$。对单位区间损失，记录风险的相应偏差至多为同一数值；对上界为 $L$ 的损失，乘以 $L$。
+

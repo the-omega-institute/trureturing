@@ -26606,3 +26606,1855 @@ $$
 $$
 
 后续章节可以在这一锚上研究三类问题：不同记忆结构下的缺陷复合律、comb/strategy 范数的逐槽推广，以及 Zeckendorf 粗读出在给定实验族中的最小充分记录。若没有这些额外假设，不得把“记录看起来经典”升级为“整体过程已经经典”。
+## 121. 记录接口的 Blackwell 偏序与缺陷复合
+
+第 120 节用过程 diamond 缺陷控制任意后续量子决策风险。本节固定一个历史参数集，研究不同记录接口之间的可模拟关系：若较粗记录可以由较细记录通过与历史无关的退化得到，则较细记录对所有固定任务都不劣；若只能近似退化，则缺陷沿记录链次可加。这给“保留多少历史”提供一个偏序，而不是单一标量。
+
+### 121.1 经典记录的 Blackwell 预序
+
+设有限历史集为 $H$，有限记录集为 $Y,Z$。记录接口是条件概率核
+
+$$
+E(y\mid h),
+\qquad
+F(z\mid h),
+$$
+
+其中对每个 $h$ 有 $\sum_yE(y\mid h)=\sum_zF(z\mid h)=1$。随机退化核 $K(z\mid y)$ 作用为
+
+$$
+(K E)(z\mid h)=\sum_yK(z\mid y)E(y\mid h).
+$$
+
+定义 Blackwell 预序
+
+$$
+E\succeq_B F
+\quad\Longleftrightarrow\quad
+\exists K\;F=K\circ E.
+$$
+
+它是自反且传递的预序：自反性取恒等核；若 $F=K_1E$ 且 $G=K_2F$，则 $G=(K_2K_1)E$。互相可以退化的接口应视为同一个等价类；一般情况下预序不反对称，因此不能把所有记录接口排成一条全序链。
+
+对有限动作集 $A$、先验 $\pi$ 和损失 $0\le\ell(a,h)\le L$，记录 $E$ 的最优风险为
+
+$$
+R_E
+=
+\inf_\delta
+\sum_{h\in H}\pi(h)
+\sum_{y\in Y}E(y\mid h)
+\sum_{a\in A}\delta(a\mid y)\ell(a,h),
+$$
+
+其中 $\delta(a\mid y)$ 是从记录到动作的随机决策规则。若 $E\succeq_BF$，固定一个实现 $F=K E$。任意使用 $F$ 的决策规则都可在 $E$ 上先施加 $K$ 再执行，因此
+
+$$
+\boxed{R_E\le R_F.}
+$$
+
+该不等式对每个固定先验、动作集和有界损失分别成立；它不构成跨任务的单一风险全序，也不说明某条记录在未声明的动力学或自适应实验中仍然充分。
+
+### 121.2 经典近似缺陷的复合律
+
+定义从 $E$ 模拟 $F$ 的最坏行总变差缺陷
+
+$$
+\delta_B(F\mid E)
+=
+\inf_K\max_{h\in H}
+\operatorname{TV}\bigl(F_h,(K E)_h\bigr),
+$$
+
+其中 $E_h$、$F_h$ 表示固定历史 $h$ 的记录分布。设有第三个接口 $G$，且记录空间允许复合相应随机核。对任意 $K_1,K_2$，由三角不等式和随机核对总变差距离的收缩性，得到
+
+$$
+\operatorname{TV}\bigl(G_h,(K_2K_1E)_h\bigr)
+\le
+\operatorname{TV}\bigl(G_h,(K_2F)_h\bigr)
++
+\operatorname{TV}\bigl((K_2F)_h,(K_2K_1E)_h\bigr)
+\le
+\operatorname{TV}\bigl(G_h,(K_2F)_h\bigr)
++
+\operatorname{TV}\bigl(F_h,(K_1E)_h\bigr).
+$$
+
+取历史最坏值和两个核的下确界，得到
+
+$$
+\boxed{
+\delta_B(G\mid E)
+\le
+\delta_B(F\mid E)+\delta_B(G\mid F).
+}
+$$
+
+因此沿接口链 $E_0\succeq_B E_1\succeq_B\cdots\succeq_B E_m$，若第 $i$ 步近似缺陷为 $\varepsilon_i$，则端点缺陷至多为 $\sum_i\varepsilon_i$。对单位区间损失，记录风险的相应偏差至多为同一数值；对上界为 $L$ 的损失，乘以 $L$。
+
+### 121.3 量子记录接口
+
+经典核的退化对应量子记录态族之间的 CPTP 模拟。设每个历史 $h$ 在接口 $E$、$F$ 下分别产生密度算子 $\rho_h^E$、$\rho_h^F$。定义
+
+$$
+E\succeq_QF
+\quad\Longleftrightarrow\quad
+\exists\Lambda\ \text{CPTP},
+\quad
+\rho_h^F=\Lambda(\rho_h^E)\quad(\forall h).
+$$
+
+量子接口的状态族模拟缺陷为
+
+$$
+\delta_Q(F\mid E)
+=
+\inf_{\Lambda\ \mathrm{CPTP}}
+\max_{h\in H}
+\frac12\left\|\rho_h^F-\Lambda(\rho_h^E)\right\|_1.
+$$
+
+CPTP 映射保持迹距离收缩，因此 $E\succeq_QF$ 时，对任意 POVM 决策和有界损失都有 $R_E\le R_F$；近似情形下，被模拟方向满足 $R_E\le R_F+L\,\delta_Q(F\mid E)$。近似缺陷还满足复合律
+
+$$
+\boxed{
+\delta_Q(G\mid E)
+\le
+\delta_Q(F\mid E)+\delta_Q(G\mid F).
+}
+$$
+
+证明与经典情形相同：对近似模拟器 $\Lambda_1:E\to F$、$\Lambda_2:F\to G$ 复合，并使用
+
+$$
+\frac12\left\|\Lambda_2(\sigma)-\Lambda_2(\tau)\right\|_1
+\le
+\frac12\left\|\sigma-\tau\right\|_1.
+$$
+
+这里的量子预序只比较一组状态族和一次 CPTP 读出。若后续实验可以访问多槽活动记忆、插入自适应控制或保留参考，应回到第 120 节的过程缺陷；单次状态族的 $\delta_Q$ 不自动支配 comb 或 strategy 的风险。
+
+### 121.4 历史保留的操作判据
+
+令 $E_k$ 表示保留深度为 $k$ 的记录接口，且忘却核满足
+
+$$
+E_{k+1}\succeq_BE_k
+$$
+
+或其量子对应 $E_{k+1}\succeq_QE_k$。给定目标未来接口 $T$、损失上界 $L$ 和容许风险误差 $\varepsilon$，若存在满足条件的 $k$，则可以选择最小的 $k$ 使
+
+$$
+L\,\delta(T\mid E_k)\le\varepsilon,
+$$
+
+其中 $\delta$ 取与任务匹配的 $\delta_B$、$\delta_Q$ 或第 120 节的过程 diamond 缺陷。这个 $k$ 是相对于历史参数集、后续决策类和误差预算的最小充分记录深度；改变任一项都可能改变它。
+
+该判据不声称存在跨所有任务的唯一“客观历史长度”。Blackwell 预序提供的是可比较性：一条记录若能无损模拟另一条，就对所有固定任务支配；两条记录若互不可退化，则需要指定先验、损失或后续实验才能比较。
+
+### 121.5 与 Zeckendorf 构型的连接
+
+在合法语言
+
+$$
+\mathcal W_L
+=\{w\in\{0,1\}^L:w_jw_{j+1}=0\}
+$$
+
+上，可把 $h=w$ 作为历史参数，把 Zeckendorf 数值、奇偶性或局部模式作为不同记录接口。当 $E_k$ 是 $E_{k+1}$ 的历史无关粗粒化（由函数或随机核给出）时，存在忘却核，因而 $E_{k+1}\succeq_BE_k$。但若记录接口还包含相位、活动记忆或参考，粗粒度函数未必能由经典核模拟；必须把这些量纳入量子状态族并计算 $\delta_Q$，或回到第 120 节的过程缺陷。
+
+这解释了为什么同一组合法构型可以有不同的“现实稳定度”：稳定度不是由 Fibonacci 维数 $F_{L+2}$ 单独决定，而是由所选记录接口在 Blackwell 预序中的位置及其对目标未来的缺陷共同决定。
+
+### 121.6 形式化边界与追加锚
+
+本节的经典预序、总变差复合律、量子 CPTP 预序和状态族迹距离复合律是有限集合与有限维量子态上的普通数学推导。指定版本的 Lean 库已有随机核、有限 Kraus 通道和迹距离收缩等支点；其中 `FiniteDeficiencyTriangle.lean` 与 `FiniteDeficiencyRiskTransfer.lean` 分别提供有限缺陷三角和有界损失风险传递。Blackwell 命名、接口预序与量子状态族的统一组合尚无一个单一冻结定理；本节不冒充新增 kernel 证明。多槽自适应过程仍应使用第 120 节的过程级范数。
+
+新增锚为
+
+$$
+\boxed{
+\text{记录的充分性形成 Blackwell 预序；缺陷沿可复合的退化链次可加；在模拟方向上，风险增加至多为损失上界乘以缺陷。}
+}
+$$
+
+因此，“需要保留多少历史”可以先问三个可计算问题：哪些记录可以无损退化，近似退化的缺陷如何沿链累加，以及给定未来任务的风险预算允许多大的端点缺陷。只有在这三个量都被指定后，稳定经典现实才有可检验的记录深度。
+
+## 122. 双向缺陷、操作等价与历史深度
+
+第 121 节给出了有向的 Blackwell 缺陷：较细接口能否模拟较粗接口，以及模拟误差如何沿链累加。本节补上两个边界。第一，若要称两个接口“同一现实接口”，需要同时控制两个方向；第二，嵌套历史接口只有在忘却核与任务缺陷相容时，才会产生可证明的最小保留深度。
+
+### 122.1 双向缺陷不是标签相等
+
+对经典接口定义
+
+$$
+\Delta_B(E,F)
+=
+\max\left\{\delta_B(F\mid E),\delta_B(E\mid F)\right\},
+$$
+
+对量子状态族定义
+
+$$
+\Delta_Q(E,F)
+=
+\max\left\{\delta_Q(F\mid E),\delta_Q(E\mid F)\right\}.
+$$
+
+第 121 节的有向次可加律立即给出三角不等式
+
+$$
+\Delta_B(E,G)
+\le
+\Delta_B(E,F)+\Delta_B(F,G),
+$$
+
+以及量子对应式
+
+$$
+\Delta_Q(E,G)
+\le
+\Delta_Q(E,F)+\Delta_Q(F,G).
+$$
+
+两者都满足自反性，但一般不满足严格的同一性判别：若两个接口可以在所有历史上互相近似退化，可能仍然不是字节相等、标签相等或通道同构。它们只是在指定历史实验族下操作等价。因此 $\Delta_B$ 与 $\Delta_Q$ 更准确地说是伪度量；在互相零缺陷的接口等价类上，才得到真正的度量结构。 在有限接口且模拟器集合紧的条件下，定义 $E\sim F\iff\Delta(E,F)=0$ 得到等价关系，商空间上的诱导距离才是度量；若只给定部分任务族，只能称为任务相对等价。
+
+若 $\Delta(E,F)\le\varepsilon$ 且 $\Delta(F,G)\le\varepsilon$，只能推出 $\Delta(E,G)\le2\varepsilon$。所以“误差不超过 $\varepsilon$ 的等价”本身不是传递等价关系；跨多层接口时必须把预算累加，或提高允许阈值。
+
+### 122.2 双向缺陷与任务风险
+
+若损失上界为 $L$，第 121 节的单向结论分别给出
+
+$$
+R_E\le R_F+L\,\delta(F\mid E),
+\qquad
+R_F\le R_E+L\,\delta(E\mid F).
+$$
+
+因此
+
+$$
+\boxed{
+\left|R_E-R_F\right|
+\le
+L\,\Delta(E,F).
+}
+$$
+
+这里的风险必须针对同一个先验、动作集和损失函数；改变任务后，$\Delta$ 仍可作为接口距离，但这条风险界需要重新代入新的 $L$ 与决策类。量子状态族的 POVM 决策同样满足该双向界，迹距离收缩是唯一使用的量子性质。
+
+### 122.3 嵌套历史接口的单调性
+
+设 $E_k$ 是保留前 $k$ 层历史的接口。若存在与历史无关的忘却核 $W_k$，满足
+
+$$
+E_k=W_k\circ E_{k+1},
+$$
+
+则有精确 Blackwell 关系
+
+$$
+E_{k+1}\succeq_BE_k.
+$$
+
+对任意目标接口 $T$，把从 $E_k$ 到 $T$ 的近似模拟器与 $W_k$ 复合，得到
+
+$$
+\boxed{
+\delta_B(T\mid E_{k+1})
+\le
+\delta_B(T\mid E_k).
+}
+$$
+
+量子状态族在存在 CPTP 忘却映射时满足完全相同的单调性：若 $\rho_h^{E_k}=\Lambda_k(\rho_h^{E_{k+1}})$，则
+
+$$
+\delta_Q(T\mid E_{k+1})
+\le
+\delta_Q(T\mid E_k).
+$$
+
+单调性只说明增加可模拟的历史不会变差；它不保证缺陷严格下降，也不保证任意“看起来更长”的记录都存在这样的忘却核。嵌套性必须由接口的实际构造给出。
+
+### 122.4 有限历史深度与开放边界
+
+给定目标未来接口 $T$、容许接口缺陷 $\varepsilon$ 和损失上界 $L$，定义
+
+$$
+k_\varepsilon(T)
+=
+\min\left\{k:\ L\,\delta(T\mid E_k)\le\varepsilon\right\},
+$$
+
+但只有集合非空时该最小值才存在。若对所有可用 $k$ 都不满足条件，应保留“无有限深度”的开放状态，不能以增加计算预算代替缺失的历史信息。
+
+当 $E_k$ 嵌套且存在忘却核时，上一节单调性保证可行深度集合是向上的：一旦某个 $k$ 满足预算，所有更深层接口也满足。于是 $k_\varepsilon(T)$ 的含义是明确的最小充分记录深度，而不是任意截断点。 若令 $e_k=\delta(T\mid E_k)$、$e_\infty=\inf_k e_k$，则严格满足 $\varepsilon>L e_\infty$ 时可由单调收敛得到某个有限可行 $k$；$\varepsilon<L e_\infty$ 时不存在可行深度；等号情形只有在某个有限 $k$ 达到极限时才可行，否则仍是开放边界。
+
+第 120 节的过程 diamond 缺陷可直接替换这里的 $\delta$，但需要把 $E_k$ 视为完整过程接口并保留参考与活动记忆。若只用单次状态族的 $\delta_Q$，则所得深度只对一阶段 POVM 任务有效。
+
+### 122.5 Zeckendorf 合法空间中的实例化
+
+在
+
+$$
+\mathcal W_L
+=\{w\in\{0,1\}^L:w_jw_{j+1}=0\}
+$$
+
+中，令 $E_k$ 保留 Zeckendorf 合法字串的前 $k$ 个坐标，令 $W_k$ 忘却其余坐标。只要粗读出确实是这些坐标的函数，$E_k=W_k\circ E_{k+1}$ 成立，因而形成 Blackwell 链。
+
+若目标任务读取完整数值、相位或跨坐标历史，坐标前缀未必足够；此时应把目标接口 $T$ 的后态与记忆纳入缺陷计算。合法构型总数 $F_{L+2}$ 只给出状态空间规模，不决定 $k_\varepsilon(T)$。
+
+因此，同一个 Zeckendorf 刻度可以在一个任务上很快达到小缺陷，在另一个任务上始终有非零缺陷。差异来自目标实验族和可访问关联，而不是编码是否唯一。
+
+### 122.6 形式化边界与追加锚
+
+本节的双向伪度量、风险绝对差界和嵌套接口单调性，均由第 121 节的有向缺陷复合与 CPTP/随机核收缩推出。指定版本的 Lean 支点仍是有限缺陷三角、风险传递和通道收缩；本节未新增 Lean 声明，也没有把这些普通数学组合冒充 kernel 已证结果。
+
+新增锚为
+
+$$
+\boxed{
+\text{“同一现实接口”只能表示指定实验族下的双向小缺陷；历史深度只有在忘却核、任务和误差预算同时给定时才可计算。}
+}
+$$
+
+这使“保留多少历史”获得两个可审计的失败模式：没有双向模拟时，接口不能称为操作等价；没有满足预算的有限 $k$ 时，结论必须保持开放，而不是把更长的 Zeckendorf 标签自动当作充分历史。
+## 123. 逆极限中的幽灵历史与载体完备化
+
+第 122 节把记录深度写成相对于目标任务的缺陷预算。本节补上一个不同的边界：即使每个有限层都可实现，且层与层之间完全相容，也不保证这些有限记录来自原先的对象载体。逆极限会把所有有限层一致的塔组织起来；原载体能否覆盖这些塔，是一个独立的满射与完备化问题。
+
+### 123.1 有限接口塔与自然嵌入
+
+设有有限层接口 $q_n:X\to Q_n$，以及忘却映射 $\pi_n:Q_{n+1}\to Q_n$，满足
+
+$$
+\pi_n\circ q_{n+1}=q_n.
+$$
+
+定义兼容塔
+
+$$
+\varprojlim Q_n
+=
+\left\{(z_n)_n:\ \pi_n(z_{n+1})=z_n\ \text{对所有 }n\right\}.
+$$
+
+每个 $x\in X$ 给出一个塔
+
+$$
+\iota(x)=(q_n(x))_n.
+$$
+
+令
+
+$$
+R_\infty=\bigcap_n\ker(q_n),
+\qquad
+x\mathrel{R_\infty}y
+\Longleftrightarrow
+q_n(x)=q_n(y)\ \text{对所有 }n.
+$$
+
+则 $\iota$ 唯一因子化为
+
+$$
+\bar\iota:X/R_\infty\longrightarrow\varprojlim Q_n,
+$$
+
+并且 $\bar\iota$ 是单射。这里的单射只使用所有层读数同时相等才定义的商关系；它不要求原载体已经完备。
+
+### 123.2 满射缺陷不是逐层一致性能够消除的
+
+嵌入 $\bar\iota$ 满射，当且仅当每一个兼容塔 $(z_n)_n$ 都存在单个 $x\in X$，使
+
+$$
+q_n(x)=z_n
+\qquad\text{对所有 }n.
+$$
+
+因此，“每个有限层都有实现”只说明塔属于逆极限，不说明塔属于原像。定义载体的完备化缺陷为
+
+$$
+\operatorname{Ghost}(X;Q_\bullet)
+=
+\left(\varprojlim Q_n\right)\setminus\operatorname{im}(\bar\iota).
+$$
+
+这个集合为空，才可以说当前载体对这组有限接口是完备的；非空时，逆极限引入了原类型中没有的理想记录。这里的“幽灵”是表示边界的数学名称，不是额外物理实体。
+
+### 123.3 Zeckendorf 前缀的具体幽灵
+
+令 $X_{\mathrm{fs}}$ 为所有只有有限多个 $1$ 的无限合法串：
+
+$$
+X_{\mathrm{fs}}
+=
+\left\{x\in\{0,1\}^{\mathbb N}:x_ix_{i+1}=0,\ \exists N\ \forall i\ge N,\ x_i=0\right\}.
+$$
+
+令 $Q_n=\mathcal W_n$ 为长度 $n$ 的无相邻 $1$ 字串，$\pi_n$ 删除最后一位，$q_n$ 取前缀。兼容性给出
+
+$$
+\varprojlim Q_n
+\cong
+\left\{z\in\{0,1\}^{\mathbb N}:z_i z_{i+1}=0\right\},
+$$
+
+即所有无限合法串，而不仅是有限支持串。
+
+交替串
+
+$$
+z=1010101010\cdots
+$$
+
+的每个有限前缀都属于某个 $Q_n$，并且每个前缀都可由一个有限 Zeckendorf 整数实现；但不存在 $x\in X_{\mathrm{fs}}$ 同时实现全部前缀，因为 $x$ 最终必须全为 $0$。所以 $z$ 是逆极限中的元素，却不在 $\bar\iota$ 的像中。
+
+若把对象类型扩张为所有无限合法串
+
+$$
+\widehat X
+=
+\left\{x\in\{0,1\}^{\mathbb N}:x_ix_{i+1}=0\right\},
+$$
+
+则前缀映射对该逆系统满射。扩张载体解决了满射缺陷，但也改变了对象类型：它加入了有限整数模型没有的无限历史。不能把这一步描述成在原对象中发现了一个普通整数。
+
+### 123.4 动力学必须保持原像
+
+若每层有操作 $T_n:Q_n\to Q_n$，并满足
+
+$$
+\pi_n\circ T_{n+1}=T_n\circ\pi_n,
+$$
+
+则得到逆极限上的操作
+
+$$
+\widehat T((z_n)_n)=(T_n z_n)_n.
+$$
+
+若原载体上存在 $T:X\to X$，且
+
+$$
+q_n\circ T=T_n\circ q_n,
+$$
+
+则
+
+$$
+\widehat T\circ\iota=\iota\circ T.
+$$
+
+但层间相容本身不保证 $\widehat T$ 保持有限支持像。对 Hilbert 型有界线程，还需要统一的算子界
+
+$$
+\sup_n\|T_n\|\le M<\infty
+$$
+
+来保证逐层作用仍给出有界线程；没有这个界，层操作可能把可实现的线程推出载体。要让完备化后的动力学仍然代表原模型，必须另行证明
+
+$$
+\widehat T\bigl(\operatorname{im}(\bar\iota)\bigr)
+\subseteq
+\operatorname{im}(\bar\iota),
+$$
+
+或给出离开该像集的泄漏指标。否则，一个只在无限完备化中存在的幽灵历史，可能被层操作激活并进入后续读数；这不是原有限对象动力学的结论。
+
+### 123.5 与历史深度和量子接口的边界
+
+本节的逆极限问题与第 122 节的缺陷预算正交。缺陷衡量某个接口对目标实验的预测损失；逆极限满射衡量所有兼容有限记录是否能由同一原对象实现。一个载体可以在任务意义下具有很小缺陷，却仍有非空的完备化缺陷；反过来，载体完备也不保证记录足以闭合未来动力学。
+
+指定版本已经有两个直接相关的 Lean 支点。`D5/S3/Quantum/Completion/BoundedInverseLimitReconstruction.lean` 中的 `bounded_inverse_limit_reconstruction` 证明：单调子空间序列的有界、正交投影相容族，与累积闭子空间之间存在规范的线性等距双射；因此在 Hilbert 载体中，“逆极限线程”还必须带有统一有界性。`D5/S3/Quantum/Completion/CompatibleUnboundedCoordinates.lean` 中的 `compatible_unbounded_coordinates` 给出反例：`partialOnes n` 满足每个有限层的投影相容性，但
+
+$$
+\|\mathrm{partialOnes}(n)\|^2=n,
+$$
+
+故范数无界；它既不是某个 $\ell^2$ 向量的投影族，也不属于有界逆极限。这个例子把“逐层一致”与“存在一个实际状态”之间缺失的有界性条件具体化了。
+
+对量子接口，$Q_n$ 应替换为带态、相位和活动记忆的有限接口，忘却映射应替换为保持合法性的量子通道。逐层状态族的一致性仍不自动给出完整过程的可实现性；若后续实验能访问参考或旧记录，必须回到第 120 节的过程 diamond 缺陷。Gram 矩阵的正定性、通道的完全正性和像集不变性，都是额外的整体相容条件。
+
+本节的因子化、Zeckendorf 前缀反例和动力学像集条件是逆系统与有限字串上的普通数学推导；Hilbert 载体中的有界重建与无界线程反例则由上述两个已有 Lean 声明直接支撑。本节没有新增 Lean 声明，也不声称重建了物理时空的完备性。指定版本的项目已有上下文等价、有限接口和记录通道支点，但没有一个冻结定理把这些支点自动组合成 Zeckendorf 逆极限的满射定理。
+
+新增锚为
+
+$$
+\boxed{
+\text{逆极限组织所有有限层一致记录；原载体的可实现性还要求满射、完备性或有界性，动力学则必须额外保持该像集。}
+}
+$$
+
+因此，“无限递归”应当分成两个可检验问题：有限层是否相容，以及相容塔是否仍由当前对象类型承载。前者失败时要拒绝该关系网络；后者失败时要明确报告完备化新增的理想历史，并重新指定允许的动力学与测量范围。
+## 追加锚（本行以下为增补区）
+
+## 124. 有限前缀量子模拟与连续延拓
+
+本节固定一个经典数字载体和一个有限维量子输出空间，把第 122 节的前缀缺陷与第 123 节的完备化联系起来。目标是刻画何时有限前缀能一致逼近一个态制备任务；载体加入无限合法串，并不自动使任意任务连续。以下定义与证明均在通常数学中进行。
+
+**定义 124.1（合法串、有限核心与实际前缀像）。** 所有下标从 $0$ 开始，令
+$$
+\widehat X=\{x\in\{0,1\}^{\mathbb N}:\ \forall j\ge0,\ x_jx_{j+1}=0\},\qquad
+X_{\rm fs}=\{x\in\widehat X:\ \exists N\ \forall j\ge N,\ x_j=0\}.
+$$
+对 $k\in\mathbb N$，以同一符号 $q_k$ 表示两个域上的前缀限制，置
+$$
+q_kx=(x_0,\ldots,x_{k-1}),\qquad
+W_k=q_k[X_{\rm fs}]=q_k[\widehat X],\qquad
+F_{k,w}=\{x\in X_{\rm fs}:q_kx=w\}.
+$$
+$W_k$ 恰是全部长度 $k$ 的无相邻 $1$ 字串；任一这种字串补零即给两个域中的原像。因此每个 $F_{k,w}$ 非空，$W_k$ 有限非空，$W_0=\{\varnothing\}$。记 $\tau_kz$ 为 $z$ 保留前 $k$ 位后补零的串。
+取前缀距离
+$$
+p(x,y)=
+\begin{cases}
+0,&x=y,\\
+2^{-m},&x\ne y,\ m=\min\{j:x_j\ne y_j\}.
+\end{cases}
+$$
+这是 Z 卷定理 477.3 的 $d_{1/2}$。Z 卷定义 371.1 的距离另为 $d_K(x,y)=\sum_{j\ge0}2^{-j-1}|x_j-y_j|$，二者满足 $p/2\le d_K\le p$，并非同一数值公式。上述数字核心也不是 CSA 定义 1–3 的带事件、偏序、区域与选择的档案载体；CSA §§14–16 中的读数与语言仍保留各自的类型。
+
+**命题 124.2（紧完备载体与逐柱稠密性）。** $p$ 是给出二元离散乘积之子空间拓扑的超度量，$\widehat X$ 紧且完备，$X_{\rm fs}$ 在其中稠密。更精确地，对每个 $k,w$，$F_{k,w}$ 在柱集 $\widehat F_{k,w}=\{z\in\widehat X:q_kz=w\}$ 中稠密，且
+$$
+q_kx=q_ky\ \Longleftrightarrow\ p(x,y)\le2^{-k},\qquad
+p(\tau_kz,z)\le2^{-k}.
+$$
+证明。两对串共享的前缀长度取较小者，仍是第三对共享的前缀长度，故
+$p(x,z)\le\max\{p(x,y),p(y,z)\}$；分离性和对称性由定义得到。
+前缀柱集是有限个离散坐标条件的交；任意有限坐标条件又包含一个足够长的前缀条件。距离球与前缀柱集因而给出同一拓扑，所列等价含 $k=0$。
+
+违反合法性的串在某对相邻坐标上取值 $11$，这是一项开柱条件；所以 $\widehat X$ 在二元乘积中闭。为具体证明紧性，对任意序列依次选第 $0,1,2,\ldots$ 位恒定的无限子序列，再取对角子序列。各坐标最终恒定所得的极限仍无相邻 $1$，前缀距离保证收敛。度量空间的序列紧性给紧性。
+若序列是 Cauchy，对每个 $j$，距离最终小于 $2^{-j}$，故第 $j$ 位最终恒定；同一构造给合法极限并证明原序列收敛，故完备。
+
+补零不制造相邻 $1$，故 $\tau_mz\in X_{\rm fs}$ 且趋于 $z$。若 $z\in\widehat F_{k,w}$，则所有 $m\ge k$ 的截断都在 $F_{k,w}$，得到逐柱稠密性。若首差在 $j$，加权距离的首项为 $2^{-j-1}$、尾和至多 $2^{-j}$，也直接验证定义 124.1 的距离比较。这给 Z371.1–2、Z477.3 的载体在所选前缀距离下的具体实现。
+
+**定义 124.3（固定有限维的静态态制备任务）。** 固定整数 $d\ge1$，输出态空间与距离为
+$$
+\mathcal D_d=\{\rho\in M_d(\mathbb C):\rho=\rho^*,\ \rho\succeq0,\ \operatorname{tr}\rho=1\},\qquad
+D(\rho,\sigma)=\tfrac12\|\rho-\sigma\|_1.
+$$
+这里 $\|A\|_1=\operatorname{tr}\sqrt{A^*A}$，允许任意混态，不限于纯态。
+任务是任意总函数 $T:X_{\rm fs}\to\mathcal D_d$，起初不假定连续。
+
+深度 $k$ 的输入寄存器为 $\mathcal H_k=\mathbb C^{W_k}$，取以 $w\in W_k$ 标记的正交标准基，并置
+$$
+E_{k,x}=|q_kx\rangle\langle q_kx|.
+$$
+模拟器遍历所有 CPTP 映射 $\Lambda:M_{|W_k|}(\mathbb C)\to M_d(\mathbb C)$；它须对所有 $x$ 共用，只能从给定寄存器获得前缀。这里 $x$ 是经典制备标签，未给不相容量子可观测量预先指定共同测量结果。
+
+**命题 124.4（CPTP 模拟器与混态表的精确等价）。** 上述输入族上的全部可实现输出恰为任意混态表 $(\sigma_w)_{w\in W_k}\in\mathcal D_d^{W_k}$。每张表都可由
+$$
+\Lambda_\sigma(A)=\sum_{w\in W_k}\langle w|A|w\rangle\sigma_w
+$$
+实现，因此只对 $E_{k,x}$ 计算的最坏误差，在所有 CPTP 映射与所有混态表上取下确界相同。
+证明。任一 CPTP 映射给出密度态 $\sigma_w=\Lambda(|w\rangle\langle w|)$，于是输入 $x$ 的输出只依赖 $q_kx$。
+反向对每个 $w$ 作谱分解 $\sigma_w=\sum_{a=1}^d\lambda_{wa}|v_{wa}\rangle\langle v_{wa}|$，其中 $\lambda_{wa}\ge0$、$\sum_a\lambda_{wa}=1$。取 Kraus 算子
+$$
+K_{wa}=\sqrt{\lambda_{wa}}\,|v_{wa}\rangle\langle w|.
+$$
+则 $\sum_{w,a}K_{wa}^*K_{wa}=I_{\mathcal H_k}$，且 $\sum_{w,a}K_{wa}AK_{wa}^*=\Lambda_\sigma(A)$。Kraus 形式给完全正性，前一等式给保迹性，代入基态即得指定表。这个等价只规定输入族上的行为，不规定一般相干叠加输入上的通道行为。
+
+**定义 124.5（前缀缺陷、纤维振幅与半径）。** 对定义 124.3 的固定任务，令
+$$
+e_k(T)=\inf_{\Lambda\ {\rm CPTP}}\ \sup_{x\in X_{\rm fs}}
+D\bigl(T(x),\Lambda(E_{k,x})\bigr)
+=\inf_{\sigma\in\mathcal D_d^{W_k}}\ \sup_{x\in X_{\rm fs}}D\bigl(T(x),\sigma_{q_kx}\bigr),
+$$
+$$
+\omega_{k,w}(T)=\sup_{x,y\in F_{k,w}}D(T(x),T(y)),\qquad
+\omega_k(T)=\max_{w\in W_k}\omega_{k,w}(T),
+$$
+$$
+f_{k,w}(\sigma)=\sup_{x\in F_{k,w}}D(T(x),\sigma),\qquad
+r_{k,w}(T)=\inf_{\sigma\in\mathcal D_d}f_{k,w}(\sigma).
+$$
+所有上确界都在非空集上且取值于 $[0,1]$。纤维可以无限且不紧，$T$ 也可以不连续，所以这里没有把无限纤维上的上确界写成最大值。只有有限集合 $W_k$ 上使用最大值。
+
+**定理 124.6（精确纤维半径公式与最优表存在）。** $\mathcal D_d$ 在 $D$ 下紧且完备，任意两态间的距离属于 $[0,1]$。对任意 $T:X_{\rm fs}\to\mathcal D_d$ 及任意 $k$，每个纤维都有最优中心，且
+$$
+e_k(T)=\max_{w\in W_k}\ \min_{\sigma\in\mathcal D_d}
+\sup_{x\in F_{k,w}}D(T(x),\sigma)
+=\max_{w\in W_k}r_{k,w}(T).
+$$
+存在一张表达到 $e_k(T)$，并由命题 124.4 实现为 CPTP 模拟器。
+证明。Hermitian 矩阵组成有限维实向量空间，迹范数在该空间上给完备的度量。
+若一列密度矩阵趋于 $\rho$，则对每个 $v\in\mathbb C^d$，
+$$
+v^*\rho v=\lim_n v^*\rho_n v\ge0,\qquad
+\rho^*=\rho,\qquad \operatorname{tr}\rho=\lim_n\operatorname{tr}\rho_n=1.
+$$
+所以态空间闭。半正定矩阵的特征值非负，迹等于特征值之和，因此
+$$
+\|\rho\|_1=\operatorname{tr}\rho=1,\qquad
+\tfrac12\|\rho-\sigma\|_1\le\tfrac12(\|\rho\|_1+\|\sigma\|_1)=1.
+$$
+闭有界性在有限维给紧性，闭子集又继承完备性；迹范数的一半仍是度量。
+
+对任何 $\sigma,\eta\in\mathcal D_d$，逐点三角不等式及取上确界给
+$$
+f_{k,w}(\sigma)\le f_{k,w}(\eta)+D(\sigma,\eta),\qquad
+|f_{k,w}(\sigma)-f_{k,w}(\eta)|\le D(\sigma,\eta).
+$$
+故纤维目标函数对中心是 $1$-Lipschitz，尽管它对 $x$ 不要求连续。紧集 $\mathcal D_d$ 上的连续实函数达到最小值，取一个中心 $\sigma_w^*$。
+任意表的全局目标恰为 $\max_w f_{k,w}(\sigma_w)$，因为非空纤维有限个且分割 $X_{\rm fs}$。每一项至少为 $r_{k,w}$，故任何表的目标至少为 $\max_w r_{k,w}$；对有限个 $w$ 分别选取上述中心，便同时达到这个下界。
+证明不要求中心来自 $T[F_{k,w}]$，也不给中心唯一性或不同深度最优表之间的相容性。
+
+**命题 124.7（直径界、单调性与有限层精确性）。** 对所有 $k\ge0$，
+$$
+\tfrac12\omega_k(T)\le e_k(T)\le\omega_k(T),\qquad
+e_{k+1}(T)\le e_k(T),\qquad
+\omega_{k+1}(T)\le\omega_k(T).
+$$
+而且
+$$
+e_k(T)=0\quad\Longleftrightarrow\quad
+\exists t_k:W_k\to\mathcal D_d\ \forall x\in X_{\rm fs},\ T(x)=t_k(q_kx).
+$$
+证明。对同纤维的 $x,y$ 和任一中心 $\sigma$，有
+$D(T(x),T(y))\le D(T(x),\sigma)+D(T(y),\sigma)\le2f_{k,w}(\sigma)$。
+先对 $x,y$ 取上确界，再对中心取下确界，得 $\omega_{k,w}\le2r_{k,w}$。
+从非空纤维选一个 $x_w$，用 $T(x_w)$ 作中心，得 $r_{k,w}\le\omega_{k,w}$；定理 124.6 给全局两界。
+
+将深度 $k$ 的最优中心复制给每个具有相同父前缀的长度 $k+1$ 字串，新表逐点输出与旧表相同。因此新最优误差不增；新纤维包含于父纤维，也使 $\omega_k$ 不增。这个复制表不必是新层最优表。
+若 $e_k=0$，则 $\omega_k=0$，每个非空纤维上的 $T$ 恒定，按此值定义 $t_k$；反向因子化表逐点误差为零。所有结论也覆盖 $d=1$，此时态空间只有一个元素，全部缺陷恒为零。
+
+**定理 124.8（误差趋零与唯一连续延拓的等价）。** 对固定有限 $d\ge1$ 和任意 $T:X_{\rm fs}\to\mathcal D_d$，以下四项等价：
+
+1. $\lim_{k\to\infty}e_k(T)=0$。
+2. $\lim_{k\to\infty}\omega_k(T)=0$。
+3. $T:(X_{\rm fs},p)\to(\mathcal D_d,D)$ 一致连续，即
+$$
+\forall\varepsilon>0\ \exists\delta>0\ \forall x,y\in X_{\rm fs},\quad
+p(x,y)<\delta\ \Longrightarrow\ D(T(x),T(y))<\varepsilon.
+$$
+4. 存在唯一连续函数 $\widehat T:(\widehat X,p)\to(\mathcal D_d,D)$，使 $\widehat T|_{X_{\rm fs}}=T$。
+
+该延拓实际上是一致连续的。这里第三项的定义域是有限支持核心，第四项的定义域是全部无限合法串；不能把第三项降为核心上的逐点连续，也不能把第一项换成逐输入的误差极限。
+
+证明。命题 124.7 的两侧界直接给第一、二项等价。
+若第二项成立，给定 $\varepsilon>0$ 选 $K$ 使 $\omega_K<\varepsilon$。当 $p(x,y)<2^{-K}$ 时两点共享前 $K$ 位，故 $D(T(x),T(y))\le\omega_K<\varepsilon$，得到第三项。
+若第三项成立，先对 $\varepsilon/2$ 选一致连续性的 $\delta$，再选 $K$ 使 $2^{-K}<\delta$。对每个 $k\ge K$ 的同纤维两点，距离不超过 $2^{-k}<\delta$，故目标距离小于 $\varepsilon/2$。取上确界后 $\omega_k\le\varepsilon/2<\varepsilon$，得到第二项。
+
+现由第二项构造第四项。固定 $z\in\widehat X$，对 $m,n\ge K$，截断 $\tau_mz,\tau_nz$ 共享前 $K$ 位，故
+$$
+D\bigl(T(\tau_mz),T(\tau_nz)\bigr)\le\omega_K(T).
+$$
+因此这是一列 Cauchy 态；由 $\mathcal D_d$ 的完备性定义
+$$
+\widehat T(z)=\lim_{n\to\infty}T(\tau_nz)\in\mathcal D_d.
+$$
+它不依赖截断以外的近似选择：若 $x_n\in X_{\rm fs}$ 且 $p(x_n,z)\to0$，则对固定 $K$，充分大的 $n$ 有 $q_Kx_n=q_Kz$。同样对 $m\ge K$ 有 $q_K\tau_mz=q_Kz$，于是 $D(T(x_n),T(\tau_mz))\le\omega_K$。令 $m\to\infty$ 后仍有 $D(T(x_n),\widehat T(z))\le\omega_K$；再让 $K$ 增大，得到 $T(x_n)\to\widehat T(z)$。有限支持的 $z$ 最终等于自身截断，故延拓确实等于 $T$。
+
+若 $q_Kz=q_Kz'$，则 $n\ge K$ 时的两截断也共享该前缀，令 $n\to\infty$ 得
+$$
+D(\widehat T(z),\widehat T(z'))\le\omega_K(T).
+$$
+选 $\omega_K<\varepsilon$ 并取输入距离阈值 $2^{-K}$，这证明延拓一致连续，特别连续。
+任一连续延拓 $U$ 都满足 $U(z)=\lim_n U(\tau_nz)=\lim_n T(\tau_nz)=\widehat T(z)$，所以唯一。
+
+最后若第四项成立，命题 124.2 给紧域，Heine–Cantor 定理使连续的 $\widehat T$ 一致连续。
+这里也可直接证明所需的紧性步骤：若不一致连续，存在 $\varepsilon_0>0$ 和两列 $z_n,z_n'\in\widehat X$，满足
+$$
+p(z_n,z_n')<1/(n+1),\qquad
+D(\widehat T(z_n),\widehat T(z_n'))\ge\varepsilon_0.
+$$
+由紧性取 $z_n$ 的收敛子序列，沿同一下标的 $z_n'$ 也趋于同一点。连续性和目标距离三角不等式迫使输出距离趋零，矛盾。
+故限制到 $X_{\rm fs}$ 也一致连续，得到第三项。完备性在构造目标极限时使用，紧性在这个反向推导时使用；它们承担不同义务。
+
+**命题 124.9（连续延拓保持每个有限缺陷）。** 若存在连续延拓 $\widehat T:\widehat X\to\mathcal D_d$，把定义 124.5 中的定义域换成 $\widehat X$，而保持 $W_k$ 与模拟器类不变，则对每个 $k$ 有
+$$
+e_k(\widehat T)=e_k(T),\qquad \omega_k(\widehat T)=\omega_k(T).
+$$
+更强地，对每个 $w\in W_k$ 与每个中心 $\sigma\in\mathcal D_d$，
+$$
+\sup_{z\in\widehat F_{k,w}}D(\widehat T(z),\sigma)
+=\sup_{x\in F_{k,w}}D(T(x),\sigma).
+$$
+证明。核心包含于完备载体给右边不大于左边。任一 $z\in\widehat F_{k,w}$ 的截断 $\tau_nz$ 在 $n\ge k$ 时属于 $F_{k,w}$；连续性使其到中心的距离趋于 $D(\widehat T(z),\sigma)$，每项又不超过右侧上确界，故反向不等式成立。
+逐对截断同样证明每个柱上的直径上确界不变；对中心取下确界、对有限个柱取最大值便给两个结论。无限串可以使某个上确界真正达到，但不会在连续延拓下增大任何有限层最坏误差。
+
+**命题 124.10（连续而永无精确有限深度的量子比特任务）。** 本命题取 $d=2$，复用 Z477.3 的函数
+$$
+S(z)=\sum_{j\ge0}4^{-j-1}z_j,\qquad
+T_S(x)=\operatorname{diag}(1-S(x),S(x)),\qquad
+c_k=\tfrac4{15}4^{-k}.
+$$
+则 $0\le S(z)\le4/15$，$T_S$ 连续延拓到 $\widehat X$，且对每个 $k\ge0$，
+$$
+\omega_k(T_S)=c_k,\qquad e_k(T_S)=\tfrac12c_k=\tfrac2{15}4^{-k}>0.
+$$
+证明。若从位置 $k$ 开始的尾部首位不受前一位限制，每对位置 $k+2r,k+2r+1$ 至多一个 $1$，所以该对的加权贡献至多为 $4^{-(k+2r)-1}$。求几何级数得
+$$
+\sum_{j\ge k}4^{-j-1}z_j
+\le\sum_{r\ge0}4^{-(k+2r)-1}
+=\frac{4^{-k-1}}{1-4^{-2}}=c_k.
+$$
+交替尾 $1010\cdots$ 达到此值；其任意长的有限截断都合法，尾和趋于 $c_k$。取 $k=0$ 得全局范围，因此所写矩阵确为密度态。
+
+固定前缀 $w$，置 $s_w=\sum_{j<k}4^{-j-1}w_j$。当 $k=0$ 或 $w_{k-1}=0$ 时，尾部范围的下确界为 $0$、上确界为 $b_w=c_k$。当 $k\ge1$ 且 $w_{k-1}=1$ 时，第 $k$ 位被迫为零，位置 $k+1$ 起可自由接交替尾，故 $b_w=c_{k+1}$。下端用全零尾达到；上端由对应交替尾的有限截断逼近。
+有限支持串无法达到正的上端：达到成对求和界需要无限多对各自达到最大贡献。完备载体上的交替尾则达到上端。
+
+两对角态的迹距离等于第二个对角元之差的绝对值，因此纤维直径的上确界为 $b_w$。合法态
+$$
+\sigma_w=\operatorname{diag}\bigl(1-s_w-b_w/2,\ s_w+b_w/2\bigr)
+$$
+是两端态的中点，对整个纤维的误差至多 $b_w/2$；两端态合法，因为对应无限合法串的 $S$ 仍在 $[0,4/15]$。命题 124.7 的逐纤维下界又迫使任何中心，包括非对角中心，半径至少为 $b_w/2$。
+全零前缀（含空前缀）给 $b_w=c_k$，其余 $b_w\le c_k$，定理 124.6 因而给出精确缺陷。
+
+同前缀的 $S$ 差不超过 $c_k\to0$，所以无穷级数给出的对角态函数在 $\widehat X$ 连续，并由定理 124.8 唯一延拓核心任务。每个有限 $k$ 的缺陷仍严格为正；“任意小误差都有有限深度”不蕴含“某个有限深度误差为零”。
+
+**命题 124.11（逐输入最终正确仍有固定最坏缺陷）。** 本命题取 $d=2$，记 $P_a=|a\rangle\langle a|$，$a\in\{0,1\}$，以 $0^\infty$ 表示总零串。定义
+$$
+T_0(x)=\begin{cases}P_0,&x=0^\infty,\\P_1,&x\ne0^\infty.\end{cases}
+$$
+则对每个有限 $k$，$\omega_k(T_0)=1$、$e_k(T_0)=1/2$。但存在一列确定性前缀预测器，对每个固定输入最终完全正确。
+证明。全零前缀纤维同时包含 $0^\infty$ 和仅在某个 $j\ge k$ 取 $1$ 的合法串；它们的目标态距离为 $D(P_0,P_1)=1$。其余纤维若含已见 $1$，目标态恒为 $P_1$。故最大纤维直径为 $1$，一般下界给 $e_k\ge1/2$。
+对全零前缀输出 $(P_0+P_1)/2$，对已见 $1$ 的前缀输出 $P_1$，便把最坏误差控制在 $1/2$，证明等式。
+
+另取确定性表 $A_k(w)$：已经见到 $1$ 时输出 $P_1$，否则输出 $P_0$。总零输入在所有深度都正确；任一非零输入有首个 $1$ 的下标 $j$，从 $k=j+1$ 起永远正确。因此
+$$
+\forall x\in X_{\rm fs},\quad
+\lim_{k\to\infty}D(T_0(x),A_k(q_kx))=0,
+\qquad
+\forall k,\quad\sup_{x\in X_{\rm fs}}D(T_0(x),A_k(q_kx))=1.
+$$
+后式由每层尚未出现的单个 $1$ 实现。这个确定性表并非最优混态表，不能将其误差 $1$ 与最优缺陷 $1/2$ 混用；同样不能把纤维直径误写成 $1/2$。
+远处的单个 $1$ 趋于总零串，目标态却恒为 $P_1$，所以 $T_0$ 在核心的总零点不连续，更无连续延拓。
+
+**命题 124.12（任务逐个有限与整个任务族一致有限的区别）。** 本命题取 $d=2$，对每个 $j\ge0$ 定义坐标任务 $T_j(x)=P_{x_j}$，则
+$$
+e_k(T_j)=\begin{cases}0,&j<k,\\1/2,&j\ge k.\end{cases}
+$$
+若先提供前缀、再揭示任务 $j$，允许模拟器按 $(j,w)$ 选择态，但在所有 $j,x$ 上评价最坏误差，则
+$$
+E_k=\inf_{(\sigma_{j,w})\in\mathcal D_2^{\mathbb N\times W_k}}
+\sup_{j\in\mathbb N,\ x\in X_{\rm fs}}D(T_j(x),\sigma_{j,q_kx})=1/2
+$$
+对每个有限 $k$ 成立。这不是一次同时制备所有任务的联合量子态的要求。
+证明。$j<k$ 时该位已被记录，直接输出 $P_{w_j}$ 即精确。$j\ge k$ 时，总零串与仅第 $j$ 位为 $1$ 的串同属全零前缀纤维，迫使误差至少为 $1/2$；常值中点态表给上界。
+对任务族，任意表固定取 $j=k$，同一对串仍迫使最坏误差至少为 $1/2$。同时给所有已记录任务输出对应纯态、所有未记录任务输出中点态，达到该界。
+
+每个 $T_j$ 都连续延拓且在深度 $j+1$ 精确；有限非空任务集 $J$ 有共同精确深度 $1+\max J$，空任务集没有约束。然而对无限任务族，以下两个量词序列不同：
+$$
+\forall j\ \exists K\ \forall k\ge K,\ e_k(T_j)=0,
+\qquad
+\exists K\ \forall j\ \forall k\ge K,\ e_k(T_j)=0.
+$$
+本例满足前者而否定后者，甚至对任意小于 $1/2$ 的共同误差预算也否定后者的近似版本。
+一般固定有限维、由非空集合 $J$ 标记的任务族 $\{T_j:X_{\rm fs}\to\mathcal D_d\}_{j\in J}$，将上式的 $\mathbb N$ 换成 $J$ 定义共同缺陷。其趋零须由共同的一致连续性条件控制：
+$$
+\forall\varepsilon>0\ \exists\delta>0\ \forall j\in J\ \forall x,y\in X_{\rm fs},\quad
+p(x,y)<\delta\ \Longrightarrow\ D(T_j(x),T_j(y))<\varepsilon.
+$$
+在通常集合选择下，这也是充要条件：逐任务、逐纤维选择最优中心使共同缺陷等于 $\sup_j e_k(T_j)$；两侧直径界将其趋零化为 $\sup_j\omega_k(T_j)\to0$，再用定理 124.8 中相同的前缀阈值证明。仅有每个任务各自的一致连续性不提供这个共同模量。
+
+**命题 124.13（第 123 节逐层条件与线程完备性的勘注）。** 对第 123 节的逆系统，以下条件必须分开：$z_n\in q_n[X]$ 对每个 $n$ 成立；以及 $\pi_n(z_{n+1})=z_n$ 对每个 $n$ 成立。第 123.2 节“每个有限层都有实现”若被单独用来推出逆极限成员身份，须替换为这两项的合取。
+证明与精确定义。取 $X=\{0,1\}$，各层 $Q_n=X$，$q_n$ 和 $\pi_n$ 都是恒等映射。令 $z_n$ 依奇偶交替为 $0,1$；每一层都有实现，但相邻两层不相容，故不在逆极限。
+
+对非空 $X$，若使用实际像 $Q_n=q_n[X]$，每个 $Q_n$ 有限且取离散拓扑，连接映射由兼容读数限制而来，则自然像 $\iota[X]$ 在 $\varprojlim Q_n$ 中稠密。事实上，取线程 $z$ 的任一基本邻域，它只限制有限多个坐标；令 $m$ 为受限坐标的最大值，选 $x$ 使 $q_mx=z_m$。反复使用相容性，便有所有 $n\le m$ 的 $q_nx=z_n$，所以该像点在邻域中。没有坐标限制时任取 $x\in X$ 即可。
+因此这里定义
+$$
+\operatorname{Ghost}(X)=\left(\varprojlim q_n[X]\right)\setminus\iota[X]
+$$
+才能只计实际有限读数相容后仍无法实现的线程。若改用较大陪域，$X=\{0\}$、各层 $Q_n=\{0,1\}$、$q_n(0)=0$、$\pi_n={\rm id}$ 已给反例：常值 $1$ 线程从未在任何层命中，也不在自然像的闭包中。
+
+代数术语 $\operatorname{ThreadComplete}$ 的定义是 $\iota:X\to\varprojlim Q_n$ 满射；若各层不分离对象，也可等价说商嵌入 $\bar\iota$ 满射。它不是对任意给定拓扑或度量的完备性结论。例如在 $X_{\rm fs}$ 上改取离散距离，空间完备，但前缀线程仍含不属于核心的交替无限串。第 123.3 节与本节命题 124.2 指定前缀拓扑、稠密嵌入和完备载体，才把该具体线程空间识别为度量完备化。
+
+**命题 124.14（第 123.4 节 Hilbert 动力学界的充分条件）。** 设 $H$ 为 Hilbert 空间，$S_n\subseteq H$ 为递增闭子空间，$P_n:H\to S_n$ 为正交投影。每个 $T_n:S_n\to S_n$ 是有界线性算子，并满足对所有 $n\le m$ 和 $u\in S_m$，
+$$
+P_n(T_mu)=T_n(P_nu).
+$$
+若有有限 $M\ge0$ 使 $\sup_n\|T_n\|\le M$，则逐层作用保持有界相容线程，并有
+$$
+\sup_n\|T_nz_n\|\le M\sup_n\|z_n\|.
+$$
+证明。令 $B=\sup_n\|z_n\|<\infty$，则 $\|T_nz_n\|\le\|T_n\|\|z_n\|\le MB$。而线程相容性给
+$P_n(T_mz_m)=T_n(P_nz_m)=T_nz_n$，两项条件俱全。
+这将第 123.4 节的算子界明确为上述类型中的充分条件；本命题不把它断言为无条件必要条件，也不从它推出有限支持像保持。
+
+后一个限制可具体检验。取 $H=\ell^2(\mathbb N)$、$S_n$ 为前 $n$ 个坐标子空间，$v_j=2^{-j-1}$，则 $\|v\|^2=1/3$。令 $T_0=0$，$n\ge1$ 时置 $T_nu=u_0P_nv$。它们投影相容且 $\|T_n\|\le\|v\|$，但由有限支持向量 $e_0$ 所给的线程，经逐层作用后重建为无限支持的 $v$。故保持 Hilbert 有界线程与保持原有限支持载体是两项不同要求。
+
+**命题 124.15（第 123.5 节归一化记录 Gram 条件的勘注）。** 有限复矩阵 $G$ 能表示某个有限维 Hilbert 空间内一族归一化记录向量的 Gram 矩阵，当且仅当它是 Hermitian、半正定且对角元全为 $1$。若预先固定记录空间维数为 $r$，还须且只须 $\operatorname{rank}G\le r$；严格正定不是必要条件。
+证明。若 $G_{ab}=\langle v_a,v_b\rangle$，则 $c^*Gc=\|\sum_a c_av_a\|^2\ge0$，共轭对称性给 Hermitian 性，归一化给单位对角；秩不超过记录空间维数。
+反向由有限维谱分解取 $B$ 使 $G=B^*B$，$B$ 的各列即所需向量，对角条件使各列范数为 $1$。只保留非零特征值可在维数 $\operatorname{rank}G$ 中实现，再嵌入给定的 $r$ 维空间。
+至少两个记录全取同一单位向量时，Gram 矩阵全为 $1$，秩为 $1$，合法而奇异。因此第 123.5 节的“Gram 矩阵的正定性”在归一化记录意义下应读作上述半正定条件；它与通道完全正性、动力学像集不变性仍是不同类型的要求。
+
+**约定 124.16（来源、证明范围与后续问题）。** 本节所引 CSA、Z 与 Q 分别指 `CONTEXTUAL_SPACETIME_ARITHMETIC.md`、`CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md` 与本量子卷。CSA 定义 1–3、§§14–16，Z371.1–2、Z477.3，以及 Q54.7、Q57、Q120–122 的引用版本均为仓库提交 `58d94fb6c3b75e5f0fc33f184e510f46949efdca`；Q123 的引用版本为 `71d892f05c219488670b0a10ca6b9bf11b975cfe`。Q54.7 给纤维直径与近似预测的两侧界，Q57 固定特定未来实验族；Q120 使用含参考的过程 diamond 缺陷，Q121–122 的态族缺陷和 Q123 的线程问题各保留原类型。本节将历史参数集明确换成 $X_{\rm fs}$ 并使用上确界，所需证明已逐项给出。
+
+同一基线版本的 `D5/S3/Quantum/Completion/BoundedInverseLimitReconstruction.lean` 中，`bounded_inverse_limit_reconstruction` 在完备内积空间、单调且具有正交投影的子空间序列上，给累积闭子空间与有界相容线程的规范线性等距双射，并给最终残余商的同类表示。`D5/S3/Quantum/Completion/CompatibleUnboundedCoordinates.lean` 的 `compatible_unbounded_coordinates` 给实际 $\ell^2$ 坐标截断线程、范数平方为 $n$、无界及无法由单个 $\ell^2$ 向量投影实现等结论。`D5/S3/ConceptDynamics/RefinementGeometry/InverseLimitCompletion.lean` 的 `ThreadComplete` 定义为 `stateThread` 满射，`stateThread_bijective_iff_complete_and_separates` 对应线程完备与各层联合分离的合取，不带拓扑完备性的假设或结论。这些声明分别支持所写类型中的既有结果，不承载本节的新前缀缺陷桥。
+
+一般完备延拓与 Heine–Cantor 原理可见钉版 Mathlib（`lake-manifest.json` 的 mathlib 修订 `db584cd6d46c92f209a44c0f1c829460d327499d`，`v4.33.0`）：`Mathlib/Topology/UniformSpace/Completion.lean` 的 `UniformSpace.Completion.extension`、`extension_coe`、`uniformContinuous_extension`、`extension_unique`，以及 `Mathlib/Topology/UniformSpace/HeineCantor.lean` 的 `CompactSpace.uniformContinuous_of_continuous`。延拓的正确限制要求原映射一致连续；目标完备且分离时具有相应唯一性，不能仅凭对任意函数可写下 extension 定义就声称得到延拓。本节是结合这些通常原理与所引仓内模型的 `repo-derived` 普通证明，不提出新颖性或新增 Lean 认证主张。
+
+本节的静态制备模型只比较指定经典输入族的输出态，不保证隐藏参考关联、相干输入行为或自适应过程的模拟；这些要求须另指定联合态或完整过程。定理 124.8 的存在性不提供有效连续模量或高效求最优中心的算法，有限维紧性所得中心存在性也未推广到无限维态空间。下一项研究问题因此是：在增加参考或过程结构后，哪些可检验的连续性与紧性条件仍能给出相应缺陷的精确延拓判据。
+
+## 追加锚（本行以下为增补区）
+
+## 125. 均匀相干态的局部极限与表示边界
+
+本节复用 Q109 的有限均匀态及定义 124.1 的零下标合法串 $W_L$、紧载体 $\widehat X$ 和有限支持核心 $X_{\rm fs}$。固定左端第 $0$ 位而向右增加长度，取 $\varphi=(1+\sqrt5)/2$、$\alpha=\varphi^{-1}$，于是 $0<\alpha<1$ 且 $\alpha+\alpha^2=1$。记 $D_L=|W_L|=F_{L+2}$，其中 $F_0=0,F_1=1$，特别地 $D_0=1$。在完整 qubit 空间 $\mathcal K_L=(\mathbb C^2)^{\otimes L}$ 中沿用
+$$
+|\Omega_L\rangle=|\Psi_L\rangle
+=D_L^{-1/2}\sum_{w\in W_L}|w\rangle.
+$$
+所讨论的是这一个指定态族的局部极限及其柱读数的表示条件；数字载体仍区别于 CSA 定义 1–3 的事件档案。以下均为普通数学定义与证明。
+
+**命题 125.1（固定左窗口的约化极限）。** 固定整数 $n\ge1$，令 $L=n+m$，$m\ge1$，并在完整张量积上定义
+$$
+\rho_n^{(L)}=\operatorname{Tr}_{\{n,\ldots,L-1\}}
+|\Omega_L\rangle\langle\Omega_L|.
+$$
+对 $u,v\in W_n$，有
+$$
+(\rho_n^{(L)})_{uv}=
+\begin{cases}
+D_m/D_L,&u_{n-1}=v_{n-1}=0,\\
+D_{m-1}/D_L,&\text{其余合法前缀对}.
+\end{cases}
+$$
+含非法前缀的行或列全为零。置
+$$
+s_n=\sum_{u\in W_n}|u\rangle,\qquad
+t_n=\sum_{\substack{u\in W_n\\u_{n-1}=0}}|u\rangle.
+$$
+当 $L\to\infty$ 且 $n$ 固定时，$\rho_n^{(L)}$ 在迹范数下收敛到
+$$
+\rho_n=\alpha^{n+1}|s_n\rangle\langle s_n|
+       +\alpha^{n+2}|t_n\rangle\langle t_n|.
+$$
+每个 $\rho_n$ 都正、迹为 $1$、秩恰为 $2$，且在完整 qubit 空间之间满足
+$$
+\operatorname{Tr}_{\{n\}}\rho_{n+1}=\rho_n.
+$$
+
+证明。偏迹的矩阵元是使 $uz$ 与 $vz$ 同时合法的长度 $m$ 尾字 $z$ 的数量除以 $D_L$。若两个前缀末位均为 $0$，任意 $z\in W_m$ 均可；否则 $z$ 的首位必须为 $0$，余下 $m-1$ 位任意合法，数量为 $D_{m-1}$。这个计数也含 $m=1$ 的情形。非法前缀不可能被延长为合法字，故相应行列为零。
+
+由 Binet 公式 $F_k=(\varphi^k-(-\varphi^{-1})^k)/\sqrt5$，固定 $n$ 时有
+$$
+\lim_{m\to\infty}\frac{D_m}{D_{m+n}}=\alpha^n,
+\qquad
+\lim_{m\to\infty}\frac{D_{m-1}}{D_{m+n}}=\alpha^{n+1}.
+$$
+两前缀末位均为 $0$ 时，所列 $\rho_n$ 的矩阵元为 $\alpha^{n+1}+\alpha^{n+2}=\alpha^n$；其余合法对为 $\alpha^{n+1}$，所以它正是逐元极限。固定维数 $2^n$ 下，矩阵元收敛给 Hilbert–Schmidt 范数收敛，再由 $\|B\|_1\le\sqrt{2^n}\|B\|_{\rm HS}$ 给迹范数收敛。
+
+两个系数严格为正，故 $\rho_n$ 正且其核为 $s_n^\perp\cap t_n^\perp$。向量 $t_n$ 非零；合法词 $0^{n-1}1$ 在 $s_n$ 中的系数为 $1$，在 $t_n$ 中为 $0$，而 $0^n$ 在两者中的系数都为 $1$，故两向量线性独立，秩恰为 $2$。这里直接计算极限的秩，并未假定取极限保持有限态的秩。
+
+为核对偏迹，对任意长度 $n$ 的前缀对求
+$$
+(\operatorname{Tr}_{\{n\}}\rho_{n+1})_{uv}
+=\sum_{a\in\{0,1\}}(\rho_{n+1})_{ua,va}.
+$$
+若 $u,v$ 合法且末位均为 $0$，附 $0$ 与附 $1$ 两项分别是 $\alpha^{n+1}$、$\alpha^{n+2}$，和为 $\alpha^n$。其余合法对只有共同附 $0$ 的项非零，为 $\alpha^{n+1}$。含非法前缀的两项均为零。这证明全矩阵偏迹相容。最后
+$$
+\rho_1=\begin{pmatrix}\alpha&\alpha^2\\\alpha^2&\alpha^2\end{pmatrix},
+\qquad \operatorname{Tr}\rho_1=\alpha+\alpha^2=1;
+$$
+偏迹保持迹，逐层得到全部归一化。Q109 的有限 Schmidt 秩与谱公式在此只作为既有有限态背景。
+
+**命题 125.2（完整局部代数上的态及局部弱星极限）。** 令 $\mathcal A_n=M_{2^n}(\mathbb C)$，嵌入为 $A\mapsto A\otimes I_2$，以 $\mathcal A_{\rm loc}$ 表示按这些嵌入识别后的代数并，$\mathcal A$ 为其算子范数完备化，即单侧 qubit UHF 代数。存在唯一态 $\omega:\mathcal A\to\mathbb C$ 满足
+$$
+\omega(A)=\operatorname{Tr}(\rho_n A)\qquad(A\in\mathcal A_n).
+$$
+将每个有限态 $|\Omega_L\rangle\langle\Omega_L|$ 接上全零乘积尾态，得到 $\mathcal A$ 上的态 $\widetilde\omega_L$，则
+$$
+\widetilde\omega_L(A)\longrightarrow\omega(A)\qquad(A\in\mathcal A).
+$$
+这里弱星收敛指 $\sigma(\mathcal A^*,\mathcal A)$ 下逐可观测量收敛。任意其它态延拓，只要在前 $L$ 位与该有限密度一致，也有同一极限。上述代数嵌入不由合法空间上的压缩自动给出。
+
+证明。令 $\omega_n(A)=\operatorname{Tr}(\rho_n A)$。命题 125.1 给
+$$
+\omega_{n+1}(A\otimes I_2)=\omega_n(A),\qquad
+|\omega_n(A)|\le\|A\|,\qquad \omega_n(I)=1.
+$$
+所以这些泛函在 $\mathcal A_{\rm loc}$ 上定义一个良定、范数为 $1$ 的线性泛函，并唯一连续延拓到 $\mathcal A$。为核对延拓的正性，给定 $B\in\mathcal A$，取局部 $B_j\to B$，则 $B_j^*B_j\to B^*B$ 且 $\omega(B_j^*B_j)\ge0$，故 $\omega(B^*B)\ge0$。$\mathcal A$ 是 $C^*$ 代数，每个正元都是其正平方根的平方，故延拓为正；其单位值仍为 $1$，即为态。稠密性也给唯一性。
+
+全零尾延拓可具体按有限层定义：前 $k\le L$ 位取 $|\Omega_L\rangle\langle\Omega_L|$ 的约化密度，前 $k>L$ 位取
+$$
+|\Omega_L\rangle\langle\Omega_L|
+\otimes|0^{k-L}\rangle\langle0^{k-L}|.
+$$
+这组密度正、归一且偏迹相容，故由刚才的延拓论证给 $\widetilde\omega_L$。固定 $A\in\mathcal A_n$，当 $L\ge n+1$ 时，
+$$
+|\widetilde\omega_L(A)-\omega(A)|
+\le\|\rho_n^{(L)}-\rho_n\|_1\|A\|\longrightarrow0.
+$$
+对一般 $A\in\mathcal A$ 及 $\varepsilon>0$，取局部 $B$ 使 $\|A-B\|<\varepsilon$。两态范数均为 $1$，故差值不超过 $2\varepsilon+|\widetilde\omega_L(B)-\omega(B)|$，得到逐点收敛。同一论证只用前 $L$ 位的密度和态范数为 $1$，因而适用于所说的任何延拓。固定窗口的迹范数收敛与这里的弱星收敛，不给出全局密度的迹范数收敛结论。
+
+压缩的区别已有两位反例。令 $Q$ 为 $\mathcal K_2$ 到 $\operatorname{span}\{|00\rangle,|01\rangle,|10\rangle\}$ 的正交投影，$X=\begin{pmatrix}0&1\\1&0\end{pmatrix}$，定义 $\kappa(A)=Q(A\otimes I_2)Q$，视为合法子空间上的算子。因为 $(X\otimes I_2)|01\rangle=|11\rangle$，有
+$$
+\kappa(X)^2|01\rangle=0,
+\qquad
+\kappa(X^2)|01\rangle=|01\rangle.
+$$
+所以这条压缩不是乘法同态，不能用它把 $M_{|W_n|}(\mathbb C)$ 自动组成通常张量嵌入塔。这只否定所写压缩方案，不排除其它受约束代数的构造，也不规定完整局部代数的所有动力学保持无相邻 $1$ 的约束。
+
+**命题 125.3（固定左边界柱律与 Z 圆周概率）。** 对 $u\in\{0,1\}^n$，$n\ge1$，记 $[u]=\{x\in\widehat X:q_nx=u\}$，并约定 $[\varnothing]=\widehat X$。存在唯一 Borel 概率 $\mu$ 满足
+$$
+\mu([u])=\omega(|u\rangle\langle u|)=
+\begin{cases}
+\alpha^{n+u_{n-1}},&u\in W_n,\\
+0,&u\notin W_n.
+\end{cases}
+$$
+在 Q124.1 对 Z 卷载体 $K$ 与 $\widehat X$ 的相同数字及 Borel 结构的识别下，$\mu=(s_Z)_*\lambda$，其中 $\lambda$ 是 Z396.1 的圆周长度概率，$s_Z:\mathbb T\to K$ 是 Z400.1 的 Borel 截面。此柱律的初始分布与行随机转移矩阵为
+$$
+q=(\alpha,\alpha^2),\qquad
+P=\begin{pmatrix}\alpha&\alpha^2\\1&0\end{pmatrix}.
+$$
+它等同于虚拟左邻位固定 $x_{-1}=0$ 后由 $P$ 生成的边界律，而非以
+$$
+\pi=\frac{(\varphi^2,1)}{\varphi^2+1}
+$$
+为初始分布的平稳 Parry 律。
+
+证明。命题 125.1 的对角元给显示的柱读数。为建立其 Borel 概率实现而不只保留一组有限分布，记 Z 卷相位映射为 $H_Z$，则 $H_Zs_Z=\operatorname{id}_{\mathbb T}$。$s_Z$ 为 Borel，故 $\nu=(s_Z)_*\lambda$ 是 $K$ 上的 Borel 概率。
+
+将 Z381.2 对应于合法词 $u$ 的柱集和定向开弧分别记作 $C_u^Z$、$A_u^Z$；其两个端点为 $E_i,E_j$，该条定向弧的长度为 $\alpha^{n+u_{n-1}}$。那里的完整端点公式给
+$$
+C_u^Z=H_Z^{-1}(A_u^Z)\cup\{e_i^+,e_j^-\}.
+$$
+由于截面逐点落在相应相位纤维中，这个等式蕴含
+$$
+s_Z^{-1}(C_u^Z)\mathbin{\triangle}A_u^Z
+\subseteq\{E_i,E_j\}.
+$$
+Z396.1 给两个端点的质量均为零，开弧的质量等于其长度，因而
+$$
+\nu(C_u^Z)=\lambda(s_Z^{-1}(C_u^Z))
+=\lambda(A_u^Z)=\alpha^{n+u_{n-1}}.
+$$
+非法柱为空，空前缀柱为整个载体，故可取 $\mu=\nu$。前缀柱集连同空集构成生成 Borel 集的 $\pi$ 系统：交集或为空、或为其中更深的柱集，且这些柱集是可数拓扑基。概率测度的唯一性定理遂使任意具有全部相同柱读数的 Borel 概率都等于 $\nu$。这里不需要 $H_Z$ 或 $s_Z$ 为双射，也不忽略开弧内部可能存在的分裂纤维。
+
+每个合法柱都具有正质量，可以逐柱计算条件概率。若 $u_{n-1}=0$，则
+$$
+\frac{\mu([u0])}{\mu([u])}=\alpha,
+\qquad
+\frac{\mu([u1])}{\mu([u])}=\alpha^2.
+$$
+若 $u_{n-1}=1$，则 $u1$ 非法，而
+$$
+\frac{\mu([u0])}{\mu([u])}
+=\frac{\alpha^{n+1}}{\alpha^{n+1}}=1,
+\qquad
+\frac{\mu([u1])}{\mu([u])}=0.
+$$
+初始一位柱质量给 $q$，上述比值只依赖末位，证明 Markov 性及所列 $P$；$q$ 正好是 $P$ 的第 $0$ 行。由 $\pi_1=\pi_0\alpha^2$ 与 $\pi_0+\pi_1=1$，得到所列唯一平稳分布，亦即 `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY.md` 第1594部的分布。
+
+明确地，对数字左移 $\sigma(x)_j=x_{j+1}$，有
+$$
+\mu(\sigma^{-1}[1])=(qP)_1=\alpha^3
+\ne\alpha^2=\mu([1]).
+$$
+所以非平稳性是相对于数字左移而言；它不把数字左移与 Z 卷的算术后继或圆周旋转认作同一变换。与 Z 概率相同的只是对角柱数据，不能据此认定整个量子态相同：例如 $\langle0|\rho_1|1\rangle=\alpha^2>0$，是柱概率本身未指定的相干读数。
+
+**命题 125.4（有限支持基上的 normal 密度障碍及其表示边界）。** 在 $H_{\rm fs}=\ell^2(X_{\rm fs})$ 中取标准基 $(e_x)_{x\in X_{\rm fs}}$，对每个有限词 $u$ 定义柱投影
+$$
+C_ue_x=\mathbf1_{\{q_{|u|}x=u\}}e_x.
+$$
+不存在正迹类算子 $R$ 满足 $\operatorname{Tr}R=1$ 且同时对所有有限词有 $\operatorname{Tr}(RC_u)=\mu([u])$。尽管每个有限深度的全部柱读数都可由该空间上的有限秩密度精确实现，这些实现不能由一个这样的 $R$ 统一承担。此外，$\mu$ 的每个单点质量均为零，$\mu(X_{\rm fs})=0$。局部态 $\omega$ 仍有 GNS 表示及其中的秩一密度实现。
+
+证明。有限支持核心可写为
+$$
+X_{\rm fs}=\bigcup_{N\ge0}\{u0^\infty:u\in W_N\},
+$$
+故它可数；补零保持合法性。对任意 $x\in\widehat X$，递减的柱集 $[q_nx]$ 的交恰为 $\{x\}$，由概率测度的从上连续性有
+$$
+\mu(\{x\})=\lim_{n\to\infty}\mu([q_nx])
+\le\lim_{n\to\infty}\alpha^n=0.
+$$
+单点为闭集，可数个这样的单点给 $X_{\rm fs}$ 为 Borel 零测集。
+
+假设所说的 $R$ 存在。对每个 $x\in X_{\rm fs}$ 及 $n\ge1$，秩一投影满足 $|e_x\rangle\langle e_x|\le C_{q_nx}$。正迹类算子定义正迹泛函；具体地，对正有界 $B$ 有 $\operatorname{Tr}(RB)=\operatorname{Tr}(R^{1/2}BR^{1/2})\ge0$。所以
+$$
+0\le\langle e_x,Re_x\rangle
+\le\operatorname{Tr}(RC_{q_nx})
+=\mu([q_nx])\le\alpha^n\longrightarrow0.
+$$
+每个基对角元均为零，而正迹类算子的迹等于任意可数正交标准基上的对角元之和，得到
+$$
+1=\operatorname{Tr}R
+=\sum_{x\in X_{\rm fs}}\langle e_x,Re_x\rangle=0,
+$$
+矛盾。证明没有要求 $R$ 对角化或与柱投影对易，也没有假定整个 UHF 代数在 $H_{\rm fs}$ 上具有某个自然表示。
+
+为给出有限深度的准确对照，对固定 $N\ge1$ 定义
+$$
+R_N=\sum_{u\in W_N}\mu([u])
+|e_{u0^\infty}\rangle\langle e_{u0^\infty}|.
+$$
+这些不同的补零串是正交基标记，系数非负且和为 $1$，故 $R_N$ 为正归一有限秩密度。对 $|v|\le N$，深度 $N$ 的细柱分割 $[v]$，从而
+$$
+\operatorname{Tr}(R_NC_v)
+=\sum_{\substack{u\in W_N\\u|_{|v|}=v}}\mu([u])
+=\mu([v]).
+$$
+这里仅匹配对角柱读数，没有把 $R_N$ 与 Q109 的相干纯态或其约化矩阵认作同一密度。
+
+最后直接给 $\omega$ 的通常 GNS 构造。取
+$$
+\mathcal N_\omega=\{B\in\mathcal A:\omega(B^*B)=0\},
+\qquad
+\langle[B],[C]\rangle=\omega(B^*C)
+$$
+并以第二变量线性的内积约定使用此式。正性作用于 $(B+zC)^*(B+zC)$ 给 Cauchy–Schwarz 不等式，故零半范数元与所有元正交，商 $\mathcal A/\mathcal N_\omega$ 上的内积良定。由 $A^*A\le\|A\|^2I$ 得
+$$
+\omega(B^*A^*AB)\le\|A\|^2\omega(B^*B).
+$$
+因此 $\mathcal N_\omega$ 是左理想，左乘 $[B]\mapsto[AB]$ 良定且范数至多 $\|A\|$；它延拓到商内积空间的完备化 $H_\omega$，记作 $\pi_\omega(A)$。左乘保持乘法和单位，且由内积公式其伴随为 $\pi_\omega(A^*)$，所以 $\pi_\omega$ 是幺星表示。向量 $\xi=[I]$ 的范数为 $1$，$\pi_\omega(A)\xi=[A]$ 的线性张成稠密，故 $\xi$ 循环，且
+$$
+\omega(A)=\langle\xi,\pi_\omega(A)\xi\rangle
+=\operatorname{Tr}_{H_\omega}
+\bigl(|\xi\rangle\langle\xi|\,\pi_\omega(A)\bigr).
+$$
+秩一密度位于 $B(H_\omega)$，其向量态限制到 $\pi_\omega(\mathcal A)$ 不因此必为纯态。normal 实现依赖指定的可观测量与表示，不能只由抽象 Hilbert 空间的基数判断。因而本命题给的是有限支持基及上述柱投影的实现障碍，同时保留了全局代数态及其它 Hilbert 表示的实现。
+
+**约定 125.5（引用与证明范围）。** Q、Z、CSA 分别指本量子卷、`CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md`、`CONTEXTUAL_SPACETIME_ARITHMETIC.md`。本节所引 Q109、Q123–124、Z381.2、Z396.1、Z400.1、CSA 定义 1–3 及 `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY.md` 第1594部，均取仓库提交 `c225a37b44971d289ae51b8b324f5cef78e31b82` 的版本。Q123–124 的载体与相容性问题在这里落实为有限相干态、局部代数态和指定表示中的柱读数问题；所用局部极限不另申报 Q109 的有限 Schmidt 结论。
+
+同一版本 `D5/S1/Digit/Infinite/WindowCylinderPartition.lean` 的 `window_cylinder_partition` 给合法窗口的区间几何、准确弧长及定向端点纤维，其结论不含本节的量子态构造。`D5/S3/Quantum/Measurements/OrthogonalAdditivity.lean` 的 `orthogonal_additivity` 在 `SequentiallyNormal` 与 `strong_complete` 等假设下给正交投影族的可数可加性；命题 125.4 使用直接的正迹类论证，不把这些假设省略后援引该声明。
+
+钉版 Mathlib 修订 `db584cd6d46c92f209a44c0f1c829460d327499d` 的 `Mathlib/Analysis/CStarAlgebra/GelfandNaimarkSegal.lean` 提供 `PositiveLinearMap.gnsStarAlgHom`，该文件明确将单位循环向量的构造列为 TODO，故它不作为上文完整循环向量结论的现成证明；上文已独立给出通常 GNS 构造。本节为结合所引模型与标准概率、算子代数方法的 `repo-derived` 普通推导，不提出新颖性或新增 Lean 认证主张。
+
+## 追加锚（本行以下为增补区）
+
+## 126. 固定尾零载体上的事件组合预算与精确最优误差
+
+固定非负整数 $K,N$ 与正整数 $M$，令 $\alpha=(\sqrt5-1)/2$，$F_0=0,F_1=1,F_{j+2}=F_{j+1}+F_j$。沿用 Q123–125 的前缀方向，以
+$$
+X=\{x\in\{0,1\}^{\mathbb N}:x_jx_{j+1}=0\ \text{对所有 }j\ge0\},
+\qquad W_n=q_n[X],\qquad W_0=\{\varnothing\}
+$$
+表示完整合法流及其长度 $n$ 前缀，$q_nx=(x_0,\ldots,x_{n-1})$。记 $[u]=\{x\in X:q_nx=u\}$，$[\varnothing]=X$，并固定尾零载体
+$$
+S_K=\{w0^\infty:w\in W_K\},\qquad
+D_K=|S_K|=|W_K|=F_{K+2}.
+$$
+$\operatorname{Prob}(S_K)$ 指集中在这个指定集合上的全部概率，允许个别原子质量为零；$U_K$ 为每点质量 $1/D_K$ 的均匀概率，即 Q109 有限均匀态的基测量分布补零后的概率。
+
+目标取 Q125.3 的固定虚拟左邻位为零的边界律，其全部柱读数在此明确为
+$$
+\mu([\varnothing])=1,\qquad
+\mu([u])=
+\begin{cases}
+\alpha^{n+u_{n-1}},&u\in W_n,\ n\ge1,\\
+0,&u\notin W_n.
+\end{cases}
+$$
+这些权重由 $\alpha+\alpha^2=1$ 相容：末位为零的柱分成权重比为 $\alpha,\alpha^2$ 的两柱，末位为一的柱只能接零且质量不变；初层质量之和为一。因此通常的相容有限分布延拓与柱集唯一性给出 $X$ 上的唯一 Borel 概率。该律不对数字左移平稳，因为 $\mu(x_1=1)=\alpha^3\ne\alpha^2=\mu(x_0=1)$。这里的数字流与概率事件保留各自类型，不与 CSA 定义 1–3 的情境档案混同。
+
+**命题 126.1（同层柱集组合预算的精确极小极大值）。** 对 $\nu\in\operatorname{Prob}(S_K)$ 定义
+$$
+d_M(\nu,\mu)=\sup_{n\ge1}\,
+\max_{\substack{J\subseteq W_n\\|J|\le M}}
+\left|\nu\left(\bigcup_{u\in J}[u]\right)
+      -\mu\left(\bigcup_{u\in J}[u]\right)\right|.
+$$
+每个 $J$ 中的柱集必须有同一个深度 $n$，空 $J$ 允许。则
+$$
+\min_{\nu\in\operatorname{Prob}(S_K)}d_M(\nu,\mu)
+=\min\left(1,\frac{M}{D_K}\right).
+$$
+若 $M<D_K$，唯一经典最优分布是 $U_K$；若 $M\ge D_K$，全部 $\nu$ 的误差均为 $1$。后一情形在 $K\ge1$ 时不唯一，在 $K=0$ 时定义域本身只有 $\delta_{0^\infty}=U_0$。对 $U_K$，任一有限深度的上述事件差都严格小于所列上确界，故不能把对深度的 $\sup$ 换成 $\max$。
+
+证明。将 $D=D_K$ 个原子质量排序为 $p_1\ge\cdots\ge p_D\ge0$，令 $m=\min(M,D)$、$T_m=\sum_{i=1}^mp_i$。在每个 $n>K$，前 $m$ 个原子的深度 $n$ 前缀给两两不交的隔离柱，每柱在 $\mu$ 下均有质量 $\alpha^n$，故
+$$
+d_M(\nu,\mu)\ge |T_m-m\alpha^n|.
+$$
+令 $n\to\infty$，得到 $d_M(\nu,\mu)\ge T_m\ge m/D$，最后一步是最大 $m$ 个质量的平均值不小于全部质量的平均值。
+
+下面证明 $U_K$ 的上界。若 $1\le n\le K$、$u\in W_n$ 且 $b=u_{n-1}$，合法延长计数给
+$$
+U_K([u])=\frac{F_{K-n+2-b}}{D_K}.
+$$
+末位零时可接任意长度 $K-n$ 的合法尾字；末位一且仍需延长时，下一位被迫为零。这两种计数也包含 $n=K$ 时的空延长，分别为 $F_2=F_1=1$。置 $r=K-n+2-b$、$s=K+2$，则 $1\le r<s$、$s-r=n+b$。Binet 公式给
+$$
+F_r-\alpha^{s-r}F_s
+=\frac{-(-\alpha)^r+\alpha^{s-r}(-\alpha)^s}{\sqrt5},
+\qquad
+\left|F_r-\alpha^{s-r}F_s\right|
+\le\frac{2\alpha}{\sqrt5}<1.
+$$
+因此每个这样的柱误差严格小于 $1/D_K$。
+
+若 $n>K$，每个柱在 $U_K$ 下的质量为零或 $1/D_K$，而
+$$
+0<\mu([u])\le\alpha^n\le\alpha^{K+1}<\frac1{D_K}
+\qquad(u\in W_n).
+$$
+最后一个严格不等式在 $K=0$ 时是 $\alpha<1$；在 $K\ge1$ 时，深度 $K$ 的柱权重 $\alpha^K$ 与 $\alpha^{K+1}$ 均出现且总和为一，故其平均值满足
+$$
+\alpha^{K+1}<\frac1{D_K}<\alpha^K.
+$$
+这也使每个深柱误差严格小于 $1/D_K$。同层柱集互不相交，对至多 $M$ 项求和并用三角不等式，得到事件差至多 $M/D_K$；概率差又至多为一。结合下界即得最优值。$M<D_K$ 时，有限深度事件差严格小于 $M/D_K$；$M\ge D_K$ 时，有限层的 $\mu_n$ 对每个合法词赋正质量，所以不存在两概率相差为一的事件，仍严格小于上确界一。
+
+当 $M<D$ 且 $\nu$ 最优时，下界迫使 $T_M=M/D$。于是
+$$
+\sum_{i\le M<j}(p_i-p_j)=D T_M-M=0.
+$$
+每项非负，故所有跨越分界的差均为零；两侧均非空，遂使全部质量相等，证明唯一性。若 $M\ge D$，下界已为一，概率上界给每个 $\nu$ 都取一，包括 $K=0$ 的单点定义域。
+
+**命题 126.2（有限窗口总变差及截断的最优者）。** 记 $\nu_n=(q_n)_*\nu$、$\mu_n=(q_n)_*\mu$，在有限集 $W_n$ 上取
+$$
+\operatorname{TV}(p,q)=\frac12\sum_{u\in W_n}|p(u)-q(u)|.
+$$
+则
+$$
+\min_{\nu\in\operatorname{Prob}(S_K)}
+\max_{0\le n\le N}\operatorname{TV}(\nu_n,\mu_n)
+=\begin{cases}
+0,&N\le K,\\
+1-D_K\alpha^N,&N>K.
+\end{cases}
+$$
+$N\le K$ 时最优者恰为满足 $\nu_N=\mu_N$ 的分布；$N>K$ 时最优者恰为原子质量
+$$
+p_w=\nu(\{w0^\infty\})\ge\alpha^N
+\qquad(w\in W_K)
+$$
+的分布。令 $\tau_Kx=(q_Kx)0^\infty$、$\nu^{\rm cut}=(\tau_K)_*\mu$，则 $\nu^{\rm cut}$ 是唯一同时对所有非负整数 $N$ 最优的分布。$U_K$ 与 $\nu^{\rm cut}$ 都对每个固定 $N>K$ 最优，但
+$$
+d_1(\nu^{\rm cut},\mu)=\alpha^K,
+\qquad
+\alpha^K>\frac1{D_K}\quad(K\ge1).
+$$
+$K=0$ 时两分布相同，$N=0$ 的误差为零，$N>0$ 的最优误差为 $1-\alpha^N$，而 $d_1=1$。
+
+证明。前缀投影收缩总变差，故对每个固定 $\nu$ 有
+$$
+\max_{0\le n\le N}\operatorname{TV}(\nu_n,\mu_n)
+=\operatorname{TV}(\nu_N,\mu_N).
+$$
+当 $N\le K$ 时，$q_N:S_K\to W_N$ 满射，任意目标前缀都可补零至长度 $K$，因此可以给这些原像分配质量以精确实现 $\mu_N$；总变差为零当且仅当两有限分布相同。这也包括 $N=0$，此时所有概率的空前缀分布相同。
+
+当 $N>K$ 时，$\nu_N$ 集中在
+$$
+A_{K,N}=\{w0^{N-K}:w\in W_K\}\subseteq W_N,
+\qquad |A_{K,N}|=D_K
+$$
+上，其中每个词在 $\mu_N$ 下的质量都是 $a=\alpha^N$。有限概率的重叠质量公式遂给出精确式
+$$
+\operatorname{TV}(\nu_N,\mu_N)
+=1-\sum_{w\in W_K}\min(p_w,a)
+\ge1-D_Ka.
+$$
+逐项 $\min(p_w,a)\le a$，等号成立当且仅当每项 $p_w\ge a$。命题 126.1 证明中的 $a\le\alpha^{K+1}<1/D_K$ 说明这些条件可由 $U_K$ 同时满足，故下界可达。
+
+截断概率在所有 $n\le K$ 精确保持柱读数，且其原子质量为
+$$
+\nu^{\rm cut}(\{w0^\infty\})=
+\begin{cases}
+\alpha^{K+w_{K-1}},&K\ge1,\\
+1,&K=0.
+\end{cases}
+$$
+$K\ge1$ 时每项至少为 $\alpha^{K+1}$，$K=0$ 时唯一质量为一，所以它也满足每个 $N>K$ 的等号条件。反过来，同时最优必在 $N=K$ 精确实现 $\mu_K$；$q_K:S_K\to W_K$ 是双射，故原子质量被唯一确定为截断概率。这证明全部窗口同时最优的唯一性，并不把固定深窗口的两类最优者分开。
+
+为计算截断概率的 $d_1$，$n\le K$ 的柱误差为零。$K\ge1$ 且 $n>K$ 时，含有支撑原子的柱误差为 $p_w-\alpha^n$，其中 $\alpha^{K+1}\le p_w\le\alpha^K$；不含支撑原子的柱误差至多为 $\alpha^n\le\alpha^{K+1}$。故 $d_1\le\alpha^K$，而 $[0^n]$ 上的差为 $\alpha^K-\alpha^n$，趋于 $\alpha^K$，证明等号。$K=0$ 时同一柱上的差为 $1-\alpha^n$，上确界为一。命题 126.1 中的严格平均值界给 $K\ge1$ 时与 $1/D_K$ 的严格差异。因此，精确保留截至 $K$ 的读数与优化全深度的受限事件误差是不同任务，虽然后者的均匀最优者与截断概率都优化每个 $N>K$ 的固定窗口。
+
+由命题 126.1，固定 $M$ 时最优误差随 $K\to\infty$ 趋于零；若正整数预算 $M_K$ 随 $K$ 变化，则该误差趋零当且仅当 $M_K/D_K\to0$。$M$ 只计一次事件表达允许使用的同深度柱集数，不是运行时间、能量或物理存储量。若完全取消这个数目的限制，有限层事件变分式给全层事件差的最大值为 $\operatorname{TV}(\nu_n,\mu_n)$；对任意固定 $K$ 与 $\nu\in\operatorname{Prob}(S_K)$，事件 $A_{K,n}$ 的差为 $1-D_K\alpha^n$，故全部深度上的上确界为一。这是 Z458.5 的有限或可数支撑对无原子概率的既有分离机制在前缀事件中的体现，不另作为新增结论。
+
+量子读数只给如下带条件的下界。固定 $n>K$，在 $\mathcal K_n=(\mathbb C^2)^{\otimes n}$ 的计算基上，令 $P_{K,n}$ 为投到 $\operatorname{span}\{|u\rangle:u\in A_{K,n}\}$ 的正交投影。设 $\sigma_n,\rho_n$ 为密度算子，且
+$$
+\sigma_n=P_{K,n}\sigma_nP_{K,n},\qquad
+\langle u|\rho_n|u\rangle=\mu_n(u)
+\quad(u\in\{0,1\}^n),
+$$
+其中非法词的目标对角质量为零。以 $D(\sigma,\rho)=\tfrac12\|\sigma-\rho\|_1$ 记迹距，则
+$$
+D(\sigma_n,\rho_n)
+\ge\left|\operatorname{Tr}\bigl(P_{K,n}(\sigma_n-\rho_n)\bigr)\right|
+=1-D_K\alpha^n.
+$$
+证明此测量界只需将迹零 Hermitian 算子 $H=\sigma_n-\rho_n$ 写成正负谱部分 $H_+-H_-$：两部分的迹均为 $\|H\|_1/2$，而 $0\le P_{K,n}\le I$ 使 $\operatorname{Tr}(P_{K,n}H)$ 位于这两个相反界之间。支撑条件使 $\operatorname{Tr}(P_{K,n}\sigma_n)=1$，指定对角律使另一迹为 $D_K\alpha^n$。若每个 $n>K$ 的前缀都满足所列条件，则由迹距至多为一得到全深度上确界一。仅有秩或 Hilbert 空间维数不能推出这里的支撑条件；经典最优等式也不直接给量子迹距的等号或相干态最优者唯一性。
+
+本节引用的 Q109、Q123–124、Z381.2（柱弧）、Z396.1（长度概率）、Z400.1（Borel 截面）、Z458.5 及 CSA 定义 1–3，取仓库提交 `ca874c0d5f5c42b3546795595814b36df13d1013`；Q125.3 的正文版本为 `7af72f9910546ca2aa0bfa3a6bbaed4d8a393efb`。前一提交的 `D5/S3/TotalVariation/Metric.lean` 中 `total_variation_eq_sup_event_gap` 给等质量有限函数的事件变分式，`D5/S3/TotalVariation/DataProcessing.lean` 中 `total_variation_channel_le` 给随机通道收缩，`D5/S1/Scale/FibonacciErrorRatio.lean` 中 `fibonacci_golden_residual` 给相邻 Fibonacci 数的黄金残差。这些是所用既有输入；本节的两条最优性命题及条件量子界为 `repo-derived` 普通数学推导，不据此提出外部新颖性、Lean 准入或完整 Lean 认证主张。
+
+## 追加锚（本行以下为增补区）
+
+## 127. 固定尾零支撑下相干局部态的精确迹距离
+
+固定整数 $n>K\ge0$，令 $\alpha=(\sqrt5-1)/2$、$F_0=0,F_1=1,F_{j+2}=F_{j+1}+F_j$，并沿用从第 $0$ 位向右的前缀方向。记
+$$
+W_j=\{w\in\{0,1\}^j:w_iw_{i+1}=0\ \text{对所有 }0\le i<j-1\},
+\qquad W_0=\{\varnothing\},
+\qquad \mathcal K_n=(\mathbb C^2)^{\otimes n}.
+$$
+在完整 $n$ qubit 空间的计算基上，取未归一化向量及指定目标
+$$
+s_n=\sum_{u\in W_n}|u\rangle,
+\qquad
+t_n=\sum_{\substack{u\in W_n\\u_{n-1}=0}}|u\rangle,
+\qquad
+\rho_n=\alpha^{n+1}|s_n\rangle\langle s_n|
+       +\alpha^{n+2}|t_n\rangle\langle t_n|.
+$$
+这正是 Q125.1 的相干局部极限；非法词方向上的行、列均为零。预算固定的是具体计算基支撑
+$$
+A=A_{K,n}=\{w0^{n-K}:w\in W_K\},
+\qquad
+P=P_{K,n}=\sum_{u\in A}|u\rangle\langle u|,
+\qquad
+\mathcal F_{K,n}=\{\sigma\ge0:\operatorname{Tr}\sigma=1,\ \sigma=P\sigma P\}.
+$$
+可行态允许混合及支撑内的任意相干。以
+$$
+d_{\rm tr}(\rho,\sigma)=\frac12\|\rho-\sigma\|_1,
+\qquad \|X\|_1=\operatorname{Tr}\sqrt{X^*X}
+$$
+采用半迹范数约定，字母 $D$ 只用于计数。以下简记
+$$
+D=F_{K+2},\qquad B=F_{n+1},\qquad C=F_n,\qquad b=B-D,
+$$
+$$
+m=D\alpha^n,\qquad
+\delta=\alpha^{2n+3}BC,\qquad
+\eta=\alpha^{2n+3}bC,\qquad
+c=1-m-\delta,
+$$
+并置
+$$
+|a\rangle=D^{-1/2}\sum_{u\in A}|u\rangle,
+\qquad \tau_{K,n}=|a\rangle\langle a|.
+$$
+
+**命题 127.1（指定相干目标的尾零最优误差）。** 对所有整数 $n>K\ge0$，$\tau_{K,n}$ 达到
+$$
+e_{K,n}=\min_{\sigma\in\mathcal F_{K,n}}d_{\rm tr}(\rho_n,\sigma).
+$$
+精确值 $e_{K,n}$ 是三次方程
+$$
+x^3-cx-\eta=0
+$$
+的唯一严格正实根。边界为
+$$
+e_{K,K+1}=\alpha^{K+2}\sqrt{F_{K+1}F_{K+3}},
+\qquad e_{0,1}=\sqrt2\,\alpha^2.
+$$
+若 $\mu_n(u)=\langle u|\rho_n|u\rangle$ 为计算基读数，在全部集中于 $A$ 的经典概率 $\nu$ 上取
+$$
+\operatorname{TV}(\nu,\mu_n)
+=\frac12\sum_{u\in\{0,1\}^n}|\nu(u)-\mu_n(u)|,
+$$
+则有严格比较
+$$
+e_{K,n}>1-m
+=\min_{\nu:\,\nu(A)=1}\operatorname{TV}(\nu,\mu_n).
+$$
+其中经典最小值由 $\tau_{K,n}$ 的对角分布达到。固定 $K$ 后，同一个有限均匀态
+$$
+|\Psi_K\rangle=D^{-1/2}\sum_{w\in W_K}|w\rangle
+$$
+接上全零尾部，给出所有 $n>K$ 的上述量子最优者，因为
+$$
+\tau_{K,n}=|\Psi_K\rangle\langle\Psi_K|
+\otimes|0^{n-K}\rangle\langle0^{n-K}|.
+$$
+$K=0$ 时 $|\Psi_0\rangle$ 按空张量积的单位向量理解。
+
+证明。先核对计数与归一化。长度 $n\ge1$ 的合法词中，末位零、末位一的数量分别是 $B=F_{n+1}$、$C=F_n$：末位零可由任意长度 $n-1$ 合法词接零得到；末位一在 $n\ge2$ 时由长度 $n-2$ 合法词接 $01$ 得到，$n=1$ 时两类各有一词。连同 $|W_0|=1,|W_1|=2$，这给 $|W_j|=F_{j+2}$。补零把 $W_K$ 单射到末位零的一类，故 $|A|=D\le B$、$b\ge0$，且 $C,D>0$。Fibonacci 数从下标 $2$ 起严格递增，所以在本参数域内 $b=0$ 当且仅当 $n=K+1$。
+
+由 $\alpha+\alpha^2=1$，$\rho_n$ 的合法对角元为
+$$
+\mu_n(u)=
+\begin{cases}
+\alpha^n,&u_{n-1}=0,\\
+\alpha^{n+1},&u_{n-1}=1.
+\end{cases}
+$$
+非法词的对角元为零。恒等式
+$$
+\alpha^n(F_{n+1}+\alpha F_n)=1
+$$
+在 $n=1$ 时是 $\alpha(1+\alpha)=1$；若它在 $n$ 成立，则
+$$
+\alpha^{n+1}(F_{n+2}+\alpha F_{n+1})
+=\alpha^n\bigl(\alpha(1+\alpha)F_{n+1}+\alpha F_n\bigr)
+=\alpha^n(F_{n+1}+\alpha F_n)=1.
+$$
+因此所列正算子 $\rho_n$ 的迹为一，而且
+$$
+\operatorname{Tr}(P\rho_n)=m,
+\qquad 0<m\le B\alpha^n=1-C\alpha^{n+1}<1.
+$$
+
+现在证明最优性。在本证明内简写 $\tau=\tau_{K,n}$。由于 $A$ 的全部词都以零结尾，
+$$
+Ps_n=Pt_n=\sqrt D\,|a\rangle.
+$$
+$Q=P-\tau$ 是正交投影，$R=I-Q$ 也是正交投影，且 $Qs_n=Qt_n=0$。取 $\operatorname{ran}Q$ 的正交标准基 $(q_j)_{j=1}^{D-1}$，以 $R$ 及 $|a\rangle\langle q_j|$ 为 Kraus 算子。它们满足
+$$
+R^*R+\sum_{j=1}^{D-1}
+\bigl(|a\rangle\langle q_j|\bigr)^*
+\bigl(|a\rangle\langle q_j|\bigr)
+=R+Q=I,
+$$
+故
+$$
+\Phi(X)=RXR+\operatorname{Tr}(QX)\tau
+$$
+是完全正保迹通道。$Q\rho_n=\rho_nQ=0$ 使 $\Phi(\rho_n)=\rho_n$。另一方面，$RP=PR=\tau$，所以每个 $\sigma\in\mathcal F_{K,n}$ 都满足
+$$
+R\sigma R=\langle a|\sigma|a\rangle\tau,
+\qquad
+\operatorname{Tr}(Q\sigma)=1-\langle a|\sigma|a\rangle,
+\qquad \Phi(\sigma)=\tau.
+$$
+这里 $D=1$ 时 $Q=0$，Kraus 求和为空，等式仍成立。由迹距离在通道下的收缩性，
+$$
+d_{\rm tr}(\rho_n,\tau)
+=d_{\rm tr}(\Phi(\rho_n),\Phi(\sigma))
+\le d_{\rm tr}(\rho_n,\sigma).
+$$
+收缩性也可直接从正负谱部分核对：对 Hermitian 算子 $Y=Y_+-Y_-$，正性、保迹性与三角不等式给
+$$
+\|\Phi(Y)\|_1
+\le\operatorname{Tr}\Phi(Y_+)+\operatorname{Tr}\Phi(Y_-)
+=\operatorname{Tr}Y_++\operatorname{Tr}Y_-=\|Y\|_1.
+$$
+$\tau$ 本身可行，故最小值确由它达到。$\Phi$ 在这里是比较态的数学通道，不以它属于某个物理可实现的制备资源集为前提。
+
+为求这个最小值，置 $H=\rho_n-\tau$。将合法词分成三个互不相交的词组：$A$、末位零但不在 $A$ 的词、末位一的词。$H$ 在各非空词组的均匀向量张成空间之外为零。由于 $C>0$，始终定义
+$$
+|v\rangle=C^{-1/2}\sum_{\substack{u\in W_n\\u_{n-1}=1}}|u\rangle.
+$$
+当 $b>0$ 时再定义
+$$
+|z\rangle=b^{-1/2}\sum_{\substack{u\in W_n\setminus A\\u_{n-1}=0}}|u\rangle.
+$$
+此时 $(a,z,v)$ 是正交标准组，其上的实际三维压缩为
+$$
+H_3=\alpha^n
+\begin{pmatrix}
+D&\sqrt{Db}&\alpha\sqrt{DC}\\
+\sqrt{Db}&b&\alpha\sqrt{bC}\\
+\alpha\sqrt{DC}&\alpha\sqrt{bC}&\alpha C
+\end{pmatrix}
+-\operatorname{diag}(1,0,0).
+$$
+当 $b=0$ 时不定义空词组的归一化向量 $z$，只用 $(a,v)$，实际二维压缩为
+$$
+H_2=\alpha^n
+\begin{pmatrix}
+D&\alpha\sqrt{DC}\\
+\alpha\sqrt{DC}&\alpha C
+\end{pmatrix}
+-\operatorname{diag}(1,0).
+$$
+在两种情形下都有 $\operatorname{Tr}H=0$。对 $y\perp a$，
+$$
+\langle y|H|y\rangle=\langle y|\rho_n|y\rangle\ge0,
+\qquad
+\langle a|H|a\rangle=m-1<0.
+$$
+若负谱子空间至少二维，它与 $a^\perp$ 有非零交，便同时给出严格负和非负的二次型值，矛盾。因此 $H$ 恰有一个负特征值，记为 $-e$，其中 $e>0$。迹为零使正特征值之和为 $e$，从而 $\|H\|_1/2=e=e_{K,n}$。
+
+接着计算不变量。$\rho_n$ 在整个末位零类与末位一类的两个归一化均匀向量上具有矩阵
+$$
+\alpha^n
+\begin{pmatrix}
+B&\alpha\sqrt{BC}\\
+\alpha\sqrt{BC}&\alpha C
+\end{pmatrix}.
+$$
+其行列式为
+$$
+\alpha^{2n}(\alpha-\alpha^2)BC
+=\alpha^{2n+3}BC=\delta>0,
+$$
+其中 $\alpha-\alpha^2=\alpha^3$。这个二维矩阵之外 $\rho_n$ 为零，且其迹为一，所以
+$$
+\operatorname{Tr}\rho_n^2=1-2\delta,
+\qquad
+\operatorname{Tr}H^2
+=\operatorname{Tr}\rho_n^2-2\langle a|\rho_n|a\rangle+1
+=2(1-m-\delta)=2c.
+$$
+$H\ne0$ 为 Hermitian 算子，故 $c>0$。
+
+当 $b>0$ 时，$\rho_n$ 的三维压缩秩为二、行列式为零。将它的第一对角元减去一，行列式恰减去对应的余子式，得到
+$$
+\det H_3
+=-\alpha^{2n}(\alpha-\alpha^2)bC
+=-\eta.
+$$
+迹零三维矩阵的二次基本对称式为 $-\operatorname{Tr}H_3^2/2=-c$，于是
+$$
+\det(\lambda I_3-H_3)=\lambda^3-c\lambda+\eta.
+$$
+代入唯一负特征值 $\lambda=-e$ 得 $e^3-ce-\eta=0$。反过来，每个严格正实根 $x$ 都使 $-x$ 成为 $H_3$ 的负特征值，故严格正实根唯一。
+
+当 $b=0$ 时使用实际的 $H_2$：它的迹为零、平方迹为 $2c$，所以
+$$
+\det H_2=-c,\qquad
+\operatorname{spec}(H_2)=\{-\sqrt c,\sqrt c\}.
+$$
+此时 $\eta=0$，三次方程是 $x(x^2-c)=0$，唯一严格正实根仍是 $e=\sqrt c$；二维行列式是 $-c$，不是三维补零矩阵的零行列式。
+
+在边界 $n=K+1$，有 $D=B$，归一化恒等式进一步把实际二维矩阵写成
+$$
+H_2=\alpha^{n+1}
+\begin{pmatrix}
+-C&\sqrt{DC}\\
+\sqrt{DC}&C
+\end{pmatrix}.
+$$
+因此
+$$
+e_{K,K+1}^2=\alpha^{2n+2}C(C+D)
+=\alpha^{2K+4}F_{K+1}F_{K+3},
+$$
+由 $e_{K,K+1}>0$ 即得所列平方根。$K=0$ 时 $D=1$，可行支撑为 $|0^n\rangle$ 张成的一维空间，上述通道与谱论证对每个 $n>0$ 仍适用；其中 $n=1$ 给 $C=D=1$，故 $e_{0,1}=\sqrt2\,\alpha^2$。
+
+最后核对经典最优值与严格差距。显式对角律在 $A$ 上每词赋质量 $\alpha^n$，总质量为 $m$。对任意 $\nu(A)=1$，总变差的事件界给
+$$
+\operatorname{TV}(\nu,\mu_n)\ge|\nu(A)-\mu_n(A)|=1-m.
+$$
+该事件界直接来自差函数总和为零，其正部、负部之和各等于总变差。令 $\nu$ 在 $A$ 上均匀，则 $m<1$ 给 $1/D>\alpha^n$，从而 $A$ 内外的绝对差之和分别为
+$$
+\sum_{u\in A}\left(\frac1D-\alpha^n\right)=1-m,
+\qquad
+\sum_{u\notin A}\mu_n(u)=1-m.
+$$
+半和恰为 $1-m$，这既证明经典最优值，也说明 $\tau$ 的对角分布达到它。
+
+量子严格性则来自 $H$ 的非对角作用。无论 $b$ 是否为零，末位一类的均匀向量 $v$ 都已定义且与 $a$ 正交，并满足
+$$
+\langle v|H|a\rangle=\alpha^{n+1}\sqrt{DC}>0.
+$$
+因此 $a$ 不是 $H$ 的特征向量。Rayleigh 商达到最小特征值当且仅当向量属于相应特征空间，故
+$$
+-e_{K,n}=\lambda_{\min}(H)
+<\langle a|H|a\rangle=m-1,
+$$
+即 $e_{K,n}>1-m$。张量积公式直接由 $A$ 的定义得到，证明固定的 $|\Psi_K\rangle$ 接全零尾部同时给出每个 $n>K$ 的最优者。证毕。
+
+这里的差距比较完整 POVM 所能取得的态区分总变差与只读计算基的总变差。它依赖所列相干目标及固定尾零支撑，不是对所有目标或每种受限测量的结论，也不是过程的 diamond 范数界。它不表示最优值依赖计算基的相位角：任意计算基对角酉算子 $U$ 都与 $P$ 对易，共轭使 $\mathcal F_{K,n}$ 双射到自身，迹范数的酉不变性便给
+$$
+\min_{\sigma\in\mathcal F_{K,n}}d_{\rm tr}(U\rho_nU^*,\sigma)=e_{K,n}.
+$$
+固定支撑也不能换成仅有维数的预算；若 $K\ge1$，则 $D\ge2$，而上面的正二维行列式给 $\operatorname{rank}\rho_n=2$，允许任选 $D$ 维子空间就能令其包含 $\operatorname{ran}\rho_n$，以 $\sigma=\rho_n$ 达到零误差。
+
+本节的 Q109、Q125.1、Q125.3 取仓库提交 `7af72f9910546ca2aa0bfa3a6bbaed4d8a393efb`；Q126.2 的固定尾零载体及经典窗口比较取提交 `dc4af5d3b06e66c8be5fe63ffd5fc1ace63e2c7e`，这里已从显式对角律独立证明所需经典最优值。迹距离的数据处理是既有标准结论，前一提交的 `D5/S3/Quantum/Foundation/FiniteTraceDistance.lean` 中 `traceDistance_contract` 对应所用收缩性，其范围不包含本节完整最优化。命题 127.1 为 `repo-derived` 普通数学推导，不提出外部新颖性或完整 Lean 认证主张。
+
+## 追加锚（本行以下为增补区）
+
+## 128. 尾零量子最优者的唯一性与短窗口保真的代价
+
+固定整数 $n>K\ge0$，取 $\alpha=(\sqrt5-1)/2$、$F_0=0,F_1=1,F_{j+2}=F_{j+1}+F_j$。窗口从第 $0$ 位向右延伸，记
+$$
+W_j=\{w\in\{0,1\}^j:w_iw_{i+1}=0\ \text{对所有 }0\le i<j-1\},
+\qquad W_0=\{\varnothing\},
+\qquad D_K=|W_K|=F_{K+2}.
+$$
+完整载体与其中的合法词子空间分别为
+$$
+\mathcal K_j=(\mathbb C^2)^{\otimes j},
+\qquad
+\mathcal L_j=\operatorname{span}\{|w\rangle:w\in W_j\}\subseteq\mathcal K_j,
+\qquad \mathcal K_0=\mathcal L_0=\mathbb C.
+$$
+目标是 Q125.1、Q127.1 所指定的相干态族：$\rho_0=(1)$，而对 $j\ge1$，
+$$
+s_j=\sum_{w\in W_j}|w\rangle,
+\qquad
+t_j=\sum_{\substack{w\in W_j\\w_{j-1}=0}}|w\rangle,
+\qquad
+\rho_j=\alpha^{j+1}|s_j\rangle\langle s_j|
+       +\alpha^{j+2}|t_j\rangle\langle t_j|.
+$$
+这里 $s_j,t_j$ 未归一化，$\rho_j$ 是完整 $\mathcal K_j$ 上的密度算子，非法词方向上的行、列为零。补零等距映射及可行域为
+$$
+V=V_{K,n}:\mathcal L_K\longrightarrow\mathcal K_n,
+\qquad V|w\rangle=|w0^{n-K}\rangle,
+\qquad P=VV^*,
+$$
+$$
+\mathcal F_{K,n}
+=\{\sigma\text{ 为 }\mathcal K_n\text{ 上的密度算子}:\sigma=P\sigma P\}.
+$$
+因此固定的是 $\{w0^{n-K}:w\in W_K\}$ 的具体尾零支撑，允许该支撑内的混合及任意相干。置
+$$
+|\Psi_K\rangle=D_K^{-1/2}\sum_{w\in W_K}|w\rangle,
+\qquad |a\rangle=V|\Psi_K\rangle,
+\qquad \tau=\tau_{K,n}=|a\rangle\langle a|,
+\qquad Q=P-\tau.
+$$
+采用半迹范数 $d_{\rm tr}(\rho,\sigma)=\tfrac12\|\rho-\sigma\|_1$。Q127.1 的普通证明给出
+$$
+e=e_{K,n}=d_{\rm tr}(\rho_n,\tau)
+=\min_{\sigma\in\mathcal F_{K,n}}d_{\rm tr}(\rho_n,\sigma)
+>1-D_K\alpha^n>0,
+$$
+并给出 $H=\rho_n-\tau$ 的负谱子空间恰为一维。取其中单位向量 $\zeta$，使 $H\zeta=-e\zeta$，定义
+$$
+r=r_{K,n}=\|P\zeta\|^2.
+$$
+谱投影 $|\zeta\rangle\langle\zeta|$ 及 $r$ 均与 $\zeta$ 的相位选择无关。对 $K\ge1$ 再记
+$$
+B_K=F_{K+1},\qquad C_K=F_K,\qquad D_K=B_K+C_K,
+\qquad \kappa_K=\alpha^{K+2}\frac{B_KC_K}{D_K},
+$$
+并单独定义 $\kappa_0=0$；空词不使用末位分类。
+
+**命题 128.1（投影余量、唯一最优者与短窗口保真冲突）。** 对所有上述整数 $n>K\ge0$，有 $0<r_{K,n}<1$。每个 $\sigma\in\mathcal F_{K,n}$ 若记 $p=\langle a|\sigma|a\rangle$，则
+$$
+d_{\rm tr}(\rho_n,\sigma)
+\ge e_{K,n}+(1-r_{K,n})(1-p).
+$$
+因而 $\tau_{K,n}$ 是该可行域内唯一的迹距离最优者。
+
+每个可行态唯一写成 $\sigma=V\theta V^*$，其中 $\theta$ 是 $\mathcal L_K$ 上的密度算子；把 $\theta$ 在非法词方向延零，视为完整 $\mathcal K_K$ 上的算子，则其完整张量积偏迹为
+$$
+\operatorname{Tr}_{\{K,\ldots,n-1\}}\sigma=\theta.
+$$
+所以精确保留前 $K$ 位目标 $\rho_K$ 的唯一可行延拓是
+$$
+\sigma^{\rm cut}_{K,n}=V\rho_KV^*
+=\rho_K\otimes|0^{n-K}\rangle\langle0^{n-K}|.
+$$
+乘积 $V\rho_KV^*$ 中的 $\rho_K$ 取其在 $\mathcal L_K$ 上的限制，右端及偏迹仍在完整 qubit 空间中解释。此延拓也精确保留所有 $0\le j\le K$ 的目标前缀 $\rho_j$。令
+$$
+p_K=\langle\Psi_K|\rho_K|\Psi_K\rangle.
+$$
+对 $K\ge1$，有
+$$
+p_K=\alpha^{K+1}D_K+\alpha^{K+2}\frac{B_K^2}{D_K},
+\qquad 1-p_K=\kappa_K>0,
+$$
+以及严格的长窗口额外误差
+$$
+g_{K,n}:=d_{\rm tr}(\rho_n,\sigma^{\rm cut}_{K,n})-e_{K,n}
+\ge(1-r_{K,n})\kappa_K>0.
+$$
+对 $K=0$，$p_0=1$，唯一可行态就是 $\tau_{0,n}=\sigma^{\rm cut}_{0,n}$，没有这种冲突。
+
+更一般地，任取非负容差 $\varepsilon_{\rm short},\varepsilon_{\rm large}$。若某个可行态及其短窗口 $\theta$ 同时满足
+$$
+d_{\rm tr}(\theta,\rho_K)\le\varepsilon_{\rm short},
+\qquad
+d_{\rm tr}(\rho_n,\sigma)\le e_{K,n}+\varepsilon_{\rm large},
+$$
+则必有
+$$
+\varepsilon_{\rm large}
+\ge(1-r_{K,n})\max\{\kappa_K-\varepsilon_{\rm short},0\}.
+$$
+这只是必要条件，一般并不充分，也不是可达误差对的精确 Pareto 边界。
+
+对每个固定的 $K\ge1$，各有限 $n>K$ 的冲突严格为正，但实际差距满足
+$$
+0<g_{K,n}\le1-e_{K,n}<D_K\alpha^n\longrightarrow0
+\qquad(n\to\infty).
+$$
+因而不存在对所有 $n>K$ 统一成立的正差距下界。投影余量的系数也退化：
+$$
+e_{K,n}\le r_{K,n}<1,
+\qquad
+0<1-r_{K,n}\le1-e_{K,n}<D_K\alpha^n\longrightarrow0.
+$$
+
+证明。先构造实际用于余量界的测量。由于支撑中的每个词均以零结尾，
+$$
+Ps_n=Pt_n=\sqrt{D_K}\,|a\rangle.
+$$
+$Q=P-\tau$ 是正交投影，且 $Qs_n=Qt_n=0$，故 $Q\rho_n=\rho_nQ=0$ 及 $QH=HQ=0$。由
+$$
+0=QH\zeta=-eQ\zeta
+$$
+和 $e>0$ 得 $Q\zeta=0$。于是
+$$
+P\zeta=\tau\zeta=\langle a|\zeta\rangle a,
+\qquad r=|\langle a|\zeta\rangle|^2.
+$$
+若 $r=0$，则
+$$
+-e=\langle\zeta|H|\zeta\rangle
+=\langle\zeta|\rho_n|\zeta\rangle\ge0,
+$$
+矛盾。若 $r=1$，则单位向量 $\zeta$ 属于 $\operatorname{ran}P$，结合 $Q\zeta=0$ 可知它与 $a$ 平行，故 $a$ 必为 $H$ 的特征向量。然而 Q127.1 中始终非空的末位一词组给单位向量
+$$
+|v\rangle=F_n^{-1/2}\sum_{\substack{u\in W_n\\u_{n-1}=1}}|u\rangle,
+\qquad v\perp\operatorname{ran}P,
+$$
+并且由显式目标直接有
+$$
+\langle v|H|a\rangle
+=\alpha^{n+1}\sqrt{D_KF_n}>0.
+$$
+这与 $a$ 为特征向量矛盾，故 $0<r<1$。这里 $F_n>0$ 对每个 $n>K\ge0$ 成立，$n=K+1$ 也无需引入任何空词组的归一化向量。
+
+由 $Q\zeta=0$，两个正交投影 $|\zeta\rangle\langle\zeta|$ 与 $Q$ 的乘积在两个方向上均为零，因此
+$$
+E=|\zeta\rangle\langle\zeta|+Q,
+\qquad E^*=E,\qquad E^2=E,\qquad 0\le E\le I.
+$$
+它与 $I-E$ 构成二元投影测量。对任意可行 $\sigma$，支撑条件和 $P\zeta=\langle a|\zeta\rangle a$ 给
+$$
+\operatorname{Tr}(E\sigma)
+=\langle\zeta|\sigma|\zeta\rangle+\operatorname{Tr}(Q\sigma)
+=rp+1-p.
+$$
+另一方面，$Q\rho_n=0$ 及 $H\zeta=-e\zeta$ 给
+$$
+\operatorname{Tr}(E\rho_n)
+=\langle\zeta|\rho_n|\zeta\rangle
+=\langle\zeta|(H+\tau)|\zeta\rangle=r-e.
+$$
+在本次应用中，将迹零 Hermitian 算子 $Y=\sigma-\rho_n$ 写成正负谱部分 $Y_+-Y_-$；两部分的迹都是 $\|Y\|_1/2$，且 $0\le\operatorname{Tr}(EY_\pm)\le\operatorname{Tr}Y_\pm$，所以
+$$
+|\operatorname{Tr}(EY)|\le\tfrac12\|Y\|_1=d_{\rm tr}(\rho_n,\sigma).
+$$
+两个期望相减恰为 $e+(1-r)(1-p)>0$，这便证明投影余量界。
+
+Q127.1 已给 $\tau$ 达到最小值 $e$。若 $\sigma$ 也达到该值，$1-r>0$ 与 $0\le p\le1$ 迫使 $p=1$。此时
+$$
+\operatorname{Tr}\bigl((I-\tau)\sigma(I-\tau)\bigr)=1-p=0.
+$$
+括号中的算子为正，迹零使它为零，消去了 $a^\perp$ 内的全部方向。对任意 $x\perp a$，正算子的 Cauchy–Schwarz 不等式又给
+$$
+|\langle x|\sigma|a\rangle|^2
+\le\langle x|\sigma|x\rangle\langle a|\sigma|a\rangle=0,
+$$
+其共轭交叉项也为零。因此 $\sigma=p\tau=\tau$，唯一性成立；这里并未使用迹范数的严格凸性。
+
+下面核对短窗口及其唯一延拓。$V^*V=I_{\mathcal L_K}$，故可行态给出密度算子 $\theta=V^*\sigma V$，且 $V\theta V^*=P\sigma P=\sigma$；反向乘以 $V^*,V$ 也证明 $\theta$ 唯一。按合法词基展开，
+$$
+V\theta V^*
+=\sum_{w,u\in W_K}\theta_{wu}
+  |w\rangle\langle u|\otimes|0^{n-K}\rangle\langle0^{n-K}|.
+$$
+尾部秩一投影的迹为一，故在完整张量积上取尾部偏迹正好得到延零后的 $\theta$，并非在较小的合法空间上另定义偏迹。特别地，短窗口等于 $\rho_K$ 当且仅当 $\theta=\rho_K$，得到所列唯一的 $\sigma^{\rm cut}_{K,n}$。Q125.1 的完整偏迹相容性逐层迭代，使该态的前 $j$ 位等于 $\rho_j$，$1\le j\le K$；空窗口为标量迹一，即 $\rho_0$。
+
+对 $K\ge1$，末位零、末位一的词数分别为 $B_K,C_K$，两者均正。由未归一化向量的定义，
+$$
+\langle\Psi_K|s_K\rangle=\sqrt{D_K},
+\qquad
+\langle\Psi_K|t_K\rangle=\frac{B_K}{\sqrt{D_K}},
+$$
+从而得到陈述中的 $p_K$。归一化在同一记号下为
+$$
+1=\operatorname{Tr}\rho_K
+=\alpha^{K+1}D_K+\alpha^{K+2}B_K.
+$$
+两式相减，利用 $D_K-B_K=C_K$，即得
+$$
+1-p_K
+=\alpha^{K+2}\left(B_K-\frac{B_K^2}{D_K}\right)
+=\alpha^{K+2}\frac{B_KC_K}{D_K}=\kappa_K>0.
+$$
+$\sigma^{\rm cut}_{K,n}$ 的 $p$ 正是 $p_K$，代入余量界给严格额外误差。$K=0$ 时 $\mathcal L_0$ 一维，唯一密度为 $\rho_0=(1)$，$\Psi_0$ 是单位空张量；因此 $p_0=1$、$\kappa_0=0$ 及全部无冲突结论直接成立。
+
+对容差结论，$\sigma=V\theta V^*$ 给 $p=\langle\Psi_K|\theta|\Psi_K\rangle$。对完整 $\mathcal K_K$ 上的迹零算子 $\theta-\rho_K$ 应用刚才的正负部分论证，并取投影 $|\Psi_K\rangle\langle\Psi_K|$，得到
+$$
+|p-p_K|\le d_{\rm tr}(\theta,\rho_K)\le\varepsilon_{\rm short}.
+$$
+由于 $p\le1$，这蕴含
+$$
+1-p\ge\max\{\kappa_K-\varepsilon_{\rm short},0\}.
+$$
+与长窗口余量界和假设的长窗口上界合并，便是所列必要条件，$K=0$ 时右端为零。
+
+为验证它一般不充分，取 $K=1$、任意 $n>1$，以及 $\varepsilon_{\rm large}=0$、$\varepsilon_{\rm short}=\kappa_1$。这对预算满足所列必要不等式。若有可行态满足两项预算，长窗口预算及唯一性却迫使它为 $\tau_{1,n}$，短窗口只能是 $|\Psi_1\rangle\langle\Psi_1|$。此时 $\kappa_1=\alpha^3/2=\alpha-1/2>0$，由 Q125.1 的一位矩阵得到
+$$
+|\Psi_1\rangle\langle\Psi_1|-\rho_1
+=\frac12\begin{pmatrix}1&1\\1&1\end{pmatrix}
+ -\begin{pmatrix}\alpha&\alpha^2\\\alpha^2&\alpha^2\end{pmatrix}
+=\kappa_1\begin{pmatrix}-1&1\\1&1\end{pmatrix}.
+$$
+这个迹零矩阵的特征值为 $\pm\sqrt2\,\kappa_1$，故短窗口迹距离是 $\sqrt2\,\kappa_1>\varepsilon_{\rm short}$，矛盾。这给出了必要条件与可达性的严格区别。
+
+最后，任意两个密度算子的迹距离至多为一，所以对 $K\ge1$，已证的严格性与 Q127.1 的 $e_{K,n}>1-D_K\alpha^n$ 共同给
+$$
+0<g_{K,n}\le1-e_{K,n}<D_K\alpha^n.
+$$
+固定 $K$ 时右端趋零，夹逼的是实际差距本身。又因 $E$ 与 $\rho_n$ 均为正算子，
+$$
+0\le\operatorname{Tr}(E\rho_n)=r_{K,n}-e_{K,n},
+$$
+故 $r_{K,n}\ge e_{K,n}$，同时 $r_{K,n}<1$，得到所列系数退化界。证毕。
+
+本命题刻画指定相干目标与准确尾零支撑下的静态窗口相容性。Q126.2 中经典截断概率与均匀概率均优化每个固定深窗口的总变差；这里的唯一量子最优者则在 $K\ge1$ 时不能同时精确保留 $\rho_K$。投影 $E$ 是完整 $n$ 窗口上允许任意联合测量时的数学效应，未附加局域性、实施成本或可访问性条件。所证范围不包含时间演化、动态预测、任意维数预算、一般目标态或形而上必然性。
+
+本节的 Q125.1、Q126.2、Q127.1 均取[仓库不可变提交 `ac40238901406b5bba4518e306d5bb2da9fe8ba1` 的量子卷](https://github.com/the-omega-institute/trureturing/blob/ac40238901406b5bba4518e306d5bb2da9fe8ba1/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_QUANTUM.md)，依其显式普通证明使用。测量期望受迹距离控制属于 Helstrom 变分框架；Q127.1 所引同仓 `D5/S3/Quantum/Foundation/FiniteTraceDistance.lean` 提供既有有限迹距离数据处理，其覆盖范围不是本节的完整唯一性与保真冲突。命题 128.1 是 `repo-derived` 普通数学推导，不主张外部新颖性或 Lean 认证。
+
+## 追加锚（本行以下为增补区）
+
+## 129. 移动边界下的非消失尾零代价
+
+取 $\alpha=(\sqrt5-1)/2$、$F_0=0,F_1=1,F_{j+2}=F_{j+1}+F_j$，在完整 qubit 载体中记
+$$
+\mathcal K_j=(\mathbb C^2)^{\otimes j},
+\qquad
+W_j=\{w\in\{0,1\}^j:w_iw_{i+1}=0\ \text{对所有 }0\le i<j-1\},
+\qquad W_0=\{\varnothing\},
+$$
+$$
+\mathcal L_j=\operatorname{span}\{|w\rangle:w\in W_j\}\subseteq\mathcal K_j,
+\qquad \mathcal K_0=\mathcal L_0=\mathbb C.
+$$
+目标取命题 125.1 的指定密度算子 $\rho_0=(1)$ 及
+$$
+\rho_j=\alpha^{j+1}|s_j\rangle\langle s_j|
+       +\alpha^{j+2}|t_j\rangle\langle t_j|\quad(j\ge1),
+\qquad
+|s_j\rangle=\sum_{w\in W_j}|w\rangle,
+\qquad
+|t_j\rangle=\sum_{\substack{w\in W_j\\w_{j-1}=0}}|w\rangle.
+$$
+对每个整数 $K\ge0$ 取 $n=K+1$，置
+$$
+C=F_{K+1},\qquad D=F_{K+2},\qquad s=\alpha^{K+2},
+$$
+$$
+A=\{w0:w\in W_K\},
+\qquad P=\sum_{u\in A}|u\rangle\langle u|,
+\qquad
+\mathcal F_{K,K+1}=\{\sigma\ge0:\operatorname{Tr}\sigma=1,\ \sigma=P\sigma P\},
+$$
+其中 $\sigma$ 作用于完整 $\mathcal K_{K+1}$。定义精确尾零等距映射与向量
+$$
+V:\mathcal L_K\longrightarrow\mathcal K_{K+1},
+\qquad V|w\rangle=|w0\rangle,
+\qquad
+|\Psi_K\rangle=D^{-1/2}\sum_{w\in W_K}|w\rangle,
+$$
+$$
+|a\rangle=V|\Psi_K\rangle,
+\qquad \tau=|a\rangle\langle a|,
+\qquad
+|v\rangle=C^{-1/2}\sum_{\substack{u\in W_{K+1}\\u_K=1}}|u\rangle,
+\qquad \mathcal M=\operatorname{span}\{a,v\}.
+$$
+采用半迹范数约定，并以命题 127.1 的可行域定义最优误差：
+$$
+d_{\rm tr}(\rho,\sigma)=\frac12\|\rho-\sigma\|_1,
+\qquad \|X\|_1=\operatorname{Tr}\sqrt{X^*X},
+\qquad
+e_{K,K+1}=\min_{\sigma\in\mathcal F_{K,K+1}}d_{\rm tr}(\rho_{K+1},\sigma).
+$$
+记 $H=\rho_{K+1}-\tau$，令 $\Pi_-$ 为 $H$ 在完整载体上的负谱投影，定义
+$$
+r_{K,K+1}=\langle a|\Pi_-|a\rangle,
+\qquad
+\sigma^{\rm cut}_{K,K+1}=V(\rho_K|_{\mathcal L_K})V^*,
+\qquad
+g_K=d_{\rm tr}(\rho_{K+1},\sigma^{\rm cut}_{K,K+1})-e_{K,K+1}.
+$$
+这里乘积中的 $\rho_K$ 识别为它在合法支撑 $\mathcal L_K$ 上的限制；$\rho_K$ 本身仍指完整 $\mathcal K_K$ 上、在非法词方向延零的算子。对 $K\ge1$ 沿用命题 128.1 的记号
+$$
+\kappa_K=\alpha^{K+2}\frac{F_{K+1}F_K}{F_{K+2}}.
+$$
+
+**命题 129.1（移动边界的非消失尾零代价）。** 对上述指定目标与具体尾零支撑，对所有整数 $K\ge0$，在完整载体上有
+$$
+\sigma^{\rm cut}_{K,K+1}=\rho_K\otimes|0\rangle\langle0|,
+\qquad
+e_{K,K+1}=d_{\rm tr}(\rho_{K+1},\tau)=s\sqrt{C(C+D)}>0.
+$$
+$H$ 在正交标准基 $(a,v)$ 上的矩阵及其平方为
+$$
+H_2=s\begin{pmatrix}-C&\sqrt{CD}\\\sqrt{CD}&C\end{pmatrix},
+\qquad H_2^2=e_{K,K+1}^2I_2.
+$$
+$H$ 在 $\mathcal M^\perp$ 上为零，其完整负谱投影为二维负谱投影的延零：
+$$
+\Pi_{-,2}=\frac{I_2-H_2/e_{K,K+1}}2,
+\qquad \Pi_-=\Pi_{-,2}\oplus0_{\mathcal M^\perp}.
+$$
+当 $K\ge1$ 时，$\dim\ker H=2^{K+1}-2>0$，而 $(I_{\rm full}-H/e_{K,K+1})/2$ 在此核上作用为单位算子的一半，故不是负谱投影。当 $K=0$ 时，$\mathcal K_1=\mathcal M$，该完整单位算子表达式成立。对所有 $K\ge0$，重叠量为
+$$
+r_{K,K+1}=\frac{1+\sqrt{F_{K+1}/F_{K+3}}}{2}.
+$$
+取 $\kappa_0=0$，则 $g_0=0$；对 $K\ge1$ 有
+$$
+g_K\ge(1-r_{K,K+1})\kappa_K>0.
+$$
+沿 $n=K+1$ 令 $K\to\infty$，有三个极限
+$$
+e_{K,K+1}\longrightarrow\frac1{\sqrt5},
+\qquad
+1-r_{K,K+1}\longrightarrow\frac{1-\alpha}{2}=\frac{\alpha^2}{2},
+\qquad
+\kappa_K\longrightarrow\frac{\alpha^3}{\sqrt5},
+$$
+以及
+$$
+\liminf_{K\to\infty}g_K\ge L:=\frac{\alpha^5}{2\sqrt5}>0.
+$$
+另一方面，固定任意整数 $K\ge1$，令 $n>K$ 增大，并沿用命题 127.1、128.1 在具体支撑 $A_{K,n}=\{w0^{n-K}:w\in W_K\}$ 上的最优误差 $e_{K,n}$，记
+$$
+D_K=F_{K+2},
+\qquad
+\sigma^{\rm cut}_{K,n}=\rho_K\otimes|0^{n-K}\rangle\langle0^{n-K}|,
+\qquad
+g_{K,n}=d_{\rm tr}(\rho_n,\sigma^{\rm cut}_{K,n})-e_{K,n}.
+$$
+则
+$$
+0<g_{K,n}\le1-e_{K,n}<D_K\alpha^n,
+\qquad
+g_{K,n}\longrightarrow0,
+\qquad
+e_{K,n}\longrightarrow1,
+\qquad
+d_{\rm tr}(\rho_n,\sigma^{\rm cut}_{K,n})\longrightarrow1.
+$$
+
+证明。按合法词基展开 $\rho_K|_{\mathcal L_K}$，每个矩阵单位 $|w\rangle\langle u|$ 经 $V$ 变为 $|w0\rangle\langle u0|$，即 $|w\rangle\langle u|\otimes|0\rangle\langle0|$。在非法词方向延零，得到陈述中的完整载体等式。
+
+命题 127.1 的计数给 $|A|=D$、末位一合法词数为 $C$，且 $C,D>0$。当 $n=K+1$ 时，$A$ 恰为全部末位零合法词，故 $(a,v)$ 正交归一，且
+$$
+|s_{K+1}\rangle=\sqrt D\,|a\rangle+\sqrt C\,|v\rangle,
+\qquad |t_{K+1}\rangle=\sqrt D\,|a\rangle.
+$$
+因此 $H$ 在 $\mathcal M^\perp$ 上为零。将这两式代入目标公式，并用命题 127.1 的归一化恒等式 $\alpha^{K+1}(D+\alpha C)=1$，即得所列 $H_2$。直接相乘，
+$$
+H_2^2=s^2
+\begin{pmatrix}C^2+CD&0\\0&CD+C^2\end{pmatrix}
+=s^2C(C+D)I_2.
+$$
+$H_2$ 的迹为零，其特征值为 $\pm s\sqrt{C(C+D)}$。命题 127.1 给 $\tau$ 达到可行域上的最小值，半迹范数遂给 $e_{K,K+1}=s\sqrt{C(C+D)}>0$。两特征值非零，故 $\ker H=\mathcal M^\perp$。有限维谱分解给 $\Pi_{-,2}=(I_2-H_2/e_{K,K+1})/2$，在正交补上延零才是完整负谱投影。$K\ge1$ 时正交补维数 $2^{K+1}-2>0$，完整单位算子表达式在该补空间上为一半；$K=0$ 时完整空间只有两维、正交补为零，因而该表达式有效。
+
+负谱为一维，取其单位向量 $\zeta$。由于 $Pa=a$、$Pv=0$ 且 $\zeta\in\mathcal M$，这里的 $r_{K,K+1}$ 与命题 128.1 的 $\|P\zeta\|^2=|\langle a|\zeta\rangle|^2$ 相同。二维投影的第一个对角元为
+$$
+r_{K,K+1}=\langle a|\Pi_-|a\rangle
+=\frac12\left(1+\frac{sC}{e_{K,K+1}}\right)
+=\frac12\left(1+\sqrt{\frac{C}{C+D}}\right).
+$$
+用 $C+D=F_{K+3}$ 即得对所有 $K\ge0$ 的重叠公式，且 $0<r_{K,K+1}<1$。
+
+令 $h_j=\alpha^jF_j$。命题 125.1 所用 Binet 公式在本参数下给精确残差
+$$
+h_j=\frac{1-(-\alpha^2)^j}{\sqrt5},
+\qquad h_j\longrightarrow\frac1{\sqrt5},
+$$
+因为 $0<\alpha<1$。边界误差、重叠比值和 $\kappa_K$ 满足三个缩放恒等式：
+$$
+e_{K,K+1}^2=\alpha^{2K+4}F_{K+1}F_{K+3}=h_{K+1}h_{K+3},
+$$
+$$
+\frac{F_{K+1}}{F_{K+3}}=\alpha^2\frac{h_{K+1}}{h_{K+3}},
+$$
+$$
+\kappa_K=\alpha^{K+2}\frac{F_{K+1}F_K}{F_{K+2}}
+=\alpha^3\frac{h_{K+1}h_K}{h_{K+2}}.
+$$
+最后一式的指数抵消为 $K+2-(K+1)-K+(K+2)=3$；它在 $K=0$ 时也因 $F_0=h_0=0$ 与定义 $\kappa_0=0$ 一致。各分母的极限严格为正，取正平方根、商及乘积的极限，结合 $1-\alpha=\alpha^2$，得到陈述中的三个极限。
+
+命题 128.1 对此 cut 态给 $1-\langle a|\sigma^{\rm cut}_{K,K+1}|a\rangle=\kappa_K$，并由其投影余量界得到
+$$
+g_K\ge(1-r_{K,K+1})\kappa_K>0\qquad(K\ge1).
+$$
+因此
+$$
+\liminf_{K\to\infty}g_K
+\ge\lim_{K\to\infty}(1-r_{K,K+1})\kappa_K
+=\frac{\alpha^2}{2}\frac{\alpha^3}{\sqrt5}
+=\frac{\alpha^5}{2\sqrt5}>0.
+$$
+$K=0$ 时，$\rho_0=(1)$ 且 $\sigma^{\rm cut}_{0,1}=\tau=|0\rangle\langle0|$，故 $g_0=0$；改变这一有限项不影响下极限。
+
+最后，对每个固定 $K\ge1$，命题 128.1 的实际上界是 $0<g_{K,n}\le1-e_{K,n}<D_K\alpha^n$。右端随 $n\to\infty$ 趋零，故 $g_{K,n}\to0$；再用 $e_{K,n}\le1$ 得 $e_{K,n}\to1$，从而 $d_{\rm tr}(\rho_n,\sigma^{\rm cut}_{K,n})=e_{K,n}+g_{K,n}\to1$。这是固定 $K$ 的窗口序列；沿 $n=K+1$ 的窗口序列则有 $e_{K,K+1}\to1/\sqrt5<1$ 及上述正的下极限界。证毕。
+
+## 追加锚（本行以下为增补区）

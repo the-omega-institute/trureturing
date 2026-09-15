@@ -1,0 +1,6 @@
+**定义。** 固定闭、连通、可定向曲面 $\Sigma_g$，$g\ge3$，记 $\pi=\pi_1(\Sigma_g)$，$\mathcal M_g=\operatorname{Mod}^{+}(\Sigma_g)$。以下群作用始终来自保持曲面定向的映射类。令
+
+$$\mathcal J_c=\ker\left(\mathcal M_g\longrightarrow\operatorname{Out}(\pi/\gamma_{c+1}\pi)\right),\qquad c\ge1.$$
+
+$\mathcal J_1$ 是 Torelli 群，$\mathcal J_2$ 是 Johnson 核。Johnson 同态给出 $\mathcal J_c/\mathcal J_{c+1}$ 为交换群；Johnson 核由所有本质分离简单闭曲线上的 Dehn 扭转生成。
+

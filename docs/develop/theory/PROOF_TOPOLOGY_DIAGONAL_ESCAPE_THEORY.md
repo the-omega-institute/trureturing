@@ -2806,3 +2806,354 @@ $$
 **命题。** 对每个 $a$，命令词集合是无限的，而其诱导的部分变换集合是有限的。
 
 **证明。** 前一定理给出有限性。词族 $(+)^{a+1}(+-)^n$ 随 $n\in\mathbb N$ 两两不同，却都在开头的 $(+)^{a+1}$ 后处处失败，故词集合无限。证毕。
+
+---
+
+# 补编 PM：五倍指标整除、正矩响应与一致性约束下的记忆恢复
+
+## PM.1 Bala 的五倍指标整除
+
+**定义。** 沿用 FM.6 的阶乘比
+
+$$
+A(n)=\frac{(30n)!n!}{(15n)!(10n)!(6n)!},\qquad n\in\mathbb N,
+$$
+
+并对正整数 $q$ 置
+
+$$
+f(n,q)=\left\lfloor\frac{30n}{q}\right\rfloor+\left\lfloor\frac n q\right\rfloor-
+\left\lfloor\frac{15n}{q}\right\rfloor-\left\lfloor\frac{10n}{q}\right\rfloor-
+\left\lfloor\frac{6n}{q}\right\rfloor.
+$$
+
+**定理 PM1。** 若 $q\ge6$ 且 $q\mid5n+1$，则 $f(n,q)=1$。此外，对 $n>0$，若 $10n<q\le30n$，则同样有 $f(n,q)=1$。
+
+**证明。** 先令 $r=n\bmod q$。整数部分由 $30+1=15+10+6$ 抵消，故 $f(n,q)=f(r,q)$。若 $q\mid5n+1$，则 $5r+1=tq$，其中 $t\in\{1,2,3,4\}$。当 $q\ge6$ 时，四个商 $\lfloor30r/q\rfloor,\lfloor15r/q\rfloor,\lfloor10r/q\rfloor,\lfloor6r/q\rfloor$ 依次为
+
+$$
+\begin{array}{c|rrrr}
+t&\lfloor30r/q\rfloor&\lfloor15r/q\rfloor&\lfloor10r/q\rfloor&\lfloor6r/q\rfloor\\
+1&5&2&1&1\\
+2&11&5&3&2\\
+3&17&8&5&3\\
+4&23&11&7&4
+\end{array}
+$$
+
+且 $\lfloor r/q\rfloor=0$，逐行相减得到一。对于第二项，$\lfloor n/q\rfloor,\lfloor6n/q\rfloor,\lfloor10n/q\rfloor$ 都为零。令 $k=\lfloor30n/q\rfloor\in\{1,2\}$，则 $\lfloor15n/q\rfloor=\lfloor k/2\rfloor$，所以 $f(n,q)=k-\lfloor k/2\rfloor=1$。证毕。
+
+**定理 PM2。** 对全部自然数 $n$，
+
+$$
+\boxed{(5n+1)(15n)!(10n)!(6n)!\mid(30n)!n!.}
+$$
+
+这是 Peter Bala 在 OEIS A211417 的 2025 年 8 月 28 日评注中提出的 $A(n)/(5n+1)$ 整性条款；不等同于该条目的 $3n+1$ 或 $30n-1$ 条款。来源：[OEIS A211417](https://oeis.org/A211417)。
+
+**证明。** $n=0$ 显然。设 $n>0$。由 FM5 已知分母 $(15n)!(10n)!(6n)!$ 整除分子，故 $A(n)$ 是正整数。FM.7 的余数计算给出 $f(n,q)\ge0$，而 Legendre 公式给出
+
+$$
+v_p(A(n))=\sum_{j\ge1}f(n,p^j).
+$$
+
+对 $p\ge7$，每个整除 $5n+1$ 的 $p^j$ 都满足 PM1，故各贡献一个单位。素数五不整除 $5n+1$。若 $p\nmid5n+1$，则 $v_p(A(n))\ge0=v_p(5n+1)$。
+
+对素数二，由 $v_2((2m)!)=m+v_2(m!)$ 反复化简，
+
+$$
+v_2(A(n))=7n+v_2(n!)-v_2((5n)!)-v_2((3n)!)
+=v_2\binom{8n}{5n}.
+$$
+
+若 $2\mid5n+1$，则 $n$ 为奇数，$3n$ 是二进单位。恒等式
+
+$$
+(5n+1)\binom{8n}{5n+1}=3n\binom{8n}{5n}
+$$
+
+遂给出 $v_2(A(n))\ge v_2(5n+1)$。
+
+对素数三，令 $v=v_3(5n+1)$。若 $v=0$，结论显然。否则 $3^j$ 对 $2\le j\le v$ 各贡献一，共 $v-1$ 个单位；不把 $j=1$ 的贡献假定为一。另取
+
+$$
+k=\lfloor\log_3(10n)\rfloor+1,\qquad q=3^k.
+$$
+
+则 $10n<q\le30n$，PM1 给出 $f(n,q)=1$。又 $q>5n+1$，而 $3^v\le5n+1$，故 $k>v$，这项未被前面的 $2,\ldots,v$ 重复计入。总计至少 $v$ 个单位。全部素数赋值均满足所需不等式，唯一分解给出整除。证毕。
+
+## PM.2 同一阶乘比的正矩表示
+
+**定义。** 令
+
+$$
+S=\frac{30^{30}}{15^{15}10^{10}6^6}=2^{14}3^9 5^5,
+\qquad r_n=\frac{A(n)}{S^n},
+$$
+
+并置
+
+$$
+\boldsymbol\alpha=\frac1{30}(1,7,11,13,17,19,23,29),
+\qquad
+\boldsymbol\beta=\left(\frac15,\frac13,\frac25,\frac12,\frac35,\frac23,\frac45,1\right).
+$$
+
+记 $(a)_n=a(a+1)\cdots(a+n-1)$，且 $(a)_0=1$。
+
+**定理 PM3。** 对所有 $n\ge0$，
+
+$$
+\boxed{r_n=\prod_{i=1}^{8}\frac{(\alpha_i)_n}{(\beta_i)_n}.}
+$$
+
+存在一个在 $(0,1)$ 的每个非空开区间上都有正质量的概率测度 $\mu$，使
+
+$$
+\boxed{r_n=\int_0^1 x^n\,d\mu(x).}
+$$
+
+**证明。** 阶乘的相邻项比给出
+
+$$
+\frac{r_{n+1}}{r_n}
+=\frac{\prod_{j=1}^{30}(n+j/30)(n+1)}
+{\prod_{j=1}^{15}(n+j/15)\prod_{j=1}^{10}(n+j/10)\prod_{j=1}^{6}(n+j/6)}.
+$$
+
+约去公共因子，分子留下八个 $n+\alpha_i$，分母留下八个 $n+\beta_i$；两边在零处都为一，归纳得到第一式。
+
+逐项有 $0<\alpha_i<\beta_i$。取相互独立的随机变量 $X_i$，其密度为
+
+$$
+\frac{x^{\alpha_i-1}(1-x)^{\beta_i-\alpha_i-1}}
+{\mathrm B(\alpha_i,\beta_i-\alpha_i)},\qquad0<x<1.
+$$
+
+Beta 积分给出 $\mathbb E[X_i^n]=(\alpha_i)_n/(\beta_i)_n$。令 $X=\prod_iX_i$，其分布 $\mu$ 便满足矩等式。每个因子密度在 $(0,1)$ 为正；对任意 $x\in(0,1)$，取八个因子均在 $x^{1/8}$ 附近的充分小开区间，其乘积落在 $x$ 的指定邻域，联合概率为正。因此 $\mu$ 在每个非空开区间上有正质量。证毕。
+
+阶乘比与超几何参数消去的背景见 J. W. Bober, *Factorial ratios, hypergeometric series, and a family of step functions*, J. London Math. Soc. 79 (2009), 422–444, [arXiv:0709.1977](https://arxiv.org/abs/0709.1977)。Gamma 型矩与阶乘比 Hausdorff 矩问题见 M. Wang, *Moments of Gamma type and three-parametric Mittag-Leffler function*, [arXiv:2410.19330](https://arxiv.org/abs/2410.19330)。PM3 的具体参数与概率构造由上面的约分和独立乘积给出。
+
+## PM.3 一个具有无限隐藏谱的固定观察实现
+
+**定义。** 在 $\mathcal H=L^2(\mu)$ 上取 $Kf(x)=xf(x)$，令 $e(x)=1$，令 $P$ 为到 $\mathbb C e$ 的正交投影。此处 $K$ 是固定的正收缩演化；不附加保持常数函数的随机转移要求。
+
+**定理 PM4。** 有 $0\le K\le I$、$\|e\|=1$，且
+
+$$
+r_n=\langle e,K^ne\rangle.
+$$
+
+对每个 $N\ge0$，Hankel 矩阵 $(r_{i+j})_{0\le i,j\le N}$ 严格正定。不存在有限维线性空间上的固定算子 $T$、向量 $v$ 与线性泛函 $c$，使 $r_n=c(T^nv)$ 对所有 $n$ 成立。
+
+**证明。** 乘法函数 $x$ 取值于 $[0,1]$，故算子正且收缩。概率质量为一给出单位范数，矩公式由 PM3 得到。对非零系数向量 $(a_0,\ldots,a_N)$，
+
+$$
+\sum_{i,j=0}^{N}\overline a_i r_{i+j}a_j
+=\int\left|\sum_{i=0}^{N}a_ix^i\right|^2d\mu(x)>0.
+$$
+
+最后一个严格不等式来自非零多项式在某个开区间上不为零，以及 PM3 的满区间支撑。若存在维数 $d$ 的线性实现，则每个 Hankel 矩阵通过映射 $a\mapsto\sum_j a_jT^jv$ 与 $w\mapsto(c(T^iw))_i$ 因子化，秩不超过 $d$。取 $N=d$ 与严格正定性矛盾。证毕。
+
+**命题。** PM4 的矩实现不蕴含某个指定有限群在 $\mathcal H$ 上的作用，也不蕴含该作用与 $K,P$ 的交换性。
+
+**证明。** PM4 的构造仅指定测度、乘法算子和常数投影，没有指定群到酉算子的同态；群作用及交换性是另外的数据和等式。证毕。
+
+## PM.4 正收缩系统的反馈质量界
+
+**假设。** 设 $\mathcal H=V\oplus H$ 为复 Hilbert 空间的正交分解，其中 $1\le d=\dim V<\infty$，$H$ 可为无限维。设固定有界算子满足 $0\le K\le I$，并写
+
+$$
+K=\begin{pmatrix}A&B\\B^*&D\end{pmatrix},\qquad
+R_n=\operatorname{pr}_V K^n|_V,\qquad
+M_j=BD^jB^*.
+$$
+
+**定义。** 令 $F_1=A$，$F_{j+2}=M_j$。
+
+**定理 PM5。** 每个 $F_n$ 均半正定，且对所有 $N\ge1$，
+
+$$
+\boxed{\sum_{n=1}^{N}F_n\le I_V.}
+$$
+
+**证明。** $A,D$ 是正收缩压缩，故 $BD^jB^*\ge0$。令 $H_m=\sum_{j=0}^mD^j$。由于这些幂互相交换，
+
+$$
+H_m(I-D)H_m=H_m-H_mD^{m+1}\le H_m.
+$$
+
+在 $I-K\ge0$ 的二次型中代入 $(v,H_mB^*v)$，得到
+
+$$
+\begin{aligned}
+0&\le\langle v,(I-A)v\rangle
+-2\langle B^*v,H_mB^*v\rangle
++\langle H_mB^*v,(I-D)H_mB^*v\rangle\\
+&\le\langle v,(I-A-BH_mB^*)v\rangle.
+\end{aligned}
+$$
+
+所以 $A+\sum_{j=0}^mM_j\le I$，而 $N=1$ 由 $A\le I$。证毕。
+
+**定理 PM6。** 在 $\operatorname{End}(V)$ 的形式幂级数环中，
+
+$$
+R(z)=I+\sum_{n\ge1}R_nz^n,
+\qquad
+\boxed{R(z)^{-1}=I-\sum_{n\ge1}F_nz^n.}
+$$
+
+因此 $M_j$ 由 $R_1,\ldots,R_{j+2}$ 唯一决定。
+
+**证明。** 把 MF1 应用于零隐藏初态，得到
+
+$$
+R_{n+1}=AR_n+\sum_{i=0}^{n-1}M_{n-1-i}R_i,
+\qquad R_0=I.
+$$
+
+乘以相应形式幂并求和，按既定组合次序有 $(I-zA-z^2M(z))R(z)=I$。常数项为 $I$ 的形式级数有唯一双侧逆，故得到所示等式。逐系数递归时，第 $j$ 个核只消费至 $j+2$ 的响应。证毕。
+
+**命题。** 若 $d=1$，则 $F_n\ge0$ 且 $\sum_{n\ge1}F_n\le1$；响应级数逆的系数绝对值总和至多二。
+
+**证明。** 对 PM5 的单调有界部分和取极限，逆级数的常数项为一，其余项为 $-F_n$。证毕。这与 Kaluza 的倒数级数符号判据及更新级数结构相容；参见 Á. Baricz, J. Vesti, M. Vuorinen, *On Kaluza's sign criterion for reciprocal power series*, Ann. Univ. Mariae Curie-Skłodowska Sect. A 65(2) (2011), 1–16, [arXiv:1010.5337](https://arxiv.org/abs/1010.5337)。
+
+## PM.5 不依赖滞后的有限前缀误差界
+
+**假设。** 两个系统均满足 PM.4，并使用同一个可见空间 $V$；其隐藏空间和算子可以不同。把第二个系统的响应与核记作 $\widehat R_n,\widehat M_j$。设 $H_0\ge0$，且
+
+$$
+\max_{1\le n\le H_0+2}\|\widehat R_n-R_n\|\le\eta.
+$$
+
+**定理 PM7。** 对全部 $0\le j\le H_0$，
+
+$$
+\boxed{\|\widehat M_j-M_j\|\le(d+1)^2\eta.}
+$$
+
+在标量可见空间中，该界为 $4\eta$，与 $H_0$、隐藏维数、谱分离距离及非零耦合的最小值无关。
+
+**证明。** 写 $Q(z)=R(z)^{-1}$、$\widehat Q(z)=\widehat R(z)^{-1}$。PM5 与半正定矩阵的 $\|F_n\|\le\operatorname{tr}F_n$ 给出对每个 $N$，
+
+$$
+\sum_{n=0}^{N}\|Q_n\|
+=1+\sum_{n=1}^{N}\|F_n\|
+\le1+\operatorname{tr}\left(\sum_{n=1}^{N}F_n\right)\le1+d,
+$$
+
+第二个系统同理。在非交换形式级数环中，
+
+$$
+\widehat Q-Q=\widehat Q(R-\widehat R)Q.
+$$
+
+比较第 $j+2$ 个系数；每个响应差的指标不超过 $j+2\le H_0+2$，零阶响应差为零。使用次乘法性并扩张有限求和区域，得到
+
+$$
+\|\widehat Q_{j+2}-Q_{j+2}\|
+\le\eta\left(\sum_{a=0}^{j+2}\|\widehat Q_a\|\right)
+\left(\sum_{b=0}^{j+2}\|Q_b\|\right)
+\le(d+1)^2\eta.
+$$
+
+而 $Q_{j+2}=-M_j$、$\widehat Q_{j+2}=-\widehat M_j$。证明没有分离特征值、除以耦合或选择隐藏坐标。证毕。
+
+**命题。** PM7 的前提强于分别要求每个响应矩阵范数不超过一。
+
+**证明。** 正收缩共同实现要求 $R_n$ 来自同一个算子的幂。标量情形下它还要求例如 $r_0r_2\ge r_1^2$。有界数列 $r_0=1,r_1=1,r_2=0$ 违反此式，虽各项都在 $[0,1]$。因此逐项截断到单位区间或单位球并不能履行 PM7 的前提。证毕。
+
+## PM.6 从有误差的标量数据得到相容恢复
+
+**定义。** 对 $N\ge1$ 定义截断矩集
+
+$$
+\mathcal C_N=\left\{\left(\int x^n\,d\nu(x)\right)_{n=1}^{N}:
+\nu\text{ 是 }[0,1]\text{ 上的概率测度}\right\}.
+$$
+
+**定理 PM8。** $\mathcal C_N$ 是紧集，其中每个向量都可由至多 $N+1$ 个原子的概率测度实现。给定数据 $d_1,\ldots,d_N$，最小化 $\max_{n\le N}|r_n-d_n|$ 的相容向量存在。
+
+**证明。** 令 $\gamma(x)=(x,x^2,\ldots,x^N)$。$\gamma([0,1])$ 紧。其凸包由 Carathéodory 定理表示为至多 $N+1$ 个曲线点的凸组合，因而是紧参数空间 $[0,1]^{N+1}\times\Delta_N$ 的连续像，仍紧。有限原子测度给出凸包中的每一点；任意概率测度的积分可由有限分割上的加权点和逼近，因此属于该闭凸包。最大绝对残差是连续函数，在紧集上取得最小值。证毕。
+
+**定理 PM9。** 设真实 $r_n$ 是任意 $[0,1]$ 概率测度的矩，并有 $|d_n-r_n|\le\epsilon$（$1\le n\le H_0+2$）。取 PM8 中 $N=H_0+2$ 的任一最小残差相容向量，再通过 PM6 恢复 $\widehat m_0,\ldots,\widehat m_{H_0}$。则
+
+$$
+\boxed{\max_{0\le j\le H_0}|\widehat m_j-m_j|\le8\epsilon.}
+$$
+
+**证明。** 真实矩向量属于可行集，故最优残差不超过 $\epsilon$，三角不等式给出相容估计矩与真实矩的距离至多 $2\epsilon$。对每个实现该有限向量的概率测度，取乘法算子与常数投影，均满足 PM.4，且其前 $H_0+1$ 个记忆系数只依赖这个有限向量。以 $d=1,\eta=2\epsilon$ 应用 PM7。证毕。
+
+## PM.7 对称约化后的矩阵元数量与误差
+
+**假设。** 给定有限群的已知复酉等型分解
+
+$$
+\mathcal H=\bigoplus_\lambda\left(V_\lambda\otimes W_\lambda\right),
+\qquad \rho(g)=\bigoplus_\lambda(I\otimes\rho_\lambda(g)),
+$$
+
+其中 $W_\lambda$ 是两两不等价的有限维不可约表示，重数空间 $V_\lambda$ 可含任意多个隐藏方向。设 $0\le K\le I$，且 $K,P$ 均与群作用交换；$P$ 在第 $\lambda$ 个重数空间保留 $r_\lambda<\infty$ 维，非零 $r_\lambda$ 仅有限多个。固定这些分解与观察坐标。
+
+**定理 PM10。** 在每个 $W_\lambda$ 选定一个单位向量 $e_\lambda$。读取
+
+$$
+\left\langle e_a\otimes e_\lambda,K^t(e_b\otimes e_\lambda)\right\rangle,
+\quad1\le a,b\le r_\lambda,\quad1\le t\le H_0+2,
+$$
+
+足以确定全部 $0\le j\le H_0$ 的观察记忆核。每个时间所需复矩阵元数为 $\sum_\lambda r_\lambda^2$，不依赖 $\dim W_\lambda$。
+
+若逐项数据误差至多 $\epsilon$，并选取任意在这些数据上逐项残差不超过 $\epsilon$ 的共同正收缩响应实现，则令 $r_*=\max_\lambda r_\lambda$，有
+
+$$
+\boxed{
+\max_{0\le j\le H_0}\|\widehat M_j-M_j\|
+\le2r_*(r_*+1)^2\epsilon.
+}
+$$
+
+**证明。** Schur 分解给出 $K=\bigoplus_\lambda(K_\lambda\otimes I)$ 和相应的 $P$ 分解。所列矩阵元恰是每个保留重数空间上的完整压缩响应条目；用 PM6 逐块恢复后再张量回去。真实实现本身满足数据误差条件，所以要求残差不超过 $\epsilon$ 的正收缩可行集非空。两个实现相对数据各误差至多 $\epsilon$，故每个条目之差至多 $2\epsilon$；一个 $r_\lambda$ 方阵的算子范数不超过其 Frobenius 范数，因而响应误差至多 $2r_\lambda\epsilon$。逐块应用 PM7，再取正交直和的范数上确界，即得所示界。证毕。
+
+## PM.8 有限前缀与尾部的不同要求
+
+**命题。** PM7 至 PM10 不要求任何正谱隙或非零耦合下界，但只控制由已观测前缀确定的核系数。
+
+**证明。** PM7 的卷积系数仅消费不超过 $H_0+2$ 的响应差，未约束更晚的响应；证明未使用隐藏谱间距或逆耦合。证毕。
+
+**定理 PM11。** 在 PM7 的两个系统中，若另有 $\|D\|,\|\widehat D\|\le\theta<1$，其中 $0\le\theta<1$，则
+
+$$
+\sum_{j\ge0}\|\widehat M_j-M_j\|
+\le(H_0+1)(d+1)^2\eta+\frac{2\theta^{H_0+1}}{1-\theta}.
+$$
+
+**证明。** 前 $H_0+1$ 项由 PM7 控制。正收缩的交叉块满足 $\|B\|,\|\widehat B\|\le1$，所以 $\|M_j\|,\|\widehat M_j\|\le\theta^j$；对剩余几何级数求和即得。证毕。
+
+**命题。** PM3–PM4 的具体响应满足 PM7–PM9 的正性前提，并具有无限秩 Hankel 矩阵。PM4 没有给出 $\|D\|<1$ 的严格收缩常数。
+
+**证明。** 前两项分别由乘法算子的正收缩性和 PM4 的严格正定性得到。$\mu$ 的支撑逼近一，故 $\|K\|=1$；已给出的压缩估计只能推出 $\|D\|\le1$，不能用它替代 PM11 所要求的严格上界。证毕。
+
+**定理 PM12（PM10 的更正）。** 在每个 $W_\lambda$ 选定一个单位向量 $e_\lambda$，并设至少有一个 $r_\lambda\ge1$。读取
+
+$$
+\left\langle e_a\otimes e_\lambda,K^t(e_b\otimes e_\lambda)\right\rangle,
+\quad1\le a,b\le r_\lambda,\quad1\le t\le H_0+2,
+$$
+
+足以确定全部 $0\le j\le H_0$ 的观察记忆核。每个时间所需复矩阵元数为 $\sum_\lambda r_\lambda^2$，不依赖 $\dim W_\lambda$。
+
+若逐项数据误差至多 $\epsilon$，并选取任意在这些数据上逐项残差不超过 $\epsilon$ 的共同正收缩响应实现，则令 $r_*=\max_\lambda r_\lambda$，有
+
+$$
+\boxed{
+\max_{0\le j\le H_0}\|\widehat M_j-M_j\|
+\le2r_*(r_*+1)^2\epsilon.
+}
+$$
+
+**证明。** Schur 分解给出 $K=\bigoplus_\lambda(K_\lambda\otimes I)$ 和相应的 $P$ 分解。所列矩阵元恰是每个保留重数空间上的完整压缩响应条目；用 PM6 逐块恢复后再张量回去。真实实现本身满足数据误差条件，所以要求残差不超过 $\epsilon$ 的正收缩可行集非空。两个实现相对数据各误差至多 $\epsilon$，故每个条目之差至多 $2\epsilon$；一个 $r_\lambda$ 方阵的算子范数不超过其 Frobenius 范数，因而响应误差至多 $2r_\lambda\epsilon$。逐块应用 PM7，再取正交直和的范数上确界，即得所示界。其中 $r_\lambda=0$ 的块不贡献矩阵元或记忆核系数，以下仅在 $r_\lambda\ge1$ 的块上恢复并应用 PM7。证毕。
+
+本定理取代定理 PM10 的陈述与证明；PM10 在允许全部 $r_\lambda=0$ 时其界 $r_*$ 无定义，且其证明对零维块误用 PM7。
+

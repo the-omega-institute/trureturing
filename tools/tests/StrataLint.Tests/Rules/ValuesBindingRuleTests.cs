@@ -87,7 +87,7 @@ public sealed class ValuesBindingRuleTests
 
     [Theory]
     [InlineData("Directory.Build.props")]
-    [InlineData("Meta/lean-report.toml")]
+    [InlineData("lean-report-inputs.json")]
     public void ChangedLeanReportDefinitionWakesAndRevalidatesItsStoredSl018Binding(string path)
     {
         var fixture = Fixture();

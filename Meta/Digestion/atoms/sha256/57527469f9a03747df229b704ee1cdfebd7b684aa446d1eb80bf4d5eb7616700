@@ -1,0 +1,6 @@
+**定理。** 无需除以任何整数，对每个交换环 R 均有
+
+$$\boxed{D_i=-Q_{ii},\qquad D_{ij}=-Q_{ii}-Q_{jj}+Q_{ij},}$$
+
+$$\boxed{Q_{ii}=-D_i,\qquad Q_{ij}=D_{ij}-D_i-D_j\quad(i<j).}$$
+

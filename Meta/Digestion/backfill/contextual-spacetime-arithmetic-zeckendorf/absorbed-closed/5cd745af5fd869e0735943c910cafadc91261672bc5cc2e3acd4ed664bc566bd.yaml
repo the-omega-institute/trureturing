@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:5cd745af5fd869e0735943c910cafadc91261672bc5cc2e3acd4ed664bc566bd
+  normalized_sha256: sha256:5cd745af5fd869e0735943c910cafadc91261672bc5cc2e3acd4ed664bc566bd
+cas_ref: sha256:5cd745af5fd869e0735943c910cafadc91261672bc5cc2e3acd4ed664bc566bd
+coverage_gids:
+  - gid: D5/S3/Arith/GoldenResource/RationalTailLevelClosure.rational_tail_level_closure
+    target_statement_id: sha256:bb9b867eea0b302f4e5de82e11519d7b30f81a81b28364fd6ed497146958a245
+receipts:
+  unresolved_subitems: []
