@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:403500dd72e3c7e79e2ba9aa573f76355b8398e7c68aff7087f6f3fa1b9c2ad4
+  normalized_sha256: sha256:403500dd72e3c7e79e2ba9aa573f76355b8398e7c68aff7087f6f3fa1b9c2ad4
+cas_ref: sha256:403500dd72e3c7e79e2ba9aa573f76355b8398e7c68aff7087f6f3fa1b9c2ad4
+coverage_gids:
+  - gid: D5/S3/Arith/GoldenResource/FibonacciFactorialBlockTailFilling.factorial_block_tail_filling
+    target_statement_id: sha256:ec1a7786b3991b84dc207f93c808b68999031593516d61448b4703202808e9d9
+receipts:
+  unresolved_subitems: []
