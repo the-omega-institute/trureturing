@@ -29518,3 +29518,190 @@ $$
 可分性的量词是存在一个有限凸乘积态分解，并不要求一个密度的每个纯态系综都由乘积向量组成。因此，对 $g\ge1$，可依据完整经典测量记录选择正概率的纠缠分支 $\theta_g$，与忘却全部记录后得到可分的 Born 平均 $\Theta_g$ 相容。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 135. 指定纠缠分支的联合概率与固定乘积态极限
+
+**命题 135.1（有限间隔纠缠、消失的联合概率与固定端点极限）。** 沿用命题 134.1 的纯边界与生成器：
+$$
+\alpha=\frac{\sqrt5-1}{2},\qquad s=\sqrt\alpha,\qquad
+m_0=s|0\rangle+\alpha|1\rangle,\qquad m_1=|0\rangle,\qquad
+T|j\rangle=|j\rangle\otimes m_j\quad(j=0,1).
+$$
+对每个整数 $g\ge0$，从初始活动记忆 $m_0$ 恰好生成 $g+2$ 个输出，保留第一个及最后一个已发出的 qubit $L,R$；左端点之前没有被丢弃的输出前缀。假设可访问全部内部输出的测量记录及最终活动记忆：在每个内部输出的正交基 $|\pm\rangle=(|0\rangle\pm|1\rangle)/\sqrt2$ 中选择结果 $+$，在最终活动记忆的计算基中选择结果 $0$。此处选中的记忆向量是 $|0\rangle$，不是非正交记忆标签 $m_0$；两个端点始终都是已发出的输出。所有 $B_L\otimes B_R$ 通过各自带标签的计算基识别为同一个固定空间 $\mathbb C^2\otimes\mathbb C^2$。
+
+以命题 134.1 的完整联合向量 $\Xi_{g+2}$ 定义
+$$
+v_g=(I_{B_L}\otimes\langle+|^{\otimes g}\otimes I_{B_R}\otimes\langle0|)\Xi_{g+2}
+=\operatorname{vec}_{LR}(C_g),\qquad
+\operatorname{vec}_{LR}(C)=\sum_{i,j=0}^1 C(i,j)|i\rangle_L\otimes|j\rangle_R.
+$$
+$g=0$ 时内部 bra 是空张量积的恒等收缩。矩阵的行指标为 $L$ 位值，列指标为 $R$ 位值。记 $\operatorname{adj}(A)$ 为共轭转置，$\operatorname{outer}(x)=|x\rangle\langle x|$，并在本命题内令
+$$
+p_g=\|v_g\|^2=\operatorname{Tr}(C_g\operatorname{adj}(C_g)),\qquad
+\psi_g=\frac{v_g}{\sqrt{p_g}},\qquad
+\theta_g=\operatorname{outer}(\psi_g).
+$$
+这里 $p_g$ 是上述整个记录的联合 Born 概率，包含最终记忆结果 $0$ 的概率，不是预先条件于记忆成功后的概率，也不是命题 131.1 的记忆混合参数；$\theta_g$ 只表示固定端点空间上的选中密度。命题 134.1 已给出
+$$
+J=\begin{pmatrix}1&1\\1&0\end{pmatrix},\qquad
+\kappa_g=\frac{s^{g+3}}{(\sqrt2)^g},\qquad
+C_g=\kappa_gJ^{g+1},\qquad \det C_g\ne0,\qquad 0<p_g<1.
+$$
+
+令
+$$
+\mathrm{den}=1+\alpha^2,\qquad
+u_+=\frac{|0\rangle+\alpha|1\rangle}{\sqrt{\mathrm{den}}},\qquad
+u_-=\frac{-\alpha|0\rangle+|1\rangle}{\sqrt{\mathrm{den}}},\qquad
+e_+=u_+\otimes u_+,\qquad e_-=u_-\otimes u_-,
+$$
+$$
+\varepsilon_g=(-1)^{g+1},\qquad t_g=\alpha^{2g+2},\qquad
+b=\frac1{2\alpha},\qquad r_g=\kappa_g\alpha^{-g-1}>0.
+$$
+则 $u_+,u_-$ 是实正交单位向量，且有固定基展开
+$$
+C_g=r_g\bigl(\operatorname{outer}(u_+)+\varepsilon_gt_g\operatorname{outer}(u_-)\bigr),\qquad
+\psi_g=\frac{e_++\varepsilon_gt_ge_-}{\sqrt{1+t_g^2}},\qquad
+r_g^2=\alpha b^g.
+$$
+相对符号在偶数 $g$ 时为负，在奇数 $g$ 时为正。联合概率的精确式为
+$$
+p_g=\frac{\alpha^{g+3}}{2^g}
+\bigl(\alpha^{-2g-2}+\alpha^{2g+2}\bigr)
+=\alpha b^g\bigl(1+\alpha^{4g+4}\bigr).
+$$
+两端约化密度 $\operatorname{Tr}_{B_R}\theta_g$、$\operatorname{Tr}_{B_L}\theta_g$ 在各自的 $u_+,u_-$ 基下具有相同的两个特征值
+$$
+w_+=\frac1{1+t_g^2},\qquad w_-=\frac{t_g^2}{1+t_g^2}.
+$$
+每个有限 $g$ 下二者均为正；非负 Schmidt 系数是 $\sqrt{w_+},\sqrt{w_-}$。因此 $\theta_g$ 的密度算子秩为 $1$，而系数矩阵及两端约化密度的秩均为 $2$，$\theta_g$ 对完整 $B_L\mid B_R$ 分割不可分。
+
+对有限维矩阵采用迹范数及密度间迹距离
+$$
+\operatorname{traceNorm}(A)=\operatorname{Tr}\sqrt{\operatorname{adj}(A)A},\qquad
+D(\rho,\sigma)=\frac12\operatorname{traceNorm}(\rho-\sigma),
+$$
+其中平方根取唯一正半定平方根，故其迹为实数。这与 [FiniteTraceDistance 的 traceNorm、traceDistance](../../../D5/S3/Quantum/Foundation/FiniteTraceDistance.lean) 的约定一致。令与 $g$ 无关的纯乘积密度为
+$$
+\Pi_+=\operatorname{outer}(e_+)
+=\operatorname{outer}(u_+)\otimes\operatorname{outer}(u_+).
+$$
+则
+$$
+D(\theta_g,\Pi_+)=\frac{t_g}{\sqrt{1+t_g^2}},\qquad
+0<D(\theta_g,\Pi_+)\le\alpha^{2g+2},
+$$
+并且沿全部非负整数指标有
+$$
+0<p_g\le3\alpha^3b^g\longrightarrow0,\qquad
+w_-\longrightarrow0,\qquad
+D(\theta_g,\Pi_+)\longrightarrow0.
+$$
+故这个指定分支在每个有限间隔仍纠缠，同时联合成功概率趋零，密度在固定四维端点空间的迹距离下趋于一个固定纯乘积态。上述距离针对指定的 $\Pi_+$，不是对可分密度的最小化，也不是对所有可分密度的距离下界。
+
+证明。由 $\alpha+\alpha^2=1$，有 $1/2<\alpha<1$ 及 $1+\alpha=\alpha^{-1}$。向量 $u_+,u_-$ 的范数平方均为 $1$，内积为 $(-\alpha+\alpha)/\mathrm{den}=0$。直接矩阵乘法给出
+$$
+J\begin{pmatrix}1\\\alpha\end{pmatrix}
+=\begin{pmatrix}1+\alpha\\1\end{pmatrix}
+=\alpha^{-1}\begin{pmatrix}1\\\alpha\end{pmatrix},\qquad
+J\begin{pmatrix}-\alpha\\1\end{pmatrix}
+=\begin{pmatrix}1-\alpha\\-\alpha\end{pmatrix}
+=-\alpha\begin{pmatrix}-\alpha\\1\end{pmatrix}.
+$$
+这两个特征对亦见 [FibonacciEigen 的 fibonacci_substitution_spec](../../../D5/S1/Scale/FibonacciEigen.lean)：其中扩张向量为 $(\alpha^{-1},1)$，收缩向量为 $(-\alpha,1)$，分别乘以 $\alpha/\sqrt{\mathrm{den}}$、$1/\sqrt{\mathrm{den}}$ 即为这里的 $u_+,u_-$。因它们构成二维空间的正交单位基，谱分解给
+$$
+J^{g+1}=\alpha^{-g-1}\operatorname{outer}(u_+)
++(-\alpha)^{g+1}\operatorname{outer}(u_-).
+$$
+将此式代入命题 134.1 的 $C_g=\kappa_gJ^{g+1}$，提出正因子 $r_g$，即得所述 $C_g$ 展开。
+
+按上述行列指标约定，对一般复向量 $u$，
+$$
+\operatorname{vec}_{LR}(\operatorname{outer}(u))
+=u\otimes\overline u,
+$$
+其中横线表示计算基中的逐坐标共轭。这里 $u_+,u_-$ 的坐标全为实数，才有 $\operatorname{vec}_{LR}(\operatorname{outer}(u_\pm))=e_\pm$。由局部正交性，$e_+,e_-$ 也是正交单位向量，故
+$$
+v_g=r_g(e_++\varepsilon_gt_ge_-),\qquad
+p_g=r_g^2(1+t_g^2),\qquad
+\psi_g=\frac{e_++\varepsilon_gt_ge_-}{\sqrt{1+t_g^2}}.
+$$
+因 $s^2=\alpha$，
+$$
+r_g^2=\frac{s^{2g+6}}{2^g}\alpha^{-2g-2}
+=\frac{\alpha^{1-g}}{2^g}=\alpha b^g,
+$$
+代入 $p_g$ 即得两个概率闭式。归一化因子 $(\sqrt2)^{-g}$ 来自每个内部投影 bra；最终记忆的 $\langle0|$ 已在 $C_g$ 中，未作任何记忆成功条件化。此计算只使用联合向量的 Born 范数，不假设各结果等概率或相互独立。
+
+将纯密度展开为
+$$
+\theta_g=\frac{
+\operatorname{outer}(e_+)+t_g^2\operatorname{outer}(e_-)
++\varepsilon_gt_g\bigl(|e_+\rangle\langle e_-|+|e_-\rangle\langle e_+|\bigr)
+}{1+t_g^2}.
+$$
+在右端取偏迹时，交叉项分别乘以 $\langle u_-,u_+\rangle$、$\langle u_+,u_-\rangle$，均为零；对角项乘以相应单位向量的范数平方。因此
+$$
+\operatorname{Tr}_{B_R}\theta_g
+=w_+\operatorname{outer}(u_+)_L+w_-\operatorname{outer}(u_-)_L.
+$$
+在左端取偏迹同理得到
+$$
+\operatorname{Tr}_{B_L}\theta_g
+=w_+\operatorname{outer}(u_+)_R+w_-\operatorname{outer}(u_-)_R.
+$$
+$t_g>0$ 给两个正特征值。带符号的固定基展开中，把 $\varepsilon_g$ 吸收到右端第二个局部向量，得到真正的非负 Schmidt 展开
+$$
+\psi_g=\sqrt{w_+}\,u_+\otimes u_+
++\sqrt{w_-}\,u_-\otimes(\varepsilon_gu_-).
+$$
+每侧两个局部向量仍正交归一，故 Schmidt 秩为 $2$；不可分性亦与命题 134.1 的非零行列式结论一致。整个密度仍是一个单位向量的外积，故秩为 $1$。相对符号虽在两端约化谱中消失，却仍保留在 $\theta_g$ 的交叉项中。
+
+在有序正交基 $(e_+,e_-)$ 所张成的子空间上，差 $\theta_g-\Pi_+$ 的矩阵为
+$$
+\frac1{1+t_g^2}
+\begin{pmatrix}
+-t_g^2&\varepsilon_gt_g\\
+\varepsilon_gt_g&t_g^2
+\end{pmatrix},
+$$
+并在其正交补上为零。这个实对称块的迹为零，行列式为 $-t_g^2/(1+t_g^2)$，故两个特征值恰为
+$$
+\lambda_+=\frac{t_g}{\sqrt{1+t_g^2}},\qquad
+\lambda_-=-\frac{t_g}{\sqrt{1+t_g^2}}.
+$$
+对 Hermitian 矩阵，$\operatorname{adj}(A)A=A^2$；在正交特征基中，其正半定平方根的特征值为原特征值的绝对值。因此取以上两个绝对值之和的一半，便得到
+$$
+D(\theta_g,\Pi_+)=\frac{t_g}{\sqrt{1+t_g^2}}\le t_g.
+$$
+这直接计算了两个已归一化密度的差，不使用保迹映射的压缩性去处理非线性的分支归一化。
+
+边界 $g=0$ 的内部测量为空，最终记忆测量仍在。由 $J$ 的三个非零矩阵元，
+$$
+C_0=s^3J,\qquad p_0=3\alpha^3,\qquad
+\psi_0=\frac{|00\rangle+|01\rangle+|10\rangle}{\sqrt3}.
+$$
+又因 $J^2=\begin{pmatrix}2&1\\1&1\end{pmatrix}$，
+$$
+C_1=\frac{s^4}{\sqrt2}\begin{pmatrix}2&1\\1&1\end{pmatrix},\qquad
+p_1=\frac{7\alpha^4}{2},\qquad
+\psi_1=\frac{2|00\rangle+|01\rangle+|10\rangle+|11\rangle}{\sqrt7}.
+$$
+两式中的概率都保留了最终记忆结果 $0$ 的概率因子。
+
+最后，由 $1/2<\alpha<1$ 得 $0<b<1$。又由 $\alpha^2=1-\alpha$，可得 $\alpha^4=2-3\alpha$，从而
+$$
+\alpha(1+\alpha^4)=3\alpha(1-\alpha)=3\alpha^3.
+$$
+对所有 $g\ge0$，$\alpha^{4g+4}\le\alpha^4$，所以
+$$
+0<p_g=\alpha b^g(1+\alpha^{4g+4})\le3\alpha^3b^g,\qquad
+0<w_-\le t_g^2=\alpha^{4g+4},\qquad
+0<D(\theta_g,\Pi_+)\le\alpha^{2g+2}.
+$$
+由于 $b$、$\alpha^2$、$\alpha^4$ 均严格介于 $0$ 与 $1$，三个右端是趋零的几何序列；夹逼即给沿全部整数指标的三个极限，而非只沿某个奇偶子列的极限。尤其不存在对所有 $g$ 都成立的联合成功概率正下界，也不存在到这个固定 $\Pi_+$ 的距离正下界；这不改变任何有限 $g$ 下的精确非零性及纠缠性。
+
+这里比较的是每个有限 $g$ 的正概率条件态在同一端点空间内的极限，不是增长的完整输出空间中的极限，也没有对一个概率为零的无限测量事件定义条件态。命题 134.1 的 $\Theta_g$ 仍是对完整结果集按联合 Born 概率求和的无条件端点密度，与选中的 $\theta_g$ 为不同对象。证毕。
+
+## 追加锚（本行以下为增补区）

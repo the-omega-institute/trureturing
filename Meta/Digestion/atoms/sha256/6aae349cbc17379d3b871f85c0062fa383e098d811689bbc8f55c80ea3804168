@@ -1,0 +1,18 @@
+### 15.4 定理：Chebyshev 节点给出的连续支撑精确界
+
+设 $n\geq1$，$0<a<b<y$，取递减的 Chebyshev--Lobatto 节点
+
+\[
+x_j=\frac{a+b}{2}+\frac{b-a}{2}\cos(j\pi/n),\qquad j=0,\ldots,n,
+\quad z=\frac{2y-a-b}{b-a}>1.
+\]
+
+对所有支撑于 $[a,y]$ 的概率测度 $\mu$ 和支撑于 $[a,b]$ 的概率测度 $\nu$，若二者前 $n+1$ 个矩完全相同，则外部点 $y$ 的最大可能质量为
+
+\[
+\boxed{\mu(\{y\})\leq\frac2{1+T_n(z)},}
+\tag{15.8}
+\]
+
+而此上界由实际有限原子概率对达到。
+
