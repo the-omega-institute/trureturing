@@ -45,7 +45,7 @@ triage: anchor
 | --- | --- | --- | --- | --- | --- | --- |
 | [A397902](https://oeis.org/A397902) | A∈xℤ[[x]]，∀m>1，[x^(m−1)](1−A)^(m²)/(1−m²x)=0；∀n>2，a(n)奇⇔∃k>1，n∈{2^k,2^k−1,2^k−2,2^k−3}。 | 1 | unknown | med | yes | note-only |
 | [A397594](https://oeis.org/A397594) | A_y(0)=1，∀m≥1，[x^(m−1)]A_y(x)^m/(1−mx)=(ym)^(m−1)，y=4；∀n>3，a_y(n)奇⇔∃k>1，n=2^k±1。 | 1 | unknown | high | yes | note-only |
-| [A397592](https://oeis.org/A397592) | A_y(0)=1，∀m≥1，[x^(m−1)]A_y(x)^m/(1−mx)=(ym)^(m−1)，y=2；∀n>3，a_y(n)奇⇔∃k>1，n=2^k±1。 | 1 | unknown | high | yes | note-only |
+| [A397592](https://oeis.org/A397592) | Source(A)：A∈ℤ[[X]]，A(0)=1，∀m>0，Σ_{j=0}^{m−1}[X^j](A_Q(X/m))^m=2^(m−1)，A_Q为逐系数有理像；(∃!A,Source(A)) 且 ∀A,Source(A)⇒∀n>3，Odd(a(n))⇔∃k>1，(n=2^k−1∨n=2^k+1)。 | 1 | repo-derived（原猜想已证） | content | yes | [精确结算](../../Problems/oeis-a397592-dyadic-parity.md) |
 | [A397588](https://oeis.org/A397588) | a(1)=1、a(n)=(n+1)Σa(k)a(n−k)的奇项指标恰为2的幂。 | out | published | high | yes | drop |
 | [A397551](https://oeis.org/A397551) | ∀n≥0，半行 w_i=C(n,i), 0≤i<⌈n/2⌉ 的重复和值数等于 Σ_R 2^(⌈n/2⌉−∣supp R∣)，R 为全局包含极小非空平衡支撑（每支撑计一次） | out | unknown | med | yes | drop |
 | [A397501](https://oeis.org/A397501) | ∀奇数n≥1，索引集{0,…,n}的无序分拆（每非空块的Σ_i C(n,i)为2的非负整数次幂）数 P(n)=2^((n−1)/2)+1+A397551(n) | 1 | unknown | med | yes | note-only |
@@ -60,7 +60,7 @@ triage: anchor
 | [A396806](https://oeis.org/A396806) | A=x exp(A^{∘6}) 的 EGF；∀n≥1，a_n≡n mod6，由 IterateExponentialModSix.result 证明，蕴含源 mod3；奇偶已有 parity_iterate_six。 | 1 | repo-derived | med | yes | theorem |
 | [A396805](https://oeis.org/A396805) | EGF A=x exp(A∘5)：奇偶已证；n≥3的模3周期0,1,0由 IterateExponentialFiveModThree.result 证明。mod5保留n23的非kernel反例。 | 1 | repo-derived | med | yes | theorem |
 | [A396803](https://oeis.org/A396803) | A=x exp(A^{∘3})为EGF，a0=0,a1=1；∀n≥1,Odd(a_n) iff Odd(n)，且a_n≡n mod3。 | 1 | proved | med | yes | reuse |
-| [A396798](https://oeis.org/A396798) | OGF A=x+(A∘4)(A∘5)：第四、八条尾系数模8为0及第三、第五条从 n=2 起的 [3,1,7,5]、[5,1,1,5] 周期分别由 IterateProductFourFiveFourthModEight.result、IterateProductFourFiveEighthModEight.result、IterateProductFourFiveThirdModEight.result、IterateProductFourFiveFifthModEight.result 结算；第2、6、7条及修正版首条仍未结算。 | 1 | repo-derived | med | yes | theorem |
+| [A396798](https://oeis.org/A396798) | OGF A=x+(A∘4)(A∘5)：第四、八条尾系数模8为0及第三、第五条从 n=2 起的 [3,1,7,5]、[5,1,1,5] 周期分别由 IterateProductFourFiveFourthModEight.result、IterateProductFourFiveEighthModEight.result、IterateProductFourFiveThirdModEight.result、IterateProductFourFiveFifthModEight.result 结算；第七条全部 n>1、从 n=2 起的 [7,1,3,5] 周期由 IterateProductFourFiveSeventhModEight.result 单独结算；第2、6条仍属 #6436（及 #6375 转引），修正版首条仍未结算。 | 1 | repo-derived | med | yes | theorem |
 | [A393868](https://oeis.org/A393868) | A393866从常数项起的每个已结束极大奇偶游程长度为偶数。 | 1 | open | high | yes | note-only |
 | [A396493](https://oeis.org/A396493) | ∀n≥1，Sat4(n)=C(C(2n+2,3)+3,4)−n(16n^6+48n^5+340n^4+180n^3+2818n²−10011n+6789)/18；子句为3文字多重集，公式为4子句多重集，允许同义重复及重子句。 | out | unknown | high | yes | note-only |
 | [A396491](https://oeis.org/A396491) | ∀n≥1，n 个有标号变量、允许子句内重复文字及公式内重复子句的五子句 3-SAT 不可满足公式数，等于 %F 给定的十项二项式多项式。 | 1 | unknown | med | yes | note-only |
@@ -91,11 +91,29 @@ triage: anchor
 
 ### A397594
 
-精确目标：A_y(0)=1，∀m≥1，[x^(m−1)]A_y(x)^m/(1−mx)=(ym)^(m−1)，y=4；∀n>3，a_y(n)奇⇔∃k>1，n=2^k±1。 本项固定 y=4，索引从0起，量词是全部 n>3；不能误用 A397591 从1起的偏移，也不能把 m² 指数的 A397902 当同一递推。目标及7个直接引用的全部字段已读：A397594 %C 为 Jul 10 2026 猜想，%F 给 a_y(n)=Σ y^k T(n,k)，A397590 %F(5)–(8)明列 y=0、1、2、3、4、5 与主对角 A180747；A375457 的右端是 m，其对数导数整除观察不是本题奇支撑证明。已打开 arXiv 精确 A397592 OR A397594 查询（family592-arxiv.web.json），totalResults=0；Brave 429，通用搜索仍不可作有效否定证据，所以只记搜索范围内未见证明、总裁定 unknown。D5 精确号及 Abel/diagonal parity 文字初筛未命中，mathlib 已读 PowerSeries.coeff_pow（Basic.lean:635）只展开幂；系数整数三角 T 若被完整证明，则偶 y 的取值模2都等于 T(n,0)，这两个目标只是 A397591 奇支撑的绑定推论，故 bind=high。源文件把 T 当整数三角展示却没有证明全部系数整性，不能把有限表提升成已确认的桥。拟议逃逸须放在族公共核心：证明 T∈ℤ[y][[x]] 的整性及 T(n,0) 在模2的二进制下降，或在有理递推中保持足够2-adic精度后证明可约去 m；这才超出参数代入，给单项再包一层不算新见证。numeric=yes：精确三角幂递推 N=100，O(N³)大整数算术、O(N)工作空间，A397594 前10项与源一致，n=4..100 零反例，奇指标0,1,2,5,7,9,15,17,31,33,63,65；与 y=0 的奇偶逐项相同。有限检查不能证明三角整性或全称支撑。停止条件：找到 A397591/三角核心同域证明后这些特例 drop；整性桥仍未核实或候选仅取 y=2/4 时保持 note-only。族合并为 A397592+A397594（连同非目标 A397591）最多1公共核心探针席，确认桥之前只称共享构造，确认桥之后两目标逻辑等价于同一常数列奇偶结论；不占两个实施席。全部直接引用为 A180747, A375457, A397590, A397591, A397592, A397593, A397595。主循环另实测GitHub公开代码精确号加language:Lean查询，total_count=0、incomplete_results=false；只限索引，不替代无编号文献检索。其余未打开的源b-file及网页均ASSUMED-UNVERIFIED。精确数值指令：a₀=1；n=1..100令m=n+1、P=Σ_{i<n}a_i x^i，先按A397902段的幂系数递推以e=m、f=[a₀,…,a_(n−1),0]算c_j=[x^j]P^m，再置a_n=((ym)^n−Σ_{j=0}^n c_j m^(n−j))/m，每次断言整除；y取本条参数，避免先mod2再除m。前轮A397591已列1/unknown/note-only，本轮不另给这个排除号计行或派席。
+精确目标：A_y(0)=1，∀m≥1，[x^(m−1)]A_y(x)^m/(1−mx)=(ym)^(m−1)，y=4；∀n>3，a_y(n)奇⇔∃k>1，n=2^k±1。 本项固定 y=4，索引从0起，量词是全部 n>3；不能误用 A397591 从1起的偏移，也不能把 m² 指数的 A397902 当同一递推。目标及7个直接引用的全部字段已读：A397594 %C 为 Jul 10 2026 猜想，%F 给 a_y(n)=Σ y^k T(n,k)，A397590 %F(5)–(8)明列 y=0、1、2、3、4、5 与主对角 A180747；A375457 的右端是 m，其对数导数整除观察不是本题奇支撑证明。已打开 arXiv 精确 A397592 OR A397594 查询（family592-arxiv.web.json），totalResults=0；Brave 429，通用搜索仍不可作有效否定证据，所以只记搜索范围内未见证明、总裁定 unknown。D5 精确号及 Abel/diagonal parity 文字初筛未命中，mathlib 已读 PowerSeries.coeff_pow（Basic.lean:635）只展开幂；系数整数三角 T 若被完整证明，则偶 y 的取值模2都等于 T(n,0)，这两个目标只是 A397591 奇支撑的绑定推论，故 bind=high。源文件把 T 当整数三角展示却没有证明全部系数整性，不能把有限表提升成已确认的桥。A397591/y=0 已有 `LinearExponentDyadicSupport` 端点，A397592/y=2 的精确目标见下节；A397594/y=4 仍须自己的整数源与全指标奇偶桥。完整三角整性是可选的更强问题，不是这两个外部具名问题按现行 CLAUDE 3.2 结算所必需的逃逸见证。numeric=yes：精确三角幂递推 N=100，O(N³)大整数算术、O(N)工作空间，A397594 前10项与源一致，n=4..100 零反例，奇指标0,1,2,5,7,9,15,17,31,33,63,65；与 y=0 的奇偶逐项相同。有限检查不能证明三角整性或全称支撑。本项保持 note-only；y=0 端点或 y=2 结论都不单独结算 y=4，更不结算完整三角。只有精确同源的证明或反例才能终结本项。全部直接引用为 A180747, A375457, A397590, A397591, A397592, A397593, A397595。主循环另实测GitHub公开代码精确号加language:Lean查询，total_count=0、incomplete_results=false；只限索引，不替代无编号文献检索。其余未打开的源b-file及网页均ASSUMED-UNVERIFIED。精确数值指令：a₀=1；n=1..100令m=n+1、P=Σ_{i<n}a_i x^i，先按A397902段的幂系数递推以e=m、f=[a₀,…,a_(n−1),0]算c_j=[x^j]P^m，再置a_n=((ym)^n−Σ_{j=0}^n c_j m^(n−j))/m，每次断言整除；y取本条参数，避免先mod2再除m。A397591 的既有 y=0 端点与本项 y=4 源保持区分。
 
 ### A397592
 
-精确目标：A_y(0)=1，∀m≥1，[x^(m−1)]A_y(x)^m/(1−mx)=(ym)^(m−1)，y=2；∀n>3，a_y(n)奇⇔∃k>1，n=2^k±1。 本项固定 y=2，索引从0起，量词是全部 n>3；不能误用 A397591 从1起的偏移，也不能把 m² 指数的 A397902 当同一递推。目标及7个直接引用的全部字段已读：A397592 %C 为 Jul 10 2026 猜想，%F 给 a_y(n)=Σ y^k T(n,k)，A397590 %F(5)–(8)明列 y=0、1、2、3、4、5 与主对角 A180747；A375457 的右端是 m，其对数导数整除观察不是本题奇支撑证明。已打开 arXiv 精确 A397592 OR A397594 查询（family592-arxiv.web.json），totalResults=0；Brave 429，通用搜索仍不可作有效否定证据，所以只记搜索范围内未见证明、总裁定 unknown。D5 精确号及 Abel/diagonal parity 文字初筛未命中，mathlib 已读 PowerSeries.coeff_pow（Basic.lean:635）只展开幂；系数整数三角 T 若被完整证明，则偶 y 的取值模2都等于 T(n,0)，这两个目标只是 A397591 奇支撑的绑定推论，故 bind=high。源文件把 T 当整数三角展示却没有证明全部系数整性，不能把有限表提升成已确认的桥。拟议逃逸须放在族公共核心：证明 T∈ℤ[y][[x]] 的整性及 T(n,0) 在模2的二进制下降，或在有理递推中保持足够2-adic精度后证明可约去 m；这才超出参数代入，给单项再包一层不算新见证。numeric=yes：精确三角幂递推 N=100，O(N³)大整数算术、O(N)工作空间，A397592 前10项与源一致，n=4..100 零反例，奇指标0,1,2,5,7,9,15,17,31,33,63,65；与 y=0 的奇偶逐项相同。有限检查不能证明三角整性或全称支撑。停止条件：找到 A397591/三角核心同域证明后这些特例 drop；整性桥仍未核实或候选仅取 y=2/4 时保持 note-only。族合并为 A397592+A397594（连同非目标 A397591）最多1公共核心探针席，确认桥之前只称共享构造，确认桥之后两目标逻辑等价于同一常数列奇偶结论；不占两个实施席。全部直接引用为 A180747, A375457, A397590, A397591, A397593, A397594, A397595。主循环另实测GitHub公开代码精确号加language:Lean查询，total_count=0、incomplete_results=false；只限索引，不替代无编号文献检索。其余未打开的源b-file及网页均ASSUMED-UNVERIFIED。精确数值指令：a₀=1；n=1..100令m=n+1、P=Σ_{i<n}a_i x^i，先按A397902段的幂系数递推以e=m、f=[a₀,…,a_(n−1),0]算c_j=[x^j]P^m，再置a_n=((ym)^n−Σ_{j=0}^n c_j m^(n−j))/m，每次断言整除；y取本条参数，避免先mod2再除m。前轮A397591已列1/unknown/note-only，本轮不另给这个排除号计行或派席。
+精确原文（Paul D. Hanna，Jul 10 2026；revision 18）：
+
+> G.f. A(x) such that the sum of the first n coefficients in A(x/n)^n equals 2^(n-1) for n >= 1.
+
+> Conjecture: for n > 3, a(n) is odd iff n is of the form 2^k-1 or 2^k+1 (k > 1).
+
+令 A∈ℤ[[X]]，A_Q=A.map(Int.castRingHom Rat)，即逐系数整数到有理数映射。Source(A) 表示 constantCoeff(A)=1 且 ∀m∈ℕ，m>0 ⇒ Σ_{j=0}^{m−1} coeff_j((rescale(1/m,A_Q))^m)=2^(m−1)。目标恰为 (∃!A∈ℤ[[X]], Source(A)) ∧ (∀A∈ℤ[[X]], Source(A) ⇒ ∀n∈ℕ, n>3 ⇒ (Odd(coeff_n A) ⇔ ∃k∈ℕ, k>1 ∧ (n=2^k−1 ∨ n=2^k+1)))。原始 offset=0，a(0)=1；幂是普通乘法，不是复合迭代，不含阶乘归一化或收敛假设。%F(2) 的整数行式 (2m)^(m−1)=[X^(m−1)]A(X)^m/(1−mX) 是源中另列的等价式，使用它须在 m>0 下证明与 NAME 的等价，不能把它假定为替代源。
+
+A397591/y=0 的既有端点为 `D5/S1/Recurrence/LinearRows/LinearExponentDyadicSupport`，其 F 的常数项为0、offset=1，满足 [X^(m−1)](1−F)^m/(1−mX)=0（m>1）。`hanna_conjecture` 的已存 SID 为 `sha256:257441c32f0b491832283533f85a4a8f2894bd3bb24da35790b5c8539a682503`。它不单独提供 A397592/y=2 的整数构造或全指标奇偶桥。A397590 的 A(X,0)=1−F(X) 与 a(n)=Σ2^kT(n,k) 是源关系，不能用有限三角表冒充全部系数整性。y=4 的 A397594、任意偶参数以及完整三角不在本目标内。
+
+第一档具名问题见 [#8006](https://github.com/the-omega-institute/trureturing/issues/8006)（2026-09-15T03:15:36Z，早于探针）及 [Problems 卷宗](../../Problems/oeis-a397592-dyadic-parity.md)，来源 note 为 `D5/L/hanna2026a397592`。现行 CLAUDE 3.2 的 `open-problem-resolution` 适用于这条预登记外部断言，bind-only 判形本身不是拒绝依据；不要求另造全三角逃逸见证。`D5/S1/Recurrence/LinearRows/DoubledLinearExponentDyadicSupport.result` 同时证明字面源的整数存在唯一性和原奇偶合取。证明先清有理缩放分母，给出 NAME 与整数行式的双向等价，再在整数上约去 m。归一化右端为 2^n(n+1)^(n−1)；将其加入系数修正映射，逐系数稳定构造整数源并由强归纳证明唯一。此后取模2，正指标右端归零，由既有归一化唯一性及 y=0 端点得到全部 n>3 的奇偶结论。`proof_shape: content` 对应新的非齐次稳定构造，`admission_basis: open-problem-resolution`，`escape_witness: none`，`utility: none`；未以有限三角表或额外整性前提替代证明。
+
+文献边界：#8006 的完整 A397592 镜像为3,990字节，SHA-256 `ec2009bc22f7209c0403adc0c2909bffbc24016ef40c9eb8b0c131585c8e51d8`；live text HTTP200、4,200字节，同为 revision18。精确 A397592 的 Crossref/OpenAlex 各 HTTP200/0，MathOverflow HTTP200/空且无下一页，公开 GitHub Lean 索引为0。D5 和钉版 Mathlib 的所检范围有 y=0 端点及通用 API，没有精确 A397592 结算命中；`dominating_theorem_search: not-found-in-searched-scope`。宽 OpenAlex 只查20/34项、MathOverflow只筛9个标题且未读全答案，宽 Crossref 排名不是否定证据。Fried arXiv:2607.24832 与 Heninger–Rains–Sloane 只部分阅读，后者 fixed-n 根整性到 varying-row 的归约未经确认。arXiv429/超时、Google JS壳、未读论文或部分以及未打开 b-file 均属 ASSUMED-UNVERIFIED，不产生阴性证据；无穷尽检索或全球优先权主张。
+
+numeric=yes：精确三角幂递推 N=100，O(N³)大整数算术、O(N)工作空间，A397592 前10项与源一致，n=4..100 零反例，奇指标0,1,2,5,7,9,15,17,31,33,63,65；与 y=0 的奇偶逐项相同。有限检查不能证明三角整性或全称支撑。
+
+精确数值指令：a₀=1；n=1..100令m=n+1、P=Σ_{i<n}a_i x^i，先按A397902段的幂系数递推以e=m、f=[a₀,…,a_(n−1),0]算c_j=[x^j]P^m，再置a_n=((ym)^n−Σ_{j=0}^n c_j m^(n−j))/m，每次断言整除；y取本条参数，避免先mod2再除m。
+
+源条目直接引用为 A180747、A375457、A397590、A397591、A397593、A397594、A397595；交叉引用不构成定理转移。以上程序和数值保留为有限研究材料，不承担全指标结论。
 
 ### A397588
 
@@ -205,7 +223,7 @@ Math StackExchange及GitHub数列代码检索；本轮刷新OEIS和仓库全状�
 
 ### A396798
 
-源为零常数项整数普通生成函数 A=x+A^{∘4}A^{∘5}，a(n)=[x^n]A；所有 A^k 表示函数复合迭代，乘积才是普通乘法。OEIS revision12 的第三条逐字为“Conjecture: [x^n] A^3(x) == [3,1,7,5] repeating (mod 8) for n > 1.”，第四条逐字为“Conjecture: [x^n] A^4(x) == 0 (mod 8) for n > 2.”，第五条逐字为“Conjecture: [x^n] A^5(x) == [5,1,1,5] repeating (mod 8) for n > 1.”，第八条逐字为“Conjecture: [x^n] A^8(x) == 0 (mod 8) for n > 1.”。`IterateProductFourFiveThirdModEight.result` 对全部 n>1 证明第三条，`IterateProductFourFiveFourthModEight.result` 对全部 n>2 证明第四条，`IterateProductFourFiveFifthModEight.result` 对全部 n>1 证明第五条，`IterateProductFourFiveEighthModEight.result` 对全部 n>1 证明第八条。四者使用同一个 `IterateProductFourFiveEighthModEight.generatingSeries`。第三、第五条均从 n=2 开始。第三条的 (n-2)%4 为0、1、2、3时分别取3、1、7、5；第五条(n-2)%4 为0或3取5，否则取1。完整来源、量词与范围见四个对应的 `Problems/oeis-a396798-*-iterate-mod-eight.md` 与 `Library/Arith/hanna2026a396798.md`。本题属于 OGF，不属于 A396803/805/806 的指数生成函数族。
+源为零常数项整数普通生成函数 A=x+A^{∘4}A^{∘5}，a(n)=[x^n]A；所有 A^k 表示函数复合迭代，乘积才是普通乘法。OEIS revision12 的第三条逐字为“Conjecture: [x^n] A^3(x) == [3,1,7,5] repeating (mod 8) for n > 1.”，第四条逐字为“Conjecture: [x^n] A^4(x) == 0 (mod 8) for n > 2.”，第五条逐字为“Conjecture: [x^n] A^5(x) == [5,1,1,5] repeating (mod 8) for n > 1.”，第七条逐字为“Conjecture: [x^n] A^7(x) == [7,1,3,5] repeating (mod 8) for n > 1.”，第八条逐字为“Conjecture: [x^n] A^8(x) == 0 (mod 8) for n > 1.”。`IterateProductFourFiveThirdModEight.result` 对全部 n>1 证明第三条，`IterateProductFourFiveFourthModEight.result` 对全部 n>2 证明第四条，`IterateProductFourFiveFifthModEight.result` 对全部 n>1 证明第五条，`IterateProductFourFiveEighthModEight.result` 对全部 n>1 证明第八条。四者使用同一个 `IterateProductFourFiveEighthModEight.generatingSeries`。第三、第五条均从 n=2 开始。第三条的 (n-2)%4 为0、1、2、3时分别取3、1、7、5；第五条(n-2)%4 为0或3取5，否则取1。第七条也绑定同一个源和真正的第七次复合：对全部 n>1，(n-2)%4 为0、1、2、3时分别取7、1、3、5，从 n=2 起循环；由 `IterateProductFourFiveSeventhModEight.result` 单独结算。完整来源、量词与范围见五个对应的 `Problems/oeis-a396798-*-iterate-mod-eight.md` 与 `Library/Arith/hanna2026a396798.md`。本题属于 OGF，不属于 A396803/805/806 的指数生成函数族。
 
 该源按 H(F)=X+I4(F)I5(F) 的逐系数稳定构造。第四、八条的来源桥给出源方程与唯一性，在 ZMod4 识别 A=X/(1-X)。第四条由此得到 I2(A)=X+2X² mod4；精确整数商使其模八像写成 G=X+2X²+4B。既冻 substitution annihilation 给出4(B∘G-B)=0，环展开给出2G²=2X²，故 G∘G=X+4X²。第八条则由 I4(A)=X+4B 的整数分解，经模八平方零迭代得到 I8(A)=X。
 
@@ -213,11 +231,13 @@ Math StackExchange及GitHub数列代码检索；本轮刷新OEIS和仓库全状�
 
 第三条以公开第五条及同源低阶系数恢复 J=I5(F) 的完整有理式。令 K=X+X²(3+X+7X²+5X³)/(1-X⁴)，在特征8清除已证为单位的分母后，完整多项式恒等式给出 K∘J=X。由 I8(F)=X 和复合代入的单射性得到 I3(F)=K，提取全部 n>1 的系数即得 [3,1,7,5] 周期。所用低阶系数直接来自既冻源的逐系数定义，未新增源定义或未证的逆恒等式前提。
 
-原首条从 n≥1 排列 [1,1,5,5] 的版本在 a(3)=9 已错：9 mod8=1，而该周期要求5。这是既有源数据和独立递推的非kernel反例，本次不新增形式反驳。实际前缀模8为1,1,1,5,5,1,1,5,…；单列 a1=1 后从 n=2 排列 [1,1,5,5] 是另拟修正版，不能冒充原猜想。尚未结算的第2、6条要求 I2、I6 在 n>3 的系数为0 mod8；第7条要求 I7 在 n>1 从 n=2 起循环 [7,1,3,5]。这三条与修正版首条没有被上述第三、第四、第五、第八条结算。
+第七条令 F=A mod8、U=I3(F)。源定义给出 coeff0(F)=0、coeff1(F)=1；既有 iterate_top 在二次项比较 F 与 X，得到全部 j 的 coeff2(Ij(F))=j*coeff2(F)。公开第三条在 n=2 给出3*coeff2(F)=3，由 ZMod8 中3*3=1得到 coeff2(F)=1。补齐这些低阶系数后，公开第四条尾项给出 I4(F)=X+4X²。U 的零常数项满足 HasSubst；真正的迭代加法及代入给出 I7(F)=U+4U²。第三条周期和 coeff1(U)=1 给出每个 m>0 的4*coeff_m(U)=4。卷积两端为零，恰好 n-1 个正指标对各贡献4，故4*coeff_n(U²)=4*(n-1)。保留自然数减法界后，(n-2)%4 的四相位给出 [7,1,3,5]，再经系数映射还原整数整除。全部新增适配局限于 result，所复用的既有通用声明包含可访问的 private 声明；`proof_shape: bind-only`、`admission_basis: open-problem-resolution`、`escape_witness: none`，无界符号结果的 `utility.kind: none`。
 
-既有 N=64 模运算与精确前缀16的 Horner 截断实验在原首条检出31个失败、最早 n=3，其余当时七条在各自域内零差异；该旧有限结果不替代四条正式证明，也不升级其余三条。保留的研究候选 R=x/(1-x)+4x^4/((1-x)(1+x^2)) 在 Z/8Z[[x]] 满足源式及完整迭代公式仍待验证；常数项为1的分母必须是单位，不能将该有理候选当已证前提。旧 `probes.py A396798` 与 `counterexamples.py` 的实验用途仍属这些有限读数。剩余范围共享同一源对象，不按各同余重复派同形任务。
+原首条从 n≥1 排列 [1,1,5,5] 的版本在 a(3)=9 已错：9 mod8=1，而该周期要求5。这是既有源数据和独立递推的非kernel反例，本次不新增形式反驳。实际前缀模8为1,1,1,5,5,1,1,5,…；单列 a1=1 后从 n=2 排列 [1,1,5,5] 是另拟修正版，不能冒充原猜想。尚未结算的第2、6条仍要求 I2、I6 在 n>3 的系数为0 mod8，保留 #6436 的第二条强同余与第六条重叠归属（及 #6375 的转引）。这两条与修正版首条不由第三、第四、第五、第七、第八条的结果结算。
 
-文献核对已读完整 revision12、直接引用 A213591/A396099/A396797/A396807，以及精确A号索引。已冻3/4、5/6与2/3定理属于不同源方程；第三、第四、第五、第八条的预登记分别为 #7982、#7950、#7961、#7943，旧 #6436/#6375 留有二次复合队列和转引。有效搜索范围内未找到这四条的先前证明；失败、验证码、JS或未读全文的广搜结果不作负证据，不主张全球优先权。剩余有理候选若遇同源已证结果、非单位分母或恒等式失败则停止该路线，不以额外目标等价假设替代证明。
+既有 N=64 模运算与精确前缀16的 Horner 截断实验在原首条检出31个失败、最早 n=3，其余当时七条在各自域内零差异；该旧有限结果不替代五条正式证明，也不升级第2、6条。保留的研究候选 R=x/(1-x)+4x^4/((1-x)(1+x^2)) 在 Z/8Z[[x]] 满足源式及完整迭代公式仍待验证；常数项为1的分母必须是单位，不能将该有理候选当已证前提。旧 `probes.py A396798` 与 `counterexamples.py` 的实验用途仍属这些有限读数。剩余范围共享同一源对象，不按各同余重复派同形任务。
+
+文献核对已读完整 revision12、直接引用 A213591/A396099/A396797/A396807，以及精确A号索引。已冻3/4、5/6与2/3定理属于不同源方程；第三、第四、第五、第八条的预登记分别为 #7982、#7950、#7961、#7943，旧 #6436/#6375 留有二次复合队列和转引。第七条在证明或数值探针前于 #7994 预登记，证明及范围见 `Problems/oeis-a396798-seventh-iterate-mod-eight.md`。其保存的 revision12 先前获取为 HTTP200，实时刷新为 HTTP403，未验证当前页面未变；Crossref 精确 A396798 为 HTTP200、0项，广搜前20标题无关且不穷尽；arXiv HTTP429 不可用，代码索引0项漏掉既有模块，均不能作不存在证明。不同索引下的结果仍未排除。有效搜索范围内未找到既有这四条的先前证明；失败、验证码、JS或未读全文的广搜结果不作负证据，不主张全球优先权。剩余有理候选若遇同源已证结果、非单位分母或恒等式失败则停止该路线，不以额外目标等价假设替代证明。
 
 ### A393868
 

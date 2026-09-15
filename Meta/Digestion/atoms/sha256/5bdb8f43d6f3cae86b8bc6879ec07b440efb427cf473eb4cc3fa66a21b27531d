@@ -1,0 +1,20 @@
+### 82.5 这给“保留多少历史”增加了一个可检验预算
+
+对于给定载体、仪器和目标实验族，可以把历史保留预算拆为
+
+$$
+\boxed{
+\begin{aligned}
+&\text{结构预算：}\quad d^2-1\text{ 个 trace-zero 方向的最坏上界；}\\
+&\text{深度预算：}\quad r_\infty-r_0\text{ 个实际秩增量；}\\
+&\text{证书预算：}\quad \le d^2-1\text{ 个信息完整效果；}\\
+&\text{恢复预算：}\quad \gamma\text{ 谱给出的不可恢复误差下界。}
+\end{aligned}}
+$$
+
+第一项只由载体维数控制，第二项由具体动力学控制，第三项由任务的读出选择控制，第四项由记录耦合与可访问环境控制。它们互相不能替代：较小的中心标签数不会消除块内维数，有限证书也不会保证记录通道可逆，深度稳定更不会自动产生经典吸引子。
+
+所以，对用户最初的命题，一个更严格的有限版本是：在给定 Zeckendorf 合法载体、仪器族、预测视界和恢复访问范围后，保留的历史必须至少支撑任务所需的可见秩、有限证书和恢复误差预算；只有在这些条件同时满足时，才可以把当前层称为稳定的有效经典记录。
+
+本节复用 `finite_sequential_completeness_depth`、`centered_effect_stability_depth_bound` 和 `finite_informational_effect_certificate` 的现有 Lean 结果。将 $d=F_{L+2}$ 代入 Zeckendorf 载体是条件性组合推导，不是仓库已经证明的受约束量子系统构造。
+

@@ -1,0 +1,6 @@
+## 66. 信息完备读出的有限证书
+
+第 65 节给出了多上下文完整读出的独立预算下界，但下界本身没有说明一个已经完备的无限或任意索引 effect 家族能否压缩成有限清单。本节使用 `FiniteInformationalEffectCertificate.lean` 的 `finite_informational_effect_certificate`，把这个压缩问题写成有限证书。
+
+本节仍限定在有限维 Hermitian 算子和密度态读出；“有限证书”表示存在一个有限子族，不表示任意实验都能自动找到该子族，也不把证书搜索过程当作物理动力学。正文为 `repo-derived/open`，没有新增 Lean 声明。
+

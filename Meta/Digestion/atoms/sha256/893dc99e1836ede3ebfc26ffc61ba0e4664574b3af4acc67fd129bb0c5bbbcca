@@ -1,0 +1,45 @@
+**命题 118.15（第 115.4 节相位响应的物理假设与行动边界）。** 在指定的有限维正交基下，若使用该节的 Schur 形式作为记录通道，须要求同阶记录矩阵 $R$ 半正定且 $R_{ii}=1$；此时
+
+$$
+\mathcal C(\rho)_{ij}=R_{ij}\rho_{ij}
+$$
+
+确为 CPTP 映射。若使用该节的三态耦合，取 $g\in\mathbb R\setminus\{0\}$，在合法子空间 $\operatorname{span}\{|00\rangle,|01\rangle,|10\rangle\}$ 上规定
+
+$$
+H=g\bigl(|00\rangle\langle01|+|00\rangle\langle10|
++|01\rangle\langle00|+|10\rangle\langle00|\bigr).
+$$
+
+取 $\hbar=1$；若嵌入更大的空间，要求自伴扩张满足 $[H,P_Z]=0$，其他允许通道也须保持合法态域。则对该节的 $|B\rangle,|D\rangle$，时间 $\tau$ 后测量 $|00\rangle\langle00|$ 的概率分别为
+
+$$
+p_B(\tau)=\sin^2(\sqrt2g\tau),\qquad p_D(\tau)=0.
+$$
+
+当 $\sin^2(\sqrt2g\tau)>0$ 时，这是不同实验响应的见证；要进一步推出必须动作或最优动作不同，还须指定相应任务或奖励，不能只用耦合差异推出行动标签差异。
+
+证明。半正定矩阵分解给出系数 $v_{i\lambda}$ 满足
+
+$$
+R_{ij}=\sum_\lambda v_{i\lambda}\overline{v_{j\lambda}},
+\qquad \sum_\lambda|v_{i\lambda}|^2=1.
+$$
+
+对角 Kraus 算子 $K_\lambda=\operatorname{diag}(v_{i\lambda})$ 实现 $\mathcal C$，且 $\sum_\lambda K_\lambda^\dagger K_\lambda=\mathbf1$。相位耦合的 $H$ 自伴，并满足
+
+$$
+H|B\rangle=\sqrt2g|00\rangle,\quad
+H|00\rangle=\sqrt2g|B\rangle,\quad H|D\rangle=0.
+$$
+
+因此
+
+$$
+e^{-i\tau H}|B\rangle
+=\cos(\sqrt2g\tau)|B\rangle-i\sin(\sqrt2g\tau)|00\rangle,
+\qquad e^{-i\tau H}|D\rangle=|D\rangle.
+$$
+
+Born 规则给出所列概率。另一方面，若所有动作奖励和终值均为零，任何允许动作均最优，故响应不同并不强制最优标签不同。
+

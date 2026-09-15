@@ -1,0 +1,31 @@
+### 97.1 定义成对的未来分离距离
+
+设 $$Y$$ 是有限状态集，
+
+$$
+\tau:Y\to Y,
+\qquad
+q:Y\to O
+$$
+
+分别是确定性更新和当前读出。对有序状态对 $$(x,y)$$，定义
+
+$$
+\delta(x,y)
+=
+\min\left\{n\in\mathbb N:
+q(\tau^n x)\ne q(\tau^n y)\right\},
+$$
+
+若不存在这样的时刻则记为 $$\delta(x,y)=\infty$$。这正是源码中的 `exactSeparationDepth`：它返回 `some n` 或 `none`，而不是把永远不可分的状态强行赋予一个有限距离。
+
+$$
+\boxed{
+\delta(x,y)=\infty
+\iff
+x,y\text{ 对全部未来读数保持等价}.
+}
+$$
+
+因此，稳定对象的边界可以按对区分：有限距离表示还需要保留一个有限未来窗口，$$\infty$$ 表示在指定更新和读出下无需再区分。
+

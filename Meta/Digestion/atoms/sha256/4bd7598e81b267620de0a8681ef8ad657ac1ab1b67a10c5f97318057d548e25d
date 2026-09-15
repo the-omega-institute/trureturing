@@ -1,0 +1,62 @@
+### 59.1 双系统的三种方向
+
+令两个有限维系统的局部维数分别为 $$m$$ 和 $$n$$。在双系统 traceless-Hermitian 算子空间中，仓库模块 BipartiteSectorDecomposition.lean 定义了：
+
+$$
+\mathcal L_A
+=
+\operatorname{traceZeroHermitian}(m)
+\otimes
+\operatorname{scalarHermitian}(n),
+$$
+
+$$
+\mathcal L_B
+=
+\operatorname{scalarHermitian}(m)
+\otimes
+\operatorname{traceZeroHermitian}(n),
+$$
+
+以及真正同时依赖两边的关联扇区：
+
+$$
+\mathcal C
+=
+\operatorname{traceZeroHermitian}(m)
+\otimes
+\operatorname{traceZeroHermitian}(n).
+$$
+
+在 Hilbert--Schmidt 实内积下，模块中的 bipartite_sector_decomposition 给出这些扇区的正交分解。相应维数为：
+
+$$
+\dim\mathcal L_A=m^2-1,
+\qquad
+\dim\mathcal L_B=n^2-1,
+$$
+
+$$
+\dim\mathcal C=(m^2-1)(n^2-1).
+$$
+
+因此无关联局部方向的维数与真正关联方向的维数是两笔不同的账。把局部边缘读数做得更精细，只是在前两笔账内增加可见方向；它不会自动把第三笔账转移到前两笔账。
+
+记局部可见扇区为：
+
+$$
+\mathcal V_{\mathrm{loc}}
+=
+\mathcal L_A+\mathcal L_B.
+$$
+
+由正交分解：
+
+$$
+\mathcal V_{\mathrm{loc}}\perp\mathcal C,
+\qquad
+\mathcal V_{\mathrm{loc}}\cap\mathcal C=\{0\}.
+$$
+
+这里的“方向”是算子空间中的方向，不是物理空间中的额外坐标轴。
+

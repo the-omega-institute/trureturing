@@ -1,0 +1,22 @@
+### 107.4 与禁止相邻 $$11$$ 的 Zeckendorf 空间不要混同
+
+本节的黄金相位字母满足的是
+
+$$
+SS\text{ 禁止},
+\qquad
+LLL\text{ 禁止},
+$$
+
+而第 79、98、104 节使用的有限 Zeckendorf 构型空间满足的是二进制约束
+
+$$
+11\text{ 禁止}.
+$$
+
+两者都来自 Fibonacci 型递归，但字母表、状态含义和可实现动力学不同。不能因为它们都出现 Fibonacci 数，就把黄金频率时间序列直接识别成一个禁止相邻激发的量子 Hilbert 空间。
+
+可以建立一个条件性桥：若给定实验把 $$S/L$$ 相位字母编码为合法构型，并且联合更新保持该编码空间，那么第 105、106 节的预测商和受控稳定深度可以应用于这个有限语言。现有 Lean 结果只证明了相位字母的频率选择和禁词继承；它没有证明该相位语言存在唯一的物理寄存器编码，也没有证明其商类数等于某个 Fibonacci Hilbert 维数。
+
+本节复用 `zeckendorf_selects_layer_gap_phase`、`golden_true_selects_long_frequency`、`golden_false_selects_short_frequency`、`short_frequency_forces_next_long`、`two_long_frequencies_force_next_short`、`short_phase_forces_next_long` 和 `two_long_phases_force_next_short`。Lean 已证明的是黄金词约束到频率与相位的精确传递；标量端点的顺序不可见性来自交换乘法，顺序恢复、物理编码和量子噪声下的稳定深度仍需另建模型。
+

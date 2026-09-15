@@ -1,0 +1,32 @@
+### 117.1 奖励和终值也必须因子化
+
+仅有状态转移相容还不够。有限时域最优控制还使用阶段奖励和终端价值。设
+
+$$
+r_m:S_{\mathrm{micro}}\times A\to\mathbb R,
+\qquad
+r_M:S_{\mathrm{macro}}\times A\to\mathbb R,
+$$
+
+以及终端价值
+
+$$
+V^0_m:S_{\mathrm{micro}}\to\mathbb R,
+\qquad
+V^0_M:S_{\mathrm{macro}}\to\mathbb R.
+$$
+
+需要同时满足
+
+$$
+ r_m(s,a)=r_M(\alpha(s),a),
+$$
+
+以及
+
+$$
+ V^0_m(s)=V^0_M(\alpha(s)).
+$$
+
+这三个条件分别保证：执行同一个动作后的状态一致、即时收益一致、停止时的价值一致。缺少任意一个条件，宏观读出都可能无法承担控制价值。
+

@@ -1,0 +1,28 @@
+### 90.3 Zeckendorf 标签可以复制，标签上的任意叠加不能任意复制
+
+若长度为 $L$ 的合法 Zeckendorf 字符串被实现为一组正交计算基态
+
+$$
+\{|w\rangle:w\in\mathcal W_L\},
+$$
+
+则对不同 $w\ne v$ 有
+
+$$
+\langle w|v\rangle=0.
+$$
+
+在这个离散基底上，受控复制可以把经典标签写入空白寄存器；这与第 90.2 节并不冲突，因为被复制的是一组彼此正交的基态。可是，对叠加态
+
+$$
+|\Psi\rangle=\sum_{w\in\mathcal W_L}a_w|w\rangle
+$$
+
+不能把同一个过程解释为对任意未知 $|\Psi\rangle$ 都实现
+
+$$
+|\Psi\rangle|0\rangle\longmapsto|\Psi\rangle|\Psi\rangle.
+$$
+
+线性演化会把基态复制协议延伸为纠缠的相干复制态，而不是右侧所写的非线性平方。于是，Zeckendorf 的合法性约束只决定可用的正交标签集合；它不能绕过量子态重叠的复制边界，也不能把标签复制自动升级为历史的独立物理副本。
+

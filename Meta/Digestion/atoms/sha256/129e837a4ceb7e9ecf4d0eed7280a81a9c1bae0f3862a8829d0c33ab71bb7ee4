@@ -1,0 +1,38 @@
+### 定理 65.1（多上下文 informational completeness 下界）
+
+若联合读出对密度态是单射，即
+
+$$
+\rho\ne\sigma
+\Longrightarrow
+\exists x,j,
+\quad
+\operatorname{Tr}(\rho E_{x,j})
+e
+\operatorname{Tr}(\sigma E_{x,j}),
+$$
+
+则冻结定理 `multi_context_budget_lower_bound` 证明
+
+$$
+\boxed{
+ d^2-1
+\le
+\sum_{x\in\mathcal X}m_x.
+}
+$$
+
+证明的线性核心是：所有上下文 outcome 的 span 必须覆盖完整的 traceless-Hermitian 载体，其实维数为
+
+$$
+\dim_{\mathbb R}\operatorname{Herm}_0(d)=d^2-1.
+$$
+
+每个上下文删去一个由归一化关系决定的 outcome 后，剩余独立 outcome 总数为
+
+$$
+\sum_xm_x.
+$$
+
+一个有限 spanning family 的基数不可能小于载体维数，于是得到下界。该结论不要求上下文彼此正交，也不要求它们来自同一个物理装置；只要求联合读出确实 informationally complete。
+

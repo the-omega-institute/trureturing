@@ -1,0 +1,29 @@
+### 定理 61.2（观察半范数的核与商空间度量）
+
+给定有限 effect 索引集、严格正的权重和 centered effects，定义一个加权观察半范数。冻结结果 `operational_observation_kernel_and_metric` 的第一部分把它的核识别为 effect span 的正交补：
+
+$$
+\operatorname{ker}\|D\|_{\mathrm{obs}}
+=
+\operatorname{span}_{\mathbb R}
+\{E_i\}^{\perp}.
+$$
+
+因此，对密度态差
+
+$$
+D=\rho-\sigma,
+$$
+
+半范数为零，恰好表示当前 effect 家族无法区分这两个状态。它在状态空间上只给出伪距离；把零距离状态取商以后，诱导的 `operationalQuotientDistance` 满足非负性、对称性和三角不等式，并且
+
+$$
+\bar d([\rho],[\sigma])=0
+\iff
+[\rho]=[\sigma].
+$$
+
+这使“对象是一个读数等价类”获得了一个内部几何：距离不是预先附加的物理空间距离，而是由允许的 effect、权重和读出范数共同定义的操作距离。
+
+冻结结果还给出分离条件：若原状态空间上的伪距离已经是严格距离，则这组 effect 对密度态是 informationally complete。反之，存在非零残差就意味着至少有两个不同状态落入同一个操作类。这里的 `informationally complete` 只针对指定的密度态与 effect 集合，不能推出对任意序列仪器或任意开放系统都完备。
+

@@ -1,0 +1,47 @@
+### 63.3 有限移位记录的通道系数
+
+令有限记录振幅为
+
+$$
+c:\mathbb Z\longrightarrow\mathbb C,
+$$
+
+其支撑位于有限区间并满足归一化
+
+$$
+\sum_{k\in\mathbb Z}|c(k)|^2=1.
+$$
+
+定义记录自相关
+
+$$
+\gamma(\ell)
+=
+\sum_{k\in\mathbb Z}c(k+\ell)\,\overline{c(k)}.
+$$
+
+给每个系统标签 $i$ 一个整数位置 $q(i)$，则 `FiniteShiftedRecordChannel` 产生的 Heisenberg 作用按逐项乘法写成
+
+$$
+\Lambda(A)_{ij}
+=
+\gamma\bigl(q(i)-q(j)\bigr)A_{ij}.
+$$
+
+因此，对角元保持不变，非对角元由记录自相关调节。这里的 $\gamma$ 是有限移位模型的输入，不是任意记录通道都必须具有的普适函数。
+
+`finite_record_pair_witnesses` 构造两个只在 $i,j$ 位置有相反相干符号的纯态，使其初始迹距离为
+
+$$
+D(\rho,\sigma)=1,
+$$
+
+而经过 $\Lambda$ 后的距离恰为
+
+$$
+D(\Lambda\rho,\Lambda\sigma)
+=|\gamma(q(i)-q(j))|.
+$$
+
+这个见证把 Gram 或自相关系数直接连接到一个可测的最坏方向：不是所有初态都按同一个相干速率衰减，至少有一对相位方向实现该系数。
+

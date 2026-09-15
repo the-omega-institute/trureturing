@@ -1,0 +1,27 @@
+### 81.5 对稳定经典现实的修正
+
+结合第 79、80 节，稳定经典现实至少需要三个独立条件：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{记录重叠谱在目标视界内足够收缩；}\\
+&\text{可见 operator system 对指定实验闭合；}\\
+&\text{被省略的联合记录在允许操作族中不会重新回流，或其回流误差有界。}
+\end{aligned}}
+$$
+
+第一条由 $\gamma$ 的模长和恢复误差下界约束，第二条由 $V_\infty$ 或其有限稳定阶段约束，第三条由可访问环境范围和联合通道决定。Zeckendorf 可以为第一条提供规范位置差，为第二条提供合法构型索引，但不能单独证明任一条的物理前提。
+
+因此，问题“要保留多少历史”现在可以写成一个带任务参数的优化：在给定实验族 $\mathfrak T$、预测视界 $H$、允许误差 $\varepsilon$ 和允许访问的记录代数 $\mathcal R$ 下，寻找最小保留结构，使
+
+$$
+\sup_{T\in\mathfrak T,\,n\le H}
+\operatorname{TV}\bigl(p_T^{\mathrm{full}}(n),p_T^{\mathrm{retained}}(n)\bigr)
+\le\varepsilon,
+$$
+
+同时满足记录重叠诱导的恢复下界、operator-system 闭合和联合访问约束。这个优化问题仍是开放的研究接口；本节只把已有的重叠谱、恢复下界和局部访问反例接到同一条可检验主线上。
+
+本节复用 `coefficient_gamma_neg`、`finite_record_recovery_error_lower_bound` 和 `reduced_irreversibility_is_access_defect` 的现有 Lean 结果。Zeckendorf 位置映射、重复记录的多步误差和最后的保留结构优化是组合推导，不冒充仓库已有的统一恢复定理。
+

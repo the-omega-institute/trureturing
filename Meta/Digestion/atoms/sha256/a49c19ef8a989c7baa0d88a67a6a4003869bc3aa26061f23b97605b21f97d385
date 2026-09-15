@@ -1,0 +1,54 @@
+### 76.2 稳定深度消耗的是商类预算
+
+初始类数不是状态数本身，而是当前读出能够区分的商类数：
+
+$$
+C_0
+=
+\left\lvert X/\ker q\right\rvert
+=
+\left\lvert\operatorname{range}q\right\rvert.
+$$
+
+完全未来类数为 $$C_\infty$$。在源码的自然数减法语境下，`finite_stability_class_bound` 给出两段类预算
+
+$$
+\boxed{
+ d\le C_\infty-C_0,
+}
+$$
+
+以及
+
+$$
+\boxed{
+ C_\infty-C_0
+ \le
+ \lvert X\rvert-C_0.
+}
+$$
+
+这表示每次关系塔严格细化，都必须消耗至少一个新的商类；它不是说每一步一定恰好增加一个类，也不是最小线性预测维数定理。若 $$q$$ 满射到有限字母表 $$O$$，则
+
+$$
+C_0=\lvert O\rvert,
+$$
+
+从而得到
+
+$$
+ d\le C_\infty-\lvert O\rvert
+ \le
+ \lvert X\rvert-\lvert O\rvert.
+$$
+
+更一般地，若初始关系不是当前读出的核，而是任意有限载体上的 Setoid $$R$$，`finite_equivalence_descent_and_stability_bound` 给出相应的形式
+
+$$
+ d\le C_\infty-\lvert Y/R\rvert
+ \le
+ \lvert Y\rvert-\lvert Y/R\rvert.
+$$
+
+所以“需要保留多少历史”在这个有限确定性模型中首先表现为一个商类预算：不是保存每条历史词，而是继续细分那些仍会在未来读出中分开的类。
+

@@ -1,0 +1,30 @@
+### 80.2 固定代数的中心与块内量子自由度
+
+设 $\Lambda$ 有限、每个 $n_\lambda$ 有限，并先选定一个代数同构，使有限维固定代数具有块分解
+
+$$
+\mathcal A
+\cong
+\prod_{\lambda\in\Lambda}M_{n_\lambda}(\mathbb C).
+$$
+
+仓库的 `record_fixed_center_eq_block_scalars` 精确给出规范乘积代数的中心；经上述同构输运后得到这里的中心公式：
+
+$$
+Z(\mathcal A)
+=
+\left\{(c_\lambda I_{n_\lambda})_{\lambda\in\Lambda}:c_\lambda\in\mathbb C\right\}.
+$$
+
+因此（维数公式使用有限直积的标准线性代数维数计算）
+
+$$
+\dim_{\mathbb C}Z(\mathcal A)=|\Lambda|,
+\qquad
+\dim_{\mathbb C}\mathcal A=\sum_{\lambda\in\Lambda}n_\lambda^2.
+$$
+
+只有当所有 $n_\lambda=1$ 时，代数才交换，中心才等于整个代数。若某个 $n_\lambda>1$，同一个中心标签仍允许一个非平凡的块内量子系统；把标签 $\lambda$ 当成完整经典对象，会把这部分可由后续操作恢复的关系一并丢掉。
+
+这给“经典记录”的含义加上一个边界：在给定记录通道确实固定这些中心投影、且允许观测族只读取它们时，中心投影才可作为稳定的经典标签；抽象代数的中心本身不自动给出物理记录通道。中心标签的数量不等于完整联合系统的 Hilbert 维数，也不等于可组合算子的维数。`FiniteMemoryHistoryCapacity.finite_memory_history_capacity` 的 $N\le d$ 也只在 $N$ 个密度态被同一个 POVM 一次性完美区分时成立，不能把中心标签数自动解释成所有物理记忆的维数。
+

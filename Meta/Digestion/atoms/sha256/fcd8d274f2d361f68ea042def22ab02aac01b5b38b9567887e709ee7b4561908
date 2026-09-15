@@ -1,0 +1,13 @@
+### 99.1 扇区分解
+
+设有限索引集为 $$\iota$$，第 $$i$$ 个局部因子维数为 $$d_i$$。对每个有限支撑集 $$S\subseteq\iota$$，定义一个扇区：在 $$S$$ 上取局部 trace-zero Hermitian 方向，在 $$S$$ 外取标量恒等方向。记该扇区为 $$\mathcal V_S$$。
+
+于是全局 Hermitian 张量空间按支撑集合分解为
+
+$$
+\mathsf{Herm}_{\mathrm{global}}
+=\bigoplus_{S\subseteq\iota}\mathcal V_S.
+$$
+
+空支撑 $$S=\varnothing$$ 是整体恒等方向；单点支撑 $$S=\{i\}$$ 是第 $$i$$ 条局部轴的中心化读数；$$|S|\ge2$$ 则表示跨轴相关方向。
+

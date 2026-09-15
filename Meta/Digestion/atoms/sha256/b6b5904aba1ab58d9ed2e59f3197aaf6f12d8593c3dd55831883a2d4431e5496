@@ -1,0 +1,28 @@
+### 98.3 每个切口都有一个不可绕开的秩下界
+
+把长度 $$t+s$$ 的完整振幅按切口拆成前缀和后缀，定义系数矩阵 $$C_a^{t,s}$$。任意一个有限链若能精确产生同一个扇区振幅，`sequential_coefficient_factorization` 给出
+
+$$
+C_a^{t,s}=P_tQ_s,
+$$
+
+其中中间指标空间就是该切口的 bond carrier。因此
+
+$$
+\operatorname{rank}(C_a^{t,s})
+\le
+\dim(\text{bond at }t).
+$$
+
+项目进一步把扇区系数矩阵的秩写成边界数量，得到 `sequential_memory_necessity`：
+
+$$
+\boxed{
+|\operatorname{Boundary}(a,t)|
+\le
+\dim(\text{任何精确链在切口 }t\text{ 的记忆} ) .
+}
+$$
+
+这是一条比“历史越长，内存越多”更精确的说法。真正的债务由前缀与后缀振幅的线性秩决定；大量字面不同的历史如果在系数矩阵中线性相关，可以共享记忆，而线性独立的边界不能被同一个更小的切口载体精确表示。
+
