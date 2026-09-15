@@ -2,12 +2,11 @@
    generality: I
    mirror-B: D5/B/S1/Recurrence/StephanTriangleSecondColumn
    mirror-E: none(waiver:symbolic-proof-no-numeric-artifact)
-   anchors: [mathlib/module/Mathlib.Algebra.BigOperators.Group.Finset.Basic, mathlib/module/Mathlib.Tactic.Order, mathlib/module/Mathlib.Tactic.Ring]
+   anchors: [mathlib/module/Mathlib.Algebra.BigOperators.Group.Finset.Basic, mathlib/module/Mathlib.Tactic.Ring]
    utility: none
    digest: The second column of Kimberling's row-sum triangle is shifted OEIS A006183. -/
 
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Tactic.Order
 import Mathlib.Tactic.Ring
 
 open Finset
