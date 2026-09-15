@@ -22885,3 +22885,310 @@ $$
 这把“保留多少历史”具体化为：先规定允许的时间操作，再判断隐藏扇区是否可以安全商掉。若未来协议允许跨扇区访问，当前的经典接口必须补回 $$c$$，或保留一个能恢复它的记忆寄存器。
 
 本节使用 `visible_path_hidden_address_dichotomy` 与 `universal_solenoid_visible_hidden_motion_classification` 的现成结论。Lean 已证明的是 UniversalSolenoid、连续路径和 HiddenAddress 之间的这些结构关系；它没有证明现实物理系统必然采用该拓扑模型，也没有把“隐藏扇区”自动识别成实验中的某个具体粒子或场。
+
+## 104. 切口 Schmidt 谱：记忆维数之外还要保留哪些历史权重
+
+第 98 节给出了精确相干制备的切口秩下界。`CoherentHistorySchmidt` 进一步计算这个切口中每个边界扇区的权重，因此可以区分“必须保留多少个正交方向”和“哪些方向对当前任务贡献最大”。
+
+### 104.1 完整历史矩阵按边界因子化
+
+取一个有限占据多重集 $$a$$，把总长度写成
+
+$$
+|a|=t+s.
+$$
+
+令 $$u$$ 是长度 $$t$$ 的前缀，$$v$$ 是长度 $$s$$ 的后缀。源码定义完整合法词的系数矩阵
+
+$$
+C_a^{t,s}(u,v)
+=
+\\begin{cases}
+\\operatorname{multiplicity}(|a|,a)^{-1/2},
+&\\operatorname{occupation}(u\\mathbin{+!!+}v)=a,\\\\
+0,&\\text{否则}.
+\\end{cases}
+$$
+
+`coefficient_factorization` 证明它可以经过边界集合分解：
+
+$$
+C_a^{t,s}=P_{a,t}Q_{a,t,s},
+$$
+
+其中中间指标 $$b\\in\\operatorname{Boundary}(a,t)$$ 记录前缀占据，后缀占据被确定为 $$a-b$$。这说明切口记忆不是任意压缩标签，而是前缀与后缀仍然能够匹配的边界扇区。
+
+选取每个边界的代表词后，`coefficient_diagonal_restriction` 给出一个对角子矩阵：
+
+$$
+C_a^{t,s}(u_b,v_c)
+=
+\\begin{cases}
+\\operatorname{multiplicity}(|a|,a)^{-1/2},&b=c,\\\\
+0,&b\\ne c.
+\\end{cases}
+$$
+
+所以 `coefficient_rank` 得到精确等式
+
+$$
+\\boxed{
+\\operatorname{rank}(C_a^{t,s})
+=
+|\\operatorname{Boundary}(a,t)|.
+}
+$$
+
+第 98 节的 bond 下界因此可以被理解为 Schmidt 秩下界：任何精确实现同一纯历史振幅的切口，都必须至少携带这么多彼此独立的边界方向。
+
+### 104.2 每个边界方向的 Schmidt 权重
+
+源码进一步定义边界 $$b$$ 的 Schmidt 系数
+
+$$
+\\lambda_b
+=
+\\frac{
+\\sqrt{\\operatorname{multiplicity}(t,b)}
+\\sqrt{\\operatorname{multiplicity}(s,a-b)}
+}{
+\\sqrt{\\operatorname{multiplicity}(t+s,a)}
+}.
+$$
+
+`schmidt_coefficient_sq` 和 `schmidt_coefficient_sq_binomial` 证明
+
+$$
+\\boxed{
+\\lambda_b^2
+=
+\\frac{
+\\operatorname{multiplicity}(t,b)\\,\\operatorname{multiplicity}(s,a-b)
+}{
+\\operatorname{multiplicity}(t+s,a)
+}
+=
+\\frac{
+\\displaystyle\\prod_z
+\\binom{a(z)}{b(z)}
+}{
+\\binom{t+s}{t}
+}.
+}
+$$
+
+这些权重之和为一，因为它们来自完整均匀合法词的边界分解。于是一个切口有两个不同的复杂度量：
+
+$$
+\\begin{aligned}
+\\text{精确记忆维数}&=|\\operatorname{Boundary}(a,t)|,\\\\
+\\text{历史权重分布}&=(\\lambda_b^2)_b.
+\\end{aligned}
+$$
+
+前者回答“零误差地保留全部相干需要多少维”；后者回答“若只允许近似预测，哪些边界方向承载主要概率质量”。不能从第二个量的集中性直接推出第一个量可以在精确任务中减少。
+
+### 104.3 精确压缩与近似压缩的边界
+
+若任务要求保留完整纯态的所有振幅，任何丢弃一个 $$\\lambda_b\\ne0$$ 的边界方向都会降低切口 Schmidt 秩，因此不可能由同一较小 bond 精确实现。若任务只要求某个有限观测族的近似预测，可以按权重排序选取一个子集 $$S$$，并定义被丢弃的质量
+
+$$
+\\varepsilon_S^2
+=
+\\sum_{b\\notin S}\\lambda_b^2.
+$$
+
+在标准纯态 Schmidt 截断解释下，$$\\varepsilon_S$$ 是态向量级别的尾部范数；但把它转成具体测量概率、迹距离或多步预测误差，还需要指定归一化、测量族和后续动力学。仓库当前定理证明了 $$\\lambda_b$$ 的精确公式，没有自动证明任意截断协议的统一实验误差界。
+
+因此可以把“历史保留多少”拆成两个问题：
+
+$$
+\\boxed{
+\\begin{aligned}
+\\text{精确相干任务:}&\\quad
+\\text{保留全部非零边界方向};\\\\
+\\text{有限精度任务:}&\\quad
+\\text{给定预测族后控制被丢弃 Schmidt 尾部及其回流}.
+\\end{aligned}
+}
+$$
+
+第二行仍要与第 79、86 节的未来 observable 闭包结合。一个很大的 Schmidt 尾部如果完全落在实验不可见方向，未必造成可见误差；一个很小的尾部若被后续操作放大或回流，也不能仅凭当前质量安全丢弃。
+
+### 104.4 与 Zeckendorf 合法空间的严格接口
+
+对禁止相邻两个 $$1$$ 的 Zeckendorf 合法集合 $$\\mathcal W_L$$，可以把每个合法字串按切口分成前缀和后缀，并令边界集合只保留满足跨切口相邻约束的占据模式。若能证明该受限系数矩阵具有与某个 occupation sector 相同的因子化，则可以把上面的边界秩和 Schmidt 权重转移到 Zeckendorf 模型。
+
+但这一步目前不能直接从 `CoherentHistorySchmidt` 得出。现有定理的词空间是由有限多重集占据约束定义的；它没有证明“禁止相邻 $$11$$”与某个固定多重集 sector 的系数矩阵同构，也没有给出受限边界的闭式 Schmidt 谱。因此目前只能保留如下条件性桥：
+
+$$
+\\text{若给定 Zeckendorf 振幅能因子化为边界扇区，}
+\\quad
+\\text{则其精确切口记忆下界等于该边界矩阵的秩。}
+$$
+
+这正是下一步可形式化的具体目标：构造一个带相邻约束的系数矩阵，证明其切口因子化，再比较其秩与 Fibonacci 合法构型数 $$F_{L+2}$$。不能把一般 occupation 的 Schmidt 权重直接冒充 Zeckendorf 量子模型的实验谱。
+
+本节复用 `coefficient_factorization`、`coefficient_rank`、`schmidt_coefficient_sq`、`schmidt_coefficient_sq_binomial` 和 `normalized_coefficient_factorization`。Lean 已证明的是有限占据 sector 的精确切口分解、秩和权重；Zeckendorf 相邻约束的 Schmidt 理论、近似截断的多步误差以及对应的物理编码仍保持为条件性或开放问题。
+
+## 105. 预测商：稳定对象是未来响应的最大不变商
+
+前几节分别给出了切口记忆、共享寄存器和隐藏扇区的例子。它们可以被一个更一般的有限状态构造统一：不是先猜一个“真正对象”的内部标签，而是从当前读出和更新规则反复检查哪些历史在未来仍会分开。
+
+### 105.1 有限未来关系逐步细化
+
+设状态空间为 $$Y$$，更新为 $$\tau:Y\to Y$$，当前读出为 $$q:Y\to O$$。定义长度 $$m$$ 的未来关系
+
+$$
+R_m(y,y')
+\iff
+q(\tau^k y)=q(\tau^k y')
+\quad\text{对所有 }0\le k\le m.
+$$
+
+`finite_horizon_kernel_succ_iff` 精确给出
+
+$$
+R_{m+1}(y,y')
+\iff
+R_m(y,y')
+\land
+q(\tau^{m+1}y)=q(\tau^{m+1}y').
+$$
+
+所以每增加一个未来坐标，关系只会细化，不会重新合并：
+
+$$
+m\le n\quad\Longrightarrow\quad R_n\subseteq R_m.
+$$
+
+若某一对状态在前 $$m$$ 步相同、在第 $$m+1$$ 步第一次不同，`finite_horizon_first_new_coordinate_strict` 证明
+
+$$
+R_{m+1}\subsetneq R_m.
+$$
+
+这把“隐藏历史何时重新出现”变成一个可枚举的首次分离深度，而不是一句关于无限历史的直觉。
+
+### 105.2 完整未来核与最大的前向不变关系
+
+把所有未来读出合并为完整 itinerary：
+
+$$
+\operatorname{Itin}(y)
+=
+\bigl(q(y),q(\tau y),q(\tau^2y),\ldots\bigr).
+$$
+
+完整未来核为
+
+$$
+R_\infty(y,y')
+\iff
+\operatorname{Itin}(y)=\operatorname{Itin}(y').
+$$
+
+`complete_kernel_eq_iInf_finite_horizon` 证明它是有限未来核的无穷交：
+
+$$
+R_\infty=\bigcap_{m\ge0}R_m.
+$$
+
+更强的 `predictive_completion_maximal_invariant_quotient` 把它刻画为当前读出核中的最大前向不变关系：
+
+$$
+R_\infty
+=
+\operatorname{gfp}(\mathcal R),
+$$
+
+其中 $$\mathcal R$$ 保留当前读出相同，并要求关系在 $$\tau$$ 下继续保持。于是 canonical quotient
+
+$$
+Y_{\mathrm{pred}}=Y/R_\infty
+$$
+
+携带唯一下降的读出与更新。它正是“相对于这组更新和读出，未来响应完全相同”的最粗状态空间。
+
+这里的“最粗”有明确方向：若两个状态在 $$Y_{\mathrm{pred}}$$ 中被识别，它们所有未来读出都相同；若一个摘要仍能精确预测全部未来读出，则它必须细于或等价于这个商。
+
+### 105.3 任何精确历史接口都因子化到预测商
+
+设另一个记忆摘要为 $$r:Y\to M$$，并且当前读出与更新都通过它因子化：
+
+$$
+q=\bar q\circ r,
+\qquad
+r\circ\tau=\bar\tau\circ r.
+$$
+
+`predictive_memory_minimal_quotient` 证明存在唯一映射
+
+$$
+\theta:\operatorname{range}(r)\to Y_{\mathrm{pred}}
+$$
+
+使得 canonical projection 满足
+
+$$
+\operatorname{completionProjection}
+=
+\theta\circ\operatorname{rangeFactorization}(r).
+$$
+
+因此，任何能够精确预测所有未来读出的记忆接口，都会唯一映射到 canonical predictive state。这个结论比“某个编码看起来够用”更严格：它给出所有 exact predictive memories 的共同目标，而不要求先指定哪一个内部标签才是真实对象。
+
+`prediction_completion_universality` 还说明，若当前读出和一步更新已经通过某个粗状态半共轭因子化，那么完整未来 itinerary 自动通过同一个粗状态因子化。换句话说，真正的闭合条件一旦成立，不需要为每个未来时刻重新发明一个独立记录。
+
+### 105.4 有限状态何时可以停止继续保留历史
+
+若 $$Y$$ 有限，`finite_horizon_stabilizes_at_completionDepth` 给出某个有限深度 $$H_*$$，使
+
+$$
+R_{H_*}=R_\infty.
+$$
+
+`FiniteHistoryPermanentStability` 的对应结论更局部：如果某一步的相等关系已经不再细化，即
+
+$$
+R_m=R_{m+1},
+$$
+
+则对所有 $$r\ge0$$ 都有
+
+$$
+R_{m+r}=R_m.
+$$
+
+所以“现在没有新分离”只有在这个等式对全部状态成立时才是停止证据；一条样本轨迹暂时没有分开，不能推出全局闭合。
+
+在线性有限维模型中，`FutureReadoutQuotient` 给出同一结构的商版本。对状态空间 $$V$$、线性更新 $$T$$ 和读出 $$C$$，隐藏子空间为
+
+$$
+\mathcal N_\infty
+=
+\bigcap_{k\ge0}\ker(C\circ T^k).
+$$
+
+商空间 $$V/\mathcal N_\infty$$ 携带唯一诱导动力学，并恢复所有未来读出。`MaximalUnobservableSubspace.future_kernel_is_maximal_invariant` 进一步说明 $$\mathcal N_\infty$$ 是当前不可见空间中最大的 $$T$$-不变部分；这正是“不会在未来回流到可见读出”的隐藏方向，而不是所有当前看不见方向的简单集合。
+
+### 105.5 与 Zeckendorf 和量子记忆的接口
+
+若把长度 $$L$$ 的 Zeckendorf 合法构型作为初始状态集 $$Y=\mathcal W_L$$，并把一个具体量子或经典更新协议投影成 $$\tau$$ 与 $$q$$，则历史预算应按以下顺序计算：
+
+$$
+\boxed{
+\begin{aligned}
+\text{合法构型数}&=F_{L+2},\\
+\text{未来预测商大小}&=|\mathcal W_L/R_\infty|,\\
+\text{有限停止深度}&=\min\{m:R_m=R_\infty\},\\
+\text{量子精确载体}&\text{还需满足相应切口秩、POVM 或完全正编码约束}.
+\end{aligned}
+}
+$$
+
+第一行是 Zeckendorf 的组合计数；第二、三行依赖实际更新和读出，不能由 Fibonacci 数自动给出；第四行又把预测商与量子可实现性区分开来。若记录通道留下共享相干，经典商可能过早合并状态；若所有未来读出都已在商上闭合，则继续保留更细的历史只增加成本，不增加该任务的预测力。
+
+因此，对“用多少约束保留历史才能得到稳定经典现实”的最精确回答是：先计算允许实验族的完整未来核，再取其最大前向不变商；只有在这个商还能由物理记忆、测量和动力学实现时，它才是一个可交付的经典接口。
+
+本节复用 `finite_horizon_kernel_succ_iff`、`finite_horizon_kernel_antitone`、`complete_kernel_eq_iInf_finite_horizon`、`finite_horizon_stabilizes_at_completionDepth`、`predictive_completion_maximal_invariant_quotient`、`predictive_memory_minimal_quotient`、`prediction_completion_universality` 与 `future_readout_quotient_is_coarsest_with_unique_dynamics`。Lean 已证明的是这些有限状态和有限维线性模型中的核、商与唯一因子关系；将其具体实例化到 Zeckendorf 受限量子通道、噪声环境和实验成本函数，仍是后续形式化目标。
