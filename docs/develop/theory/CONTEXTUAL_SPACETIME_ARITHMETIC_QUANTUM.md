@@ -30873,3 +30873,240 @@ $$
 分别除以各自的正概率即得陈述中的两个条件预测，它们不同而奇偶值相同。因而这里保留纠缠的单比特反例不保留完整记录的全部端点预测，也不给出任意 $g$ 的奇偶结论或一般压缩最优性、比特或熵下界。全部结论的量词限于所写的固定生成、固定选基及无反馈记录接口，不附加物理擦除代价、Bell 产率、任意局部操作与经典通信的结论，亦不赋予 $g$ 时空度量含义。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 141. 两内部位经典奇偶记录的独立翻转与精确可分阈值
+
+**命题 141.1（带噪奇偶报告的条件端点可分性）。** 沿用命题 140.1（C）的完整加减基仪器与命题 130.1 的纯边界生成器，取
+$$
+\alpha=\frac{\sqrt5-1}{2},\qquad s=\sqrt\alpha,\qquad
+0<\alpha<1,\qquad \alpha^2+\alpha=1,\qquad B=M=\mathbb C^2,
+$$
+$$
+m_0=s|0\rangle+\alpha|1\rangle,\qquad m_1=|0\rangle,\qquad
+T|j\rangle=|j\rangle\otimes m_j\quad(j=0,1),
+$$
+$$
+\Xi_0=m_0,\qquad
+\Xi_{n+1}=(I_{B^{\otimes n}}\otimes T)\Xi_n\quad(0\le n<4).
+$$
+各空间均取正交标准基，恰好发出四位，完整次序为
+$$
+B_L\otimes B_1\otimes B_2\otimes B_R\otimes M.
+$$
+左右端点分别是第一位和第四位，左端点之前没有被忽略的前缀。生成过程中不读取、测量或重置记忆，最终记忆取偏迹且不可访问。两个内部输出分别在事先固定的局部正交基
+$$
+|\eta_r\rangle=\frac{|0\rangle+(-1)^r|1\rangle}{\sqrt2}
+\quad(r=0,1),\qquad |\eta_0\rangle=|+\rangle,\quad |\eta_1\rangle=|-\rangle
+$$
+中测量一次。测量全部完成且结果已为经典记录后，形成
+$$
+b=r_1\mathbin{\oplus}r_2\in\{0,1\}.
+$$
+结果不用于反馈、后续选基或端点操作；测后的内部系统及原始记录、奇偶记录的其他副本均不可访问，不允许环境重新耦合或记录的相干重组。端点的张量分割始终是完整的 $B_L\otimes B_R=\mathbb C^2\otimes\mathbb C^2$。
+
+记 $Q_0=Q_{\rm even}$、$Q_1=Q_{\rm odd}$ 为命题 140.1（C）的实际未归一化端点算子，$\operatorname{adj}$ 表示共轭转置。在 $00,01,10,11$ 次序下，令
+$$
+Q_b=\frac{\alpha^5}{4}N_b,\qquad
+N_0=\begin{pmatrix}
+10(1+\alpha)&6&6(1+\alpha)&2\\
+6&4&4&2\\
+6(1+\alpha)&4&4(1+\alpha)&2\\
+2&2&2&2
+\end{pmatrix},\qquad
+N_1=\begin{pmatrix}
+2(1+\alpha)&2&2(1+\alpha)&2\\
+2&4&0&2\\
+2(1+\alpha)&0&4(1+\alpha)&2\\
+2&2&2&2
+\end{pmatrix}.
+$$
+其实际先验概率为
+$$
+\begin{aligned}
+q_0=\operatorname{Tr}Q_0
+&=\frac{\alpha^5}{4}(20+14\alpha)=\frac52-3\alpha>0,\\
+q_1=\operatorname{Tr}Q_1
+&=\frac{\alpha^5}{4}(12+6\alpha)=3\alpha-\frac32>0,
+\end{aligned}
+\qquad q_0+q_1=1,\qquad q_0\ne q_1.
+$$
+在此经典奇偶位上施加独立二元对称通道：翻转位 $e$ 独立于测量记录及其端点系综，满足
+$$
+\Pr(e=1)=\epsilon\in[0,1],\qquad y=b\mathbin{\oplus}e.
+$$
+唯一保留的接口是 $y$；不保留 $b$ 或原始记录的隐藏副本，翻转位 $e$ 不可访问。这一通道只处理已经经典化的记录。相应事件算子、概率及条件密度定义为
+$$
+\widetilde Q_0=(1-\epsilon)Q_0+\epsilon Q_1,\qquad
+\widetilde Q_1=\epsilon Q_0+(1-\epsilon)Q_1,
+$$
+$$
+\widetilde q_y=\operatorname{Tr}\widetilde Q_y>0,\qquad
+\rho_y=\frac{\widetilde Q_y}{\widetilde q_y}\quad(y=0,1).
+$$
+特别地，实际归一化混合权重是贝叶斯后验
+$$
+\Pr(b\mid y)=\frac{\Pr(y\mid b)q_b}{\widetilde q_y},\qquad
+\Pr(y\mid b)=
+\begin{cases}1-\epsilon,&y=b,\\ \epsilon,&y\ne b,\end{cases}
+\qquad
+\rho_y=\sum_{b=0}^1\Pr(b\mid y)\frac{Q_b}{q_b}.
+$$
+先验不等，故直接以原通道权重混合两个归一化密度一般得到不同的态。
+
+可分性采用命题 132.1 的有限凸乘积密度和定义，纠缠指不可分。沿用右偏转置约定
+$$
+\operatorname{PT}_R(|ij\rangle\langle kl|)=|il\rangle\langle kj|.
+$$
+称密度为 PPT，是指其右偏转置正半定；NPT 指其右偏转置不是正半定。则对每个 $\epsilon\in[0,1]$ 和每个 $y\in\{0,1\}$，
+$$
+\rho_y\text{ 为 NPT}
+\quad\Longleftrightarrow\quad
+\rho_y\text{ 纠缠}
+\quad\Longleftrightarrow\quad
+\epsilon(1-\epsilon)<\frac{\alpha^3}{2},
+$$
+$$
+\rho_y\text{ 为 PPT}
+\quad\Longleftrightarrow\quad
+\rho_y\text{ 可分}
+\quad\Longleftrightarrow\quad
+\epsilon(1-\epsilon)\ge\frac{\alpha^3}{2}.
+$$
+置
+$$
+\epsilon_*=\frac{1-\sqrt{1-2\alpha^3}}2\in(0,1/2).
+$$
+两种报告的条件态均在 $[0,\epsilon_*)\cup(1-\epsilon_*,1]$ 上纠缠，在闭区间 $[\epsilon_*,1-\epsilon_*]$ 上可分；两个边界均为 PPT，且
+$$
+\operatorname{rank}\operatorname{PT}_R(\rho_y)=3
+\qquad(\epsilon=\epsilon_*\text{ 或 }1-\epsilon_*).
+$$
+等价的纠缠条件为 $|1-2\epsilon|>\sqrt{1-2\alpha^3}$。同时令 $Q_+=Q_0+Q_1$、$Q_-=Q_0-Q_1$，则
+$$
+\widetilde Q_0+\widetilde Q_1=Q_+,\qquad
+\widetilde Q_0-\widetilde Q_1=(1-2\epsilon)Q_-.
+$$
+其中 $Q_+$ 是迹为一的可分端点密度。$\epsilon=0$ 给出完整奇偶报告，$\epsilon=1$ 交换两个报告标签，而 $\epsilon=1/2$ 时两个归一化分支均恰为 $Q_+$。
+
+证明。命题 140.1（C）的完整仪器在两条最终记忆列上取偏迹，给出上述 $Q_b\ge0$、正迹 $q_b$ 及其和为一。测量后的奇偶记录与端点联合态为
+$$
+\sum_{b=0}^1|b\rangle\langle b|\otimes Q_b.
+$$
+独立经典通道将报告为 $y$ 的项合并为 $\sum_b\Pr(y\mid b)Q_b$，正是所列 $\widetilde Q_y$，没有不同原始记录间的振幅交叉项。其迹是两个严格正数 $q_0,q_1$ 的凸组合，所以对整个闭参数区间均严格为正；除以该迹即得贝叶斯公式。由于 $N_0,N_1$ 的同一非零矩阵元 $01,01$ 均为 $4$，而迹不同，$Q_0/q_0\ne Q_1/q_1$。例如 $\epsilon=1/2$ 时后验仍为 $q_b$，以 $1/2,1/2$ 混合这两个不同密度便与实际后验混合不同。
+
+取任意 $t\in[0,1]$，令 $N(t)=(1-t)N_0+tN_1$。按右偏转置定义逐块转置，得到
+$$
+A(t):=\operatorname{PT}_R(N(t))
+=\begin{pmatrix}d&\operatorname{adj}(v)\\v&B\end{pmatrix},\qquad
+d=(10-8t)(1+\alpha),\qquad
+v=\begin{pmatrix}6-4t\\(6-4t)(1+\alpha)\\4-4t\end{pmatrix},
+$$
+$$
+B=\begin{pmatrix}4&2&2\\2&4+4\alpha&2\\2&2&2\end{pmatrix}.
+$$
+对任意 $z=(z_0,z_1,z_2)^{\mathsf T}\in\mathbb C^3$，直接展开有
+$$
+\operatorname{adj}(z)Bz
+=2|z_0|^2+(2+4\alpha)|z_1|^2+2|z_0+z_1+z_2|^2.
+$$
+三个系数均严格为正；右边为零先迫使 $z_0=z_1=0$，继而 $z_2=0$，故 $B>0$。其分解及行列式为
+$$
+B=\operatorname{adj}(L)DL,\qquad
+L=\begin{pmatrix}1&0&0\\0&1&0\\1&1&1\end{pmatrix},\qquad
+D=\operatorname{diag}(2,2+4\alpha,2),\qquad
+\det B=8+16\alpha>0.
+$$
+令 $S(t)=d-\operatorname{adj}(v)B^{-1}v$。对任意 $x\in\mathbb C$ 及 $z\in\mathbb C^3$，完整二次型配方为
+$$
+\operatorname{adj}\begin{pmatrix}x\\z\end{pmatrix}
+A(t)\begin{pmatrix}x\\z\end{pmatrix}
+=S(t)|x|^2+
+\operatorname{adj}(z+B^{-1}vx)B(z+B^{-1}vx).
+$$
+变量变换 $(x,z)\mapsto(x,z+B^{-1}vx)$ 可逆且行列式为一。因此 $A(t)$ 与 $\operatorname{diag}(S(t),B)$ 合同，并有
+$$
+A(t)\ge0\quad\Longleftrightarrow\quad S(t)\ge0,
+\qquad \det A(t)=(\det B)S(t).
+$$
+在这一矩阵族内，$B>0$ 因而使正半定性等价于行列式非负；这一步依赖所证的正定块。
+
+为显式计算标量补量，记 $h=6-4t$、$w=4-4t$，则 $h-w=2$，且由上面的三角分解，
+$$
+\begin{aligned}
+\operatorname{adj}(v)B^{-1}v
+&=\frac{(v_0-v_2)^2}{2}
++\frac{(v_1-v_2)^2}{2+4\alpha}+\frac{v_2^2}{2}\\
+&=2+\frac{(2+\alpha h)^2}{2+4\alpha}+\frac{w^2}{2}.
+\end{aligned}
+$$
+这里 $v$ 为实向量，故这些平方也等于平方模。乘以 $\det B$ 后逐项展开给
+$$
+\begin{aligned}
+\det A(t)
+&=(8+16\alpha)\left((10-8t)(1+\alpha)-2-\frac{(4-4t)^2}{2}\right)
+-4\bigl(2+\alpha(6-4t)\bigr)^2\\
+&=-32\alpha+64(2+\alpha)t(1-t)
++16(\alpha^2+\alpha-1)\bigl(1+4t(1-t)\bigr)\\
+&=-32\alpha+64(2+\alpha)t(1-t).
+\end{aligned}
+$$
+第二行是尚未施加 $\alpha^2+\alpha=1$ 的多项式恒等式，第三行才用该关系。再由 $\alpha^3=2\alpha-1$ 及 $(2+\alpha)\alpha^3=\alpha$，得到
+$$
+\det A(t)=64(2+\alpha)\left(t(1-t)-\frac{\alpha^3}{2}\right).
+$$
+由于 $2+\alpha>0$，结合配方即得 $A(t)$ 正半定当且仅当 $t(1-t)\ge\alpha^3/2$；严格反向不等式时 $S(t)<0$，取 $x=1$、$z=-B^{-1}v$ 就给出严格负二次型。
+
+对报告 $y$ 分别取
+$$
+t_0=\epsilon,\qquad t_1=1-\epsilon.
+$$
+于是 $t_y(1-t_y)=\epsilon(1-\epsilon)$，且
+$$
+\operatorname{PT}_R(\widetilde Q_y)=\frac{\alpha^5}{4}A(t_y),\qquad
+\operatorname{PT}_R(\rho_y)=\frac{\alpha^5}{4\widetilde q_y}A(t_y),
+$$
+$$
+\det\operatorname{PT}_R(\widetilde Q_y)
+=\left(\frac{\alpha^5}{4}\right)^4
+\bigl[-32\alpha+64(2+\alpha)\epsilon(1-\epsilon)\bigr],
+$$
+$$
+\det\operatorname{PT}_R(\rho_y)
+=\frac{(\alpha^5/4)^4}{\widetilde q_y^4}
+\bigl[-32\alpha+64(2+\alpha)\epsilon(1-\epsilon)\bigr].
+$$
+所有缩放因子均为正，故两报告具有同一个 PPT/NPT 判定。归一化行列式各除以自己的 $\widetilde q_y^4$，不要求两值相等。在等号边界 $S(t_y)=0$ 而 $B>0$，合同式给出右偏转置秩恰为 $3$，同时为正半定。
+
+当偏转置不是正半定时，命题 136.1 证明中使用的 Peres 必要条件排除可分性：若 $\rho=\sum_\nu p_\nu U_\nu\otimes V_\nu$ 是有限凸乘积密度和，则
+$$
+\operatorname{PT}_R(\rho)=\sum_\nu p_\nu U_\nu\otimes V_\nu^{\mathsf T}\ge0,
+$$
+因为正矩阵的转置仍正。该必要条件见 Asher Peres，*Separability Criterion for Density Matrices*，Physical Review Letters 77，1413–1415（1996），[DOI:10.1103/PhysRevLett.77.1413](https://doi.org/10.1103/PhysRevLett.77.1413)。
+
+当偏转置正半定时，使用 M. Horodecki、P. Horodecki、R. Horodecki，*Separability of Mixed States: Necessary and Sufficient Conditions*，[arXiv:quant-ph/9605038](https://arxiv.org/abs/quant-ph/9605038)，[第二版定理 3，PDF 第 8 页](https://arxiv.org/pdf/quant-ph/9605038v2)，Physics Letters A 223，1–8（1996），[DOI:10.1016/S0375-9601(96)00706-2](https://doi.org/10.1016/S0375-9601(96)00706-2) 的 $\mathbb C^2\otimes\mathbb C^2$ 充分性：此空间上的密度若 PPT，则可分。这里的 $\rho_y$ 已是该完整空间上的密度，故符合该定理的维数与正性、迹条件。
+
+该文第 3 页以有限凸乘积密度和在迹范数中的闭包定义可分态；它与这里的有限和定义一致。事实上，两个局部密度集合均为有限维紧集，故乘积密度集合
+$$
+\mathcal P=\{U\otimes V:U,V\ge0,\ \operatorname{Tr}U=\operatorname{Tr}V=1\}
+$$
+亦紧，且包含在实仿射维数为 $15$ 的四阶迹一 Hermitian 空间中。若一个凸组合含超过 $16$ 个正权重项 $\sum_i p_i R_i$，仿射相关性给出不全为零的实数 $c_i$，满足
+$$
+\sum_i c_i=0,\qquad \sum_i c_iR_i=0.
+$$
+其中有正的 $c_i$。取 $\lambda=\min_{c_i>0}p_i/c_i$，将权重改为 $p_i-\lambda c_i$，保持非负性、总和与所表示的态，并至少消去一项。有限次消元将项数降至至多 $16$。因此 $\operatorname{conv}(\mathcal P)$ 是紧集 $\Delta_{15}\times\mathcal P^{16}$ 在连续映射 $((p_i),(R_i))\mapsto\sum_i p_iR_i$ 下的像；这里 $\Delta_{15}=\{p\in\mathbb R^{16}:p_i\ge0,\sum_i p_i=1\}$，不足的项补零权重。这个凸包紧而闭，在有限维迹范数中也闭，故上述闭包没有加入新的态。这便使所引充分性恰好给出本命题所用的有限凸分解意义下的可分性，并与必要条件共同完成两个等价式。
+
+最后，$\alpha^3=\sqrt5-2$ 给
+$$
+1-2\alpha^3=5-2\sqrt5\in(0,1),\qquad
+\epsilon(1-\epsilon)=\frac{1-(1-2\epsilon)^2}{4}.
+$$
+前一个区间由 $2<\sqrt5<5/2$ 得到。因此两个根为 $\epsilon_*$ 和 $1-\epsilon_*$，分别严格位于 $0$ 与 $1/2$、$1/2$ 与 $1$ 之间；二次式在两根之间达到或超过阈值，外侧严格低于阈值。这证明所列闭中间区间、两外侧区间及记录对比的等价不等式。
+
+经典通道的两条线性式直接相加、相减，便得 $Q_+$ 不变与 $Q_-$ 乘以 $1-2\epsilon$。完整仪器的结果求和等于忽略内部输出，故
+$$
+Q_+=\operatorname{Tr}_{B_1,B_2,M}\operatorname{outer}(\Xi_4)
+=\theta^{P_0}_{0;1,2,1},\qquad P_0=\operatorname{outer}(m_0).
+$$
+命题 133.1 在纯输入 $P_0$、忽略前缀长度 $0$、两端块长度各为 $1$、忽略间隔长度 $2$ 时给出此密度的可分性。$\epsilon=0,1$ 的两式分别保留、交换 $Q_0,Q_1$。$\epsilon=1/2$ 时 $\widetilde Q_0=\widetilde Q_1=Q_+/2$、$\widetilde q_0=\widetilde q_1=1/2$，故两个条件密度均为 $Q_+$，与阈值判定一致。证毕。
+
+## 追加锚（本行以下为增补区）
