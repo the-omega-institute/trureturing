@@ -28622,3 +28622,535 @@ $$
 这与命题 125.3 的固定左边界律一致。若第一步后丢弃记忆并独立重置，第二步后两位输出为乘积态；若还要保持上述两个单点概率，便会给 $\Pr(11)=\alpha^5>0$，而目标值为零。因此停止时取偏迹不能替代生成途中保留记忆关联。当 $n\ge1$ 时，命题 125.3 的经典 Markov 抽样在计算基中给 $\sum_{w\in W_n}\alpha^{n+\ell(w)}|w\rangle\langle w|$，只匹配对角元；例如目标的 $\langle0|\rho_1|1\rangle=\alpha^2>0$。这一比较限于抽样所得的对角态，不排除另带相干制备的经典控制协议，也不把本命题的容量下界推广到其假设以外的模型。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 131. 活动记忆的边界遗忘与平稳窗口的构型相干
+
+**命题 131.1（精确记忆衰减、统一未来窗口界与保留首记录的正下界）。** 沿用命题 130.1 的固定等距，取
+$$
+\alpha=\frac{\sqrt5-1}{2},\qquad 0<\alpha<1,\qquad \alpha+\alpha^2=1,
+\qquad B=M=\mathbb C^2,\qquad H_\ell=B^{\otimes\ell},\qquad H_0=\mathbb C.
+$$
+$B$ 与 $M$ 均取正交标准基 $|0\rangle,|1\rangle$。令
+$$
+m_0=\sqrt\alpha\,|0\rangle+\alpha|1\rangle,\qquad
+m_1=|0\rangle,\qquad P_j=|m_j\rangle\langle m_j|\quad(j=0,1),
+$$
+$$
+T:M\longrightarrow B\otimes M,\qquad T|j\rangle=|j\rangle\otimes m_j.
+$$
+每步对已发出输出张量恒等，始终按输出在前、活动记忆在后的次序定义
+$$
+T_0=I_M,\qquad T_{\ell+1}=(I_{H_\ell}\otimes T)T_\ell:
+M\longrightarrow H_{\ell+1}\otimes M.
+$$
+对 $X\in\mathcal L(M)$ 定义记忆通道与输出通道
+$$
+\mathcal M(X)=\operatorname{Tr}_B(TXT^*),\qquad
+\Gamma_\ell(X)=\operatorname{Tr}_M(T_\ell XT_\ell^*),\qquad
+\Gamma_0(X)=\operatorname{Tr}X.
+$$
+原初记忆为纯态 $\sigma_0=P_0$，记
+$$
+\sigma_n=\mathcal M^n(P_0),\qquad
+\Omega_n=T_nP_0T_n^*,\qquad
+\rho_n=\Gamma_n(P_0)\quad(n\ge0).
+$$
+这里 $\rho_n$ 是命题 125.1 的完整相干密度，由命题 130.1 的等式识别；$\rho_0=1$。任意同一有限维空间上的两个密度采用半迹范数距离
+$$
+D(\theta,\vartheta)=\frac12\|\theta-\vartheta\|_1,
+\qquad \|A\|_1=\operatorname{Tr}\sqrt{A^*A}.
+$$
+令
+$$
+\mathrm{den}=1+\alpha^2,\qquad
+\pi_0=\frac1{\mathrm{den}},\qquad
+\pi_1=\frac{\alpha^2}{\mathrm{den}},\qquad
+\sigma_*=\pi_0P_0+\pi_1P_1.
+$$
+则记忆通道的显式形式、唯一不动密度及从指定初态出发的轨道满足
+$$
+\mathcal M(X)=X_{00}P_0+X_{11}P_1,\qquad
+\mathcal M(\sigma_*)=\sigma_*,
+$$
+$$
+\sigma_n=(1-p_n)P_0+p_nP_1,\qquad
+p_0=0,\qquad p_{n+1}=\alpha^2(1-p_n),\qquad
+p_n=\pi_1\bigl(1-(-\alpha^2)^n\bigr).
+$$
+带符号的系数偏差 $p_n-\pi_1=-\pi_1(-\alpha^2)^n$ 在偶数 $n$ 时严格为负，在奇数 $n$ 时严格为正；它是两个非正交密度的混合系数偏差，不是可完美读取的记忆标志概率。对所有整数 $n\ge0$，精确记忆距离为
+$$
+D(\sigma_n,\sigma_*)=
+\frac{\alpha^3}{\mathrm{den}}\alpha^{2n}.
+$$
+
+对整数 $n\ge0,\ell\ge1$，在 $H_\ell$ 上定义无条件未来窗口和比较密度
+$$
+\beta_{n,\ell}=\operatorname{Tr}_{\text{前 }n\text{ 位}}\rho_{n+\ell},
+\qquad \eta_\ell=\Gamma_\ell(\sigma_*),\qquad \eta_0=1.
+$$
+此前 $n$ 位输出及最终记忆均被忽略；允许的未来窗口效应在联合空间上形如 $I_{H_n}\otimes E\otimes I_M$，其中 $0\le E\le I_{H_\ell}$。此范围不含读取旧记录、按旧记录条件化、访问纯化参考、反馈或任意记忆干预。则
+$$
+\beta_{n,\ell}=\Gamma_\ell(\sigma_n),\qquad
+D(\beta_{n,\ell},\eta_\ell)
+\le\frac{\alpha^3}{\mathrm{den}}\alpha^{2n}
+\quad(n\ge0,\ \ell\ge1),
+$$
+其中同一个上界适用于每个有限 $\ell$。对所有整数 $\ell\ge0$，比较族左右边缘均相容：
+$$
+\operatorname{Tr}_{\text{末位}}\eta_{\ell+1}=\eta_\ell,
+\qquad
+\operatorname{Tr}_{\text{首位}}\eta_{\ell+1}=\eta_\ell.
+$$
+特别地，对所有整数 $r,s,\ell\ge0$，将剩余输出依序识别为 $H_\ell$ 后，
+$$
+\operatorname{Tr}_{\text{前 }r\text{ 位与后 }s\text{ 位}}
+\eta_{r+\ell+s}=\eta_\ell.
+$$
+
+在所指定的记忆基与输出构型基中，矩阵分别为
+$$
+\Gamma_1(X)=
+\begin{pmatrix}X_{00}&\sqrt\alpha\,X_{01}\\
+\sqrt\alpha\,X_{10}&X_{11}\end{pmatrix},
+\qquad
+\sigma_*=
+\frac1{\mathrm{den}}
+\begin{pmatrix}1&\alpha\sqrt\alpha\\
+\alpha\sqrt\alpha&\alpha^2\end{pmatrix},
+$$
+$$
+\eta_1=\frac1{\mathrm{den}}
+\begin{pmatrix}1&\alpha^2\\\alpha^2&\alpha^2\end{pmatrix},
+\qquad
+\langle0|\eta_1|1\rangle=\frac{\alpha^2}{\mathrm{den}}>0,
+\qquad
+\det\sigma_*=\frac{\alpha^4}{\mathrm{den}^2}>0.
+$$
+若以 $\Delta_B(Y)=\sum_{j=0}^1|j\rangle\langle j|Y|j\rangle\langle j|$ 表示该输出基中的完全去相干，则 $\Delta_B(\eta_1)\ne\eta_1$。此单位置结论只判定给定基中的去相干，不给出纠缠、情境性或 Bell 非局域性的判据。比较族的此项构造使用秩二的混合初始记忆 $\sigma_*$，不属于命题 130.1 比较最小容量时限定的纯初态类别；这里不对 $\eta_\ell$ 在该类别中的可达性或最小容量作断言。
+
+最后，若比较保留首记录的完整窗口，则对每个整数 $\ell\ge1$ 有
+$$
+D(\rho_\ell,\eta_\ell)\ge
+\frac{\sqrt2\,\alpha^4}{\mathrm{den}}>0.
+$$
+上述未来窗口上界与完整窗口下界均是在各自有限空间 $H_\ell$ 内的距离不等式，不是把增长中的窗口视为同一空间中的范数极限；$n$ 表示略去的输出位数，不是物理时间。
+
+证明。命题 130.1 给 $T^*T=I_M$，故由递推 $T_\ell^*T_\ell=I_M$。各 $\Gamma_\ell$ 将密度映为密度，包括 $\ell=0$ 的标量密度。对矩阵单位直接展开，
+$$
+TXT^*=\sum_{i,j=0}^1X_{ij}|i\rangle\langle j|\otimes|m_i\rangle\langle m_j|.
+$$
+对输出基取偏迹，只保留 $i=j$ 项，得到
+$$
+\mathcal M(X)=X_{00}P_0+X_{11}P_1.
+$$
+密度 $X$ 的两个对角元非负且和为 $1$，故任何不动密度都必须落在 $P_0,P_1$ 的凸混合像中。这两密度不同，因而其混合系数唯一。设 $X=(1-p)P_0+pP_1$、$0\le p\le1$，则
+$$
+X_{11}=\alpha^2(1-p),\qquad
+X_{00}=\alpha(1-p)+p=1-\alpha^2(1-p).
+$$
+因此 $\mathcal M(X)$ 的 $P_1$ 系数是 $\alpha^2(1-p)$。不动点方程为
+$$
+p=\alpha^2(1-p),\qquad
+p=\frac{\alpha^2}{1+\alpha^2}=\pi_1,
+$$
+所以 $\sigma_*$ 存在且是不动密度中的唯一者。从 $p_0=0$ 归纳，递推保持 $p_n\in[0,1]$；减去不动点方程得
+$$
+p_{n+1}-\pi_1=-\alpha^2(p_n-\pi_1),\qquad
+p_n-\pi_1=-\pi_1(-\alpha^2)^n.
+$$
+这证明轨道公式及奇偶符号。又 $\langle m_1,m_0\rangle=\sqrt\alpha\ne0$。若效应 $E$ 能以概率 $1$ 区分这两个纯态，则交换标签后可设 $Em_0=m_0$、$Em_1=0$：这些等式由 $E$ 与 $I_M-E$ 的正性推出。自伴性却会给
+$$
+\sqrt\alpha=\langle m_1,m_0\rangle
+=\langle m_1,Em_0\rangle=\langle Em_1,m_0\rangle=0,
+$$
+矛盾，故混合分量不是可完美读取的标志。
+
+为计算精确距离，在记忆基中有
+$$
+P_1-P_0=
+\begin{pmatrix}\alpha^2&-\alpha\sqrt\alpha\\
+-\alpha\sqrt\alpha&-\alpha^2\end{pmatrix},
+\qquad \operatorname{Tr}(P_1-P_0)=0,
+$$
+$$
+(P_1-P_0)^2=(\alpha^4+\alpha^3)I_M=\alpha^2I_M.
+$$
+末式使用 $\alpha+\alpha^2=1$。此自伴矩阵的两个特征值为 $\alpha,-\alpha$，故 $D(P_0,P_1)=\alpha$。于是对 $n\ge0$，
+$$
+\sigma_n-\sigma_*=(p_n-\pi_1)(P_1-P_0),\qquad
+D(\sigma_n,\sigma_*)=|p_n-\pi_1|\alpha
+=\frac{\alpha^3}{\mathrm{den}}\alpha^{2n}.
+$$
+特别地，$n=0$ 给 $D(P_0,\sigma_*)=\pi_1\alpha=\alpha^3/\mathrm{den}$。
+
+现从实际联合态求未来窗口。递推并保留张量次序，归纳得到
+$$
+T_{n+\ell}=(I_{H_n}\otimes T_\ell)T_n
+\qquad(n,\ell\ge0).
+$$
+对任意 $A\in\mathcal L(H_n\otimes M)$，在 $H_n$ 的正交标准基中写 $A=\sum_{u,v}|u\rangle\langle v|\otimes A_{uv}$，便有
+$$
+\operatorname{Tr}_{H_n}
+\bigl[(I_{H_n}\otimes T_\ell)A(I_{H_n}\otimes T_\ell^*)\bigr]
+=\sum_uT_\ell A_{uu}T_\ell^*
+=T_\ell(\operatorname{Tr}_{H_n}A)T_\ell^*.
+$$
+这个恒等式适用于相关联合态。取 $\ell=1$，再对新输出取偏迹，并从 $\Omega_0=P_0$ 归纳，得到
+$$
+\operatorname{Tr}_{H_n}\Omega_n=\mathcal M^n(P_0)=\sigma_n.
+$$
+现在取 $A=\Omega_n$，再对最终记忆取偏迹，结合命题 130.1 对完整相干输出的识别，得到
+$$
+\begin{aligned}
+\beta_{n,\ell}
+&=\operatorname{Tr}_{H_n\otimes M}
+\bigl[(I_{H_n}\otimes T_\ell)\Omega_n(I_{H_n}\otimes T_\ell^*)\bigr]\\
+&=\operatorname{Tr}_M(T_\ell\sigma_nT_\ell^*)
+=\Gamma_\ell(\sigma_n).
+\end{aligned}
+$$
+这里没有把 $\Omega_n$ 分解成旧输出与记忆的乘积；被忽略的旧输出是通过偏迹消去的。
+
+以下使用有限维迹距离的效应变分式（参见 John Watrous，[The Theory of Quantum Information](https://cs.uwaterloo.ca/~watrous/TQI/)，Cambridge University Press，2018，量子态判别部分）。为同时处理不同输入、输出维数，直接给出所需推导。任意有限维空间 $K$ 上的两个密度 $\theta,\vartheta$ 之差 $A=\theta-\vartheta$ 自伴且迹零。取正、负谱部分 $A_+,A_-$，则
+$$
+A=A_+-A_-,\qquad A_+A_-=0,\qquad
+\operatorname{Tr}A_+=\operatorname{Tr}A_-=\tfrac12\|A\|_1.
+$$
+对 $0\le E\le I_K$，正性给 $0\le\operatorname{Tr}(EA_\pm)\le\operatorname{Tr}A_\pm$，所以
+$$
+|\operatorname{Tr}(EA)|\le\tfrac12\|A\|_1.
+$$
+取 $E$ 为 $A$ 的正谱投影即达到右端，因而
+$$
+D(\theta,\vartheta)=\sup_{0\le E\le I_K}
+|\operatorname{Tr}(E(\theta-\vartheta))|.
+$$
+对输出空间 $H_\ell$ 上任意效应 $E$，回拉为记忆空间上的
+$$
+F=T_\ell^*(E\otimes I_M)T_\ell.
+$$
+由于 $T_\ell$ 等距，
+$$
+F\ge0,\qquad
+I_M-F=T_\ell^*((I_{H_\ell}-E)\otimes I_M)T_\ell\ge0.
+$$
+故对 $M$ 上的两个密度 $\theta,\vartheta$，偏迹的定义与迹的循环性给
+$$
+\begin{aligned}
+|\operatorname{Tr}(E(\Gamma_\ell(\theta)-\Gamma_\ell(\vartheta)))|
+&=|\operatorname{Tr}(F(\theta-\vartheta))|\\
+&\le D(\theta,\vartheta).
+\end{aligned}
+$$
+在 $H_\ell$ 上对 $E$ 取上确界，得到
+$$
+D(\Gamma_\ell(\theta),\Gamma_\ell(\vartheta))
+\le D(\theta,\vartheta).
+$$
+这一步不要求 $\dim H_\ell=\dim M$。取 $\theta=\sigma_n,\vartheta=\sigma_*$，便得所述未来窗口界，右端与 $\ell$ 无关。
+
+为证明边缘相容，先取任意记忆密度 $X$ 与 $A\in\mathcal L(H_\ell)$。由最后一步 $T_{\ell+1}=(I_{H_\ell}\otimes T)T_\ell$，
+$$
+\begin{aligned}
+\operatorname{Tr}\bigl[(A\otimes I_B)\Gamma_{\ell+1}(X)\bigr]
+&=\operatorname{Tr}\bigl[T_\ell XT_\ell^*(A\otimes T^*T)\bigr]\\
+&=\operatorname{Tr}\bigl[A\Gamma_\ell(X)\bigr].
+\end{aligned}
+$$
+因这对所有 $A$ 成立，$\operatorname{Tr}_{\text{末位}}\Gamma_{\ell+1}(X)=\Gamma_\ell(X)$。另一方面，按第一步分组为 $T_{\ell+1}=(I_B\otimes T_\ell)T$，利用刚才的偏迹交换恒等式得
+$$
+\operatorname{Tr}_{\text{首位}}\Gamma_{\ell+1}(X)
+=\operatorname{Tr}_M\bigl[T_\ell\operatorname{Tr}_B(TXT^*)T_\ell^*\bigr]
+=\Gamma_\ell(\mathcal M(X)).
+$$
+两式在 $\ell=0$ 时均为取整个单点密度的迹，值为 $1$。取 $X=\sigma_*$ 并用 $\mathcal M(\sigma_*)=\sigma_*$，即得左右相容；反复略去末位与首位给所有平移窗口的同一密度 $\eta_\ell$。
+
+对 $TXT^*$ 的展开改为取记忆偏迹，矩阵元变为 $X_{ij}\langle m_j,m_i\rangle$。两记忆向量均为单位向量，交叉内积为 $\sqrt\alpha$，所以得到所列 $\Gamma_1(X)$。再将 $\pi_0,\pi_1$ 代入 $\sigma_*$：
+$$
+\sigma_*=
+\frac1{\mathrm{den}}
+\begin{pmatrix}\alpha+\alpha^2&\alpha\sqrt\alpha\\
+\alpha\sqrt\alpha&\alpha^2\end{pmatrix}
+=\frac1{\mathrm{den}}
+\begin{pmatrix}1&\alpha\sqrt\alpha\\
+\alpha\sqrt\alpha&\alpha^2\end{pmatrix}.
+$$
+应用 $\Gamma_1$ 得 $\eta_1$ 的非对角元 $\sqrt\alpha\,\alpha\sqrt\alpha/\mathrm{den}=\alpha^2/\mathrm{den}$，严格为正，故 $\eta_1\ne\Delta_B(\eta_1)$。同时
+$$
+\det\sigma_*=
+\frac{\alpha^2-\alpha^3}{\mathrm{den}^2}
+=\frac{\alpha^2(1-\alpha)}{\mathrm{den}^2}
+=\frac{\alpha^4}{\mathrm{den}^2}>0.
+$$
+$\sigma_*$ 为密度且秩二，故此比较族确实使用混合初态。
+
+最后，由命题 125.1 的单点矩阵，令 $c=\alpha^4/\mathrm{den}>0$，则
+$$
+\rho_1=\begin{pmatrix}\alpha&\alpha^2\\\alpha^2&\alpha^2\end{pmatrix},\qquad
+\rho_1-\eta_1=c\begin{pmatrix}-1&1\\1&1\end{pmatrix}.
+$$
+右边矩阵的平方为 $2c^2I_B$ 且迹零，特征值为 $\sqrt2c,-\sqrt2c$，所以 $D(\rho_1,\eta_1)=\sqrt2c$。命题 130.1 的前缀相容与已证 $\eta$ 的末位相容给
+$$
+\operatorname{Tr}_{\text{后 }\ell-1\text{ 位}}\rho_\ell=\rho_1,
+\qquad
+\operatorname{Tr}_{\text{后 }\ell-1\text{ 位}}\eta_\ell=\eta_1.
+$$
+在效应变分式中将单点效应 $E$ 提升为 $E\otimes I_{H_{\ell-1}}$，即得偏迹收缩；因此
+$$
+D(\rho_\ell,\eta_\ell)\ge D(\rho_1,\eta_1)
+=\frac{\sqrt2\,\alpha^4}{\mathrm{den}}>0
+\qquad(\ell\ge1).
+$$
+故略去左端记录后，所有有限未来窗口的距离都受随 $n$ 趋零的同一上界控制；保留旧首记录的窗口则始终具有上述正的可区分度下界。证毕。
+
+## 追加锚（本行以下为增补区）
+## 132. 边界遗忘下的相邻输出纠缠与统一有限位置见证
+
+**命题 132.1（平稳双位置纠缠及同一轨道的严格负见证界）。** 沿用命题 130.1 的固定等距及命题 131.1 的记号：
+$$
+\alpha=\frac{\sqrt5-1}{2},\qquad 0<\alpha<1,\qquad \alpha+\alpha^2=1,
+\qquad \mathrm{den}=1+\alpha^2,\qquad
+\pi_0=\frac1{\mathrm{den}},\qquad \pi_1=\frac{\alpha^2}{\mathrm{den}}.
+$$
+取 $B=M=\mathbb C^2$，均以 $|0\rangle,|1\rangle$ 为正交标准基，并令
+$$
+m_0=\sqrt\alpha\,|0\rangle+\alpha|1\rangle,\qquad
+m_1=|0\rangle,\qquad P_j=|m_j\rangle\langle m_j|,\qquad
+T|j\rangle=|j\rangle\otimes m_j\quad(j=0,1).
+$$
+顺序始终为输出在前、记忆在后；$T_0=I_M$，$T_{\ell+1}=(I_{B^{\otimes\ell}}\otimes T)T_\ell$，且
+$$
+\Gamma_\ell(X)=\operatorname{Tr}_M(T_\ell XT_\ell^*),\qquad
+\sigma_*=\pi_0P_0+\pi_1P_1,\qquad
+\eta_\ell=\Gamma_\ell(\sigma_*),\qquad
+\rho_\ell=\Gamma_\ell(P_0).
+$$
+命题 131.1 给出的 $\sigma_*$ 是秩二混合不动密度，$\eta_\ell$ 为平稳比较族；原族 $\rho_\ell$ 仍从纯记忆 $P_0$ 出发。此混合比较初态不改变命题 130.1 的纯初态容量定理及其适用类别。
+
+以下张量分割为两个实际发出位置的完整空间 $B_1\otimes B_2=\mathbb C^2\otimes\mathbb C^2$。称其上的密度 $\theta$ 可分，是指存在有限分解
+$$
+\theta=\sum_{r=1}^N q_r A_r\otimes C_r,\qquad
+q_r\ge0,\qquad \sum_{r=1}^N q_r=1,
+$$
+其中 $A_r,C_r$ 分别为 $B_1,B_2$ 上的密度，即正半定且迹为一的算子。不满足此定义者称为纠缠态。合法支撑 $\operatorname{span}\{|00\rangle,|01\rangle,|10\rangle\}$ 只是完整空间的子空间，不另赋予它一个张量分割。
+
+在字典序 $00,01,10,11$ 下，平稳双位置密度为
+$$
+\eta_2=\pi_0
+\begin{pmatrix}
+\alpha&\alpha^2&\alpha^2&0\\
+\alpha^2&\alpha^2&\alpha^3&0\\
+\alpha^2&\alpha^3&\alpha^2&0\\
+0&0&0&0
+\end{pmatrix}.
+$$
+定义 Hermitian 算子
+$$
+W_{\rm ent}=\alpha^4|00\rangle\langle00|+|11\rangle\langle11|
+-\alpha^2\bigl(|01\rangle\langle10|+|10\rangle\langle01|\bigr).
+$$
+则对每个可分密度 $\theta$ 有 $\operatorname{Tr}(W_{\rm ent}\theta)\ge0$，而
+$$
+\operatorname{Tr}(W_{\rm ent}\eta_2)=-\pi_0\alpha^5<0.
+$$
+因此 $\eta_2$ 在两个发出位置之间纠缠。$W_{\rm ent}$ 有负特征值，因而不是正的 POVM 效应；这里使用的是其期望值作为纠缠见证。
+
+同一命题还适用于原纯初态轨道的每个有限位置。对整数 $n\ge0$，令
+$$
+\beta_{n,2}=\operatorname{Tr}_{\text{前 }n\text{ 位}}\rho_{n+2}.
+$$
+这些窗口均忽略前 $n$ 位及最终记忆，不作条件化、反馈或其它干预。命题 131.1 的实际相关前缀恒等式与递推给
+$$
+\beta_{n,2}=\Gamma_2(\sigma_n),\qquad
+\sigma_n=(1-p_n)P_0+p_nP_1,\qquad
+p_0=0,\qquad p_{n+1}=\alpha^2(1-p_n).
+$$
+同一个 $W_{\rm ent}$ 满足
+$$
+\operatorname{Tr}(W_{\rm ent}\beta_{n,2})
+=\alpha^5\bigl((\alpha-2)+(3-\alpha)p_n\bigr)
+\le-2\alpha^8<0\qquad(n\ge0),
+$$
+且 $n=1$ 时等号成立。故原族的每个平移相邻窗口也纠缠；$-2\alpha^8$ 是此固定见证沿指定轨道的期望最大值，不是对所有态或见证优化的纠缠量。
+
+证明。由 $T$ 的基像及顺序递推，
+$$
+T_2|0\rangle=\sqrt\alpha\,|00\rangle\otimes m_0
++\alpha|01\rangle\otimes m_1,\qquad
+T_2|1\rangle=|10\rangle\otimes m_0.
+$$
+为核对全部矩阵元，对 $u\in\{00,01,10,11\}$ 定义记忆系数映射
+$$
+L_u=(\langle u|\otimes I_M)T_2,\qquad
+L_{00}=\sqrt\alpha\,|m_0\rangle\langle0|,\quad
+L_{01}=\alpha|m_1\rangle\langle0|,\quad
+L_{10}=|m_0\rangle\langle1|,\quad L_{11}=0.
+$$
+于是对任意 $X\in\mathcal L(M)$ 及任意 $u,v$，
+$$
+\langle u|\Gamma_2(X)|v\rangle=\operatorname{Tr}(L_uXL_v^*).
+$$
+两个记忆向量的实际内积为
+$$
+\langle m_0,m_0\rangle=\langle m_1,m_1\rangle=1,\qquad
+\langle m_0,m_1\rangle=\langle m_1,m_0\rangle=\sqrt\alpha.
+$$
+具体地，对非零的三个 $L_u=c_u|m_{k_u}\rangle\langle j_u|$，上式等于
+$$
+c_uc_vX_{j_uj_v}\langle m_{k_v},m_{k_u}\rangle,
+\qquad
+(c_u,j_u,k_u)=
+\begin{cases}
+(\sqrt\alpha,0,0),&u=00,\\
+(\alpha,0,1),&u=01,\\
+(1,1,0),&u=10.
+\end{cases}
+$$
+任一指标为 $11$ 时则为零。三个对角元依次是 $\alpha X_{00},\alpha^2X_{00},X_{11}$；三个上三角非对角元依次是
+$$
+\sqrt\alpha\,\alpha X_{00}\langle m_1,m_0\rangle=\alpha^2X_{00},\qquad
+\sqrt\alpha\,X_{01}\langle m_0,m_0\rangle=\sqrt\alpha\,X_{01},\qquad
+\alpha X_{01}\langle m_0,m_1\rangle=\alpha\sqrt\alpha\,X_{01}.
+$$
+反向指标仍由同一公式给出，无需假设 $X$ 自伴。因此全部十六个矩阵元为
+$$
+\Gamma_2(X)=
+\begin{pmatrix}
+\alpha X_{00}&\alpha^2X_{00}&\sqrt\alpha\,X_{01}&0\\
+\alpha^2X_{00}&\alpha^2X_{00}&\alpha\sqrt\alpha\,X_{01}&0\\
+\sqrt\alpha\,X_{10}&\alpha\sqrt\alpha\,X_{10}&X_{11}&0\\
+0&0&0&0
+\end{pmatrix}.
+$$
+这里的相干项来自记忆向量的内积，非法扇区的整行整列由 $L_{11}=0$ 消失，并非只计算经典转移概率。
+
+将命题 131.1 的矩阵
+$$
+\sigma_*=\pi_0
+\begin{pmatrix}1&\alpha\sqrt\alpha\\
+\alpha\sqrt\alpha&\alpha^2\end{pmatrix}
+$$
+代入，便得到陈述中的完整 $\eta_2$。它由密度 $\sigma_*$ 经等距及偏迹得到，故为正半定；同时
+$$
+\operatorname{Tr}\eta_2=\pi_0(\alpha+2\alpha^2)
+=\pi_0(1+\alpha^2)=1.
+$$
+命题 131.1 的左右边缘相容性已保证，这也是该平稳比较族中任意两个相邻位置的密度。
+
+现证明见证对全部可分态非负。任取复向量
+$$
+a=a_0|0\rangle+a_1|1\rangle\in B_1,\qquad
+b=b_0|0\rangle+b_1|1\rangle\in B_2,
+$$
+不要求归一化，也不限制其乘积向量的支撑。直接展开给
+$$
+\begin{aligned}
+\langle a\otimes b,W_{\rm ent}(a\otimes b)\rangle
+&=\alpha^4|a_0b_0|^2+|a_1b_1|^2
+-2\alpha^2\operatorname{Re}\bigl(\overline{a_0b_1}\,a_1b_0\bigr)\\
+&=\left|a_1\overline{b_1}-\alpha^2a_0\overline{b_0}\right|^2\ge0.
+\end{aligned}
+$$
+第二个因子的共轭不可省略：该等式使用任意复坐标，而非实向量的限制。若 $A,C$ 为两个因子上的密度，有限维谱分解给
+$$
+A=\sum_r\lambda_r|a^{(r)}\rangle\langle a^{(r)}|,\qquad
+C=\sum_s\mu_s|b^{(s)}\rangle\langle b^{(s)}|,\qquad
+\lambda_r,\mu_s\ge0,
+$$
+其中谱向量为单位向量，两组特征值各自和为一。按张量积及迹的线性性，
+$$
+\operatorname{Tr}\bigl(W_{\rm ent}(A\otimes C)\bigr)
+=\sum_{r,s}\lambda_r\mu_s
+\left|a^{(r)}_1\overline{b^{(s)}_1}
+-\alpha^2a^{(r)}_0\overline{b^{(s)}_0}\right|^2\ge0.
+$$
+再对可分密度的有限凸组合应用线性性，即得 $\operatorname{Tr}(W_{\rm ent}\theta)\ge0$。这正是块正算子在可分锥上配对非负的成熟可分性数学（[CompositeConeDuality，blockPositive_iff_forall_separable_pairing_nonneg](../../../D5/S3/Resource/CompositeConeDuality.lean)）。
+
+此见证的偏转置来源也可直接表示为
+$$
+W_{\rm ent}=\operatorname{PT}_2\bigl(|v\rangle\langle v|\bigr),\qquad
+v=|11\rangle-\alpha^2|00\rangle,\qquad
+\operatorname{PT}_2(|ij\rangle\langle kl|)=|il\rangle\langle kj|,
+$$
+其中 $\operatorname{PT}_2$ 按此基公式线性延伸。偏转置的可分性判据见 Asher Peres，Separability Criterion for Density Matrices，Physical Review Letters 77，1413–1415（1996），[DOI:10.1103/PhysRevLett.77.1413](https://doi.org/10.1103/PhysRevLett.77.1413)，[arXiv:quant-ph/9604005](https://arxiv.org/abs/quant-ph/9604005)。这里仅使用其数学含义，不把偏转置当作物理操作；所需非负性已由平方模及谱分解直接证明。
+
+$W_{\rm ent}$ 的两个交叉项互为伴随，故它自伴。而
+$$
+W_{\rm ent}(|01\rangle+|10\rangle)
+=-\alpha^2(|01\rangle+|10\rangle),
+$$
+所以它不是正半定算子，也不满足 POVM 效应所需的 $0\le E\le I$。由 $\eta_2$ 的上述矩阵元，
+$$
+\begin{aligned}
+\operatorname{Tr}(W_{\rm ent}\eta_2)
+&=\alpha^4\langle00|\eta_2|00\rangle
++\langle11|\eta_2|11\rangle
+-\alpha^2\bigl(\langle10|\eta_2|01\rangle+\langle01|\eta_2|10\rangle\bigr)\\
+&=\pi_0\alpha^5-2\pi_0\alpha^5=-\pi_0\alpha^5<0.
+\end{aligned}
+$$
+这与可分密度的非负性矛盾，证明平稳双位置态纠缠。
+
+最后处理同一纯初态轨道的有限位置。将
+$$
+P_0=\begin{pmatrix}\alpha&\alpha\sqrt\alpha\\
+\alpha\sqrt\alpha&\alpha^2\end{pmatrix},\qquad
+P_1=\begin{pmatrix}1&0\\0&0\end{pmatrix}
+$$
+代入已求出的 $\Gamma_2$，得到
+$$
+G_0:=\Gamma_2(P_0)=
+\begin{pmatrix}
+\alpha^2&\alpha^3&\alpha^2&0\\
+\alpha^3&\alpha^3&\alpha^3&0\\
+\alpha^2&\alpha^3&\alpha^2&0\\
+0&0&0&0
+\end{pmatrix},
+$$
+$$
+G_1:=\Gamma_2(P_1)=|0\rangle\langle0|\otimes\rho_1
+=\begin{pmatrix}
+\alpha&\alpha^2&0&0\\
+\alpha^2&\alpha^2&0&0\\
+0&0&0&0\\
+0&0&0&0
+\end{pmatrix},\qquad
+\rho_1=\begin{pmatrix}\alpha&\alpha^2\\\alpha^2&\alpha^2\end{pmatrix}.
+$$
+由命题 131.1 已在相关联合态上证明的窗口恒等式与 $\Gamma_2$ 的线性性，
+$$
+\beta_{n,2}=(1-p_n)G_0+p_nG_1.
+$$
+因而
+$$
+\operatorname{Tr}(W_{\rm ent}G_0)=\alpha^6-2\alpha^5
+=\alpha^5(\alpha-2),\qquad
+\operatorname{Tr}(W_{\rm ent}G_1)=\alpha^5,
+$$
+$$
+\operatorname{Tr}(W_{\rm ent}\beta_{n,2})
+=\alpha^5\bigl((\alpha-2)+(3-\alpha)p_n\bigr).
+$$
+递推映射 $p\mapsto\alpha^2(1-p)$ 将闭区间 $[0,\alpha^2]$ 映到
+$$
+[\alpha^2(1-\alpha^2),\alpha^2]=[\alpha^3,\alpha^2]
+\subseteq[0,\alpha^2].
+$$
+从 $p_0=0$ 归纳得 $0\le p_n\le\alpha^2$ 对所有 $n\ge0$ 成立，且 $p_1=\alpha^2$。用 $\alpha+\alpha^2=1$ 化简，有
+$$
+(\alpha-2)+(3-\alpha)\alpha^2=-2\alpha^3,
+$$
+$$
+\operatorname{Tr}(W_{\rm ent}\beta_{n,2})+2\alpha^8
+=\alpha^5(3-\alpha)(p_n-\alpha^2)\le0.
+$$
+由于 $\alpha>0$、$3-\alpha>0$，这给出陈述中的统一严格负界，并在 $n=1$ 达到等号。每个 $\beta_{n,2}$ 因此均不可分。命题 130.1 的已发出前缀不变性还保证，继续生成任意有限个后续输出再忽略它们，不改变这一对已发出位置的边际。
+
+同时，直接引用命题 131.1 在同一无条件窗口上的结论，
+$$
+D(\beta_{n,2},\eta_2)\le\frac{\alpha^3}{\mathrm{den}}\alpha^{2n}
+\longrightarrow0\qquad(n\longrightarrow\infty).
+$$
+因此此固定生成器的边界遗忘与相邻输出纠缠同时成立。这里在单位置的指定基相干之外，进一步判定了跨两个输出因子的不可分性；此结论不蕴含 Bell 非局域性或情境性，不量化所有平稳态，也不构成物理空间的推导、最优负性或距离的断言。证毕。
+
+## 追加锚（本行以下为增补区）
