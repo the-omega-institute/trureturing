@@ -278,8 +278,13 @@ if [[ "$delta_available" == "1" ]] \
      && "$current_producer_sha256" =~ ^[0-9a-f]{64}$ \
      && "$current_resident_sha256" =~ ^[0-9a-f]{64}$ \
      && "$current_config_sha256" =~ ^[0-9a-f]{64}$ ]]; then
+  # Planned baseline paths must survive run_phase changing to REPOSITORY.
+  delta_cache_root="$STRATALINT_REPORT_CACHE_ROOT"
+  if [[ "$delta_cache_root" != /* ]]; then
+    delta_cache_root="$(pwd -P)/$delta_cache_root"
+  fi
   python3 "$DELTA_SCRIPT" plan \
-    "$REPOSITORY" "$STRATALINT_REPORT_CACHE_ROOT" "$current_input_address" \
+    "$REPOSITORY" "$delta_cache_root" "$current_input_address" \
     "$current_producer_sha256" "$current_resident_sha256" "$current_config_sha256" \
     "$MODULE_TABLE" "$DELTA_PLAN" || true
   if [[ -s "$DELTA_PLAN" ]]; then
@@ -344,9 +349,9 @@ fi
 
 if [[ "$delta_status" == "delta" || "$delta_status" == "reuse" ]]; then
   if [[ "$delta_status" == "reuse" ]]; then
-    cp "$delta_baseline" "$OUTPUT"
-    cp "${delta_baseline}.materials.zip" "${OUTPUT}.materials.zip"
-  elif ! python3 "$DELTA_SCRIPT" merge \
+    run_phase reuse-report cp "$delta_baseline" "$OUTPUT"
+    run_phase reuse-materials cp "${delta_baseline}.materials.zip" "${OUTPUT}.materials.zip"
+  elif ! run_phase delta-merge python3 "$DELTA_SCRIPT" merge \
       "$DELTA_PLAN" "$DELTA_SUBSET_OUTPUT" "$OUTPUT"; then
     delta_status="full-fallback"
   fi

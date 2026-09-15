@@ -5,6 +5,21 @@ cas_ref: sha256:d9d55284a9953ff2612338b3d43db4760260d6a6033da47a9aca957dad2d286e
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    gids:
+      - D5/S3/Factorization/Automata/PrimeHistoryNormalForm.normal_surjective
+    gaps:
+      - code: chain-migration-incomplete
+        detail: 2d4ddc353db7be333fccc78c55acbdcc6f96021e69d27de0a90d59325de2c361
+      - code: chain-migration-incomplete
+        detail: 48b3c63e4d71fb9032dcf83e5fa522ae33b203104c69d2c36762f762a2cb347f
+      - code: chain-migration-incomplete
+        detail: a373e6b551b511d303c33df0d2d3f32c72b4ffbd197a12f8c508a82cb694f35e
+      - code: chain-migration-incomplete
+        detail: c0bde622259ca51bfaa826e84c851e4a97a34a6ef6e87f81b437b40076196797
+      - code: chain-migration-incomplete
+        detail: db863614e621d250b3e60d7cf3264fac7bc6024727c56e2de77e81a01f971bd6
   chain_atoms:
     - c0bde622259ca51bfaa826e84c851e4a97a34a6ef6e87f81b437b40076196797
     - a373e6b551b511d303c33df0d2d3f32c72b4ffbd197a12f8c508a82cb694f35e

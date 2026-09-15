@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:4ba4c6d89868c53e3c3be50bcb9fe5a2742dbf5ea2f07bce738469aa8e18debc
+  normalized_sha256: sha256:4ba4c6d89868c53e3c3be50bcb9fe5a2742dbf5ea2f07bce738469aa8e18debc
+cas_ref: sha256:4ba4c6d89868c53e3c3be50bcb9fe5a2742dbf5ea2f07bce738469aa8e18debc
+coverage_gids:
+  - gid: D5/S3/Quantum/Algebra/StationaryGramRank.recurrence_quadratic_identity
+    target_statement_id: sha256:1d8c5c134335e45b0e1b215bb60e62f372c7a1affc1f46000879e94796a64a39
+receipts:
+  unresolved_subitems: []

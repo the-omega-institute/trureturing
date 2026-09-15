@@ -1,0 +1,12 @@
+它与单个原关系族的成员像之间有同胚
+$$
+\Phi_R:\widehat{\mathscr Q}_R\to\mathscr Q_R^*,\qquad
+\Phi_R((a_L,b_L)_L)
+=\operatorname{Enc}\bigl(L\mapsto
+\operatorname{Dec}(\chi_L(a_L,b_L))\bigr),
+$$
+$$
+\Phi_R^{-1}(\operatorname{Enc}(r'))
+=\bigl(\chi_L^{-1}(\operatorname{Enc}(r'_L))\bigr)_{L\ge1}
+\qquad(r'\in\mathscr Q_R).
+$$

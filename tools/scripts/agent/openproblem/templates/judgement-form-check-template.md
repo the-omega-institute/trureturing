@@ -10,7 +10,7 @@ Read only: `cat`, `sed -n`, `grep`, `git show`. At most 12 commands. Return one 
 
 ## Why this stage exists
 
-A bind-only module cannot be deposited at all, and the decision is not mechanical: no current
+A bind-only module cannot be deposited under the `escape-witness` basis (the one exception is CLAUDE.md §3.2 「开放问题结算依据」: a preregistered, literature-checked external named open problem may be settled by a bind-only proof under `admission_basis: open-problem-resolution`, shape reported honestly), and the decision is not mechanical: no current
 check computes it. The Lean report carries `axioms`, `statement_id` and `type_sha256` per
 declaration, but no constant-dependency closure, so nothing in the machine surface can raise
 this. It therefore has to be judged by reading, and it has to be judged BEFORE the freeze:
@@ -37,7 +37,7 @@ declarations, using only:
   * normalisation — definitional unfolding, `simp` with existing lemmas, and, once every
     atomic fact is already supplied, `ring` / `linarith` / `omega` / `norm_num` / `decide`.
 
-If yes, the declaration is **bind-only** and the delivery must be refused.
+If yes, the declaration is **bind-only** and the delivery must be refused — unless the module settles a preregistered external named open problem under `admission_basis: open-problem-resolution` (CLAUDE.md §3.2), in which case report the shape as bind-only and check that basis's conditions (a)–(d) instead.
 
 Watch for the two shapes that hide best:
 

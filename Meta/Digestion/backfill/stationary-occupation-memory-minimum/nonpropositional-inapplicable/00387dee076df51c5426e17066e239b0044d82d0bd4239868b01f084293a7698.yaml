@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:00387dee076df51c5426e17066e239b0044d82d0bd4239868b01f084293a7698
+  normalized_sha256: sha256:00387dee076df51c5426e17066e239b0044d82d0bd4239868b01f084293a7698
+cas_ref: sha256:00387dee076df51c5426e17066e239b0044d82d0bd4239868b01f084293a7698
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Records the conjugate-transpose omission in the producer's original notation; this clause concerns source-editing history. The corrected sesquilinear identity is a separate child.
+    previous_atom_id: c58de959cb3921e11093180d516596986c79a527ca6cbc48bac15b1dd5e845f7
+    next_atom_id: 4ba4c6d89868c53e3c3be50bcb9fe5a2742dbf5ea2f07bce738469aa8e18debc

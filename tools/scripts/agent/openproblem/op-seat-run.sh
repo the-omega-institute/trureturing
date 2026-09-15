@@ -29,7 +29,7 @@
 # fails the whole run with invalid_json_schema, exit 1, and no result. Catching that here costs
 # milliseconds and saves a seat lifetime.
 set -u
-export PATH="$HOME/.elan/bin:$HOME/.dotnet:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+export PATH="$HOME/.local/bin:$HOME/.elan/bin:$HOME/.dotnet:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 export LC_ALL=C
 
 SEAT_ROOT="${OP_SEAT_ROOT:-$HOME/omega-op/seats}"
