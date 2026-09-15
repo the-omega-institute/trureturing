@@ -27,11 +27,11 @@ In this entry `A^6(x)` denotes the 6-fold COMPOSITIONAL ITERATE of `A`, not
 the 6-th power; the entry's formula field states that convention explicitly.
 The offset is 1 and the first terms are 1, 2, 39, 1804, 139625, 15563526, 2301954109.
 
-This lane settles ONLY the parity conjecture. The remaining
-conjectures quoted above,
-on residues modulo three and six,
-are NOT proved, are not claimed,
-and do not appear in the module in any form.
+This dossier settles the parity conjecture through parity_iterate_six.
+The independent result IterateExponentialModSix.result settles the
+modulo-six assertion and consequently the modulo-three assertion; see
+Problems/oeis-a396806-iterate-exponential-mod-six.md. These residue
+conclusions are not additional statements of the parity module.
 
 ## Motivation
 
@@ -106,9 +106,10 @@ the same vanishing constant coefficient would falsify `fixed_unique`.
 
 ## Triage
 
-`theorem`. One universal conjecture of this entry is settled, for a sequence
-proved to satisfy the entry's defining equation. The residue
-conjectures remain open.
+`theorem`. The parity conjecture is settled for the sequence identified by
+the entry's defining equation. Its residue conjectures are separately
+settled by IterateExponentialModSix.result and the independent modulo-six
+dossier.
 
 ## ASSUMED-UNVERIFIED
 

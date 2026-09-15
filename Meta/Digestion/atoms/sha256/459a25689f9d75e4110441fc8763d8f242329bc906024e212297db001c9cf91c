@@ -1,0 +1,19 @@
+**定义 35.1（固定通道的主动观察问题）。** 令 $S,A,Y$ 为有限非空集合，$E$ 为有限实验集（允许为空），先验为 $\mu\in\mathcal P(S)$，损失满足
+$$
+0\le \ell(a,s)\le M,\qquad M>0.
+$$
+点信念的停止风险为
+$$
+R(\mu)=\min_{a\in A}\sum_{s\in S}\mu(s)\ell(a,s).
+$$
+实验 $e$ 的观测通道为 $K_e(y\mid s)$，实验费用 $c_e\ge0$；观测概率和正概率观测后的后验分别为
+$$
+p_e(y)=\sum_s\mu(s)K_e(y\mid s),
+\qquad
+\mu_e^y(s)=\frac{\mu(s)K_e(y\mid s)}{p_e(y)}\quad(p_e(y)>0).
+$$
+只对 $p_e(y)>0$ 的 $y$ 定义后验。把费用换算到与损失相同的标量单位后，实验 $e$ 的一步净价值定义为
+$$
+\operatorname{VOI}_e(\mu)=R(\mu)-c_e-\sum_{y:p_e(y)>0}p_e(y)R(\mu_e^y).
+$$
+

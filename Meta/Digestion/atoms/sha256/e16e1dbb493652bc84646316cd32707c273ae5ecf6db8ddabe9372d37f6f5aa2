@@ -1,0 +1,22 @@
+**命题 53.1（退相干因子分解的假设）。** 第 51.1 节的乘积式
+
+$$
+\Gamma_{ab}(t)=\prod_k\gamma_{ab}^{(k)}(t)
+$$
+
+需要至少假设初态在所选环境分解下为
+
+$$
+\rho_{SE}(0)=\rho_S(0)\otimes\bigotimes_k\tau_k
+$$
+
+并且条件环境演化在每个标签 $a$ 下因子化为 $U_a(t)=\bigotimes_kU_{a,k}(t)$。在这些假设下，环境重叠给出
+
+$$
+\Gamma_{ab}(t)=\prod_k\operatorname{tr}\!\left(U_{a,k}(t)\tau_kU_{b,k}(t)^\dagger\right).
+$$
+
+若系统自身 Hamiltonian 混合不同的 $\Pi_a$ 子空间，则 $\rho_{ab}(t)=\rho_{ab}(0)\Gamma_{ab}(t)$ 一般只是相互作用表象或附加条件下的表达，不能直接当作完整动力学的恒等式。
+
+证明。因子化初态与条件演化使环境条件态分别为 $\bigotimes_kU_{a,k}\tau_kU_{a,k}^\dagger$。两个条件态的重叠是各片段重叠的乘积，得到第一式。若系统自身演化不保持指针分解，它会在不同 $a$ 之间产生额外转移项，故单一乘法因子不能代表完整演化。证毕。
+

@@ -103,6 +103,9 @@ public sealed partial class MakeWorkflowTests
         "prime-slab-device-test",
         "prime-slab-verify",
         "prime-slab-mutation-test",
+        "prime-slab-cpu",
+        "prime-slab-cpu-test",
+        "prime-slab-cpu-mutation-test",
         "census-test",
         "census-frontier-performance",
     ];
