@@ -55,8 +55,8 @@ private def residualMemoryIndex (head : σ) (a b : Multiset σ) (hb : b ≤ a)
     (hr : 0 < PaddingResidualGram.tailCount head b) (h : Fin (b.count head + 1)) : PaddingTransition.K a head :=
   some (PaddingResidualGram.residualPaddingTail head a b hb hr, PaddingResidualGram.residualHeadIndex head a b hb h)
 
-theorem padding_residual_intertwining [Nonempty σ] (a : Multiset σ) (head : σ)
-    (hmax : a.count head = Finset.univ.sup a.count) (r : Multiset σ) (hr : r ≤ a)
+theorem padding_residual_intertwining (a : Multiset σ) (head : σ)
+    (r : Multiset σ) (hr : r ≤ a)
     (hr0 : r ≠ 0) (i : σ) (k : PaddingTransition.K a head) :
     (PaddingTransition.W a head).mulVec (fun s : PaddingTransition.K a head => PaddingResidualGram.padding a head r s) (i, k) =
       if i ∈ r then PaddingResidualGram.padding a head (r.erase i) k else 0 := by
@@ -759,125 +759,6 @@ theorem padding_residual_intertwining [Nonempty σ] (a : Multiset σ) (head : σ
     exact residual_linear_step a head r hr hr0 i k
 
   exact padding_residual_intertwining_all_heads a head r hr hr0 i k
-
-theorem image_coordinates [Nonempty σ] (a : Multiset σ) (head : σ)
-    (hmax : a.count head = Finset.univ.sup a.count) (r : Multiset σ) (hr : r ≤ a) :
-    ((EuclideanSpace.basisFun σ ℂ).tensorProduct
-      (EuclideanSpace.basisFun (PaddingTransition.K a head) ℂ)).repr (image a head r) =
-        emitLinear a head (PaddingResidualGram.phi a head r) := by
-  have emit_linear_basis  (s : PaddingTransition.K a head)
-      (i : σ) (k : PaddingTransition.K a head) : emitLinear a head (basis s) (i, k) = PaddingTransition.W a head (i, k) s := by
-    exact matrix_isometry_basis (PaddingTransition.W a head) (PaddingTransition.W_gram a head) s (i, k)
-  have W_sink (i : σ) (k : PaddingTransition.K a head) :
-      PaddingTransition.W a head (i, k) none = if i = head ∧ k = none then 1 else 0 := by
-    change (if PaddingTransition.paddingNext (a.count head) (fun j : PaddingTransition.TailAlphabet head => a.count j.val)
-        none ((Equiv.optionSubtypeNe head).symm i) = k then
-      (Real.sqrt (PaddingTransition.paddingProbability (a.count head)
-        (fun j : PaddingTransition.TailAlphabet head => a.count j.val) none
-        ((Equiv.optionSubtypeNe head).symm i)) : ℂ) else 0) = _
-    by_cases hi : i = head
-    · subst i
-      rw [Equiv.optionSubtypeNe_symm_self]
-      simp only [PaddingTransition.paddingNext, PaddingTransition.paddingProbability, Real.sqrt_one, Complex.ofReal_one,
-        true_and]
-      congr 1
-      exact propext eq_comm
-    · rw [Equiv.optionSubtypeNe_symm_of_ne hi]
-      simp only [PaddingTransition.paddingNext, PaddingTransition.paddingProbability, Real.sqrt_zero, Complex.ofReal_zero,
-        ite_self, hi, false_and, if_false]
-  have emit_linear_sink  :
-      emitLinear a head (basis none) = basis (head, none) := by
-    ext ⟨i, k⟩
-    rw [emit_linear_basis, W_sink]
-    simpa only [Prod.mk.injEq] using (basis_apply (head, none) (i, k)).symm
-  have phi_zero  : PaddingResidualGram.phi a head 0 = basis none := by
-    classical
-    have hm : PaddingResidualGram.M (0 : Multiset σ) = 1 := by
-      simpa [PaddingResidualGram.M] using multiplicity_eq_factorial (0 : Multiset σ) rfl
-    ext k
-    cases k with
-    | none => simp [PaddingResidualGram.phi, PaddingResidualGram.padding,
-        hm, PaddingResidualGram.tailOcc,
-        basis_apply]
-    | some p =>
-      rcases p with ⟨b, j⟩
-      by_cases hj : j = 0
-      · subst j
-        by_cases hb : PaddingResidualGram.tailWord a head b.val = 0
-        · simp [PaddingResidualGram.phi, PaddingResidualGram.padding,
-          PaddingResidualGram.tailOcc, PaddingResidualGram.slice,
-          PaddingResidualGram.lastTail, hb, hm, basis_apply]
-        · simp [PaddingResidualGram.phi, PaddingResidualGram.padding,
-            PaddingResidualGram.tailOcc, Ne.symm hb, basis_apply]
-      · have hjv : ¬ j.val ≤ 0 := fun h => hj (Fin.ext (Nat.eq_zero_of_le_zero h))
-        simp [PaddingResidualGram.phi, PaddingResidualGram.padding, PaddingResidualGram.tailOcc, hj, hjv, basis_apply]
-  have erase_multiplicity_real (b : Multiset σ) (i : σ) (hi : i ∈ b) :
-      (b.card : ℝ) * (multiplicity (b.erase i).card (b.erase i) : ℝ) =
-        (b.count i : ℝ) * (multiplicity b.card b : ℝ) := by
-    have hn : (b.erase i).card + 1 = b.card := by
-      simpa using congrArg Multiset.card (Multiset.cons_erase hi)
-    have hm := multiplicity_erase_mul (n := (b.erase i).card) hn.symm i hi
-    rw [hn] at hm
-    exact_mod_cast hm
-  have scale_pos  (r : Multiset σ) : 0 < PaddingResidualGram.residualScale r := by
-    exact Real.sqrt_pos.mpr (by exact_mod_cast multiplicity_pos r rfl)
-  have scale_ne_zero  (r : Multiset σ) : (PaddingResidualGram.residualScale r : ℂ) ≠ 0 :=
-    Complex.ofReal_ne_zero.mpr (scale_pos r).ne'
-  have erasure_normalization  (r : Multiset σ) (i : σ) (hi : i ∈ r) :
-      (Real.sqrt ((r.count i : ℝ) / (r.card : ℝ)) : ℂ) *
-        (PaddingResidualGram.residualScale (r.erase i) : ℂ)⁻¹ = (PaddingResidualGram.residualScale r : ℂ)⁻¹ := by
-    have hc : (0 : ℝ) < r.card := by
-      have hr0 : r ≠ 0 := by
-        intro h
-        simpa [h] using hi
-      exact_mod_cast Multiset.card_pos.mpr hr0
-    have hm := erase_multiplicity_real r i hi
-    have he : (PaddingResidualGram.M (r.erase i) : ℝ) = ((r.count i : ℝ) / (r.card : ℝ)) * (PaddingResidualGram.M r : ℝ) := by
-      rw [div_mul_eq_mul_div]
-      apply (eq_div_iff hc.ne').mpr
-      simpa only [PaddingResidualGram.M, mul_comm] using hm
-    have hs : PaddingResidualGram.residualScale (r.erase i) =
-        Real.sqrt ((r.count i : ℝ) / (r.card : ℝ)) * PaddingResidualGram.residualScale r := by
-      change Real.sqrt (PaddingResidualGram.M (r.erase i) : ℝ) = _
-      rw [he, Real.sqrt_mul (div_nonneg (Nat.cast_nonneg _) hc.le)]
-      rfl
-    apply (mul_inv_eq_iff_eq_mul₀ (scale_ne_zero (r.erase i))).mpr
-    rw [hs, Complex.ofReal_mul]
-    field_simp [scale_ne_zero r]
-
-  by_cases hz : r = 0
-  · subst r
-    rw [image, if_pos rfl, phi_zero, emit_linear_sink]
-    ext ⟨i, k⟩
-    simp only [OrthonormalBasis.tensorProduct_repr_tmul_apply,
-      EuclideanSpace.basisFun_repr, basis_apply, Prod.mk.injEq]
-    split_ifs <;> simp_all
-  · rw [image, if_neg hz]
-    ext ⟨i, k⟩
-    simp only [map_sum, map_smul, WithLp.ofLp_sum, Finset.sum_apply, PiLp.smul_apply,
-      OrthonormalBasis.tensorProduct_repr_tmul_apply, EuclideanSpace.basisFun_repr,
-      basis_apply, smul_eq_mul, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq,
-      Finset.mem_univ, if_true]
-    have hstep := padding_residual_intertwining a head hmax r hr hz i k
-    simp only [PaddingResidualGram.phi, map_smul, PiLp.smul_apply, smul_eq_mul]
-    change _ = (PaddingResidualGram.residualScale r : ℂ)⁻¹ *
-      (PaddingTransition.W a head).mulVec (fun s => PaddingResidualGram.padding a head r s) (i, k)
-    rw [hstep]
-    by_cases hi : i ∈ r
-    · rw [if_pos hi]
-      change _ * ((PaddingResidualGram.residualScale (r.erase i) : ℂ)⁻¹ * PaddingResidualGram.padding a head (r.erase i) k) = _
-      rw [← mul_assoc, erasure_normalization r i hi]
-    · rw [if_neg hi, Multiset.count_eq_zero.mpr hi]
-      simp
-
-theorem prescribed_image_gram [Nonempty σ] (a : Multiset σ) (head : σ)
-    (hmax : a.count head = Finset.univ.sup a.count) (r s : Multiset σ)
-    (hr : r ≤ a) (hs : s ≤ a) :
-    inner ℂ (image a head r) (image a head s) = inner ℂ (PaddingResidualGram.phi a head r) (PaddingResidualGram.phi a head s) := by
-  let b := (EuclideanSpace.basisFun σ ℂ).tensorProduct (EuclideanSpace.basisFun (PaddingTransition.K a head) ℂ)
-  rw [← b.repr.inner_map_map, image_coordinates a head hmax r hr,
-    image_coordinates a head hmax s hs]
-  exact (matrixIsometry (PaddingTransition.W a head) (PaddingTransition.W_gram a head)).inner_map_map _ _
 
 def memoryCoordinates (a : Multiset σ) (head : σ) (e : PaddingTransition.K a head ≃ Fin (PaddingTransition.N a)) :
     Space (PaddingTransition.K a head) ≃ₗᵢ[ℂ] Space (Fin (PaddingTransition.N a)) :=
