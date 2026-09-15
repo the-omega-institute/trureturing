@@ -1,0 +1,28 @@
+### 定义 62.1（有限 Heisenberg 观察塔）
+
+令 $H$ 是 Hermitian 载体上的 Heisenberg 线性作用，初始 effect 家族为
+
+$$
+E_0=\{E_i: i\in I\}.
+$$
+
+定义 horizon 为 $n$ 的可见空间
+
+$$
+\mathcal V_n
+=
+\operatorname{span}_{\mathbb R}
+\left(
+\{I\}\cup
+\{H^tE_i:t<n,\ i\in I\}
+\right),
+$$
+
+以及有限深度残差
+
+$$
+\mathcal R_n=\mathcal V_n^{\perp}.
+$$
+
+这里的 $n$ 是允许的后续迭代次数，不是物理时间单位；是否存在连续时间生成元需要另外的动力学假设。
+

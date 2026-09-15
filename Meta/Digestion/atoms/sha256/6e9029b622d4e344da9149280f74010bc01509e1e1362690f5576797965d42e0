@@ -1,0 +1,2 @@
+**证明。** $t_\beta\mid d_\beta e_{\beta,\ell}$ 等价于 $r_\beta\mid e_{\beta,\ell}$；后者仅为 $1$ 或素数 $\ell$。逐项得到排除结论，再应用固定基商的多素数因子化定理。
+

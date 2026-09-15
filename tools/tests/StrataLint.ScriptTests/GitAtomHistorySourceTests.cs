@@ -11,6 +11,48 @@ namespace StrataLint.Tests;
 
 public sealed class GitAtomHistorySourceTests
 {
+    [Xunit.SkippableFact]
+    public void CompleteHistoryLargerThanBufferedLimitRetainsLateMinimumAndAllAtoms()
+    {
+        using var fixture = new AtomHistoryRepository();
+        var historyPath = Path.Combine(fixture.Temporary.Path, "large-history");
+        var repeated = Encoding.UTF8.GetBytes($"\u001e1788307200\n\n"
+            + DigestionCasStore.RootPath + fixture.RootAtomId + "\n");
+        using (var output = new MemoryStream())
+        {
+            for (var count = 0; count <= GitRepositoryGateway.DefaultGitOutputBytes / repeated.Length; count++)
+                output.Write(repeated);
+            output.Write(Encoding.UTF8.GetBytes($"\u001e1786665600\n\n"
+                + DigestionCasStore.RootPath + fixture.RootAtomId + "\n"
+                + DigestionCasStore.RootPath + fixture.SideAtomId + "\n"));
+            File.WriteAllBytes(historyPath, output.ToArray());
+        }
+
+        // Exercise the production pipe and parser with a synthetic complete
+        // history larger than 64 MiB, without manufacturing thousands of commits.
+        var previousStart = BoundedProcessRunner.StartProcess.Value;
+        try
+        {
+            BoundedProcessRunner.StartProcess.Value = process =>
+            {
+                process.StartInfo.FileName = "/bin/cat";
+                process.StartInfo.ArgumentList.Clear();
+                process.StartInfo.ArgumentList.Add(historyPath);
+                return process.Start();
+            };
+            var history = TestProcessRunner.Classify(() => fixture.ReadUnchanged(fixture.Root), "git");
+
+            Assert.False(history.IsShallow);
+            Assert.Equal(2, history.FirstAdded.Count);
+            Assert.All(history.FirstAdded.Values, time =>
+                Assert.Equal(DateTimeOffset.FromUnixTimeSeconds(1786665600), time));
+        }
+        finally
+        {
+            BoundedProcessRunner.StartProcess.Value = previousStart;
+        }
+    }
+
     [Theory]
     [InlineData("GIT_DIR")]
     [InlineData("GIT_WORK_TREE")]

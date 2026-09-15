@@ -1,0 +1,2 @@
+**定义。** 设 $\pi$ 有限生成，$N\le\pi$ 为有限指数特征子群，$\Lambda\le\operatorname{Out}(\pi)$。这一节不要求 $\pi/N$ 中心平凡，也不要求其外作用平凡。固定素数 $\ell$，令 $N_\ell=[N,N]N^\ell$。设 $K$ 为 $\pi$ 的特征子群、$K\subseteq N_\ell$，且 $N/K$ 为有限 $\ell$ 群。记 $Q=\pi/K$，$Q_\ell=\pi/N_\ell$，并令 $A_Q,A_\ell$ 为同一个 $\Lambda$ 在两者上的实际外作用像。
+

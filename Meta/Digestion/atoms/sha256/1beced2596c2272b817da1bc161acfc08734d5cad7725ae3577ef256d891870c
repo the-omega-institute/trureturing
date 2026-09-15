@@ -1,0 +1,6 @@
+**定义。** 设 $H$ 为实 Hilbert 空间，$L:H\to H$ 为线性映射，$B:H\times H\to H$ 为双线性映射，$f\in H$，并定义
+
+\[
+F(x)=Lx-B(x,x)+f.
+\]
+

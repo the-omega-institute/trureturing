@@ -1,0 +1,5 @@
+**定义 472.4（未纳入支撑的上半窗素数）。** 对整数 $N\ge2$ 及平方自由 $Q\ge1$，令
+$$
+\mathcal P_Q(N)=\{p:N/2<p\le N,\ p\nmid Q,\ p\text{ 为素数}\},\qquad T_Q(N)=|\mathcal P_Q(N)|.
+$$
+

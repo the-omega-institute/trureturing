@@ -1,0 +1,11 @@
+**证明。** Fibonacci 与黄金共轭恒等式给出
+
+$$
+B_L\alpha-C_L=-d_L,\qquad
+A_L\alpha-B_L=\alpha d_L.
+$$
+
+将 $e=A_Lm+B_Lk$、$h=B_Lm+C_Lk$ 代入并合并系数，得到 GC1。
+对 $M_L$ 使用上一节的伴随矩阵公式和
+$A_LC_L-B_L^2=(-1)^L$，得到 GC2。
+

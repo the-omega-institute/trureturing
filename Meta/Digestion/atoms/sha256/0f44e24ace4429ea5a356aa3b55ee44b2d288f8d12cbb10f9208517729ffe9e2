@@ -1,0 +1,93 @@
+**定理 16.3（全存储历史的有限乘积误差界）。** 在定义 16.1–16.2 下，记
+
+$$
+\delta_N
+=\sqrt{1-\prod_{t=1}^N(1-\beta_t)}.
+$$
+
+则
+
+$$
+\frac12\|\mathcal H_{\rm actual}-\mathcal H_{\rm ideal}\|_\diamond
+\le\delta_N
+\le\min\left\{1,\sqrt{\sum_{t=1}^N\beta_t}\right\}.
+$$
+
+因此对任意初态及有限参考，整个已存储历史、最终系统、可访问记忆与参考的联合输出迹距离均不超过 $\delta_N$。该结论允许非交换的阶段间控制、按历史反馈及有限量子记忆；不以理想标签过程满足单标签 Markov 性为前提。
+
+证明。 先固定一步和一个历史，省略 $t,h$，令
+
+$$
+a=\sqrt{1-\beta},
+\qquad
+v_x=\sqrt{M_x}e_x,
+\qquad
+q_x=\|v_x\|^2\ge a^2.
+$$
+
+在被丢弃的记录空间中加入一个与实际记录空间正交的单位方向 $\bot$。若 $a>0$，则所有 $q_x>0$，可以定义
+
+$$
+b_x=\frac{a}{q_x}v_x+
+\sqrt{1-\frac{a^2}{q_x}}\,\bot.
+$$
+
+若 $a=0$，对所有 $x$ 定义 $b_x=\bot$，包括 $q_x=0$ 的情形。两种情形都满足
+
+$$
+\|b_x\|=1,
+\qquad
+\langle b_x,v_x\rangle=a.
+$$
+
+令 $Z$ 为保留的结果寄存器，$C$ 为不可访问的结果副本，定义两个等距映射
+
+$$
+A|x\rangle
+=|x\rangle_S\sum_z|z\rangle_Z|z\rangle_C\sqrt{M_z}e_x,
+\qquad
+B|x\rangle
+=|x\rangle_S|x\rangle_Z|x\rangle_C b_x.
+$$
+
+它们在记忆及其他旁系统上作用为恒等。$A$ 的等距性由系统基正交和 $\sum_zM_z=I$ 给出；$B$ 的等距性由 $\|b_x\|=1$ 给出。对 $C$ 及记录余系统取部分迹，$A$ 恰好产生实际仪器 $\mathcal I$；$B$ 中的结果副本使异标签交叉项消失，恰好产生理想仪器 $\mathcal J$。
+
+系统基还使 $B^\dagger A$ 的异标签矩阵元为零，而第 $x$ 个对角元为 $\langle b_x,\sqrt{M_x}e_x\rangle=a$。故有精确的标量恒等式
+
+$$
+B^\dagger A=aI_S.
+$$
+
+按每个历史分支分别实施上述构造，并为不同分支选取一个共同的有限维扩张空间。在第 $t$ 步中，所有分支使用相同的 $a_t=\sqrt{1-\beta_t}$，历史寄存器作为保持不变的控制，因此得到
+
+$$
+B_t^\dagger A_t=a_t I_{H_{t-1}SM}.
+$$
+
+每个共同 CPTP 控制可选取一个有限 Stinespring 等距实现 $V_t$，由历史控制而不改写历史。记其新引入的不可访问环境为 $D_t$，在数学纯化中保留该环境，并使记录步骤及所有后续操作在它上面作用为恒等。复合等距映射满足
+
+$$
+\bigl[(B_t\otimes I_{D_t})V_t\bigr]^\dagger
+\bigl[(A_t\otimes I_{D_t})V_t\bigr]
+=V_t^\dagger(a_tI_{H_{t-1}SM}\otimes I_{D_t})V_t
+=a_tI_{H_{t-1}SM}.
+$$
+
+所有此前不可访问环境也同样保留在纯化中并不再作用。若 $A^{(t)},B^{(t)}$ 表示到第 $t$ 步为止的完整等距映射，逐步从末步消去上式得到
+
+$$
+(B^{(N)})^\dagger A^{(N)}
+=\left(\prod_{t=1}^N a_t\right)I_{SM}.
+$$
+
+对任意纯输入及其有限参考，两种完整纯化输出的内积恰为 $\prod_ta_t$，所以它们的迹距离为
+
+$$
+\sqrt{1-\left|\prod_ta_t\right|^2}
+=\sqrt{1-\prod_t(1-\beta_t)}.
+$$
+
+丢弃不可访问环境收缩迹距离，保留全部 $H_N,S,M,R$ 便得到所需输出界。混态输入再加一个有限纯化参考即可。对通道之差，diamond 范数可在带有限参考的密度矩阵输入上取最大值，因而该输出界给出所列半 diamond 界。最后，由 $\prod_t(1-\beta_t)\ge1-\sum_t\beta_t$ 及距离至多为一，得到根号内求和的上界。证毕。
+
+本证明的乘法来自补入正交方向后得到的精确标量关系 $B_t^\dagger A_t=a_tI$；它没有将若干依赖输入的单步重叠下界直接相乘。补入方向只选择理想通道的一个数学扩张，不向可访问系统提供额外记录。
+

@@ -1,0 +1,6 @@
+**定理。** 对任意非奇异整数二阶矩阵 $M$，商群 $\mathbb Z^2/M\mathbb Z^2$ 有限，且
+
+$$
+\#(\mathbb Z^2/M\mathbb Z^2)=|\det M|.
+$$
+

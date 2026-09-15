@@ -1,0 +1,6 @@
+## 61. 观察精炼、商空间度量与容量守恒
+
+第 57 节把对象定义为全部指定未来统计下的预测等价类，第 59 节说明局部端口若不接触关联扇区，就不能凭空恢复关联信息，第 60 节则给出记录作用量和恢复误差的下界。本节把“增加约束或增加读出究竟保留了什么”写成一个有限维账本：观察精炼增加可见方向，同时减少不可见残差；在固定载体上，两者的总维数保持不变。
+
+本节使用以下冻结 Lean 结果：`ObserverRefinementVisibleResidualEquivalence.lean` 中的 `observer_refinement_visible_residual_equivalence`，`OperationalObservationKernel.lean` 中的 `operational_observation_kernel_and_metric`，以及 `ObserverCapacityConservation.lean` 中的 `observer_capacity_conservation`。正文仍是 `repo-derived/open` 解释，不新增 Lean 声明，也不把有限维结论提升为任意物理系统的普遍定律。
+

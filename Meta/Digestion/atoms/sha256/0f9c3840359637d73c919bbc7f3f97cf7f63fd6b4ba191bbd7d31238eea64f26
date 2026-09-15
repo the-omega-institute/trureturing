@@ -1,0 +1,13 @@
+**定理。** 设 $\rho\geq0$，且 $u:[0,T]\to H$ 连续并在 $[0,T)$ 具有右导数。若轨迹满足
+
+$$
+u'(t)=F(u(t))+r(t),\qquad \|r(t)\|\leq\rho,
+$$
+
+则对 $t\in[0,T]$，
+
+$$
+\|u(t)-v\|\leq e^{-(\mu-G)t}\|u(0)-v\|
++\frac{\rho}{\mu-G}\bigl(1-e^{-(\mu-G)t}\bigr).
+$$
+

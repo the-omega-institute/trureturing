@@ -1,0 +1,7 @@
+**推论。** $[\tau]$ 在 $\operatorname{Out}(\Pi_g)$ 中具有无限阶。每个子群 $m\mathbb Z$ 都恰好是由特征商 $Q_{g,m}$ 所诱导的映射
+
+$$\mathbb Z\longrightarrow\operatorname{Out}(\Pi_g)
+\longrightarrow\operatorname{Out}(Q_{g,m})$$
+
+的核。
+

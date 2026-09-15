@@ -1,0 +1,64 @@
+**定理 474.3（原系数的共同定量衰减）。** 固定文献定理中的 $K$，令
+$$
+F_K(y)=\frac{\tfrac12+K\left(1+\log\frac{\log y}{\log2}\right)}{\log y}\qquad(y\ge2).
+$$
+则对全部实数 $y\ge2$，
+$$
+0<\alpha_{\mathcal P(y)}\le c_{\mathcal P(y)}\le F_K(y),
+\qquad c_{\mathcal P(y)},\alpha_{\mathcal P(y)}
+=O_K\left(\frac{1+\log\log y}{\log y}\right)\quad(y\to\infty).
+\tag{474.3a}
+$$
+两系数沿 $y\to\infty$ 均趋零，因而第 443.13 条的原条件
+$$
+H_c:\quad\inf_{Q>1,\ Q\text{ 平方自由}}c_Q=0
+$$
+成立；亦有 $\inf_{Q\ge1,\ Q\text{ 平方自由}}\alpha_Q=0$。
+
+**证明。** 先在本系数积分的实际被积函数上识别原核。平方自由的 $y$ 光滑整数恰为 $\mathcal P(y)$ 的约数；非平方自由整数的 Möbius 值为零。删去这些零项，在同一个闭上端 $n\le u$ 下得到，对全部 $u\ge0$，
+$$
+B_{\mathcal P(y)}(u)=\sum_{n\in\mathcal S(u,y)}\mu(n).
+\tag{474.3b}
+$$
+$u<1$ 时两边为空，$n=1$ 在两边均贡献一。$1\le u\le y$ 时全部正整数 $n\le u$ 都是 $y$ 光滑数，故此值等于 $M(\lfloor u\rfloor)$。特别地，$\Psi(y,y)=\lfloor y\rfloor$；在文献界中取 $(x,y)=(u,u)$ 就得到全部实数 $u\ge2$ 的经典对角界 $|M(\lfloor u\rfloor)|\le K\lfloor u\rfloor/\log u$。素数上端在两边都保留负一项，非平方自由上端在两边都给零，非整数端点按 floor 取值；没有遗漏跳点。
+
+固定 $y$。非负项的单调收敛和有限素数集的几何级数展开给
+$$
+\begin{aligned}
+\int_1^\infty\Psi(u,y)\frac{du}{u^2}
+&=\sum_{P^+(n)\le y}\int_n^\infty\frac{du}{u^2}
+=\sum_{P^+(n)\le y}\frac1n\\
+&=\prod_{p\le y}(1-p^{-1})^{-1}=e_y^{-1}<\infty.
+\end{aligned}
+\tag{474.3c}
+$$
+可先截到 $n\le L$ 再令整数 $L\to\infty$，以非负性许可交换；每个几何级数收敛，乘积的素数个数有限。该和包含 $1\le n\le\lfloor y\rfloor$，故
+$$
+e_y^{-1}\ge\sum_{n=1}^{\lfloor y\rfloor}\frac1n
+\ge\int_1^{\lfloor y\rfloor+1}\frac{du}{u}
+\ge\log y,
+\qquad e_y\le\frac1{\log y}.
+\tag{474.3d}
+$$
+这里没有交换增长 $y$ 与积分的极限。
+
+直接使用第 443.7 条的 $c_Q=e_Q\int_1^\infty|B_Q(u)|u^{-2}\,du$，在 $[1,2)$、$[2,y]$、$[y,\infty)$ 分段。第一段核为一，积分为 $1/2$。第二段用 (474.3b) 及文献界的参数 $(u,u)$，得到 $|B_{\mathcal P(y)}(u)|\le Ku/\log u$；第三段用参数 $(u,y)$。所有参数处都使用同一个 $K$。于是
+$$
+\begin{aligned}
+c_{\mathcal P(y)}
+&\le e_y\left(\frac12+K\int_2^y\frac{du}{u\log u}\right)
+ +\frac{Ke_y}{\log y}\int_y^\infty\Psi(u,y)\frac{du}{u^2}\\
+&\le\frac{\tfrac12+K\log(\log y/\log2)}{\log y}
+ +\frac K{\log y}=F_K(y).
+\end{aligned}
+\tag{474.3e}
+$$
+第二行用 (474.3c)–(474.3d)，其各非负项的方向正确。$y=2$ 时中间积分为空，单点不改变积分；原有限和中的跳点仍按 (474.3b) 的闭上端处理。
+
+第 443.12 条的原关系为
+$$
+\alpha_Q=\frac{c_Q}{\zeta_R(2)\prod_{p\mid Q}(1-p^{-2})},\qquad
+c_Q/\zeta_R(2)\le\alpha_Q\le c_Q.
+$$
+因此 $\alpha$ 具有同一上界；严格正性来自原共同差和的首个区间及正因子。令 $v=\log y$，则 $F_K(y)=(K\log v+\tfrac12+K-K\log\log2)/v\to0$。于是给定任意 $\eta>0$，可选有限 $y\ge2$ 使 $c_{\mathcal P(y)}<\eta$；所有系数非负，便得到原 $H_c$ 及 $\alpha$ 的下确界。每个固定有限支撑的系数仍严格正。证毕。
+

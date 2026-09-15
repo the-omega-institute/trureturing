@@ -1,0 +1,3 @@
+**证明。** 两个同余分别等价于 $q\mid E_n$ 于 $\mathcal O$ 与
+$q\mid L_n-1$ 于 $\mathbb Z$，故结论由 T2 得到。
+

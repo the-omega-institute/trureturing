@@ -242,6 +242,7 @@ public sealed partial class MakeWorkflowTests
         Assert.True(
             expectedExitCode == result.ExitCode,
             $"expected exit {expectedExitCode}, actual {result.ExitCode}\nstdout:\n{output}\nstderr:\n{error}");
+        Assert.Contains($"fixture-admission-exit={admissionExitCode}\n", output, StringComparison.Ordinal);
     }
 
     [Theory]
@@ -309,6 +310,7 @@ public sealed partial class MakeWorkflowTests
         Assert.True(
             expectedExitCode == result.ExitCode,
             $"expected exit {expectedExitCode}, actual {result.ExitCode}\nstdout:\n{output}\nstderr:\n{Encoding.UTF8.GetString(result.StandardError)}");
+        Assert.Contains($"fixture-admission-exit={admissionExitCode}\n", output, StringComparison.Ordinal);
         Assert.Contains("[preflight] dotnet", output, StringComparison.Ordinal);
         Assert.Equal(gitStateBefore, File.ReadAllBytes(gitState));
     }
@@ -648,6 +650,7 @@ public sealed partial class MakeWorkflowTests
             if [[ "${2:-}" == selftest ]]; then printf 'selftest\n'; exit 0; fi
             if [[ "${2:-}" == check ]]; then
               if [[ -n "${PREFLIGHT_EXPECTED_GATE_BASE:-}" && "$*" != *" --protected-base $PREFLIGHT_EXPECTED_GATE_BASE "* ]]; then exit 94; fi
+              printf 'fixture-admission-exit=%s\n' "$PREFLIGHT_ADMISSION_RC"
               exit "$PREFLIGHT_ADMISSION_RC"
             fi
             if [[ "${2:-}" == filemap-conform ]]; then exit 0; fi
@@ -692,6 +695,14 @@ public sealed partial class MakeWorkflowTests
     [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
     private static void WriteHarnessGateChainReportPair(string candidateRoot)
     {
+        LeanReportRegistrationFixture.Install(candidateRoot);
+        foreach (var relative in new[] { "Trureturing.lean", "lean-toolchain", "lake-manifest.json",
+                     "lakefile.toml", "tools/scripts/worktree/lean-cache-publish.sh" })
+        {
+            var path = Path.Combine(candidateRoot, relative);
+            Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+            File.WriteAllText(path, "fixture\n");
+        }
         CopyAdmissionBaseLibraryIfPresent(candidateRoot);
         CopyResourceObservationLibrary(candidateRoot);
         CopyBannedApiCompileFailProof(candidateRoot);

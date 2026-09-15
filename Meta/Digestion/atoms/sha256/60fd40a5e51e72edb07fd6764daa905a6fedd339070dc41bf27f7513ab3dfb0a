@@ -1,0 +1,8 @@
+**定义。** 令 $F_0=0,F_1=1,F_{i+2}=F_{i+1}+F_i$，$\varphi^2=\varphi+1$，并定义
+
+$$
+\mathcal R=\mathbb N^{(\mathbb N)},\qquad
+v(r)=\sum_i r_iF_{i+2},\qquad
+\beta(r)=\sum_i r_i\varphi^{i+2}\in\mathbb Z[\varphi].
+$$
+

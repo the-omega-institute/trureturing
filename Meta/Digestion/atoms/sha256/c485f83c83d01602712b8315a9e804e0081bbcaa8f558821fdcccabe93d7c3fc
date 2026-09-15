@@ -1,0 +1,42 @@
+### 79.2 物理编码的最小接口
+
+设 $\mathcal H_S$ 是完整系统，$\mathcal H_R$ 是候选记忆空间。下面把一个“可独立访问的量子记忆”作为额外的强假设，定义为一对映射
+
+$$
+\iota:\mathcal B(\mathcal H_R)\longrightarrow\mathcal B(\mathcal H_S),
+\qquad
+\mathcal R:\mathcal B(\mathcal H_S)\longrightarrow\mathcal B(\mathcal H_R),
+$$
+
+其中 $\iota$ 要求为 Heisenberg 意义下的保单位 $*$-单同态（若只给 UCP 映射，则还须另加 complete-order embedding 假设），$\mathcal R$ 是保单位完全正映射，并满足
+
+$$
+\mathcal R\circ\iota=\operatorname{id}_{\mathcal B(\mathcal H_R)}.
+$$
+
+若只要求把完整演化商到记忆上，要求某个记忆演化 $H_R$ 满足
+
+$$
+\mathcal R\circ H=H_R\circ\mathcal R.
+$$
+
+这三条分别保证代数嵌入、Heisenberg 商的可定义性和预测闭合；它们是定义中的额外条件，不是由 operator system 自动得到的。若要求记忆内部作为完整子系统演化，还要加强为
+
+$$
+H\circ\iota=\iota\circ H_R.
+$$
+
+在 Schrödinger 对偶方向，这些 UCP 条件对应相应的 CPTP 编码与解码条件。它们比“$V$ 是一个稳定实向量空间”严格得多。
+
+在有限维情形，若只要求任务效果而非整个矩阵代数，则可以把 $\mathcal R$ 的像限制为一个含单位的 Hermitian operator system；这正是第 77--78 节可见空间的适用范围。若要求任意后续量子操作都能在记忆内实现，则必须进一步验证乘法闭合或给出一个更大的代数载体。因而“对象”至少有两层：
+
+$$
+\text{任务对象}=\text{对指定实验闭合的 operator system},
+$$
+
+$$
+\text{量子子系统}=\text{带完全正编码与回收的代数对象}.
+$$
+
+把第一层直接称为第二层，会把预测充分性误报成物理可实现性。
+

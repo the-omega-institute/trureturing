@@ -14,14 +14,8 @@
 # Release 不存在或不可用时，`lake exe cache get` 加冷构建仍能建立第一份归档。
 # 它不读写 Actions project-build cache，避免每个 sources 地址占一份约 1.8 GB 的仓库缓存。
 #
-#   1. `lean-report-input.sh:135-140` 把 ci.yml 中 `lean-inspect:` 到 `baseline-admission:`
-#      的**切片文本**折进 Lean 报告的输入闭包，并解析其中的脚本引用。发布脚本若出现在那段里，
-#      改它一行就会让每一份 canonical Lean 报告作废、本地与 CI 全量重算。
-#   2. `Cf10WorkflowSeparatesLeanInspectionFromDotnetAdmission` 禁止 `baseline-admission:`
-#      到文件末尾的切片出现 `.lake` / `elan` / `lake build`。
-#   两段切片首尾相接，覆盖了 ci.yml 中 lean-inspect 之后的全部文本。
-#   3. 加进 ci.yml 会把它推到 922 行，越过 SL-003 的 800 行硬线；第 8 条要的是裂桶，不是抬阈值。
-# 三条一致指向同一个结论：发布是独立关注点，就该住在自己的文件里。
+# Report input selection is owned by the registered lean-report-inputs.json manifest.
+# This scheduled publisher only requires Lean products; report production is optional.
 name: Lean build cache publication
 
 # 【触发形态：2026-08-21 owner 定「做成定时的就行」】
@@ -90,13 +84,8 @@ jobs:
   #   两席都禁止用「5000/hour」这类文档常数代替实测 header —— 故这里只做三次真调用,
   #   把 `X-RateLimit-*` 原样打进日志,不判任何东西。
   #
-  #   为什么放在这个 workflow 而不是新建文件:`.github` 在 RepositoryPathPolicy 里是
-  #   **白名单**,新增控制工件要在 `tools/` 下具名登记,而 `tools/` 在 Lean 报告输入闭包
-  #   里 —— 两行常量换一次全量报告重算(2026-08-21 实测 84 分钟)。本 workflow 已登记,
-  #   且**不在**该闭包内(闭包只含 `ci.yml`,见 `lean-report-input.sh:108`),故零连带成本。
-  #
   #   **已知的作用域限制**:本 job 跑在 `schedule` 事件下,而 C 门要用的核验发生在
-  #   `pull_request_target` 下。两者的配额桶是否同一个,正是本探测要回答的问题之一 ——
+  #   原生 `pull_request` 下。两者的配额桶是否同一个,正是本探测要回答的问题之一 ——
   #   读数里的 `X-RateLimit-Resource` 会说明它是按什么维度计的。**在读到之前不得假定相同。**
   publish:
     name: Publish the Lean build cache

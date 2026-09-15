@@ -1,0 +1,7 @@
+**证明。** 标量比较于是得到
+
+\[
+z_\delta(t)\leq e^{-\gamma t}z_\delta(0)
++\left(\frac{\rho}{\gamma}+\delta\right)(1-e^{-\gamma t}).
+\]
+

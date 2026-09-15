@@ -1,0 +1,33 @@
+**定理 9.4（辅助系统一致的有限前缀界）。** 对标签数$d=|\mathsf X|\ge2$，有
+$$
+\frac{q(C)}2
+\le \varepsilon_\diamond(C)
+\le \frac{d-1}{2}q(C).
+$$
+因此在固定有限$d$下，任意一列有限前缀Schur通道满足
+$$
+q(C_N)\longrightarrow0
+\quad\Longleftrightarrow\quad
+\varepsilon_\diamond(C_N)\longrightarrow0.
+$$
+这个结论只给出上下界，不声称一般情形下的精确diamond范数公式。
+
+证明。取任意参考系统$R$和密度态$\omega_{SR}$，按系统标签分块为$\omega_{SR}=[\omega_{xy}]_{x,y}$，并令$p_x=\operatorname{tr}(\omega_{xx})$。正块矩阵的Cauchy--Schwarz因子化给出
+$$
+\|\omega_{xy}\|_1\le\sqrt{p_xp_y}.
+$$
+于是
+$$
+\begin{aligned}
+\mathsf d\!\left((\Phi_C\otimes\operatorname{id})(\omega),
+(\Delta\otimes\operatorname{id})(\omega)\right)
+&\le \frac12\sum_{x\ne y}|C_{xy}|\,\|\omega_{xy}\|_1\\
+&\le \frac{q(C)}2\sum_{x\ne y}\sqrt{p_xp_y}\\
+&=\frac{q(C)}2\left[\left(\sum_x\sqrt{p_x}\right)^2-1\right]\\
+&\le\frac{d-1}{2}q(C),
+\end{aligned}
+$$
+其中最后一步使用Cauchy--Schwarz和$\sum_xp_x=1$。下界取一个达到$q(C)$的标签对$x,y$，并使用系统纯态$(|x\rangle+e^{i\varphi}|y\rangle)/\sqrt2$、参考系统一维；此时输出差的迹距离为$q(C)/2$。证毕。
+
+定理9.4把第8.14节的系统态上界提升为带任意有限纠缠参考的操作性上界，但它仍然是固定有限标签、有限前缀的陈述。它不说明记录是否可访问，也不把项目一致性no-go变成全局态存在定理：可操作稳定性与跨前缀可拼接性是两个独立条件。
+

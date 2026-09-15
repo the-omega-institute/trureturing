@@ -1,0 +1,29 @@
+### 定义 58.1（规范黄金读数与刻度残差）
+
+令
+
+$$
+\phi=\frac{1+\sqrt5}{2},\qquad
+G_j=F_{j+2},
+$$
+
+并令 $s(n)$ 是低位到高位的规范 Zeckendorf 行。置
+
+$$
+\Lambda_Z(s(n))
+=
+\sum_{j\ge0}\phi^{j+2}s(n)_j,
+\qquad
+\gamma_Z(n)
+=
+\frac{\Lambda_Z(s(n))}{\sqrt5},
+$$
+
+其中和因 $s(n)$ 有限支撑而有限；这正是 Z 卷定义 19 的黄金值 $\beta$ 在单行规范数字上的限制。定义刻度残差
+
+$$
+\eta_Z(n)=\gamma_Z(n)-n.
+$$
+
+这里的 $\gamma_Z$ 是一个读数坐标，不是新的整数运算，也不是物理能量或 Hamiltonian 的定义。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8c68d75c4c19bb6da517e5a4ee11d7303d768637c1efc30bb4709a43ac4bd450
+  normalized_sha256: sha256:8c68d75c4c19bb6da517e5a4ee11d7303d768637c1efc30bb4709a43ac4bd450
+cas_ref: sha256:8c68d75c4c19bb6da517e5a4ee11d7303d768637c1efc30bb4709a43ac4bd450
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Evidence and corrections section heading; contains no mathematical proposition.
+    previous_atom_id: 56f70f84815704e1655402657137a3adad45196d078fb61079807f357134ca2d
+    next_atom_id: c58de959cb3921e11093180d516596986c79a527ca6cbc48bac15b1dd5e845f7

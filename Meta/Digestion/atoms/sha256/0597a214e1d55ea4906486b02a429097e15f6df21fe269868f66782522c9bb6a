@@ -1,0 +1,6 @@
+**定理 370.4。** 给定实际数字双射 $b_Y:Y\to C_Y$，原对象提升与数字对象提升分别为
+$$
+h_Y(c)=\operatorname{Enc}(b_Y^{-1}(c)),\qquad
+e_Y(c)=\operatorname{Enc}(c)\quad(c\in C_Y).
+$$
+它们的精确像分别为 $Y^*$、$\operatorname{Enc}[C_Y]$，逆分别为 $b_Y\circ\operatorname{Dec}|_{Y^*}$、$\operatorname{Dec}|_{\operatorname{Enc}[C_Y]}$。

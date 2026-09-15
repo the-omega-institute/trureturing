@@ -138,12 +138,23 @@ public sealed partial class CoverAtomTests
     [Fact]
     public void CoverWithoutProducerEmissionWritesCoverageWithoutScribeReceipts()
     {
-        var (result, after, before, _) = Execute(new CoverSpec { VerifyScribe = false });
+        var (result, after, before, afterDocument) = Execute(new CoverSpec { VerifyScribe = false });
 
         Assert.True(result.Success, result.Error);
-        Assert.Contains("deletable_now=1", result.Output, StringComparison.Ordinal);
+        Assert.Contains(
+            $"COVER atom_id={CoverWorld.DefaultAtomId} gid=D5/S0/Carrier/Probe.probe ledger_changed=true\n",
+            result.Output,
+            StringComparison.Ordinal);
+        Assert.DoesNotContain("DIGEST_STATUS ", result.Output, StringComparison.Ordinal);
+        Assert.DoesNotContain("ENTRY ", result.Output, StringComparison.Ordinal);
+        Assert.DoesNotContain("GAP atom=", result.Output, StringComparison.Ordinal);
         Assert.NotEqual(before, after);
         Assert.DoesNotContain("scribe:", after, StringComparison.Ordinal);
+        var entry = Assert.Single(
+            afterDocument.RequireDigestionEntries(),
+            candidate => candidate.AtomId == CoverWorld.DefaultAtomId);
+        Assert.Equal(DigestionMigrationState.Absorbed, entry.ProjectedStatus.Migration);
+        Assert.Equal(DigestionTruthState.Closed, entry.ProjectedStatus.Truth);
     }
 
     [Fact]

@@ -1,0 +1,7 @@
+**命题。** 对每个 $k\in\mathbb N$，
+
+$$
+\beta(\operatorname{shift}_k(r))=\varphi^k\beta(r),
+\qquad v_k(r)=\pi(\varphi^k\beta(r)).
+$$
+

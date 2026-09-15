@@ -29,7 +29,7 @@ dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration 
 dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- route MANIFEST|-
 dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- selftest
 dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- topology
-dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- worktree --kind KIND --name NAME --path DIR [--base REV] [--skip-restore]
+dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- worktree --branch NAME --path DIR [--base REV] [--skip-restore]
 ```
 
 Lean inspection and .NET admission are separate programs. The inspector runs in
@@ -37,35 +37,9 @@ the pinned Lean environment and emits source-bound canonical JSON plus a SHA-256
 sidecar; `check` consumes the candidate report without invoking Lean. Baseline and fork-point
 state remain Git object snapshots used by repository rules.
 
-`worktree` fetches a remote base and creates a worktree without `.lake`, restoring
-locked .NET dependencies unless `--skip-restore` is explicit.
-`make lean-cache-ensure` is an optional explicit step to validate and materialize
-private dependency sources and select the cache. `make lean` and `make lean-report`
-use the same preparation when invoking Lean, read native Lake artifacts, and restore
-ordinary private `.lake/build` outputs. Missing artifacts build locally. Mathlib
-downloads use each tree's `.lake/mathlib-cache`; private mode retains the separate
-GitHub release fallback for project outputs.
-
-The shared store is `<git-common-dir>/stratalint-lake/lean-<version>/<os>-<arch>`,
-selected by the pinned toolchain and platform. Lake owns the hashes and input
-mappings; commits and complete manifest bytes do not partition the store.
-Normal commands, including main-checkout builds, are readers and clear inherited
-cache writer/path overrides. Shared mode and warming are supported on macOS with
-`sandbox-exec`, which denies shared-subtree writes by commands and their descendants;
-native hardlink restores fall back to copying. Other platforms use private caches
-when no shared store exists and reject shared mode.
-
-Only `make warm-donor` in the physical, clean main `dev` checkout writes the local
-shared store. It holds an exclusive warmer lock and the main `.lake` lock across
-pull, ensure, build and publication. Private native Lake staging preserves older
-input mappings; artifacts are detached from mutable build outputs before
-publication. Complete artifacts precede atomic replacement of each complete mapping
-file, so existing readers remain usable during warming and interrupted publication
-without taking the warmer lock.
-
-Existing independent private build outputs remain usable; whole-build donor copying
-and reverse publication are removed. `.lake` and its build, packages and cache
-directories must not be symlinks. Readers reject shared symlinks and hardlink aliases.
-Cache owners must migrate old aliases with related readers and warmers stopped,
-restoring independent files and rebuilding affected shared artifacts from trusted
-outputs if those aliases may have allowed writes. Readers never repair shared storage.
+`worktree` fetches a remote base and creates the worktree with no `.lake` directory.
+The canonical Lean wrapper materializes a private cache on demand, using an APFS
+`clonefile(2)` donor copy on macOS when possible and `lake exe cache get` otherwise;
+`make lean-cache-ensure` is an explicit, optional prewarm target. The cache is never
+shared through a symlink, and worktree creation restores locked .NET dependencies
+unless `--skip-restore` is explicit.

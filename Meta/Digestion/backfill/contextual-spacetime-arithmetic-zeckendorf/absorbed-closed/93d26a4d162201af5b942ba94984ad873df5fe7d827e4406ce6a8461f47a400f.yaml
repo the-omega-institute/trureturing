@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:93d26a4d162201af5b942ba94984ad873df5fe7d827e4406ce6a8461f47a400f
+  normalized_sha256: sha256:93d26a4d162201af5b942ba94984ad873df5fe7d827e4406ce6a8461f47a400f
+cas_ref: sha256:93d26a4d162201af5b942ba94984ad873df5fe7d827e4406ce6a8461f47a400f
+coverage_gids:
+  - gid: D5/S1/Digit/Infinite/SignedSeriesRange.signed_series_range
+    target_statement_id: sha256:9d47ee68a40e19a32785b1263984b7d633188221567107d16f3612d0578f9777
+receipts:
+  unresolved_subitems: []

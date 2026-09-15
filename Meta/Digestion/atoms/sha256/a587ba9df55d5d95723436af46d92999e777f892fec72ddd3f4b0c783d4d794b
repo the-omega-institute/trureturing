@@ -1,0 +1,2 @@
+**定义 4.1（相对自性与相对空）**〔semantic〕。给定账本族 $\mathscr L$，称 $P$ 在 $\mathscr L$ 上有相对自性（svabhāva），当且仅当 $\forall L\in\mathscr L,\ s_L(P)=\mathsf{frozen}$；称它在该族上空，当且仅当上述全称式不成立。这里的参数是整个账本族；空族上的全称式按通常逻辑成立，不额外赋予其存在含义。
+

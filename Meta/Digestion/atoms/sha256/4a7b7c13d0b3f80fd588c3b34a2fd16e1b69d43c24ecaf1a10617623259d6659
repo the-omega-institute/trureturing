@@ -1,0 +1,10 @@
+**定理。** 因此可见状态满足精确 Volterra 方程
+
+\[
+x'(t)=-ax(t)+be^{-dt}y(0)
++\int_0^tK(t-s)x(s)\,ds,
+\qquad
+\boxed{K(\tau)=-b^2e^{-d\tau}.}
+\tag{12.14}
+\]
+

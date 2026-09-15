@@ -1,0 +1,13 @@
+**证明。** 对 $r\in\{0,\ldots,59\}$，依次令
+
+$$
+w=r\bmod2,\qquad
+z=\lfloor r/2\rfloor\bmod2,\qquad
+y=\lfloor r/4\rfloor\bmod3,\qquad
+x=\lfloor r/12\rfloor.
+$$
+
+这些值属于 $R$ 的相应因子，连续使用带余除法可恢复
+$r=12x+4y+2z+w$，且恢复唯一。六位二进制编码覆盖 $0$ 至 $63$，
+故像的补集恰为所列四个码。
+

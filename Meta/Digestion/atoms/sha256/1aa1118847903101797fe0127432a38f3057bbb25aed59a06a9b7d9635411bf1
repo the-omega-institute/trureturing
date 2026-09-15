@@ -1,0 +1,33 @@
+**定理 483.4（同函数、同长度和同计数的分离及最低判别损失）。** 在最大图中，$\operatorname{Adm}_{\mathscr G_{\max}}$ 不能经 $O_0,O_\ell,O_c$ 中任何一个的实际像因子化。特别是
+$$
+A_2A_3A_5,\qquad A_5A_3A_2
+$$
+具有相同的整个净函数 $x\mapsto x+10$、相同词长三和相同带类型字母多重集，却分别成功、失败。
+
+对观察 $O$，准入判别由函数 $u:O[\mathcal E_X]\to[0,1]$ 给出：在该读数处以概率 $u$ 判为成功，额外随机性在给定读数后不再依赖真实纤维代表。定义原全域误判概率及其 $\mathcal F_{10}$ 部分为
+$$
+\begin{aligned}
+R_O(u)
+&=\sum_{\gamma\in\mathcal E_X}
+\frac{t^{|\gamma|}}{Z_X(t)}
+\left[(1-\operatorname{Adm}(\gamma))u(O\gamma)
++\operatorname{Adm}(\gamma)(1-u(O\gamma))\right],\\
+R_{O,10}(u)
+&=\sum_{\gamma\in\mathcal F_{10}}
+\frac{t^{|\gamma|}}{Z_X(t)}
+\left[(1-\operatorname{Adm}(\gamma))u(O\gamma)
++\operatorname{Adm}(\gamma)(1-u(O\gamma))\right],
+\end{aligned}
+$$
+其中 $\operatorname{Adm}=\operatorname{Adm}_{\mathscr G_{\max}}$。这个指定纤维所迫的准确最低贡献为
+$$
+\min_u R_{O_0,10}(u)
+=\min_u R_{O_\ell,10}(u)
+=\frac{t^2+2t^3}{Z_X(t)},\qquad
+\min_u R_{O_c,10}(u)=\frac{2t^3}{Z_X(t)}.
+\tag{483.5}
+$$
+相应数值分别是所有只读该观察的判别在整个 $\mathcal E_X$ 上的误判下界；等式只断言该纤维贡献的最小值，不断言其它观察纤维可全部无误判。$11\le X<13,t=1$ 时，仅净函数或再加词长的全域下界为 $1/24$，再加字母计数的全域下界为 $1/36$。
+
+在任意实际子图中，若三条所列成功词中至少一条仍有合法完整提升，则关于 $O_0,O_\ell$ 的非因子化继续成立。若 $A_2A_3A_5$ 或 $A_3A_2A_5$ 至少一条仍有合法完整提升，则关于 $O_c$ 的非因子化也继续成立。准确三词分类及式 (483.5) 声明于最大图。
+

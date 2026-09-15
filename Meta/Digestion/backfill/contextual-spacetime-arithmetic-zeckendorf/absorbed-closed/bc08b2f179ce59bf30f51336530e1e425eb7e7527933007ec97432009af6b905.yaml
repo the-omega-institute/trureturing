@@ -1,0 +1,14 @@
+fingerprints:
+  raw_sha256: sha256:bc08b2f179ce59bf30f51336530e1e425eb7e7527933007ec97432009af6b905
+  normalized_sha256: sha256:bc08b2f179ce59bf30f51336530e1e425eb7e7527933007ec97432009af6b905
+cas_ref: sha256:bc08b2f179ce59bf30f51336530e1e425eb7e7527933007ec97432009af6b905
+coverage_gids:
+  - gid: D5/S1/Digit/Admissibility/WindowCapacityExtrema.capacity_isGreatest_and_eq_iff
+    target_statement_id: sha256:0d478c68e9924cd1c41dbdaf47737a770fb79ef0866ea3a8e4a6e6147064ebf2
+  - gid: D5/S1/Digit/Admissibility/WindowCapacityExtrema.state_product_le_capacity_and_eq_iff
+    target_statement_id: sha256:bd80405472fa376b99bb864e9fea64bc4003736d4dae1c8e493a76b2f6186f78
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 018b66ad5bb4995eff2845ac26a68d3e11527b6446944049c30beacedf918db5
+    - daf58cf272c148f02a5299f71484add13a9b5643fc2e411234b5b6bb6e30da0d

@@ -1,0 +1,8 @@
+**证明。** 对 T1 分别应用 $\sigma_+$ 与 $\sigma_*$，得到前两式。
+再使用 $\varphi\psi=-1$ 及 $n$ 为奇数，得到
+
+$$
+\sigma_+(E_n)\sigma_*(E_n)
+=(L_n-1)^2(\varphi\psi)^n
+=-(L_n-1)^2.
+$$

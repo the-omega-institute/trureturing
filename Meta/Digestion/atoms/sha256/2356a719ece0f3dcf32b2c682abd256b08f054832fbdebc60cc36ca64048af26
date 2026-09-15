@@ -1,0 +1,9 @@
+**命题 33.2（信念细化的最坏风险单调性）。** 若 $\mathcal{F}'\subseteq\mathcal{F}$ 且两者都非空，则对每个动作 $a$ 有
+$$
+R_{\mathcal{F}'}(a)\le R_{\mathcal{F}}(a),
+$$
+并且
+$$
+V(\mathcal{F}')\le V(\mathcal{F}).
+$$
+

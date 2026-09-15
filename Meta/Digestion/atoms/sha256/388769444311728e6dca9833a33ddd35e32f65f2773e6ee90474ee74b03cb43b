@@ -1,0 +1,24 @@
+**定义 51.1（历史记录模型）。** 设系统 $S$ 的候选经典标签为 $a$，环境分解为
+
+$$
+E=E_1\otimes\cdots\otimes E_N,
+$$
+
+并取退相干型相互作用
+
+$$
+H_{\mathrm{int}}=\sum_a \Pi_a\otimes B_a,
+$$
+
+其中 $\{\Pi_a\}$ 是候选指针分解。若初态含有两个标签的相干项 $|a\rangle\langle b|$，在环境演化后其系统系数写成
+
+$$
+\rho_{ab}(t)=\rho_{ab}(0)\,\Gamma_{ab}(t).
+$$
+
+当环境片段独立耦合时，退相干因子分解为
+
+$$
+\Gamma_{ab}(t)=\prod_{k=1}^{N}\gamma_{ab}^{(k)}(t).
+$$
+

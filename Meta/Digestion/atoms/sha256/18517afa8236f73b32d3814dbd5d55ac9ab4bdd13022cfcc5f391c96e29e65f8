@@ -1,0 +1,9 @@
+**定理。** 对所定义的 $u,\delta$，有
+
+$$\delta\in\Pi_g''\cap\gamma_6\Pi_g,\qquad
+\tau(\delta)\delta^{-1}\in\gamma_8\Pi_g.$$
+
+若 $F$ 的幂零类至多为 5，则每个同态 $\sigma:\Pi_g\to F$ 对全部整数 $n$ 满足
+
+$$\sigma(\tau^n(u))=\sigma(u).$$
+

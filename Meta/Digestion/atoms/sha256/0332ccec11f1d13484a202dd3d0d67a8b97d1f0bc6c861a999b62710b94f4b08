@@ -1,0 +1,9 @@
+**证明。** 若 $e=T_L(m)$ 且 $m\ne0$，取
+$k=\lfloor m\alpha\rfloor$ 及
+$h=B_Lm+C_Lk$。数 $m\alpha$ 不是整数，故
+$0<m\alpha-k<1$；GC1 随即给出窗口不等式。
+反之，由窗口中的 $e,h$ 按 GC2 恢复 $m,k\in\mathbb Z$。
+GC1 把窗口不等式化为 $0<m\alpha-k<1$，所以
+$k=\lfloor m\alpha\rfloor$。若 $m=0$，则该不等式要求整数 $k$
+严格位于 $(-1,0)$，矛盾；故 $m\ne0$，并且 $e=T_L(m)$。
+

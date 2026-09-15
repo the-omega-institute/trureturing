@@ -1,0 +1,35 @@
+**定理 10.1（粗标签预测缺陷）。** 有精确等式
+$$
+\epsilon_Q(\mathcal E,K)
+=\sup_\rho\operatorname{TV}\!\left(C_Q(\mathcal E(\rho)),KC_Q(\rho)\right),
+$$
+上确理由全部系统密度矩阵取得。对全部输入态存在零缺陷的经典律，当且仅当
+$$
+\mathcal E^*(\mathcal A_Q)\subseteq\mathcal A_Q.
+$$
+此时$K$唯一，并满足
+$$
+K(b\mid a)=\frac{\operatorname{tr}\left(Q_a\mathcal E^*(Q_b)\right)}{\operatorname{rank}Q_a}.
+$$
+
+一般情形的最优缺陷
+$$
+\epsilon_Q^*(\mathcal E)=\min_K\epsilon_Q(\mathcal E,K)
+$$
+可由有限半正定优化取得：最小化$\epsilon$，约束$K$列随机以及对全部$B$
+$$
+-\epsilon I\preceq
+\mathcal E^*(Q_B)-\sum_aK(B\mid a)Q_a
+\preceq\epsilon I.
+$$
+
+证明。对概率向量有$\operatorname{TV}(p,q)=\max_B|p(B)-q(B)|$；对Hermitian$D$有$\sup_\rho|\operatorname{tr}(\rho D)|=\|D\|$。交换两个有限最大值即得第一式。零缺陷等价于每个$\mathcal E^*(Q_b)$属于粗块代数；正性与$\mathcal E^*(I)=I$给出非负系数和列和为一，压缩到$Q_a$并取迹得到唯一系数。有限随机矩阵集上的连续最小化达到，算子范数界等价于两侧半正定约束。证毕。
+
+将缺陷拆成
+$$
+\mathcal E^*(Q_B)-\sum_aK(B\mid a)Q_a
+=\bigl[\mathcal E^*(Q_B)-B_Q(\mathcal E^*(Q_B))\bigr]
++\bigl[B_Q(\mathcal E^*(Q_B))-\sum_aK(B\mid a)Q_a\bigr]
+$$
+可分别看出粗块间相干和粗块内部状态对未来读数的影响。粗块间退相干只消除第一项。
+

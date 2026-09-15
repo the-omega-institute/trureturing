@@ -1,0 +1,97 @@
+**定理 45.1（固定存储预算下的迹范数扰动界）。** 固定整数 $D,m\ge1$ 与 $1\le q\le D$。对 $\mathbb C^D$ 上的任意有限 Hermitian 矩阵表
+
+$$
+\mathbf H=(H_1,\ldots,H_m),
+$$
+
+沿用第 42 节的存储域：通道输出至任意有限个免费经典标签，每个标签携带至多 $q$ 维量子系统，各分支输出不归一化且不作后选择。定义
+
+$$
+V_q(\mathbf H)=\sup_\Phi\sum_{j=1}^m\|\Phi(H_j)\|_1,
+\qquad
+B(\mathbf H)=\sum_{j=1}^m\|H_j\|_1,
+\qquad
+\Delta_q(\mathbf H)=B(\mathbf H)-V_q(\mathbf H).
+$$
+
+这里不同矩阵表上的最优通道可以不同，但允许的通道集合由同一组 $D,m,q$ 固定。对另一组同维同长矩阵表 $\mathbf H'=(H'_1,\ldots,H'_m)$，令
+
+$$
+d_1(\mathbf H,\mathbf H')=
+\sum_{j=1}^m\|H_j-H'_j\|_1.
+$$
+
+则
+
+$$
+\boxed{
+|V_q(\mathbf H)-V_q(\mathbf H')|
+\le d_1(\mathbf H,\mathbf H'),
+\qquad
+|\Delta_q(\mathbf H)-\Delta_q(\mathbf H')|
+\le2d_1(\mathbf H,\mathbf H').
+}
+$$
+
+不要求任何输入差可逆。若仅改变同一密度矩阵对 $A,J$ 的权重，令 $H_j=c_jA-J$、$H'_j=c'_jA-J$，则距离精确为
+
+$$
+d_1(\mathbf H,\mathbf H')=\sum_{j=1}^m|c_j-c'_j|.
+$$
+
+定义最小无损量子寄存器维数
+
+$$
+q_{\min}(\mathbf H)=
+\min\{q\in\{1,\ldots,D\}:\Delta_q(\mathbf H)=0\}.
+$$
+
+第 42 节的达到性使 $\Delta_q=0$ 等价于存在有限标签的逐项无损通道。对每个固定 $q$，集合 $\{\mathbf H:q_{\min}(\mathbf H)\le q\}$ 是闭集。因此 $q_{\min}$ 是下半连续的：在任意固定矩阵表处，足够小的扰动不能降低该处的最小无损量子维数，但可以使它升高。
+
+证明。首先，对 Hermitian 矩阵 $X=X_+-X_-$，正性与迹保持给出
+
+$$
+\|\Phi(X)\|_1
+\le\|\Phi(X_+)\|_1+\|\Phi(X_-)\|_1
+=\operatorname{tr}X_++\operatorname{tr}X_-
+=\|X\|_1.
+$$
+
+所以 $0\le V_q(\mathbf H)\le B(\mathbf H)$。对任一共同允许通道，反三角不等式与上述收缩性给出
+
+$$
+\begin{aligned}
+\left|\sum_j\|\Phi(H_j)\|_1
+-\sum_j\|\Phi(H'_j)\|_1\right|
+&\le\sum_j\|\Phi(H_j-H'_j)\|_1\\
+&\le d_1(\mathbf H,\mathbf H').
+\end{aligned}
+$$
+
+该界对整个允许通道集合一致。先取一侧上确界，再交换两组矩阵表，便得到 $V_q$ 的扰动界；这一步不要求两组最优通道相同，也不预先使用最大值达到性。对 $B$ 直接用反三角不等式同样得到
+
+$$
+|B(\mathbf H)-B(\mathbf H')|
+\le d_1(\mathbf H,\mathbf H').
+$$
+
+将两式相加即得 $\Delta_q$ 的系数二界。仅改变权重时，$H_j-H'_j=(c_j-c'_j)A$，而 $A\ge0$、$\operatorname{tr}A=1$，所以 $\|H_j-H'_j\|_1=|c_j-c'_j|$。
+
+预算从 $q$ 增大时，可以把原输出量子系统等距嵌入较大空间，故 $V_q$ 不减而 $\Delta_q$ 不增。恒等存储使用 $q=D$ 即可无损，所以 $q_{\min}$ 的定义集合非空。第 42 节的有限达到论证对任意有限 Hermitian 表都成立；各项范数损失非负，故达到的总损失为零，当且仅当每项损失为零。由此
+
+$$
+\{\mathbf H:q_{\min}(\mathbf H)\le q\}
+=\{\mathbf H:\Delta_q(\mathbf H)=0\}.
+$$
+
+右端是连续函数的零点集，因此闭，给出下半连续性。更具体地，若 $q_0=q_{\min}(\mathbf H)>1$，则 $\Delta_{q_0-1}(\mathbf H)>0$。只要
+
+$$
+d_1(\mathbf H,\mathbf H')
+<\frac12\Delta_{q_0-1}(\mathbf H),
+$$
+
+扰动界就保证 $\Delta_{q_0-1}(\mathbf H')>0$，从而 $q_{\min}(\mathbf H')\ge q_0$。若 $q_0=1$，同一结论由维数至少为一自动成立。
+
+这里的连续性控制最优分数与最优损失，没有把整数值的精确资源函数断言为连续。所用范数性质是 Schatten 迹范数的标准三角不等式与正算子迹公式；正且保迹映射的迹范数收缩性见 Watrous，*The Theory of Quantum Information*，[推论 3.40 及式 (3.241)](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)。免费经典标签上的有限达到性由第 42 节承担。证毕。
+

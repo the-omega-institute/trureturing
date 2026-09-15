@@ -1,0 +1,12 @@
+**定义。** 给定观察位置 $A\subseteq\mathbb Z$，令
+
+$$
+D(A)=\{m:m-1\in A\ \text{或}\ m\in A\}=A\cup(A+1).
+$$
+
+对目标位置 $B\subseteq\mathbb Z$，定义同一边界的两侧轨迹对的目标残差
+
+$$
+R(A;B)=\{m:\ell_m|_A=u_m|_A,\ \ell_m|_B\ne u_m|_B\}.
+$$
+

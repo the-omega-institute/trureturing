@@ -1,0 +1,34 @@
+### 82.4 对 Zeckendorf 合法空间的条件上界
+
+令
+
+$$
+D_L=|\mathcal W_L|=F_{L+2},
+\qquad
+\mathcal H_{Z,L}=\operatorname{span}\{|w\rangle:w\in\mathcal W_L\}.
+$$
+
+若明确把 $\mathcal H_{Z,L}$ 作为一个 $D_L$ 维物理 Hilbert 空间，并且所选仪器的 Heisenberg 效果在这个空间上满足完整性前提，那么把 $d=D_L$ 代入上述定理得到条件上界
+
+$$
+N_Z\le D_L^2-1
+=(F_{L+2})^2-1.
+$$
+
+同样，信息完整效果族存在一个至多
+
+$$
+(F_{L+2})^2-1
+$$
+
+个效果的有限证书。
+
+这只是一个载体维数上界。它没有从 Zeckendorf 递推自动推出实际 Hamiltonian、仪器完备性或实验可达性。若系统只允许某个受限 operator system，或存在块分解
+
+$$
+\mathcal A_Z^{\mathrm{block}}
+=\bigoplus_w M_{n_w}(\mathbb C),
+$$
+
+则可见深度取决于实际 Heisenberg 作用在该空间上的秩增长；不能只把 $F_{L+2}$ 代入 $d$ 而跳过物理载体的构造。
+

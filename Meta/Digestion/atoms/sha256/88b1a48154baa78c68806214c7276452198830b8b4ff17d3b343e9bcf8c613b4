@@ -1,0 +1,23 @@
+## 109. 禁止相邻 `11` 的均匀态：Fibonacci 标签与 bond 维数分离
+
+现在可以对第 104 节留下的受限 Schmidt 问题做一个完全有限的计算模型。令
+
+$$
+\mathcal W_L
+=
+\{w\in\{0,1\}^L:w_jw_{j+1}=0\},
+\qquad
+D_L=|\mathcal W_L|=F_{L+2},
+$$
+
+并取均匀纯态
+
+$$
+|\Psi_L\rangle
+=
+\frac1{\sqrt{D_L}}
+\sum_{w\in\mathcal W_L}|w\rangle.
+$$
+
+这一步是一个明确指定的有限量子模型；它不是声称仓库已有的 occupation sector 定理已经覆盖了相邻约束。
+

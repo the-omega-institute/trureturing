@@ -1,0 +1,8 @@
+**命题。** A_Q 保持交叉形式，U_Q²=0，且对每个整数 n，
+
+$$A_Q^n=I+nU_Q,\qquad
+\operatorname{tr}(A_Q^n)=2G,\qquad
+\det(xI-A_Q^n)=(x-1)^{2G}.$$
+
+这里整数经标准映射进入 R。
+

@@ -1,0 +1,29 @@
+**证明。** 对 $\delta>0$ 定义
+
+$$
+z_\delta(t)=\sqrt{\|u(t)\|^2+\delta^2}.
+$$
+
+被开方数严格为正，故在 $u(t)=0$ 时链式法则仍适用。记 $n=\|u(t)\|$、$z=z_\delta(t)$，则 $z\geq n$、$z\geq\delta$，并且
+
+$$
+z_\delta'(t)=\frac{\langle u(t),\dot u(t)\rangle}{z_\delta(t)}
+\leq-\gamma z_\delta(t)+\rho+\gamma\delta.
+$$
+
+最后一个不等式可在乘以正数 $z$ 后由恒等式
+
+$$
+(-\gamma z+\rho+\gamma\delta)z-(-\gamma n^2+\rho n)
+=\rho(z-n)+\gamma\delta(z-\delta)
+$$
+
+得到。标量 Gronwall 比较给出
+
+$$
+z_\delta(t)\leq e^{-\gamma t}z_\delta(0)
++\frac{\rho+\gamma\delta}{\gamma}\bigl(1-e^{-\gamma t}\bigr).
+$$
+
+由 $\|u(t)\|\leq z_\delta(t)$，再令 $\delta\downarrow0$，利用平方根与指数函数的连续性即得结论。
+

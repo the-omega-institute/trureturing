@@ -1,0 +1,63 @@
+**命题 8.15（访问集合、混态准备、联合相位与过弱补写的操作性反例）。** 下列构造都只涉及有限维、有限轮次，且不建立无限张量积状态。
+
+（零）每轮都有严格辨识力仍不保证无限前缀完全退相干。取二标签并令每轮重叠模为$|\gamma_t(0,1)|=\exp(-2^{-t})$，则$L_{01}(N)=\sum_{t=1}^N2^{-t}=1-2^{-N}$，从而$|\Gamma_{I_N}(0,1)|=\exp(-(1-2^{-N}))\to e^{-1}>0$。对初态$|+\rangle\langle+|$，系统相干距离趋于$e^{-1}/2$，全部记录的最优最坏二标签错误率趋于$(1-\sqrt{1-e^{-2}})/2>0$。缺少的是发散的累积区分预算，而不是形式上的无限个时间单元。
+
+（一）不可访问时间片与可读取时间片承担不同任务。取二标签，第一轮记录为$e_0^{(1)}=|0\rangle$、$e_1^{(1)}=|1\rangle$，其余轮次取同一个与标签无关的单位向量。令$D=\{1\}$、$F=\{2,\ldots,N\}$。则$\Gamma_D(0,1)=0$，而$|e_0^F\rangle=|e_1^F\rangle$。因此系统与可见记录已经精确达到由$D$控制的参考态，但在指定可读集合$F$上最优最坏错误率仍为$1/2$。若交换$D$与$F$，保留片段的可读性随之交换，而系统边缘仍由同一已执行的动力学决定；对有非零初始相干的输入，系统与新的可见片段的联合相干距离为$|\varrho_{01}|$，不能把“不可访问”自动算作“可读取”。
+
+（二）混态环境可造成边缘退相干而不提供可读记录。每轮取环境输入$I_2/2$，并用
+$$
+U=P_0\otimes I+P_1\otimes Z,\qquad Z=|0\rangle\langle0|-|1\rangle\langle1|.
+$$
+系统非对角乘子是$\operatorname{tr}((I_2/2)Z)=0$，所以系统边缘完全退相干；但两个标签下的环境输出都仍为$I_2/2$，任何读取POVM都不能获得标签信息。这一构造故意不满足定义8.1的纯准备态假设，说明“边缘退相干”与“条件记录可读”不能无条件推广为同一命题。
+
+（三）相同逐对重叠模不决定有限多标签联合判别误差。取三个标签、两轮、零阶段相位，并令
+$$
+G_+=\frac12I_3+\frac12\mathbf1\mathbf1^\dagger,\qquad
+G_-=\frac32I_3-\frac12\mathbf1\mathbf1^\dagger.
+$$
+两者都正半定且对角元为一，非对角元分别为$1/2$和$-1/2$。模型甲两轮都用$G_+$，模型乙第一轮用$G_-$、第二轮用$G_+$。两模型每个标签对的第一轮重叠模都是$1/2$，两轮联合重叠模都是$1/4$，但联合Gram矩阵分别为
+$$
+G_{\mathrm A}=\frac34I_3+\frac14\mathbf1\mathbf1^\dagger,\qquad
+G_{\mathrm B}=\frac54I_3-\frac14\mathbf1\mathbf1^\dagger.
+$$
+设$h_{\mathrm A}=[\sqrt{3/2}+\sqrt3]/3$，$h_{\mathrm B}=[1/\sqrt2+\sqrt5]/3$。两个Gram矩阵的平方根均有恒定对角元，平方根测量分别达到逐标签正确率
+$$
+s_{\mathrm A}=h_{\mathrm A}^2=\frac{(\sqrt{3/2}+\sqrt3)^2}{9},\qquad
+s_{\mathrm B}=h_{\mathrm B}^2=\frac{(1/\sqrt2+\sqrt5)^2}{9},
+$$
+且$s_{\mathrm A}\ne s_{\mathrm B}$。为证其为最坏标签最优值，令$A$为联合记录列矩阵、$T=AA^\dagger$，并令$T^{-1/2}$表示在$\operatorname{supp}T$上的逆平方根、在$\ker T$上为零的Moore--Penrose逆。由于每个$v_x$属于$\operatorname{supp}T$，对任意向量$z$，Cauchy--Schwarz给出
+$$
+|\langle v_x,z\rangle|^2\le\langle v_x,T^{-1/2}v_x\rangle\langle z,T^{1/2}z\rangle=h\langle z,T^{1/2}z\rangle,
+$$
+其中$h$是相应的恒定平方根对角元。因此$|v_x\rangle\langle v_x|\le hT^{1/2}$，任意POVM的等先验平均正确率至多为$h^2$；平方根测量达到该值，且逐标签相同，故最坏任务也达到该值。这个反例只改变联合Gram的相位符号，保留全部逐对模资料，却改变有限联合解码误差。
+
+（四）旧记录的零重叠不阻止后续Hamiltonian从不均匀人口制造指针基相干。取$0<p<1$且$p\ne1/2$，先写入并隐藏正交记录，使系统为$\rho_d=pP_0+(1-p)P_1$。给定$\tau_0>0$，令
+$$
+Y=\begin{pmatrix}0&-i\\ i&0\end{pmatrix},\qquad H=\frac{\pi\hbar}{4\tau_0}Y.
+$$
+则$U(\tau_0)=\exp(-i\pi Y/4)$，直接计算得
+$$
+U(\tau_0)\rho_dU(\tau_0)^\dagger=\frac12\begin{pmatrix}1&2p-1\\ 2p-1&1\end{pmatrix},\qquad
+\mathsf d\!\left(U\rho_dU^\dagger,\Delta(U\rho_dU^\dagger)\right)=\frac{|2p-1|}{2}>0.
+$$
+旧记录仍有零重叠，但它没有把后续系统Hamiltonian限制在指针代数内；这也没有恢复已经丢弃的初始相位。$p=1/2$时初态是最大混态，单独的酉不能制造相干，故该端点不属于反例。
+
+（五）任意密集但过弱的新鲜补写仍可能让系统翻转。取二标签、$\sigma_0=P_0$及
+$$
+H=\frac{\pi\hbar}{2\tau_*}X,\qquad X=|0\rangle\langle1|+|1\rangle\langle0|,\qquad r_N=\exp(-1/N^2).
+$$
+每个长度$h=\tau_*/N$的自由段后施加合法的新鲜Schur通道$\Phi_{r_N}=r_N\operatorname{id}+(1-r_N)\Delta$。没有写入时，$N$段自由演化把$P_0$变为$P_1$。对任意态$\rho$，
+$$
+\mathsf d(\Phi_{r_N}(\rho),\rho)=(1-r_N)\mathsf d(\Delta(\rho),\rho)\le1-r_N.
+$$
+逐轮用通道收缩性比较有写入和无写入的演化，得到
+$$
+\mathsf d(\sigma_N,P_1)\le N(1-r_N)\le\frac1N,\qquad
+\operatorname{tr}(P_0\sigma_N)\le\frac1N.
+$$
+虽然轮次任意增加，$r_N\to1$且$N(1-r_N)\to0$；系统仍趋近翻转态。这个例子与定理8.12的预算一致，说明“任意频繁”必须和每轮记录强度一起计量。
+
+上述六个构造（零）至（五）分别隔离累积预算、访问权限、准备态纯度、联合Gram相位、后续非对角动力学和补写强度。它们不提供实验或Lean验证，不给出普适经典性，不规定唯一全局结果；所有极限仍只是固定有限标签下有限前缀数列的极限。证毕。
+
+本节明确区分两类模型：前者依赖一个固定标签的有限产品记录，后者是“自由演化—新鲜固定标签Schur通道—取迹、无反馈”的交错递推。重复相互作用背景可参见Francesco Ciccarello、Salvatore Lorenzo、Vittorio Giovannetti、G. Massimo Palma，*Quantum collision models: open system dynamics from repeated interactions*，*Physics Reports* 954（2022）1--70，arXiv:2106.11974v2；Zeno背景可参见P. Facchi、S. Pascazio，*Quantum Zeno subspaces*，*Physical Review Letters* 89（2002）080401，arXiv:quant-ph/0201115v2。除已直接核查的Schur判据和二态判别基础外，不宣称这些背景文献给出本节常数或本节命题的优先性。本文没有实验、Lean或唯一结果的断言。
+

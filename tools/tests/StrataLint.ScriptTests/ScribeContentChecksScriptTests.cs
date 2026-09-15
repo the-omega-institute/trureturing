@@ -27,6 +27,20 @@ public sealed class ScribeContentChecksScriptTests
             fixture.Invocations);
     }
 
+    [Theory]
+    [InlineData("deleted-producer", "projections,describe-report")]
+    [InlineData("manifest", "projections,describe-report")]
+    [InlineData("blueprint", "describe-report,markdown-check")]
+    public void RegisteredProducerDeltaPreservesContentRouting(string change, string expected)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new ScribeContentFixture();
+        fixture.ChangeRegisteredInput(change);
+        var result = fixture.RunGate(0);
+        Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
+        Assert.Equal(expected.Split(','), fixture.Invocations);
+    }
+
     [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
     private sealed class ScribeContentFixture : IDisposable
     {
@@ -78,6 +92,11 @@ public sealed class ScribeContentChecksScriptTests
                 fi
                 PATH="$ORIGINAL_PATH" exec dotnet "$@"
                 """);
+            Write("Trureturing.lean", "-- fixture\n");
+            Write("lean-toolchain", "leanprover/lean4:v4.31.0\n");
+            Write("lake-manifest.json", "{}\n");
+            Write("lakefile.toml", "name = \"fixture\"\n");
+            LeanReportRegistrationFixture.Install(repository);
             RunGit("init", "--quiet");
             RunGit("config", "user.email", "stratalint@example.invalid");
             RunGit("config", "user.name", "StrataLint Tests");
@@ -90,6 +109,15 @@ public sealed class ScribeContentChecksScriptTests
 
         internal void ChangeFetcher() => ScriptHarnessScratch.AppendScratchText(
             Path.Combine(repository, CacheFetcherPath), "# fetch acceptance changed\n");
+
+        internal void ChangeRegisteredInput(string change)
+        {
+            if (change == "deleted-producer")
+                TemporaryFileSystem.File.Delete(Path.Combine(repository, "tools/StrataLint.Engine/Fixture.cs"));
+            else if (change == "manifest")
+                ScriptHarnessScratch.AppendScratchText(Path.Combine(repository, "lean-report-inputs.json"), "\n");
+            else Write("Blueprint/Probe.scribe.cs", "// document\n");
+        }
 
         internal ProcessOutput RunGate(int childExit) => TestProcessRunner.Run(
             "/bin/bash",

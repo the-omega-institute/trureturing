@@ -1,0 +1,2 @@
+**证明。** 中心平凡性给出 $s_\eta$ 的唯一性。对 $s\in S$，有 $t_\eta\lambda(s)t_\eta^{-1}=\lambda(s_\eta s s_\eta^{-1})$，所以经修正后的作用与 $\lambda(S)$ 交换。若将 $\eta$ 换为 $\operatorname{Ad}_x\eta$，则 $t_\eta$ 左乘 $\lambda(\bar x)$，$s_\eta$ 左乘 $\bar x$，两项修正相消。对两个代表 $\eta,\zeta$，有 $s_{\eta\zeta}=s_\eta s_\zeta$；将 $t_\eta=\lambda(s_\eta)\Psi_\ell(\gamma)$ 代入，再用修正作用与甲板作用交换，即得乘法保持性。
+

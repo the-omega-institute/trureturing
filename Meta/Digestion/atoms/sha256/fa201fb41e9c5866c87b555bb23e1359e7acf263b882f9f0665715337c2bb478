@@ -1,0 +1,8 @@
+**证明。** 前两式由 $\varphi=(1+\sqrt5)/2$ 与
+$\psi=(1-\sqrt5)/2$ 直接计算得到。由范数的乘法性，
+
+$$
+\operatorname N(\varphi^n)
+=(\varphi\psi)^n=(-1)^n.
+$$
+

@@ -1,0 +1,53 @@
+### R.14 奇素数的完整周期塔
+
+**定理。** 对任意奇素数 $p$ 与任意 $e\ge1$，
+
+$$
+\boxed{
+\pi(p^e)=r_p\,p^{\max(e-s_p,0)},
+\qquad s_p=\nu_p(C_{r_p}).
+}
+\tag{R18}
+$$
+
+**证明。** 由 Fibonacci 递推，
+$C_{r_p}=\gcd(F_{r_p},F_{r_p-1}-1)$。结合 $s_p$ 的定义与 R2，
+$\varphi^{r_p}-1$ 的两个整数坐标都被
+$p^{s_p}$ 整除，但不都被 $p^{s_p+1}$ 整除。因此存在
+$B\in\mathcal O$ 使
+
+$$
+\varphi^{r_p}=1+p^{s_p}B,\qquad p\nmid B.
+$$
+
+**证明。** 若 $e\le s_p$，则 $r_p$ 已在模 $p^e$ 下回归，而降模到 $p$ 又给
+$r_p\mid\pi(p^e)$，故 $\pi(p^e)=r_p$。若 $e=s_p+j$，R.13 表明
+$\varphi^{r_p}$ 在模 $p^e$ 下的阶为 $p^j$。令
+$T=\pi(p^e)$；因 $r_p\mid T$，元素幂的阶公式给出
+
+$$
+\operatorname{ord}(\varphi^{r_p})
+=\frac{T}{\gcd(T,r_p)}=\frac{T}{r_p}=p^j.
+$$
+
+**证明。** 于是 $T=r_pp^j$，与第一种情形合并即得 R18。
+
+**定理。** 对素数 $p\ne2,5$，
+
+$$
+\boxed{q_p=0\iff s_p\ge2.}
+\tag{R19}
+$$
+
+**证明。** 由 R5，$s_p\ge2$ 当且仅当
+$p^2\mid C_{r_p}$，也即 $\pi(p^2)=\pi(p)$；再用 R16，即得 R19。
+
+**命题。** 对素数 $p\ne2,5$，若 $q_p\ne0$，则
+
+$$
+\forall e\ge1,\quad \pi(p^e)=\pi(p)p^{e-1}.
+$$
+
+**证明。** 若 $q_p\ne0$，则 R19 给出 $s_p\not\ge2$，而 R.11 给出
+$s_p\ge1$，故 $s_p=1$；代入 R18 即得最后一式。
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:428e22d3e09dc08334c1579a1bd474f29240d4e5718c68b57eb1d1844e0f06c1
+  normalized_sha256: sha256:428e22d3e09dc08334c1579a1bd474f29240d4e5718c68b57eb1d1844e0f06c1
+cas_ref: sha256:428e22d3e09dc08334c1579a1bd474f29240d4e5718c68b57eb1d1844e0f06c1
+coverage_gids:
+  - gid: D5/S0/Rewriting/GuardedBoxPaths.endpoint_counts
+    target_statement_id: sha256:a6cd61a151941e0ba5dfe64d01db3fc7d89ce48093315043111af5b12ac087ba
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,12 @@
+#### 注记 15.5 黄金坐标与 Wall–Sun–Sun 边界
+
+若 $\varphi^2=\varphi+1$，则 $\varphi^8=13+21\varphi$，其迹为
+$L_8=2\cdot13+21=47$；相应基矩阵
+$\left(\begin{smallmatrix}21&0\\13&-1\end{smallmatrix}\right)$ 的行列式为
+$-21=-F_8$，故只有在 $21$ 模 $m$ 可逆时它才是可逆基变换。
+
+经典 Wall–Sun–Sun 问题针对普通 Fibonacci 递推
+$F_0=0,F_1=1,F_{n+2}=F_{n+1}+F_n$，询问是否存在素数 $p\ne2,5$ 使
+$p^2\mid F_{p-(5/p)}$，其中 $(5/p)$ 为 Legendre 符号。
+命题 15.3 与 15.4 针对 $(47,-1)$ 递推，并未判定这一经典存在性问题。
+

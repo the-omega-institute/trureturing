@@ -1,0 +1,15 @@
+**定理。** 若 $t\geq0$，$x$ 在 $[0,t]$ 上连续且 $y$ 在该区间满足隐藏方程，则
+
+$$
+y(t)=e^{-dt}\left(y(0)-b\int_0^t e^{ds}x(s)\,ds\right).
+$$
+
+因此可见变量满足精确 Volterra 方程
+
+$$
+x'(t)=-ax(t)+be^{-dt}y(0)
++\int_0^tK(t-s)x(s)\,ds,
+\qquad
+K(\tau)=-b^2e^{-d\tau}.
+$$
+

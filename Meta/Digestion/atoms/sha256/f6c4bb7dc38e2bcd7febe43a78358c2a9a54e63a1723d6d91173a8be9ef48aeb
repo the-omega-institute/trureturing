@@ -1,0 +1,16 @@
+**证明。** 由
+$u_L=F_{L+1}+F_{L+2}\varphi=C_L+B_L\varphi$，且
+
+$$
+q_\alpha(m-1)=\lfloor m\alpha\rfloor,
+$$
+
+展开 $u_Ls_\alpha(m-1)$ 的 $\varphi$ 坐标，得到
+
+$$
+U_L(m-1)=A_L(m-1)+B_L\lfloor m\alpha\rfloor
+=T_L(m)-A_L.
+$$
+
+移项即得 GS13。
+

@@ -1,0 +1,10 @@
+**定理 RD3。** 对任意 $n,m\in\mathbb N$，
+
+$$
+\exists r:\ v(r)=n\ \land\ v_1(r)=m
+\quad\Longleftrightarrow\quad
+3n\le2m\ \land\ m\le2n.
+$$
+
+每个这样的 $r$ 都满足 $\beta(r)=(m-n)+n\varphi$。
+

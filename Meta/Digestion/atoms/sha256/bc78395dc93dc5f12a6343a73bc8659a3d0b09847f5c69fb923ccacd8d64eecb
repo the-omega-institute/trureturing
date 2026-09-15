@@ -1,0 +1,43 @@
+### R.2 序列周期、伴随矩阵阶与黄金单位阶
+
+**定义。** 对正整数 $q$，令 $\pi(q)$ 为 $Q$ 在
+$GL_2(\mathbb Z/q\mathbb Z)$ 中的阶；等价地，它是 Fibonacci 递推的可逆伴随矩阵
+$\begin{pmatrix}1&1\\1&0\end{pmatrix}$ 的阶。特别地，$\pi(1)=1$。
+
+**定理。** 对正整数 $q$ 与 $t\ge0$，
+
+$$
+\boxed{
+\pi(q)\mid t
+\iff(F_t,F_{t+1})\equiv(0,1)\pmod q
+\iff\forall n\ge0,\ F_{n+t}\equiv F_n\pmod q.
+}
+\tag{R2}
+$$
+
+**证明。** 由 R1，$Q^t=I$ 当且仅当矩阵的左下项为 $0$、左上项为
+$1$，即 $(F_t,F_{t+1})\equiv(0,1)$。若 $Q^t=I$，则
+$Q^{n+t}=Q^n$，比较左下项便得序列同余。反之，在序列同余中依次取
+$n=0,1$，即得所需的两项回归条件。
+
+**定义。** 对 $z=a+b\varphi\in\mathcal O/q\mathcal O$，以反序坐标
+$(b,a)$ 定义正则表示
+
+$$
+\mathcal R_q(z)=\begin{pmatrix}a+b&b\\b&a\end{pmatrix}.
+\tag{R3}
+$$
+
+**定理。** $\mathcal R_q$ 是单射环同态，$\mathcal R_q(\varphi)=Q$，因而
+
+$$
+\boxed{\pi(q)=\operatorname{ord}(\overline\varphi\in(\mathcal O/q\mathcal O)^\times).}
+\tag{R4}
+$$
+
+**证明。** 若 $w=c+d\varphi$，则
+$zw=(ac+bd)+(ad+bc+bd)\varphi$；在坐标 $(d,c)$ 上，这正是 R3 的矩阵作用。
+由此乘法与加法均被保持。矩阵第二列为 $(b,a)$，故表示为零只可能
+$a=b=0$，所以它单射。取 $z=\varphi$ 得 $Q$；单射同态保持并反映
+幂等于单位元，故两侧的阶相等。
+

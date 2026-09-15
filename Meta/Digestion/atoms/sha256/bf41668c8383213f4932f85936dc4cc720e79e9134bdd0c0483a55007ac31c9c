@@ -1,0 +1,6 @@
+对每个 $\varepsilon>0$，
+$$
+\{(c,c'):d_{\rm ext}(c,c')<\varepsilon\}
+=(\operatorname{enc}_X\times\operatorname{enc}_X)
+[\{(x,x'):d(x,x')<\varepsilon\}].
+$$

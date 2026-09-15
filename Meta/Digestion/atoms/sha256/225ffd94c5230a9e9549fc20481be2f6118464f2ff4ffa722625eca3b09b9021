@@ -1,0 +1,70 @@
+**证明。** $n=0$ 时为 $1\mid1$。以下设 $n>0$。对正整数 $q$ 定义
+
+$$
+f(n,q)=\left\lfloor\frac{30n}q\right\rfloor+\left\lfloor\frac nq\right\rfloor
+-\left\lfloor\frac{15n}q\right\rfloor-\left\lfloor\frac{10n}q\right\rfloor
+-\left\lfloor\frac{6n}q\right\rfloor.
+$$
+
+先证 $f(n,q)\ge0$。令 $r=n\bmod q$、$k=\lfloor30r/q\rfloor\in\{0,\ldots,29\}$。由 $30+1=15+10+6$，整部抵消，并有
+
+$$
+f(n,q)=k-\lfloor k/2\rfloor-\lfloor k/3\rfloor-\lfloor k/5\rfloor\ge0.
+$$
+
+最后一个不等式逐一检查 $0\le k<30$ 的余数类即可。
+
+若 $q\mid3n+1$，则 $3r+1=tq$，其中 $t=1$ 或 $2$。当 $q\ge10$ 时，四个商
+
+$$
+(\lfloor30r/q\rfloor,\lfloor15r/q\rfloor,
+\lfloor10r/q\rfloor,\lfloor6r/q\rfloor)
+$$
+
+分别为
+
+$$
+t=1:(9,4,3,1),\qquad t=2:(19,9,6,3),
+$$
+
+故 $f(n,q)=1$。当 $q=7$ 时 $r=2$，四个商为 $(8,4,2,1)$，仍有 $f(n,q)=1$。
+
+由 Legendre 公式，对每个素数 $p$，
+
+$$
+v_p(A(n))=\sum_{j\ge1}f(n,p^j),
+$$
+
+且该和有限。若 $p\ge7$，则对每个 $1\le j\le v_p(3n+1)$，$p^j$ 为 $7$ 或至少为 $10$，所以上段各给一个单位贡献，其余项非负。因此
+
+$$
+v_p(A(n))\ge v_p(3n+1).
+$$
+
+素数 $3$ 不整除 $3n+1$。对素数 $2$，由 $v_p((pm)!)=v_p(m!)+m$ 反复化简得
+
+$$
+v_2(A(n))=v_2\binom{8n}{3n}.
+$$
+
+若 $2\mid3n+1$，则 $n$ 与 $5n$ 均为奇数。恒等式
+
+$$
+(3n+1)\binom{8n}{3n+1}=5n\binom{8n}{3n}
+$$
+
+两边取 $v_2$，得到 $v_2(A(n))\ge v_2(3n+1)$；若 $2\nmid3n+1$，结论平凡。
+
+对素数 $5$，同理有
+
+$$
+v_5(A(n))=v_5\binom{5n}{3n}.
+$$
+
+若 $5\mid3n+1$，则 $5\nmid2n$，由
+
+$$
+(3n+1)\binom{5n}{3n+1}=2n\binom{5n}{3n}
+$$
+
+得到 $v_5(A(n))\ge v_5(3n+1)$；若 $5\nmid3n+1$，结论平凡。所有素数的赋值不等式均成立，唯一分解定理遂给出所述整除。证毕。

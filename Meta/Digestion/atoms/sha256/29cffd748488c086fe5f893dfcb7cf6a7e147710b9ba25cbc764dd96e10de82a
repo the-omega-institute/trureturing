@@ -1,0 +1,8 @@
+**证明。** 一个 $r_\lambda\times r_\lambda$ 误差矩阵的算子范数不超过 Frobenius 范数，因而不超过 $r_\lambda\epsilon$。对 $\|R\|\le1$，径向归一化满足
+
+$$
+\left\|\frac Z{\max(1,\|Z\|)}-R\right\|\le2\|Z-R\|.
+$$
+
+当 $\|Z\|>1$ 时，$\|Z-Z/\|Z\|\|=\|Z\|-1\le\|Z-R\|$；另一情形为恒等映射。以 $\eta=2r_*\epsilon$ 应用 FM2。证毕。
+

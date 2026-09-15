@@ -1,0 +1,36 @@
+## 36. 一个完全指定的合同商与一族正向轨道解
+
+**定义。** 全映射类群在 $X$ 上通过 $G_2=\operatorname{Sp}_{2g}(\mathbb F_2)$ 置换字符。为各 $W_\chi$ 选择辛基，将不同分块之间的辛同构射影化，得到块置换表示
+
+$$\mathcal R_\ell:M\longrightarrow D_\ell^X\rtimes G_2,$$
+
+其中 $G_2$ 按其在非零字符上的自然作用置换直积因素。更换覆盖提升只增加各块的标量 $\pm I$，故不改变此表示。基选择只共轭目标表示。
+
+**定理。** $\mathcal R_\ell$ 满射，且经 $a(M)$ 因子化。因此
+
+$$\boxed{M\twoheadrightarrow D_\ell^{\,4^g-1}\rtimes\operatorname{Sp}_{2g}(\mathbb F_2)}$$
+
+是来自实际特征曲面商 $Q$ 的合同商。
+
+**证明。** 第 35 节表明 $\mathcal K_g$ 的像已经包含全部基群 $D_\ell^X$。模二辛表示满射，给出全部置换商 $G_2$。含有整个基群并满射到商的子群必为整个半直积。若一个映射类在 $Q$ 上以内自同构作用，它在 $S$ 上为恒等，因为 $S$ 交换；在各字符块上为甲板符号，所以 $\mathcal R_\ell$ 的像为恒等。因而 $\ker a\subseteq\ker\mathcal R_\ell$，得到所需因子化及合同性。
+
+**定义。** 固定 $\chi\in X$，记 $M_\chi$ 为其稳定子，$p_\chi$ 在此群上同样良定义。令
+
+$$\Gamma_{\chi,\ell}=\ker(p_\chi:M_\chi\to D_\ell),\qquad
+\Delta_\ell=\ker\mathcal R_\ell.$$
+
+**定理。** 这些是 $M$ 的有限指数子群，且
+
+$$[M:\Gamma_{\chi,\ell}]=(4^g-1)|D_\ell|,\qquad
+[M:\Delta_\ell]=|D_\ell|^{4^g-1}|\operatorname{Sp}_{2g}(\mathbb F_2)|.$$
+
+此外，$\Delta_\ell$ 是 $\Gamma_{\chi,\ell}$ 在 $M$ 中的正规核，包含主合同核 $\ker a$，而且对每条本质简单闭曲线 $\alpha$，都有
+
+$$\boxed{\Delta_\ell\alpha\subseteq\Gamma_{\chi,\ell}\alpha.}$$
+
+**证明。** $G_2$ 在 $X$ 上传递，故 $[M:M_\chi]=4^g-1$；$p_\chi$ 已在其子群 $\mathcal K_g$ 上满射，得到第一个指数。第二个指数来自半直积满射。目标中对应 $\Gamma_{\chi,\ell}$ 的子群要求置换固定 $\chi$，且该坐标为单位元。若一个元素属于这个子群的全部共轭，则其置换固定所有字符，故置换为恒等；再逐字符检查得到全部坐标为单位元。因而其正规核平凡，拉回即为 $\Delta_\ell$。最后 $\Delta_\ell\subseteq\Gamma_{\chi,\ell}$ 直接给出轨道包含。
+
+**命题。** $\Gamma_{\chi,\ell}$ 不包含 Torelli 群，因此上述输入族不能仅由底曲面的一阶同调稳定条件描述。
+
+**证明。** 第 34 节给出一个属于 $\mathcal K_g$ 的分离扭转，其 $p_\chi$ 像非平凡。它属于 Torelli 群却不属于 $\Gamma_{\chi,\ell}$。上述结论只为显示的子群族及其上群构造轨道控制，不涵盖任意给定的有限指数子群。
+

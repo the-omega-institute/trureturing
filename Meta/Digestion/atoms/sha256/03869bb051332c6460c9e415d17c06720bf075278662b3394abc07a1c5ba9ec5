@@ -1,0 +1,2 @@
+**证明。** 因 $Q^r\equiv I\pmod p$，取行列式得
+$(-1)^r\equiv1\pmod p$。奇素数下 $1\not\equiv-1$，故 $r$ 为偶数。

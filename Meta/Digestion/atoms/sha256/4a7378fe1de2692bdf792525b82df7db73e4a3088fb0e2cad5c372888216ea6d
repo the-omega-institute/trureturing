@@ -1,0 +1,35 @@
+**假设 118.2（部分操作的定义域与失败观察）。** 第 116、117 节使用总更新时，须固定当前读出 $c:X\to O$ 及如下操作解释。每个字母 $u\in U$ 指定一个原操作的确定部分映射
+
+$$
+I_u:D_u\subseteq X\longrightarrow X.
+$$
+
+多元原操作通过固定其他参数及孔的位置给出这样的映射；$D_u$ 保留原定义域。例如原时间复合的守卫仍为
+
+$$
+\forall e\in E_{\mathbf x}\ \forall f\in E_{\mathbf y},
+\qquad t_{\mathbf x}(e)<t_{\mathbf y}(f).
+$$
+
+应用总更新结论时，或者限制到一个非空不变域 $X_0$，使每个允许字母在全部 $X_0$ 上合法且 $I_u(X_0)\subseteq X_0$；或者使用带不交失败标签的扩张
+
+$$
+X_\bot=X\sqcup\{\bot\},\qquad
+\widehat I_u(z)=
+\begin{cases}
+I_u(z),&z\in D_u,\\
+\bot,&z\in X\setminus D_u\text{ 或 }z=\bot,
+\end{cases}
+$$
+
+$$
+\widehat c(z)=
+\begin{cases}
+\operatorname{ok}(c(z)),&z\in X,\\
+\operatorname{fail},&z=\bot,
+\end{cases}
+\qquad \operatorname{fail}\notin\operatorname{ok}(c[X]).
+$$
+
+成功后继须仍在所选 $X$ 内；失败严格传播。此扩张与[原卷定义 16 的严格观察](CONTEXTUAL_SPACETIME_ARITHMETIC.md)及[Zeckendorf 卷定义 446.1](CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md)一致。若还要优化控制，须对失败规定终止、奖励和终值，或只使用在全域合法的共同动作集；不能以固定动作集上的最大值代替未说明的状态依赖合法动作域。
+

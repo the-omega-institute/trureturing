@@ -58,6 +58,7 @@ internal static class FileMapPolicy
             ["FrozenStateRecordLoader"] = FrozenStateRecordLoaderPath,
             ["GateAuthorityRootCatalogLoader"] = GateAuthorityRootCatalogLoaderPath,
             ["LibraryNoteCatalog"] = LibraryNoteCatalogPath,
+            ["LeanReportSelection"] = "tools/scripts/report/lean-report-selection.py",
             ["ProblemCandidateCatalog"] = ProblemCandidateCatalogPath,
             ["RegistryLoader"] = RegistryLoaderPath,
             ["ScribeEmitter"] = ScribeEmitterPath,

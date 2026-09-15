@@ -1,0 +1,28 @@
+### 61.4 接到 Zeckendorf 合法构型
+
+令
+
+$$
+\mathcal W_L
+=
+\{w\in\{0,1\}^L:w_rw_{r+1}=0\},
+$$
+
+并把合法构型映到第 58 节的黄金坐标或某个指定的 effect 家族。若窗口扩大、记录端口增加，得到的不是自动的“更多历史”，而是一组新的 effect。应分别计算
+
+$$
+\mathcal V_L=\operatorname{span}_{\mathbb R}\bigl(\{I\}\cup E_L\bigr),
+\qquad
+\mathcal R_L=\mathcal V_L^{\perp},
+$$
+
+再比较
+
+$$
+C_L=\dim_{\mathbb R}\mathcal V_L-1,
+\qquad
+Q_L=\dim_{\mathbb R}\mathcal R_L.
+$$
+
+Zeckendorf 约束只规定合法构型集合及其离散坐标；它不自动规定 effect 的线性独立性，也不自动把窗口长度 $L$ 转成可见容量 $C_L$。若新增构型只改变编号、不改变读出 span，容量不变；若新增构型引入了新的可区分 effect，容量才增加。相应的相干与历史影响仍须用第 55、56 和 60 节的 Gram、回流和作用量计算。
+

@@ -1,0 +1,2 @@
+**定义。** 对有限特征商 $q:\pi\twoheadrightarrow Q$，记实际诱导外作用为 $a_q:\mathcal M_g\to\operatorname{Out}(Q)$，主合同核为 $C_q=\ker a_q$。这里的幂零性指 $Q$，不指其自同构群或外自同构群。
+

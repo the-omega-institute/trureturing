@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:a3c0de770fcbb59de4b95eb244e8dc8232d52f67a0ac9d8b29d4c6a23f06f6b6
+  normalized_sha256: sha256:a3c0de770fcbb59de4b95eb244e8dc8232d52f67a0ac9d8b29d4c6a23f06f6b6
+cas_ref: sha256:a3c0de770fcbb59de4b95eb244e8dc8232d52f67a0ac9d8b29d4c6a23f06f6b6
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Spacetime/HistoricalEquivalence.HistoricalIsoData
+    target_statement_id: sha256:d40d4a750ef8624ae93ddba3b4e926010505af0bf083f06472f1ebdc1b26b9da
+  - gid: D5/S3/ConceptDynamics/Spacetime/ParallelComposition.archive_card
+    target_statement_id: sha256:071b4e0f9c4bb6d0cc13c520a413e72184fe5705652c86eb5ca7e725ed85d43f
+  - gid: D5/S3/ConceptDynamics/Spacetime/TaggedPresentation.charge_map
+    target_statement_id: sha256:7820a61a4912147f9d4712e22ea5cc9865613c64c04b36acbc62369dc6e30a76
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 74a90f66cfa8e8efc86051e96f2c130d20ce4f63c075ffacf30552cae199658b
+    - 1720a8e4f0e1b78411171138982cc17417a129e3c4decda57f8f3edbf96e79e6

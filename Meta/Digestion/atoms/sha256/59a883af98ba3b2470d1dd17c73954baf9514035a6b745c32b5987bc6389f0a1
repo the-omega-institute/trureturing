@@ -1,0 +1,7 @@
+**假设。** 设 $H$ 为实内积空间，$u:[0,T]\to H$ 连续，并在 $[0,T)$ 具有右导数 $\dot u$。设 $\gamma>0$、$\rho\geq0$，且
+
+$$
+\langle u(t),\dot u(t)\rangle
+\leq-\gamma\|u(t)\|^2+\rho\|u(t)\|.
+$$
+

@@ -1,0 +1,34 @@
+### 81.2 任意恢复都有一个由记录重叠决定的下界
+
+设 $q(i)-q(j)\ne0$。`finite_record_recovery_error_lower_bound` 对任意量子通道 $R$ 都给出
+
+$$
+\frac{1-\lVert\gamma(q(i)-q(j))\rVert}{2}
+\le
+\sup_{\rho}
+\frac12
+\left\|
+R\!\left(\Lambda(\rho)\right)-\rho
+\right\|_1.
+$$
+
+更准确地说，右侧是该误差集合的上确界；定理还构造了两个输入态，它们在记录通道前的迹距离为 $1$，经过记录后变为 $\lVert\gamma(q(i)-q(j))\rVert$。迹距离的收缩性说明，任何恢复通道都必须支付上述损失。
+
+这给出两个极端：
+
+$$
+\lVert\gamma(q(i)-q(j))\rVert=1
+\quad\Longrightarrow\quad
+\text{该下界为 }0,
+$$
+
+说明相干可能只是旋转或保留相位，不能从下界推出已经经典化；而
+
+$$
+\gamma(q(i)-q(j))=0
+\quad\Longrightarrow\quad
+\text{任意恢复的最坏误差至少为 }\frac12.
+$$
+
+所以“记录已经抹掉历史”必须附带记录模型和误差指标。相同的标签数量可以对应完全不同的 $\gamma$，相同的单步去相干也可以对应不同的多步恢复能力。
+

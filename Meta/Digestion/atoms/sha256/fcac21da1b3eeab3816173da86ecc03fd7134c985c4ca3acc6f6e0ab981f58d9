@@ -1,0 +1,5 @@
+对任意集合 $X$，沿用
+$$
+X^*=\operatorname{Enc}[X],\qquad e_X=\operatorname{enc}_X:X\to X^*,\qquad
+f^*=e_Y\circ f\circ e_D^{-1}:D^*\to Y^*\quad(f:D\to Y).
+$$

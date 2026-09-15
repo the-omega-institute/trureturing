@@ -1,0 +1,6 @@
+**定义 4.7（中道）**〔semantic〕。固定 $K,\mathfrak A$ 及读出，定义中道（madhyamā pratipad）谓词为
+$$
+\operatorname{Middle}(P,L)\ \Longleftrightarrow\ \operatorname{依缘空}(P)\ \land\ \bigl(P\in N_L\Rightarrow\forall T\in\mathfrak M,\ P\in N_{T(L)}\bigr).
+$$
+其中“非常”只命名不自立的证明条件，“非断”只命名容许扩展下既有成员指标恒真；两者不是自然世界的常与断。后一合取项在假设 2.5 下自动满足，不能充当依缘空成立的证据。
+

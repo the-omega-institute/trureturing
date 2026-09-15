@@ -1,0 +1,40 @@
+**定理 15.3（Schur差值的精确扰动与参考系统无增益）。** 有
+$$
+\boxed{
+\Delta_R(m,n)=\frac12\max_{p_x\ge0,\ \sum_xp_x=1}
+\left\|D_pH_R(m,n)D_p\right\|_1.
+}
+$$
+这也等于同时优化初态及可访问空间上全部有限POVM所得的总变差变化。若允许任意有限旁参考 $K$ 在最初与系统纠缠，随后保持不动且可被联合测量，同一最坏值仍为 $\Delta_R(m,n)$。此外，
+$$
+\Delta_R(m,n)=0
+\quad\Longleftrightarrow\quad
+G^{m,R}_{xy}\bigl((F_{m,n})_{xy}-1\bigr)=0
+\quad\text{对所有 }x,y,
+$$
+且访问范围满足
+$$
+R\subseteq R'\subseteq\{1,\ldots,m\}
+\quad\Longrightarrow\quad
+\Delta_R(m,n)\le\Delta_{R'}(m,n).
+$$
+当全部旧记录可访问时 $G^{m,R}=J$，旧记录的重叠不再出现在该完整扰动公式中。
+
+证明。等距嵌入保持迹范数，故命题15.2将两态之差的范数化为 $\|H_R\odot\rho\|_1$。对纯态 $\psi_x=\sqrt{p_x}e^{i\phi_x}$，该矩阵与 $D_pH_RD_p$ 由对角酉共轭联系。对混态取任意纯态凸分解，迹范数凸性说明其值不超过纯态上的最大值。概率单纯形紧且目标连续，故最大值达到，得到第一式。
+
+再取系统与有限参考的纯态，并写为
+$$
+|\Psi\rangle=\sum_x\sqrt{p_x}|x\rangle|r_x\rangle,
+\qquad \|r_x\|=1\ \text{当 }p_x>0.
+$$
+零概率标签对应的 $r_x$ 任取单位向量。向量 $|x\rangle|r_x\rangle$ 两两正交；因此 $V|x\rangle=|x\rangle|r_x\rangle$ 是等距映射，且
+$$
+(M_{H_R}\otimes\operatorname{id}_K)(|\Psi\rangle\langle\Psi|)
+=V(D_pH_RD_p)V^\dagger.
+$$
+再沿 $W\otimes I_K$ 嵌入也不改变范数，故有限参考不能提高第一式。混态仍由凸性处理；取一维参考即可达到原值。这里的无增益只针对所列Schur差值，不外推为一般通道判别结论。
+
+对任意迹为零的Hermitian差值 $T$，其正谱投影与补投影构成的二输出PVM达到总变差 $\|T\|_1/2$，而所有POVM都受迹距离收缩约束，证明测量优化的等价性。若 $H_{R,xy}\ne0$，取在 $x,y$ 上各占 $1/2$ 的 $p$，则得到扰动 $|H_{R,xy}|/2>0$；反向由零矩阵立即成立。最后，对同一输入态，访问集合 $R$ 的两个边缘都由对应 $R'$ 边缘迹掉 $E_{R'\setminus R}$ 得到。部分迹收缩迹距离，随后取初态上确界，得到访问单调性。证毕。
+
+保 Hermitian 映射的 diamond 范数优化与同维有限参考约定见 John Watrous，[《The Theory of Quantum Information》](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)，定理 3.51、式 (3.291)。本定理中参考系统无增益的结论由上述 Schur 差值的等距表示给出。
+

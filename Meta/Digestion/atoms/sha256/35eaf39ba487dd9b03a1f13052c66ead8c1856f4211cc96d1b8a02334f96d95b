@@ -1,0 +1,36 @@
+### 79.2 物理编码的最小接口
+
+设 $\mathcal H_S$ 是完整系统，$\mathcal H_R$ 是候选记忆空间。把一个“可独立访问的量子记忆”定义为一对映射
+
+$$
+\iota:\mathcal B(\mathcal H_R)\longrightarrow\mathcal B(\mathcal H_S),
+\qquad
+\mathcal R:\mathcal B(\mathcal H_S)\longrightarrow\mathcal B(\mathcal H_R),
+$$
+
+其中 $\iota$ 是 Heisenberg 意义下的完全正幺保持嵌入，$\mathcal R$ 是完全正幺保持压缩，并满足
+
+$$
+\mathcal R\circ\iota=\operatorname{id}_{\mathcal B(\mathcal H_R)}.
+$$
+
+若完整系统一步 Heisenberg 演化为 $H$，还要有某个记忆演化 $H_R$ 使
+
+$$
+\mathcal R\circ H=H_R\circ\mathcal R.
+$$
+
+这三个条件分别承担不同工作：第一条保证候选坐标确实来自量子系统，第二条保证它可被物理读出，第三条保证丢弃其余自由度后仍可预测。它们比“$V$ 是一个稳定实向量空间”严格得多。
+
+在有限维情形，若只要求任务效果而非整个矩阵代数，则可以把 $\mathcal R$ 的像限制为一个含单位的 Hermitian operator system；这正是第 77--78 节可见空间的适用范围。若要求任意后续量子操作都能在记忆内实现，则必须进一步验证乘法闭合或给出一个更大的代数载体。因而“对象”至少有两层：
+
+$$
+\text{任务对象}=\text{对指定实验闭合的 operator system},
+$$
+
+$$
+\text{量子子系统}=\text{带完全正编码与回收的代数对象}.
+$$
+
+把第一层直接称为第二层，会把预测充分性误报成物理可实现性。
+

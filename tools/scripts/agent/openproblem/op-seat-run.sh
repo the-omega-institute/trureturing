@@ -29,7 +29,7 @@
 # fails the whole run with invalid_json_schema, exit 1, and no result. Catching that here costs
 # milliseconds and saves a seat lifetime.
 set -u
-export PATH="$HOME/.elan/bin:$HOME/.dotnet:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+export PATH="$HOME/.local/bin:$HOME/.elan/bin:$HOME/.dotnet:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 export LC_ALL=C
 
 SEAT_ROOT="${OP_SEAT_ROOT:-$HOME/omega-op/seats}"
@@ -81,6 +81,10 @@ PY
 
 CWD=$(cat "$D/cwd.txt" 2>/dev/null || echo "$WORKTREE_DEFAULT")
 [ -d "$CWD" ] || { echo "NO_WORKTREE $CWD" >&2; exit 9; }
+
+# Seats build, so a seat on a worktree of a second clone silently grows a second cache.
+bash "$(dirname "$0")/op-require-base.sh" "$CWD" "${OP_BASE_GIT:-$HOME/Desktop/omega/trureturing/.git}" \
+  || { echo "SEAT_FOREIGN_CLONE $CWD" >&2; exit 7; }
 
 rm -f "$D/result.json" "$D/DONE"
 cd "$CWD" || exit 9
