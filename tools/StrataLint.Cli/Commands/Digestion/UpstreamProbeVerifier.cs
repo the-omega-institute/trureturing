@@ -32,11 +32,15 @@ internal sealed class UpstreamProbeVerifier(IUpstreamLeanProcessRunner runner, s
     // Maximal runs of Lean's isIdRest alphabet (Init.Meta.Defs), including !/?,
     // apostrophes, subscripts and supplementary letter-like characters. .NET \b
     // would split legal identifiers such as def!, def₁ and def𝒜 into keywords.
-    private static readonly Regex Tokens = new(
-        @"«[^»]*»|#?(?:[A-Za-z0-9_'!?\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u017F"
+    private const string IdentifierCharacter =
+        @"(?:[A-Za-z0-9_'!?\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u017F"
         + @"\u0391-\u039F\u03A1-\u03A2\u03A4-\u03A9\u03B1-\u03BA\u03BC-\u03FB"
         + @"\u1F00-\u1FFE\u2100-\u214F\u2080-\u2089\u2090-\u209C\u1D62-\u1D6A\u2C7C]"
-        + @"|\uD835[\uDC9C-\uDD9F])+|#", Options);
+        + @"|\uD835[\uDC9C-\uDD9F])";
+    private static readonly Regex Tokens = new(@"«[^»]*»|#?" + IdentifierCharacter + @"+|#", Options);
+    private static readonly Regex RawStringStart = new(@"\G(?<!" + IdentifierCharacter + @")r(?<hashes>#*)""", Options);
+    private static readonly Regex CharacterLiteral = new(@"\G(?<!" + IdentifierCharacter
+        + @")'(?:[\uD800-\uDBFF][\uDC00-\uDFFF]|[^'\\\r\n]|\\(?:x[0-9a-fA-F]{2}|u\{[0-9a-fA-F]+\}|[^\r\n]))'", Options);
 
     // Derived from Lean v4.33.0 and all lake-manifest packages, including Mathlib
     // db584cd6d46c92f209a44c0f1c829460d327499d. Pinned ordinal-sorted command tokens;
@@ -288,15 +292,53 @@ internal sealed class UpstreamProbeVerifier(IUpstreamLeanProcessRunner runner, s
         var line = false;
         var quoted = false;
         var escaped = false;
+        var rawHashes = -1;
         for (var i = 0; i < chars.Length; i++)
         {
             var c = source[i];
+            if (rawHashes >= 0)
+            {
+                if (c is not '\n' and not '\r') chars[i] = ' ';
+                if (c == '"')
+                {
+                    var end = i + 1;
+                    while (end < source.Length && source[end] == '#') end++;
+                    if (end - i - 1 == rawHashes)
+                    {
+                        Array.Fill(chars, ' ', i, end - i);
+                        i = end - 1;
+                        rawHashes = -1;
+                    }
+                }
+                continue;
+            }
             if (quoted)
             {
                 if (!escaped && c == '"') quoted = false;
                 escaped = !escaped && c == '\\';
                 if (c is not '\n' and not '\r') chars[i] = ' ';
                 continue;
+            }
+            if (depth == 0 && !line && c == 'r')
+            {
+                var raw = RawStringStart.Match(source, i);
+                if (raw.Success)
+                {
+                    rawHashes = raw.Groups["hashes"].Length;
+                    Array.Fill(chars, ' ', i, raw.Length);
+                    i += raw.Length - 1;
+                    continue;
+                }
+            }
+            if (depth == 0 && !line && c == '\'')
+            {
+                var literal = CharacterLiteral.Match(source, i);
+                if (literal.Success)
+                {
+                    Array.Fill(chars, ' ', i, literal.Length);
+                    i += literal.Length - 1;
+                    continue;
+                }
             }
             if (depth == 0 && !line && c == '"')
             { quoted = true; chars[i] = ' '; continue; }
@@ -308,7 +350,7 @@ internal sealed class UpstreamProbeVerifier(IUpstreamLeanProcessRunner runner, s
             if (c == '\n') line = false;
             else if (c != '\r' && (line || depth > 0)) chars[i] = ' ';
         }
-        if (quoted || depth > 0) throw Invalid("PROBE_DECLARATION_UNSUPPORTED", "unterminated string or block comment");
+        if (quoted || rawHashes >= 0 || depth > 0) throw Invalid("PROBE_DECLARATION_UNSUPPORTED", "unterminated string or block comment");
         return new string(chars);
     }
 
