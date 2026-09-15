@@ -31,15 +31,28 @@ internal static partial class CommonExecutionEvidence
             output.WriteLine($"COMMON_CHECK_SEED_UNAVAILABLE stage={stage} reason={JsonSerializer.Serialize(exception.Message)}");
             return accepted;
         }
-        foreach (var id in CheckIds(stage, ReadCheckManifest(snapshot)).Where(inputs.ContainsKey))
+        // Notifications can invoke caller code. Finish validation and copying before
+        // exposing them, and never carry a validation scope across those writes.
+        using var messages = new StringWriter();
+        var sources = new List<CheckUnitResult>();
+        var copied = new List<CheckUnitResult>();
+        var environment = ExecutionEnvironment(root);
         {
-            try
+            var validation = new ValidationScope(snapshot);
+            foreach (var id in CheckIds(stage, validation.CheckManifest()).Where(inputs.ContainsKey))
+                Attempt(id, () =>
+                {
+                    var row = rows.Single(row => row.ValueKind == JsonValueKind.Object && row.TryGetProperty("id", out var key) && key.GetString() == id);
+                    var unit = row.Deserialize<CheckUnitResult>(JsonOptions) ?? throw new InvalidDataException("missing common seed unit: " + id);
+                    if (unit.ExecutionEnvironment != environment)
+                        throw new InvalidDataException("common seed execution environment differs from local environment: " + id);
+                    ValidateCheckUnit(seedRoot, root, snapshot, unit, inputs[id], candidate, round, validation);
+                    sources.Add(unit);
+                });
+        }
+        foreach (var unit in sources)
+            Attempt(unit.Id, () =>
             {
-                var row = rows.Single(row => row.ValueKind == JsonValueKind.Object && row.TryGetProperty("id", out var key) && key.GetString() == id);
-                var unit = row.Deserialize<CheckUnitResult>(JsonOptions) ?? throw new InvalidDataException("missing common seed unit: " + id);
-                if (unit.ExecutionEnvironment != ExecutionEnvironment(root))
-                    throw new InvalidDataException("common seed execution environment differs from local environment: " + id);
-                ValidateCheckUnit(seedRoot, root, snapshot, unit, inputs[id], candidate, round);
                 foreach (var material in unit.Materials)
                 {
                     var destination = Path.Combine(root, material.Path);
@@ -52,16 +65,29 @@ internal static partial class CommonExecutionEvidence
                     }
                     else File.Copy(Path.Combine(seedRoot, material.Path), destination);
                 }
-                ValidateCheckUnit(root, root, snapshot, unit, inputs[id], candidate, round);
-                accepted.Add(id, unit with { Status = "reused" });
-                output.WriteLine($"COMMON_CHECK_REUSED id={id} execution_candidate={unit.ExecutionCandidate} execution_round={unit.ExecutionRound}");
-            }
+                copied.Add(unit);
+            });
+        {
+            var validation = new ValidationScope(snapshot);
+            foreach (var unit in copied)
+                Attempt(unit.Id, () =>
+                {
+                    ValidateCheckUnit(root, root, snapshot, unit, inputs[unit.Id], candidate, round, validation);
+                    accepted.Add(unit.Id, unit with { Status = "reused" });
+                    messages.WriteLine($"COMMON_CHECK_REUSED id={unit.Id} execution_candidate={unit.ExecutionCandidate} execution_round={unit.ExecutionRound}");
+                });
+        }
+        output.Write(messages.ToString());
+        return accepted;
+
+        void Attempt(string id, Action action)
+        {
+            try { action(); }
             catch (Exception exception) when (exception is InvalidDataException or FormatException or IOException or UnauthorizedAccessException or JsonException or InvalidOperationException or ArgumentException or KeyNotFoundException)
             {
-                output.WriteLine($"COMMON_CHECK_SEED_MISS id={id} reason={JsonSerializer.Serialize(exception.Message)}");
+                messages.WriteLine($"COMMON_CHECK_SEED_MISS id={id} reason={JsonSerializer.Serialize(exception.Message)}");
             }
         }
-        return accepted;
     }
 
     internal static bool ExportCheckSeed(string root, string stage, TextWriter output, string? destination = null)
