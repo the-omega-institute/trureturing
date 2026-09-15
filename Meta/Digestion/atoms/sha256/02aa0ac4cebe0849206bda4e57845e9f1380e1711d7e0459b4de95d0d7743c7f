@@ -1,0 +1,12 @@
+对全部有限 $t>0$，
+$$
+d_{\rm TV}(\nu_{X,t},u_X)
+\le\delta_m+(1-\delta_m)\frac{B}{(m+1)t+B}.
+$$
+若 $r=2mt<1$，则
+$$
+d_{\rm TV}(\nu_{X,t},v_X)\le\frac{mr}{m+1-r}\le r,
+\qquad d_{\rm TV}(\nu_{X,t},u_X)\le\delta_m+2mt.
+$$
+所有上界均可再与一取最小值。
+
