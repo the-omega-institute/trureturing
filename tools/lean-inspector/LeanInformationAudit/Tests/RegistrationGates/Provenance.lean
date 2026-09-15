@@ -51,7 +51,8 @@ elab "check_provenance " label:str " using " readout:ident " expects " reason:st
       hints := .abbrev, safety := .safe }
     let entry := { entry with theoremName := `RegistrationProvenance ++ theoremName.getId }
     let actual ← tryCatchRuntimeEx
-      (RegistrationGates.validateFinite { entry with realizationName := holder })
+      (RegistrationGates.provenanceErrorCurrent entry.registrationModuleName
+        entry.effectiveCatalogId entry.theoremName holder)
       (fun _ => throwError "[FAIL] {label.getString}: uncaught provenance exhaustion")
     let ok := match actual with
       | none => reason.getString == "clean"
@@ -99,16 +100,18 @@ check_provenance "StatementDecidable" using viaDecision expects "forbidden_depen
 check_provenance "TheoremCertificate" using viaCertificate expects "clean" for truth
 check_provenance "StatementIdentity" using viaIdentity expects "clean" for truth
 check_provenance "CleanReadout" using clean expects "clean" for truth
-check_provenance "C050BeforeC021" using constantTruth expects "forbidden_dependency" for truth
+check_provenance "ConstantReadoutWalker" using constantTruth expects "forbidden_dependency" for truth
 
 run_cmd Elab.Command.liftTermElabM do
   let some entry := InformationRegistry.find? (← getEnv) ``truth | throwError "missing entry"
   let name := RegistrationGates.diagnosticName entry.unitName entry.registrationModuleName
   let actual := (← getConstInfo name).value!
   let .lit (.strVal message) := actual | throwError "fixture metadata"
-  unless message.startsWith "IE-C050 ClosedTruthReadout " do
-    throwError "[FAIL] FinitePublished: {actual}"
-  logInfo "[PASS] FinitePublished"
+  let record := (TemplateBinding.records (← getEnv)).find?
+    (·.occurrence.key.theoremName == ``truth)
+  unless message.isEmpty && record.any (fun row => row.result matches .undeclared) do
+    throwError "[FAIL] FiniteUndeclaredPublished: {actual}"
+  logInfo "[PASS] FiniteUndeclaredPublished"
 
 -- A real chain exceeds the fixed production fuel, with no recursive Lean definition.
 run_cmd Elab.Command.liftTermElabM do
@@ -141,12 +144,16 @@ structural_theorem structuralTruth in RegistrationStructural.law
 run_cmd Elab.Command.liftTermElabM do
   let entry := ((structuralProvenanceEntries (← getEnv)).find?
     (·.theoremName == ``structuralTruth)).get!
-  let actual ← RegistrationGates.validateStructural entry
+  let actual ← RegistrationGates.provenanceErrorCurrent entry.registrationModule
+    entry.canonicalArena entry.theoremName entry.realizationConst
   unless (actual.getD "").startsWith "IE-C050 ClosedTruthReadout " do
     throwError "[FAIL] StructuralForbidden: {actual}"
   let name := RegistrationGates.diagnosticName entry.unitConst entry.registrationModule
-  unless (← getConstInfo name).value? == some (mkStrLit (actual.getD "")) do
-    throwError "[FAIL] StructuralPublished"
+  let record := (TemplateBinding.records (← getEnv)).find?
+    (·.occurrence.key.theoremName == ``structuralTruth)
+  unless (← getConstInfo name).value? == some (mkStrLit "") &&
+      record.any (fun row => row.result matches .undeclared) do
+    throwError "[FAIL] StructuralUndeclaredPublished"
   logInfo "[PASS] StructuralForbidden"
 -- A complete clean closure is asserted independently of the collector.
 run_cmd do
@@ -189,11 +196,12 @@ structural_theorem structuralConstant in boolLaw
 run_cmd Elab.Command.liftTermElabM do
   let entry := ((structuralProvenanceEntries (← getEnv)).find?
     (·.theoremName == ``structuralConstant)).get!
-  let actual ← RegistrationGates.validateStructural entry
+  let actual ← RegistrationGates.provenanceErrorCurrent entry.registrationModule
+    entry.canonicalArena entry.theoremName entry.realizationConst
   unless (actual.getD "").startsWith "IE-C050 ClosedTruthReadout " &&
       ((actual.getD "").splitOn " reason=forbidden_dependency provenance=").length == 2 do
-    throwError "[FAIL] StructuralC050BeforeC021: {actual}"
-  logInfo "[PASS] StructuralC050BeforeC021"
+    throwError "[FAIL] StructuralConstantReadoutWalker: {actual}"
+  logInfo "[PASS] StructuralConstantReadoutWalker"
 run_cmd Elab.Command.liftTermElabM do
   let some entry := InformationRegistry.find? (← getEnv) ``truth | throwError "missing entry"
   addDecl <| .defnDecl {

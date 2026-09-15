@@ -1,4 +1,4 @@
-import LeanInformationAudit.Tests.RegistrationGates.DeclaredBindings
+import LeanInformationAudit.Tests.RegistrationGates.NativeCoherence.BindingOwner
 
 namespace LeanInformationAudit.Tests.NativeCoherence
 open Lean Meta TemplateAudit
@@ -11,7 +11,7 @@ private def replaceNative (path : System.FilePath) (bytes : ByteArray) : IO Unit
 run_meta do
   let originalEnv ← getEnv
   let some original := (TemplateBinding.records originalEnv).find?
-      (·.occurrence.key.theoremName == `LeanInformationAudit.Tests.DeclaredBindings.validated)
+      (·.occurrence.key.theoremName == `LeanInformationAudit.Tests.NativeBindingOwner.validated)
     | throwError "setup: native binding fixture missing"
   let claim : TemplateBindingClaim := {
     key := original.occurrence.key, arena := original.occurrence.arena,
