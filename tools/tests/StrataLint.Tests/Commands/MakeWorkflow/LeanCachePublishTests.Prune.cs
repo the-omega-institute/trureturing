@@ -23,7 +23,7 @@ public sealed partial class LeanCachePublishTests
     public void PublishPrunesSupersededSameConfigReleasesAndSparesTheNewOneAndOtherConfigs()
     {
         const string Sha = "0123456789abcdef0123456789abcdef01234567";
-        const string NewTag = "lean-cache-v1-leanprover-lean4-v4-31-0-2222222222222222-1111111111111111";
+        const string NewTag = "lean-cache-v1-leanprover-lean4-v4-31-0-2222222222222222-1111111111111111-5555555555555555";
         const string SupersededA = "lean-cache-v1-leanprover-lean4-v4-31-0-2222222222222222-aaaaaaaaaaaaaaaa";
         const string SupersededB = "lean-cache-v1-leanprover-lean4-v4-31-0-2222222222222222-bbbbbbbbbbbbbbbb";
         const string RetainedC = "lean-cache-v1-leanprover-lean4-v4-31-0-2222222222222222-cccccccccccccccc";
