@@ -127,8 +127,18 @@ private def finiteVariation (arena : Expr) (name : Name) : MetaM Bool := do
 protected-base consumer owns delta membership, never an olean or an environment
 variable captured during compilation. C048 has strict precedence over C049. -/
 def validateFinite (entry : InformationRegistryEntry) : MetaM (Option String) := budget do
-  if let some error ← provenanceErrorCurrent entry.registrationModuleName
-      entry.effectiveCatalogId entry.theoremName entry.realizationName then return some error
+  -- P1 retains its independent semantic contract on every raw reifier argument.
+  -- Declared-template assessment owns the readout plan and its argument audit;
+  -- witness validation never expands a whole realization as a fallback.
+  if let some certificate := entry.derivedCertificate then
+    if let .error diagnostic ← templateArgumentsCurrent entry.theoremName
+        certificate.descriptor.getAppArgs 524288 then
+      let parts := diagnostic.splitOn ":"
+      let reason := parts.head!
+      let rule := parts[1]?.getD "dtr.argument_audit"
+      return some s!"IE-C050 ClosedTruthReadout \
+        key={entry.registrationModuleName}/{entry.effectiveCatalogId}/{entry.theoremName} \
+        reason={reason} rule={rule} site=\"p1.arguments\""
   if entry.variationWitness.isAnonymous then
     return some <| variationError entry.registrationModuleName entry.effectiveCatalogId
       entry.theoremName entry.arenaName "all" "missing_witness"

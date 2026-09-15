@@ -55,7 +55,12 @@ elab "observe_semantic_insertion" : command => do
     let errors := (← get).messages.toList.filter (·.severity == .error)
     let mut rejected := false
     if errors.length == 1 then
-      rejected := ((← errors[0]!.data.toString).splitOn "forbidden_dependency").length > 1
+      let message ← errors[0]!.data.toString
+      rejected := message.startsWith "P1.SemanticRejected: IE-C050 " &&
+        (message.splitOn "reason=unclassified_form").length == 2 &&
+        (if label == "reflexive_closed_truth" then
+          (message.splitOn "rule=p1.reflexive_source").length == 2
+         else (message.splitOn "rule=dtr.argument_audit").length == 2)
     set initial
     if !inserted && !rejected then throwError "unexpected semantic probe diagnostic: {label}"
     logInfo m!"[{if !inserted && rejected then "PASS" else "FAIL"}] {label}"

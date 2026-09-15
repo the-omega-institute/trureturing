@@ -230,7 +230,7 @@ public sealed class RawLeanReportArtifactTests
         var inspected = TestProcessRunner.Run(
             "lake",
             [
-                "env", "lean", "--run", inspector,
+                "env", "lean", "--root=" + Path.GetDirectoryName(inspector), "--run", inspector, "--statements-only",
                 "--output", spoolReport,
                 "--material-spool", spoolMaterials,
                 "Trureturing", "Trureturing.lean", sourceHash,

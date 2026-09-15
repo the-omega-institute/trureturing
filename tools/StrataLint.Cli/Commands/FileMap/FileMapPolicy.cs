@@ -57,6 +57,8 @@ internal static class FileMapPolicy
             ["FileMapLoader"] = FileMapLoaderPath,
             ["FrozenStateRecordLoader"] = FrozenStateRecordLoaderPath,
             ["GateAuthorityRootCatalogLoader"] = GateAuthorityRootCatalogLoaderPath,
+            ["InformationTemplateDebtStore"] = "tools/StrataLint.Engine/RepositoryIo/InformationTemplateDebtStore.cs",
+            ["DeclaredTemplateBindingRule"] = "tools/StrataLint.Engine/Rules/TheoryGeneration/DeclaredTemplateBindingRule.cs",
             ["LibraryNoteCatalog"] = LibraryNoteCatalogPath,
             ["LeanReportSelection"] = "tools/scripts/report/lean-report-selection.py",
             ["ProblemCandidateCatalog"] = ProblemCandidateCatalogPath,
@@ -554,19 +556,44 @@ internal static class FileMapPolicy
     private static bool IsReportPath(string path) =>
         path.StartsWith(RepositoryPathPolicy.ReportsRootPath, StringComparison.Ordinal);
 
+    // Debt partitions are installed before seeding and remain after the last
+    // discharge. The independently registered activation authority anchors that
+    // empty set; the debt rule still checks its seed and exact residual universe.
+    private static bool IsInformationTemplateDebtReservation(
+        FileMapEntry entry, FileMapManifest manifest, IReadOnlySet<string> trackedPaths)
+    {
+        static bool OwnedData(FileMapEntry item, FileMapAdmissionPlane plane) =>
+            item.Kind == FileMapKind.Data && item.AdmissionPlane == plane
+            && item.ProducedBy == nameof(InformationTemplateDebtWriter)
+            && item.ArtifactId == "none" && item.RuntimeDisposition == "committed-source"
+            && item.ConsumedBy.SequenceEqual(new[] { "DeclaredTemplateBindingRule", "InformationTemplateDebtStore" })
+            && item.VerifiedBy.SequenceEqual(new[] { "DeclaredTemplateBindingRule", "InformationTemplateDebtStore" });
+        var prefix = InformationTemplateDebtStore.Root + "*";
+        return OwnedData(entry, FileMapAdmissionPlane.Content)
+            && entry.Pattern.StartsWith(prefix, StringComparison.Ordinal)
+            && entry.Pattern.Length == prefix.Length + 6
+            && "0123456789abcdef".Contains(entry.Pattern[prefix.Length])
+            && entry.Pattern.EndsWith(".json", StringComparison.Ordinal)
+            && trackedPaths.Contains(InformationTemplateDebtStore.ActivationPath)
+            && manifest.Match(InformationTemplateDebtStore.ActivationPath) is [var authority]
+            && authority.Pattern == InformationTemplateDebtStore.ActivationPath
+            && OwnedData(authority, FileMapAdmissionPlane.Judge);
+    }
+
     internal static IReadOnlyList<FileMapFinding> InspectPatternPopulation(
         FileMapManifest manifest,
         IEnumerable<string> paths)
     {
         ArgumentNullException.ThrowIfNull(manifest);
         ArgumentNullException.ThrowIfNull(paths);
-        var trackedPaths = paths.ToArray();
+        var trackedPaths = paths.ToHashSet(StringComparer.Ordinal);
         return manifest.Entries
             .Where(static entry => entry.RuntimeDisposition != "run-local")
             // SL-029 separates a FILEMAP registration from its content addition.
             // An exact report path is therefore a reservation, including between
             // content deletion and the subsequent registration cleanup.
             .Where(static entry => !IsReportPath(entry.Pattern) || entry.Pattern.Contains('*'))
+            .Where(entry => !IsInformationTemplateDebtReservation(entry, manifest, trackedPaths))
             .Where(entry => !trackedPaths.Any(entry.Matches))
             .Select(static entry => new FileMapFinding(
                 "FILEMAP-PATTERN-EMPTY",

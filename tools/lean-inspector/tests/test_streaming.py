@@ -13,9 +13,29 @@ from unittest.mock import patch
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import materials
 import publication
+import native
 
 
 class StreamingTests(unittest.TestCase):
+    def test_chunked_spool_preserves_material_bytes(self):
+        data = ('λ😀' * 40000).encode()
+        chunks = [data[i:i + materials.BUFFER_BYTES] for i in range(0, len(data), materials.BUFFER_BYTES)]
+        wire = b'chunks\n' + b''.join(str(len(c)).encode() + b'\n' + c for c in chunks) + b'0\ndone\n'
+        with tempfile.TemporaryDirectory() as directory:
+            result = subprocess.run([sys.executable, materials.__file__, 'stream', directory],
+                input=wire, capture_output=True, timeout=30)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertEqual(result.stdout, b'ok\ndone\n')
+            self.assertEqual(materials.read_material(Path(directory) / '0.statement.gz'), data)
+
+    def test_chunked_spool_rejects_incomplete_or_oversize_frame_without_output(self):
+        for wire in [b'chunks\n4\nabc', b'chunks\n65537\n', b'chunks\n0\n', b'chunks\n1\nx', b'chunks\n-1\n']:
+            with self.subTest(wire=wire), tempfile.TemporaryDirectory() as directory:
+                result = subprocess.run([sys.executable, materials.__file__, 'stream', directory],
+                    input=wire, capture_output=True, timeout=30)
+                self.assertNotEqual(result.returncode, 0)
+                self.assertEqual(list(Path(directory).iterdir()), [])
+
     def test_chunk_boundaries_match_canonical_declaration_bytes(self):
         values = ['', 'plain', '\\"\n\x00λ😀𐀀\U0010ffff', '\b\t\r\f' + 'a' * 65530 + '😀tail']
         for value in values:
@@ -89,6 +109,97 @@ class StreamingTests(unittest.TestCase):
 
 
 class PublicationTests(unittest.TestCase):
+    def test_binding_batch_scope_expanded_once(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            paths = lambda *names: dict(include=[dict(pattern=n, optional=False) for n in names], exclude=[])
+            (root / 'lean-report-inputs.json').write_text(json.dumps(dict(schema_version=1, report_semantic_version=4,
+                report_modules=paths('X*.lean'), inspector_sources=paths(), config_inputs=paths(),
+                producer_scopes={'lean-report': paths('lean-report-inputs.json',
+                    'tools/scripts/report/lean-report-selection.py'), 'scribe-content': paths()})))
+            policy = root / 'Policy.lean'
+            policy.write_text('def driver := 1\n')
+            rows, requests = {}, []
+            for i in range(8):
+                name = 'X' + str(i)
+                source = root / (name + '.lean')
+                source.write_text('def x := 1\n')
+                utility = root / (name + '.json')
+                utility.write_text(json.dumps(dict(source_path=source.name, utilities=[])))
+                rows[name] = [dict(module=name, source_path=source.name,
+                    source_sha256='sha256:' + publication.digest(source),
+                    information_templates=dict(schema_version=1, compatibility_version=4,
+                        inventory=[], registered=[], records=[],
+                        inputs=[dict(path=policy.name, sha256=publication.digest(policy))]))]
+                requests.append(['validate', [str(root), 'module', str(root), name, str(utility), 'fixture.zip']])
+            request, result = root / 'request.json', root / 'result.json'
+            request.write_text(json.dumps(requests))
+            # Isolate the source-binding boundary from ZIP decoding. The batch
+            # loop and each row's real path/hash validator still execute.
+            def validate(kind, owner, name, utility, artifact, **kwargs):
+                native.row_binding(rows[name], owner, name, utility,
+                    **{key: value for key, value in kwargs.items() if key == 'template_inputs'})
+            with patch.object(native, 'validate', side_effect=validate), patch.object(
+                    publication.selection, 'Selection', wraps=publication.selection.Selection) as selections:
+                native.batch(request, result)
+                self.assertEqual(json.loads(result.read_text()), [0] * len(requests))
+                self.assertEqual(selections.call_count, 1, '[FAIL] binding_batch_scope_expanded_once')
+
+    def test_binding_evidence_survives_compaction_and_native_validation(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / 'spool').mkdir()
+            evidence = dict(schema_version=1, compatibility_version=4,
+                inventory=[], registered=[], records=[], inputs=[])
+            raw = dict(schema=materials.SPOOL_SCHEMA, modules=[dict(module='X', source_path='X.lean',
+                source_sha256='sha256:' + 'a'*64, imports=[], declarations=[], information_templates=evidence)])
+            source, report = root / 'spool.json', root / 'report.json'
+            source.write_text(json.dumps(raw))
+            materials.compact(source, root / 'spool', report)
+            rows = publication.validate_rows(report, publication.member(report, '.materials.zip'))
+            self.assertEqual(rows[0]['information_templates'], evidence)
+            for field, value in [('compatibility_version', 3), ('schema_version', True), ('inputs', {}), ('extra', [])]:
+                with self.subTest(field=field):
+                    rows[0]['information_templates'] = dict(evidence, **{field: value})
+                    report.write_bytes(materials.canonical_json(dict(schema=materials.REPORT_SCHEMA, modules=rows)))
+                    with self.assertRaisesRegex(ValueError, 'declared-template evidence'):
+                        publication.validate_rows(report, publication.member(report, '.materials.zip'))
+
+    def test_binding_source_revalidation_rejects_stale_and_missing_inputs(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            paths = lambda *names: dict(include=[dict(pattern=n, optional=False) for n in names], exclude=[])
+            (root / 'lean-report-inputs.json').write_text(json.dumps(dict(schema_version=1, report_semantic_version=4,
+                report_modules=paths('X.lean'), inspector_sources=paths(), config_inputs=paths(),
+                producer_scopes={'lean-report': paths('lean-report-inputs.json',
+                    'tools/scripts/report/lean-report-selection.py'), 'scribe-content': paths()})))
+            policy = root / 'Policy.lean'
+            policy.write_text('def driver := 1\n')
+            source = root / 'X.lean'
+            source.write_text('def x := 1\n')
+            utility = root / 'utility.json'
+            utility.write_text(json.dumps(dict(source_path='X.lean', utilities=[])))
+            evidence = dict(schema_version=1, compatibility_version=4, inventory=[], registered=[], records=[],
+                inputs=[dict(path='Policy.lean', sha256=publication.digest(policy))])
+            rows = [dict(module='X', source_path='X.lean', source_sha256='sha256:' + publication.digest(source),
+                information_templates=evidence)]
+            inputs = publication.selection.Selection(root)
+            validators = [lambda: native.row_binding(rows, root, 'X', utility),
+                          lambda: native.row_binding(rows, root, 'X', utility, template_inputs=inputs),
+                          lambda: publication.validate_template_sources(rows, root, inputs=inputs),
+                          lambda: publication.validate_sources(rows, root)]
+            for validate in validators:
+                validate()
+            policy.write_text('def driver := 2\n')
+            for validate in validators:
+                with self.assertRaisesRegex(ValueError, 'stale declared-template input',
+                        msg='[FAIL] native_binding_input_freshness'):
+                    validate()
+            policy.unlink()
+            for validate in validators:
+                with self.assertRaises((ValueError, OSError)):
+                    validate()
+
     def test_shared_validation_rechecks_bytes_and_complete_declaration_identity(self):
         import zipfile
         with tempfile.TemporaryDirectory() as directory:

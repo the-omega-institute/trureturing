@@ -213,10 +213,18 @@ open Elab Command Term
 
 /-- Generate the statement, proof declaration and compiled unit as one transaction.
 There is no command that registers a pre-existing theorem. -/
-elab "structural_theorem " theoremId:ident " in " lawArenaId:ident
-    " realization " realizationTerm:term certificateId:(" nondegeneracy " ident)?
-    domainId:(" domain " ident)? sensitivityId:(" sensitivity " ident)?
-    " := " proofTerm:term : command => do
+syntax (name := structuralTheoremCmd)
+  "structural_theorem " ident " in " ident
+    " realization " term (" nondegeneracy " ident)?
+    (" domain " ident)? (" sensitivity " ident)?
+    " := " term : command
+
+@[command_elab structuralTheoremCmd]
+private def elabStructuralTheorem : CommandElab := fun stx => registrationTransaction do
+  let theoremId : TSyntax `ident := ⟨stx[1]⟩
+  let lawArenaId : TSyntax `ident := ⟨stx[3]⟩
+  let realizationTerm : TSyntax `term := ⟨stx[5]⟩
+  let proofTerm : TSyntax `term := ⟨stx[10]⟩
   let rawName := theoremId.getId.eraseMacroScopes
   let currentNamespace ← getCurrNamespace
   let theoremName := if (`_root_).isPrefixOf rawName then
@@ -303,9 +311,38 @@ elab "structural_theorem " theoremId:ident " in " lawArenaId:ident
     liftTermElabM do
       RegistrationGates.publishDiagnostic entry.unitConst (← RegistrationGates.validateStructural entry)
     modifyEnv fun env => structuralRegistry.addEntry env entry
+    TemplateBinding.publishRegistration {
+      theoremName := entry.theoremName, unitName := entry.unitConst,
+      arenaName := entry.lawArenaConst, realizationName := entry.realizationConst,
+      registrationModuleName := entry.registrationModule,
+      resolvedArenaName := entry.canonicalArena }
   catch error =>
     setEnv before
     throw error
+
+syntax (name := structuralTheoremReadoutCmd)
+  "structural_theorem " ident " in " ident &"readout " "via " "(" term ")"
+    " realization " term (" nondegeneracy " ident)?
+    (" domain " ident)? (" sensitivity " ident)? " := " term : command
+
+@[command_elab structuralTheoremReadoutCmd]
+private def elabStructuralReadout : CommandElab := fun stx => registrationTransaction do
+  let lawArenaName ← liftCoreM <| realizeGlobalConstNoOverloadWithInfo stx[3]
+  let lawType ← liftTermElabM do inferType (← mkConstWithFreshMVarLevels lawArenaName)
+  unless lawType.isAppOfArity ``StructuralPrimitiveLawArena 1 do
+    throwError "IE-C003 ArenaResolutionFailed: {lawArenaName}"
+  let some arena := lawType.getAppArgs[0]!.constName?
+    | throwError "IE-C003 ArenaResolutionFailed: {lawArenaName}"
+  let (descriptor, diagnostic) ← elaborateReadoutDescriptor ⟨stx[7]⟩
+  if (← get).messages.hasErrors then return
+  let rawName := stx[1].getId.eraseMacroScopes
+  let ns ← getCurrNamespace
+  let theoremName := if (`_root_).isPrefixOf rawName then
+      rawName.replacePrefix `_root_ .anonymous else ns ++ rawName
+  let lowered : TSyntax `command := ⟨Syntax.node stx.getHeadInfo ``structuralTheoremCmd
+    (stx.getArgs.extract 0 4 ++ stx.getArgs.extract 9 stx.getNumArgs)⟩
+  TemplateBinding.withDeclaration { theoremName, arena, descriptor, diagnostic } <|
+    elabCommand lowered
 
 private def sourceDeclName (ns raw : Name) : Name :=
   if (`_root_).isPrefixOf raw then raw.replacePrefix `_root_ .anonymous else ns ++ raw
@@ -779,5 +816,27 @@ def validateEvidence (root : Name) (inventory : DispositionInventory)
   discard <| validateEvidenceSources root inventory scope
 
 end DispositionCensus
+
+end LeanInformationAudit
+
+namespace LeanInformationAudit
+open Lean Meta
+
+/-- One authoritative imported join shared by all requested report modules. -/
+def informationTemplateReportDriver : InformationTemplateReportDriver := fun moduleNames => do
+    let env ← getEnv
+    TemplateAudit.NativeCoherence.validate #[`LeanInformationAudit.DispositionEvidence]
+    let snapshot ← TemplateBinding.exportSnapshot
+    moduleNames.mapM fun moduleName => do
+      let finite := (InformationRegistry.entries env).filter
+        (·.registrationModuleName == moduleName) |>.map fun entry => {
+          root := moduleName, registrationModule := moduleName, theoremName := entry.theoremName,
+          objectArena := entry.canonicalObjectArenaName, «catalog» := entry.effectiveCatalogId :
+            TemplateOccurrenceKey }
+      let structural := (DispositionCensus.structuralProvenanceEntries env).filter
+        (·.registrationModule == moduleName) |>.map fun entry => {
+          root := moduleName, registrationModule := moduleName, theoremName := entry.theoremName,
+          objectArena := entry.canonicalArena, «catalog» := entry.canonicalArena : TemplateOccurrenceKey }
+      TemplateBinding.moduleJson snapshot moduleName (finite ++ structural)
 
 end LeanInformationAudit

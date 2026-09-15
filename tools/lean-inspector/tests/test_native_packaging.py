@@ -28,6 +28,61 @@ import native
 from test_native_support import *
 
 class NativePackagingTests:
+    def test_native_facet_supplies_toolchain_environment(self):
+        self.env.pop('LEAN_SYSROOT', None)
+        result = self.run_lake('build', ':report', success=None)
+        self.assertEqual(result.returncode, 0,
+            '[FAIL] native_toolchain_search_path\n' + result.stdout + result.stderr)
+        self.assertIn('D5.Alone', self.stamps())
+
+    def test_binding_driver_environment_survives_interpreter_shutdown(self):
+        # Exercise the dynamic driver entry, including interpreter teardown.
+        # These fixture records test lifetime only, not binding admission.
+        self.write('LeanInformationAudit/RegistryTypes.lean', '''import Lean
+namespace LeanInformationAudit
+abbrev InformationTemplateReportDriver := Array Lean.Name → Lean.MetaM (Array Lean.Json)
+initialize fixtureExtension : Lean.SimplePersistentEnvExtension Lean.Name (Array Lean.Name) ←
+  Lean.registerSimplePersistentEnvExtension {
+    addEntryFn := fun entries entry => entries.push entry
+    addImportedFn := fun arrays => arrays.foldl (· ++ ·) #[] }
+''')
+        self.write('LeanInformationAudit/Registry.lean', '''import LeanInformationAudit.RegistryTypes
+namespace LeanInformationAudit
+def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := fun names => do
+  let env ← Lean.getEnv
+  let entries := fixtureExtension.getState env
+  return names.map fun name => Lean.Json.mkObj [
+    ("fixture_root", Lean.toJson name.toString),
+    ("fixture_modules", Lean.toJson env.header.moduleNames.size),
+    ("fixture_entries", Lean.toJson entries.size)]
+''')
+        self.copy('tools/lean-inspector/Inspector.lean')
+        self.ensure()
+        built = subprocess.run(['make', 'lean',
+            'LEAN_TARGETS=leanInspector/reportInspector D5.Alone LeanInformationAudit.Registry'],
+            cwd=self.root, env=self.env, capture_output=True, text=True, timeout=120)
+        self.assertEqual(built.returncode, 0, built.stdout + built.stderr)
+        output = self.root / 'driver.spool.json'
+        executable = self.root / '.lake/build/lean-inspector/producer/bin/reportInspector'
+        result = self.run_lake('env', str(executable), '--output', str(output),
+            '--material-spool', str(self.root / 'driver.material-spool'),
+            'D5.Alone', 'D5/Alone.lean', 'sha256:' + publication.digest(self.root / 'D5/Alone.lean'),
+            success=None)
+        self.assertEqual(result.returncode, 0,
+            '[FAIL] binding_driver_process_lifetime\n' + result.stdout + result.stderr)
+        binding = json.loads(output.read_text())['modules'][0]['information_templates']
+        self.assertEqual(binding['fixture_root'], 'D5.Alone')
+        self.assertGreater(binding['fixture_modules'], 0)
+        # The source interpreter has its own process-global IR cache. Exercise
+        # that entry as well as the relocated native executable.
+        result = self.run_lake('env', 'lean', '--root=tools/lean-inspector', '--run',
+            'tools/lean-inspector/Inspector.lean', '--output', str(output),
+            '--material-spool', str(self.root / 'source-driver.material-spool'),
+            'D5.Alone', 'D5/Alone.lean', 'sha256:' + publication.digest(self.root / 'D5/Alone.lean'),
+            success=None)
+        self.assertEqual(result.returncode, 0,
+            '[FAIL] binding_driver_process_lifetime\n' + result.stdout + result.stderr)
+
     def test_native_pack_unpack_reuses_complete_rows(self):
         self.build()
         expected = self.report()[1:]
