@@ -1,0 +1,29 @@
+### 108.1 两状态自动机只负责检查局部约束
+
+源码中的状态为
+
+$$
+Q=\{\mathrm{clear},\mathrm{previousOne}\}.
+$$
+
+转移规则是
+
+$$
+\begin{aligned}
+\mathrm{clear}\xrightarrow{0}&\mathrm{clear},
+&\mathrm{clear}\xrightarrow{1}&\mathrm{previousOne},\\
+\mathrm{previousOne}\xrightarrow{0}&\mathrm{clear},
+&\mathrm{previousOne}\xrightarrow{1}&\text{非法}.
+\end{aligned}
+$$
+
+`zeckendorfMSDWord_noAdjacentOnes` 证明任意自然数的规范密集 Zeckendorf 字都满足这个语言约束；`zeckendorfMSDWord_base_success` 则证明这些字都能在该部分自动机中成功执行。
+
+因此，对任务
+
+$$
+\text{“当前前缀后面还能不能接一个一？”}
+$$
+
+两状态确实是一个充分的有限接口。它保存的是局部合法性所需的最小上下文，而不是完整输入的数值。
+

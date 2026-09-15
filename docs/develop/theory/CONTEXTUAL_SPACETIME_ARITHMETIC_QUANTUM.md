@@ -23445,3 +23445,114 @@ $$
 可以建立一个条件性桥：若给定实验把 $$S/L$$ 相位字母编码为合法构型，并且联合更新保持该编码空间，那么第 105、106 节的预测商和受控稳定深度可以应用于这个有限语言。现有 Lean 结果只证明了相位字母的频率选择和禁词继承；它没有证明该相位语言存在唯一的物理寄存器编码，也没有证明其商类数等于某个 Fibonacci Hilbert 维数。
 
 本节复用 `zeckendorf_selects_layer_gap_phase`、`golden_true_selects_long_frequency`、`golden_false_selects_short_frequency`、`short_frequency_forces_next_long`、`two_long_frequencies_force_next_short`、`short_phase_forces_next_long` 和 `two_long_phases_force_next_short`。Lean 已证明的是黄金词约束到频率与相位的精确传递；标量端点的顺序不可见性来自交换乘法，顺序恢复、物理编码和量子噪声下的稳定深度仍需另建模型。
+
+## 108. 合法性记忆不等于历史记忆
+
+前面已经区分了合法构型数、预测商和量子载体维数。`GoldenZeckendorfLanguage` 给出一个最小的反例：判断一个输入是否属于 Zeckendorf 合法语言，只需要记住前一个符号是否为一；但这远远不够回答该输入代表哪个整数、产生哪种相位或怎样参与后续干涉。
+
+### 108.1 两状态自动机只负责检查局部约束
+
+源码中的状态为
+
+$$
+Q=\{\mathrm{clear},\mathrm{previousOne}\}.
+$$
+
+转移规则是
+
+$$
+\begin{aligned}
+\mathrm{clear}\xrightarrow{0}&\mathrm{clear},
+&\mathrm{clear}\xrightarrow{1}&\mathrm{previousOne},\\
+\mathrm{previousOne}\xrightarrow{0}&\mathrm{clear},
+&\mathrm{previousOne}\xrightarrow{1}&\text{非法}.
+\end{aligned}
+$$
+
+`zeckendorfMSDWord_noAdjacentOnes` 证明任意自然数的规范密集 Zeckendorf 字都满足这个语言约束；`zeckendorfMSDWord_base_success` 则证明这些字都能在该部分自动机中成功执行。
+
+因此，对任务
+
+$$
+\text{“当前前缀后面还能不能接一个一？”}
+$$
+
+两状态确实是一个充分的有限接口。它保存的是局部合法性所需的最小上下文，而不是完整输入的数值。
+
+### 108.2 三种不同的“记忆维数”
+
+同一个 Zeckendorf 字可以对应至少三种不同的资源量：
+
+$$
+\boxed{
+\begin{aligned}
+\text{合法性记忆}&=|Q|=2,\\
+\text{有限窗口构型载体}&=|\mathcal W_L|=F_{L+2},\\
+\text{任务预测或相干记忆}&=\text{由未来商、切口秩和物理编码决定}.
+\end{aligned}
+}
+$$
+
+第一项只回答语言接受问题；第二项列出窗口中可能出现的合法基态；第三项还要考虑允许的更新、测量、相位和恢复操作。把第一项当成第二项，或者把第二项当成第三项，都会低估历史债务。
+
+例如，两个前缀都处于 $$\mathrm{clear}$$ 状态时，它们都允许下一位为一；但它们已经累积的 Fibonacci 权重可能不同，之后的数值读数、素数频率或共享记忆注入也可能不同。自动机状态把这些前缀合并，只在“合法性”这个观察族下闭合。
+
+### 108.3 合法性商何时可以成为经典对象
+
+设 $$q_{\mathrm{legal}}$$ 只读出自动机状态，$$q_{\mathrm{value}}$$ 读出完整 Fibonacci 数值，$$q_{\mathrm{phase}}$$ 读出后续相位响应。一般有
+
+$$
+\ker q_{\mathrm{value}}
+\subseteq
+\ker q_{\mathrm{legal}},
+\qquad
+\ker q_{\mathrm{phase}}
+\subseteq
+\ker q_{\mathrm{legal}},
+$$
+
+因为数值和相位任务会区分更多前缀。只有当允许的后续实验族确实只查询合法性，并且更新不把被合并的前缀重新分开时，二状态商才满足第 105、106 节的预测闭合条件。
+
+若加入算术读数、黄金 Euler 相位或量子干涉，必须重新计算完整未来核：
+
+$$
+R_\infty^{\mathrm{legal}}
+\supseteq
+R_\infty^{\mathrm{value}},
+\qquad
+R_\infty^{\mathrm{legal}}
+\supseteq
+R_\infty^{\mathrm{phase}}.
+$$
+
+商关系越小，所需历史接口越细。于是“约束减少了状态”只对指定观察任务成立；换一个任务，原先被约掉的历史可能重新成为可见差异。
+
+### 108.4 对量子实现的边界
+
+两状态自动机可以作为一个经典控制器，决定某个量子门是否允许施加；它本身不构成把所有合法字编码为两个正交量子态的物理实现。若要求保留合法构型的相干叠加，至少还要给出
+
+$$
+\mathcal H_{Z,L}
+=
+\operatorname{span}\{|w\rangle:w\in\mathcal W_L\}
+$$
+
+的编码、在该空间上保持合法性的联合演化，以及测量和恢复的完全正映射。自动机状态可以附加在寄存器上，但不能替代第 98、104 节中由切口秩决定的相干 bond。
+
+所以一个更准确的分工是：
+
+$$
+\text{自动机}
+\longrightarrow
+\text{约束可执行性},
+\qquad
+\text{预测商}
+\longrightarrow
+\text{未来响应闭合},
+\qquad
+\text{量子寄存器}
+\longrightarrow
+\text{相干历史与可恢复关联}.
+$$
+
+本节复用 `ZeckendorfBaseState`、`zeckendorfBaseStep`、`zeckendorfMSDWord_noAdjacentOnes` 和 `zeckendorfMSDWord_base_success`。Lean 已证明的是规范 Zeckendorf 字的局部合法性和两状态部分自动机的成功执行；它没有证明两状态自动机足以承载数值、相位或任意量子预测任务。
