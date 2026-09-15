@@ -29,7 +29,7 @@ internal sealed class OrlovskyEighthQuadraticSolePrimeDocument : IScribeDocument
                 DeclarationHandle.Create(Prefix + "result"),
                 H("The parameter classification and the sole prime"),
                 StatementSource.FromAuthor(ResultFormula()),
-                AssessedProvenance.FromLiterature(Source),
+                AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
                     "For every positive k, integrality is equivalent to k+1=8m or k=8m "
                         + "for a positive natural m. The value 17 occurs at k=8 and is prime. "

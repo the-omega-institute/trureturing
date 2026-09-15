@@ -26,7 +26,9 @@ $$(\forall k \in \mathrm{Nat},\; (0 < k) \Rightarrow ((8 \mid k \cdot (k + 9)) \
 
 <!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a165719-eighth-quadratic-integrality-and-sole-prime","declaration_gid":"D5/S3/PrimeForms/OrlovskyEighthQuadraticSolePrime.result","resolution_kind":"proved"} -->
 
-*Citation.* Vladimir Joseph Stephan Orlovsky; Bill McEachen (2009). *OEIS A165719, Integers of the form k*(k+9)/8*. URL: <https://oeis.org/A165719>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Vladimir Joseph Stephan Orlovsky; Bill McEachen (2009). *OEIS A165719, Integers of the form k*(k+9)/8*. URL: <https://oeis.org/A165719>.
 
 *Commentary.*
 
