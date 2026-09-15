@@ -1,0 +1,7 @@
+### 定理 4.3. 无隐藏秩条件
+
+\[
+\det J=\Bigl(\prod_i\mu_i\Bigr)\det R,
+\qquad \det J\ne0\ \Longleftrightarrow\ \det R\ne0.
+\]
+

@@ -1,0 +1,11 @@
+## 25. 补充参考文献与精确实例
+
+[OM24] Ron Ofir and Michael Margaliot. *Multiplicative and additive compounds via Kronecker products and Kronecker sums*. arXiv:2401.02100. 本文借鉴其实际 compound/Kronecker 语境，不把外幂矩阵公式的存在宣称为新结果。
+https://arxiv.org/abs/2401.02100
+
+[DOG26] Debojyoti Dey, Ron Ofir and Christian Grussler. *Inversion of the Multiplicative Matrix Compound Operator*. arXiv:2605.27682v3, 15 July 2026. 该文研究乘法 compound 的逆问题；本文的 primitive infinitesimal 收缩与平方零识别是另一个明确陈述，不把乘法逆问题误作尚无人研究。
+https://arxiv.org/abs/2605.27682
+
+[IW14] Elham Izadi and Jie Wang. *The primitive cohomology of theta divisors*. arXiv:1410.5868v1. §2 的 Prym embeddings，§4 的三维参数空间 F 及 Theorem 4.1。它们只支持第 23 节所注明的具体对象与 Abel-Jacobi 结论。
+https://arxiv.org/abs/1410.5868
+
