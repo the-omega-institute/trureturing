@@ -37,7 +37,11 @@ internal sealed class OrlovskyEighthQuadraticSolePrimeDocument : IScribeDocument
                         + "modulo eight leaves only residues seven and zero. In the first case "
                         + "a=k(m+1), with both factors greater than one. In the second case "
                         + "a=m(8m+9); m=1 gives 17, and every larger m gives a composite value."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "oeis-a165719-eighth-quadratic-integrality-and-sole-prime"),
+                    ResolutionKind.Proved)))));
 
     private static Formula TermFormula()
     {
