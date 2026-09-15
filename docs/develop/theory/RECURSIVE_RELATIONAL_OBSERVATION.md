@@ -3884,3 +3884,282 @@ $$
 [^rro16_phase]: *CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF*，第371—377节，特别是定理371.2、372.2—372.4、373.2、375.2—375.3与377.1；固定文本为提交 c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb 的 [Zeckendorf 理论卷](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md)。
 
 ## 追加锚（本行以下为增补区）
+## 17. 完整历史见证、可逆后继与选史障碍
+
+**定义与假设 17.0（完整过去空间及 Zeckendorf 前置）。** 在 ZFC 中取 $\mathbb N=\{0,1,\ldots\}$。对非空紧致 Hausdorff 空间 $X$ 及连续满射 $f:X\to X$，定义
+$$
+\mathcal L_f=\{(x_0,x_1,\ldots)\in X^{\mathbb N}:f(x_{j+1})=x_j\text{ 对每个 }j\ge0\},
+$$
+赋予乘积空间的子空间拓扑，记 $p_j(x_0,x_1,\ldots)=x_j$、$P_f=p_0$，并定义候选演化
+$$
+U_f(x_0,x_1,\ldots)=(f(x_0),x_0,x_1,\ldots).
+$$
+
+具体情形沿用[前置卷第371–375节](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md)的对象，在本节简记为
+$$
+\phi=\frac{1+\sqrt5}{2},\qquad \mathbb T=\mathbb R/\mathbb Z,\qquad K=\{x\in\{0,1\}^{\mathbb N}:x_ix_{i+1}=0\text{ 对所有 }i\ge0\}.
+$$
+$K$ 取乘积子空间拓扑。令 $G_0=1$、$G_1=2$、$G_{i+2}=G_{i+1}+G_i$，$Z(n)$ 为权值 $G_i$ 下低位起的有限 Zeckendorf 表示补零，$0=Z(0)$ 为全零状态，并记
+$$
+u=(10)^\omega,\qquad v=(01)^\omega,\qquad D=Z[\mathbb N],\qquad H(x)=\left[\sum_{i\ge0}(-1)^{i+1}\phi^{-i-2}x_i\right].
+$$
+$T$ 为前置卷定义375.1的首个相邻零后继：在首个 $00$ 的位置清零此前缀并置该位为一；无 $00$ 时输出 $0$。本节使用前置卷定理371.2、372.4、375.2–375.3的以下结论：$K$ 紧致可度量，$Z$ 单射且 $D$ 稠密；$T$ 连续满射，且
+$$
+TZ(n)=Z(n+1),\qquad T^{-1}(\{0\})=\{u,v\},
+$$
+每个非零状态的前驱唯一；$H$ 连续满射，且
+$$
+H(Z(n))=[n\phi],\qquad H(Tx)=H(x)+[\phi].
+$$
+$H$ 的二点纤维恰位于
+$$
+E_- =\{[-m\phi]:m\ge1\},
+$$
+其余相位的纤维均为单点，特别
+$$
+H^{-1}(\{[n\phi]\})=\{Z(n)\}\qquad(n\ge0).
+$$
+在此具体情形记 $L=\mathcal L_T$、$P=P_T$、$U=U_T$、$Q=H\circ P$，并置
+$$
+E_+=\{[n\phi]:n\ge0\},\qquad \mathcal O=\{[k\phi]:k\in\mathbb Z\}=E_-\cup E_+.
+$$
+由 $\phi$ 无理，$E_-\cap E_+=\varnothing$，且整数 $k$ 由相位 $[k\phi]$ 唯一确定。
+
+**定理 17.1（主定理组：自然扩张及其准确泛性质）。** 对定义17.0的一般系统 $(X,f)$，$\mathcal L_f$ 非空、紧致且 Hausdorff；每个坐标投影 $p_j$ 都是连续满射，$P_f$ 还是闭映射及商映射。$U_f$ 是同胚，其逆为
+$$
+U_f^{-1}(x_0,x_1,x_2,\ldots)=(x_1,x_2,x_3,\ldots),
+$$
+并满足
+$$
+P_fU_f=fP_f,\qquad p_j=P_fU_f^{-j}.
+$$
+
+空间 $\mathcal L_f$ 连同各 $p_j$ 是逆系统
+$$
+X\xleftarrow{f}X\xleftarrow{f}X\xleftarrow{f}\cdots
+$$
+在拓扑空间范畴中的逆极限：若拓扑空间 $Y$ 上的连续映射 $a_j:Y\to X$ 满足 $fa_{j+1}=a_j$，则存在唯一连续映射 $a:Y\to\mathcal L_f$，使 $p_ja=a_j$ 对所有 $j$ 成立。
+
+对于动力系统，令对象为三元组 $(Y,S,g)$，其中 $Y$ 是非空紧致 Hausdorff 空间，$S:Y\to Y$ 是同胚，$g:Y\to X$ 连续且 $gS=fg$。从 $(Y,S,g)$ 到 $(Y',S',g')$ 的箭头为满足
+$$
+hS=S'h,\qquad g'h=g
+$$
+的连续映射 $h:Y\to Y'$。在此范畴中，$(\mathcal L_f,U_f,P_f)$ 是终对象。准确地说，每个对象具有唯一的箭头
+$$
+\widetilde g:Y\longrightarrow\mathcal L_f,\qquad \widetilde g(y)=\bigl(g(y),g(S^{-1}y),g(S^{-2}y),\ldots\bigr),
+$$
+满足
+$$
+P_f\widetilde g=g,\qquad \widetilde gS=U_f\widetilde g.
+$$
+若 $g$ 满射，则 $\widetilde g$ 也满射。因此，进一步要求底映射 $g$ 和箭头 $h$ 均满射时，同一三元组仍是该可逆扩张范畴的终对象。这些性质将该扩张确定到唯一的、与底投影相容的动力学同胚。
+
+一般逆极限的成熟框架见 Ingram–Mahavier，*Inverse Limits: From Continua to Chaos*，第2章“[Inverse Limits in a General Setting](https://doi.org/10.1007/978-1-4614-1797-2_2)”，第75–129页；上述移位同胚及自然扩张的动力学定位见 Boroński–Minc–Štimac，“[On conjugacy of natural extensions of one-dimensional maps](https://arxiv.org/html/2110.11440v1#S1)”，第1节，期刊 DOI：10.1017/etds.2022.62。
+
+**证明。** 对每个 $j\ge0$，集合
+$$
+C_j=\{\xi\in X^{\mathbb N}:f(\xi_{j+1})=\xi_j\}
+$$
+是闭集：映射 $\xi\mapsto(f(\xi_{j+1}),\xi_j)$ 连续，而 Hausdorff 空间 $X$ 的对角线在 $X\times X$ 中闭。因此 $\mathcal L_f=\bigcap_{j\ge0}C_j$ 是紧致 Hausdorff 乘积空间 $X^{\mathbb N}$ 的闭子空间。
+
+固定任意 $x\in X$。对 $N\ge0$ 置
+$$
+A_N(x)=\{\xi\in X^{\mathbb N}:\xi_0=x,\ f(\xi_{j+1})=\xi_j\text{ 对 }0\le j<N\}.
+$$
+这些是递减的闭集。由 $f^N$ 满射，存在 $y\in X$ 使 $f^N(y)=x$；令 $\xi_j=f^{N-j}(y)$ 对 $0\le j\le N$ 成立，并用任一固定状态填充其余坐标，即得 $A_N(x)$ 的元素。紧性与有限交性质给出
+$$
+\varnothing\ne\bigcap_{N\ge0}A_N(x)=P_f^{-1}(\{x\}).
+$$
+于是 $P_f$ 满射，且 $\mathcal L_f$ 非空。投影连续。若 $B\subseteq\mathcal L_f$ 闭，则 $B$ 紧，其像 $P_f(B)$ 在 Hausdorff 空间 $X$ 中闭，故 $P_f$ 是闭映射。连续闭满射是商映射：若 $P_f^{-1}(A)$ 闭，则 $A=P_f(P_f^{-1}(A))$ 闭，反向由连续性成立。
+
+若 $\ell=(x_0,x_1,\ldots)\in\mathcal L_f$，则插入的首条关系为 $f(x_0)=f(x_0)$，其余关系来自 $\ell$，故 $U_f\ell\in\mathcal L_f$。删除首坐标也保留全部相容关系，定义映射 $V(\ell)=(x_1,x_2,\ldots)$。逐坐标检查得到
+$$
+VU_f=\operatorname{id}_{\mathcal L_f},\qquad U_fV=\operatorname{id}_{\mathcal L_f},
+$$
+其中第二式的首坐标使用 $f(x_1)=x_0$。两个映射的每个坐标函数均连续，所以两者连续，$U_f$ 为同胚且逆为 $V$。首坐标直接给出 $P_fU_f=fP_f$，反复删除首坐标给出 $p_j=P_fU_f^{-j}$；因此所有 $p_j$ 满射。
+
+对于相容映射族 $(a_j)$，唯一可能的映射是 $a(y)=(a_j(y))_{j\ge0}$。相容性保证其值在 $\mathcal L_f$ 中，乘积拓扑保证其连续；逐坐标相等又保证唯一性。这证明拓扑逆极限的泛性质。
+
+同时记录一个后面使用的柱集事实。由相容关系，对 $0\le i\le N$ 有 $p_i=f^{N-i}p_N$。因而，对开集 $O_0,\ldots,O_N\subseteq X$，
+$$
+\bigcap_{i=0}^N p_i^{-1}(O_i)=p_N^{-1}(W),\qquad W=\bigcap_{i=0}^N(f^{N-i})^{-1}(O_i).
+$$
+$W$ 开；左侧非空时 $W$ 非空。任意非空开子集均包含这样的非空柱集。
+
+现在取 $(Y,S,g)$。对每个 $j\ge0$，由 $gS=fg$ 得
+$$
+f\bigl(g(S^{-j-1}y)\bigr)=g(S^{-j}y),
+$$
+故所给 $\widetilde g$ 落在 $\mathcal L_f$，且由各坐标连续而连续。首坐标给 $P_f\widetilde g=g$；比较首坐标及所有其余坐标，得到 $\widetilde gS=U_f\widetilde g$。
+
+若 $h:Y\to\mathcal L_f$ 也满足这两式，则 $S,U_f$ 可逆使 $hS^{-j}=U_f^{-j}h$，所以
+$$
+p_jh(y)=P_fU_f^{-j}h(y)=P_fh(S^{-j}y)=g(S^{-j}y).
+$$
+全部坐标被强制为 $\widetilde g$ 的坐标，故 $h=\widetilde g$。
+
+再设 $g$ 满射。给定 $\ell=(x_j)_{j\ge0}\in\mathcal L_f$，令
+$$
+B_N=\{y\in Y:g(S^{-j}y)=x_j\text{ 对所有 }0\le j\le N\}.
+$$
+这些是递减闭集。选取 $z\in Y$ 使 $g(z)=x_N$，置 $y=S^Nz$；则对 $0\le j\le N$，
+$$
+g(S^{-j}y)=g(S^{N-j}z)=f^{N-j}(x_N)=x_j.
+$$
+所以 $B_N$ 非空。$Y$ 的紧性给出 $y\in\bigcap_NB_N$，而此时 $\widetilde g(y)=\ell$，证明提升满射。
+
+最后，两个满足所述终对象性质的三元组之间各有唯一箭头。两个复合都是相应终对象的自箭头，故由唯一性等于恒等。两箭头因而互为连续逆映射，并保持底投影与演化。这证明唯一的动力学同胚。证毕。
+
+**命题 17.2（直接支持组一：全部历史纤维、边界与相位拆分）。** 在定义17.0的 Zeckendorf 系统中，对 $x\in K\setminus D$，其唯一前驱仍在 $K\setminus D$，记为 $r(x)$，并定义
+$$
+\lambda(x)=(r^j(x))_{j\ge0}.
+$$
+对 $\varepsilon\in\{u,v\}$ 定义双向状态序列及完整历史
+$$
+c_n^\varepsilon=Z(n)\quad(n\ge0),\qquad c_{-m}^\varepsilon=r^{m-1}(\varepsilon)\quad(m\ge1),\qquad \ell_k^\varepsilon=(c_{k-j}^\varepsilon)_{j\ge0}\quad(k\in\mathbb Z).
+$$
+这些对象均有定义，并满足
+$$
+Tc_k^\varepsilon=c_{k+1}^\varepsilon,\qquad U\ell_k^\varepsilon=\ell_{k+1}^\varepsilon,\qquad P\ell_k^\varepsilon=c_k^\varepsilon,\qquad Q\ell_k^\varepsilon=[k\phi].
+$$
+
+$P$ 的全部纤维准确为
+$$
+P^{-1}(\{Z(n)\})=\{\ell_n^u,\ell_n^v\}\quad(n\ge0),\qquad P^{-1}(\{x\})=\{\lambda(x)\}\quad(x\notin D).
+$$
+对于 $n\ge0$，这两个历史的第 $0,\ldots,n$ 个坐标相同，准确等于 $Z(n),Z(n-1),\ldots,Z(0)$，首次区别在第 $n+1$ 个坐标：
+$$
+p_{n+1}(\ell_n^u)=u,\qquad p_{n+1}(\ell_n^v)=v.
+$$
+特别地，零状态有且仅有两条历史
+$$
+\ell_0^u=(0,u,r(u),r^2(u),\ldots),\qquad \ell_0^v=(0,v,r(v),r^2(v),\ldots).
+$$
+两个交替状态 $u,v$ 自身却各只有一条完整历史。
+
+原相位映射与历史相位映射的纤维区别准确如下。对每个 $m\ge1$，
+$$
+H^{-1}(\{[-m\phi]\})=\{c_{-m}^u,c_{-m}^v\},\qquad P^{-1}(\{c_{-m}^\varepsilon\})=\{\ell_{-m}^\varepsilon\}.
+$$
+$Q$ 连续满射，其二点纤维恰位于整个整数轨道 $\mathcal O$，具体为
+$$
+Q^{-1}(\{[k\phi]\})=\{\ell_k^u,\ell_k^v\}\qquad(k\in\mathbb Z).
+$$
+若 $\theta\notin\mathcal O$，以 $x_\theta$ 表示其唯一的 $H$ 原像，则
+$$
+Q^{-1}(\{\theta\})=\{\lambda(x_\theta)\}.
+$$
+因此，负轨道 $E_-$ 上原有的两个当前状态各自只提升为一条历史；非负轨道 $E_+$ 上原有的唯一当前状态提升为两条历史；其余相位保持单点。新出现的二点相位准确是 $E_+$，没有四点纤维。
+
+此外，对任意 $\ell\in L$ 及 $k\in\mathbb Z$，
+$$
+H(P(U^k\ell))=Q(\ell)+[k\phi].
+$$
+所以即使保留全部双向相位读数，仍然只有 $Q$ 的区分能力：
+$$
+\bigl(H(P(U^k\ell))\bigr)_{k\in\mathbb Z}=\bigl(H(P(U^k\ell'))\bigr)_{k\in\mathbb Z}\quad\Longleftrightarrow\quad Q(\ell)=Q(\ell').
+$$
+本条使用的单步分支与原相位纤维分别是[前置卷定理375.2及372.4](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md)；完整历史纤维由以下证明确定。
+
+**证明。** 因 $D$ 中每一点仅有有限个非零数字，而 $u,v$ 各有无限多个非零数字，所以 $u,v\notin D$。若 $x\notin D$，则 $x\ne0$，故有唯一前驱 $y$。假如 $y=Z(n)$，则 $x=Ty=Z(n+1)\in D$，矛盾。因此 $r:K\setminus D\to K\setminus D$ 有定义，所有迭代 $r^j(x)$ 都有定义。
+
+若 $\ell=(x_j)_{j\ge0}\in P^{-1}(\{x\})$ 且 $x\notin D$，则每个 $x_j$ 都不在 $D$：否则 $x_j=Z(a)$ 会给出 $x=T^jZ(a)=Z(a+j)\in D$。所以逐次前驱都唯一，强制 $x_j=r^j(x)$。反之，$T(r^{j+1}(x))=r^j(x)$ 保证 $\lambda(x)\in L$。这证明全部非核心状态的单点历史纤维，包括 $u,v$。
+
+由 $TZ(n)=Z(n+1)$ 及 $Z$ 单射，对 $a\ge1$，状态 $Z(a)$ 非零，而 $Z(a-1)$ 已是其前驱，故它是唯一前驱。因此任取 $\ell\in P^{-1}(\{Z(n)\})$，其前 $n+1$ 个坐标被强制为
+$$
+Z(n),Z(n-1),\ldots,Z(0).
+$$
+随后唯一可能的选择为 $u$ 或 $v$。选定其一后，该点属于 $K\setminus D$，由上一段，全部更早历史唯一。这既排除后续分支，也排除其他完整历史，故恰有两条，且首次差别准确位于第 $n+1$ 个坐标。这里 $n=0$ 无须另加假设，直接给出显示的两条零历史。
+
+由 $Tr(x)=x$、$Tu=Tv=0$ 及有限核心后继式，分 $k\le-2$、$k=-1$、$k\ge0$ 三种情形得到 $Tc_k^\varepsilon=c_{k+1}^\varepsilon$。这保证每个 $\ell_k^\varepsilon$ 属于 $L$，并逐坐标给出 $U\ell_k^\varepsilon=\ell_{k+1}^\varepsilon$ 与 $P\ell_k^\varepsilon=c_k^\varepsilon$。
+
+对 $m\ge1$，有
+$$
+T^{m-1}c_{-m}^u=u,\qquad T^{m-1}c_{-m}^v=v.
+$$
+因此 $c_{-m}^u\ne c_{-m}^v$。它们都属于 $K\setminus D$，各自的唯一历史为 $\ell_{-m}^u$、$\ell_{-m}^v$。又由 $T^mc_{-m}^\varepsilon=0$ 和相位交换式，
+$$
+H(c_{-m}^\varepsilon)+[m\phi]=H(0)=0,
+$$
+故它们均位于相位 $[-m\phi]$ 的纤维。该纤维按前置恰有两点，所以所列两点就是其全部原像。这也验证了负一时刻的边界为 $\{u,v\}$，而零时刻的当前状态已合为 $\{0\}$。
+
+$Q=HP$ 连续满射，且 $QU=R Q$，其中 $R(\theta)=\theta+[\phi]$。因为 $U,R$ 都可逆，将该式与逆映射复合，得到 $QU^{-1}=R^{-1}Q$，继而对所有整数 $k$ 有 $QU^k=R^kQ$。在上述轨道上，这给出 $Q\ell_k^\varepsilon=[k\phi]$。对 $k\ge0$，两条历史在第 $k+1$ 个坐标不同；对 $k<0$，它们已在第零个坐标不同。因此所有显示的二点集合确实各含两个不同元素。
+
+现在穷尽全部相位。若 $\theta=[n\phi]\in E_+$，则 $H^{-1}(\{\theta\})=\{Z(n)\}$，其 $P$ 纤维恰有上述两条历史。若 $\theta=[-m\phi]\in E_-$，则 $H$ 纤维恰为 $c_{-m}^u,c_{-m}^v$，而这两个状态的 $P$ 纤维各为单点。若 $\theta\notin\mathcal O$，则 $\theta\notin E_-$，所以 $H$ 纤维只有一点 $x_\theta$；该点不能属于 $D$，否则其相位属于 $E_+$。因此其 $P$ 纤维同样只有一点。三种情形互斥且穷尽圆周，证明完整分类，并说明为何不能把两个二点纤维数目相乘得到四点。
+
+最后，$QU^k=R^kQ$ 就是所有双向相位读数的显示公式。相位 $Q(\ell)$ 相等时，全部读数相等；全部读数相等时，取 $k=0$ 即得 $Q(\ell)=Q(\ell')$。证毕。
+
+**命题 17.3（直接支持组二：极小性与连续选史的准确障碍）。** 本模型的 $(K,T)$ 与 $(L,U)$ 均为极小系统，此处极小指每一点的非负时间轨道稠密。特别地，对任取 $\ell_0\in P^{-1}(\{0\})$，
+$$
+\overline{\{U^n\ell_0:n\ge0\}}=L.
+$$
+集合 $Q^{-1}(\mathcal O)$ 准确分解为两条互不相交的稠密整数轨道
+$$
+\{\ell_k^u:k\in\mathbb Z\},\qquad \{\ell_k^v:k\in\mathbb Z\}.
+$$
+
+集合意义的截面 $s:K\to L$、$Ps=\operatorname{id}_K$ 存在，但每一个这样的截面的连续点集都准确等于 $K\setminus D$。因此 $P$ 没有连续全局截面。更强地，对任何非空开集 $V\subseteq K$，不存在连续映射 $s:V\to L$ 使 $P(s(x))=x$ 对所有 $x\in V$ 成立。即使不要求连续，也不存在满足
+$$
+Ps=\operatorname{id}_K,\qquad sT=Us
+$$
+的全局截面。
+
+极小性所需的稠密核心、单点相位纤维及相位交换式，均取自[前置卷定理371.2、372.4、375.3](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md)，不额外假设极小性。
+
+**证明。** 先建立原系统的极小性。$H$ 连续满射且 $D$ 稠密，所以 $H(D)=\{[n\phi]:n\ge0\}$ 在圆周稠密：任一非空圆周开集的 $H$ 原像是非空开集，必与 $D$ 相交。圆周平移是同胚，故任意相位 $\theta$ 的非负旋转轨道
+$$
+\{\theta+[n\phi]:n\ge0\}
+$$
+也稠密。
+
+任取 $x\in K$，令
+$$
+A=\overline{\{T^nx:n\ge0\}}.
+$$
+$A$ 紧，因而 $H(A)$ 在圆周闭；相位交换式使 $H(A)$ 包含稠密集合 $\{H(x)+[n\phi]:n\ge0\}$，所以 $H(A)=\mathbb T$。对于每个 $a\ge0$，存在 $y\in A$ 使 $H(y)=[a\phi]$；这个相位的唯一原像是 $Z(a)$，故 $Z(a)\in A$。因此 $D\subseteq A$，再由 $D$ 稠密得 $A=K$。这证明每个原状态的非负轨道稠密。
+
+再取任意 $\ell\in L$ 及非空开集 $B\subseteq L$。由定理17.1的柱集等式，$B$ 包含某个非空柱集 $p_N^{-1}(W)$，其中 $W\subseteq K$ 非空且开。置 $x=P\ell$。刚证的原系统极小性给出 $m\ge0$ 使 $T^mx\in W$。由移位公式，
+$$
+p_N(U^{N+m}\ell)=T^m(P\ell)=T^mx\in W.
+$$
+于是 $U^{N+m}\ell\in B$，证明 $(L,U)$ 极小。若 $P\ell=0$，同一柱集论证只需使用 $T^m0=Z(m)$ 及 $D$ 稠密，亦直接证明题设两条零历史各自的非负轨道稠密。
+
+命题17.2给出 $U\ell_k^\varepsilon=\ell_{k+1}^\varepsilon$，所以两组显示的点各是一条整数轨道，且各包含一条已证稠密的非负轨道。若两组中的点相等，则其相位相等，$\phi$ 无理迫使两个整数指标相同；随后与命题17.2中同一指标的两条历史不同相矛盾。因此两轨道不交；它们穷尽 $Q^{-1}(\mathcal O)$，亦由该命题的相位纤维分类得到。
+
+接着证明截面断言。令每个 $Z(n)$ 选择 $\ell_n^u$，每个 $x\notin D$ 选择唯一的 $\lambda(x)$，便定义了集合截面，故这里不是集合选取的存在障碍。
+
+设 $s$ 为任意集合截面，$x\notin D$。此时 $P^{-1}(\{x\})=\{s(x)\}$。若 $O\subseteq L$ 是包含 $s(x)$ 的开集，则 $P(L\setminus O)$ 闭且不含 $x$。因而
+$$
+W=K\setminus P(L\setminus O)
+$$
+是 $x$ 的开邻域。对每个 $y\in W$，其全部 $P$ 原像均在 $O$ 中，特别 $s(y)\in O$。所以 $s$ 在 $x$ 连续。这一论证不要求 $s$ 在其他点连续。
+
+现在固定 $n\ge0$。对 $\varepsilon\in\{u,v\}$ 及 $a\ge1$，令 $\varepsilon^{(a)}$ 为 $\varepsilon$ 的前 $a$ 位截断后补零。它仍是合法有限表示，故
+$$
+\varepsilon^{(a)}=Z(A_a^\varepsilon),\qquad A_a^\varepsilon=\sum_{i<a}G_i\varepsilon_i,
+$$
+并且 $\varepsilon^{(a)}\to\varepsilon$。令
+$$
+y_a^\varepsilon=T^{n+1}\varepsilon^{(a)}=Z(A_a^\varepsilon+n+1).
+$$
+由 $T$ 连续及 $T\varepsilon=0$，两列满足
+$$
+y_a^u\longrightarrow Z(n),\qquad y_a^v\longrightarrow Z(n).
+$$
+然而，命题17.2中有限核心历史的强制前缀表明：无论截面在这两个状态上选择哪条历史，都有
+$$
+p_{n+1}(s(y_a^\varepsilon))=Z(A_a^\varepsilon)=\varepsilon^{(a)}.
+$$
+若 $s$ 在 $Z(n)$ 连续，则连续坐标映射 $p_{n+1}$ 与它复合后，在两列上必须趋于同一个值 $p_{n+1}(s(Z(n)))$。第一列却趋于 $u$，第二列趋于 $v$；$K$ 为 Hausdorff 且 $u\ne v$，矛盾。因此每个集合截面在每个 $Z(n)$ 都不连续。结合上一段，其连续点集恰为 $K\setminus D$。
+
+同样的两列也排除局部连续截面：若截面只定义在含 $Z(n)$ 的开邻域内，两列最终仍位于其定义域，矛盾不变。任意非空开集与稠密集 $D$ 相交，故任何非空开集上都不存在连续截面。
+
+最后，假设某个集合截面还满足 $sT=Us$。由 $Tu=Tv=0$，
+$$
+Us(u)=s(0)=Us(v).
+$$
+$U$ 单射推出 $s(u)=s(v)$，再应用 $P$ 得 $u=v$，矛盾。因此不存在这样的动力学截面，即使舍弃连续性也不例外。
+
+综上，$P$ 以连续满射保留当前状态，$L$ 以全部相容过去提供可逆演化，但把每个当前状态连续地选成一条完整历史不可行；两条零历史各有稠密正向轨道并不改变这一截面障碍。证毕。
+
+## 追加锚（本行以下为增补区）
