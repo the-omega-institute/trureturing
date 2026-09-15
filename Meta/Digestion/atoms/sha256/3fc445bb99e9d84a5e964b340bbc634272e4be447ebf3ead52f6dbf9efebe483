@@ -1,0 +1,10 @@
+**命题。** 对先执行 $v$ 再执行 $w$ 的拼接词 $vw$，有
+
+$$
+\begin{aligned}
+d(vw)&=d(v)+d(w),\\
+m(vw)&=\min(m(v),d(v)+m(w)),\\
+M(vw)&=\max(M(v),d(v)+M(w)).
+\end{aligned}
+$$
+

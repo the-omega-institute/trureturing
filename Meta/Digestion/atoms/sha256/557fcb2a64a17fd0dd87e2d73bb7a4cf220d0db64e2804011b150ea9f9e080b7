@@ -1,0 +1,58 @@
+**定理 119.4（缺陷控制有界决策风险）。** 在定义 119.2 的全部假设下，
+
+$$
+R(E)\le R(F)+\delta(F\mid E).
+$$
+
+这是[定理 `deficiency_risk_bound`](../../../D5/S3/Estimation/SequentialDecisionRisk/FiniteDeficiencyRiskTransfer.lean)在上述有限实值约定下的风险转移结论；固定模拟器的风险比较见[定理 `bounded_loss_risk_stability_of_simulator`](../../../D5/S3/Estimation/DecisionRisk/BoundedRiskSimulatorTransport.lean)。
+
+证明。先给出两个有限概率不等式。若 $p,q$ 是同一有限集上的概率，$h_i=p(i)-q(i)$，则 $\sum_i h_i=0$，从而
+
+$$
+\sum_{h_i>0}h_i=\sum_{h_i<0}(-h_i)=\frac12\sum_i|h_i|.
+$$
+
+对 $0\le f(i)\le1$，丢掉非正项并以一控制正项，得到 $\sum_i h_i f(i)\le\operatorname{TV}(p,q)$；交换 $p,q$ 得
+
+$$
+\left|\sum_i p(i)f(i)-\sum_i q(i)f(i)\right|
+\le\operatorname{TV}(p,q).
+$$
+
+因此 $[0,1]$ 损失对应的系数是一。其次，任一共同随机核 $K$ 满足
+
+$$
+\begin{aligned}
+\operatorname{TV}(Kp,Kq)
+&=\frac12\sum_j\left|\sum_i(p(i)-q(i))K(j\mid i)\right|\\
+&\le\frac12\sum_i|p(i)-q(i)|\sum_jK(j\mid i)
+=\operatorname{TV}(p,q).
+\end{aligned}
+$$
+
+现在固定模拟器 $S$ 和基于 $F$ 的任意决策 $d_F$，在 $E$ 上执行
+
+$$
+d_E(a\mid z)=\sum_y S(y\mid z)d_F(a\mid y).
+$$
+
+各项非负，且 $\sum_a d_E(a\mid z)=\sum_yS(y\mid z)=1$，所以 $d_E$ 是合法决策。有限和交换给出 $d_EE_\theta=d_F(SE)_\theta$。对每个 $\theta$，随机后处理的全变差收缩及上述损失不等式给
+
+$$
+\begin{aligned}
+\sum_a(d_EE)_\theta(a)\ell(\theta,a)
+&\le\sum_a(d_FF)_\theta(a)\ell(\theta,a)
+   +\operatorname{TV}(d_F(SE)_\theta,d_FF_\theta)\\
+&\le\sum_a(d_FF)_\theta(a)\ell(\theta,a)+\varepsilon(S).
+\end{aligned}
+$$
+
+以非负的 $\mu(\theta)$ 加权求和，并使用 $\sum_\theta\mu(\theta)=1$，得到
+
+$$
+R(E)\le\mathcal C_{\mu,\ell}(E,d_E)
+\le\mathcal C_{\mu,\ell}(F,d_F)+\varepsilon(S).
+$$
+
+任取 $\eta>0$，分别选取代价小于 $R(F)+\eta/2$ 的决策和误差小于 $\delta(F\mid E)+\eta/2$ 的模拟器。两者的优化域独立，故 $R(E)<R(F)+\delta(F\mid E)+\eta$。对所有 $\eta>0$ 成立即得结论；此步只需下确界逼近，不依赖选择最优核。证毕。
+

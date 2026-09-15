@@ -1,0 +1,14 @@
+**定理 RD4。** 对原始输入 $r,s$，
+
+$$
+\beta(r)=\beta(s)
+\iff (v(r),v_1(r))=(v(s),v_1(s))
+\iff \forall k\in\mathbb N,\ v_k(r)=v_k(s),
+$$
+
+并且
+
+$$
+v_{k+2}(r)=v_{k+1}(r)+v_k(r).
+$$
+

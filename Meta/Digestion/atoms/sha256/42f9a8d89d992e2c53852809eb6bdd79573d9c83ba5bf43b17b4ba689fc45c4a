@@ -1,0 +1,7 @@
+The producer's unannotated uBu expression omitted conjugate transposes; the
+correct sesquilinear formula is given above. Its optional Cayley formula also
+omitted adjoints: with A=I+P and C=P A^(-1), the correct identity is
+G=A(I-CC^*)A^*. That formula is not used by the lower bound. The printed
+arithmetic1+115=56 was corrected to1+11*5=56. The original envelope is retained
+unchanged so these defects are not erased.
+

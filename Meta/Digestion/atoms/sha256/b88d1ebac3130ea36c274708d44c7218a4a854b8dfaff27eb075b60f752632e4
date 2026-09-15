@@ -1,0 +1,12 @@
+**定理。** 若 $d\ne0$，则对每个固定的 $n$，映射
+
+$$
+k\longmapsto\pi\bigl(u(k+n\varphi)\bigr)
+$$
+
+是单射，因此每个纤维产生无限多个不同的一步输出。此时联合读出
+
+$$
+\boxed{z\longmapsto(\pi z,\pi(uz))\text{ 是单射}.}\tag{GS3}
+$$
+

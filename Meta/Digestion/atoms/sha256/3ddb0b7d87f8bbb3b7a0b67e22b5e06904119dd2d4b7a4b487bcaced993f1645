@@ -1,0 +1,8 @@
+**证明。** 上式的末项为零，其余两项非负。因此式 (12.1) 给出
+
+\[
+z_\delta'(t)
+=\frac{\langle u(t),u'(t)\rangle}{z_\delta(t)}
+\leq-\gamma z_\delta(t)+\rho+\gamma\delta.
+\]
+

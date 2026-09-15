@@ -8,16 +8,18 @@ internal static partial class IngestCommand
     private const string ImplementationPath =
         "tools/StrataLint.Cli/Commands/Digestion/IngestCommand.cs";
 
-    private static string ParseArguments(IReadOnlyList<string> arguments)
+    private sealed record AlignmentOptions(string BaselineRevision, bool PlanOnly);
+
+    private static AlignmentOptions ParseArguments(IReadOnlyList<string> arguments)
     {
-        if (arguments.Count == 2
+        if ((arguments.Count == 2 || arguments.Count == 3 && arguments[2] == "--plan")
             && arguments[0] == "--base"
             && !string.IsNullOrWhiteSpace(arguments[1]))
         {
-            return arguments[1];
+            return new AlignmentOptions(arguments[1], arguments.Count == 3);
         }
 
-        throw new InvalidOperationException("USAGE: StrataLint ingest --base REV");
+        throw new InvalidOperationException("USAGE: StrataLint align-digestion-status --base REV [--plan]");
     }
 
     private static RawChangeSet EffectiveChanges(

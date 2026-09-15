@@ -1,0 +1,6 @@
+**定义。** 对剩余容量向量 $r$ 与 $H\in\mathbb N$，定义
+
+$$
+C_H(r)=\bigl(\min(r_i,H)\bigr)_{i\in I}.
+$$
+

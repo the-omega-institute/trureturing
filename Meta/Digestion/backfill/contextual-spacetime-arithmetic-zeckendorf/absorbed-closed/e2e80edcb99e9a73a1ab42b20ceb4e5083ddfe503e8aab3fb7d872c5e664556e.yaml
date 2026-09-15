@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:e2e80edcb99e9a73a1ab42b20ceb4e5083ddfe503e8aab3fb7d872c5e664556e
+  normalized_sha256: sha256:e2e80edcb99e9a73a1ab42b20ceb4e5083ddfe503e8aab3fb7d872c5e664556e
+cas_ref: sha256:e2e80edcb99e9a73a1ab42b20ceb4e5083ddfe503e8aab3fb7d872c5e664556e
+coverage_gids:
+  - gid: D5/S0/History/Spacetime/AllSetZeckendorfEncoding.enc_injective_and_left_inverse
+    target_statement_id: sha256:ca366470801b4da4f911d6bce2506fc8830071ebde48d80c0c48748ef4b327b8
+receipts:
+  unresolved_subitems: []

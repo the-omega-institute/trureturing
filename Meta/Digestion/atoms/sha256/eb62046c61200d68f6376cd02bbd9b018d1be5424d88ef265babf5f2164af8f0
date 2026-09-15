@@ -1,0 +1,34 @@
+### 93.2 有限 zeta 权重自动落入这个固定点
+
+对有限索引集 $S\subseteq\operatorname{Fin}(d)$，项目定义
+
+$$
+Z_s(S)=\sum_{n\in S}(n+1)^{-s},
+$$
+
+并构造加权算子
+
+$$
+\tau_{B,s,S}
+=
+\sum_{n\in S}
+\frac{(n+1)^{-s}}{Z_s(S)}P_{B,n}.
+$$
+
+`zeta_thermal_state_mem_diagonal` 证明
+
+$$
+\tau_{B,s,S}\in\operatorname{diagonalSubspace}(B),
+$$
+
+所以 `zeta_thermal_state_pinching_fixed` 给出
+
+$$
+\boxed{
+\operatorname{basisMeasurement}_B(\tau_{B,s,S})
+=\tau_{B,s,S}.
+}
+$$
+
+这里的“thermal”只表示一种有限 zeta 权重的构造命名。当前定理证明的是它属于指定上下文的对角子空间并被该测量固定；它没有单独证明 $Z_s(S)\ne0$、正迹归一化、某个 Hamiltonian 的 Gibbs 形式，或与实验温度的对应关系。若要把 $\tau_{B,s,S}$ 当作物理密度态，还必须另加这些条件。
+

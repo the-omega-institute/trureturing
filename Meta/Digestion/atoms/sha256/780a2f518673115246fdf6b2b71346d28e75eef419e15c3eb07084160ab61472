@@ -1,0 +1,26 @@
+**定理 406.1。** 令
+$$
+T^*=e_KTe_K^{-1},\qquad R^*=e_{\mathbb T}Re_{\mathbb T}^{-1},
+\qquad H^*=e_{\mathbb T}He_K^{-1}.
+$$
+对全部 $m\in\omega$ 和 $k\in\mathbb Z$，
+$$
+(T^*)^m=e_KT^me_K^{-1},\qquad
+(R^*)^k=e_{\mathbb T}R^ke_{\mathbb T}^{-1},\qquad H^*T^*=R^*H^*.
+$$
+异步关系、同步关系与相位纤维关系的外部运输分别准确满足
+$$
+c\mathrel{E_{T,{\rm ext}}}d
+\iff\exists m,n\in\omega\ ((T^*)^mc=(T^*)^nd),
+$$
+$$
+c\mathrel{S_{T,{\rm ext}}}d
+\iff\exists m\in\omega\ ((T^*)^mc=(T^*)^md)
+\iff H^*c=H^*d,
+$$
+$$
+u\mathrel{E_{R,{\rm ext}}}v
+\iff\exists k\in\mathbb Z\ (v=(R^*)^ku).
+$$
+并有 $c\mathrel{E_{T,{\rm ext}}}d\iff H^*c\mathrel{E_{R,{\rm ext}}}H^*d$。
+

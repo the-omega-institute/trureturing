@@ -1,0 +1,35 @@
+### 97.2 反向 BFS 的正确性
+
+把状态对写成一个成对节点
+
+$$
+(x,y)\longmapsto(\tau x,\tau y).
+$$
+
+先把当前读数不同的节点放入源集合：
+
+$$
+M_0
+=\{(x,y):q(x)\ne q(y)\}.
+$$
+
+再沿成对更新边反向扩张：
+
+$$
+M_{k+1}
+=
+M_k
+\cup
+\left\{(x,y):(\tau x,\tau y)\in M_k\right\}.
+$$
+
+第 $$k$$ 层恰好包含那些在不超过 $$k$$ 步的未来某个时刻会分离的状态对。因而反向搜索首次访问层数满足
+
+$$
+\operatorname{reverseBfsDistance}(x,y)
+=
+\delta(x,y).
+$$
+
+这不是启发式搜索；Lean 定理逐对证明了它与源语义 `exactSeparationDepth` 的相等。
+

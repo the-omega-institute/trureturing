@@ -1,0 +1,2 @@
+**定义。** 对 $\Lambda\le\operatorname{Out}(\pi)$，记 $a_S:\Lambda\to\operatorname{Out}(S^r)$ 为上述特征商的外作用，$b_S:\Lambda\to\operatorname{Sym}(\mathcal E_S)$ 为对核集合的置换。内自同构不改变正规子群，故 $b_S$ 良定义。与该核标记相容地，$b_S$ 是 $a_S$ 的因素置换。
+

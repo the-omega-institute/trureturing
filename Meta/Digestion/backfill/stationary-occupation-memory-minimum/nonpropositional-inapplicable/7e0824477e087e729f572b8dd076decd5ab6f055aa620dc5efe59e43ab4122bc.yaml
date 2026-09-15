@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7e0824477e087e729f572b8dd076decd5ab6f055aa620dc5efe59e43ab4122bc
+  normalized_sha256: sha256:7e0824477e087e729f572b8dd076decd5ab6f055aa620dc5efe59e43ab4122bc
+cas_ref: sha256:7e0824477e087e729f572b8dd076decd5ab6f055aa620dc5efe59e43ab4122bc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Records future formalization work and its separation from the ongoing time-dependent history atom; this is a work-status note with no mathematical assertion.
+    previous_atom_id: 53c3d3c7fb0027e393a978733e9fe7440fc92beadebef8265dab14aba0bb62f6
+    next_atom_id: null

@@ -1,0 +1,12 @@
+fingerprints:
+  raw_sha256: sha256:fb3297ab6e868f229459596eec506bfbc8d668d765f15d160f1a4561c33bb686
+  normalized_sha256: sha256:fb3297ab6e868f229459596eec506bfbc8d668d765f15d160f1a4561c33bb686
+cas_ref: sha256:fb3297ab6e868f229459596eec506bfbc8d668d765f15d160f1a4561c33bb686
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Postprocessing/InjectivePostprocessingKernelEquality.injective_postprocessing_preserves_kernel
+    target_statement_id: sha256:d084f9c1b6a56de1ded5b685567b631c12c2fad69ac6149038d5ffa32fa6de99
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 4cbce9a310e678caff7b507331f01df6e5ddf8ebd041f546286d8a080b492387
+    - 67bb585908e830c71699cc0510f649fd8277550498430a3f926f25f2acfe64ac

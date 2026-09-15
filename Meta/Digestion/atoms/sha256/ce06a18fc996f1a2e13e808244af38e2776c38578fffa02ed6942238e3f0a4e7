@@ -1,0 +1,33 @@
+### R.1 Fibonacci 矩阵与黄金二次环
+
+**定义。** 令 $F_0=0$、$F_1=1$、$F_{t+2}=F_{t+1}+F_t$，并令
+
+$$
+Q=\begin{pmatrix}1&1\\1&0\end{pmatrix},\qquad \det Q=-1,
+\qquad \mathcal O=\mathbb Z[\varphi],\quad \varphi^2=\varphi+1.
+$$
+
+**命题。** Fibonacci 矩阵满足
+
+$$
+Q^2=
+\begin{pmatrix}1&1\\0&1\end{pmatrix}
+\begin{pmatrix}1&0\\1&1\end{pmatrix}.
+$$
+
+**证明。** 两端直接相乘都等于 $\begin{pmatrix}2&1\\1&1\end{pmatrix}$。
+
+**定理。** 对全部 $t\ge0$，
+
+$$
+\boxed{
+Q^t=
+\begin{pmatrix}
+F_{t+1}&F_t\\F_t&F_{t+1}-F_t
+\end{pmatrix}.}
+\tag{R1}
+$$
+
+**证明。** 当 $t=0$ 时右端是单位矩阵。若公式对 $t$ 成立，将右端乘以
+$Q$，再用 $F_{t+2}=F_{t+1}+F_t$，便得到 $t+1$ 时的公式。
+

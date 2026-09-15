@@ -1,0 +1,2 @@
+**证明。** 无损编码是单射 $X\hookrightarrow\{0,1\}^b$，必要性为单射基数不等式。充分性选择 $X\simeq\operatorname{Fin}(|X|)$ 和 $\{0,1\}^b\simeq\operatorname{Fin}(2^b)$，在中间使用初始区间包含。
+

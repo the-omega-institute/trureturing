@@ -1,0 +1,8 @@
+**约定 124.16（来源、证明范围与后续问题）。** 本节所引 CSA、Z 与 Q 分别指 `CONTEXTUAL_SPACETIME_ARITHMETIC.md`、`CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md` 与本量子卷。CSA 定义 1–3、§§14–16，Z371.1–2、Z477.3，以及 Q54.7、Q57、Q120–122 的引用版本均为仓库提交 `58d94fb6c3b75e5f0fc33f184e510f46949efdca`；Q123 的引用版本为 `71d892f05c219488670b0a10ca6b9bf11b975cfe`。Q54.7 给纤维直径与近似预测的两侧界，Q57 固定特定未来实验族；Q120 使用含参考的过程 diamond 缺陷，Q121–122 的态族缺陷和 Q123 的线程问题各保留原类型。本节将历史参数集明确换成 $X_{\rm fs}$ 并使用上确界，所需证明已逐项给出。
+
+同一基线版本的 `D5/S3/Quantum/Completion/BoundedInverseLimitReconstruction.lean` 中，`bounded_inverse_limit_reconstruction` 在完备内积空间、单调且具有正交投影的子空间序列上，给累积闭子空间与有界相容线程的规范线性等距双射，并给最终残余商的同类表示。`D5/S3/Quantum/Completion/CompatibleUnboundedCoordinates.lean` 的 `compatible_unbounded_coordinates` 给实际 $\ell^2$ 坐标截断线程、范数平方为 $n$、无界及无法由单个 $\ell^2$ 向量投影实现等结论。`D5/S3/ConceptDynamics/RefinementGeometry/InverseLimitCompletion.lean` 的 `ThreadComplete` 定义为 `stateThread` 满射，`stateThread_bijective_iff_complete_and_separates` 对应线程完备与各层联合分离的合取，不带拓扑完备性的假设或结论。这些声明分别支持所写类型中的既有结果，不承载本节的新前缀缺陷桥。
+
+一般完备延拓与 Heine–Cantor 原理可见钉版 Mathlib（`lake-manifest.json` 的 mathlib 修订 `db584cd6d46c92f209a44c0f1c829460d327499d`，`v4.33.0`）：`Mathlib/Topology/UniformSpace/Completion.lean` 的 `UniformSpace.Completion.extension`、`extension_coe`、`uniformContinuous_extension`、`extension_unique`，以及 `Mathlib/Topology/UniformSpace/HeineCantor.lean` 的 `CompactSpace.uniformContinuous_of_continuous`。延拓的正确限制要求原映射一致连续；目标完备且分离时具有相应唯一性，不能仅凭对任意函数可写下 extension 定义就声称得到延拓。本节是结合这些通常原理与所引仓内模型的 `repo-derived` 普通证明，不提出新颖性或新增 Lean 认证主张。
+
+本节的静态制备模型只比较指定经典输入族的输出态，不保证隐藏参考关联、相干输入行为或自适应过程的模拟；这些要求须另指定联合态或完整过程。定理 124.8 的存在性不提供有效连续模量或高效求最优中心的算法，有限维紧性所得中心存在性也未推广到无限维态空间。下一项研究问题因此是：在增加参考或过程结构后，哪些可检验的连续性与紧性条件仍能给出相应缺陷的精确延拓判据。
+

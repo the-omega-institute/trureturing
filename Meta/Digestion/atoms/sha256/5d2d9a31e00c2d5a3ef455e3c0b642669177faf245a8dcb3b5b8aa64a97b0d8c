@@ -1,0 +1,9 @@
+**定理 4.4（有限精度逃逸与连续延拓等价）。** 以下条件等价：
+\[
+\forall n\ \exists m,\quad \mathcal E_{m,n}(F)=\varnothing;
+\]
+存在唯一连续映射 \(\widehat F:\widehat X\to\widehat Y\) 满足
+\[
+\widehat F\circ\iota_X=\iota_Y\circ F.
+\]
+

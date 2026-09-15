@@ -1,0 +1,2 @@
+**命题 29.2（有限受限解码器的无穷值排除）。** 命题28.3可在 $H,Q,Y$ 为有限集合、$Z=q(H,Q)$、$\mathcal D_B$ 为预先规定的非空解码器类、$\widehat p\in\mathcal D_B$ 且 $L(\widehat p)<\infty$ 的条件下成立；不要求 $\mathcal D_B$ 有限、凸或其风险下确界可达。所有熵、互信息和 KL 均取二为底。
+

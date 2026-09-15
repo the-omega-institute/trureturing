@@ -1,0 +1,6 @@
+**推论。** 若 $C_F(S)\subseteq Z(F)$，则
+
+$$\phi T^n\sim\phi\quad\Longleftrightarrow\quad A^n=1.$$
+
+特别地，当固定生成元的像生成整个 $F$ 时，该条件成立。
+

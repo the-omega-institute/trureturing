@@ -1,0 +1,7 @@
+**定理 85（两尾累积、延迟乘积与固定因子）。** 取空间卷积环 \(R=\mathbb Z^{(\mathbb Z^3)}\)、联合有限支撑群 \(\mathcal L=R^{(\mathbb Z)}\)。令 \(\mathcal A(R)\) 为全部序列 \(C:\mathbb Z\to R\)，满足充分左侧为零、充分右侧为常值。则
+\[
+\mathsf P:\mathcal L\simeq\mathcal A(R),\quad
+(\mathsf Pc)_n=\sum_{t\le n}c_t,\qquad
+(\mathsf P^{-1}C)_n=C_n-C_{n-1}.
+\tag{Z-CUM}
+\]

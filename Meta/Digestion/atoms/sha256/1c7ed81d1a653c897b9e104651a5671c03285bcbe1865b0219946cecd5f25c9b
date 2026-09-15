@@ -1,0 +1,6 @@
+**定义。** 令
+
+$$
+c_L=\begin{cases}0,&d_L>0,\\1,&d_L<0.\end{cases}
+$$
+

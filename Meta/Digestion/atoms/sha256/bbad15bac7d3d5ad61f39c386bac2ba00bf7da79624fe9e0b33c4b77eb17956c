@@ -1,0 +1,21 @@
+### TR.11 粒子流与环面自同构的同痕障碍
+
+**假设。** 设 $T\geq0$，$\Phi:[0,T]\times\mathbb T^2\to\mathbb T^2$ 连续，且 $\Phi_0=\operatorname{id}_{\mathbb T^2}$；对每个 $t$，记 $\Phi_t(x)=\Phi(t,x)$。
+
+**定理。** $\Phi_T$ 与恒等映射同痕，因而 $\Phi_T$ 在一阶同调群上的诱导映射是恒等。若整数环面自同构 $f_A$ 在一阶同调上的作用为非恒等矩阵 $A$，则 $\Phi_T\ne f_A$。
+
+**证明。** 映射 $(s,x)\mapsto\Phi_{sT}(x)$ 是从恒等映射到 $\Phi_T$ 的同痕。同调的同痕不变性给出第一项。若 $\Phi_T=f_A$，则二者在一阶同调上的作用相同，迫使 $A=I$，矛盾。
+
+**定义。** 对常系数对称逆度量
+
+$$
+H=\begin{pmatrix}h_{00}&h_{01}\\h_{01}&h_{11}\end{pmatrix}
+$$
+
+和黏性 $\nu$，定义平坦二维零压力、零外力的 Navier--Stokes 残差
+
+$$
+\mathcal R_H(v)=\partial_tv+(v\cdot\nabla)v
+-\nu\bigl(h_{00}\partial_{xx}+2h_{01}\partial_{xy}+h_{11}\partial_{yy}\bigr)v.
+$$
+

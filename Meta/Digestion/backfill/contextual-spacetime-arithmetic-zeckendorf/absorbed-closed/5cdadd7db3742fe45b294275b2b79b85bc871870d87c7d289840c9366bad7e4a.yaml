@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:5cdadd7db3742fe45b294275b2b79b85bc871870d87c7d289840c9366bad7e4a
+  normalized_sha256: sha256:5cdadd7db3742fe45b294275b2b79b85bc871870d87c7d289840c9366bad7e4a
+cas_ref: sha256:5cdadd7db3742fe45b294275b2b79b85bc871870d87c7d289840c9366bad7e4a
+coverage_gids:
+  - gid: D5/S3/Quantum/Entanglement/OccupancyWordSectors.multiplicity_eq_factorial
+    target_statement_id: sha256:5264b0008df77f207cb3d13a1a564ce34f67ba585e78625942ccc97ac2dbbcaf
+receipts:
+  unresolved_subitems: []

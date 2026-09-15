@@ -1,0 +1,63 @@
+### 8.4 接缝端点与跨层覆盖
+
+**定义。** 给定 $e,h\in\mathbb Z$，令
+
+$$
+u=\frac{e\alpha-h}{d_L}.
+$$
+
+**定理。** 上述 $u$ 满足跨层恒等式
+
+$$
+\boxed{
+\frac{e\alpha-h}{d_{L+2}}=\frac{u}{\alpha^2},\qquad
+\frac{(e+B_L)\alpha-(h+C_L)}{d_{L+1}}
+=\frac{1-u}{\alpha}.
+}\tag{GC7}
+$$
+
+**证明。** 第一式来自 $d_{L+2}=\alpha^2d_L$。第二式使用
+$B_L\alpha-C_L=-d_L$ 与 $d_{L+1}=-\alpha d_L$，直接化简即可。
+
+**定理。** 若 $u=\alpha^2$，则接缝唯一落在负返回时刻：
+
+$$
+\boxed{e=-F_{L+4}=T_L(-1).}\tag{GC8}
+$$
+
+同时 $h=-F_{L+3}$。
+
+**证明。** 将 $u=\alpha^2$ 代入定义，并用 Fibonacci 黄金误差恒等式化简，得到
+
+$$
+(e+F_{L+4})\alpha=h+F_{L+3}.
+$$
+
+$\alpha$ 无理，故等式两侧的整数系数分别为零，从而得到 $e,h$ 的值。
+又因 $\lfloor-\alpha\rfloor=-1$，
+
+$$
+T_L(-1)=-A_L-B_L=-F_{L+4}.
+$$
+
+**定理。** 对每个 $e\in\mathbb Z$ 且 $e\ne-F_{L+4}$，有接缝外的分辨率覆盖
+
+$$
+\boxed{
+\operatorname{Hits}_L(e)
+\iff\operatorname{Hits}_{L+2}(e)
+\ \lor\ \operatorname{Hits}_{L+1}(e+B_L).
+}\tag{GC9}
+$$
+
+特别地，该等价式对每个 $e\ge0$ 成立。
+
+**证明。** 取 $\operatorname{Hits}_L(e)$ 的见证 $h$ 及其参数 $u\in(0,1)$。
+若 $u<\alpha^2$，GC7 第一式给出 $\operatorname{Hits}_{L+2}(e)$；
+若 $u>\alpha^2$，GC7 第二式给出
+$\operatorname{Hits}_{L+1}(e+B_L)$。等号情形由 GC8 恰为被排除的
+$e=-F_{L+4}$。反向地，第一种窗口经 $u=\alpha^2v$ 回到
+$u\in(0,\alpha^2)$；第二种窗口经 $u=1-\alpha v$ 回到
+$u\in(\alpha^2,1)$。因此两者都推出 $\operatorname{Hits}_L(e)$。
+最后 $F_{L+4}>0$，所以 $e\ge0$ 自动避开接缝。
+

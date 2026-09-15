@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:c94ef262d00f21b9a983e0fa810c78398a90db34ed947a0f016db0780cabf46e
+  normalized_sha256: sha256:c94ef262d00f21b9a983e0fa810c78398a90db34ed947a0f016db0780cabf46e
+cas_ref: sha256:c94ef262d00f21b9a983e0fa810c78398a90db34ed947a0f016db0780cabf46e
+coverage_gids:
+  - gid: D5/S1/Digit/Carry/SuccessorShortest.successor_erasure_and_shortest
+    target_statement_id: sha256:af5e577567f49fc672db1099a74d81d242fcc1ab932d46b0924f19bf76bb65a7
+receipts:
+  unresolved_subitems: []

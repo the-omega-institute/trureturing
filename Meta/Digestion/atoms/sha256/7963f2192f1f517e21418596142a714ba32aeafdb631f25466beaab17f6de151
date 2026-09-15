@@ -1,0 +1,22 @@
+### 9.8 返回映射与规范尺度不存在共同单射共轭
+
+**定理。** 若 $B_Lc_K-B_Kc_L\ne0$，则不存在单射
+$f:\mathbb Z\to\mathbb Z$ 同时满足
+
+$$
+f\circ T_K=U_K\circ f,
+\qquad
+f\circ T_L=U_L\circ f.
+$$
+
+**证明。** GS11 给出 $U_KU_L=U_LU_K$。若这样的 $f$ 存在，
+则对任意非零 $m$，连续使用两条交织关系得到
+
+$$
+f(T_K(T_L(m)))=U_K(U_L(f(m)))
+=U_L(U_K(f(m)))=f(T_L(T_K(m))).
+$$
+
+$f$ 的单射性迫使 $T_K(T_L(m))=T_L(T_K(m))$，
+这与 GC12 及 $B_Lc_K-B_Kc_L\ne0$ 矛盾。
+

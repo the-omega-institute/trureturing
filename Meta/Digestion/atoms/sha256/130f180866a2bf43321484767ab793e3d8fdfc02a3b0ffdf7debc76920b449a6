@@ -1,0 +1,2 @@
+对每个先固定的有限族 \(h_1,\ldots,h_m\in\mathcal E_1\)，存在 \(X,Y\in\mathcal B\) 使全部 \(h_i(X)=h_i(Y)\) 而 \(H_=(X)\ne H_=(Y)\)。因此任意后处理 \(g:\mathbb Z^m\to\mathbb Z\) 都不能从该族恢复 \(H_=\)，并有 \(\mathbb Z[\mathcal E_1]\subsetneq\mathcal E\)。这些式子及量词在码侧完全保留。
+

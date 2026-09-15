@@ -1,0 +1,5 @@
+**定理 378.6。** 对任意普通实值度量空间 $(X,d)$，在 $X^*$ 上定义外部实值距离
+$$
+d_{\rm ext}(c,c')=d(\operatorname{Dec}(c),\operatorname{Dec}(c')).
+$$
+它是度量，$\operatorname{enc}_X$ 为等距双射。

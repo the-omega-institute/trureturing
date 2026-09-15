@@ -1,0 +1,76 @@
+### 12.3 同一正裕量的动态与静态结论
+
+**定义。** 设 $H$ 为实 Hilbert 空间，$L:H\to H$ 为线性映射，$B:H\times H\to H$ 为双线性映射，$f\in H$，并定义
+
+\[
+F(x)=Lx-B(x,x)+f.
+\]
+
+**假设。** 对所有 $p,q\in H$，假设
+
+\[
+\langle q,B(p,q)\rangle=0.
+\tag{12.3}
+\]
+
+**假设。** 再设 $v\in H$ 满足 $F(v)=0$。假设存在 $\mu,G\in\mathbb R$，使每个 $w\in H$ 都满足
+
+\[
+\langle w,Lw\rangle\leq-\mu\|w\|^2,
+\qquad
+-\langle w,B(w,v)\rangle\leq G\|w\|^2,
+\qquad
+\gamma=\mu-G>0.
+\tag{12.4}
+\]
+
+**命题。** 对每个 $w\in H$，有差能量恒等式
+
+\[
+\langle w,F(v+w)-F(v)\rangle
+=\langle w,Lw\rangle-\langle w,B(w,v)\rangle.
+\tag{12.5}
+\]
+
+**证明。** 双线性展开给出
+
+\[
+B(v+w,v+w)=B(v,v)+B(v,w)+B(w,v)+B(w,w).
+\]
+
+**证明。** 由式 (12.3)，$B(v,w)$ 与 $B(w,w)$ 对 $w$ 的配对均为零，故只余式 (12.5) 的两项。
+
+**定理。** 若轨迹 $u:[0,T]\to H$ 连续并在 $[0,T)$ 上有强右导数，且满足 $u'=F(u)+r$ 与 $\|r(t)\|\leq\rho$，则同一个正裕量 $\gamma$ 给出
+
+\[
+\|u(t)-v\|\leq e^{-\gamma t}\|u(0)-v\|
++\frac{\rho}{\gamma}(1-e^{-\gamma t}).
+\tag{12.6}
+\]
+
+**定理。** 对每个 $x\in H$，同一个 $\gamma$ 还给出静态残差界
+
+\[
+\boxed{\|x-v\|\leq\frac{\|F(x)\|}{\gamma}.}
+\tag{12.7}
+\]
+
+**定理。** 特别地，$v$ 是 $F$ 的唯一零点。
+
+**证明。** 令 $w=u-v$。由式 (12.4)--(12.5)，
+
+\[
+\langle w,w'\rangle
+\leq-\gamma\|w\|^2+\rho\|w\|,
+\]
+
+**证明。** 故式 (12.2) 给出式 (12.6)。对静态点令 $w=x-v$，则
+
+\[
+\gamma\|w\|^2
+\leq-\langle w,F(x)\rangle
+\leq\|w\|\,\|F(x)\|.
+\]
+
+**证明。** $w=0$ 时结论显然；$w\neq0$ 时约去 $\|w\|$ 得式 (12.7)。若 $F(x)=0$，式 (12.7) 强制 $x=v$。
+

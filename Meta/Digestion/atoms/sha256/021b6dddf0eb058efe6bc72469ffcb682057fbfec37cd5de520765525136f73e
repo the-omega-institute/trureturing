@@ -1,0 +1,6 @@
+**定义。** 令可见变量 $y_n\in V$、隐藏变量 $h_n\in H$ 满足
+
+$$
+y_{n+1}=Ay_n+Bh_n,\qquad h_{n+1}=Cy_n+Dh_n.
+$$
+

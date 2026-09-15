@@ -1,0 +1,6 @@
+**定理。** 这些像给出满射 $\phi:\Pi_2\twoheadrightarrow D_8$，并且
+
+$$\boxed{\phi(a_1)=r^2\ne1,\qquad\phi T=\operatorname{Ad}_r\phi.}$$
+
+因此共轭类稳定不推出曲线属于 $\ker\phi$。
+

@@ -1,0 +1,13 @@
+**定义 479.4（有序切口的有限共同载体）。** 仍固定定义479.1的数据。令 $\mathfrak S_{r-1}$ 为内部位置 $\{1,\ldots,r-1\}$ 的全部排列，空位置集只有空排列，$0!=1$。置
+$$
+\widehat H_n=\mathcal H_+(n)\times\mathfrak S_{r-1},\qquad
+\widehat w(\gamma,\sigma)=\frac{w(\gamma)}{(r-1)!},\qquad
+\widehat J(\gamma,\sigma)=J(\gamma).
+$$
+用 $\sigma$ 的前 $k-1$ 项作为无序标记，所得原链记为 $c_k(\gamma,\sigma)$。定义
+$$
+O_k(\gamma,\sigma)=(c_1(\gamma,\sigma),\ldots,c_k(\gamma,\sigma)),\qquad
+Y_k=O_k[\widehat H_n],\qquad 1\le k\le r.
+$$
+连接 $\pi_k:Y_{k+1}\to Y_k$ 删除末分量。各层概率和 Boltzmann 质量分别是 $\widehat w$ 与 $\widehat w e^{-\beta\widehat J}$ 在 $O_k$ 下的实际推前。
+

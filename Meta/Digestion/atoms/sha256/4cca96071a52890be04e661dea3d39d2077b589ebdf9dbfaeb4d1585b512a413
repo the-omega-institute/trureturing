@@ -1,0 +1,32 @@
+## 117. 有限时域控制的下沉：预测闭合还必须保留价值递归
+
+第 116 节说明，若只要求响应对干预闭合，可以用动态闭包构造最小细化。但行动任务通常还有一个更强的问题：不是只问“允许什么动作”，而是问“在有限未来时域内，哪个动作最优”。这要求记录接口不仅保持状态更新，还要保持奖励和终值的结构。
+
+仓库中的 `D5/S3/ConceptDynamics/DecisionValueScale/FiniteHorizonValueFactorization.lean` 形式化了这个桥。设微观状态、宏观状态和动作分别为
+
+$$
+S_{\mathrm{micro}},\qquad S_{\mathrm{macro}},\qquad A,
+$$
+
+有一个抽象映射
+
+$$
+\alpha:S_{\mathrm{micro}}\to S_{\mathrm{macro}}.
+$$
+
+微观转移和宏观转移为
+
+$$
+T_m:A\times S_{\mathrm{micro}}\to S_{\mathrm{micro}},
+\qquad
+T_M:A\times S_{\mathrm{macro}}\to S_{\mathrm{macro}}.
+$$
+
+若对每个动作和微观状态都有
+
+$$
+\alpha(T_m(a,s))=T_M(a,\alpha(s)),
+$$
+
+则抽象与受控动力学相容。
+

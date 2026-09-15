@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:1267d305f1df5106921a04fa267e73da928d597a28e5ba04993a0a6e1585c065
+  normalized_sha256: sha256:1267d305f1df5106921a04fa267e73da928d597a28e5ba04993a0a6e1585c065
+cas_ref: sha256:1267d305f1df5106921a04fa267e73da928d597a28e5ba04993a0a6e1585c065
+coverage_gids:
+  - gid: D5/S3/Weil/Probability/CanonicalLiDiskEquivalence.rh_iff_xi_disk_ne_zero
+    target_statement_id: sha256:0fac2a6fe7a7592e3f5402c80ef0fbea183bd297092baa28b70e9043fc788c77
+receipts:
+  unresolved_subitems: []

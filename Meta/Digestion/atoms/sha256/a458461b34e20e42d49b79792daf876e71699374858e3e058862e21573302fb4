@@ -1,0 +1,10 @@
+**证明。** 当 $\omega\ne0$ 时，端点公式为
+
+$$
+\mathcal F_\omega(a,b)=\frac{e^{-i\omega b}-e^{-i\omega a}}{-i\omega}.
+$$
+
+把 $(a,b)$ 换成 $(-b,-a)$，并用
+$\overline{e^{-i\theta}}=e^{i\theta}$，得到反射取共轭；取模平方得到功率相等。
+把端点同时平移 $t$，公因子 $e^{-i\omega t}$ 提出后得到平移公式。
+

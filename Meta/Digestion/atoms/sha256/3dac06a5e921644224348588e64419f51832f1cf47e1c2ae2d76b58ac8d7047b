@@ -1,0 +1,12 @@
+**证明。** 任意剩余类由 $(0,y)$ 映到，故 $\pi_C$ 满射。又
+
+$$
+(C_k-I)\binom pq=\binom{4kp+q}{4kp},
+$$
+
+所以其像包含于 $\ker\pi_C$。反之，若 $\pi_C(x,y)=0$，则 $y=4ka$；于是
+
+$$
+\binom xy=(C_k-I)\binom{a}{x-4ka}.
+$$
+

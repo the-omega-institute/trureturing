@@ -1,0 +1,8 @@
+### 15.1 读数自身的剩余非对角量
+
+固定第12章的投影测量 $Q=(Q_b)_{b\in\mathcal B}$，并令 $Q_B=\sum_{b\in B}Q_b$。对任意算符 $X$，$\operatorname{diag}(X)$ 表示其指针基对角部分。定义
+$$
+r_N(Q)=\max_{B\subseteq\mathcal B}
+\left\|\overline{A_N}\odot\bigl(Q_B-\operatorname{diag}(Q_B)\bigr)\right\|_\infty.
+$$
+

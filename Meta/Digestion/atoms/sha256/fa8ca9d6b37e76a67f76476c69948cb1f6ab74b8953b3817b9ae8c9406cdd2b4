@@ -1,0 +1,37 @@
+**推论 8.13（形成、保留记录与持续补写的联合预算）。** 设形成阶段结束时系统与旧记录$F$的实际态为$\rho_{SF}^{\mathrm{form}}$，给定
+$$
+\Omega_{SF}=\sum_xp_xP_x\otimes\xi_x^F,\qquad
+\mathsf d(\rho_{SF}^{\mathrm{form}},\Omega_{SF})\le e_{\mathrm{form}}.
+$$
+在补写阶段旧记录$F$保持不变、不擦除、不再与系统耦合；只有新的记录单元按定义8.11作用，并在描述系统与旧记录时全部取迹。则定理8.12的任意保证时刻满足
+$$
+\mathsf d(\rho_{SF}(\tau),\Omega_{SF})
+\le e_{\mathrm{form}}+C_N+B_N.
+$$
+若旧记录有一个固定POVM$(M_x)_x$，且对每个标签有$\operatorname{tr}(M_x\xi_x^F)\ge1-\beta$，则同时测量当前系统的$(P_x)_x$与旧记录的$(M_x)_x$，并令$Z_S,Z_F$为两个输出，有
+$$
+\Pr[Z_S=Z_F]\ge(1-\min\{1,B_N\})(1-\beta)-e_{\mathrm{form}}.
+$$
+这里新记录已被取迹，旧记录仍是同一固定解码对象；补写轮数不能替代旧记录的读取误差。若形成阶段本身是定义8.1的固定标签模型，可取$\xi_x^F=|e_x^F\rangle\langle e_x^F|$及$e_{\mathrm{form}}$为相应的形成相干距离。
+
+证明。 令$\sigma_x(\tau)$为从$P_x$开始的补写动力学，并令
+$$
+\widetilde\Omega_{SF}(\tau)=\sum_xp_x\sigma_x(\tau)\otimes\xi_x^F.
+$$
+定理8.12给出每个$x$的$\mathsf d(\sigma_x(\tau),P_x)\le C_N+B_N$；张量乘上固定密度矩阵不增加迹距离，故
+$$
+\mathsf d(\widetilde\Omega_{SF}(\tau),\Omega_{SF})\le C_N+B_N.
+$$
+同一个完全正保迹的补写演化作用于实际态与形成参考态，初始距离至多保持$e_{\mathrm{form}}$，三角不等式即得第一式。
+
+令一致输出事件对应的效应为
+$$
+M_{\mathrm{eq}}=\sum_yP_y\otimes M_y.
+$$
+在参考态上，其概率至少为
+$$
+\sum_xp_x\operatorname{tr}(P_x\sigma_x(\tau))\operatorname{tr}(M_x\xi_x^F)
+\ge(1-\min\{1,B_N\})(1-\beta).
+$$
+实际态与参考态的效应概率相差至多$e_{\mathrm{form}}$，得到第二式。相干预算$C_N$仍由第一式控制，但一致输出事件只读取系统的对角人口，故下界中不需额外扣除$C_N$。证毕。
+

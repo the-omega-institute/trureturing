@@ -1,0 +1,46 @@
+**定理 488.6（原增长截止上的两种证书与完整表）。** 固定实数 $0<\theta<1/2$。对满足 $m_N=\lfloor\theta\log_2N\rfloor\ge2$ 的整数 $N$，令 $Q_N=\mathcal P(m_N)$、$k_N=\pi(m_N)$。同一个截止处有
+$$
+\frac{|M(N)|}{N}\le\frac{U_{Q_N}(N)}N
+\le\frac C{\log m_N}+N^{2\theta-1},
+\tag{488.6a}
+$$
+$$
+\frac{|M(N)|}{N}\le\frac{W_{Q_N}(N)}N
+\le\frac C{\log m_N}
++(N^\theta+2)N^{-1/2}\exp(2\sqrt{\theta\log_2N}),
+\tag{488.6b}
+$$
+$$
+\left|\frac{\mathcal L_{k_N}(N)}N-\frac1{6z}\right|
+\le\frac C{2\log m_N}
++\frac{E_2+(N^\theta+2)\exp(2\sqrt{\theta\log_2N})}{2\sqrt N}.
+\tag{488.6c}
+$$
+更有固定整数 $N_\theta$，使全部 $N\ge N_\theta$ 都满足 $m_N\ge Y$，且
+$$
+\frac a{2\log m_N}\le\frac{U_{Q_N}(N)}N\le\frac{C+a/2}{\log m_N},\qquad
+\frac a{2\log m_N}\le\frac{W_{Q_N}(N)}N\le\frac{C+a/2}{\log m_N},
+\tag{488.6d}
+$$
+因此
+$$
+c_{Q_N},\alpha_{Q_N},\frac{U_{Q_N}(N)}N,\frac{W_{Q_N}(N)}N
+=\Theta_\theta(1/\log\log N).
+\tag{488.6e}
+$$
+
+在这个相同截止处，第 474.8 条的构造表长、生成与完整核对位运算、表已给定后的准确 $U$ 求值位运算仍分别具有原预算
+$$
+O_\theta(N^\theta\log N\log\log N),
+\tag{488.6f}
+$$
+$$
+O_\theta\bigl(N^\theta(\log N)^3(\log\log N)^2+(\log N)^3\bigr),
+\tag{488.6g}
+$$
+$$
+O_\theta\bigl(N^{2\theta}(\log N)^2(\log\log N)^2\bigr).
+\tag{488.6h}
+$$
+三者均为 $o(N)$。表长及生成核对的更强 $N^{o(1)}$ 预算直接沿用第 472.3 条的 Chebyshev 代入，不由 (488.1) 另生一个费用定理。
+

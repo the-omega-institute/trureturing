@@ -1,0 +1,4 @@
+**证明。** 若 $\overline Bv=0$，R12 给出 $5a^2v=0$；$5a^2$ 可逆，故
+$v=0$。R7 给出 $Q^rv-v=pBv$。若后者在模 $p^2$ 下为零，则
+$\overline B(v\bmod p)=0$，由核为零得到 $v\equiv0\pmod p$，与假设矛盾。
+

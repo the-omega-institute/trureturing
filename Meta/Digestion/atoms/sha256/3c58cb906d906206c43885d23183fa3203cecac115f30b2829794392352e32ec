@@ -1,0 +1,6 @@
+## theorem 1: Exact stationary occupation-memory minimum
+
+For a finite nonempty alphabet and capacities a_i>=0, the exact minimum is
+
+    D_min = product_i(a_i+1) - max_i a_i.
+

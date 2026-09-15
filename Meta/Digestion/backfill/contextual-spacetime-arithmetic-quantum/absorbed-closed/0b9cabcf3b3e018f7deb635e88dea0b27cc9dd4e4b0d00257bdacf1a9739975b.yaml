@@ -1,0 +1,29 @@
+fingerprints:
+  raw_sha256: sha256:0b9cabcf3b3e018f7deb635e88dea0b27cc9dd4e4b0d00257bdacf1a9739975b
+  normalized_sha256: sha256:0b9cabcf3b3e018f7deb635e88dea0b27cc9dd4e4b0d00257bdacf1a9739975b
+cas_ref: sha256:0b9cabcf3b3e018f7deb635e88dea0b27cc9dd4e4b0d00257bdacf1a9739975b
+coverage_gids:
+  - gid: D5/S3/Quantum/Decoherence/FiniteRecordRecoveryError.pair_matrix_traceNorm
+    target_statement_id: sha256:4cee7e7de04593ac6160b62bfeeb96cd61bbf7e22cfa3cb821f7b9c6d19e276e
+  - gid: D5/S3/Quantum/Foundation/FiniteKrausChannel.finite_kraus_quantum_channel
+    target_statement_id: sha256:0ede64813b26e6161a0898eec4e0ff5c4fffc9727c0094b5bcfbc6a77c6ef9a0
+  - gid: D5/S3/Quantum/Foundation/FiniteTraceDistance.exists_svd_sqrt_eigenvalues
+    target_statement_id: sha256:45da9cf0932401889f25447596615c374822f09b236301f0b55086e64845b936
+  - gid: D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm
+    target_statement_id: sha256:ec2ace26dd8d3b1f1b18defca9f881e75ab25f3e1a67abd2b14cdc72e2702569
+  - gid: D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm_add_le
+    target_statement_id: sha256:3db8d0cc1aa28c78624e69d989ca938ee9442b2409e1ba0ba39d593ce49d5512
+  - gid: D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm_eq_max_re_tr_U
+    target_statement_id: sha256:5f442a5da7aa083d7b4477e6b217b6ae9033079e819f05248133218bc73f0742
+  - gid: D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm_neg
+    target_statement_id: sha256:d7a81ef774c91a733d963a18aa1a998fd412bb6e352db4f96b70ec875b1b00ec
+  - gid: D5/S3/Quantum/Foundation/FiniteTraceDistance.traceNorm_of_posSemidef
+    target_statement_id: sha256:f9f5b54d2f389f80229204551ad9217b56fb75ef8f081925f568f00cccca0db8
+  - gid: D5/S3/TotalVariation/Bhattacharyya.bhattacharyya
+    target_statement_id: sha256:c1f81e4cb7af85c915d1507b1a44c92a22a96b89317aac9cd222a392d09ebe3a
+  - gid: D5/S3/TotalVariation/Bhattacharyya.total_variation_sq_le_one_sub_bhattacharyya_sq
+    target_statement_id: sha256:5b47fb7f447fdedc80cdaa02df393a1bc59a677a059c428ad553264c20e23af0
+  - gid: D5/S3/TotalVariation/Pinsker.totalVariation
+    target_statement_id: sha256:417383b2f5f4a4f7c56881e521c516e431c6f287d2d24996ca4ec3797e2e61f3
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,13 @@
+**定义。** 对常系数对称逆度量
+
+$$
+H=\begin{pmatrix}h_{00}&h_{01}\\h_{01}&h_{11}\end{pmatrix}
+$$
+
+和黏性 $\nu$，定义平坦二维零压力、零外力的 Navier--Stokes 残差
+
+$$
+\mathcal R_H(v)=\partial_tv+(v\cdot\nabla)v
+-\nu\bigl(h_{00}\partial_{xx}+2h_{01}\partial_{xy}+h_{11}\partial_{yy}\bigr)v.
+$$
+

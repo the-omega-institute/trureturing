@@ -1,0 +1,17 @@
+**定理。** 集合
+
+$$
+\mathcal C=\{u\in\mathcal O:|u_*|\le1\}
+$$
+
+对乘法闭合。若 $u_1,\ldots,u_t\in\mathcal C$，则
+
+$$
+\boxed{
+P_{u_1}^{1/2}\cdots P_{u_t}^{1/2}(n)
+=P_{u_1\cdots u_t}^{1/2}(n).
+}\tag{GS8}
+$$
+
+特别地，这些投影映射两两交换。
+

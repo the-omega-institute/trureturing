@@ -1,0 +1,6 @@
+**定理 158（最短单位指令词的精确计数）。** 对任意 \(a,b\in S(P,A)\)，有
+\[
+\left|\operatorname{Geo}_{P,A}(a,b)\right|
+ =\frac{D!}{\prod_{p\in P}m_p!}.
+\tag{Z-GEO-COUNT}
+\]

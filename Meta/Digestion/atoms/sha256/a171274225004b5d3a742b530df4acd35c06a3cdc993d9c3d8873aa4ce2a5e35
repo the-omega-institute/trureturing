@@ -1,0 +1,12 @@
+**定理。** 对每个 $e\in\mathbb Z$ 且 $e\ne-F_{L+4}$，有接缝外的分辨率覆盖
+
+$$
+\boxed{
+\operatorname{Hits}_L(e)
+\iff\operatorname{Hits}_{L+2}(e)
+\ \lor\ \operatorname{Hits}_{L+1}(e+B_L).
+}\tag{GC9}
+$$
+
+特别地，该等价式对每个 $e\ge0$ 成立。
+

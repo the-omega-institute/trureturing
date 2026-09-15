@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4970b1f523e343712281109c17146d2bdfe92d4f1e0412c5d67bbaabf38c4598
+  normalized_sha256: sha256:4970b1f523e343712281109c17146d2bdfe92d4f1e0412c5d67bbaabf38c4598
+cas_ref: sha256:4970b1f523e343712281109c17146d2bdfe92d4f1e0412c5d67bbaabf38c4598
+coverage_gids:
+  - gid: D5/S1/Words/Mechanical/MechanicalBalance.lowerMechanicalLetter_eq_zero_or_one
+    target_statement_id: sha256:5386c38192676a913b44b62dd445e421e0db0c92e65ac92018fa6596026b4f4f
+  - gid: D5/S1/Words/Mechanical/MechanicalGoldenBridge.lowerMechanicalWord_golden
+    target_statement_id: sha256:2037564af9b99b01234176d13833af9750084722582034afc4dfabcc69fb43c7
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,22 @@
+### 9.4 纠缠参考下的有限前缀稳定界
+
+项目一致性讨论的是态能否拼接；另一个独立问题是，有限前缀退相干是否对任意旁参考系统都稳定。令$C$为一个有限标签Schur Gram矩阵，$C_{xx}=1$，并令
+$$
+\Phi_C(A)=C\odot A,
+\qquad
+\Delta(A)=\sum_xP_xAP_x,
+\qquad
+q(C)=\max_{x\ne y}|C_{xy}|.
+$$
+定义辅助系统允许的最坏相干缺陷
+$$
+\varepsilon_\diamond(C)
+=\frac12\|\Phi_C-\Delta\|_\diamond
+=\sup_{R,\,\omega_{SR}}
+\mathsf d\!\left((\Phi_C\otimes\operatorname{id}_R)(\omega_{SR}),
+(\Delta\otimes\operatorname{id}_R)(\omega_{SR})\right),
+$$
+其中$R$可取有限维，且只需考察密度态$\omega_{SR}$。
+
+这里$\Phi_C-\Delta$是保厄米、迹消失的线性映射，因此标准稳定化定义可等价地写成密度态上的最大迹距离；辅助系统维数取不超过系统维数$d$即可达到该上确界。
+

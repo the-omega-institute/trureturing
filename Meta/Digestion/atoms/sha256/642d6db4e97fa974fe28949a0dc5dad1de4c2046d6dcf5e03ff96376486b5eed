@@ -1,0 +1,33 @@
+### 59.4 目标在可见扇区内，才有签名充分性
+
+对给定 centered effects，令可见空间为：
+
+$$
+\mathcal V
+=
+\operatorname{span}
+\left(
+\{I\}\cup\{E_i\}
+\right).
+$$
+
+仓库的 TargetPredictionSufficiency.lean 中，冻结声明 target_prediction_sufficiency 将两件事放在同一命题中：
+
+$$
+A\in\mathcal V
+\Longrightarrow
+\text{所有 }E_i\text{ 的共同读数决定 }A\text{ 的期望值};
+$$
+
+而：
+
+$$
+A\notin\mathcal V
+\Longrightarrow
+\text{存在读数完全相同、但 }A\text{ 期望不同的两个物理态}.
+$$
+
+因此，局部读出是否足够，不能只问“测了多少次”，还要问目标 effect 是否落在局部可见空间及其动力学闭包中。若目标关联 effect 位于 $$\mathcal C$$，而 $$H$$ 满足局部扇区保持条件，那么所有迭代后的局部读出仍在 $$\mathcal V_{\mathrm{loc}}$$ 内，目标仍然位于该读出族的不可见残差。
+
+这也说明第 57 节的最小预测摘要必须带有任务索引。对局部任务，$$\rho_+$$ 与 $$\rho_-$$ 可以属于同一预测类；加入联合目标后，它们被拆分为不同类。对象的等价性随允许的 effect 和动力学改变，而不是由一个脱离任务的标签决定。
+

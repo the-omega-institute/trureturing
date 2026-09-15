@@ -1,0 +1,7 @@
+**定义。** 对 $L\in\mathbb N$，令
+
+$$
+u_L=\varphi^{L+2},
+\qquad U_L(n)=P_{u_L}^{\alpha}(n)\quad(n\in\mathbb Z).
+$$
+

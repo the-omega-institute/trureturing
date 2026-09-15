@@ -1,0 +1,16 @@
+**证明。** 取
+
+$$
+r_k=2\delta_0+2\delta_1+k\delta_4,\qquad
+s_k=2\delta_2+k\delta_4.
+$$
+
+两者的黄金值均为 $(4+5k)+(6+8k)\varphi$，故由 RD4 得到全部移位读数相同，并由 RD5 得到总电荷相同。两者均有重数二的槽，所以都非规范。按最低重复槽进位，
+
+$$
+Tr_k=3\delta_1+k\delta_4,\qquad
+Ts_k=\delta_0+\delta_3+k\delta_4.
+$$
+
+由 $\varphi^2+\varphi^5-3\varphi^3=1$ 得结论。证毕。
+

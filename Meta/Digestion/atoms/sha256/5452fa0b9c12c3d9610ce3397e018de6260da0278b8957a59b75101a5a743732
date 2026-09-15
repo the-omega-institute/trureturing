@@ -1,0 +1,12 @@
+**命题 124.4（CPTP 模拟器与混态表的精确等价）。** 上述输入族上的全部可实现输出恰为任意混态表 $(\sigma_w)_{w\in W_k}\in\mathcal D_d^{W_k}$。每张表都可由
+$$
+\Lambda_\sigma(A)=\sum_{w\in W_k}\langle w|A|w\rangle\sigma_w
+$$
+实现，因此只对 $E_{k,x}$ 计算的最坏误差，在所有 CPTP 映射与所有混态表上取下确界相同。
+证明。任一 CPTP 映射给出密度态 $\sigma_w=\Lambda(|w\rangle\langle w|)$，于是输入 $x$ 的输出只依赖 $q_kx$。
+反向对每个 $w$ 作谱分解 $\sigma_w=\sum_{a=1}^d\lambda_{wa}|v_{wa}\rangle\langle v_{wa}|$，其中 $\lambda_{wa}\ge0$、$\sum_a\lambda_{wa}=1$。取 Kraus 算子
+$$
+K_{wa}=\sqrt{\lambda_{wa}}\,|v_{wa}\rangle\langle w|.
+$$
+则 $\sum_{w,a}K_{wa}^*K_{wa}=I_{\mathcal H_k}$，且 $\sum_{w,a}K_{wa}AK_{wa}^*=\Lambda_\sigma(A)$。Kraus 形式给完全正性，前一等式给保迹性，代入基态即得指定表。这个等价只规定输入族上的行为，不规定一般相干叠加输入上的通道行为。
+

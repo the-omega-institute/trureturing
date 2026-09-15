@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:3ee3728019b46de8ba48eb952c8ca4ac97376cd5f49f1616354d7cabf84e6a9d
+  normalized_sha256: sha256:3ee3728019b46de8ba48eb952c8ca4ac97376cd5f49f1616354d7cabf84e6a9d
+cas_ref: sha256:3ee3728019b46de8ba48eb952c8ca4ac97376cd5f49f1616354d7cabf84e6a9d
+coverage_gids:
+  - gid: D5/S3/Analytic/Interpolation/EnvelopeKMonotone.coordinate_variance_domain
+    target_statement_id: sha256:0156ea429a9816ca30aef9627a0fd4285e109fafa7b0c544bb4c203afa23a8d9
+  - gid: D5/S3/Analytic/Interpolation/HermiteMomentBounds.hermite_moment_bounds
+    target_statement_id: sha256:c6ad6c5410e7e7947c6f68f4ee537f8cbfcbdee49d098ef669b9a30837bed6a7
+  - gid: D5/S3/Analytic/Interpolation/QuadraticMajorantEnvelope.majorant_at_nodes
+    target_statement_id: sha256:7469155042322d2506ee4c1744921b83e36b4e33b25bcbdefb793f01606a625d
+receipts:
+  unresolved_subitems: []

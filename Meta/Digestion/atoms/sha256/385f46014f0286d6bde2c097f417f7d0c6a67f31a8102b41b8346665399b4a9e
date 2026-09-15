@@ -1,0 +1,6 @@
+**命题。** 可见向量满足二阶递推
+
+$$
+\boxed{y_{n+2}=(A_v+\lambda I)y_{n+1}+(B_vC_v-\lambda A_v)y_n.}
+$$
+

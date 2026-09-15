@@ -1,0 +1,7 @@
+且 \(\operatorname{dig}_{\rm Pr}\) 是 \(\mathsf E_{\rm Pr}\) 与有限支撑局部 Zeckendorf 表
+\[
+\mathsf W_Z^{(\operatorname{Pr})}
+=\{d:\operatorname{Pr}\to\mathsf W_Z:
+\operatorname{supp}(d)\text{ 有限}\}
+\]
+之间的幺半群同构。

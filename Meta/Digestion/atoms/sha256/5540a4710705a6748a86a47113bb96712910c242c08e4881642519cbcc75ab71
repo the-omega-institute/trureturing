@@ -1,0 +1,23 @@
+### 68.7 校准后的使用规则
+
+六项边界合并后，当前可安全使用的推理链是
+
+$$
+\begin{aligned}
+&\text{centered effect span}
+\longrightarrow
+\text{当前读出商与残差},\\
+&\text{trace-zero predictive tower}
+\longrightarrow
+\text{有限观察深度},\\
+&\text{具体记录通道}
+\longrightarrow
+\text{具体相干衰减与恢复下界},\\
+&\text{联合幺正}
+\longrightarrow
+\text{左右共轭的整体恢复}.
+\end{aligned}
+$$
+
+因此，Zeckendorf 合法构型仍可作为离散索引和约束窗口；它不自动提供 POVM 正性、Hamiltonian、记录通道、全体未来完备性或环境恢复。所谓“保留多少历史”必须同时标明：使用的是哪一类 effect、是否已经 centered、动力学位于哪个 trace-zero 载体、记录通道的具体假设是什么，以及完备性是针对全部有限维密度态还是仅针对一个目标预测任务。
+

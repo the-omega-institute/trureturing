@@ -1,0 +1,6 @@
+**定理 378.8。** 若另外给定字段双射 $b_D:D\to C_D$、$b_Y:Y\to C_Y$，置
+$$
+f^d=b_Y\circ f\circ b_D^{-1},\qquad
+h_D(c)=\operatorname{Enc}(b_D^{-1}(c)),\qquad e_D(c)=\operatorname{Enc}(c),
+$$
+并在输出槽相应置 $h_Y,e_Y$。则 $h_D$ 的像为 $D^*$，其逆在该像上为 $b_D\circ\operatorname{Dec}$；$e_D$ 的像为 $\operatorname{Enc}[C_D]$，其逆在该像上为 $\operatorname{Dec}$。输出槽有对应的两个精确逆域，

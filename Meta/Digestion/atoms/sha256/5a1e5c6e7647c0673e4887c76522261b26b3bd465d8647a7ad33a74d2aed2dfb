@@ -1,0 +1,8 @@
+**定理 228（加权剖面的积分、差分、并行与补集）。** 对 $X\in\mathcal C_P^{\rm tb}$ 及 $T\in\mathbb Z$，有
+$$
+\mathbf a_X^{G,T}=V_P^{\mathbb Z}(r_X^T),\qquad
+\mathbf a_X^{G,\infty}=V_P^{\mathbb Z}(r_X)=\mathsf C_P(q_X),
+$$
+$$
+\delta_X^G(t,p)=\mathbf a_X^{G,t}(p)-\mathbf a_X^{G,t-1}(p).
+$$

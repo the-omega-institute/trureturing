@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:529de3f32be9a2407a248c117b70e82475bab5ab2443da6ae3b41f4f835a3aeb
+  normalized_sha256: sha256:529de3f32be9a2407a248c117b70e82475bab5ab2443da6ae3b41f4f835a3aeb
+cas_ref: sha256:529de3f32be9a2407a248c117b70e82475bab5ab2443da6ae3b41f4f835a3aeb
+coverage_gids:
+  - gid: D5/S3/Entropy/Forgetting/PushforwardComposition.pushforward_comp
+    target_statement_id: sha256:656edd11d1bd5231d848d38234fab4d88b8c20381d0741996e70d41b01e756d6
+receipts:
+  unresolved_subitems: []

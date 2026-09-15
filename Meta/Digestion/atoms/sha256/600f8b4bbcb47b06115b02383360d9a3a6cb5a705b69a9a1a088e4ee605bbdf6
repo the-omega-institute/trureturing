@@ -1,0 +1,31 @@
+### TR.10 环面固定点与返回商
+
+**定理。** 设 $M=A^n-I$ 且 $\det M\ne0$。则存在加法群同构
+
+$$
+R(A,n)\cong K(A,n).
+$$
+
+其逆可写为
+
+$$
+[x]\longmapsto[Mx]
+\quad\text{从}\quad
+M_{\mathbb R}^{-1}\mathbb Z^2/\mathbb Z^2
+\quad\text{到}\quad
+\mathbb Z^2/M\mathbb Z^2.
+$$
+
+**证明。** 由 $\det M\ne0$，实线性映射 $M_{\mathbb R}$ 可逆。定义
+
+$$
+b_M:\mathbb Z^2\to\ker f_M,qquad
+z\longmapsto[M_{\mathbb R}^{-1}j(z)].
+$$
+
+若 $[x]\in\ker f_M$，则 $M_{\mathbb R}x\in L$，故存在 $z\in\mathbb Z^2$ 使 $M_{\mathbb R}x=j(z)$，从而 $b_M(z)=[x]$；所以 $b_M$ 满射。另一方面，$b_M(z)=0$ 当且仅当存在 $w\in\mathbb Z^2$ 使 $M_{\mathbb R}^{-1}j(z)=j(w)$，也即 $z=Mw$。因此 $\ker b_M=M\mathbb Z^2$，第一同构定理给出结论。所写逆映射由同一计算得出。
+
+**定理。** 对 $k>0$、$n>0$，$f_{C_k}$ 与 $f_{D_k}$ 的周期整除 $n$ 的固定点群具有相同有限基数；在 $n=1$ 时，这两个固定点群不同构。
+
+**证明。** TR.3 保证相关行列式非零，TR.10 把固定点群分别同构到返回模，再应用 TR.3 与 TR.6。
+

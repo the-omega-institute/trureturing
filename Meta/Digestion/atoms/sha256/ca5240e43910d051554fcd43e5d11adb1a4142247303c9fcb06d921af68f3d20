@@ -1,0 +1,40 @@
+### 8.8 不同分辨率中心的共同反射阻碍
+
+**定义。** 第 $L$ 层有符号区间的中心记为
+
+$$
+\mu_L=\frac{d_L}{2}.
+$$
+
+**定理。** 若 $r\in\mathbb N$ 且 $r>0$，则不存在 $t\in\mathbb R$ 同时满足
+
+$$
+\mu_L+t=-\mu_L,\qquad
+\mu_{L+r}+t=-\mu_{L+r}.
+$$
+
+**证明。** 两式分别给出 $t=-d_L$ 与 $t=-d_{L+r}$，从而要求
+$D_{L,r}=d_L-d_{L+r}=0$，这与 GC5 矛盾。
+
+**定理。** 若 $\omega\ne0$，且 $r\in\mathbb N$、$r>0$，则未取模的几何相位差
+
+$$
+\Theta_{L,r}=-\frac{\omega}{2}(d_L-d_{L+r})
+$$
+
+满足
+
+$$
+\boxed{\Theta_{L,r}\ne0,\qquad
+\Theta_{L+1,r}=-\alpha\Theta_{L,r}.}
+$$
+
+**证明。** 非零性由 $\omega\ne0$ 与 GC5 得到；递推式由
+$D_{L+1,r}=-\alpha D_{L,r}$ 得到。
+
+**命题。** 对实数 $\theta$，条件 $\theta\ne0$ 本身不推出
+$e^{i\theta}\ne1$。
+
+**证明。** 取 $\theta=2\pi$，则 $\theta\ne0$，但
+$e^{i\theta}=e^{2\pi i}=1$。
+

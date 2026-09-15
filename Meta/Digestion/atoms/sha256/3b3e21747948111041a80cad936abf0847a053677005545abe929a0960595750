@@ -1,0 +1,40 @@
+### 123.1 有限接口塔与自然嵌入
+
+设有有限层接口 $q_n:X\to Q_n$，以及忘却映射 $\pi_n:Q_{n+1}\to Q_n$，满足
+
+$$
+\pi_n\circ q_{n+1}=q_n.
+$$
+
+定义兼容塔
+
+$$
+\varprojlim Q_n
+=
+\left\{(z_n)_n:\ \pi_n(z_{n+1})=z_n\ \text{对所有 }n\right\}.
+$$
+
+每个 $x\in X$ 给出一个塔
+
+$$
+\iota(x)=(q_n(x))_n.
+$$
+
+令
+
+$$
+R_\infty=\bigcap_n\ker(q_n),
+\qquad
+x\mathrel{R_\infty}y
+\Longleftrightarrow
+q_n(x)=q_n(y)\ \text{对所有 }n.
+$$
+
+则 $\iota$ 唯一因子化为
+
+$$
+\bar\iota:X/R_\infty\longrightarrow\varprojlim Q_n,
+$$
+
+并且 $\bar\iota$ 是单射。这里的单射只使用所有层读数同时相等才定义的商关系；它不要求原载体已经完备。
+

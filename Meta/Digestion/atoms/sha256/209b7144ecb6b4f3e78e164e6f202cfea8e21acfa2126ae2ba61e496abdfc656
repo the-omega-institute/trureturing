@@ -1,0 +1,12 @@
+**定义。** 初态为 $1$，因数状态的输出为 $\mathsf{true}$，$\bot$ 的输出为 $\mathsf{false}$，且
+
+$$
+\delta(d,p)=
+\begin{cases}
+dp,&dp\mid N,\\
+\bot,&dp\nmid N,
+\end{cases}
+\qquad
+\delta(\bot,p)=\bot.
+$$
+

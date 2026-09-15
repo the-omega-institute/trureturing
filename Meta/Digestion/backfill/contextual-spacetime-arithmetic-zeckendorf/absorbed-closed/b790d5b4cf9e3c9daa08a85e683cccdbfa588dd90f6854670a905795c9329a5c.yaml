@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:b790d5b4cf9e3c9daa08a85e683cccdbfa588dd90f6854670a905795c9329a5c
+  normalized_sha256: sha256:b790d5b4cf9e3c9daa08a85e683cccdbfa588dd90f6854670a905795c9329a5c
+cas_ref: sha256:b790d5b4cf9e3c9daa08a85e683cccdbfa588dd90f6854670a905795c9329a5c
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Observation/StrictOneHoleContexts.forall_contexts_iff_words
+    target_statement_id: sha256:7d7e86a9c3312c88d5f739339618e31a791c1d164b91596d1144eaec0afd4f75
+  - gid: D5/S3/ObserverMemory/Algorithms/ControlledRelationRecursion.controlled_behavior_relation_recursion
+    target_statement_id: sha256:0f13defa063529ddef7119476cdc35c19e365b9e7846e004b727860b05c47f70
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 1e26a9f05ce898cfaef68b86a2e4dcf293ead7c7d49542e070a7a68d33f4c291
+    - 6a04cb4d27777e127b93d3c03d3a744152318ec234f0e2a12a308b40157af8b5
+    - 2fd6d39986bb478f51a6dce2402503639f7e04bb1c1df6975dfc0171521ef146

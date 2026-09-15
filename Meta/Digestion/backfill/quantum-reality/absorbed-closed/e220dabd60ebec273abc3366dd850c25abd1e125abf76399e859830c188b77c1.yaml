@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:e220dabd60ebec273abc3366dd850c25abd1e125abf76399e859830c188b77c1
+  normalized_sha256: sha256:e220dabd60ebec273abc3366dd850c25abd1e125abf76399e859830c188b77c1
+cas_ref: sha256:e220dabd60ebec273abc3366dd850c25abd1e125abf76399e859830c188b77c1
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/GraphColoring/StepGraphComponentCount.reachable_iff_mod_eq
+    target_statement_id: sha256:f33b7d18170c101d16ba874084a0110fca9af2c1259fd334b125ae68fa21bfc9
+receipts:
+  unresolved_subitems: []

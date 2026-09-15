@@ -1,0 +1,28 @@
+**定理 8.4（时间合成、指针代数及完整不动空间）。** 对互不相交的时间集合$A,B\subseteq T$，每步均满足定义8.1且输入环境保持新鲜，则
+$$
+\Gamma_{A\cup B}=\Gamma_A\odot\Gamma_B,\qquad
+C_{A\cup B}=C_A\odot C_B,\qquad
+\Phi_{A\cup B}=\Phi_B\circ\Phi_A=\Phi_A\circ\Phi_B.
+$$
+这里交换的是指定记录通道；不宣称$U_s,U_t$在任意非预备的环境输入上可交换。相交集合若仍用上式复合，会把交集步骤计算两次，只能解释为另备独立副本后再次执行，不能解释为原时间集合的并。
+
+定义指针代数$\mathcal D=\{\sum_i a_iP_i:a_i\in\mathbb C\}$。每个$E_{ij}$是$\Phi_A$的特征算符，且
+$$
+\Phi_A(E_{ij})=C_A(i,j)E_{ij},\qquad
+\Phi_A|_{\mathcal D}=\operatorname{id}_{\mathcal D},\qquad
+\operatorname{Fix}(\Phi_A)=\operatorname{span}\{E_{ij}:C_A(i,j)=1\}.
+$$
+对偶通道在$E_{ij}$上的特征值为$\overline{C_A(i,j)}$，因此同样逐点固定$\mathcal D$；系统的指针布居和全部对角观察均保持。仅有$|C_A(i,j)|=1$不保证$E_{ij}$固定，还须总相位使$C_A(i,j)=1$。
+
+更精确地，令$w_i=e^{i\Theta_i(A)}e_i^A$。关系$i\sim_Aj$定义为$C_A(i,j)=1$，等价于$w_i=w_j$，故是等价关系。不动空间是各等价类上的完整矩阵代数的直和。它恰为$\mathcal D$的充要条件是每个$i\ne j$都有$C_A(i,j)\ne1$；一个充分条件是每个异标签对至少有一步$t\in A$满足$|G_t(i,j)|<1$。
+
+证明。 不交集合上的有限和与有限积分别相加、相乘，给出前两式；逐元素乘法的结合律和交换律给出通道复合式。对特征算符的结论直接来自$C_A\odot E_{ij}=C_A(i,j)E_{ij}$。矩阵元构成一组线性无关的基，故固定一个矩阵当且仅当其在$C_A(i,j)\ne1$的位置为零。Kraus分解中的$K_a$都对角；将共轭次序反向即得对偶的共轭特征值。
+
+按既定内积方向，$C_A(i,j)=\langle w_j,w_i\rangle$且$\|w_i\|=1$。若其值为一，则
+$$
+\|w_i-w_j\|^2=2-2\operatorname{Re}\langle w_j,w_i\rangle=0.
+$$
+反向蕴含显然。因而等价类内的矩阵元全部固定，类间全部不固定，得到直和描述。Cauchy–Schwarz给$|G_t(i,j)|\le1$；若其中一个严格小于一，则$|C_A(i,j)|<1$，不可能等于一。空时间集合时所有$w_i=1$，不动代数为整个$\operatorname{End}(\mathcal H_S)$，与恒等通道相符。证毕。
+
+相位的分拆本身不是额外物理数据。若改取$e_i^{(t)}\mapsto e^{i\chi_{i,t}}e_i^{(t)}$并同时令$\theta_{i,t}\mapsto\theta_{i,t}-\chi_{i,t}$，预备子空间上的$U_t$不变，$C_A$及定理8.2的联合态亦不变。这个结论由每步的相位因子相消直接得到；对部分保留情形，剩余的$R$相位恰与$|e_i^R\rangle\langle e_j^R|$的相位相消。因此不能先忽略复重叠的相位，再用其模判定不动点。
+

@@ -2,8 +2,6 @@
 set -euo pipefail
 export LC_ALL=C
 
-LEAN_CACHE_GIT_RUNNER="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)/lean-cache-run.sh"
-
 # The report consumer also sources the shared manifest and memo primitives.
 if [[ "${BASH_SOURCE[0]}" == "$0" ]]; then
   COMMAND="${1:-}"
@@ -15,8 +13,8 @@ if [[ "${BASH_SOURCE[0]}" == "$0" ]]; then
       *) echo "lean-cache-input: unknown argument '$1'" >&2; exit 2 ;;
     esac
   done
-  [[ "$COMMAND" == "address" || "$COMMAND" == "dependency-address" ]] \
-    || { echo "usage: lean-cache-input.sh address|dependency-address --repository DIR" >&2; exit 2; }
+  [[ "$COMMAND" == "address" || "$COMMAND" == "dependency-address" || "$COMMAND" == "build-snapshot-address" ]] \
+    || { echo "usage: lean-cache-input.sh address|dependency-address|build-snapshot-address --repository DIR" >&2; exit 2; }
   [[ -n "$REPOSITORY" && "$REPOSITORY" == /* && -d "$REPOSITORY" ]] \
     || { echo "lean-cache-input: --repository requires an absolute directory" >&2; exit 2; }
   REPOSITORY="$(cd "$REPOSITORY" && pwd -P)"
@@ -73,9 +71,9 @@ prepare_memo() {
 
   local status="$TMP_ROOT/git-status"
   local index="$TMP_ROOT/git-index"
-  "$LEAN_CACHE_GIT_RUNNER" --git -C "$REPOSITORY" status --porcelain=v1 -z --untracked-files=all > "$status" \
+  git -C "$REPOSITORY" status --porcelain=v1 -z --untracked-files=all > "$status" \
     2>/dev/null || return 0
-  "$LEAN_CACHE_GIT_RUNNER" --git -C "$REPOSITORY" ls-files -s -z > "$index" 2>/dev/null || return 0
+  git -C "$REPOSITORY" ls-files -s -z > "$index" 2>/dev/null || return 0
 
   if [[ ! -e "$MEMO_ROOT" ]]; then
     local old_umask
@@ -317,8 +315,8 @@ append_manifest_entry() {
 }
 
 # The report inspector is a Lean program too. Keep its source closure owned by
-# this canonical Lean-input helper so report fingerprints and the Lean build
-# address enumerate the same supporting files.
+# this compiled-cache helper. Inspector report facets trace registered producers
+# separately; compiled Lean source/config addresses retain their existing meaning.
 lean_inspector_source_paths() {
   local path
   [[ -d "$REPOSITORY/tools/lean-inspector" ]] || return 0
@@ -345,8 +343,7 @@ lean_cache_address() {
   local sources_manifest="$TMP_ROOT/sources.manifest"
   local sources_list="$TMP_ROOT/sources.list"
   local inspector_sources_list="$TMP_ROOT/inspector-sources.list"
-  local config_manifest="$TMP_ROOT/config.manifest"
-  local sources_sha256 config_sha256 lakefile_count=0 lakefile
+  local sources_sha256 config_sha256
 
   : > "$sources_manifest"
   : > "${sources_manifest}.requests"
@@ -366,6 +363,15 @@ lean_cache_address() {
   materialize_manifest "$sources_manifest" || return 2
   sources_sha256="$(hash_file "$sources_manifest")" || return 2
 
+  config_sha256="$(lean_config_sha256)" || return 2
+
+  printf '%s %s\n' "$sources_sha256" "$config_sha256"
+}
+
+# Shared unchanged Lean toolchain/lake configuration preimage.
+lean_config_sha256() {
+  local config_manifest="$TMP_ROOT/config.manifest"
+  local lakefile_count=0 lakefile
   : > "$config_manifest"
   : > "${config_manifest}.requests"
   append_manifest_entry "$config_manifest" "lean-toolchain" || return 2
@@ -379,15 +385,21 @@ lean_cache_address() {
   [[ "$lakefile_count" -gt 0 ]] \
     || { echo "lean-cache-input: repository has no lakefile" >&2; return 2; }
   materialize_manifest "$config_manifest" || return 2
-  config_sha256="$(hash_file "$config_manifest")" || return 2
-
-  printf '%s %s\n' "$sources_sha256" "$config_sha256"
+  hash_file "$config_manifest"
 }
 
 if [[ "${BASH_SOURCE[0]}" == "$0" ]]; then
   prepare_memo
   if [[ "$COMMAND" == "dependency-address" ]]; then
     lean_dependency_sha256
+  elif [[ "$COMMAND" == "build-snapshot-address" ]]; then
+    # One immutable CI snapshot carries both ordinary Lean and native Inspector
+    # facets. Preserve the existing Lean identities and restore-prefix scope;
+    # distinguish producer-only changes in this snapshot's final generation.
+    snapshot_manifest="$TMP_ROOT/build-snapshot.manifest"
+    lean_cache_address > "$snapshot_manifest"
+    "$REPOSITORY/tools/scripts/report/lean-report-input.sh" address --repository "$REPOSITORY" >> "$snapshot_manifest"
+    hash_file "$snapshot_manifest"
   else
     lean_cache_address
   fi

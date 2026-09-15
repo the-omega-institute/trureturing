@@ -1,0 +1,36 @@
+## MF.4 三态链的全部记忆系数
+
+**定义。** 沿用 PT6 的 $K_{a,b},P$，令 $Q=I-P$，并在隐藏方向 $(1,-1,0)$ 上置
+
+$$
+\lambda=1-2a-b/2,\quad D=QK_{a,b}Q,\quad C=QK_{a,b}P,\quad B=PK_{a,b}Q.
+$$
+
+**定理 MF3。** 对所有实参数和 $j\in\mathbb N$，
+
+$$
+\boxed{M_j=BD^jC=\lambda^j\Delta_2,\qquad
+\Delta_2=PK_{a,b}^2P-(PK_{a,b}P)^2.}
+$$
+
+**证明。** 直接计算得 $DC=\lambda C$，归纳得 $D^jC=\lambda^jC$。又因 $Q^2=Q$，$BC=PK_{a,b}QK_{a,b}P=\Delta_2$。证毕。
+
+**命题。** 有
+
+$$
+(M_j)_{22}=\frac{b^2}{2}\lambda^j.
+$$
+
+若 $a\ge0,b>0,a+b\le1$，则 $-1<\lambda<1$，并且对 $m\ge0$，
+
+$$
+\sum_{j=m}^{\infty}|(M_j)_{22}|=
+\frac{b^2|\lambda|^m}{2(1-|\lambda|)}.
+$$
+
+**证明。** 第一式由 PT6 的 $\Delta_2(2,2)=b^2/2$ 与 MF3 得到。上界 $\lambda<1$ 来自 $b>0$，下界由 $a\le1-b$ 得 $\lambda\ge-1+3b/2>-1$。最后对几何级数求和。证毕。
+
+**命题。** 在 $a\ge0,b>0,a+b\le1$ 下，若 $\lambda\ne0$，则每个滞后的 $(M_j)_{22}$ 都非零；若 $\lambda=0$，则只有 $j=0$ 项非零。若 $b=0$，则全部反馈核为零。
+
+**证明。** 直接代入 $(M_j)_{22}=b^2\lambda^j/2$；当 $b=0$ 时由 PT6 得 $\Delta_2=0$，再用 MF3。证毕。
+

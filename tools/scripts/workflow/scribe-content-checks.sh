@@ -39,10 +39,10 @@ done < <(
   git ls-files --others --exclude-standard -z
 )
 
+PRODUCER_CHANGED_PATHS=()
 requires_projection_check=0
 requires_describe_check=0
 requires_markdown_check=0
-derive_producer_closure=0
 if [[ "${#CHANGED_PATHS[@]}" -gt 0 ]]; then
   for path in "${CHANGED_PATHS[@]}"; do
     case "$path" in
@@ -63,34 +63,19 @@ if [[ "${#CHANGED_PATHS[@]}" -gt 0 ]]; then
       tools/lean-inspector/*|tools/scripts/report/lean-report-input.sh)
         requires_describe_check=1
         ;;
-      .github/workflows/ci.yml|Directory.Build.props|Directory.Build.targets|Directory.Packages.props|\
-      global.json|tools/StrataLint.Scribe/*|tools/StrataLint.Scribe.Documents/*|\
-      tools/StrataLint.Engine/*|tools/StrataLint.Cli/*|\
-      tools/Architecture/BannedSymbols*.txt|tools/scripts/workflow/scribe-content-checks.sh)
-        requires_projection_check=1
-        requires_describe_check=1
-        ;;
-      *.cs|*.sh|*.csproj|*.props|*.targets|*/packages.lock.json)
-        derive_producer_closure=1
-        ;;
+      *) PRODUCER_CHANGED_PATHS+=("$path") ;;
     esac
   done
 fi
 
-if [[ "$derive_producer_closure" == "1" ]]; then
-  producer_output="$(
-    "$REPO_ROOT/tools/scripts/report/lean-report-input.sh" scribe-producer-paths \
-      --repository "$REPO_ROOT"
-  )" || { echo "scribe-content-checks: Scribe producer closure is unavailable" >&2; exit 2; }
-  while IFS= read -r producer_path; do
-    for path in "${CHANGED_PATHS[@]}"; do
-      if [[ "$path" == "$producer_path" ]]; then
-        requires_projection_check=1
-        requires_describe_check=1
-        break 2
-      fi
-    done
-  done <<< "$producer_output"
+# The scope query matches authored patterns, so deleted producer members and
+# manifest changes route exactly like present members. Registration errors are fatal.
+producer_affected="$(printf '%s\0' ${PRODUCER_CHANGED_PATHS[@]+"${PRODUCER_CHANGED_PATHS[@]}"} | python3 \
+  "$REPO_ROOT/tools/scripts/report/lean-report-selection.py" scribe-affected \
+  --repository "$REPO_ROOT")" || exit 2
+if [[ "$producer_affected" == "true" ]]; then
+  requires_projection_check=1
+  requires_describe_check=1
 fi
 
 if [[ "$requires_projection_check" == "1" ]]; then

@@ -1,0 +1,8 @@
+**定义。** 对正整数 $m$，令 $F_m=\operatorname{GL}_7(\mathbb Z/m)$，并定义
+
+$$E^{\rm mat}_{g,m}:\Pi_g\longrightarrow
+F_m^{\operatorname{Hom}(\Pi_g,F_m)},\qquad
+E^{\rm mat}_{g,m}(x)(\rho)=\rho(x).$$
+
+令 $Q^{\rm mat}_{g,m}=\operatorname{im}E^{\rm mat}_{g,m}$，$q^{\rm mat}_{g,m}$ 为像限制满射。
+

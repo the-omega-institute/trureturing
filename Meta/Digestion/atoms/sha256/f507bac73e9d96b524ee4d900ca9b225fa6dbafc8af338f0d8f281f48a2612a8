@@ -1,0 +1,17 @@
+### 10.4 未来读数所需的最小特征保留
+
+取有限细标签集$\mathsf X$及其完整正交基投影$P_x=|x\rangle\langle x|$、目标读数$g:\mathsf X\to\mathsf Y$，以及有限通道族$\Psi_k$，其中$\Psi_0=\operatorname{id}$。令
+$$
+Q_b^g=\sum_{g(x)=b}P_x,
+\qquad A_{k,b}=\Psi_k^*(Q_b^g).
+$$
+给定有限可访问特征指标集$\mathcal J_{\rm acc}$及特征$h_j:\mathsf X\to\mathsf Z_j$，保留$J\subseteq\mathcal J_{\rm acc}$时的标签为$f_J(x)=(h_j(x))_{j\in J}$。若某个$A_{k,b}$在细标签基中有非对角元，则任何只保留$f_J$的经典标签都不能对全部输入态精确预测该读数。若所有$A_{k,b}$均对角，定义
+$$
+ v(x)=\bigl(\langle x|A_{k,b}|x\rangle\bigr)_{k,b},
+$$
+以及
+$$
+\mathcal P=\{\{x,y\}:v(x)\ne v(y)\},
+\qquad
+S_j=\{\{x,y\}\in\mathcal P:h_j(x)\ne h_j(y)\}.
+$$

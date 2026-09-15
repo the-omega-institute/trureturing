@@ -1,0 +1,53 @@
+### TR.2 行列式为二的校准族
+
+**定义。** 对任意自然数 $k$，定义 companion 族、balanced 族及其整数交织子
+
+$$
+C_k=\begin{pmatrix}4k+1&1\\4k&1\end{pmatrix},\qquad
+D_k=\begin{pmatrix}2k+1&2\\2k(k+1)&2k+1\end{pmatrix},\qquad
+P_k=\begin{pmatrix}1&0\\-2k&2\end{pmatrix}.
+$$
+
+**定理。** 对每个 $k\geq0$，有
+
+$$
+\det C_k=\det D_k=1,\qquad
+\operatorname{tr}C_k=\operatorname{tr}D_k=4k+2,
+$$
+
+以及
+
+$$
+C_kP_k=P_kD_k,\qquad \det P_k=2.
+$$
+
+对每个 $n\geq0$，还有
+
+$$
+(C_k^n-I)P_k=P_k(D_k^n-I),
+\qquad
+\det(C_k^n-I)=\det(D_k^n-I).
+$$
+
+**证明。** 前两组等式由二阶行列式、迹和矩阵乘法直接计算。由 $C_kP_k=P_kD_k$ 对 $n$ 归纳，得 $C_k^nP_k=P_kD_k^n$，减去 $P_k$ 即得交织恒等式。两边取行列式后得到
+
+$$
+2\det(C_k^n-I)=2\det(D_k^n-I),
+$$
+
+在整数中约去 $2$ 即得最后一式。
+
+**定理。** $P_k$ 在 $\mathbb Z^2$ 上单射，其像的指数为 $2$，因而诱导一个度数为 $2$ 的格同源；它不是整数基变换。
+
+**证明。** 若 $P_k(p,q)=0$，则第一坐标给出 $p=0$，第二坐标再给出 $q=0$，故 $P_k$ 单射。其像恰为第二坐标为偶数的整数向量集合：正向由 $P_k(p,q)=(p,-2kp+2q)$，反向对 $(x,2y)$ 取 $(p,q)=(x,y+kx)$。因此像的指数为 $2$。整数基变换的行列式只能是 $\pm1$。
+
+**定理。** $C_k$ 与 $D_k$ 的共同特征多项式的判别式为
+
+$$
+(4k+2)^2-4=16k(k+1).
+$$
+
+当 $k=1$ 时，其特征值生成的二次域是 $\mathbb Q(\sqrt2)$。
+
+**证明。** 两个矩阵的行列式均为 $1$、迹均为 $4k+2$，故特征多项式为 $X^2-(4k+2)X+1$，判别式即所示。$k=1$ 时，判别式为 $32=(4\sqrt2)^2$，其平方根生成 $\mathbb Q(\sqrt2)$。
+

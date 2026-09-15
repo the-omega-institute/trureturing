@@ -1,0 +1,9 @@
+**定理。** 对每个 $k\geq0$，有加法群同构
+
+$$
+R(C_k,1)\cong\mathbb Z/(4k),qquad
+R(D_k,1)\cong\mathbb Z/(2)\times\mathbb Z/(2k).
+$$
+
+当 $k=0$ 时，这两式分别为 $R(C_0,1)\cong\mathbb Z$ 与 $R(D_0,1)\cong\mathbb Z/(2)\times\mathbb Z$。
+

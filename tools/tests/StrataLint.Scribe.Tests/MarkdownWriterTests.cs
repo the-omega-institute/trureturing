@@ -207,9 +207,10 @@ public sealed class MarkdownWriterTests
     }
 
     [Theory]
-    [InlineData(false)]
-    [InlineData(true)]
-    public void LiteratureProvenanceEmitsAnAuthorYearCitationFromTypedMetadata(bool useUrl)
+    [InlineData(true, false)]
+    [InlineData(false, true)]
+    [InlineData(true, true)]
+    public void LiteratureProvenanceEmitsAnAuthorYearCitationFromTypedMetadata(bool useDoi, bool useUrl)
     {
         var reference = LibraryNoteRef.Create("D5/L/sos1957threegap");
         var document = ScribeDocument.Create(
@@ -235,7 +236,7 @@ public sealed class MarkdownWriterTests
                 "Vera T. Sos",
                 1957,
                 "On the three gap theorem",
-                useUrl ? null : "10.1007/BF01389053",
+                useDoi ? "10.1007/BF01389053" : null,
                 useUrl ? "https://example.org/source" : null),
         };
         var text = Encoding.UTF8.GetString(
@@ -243,8 +244,9 @@ public sealed class MarkdownWriterTests
 
         Assert.Contains(
             "*Citation.* Vera T. Sos (1957). *On the three gap theorem*. "
-            + (useUrl ? "URL: <https://example.org/source>."
-                : "DOI: [10.1007/BF01389053](https://doi.org/10.1007/BF01389053)."),
+            + (useDoi ? "DOI: [10.1007/BF01389053](https://doi.org/10.1007/BF01389053)." : string.Empty)
+            + (useDoi && useUrl ? " " : string.Empty)
+            + (useUrl ? "URL: <https://example.org/source>." : string.Empty),
             text,
             StringComparison.Ordinal);
         Assert.DoesNotContain("D5/L/sos1957threegap", text, StringComparison.Ordinal);

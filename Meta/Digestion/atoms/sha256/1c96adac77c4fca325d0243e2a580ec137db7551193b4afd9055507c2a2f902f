@@ -1,0 +1,10 @@
+**定义 9.1（两层线性任务）。** 给宽度 $m\ge1$，$u,v\in\mathbb R^m$，
+$$
+f_{u,v}(x)=\langle u,v\rangle x,\qquad w=\langle u,v\rangle,\qquad s=\|u\|^2+\|v\|^2.
+$$
+损失为固定可微函数 $\ell(w)$，记 $g(w)=\ell'(w)$。同一时间层的同步欧氏梯度下降为
+$$
+u^+=u-\eta g(w)v,\qquad v^+=v-\eta g(w)u.
+$$
+右端都使用旧参数；交替更新是另一种动作，不能共享未经重算的公式。深线性网络的可解动力学有[Saxe、McClelland与Ganguli](../../../Library/Dynamics/saxe2013exact.md)的既有框架；以下是直接证明的有限步长公式，不归给该文特殊白化、平衡初值下的连续解。
+

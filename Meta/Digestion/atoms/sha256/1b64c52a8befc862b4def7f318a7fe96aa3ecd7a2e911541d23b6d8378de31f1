@@ -1,0 +1,23 @@
+**命题 8.8（无条件取迹与实际记录测量的分界）。** 在定理8.2的$A=D\mathbin{\dot\cup}R$中，若在末端实际对$D$实施有限POVM $(B_a)_a$，再丢弃被测因子，结果$a$对应的未归一化系统与保留记录态为
+$$
+\widetilde\varrho_{SR}^{A,a}
+=\sum_{i,j}\varrho_{ij}e^{i[\Theta_i(A)-\Theta_j(A)]}
+\langle e_j^D,B_a e_i^D\rangle
+E_{ij}\otimes|e_i^R\rangle\langle e_j^R|.
+$$
+结果概率以及正概率结果的条件指针布居分别为
+$$
+p(a)=\sum_i p_i\langle e_i^D,B_ae_i^D\rangle,\qquad
+p(i\mid a)=\frac{p_i\langle e_i^D,B_ae_i^D\rangle}{p(a)}\quad(p(a)>0).
+$$
+忘记结果给出$\sum_a\widetilde\varrho_{SR}^{A,a}=\varrho_{SR}^{A}$。当$p(a)=0$时不定义归一化条件态。
+
+证明。 将结果$a$的环境操作写成Kraus族$(L_{a\nu})_\nu$，满足$\sum_\nu L_{a\nu}^\dagger L_{a\nu}=B_a$。即使测量仪器使用额外输出空间，只要该输出随$D$一起丢弃，循环迹公式仍给
+$$
+\sum_\nu\operatorname{tr}\left(L_{a\nu}|e_i^D\rangle\langle e_j^D|L_{a\nu}^\dagger\right)
+=\langle e_j^D,B_ae_i^D\rangle.
+$$
+将此式代入取迹前的全局矩阵元展开，即得未归一化态。再取系统与$R$的迹，系统标签正交消去$i\ne j$项，得到$p(a)$；$p(a)>0$时除以它即得条件布居。最后使用$\sum_aB_a=I$，逐项恢复定理8.2的$\Gamma_D$。证毕。
+
+因此无条件布居保持与条件化后的布居改变并不矛盾。取部分迹本身不指定某个结果，也不要求已经实施一次测量；条件化是另一操作，本命题没有将其结果送入后续动力学作反馈。
+

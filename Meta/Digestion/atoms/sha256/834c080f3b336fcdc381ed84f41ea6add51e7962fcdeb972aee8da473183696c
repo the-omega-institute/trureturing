@@ -1,0 +1,67 @@
+**定理 8.5（一般混态的精确相干距离与有限时间预算）。** 令$\Delta(X)=\sum_iP_iXP_i$，$p_i=\varrho_{ii}$。在定理8.2的划分下，取比较态
+$$
+\omega_{SR}^{A}=\sum_i p_iP_i\otimes|e_i^R\rangle\langle e_i^R|.
+$$
+它具有相同的指针布居和每个单独制备标签的保留记录。记迹距离为$\mathsf d(\sigma,\tau)=\frac12\|\sigma-\tau\|_1$，并定义
+$$
+L_D=\Gamma_D\odot(\varrho-\Delta(\varrho)),\qquad
+Q_D=\sum_{i\ne j}|\varrho_{ij}|^2\prod_{t\in D}|G_t(i,j)|^2.
+$$
+则有精确公式及上下界
+$$
+\mathsf d(\varrho_{SR}^{A},\omega_{SR}^{A})=\frac12\|L_D\|_1,
+$$
+$$
+\frac12\sqrt{Q_D}
+\le\mathsf d(\varrho_{SR}^{A},\omega_{SR}^{A})
+\le\min\left\{\frac{\sqrt n}{2}\sqrt{Q_D},\,
+\frac12\sum_{i\ne j}|\varrho_{ij}|\prod_{t\in D}|G_t(i,j)|\right\}.
+$$
+新增环境对这个距离的作用取决于访问划分：追加并保留新记录不改变原$D$对应的距离；追加并丢弃新记录使此距离不增。完整丢弃后的各矩阵元满足
+$$
+|\Phi_A(\varrho)_{ij}|=|\varrho_{ij}|\prod_{t\in A}|G_t(i,j)|.
+$$
+因此在新鲜、固定标签且无反馈的有限序列内，各异标签相干的模不增；其复值仍可因相位旋转而改变。
+
+若$D$含$k$个时刻，且有给定$q\in(0,1)$使这些时刻的每个异标签对均满足$|G_t(i,j)|\le q$，令
+$$
+\mathcal C_1(\varrho)=\sum_{i\ne j}|\varrho_{ij}|,
+$$
+则
+$$
+\mathsf d(\varrho_{SR}^{A},\omega_{SR}^{A})
+\le\frac12\mathcal C_1(\varrho)q^k.
+$$
+对指定容许误差$\delta>0$，若$\mathcal C_1(\varrho)>2\delta$，一个充分的丢弃时间样本数为
+$$
+k\ge\left\lceil\frac{\log(\mathcal C_1(\varrho)/(2\delta))}{\log(1/q)}\right\rceil;
+$$
+若$\mathcal C_1(\varrho)\le2\delta$，$k=0$已经满足这个上界。样本数必须不超过可用有限时间数，且所选各步必须实际满足该重叠界；不存在所需步骤时此充分判据不作保证。$q=0$时一个满足全体异标签零重叠的丢弃步骤足以使距离为零；$q=1$只给不增性，不能据它推出衰减。上述预算针对给定初态、误差、标签基与记录质量，不是普适经典性阈值。
+
+证明。 设$Z_A=\sum_ie^{i\Theta_i(A)}P_i$。由定理8.2及$\Gamma_D(i,i)=1$，
+$$
+\varrho_{SR}^{A}-\omega_{SR}^{A}=J_R Z_A L_D Z_A^\dagger J_R^\dagger.
+$$
+酉共轭保持奇异值；等距嵌入$J_R$只在正交补上补零，也保持全部非零奇异值。因此得到精确迹范数式。注意记录$e_i^R$之间可以相同或线性相关；使$J_R$等距的是系统标签的正交性，不是记录的独立性。
+
+$L_D$为Hermitian矩阵，且$\|L_D\|_2^2=Q_D$，其中$\|\cdot\|_2$为Hilbert–Schmidt范数。对其至多$n$个奇异值应用平方和与和之间的不等式，得到
+$$
+\|L_D\|_2\le\|L_D\|_1\le\sqrt n\|L_D\|_2.
+$$
+又因$\|E_{ij}\|_1=1$，逐项三角不等式给出另一上界。
+
+若新增丢弃集合$B$与$D$不交，则$L_{D\cup B}=M_{\Gamma_B}(L_D)$。定理8.3说明此映射正且保持迹。对任意Hermitian矩阵$L=L_+-L_-$的正负谱分解，
+$$
+\|M_{\Gamma_B}(L)\|_1
+\le\operatorname{tr}M_{\Gamma_B}(L_+)+\operatorname{tr}M_{\Gamma_B}(L_-)
+=\operatorname{tr}L_++\operatorname{tr}L_-=\|L\|_1.
+$$
+这证明距离不增。若只增加保留步骤，$D$及$L_D$均不变，精确式给距离相同。逐矩阵元公式由$C_A$的模直接得到。将统一重叠界代入逐项上界得$q^k$，在$q\in(0,1)$时对正数取对数并除以正数$\log(1/q)$即得整数预算；零相干输入与两个$q$端点按原乘积处理，无须对零取对数。证毕。
+
+对仅有$x,y$两个标签的系统，上述距离还有更强的精确形式：$L_D$是对角为零、非对角为$\varrho_{xy}\Gamma_D(x,y)$及其共轭的二阶矩阵，其特征值为$\pm|\varrho_{xy}\Gamma_D(x,y)|$，故
+$$
+\mathsf d(\varrho_{SR}^{A},\omega_{SR}^{A})
+=|\varrho_{xy}|\prod_{t\in D}|G_t(x,y)|.
+$$
+若$\varrho_{xy}=0$，任意$D$的距离都为零；若其非零，有限时刻精确消相干当且仅当$D$中至少一个重叠为零。逐步重叠严格小于一但非零只给有限乘积缩小，不给有限步精确归零。
+
