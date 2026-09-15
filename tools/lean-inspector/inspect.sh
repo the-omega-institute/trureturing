@@ -173,8 +173,20 @@ run_phase() {
   fi
 }
 
-# The cache writer converges the pinned mathlib cache before starting either Lake phase.
-run_phase build "$CACHE_RUN" "$LAKE" build
+# The cache writer converges the pinned mathlib cache immediately before the
+# Inspector phase that needs it.  Delta planning intentionally runs first so a
+# complete cache reuse can return without starting Lake at all.
+lake_build_done=0
+ensure_lake_build() {
+  if [[ "$lake_build_done" == "0" ]]; then
+    local -a lake_build_args=(build)
+    if [[ "${#build_targets[@]}" -gt 0 && "${#build_targets[@]}" -lt "${module_count}" ]]; then
+      lake_build_args+=("${build_targets[@]}")
+    fi
+    run_phase build "$CACHE_RUN" "$LAKE" "${lake_build_args[@]}" || return $?
+    lake_build_done=1
+  fi
+}
 
 MODULE_TABLE="$(mktemp "${TMPDIR:-/tmp}/stratalint-modules.XXXXXXXX")"
 "$INPUT_HELPER" modules --repository "$REPOSITORY" > "$MODULE_TABLE"
@@ -200,26 +212,31 @@ invoke_inspector() {
   rm -rf -- "$SPOOL_REPORT" "$MATERIAL_SPOOL" "${output}.materials" "${output}.materials.zip"
   mkdir -p "$MATERIAL_SPOOL"
   inspector_arguments=()
+  build_targets=()
+  module_count=0
   while IFS=$'\t' read -r module path; do
+    ((module_count+=1))
     if [[ -n "$selection_file" ]] \
       && ! grep -Fqx -- "$module" "$selection_file"; then
       continue
     fi
-    append_module "$module" "$path"
+    append_module "$module" "$path" || return $?
+    build_targets+=("+$module")
   done < "$MODULE_TABLE"
   [[ "${#inspector_arguments[@]}" -gt 0 ]] || return 2
   run_phase utility-input-build dotnet build \
-    "$INSPECTOR_DIR/../StrataLint.Cli/StrataLint.Cli.csproj" --configuration Release --nologo --verbosity quiet
+    "$INSPECTOR_DIR/../StrataLint.Cli/StrataLint.Cli.csproj" --configuration Release --nologo --verbosity quiet || return $?
   run_phase utility-input dotnet run \
     --project "$INSPECTOR_DIR/../StrataLint.Cli/StrataLint.Cli.csproj" \
-    --configuration Release --no-build --no-restore --no-launch-profile -- lean-utility-input
+    --configuration Release --no-build --no-restore --no-launch-profile -- lean-utility-input || return $?
+  ensure_lake_build || return $?
   run_phase inspect \
     "$CACHE_RUN" "$LAKE" env lean --root="$INSPECTOR_DIR" --run "$INSPECTOR" \
     --output "$SPOOL_REPORT" --material-spool "$MATERIAL_SPOOL" \
     --utility-input "$LOG_DIR/utility-input.stdout.log" \
-    "${inspector_arguments[@]}"
+    "${inspector_arguments[@]}" || return $?
   run_phase compact python3 "$compactor" compact \
-    "$SPOOL_REPORT" "$MATERIAL_SPOOL" "$output"
+    "$SPOOL_REPORT" "$MATERIAL_SPOOL" "$output" || return $?
   rm -rf -- "$SPOOL_REPORT" "$MATERIAL_SPOOL"
   SPOOL_REPORT=""
   MATERIAL_SPOOL=""
@@ -261,8 +278,13 @@ if [[ "$delta_available" == "1" ]] \
      && "$current_producer_sha256" =~ ^[0-9a-f]{64}$ \
      && "$current_resident_sha256" =~ ^[0-9a-f]{64}$ \
      && "$current_config_sha256" =~ ^[0-9a-f]{64}$ ]]; then
+  # Planned baseline paths must survive run_phase changing to REPOSITORY.
+  delta_cache_root="$STRATALINT_REPORT_CACHE_ROOT"
+  if [[ "$delta_cache_root" != /* ]]; then
+    delta_cache_root="$(pwd -P)/$delta_cache_root"
+  fi
   python3 "$DELTA_SCRIPT" plan \
-    "$REPOSITORY" "$STRATALINT_REPORT_CACHE_ROOT" "$current_input_address" \
+    "$REPOSITORY" "$delta_cache_root" "$current_input_address" \
     "$current_producer_sha256" "$current_resident_sha256" "$current_config_sha256" \
     "$MODULE_TABLE" "$DELTA_PLAN" || true
   if [[ -s "$DELTA_PLAN" ]]; then
@@ -316,6 +338,9 @@ pathlib.Path(sys.argv[2]).write_text("".join(name + "\n" for name in plan["reche
 PY
   if ! invoke_inspector "$DELTA_SUBSET_OUTPUT" "$selection_file"; then
     delta_status="full-fallback"
+    # A targeted build may have completed before inspection failed.  Permit
+    # the fallback invocation to widen that build to the complete module set.
+    lake_build_done=0
   fi
   rm -f -- "$selection_file"
 elif [[ "$delta_status" != "reuse" && "$delta_status" != "delta" ]]; then
@@ -324,9 +349,9 @@ fi
 
 if [[ "$delta_status" == "delta" || "$delta_status" == "reuse" ]]; then
   if [[ "$delta_status" == "reuse" ]]; then
-    cp "$delta_baseline" "$OUTPUT"
-    cp "${delta_baseline}.materials.zip" "${OUTPUT}.materials.zip"
-  elif ! python3 "$DELTA_SCRIPT" merge \
+    run_phase reuse-report cp "$delta_baseline" "$OUTPUT"
+    run_phase reuse-materials cp "${delta_baseline}.materials.zip" "${OUTPUT}.materials.zip"
+  elif ! run_phase delta-merge python3 "$DELTA_SCRIPT" merge \
       "$DELTA_PLAN" "$DELTA_SUBSET_OUTPUT" "$OUTPUT"; then
     delta_status="full-fallback"
   fi
@@ -334,6 +359,7 @@ fi
 
 if [[ "$delta_status" == "full-fallback" ]]; then
   rm -rf -- "$DELTA_SUBSET_OUTPUT" "${DELTA_SUBSET_OUTPUT}.materials.zip"
+  lake_build_done=0
   invoke_inspector "$OUTPUT"
 fi
 

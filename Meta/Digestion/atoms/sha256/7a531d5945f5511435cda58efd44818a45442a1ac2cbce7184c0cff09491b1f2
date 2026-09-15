@@ -1,0 +1,51 @@
+### 104.1 完整历史矩阵按边界因子化
+
+取一个有限占据多重集 $$a$$，把总长度写成
+
+$$
+|a|=t+s.
+$$
+
+令 $$u$$ 是长度 $$t$$ 的前缀，$$v$$ 是长度 $$s$$ 的后缀。源码定义完整合法词的系数矩阵
+
+$$
+C_a^{t,s}(u,v)
+=
+\\begin{cases}
+\\operatorname{multiplicity}(|a|,a)^{-1/2},
+&\\operatorname{occupation}(u\\mathbin{+!!+}v)=a,\\\\
+0,&\\text{否则}.
+\\end{cases}
+$$
+
+`coefficient_factorization` 证明它可以经过边界集合分解：
+
+$$
+C_a^{t,s}=P_{a,t}Q_{a,t,s},
+$$
+
+其中中间指标 $$b\\in\\operatorname{Boundary}(a,t)$$ 记录前缀占据，后缀占据被确定为 $$a-b$$。这说明切口记忆不是任意压缩标签，而是前缀与后缀仍然能够匹配的边界扇区。
+
+选取每个边界的代表词后，`coefficient_diagonal_restriction` 给出一个对角子矩阵：
+
+$$
+C_a^{t,s}(u_b,v_c)
+=
+\\begin{cases}
+\\operatorname{multiplicity}(|a|,a)^{-1/2},&b=c,\\\\
+0,&b\\ne c.
+\\end{cases}
+$$
+
+所以 `coefficient_rank` 得到精确等式
+
+$$
+\\boxed{
+\\operatorname{rank}(C_a^{t,s})
+=
+|\\operatorname{Boundary}(a,t)|.
+}
+$$
+
+第 98 节的 bond 下界因此可以被理解为 Schmidt 秩下界：任何精确实现同一纯历史振幅的切口，都必须至少携带这么多彼此独立的边界方向。
+

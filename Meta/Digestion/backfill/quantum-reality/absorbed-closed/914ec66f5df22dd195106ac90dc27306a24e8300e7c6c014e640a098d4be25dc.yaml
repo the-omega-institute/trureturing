@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:914ec66f5df22dd195106ac90dc27306a24e8300e7c6c014e640a098d4be25dc
+  normalized_sha256: sha256:914ec66f5df22dd195106ac90dc27306a24e8300e7c6c014e640a098d4be25dc
+cas_ref: sha256:914ec66f5df22dd195106ac90dc27306a24e8300e7c6c014e640a098d4be25dc
+coverage_gids:
+  - gid: D5/S3/Observer/BlockStructure/HiddenFieldResponse.c_eff_sq_bounds
+    target_statement_id: sha256:c60764a3cf775d7407b76adc077d2f5b4d279788ce0ec7964b34419f12a529d6
+receipts:
+  unresolved_subitems: []

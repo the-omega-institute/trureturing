@@ -1,0 +1,42 @@
+### 121.3 量子记录接口
+
+经典核的退化对应量子记录态族之间的 CPTP 模拟。设每个历史 $h$ 在接口 $E$、$F$ 下分别产生密度算子 $\rho_h^E$、$\rho_h^F$。定义
+
+$$
+E\succeq_QF
+\quad\Longleftrightarrow\quad
+\exists\Lambda\ \text{CPTP},
+\quad
+\rho_h^F=\Lambda(\rho_h^E)\quad(\forall h).
+$$
+
+量子接口的过程缺陷为
+
+$$
+\delta_Q(F\mid E)
+=
+\inf_{\Lambda\ \mathrm{CPTP}}
+\max_{h\in H}
+\frac12\left\|\rho_h^F-\Lambda(\rho_h^E)\right\|_1.
+$$
+
+CPTP 映射保持迹距离收缩，因此 $E\succeq_QF$ 时，对任意 POVM 决策和有界损失都有 $R_E\le R_F$；近似情形下，被模拟方向满足 $R_E\le R_F+L\,\delta_Q(F\mid E)$。近似缺陷还满足复合律
+
+$$
+\boxed{
+\delta_Q(G\mid E)
+\le
+\delta_Q(F\mid E)+\delta_Q(G\mid F).
+}
+$$
+
+证明与经典情形相同：对近似模拟器 $\Lambda_1:E\to F$、$\Lambda_2:F\to G$ 复合，并使用
+
+$$
+\frac12\left\|\Lambda_2(\sigma)-\Lambda_2(\tau)\right\|_1
+\le
+\frac12\left\|\sigma-\tau\right\|_1.
+$$
+
+这里的量子预序只比较一组状态族和一次 CPTP 读出。若后续实验可以访问多槽活动记忆、插入自适应控制或保留参考，应回到第 120 节的过程缺陷；单次状态族的 $\delta_Q$ 不自动支配 comb 或 strategy 的风险。
+

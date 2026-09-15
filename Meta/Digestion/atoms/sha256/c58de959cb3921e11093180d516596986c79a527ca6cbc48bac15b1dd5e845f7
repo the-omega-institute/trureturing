@@ -1,0 +1,6 @@
+Producer: stationary-minimality-oracle-result.json, via NyxID task
+2260c8d2-e53d-40b0-8fe6-1401a8bda816. Independent review and exact checks:
+stationary-minimum56-audit-result.json. The reviewer used exact integer and
+Gaussian-integer probes, including all65536 words and3136 isometry entries.
+The universal lower bound rests on the ordinary proof, not those finite probes.
+

@@ -238,6 +238,11 @@
     "quantum_word_cases": 1023,
     "regional_missing_stability_cases": 3,
     "regression_trajectories": 48,
+    "relu_certified_steps": 593,
+    "relu_certified_words": 256,
+    "relu_conservative_rejections": 2,
+    "relu_psd_sign_image_obstructions": 1,
+    "relu_same_summary_migration_pairs": 1,
     "state_error_without_readout_regularity_cases": 3,
     "stochastic_discounted_pairs": 27,
     "stochastic_iid_horizons": 36,
@@ -245,10 +250,408 @@
     "two_layer_trajectories": 90,
     "worked_regression_trajectory": 1
   },
+  "relu_certificates": {
+    "certificate_state": "One declared mu, one global D, explicit clock; all sums seeded with Fraction(0).",
+    "collision": {
+      "cases": [
+        {
+          "initial_rows": [
+            [
+              "2",
+              "0"
+            ],
+            [
+              "1",
+              "1"
+            ],
+            [
+              "1",
+              "3"
+            ]
+          ],
+          "next_loss": "32",
+          "next_masks": [
+            [
+              1
+            ],
+            [
+              0
+            ],
+            [
+              0
+            ]
+          ],
+          "next_prediction": "-8",
+          "next_rows": [
+            [
+              "2",
+              "-4"
+            ],
+            [
+              "-1",
+              "-1"
+            ],
+            [
+              "-5",
+              "1"
+            ]
+          ]
+        },
+        {
+          "initial_rows": [
+            [
+              "2/5",
+              "-4/5"
+            ],
+            [
+              "11/5",
+              "3/5"
+            ],
+            [
+              "1",
+              "3"
+            ]
+          ],
+          "next_loss": "49/2",
+          "next_masks": [
+            [
+              1
+            ],
+            [
+              1
+            ],
+            [
+              0
+            ]
+          ],
+          "next_prediction": "-7",
+          "next_rows": [
+            [
+              "2",
+              "-8/5"
+            ],
+            [
+              "1",
+              "-19/5"
+            ],
+            [
+              "-5",
+              "1"
+            ]
+          ]
+        }
+      ],
+      "common_exact_minimum": "1/4",
+      "common_initial_A_W_B": [
+        "6",
+        "4",
+        "10"
+      ],
+      "common_unmasked_next_A_W_B": [
+        "30",
+        "-12",
+        "18"
+      ],
+      "drift_after_one_step": "2"
+    },
+    "family": [
+      {
+        "all_batch_words": 9,
+        "eta": "1/8",
+        "group_widths": [
+          1,
+          1
+        ],
+        "horizon": 2,
+        "initial_squared_masses": [
+          "1",
+          "1"
+        ],
+        "max_global_drift": "17/64",
+        "nonzero_gradient_steps": 18,
+        "uniform_bound": "17/64"
+      },
+      {
+        "all_batch_words": 9,
+        "eta": "1/8",
+        "group_widths": [
+          1,
+          2
+        ],
+        "horizon": 2,
+        "initial_squared_masses": [
+          "1",
+          "1/2"
+        ],
+        "max_global_drift": "953/4096",
+        "nonzero_gradient_steps": 18,
+        "uniform_bound": "17/64"
+      },
+      {
+        "all_batch_words": 9,
+        "eta": "1/8",
+        "group_widths": [
+          2,
+          3
+        ],
+        "horizon": 2,
+        "initial_squared_masses": [
+          "1/2",
+          "1/3"
+        ],
+        "max_global_drift": "7921/65536",
+        "nonzero_gradient_steps": 18,
+        "uniform_bound": "17/64"
+      },
+      {
+        "all_batch_words": 27,
+        "eta": "1/12",
+        "group_widths": [
+          1,
+          1
+        ],
+        "horizon": 3,
+        "initial_squared_masses": [
+          "1",
+          "1"
+        ],
+        "max_global_drift": "63649/248832",
+        "nonzero_gradient_steps": 81,
+        "uniform_bound": "469/1728"
+      },
+      {
+        "all_batch_words": 27,
+        "eta": "1/12",
+        "group_widths": [
+          1,
+          2
+        ],
+        "horizon": 3,
+        "initial_squared_masses": [
+          "1",
+          "1/2"
+        ],
+        "max_global_drift": "24543428462125/106993205379072",
+        "nonzero_gradient_steps": 81,
+        "uniform_bound": "469/1728"
+      },
+      {
+        "all_batch_words": 27,
+        "eta": "1/12",
+        "group_widths": [
+          2,
+          3
+        ],
+        "horizon": 3,
+        "initial_squared_masses": [
+          "1/2",
+          "1/3"
+        ],
+        "max_global_drift": "105009992248704601/876488338465357824",
+        "nonzero_gradient_steps": 81,
+        "uniform_bound": "469/1728"
+      }
+    ],
+    "mixed_vector_cases": [
+      {
+        "all_batch_words": 49,
+        "d": 2,
+        "eta": "1/10000",
+        "horizon": 2,
+        "initial_minimum": "15/53",
+        "k": 2,
+        "max_global_drift": "3038927555929059634177/7683200000000000000000000",
+        "mu": "1/10",
+        "n": 3,
+        "patterns": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            1
+          ],
+          [
+            1,
+            0,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ],
+        "width": 4
+      },
+      {
+        "all_batch_words": 49,
+        "d": 2,
+        "eta": "1/10000",
+        "horizon": 2,
+        "initial_minimum": "45/169",
+        "k": 3,
+        "max_global_drift": "24549164645092607161/31395410156250000000000",
+        "mu": "1/10",
+        "n": 3,
+        "patterns": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            1
+          ],
+          [
+            1,
+            0,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ],
+        "width": 4
+      },
+      {
+        "all_batch_words": 49,
+        "d": 3,
+        "eta": "1/10000",
+        "horizon": 2,
+        "initial_minimum": "680/3441",
+        "k": 2,
+        "max_global_drift": "8610249625412238090504744019/19760514278400000000000000000000",
+        "mu": "1/10",
+        "n": 3,
+        "patterns": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            1
+          ],
+          [
+            1,
+            0,
+            1
+          ],
+          [
+            1,
+            1,
+            1
+          ]
+        ],
+        "width": 4
+      }
+    ],
+    "psd_sign_obstruction": {
+      "Q": [
+        [
+          "1",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "1",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "0"
+        ]
+      ],
+      "pattern": [
+        1,
+        1
+      ],
+      "rank": 2,
+      "separation": "strict ++ implies A12>0, but Q has A12=0; rational factors exist",
+      "width": 2
+    },
+    "queries": "All current training predictions and all batch losses at 0..H; next predictions only at t<H.",
+    "rejections_without_crossing": [
+      {
+        "accepted": false,
+        "actual_gate_crossing": false,
+        "drift": "1",
+        "horizon": 2,
+        "kind": "equality",
+        "mu": "1"
+      },
+      {
+        "accepted": false,
+        "actual_gate_crossing": false,
+        "drift": "213/256",
+        "horizon": 2,
+        "kind": "strictly_above",
+        "mu": "1/2"
+      }
+    ],
+    "scope": "Exact finite checks of §§27.4–27.10; no universal proof or bit-time claim.",
+    "worked_family_trajectory": {
+      "eta": "1/8",
+      "full_batch_losses_t0_to_t2": [
+        "17/64",
+        "223112961/1073741824",
+        "851142878624054573636891450625/5070602400912917605986812821504"
+      ],
+      "global_drift_t2": "7921/65536",
+      "initial_rows": [
+        [
+          "1",
+          "1"
+        ],
+        [
+          "-1/2",
+          "-1/2"
+        ]
+      ],
+      "mu": "1/2",
+      "predictions_t0_to_t2": [
+        [
+          "1",
+          "-1/4"
+        ],
+        [
+          "225/256",
+          "-3969/16384"
+        ],
+        [
+          "3371544225/4294967296",
+          "-264551038250625/1125899906842624"
+        ]
+      ],
+      "sample_indexing": "zero-based: x[0]=1, x[1]=-1; both labels zero",
+      "word": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ]
+    }
+  },
   "result": "all finite assertions passed",
   "schema": "contextual-spacetime-ml-finite-checks-v1",
   "source": "docs/reports/contextual-spacetime-ml/finite_checks.py",
-  "source_sha256": "3df005fe87c405794e2a3295686c4c31bde45de5c471f51a986c2e224fe4ff00",
+  "source_sha256": "b19fafb310ed8fbd286e5404e787591fd24ad130b9cc606b682c1204a5afdcb2",
   "stochastic_records": {
     "bernoulli_discounted_distance": "rho*abs(p-pprime); first random output at depth 1",
     "iid_state_contraction": "0",

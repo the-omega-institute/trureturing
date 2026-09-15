@@ -1,0 +1,74 @@
+### 120.4 即时统计相同仍可能有后续风险
+
+Zeckendorf 合法构型空间可取为
+
+$$
+\mathcal W_L
+=
+\{w\in\{0,1\}^L:w_jw_{j+1}=0\}.
+$$
+
+令 $$P_w=|w\rangle\langle w|$$，并按某个粗读出 $$q:\mathcal W_L\to Q$$ 定义两种过程。第一种是粗 Lüders 过程
+
+$$
+L_q(\rho)
+=
+\sum_{r\in Q}Q_r\rho Q_r,
+\qquad
+Q_r=\sum_{q(w)=r}P_w;
+$$
+
+第二种是先精确记录构型再忘记标签
+
+$$
+M_q(\rho)
+=
+\sum_{r\in Q}\sum_{q(w)=r}P_w\rho P_w.
+$$
+
+二者在当前粗标签的经典概率上相同，但保留的后态不同。取三位合法构型中的 $$000$$ 与 $$010$$，并令
+
+$$
+|\psi_\pm\rangle
+=
+\frac{|000\rangle\pm|010\rangle}{\sqrt2}.
+$$
+
+若粗读出把这两个构型归入同一类，则
+
+$$
+M_q(|\psi_+\rangle\langle\psi_+|)
+=
+M_q(|\psi_-\rangle\langle\psi_-|)
+=\tau,
+$$
+
+而 $$L_q$$ 保留两个相反相位的纯态。两者满足
+
+$$
+D\!\left(L_q(\psi_+),L_q(\psi_-)\right)=1,
+\qquad
+D\!\left(M_q(\psi_+),M_q(\psi_-)\right)=0.
+$$
+
+因此对任意不依赖参数的模拟器 $$S$$，若它同时把 $$M_q(\psi_\pm)$$ 近似为 $$L_q(\psi_\pm)$$，三角不等式给出
+
+$$
+1
+\le
+D(L_q(\psi_+),S\tau)
++
+D(S\tau,L_q(\psi_-))
+\le2\varepsilon,
+$$
+
+从而
+
+$$
+\boxed{
+\delta_\diamond(L_q\mid M_q)\ge\frac12.
+}
+$$
+
+这说明“即时经典统计完全相同”并不意味着过程缺陷为零。被遗忘的相位在后续联合操作中仍可转回可见读数；风险界必须针对完整过程，而不是单步标签分布。这里的例子把第 96 节和第 119 节的边界现象放进同一个过程缺陷框架。
+

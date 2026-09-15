@@ -1,0 +1,8 @@
+**证明。** 取 $V$ 的正交基 $e_1,\ldots,e_r$。投影展开给
+$$
+c_S=\sum_{i=1}^r|\langle \chi_S,e_i\rangle|^2.
+$$
+对 $S$ 求和并交换有限和；Bessel 不等式对每个 $e_i$ 给出 $\sum_S|\langle\chi_S,e_i\rangle|^2\le1$，故总和不超过 $r$。当目标族完整覆盖 $V$ 且投影无损时每个基向量均取等号。证毕。
+
+Dambre 等（2012，定理4、7）把相同投影结构用于动力系统的信息处理容量；其动力系统等号还需要衰退记忆、读出相关矩阵满秩、矩条件以及无限数据和初始化极限。上面的 Hilbert 空间不等式本身不需要这些统计极限，也不把总容量解释成隐藏状态基数、神经元数或通用智能分数。未中心化容量使用 $\operatorname{rank}\mathbb E[xx^{\mathsf T}]$；文献补充材料另定义的中心化版本使用 $\operatorname{rank}\operatorname{Cov}(x)$，两者不可混写。
+

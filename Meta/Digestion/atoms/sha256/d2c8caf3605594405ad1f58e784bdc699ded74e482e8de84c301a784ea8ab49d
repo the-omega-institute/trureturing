@@ -1,0 +1,16 @@
+**定理 386.2。** 全部窗口映射的外部共轭具有准确的域和求值：
+$$
+P_L^*:K^*\to\mathsf X_L^*,\quad P_L^*(\operatorname{Enc}(x))=\operatorname{Enc}(x|_L),
+$$
+$$
+\pi_{J,L}^*:\mathsf X_J^*\to\mathsf X_L^*,\quad
+\pi_{J,L}^*(\operatorname{Enc}(p))=\operatorname{Enc}(p|_L)\quad(J\ge L\ge1),
+$$
+$$
+V_L^*:\mathsf X_L^*\to\{\operatorname{NatZ}(s):s<G_L\},\quad
+V_L^*(\operatorname{Enc}(p))=\operatorname{NatZ}(V_L(p)),
+$$
+$$
+T^*:K^*\to K^*,\quad T^*(\operatorname{Enc}(x))=\operatorname{Enc}(Tx),\qquad
+z^*:\omega^*\to K^*,\quad z^*(\operatorname{NatZ}(n))=\operatorname{Enc}(z(n)).
+$$

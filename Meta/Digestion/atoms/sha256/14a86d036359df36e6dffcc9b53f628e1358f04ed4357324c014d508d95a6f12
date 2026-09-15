@@ -1,0 +1,44 @@
+### 89.5 Zeckendorf 只提供合法索引，不决定关联与熵
+
+若把长度为 $L$ 的禁止相邻 `11` 合法串作为构型标签，并令
+
+$$
+d=F_{L+2},
+$$
+
+则可以把这些标签映射到一个 $d$ 维正交载体，再在其上定义 $\rho$、$U$、基底去相位和记录寄存器。此时第 88 节的容量守恒给出
+
+$$
+C(\mathcal E)+R(\mathcal E)=d^2-1=(F_{L+2})^2-1.
+$$
+
+但本节的互信息、相对熵和熵产生公式还需要额外指定：
+
+$$
+\text{构型到 Hilbert 基底的映射},
+\quad
+\text{记录耦合},
+\quad
+\text{幺正动力学},
+\quad
+\text{去相位基底}.
+$$
+
+Zeckendorf 权重本身不决定 $U$，也不决定记录 Gram 矩阵、互信息或相对熵。它只说明哪些有限构型作为离散载体是合法的，以及如何给这些构型提供规范编号。若更换局部约束，合法载体维数和适合的索引递推也会改变；若保留同一标签而更换记录耦合，关联谱和熵变化同样会改变。
+
+因此，对“保留多少历史才能得到稳定经典现实”的当前回答应写成：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{整体层：保留联合态中的记录关联；}\\
+&\text{局部层：只保留给定任务可访问的边缘记录；}\\
+&\text{动力学层：结算每一步相对熵和未来回流；}\\
+&\text{编码层：用 Zeckendorf 组织合法构型，但不把编码当作动力学。}
+\end{aligned}}
+$$
+
+“历史消失”于是被拆成三个可检验问题：边缘是否已经去相位、联合关联是否仍可访问、以及允许的后续操作是否能把关联重新转回目标读数。只有在指定实验族、访问范围和误差容限下，这三个问题都给出稳定答案时，才可以把该层记录称为有效的经典现实。
+
+本节复用 `coherentCopyState_correlated_entry`、`marginalRight_coherentCopyState`、`marginalLeft_coherentCopyState`、`vonNeumannEntropy_coherentCopyState`、`coherent_copy_correlation_tax` 和 `entropy_production_coherence_deletion_identity`。关于“相对熵就是实际热力学熵产生”、任意 Zeckendorf 物理实现、无限环境中的恢复能力，以及对所有未来实验的经典闭合，仍需额外模型与证明；本节不把这些条件性组合推导冒充为仓库已有结论。
+

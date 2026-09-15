@@ -1,0 +1,45 @@
+**命题 70.1（逐步记录的有限视界误差）。** 令 $A=\mathcal E\Phi$、$B=\mathcal E\Phi\mathcal E$，两者均为量子通道，并假设每一步都在记录之后继续演化。若
+
+$$
+\sup_{\rho\in\mathsf D}D(A\rho,B\rho)\le\delta,
+$$
+
+则对任意初态 $\rho$ 和整数 $n\ge1$，
+
+$$
+D(A^n\rho,B^n\rho)\le n\delta.
+$$
+
+证明。通道的迹距离收缩性给出
+
+$$
+D(A\sigma,A\tau)\le D(\sigma,\tau),
+\qquad
+D(B\sigma,B\tau)\le D(\sigma,\tau).
+$$
+
+插入望远镜分解
+
+$$
+A^n-B^n
+=
+\sum_{k=0}^{n-1}A^{n-1-k}(A-B)B^k
+$$
+
+的逐步态版本。第 $k$ 项的距离贡献不超过 $\delta$，已有贡献不会被后续通道放大，故归纳得到
+
+$$
+e_{n+1}\le e_n+\delta,
+\qquad e_0=0.
+$$
+
+因此 $e_n\le n\delta$。证毕。
+
+当要求视界 $n$ 内的记录分布误差不超过 $\varepsilon$ 时，一个充分条件是
+
+$$
+\boxed{n\delta\le\varepsilon.}
+$$
+
+这个命题只适用于“每一步重新建立记录”的无记忆协议。若同一个记录单元被相干复用，旧关联会留在联合系统中，过程不再由固定的 $B$ 描述；第 55 节的相位回流模型已经给出相同单步作用可以周期性恢复相干的反例。此时必须把记录单元并入状态，或建立带记忆的多时误差界。
+

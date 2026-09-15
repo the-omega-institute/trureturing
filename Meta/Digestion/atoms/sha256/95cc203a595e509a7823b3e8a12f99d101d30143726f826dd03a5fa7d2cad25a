@@ -1,0 +1,30 @@
+### 68.4 第 63 节的裸矩阵定理与密度态见证分开
+
+`reduced_irreversibility_is_access_defect` 及其 canonical bridge 的输入是
+
+$$
+\rho,\sigma:\operatorname{QubitMatrix},
+$$
+
+源码假设只有对角元相等和某个非对角元不同；没有在该定理的参数中要求 Hermitian、正半定或迹为 $1$。因此第 63.1 节把任意参数直接称为“两个密度态”的说法应撤回，改为“两个 qubit 矩阵的线性见证”。
+
+文件末尾的具体例子取 $\rho=|+\rangle\langle+|$、$\sigma=|-\rangle\langle-|$。从这两个归一化向量的外积可直接检验正性和迹为一；该 Lean `example` 的结论本身只记录对角相等及非对角不同。因此可以在上述合法性检验后保留如下物理实例：在这个例子中，偏迹相同、联合矩阵不同，并且联合逆耦合可恢复。一般的密度态版本需要显式加入
+
+$$
+\rho\succeq0,\quad \sigma\succeq0,
+\qquad
+\operatorname{Tr}\rho=\operatorname{Tr}\sigma=1,
+$$
+
+或直接引用该具体见证。
+
+同样，第 63.3 节的恢复误差下界不是任意记录通道的定理。`FiniteRecordRecoveryError.lean` 的 `finite_record_recovery_error_lower_bound` 固定了有限支撑振幅 $c:\mathbb Z\to\mathbb C$、归一化、整数标签 $q$、非零位移 $q(i)-q(j)$，并对由 `FiniteShiftedRecordChannel` 构造的具体通道 $\Lambda$ 以及任意恢复通道 $R$ 给出
+
+$$
+\sup_{\tau}D\bigl(R\Lambda(\tau),\tau\bigr)
+\ge
+\frac{1-|\gamma(q(i)-q(j))|}{2}.
+$$
+
+因此应保留“该有限移位记录模型中的恢复下界”，撤回任何对任意记录通道、任意环境或普适物理恢复的外推。
+

@@ -587,6 +587,341 @@ def stochastic_records():
             'iid_trace_tv_h0_to_h8': tight_bounds, 'iid_state_contraction': '0'}
 
 
+def exact_tree(value):
+    """No float, including an inactive group's empty gradient sum, is allowed."""
+    if isinstance(value, dict):
+        for child in value.values():
+            exact_tree(child)
+    elif isinstance(value, (tuple, list)):
+        for child in value:
+            exact_tree(child)
+    else:
+        assert isinstance(value, F), (type(value), value)
+
+
+def relu_raw(rows, xs, ys, batch):
+    """Rowwise ReLU values and both raw gradients; no Gram or fixed-mask input.
+
+    Rows concatenate input weights u and output weights v. Data and outputs
+    here are sample-major, whereas the volume writes data as columns.
+    The derivative convention at zero is zero, outside the strict certificate.
+    """
+    d, k = len(xs[0]), len(ys[0])
+    pre = [[dot(row[:d], x) for x in xs] for row in rows]
+    masks = [tuple(int(h > 0) for h in row) for row in pre]
+    predictions = [[sum((row[d+r] * max(F(0), pre[j][i])
+                         for j, row in enumerate(rows)), F(0))
+                    for r in range(k)] for i in range(len(xs))]
+    residual = [[f-y for f, y in zip(fi, yi)] for fi, yi in zip(predictions, ys)]
+    loss = sum((e*e for i in batch for e in residual[i]), F(0)) / (2*len(batch))
+    gradients = []
+    for j, row in enumerate(rows):
+        du = [sum((dot(row[d:], residual[i]) * xs[i][b]
+                   for i in batch if pre[j][i] > 0), F(0)) / len(batch)
+              for b in range(d)]
+        dv = [sum((residual[i][r] * max(F(0), pre[j][i])
+                   for i in batch), F(0)) / len(batch) for r in range(k)]
+        gradients.append(du+dv)
+    exact_tree((predictions, loss, gradients))
+    return predictions, masks, loss, gradients
+
+
+def relu_extract(rows, xs, mu):
+    """Verify the declared initial lower margin and return constrained factors' Grams."""
+    d = len(xs[0])
+    assert mu > 0 and all(any(x) for x in xs)
+    groups, margins = {}, []
+    for row in rows:
+        pre = [dot(row[:d], x) for x in xs]
+        assert all(pre), 'strict initial patterns required'
+        pattern = tuple(int(h > 0) for h in pre)
+        radius = sum((abs(z) for z in row), F(0))
+        for h, x in zip(pre, xs):
+            denominator = radius * max(abs(z) for z in x)
+            assert abs(h) >= mu * denominator
+            margins.append(abs(h)/denominator)
+        groups.setdefault(pattern, []).append(row)
+    return {s: gram(z) for s, z in groups.items()}, min(margins)
+
+
+def relu_reduced_readout(groups, xs, ys, batch):
+    d, k = len(xs[0]), len(ys[0])
+    predictions = [[sum((q[d+r][b]*x[b]
+                         for s, q in groups.items() if s[i]
+                         for b in range(d)), F(0))
+                    for r in range(k)] for i, x in enumerate(xs)]
+    loss = sum(((predictions[i][r]-ys[i][r])**2
+                for i in batch for r in range(k)), F(0)) / (2*len(batch))
+    exact_tree((predictions, loss))
+    return predictions, loss
+
+
+def relu_reduced_step(groups, xs, ys, batch, eta, drift):
+    """An unconditional polynomial surrogate, independent of all future raw rows."""
+    d, k = len(xs[0]), len(ys[0])
+    p = d+k
+    predictions, _ = relu_reduced_readout(groups, xs, ys, batch)
+    updated, gs, kappas = {}, {}, []
+    for s, q in groups.items():
+        g = [[sum(((predictions[i][r]-ys[i][r])*xs[i][b]
+                   for i in batch if s[i]), F(0)) / len(batch)
+              for b in range(d)] for r in range(k)]
+        gs[s] = g
+        kappas.append(max(max(sum((abs(z) for z in row), F(0)) for row in g),
+                          max(sum((abs(z) for z in col), F(0)) for col in transpose(g))))
+        matrix = [[F(int(r == b)) for b in range(p)] for r in range(p)]
+        for r in range(k):
+            for b in range(d):
+                matrix[b][d+r] = matrix[d+r][b] = -eta*g[r][b]
+        updated[s] = mm(mm(transpose(matrix), q), matrix)
+    rho = eta * max(kappas)
+    next_drift = (1+drift)*(1+rho)-1
+    exact_tree((updated, gs, rho, next_drift))
+    return updated, next_drift, gs
+
+
+def relu_batches(n):
+    return [tuple(i for i, bit in enumerate(bits) if bit)
+            for bits in product((0, 1), repeat=n) if any(bits)]
+
+
+def relu_certified_word(rows, xs, ys, word, eta, mu, nonstationary=False):
+    """Compare actual rows with a separately computed surrogate at every depth."""
+    groups, minimum = relu_extract(rows, xs, mu)
+    initial_rows = [row[:] for row in rows]
+    _, initial_masks, _, _ = relu_raw(rows, xs, ys, word[0])
+    batches = relu_batches(len(xs))
+    drift, gradient_steps = F(0), 0
+    prediction_trace = []
+    for t in range(len(word)+1):
+        for batch in batches:
+            raw_f, masks, raw_loss, gradients = relu_raw(rows, xs, ys, batch)
+            red_f, red_loss = relu_reduced_readout(groups, xs, ys, batch)
+            assert (raw_f, raw_loss) == (red_f, red_loss)
+            assert masks == initial_masks
+            if nonstationary:
+                assert any(g for row in gradients for g in row)
+        current_groups = {s: gram([row for row, mask in zip(rows, masks) if mask == s])
+                          for s in groups}
+        assert current_groups == groups
+        for old, current, pattern in zip(initial_rows, rows, initial_masks):
+            radius = sum((abs(z) for z in old), F(0))
+            for i, x in enumerate(xs):
+                bound = radius*max(abs(z) for z in x)*drift
+                assert abs(dot(current[:len(x)], x)-dot(old[:len(x)], x)) <= bound
+                assert (2*pattern[i]-1)*dot(current[:len(x)], x) > 0
+        prediction_trace.append(raw_f)
+        if t == len(word):
+            break  # Terminal prediction/loss, no unlicensed H+1 query.
+        _, _, _, gradients = relu_raw(rows, xs, ys, word[t])
+        # The two transitions share only the original input data and action.
+        new_rows = [[z-eta*g for z, g in zip(row, grad)]
+                    for row, grad in zip(rows, gradients)]
+        groups, next_drift, _ = relu_reduced_step(groups, xs, ys, word[t], eta, drift)
+        assert drift <= next_drift < mu
+        rows, drift = new_rows, next_drift
+        gradient_steps += int(any(g for row in gradients for g in row))
+    record('relu_certified_words')
+    record('relu_certified_steps', len(word))
+    return drift, minimum, prediction_trace, gradient_steps
+
+
+def relu_certificate_records():
+    """Deterministic additions after all legacy RNG consumers; §§27.4–27.10."""
+    rng_state = RNG.getstate()
+
+    def assert_rejected(name, *args):
+        try:
+            relu_certified_word(*args)
+        except AssertionError:
+            pass
+        else:
+            raise AssertionError(f'{name} must fail certificate checking')
+
+    batches = relu_batches(2)
+    assert len(batches) == 3 and set(batches) == {(0,), (1,), (0, 1)}, \
+        'two-sample nonempty batches'
+    family = []
+    for horizon, sizes in product((2, 3), ((1, 1), (1, 2), (2, 3))):
+        pos, neg = sizes
+        rows = [[F(1, pos), F(1, pos)] for _ in range(pos)]
+        rows += [[-F(1, neg), -F(1, neg)] for _ in range(neg)]
+        eta, max_drift, steps = F(1, 4*horizon), F(0), 0
+        words = list(product(batches, repeat=horizon))
+        assert len(words) == len(set(words)) == 3**horizon, 'family all-word cardinality'
+        for word in words:
+            drift, minimum, trace, count = relu_certified_word(
+                rows, [[F(1)], [F(-1)]], [[F(0)], [F(0)]], word, eta, F(1, 2), True)
+            assert minimum == F(1, 2)
+            max_drift = max(max_drift, drift)
+            steps += count
+            # Scalar mass recurrence is a third calculation specific to §27.7.
+            masses = [F(1, pos), F(1, neg)]
+            for batch in word:
+                for i in batch:
+                    masses[i] *= (1-eta*masses[i]/len(batch))**2
+            assert trace[-1] == [[masses[0]], [-masses[1]]]
+        envelope = (1+eta)**horizon-1
+        assert max_drift <= envelope < F(1, 3) < F(1, 2)
+        assert steps == horizon*3**horizon
+        family.append({'horizon': horizon, 'group_widths': list(sizes),
+                       'initial_squared_masses': [str(F(1, pos)), str(F(1, neg))],
+                       'eta': str(eta), 'all_batch_words': len(words),
+                       'nonzero_gradient_steps': steps,
+                       'max_global_drift': str(max_drift), 'uniform_bound': str(envelope)})
+        assert family[-1]['all_batch_words'] == 3**horizon, 'family reported word count'
+
+    worked_rows = [[F(1), F(1)], [F(-1, 2), F(-1, 2)]]
+    worked_drift, worked_minimum, worked_trace, count = relu_certified_word(
+        worked_rows, [[F(1)], [F(-1)]], [[F(0)], [F(0)]],
+        ((0, 1), (0, 1)), F(1, 8), F(1, 2), True)
+    assert worked_drift < worked_minimum == F(1, 2)
+    # The accepted trajectory above controls this same-input margin rejection.
+    assert_rejected('overstated initial mu', worked_rows,
+                    [[F(1)], [F(-1)]], [[F(0)], [F(0)]],
+                    ((0, 1), (0, 1)), F(1, 8), F(3, 4))
+    assert count == 2
+    assert worked_trace == [[[F(1)], [F(-1, 4)]],
+                            [[F(225, 256)], [F(-3969, 16384)]],
+                            [[F(3371544225, 4294967296)],
+                             [F(-264551038250625, 1125899906842624)]]]
+    worked = {'initial_rows': [[str(z) for z in row] for row in worked_rows],
+              'eta': '1/8', 'mu': '1/2', 'word': [[0, 1], [0, 1]],
+              'sample_indexing': 'zero-based: x[0]=1, x[1]=-1; both labels zero',
+              'predictions_t0_to_t2': [[str(fi[0]) for fi in state] for state in worked_trace],
+              'full_batch_losses_t0_to_t2':
+                  [str(sum((fi[0]**2 for fi in state), F(0))/4) for state in worked_trace],
+              'global_drift_t2': str(worked_drift)}
+
+    # Four mixed patterns, including a completely inactive group. Nonzero
+    # labels and unequal vector coordinates exercise rectangular gradients.
+    mixed = []
+    for d, k in ((2, 2), (2, 3), (3, 2)):
+        xs = [[F(1), F(0)], [F(0), F(1)], [F(1), F(1)]]
+        us = [[F(1), F(2)], [F(-2), F(-1)], [F(2), F(-1)], [F(-1), F(2)]]
+        vs = [[F(1, 3), F(-1, 5)], [F(-1, 4), F(1, 6)],
+              [F(1, 5), F(2, 7)], [F(-2, 5), F(1, 8)]]
+        if d == 3:
+            xs = [x+[F(1, 3)] for x in xs]
+            us = [u+[F(j+1, 7)] for j, u in enumerate(us)]
+        if k == 3:
+            vs = [v+[F(j-2, 9)] for j, v in enumerate(vs)]
+        rows = [u+v for u, v in zip(us, vs)]
+        ys = [[F((i+1)*(r+1)-2, 5) for r in range(k)] for i in range(3)]
+        actions, mu, eta = relu_batches(3), F(1, 10), F(1, 10000)
+        assert len(actions) == 7 and set(actions) == {
+            (0,), (1,), (2,), (0, 1), (0, 2), (1, 2), (0, 1, 2)}, \
+            'three-sample nonempty batches'
+        groups, minimum = relu_extract(rows, xs, mu)
+        assert len(groups) == 4 and (0, 0, 0) in groups
+        max_drift = F(0)
+        words = list(product(actions, repeat=2))
+        assert len(words) == len(set(words)) == 49, 'mixed all-word cardinality'
+        for word in words:
+            drift, _, _, _ = relu_certified_word(rows, xs, ys, word, eta, mu)
+            max_drift = max(max_drift, drift)
+        mixed.append({'d': d, 'k': k, 'n': 3, 'width': 4, 'horizon': 2,
+                      'patterns': [list(s) for s in sorted(groups)],
+                      'all_batch_words': len(words), 'eta': str(eta),
+                      'mu': str(mu), 'initial_minimum': str(minimum),
+                      'max_global_drift': str(max_drift)})
+        assert mixed[-1]['all_batch_words'] == 49, 'mixed reported word count'
+
+    # Independent rectangular norms: max(9, 6)=9 and max(2, 3)=3.
+    for name, rows, xs, ys, margin, expected_g, expected_drift in (
+            ('row_dominant', [[F(1), F(1), F(1)]], [[F(1), F(2)]], [[F(0)]],
+             F(1, 2), [[F(3), F(6)]], F(3, 5)),
+            ('column_dominant', [[F(1), F(1), F(2)]], [[F(1)]], [[F(0), F(0)]],
+             F(1, 4), [[F(1)], [F(2)]], F(1, 5))):
+        groups, _ = relu_extract(rows, xs, margin)
+        _, drift, gs = relu_reduced_step(groups, xs, ys, (0,), F(1, 15), F(0))
+        assert gs == {(1,): expected_g}
+        assert drift == expected_drift, f'{name} induced norm'
+        if name == 'row_dominant':
+            # Using min gives 2/5 < mu; the correct 3/5 must reject.
+            assert_rejected('rectangular drift', rows, xs, ys,
+                            ((0,),), F(1, 15), margin)
+
+    xs, ys, batch = [[F(1)]], [[F(0)]], (0,)
+    left = [[F(2), F(0)], [F(1), F(1)], [F(1), F(3)]]
+    right = [[F(2, 5), F(-4, 5)], [F(11, 5), F(3, 5)], [F(1), F(3)]]
+    mu, eta = F(1, 4), F(1, 2)
+    lq, lm = relu_extract(left, xs, mu)
+    rq, rm = relu_extract(right, xs, mu)
+    assert lq == rq == {(1,): [[F(6), F(4)], [F(4), F(10)]]}
+    assert lm == rm == mu
+    collision = []
+    surrogate, drift, gs = relu_reduced_step(lq, xs, ys, batch, eta, F(0))
+    assert gs == {(1,): [[F(4)]]} and drift == 2 and not drift < mu
+    for rows, expected_f, expected_loss, expected_mask in (
+            (left, F(-8), F(32), [(1,), (0,), (0,)]),
+            (right, F(-7), F(49, 2), [(1,), (1,), (0,)])):
+        prediction, masks, _, gradients = relu_raw(rows, xs, ys, batch)
+        assert prediction == [[F(4)]] and masks == [(1,), (1,), (1,)]
+        next_rows = [[z-eta*g for z, g in zip(row, grad)]
+                     for row, grad in zip(rows, gradients)]
+        raw_f, masks, loss, _ = relu_raw(next_rows, xs, ys, batch)
+        assert (raw_f, masks, loss) == ([[expected_f]], expected_mask, expected_loss)
+        assert gram(next_rows) == surrogate[(1,)] == [[F(30), F(-12)], [F(-12), F(18)]]
+        collision.append({'initial_rows': [[str(z) for z in row] for row in rows],
+                          'next_rows': [[str(z) for z in row] for row in next_rows],
+                          'next_masks': [list(s) for s in masks],
+                          'next_prediction': str(raw_f[0][0]), 'next_loss': str(loss)})
+    assert relu_reduced_readout(surrogate, xs, ys, batch)[0] == [[F(-12)]]
+    record('relu_same_summary_migration_pairs')
+
+    rejections = []
+    for name, rows, labels, step, margin in (
+            ('equality', [[F(1), F(0)]], [[F(-1)]], F(1), F(1)),
+            ('strictly_above', [[F(1), F(1)]], ys, F(3, 4), F(1, 2))):
+        assert_rejected(name, rows, xs, labels, (batch, batch), step, margin)
+        groups, _ = relu_extract(rows, xs, margin)
+        drift = F(0)
+        for _ in range(2):
+            _, _, _, gradients = relu_raw(rows, xs, labels, batch)
+            rows = [[z-step*g for z, g in zip(row, grad)]
+                    for row, grad in zip(rows, gradients)]
+            groups, drift, _ = relu_reduced_step(groups, xs, labels, batch, step, drift)
+            assert relu_raw(rows, xs, labels, batch)[1] == [(1,)]
+            assert not drift < margin
+        if name == 'equality':
+            assert drift == margin == 1 and rows == [[F(1), F(-1)]]
+        else:
+            assert drift == F(213, 256) > margin and rows == [[F(61, 256), F(61, 256)]]
+        rejections.append({'kind': name, 'horizon': 2, 'drift': str(drift),
+                           'mu': str(margin), 'accepted': False,
+                           'actual_gate_crossing': False})
+        record('relu_conservative_rejections')
+
+    # The PSD/rank witness is independent of the sign-infeasibility argument:
+    # any strict ++ factor would have A12=sum_j u_j1*u_j2 > 0.
+    psd_factor = [[F(1), F(0), F(0)], [F(0), F(1), F(0)]]
+    psd_q = gram(psd_factor)
+    assert psd_q == [[F(1), F(0), F(0)], [F(0), F(1), F(0)], [F(0), F(0), F(0)]]
+    assert psd_q[0][0]*psd_q[1][1]-psd_q[0][1]**2 == 1  # rank at least 2
+    assert all(z == 0 for z in psd_q[2])  # rank exactly 2
+    try:
+        relu_extract(psd_factor, [[F(1), F(0)], [F(0), F(1)]], F(1, 10))
+    except AssertionError as exc:
+        assert str(exc) == 'strict initial patterns required'
+    else:
+        raise AssertionError('boundary factors must fail strict extraction')
+    record('relu_psd_sign_image_obstructions')
+    assert RNG.getstate() == rng_state
+    return {'scope': 'Exact finite checks of §§27.4–27.10; no universal proof or bit-time claim.',
+            'queries': 'All current training predictions and all batch losses at 0..H; next predictions only at t<H.',
+            'certificate_state': 'One declared mu, one global D, explicit clock; all sums seeded with Fraction(0).',
+            'family': family, 'worked_family_trajectory': worked, 'mixed_vector_cases': mixed,
+            'collision': {'common_initial_A_W_B': ['6', '4', '10'],
+                          'common_exact_minimum': '1/4', 'drift_after_one_step': str(F(2)),
+                          'common_unmasked_next_A_W_B': ['30', '-12', '18'],
+                          'cases': collision},
+            'rejections_without_crossing': rejections,
+            'psd_sign_obstruction': {'pattern': [1, 1], 'width': 2, 'rank': 2,
+                                    'Q': [[str(z) for z in row] for row in psd_q],
+                                    'separation': 'strict ++ implies A12>0, but Q has A12=0; rational factors exist'}}
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, help='write deterministic result JSON')
@@ -602,12 +937,14 @@ def main():
     lipschitz()
     witnesses = counterexamples()
     stochastic = stochastic_records()
+    relu_certificates = relu_certificate_records()
     result = {
         'schema': 'contextual-spacetime-ml-finite-checks-v1',
         'source': 'docs/reports/contextual-spacetime-ml/finite_checks.py',
         'source_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         'theory': 'docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ML.md',
         'stochastic_records': stochastic,
+        'relu_certificates': relu_certificates,
         'configuration': {'seed': SEED, 'arithmetic': 'fractions.Fraction and rational-complex pairs',
                           'regression_steps': 5, 'two_layer_steps': 4, 'momentum_steps': 3,
                           'automata_scope': 'all binary-output partial deterministic machines with 1 or 2 states and 2 actions',

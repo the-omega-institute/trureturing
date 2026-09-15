@@ -1,0 +1,59 @@
+**定理 69.1（任务读出的有限噪声放大判据）。** 对上述有限维线性映射，以下条件等价：
+
+$$
+\ker A\subseteq\ker F;
+$$
+
+$$
+\exists L_0:\operatorname{ran}A\to Z\text{ 线性},
+\qquad F=L_0A;
+$$
+
+$$
+\exists c\ge0,\quad
+\forall x\in X,\qquad\|Fx\|\le c\|Ax\|.
+$$
+
+第二式将 $A$ 的值视为 $\operatorname{ran}A$ 的元素，且 $L_0$ 唯一。把满足第三式的最小常数记为 $c_{\mathrm{task}}$，则
+
+$$
+\boxed{
+ c_{\mathrm{task}}=\|L_0\|
+ =\|FA^+\|_{\mathrm{op}}.
+}
+$$
+
+这里 $A^+$ 是 Moore–Penrose 逆。$A=0,F=0$ 时约定 $c_{\mathrm{task}}=0$。核包含不成立时，记任务代价为 $+\infty$，不把零分母按总定义除法解释为零代价。对给定 $c\ge0$，上述范数不等式又等价于
+
+$$
+\boxed{
+F^\ast F\preceq c^2A^\ast A,
+}
+$$
+
+其中 $\preceq$ 表示自伴算子的二次型偏序。
+
+证明。若核包含成立，定义 $L_0(Ax)=Fx$。相同读出的两个原像之差属于 $\ker A$，因此定义与代表无关；线性和唯一性随之成立。有限维使 $L_0$ 有有限算子范数，从而得到范数界。反之，把 $x\in\ker A$ 代入范数界立即得到 $Fx=0$。
+
+由 Penrose 恒等式 $AA^+A=A$，有 $A(A^+Ax-x)=0$，核包含推出
+
+$$
+F=FA^+A.
+$$
+
+令 $P=AA^+$。Penrose 恒等式还给出 $P^2=P=P^\ast$、$\operatorname{ran}P=\operatorname{ran}A$，因此 $P$ 是到读出像空间的正交投影；由 $A^+AA^+=A^+$ 得 $A^+P=A^+$。于是
+
+$$
+FA^+=L_0P.
+$$
+
+$P$ 不扩张范数，且在像空间上为恒等，故 $\|FA^+\|=\|L_0\|$。所有可用 $c$ 的最小值正是该范数。最后，平方范数界等价于对全部 $x$ 有
+
+$$
+\langle x,(c^2A^\ast A-F^\ast F)x\rangle\ge0,
+$$
+
+即所列半正定条件。证毕。
+
+`D5/S3/Observer/Hilbert/FiniteMoorePenroseInverse.lean` 的 `isMoorePenroseInverse_moorePenroseInverse` 及 `comp_moorePenroseInverse_comp` 提供所用的有限维 Penrose 基础。这里的任务因子化、最小算子范数及半正定判据是本节组合推导，不称为该模块已有的同名结果。
+
