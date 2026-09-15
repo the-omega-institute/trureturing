@@ -13,6 +13,7 @@ from unittest.mock import patch
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import materials
 import publication
+import native
 
 
 class StreamingTests(unittest.TestCase):
@@ -133,21 +134,31 @@ class PublicationTests(unittest.TestCase):
             root = Path(directory)
             paths = lambda *names: dict(include=[dict(pattern=n, optional=False) for n in names], exclude=[])
             (root / 'lean-report-inputs.json').write_text(json.dumps(dict(schema_version=1, report_semantic_version=4,
-                report_modules=paths(), inspector_sources=paths(), config_inputs=paths(),
+                report_modules=paths('X.lean'), inspector_sources=paths(), config_inputs=paths(),
                 producer_scopes={'lean-report': paths('lean-report-inputs.json',
                     'tools/scripts/report/lean-report-selection.py'), 'scribe-content': paths()})))
             policy = root / 'Policy.lean'
             policy.write_text('def driver := 1\n')
+            source = root / 'X.lean'
+            source.write_text('def x := 1\n')
+            utility = root / 'utility.json'
+            utility.write_text(json.dumps(dict(source_path='X.lean', utilities=[])))
             evidence = dict(schema_version=1, compatibility_version=4, inventory=[], registered=[], records=[],
                 inputs=[dict(path='Policy.lean', sha256=publication.digest(policy))])
-            rows = [dict(information_templates=evidence)]
-            publication.validate_template_sources(rows, root)
+            rows = [dict(module='X', source_path='X.lean', source_sha256='sha256:' + publication.digest(source),
+                information_templates=evidence)]
+            validators = [lambda: native.row_binding(rows, root, 'X', utility),
+                          lambda: publication.validate_sources(rows, root)]
+            for validate in validators:
+                validate()
             policy.write_text('def driver := 2\n')
-            with self.assertRaisesRegex(ValueError, 'stale declared-template input'):
-                publication.validate_template_sources(rows, root)
+            for validate in validators:
+                with self.assertRaisesRegex(ValueError, 'stale declared-template input'):
+                    validate()
             policy.unlink()
-            with self.assertRaises((ValueError, OSError)):
-                publication.validate_template_sources(rows, root)
+            for validate in validators:
+                with self.assertRaises((ValueError, OSError)):
+                    validate()
 
     def test_shared_validation_rechecks_bytes_and_complete_declaration_identity(self):
         import zipfile
