@@ -23713,3 +23713,79 @@ F_{L+2}\quad\text{与}\quad 2
 $$
 
 的分离从一个可复算模型升级为形式化定理；在此之前，它只承担研究报告中的明确、可检验桥接。
+
+## 110. 同一 Zeckendorf 语言的任务依赖状态复杂度
+
+第 108 节的两状态自动机只检查“是否出现相邻两个一”。仓库还给出一个任务复杂度完全不同的对照：对同一类规范 Zeckendorf 输入，若任务是计算黄金比例的稀疏 radix-4 输出，则状态下界可以大得多。
+
+### 110.1 合法性任务只需两状态
+
+`ZeckendorfBaseState` 只有
+
+$$
+\{\mathrm{clear},\mathrm{previousOne}\},
+$$
+
+因此验证局部合法性只需保存一个比特级上下文：前一位是否为一。`zeckendorfMSDWord_base_success` 证明每个规范 Zeckendorf 输入都能在这个部分自动机中成功运行。
+
+这个自动机并不输出输入代表的整数，也不计算黄金比例的 radix-4 数字。它的闭合任务只有语言成员关系。
+
+### 110.2 算术输出任务需要保存更多可区分前缀
+
+`GoldenBase4AutomataOracle` 定义了另一项任务：输入是
+
+$$
+\operatorname{zeckendorfMSDWord}(4^i),
+$$
+
+输出是
+
+$$
+\left\lfloor 4^{i+1}\varphi\right\rfloor
+-4\left\lfloor4^i\varphi\right\rfloor,
+$$
+
+的 radix-4 数字。此时前缀不仅要保持合法性，还要保留足以决定未来输出的算术信息。
+
+源码中的 `phi_base4_twenty_two_state_minimality` 给出条件性最小性结论：若存在一个 22 状态全局模型，并且对 21 状态模型的指定有限前缀反驳已经由 LRAT 证书提供，则
+
+$$
+\operatorname{IsMinimalStateCount}(\operatorname{base4Problem},22).
+$$
+
+对应的 M16 定理直接排除至多 21 状态的模型，但它的使用条件仍是显式的有限反驳证书。这里不能把“22”脱离这些前提写成无条件的现实物理常数。
+
+### 110.3 这与量子历史预算是同一类区别
+
+两种任务的状态数对照为
+
+$$
+\begin{array}{c|c|c}
+\text{任务}&\text{必须保留的关系}&\text{现有状态规模}\\
+\hline
+\text{检查 Zeckendorf 合法性}&\text{最近一位的局部约束}&2\\
+\text{计算稀疏黄金 radix-4 输出}&\text{未来算术输出等价类}&\text{条件性至少 }22\\
+\text{均匀禁止相邻态的局部相干}&\text{切口边界}&2\\
+\text{完整量子预测}&\text{未来 effect/仪器词闭包}&\text{由商空间与载体决定}
+\end{array}
+$$
+
+因此“约束只产生两个状态”和“这个系统只需要两个状态”是不同命题。前者只关于一个局部语言；后者必须对指定的所有后续操作和输出任务成立。
+
+### 110.4 对稳定经典现实的修正
+
+如果观察者只问一个局部约束问题，二状态摘要可以是稳定经典对象。若观察者随后要求数值解码、黄金相位预测、不同控制词下的输出，二状态摘要通常不再满足第 105、106 节的预测闭合条件。对应的最小对象应改为
+
+$$
+\text{当前前缀}/\text{未来任务响应等价},
+$$
+
+而不是
+
+$$
+\text{当前前缀}/\text{局部合法性等价}.
+$$
+
+量子模型中完全相同：一个两维边界 bond 可以精确承载第 109 节的均匀相干态，但不能因此承载所有合法构型的任意数值、相位和恢复协议。任务一旦扩大，预测商会细化，必须重新计算历史预算。
+
+本节复用 `zeckendorfMSDWord_base_success`、`m16_phi_base4_exclude_at_most_twenty_one` 和 `phi_base4_twenty_two_state_minimality`。Lean 已证明的是两状态合法性执行以及带上界模型和 LRAT 反驳前提的状态最小性接口；它没有把 22 状态结论无条件推广到所有 Zeckendorf 任务，也没有把自动机状态数等同于量子 Hilbert 维数。
