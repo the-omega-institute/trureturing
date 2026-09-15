@@ -146,6 +146,50 @@ theorem squarefree_coprime_count_error (Q : ℕ) (X : ℝ) (hQ : Squarefree Q) (
       |C Q Y - Y * ∏ p ∈ Q.primeFactors, (1 - (p : ℝ)⁻¹)| ≤
         (2 : ℝ) ^ Q.primeFactors.card := by
     simpa [hcard, he_product, mul_comm] using herror_divisors Y hY
+  have hsf_indicator (n : ℕ) (hn : 0 < n) :
+      (if Squarefree n then (1 : ℝ) else 0) =
+        ∑ a ∈ n.divisors.filter (fun a => a ^ 2 ∣ n),
+          (ArithmeticFunction.moebius a : ℝ) := by
+    obtain ⟨b, t, hb, ht, heq, hbs⟩ := Nat.sq_mul_squarefree_of_pos hn
+    have hdiv (a : ℕ) : a ^ 2 ∣ n ↔ a ∣ t := by
+      constructor
+      · intro had
+        have ha : a ≠ 0 := by
+          intro hz
+          simp [hz, hn.ne'] at had
+        apply (Nat.factorization_le_iff_dvd ha ht.ne').mp
+        intro p
+        have hle := (Nat.factorization_le_iff_dvd (pow_ne_zero 2 ha) hn.ne').mpr had p
+        rw [← heq, Nat.factorization_mul (pow_ne_zero 2 ht.ne') hb.ne',
+          Nat.factorization_pow, Nat.factorization_pow] at hle
+        simp only [Finsupp.add_apply, Finsupp.smul_apply, smul_eq_mul] at hle
+        have hbound := (Nat.squarefree_iff_factorization_le_one hb.ne').mp hbs p
+        omega
+      · intro had
+        rw [← heq]
+        exact dvd_mul_of_dvd_left (pow_dvd_pow_of_dvd had 2) b
+    have hset : n.divisors.filter (fun a => a ^ 2 ∣ n) = t.divisors := by
+      ext a
+      constructor
+      · intro ha
+        exact Nat.mem_divisors.mpr ⟨(hdiv a).mp (mem_filter.mp ha).2, ht.ne'⟩
+      · intro ha
+        have had := Nat.dvd_of_mem_divisors ha
+        have htn : t ∣ n := by
+          rw [← heq]
+          exact dvd_mul_of_dvd_left (dvd_pow_self t (by omega)) b
+        exact mem_filter.mpr ⟨Nat.mem_divisors.mpr ⟨dvd_trans had htn, hn.ne'⟩,
+          (hdiv a).mpr had⟩
+    have hiff : Squarefree n ↔ t = 1 := by
+      constructor
+      · intro hs
+        exact Nat.isUnit_iff.mp (hs t (by rw [← heq, ← pow_two]; exact dvd_mul_right _ _))
+      · rintro rfl
+        rw [← heq]
+        simpa using hbs
+    rw [hset, ← Int.cast_sum, ← ArithmeticFunction.coe_mul_zeta_apply,
+      ArithmeticFunction.moebius_mul_coe_zeta, ArithmeticFunction.one_apply]
+    simp [hiff]
   sorry
 
 end D5.S3.Weil.Mertens.CoprimeSquarefreeDensity
