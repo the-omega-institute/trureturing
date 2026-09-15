@@ -3096,7 +3096,7 @@ $$
 
 其中 $W_\lambda$ 是两两不等价的有限维不可约表示，重数空间 $V_\lambda$ 可含任意多个隐藏方向。设 $0\le K\le I$，且 $K,P$ 均与群作用交换；$P$ 在第 $\lambda$ 个重数空间保留 $r_\lambda<\infty$ 维，非零 $r_\lambda$ 仅有限多个。固定这些分解与观察坐标。
 
-**定理 PM10。** 在每个 $W_\lambda$ 选定一个单位向量 $e_\lambda$，并设至少有一个 $r_\lambda\ge1$。读取
+**定理 PM10。** 在每个 $W_\lambda$ 选定一个单位向量 $e_\lambda$。读取
 
 $$
 \left\langle e_a\otimes e_\lambda,K^t(e_b\otimes e_\lambda)\right\rangle,
@@ -3114,7 +3114,7 @@ $$
 }
 $$
 
-**证明。** Schur 分解给出 $K=\bigoplus_\lambda(K_\lambda\otimes I)$ 和相应的 $P$ 分解。其中 $r_\lambda=0$ 的块不贡献矩阵元或记忆核系数，以下仅在 $r_\lambda\ge1$ 的块上恢复并应用 PM7。所列矩阵元恰是每个保留重数空间上的完整压缩响应条目；用 PM6 逐块恢复后再张量回去。真实实现本身满足数据误差条件，所以要求残差不超过 $\epsilon$ 的正收缩可行集非空。两个实现相对数据各误差至多 $\epsilon$，故每个条目之差至多 $2\epsilon$；一个 $r_\lambda$ 方阵的算子范数不超过其 Frobenius 范数，因而响应误差至多 $2r_\lambda\epsilon$。逐块应用 PM7，再取正交直和的范数上确界，即得所示界。证毕。
+**证明。** Schur 分解给出 $K=\bigoplus_\lambda(K_\lambda\otimes I)$ 和相应的 $P$ 分解。所列矩阵元恰是每个保留重数空间上的完整压缩响应条目；用 PM6 逐块恢复后再张量回去。真实实现本身满足数据误差条件，所以要求残差不超过 $\epsilon$ 的正收缩可行集非空。两个实现相对数据各误差至多 $\epsilon$，故每个条目之差至多 $2\epsilon$；一个 $r_\lambda$ 方阵的算子范数不超过其 Frobenius 范数，因而响应误差至多 $2r_\lambda\epsilon$。逐块应用 PM7，再取正交直和的范数上确界，即得所示界。证毕。
 
 ## PM.8 有限前缀与尾部的不同要求
 
@@ -3134,3 +3134,26 @@ $$
 **命题。** PM3–PM4 的具体响应满足 PM7–PM9 的正性前提，并具有无限秩 Hankel 矩阵。PM4 没有给出 $\|D\|<1$ 的严格收缩常数。
 
 **证明。** 前两项分别由乘法算子的正收缩性和 PM4 的严格正定性得到。$\mu$ 的支撑逼近一，故 $\|K\|=1$；已给出的压缩估计只能推出 $\|D\|\le1$，不能用它替代 PM11 所要求的严格上界。证毕。
+
+**定理 PM12（PM10 的更正）。** 在每个 $W_\lambda$ 选定一个单位向量 $e_\lambda$，并设至少有一个 $r_\lambda\ge1$。读取
+
+$$
+\left\langle e_a\otimes e_\lambda,K^t(e_b\otimes e_\lambda)\right\rangle,
+\quad1\le a,b\le r_\lambda,\quad1\le t\le H_0+2,
+$$
+
+足以确定全部 $0\le j\le H_0$ 的观察记忆核。每个时间所需复矩阵元数为 $\sum_\lambda r_\lambda^2$，不依赖 $\dim W_\lambda$。
+
+若逐项数据误差至多 $\epsilon$，并选取任意在这些数据上逐项残差不超过 $\epsilon$ 的共同正收缩响应实现，则令 $r_*=\max_\lambda r_\lambda$，有
+
+$$
+\boxed{
+\max_{0\le j\le H_0}\|\widehat M_j-M_j\|
+\le2r_*(r_*+1)^2\epsilon.
+}
+$$
+
+**证明。** Schur 分解给出 $K=\bigoplus_\lambda(K_\lambda\otimes I)$ 和相应的 $P$ 分解。所列矩阵元恰是每个保留重数空间上的完整压缩响应条目；用 PM6 逐块恢复后再张量回去。真实实现本身满足数据误差条件，所以要求残差不超过 $\epsilon$ 的正收缩可行集非空。两个实现相对数据各误差至多 $\epsilon$，故每个条目之差至多 $2\epsilon$；一个 $r_\lambda$ 方阵的算子范数不超过其 Frobenius 范数，因而响应误差至多 $2r_\lambda\epsilon$。逐块应用 PM7，再取正交直和的范数上确界，即得所示界。其中 $r_\lambda=0$ 的块不贡献矩阵元或记忆核系数，以下仅在 $r_\lambda\ge1$ 的块上恢复并应用 PM7。证毕。
+
+本定理取代定理 PM10 的陈述与证明；PM10 在允许全部 $r_\lambda=0$ 时其界 $r_*$ 无定义，且其证明对零维块误用 PM7。
+
