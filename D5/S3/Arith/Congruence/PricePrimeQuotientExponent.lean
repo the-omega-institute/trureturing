@@ -11,7 +11,6 @@ import Mathlib.Data.Nat.GCD.Basic
 import Mathlib.Data.Nat.Prime.Basic
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
-import Lean.Elab.Tactic.Omega
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
