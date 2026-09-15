@@ -44,7 +44,7 @@ internal sealed record DigestionUpstream(
             if (string.IsNullOrWhiteSpace(Justification))
                 return "justification must be a nonempty scalar";
             if (Declarations.IsDefaultOrEmpty || !SortedDistinct(Declarations)
-                || !Declarations.All(static name => DeclarationPattern.IsMatch(name)))
+                || !Declarations.All(IsDeclarationName))
                 return "declarations must be a non-empty ordinal-sorted distinct list of Lean declaration names";
             if (MathlibRev.Length != 40
                 || !MathlibRev.All(static c => c is >= '0' and <= '9' or >= 'a' and <= 'f'))
@@ -61,6 +61,8 @@ internal sealed record DigestionUpstream(
             return null;
         }
     }
+
+    internal static bool IsDeclarationName(string name) => DeclarationPattern.IsMatch(name);
 
     internal static bool IsAllowedAxiom(string name) => name is "propext" or "Classical.choice" or "Quot.sound";
 
