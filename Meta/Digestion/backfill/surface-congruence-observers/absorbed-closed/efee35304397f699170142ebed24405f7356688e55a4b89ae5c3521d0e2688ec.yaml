@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:efee35304397f699170142ebed24405f7356688e55a4b89ae5c3521d0e2688ec
   normalized_sha256: sha256:efee35304397f699170142ebed24405f7356688e55a4b89ae5c3521d0e2688ec
 cas_ref: sha256:efee35304397f699170142ebed24405f7356688e55a4b89ae5c3521d0e2688ec
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Observer/Dynamics/SurfaceDerivedOrbitDetector.finite_second_derived_orbit_detector
+    target_statement_id: sha256:02271513d00dda3f54e2d15c5eacfa0408d5f36703bda28af73774218576203f
 receipts:
   unresolved_subitems: []
