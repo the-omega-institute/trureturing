@@ -15,7 +15,7 @@ public sealed class LeanReportSelectionTests
         using var temporary = new TemporaryDirectory();
         var root = TestRepositoryLayout.FindRoot();
         var result = TestProcessRunner.Run("python3",
-            ["-B", Path.Combine(root, "tools/tests/StrataLint.ScriptTests/lean_report_selection_fixture.py"),
+            ["-B", Path.Combine(root, "tools/tests/StrataLint.ScriptTests/lean_report_selection_contract_fixture.py"),
                 root, temporary.Path, scenario], temporary.Path,
             TestBudgets.WorkflowProcessHangGuard, 1024 * 1024);
         Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardOutput)

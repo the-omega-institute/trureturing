@@ -954,7 +954,7 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
-pattern = "tools/tests/StrataLint.ScriptTests/lean_report_selection_fixture.py"
+pattern = "tools/tests/StrataLint.ScriptTests/lean_report_selection_contract_fixture.py"
 kind = "program"
 admission_plane = "judge"
 produced_by = "none"
