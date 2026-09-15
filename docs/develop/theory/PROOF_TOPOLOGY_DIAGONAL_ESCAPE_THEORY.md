@@ -3096,7 +3096,7 @@ $$
 
 其中 $W_\lambda$ 是两两不等价的有限维不可约表示，重数空间 $V_\lambda$ 可含任意多个隐藏方向。设 $0\le K\le I$，且 $K,P$ 均与群作用交换；$P$ 在第 $\lambda$ 个重数空间保留 $r_\lambda<\infty$ 维，非零 $r_\lambda$ 仅有限多个。固定这些分解与观察坐标。
 
-**定理 PM10。** 在每个 $W_\lambda$ 选定一个单位向量 $e_\lambda$。读取
+**定理 PM10。** 在每个 $W_\lambda$ 选定一个单位向量 $e_\lambda$，并设至少有一个 $r_\lambda\ge1$。读取
 
 $$
 \left\langle e_a\otimes e_\lambda,K^t(e_b\otimes e_\lambda)\right\rangle,
@@ -3114,7 +3114,7 @@ $$
 }
 $$
 
-**证明。** Schur 分解给出 $K=\bigoplus_\lambda(K_\lambda\otimes I)$ 和相应的 $P$ 分解。所列矩阵元恰是每个保留重数空间上的完整压缩响应条目；用 PM6 逐块恢复后再张量回去。真实实现本身满足数据误差条件，所以要求残差不超过 $\epsilon$ 的正收缩可行集非空。两个实现相对数据各误差至多 $\epsilon$，故每个条目之差至多 $2\epsilon$；一个 $r_\lambda$ 方阵的算子范数不超过其 Frobenius 范数，因而响应误差至多 $2r_\lambda\epsilon$。逐块应用 PM7，再取正交直和的范数上确界，即得所示界。证毕。
+**证明。** Schur 分解给出 $K=\bigoplus_\lambda(K_\lambda\otimes I)$ 和相应的 $P$ 分解。其中 $r_\lambda=0$ 的块不贡献矩阵元或记忆核系数，以下仅在 $r_\lambda\ge1$ 的块上恢复并应用 PM7。所列矩阵元恰是每个保留重数空间上的完整压缩响应条目；用 PM6 逐块恢复后再张量回去。真实实现本身满足数据误差条件，所以要求残差不超过 $\epsilon$ 的正收缩可行集非空。两个实现相对数据各误差至多 $\epsilon$，故每个条目之差至多 $2\epsilon$；一个 $r_\lambda$ 方阵的算子范数不超过其 Frobenius 范数，因而响应误差至多 $2r_\lambda\epsilon$。逐块应用 PM7，再取正交直和的范数上确界，即得所示界。证毕。
 
 ## PM.8 有限前缀与尾部的不同要求
 
