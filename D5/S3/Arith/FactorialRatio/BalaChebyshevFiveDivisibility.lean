@@ -209,7 +209,7 @@ theorem bala_five_integrality (n : Nat) :
       have hb := Nat.le_of_dvd (by omega : 0 < 5*n+1) hd
       by_contra hh
       have hkv : k ≤ v := by omega
-      have hpw : (3:Nat)^k ≤ 3^v := by gcongr
+      have hpw : (3:Nat)^k ≤ 3^v := Nat.pow_le_pow_right (by norm_num) hkv
       omega
     have hknot : k ∉ Finset.Ico 2 (v+1) := by
       simp only [Finset.mem_Ico]
@@ -220,7 +220,7 @@ theorem bala_five_integrality (n : Nat) :
       · exact top_scale_unit n (3^k) hn qlo qhi
       · obtain ⟨hj2, hjv⟩ := Finset.mem_Ico.mp hj
         have hsize : 6 ≤ (3:Nat)^j := by
-          have hh : (3:Nat)^2 ≤ 3^j := by gcongr
+          have hh : (3:Nat)^2 ≤ 3^j := Nat.pow_le_pow_right (by norm_num) hj2
           norm_num at hh
           omega
         have hd : (3:Nat)^j ∣ 5*n+1 :=
@@ -230,7 +230,7 @@ theorem bala_five_integrality (n : Nat) :
       calc
         (v : Int) = ∑ j ∈ insert k (Finset.Ico 2 (v+1)), (1 : Int) := by
           rw [Finset.sum_insert hknot]
-          simp only [Finset.sum_const, Finset.card_Ico, nsmul_eq_mul, mul_one]
+          simp only [Finset.sum_const, Nat.card_Ico, nsmul_eq_mul, mul_one]
           omega
         _ = ∑ j ∈ insert k (Finset.Ico 2 (v+1)), defect n ((3:Nat)^j) := by
           apply Finset.sum_congr rfl
