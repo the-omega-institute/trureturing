@@ -1,0 +1,4 @@
+**Proof.** Cassini and the Fibonacci recurrence give F_(n-1)F_(n+1)=F_n^2+(-1)^n and F_(n-2)F_(n+2)=F_n^2-(-1)^n. Thus F_n^2+1=F_uF_v in the stated cases. Apply FDS3 to every k>=3; the value one is always a divisor. The u,v are positive odd coprime integers, so their positive divisor sets overlap only at one. All their remaining divisors are at least three, where Fibonacci values are distinct. Counting the union proves FDS5. At n=0 the target is one, and at n=1 it is two.
+
+These are explicit formulas for the sequence defined by Michel Lagneau in OEIS A340542, https://oeis.org/A340542 . The definition counts divisor values rather than Fibonacci indices.
+

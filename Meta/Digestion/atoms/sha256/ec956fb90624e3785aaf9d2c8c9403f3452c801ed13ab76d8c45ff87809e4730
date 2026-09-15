@@ -1,0 +1,8 @@
+**Proof.** Reduction commutes with evaluation and formal differentiation. Thus `f(1),f'(1),g(1),g'(1)` all belong to the kernel of rho. The product rule and the lemma give
+
+\[
+(fg)'(1)=f'(1)g(1)+f(1)g'(1)=0.
+\]
+
+But `(X^p-1)'(1)=p`, which is nonzero in R. Equality of the polynomials is impossible.
+
