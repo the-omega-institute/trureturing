@@ -1,0 +1,19 @@
+**36.11 Uniform distribution for continuous observables on the actual closure.**
+For a restricted character let \(t=\chi_\ell(\alpha)\). If \(t=1\), the
+character is identically 1 on \(H\). Otherwise its integral is zero and the
+finite geometric sum gives, for every \(x\in H\),
+\[
+\left|\frac1M*\sum_{n=1}^M\chi_\ell(x+n*\alpha)\right|
+\le\frac{2}{M*|1-t|}\longrightarrow0.
+\]
+This is uniform in \(x\); a nontrivial finite-order \(t\) causes no exception.
+Restricted characters form a conjugation-closed unital algebra separating
+points of \(H\). Given continuous \(f\) and \(\eta>0\), Stone-Weierstrass
+gives a finite character polynomial \(P\) with \(\|f-P\|_\infty<\eta\).
+The difference between the orbit mean and Haar integral of \(f\) is bounded
+by \(2*\eta\) plus the corresponding difference for \(P\), uniformly in the
+starting point. The latter tends to zero by the displayed estimate. Letting
+\(\eta\) decrease proves uniform convergence to \(\int_H f\,d\mu_H\).
+This proves the needed specialized classical distribution statement on proper
+or disconnected \(H\), with no assumed joint rational independence.
+

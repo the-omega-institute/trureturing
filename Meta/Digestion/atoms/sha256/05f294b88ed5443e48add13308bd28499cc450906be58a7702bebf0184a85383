@@ -1,0 +1,19 @@
+**36.5 Surjective component coordinates and null seams.** The projection of
+\(H\) to coordinate circle \(i\) is a closed subgroup containing all multiples
+of irrational \(\alpha_i\), hence is the circle. To recall the elementary
+circle fact: an infinite closed subgroup has arbitrarily small nonzero
+representatives by compactness and subtraction of two nearby distinct points;
+choose their signs positive. Successive multiples of such a representative
+approximate every circle point, so closedness gives the whole circle.
+The image of the connected compact group \(H^0\) is a connected compact circle
+subgroup, hence either the trivial subgroup or the circle. If it were trivial,
+the finite component decomposition in 36.4 would make the image of \(H\)
+finite, a contradiction. Thus each projection of \(H^0\) is surjective;
+in particular \(v\mapsto v_i\) is a nonzero linear form on \(V\).
+
+The pushforward of \(\mu_H\) under this projection is circle Haar measure:
+surjectivity lifts any circle translation to a translation of \(H\), and
+Haar uniqueness applies. Every coordinate fiber is therefore Haar-null,
+including the representative seam \(x_i=0\bmod1\). Component surjectivity is
+stronger than the marginal statement and will also control mixed faces.
+

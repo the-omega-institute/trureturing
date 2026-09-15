@@ -1,0 +1,25 @@
+**36.18 Exact anchored-range volume.** Partition \(\mathcal D_\epsilon\)
+according to which of its \(k\) anchored coordinates
+\(0,\Delta_1,\ldots,\Delta_d\) is minimal. Equal minima lie in finitely
+many Euclidean hyperplanes and contribute zero volume. If zero is minimal,
+all \(\Delta_i\in[0,\epsilon]\), a region of volume \(\epsilon^d\).
+If \(\Delta_j\) is minimal, put \(\Delta_j=-t\), \(0\le t\le\epsilon\).
+Each remaining \(\Delta_i\) ranges independently in
+\([-t,\epsilon-t]\); the anchored zero belongs to that interval. Integrating
+\(\epsilon^{d-1}\) over \(t\) gives another \(\epsilon^d\). This also
+works for \(d=1\), with empty product equal to 1. There are \(d\) such
+regions in addition to the minimum-at-zero region. Consequently
+\[
+\operatorname{vol}_d(\mathcal D_\epsilon)
+=(d+1)*\epsilon^d=k*\epsilon^{k-1}.
+\]
+Together with 36.16-36.17 this gives, **conditionally on \(H=\mathbb T^d\)**,
+\[
+\kappa_\epsilon=\frac{k*\epsilon^{k-1}}{\prod_{i=1}^d h_i},
+\qquad C_\epsilon(X)=\frac{\epsilon^{k-1}}{\prod_{i=0}^d h_i}*\log X
++o(\log X).
+\]
+The geometric volume is unconditional as a Euclidean calculation; its use
+as the Haar integral for a prime list of dimension at least three requires
+the stated orbit-closure hypothesis.
+

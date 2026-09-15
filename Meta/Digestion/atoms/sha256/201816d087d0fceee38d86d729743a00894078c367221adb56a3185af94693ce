@@ -1,0 +1,24 @@
+**36.14 Multiplicity, visit density and eventual syndeticity.** The pointwise
+inequalities \(\mathbf1_{\{w>0\}}\le w\le B_\epsilon*
+\mathbf1_{\{w>0\}}\), together with 36.12-36.13, yield
+\[
+0<\nu_\epsilon\le\kappa_\epsilon\le B_\epsilon,
+\qquad \kappa_\epsilon/B_\epsilon\le\nu_\epsilon
+\le\min(\kappa_\epsilon,1).
+\]
+By 36.7, the natural density of reference indices admitting an actual box is
+\(\nu_\epsilon\), whereas their average number of boxes is \(\kappa_\epsilon\).
+The finite initial positivity correction changes neither mean. These numbers
+can differ: 36.19 proves that for \(k=2\) and \(\epsilon=h_1\),
+\(\kappa_\epsilon=2\) but \(\nu_\epsilon=1\).
+
+Uniform support-frequency convergence supplies an integer \(L\) such that
+every block of \(L\) consecutive indices with nonnegative starting index has
+support average greater than \(\nu_\epsilon/2\). Every such block contains a
+positive multiplicity. Beyond the finite positivity cutoff in 36.7, this is
+syndetic occurrence of actual boxes. The argument establishes a finite gap
+bound depending on this rotation and window; it evaluates no numerical bound.
+It is neither a Dirichlet first-return estimate nor a maximal-gap bound
+depending only on \(Q\). Section 35's distinction between those questions
+remains in force.
+

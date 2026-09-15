@@ -1,0 +1,34 @@
+{
+  "source_report_sha256": "9f408a872f3cd7389af735ade7e5b2bd38a1847c32c93b63758b1aae80379ad0",
+  "kind": "recorded tables, not a new execution",
+  "python_flint": "0.8.0",
+  "precision_bits": 256,
+  "denominator": "10^18",
+  "interval_convention": "strict lower < value < upper",
+  "numerators": {
+    "Psi": [
+      "-136498016563252",
+      "-136498016563251"
+    ],
+    "U_dual": [
+      "-136497658176917",
+      "-136497658176916"
+    ],
+    "U_dual-Psi": [
+      "358386335",
+      "358386336"
+    ]
+  },
+  "configuration_table": "| Bits | Coordinates | Exact Sum | Slab Feasible |\n|---|---|---:|---|\n| 000 | (99/10,249/25,249/25) | 1491/50 | no |\n| 001 | (99/10,249/25,507/50) | 30 | yes |\n| 010 | (99/10,507/50,249/25) | 30 | yes |\n| 011 | (99/10,507/50,507/50) | 1509/50 | no |\n| 100 | (101/10,249/25,249/25) | 1501/50 | no |\n| 101 | (101/10,249/25,507/50) | 151/5 | no |\n| 110 | (101/10,507/50,249/25) | 151/5 | no |\n| 111 | (101/10,507/50,507/50) | 1519/50 | no |",
+  "classification_sha256": "a34b04a4923192132448880159fd0b75818a3cc3ff81bceee9fdbfcf7e30429b",
+  "V0": "13199640003/10^12",
+  "Vbar": "6/625",
+  "theta": "9/10",
+  "expected_sum": "30",
+  "support_sums": [
+    "1491/50",
+    "1501/50"
+  ],
+  "strict_order": "variance_bound < optimal_dual",
+  "limit": "One artificial real grid, not a prime-exponent lattice. Exact optimality is proved analytically; ball overlap is not equality."
+}

@@ -1,0 +1,26 @@
+**36.34 Recorded-radius occurrence bounds and vanishing unscaled gaps.** The
+positive exponential series gives
+\(\exp(2)>1+2+2+4/3+2/3=7\), so \(\log5<2\) and \(\log7<2\).
+At \(\epsilon=1/480\) for 235, choose \(Q=1920\); then
+\(2*\log5/1920<1/480\), and 36.13 gives
+\(\kappa_\epsilon\ge\nu_\epsilon\ge1920^{-2}\).
+At \(\epsilon=1/320\) for 237, \(Q=1280\) similarly gives
+\(\kappa_\epsilon\ge\nu_\epsilon\ge1280^{-2}\).
+These lower bounds on full-family occurrence are not substituted for its
+actual multiplicity mean or leading coefficient. Smaller positive widths
+use an appropriate larger \(Q\) as in 36.13.
+
+For any admitted box, all row endpoints and envelope arguments are at least
+\(T\), by 36.29. Since \(f\) is increasing and negative,
+\(D,\Psi\in[k*f(T),0]\) and \(|G|\le-k*f(T)\), uniformly over its
+admitted slabs, including the upper slack regime. In a fixed-width unshifted
+tube, \(T\le U\) forces \(c_i\le U+\epsilon\), leaving only finitely many
+tuples. Thus \(T\to\infty\) outside finite subsets, and
+\(-k*f(T)\to0\). For the two triples, original-domain nonemptiness also
+holds outside the finite set in 36.33. Their infinite families therefore
+cannot carry an unscaled negative margin bounded away from zero over all
+boxes and slabs. The supplied strictly negative margins are **scaled**.
+For an integer-baseline tube, \(T\ge\min_i a_i+\tau\) and 36.24 likewise
+implies vanishing of this absolute bound at unbounded translated height,
+without supplying any missing \(G\) sign.
+

@@ -1,0 +1,26 @@
+**36.6 Bounded periodic branch multiplicity.** For representatives
+\(x_i\in[0,1)\) and a branch \(j\in\mathbb Z^d\), define
+\[
+\Delta_0=0,\qquad \Delta_i=h_i*(j_i-x_i),\qquad
+w_\epsilon(x)=\#\{j:\max_{0\le i\le d}\Delta_i-
+                         \min_{0\le i\le d}\Delta_i\le\epsilon\}.
+\]
+Because zero is among the anchored coordinates, each contributing branch has
+\(-\epsilon\le\Delta_i\le\epsilon\). Thus
+\(x_i-\epsilon/h_i\le j_i\le x_i+\epsilon/h_i\); an interval of that length
+contains at most \(\lfloor2*\epsilon/h_i\rfloor+1\) integers. Consequently
+\[
+0\le w_\epsilon\le B_\epsilon,
+\qquad B_\epsilon=\prod_{i=1}^d(\lfloor2*\epsilon/h_i\rfloor+1).
+\]
+For all representatives at once it suffices to use the finite branch set
+\(-\lceil\epsilon/h_i\rceil\le j_i\le1+\lceil\epsilon/h_i\rceil\).
+Changing a lift from \(x\) to \(x+z\), \(z\in\mathbb Z^d\), and reindexing
+\(j\) to \(j+z\) preserves every \(\Delta_i\); hence \(w_\epsilon\) is a
+well-defined periodic Borel function on the torus. Put
+\[
+\kappa_\epsilon=\int_H w_\epsilon\,d\mu_H,
+\qquad \nu_\epsilon=\mu_H(\{x:w_\epsilon(x)>0\}).
+\]
+The first is a multiplicity-weighted mean; the second is a support probability.
+

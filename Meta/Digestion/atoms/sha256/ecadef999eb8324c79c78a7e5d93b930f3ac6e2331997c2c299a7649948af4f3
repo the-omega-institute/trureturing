@@ -1,0 +1,18 @@
+**36.9 Null boundary at every positive width, including closed width.** In each
+component chart, each possible distinct-index threshold face from 36.8 is an
+affine hyperplane with nonzero derivative on \(V\), hence is Haar-null by
+36.4. Components have countable chart covers, and there are finitely many
+components, branch indices and ordered pair types. Their union is null.
+Add the null seams from 36.5. This contains every discontinuity of
+\(w_\epsilon|_H\), proving Haar-almost-everywhere continuity for **each**
+fixed finite \(\epsilon>0\). No exceptional width, connectedness assumption
+or full-torus hypothesis is discarded.
+
+Let \(w_{<\epsilon}\) use strict width. Its branch indicators differ from
+the closed indicators only where a distinct-index difference equals
+\(\epsilon\); diagonal equalities are impossible by 36.8. Therefore
+\(\int_H w_{<\epsilon}\,d\mu_H=\kappa_\epsilon\), and their support
+probabilities agree as well. Chart seams have no effect on this conclusion.
+This is a Haar-measure argument on all of \(H\), not an inference from a
+possibly exceptional orbit's finite or zero frequency of boundary hits.
+

@@ -1,0 +1,44 @@
+{
+  "source_report_sha256": "1ba4a1323d3aa4a54575b1e398af25c0c879333db6dda64e99222ee9a7088b20",
+  "kind": "recorded strict enclosure table, not a new execution",
+  "python": "3.12.13",
+  "python_flint": "0.8.0",
+  "precision_bits": 256,
+  "denominator": "10^50",
+  "interval_convention": "lower_numerator / denominator < value < (lower_numerator + 1) / denominator",
+  "lower_numerators": {
+    "mu": "346806722294572074517103011784929867316133612824257",
+    "V": "27133175249332569671634728430586873423713121031745",
+    "L": "331769774673979719717219590163822109430996798911538",
+    "H": "391917565156349138916753276648253140971544054562411",
+    "exact": "383809523809523809523809523809523809523809523809523",
+    "sharp": "383865586689570166735893845850881054340607342920482",
+    "quadratic": "385004796618310708532303878695076948942695007873789",
+    "Jensen": "385438777199267676938187661368470637018253489457890"
+  },
+  "input": [
+    [
+      2,
+      4
+    ],
+    [
+      3,
+      2
+    ],
+    [
+      5,
+      1
+    ],
+    [
+      7,
+      1
+    ]
+  ],
+  "n": 5040,
+  "sigma": 19344,
+  "sigma_over_n": "403/105",
+  "E_S": "35/8",
+  "strict_order": "exact < sharp < quadratic < Jensen",
+  "positive_support": "L > 0",
+  "limit": "Single boundary integer outside Robin n > 5040; numerical-library evidence only."
+}

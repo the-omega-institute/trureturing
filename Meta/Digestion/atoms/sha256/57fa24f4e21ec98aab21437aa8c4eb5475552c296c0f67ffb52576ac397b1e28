@@ -1,0 +1,18 @@
+**36.3 Exact annihilator description without a full-torus assumption.** One has
+\[
+H=\{x\in\mathbb T^d:\chi_\ell(x)=1\text{ for all }\ell\in\Lambda\}.
+\]
+The forward inclusion follows from 36.2. For the converse suppose \(x\notin H\).
+In a translation-invariant torus metric let \(g(y)=\operatorname{dist}(y,H)\).
+This continuous function is invariant under translations by \(H\), satisfies
+\(g(0)=0\), and has \(g(x)>0\). Ambient characters and their finite linear
+combinations form a conjugation-closed unital algebra separating torus points.
+The complex Stone-Weierstrass theorem gives a trigonometric polynomial \(P\)
+with \(\|P-g\|_\infty<g(x)/3\). Average \(P(y+v)\) over \(v\in H\).
+Character integration from 36.2 produces a polynomial \(Q\) using only
+\(\ell\in\Lambda\); the same error bound holds because \(g(y+v)=g(y)\).
+If \(x\) satisfied every annihilator character, then \(Q(x)=Q(0)\). But
+\(g(x)=|g(x)-g(0)|<2*g(x)/3\) would follow, a contradiction. This establishes
+the description using Haar measure and character approximation, not an
+unproved joint-independence assertion.
+

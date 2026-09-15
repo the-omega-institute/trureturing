@@ -1,0 +1,21 @@
+**36.37 Fibonacci cutoffs, encoding and distinct geometric domains.** Every
+established ordinary cutoff limit persists along increasing Fibonacci
+cutoffs \(F_j\to\infty\), simply because a convergent function or sequence
+has the same limit on a subsequence. Thus
+\(C_\epsilon(F_j)/\log F_j\to\kappa_\epsilon/(k*h_0)\), and weighted
+reference-index averages over all \(1\le n\le F_j\) tend to
+\(\kappa_\epsilon\). Shifted-family limits behave the same way. None of
+these statements determines the sparsely sampled orbit \(F_j*\alpha\), or
+membership frequency among the isolated indices \(n=F_j\).
+
+Numerical-order Zeckendorf recoding leaves the underlying integers unchanged,
+so membership counts at **every** numerical cutoff are exactly preserved;
+complete Fibonacci numerical intervals inherit the proved limits. Digit
+cylinders, codeword weighting and nonnumerical enumerations ask different
+sampling questions. No golden-ratio extremality, improved density, full-torus
+distribution or new orthogonality follows from recoding. A superiority claim
+would need its own precisely attributed theorem and metric. The stipulated
+Euclidean inner product in 36.27 remains a choice. A positive-width tube,
+the zero-width equal-coordinate locus, a real budget slab and a digit cylinder
+are distinct sets; their measures, densities and geometries cannot be exchanged.
+

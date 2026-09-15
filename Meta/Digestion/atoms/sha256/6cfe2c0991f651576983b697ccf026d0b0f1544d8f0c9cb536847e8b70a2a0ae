@@ -1,0 +1,11 @@
+**27.19 证明附引（附 27.4–27.13）：经典材料附引。** Boyd/Vandenberghe 的
+[Convex Optimization](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf)
+Appendix A.1.2 印刷 p.634 给范数齐次性和三角不等式;
+§3.1.5 印刷 pp.72-73 给范数凸性及由三角不等式、齐次性作的证明;
+§3.1.3 式 (3.3) 印刷 p.70 给严格凸函数在不同点的严格一阶支撑不等式。
+这些是 literature-attested 的经典材料,不是该书含有本节素数定理的断言。
+27.4 的欧氏范数及增量等号、27.6 的严格 Bernoulli、27.13 的抽屉构造已在本节自足证明。
+这里没有穷尽检索新颖性,没有 Lean 或 RH 结果。
+
+[原有固定恒等式程序](../../reports/quantized-gh/coordinate-separation.py)保留原 I11 的十项标准库检查；原报告结果为全部通过。数学来源为实际 PRO `a9d1269e-64ae-4a9a-b90f-8982ff023ee6`。这些检查不承担三角等号分类、全域严格性、射线量词或抽屉极限证明，所需完整证明见本节 27.4–27.13。primary 使用获供定义而未独立读取仓库全文；该来源限制不因程序留存而改变。
+

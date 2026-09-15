@@ -1,0 +1,15 @@
+**29.20 证明附引（附 29.5–29.18）：经典方法附引。** 分数背包、
+对数幂级数、有限测度矩界、Vandermonde 可逆性、有理函数微分、
+紧区间极值和抽屉齐次同时逼近均为经典方法。
+分数背包的已有来源记录直接引用 26.28;
+NIST DLMF [4.6.E1](https://dlmf.nist.gov/4.6.E1.tex) 的对数级数,
+MathWorld [Vandermonde Determinant](https://mathworld.wolfram.com/VandermondeDeterminant.html)
+式 (1)-(2),及 Encyclopedia of Mathematics
+[Dirichlet theorem](https://encyclopediaofmath.org/wiki/Dirichlet_theorem)
+中 Diophantine approximations 小节的同时逼近与抽屉原理说明。
+这里使用的 \(Q=N^2\) 齐次特例已在 29.18 自足证明;
+没有把这些经典出处说成含有本比较差的专门邻域结论。
+收敛域和所需特殊化由本节的正支持及纸面证明核对。
+
+证明附引：[原有固定程序](../../reports/quantized-gh/common-height.py)及[原始结果](../../reports/quantized-gh/common-height-results.json)；数学来源为实际 PRO `fd06c983-162f-4f98-adab-2049d31a9f8d`，程序为原 I13 留存的 Fraction/SymPy 1.14.0 固定核验，21 项通过。全部高度和整数矩的结论由本节完整证明承担，未计算有效共同高度截止或新素数见证。
+

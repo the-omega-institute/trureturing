@@ -1,0 +1,32 @@
+**36.30 Exact budget inverse image and strict cutoff buffers.** Fix steps
+\(h_i>0\) and a positive baseline box \(c_i^0\). Translate independently by
+\(\xi_i\ge0\) with \(\min_i\xi_i=0\), and set
+\(S_\xi=\sum_i\xi_i\), \(c_i^\xi=c_i^0+\xi_i\),
+\(A_\xi=A_0+S_\xi\). Target budgets \(M_j^\xi\) correspond exactly to
+baseline budgets \(M_j^0=M_j^\xi-S_\xi\), for \(j=0,1\). For each corner,
+\[
+M_0^\xi\le A_\xi+\sum_i e_i*h_i\le M_1^\xi
+\quad\Longleftrightarrow\quad
+M_0^0\le A_0+\sum_i e_i*h_i\le M_1^0.
+\]
+The bijection preserves each endpoint equality, the width, corner count and
+residual fractional capacity \(M_1^\xi-A_\xi=M_1^0-A_0\), including zero
+capacity, saturation and slack. It therefore identifies the full feasible
+polytopes, not just an assumed optimal face.
+
+For a fixed cutoff \(B_{\rm cut}\), however, the exact inverse image is
+\[
+M_0^\xi>B_{\rm cut}\quad\Longleftrightarrow\quad
+M_0^0>B_{\rm cut}-S_\xi.
+\]
+A baseline result restricted to \(M_0^0>B_{\rm cut}\) covers exactly the
+target subset \(M_0^\xi>B_{\rm cut}+S_\xi\), with its other hypotheses.
+If \(0\le\xi_i\le\epsilon\), then \(S_\xi\le(k-1)*\epsilon\).
+A sufficient uniform target buffer is the **strict** inequality
+\(M_0^\xi>B_{\rm cut}+(k-1)*\epsilon\); alternatively a baseline theorem
+on \(M_0^0>B_{\rm cut}-(k-1)*\epsilon\) covers the full target cutoff
+domain. Weak buffer equality can give \(M_0^0=B_{\rm cut}\) when
+\(S_\xi=(k-1)*\epsilon\), outside the strict baseline domain. Only a
+theorem on the entire wider domain permits unrestricted transfer followed
+by intersection with the original strict cutoff, as already proved in 34.17.
+

@@ -1,0 +1,28 @@
+**36.8 All possible threshold faces and every derivative.** Away from seams,
+a fixed branch is admitted exactly when
+\(\Delta_i-\Delta_j\le\epsilon\) for every ordered pair
+\(i,j\in\{0,\ldots,d\}\). Its indicator is locally constant unless a
+threshold equality occurs. Both signs are covered by the two orders; ordinary
+ties away from the threshold do not change admission. For a tangent vector
+\(v\in V\), every distinct-index derivative is explicitly
+\[
+\begin{aligned}
+d(\Delta_i-\Delta_j)(v)&=-h_i*v_i+h_j*v_j &&(i,j>0,\ i\ne j),\\
+d(\Delta_i-\Delta_0)(v)&=-h_i*v_i &&(i>0),\\
+d(\Delta_0-\Delta_j)(v)&= h_j*v_j &&(j>0).
+\end{aligned}
+\]
+The last two forms are nonzero on \(V\) by 36.5. If a mixed form vanished
+identically, evaluate it on the integer spanning set of \(V\) in 36.4.
+For each such integer vector, \(h_i*v_i=h_j*v_j\) and irrational
+\(h_i/h_j\) force \(v_i=v_j=0\): one zero forces the other, and two nonzero
+integers would give a rational ratio. Both coordinate projections would
+then vanish on the real span \(V\), contradicting 36.5. So every mixed
+form is nonzero as well.
+
+For **every diagonal pair** \(i=j\), including each \(i>0\) and \(i=0\),
+\(\Delta_i-\Delta_i=0\) identically. Its threshold equality is
+\(0=\epsilon\), impossible for \(\epsilon>0\). The diagonal derivative is
+zero but there is no diagonal face to measure. Tied extrema at width
+\(\epsilon\) are already in the union of the distinct-index faces above.
+

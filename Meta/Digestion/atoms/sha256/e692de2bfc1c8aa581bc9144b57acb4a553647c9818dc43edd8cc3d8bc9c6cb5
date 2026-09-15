@@ -1,0 +1,27 @@
+**36.21 Exact asymptotic smooth-family ratio and integer densities.** Divide
+36.16 by 36.20, whose leading coefficient is positive. The exact asymptotic
+ratio is
+\[
+\frac{C_\epsilon(X)}{S_P(X)}\sim
+\kappa_\epsilon*(k-1)!*\left(\prod_{i=1}^d h_i\right)*
+(\log X)^{1-k}\longrightarrow0.
+\]
+Under \(H=\mathbb T^d\) this simplifies to
+\(k!*\epsilon^{k-1}*(\log X)^{1-k}\); for \(k=2\) the simplification
+is unconditional and equals \(2*\epsilon/\log X\). Thus the leading
+proportion within a two-prime smooth family is independent of its prime
+labels even though its absolute coefficient in 36.19 depends on them.
+
+The bound \(C_\epsilon(X)=O(1+\log X)\) gives natural integer density zero.
+For the set of its distinct integers, partial summation gives
+\[
+\sum_{\substack{N\text{ in the tube}\\N\le X}}\frac1N
+=\frac{C_\epsilon(X)}X+\int_1^X\frac{C_\epsilon(t)}{t^2}\,dt.
+\]
+The integral is bounded as \(X\to\infty\), because
+\(\int_1^\infty(1+\log t)/t^2\,dt<\infty\). Consequently the total
+reciprocal sum converges, and its quotient by \(\log X\) tends to zero:
+logarithmic density is also zero. A counting function proportional to
+\(\log X\) is not positive logarithmic density. These facts do not conflict
+with positive support or weighted frequency in the reference exponent.
+

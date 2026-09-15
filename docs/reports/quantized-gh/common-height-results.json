@@ -1,0 +1,29 @@
+{
+  "exact_fixed_checks": 21,
+  "checks": [
+    "exp(7/10) > 2 through degree four",
+    "exp(11/10) > 3 through degree five",
+    "four-term log5 lower bound",
+    "theta < 7/8 by integer powers",
+    "exp(3/10) > 4/3",
+    "exp(9/10) > 12/5",
+    "strict positive m from two strict exponential bounds",
+    "rho squared upper constant",
+    "rho squared lower bound implies eta > 9/10",
+    "lambda lower constant",
+    "second-moment envelope bound",
+    "second-moment mixture bound",
+    "strict second-moment sign",
+    "geometric envelope tail from n=3",
+    "scaled-gap neighborhood margin",
+    "first-moment neighborhood margin",
+    "shape-projection identity",
+    "shape-projection remainder on 0<=middle<=width",
+    "leading-term strict-tail cutoff boundary",
+    "eight-atom derivative highest coefficient",
+    "mass-zero derivative degree at most six"
+  ],
+  "sympy": "1.14.0",
+  "CPU_candidate_search": false,
+  "GPU_dispatches": 0
+}

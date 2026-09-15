@@ -1,0 +1,32 @@
+**36.27 General-dimensional box, LP and envelope definitions.** For the actual
+positive coordinates \(c_i=m_i*h_i\), use row sets
+\(\mathcal C_i=\{c_i,c_i+h_i\}\), \(T=\min_i c_i>0\),
+\(A=\sum_i c_i\), and \(f(x)=\log(1-\exp(-x))\) on \(x>0\).
+For finite real \(M_0<M_1\), put
+\[
+I=[M_0/k,M_1/k],\quad \mu=M_1/k,\quad
+\delta_i=\operatorname{dist}(I,\mathcal C_i),\quad V_0=\sum_i\delta_i^2,
+\]
+\[
+\rho=\sqrt{V_0/(k*(k-1))},\quad L_{\rm env}=\mu-\rho,\quad
+U_{\rm env}=\mu+(k-1)*\rho,\quad r_{\rm cap}=M_1-A.
+\]
+The distance is the infimum of absolute differences, and \(V_0\) has no
+additional division by \(k\). With the full fractional feasible polytope,
+\[
+\mathcal P(r_{\rm cap})=\{y\in[0,1]^k:\sum_i h_i*y_i\le r_{\rm cap}\},
+\]
+\[
+D(M_1)=\max_{y\in\mathcal P(r_{\rm cap})}
+\sum_i\big((1-y_i)*f(c_i)+y_i*f(c_i+h_i)\big),
+\]
+\[
+\Psi=f(U_{\rm env})+(k-1)*f(L_{\rm env}),\qquad G=D-\Psi.
+\]
+The lower budget enters \(I\), not another constraint on \(y\).
+These are the existing comparison definitions of sections 27, 30, 31 and 34.
+The stipulated inner product is ordinary Euclidean,
+\(\langle u,v\rangle=\sum_i u_i*v_i\), with its norm; prime labels and
+encodings do not supply orthogonality. Support and feasibility are checked
+below before using \(f(L_{\rm env})\) or any sign input.
+

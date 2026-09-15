@@ -1,0 +1,20 @@
+**36.19 Unconditional two-prime coefficient and its scoped comparison.** For
+\(k=2\), the irrational rotation \(\alpha_1=h_0/h_1\) has the whole circle
+as its closure, by the circle argument in 36.5. Thus 36.18 applies
+unconditionally and gives, for every finite \(\epsilon>0\),
+\[
+\kappa_\epsilon=2*\epsilon/h_1,\qquad
+C_\epsilon(X)=\frac{\epsilon}{\log p_0*\log p_1}*\log X+o(\log X).
+\]
+Here the width condition is just \(|h_1*(j_1-x_1)|\le\epsilon\).
+There is some branch exactly when the circle distance to the nearest integer
+is at most \(\epsilon/h_1\). Circle Haar measure therefore gives
+\(\nu_\epsilon=\min(1,2*\epsilon/h_1)\), including closed endpoints, whose
+measure is zero. This also proves the multiplicity/probability example in
+36.14. At a fixed logarithmic width, a smaller product
+\(\log p_0*\log p_1\) has a larger leading absolute counting coefficient;
+fixing one prime and increasing the other decreases it. This is an asymptotic
+coefficient comparison, not finite-\(X\) set inclusion, a \(G\)-sign comparison
+or positive ordinary integer density. No unconditional blanket comparison
+for \(k\ge3\) follows from a formula requiring a full torus.
+

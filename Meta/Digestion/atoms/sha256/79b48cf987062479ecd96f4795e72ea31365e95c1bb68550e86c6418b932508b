@@ -1,0 +1,30 @@
+**36.16 Closed cutoff squeeze and reference-invariant coefficient.** Set
+\(y_X=(\log X+S_h)/(k*h_0)\) and
+\(\delta=d*\epsilon/(k*h_0)\). The exact size bound in 36.15 gives
+\[
+F(y_X-\delta)\le C_\epsilon(X)\le F(y_X+\delta).
+\]
+For the left inequality, \(n\le y_X-\delta\) forces \(\log N\le\log X\).
+For the right one, \(\log N\le\log X\) and \(R\ge-d*\epsilon\) force
+\(n\le y_X+\delta\). Both arguments allow equality. A change of real index
+cutoff by fixed \(\delta\) crosses at most \(\lceil\delta\rceil+1\) integers,
+each of multiplicity at most \(B_\epsilon\). Hence
+\[
+C_\epsilon(X)=F(y_X)+O(1)
+=\frac{\kappa_\epsilon}{k*h_0}*\log X+o(\log X).
+\]
+Floor endpoints, positivity discards and multiple branches are all included.
+If \(N(m)=N(m')\), unique factorization gives \(m_i-1=m'_i-1\) for every
+labeled prime, so no distinct tuples are identified in this count.
+
+Repeat this proved theorem with \(p_r\) as reference and write the resulting
+mean as \(\kappa_\epsilon^{(r)}\). The intrinsic counting function is unchanged
+by the coordinate permutation. Its limit divided by \(\log X\) therefore gives
+\[
+\frac{\kappa_\epsilon^{(r)}}{k*h_r}
+=\frac{\kappa_\epsilon^{(0)}}{k*h_0}.
+\]
+It is \(\kappa_\epsilon^{(r)}/h_r\) that is invariant; raw multiplicity means
+and support probabilities need not be. This fixed-parameter proof supplies no
+discrepancy rate, evaluated annihilator or uniform shrinking-window error.
+

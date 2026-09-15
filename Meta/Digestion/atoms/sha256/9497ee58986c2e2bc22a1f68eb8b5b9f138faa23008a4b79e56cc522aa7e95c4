@@ -1,0 +1,20 @@
+**36.10 The actual strict-versus-closed correction is finite.** If a positive
+integer tuple has width exactly \(\epsilon>0\), choose its ordered distinct
+maximum/minimum pair \(i,j\). The equation
+\(m_i*h_i-m_j*h_j=\epsilon\) has at most one integer solution pair. Indeed
+subtracting two solutions gives
+\((m_i-m'_i)*h_i=(m_j-m'_j)*h_j\); irrationality in 36.2 forces both
+differences to vanish. Once this pair is fixed, every other coordinate
+\(m_l*h_l\) lies in the fixed bounded closed interval
+\([m_j*h_j,m_i*h_i]\), which contains only finitely many positive multiples
+of \(h_l\). There are finitely many ordered maximum/minimum pairs. Thus the
+actual boundary set \(\mathcal E_\epsilon\) is finite. Exactly,
+\[
+C_\epsilon(X)-C_{<\epsilon}(X)
+=\sum_{m\in\mathcal E_\epsilon}\mathbf1_{\{N(m)\le X\}}\ge0.
+\]
+This correction is bounded in \(X\) and eventually constant. Multiple extreme
+pairs count the tuple only once in \(\mathcal E_\epsilon\). It supplements
+the Haar-null proof in 36.9 and preserves every equality at the integer-size
+cutoff. Width zero is classified separately in 36.25.
+

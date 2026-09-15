@@ -1,0 +1,21 @@
+**36.29 Positive envelope support, including ties and zero radius.** Suppose
+at least one actual corner \(v\) lies in the closed budget slab, and let
+\(\bar v=\sum_i v_i/k\). Then \(\bar v\in I\), \(v_i\in\mathcal C_i\),
+and \(u_i=v_i-T\ge0\). Thus
+\[
+\delta_i\le|v_i-\bar v|,\qquad
+V_0\le\sum_i(v_i-\bar v)^2
+=\sum_i u_i^2-k*(\bar v-T)^2
+\le k*(k-1)*(\bar v-T)^2.
+\]
+The last inequality uses \(\sum_i u_i^2\le(\sum_i u_i)^2
+=k^2*(\bar v-T)^2\), since all cross-products are nonnegative.
+Consequently \(\rho\le\bar v-T\le\mu-T\), whence
+\(U_{\rm env}\ge L_{\rm env}\ge T>0\). This proves the support directly,
+including endpoints, ties, branch changes, zero distance and \(\rho=0\),
+where \(\Psi=k*f(\mu)\). It also covers one-corner slabs and degenerate
+mean intervals when support alone is considered; their \(G\) signs are not
+supplied by the two-corner results. With no corner, this proof asserts no
+positive envelope support. The same calculation applies to the continuous
+positive-coordinate baseline and shifted grids used below.
+

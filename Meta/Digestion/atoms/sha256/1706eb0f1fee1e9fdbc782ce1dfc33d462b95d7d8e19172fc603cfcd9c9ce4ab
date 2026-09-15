@@ -1,0 +1,22 @@
+**36.13 Positive Bohr inclusion and an explicit Haar lower bound.** Choose any
+integer \(Q\ge3\) with \(2*h_{\max}/Q<\epsilon\), for example
+\(Q=\max(3,\lfloor2*h_{\max}/\epsilon\rfloor+1)\), and put
+\[
+U_Q=\{x\in H:\max_{1\le i\le d}\|x_i\|_{\mathbb R/\mathbb Z}<1/Q\}.
+\]
+In each coordinate of \(U_Q\) choose the unique nearest integer branch:
+\(j_i=0\) near zero and \(j_i=1\) near one in \([0,1)\). Its errors satisfy
+\(|\Delta_i|<h_i/Q\), with \(\Delta_0=0\), so the full range is strictly
+less than \(2*h_{\max}/Q<\epsilon\). Thus \(U_Q\subset\{w_\epsilon>0\}\).
+Partition \([0,1)^d\) into \(Q^d\) half-open cubes of side \(1/Q\) and
+intersect with \(H\). Some cell \(E\) has measure at least \(Q^{-d}\).
+Choose \(a\in E\); differences of representatives in the same half-open
+coordinate interval have absolute value strictly less than \(1/Q\).
+Therefore \(E-a\subset U_Q\). Translation invariance proves
+\[
+\kappa_\epsilon\ge\nu_\epsilon\ge\mu_H(U_Q)\ge Q^{-d}>0.
+\]
+This strict half-open-cell argument works on disconnected and proper \(H\).
+The Bohr family proves positivity; it does not replace the complete family
+or turn its weighted mean into this lower bound.
+

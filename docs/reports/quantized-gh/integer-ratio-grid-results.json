@@ -1,0 +1,85 @@
+{
+  "status": "pass",
+  "scope": "one hand-derived integer-ratio real grid",
+  "candidate_search": false,
+  "configurations_verified": 8,
+  "python_flint": "0.8.0",
+  "arb_precision_bits": 256,
+  "rows": [
+    [
+      "1000/101",
+      "1020/101"
+    ],
+    [
+      "111650/11211",
+      "113680/11211"
+    ],
+    [
+      "111650/11211",
+      "113680/11211"
+    ]
+  ],
+  "coordinate_sum_slab": [
+    "29999997/1000000",
+    "30"
+  ],
+  "integer_lower_endpoint_ratios": [
+    50,
+    55,
+    55
+  ],
+  "theta": "203/222",
+  "V0": "1655254483717059563/125686521000000000000",
+  "inventory": [
+    {
+      "bits": "000",
+      "sum": "334300/11211",
+      "feasible": false
+    },
+    {
+      "bits": "001",
+      "sum": "30",
+      "feasible": true
+    },
+    {
+      "bits": "010",
+      "sum": "30",
+      "feasible": true
+    },
+    {
+      "bits": "011",
+      "sum": "338360/11211",
+      "feasible": false
+    },
+    {
+      "bits": "100",
+      "sum": "336520/11211",
+      "feasible": false
+    },
+    {
+      "bits": "101",
+      "sum": "3050/101",
+      "feasible": false
+    },
+    {
+      "bits": "110",
+      "sum": "3050/101",
+      "feasible": false
+    },
+    {
+      "bits": "111",
+      "sum": "340580/11211",
+      "feasible": false
+    }
+  ],
+  "classification_sha256": "f9eca670c4f6417b6247d2a35067bec1b3851204b7a06607a9755b8bc720abf0",
+  "strict_gap_bounds": [
+    "1/10000000000",
+    "1/1000000000"
+  ],
+  "gap_approximation_not_certificate": "[3.366686556042778282400921890250120016861849146400451607619698303077e-10 +/- 9.12e-77]",
+  "optimality": "row-1 secant, other slopes strictly smaller, matching mixture",
+  "prime_grid": false,
+  "limitations": "Widths are rational, not certified log primes; rows 2 and 3 coincide.",
+  "program_sha256": "7372b2a91cd150f342c1c253fc3ed3dc05c93d8ae812d1ac1f71c1b0480ebce9"
+}

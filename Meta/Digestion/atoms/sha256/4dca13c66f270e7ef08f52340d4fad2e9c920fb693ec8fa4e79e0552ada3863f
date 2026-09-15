@@ -1,0 +1,30 @@
+**36.4 Rational tangent space and all finite components.** Every subgroup of
+\(\mathbb Z^d\) is finitely generated: induct on \(d\), project to the first
+coordinate, lift a generator of its nonzero image in \(\mathbb Z\) if needed,
+and add generators for the kernel by induction. Apply this to \(\Lambda\),
+put its generators in the rows of an integer matrix \(B\) with \(s\) rows,
+and set \(V=\ker_{\mathbb R}B\). The empty matrix is allowed. By 36.3,
+\[
+H=\{x\bmod\mathbb Z^d:B*x\in\mathbb Z^s\}.
+\]
+Rational row reduction gives a rational basis of \(V\); clearing denominators
+gives integer vectors spanning \(V\) over \(\mathbb R\). No saturation of
+\(\Lambda\) is assumed. In a sufficiently small injective coordinate cube
+about zero, every component of \(B*x\) has absolute value less than 1. The
+local lift of \(H\) is therefore exactly \(V\) intersected with that cube.
+For the quotient map \(\pi:\mathbb R^d\to\mathbb T^d\), the subgroup
+\(\pi(V)\) contains a neighborhood of zero in \(H\). It is open; its other
+cosets are open, so it is also closed. Compactness gives finitely many cosets.
+The image \(\pi(V)\) is connected. Conversely a connected subset of \(H\)
+cannot cross those disjoint open cosets. Thus \(H^0=\pi(V)\) is exactly the
+identity component and those finitely many cosets are all components.
+
+The discrete group \(V\cap\mathbb Z^d\) contains a real spanning set of
+integer vectors, so it is a full lattice in \(V\). The quotient
+\(V/(V\cap\mathbb Z^d)\) identifies with \(H^0\). Lebesgue measure on a
+lattice fundamental domain, normalized to total mass 1, pushes forward to
+Haar probability on \(H^0\). Haar measure on \(H\) assigns equal mass to
+its finitely many component cosets. In every local affine chart of a component,
+a hyperplane with nonzero derivative on \(V\) consequently has Haar measure
+zero. This gives the measure model needed even for proper, disconnected \(H\).
+

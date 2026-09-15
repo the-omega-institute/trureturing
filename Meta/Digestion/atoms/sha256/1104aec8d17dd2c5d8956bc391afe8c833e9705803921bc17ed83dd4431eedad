@@ -1,0 +1,4 @@
+**包络依据。** [完整自足固定程序](../../reports/quantized-gh/fixed-5040.py)及[原 caller 包围结果](../../reports/quantized-gh/fixed-5040-sign-results.json)。
+
+固定数值的数学来源为实际 PRO `0838ec9d-f978-4cfc-8d59-965a3331f912`；其原 dyadic 可执行程序未供给。所附程序是原 I16 的自足 Arb 适配程序（Python-FLINT 0.8.0、256 位），原适配报告为 277 项断言通过，其中四个密度与 48 个节点包围和原 caller 表相同，其余断言不增加连续量词。原 caller 的[完整 71 槽结果](../../reports/quantized-gh/fixed-5040-node-results.json)只判 eligibility，55 个未准入槽不是负号认证。最优性与连续薄层结论由本节纸面证明承担；这些文件只覆盖固定箱体，不提供 translated5040 的更宽域裕量。
+
