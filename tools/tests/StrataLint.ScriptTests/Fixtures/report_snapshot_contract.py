@@ -1,4 +1,5 @@
 """Actions report snapshot export, handoff, restore, and layer-isolation contracts."""
+import errno
 import hashlib
 import json
 import os
@@ -27,9 +28,9 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
             (logs / "producer.log").write_text(contents)
         return owner, source, output
 
-    def publish_command(self, owner, source, output):
+    def publish_command(self, owner, source, output, *extra):
         with mock.patch.object(sys, "argv", ["report_cache.py", "publish",
-                "--report", str(source), "--output", str(output)]):
+                "--report", str(source), "--output", str(output), *extra]):
             return owner.main()
 
     def published_bytes(self, owner, report):
@@ -56,6 +57,35 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
         self.assertTrue(staged.parent.name.startswith(".lean-report-publish-"))
         self.assertEqual(output.name, staged.name)
         self.assertEqual([], list(output.parent.glob(".lean-report-publish-*")))
+
+        import preparation
+        cache = output.parent / "cache"
+        extra = ("--repository", str(source.parent.parent), "--preparation", str(source.parent),
+                 "--execution", str(source) + ".execution.json", "--cache-root", str(cache))
+        for failure in (None, ValueError("wrong candidate"), subprocess.CalledProcessError(17, "input-helper")):
+            with self.subTest(completion=failure), \
+                    mock.patch.object(preparation, "complete", side_effect=failure) as complete, \
+                    mock.patch.object(owner, "partition_path", return_value=REV + "/linux-x64"), \
+                    mock.patch.object(delta, "validate_materials", wraps=delta.validate_materials) as validate, \
+                    mock.patch.object(owner, "store", wraps=owner.store) as store:
+                self.assertEqual(0 if failure is None else 2,
+                                 self.publish_command(owner, source, output, *extra))
+                complete.assert_called_once_with(source.parent.parent, source.parent, output,
+                                                pathlib.Path(str(source) + ".execution.json"))
+                self.assertEqual(1, validate.call_count)
+                self.assertEqual(int(failure is None), store.call_count)
+        snapshot = next(cache.glob("*/*/*/raw-lean-report.json"))
+        self.assertEqual(expected[""], snapshot.read_bytes())
+        with mock.patch.object(owner, "publish", wraps=owner.publish) as publish:
+            self.assertEqual(2, self.publish_command(owner, source, output, "--cache-root", str(cache)))
+            self.assertEqual(0, publish.call_count)
+        with mock.patch.object(preparation, "complete"), mock.patch.object(owner, "store", side_effect=OSError("save failed")):
+            self.assertEqual(0, self.publish_command(owner, source, output, *extra))
+        with mock.patch.object(os, "replace", side_effect=OSError("publication failed")), \
+                mock.patch.object(preparation, "complete") as complete, mock.patch.object(owner, "store") as store:
+            self.assertEqual(2, self.publish_command(owner, source, output, *extra))
+            self.assertEqual(0, complete.call_count)
+            self.assertEqual(0, store.call_count)
 
     def test_report_publish_rejects_invalid_source_checksum_before_copy(self):
         owner, source, output = self.prepare_publish()
@@ -110,6 +140,16 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
                 self.assertEqual(0, replace.call_count)
                 self.assertEqual(before, self.published_bytes(owner, output))
                 self.assertEqual([], list(output.parent.glob(".lean-report-publish-*")))
+        valid_bundle = owner.valid_bundle
+        for suffix in STORE_SUFFIXES:
+            with self.subTest(after_validation=suffix):
+                def changed_after_validation(staged, **options):
+                    result = valid_bundle(staged, **options)
+                    owner.member(staged, suffix).write_bytes(b"changed after validation")
+                    return result
+                with mock.patch.object(owner, "valid_bundle", changed_after_validation):
+                    self.assertEqual(2, self.publish_command(owner, source, output))
+                self.assertEqual(before, self.published_bytes(owner, output))
 
     def test_report_publish_requires_nonempty_log_directory(self):
         owner, source, output = self.prepare_publish()
@@ -153,6 +193,17 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
         snapshot = arguments.cache_root / partition / report_cache.seed_identity(source) / "raw-lean-report.json"
         return report_cache, arguments, snapshot
 
+    def accepted_bundle(self, owner, arguments):
+        # The fixture seed already has valid partition/runtime/material binding.
+        logs = owner.member(arguments.report, ".logs")
+        logs.mkdir(exist_ok=True)
+        (logs / "producer.log").write_text("complete producer")
+        output = arguments.report.parent / "accepted" / arguments.report.name
+        from argparse import Namespace
+        accepted = owner.publish(Namespace(report=arguments.report, output=output))
+        arguments.report = output
+        return accepted
+
     def test_report_store_same_bundle_validates_materials_once(self):
         owner, arguments, snapshot = self.prepare_store()
         import delta
@@ -161,6 +212,17 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
             self.assertTrue(owner.store(arguments))
         self.assertEqual(1, validate.call_count)
         self.assertEqual(before, {suffix: owner.member(snapshot, suffix).read_bytes() for suffix in STORE_SUFFIXES})
+        accepted = self.accepted_bundle(owner, arguments)
+        for existing in (True, False):
+            if not existing:
+                shutil.rmtree(snapshot.parent)
+            with mock.patch.object(delta, "validate_materials", wraps=delta.validate_materials) as validate:
+                self.assertTrue(owner.store(arguments, accepted=accepted))
+            self.assertEqual(0, validate.call_count)
+            self.assertEqual(before, {suffix: owner.member(snapshot, suffix).read_bytes() for suffix in STORE_SUFFIXES})
+        arguments.repository = snapshot.parent
+        with mock.patch.object(owner, "partition_path", return_value="b" * 40 + "/linux-x64"):
+            self.assertFalse(owner.store(arguments, accepted=accepted))
 
     def test_report_store_renamed_source_binds_cached_checksum_name(self):
         owner, arguments, snapshot = self.prepare_store("candidate.json")
@@ -178,20 +240,33 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
 
     def test_report_store_rebuilds_each_missing_or_corrupt_snapshot_file(self):
         owner, arguments, snapshot = self.prepare_store()
+        accepted = self.accepted_bundle(owner, arguments)
         expected = {suffix: owner.member(snapshot, suffix).read_bytes() for suffix in STORE_SUFFIXES}
-        for suffix in STORE_SUFFIXES:
-            for missing in (False, True):
-                with self.subTest(suffix=suffix, missing=missing):
+        for proof in (None, accepted):
+            for suffix, missing in ((suffix, missing) for suffix in STORE_SUFFIXES for missing in (False, True)):
+                with self.subTest(suffix=suffix, missing=missing, accepted=proof is not None):
                     damaged = owner.member(snapshot, suffix)
                     if missing:
                         damaged.unlink()
                     else:
                         damaged.write_bytes(expected[suffix] + b"corrupt")
-                    self.assertTrue(owner.store(arguments))
+                    self.assertTrue(owner.store(arguments, accepted=proof))
                     self.assertEqual(expected, {key: owner.member(snapshot, key).read_bytes() for key in STORE_SUFFIXES})
+        shutil.rmtree(snapshot.parent)
+        copy_bundle = owner.copy_bundle
+        for suffix in STORE_SUFFIXES:
+            with self.subTest(damaged_copy=suffix):
+                def damaged_copy(report, target):
+                    copy_bundle(report, target)
+                    owner.member(target, suffix).write_bytes(b"damaged copy")
+                with mock.patch.object(owner, "copy_bundle", damaged_copy), self.assertRaises(ValueError):
+                    owner.store(arguments, accepted=accepted)
+                self.assertFalse(snapshot.exists())
+                self.assertEqual([], list(snapshot.parent.parent.glob(".staging-*")))
 
     def test_report_store_rejects_each_missing_or_corrupt_source_file(self):
         owner, arguments, snapshot = self.prepare_store()
+        accepted = self.accepted_bundle(owner, arguments)
         expected = {suffix: owner.member(snapshot, suffix).read_bytes() for suffix in STORE_SUFFIXES}
         for suffix in STORE_SUFFIXES:
             for missing in (False, True):
@@ -203,33 +278,37 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
                             damaged.unlink()
                         else:
                             damaged.write_bytes(original + b"corrupt")
-                        try:
-                            accepted = owner.store(arguments)
-                        except (OSError, ValueError):
-                            accepted = False
-                        self.assertFalse(accepted)
+                        for proof in (None, accepted):
+                            try:
+                                stored = owner.store(arguments, accepted=proof)
+                            except (OSError, ValueError):
+                                stored = False
+                            self.assertFalse(stored)
                         self.assertEqual(expected, {key: owner.member(snapshot, key).read_bytes() for key in STORE_SUFFIXES})
                     finally:
                         damaged.write_bytes(original)
 
     def test_report_store_preserves_concurrent_winner_validation(self):
         owner, arguments, snapshot = self.prepare_store()
+        accepted = self.accepted_bundle(owner, arguments)
         expected = {suffix: owner.member(snapshot, suffix).read_bytes() for suffix in STORE_SUFFIXES}
-        for corrupt in (False, True):
-            with self.subTest(corrupt=corrupt):
-                shutil.rmtree(snapshot.parent)
+        for proof, corrupt, error in ((proof, corrupt, error) for proof in (None, accepted)
+                for error in (errno.EEXIST, errno.ENOTEMPTY) for corrupt in (False, True)):
+            with self.subTest(corrupt=corrupt, error=error, accepted=proof is not None):
+                if snapshot.parent.exists():
+                    shutil.rmtree(snapshot.parent)
                 def competing_publish(staged, target):
                     self.assertEqual(snapshot.parent, target)
                     shutil.copytree(staged, target)
                     if corrupt:
                         snapshot.write_bytes(b"corrupt winner")
-                    raise FileExistsError(str(target))
+                    raise OSError(error, str(target))
                 with mock.patch.object(pathlib.Path, "rename", competing_publish):
                     if corrupt:
-                        with self.assertRaises(FileExistsError):
-                            owner.store(arguments)
+                        with self.assertRaises(OSError):
+                            owner.store(arguments, accepted=proof)
                     else:
-                        self.assertTrue(owner.store(arguments))
+                        self.assertTrue(owner.store(arguments, accepted=proof))
                 if corrupt:
                     self.assertEqual(b"corrupt winner", snapshot.read_bytes())
                 else:
