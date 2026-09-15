@@ -18,7 +18,7 @@ $$\forall n:\mathbb{N}, 2<n\implies 8 \mid \operatorname{coeff}\left(n, \operato
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Paul D. Hanna (2026). *OEIS A396798: the fourth and eighth compositional iterates modulo eight*. URL: <https://oeis.org/A396798>.
+*Acknowledgement.* Paul D. Hanna (2026). *OEIS A396798: compositional iterates modulo eight*. URL: <https://oeis.org/A396798>.
 
 *Commentary.*
 
