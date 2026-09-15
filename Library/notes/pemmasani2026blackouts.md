@@ -38,8 +38,9 @@ needed finite-set form locally. The exact three-row upper bound also uses
 a collision across different row pairs. The two-row theorem by itself
 does not give the full three-row target.
 
-## Verified locators and boundaries
+## Verified locator
 
+- https://github.com/apemm/Kagey-Problems/blob/b9567e4dc1c7cf1e5034569571a9479b1b83dc57/kagey-problems/problem001/paper/main.tex
 - Preliminary-note Git revision:
   `b9567e4dc1c7cf1e5034569571a9479b1b83dc57`, dated
   2026-09-09T06:25:25Z. The complete 18,960-byte TeX has SHA-256
