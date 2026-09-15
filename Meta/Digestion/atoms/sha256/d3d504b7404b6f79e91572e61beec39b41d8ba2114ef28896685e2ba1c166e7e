@@ -1,0 +1,10 @@
+**定理。** 对所有 $g\ge2$，赋值
+
+$$(a_1,b_1,a_2,b_2)\longmapsto(Z,Y,X,1)$$
+
+并将其余生成元映为单位元，定义满射 $\phi_R:\Pi_g\twoheadrightarrow H(R)$。对每个整数 $n$，
+
+$$\boxed{\phi_R T^n=\operatorname{Ad}_{X^n}\phi_R.}$$
+
+当 $R=\mathbb Z$ 时 $\phi_R(a_1)\ne1$，且 $H(\mathbb Z)$ 无挠；当 $R=\mathbb Z/m$ 且 $m\ge2$ 时，$\phi_R(a_1)$ 的阶恰好为 $m$。
+

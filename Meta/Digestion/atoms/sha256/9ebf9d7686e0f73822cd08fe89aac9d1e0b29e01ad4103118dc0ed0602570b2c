@@ -1,0 +1,9 @@
+**定义。** 令 $\mathcal R_{g,m}=\operatorname{Hom}(\Pi_g,D_m)$，定义
+
+$$E_{g,m}:\Pi_g\longrightarrow D_m^{\mathcal R_{g,m}},\qquad
+E_{g,m}(x)(\rho)=\rho(x).$$
+
+令 $Q_{g,m}=\operatorname{im}E_{g,m}$，并将像限制映射记为 $q_{g,m}:\Pi_g\twoheadrightarrow Q_{g,m}$。其核为
+
+$$N_{g,m}=\bigcap_{\rho\in\mathcal R_{g,m}}\ker\rho.$$
+

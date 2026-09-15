@@ -1,0 +1,20 @@
+## 9. 轨道合同控制的剩余群论条件
+
+**命题。** 设群 $\Lambda$ 作用于集合 $X$，$\alpha\in X$，$H=\operatorname{Stab}_\Lambda(\alpha)$。对任意子群 $\Gamma,\Delta\le\Lambda$，
+
+$$\Delta\alpha\subseteq\Gamma\alpha
+\quad\Longleftrightarrow\quad\Delta\subseteq\Gamma H.$$
+
+当 $\Gamma$ 正规时，$\Gamma H$ 本身为子群。
+
+**证明。** $\delta\alpha\in\Gamma\alpha$ 当且仅当存在 $\gamma\in\Gamma$ 使 $\gamma^{-1}\delta\in H$，亦即 $\delta\in\Gamma H$。正规性保证子群乘积闭合。
+
+**命题。** 对由有限特征商定义的合同子群族，要使上述轨道包含对所有有限指数 $\Gamma$ 成立，只需且必须能为每个这样的轨道条件找到一个主合同核 $C$，使
+
+$$C\subseteq\Gamma H.$$
+
+只研究 $C\cap\langle\tau\rangle$ 并不能推出此包含。
+
+**证明。** 每个合同子群都包含相应的主合同核，故从轨道包含可以缩小到主核；反向取 $\Delta=C$ 即可。交于循环子群的条件只限制该循环子群中的元素，未限制 $C$ 在其余陪集中的元素。作为纯群作用的例子，令 $\Lambda=\mathbb Z^2$ 通过平移作用于自身，$\alpha=0$，$\Gamma=2\mathbb Z\times2\mathbb Z$，$A=\mathbb Z\times\{0\}$，$C=2\mathbb Z\times\mathbb Z$；则 $C\cap A\subseteq\Gamma$，但 $C\not\subseteq\Gamma$。这里 $\Gamma,C$ 均为有限指数子群；该例只说明给定 $C$ 的交集条件不足以推出所需包含，不否定其他主核的存在。
+
+

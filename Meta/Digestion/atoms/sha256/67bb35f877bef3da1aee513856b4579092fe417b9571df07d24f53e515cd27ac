@@ -1,0 +1,8 @@
+**定理 2.2（实际像上的精确因子化）。** 对任意 \(q:X\to Q\) 和 \(T:X\to Y\)，以下等价：
+\[
+\mathcal E(q;T)=\varnothing;
+\]
+\[
+\exists!\,\bar T:q[X]\to Y,\qquad T=\bar T\circ q.
+\]
+

@@ -1,0 +1,37 @@
+## 3. 从全部表示构造真正的特征商
+
+**定义。** 令 $\mathcal R_{g,m}=\operatorname{Hom}(\Pi_g,D_m)$，定义
+
+$$E_{g,m}:\Pi_g\longrightarrow D_m^{\mathcal R_{g,m}},\qquad
+E_{g,m}(x)(\rho)=\rho(x).$$
+
+令 $Q_{g,m}=\operatorname{im}E_{g,m}$，并将像限制映射记为 $q_{g,m}:\Pi_g\twoheadrightarrow Q_{g,m}$。其核为
+
+$$N_{g,m}=\bigcap_{\rho\in\mathcal R_{g,m}}\ker\rho.$$
+
+**定理。** $Q_{g,m}$ 有限，$N_{g,m}$ 在 $\Pi_g$ 的所有自同态下保持不变。特别地，$N_{g,m}$ 为特征子群。
+
+**证明。** 每个同态由 $2g$ 个生成元的像唯一确定，因此
+$|\mathcal R_{g,m}|\le(8m)^{2g}$，评价映射的目标为有限群。若 $x\in N_{g,m}$，则对每个自同态 $f$ 及每个 $\rho$，$\rho(f(x))=(\rho\circ f)(x)=1$，因为 $\rho\circ f$ 仍属于同一个表示族。故 $f(N_{g,m})\subseteq N_{g,m}$。对自同构及其逆同时应用此包含即得特征性。
+
+**定理。** $\tau$ 在 $Q_{g,m}$ 上诱导自同构 $T_{g,m}$，满足
+
+$$T_{g,m}q_{g,m}=q_{g,m}\tau.$$
+
+对每个整数 $n$，有
+
+$$\boxed{T_{g,m}^n\text{ 为内自同构}\quad\Longleftrightarrow\quad m\mid n.}$$
+
+当 $m\mid n$ 时，$T_{g,m}^n$ 实际上为恒等映射。因此 $T_{g,m}$ 在自同构群以及外自同构群中的阶都恰为 $m$。
+
+**证明。** 核的特征性给出良定义的诱导自同构；满射性保证唯一性。若 $m\mid n$，上一节的结论对全部表示同时成立，故评价向量不变。若 $T_{g,m}^n$ 为某个 $z\in Q_{g,m}$ 的内共轭，将评价向量投影到坐标 $\rho_m$，得到上一节所排除的共同共轭，除非 $m\mid n$。对负幂取逆，将结论化为正幂情形。
+
+**推论。** $[\tau]$ 在 $\operatorname{Out}(\Pi_g)$ 中具有无限阶。每个子群 $m\mathbb Z$ 都恰好是由特征商 $Q_{g,m}$ 所诱导的映射
+
+$$\mathbb Z\longrightarrow\operatorname{Out}(\Pi_g)
+\longrightarrow\operatorname{Out}(Q_{g,m})$$
+
+的核。
+
+**证明。** 若非零整数 $n$ 给出内自同构，取 $m>|n|$，其在 $Q_{g,m}$ 上的像仍为内自同构，与准确阶判据矛盾。核的描述直接来自该判据。
+

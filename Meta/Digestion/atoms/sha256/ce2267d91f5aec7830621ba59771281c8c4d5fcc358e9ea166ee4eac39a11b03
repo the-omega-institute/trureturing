@@ -1,0 +1,4 @@
+**证明。** 用模二交叉形式把字符识别为不同的非零向量 $x,y\in H_1(\Sigma_g;\mathbb F_2)$。存在辛二平面 $W$，使 $x\in W$ 而 $y$ 在 $W$ 和 $W^\perp$ 上的投影都非零。具体地，取 $z$ 使 $\langle x,z\rangle=1$。若 $\langle x,y\rangle=0$，再要求 $\langle y,z\rangle=1$，两个独立线性条件有解。若 $\langle x,y\rangle=1$，在该仿射超平面中避开 $y,x+y$ 即可。令 $W=\langle x,z\rangle$，就满足上述要求。模二辛基可提升为整数辛基，并由曲面映射类实现，因此 $W$ 可取为亏格一子曲面的一阶模二同调。
+
+令 $\alpha$ 为其边界。字符 $\chi$ 在补侧平凡，字符 $\psi$ 在两侧均非平凡。所以 $p_\chi(T_\alpha)=1$ 而 $p_\psi(T_\alpha)\ne1$。同一个真实分离扭转区分两个核。
+

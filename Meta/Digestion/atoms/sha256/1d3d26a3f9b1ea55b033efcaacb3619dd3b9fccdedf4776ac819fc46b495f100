@@ -1,0 +1,24 @@
+## 16. 在全部 Johnson 层保留的有限单群商
+
+**定义。** 固定闭、连通、可定向曲面 $\Sigma_g$，$g\ge3$，记 $\pi=\pi_1(\Sigma_g)$，$\mathcal M_g=\operatorname{Mod}^{+}(\Sigma_g)$。以下群作用始终来自保持曲面定向的映射类。令
+
+$$\mathcal J_c=\ker\left(\mathcal M_g\longrightarrow\operatorname{Out}(\pi/\gamma_{c+1}\pi)\right),\qquad c\ge1.$$
+
+$\mathcal J_1$ 是 Torelli 群，$\mathcal J_2$ 是 Johnson 核。Johnson 同态给出 $\mathcal J_c/\mathcal J_{c+1}$ 为交换群；Johnson 核由所有本质分离简单闭曲线上的 Dehn 扭转生成。
+
+**引理。** 设 $J_1\ge J_2\ge\cdots$ 是群 $\Lambda$ 的子群列，每个 $J_{c+1}$ 正规于 $J_c$ 且 $J_c/J_{c+1}$ 交换。若同态 $f:\Lambda\to F$ 满足 $F=[F,F]$ 和 $f(J_1)=F$，则 $f(J_c)=F$ 对所有 $c\ge1$ 成立。
+
+**证明。** 归纳。若 $f(J_c)=F$，由 $[J_c,J_c]\subseteq J_{c+1}$ 及同态保持交换子，得到
+
+$$F=[F,F]=[f(J_c),f(J_c)]=f([J_c,J_c])\subseteq f(J_{c+1})\subseteq F.$$
+
+**已知存在定理。** 对每个 $g\ge3$，存在非交换有限单群 $F$ 和满射 $f:\mathcal M_g\twoheadrightarrow F$，使 $f(\mathcal J_1)=F$。
+
+**证明依据。** Masbaum–Reid 的量子表示与强逼近构造给出 $\mathcal M_g$ 到任意大维数的一族 $\operatorname{PSL}(N,q)$ 的满射。Torelli 群正规，故其在同一个满射下的像为平凡群或整个单群。若像平凡，该满射将经 $\operatorname{Sp}(2g,\mathbb Z)$ 因子化；对构造中足够大的 $N$，辛群的合同子群性质排除了这一可能。这里需要的是同一个 $f$ 的限制满射，单独存在某个 Torelli 群商不够。
+
+**推论。** 可以固定一个这样的 $f$ 和 $\Gamma=\ker f$，使
+
+$$\boxed{f(\mathcal J_c)=F\quad\text{对所有 }c\ge1.}$$
+
+**证明。** 非交换单群完美，应用引理。
+

@@ -27391,3 +27391,229 @@ $P_n(T_mz_m)=T_n(P_nz_m)=T_nz_n$，两项条件俱全。
 本节的静态制备模型只比较指定经典输入族的输出态，不保证隐藏参考关联、相干输入行为或自适应过程的模拟；这些要求须另指定联合态或完整过程。定理 124.8 的存在性不提供有效连续模量或高效求最优中心的算法，有限维紧性所得中心存在性也未推广到无限维态空间。下一项研究问题因此是：在增加参考或过程结构后，哪些可检验的连续性与紧性条件仍能给出相应缺陷的精确延拓判据。
 
 ## 追加锚（本行以下为增补区）
+
+## 125. 均匀相干态的局部极限与表示边界
+
+本节复用 Q109 的有限均匀态及定义 124.1 的零下标合法串 $W_L$、紧载体 $\widehat X$ 和有限支持核心 $X_{\rm fs}$。固定左端第 $0$ 位而向右增加长度，取 $\varphi=(1+\sqrt5)/2$、$\alpha=\varphi^{-1}$，于是 $0<\alpha<1$ 且 $\alpha+\alpha^2=1$。记 $D_L=|W_L|=F_{L+2}$，其中 $F_0=0,F_1=1$，特别地 $D_0=1$。在完整 qubit 空间 $\mathcal K_L=(\mathbb C^2)^{\otimes L}$ 中沿用
+$$
+|\Omega_L\rangle=|\Psi_L\rangle
+=D_L^{-1/2}\sum_{w\in W_L}|w\rangle.
+$$
+所讨论的是这一个指定态族的局部极限及其柱读数的表示条件；数字载体仍区别于 CSA 定义 1–3 的事件档案。以下均为普通数学定义与证明。
+
+**命题 125.1（固定左窗口的约化极限）。** 固定整数 $n\ge1$，令 $L=n+m$，$m\ge1$，并在完整张量积上定义
+$$
+\rho_n^{(L)}=\operatorname{Tr}_{\{n,\ldots,L-1\}}
+|\Omega_L\rangle\langle\Omega_L|.
+$$
+对 $u,v\in W_n$，有
+$$
+(\rho_n^{(L)})_{uv}=
+\begin{cases}
+D_m/D_L,&u_{n-1}=v_{n-1}=0,\\
+D_{m-1}/D_L,&\text{其余合法前缀对}.
+\end{cases}
+$$
+含非法前缀的行或列全为零。置
+$$
+s_n=\sum_{u\in W_n}|u\rangle,\qquad
+t_n=\sum_{\substack{u\in W_n\\u_{n-1}=0}}|u\rangle.
+$$
+当 $L\to\infty$ 且 $n$ 固定时，$\rho_n^{(L)}$ 在迹范数下收敛到
+$$
+\rho_n=\alpha^{n+1}|s_n\rangle\langle s_n|
+       +\alpha^{n+2}|t_n\rangle\langle t_n|.
+$$
+每个 $\rho_n$ 都正、迹为 $1$、秩恰为 $2$，且在完整 qubit 空间之间满足
+$$
+\operatorname{Tr}_{\{n\}}\rho_{n+1}=\rho_n.
+$$
+
+证明。偏迹的矩阵元是使 $uz$ 与 $vz$ 同时合法的长度 $m$ 尾字 $z$ 的数量除以 $D_L$。若两个前缀末位均为 $0$，任意 $z\in W_m$ 均可；否则 $z$ 的首位必须为 $0$，余下 $m-1$ 位任意合法，数量为 $D_{m-1}$。这个计数也含 $m=1$ 的情形。非法前缀不可能被延长为合法字，故相应行列为零。
+
+由 Binet 公式 $F_k=(\varphi^k-(-\varphi^{-1})^k)/\sqrt5$，固定 $n$ 时有
+$$
+\lim_{m\to\infty}\frac{D_m}{D_{m+n}}=\alpha^n,
+\qquad
+\lim_{m\to\infty}\frac{D_{m-1}}{D_{m+n}}=\alpha^{n+1}.
+$$
+两前缀末位均为 $0$ 时，所列 $\rho_n$ 的矩阵元为 $\alpha^{n+1}+\alpha^{n+2}=\alpha^n$；其余合法对为 $\alpha^{n+1}$，所以它正是逐元极限。固定维数 $2^n$ 下，矩阵元收敛给 Hilbert–Schmidt 范数收敛，再由 $\|B\|_1\le\sqrt{2^n}\|B\|_{\rm HS}$ 给迹范数收敛。
+
+两个系数严格为正，故 $\rho_n$ 正且其核为 $s_n^\perp\cap t_n^\perp$。向量 $t_n$ 非零；合法词 $0^{n-1}1$ 在 $s_n$ 中的系数为 $1$，在 $t_n$ 中为 $0$，而 $0^n$ 在两者中的系数都为 $1$，故两向量线性独立，秩恰为 $2$。这里直接计算极限的秩，并未假定取极限保持有限态的秩。
+
+为核对偏迹，对任意长度 $n$ 的前缀对求
+$$
+(\operatorname{Tr}_{\{n\}}\rho_{n+1})_{uv}
+=\sum_{a\in\{0,1\}}(\rho_{n+1})_{ua,va}.
+$$
+若 $u,v$ 合法且末位均为 $0$，附 $0$ 与附 $1$ 两项分别是 $\alpha^{n+1}$、$\alpha^{n+2}$，和为 $\alpha^n$。其余合法对只有共同附 $0$ 的项非零，为 $\alpha^{n+1}$。含非法前缀的两项均为零。这证明全矩阵偏迹相容。最后
+$$
+\rho_1=\begin{pmatrix}\alpha&\alpha^2\\\alpha^2&\alpha^2\end{pmatrix},
+\qquad \operatorname{Tr}\rho_1=\alpha+\alpha^2=1;
+$$
+偏迹保持迹，逐层得到全部归一化。Q109 的有限 Schmidt 秩与谱公式在此只作为既有有限态背景。
+
+**命题 125.2（完整局部代数上的态及局部弱星极限）。** 令 $\mathcal A_n=M_{2^n}(\mathbb C)$，嵌入为 $A\mapsto A\otimes I_2$，以 $\mathcal A_{\rm loc}$ 表示按这些嵌入识别后的代数并，$\mathcal A$ 为其算子范数完备化，即单侧 qubit UHF 代数。存在唯一态 $\omega:\mathcal A\to\mathbb C$ 满足
+$$
+\omega(A)=\operatorname{Tr}(\rho_n A)\qquad(A\in\mathcal A_n).
+$$
+将每个有限态 $|\Omega_L\rangle\langle\Omega_L|$ 接上全零乘积尾态，得到 $\mathcal A$ 上的态 $\widetilde\omega_L$，则
+$$
+\widetilde\omega_L(A)\longrightarrow\omega(A)\qquad(A\in\mathcal A).
+$$
+这里弱星收敛指 $\sigma(\mathcal A^*,\mathcal A)$ 下逐可观测量收敛。任意其它态延拓，只要在前 $L$ 位与该有限密度一致，也有同一极限。上述代数嵌入不由合法空间上的压缩自动给出。
+
+证明。令 $\omega_n(A)=\operatorname{Tr}(\rho_n A)$。命题 125.1 给
+$$
+\omega_{n+1}(A\otimes I_2)=\omega_n(A),\qquad
+|\omega_n(A)|\le\|A\|,\qquad \omega_n(I)=1.
+$$
+所以这些泛函在 $\mathcal A_{\rm loc}$ 上定义一个良定、范数为 $1$ 的线性泛函，并唯一连续延拓到 $\mathcal A$。为核对延拓的正性，给定 $B\in\mathcal A$，取局部 $B_j\to B$，则 $B_j^*B_j\to B^*B$ 且 $\omega(B_j^*B_j)\ge0$，故 $\omega(B^*B)\ge0$。$\mathcal A$ 是 $C^*$ 代数，每个正元都是其正平方根的平方，故延拓为正；其单位值仍为 $1$，即为态。稠密性也给唯一性。
+
+全零尾延拓可具体按有限层定义：前 $k\le L$ 位取 $|\Omega_L\rangle\langle\Omega_L|$ 的约化密度，前 $k>L$ 位取
+$$
+|\Omega_L\rangle\langle\Omega_L|
+\otimes|0^{k-L}\rangle\langle0^{k-L}|.
+$$
+这组密度正、归一且偏迹相容，故由刚才的延拓论证给 $\widetilde\omega_L$。固定 $A\in\mathcal A_n$，当 $L\ge n+1$ 时，
+$$
+|\widetilde\omega_L(A)-\omega(A)|
+\le\|\rho_n^{(L)}-\rho_n\|_1\|A\|\longrightarrow0.
+$$
+对一般 $A\in\mathcal A$ 及 $\varepsilon>0$，取局部 $B$ 使 $\|A-B\|<\varepsilon$。两态范数均为 $1$，故差值不超过 $2\varepsilon+|\widetilde\omega_L(B)-\omega(B)|$，得到逐点收敛。同一论证只用前 $L$ 位的密度和态范数为 $1$，因而适用于所说的任何延拓。固定窗口的迹范数收敛与这里的弱星收敛，不给出全局密度的迹范数收敛结论。
+
+压缩的区别已有两位反例。令 $Q$ 为 $\mathcal K_2$ 到 $\operatorname{span}\{|00\rangle,|01\rangle,|10\rangle\}$ 的正交投影，$X=\begin{pmatrix}0&1\\1&0\end{pmatrix}$，定义 $\kappa(A)=Q(A\otimes I_2)Q$，视为合法子空间上的算子。因为 $(X\otimes I_2)|01\rangle=|11\rangle$，有
+$$
+\kappa(X)^2|01\rangle=0,
+\qquad
+\kappa(X^2)|01\rangle=|01\rangle.
+$$
+所以这条压缩不是乘法同态，不能用它把 $M_{|W_n|}(\mathbb C)$ 自动组成通常张量嵌入塔。这只否定所写压缩方案，不排除其它受约束代数的构造，也不规定完整局部代数的所有动力学保持无相邻 $1$ 的约束。
+
+**命题 125.3（固定左边界柱律与 Z 圆周概率）。** 对 $u\in\{0,1\}^n$，$n\ge1$，记 $[u]=\{x\in\widehat X:q_nx=u\}$，并约定 $[\varnothing]=\widehat X$。存在唯一 Borel 概率 $\mu$ 满足
+$$
+\mu([u])=\omega(|u\rangle\langle u|)=
+\begin{cases}
+\alpha^{n+u_{n-1}},&u\in W_n,\\
+0,&u\notin W_n.
+\end{cases}
+$$
+在 Q124.1 对 Z 卷载体 $K$ 与 $\widehat X$ 的相同数字及 Borel 结构的识别下，$\mu=(s_Z)_*\lambda$，其中 $\lambda$ 是 Z396.1 的圆周长度概率，$s_Z:\mathbb T\to K$ 是 Z400.1 的 Borel 截面。此柱律的初始分布与行随机转移矩阵为
+$$
+q=(\alpha,\alpha^2),\qquad
+P=\begin{pmatrix}\alpha&\alpha^2\\1&0\end{pmatrix}.
+$$
+它等同于虚拟左邻位固定 $x_{-1}=0$ 后由 $P$ 生成的边界律，而非以
+$$
+\pi=\frac{(\varphi^2,1)}{\varphi^2+1}
+$$
+为初始分布的平稳 Parry 律。
+
+证明。命题 125.1 的对角元给显示的柱读数。为建立其 Borel 概率实现而不只保留一组有限分布，记 Z 卷相位映射为 $H_Z$，则 $H_Zs_Z=\operatorname{id}_{\mathbb T}$。$s_Z$ 为 Borel，故 $\nu=(s_Z)_*\lambda$ 是 $K$ 上的 Borel 概率。
+
+将 Z381.2 对应于合法词 $u$ 的柱集和定向开弧分别记作 $C_u^Z$、$A_u^Z$；其两个端点为 $E_i,E_j$，该条定向弧的长度为 $\alpha^{n+u_{n-1}}$。那里的完整端点公式给
+$$
+C_u^Z=H_Z^{-1}(A_u^Z)\cup\{e_i^+,e_j^-\}.
+$$
+由于截面逐点落在相应相位纤维中，这个等式蕴含
+$$
+s_Z^{-1}(C_u^Z)\mathbin{\triangle}A_u^Z
+\subseteq\{E_i,E_j\}.
+$$
+Z396.1 给两个端点的质量均为零，开弧的质量等于其长度，因而
+$$
+\nu(C_u^Z)=\lambda(s_Z^{-1}(C_u^Z))
+=\lambda(A_u^Z)=\alpha^{n+u_{n-1}}.
+$$
+非法柱为空，空前缀柱为整个载体，故可取 $\mu=\nu$。前缀柱集连同空集构成生成 Borel 集的 $\pi$ 系统：交集或为空、或为其中更深的柱集，且这些柱集是可数拓扑基。概率测度的唯一性定理遂使任意具有全部相同柱读数的 Borel 概率都等于 $\nu$。这里不需要 $H_Z$ 或 $s_Z$ 为双射，也不忽略开弧内部可能存在的分裂纤维。
+
+每个合法柱都具有正质量，可以逐柱计算条件概率。若 $u_{n-1}=0$，则
+$$
+\frac{\mu([u0])}{\mu([u])}=\alpha,
+\qquad
+\frac{\mu([u1])}{\mu([u])}=\alpha^2.
+$$
+若 $u_{n-1}=1$，则 $u1$ 非法，而
+$$
+\frac{\mu([u0])}{\mu([u])}
+=\frac{\alpha^{n+1}}{\alpha^{n+1}}=1,
+\qquad
+\frac{\mu([u1])}{\mu([u])}=0.
+$$
+初始一位柱质量给 $q$，上述比值只依赖末位，证明 Markov 性及所列 $P$；$q$ 正好是 $P$ 的第 $0$ 行。由 $\pi_1=\pi_0\alpha^2$ 与 $\pi_0+\pi_1=1$，得到所列唯一平稳分布，亦即 `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY.md` 第1594部的分布。
+
+明确地，对数字左移 $\sigma(x)_j=x_{j+1}$，有
+$$
+\mu(\sigma^{-1}[1])=(qP)_1=\alpha^3
+\ne\alpha^2=\mu([1]).
+$$
+所以非平稳性是相对于数字左移而言；它不把数字左移与 Z 卷的算术后继或圆周旋转认作同一变换。与 Z 概率相同的只是对角柱数据，不能据此认定整个量子态相同：例如 $\langle0|\rho_1|1\rangle=\alpha^2>0$，是柱概率本身未指定的相干读数。
+
+**命题 125.4（有限支持基上的 normal 密度障碍及其表示边界）。** 在 $H_{\rm fs}=\ell^2(X_{\rm fs})$ 中取标准基 $(e_x)_{x\in X_{\rm fs}}$，对每个有限词 $u$ 定义柱投影
+$$
+C_ue_x=\mathbf1_{\{q_{|u|}x=u\}}e_x.
+$$
+不存在正迹类算子 $R$ 满足 $\operatorname{Tr}R=1$ 且同时对所有有限词有 $\operatorname{Tr}(RC_u)=\mu([u])$。尽管每个有限深度的全部柱读数都可由该空间上的有限秩密度精确实现，这些实现不能由一个这样的 $R$ 统一承担。此外，$\mu$ 的每个单点质量均为零，$\mu(X_{\rm fs})=0$。局部态 $\omega$ 仍有 GNS 表示及其中的秩一密度实现。
+
+证明。有限支持核心可写为
+$$
+X_{\rm fs}=\bigcup_{N\ge0}\{u0^\infty:u\in W_N\},
+$$
+故它可数；补零保持合法性。对任意 $x\in\widehat X$，递减的柱集 $[q_nx]$ 的交恰为 $\{x\}$，由概率测度的从上连续性有
+$$
+\mu(\{x\})=\lim_{n\to\infty}\mu([q_nx])
+\le\lim_{n\to\infty}\alpha^n=0.
+$$
+单点为闭集，可数个这样的单点给 $X_{\rm fs}$ 为 Borel 零测集。
+
+假设所说的 $R$ 存在。对每个 $x\in X_{\rm fs}$ 及 $n\ge1$，秩一投影满足 $|e_x\rangle\langle e_x|\le C_{q_nx}$。正迹类算子定义正迹泛函；具体地，对正有界 $B$ 有 $\operatorname{Tr}(RB)=\operatorname{Tr}(R^{1/2}BR^{1/2})\ge0$。所以
+$$
+0\le\langle e_x,Re_x\rangle
+\le\operatorname{Tr}(RC_{q_nx})
+=\mu([q_nx])\le\alpha^n\longrightarrow0.
+$$
+每个基对角元均为零，而正迹类算子的迹等于任意可数正交标准基上的对角元之和，得到
+$$
+1=\operatorname{Tr}R
+=\sum_{x\in X_{\rm fs}}\langle e_x,Re_x\rangle=0,
+$$
+矛盾。证明没有要求 $R$ 对角化或与柱投影对易，也没有假定整个 UHF 代数在 $H_{\rm fs}$ 上具有某个自然表示。
+
+为给出有限深度的准确对照，对固定 $N\ge1$ 定义
+$$
+R_N=\sum_{u\in W_N}\mu([u])
+|e_{u0^\infty}\rangle\langle e_{u0^\infty}|.
+$$
+这些不同的补零串是正交基标记，系数非负且和为 $1$，故 $R_N$ 为正归一有限秩密度。对 $|v|\le N$，深度 $N$ 的细柱分割 $[v]$，从而
+$$
+\operatorname{Tr}(R_NC_v)
+=\sum_{\substack{u\in W_N\\u|_{|v|}=v}}\mu([u])
+=\mu([v]).
+$$
+这里仅匹配对角柱读数，没有把 $R_N$ 与 Q109 的相干纯态或其约化矩阵认作同一密度。
+
+最后直接给 $\omega$ 的通常 GNS 构造。取
+$$
+\mathcal N_\omega=\{B\in\mathcal A:\omega(B^*B)=0\},
+\qquad
+\langle[B],[C]\rangle=\omega(B^*C)
+$$
+并以第二变量线性的内积约定使用此式。正性作用于 $(B+zC)^*(B+zC)$ 给 Cauchy–Schwarz 不等式，故零半范数元与所有元正交，商 $\mathcal A/\mathcal N_\omega$ 上的内积良定。由 $A^*A\le\|A\|^2I$ 得
+$$
+\omega(B^*A^*AB)\le\|A\|^2\omega(B^*B).
+$$
+因此 $\mathcal N_\omega$ 是左理想，左乘 $[B]\mapsto[AB]$ 良定且范数至多 $\|A\|$；它延拓到商内积空间的完备化 $H_\omega$，记作 $\pi_\omega(A)$。左乘保持乘法和单位，且由内积公式其伴随为 $\pi_\omega(A^*)$，所以 $\pi_\omega$ 是幺星表示。向量 $\xi=[I]$ 的范数为 $1$，$\pi_\omega(A)\xi=[A]$ 的线性张成稠密，故 $\xi$ 循环，且
+$$
+\omega(A)=\langle\xi,\pi_\omega(A)\xi\rangle
+=\operatorname{Tr}_{H_\omega}
+\bigl(|\xi\rangle\langle\xi|\,\pi_\omega(A)\bigr).
+$$
+秩一密度位于 $B(H_\omega)$，其向量态限制到 $\pi_\omega(\mathcal A)$ 不因此必为纯态。normal 实现依赖指定的可观测量与表示，不能只由抽象 Hilbert 空间的基数判断。因而本命题给的是有限支持基及上述柱投影的实现障碍，同时保留了全局代数态及其它 Hilbert 表示的实现。
+
+**约定 125.5（引用与证明范围）。** Q、Z、CSA 分别指本量子卷、`CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md`、`CONTEXTUAL_SPACETIME_ARITHMETIC.md`。本节所引 Q109、Q123–124、Z381.2、Z396.1、Z400.1、CSA 定义 1–3 及 `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY.md` 第1594部，均取仓库提交 `c225a37b44971d289ae51b8b324f5cef78e31b82` 的版本。Q123–124 的载体与相容性问题在这里落实为有限相干态、局部代数态和指定表示中的柱读数问题；所用局部极限不另申报 Q109 的有限 Schmidt 结论。
+
+同一版本 `D5/S1/Digit/Infinite/WindowCylinderPartition.lean` 的 `window_cylinder_partition` 给合法窗口的区间几何、准确弧长及定向端点纤维，其结论不含本节的量子态构造。`D5/S3/Quantum/Measurements/OrthogonalAdditivity.lean` 的 `orthogonal_additivity` 在 `SequentiallyNormal` 与 `strong_complete` 等假设下给正交投影族的可数可加性；命题 125.4 使用直接的正迹类论证，不把这些假设省略后援引该声明。
+
+钉版 Mathlib 修订 `db584cd6d46c92f209a44c0f1c829460d327499d` 的 `Mathlib/Analysis/CStarAlgebra/GelfandNaimarkSegal.lean` 提供 `PositiveLinearMap.gnsStarAlgHom`，该文件明确将单位循环向量的构造列为 TODO，故它不作为上文完整循环向量结论的现成证明；上文已独立给出通常 GNS 构造。本节为结合所引模型与标准概率、算子代数方法的 `repo-derived` 普通推导，不提出新颖性或新增 Lean 认证主张。
+
+## 追加锚（本行以下为增补区）

@@ -1,0 +1,6 @@
+**推论。** 在第 27 节的中心平凡、外作用平凡假设下，若 $T_\alpha\in\Lambda$，则
+
+$$\Psi_\ell(T_\alpha)^d=W_*\bmod\ell.$$
+
+令 $\epsilon_\ell=1$ 当 $b=0$ 或 $\ell\mid s_1$，其余情形令 $\epsilon_\ell=\ell$。则上式右侧的准确阶为 $\epsilon_\ell$。
+

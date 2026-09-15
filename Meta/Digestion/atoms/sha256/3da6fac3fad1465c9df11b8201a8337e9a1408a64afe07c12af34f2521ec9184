@@ -1,0 +1,7 @@
+**命题。** 有正交辛分解
+
+$$V=\bigoplus_{\chi\in\widehat S}W_\chi,\qquad
+\dim W_1=2g,\qquad \dim W_\chi=2g-2\ (\chi\ne1).$$
+
+因而 $\dim V=2+(2g-2)4^g$。每个非平凡分块均可识别为对应连通二重覆盖的反不变同调。
+

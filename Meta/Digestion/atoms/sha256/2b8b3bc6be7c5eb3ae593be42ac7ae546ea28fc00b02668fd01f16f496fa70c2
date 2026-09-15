@@ -1,0 +1,2 @@
+**证明。** $\delta\alpha\in\Gamma\alpha$ 当且仅当存在 $\gamma\in\Gamma$ 使 $\gamma^{-1}\delta\in H$，亦即 $\delta\in\Gamma H$。正规性保证子群乘积闭合。
+
