@@ -6,7 +6,7 @@ internal sealed partial class BackfillInventoryDocument
         string atomId, IReadOnlyDictionary<string, object?> receipts)
     {
         if (!receipts.ContainsKey("upstream")) return null;
-        var label = $"entry {atomId} upstream";
+        var label = $"entry {atomId} upstream receipt:";
         var raw = Mapping(receipts["upstream"], label + " must be a mapping");
         ExactKeys(raw, ["justification", "declarations", "mathlib_rev", "probe_sha256", "probe_axioms",
             "previous_atom_id", "next_atom_id"], label);
@@ -18,7 +18,7 @@ internal sealed partial class BackfillInventoryDocument
             Strings(List(raw, "probe_axioms", label + " probe_axioms must be a list"), label + " probe_axioms"),
             NullableScalar(raw, "previous_atom_id", label + " previous_atom_id"),
             NullableScalar(raw, "next_atom_id", label + " next_atom_id"));
-        if (!receipt.IsValid) throw new FormatException(label + " receipt is invalid");
+        if (receipt.ValidationError is { } error) throw new FormatException(label + " " + error);
         return receipt;
     }
 }
