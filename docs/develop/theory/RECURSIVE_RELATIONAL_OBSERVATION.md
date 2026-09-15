@@ -3128,3 +3128,1360 @@ $$
 对截断减法，这将强制 $\omega=\iota(0)$；对严格响应，这将强制 $\operatorname{ok}(\omega)=\perp$。二者均矛盾，故分别连续延拓也不存在。证毕。
 
 ## 追加锚（本行以下为增补区）
+## 15. 连续辅助观察：有限覆盖标签与对跖商的欧氏障碍
+
+**定义 15.0（覆盖、纤维分离与三种辅助量）。** 记 $\mathbb N_0=\{0,1,2,\ldots\}$，$[N]=\{1,\ldots,N\}$，其中 $[0]=\varnothing$，并给每个 $[N]$ 离散拓扑。设 $X,B$ 为 Hausdorff 空间，$B\ne\varnothing$，$d\ge1$ 为固定整数。称连续满射 $q:X\to B$ 为固定 $d$ 页覆盖，若每个 $b\in B$ 都有开邻域 $U$，使
+$$
+q^{-1}(U)=\bigsqcup_{i=1}^{d}V_i,
+\qquad
+q|_{V_i}:V_i\longrightarrow U
+$$
+是同胚，且各 $V_i$ 在 $X$ 中开。特别地，每条纤维恰有 $d$ 个点。本节不预设 $X$ 或 $B$ 连通。
+
+对映射 $r:X\to Y$，称 $r$ 分离 $q$ 的纤维，若
+$$
+q(x)=q(y)\ \land\ r(x)=r(y)\quad\Longrightarrow\quad x=y.
+$$
+这等价于联合映射
+$$
+J_r=(q,r):X\longrightarrow B\times Y
+$$
+单射。这里对联合观察 $J_r$ 应用定理 2.2，目标取 $\operatorname{id}_X$；要求恢复的是点本身，而不是只恢复某个较粗目标。覆盖在 $B$ 上的平凡化，是满足 $\operatorname{pr}_B\circ H=q$ 的同胚 $H:X\to B\times[d]$。连续截面是满足 $q\circ s=\operatorname{id}_B$ 的连续映射 $s:B\to X$。
+
+定义
+$$
+\lambda_{\mathrm{set}}(q)
+=
+\min\{N\in\mathbb N_0:\exists r:X\to[N],\ J_r\text{ 单射}\},
+$$
+$$
+\lambda_{\mathrm{disc}}(q)
+=
+\min\{N\in\mathbb N_0:\exists\text{ 连续 }r:X\to[N],\ J_r\text{ 单射}\},
+$$
+$$
+\mu_{\mathbb R}(q)
+=
+\min\{m\in\mathbb N_0:\exists\text{ 连续 }r:X\to\mathbb R^m,\ J_r\text{ 单射}\}.
+$$
+候选集合为空时，相应值约定为 $\infty$；$\mathbb R^0$ 是单点空间。第一项不要求标签连续，第二项要求离散标签连续，第三项最小化固定商映射下连续欧氏辅助读数的坐标数。
+
+覆盖的局部页定义参考：Allen Hatcher，*Algebraic Topology*，§1.3，第 56 页，[原书](https://pi.math.cornell.edu/~hatcher/AT/AT.pdf)。
+
+**定理 15.1（恰好一页一个标签的精确等价）。** 对定义 15.0 的固定 $d$ 页覆盖，以下三种数据相互确定：
+
+（甲）连续映射 $r:X\to[d]$，在每条 $q$-纤维上单射。
+
+（乙）在 $B$ 上的平凡化 $H:X\to B\times[d]$。
+
+（丙）有序的 $d$ 条连续截面 $s_1,\ldots,s_d$，满足对每个 $b\in B$，
+$$
+s_i(b)\ne s_j(b)\quad(i\ne j),
+\qquad
+q^{-1}(b)=\{s_1(b),\ldots,s_d(b)\}.
+$$
+对应关系为
+$$
+H(x)=(q(x),r(x)),
+\qquad
+s_i(b)=H^{-1}(b,i),
+\qquad
+r(s_i(b))=i.
+$$
+因此，对给定的 $r$，逐纤维单射恰好保证 $(q,r)$ 本身是平凡化，而不只是集合双射。此结论包括 $d=1$，不要求连通性。
+
+**证明。** 先证覆盖映射 $q$ 是开映射。若 $O\subseteq X$ 开，在任意均匀覆盖邻域 $U$ 上，
+$$
+q(O)\cap U=\bigcup_{i=1}^{d}q(O\cap V_i),
+$$
+右侧在 $U$ 中开，故 $q(O)$ 在 $B$ 中开。
+
+给定甲，令 $X_i=r^{-1}(\{i\})$。这些集合开闭。每条纤维有 $d$ 个点，标签也恰有 $d$ 个，故逐纤维单射实际是逐纤维双射。因此
+$$
+q_i=q|_{X_i}:X_i\longrightarrow B
+$$
+是连续双射。由于 $X_i$ 开且 $q$ 开，$q_i$ 也是开映射，因而是同胚。令 $s_i=q_i^{-1}$，便得到丙；同时 $H=(q,r)$ 的逆映射在每个开片 $B\times\{i\}$ 上为 $(b,i)\mapsto s_i(b)$，故连续，得到乙。
+
+给定乙，公式 $s_i(b)=H^{-1}(b,i)$ 直接给出丙。为从丙恢复甲，须验证截面像确实开，而不能只用集合分解。取 $x=s_i(b)$，选取含 $b$ 的均匀覆盖邻域 $U$ 及含 $x$ 的局部页 $V$。集合
+$$
+W=U\cap s_i^{-1}(V)
+$$
+是含 $b$ 的开邻域。由截面方程和 $q|_V$ 的单射性，
+$$
+s_i(W)=V\cap q^{-1}(W),
+$$
+故 $s_i(W)$ 在 $X$ 中开。于是每个 $s_i(B)$ 都开；其补集是其余截面像的并，故也开。由穷尽性与互异性定义 $r(s_i(b))=i$，每个单点的原像均开，所以 $r$ 连续，并且逐纤维单射。
+
+上述公式还说明三次构造彼此互逆。若 $d=1$，同一证明表明 $q$ 是同胚，唯一标签与唯一截面分别为常值标签与 $q^{-1}$。证毕。
+
+**定理 15.2（增加有限离散标签不能绕过平凡化障碍）。** 对定义 15.0 的覆盖及任意 $N\in\mathbb N_0$，
+$$
+\exists\text{ 连续 }r:X\to[N]\text{ 分离 }q\text{ 的纤维}
+\quad\Longleftrightarrow\quad
+N\ge d\ \land\ q\text{ 在 }B\text{ 上平凡}.
+$$
+特别地，
+$$
+\lambda_{\mathrm{disc}}(q)=
+\begin{cases}
+d,&q\text{ 平凡},\\
+\infty,&q\text{ 不平凡}.
+\end{cases}
+$$
+此处不需要 $B$ 连通。
+
+更精确地，对任何这样的 $r$，令
+$$
+S(b)=\{r(x):q(x)=b\}\subseteq[N].
+$$
+则 $S(b)$ 恒有 $d$ 个元素，且 $b\mapsto S(b)$ 局部常值。联合映射 $(q,r)$ 是到开闭子空间
+$$
+E_r=\{(b,a)\in B\times[N]:a\in S(b)\}
+$$
+的同胚。若 $N>d$，则 $E_r\ne B\times[N]$；迫使平凡化的是可以把标签连续压缩到 $d$ 个，而不是原联合映射满射到较大乘积。
+
+**证明。** 纤维非空且恰有 $d$ 个点，逐纤维单射首先给出 $N\ge d$。固定 $b_0\in B$，取均匀覆盖邻域 $U$，记各局部逆分支为 $t_i:U\to V_i$。每个 $r\circ t_i$ 连续且值域离散，因此
+$$
+W=\bigcap_{i=1}^{d}
+(r\circ t_i)^{-1}\bigl(\{r(t_i(b_0))\}\bigr)
+$$
+是 $U$ 中含 $b_0$ 的开邻域。在 $W$ 上，每条局部页的标签都恒定，故 $S$ 恒定。这里仅取有限次交，没有使用局部连通性或连通性。
+
+按 $[N]$ 的通常次序定义
+$$
+\rho(x)
+=
+1+\#\{a\in S(q(x)):a<r(x)\}.
+$$
+对每条纤维，$\rho$ 就是其 $d$ 个不同标签的次序排名，故取遍 $[d]$ 且单射。在刚构造的 $W$ 上，$\rho$ 在每条局部页上恒定；这些局部页是开集并覆盖 $X$，所以 $\rho:X\to[d]$ 连续。由定理 15.1，$(q,\rho)$ 是平凡化。反之，平凡化提供连续的 $d$ 值标签，再与任意单射 $[d]\to[N]$ 复合即可。
+
+在同一个 $W$ 上，
+$$
+E_r\cap(W\times[N])=W\times S(b_0).
+$$
+因此 $E_r$ 及其补集都局部为开集，故 $E_r$ 开闭。映射 $(q,r)$ 在 $q^{-1}(W)$ 上把不同局部页同胚地送到不同的片 $W\times\{a\}$，所以其逆映射局部连续，进而在 $E_r$ 上连续。若 $N>d$，每个 $b$ 上都有未使用标签，故 $E_r$ 是真子集。
+
+若 $B$ 连通，局部常值映射 $S$ 进一步必为常值，此时可以固定一个 $d$ 元子集统一重编号；平凡化结论并不需要这一步。无连通性时，排名一般依赖 $(q(x),r(x))$，不能断言只对 $r(x)$ 作一个固定后处理便可压缩。对此有明确反例：令
+$$
+B=\bigl\{\{1,2\},\{1,3\},\{2,3\}\bigr\},
+\qquad
+X=\{(A,a):A\in B,\ a\in A\},
+$$
+两者都取离散拓扑，令 $q(A,a)=A$、$r(A,a)=a$。这是两页覆盖及连续三值分离标签。任意函数 $\varphi:[3]\to[2]$ 都把某两个不同元素送到同一值，而这两个元素恰构成某条纤维的标签集，故 $\varphi\circ r$ 不分离该纤维。上述依赖 $q$ 的排名仍给出连续二值分离标签。证毕。
+
+**命题 15.3（一个一般覆盖截面只保证劈出一页）。** 对定义 15.0 的覆盖，若存在连续截面 $s$，则 $s(B)$ 在 $X$ 中开闭，且
+$$
+q|_{s(B)}:s(B)\longrightarrow B
+$$
+是同胚。若 $d\ge2$，则限制映射
+$$
+q|_{X\setminus s(B)}:X\setminus s(B)\longrightarrow B
+$$
+是固定 $d-1$ 页覆盖。因此两页覆盖有一个连续截面当且仅当平凡，但一般有限覆盖不能把一个截面等同于完全平凡化；即使基空间连通也不能。
+
+**证明。** 截面像开及限制映射为同胚，已由定理 15.1 证明中的局部论证给出，该论证不需要其他截面。固定 $b\in B$，选取均匀覆盖邻域 $U$，把含 $s(b)$ 的局部页记为 $V_1$，并缩小到
+$$
+W=U\cap s^{-1}(V_1).
+$$
+在 $W$ 上，$s$ 恰为第一局部逆分支，所以
+$$
+q^{-1}(W)\setminus s(B)
+=
+\bigsqcup_{i=2}^{d}\bigl(V_i\cap q^{-1}(W)\bigr).
+$$
+这既证明补集开，也证明它是固定 $d-1$ 页覆盖。若 $d=2$，补集上的一页覆盖是同胚，其逆给出第二条截面，再用定理 15.1 即得平凡化。
+
+为证明最后的否定结论，取两个圆周的拓扑不交并
+$$
+X=S^1\sqcup S^1,\qquad B=S^1,
+$$
+并令第一份上的映射为 $z\mapsto z$，第二份上的映射为 $z\mapsto z^2$。小圆弧有两条连续平方根分支，故这是三页覆盖。第一份圆周的包含给出连续截面。然而若它平凡，定理 15.1 将给出连续三值分离标签。第二份圆周连通，所以该标签在第二份上必为常值；但其中 $z$ 与 $-z$ 是同一纤维中的不同点，矛盾。证毕。
+
+圆周幂映射的覆盖结构参考：Hatcher，*Algebraic Topology*，§1.3，第 56 页，[原书](https://pi.math.cornell.edu/~hatcher/AT/AT.pdf)。
+
+**命题 15.4（紧致自由对合的差映射桥）。** 设 $K\ne\varnothing$ 为紧致 Hausdorff 空间，$\tau:K\to K$ 连续，满足
+$$
+\tau^2=\operatorname{id}_K,
+\qquad
+\tau(x)\ne x\quad(x\in K).
+$$
+令 $Q=K/\langle\tau\rangle$ 取商拓扑，$q:K\to Q$ 为轨道商。则 $Q$ 紧致 Hausdorff，$q$ 是两页覆盖。
+
+对每个整数 $m\ge1$，以下存在性条件等价：存在连续纤维分离读数 $r:K\to\mathbb R^m$；存在连续映射 $f:K\to\mathbb R^m\setminus\{0\}$ 满足 $f(\tau x)=-f(x)$；存在连续映射 $u:K\to S^{m-1}$ 满足 $u(\tau x)=-u(x)$。其中球面取标准欧氏单位球面。
+
+对给定的连续 $r$，有精确判据
+$$
+(q,r)\text{ 单射}
+\quad\Longleftrightarrow\quad
+\Delta_r(x):=r(x)-r(\tau x)\ne0\quad(\forall x\in K).
+$$
+满足判据时，
+$$
+u_r(x)=\frac{\Delta_r(x)}{\|\Delta_r(x)\|}
+$$
+是上述奇映射，而且
+$$
+\min_{x\in K}\|\Delta_r(x)\|>0.
+$$
+此时 $(q,r)$ 是到 $Q\times\mathbb R^m$ 中闭子空间的拓扑嵌入。零维欧氏目标不可能分离纤维；一维欧氏分离读数存在，当且仅当 $q$ 平凡，也当且仅当 $q$ 有一个连续截面。
+
+**证明。** 由 $\tau^2=\operatorname{id}_K$，$\tau$ 是同胚。对开集 $V\subseteq K$，
+$$
+q^{-1}(q(V))=V\cup\tau(V)
+$$
+开，故商映射 $q$ 是开映射。对任意 $x$，用 Hausdorff 性选取分别包含 $x,\tau x$ 的不交开集 $A,C$。令 $V=A\cap\tau^{-1}(C)$，则 $x\in V$ 且 $V\cap\tau(V)=\varnothing$。于是
+$$
+q^{-1}(q(V))=V\sqcup\tau(V),
+$$
+而两片各自通过 $q$ 连续、开且双射地映到 $q(V)$，所以都是同胚。这证明两页覆盖性质。
+
+不同轨道 $O,P$ 是互不相交的有限集。对每个 $a\in O$、$b\in P$，取包含相应点的不交开集 $A_{ab},C_{ab}$。令
+$$
+A_0=\bigcup_{a\in O}\bigcap_{b\in P}A_{ab},
+\qquad
+C_0=\bigcup_{b\in P}\bigcap_{a\in O}C_{ab}.
+$$
+它们分别包含 $O,P$，都是开集且互不相交。将它们替换为
+$$
+A_0\cap\tau(A_0),
+\qquad
+C_0\cap\tau(C_0),
+$$
+得到仍包含相应轨道的不交饱和开集；它们在商中的像是不交开邻域，故 $Q$ Hausdorff。它又是紧致空间 $K$ 的连续像，所以紧致。
+
+商纤维恰为 $\{x,\tau x\}$，且两点不同。因此联合单射恰好要求 $r(x)\ne r(\tau x)$，即差映射处处非零。直接计算得到
+$$
+\Delta_r(\tau x)
+=
+r(\tau x)-r(\tau^2x)
+=
+-\Delta_r(x).
+$$
+非零差映射连续，除以其连续正范数就得到连续奇映射 $u_r$。反过来，若 $f$ 是处处非零的连续奇映射，则把 $f$ 本身作为读数，有
+$$
+f(x)-f(\tau x)=2f(x)\ne0.
+$$
+而球面值奇映射本来就处处非零。这证明三种存在性条件等价；并未假设原读数 $r$ 是奇映射。
+
+连续正函数 $x\mapsto\|\Delta_r(x)\|$ 在非空紧致空间上取得最小值，该值不能为零。又因 $Q\times\mathbb R^m$ Hausdorff，任意闭集 $F\subseteq K$ 都紧致，其像 $(q,r)(F)$ 紧致而闭。所以联合映射在其实际像上的连续逆存在，且整个实际像紧致而闭，得到所述嵌入。
+
+当 $m=0$ 时，读数只有一个值，不能区分任意一对 $x,\tau x$。当 $m=1$ 时，归一化的奇映射取值于离散两点集 $S^0=\{-1,1\}$，因而由定理 15.1 给出平凡化。反向地，任何平凡化的二值标签在每条二点纤维上取两个不同值，将它们分别记为 $-1,1$，即得连续奇实值读数。若只给一个连续截面 $s$，则 $s$ 与 $\tau\circ s$ 连续、逐点互异并穷尽纤维，仍由定理 15.1 得平凡化；平凡化当然给出截面。证毕。
+
+局部轨道商覆盖参考：Hatcher，*Algebraic Topology*，命题 1.40(a)，第 72 页，[原书](https://pi.math.cornell.edu/~hatcher/AT/AT.pdf)。差映射与归一化参考：Jiří Matoušek，*Using the Borsuk–Ulam Theorem*，§2.1，第 24 页，[第 2 章样章](https://beckassets.blob.core.windows.net/product/readingsample/250866/9783540003625_excerpt_001.pdf)。二值余坐标与截面的对应亦是《QUANTITATIVE_DIAGONALIZATION_OBSERVER_COMPLETION》[定理 5.1](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/QUANTITATIVE_DIAGONALIZATION_OBSERVER_COMPLETION.md)的两元素群特例；上面的证明只使用本条明列的假设。
+
+**定理 15.5（对跖商的集合二值补充与连续离散障碍）。** 对任意 $n\in\mathbb N_0$，令
+$$
+S^n=\left\{(x_0,\ldots,x_n)\in\mathbb R^{n+1}:
+\sum_{i=0}^{n}x_i^2=1\right\},
+\qquad
+q_n:S^n\longrightarrow\mathbb{RP}^n=S^n/(x\sim-x).
+$$
+则 $q_n$ 是紧致 Hausdorff 空间之间的两页覆盖，并且
+$$
+\lambda_{\mathrm{set}}(q_n)=2.
+$$
+当 $n\ge1$ 时，不存在到任何离散空间的连续纤维分离读数，因而
+$$
+\lambda_{\mathrm{disc}}(q_n)=\infty,
+$$
+且 $q_n$ 无连续截面、不平凡。当 $n=0$ 时，
+$$
+S^0=\{-1,1\},
+\qquad
+\mathbb{RP}^0=\{*\},
+\qquad
+\lambda_{\mathrm{disc}}(q_0)=2,
+$$
+并且 $q_0$ 平凡。
+
+**证明。** 对合 $\tau(x)=-x$ 连续且自由，因为单位向量不可能等于其负向量。球面非空、紧致 Hausdorff，故命题 15.4 给出商空间性质和两页覆盖。
+
+对于任意 $x\in S^n$，定义
+$$
+k(x)=\min\{i\in\{0,\ldots,n\}:x_i\ne0\},
+\qquad
+\varepsilon(x)=
+\begin{cases}
+1,&x_{k(x)}>0,\\
+-1,&x_{k(x)}<0.
+\end{cases}
+$$
+至少一个坐标非零，所以定义总是有意义。显然 $k(-x)=k(x)$ 且 $\varepsilon(-x)=-\varepsilon(x)$。将 $1,-1$ 重编号为 $1,2$，得到分离每条纤维的二值集合标签。另一方面，任何一条纤维都有两个不同点，故少于两个标签不可能分离它。这证明集合标签数恰为二，并且不需要从每条纤维任意选择代表。事实上还得到显式集合截面
+$$
+s([x])=\varepsilon(x)x,
+$$
+因为右侧在把 $x$ 替换成 $-x$ 时不变。
+
+当 $n\ge1$ 时，$S^n$ 道路连通：若 $x,y$ 不互为对跖点，规范化线段
+$$
+t\longmapsto
+\frac{(1-t)x+ty}{\|(1-t)x+ty\|},
+\qquad 0\le t\le1,
+$$
+给出连接二者的道路；若 $y=-x$，在 $\mathbb R^{n+1}$ 中选一个不与 $x$ 共线的单位向量，经过它连接两段上述道路。连续映射把连通空间送到连通子空间，而离散空间的非空连通子空间只能是单点。因此任何连续离散读数都恒定，不能区分 $x$ 与 $-x$。由定理 15.1 和命题 15.3，两页覆盖的平凡化及连续截面也均不存在。特别地，刚构造的集合二值标签与集合截面在这些维数下不能是连续的。
+
+当 $n=0$ 时，定义域就是离散两点集，商是单点。标签 $\varepsilon(x)=x$ 连续并分离该纤维，且 $q_0$ 显然是单点基空间上的平凡两页覆盖。证毕。
+
+**定理 15.6（对跖商的最小连续欧氏辅助坐标数）。** 对任意 $n,m\in\mathbb N_0$，
+$$
+\exists\text{ 连续 }r:S^n\to\mathbb R^m
+\text{ 使 }(q_n,r)\text{ 单射}
+\quad\Longleftrightarrow\quad
+m\ge n+1.
+$$
+因此
+$$
+\mu_{\mathbb R}(q_n)=n+1,
+$$
+且满足单射条件的每个联合映射，都是到 $\mathbb{RP}^n\times\mathbb R^m$ 中闭子空间的拓扑嵌入。结合定理 15.5，
+$$
+\bigl(\lambda_{\mathrm{set}}(q_n),
+\lambda_{\mathrm{disc}}(q_n),
+\mu_{\mathbb R}(q_n)\bigr)
+=
+\begin{cases}
+(2,2,1),&n=0,\\
+(2,\infty,n+1),&n\ge1.
+\end{cases}
+$$
+等价地，对 $m\ge1$，存在连续奇映射 $S^n\to S^{m-1}$ 当且仅当 $m\ge n+1$。
+
+**证明。** 下界使用 Borsuk–Ulam 定理的如下形式：对每个整数 $k\ge0$ 和每个连续映射 $F:S^k\to\mathbb R^k$，存在 $x\in S^k$ 使 $F(x)=F(-x)$。这里不要求 $F$ 为奇映射。参考：Matoušek，*Using the Borsuk–Ulam Theorem*，定理 2.1.1 的 BU1a，第 23 页，及第 24 页与 BU1b 的等价证明，[第 2 章样章](https://beckassets.blob.core.windows.net/product/readingsample/250866/9783540003625_excerpt_001.pdf)；亦见 Hatcher，*Algebraic Topology*，推论 2B.7，第 176 页，[原书](https://pi.math.cornell.edu/~hatcher/AT/AT.pdf)。
+
+首先，$m=0$ 时读数恒定，任意对跖点仍有相同联合读数，所以对所有 $n\ge0$ 都不可能单射。其次，设 $n\ge1$ 且 $1\le m\le n$。对任意连续 $r:S^n\to\mathbb R^m$，补零得到连续映射
+$$
+\widetilde r:S^n\longrightarrow\mathbb R^n,
+\qquad
+\widetilde r(x)=\bigl(r(x),0_{\mathbb R^{n-m}}\bigr).
+$$
+当 $m=n$ 时这里就是原映射。Borsuk–Ulam 给出 $x$ 使
+$$
+\widetilde r(x)=\widetilde r(-x),
+$$
+于是 $r(x)=r(-x)$；同时 $q_n(x)=q_n(-x)$ 且 $x\ne-x$，所以联合映射不单射。这同时覆盖 $m=n$ 和 $m<n$，证明任何可行的 $m$ 都至少为 $n+1$。
+
+反向地，对 $m\ge n+1$，取
+$$
+r_m(x_0,\ldots,x_n)
+=
+\bigl(x_0,\ldots,x_n,0_{\mathbb R^{m-n-1}}\bigr).
+$$
+这是连续映射，并且
+$$
+r_m(-x)=-r_m(x),
+\qquad
+\|r_m(x)-r_m(-x)\|=2.
+$$
+因此它分离每条对跖纤维；在最小维数 $m=n+1$ 时就是标准包含 $r(x)=x$。联合映射的闭嵌入结论由命题 15.4 的紧致到 Hausdorff 论证得到。
+
+若 $n=0$，前面已单独排除 $m=0$，而 $r(x)=x\in\mathbb R$ 区分 $S^0$ 的两点，所以最小值确为一，不需要对负维球面作任何约定。最后，奇球面映射的存在性等价由命题 15.4 直接得到。证毕。
+
+**命题 15.7（圆周平方覆盖的精确对应）。** 将 $S^1$ 视为复平面的单位圆，令
+$$
+p:S^1\longrightarrow S^1,
+\qquad p(z)=z^2.
+$$
+映射
+$$
+h:\mathbb{RP}^1\longrightarrow S^1,
+\qquad h([z])=z^2
+$$
+是同胚，且 $p=h\circ q_1$。因此 $p$ 的集合标签数为二，不存在连续离散纤维分离标签，不存在连续全局截面，而连续欧氏辅助坐标数恰为二。一个达到上界的读数为
+$$
+r(z)=(\operatorname{Re}z,\operatorname{Im}z).
+$$
+
+**证明。** 平方在 $z$ 与 $-z$ 上取值相同，所以由商拓扑得到连续映射 $h$。若 $z^2=w^2$，则 $(z-w)(z+w)=0$，故 $w=z$ 或 $w=-z$，所以 $h$ 单射。每个单位复数写成 $e^{it}$ 后都有单位平方根 $e^{it/2}$，故 $h$ 满射。定义域紧致、值域 Hausdorff，因而这个连续双射是同胚。
+
+对任意辅助目标 $Y$ 及读数 $r:S^1\to Y$，
+$$
+(p,r)=(h\times\operatorname{id}_Y)\circ(q_1,r).
+$$
+故两种商下的纤维分离条件完全相同。截面也通过 $h$ 互相转换：若 $p\circ s=\operatorname{id}_{S^1}$，则 $s\circ h$ 是 $q_1$ 的截面；若 $q_1\circ t=\operatorname{id}_{\mathbb{RP}^1}$，则 $t\circ h^{-1}$ 是 $p$ 的截面。现在应用定理 15.5、15.6 即得全部结论，所列实部与虚部读数就是标准平面包含。证毕。
+
+## 追加锚（本行以下为增补区）
+## 16. 增补·Zeckendorf 低位读数的紧致增强障碍与加法闭图
+
+**定义 16.0（数字观察、平移区分与加法闭图）。** 取 $\mathbb N=\{0,1,2,\ldots\}$，并置
+$$
+G_0=1,\qquad G_1=2,\qquad G_{j+2}=G_{j+1}+G_j,\qquad
+\phi=\frac{1+\sqrt5}{2},\qquad \alpha=\phi^{-1},\qquad r=-\alpha.
+$$
+令 $Z(n)$ 为 $n$ 的有限 Zeckendorf 规范字按低位到高位排列后补零所得的无限字，包括 $Z(0)=0_K$。设
+$$
+K=\{x\in\{0,1\}^{\mathbb N}:x_jx_{j+1}=0\text{ 对所有 }j\},\qquad
+D_L=\{\text{长度为 }L\text{ 的合法二值字}\},
+$$
+$$
+\pi_L(x)=(x_0,\ldots,x_{L-1}),\qquad q_L=\pi_L\circ Z,\qquad
+\delta_j(x)=x_j.
+$$
+其中 $D_0$ 仅含空字，将 $D_1$ 与 $\{0,1\}$ 自然等同，故 $q_1(n)=Z(n)_0$。各数字空间取乘积拓扑，有限读数空间取离散拓扑。沿用带符号相位
+$$
+d_K(x,y)=\sum_{j\ge0}2^{-j-1}|x_j-y_j|,\qquad
+F(x)=\sum_{j\ge0}(-1)^{j+1}\alpha^{j+2}x_j,
+$$
+$$
+\mathbb T=\mathbb R/\mathbb Z,\qquad H(x)=[F(x)],\qquad
+\gamma(n)=[n\phi],\qquad E=\{[-m\phi]:m\ge1\}.
+$$
+对有限离散集 $D$ 和函数 $f:\mathbb N\to D$，定义平移区分关系
+$$
+n\equiv_f m\quad\Longleftrightarrow\quad
+\forall k\in\mathbb N,\ f(n+k)=f(m+k).
+$$
+称 $f$ 最终周期，若存在 $t\ge0$、$d\ge1$，使所有 $n\ge t$ 满足 $f(n+d)=f(n)$。定义
+$$
+\Gamma=\overline{\{(Z(n),Z(m),Z(n+m)):n,m\in\mathbb N\}}^{\,K^3},\qquad
+\Gamma(x,y)=\{z\in K:(x,y,z)\in\Gamma\}.
+$$
+
+**定理 16.1（有限读数的紧致实现判据与忠实增强不可能性）。** 对任意有限离散集 $D$ 和 $f:\mathbb N\to D$，下列条件等价：
+
+（甲）$f$ 最终周期。
+
+（乙）存在紧致 Hausdorff 空间 $X$、映射 $j:\mathbb N\to X$ 和联合连续函数 $B:X\times X\to D$，使
+$$
+B(j(n),j(m))=f(n+m)\qquad(n,m\in\mathbb N).
+$$
+这里不要求 $j$ 单射、连续或具有稠密像。
+
+（丙）存在有限离散交换幺半群 $M$、满射幺半群同态 $\iota:(\mathbb N,+)\to M$ 和函数 $h:M\to D$，使 $h\circ\iota=f$。
+
+因此，若紧致 Hausdorff 空间 $L$ 上存在联合连续 $A:L\times L\to L$、连续 $h:L\to D$ 和映射 $j:\mathbb N\to L$，满足
+$$
+A(j(n),j(m))=j(n+m),\qquad h(j(n))=f(n),
+$$
+则 $f$ 必最终周期。若另有 $j[\mathbb N]$ 稠密，$A$ 自动满足结合律、交换律，并以 $j(0)$ 为单位。
+
+对于 $f=q_1$，上述实现全部不存在。尤其不存在紧致 Hausdorff 空间 $L$、稠密映射 $j:\mathbb N\to L$、连续 $P:L\to K$ 及联合连续 $A:L\times L\to L$ 同时满足
+$$
+P\circ j=Z,\qquad A(j(n),j(m))=j(n+m).
+$$
+此外，$\equiv_{q_1}$ 恰为相等关系；因而任何包含于 $\ker q_1$ 的加法同余都只能是相等关系。
+
+**证明。** 先证明乙推出甲。固定 $x\in X$。对每个 $y\in X$，由 $B$ 连续及 $D$ 离散，可取开邻域 $U_y\ni x$、$V_y\ni y$，使 $B$ 在 $U_y\times V_y$ 上恒等于 $B(x,y)$。紧致性给有限子覆盖 $V_{y_1},\ldots,V_{y_s}$。置
+$$
+U_x=\bigcap_{i=1}^{s}U_{y_i}.
+$$
+若 $x'\in U_x$、$z\in X$，选择 $i$ 使 $z\in V_{y_i}$，则
+$$
+B(x',z)=B(x,y_i)=B(x,z).
+$$
+故整行函数 $B(x',\cdot)$ 在 $U_x$ 内不变。再对开覆盖 $\{U_x:x\in X\}$ 使用紧致性，得到整行函数 $B(x,\cdot)$ 仅有有限多个。于是存在整数 $a<b$，使
+$$
+B(j(a),z)=B(j(b),z)\qquad(z\in X).
+$$
+取 $z=j(k)$，得到 $f(a+k)=f(b+k)$ 对所有 $k\ge0$ 成立。这就是从 $a$ 开始、以 $b-a$ 为周期的最终周期性。此论证没有假设 $X$ 零维，也没有使用紧空间的序列紧性。[^rro16_compact]
+
+若甲成立，定义
+$$
+n\mathrel{R_{t,d}}m\quad\Longleftrightarrow\quad
+n=m\ \lor\ \bigl(n,m\ge t\text{ 且 }n\equiv m\pmod d\bigr).
+$$
+它是加法同余：等价的两数同时加上任意 $k\ge0$ 后，或者仍相等，或者仍处于阈值以上并有相同模 $d$ 剩余类；依次替换两个槽位即得双槽相容性。商集有 $t+d$ 个元素，运算 $[n]+[m]=[n+m]$ 定义良好。最终周期性保证 $h([n])=f(n)$ 定义良好，给出丙。这给出阈值—周期商的有限实现。[^rro16_unary] 丙推出乙，只需取 $X=M$、$j=\iota$、$B(s,t)=h(s+t)$；有限离散空间上的这些映射连续。
+
+若给定 $L,A,h,j$，取 $B=h\circ A$ 即适用乙。稠密情形下，结合律两边是 $L^3\to L$ 的连续映射，且在稠密集 $j[\mathbb N]^3$ 上相等；Hausdorff 性使其相等集合闭，故处处相等。交换律及左右单位律同理分别在 $L^2$ 与 $L$ 上由稠密性延拓。这也证明紧致拓扑幺半群上的连续有限读数沿单生成轨道必最终周期。
+
+现在证明 $q_1$ 不最终周期。长度为 $L$ 的合法字按权值求和，恰与整数区间 $[0,G_L)\cap\mathbb N$ 双射。对于 $L=0,1$ 可直接验证；对于 $L\ge2$，最高位为零的字给出区间 $[0,G_{L-1})$，最高位为一则次高位被迫为零，给出区间
+$$
+G_{L-1}+[0,G_{L-2})=[G_{L-1},G_L).
+$$
+两个区间不交，归纳即得双射。最低位为一的字以 $10$ 开始，余下 $L-2$ 位任取合法字，所以对 $L\ge2$，
+$$
+\sum_{n=0}^{G_L-1}q_1(n)=G_{L-2}.
+$$
+由初值和递推式验证
+$$
+G_L=\frac{\phi^{L+2}-(-\alpha)^{L+2}}{\sqrt5},
+$$
+从而
+$$
+\lim_{L\to\infty}\frac1{G_L}\sum_{n=0}^{G_L-1}q_1(n)
+=\alpha^2=\frac{3-\sqrt5}{2}\notin\mathbb Q.
+$$
+若一个二值序列从 $t$ 开始具有周期 $d$，且一周期中有 $c$ 个一，则把任意长初段分成初始段、完整周期和不足一周期的余段，得到其平均值趋于 $c/d$；初始段和余段引起的误差分子有界。因此其在长度 $G_L$ 上的平均值也必须趋于同一有理数，矛盾。这里所需且已证明的是沿 $G_L$ 的平均值极限。[^rro16_count]
+
+因此 $q_1$ 不满足甲。若存在所列 $P,A,j$，取 $h=\delta_0\circ P$ 即与已经证明的不可能性矛盾。
+
+最后，对任意 $f$，关系 $\equiv_f$ 是包含于 $\ker f$ 的加法同余：等价关系性质逐项成立，而把两数同时平移 $a$ 后的测试 $k$ 就是原来的测试 $a+k$。任意加法同余 $R\subseteq\ker f$ 都满足
+$$
+n\mathrel Rm\Longrightarrow n+k\mathrel Rm+k
+\Longrightarrow f(n+k)=f(m+k),
+$$
+所以 $R\subseteq\equiv_f$。若有 $n<m$ 且 $n\equiv_fm$，则 $f$ 从 $n$ 开始以 $m-n$ 为周期。对不最终周期的 $q_1$ 不可能出现这样的不同元素，故 $\equiv_{q_1}$ 是相等关系，关于加法同余的断言随即成立。证毕。
+
+**推论 16.2（辅助读数的边界、完成契约与素数轴转移）。** 下列结论成立。
+
+（甲）令 $I_0$ 为任意集合，$C_i$ 为紧致 Hausdorff 空间，$d_i:\mathbb N\to C_i$ 为任意辅助读数。置
+$$
+j_d(n)=(Z(n),(d_i(n))_{i\in I_0}),\qquad
+L_d=\overline{j_d[\mathbb N]}^{\,K\times\prod_{i\in I_0}C_i}.
+$$
+则 $L_d$ 紧致，向 $K$ 的投影满射，但不存在延拓自然加法的联合连续 $A:L_d^2\to L_d$。即使只要求联合连续 $B:L_d^2\to\{0,1\}$ 满足
+$$
+B(j_d(n),j_d(m))=q_1(n+m),
+$$
+仍不可能。此结论包括任意多个有限标签、任意紧值标签，以及标签不连续于原数字核心拓扑的情形。更直接地，不存在有限集 $C$ 和函数 $c:\mathbb N\to C$、$g:C^2\to\{0,1\}$，使 $g(c(n),c(m))=q_1(n+m)$ 对全部 $n,m$ 成立。
+
+（乙）令
+$$
+u=(10)^\omega,\qquad v=(01)^\omega,\qquad
+a_k=\sum_{j=0}^{k}G_{2j},\qquad b_k=G_{2k},\qquad c_k=a_k+b_k.
+$$
+则
+$$
+a_k=G_{2k+1}-1,\qquad
+c_k=G_{2k+2}-1=\sum_{j=0}^{k}G_{2j+1}.
+$$
+对每个 $m\ge0$ 及 $2k\ge m$，两输入对 $(0,a_k)$、$(b_k,a_k)$ 的每个槽位具有相同 $q_m$ 读数，而和的 $q_1$ 读数分别为一和零。并且
+$$
+Z(a_k)\longrightarrow u,\qquad Z(b_k)\longrightarrow0_K,\qquad Z(c_k)\longrightarrow v,
+$$
+$$
+(0_K,u,u),(0_K,u,v)\in\Gamma.
+$$
+
+（丙）圆周上的加法和嵌入 $\gamma$ 保留自然加法，却不保留数字读数的全局连续延拓。更精确地，$\gamma$ 单射，数字拓扑与相位拓扑在 $\mathbb N$ 上相同；然而，对每个 $L\ge1$，不存在函数 $\psi:\mathbb T\to D_L$ 使 $\pi_L=\psi\circ H$，甚至不要求 $\psi$ 连续也不行。每个单独坐标 $\delta_j$ 同样不能经 $H$ 因子化。相反，核心上的函数
+$$
+\gamma(n)\longmapsto q_L(n)
+$$
+定义良好且连续，但没有连续的全圆周延拓。度量
+$$
+d_{\rm digit}(n,m)=d_K(Z(n),Z(m)),\qquad
+d_{\rm phase}(n,m)=\rho(\gamma(n),\gamma(m)),
+$$
+其中 $\rho([s],[t])=\min_{k\in\mathbb Z}|s-t-k|$，给出不同一致结构，完成分别为 $K$ 和 $\mathbb T$。
+
+因此，保留联合连续加法和紧致性时，必须舍弃至少这个原始低位读数的全局连续恢复；若保留原数字读数和自然加法，则可以留在非紧的数字核心；若保留紧载体 $K$ 和所有数字，则固定平移 $T^h$ 仍可连续，但不能把这些固定平移合成为延拓自然加法的联合连续二元运算。[^rro16_phase]
+
+（丁）令 $\mathcal P$ 为全部素数的集合，对 $N\in\mathbb N_{>0}$ 记 $\nu_p(N)$ 为素数 $p$ 的指数，并定义
+$$
+\eta(N)=(Z(\nu_p(N)))_{p\in\mathcal P}\in K^{\mathcal P}.
+$$
+其实际像准确为
+$$
+\eta[\mathbb N_{>0}]
+=\{x\in K^{\mathcal P}:x_p\in Z[\mathbb N]\text{ 对每个 }p,
+\ \{p:x_p\ne0_K\}\text{ 有限}\}.
+$$
+对有限素数集 $S$ 和逐行有限精度 $\ell:S\to\mathbb N$，令
+$$
+Q_{S,\ell}(N)=(q_{\ell(p)}(\nu_p(N)))_{p\in S}.
+$$
+其实际像恰为有限集 $\prod_{p\in S}D_{\ell(p)}$。按扩大 $S$、提高各行精度组成的逆系统，其逆极限为 $K^{\mathcal P}$，且 $\eta[\mathbb N_{>0}]$ 在其中稠密。无限完整素数表不是这个系统的一个有限层；有限素数窗口中一条无限精度行也不是有限层。
+
+固定素数 $p$ 后，$n\mapsto p^n$ 是 $(\mathbb N,+)$ 到乘法子幺半群 $\{p^n:n\ge0\}$ 的同构。不存在紧致 Hausdorff 空间 $M$、映射 $j:\mathbb N_{>0}\to M$、联合连续乘法 $\mu:M^2\to M$ 和连续 $h_p:M\to\{0,1\}$ 同时满足
+$$
+\mu(j(N),j(R))=j(NR),\qquad h_p(j(N))=q_1(\nu_p(N)).
+$$
+这里甚至不要求 $j[\mathbb N_{>0}]$ 稠密。
+
+**证明。** 甲中，Tychonoff 定理和闭子空间的紧致性给出 $L_d$ 紧致。投影像是 $K$ 中含有稠密集 $Z[\mathbb N]$ 的紧集，因 $K$ Hausdorff 而闭，所以投影满射。投影的最低位读数连续，故定理16.1排除 $A$；该定理的乙条件直接排除 $B$。对于有限摘要 $c$，若 $c(n)=c(m)$，则对所有 $k$，
+$$
+q_1(n+k)=g(c(n),c(k))=g(c(m),c(k))=q_1(m+k).
+$$
+由 $\equiv_{q_1}$ 为相等关系，必有 $n=m$。这迫使 $c$ 将无限集单射到有限集，矛盾。
+
+乙中的偶位和恒等式在 $k=0$ 时为 $G_0=G_1-1$；若对 $k$ 成立，则加上 $G_{2k+2}$ 并使用递推式，得到下一项。奇位和同理从 $G_1=G_2-1$ 归纳。再由
+$$
+a_k+b_k=G_{2k+1}+G_{2k}-1=G_{2k+2}-1
+$$
+得到全部恒等式。显示的偶位和、奇位和及单个权值都是合法规范字，故其补零字就是相应的 $Z$ 值。若 $2k\ge m$，$Z(b_k)$ 的前 $m$ 位均为零；$Z(a_k)$ 的最低位为一，$Z(c_k)$ 的最低位为零。逐坐标最终稳定给出三个极限。原加法图中的
+$$
+(Z(0),Z(a_k),Z(a_k)),\qquad
+(Z(b_k),Z(a_k),Z(c_k))
+$$
+分别趋于所列三元组，故它们属于 $\Gamma$。特别 $k=2$ 时，$a_2=1+3+8=12$、$b_2=8$、$c_2=2+5+13=20$。
+
+丙中使用既有相位结论：$K$ 紧致，$Z[\mathbb N]$ 稠密，$H$ 连续满射，$H\circ Z=\gamma$；$H$ 的二点纤维恰位于 $E$，自然轨道上的纤维为单点；并且 $H(u)=H(v)=[-\phi]$。[^rro16_phase] 由 $\phi$ 无理，$\gamma$ 单射；由 $H$ 满射及核心稠密，$\gamma[\mathbb N]$ 稠密。
+
+连续性 $H\circ Z=\gamma$ 给相位拓扑包含于数字拓扑。反之，设 $U\subseteq K$ 开且 $Z(n)\in U$。单点纤维性质保证 $\gamma(n)\notin H(K\setminus U)$。后者为紧闭集，所以
+$$
+V=\mathbb T\setminus H(K\setminus U)
+$$
+是包含 $\gamma(n)$ 的开集，且 $H^{-1}(V)\subseteq U$。拉回核心即得反向拓扑包含。于是核心数字读数经 $\gamma$ 表示后连续。
+
+但 $u_j\ne v_j$ 对每个 $j$ 成立，而 $H(u)=H(v)$，故任何 $\delta_j$、任何正长度前缀 $\pi_L$ 都不能经 $H$ 因子化。圆周连通，连续映射到有限离散空间必为常函数；核心 $q_L$ 对 $L\ge1$ 非常值，故不存在其连续全圆周延拓。这里 $\gamma$ 在核心上的单射性与边界处数字不能恢复是不同断言。
+
+紧空间上的连续映射 $H$ 一致连续，因此恒等映射从数字一致结构到相位一致结构一致连续。乙中的两列却满足
+$$
+\rho(\gamma(a_k),\gamma(c_k))\longrightarrow0,\qquad
+d_K(Z(a_k),Z(c_k))=1-2^{-(2k+2)}\longrightarrow1.
+$$
+第一式来自共同极限相位，第二式来自前 $2k+2$ 位逐位相反、其余均为零。故反向恒等映射不一致连续。两个紧度量空间都完备，并分别含有相应稠密等距核心，因而是所列两个度量的完成。
+
+相位核心在圆周加法下封闭，且 $\gamma(n+m)=\gamma(n)+\gamma(m)$；故加法在相位核心连续，也就在相同的数字核心拓扑连续。数字核心不是紧空间：它在 Hausdorff 紧空间 $K$ 中稠密且不含 $u$，若紧则必闭而等于 $K$，矛盾。另一方面，既有连续后继 $T$ 的固定迭代 $T^h$ 延拓固定自然平移；其存在不满足定理16.1所要求的二元联合连续运算契约。[^rro16_phase]
+
+丁中，由素因子分解的存在唯一性，每个正整数只有有限个非零素数指数；每个指数有唯一有限规范行。因此 $\eta$ 单射并落入显示的实际像。反之，对显示集合中的表，逐个非零行解码为自然指数 $e_p$，有限乘积 $\prod_p p^{e_p}$ 恢复原表，证明像的准确性。
+
+给定任意 $(d_p)_{p\in S}\in\prod_{p\in S}D_{\ell(p)}$，令
+$$
+e_p=\sum_{j<\ell(p)}G_j(d_p)_j,\qquad N=\prod_{p\in S}p^{e_p}.
+$$
+合法字补零仍为规范字，故 $Q_{S,\ell}(N)=(d_p)_{p\in S}$，包括空窗口与零精度情形。这证明每个有限层的实际满性。兼容的全部有限窗口在每个素数轴上给出唯一无限合法行，反之无限行表给出兼容窗口；这些对应保持有限柱集，故得到拓扑逆极限 $K^{\mathcal P}$。有限层满性又使每个非空基本柱集都遇到实际像，证明稠密性。
+
+在固定 $p$ 的幂子幺半群上，$\eta(p^n)$ 只有 $p$ 行可能非零，该行为 $Z(n)$；其闭包是仅允许 $p$ 行任取 $K$、其余行全零的子空间。若所列 $M,j,\mu,h_p$ 存在，令
+$$
+j_p(n)=j(p^n),\qquad B=h_p\circ\mu.
+$$
+则
+$$
+B(j_p(n),j_p(m))=q_1(\nu_p(p^{n+m}))=q_1(n+m),
+$$
+与定理16.1矛盾。
+
+有限窗口上的逃逸也由同一证据直接得到：给定 $S,\ell$，取 $m=\ell(p)$ 当 $p\in S$，否则取 $m=0$，再取 $2k\ge m$。两输入对
+$$
+(1,p^{a_k}),\qquad (p^{b_k},p^{a_k})
+$$
+在两个槽位的 $Q_{S,\ell}$ 读数分别相同，但两个乘积的 $p$ 行最低位分别为 $q_1(a_k)=1$ 与 $q_1(c_k)=0$。所有其他素数行均为零。证毕。
+
+**定义 16.3（二点相位纤维的定向标记）。** 置
+$$
+a=-\alpha,\qquad b=\alpha^2,\qquad I=[a,b],\qquad c_*=-\alpha^3,\qquad \theta_*=[-\phi].
+$$
+将无限合法字唯一解析为块 $0$、$10$。对有限块字 $w$，记展开后的数字长度为 $L(w)$，并置
+$$
+S_w=\sum_{j<L(w)}(-1)^{j+1}\alpha^{j+2}w_j,\qquad
+f_w(t)=S_w+r^{L(w)}t.
+$$
+空块字允许出现。既有实相位纤维分类给出：端点纤维分别为 $\{u\}$、$\{v\}$；每个内部二点纤维唯一写成
+$$
+F^{-1}(\{f_w(c_*)\})=\{w0v,w10v\}.
+$$
+相应内部相位恰遍历 $E\setminus\{\theta_*\}$。[^rro16_phase] 定义
+$$
+z_{\theta_*}^{+1}=u,\qquad z_{\theta_*}^{-1}=v.
+$$
+对 $\theta=[f_w(c_*)]\ne\theta_*$，定义
+$$
+(z_\theta^{+1},z_\theta^{-1})=
+\begin{cases}
+(w0v,w10v),&L(w)\text{ 为偶数},\\
+(w10v,w0v),&L(w)\text{ 为奇数}.
+\end{cases}
+$$
+连接记号均按低位到高位解释。最后置
+$$
+\mathcal S(x)=
+\begin{cases}
+\{+1\},&H(x)\in E,\ x=z_{H(x)}^{+1},\\
+\{-1\},&H(x)\in E,\ x=z_{H(x)}^{-1},\\
+\{-1,+1\},&H(x)\notin E.
+\end{cases}
+$$
+
+**定理 16.4（加法闭图的完整输入纤维分类）。** 对任意 $x,y\in K$，置 $\theta=H(x)+H(y)$。则
+$$
+\Gamma(x,y)=
+\begin{cases}
+H^{-1}(\{\theta\}),&\theta\notin E,\\
+\{z_\theta^{+1}\},&\theta\in E,\ \mathcal S(x)=\mathcal S(y)=\{+1\},\\
+\{z_\theta^{-1}\},&\theta\in E,\ \mathcal S(x)=\mathcal S(y)=\{-1\},\\
+\{z_\theta^{+1},z_\theta^{-1}\},&\theta\in E\text{ 且不属于上述两种同号情形}.
+\end{cases}
+$$
+第一种情形的纤维恰有一点。特别每个输入纤维非空且至多有两点，且
+$$
+\Gamma(Z(n),Z(m))=\{Z(n+m)\}\qquad(n,m\in\mathbb N).
+$$
+但是
+$$
+\Gamma\subsetneq\{(x,y,z)\in K^3:H(z)=H(x)+H(y)\}.
+$$
+更具体地，以 $0v$、$10v$ 表示有限字与 $v$ 的连接，有
+$$
+\Gamma(0_K,u)=\{u,v\},\qquad
+\Gamma(u,u)=\{0v\},\qquad
+\Gamma(v,v)=\{10v\},\qquad
+\Gamma(u,v)=\{0v,10v\}.
+$$
+所以闭图保留全部核心加法，却不满足以 $0_K$ 为单位的集合值单位律 $\Gamma(0_K,x)=\{x\}$。
+
+**证明。** 先证明定向标记的逼近性质。若 $H(x)=\beta\notin E$，则对任何自然数列 $n_i$，
+$$
+\gamma(n_i)\longrightarrow\beta\quad\Longrightarrow\quad Z(n_i)\longrightarrow x.
+$$
+事实上，$K$ 紧致且可度量；任意聚点都由 $H$ 连续性落在单点纤维 $H^{-1}(\{\beta\})=\{x\}$。若原序列不趋于 $x$，可在某个固定邻域外取子序列，再取收敛子列，得到另一个聚点，矛盾。
+
+对于 $\beta\in E$，若
+$$
+\gamma(n_i)=\beta+[\varepsilon_i],\qquad
+0<|\varepsilon_i|<\tfrac12,\qquad \varepsilon_i\longrightarrow0,
+$$
+则对每个 $s\in\{-1,+1\}$，有准确的单侧等价
+$$
+Z(n_i)\longrightarrow z_\beta^s
+\quad\Longleftrightarrow\quad
+\operatorname{sgn}(\varepsilon_i)=s\text{ 最终成立}.
+$$
+为证此式，先取 $\beta=\theta_*$。由于 $F(Z(n_i))\in(a,b)$ 且 $b-a=1$，正的小偏移对应代表 $a+\varepsilon_i$，负的小偏移对应代表 $b+\varepsilon_i$。实端点纤维的唯一性与上述紧致聚点论证分别给出极限 $u$ 和 $v$。反之，趋于 $u$ 或 $v$ 时，连续实函数 $F$ 分别趋于 $a$ 或 $b$，且有限核心不达到端点，故偏移最终分别为正或负。
+
+再取内部二点相位 $\beta=[c]$，其中 $c=f_w(c_*)\in(a,b)$。拆分定义 $F$ 的级数可得
+$$
+F(wt)=f_w(F(t)),\qquad
+f_0(I)=[c_*,b],\qquad f_{10}(I)=[a,c_*].
+$$
+由 $F(K)=I$，两个互不相交的开闭柱集 $[w0]_K$、$[w10]_K$ 的实值域分别为
+$$
+f_w([c_*,b]),\qquad f_w([a,c_*]).
+$$
+它们位于 $c$ 的两侧。若 $L(w)$ 为偶数，前者在右、后者在左；若为奇数，则方向交换。这正是定义16.3的标记。对充分小的局部偏移，相位差就是实代表与 $c$ 的差，因为 $c$ 位于 $(a,b)$ 内。
+
+任何聚点只能是 $w0v$ 或 $w10v$。若偏移始终取指定符号，却有子列趋于反号标记，该子列最终进入反号标记的开闭柱集，其实值域方向与偏移符号矛盾。因此只有指定标记能成为聚点，紧致性给出整列收敛。反之，若 $Z(n_i)$ 趋于一个标记，它最终进入对应单侧柱集。自然轨道不遇到 $E$，所以偏移不能等于零，必最终具有该侧符号。单侧等价得证。
+
+现在证明分类的必要性。若 $(x,y,z)\in\Gamma$，由 $K^3$ 可度量，存在同一列自然数对 $(n_i,m_i)$，使
+$$
+(Z(n_i),Z(m_i),Z(n_i+m_i))\longrightarrow(x,y,z).
+$$
+连续性和核心上的加法相位恒等式给出
+$$
+H(z)=H(x)+H(y)=\theta.
+$$
+故 $\Gamma(x,y)\subseteq H^{-1}(\{\theta\})$。若 $\theta\notin E$，可能输出至多一个。若两输入都被迫为正号标记，分别写其趋零局部偏移为 $\varepsilon_i,\delta_i$，单侧等价保证二者最终均正；它们之和仍正，并且最终绝对值小于 $1/2$。由于
+$$
+\gamma(n_i+m_i)=\theta+[\varepsilon_i+\delta_i],
+$$
+输出只能趋于 $z_\theta^{+1}$。两个负号输入完全同理。其余情形只剩该相位的两个标记，不会出现第三个输出。
+
+下面证明每个列出的输出都由共同的自然数对序列实现。若 $\theta\notin E$，可分别用截断字选择 $n_i,m_i$ 使 $Z(n_i)\to x$、$Z(m_i)\to y$。和的相位趋于 $\theta$，单点纤维的逼近性质保证整列 $Z(n_i+m_i)$ 趋于该唯一输出。
+
+设 $\theta\in E$，并固定分类式允许的目标符号 $s\in\{-1,+1\}$。允许性意味着不是两个输入都被迫取 $-s$，因而至少一个输入允许符号 $s$。交换两输入后，可设 $s\in\mathcal S(x)$。任取 $t\in\mathcal S(y)$，令
+$$
+\tau_i=\frac1{100(i+1)},\qquad
+I_i=(3s\tau_i-\tau_i/4,\ 3s\tau_i+\tau_i/4),\qquad
+J_i=(t\tau_i-\tau_i/4,\ t\tau_i+\tau_i/4).
+$$
+圆周自然轨道稠密，所以可同时选择 $n_i,m_i\in\mathbb N$，使
+$$
+\gamma(n_i)\in H(x)+[I_i],\qquad
+\gamma(m_i)\in H(y)+[J_i].
+$$
+这里 $[I_i]=\{[a]:a\in I_i\}$，另一个区间同理。取相应实偏移 $\varepsilon_i\in I_i$、$\delta_i\in J_i$。它们趋于零且分别具有允许的符号 $s,t$；对非分裂输入使用单点纤维逼近性质，对分裂输入使用单侧等价，得到
+$$
+Z(n_i)\longrightarrow x,\qquad Z(m_i)\longrightarrow y.
+$$
+而 $\varepsilon_i+\delta_i$ 的中心为 $(3s+t)\tau_i$，与中心的距离小于 $\tau_i/2$。因 $3s+t$ 与 $s$ 同号且绝对值至少为二，偏移和始终具有符号 $s$，趋于零且绝对值小于 $1/2$。再次应用单侧等价，得到
+$$
+Z(n_i+m_i)\longrightarrow z_\theta^s.
+$$
+这构造的是同一对输入序列及其实际和，不是三条彼此无关的相位逼近。所有允许输出均已实现，分类式得证。
+
+自然数核心输入的和相位是 $\gamma(n+m)\notin E$，其纤维为 $\{Z(n+m)\}$，给出核心精确性。最后，$H(0_K)=0$，$H(u)=H(v)=\theta_*$，且
+$$
+2\theta_*=[-2\phi]=[c_*],\qquad
+z_{[-2\phi]}^{+1}=0v,\qquad z_{[-2\phi]}^{-1}=10v.
+$$
+将空块字及符号 $\mathcal S(0_K)=\{-1,+1\}$、$\mathcal S(u)=\{+1\}$、$\mathcal S(v)=\{-1\}$ 代入分类式，即得四个显示的输入纤维。特别 $(u,u,10v)$ 满足相位等式，却不属于 $\Gamma$，证明严格包含；$\Gamma(0_K,u)=\{u,v\}$ 则否定所述单位律。证毕。
+
+[^rro16_compact]: Jorge Almeida, Herman Goulet-Ouellet, Ondřej Klíma, *What makes a Stone topological algebra Profinite*, Algebra universalis 84, article 6 (2023), DOI: [10.1007/s00012-023-00804-w](https://link.springer.com/article/10.1007/s00012-023-00804-w)，尤见第3节 Lemma 3.1（正式版第7页）、第5.1节（第10页）及 Theorem 5.16（第18页）。定理16.1中所需的有限值双变量特例已由开覆盖完整证明，不以载体为 Stone 空间为前提。
+
+[^rro16_unary]: James East, Nik Ruškuc, *Classification of congruences of twisted partition monoids*, arXiv:[2010.04392v3](https://arxiv.org/html/2010.04392v3#S2.SS1)，第2.1节关于自然数加法同余的未编号段落；亦见本卷定理11.2的自然数加法同余分类。
+
+[^rro16_count]: Hung Viet Chu, *The Fibonacci Sequence and Schreier-Zeckendorf Sets*, Journal of Integer Sequences 22 (2019), arXiv:[1906.10962](https://arxiv.org/abs/1906.10962)。这里只用合法有限字的基本计数，所需递推及最低位计数已在定理16.1内证明。
+
+[^rro16_phase]: *CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF*，第371—377节，特别是定理371.2、372.2—372.4、373.2、375.2—375.3与377.1；固定文本为提交 c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb 的 [Zeckendorf 理论卷](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md)。
+
+## 追加锚（本行以下为增补区）
+## 17. 完整历史见证、可逆后继与选史障碍
+
+**定义与假设 17.0（完整过去空间及 Zeckendorf 前置）。** 在 ZFC 中取 $\mathbb N=\{0,1,\ldots\}$。对非空紧致 Hausdorff 空间 $X$ 及连续满射 $f:X\to X$，定义
+$$
+\mathcal L_f=\{(x_0,x_1,\ldots)\in X^{\mathbb N}:f(x_{j+1})=x_j\text{ 对每个 }j\ge0\},
+$$
+赋予乘积空间的子空间拓扑，记 $p_j(x_0,x_1,\ldots)=x_j$、$P_f=p_0$，并定义候选演化
+$$
+U_f(x_0,x_1,\ldots)=(f(x_0),x_0,x_1,\ldots).
+$$
+
+具体情形沿用[前置卷第371–375节](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md)的对象，在本节简记为
+$$
+\phi=\frac{1+\sqrt5}{2},\qquad \mathbb T=\mathbb R/\mathbb Z,\qquad K=\{x\in\{0,1\}^{\mathbb N}:x_ix_{i+1}=0\text{ 对所有 }i\ge0\}.
+$$
+$K$ 取乘积子空间拓扑。令 $G_0=1$、$G_1=2$、$G_{i+2}=G_{i+1}+G_i$，$Z(n)$ 为权值 $G_i$ 下低位起的有限 Zeckendorf 表示补零，$0=Z(0)$ 为全零状态，并记
+$$
+u=(10)^\omega,\qquad v=(01)^\omega,\qquad D=Z[\mathbb N],\qquad H(x)=\left[\sum_{i\ge0}(-1)^{i+1}\phi^{-i-2}x_i\right].
+$$
+$T$ 为前置卷定义375.1的首个相邻零后继：在首个 $00$ 的位置清零此前缀并置该位为一；无 $00$ 时输出 $0$。本节使用前置卷定理371.2、372.4、375.2–375.3的以下结论：$K$ 紧致可度量，$Z$ 单射且 $D$ 稠密；$T$ 连续满射，且
+$$
+TZ(n)=Z(n+1),\qquad T^{-1}(\{0\})=\{u,v\},
+$$
+每个非零状态的前驱唯一；$H$ 连续满射，且
+$$
+H(Z(n))=[n\phi],\qquad H(Tx)=H(x)+[\phi].
+$$
+$H$ 的二点纤维恰位于
+$$
+E_- =\{[-m\phi]:m\ge1\},
+$$
+其余相位的纤维均为单点，特别
+$$
+H^{-1}(\{[n\phi]\})=\{Z(n)\}\qquad(n\ge0).
+$$
+在此具体情形记 $L=\mathcal L_T$、$P=P_T$、$U=U_T$、$Q=H\circ P$，并置
+$$
+E_+=\{[n\phi]:n\ge0\},\qquad \mathcal O=\{[k\phi]:k\in\mathbb Z\}=E_-\cup E_+.
+$$
+由 $\phi$ 无理，$E_-\cap E_+=\varnothing$，且整数 $k$ 由相位 $[k\phi]$ 唯一确定。
+
+**定理 17.1（主定理组：自然扩张及其准确泛性质）。** 对定义17.0的一般系统 $(X,f)$，$\mathcal L_f$ 非空、紧致且 Hausdorff；每个坐标投影 $p_j$ 都是连续满射，$P_f$ 还是闭映射及商映射。$U_f$ 是同胚，其逆为
+$$
+U_f^{-1}(x_0,x_1,x_2,\ldots)=(x_1,x_2,x_3,\ldots),
+$$
+并满足
+$$
+P_fU_f=fP_f,\qquad p_j=P_fU_f^{-j}.
+$$
+
+空间 $\mathcal L_f$ 连同各 $p_j$ 是逆系统
+$$
+X\xleftarrow{f}X\xleftarrow{f}X\xleftarrow{f}\cdots
+$$
+在拓扑空间范畴中的逆极限：若拓扑空间 $Y$ 上的连续映射 $a_j:Y\to X$ 满足 $fa_{j+1}=a_j$，则存在唯一连续映射 $a:Y\to\mathcal L_f$，使 $p_ja=a_j$ 对所有 $j$ 成立。
+
+对于动力系统，令对象为三元组 $(Y,S,g)$，其中 $Y$ 是非空紧致 Hausdorff 空间，$S:Y\to Y$ 是同胚，$g:Y\to X$ 连续且 $gS=fg$。从 $(Y,S,g)$ 到 $(Y',S',g')$ 的箭头为满足
+$$
+hS=S'h,\qquad g'h=g
+$$
+的连续映射 $h:Y\to Y'$。在此范畴中，$(\mathcal L_f,U_f,P_f)$ 是终对象。准确地说，每个对象具有唯一的箭头
+$$
+\widetilde g:Y\longrightarrow\mathcal L_f,\qquad \widetilde g(y)=\bigl(g(y),g(S^{-1}y),g(S^{-2}y),\ldots\bigr),
+$$
+满足
+$$
+P_f\widetilde g=g,\qquad \widetilde gS=U_f\widetilde g.
+$$
+若 $g$ 满射，则 $\widetilde g$ 也满射。因此，进一步要求底映射 $g$ 和箭头 $h$ 均满射时，同一三元组仍是该可逆扩张范畴的终对象。这些性质将该扩张确定到唯一的、与底投影相容的动力学同胚。
+
+一般逆极限的成熟框架见 Ingram–Mahavier，*Inverse Limits: From Continua to Chaos*，第2章“[Inverse Limits in a General Setting](https://doi.org/10.1007/978-1-4614-1797-2_2)”，第75–129页；上述移位同胚及自然扩张的动力学定位见 Boroński–Minc–Štimac，“[On conjugacy of natural extensions of one-dimensional maps](https://arxiv.org/html/2110.11440v1#S1)”，第1节，期刊 DOI：10.1017/etds.2022.62。
+
+**证明。** 对每个 $j\ge0$，集合
+$$
+C_j=\{\xi\in X^{\mathbb N}:f(\xi_{j+1})=\xi_j\}
+$$
+是闭集：映射 $\xi\mapsto(f(\xi_{j+1}),\xi_j)$ 连续，而 Hausdorff 空间 $X$ 的对角线在 $X\times X$ 中闭。因此 $\mathcal L_f=\bigcap_{j\ge0}C_j$ 是紧致 Hausdorff 乘积空间 $X^{\mathbb N}$ 的闭子空间。
+
+固定任意 $x\in X$。对 $N\ge0$ 置
+$$
+A_N(x)=\{\xi\in X^{\mathbb N}:\xi_0=x,\ f(\xi_{j+1})=\xi_j\text{ 对 }0\le j<N\}.
+$$
+这些是递减的闭集。由 $f^N$ 满射，存在 $y\in X$ 使 $f^N(y)=x$；令 $\xi_j=f^{N-j}(y)$ 对 $0\le j\le N$ 成立，并用任一固定状态填充其余坐标，即得 $A_N(x)$ 的元素。紧性与有限交性质给出
+$$
+\varnothing\ne\bigcap_{N\ge0}A_N(x)=P_f^{-1}(\{x\}).
+$$
+于是 $P_f$ 满射，且 $\mathcal L_f$ 非空。投影连续。若 $B\subseteq\mathcal L_f$ 闭，则 $B$ 紧，其像 $P_f(B)$ 在 Hausdorff 空间 $X$ 中闭，故 $P_f$ 是闭映射。连续闭满射是商映射：若 $P_f^{-1}(A)$ 闭，则 $A=P_f(P_f^{-1}(A))$ 闭，反向由连续性成立。
+
+若 $\ell=(x_0,x_1,\ldots)\in\mathcal L_f$，则插入的首条关系为 $f(x_0)=f(x_0)$，其余关系来自 $\ell$，故 $U_f\ell\in\mathcal L_f$。删除首坐标也保留全部相容关系，定义映射 $V(\ell)=(x_1,x_2,\ldots)$。逐坐标检查得到
+$$
+VU_f=\operatorname{id}_{\mathcal L_f},\qquad U_fV=\operatorname{id}_{\mathcal L_f},
+$$
+其中第二式的首坐标使用 $f(x_1)=x_0$。两个映射的每个坐标函数均连续，所以两者连续，$U_f$ 为同胚且逆为 $V$。首坐标直接给出 $P_fU_f=fP_f$，反复删除首坐标给出 $p_j=P_fU_f^{-j}$；因此所有 $p_j$ 满射。
+
+对于相容映射族 $(a_j)$，唯一可能的映射是 $a(y)=(a_j(y))_{j\ge0}$。相容性保证其值在 $\mathcal L_f$ 中，乘积拓扑保证其连续；逐坐标相等又保证唯一性。这证明拓扑逆极限的泛性质。
+
+同时记录一个后面使用的柱集事实。由相容关系，对 $0\le i\le N$ 有 $p_i=f^{N-i}p_N$。因而，对开集 $O_0,\ldots,O_N\subseteq X$，
+$$
+\bigcap_{i=0}^N p_i^{-1}(O_i)=p_N^{-1}(W),\qquad W=\bigcap_{i=0}^N(f^{N-i})^{-1}(O_i).
+$$
+$W$ 开；左侧非空时 $W$ 非空。任意非空开子集均包含这样的非空柱集。
+
+现在取 $(Y,S,g)$。对每个 $j\ge0$，由 $gS=fg$ 得
+$$
+f\bigl(g(S^{-j-1}y)\bigr)=g(S^{-j}y),
+$$
+故所给 $\widetilde g$ 落在 $\mathcal L_f$，且由各坐标连续而连续。首坐标给 $P_f\widetilde g=g$；比较首坐标及所有其余坐标，得到 $\widetilde gS=U_f\widetilde g$。
+
+若 $h:Y\to\mathcal L_f$ 也满足这两式，则 $S,U_f$ 可逆使 $hS^{-j}=U_f^{-j}h$，所以
+$$
+p_jh(y)=P_fU_f^{-j}h(y)=P_fh(S^{-j}y)=g(S^{-j}y).
+$$
+全部坐标被强制为 $\widetilde g$ 的坐标，故 $h=\widetilde g$。
+
+再设 $g$ 满射。给定 $\ell=(x_j)_{j\ge0}\in\mathcal L_f$，令
+$$
+B_N=\{y\in Y:g(S^{-j}y)=x_j\text{ 对所有 }0\le j\le N\}.
+$$
+这些是递减闭集。选取 $z\in Y$ 使 $g(z)=x_N$，置 $y=S^Nz$；则对 $0\le j\le N$，
+$$
+g(S^{-j}y)=g(S^{N-j}z)=f^{N-j}(x_N)=x_j.
+$$
+所以 $B_N$ 非空。$Y$ 的紧性给出 $y\in\bigcap_NB_N$，而此时 $\widetilde g(y)=\ell$，证明提升满射。
+
+最后，两个满足所述终对象性质的三元组之间各有唯一箭头。两个复合都是相应终对象的自箭头，故由唯一性等于恒等。两箭头因而互为连续逆映射，并保持底投影与演化。这证明唯一的动力学同胚。证毕。
+
+**命题 17.2（直接支持组一：全部历史纤维、边界与相位拆分）。** 在定义17.0的 Zeckendorf 系统中，对 $x\in K\setminus D$，其唯一前驱仍在 $K\setminus D$，记为 $r(x)$，并定义
+$$
+\lambda(x)=(r^j(x))_{j\ge0}.
+$$
+对 $\varepsilon\in\{u,v\}$ 定义双向状态序列及完整历史
+$$
+c_n^\varepsilon=Z(n)\quad(n\ge0),\qquad c_{-m}^\varepsilon=r^{m-1}(\varepsilon)\quad(m\ge1),\qquad \ell_k^\varepsilon=(c_{k-j}^\varepsilon)_{j\ge0}\quad(k\in\mathbb Z).
+$$
+这些对象均有定义，并满足
+$$
+Tc_k^\varepsilon=c_{k+1}^\varepsilon,\qquad U\ell_k^\varepsilon=\ell_{k+1}^\varepsilon,\qquad P\ell_k^\varepsilon=c_k^\varepsilon,\qquad Q\ell_k^\varepsilon=[k\phi].
+$$
+
+$P$ 的全部纤维准确为
+$$
+P^{-1}(\{Z(n)\})=\{\ell_n^u,\ell_n^v\}\quad(n\ge0),\qquad P^{-1}(\{x\})=\{\lambda(x)\}\quad(x\notin D).
+$$
+对于 $n\ge0$，这两个历史的第 $0,\ldots,n$ 个坐标相同，准确等于 $Z(n),Z(n-1),\ldots,Z(0)$，首次区别在第 $n+1$ 个坐标：
+$$
+p_{n+1}(\ell_n^u)=u,\qquad p_{n+1}(\ell_n^v)=v.
+$$
+特别地，零状态有且仅有两条历史
+$$
+\ell_0^u=(0,u,r(u),r^2(u),\ldots),\qquad \ell_0^v=(0,v,r(v),r^2(v),\ldots).
+$$
+两个交替状态 $u,v$ 自身却各只有一条完整历史。
+
+原相位映射与历史相位映射的纤维区别准确如下。对每个 $m\ge1$，
+$$
+H^{-1}(\{[-m\phi]\})=\{c_{-m}^u,c_{-m}^v\},\qquad P^{-1}(\{c_{-m}^\varepsilon\})=\{\ell_{-m}^\varepsilon\}.
+$$
+$Q$ 连续满射，其二点纤维恰位于整个整数轨道 $\mathcal O$，具体为
+$$
+Q^{-1}(\{[k\phi]\})=\{\ell_k^u,\ell_k^v\}\qquad(k\in\mathbb Z).
+$$
+若 $\theta\notin\mathcal O$，以 $x_\theta$ 表示其唯一的 $H$ 原像，则
+$$
+Q^{-1}(\{\theta\})=\{\lambda(x_\theta)\}.
+$$
+因此，负轨道 $E_-$ 上原有的两个当前状态各自只提升为一条历史；非负轨道 $E_+$ 上原有的唯一当前状态提升为两条历史；其余相位保持单点。新出现的二点相位准确是 $E_+$，没有四点纤维。
+
+此外，对任意 $\ell\in L$ 及 $k\in\mathbb Z$，
+$$
+H(P(U^k\ell))=Q(\ell)+[k\phi].
+$$
+所以即使保留全部双向相位读数，仍然只有 $Q$ 的区分能力：
+$$
+\bigl(H(P(U^k\ell))\bigr)_{k\in\mathbb Z}=\bigl(H(P(U^k\ell'))\bigr)_{k\in\mathbb Z}\quad\Longleftrightarrow\quad Q(\ell)=Q(\ell').
+$$
+本条使用的单步分支与原相位纤维分别是[前置卷定理375.2及372.4](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md)；完整历史纤维由以下证明确定。
+
+**证明。** 因 $D$ 中每一点仅有有限个非零数字，而 $u,v$ 各有无限多个非零数字，所以 $u,v\notin D$。若 $x\notin D$，则 $x\ne0$，故有唯一前驱 $y$。假如 $y=Z(n)$，则 $x=Ty=Z(n+1)\in D$，矛盾。因此 $r:K\setminus D\to K\setminus D$ 有定义，所有迭代 $r^j(x)$ 都有定义。
+
+若 $\ell=(x_j)_{j\ge0}\in P^{-1}(\{x\})$ 且 $x\notin D$，则每个 $x_j$ 都不在 $D$：否则 $x_j=Z(a)$ 会给出 $x=T^jZ(a)=Z(a+j)\in D$。所以逐次前驱都唯一，强制 $x_j=r^j(x)$。反之，$T(r^{j+1}(x))=r^j(x)$ 保证 $\lambda(x)\in L$。这证明全部非核心状态的单点历史纤维，包括 $u,v$。
+
+由 $TZ(n)=Z(n+1)$ 及 $Z$ 单射，对 $a\ge1$，状态 $Z(a)$ 非零，而 $Z(a-1)$ 已是其前驱，故它是唯一前驱。因此任取 $\ell\in P^{-1}(\{Z(n)\})$，其前 $n+1$ 个坐标被强制为
+$$
+Z(n),Z(n-1),\ldots,Z(0).
+$$
+随后唯一可能的选择为 $u$ 或 $v$。选定其一后，该点属于 $K\setminus D$，由上一段，全部更早历史唯一。这既排除后续分支，也排除其他完整历史，故恰有两条，且首次差别准确位于第 $n+1$ 个坐标。这里 $n=0$ 无须另加假设，直接给出显示的两条零历史。
+
+由 $Tr(x)=x$、$Tu=Tv=0$ 及有限核心后继式，分 $k\le-2$、$k=-1$、$k\ge0$ 三种情形得到 $Tc_k^\varepsilon=c_{k+1}^\varepsilon$。这保证每个 $\ell_k^\varepsilon$ 属于 $L$，并逐坐标给出 $U\ell_k^\varepsilon=\ell_{k+1}^\varepsilon$ 与 $P\ell_k^\varepsilon=c_k^\varepsilon$。
+
+对 $m\ge1$，有
+$$
+T^{m-1}c_{-m}^u=u,\qquad T^{m-1}c_{-m}^v=v.
+$$
+因此 $c_{-m}^u\ne c_{-m}^v$。它们都属于 $K\setminus D$，各自的唯一历史为 $\ell_{-m}^u$、$\ell_{-m}^v$。又由 $T^mc_{-m}^\varepsilon=0$ 和相位交换式，
+$$
+H(c_{-m}^\varepsilon)+[m\phi]=H(0)=0,
+$$
+故它们均位于相位 $[-m\phi]$ 的纤维。该纤维按前置恰有两点，所以所列两点就是其全部原像。这也验证了负一时刻的边界为 $\{u,v\}$，而零时刻的当前状态已合为 $\{0\}$。
+
+$Q=HP$ 连续满射，且 $QU=R Q$，其中 $R(\theta)=\theta+[\phi]$。因为 $U,R$ 都可逆，将该式与逆映射复合，得到 $QU^{-1}=R^{-1}Q$，继而对所有整数 $k$ 有 $QU^k=R^kQ$。在上述轨道上，这给出 $Q\ell_k^\varepsilon=[k\phi]$。对 $k\ge0$，两条历史在第 $k+1$ 个坐标不同；对 $k<0$，它们已在第零个坐标不同。因此所有显示的二点集合确实各含两个不同元素。
+
+现在穷尽全部相位。若 $\theta=[n\phi]\in E_+$，则 $H^{-1}(\{\theta\})=\{Z(n)\}$，其 $P$ 纤维恰有上述两条历史。若 $\theta=[-m\phi]\in E_-$，则 $H$ 纤维恰为 $c_{-m}^u,c_{-m}^v$，而这两个状态的 $P$ 纤维各为单点。若 $\theta\notin\mathcal O$，则 $\theta\notin E_-$，所以 $H$ 纤维只有一点 $x_\theta$；该点不能属于 $D$，否则其相位属于 $E_+$。因此其 $P$ 纤维同样只有一点。三种情形互斥且穷尽圆周，证明完整分类，并说明为何不能把两个二点纤维数目相乘得到四点。
+
+最后，$QU^k=R^kQ$ 就是所有双向相位读数的显示公式。相位 $Q(\ell)$ 相等时，全部读数相等；全部读数相等时，取 $k=0$ 即得 $Q(\ell)=Q(\ell')$。证毕。
+
+**命题 17.3（直接支持组二：极小性与连续选史的准确障碍）。** 本模型的 $(K,T)$ 与 $(L,U)$ 均为极小系统，此处极小指每一点的非负时间轨道稠密。特别地，对任取 $\ell_0\in P^{-1}(\{0\})$，
+$$
+\overline{\{U^n\ell_0:n\ge0\}}=L.
+$$
+集合 $Q^{-1}(\mathcal O)$ 准确分解为两条互不相交的稠密整数轨道
+$$
+\{\ell_k^u:k\in\mathbb Z\},\qquad \{\ell_k^v:k\in\mathbb Z\}.
+$$
+
+集合意义的截面 $s:K\to L$、$Ps=\operatorname{id}_K$ 存在，但每一个这样的截面的连续点集都准确等于 $K\setminus D$。因此 $P$ 没有连续全局截面。更强地，对任何非空开集 $V\subseteq K$，不存在连续映射 $s:V\to L$ 使 $P(s(x))=x$ 对所有 $x\in V$ 成立。即使不要求连续，也不存在满足
+$$
+Ps=\operatorname{id}_K,\qquad sT=Us
+$$
+的全局截面。
+
+极小性所需的稠密核心、单点相位纤维及相位交换式，均取自[前置卷定理371.2、372.4、375.3](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md)，不额外假设极小性。
+
+**证明。** 先建立原系统的极小性。$H$ 连续满射且 $D$ 稠密，所以 $H(D)=\{[n\phi]:n\ge0\}$ 在圆周稠密：任一非空圆周开集的 $H$ 原像是非空开集，必与 $D$ 相交。圆周平移是同胚，故任意相位 $\theta$ 的非负旋转轨道
+$$
+\{\theta+[n\phi]:n\ge0\}
+$$
+也稠密。
+
+任取 $x\in K$，令
+$$
+A=\overline{\{T^nx:n\ge0\}}.
+$$
+$A$ 紧，因而 $H(A)$ 在圆周闭；相位交换式使 $H(A)$ 包含稠密集合 $\{H(x)+[n\phi]:n\ge0\}$，所以 $H(A)=\mathbb T$。对于每个 $a\ge0$，存在 $y\in A$ 使 $H(y)=[a\phi]$；这个相位的唯一原像是 $Z(a)$，故 $Z(a)\in A$。因此 $D\subseteq A$，再由 $D$ 稠密得 $A=K$。这证明每个原状态的非负轨道稠密。
+
+再取任意 $\ell\in L$ 及非空开集 $B\subseteq L$。由定理17.1的柱集等式，$B$ 包含某个非空柱集 $p_N^{-1}(W)$，其中 $W\subseteq K$ 非空且开。置 $x=P\ell$。刚证的原系统极小性给出 $m\ge0$ 使 $T^mx\in W$。由移位公式，
+$$
+p_N(U^{N+m}\ell)=T^m(P\ell)=T^mx\in W.
+$$
+于是 $U^{N+m}\ell\in B$，证明 $(L,U)$ 极小。若 $P\ell=0$，同一柱集论证只需使用 $T^m0=Z(m)$ 及 $D$ 稠密，亦直接证明题设两条零历史各自的非负轨道稠密。
+
+命题17.2给出 $U\ell_k^\varepsilon=\ell_{k+1}^\varepsilon$，所以两组显示的点各是一条整数轨道，且各包含一条已证稠密的非负轨道。若两组中的点相等，则其相位相等，$\phi$ 无理迫使两个整数指标相同；随后与命题17.2中同一指标的两条历史不同相矛盾。因此两轨道不交；它们穷尽 $Q^{-1}(\mathcal O)$，亦由该命题的相位纤维分类得到。
+
+接着证明截面断言。令每个 $Z(n)$ 选择 $\ell_n^u$，每个 $x\notin D$ 选择唯一的 $\lambda(x)$，便定义了集合截面，故这里不是集合选取的存在障碍。
+
+设 $s$ 为任意集合截面，$x\notin D$。此时 $P^{-1}(\{x\})=\{s(x)\}$。若 $O\subseteq L$ 是包含 $s(x)$ 的开集，则 $P(L\setminus O)$ 闭且不含 $x$。因而
+$$
+W=K\setminus P(L\setminus O)
+$$
+是 $x$ 的开邻域。对每个 $y\in W$，其全部 $P$ 原像均在 $O$ 中，特别 $s(y)\in O$。所以 $s$ 在 $x$ 连续。这一论证不要求 $s$ 在其他点连续。
+
+现在固定 $n\ge0$。对 $\varepsilon\in\{u,v\}$ 及 $a\ge1$，令 $\varepsilon^{(a)}$ 为 $\varepsilon$ 的前 $a$ 位截断后补零。它仍是合法有限表示，故
+$$
+\varepsilon^{(a)}=Z(A_a^\varepsilon),\qquad A_a^\varepsilon=\sum_{i<a}G_i\varepsilon_i,
+$$
+并且 $\varepsilon^{(a)}\to\varepsilon$。令
+$$
+y_a^\varepsilon=T^{n+1}\varepsilon^{(a)}=Z(A_a^\varepsilon+n+1).
+$$
+由 $T$ 连续及 $T\varepsilon=0$，两列满足
+$$
+y_a^u\longrightarrow Z(n),\qquad y_a^v\longrightarrow Z(n).
+$$
+然而，命题17.2中有限核心历史的强制前缀表明：无论截面在这两个状态上选择哪条历史，都有
+$$
+p_{n+1}(s(y_a^\varepsilon))=Z(A_a^\varepsilon)=\varepsilon^{(a)}.
+$$
+若 $s$ 在 $Z(n)$ 连续，则连续坐标映射 $p_{n+1}$ 与它复合后，在两列上必须趋于同一个值 $p_{n+1}(s(Z(n)))$。第一列却趋于 $u$，第二列趋于 $v$；$K$ 为 Hausdorff 且 $u\ne v$，矛盾。因此每个集合截面在每个 $Z(n)$ 都不连续。结合上一段，其连续点集恰为 $K\setminus D$。
+
+同样的两列也排除局部连续截面：若截面只定义在含 $Z(n)$ 的开邻域内，两列最终仍位于其定义域，矛盾不变。任意非空开集与稠密集 $D$ 相交，故任何非空开集上都不存在连续截面。
+
+最后，假设某个集合截面还满足 $sT=Us$。由 $Tu=Tv=0$，
+$$
+Us(u)=s(0)=Us(v).
+$$
+$U$ 单射推出 $s(u)=s(v)$，再应用 $P$ 得 $u=v$，矛盾。因此不存在这样的动力学截面，即使舍弃连续性也不例外。
+
+综上，$P$ 以连续满射保留当前状态，$L$ 以全部相容过去提供可逆演化，但把每个当前状态连续地选成一条完整历史不可行；两条零历史各有稠密正向轨道并不改变这一截面障碍。证毕。
+
+## 追加锚（本行以下为增补区）
+## 18. 增补·加法闭图的结合律与最细确定观察商
+
+**定义 18.0（关系复合、确定观察与因子化次序）。** 沿用定义16.0、16.3中的数字载体 $K$、有限核心 $Z$、零点 $0_K$、相位映射 $H:K\to\mathbb T$、加法闭图 $\Gamma$ 及分裂纤维的定向标记 $z_\theta^s$。特别，
+$$
+\mathbb T=\mathbb R/\mathbb Z,\qquad
+\Gamma=\overline{\{(Z(n),Z(m),Z(n+m)):n,m\in\mathbb N\}}^{K^3}.
+$$
+记
+$$
+E_m=[-m\phi]\quad(m\ge1),\qquad E=\{E_m:m\ge1\},\qquad \Sigma=\{-1,+1\}.
+$$
+若 $H(x)\notin E$，置 $\mathcal S(x)=\Sigma$；若 $x=z_\theta^s$ 且 $\theta\in E$，置 $\mathcal S(x)=\{s\}$。[^rro18_phase][^rro18_fibers]
+
+对 $A,B\subseteq K$，定义
+$$
+\Gamma(A,B)=\bigcup_{a\in A,\,b\in B}\Gamma(a,b).
+$$
+其中 $\Gamma(A,y)$、$\Gamma(x,B)$ 分别表示 $\Gamma(A,\{y\})$、$\Gamma(\{x\},B)$。再定义
+$$
+C(x)=\Gamma(0_K,x),\qquad C(A)=\bigcup_{x\in A}C(x),\qquad
+\Lambda(x,y)=H^{-1}(\{H(x)+H(y)\}),
+$$
+并以 $\Lambda$ 同时表示由这些输入纤维组成的三元关系。严格左单位是满足 $\Gamma(e,x)=\{x\}$ 对所有 $x\in K$ 成立的点 $e$；严格右单位作对称定义。弱左单位只要求 $x\in\Gamma(e,x)$。
+
+称连续满射 $q:K\to Q$ 为一个连续确定观察，若 $Q$ 是 Hausdorff 空间，且存在全函数 $D:Q^2\to Q$，满足
+$$
+\forall x,y\in K\ \forall z\in\Gamma(x,y),\qquad
+D(q(x),q(y))=q(z).
+$$
+此定义不预设 $D$ 连续、结合、交换或具有单位。对两个连续满射观察，记 $q_1\succeq q_2$，若存在连续映射 $r:Q_1\to Q_2$ 使 $q_2=r\circ q_1$；此时 $r$ 自动满射，称 $q_1$ 比 $q_2$ 精细。
+
+单值选择则是函数 $A:K^2\to K$，满足 $A(x,y)\in\Gamma(x,y)$，只要求选中一个输出，而不是将全部输出观察为同一点。另一个载体 $L$ 连同投影 $P:L\to K$ 属于状态提升的数据，其映射方向与观察商 $q:K\to Q$ 不同；以下结论不以这种提升为前提。
+
+**假设 18.1（相位前置与明确采用的闭图分类）。** 采用如下前提。$K$ 是紧致 Hausdorff 空间，$Z[\mathbb N]$ 在其中稠密，$H$ 连续满射且满足 $H(Z(n))=[n\phi]$。相位 $\theta\notin E$ 的纤维恰有一点，相位 $\theta\in E$ 的纤维恰为两个不同的点 $z_\theta^{+1},z_\theta^{-1}$，并且
+$$
+H^{-1}(\{0\})=\{0_K\},\qquad
+z_{E_1}^{+1}=u=(10)^\omega,\qquad z_{E_1}^{-1}=v=(01)^\omega,
+$$
+$$
+z_{E_2}^{+1}=0v,\qquad z_{E_2}^{-1}=10v.
+$$
+这里 $0v,10v$ 仍按低位到高位连接。上述相位与定向约定采用定理371.2、372.2—372.4及定义16.3。[^rro18_phase][^rro18_fibers]
+
+本节把定理16.4的完整输入纤维分类作为明确的数学前提。用定义18.0的符号，其等价写法是：令 $\theta=H(x)+H(y)$，当 $\theta\notin E$ 时，
+$$
+\Gamma(x,y)=H^{-1}(\{\theta\});
+$$
+当 $\theta\in E$ 时，
+$$
+\Gamma(x,y)=\{z_\theta^s:s\in\mathcal S(x)\cup\mathcal S(y)\}.
+$$
+这个写法与原分类一致，因为两个非空集合 $\mathcal S(x),\mathcal S(y)$ 的并恰为单点 $\{s\}$，当且仅当它们都等于 $\{s\}$；其余情形的并均为 $\Sigma$。以下命题及定理均在本假设下成立。[^rro18_fibers]
+
+**命题 18.2（集合值结合律与全部点单位的排除）。** $\Gamma$ 非空值且交换，并且对任意 $x,y,z\in K$，
+$$
+\bigcup_{w\in\Gamma(x,y)}\Gamma(w,z)
+=
+\bigcup_{w\in\Gamma(y,z)}\Gamma(x,w).
+$$
+更准确地，令
+$$
+\sigma=H(x)+H(y)+H(z),\qquad
+U=\mathcal S(x)\cup\mathcal S(y)\cup\mathcal S(z).
+$$
+若 $\sigma\notin E$，两边都等于单点纤维 $H^{-1}(\{\sigma\})$；若 $\sigma\in E$，两边都等于
+$$
+\{z_\sigma^s:s\in U\}.
+$$
+因此，最终相位分裂时，恰在三个输入全为同号分裂点时只保留该号，其余情形保留两个号。$0_K$ 是唯一弱左单位，也因交换性成为唯一弱右单位；但是 $K$ 中不存在严格左单位或严格右单位。[^rro18_fibers]
+
+**证明。** 首先，
+$$
+E_m+E_n=E_{m+n}\in E\qquad(m,n\ge1),
+$$
+所以 $E$ 对相位加法封闭。这并不使其补集封闭，也不阻止与补集相加后离开 $E$。例如 $[-\phi/2]\notin E$，但它与自身之和为 $E_1$；又有 $E_1+[\phi]=0\notin E$。第一个非归属断言若不成立，便有 $(2m-1)\phi\in2\mathbb Z$，与 $\phi$ 无理矛盾；零不属于 $E$ 也由无理性得到。
+
+假设18.1立即给出每个 $\Gamma(x,y)$ 非空，而且二元分类对 $x,y$ 对称，所以 $\Gamma$ 交换。关键是对所有输入均成立的符号传播等式
+$$
+\bigcup_{w\in\Gamma(x,y)}\mathcal S(w)
+=
+\mathcal S(x)\cup\mathcal S(y).
+$$
+为完整证明此式，分两种情况。若 $H(x)+H(y)\in E$，分类给出的输出恰为右侧所列符号对应的分裂点，而每个这种输出的符号集合是相应单点，取并即得等式。若 $H(x)+H(y)\notin E$，输出是非分裂相位的唯一点，故左侧为 $\Sigma$。此时 $H(x),H(y)$ 不可能都属于 $E$，否则由 $E+E\subseteq E$ 得到矛盾。因此至少一个输入的符号集合为 $\Sigma$，右侧也为 $\Sigma$。两种情况穷尽了所有中间相位，包括由非分裂输入进入 $E$ 及由混合输入离开 $E$ 的情况。
+
+现在比较两个括号方式。每个 $w\in\Gamma(x,y)$ 均满足 $H(w)=H(x)+H(y)$，每个 $w\in\Gamma(y,z)$ 均满足 $H(w)=H(y)+H(z)$。若 $\sigma\notin E$，两边的每个末次运算都给同一个单点纤维 $H^{-1}(\{\sigma\})$；中间纤维非空，所以两边的并都恰为此纤维。
+
+若 $\sigma\in E$，左边按末次运算的分类等于
+$$
+\left\{z_\sigma^s:
+ s\in\left(\bigcup_{w\in\Gamma(x,y)}\mathcal S(w)\right)\cup\mathcal S(z)
+\right\}
+=
+\{z_\sigma^s:s\in U\}.
+$$
+右边同样等于
+$$
+\left\{z_\sigma^s:
+ s\in\mathcal S(x)\cup\left(\bigcup_{w\in\Gamma(y,z)}\mathcal S(w)\right)
+\right\}
+=
+\{z_\sigma^s:s\in U\}.
+$$
+这里对两个中间和分别应用了已经覆盖 $E$ 内外全部情况的传播等式，没有要求二者具有相同的归属类型。这证明结合律及完整三输入分类。由于 $U$ 为单点当且仅当三个输入符号集合是同一个单点，关于唯一分支的断言也成立。
+
+最后，$H(0_K)=0\notin E$，故 $\mathcal S(0_K)=\Sigma$。分类使 $x\in\Gamma(0_K,x)$ 对每个 $x$ 成立，所以 $0_K$ 是弱左单位。反之，若 $e$ 是弱左单位，将 $x=0_K$ 代入，得到 $0_K\in\Gamma(e,0_K)$。相位等式迫使 $H(e)=0$，再由零相位的单点纤维得到 $e=0_K$。然而
+$$
+\Gamma(0_K,u)=\{u,v\}\ne\{u\}.
+$$
+因此这个唯一可能的严格左单位并不严格，严格左单位不存在；交换性给出全部右单位结论。证毕。
+
+**命题 18.3（零相位作用、纤维饱和与单值选择的区别）。** 对任意 $x,y\in K$，
+$$
+C(x)=H^{-1}(\{H(x)\}),\qquad C(C(x))=C(x),
+$$
+并且
+$$
+\Lambda(x,y)
+=C(\Gamma(x,y))
+=\Gamma(C(x),y)
+=\Gamma(x,C(y))
+=\Gamma(C(x),C(y)).
+$$
+原关系并不已经饱和：
+$$
+\Gamma(u,u)=\{0v\},\qquad
+\Lambda(u,u)=\{0v,10v\},\qquad
+\Gamma\subsetneq\Lambda.
+$$
+存在全域单值选择 $A:K^2\to K$，但不存在联合连续的这种选择。[^rro18_fibers][^rro18_phase]
+
+**证明。** 由于 $\mathcal S(0_K)=\Sigma$，假设18.1在分裂相位处给出全部两个输出，在非分裂相位处给出唯一输出。因此 $C(x)$ 恰为 $H(x)$ 的整个纤维。该纤维非空，且其中每个 $w$ 都满足 $C(w)=C(x)$，所以
+$$
+C(C(x))=\bigcup_{w\in C(x)}C(w)=C(x).
+$$
+对任意集合 $A\subseteq K$ 再取并，也得到 $C(C(A))=C(A)$，包括空集情形。
+
+固定 $x,y$，令 $\theta=H(x)+H(y)$。每个 $w\in\Gamma(x,y)$ 都满足 $C(w)=H^{-1}(\{\theta\})$，而 $\Gamma(x,y)$ 非空，故
+$$
+C(\Gamma(x,y))=H^{-1}(\{\theta\})=\Lambda(x,y).
+$$
+命题18.2的结合律给出
+$$
+\Gamma(C(x),y)
+=\Gamma(\Gamma(0_K,x),y)
+=\Gamma(0_K,\Gamma(x,y))
+=C(\Gamma(x,y)).
+$$
+交换性同样给出 $\Gamma(x,C(y))=\Lambda(x,y)$。最后，对每个 $y'\in C(y)$，有 $H(y')=H(y)$，于是
+$$
+\Gamma(C(x),C(y))
+=\bigcup_{y'\in C(y)}\Gamma(C(x),y')
+=\bigcup_{y'\in C(y)}\Lambda(x,y')
+=\Lambda(x,y).
+$$
+最后一个并取在非空集合上，且每项是同一纤维。
+
+由 $H(u)=E_1$、$\mathcal S(u)=\{+1\}$、$E_1+E_1=E_2$，分类给出 $\Gamma(u,u)=\{z_{E_2}^{+1}\}=\{0v\}$。但 $E_2$ 的整个纤维是 $\{0v,10v\}$，且这两个字不同。因此严格包含成立，不能把 $\Gamma$ 本身替换为饱和关系。
+
+逐点单值选择可以明确规定：输出相位不在 $E$ 时取唯一输出；输出相位在 $E$ 且正号被允许时取正号输出，否则取负号输出。分类保证每个输入对都恰落入一个这样的规定，且选中的点属于 $\Gamma(x,y)$。
+
+假设存在联合连续的单值选择 $A$。自然相位不属于 $E$，因为 $[n\phi]=[-m\phi]$、$n\ge0,m\ge1$ 将迫使 $(n+m)\phi\in\mathbb Z$。因此分类与 $H(Z(n))=[n\phi]$ 给出
+$$
+\Gamma(Z(n),Z(m))=\{Z(n+m)\},\qquad
+A(Z(n),Z(m))=Z(n+m).
+$$
+$A$ 的图在 $K^3$ 中闭：它是连续映射 $(x,y,z)\mapsto(A(x,y),z)$ 下的闭对角线的原像。这个闭图包含全部自然加法三元组，所以也包含其闭包 $\Gamma$。但 $\Gamma$ 同时包含 $(0_K,u,u)$ 和 $(0_K,u,v)$，与函数在输入 $(0_K,u)$ 处只能有一个值矛盾。这证明连续选择不存在；逐点选择的存在既不提供这种连续性，也没有断言该选择满足结合律或单位律。证毕。
+
+**定理 18.4（最细连续确定观察与全部允许的后处理）。** 给定连续满射 $q:K\to Q$，其中 $Q$ 是 Hausdorff 空间。以下条件等价。[^rro18_fibers][^rro18_quotient]
+
+（甲）存在全函数 $D:Q^2\to Q$，使
+$$
+\forall x,y\in K\ \forall z\in\Gamma(x,y),\qquad
+D(q(x),q(y))=q(z).
+$$
+
+（乙）存在连续满射 $p:\mathbb T\to Q$，使 $q=p\circ H$，并且其相等关系核是加法同余，即对所有 $a,a',b,b'\in\mathbb T$，
+$$
+p(a)=p(a'),\ p(b)=p(b')
+\quad\Longrightarrow\quad
+p(a+b)=p(a'+b').
+$$
+
+（丙）存在闭子群 $N\le\mathbb T$ 及同胚 $h:\mathbb T/N\to Q$，使
+$$
+q=h\circ\pi_N\circ H,
+$$
+其中 $\mathbb T/N$ 取商拓扑，$\pi_N(a)=a+N$。这里 $h$ 是空间同胚，不预设 $Q$ 上已有任何群运算。
+
+这些条件成立时，$p,N,h,D$ 均由给定的 $q$ 唯一确定，而且
+$$
+N=p^{-1}(\{p(0)\}),\qquad
+p(a)=p(b)\ \Longleftrightarrow\ a-b\in N,
+$$
+$$
+D(p(a),p(b))=p(a+b),\qquad
+e_Q=p(0)=q(0_K),\qquad
+\iota_Q(p(a))=p(-a).
+$$
+$D$ 与 $\iota_Q$ 自动连续；它们使 $Q$ 成为紧致交换拓扑群，$p$ 成为满射连续群同态。因此 $H$ 是因子化次序中最精细的连续确定观察。
+
+更具体地，允许的连续满射后处理 $p:\mathbb T\to Q$ 恰是满足乙中同余条件的那些映射，等价地，其纤维恰为某个闭子群的陪集。对任意闭子群 $N$，$q_N=\pi_N\circ H$ 都给出这种观察，并且
+$$
+q_{N_1}\succeq q_{N_2}
+\quad\Longleftrightarrow\quad N_1\subseteq N_2.
+$$
+并非每个连续满射后处理都允许确定运算；例如 $p([t])=\cos(2\pi t)$ 不允许。最后，$\Gamma$ 与 $\Lambda$ 具有完全相同的连续确定观察，尽管两关系严格不同。
+
+**证明。** 先证甲推出乙。命题18.3给出 $C(x)=H^{-1}(\{H(x)\})$，特别 $x\in C(x)$。对任何 $z\in C(x)=\Gamma(0_K,x)$，甲分别应用于输出 $x$ 和 $z$，得到
+$$
+q(z)=D(q(0_K),q(x))=q(x).
+$$
+因此 $q$ 在每个 $H$ 纤维上恒定。$H$ 满射，所以存在唯一的满射函数 $p:\mathbb T\to Q$，满足 $q=p\circ H$。
+
+这个因子映射连续，而不是额外假设连续。事实上，$H$ 是从紧致空间到 Hausdorff 空间的连续满射，所以是闭映射：每个闭集在 $K$ 中紧，其像在 $\mathbb T$ 中紧而闭。闭满射是商映射，因为若 $H^{-1}(V)$ 开，则
+$$
+\mathbb T\setminus V=H(K\setminus H^{-1}(V))
+$$
+闭，故 $V$ 开。于是对每个开集 $O\subseteq Q$，由
+$$
+H^{-1}(p^{-1}(O))=q^{-1}(O)
+$$
+开，得到 $p^{-1}(O)$ 开。
+
+任取 $a,b\in\mathbb T$，利用 $H$ 满射选择 $x,y$ 使 $H(x)=a,H(y)=b$，再利用非空值性选择 $z\in\Gamma(x,y)$。甲和相位等式给出
+$$
+D(p(a),p(b))=q(z)=p(a+b).
+$$
+因此若 $p(a)=p(a')$ 且 $p(b)=p(b')$，同一个 $D$ 值同时等于 $p(a+b)$ 和 $p(a'+b')$，得到乙的同余条件。$p$ 满射又说明这条公式已经唯一确定 $D$。
+
+反过来，若乙成立，规定 $D(p(a),p(b))=p(a+b)$。同余条件保证更换任一代表均不改变结果，满射性保证在 $Q^2$ 上处处有定义。对任意 $z\in\Gamma(x,y)$，有 $H(z)=H(x)+H(y)$，所以
+$$
+D(q(x),q(y))=p(H(x)+H(y))=p(H(z))=q(z).
+$$
+这证明乙推出甲。
+
+接着证明闭子群描述。乙中的双槽同余条件等价于所有平移都保持相等关系核：
+$$
+p(a)=p(b)\quad\Longrightarrow\quad
+p(a+t)=p(b+t)\qquad(t\in\mathbb T).
+$$
+双槽条件取相同的第二槽即得平移条件；反向先以平移条件替换第一槽，再利用加法交换性替换第二槽，即得双槽条件。
+
+置 $N=p^{-1}(\{p(0)\})$。$Q$ Hausdorff，使单点 $\{p(0)\}$ 闭，故 $N$ 闭。显然 $0\in N$。若 $n,m\in N$，同余条件给出 $p(n+m)=p(0+0)=p(0)$，所以 $n+m\in N$。若 $n\in N$，将 $p(n)=p(0)$ 平移 $-n$，得到 $p(0)=p(-n)$，所以 $-n\in N$。因此 $N$ 是闭子群。对任意 $a,b$，先平移 $-b$、反向再平移 $b$，得到
+$$
+p(a)=p(b)
+\quad\Longleftrightarrow\quad
+p(a-b)=p(0)
+\quad\Longleftrightarrow\quad a-b\in N.
+$$
+
+所以 $h(a+N)=p(a)$ 定义良好且双射。由于 $p=h\circ\pi_N$ 且 $\pi_N$ 是商映射，$h$ 连续。$\mathbb T/N$ 是紧空间的连续像，故紧；连续双射 $h$ 的目标 $Q$ Hausdorff，因此 $h$ 是闭映射，其逆连续。这证明乙推出丙。反向，若丙成立，令 $p=h\circ\pi_N$。它连续满射，而 $h$ 单射保证 $p(a)=p(b)$ 当且仅当 $a-b\in N$。子群对加法封闭，故这个关系是加法同余，得到乙。$p$ 已由 $q$ 唯一确定，$N$ 由显示的零纤维公式唯一确定，$h$ 又由 $h\circ\pi_N=p$ 唯一确定。
+
+现在证明全部群结构与连续性。$Q$ 是 $K$ 的连续像，故紧。任取 $a,b,c\in\mathbb T$，已经证明的公式给出
+$$
+D(D(p(a),p(b)),p(c))=p((a+b)+c)
+=p(a+(b+c))=D(p(a),D(p(b),p(c))).
+$$
+$ p $ 满射，因此 $D$ 结合。交换性同理由 $a+b=b+a$ 得到，单位律由 $a+0=0+a=a$ 得到。若 $p(a)=p(b)$，则 $a-b\in N$，从而 $(-a)-(-b)\in N$，故 $p(-a)=p(-b)$；所以 $\iota_Q(p(a))=p(-a)$ 定义良好。两侧乘积公式均给
+$$
+D(p(a),\iota_Q(p(a)))=D(\iota_Q(p(a)),p(a))=p(0).
+$$
+因此这些数据确实构成交换群，而不是只构成一个结合的二元运算。
+
+为证明联合连续性，考虑连续满射
+$$
+p\times p:\mathbb T^2\longrightarrow Q^2.
+$$
+其定义域紧，目标 Hausdorff，所以如前述论证一样，它是闭的商映射。圆周加法连续，且
+$$
+D\circ(p\times p)=p\circ +.
+$$
+右侧连续。对于任意开集 $O\subseteq Q$，
+$$
+(p\times p)^{-1}(D^{-1}(O))=(p\circ +)^{-1}(O)
+$$
+开，商映射性质遂给出 $D^{-1}(O)$ 开。这是 $D$ 的联合连续性证明，并未使用一般的两个商映射之积仍为商映射这一断言。取逆连续性同样由
+$$
+\iota_Q\circ p=p\circ(a\mapsto-a)
+$$
+以及 $p$ 是商映射得到。于是 $Q$ 为紧致交换拓扑群。显示的运算公式还说明 $p$ 保持运算和单位，故是连续群同态。
+
+为确认每个闭子群确实产生所列 Hausdorff 观察，固定任意闭子群 $N\le\mathbb T$。商映射 $\pi_N$ 是开映射：对开集 $V\subseteq\mathbb T$，
+$$
+\pi_N^{-1}(\pi_N(V))=V+N=\bigcup_{n\in N}(V+n)
+$$
+开。若 $a+N\ne b+N$，则 $d=a-b\notin N$。$N$ 闭，所以存在零的开邻域 $W$，使 $(d+W)\cap N=\varnothing$。由圆周减法在 $(0,0)$ 连续，可取零的开邻域 $V$，满足 $V-V\subseteq W$。开集 $\pi_N(a+V)$ 和 $\pi_N(b+V)$ 分别包含两个陪集，且互不相交；否则存在 $v,w\in V$ 使 $d+v-w\in N$，与 $(d+W)\cap N=\varnothing$ 矛盾。因此 $\mathbb T/N$ Hausdorff。它又是紧空间的连续像，故紧。$\pi_N$ 的相等关系核为陪集同余，所以将已证的乙推出甲及连续性结论应用于 $p=\pi_N$，即得 $q_N=\pi_N\circ H$ 是连续确定观察。
+
+$H$ 自身满足甲，只需取 $Q=\mathbb T$ 和圆周加法为 $D$。任意满足甲的 $q$ 均已证明唯一地连续因子化为 $p\circ H$，所以 $H\succeq q$；这正是所定义次序中的最精细性，而不是关于任意后处理的无条件断言。
+
+对规范商，若 $N_1\subseteq N_2$，则
+$$
+r(a+N_1)=a+N_2
+$$
+定义良好且满射。等式 $r\circ\pi_{N_1}=\pi_{N_2}$ 与 $\pi_{N_1}$ 的商映射性质保证 $r$ 连续，并且 $q_{N_2}=r\circ q_{N_1}$。反之，若这个观察因子化成立，$H$ 满射给出 $\pi_{N_2}=r\circ\pi_{N_1}$。任取 $n\in N_1$，有
+$$
+\pi_{N_2}(n)=r(\pi_{N_1}(n))=r(\pi_{N_1}(0))=\pi_{N_2}(0),
+$$
+所以 $n\in N_2$。这证明因子化次序的闭子群包含描述。
+
+为否定所有连续后处理都允许确定运算，取连续满射
+$$
+p:\mathbb T\to[-1,1],\qquad p([t])=\cos(2\pi t).
+$$
+令 $a=[1/4]$、$b=[-1/4]$、$t=[1/4]$，则
+$$
+p(a)=p(b)=p(t)=0,\qquad p(a+t)=-1,\qquad p(b+t)=1.
+$$
+相等关系核不被这个平移保持。等价地，任何所需运算都将同时被迫满足 $D(0,0)=-1$ 与 $D(0,0)=1$，故不存在。
+
+最后，若 $q,D$ 对 $\Gamma$ 满足甲，前面已证 $q$ 在每个 $C$ 纤维上恒定。对 $r\in\Lambda(x,y)$，取任意 $w\in\Gamma(x,y)$；命题18.3给出 $r\in C(w)$，因而
+$$
+q(r)=q(w)=D(q(x),q(y)).
+$$
+所以同一个 $q,D$ 对 $\Lambda$ 也确定。反向由 $\Gamma\subseteq\Lambda$ 立即成立。这只说明两关系具有相同的确定观察，并不消除命题18.3中的严格关系差异。商上的单位 $q(0_K)$ 来自对 $C$ 纤维的识别，也不使 $0_K$ 成为原关系的严格单位。证毕。
+
+[^rro18_phase]: 《CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF》，定理371.2、372.2—372.4及377.1；固定提交 c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb 的[相位前置文本](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md)。其中定理372.2—372.3给出两分支的实值域及公共前缀的奇偶定向，定理372.4给出全部圆周分裂纤维。
+
+[^rro18_fibers]: 第16节定义16.3及定理16.4：定向标记与加法闭图的完整输入纤维分类。本节在假设18.1中明确采用该分类；结合律及确定观察商的结论由命题18.2—定理18.4另行证明。
+
+[^rro18_quotient]: Nicolas Bourbaki, *General Topology: Chapters 1–4*，第I章 Topological Structures 与第III章 Topological Groups，Springer，DOI：[10.1007/978-3-642-61701-0](https://doi.org/10.1007/978-3-642-61701-0)。本节所需的商映射下降、闭子群陪集与连续群运算论证均在定理18.4的证明中给出。
+
+## 追加锚（本行以下为增补区）
