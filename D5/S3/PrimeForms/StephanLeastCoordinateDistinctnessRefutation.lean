@@ -2,12 +2,11 @@
    generality: I
    mirror-B: D5/B/S3/PrimeForms/StephanLeastCoordinateDistinctnessRefutation
    mirror-E: none(waiver:finite-certificate-no-numeric-artifact)
-   anchors: [mathlib/module/Mathlib.Tactic.IntervalCases, mathlib/module/Mathlib.Tactic.NormNum]
+   anchors: [mathlib/module/Mathlib.Tactic.IntervalCases]
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/PrimeForms/StephanLeastCoordinateDistinctnessRefutation.claim; result=D5/S3/PrimeForms/StephanLeastCoordinateDistinctnessRefutation.result; claim=D5/S3/PrimeForms/StephanLeastCoordinateDistinctnessRefutation.claim
    digest: The values 628 and 673 between consecutive zero values 625 and 676 refute the distinctness conjecture for OEIS A229140. -/
 
 import Mathlib.Tactic.IntervalCases
-import Mathlib.Tactic.NormNum
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
