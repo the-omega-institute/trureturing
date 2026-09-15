@@ -68,18 +68,16 @@ public sealed partial class UpstreamProbeVerifierTests
             "unseal unset_option unsuppress_compilation variable variable? " +
             "variables wait_for_cancel_once_command whatsnew with_weak_namespace";
         foreach (var keyword in keywords.Split(' '))
-            yield return [keyword];
+        foreach (var separator in new[] { " ", "\n  ", "\n", "\n  exact " })
+            yield return [keyword, separator];
     }
 
     [Theory]
     [MemberData(nameof(UnsupportedCommandKeywords))]
-    public void CommandKeywordIsRejectedAtEveryPositionAfterHeader(string keyword)
-    {
-        foreach (var separator in new[] { " ", "\n  ", "\n", "\n  exact " })
-            AssertDialectRejected("theorem probe : True := True.intro" + separator
-                + keyword + " hidden\ntheorem second : True := True.intro\n"
-                + "#print axioms probe\n#print axioms second\n");
-    }
+    public void CommandKeywordIsRejectedAtEveryPositionAfterHeader(string keyword, string separator) =>
+        AssertDialectRejected("theorem probe : True := True.intro" + separator
+            + keyword + " hidden\ntheorem second : True := True.intro\n"
+            + "#print axioms probe\n#print axioms second\n");
 
     public static IEnumerable<object[]> UnsupportedHashCommands()
     {
