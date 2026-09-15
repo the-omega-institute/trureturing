@@ -70,104 +70,6 @@ private def noiseFunctional (N : ℕ) (p : ℝ[X]) : ℝ[X] →ₗ[ℝ] ℝ wher
     intro k hk
     ring
 
-private theorem noise_constant (N : ℕ) (p : ℝ[X]) (a : ℝ) :
-    noiseFunctional N p (C a) = 0 := by
-  change (∑ k ∈ range N, direction p k * (C a).coeff k) = 0
-  apply sum_eq_zero
-  intro k hk
-  by_cases h : k = 0
-  · subst k
-    simp [direction]
-  · simp [coeff_C, h]
-
-private theorem noise_power (N : ℕ) (p : ℝ[X]) (k : ℕ) (hk : k < N) :
-    noiseFunctional N p (X ^ k) = direction p k := by
-  simp [noiseFunctional, coeff_X_pow, hk]
-
-private theorem noise_self (N : ℕ) (p : ℝ[X]) :
-    noiseFunctional N p p = coefficientCost N p := by
-  unfold coefficientCost
-  change (∑ k ∈ range N, direction p k * p.coeff k) = _
-  apply sum_congr rfl
-  intro k hk
-  by_cases h0 : k = 0
-  · simp [direction, h0]
-  · by_cases hp : 0 ≤ p.coeff k
-    · simp [direction, h0, hp, abs_of_nonneg hp]
-    · simp [direction, h0, hp, abs_of_neg (lt_of_not_ge hp)]
-
-private theorem direction_abs_le (p : ℝ[X]) (k : ℕ) :
-    |direction p k| ≤ 1 := by
-  unfold direction
-  split_ifs <;> norm_num
-
-private theorem cost_nonneg (N : ℕ) (p : ℝ[X]) :
-    0 ≤ coefficientCost N p := by
-  apply sum_nonneg
-  intro k hk
-  split_ifs <;> positivity
-
-private theorem weighted_eval_expansion (a x : ι → ℝ) (p : ℝ[X])
-    (N : ℕ) (hp : p.natDegree < N) :
-    (∑ i, a i * p.eval (x i)) =
-      ∑ k ∈ range N, p.coeff k * (∑ i, a i * x i ^ k) := by
-  simp_rw [Polynomial.eval_eq_sum_range' hp, mul_sum]
-  rw [sum_comm]
-  apply sum_congr rfl
-  intro k hk
-  apply sum_congr rfl
-  intro i hi
-  ring
-
-private theorem raw_moment_dual_bound (x : ι → ℝ) (y ε w : ℝ)
-    (u v : ι → ℝ) (hu : ∀ i, 0 ≤ u i) (hv : ∀ i, 0 ≤ v i)
-    (hmu : w + ∑ i, u i = 1) (hnu : (∑ i, v i) = 1)
-    (hnoise : ∀ k : ℕ, k < Fintype.card ι →
-      |w * y ^ k + ∑ i, u i * x i ^ k - ∑ i, v i * x i ^ k| ≤ ε)
-    (p : ℝ[X]) (hp : p.natDegree < Fintype.card ι)
-    (hvalues : ∀ i, 0 ≤ p.eval (x i) ∧ p.eval (x i) ≤ 1) :
-    w * p.eval y ≤ 1 + ε * coefficientCost (Fintype.card ι) p := by
-  let e : ℕ → ℝ := fun k =>
-    w * y ^ k + ∑ i, u i * x i ^ k - ∑ i, v i * x i ^ k
-  have he0 : e 0 = 0 := by
-    dsimp [e]
-    simp only [pow_zero, mul_one]
-    linarith
-  have hidentity : w * p.eval y + (∑ i, u i * p.eval (x i)) -
-      (∑ i, v i * p.eval (x i)) =
-      ∑ k ∈ range (Fintype.card ι), p.coeff k * e k := by
-    rw [weighted_eval_expansion u x p _ hp, weighted_eval_expansion v x p _ hp,
-      Polynomial.eval_eq_sum_range' hp y, mul_sum,
-      ← sum_add_distrib, ← sum_sub_distrib]
-    apply sum_congr rfl
-    intro k hk
-    dsimp [e]
-    ring
-  have hbudget : (∑ k ∈ range (Fintype.card ι), p.coeff k * e k) ≤
-      ε * coefficientCost (Fintype.card ι) p := by
-    unfold coefficientCost
-    rw [mul_sum]
-    apply sum_le_sum
-    intro k hk
-    by_cases h0 : k = 0
-    · subst k
-      simp [he0]
-    · rw [if_neg h0]
-      calc
-        p.coeff k * e k ≤ |p.coeff k * e k| := le_abs_self _
-        _ = |p.coeff k| * |e k| := abs_mul _ _
-        _ ≤ |p.coeff k| * ε :=
-          mul_le_mul_of_nonneg_left (hnoise k (mem_range.mp hk)) (abs_nonneg _)
-        _ = ε * |p.coeff k| := mul_comm _ _
-  have hulo : 0 ≤ ∑ i, u i * p.eval (x i) :=
-    sum_nonneg fun i _ => mul_nonneg (hu i) (hvalues i).1
-  have hvhi : (∑ i, v i * p.eval (x i)) ≤ 1 := by
-    calc
-      (∑ i, v i * p.eval (x i)) ≤ ∑ i, v i * 1 :=
-        sum_le_sum fun i _ => mul_le_mul_of_nonneg_left (hvalues i).2 (hv i)
-      _ = 1 := by simpa using hnu
-  linarith
-
 /-- Exact small-noise optimum, with matching positive normalized witnesses.
 All quantities determining the value and the noise interval are computed
 from the nodes, the exterior point and ordinary Lagrange polynomials.
@@ -191,6 +93,97 @@ theorem finite_noisy_exterior_atom_sharp [Nonempty ι]
     0 < P ∧ ∀ ε : ℝ, 0 ≤ ε → ε * (1 + B) ≤ (1 / P) / 2 →
       IsGreatest (momentAtomSet x y ε) ((1 + ε * L) / P) := by
   classical
+  have noise_constant (N : ℕ) (p : ℝ[X]) (a : ℝ) :
+      noiseFunctional N p (C a) = 0 := by
+    change (∑ k ∈ range N, direction p k * (C a).coeff k) = 0
+    apply sum_eq_zero
+    intro k hk
+    by_cases h : k = 0
+    · subst k
+      simp [direction]
+    · simp [coeff_C, h]
+  have noise_power (N : ℕ) (p : ℝ[X]) (k : ℕ) (hk : k < N) :
+      noiseFunctional N p (X ^ k) = direction p k := by
+    simp [noiseFunctional, coeff_X_pow, hk]
+  have noise_self (N : ℕ) (p : ℝ[X]) :
+      noiseFunctional N p p = coefficientCost N p := by
+    unfold coefficientCost
+    change (∑ k ∈ range N, direction p k * p.coeff k) = _
+    apply sum_congr rfl
+    intro k hk
+    by_cases h0 : k = 0
+    · simp [direction, h0]
+    · by_cases hp : 0 ≤ p.coeff k
+      · simp [direction, h0, hp, abs_of_nonneg hp]
+      · simp [direction, h0, hp, abs_of_neg (lt_of_not_ge hp)]
+  have direction_abs_le (p : ℝ[X]) (k : ℕ) :
+      |direction p k| ≤ 1 := by
+    unfold direction
+    split_ifs <;> norm_num
+  have cost_nonneg (N : ℕ) (p : ℝ[X]) :
+      0 ≤ coefficientCost N p := by
+    apply sum_nonneg
+    intro k hk
+    split_ifs <;> positivity
+  have weighted_eval_expansion (a x : ι → ℝ) (p : ℝ[X])
+      (N : ℕ) (hp : p.natDegree < N) :
+      (∑ i, a i * p.eval (x i)) =
+        ∑ k ∈ range N, p.coeff k * (∑ i, a i * x i ^ k) := by
+    simp_rw [Polynomial.eval_eq_sum_range' hp, mul_sum]
+    rw [sum_comm]
+    apply sum_congr rfl
+    intro k hk
+    apply sum_congr rfl
+    intro i hi
+    ring
+  have raw_moment_dual_bound (x : ι → ℝ) (y ε w : ℝ)
+      (u v : ι → ℝ) (hu : ∀ i, 0 ≤ u i) (hv : ∀ i, 0 ≤ v i)
+      (hmu : w + ∑ i, u i = 1) (hnu : (∑ i, v i) = 1)
+      (hnoise : ∀ k : ℕ, k < Fintype.card ι →
+        |w * y ^ k + ∑ i, u i * x i ^ k - ∑ i, v i * x i ^ k| ≤ ε)
+      (p : ℝ[X]) (hp : p.natDegree < Fintype.card ι)
+      (hvalues : ∀ i, 0 ≤ p.eval (x i) ∧ p.eval (x i) ≤ 1) :
+      w * p.eval y ≤ 1 + ε * coefficientCost (Fintype.card ι) p := by
+    let e : ℕ → ℝ := fun k =>
+      w * y ^ k + ∑ i, u i * x i ^ k - ∑ i, v i * x i ^ k
+    have he0 : e 0 = 0 := by
+      dsimp [e]
+      simp only [pow_zero, mul_one]
+      linarith
+    have hidentity : w * p.eval y + (∑ i, u i * p.eval (x i)) -
+        (∑ i, v i * p.eval (x i)) =
+        ∑ k ∈ range (Fintype.card ι), p.coeff k * e k := by
+      rw [weighted_eval_expansion u x p _ hp, weighted_eval_expansion v x p _ hp,
+        Polynomial.eval_eq_sum_range' hp y, mul_sum,
+        ← sum_add_distrib, ← sum_sub_distrib]
+      apply sum_congr rfl
+      intro k hk
+      dsimp [e]
+      ring
+    have hbudget : (∑ k ∈ range (Fintype.card ι), p.coeff k * e k) ≤
+        ε * coefficientCost (Fintype.card ι) p := by
+      unfold coefficientCost
+      rw [mul_sum]
+      apply sum_le_sum
+      intro k hk
+      by_cases h0 : k = 0
+      · subst k
+        simp [he0]
+      · rw [if_neg h0]
+        calc
+          p.coeff k * e k ≤ |p.coeff k * e k| := le_abs_self _
+          _ = |p.coeff k| * |e k| := abs_mul _ _
+          _ ≤ |p.coeff k| * ε :=
+            mul_le_mul_of_nonneg_left (hnoise k (mem_range.mp hk)) (abs_nonneg _)
+          _ = ε * |p.coeff k| := mul_comm _ _
+    have hulo : 0 ≤ ∑ i, u i * p.eval (x i) :=
+      sum_nonneg fun i _ => mul_nonneg (hu i) (hvalues i).1
+    have hvhi : (∑ i, v i * p.eval (x i)) ≤ 1 := by
+      calc
+        (∑ i, v i * p.eval (x i)) ≤ ∑ i, v i * 1 :=
+          sum_le_sum fun i _ => mul_le_mul_of_nonneg_left (hvalues i).2 (hv i)
+        _ = 1 := by simpa using hnu
+    linarith
   let ell : ι → ℝ[X] := fun i => Lagrange.basis univ x i
   let c : ι → ℝ := fun i => (ell i).eval y
   let J : Finset ι := univ.filter (fun i => 0 < c i)
