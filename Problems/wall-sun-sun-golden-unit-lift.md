@@ -67,6 +67,9 @@ existence question is not a routine finite-period exercise.
 - The period can therefore plausibly be re-expressed as an order of the reduced
   golden unit or Fibonacci matrix. Equality at `p` and `p^2` is then an
   exceptional failure of the usual order multiplication by `p` under lifting.
+- The first reachable theorem is not existence. It is an exact bridge among the
+  pair recurrence period, the order of the Fibonacci matrix, and the order of
+  `phi` in an appropriate golden algebra modulo `p^e` for `e = 1, 2`.
 
 ## Gap
 
@@ -420,7 +423,7 @@ $$v_p(L_N-2\chi)=2h_p.$$
 
 **定义。** 令 $c_p\in\{0,\ldots,p-1\}$ 为 $\chi q_p$ 的整数代表，$w_p=c_p/p\pmod{\mathbb Z}\in\mathbb R/\mathbb Z$。以 $\mathbb Z d$ 为 $T$ 的迹零 Lie 格，CG.1 表明这正是由 $u^N\bmod p^2$ 的切空间缺陷除以 $p^2$ 得到的圆周读数。$u$ 不是扭元素，因此在一维环面的几何泛纤维中生成 Zariski 稠密子群。
 
-**命题。** $w_p=0$ 當且仅当 $p$ 为原 WSS 素数。圆周上 Haar 等分布的性质本身，不推出这种零点至少出现一次。
+**命题。** $w_p=0$ 当且仅当 $p$ 为原 WSS 素数。圆周上 Haar 等分布的性质本身，不推出这种零点至少出现一次。
 
 **证明。** 第一项由 $\chi$ 是单位直接得到。为说明后一项，按递增顺序记素数为 $p_j$，取任意无理实数 $\theta$，令
 
@@ -615,8 +618,12 @@ In particular the lambda_p component of C_p is nonzero. Its vanishing is a suffi
 
 **Proof.** The automorphism tau(theta_p)=zeta_p theta_p generates Gal(V_p/H_p). The lift of delta_a in the cyclotomic factor fixes theta_p and sends zeta_p to zeta_p^a, so delta_a tau delta_a^(-1)=tau^a. The golden conjugation lifts by theta_p mapping to -theta_p^(-1) and zeta_p fixed; it conjugates tau to tau^(-1). These formulas show that Gal(V_p/H_p), as an F_p[Delta_p]-module, is F_p(lambda_p).
 
-For an everywhere-unramified abelian extension, global Artin reciprocity gives a surjection from the ideal class group onto its Galois group. The quotient has exponent p, and splitting of the primes above p puts their classes in its kernel. Equivariance gives the stated map. Since p does not divide |Delta_p|=2(p-1), the character decomposition over F_p is semisimple, so the lambda_p component must be nonzero. This uses the classical Hilbert class field theorem. No converse for arbitrary nonzero class-group components is asserted.
+For an everywhere-unramified abelian extension, global Artin reciprocity gives a surjection from the ideal class group onto its Galois group. The quotient has exponent p, and splitting of the primes above p puts their classes in its kernel. Equivariance gives the stated map. Since p does not divide |Delta_p|=2(p-1), the character decomposition over F_p is semisimple, so the lambda_p component must be nonzero. This uses the classical Hilbert class field theorem, as stated in J. S. Milne, *Class Field Theory*, version 4.03 (2020), Chapter V, https://www.jmilne.org/math/CourseNotes/CFT.pdf . No converse for arbitrary nonzero class-group components is asserted.
 
 **Proposition.** RNI12 constructs a specific extension from the original golden unit. RNI13 requires a class-group estimate with the character lambda_p varying with p to yield a new prime-family exclusion; nonvanishing or vanishing of that component has not been proved here.
 
 **Proof.** The extension and its character are explicitly given by the displayed generators and conjugations. RNI13 is an implication from q_p=0, and supplies an exclusion only after its nonzero quotient is contradicted by independent information. RNI6 and RNI10 give no such contradiction, since their indices are expressed in terms of the same h_p. Consequently these constructions alone neither supply a WSS prime nor a new family of non-WSS primes.
+
+**Proposition.** The quotient by the classes of primes above p in the definition of C_p does not change the lambda_p component of Cl(H_p)/pCl(H_p).
+
+**Proof.** The cyclotomic subgroup Gal(H_p/K) fixes every prime above p, since the extension is totally ramified at each prime of K above p. Thus it fixes their class span. Its action on F_p(lambda_p) is the nontrivial character omega_p. As this subgroup has order p-1 prime to p, the fixed span has zero lambda_p component, proving the assertion.
