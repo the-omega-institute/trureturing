@@ -3,7 +3,8 @@
    mirror-B: D5/B/S3/Analytic/SparseEndpointTailModulus
    mirror-E: none(waiver:unbounded-symbolic-endpoint-estimate)
    anchors: []
-   digest: A selective sign annihilator bounds any visible exterior atom under sparse positive moments and an unmodelled positive tail. -/
+   utility: none
+   digest: A sign annihilator bounds an exterior atom under sparse moments with a positive tail. -/
 
 import D5.S3.Analytic.GoldenTomography.FinitePronyHankelReconstruction
 import Mathlib.Algebra.BigOperators.Ring.List
@@ -37,50 +38,6 @@ namespace D5.S3.Analytic.SparseEndpointTailModulus
 open scoped BigOperators
 open D5.S3.Analytic.GoldenTomography.FinitePronyHankelReconstruction
 
-/-- Propagate a finite raw-moment budget through a genuine product of linear
-factors. This is an inductive estimate, not a supplied coefficient budget. -/
-private theorem factor_budget
-    (roots : List ℝ) (L : (ℝ → ℝ) →ₗ[ℝ] ℝ) (ε : ℝ)
-    (hε : 0 ≤ ε) (hr : ∀ a ∈ roots, |a| ≤ 1)
-    (hm : ∀ k : ℕ, k ≤ roots.length → |L (fun t => t ^ k)| ≤ ε) :
-    |L (fun t => (roots.map (fun a => t - a)).prod)| ≤
-      (2 : ℝ) ^ roots.length * ε := by
-  induction roots generalizing L ε with
-  | nil =>
-      simpa using hm 0 (by simp)
-  | cons a roots ih =>
-      let T : (ℝ → ℝ) →ₗ[ℝ] (ℝ → ℝ) :=
-        { toFun := fun f t => (t - a) * f t
-          map_add' := by intro f g; ext t; simp only [Pi.add_apply]; ring
-          map_smul' := by intro c f; ext t; simp only [Pi.smul_apply, smul_eq_mul]; ring }
-      let L' : (ℝ → ℝ) →ₗ[ℝ] ℝ := L.comp T
-      have ha : |a| ≤ 1 := hr a (by simp)
-      have hnext (k : ℕ) (hk : k ≤ roots.length) :
-          |L' (fun t => t ^ k)| ≤ 2 * ε := by
-        have heq : L' (fun t => t ^ k) =
-            L (fun t => t ^ (k + 1)) - a * L (fun t => t ^ k) := by
-          change L (fun t => (t - a) * t ^ k) = _
-          have hf : (fun t : ℝ => (t - a) * t ^ k) =
-              (fun t : ℝ => t ^ (k + 1)) - a • (fun t : ℝ => t ^ k) := by
-            ext t
-            simp only [Pi.sub_apply, Pi.smul_apply, smul_eq_mul, pow_succ]
-            ring
-          simp only [hf, map_sub, map_smul, smul_eq_mul, RingHom.id_apply]
-        rw [heq]
-        calc
-          |L (fun t => t ^ (k + 1)) - a * L (fun t => t ^ k)| ≤
-              |L (fun t => t ^ (k + 1))| + |a * L (fun t => t ^ k)| := abs_sub _ _
-          _ ≤ ε + |a| * ε := by
-            rw [abs_mul]
-            exact add_le_add (hm (k + 1) (by simpa using Nat.succ_le_succ hk))
-              (mul_le_mul_of_nonneg_left (hm k (by simp; omega)) (abs_nonneg a))
-          _ ≤ 2 * ε := by nlinarith [mul_le_mul_of_nonneg_right ha hε]
-      have h := ih L' (2 * ε) (by positivity)
-        (fun z hz => hr z (by simp [hz])) hnext
-      change |L (fun t => (t - a) * (roots.map (fun z => t - z)).prod)| ≤ _ at h
-      simpa only [List.map_cons, List.prod_cons, List.length_cons, pow_succ,
-        mul_assoc, mul_comm, mul_left_comm] using h
-
 /-- A retained atom of weight at least eta cannot sit far above a competing
 spectrum while the first 2*n raw moments agree. The retained part has n modes;
 the positive residual tail and the competitor may have arbitrary finite size.
@@ -100,6 +57,50 @@ theorem sparse_endpoint_tail_modulus
       |pronyMoment x u k + pronyMoment z a k - pronyMoment y v k| ≤ ε) :
     η * (x i₀ - b) ^ (2 * n - 1) ≤ (2 : ℝ) ^ (2 * n - 1) * ε + τ := by
   classical
+  have factor_budget : ∀ (rs : List ℝ) (L : (ℝ → ℝ) →ₗ[ℝ] ℝ) (e : ℝ),
+      0 ≤ e → (∀ a ∈ rs, |a| ≤ 1) →
+      (∀ k : ℕ, k ≤ rs.length → |L (fun t => t ^ k)| ≤ e) →
+      |L (fun t => (rs.map (fun a => t - a)).prod)| ≤ (2 : ℝ) ^ rs.length * e := by
+    intro roots L ε hε hr hm
+    induction roots generalizing L ε with
+    | nil =>
+        simpa using hm 0 (by simp)
+    | cons a roots ih =>
+        let T : (ℝ → ℝ) →ₗ[ℝ] (ℝ → ℝ) :=
+          { toFun := fun f t => (t - a) * f t
+            map_add' := by intro f g; ext t; simp only [Pi.add_apply]; ring
+            map_smul' := by
+              intro c f
+              ext t
+              simp only [Pi.smul_apply, smul_eq_mul, RingHom.id_apply]
+              ring }
+        let L' : (ℝ → ℝ) →ₗ[ℝ] ℝ := L.comp T
+        have ha : |a| ≤ 1 := hr a (by simp)
+        have hnext (k : ℕ) (hk : k ≤ roots.length) :
+            |L' (fun t => t ^ k)| ≤ 2 * ε := by
+          have heq : L' (fun t => t ^ k) =
+              L (fun t => t ^ (k + 1)) - a * L (fun t => t ^ k) := by
+            change L (fun t => (t - a) * t ^ k) = _
+            have hf : (fun t : ℝ => (t - a) * t ^ k) =
+                (fun t : ℝ => t ^ (k + 1)) - a • (fun t : ℝ => t ^ k) := by
+              ext t
+              simp only [Pi.sub_apply, Pi.smul_apply, smul_eq_mul, pow_succ]
+              ring
+            simp only [hf, map_sub, map_smul, smul_eq_mul]
+          rw [heq]
+          calc
+            |L (fun t => t ^ (k + 1)) - a * L (fun t => t ^ k)| ≤
+                |L (fun t => t ^ (k + 1))| + |a * L (fun t => t ^ k)| := abs_sub _ _
+            _ ≤ ε + |a| * ε := by
+              rw [abs_mul]
+              exact add_le_add (hm (k + 1) (by simpa using Nat.succ_le_succ hk))
+                (mul_le_mul_of_nonneg_left (hm k (by simp; omega)) (abs_nonneg a))
+            _ ≤ 2 * ε := by nlinarith [mul_le_mul_of_nonneg_right ha hε]
+        have h := ih L' (2 * ε) (by positivity)
+          (fun z hz => hr z (by simp [hz])) hnext
+        change |L (fun t => (t - a) * (roots.map (fun z => t - z)).prod)| ≤ _ at h
+        simpa only [List.map_cons, List.prod_cons, List.length_cons, pow_succ,
+          mul_assoc, mul_comm, mul_left_comm] using h
   let s : Finset (Fin n) := Finset.univ.filter (fun i => x i ≤ b)
   let nodes : List ℝ := s.toList.map x
   let roots : List ℝ := b :: nodes.flatMap (fun r => [r, r])
@@ -133,7 +134,7 @@ theorem sparse_endpoint_tail_modulus
         ring
   have hQ (t : ℝ) : Q t = (t - b) * (nodes.map (fun r => (t - r) ^ 2)).prod := by
     change (t - b) * _ = _
-    rw [hpair]
+    exact congrArg (fun p : ℝ => (t - b) * p) (hpair nodes t)
   have hsq (rs : List ℝ) (t : ℝ) : 0 ≤ (rs.map (fun r => (t - r) ^ 2)).prod := by
     induction rs with
     | nil => simp
@@ -250,7 +251,7 @@ theorem sparse_endpoint_tail_modulus
       mul_le_mul_of_nonneg_left hpower hη.le
     _ ≤ (2 : ℝ) ^ roots.length * ε + τ := hraw
     _ ≤ (2 : ℝ) ^ (2 * n - 1) * ε + τ :=
-      add_le_add_right (mul_le_mul_of_nonneg_right htwo hε) τ
+      by simpa [add_comm] using add_le_add_right (mul_le_mul_of_nonneg_right htwo hε) τ
 
 #print axioms sparse_endpoint_tail_modulus
 
