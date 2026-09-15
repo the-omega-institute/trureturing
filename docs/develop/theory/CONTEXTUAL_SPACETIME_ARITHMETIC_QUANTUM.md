@@ -22245,3 +22245,115 @@ $$
 Zeckendorf 可以继续提供合法构型的离散坐标，occupation chain 则给出在一个具体相干任务中这些历史怎样组合、怎样跨切口传输。只有把两者之间的编码映射、目标振幅和允许误差明确写出，才能把 Fibonacci 构型数量转换成实际量子记忆预算。
 
 本节复用 `next_step_gram`、`next_step_quantum_channel`、`contraction_eq_sector`、`sequential_memory_necessity`、`minimum_maximum_bond_characterization` 和 `history_5040_minimum_maximum_bond`。Lean 已证明的是有限多重集占据链的等距性、精确收缩和切口下界；Zeckendorf—occupation 同构、噪声容错记忆以及任意开放系统中的最优压缩仍是未完成接口。
+
+## 追加锚（新终端）
+
+## 99. 单素数轴读数与多素数相关残差
+
+算术卷中的 $$K(n)(p,j)$$ 把每个素数轴上的指数写成一行 Zeckendorf 字串。若把这些轴进一步放进一个有限张量模型，项目的 `single_prime_visible_space` 给出一个精确边界：所有逐轴 Hermitian 读数只能看到空支撑和单轴支撑，不能自动看到两个或更多素数轴之间的相关方向。
+
+### 99.1 扇区分解
+
+设有限索引集为 $$\iota$$，第 $$i$$ 个局部因子维数为 $$d_i$$。对每个有限支撑集 $$S\subseteq\iota$$，定义一个扇区：在 $$S$$ 上取局部 trace-zero Hermitian 方向，在 $$S$$ 外取标量恒等方向。记该扇区为 $$\mathcal V_S$$。
+
+于是全局 Hermitian 张量空间按支撑集合分解为
+
+$$
+\mathsf{Herm}_{\mathrm{global}}
+=\bigoplus_{S\subseteq\iota}\mathcal V_S.
+$$
+
+空支撑 $$S=\varnothing$$ 是整体恒等方向；单点支撑 $$S=\{i\}$$ 是第 $$i$$ 条局部轴的中心化读数；$$|S|\ge2$$ 则表示跨轴相关方向。
+
+### 99.2 逐轴读数的完整像
+
+令 `singlePrimeVisibleSpace` 表示由常数和所有完整单因子 Hermitian effect 生成的可见空间。Lean 定理 `single_prime_visible_space` 证明
+
+$$
+\boxed{
+\mathsf V_{\mathrm{single}}
+=\mathcal V_{\varnothing}
+\oplus
+\bigoplus_{i\in\iota}\mathcal V_{\{i\}}.
+}
+$$
+
+如果每个扇区维数满足
+
+$$
+\dim_{\mathbb R}\mathcal V_S
+=\prod_{j\in S}(d_j^2-1),
+$$
+
+则逐轴可见空间的维数为
+
+$$
+\boxed{
+\dim_{\mathbb R}\mathsf V_{\mathrm{single}}
+=1+\sum_{i\in\iota}(d_i^2-1).
+}
+$$
+
+它是逐轴读数的完整线性容量；不是全部全局 Hermitian 空间的维数。
+
+### 99.3 多轴相关方向的精确盲区
+
+同一定理给出可见空间正交残差
+
+$$
+\mathsf R_{\mathrm{multi}}
+=\bigoplus_{\substack{S\subseteq\iota\\|S|\ge2}}\mathcal V_S,
+$$
+
+以及
+
+$$
+\boxed{
+\dim_{\mathbb R}\mathsf R_{\mathrm{multi}}
+=\left(\prod_{i\in\iota}d_i\right)^2
+-1
+-\sum_{i\in\iota}(d_i^2-1).
+}
+$$
+
+因此，只要这个数非零，就存在全局 Hermitian 差异，它对每条单轴读数都为零，却可能在联合 effect 上有非零响应。两因子情形退化为
+
+$$
+(d_1^2-1)(d_2^2-1),
+$$
+
+与前面二分系统的相关扇区维数一致。
+
+这说明“逐素数轴都读过了”仍不等于“整体历史已经被读出”。逐轴记录保存的是一阶轴向信息；多素数耦合、联合进位或跨轴相位可以落在 $$\mathsf R_{\mathrm{multi}}$$ 中。
+
+### 99.4 与 $$K(n)$$ 的准确接口
+
+把 $$\iota$$ 取作一个有限素数集合时，可以把算术记录的每条 $$K(n)(p,\cdot)$$ 视为第 $$p$$ 轴的离散标签。但要把上面的维数公式用于量子模型，必须额外指定一个映射
+
+$$
+K(n)(p,\cdot)
+\longmapsto
+\text{第 }p\text{ 个局部 Hilbert 空间中的状态或 effect}.
+$$
+
+仓库当前定理只处理给定局部维数、给定扇区分解和给定单因子 Hermitian 读数；它没有从 Zeckendorf 行自动构造这些 Hilbert 空间，也没有把算术乘法的进位自动变成跨因子 Hamiltonian。
+
+所以，若当前任务只询问每个素数轴的指数，单轴可见空间可能足够；若任务询问乘积、规范化进位、跨素数联合概率或联合相位，就必须加入至少一个 $$|S|\ge2$$ 的扇区，或者给出该相关残差对目标读数的误差界。
+
+### 99.5 对稳定经典接口的后果
+
+本节把“保留多少约束”改写成一个可量化选择：
+
+$$
+\boxed{
+\text{逐轴经典接口}
+\quad\text{vs.}\quad
+\text{包含多轴相关的联合接口}.
+}
+$$
+
+前者的容量是 $$1+\sum_i(d_i^2-1)$$；后者还要承担 $$\mathsf R_{\mathrm{multi}}$$ 中的方向。若后续动力学始终保持单轴可见空间不变，相关残差可以对该任务保持隐藏；若动力学或目标 effect 进入多轴扇区，当前逐轴记录就不再预测闭合。
+
+这与两份算术卷的边界一致：Zeckendorf 唯一表示保证每条轴上的规范坐标，但不保证跨轴联合记录的唯一性、可见性或物理可逆性。稳定的经典现实因此不能由“每条轴都有合法刻度”单独推出，还必须说明哪些跨轴相关是任务允许继续访问的。
+
+本节复用 `single_prime_visible_space`。Lean 已证明的是有限张量族、Hermitian 扇区和完整单因子读数下的可见空间及残差维数；素数轴到物理局部系统的编码、算术进位的联合动力学以及具体 Zeckendorf Hamiltonian 仍是待建接口。
