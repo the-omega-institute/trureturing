@@ -294,6 +294,104 @@ combinatorics files, and these BBMST papers supplied the component inequalities,
 but no exact joint-layout head theorem was identified. This bounded search does
 not establish literature priority. The argument here is not a Lean formalization.
 
+## Transfer retaining the actual forbidden-fibre geometry
+
+Extend `Γ_Q` homogeneously to finite positive measures. For an arbitrary
+normalized kernel `K_x` on `Z/p^H Z`, set
+
+\[
+ M_t(x)=\max_{b\bmod p^t}K_x(y\equiv b\pmod{p^t}).
+\]
+
+The joint-load argument gives the stronger, measure-dependent estimate
+
+\[
+ \boxed{\Gamma_{Qp^H}(\mu K)
+ \le\Gamma_Q(\mu)+\sum_{t=1}^H(2t+1)\Gamma_Q(M_t\mu).}
+ \tag{W1}
+\]
+
+Indeed, for exponent groups `(e,f)` with `max(e,f)=t`, each nonempty current
+intersection is a depth-`t` prefix and has conditional mass at most `M_t(x)`.
+If `A_e,A_f` are their complete old loads, weighted Cauchy–Schwarz gives
+`∫M_t A_e A_f dμ≤Γ_Q(M_t μ)`. There are `2t+1` such ordered groups.
+The old-old contribution remains at most `Γ_Q(μ)`. All old cofactors,
+including 1, remain in these loads.
+
+For the BBMST kernel take the current base law `U` to be uniform on
+`Z/p^H Z`, with **all** new forbidden classes, including pure powers, in
+the actual union `B_x`. Put
+
+\[
+ \alpha(x)=U(B_x),\quad \theta(x)=\min\{\alpha(x),\delta\},\quad
+ m_t(x)=\min_{b\bmod p^t}U(B_x\cap\{y\equiv b\pmod{p^t}\}).
+\]
+
+The outside density is `1/(1−θ)` and the inside density is
+`(α−δ)_+/(α(1−δ))`. Subtracting these densities and summing on a prefix
+proves the exact formula
+
+\[
+ M_t(x)=\frac{p^{-t}-(\theta/\alpha)m_t(x)}{1-\theta},
+ \tag{W2}
+\]
+
+where `(θ/α)m_t` is defined as zero at `α=0`. The formula also applies
+at `α=1`. In particular, with `c_t=p^{-t}/(1−δ)`,
+
+\[
+ c_t-M_t=
+ \frac{p^{-t}(\delta-\theta)}{(1-\delta)(1-\theta)}
+ +\frac{\theta m_t}{\alpha(1-\theta)}\ge0.
+ \tag{W3}
+\]
+
+Since every old layout has load at least one,
+`Γ_Q(M_t μ)≤c_t Γ_Q(μ)−E_μ(c_t−M_t)`. Consequently
+
+\[
+ \Gamma_{Qp^H}(\mu K)
+ \le\Gamma_Q(\mu)\left(1+\frac{A_p(H)}{1-\delta}\right)
+       -\sum_{t=1}^H(2t+1)\mathbb E_\mu(c_t-M_t).
+ \tag{W4}
+\]
+
+The second term of (W3) measures forbidden occupancy in every depth-`t`
+prefix and can be positive even when `α≥δ`. The weighted estimate (W1)
+additionally retains its correlation with the old test loads.
+For the actual ending-event charge `b=(μK)(B)`, the first term alone gives
+the joint inequality
+
+\[
+ \Gamma_{Qp^H}(\mu K)+A_p(H)b
+ \le\Gamma_Q(\mu)\left(1+\frac{A_p(H)}{1-\delta}\right)
+       +\frac{A_p(H)(\mathbb E_\mu\alpha-\delta)}{1-\delta}.
+ \tag{W5}
+\]
+
+To obtain it use
+`E(δ−α)_+=δ−Eα+(1−δ)b` in (W3)–(W4).
+
+The geometry in (W2) can be computed without counting nested exclusions
+twice. Write the actual union as `⋃_j A_j×J_j`, combining equal old
+cylinders, and order proper old supersets before subsets. Replacing `J_j`
+by `J_j\⋃_{i:A_j⊊A_i}J_i` preserves this union. A point removed from one
+rectangle lies in a rectangle with a strictly larger old cylinder, and
+this finite ascent terminates. For irredundant full congruence classes,
+intersecting current prefixes from these ancestors lie strictly inside the
+child prefix; their maximal members are disjoint, so their masses subtract
+by finite additivity. This is the local prefix-packing calculation behind
+the Kraft inequality.
+
+Both `α` and `m_t` must refer to that same actual union. An upper bound
+on `α` supplies no lower bound on `m_t`; a base already conditioned away
+from pure-power classes cannot use the numerical `p^{-t}` factors unchanged.
+The project’s `CompatibleResidueJointImage` and `FiniteCompatibleCrt`
+provide the congruence compatibility statements, and pinned Mathlib's
+`InformationTheory/Coding/KraftMcMillan.lean` supplies prefix packing.
+These profile-sensitive inequalities have not been formalized in Lean.
+A uniform accumulated improvement sufficient for Γ73 remains unproved.
+
 ## Exact continuation from the conditional 73-head seed
 
 [The finite continuation verifier](../docs/reports/erdos7-odd-covering/verify_finite_continuation.py)
@@ -465,6 +563,160 @@ without adding forbidden classes. The same applies to each other row.
 the calibration is a sufficient implication, not a finite verification of all
 residue assignments. The height-lifting argument is not formalized in Lean.
 
+## One-stage smoothing of the height lift
+
+Averaging the highest old digits before the final conditioning improves the
+height error to `O(H⁻²)`. Fix a finite prime set `P` and
+`1≤h_p≤H_p≤K_p`. Put
+
+\[
+ Q_h=\prod_p p^{h_p},\quad Q_H=\prod_p p^{H_p},\quad
+ Q_K=\prod_p p^{K_p},\qquad r_p=H_p-h_p,\quad k_p=h_p+1,
+ \quad D_S=\prod_{p\in S}k_p.
+\]
+
+Take a family of distinct nonunit moduli dividing `Q_K`. Suppose a probability
+`μ` on `Z/Q_H Z` avoids every actual class whose modulus divides `Q_H`, and
+`Γ_{Q_H}(μ)≤C`. For a vector `n` of nonnegative integers define
+
+\[
+ u_p(n_p)=\sum_{t=1}^{n_p}p^{-t},\qquad
+ v_p(n_p)=\sum_{t=1}^{n_p}(2t-1)p^{-t},\qquad
+ B_h(n)=\prod_p\left(1+\frac{2u_p(n_p)}{k_p}
+                            +\frac{v_p(n_p)}{k_p^2}\right).
+\]
+
+Use `u_p(∞)=1/(p−1)` and `v_p(∞)=(p+1)/(p−1)²` in the infinite-height
+expressions, and set
+
+\[
+ E_h(r)=B_h(\infty)-B_h(r),\qquad
+ \lambda_h(C)=\sum_{\varnothing\ne S\subseteq P}
+ \left(\prod_{p\in S}\frac1{p-1}\right)
+ \min\left\{\frac{\sqrt C}{D_S},\frac C{D_S^2},
+                         \frac{C-1}{D_S^2-1}\right\}.
+\]
+
+**Smoothed height-lifting theorem.** If `λ_h(C)<1`, there is a probability
+`μ'` on complete survivors of the whole family such that
+
+\[
+ \boxed{\Gamma_{Q_K}(\mu')\le
+       \frac{C[1+E_h(r)]-\lambda_h(C)}{1-\lambda_h(C)}.}
+ \tag{S1}
+\]
+
+For finite `K`, replacing every `∞` by `K_p−h_p` in the corresponding local
+sums gives the same assertion with smaller bounds. With `r=0`, (S1) is (H1).
+No Γ-minimizing property of the initial law is assumed.
+
+**Proof.** Let `η` be the projection of `μ` to `Q_h`; completing a coarse
+layout to an old layout gives `Γ_{Q_h}(η)≤C`. Average `μ` over the additive
+group `ker(Z/Q_H Z→Z/Q_h Z)`. Its average `ρ` is the uniform extension of `η`
+to `Q_H`. Each translation takes a residue class to another class of the
+same modulus, so Γ is translation invariant. It is also convex in the law,
+being a maximum of linear expectations. Consequently `Γ_{Q_H}(ρ)≤C`.
+The average can reintroduce old forbidden classes above the coarse cap;
+these are included in the final conditioning. Classes with moduli dividing
+`Q_h` remain avoided because the translations fix the coarse residue.
+
+Extend `ρ` uniformly to `Q_K`, giving `ν`, equivalently the uniform extension
+of `η` from `Q_h`. In a full test layout, the squared load from moduli dividing
+`Q_H` has expectation at most `C`. Group all moduli by their excess vectors
+`t_p=max(v_p(d)−h_p,0)`. The coarse modulus and `t` determine `d`, so each
+coarse group is a partial layout to which (H2) applies at cap `h`. The same
+CRT intersection count and Cauchy–Schwarz bound each ordered pair of groups by
+
+\[
+ C\frac{\prod_p p^{-\max(t_p,s_p)}}
+        {D_{\operatorname{supp}(t)}D_{\operatorname{supp}(s)}}.
+\]
+
+Two groups are both old exactly when `t_p,s_p≤r_p` for every `p`.
+The sum of coefficients over all other ordered pairs is
+`B_h(K−h)−B_h(r)≤E_h(r)`. Adding the separately bounded old-old expectation
+therefore gives `Γ_{Q_K}(ν)≤C[1+E_h(r)]`. This subtracts only explicit
+coefficient sums, not an unknown old expectation.
+
+Now group **all** actual excluded classes above `h`, including the old ones
+that averaging reintroduced. Uniform fibre counting and the first-moment
+part of (H2) give their total union mass `b≤λ_h(C)`. All remaining actual
+classes already have zero mass. Condition once outside this union. Every
+test squared load is at least one, so the resulting complete survivor law obeys
+
+\[
+ \Gamma_{Q_K}(\mu')\le
+ \frac{C[1+E_h(r)]-b}{1-b}
+ \le\frac{C[1+E_h(r)]-\lambda_h(C)}{1-\lambda_h(C)}.
+\]
+
+The last function is increasing in `b` because `C[1+E_h(r)]≥1`.
+This proves (S1), without independent old coordinates or positive survival
+in every old fibre.
+
+**Two constants.** If the same initial law has the separately available bounds
+`Γ_{Q_H}(μ)≤C_H` and `Γ_{Q_h}(η)≤C_h`, with `1≤C_h≤C_H`, only the old-old
+term uses `C_H`. Thus, when `λ_h(C_h)<1`, the proof gives
+
+\[
+ \boxed{\Gamma_{Q_K}(\mu')\le
+ \frac{C_H+C_hE_h(r)-\lambda_h(C_h)}{1-\lambda_h(C_h)}.}
+ \tag{S2}
+\]
+
+**Rate.** For fixed `P,C`, choose common `H_p=H`,
+`r_p=⌈log_p H⌉` and `h_p=H−r_p` for sufficiently large `H`. The exact tails
+
+\[
+ u_p(\infty)-u_p(r)=\frac{p^{-r}}{p-1},\qquad
+ v_p(\infty)-v_p(r)=p^{-r}
+       \left(\frac{2r}{p-1}+\frac{p+1}{(p-1)^2}\right)
+\]
+
+give `E_h(r)=O(H⁻²)` and `λ_h(C)=O(H⁻²)`. Hence (S1) is
+`Γ_{Q_K}(μ')≤C+O_{P,C}(H⁻²)`, uniformly over all finite future heights.
+
+**Fixed rational parameters.** Put `k_min=min_p k_p` and
+`R=k_min²/(k_min²−1)`. Since `1/(D_S²−1)≤R/D_S²` for nonempty `S`, the
+following rational product is a valid replacement for `λ_h(C)`:
+
+\[
+ \overline\lambda_h(C)=(C-1)R
+       \left[\prod_p\left(1+\frac1{(p-1)k_p^2}\right)-1\right].
+\]
+
+For the twenty odd primes through 73, use prime order
+`(3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73)`.
+The following fixed widths give sufficient parameters for (S1). Each upper
+display endpoint lies less than `10⁻¹²` above the exact rational bound and
+is strictly below `138877/1000`.
+
+| Hypothetical uniform base `C` | Common cap `H` | Width vector `r` in prime order | Upper display endpoint |
+|---:|---:|---|---:|
+| 128 | 52 | `(3,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1)` | 138.556342372564 |
+| 130 | 58 | `(3,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1)` | 138.599521198059 |
+| 138 | 185 | `(5,4,3,3,3,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2)` | 138.872506575675 |
+| 138.874 | 3118 | `(10,7,6,5,5,4,4,4,4,4,4,4,3,3,3,3,3,3,3,3)` | 138.876998901712 |
+
+[The smoothed calibration verifier](../docs/reports/erdos7-odd-covering/verify_smoothed_height_lifting.py)
+uses exact `Fraction` arithmetic to check the geometric tails, the old-old
+coefficient boxes, `0≤λ̄_h<1`, the strict target comparisons and these display
+intervals. It uses Python 3.9+ standard library only, with explicit failures
+that remain active under `-O`:
+
+```sh
+python3 docs/reports/erdos7-odd-covering/verify_smoothed_height_lifting.py
+python3 -O docs/reports/erdos7-odd-covering/verify_smoothed_height_lifting.py
+```
+
+For example, a universal survivor bound `Γ≤128` at common cap 52 would now
+suffice for unrestricted #7 through (S1) and the preceding prime-tail transfer.
+**Every universal finite-base bound in this table remains unproved.** The
+squarefree `Γ<138.874` result does not supply the cap-3118 hypothesis.
+The verifier checks the numerical implications, not all residue assignments;
+the smoothing theorem and its two-constant version have not been formalized
+in Lean.
+
 ## A four-prime head and a restricted noncoverage theorem
 
 **Theorem.** A finite family of residue classes with distinct odd moduli
@@ -472,21 +724,22 @@ greater than one cannot cover the integers if every prime divisor of every
 modulus belongs to
 
 \[
- \{3,5,7,11\}\ \cup\ \{p:\ p\text{ prime},\ p\ge79\}.
+ \{3,5,7,11\}\ \cup\ \{p:\ p\text{ prime},\ p\ge73\}.
  \tag{P1}
 \]
 
 There is no bound on the exponents, the number of large prime divisors, or the
 number of prime divisors of a single modulus. Equivalently, any hypothetical
 distinct odd covering must use a modulus divisible by at least one of the
-primes from 13 through 73. This is a restricted theorem, not the full conjecture.
+primes from 13 through 71. This is a restricted theorem, not the full conjecture.
 
 The head estimate used to prove it is the following uniform statement.
 For any finite distinct-modulus family supported on `{3,5,7,11}`, its complete
 survivor set is nonempty, and the uniform survivor probability satisfies
 
 \[
- \boxed{\Gamma\le\frac{3885}{29}<\frac{138877}{1000}.}
+ \boxed{\Gamma\le C_4:=\frac{47039764798810808}{386617378845795}
+ <121.67008.}
  \tag{P2}
 \]
 
@@ -619,15 +872,91 @@ the sharper exact value. These finite calculations certify the numerical
 parameters; the profile induction proves their validity for every residue
 assignment and every finite height.
 
+**Refinement using a surviving ternary fibre.** For a two-prime family on
+`3^H q^J`, with prime `q≥5`, the same uniform complete-survivor law satisfies
+
+\[
+ \mu(x\equiv a\pmod3)\le\frac{2(q-2)}{3q-8}.
+ \tag{P6}
+\]
+
+To prove this, let `Y` avoid the pure `q`-power classes and write
+`z=|Y|/q^J≥1−y`, where `y=1/(q−1)≤1/4`. If the target ternary root
+is excluded by the modulus-3 class its mass is zero. Otherwise another root
+`r mod 3` is also not excluded by that class. Inside `r`, pure powers
+`3^h`, `h≥2`, remove a fraction at most `1/2` of the ternary coordinate.
+Classes of modulus `3q^j` remove at most `y` of the `q` coordinate.
+These conditions concern separate coordinates, leaving relative density
+at least `(z−y)/2`. The remaining mixed classes, of modulus `3^h q^j`
+with `h≥2`, have total relative density at most `y/2`. Thus complete
+survivors in `r` have relative density at least `z/2−y>0`.
+
+The target root has relative survivor density at most `z`, so its normalized
+mass is at most `z/(3z/2−y)`. This expression decreases with `z`, and
+substituting `z≥1−y` proves (P6). Missing moduli only improve the estimates.
+In particular the `{3,5}` bound is `6/7`; it uses actual survival in another
+root, with no assumption that every fibre survives.
+
+For each support `T` containing 3, augment `c(T)` with a coefficient `b(T)`
+meaning
+
+\[
+ \mu\left(x\equiv a\pmod{3^{e_3}\prod_{q\in T\setminus\{3\}}q^{e_q}}\right)
+ \le\frac{b(T)}{3\prod_{q\in T\setminus\{3\}}q^{e_q}}
+ \qquad(e_3\ge1).
+ \tag{P7}
+\]
+
+This follows by projection to exponent one of the ternary coordinate.
+The envelope is now the minimum of all projected `c` and `b` bounds.
+When adjoining a prime other than 3, propagate both coefficients by (P4),
+using the refined predecessor `R`; when adjoining 3, the new `b` candidate
+equals the new `c` candidate. Take minima across admissible orders for both
+families. At each two-prime subset `{3,q}`, additionally replace `b({3})`
+by its minimum with `6(q−2)/(3q−8)`, as justified by (P6).
+Every bound concerns the same uniform complete-survivor law.
+
+The finite-cell evaluation above still applies. For a nonternary coordinate
+also require `p^{L_p+1}≥b(T∪{p})/b(T)` for supports containing 3 and
+omitting `p`. Require `L_3≥1` and
+`3^{L_3+1}≥3c(T)/b(T)` for every support containing 3. Above that
+ternary cutoff, the full-exponent `c` term dominates its `b` counterpart;
+the remaining tails factor geometrically as before. The resulting exact
+envelope sums are
+
+| Prime support | `R` | `K`, an upper bound on `Γ` |
+|---|---:|---:|
+| {3,5} | 33/14 | 429/28 |
+| {3,5,7} | 36903/7585 | 336438/7585 |
+| {3,5,7,11} | 7621078040639947/773234757691590 | 47039764798810808/386617378845795 |
+
+The last row proves (P2). Its cutoffs remain `(2,1,0,0)`.
+The [refined profile verifier](../docs/reports/erdos7-odd-covering/verify_refined_head_profile.py)
+checks this recurrence with exact rational arithmetic and an independent
+finite-box sum with a geometric bound on the complement. The simpler
+support-only estimate (P5) remains valid. Neither calculation enumerates
+residue assignments; universality follows from the two profile inductions
+and the root-fibre argument.
+
 **Conclusion of (P1).** Apply (P2) to the classes involving only `{3,5,7,11}`.
 For any missing small prime use an unused coordinate; this does not add a
-forbidden class, and the same head bound applies. Begin the new-prime steps
-in (T6) at `79`, with absolute prime index `22`, using the checked upper seed
-`F_21=138877/1000`. There is no need to insert any prime from 13 through 73
-into the head: index 21 specifies where the tail starts, while (T1) allows
-any coprime head. The exact continuation and BBMST's analytic termination then
-leave positive mass on complete survivors. CRT and periodicity supply an
-integer avoiding every original congruence.
+forbidden class, and the same head bound applies. Apply one step of (T6)
+at `p=73`, choosing `δ=27/100` and initial `G=C_4`, `s=1`. Exactly,
+
+\[
+ s'=\frac{23954544135062588143}{24689540460044007018}>0,\qquad
+ F'=\frac{15885128653558014915666}{119772720675312940715}
+ <\frac{138877}{1000}.
+ \tag{P8}
+\]
+
+If 73 is absent it too may be an unused coordinate. Continue at prime 79,
+with absolute prime index 22, using the checked upper seed
+`F_21=138877/1000`. No prime from 13 through 71 needs to be inserted into
+the head: the index specifies where the tail starts, while (T1) allows any
+coprime head. The exact continuation and BBMST's analytic termination leave
+positive mass on complete survivors. CRT and periodicity supply an integer
+avoiding every original congruence.
 
 **Literature boundary.** The searched project has the two-prime density
 theorem but no joint-load or cylinder-profile head theorem. The searched pinned
@@ -835,9 +1164,9 @@ open. The results are three exact obstacles to earlier proof routes, a direct
 joint-load transfer into the BBMST continuation, and a quantitative reduction
 of the arbitrary-height sufficient condition to a finite exponent cap. A
 uniform four-prime head bound additionally proves the restricted noncoverage
-theorem (P1), allowing arbitrary prime support above 73. The universal
-finite-base bound needed for the full conjecture remains unproved. No new Lean theorem, freeze,
-or problem-resolution binding is supplied.
+theorem (P1), allowing arbitrary prime support at or above 73. The universal
+finite-base bound needed for the full conjecture remains unproved. No new
+Lean theorem, freeze, or problem-resolution binding is supplied.
 
 ## ASSUMED-UNVERIFIED
 
