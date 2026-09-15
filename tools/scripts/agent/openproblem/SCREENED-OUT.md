@@ -234,6 +234,22 @@ only"`、`"Conjecture:" "is prime if and only if"`、`"Conjecture" "are the only
 - **A321084**、**A015126**、**A069051**、**A211384**:分别归结为「该族无 base-2 Fermat 伪素数」、
   Carmichael 全序数猜想邻域、Wieferich 邻域、贪心整除递推的无界分类,均非第一档。
 
+### 结算藏在条目自己链接的论文里(最贵的一条)
+
+- **A181666**(`%C` Ralf Stephan, Nov 18 2010:`Also, terms of A023758 divisible by 3, divided by 3
+  (conjectured)`)。**该条目 `%H` 链接的论文已经证出它**:Andreas M. Hinz、Paul K. Stockmeyer,
+  *Precious Metal Sequences and Sierpinski-Type Graphs*,J. Integer Seq. 25 (2022), Article 22.4.8。
+  取 PDF 转文本后的逐行读数:
+    - 第 233 行 `ℓ_{2ν−1} = (1/3)(2^{2ν} − 1)`,即 `(4^ν − 1)/3` —— A181666 `%N` 的奇部形状;
+    - 第 975 行指认 `2^n − 2^{n−ν}` 族「apart from the offset」就是 A023758;
+    - 第 1515 行对**偶** ν 取 `(1/3)·2^{n−ν}M_ν = (1/3)(2^n − 2^{n−ν})`;
+    - 第 1528 行(式 33)`B̂ = {2^i·ℓ_{2j+1} | i, j ∈ ℕ₀}`;
+    - 第 1566–1569 行 `b̂(…) = (1/3)(2^N − 2^{N−2ρ}) = 2^{N−2ρ}ℓ_{2ρ−1}`,并直书
+      「(This sequence b̂ is A181666.)」
+  合起来即:A023758 的项被 3 整除当且仅当其 1-游程长为偶,除以 3 后所得集合恰为 A181666——正是待结算
+  的那句 `%C`。该 lane 已走到冻结与三轮九席评审,由架构席以 10/10 判出,PR #8184 与预登记 #8143 关闭。
+  **这条比前两条贵得多:前两条在预登记阶段就能看见,这条要读一篇 840 KB 的论文正文。**
+
 ## 本轮的方法学教训(比 R32 更贵的同一个病)
 
 R32 已经记过「形状过滤只看含 `Conjecture` 的行会漏掉别处的结算行」,并且仓内早有
@@ -250,3 +266,22 @@ R32 已经记过「形状过滤只看含 `Conjecture` 的行会漏掉别处的�
 手写核对不能替代它。** 其次,「无证明行」是一句全称否定,写它之前要枚举过全集——这里的全集是该条目的
 全部 `%C`/`%H`/`%D` 行,不是含 `Conjecture` 的那一行。结算行最常见的位置恰恰是猜想行的**下一行**,
 因为提出者与证明者在同一处对话;读到猜想句就停手是最容易漏的姿势。
+
+### 第三种藏法及其修法
+
+前两条的结算写在条目文本里,`oeis-conjecture-scan.py` 的 `SETTLED` 正则能看见;**A181666 的结算不在
+条目文本里,而在条目 `%H` 链接的论文正文里**,任何扫描条目文本的器都看不见。
+
+本仓的 `Library/Arith/stephan2010a181666.md` 曾由 orchestrator 写下「the Hinz--Stockmeyer paper on
+Sierpinski-type graphs do not treat this identity」——**写这句时没有读过那篇论文**,只看了 5 KB 的
+摘要页,而正文 PDF 是 840 KB。摘要页的「Concerned with sequences … A023758 … A181666 …」列表恰恰说明
+作者知道这两个序列,是**更该读全文**的信号,不是可以跳过的理由。
+
+修法是把「全集」写清楚:一句「该陈述未被文献判定」的全称否定,其全集是
+**该条目的全部 `%C`/`%H`/`%D` 行,加上每一篇 `%H` 论文的全文**。操作上:
+
+    curl -s "https://oeis.org/search?fmt=text&q=id:<A号>" | grep -E '^%[CHD]'   # 枚举链接
+    curl -sL <每个 %H 论文 URL 的 pdf> -o p.pdf && pdftotext p.pdf p.txt        # 取全文
+    grep -n -F <A号> p.txt; grep -n <定义式/集合形状> p.txt                      # 按数学内容查,不只按 A 号
+
+`%H` 为空才是「无链接论文」,当场用上面第一条命令验;例如 A079278 只有 `%D`、A249759 两者皆无。
