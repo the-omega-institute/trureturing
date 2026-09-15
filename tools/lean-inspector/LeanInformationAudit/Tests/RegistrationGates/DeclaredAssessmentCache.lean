@@ -1,5 +1,6 @@
 import LeanInformationAudit.Tests.RegistrationGates.DeclaredSidecar
 import LeanInformationAudit.Tests.RegistrationGates.IndexWork.Selected
+import LeanInformationAudit.Tests.SourceIsolation
 
 namespace LeanInformationAudit.Tests.DeclaredAssessmentCache
 open Lean Meta Elab Command TemplateBinding TemplateAudit
@@ -7,7 +8,7 @@ open Lean Meta Elab Command TemplateBinding TemplateAudit
 private def observe (name : String) (ok : Bool) : MetaM Unit :=
   logInfo m!"[{if ok then "PASS" else "FAIL"}] {name}"
 
-run_meta do
+run_meta withPrivateSources do
   let initial ← getEnv
   let rows ← assessJoined
   let #[record] := rows | throwError "setup: exactly one sidecar occurrence required"

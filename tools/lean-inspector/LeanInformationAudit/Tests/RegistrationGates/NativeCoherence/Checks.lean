@@ -1,5 +1,6 @@
 import LeanInformationAudit.Tests.RegistrationGates.NativeCoherence.Owner
 import LeanInformationAudit.Tests.RegistrationGates.NativeCoherence.Plain
+import LeanInformationAudit.Tests.SourceIsolation
 
 namespace LeanInformationAudit.Tests.NativeCoherence
 open Lean Meta Elab Command TemplateAudit
@@ -29,7 +30,7 @@ private def observeEnrollment (label : String) (expected : Option String) : Comm
   let ok := actual == expected && present == expected.isNone
   logInfo m!"[{if ok then "PASS" else "FAIL"}] {label} actual={repr actual}"
 
-elab "observe_native_enrollment_coherence" : command => do
+elab "observe_native_enrollment_coherence" : command => withPrivateSources do
   observeEnrollment "fresh_native_source_plan_accepted" none
   for (suffix, label) in #[("Owner", "fresh_source_stale_native_enrollment_rejected"),
       ("Helper", "transitive_source_stale_native_enrollment_rejected")] do
@@ -53,7 +54,7 @@ elab "observe_native_enrollment_coherence" : command => do
 
 observe_native_enrollment_coherence
 
-elab "observe_empty_report_driver_coherence" : command => do
+elab "observe_empty_report_driver_coherence" : command => withPrivateSources do
   let requested := `LeanInformationAudit.Tests.RegistrationGates.NativeCoherence.Plain
   let observe (label : String) (expected : Option String) : CommandElabM Unit := do
     let saved ← get
