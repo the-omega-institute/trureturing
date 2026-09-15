@@ -1,0 +1,6 @@
+**定义 390.1。** 在通常 ZFC 中，沿用定义 371.1、372.1、375.1 的全部对象，在第 390–412 条局部简记
+$$
+K=K_{\rm infdig},\quad z=z_{\rm infdig},\quad
+F=F_{\rm infdig},\quad H=H_{\rm infdig},\quad T=T_{\rm infdig}.
+$$
+$\omega$ 仍为通常自然数集合，$K$ 中的点仍为低位到高位的合法总函数，$z(n)=\operatorname{pad}(\zeta(n))$。

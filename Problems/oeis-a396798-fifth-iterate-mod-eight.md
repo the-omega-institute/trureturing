@@ -99,8 +99,10 @@ reflects reuse of existing results and normalization; no escape witness is claim
 The argument is unbounded and symbolic, with `utility.kind: none`.
 
 The fourth comment is separately settled for n>2 and the eighth for n>1.
-Comments 2 and 6, comments 3 and 7, and the proposed repair of the first
-comment retain their own obligations. The recorded contradiction to the
+The third comment is separately settled by
+`IterateProductFourFiveThirdModEight.result` for n>1 with period 3,1,7,5
+from n=2. Comments 2,6,7 and the proposed repair of the first comment
+retain their own obligations. The recorded contradiction to the
 original first-comment period remains non-kernel evidence and is not a
 new formal refutation here.
 
