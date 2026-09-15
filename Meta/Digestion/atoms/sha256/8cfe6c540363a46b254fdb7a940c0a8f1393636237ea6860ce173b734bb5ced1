@@ -1,0 +1,6 @@
+**定理 2.5（部分操作的严格观察下降）。** 存在唯一的实际像上部分操作 \(\bar F\)，其准入性由 \(q_{\mathrm{in}}\) 决定，且成功输出观察与失败标签完全由 \(q_{\mathrm{in}}\) 决定，当且仅当
+\[
+\forall x,y,\quad q_{\mathrm{in}}(x)=q_{\mathrm{in}}(y)\Longrightarrow
+\mathsf R(x)=\mathsf R(y).
+\]
+
