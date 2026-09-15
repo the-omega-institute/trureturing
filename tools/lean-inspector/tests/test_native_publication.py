@@ -301,7 +301,7 @@ class NativePublicationTests:
                                   ('tools/lean-inspector/native.py', '#'),
                                   ('tools/lean-inspector/lakefile.lean', '--'),
                                   ('tools/scripts/report/lean-report-input.sh', '#'),
-                                  ('tools/StrataLint.Cli/Commands/LeanUtilityInputCommand.cs', '//')]:
+                                  ('tools/StrataLint.Lean/Lean/LeanUtilityInputCommand.cs', '//')]:
             with self.subTest(producer=producer):
                 calls = (self.root / 'utility-calls').read_text().splitlines()
                 implementation = (self.root / producer).read_text()

@@ -59,8 +59,15 @@ def prepare(root):
     inputs = selection.Selection(root)
     inputs.validate('lean-report')
     modules = inputs.modules()
-    result = subprocess.run(['dotnet', 'run', '--project', str(root / 'tools/StrataLint.Cli/StrataLint.Cli.csproj'),
-        '--configuration', 'Release', '--no-build', '--no-restore', '--no-launch-profile', '--', 'lean-utility-input'],
+    producer = os.environ.get('STRATALINT_LEAN_PRODUCER_DLL')
+    if producer:
+        if not Path(producer).is_absolute() or not Path(producer).is_file():
+            raise ValueError('candidate Lean producer must be an existing absolute path')
+        command = ['dotnet', producer]
+    else:
+        command = ['dotnet', 'run', '--project', str(root / 'tools/StrataLint.Lean/StrataLint.Lean.csproj'),
+            '--configuration', 'Release', '--no-build', '--no-restore', '--no-launch-profile', '--']
+    result = subprocess.run([*command, 'lean-utility-input'],
         cwd=root, stdout=subprocess.PIPE, check=True)
     utilities = public.read_json(result.stdout)
     if not isinstance(utilities, list):

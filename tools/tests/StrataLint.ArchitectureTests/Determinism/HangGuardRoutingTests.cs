@@ -7,16 +7,10 @@ namespace StrataLint.ArchitectureTests;
 /// </summary>
 public sealed class HangGuardRoutingTests
 {
-    /// <summary>
-    /// 判据与其**已知反例集合**都写在
-    /// <c>ScribeTestMapDeriver.FindUnroutedHangGuardCalls</c> 的注释里,包括一条诚实交代:
-    /// 本判据的 repository read **对映射器不可归因**,它当前可达的理由是
-    /// `IsFullSurface` 把 `tools/` 下任何改动转 Full,**不是**归因成立。
-    /// </summary>
     [Fact]
     public void EveryHangGuardBudgetGoesThroughTheSkipClassifyingRunner()
     {
-        var offenders = ScribeTestMapDeriver.FindUnroutedHangGuardCalls(RepositoryLayout.FindRoot());
+        var offenders = HangGuardRouting.FindUnroutedHangGuardCalls(RepositoryLayout.FindRoot());
 
         Assert.True(
             offenders.Count == 0,
