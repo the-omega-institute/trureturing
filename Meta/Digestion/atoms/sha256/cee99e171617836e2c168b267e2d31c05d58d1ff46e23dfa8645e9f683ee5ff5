@@ -1,0 +1,6 @@
+同时普通图 $G_{T^*}\subseteq K^*\times K^*$ 通过
+$$
+\langle c,d\rangle\longmapsto
+\bigl(\langle P_L^*c,P_L^*d\rangle\bigr)_{L\ge1}
+$$
+同胚到 $\widehat{\mathscr Q}_R$。以上各层均取声明的乘积及子空间拓扑，
