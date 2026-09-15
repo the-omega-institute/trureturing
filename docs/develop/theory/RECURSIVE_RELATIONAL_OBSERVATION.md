@@ -322,3 +322,638 @@ pro-Hom 提供“高阶关系的相容封装”；上下文最大性提供“新
 都只能报告边缘像、部分代表或闭包，不能报告原始高阶关系已经恢复。
 
 ## 追加锚（本行以下为增补区）
+
+## 6. 增补·既有陈述的条件与适用范围
+
+本批在第 5 节之后追加：本节限定第 2.5、2.6、3.2、3.6 及第 5 节相关条目的条件和量词；第 7 节给出关系复合与完备化的交换判据；第 8 节列来源与范围。以下说明按既有编号定位，不另立重复定理候选。第 5.1 条的闭包等式重述定理 3.4，不计为新增数学结果。既有正文中的批次指称仍属于其原批次。
+
+### 6.1 第 3.6 与 5.1 条：闭像、关系代表与环境满射
+
+沿用定理 3.4 的全部假设和记号，令
+
+$$
+K=\prod_{i\in I}K_i,\qquad
+\widehat R=\bigcap_{n\ge 0}\pi_n^{-1}(R_n).
+$$
+
+有限阶段像恢复的集合恰为
+
+$$
+\widehat R=\overline{\eta[R]}\subseteq K.
+$$
+
+若 $\eta[R]$ 在 $K$ 中闭，则 $\widehat R=\eta[R]$，因而已经有
+
+$$
+\forall z\in\widehat R\ \exists x\in R,\qquad \eta(x)=z.
+$$
+
+这里每个完成关系点有一个原始关系代表，直接来自像集的定义，不须再加独立的实现性假设。反之，若上述存在量词成立，则 $\widehat R\subseteq\eta[R]$；结合定理 3.4 即得 $\eta[R]=\widehat R$，所以像闭。在闭像条件下，每个完成关系点的代表唯一，当且仅当 $\eta|_R$ 单射，即
+
+$$
+\forall x,y\in R,\qquad \eta(x)=\eta(y)\Longrightarrow x=y.
+$$
+
+因此，有限层条件确定的是 $K$ 中的关系像；与原始关系 $R$ 一一识别还需上述单射条件。对指定原输入 $x$，$\eta(x)\in\widehat R$ 在闭像时保证存在 $x^{\prime}\in R$ 与它观察相同，却不保证 $x\in R$；后者可由 $R$ 对 $\eta$ 的纤维饱和保证。不能把位于不同载体中的 $\eta[R]$ 与 $R$ 直接写成相等。
+
+“整个环境空间的每一点都有原始载体代表”是另一个量词：
+
+$$
+\forall z\in K\ \exists x\in\prod_{i\in I}X_i,\qquad \eta(x)=z.
+$$
+
+这要求 $\eta$ 对整个 $K$ 满射。若进一步要求这些代表都取自 $R$，则要求 $\eta[R]=K$。这两种对整个环境空间的实现要求均不由 $\eta[R]$ 闭推出。第 3.6 与 5.1 条中“必须另加实现性”的措辞仅可用于这种扩大了对象范围的要求；对 $\widehat R$ 内的代表存在性，闭像已经充分。
+
+### 6.2 第 5.3 条：零模约定与满射蕴含方向
+
+第 5.3 条中的商统一解释为整数环的商，特别是
+
+$$
+\mathbb Z/0\mathbb Z=\mathbb Z,\qquad
+\mathbb Z/1\mathbb Z=\{0\}.
+$$
+
+模零的商映射是恒等映射；对整数 $x,y$，条件 $x\equiv y\pmod 0$ 就是 $x=y$，不是自动成立的条件。
+
+令 $d=\gcd(m,n)$。因 $d\mid m$ 且 $d\mid n$，有良定义的商映射
+
+$$
+r_{m,d}:\mathbb Z/m\mathbb Z\longrightarrow\mathbb Z/d\mathbb Z,
+\qquad
+r_{n,d}:\mathbb Z/n\mathbb Z\longrightarrow\mathbb Z/d\mathbb Z.
+$$
+
+第 5.3 条的联合像条件精确写为
+
+$$
+\operatorname{im}\rho_{m,n}
+=\{(a,b):r_{m,d}(a)=r_{n,d}(b)\}.
+$$
+
+若 $m=0<n$，该条件是 $b=a\bmod n$，其中 $a$ 是整数；共同整数代表就是 $a$。若 $n=0<m$，对称地由整数坐标 $b$ 给出代表。若 $m=n=0$，则 $d=0$，条件是整数相等，联合像为 $\mathbb Z\times\mathbb Z$ 的对角线。非零模情形沿用第 5.3 条的广义中国剩余定理。因此，原有结论
+
+$$
+\rho_{m,n}\text{ 满射}\quad\Longleftrightarrow\quad\gcd(m,n)=1
+$$
+
+仍覆盖所有自然模数，包括 $(0,1)$ 与 $(1,0)$。
+
+每个整数商映射均满射，且每个商都有零元素。在这里，联合满射蕴含两个边缘映射分别满射：固定一个边缘值，将另一边缘值取为零，再用联合满射取得共同代表。反向不成立；$m=n=2$ 时两个边缘均满射，但 $(0,1)$ 不在联合像中。故原文“两个独立命题”应收紧为“联合满射是更强条件，边缘分别满射不足以推出联合满射”，不能解读成两个方向都不存在蕴含。
+
+### 6.3 第 5.4 条：坐标满射的充分性与逐系统边界
+
+第 5.4 条的两个条件命题及其证明保留；唯一性只在满足所列坐标公式的映射中成立。所有源极限投影满射是一般反推证明的充分假设，不是对每个具体系统都必要的假设，故替代原末句的“必要”表述。
+
+具体地，令 $p_j:\varprojlim\mathsf X\to\mathsf X_j$ 为源投影。只要存在满足坐标公式的 $\Delta$，对任意 $i\le j$，总能推出
+
+$$
+\forall x\in\operatorname{im}p_j,\qquad
+\mathsf Y_{j\to i}(\delta_jx)
+=\delta_i(\mathsf X_{j\to i}x).
+$$
+
+这是把一个提升 $z$ 代入 $\Delta z$ 的相容方程所得。若 $p_j$ 满射，便覆盖该等式的全部输入；对固定的非恒等阶段箭头，这一步只用其源阶段 $j$ 的投影。对于不能提升的输入，坐标公式本身不提供直接测试，但仍可由具体系统的其他结构推出相应等式，不能据此断言自然性必定无法反推。
+
+取仅有 $0<1$ 的两层预序，以及源系统
+
+$$
+\mathsf X_1=\{*\},\qquad
+\mathsf X_0=\{0,1\},\qquad
+\mathsf X_{1\to0}(*)=0.
+$$
+
+其极限仅含 $z=(0,*)$。投影 $p_0$ 的像是 $\{0\}$，故不满射；$p_1$ 则满射。对任意同指标目标系统 $\mathsf Y$、任意逐阶段映射 $\delta_0,\delta_1$，如果存在满足第 5.4 条坐标公式的 $\Delta$，则 $\Delta z$ 的相容性给出
+
+$$
+\mathsf Y_{1\to0}(\delta_1(*))
+=\delta_0(0)
+=\delta_0(\mathsf X_{1\to0}(*)).
+$$
+
+这就是唯一非恒等阶段箭头的自然性等式，且 $*$ 已穷尽其输入；两个恒等箭头的自然性由系统恒等律成立。因此，即使源极限到某阶段的投影不满射，该系统的全部阶段自然性仍可由坐标公式反推。此例直接否定原文的逐系统必要性表述。
+
+### 6.4 第 5.5 条：小性、代表类相容与共同细化
+
+第 5.5 条的指标须明确为小滤范畴 $I,J$，不是仅给出两个未规定箭头与滤性的指标集合。固定声明宇宙，使 $I,J$ 的对象集和态射集以及 $\mathcal C$ 的各 Hom 集均位于同一个宇宙中；原文的小范畴 $\mathcal C$ 也可取在该宇宙内。于是所有阶段 Hom、其滤余极限及外层小极限均型良好。更一般地，可令 $\mathcal C$ 的对象宇宙为 $u$、Hom 宇宙为 $v$，而 $I,J$ 的对象与 Hom 同在 $v$，并保持两者的小性与滤性。
+
+对 $X:I^{\mathrm{op}}\to\mathcal C$ 和 $Y:J^{\mathrm{op}}\to\mathcal C$，沿用第 5.5 条的公式
+
+$$
+\operatorname{Hom}_{\mathrm{Pro}(\mathcal C)}(X,Y)
+\cong
+\varprojlim_{j\in J^{\mathrm{op}}}
+\varinjlim_{i\in I}\operatorname{Hom}_{\mathcal C}(X_i,Y_j).
+$$
+
+固定目标阶段 $j$ 后，源箭头 $u:i\to k$ 通过预复合 $X(u^{\mathrm{op}}):X_k\to X_i$ 给出 Hom 的余极限结构映射。一个 pro-态射在每个目标阶段确定一个余极限类 $c_j$；该类可由某个 $f_j:X_{i_j}\to Y_j$ 表示。外层极限的相容性首先是这些类的相容性。
+
+精确地，给定任意目标箭头 $\beta:j\to j'$，以及 $c_j,c_{j'}$ 的任意两个阶段代表 $f_j,f_{j'}$，类相容意味着存在共同源细化阶段 $k\in I$ 及箭头
+
+$$
+u:i_j\to k,\qquad v:i_{j'}\to k,
+$$
+
+使
+
+$$
+f_j\circ X(u^{\mathrm{op}})
+=Y(\beta^{\mathrm{op}})\circ f_{j'}\circ X(v^{\mathrm{op}})
+\quad\text{作为 }X_k\to Y_j\text{ 的态射}.
+$$
+
+这是滤余极限中两个代表类相等的共同细化判据。它保证存在一次使该比较相等的细化，不声称未经细化的任意代表直接交换，也不声称随意选取一个共同阶段就已相等。相应存在量词的 $k,u,v$ 可以依赖于 $\beta$ 及所选代表；滤性不提供覆盖无限多个目标阶段的统一源阶段，不能把逐目标、逐比较的存在量词改为全体目标共用一个源阶段。
+
+退化为普通 Hom 的指标应明确取离散单点范畴 $I=J=\mathbf 1$，即仅一个对象且仅有其恒等箭头。此时两个呈示分别只指定 $A,B\in\mathcal C$，两层极限与余极限退化为 $\operatorname{Hom}_{\mathcal C}(A,B)$。仅说“一对象范畴”不够，因为该对象还可能有非恒等自同态；仓内 `singleStageDiagram` 实际采用的是 `Discrete PUnit`。
+
+### 6.5 第 5.6 条：多种类条件与不变核的准确含义
+
+第 5.6 条所引 `StrictOneHoleContexts` 的现有 Lean 声明使用一个载体 $X$、一个读数 $q:X\to Q$，所有操作的输入与成功输出都在同一 $X$ 中。以下多种类读法须补齐类型条件，其依据是本节给出的逐槽替换论证，不属于该单载体声明已经形式化的范围。
+
+令 $\mathcal S$ 为种类集合，对每个 $s\in\mathcal S$ 给定载体 $X_s$ 和读数 $q_s:X_s\to Q_s$。签名 $S$ 中每个操作 $\omega$ 有有限个有序输入种类 $s_0,\ldots,s_{k-1}$、输出种类 $t$、准入域及确定的成功输出
+
+$$
+D_\omega\subseteq\prod_{r<k}X_{s_r},\qquad
+F_\omega:D_\omega\to X_t.
+$$
+
+扩展 $S\hookrightarrow T$ 必须保留每个旧符号的元数、各输入槽种类、输出种类，以及整个部分操作，包括准入性和实际成功输出。种类、载体和读数在比较中固定。
+
+对输入孔种类 $s$ 与输出种类 $t$，令 $\mathcal C_S(s,t)$ 为所有类型相合的有限严格一孔上下文。每个 $\mathcal C_S(s,s)$ 包含该种类的空上下文；基本一步允许将其余每个槽固定为该槽载体中的任意实际参数；语言允许在任何后续上下文前加上类型相合的基本一步，即对有限前缀复合封闭。失败以标签 $\bot$ 严格传播，且 $\bot$ 与每个成功观察标签均不同。若上下文 $C$ 成功输出 $z\in X_t$，记其观察为 $\operatorname{ok}(q_t(z))$，失败时记为 $\bot$。于是逐种类定义
+
+$$
+x\simeq_{S,s}y
+\quad\Longleftrightarrow\quad
+\forall t\in\mathcal S\ \forall C\in\mathcal C_S(s,t),\qquad
+\operatorname{Obs}_{q_t}(C(x))=\operatorname{Obs}_{q_t}(C(y)).
+$$
+
+在这些条件下，第 5.6 条的强同余按种类解释：每个 $\theta_s$ 是 $X_s$ 上的等价关系；对于任一操作和任意逐槽 $\theta_{s_r}$ 等价的两组输入，二者准入性相同，成功时输出位于同一个 $\theta_t$ 类。上下文等价族是满足 $\theta_s\subseteq\ker q_s$ 的最大强同余族，且签名扩展给出每个种类上的包含
+
+$$
+\simeq_{T,s}\ \subseteq\ \simeq_{S,s}.
+$$
+
+逐槽替换的理由如下。对逐槽等价的输入 $a,b$，在第 $r$ 步把前 $r$ 个槽取自 $b$、其余槽取自 $a$，再只替换第 $r$ 个槽。其余槽的值均是各自种类中的实际参数，故这一步属于允许的一孔上下文。把任意输出种类相合的后续上下文接在该步之后，前缀封闭性使整个试验仍属于语言。被替换输入的上下文等价因而保证所有后续观察相同；取空后续上下文可分辨成功与失败，取全部后续上下文则保证成功输出仍上下文等价。有限次替换给出整个操作的强同余性。空上下文又给出 $\simeq_{S,s}\subseteq\ker q_s$。反过来，任意满足这些核包含的强同余族，在每个基本一步保持准入及输出等价类，对有限上下文归纳即保持最终观察，因此包含于上下文等价族。旧上下文保留在扩展语言中，遂得上述细化关系。
+
+第 5.6 条关于“核不变”的准确条件是：每个新增操作都保持旧上下文等价族的准入与成功输出等价类。写成量词，就是对每个新增 $\omega$ 及任意 $a,b\in\prod_{r<k}X_{s_r}$，若
+
+$$
+\forall r<k,\qquad a_r\simeq_{S,s_r}b_r,
+$$
+
+则须有
+
+$$
+a\in D_\omega\quad\Longleftrightarrow\quad b\in D_\omega,
+$$
+
+并且在准入时满足
+
+$$
+F_\omega(a)\simeq_{S,t}F_\omega(b).
+$$
+
+旧操作已保持该等价族；新增操作也满足上述条件时，旧等价族就是扩展签名的强同余，由最大性得 $\simeq_{S,s}\subseteq\simeq_{T,s}$，故核不变。反之，若扩展前后上下文等价族相同，扩展语言的强同余性立即给出上述条件。因此“对旧标签作后处理”只有在标签记录旧上下文等价类，并同时记录准入与成功输出类时，才能据此保证不变；仅要求即时输出读数 $q_t\circ F_\omega$ 在旧类上不变是不够的。
+
+一个单载体反例已能区分这两种条件。取 $X=\{a,b,c,d\}$，读数 $q:X\to\{0,1\}$，以及总的一元操作 $f,g:X\to X$，用向量规定
+
+$$
+q=(0,0,0,1),\qquad
+f=(a,a,d,d),\qquad
+g=(a,c,a,a).
+$$
+
+三个向量均依次列出输入 $a,b,c,d$ 的输出，复合 $qfg$ 表示 $q\circ f\circ g$。旧语言只含 $f$，故其上下文为有限次迭代 $f^n$，包括 $n=0$ 的空上下文。因 $q(a)=q(b)=0$ 且 $f(a)=f(b)=a$，有 $a\simeq_S b$。然而
+
+$$
+q\circ g=(0,0,0,0),\qquad
+q\circ f\circ g=(0,1,0,0).
+$$
+
+所以 $q\circ g$ 甚至是常值的旧读数后处理，但新增上下文 $f\circ g$ 已区分 $a,b$。具体地，$g(a)=a$ 与 $g(b)=c$ 即时读数相同，却被旧上下文 $f$ 区分，故不属于同一个旧上下文等价类。这说明不变核条件必须保持旧上下文的全部后续响应，不能只保持新增操作的即时 $q$ 输出。
+
+上述多种类论证与反例均是对第 5.6 条适用条件的正文限定；现有单载体 Lean 声明不据此扩张为多种类证明，本节不主张新增 Lean 形式化或消化状态。
+
+### 6.6 第 2.5、2.6 与 3.2 条：下降类型、充分条件与代表纤维
+
+第 2.5 条中唯一下降的成功输出空间应为观察值空间 $B$。不含其他响应数据时，精确类型和公式为
+
+$$
+\bar D=q_{\mathrm{in}}[D]\subseteq q_{\mathrm{in}}[X],\qquad
+\bar F:\bar D\to B,\qquad
+\bar F(q_{\mathrm{in}}(x))=q_{\mathrm{out}}(F(x))\quad(x\in D).
+$$
+
+严格响应在输入观察纤维上恒定，使 $D$ 饱和，定义良好且在实际像上唯一。若并入费用、失败位置等数据，则下降取值于所要求的完整响应空间。这里不是 $Y$ 值下降的唯一性：取两个不同的 $y_0,y_1\in Y$ 且 $q_{\mathrm{out}}(y_0)=q_{\mathrm{out}}(y_1)$，同一个成功观察不能唯一选定其中一个。
+
+第 2.6 条的全实际参数、严格失败传播和有限前缀封闭，是一般上下文同余证明的充分条件，不能称为每个具体系统中同余成立的逻辑必要条件。取任意集合 $X$、任意读数 $q:X\to Q$，总操作 $F(x,y)=x$，而受限语言仅含恒等上下文。此时上下文等价就是 $\ker q$；若 $q(x)=q(x')$ 且 $q(y)=q(y')$，则
+
+$$
+q(F(x,y))=q(x)=q(x')=q(F(x',y')).
+$$
+
+准入恒真，故任意这样的核仍为 $F$ 的强同余，尽管语言不含一般逐槽基本上下文。原条目的逐槽证明说明一般证明需要哪些可用试验，不排除具体操作由自身结构保持受限语言的等价关系。
+
+第 3.2 条须明确
+
+$$
+q_0(a),\qquad q_0(b)=q_0(c),\qquad q_0(d)
+$$
+
+是三个两两不同的值，并保留第 3.1 条的边界下降假设。若 $q_1(h)=q_1(f)$，则边界下降给出
+
+$$
+(q_0(s(h)),q_0(t(h)))=(q_0(a),q_0(b)).
+$$
+
+恒等箭头的两个观察边界相等，不满足此式；另一条非恒等箭头 $g$ 的观察边界为 $(q_0(b),q_0(d))$，也不满足。所给范畴除恒等箭头外仅有 $f,g$，所以
+
+$$
+q_1^{-1}(\{q_1(f)\})=\{f\},\qquad
+q_1^{-1}(\{q_1(g)\})=\{g\}.
+$$
+
+第二式由同一论证得到。因 $q_0(b)=q_0(c)$，观察箭头对属于候选拼接域；但两个观察纤维的唯一代表对是 $(f,g)$，且 $t(f)=b\ne c=s(g)$。这才排除任何实际可复合代表，证明该观察对不在真实联合像中。只检验原 $f,g$ 不可复合而不排除同纤维其他代表，本身不足以作此结论。
+
+### 6.7 第 5.2 条：函子性与共滤性的完整条件
+
+第 5.2 条的 $F:J\to\mathsf{Type}$ 必须是函子，满足恒等与复合律；$J$ 为小共滤范畴，含非空性、任意两个对象有共同前驱、任意平行箭头可经前复合等化三个条件。共同前驱和等化条件使任意有限组相容方程可在一个共同阶段同时实现；取该阶段的一个元素并映到相关对象，函子律保证这些方程成立。有限非空对象值的离散乘积紧致，故所有相容闭条件有共同点。不要求过渡映射满射。所得共同点是一族相容截面；若要求来自某个另给原始载体中的单个代表，还须该载体到截面集合的相应实现条件。
+
+## 7. 观察完备化与共同中间见证的关系复合
+
+本节固定非空载体 $X,Y,Z$。对每个 $U\in\{X,Y,Z\}$ 给定有限实际像观察塔
+
+$$
+q_n^U:U\twoheadrightarrow Q_n^U,\qquad n\in\mathbb N,\qquad
+q_n^U=p_{m,n}^Uq_m^U\quad(m\ge n).
+$$
+
+各 $Q_n^U$ 有限离散，过渡映射满足恒等律与复合律。令
+
+$$
+K_U=\varprojlim_n Q_n^U,\qquad
+\iota_U:U\to K_U,\quad \iota_U(u)=(q_n^U(u))_n,\qquad
+\pi_n^U:K_U\to Q_n^U.
+$$
+
+$\iota_U$ 是实际载体到完成空间的自然映射，不预设单射。第 4.2 条给出 $K_U$ 紧致 Hausdorff、实际像稠密及柱集开闭基；又因 $\pi_n^U\iota_U=q_n^U$，每个 $\pi_n^U$ 满射。乘积投影和过渡映射使用上标 $XZ$ 或 $XYZ$，例如 $\pi_n^{XZ}=\pi_n^X\times\pi_n^Z$、$p_{m,n}^{XYZ}=p_{m,n}^X\times p_{m,n}^Y\times p_{m,n}^Z$。
+
+给定支撑关系 $R\subseteq X\times Y$、$S\subseteq Y\times Z$，令
+
+$$
+C=S\circ R=\{(x,z):\exists y\in Y,\ R(x,y)\land S(y,z)\}.
+$$
+
+两次实际关系成员资格要求同一个 $y$。区分实际像与其在相应完成乘积中的闭包：
+
+$$
+R^0=(\iota_X\times\iota_Y)[R],\qquad
+S^0=(\iota_Y\times\iota_Z)[S],\qquad
+C^0=(\iota_X\times\iota_Z)[C],
+$$
+
+$$
+\widehat R=\overline{R^0},\qquad
+\widehat S=\overline{S^0},\qquad
+\widehat C=\overline{C^0}.
+$$
+
+定义实际阶段像及有限层候选复合
+
+$$
+R_n=(q_n^X\times q_n^Y)[R],\qquad
+S_n=(q_n^Y\times q_n^Z)[S],\qquad
+C_n=(q_n^X\times q_n^Z)[C],\qquad D_n=S_n\circ R_n.
+$$
+
+总有 $C_n\subseteq D_n$；$D_n$ 只要求两个实际中间代表的第 $n$ 层读数相同。保留中间元素时，令
+
+$$
+W=\{(x,y,z)\in X\times Y\times Z:R(x,y)\land S(y,z)\},\qquad
+W^0=(\iota_X\times\iota_Y\times\iota_Z)[W],\qquad
+\widehat W=\overline{W^0},
+$$
+
+$$
+T=\{(\xi,\eta,\zeta)\in K_X\times K_Y\times K_Z:
+(\xi,\eta)\in\widehat R\land(\eta,\zeta)\in\widehat S\},\qquad
+P=\widehat S\circ\widehat R=\operatorname{pr}_{XZ}(T).
+$$
+
+这里保留的是支撑关系中的端点与中间元素；$W$ 不记录同一三元组的多条历史或证明档案，不能与第 1.2 条任意带见证关系的数据载体混同。
+
+**定理 7.1（逐有限层可复合与完成空间的共同中间见证）。** 在上述数据下，$P$ 闭，并且
+
+$$
+P=\bigcap_{n\ge0}(\pi_n^{XZ})^{-1}(D_n),\qquad
+\widehat C\subseteq P.
+$$
+
+等价地，对任意 $\xi\in K_X$、$\zeta\in K_Z$，
+
+$$
+(\xi,\zeta)\in P
+\ \Longleftrightarrow\
+\forall n\in\mathbb N\ \exists b_n\in Q_n^Y,\quad
+(\pi_n^X\xi,b_n)\in R_n\ \land\ (b_n,\pi_n^Z\zeta)\in S_n.
+$$
+
+保留中间见证时有
+
+$$
+\widehat W\subseteq T,\qquad
+\operatorname{pr}_{XZ}(\widehat W)=\widehat C,\qquad
+\operatorname{pr}_{XZ}(T)=P.
+$$
+
+**证明。** 若 $(\xi,\zeta)\in P$，取共同中间点 $\eta\in K_Y$。由第 3.4 条的有限观察闭包判定，$b_n=\pi_n^Y\eta$ 满足每层所列关系条件。
+
+反之，设每层都有这样的 $b_n$，在 $K_Y$ 中定义
+
+$$
+F_n=\{\eta\in K_Y:
+(\pi_n^X\xi,\pi_n^Y\eta)\in R_n,\
+(\pi_n^Y\eta,\pi_n^Z\zeta)\in S_n\}.
+$$
+
+有限离散层的纤维开闭，故 $F_n$ 闭；$\pi_n^Y$ 满射使 $b_n$ 可提升，故 $F_n$ 非空。实际阶段关系像经下投影仍属低层关系，因而 $F_{n+1}\subseteq F_n$。紧致性给出 $\eta\in\bigcap_n F_n$，再次由闭包判定得到 $(\xi,\eta)\in\widehat R$ 和 $(\eta,\zeta)\in\widehat S$。这证明交集表达式；逐层所选的 $b_n$ 不必事先相容，紧致性取得同一个 $\eta$。交集中的每个集合都开闭，所以 $P$ 闭。
+
+实际三元组的中间点 $y$ 映为 $\iota_Y(y)$ 后仍共同见证两条完成关系，故 $C^0\subseteq P$；取闭包得 $\widehat C\subseteq P$。$T$ 是两个闭关系的连续逆像之交，因此闭，且包含 $W^0$，所以 $\widehat W\subseteq T$。连续性给出
+
+$$
+\operatorname{pr}_{XZ}(\widehat W)
+\subseteq\overline{\operatorname{pr}_{XZ}(W^0)}
+=\overline{C^0}=\widehat C.
+$$
+
+另一方面，$\widehat W$ 紧致，其在 Hausdorff 空间 $K_X\times K_Z$ 中的连续像闭，并包含 $\operatorname{pr}_{XZ}(W^0)=C^0$，故也包含 $\widehat C$。两侧相等。$\operatorname{pr}_{XZ}(T)=P$ 是复合的定义。证毕。
+
+所得共同见证属于 $K_Y$，不自动属于 $\iota_Y[Y]$；即使属于，也不自动使两个闭包成员资格由同一个实际 $y$ 实现。$P$ 已闭，再对它取闭包不能消除与 $\widehat C$ 的差距。
+
+**命题 7.2（关系复合与完备化交换的确切阶段判据）。** 对每个 $n\in\mathbb N$，
+
+$$
+\pi_n^{XZ}[P]=\bigcap_{m\ge n}p_{m,n}^{XZ}[D_m].
+$$
+
+右侧在有限集合中递减，故存在 $m_0\ge n$，使所有 $m\ge m_0$ 都满足 $p_{m,n}^{XZ}[D_m]=\pi_n^{XZ}[P]$。因此
+
+$$
+\widehat C=P
+\ \Longleftrightarrow\
+\forall n\in\mathbb N\ \exists m\ge n,\quad
+p_{m,n}^{XZ}[D_m]=C_n.
+$$
+
+令
+
+$$
+E_n=\{(a,b,c)\in Q_n^X\times Q_n^Y\times Q_n^Z:
+(a,b)\in R_n\land(b,c)\in S_n\},\qquad
+W_n=(q_n^X\times q_n^Y\times q_n^Z)[W].
+$$
+
+保留中间见证的交换判据为
+
+$$
+\widehat W=T
+\ \Longleftrightarrow\
+\forall n\in\mathbb N\ \exists m\ge n,\quad
+p_{m,n}^{XYZ}[E_m]=W_n.
+$$
+
+端点判据的实际元素量词版为：对每个 $n$，存在 $m\ge n$，对所有 $x\in X$、$y_0,y_1\in Y$、$z\in Z$，若
+
+$$
+R(x,y_0)\land S(y_1,z)\land q_m^Y(y_0)=q_m^Y(y_1),
+$$
+
+则存在 $(x',y,z')\in W$，使
+
+$$
+q_n^X(x')=q_n^X(x),\qquad q_n^Z(z')=q_n^Z(z).
+$$
+
+**证明。** 固定 $n$。由定理 7.1，$u\in P$ 蕴含 $\pi_m^{XZ}(u)\in D_m$，下投影即得 $\pi_n^{XZ}[P]\subseteq\bigcap_{m\ge n}p_{m,n}^{XZ}[D_m]$。反之，取右侧的 $\alpha$，对 $m\ge n$ 定义
+
+$$
+H_m=\{u\in K_X\times K_Z:
+\pi_n^{XZ}(u)=\alpha,\ \pi_m^{XZ}(u)\in D_m\}.
+$$
+
+因 $\alpha\in p_{m,n}^{XZ}[D_m]$，可取相应的 $m$ 层候选，再由 $\pi_m^{XZ}$ 满射提升，故 $H_m$ 非空。各 $H_m$ 闭且递减；紧致性取得 $u\in\bigcap_{m\ge n}H_m$。该点满足所有 $m\ge n$ 层条件，下投影又满足较低层条件，故由定理 7.1 得 $u\in P$，而 $\pi_n^{XZ}(u)=\alpha$。这证明第一式。
+
+集合 $p_{m,n}^{XZ}[D_m]$ 在有限集合 $Q_n^X\times Q_n^Z$ 中递减，只有有限次严格缩小，故最终稳定于其交集。实际共同像满足
+
+$$
+p_{m,n}^{XZ}[C_m]=C_n,\qquad
+C_m\subseteq D_m,\qquad
+C_n\subseteq p_{m,n}^{XZ}[D_m]\quad(m\ge n).
+$$
+
+第一等式的满射方向由同一个实际 $(x,z)\in C$ 的第 $m$ 层读数给出。有限层纤维开闭，取闭包不增加或丢失该层像，所以
+
+$$
+\pi_n^{XZ}[\widehat C]=C_n.
+$$
+
+若 $\widehat C=P$，第一式及有限稳定性就给出所需 $m$。反之，若每个 $n$ 有一个 $m$ 使所列阶段像等于 $C_n$，第一式和始终成立的包含给出 $\pi_n^{XZ}[P]=C_n$。$P$ 中每点因此满足 $C$ 的全部有限观察条件，由第 3.4 条属于 $\widehat C$。结合定理 7.1 的包含得等式。
+
+对于三元版本，闭包判定给出
+
+$$
+T=\bigcap_{m\ge0}(\pi_m^{XYZ})^{-1}(E_m).
+$$
+
+固定第 $n$ 层三元坐标 $\alpha\in\bigcap_{m\ge n}p_{m,n}^{XYZ}[E_m]$，用
+
+$$
+H_m^{XYZ}=\{u\in K_X\times K_Y\times K_Z:
+\pi_n^{XYZ}(u)=\alpha,\ \pi_m^{XYZ}(u)\in E_m\}
+$$
+
+重复上述论证：$\pi_m^{XYZ}$ 满射保证非空，阶段关系的相容性保证递减，各集闭；紧致性交出一个满足全部层条件的三元点。因此
+
+$$
+\pi_n^{XYZ}[T]=\bigcap_{m\ge n}p_{m,n}^{XYZ}[E_m].
+$$
+
+有限递减交最终稳定；同一实际三元组的读数又给出
+
+$$
+p_{m,n}^{XYZ}[W_m]=W_n,\qquad
+W_m\subseteq E_m,\qquad
+\pi_n^{XYZ}[\widehat W]=W_n.
+$$
+
+若 $\widehat W=T$，取稳定阶段即可得到所列三元等式。反之，每个 $n$ 的阶段等式和始终成立的 $W_n\subseteq p_{m,n}^{XYZ}[E_m]$，使 $T$ 每点满足 $W$ 的全部有限观察条件，故 $T\subseteq\widehat W$；反向包含由定理 7.1 成立。
+
+最后，任一 $D_m$ 候选可分别用 $R(x,y_0)$ 与 $S(y_1,z)$ 的实际代表表示，中间坐标相等恰为 $q_m^Y(y_0)=q_m^Y(y_1)$。其端点下投影属于 $C_n$，恰指存在所列实际共同三元组，故实际元素量词版等价于 $p_{m,n}^{XZ}[D_m]\subseteq C_n$。反向包含始终成立，遂得等价。证毕。
+
+此判据允许先提高精度再排除虚假候选，不要求同一层的 $D_n=C_n$。有限稳定只给每个固定 $n$ 的阶段存在性，不给统一阶段界或可计算的停止界。
+
+**定理 7.3（闭关系像与中间代表提升保证严格交换）。** 假定 $R^0$ 在 $K_X\times K_Y$ 中闭、$S^0$ 在 $K_Y\times K_Z$ 中闭，并且以下条件至少一个成立：
+
+1. $\iota_Y$ 单射。
+2. $R$ 在完整中间观察纤维上饱和，即
+   $$
+   \forall x\in X\ \forall y_0,y_1\in Y,\quad
+   R(x,y_0)\land\iota_Y(y_0)=\iota_Y(y_1)\ \Longrightarrow\ R(x,y_1).
+   $$
+3. $S$ 在完整中间观察纤维上饱和，即
+   $$
+   \forall y_0,y_1\in Y\ \forall z\in Z,\quad
+   S(y_1,z)\land\iota_Y(y_0)=\iota_Y(y_1)\ \Longrightarrow\ S(y_0,z).
+   $$
+
+则
+
+$$
+W^0=\widehat W=T,\qquad C^0=\widehat C=P.
+$$
+
+若进一步 $\iota_X,\iota_Z$ 单射，则对每个指定实际端点 $x\in X$、$z\in Z$，
+
+$$
+\exists y\in Y,\ R(x,y)\land S(y,z)
+\ \Longleftrightarrow\
+\forall n\in\mathbb N\ \exists b\in Q_n^Y,\quad
+(q_n^X(x),b)\in R_n\land(b,q_n^Z(z))\in S_n.
+$$
+
+一组充分拓扑假设是：$X,Y,Z$ 为紧致 Hausdorff 空间，各 $q_n^U$ 连续，$R,S$ 在原乘积空间中闭，且中间观察族分离 $Y$ 的点。若三个载体的观察族均分离点，则还得到指定实际端点的版本。
+
+**证明。** 闭性给出 $\widehat R=R^0$、$\widehat S=S^0$。取 $(\xi,\eta,\zeta)\in T$，由这两个实际像表示，分别取 $x\in X$、$y_0,y_1\in Y$、$z\in Z$，满足
+
+$$
+R(x,y_0),\qquad S(y_1,z),\qquad
+\iota_X(x)=\xi,\quad
+\iota_Y(y_0)=\eta=\iota_Y(y_1),\quad
+\iota_Z(z)=\zeta.
+$$
+
+若 $\iota_Y$ 单射，则 $y_0=y_1$；若 $R$ 纤维饱和，则 $R(x,y_1)$，可取 $y_1$；若 $S$ 纤维饱和，则 $S(y_0,z)$，可取 $y_0$。三种情况都得到一个实际共同中间见证，其三元像是给定的 $(\xi,\eta,\zeta)$。故 $T\subseteq W^0$，而 $W^0\subseteq T$ 总成立。$T$ 闭，遂有 $W^0=\widehat W=T$。投影后 $C^0=P$，又由定理 7.1 的闭性得到 $C^0=\widehat C=P$。
+
+对指定端点，右侧有限层条件由定理 7.1 等价于 $(\iota_X(x),\iota_Z(z))\in P$。刚证的实际实现给出某个 $(x',y,z')\in W$，其端点完整观察分别等于 $\iota_X(x),\iota_Z(z)$；两端的单射性迫使 $x'=x$、$z'=z$，因此原关系成员资格由所指定的实际端点实现。另一方向直接取实际 $y$ 的每层读数即可。
+
+在所列拓扑假设下，$\iota_U$ 的每个坐标 $q_n^U$ 连续，故 $\iota_U$ 连续。闭关系 $R,S$ 是紧致乘积的闭子集，因而紧致；连续像 $R^0,S^0$ 紧致，目标 Hausdorff 保证它们闭。中间观察分离点恰使 $\iota_Y$ 单射，故上述结论适用。三族观察都分离点时，两端单射性也成立。证毕。
+
+关系像在完成空间中闭，比关系在原载体中相对闭强。闭像保证完成关系成员资格有实际代表；中间单射性或饱和性把两个相同完整观察的代表换成一个；两端单射性才进一步固定所指定的实际端点。
+
+**命题 7.4（闭包复合、端点交换与见证交换的严格反例）。** 一般情况下，$\widehat C\subseteq P$ 与 $\widehat W\subseteq T$ 均可严格；端点交换不推出见证交换，全部两条边关系的有限阶段像不决定实际共同像。闭关系像不能单独代替中间代表条件；原关系相对闭且观察分离，也不能单独代替完成空间中的闭像条件。
+
+**证明。** 以下三组构造中均取 $X=Z=\{*\}$，两端观察恒为单点。
+
+第一组取完整 Cantor 空间 $Y=\{0,1\}^{\mathbb N}$，$q_n^Y$ 记录位置 $0,\ldots,n-1$。其相容有限前缀恰是一条无限二进制序列，且柱拓扑就是积拓扑，故 $K_Y=Y$、$\iota_Y=\mathrm{id}$。令
+
+$$
+A_\varepsilon=\{y\in Y:\exists N\in\mathbb N\ \forall k\ge N,\ y_k=\varepsilon\}
+\quad(\varepsilon\in\{0,1\}),\qquad
+R=\{*\}\times A_0,\quad S=A_1\times\{*\}.
+$$
+
+任意有限前缀都可续接为最终恒零或恒一序列，故 $A_0,A_1$ 都稠密。同一序列不可能最终同时恒零、恒一，故它们互斥。于是
+
+$$
+C=\varnothing,\qquad
+\widehat R=\{*\}\times Y,\qquad
+\widehat S=Y\times\{*\},\qquad
+\widehat C=\varnothing\subsetneq\{(*,*)\}=P.
+$$
+
+每个 $D_n$ 为端点单点，$C_n$ 为空。这里全部完成中间点都是原 $Y$ 点，失败来自原关系成员资格无法共同实现。
+
+再令 $p=(0,0,\ldots)$，把 $S$ 改为 $S'=(A_1\cup\{p\})\times\{*\}$。因 $A_1$ 已有全部有限前缀，所有 $S_n'=S_n$，而 $R_n$ 不变，两个完成关系也不变。但
+
+$$
+A_0\cap(A_1\cup\{p\})=\{p\},\qquad
+C'=S'\circ R=\{(*,*)\},\qquad
+(C')^0=\widehat C'=P'=\{(*,*)\},
+$$
+
+$$
+(W')^0=\widehat W'=\{(*,p,*)\}
+\subsetneq \{*\}\times Y\times\{*\}=T'.
+$$
+
+其中三元单点在 Hausdorff 空间中闭，故其闭包不增点。这证明端点交换严格弱于见证交换；相同的全部 $R_n,S_n$ 可对应不同的 $C_n,W_n$，所以第 7.2 条必须另含实际共同像数据。
+
+第二组取
+
+$$
+Y=\{0,1\},\qquad R=\{(*,0)\},\qquad S=\{(1,*)\}.
+$$
+
+若所有中间观察都是到单点的常值映射，则每层及 $K_Y$ 均为单点。$R^0,S^0$ 为闭单点，实际 $C$ 空，而 $P=\{(*,*)\}$。此时 $\iota_Y$ 不单射，两个关系也均不满足第 7.3 条的相应饱和性，故仅有闭关系像不足。
+
+保持实际关系不变，改用第 $0$ 层常值、所有 $n\ge1$ 层精确的观察塔。相容线程由其精确层唯一决定，故 $K_Y=Y$；两完成关系仍分别通过 $0$ 和 $1$，没有共同中间点。因此
+
+$$
+\widehat C=P=\varnothing,\qquad
+D_0=\{(*,*)\}\ne C_0=\varnothing,\qquad
+D_n=C_n=\varnothing\quad(n\ge1).
+$$
+
+交换成立却没有每层的同阶段相等；提高到精确层才排除第 $0$ 层的假候选。
+
+第三组令 $e_k\in\{0,1\}^{\mathbb N}$ 为只在位置 $k$ 等于 $1$ 的序列，取
+
+$$
+Y=\{e_k:k\in\mathbb N\},\qquad
+q_n^Y(y)=(y_0,\ldots,y_{n-1}),\qquad Q_n^Y=q_n^Y[Y].
+$$
+
+$Q_n^Y$ 恰含全零前缀及每个只有一个 $1$ 的长度 $n$ 前缀；过渡为截断，观察按定义满射。相容线程给出一条无限序列：若有两个 $1$，足够长的前缀就不在相应 $Q_n^Y$ 中，矛盾；若有一个 $1$，线程是相应的 $e_k$；若没有，则为全零点 $p$。这些线程反过来都满足阶段条件，且识别保持柱集，故完成空间及自然映射为
+
+$$
+K_Y=Y\cup\{p\},\qquad p=(0,0,\ldots),\qquad
+\iota_Y:Y\hookrightarrow Y\cup\{p\}.
+$$
+
+指定位置 $k$ 为 $1$ 的柱集在 $Y$ 中仅含 $e_k$，故每个单点开，$Y$ 的观察拓扑离散。令
+
+$$
+B_{\mathrm{ev}}=\{e_{2k}:k\in\mathbb N\},\qquad
+B_{\mathrm{odd}}=\{e_{2k+1}:k\in\mathbb N\},\qquad
+R=\{*\}\times B_{\mathrm{ev}},\quad S=B_{\mathrm{odd}}\times\{*\}.
+$$
+
+两子集在离散的原 $Y$ 中均闭，故 $R,S$ 在原乘积中相对闭，且 $C=\varnothing$。$p$ 的任意基本邻域只规定有限个位置为零，总可在更高偶位置或奇位置放置唯一的 $1$，故 $p$ 属于两子集在 $K_Y$ 中的闭包。另一方面，每个 $e_j$ 的上述单点柱邻域排除不含它的那个子集；$K_Y$ 又只有这些点和 $p$，所以精确地
+
+$$
+\overline{B_{\mathrm{ev}}}^{\,K_Y}=B_{\mathrm{ev}}\cup\{p\},\qquad
+\overline{B_{\mathrm{odd}}}^{\,K_Y}=B_{\mathrm{odd}}\cup\{p\}.
+$$
+
+两闭包的交恰为 $\{p\}$，由此
+
+$$
+\widehat C=\varnothing,\qquad P=\{(*,*)\},\qquad
+T=\{(*,p,*)\},\qquad p\notin\iota_Y[Y].
+$$
+
+完成复合的唯一共同中间见证不是原 $Y$ 点。这证明原载体相对闭性与观察分离仍不足以保证实际实现，区别于第一组的原关系成员资格缺失。证毕。
+
+## 8. 本批的来源、范围与产地
+
+文献表态：紧致性、紧致因子的闭投影、有限非空共滤极限与滤余极限的共同细化判据均属已有数学。第 7 节是基于这些构件和本卷观察塔定义的纸面推导（repo-derived）；未查证全球首创。以下固定源码仅锚定所列构件，不表示第 7 节整体交换判据已有 Lean 形式化。
+
+项目源码固定于 `43aad93d4245edaa7cf8421a0de8a84392125107`，mathlib 固定于 `db584cd6d46c92f209a44c0f1c829460d327499d`：
+
+| 固定源码 | 声明名 | 引用范围 |
+| --- | --- | --- |
+| [CompactLocalRealization](https://github.com/the-omega-institute/trureturing/blob/43aad93d4245edaa7cf8421a0de8a84392125107/D5/S3/Observer/Completion/CompactLocalRealization.lean) | `compact_local_realization` | 紧致空间中的有限局部实现 |
+| [FiniteCofilteredLimit](https://github.com/the-omega-institute/trureturing/blob/43aad93d4245edaa7cf8421a0de8a84392125107/D5/S3/ObserverMemory/InverseLimits/FiniteCofilteredLimit.lean) | `finite_cofiltered_limit_nonempty` | 有限非空共滤系统的相容截面 |
+| [IndependentDescentCriterion](https://github.com/the-omega-institute/trureturing/blob/43aad93d4245edaa7cf8421a0de8a84392125107/D5/S3/ObserverMemory/InverseLimitMorphisms/IndependentDescentCriterion.lean) | `inverse_limit_descent_and_independent_converse` | 坐标下降及满投影下的反推 |
+| [GeneralHomFormula](https://github.com/the-omega-institute/trureturing/blob/43aad93d4245edaa7cf8421a0de8a84392125107/D5/S3/ObserverMemory/ProObjects/GeneralHomFormula.lean) | `pro_category_hom_formula`、`pro_hom_has_stage_representatives`、`pro_hom_stage_classes_compatible`、`singleStageDiagram` | pro-Hom、阶段代表类与单点呈示 |
+| [StrictOneHoleContexts](https://github.com/the-omega-institute/trureturing/blob/43aad93d4245edaa7cf8421a0de8a84392125107/D5/S3/ConceptDynamics/Observation/StrictOneHoleContexts.lean) | `contextual_equivalence_is_greatest`、`signature_extension_refines` | 单载体上下文最大强同余与签名扩展 |
+| [CompatibleResidueJointImage](https://github.com/the-omega-institute/trureturing/blob/43aad93d4245edaa7cf8421a0de8a84392125107/D5/S3/Factorization/PrimePowers/CompatibleResidueJointImage.lean) | `joint_residue_image_eq_compatible_pairs`、`residue_realization_independent_iff_coprime` | 含零模的联合余数像与互素判据 |
+| [Mathlib/Topology/Maps/Proper/Basic.lean](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Topology/Maps/Proper/Basic.lean) | `isClosedMap_fst_of_compactSpace` | 紧致因子的投影为闭映射 |
+| [Mathlib/Topology/Compactness/Compact.lean](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Topology/Compactness/Compact.lean) | `IsCompact.nonempty_iInter_of_sequence_nonempty_isCompact_isClosed` | 非空递减闭集的紧致性交 |
+| [Mathlib/CategoryTheory/Limits/Types/ColimitTypeFiltered.lean](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/CategoryTheory/Limits/Types/ColimitTypeFiltered.lean) | `Functor.ιColimitType_eq_iff_of_isFiltered` | 滤余极限类相等的共同细化判据 |
+
+产地：追加结构采用 theory-volume-template。主数学推理由 ChatGPT Pro 完成，条件核对与 TeX 规范化由 Codex 完成。
+
+范围：本批为纸面陈述与证明，未新增或运行 Lean 验证。单载体源码锚不覆盖第 6 节的多种类推广；第 7 节只处理支撑关系及共同中间元素，不恢复同一三元组的多条历史或证明档案。本文不声明消化或冻结机器状态。
+
+## 追加锚（本行以下为增补区）
