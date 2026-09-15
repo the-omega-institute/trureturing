@@ -1104,9 +1104,37 @@ def policyPaths : Array String := #[
   "tools/lean-inspector/LeanInformationAudit/ReadoutProvenance.lean",
   "tools/lean-inspector/LeanInformationAudit/Syntax.lean"]
 
+private def fileHashes (paths : Array String) : IO (Array String) := do
+  if paths.isEmpty then return #[]
+  let result ← IO.Process.output { cmd := "python3", args := #["-I", "-c",
+    "import hashlib,pathlib,sys; [print(hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest()) for p in sys.argv[1:]]"] ++ paths }
+  unless result.exitCode == 0 do throw <| IO.userError "incomplete_closure:E7.native_hash"
+  let hashes := result.stdout.trimAscii.toString.splitOn "\n" |>.toArray
+  unless hashes.size == paths.size && hashes.all (fun hash => hash.length == 64 &&
+      hash.toList.all (fun c => c.isDigit || ('a' ≤ c && c ≤ 'f'))) do
+    throw <| IO.userError "incomplete_closure:E7.native_hash"
+  return hashes
+
+
+/-- Hash every supplied current file in order, including repeated paths. The
+fixed native worker avoids interpreting SHA-256 separately for every byte. -/
+def readSourceInputs (paths : Array String) : CoreM (Array SourceInput) := do
+  let hashes ← fileHashes paths
+  return (paths.zip hashes).map fun (path, sha256) => { path, sha256 }
+
 def readSourceInput (path : String) : CoreM SourceInput := do
-  let bytes ← IO.FS.readBinFile path
-  return { path, sha256 := Sha256.hex bytes }
+  let hashes ← fileHashes #[path]
+  return { path, sha256 := hashes[0]! }
+
+/-- Preserve already captured bytes across native validation. Hashing the live
+paths again could bind a later replacement to the earlier checked native image. -/
+private def capturedHashes (inputs : Array ByteArray) : IO (Array String) :=
+  IO.FS.withTempDir fun directory => do
+    let paths ← inputs.mapIdxM fun index bytes => do
+      let path := directory / s!"input{index}"
+      IO.FS.writeBinFile path bytes
+      pure path.toString
+    fileHashes paths
 
 namespace NativeCoherence
 
@@ -1276,15 +1304,6 @@ private partial def exports (env : Environment) (name : Name)
     transitive := transitive }
   return (some value, memo.insert name value)
 
-private def fileHashes (paths : Array String) : IO (Array String) := do
-  let result ← IO.Process.output { cmd := "python3", args := #["-I", "-c",
-    "import hashlib,pathlib,sys; [print(hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest()) for p in sys.argv[1:]]"] ++ paths }
-  unless result.exitCode == 0 do throw <| IO.userError "incomplete_closure:E7.native_hash"
-  let hashes := result.stdout.trimAscii.toString.splitOn "\n" |>.toArray
-  unless hashes.size == paths.size && hashes.all (fun hash => hash.length == 64 &&
-      hash.toList.all (fun c => c.isDigit || ('a' ≤ c && c ≤ 'f'))) do
-    throw <| IO.userError "incomplete_closure:E7.native_hash"
-  return hashes
 
 private def unchanged (inputs : Array SourceInput) : IO Bool := do
   if inputs.isEmpty then return true
@@ -1411,9 +1430,10 @@ private def verifyImported (env : Environment) (name : Name)
   for (part, hash) in parts.zip nativeHashes do
     unless (← ofExcept <| parseHash (part.take 16).toString) == hash do
       throwError "incomplete_closure:E7.native_output:{name}"
+  let sourceHashes ← capturedHashes #[sourceBytes, traceBytes]
   let result : Snapshot := { data, inputs := #[
-    {path := source, sha256 := Sha256.hex sourceBytes},
-    {path := tracePath.toString, sha256 := Sha256.hex traceBytes}] ++ nativeInputs }
+    {path := source, sha256 := sourceHashes[0]!},
+    {path := tracePath.toString, sha256 := sourceHashes[1]!}] ++ nativeInputs }
   -- Close source/artifact replacement during verification itself.
   unless ← unchanged result.inputs do
     throwError "incomplete_closure:E7.native_input_changed:{name}"
@@ -1486,7 +1506,7 @@ private def sourceInputs (env : Environment) (dependencies : Array DependencyIde
     if dep.owner.toString.startsWith "D5." || dep.owner.toString.startsWith "LeanInformationAudit." then
       let path := sourcePath dep.owner
       unless paths.contains path do paths := paths.push path
-  (paths.qsort (· < ·)).mapM readSourceInput
+  readSourceInputs (paths.qsort (· < ·))
 
 private def sourceIdentity (inputs : Array SourceInput) : String :=
   Sha256.hex (Json.arr (inputs.map fun input => Json.arr #[Json.str input.path, Json.str input.sha256])).compress.toUTF8
@@ -3156,7 +3176,7 @@ def moduleInputs (env : Environment) (root : Name) : CoreM (Array TemplateAudit.
         | throwError "incomplete_closure:dtr.module_input:{name}"
       pure env.header.moduleData[index.toNat]!.imports
     pending := imports.toList.map (·.module) ++ pending
-  (paths.qsort (· < ·)).mapM TemplateAudit.readSourceInput
+  TemplateAudit.readSourceInputs (paths.qsort (· < ·))
 
 /-- Content touches follow actual constant dependencies, including complete
 arena/realization types, while theorem proof implementations are never entered. -/
