@@ -4849,6 +4849,9 @@ odd-count conclusion.
 The character identity alone holds more generally for any odd natural
 base $\ell$ with $\chi(\ell)=-1$; the exact-rank statement uses primality.
 
+**Proposition IP12.** The cumulative and individual layer characters in the
+following exact factorization have the stated opposite signs.
+
 **Cumulative versus layer parity.** For an inert prime $\ell$,
 
 $$
@@ -4867,6 +4870,11 @@ $$
 The inert factors $13$ and $97$ make the cumulative character positive,
 while the new layer still has negative character. A positive character
 therefore cannot be used to infer that no odd-depth inert factors exist.
+
+**Proof.** The Fibonacci recurrence gives the displayed values, and their
+product is exact. Modulo five, both $13$ and $97$ are inert while $6168709$
+is split. Hence the two inert contributions in $F_{49}$ cancel, whereas the
+single inert contribution in $B_{7,1}$ gives negative character.
 
 ### IP.3 Cyclotomic blocks and the ramified specialization
 
@@ -5039,6 +5047,9 @@ preserves odd depth, not necessarily depth one.
 
 ### IP.6 Exact examples and the WSS boundary
 
+**Proposition IP13.** The indices $91$, $153$, and $21$ have the exact
+cyclotomic and primitive blocks, ranks, depths, and characters stated below.
+
 At $n=91=7\cdot13$, the complete factorization is
 
 $$
@@ -5067,6 +5078,17 @@ split prime of rank 21 and no odd-depth inert primitive factor. This
 prevents extending the forced-odd assertion to every odd composite
 index without the IP11 conditions.
 
+**Proof.** Evaluate the homogeneous cyclotomic products in IP6 by the integer
+Fibonacci recurrence and factor the resulting integers. Exact division and
+deterministic primality tests give the displayed prime factors. Testing the
+proper divisors of $91$, $153$, and $21$ in the Fibonacci recurrence gives
+the stated exact ranks; division by the corresponding prime squares gives
+depth one. Reduction modulo five gives the asserted split and inert
+characters, and IP9 then removes precisely the displayed old factors.
+
+**Proposition IP14.** The old prime thirteen at indices $7$ and $91$ has the
+valuation and initial quotient stated below.
+
 One must distinguish initial depth from later index lifting. For the
 old prime thirteen,
 
@@ -5079,6 +5101,11 @@ The square factor in $F_{91}$ is automatic from multiplying the index
 by thirteen; it does not make thirteen a WSS prime. The exact
 cyclotomic removal in IP8-IP9 is what separates this automatic factor
 from genuinely repeated primitive factors.
+
+**Proof.** Since $F_7=13$, its initial valuation is one. The Fibonacci
+valuation formula gives
+$v_{13}(F_{91})=v_{13}(F_7)+v_{13}(91/7)=1+1=2$. Finally
+$F_{14}/13=377/13=29\equiv3\pmod{13}$.
 
 All forced witnesses above have $h_p\in\{1,3,5,\ldots\}$. The argument
 never forces $h_p=1$, $h_p\ge3$, or any $h_p\ge2$. A simple witness is
@@ -5412,11 +5439,18 @@ This proves density in each ball at every precision, hence the closure
 identity. Counting both balls gives the limiting fraction. This density belongs to the block sequence at the fixed prime five;
 it is not the Fibonacci density $\delta(p)$ of Appendix FD.
 
+**Proposition RP13.** The base $\ell=7$ has the exact period, closure density,
+and non-WSS initial depth stated below.
+
 For example $s_7=2$, because 7^4-1=2400. Hence the least block period
 at modulus 125 is still two, and the closure has density 2/125.
 However $h_7=v_7(F_8)=1$, so seven is not a WSS prime. The period plateau
 here measures the Fermat valuation of the BASE seven at the PRIME five.
 It must not be relabelled as a Fibonacci-Wieferich exception at seven.
+
+**Proof.** The equality $7^4-1=2400=5^2\cdot96$ gives $s_7=2$.
+Substitution into RP11 at modulus $5^3$ gives period two, and RP12 gives
+density $2/5^3=2/125$. Since $F_8=21$, one has $h_7=v_7(F_8)=1$.
 
 ### IP.12 Mathematical boundary of the refinement
 
@@ -5540,6 +5574,9 @@ The sum in S3 includes split primes as well as inert primes. A nonzero
 right-hand side forces a nonzero weighted contribution, but does not
 force that contributor to be inert or to have depth greater than one.
 
+**Proposition S11.** At $n=91$, the exact primitive block has the
+modulo-three coefficients and depth congruences stated below.
+
 **The previously blind coefficient.** At n=91, the earlier exact block is
 R_91=741469*159607993 and E_91=13. Here H(91)=0 and
 
@@ -5561,6 +5598,12 @@ exponent from one to three. It does not eliminate coordinated changes of
 several exponents. The full modulo-five residue, which is more informative
 than its quadratic character, can also distinguish some such changes;
 These facts do not imply that 5040 is a minimal necessary modulus.
+
+**Proof.** Reduce the three displayed prime factors modulo nine in the
+definition of $\lambda_3$ to obtain the three coefficients. Since
+$91=7\cdot13$, formula S4 gives $H(91)=0$; S3 then yields S5 after removing
+$E_{91}=13$. Direct reduction modulo five gives
+$\lambda_5(159607993)=0$, and RP3 gives the remaining congruence.
 
 ### S5040.3 Every Fibonacci power-layer sequence modulo 5040
 
@@ -5622,11 +5665,19 @@ conditions leaves precisely ell=1 or23 modulo twenty-four. Modulo five
 already gives equality. This proves S7. A nonconstant two-cycle cannot
 acquire an eventual period one.
 
+**Proposition S12.** The bases $7$, $13$, and $23$ have the exact
+modulo-$5040$ layer residues stated below.
+
 Examples are ell=7 with residues 13,853; ell=13 with residues 233,4553;
 and ell=23 with constant residue 3457. For prime inert bases at least
 seven, all preceding primitive-support conclusions still hold: a repeated
 auxiliary residue does not imply repeated prime support or repeated
 initial depth.
+
+**Proof.** The recurrence gives $F_7\equiv13$, $F_{13}\equiv233$, and
+$F_{23}\equiv3457\pmod{5040}$. Exact modular division in S6 gives the
+second residues $853$, $4553$, and $3457$, respectively. Formula S7 then
+identifies the first two pairs as two-cycles and the last as constant.
 
 ### S5040.4 Exact information limit of the fixed modulus
 
@@ -5652,6 +5703,9 @@ the four local exponents are 2^(4s-2), 2*3^(2s-1), 4*5^(s-1) and
 6*7^(s-1). Their least common multiple is S9. These are the standard
 prime-power unit-group formulas, specialized to the actual modulus.
 
+**Proposition S13.** The exponent shifts and the exact residue calculation
+below exhibit the stated information limit of the fixed modulus.
+
 Consequently every unit u satisfies u^(e+12)=u^e modulo5040. Even the
 full residue, and hence every character or other postprocessing of that
 residue, cannot distinguish those two exponents. The analogous shift
@@ -5672,6 +5726,12 @@ used in IP.7-IP.11. Combining both requires their least common multiple
 residue even modulo25200. Higher precision can distinguish more, but no
 fixed finite precision recovers an unbounded exponent without further
 arithmetic information.
+
+**Proof.** The exponent statements follow from S8 and S9. Binary modular
+exponentiation gives the three displayed residues of $159607993$ modulo
+$5040$, and the same calculation modulo $25200$ gives equality of its first
+and thirteenth powers. Postprocessing equal residues cannot distinguish the
+corresponding exponents.
 
 ### S5040.5 Primitive-block abundancy and the Robin boundary
 
@@ -5964,12 +6024,23 @@ The restriction s<=k+1 in NP9 is essential to the linear truncation.
 It is not a statement about arbitrary precision at one fixed layer.
 No value v_p(0) needs to be assigned for the divisibility version.
 
+**Proposition NP12.** The $p=7$ computation below realizes the sign reversal
+in NP8 and requires both split and inert primes in the weighted sum.
+
 **Example.** At p=7, q_p=F_8/7=3 modulo seven. At k=0 the only factor
 is13, so S_(7,0)=(-13-1)/7=-2=5 modulo seven. At k=1 the exact block
 is97*6168709, both initial depths one. The signed coefficients are
 -2 and125892, respectively. Hence S_(7,1)=125890=2 modulo seven,
 as predicted by the sign reversal. The sum contains both split and
 inert primes; restricting it to inert primes would invalidate NP8.
+
+**Proof.** The recurrence gives $F_8=21$, while the exact layer
+factorizations give $B_{7,0}=13$ and
+$B_{7,1}=97\cdot6168709$. Substitution in the definition of $S_{p,k}$
+gives $-2\equiv5\pmod7$ and $125890\equiv2\pmod7$, which are related by
+multiplication by $\chi(7)=-1$. The residues modulo five of the two factors
+in the second layer have opposite quadratic characters, so both split and
+inert terms occur.
 
 ### NP.5 Prime-power primitive orbit counts retain the same depth
 
