@@ -27771,3 +27771,270 @@ $$
 本节引用的 Q109、Q123–124、Z381.2（柱弧）、Z396.1（长度概率）、Z400.1（Borel 截面）、Z458.5 及 CSA 定义 1–3，取仓库提交 `ca874c0d5f5c42b3546795595814b36df13d1013`；Q125.3 的正文版本为 `7af72f9910546ca2aa0bfa3a6bbaed4d8a393efb`。前一提交的 `D5/S3/TotalVariation/Metric.lean` 中 `total_variation_eq_sup_event_gap` 给等质量有限函数的事件变分式，`D5/S3/TotalVariation/DataProcessing.lean` 中 `total_variation_channel_le` 给随机通道收缩，`D5/S1/Scale/FibonacciErrorRatio.lean` 中 `fibonacci_golden_residual` 给相邻 Fibonacci 数的黄金残差。这些是所用既有输入；本节的两条最优性命题及条件量子界为 `repo-derived` 普通数学推导，不据此提出外部新颖性、Lean 准入或完整 Lean 认证主张。
 
 ## 追加锚（本行以下为增补区）
+
+## 127. 固定尾零支撑下相干局部态的精确迹距离
+
+固定整数 $n>K\ge0$，令 $\alpha=(\sqrt5-1)/2$、$F_0=0,F_1=1,F_{j+2}=F_{j+1}+F_j$，并沿用从第 $0$ 位向右的前缀方向。记
+$$
+W_j=\{w\in\{0,1\}^j:w_iw_{i+1}=0\ \text{对所有 }0\le i<j-1\},
+\qquad W_0=\{\varnothing\},
+\qquad \mathcal K_n=(\mathbb C^2)^{\otimes n}.
+$$
+在完整 $n$ qubit 空间的计算基上，取未归一化向量及指定目标
+$$
+s_n=\sum_{u\in W_n}|u\rangle,
+\qquad
+t_n=\sum_{\substack{u\in W_n\\u_{n-1}=0}}|u\rangle,
+\qquad
+\rho_n=\alpha^{n+1}|s_n\rangle\langle s_n|
+       +\alpha^{n+2}|t_n\rangle\langle t_n|.
+$$
+这正是 Q125.1 的相干局部极限；非法词方向上的行、列均为零。预算固定的是具体计算基支撑
+$$
+A=A_{K,n}=\{w0^{n-K}:w\in W_K\},
+\qquad
+P=P_{K,n}=\sum_{u\in A}|u\rangle\langle u|,
+\qquad
+\mathcal F_{K,n}=\{\sigma\ge0:\operatorname{Tr}\sigma=1,\ \sigma=P\sigma P\}.
+$$
+可行态允许混合及支撑内的任意相干。以
+$$
+d_{\rm tr}(\rho,\sigma)=\frac12\|\rho-\sigma\|_1,
+\qquad \|X\|_1=\operatorname{Tr}\sqrt{X^*X}
+$$
+采用半迹范数约定，字母 $D$ 只用于计数。以下简记
+$$
+D=F_{K+2},\qquad B=F_{n+1},\qquad C=F_n,\qquad b=B-D,
+$$
+$$
+m=D\alpha^n,\qquad
+\delta=\alpha^{2n+3}BC,\qquad
+\eta=\alpha^{2n+3}bC,\qquad
+c=1-m-\delta,
+$$
+并置
+$$
+|a\rangle=D^{-1/2}\sum_{u\in A}|u\rangle,
+\qquad \tau_{K,n}=|a\rangle\langle a|.
+$$
+
+**命题 127.1（指定相干目标的尾零最优误差）。** 对所有整数 $n>K\ge0$，$\tau_{K,n}$ 达到
+$$
+e_{K,n}=\min_{\sigma\in\mathcal F_{K,n}}d_{\rm tr}(\rho_n,\sigma).
+$$
+精确值 $e_{K,n}$ 是三次方程
+$$
+x^3-cx-\eta=0
+$$
+的唯一严格正实根。边界为
+$$
+e_{K,K+1}=\alpha^{K+2}\sqrt{F_{K+1}F_{K+3}},
+\qquad e_{0,1}=\sqrt2\,\alpha^2.
+$$
+若 $\mu_n(u)=\langle u|\rho_n|u\rangle$ 为计算基读数，在全部集中于 $A$ 的经典概率 $\nu$ 上取
+$$
+\operatorname{TV}(\nu,\mu_n)
+=\frac12\sum_{u\in\{0,1\}^n}|\nu(u)-\mu_n(u)|,
+$$
+则有严格比较
+$$
+e_{K,n}>1-m
+=\min_{\nu:\,\nu(A)=1}\operatorname{TV}(\nu,\mu_n).
+$$
+其中经典最小值由 $\tau_{K,n}$ 的对角分布达到。固定 $K$ 后，同一个有限均匀态
+$$
+|\Psi_K\rangle=D^{-1/2}\sum_{w\in W_K}|w\rangle
+$$
+接上全零尾部，给出所有 $n>K$ 的上述量子最优者，因为
+$$
+\tau_{K,n}=|\Psi_K\rangle\langle\Psi_K|
+\otimes|0^{n-K}\rangle\langle0^{n-K}|.
+$$
+$K=0$ 时 $|\Psi_0\rangle$ 按空张量积的单位向量理解。
+
+证明。先核对计数与归一化。长度 $n\ge1$ 的合法词中，末位零、末位一的数量分别是 $B=F_{n+1}$、$C=F_n$：末位零可由任意长度 $n-1$ 合法词接零得到；末位一在 $n\ge2$ 时由长度 $n-2$ 合法词接 $01$ 得到，$n=1$ 时两类各有一词。连同 $|W_0|=1,|W_1|=2$，这给 $|W_j|=F_{j+2}$。补零把 $W_K$ 单射到末位零的一类，故 $|A|=D\le B$、$b\ge0$，且 $C,D>0$。Fibonacci 数从下标 $2$ 起严格递增，所以在本参数域内 $b=0$ 当且仅当 $n=K+1$。
+
+由 $\alpha+\alpha^2=1$，$\rho_n$ 的合法对角元为
+$$
+\mu_n(u)=
+\begin{cases}
+\alpha^n,&u_{n-1}=0,\\
+\alpha^{n+1},&u_{n-1}=1.
+\end{cases}
+$$
+非法词的对角元为零。恒等式
+$$
+\alpha^n(F_{n+1}+\alpha F_n)=1
+$$
+在 $n=1$ 时是 $\alpha(1+\alpha)=1$；若它在 $n$ 成立，则
+$$
+\alpha^{n+1}(F_{n+2}+\alpha F_{n+1})
+=\alpha^n\bigl(\alpha(1+\alpha)F_{n+1}+\alpha F_n\bigr)
+=\alpha^n(F_{n+1}+\alpha F_n)=1.
+$$
+因此所列正算子 $\rho_n$ 的迹为一，而且
+$$
+\operatorname{Tr}(P\rho_n)=m,
+\qquad 0<m\le B\alpha^n=1-C\alpha^{n+1}<1.
+$$
+
+现在证明最优性。在本证明内简写 $\tau=\tau_{K,n}$。由于 $A$ 的全部词都以零结尾，
+$$
+Ps_n=Pt_n=\sqrt D\,|a\rangle.
+$$
+$Q=P-\tau$ 是正交投影，$R=I-Q$ 也是正交投影，且 $Qs_n=Qt_n=0$。取 $\operatorname{ran}Q$ 的正交标准基 $(q_j)_{j=1}^{D-1}$，以 $R$ 及 $|a\rangle\langle q_j|$ 为 Kraus 算子。它们满足
+$$
+R^*R+\sum_{j=1}^{D-1}
+\bigl(|a\rangle\langle q_j|\bigr)^*
+\bigl(|a\rangle\langle q_j|\bigr)
+=R+Q=I,
+$$
+故
+$$
+\Phi(X)=RXR+\operatorname{Tr}(QX)\tau
+$$
+是完全正保迹通道。$Q\rho_n=\rho_nQ=0$ 使 $\Phi(\rho_n)=\rho_n$。另一方面，$RP=PR=\tau$，所以每个 $\sigma\in\mathcal F_{K,n}$ 都满足
+$$
+R\sigma R=\langle a|\sigma|a\rangle\tau,
+\qquad
+\operatorname{Tr}(Q\sigma)=1-\langle a|\sigma|a\rangle,
+\qquad \Phi(\sigma)=\tau.
+$$
+这里 $D=1$ 时 $Q=0$，Kraus 求和为空，等式仍成立。由迹距离在通道下的收缩性，
+$$
+d_{\rm tr}(\rho_n,\tau)
+=d_{\rm tr}(\Phi(\rho_n),\Phi(\sigma))
+\le d_{\rm tr}(\rho_n,\sigma).
+$$
+收缩性也可直接从正负谱部分核对：对 Hermitian 算子 $Y=Y_+-Y_-$，正性、保迹性与三角不等式给
+$$
+\|\Phi(Y)\|_1
+\le\operatorname{Tr}\Phi(Y_+)+\operatorname{Tr}\Phi(Y_-)
+=\operatorname{Tr}Y_++\operatorname{Tr}Y_-=\|Y\|_1.
+$$
+$\tau$ 本身可行，故最小值确由它达到。$\Phi$ 在这里是比较态的数学通道，不以它属于某个物理可实现的制备资源集为前提。
+
+为求这个最小值，置 $H=\rho_n-\tau$。将合法词分成三个互不相交的词组：$A$、末位零但不在 $A$ 的词、末位一的词。$H$ 在各非空词组的均匀向量张成空间之外为零。由于 $C>0$，始终定义
+$$
+|v\rangle=C^{-1/2}\sum_{\substack{u\in W_n\\u_{n-1}=1}}|u\rangle.
+$$
+当 $b>0$ 时再定义
+$$
+|z\rangle=b^{-1/2}\sum_{\substack{u\in W_n\setminus A\\u_{n-1}=0}}|u\rangle.
+$$
+此时 $(a,z,v)$ 是正交标准组，其上的实际三维压缩为
+$$
+H_3=\alpha^n
+\begin{pmatrix}
+D&\sqrt{Db}&\alpha\sqrt{DC}\\
+\sqrt{Db}&b&\alpha\sqrt{bC}\\
+\alpha\sqrt{DC}&\alpha\sqrt{bC}&\alpha C
+\end{pmatrix}
+-\operatorname{diag}(1,0,0).
+$$
+当 $b=0$ 时不定义空词组的归一化向量 $z$，只用 $(a,v)$，实际二维压缩为
+$$
+H_2=\alpha^n
+\begin{pmatrix}
+D&\alpha\sqrt{DC}\\
+\alpha\sqrt{DC}&\alpha C
+\end{pmatrix}
+-\operatorname{diag}(1,0).
+$$
+在两种情形下都有 $\operatorname{Tr}H=0$。对 $y\perp a$，
+$$
+\langle y|H|y\rangle=\langle y|\rho_n|y\rangle\ge0,
+\qquad
+\langle a|H|a\rangle=m-1<0.
+$$
+若负谱子空间至少二维，它与 $a^\perp$ 有非零交，便同时给出严格负和非负的二次型值，矛盾。因此 $H$ 恰有一个负特征值，记为 $-e$，其中 $e>0$。迹为零使正特征值之和为 $e$，从而 $\|H\|_1/2=e=e_{K,n}$。
+
+接着计算不变量。$\rho_n$ 在整个末位零类与末位一类的两个归一化均匀向量上具有矩阵
+$$
+\alpha^n
+\begin{pmatrix}
+B&\alpha\sqrt{BC}\\
+\alpha\sqrt{BC}&\alpha C
+\end{pmatrix}.
+$$
+其行列式为
+$$
+\alpha^{2n}(\alpha-\alpha^2)BC
+=\alpha^{2n+3}BC=\delta>0,
+$$
+其中 $\alpha-\alpha^2=\alpha^3$。这个二维矩阵之外 $\rho_n$ 为零，且其迹为一，所以
+$$
+\operatorname{Tr}\rho_n^2=1-2\delta,
+\qquad
+\operatorname{Tr}H^2
+=\operatorname{Tr}\rho_n^2-2\langle a|\rho_n|a\rangle+1
+=2(1-m-\delta)=2c.
+$$
+$H\ne0$ 为 Hermitian 算子，故 $c>0$。
+
+当 $b>0$ 时，$\rho_n$ 的三维压缩秩为二、行列式为零。将它的第一对角元减去一，行列式恰减去对应的余子式，得到
+$$
+\det H_3
+=-\alpha^{2n}(\alpha-\alpha^2)bC
+=-\eta.
+$$
+迹零三维矩阵的二次基本对称式为 $-\operatorname{Tr}H_3^2/2=-c$，于是
+$$
+\det(\lambda I_3-H_3)=\lambda^3-c\lambda+\eta.
+$$
+代入唯一负特征值 $\lambda=-e$ 得 $e^3-ce-\eta=0$。反过来，每个严格正实根 $x$ 都使 $-x$ 成为 $H_3$ 的负特征值，故严格正实根唯一。
+
+当 $b=0$ 时使用实际的 $H_2$：它的迹为零、平方迹为 $2c$，所以
+$$
+\det H_2=-c,\qquad
+\operatorname{spec}(H_2)=\{-\sqrt c,\sqrt c\}.
+$$
+此时 $\eta=0$，三次方程是 $x(x^2-c)=0$，唯一严格正实根仍是 $e=\sqrt c$；二维行列式是 $-c$，不是三维补零矩阵的零行列式。
+
+在边界 $n=K+1$，有 $D=B$，归一化恒等式进一步把实际二维矩阵写成
+$$
+H_2=\alpha^{n+1}
+\begin{pmatrix}
+-C&\sqrt{DC}\\
+\sqrt{DC}&C
+\end{pmatrix}.
+$$
+因此
+$$
+e_{K,K+1}^2=\alpha^{2n+2}C(C+D)
+=\alpha^{2K+4}F_{K+1}F_{K+3},
+$$
+由 $e_{K,K+1}>0$ 即得所列平方根。$K=0$ 时 $D=1$，可行支撑为 $|0^n\rangle$ 张成的一维空间，上述通道与谱论证对每个 $n>0$ 仍适用；其中 $n=1$ 给 $C=D=1$，故 $e_{0,1}=\sqrt2\,\alpha^2$。
+
+最后核对经典最优值与严格差距。显式对角律在 $A$ 上每词赋质量 $\alpha^n$，总质量为 $m$。对任意 $\nu(A)=1$，总变差的事件界给
+$$
+\operatorname{TV}(\nu,\mu_n)\ge|\nu(A)-\mu_n(A)|=1-m.
+$$
+该事件界直接来自差函数总和为零，其正部、负部之和各等于总变差。令 $\nu$ 在 $A$ 上均匀，则 $m<1$ 给 $1/D>\alpha^n$，从而 $A$ 内外的绝对差之和分别为
+$$
+\sum_{u\in A}\left(\frac1D-\alpha^n\right)=1-m,
+\qquad
+\sum_{u\notin A}\mu_n(u)=1-m.
+$$
+半和恰为 $1-m$，这既证明经典最优值，也说明 $\tau$ 的对角分布达到它。
+
+量子严格性则来自 $H$ 的非对角作用。无论 $b$ 是否为零，末位一类的均匀向量 $v$ 都已定义且与 $a$ 正交，并满足
+$$
+\langle v|H|a\rangle=\alpha^{n+1}\sqrt{DC}>0.
+$$
+因此 $a$ 不是 $H$ 的特征向量。Rayleigh 商达到最小特征值当且仅当向量属于相应特征空间，故
+$$
+-e_{K,n}=\lambda_{\min}(H)
+<\langle a|H|a\rangle=m-1,
+$$
+即 $e_{K,n}>1-m$。张量积公式直接由 $A$ 的定义得到，证明固定的 $|\Psi_K\rangle$ 接全零尾部同时给出每个 $n>K$ 的最优者。证毕。
+
+这里的差距比较完整 POVM 所能取得的态区分总变差与只读计算基的总变差。它依赖所列相干目标及固定尾零支撑，不是对所有目标或每种受限测量的结论，也不是过程的 diamond 范数界。它不表示最优值依赖计算基的相位角：任意计算基对角酉算子 $U$ 都与 $P$ 对易，共轭使 $\mathcal F_{K,n}$ 双射到自身，迹范数的酉不变性便给
+$$
+\min_{\sigma\in\mathcal F_{K,n}}d_{\rm tr}(U\rho_nU^*,\sigma)=e_{K,n}.
+$$
+固定支撑也不能换成仅有维数的预算；若 $K\ge1$，则 $D\ge2$，而上面的正二维行列式给 $\operatorname{rank}\rho_n=2$，允许任选 $D$ 维子空间就能令其包含 $\operatorname{ran}\rho_n$，以 $\sigma=\rho_n$ 达到零误差。
+
+本节的 Q109、Q125.1、Q125.3 取仓库提交 `7af72f9910546ca2aa0bfa3a6bbaed4d8a393efb`；Q126.2 的固定尾零载体及经典窗口比较取提交 `dc4af5d3b06e66c8be5fe63ffd5fc1ace63e2c7e`，这里已从显式对角律独立证明所需经典最优值。迹距离的数据处理是既有标准结论，前一提交的 `D5/S3/Quantum/Foundation/FiniteTraceDistance.lean` 中 `traceDistance_contract` 对应所用收缩性，其范围不包含本节完整最优化。命题 127.1 为 `repo-derived` 普通数学推导，不提出外部新颖性或完整 Lean 认证主张。
+
+## 追加锚（本行以下为增补区）
