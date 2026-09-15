@@ -1,0 +1,7 @@
+**推论 AT6。** 该全局最小化问题有解，且任意全局最小解满足
+
+$$
+\boxed{\sum_{j\ge0}|\widetilde m_j-m_j|
+\le8\epsilon\,C_{2r}(\theta).}
+$$
+
