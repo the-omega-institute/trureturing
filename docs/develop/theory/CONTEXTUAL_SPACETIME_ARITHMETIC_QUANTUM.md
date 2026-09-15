@@ -29908,3 +29908,257 @@ $$
 本命题给出的是上述纯边界、内部测量及全加记录选择下，对每个有限间隔都纠缠的一种指定协议；最终记忆访问不是该协议的假设。它不对所有测量记录、任意混合初态或所有协议量化，不给出普遍最小访问条件、最优纠缠、确定性交付、信号传递、物理距离或时间的结论，也不给出关于 $g$ 的统一纠缠量正下界。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 137. 未读最终记忆时任意局部秩一内部记录的端点分类
+
+**命题 137.1（正概率记录的乘积与秩二纠缠二分）。** 取命题 130.1 的纯边界生成器及命题 136.1 的向量化约定：
+$$
+\alpha=\frac{\sqrt5-1}{2},\qquad s=\sqrt\alpha,\qquad
+0<\alpha<1,\qquad \alpha+\alpha^2=1,\qquad B=M=\mathbb C^2,
+$$
+$$
+m_0=s|0\rangle+\alpha|1\rangle,\qquad m_1=|0\rangle,\qquad
+T|j\rangle=|j\rangle\otimes m_j\quad(j=0,1),
+$$
+$$
+H_n=B^{\otimes n},\qquad H_0=\mathbb C,\qquad
+\Xi_0=m_0,\qquad \Xi_{n+1}=(I_{H_n}\otimes T)\Xi_n.
+$$
+两份二维空间均取正交标准基。对任意整数 $g\ge0$，恰好生成 $g+2$ 个输出，按发出次序分组为
+$$
+B_L\otimes H_g\otimes B_R\otimes M.
+$$
+$L,R$ 是第一个和最后一个已发出的 qubit，左端点之前没有被忽略的前缀。对第 $k$ 个内部输出，选取单位复向量
+$$
+|\eta_k\rangle=\eta_{k,0}|0\rangle+\eta_{k,1}|1\rangle,
+\qquad |\eta_{k,0}|^2+|\eta_{k,1}|^2=1\quad(1\le k\le g),
+$$
+其秩一投影为该位置某个固定局部正交基测量的一个结果。记记录为 $\eta=(\eta_1,\ldots,\eta_g)$；只对内部输出作这些测量及结果选择，生成过程没有反馈、记忆测量或重置，最终活动记忆以偏迹忽略。两个端点保留完整空间 $B_L\otimes B_R=\mathbb C^2\otimes\mathbb C^2$；可分密度指此分割上的有限凸乘积密度和，非可分密度称为纠缠态。
+
+令 $\operatorname{adj}$ 表示共轭转置，$\operatorname{outer}(v)=v\operatorname{adj}(v)$，并定义
+$$
+D_k=\operatorname{diag}(\overline{\eta_{k,0}},\overline{\eta_{k,1}}),\qquad
+J=\begin{pmatrix}1&1\\1&0\end{pmatrix},\qquad
+E_0=\operatorname{diag}(1,0),
+$$
+$$
+\operatorname{vec}_{LR}(C)=\sum_{i,j=0}^1 C_{ij}|i\rangle_L\otimes|j\rangle_R,
+\qquad \|C\|_F^2=\sum_{i,j=0}^1|C_{ij}|^2,
+$$
+$$
+C_\eta=s^{g+3}JD_1JD_2\cdots JD_gJ,\qquad C_\varnothing=s^3J.
+$$
+其中矩阵因子从左到右按内部位置 $1,\ldots,g$ 排列，所有空乘积取一。实际记录收缩及其最终记忆偏迹满足
+$$
+\begin{aligned}
+\chi_\eta
+&=(I_{B_L}\otimes\langle\eta_1|\otimes\cdots\otimes\langle\eta_g|
+\otimes I_{B_R}\otimes I_M)\Xi_{g+2}\\
+&=\operatorname{vec}_{LR}(C_\eta)\otimes|0\rangle
++s\operatorname{vec}_{LR}(C_\eta E_0)\otimes|1\rangle,\\
+Q_\eta&:=\operatorname{Tr}_M\operatorname{outer}(\chi_\eta)
+=\operatorname{outer}(\operatorname{vec}_{LR}(C_\eta))
++\alpha\operatorname{outer}(\operatorname{vec}_{LR}(C_\eta E_0)),\\
+q_\eta&:=\operatorname{Tr}Q_\eta
+=\|C_\eta\|_F^2+\alpha\|C_\eta E_0\|_F^2\in[0,1].
+\end{aligned}
+$$
+$q_\eta$ 是实际内部投影的 Born 概率，且 $q_\eta=0$ 当且仅当 $C_\eta=0$；只在 $q_\eta>0$ 时定义条件密度 $\theta_\eta=Q_\eta/q_\eta$。有
+$$
+\det C_\eta=(-1)^{g+1}\alpha^{g+3}
+\prod_{k=1}^g\overline{\eta_{k,0}\eta_{k,1}}.
+$$
+每个正概率记录恰属于以下一类。
+
+第一，若至少一个内部向量有零计算基分量，则 $C_\eta$ 非零且秩为一。存在非零复系数列向量 $a,b\in\mathbb C^2$，使 $C_\eta=ab^{\mathsf T}$，其中 $\mathsf T$ 是普通转置。此时
+$$
+\theta_\eta=
+\frac{\operatorname{outer}(a)}{\|a\|^2}\otimes
+\frac{\operatorname{outer}(b)+\alpha\operatorname{outer}(E_0b)}
+{\|b\|^2+\alpha|b_0|^2}.
+$$
+这是左因子为纯态的乘积密度，右因子不必为纯态。
+
+第二，若所有内部向量的两个计算基分量均非零，则 $C_\eta$ 可逆，记录必有正概率，且 $\theta_\eta$ 是秩为二的纠缠密度。这包含 $g=0$ 的空记录；此时
+$$
+q_\varnothing=1,\qquad Q_\varnothing=\theta_\varnothing=G_0=\Gamma_2(P_0),
+\qquad P_0=\operatorname{outer}(m_0),
+$$
+其中 $G_0$ 是命题 132.1 的纯边界相邻双位置密度。
+
+对每个内部位置固定一个正交标准基 $\{|\eta_{k,0}^{\rm bas}\rangle,|\eta_{k,1}^{\rm bas}\rangle\}$，对全部记录 $e\in\{0,1\}^g$ 以上述定义取 $\eta_k=\eta_{k,e_k}^{\rm bas}$，并把所得算子及概率记为 $Q_e,q_e$。这个完整测量的平均为
+$$
+\overline\Theta_g:=\sum_{e\in\{0,1\}^g}Q_e
+=\operatorname{Tr}_{H_g,M}\operatorname{outer}(\Xi_{g+2})
+=\sum_{\substack{e\in\{0,1\}^g\\q_e>0}}q_e\theta_e,
+\qquad \sum_{e\in\{0,1\}^g}q_e=1.
+$$
+对 $g\ge1$，此平均由命题 133.1 可分；$g=0$ 时它等于纠缠密度 $G_0$。特别地，$g\ge1$ 时在所有内部位置测计算基，正概率记录恰为不含相邻 $11$ 的内部词，每个这样的记录均给乘积密度。若每个内部位置均测
+$$
+|+\rangle=\frac{|0\rangle+|1\rangle}{\sqrt2},\qquad
+|-\rangle=\frac{|0\rangle-|1\rangle}{\sqrt2},
+$$
+则对每个 $g\ge0$，全部 $2^g$ 个记录均有正概率，均给秩二纠缠密度；这些概率和条件密度不要求彼此相等。
+
+在混合选基记录中，任何含零分量的正概率记录仍给上述乘积密度。若恰有一个 $D_k$ 奇异，其余 $D_k$ 均可逆，则 $C_\eta$ 必为非零秩一矩阵，因而 $q_\eta>0$；两个或更多奇异因子则可以使整个矩阵为零。具体地，$g=2$ 的计算基内部记录 $(|1\rangle,|1\rangle)$ 概率为零，$g=3$ 的记录 $(|0\rangle,|-\rangle,|0\rangle)$ 也恰有零概率，后者即使存在合法计算基路径仍相消。
+
+证明。令 $W_n$ 为不含相邻 $11$ 的长度 $n$ 二进制词集。命题 130.1 从实际 $T$ 递推所得的两个记忆列为
+$$
+\Xi_n=s^{n+1}\sum_{w\in W_n}|w\rangle\otimes|0\rangle
++s^{n+2}\sum_{\substack{w\in W_n\\w_{n-1}=0}}|w\rangle\otimes|1\rangle
+\quad(n\ge1),\qquad \|\Xi_n\|=1.
+$$
+取 $n=g+2$。对任意内部计算基词 $u=(u_1,\ldots,u_g)$，复 bra 收缩的权重是
+$$
+(\langle\eta_1|\otimes\cdots\otimes\langle\eta_g|)|u\rangle
+=\prod_{k=1}^g\overline{\eta_{k,u_k}}.
+$$
+置 $x_0=i$、$x_k=u_k$（$1\le k\le g$）、$x_{g+1}=j$。由 $J_{ab}=0$ 恰当 $a=b=1$，第一记忆列在端点 $i,j$ 上的系数为
+$$
+\begin{aligned}
+s^{g+3}\sum_{u\in\{0,1\}^g}
+\left(\prod_{t=0}^g J_{x_t,x_{t+1}}\right)
+\left(\prod_{k=1}^g\overline{\eta_{k,u_k}}\right)
+&=s^{g+3}(JD_1JD_2\cdots JD_gJ)_{ij}\\
+&=(C_\eta)_{ij}.
+\end{aligned}
+$$
+这是矩阵乘法对所有内部指标的求和：$D_k$ 的对角元在第 $k$ 个内部指标处插入，故次序是从左端点沿发出位置到右端点的 $D_1,\ldots,D_g$。$g=0$ 时求和只有空词，唯一边因子为 $J_{ij}$，仍给 $C_\varnothing=s^3J$。第二记忆列只允许末位 $j=0$，并多出一个 $s$，所以对全部 $i,j$，其系数为
+$$
+s(C_\eta)_{ij}\mathbf1_{\{j=0\}}=s(C_\eta E_0)_{ij}.
+$$
+因此得到所述 $\chi_\eta$。两个记忆列保留其原振幅；在正交记忆基中取偏迹消掉交叉项，以 $s^2=\alpha$ 得到 $Q_\eta$。它是正半定，取迹给 $q_\eta$ 的两个平方范数之和。该和为零当且仅当 $C_\eta=0$，此时 $\chi_\eta=0$、$Q_\eta=0$。
+
+写 $|\eta\rangle=\bigotimes_{k=1}^g|\eta_k\rangle$，空张量积为 $H_0$ 的单位向量。实际内部事件的投影为
+$$
+\mathsf P_\eta=I_{B_L}\otimes\operatorname{outer}(|\eta\rangle)
+\otimes I_{B_R}\otimes I_M.
+$$
+各局部向量单位化，故 $0\le\mathsf P_\eta\le I$，于是
+$$
+q_\eta=\|\chi_\eta\|^2
+=\langle\Xi_{g+2},\mathsf P_\eta\Xi_{g+2}\rangle\in[0,1].
+$$
+这既证明概率的 Born 含义，也说明只可对正概率记录归一化，不能分别归一化两列再混合。$g=0$ 时 $\mathsf P_\varnothing=I$，所以 $q_\varnothing=1$；此时偏迹就是 $\Gamma_2(P_0)=G_0$，与命题 132.1、136.1 的相邻密度一致。
+
+二阶矩阵的标量倍数在行列式中贡献标量的平方。由乘法性、$g+1$ 个 $J$ 因子及 $s^2=\alpha$，
+$$
+\begin{aligned}
+\det C_\eta
+&=(s^{g+3})^2(\det J)^{g+1}\prod_{k=1}^g\det D_k\\
+&=\alpha^{g+3}(-1)^{g+1}
+\prod_{k=1}^g\overline{\eta_{k,0}\eta_{k,1}}.
+\end{aligned}
+$$
+由于 $\alpha>0$，这恰在至少一个计算基分量为零时消失。若 $q_\eta>0$ 且有这样的零分量，$C=C_\eta$ 非零且行列式为零，所以秩为一。选一个非零主元 $C_{i_*j_*}$，逐坐标定义
+$$
+a_i=C_{ij_*},\qquad b_j=\frac{C_{i_*j}}{C_{i_*j_*}}\quad(i,j\in\{0,1\}).
+$$
+秩一给出所有二阶子式关系
+$$
+C_{ij}C_{i_*j_*}=C_{ij_*}C_{i_*j}.
+$$
+故 $C_{ij}=a_ib_j$，且 $a_{i_*}\ne0$、$b_{j_*}=1$。这里是复系数的双线性分解 $C=ab^{\mathsf T}$，不对 $b$ 取共轭。由向量化定义及 $E_0^{\mathsf T}=E_0$，
+$$
+\operatorname{vec}_{LR}(C)=a\otimes b,\qquad
+\operatorname{vec}_{LR}(CE_0)=a\otimes E_0b,
+$$
+$$
+Q_\eta=\operatorname{outer}(a)\otimes
+\bigl(\operatorname{outer}(b)+\alpha\operatorname{outer}(E_0b)\bigr),
+\qquad q_\eta=\|a\|^2(\|b\|^2+\alpha|b_0|^2)>0.
+$$
+两个因子均为非零正半定算子；按其迹归一化得到陈述中的乘积密度，左因子的秩为一。右因子确实可以混合：取 $g=1$、$\eta_1=|0\rangle$，则
+$$
+C_\eta=s^4JE_0J=s^4\begin{pmatrix}1&1\\1&1\end{pmatrix}.
+$$
+可取 $a=s^4(1,1)^{\mathsf T}$、$b=(1,1)^{\mathsf T}$；右因子归一化前的矩阵为
+$$
+\begin{pmatrix}1+\alpha&1\\1&1\end{pmatrix},
+$$
+其行列式为 $\alpha>0$，所以归一化后仍秩二。
+
+若每个分量均非零，则行列式非零，$C=C_\eta$ 可逆，且 $q_\eta\ge\|C\|_F^2>0$。直接应用命题 136.1 的局部合同论证：其中逐坐标恒等式
+$$
+(A\otimes I_{B_R})\operatorname{vec}_{LR}(C)=\operatorname{vec}_{LR}(AC)
+$$
+对任意复矩阵 $A,C$ 成立，并不要求矩阵为实。取
+$$
+F=C^{-1}\otimes I_{B_R},\qquad \phi=|00\rangle+|11\rangle,
+\qquad S=\operatorname{outer}(\phi)+\alpha\operatorname{outer}(|00\rangle),
+$$
+便有
+$$
+FQ_\eta\operatorname{adj}(F)=S,\qquad
+F\theta_\eta\operatorname{adj}(F)=\frac{S}{q_\eta},\qquad
+\operatorname{Tr}\left(\frac{S}{q_\eta}\right)=\frac{2+\alpha}{q_\eta}.
+$$
+这是代数合同变换，不是本命题允许实施的操作；其归一化输入的像也不是单位迹密度。
+
+命题 136.1 的可分正半定锥论证同样允许复系数：若 $X=\sum_r A_r\otimes B_r$ 且 $A_r,B_r\ge0$，则
+$$
+FX\operatorname{adj}(F)
+=\sum_r(C^{-1}A_r\operatorname{adj}(C^{-1}))\otimes B_r
+$$
+仍是有限个正半定乘积之和。第一因子的非负性来自二次型；若 $B_r=\sum_t\mu_t\operatorname{outer}(z_t)$、$\mu_t\ge0$ 是谱分解，则
+$$
+B_r^{\mathsf T}=\sum_t\mu_t\operatorname{outer}(\overline{z_t})\ge0.
+$$
+所以在右计算基上取偏转置后，上述每个张量因子及有限和仍正半定。采用命题 132.1、136.1 的约定
+$$
+\operatorname{PT}_R(|ij\rangle\langle kl|)=|il\rangle\langle kj|,
+$$
+在字典序 $00,01,10,11$ 下已有
+$$
+\operatorname{PT}_R(S)=
+\begin{pmatrix}
+1+\alpha&0&0&0\\
+0&0&1&0\\
+0&1&0&0\\
+0&0&0&1
+\end{pmatrix},\qquad
+v=\frac{|01\rangle-|10\rangle}{\sqrt2},\qquad
+\langle v,\operatorname{PT}_R(S)v\rangle=-1.
+$$
+若 $\theta_\eta$ 可分，则 $Q_\eta=q_\eta\theta_\eta$ 也在该锥中，合同后的 $S$ 必有正半定偏转置，与此负二次型矛盾。因此 $\theta_\eta$ 纠缠。所用的仅是可分性的偏转置正性必要条件（Asher Peres，Separability Criterion for Density Matrices，Physical Review Letters 77，1413–1415，1996，[DOI:10.1103/PhysRevLett.77.1413](https://doi.org/10.1103/PhysRevLett.77.1413)），其复数情形已由上述谱分解落实。
+
+若 $\lambda\operatorname{vec}_{LR}(C)+\mu\operatorname{vec}_{LR}(CE_0)=0$，向量化的单射性给 $C(\lambda I+\mu E_0)=0$。左乘 $C^{-1}$，比较两个对角元，得到 $\lambda=0$、$\lambda+\mu=0$，故 $\mu=0$。两向量线性无关，$\alpha>0$，于是 $Q_\eta$ 这两个正权重外积之和的像恰为它们张成的二维空间：其核是两向量的共同正交补。这证明 $\operatorname{rank}\theta_\eta=2$，并未对混合密度使用纯态的 Schmidt 判据。行列式的两种情形穷尽所有正概率记录，故分类成立。
+
+现在证明完整测量的平均。各个局部基的正交完备性给
+$$
+\sum_{e_k=0}^1\operatorname{outer}(|\eta_{k,e_k}^{\rm bas}\rangle)=I_B,
+\qquad
+\sum_{e\in\{0,1\}^g}\operatorname{outer}(|\eta_e^{\rm bas}\rangle)=I_{H_g},
+\qquad
+|\eta_e^{\rm bas}\rangle=\bigotimes_{k=1}^g|\eta_{k,e_k}^{\rm bas}\rangle.
+$$
+将同一个 $\Xi_{g+2}$ 在这个内部正交基上展开，每个系数正是 $\chi_e$；取内部偏迹时，正交性消掉不同记录间的交叉项，因此
+$$
+\operatorname{Tr}_{H_g}\operatorname{outer}(\Xi_{g+2})
+=\sum_e\operatorname{outer}(\chi_e).
+$$
+再取 $M$ 的偏迹即得 $\sum_eQ_e=\overline\Theta_g$，取迹得 $\sum_eq_e=\|\Xi_{g+2}\|^2=1$。零概率项已经证明为零算子，只在写成 $q_e\theta_e$ 时省去。由命题 130.1 的实际输出偏迹，这个平均恰为命题 133.1 的
+$$
+\overline\Theta_g=\theta^{P_0}_{0;1,g,1}\qquad(g\ge1),
+$$
+即纯边界 $X=P_0$、无前缀 $r=0$、左右块长 $a=b=1$、忽略 $g$ 个内部输出的态；其可分性直接由该命题得出。$g=0$ 的完整基只有空记录，平均为上面已识别的纠缠密度 $G_0$。
+
+在计算基测量中，记录 $u\in\{0,1\}^g$ 的权重只选中该内部词。若 $u$ 含相邻 $11$，没有合法完整词含此内部片段，路径式处处为零；若 $u$ 不含相邻 $11$，完整词 $(0,u,0)$ 合法，因此 $(C_u)_{00}=s^{g+3}\ne0$。这证明正概率记录恰为合法内部词；当 $g\ge1$ 时，每个此类记录含零分量，故分类的第一项给出乘积密度。该论证的全乘积结论不含 $g=0$。在加减基中，每个局部向量的两分量均非零，故每条记录的行列式非零，分类的第二项适用于全部 $2^g$ 条记录，包括空记录。完整测量的权重始终是各自的 $q_e$；正交完备性只给它们的和为一，不给等概率或相同条件密度。
+
+最后，单位向量有零分量时另一个分量非零，所以奇异的 $D_k$ 本身秩为一。若这样的因子恰有一个，把整个乘积写作 $U D_k V$，其中包含非零标量及所有其余因子的 $U,V$ 均可逆；左右乘可逆矩阵保持秩，故 $C_\eta$ 秩一且非零。对多个奇异因子，令 $E_1=\operatorname{diag}(0,1)$，则
+$$
+E_1JE_1=0,\qquad
+C_{(|1\rangle,|1\rangle)}=s^5JE_1JE_1J=0.
+$$
+另令 $Z=\operatorname{diag}(1,-1)$，则
+$$
+JZJ=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+E_0JZJE_0=0,
+$$
+$$
+C_{(|0\rangle,|-\rangle,|0\rangle)}
+=\frac{s^6}{\sqrt2}JE_0JZJE_0J=0.
+$$
+第二个记录在每对端点 $i,j$ 上都有两个合法词 $(i,0,0,0,j)$ 与 $(i,0,1,0,j)$，其内部 bra 权重分别为 $1/\sqrt2$ 与 $-1/\sqrt2$，故等幅相消；最终记忆的两列同时为零。两例均由 $C_\eta=0$ 得到 $q_\eta=0$，不定义其条件密度。证毕。
+
+## 追加锚（本行以下为增补区）
