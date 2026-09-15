@@ -276,6 +276,33 @@ def validate_judge_registration(root, layers):
         return project_registry(root)
 
 
+def replace_restored_directory(staged, target, rollback_root):
+    """Install a validated directory while retaining the previous target.
+
+    ``staged`` is on the same filesystem as ``target`` (the caller creates
+    both under ``target.parent``), so the two renames are the publication
+    boundary. Keep the old target in a private rollback slot until the new
+    directory has been published; a failed second rename, including
+    ``EXDEV`` from a filesystem or test fault, must leave the old cache usable.
+    """
+    previous = rollback_root / "previous"
+    had_target = target.exists() or target.is_symlink()
+    if had_target:
+        rollback_root.mkdir(parents=True, exist_ok=True)
+        target.rename(previous)
+    try:
+        staged.rename(target)
+    except BaseException:
+        if had_target and (previous.exists() or previous.is_symlink()):
+            previous.rename(target)
+        raise
+    if had_target:
+        if previous.is_dir() and not previous.is_symlink():
+            shutil.rmtree(previous)
+        else:
+            previous.unlink()
+
+
 def stage_snapshot(root, keys, layer, staged, registry=None, *, current=None):
     """Produce a private layer; only the parent may publish it and report ready."""
     spec = keys[layer]
@@ -456,9 +483,7 @@ def restore(root, keys, matched, layers=LAYERS, registry=None):
                     if layer in EXECUTION_LAYERS:
                         restore_execution(root, layer, keys, staged)
                     else:
-                        if target.exists():
-                            shutil.rmtree(target)
-                        staged.rename(target)
+                        replace_restored_directory(staged, target, pathlib.Path(temporary) / "rollback")
             project_seeded |= layer == "project"
             receipt(layer, "restored", key=key, partition=keys["partition"])
         except (OSError, ValueError, TypeError, KeyError, subprocess.CalledProcessError) as error:
