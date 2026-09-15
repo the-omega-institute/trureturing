@@ -230,6 +230,14 @@ def validate_result(root: pathlib.Path, directory: pathlib.Path, accepted_report
     return result
 
 
+def complete(root: pathlib.Path, directory: pathlib.Path, report: pathlib.Path, execution: pathlib.Path) -> None:
+    root, directory = root.resolve(), location(root.resolve(), directory)
+    evidence = read_json(execution)
+    if set(evidence) != {"lean_build_succeeded"} or type(evidence["lean_build_succeeded"]) is not bool:
+        raise ValueError("producer execution evidence is malformed")
+    write_json(directory / "result.json", result_value(root, directory, report, evidence["lean_build_succeeded"]))
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("command", choices=("prepare", "resume", "complete"))
@@ -242,10 +250,7 @@ def main() -> int:
     try:
         root, directory = args.repository.resolve(), location(args.repository.resolve(), args.directory)
         if args.command == "complete":
-            execution = read_json(args.execution)
-            if set(execution) != {"lean_build_succeeded"} or type(execution["lean_build_succeeded"]) is not bool:
-                raise ValueError("producer execution evidence is malformed")
-            write_json(directory / "result.json", result_value(root, directory, args.report, execution["lean_build_succeeded"]))
+            complete(root, directory, args.report, args.execution)
         else:
             (directory / "result.json").unlink(missing_ok=True)
             state = prepare(root, directory) if args.command == "prepare" else validate(root, directory)

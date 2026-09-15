@@ -95,12 +95,11 @@ python3 "$CACHE_HELPER" bind --repository "$CANDIDATE_ROOT" --report "$OUTPUT" \
   --input-address "$input_address" --repository-sha "$repository_sha256" \
   --producer-sha "$producer_sha256" --sources-sha "$sources_sha256" --config-sha "$config_sha256"
 "$INPUT_HELPER" verify --repository "$CANDIDATE_ROOT" --report "$OUTPUT"
-python3 "$CACHE_HELPER" publish --repository "$CANDIDATE_ROOT" --report "$OUTPUT" --output "$CANDIDATE_OUTPUT"
-python3 "$(dirname "$PRODUCER")/preparation.py" complete --repository "$CANDIDATE_ROOT" \
-  --directory "$PREPARATION" --report "$CANDIDATE_OUTPUT" --execution "${OUTPUT}.execution.json"
+cache_args=()
+if [[ -n "${STRATALINT_REPORT_CACHE_ROOT:-}" ]]; then
+  cache_args=(--cache-root "$STRATALINT_REPORT_CACHE_ROOT")
+fi
+python3 "$CACHE_HELPER" publish --repository "$CANDIDATE_ROOT" --report "$OUTPUT" --output "$CANDIDATE_OUTPUT" \
+  --preparation "$PREPARATION" --execution "${OUTPUT}.execution.json" "${cache_args[@]}"
 printf 'LEAN_REPORT_PROVENANCE side=candidate mode=produced source_side=candidate input_address=sha256:%s attestation=%s\n' \
   "$input_address" "${CANDIDATE_OUTPUT}.provenance.json"
-if [[ -n "${STRATALINT_REPORT_CACHE_ROOT:-}" ]]; then
-  python3 "$CACHE_HELPER" store --repository "$CANDIDATE_ROOT" \
-    --cache-root "$STRATALINT_REPORT_CACHE_ROOT" --report "$CANDIDATE_OUTPUT" || true
-fi
