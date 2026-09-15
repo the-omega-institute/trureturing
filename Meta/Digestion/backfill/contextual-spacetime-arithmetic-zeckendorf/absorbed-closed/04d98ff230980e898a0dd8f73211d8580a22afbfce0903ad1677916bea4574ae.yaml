@@ -2,7 +2,9 @@ fingerprints:
   raw_sha256: sha256:04d98ff230980e898a0dd8f73211d8580a22afbfce0903ad1677916bea4574ae
   normalized_sha256: sha256:04d98ff230980e898a0dd8f73211d8580a22afbfce0903ad1677916bea4574ae
 cas_ref: sha256:04d98ff230980e898a0dd8f73211d8580a22afbfce0903ad1677916bea4574ae
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Weil/Mertens/CoprimeSquarefreeDensity.squarefree_coprime_count_error
+    target_statement_id: sha256:eb0621e8a9a06bd9b8d61799cd05b98d5950fcae618e50794ccc996d93411eaa
 receipts:
   unresolved_subitems: []
   chain_atoms:
