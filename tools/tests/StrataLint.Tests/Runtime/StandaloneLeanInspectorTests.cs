@@ -406,7 +406,7 @@ public sealed class StandaloneLeanInspectorTests
         File.Copy(Path.Combine(root, "lean-toolchain"), Path.Combine(directory, "lean-toolchain"));
         var source = File.ReadAllText(Path.Combine(root, "tools", "lean-inspector", "Inspector.lean"));
         File.WriteAllText(Path.Combine(directory, "EncodingProbe.lean"),
-            source + "\nopen LeanInformationAudit.InspectorProducer\n" + probe + "\n");
+            source + "\nopen Lean LeanInformationAudit.InspectorProducer\n" + probe + "\n");
         var result = TestProcessRunner.Run("lean", ["EncodingProbe.lean"], directory,
             TestBudgets.LeanProcessHangGuard, 8 * 1024 * 1024);
         Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
