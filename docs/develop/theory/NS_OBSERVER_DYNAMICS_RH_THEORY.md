@@ -247,7 +247,7 @@ LowModeReversalWitness -> ReversalWaveSynthesis
 
 本组完成数学推导的自审和精确符号交叉核对。独立的 Laurent 多项式实现按空间导数构造对流，与源码的 16 对卷积产生的 9 个输出模式作 27 项分量比较；另有 100 组精确有理参数回归、真实余弦场合成检查、隐藏二次系数检查和既有 Weil 能量恒等式检查。这是同一作者的第二种实现，不冒充独立作者审稿。
 
-当前作者环境无 Lean、Lake 或 .NET。没有执行新的 elaboration、Lean 内核检查、公理闭包收集、Scribe 发射。源码是经过逻辑检查的候选证明；词法上无新增 axiom、sorry、admit、native_decide，不足以替代编译及传递依赖检查。
+当前作者环境无 Lean、Lake 或 .NET。没有执行新的 elaboration、Lean 内核检查、公理闭包收集或 Scribe 发射。源码是经过逻辑检查的候选证明；词法上无新增 axiom、sorry、admit、native_decide，不足以替代编译及传递依赖检查。
 
 下一项直接消费者是统一有限 Fourier 系数与实际空间微分的算子级识别，再把系数见证作为通用二次闭包定理的实例。之后才能严格接入局部解、记忆核和相应预测误差。原稿的 Schur–记忆积分、隐藏耗散、Gamma 尾项认证、canonical Li 增长到 RH、热变形零点运动等目标仍各有独立证明义务，未由本组完成。
 
@@ -428,7 +428,7 @@ a(t)=c+(a(0)-c)e^{-\Gamma_k t},
 \leq-\gamma\|w\|_{L^2}^2+\rho\|w\|_{L^2}.
 \]
 
-**证明。** 对 $\|w(t)\|_{L^2}$ 应用第 11.3 节的比较论证即得结论。
+**证明。** 对 $\|w\|_{L^2}$ 应用第 11.3 节的比较论证即得结论。
 
 ## 12. 正则化能量、二次平衡证书与记忆消元
 
@@ -833,7 +833,7 @@ C_\sigma(t)=\int e^{-tE}\,\sigma(dE),\quad t\geq0,
 
 取相容谱底集合上下确界的中点为估计；空相容集任取 $E_-$。其最坏误差不超过上述直径的一半。这只是估计函数存在性；所用信息可缩至 $2d$ 个等间距时刻。
 
-**下界构造。** 先设 $d\geq2$，令 $n=2d-2$、$A_\eta=\operatorname{arcosh}(2/\eta-1)>0$、
+**下界构造。** 记 $T_n$ 为满足 $T_n(\cos\theta)=\cos(n\theta)$ 的第一类 Chebyshev 多项式。先设 $d\geq2$，令 $n=2d-2$、$A_\eta=\operatorname{arcosh}(2/\eta-1)>0$、
 
 \[
 x_j=\tfrac12(1+\cos(j\pi/n)),\quad j=0,\ldots,n,
@@ -914,6 +914,10 @@ Q(t)=\prod_{i=1}^d(t-x_i)^2.
 \]
 
 取 $s=\kappa\varepsilon^{1/(2m-1)}/W_\eta$，则所有能量位于固定区间内，式 (16.8) 右侧不超过 $2\varepsilon$。谱底间距至少为 $\kappa A_\eta^2\varepsilon^{1/(2m-1)}/(16W_\eta m^2)$。中点论证及 $\mathcal M_m\subseteq\mathcal M_d$ 给出每个 $m\leq d$ 的下界。$m=1$ 由上述 Dirac 构造给出；减小常数使其也成立，然后取最大值。
+
+**推论。** 当 $0<\varepsilon\leq e^{-1}$ 且 $d\geq\lceil\log(1/\varepsilon)\rceil$ 时，$\mathcal R_d(\varepsilon)\geq c'/\log^2(1/\varepsilon)$，其中 $c'>0$ 仍只依赖固定能量区间及 $\eta$。
+
+**证明。** 在式 (16.10) 取 $m=\lceil L\rceil$、$L=\log(1/\varepsilon)\geq1$。有 $m\leq2L$、$2m-1\geq L$，所以 $\varepsilon^{1/(2m-1)}\geq e^{-1}$。代入即得 $c'=c/(4e)$。这个全时间下界只使用实 Taylor 余项及正测度构造。
 
 ### 16.7 问题：维数与精度的统一过渡
 
