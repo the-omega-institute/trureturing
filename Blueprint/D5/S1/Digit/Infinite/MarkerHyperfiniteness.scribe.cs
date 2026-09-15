@@ -16,8 +16,8 @@ internal sealed class MarkerHyperfinitenessDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "On the circle of circumference one, take the open marker arc of length one "
-                    + "divided by n plus two. Choose the least positive odd index j for which alpha "
-                    + "to the power j plus two is smaller than this length. Write h for that power, "
+                    + "divided by the sum of n and two. Choose the least positive odd index j for which alpha "
+                    + "to the power given by j plus two is smaller than this length. Write h for that power, "
                     + "Q for the corresponding Fibonacci return time, M for the floor of one divided "
                     + "by h, B for Q times M, and L for B plus one. The arcs are open, decrease, and "
                     + "have empty intersection. Every integer interval from a through a plus B "
