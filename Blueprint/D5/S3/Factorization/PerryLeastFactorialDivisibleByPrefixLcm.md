@@ -2,7 +2,7 @@
 
 ## Abstract
 
-The prefix lcm divides the factorial of its largest prime, which is the least factorial index.
+For n >= 5, the prefix lcm divides the factorial of the largest prime <= n, which is the least factorial index.
 
 **Theorem 1.1 (The maximal-prime factorial contains the prefix lcm).**
 
@@ -20,7 +20,7 @@ For n at least five and any prime p at least as large as every prime not exceedi
 
 **Theorem 1.2 (The maximal prime is the least factorial index).**
 
-$$\forall n \in \mathrm{Nat}, p \in \mathrm{Nat},\; ((5 \le n) \land ((Prime\left(p\right)) \land ((p \le n) \land (\forall q \in \mathrm{Nat},\; ((Prime\left(q\right)) \land (q \le n)) \Rightarrow q \le p)))) \Rightarrow IsLeast\left(S\left(n\right), p\right)$$
+$$\forall n \in \mathrm{Nat}, p \in \mathrm{Nat},\; ((5 \le n) \land ((Prime\left(p\right)) \land ((p \le n) \land (\forall q \in \mathrm{Nat},\; ((Prime\left(q\right)) \land (q \le n)) \Rightarrow q \le p)))) \Rightarrow \left((lcmUpto\left(n\right) \mid p!) \land (\forall k \in \mathrm{Nat},\; (lcmUpto\left(n\right) \mid k!) \Rightarrow p \le k)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Factorization/PerryLeastFactorialDivisibleByPrefixLcm.result` (`✓ std3`). ∎
 
@@ -34,7 +34,7 @@ $$\forall n \in \mathrm{Nat}, p \in \mathrm{Nat},\; ((5 \le n) \land ((Prime\lef
 
 *Commentary.*
 
-Let S(n) be the set of natural k for which the lcm of 1 through n divides k!. For n at least five, a prime p at most n that bounds every prime not exceeding n is the least element of S(n). The maximal-prime factorial lemma supplies membership. Any k in S(n) has p dividing k!, so prime factorial divisibility implies p at most k. The upper bound uses Bertrand's prime gap and a prime-power factorial estimate, including the square case.
+For n at least five, a prime p at most n that bounds every prime not exceeding n is the least natural index whose factorial is divisible by the lcm of 1 through n. The maximal-prime factorial lemma supplies divisibility by p!. Any natural k whose factorial is divisible by that lcm has p dividing k!, so prime factorial divisibility implies p at most k. The upper bound uses Bertrand's prime gap and a prime-power factorial estimate, including the square case.
 
 ## References
 

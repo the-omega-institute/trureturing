@@ -36,8 +36,8 @@ prefix-lcm input, or an asymptotic estimate for `lcmUpto`.
 ## Motivation
 
 Jon Perry's conjecture dates from June 2004. Revision #1 (September 2004)
-already contains the conjecture and current revision #10 (April 2024)
-still leaves it unsettled: twenty-two years as of 2026. It evaluates the
+already contains the conjecture, and revision #10 (2024-04-01) still marks
+it as a conjecture without a settlement comment. It evaluates the
 Kempner/Smarandache function at the specific input `lcm(1,...,n)`.
 
 ## Gap

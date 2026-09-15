@@ -13,7 +13,7 @@ internal sealed class PerryLeastFactorialDivisibleByPrefixLcmDocument
         LibraryNoteRef.Create("D5/L/Factorization/perry2004a094802");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The prefix lcm divides the factorial of its largest prime, which is the least factorial index.",
+        "For n >= 5, the prefix lcm divides the factorial of the largest prime <= n, which is the least factorial index.",
         H("Perry's Least Factorial Index for the Prefix Lcm"),
         Blocks(
             Describe.Lean(
@@ -38,11 +38,11 @@ internal sealed class PerryLeastFactorialDivisibleByPrefixLcmDocument
                 StatementSource.FromAuthor(ResultFormula()),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
-                    "Let S(n) be the set of natural k for which the lcm of 1 through n "
-                        + "divides k!. For n at least five, a prime p at most n that "
-                        + "bounds every prime not exceeding n is the least element of S(n). "
-                        + "The maximal-prime factorial lemma supplies membership. Any k "
-                        + "in S(n) has p dividing k!, so prime factorial divisibility "
+                    "For n at least five, a prime p at most n that bounds every prime "
+                        + "not exceeding n is the least natural index whose factorial is "
+                        + "divisible by the lcm of 1 through n. The maximal-prime factorial "
+                        + "lemma supplies divisibility by p!. Any natural k whose factorial "
+                        + "is divisible by that lcm has p dividing k!, so prime factorial divisibility "
                         + "implies p at most k. The upper bound uses Bertrand's prime gap "
                         + "and a prime-power factorial estimate, including the square case."))),
                 DescribeRole.Theorem,
@@ -61,10 +61,12 @@ internal sealed class PerryLeastFactorialDivisibleByPrefixLcmDocument
 
     private static Formula ResultFormula()
     {
-        Formula n = F.Id("n"), p = F.Id("p");
+        Formula n = F.Id("n"), p = F.Id("p"), k = F.Id("k");
         return Disp(ForAll([Bound("n"), Bound("p")],
             Implies(And(Le(D(5), n), Prime(p), Le(p, n), MaximalPrime(n, p)),
-                Call("IsLeast", Call("S", n), p))));
+                And(Dvd(LcmUpto(n), Factorial(p)),
+                    ForAll([Bound("k")],
+                        Implies(Dvd(LcmUpto(n), Factorial(k)), Le(p, k)))))));
     }
 
     private static Formula MaximalPrime(Formula n, Formula p)

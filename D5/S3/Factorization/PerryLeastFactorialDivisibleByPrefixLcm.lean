@@ -4,7 +4,7 @@
    mirror-E: none(waiver:symbolic-proof-no-numeric-artifact)
    anchors: [mathlib/module/Mathlib.NumberTheory.Bertrand, mathlib/module/Mathlib.NumberTheory.Chebyshev]
    utility: none
-   digest: The least factorial divisible by the prefix lcm is indexed by its largest prime. -/
+   digest: For n >= 5, the least factorial divisible by the prefix lcm is indexed by the largest prime <= n. -/
 
 import Mathlib.NumberTheory.Bertrand
 import Mathlib.NumberTheory.Chebyshev
