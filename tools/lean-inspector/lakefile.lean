@@ -18,6 +18,15 @@ private def nativeCommand (pkg : Package) (args : Array String) : IO.Process.Spa
   { cmd := "python3", args := #[((inspectorDir pkg) / "native.py").toString] ++ args,
     cwd := some pkg.dir }
 
+-- Direct phase observations survive a cache-writer process that buffers Lake's
+-- output. They never participate in traces, reuse or admission decisions.
+private def observePhase (phase boundary : String) : IO Unit := do
+  if let some path ← IO.getEnv "STRATALINT_INSPECTOR_PHASES" then
+    let now ← IO.monoMsNow
+    IO.FS.withFile path .append fun out => out.putStrLn <| (Lean.Json.mkObj [
+      ("phase", Lean.toJson phase), ("boundary", Lean.toJson boundary),
+      ("monotonic_ms", Lean.toJson now)]).compress
+
 private structure ReportState where
   started : IO.Ref Lean.NameSet
   batch : IO.Ref (Option (Lean.NameSet × Job Unit))
@@ -267,21 +276,26 @@ private def runBatch (pkg : Package) (requests : Array (String × Array String))
     removeFileIfExists resultFile
 
 package_facet report (pkg : Package) : FilePath := withCurrPackage pkg do
+  observePhase "lake-inputs" "start"
   let reportState ← (← fetch <| pkg.facet `reportBatch).await
   let inputs ← (← fetch <| pkg.facet `reportInputs).await
   let config ← readJson inputs
   let names ← strings config "modules"
+  observePhase "lake-inputs" "finish"
   -- Demand ordinary defaults independently of row traces. Audit/default-only
   -- changes still fail the invocation without invalidating unrelated rows.
   let defaults ← match ← (parseTargetSpec (← getWorkspace) s!"@{pkg.baseName}").toBaseIO with
     | .ok specs => pure specs
     | .error err => error err.toString
+  observePhase "lake-defaults" "start"
   discard <| (← buildSpecs defaults).await
+  observePhase "lake-defaults" "finish"
   -- Shared native dependency jobs compose continuations; no per-miss promise
   -- wait, readiness polling, or independent dependency/freshness planner.
   let alreadyStarted ← reportState.started.get
   let mut members : Lean.NameSet := {}
   let mut prepared := #[]
+  observePhase "lake-prepare" "start"
   for name in names do
     let some mod := (← getWorkspace).findModule? name.toName
       | error s!"registered report module is not in the Lake workspace: {name}"
@@ -289,6 +303,7 @@ package_facet report (pkg : Package) : FilePath := withCurrPackage pkg do
       members := members.insert mod.name
       prepared := prepared.push (← preparedModuleReport mod)
   let batch ← (Job.collectArray prepared).mapM fun artifacts => do
+    observePhase "lake-prepare" "finish"
     let requests := artifacts.filterMap fun request =>
       if request.artifact?.isSome then none else
         some ("produce", request.args.set! 5 (request.file.addExtension "pending").toString)

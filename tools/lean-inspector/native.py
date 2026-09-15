@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+from contextlib import contextmanager
 from functools import lru_cache
 import os
 from pathlib import Path
@@ -11,6 +12,7 @@ import stat
 import subprocess
 import sys
 import tempfile
+import time
 import zipfile
 import zlib
 
@@ -40,6 +42,26 @@ def activity(kind, count):
             target.write(json.dumps({'kind': kind, 'count': count}) + '\n')
 
 
+@contextmanager
+def phase(name):
+    """Flush invocation phase boundaries independently of buffered process IO."""
+    path = os.environ.get('STRATALINT_INSPECTOR_PHASES')
+
+    def emit(boundary, **fields):
+        if path:
+            with Path(path).open('a', encoding='utf-8') as target:
+                target.write(json.dumps(dict(phase=name, boundary=boundary,
+                    monotonic_ms=time.monotonic_ns() // 1_000_000, **fields)) + '\n')
+
+    emit('start')
+    success = False
+    try:
+        yield
+        success = True
+    finally:
+        emit('finish', success=success)
+
+
 def state(root):
     return Path(root) / '.lake/build/lean-inspector'
 
@@ -54,6 +76,7 @@ def write_if_changed(path, data):
     os.replace(temporary, path)
 
 
+@phase('native-inputs')
 def prepare(root):
     root = Path(root).resolve()
     inputs = selection.Selection(root)
@@ -191,7 +214,8 @@ def produce_batch(requests):
                      '--utility-input', str(utility_file), *triples]
         argument_file = directory / 'arguments.json'
         argument_file.write_text(json.dumps(arguments))
-        subprocess.run([executable, '--request-file', str(argument_file)], cwd=root, check=True)
+        with phase('native-inspect'):
+            subprocess.run([executable, '--request-file', str(argument_file)], cwd=root, check=True)
         raw = public.read_json((directory / 'spool.json').read_bytes())
         if [row['module'] for row in raw['modules']] != sorted(bindings):
             raise ValueError('incomplete native inspection batch')
@@ -222,11 +246,13 @@ def produce_batch(requests):
         print(f'LEAN_INSPECTOR_EXTRACT modules={len(requests)} declarations={sum(len(row["declarations"]) for row in raw["modules"])}')
 
 
+@phase('native-batch')
 def batch(request_file, result_file):
     requests = public.read_json(Path(request_file).read_bytes())
     produce = [args for kind, args in requests if kind == 'produce']
     if produce:
-        produce_batch(produce)
+        with phase('native-produce'):
+            produce_batch(produce)
     statuses = []
     verified_materials = {}
     for kind, args in requests:

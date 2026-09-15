@@ -52,10 +52,14 @@ trap 'exit 130' INT
 trap 'exit 143' TERM
 
 run_phase() {
-  local phase="$1" status=0
+  local phase="$1" status=0 started=$SECONDS
   shift
+  printf 'LEAN_INSPECTOR_PHASE phase=%s boundary=start\n' "$phase"
   (cd "$REPOSITORY" && "$@") > "$LOG_DIR/$phase.stdout.log" 2> "$LOG_DIR/$phase.stderr.log" || status=$?
   printf '%s\n' "$status" > "$LOG_DIR/$phase.exit.log"
+  printf '%s\n' "$((SECONDS - started))" > "$LOG_DIR/$phase.seconds.log"
+  printf 'LEAN_INSPECTOR_PHASE phase=%s boundary=finish exit=%s seconds=%s\n' \
+    "$phase" "$status" "$((SECONDS - started))"
   if [[ "$status" != 0 ]]; then
     printf 'LEAN_INSPECTOR_FAILED phase=%s exit=%s\n' "$phase" "$status" >&2
     cat "$LOG_DIR/$phase.stdout.log" "$LOG_DIR/$phase.stderr.log" >&2
@@ -73,6 +77,8 @@ mv -f -- "$STARTUP_LOG_DIR"/* "$FINAL_LOG_DIR/"
 LOG_DIR="$FINAL_LOG_DIR"
 export STRATALINT_INSPECTOR_ACTIVITY="$LOG_DIR/native-work.jsonl"
 : > "$STRATALINT_INSPECTOR_ACTIVITY"
+export STRATALINT_INSPECTOR_PHASES="$LOG_DIR/native-phases.jsonl"
+: > "$STRATALINT_INSPECTOR_PHASES"
 # The package facet demands all ordinary defaults/audits and owns module work.
 # The writer owns the private clonefile-seeded .lake through the native build.
 run_phase report "$REPOSITORY/tools/scripts/worktree/lean-cache-run.sh" "$LAKE" build :report
