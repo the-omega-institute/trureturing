@@ -1,0 +1,51 @@
+**命题 126.1（同层柱集组合预算的精确极小极大值）。** 对 $\nu\in\operatorname{Prob}(S_K)$ 定义
+$$
+d_M(\nu,\mu)=\sup_{n\ge1}\,
+\max_{\substack{J\subseteq W_n\\|J|\le M}}
+\left|\nu\left(\bigcup_{u\in J}[u]\right)
+      -\mu\left(\bigcup_{u\in J}[u]\right)\right|.
+$$
+每个 $J$ 中的柱集必须有同一个深度 $n$，空 $J$ 允许。则
+$$
+\min_{\nu\in\operatorname{Prob}(S_K)}d_M(\nu,\mu)
+=\min\left(1,\frac{M}{D_K}\right).
+$$
+若 $M<D_K$，唯一经典最优分布是 $U_K$；若 $M\ge D_K$，全部 $\nu$ 的误差均为 $1$。后一情形在 $K\ge1$ 时不唯一，在 $K=0$ 时定义域本身只有 $\delta_{0^\infty}=U_0$。对 $U_K$，任一有限深度的上述事件差都严格小于所列上确界，故不能把对深度的 $\sup$ 换成 $\max$。
+
+证明。将 $D=D_K$ 个原子质量排序为 $p_1\ge\cdots\ge p_D\ge0$，令 $m=\min(M,D)$、$T_m=\sum_{i=1}^mp_i$。在每个 $n>K$，前 $m$ 个原子的深度 $n$ 前缀给两两不交的隔离柱，每柱在 $\mu$ 下均有质量 $\alpha^n$，故
+$$
+d_M(\nu,\mu)\ge |T_m-m\alpha^n|.
+$$
+令 $n\to\infty$，得到 $d_M(\nu,\mu)\ge T_m\ge m/D$，最后一步是最大 $m$ 个质量的平均值不小于全部质量的平均值。
+
+下面证明 $U_K$ 的上界。若 $1\le n\le K$、$u\in W_n$ 且 $b=u_{n-1}$，合法延长计数给
+$$
+U_K([u])=\frac{F_{K-n+2-b}}{D_K}.
+$$
+末位零时可接任意长度 $K-n$ 的合法尾字；末位一且仍需延长时，下一位被迫为零。这两种计数也包含 $n=K$ 时的空延长，分别为 $F_2=F_1=1$。置 $r=K-n+2-b$、$s=K+2$，则 $1\le r<s$、$s-r=n+b$。Binet 公式给
+$$
+F_r-\alpha^{s-r}F_s
+=\frac{-(-\alpha)^r+\alpha^{s-r}(-\alpha)^s}{\sqrt5},
+\qquad
+\left|F_r-\alpha^{s-r}F_s\right|
+\le\frac{2\alpha}{\sqrt5}<1.
+$$
+因此每个这样的柱误差严格小于 $1/D_K$。
+
+若 $n>K$，每个柱在 $U_K$ 下的质量为零或 $1/D_K$，而
+$$
+0<\mu([u])\le\alpha^n\le\alpha^{K+1}<\frac1{D_K}
+\qquad(u\in W_n).
+$$
+最后一个严格不等式在 $K=0$ 时是 $\alpha<1$；在 $K\ge1$ 时，深度 $K$ 的柱权重 $\alpha^K$ 与 $\alpha^{K+1}$ 均出现且总和为一，故其平均值满足
+$$
+\alpha^{K+1}<\frac1{D_K}<\alpha^K.
+$$
+这也使每个深柱误差严格小于 $1/D_K$。同层柱集互不相交，对至多 $M$ 项求和并用三角不等式，得到事件差至多 $M/D_K$；概率差又至多为一。结合下界即得最优值。$M<D_K$ 时，有限深度事件差严格小于 $M/D_K$；$M\ge D_K$ 时，有限层的 $\mu_n$ 对每个合法词赋正质量，所以不存在两概率相差为一的事件，仍严格小于上确界一。
+
+当 $M<D$ 且 $\nu$ 最优时，下界迫使 $T_M=M/D$。于是
+$$
+\sum_{i\le M<j}(p_i-p_j)=D T_M-M=0.
+$$
+每项非负，故所有跨越分界的差均为零；两侧均非空，遂使全部质量相等，证明唯一性。若 $M\ge D$，下界已为一，概率上界给每个 $\nu$ 都取一，包括 $K=0$ 的单点定义域。
+
