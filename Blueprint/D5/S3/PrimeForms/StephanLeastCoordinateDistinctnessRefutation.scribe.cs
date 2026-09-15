@@ -39,7 +39,11 @@ internal sealed class StephanLeastCoordinateDistinctnessRefutationDocument
                     + "and the absence of a natural square strictly between 625 and 676. Thus "
                     + "628 and 673 share the least first coordinate 12.",
                 "result", DescribeRole.Theorem,
-                AssessedProvenance.FromRepo(Source)))));
+                AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "oeis-a229140-stephan-least-coordinate-distinctness-refutation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(
         string id,
@@ -48,10 +52,11 @@ internal sealed class StephanLeastCoordinateDistinctnessRefutationDocument
         string prose,
         string declaration,
         DescribeRole role,
-        AssessedProvenance provenance) => Describe.Lean(
+        AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
             H(title), StatementSource.FromAuthor(formula), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula IsLeastCoordFormula()
     {

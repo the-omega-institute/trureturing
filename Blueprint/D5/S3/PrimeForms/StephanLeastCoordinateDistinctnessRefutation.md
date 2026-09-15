@@ -34,6 +34,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/PrimeForms/StephanLeastCoordinateDistinctnessRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a229140-stephan-least-coordinate-distinctness-refutation` (refuted) by `D5/S3/PrimeForms/StephanLeastCoordinateDistinctnessRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a229140-stephan-least-coordinate-distinctness-refutation","declaration_gid":"D5/S3/PrimeForms/StephanLeastCoordinateDistinctnessRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Ralf Stephan (2013). *OEIS A229140, Smallest k such that k^2 + l^2 = n-th number expressible as sum of two squares*. URL: <https://oeis.org/A229140>.
