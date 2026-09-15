@@ -42,6 +42,8 @@ Inspector 的可复用工件由 [Lake facets](lakefile.lean) 管理，均在当�
 `make lean-cache-to-github-without-mathlib`）必须通过同一 `inspect.sh` 入口生成或
 复用并完整校验当前报告，然后由 `lake pack` 打包根 buildDir；不另跑一轮完整
 `lake build`。输入、生成或校验失败即发布失败，即使对应 tag 已存在也不能跳过。
+只有已发布的 exact release 才返回 `exists`；上传中的可读 draft 或无效发布元数据
+会明确报错，不接管、删除或修改其他发布者的 release。
 手动发布仍须显式提供 `GITHUB_SHA`（产出提交的 40 位 SHA）和 `GITHUB_RUN_ID`
 （归属编号），以及 GitHub 发布凭据；本地需要钉版 Lean、.NET SDK 和 Python 3。
 

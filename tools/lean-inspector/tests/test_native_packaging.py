@@ -158,7 +158,10 @@ root = Path(os.environ['RELEASE_FIXTURE'])
 root.mkdir(exist_ok=True)
 a = sys.argv[1:]
 if a[:2] == ['release', 'view']:
-    raise SystemExit(0 if (root / a[2]).is_dir() else 1)
+    if not (root / a[2]).is_dir(): raise SystemExit(1)
+    if '--json' in a:
+        print(json.dumps(dict(isDraft=False, tagName=a[2])))
+    raise SystemExit(0)
 if a[:2] == ['release', 'list']:
     print('\\n'.join(p.name for p in sorted(root.iterdir(), key=lambda p: p.stat().st_mtime_ns, reverse=True)))
 elif a[:2] == ['release', 'create']:
@@ -185,7 +188,7 @@ else:
 
     def release_run(self, verb, success=True):
         # Run outside the repository; explicit repository paths must be sufficient.
-        result = subprocess.run(['/bin/bash', str(self.root / 'tools/scripts/worktree/lean-cache-publish.sh'),
+        result = self.guarded_command(['/bin/bash', str(self.root / 'tools/scripts/worktree/lean-cache-publish.sh'),
             verb, '--repository', str(self.root)], cwd=self.root.parent, env=self.env,
             text=True, capture_output=True, timeout=120)
         self.assertEqual(result.returncode == 0, success, result.stdout + result.stderr)
@@ -214,7 +217,7 @@ else:
         self.assertIn('"resolved":"' + legacy + '"', restored.stdout)
         self.assertFalse((self.root / '.lake/build/lean-inspector/report.zip').exists())
         # The documented manual path must prepare a report despite the legacy tag.
-        first = subprocess.run(['make', 'lean-cache-to-github-without-mathlib'], cwd=self.root,
+        first = self.guarded_command(['make', 'lean-cache-to-github-without-mathlib'], cwd=self.root,
             env=self.env, text=True, capture_output=True, timeout=120)
         self.assertEqual(first.returncode, 0, first.stdout + first.stderr)
         self.assertIn('"status":"published"', first.stdout)

@@ -166,7 +166,17 @@ case "$VERB" in
     "$repository/tools/lean-inspector/inspect.sh" --repository "$repository" \
       --output "$repository/.lake/build/stratalint/raw-lean-report.json"
     [[ -d "$repository/.lake/build" ]] || die "Inspector produced no root buildDir"
-    if gh release view "$tag" --repo "$REPO" >/dev/null 2>&1; then
+    if release_metadata="$(gh release view "$tag" --repo "$REPO" --json isDraft 2>/dev/null)"; then
+      # gh creates a readable draft while uploading. Only a published exact
+      # release satisfies this result; leave another publisher's draft alone.
+      release_draft="$(jq -er 'if type == "object" and (.isDraft | type) == "boolean"
+        then .isDraft | tostring else error("invalid isDraft") end' <<< "$release_metadata")" \
+        || die "invalid release metadata for exact tag $tag: expected boolean isDraft"
+      case "$release_draft" in
+        false) ;;
+        true) die "exact release $tag is an incomplete draft; retry after its publisher finishes" ;;
+        *) die "invalid release metadata for exact tag $tag: expected one isDraft value" ;;
+      esac
       printf 'LEAN_CACHE_PUBLISH {"status":"exists","tag":"%s"}\n' "$tag"
       exit 0
     fi
