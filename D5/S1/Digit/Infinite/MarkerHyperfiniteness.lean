@@ -143,17 +143,8 @@ theorem marker_hyperfiniteness :
       exact hr
     · intro h
       exact ⟨t.val,h,htc⟩
-  have marker_arc (n : ℕ) :
-      (markerU n).Nonempty ∧ IsOpen (markerU n) ∧
-      Set.InjOn (fun r : ℝ => (r : MarkerCircle)) (Ioo 0 (markerEll n)) := by
-    have hb := ell_bounds n
-    refine ⟨?_,?_,?_⟩
-    · exact ⟨((markerEll n / 2 : ℝ) : MarkerCircle),⟨markerEll n / 2,⟨by linarith,by linarith⟩,rfl⟩⟩
-    · exact QuotientAddGroup.isOpenMap_coe _ isOpen_Ioo
-    · intro x hx y hy he
-      exact (AddCircle.coe_eq_coe_iff_of_mem_Ico
-        (show x ∈ Ico (0 : ℝ) (0+1) from ⟨hx.1.le,by linarith [hx.2]⟩)
-        (show y ∈ Ico (0 : ℝ) (0+1) from ⟨hy.1.le,by linarith [hy.2]⟩)).mp he
+  have marker_open (n : ℕ) : IsOpen (markerU n) :=
+    QuotientAddGroup.isOpenMap_coe _ isOpen_Ioo
   have marker_decreasing : Antitone markerU := by
     intro m n h c hc
     obtain ⟨r,hr,he⟩ := hc
@@ -182,10 +173,8 @@ theorem marker_hyperfiniteness :
     have hs := Nat.find_spec (odd_small_exists n)
     exact ⟨hs.1, hs.2.1, pow_pos (inv_pos.mpr Real.goldenRatio_pos) _, hs.2.2⟩
   have marker_geometry :
-      (∀ n, (markerU n).Nonempty ∧ IsOpen (markerU n)) ∧
-      Antitone markerU ∧ (⋂ n, markerU n) = ∅ :=
-    ⟨fun n => ⟨(marker_arc n).1,(marker_arc n).2.1⟩,
-      marker_decreasing,marker_empty_inter⟩
+      (∀ n, IsOpen (markerU n)) ∧ Antitone markerU ∧ (⋂ n, markerU n) = ∅ :=
+    ⟨marker_open,marker_decreasing,marker_empty_inter⟩
   have coefficient (j : ℕ) :
       (-1 : ℝ) ^ (j + 1) * alpha ^ (j + 2) =
       Real.goldenRatio * (Nat.fib (j + 2) : ℝ) - (Nat.fib (j + 3) : ℝ) := by
@@ -293,7 +282,7 @@ theorem marker_hyperfiniteness :
       by_contra hn
       exact hadj k (by omega) (by omega) hm
   have f_equivalence (n : ℕ) : Equivalence (markerF n) := by
-    letI : Std.Symm (fun x y => remainingEdge n x y ∨ remainingEdge n y x) :=
+    let : Std.Symm (fun x y => remainingEdge n x y ∨ remainingEdge n y x) :=
       ⟨fun _ _ h => h.symm⟩
     unfold markerF
     exact ⟨fun _ => .refl, fun h => symm h, fun h h' => h.trans h'⟩
@@ -427,7 +416,7 @@ theorem marker_hyperfiniteness :
     | nil => exact MeasurableSet.univ
     | cons b bs ih =>
       have h : MeasurableSet {x | allowed n b x} := by
-        have hm := (marker_geometry.1 n).2.measurableSet.compl
+        have hm := (marker_geometry.1 n).measurableSet.compl
         cases b
         · exact hm.preimage (continuous_step false).measurable
         · exact hm
@@ -438,7 +427,7 @@ theorem marker_hyperfiniteness :
     have hrepr : {p : MarkerCircle × MarkerCircle | markerF n p.1 p.2} =
         ⋃ bs : List Bool, {p | valid n bs p.1 ∧ p.2 = walk bs p.1} := by
       ext p
-      simp only [Set.mem_setOf_eq,Set.mem_iUnion,f_words]
+      simp only [Set.mem_ofPred_eq,Set.mem_iUnion,f_words]
     rw [hrepr]
     apply MeasurableSet.iUnion
     intro bs
@@ -447,7 +436,7 @@ theorem marker_hyperfiniteness :
   have exhaustion : ∀ t s, ER t s ↔ ∃ n, markerF n t s := by
     have disappears (x : MarkerCircle) : ∃ n, x ∉ markerU n := by
       by_contra h
-      push_neg at h
+      push Not at h
       have hx : x ∈ ⋂ n, markerU n := Set.mem_iInter.mpr h
       rw [marker_geometry.2.2] at hx
       exact hx
@@ -592,8 +581,8 @@ theorem marker_hyperfiniteness :
           (class_bound n (phase x)).2)
   have g_borel (n : ℕ) : BorelEquivalence (markerG n) := by
     refine ⟨g_equivalence n,?_⟩
-    letI : MeasurableSpace (LegalDigits × LegalDigits) := borel _
-    letI : BorelSpace (LegalDigits × LegalDigits) := ⟨rfl⟩
+    let : MeasurableSpace (LegalDigits × LegalDigits) := borel _
+    let : BorelSpace (LegalDigits × LegalDigits) := ⟨rfl⟩
     have hf := (f_borel n).2
     rw [← (inferInstance : BorelSpace (MarkerCircle × MarkerCircle)).measurable_eq] at hf
     exact hf.preimage
@@ -601,7 +590,7 @@ theorem marker_hyperfiniteness :
         (h_continuous.comp continuous_snd)).measurable)
 
   have gex : ∀ x y, ET x y ↔ ∃ n, markerG n x y := pullback_exhaustion exhaustion
-  refine ⟨fun n => (marker_geometry.1 n).2,marker_geometry.2.1,marker_geometry.2.2,
+  refine ⟨fun n => (marker_geometry.1 n),marker_geometry.2.1,marker_geometry.2.2,
     visit_bound,visit_consequences,fun n => ⟨f_borel n,class_bound n⟩,f_monotone,exhaustion,
     fun n => ⟨g_borel n,g_bound n⟩,g_monotone,gex,?_,?_⟩
   · exact ⟨markerF,f_monotone,fun n => ⟨f_borel n,fun t => (class_bound n t).1⟩,exhaustion⟩
