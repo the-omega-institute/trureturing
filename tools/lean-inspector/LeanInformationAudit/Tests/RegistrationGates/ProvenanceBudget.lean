@@ -110,9 +110,9 @@ run_cmd Elab.Command.liftCoreM do
   else
     logError m!"[FAIL] ProvenanceWorkFuelBoundary: exact={enough}, below={exhausted}, fuel={total}"
 
--- This dependent output family is larger than every InformationRoot query.
--- Check the actual registration so a cap derived from only the smaller root
--- cannot silently publish an IE-C050 diagnostic for this accepted readout.
+-- The shadow adapter contains an unsupported abstract dependent carrier. Keep
+-- that rejection separate from the budget control on the same theorem's
+-- concrete InformationRoot realization. No corpus-specific type admission.
 run_cmd Elab.Command.liftCoreM do
   let root := `D5.S3.ConceptDynamics.InformationEscape.TemplateShadow
   let theoremName :=
@@ -120,8 +120,30 @@ run_cmd Elab.Command.liftCoreM do
   let some entry := (InformationRegistry.entries (← getEnv)).find?
       (fun entry => entry.registrationModuleName == root && entry.theoremName == theoremName)
     | throwError "[FAIL] TemplateShadowReadoutBudget: missing registration"
+  let firstTrace := (← getTraces).size
   let actual ← withOptions (·.set `trace.InformationProvenance.check true) <|
     provenanceErrorCurrent root entry.effectiveCatalogId theoremName entry.realizationName
-  if actual.isSome then
-    throwError "[FAIL] TemplateShadowReadoutBudget: {actual}"
+  let mut firstCarrier : Option Nat := none
+  let mut firstBudget : Option Nat := none
+  for (trace, index) in (← getTraces).toArray[firstTrace:].toArray.zipIdx do
+    let message ← trace.msg.toString
+    if firstCarrier.isNone && message.contains "unclassified_abstract_carrier family=D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization" &&
+        message.contains "field_type=(i :" then firstCarrier := some index
+    if firstBudget.isNone && message.contains "cause=expression_budget" then
+      firstBudget := some index
+  unless actual.any (·.contains "reason=incomplete_closure provenance=null") &&
+      firstCarrier.any (fun index => firstBudget.all (index < ·)) do
+    throwError "[FAIL] TemplateShadowAbstractCarrierRejected: {actual}"
+  logInfo "[PASS] TemplateShadowAbstractCarrierRejected"
+  let shadowCounts ← getProvenanceCounters
+  logInfo m!"TemplateShadowRejection charged_visits={shadowCounts.chargedVisits} budget_exhausted={firstBudget.isSome}"
+  let concreteRoot := `D5.S3.ConceptDynamics.InformationEscape.InformationRoot
+  let some concrete := (InformationRegistry.entries (← getEnv)).find?
+      (fun row => row.registrationModuleName == concreteRoot && row.theoremName == theoremName)
+    | throwError "[FAIL] TemplateShadowReadoutBudget: missing concrete counterpart"
+  let result ← provenanceErrorCurrent concreteRoot concrete.effectiveCatalogId theoremName concrete.realizationName
+  let counts ← getProvenanceCounters
+  unless result.isNone && counts.chargedVisits > 0 &&
+      counts.chargedVisits < provenanceExpressionFuel do
+    throwError "[FAIL] TemplateShadowReadoutBudget: concrete={result} counts={repr counts}"
   logInfo "[PASS] TemplateShadowReadoutBudget"
