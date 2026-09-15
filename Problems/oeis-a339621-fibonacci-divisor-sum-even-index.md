@@ -22,16 +22,19 @@ OEIS A339621 records these lines verbatim:
 ```
 
 Formally, let `FibValues(N)` be the finite set of distinct positive Fibonacci
-values dividing `N`, so the value 1 occurs once. For every natural `m`, if
-`sum(FibValues(m^2 + 1)) = F_r` for some positive index `r`, then there is a
-positive integer `q` such that `sum(FibValues(m^2 + 1)) = F_(2q)`.
+values dividing `N`, so the value 1 occurs once. Every positive Fibonacci value
+has a unique canonical index `r >= 2`. For every natural `m`, if
+`sum(FibValues(m^2 + 1))` is a Fibonacci value and `r >= 2` is its canonical
+index, then there is a positive integer `q` such that
+`sum(FibValues(m^2 + 1)) = F_(2q)`.
 
 ## Motivation
 
 The conjecture asks whether a divisibility-defined set can sum to a Fibonacci
-number of odd index. Carlitz's classification answers the stronger question
-for every finite set of distinct Fibonacci values that contains 1, without
-using the square-plus-one form.
+value with odd canonical index `r >= 3`, equivalently one with no even-index
+representation. Carlitz's classification answers the stronger question for
+every finite set of distinct Fibonacci values that contains 1, without using
+the square-plus-one form.
 
 ## Gap
 
@@ -45,16 +48,21 @@ literature-attested as an immediate corollary rather than an open target.
 Carlitz proves `R(F_r) = floor(r/2)` and lists all representations as
 `S_(r,k) = {F_(r-2k)} union {F_(r-2j-1) : 0 <= j < k}`.
 The A339621 divisor set is finite, has distinct Fibonacci values, and contains 1.
-If its sum is `F_r`, it is therefore one of Carlitz's sets `S_(r,k)`.
-Among those sets, a representation contains the value 1 exactly when `r` is even.
-Hence `r = 2q` for some positive `q`, which is precisely membership in A001906.
-No property special to `m^2 + 1` is needed.
+If its sum is a Fibonacci value, choose its unique canonical index `r >= 2`;
+the divisor set is then one of Carlitz's sets `S_(r,k)`. Among those classified
+representations, one that contains the value 1 can occur only when `r` is even.
+Hence an even-index representation `F_r = F_(2q)` exists for some positive
+`q`, which is precisely membership in A001906. No property special to
+`m^2 + 1` is needed. For `m = 0`, the sum is 1; its canonical index is 2 even
+though the same value also equals `F_1`.
 
 ## Falsifier
 
 A counterexample would be a natural `m` whose distinct Fibonacci divisors of
-`m^2 + 1`, counting 1 once, sum to `F_r` for an odd positive index `r`. Such a
-set would contradict Carlitz's complete representation classification.
+`m^2 + 1`, counting 1 once, sum to a Fibonacci value that has no even-index
+representation. Equivalently, the value's canonical index `r >= 2` would be
+odd, and hence `r >= 3`. Such a set would contradict Carlitz's complete
+representation classification.
 
 ## Evidence
 
