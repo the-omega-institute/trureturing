@@ -125,6 +125,23 @@ classes is precisely the extra obligation addressed by the common-density
 and weighted-root arguments below; the numerical product alone does not
 supply that obligation. No duplicate Lean declaration is introduced.
 
+More generally, if `mu` is any probability on an odd period `Q` and `u`
+is uniform on `Z/2^a Z`, the actual-layout transfer and a product maximizing
+layout give the exact identity
+
+\[
+ \Gamma_{Q2^a}(\mu\otimes u)
+ =\Gamma_Q(\mu)\sum_{j=0}^a(2j+1)2^{-j}.
+\]
+
+The case `a=0` is immediate; otherwise the upper bound is (T1) with `delta=0`; for the lower bound choose a
+maximizing old layout at every new exponent and nested dyadic cylinders.
+At `a=4`, the multiplier is `83/16`, whereas the reciprocal-divisor
+multiplier is `31/16`. Thus the exact link through 5040 preserves the
+second-moment weights; replacing them by the divisor-sum weights would
+change the quantity being bounded. The same argument works for any new
+prime. It does not require a new Lean declaration.
+
 The existing unique optimum at 5040 concerns the objective
 `log(σ(N)/N)−(1/25)log N`, not an optimization over survivor probabilities.
 Similarly, [robin_seven_smooth](../D5/S3/Arith/Robin/SevenSmooth.lean) bounds
@@ -450,6 +467,109 @@ The rectangle component of (W1) is formalized as stated above. The exact
 clipped-kernel formula (W2), its consequences (W3)–(W5), and the full
 divisor-layout embedding have not been formalized in Lean.
 A uniform accumulated improvement sufficient for Γ73 remains unproved.
+
+### Forced loss on an actual pure-prime forbidden root
+
+Let Q=3^a M with a>=1 and gcd(3,M)=1. Let U be uniform on Z/QZ,
+B the actual forbidden union, and s=U(B^c)>0. Suppose B contains an
+actual class A=r mod 3. For every complete test layout L, let T be its
+subload indexed by the divisors of M, including 1. Then L>=T>=1 and the
+law of the M-coordinate conditional on A is uniform.
+
+Write
+
+    Z_M = sum_{d|M} 1/d = product_{p|M}(1+S_p),
+    C_M = sum_{d,e|M, gcd(d,e)=1} 1/(de)
+        = product_{p|M}(1+2S_p),
+    S_p = sum_{j=1}^{v_p(M)} p^(-j).
+
+Every diagonal term in E(T^2) has mass 1/d, and every pair of distinct
+coprime test moduli intersects with mass 1/(de), independently of the
+chosen residues. All remaining intersections have nonnegative mass.
+Therefore every complete cofactor layout satisfies
+
+    E_U(T^2) >= Z_M+C_M-1.                         (1)
+
+This is a lower bound on all complete layouts, not the maximum Gamma.
+Since L^2>=1 on B\A as well, the total forbidden loss obeys
+
+    integral_B L^2 dU >= U(B)+(Z_M+C_M-2)/3.       (2)
+
+The ordinary complete-layout uniform maximum is
+
+    K_Q = product_{p|Q}[1+sum_{j=1}^{v_p(Q)}(2j+1)p^(-j)].
+
+Combining (2) with this exact maximum gives a parameterized survivor bound
+
+    Gamma(U conditioned on B^c)
+      <= 1+[K_Q-1-(Z_M+C_M-2)/3]/s.               (3)
+
+The extra loss is positive whenever M>1. It strengthens the bound using
+only the total deleted mass. It is valid for arbitrary finite exponents
+and all test cofactors, with no alignment assumption.
+
+#### Sharpness of the cofactor lower bound
+
+For P=prime support of M, suppose p-1>=2^(|P|-1) for every p in P.
+This includes P contained in {5,7,11}. For each p, assign different nonzero
+digits c_p(S) in {1,...,p-1} to the supports S contained in P with p in S.
+For a divisor d with support S and exponent e>0 at p, choose by CRT
+
+    a_d = c_p(S) p^(e-1) mod p^e.
+
+Two such p-prefixes of different depths are disjoint; prefixes of the same
+depth and different support labels are also disjoint. Thus distinct
+divisors sharing a prime have disjoint test classes. Coprime pairs have
+the forced intersection 1/(de). This constructs a complete layout attaining
+(1), so its lower bound is exact for arbitrary heights on {5,7,11}.
+
+#### Comparison with the current head estimates
+
+The existing same-family density bounds imply
+
+    s_357 >= 5/42,   s_35711 >= 1591/30240.
+
+For example s_35>=1/4 follows from the two-root budget; subsequent factors
+are (5/6)(1-(15/7)/5) and (9/10)(1-(1649/360)/9).
+
+The numerator of (3) is increasing in every finite height: for an exponent
+increment in M, K-local factors dominate both Z-local and C-local factors,
+and the K increment has coefficient 2j+1>=3. Hence the infinite-height
+values give valid bounds simultaneously, without mixing incompatible maxima.
+
+For support {3,5,7}:
+
+    K_Q <= 35/4, Z_M ->35/24, C_M ->2,
+    extra loss ->35/72,
+    resulting universal bound from (3): 3721/60.
+
+For support {3,5,7,11}:
+
+    K_Q <=231/20, Z_M ->77/48, C_M ->12/5,
+    extra loss ->481/720,
+    resulting universal bound from (3): 300421/1591.
+
+These improve the bare deleted-mass bounds 661/10 and 320623/1591,
+respectively. They do not improve the existing survivor bounds 481/12
+and 5015891/47730. The absent-modulus-3 case uses the already stronger
+existing unsplit branch. No new best head constant results.
+
+#### Why this does not automatically improve the pure-survivor base
+
+Suppose the actual family contains 0 mod p for each p in P, and let nu
+be the product of the pure-prime survivor laws. Choose every nonunit test
+residue to be 0. Every nonunit test cylinder then lies in an actual pure
+forbidden root, so the complete test load is identically 1 on nu's support.
+For any additional mixed forbidden union D of positive nu-mass,
+
+    integral_D L^2 dnu = nu(D).
+
+Thus no positive extra loss valid for every test layout can be imported
+into this already conditioned base. A useful improvement there must
+couple the extra loss to how close the test layout is to maximizing its
+moment. Such a uniform high-load tradeoff is not established here.
+
+These are ordinary mathematical proofs. No new Lean declaration is supplied.
 
 ### Actual forbidden-class projection and its open quantitative input
 
@@ -1931,6 +2051,86 @@ cylinder inequalities are the sixteen used dual rows; no omitted solver
 state is needed to check the result. No Lean kernel certification is
 claimed for this mathematical proof.
 
+### A positive atomic representation of the extremal three-prime densities
+
+The density coordinates used by the exact R357=1649/360 relaxation
+certificate are
+
+    (t,v35,v37,v57)=(21/8,7/4,21/10,103/40).
+
+They admit a genuine positive probability space for the abstract subsystem
+survival events. Consequently, adding Gram positivity or higher moment
+positivity for those events alone cannot exclude this density point.
+This probability space is not asserted to arise from actual residue
+classes; it does not rule out an improvement using CRT compatibility or
+the actual cylinder indicators.
+
+Let Ω have five atoms. The table gives their probabilities and indicators
+of E357, E35, E37, E57:
+
+| Probability | E357 | E35 | E37 | E57 |
+|---:|---:|---:|---:|---:|
+| 8/21 | 1 | 1 | 1 | 1 |
+| 1/15 | 0 | 1 | 1 | 1 |
+| 2/105 | 0 | 1 | 1 | 0 |
+| 1/5 | 0 | 1 | 0 | 1 |
+| 1/3 | 0 | 0 | 1 | 1 |
+
+All probabilities are strictly positive and their sum is one. Direct
+summation gives
+
+    λ357=8/21, λ35=2/3, λ37=4/5, λ57=103/105.
+
+Dividing by λ357 gives exactly the displayed density coordinates.
+Moreover,
+
+    P(E35∩E37)=49/105,
+    P(E35∩E57)=68/105,
+    P(E37∩E57)=82/105,
+    P(E35∩E37∩E57)=47/105.
+
+Thus the pair-survival failures have disjoint masses 1/3, 1/5, and
+2/105<=1/15; the extra failure of full three-prime survival has mass
+1/15. These satisfy the exact-support budgets. Every union-of-subsystems
+inequality derived only from those budgets is therefore valid on this
+atomic model. The three prime-adjoining bounds also hold:
+
+    λ357=(4/7)λ35,
+    λ357 >= (6/13)λ37 = 24/65,
+    λ357 >= (5/14)λ57 = 103/294.
+
+For a concrete matrix certificate, put Y=(1,1_E357,1_E35,1_E37,1_E57).
+The normalized Gram matrix M=E[YYᵀ]/λ357 is
+
+    [ 21/8   1   7/4    21/10   103/40 ]
+    [ 1      1   1      1       1      ]
+    [ 7/4    1   7/4    49/40   17/10  ]
+    [ 21/10  1   49/40  21/10   41/20  ]
+    [ 103/40 1   17/10  41/20   103/40 ].
+
+Its positive rank-one decomposition uses the five table vectors, prefixed
+by 1, with weights
+
+    1, 7/40, 1/20, 21/40, 7/8.
+
+For every real vector z,
+
+    zᵀMz = sum_ω weight(ω) (z·Y(ω))² >= 0.
+
+In fact M is positive definite: the five vectors span R⁵. Subtracting the
+second vector from the first isolates the E357 coordinate; subtracting
+each of the last three vectors from the second isolates the other three
+event coordinates; the constant coordinate follows. Hence a zero quadratic
+form forces z=0. No numerical eigenvalue calculation is needed.
+
+For arbitrary polynomial functions f₁,...,f_m of these indicators, the
+same identity shows the moment matrix E[f_i f_j] is positive semidefinite.
+All Boolean relations and inclusions E357⊆E35∩E37∩E57 hold pointwise.
+The obstruction therefore applies to every order of abstract subsystem
+moment positivity, not merely to a second-order PSD relaxation. It does
+not apply to matrices that additionally encode realizable congruence
+intersections or conditional root-residue profiles.
+
 ### Nonuniform two-root survivor laws
 
 For every finite family of distinct moduli supported on `{3,5}`, there is a
@@ -2162,6 +2362,119 @@ renormalization. That construction is squarefree and does not directly
 supply (N6)–(N10) for arbitrary powers. The new step here is the weighted
 complete-layout inequality and its continuous distinct-modulus budget
 certificate, not the general linear-programming method.
+
+### Exact tensorization for two fixed depth-two tree shapes
+
+Let `p,q` be distinct odd primes. Consider probability laws on residues
+modulo `p²` and `q²`, each supported on four leaves in two depth-one roots.
+For either of the following two cases, with arbitrary real nonnegative
+probability weights on the four leaves, one has
+
+\[
+ \Gamma_{p^2q^2}(\mu\times\nu)
+   =\Gamma_{p^2}(\mu)\Gamma_{q^2}(\nu).
+ \tag{TT}
+\]
+
+The two cases are separate: both root partitions are `2+2`, or both are
+`3+1`. Leaves may have zero weight. Residues `0,p,1,p+1` realize `2+2`;
+residues `0,p,2p,1` realize `3+1`. The analogous choices work modulo `q²`.
+These statements do not cover a product of different shapes, additional
+roots, higher powers or arbitrary complete-survivor supports. They supply
+no new numerical covering-head bound.
+
+A complete one-coordinate test layout contains divisor one, one chosen
+root cylinder and one chosen leaf cylinder. Root and leaf choices are
+independent; the leaf need not lie in the selected root. Every cylinder
+with zero intersection with the support can be replaced by a supported
+cylinder without decreasing the load. Hence the two roots and four leaves
+give exactly eight relevant one-coordinate choices. If `x` is a probability
+vector, write their squared-load vectors as `s_0,…,s_7`. Then
+
+\[
+ \Gamma(x)=\max_{0\le i<8}s_i\cdot x.
+\]
+
+For `3+1` these vectors, ordered by root and then leaf, are
+
+\[
+ (9,4,4,1),\ (4,9,4,1),\ (4,4,9,1),\ (4,4,4,4),
+\]
+\[
+ (4,1,1,4),\ (1,4,1,4),\ (1,1,4,4),\ (1,1,1,9).
+\]
+
+In particular the nonnested constant-load branch `(4,4,4,4)` is retained.
+For example `(21,21,21,37)/100` has `Γ=4`, attained by selecting the
+three-leaf root and the other root's leaf. Its two nested alternatives have
+values `197/50` and `99/25`, both strictly smaller. The verifier derives
+the corresponding eight vectors directly for each fixed root partition.
+
+For each `i`, let
+
+\[
+ P_i=\{x\ge0:\ \textstyle\sum_jx_j=1,
+                \ (s_i-s_k)\cdot x\ge0\text{ for every }k\}.
+\]
+
+These compact rational polytopes cover the probability simplex, and
+`Γ(x)=s_i·x` on `P_i`. A vertex in this three-dimensional normalization
+hyperplane has three linearly independent active inequalities. Enumerating
+all triples, solving with exact signed minors, normalizing and checking all
+inequalities therefore gives every vertex. Empty and lower-dimensional
+regions are handled by the same enumeration; a nonempty compact polytope
+has a vertex.
+
+A complete product layout chooses one product cylinder independently for
+each exponent pair in `{0,1,2}²`. All nine divisors, including old-only and
+mixed cofactors, are present. The choices total
+
+\[
+ 2\cdot4\cdot2\cdot4\cdot8\cdot4\cdot8\cdot16=262144.
+\]
+
+For any such layout, let `M` be its squared-load matrix on the sixteen
+supported point pairs. Its second moment under `x×y` is `xᵀMy`. On
+`P_i×P_j` the proposed upper-bound margin is
+
+\[
+ (s_i\cdot x)(s_j\cdot y)-x^{\mathsf T}My,
+\]
+
+which is bilinear. Minimizing a linear function on the first polytope and
+then on the second proves that its minimum occurs at a pair of vertices.
+Thus it suffices to compare every complete layout at every pair from the
+union of all local polytope vertices.
+
+The fixed certificate gives these exact counts:
+
+| Root partition | Vertex counts for the eight local regions | Distinct vertices | Vertex pairs | Integer comparisons |
+| --- | --- | ---: | ---: | ---: |
+| `2+2` | `8,8,0,0,0,0,8,8` | 15 | 225 | 58,982,400 |
+| `3+1` | `10,10,10,4,0,0,0,10` | 18 | 324 | 84,934,656 |
+
+The standalone standard-library plus NumPy verifier recomputes every
+polytope vertex using rational arithmetic and checks every displayed
+integer comparison. For every vertex pair, the maximum layout moment
+numerator equals the product of the two local Gamma numerators. These
+checks prove the upper bound in (TT). The reverse inequality follows for
+all weights by choosing the product of two maximizing one-coordinate
+layouts, whose complete product load factors pointwise.
+
+The integer arithmetic has an explicit overflow bound. A full product load
+is between one and nine. After clearing each vertex's denominator, the
+maximum integer weight sum is 27 for `2+2` and 40 for `3+1`. Consequently
+all moment numerators and local-Gamma products are at most
+`81·27²=59049` and `81·40²=129600`, respectively. The verifier checks these
+bounds before and after the `int64` comparisons. It uses explicit errors,
+so optimized Python retains every check.
+
+The [standalone verifier](../docs/reports/erdos7-odd-covering/verify_two_root_tensorization.py)
+and [fixed rational certificate](../docs/reports/erdos7-odd-covering/two_root_tensorization_certificate.json)
+are the complete runtime artifacts. The default invocation verifies
+both fixed shapes; `--shape 2+2` or `--shape 3+1` selects one. This is an
+ordinary mathematical polytope reduction with exact integer verification;
+no Lean formalization or general tensorization theorem is claimed.
 
 ## Falsifier
 
