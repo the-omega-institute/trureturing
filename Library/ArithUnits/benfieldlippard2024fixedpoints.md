@@ -1,7 +1,7 @@
 ---
 bibkey: benfieldlippard2024fixedpoints
 authors: Brennan Benfield, Oliver Lippard
-year: 2024
+year: 2025
 title: "Fixed points of K-Fibonacci sequences"
 doi: 10.1080/00150517.2025.2491986
 url: https://arxiv.org/abs/2404.08194v2
@@ -36,8 +36,10 @@ These counterexamples are supplied by this repository, not by the cited paper.
 
 ## Source locator
 
-The cited text is arXiv:2404.08194v2, 29 July 2024, Section 6, Conjecture 6.5(v)
-and the paragraph immediately following it: https://arxiv.org/abs/2404.08194v2.
-PR #7709 reports publication in The Fibonacci Quarterly (2025) and DOI
-10.1080/00150517.2025.2491986; that journal DOI has not been independently
-resolved here.
+Journal version: The Fibonacci Quarterly 63 (2), 259-274, 2025 (print May 2025;
+online 14 August 2025), DOI 10.1080/00150517.2025.2491986.
+Preprint: arXiv:2404.08194v2, 29 July 2024.
+
+Source boundary: the quoted clause (v) and the critical-prime paragraph are in
+Section 6 ("Final Thoughts") of the preprint; the journal text was not compared
+line by line.
