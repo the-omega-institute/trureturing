@@ -29,7 +29,7 @@ noncomputable def mixedPolynomial (J : ℕ) : ℕ → Polynomial ℕ
   | k+1 => clipPositive J (∑ q ∈ Nat.primesLE J,
       (X ^ q * mixedPolynomial J k + (mixedPolynomial J k).comp (X ^ q)))
 
-/-- Sum the length weights of all histories with a positive endpoint, and set the value at zero to zero. -/
+/-- Sum history length weights at positive endpoints, with value zero at endpoint zero. -/
 noncomputable def weightedCount (r : ℝ) (n : ℕ) : ℝ :=
   if hn : 0 < n then ∑ w ∈ (reachable_finite n hn).2.toFinset, r ^ w.length else 0
 
@@ -120,11 +120,11 @@ theorem mixed_coefficient (J k n : ℕ) (hn : 1 ≤ n) (hnJ : n ≤ J) :
       ext w
       by_cases hn : n = 1
       · subst n
-        simp only [if_pos rfl, Set.mem_setOf_eq, Set.mem_singleton_iff]
+        simp only [Set.mem_ofPred_eq]
         constructor
         · intro h; exact List.length_eq_zero_iff.mp h.2
         · rintro rfl; exact ⟨rfl, rfl⟩
-      · simp only [if_neg hn, Set.mem_setOf_eq, Set.mem_empty_iff_false, iff_false]
+      · simp only [if_neg hn, Set.mem_ofPred_eq, Set.mem_empty_iff_false, iff_false]
         rintro ⟨he, hl⟩
         have hw := List.length_eq_zero_iff.mp hl
         subst w
@@ -136,7 +136,7 @@ theorem mixed_coefficient (J k n : ℕ) (hn : 1 ≤ n) (hnJ : n ≤ J) :
     change ({w : List PrimeLetter | endpoint w = 1 ∧ w.length = k+1} : Set _).ncard = 0
     have hs : ({w : List PrimeLetter | endpoint w = 1 ∧ w.length = k+1} : Set _) = ∅ := by
       ext w
-      simp only [Set.mem_setOf_eq, Set.mem_empty_iff_false, iff_false, endpoint_one]
+      simp only [Set.mem_ofPred_eq, Set.mem_empty_iff_false, iff_false, endpoint_one]
       rintro ⟨rfl, h⟩
       simp at h
     rw [hs]; simp
@@ -173,6 +173,28 @@ theorem mixed_coefficient (J k n : ℕ) (hn : 1 ≤ n) (hnJ : n ≤ J) :
 /-- Every nonempty prime history ends at least twice its length. -/
 theorem sharp_length_bound (w : List PrimeLetter) (hw : w ≠ []) :
     2 * w.length ≤ endpoint w := by
-  sorry
+  have step (a : PrimeLetter) (m : ℕ) (hm : 2 ≤ m) : m+2 ≤ primeStep a m := by
+    cases a with
+    | inl q => have hq := q.property.two_le; change m+2 ≤ m+q.val; omega
+    | inr q => have hq := q.property.two_le; change m+2 ≤ q.val*m; nlinarith
+  have bound (v : List PrimeLetter) (m : ℕ) (hm : 2 ≤ m) :
+      m + 2*v.length ≤ runWord primeStep v m := by
+    induction v generalizing m with
+    | nil => simp [runWord]
+    | cons a v ih =>
+      have hs := step a m hm
+      have hi := ih (primeStep a m) (by omega)
+      simp only [runWord, List.length_cons]
+      omega
+  cases w with
+  | nil => contradiction
+  | cons a v =>
+    have first : 2 ≤ primeStep a 1 := by
+      cases a with
+      | inl q => have hq := q.property.two_le; change 2 ≤ 1+q.val; omega
+      | inr q => simpa [primeStep] using q.property.two_le
+    have h := bound v (primeStep a 1) first
+    simpa only [endpoint, runWord, List.length_cons] using
+      (show 2*(v.length+1) ≤ runWord primeStep v (primeStep a 1) by omega)
 
 end D5.S3.Factorization.Combinatorics.MixedPrimeHistoryGenerating
