@@ -302,7 +302,8 @@ internal sealed class UpstreamProbeVerifier(IUpstreamLeanProcessRunner runner, s
                 if (c == '"')
                 {
                     var end = i + 1;
-                    while (end < source.Length && source[end] == '#') end++;
+                    // Consume exactly the delimiter's k hashes; any extra # is code.
+                    while (end < source.Length && end - i - 1 < rawHashes && source[end] == '#') end++;
                     if (end - i - 1 == rawHashes)
                     {
                         Array.Fill(chars, ' ', i, end - i);
