@@ -1975,3 +1975,115 @@ Consequently the prime indices excluded by M are exactly the distinct prime rank
 **Proposition.** The integers F_7=13 and N=29^2*37^3=42599173 have the same residue four modulo nine. The latter is powerful, is not a perfect power, and its two prime divisors exceed thirteen and are both one modulo four.
 
 **Proof.** The displayed factorizations and residues are exact integer calculations, and the exponents two and three have gcd one. The primes twenty-nine and thirty-seven do not divide F_7 and are not asserted to have rank seven. This example records the distinction between residue compatibility and membership in an actual prime-index Fibonacci block.
+
+
+## Appendix GAW. Linear-index reduction for aligned prime witnesses
+
+### GAW.1. The exact arithmetic objects and linear reduction
+
+**Definition.** Let F_0=0,F_1=1,F_(n+2)=F_(n+1)+F_n. For a prime p, let rho(p) be its least positive Fibonacci zero index. Let pi(q) be the least positive t for which Q^t=I modulo q, where Q=((1,1),(1,0)); this is the Pisano period. For primes q>5 put epsilon_q=(5/q), N_q=q-epsilon_q, h_q=v_q(F_rho(q)) and q_q=F_(N_q)/q modulo q. An aligned prime witness for q is a prime p congruent to one modulo q with rho(p)|pi(q).
+
+**Lemma.** For a prime q other than two and five, pi(q)|q-1 when epsilon_q=1, and pi(q)|2(q+1) when epsilon_q=-1. In particular q does not divide pi(q).
+
+**Proof.** Over the quadratic splitting field, Q has distinct eigenvalues alpha,beta with alpha*beta=-1. In the split case both lie in F_q^*, so their orders divide q-1. In the inert case Frobenius interchanges them, giving alpha^(q+1)=beta^(q+1)=-1 and Q^(q+1)=-I. Hence Q^(2(q+1))=I. These prove the period bounds and coprimality. The same golden Frobenius argument gives rho(p)|p-epsilon_p. These are the classical prime-period and apparition bounds of Wall and Carmichael, not additional exceptional-prime assumptions.
+
+**Theorem.** Let q>5 and p=kq+1 be primes, k>=4, and suppose r=rho(p) divides pi(q). Then
+
+$$
+\begin{array}{c|c}
+(\epsilon_p,\epsilon_q)&\text{necessary index divisibility}\\
+(1,1)\text{ or }(1,-1)&r\mid k\\
+(-1,1)&r\mid k+2\\
+(-1,-1)&r\mid2(k-2).
+\end{array}\tag{GAW1}
+$$
+
+Consequently p divides at least one of F_k,F_(k+2),F_(2(k-2)).
+
+**Proof.** If epsilon_p=1, then r|p-1=kq and gcd(r,q)=1 by the period lemma, so r|k. If epsilon_p=-1 and epsilon_q=1, subtract k(q-1) from kq+2 to obtain r|k+2. If both signs are negative, subtract 2(kq+2) from k*2(q+1) to obtain r|2(k-2). The apparition divisibility criterion and Fibonacci divisibility finish the proof. Odd k are already impossible because p would be even and greater than two.
+
+The all-k question is OQ2 in A. Goel, *Sophie Germain Primes and the Totient of Fibonacci Numbers*, arXiv:2604.17847v3, Section 10, https://arxiv.org/html/2604.17847v3 . Its Theorem 4.2 gives a deterministic multiplier range through 31 and non-exhaustive factor-table evidence through 100. GAW1 uses the signed prime-period bounds to replace the quadratic candidate index k^2-4 by linear indices. The ramified q=5 exception is excluded in that version of the source as well.
+
+### GAW.2. Complete exclusion for multipliers through two hundred
+
+**Theorem.** Let q be an odd prime other than five, and let p=kq+1 be prime with 2<=k<=200. Then
+
+$$
+\boxed{\rho(p)\mid\pi(q)\quad\Longrightarrow\quad k=2.}\tag{GAW2}
+$$
+
+There is no bound on q or p.
+
+**Proof.** For q=3, Q^8=I modulo three and F_8=21. Thus an aligned p divides 21. The conditions p=3k+1 and k>=2 leave only p=7,k=2. Now take q>5 and even 4<=k<=200. By GAW1 it suffices to enumerate every prime divisor of the three indicated Fibonacci numbers.
+
+The complete integer factorization certificate covers the set {k,k+2,2(k-2):4<=k<=200, k even}, containing 149 different indices, all at most 396. It gives all 353 different prime divisors. For each claimed prime n>2, the certificate supplies n-1=product r^e with recursively certified smaller primes r, and an integer a satisfying
+
+$$
+a^{n-1}\equiv1\pmod n,\qquad
+\gcd(a^{(n-1)/r}-1,n)=1\quad(r\mid n-1).\tag{GAW3}
+$$
+
+This is a primality proof: modulo any prime divisor t of n, the order of a is exactly n-1, hence n-1|t-1 and t>=n. Thus t=n. The recursion ends at two. The Fibonacci factorization products equal the actual recurrence values, so no cofactor is omitted. Every composite quotient (p-1)/k>5 has an explicit proper divisor; every prime quotient has the same recursive primality certificate.
+
+After these exact tests, the only candidates are the following. Each row satisfies Q^t=I modulo q and the displayed nonzero residue F_t modulo p.
+
+| k | p | q | t | F_t mod p |
+|---:|---:|---:|---:|---:|
+|54|5779|107|72|2584|
+|70|911|13|28|783|
+|78|859|11|10|55|
+|118|336419|2851|2850|2584|
+|160|3041|19|18|2584|
+|162|3079|19|18|2584|
+|164|2789|17|36|835|
+|174|947104099|5443127|10886256|866005836|
+|194|3299|17|36|2377|
+|198|2179|11|10|55|
+
+These are integer congruences. Since pi(q)|t, any alignment rho(p)|pi(q) would force p|F_t, contradicting the last column. There is no need to prove t is the least period. This excludes every candidate and proves GAW2.
+
+The mathematical data for the finite proof are the complete product, primality and proper-divisor certificates retained at `Evidence/D5/S3/Arith/GoelAlignedWitness200/certificate.json`; its decoded JSON has SHA-256 `0373b90e7386142c3afd0bab7d1272ec9a1a9987321b187a1695de267f910318`. The proof uses the arithmetic identities in the certificate, not an assumption that probable-prime tests succeed. GAW2 is a bounded-multiplier theorem and does not assert the all-k conclusion of OQ2.
+
+**Boundary proposition.** The q=5 exclusion in GAW2 is necessary.
+
+**Proof.** The known ramified example p=41=8*5+1 has rho(41)=20=pi(5). The zero at twenty and the absence of zeros at its proper divisors are exact Fibonacci computations. This is the exception already stated in the source, rather than a new refutation.
+
+### GAW.3. The zero residue of the totient problem retains the actual WSS branch
+
+**Definition.** For a prime q>5 and P=pi(q), let S(q) be the set of residues a modulo P such that q divides Euler's totient tot(F_m) for every positive integer m congruent to a modulo P. Only positive indices are used, so tot(F_0) is never invoked.
+
+**Theorem.** With h_q and q_q as in GAW.1,
+
+$$
+\boxed{
+v_q(\operatorname{tot}(F_P))
+=h_q-1+\sum_{\substack{p\mid F_P\ p\ne q\ p\text{ prime}}}v_q(p-1).
+}\tag{GAW4}
+$$
+
+Consequently
+
+$$
+\boxed{
+0\in S(q)\iff q\mid\operatorname{tot}(F_P)
+\iff q_q=0\ \text{or}\ \exists p\text{ aligned for }q.
+}\tag{GAW5}
+$$
+
+**Proof.** Since rho(q)|P and q does not divide P, the classical Fibonacci valuation formula gives v_q(F_P)=h_q. In tot(F_P)=product p^(v_p(F_P)-1)(p-1), the contribution of p=q is h_q-1. Every other prime p contributes only v_q(p-1). This proves GAW4. If q divides tot(F_P), then it divides tot(F_(uP)) for every u>=1: F_P divides F_(uP), and A|B for positive integers implies tot(A)|tot(B), directly from prime factorization. The reverse implication takes u=1. Nonnegativity in GAW4, the actual WSS criterion h_q>=2 iff q_q=0, and p|F_P iff rho(p)|P prove GAW5.
+
+**Corollary.** For every prime q>5,
+
+$$
+\boxed{0\in S(q)\iff q_q=0\ \text{or}\
+\bigl(2q+1\text{ prime and }\rho(2q+1)\mid\pi(q)\bigr)\ \text{or}\
+\exists p>200q+1:\ p\text{ prime},\ p\equiv1\pmod q,\ \rho(p)\mid\pi(q).}\tag{GAW6}
+$$
+
+**Proof.** Every aligned prime has p=kq+1 for an even k>=2. GAW2 leaves k=2 or k>200. Apply GAW5. Every branch conversely supplies the required totient divisibility.
+
+**Theorem.** Suppose a is a residue in S(q). If rho(q) does not divide a, every positive m congruent to a modulo P has a prime divisor p of F_m with p congruent to one modulo q. If rho(q)|a and h_q=1, at least a fraction (q-1)/q of that progression, measured by its progression parameter, necessarily has such a prime divisor. If rho(q)|a and h_q>=2, then a belongs to S(q) without requiring any such other-prime witness.
+
+**Proof.** In the first case q never divides F_m, so Euler's product forces a different prime p with q|p-1. In the second case v_q(F_m)=1+v_q(m/rho(q)). Because q is coprime to P/rho(q), exactly one progression-parameter class modulo q makes q divide m/rho(q). In the other q-1 classes the q-primary contribution to the totient is zero, so an external witness is forced. In the third case v_q(F_m)>=2 at every such index, and the q-primary factor alone gives the totient divisibility.
+
+The second conclusion is a positive-proportion assertion; it does not say that all but finitely many progression members lack the q^2 contribution. The proof never infers h_q=1 from a finite search for WSS primes. In particular GAW4-GAW6 retain the branch left unproved by that inference in Lemma 4.3 of the cited preprint. None of these identities proves that the WSS branch or the large-witness branch occurs, and none supplies an upper bound for the prime-index powerful-block count H_*(Y).
