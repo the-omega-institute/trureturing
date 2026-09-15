@@ -1,0 +1,6 @@
+**引理。** 设 $P$ 为有限 $\ell$ 群，$\Phi(P)$ 为其 Frattini 子群，则
+
+$$\Phi(P)=[P,P]P^\ell,$$
+
+且 $\operatorname{Aut}(P)\to\operatorname{Aut}(P/\Phi(P))$ 的核是有限 $\ell$ 群。
+

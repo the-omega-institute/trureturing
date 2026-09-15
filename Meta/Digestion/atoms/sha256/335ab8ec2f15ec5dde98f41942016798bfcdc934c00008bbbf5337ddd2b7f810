@@ -1,0 +1,2 @@
+**定理。** 设 $Q$ 为有限群，$P\triangleleft Q$ 为有限 $\ell$ 子群。令 $\mathcal B$ 为所有保持 $P$ 并在 $Q/\Phi(P)$ 上诱导恒等的自同构所成的群。则 $\mathcal B$ 是 $\ell$ 群。因此，任意保持 $P$ 的外自同构子群到 $\operatorname{Out}(Q/\Phi(P))$ 的映射，其核也是 $\ell$ 群。
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:99305b33a59510cce5ecd4810210d319f5b728843f3d3cc26db2119861ede33b
+  normalized_sha256: sha256:99305b33a59510cce5ecd4810210d319f5b728843f3d3cc26db2119861ede33b
+cas_ref: sha256:99305b33a59510cce5ecd4810210d319f5b728843f3d3cc26db2119861ede33b
+coverage_gids:
+  - gid: D5/S3/Arith/GoldenResource/FiniteMultiplicationResponseKernel.eq_plus_iff
+    target_statement_id: sha256:5eb5a3ee6ed7f65e26218fdb5a745e8e276f3e96779cf4b073bcfaa5d1996d74
+receipts:
+  unresolved_subitems: []

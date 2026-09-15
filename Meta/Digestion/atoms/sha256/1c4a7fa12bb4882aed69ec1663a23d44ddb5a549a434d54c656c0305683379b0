@@ -1,0 +1,8 @@
+**定理。** $Q^{\rm mat}_{g,m}$ 有限，其投影核在全部自同态下保持不变。对任意整数 $p,n$，
+
+$$q^{\rm mat}_{g,m}(\tau^n(u))\sim
+q^{\rm mat}_{g,m}(\tau^p(u))
+\quad\Longrightarrow\quad n\equiv p\pmod m,$$
+
+其中 $\sim$ 表示在同一个商群中的共轭。
+

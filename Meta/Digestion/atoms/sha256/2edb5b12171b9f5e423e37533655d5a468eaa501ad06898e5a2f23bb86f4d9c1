@@ -1,0 +1,30 @@
+## 14. 单位上三角特征商的准确周期与六类阈值
+
+**定义。** 用 $V_m=U_7(\mathbb Z/m)$ 替换上一节的全部可逆矩阵群，定义同样的评价像商 $Q^{\rm ut}_{g,m}$ 和满射 $q^{\rm ut}_{g,m}$。
+
+**引理。** $U_7(R)$ 的幂零类至多为 6，其 $\gamma_6$ 包含于中心子群 $\{I+tE_{17}:t\in R\}$。当 $R=\mathbb Z/m$ 时，该子群的每个元素的阶都整除 $m$。
+
+**证明。** 令 $J_r$ 为所有仅可能在 $j-i\ge r$ 处非零的严格上三角矩阵，则 $J_rJ_s\subseteq J_{r+s}$。由有限几何级数的逆矩阵公式，$[1+J_r,1+J_s]\subseteq1+J_{r+s}$。因此 $\gamma_r U_7(R)\subseteq1+J_r$。$J_7=0$，$J_6=R E_{17}$ 且 $J_1J_6=J_6J_1=0$，给出中心性。最后 $(I+tE_{17})^m=I+mtE_{17}=I$。
+
+**定理。** 对每个 $\sigma:\Pi_g\to V_m$ 及每个整数 $n$，
+
+$$\sigma(\tau^n(u))=\sigma(u)\sigma(\delta)^n,$$
+
+其中 $\sigma(\delta)$ 位于中心，且其 $m$ 次幂为单位元。故对全部整数 $p,n$，
+
+$$\boxed{q^{\rm ut}_{g,m}(\tau^n(u))\sim
+q^{\rm ut}_{g,m}(\tau^p(u))
+\quad\Longleftrightarrow\quad n\equiv p\pmod m.}$$
+
+该共轭类轨道恰有 $m$ 个元素。
+
+**证明。** 第 11 节给出 $\delta\in\gamma_6\Pi_g$ 和 $\tau(\delta)\delta^{-1}\in\gamma_8\Pi_g$。每个 $V_m$ 值表示都消去 $\gamma_7\Pi_g$，所以看见的增量是中心元，且在 $\tau$ 下保持不变。在 $\Pi_g/\gamma_7\Pi_g$ 中对正负幂归纳，再经 $\sigma$，得到第一式。增量的 $m$ 次幂为单位元，故参数差被 $m$ 整除时，所有表示的实际像都相等，得到充分性。必要性沿用 $\rho_{-p}$；该表示本来就在 $V_m$ 中，因此仍是此评价族的合法坐标。评价核同样完全不变，故以上是同一个实际特征商上的轨道陈述。
+
+**定理。** 所定义的动力学差满足
+
+$$\boxed{\delta\in\gamma_6\Pi_g\setminus\gamma_7\Pi_g.}$$
+
+因此，对这个指定词 $u$ 和指定动力学 $\tau$，幂零类 6 是检测其变化的准确最小阈值。
+
+**证明。** 第 11 节给出上侧包含。取 $R=\mathbb Z/2$ 和 $t=0$，第 12 节给出 $\rho_0(u)=I$，$\rho_0(\tau(u))=I-E_{17}\ne I$，所以 $\rho_0(\delta)\ne I$。但 $U_7(\mathbb Z/2)$ 消去 $\gamma_7\Pi_g$，故 $\delta\notin\gamma_7\Pi_g$。五类及以下的全部幂零表示均固定该轨道，而这个六类表示已经检测到变化。阈值针对本词的变化；它没有断言所有曲面词、所有扭转或全部有限矩阵群都需要七维表示。
+

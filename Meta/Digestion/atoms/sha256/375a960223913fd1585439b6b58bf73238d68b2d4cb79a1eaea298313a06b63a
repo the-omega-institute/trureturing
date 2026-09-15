@@ -1,0 +1,7 @@
+**定义。** 令 $\pi$ 为有限生成群，$S$ 为非交换有限单群，且 $\operatorname{Epi}(\pi,S)$ 非空。设
+
+$$\mathcal E_S=\operatorname{Epi}(\pi,S)/\operatorname{Aut}(S),\qquad
+N_S=\bigcap_{\rho\in\operatorname{Epi}(\pi,S)}\ker\rho,$$
+
+其中等价关系为在目标端复合自同构。记 $r=|\mathcal E_S|$。该集合也可识别为所有满足 $\pi/N\cong S$ 的正规子群 $N$ 的集合。
+

@@ -1,0 +1,6 @@
+另一独立有效的误差界为 $\Phi(R)\sum_{i<t}|b_i|$。特别地，
+$$
+c_2=\frac14,\quad c_6=\frac29,\quad c_{30}=\frac{16}{75},\quad
+|M(N)|\le\frac{2N}{9}+4.
+$$
+

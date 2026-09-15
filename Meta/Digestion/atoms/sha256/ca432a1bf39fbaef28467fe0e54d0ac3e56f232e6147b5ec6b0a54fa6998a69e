@@ -1,0 +1,16 @@
+**命题 59.4。** 本命题给出 §49 中以「实例」陈述的断言的命题形式与证明；该断言以本命题为准。对 §48 中 $g=2$、$p=2$ 的指定横向覆盖，令 $k\in\mathbb Z\setminus\{0\}$、$q=|k|$。则 $D=16$、$G=17$、$a=b=4$，并且
+$$H_1(\widetilde M;\mathbb Z)\cong\mathbb Z^{26}\oplus(\mathbb Z/q)^4\oplus(\mathbb Z/(4q))^4\oplus\mathbb Z/(16q).$$
+原流形的全部时间循环覆盖的一阶同调均为 $\mathbb Z^5$，而这个十六重横向覆盖的挠子群指数为 $16|k|$。
+
+**证明。** $1\le h<g=2$ 强制 $h=1$，故 §48 的参数在这里为
+$$D=2^{2g}=2^4=16,\qquad G=1+D(g-1)=1+16=17,$$
+$$a=2^{2\min(1,1)}=4,\qquad b=2^{2\max(1,1)}=4,$$
+$$\beta=(a-1)(b-1)=3\cdot3=9,\qquad c=(a-2)(b-2)=2\cdot2=4,$$
+$$R=2G+1-\beta=2\cdot17+1-9=26.$$
+将 §48 的同调分解逐项代入 $q=|k|$ 得
+$$\mathbb Z^R=\mathbb Z^{26},\quad (\mathbb Z/q)^c=(\mathbb Z/q)^4,$$
+$$ (\mathbb Z/(qa))^{b-2}=(\mathbb Z/(4q))^2,\quad (\mathbb Z/(qb))^{a-2}=(\mathbb Z/(4q))^2,$$
+$$\mathbb Z/(qab)=\mathbb Z/(16q),$$
+合并两个 $4q$ 项即得所示群分解。§48 的挠指数公式给出
+$$\exp\operatorname{Tor}H_1=qD=q\cdot16=16|k|.$$
+另一方面，§47 对 $g=2$ 的任意时间循环覆盖给出 $\mathbb Z^{2g+1}=\mathbb Z^5$。证毕。

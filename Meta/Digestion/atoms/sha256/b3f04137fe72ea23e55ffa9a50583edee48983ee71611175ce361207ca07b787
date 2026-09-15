@@ -1,0 +1,8 @@
+**定理。** 在上述一般条件中，若 $A_0$ 有限，令
+
+$$B=\operatorname{im}(f,a)\le F\times A_0.$$
+
+则恰有两种可能：$B=F\times A_0$，或者 $B$ 是一个满射 $\theta:A_0\twoheadrightarrow F$ 的图像。后一种情形恰好对应轨道控制；等价的有限判据为
+
+$$\boxed{B\cap(F\times\{1\})=\{(1,1)\}.}$$
+

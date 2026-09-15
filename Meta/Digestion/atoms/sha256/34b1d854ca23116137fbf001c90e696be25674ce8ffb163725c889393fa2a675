@@ -1,0 +1,27 @@
+## 33. 通用模二同调覆盖的全部符号分块
+
+**定义。** 固定闭可定向曲面 $\Sigma_g$，$g\ge3$，令 $\pi=\pi_1(\Sigma_g)$、$M=\operatorname{Mod}^{+}(\Sigma_g)$，并定义
+
+$$N_2=[\pi,\pi]\pi^2=\ker(\pi\to H_1(\Sigma_g;\mathbb F_2)),\qquad S=\pi/N_2\cong(\mathbb Z/2)^{2g}.$$
+
+这里 $N_2$ 在 $\pi$ 中特征。对奇素数 $\ell$，令 $V=H_1(N_2;\mathbb F_\ell)$、$Q=\pi/[N_2,N_2]N_2^\ell$，并记实际外作用 $a:M\to\operatorname{Out}(Q)$。设 $\widehat S=\operatorname{Hom}(S,\{\pm1\})$，$X=\widehat S\setminus\{1\}$，$r=|X|=4^g-1$。对 $\chi\in\widehat S$，记 $W_\chi$ 为甲板作用的 $\chi$ 特征空间。
+
+**命题。** 有正交辛分解
+
+$$V=\bigoplus_{\chi\in\widehat S}W_\chi,\qquad
+\dim W_1=2g,\qquad \dim W_\chi=2g-2\ (\chi\ne1).$$
+
+因而 $\dim V=2+(2g-2)4^g$。每个非平凡分块均可识别为对应连通二重覆盖的反不变同调。
+
+**证明。** $|S|$ 在 $\mathbb F_\ell$ 中可逆，且全部字符值已在该域内，所以投影 $e_\chi=|S|^{-1}\sum_{s\in S}\chi(s)s$ 给出分解。不同字符的配对为零，因为甲板变换保持交叉形式；各自逆字符等于自身，所以各分块上的形式非退化。覆盖胞腔链群分别为 $\mathbb F_\ell[S]$、$\mathbb F_\ell[S]^{2g}$、$\mathbb F_\ell[S]$；零阶和二阶同调都是平凡表示。半单性使链复形的表示类恒等式成为
+
+$$V\cong\mathbb F_\ell^2\oplus\mathbb F_\ell[S]^{2g-2}.$$
+
+取各特征空间即得维数。向 $\ker\chi$ 对应的中间二重覆盖转移时，覆盖度为 $2^{2g-1}$，可逆的平均化识别其反不变空间与 $W_\chi$。
+
+**定义。** 令 $U=M[2]$ 为模二同调作用的核。$U$ 固定所有字符；其在 $W_\chi$ 上的作用因提升选择相差 $\pm I$，所以定义良好的射影辛表示为
+
+$$p_\chi:U\to D_\ell:=\operatorname{PSp}_{2g-2}(\mathbb F_\ell).$$
+
+该表示经 $a(U)$ 因子化，因为 $Q$ 的内自同构在 $V$ 上是甲板作用，在每个符号分块上只是 $\pm I$。这里没有使用第 27 节的中心平凡基商假设；当前的 $S$ 是交换群，采用射影作用消除提升歧义。
+

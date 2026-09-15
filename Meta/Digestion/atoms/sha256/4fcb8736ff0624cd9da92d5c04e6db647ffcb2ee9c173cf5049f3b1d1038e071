@@ -1,0 +1,9 @@
+**定义。** 对 i<j≤r，取 z_i=b_i、w_{ij}=b_j+a_i，定义
+
+$$D_i=\operatorname{tr}(P_{b_i}A_Q)-\operatorname{tr}(P_{b_i}),$$
+
+$$D_{ij}=\operatorname{tr}(P_{b_i}P_{b_j+a_i}A_Q)
+-\operatorname{tr}(P_{b_i}P_{b_j+a_i}).$$
+
+右端先作用 A_Q，再按矩阵乘法顺序施加两个固定探针。不同读数属于从同一未知作用重置的独立实验，不把多条实验分支当成一条未重置轨迹。
+

@@ -1,0 +1,9 @@
+**定理。** 这些是 $M$ 的有限指数子群，且
+
+$$[M:\Gamma_{\chi,\ell}]=(4^g-1)|D_\ell|,\qquad
+[M:\Delta_\ell]=|D_\ell|^{4^g-1}|\operatorname{Sp}_{2g}(\mathbb F_2)|.$$
+
+此外，$\Delta_\ell$ 是 $\Gamma_{\chi,\ell}$ 在 $M$ 中的正规核，包含主合同核 $\ker a$，而且对每条本质简单闭曲线 $\alpha$，都有
+
+$$\boxed{\Delta_\ell\alpha\subseteq\Gamma_{\chi,\ell}\alpha.}$$
+

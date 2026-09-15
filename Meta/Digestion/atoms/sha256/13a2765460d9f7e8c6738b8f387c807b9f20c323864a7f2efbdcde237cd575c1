@@ -1,0 +1,2 @@
+**定理。** 对任意同态 $\rho:\Pi_g\to D_m$，有 $\rho\circ\tau^m=\rho$。更一般地，$m\mid n$ 推出 $\rho\circ\tau^n=\rho$。
+

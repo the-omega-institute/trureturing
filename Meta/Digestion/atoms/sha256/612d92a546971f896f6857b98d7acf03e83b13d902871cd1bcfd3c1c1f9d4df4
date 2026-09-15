@@ -1,0 +1,6 @@
+**定理。** 设 $f:\Lambda\twoheadrightarrow F$ 满射到非交换有限单群。则对每个素数 $\ell$，包括整除 $|S|$ 的素数，都有
+
+$$\boxed{f\text{ 经 }a_\ell(\Lambda)\text{ 因子化}
+\quad\Longleftrightarrow\quad
+f\text{ 经 }\Psi_\ell(\Lambda)\text{ 因子化}.}$$
+

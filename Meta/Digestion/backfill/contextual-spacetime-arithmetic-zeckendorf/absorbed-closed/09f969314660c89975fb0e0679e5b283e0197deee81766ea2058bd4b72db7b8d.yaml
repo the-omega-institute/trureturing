@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:09f969314660c89975fb0e0679e5b283e0197deee81766ea2058bd4b72db7b8d
+  normalized_sha256: sha256:09f969314660c89975fb0e0679e5b283e0197deee81766ea2058bd4b72db7b8d
+cas_ref: sha256:09f969314660c89975fb0e0679e5b283e0197deee81766ea2058bd4b72db7b8d
+coverage_gids:
+  - gid: D5/S3/Arith/GoldenResource/CrossCapacityMultiplicationResponseKernel.eq_plus_all_iff
+    target_statement_id: sha256:eb78d7354c6c2efd9e094fb5679ec5c8d5a0eba7cdc3ea6bc0a0c65d0c2991d3
+receipts:
+  unresolved_subitems: []

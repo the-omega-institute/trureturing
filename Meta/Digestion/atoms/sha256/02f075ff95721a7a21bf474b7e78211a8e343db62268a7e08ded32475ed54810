@@ -1,0 +1,6 @@
+**定理。** 存在一个 $u\in D_m$ 使
+
+$$\rho_m(\tau^n(x))=u\rho_m(x)u^{-1}\quad\text{对所有 }x\in\Pi_g$$
+
+当且仅当 $m\mid n$。
+
