@@ -63,6 +63,42 @@ public sealed partial class FileMapPolicyTests
         Assert.Equal("committed-source", entry.RuntimeDisposition);
     }
 
+    [Theory]
+    [InlineData("lean-report")]
+    [InlineData("scribe-content")]
+    public void ReportConsumerScopesAreAdmittedByRegisteredRepositoryPolicy(string scope)
+    {
+        var root = RepositoryLayout.FindRoot();
+        var registry = Assert.IsType<RegistryLoadOutcome.Accepted>(RegistryLoader.Load(
+            File.ReadAllBytes(Path.Combine(root, "Meta/registry.yaml")),
+            File.ReadAllBytes(Path.Combine(root, "Meta/domains.yaml"))));
+        var path = $"Meta/ReportConsumers/{scope}.json";
+
+        Assert.Null(RepositoryPathPolicy.Validate(RepoPath.CreateKnown(path), registry.Policy));
+        var entry = Assert.Single(FileMapLoader.LoadRepository(root).Match(path));
+        Assert.Equal(FileMapKind.Data, entry.Kind);
+        Assert.Equal(FileMapAdmissionPlane.Judge, entry.AdmissionPlane);
+        Assert.Equal("CommonExecutionEvidence", Assert.Single(entry.VerifiedBy));
+    }
+
+    [Theory]
+    [InlineData("Meta/ReportConsumers/unregistered.json")]
+    [InlineData("Meta/ReportConsumers/nested/lean-report.json")]
+    [InlineData("Meta/unregistered.json")]
+    public void UnregisteredMetaArtifactsRemainRejected(string path)
+    {
+        var root = RepositoryLayout.FindRoot();
+        var registry = Assert.IsType<RegistryLoadOutcome.Accepted>(RegistryLoader.Load(
+            File.ReadAllBytes(Path.Combine(root, "Meta/registry.yaml")),
+            File.ReadAllBytes(Path.Combine(root, "Meta/domains.yaml"))));
+
+        var issue = RepositoryPathPolicy.Validate(RepoPath.CreateKnown(path), registry.Policy);
+
+        Assert.NotNull(issue);
+        Assert.Equal("SL-000", issue.RuleId.Value);
+        Assert.Equal("unknown Meta artifact", issue.Message);
+    }
+
     [Fact]
     public void ComputationalProjectionsHaveCanonicalFileMapEntries()
     {

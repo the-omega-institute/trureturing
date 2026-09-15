@@ -31,12 +31,12 @@ public sealed class CommonCurrentProducerTests
         fixture.Files["Golden/Projection/statement-projection-expansion-v1.json"] = "{\"schema\":\"statement-projection-expansion-fixture-v1\",\"declarations\":[]}";
         fixture.Files["Meta/ci-checks.json"] = CommonCheckRegistrationFixture.Manifest("tools/StrataLint.Scribe/StrataLint.Scribe.csproj");
         var checksDeclaration = JsonNode.Parse(fixture.Files["Meta/ci-checks.json"])!;
-        checksDeclaration["checks"]!.AsArray().Single(row => row!["id"]!.ToString() == "SL-001")!["report_inputs"] = JsonNode.Parse("[{\"producer\":\"Meta/ReportProducers/lean-report.json\",\"artifact\":\"raw-lean-report\",\"materials\":[\"global.json\"]}]");
+        checksDeclaration["checks"]!.AsArray().Single(row => row!["id"]!.ToString() == "SL-001")!["report_inputs"] = JsonNode.Parse("[{\"producer\":\"Meta/ReportProducers/lean-report.json\",\"consumer\":\"Meta/ReportConsumers/lean-report.json\",\"artifact\":\"raw-lean-report\",\"materials\":[\"global.json\"]}]");
         foreach (var id in new[] { "SL-006", "SL-023", "SL-025", "scribe-describe" })
         {
             var inputs = new JsonArray();
-            if (id == "SL-006") inputs.Add(JsonNode.Parse("{\"producer\":\"Meta/ReportProducers/lean-report.json\",\"artifact\":\"raw-lean-report\",\"materials\":[\"global.json\"]}"));
-            inputs.Add(JsonNode.Parse("{\"producer\":\"Meta/ReportProducers/scribe-content.json\",\"artifact\":\"" + (id == "scribe-describe" ? "raw-lean-report" : "VerifiedScribeEmissions") + "\",\"materials\":[\"global.json\"]}"));
+            if (id == "SL-006") inputs.Add(JsonNode.Parse("{\"producer\":\"Meta/ReportProducers/lean-report.json\",\"consumer\":\"Meta/ReportConsumers/lean-report.json\",\"artifact\":\"raw-lean-report\",\"materials\":[\"global.json\"]}"));
+            inputs.Add(JsonNode.Parse("{\"producer\":\"Meta/ReportProducers/scribe-content.json\",\"consumer\":\"Meta/ReportConsumers/scribe-content.json\",\"artifact\":\"" + (id == "scribe-describe" ? "raw-lean-report" : "VerifiedScribeEmissions") + "\",\"materials\":[\"global.json\"]}"));
             checksDeclaration["checks"]!.AsArray().Single(row => row!["id"]!.ToString() == id)!["report_inputs"] = inputs;
         }
         fixture.Files["Meta/ci-checks.json"] = checksDeclaration.ToJsonString();
@@ -44,6 +44,18 @@ public sealed class CommonCurrentProducerTests
         fixture.Files["Meta/ReportProducers/scribe-content.json"] = "{\"schema\":\"report-producer-scope-v1\",\"scripts\":[],\"projects\":[\"tools/StrataLint.Scribe/StrataLint.Scribe.csproj\"],\"materials\":[\"global.json\"]}";
         fixture.Files["Meta/registry.yaml"] = fixture.Files["Meta/registry.yaml"].Replace("  - \"Meta/ci-checks.json\"", "  - \"Meta/ReportProducers/lean-report.json\"\n  - \"Meta/ci-checks.json\"", StringComparison.Ordinal);
         fixture.Files["Meta/registry.yaml"] = fixture.Files["Meta/registry.yaml"].Replace("  - \"Meta/ci-checks.json\"", "  - \"Meta/ReportProducers/scribe-content.json\"\n  - \"Meta/ci-checks.json\"", StringComparison.Ordinal);
+        foreach (var kind in new[] { "lean-report", "scribe-content" })
+        {
+            var path = "Meta/ReportConsumers/" + kind + ".json";
+            fixture.Files[path] = System.Text.Json.JsonSerializer.Serialize(new
+            {
+                schema = "report-consumer-inputs-v1", producer = "Meta/ReportProducers/" + kind + ".json",
+                projects = kind == "scribe-content" ? new[] { "tools/StrataLint.Scribe/StrataLint.Scribe.csproj" } : [],
+                materials = new[] { "global.json" },
+            });
+            fixture.Files["Meta/registry.yaml"] = fixture.Files["Meta/registry.yaml"].Replace("  - \"Meta/ci-checks.json\"",
+                "  - \"" + path + "\"\n  - \"Meta/ci-checks.json\"", StringComparison.Ordinal);
+        }
         fixture.Files["global.json"] = "{\"sdk\":{\"version\":\"10.0.103\"}}";
         foreach (var file in fixture.Files)
         {

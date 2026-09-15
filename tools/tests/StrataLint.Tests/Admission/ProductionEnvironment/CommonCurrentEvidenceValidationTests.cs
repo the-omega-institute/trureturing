@@ -91,11 +91,19 @@ public sealed class CommonCurrentEvidenceValidationTests
             Write(EngineeringRegistrationFixture.Path, EngineeringRegistrationFixture.Manifest(
                 new EngineeringProjectFixture(Project, "Producer", "test-support", false, [])));
             const string producer = "Meta/ReportProducers/fixture.json";
+            const string consumer = "Meta/ReportConsumers/fixture.json";
             Write(producer, "{\"schema\":\"report-producer-scope-v1\",\"scripts\":[],\"projects\":[],\"materials\":[\"global.json\"]}");
+            Write(consumer, System.Text.Json.JsonSerializer.Serialize(new
+            {
+                schema = "report-consumer-inputs-v1", producer, projects = Array.Empty<string>(), materials = new[] { "global.json" },
+            }));
             var registration = JsonNode.Parse(CommonCheckRegistrationFixture.Manifest(Project))!;
             foreach (var id in new[] { "SL-001", "SL-002" })
                 registration["checks"]!.AsArray().Single(row => row!["id"]!.ToString() == id)!["report_inputs"] =
-                    JsonNode.Parse("[{\"producer\":\"" + producer + "\",\"artifact\":\"raw-lean-report\",\"materials\":[\"global.json\"]}]");
+                    JsonNode.Parse(System.Text.Json.JsonSerializer.Serialize(new[]
+                    {
+                        new { producer, consumer, artifact = "raw-lean-report", materials = new[] { "global.json" } },
+                    }));
             Write(CommonExecutionEvidence.CheckManifestPath, registration.ToJsonString());
             Git("init", "-q"); Git("add", ".");
             Git("-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", "evidence inputs");

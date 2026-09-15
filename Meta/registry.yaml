@@ -21,6 +21,8 @@ governance_documents:
   - "Golden/gate-authority-roots.toml"
   - "Meta/Digestion/atomizers.toml"
   - "Meta/FILEMAP.toml"
+  - "Meta/ReportConsumers/lean-report.json"
+  - "Meta/ReportConsumers/scribe-content.json"
   - "Meta/ReportProducers/lean-report.json"
   - "Meta/ReportProducers/scribe-content.json"
   - "Meta/ci-checks.json"

@@ -14,6 +14,7 @@ public sealed class ScribeInvocationRegistrationTests(ITestOutputHelper output)
     private const string Invocation = "tools/StrataLint.Cli/Admission/ProductionCliEnvironment.CurrentChecks.cs";
     private const string Verification = "tools/StrataLint.Cli/Runtime/ScribeEmissionVerifier.cs";
     private const string Producer = "Meta/ReportProducers/scribe-content.json";
+    private const string Consumer = "Meta/ReportConsumers/scribe-content.json";
 
     [Theory]
     [InlineData(Invocation)]
@@ -78,6 +79,7 @@ public sealed class ScribeInvocationRegistrationTests(ITestOutputHelper output)
             var source = TestRepositoryLayout.FindRoot();
             var manifest = JsonNode.Parse(File.ReadAllText(Path.Combine(source, Producer)))!;
             Write(Producer, manifest.ToJsonString());
+            Write(Consumer, File.ReadAllText(Path.Combine(source, Consumer)));
             foreach (var input in manifest["scripts"]!.AsArray().Concat(manifest["materials"]!.AsArray())
                 .Select(item => item!.GetValue<string>()).Append(Invocation).Append(Verification).Distinct())
                 Write(input, File.ReadAllText(Path.Combine(source, input)));

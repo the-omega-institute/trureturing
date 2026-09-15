@@ -24,7 +24,7 @@ public sealed partial class CommonCheckExecutionTests
         using var second = new Fixture();
         var original = CommonExecutionEvidence.ValidationScope.Create(first.Tree.Root).CheckManifest();
         CommonExecutionEvidence.Write(first.Tree.Root, CommonExecutionEvidence.CheckManifestPath,
-            new CommonCheckManifest("ci-check-input-registration-v1", original.Select(check => check.Id == "filemap"
+            new CommonCheckManifest("ci-check-input-registration-v2", original.Select(check => check.Id == "filemap"
                 ? check with { Materials = ["fixtures/selftest.txt"] } : check).ToArray()));
 
         var changed = CommonExecutionEvidence.ValidationScope.Create(first.Tree.Root).CheckManifest();
@@ -44,7 +44,7 @@ public sealed partial class CommonCheckExecutionTests
         fixture.Run();
         var original = CommonExecutionEvidence.ValidationScope.Create(fixture.Tree.Root).CheckManifest();
         CommonExecutionEvidence.Write(fixture.Tree.Root, CommonExecutionEvidence.CheckManifestPath,
-            new CommonCheckManifest("ci-check-input-registration-v1", original.Select(check => check.Id != "SL-001" ? check
+            new CommonCheckManifest("ci-check-input-registration-v2", original.Select(check => check.Id != "SL-001" ? check
                 : defect == "project" ? check with { ProgramProjects = [expected] }
                 : check with { Materials = [expected] }).ToArray()));
 
@@ -227,16 +227,16 @@ public sealed partial class CommonCheckExecutionTests
     [Theory]
     [InlineData("lean-material")]
     [InlineData("scribe-material")]
-    [InlineData("scribe-producer")]
+    [InlineData("scribe-consumer")]
     [InlineData("scribe-registration")]
-    public void EitherProducerInputOrScribeRegistrationInvalidatesConsumers(string change)
+    public void EitherConsumerInputOrScribeRegistrationInvalidatesConsumers(string change)
     {
         using var fixture = new ReportInputsFixture();
         fixture.Run();
         fixture.Seed();
         if (change == "lean-material") fixture.Tree.Write("fixtures/lean.txt", "changed");
         if (change == "scribe-material") fixture.Tree.Write("fixtures/scribe.txt", "changed");
-        if (change == "scribe-producer") fixture.Tree.Write(ReportInputsFixture.ScribeProducer, ReportInputsFixture.Producer("fixtures/extra.txt"));
+        if (change == "scribe-consumer") fixture.Tree.Write(ReportInputsFixture.ScribeConsumer, ReportInputsFixture.Consumer(ReportInputsFixture.ScribeProducer, "fixtures/extra.txt"));
         if (change == "scribe-registration") fixture.Edit(rows => rows.Single(row => row!["id"]!.ToString() == "scribe-describe")!["materials"] = new JsonArray("fixtures/extra.txt"));
         fixture.Tree.Track();
         fixture.Run();
@@ -364,20 +364,28 @@ public sealed partial class CommonCheckExecutionTests
     {
         internal const string LeanProducer = "Meta/ReportProducers/lean.json";
         internal const string ScribeProducer = "Meta/ReportProducers/scribe.json";
+        internal const string LeanConsumer = "Meta/ReportConsumers/lean.json";
+        internal const string ScribeConsumer = "Meta/ReportConsumers/scribe.json";
         private readonly Fixture fixture = new();
         internal CurrentExecutionContractTests.CandidateFixture Tree => fixture.Tree;
         internal string Root => Tree.Root;
         internal List<string> Calls { get; } = [];
         internal string ScribeMaterial { get; set; } = CommonCheckRegistrationFixture.ScribeMaterial;
         internal static string Producer(string material) => "{\"schema\":\"report-producer-scope-v1\",\"scripts\":[],\"projects\":[],\"materials\":[\"" + material + "\"]}";
+        internal static string Consumer(string producer, string material) => System.Text.Json.JsonSerializer.Serialize(new
+        {
+            schema = "report-consumer-inputs-v1", producer, projects = Array.Empty<string>(), materials = new[] { material },
+        });
         internal ReportInputsFixture()
         {
             Tree.Write(LeanProducer, Producer("fixtures/lean.txt"));
             Tree.Write(ScribeProducer, Producer("fixtures/scribe.txt"));
+            Tree.Write(LeanConsumer, Consumer(LeanProducer, "fixtures/lean.txt"));
+            Tree.Write(ScribeConsumer, Consumer(ScribeProducer, "fixtures/scribe.txt"));
             foreach (var path in new[] { "fixtures/lean.txt", "fixtures/scribe.txt", "fixtures/extra.txt" }) Tree.Write(path, "input");
             Edit(rows =>
             {
-                JsonNode Input(string producer, string artifact) => JsonNode.Parse("{\"producer\":\"" + producer + "\",\"artifact\":\"" + artifact + "\",\"materials\":[\"global.json\"]}")!;
+                JsonNode Input(string producer, string artifact) => JsonNode.Parse("{\"producer\":\"" + producer + "\",\"consumer\":\"" + (producer == LeanProducer ? LeanConsumer : ScribeConsumer) + "\",\"artifact\":\"" + artifact + "\",\"materials\":[\"global.json\"]}")!;
                 JsonNode Row(string id) => rows.Single(row => row!["id"]!.ToString() == id)!;
                 Row("SL-006")["report_inputs"] = new JsonArray(Input(LeanProducer, "raw-lean-report"), Input(ScribeProducer, "VerifiedScribeEmissions"));
                 Row("SL-023")["report_inputs"] = new JsonArray(Input(ScribeProducer, "VerifiedScribeEmissions"));

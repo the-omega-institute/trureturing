@@ -1,5 +1,5 @@
 {
-  "schema": "ci-check-input-registration-v1",
+  "schema": "ci-check-input-registration-v2",
   "checks": [
     {
       "id": "SL-001",
@@ -7,7 +7,7 @@
       "materials": ["global.json", "Directory.Build.props", "Directory.Packages.props", ".editorconfig", "tools/Architecture/BannedSymbols.txt", "tools/Architecture/BannedSymbols.Determinism.txt", "tools/Architecture/BannedSymbols.Guid.txt", "tools/StrataLint.Cli/packages.lock.json", "tools/StrataLint.Engine/packages.lock.json", "tools/StrataLint.EngineeringScope/packages.lock.json", "tools/StrataLint.Lean/packages.lock.json", "tools/StrataLint.Scribe.Documents/packages.lock.json", "tools/StrataLint.Scribe/packages.lock.json", "tools/Trureturing.Truth/packages.lock.json", "*.lean", "D5/**/*.lean", "Meta/registry.yaml", "Meta/domains.yaml"],
       "material_excludes": [],
       "path_inventory": [],
-      "report_inputs": [{"producer": "Meta/ReportProducers/lean-report.json", "artifact": "raw-lean-report", "materials": ["*.lean", "D5/**/*.lean", "lean-toolchain", "lakefile.toml", "lake-manifest.json"]}]
+      "report_inputs": [{"producer": "Meta/ReportProducers/lean-report.json", "consumer": "Meta/ReportConsumers/lean-report.json", "artifact": "raw-lean-report", "materials": ["*.lean", "D5/**/*.lean", "lean-toolchain", "lakefile.toml", "lake-manifest.json"]}]
     },
     {
       "id": "SL-002",
@@ -15,7 +15,7 @@
       "materials": ["global.json", "Directory.Build.props", "Directory.Packages.props", ".editorconfig", "tools/Architecture/BannedSymbols.txt", "tools/Architecture/BannedSymbols.Determinism.txt", "tools/Architecture/BannedSymbols.Guid.txt", "tools/StrataLint.Cli/packages.lock.json", "tools/StrataLint.Engine/packages.lock.json", "tools/StrataLint.EngineeringScope/packages.lock.json", "tools/StrataLint.Lean/packages.lock.json", "tools/StrataLint.Scribe.Documents/packages.lock.json", "tools/StrataLint.Scribe/packages.lock.json", "tools/Trureturing.Truth/packages.lock.json", "*.lean", "D5/**/*.lean", "Meta/registry.yaml", "Meta/domains.yaml"],
       "material_excludes": [],
       "path_inventory": [],
-      "report_inputs": [{"producer": "Meta/ReportProducers/lean-report.json", "artifact": "raw-lean-report", "materials": ["*.lean", "D5/**/*.lean", "lean-toolchain", "lakefile.toml", "lake-manifest.json"]}]
+      "report_inputs": [{"producer": "Meta/ReportProducers/lean-report.json", "consumer": "Meta/ReportConsumers/lean-report.json", "artifact": "raw-lean-report", "materials": ["*.lean", "D5/**/*.lean", "lean-toolchain", "lakefile.toml", "lake-manifest.json"]}]
     },
     {
       "id": "SL-003",
@@ -31,7 +31,7 @@
       "materials": ["global.json", "Directory.Build.props", "Directory.Packages.props", ".editorconfig", "tools/Architecture/BannedSymbols.txt", "tools/Architecture/BannedSymbols.Determinism.txt", "tools/Architecture/BannedSymbols.Guid.txt", "tools/StrataLint.Cli/packages.lock.json", "tools/StrataLint.Engine/packages.lock.json", "tools/StrataLint.EngineeringScope/packages.lock.json", "tools/StrataLint.Lean/packages.lock.json", "tools/StrataLint.Scribe.Documents/packages.lock.json", "tools/StrataLint.Scribe/packages.lock.json", "tools/Trureturing.Truth/packages.lock.json", "D5/**/*.lean", "Meta/registry.yaml", "Meta/domains.yaml"],
       "material_excludes": [],
       "path_inventory": ["Blueprint/D5/**", "Evidence/D5/**"],
-      "report_inputs": [{"producer": "Meta/ReportProducers/lean-report.json", "artifact": "raw-lean-report", "materials": ["*.lean", "D5/**/*.lean", "lean-toolchain", "lakefile.toml", "lake-manifest.json"]}]
+      "report_inputs": [{"producer": "Meta/ReportProducers/lean-report.json", "consumer": "Meta/ReportConsumers/lean-report.json", "artifact": "raw-lean-report", "materials": ["*.lean", "D5/**/*.lean", "lean-toolchain", "lakefile.toml", "lake-manifest.json"]}]
     },
     {
       "id": "SL-006",
@@ -39,7 +39,7 @@
       "materials": ["global.json", "Directory.Build.props", "Directory.Packages.props", ".editorconfig", "tools/Architecture/BannedSymbols.txt", "tools/Architecture/BannedSymbols.Determinism.txt", "tools/Architecture/BannedSymbols.Guid.txt", "tools/StrataLint.Cli/packages.lock.json", "tools/StrataLint.Engine/packages.lock.json", "tools/StrataLint.EngineeringScope/packages.lock.json", "tools/StrataLint.Lean/packages.lock.json", "tools/StrataLint.Scribe.Documents/packages.lock.json", "tools/StrataLint.Scribe/packages.lock.json", "tools/Trureturing.Truth/packages.lock.json", "D5/**", "Blueprint/**", "Evidence/**", "Library/**", "Papers/**", "Chronicle/**", "Meta/registry.yaml", "Meta/domains.yaml"],
       "material_excludes": [],
       "path_inventory": [],
-      "report_inputs": [{"producer": "Meta/ReportProducers/lean-report.json", "artifact": "raw-lean-report", "materials": ["*.lean", "D5/**/*.lean", "lean-toolchain", "lakefile.toml", "lake-manifest.json"]}, {"producer": "Meta/ReportProducers/scribe-content.json", "artifact": "VerifiedScribeEmissions", "materials": ["*.lean", "D5/**/*.lean", "lean-toolchain", "lakefile.toml", "lake-manifest.json", "Golden/Projection/*.json", "Golden/Frozen/state/**/*.json", "Library/*/*.md", "Problems/*.md", "Blueprint/**/*.md"]}]
+      "report_inputs": [{"producer": "Meta/ReportProducers/lean-report.json", "consumer": "Meta/ReportConsumers/lean-report.json", "artifact": "raw-lean-report", "materials": ["*.lean", "D5/**/*.lean", "lean-toolchain", "lakefile.toml", "lake-manifest.json"]}, {"producer": "Meta/ReportProducers/scribe-content.json", "consumer": "Meta/ReportConsumers/scribe-content.json", "artifact": "VerifiedScribeEmissions", "materials": ["*.lean", "D5/**/*.lean", "lean-toolchain", "lakefile.toml", "lake-manifest.json", "Golden/Projection/*.json", "Golden/Frozen/state/**/*.json", "Library/*/*.md", "Problems/*.md", "Blueprint/**/*.md"]}]
     },
     {
       "id": "SL-008",
@@ -47,7 +47,7 @@
       "materials": ["global.json", "Directory.Build.props", "Directory.Packages.props", ".editorconfig", "tools/Architecture/BannedSymbols.txt", "tools/Architecture/BannedSymbols.Determinism.txt", "tools/Architecture/BannedSymbols.Guid.txt", "tools/StrataLint.Cli/packages.lock.json", "tools/StrataLint.Engine/packages.lock.json", "tools/StrataLint.EngineeringScope/packages.lock.json", "tools/StrataLint.Lean/packages.lock.json", "tools/StrataLint.Scribe.Documents/packages.lock.json", "tools/StrataLint.Scribe/packages.lock.json", "tools/Trureturing.Truth/packages.lock.json", "D5/X_Frontier/Hearts.lean", "D5/**/*.md", "Golden/Frozen/state/**/*.json", "Golden/Frozen/accepted/*.json", "Meta/registry.yaml", "Meta/domains.yaml"],
       "material_excludes": [],
       "path_inventory": [],
-      "report_inputs": [{"producer": "Meta/ReportProducers/lean-report.json", "artifact": "raw-lean-report", "materials": ["*.lean", "D5/**/*.lean", "lean-toolchain", "lakefile.toml", "lake-manifest.json"]}]
+      "report_inputs": [{"producer": "Meta/ReportProducers/lean-report.json", "consumer": "Meta/ReportConsumers/lean-report.json", "artifact": "raw-lean-report", "materials": ["*.lean", "D5/**/*.lean", "lean-toolchain", "lakefile.toml", "lake-manifest.json"]}]
     },
     {
       "id": "SL-010",
@@ -55,7 +55,7 @@
       "materials": ["global.json", "Directory.Build.props", "Directory.Packages.props", ".editorconfig", "tools/Architecture/BannedSymbols.txt", "tools/Architecture/BannedSymbols.Determinism.txt", "tools/Architecture/BannedSymbols.Guid.txt", "tools/StrataLint.Cli/packages.lock.json", "tools/StrataLint.Engine/packages.lock.json", "tools/StrataLint.EngineeringScope/packages.lock.json", "tools/StrataLint.Lean/packages.lock.json", "tools/StrataLint.Scribe.Documents/packages.lock.json", "tools/StrataLint.Scribe/packages.lock.json", "tools/Trureturing.Truth/packages.lock.json", "D5/**/*.lean", "Meta/registry.yaml", "Meta/domains.yaml"],
       "material_excludes": [],
       "path_inventory": [],
-      "report_inputs": [{"producer": "Meta/ReportProducers/lean-report.json", "artifact": "raw-lean-report", "materials": ["*.lean", "D5/**/*.lean", "lean-toolchain", "lakefile.toml", "lake-manifest.json"]}]
+      "report_inputs": [{"producer": "Meta/ReportProducers/lean-report.json", "consumer": "Meta/ReportConsumers/lean-report.json", "artifact": "raw-lean-report", "materials": ["*.lean", "D5/**/*.lean", "lean-toolchain", "lakefile.toml", "lake-manifest.json"]}]
     },
     {
       "id": "SL-011",
@@ -87,7 +87,7 @@
       "materials": ["global.json", "Directory.Build.props", "Directory.Packages.props", ".editorconfig", "tools/Architecture/BannedSymbols.txt", "tools/Architecture/BannedSymbols.Determinism.txt", "tools/Architecture/BannedSymbols.Guid.txt", "tools/StrataLint.Cli/packages.lock.json", "tools/StrataLint.Engine/packages.lock.json", "tools/StrataLint.EngineeringScope/packages.lock.json", "tools/StrataLint.Lean/packages.lock.json", "tools/StrataLint.Scribe.Documents/packages.lock.json", "tools/StrataLint.Scribe/packages.lock.json", "tools/Trureturing.Truth/packages.lock.json", "Golden/values-kernels.toml", "Evidence/D5/values.*", "Meta/registry.yaml", "Meta/domains.yaml"],
       "material_excludes": [],
       "path_inventory": [],
-      "report_inputs": [{"producer": "Meta/ReportProducers/lean-report.json", "artifact": "raw-lean-report", "materials": ["*.lean", "D5/**/*.lean", "lean-toolchain", "lakefile.toml", "lake-manifest.json"]}]
+      "report_inputs": [{"producer": "Meta/ReportProducers/lean-report.json", "consumer": "Meta/ReportConsumers/lean-report.json", "artifact": "raw-lean-report", "materials": ["*.lean", "D5/**/*.lean", "lean-toolchain", "lakefile.toml", "lake-manifest.json"]}]
     },
     {
       "id": "SL-019",
@@ -103,7 +103,7 @@
       "materials": ["global.json", "Directory.Build.props", "Directory.Packages.props", ".editorconfig", "tools/Architecture/BannedSymbols.txt", "tools/Architecture/BannedSymbols.Determinism.txt", "tools/Architecture/BannedSymbols.Guid.txt", "tools/StrataLint.Cli/packages.lock.json", "tools/StrataLint.Engine/packages.lock.json", "tools/StrataLint.EngineeringScope/packages.lock.json", "tools/StrataLint.Lean/packages.lock.json", "tools/StrataLint.Scribe.Documents/packages.lock.json", "tools/StrataLint.Scribe/packages.lock.json", "tools/Trureturing.Truth/packages.lock.json", "*.lean", "D5/**/*.lean", "Meta/registry.yaml", "Meta/domains.yaml"],
       "material_excludes": [],
       "path_inventory": [],
-      "report_inputs": [{"producer": "Meta/ReportProducers/lean-report.json", "artifact": "raw-lean-report", "materials": ["*.lean", "D5/**/*.lean", "lean-toolchain", "lakefile.toml", "lake-manifest.json"]}]
+      "report_inputs": [{"producer": "Meta/ReportProducers/lean-report.json", "consumer": "Meta/ReportConsumers/lean-report.json", "artifact": "raw-lean-report", "materials": ["*.lean", "D5/**/*.lean", "lean-toolchain", "lakefile.toml", "lake-manifest.json"]}]
     },
     {
       "id": "SL-021",
@@ -119,7 +119,7 @@
       "materials": ["global.json", "Directory.Build.props", "Directory.Packages.props", ".editorconfig", "tools/Architecture/BannedSymbols.txt", "tools/Architecture/BannedSymbols.Determinism.txt", "tools/Architecture/BannedSymbols.Guid.txt", "tools/StrataLint.Cli/packages.lock.json", "tools/StrataLint.Engine/packages.lock.json", "tools/StrataLint.EngineeringScope/packages.lock.json", "tools/StrataLint.Lean/packages.lock.json", "tools/StrataLint.Scribe.Documents/packages.lock.json", "tools/StrataLint.Scribe/packages.lock.json", "tools/Trureturing.Truth/packages.lock.json", "Golden/Projection/*.json", "Golden/Frozen/state/**/*.json", "Library/*/*.md", "Problems/*.md", "Meta/registry.yaml", "Meta/domains.yaml"],
       "material_excludes": [],
       "path_inventory": [],
-      "report_inputs": [{"producer": "Meta/ReportProducers/scribe-content.json", "artifact": "VerifiedScribeEmissions", "materials": ["*.lean", "D5/**/*.lean", "lean-toolchain", "lakefile.toml", "lake-manifest.json", "Golden/Projection/*.json", "Golden/Frozen/state/**/*.json", "Library/*/*.md", "Problems/*.md", "Blueprint/**/*.md"]}]
+      "report_inputs": [{"producer": "Meta/ReportProducers/scribe-content.json", "consumer": "Meta/ReportConsumers/scribe-content.json", "artifact": "VerifiedScribeEmissions", "materials": ["*.lean", "D5/**/*.lean", "lean-toolchain", "lakefile.toml", "lake-manifest.json", "Golden/Projection/*.json", "Golden/Frozen/state/**/*.json", "Library/*/*.md", "Problems/*.md", "Blueprint/**/*.md"]}]
     },
     {
       "id": "SL-025",
@@ -127,7 +127,7 @@
       "materials": ["global.json", "Directory.Build.props", "Directory.Packages.props", ".editorconfig", "tools/Architecture/BannedSymbols.txt", "tools/Architecture/BannedSymbols.Determinism.txt", "tools/Architecture/BannedSymbols.Guid.txt", "tools/StrataLint.Cli/packages.lock.json", "tools/StrataLint.Engine/packages.lock.json", "tools/StrataLint.EngineeringScope/packages.lock.json", "tools/StrataLint.Lean/packages.lock.json", "tools/StrataLint.Scribe.Documents/packages.lock.json", "tools/StrataLint.Scribe/packages.lock.json", "tools/Trureturing.Truth/packages.lock.json", "Blueprint/**/*.md", "Golden/Projection/*.json", "Golden/Frozen/state/**/*.json", "Library/*/*.md", "Problems/*.md", "Meta/registry.yaml", "Meta/domains.yaml"],
       "material_excludes": [],
       "path_inventory": [],
-      "report_inputs": [{"producer": "Meta/ReportProducers/scribe-content.json", "artifact": "VerifiedScribeEmissions", "materials": ["*.lean", "D5/**/*.lean", "lean-toolchain", "lakefile.toml", "lake-manifest.json", "Golden/Projection/*.json", "Golden/Frozen/state/**/*.json", "Library/*/*.md", "Problems/*.md", "Blueprint/**/*.md"]}]
+      "report_inputs": [{"producer": "Meta/ReportProducers/scribe-content.json", "consumer": "Meta/ReportConsumers/scribe-content.json", "artifact": "VerifiedScribeEmissions", "materials": ["*.lean", "D5/**/*.lean", "lean-toolchain", "lakefile.toml", "lake-manifest.json", "Golden/Projection/*.json", "Golden/Frozen/state/**/*.json", "Library/*/*.md", "Problems/*.md", "Blueprint/**/*.md"]}]
     },
     {
       "id": "SL-026",
@@ -167,7 +167,7 @@
       "materials": ["global.json", "Directory.Build.props", "Directory.Packages.props", ".editorconfig", "tools/Architecture/BannedSymbols.txt", "tools/Architecture/BannedSymbols.Determinism.txt", "tools/Architecture/BannedSymbols.Guid.txt", "tools/StrataLint.Engine/packages.lock.json", "tools/StrataLint.Scribe.Documents/packages.lock.json", "tools/StrataLint.Scribe/packages.lock.json", "tools/Trureturing.Truth/packages.lock.json", "Golden/Projection/*.json", "Meta/registry.yaml", "Meta/domains.yaml"],
       "material_excludes": [],
       "path_inventory": [],
-      "report_inputs": [{"producer": "Meta/ReportProducers/scribe-content.json", "artifact": "raw-lean-report", "materials": ["*.lean", "D5/**/*.lean", "lean-toolchain", "lakefile.toml", "lake-manifest.json"]}]
+      "report_inputs": [{"producer": "Meta/ReportProducers/scribe-content.json", "consumer": "Meta/ReportConsumers/scribe-content.json", "artifact": "raw-lean-report", "materials": ["*.lean", "D5/**/*.lean", "lean-toolchain", "lakefile.toml", "lake-manifest.json"]}]
     },
     {
       "id": "scribe-describe",
@@ -175,7 +175,7 @@
       "materials": ["global.json", "Directory.Build.props", "Directory.Packages.props", ".editorconfig", "tools/Architecture/BannedSymbols.txt", "tools/Architecture/BannedSymbols.Determinism.txt", "tools/Architecture/BannedSymbols.Guid.txt", "tools/StrataLint.Engine/packages.lock.json", "tools/StrataLint.Scribe.Documents/packages.lock.json", "tools/StrataLint.Scribe/packages.lock.json", "tools/Trureturing.Truth/packages.lock.json", "Library/*/*.md", "Problems/*.md", "Golden/Frozen/state/**/*.json", "Golden/Projection/*.json", "Meta/registry.yaml", "Meta/domains.yaml"],
       "material_excludes": [],
       "path_inventory": [],
-      "report_inputs": [{"producer": "Meta/ReportProducers/scribe-content.json", "artifact": "raw-lean-report", "materials": ["*.lean", "D5/**/*.lean", "lean-toolchain", "lakefile.toml", "lake-manifest.json"]}]
+      "report_inputs": [{"producer": "Meta/ReportProducers/scribe-content.json", "consumer": "Meta/ReportConsumers/scribe-content.json", "artifact": "raw-lean-report", "materials": ["*.lean", "D5/**/*.lean", "lean-toolchain", "lakefile.toml", "lake-manifest.json"]}]
     },
     {
       "id": "scribe-markdown",
@@ -183,7 +183,7 @@
       "materials": ["global.json", "Directory.Build.props", "Directory.Packages.props", ".editorconfig", "tools/Architecture/BannedSymbols.txt", "tools/Architecture/BannedSymbols.Determinism.txt", "tools/Architecture/BannedSymbols.Guid.txt", "tools/StrataLint.Engine/packages.lock.json", "tools/StrataLint.Scribe.Documents/packages.lock.json", "tools/StrataLint.Scribe/packages.lock.json", "tools/Trureturing.Truth/packages.lock.json", "Blueprint/**/*.md", "Golden/Projection/*.json", "Golden/Frozen/state/**/*.json", "Library/*/*.md", "Problems/*.md", "Meta/registry.yaml", "Meta/domains.yaml", "tools/StrataLint.Scribe/Vendor/Katex/katex.min.js"],
       "material_excludes": [],
       "path_inventory": ["Blueprint/**/*.md"],
-      "report_inputs": [{"producer": "Meta/ReportProducers/scribe-content.json", "artifact": "raw-lean-report", "materials": ["*.lean", "D5/**/*.lean", "lean-toolchain", "lakefile.toml", "lake-manifest.json"]}]
+      "report_inputs": [{"producer": "Meta/ReportProducers/scribe-content.json", "consumer": "Meta/ReportConsumers/scribe-content.json", "artifact": "raw-lean-report", "materials": ["*.lean", "D5/**/*.lean", "lean-toolchain", "lakefile.toml", "lake-manifest.json"]}]
     },
     {
       "id": "filemap",

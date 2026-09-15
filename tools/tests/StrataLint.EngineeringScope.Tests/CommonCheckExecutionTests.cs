@@ -54,9 +54,10 @@ public sealed partial class CommonCheckExecutionTests
     {
         using var fixture = new Fixture();
         fixture.Tree.Write("Meta/ReportProducers/check.json", "{\"schema\":\"report-producer-scope-v1\",\"scripts\":[],\"projects\":[],\"materials\":[\"global.json\"]}");
+        fixture.Tree.Write("Meta/ReportConsumers/check.json", ReportInputsFixture.Consumer("Meta/ReportProducers/check.json", "global.json"));
         var manifestPath = Path.Combine(fixture.Tree.Root, CommonExecutionEvidence.CheckManifestPath);
         var manifest = JsonNode.Parse(File.ReadAllText(manifestPath))!;
-        manifest["checks"]!.AsArray().Single(row => row!["id"]!.ToString() == "SL-001")!["report_inputs"] = JsonNode.Parse("[{\"producer\":\"Meta/ReportProducers/check.json\",\"artifact\":\"raw-lean-report\",\"materials\":[\"global.json\"]}]");
+        manifest["checks"]!.AsArray().Single(row => row!["id"]!.ToString() == "SL-001")!["report_inputs"] = JsonNode.Parse("[{\"producer\":\"Meta/ReportProducers/check.json\",\"consumer\":\"Meta/ReportConsumers/check.json\",\"artifact\":\"raw-lean-report\",\"materials\":[\"global.json\"]}]");
         File.WriteAllText(manifestPath, manifest.ToJsonString());
         fixture.Tree.Track();
         var build = fixture.Tree.Build();
@@ -321,7 +322,7 @@ public sealed partial class CommonCheckExecutionTests
             Tree.Write("fixtures/selftest.txt", "selftest");
             var ids = new[] { "SL-001", "SL-002", "SL-003", "SL-004", "SL-006", "SL-008", "SL-010", "SL-011", "SL-012", "SL-015", "SL-018", "SL-019", "SL-020", "SL-021", "SL-023", "SL-025", "SL-026", "selftest-pair", "capability-proof", "banned-api-proof", "scribe-projections", "scribe-describe", "scribe-markdown", "filemap" };
             CommonExecutionEvidence.Write(Tree.Root, CommonExecutionEvidence.CheckManifestPath,
-                new CommonCheckManifest("ci-check-input-registration-v1", ids.Select(id => new RegisteredCommonCheck(id,
+                new CommonCheckManifest("ci-check-input-registration-v2", ids.Select(id => new RegisteredCommonCheck(id,
                     [CurrentExecutionContractTests.CandidateFixture.First], id == "selftest-pair" ? ["fixtures/selftest.txt", "fixtures/*.txt"] : [], [], [], [])).ToArray()));
             Tree.Track();
         }

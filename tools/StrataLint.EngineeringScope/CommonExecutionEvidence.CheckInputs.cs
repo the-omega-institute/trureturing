@@ -53,6 +53,7 @@ internal static partial class CommonExecutionEvidence
         var sources = registry.Sources(files);
         var paths = snapshot.Files.Keys.Select(path => path.Value).ToArray();
         var projects = registry.Projects.ToDictionary(project => project.Path, StringComparer.Ordinal);
+        var registeredProjects = projects.Keys.ToHashSet(StringComparer.Ordinal);
         var environment = executionEnvironment ?? ExecutionEnvironment(root);
         string? reportValue = null;
         if (currentReport && checks.Any(check => check.ReportInputs.Length != 0))
@@ -82,10 +83,15 @@ internal static partial class CommonExecutionEvidence
             foreach (var report in check.ReportInputs)
             {
                 materialPaths.UnionWith(EngineeringProjectRegistry.ExpandInputs(paths, report.Materials, [], check.Id));
+                // Production validates its complete inputs. Reusing its accepted output
+                // depends on the explicit consumer contract, not transport implementation.
                 var producer = ReadProducer(snapshot, report.Producer);
-                foreach (var project in producer.Projects) Add(project);
-                materialPaths.UnionWith(producer.Scripts.Concat(producer.Materials));
-                materialPaths.Add(report.Producer);
+                foreach (var project in producer.Projects)
+                    if (!registeredProjects.Contains(project)) throw new InvalidDataException($"producer {report.Producer} references unregistered project: {project}");
+                var consumer = ReadConsumer(snapshot, report, registeredProjects, check.Id);
+                foreach (var project in consumer.Projects) Add(project);
+                materialPaths.UnionWith(consumer.Materials);
+                materialPaths.Add(report.Consumer);
             }
             foreach (var project in selected.Select(path => projects[path]))
             {
@@ -103,7 +109,7 @@ internal static partial class CommonExecutionEvidence
                 governance = check.Id == "selftest-pair" ? new { project.Role, project.Ci, project.Owner, project.OwnedTestAssembly, project.TestPartition, project.RootNamespace,
                     project.NamespaceExclude, project.GlobalNamespaceExceptions } : null,
             };
-            result.Add(check.Id, Digest(new { contract = "common-check-execution-v2", registration = check,
+            result.Add(check.Id, Digest(new { contract = "common-check-execution-v3", registration = check,
                 projects = selected.Order(StringComparer.Ordinal).Select(name => ProjectProjection(projects[name])),
                 materials = materialPaths.Order(StringComparer.Ordinal).Select(Material),
                 inventory = EngineeringProjectRegistry.ExpandInputs(paths, check.PathInventory, [], check.Id),
@@ -123,6 +129,33 @@ internal static partial class CommonExecutionEvidence
     // Runtime material is consumed and validated at the Lean producer boundary.
     private sealed record CheckProducerRuntime(string[] Lean, string[] Python);
     private sealed record CheckProducer(string Schema, string[] Scripts, string[] Projects, string[] Materials, CheckProducerRuntime? Runtime = null);
+    private sealed record CheckConsumer(string Schema, string Producer, string[] Projects, string[] Materials);
+
+    private static CheckConsumer ReadConsumer(RepositorySnapshot snapshot, RegisteredCheckReport report, IReadOnlySet<string> projects, string check)
+    {
+        var path = report.Consumer;
+        var context = $"check {check}: consumer {path}";
+        if (!RepoPath.TryCreate(path, out _) || !snapshot.TryGetFile(path, out var file))
+            throw new InvalidDataException($"missing {context}");
+        try
+        {
+            var consumer = JsonSerializer.Deserialize<CheckConsumer>(file.Text, JsonOptions);
+            if (consumer is null || consumer.Schema != "report-consumer-inputs-v1" || consumer.Producer != report.Producer
+                || consumer.Projects is null || consumer.Materials is null)
+                throw new InvalidDataException($"invalid {context}: producer {report.Producer}");
+            var inputs = consumer.Projects.Concat(consumer.Materials).ToArray();
+            foreach (var duplicate in inputs.GroupBy(input => input).Where(group => group.Count() > 1))
+                throw new InvalidDataException($"duplicate input in {context}: {duplicate.Key}");
+            EngineeringProjectRegistry.ValidateInputPaths(inputs, context);
+            foreach (var project in consumer.Projects)
+                if (!projects.Contains(project)) throw new InvalidDataException($"{context} references unregistered project: {project}");
+            foreach (var input in inputs)
+                if (!snapshot.TryGetFile(input, out _)) throw new InvalidDataException($"{context} references absent input: {input}");
+            return consumer;
+        }
+        catch (JsonException exception) { throw new InvalidDataException($"invalid {context}: {exception.Message}", exception); }
+    }
+
     private static CheckProducer ReadProducer(RepositorySnapshot snapshot, string path)
     {
         try
