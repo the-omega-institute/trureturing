@@ -45,12 +45,15 @@ exhaustive literature coverage.
 ## Motivation
 
 The conjecture first appeared in OEIS revision #8 on September 17, 2013 and
-has remained unsettled for 13 years. Its counterexample is already visible in
-the entry's own linked b-file at lines `216 0`, `218 12`, `231 12`, and
-`233 0`. These rows correspond to the consecutive zero endpoints 625 and 676
-and the intermediate values 628 and 673, both assigned the value 12. The
-conjecture was never re-checked against the data linked by the entry itself.
-No priority claim is made.
+has stood since then; revision #39 of September 23, 2025 still carries it with
+no proof or refutation comment. Its counterexample is already visible in the
+entry's own linked b-file at lines `216 0`, `218 12`, `231 12`, and `233 0`.
+These rows correspond to the consecutive zero endpoints 625 and 676 and the
+intermediate values 628 and 673, both assigned the value 12. The observable
+fact is that the current entry still carries the conjecture despite those
+b-file rows; the searches recorded under Gap found no public settlement within
+their scope, which is not evidence that nobody re-checked it. No priority
+claim is made.
 
 ## Gap
 
