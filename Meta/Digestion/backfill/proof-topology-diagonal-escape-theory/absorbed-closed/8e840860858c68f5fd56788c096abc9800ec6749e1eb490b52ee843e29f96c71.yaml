@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:8e840860858c68f5fd56788c096abc9800ec6749e1eb490b52ee843e29f96c71
   normalized_sha256: sha256:8e840860858c68f5fd56788c096abc9800ec6749e1eb490b52ee843e29f96c71
 cas_ref: sha256:8e840860858c68f5fd56788c096abc9800ec6749e1eb490b52ee843e29f96c71
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Factorization/Automata/PrimeBoxBidirectionalHorizon.mixed_word_profile_classification
+    target_statement_id: sha256:6f1e2789debef4c189fad5a51f3cf837c2824e9edf3d5655c1fc73646a9b2233
 receipts:
   unresolved_subitems: []

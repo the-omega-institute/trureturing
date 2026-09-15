@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:c2f9ce7bec4dbb7d8727930695aa0a0c2cc4a0752bbb76f0716cc68966917e03
   normalized_sha256: sha256:c2f9ce7bec4dbb7d8727930695aa0a0c2cc4a0752bbb76f0716cc68966917e03
 cas_ref: sha256:c2f9ce7bec4dbb7d8727930695aa0a0c2cc4a0752bbb76f0716cc68966917e03
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Factorization/Automata/GuardedPrimeProduct.arithmetic_dfao_minimality
+    target_statement_id: sha256:80282364b43e40382af93031719cd71154c6a6687dd80f9956144a53c2205977
 receipts:
   unresolved_subitems: []
