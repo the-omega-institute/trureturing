@@ -1045,3 +1045,253 @@ y_n=B+\frac{B-A}{2}[\cosh(D_\eta/n)-1]<Y.
 [15-C] Lloyd N. Trefethen. *Approximation Theory and Approximation Practice*, Theorems 8.1--8.2. SIAM, 2013; extended edition, 2019. Chapter 8 source: https://github.com/chebfun/ATAP/blob/development/chap8.m . 解析函数的 Chebyshev 系数界和截断误差 $2M\rho^{-n}/(\rho-1)$。
 
 [15-D] Lin Lin and Yu Tong. *Heisenberg-Limited Ground-State Energy Estimation for Early Fault-Tolerant Quantum Computers*. PRX Quantum 3, 010318, 2022. DOI: 10.1103/PRXQuantum.3.010318. https://doi.org/10.1103/PRXQuantum.3.010318 . 其相干量子查询模型与式 (15.11) 的被动含绝对噪声 Laplace 观察模型不同，二者不共享本文下界的查询前提。
+
+## 19. 两矩连续支撑极值、网格偏差与最优节点配置
+
+### 19.1 定义：两组概率分布的含噪矩比较
+
+固定 $0\leq a<b<1$。令 $\mu,\nu$ 为 Borel 概率测度，满足
+\[
+\operatorname{supp}\mu\subseteq[a,1],\qquad
+\operatorname{supp}\nu\subseteq[a,b],\qquad
+\left|\int x^k\,d\mu-\int x^k\,d\nu\right|\leq\varepsilon
+\quad(k=1,2),\quad\varepsilon\geq0.
+\tag{19.1}
+\]
+定义 $W(\varepsilon)$ 为全部可行对中的最大 $\mu(\{1\})$。对开区间 $(l,r)\subset[a,1)$，再要求 $\mu((l,r))=0$，得到最大值 $W_{l,r}(\varepsilon)$。下面给出的上界对任意上述测度成立，且由有限原子测度取得，所以将模型类限制为任意有限原子数的并集不改变这些最大值。
+
+此处 $\varepsilon$ 比较两种真实模型的矩。若它们分别与同一读数相差至多 $\delta$，则应使用 $\varepsilon=2\delta$。当 $a>0$、$x=e^{-hE}$ 且 $h>0$ 时，两矩分别对应 $h,2h$ 时刻的 Laplace 读数。式 (19.1) 没有假设其他时间的读数相近。一般矩极值的多项式对偶背景见 [19-A]。
+
+### 19.2 定理：移动原子的精确极值与支撑空隙代价
+
+设
+\[
+a\leq l<r\leq b,\qquad l\leq t\leq r,\qquad
+2t\leq a+b,\qquad l+r\leq a+b.
+\]
+定义
+\[
+\varepsilon(t)=\frac{(1-b)(b-t)}{2+t},\quad
+c(t)=\frac{(1-b)(2+b)}{2+t},\quad
+w_c(t)=1-\frac{c(t)}{1-t},
+\]
+\[
+w_h(t;l,r)=\frac{(b-l)(b-r)+\varepsilon(t)(1+l+r)}{(1-l)(1-r)}.
+\tag{19.2}
+\]
+则
+\[
+\boxed{W(\varepsilon(t))=w_c(t),\qquad
+W_{l,r}(\varepsilon(t))=w_h(t;l,r),}
+\]
+并且
+\[
+\boxed{w_c(t)-w_h(t;l,r)
+=\frac{(1-w_c(t))(t-l)(r-t)}{(1-l)(1-r)}.}
+\tag{19.3}
+\]
+当 $l<t<r$ 时差严格为正；在两个端点处差为零。
+
+**构造。** 无空隙时取
+\[
+\mu_c=w_c\delta_1+(1-w_c)\delta_t,\qquad\nu_c=\delta_b.
+\tag{19.4}
+\]
+有空隙时取
+\[
+\mu_h=w_h\delta_1+u_l\delta_l+u_r\delta_r,\qquad\nu_h=\delta_b,
+\]
+\[
+u_l=\frac{c(t)(r-t)}{(1-l)(r-l)},\qquad
+u_r=\frac{c(t)(t-l)}{(1-r)(r-l)}.
+\tag{19.5}
+\]
+这里式 (19.5) 的 $u_l,u_r$ 为残余概率质量。所有分母为正，$u_l,u_r\geq0$，而
+\[
+w_c=\frac{(b-t)(1+b+t)}{(1-t)(2+t)}\geq0,\qquad
+1-w_c=\frac{(1-b)(2+b)}{(1-t)(2+t)}>0.
+\]
+式 (19.2) 给 $w_h\geq0$。直接代入得到
+\[
+w_h+u_l+u_r=1,
+\]
+\[
+\int x\,d(\mu_c-\nu_c)=\int x\,d(\mu_h-\nu_h)=-\varepsilon(t),\qquad
+\int x^2\,d(\mu_c-\nu_c)=\int x^2\,d(\mu_h-\nu_h)=\varepsilon(t).
+\tag{19.6}
+\]
+因此两组都是实际可行概率对。
+
+**普遍上界。** 记任意可行对的误差为 $e_1,e_2$。对 $q(x)=x^2-sx+p$，$s\geq0$，若 $q$ 在 $\mu$ 的残余支撑上非负，并且在 $[a,b]$ 上不超过 $B$，则归一化与实际矩误差给出
+\[
+\mu(\{1\})q(1)\leq\int q\,d\mu
+=\int q\,d\nu+e_2-se_1\leq B+\varepsilon(1+s).
+\tag{19.7}
+\]
+取 $q_c(x)=(x-t)^2$。在 $[a,b]$ 上，
+\[
+q_c(b)-q_c(x)=(b-x)(b+x-2t)\geq0,
+\]
+所以 $B=(b-t)^2$。式 (19.7) 的上界由 (19.4) 取得，给出 $W=w_c$。
+
+取 $q_h(x)=(x-l)(x-r)$。它在 $(l,r)$ 之外非负，而
+\[
+q_h(b)-q_h(x)=(b-x)(b+x-l-r)\geq0\quad(a\leq x\leq b).
+\]
+式 (19.7) 的上界由 (19.5) 取得，给出 $W_{l,r}=w_h$。最后，(19.4) 与 (19.5) 具有相同前两矩及总质量，故对 $q_h$ 积分相同。于是
+\[
+w_hq_h(1)=w_cq_h(1)+(1-w_c)q_h(t),
+\]
+即为式 (19.3)。严格性来自 $1-w_c>0$ 及区间内部的两个正因子。
+
+### 19.3 定理：连续支撑模型的完整噪声曲线
+
+记
+\[
+m=\frac{a+b}{2},\quad h=\frac{b-a}{2},\quad
+\varepsilon_1=\frac{(1-b)(b-a)}{4+a+b},\quad
+\varepsilon_2=\frac{(1-b)(b-a)}{2+a},\quad
+\varepsilon_3=1-b^2.
+\]
+有 $0<\varepsilon_1<\varepsilon_2<\varepsilon_3$，且对全部 $\varepsilon\geq0$，
+\[
+\boxed{
+W(\varepsilon)=
+\begin{cases}
+\dfrac{h^2+\varepsilon(1+2m)}{(1-m)^2},&0\leq\varepsilon\leq\varepsilon_1,\\[4pt]
+\dfrac{\varepsilon(1+2b)-\varepsilon^2}{(1-b)^2+3\varepsilon},&\varepsilon_1\leq\varepsilon\leq\varepsilon_2,\\[4pt]
+\dfrac{b^2-a^2+\varepsilon}{1-a^2},&\varepsilon_2\leq\varepsilon\leq\varepsilon_3,\\[4pt]
+1,&\varepsilon\geq\varepsilon_3.
+\end{cases}}
+\tag{19.8}
+\]
+相邻表达式在转折点相等。
+
+**证明。** 第一段使用 $q=(x-m)^2$，它在比较支撑上的最大值为 $h^2$，故式 (19.7) 给出上界。取
+\[
+\mu=W\delta_1+(1-W)\delta_m,\qquad
+\nu=\lambda\delta_a+(1-\lambda)\delta_b,
+\]
+\[
+\lambda=\frac{(1-b)(b-a)-\varepsilon(4+a+b)}{(b-a)(2-a-b)}.
+\tag{19.9}
+\]
+在该区间内 $0\leq\lambda\leq1$。$W$ 从非负值线性增长到式 (19.4) 在 $t=m$ 时小于一的值，故 $0\leq W<1$。两矩误差为 $(-\varepsilon,\varepsilon)$，得到取等。
+
+第二段将式 (19.2) 反解为
+\[
+t(\varepsilon)=\frac{b(1-b)-2\varepsilon}{1-b+\varepsilon}.
+\tag{19.10}
+\]
+这个函数严格递减，将 $[\varepsilon_1,\varepsilon_2]$ 映到 $[a,m]$，端点分别为 $m,a$。将其代入 (19.4) 得到式 (19.8) 的第二段，普遍上界用 $q=(x-t)^2$。该上界不依赖提前指定残余节点。
+
+第三段使用 $q=x^2-a^2$，其在 $[a,1]$ 上非负、在 $[a,b]$ 上不超过 $b^2-a^2$。取
+\[
+\mu=W\delta_1+(1-W)\delta_a,\qquad\nu=\delta_b.
+\]
+此时二次矩误差为 $\varepsilon$，一次矩误差为
+\[
+e_1=\frac{\varepsilon-(1-b)(b-a)}{1+a}.
+\]
+条件 $\varepsilon\geq\varepsilon_2$ 保证 $e_1\geq-\varepsilon$，而 $a\geq0$ 保证 $e_1\leq\varepsilon$；$\varepsilon\leq\varepsilon_3$ 保证 $W\leq1$。最后一段取 $\mu=\delta_1,\nu=\delta_b$，误差为 $(1-b,1-b^2)$，两者均不超过 $\varepsilon_3$。这证明了所有区间的上界、取等与转折。
+
+### 19.4 推论：固定网格的严格偏差及一个精确反例
+
+设固定有限网格 $G\subset[a,b]$ 包含 $a,m,b$。将 $\mu$ 的残余支撑和 $\nu$ 的支撑都限制在 $G$，记最大端点质量为 $W_G(\varepsilon)$。若 $\varepsilon\in(\varepsilon_1,\varepsilon_2)$ 且 $t=t(\varepsilon)\notin G$，令 $l<r$ 为夹住 $t$ 的相邻网格节点。因为 $m\in G$，有 $a\leq l<t<r\leq m$。式 (19.5) 的全部节点属于允许支撑，且 $G\cap(l,r)=\varnothing$，故
+\[
+\boxed{W_G(\varepsilon)=w_h(t;l,r),\qquad
+W(\varepsilon)-W_G(\varepsilon)
+=\frac{(1-W(\varepsilon))(t-l)(r-t)}{(1-l)(1-r)}>0.}
+\tag{19.11}
+\]
+若 $t\in G$，式 (19.4) 给出零偏差。因此有限网格在这个整个开噪声区间中只能于有限多个噪声值精确。有限原子取等不蕴含一个预先固定的有限节点集合足够。
+
+对 $a=1/4,b=3/4,G=\{1/4,1/2,3/4\}$ 和 $\varepsilon=1/25$，
+\[
+t=\frac{43}{116},\quad W=\frac{984}{1825},\quad W_G=\frac{13}{25},\quad
+W-W_G=\frac7{365}.
+\tag{19.12}
+\]
+连续模型的取等分布为
+\[
+\mu=\frac{984}{1825}\delta_1+\frac{841}{1825}\delta_{43/116},\qquad
+\nu=\delta_{3/4}.
+\]
+两矩误差恰为 $(-1/25,1/25)$。在整个中间区间 $1/40\leq\varepsilon\leq1/18$，网格偏差为
+\[
+W-W_G=\frac{(1-18\varepsilon)(40\varepsilon-1)}{3(48\varepsilon+1)}.
+\tag{19.13}
+\]
+该比较保持了固定网格问题本身的正确性，只改变允许的支撑模型类。
+
+### 19.5 定理：每个网格单元的精确最坏偏差
+
+令 $K=(1-b)(2+b)>0$，并定义严格递增坐标
+\[
+\psi(t)=\sqrt{\frac{2+t}{1-t}},\qquad 0\leq t<1.
+\]
+对任意 $a\leq l<r\leq m$，在 $t\in[l,r]$ 对应的噪声段内，式 (19.11) 的最大偏差恰为
+\[
+\boxed{\max_{l\leq t\leq r}(w_c-w_h)
+=\frac K9\bigl(\psi(r)-\psi(l)\bigr)^2.}
+\tag{19.14}
+\]
+最大值在
+\[
+t_* =\frac{\psi(l)\psi(r)-2}{\psi(l)\psi(r)+1}\in(l,r)
+\]
+取得。
+
+**证明。** 令 $s=(2+t)/(1-t)$、$s_l=(2+l)/(1-l)$、$s_r=(2+r)/(1-r)$。将式 (19.3) 中的 $1-w_c=K/[(2+t)(1-t)]$ 代入，精确化为
+\[
+w_c-w_h=\frac K9\frac{(s-s_l)(s_r-s)}s
+=\frac K9\left(s_l+s_r-s-\frac{s_ls_r}s\right).
+\]
+对 $s>0$，
+\[
+s+\frac{s_ls_r}s-2\sqrt{s_ls_r}
+=\frac{(s-\sqrt{s_ls_r})^2}s\geq0.
+\]
+因此在 $s=\sqrt{s_ls_r}=\psi(l)\psi(r)$ 处取得且仅取得最大值。该点严格位于两端之间，反变换给出 $t_*$，而最大值为式 (19.14)。
+
+### 19.6 定理：保留校准节点的最优有限网格
+
+固定整数 $M\geq1$，考虑所有网格
+\[
+G=\{g_0,g_1,\ldots,g_M,b\},\qquad
+a=g_0<g_1<\cdots<g_M=m.
+\]
+这类网格保留 $a,m,b$ 三个校准节点，并允许在 $[a,m]$ 内选择 $M-1$ 个附加节点。则
+\[
+\boxed{\inf_G\sup_{\varepsilon\geq0}\bigl(W(\varepsilon)-W_G(\varepsilon)\bigr)
+=\frac{(1-b)(2+b)}{9M^2}\bigl(\psi(m)-\psi(a)\bigr)^2.}
+\tag{19.15}
+\]
+唯一最优的有序节点由
+\[
+\psi_j=\psi(a)+\frac jM\bigl(\psi(m)-\psi(a)\bigr),\qquad
+\boxed{g_j=\frac{\psi_j^2-2}{\psi_j^2+1}\quad(0\leq j\leq M)}
+\tag{19.16}
+\]
+给出。
+
+**证明。** 式 (19.9) 和第三、四阶段的取等分布只使用 $a,m,b,1$，所以所有这些网格在移动阶段之外都精确。移动阶段内，式 (19.14) 给出
+\[
+\sup_{\varepsilon\geq0}(W-W_G)
+=\frac K9\max_{0\leq j<M}\bigl(\psi(g_{j+1})-\psi(g_j)\bigr)^2.
+\]
+$M$ 个正增量之和固定为 $\psi(m)-\psi(a)$，其最大值至少为该和除以 $M$。等号成立当且仅当全部增量相等，得到式 (19.15)--(19.16)。这是固定有限 $M$ 下的精确最优值，因而也给出 $M^{-2}$ 误差阶。节点数预算和保留校准节点的条件是结论的一部分；未要求保留这些节点的更大设计类没有在此被优化。
+
+### 19.7 范围与下一项问题
+
+候选 Lean `TwoMomentSupportHole.two_moment_support_hole_sharp` 对任意有限原子数的真实 Prony 矩给出第 19.2 节的两项最大值及精确差额；其证明包含移动原子与双端残余的正权重构造和普遍上界。第 19.3--19.6 节的完整分段曲线、固定网格结论和最佳网格配置在本节有普通证明，尚未作为新的 Lean 声明完成。一般 Borel 测度版本由相同有界多项式积分论证给出。
+
+接下来的具体问题是：对三阶及更高阶含噪矩，是否能得到类似的支撑移动分类、可认证的网格误差和全局最佳节点配置？更一般的自由节点一致逼近仍有独立的最优性问题 [19-C]，本节只解决由指定两矩极值诱导、且保留校准节点的设计类。它不结算一般自由节点样条问题，也不证明维数、时长与精度的联合谱底 minimax 上界。
+
+### 19.8 文献定位
+
+[19-A] Dimitris Bertsimas and Ioana Popescu. *Optimal Inequalities in Probability Theory: A Convex Optimization Approach*. SIAM Journal on Optimization 15(3), 780--804, 2005. DOI: 10.1137/S1052623401399903. https://epubs.siam.org/doi/10.1137/S1052623401399903 . 一般矩约束下紧概率界及多项式优化的背景；不把二次证书或矩对偶方法本身归为本节新发现。
+
+[19-B] Ken'ichiro Tanaka and Alexis Akira Toda. *Discretizing Distributions with Exact Moments: Error Estimate and Convergence Analysis*. SIAM Journal on Numerical Analysis 53(5), 2158--2177, 2015. DOI: 10.1137/140971269. https://epubs.siam.org/doi/10.1137/140971269 . 研究矩保持离散化的误差与收敛；其给定分布的近似问题与本节两种可变测度间的最坏端点质量问题不同。
+
+[19-C] Vinesha Peiris, Nadezda Sukhorukova and Duy Khoa Pham. *Best free knot linear spline approximation and its application to neural networks*. IMA Journal of Applied Mathematics 91(3), 273--292, June 2026. DOI: 10.1093/imamat/hxag015. https://academic.oup.com/imamat/advance-article/doi/10.1093/imamat/hxag015/8706326 . 研究一般自由节点一致逼近，给出单内部节点的优化与充分最优性条件。这里的有限网格公式针对特殊矩极值曲线的受限设计类，不替代该文的一般问题。
