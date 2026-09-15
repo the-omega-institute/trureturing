@@ -1045,3 +1045,187 @@ y_n=B+\frac{B-A}{2}[\cosh(D_\eta/n)-1]<Y.
 [15-C] Lloyd N. Trefethen. *Approximation Theory and Approximation Practice*, Theorems 8.1--8.2. SIAM, 2013; extended edition, 2019. Chapter 8 source: https://github.com/chebfun/ATAP/blob/development/chap8.m . 解析函数的 Chebyshev 系数界和截断误差 $2M\rho^{-n}/(\rho-1)$。
 
 [15-D] Lin Lin and Yu Tong. *Heisenberg-Limited Ground-State Energy Estimation for Early Fault-Tolerant Quantum Computers*. PRX Quantum 3, 010318, 2022. DOI: 10.1103/PRXQuantum.3.010318. https://doi.org/10.1103/PRXQuantum.3.010318 . 其相干量子查询模型与式 (15.11) 的被动含绝对噪声 Laplace 观察模型不同，二者不共享本文下界的查询前提。
+
+## 18. 含噪矩极值的精确转折点与取等刚性
+
+### 18.1 定义：初始线性上界的有效区间
+
+沿用第 15.1 节的不同实节点 $x_1,\ldots,x_N$、离节点点 $y$、Lagrange 基 $\ell_i$、系数 $c_i=\ell_i(y)$、集合 $J=\{i:c_i>0\}$，以及
+\[
+p=\sum_{i\in J}\ell_i,\quad P=p(y)\geq1,\quad
+L=\sum_{k=1}^{N-1}|p_k|,\quad d_0=0,\quad
+ d_k=\begin{cases}1,&p_k\geq0,\\-1,&p_k<0,\end{cases}
+\quad r_i=\sum_{k=0}^{N-1}d_k[\ell_i]_k.
+\]
+定义转折斜率、初始仿射值及候选有符号权重
+\[
+A_i=\frac{Pr_i}{c_i}-L,\qquad
+w_\varepsilon=\frac{1+\varepsilon L}{P},\qquad
+b_i(\varepsilon)=w_\varepsilon c_i-\varepsilon r_i
+=\frac{c_i}{P}(1-\varepsilon A_i).
+\tag{18.1}
+\]
+所有分母均非零。对 $\varepsilon\geq0$，称 $(w,u,v)$ 可行，是指 $w,u_i,v_i\geq0$、$w+\sum_i u_i=\sum_i v_i=1$，以及
+\[
+|e_k|\leq\varepsilon\quad(0\leq k<N),\qquad
+e_k=wy^k+\sum_i u_ix_i^k-\sum_i v_ix_i^k.
+\tag{18.2}
+\]
+这是两个实际概率测度的原始矩误差。两边归一化使 $e_0=0$。记最大可行外部质量为 $W(\varepsilon)$。有限维可行集闭且有界，且取 $w=0,u=v$ 可知它非空，所以最大值存在。
+
+### 18.2 定理：取等的必要充分条件与唯一权重
+
+假设 $p_k\neq0$ 对全部 $1\leq k<N$ 成立。对任意 $\varepsilon\geq0$，一组权重 $(w_\varepsilon,u,v)$ 可行，当且仅当
+\[
+\boxed{
+\varepsilon A_i\leq1\quad(1\leq i\leq N),\qquad
+u_i=\max\{-b_i(\varepsilon),0\},\qquad
+v_i=\max\{b_i(\varepsilon),0\}.
+}
+\tag{18.3}
+\]
+因此，达到初始仿射上界的概率对唯一；转折点处出现零权重仍允许取等。此处的非零条件是对指定多项式的非恒定系数而言，不等同于一般线性规划的非退化性。
+
+**必要性证明。** 对任意可行三元组，定义非负差额
+\[
+\Delta=1+\varepsilon L-wP.
+\]
+直接按实际矩展开，得到具有逐项非负右端的恒等式
+\[
+\boxed{
+\Delta=\sum_i u_i p(x_i)+\sum_i v_i(1-p(x_i))
++\sum_{k=1}^{N-1}\bigl(\varepsilon|p_k|-p_ke_k\bigr).
+}
+\tag{18.4}
+\]
+非负性分别来自 $p(x_i)\in\{0,1\}$、正权重及 $|e_k|\leq\varepsilon$。当 $w=w_\varepsilon$ 时 $\Delta=0$，故每个右端项都为零。由于 $p_k\neq0$，所有非恒定矩误差被强制为
+\[
+e_k=\varepsilon d_k.
+\tag{18.5}
+\]
+对实际观测差泛函作用 $\ell_i$，插值的节点取值给出
+\[
+wc_i+u_i-v_i=\sum_k[\ell_i]_ke_k=\varepsilon r_i,
+\]
+从而 $v_i-u_i=b_i(\varepsilon)$。式 (18.4) 还强制 $u_i=0$（$i\in J$）及 $v_i=0$（$i\notin J$）。结合非负性，正负部分被唯一确定，且 $b_i/c_i\geq0$。式 (18.1) 与 $P>0$ 随即给出全部 $\varepsilon A_i\leq1$。这排除了用另一组可行权重绕过初始构造的符号障碍。
+
+**充分性证明。** 条件 $\varepsilon A_i\leq1$ 保证 $b_i$ 与 $c_i$ 同号或为零。取式 (18.3) 的正负部分，使用 Lagrange 恒等式得到
+\[
+\sum_i c_i=1,\quad\sum_i r_i=0,\quad
+\sum_{i\in J}c_i=P,\quad\sum_{i\in J}r_i=L.
+\]
+于是 $\sum_i v_i=w_\varepsilon P-\varepsilon L=1$，而 $\sum_i(v_i-u_i)=w_\varepsilon$，所以另一侧也归一化。对每个 $k<N$，插值给出 $\sum_i c_ix_i^k=y^k$ 和 $\sum_i r_ix_i^k=d_k$，故实际误差就是 $\varepsilon d_k$。这证明可行性，包括边界零权重。$N=1$ 时条件为空，结论退化为唯一的 $w=1,u=0,v=1$。
+
+### 18.3 推论：精确第一转折点
+
+若 $N\geq2$ 且第 18.2 节的系数条件成立，则 $L>0$，并且
+\[
+M=\max_i A_i>0,\qquad \varepsilon_*=\frac1M
+\tag{18.6}
+\]
+满足
+\[
+W(\varepsilon)=\frac{1+\varepsilon L}{P}\quad(0\leq\varepsilon\leq\varepsilon_*),
+\qquad
+W(\varepsilon)<\frac{1+\varepsilon L}{P}\quad(\varepsilon>\varepsilon_*).
+\tag{18.7}
+\]
+
+**证明。** 式 (18.4) 对所有可行对给出 $wP\leq1+\varepsilon L$。若全部 $A_i\leq0$，式 (18.3) 会对任意大 $\varepsilon$ 构造可行的 $w_\varepsilon$；但 $L>0$ 会使 $w_\varepsilon>1$，与概率归一化矛盾。因此 $M>0$。当 $0\leq\varepsilon\leq1/M$ 时，式 (18.3) 构造取等。超过该阈值时至少一个条件失败，而必要性排除了所有取等概率对。由于最大值确实取得，故为严格不等式。第 15.2 节的 $1/[2P(1+B)]$ 是有效的充分半径；式 (18.6) 给出此系数条件下的精确半径。
+
+### 18.4 命题：近最优概率对的定量刚性
+
+在第 18.2 节的系数条件下，设 $(w,u,v)$ 任意可行，不要求已经取等。令 $\Delta$ 如式 (18.4)，并定义
+\[
+b_i(w,\varepsilon)=wc_i-\varepsilon r_i,
+\qquad B_i=\sum_{k=1}^{N-1}\frac{|[\ell_i]_k|}{|p_k|}.
+\]
+则
+\[
+|e_k-\varepsilon d_k|\leq\frac{\Delta}{|p_k|}\quad(1\leq k<N),
+\tag{18.8}
+\]
+且对每个节点有
+\[
+\boxed{
+|u_i-\max\{-b_i(w,\varepsilon),0\}|\leq\Delta(1+B_i),\qquad
+|v_i-\max\{b_i(w,\varepsilon),0\}|\leq\Delta(1+B_i).
+}
+\tag{18.9}
+\]
+
+**证明。** 式 (18.4) 中每个非负项均不超过 $\Delta$。在 $|e_k|\leq\varepsilon$ 下，系数项恰好等于 $|p_k|\,|e_k-\varepsilon d_k|$，得到式 (18.8)。对 $\ell_i$ 展开实际误差并用三角不等式，得
+\[
+|(v_i-u_i)-b_i(w,\varepsilon)|\leq\Delta B_i.
+\]
+若 $p(x_i)=1$，则 $u_i\leq\Delta$；否则 $v_i\leq\Delta$。故 $\min\{u_i,v_i\}\leq\Delta$。使用
+\[
+u_i=\max\{-(v_i-u_i),0\}+\min\{u_i,v_i\},\quad
+v_i=\max\{v_i-u_i,0\}+\min\{u_i,v_i\}
+\]
+及实正部分函数的 1-Lipschitz 性得到式 (18.9)。该估计把最优值差额变成实际权重误差；其条件数包含 $1/|p_k|$，因此不能无条件跨越系数趋零的情形。
+
+### 18.5 命题：三节点模型在所有噪声水平下的完整解
+
+取 $x=(1/4,1/2,3/4)$、$y=1$。则
+\[
+p=4-16X+16X^2,\quad P=4,\quad L=32,\quad
+c=(1,-3,3),\quad r=(18,-32,14),\quad
+A=(40,32/3,-40/3).
+\]
+因此精确第一转折点为 $1/40$。对全部 $\varepsilon\geq0$，
+\[
+\boxed{W(\varepsilon)=\min\left\{
+\tfrac14+8\varepsilon,\quad
+\tfrac13+\tfrac{14}3\varepsilon,\quad
+\tfrac8{15}+\tfrac{16}{15}\varepsilon,\quad 1\right\}.}
+\tag{18.10}
+\]
+四段的转折依次为 $1/40,1/18,7/16$。
+
+**上界证明。** 三个多项式
+\[
+p_1=4-16X+16X^2,\qquad p_2=1-6X+8X^2,\qquad p_3=2X^2-\tfrac18
+\]
+在三个节点上的值均属于 $[0,1]$。它们在 $y=1$ 处的值分别为 $4,3,15/8$，非恒定系数绝对值和分别为 $32,14,2$。将各自代入式 (18.4) 所对应的多项式上界，再使用 $w\leq1$，得到式 (18.10) 的四条直线。
+
+**取等构造。** 当 $0\leq\varepsilon\leq1/40$ 时，使用式 (15.7)。当 $1/40\leq\varepsilon\leq1/18$ 时，取
+\[
+w=\tfrac13+\tfrac{14}3\varepsilon,\quad
+\mu=w\delta_1+\tfrac{40\varepsilon-1}{3}\delta_{1/4}
+ +(1-18\varepsilon)\delta_{1/2},\quad \nu=\delta_{3/4}.
+\]
+两组误差为 $(-\varepsilon,\varepsilon)$。当 $1/18\leq\varepsilon\leq7/16$ 时，取
+\[
+w=\tfrac8{15}+\tfrac{16}{15}\varepsilon,\quad
+\mu=w\delta_1+(1-w)\delta_{1/4},\quad\nu=\delta_{3/4}.
+\]
+误差为 $((8\varepsilon-1)/10,\varepsilon)$，其绝对值均不超过 $\varepsilon$。最后当 $\varepsilon\geq7/16$，取 $\mu=\delta_1,\nu=\delta_{3/4}$，误差为 $(1/4,7/16)$。各段内权重非负且归一化，在端点处相容，因此证明全部区间的取等。
+
+### 18.6 命题与后续问题：零系数产生的自由噪声面
+
+若允许部分 $p_k=0$，定义紧凸集合
+\[
+\mathcal D_p=\{d\in\mathbb R^N:d_0=0,\ |d_k|\leq1,\ 
+ d_k=\operatorname{sign}(p_k)\text{ whenever }p_k\neq0,\ 1\leq k<N\}.
+\]
+对 $d\in\mathcal D_p$ 定义 $r_i(d)=\sum_kd_k[\ell_i]_k$、$A_i(d)=Pr_i(d)/c_i-L$。则 $w_\varepsilon=(1+\varepsilon L)/P$ 可行，当且仅当存在 $d\in\mathcal D_p$ 满足
+\[
+\varepsilon A_i(d)\leq1\quad\text{对所有 }i.
+\tag{18.11}
+\]
+若 $L>0$，其精确第一取等区间为 $[0,1/M_*]$，其中
+\[
+\boxed{M_* = \min_{d\in\mathcal D_p}\max_i A_i(d)>0.}
+\tag{18.12}
+\]
+
+**证明。** 当 $\varepsilon>0$ 且存在取等概率对时，令 $d_k=e_k/\varepsilon$。式 (18.4) 强制所有非零系数上的饱和，零系数保留 $[-1,1]$ 自由度。逐个作用 $\ell_i$ 和节点互补性后得到式 (18.11)。反向对指定的 $d$ 使用第 18.2 节的正负部分构造；所需恒等式 $D(p)=L$ 不依赖零系数处的选择。$\varepsilon=0$ 时直接使用零噪声构造。若某个 $d$ 的全部 $A_i(d)\leq0$，该方向会让仿射值在任意大噪声下可行，与 $L>0$ 及 $w\leq1$ 矛盾。连续函数 $\max_i A_i(d)$ 在紧集上取得严格正最小值，给出式 (18.12)。这个最小化是一个固定节点下的有限线性规划。
+
+当前候选 Lean 主定理是第 18.2 节的非零系数精确分类。第 18.4--18.6 节保留为上面的普通数学推导；尚未将定量近最优性、零系数面和后续完整分段曲线合并为通用形式化算法。下一项具体义务是形式化式 (18.11) 的自由面及构造性求解，并研究这些面在节点数增加时如何影响有限观察的最坏谱端点界。维数、时长和精度的联合 minimax 上界仍未由本节证明。
+
+### 18.7 文献定位
+
+[18-A] Yohann de Castro and Fabrice Gamboa. *Exact Reconstruction Using Beurling Minimal Extrapolation*. Journal of Mathematical Analysis and Applications 395(1), 336--354, 2012. arXiv:1103.4951. https://arxiv.org/abs/1103.4951 . 提供有限测度矩重建与插值、多项式对偶的背景；本节单独计算含噪极值的精确取等面。
+
+[18-B] Milan Hladík. *Linear programming sensitivity measured by the optimal value worst-case analysis*. Optimization Methods and Software 39(5), 1168--1184, 2024. DOI: 10.1080/10556788.2024.2329590. https://doi.org/10.1080/10556788.2024.2329590 . 讨论线性规划最优值对区间数据扰动的敏感性及一般退化情形的未解决复杂度问题。本节只涉及固定节点矩阵、固定目标及坐标误差预算，非零多项式系数条件也不同于一般 LP 非退化性；不据此宣称解决该文的一般开放问题。
