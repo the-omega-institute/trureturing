@@ -747,7 +747,7 @@ kind = "data"
 admission_plane = "judge"
 produced_by = "none"
 consumed_by = ["lean-inspector"]
-verified_by = ["LeanReportSelection"]
+verified_by = ["LeanReportInput"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
@@ -960,16 +960,6 @@ admission_plane = "judge"
 produced_by = "none"
 consumed_by = ["dotnet"]
 verified_by = ["dotnet-test"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
-pattern = "tools/tests/StrataLint.Tests/Fixtures/fixture-registry.yaml"
-kind = "data"
-admission_plane = "content"
-produced_by = "none"
-consumed_by = ["TestRegistry"]
-verified_by = ["TestRegistry"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
