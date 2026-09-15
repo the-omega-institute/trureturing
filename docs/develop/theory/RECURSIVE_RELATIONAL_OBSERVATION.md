@@ -3500,3 +3500,387 @@ $$
 故两种商下的纤维分离条件完全相同。截面也通过 $h$ 互相转换：若 $p\circ s=\operatorname{id}_{S^1}$，则 $s\circ h$ 是 $q_1$ 的截面；若 $q_1\circ t=\operatorname{id}_{\mathbb{RP}^1}$，则 $t\circ h^{-1}$ 是 $p$ 的截面。现在应用定理 15.5、15.6 即得全部结论，所列实部与虚部读数就是标准平面包含。证毕。
 
 ## 追加锚（本行以下为增补区）
+## 16. 增补·Zeckendorf 低位读数的紧致增强障碍与加法闭图
+
+**定义 16.0（数字观察、平移区分与加法闭图）。** 取 $\mathbb N=\{0,1,2,\ldots\}$，并置
+$$
+G_0=1,\qquad G_1=2,\qquad G_{j+2}=G_{j+1}+G_j,\qquad
+\phi=\frac{1+\sqrt5}{2},\qquad \alpha=\phi^{-1},\qquad r=-\alpha.
+$$
+令 $Z(n)$ 为 $n$ 的有限 Zeckendorf 规范字按低位到高位排列后补零所得的无限字，包括 $Z(0)=0_K$。设
+$$
+K=\{x\in\{0,1\}^{\mathbb N}:x_jx_{j+1}=0\text{ 对所有 }j\},\qquad
+D_L=\{\text{长度为 }L\text{ 的合法二值字}\},
+$$
+$$
+\pi_L(x)=(x_0,\ldots,x_{L-1}),\qquad q_L=\pi_L\circ Z,\qquad
+\delta_j(x)=x_j.
+$$
+其中 $D_0$ 仅含空字，将 $D_1$ 与 $\{0,1\}$ 自然等同，故 $q_1(n)=Z(n)_0$。各数字空间取乘积拓扑，有限读数空间取离散拓扑。沿用带符号相位
+$$
+d_K(x,y)=\sum_{j\ge0}2^{-j-1}|x_j-y_j|,\qquad
+F(x)=\sum_{j\ge0}(-1)^{j+1}\alpha^{j+2}x_j,
+$$
+$$
+\mathbb T=\mathbb R/\mathbb Z,\qquad H(x)=[F(x)],\qquad
+\gamma(n)=[n\phi],\qquad E=\{[-m\phi]:m\ge1\}.
+$$
+对有限离散集 $D$ 和函数 $f:\mathbb N\to D$，定义平移区分关系
+$$
+n\equiv_f m\quad\Longleftrightarrow\quad
+\forall k\in\mathbb N,\ f(n+k)=f(m+k).
+$$
+称 $f$ 最终周期，若存在 $t\ge0$、$d\ge1$，使所有 $n\ge t$ 满足 $f(n+d)=f(n)$。定义
+$$
+\Gamma=\overline{\{(Z(n),Z(m),Z(n+m)):n,m\in\mathbb N\}}^{\,K^3},\qquad
+\Gamma(x,y)=\{z\in K:(x,y,z)\in\Gamma\}.
+$$
+
+**定理 16.1（有限读数的紧致实现判据与忠实增强不可能性）。** 对任意有限离散集 $D$ 和 $f:\mathbb N\to D$，下列条件等价：
+
+（甲）$f$ 最终周期。
+
+（乙）存在紧致 Hausdorff 空间 $X$、映射 $j:\mathbb N\to X$ 和联合连续函数 $B:X\times X\to D$，使
+$$
+B(j(n),j(m))=f(n+m)\qquad(n,m\in\mathbb N).
+$$
+这里不要求 $j$ 单射、连续或具有稠密像。
+
+（丙）存在有限离散交换幺半群 $M$、满射幺半群同态 $\iota:(\mathbb N,+)\to M$ 和函数 $h:M\to D$，使 $h\circ\iota=f$。
+
+因此，若紧致 Hausdorff 空间 $L$ 上存在联合连续 $A:L\times L\to L$、连续 $h:L\to D$ 和映射 $j:\mathbb N\to L$，满足
+$$
+A(j(n),j(m))=j(n+m),\qquad h(j(n))=f(n),
+$$
+则 $f$ 必最终周期。若另有 $j[\mathbb N]$ 稠密，$A$ 自动满足结合律、交换律，并以 $j(0)$ 为单位。
+
+对于 $f=q_1$，上述实现全部不存在。尤其不存在紧致 Hausdorff 空间 $L$、稠密映射 $j:\mathbb N\to L$、连续 $P:L\to K$ 及联合连续 $A:L\times L\to L$ 同时满足
+$$
+P\circ j=Z,\qquad A(j(n),j(m))=j(n+m).
+$$
+此外，$\equiv_{q_1}$ 恰为相等关系；因而任何包含于 $\ker q_1$ 的加法同余都只能是相等关系。
+
+**证明。** 先证明乙推出甲。固定 $x\in X$。对每个 $y\in X$，由 $B$ 连续及 $D$ 离散，可取开邻域 $U_y\ni x$、$V_y\ni y$，使 $B$ 在 $U_y\times V_y$ 上恒等于 $B(x,y)$。紧致性给有限子覆盖 $V_{y_1},\ldots,V_{y_s}$。置
+$$
+U_x=\bigcap_{i=1}^{s}U_{y_i}.
+$$
+若 $x'\in U_x$、$z\in X$，选择 $i$ 使 $z\in V_{y_i}$，则
+$$
+B(x',z)=B(x,y_i)=B(x,z).
+$$
+故整行函数 $B(x',\cdot)$ 在 $U_x$ 内不变。再对开覆盖 $\{U_x:x\in X\}$ 使用紧致性，得到整行函数 $B(x,\cdot)$ 仅有有限多个。于是存在整数 $a<b$，使
+$$
+B(j(a),z)=B(j(b),z)\qquad(z\in X).
+$$
+取 $z=j(k)$，得到 $f(a+k)=f(b+k)$ 对所有 $k\ge0$ 成立。这就是从 $a$ 开始、以 $b-a$ 为周期的最终周期性。此论证没有假设 $X$ 零维，也没有使用紧空间的序列紧性。[^rro16_compact]
+
+若甲成立，定义
+$$
+n\mathrel{R_{t,d}}m\quad\Longleftrightarrow\quad
+n=m\ \lor\ \bigl(n,m\ge t\text{ 且 }n\equiv m\pmod d\bigr).
+$$
+它是加法同余：等价的两数同时加上任意 $k\ge0$ 后，或者仍相等，或者仍处于阈值以上并有相同模 $d$ 剩余类；依次替换两个槽位即得双槽相容性。商集有 $t+d$ 个元素，运算 $[n]+[m]=[n+m]$ 定义良好。最终周期性保证 $h([n])=f(n)$ 定义良好，给出丙。这给出阈值—周期商的有限实现。[^rro16_unary] 丙推出乙，只需取 $X=M$、$j=\iota$、$B(s,t)=h(s+t)$；有限离散空间上的这些映射连续。
+
+若给定 $L,A,h,j$，取 $B=h\circ A$ 即适用乙。稠密情形下，结合律两边是 $L^3\to L$ 的连续映射，且在稠密集 $j[\mathbb N]^3$ 上相等；Hausdorff 性使其相等集合闭，故处处相等。交换律及左右单位律同理分别在 $L^2$ 与 $L$ 上由稠密性延拓。这也证明紧致拓扑幺半群上的连续有限读数沿单生成轨道必最终周期。
+
+现在证明 $q_1$ 不最终周期。长度为 $L$ 的合法字按权值求和，恰与整数区间 $[0,G_L)\cap\mathbb N$ 双射。对于 $L=0,1$ 可直接验证；对于 $L\ge2$，最高位为零的字给出区间 $[0,G_{L-1})$，最高位为一则次高位被迫为零，给出区间
+$$
+G_{L-1}+[0,G_{L-2})=[G_{L-1},G_L).
+$$
+两个区间不交，归纳即得双射。最低位为一的字以 $10$ 开始，余下 $L-2$ 位任取合法字，所以对 $L\ge2$，
+$$
+\sum_{n=0}^{G_L-1}q_1(n)=G_{L-2}.
+$$
+由初值和递推式验证
+$$
+G_L=\frac{\phi^{L+2}-(-\alpha)^{L+2}}{\sqrt5},
+$$
+从而
+$$
+\lim_{L\to\infty}\frac1{G_L}\sum_{n=0}^{G_L-1}q_1(n)
+=\alpha^2=\frac{3-\sqrt5}{2}\notin\mathbb Q.
+$$
+若一个二值序列从 $t$ 开始具有周期 $d$，且一周期中有 $c$ 个一，则把任意长初段分成初始段、完整周期和不足一周期的余段，得到其平均值趋于 $c/d$；初始段和余段引起的误差分子有界。因此其在长度 $G_L$ 上的平均值也必须趋于同一有理数，矛盾。这里所需且已证明的是沿 $G_L$ 的平均值极限。[^rro16_count]
+
+因此 $q_1$ 不满足甲。若存在所列 $P,A,j$，取 $h=\delta_0\circ P$ 即与已经证明的不可能性矛盾。
+
+最后，对任意 $f$，关系 $\equiv_f$ 是包含于 $\ker f$ 的加法同余：等价关系性质逐项成立，而把两数同时平移 $a$ 后的测试 $k$ 就是原来的测试 $a+k$。任意加法同余 $R\subseteq\ker f$ 都满足
+$$
+n\mathrel Rm\Longrightarrow n+k\mathrel Rm+k
+\Longrightarrow f(n+k)=f(m+k),
+$$
+所以 $R\subseteq\equiv_f$。若有 $n<m$ 且 $n\equiv_fm$，则 $f$ 从 $n$ 开始以 $m-n$ 为周期。对不最终周期的 $q_1$ 不可能出现这样的不同元素，故 $\equiv_{q_1}$ 是相等关系，关于加法同余的断言随即成立。证毕。
+
+**推论 16.2（辅助读数的边界、完成契约与素数轴转移）。** 下列结论成立。
+
+（甲）令 $I_0$ 为任意集合，$C_i$ 为紧致 Hausdorff 空间，$d_i:\mathbb N\to C_i$ 为任意辅助读数。置
+$$
+j_d(n)=(Z(n),(d_i(n))_{i\in I_0}),\qquad
+L_d=\overline{j_d[\mathbb N]}^{\,K\times\prod_{i\in I_0}C_i}.
+$$
+则 $L_d$ 紧致，向 $K$ 的投影满射，但不存在延拓自然加法的联合连续 $A:L_d^2\to L_d$。即使只要求联合连续 $B:L_d^2\to\{0,1\}$ 满足
+$$
+B(j_d(n),j_d(m))=q_1(n+m),
+$$
+仍不可能。此结论包括任意多个有限标签、任意紧值标签，以及标签不连续于原数字核心拓扑的情形。更直接地，不存在有限集 $C$ 和函数 $c:\mathbb N\to C$、$g:C^2\to\{0,1\}$，使 $g(c(n),c(m))=q_1(n+m)$ 对全部 $n,m$ 成立。
+
+（乙）令
+$$
+u=(10)^\omega,\qquad v=(01)^\omega,\qquad
+a_k=\sum_{j=0}^{k}G_{2j},\qquad b_k=G_{2k},\qquad c_k=a_k+b_k.
+$$
+则
+$$
+a_k=G_{2k+1}-1,\qquad
+c_k=G_{2k+2}-1=\sum_{j=0}^{k}G_{2j+1}.
+$$
+对每个 $m\ge0$ 及 $2k\ge m$，两输入对 $(0,a_k)$、$(b_k,a_k)$ 的每个槽位具有相同 $q_m$ 读数，而和的 $q_1$ 读数分别为一和零。并且
+$$
+Z(a_k)\longrightarrow u,\qquad Z(b_k)\longrightarrow0_K,\qquad Z(c_k)\longrightarrow v,
+$$
+$$
+(0_K,u,u),(0_K,u,v)\in\Gamma.
+$$
+
+（丙）圆周上的加法和嵌入 $\gamma$ 保留自然加法，却不保留数字读数的全局连续延拓。更精确地，$\gamma$ 单射，数字拓扑与相位拓扑在 $\mathbb N$ 上相同；然而，对每个 $L\ge1$，不存在函数 $\psi:\mathbb T\to D_L$ 使 $\pi_L=\psi\circ H$，甚至不要求 $\psi$ 连续也不行。每个单独坐标 $\delta_j$ 同样不能经 $H$ 因子化。相反，核心上的函数
+$$
+\gamma(n)\longmapsto q_L(n)
+$$
+定义良好且连续，但没有连续的全圆周延拓。度量
+$$
+d_{\rm digit}(n,m)=d_K(Z(n),Z(m)),\qquad
+d_{\rm phase}(n,m)=\rho(\gamma(n),\gamma(m)),
+$$
+其中 $\rho([s],[t])=\min_{k\in\mathbb Z}|s-t-k|$，给出不同一致结构，完成分别为 $K$ 和 $\mathbb T$。
+
+因此，保留联合连续加法和紧致性时，必须舍弃至少这个原始低位读数的全局连续恢复；若保留原数字读数和自然加法，则可以留在非紧的数字核心；若保留紧载体 $K$ 和所有数字，则固定平移 $T^h$ 仍可连续，但不能把这些固定平移合成为延拓自然加法的联合连续二元运算。[^rro16_phase]
+
+（丁）令 $\mathcal P$ 为全部素数的集合，对 $N\in\mathbb N_{>0}$ 记 $\nu_p(N)$ 为素数 $p$ 的指数，并定义
+$$
+\eta(N)=(Z(\nu_p(N)))_{p\in\mathcal P}\in K^{\mathcal P}.
+$$
+其实际像准确为
+$$
+\eta[\mathbb N_{>0}]
+=\{x\in K^{\mathcal P}:x_p\in Z[\mathbb N]\text{ 对每个 }p,
+\ \{p:x_p\ne0_K\}\text{ 有限}\}.
+$$
+对有限素数集 $S$ 和逐行有限精度 $\ell:S\to\mathbb N$，令
+$$
+Q_{S,\ell}(N)=(q_{\ell(p)}(\nu_p(N)))_{p\in S}.
+$$
+其实际像恰为有限集 $\prod_{p\in S}D_{\ell(p)}$。按扩大 $S$、提高各行精度组成的逆系统，其逆极限为 $K^{\mathcal P}$，且 $\eta[\mathbb N_{>0}]$ 在其中稠密。无限完整素数表不是这个系统的一个有限层；有限素数窗口中一条无限精度行也不是有限层。
+
+固定素数 $p$ 后，$n\mapsto p^n$ 是 $(\mathbb N,+)$ 到乘法子幺半群 $\{p^n:n\ge0\}$ 的同构。不存在紧致 Hausdorff 空间 $M$、映射 $j:\mathbb N_{>0}\to M$、联合连续乘法 $\mu:M^2\to M$ 和连续 $h_p:M\to\{0,1\}$ 同时满足
+$$
+\mu(j(N),j(R))=j(NR),\qquad h_p(j(N))=q_1(\nu_p(N)).
+$$
+这里甚至不要求 $j[\mathbb N_{>0}]$ 稠密。
+
+**证明。** 甲中，Tychonoff 定理和闭子空间的紧致性给出 $L_d$ 紧致。投影像是 $K$ 中含有稠密集 $Z[\mathbb N]$ 的紧集，因 $K$ Hausdorff 而闭，所以投影满射。投影的最低位读数连续，故定理16.1排除 $A$；该定理的乙条件直接排除 $B$。对于有限摘要 $c$，若 $c(n)=c(m)$，则对所有 $k$，
+$$
+q_1(n+k)=g(c(n),c(k))=g(c(m),c(k))=q_1(m+k).
+$$
+由 $\equiv_{q_1}$ 为相等关系，必有 $n=m$。这迫使 $c$ 将无限集单射到有限集，矛盾。
+
+乙中的偶位和恒等式在 $k=0$ 时为 $G_0=G_1-1$；若对 $k$ 成立，则加上 $G_{2k+2}$ 并使用递推式，得到下一项。奇位和同理从 $G_1=G_2-1$ 归纳。再由
+$$
+a_k+b_k=G_{2k+1}+G_{2k}-1=G_{2k+2}-1
+$$
+得到全部恒等式。显示的偶位和、奇位和及单个权值都是合法规范字，故其补零字就是相应的 $Z$ 值。若 $2k\ge m$，$Z(b_k)$ 的前 $m$ 位均为零；$Z(a_k)$ 的最低位为一，$Z(c_k)$ 的最低位为零。逐坐标最终稳定给出三个极限。原加法图中的
+$$
+(Z(0),Z(a_k),Z(a_k)),\qquad
+(Z(b_k),Z(a_k),Z(c_k))
+$$
+分别趋于所列三元组，故它们属于 $\Gamma$。特别 $k=2$ 时，$a_2=1+3+8=12$、$b_2=8$、$c_2=2+5+13=20$。
+
+丙中使用既有相位结论：$K$ 紧致，$Z[\mathbb N]$ 稠密，$H$ 连续满射，$H\circ Z=\gamma$；$H$ 的二点纤维恰位于 $E$，自然轨道上的纤维为单点；并且 $H(u)=H(v)=[-\phi]$。[^rro16_phase] 由 $\phi$ 无理，$\gamma$ 单射；由 $H$ 满射及核心稠密，$\gamma[\mathbb N]$ 稠密。
+
+连续性 $H\circ Z=\gamma$ 给相位拓扑包含于数字拓扑。反之，设 $U\subseteq K$ 开且 $Z(n)\in U$。单点纤维性质保证 $\gamma(n)\notin H(K\setminus U)$。后者为紧闭集，所以
+$$
+V=\mathbb T\setminus H(K\setminus U)
+$$
+是包含 $\gamma(n)$ 的开集，且 $H^{-1}(V)\subseteq U$。拉回核心即得反向拓扑包含。于是核心数字读数经 $\gamma$ 表示后连续。
+
+但 $u_j\ne v_j$ 对每个 $j$ 成立，而 $H(u)=H(v)$，故任何 $\delta_j$、任何正长度前缀 $\pi_L$ 都不能经 $H$ 因子化。圆周连通，连续映射到有限离散空间必为常函数；核心 $q_L$ 对 $L\ge1$ 非常值，故不存在其连续全圆周延拓。这里 $\gamma$ 在核心上的单射性与边界处数字不能恢复是不同断言。
+
+紧空间上的连续映射 $H$ 一致连续，因此恒等映射从数字一致结构到相位一致结构一致连续。乙中的两列却满足
+$$
+\rho(\gamma(a_k),\gamma(c_k))\longrightarrow0,\qquad
+d_K(Z(a_k),Z(c_k))=1-2^{-(2k+2)}\longrightarrow1.
+$$
+第一式来自共同极限相位，第二式来自前 $2k+2$ 位逐位相反、其余均为零。故反向恒等映射不一致连续。两个紧度量空间都完备，并分别含有相应稠密等距核心，因而是所列两个度量的完成。
+
+相位核心在圆周加法下封闭，且 $\gamma(n+m)=\gamma(n)+\gamma(m)$；故加法在相位核心连续，也就在相同的数字核心拓扑连续。数字核心不是紧空间：它在 Hausdorff 紧空间 $K$ 中稠密且不含 $u$，若紧则必闭而等于 $K$，矛盾。另一方面，既有连续后继 $T$ 的固定迭代 $T^h$ 延拓固定自然平移；其存在不满足定理16.1所要求的二元联合连续运算契约。[^rro16_phase]
+
+丁中，由素因子分解的存在唯一性，每个正整数只有有限个非零素数指数；每个指数有唯一有限规范行。因此 $\eta$ 单射并落入显示的实际像。反之，对显示集合中的表，逐个非零行解码为自然指数 $e_p$，有限乘积 $\prod_p p^{e_p}$ 恢复原表，证明像的准确性。
+
+给定任意 $(d_p)_{p\in S}\in\prod_{p\in S}D_{\ell(p)}$，令
+$$
+e_p=\sum_{j<\ell(p)}G_j(d_p)_j,\qquad N=\prod_{p\in S}p^{e_p}.
+$$
+合法字补零仍为规范字，故 $Q_{S,\ell}(N)=(d_p)_{p\in S}$，包括空窗口与零精度情形。这证明每个有限层的实际满性。兼容的全部有限窗口在每个素数轴上给出唯一无限合法行，反之无限行表给出兼容窗口；这些对应保持有限柱集，故得到拓扑逆极限 $K^{\mathcal P}$。有限层满性又使每个非空基本柱集都遇到实际像，证明稠密性。
+
+在固定 $p$ 的幂子幺半群上，$\eta(p^n)$ 只有 $p$ 行可能非零，该行为 $Z(n)$；其闭包是仅允许 $p$ 行任取 $K$、其余行全零的子空间。若所列 $M,j,\mu,h_p$ 存在，令
+$$
+j_p(n)=j(p^n),\qquad B=h_p\circ\mu.
+$$
+则
+$$
+B(j_p(n),j_p(m))=q_1(\nu_p(p^{n+m}))=q_1(n+m),
+$$
+与定理16.1矛盾。
+
+有限窗口上的逃逸也由同一证据直接得到：给定 $S,\ell$，取 $m=\ell(p)$ 当 $p\in S$，否则取 $m=0$，再取 $2k\ge m$。两输入对
+$$
+(1,p^{a_k}),\qquad (p^{b_k},p^{a_k})
+$$
+在两个槽位的 $Q_{S,\ell}$ 读数分别相同，但两个乘积的 $p$ 行最低位分别为 $q_1(a_k)=1$ 与 $q_1(c_k)=0$。所有其他素数行均为零。证毕。
+
+**定义 16.3（二点相位纤维的定向标记）。** 置
+$$
+a=-\alpha,\qquad b=\alpha^2,\qquad I=[a,b],\qquad c_*=-\alpha^3,\qquad \theta_*=[-\phi].
+$$
+将无限合法字唯一解析为块 $0$、$10$。对有限块字 $w$，记展开后的数字长度为 $L(w)$，并置
+$$
+S_w=\sum_{j<L(w)}(-1)^{j+1}\alpha^{j+2}w_j,\qquad
+f_w(t)=S_w+r^{L(w)}t.
+$$
+空块字允许出现。既有实相位纤维分类给出：端点纤维分别为 $\{u\}$、$\{v\}$；每个内部二点纤维唯一写成
+$$
+F^{-1}(\{f_w(c_*)\})=\{w0v,w10v\}.
+$$
+相应内部相位恰遍历 $E\setminus\{\theta_*\}$。[^rro16_phase] 定义
+$$
+z_{\theta_*}^{+1}=u,\qquad z_{\theta_*}^{-1}=v.
+$$
+对 $\theta=[f_w(c_*)]\ne\theta_*$，定义
+$$
+(z_\theta^{+1},z_\theta^{-1})=
+\begin{cases}
+(w0v,w10v),&L(w)\text{ 为偶数},\\
+(w10v,w0v),&L(w)\text{ 为奇数}.
+\end{cases}
+$$
+连接记号均按低位到高位解释。最后置
+$$
+\mathcal S(x)=
+\begin{cases}
+\{+1\},&H(x)\in E,\ x=z_{H(x)}^{+1},\\
+\{-1\},&H(x)\in E,\ x=z_{H(x)}^{-1},\\
+\{-1,+1\},&H(x)\notin E.
+\end{cases}
+$$
+
+**定理 16.4（加法闭图的完整输入纤维分类）。** 对任意 $x,y\in K$，置 $\theta=H(x)+H(y)$。则
+$$
+\Gamma(x,y)=
+\begin{cases}
+H^{-1}(\{\theta\}),&\theta\notin E,\\
+\{z_\theta^{+1}\},&\theta\in E,\ \mathcal S(x)=\mathcal S(y)=\{+1\},\\
+\{z_\theta^{-1}\},&\theta\in E,\ \mathcal S(x)=\mathcal S(y)=\{-1\},\\
+\{z_\theta^{+1},z_\theta^{-1}\},&\theta\in E\text{ 且不属于上述两种同号情形}.
+\end{cases}
+$$
+第一种情形的纤维恰有一点。特别每个输入纤维非空且至多有两点，且
+$$
+\Gamma(Z(n),Z(m))=\{Z(n+m)\}\qquad(n,m\in\mathbb N).
+$$
+但是
+$$
+\Gamma\subsetneq\{(x,y,z)\in K^3:H(z)=H(x)+H(y)\}.
+$$
+更具体地，以 $0v$、$10v$ 表示有限字与 $v$ 的连接，有
+$$
+\Gamma(0_K,u)=\{u,v\},\qquad
+\Gamma(u,u)=\{0v\},\qquad
+\Gamma(v,v)=\{10v\},\qquad
+\Gamma(u,v)=\{0v,10v\}.
+$$
+所以闭图保留全部核心加法，却不满足以 $0_K$ 为单位的集合值单位律 $\Gamma(0_K,x)=\{x\}$。
+
+**证明。** 先证明定向标记的逼近性质。若 $H(x)=\beta\notin E$，则对任何自然数列 $n_i$，
+$$
+\gamma(n_i)\longrightarrow\beta\quad\Longrightarrow\quad Z(n_i)\longrightarrow x.
+$$
+事实上，$K$ 紧致且可度量；任意聚点都由 $H$ 连续性落在单点纤维 $H^{-1}(\{\beta\})=\{x\}$。若原序列不趋于 $x$，可在某个固定邻域外取子序列，再取收敛子列，得到另一个聚点，矛盾。
+
+对于 $\beta\in E$，若
+$$
+\gamma(n_i)=\beta+[\varepsilon_i],\qquad
+0<|\varepsilon_i|<\tfrac12,\qquad \varepsilon_i\longrightarrow0,
+$$
+则对每个 $s\in\{-1,+1\}$，有准确的单侧等价
+$$
+Z(n_i)\longrightarrow z_\beta^s
+\quad\Longleftrightarrow\quad
+\operatorname{sgn}(\varepsilon_i)=s\text{ 最终成立}.
+$$
+为证此式，先取 $\beta=\theta_*$。由于 $F(Z(n_i))\in(a,b)$ 且 $b-a=1$，正的小偏移对应代表 $a+\varepsilon_i$，负的小偏移对应代表 $b+\varepsilon_i$。实端点纤维的唯一性与上述紧致聚点论证分别给出极限 $u$ 和 $v$。反之，趋于 $u$ 或 $v$ 时，连续实函数 $F$ 分别趋于 $a$ 或 $b$，且有限核心不达到端点，故偏移最终分别为正或负。
+
+再取内部二点相位 $\beta=[c]$，其中 $c=f_w(c_*)\in(a,b)$。拆分定义 $F$ 的级数可得
+$$
+F(wt)=f_w(F(t)),\qquad
+f_0(I)=[c_*,b],\qquad f_{10}(I)=[a,c_*].
+$$
+由 $F(K)=I$，两个互不相交的开闭柱集 $[w0]_K$、$[w10]_K$ 的实值域分别为
+$$
+f_w([c_*,b]),\qquad f_w([a,c_*]).
+$$
+它们位于 $c$ 的两侧。若 $L(w)$ 为偶数，前者在右、后者在左；若为奇数，则方向交换。这正是定义16.3的标记。对充分小的局部偏移，相位差就是实代表与 $c$ 的差，因为 $c$ 位于 $(a,b)$ 内。
+
+任何聚点只能是 $w0v$ 或 $w10v$。若偏移始终取指定符号，却有子列趋于反号标记，该子列最终进入反号标记的开闭柱集，其实值域方向与偏移符号矛盾。因此只有指定标记能成为聚点，紧致性给出整列收敛。反之，若 $Z(n_i)$ 趋于一个标记，它最终进入对应单侧柱集。自然轨道不遇到 $E$，所以偏移不能等于零，必最终具有该侧符号。单侧等价得证。
+
+现在证明分类的必要性。若 $(x,y,z)\in\Gamma$，由 $K^3$ 可度量，存在同一列自然数对 $(n_i,m_i)$，使
+$$
+(Z(n_i),Z(m_i),Z(n_i+m_i))\longrightarrow(x,y,z).
+$$
+连续性和核心上的加法相位恒等式给出
+$$
+H(z)=H(x)+H(y)=\theta.
+$$
+故 $\Gamma(x,y)\subseteq H^{-1}(\{\theta\})$。若 $\theta\notin E$，可能输出至多一个。若两输入都被迫为正号标记，分别写其趋零局部偏移为 $\varepsilon_i,\delta_i$，单侧等价保证二者最终均正；它们之和仍正，并且最终绝对值小于 $1/2$。由于
+$$
+\gamma(n_i+m_i)=\theta+[\varepsilon_i+\delta_i],
+$$
+输出只能趋于 $z_\theta^{+1}$。两个负号输入完全同理。其余情形只剩该相位的两个标记，不会出现第三个输出。
+
+下面证明每个列出的输出都由共同的自然数对序列实现。若 $\theta\notin E$，可分别用截断字选择 $n_i,m_i$ 使 $Z(n_i)\to x$、$Z(m_i)\to y$。和的相位趋于 $\theta$，单点纤维的逼近性质保证整列 $Z(n_i+m_i)$ 趋于该唯一输出。
+
+设 $\theta\in E$，并固定分类式允许的目标符号 $s\in\{-1,+1\}$。允许性意味着不是两个输入都被迫取 $-s$，因而至少一个输入允许符号 $s$。交换两输入后，可设 $s\in\mathcal S(x)$。任取 $t\in\mathcal S(y)$，令
+$$
+\tau_i=\frac1{100(i+1)},\qquad
+I_i=(3s\tau_i-\tau_i/4,\ 3s\tau_i+\tau_i/4),\qquad
+J_i=(t\tau_i-\tau_i/4,\ t\tau_i+\tau_i/4).
+$$
+圆周自然轨道稠密，所以可同时选择 $n_i,m_i\in\mathbb N$，使
+$$
+\gamma(n_i)\in H(x)+[I_i],\qquad
+\gamma(m_i)\in H(y)+[J_i].
+$$
+这里 $[I_i]=\{[a]:a\in I_i\}$，另一个区间同理。取相应实偏移 $\varepsilon_i\in I_i$、$\delta_i\in J_i$。它们趋于零且分别具有允许的符号 $s,t$；对非分裂输入使用单点纤维逼近性质，对分裂输入使用单侧等价，得到
+$$
+Z(n_i)\longrightarrow x,\qquad Z(m_i)\longrightarrow y.
+$$
+而 $\varepsilon_i+\delta_i$ 的中心为 $(3s+t)\tau_i$，与中心的距离小于 $\tau_i/2$。因 $3s+t$ 与 $s$ 同号且绝对值至少为二，偏移和始终具有符号 $s$，趋于零且绝对值小于 $1/2$。再次应用单侧等价，得到
+$$
+Z(n_i+m_i)\longrightarrow z_\theta^s.
+$$
+这构造的是同一对输入序列及其实际和，不是三条彼此无关的相位逼近。所有允许输出均已实现，分类式得证。
+
+自然数核心输入的和相位是 $\gamma(n+m)\notin E$，其纤维为 $\{Z(n+m)\}$，给出核心精确性。最后，$H(0_K)=0$，$H(u)=H(v)=\theta_*$，且
+$$
+2\theta_*=[-2\phi]=[c_*],\qquad
+z_{[-2\phi]}^{+1}=0v,\qquad z_{[-2\phi]}^{-1}=10v.
+$$
+将空块字及符号 $\mathcal S(0_K)=\{-1,+1\}$、$\mathcal S(u)=\{+1\}$、$\mathcal S(v)=\{-1\}$ 代入分类式，即得四个显示的输入纤维。特别 $(u,u,10v)$ 满足相位等式，却不属于 $\Gamma$，证明严格包含；$\Gamma(0_K,u)=\{u,v\}$ 则否定所述单位律。证毕。
+
+[^rro16_compact]: Jorge Almeida, Herman Goulet-Ouellet, Ondřej Klíma, *What makes a Stone topological algebra Profinite*, Algebra universalis 84, article 6 (2023), DOI: [10.1007/s00012-023-00804-w](https://link.springer.com/article/10.1007/s00012-023-00804-w)，尤见第3节 Lemma 3.1（正式版第7页）、第5.1节（第10页）及 Theorem 5.16（第18页）。定理16.1中所需的有限值双变量特例已由开覆盖完整证明，不以载体为 Stone 空间为前提。
+
+[^rro16_unary]: James East, Nik Ruškuc, *Classification of congruences of twisted partition monoids*, arXiv:[2010.04392v3](https://arxiv.org/html/2010.04392v3#S2.SS1)，第2.1节关于自然数加法同余的未编号段落；亦见本卷定理11.2的自然数加法同余分类。
+
+[^rro16_count]: Hung Viet Chu, *The Fibonacci Sequence and Schreier-Zeckendorf Sets*, Journal of Integer Sequences 22 (2019), arXiv:[1906.10962](https://arxiv.org/abs/1906.10962)。这里只用合法有限字的基本计数，所需递推及最低位计数已在定理16.1内证明。
+
+[^rro16_phase]: *CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF*，第371—377节，特别是定理371.2、372.2—372.4、373.2、375.2—375.3与377.1；固定文本为提交 c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb 的 [Zeckendorf 理论卷](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md)。
+
+## 追加锚（本行以下为增补区）
