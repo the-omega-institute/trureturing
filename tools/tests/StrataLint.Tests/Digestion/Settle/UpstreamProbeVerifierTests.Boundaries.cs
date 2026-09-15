@@ -194,7 +194,6 @@ public sealed partial class UpstreamProbeVerifierTests
     [InlineData("r#\"a\"def\"b\"#")]
     [InlineData("r#\"a\"example\"b\"#")]
     [InlineData("r##\"a\"#def\"b\"##")]
-    [InlineData("r##\"a\"###example\"b\"##")]
     [InlineData("r###\"a\\\"def\"b\"###")]
     [InlineData("r#\"a\nexample #eval! -- /-\nb\"#")]
     public void RawStringLiteralsDoNotCreateCommandTokens(string literal)
@@ -243,7 +242,6 @@ public sealed partial class UpstreamProbeVerifierTests
     [Theory]
     [InlineData("r#\"unterminated\"")]
     [InlineData("r##\"unterminated\"#")]
-    [InlineData("r##\"unterminated\"###")]
     public void UnterminatedRawStringIsRejected(string literal)
     {
         using var f = new ProbeFixture();
@@ -253,6 +251,20 @@ public sealed partial class UpstreamProbeVerifierTests
         Assert.Equal("PROBE_DECLARATION_UNSUPPORTED", error.Code);
         Assert.Equal("unterminated string or block comment", error.Message);
         Assert.Empty(f.Runner.Sources);
+    }
+
+    [Theory]
+    [InlineData(0)]
+    [InlineData(1)]
+    [InlineData(2)]
+    [InlineData(5)]
+    public void ExtraHashAfterRawStringTerminatorRemainsACommand(int hashCount)
+    {
+        var hashes = new string('#', hashCount);
+        // Lean closes at the first k hashes; the following #eval! is actual code.
+        AssertDialectRejected("theorem probe : True := by\n  let note := r" + hashes
+            + "\"a\"" + hashes + "#eval! (0 : Nat)\n  -- \"" + hashes
+            + "\n  trivial\n#print axioms probe\n");
     }
 
     [Fact]
