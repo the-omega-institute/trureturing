@@ -22,7 +22,6 @@ internal sealed class CoprimeSquarefreeDensityDocument : IScribeDocumentDefiniti
                     + "The real zeta series at two is written as the sum of ((n+1)^2) inverse "
                     + "over natural numbers n starting at zero. The absolute difference between "
                     + "S(Q,X) and rho(Q) times X is at most (2 to the number of distinct prime "
-                    + "divisors of Q, plus 2) times the square root of X. The density is classical; "
-                    + "the explicit constant is the one specified in the Zeckendorf volume."))),
+                    + "divisors of Q, plus 2) times the square root of X. The density is classical."))),
                 DescribeRole.Theorem))));
 }
