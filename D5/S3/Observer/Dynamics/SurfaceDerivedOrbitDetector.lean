@@ -117,6 +117,8 @@ abbrev MatrixDetector (extra m : ℕ) := (matrixEvaluation extra m).range
 def matrixProjection (extra m : ℕ) : G extra →* MatrixDetector extra m :=
   (matrixEvaluation extra m).rangeRestrict
 
+set_option maxHeartbeats 4000000 in
+-- The symbolic seven-dimensional commutator expansion needs a larger elaboration budget.
 /-- The actual finite quotient separates every pair of orbit times below m.
 The all-time conclusion is necessary modular equality, not a converse. The
 last clause states complete blindness under the explicit metabelian law. -/
@@ -155,10 +157,8 @@ theorem finite_second_derived_orbit_detector (extra m : ℕ) (hm : 0 < m) :
     ext i j; fin_cases i <;> fin_cases j <;> simp [P, pUnit, pMat]
   have hH : H = P 1 0 := by
     apply Units.ext
-    ext i j
-    fin_cases i <;> fin_cases j <;>
-      norm_num [H, A, B, bracket, aUnit, bUnit, aMat, aiMat, bMat, biMat,
-        P, pUnit, pMat, Matrix.mul_apply, Fin.sum_univ_succ]
+    norm_num [H, A, B, bracket, aUnit, bUnit, aMat, aiMat, bMat, biMat,
+      P, pUnit, pMat]
   have hpComm : ∀ t s : R, P t s * H = H * P t s := by
     intro t s
     rw [hH, hpMul, hpMul]
@@ -175,11 +175,10 @@ theorem finite_second_derived_orbit_detector (extra m : ℕ) (hm : 0 < m) :
         (bracket (P t s * B * (P t s)⁻¹) A) = zUnit (-t) := by
     intro t s
     apply Units.ext
-    ext i j
-    fin_cases i <;> fin_cases j <;>
-      simp [bracket, A, B, P, aUnit, bUnit, pUnit, zUnit,
-        aMat, aiMat, bMat, biMat, pMat, zMat,
-        Matrix.mul_apply, Fin.sum_univ_succ] <;> ring
+    simp [bracket, A, B, P, aUnit, bUnit, pUnit, zUnit,
+      aMat, aiMat, bMat, biMat, pMat, zMat]
+    repeat' apply And.intro
+    all_goals ring
   let images (t : R) : Generator (extra+1) → MatrixTarget m := fun i =>
     match i with
     | Sum.inl j => ![P t 0 * A * (P t 0)⁻¹, P t 0 * B * (P t 0)⁻¹, A, 1] j
@@ -198,7 +197,9 @@ theorem finite_second_derived_orbit_detector (extra m : ℕ) (hm : 0 < m) :
         generalize List.finRange extra = xs
         induction xs with
         | nil => simp
-        | cons i xs ih => simp [List.map_cons, List.prod_cons, ih, bracket, images]
+        | cons i xs ih =>
+            simp only [List.map_cons, List.prod_cons, map_mul, ih]
+            simp [bracket, images]
       rw [hrest]
       simp [images, bracket]
     have hfirst : bracket (P t 0 * A * (P t 0)⁻¹)
@@ -227,7 +228,7 @@ theorem finite_second_derived_orbit_detector (extra m : ℕ) (hm : 0 < m) :
       _ = H := by rw [hpComm]; group
   have hgen : ∀ i, twistHom (extra+1) 1 (generator (extra+1) i) = twistImages (extra+1) 1 i := by
     intro i
-    exact PresentedGroup.toGroup.of _
+    simp only [twistHom, generator, PresentedGroup.toGroup.of]
   have hτBoundary : twistHom (extra+1) 1 (boundary (extra+1)) = boundary (extra+1) := by
     simp only [boundary, bracket, map_mul, map_inv, hgen]
     change bracket
@@ -268,9 +269,24 @@ theorem finite_second_derived_orbit_detector (extra m : ℕ) (hm : 0 < m) :
       calc
         _ = (H^n * P t 0) * B * (H^n * P t 0)⁻¹ := by group
         _ = _ := by simp only [hpPow, hpMul, add_zero]
-    simp only [derivedWord, bracket, map_mul, map_inv]
-    simp only [hpower]
-    simp only [map_mul, map_inv, map_pow, hρBoundary, hρGen]
+    have hmap : ∀ x y : G extra,
+        ρ t (twistPower (extra+1) n (bracket x y)) =
+          bracket (ρ t (twistPower (extra+1) n x)) (ρ t (twistPower (extra+1) n y)) := by
+      intro x y
+      simp only [bracket, map_mul, map_inv]
+    have hEvalGen : ∀ i : Generator (extra+1),
+        ρ t (twistPower (extra+1) n (generator (extra+1) i)) =
+          match i with
+          | Sum.inl j => if j.val < 2 then H^n * images t i * (H^n)⁻¹ else images t i
+          | Sum.inr _ => images t i := by
+      intro i
+      rw [hpower]
+      rcases i with i | i
+      · by_cases hi : i.val < 2
+        · simp only [hi, if_true, map_mul, map_inv, map_pow, hρBoundary, hρGen]
+        · simp only [hi, if_false, hρGen]
+      · exact hρGen t _
+    simp only [derivedWord, hmap, hEvalGen]
     change bracket
       (bracket (H^n * (P t 0 * A * (P t 0)⁻¹) * (H^n)⁻¹) A)
       (bracket (H^n * (P t 0 * B * (P t 0)⁻¹) * (H^n)⁻¹) A) = _
