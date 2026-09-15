@@ -2358,3 +2358,374 @@ $$
 [^rro12_product]: The Stacks Project, *Topology*，[Tychonov 定理，Tag 08ZU](https://stacks.math.columbia.edu/tag/08ZU)：紧致空间的乘积紧致；此处仅使用有限乘积情形，紧致性按定义 12.0 的开覆盖意义理解。
 
 ## 追加锚（本行以下为增补区）
+## 13. 增补·幂运算的有限观察相容性
+
+**定义 13.0（观察核、细化与数论记号）。** 本节取 $\mathbb N=\{0,1,2,\ldots\}$，使用自然数上的总幂运算
+$$
+a^0=1,\qquad a^{b+1}=a^b a,
+$$
+特别约定 $0^0=1$。对 $t\ge0$、$p\ge1$，沿用阈值—周期核
+$$
+n\mathrel{R_{t,p}}m
+\quad\Longleftrightarrow\quad
+n=m\ \lor\
+\bigl(n\ge t\ \land\ m\ge t\ \land\ n\equiv m\pmod p\bigr).
+$$
+称等价关系 $R$ 双槽保幂，若
+$$
+\forall a,a',b,b'\in\mathbb N,\qquad
+a\mathrel R a'\ \land\ b\mathrel R b'
+\quad\Longrightarrow\quad
+a^b\mathrel R (a')^{b'}.
+$$
+关系包含 $R'\subseteq R$ 表示 $R'$ 细化 $R$；某类细化中的最粗者，指该类中按关系包含排序的最大元素。
+
+对正整数 $n$，记
+$$
+\operatorname{Pr}(n)=\{\ell:\ell\text{ 为素数且 }\ell\mid n\}.
+$$
+对素数 $\ell$，$v_\ell(n)$ 表示 $\ell$ 在 $n$ 的素因子分解中的指数，并定义
+$$
+h(n)=
+\max\bigl(\{0\}\cup
+\{v_\ell(n):\ell\in\operatorname{Pr}(n)\}\bigr).
+$$
+因此 $\operatorname{Pr}(1)=\varnothing$、$h(1)=0$。记 $\ell^e\parallel n$ 表示 $e=v_\ell(n)\ge1$。
+
+有限群 $G$ 的指数定义为
+$$
+\operatorname{exp}(G)
+=\operatorname{lcm}\{\operatorname{ord}(g):g\in G\},
+$$
+其中 $\operatorname{ord}(g)$ 是 $g$ 的阶。对 $n\ge2$，令
+$$
+U(n)=(\mathbb Z/n\mathbb Z)^\times,\qquad
+\lambda(n)=\operatorname{exp}(U(n)),
+$$
+并约定 $\lambda(1)=1$。这是 Carmichael 函数的标准群指数定义，参见 Kevin Ford、Florian Luca 与 Carl Pomerance，*The image of Carmichael's $\lambda$-function*，第 1 节，[arXiv:1408.6506v2](https://arxiv.org/html/1408.6506v2)。
+
+**定理 13.1（阈值—周期核双槽保幂的完整分类）。** 对任意 $t\ge0$、$p\ge1$，关系 $R_{t,p}$ 双槽保幂，当且仅当
+$$
+(t,p)=(0,1)
+\quad\text{或}\quad
+\bigl(t\ge\max\{1,h(p)\}\ \land\ \lambda(p)\mid p\bigr).
+$$
+等价地，除单点商 $R_{0,1}$ 外，充要条件为
+$$
+t\ge1,\qquad
+\forall\,\ell^e\parallel p,\quad
+e\le t\ \land\ \ell-1\mid p.
+$$
+特别地，$p=1$ 时所有 $t\ge0$ 都允许；$p>1$ 时，阈值条件和周期条件缺一不可。
+
+这里 $\lambda(p)\mid p$ 等价于“每个素因子 $\ell\mid p$ 都满足 $\ell-1\mid p$”，是 Novák–Carmichael 数的标准判据，参见 Alexander Kalmynin，*Novák-Carmichael numbers and shifted primes without large prime factors*，第 2 节引理 1，[arXiv:1706.07343v1](https://arxiv.org/html/1706.07343v1)。下面证明本条所需的等价及其与观察核条件的联系。
+
+**证明。** 先说明有限群指数的基本性质。若 $g$ 的阶为 $r$，则对正整数 $d$ 作带余除法，得到
+$$
+g^d=1_G\quad\Longleftrightarrow\quad r\mid d.
+$$
+对群中所有元素取最小公倍数，因而
+$$
+\forall g\in G,\ g^d=1_G
+\quad\Longleftrightarrow\quad
+\operatorname{exp}(G)\mid d.
+$$
+因此，对 $p\ge2$，
+$$
+\lambda(p)\mid p
+\quad\Longleftrightarrow\quad
+\forall a\in\mathbb N,\ 
+\gcd(a,p)=1\Longrightarrow a^p\equiv1\pmod p.
+$$
+
+由定理 11.2，$R_{t,p}$ 已对乘法的两个槽位相容。固定指数 $b$，对 $b$ 归纳便得
+$$
+a\mathrel{R_{t,p}}a'
+\quad\Longrightarrow\quad
+a^b\mathrel{R_{t,p}}(a')^b.
+$$
+归纳起点是两边都等于 $1$，所以也涵盖零底数与零指数。故新增要求恰在指数槽。
+
+更精确地，双槽保幂等价于
+$$
+\forall a\in\mathbb N,\qquad
+a^t\mathrel{R_{t,p}}a^{t+p}.
+$$
+必要性来自 $t\mathrel{R_{t,p}}t+p$。反之，假设上述关系成立。对任意 $n\ge t$，利用乘法相容性得到
+$$
+a^{n+p}
+=a^{n-t}a^{t+p}
+\mathrel{R_{t,p}}
+a^{n-t}a^t
+=a^n.
+$$
+若 $b\mathrel{R_{t,p}}b'$ 且 $b\ne b'$，交换二者后可写成
+$$
+b\ge t,\qquad b'=b+kp,\qquad k\ge1.
+$$
+反复应用上述关系即得 $a^b\mathrel{R_{t,p}}a^{b'}$。结合底数槽的相容性，
+$$
+a^b\mathrel{R_{t,p}}(a')^b
+\mathrel{R_{t,p}}(a')^{b'},
+$$
+便得到双槽保幂。
+
+先处理 $t=0$。因 $0\mathrel{R_{0,p}}p$，取底数 $a=0$，保幂必要求
+$$
+1=0^0\mathrel{R_{0,p}}0^p=0.
+$$
+而 $R_{0,p}$ 就是模 $p$ 同余，所以 $p\mid1$，即 $p=1$。反之，$R_{0,1}$ 是全关系，当然保幂。
+
+以下设 $t\ge1$。底数 $a=0$ 时，
+$$
+0^t=0^{t+p}=0;
+$$
+底数 $a=1$ 时，两边都等于 $1$。当 $a\ge2$ 时，自然数归纳给出
+$$
+a^t\ge2^t\ge t,\qquad a^{t+p}\ge a^t.
+$$
+两项均在周期尾部。因此，前述指数槽条件恰等价于
+$$
+\forall a\in\mathbb N,\qquad
+a^{t+p}\equiv a^t\pmod p.
+$$
+
+假设这个同余恒等式成立。对每个 $\ell^e\parallel p$，取底数 $a=\ell$，得到
+$$
+\ell^e\mid \ell^{t+p}-\ell^t
+=\ell^t(\ell^p-1).
+$$
+由于 $\ell\nmid\ell^p-1$，右侧的 $\ell$-进赋值恰为 $t$，故 $e\le t$。于是
+$$
+h(p)\le t.
+$$
+另一方面，若 $\gcd(a,p)=1$，则可在模 $p$ 的单位群中消去 $a^t$，得到
+$$
+a^p\equiv1\pmod p.
+$$
+群指数的基本性质于是给出 $\lambda(p)\mid p$。当 $p=1$ 时，这个整除关系按约定也成立。必要性得证。
+
+现在证明所需的周期判据
+$$
+\lambda(p)\mid p
+\quad\Longleftrightarrow\quad
+\forall\ell\in\operatorname{Pr}(p),\ \ell-1\mid p.
+$$
+$p=1$ 时两边都成立，以下设 $p>1$。
+
+先设 $\lambda(p)\mid p$，固定 $\ell^e\parallel p$，写
+$$
+p=\ell^e m,\qquad \gcd(\ell,m)=1.
+$$
+每个模 $\ell$ 的非零剩余类 $x$ 都可提升为模 $p$ 的单位：取不被 $\ell$ 整除的整数代表 $u$，再由中国剩余定理选择
+$$
+a\equiv u\pmod{\ell^e},\qquad
+a\equiv1\pmod m.
+$$
+于是 $\gcd(a,p)=1$，从而 $x^p=1$ 于域 $\mathbb F_\ell$ 中。
+
+令 $d=\operatorname{exp}(\mathbb F_\ell^\times)$。有限群的陪集分割表明每个元素的阶整除群阶，故 $d\mid\ell-1$。另一方面，$\mathbb F_\ell$ 上的非零多项式 $X^d-1$ 在全部 $\ell-1$ 个非零元素处消失；域上次数为 $d$ 的非零多项式至多有 $d$ 个根，故 $d\ge\ell-1$。因此
+$$
+d=\ell-1.
+$$
+既然每个非零元素的 $p$ 次幂都是 $1$，群指数的基本性质给出 $d\mid p$，即 $\ell-1\mid p$。这个论证也包括 $\ell=2$。
+
+反之，设每个素因子 $\ell\mid p$ 都满足 $\ell-1\mid p$。对 $\ell^e\parallel p$，有
+$$
+\ell^{e-1}\mid p,\qquad
+\ell-1\mid p,\qquad
+\gcd(\ell^{e-1},\ell-1)=1,
+$$
+所以
+$$
+\ell^{e-1}(\ell-1)\mid p.
+$$
+模 $\ell^e$ 的单位群恰有
+$$
+\ell^e-\ell^{e-1}=\ell^{e-1}(\ell-1)
+$$
+个元素。因此，对任何满足 $\ell\nmid a$ 的底数，有限群的阶整除性质给出
+$$
+a^p\equiv1\pmod{\ell^e}.
+$$
+特别地，若 $\gcd(a,p)=1$，上式对 $p$ 的每个素数幂因子都成立；这些因子两两互素，故
+$$
+a^p\equiv1\pmod p.
+$$
+于是 $\lambda(p)\mid p$，周期判据得证。此证明不要求模合数的单位群为循环群，也未把非单位底数当作单位处理。
+
+最后证明充分性。设
+$$
+t\ge\max\{1,h(p)\},\qquad \lambda(p)\mid p.
+$$
+由已证周期判据，对每个 $\ell^e\parallel p$ 都有 $\ell-1\mid p$。固定任意底数 $a\in\mathbb N$。
+
+若 $\ell\mid a$，则 $t\ge e$，所以
+$$
+a^t\equiv a^{t+p}\equiv0\pmod{\ell^e}.
+$$
+若 $\ell\nmid a$，则上一段已经证明 $a^p\equiv1\pmod{\ell^e}$，故
+$$
+a^{t+p}=a^t a^p\equiv a^t\pmod{\ell^e}.
+$$
+这两个分支逐个处理了每个素数幂因子，因而也涵盖“对某些因子是单位、对另一些因子不是单位”的底数。由素数幂因子的两两互素性，
+$$
+a^{t+p}\equiv a^t\pmod p.
+$$
+$p=1$ 时该同余无条件成立。结合已经证明的阈值判断与指数槽化约，得到双槽保幂。两种参数表述的等价性也随之成立。证毕。
+
+**定理 13.2（阈值—周期核的有限保幂修复与唯一最粗细化）。** 固定任意 $t\ge0$、$p\ge1$。定义有限素数集序列
+$$
+S_0=\operatorname{Pr}(p),
+$$
+$$
+S_{j+1}
+=S_j\cup
+\bigcup_{\ell\in S_j}\operatorname{Pr}(\ell-1),
+\qquad 0\le j<p,
+$$
+并定义
+$$
+P(p)=
+\operatorname{lcm}
+\bigl(\{p\}\cup\{\ell-1:\ell\in S_p\}\bigr).
+$$
+令
+$$
+T(t,p)=
+\begin{cases}
+0,&(t,p)=(0,1),\\
+\max\{t,1,h(P(p))\},&(t,p)\ne(0,1).
+\end{cases}
+$$
+则
+$$
+R_*:=R_{T(t,p),P(p)}
+$$
+双槽保幂，且
+$$
+R_*\subseteq R_{t,p}.
+$$
+该观察商有限，恰有 $T(t,p)+P(p)$ 个类。构造只需上述明确给出的 $p$ 步有限集合运算，并有显式整除界
+$$
+P(p)\mid \operatorname{lcm}(1,2,\ldots,p).
+$$
+
+全部有限保幂细化 $R_{u,v}$ 恰由以下参数给出：$u\ge t$、$p\mid v$，且 $(u,v)$ 满足定理 13.1 的充要条件。它们具有唯一最粗者 $R_*$；亦即，对所有 $u\ge0$、$v\ge1$，
+$$
+R_{u,v}\subseteq R_{t,p}
+\ \land\
+R_{u,v}\text{ 双槽保幂}
+\quad\Longrightarrow\quad
+R_{u,v}\subseteq R_*.
+$$
+更一般地，$R_*$ 也是包含于 $R_{t,p}$、同时对 $\{+,\times,\operatorname{pow}\}$ 相容的所有等价关系中的最大者，不必预先要求这些等价关系具有有限商。
+
+**证明。** 先记录阈值—周期核的包含次序：
+$$
+R_{u,v}\subseteq R_{t,p}
+\quad\Longleftrightarrow\quad
+u\ge t\ \land\ p\mid v.
+$$
+这也是 James East 与 Nik Ruškuc，*Classification of congruences of twisted partition monoids*，第 2.1 节式 (2.2) 的标准包含判据，参见 [arXiv:2010.04392v3](https://arxiv.org/html/2010.04392v3#S2.SS1)。
+
+为明确此处的方向，若左侧成立，则
+$$
+u\mathrel{R_{u,v}}u+v
+$$
+是一对不同元素，因而 $u\mathrel{R_{t,p}}u+v$ 强制 $u\ge t$ 及 $p\mid v$。反之，若这两个参数条件成立，则任何不同的 $R_{u,v}$-相关元素均不小于 $u\ge t$，且其差为 $v$ 的倍数，从而也是 $p$ 的倍数，所以属于 $R_{t,p}$。
+
+下面证明素数集构造在给定步数内已封闭。归纳可知，每个 $S_j$ 都只含不超过 $p$ 的素数：初始素数整除 $p$；若新素数 $r$ 整除某个 $\ell-1$，则
+$$
+r\le\ell-1<\ell\le p.
+$$
+同时 $S_j\subseteq S_{j+1}$。不超过 $p$ 的素数至多有 $p-1$ 个，因此前 $p$ 步不可能每一步都严格增加。一旦某一步满足 $S_{j+1}=S_j$，该集合已经对所定义的增补操作封闭，之后各步都保持不变。故 $S_p$ 满足
+$$
+\ell\in S_p
+\quad\Longrightarrow\quad
+\operatorname{Pr}(\ell-1)\subseteq S_p.
+$$
+$p=1$ 时，各集合均为空，结论同样成立。
+
+简记 $P=P(p)$。显然 $p\mid P$。若素数 $r\mid P$，则由最小公倍数的素因子分解，$r$ 必整除 $p$，或整除某个 $\ell-1$，其中 $\ell\in S_p$。前一情形给出 $r\in S_0\subseteq S_p$；后一情形由封闭性给出 $r\in S_p$。因此
+$$
+\operatorname{Pr}(P)\subseteq S_p.
+$$
+对每个 $r\in\operatorname{Pr}(P)$，数 $r-1$ 正是定义 $P$ 时列入最小公倍数的一项，所以
+$$
+r-1\mid P.
+$$
+由定理 13.1 中已经证明的周期判据，
+$$
+\lambda(P)\mid P.
+$$
+
+令
+$$
+L_p=\operatorname{lcm}(1,2,\ldots,p).
+$$
+定义 $P$ 时使用的数 $p$ 整除 $L_p$；每个 $\ell\in S_p$ 都满足 $2\le\ell\le p$，故正整数 $\ell-1$ 也整除 $L_p$。于是
+$$
+P\mid L_p,
+$$
+得到所述显式整除界。
+
+若 $(t,p)=(0,1)$，则 $P=1$、$T(t,p)=0$，故 $R_*=R_{0,1}$，所需性质直接成立。否则，按定义
+$$
+T(t,p)\ge t,\qquad
+T(t,p)\ge\max\{1,h(P)\}.
+$$
+结合 $\lambda(P)\mid P$，定理 13.1 给出 $R_*$ 双槽保幂；再由 $p\mid P$ 及包含判据，得到
+$$
+R_*\subseteq R_{t,p}.
+$$
+阈值以下共有 $T(t,p)$ 个单元素类，尾部共有 $P$ 个剩余类，所以商的类数恰为 $T(t,p)+P$。至此已对所有 $t,p$ 给出有限修复，而非仅给出条件性的最粗性结论。
+
+进一步证明 $P$ 的精确最小性。设正整数 $v$ 满足
+$$
+p\mid v,\qquad \lambda(v)\mid v.
+$$
+由周期判据，每个素因子 $\ell\mid v$ 都满足 $\ell-1\mid v$。归纳证明
+$$
+S_j\subseteq\operatorname{Pr}(v)
+\qquad(0\le j\le p).
+$$
+起点来自 $p\mid v$。若结论对 $S_j$ 成立，则对每个 $\ell\in S_j$ 都有 $\ell\mid v$，进而 $\ell-1\mid v$；所以 $\ell-1$ 的所有素因子仍整除 $v$，得到下一步的包含。
+
+因此，每个 $\ell\in S_p$ 都整除 $v$，从而 $\ell-1\mid v$。连同 $p\mid v$，得到
+$$
+P(p)\mid v.
+$$
+故 $P(p)$ 是满足 $p\mid v$ 且 $\lambda(v)\mid v$ 的正整数中，按整除排序的最小元素。这一最小性比较的是全部正整数 $v$，不限于某个预先截断的搜索范围。
+
+现在设 $R_{u,v}\subseteq R_{t,p}$ 且 $R_{u,v}$ 双槽保幂。包含判据给出
+$$
+u\ge t,\qquad p\mid v.
+$$
+若旧核是 $R_{0,1}$，则任何关系都包含于 $R_*=R_{0,1}$，最粗性显然成立。
+
+以下设 $(t,p)\ne(0,1)$。此时 $R_{u,v}$ 不可能是全关系，因为全关系不能包含于这个非全关系旧核。故定理 13.1 给出
+$$
+u\ge\max\{1,h(v)\},\qquad \lambda(v)\mid v.
+$$
+由 $P$ 的最小性，$P\mid v$，从而逐素数比较赋值可得
+$$
+h(P)\le h(v).
+$$
+因此
+$$
+u\ge\max\{t,1,h(P)\}=T(t,p).
+$$
+再用一次包含判据，
+$$
+R_{u,v}\subseteq R_{T(t,p),P}=R_*.
+$$
+由于 $R_*$ 本身已是合格细化，它就是最大元素，而不仅是极大元素；最大元素的唯一性立即成立。包含判据与定理 13.1 的合取，也给出了定理所述全部有限细化的参数刻画。
+
+最后，设 $E\subseteq R_{t,p}$ 是任意对 $\{+,\times,\operatorname{pow}\}$ 相容的等价关系。若 $E$ 为等号关系，则显然 $E\subseteq R_*$。若不是等号关系，由定理 11.2 的自然数加法同余分类，存在有限参数 $u\ge0$、$v\ge1$，使
+$$
+E=R_{u,v}.
+$$
+于是刚才证明的最粗性适用，仍得 $E\subseteq R_*$。另一方面，$R_*$ 对加法、乘法的相容性来自定理 11.2，对幂的相容性已经证明。因此它确为该签名下所有保留旧区别的同余中的最大者。证毕。
+
+## 追加锚（本行以下为增补区）
