@@ -2323,7 +2323,7 @@ def observedAssessments (env : Environment) : Array TemplateOccurrenceKey :=
 
 /-- Registration and final joined assessment share this function. Failure of a
 new binding check is retained metadata, never a module elaboration failure. -/
-def assess (event : TemplateOccurrenceEvent) (claim : Option TemplateBindingClaim) : MetaM BindingRecord := do
+private def assessUncached (event : TemplateOccurrenceEvent) (claim : Option TemplateBindingClaim) : MetaM BindingRecord := do
   modifyEnv fun env => assessmentEvents.modifyState env (·.push event.key)
   match claim with
   | none => return { occurrence := event, descriptor := none, bindingOwner := none, result := .undeclared }
@@ -2343,6 +2343,109 @@ def assess (event : TemplateOccurrenceEvent) (claim : Option TemplateBindingClai
             || message.startsWith "incomplete_closure:" then message else "incomplete_closure:E8.assessment:" ++ message
         return .declaredUnresolved s!"IE-C050 ClosedTruthReadout key={event.key.root}/{event.key.catalog}/{event.key.theoremName} {TemplateAudit.diagnosticFields reason}")
     return { occurrence := event, descriptor := claim.descriptor, bindingOwner := some claim.owner, result }
+
+private abbrev CacheSemantics := Bool × ReducibilityStatus × Option Name × Bool ×
+  Option (Name × Nat × Nat × Bool)
+
+private def cacheSemantics (env : Environment) (name : Name) : CacheSemantics :=
+  (Lean.isClass env name, getReducibilityStatusCore env name,
+    Compiler.getImplementedBy? env name, (getExternAttrData? env name).isSome,
+    (env.getProjectionFnInfo? name).map fun p => (p.ctorName, p.numParams, p.i, p.fromClass))
+
+/-- An immutable occurrence result and the exact inputs it consumed. This cache
+is local to an Environment and is never serialized as certification authority. -/
+private structure CachedAssessment where
+  record : BindingRecord
+  claim : TemplateBindingClaim
+  options : Options
+  registry : Array InformationRegistryEntry
+  planName : Name
+  planIdentity : String
+  constants : Array (Name × ConstantInfo × Name × CacheSemantics)
+  inputs : Array SourceInput
+
+private initialize assessmentCache : EnvExtension (Std.HashMap TemplateOccurrenceKey CachedAssessment) ←
+  registerEnvExtension (pure {})
+
+private def sameCacheObject (a b : α) : Bool := unsafe ptrEq a b
+
+private def sameCacheEvent (a b : TemplateOccurrenceEvent) : Bool :=
+  a.key == b.key && a.unitName == b.unitName && a.realizationName == b.realizationName &&
+  a.statement.equal b.statement && a.levelParams == b.levelParams &&
+  a.statementIdentity == b.statementIdentity && a.arena.equal b.arena &&
+  a.registrationSource == b.registrationSource &&
+  a.registrationSourceIdentity == b.registrationSourceIdentity
+
+private def sameCacheClaim (a b : TemplateBindingClaim) : Bool :=
+  a.key == b.key && a.owner == b.owner && a.arena.equal b.arena &&
+  a.resolutionDiagnostic == b.resolutionDiagnostic && (match a.descriptor, b.descriptor with
+    | none, none => true
+    | some a, some b => a.equal b
+    | _, _ => false)
+
+private def cacheCurrent (cached : CachedAssessment) (event : TemplateOccurrenceEvent)
+    (claim : TemplateBindingClaim) : MetaM Bool := do
+  unless sameCacheEvent cached.record.occurrence event do return false
+  unless sameCacheClaim cached.claim claim do return false
+  let env ← getEnv
+  unless sameCacheObject cached.options (← getOptions) &&
+      sameCacheObject cached.registry (InformationRegistry.entries env) do return false
+  let .ok plan := selectedPlan env cached.planName | return false
+  unless plan.planIdentity == cached.planIdentity do return false
+  for (name, info, owner, semantics) in cached.constants do
+    let some current := env.find? name | return false
+    unless sameCacheObject info current && cacheSemantics env name == semantics &&
+        (RegistrationReifier.declaringModuleOf env name).getD env.header.mainModule == owner do
+      return false
+  try
+    validateSourceInputs cached.inputs
+    return true
+  catch _ => return false
+
+private def retainAssessment (record : BindingRecord) (claim : TemplateBindingClaim)
+    (certificate : TemplateBindingCertificate) : MetaM Unit := do
+  let some descriptor := claim.descriptor | return
+  let .const name _ := descriptor.getAppFn | return
+  let env ← getEnv
+  let .ok plan := selectedPlan env name | return
+  let mut names : NameSet := {}
+  for dependency in plan.dependencies ++ certificate.argumentInputs ++ certificate.extractionInputs do
+    names := names.insert dependency.name
+  for name in #[plan.name, record.occurrence.key.theoremName, record.occurrence.unitName,
+      record.occurrence.realizationName, record.occurrence.key.objectArena] do
+    names := names.insert name
+  let mut paths := plan.sourceInputs.map (·.path)
+  for path in #[record.occurrence.registrationSource, TemplateAudit.sourcePath claim.owner] do
+    unless paths.contains path do paths := paths.push path
+  let mut constants := #[]
+  for name in names do
+    let info ← getConstInfo name
+    let owner := (RegistrationReifier.declaringModuleOf env name).getD env.header.mainModule
+    constants := constants.push (name, info, owner, cacheSemantics env name)
+    if owner.toString.startsWith "D5." || owner.toString.startsWith "LeanInformationAudit." then
+      let path := TemplateAudit.sourcePath owner
+      unless paths.contains path do paths := paths.push path
+  let inputs ← (paths.qsort (· < ·)).mapM fun path => readSourceInput path
+  let cached : CachedAssessment := {
+    record, claim, constants, inputs, options := ← getOptions,
+    registry := InformationRegistry.entries env, planName := name, planIdentity := plan.planIdentity }
+  modifyEnv fun env => assessmentCache.modifyState env (·.insert record.occurrence.key cached)
+
+/-- Every caller uses the same assessment. A hit requires exact occurrence,
+claim, selected plan, options, native dependencies and current source bytes.
+The authoritative caller still validates the complete native join first. -/
+def assess (event : TemplateOccurrenceEvent) (claim : Option TemplateBindingClaim) : MetaM BindingRecord := do
+  if let some claim := claim then
+    if let some cached := (assessmentCache.getState (← getEnv))[event.key]? then
+      if ← cacheCurrent cached event claim then return cached.record
+  let record ← assessUncached event claim
+  if let (some claim, .declaredValidated certificate) := (claim, record.result) then
+    try
+      retainAssessment record claim certificate
+    catch error =>
+      let diagnostic := s!"IE-C050 ClosedTruthReadout key={event.key.root}/{event.key.catalog}/{event.key.theoremName} reason=incomplete_closure rule=dtr.cache_inputs site={← error.toMessageData.toString}"
+      return { record with result := .declaredUnresolved diagnostic }
+  return record
 
 private initialize occurrenceInventory : SimplePersistentEnvExtension TemplateOccurrenceEvent (Array TemplateOccurrenceEvent) ←
   registerSimplePersistentEnvExtension { addEntryFn := Array.push, addImportedFn := fun arrays => arrays.foldl (· ++ ·) #[] }
