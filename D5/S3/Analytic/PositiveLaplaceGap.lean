@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Analytic/PositiveLaplaceGap
    mirror-E: none(waiver:exact-positive-measure-inequalities)
    anchors: []
+   utility: none
    digest: Actual positive Laplace integrals bound low-energy mass, with a sharp half-gap noise floor. -/
 
 import Mathlib.MeasureTheory.Integral.Bochner.Basic
@@ -35,6 +36,7 @@ noncomputable section
 namespace D5.S3.Analytic.PositiveLaplaceGap
 
 open MeasureTheory Set
+open scoped NNReal
 
 /-- The actual Laplace integral of a positive energy measure. -/
 def laplaceCorrelation (μ : Measure ℝ≥0) (t : ℝ) : ℝ :=
@@ -60,7 +62,7 @@ private theorem low_mass_lower (μ : Measure ℝ≥0) [IsFiniteMeasure μ]
     exact mul_le_mul_of_nonpos_left
       (show (E : ℝ) ≤ (r : ℝ) from hE) (neg_nonpos.mpr ht)
   have hmono := mul_le_mul_of_nonneg_left
-    (measureReal_mono hsub) (Real.exp_pos (-t * (r : ℝ))).le
+    (measureReal_mono (μ := μ) hsub) (Real.exp_pos (-t * (r : ℝ))).le
   have hmarkov := mul_meas_ge_le_integral_of_nonneg
     (μ := μ) (f := fun E : ℝ≥0 => Real.exp (-t * (E : ℝ)))
     (ae_of_all _ fun _ => (Real.exp_pos _).le)
