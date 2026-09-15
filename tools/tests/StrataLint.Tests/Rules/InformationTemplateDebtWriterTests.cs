@@ -7,6 +7,57 @@ namespace StrataLint.Tests;
 
 public sealed class InformationTemplateDebtWriterTests
 {
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void seed_initialization_accepts_clean_installed_head(bool active)
+    {
+        using var repository = new TemporaryDirectory();
+        using var artifacts = new TemporaryDirectory();
+        string Git(params string[] args) => ReviewRegressionTests.RunGit(repository.Path, args).Trim();
+        Git("init");
+        Git("config", "user.email", "stratalint@example.invalid");
+        Git("config", "user.name", "StrataLint Tests");
+        Git("commit", "--allow-empty", "-m", "seed");
+        var seed = Git("rev-parse", "HEAD");
+        var activationPath = Path.Combine(repository.Path, InformationTemplateDebtStore.ActivationPath);
+        Directory.CreateDirectory(Path.GetDirectoryName(activationPath)!);
+        var activation = InformationTemplateDebtStore.WriteActivation(new(seed, active));
+        File.WriteAllBytes(activationPath, activation.AsSpan());
+        Git("add", ".");
+        Git("commit", "-m", "installed mechanism");
+        var head = Git("rev-parse", "HEAD");
+        var gateway = new GitRepositoryGateway(repository.Path);
+        Assert.Empty(Git("status", "--porcelain"));
+        Assert.Contains("history comparison would be vacuous",
+            Assert.Throws<InvalidOperationException>(() => gateway.Prepare(head)).Message);
+        var report = Path.Combine(artifacts.Path, "seed-report.json");
+        File.WriteAllBytes(report, Trureturing.Truth.StructuredCanonicalWriter.WriteJson(
+            "{\"modules\":[],\"schema\":\"stratalint-raw-lean-report-v2\"}").AsSpan());
+        var result = InformationTemplateDebtWriter.Run(repository.Path, gateway,
+            ["initialize", "--protected-base", head, "--seed-lean-report", report]);
+        if (active)
+        {
+            Assert.False(result.Success);
+            Assert.Contains("DTR-Seed: initialization requires the original protected inactive seed", result.Error);
+        }
+        else
+        {
+            Assert.True(result.Success, "[FAIL] seed_initialization_accepts_clean_installed_head: " + result.Error);
+        }
+        Assert.Equal(activation.ToArray(), File.ReadAllBytes(activationPath));
+        Assert.Empty(Git("status", "--porcelain"));
+        var discharge = InformationTemplateDebtWriter.Run(repository.Path, gateway,
+            ["discharge", "--protected-base", head]);
+        Assert.False(discharge.Success);
+        Assert.Contains("history comparison would be vacuous", discharge.Error);
+        Git("checkout", "--detach", seed);
+        var nonancestor = InformationTemplateDebtWriter.Run(repository.Path, gateway,
+            ["initialize", "--protected-base", head, "--seed-lean-report", report]);
+        Assert.False(nonancestor.Success);
+        Assert.Contains("protected base must be an ancestor of HEAD", nonancestor.Error);
+    }
+
     private static InformationTemplateUniverse Universe(InformationTemplateBindingState state)
     {
         var debt = Read();
