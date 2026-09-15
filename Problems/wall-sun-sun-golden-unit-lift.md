@@ -67,9 +67,6 @@ existence question is not a routine finite-period exercise.
 - The period can therefore plausibly be re-expressed as an order of the reduced
   golden unit or Fibonacci matrix. Equality at `p` and `p^2` is then an
   exceptional failure of the usual order multiplication by `p` under lifting.
-- The first reachable theorem is not existence. It is an exact bridge among the
-  pair recurrence period, the order of the Fibonacci matrix, and the order of
-  `phi` in an appropriate golden algebra modulo `p^e` for `e = 1, 2`.
 
 ## Gap
 
@@ -423,7 +420,7 @@ $$v_p(L_N-2\chi)=2h_p.$$
 
 **定义。** 令 $c_p\in\{0,\ldots,p-1\}$ 为 $\chi q_p$ 的整数代表，$w_p=c_p/p\pmod{\mathbb Z}\in\mathbb R/\mathbb Z$。以 $\mathbb Z d$ 为 $T$ 的迹零 Lie 格，CG.1 表明这正是由 $u^N\bmod p^2$ 的切空间缺陷除以 $p^2$ 得到的圆周读数。$u$ 不是扭元素，因此在一维环面的几何泛纤维中生成 Zariski 稠密子群。
 
-**命题。** $w_p=0$ 当且仅当 $p$ 为原 WSS 素数。圆周上 Haar 等分布的性质本身，不推出这种零点至少出现一次。
+**命题。** $w_p=0$ 當且仅当 $p$ 为原 WSS 素数。圆周上 Haar 等分布的性质本身，不推出这种零点至少出现一次。
 
 **证明。** 第一项由 $\chi$ 是单位直接得到。为说明后一项，按递增顺序记素数为 $p_j$，取任意无理实数 $\theta$，令
 
@@ -443,3 +440,183 @@ $$Z(X)=\sum_{5<p\le X}\frac1p+
 **命题。** CG.1–CG.7 保留原黄金单位，但没有强制任何变动素数满足 $h_p\ge2$。其中局部流、唯一提升、根位置和三维同调都容许 $h_p=1$ 与 $h_p\ge2$；将它们互相代换不产生新的素数存在结论。
 
 **证明。** CG.2 在同一个约化点上同时构造一个保周期提升及 $p-1$ 个不保周期提升。CG.3 的公式以原 $h_p$ 为输入，CG.4 将同一个深度记为固定参数到唯一根的距离，CG.5 将它记为同调挠阶，CG.6 将它记为算术微分的零阶。上述等价关系均不排除原固定点始终选中非零的一阶缺陷。CG.7 又排除了仅由宏观均匀性推出精确零点的推理。因此跨素数的深度控制仍需独立命题。
+
+
+### RNI. Constructive normalization of the fixed-golden radical tower
+
+#### RNI.1 The fixed unit, canonical orders, and local depth
+
+**Definition.** Retain K=Q(sqrt(5)), O=Z[phi], phi^2=phi+1, and psi=1-phi=-phi^(-1). For a positive n coprime to ten, choose the positive real root theta_n of X^n-phi, and set
+
+$$
+E_n=K(\theta_n)=\mathbb Q(\theta_n),\qquad
+R_n=O[\theta_n]=\mathbb Z[\theta_n],\qquad
+I_n=[O_{E_n}:R_n].
+$$
+
+The notation E_n denotes a number field, not a Fibonacci or Lucas value. For p odd and different from five, put epsilon_p=(5/p), N_p=p-epsilon_p, and retain the actual depth h_p=v_p(F_(N_p)) and quotient q_p=F_(N_p)/p modulo p.
+
+**Theorem RNI1.** The polynomial X^(2n)-X^n-1 is irreducible, [E_n:Q]=2n, and
+
+$$
+|\operatorname{disc}(R_n)|=5^n n^{2n}.
+$$
+
+**Proof.** If b^r=phi in K for an odd prime r, then b is an algebraic unit, N_(K/Q)(b)=-1, and its chosen real value lies strictly between one and phi. Its integral trace b-b^(-1) lies strictly between zero and phi-phi^(-1)=1, a contradiction. Capelli's binomial criterion now makes X^n-phi irreducible for odd n; the exceptional fourth-power case does not occur. The degree-two composition is irreducible as well. The relative order has O-basis 1,theta_n,...,theta_n^(n-1), with discriminant a unit times n^n. The tower formula and disc(K)=5 give the absolute magnitude. For n=1 the assertions hold directly. The Capelli criteria and the degree-p discriminant are recorded in Jones, arXiv:2302.10357, Theorems 2.3-2.4 and Proposition 2.5.
+
+**Lemma.** Let P be a prime of K above p, F=K_P, and f=[F:Q_p]. Then F is unramified, f is one or two, and, with v(p)=1,
+
+$$
+v\bigl(\phi^{p^f-1}-1\bigr)=h_p.
+\tag{RNI2}
+$$
+
+This equality holds at every completion above p. If a=phi when epsilon_p=1 and a=psi when epsilon_p=-1, then also
+
+$$v(a^p-\phi)=h_p.\tag{RNI3}$$
+
+**Proof.** For N=N_p, the identity u^N-1=sqrt(5)F_N psi^(-N), with u=-phi^2, shows v(phi^(2N)-1)=h_p at each completion. Since phi^N reduces to epsilon_p, the factor phi^N+epsilon_p is a unit; hence v(phi^N-epsilon_p)=h_p. This proves RNI2 in the split case. In the inert case raise phi^(p+1)=-1+O(p^h_p) to the even exponent p-1, which is a p-adic unit. Factoring a power difference, or the principal-unit logarithm, preserves the valuation. RNI3 is immediate in the split case. In the inert case psi^p-phi=-phi^(-p)(1+phi^(p+1)), giving the same valuation. All depths are finite since phi is not a root of unity.
+
+#### RNI.2 Local field factors and the full normalization index
+
+**Lemma RNI4.** Let F/Q_p be a finite unramified extension, p odd, with ring O_F, residue cardinality p^f, and v(p)=1. Let u be a unit with finite h=v(u^(p^f-1)-1). For a>=0, let B be the integral closure of A=O_F[X]/(X^(p^a)-u) in its finite etale F-algebra. Then
+
+$$
+\boxed{\operatorname{length}_{O_F}(B/A)
+=\sum_{i=1}^{\min(a,h-1)}p^{a-i}.}\tag{RNI4}
+$$
+
+**Proof.** Remove the Teichmueller part of u by scaling X. This is possible because taking a p^a-th power is an automorphism on the roots of unity of order prime to p in F. Thus assume u is a principal unit. The logarithm is an isomorphism from 1+pO_F to pO_F and preserves valuation. This follows directly because in its convergent series the linear term has smaller valuation than all higher terms; the exponential supplies its inverse. Consequently a p^b-th root in F exists exactly when b<=h-1. This criterion also follows for arbitrary units by restoring the Teichmueller factor.
+
+Put s=min(a,h-1), t=a-s, and choose beta in 1+pO_F with beta^(p^s)=u. If t>0, then v(beta-1)=1. Factor the binomial over F as
+
+$$
+X^{p^a}-u=(X^{p^t}-\beta)
+\prod_{j=1}^s\left[\prod_{\zeta\ \mathrm{primitive}\ p^j\mathrm{th}}
+(X^{p^t}-\beta\zeta)\right].\tag{RNI5}
+$$
+
+For j>=1 put F_j=F(zeta_(p^j)) and e_j=p^(j-1)(p-1). After shifting X by one, X^(p^t)-beta*zeta_(p^j) is Eisenstein over F_j when t>0: the constant term has uniformizer valuation one, and all intermediate binomial coefficients are divisible by p. Indeed beta-1 has valuation at least e_j there, whereas zeta_(p^j)-1 has valuation one. Its root alpha_j contains F_j because zeta_(p^j)=alpha_j^(p^t)/beta. Thus each bracket in RNI5 is irreducible of degree p^t*e_j. The first factor is Eisenstein of degree p^t if t>0 and is linear otherwise. When t=0, the brackets are scaled cyclotomic polynomials. These factors exhaust the algebra because their degrees sum to p^a.
+
+The maximal order in each Eisenstein component is generated by the shifted root. The cyclotomic discriminant exponent over F is
+
+$$d_j=p^{j-1}\bigl(j(p-1)-1\bigr).$$
+
+For completeness, Phi_(p^j)(X)=(X^(p^j)-1)/(X^(p^(j-1))-1). At zeta_(p^j) its derivative has valuation j*e_j-p^(j-1) in F_j. The shifted cyclotomic polynomial is Eisenstein, so this derivative computes the different and hence the stated discriminant exponent. The formula remains valid after unramified base change.
+
+In the further degree p^t extension over F_j the derivative is p^t*alpha_j^(p^t-1). As alpha_j is a unit, its relative discriminant has exponent t*p^t*e_j at the prime of F_j. Discriminant transitivity gives the exponent p^t*d_j+t*p^t*e_j over F. The first factor contributes t*p^t. Using
+
+$$
+\sum_{j=1}^s e_j=p^s-1,\qquad
+\sum_{j=1}^s d_j=s p^s-2\sum_{j=1}^s p^{s-j},
+$$
+
+the product of all maximal component discriminants has exponent
+
+$$a p^a-2\sum_{i=1}^s p^{a-i}.$$
+
+The polynomial order has discriminant exponent a*p^a. The discriminant-index identity therefore proves RNI4. The case a=0 is the identity algebra. The Eisenstein integral-generator and different facts used here are classical; see Sutherland, MIT 18.785 Lecture 11, Lemma 11.4 and Theorem 11.5, and Lecture 12, Proposition 12.24 and Proposition 12.28.
+
+**Theorem RNI6.** For n coprime to ten, and p|n, write a_p=v_p(n) and s_p=min(a_p,h_p-1). Then
+
+$$
+\boxed{v_p(I_n)=2\frac{n}{p^{a_p}}
+\sum_{j=1}^{s_p}p^{a_p-j}.}\tag{RNI6}
+$$
+
+No prime not dividing n divides I_n. Consequently
+
+$$\boxed{|\operatorname{disc}(E_n)|=5^n n^{2n}/I_n^2.}\tag{RNI7}$$
+
+**Proof.** At a completion F of K above p, write n=p^a*m with p not dividing m. The algebra O_F[X]/(X^m-phi) is finite etale because phi and m are units. It is a product of unramified valuation rings with residue degrees summing to m. At every component root b, the principal-unit logarithm satisfies m*log(<b>)=log(<phi>), so the depth remains h_p under this unramified extension. Apply RNI4 to adjoining its p^a-th root. The total O_F-index length is m times the sum in RNI4. The residue degrees of the completions of K above p sum to two, giving RNI6 as an absolute Z-index exponent. At primes not dividing n, the relative order is finite etale over the local ring of O, hence integrally closed. This includes the prime above five. RNI1 and the discriminant-index identity prove RNI7.
+
+#### RNI.3 An explicit global integral basis in the exceptional case
+
+**Definition.** For p odd and different from five, set
+
+$$
+a_p=\begin{cases}\phi,&(5/p)=1,\\\psi,&(5/p)=-1,\end{cases}
+\qquad z_p=\theta_p-a_p,\qquad
+\eta_p=\frac{z_p^{p-1}}p.
+$$
+
+Here a_p is a shift element and is distinct from the exponent notation in RNI6.
+
+**Theorem RNI8.** The element eta_p is an algebraic integer if and only if q_p=0. If q_p=0, then
+
+$$
+\boxed{O_{E_p}=R_p+O\eta_p,\qquad
+O_{E_p}/R_p\cong O/pO,\qquad I_p=p^2.}\tag{RNI8}
+$$
+
+An integral Z-basis is
+
+$$
+\boxed{\{z_p^i,\phi z_p^i:0\le i\le p-2\}
+\ \cup\ \{\eta_p,\phi\eta_p\}.}\tag{RNI9}
+$$
+
+If q_p is nonzero, R_p is already the full ring of integers.
+
+**Proof.** At each unramified completion F of K above p, RNI3 gives the constant-term valuation h_p of (X+a_p)^p-phi. If h_p=1, this polynomial is Eisenstein. Therefore v(z_p)=1/p and v(eta_p)=-1/p, which proves nonintegrality. RNI6 also gives I_p=1.
+
+If h_p>=2, the unit-root criterion in RNI4 gives b in F with b^p=phi. Its residue is the same as a_p, because Frobenius on the residue field is injective and a_p^p=phi there. The local algebra is F times F(zeta_p). On the first component z_p=b-a_p has valuation at least one. On the cyclotomic component z_p=b(zeta_p-1)+(b-a_p) has valuation 1/(p-1). Thus eta_p is integral in both components. It is integral away from p because its only denominator is p.
+
+The O-lattice obtained by replacing z_p^(p-1) in the power basis by eta_p has quotient O/pO over R_p. It has absolute index p^2 and is contained in O_(E_p). Formula RNI6 gives precisely the same full index, so equality holds. Multiplying this O-basis by the Z-basis 1,phi of O proves RNI9. This specifies a maximal order and its entire missing lattice, not merely a divisibility test for its index.
+
+Jones, *A new condition for k-Wall-Sun-Sun primes*, Theorem 1.1, already identifies q_p=0 with failure of the specified power basis to be integral-maximal. RNI8-RNI9 give the displayed explicit replacement basis. Failure of this power basis does not assert that E_p has no other power integral basis.
+
+#### RNI.4 Exact composition and the absence of a mixed-prime defect term
+
+**Theorem RNI10.** If gcd(m,n)=1 and gcd(mn,10)=1, then
+
+$$\boxed{I_{mn}=I_m^n I_n^m.}\tag{RNI10}$$
+
+If b_a=v_p(I_(p^a))/2 and b_0=0, then
+
+$$\boxed{b_a-pb_{a-1}=\mathbf1_{a<h_p}.}\tag{RNI11}$$
+
+**Proof.** At p|m, the exponent in RNI6 for mn is n times the exponent for m, while p does not divide I_n. The roles reverse at p|n, and other primes divide none of the indices. This proves RNI10. Subtract the two finite geometric sums in RNI6 to obtain RNI11, including a=1.
+
+**Corollary.** For squarefree n coprime to ten,
+
+$$
+I_n=\prod_{p\mid n,\ q_p=0}p^{2n/p},\qquad
+\log\operatorname{rd}(E_n)=\tfrac12\log5+\log n
+-2\sum_{p\mid n,\ q_p=0}\frac{\log p}{p}.
+$$
+
+**Proof.** Set a_p=1 in RNI6 and take logarithms of RNI7 divided by [E_n:Q]=2n. These formulas depend on the actual zero set. They do not establish that the sum is positive, nor an independent bound for that set.
+
+#### RNI.5 The canonical unramified Kummer extension and a global character target
+
+**Definition.** For p>5 put H_p=K(zeta_p), V_p=H_p(theta_p), and Delta_p=Gal(H_p/Q). Identify Delta_p with Gal(K/Q) times (Z/pZ)^times. Let chi_5 be the sign character on the first factor and omega_p the tautological character on the second, both valued in F_p^times. Put lambda_p=chi_5*omega_p. Let
+
+$$
+C_p=\bigl(\operatorname{Cl}(H_p)/p\operatorname{Cl}(H_p)\bigr)
+\big/\langle[\mathfrak p]:\mathfrak p\mid p\rangle.
+$$
+
+The final span is over F_p and denotes the images of the indicated ideal classes.
+
+**Theorem RNI12.** The extension V_p/H_p is cyclic of degree p. It is unramified at every prime if and only if q_p=0. In that case all primes of H_p above p split completely in V_p. If q_p is nonzero, V_p/H_p is totally ramified of degree p at each prime above p.
+
+**Proof.** The intersection of K and Q(zeta_p) is Q: the cyclotomic field is unramified away from p, whereas the nontrivial quadratic field K ramifies at five. Hence [H_p:K]=p-1. If c^p=phi in H_p, then b=N_(H_p/K)(c) would satisfy b^p=phi^(p-1), and (phi/b)^p=phi in K, contradicting RNI1. Kummer theory therefore gives degree p and cyclicity.
+
+Away from p, X^p-phi has unit derivative over the local rings of H_p and is finite etale, so no ramification occurs. At p, if h_p>=2, phi has a p-th root in the unramified completion of K by RNI4. Since H_p also contains all p-th roots of unity, the polynomial splits completely at each such completion of H_p.
+
+If h_p=1, the shifted degree-p polynomial is Eisenstein over each completion F of K. The extension F(theta_p) is totally ramified of degree p, while F(zeta_p)/F is totally ramified of degree p-1. Their compositum has degree p(p-1) because the degrees are coprime, and its ramification index is divisible by both p and p-1. Thus it is totally ramified, giving relative ramification index p over F(zeta_p). Finally H_p has only complex infinite places, so there is no additional infinite ramification to consider.
+
+**Corollary RNI13.** If q_p=0, there is a Delta_p-equivariant surjection
+
+$$\boxed{C_p\longrightarrow\mathbb F_p(\lambda_p).}\tag{RNI13}$$
+
+In particular the lambda_p component of C_p is nonzero. Its vanishing is a sufficient condition for q_p to be nonzero.
+
+**Proof.** The automorphism tau(theta_p)=zeta_p theta_p generates Gal(V_p/H_p). The lift of delta_a in the cyclotomic factor fixes theta_p and sends zeta_p to zeta_p^a, so delta_a tau delta_a^(-1)=tau^a. The golden conjugation lifts by theta_p mapping to -theta_p^(-1) and zeta_p fixed; it conjugates tau to tau^(-1). These formulas show that Gal(V_p/H_p), as an F_p[Delta_p]-module, is F_p(lambda_p).
+
+For an everywhere-unramified abelian extension, global Artin reciprocity gives a surjection from the ideal class group onto its Galois group. The quotient has exponent p, and splitting of the primes above p puts their classes in its kernel. Equivariance gives the stated map. Since p does not divide |Delta_p|=2(p-1), the character decomposition over F_p is semisimple, so the lambda_p component must be nonzero. This uses the classical Hilbert class field theorem. No converse for arbitrary nonzero class-group components is asserted.
+
+**Proposition.** RNI12 constructs a specific extension from the original golden unit. RNI13 requires a class-group estimate with the character lambda_p varying with p to yield a new prime-family exclusion; nonvanishing or vanishing of that component has not been proved here.
+
+**Proof.** The extension and its character are explicitly given by the displayed generators and conjugations. RNI13 is an implication from q_p=0, and supplies an exclusion only after its nonzero quotient is contradicted by independent information. RNI6 and RNI10 give no such contradiction, since their indices are expressed in terms of the same h_p. Consequently these constructions alone neither supply a WSS prime nor a new family of non-WSS primes.
