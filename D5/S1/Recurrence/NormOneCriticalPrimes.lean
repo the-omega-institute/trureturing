@@ -1,8 +1,9 @@
 /- GID: D5/S1/Recurrence/NormOneCriticalPrimes
-   generality: G
+   generality: I
    mirror-B: none(waiver:source-anchored-universal-refutation)
    mirror-E: none(waiver:all-parameters-and-primes)
    anchors: []
+   utility: kind=certified-instance; basis=refutes=gid:D5/S1/Recurrence/NormOneCriticalPrimes.conjecture65vNecessary; result=D5/S1/Recurrence/NormOneCriticalPrimes.refutes_conjecture65v; claim=D5/S1/Recurrence/NormOneCriticalPrimes.conjecture65vNecessary
    digest: Prime fixed points of the actual norm-one Lucas recurrence are exactly the prime divisors of a-2; golden even iterates have an exact parity split, and a mixed-modulus family refutes Conjecture 6.5(v). -/
 
 import D5.S1.Recurrence.LucasCompanion
@@ -94,7 +95,7 @@ theorem prime_fixed_iff_parameter_two (a : ℤ) (p : ℕ) (hp : p.Prime) :
     rw [h] at hu
     have ht := ZMod.trace_pow_card
       (↑(companion (a : ZMod p) (1 : (ZMod p)ˣ)) : Matrix (Fin 2) (Fin 2) (ZMod p))
-    rw [← Units.val_pow, hu] at ht
+    rw [← Units.val_pow_eq_pow_val, hu] at ht
     simpa [companion, Matrix.trace_fin_two] using ht.symm
   · exact period_eq_modulus_of_parameter_two a p
 
@@ -141,7 +142,9 @@ theorem prime_fixed_golden_even_iterate (k p : ℕ) (hp : p.Prime) :
 /-- A single mixed modulus is fixed for an unbounded family in the paper's a=-1 mod 6 case. -/
 theorem mixed_fixed_family (t : ℕ) : period (47 + 30 * (t : ℤ)) 15 = 15 := by
   apply period_eq_modulus_of_parameter_two
-  norm_num
+  push_cast
+  rw [show (47 : ZMod 15) = 2 from rfl, show (30 : ZMod 15) = 0 from rfl,
+    zero_mul, add_zero]
 
 lemma fifteen_not_prime_power : ¬ ∃ p e : ℕ, p.Prime ∧ 15 = p ^ e := by
   rintro ⟨p, e, hp, he⟩
@@ -173,5 +176,17 @@ theorem witness_is_golden_trace : D5.S1.Scale.goldenLucas 8 = 47 := by
   have h := D5.S1.Scale.golden_lucas_succ_eq_fib_add_fib 7
   norm_num [Nat.fib] at h
   exact h
+
+#print axioms period_dvd_iff_sequence
+#print axioms parameter_two_power
+#print axioms period_eq_modulus_of_parameter_two
+#print axioms prime_fixed_iff_parameter_two
+#print axioms prime_fixed_iff_dvd_parameter_sub_two
+#print axioms golden_even_trace_excess
+#print axioms prime_fixed_golden_even_iterate
+#print axioms mixed_fixed_family
+#print axioms fifteen_not_prime_power
+#print axioms refutes_conjecture65v
+#print axioms witness_is_golden_trace
 
 end D5.S1.Recurrence.NormOneCriticalPrimes

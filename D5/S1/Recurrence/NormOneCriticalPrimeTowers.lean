@@ -1,8 +1,9 @@
 /- GID: D5/S1/Recurrence/NormOneCriticalPrimeTowers
-   generality: G
+   generality: I
    mirror-B: none(waiver:external-uniqueness-refutation)
    mirror-E: none(waiver:unbounded-prime-power-exponents)
    anchors: []
+   utility: kind=certified-instance; basis=refutes=gid:D5/S1/Recurrence/NormOneCriticalPrimeTowers.criticalPrimeUniqueness; result=D5/S1/Recurrence/NormOneCriticalPrimeTowers.refutes_critical_prime_uniqueness; claim=D5/S1/Recurrence/NormOneCriticalPrimeTowers.criticalPrimeUniqueness
    digest: The original companion at golden trace L_8=47 has both complete fixed-point towers 3^e and 5^e. The lifting engine evaluates a commutative polynomial identity at an integer matrix. -/
 
 import D5.S1.Recurrence.NormOneCriticalPrimes
@@ -23,14 +24,8 @@ abbrev IntMatrix := Matrix (Fin 2) (Fin 2) ℤ
 def integralCompanion (a : ℤ) : IntMatrix := !![a, -1; 1, 0]
 
 /-- Entrywise reduction is a ring homomorphism; multiplication is not changed. -/
-def reduceMatrix (m : ℕ) : IntMatrix →+* Matrix (Fin 2) (Fin 2) (ZMod m) where
-  toFun A := fun i j => (A i j : ZMod m)
-  map_zero' := by ext i j; simp
-  map_one' := by ext i j; fin_cases i <;> fin_cases j <;> simp
-  map_add' A B := by ext i j; simp
-  map_mul' A B := by
-    ext i j
-    simp [Matrix.mul_apply, Fin.sum_univ_two]
+def reduceMatrix (m : ℕ) : IntMatrix →+* Matrix (Fin 2) (Fin 2) (ZMod m) :=
+  (Int.castRingHom (ZMod m)).mapMatrix
 
 lemma reduction_is_companion (a : ℤ) (m : ℕ) :
     reduceMatrix m (integralCompanion a) =
@@ -42,18 +37,10 @@ lemma period_eq_reduced_order (a : ℤ) (m : ℕ) :
     period a m = orderOf (reduceMatrix m (integralCompanion a)) := by
   rw [reduction_is_companion]
   unfold period matrixPeriod
-  apply Nat.dvd_antisymm
-  · apply orderOf_dvd_iff_pow_eq_one.mpr
-    apply Units.ext
-    rw [Units.val_pow]
-    exact pow_orderOf_eq_one _
-  · apply orderOf_dvd_iff_pow_eq_one.mpr
-    rw [← Units.val_pow, pow_orderOf_eq_one, Units.val_one]
+  exact orderOf_units.symm
 
 private lemma cast_mul_matrix (n : ℕ) (A : IntMatrix) : (n : IntMatrix) * A = n • A := by
-  ext i j
-  fin_cases i <;> fin_cases j <;>
-    simp [Matrix.mul_apply, Fin.sum_univ_two, nsmul_eq_mul]
+  rw [nsmul_eq_mul]
 
 /-- A polynomial identity is evaluated at B. Matrices are not incorrectly given a
 CommSemiring instance to use the commutative binomial theorem. -/
@@ -90,11 +77,13 @@ lemma reduced_shift_eq_one_iff (m k : ℕ) (B : IntMatrix) :
   · intro h i j
     apply (ZMod.intCast_zmod_eq_zero_iff_dvd _ m).mp
     have hij := congrArg (fun A : Matrix (Fin 2) (Fin 2) (ZMod m) => A i j) h
-    simpa [reduceMatrix, nsmul_eq_mul] using hij
+    simpa only [reduceMatrix, RingHom.mapMatrix_apply, Matrix.map_apply,
+      Int.coe_castRingHom, Matrix.smul_apply, Int.nsmul_eq_mul, Matrix.zero_apply] using hij
   · intro h
     ext i j
     have hij := (ZMod.intCast_zmod_eq_zero_iff_dvd _ m).mpr (h i j)
-    simpa [reduceMatrix, nsmul_eq_mul] using hij
+    simpa only [reduceMatrix, RingHom.mapMatrix_apply, Matrix.map_apply,
+      Int.coe_castRingHom, Matrix.smul_apply, Int.nsmul_eq_mul, Matrix.zero_apply] using hij
 
 private lemma primitive_corrected (p : ℕ) (b c : ℤ) (hb : ¬ (p : ℤ) ∣ b) :
     ¬ (p : ℤ) ∣ b + (p : ℤ) * c := by
@@ -124,7 +113,10 @@ theorem order_tower_of_seed (p : ℕ) (hp : p.Prime) (hp3 : 3 ≤ p)
   | zero => omega
   | succ e =>
       cases e with
-      | zero => simpa using hbase
+      | zero =>
+          change orderOf (reduceMatrix (p ^ 1) A) = p ^ 1
+          rw [pow_one]
+          exact hbase
       | succ k =>
           apply orderOf_eq_prime_pow
           · intro h
@@ -137,7 +129,8 @@ theorem order_tower_of_seed (p : ℕ) (hp : p.Prime) (hp3 : 3 ≤ p)
             have hc : ¬ (p : ℤ) ∣ B i j + (p : ℤ) * C i j :=
               primitive_corrected p (B i j) (C i j) hprimitive
             apply not_next_power p (k + 1) hp.pos (B i j + (p : ℤ) * C i j) hc
-            simpa [Nat.cast_pow, nsmul_eq_mul] using hd
+            simpa only [Nat.cast_pow, Matrix.add_apply, Matrix.smul_apply,
+              Int.nsmul_eq_mul] using hd
           · obtain ⟨C, hC⟩ := seeded_matrix_power p hp hp3 A B hseed (k + 1)
             rw [← map_pow, hC]
             apply (reduced_shift_eq_one_iff _ _ _).mpr
@@ -163,7 +156,7 @@ theorem golden_trace_three_tower (e : ℕ) (he : 0 < e) : period 47 (3 ^ e) = 3 
   refine order_tower_of_seed 3 Nat.prime_three (by decide)
     (integralCompanion 47) seedThree seed_three_identity ?_ 0 0 ?_ e he
   · rw [← period_eq_reduced_order]
-    exact (prime_fixed_iff_parameter_two 47 3 Nat.prime_three).mpr (by norm_num)
+    exact (prime_fixed_iff_parameter_two 47 3 Nat.prime_three).mpr (by decide)
   · norm_num [seedThree]
 
 /-- Second complete fixed-point tower for that same parameter. -/
@@ -172,7 +165,7 @@ theorem golden_trace_five_tower (e : ℕ) (he : 0 < e) : period 47 (5 ^ e) = 5 ^
   refine order_tower_of_seed 5 Nat.prime_five (by decide)
     (integralCompanion 47) seedFive seed_five_identity ?_ 0 0 ?_ e he
   · rw [← period_eq_reduced_order]
-    exact (prime_fixed_iff_parameter_two 47 5 Nat.prime_five).mpr (by norm_num)
+    exact (prime_fixed_iff_parameter_two 47 5 Nat.prime_five).mpr (by decide)
   · norm_num [seedFive]
 
 /-- A prime with a complete fixed-point power tower, the strongest natural reading
@@ -190,5 +183,20 @@ theorem refutes_critical_prime_uniqueness : ¬ criticalPrimeUniqueness := by
     ⟨Nat.prime_three, golden_trace_three_tower⟩
     ⟨Nat.prime_five, golden_trace_five_tower⟩
   norm_num at he
+
+#print axioms reduction_is_companion
+#print axioms period_eq_reduced_order
+#print axioms cast_mul_matrix
+#print axioms matrix_prime_power_expansion
+#print axioms seeded_matrix_power
+#print axioms reduced_shift_eq_one_iff
+#print axioms primitive_corrected
+#print axioms not_next_power
+#print axioms order_tower_of_seed
+#print axioms seed_three_identity
+#print axioms seed_five_identity
+#print axioms golden_trace_three_tower
+#print axioms golden_trace_five_tower
+#print axioms refutes_critical_prime_uniqueness
 
 end D5.S1.Recurrence.NormOneCriticalPrimeTowers

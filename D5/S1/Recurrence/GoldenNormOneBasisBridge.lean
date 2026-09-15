@@ -1,8 +1,9 @@
 /- GID: D5/S1/Recurrence/GoldenNormOneBasisBridge
-   generality: G
+   generality: I
    mirror-B: none(waiver:actual-golden-basis-transfer)
    mirror-E: none(waiver:all-norm-one-elements-and-moduli)
    anchors: []
+   utility: none
    digest: The norm-one companion intertwines with actual golden multiplication, with determinant minus the golden coefficient. Return equivalence requires that coefficient to be a unit; bad basis primes cannot be treated as WSS witnesses. -/
 
 import D5.S1.Recurrence.NormOneCriticalPrimes
@@ -31,7 +32,7 @@ theorem norm_one_intertwining (a b : R) (hn : a ^ 2 + a * b - b ^ 2 = 1) :
   ext i j
   fin_cases i <;> fin_cases j <;>
     simp [actionMatrix, basisMatrix, traceCompanion, Matrix.mul_apply, Fin.sum_univ_two] <;>
-    first | ring | linear_combination -hn
+    first | ring1 | linear_combination -hn
 
 theorem power_intertwining (a b : R) (hn : a ^ 2 + a * b - b ^ 2 = 1) (t : ℕ) :
     actionMatrix a b ^ t * basisMatrix a b = basisMatrix a b * traceCompanion a b ^ t := by
@@ -53,12 +54,12 @@ theorem returns_iff_of_unit_coefficient (a b : R)
     ext i j
     fin_cases i <;> fin_cases j <;>
       simp [basisMatrix, S, Matrix.mul_apply, Fin.sum_univ_two] <;>
-      first | ring | linear_combination hc | linear_combination a * hc
+      first | ring1 | linear_combination hc | linear_combination a * hc
   have hSP : S * basisMatrix a b = 1 := by
     ext i j
     fin_cases i <;> fin_cases j <;>
       simp [basisMatrix, S, Matrix.mul_apply, Fin.sum_univ_two] <;>
-      first | ring | linear_combination hc | linear_combination a * hc
+      first | ring1 | linear_combination hc | linear_combination a * hc
   have h := power_intertwining a b hn t
   constructor
   · intro hA
@@ -100,24 +101,25 @@ theorem even_golden_returns_iff (k m t : ℕ)
   have hn : (((phi ^ (2 * k)).a : ℤ) : ZMod m) ^ 2 +
       (((phi ^ (2 * k)).a : ℤ) : ZMod m) * (((phi ^ (2 * k)).b : ℤ) : ZMod m) -
       (((phi ^ (2 * k)).b : ℤ) : ZMod m) ^ 2 = 1 := by
-    dsimp [norm] at hnZ
-    exact_mod_cast hnZ
+    dsimp [D5.S0.Carrier.norm] at hnZ
+    have hcast := congrArg (fun z : ℤ => (z : ZMod m)) hnZ
+    simpa only [Int.cast_add, Int.cast_sub, Int.cast_mul, Int.cast_one, pow_two] using hcast
   have hc : traceCompanion (((phi ^ (2 * k)).a : ℤ) : ZMod m)
       (((phi ^ (2 * k)).b : ℤ) : ZMod m) =
       (↑(companion (goldenLucas (2 * k) : ZMod m) (1 : (ZMod m)ˣ)) :
         Matrix (Fin 2) (Fin 2) (ZMod m)) := by
     ext i j
     fin_cases i <;> fin_cases j <;>
-      simp [traceCompanion, companion, goldenLucas, trace]
+      simp [traceCompanion, companion, goldenLucas, D5.S0.Carrier.trace]
   change actionMatrix _ _ ^ t = 1 ↔ _
   rw [returns_iff_of_unit_coefficient _ _ hn hb t, hc]
   constructor
   · intro h
     apply Units.ext
-    simpa only [Units.val_pow, Units.val_one] using h
+    simpa only [Units.val_pow_eq_pow_val, Units.val_one] using h
   · intro h
     have hv := congrArg Units.val h
-    simpa only [Units.val_pow, Units.val_one] using hv
+    simpa only [Units.val_pow_eq_pow_val, Units.val_one] using hv
 
 /-- The basis obstruction is the actual Fibonacci coefficient, including depth zero. -/
 theorem even_golden_basis_determinant (k m : ℕ) :
@@ -125,5 +127,13 @@ theorem even_golden_basis_determinant (k m : ℕ) :
       (((phi ^ (2 * k)).b : ℤ) : ZMod m)).det = -(Nat.fib (2 * k) : ZMod m) := by
   rw [basis_determinant, golden_phi_pow_b_eq_fib_index]
   simp
+
+#print axioms basis_determinant
+#print axioms norm_one_intertwining
+#print axioms power_intertwining
+#print axioms returns_iff_of_unit_coefficient
+#print axioms goldenAction_mulVec
+#print axioms even_golden_returns_iff
+#print axioms even_golden_basis_determinant
 
 end D5.S1.Recurrence.GoldenNormOneBasisBridge
