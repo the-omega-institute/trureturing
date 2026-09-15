@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:7278a88fac55e73bccd369ec587d5600ad1b085dfdc2cffb6eb18549eca84693
   normalized_sha256: sha256:7278a88fac55e73bccd369ec587d5600ad1b085dfdc2cffb6eb18549eca84693
 cas_ref: sha256:7278a88fac55e73bccd369ec587d5600ad1b085dfdc2cffb6eb18549eca84693
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S0/Conventions/InvolutionDecomposition.involution_even_odd_decomposition
+    target_statement_id: sha256:5ba9a72fd2ffb87a9ad498d406487625d05c3f4767137f166512d6d931534400
 receipts:
   unresolved_subitems: []
