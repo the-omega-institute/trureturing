@@ -1,0 +1,10 @@
+**定义 2.4（严格响应）。** 对部分操作 \(F:D\to Y\)、输入观察 \(q_{\mathrm{in}}:X\to Q\) 和输出观察 \(q_{\mathrm{out}}:Y\to B\)，定义
+\[
+\mathsf R(x)=
+\begin{cases}
+\operatorname{ok}(q_{\mathrm{out}}(F(x))),&x\in D,\\
+\bot,&x\notin D,
+\end{cases}
+\]
+其中 \(\bot\notin\operatorname{ok}(B)\)。若费用、失败位置或中间读数属于任务要求，则并入 \(\mathsf R\)。
+
