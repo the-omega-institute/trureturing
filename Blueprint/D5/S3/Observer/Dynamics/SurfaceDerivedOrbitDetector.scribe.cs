@@ -56,15 +56,15 @@ internal sealed class SurfaceDerivedOrbitDetectorDocument : IScribeDocumentDefin
                 DescribeRole.Theorem))));
 
     private static Formula TheoremFormula() => Disp(new Formula.Aligned([
-        Seq(Forall, Sp, F.Id("e,m"), Colon, Sp, Call("Nat"), Comma, Sp,
+        Seq(Forall, Sp, F.Id("e"), Comma, Sp, F.Id("m"), Colon, Sp, Call("Nat"), Comma, Sp,
             D(0), Sp, Lt, Sp, F.Id("m"), Sp, Rightarrow),
         Seq(Call("Finite", F.Id("Q")), Sp, Land, Sp, Call("Surjective", F.Id("q")), Sp, Land),
         Seq(Call("FullKernel", F.Id("q")), Sp, Land),
-        Seq(Open, Forall, Sp, F.Id("n,p"), Colon, Sp, Call("Nat"), Comma, Sp,
+        Seq(Open, Forall, Sp, F.Id("n"), Comma, Sp, F.Id("p"), Colon, Sp, Call("Nat"), Comma, Sp,
             Call("C", F.Id("n"), F.Id("p")), Sp, Rightarrow, Sp,
             Call("castZMod", F.Id("n"), F.Id("m")), Sp, Eq, Sp,
             Call("castZMod", F.Id("p"), F.Id("m")), Close, Sp, Land),
-        Seq(Open, Forall, Sp, F.Id("n,p"), Colon, Sp, Call("Nat"), Comma, Sp,
+        Seq(Open, Forall, Sp, F.Id("n"), Comma, Sp, F.Id("p"), Colon, Sp, Call("Nat"), Comma, Sp,
             F.Id("n"), Sp, Lt, Sp, F.Id("m"), Sp, Land, Sp,
             F.Id("p"), Sp, Lt, Sp, F.Id("m"), Sp, Rightarrow, Sp,
             Call("C", F.Id("n"), F.Id("p")), Sp, Call("iff"), Sp,
