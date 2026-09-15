@@ -1,0 +1,14 @@
+**定理 AT2。** 对每个 $N\ge0$，
+
+$$
+\sum_{n=0}^{N-1}\|u_{q+n}\|\le T_q(\theta)\delta.
+$$
+
+特别地，范数序列可求和，并且
+
+$$
+\boxed{\sum_{n\ge0}\|u_n\|\le C_q(\theta)\delta.}
+$$
+
+（文献：N. G. de Bruijn, Acta Math. Acad. Sci. Hungar. 11 (1960) 213–216, §§3–5）
+

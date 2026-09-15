@@ -1,0 +1,24 @@
+## AT.9 响应读数的轨迹含义与一个有限抽样界
+
+**命题。** 对平稳初始分布 $\pi$ 的 AT.7 马尔可夫链，
+
+$$
+s_t=\mathbb E_\pi[e(X_0)e(X_t)].
+$$
+
+这些响应是二时刻相关函数，需要以重复轨迹或具有适当误差保证的统计程序估计。一个时刻的二元读数 $F(X_t)$ 本身不等于 $s_t$。
+
+**证明。** 条件于 $X_0=b$，$\mathbb E[e(X_t)\mid X_0=b]=(K^t e)(b)$，再对初态求期望即为 $\langle e,K^t e\rangle_\pi$。证毕。
+
+**推论。** 对 $m=3$，取 $H$ 条相互独立、各自从均匀分布出发的长度五轨迹。以样本均值估计五个 $s_t$。若 $0<\alpha<1$，且
+
+$$
+H\ge\frac{32}{9\epsilon^2}\log\frac{10}{\alpha},\qquad\epsilon>0,
+$$
+
+则五个响应误差同时不超过 $\epsilon$ 的概率至少为 $1-\alpha$，相应 AT6 估计器的全核绝对误差以该概率不超过 $2528\epsilon$。
+
+**证明。** $e$ 的两个值为 $5/\sqrt{15}$ 与 $-3/\sqrt{15}$，所以乘积 $e(X_0)e(X_t)$ 位于 $[-1,5/3]$，区间长度为 $8/3$。Hoeffding 不等式给出单个时刻的尾概率上界 $2\exp(-9H\epsilon^2/32)$，再对五个时刻取并集界。轨迹间的独立性足够，同一条轨迹的不同时刻不必独立。证毕。
+
+**引文。** W. Hoeffding，*Probability Inequalities for Sums of Bounded Random Variables*，Journal of the American Statistical Association 58 (1963), 13–30，doi:10.1080/01621459.1963.10500830。
+

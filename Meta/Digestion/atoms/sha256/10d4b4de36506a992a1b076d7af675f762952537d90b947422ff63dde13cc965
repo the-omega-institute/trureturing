@@ -1,0 +1,44 @@
+## AT.11 退化模态的出现、消失与连续恢复
+
+**假设。** 在 AT.10 中取 $A_i=1$，$m\ge2$，互异素数标签，观察仍为 $F=\boldsymbol1_{\{|b|=1\}}$。令
+
+$$
+x_i=p_i^{-\beta},\quad
+P_0=\prod_i(1+x_i)^{-1},\quad
+p_F=P_0\sum_i x_i.
+$$
+
+**命题 AT11。** 中心化归一化响应在特征值 $1-k/m$ 上的权重为
+
+$$
+W_k(\beta)=\frac{P_0^2}{p_F(1-p_F)}
+\sum_{|S|=k}\left(\prod_{i\in S}x_i\right)
+\left(\sum_{j\notin S}x_j-k\right)^2,
+\qquad 1\le k\le m.
+$$
+
+对每个 $\beta>0$，所有 $W_k(\beta)$ 都严格为正。对 $\beta=0$，恰在 $m$ 为偶数且 $k=m/2$ 时出现零权重。因此非恒定循环空间的维数在 $\beta>0$ 时为 $m$；在均匀极限，偶数 $m$ 时降为 $m-1$。
+
+**证明。** 第 $i$ 个坐标的归一化中心函数在零和一上的取值分别为 $-\sqrt{x_i}$、$1/\sqrt{x_i}$。对其乘积基函数 $\chi_S$，对恰好一个坐标为一的状态求和，得到
+
+$$
+\langle F,\chi_S\rangle
+=(-1)^{|S|}P_0\sqrt{\prod_{i\in S}x_i}
+\left(\sum_{j\notin S}x_j-|S|\right).
+$$
+
+平方并按次数相加，除以方差即得权重公式。若 $1\le k<m$ 且 $W_k=0$，每一个 $k$ 元子集都满足 $\sum_{j\notin S}x_j=k$。选择两个只交换一个元素的子集，便得到任意两个 $x_i,x_j$ 相等。$\beta>0$ 与素数互异使这不可能。$k=m$ 时括号恒为 $-m$，所以该权重也非零。$\beta=0$ 时全部 $x_i=1$，括号为 $m-2k$。互异特征值的非零谱权重数等于循环空间维数。证毕。
+
+**推论。** 若 $m$ 为偶数、$k=m/2$，则
+
+$$
+\lim_{\beta\downarrow0}\frac{W_k(\beta)}{\beta^2}
+=\frac{\displaystyle\sum_{|S|=k}
+\left(\sum_{j\notin S}\log p_j\right)^2}
+{m(2^m-m)}>0.
+$$
+
+因此，即使只考虑 $\beta>0$、所有目标谱权重均非零的模型族，也不存在对该权重有效的统一正下界。
+
+**证明。** 用 $x_i=1-\beta\log p_i+O(\beta^2)$ 展开 AT11。因 $m-k=k$，括号的常数项为零，一阶项为 $-\beta\sum_{j\notin S}\log p_j$。其他乘积因子连续趋于一，且 $P_0^2/[p_F(1-p_F)]$ 趋于 $1/[m(2^m-m)]$。有限求和允许逐项取极限；各素数对数严格为正。证毕。
+

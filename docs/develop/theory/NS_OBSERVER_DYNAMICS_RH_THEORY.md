@@ -738,6 +738,313 @@ K(\tau)=-B^*e^{-\tau D}B.
 \]
 
 **证明。** 对隐藏方程应用常系数线性方程的变参数公式，得到 $y(t)$ 的表示；将该表示代回可见方程，积分项的算子系数即为式 (12.20) 中的 $K$。
+## 15. 有限含噪矩的精确极值与全时间 Laplace 谱底恢复
+
+### 15.1 定义：有限矩观察与外部原子
+
+设 $N\geq1$，$x_1,\ldots,x_N$ 是两两不同的实数，$y$ 不等于任一节点。设 $\ell_i$ 为相应 Lagrange 基多项式，$c_i=\ell_i(y)$，$J=\{i:c_i>0\}$，并定义
+
+\[
+p=\sum_{i\in J}\ell_i,\quad P=p(y),\quad
+L=\sum_{k=1}^{N-1}|p_k|.
+\tag{15.1}
+\]
+
+定义 $d_0=0$；对 $k\geq1$，当 $p_k\geq0$ 时取 $d_k=1$，否则取 $d_k=-1$。再定义
+
+\[
+r_i=\sum_{k=0}^{N-1}d_k[\ell_i]_k,\qquad
+B=\sum_{i=1}^{N}\left|\frac LP-\frac{r_i}{c_i}\right|.
+\tag{15.2}
+\]
+
+所有 $c_i$ 均非零，$\sum_i c_i=1$，所以 $P=\sum_{i\in J}c_i\geq1$。记 $\mathcal W_\varepsilon(x,y)$ 为所有满足下列条件的 $w\geq0$ 构成的集合：存在 $u_i,v_i\geq0$，使
+
+\[
+w+\sum_i u_i=\sum_i v_i=1,\qquad
+\left|wy^k+\sum_i u_i x_i^k-\sum_i v_i x_i^k\right|\leq\varepsilon
+\quad(0\leq k<N).
+\tag{15.3}
+\]
+
+这些是实际概率测度 $\mu=w\delta_y+\sum_i u_i\delta_{x_i}$、$\nu=\sum_i v_i\delta_{x_i}$ 的矩约束。零次矩误差恒为零。
+
+### 15.2 定理：显式噪声区间内的精确可达极值
+
+当
+
+\[
+0\leq\varepsilon\leq\frac1{2P(1+B)},
+\]
+
+时，
+
+\[
+\boxed{\max\mathcal W_\varepsilon(x,y)=\frac{1+\varepsilon L}{P}.}
+\tag{15.4}
+\]
+
+**证明。** 记 $w_*=(1+\varepsilon L)/P$，构造
+
+\[
+b_i=w_*c_i-\varepsilon r_i,\qquad
+u_i=\max\{-b_i,0\},\qquad v_i=\max\{b_i,0\}.
+\tag{15.5}
+\]
+
+这里式 (15.5) 中的 $u_i$ 是 $\mu$ 的节点权重。对任意次数小于 $N$ 的多项式 $f$，Lagrange 恒等式为 $f=\sum_i f(x_i)\ell_i$。对其分别在 $y$ 求值及作用线性泛函 $D(f)=\sum_{k=0}^{N-1}d_k f_k$，得到
+
+\[
+\sum_i c_i x_i^k=y^k,\qquad
+\sum_i r_i x_i^k=d_k,\qquad
+\sum_i r_i=0,\qquad\sum_{i\in J}r_i=D(p)=L.
+\tag{15.6}
+\]
+
+由噪声条件，每个 $i$ 满足
+
+\[
+\frac1P+\varepsilon\left(\frac LP-\frac{r_i}{c_i}\right)
+\geq\frac1{2P}>0.
+\]
+
+而 $b_i$ 等于该正数乘以 $c_i$，因此所有节点的符号保持不变。于是
+
+\[
+\sum_i v_i=\sum_{i\in J}b_i=w_*P-\varepsilon L=1,
+\qquad \sum_i b_i=w_*.
+\]
+
+从 $v_i-u_i=b_i$ 得到 $w_*+\sum_i u_i=1$。式 (15.6) 又给出每个矩误差精确等于 $\varepsilon d_k$，所以构造可行。
+
+对任意可行概率对，由 $p(x_i)\in\{0,1\}$、$p(y)=P$ 和非负权重，有
+
+\[
+wP\leq\int p\,d\mu\leq\int p\,d\nu+\varepsilon L\leq1+\varepsilon L.
+\]
+
+其中常数系数不贡献误差，因为两边总质量完全相同。除以 $P>0$ 即得上界，与式 (15.5) 构造相等。此证明同时计算了极值、可达分布和保持正性的噪声区间。多项式矩对偶的背景参见 [15-A]、[15-B]。
+
+### 15.3 命题：一个有理数取等族
+
+当节点为 $1/4,1/2,3/4$，外部点为 $1$ 时，
+
+\[
+c=(1,-3,3),\quad p(x)=4-16x+16x^2,\quad P=4,\quad L=32,\quad
+r=(18,-32,14),\quad B=16.
+\]
+
+因而式 (15.4) 在 $0\leq\varepsilon\leq1/136$ 上给出 $w_*=1/4+8\varepsilon$。实际取等概率对为
+
+\[
+\begin{aligned}
+\mu_\varepsilon&=(1/4+8\varepsilon)\delta_1+(3/4-8\varepsilon)\delta_{1/2},\\
+\nu_\varepsilon&=(1/4-10\varepsilon)\delta_{1/4}+(3/4+10\varepsilon)\delta_{3/4}.
+\end{aligned}
+\tag{15.7}
+\]
+
+**证明。** 直接代入 Lagrange 基和式 (15.2) 得到列出的常数。两边总质量为一，一次矩误差为 $-\varepsilon$，二次矩误差为 $\varepsilon$。这些具体权重在更大的区间 $[0,1/40]$ 上仍非负，因此此特例的取等区间可延伸到 $1/40$；通用充分半径 $1/136$ 没有被声称是最大半径。
+
+### 15.4 定理：Chebyshev 节点给出的连续支撑精确界
+
+设 $n\geq1$，$0<a<b<y$，取递减的 Chebyshev--Lobatto 节点
+
+\[
+x_j=\frac{a+b}{2}+\frac{b-a}{2}\cos(j\pi/n),\qquad j=0,\ldots,n,
+\quad z=\frac{2y-a-b}{b-a}>1.
+\]
+
+对所有支撑于 $[a,y]$ 的概率测度 $\mu$ 和支撑于 $[a,b]$ 的概率测度 $\nu$，若二者前 $n+1$ 个矩完全相同，则外部点 $y$ 的最大可能质量为
+
+\[
+\boxed{\mu(\{y\})\leq\frac2{1+T_n(z)},}
+\tag{15.8}
+\]
+
+而此上界由实际有限原子概率对达到。
+
+**证明。** Lagrange 乘积的分子全正，递减节点使其分母的符号为 $(-1)^j$，故 $\operatorname{sign}(c_j)=(-1)^j$。在节点上 $T_n((2x_j-a-b)/(b-a))=(-1)^j$。次数不超过 $n$ 的插值唯一性给出
+
+\[
+p(x)=\frac{1+T_n((2x-a-b)/(b-a))}{2},\qquad
+P=\frac{1+T_n(z)}2.
+\]
+
+在 $[a,b]$ 上 $0\leq p\leq1$，在 $[b,y]$ 上 $p\geq1$，因此 $\mu(\{y\})P\leq\int p\,d\mu=\int p\,d\nu\leq1$。式 (15.5) 在零噪声时给出支撑于所声明区间的取等分布。该证明不把支撑事先限制在节点上。
+
+若使用逐矩噪声上界 $\varepsilon$，则在式 (15.2) 的显式充分噪声区间内，连续支撑问题的最大外部原子质量为
+
+\[
+\boxed{
+\frac{2+\varepsilon\left[
+T_n\!\left(\frac{2+a+b}{b-a}\right)
+-T_n\!\left(\frac{a+b}{b-a}\right)\right]}
+{1+T_n(z)}.
+}
+\tag{15.9}
+\]
+
+**证明。** 对非节点支撑仍使用同一个非负多项式上界。移位 Chebyshev 多项式的全部零点在 $(a,b)$，故其系数符号交替。将它在 $-1$ 处求值，并减去常数系数的绝对值，得到非恒定系数的绝对值和
+
+\[
+\sum_{k=1}^n\left|[T_n((2x-a-b)/(b-a))]_k\right|
+=T_n\!\left(\frac{2+a+b}{b-a}\right)-T_n\!\left(\frac{a+b}{b-a}\right).
+\]
+
+式 (15.4) 的正权重构造达到相同上界。超出显式噪声区间后，上界仍有效，但此处不声称取等公式继续成立。
+
+### 15.5 定理：固定原子权重下的有限前缀分辨率
+
+固定 $0<\eta<1$。在式 (15.8) 的支撑设置下，存在匹配次数 $0,\ldots,n$ 的概率对，且 $\mu(\{y\})\geq\eta$，当且仅当
+
+\[
+y-b\leq\frac{b-a}{2}\left[
+\cosh\left(\frac{\operatorname{arcosh}(2/\eta-1)}n\right)-1\right].
+\tag{15.10}
+\]
+
+在边界取等时，两种概率测度各自在其最大支撑点的质量都至少为 $\eta$。
+
+**证明。** 当 $z>1$，$T_n(z)=\cosh(n\operatorname{arcosh}z)$ 严格递增。对式 (15.8) 反解即得等价。边界处第一种测度在 $y$ 上的质量为 $\eta$；另一种在最大节点 $b=x_0$ 上的质量为 $c_0/P$。乘积公式
+
+\[
+c_0=\prod_{j=1}^n\frac{y-x_j}{b-x_j}>1
+\]
+
+给出 $c_0/P>1/P=\eta$。对固定 $\eta$，式 (15.10) 的宽度是 $\Theta(n^{-2})$。
+
+对 $x=e^{-hE}$，$h>0$，次数 $0,\ldots,n$ 的相同矩对应时间 $0,h,\ldots,nh$ 的完全相同 Laplace 读数，而两种最低能量相差 $h^{-1}\log(y/b)$。这只给出所列采样时刻的精确匹配。
+
+### 15.6 定理：全时间绝对噪声下的谱底 minimax 阶
+
+固定 $0\leq E_-<E_+<\infty$ 与 $0<\eta<1$。令 $\mathcal M$ 为所有支撑于 $[E_-,E_+]$ 的概率测度 $\sigma$，要求其最低支撑点
+
+\[
+g(\sigma)=\min\operatorname{supp}\sigma
+\]
+
+具有质量 $\sigma(\{g(\sigma)\})\geq\eta$。观察为任意函数 $Y:[0,\infty)\to\mathbb R$，满足
+
+\[
+\sup_{t\geq0}|Y(t)-C_\sigma(t)|\leq\varepsilon,
+\qquad C_\sigma(t)=\int e^{-tE}\,\sigma(dE).
+\]
+
+对任意估计函数 $\widehat g$，定义统一最坏误差及 minimax 误差
+
+\[
+\mathcal R(\varepsilon)=\inf_{\widehat g}\ \sup_{\sigma\in\mathcal M}
+\sup_{\|Y-C_\sigma\|_\infty\leq\varepsilon}
+|\widehat g(Y)-g(\sigma)|.
+\tag{15.11}
+\]
+
+存在只依赖固定参数的正数 $c,C,\varepsilon_0$，使
+
+\[
+\boxed{
+\frac{c}{\log^2(1/\varepsilon)}
+\leq\mathcal R(\varepsilon)
+\leq\frac{C}{\log^2(1/\varepsilon)}
+\qquad(0<\varepsilon<\varepsilon_0).
+}
+\tag{15.12}
+\]
+
+下界可以只用有限原子测度实现，但其原子数随精度增加；定理不规定一个固定维数上限。
+
+**上界证明。** 取 $h=1/E_+$、$a=e^{-1}$、$b_0=e^{-E_-/E_+}$、$a_0=a/2$。推送 $x=e^{-hE}$ 把所有测度支撑送入 $[a,b_0]$。考虑两个能与同一 $Y$ 相容的测度，其最大 $x$ 支撑点分别为 $y>b$。它们在时间 $kh$ 的读数差不超过 $2\varepsilon$。
+
+令 $A_b(x)=(2x-a_0-b)/(b-a_0)$，并取
+
+\[
+p_n(x)=\frac{1+T_n(A_b(x))}{2}.
+\]
+
+该多项式在第一测度的支撑上非负，在第二测度的支撑上位于 $[0,1]$。由于 $b\geq a$，其仿射内层系数范数满足
+
+\[
+\|A_b\|_{\mathrm{coef},1}=\frac{2+a_0+b}{b-a_0}
+\leq S:=\frac{2+a_0+b_0}{a-a_0}.
+\]
+
+设 $Q=2S+1>1$。由 $T_{k+1}=2A_bT_k-T_{k-1}$，归纳得到 $\|T_n(A_b)\|_{\mathrm{coef},1}\leq Q^n$。常数项由总质量抵消，于是
+
+\[
+\eta p_n(y)\leq1+\varepsilon Q^n.
+\]
+
+对足够小的 $\varepsilon$ 取 $n=\lfloor\log(1/\varepsilon)/(2\log Q)\rfloor\geq1$。则 $\varepsilon Q^n\leq1$，所以令 $A_\eta=\operatorname{arcosh}(4/\eta-1)$，有
+
+\[
+y-b\leq\frac{b-a_0}{2}[\cosh(A_\eta/n)-1]
+\leq\frac{b_0A_\eta^2\cosh(A_\eta)}{4n^2}.
+\]
+
+最后使用 $h^{-1}\log(y/b)\leq(y-b)/(ha)$，得到同一噪声数据的所有相容最低能量构成的集合直径为 $O(\log^{-2}(1/\varepsilon))$。以该集合上下确界的中点为估计，若集合为空则任取 $E_-$，即可得到统一上界。这是估计函数的存在性证明，不附带计算复杂度结论；所用信息实际上只是 $O(\log(1/\varepsilon))$ 个等间距样本。
+
+**下界证明。** 选固定 $a<A<B<Y<b_0$，并记 $D_\eta=\operatorname{arcosh}(2/\eta-1)>0$。对足够大的偶数 $n$，令
+
+\[
+y_n=B+\frac{B-A}{2}[\cosh(D_\eta/n)-1]<Y.
+\]
+
+用区间 $[A,B]$ 上的式 (15.8) 取等构造，得到支撑于 $[A,Y]$ 的概率对，匹配次数 $0,\ldots,n$ 的矩，最大支撑点分别为 $y_n$ 与 $B$，且两端原子质量都至少为 $\eta$。
+
+选择固定 $\rho>1$，使区间 $[A,Y]$ 的闭 Bernstein 椭圆完全包含于开集 $\{z:\operatorname{Re}z>0,\ |z|<1\}$。这样的 $\rho$ 存在，因为 $[A,Y]$ 紧含于 $(0,1)$。对所有 $s\geq0$，主值分支 $f_s(z)=\exp(s\operatorname{Log}z)$ 在此椭圆的邻域解析，并且 $|f_s(z)|=|z|^s\leq1$。Bernstein--Chebyshev 估计 [15-C] 给出一个次数不超过 $n$ 的多项式 $q_{n,s}$，满足
+
+\[
+\sup_{x\in[A,Y]}|x^s-q_{n,s}(x)|\leq\frac{2\rho^{-n}}{\rho-1}
+\quad\text{对所有 }s\geq0.
+\]
+
+两种测度对 $q_{n,s}$ 的积分完全相同。各自总质量为一，所以其 $x^s$ 积分之差最多为 $4\rho^{-n}/(\rho-1)$。取 $s=t/h$，得到真正的全时间估计
+
+\[
+\sup_{t\geq0}|C_1(t)-C_0(t)|\leq\frac{4\rho^{-n}}{\rho-1}.
+\tag{15.13}
+\]
+
+选最小的足够大偶数 $n$ 使右侧不超过 $2\varepsilon$；于是 $n=O(\log(1/\varepsilon))$。两个最低能量之差满足
+
+\[
+\frac1h\log\frac{y_n}{B}
+\geq\frac{y_n-B}{hY}
+\geq\frac{(B-A)D_\eta^2}{4hY n^2}.
+\]
+
+两条全时间读数的中点同时与二者在误差 $\varepsilon$ 内相容，任意估计函数在至少一个模型上的误差不小于该能量差的一半，得到式 (15.12) 的下界。
+
+**推论。** 在上述维数不受统一限制的模型类中，不存在统一的 $O(\varepsilon^\alpha)$ 谱底恢复保证，其中 $\alpha>0$ 任意。因为 $\varepsilon^\alpha\log^2(1/\varepsilon)\to0$。最低态权重在构造中始终至少为固定 $\eta$；下界不依赖让该权重趋于零。
+
+### 15.7 定理：共同循环观察与 Jacobi 边界实现
+
+第 15.6 节下界所用的偶数 $n=2m$ 的零噪声正测度对，可以实现为同一个 $(m+1)$ 维实 Hilbert 空间上的两个正定自伴收缩矩阵 $K_0,K_1$，以及同一个循环单位向量 $e_0$，满足
+
+\[
+\langle e_0,K_0^k e_0\rangle=\langle e_0,K_1^k e_0\rangle
+\quad(0\leq k\leq2m).
+\tag{15.14}
+\]
+
+两个 $K$ 可取 Jacobi 三对角矩阵，且仅最后一个对角元不同。其最低能量算子定义为 $H_j=-h^{-1}\log K_j$，则式 (15.13) 对其实际关联函数成立。
+
+**证明。** 符号交替使两种概率测度分别有 $m+1$ 个不同、正权重的原子。它们的次数至 $2m$ 矩完全相同，所以次数不超过 $m$ 的多项式内积完全相同且正定。对 $1,x,\ldots,x^m$ 作正首项系数的 Gram--Schmidt，得到共同正交多项式 $p_0,\ldots,p_m$。乘法算子 $f\mapsto xf$ 在这组基下的矩阵是 Jacobi 矩阵，次对角系数为相邻首项系数之比，严格为正。
+
+矩阵元 $\langle p_i,xp_j\rangle$ 只涉及次数不超过 $i+j+1$ 的矩。除了 $i=j=m$ 外，此次数均不超过 $2m$，所以只有最后的对角元可能不同。有限原子 $L^2$ 空间中，乘法算子的谱就是原子位置，因此两者正定且范数小于一；常数多项式 $p_0=1$ 对应同一个 $e_0$，其各谱方向权重均非零，故为循环向量。谱函数演算给出 $e^{-tH_j}=K_j^{t/h}$，于是测度积分成为实际算子关联函数。
+
+这里秩一边界差属于 $K_0,K_1$。矩阵对数 $H_0,H_1$ 不被断言保持三对角性或局域相互作用。该有限算子构造不指定规范群、场论公理、体积极限或 Yang--Mills 相互作用。
+
+### 15.8 引用
+
+[15-A] Yohann de Castro and Fabrice Gamboa. *Exact Reconstruction Using Beurling Minimal Extrapolation*. Journal of Mathematical Analysis and Applications 395(1), 336--354, 2012. arXiv:1103.4951. https://arxiv.org/abs/1103.4951 . 有限测度广义矩及多项式对偶的背景。
+
+[15-B] Cameron Musco, Christopher Musco, Lucas Rosenblatt and Apoorv Vikram Singh. *Sharper Bounds for Chebyshev Moment Matching, with Applications*. arXiv:2408.12385v3, 18 May 2026. https://arxiv.org/abs/2408.12385v3 . 含噪 Chebyshev 矩与分布恢复的背景；其 Wasserstein 目标与这里的支撑端点目标不同。
+
+[15-C] Lloyd N. Trefethen. *Approximation Theory and Approximation Practice*, Theorems 8.1--8.2. SIAM, 2013; extended edition, 2019. Chapter 8 source: https://github.com/chebfun/ATAP/blob/development/chap8.m . 解析函数的 Chebyshev 系数界和截断误差 $2M\rho^{-n}/(\rho-1)$。
+
+[15-D] Lin Lin and Yu Tong. *Heisenberg-Limited Ground-State Energy Estimation for Early Fault-Tolerant Quantum Computers*. PRX Quantum 3, 010318, 2022. DOI: 10.1103/PRXQuantum.3.010318. https://doi.org/10.1103/PRXQuantum.3.010318 . 其相干量子查询模型与式 (15.11) 的被动含绝对噪声 Laplace 观察模型不同，二者不共享本文下界的查询前提。
 
 ## 16. 固定模态数、遗漏质量与谱底识别的阶数
 

@@ -38,6 +38,8 @@ internal static partial class SettleAtomCommand
             var target = LocateTarget(document, atomId);
             if (!target.Receipts.ChainAtoms.IsEmpty)
                 throw Invalid("CHAIN_PARENT", $"atom_id={atomId}");
+            if (target.Receipts.Upstream is not null)
+                throw Invalid("UPSTREAM_PRESENT", $"atom_id={atomId}");
             DigestionLedgerEntry updated;
             if (request is null)
             {
@@ -126,7 +128,7 @@ internal static partial class SettleAtomCommand
         return newPath;
     }
 
-    private static string[] CoveredAncestors(BackfillInventoryDocument document, string atomId)
+    internal static string[] CoveredAncestors(BackfillInventoryDocument document, string atomId)
     {
         var visited = new HashSet<string>(StringComparer.Ordinal) { atomId };
         var ancestors = new HashSet<string>(StringComparer.Ordinal);

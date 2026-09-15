@@ -1,0 +1,11 @@
+**推论。** 若 $m$ 为偶数、$k=m/2$，则
+
+$$
+\lim_{\beta\downarrow0}\frac{W_k(\beta)}{\beta^2}
+=\frac{\displaystyle\sum_{|S|=k}
+\left(\sum_{j\notin S}\log p_j\right)^2}
+{m(2^m-m)}>0.
+$$
+
+因此，即使只考虑 $\beta>0$、所有目标谱权重均非零的模型族，也不存在对该权重有效的统一正下界。
+

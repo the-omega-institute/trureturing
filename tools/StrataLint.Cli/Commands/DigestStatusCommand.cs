@@ -4,7 +4,7 @@ using StrataLint.Engine;
 
 namespace StrataLint.Cli;
 
-internal static class DigestStatusCommand
+internal static partial class DigestStatusCommand
 {
     private const string ImplementationPath = "tools/StrataLint.Cli/Commands/DigestStatusCommand.cs";
     private static readonly JsonSerializerOptions JsonOptions = new()
@@ -327,6 +327,9 @@ internal static class DigestStatusCommand
         var writer = new StringWriter(System.Globalization.CultureInfo.InvariantCulture);
         writer.WriteLine(
             $"DIGEST_STATUS entries={evaluation.Entries.Length} deletable_now={evaluation.DeletableCount}");
+        foreach (var count in StatusCounts(evaluation))
+            writer.WriteLine($"STATUS_COUNT {count.Key.Replace('_', '-')}={count.Value}");
+        writer.WriteLine($"FORMALIZABLE_TOTAL {FormalizableTotal(evaluation)}");
         foreach (var entry in evaluation.Entries
                      .OrderBy(static item => item.Entry.SourceId, StringComparer.Ordinal)
                      .ThenBy(static item => item.Entry.AtomId, StringComparer.Ordinal))
@@ -355,6 +358,8 @@ internal static class DigestStatusCommand
         {
             schema = "stratalint-digest-status-v1",
             entries_total = evaluation.Entries.Length,
+            status_counts = StatusCounts(evaluation),
+            formalizable_total = FormalizableTotal(evaluation),
             deletable_now = evaluation.DeletableCount,
             age_histogram = new { total = age.Total, per_source = age.PerSource },
             frontier = new

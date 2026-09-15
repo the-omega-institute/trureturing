@@ -1,0 +1,18 @@
+**定理 PN5。** 令
+
+$$
+A_\kappa=\frac{\kappa^2}{128(1-\kappa)^2},
+\qquad 0<\epsilon\le A_\kappa,
+\qquad q=1+\left\lfloor\frac{\log(A_\kappa/\epsilon)}{\log B_\kappa}\right\rfloor.
+$$
+
+则
+
+$$
+\boxed{\mathfrak R_\kappa(\epsilon)\ge(1-\kappa)^2q\epsilon.}
+$$
+
+特别地，不存在只依赖 $\kappa$ 的有限常数 $C$，使全部维数与全部足够小的误差均满足 $\mathfrak R_\kappa(\epsilon)\le C\epsilon$。
+
+（文献：有界噪声下的最坏情形系统辨识与信息直径方法，见 B. Kacewicz, M. Milanese, International Journal of Adaptive Control and Signal Processing 9 (1995), 87–96, doi:10.1002/acs.4480090109）
+

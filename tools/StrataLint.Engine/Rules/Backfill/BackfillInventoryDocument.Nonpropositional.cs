@@ -6,7 +6,8 @@ internal sealed partial class BackfillInventoryDocument
     {
         var status = new DigestionStatus(ParseMigration(migration), ParseTruth(truth));
         if ((status.Migration == DigestionMigrationState.Nonpropositional)
-            != (status.Truth == DigestionTruthState.Inapplicable))
+            != (status.Truth == DigestionTruthState.Inapplicable)
+            || status.Migration == DigestionMigrationState.Upstream && status.Truth != DigestionTruthState.Closed)
         {
             throw new FormatException($"invalid digestion status pair: {migration}-{truth}");
         }

@@ -1,0 +1,11 @@
+**命题 AT11。** 中心化归一化响应在特征值 $1-k/m$ 上的权重为
+
+$$
+W_k(\beta)=\frac{P_0^2}{p_F(1-p_F)}
+\sum_{|S|=k}\left(\prod_{i\in S}x_i\right)
+\left(\sum_{j\notin S}x_j-k\right)^2,
+\qquad 1\le k\le m.
+$$
+
+对每个 $\beta>0$，所有 $W_k(\beta)$ 都严格为正。对 $\beta=0$，恰在 $m$ 为偶数且 $k=m/2$ 时出现零权重。因此非恒定循环空间的维数在 $\beta>0$ 时为 $m$；在均匀极限，偶数 $m$ 时降为 $m-1$。
+

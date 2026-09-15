@@ -1,0 +1,8 @@
+**定理 PN1。** 对所有 $n\ge0$，$0\le u_n\le1$；对 $0\le n<q$，$u_n=1$。此外
+
+$$
+\sum_{n\ge0}u_n=\sum_{i=1}^q\frac1{1-\lambda_i}.
+$$
+
+（文献：A. Sen, N. Balakrishnan, Statist. Probab. Lett. 43 (1999) 421–426, Theorem 1）
+

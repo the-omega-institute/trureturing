@@ -54,6 +54,7 @@ internal static class FileMapPolicy
         new Dictionary<string, string>(StringComparer.Ordinal)
         {
             ["BackfillInventoryLoader"] = BackfillLoaderPath,
+            ["DigestionStatusEvaluator"] = "tools/StrataLint.Engine/Digestion/Evaluation/DigestionStatusEvaluator.Upstream.cs",
             ["FileMapLoader"] = FileMapLoaderPath,
             ["FrozenStateRecordLoader"] = FrozenStateRecordLoaderPath,
             ["GateAuthorityRootCatalogLoader"] = GateAuthorityRootCatalogLoaderPath,
@@ -567,6 +568,12 @@ internal static class FileMapPolicy
             // An exact report path is therefore a reservation, including between
             // content deletion and the subsequent registration cleanup.
             .Where(static entry => !IsReportPath(entry.Pattern) || entry.Pattern.Contains('*'))
+            // A probe exists iff a receipt needs it. Clearing the last receipt may
+            // remove the entire family; SL-016 still requires every referenced probe.
+            .Where(static entry => entry.Pattern != "Meta/Digestion/upstream/**"
+                || entry.Kind != FileMapKind.Data || entry.AdmissionPlane != FileMapAdmissionPlane.Content
+                || entry.ProducedBy != "SettleUpstreamCommand"
+                || !entry.VerifiedBy.Contains("DigestionStatusEvaluator", StringComparer.Ordinal))
             .Where(entry => !trackedPaths.Any(entry.Matches))
             .Select(static entry => new FileMapFinding(
                 "FILEMAP-PATTERN-EMPTY",
