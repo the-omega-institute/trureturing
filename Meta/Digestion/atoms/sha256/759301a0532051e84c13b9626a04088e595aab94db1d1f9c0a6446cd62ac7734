@@ -1,0 +1,19 @@
+**命题 124.7（直径界、单调性与有限层精确性）。** 对所有 $k\ge0$，
+$$
+\tfrac12\omega_k(T)\le e_k(T)\le\omega_k(T),\qquad
+e_{k+1}(T)\le e_k(T),\qquad
+\omega_{k+1}(T)\le\omega_k(T).
+$$
+而且
+$$
+e_k(T)=0\quad\Longleftrightarrow\quad
+\exists t_k:W_k\to\mathcal D_d\ \forall x\in X_{\rm fs},\ T(x)=t_k(q_kx).
+$$
+证明。对同纤维的 $x,y$ 和任一中心 $\sigma$，有
+$D(T(x),T(y))\le D(T(x),\sigma)+D(T(y),\sigma)\le2f_{k,w}(\sigma)$。
+先对 $x,y$ 取上确界，再对中心取下确界，得 $\omega_{k,w}\le2r_{k,w}$。
+从非空纤维选一个 $x_w$，用 $T(x_w)$ 作中心，得 $r_{k,w}\le\omega_{k,w}$；定理 124.6 给全局两界。
+
+将深度 $k$ 的最优中心复制给每个具有相同父前缀的长度 $k+1$ 字串，新表逐点输出与旧表相同。因此新最优误差不增；新纤维包含于父纤维，也使 $\omega_k$ 不增。这个复制表不必是新层最优表。
+若 $e_k=0$，则 $\omega_k=0$，每个非空纤维上的 $T$ 恒定，按此值定义 $t_k$；反向因子化表逐点误差为零。所有结论也覆盖 $d=1$，此时态空间只有一个元素，全部缺陷恒为零。
+
