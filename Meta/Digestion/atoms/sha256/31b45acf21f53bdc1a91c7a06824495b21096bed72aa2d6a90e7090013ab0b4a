@@ -1,0 +1,46 @@
+### 114.2 Pythagoras 分解
+
+conditional_expectation_refinement_pythagoras 精确证明：
+
+$$
+\boxed{
+\|Y-\widehat Y_c\|_2^2
+=
+\|Y-\widehat Y_f\|_2^2
++
+\|\widehat Y_f-\widehat Y_c\|_2^2.
+}
+$$
+
+同时有
+
+$$
+\|Y-\widehat Y_f\|_2^2
+\le
+\|Y-\widehat Y_c\|_2^2.
+$$
+
+最后一项
+
+$$
+\Delta_{\mathrm{refine}}
+=
+\|\widehat Y_f-\widehat Y_c\|_2^2
+$$
+
+可以称作记录细化的创新能量。它不是一个新的 Lean 定义，而是上述分解中已经出现的平方范数项。它的解释是：
+
+$$
+\text{细化后新增的可预测部分}
+=
+\text{细化前后预测器之间的距离}.
+$$
+
+如果
+
+$$
+\Delta_{\mathrm{refine}}=0,
+$$
+
+则两层记录给出的 L^2 预测器相同；这说明新增记录对这个目标和这个测度没有带来平方风险上的改进。这个等价解释只针对该目标、该测度和该二次损失，不能推广成新增记录在所有任务中都无用。
+
