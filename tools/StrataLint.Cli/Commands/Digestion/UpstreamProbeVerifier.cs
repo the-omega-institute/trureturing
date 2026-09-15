@@ -85,15 +85,15 @@ internal sealed class UpstreamProbeVerifier(IUpstreamLeanProcessRunner runner, s
                 + Encoding.UTF8.GetString(checkedNames.StandardError);
             if (checkedNames.ExitCode != 0 || Regex.IsMatch(checkDiagnostics, @"\berror:", Options))
             {
-                var unresolved = declarations.Where(name => checkDiagnostics.Contains(name, StringComparison.Ordinal)).ToArray();
-                // Lean reports source positions even when an elaboration error does not echo the name.
+                // Each generated #check occupies one line. Successful output and names mentioned
+                // inside an unrelated error are not evidence that those declarations failed.
                 var errorLines = Regex.Matches(checkDiagnostics, @":([0-9]+):[0-9]+: error:", Options)
                     .Select(match => int.Parse(match.Groups[1].Value, System.Globalization.CultureInfo.InvariantCulture) - imports.Length - 1)
                     .Where(index => index >= 0 && index < declarations.Length).Select(index => declarations[index]);
-                var failures = unresolved.Concat(errorLines).ToHashSet(StringComparer.Ordinal);
+                var failures = errorLines.ToHashSet(StringComparer.Ordinal);
                 var ordered = declarations.Where(failures.Contains).ToArray();
-                if (ordered.Length == 0) ordered = declarations.ToArray();
-                throw Invalid("DECLARATION_UNRESOLVED", $"{ordered[0]} unresolved=[{string.Join(',', ordered)}] exit={checkedNames.ExitCode}\n{checkDiagnostics}");
+                var first = ordered.FirstOrDefault() ?? "unattributed-resolver-error";
+                throw Invalid("DECLARATION_UNRESOLVED", $"{first} unresolved=[{string.Join(',', ordered)}] exit={checkedNames.ExitCode}\n{checkDiagnostics}");
             }
             return axioms;
         }
