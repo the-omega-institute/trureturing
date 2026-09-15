@@ -1,0 +1,2 @@
+\int_0^1|S_X(\theta)|^{2k}\,d\theta=\sum_{N\in\mathbb Z}r_{k,X}(N)^2.
+$$

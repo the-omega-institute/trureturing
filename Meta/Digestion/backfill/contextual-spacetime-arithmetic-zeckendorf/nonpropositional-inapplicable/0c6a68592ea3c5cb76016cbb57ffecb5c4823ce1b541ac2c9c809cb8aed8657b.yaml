@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0c6a68592ea3c5cb76016cbb57ffecb5c4823ce1b541ac2c9c809cb8aed8657b
+  normalized_sha256: sha256:0c6a68592ea3c5cb76016cbb57ffecb5c4823ce1b541ac2c9c809cb8aed8657b
+cas_ref: sha256:0c6a68592ea3c5cb76016cbb57ffecb5c4823ce1b541ac2c9c809cb8aed8657b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: add_comm、add_assoc 和 add_zero 在 ENNReal 的逐坐标加法上直接给交换、结合及零元律，add_le_add 对各坐标给序单调性，已有 ENNReal 加法同时包含有限值与无穷值，仓内无冻结 GID。
+    previous_atom_id: f35a71948f64c0b36d8a6809d1387748f84ab13b55d0ad8290c5b5bdaa92e853
+    next_atom_id: ca37257a5aa94309273a20fb94abb80b40d23c979a24ea6fd892a05aaccb4c5d
