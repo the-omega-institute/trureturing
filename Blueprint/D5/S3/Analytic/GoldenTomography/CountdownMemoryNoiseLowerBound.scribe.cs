@@ -71,7 +71,8 @@ internal sealed class CountdownMemoryNoiseLowerBoundDocument : IScribeDocumentDe
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "This is the sum of absolute differences over the first J memory "
-                    + "coefficients. Any full-sequence absolute loss dominates this prefix. "
+                    + "coefficients. The lower bound also applies to a full-memory loss "
+                    + "when that loss dominates this prefix sum. "
                     + "No convergence hypothesis is needed for the finite lower bound."))),
                 DescribeRole.Definition),
             Describe.Lean(
@@ -95,12 +96,16 @@ internal sealed class CountdownMemoryNoiseLowerBoundDocument : IScribeDocumentDe
                         + "obstruction. The all-time quantifier makes additional observations "
                         + "at the same worst-case precision insufficient to remove it.")),
                     Paragraph(Text(
-                        "The ordinary theory appendix supplies parameter restrictions making "
-                        + "this family a genuine killed Markov countdown, and a similarity "
-                        + "realization with strictly contractive full Hilbert dynamics. It "
-                        + "also proves the matching order epsilon log(1/epsilon) upper and "
-                        + "lower rates when hidden dimension is unrestricted. Those operator "
-                        + "and asymptotic statements are not assertions of this Lean theorem."))),
+                        "With delta=epsilon>0, J is unrestricted apart from J*epsilon<=1/2. "
+                        + "For any fixed C>=0 independent of J, choosing J>2*C makes the "
+                        + "lower bound exceed C*epsilon. Thus uniformly epsilon-accurate "
+                        + "observations do not give dimension-independent O(epsilon) recovery "
+                        + "over this family in the first-J absolute (l1) loss, or in a "
+                        + "full-memory loss that dominates it.")),
+                    Paragraph(Text(
+                        "A killed Markov realization, a similarity realization with strictly "
+                        + "contractive full Hilbert dynamics, and matching asymptotic upper "
+                        + "and lower rates are outside this module and are not established here."))),
                 DescribeRole.Theorem)),
         []));
 }
