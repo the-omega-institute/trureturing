@@ -1,0 +1,37 @@
+**定理 11.2（单一重复的自治观察核及运算下降）。** 设 $q:\mathbb N\twoheadrightarrow B$，不预设 $B$ 有限。以下条件等价：观察满足后继稳定性
+
+$$
+q(n)=q(m)\quad\Longrightarrow\quad q(n+1)=q(m+1);
+$$
+
+存在映射 $s:B\to B$，使 $s(q(n))=q(n+1)$；存在二元运算 $\oplus:B\times B\to B$，使
+
+$$
+q(n+m)=q(n)\oplus q(m).
+$$
+
+存在时，$s$ 和 $\oplus$ 均唯一，且 $\oplus$ 使 $B$ 成为以 $q(0)$ 为单位元、由 $q(1)$ 生成的交换幺半群。
+
+这些条件成立时，$\ker q$ 恰有以下两种可能：它是等号关系；或者存在唯一的阈值 $t\ge0$ 和周期 $p\ge1$，使
+
+$$
+n\mathrel{R_{t,p}}m
+\quad\Longleftrightarrow\quad
+n=m\ \lor\
+\bigl(n\ge t\ \land\ m\ge t\ \land\ n\equiv m\pmod p\bigr),
+$$
+
+且 $\ker q=R_{t,p}$。反之，每个 $R_{t,p}$ 都是某个满射自治观察的核。非等号情形下，$B$ 自动有限，且
+
+$$
+|B|=t+p.
+$$
+
+此外，每个这样的核都自动允许自然数乘法在两个槽位上同时下降：存在唯一运算 $\otimes:B\times B\to B$，使
+
+$$
+q(nm)=q(n)\otimes q(m).
+$$
+
+因此 $q$ 是从自然数半环到其观察商半环的满同态，允许平凡半环情形。乘法的自动下降特指自然数加法同余；它也没有推出任意新增二元运算都会下降。阈值—周期核形是自然数加法幺半群同余的标准分类。[^rro11_monogenic][^rro11_periodicity]
+

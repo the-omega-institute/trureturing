@@ -1,0 +1,6 @@
+**本批不主张的。** 本批是 ZFC 下的纸面结果，未新增或运行 Lean，未 kernel-verified。可数塔、紧致中间空间及所用选择原则的边界分别见三条结果正文；不把非主超滤子当作实际元素，不断言无选择或有效构造版本。
+
+[^rro9_repo]: 完整卷固定提交 `1f193e8045b4091637dd5483f218cfc4fbfb352a`，[RECURSIVE_RELATIONAL_OBSERVATION.md](https://github.com/the-omega-institute/trureturing/blob/1f193e8045b4091637dd5483f218cfc4fbfb352a/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)：定理 3.4“联合关系的有限观察闭包”、定义 4.1“有限观察塔”、定理 4.2“观察完备化的基本性质”、第 6.1 节“第 3.6 与 5.1 条：闭像、关系代表与环境满射”，以及第 7 节“观察完备化与共同中间见证的关系复合”。旧推论 3.6 的实现性措辞按第 6.1 节解释。
+
+[^rro9_ultrafilter]: Tom Leinster, *Codensity and the ultrafilter monad*, *Theory and Applications of Categories* **28** (2013), 332–370，[arXiv:1209.3606v3](https://arxiv.org/html/1209.3606v3)。标准构件对应第 1 节定义 1.1–1.2、例 1.3–1.4、命题 1.5（Galvin 与 Horn），以及该节末尾关于离散空间 Stone–Čech 完成与超滤子的说明。本批核对其 HTML 正文；本节所需的闭包公式及端点复合等式在正文直接证明。
+

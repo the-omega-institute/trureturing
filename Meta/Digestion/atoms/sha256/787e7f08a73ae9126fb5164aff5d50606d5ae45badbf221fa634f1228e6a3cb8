@@ -1,0 +1,92 @@
+**证明。** 以下三组构造中均取 $X=Z=\{*\}$，两端观察恒为单点。
+
+第一组取完整 Cantor 空间 $Y=\{0,1\}^{\mathbb N}$，$q_n^Y$ 记录位置 $0,\ldots,n-1$。其相容有限前缀恰是一条无限二进制序列，且柱拓扑就是积拓扑，故 $K_Y=Y$、$\iota_Y=\mathrm{id}$。令
+
+$$
+A_\varepsilon=\{y\in Y:\exists N\in\mathbb N\ \forall k\ge N,\ y_k=\varepsilon\}
+\quad(\varepsilon\in\{0,1\}),\qquad
+R=\{*\}\times A_0,\quad S=A_1\times\{*\}.
+$$
+
+任意有限前缀都可续接为最终恒零或恒一序列，故 $A_0,A_1$ 都稠密。同一序列不可能最终同时恒零、恒一，故它们互斥。于是
+
+$$
+C=\varnothing,\qquad
+\widehat R=\{*\}\times Y,\qquad
+\widehat S=Y\times\{*\},\qquad
+\widehat C=\varnothing\subsetneq\{(*,*)\}=P.
+$$
+
+每个 $D_n$ 为端点单点，$C_n$ 为空。这里全部完成中间点都是原 $Y$ 点，失败来自原关系成员资格无法共同实现。
+
+再令 $p=(0,0,\ldots)$，把 $S$ 改为 $S'=(A_1\cup\{p\})\times\{*\}$。因 $A_1$ 已有全部有限前缀，所有 $S_n'=S_n$，而 $R_n$ 不变，两个完成关系也不变。但
+
+$$
+A_0\cap(A_1\cup\{p\})=\{p\},\qquad
+C'=S'\circ R=\{(*,*)\},\qquad
+(C')^0=\widehat C'=P'=\{(*,*)\},
+$$
+
+$$
+(W')^0=\widehat W'=\{(*,p,*)\}
+\subsetneq \{*\}\times Y\times\{*\}=T'.
+$$
+
+其中三元单点在 Hausdorff 空间中闭，故其闭包不增点。这证明端点交换严格弱于见证交换；相同的全部 $R_n,S_n$ 可对应不同的 $C_n,W_n$，所以第 7.2 条必须另含实际共同像数据。
+
+第二组取
+
+$$
+Y=\{0,1\},\qquad R=\{(*,0)\},\qquad S=\{(1,*)\}.
+$$
+
+若所有中间观察都是到单点的常值映射，则每层及 $K_Y$ 均为单点。$R^0,S^0$ 为闭单点，实际 $C$ 空，而 $P=\{(*,*)\}$。此时 $\iota_Y$ 不单射，两个关系也均不满足第 7.3 条的相应饱和性，故仅有闭关系像不足。
+
+保持实际关系不变，改用第 $0$ 层常值、所有 $n\ge1$ 层精确的观察塔。相容线程由其精确层唯一决定，故 $K_Y=Y$；两完成关系仍分别通过 $0$ 和 $1$，没有共同中间点。因此
+
+$$
+\widehat C=P=\varnothing,\qquad
+D_0=\{(*,*)\}\ne C_0=\varnothing,\qquad
+D_n=C_n=\varnothing\quad(n\ge1).
+$$
+
+交换成立却没有每层的同阶段相等；提高到精确层才排除第 $0$ 层的假候选。
+
+第三组令 $e_k\in\{0,1\}^{\mathbb N}$ 为只在位置 $k$ 等于 $1$ 的序列，取
+
+$$
+Y=\{e_k:k\in\mathbb N\},\qquad
+q_n^Y(y)=(y_0,\ldots,y_{n-1}),\qquad Q_n^Y=q_n^Y[Y].
+$$
+
+$Q_n^Y$ 恰含全零前缀及每个只有一个 $1$ 的长度 $n$ 前缀；过渡为截断，观察按定义满射。相容线程给出一条无限序列：若有两个 $1$，足够长的前缀就不在相应 $Q_n^Y$ 中，矛盾；若有一个 $1$，线程是相应的 $e_k$；若没有，则为全零点 $p$。这些线程反过来都满足阶段条件，且识别保持柱集，故完成空间及自然映射为
+
+$$
+K_Y=Y\cup\{p\},\qquad p=(0,0,\ldots),\qquad
+\iota_Y:Y\hookrightarrow Y\cup\{p\}.
+$$
+
+指定位置 $k$ 为 $1$ 的柱集在 $Y$ 中仅含 $e_k$，故每个单点开，$Y$ 的观察拓扑离散。令
+
+$$
+B_{\mathrm{ev}}=\{e_{2k}:k\in\mathbb N\},\qquad
+B_{\mathrm{odd}}=\{e_{2k+1}:k\in\mathbb N\},\qquad
+R=\{*\}\times B_{\mathrm{ev}},\quad S=B_{\mathrm{odd}}\times\{*\}.
+$$
+
+两子集在离散的原 $Y$ 中均闭，故 $R,S$ 在原乘积中相对闭，且 $C=\varnothing$。$p$ 的任意基本邻域只规定有限个位置为零，总可在更高偶位置或奇位置放置唯一的 $1$，故 $p$ 属于两子集在 $K_Y$ 中的闭包。另一方面，每个 $e_j$ 的上述单点柱邻域排除不含它的那个子集；$K_Y$ 又只有这些点和 $p$，所以精确地
+
+$$
+\overline{B_{\mathrm{ev}}}^{\,K_Y}=B_{\mathrm{ev}}\cup\{p\},\qquad
+\overline{B_{\mathrm{odd}}}^{\,K_Y}=B_{\mathrm{odd}}\cup\{p\}.
+$$
+
+两闭包的交恰为 $\{p\}$，由此
+
+$$
+\widehat C=\varnothing,\qquad P=\{(*,*)\},\qquad
+T=\{(*,p,*)\},\qquad p\notin\iota_Y[Y].
+$$
+
+完成复合的唯一共同中间见证不是原 $Y$ 点。这证明原载体相对闭性与观察分离仍不足以保证实际实现，区别于第一组的原关系成员资格缺失。证毕。
+

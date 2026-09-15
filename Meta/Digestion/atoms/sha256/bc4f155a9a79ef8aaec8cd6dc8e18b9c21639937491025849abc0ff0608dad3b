@@ -1,0 +1,16 @@
+**定理 13.1（阈值—周期核双槽保幂的完整分类）。** 对任意 $t\ge0$、$p\ge1$，关系 $R_{t,p}$ 双槽保幂，当且仅当
+$$
+(t,p)=(0,1)
+\quad\text{或}\quad
+\bigl(t\ge\max\{1,h(p)\}\ \land\ \lambda(p)\mid p\bigr).
+$$
+等价地，除单点商 $R_{0,1}$ 外，充要条件为
+$$
+t\ge1,\qquad
+\forall\,\ell^e\parallel p,\quad
+e\le t\ \land\ \ell-1\mid p.
+$$
+特别地，$p=1$ 时所有 $t\ge0$ 都允许；$p>1$ 时，阈值条件和周期条件缺一不可。
+
+这里 $\lambda(p)\mid p$ 等价于“每个素因子 $\ell\mid p$ 都满足 $\ell-1\mid p$”，是 Novák–Carmichael 数的标准判据，参见 Alexander Kalmynin，*Novák-Carmichael numbers and shifted primes without large prime factors*，第 2 节引理 1，[arXiv:1706.07343v1](https://arxiv.org/html/1706.07343v1)。下面证明本条所需的等价及其与观察核条件的联系。
+
