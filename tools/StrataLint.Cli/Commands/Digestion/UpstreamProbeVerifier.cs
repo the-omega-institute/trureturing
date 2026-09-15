@@ -160,6 +160,8 @@ internal sealed class UpstreamProbeVerifier(IUpstreamLeanProcessRunner runner, s
         {
             var line = lines[i].TrimEnd('\r');
             if (string.IsNullOrWhiteSpace(line)) continue;
+            var theorem = Regex.Match(line, @"\Atheorem[ \t]+(" + Name + @")(?=[ \t:({]|\z)", Options);
+            if (theorem.Success) inHeader = false;
             // Validate the original import line: masking a comment must never turn a
             // continuation, trailing comment or empty module list into an accepted import.
             if (inHeader && Regex.IsMatch(line, @"\bimport\b", Options))
@@ -196,7 +198,6 @@ internal sealed class UpstreamProbeVerifier(IUpstreamLeanProcessRunner runner, s
                 inTheorem = false;
                 continue;
             }
-            var theorem = Regex.Match(line, @"\Atheorem[ \t]+(" + Name + @")(?=[ \t:({]|\z)", Options);
             if (!theorem.Success)
                 throw Invalid("PROBE_DECLARATION_UNSUPPORTED", $"line={i + 1}: allowed commands are import, open, theorem and #print axioms");
             if (prints.Count > 0) throw Invalid("PROBE_AXIOMS", "#print axioms commands must form the trailing block");
