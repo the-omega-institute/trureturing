@@ -74,7 +74,11 @@ internal sealed class StephanTriangleSecondColumnDocument : IScribeDocumentDefin
                         + "a telescoping step identifies T(n,2) with a difference of "
                         + "successive row sums, and a final induction matches that difference "
                         + "to the shifted recurrence."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "oeis-a054096-stephan-triangle-second-column"),
+                    ResolutionKind.Proved)))));
 
     private static Formula RowSumFormula()
     {

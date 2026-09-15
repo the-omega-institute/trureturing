@@ -60,6 +60,10 @@ $$\forall T \in \mathrm{Nat} \to \left(\mathrm{Nat} \to \mathbb{Z}\right), B \in
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/StephanTriangleSecondColumn.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a054096-stephan-triangle-second-column` (proved) by `D5/S1/Recurrence/StephanTriangleSecondColumn.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a054096-stephan-triangle-second-column","declaration_gid":"D5/S1/Recurrence/StephanTriangleSecondColumn.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Clark Kimberling; Ralf Stephan (2004). *OEIS A054096, T(n,2), array T as in A054090*. URL: <https://oeis.org/A054096>.
