@@ -120,7 +120,8 @@ run_cmd Elab.Command.liftCoreM do
   let some entry := (InformationRegistry.entries (← getEnv)).find?
       (fun entry => entry.registrationModuleName == root && entry.theoremName == theoremName)
     | throwError "[FAIL] TemplateShadowReadoutBudget: missing registration"
-  let actual ← provenanceErrorCurrent root entry.effectiveCatalogId theoremName entry.realizationName
+  let actual ← withOptions (·.set `trace.InformationProvenance.check true) <|
+    provenanceErrorCurrent root entry.effectiveCatalogId theoremName entry.realizationName
   if actual.isSome then
     throwError "[FAIL] TemplateShadowReadoutBudget: {actual}"
   logInfo "[PASS] TemplateShadowReadoutBudget"
