@@ -190,7 +190,39 @@ theorem rational_tail_level_closure (g A : ℕ → ℕ) (hg : ∀ n, 0 < g n) :
     · intro hclosed
       rw [hclosed.closure_eq] at hzrelative
       exact hznot hzrelative
-  · sorry
+  · have hzero (x : X A) : weightedTotal g x = 0 ↔ ∀ n, (x n : ℕ) = 0 := by
+      constructor
+      · intro hx n
+        have hs : (p x n : ℝ) ≤ 0 :=
+          (hsub x 0 le_rfl).mp (by simp [hx]) n
+        have hterm : ((x n : ℕ) : ℝ) / g n ≤ (p x n : ℝ) := by
+          rw [hpcast]
+          exact Finset.single_le_sum (f := fun k => ((x k : ℕ) : ℝ) / g k)
+            (by intros; positivity) (by simp)
+        have hle : ((x n : ℕ) : ℝ) ≤ 0 := by
+          have h := (div_le_iff₀ (show (0 : ℝ) < g n by exact_mod_cast hg n)).mp
+            (hterm.trans hs)
+          simpa using h
+        exact Nat.eq_zero_of_le_zero (by exact_mod_cast hle)
+      · intro hx
+        simp [weightedTotal, hx]
+    refine ⟨?_, ?_, ?_⟩
+    · intro c hc
+      have hempty : level g A c = ∅ := by
+        apply eq_empty_iff_forall_notMem.mpr
+        intro u hu
+        change (weightedRead g u : ℝ) = c at hu
+        rcases hc with hc | hc
+        · have hu0 : (0 : ℝ) ≤ weightedRead g u := by exact_mod_cast hnonneg u
+          exact (not_lt_of_ge (hu ▸ hu0)) hc
+        · exact hc ⟨weightedRead g u, hu⟩
+      simp [hempty, ambientLevel]
+    · ext u
+      change (weightedRead g u : ℝ) = 0 ↔ ∀ n, (u.val n : ℕ) = 0
+      rw [← hzero u.val, hfinite u, ENNReal.ofReal_eq_zero]
+      exact ⟨fun h => h.le, fun h => le_antisymm h (by exact_mod_cast hnonneg u)⟩
+    · ext x
+      exact hzero x
 
 #print axioms rational_tail_level_closure
 
