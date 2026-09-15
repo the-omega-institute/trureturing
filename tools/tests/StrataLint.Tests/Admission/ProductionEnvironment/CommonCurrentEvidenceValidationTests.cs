@@ -7,7 +7,7 @@ using StrataLint.TestSupport;
 
 namespace StrataLint.Tests;
 
-public sealed class CommonCurrentEvidenceValidationTests
+public sealed partial class CommonCurrentEvidenceValidationTests
 {
     [Theory]
     [InlineData("validate")]
