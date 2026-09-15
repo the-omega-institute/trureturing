@@ -58,4 +58,8 @@ theorem result : ∀ n : ℕ, Odd (rowSum n) := by
         · simp
   exact (ZMod.natCast_eq_natCast_iff' (rowSum n) 1 2).mp (by simpa using hcast)
 
+#print axioms rowEntry
+#print axioms rowSum
+#print axioms result
+
 end D5.S3.ArithSums.BarryTriangleRowSumsOdd
