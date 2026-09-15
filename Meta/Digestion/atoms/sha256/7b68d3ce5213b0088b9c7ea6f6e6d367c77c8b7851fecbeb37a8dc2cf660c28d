@@ -1,0 +1,154 @@
+**定理 13.3（同一仪器的精确半正定规划）。** 给定非负预测预算 $\boldsymbol\varepsilon=(\varepsilon_1,\ldots,\varepsilon_N)$。若预测要求可行，则定义 13.2 中满足 $e_k(M)\le\varepsilon_k$ 的最小恢复误差恰为
+
+$$
+\eta_J^*(\boldsymbol\varepsilon)
+=\frac{1-v_J^*(\boldsymbol\varepsilon)}2,
+$$
+
+其中 $v_J^*$ 是以下有限半正定规划的最大值：
+
+$$
+\begin{aligned}
+\text{最大化}\quad&
+\operatorname{Re}\sum_{z\in\mathsf Z}\operatorname{tr}(TX_z),\\
+\text{满足}\quad&
+\sum_{z\in\mathsf Z}M_z=I_F,\\
+&\begin{pmatrix}M_z&X_z\\X_z^\dagger&M_z\end{pmatrix}\succeq0
+&&\text{对所有 }z\in\mathsf Z,\\
+&-\varepsilon_k I_S
+\preceq A_{k,B'}-L_{k,B'}(M)
+\preceq\varepsilon_k I_S
+&&\text{对所有 }k\text{ 及 }B'\subseteq\mathsf Y_k.
+\end{aligned}
+$$
+
+变量为 Hermitian 矩阵 $M_z$ 和任意复矩阵 $X_z$。可行时最大值达到，且 $0\le v_J^*\le1$；不可行时定义 $\eta_J^*=+\infty$。因此，对 $0\le\bar\eta\le1/2$，联合目标可达当且仅当上述约束连同
+
+$$
+\operatorname{Re}\sum_z\operatorname{tr}(TX_z)\ge1-2\bar\eta
+$$
+
+可行。这是同一协议的精确判据。
+
+证明。首先，将第10.2节的事件范数论证用于这些预测效应，得到
+
+$$
+\begin{aligned}
+e_k(M)
+&=\sup_\rho\max_{B'\subseteq\mathsf Y_k}
+\left|\operatorname{tr}\!\left(\rho\,[A_{k,B'}-L_{k,B'}(M)]\right)\right|\\
+&=\max_{B'\subseteq\mathsf Y_k}
+\|A_{k,B'}-L_{k,B'}(M)\|_\infty.
+\end{aligned}
+$$
+
+因此规划中的两侧矩阵不等式恰好表达全部预测要求。这也覆盖未来效应 $A_{k,b}$ 具有非对角元的情形。
+
+其次，固定 POVM。规范读取与受控酉给出的相干乘子为
+
+$$
+\kappa=
+\sum_z\operatorname{tr}\!\left(
+U_{z,0}\sqrt{M_z}\,T\sqrt{M_z}\,U_{z,1}^\dagger
+\right).
+$$
+
+记 $T_z=\sqrt{M_z}\,T\sqrt{M_z}$。有限奇异值分解给出
+
+$$
+\max_{U\text{ 酉}}\operatorname{Re}\operatorname{tr}(T_zU)
+=\|T_z\|_1.
+$$
+
+每个结果的相对酉 $U_{z,1}^\dagger U_{z,0}$ 可独立选择，使所有贡献同时为非负实数。因此固定读取 POVM 的最大恢复乘子为
+
+$$
+v(M)=\sum_z\|\sqrt{M_z}\,T\sqrt{M_z}\|_1.
+$$
+
+一般读取仪器在结果 $z$ 下可由 Stinespring 算子
+
+$$
+V_z:F\longrightarrow K\otimes A,
+\qquad V_z^\dagger V_z=M_z
+$$
+
+表示，其中 $A$ 是可能丢弃的仪器余环境。在 $\operatorname{supp}M_z$ 上作极分解 $V_z=J_z\sqrt{M_z}$，其中 $J_z$ 等距。反馈贡献可写成
+
+$$
+\operatorname{tr}(T_zK_z),
+\qquad
+K_z=J_z^\dagger
+\bigl(U_{z,1}^\dagger U_{z,0}\otimes I_A\bigr)J_z,
+\qquad
+\|K_z\|_\infty\le1.
+$$
+
+把 $K_z$ 在支撑正交补上延拓为零即可。因此该贡献的绝对值不超过 $\|T_z\|_1$。规范实现已经达到上界，一般读取仪器不能提高固定 POVM 的最优值。
+
+再次，对任意 $M\succeq0$，标准块正性分解给出
+
+$$
+\begin{pmatrix}M&X\\X^\dagger&M\end{pmatrix}\succeq0
+\iff
+X=\sqrt M\,K\sqrt M
+\quad\text{其中 }\|K\|_\infty\le1.
+$$
+
+当 $M$ 正定时，以 $\operatorname{diag}(M^{-1/2},M^{-1/2})$ 作合同变换，归结为块矩阵 $\begin{pmatrix}I&K\\K^\dagger&I\end{pmatrix}$ 的正性，即 $I-K^\dagger K\succeq0$。当 $M$ 秩亏时，块正性先迫使 $X$ 与 $X^\dagger$ 消去 $\ker M$，再在支撑空间应用同一论证。于是由迹的循环性和迹范数对偶，
+
+$$
+\max_{\left(\begin{smallmatrix}M&X\\X^\dagger&M\end{smallmatrix}\right)\succeq0}
+\operatorname{Re}\operatorname{tr}(TX)
+=\|\sqrt M\,T\sqrt M\|_1.
+$$
+
+逐结果应用该等式，便得到所列半正定规划。对任意规划可行点，都可固定其 $M_z$，再选择逐结果的极分解酉，构造目标值至少同样好的实际协议。
+
+最后，设 $\Delta=\mathcal R-\operatorname{id}_S$，令任意系统与有限参考上的算符写成 $A=[A_{xy}]$。取 $Z_S=P_0-P_1$，其非对角部分为
+
+$$
+A_{\mathrm{off}}
+=\frac12\bigl(A-(Z_S\otimes I)A(Z_S\otimes I)\bigr),
+\qquad
+\|A_{\mathrm{off}}\|_1\le\|A\|_1.
+$$
+
+非对角块矩阵的奇异值给出
+
+$$
+\begin{aligned}
+\|(\Delta\otimes\operatorname{id})(A)\|_1
+&=|1-\kappa|\bigl(\|A_{01}\|_1+\|A_{10}\|_1\bigr)\\
+&=|1-\kappa|\,\|A_{\mathrm{off}}\|_1\\
+&\le|1-\kappa|\,\|A\|_1.
+\end{aligned}
+$$
+
+无参考输入 $|+\rangle\langle+|$ 达到上界，故
+
+$$
+\eta(\mathcal R)=\frac{|1-\kappa|}{2}.
+$$
+
+每个结果的正块矩阵
+
+$$
+\begin{pmatrix}
+\sqrt{M_z}\sigma_0\sqrt{M_z}&T_z\\
+T_z^\dagger&\sqrt{M_z}\sigma_1\sqrt{M_z}
+\end{pmatrix}\succeq0
+$$
+
+由 $\mathcal W_F(|+\rangle\langle+|)$ 的正性得到。块正性分解与 Hilbert–Schmidt Cauchy–Schwarz 不等式因而给出
+
+$$
+\|T_z\|_1\le\sqrt{p_z(0)p_z(1)},
+\qquad
+v(M)\le\sum_z\sqrt{p_z(0)p_z(1)}\le1.
+$$
+
+任意协议满足 $|\kappa|\le v(M)\le1$；规范最优反馈可使 $\kappa=v(M)\ge0$，于是固定 POVM 的最小恢复误差为 $(1-v(M))/2$。
+
+规划可行集闭且有界：POVM 满足 $0\preceq M_z\preceq I_F$，块正性同时约束 $X_z$；故可行时最大值达到。取全部 $X_z=0$ 可知最优值非负。证毕。
+

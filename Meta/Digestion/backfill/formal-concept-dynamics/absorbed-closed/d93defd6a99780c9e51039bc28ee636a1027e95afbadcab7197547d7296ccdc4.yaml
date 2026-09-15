@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:d93defd6a99780c9e51039bc28ee636a1027e95afbadcab7197547d7296ccdc4
+  normalized_sha256: sha256:d93defd6a99780c9e51039bc28ee636a1027e95afbadcab7197547d7296ccdc4
+cas_ref: sha256:d93defd6a99780c9e51039bc28ee636a1027e95afbadcab7197547d7296ccdc4
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Refinement/MultiTargetMinimalSufficiency.multi_target_minimal_sufficiency
+    target_statement_id: sha256:ca3e7e2eebb5e5d4c5ae72a4863695f9fa6e227d005a6bd78a6fa884517d3f09
+receipts:
+  unresolved_subitems: []

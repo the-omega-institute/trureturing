@@ -1,0 +1,12 @@
+**推论 12.3（纯记录尾窗的统一充分界）。** 令 $d\ge2$、$q_N=\max_{x\ne y}|A_N(x,y)|$。对任意有限 $M>N$、任意有限旁参考 $R$ 以及任意初态 $\omega_{SR}$，有
+$$
+\mathsf d\bigl((M_{A_M}\otimes\operatorname{id}_R)(\omega),
+(M_{A_N}\otimes\operatorname{id}_R)(\omega)\bigr)
+\le\min\{1,(d-1)q_N\}.
+$$
+所以任意系统粗测量也满足 $\alpha_Q(N,M)\le\min\{1,(d-1)q_N\}$，该界不随这个有限尾窗的长度增长。
+
+证明。每个相关矩阵元素模长至多为 $1$，故 $q_M\le q_N$。以 $(\Delta\otimes\operatorname{id}_R)(\omega)$ 为共同中间态，两次应用定理9.4，得到 $(d-1)(q_N+q_M)/2\le(d-1)q_N$；迹距离至多为 $1$。测量收缩给出粗分布界。证毕。
+
+本推论复用定理9.4的界，不宣称常数在所有维数都最优。其条件是同一指针基上只继续记录；任意Hamiltonian控制、重新访问旧记录或反馈均不能不加检验地代入。这一有限尾窗结论也不把单时刻边缘提升为多时刻联合历史分布。
+

@@ -1,0 +1,196 @@
+**定理 40.1（两项严格不定任务的显式损失界）。** 设 $A,J$ 为量子比特密度矩阵，且
+
+$$
+[A,J]\ne0,\qquad c,d>0,\qquad c\ne d,
+\qquad \det(cA-J)<0,\quad\det(dA-J)<0.
+$$
+
+对 $t\in\{c,d\}$，记
+
+$$
+D_t=tA-J,\qquad P_t=\mathbf 1_{(0,\infty)}(D_t),
+\qquad S_t=2P_t-I_2,
+$$
+
+$$
+a_t=\frac{t-1}{2},\qquad
+b_t=\frac{\|D_t\|_1}{2},\qquad
+\mu_t=b_t-|a_t|>0.
+$$
+
+于是 $D_t=a_tI_2+b_tS_t$，且 $\mu_t$ 是正、负特征值绝对值中的较小者。再记
+
+$$
+\kappa=2\operatorname{tr}(P_cP_d)-1,
+\qquad \eta=|\kappa|\in[0,1),
+$$
+
+$$
+M=\sqrt{\mu_c^2+\mu_d^2+2\mu_c\mu_d\eta},
+$$
+
+$$
+\mathsf L=2(\mu_c+\mu_d-M),
+\qquad
+\mathsf U=2\min\{\mu_c,\mu_d,b_c(1-\eta),b_d(1-\eta)\}.
+$$
+
+令 $V$ 为在同一个有限经典存储上优化的范数总分，允许任意有限结果数：
+
+$$
+V=\max_{\Phi\ \mathrm{classical}}
+\bigl(\|\Phi(D_c)\|_1+\|\Phi(D_d)\|_1\bigr),
+\qquad
+\Delta=\|D_c\|_1+\|D_d\|_1-V.
+$$
+
+最大值的存在性由定理 36.1 保证。则
+
+$$
+\boxed{0<\mathsf L\le\Delta\le\mathsf U.}
+$$
+
+上界 $\mathsf U$ 由两个明确的存储测量之一达到其所述损失：在 $P_c,I_2-P_c$ 与 $P_d,I_2-P_d$ 之间，预先选择总损失较小的一组，然后固定使用它。该选择依赖已知候选及完整权重表，不依赖后来才揭示的实际权重。
+
+证明。首先，由 $[D_c,D_d]=(d-c)[A,J]\ne0$ 及量子比特的非退化谱分解，可知 $P_c,P_d$ 不对易。两个秩一投影对易当且仅当其值域相同或正交，所以 $0<\operatorname{tr}(P_cP_d)<1$，即 $\eta<1$。
+
+固定任意有限 POVM $(E_\ell)_\ell$ 及其经典输出通道 $\Phi$。记它在权重 $t$ 上的损失为
+
+$$
+\delta_t=\|D_t\|_1-\|\Phi(D_t)\|_1.
+$$
+
+写 $\lambda_{t,+}=b_t+a_t>0$、$\lambda_{t,-}=b_t-a_t>0$。对固定 $t$，令
+
+$$
+p_\ell=\operatorname{tr}(E_\ell P_t),\qquad
+q_\ell=\operatorname{tr}(E_\ell(I_2-P_t)).
+$$
+
+两组数非负且各自之和为一。经典输出的对角元为 $\lambda_{t,+}p_\ell-\lambda_{t,-}q_\ell$，所以
+
+$$
+\begin{aligned}
+\delta_t
+&=2\sum_\ell\min\{\lambda_{t,+}p_\ell,\lambda_{t,-}q_\ell\}\\
+&\ge2\mu_t\sum_\ell\min\{p_\ell,q_\ell\}\\
+&=\mu_t\left(2-\sum_\ell|p_\ell-q_\ell|\right)\\
+&=\mu_t\bigl(2-\|\Phi(S_t)\|_1\bigr).
+\end{aligned}
+$$
+
+剩下的辅助测量优化有一个精确值：
+
+$$
+\max_{\Phi\ \mathrm{classical}}
+\bigl(\mu_c\|\Phi(S_c)\|_1+\mu_d\|\Phi(S_d)\|_1\bigr)=2M.
+$$
+
+为直接证明它，对 $\varepsilon,\zeta\in\{-1,1\}$ 定义四个奖励矩阵
+
+$$
+X_{\varepsilon,\zeta}
+=\varepsilon\mu_cS_c+\zeta\mu_dS_d.
+$$
+
+两个无迹二阶矩阵满足
+
+$$
+S_c^2=S_d^2=I_2,
+\qquad S_cS_d+S_dS_c=2\kappa I_2.
+$$
+
+第二式可将无迹二阶矩阵的恒等式 $X^2=\tfrac12\operatorname{tr}(X^2)I_2$ 应用于 $S_c+S_d$ 后得到，其中 $\operatorname{tr}(S_cS_d)=2\kappa$。
+
+因此
+
+$$
+X_{\varepsilon,\zeta}^2
+=\bigl(\mu_c^2+\mu_d^2+2\varepsilon\zeta\mu_c\mu_d\kappa\bigr)I_2,
+\qquad MI_2\ge X_{\varepsilon,\zeta}.
+$$
+
+逐效应选择两个迹的符号，便有
+
+$$
+\begin{aligned}
+&\mu_c\|\Phi(S_c)\|_1+\mu_d\|\Phi(S_d)\|_1\\
+&=\sum_\ell\max_{\varepsilon,\zeta}
+\operatorname{tr}(E_\ell X_{\varepsilon,\zeta})
+\le\sum_\ell\operatorname{tr}(E_\ell MI_2)=2M.
+\end{aligned}
+$$
+
+选择 $\varepsilon\zeta\kappa=|\kappa|$；若 $\kappa=0$，任选一个符号组合即可。对应矩阵 $X$ 无迹且有特征值 $M,-M$。测量它的正、负谱投影，并在两结果上分别采用奖励 $X,-X$，线性奖励之和恰为 $2M$。原绝对值目标不小于这组奖励，又受上面的 $2M$ 约束，故达到 $2M$。这证明辅助最优值，且二元谱测量足够。
+
+将辅助上界代入两个单项损失估计，得到对每个有限经典存储都成立的
+
+$$
+\delta_c+\delta_d\ge2(\mu_c+\mu_d)-2M=\mathsf L.
+$$
+
+而
+
+$$
+(\mu_c+\mu_d)^2-M^2=2\mu_c\mu_d(1-\eta)>0,
+$$
+
+所以 $\mathsf L>0$；也可写成
+
+$$
+\mathsf L=
+\frac{4\mu_c\mu_d(1-\eta)}{\mu_c+\mu_d+M}.
+$$
+
+现在给出实际测量的上界。选择 $P_c,I_2-P_c$ 时，权重 $c$ 的范数完全保持，而 $D_d$ 的两个输出对角元为
+
+$$
+a_d+b_d\kappa,\qquad a_d-b_d\kappa.
+$$
+
+利用 $|x+y|+|x-y|=2\max\{|x|,|y|\}$，这组测量在 $d$ 上的范数和损失分别为
+
+$$
+2\max\{|a_d|,b_d\eta\},
+\qquad
+2b_d-2\max\{|a_d|,b_d\eta\}
+=2\min\{\mu_d,b_d(1-\eta)\}.
+$$
+
+交换 $c,d$，另一组谱测量的总损失为 $2\min\{\mu_c,b_c(1-\eta)\}$。选择其中较小者，所得实际总损失正好为 $\mathsf U$，因此最佳经典存储的损失 $\Delta\le\mathsf U$。结合此前对任意存储的下界，完成所列夹逼。
+
+这两个界可以直接解释为容差限制。给定 $\epsilon_c,\epsilon_d\ge0$，若要求同一个经典存储满足 $\delta_c\le\epsilon_c$、$\delta_d\le\epsilon_d$，必要条件是
+
+$$
+\epsilon_c+\epsilon_d\ge\mathsf L.
+$$
+
+若只要求总损失不超过 $\epsilon$，则 $\epsilon<\mathsf L$ 不可行，而 $\epsilon\ge\mathsf U$ 由上述二元谱测量保证可行。中间区间的判定仍需实际最优值 $\Delta$。
+
+按第 37 节的归一化，令
+
+$$
+Z=2+c+d,\qquad q_c=\frac{1+c}{Z},\qquad q_d=\frac{1+d}{Z},
+$$
+
+并在权重 $t$ 下使用条件先验 $t/(1+t),1/(1+t)$。权重揭示前保留量子输入的最佳平均成功率，与先作经典存储后再揭示权重的最佳平均成功率，分别为
+
+$$
+p_{\rm quantum}=\frac12+\frac{\|D_c\|_1+\|D_d\|_1}{2Z},
+\qquad
+p_{\rm classical}=\frac12+\frac{V}{2Z}.
+$$
+
+因此
+
+$$
+\frac{\mathsf L}{2Z}
+\le p_{\rm quantum}-p_{\rm classical}
+=\frac{\Delta}{2Z}
+\le\frac{\mathsf U}{2Z}.
+$$
+
+沿满足本定理假设的参数序列，若 $\min\{\mu_c,\mu_d\}\to0$，或 $\min\{b_c,b_d\}(1-\eta)\to0$，上界立即给出 $\Delta\to0$。特别地，在 $\min\{b_c,b_d\}$ 有界时，$\eta\to1$ 足以使损失趋零。这些界依赖给定候选与权重，未给出跨参数的统一正损失常数。
+
+辅助优化在 $\mu_c=\mu_d$ 时，对应 Carmeli、Heinosaari 与 Toigo，[§V.2，式 (27)](https://arxiv.org/html/1804.09693) 的两个等概率量子比特本征基：其后测量信息成功率为 $\tfrac12(1+\sqrt{(1+\eta)/2})$。一般正系数的辅助最优值由上面的四奖励证书直接证明。辅助值的精确性不使原损失下界自动精确，因为将两本征值绝对值同时替换为 $\mu_t$ 的步骤可以产生严格不等式。证毕。
+

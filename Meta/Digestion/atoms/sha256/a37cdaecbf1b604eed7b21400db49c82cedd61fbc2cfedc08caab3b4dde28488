@@ -1,0 +1,30 @@
+**定义 14.1（不访问记录的写入后恢复误差）。** 固定有限整数 $d\ge2$，系统空间为 $\mathcal H_S=\mathbb C^d$，标签为 $x\in\{0,\ldots,d-1\}$。不可访问记录空间 $\mathcal H_B$ 非零且有限维，条件记录 $e_x\in\mathcal H_B$ 均为单位向量。写入等距映射和相关矩阵为
+
+$$
+W|x\rangle=|x\rangle|e_x\rangle,
+\qquad
+C_{xy}=\langle e_y,e_x\rangle.
+$$
+
+因此 $C\succeq0$、$C_{xx}=1$；对 $B$ 取部分迹得到第 8.3 条的 Schur 通道
+
+$$
+M_C(\rho)=C\odot\rho.
+$$
+
+记录已写入后，允许在系统上实施任意 CPTP 恢复通道 $\mathcal R:\mathcal L(\mathcal H_S)\to\mathcal L(\mathcal H_S)$。恢复可以使用与未知输入及 $B$ 初始无关的有限维辅助系统、有限结果的仪器和按结果控制的后续操作；全部结果分支都计入无条件系统输出。恢复不访问 $B$，不在写入前编码，不后选择；若产生经典输出，本章不要求该输出满足额外预测任务。
+
+定义
+
+$$
+\eta(C)
+= \inf_{\mathcal R\ {\rm CPTP}}
+\frac12\|\mathcal R\circ M_C-\operatorname{id}_S\|_\diamond.
+$$
+
+输入是未知密度矩阵，允许与任意有限维参考系统纠缠；$\mathcal R$ 不依赖输入或参考上的信息。上述误差比较写入前输入与写入、丢弃记录及恢复之后的系统通道，要求整个未知输入的恢复，而非某个已知状态的重新制备。操作和辅助系统均有限，不引入无限次恢复过程。
+
+当第 13 章的可访问记录空间取 $F=\mathbb C$ 时，其仪器与标签控制反馈合成的无条件系统通道属于此恢复类。此处还允许混合标签布居的系统通道，且不对任何经典输出施加预测约束。若允许访问非平凡记录 $F$，则恢复作用域包含记录空间，不属于本定义。带参考误差沿用第 13.2 节的半 diamond 范数约定，比较目标固定为恒等通道。
+
+Schur 通道的完全正性、保迹条件与对角 Kraus 表示见 John Watrous，[《The Theory of Quantum Information》](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)，§4.1.3，命题 4.17–4.18 与定理 4.19；保 Hermitian 映射的 diamond 范数可在纯态输入及同维参考上达到，见同书定理 3.51、式 (3.291)。
+

@@ -1,0 +1,10 @@
+模型乙取乘积记录
+
+$$
+f_0=b_0=|0\rangle,
+\qquad
+f_1=b_1=\frac35|0\rangle+\frac45|1\rangle,
+\qquad
+E_x=f_x\otimes b_x.
+$$
+

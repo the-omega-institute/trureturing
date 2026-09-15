@@ -1,0 +1,154 @@
+**定理 17.2（一个实量子比特及经典反馈同时达到全部前缀界）。** 对定义 17.1 的任意有限 $N$ 和任意 $(\beta_t)_{t=1}^N$，存在一个控制表 $U$，使每个 $1\le k\le N$ 都满足
+
+$$
+\begin{aligned}
+\frac12\left\|
+\mathcal H_{{\rm actual},k}^{U}(P_0)
+-\mathcal H_{{\rm ideal},k}^{U}(P_0)
+\right\|_1
+&=\frac12\left\|
+\mathcal H_{{\rm actual},k}^{U}
+-\mathcal H_{{\rm ideal},k}^{U}
+\right\|_\diamond\\
+&=\sqrt{1-s_k^2}
+=\sqrt{1-\prod_{t=1}^k(1-\beta_t)}.
+\end{aligned}
+$$
+
+因此第 16.3 条的乘积常数在这个无可访问量子记忆的实二能级控制子类中仍不能普遍减小；达到不需要静止纠缠参考。控制表可以在实验前按完整有限历史树计算，运行时只读取已存历史。
+
+证明。 对每个历史 $h$，同时递归计算两个实的未归一化分支向量 $\psi_h,\phi_h\in\mathbb R^2$。它们分别表示固定见证输入 $P_0$ 在实际和理想过程中的分支，初值为
+
+$$
+\psi_\varnothing=\phi_\varnothing=|0\rangle.
+$$
+
+在深度 $k=|h|$，记
+
+$$
+p_h=\|\psi_h\|^2,\qquad
+q_h=\|\phi_h\|^2,\qquad
+c_h=\phi_h^{\mathsf T}\psi_h.
+$$
+
+我们逐层构造共同控制，使每个历史都满足
+
+$$
+2c_h=s_k(p_h+q_h).
+$$
+
+初始两向量相同且范数为一，故该关系在空历史成立。所有 $s_k$ 非负，因此这同时保证 $c_h\ge0$。
+
+固定深度 $t-1$ 的一个历史，暂写 $\psi=\psi_h$、$\phi=\phi_h$、$p=p_h$、$q=q_h$、$c=c_h$、$s=s_{t-1}$、$a=a_t$、$b=b_t$。定义实对称矩阵
+
+$$
+X_h
+=\psi\phi^{\mathsf T}+\phi\psi^{\mathsf T}
+-s\bigl[(a^2-b^2)\psi\psi^{\mathsf T}
++\phi\phi^{\mathsf T}\bigr]
+-sb^2pI_2.
+$$
+
+由 $a^2+b^2=1$ 和归纳关系，其迹为
+
+$$
+\operatorname{tr}X_h
+=2c-s\bigl[(a^2-b^2)p+q\bigr]-2sb^2p
+=2c-s(p+q)=0.
+$$
+
+若 $X_h=0$，取标准实正交基为 $r_0,r_1$。若 $X_h\ne0$，实对称谱定理给出正交归一的特征向量 $v_+,v_-$，特征值分别为 $\lambda,-\lambda$，其中 $\lambda>0$。令
+
+$$
+r_0=\frac{v_++v_-}{\sqrt2},
+\qquad
+r_1=\frac{v_+-v_-}{\sqrt2}.
+$$
+
+它们正交归一，而且两种情形都满足
+
+$$
+r_z^{\mathsf T}X_hr_z=0\qquad(z=0,1).
+$$
+
+选择共同系统酉 $U_{t,h}$ 的第 $z$ 行为 $r_z^{\mathsf T}$。将历史 $h$ 后附结果 $z$ 记为 $hz$，递归定义
+
+$$
+\psi_{hz}=K_{t,z}U_{t,h}\psi_h,
+\qquad
+\phi_{hz}=P_zU_{t,h}\phi_h.
+$$
+
+设 $u_z=r_z^{\mathsf T}\psi$、$v_z=r_z^{\mathsf T}\phi$。直接计算两个分支的范数与内积，得到
+
+$$
+p_{hz}=b^2p+(a^2-b^2)u_z^2,
+\qquad
+q_{hz}=v_z^2,
+\qquad
+c_{hz}=a u_zv_z.
+$$
+
+而 $r_z^{\mathsf T}X_hr_z=0$ 正好等价于
+
+$$
+2u_zv_z
+=s\bigl[b^2p+(a^2-b^2)u_z^2+v_z^2\bigr]
+=s(p_{hz}+q_{hz}).
+$$
+
+两边乘以 $a$，便得到下一层所需关系
+
+$$
+2c_{hz}=as(p_{hz}+q_{hz})
+=s_t(p_{hz}+q_{hz}).
+$$
+
+这里没有除以 $a,s,p,q$，也没有对分支向量作归一化，所以 $\beta_t=0$、$\beta_t=1$ 和任一模型中的零概率历史都包含在构造内。每个结点选择一次实正交基，沿有限历史树递归，便得到定义在全部历史上的共同控制表。
+
+由实际 Kraus 完备关系及理想投影完备关系，每个结点都有
+
+$$
+\sum_{z=0}^1p_{hz}=p_h,
+\qquad
+\sum_{z=0}^1q_{hz}=q_h.
+$$
+
+因此在任意深度 $k$，两族分支权重各自满足 $\sum_{|h|=k}p_h=\sum_{|h|=k}q_h=1$，实际和理想全输出为
+
+$$
+\rho_k=\sum_{|h|=k}|h\rangle\langle h|\otimes
+|\psi_h\rangle\langle\psi_h|,
+\qquad
+\sigma_k=\sum_{|h|=k}|h\rangle\langle h|\otimes
+|\phi_h\rangle\langle\phi_h|.
+$$
+
+对两个未归一化纯态，标准的秩一差值公式给出
+
+$$
+\left\|
+|\psi_h\rangle\langle\psi_h|
+-|\phi_h\rangle\langle\phi_h|
+\right\|_1
+=\sqrt{(p_h+q_h)^2-4c_h^2}.
+$$
+
+该式也可直接由二阶矩阵的迹 $p_h-q_h$、行列式 $c_h^2-p_hq_h\le0$ 及两个特征值得到，涵盖零向量与共线情形。代入已保持的关系，右端变为 $(p_h+q_h)\sqrt{1-s_k^2}$。不同经典历史块的迹范数相加，故
+
+$$
+\frac12\|\rho_k-\sigma_k\|_1
+=\frac12\sum_{|h|=k}(p_h+q_h)\sqrt{1-s_k^2}
+=\sqrt{1-s_k^2}.
+$$
+
+这由固定、无参考的输入 $P_0$ 给出两个通道的半 diamond 距离下界；第 16.3 条适用于该共同反馈策略，给出相同的参考系统一致上界。因此通道距离也等于所列值。构造中的同一个有限控制表保持每层关系，所以各前缀同时达到。证毕。
+
+Acín 等，*Physical Review A* **71**，032338（2005），[§III.B、式 (19)–(20)](https://arxiv.org/abs/quant-ph/0410097v2)，证明了对两个已知纯态的 $N$ 个相同副本作适应逐份测量可达到联合 Helstrom 界，可作为适应判别的背景。该副本任务不同于本定理固定 $K_{t,z}$ 与 $P_z$ 仪器的历史比较，且本章条件记录的重叠是 $\langle e_{t,1},e_{t,0}\rangle=2a_tb_t$；本定理的达到结论由上述实谱基递推证明。
+
+上述控制表使用指定模型、参数和固定见证输入，在实验前计算两族候选分支。运行中不测量未知量子态来选择控制，也不查询正在执行的是实际仪器还是理想仪器；两种实验始终使用同一个函数 $h\mapsto U_{t,h}$。对别的输入，该固定表仍定义合法通道，而定理 16.3 仍提供统一上界。
+
+第 16.4 条用可访问量子记忆及 SWAP 给出达到构造，并没有断言量子记忆是必要条件。本定理把达到构造放进更小的控制类：一个系统量子比特、经典历史及预先计算的实酉反馈。它不限制经典历史或控制表的存储量，也不声称无反馈协议都能达到。
+
+这里最大化的是实际仪器与理想仪器的完整历史差异，用来确定仅依据 $(\beta_t)$ 所能保证的最坏常数。它不是保持某个指针标签的最优策略；标签持久性仍需第 16.5 条的转移条件，不能由本定理的误差达到推出。
+

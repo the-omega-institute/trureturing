@@ -1,0 +1,8 @@
+存在不依赖代表选择的双射
+$$
+\kappa_Q:X^*/Q_{\rm ext}\longrightarrow(X/Q)^*,\qquad
+\kappa_Q([e_X(x)]_{Q_{\rm ext}})
+=\operatorname{Enc}([x]_Q).
+$$
+它满足 $\kappa_Q\circ\pi_{Q_{\rm ext}}=e_{X/Q}\circ\pi_Q\circ e_X^{-1}$，其逆将 $\operatorname{Enc}(C)$ 送到 $\operatorname{El}(\operatorname{Enc}(C))=e_X[C]$，其中 $C\in X/Q$。若商集取各自商拓扑，则 $\kappa_Q$ 也是到运输商拓扑的同胚。
+

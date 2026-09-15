@@ -1,0 +1,126 @@
+**命题 40.2（混态例中的精确最优值与两个严格界）。** 取命题 37.3 的满秩候选
+
+$$
+A=\begin{pmatrix}3/4&0\\0&1/4\end{pmatrix},\qquad
+J=\begin{pmatrix}1/2&1/4\\1/4&1/2\end{pmatrix},
+\qquad c=1,\quad d=2.
+$$
+
+最佳经典范数总分及其相对量子总分的损失为
+
+$$
+\boxed{V=\frac{\sqrt{13}}2,\qquad
+\Delta=\frac{\sqrt2+\sqrt5-\sqrt{13}}2.}
+$$
+
+定理 40.1 的两个界在此化为
+
+$$
+\mathsf L=
+\frac{\sqrt2+\sqrt5-2-\sqrt{17-32/\sqrt5}}2,
+\qquad
+\mathsf U=\frac{\sqrt2-3/\sqrt5}{2},
+$$
+
+并满足严格关系
+
+$$
+\boxed{0<\mathsf L<\Delta<\mathsf U.}
+$$
+
+证明。命题 37.3 已核对候选不对易及两个权重都在严格不定区间。这里直接写出
+
+$$
+D_1=\frac14\begin{pmatrix}1&-1\\-1&-1\end{pmatrix},
+\qquad
+D_2=\begin{pmatrix}1&-1/4\\-1/4&0\end{pmatrix}.
+$$
+
+它们的迹范数分别为 $\sqrt2/2$ 与 $\sqrt5/2$；由 $S_t=(D_t-a_tI_2)/b_t$ 计算得到 $\operatorname{tr}(S_cS_d)=6/\sqrt{10}$。因此
+
+$$
+b_c=\mu_c=\frac{\sqrt2}{4},\qquad
+b_d=\frac{\sqrt5}{4},\qquad
+\mu_d=\frac{\sqrt5-2}{4},\qquad
+\eta=\frac3{\sqrt{10}}.
+$$
+
+先计算最佳经典值。两个差矩阵之和与差为
+
+$$
+B=D_1+D_2=3A-2J
+=\begin{pmatrix}5/4&-1/2\\-1/2&-1/4\end{pmatrix},
+\qquad D_2-D_1=A\ge0.
+$$
+
+对任一效应 $E\ge0$，两个绝对迹之和等于在 $B,-B,A$ 三个奖励矩阵上取最大迹；第四种符号对应的 $-A$ 被 $A$ 支配。令
+
+$$
+Y=|B|=\frac1{4\sqrt{13}}
+\begin{pmatrix}19&-4\\-4&7\end{pmatrix}.
+$$
+
+$B$ 的特征值为 $(2+\sqrt{13})/4$ 与 $(2-\sqrt{13})/4$；在这两个异号特征值上线性插值得 $|B|=(2B+9I_2/4)/\sqrt{13}$，即上面的矩阵。因此 $Y\ge B,-B$ 且 $\operatorname{tr}Y=\sqrt{13}/2$。另外
+
+$$
+Y-A=\frac1{4\sqrt{13}}
+\begin{pmatrix}19-3\sqrt{13}&-4\\-4&7-\sqrt{13}\end{pmatrix}>0.
+$$
+
+其左上元为正，行列式的分子为 $156-40\sqrt{13}>0$；后一个严格不等式由 $39^2>100\cdot13$ 得到。因此 $Y$ 支配全部三个奖励，对任意有限 POVM 都给出
+
+$$
+\|\Phi(D_1)\|_1+\|\Phi(D_2)\|_1\le\operatorname{tr}Y=\frac{\sqrt{13}}2.
+$$
+
+达到这个界的测量是 $B$ 的二元谱测量。具体令
+
+$$
+T=\frac1{\sqrt{13}}\begin{pmatrix}3&-2\\-2&-3\end{pmatrix},
+\qquad E_+=\frac{I_2+T}{2},\quad E_-=\frac{I_2-T}{2}.
+$$
+
+$T^2=I_2$，所以 $E_+,E_-$ 是互补投影。直接计算四个迹，得到
+
+$$
+\operatorname{tr}(E_\pm D_1)=\pm\frac5{4\sqrt{13}},
+\qquad
+\operatorname{tr}(E_\pm D_2)=\frac12\pm\frac2{\sqrt{13}}.
+$$
+
+因为 $4>\sqrt{13}$，第二组也一正一负。两个范数之和于是为
+
+$$
+\frac5{2\sqrt{13}}+\frac4{\sqrt{13}}=\frac{\sqrt{13}}2.
+$$
+
+这证明所列精确 $V$，从量子总分 $(\sqrt2+\sqrt5)/2$ 减去它即得 $\Delta$。
+
+代入前面的 $\mu_c,\mu_d,\eta$，有
+
+$$
+M^2=\frac{17-32/\sqrt5}{16},
+$$
+
+因而得到陈述中的 $\mathsf L$。由于 $b_c<b_d$ 且
+
+$$
+b_d\eta=\frac3{4\sqrt2}>\frac12=|a_d|,
+$$
+
+上界四项中的最小者为 $b_c(1-\eta)$，所以 $\mathsf U=2b_c(1-\eta)=(\sqrt2-3/\sqrt5)/2$。
+
+定理 40.1 已给出 $\mathsf L>0$。最后，$\Delta<\mathsf U$ 等价于
+
+$$
+\frac8{\sqrt5}<\sqrt{13},
+$$
+
+它由 $64<65$ 成立。另一方面，因为 $\sqrt{13}-2>0$，$\mathsf L<\Delta$ 等价于
+
+$$
+\sqrt{17-32/\sqrt5}>\sqrt{13}-2.
+$$
+
+两边平方后恰好得到同一个 $8/\sqrt5<\sqrt{13}$。这证明全部严格关系。此例的最佳二元测量采用 $D_1+D_2$ 的谱基，严格优于只在两个单项谱测量之间选择；同时原损失严格高于由辅助优化得到的下界。证毕。
+

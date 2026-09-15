@@ -1,0 +1,77 @@
+**定理 52.4（时变记录与逐步收缩系数）。** 设 $\mathcal H_0,\ldots,\mathcal H_n$ 均为有限维空间。对每个 $k=0,\ldots,n-1$，令
+
+$$
+\Phi_k:\mathcal L(\mathcal H_k)\to\mathcal L(\mathcal H_{k+1})
+$$
+
+为 CPTP 映射，并对每个 $k=0,\ldots,n$ 取幂等 CPTP 记录通道 $\mathcal E_k$。定义记录态集
+
+$$
+\mathcal R_k=\mathcal E_k\bigl(\mathsf D(\mathcal H_k)\bigr),
+$$
+
+一步记录更新
+
+$$
+K_k:\mathcal R_k\to\mathcal R_{k+1},
+\qquad
+K_k(\sigma)=\mathcal E_{k+1}\Phi_k(\sigma),
+$$
+
+以及一步缺陷
+
+$$
+\delta_k
+=\max_{\omega\in\mathsf D(\mathcal H_k)}
+D\bigl(\mathcal E_{k+1}\Phi_k(\omega),
+\mathcal E_{k+1}\Phi_k\mathcal E_k(\omega)\bigr).
+$$
+
+取任意满足
+
+$$
+D(K_k\sigma,K_k\tau)\le\kappa_k D(\sigma,\tau)
+\qquad(\sigma,\tau\in\mathcal R_k)
+$$
+
+的 $\kappa_k\in[0,1]$。令 $\sigma_0=\rho$、$\sigma_{k+1}=\Phi_k(\sigma_k)$，真实末端读数为 $r_k=\mathcal E_k(\sigma_k)$；闭合预测从 $s_0=\mathcal E_0(\rho)$ 出发，按 $s_{k+1}=K_k(s_k)$ 更新。则
+
+$$
+\boxed{
+D(r_n,s_n)
+\le\sum_{j=0}^{n-1}\delta_j
+\prod_{k=j+1}^{n-1}\kappa_k.
+}
+$$
+
+空积取一，$n=0$ 时空和取零。每个记录更新都可以选择 $\kappa_k=1$，从而始终有 $D(r_n,s_n)\le\sum_{j=0}^{n-1}\delta_j$。
+
+证明。$K_k$ 是 CPTP 映射 $\mathcal E_{k+1}\Phi_k$ 在记录态集上的限制，所以记录态集保持及收缩上界成立。真实状态 $\sigma_k$ 仍归一化；由 $r_k=\mathcal E_k(\sigma_k)$，可直接得到
+
+$$
+D\bigl(r_{k+1},K_k(r_k)\bigr)
+=D\bigl(\mathcal E_{k+1}\Phi_k(\sigma_k),
+\mathcal E_{k+1}\Phi_k\mathcal E_k(\sigma_k)\bigr)
+\le\delta_k.
+$$
+
+令 $e_k=D(r_k,s_k)$，三角不等式给出
+
+$$
+e_{k+1}\le\delta_k+\kappa_k e_k,
+\qquad e_0=0.
+$$
+
+归纳展开：$e_1\le\delta_0$；若第 $m$ 步已满足乘积和，则
+
+$$
+\begin{aligned}
+e_{m+1}
+&\le\delta_m+\kappa_m
+\sum_{j=0}^{m-1}\delta_j\prod_{k=j+1}^{m-1}\kappa_k\\
+&=\sum_{j=0}^{m}\delta_j\prod_{k=j+1}^{m}\kappa_k.
+\end{aligned}
+$$
+
+这正是陈述的第 $m+1$ 步形式。整个比较针对未经中间记录干预的真实通道序列 $\Phi_{n-1}\cdots\Phi_0$；变化的是各时刻的观察映射与预测规则，未把观察计算替换成物理测量。证毕。
+

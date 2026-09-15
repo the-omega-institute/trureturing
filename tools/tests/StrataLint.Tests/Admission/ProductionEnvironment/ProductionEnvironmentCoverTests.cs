@@ -202,8 +202,13 @@ public sealed partial class ProductionEnvironmentTests(Xunit.Abstractions.ITestO
         var result = environment.CoverAtom(CoverArgs(inputs));
 
         Assert.True(result.Success, result.Error);
-        Assert.Contains("ledger_changed=true", result.Output, StringComparison.Ordinal);
-        Assert.Contains("DIGEST_STATUS", result.Output, StringComparison.Ordinal);
+        Assert.Contains(
+            $"COVER atom_id={CoverWorld.DefaultAtomId} gid=D5/S0/Carrier/Probe.probe ledger_changed=true\n",
+            result.Output,
+            StringComparison.Ordinal);
+        Assert.DoesNotContain("DIGEST_STATUS ", result.Output, StringComparison.Ordinal);
+        Assert.DoesNotContain("ENTRY ", result.Output, StringComparison.Ordinal);
+        Assert.DoesNotContain("GAP atom=", result.Output, StringComparison.Ordinal);
         var written = BackfillInventoryLoader.LoadRoot(temporary.Path);
         var entry = Assert.Single(
             written.RequireDigestionEntries(),
@@ -234,8 +239,7 @@ public sealed partial class ProductionEnvironmentTests(Xunit.Abstractions.ITestO
         var exitCode = CliApplication.Run(["cover-atom", .. CoverArgs(inputs)], environment, console);
         output.WriteLine("COVER exit=" + exitCode + "\n" + console.Output + console.Error);
         Assert.Equal(0, exitCode);
-        var result = new CommandResult(true, console.Output, console.Error);
-        Assert.Contains("deletable=true", result.Output, StringComparison.Ordinal);
+        Assert.Contains($"COVER atom_id={CoverWorld.DefaultAtomId}", console.Output, StringComparison.Ordinal);
         var entry = Assert.Single(
             BackfillInventoryLoader.LoadRoot(temporary.Path).RequireDigestionEntries(),
             candidate => candidate.AtomId == CoverWorld.DefaultAtomId);
@@ -265,6 +269,7 @@ public sealed partial class ProductionEnvironmentTests(Xunit.Abstractions.ITestO
         Assert.True(after.Success, after.Error);
         output.WriteLine("AFTER\n" + after.Output);
         Assert.Contains("deletable_now=1", after.Output, StringComparison.Ordinal);
+        Assert.Contains("deletable=true", after.Output, StringComparison.Ordinal);
         Assert.Contains("absorbed-closed", after.Output, StringComparison.Ordinal);
         Assert.DoesNotContain("GAP ", after.Output, StringComparison.Ordinal);
     }

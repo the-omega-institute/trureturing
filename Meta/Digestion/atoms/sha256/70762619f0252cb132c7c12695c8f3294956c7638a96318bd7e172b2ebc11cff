@@ -1,0 +1,26 @@
+**命题 12.4（局部不可见与联合可见可以并存）。** 保留全部旧记录，令 $W_N|x\rangle=e^{i\Theta_x(N)}|x\rangle\otimes|e_x^{\le N}\rangle$。由于系统标签正交，$W_N$ 为等距映射，且
+$$
+\rho_N=W_N\rho W_N^\dagger,\qquad
+\operatorname{tr}_{E_{N+1}}\rho_{N+1}
+=W_NM_{C_{N+1}}(\rho)W_N^\dagger.
+$$
+对任意系统投影测量 $\{Q_b\}$，在像空间上选择 $R_b=W_NQ_bW_N^\dagger$，并把 $I-W_NW_N^\dagger$ 加入其中一个输出使其成为全空间投影测量。则此联合测量的最坏读数变化恰为 $\delta_Q(C_{N+1})$，不带局部读数中的既有记录因子 $A_N$。
+
+证明。新Schur通道只乘系统矩阵单位的系数，逐项作用于 $W_N\rho W_N^\dagger$ 得到第二式。两态均支撑在 $W_N$ 的像内，因而补空间输出对它们的概率为零。用 $W_N^\dagger W_N=I$ 将联合测量拉回系统，即为第11章的比较。证毕。
+
+最小实例取二标签、第一步为正交记录、初态 $|+\rangle$，于是
+$$
+\rho_1=|\Phi^+\rangle\langle\Phi^+|,\qquad
+|\Phi^+\rangle=(|00\rangle+|11\rangle)/\sqrt2,
+\qquad \sigma_1=I_2/2.
+$$
+再写入并忽略一个正交记录，有
+$$
+\operatorname{tr}_{E_2}\rho_2
+=\tfrac12(|00\rangle\langle00|+|11\rangle\langle11|),
+\qquad \sigma_2=I_2/2.
+$$
+事实上这一两步模型对任意初态都满足 $\sigma_2=\sigma_1$。但联合事件 $|\Phi^+\rangle\langle\Phi^+|$ 的概率由 $1$ 变成 $1/2$。局部的精确稳定与旧记录可访问时的联合变化相容；稳定性必须标明观察者可以访问哪些系统。
+
+本章为第9—11章有限模型内的推导与勘注。所用偏迹、Schur对偶和谱范数事实沿用前章及其Watrous基础文献；没有新增Lean声明，也不把这些有限读数判据解释为唯一结果或普适经典性的证明。
+

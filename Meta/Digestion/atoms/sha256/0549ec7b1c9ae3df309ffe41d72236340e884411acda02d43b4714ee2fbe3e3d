@@ -1,0 +1,12 @@
+**定理 12.2（同步矩阵更新的精确因子化，repo-derived）。** 同步等步长更新 $U^+=U-\eta V^\top G,V^+=V-\eta GU^\top$ 满足
+$$
+\begin{aligned}
+W^+&=W-\eta(BG+GA)+\eta^2GW^\top G,\\
+A^+&=A-\eta(W^\top G+G^\top W)+\eta^2G^\top BG,\\
+B^+&=B-\eta(WG^\top+GW^\top)+\eta^2GAG^\top.
+\end{aligned}
+$$
+其实际像恰为 $\mathcal G\succeq0,\operatorname{rank}\mathcal G\le m$ 的块矩阵。更新在此像上闭合，且所需坐标数为 $kd+d(d+1)/2+k(k+1)/2$，但这不自动给出相对于原参数更低的总费用。
+
+证明。链式法则给 $\nabla_U\ell=V^\top G,\nabla_V\ell=GU^\top$。分别展开 $V^+U^+$、$(U^+)^\top U^+$、$V^+(V^+)^\top$，其中二次交叉项用 $U^\top V^\top=W^\top$ 替换，得到三式。令 $Z=[U,V^\top]$，则 $\mathcal G=Z^\top Z$，所以半正定且秩不超过 $m$。反向对任何符合条件的实对称矩阵作正交谱分解，以非负特征值平方根构造不超过 $m$ 行的因子 $Z$，不足行数补零，再拆出 $U,V^\top$。实际更新给像不变。计数只数独立块条目，未计提取 $A,B,W$ 或计算 $G$ 的代价，也未断言这些条目独立自由。证毕。
+
