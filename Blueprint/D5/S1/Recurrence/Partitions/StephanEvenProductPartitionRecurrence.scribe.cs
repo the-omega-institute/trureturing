@@ -60,7 +60,11 @@ internal sealed class StephanEvenProductPartitionRecurrenceDocument
                         + "For residue zero the unconstrained power of three is odd, so the "
                         + "even constraint binds and the sharp value is 8 times a power of "
                         + "three. Each branch is multiplied by three after adding three."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "oeis-a091915-stephan-even-product-partition-recurrence"),
+                    ResolutionKind.Proved)))));
 
     private static Formula ClassicalMaximumProductFormula()
     {
