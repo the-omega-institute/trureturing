@@ -4,7 +4,7 @@
    mirror-E: none(waiver:symbolic-proof-no-numeric-artifact)
    anchors: [mathlib/module/Mathlib.Data.Nat.GCD.Basic, mathlib/module/Mathlib.Tactic.FieldSimp, mathlib/module/Mathlib.Tactic.Positivity, mathlib/module/Mathlib.Tactic.Ring]
    utility: none
-   digest: The reduced denominator recurrence for Quet's rational iteration is proved via its coprime pair recurrence. -/
+   digest: For m >= 2, Quet's reduced denominators satisfy the conjectured recurrence. -/
 
 import Mathlib.Data.Nat.GCD.Basic
 import Mathlib.Tactic.FieldSimp
@@ -36,36 +36,7 @@ def b : ℕ → ℚ
   | 1 => 1
   | n + 2 => b (n + 1) + 1 / (1 + 1 / b (n + 1))
 
-theorem coprime_num_den : ∀ n : ℕ, Nat.Coprime (num n) (den n) := by
-  intro n
-  induction n with
-  | zero => simp [num, den]
-  | succ n ih =>
-      cases n with
-      | zero => simp [num, den]
-      | succ n =>
-          have hleft : Nat.Coprime (num (n + 1)) (den (n + 1)) := ih
-          rw [num, den, Nat.coprime_mul_iff_left]
-          constructor
-          · apply Nat.coprime_mul_iff_right.mpr
-            exact ⟨hleft, Nat.coprime_self_add_right.mpr hleft⟩
-          · apply Nat.coprime_mul_iff_right.mpr
-            constructor
-            · exact (Nat.coprime_add_mul_right_left (num (n + 1))
-                (den (n + 1)) 2).mpr hleft
-            · have hsum : Nat.Coprime (num (n + 1) + den (n + 1)) (den (n + 1)) :=
-                Nat.coprime_add_self_left.mpr hleft
-              have hcross :=
-                (Nat.coprime_add_mul_left_right
-                  (num (n + 1) + den (n + 1)) (den (n + 1)) 1).mpr hsum
-              have hcross' :
-                  Nat.Coprime (num (n + 1) + den (n + 1))
-                    (num (n + 1) + 2 * den (n + 1)) := by
-                convert hcross using 1
-                all_goals omega
-              exact hcross'.symm
-
-theorem num_pos : ∀ n : ℕ, 1 ≤ n → 0 < num n := by
+private theorem num_pos : ∀ n : ℕ, 1 ≤ n → 0 < num n := by
   intro n
   induction n with
   | zero => omega
@@ -77,7 +48,7 @@ theorem num_pos : ∀ n : ℕ, 1 ≤ n → 0 < num n := by
           rw [num]
           exact Nat.mul_pos (ih (by omega)) (Nat.add_pos_left (ih (by omega)) _)
 
-theorem den_pos (n : ℕ) : 0 < den n := by
+private theorem den_pos (n : ℕ) : 0 < den n := by
   induction n with
   | zero => simp [den]
   | succ n ih =>
@@ -87,7 +58,7 @@ theorem den_pos (n : ℕ) : 0 < den n := by
           rw [den]
           exact Nat.mul_pos ih (by omega)
 
-theorem b_pair : ∀ n : ℕ, b n = (num n : ℚ) / den n := by
+private theorem b_pair : ∀ n : ℕ, b n = (num n : ℚ) / den n := by
   intro n
   induction n with
   | zero => simp [b, num, den]
@@ -104,20 +75,78 @@ theorem b_pair : ∀ n : ℕ, b n = (num n : ℚ) / den n := by
           norm_num [Nat.cast_mul, Nat.cast_add]
           ring
 
-theorem b_num (n : ℕ) (_hn : 1 ≤ n) : (b n).num = num n := by
+private theorem b_num (n : ℕ) (_hn : 1 ≤ n) : (b n).num = num n := by
+  clear _hn
   rw [b_pair n]
+  have hcopNat : Nat.Coprime (num n) (den n) := by
+    induction n with
+    | zero => simp [num, den]
+    | succ n ih =>
+        cases n with
+        | zero => simp [num, den]
+        | succ n =>
+            have hleft : Nat.Coprime (num (n + 1)) (den (n + 1)) := ih
+            rw [num, den, Nat.coprime_mul_iff_left]
+            constructor
+            · apply Nat.coprime_mul_iff_right.mpr
+              exact ⟨hleft, Nat.coprime_self_add_right.mpr hleft⟩
+            · apply Nat.coprime_mul_iff_right.mpr
+              constructor
+              · exact (Nat.coprime_add_mul_right_left (num (n + 1))
+                  (den (n + 1)) 2).mpr hleft
+              · have hsum :
+                    Nat.Coprime (num (n + 1) + den (n + 1)) (den (n + 1)) :=
+                    Nat.coprime_add_self_left.mpr hleft
+                have hcross :=
+                  (Nat.coprime_add_mul_left_right
+                    (num (n + 1) + den (n + 1)) (den (n + 1)) 1).mpr hsum
+                have hcross' :
+                    Nat.Coprime (num (n + 1) + den (n + 1))
+                      (num (n + 1) + 2 * den (n + 1)) := by
+                  convert hcross using 1
+                  all_goals omega
+                exact hcross'.symm
   have hcop :
       Nat.Coprime (Int.natAbs (num n : ℤ)) (Int.natAbs (den n : ℤ)) := by
-    simpa using coprime_num_den n
+    simpa using hcopNat
   have h := Rat.num_div_eq_of_coprime (a := (num n : ℤ)) (b := (den n : ℤ))
     (by exact_mod_cast den_pos n) hcop
   simpa using h
 
-theorem b_den (n : ℕ) (_hn : 1 ≤ n) : (b n).den = den n := by
+private theorem b_den (n : ℕ) (_hn : 1 ≤ n) : (b n).den = den n := by
+  clear _hn
   rw [b_pair n]
+  have hcopNat : Nat.Coprime (num n) (den n) := by
+    induction n with
+    | zero => simp [num, den]
+    | succ n ih =>
+        cases n with
+        | zero => simp [num, den]
+        | succ n =>
+            have hleft : Nat.Coprime (num (n + 1)) (den (n + 1)) := ih
+            rw [num, den, Nat.coprime_mul_iff_left]
+            constructor
+            · apply Nat.coprime_mul_iff_right.mpr
+              exact ⟨hleft, Nat.coprime_self_add_right.mpr hleft⟩
+            · apply Nat.coprime_mul_iff_right.mpr
+              constructor
+              · exact (Nat.coprime_add_mul_right_left (num (n + 1))
+                  (den (n + 1)) 2).mpr hleft
+              · have hsum :
+                    Nat.Coprime (num (n + 1) + den (n + 1)) (den (n + 1)) :=
+                    Nat.coprime_add_self_left.mpr hleft
+                have hcross :=
+                  (Nat.coprime_add_mul_left_right
+                    (num (n + 1) + den (n + 1)) (den (n + 1)) 1).mpr hsum
+                have hcross' :
+                    Nat.Coprime (num (n + 1) + den (n + 1))
+                      (num (n + 1) + 2 * den (n + 1)) := by
+                  convert hcross using 1
+                  all_goals omega
+                exact hcross'.symm
   have hcop :
       Nat.Coprime (Int.natAbs (num n : ℤ)) (Int.natAbs (den n : ℤ)) := by
-    simpa using coprime_num_den n
+    simpa using hcopNat
   have h := Rat.den_div_eq_of_coprime (a := (num n : ℤ)) (b := (den n : ℤ))
     (by exact_mod_cast den_pos n) hcop
   have h' : ((num n : ℚ) / (den n : ℚ)).den = den n := by
@@ -169,5 +198,10 @@ theorem result (m : ℕ) (hm : 2 ≤ m) :
     apply (Nat.sub_eq_iff_eq_add' hle).2
     rw [hdm]
     ring
+
+#print axioms num
+#print axioms den
+#print axioms b
+#print axioms result
 
 end D5.S1.Recurrence.Residue.QuetRationalIterationDenominator
