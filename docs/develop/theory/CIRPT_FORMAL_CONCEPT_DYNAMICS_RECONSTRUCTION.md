@@ -1011,7 +1011,7 @@ q=p\circ q'.
 \operatorname{Refines}(q',q)
 =
 \sum_{p:B'\to B}
-\prod_{x:X]
+\prod_{x:X}
 q(x)=p(q'(x)).
 \]
 
@@ -2522,7 +2522,7 @@ q(a_0),q(a_1),q(a_2),\ldots
 
 \[
 \boxed{
-\text{在相关 FLOW 下稳定，并对指定行为充分的身份 CUT。}
+\text{在相关 FLOW 族下稳定，并对指定行为充分的身份 CUT。}
 }
 \]
 
