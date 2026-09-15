@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:88cd403c9cf02d78f88642040839a857caa798dba83c5c2eb4158e433125f416
   normalized_sha256: sha256:88cd403c9cf02d78f88642040839a857caa798dba83c5c2eb4158e433125f416
 cas_ref: sha256:88cd403c9cf02d78f88642040839a857caa798dba83c5c2eb4158e433125f416
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Factorization/Combinatorics/PureAdditivePrimeHistory.additive_tuple_count
+    target_statement_id: sha256:0a6f1c5a902ef28eccf05cf25a8b774e96a22c8a461bda2c9ec52af86c918da7
 receipts:
   unresolved_subitems: []

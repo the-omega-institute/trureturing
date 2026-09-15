@@ -3128,3 +3128,375 @@ $$
 对截断减法，这将强制 $\omega=\iota(0)$；对严格响应，这将强制 $\operatorname{ok}(\omega)=\perp$。二者均矛盾，故分别连续延拓也不存在。证毕。
 
 ## 追加锚（本行以下为增补区）
+## 15. 连续辅助观察：有限覆盖标签与对跖商的欧氏障碍
+
+**定义 15.0（覆盖、纤维分离与三种辅助量）。** 记 $\mathbb N_0=\{0,1,2,\ldots\}$，$[N]=\{1,\ldots,N\}$，其中 $[0]=\varnothing$，并给每个 $[N]$ 离散拓扑。设 $X,B$ 为 Hausdorff 空间，$B\ne\varnothing$，$d\ge1$ 为固定整数。称连续满射 $q:X\to B$ 为固定 $d$ 页覆盖，若每个 $b\in B$ 都有开邻域 $U$，使
+$$
+q^{-1}(U)=\bigsqcup_{i=1}^{d}V_i,
+\qquad
+q|_{V_i}:V_i\longrightarrow U
+$$
+是同胚，且各 $V_i$ 在 $X$ 中开。特别地，每条纤维恰有 $d$ 个点。本节不预设 $X$ 或 $B$ 连通。
+
+对映射 $r:X\to Y$，称 $r$ 分离 $q$ 的纤维，若
+$$
+q(x)=q(y)\ \land\ r(x)=r(y)\quad\Longrightarrow\quad x=y.
+$$
+这等价于联合映射
+$$
+J_r=(q,r):X\longrightarrow B\times Y
+$$
+单射。这里对联合观察 $J_r$ 应用定理 2.2，目标取 $\operatorname{id}_X$；要求恢复的是点本身，而不是只恢复某个较粗目标。覆盖在 $B$ 上的平凡化，是满足 $\operatorname{pr}_B\circ H=q$ 的同胚 $H:X\to B\times[d]$。连续截面是满足 $q\circ s=\operatorname{id}_B$ 的连续映射 $s:B\to X$。
+
+定义
+$$
+\lambda_{\mathrm{set}}(q)
+=
+\min\{N\in\mathbb N_0:\exists r:X\to[N],\ J_r\text{ 单射}\},
+$$
+$$
+\lambda_{\mathrm{disc}}(q)
+=
+\min\{N\in\mathbb N_0:\exists\text{ 连续 }r:X\to[N],\ J_r\text{ 单射}\},
+$$
+$$
+\mu_{\mathbb R}(q)
+=
+\min\{m\in\mathbb N_0:\exists\text{ 连续 }r:X\to\mathbb R^m,\ J_r\text{ 单射}\}.
+$$
+候选集合为空时，相应值约定为 $\infty$；$\mathbb R^0$ 是单点空间。第一项不要求标签连续，第二项要求离散标签连续，第三项最小化固定商映射下连续欧氏辅助读数的坐标数。
+
+覆盖的局部页定义参考：Allen Hatcher，*Algebraic Topology*，§1.3，第 56 页，[原书](https://pi.math.cornell.edu/~hatcher/AT/AT.pdf)。
+
+**定理 15.1（恰好一页一个标签的精确等价）。** 对定义 15.0 的固定 $d$ 页覆盖，以下三种数据相互确定：
+
+（甲）连续映射 $r:X\to[d]$，在每条 $q$-纤维上单射。
+
+（乙）在 $B$ 上的平凡化 $H:X\to B\times[d]$。
+
+（丙）有序的 $d$ 条连续截面 $s_1,\ldots,s_d$，满足对每个 $b\in B$，
+$$
+s_i(b)\ne s_j(b)\quad(i\ne j),
+\qquad
+q^{-1}(b)=\{s_1(b),\ldots,s_d(b)\}.
+$$
+对应关系为
+$$
+H(x)=(q(x),r(x)),
+\qquad
+s_i(b)=H^{-1}(b,i),
+\qquad
+r(s_i(b))=i.
+$$
+因此，对给定的 $r$，逐纤维单射恰好保证 $(q,r)$ 本身是平凡化，而不只是集合双射。此结论包括 $d=1$，不要求连通性。
+
+**证明。** 先证覆盖映射 $q$ 是开映射。若 $O\subseteq X$ 开，在任意均匀覆盖邻域 $U$ 上，
+$$
+q(O)\cap U=\bigcup_{i=1}^{d}q(O\cap V_i),
+$$
+右侧在 $U$ 中开，故 $q(O)$ 在 $B$ 中开。
+
+给定甲，令 $X_i=r^{-1}(\{i\})$。这些集合开闭。每条纤维有 $d$ 个点，标签也恰有 $d$ 个，故逐纤维单射实际是逐纤维双射。因此
+$$
+q_i=q|_{X_i}:X_i\longrightarrow B
+$$
+是连续双射。由于 $X_i$ 开且 $q$ 开，$q_i$ 也是开映射，因而是同胚。令 $s_i=q_i^{-1}$，便得到丙；同时 $H=(q,r)$ 的逆映射在每个开片 $B\times\{i\}$ 上为 $(b,i)\mapsto s_i(b)$，故连续，得到乙。
+
+给定乙，公式 $s_i(b)=H^{-1}(b,i)$ 直接给出丙。为从丙恢复甲，须验证截面像确实开，而不能只用集合分解。取 $x=s_i(b)$，选取含 $b$ 的均匀覆盖邻域 $U$ 及含 $x$ 的局部页 $V$。集合
+$$
+W=U\cap s_i^{-1}(V)
+$$
+是含 $b$ 的开邻域。由截面方程和 $q|_V$ 的单射性，
+$$
+s_i(W)=V\cap q^{-1}(W),
+$$
+故 $s_i(W)$ 在 $X$ 中开。于是每个 $s_i(B)$ 都开；其补集是其余截面像的并，故也开。由穷尽性与互异性定义 $r(s_i(b))=i$，每个单点的原像均开，所以 $r$ 连续，并且逐纤维单射。
+
+上述公式还说明三次构造彼此互逆。若 $d=1$，同一证明表明 $q$ 是同胚，唯一标签与唯一截面分别为常值标签与 $q^{-1}$。证毕。
+
+**定理 15.2（增加有限离散标签不能绕过平凡化障碍）。** 对定义 15.0 的覆盖及任意 $N\in\mathbb N_0$，
+$$
+\exists\text{ 连续 }r:X\to[N]\text{ 分离 }q\text{ 的纤维}
+\quad\Longleftrightarrow\quad
+N\ge d\ \land\ q\text{ 在 }B\text{ 上平凡}.
+$$
+特别地，
+$$
+\lambda_{\mathrm{disc}}(q)=
+\begin{cases}
+d,&q\text{ 平凡},\\
+\infty,&q\text{ 不平凡}.
+\end{cases}
+$$
+此处不需要 $B$ 连通。
+
+更精确地，对任何这样的 $r$，令
+$$
+S(b)=\{r(x):q(x)=b\}\subseteq[N].
+$$
+则 $S(b)$ 恒有 $d$ 个元素，且 $b\mapsto S(b)$ 局部常值。联合映射 $(q,r)$ 是到开闭子空间
+$$
+E_r=\{(b,a)\in B\times[N]:a\in S(b)\}
+$$
+的同胚。若 $N>d$，则 $E_r\ne B\times[N]$；迫使平凡化的是可以把标签连续压缩到 $d$ 个，而不是原联合映射满射到较大乘积。
+
+**证明。** 纤维非空且恰有 $d$ 个点，逐纤维单射首先给出 $N\ge d$。固定 $b_0\in B$，取均匀覆盖邻域 $U$，记各局部逆分支为 $t_i:U\to V_i$。每个 $r\circ t_i$ 连续且值域离散，因此
+$$
+W=\bigcap_{i=1}^{d}
+(r\circ t_i)^{-1}\bigl(\{r(t_i(b_0))\}\bigr)
+$$
+是 $U$ 中含 $b_0$ 的开邻域。在 $W$ 上，每条局部页的标签都恒定，故 $S$ 恒定。这里仅取有限次交，没有使用局部连通性或连通性。
+
+按 $[N]$ 的通常次序定义
+$$
+\rho(x)
+=
+1+\#\{a\in S(q(x)):a<r(x)\}.
+$$
+对每条纤维，$\rho$ 就是其 $d$ 个不同标签的次序排名，故取遍 $[d]$ 且单射。在刚构造的 $W$ 上，$\rho$ 在每条局部页上恒定；这些局部页是开集并覆盖 $X$，所以 $\rho:X\to[d]$ 连续。由定理 15.1，$(q,\rho)$ 是平凡化。反之，平凡化提供连续的 $d$ 值标签，再与任意单射 $[d]\to[N]$ 复合即可。
+
+在同一个 $W$ 上，
+$$
+E_r\cap(W\times[N])=W\times S(b_0).
+$$
+因此 $E_r$ 及其补集都局部为开集，故 $E_r$ 开闭。映射 $(q,r)$ 在 $q^{-1}(W)$ 上把不同局部页同胚地送到不同的片 $W\times\{a\}$，所以其逆映射局部连续，进而在 $E_r$ 上连续。若 $N>d$，每个 $b$ 上都有未使用标签，故 $E_r$ 是真子集。
+
+若 $B$ 连通，局部常值映射 $S$ 进一步必为常值，此时可以固定一个 $d$ 元子集统一重编号；平凡化结论并不需要这一步。无连通性时，排名一般依赖 $(q(x),r(x))$，不能断言只对 $r(x)$ 作一个固定后处理便可压缩。对此有明确反例：令
+$$
+B=\bigl\{\{1,2\},\{1,3\},\{2,3\}\bigr\},
+\qquad
+X=\{(A,a):A\in B,\ a\in A\},
+$$
+两者都取离散拓扑，令 $q(A,a)=A$、$r(A,a)=a$。这是两页覆盖及连续三值分离标签。任意函数 $\varphi:[3]\to[2]$ 都把某两个不同元素送到同一值，而这两个元素恰构成某条纤维的标签集，故 $\varphi\circ r$ 不分离该纤维。上述依赖 $q$ 的排名仍给出连续二值分离标签。证毕。
+
+**命题 15.3（一个一般覆盖截面只保证劈出一页）。** 对定义 15.0 的覆盖，若存在连续截面 $s$，则 $s(B)$ 在 $X$ 中开闭，且
+$$
+q|_{s(B)}:s(B)\longrightarrow B
+$$
+是同胚。若 $d\ge2$，则限制映射
+$$
+q|_{X\setminus s(B)}:X\setminus s(B)\longrightarrow B
+$$
+是固定 $d-1$ 页覆盖。因此两页覆盖有一个连续截面当且仅当平凡，但一般有限覆盖不能把一个截面等同于完全平凡化；即使基空间连通也不能。
+
+**证明。** 截面像开及限制映射为同胚，已由定理 15.1 证明中的局部论证给出，该论证不需要其他截面。固定 $b\in B$，选取均匀覆盖邻域 $U$，把含 $s(b)$ 的局部页记为 $V_1$，并缩小到
+$$
+W=U\cap s^{-1}(V_1).
+$$
+在 $W$ 上，$s$ 恰为第一局部逆分支，所以
+$$
+q^{-1}(W)\setminus s(B)
+=
+\bigsqcup_{i=2}^{d}\bigl(V_i\cap q^{-1}(W)\bigr).
+$$
+这既证明补集开，也证明它是固定 $d-1$ 页覆盖。若 $d=2$，补集上的一页覆盖是同胚，其逆给出第二条截面，再用定理 15.1 即得平凡化。
+
+为证明最后的否定结论，取两个圆周的拓扑不交并
+$$
+X=S^1\sqcup S^1,\qquad B=S^1,
+$$
+并令第一份上的映射为 $z\mapsto z$，第二份上的映射为 $z\mapsto z^2$。小圆弧有两条连续平方根分支，故这是三页覆盖。第一份圆周的包含给出连续截面。然而若它平凡，定理 15.1 将给出连续三值分离标签。第二份圆周连通，所以该标签在第二份上必为常值；但其中 $z$ 与 $-z$ 是同一纤维中的不同点，矛盾。证毕。
+
+圆周幂映射的覆盖结构参考：Hatcher，*Algebraic Topology*，§1.3，第 56 页，[原书](https://pi.math.cornell.edu/~hatcher/AT/AT.pdf)。
+
+**命题 15.4（紧致自由对合的差映射桥）。** 设 $K\ne\varnothing$ 为紧致 Hausdorff 空间，$\tau:K\to K$ 连续，满足
+$$
+\tau^2=\operatorname{id}_K,
+\qquad
+\tau(x)\ne x\quad(x\in K).
+$$
+令 $Q=K/\langle\tau\rangle$ 取商拓扑，$q:K\to Q$ 为轨道商。则 $Q$ 紧致 Hausdorff，$q$ 是两页覆盖。
+
+对每个整数 $m\ge1$，以下存在性条件等价：存在连续纤维分离读数 $r:K\to\mathbb R^m$；存在连续映射 $f:K\to\mathbb R^m\setminus\{0\}$ 满足 $f(\tau x)=-f(x)$；存在连续映射 $u:K\to S^{m-1}$ 满足 $u(\tau x)=-u(x)$。其中球面取标准欧氏单位球面。
+
+对给定的连续 $r$，有精确判据
+$$
+(q,r)\text{ 单射}
+\quad\Longleftrightarrow\quad
+\Delta_r(x):=r(x)-r(\tau x)\ne0\quad(\forall x\in K).
+$$
+满足判据时，
+$$
+u_r(x)=\frac{\Delta_r(x)}{\|\Delta_r(x)\|}
+$$
+是上述奇映射，而且
+$$
+\min_{x\in K}\|\Delta_r(x)\|>0.
+$$
+此时 $(q,r)$ 是到 $Q\times\mathbb R^m$ 中闭子空间的拓扑嵌入。零维欧氏目标不可能分离纤维；一维欧氏分离读数存在，当且仅当 $q$ 平凡，也当且仅当 $q$ 有一个连续截面。
+
+**证明。** 由 $\tau^2=\operatorname{id}_K$，$\tau$ 是同胚。对开集 $V\subseteq K$，
+$$
+q^{-1}(q(V))=V\cup\tau(V)
+$$
+开，故商映射 $q$ 是开映射。对任意 $x$，用 Hausdorff 性选取分别包含 $x,\tau x$ 的不交开集 $A,C$。令 $V=A\cap\tau^{-1}(C)$，则 $x\in V$ 且 $V\cap\tau(V)=\varnothing$。于是
+$$
+q^{-1}(q(V))=V\sqcup\tau(V),
+$$
+而两片各自通过 $q$ 连续、开且双射地映到 $q(V)$，所以都是同胚。这证明两页覆盖性质。
+
+不同轨道 $O,P$ 是互不相交的有限集。对每个 $a\in O$、$b\in P$，取包含相应点的不交开集 $A_{ab},C_{ab}$。令
+$$
+A_0=\bigcup_{a\in O}\bigcap_{b\in P}A_{ab},
+\qquad
+C_0=\bigcup_{b\in P}\bigcap_{a\in O}C_{ab}.
+$$
+它们分别包含 $O,P$，都是开集且互不相交。将它们替换为
+$$
+A_0\cap\tau(A_0),
+\qquad
+C_0\cap\tau(C_0),
+$$
+得到仍包含相应轨道的不交饱和开集；它们在商中的像是不交开邻域，故 $Q$ Hausdorff。它又是紧致空间 $K$ 的连续像，所以紧致。
+
+商纤维恰为 $\{x,\tau x\}$，且两点不同。因此联合单射恰好要求 $r(x)\ne r(\tau x)$，即差映射处处非零。直接计算得到
+$$
+\Delta_r(\tau x)
+=
+r(\tau x)-r(\tau^2x)
+=
+-\Delta_r(x).
+$$
+非零差映射连续，除以其连续正范数就得到连续奇映射 $u_r$。反过来，若 $f$ 是处处非零的连续奇映射，则把 $f$ 本身作为读数，有
+$$
+f(x)-f(\tau x)=2f(x)\ne0.
+$$
+而球面值奇映射本来就处处非零。这证明三种存在性条件等价；并未假设原读数 $r$ 是奇映射。
+
+连续正函数 $x\mapsto\|\Delta_r(x)\|$ 在非空紧致空间上取得最小值，该值不能为零。又因 $Q\times\mathbb R^m$ Hausdorff，任意闭集 $F\subseteq K$ 都紧致，其像 $(q,r)(F)$ 紧致而闭。所以联合映射在其实际像上的连续逆存在，且整个实际像紧致而闭，得到所述嵌入。
+
+当 $m=0$ 时，读数只有一个值，不能区分任意一对 $x,\tau x$。当 $m=1$ 时，归一化的奇映射取值于离散两点集 $S^0=\{-1,1\}$，因而由定理 15.1 给出平凡化。反向地，任何平凡化的二值标签在每条二点纤维上取两个不同值，将它们分别记为 $-1,1$，即得连续奇实值读数。若只给一个连续截面 $s$，则 $s$ 与 $\tau\circ s$ 连续、逐点互异并穷尽纤维，仍由定理 15.1 得平凡化；平凡化当然给出截面。证毕。
+
+局部轨道商覆盖参考：Hatcher，*Algebraic Topology*，命题 1.40(a)，第 72 页，[原书](https://pi.math.cornell.edu/~hatcher/AT/AT.pdf)。差映射与归一化参考：Jiří Matoušek，*Using the Borsuk–Ulam Theorem*，§2.1，第 24 页，[第 2 章样章](https://beckassets.blob.core.windows.net/product/readingsample/250866/9783540003625_excerpt_001.pdf)。二值余坐标与截面的对应亦是《QUANTITATIVE_DIAGONALIZATION_OBSERVER_COMPLETION》[定理 5.1](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/QUANTITATIVE_DIAGONALIZATION_OBSERVER_COMPLETION.md)的两元素群特例；上面的证明只使用本条明列的假设。
+
+**定理 15.5（对跖商的集合二值补充与连续离散障碍）。** 对任意 $n\in\mathbb N_0$，令
+$$
+S^n=\left\{(x_0,\ldots,x_n)\in\mathbb R^{n+1}:
+\sum_{i=0}^{n}x_i^2=1\right\},
+\qquad
+q_n:S^n\longrightarrow\mathbb{RP}^n=S^n/(x\sim-x).
+$$
+则 $q_n$ 是紧致 Hausdorff 空间之间的两页覆盖，并且
+$$
+\lambda_{\mathrm{set}}(q_n)=2.
+$$
+当 $n\ge1$ 时，不存在到任何离散空间的连续纤维分离读数，因而
+$$
+\lambda_{\mathrm{disc}}(q_n)=\infty,
+$$
+且 $q_n$ 无连续截面、不平凡。当 $n=0$ 时，
+$$
+S^0=\{-1,1\},
+\qquad
+\mathbb{RP}^0=\{*\},
+\qquad
+\lambda_{\mathrm{disc}}(q_0)=2,
+$$
+并且 $q_0$ 平凡。
+
+**证明。** 对合 $\tau(x)=-x$ 连续且自由，因为单位向量不可能等于其负向量。球面非空、紧致 Hausdorff，故命题 15.4 给出商空间性质和两页覆盖。
+
+对于任意 $x\in S^n$，定义
+$$
+k(x)=\min\{i\in\{0,\ldots,n\}:x_i\ne0\},
+\qquad
+\varepsilon(x)=
+\begin{cases}
+1,&x_{k(x)}>0,\\
+-1,&x_{k(x)}<0.
+\end{cases}
+$$
+至少一个坐标非零，所以定义总是有意义。显然 $k(-x)=k(x)$ 且 $\varepsilon(-x)=-\varepsilon(x)$。将 $1,-1$ 重编号为 $1,2$，得到分离每条纤维的二值集合标签。另一方面，任何一条纤维都有两个不同点，故少于两个标签不可能分离它。这证明集合标签数恰为二，并且不需要从每条纤维任意选择代表。事实上还得到显式集合截面
+$$
+s([x])=\varepsilon(x)x,
+$$
+因为右侧在把 $x$ 替换成 $-x$ 时不变。
+
+当 $n\ge1$ 时，$S^n$ 道路连通：若 $x,y$ 不互为对跖点，规范化线段
+$$
+t\longmapsto
+\frac{(1-t)x+ty}{\|(1-t)x+ty\|},
+\qquad 0\le t\le1,
+$$
+给出连接二者的道路；若 $y=-x$，在 $\mathbb R^{n+1}$ 中选一个不与 $x$ 共线的单位向量，经过它连接两段上述道路。连续映射把连通空间送到连通子空间，而离散空间的非空连通子空间只能是单点。因此任何连续离散读数都恒定，不能区分 $x$ 与 $-x$。由定理 15.1 和命题 15.3，两页覆盖的平凡化及连续截面也均不存在。特别地，刚构造的集合二值标签与集合截面在这些维数下不能是连续的。
+
+当 $n=0$ 时，定义域就是离散两点集，商是单点。标签 $\varepsilon(x)=x$ 连续并分离该纤维，且 $q_0$ 显然是单点基空间上的平凡两页覆盖。证毕。
+
+**定理 15.6（对跖商的最小连续欧氏辅助坐标数）。** 对任意 $n,m\in\mathbb N_0$，
+$$
+\exists\text{ 连续 }r:S^n\to\mathbb R^m
+\text{ 使 }(q_n,r)\text{ 单射}
+\quad\Longleftrightarrow\quad
+m\ge n+1.
+$$
+因此
+$$
+\mu_{\mathbb R}(q_n)=n+1,
+$$
+且满足单射条件的每个联合映射，都是到 $\mathbb{RP}^n\times\mathbb R^m$ 中闭子空间的拓扑嵌入。结合定理 15.5，
+$$
+\bigl(\lambda_{\mathrm{set}}(q_n),
+\lambda_{\mathrm{disc}}(q_n),
+\mu_{\mathbb R}(q_n)\bigr)
+=
+\begin{cases}
+(2,2,1),&n=0,\\
+(2,\infty,n+1),&n\ge1.
+\end{cases}
+$$
+等价地，对 $m\ge1$，存在连续奇映射 $S^n\to S^{m-1}$ 当且仅当 $m\ge n+1$。
+
+**证明。** 下界使用 Borsuk–Ulam 定理的如下形式：对每个整数 $k\ge0$ 和每个连续映射 $F:S^k\to\mathbb R^k$，存在 $x\in S^k$ 使 $F(x)=F(-x)$。这里不要求 $F$ 为奇映射。参考：Matoušek，*Using the Borsuk–Ulam Theorem*，定理 2.1.1 的 BU1a，第 23 页，及第 24 页与 BU1b 的等价证明，[第 2 章样章](https://beckassets.blob.core.windows.net/product/readingsample/250866/9783540003625_excerpt_001.pdf)；亦见 Hatcher，*Algebraic Topology*，推论 2B.7，第 176 页，[原书](https://pi.math.cornell.edu/~hatcher/AT/AT.pdf)。
+
+首先，$m=0$ 时读数恒定，任意对跖点仍有相同联合读数，所以对所有 $n\ge0$ 都不可能单射。其次，设 $n\ge1$ 且 $1\le m\le n$。对任意连续 $r:S^n\to\mathbb R^m$，补零得到连续映射
+$$
+\widetilde r:S^n\longrightarrow\mathbb R^n,
+\qquad
+\widetilde r(x)=\bigl(r(x),0_{\mathbb R^{n-m}}\bigr).
+$$
+当 $m=n$ 时这里就是原映射。Borsuk–Ulam 给出 $x$ 使
+$$
+\widetilde r(x)=\widetilde r(-x),
+$$
+于是 $r(x)=r(-x)$；同时 $q_n(x)=q_n(-x)$ 且 $x\ne-x$，所以联合映射不单射。这同时覆盖 $m=n$ 和 $m<n$，证明任何可行的 $m$ 都至少为 $n+1$。
+
+反向地，对 $m\ge n+1$，取
+$$
+r_m(x_0,\ldots,x_n)
+=
+\bigl(x_0,\ldots,x_n,0_{\mathbb R^{m-n-1}}\bigr).
+$$
+这是连续映射，并且
+$$
+r_m(-x)=-r_m(x),
+\qquad
+\|r_m(x)-r_m(-x)\|=2.
+$$
+因此它分离每条对跖纤维；在最小维数 $m=n+1$ 时就是标准包含 $r(x)=x$。联合映射的闭嵌入结论由命题 15.4 的紧致到 Hausdorff 论证得到。
+
+若 $n=0$，前面已单独排除 $m=0$，而 $r(x)=x\in\mathbb R$ 区分 $S^0$ 的两点，所以最小值确为一，不需要对负维球面作任何约定。最后，奇球面映射的存在性等价由命题 15.4 直接得到。证毕。
+
+**命题 15.7（圆周平方覆盖的精确对应）。** 将 $S^1$ 视为复平面的单位圆，令
+$$
+p:S^1\longrightarrow S^1,
+\qquad p(z)=z^2.
+$$
+映射
+$$
+h:\mathbb{RP}^1\longrightarrow S^1,
+\qquad h([z])=z^2
+$$
+是同胚，且 $p=h\circ q_1$。因此 $p$ 的集合标签数为二，不存在连续离散纤维分离标签，不存在连续全局截面，而连续欧氏辅助坐标数恰为二。一个达到上界的读数为
+$$
+r(z)=(\operatorname{Re}z,\operatorname{Im}z).
+$$
+
+**证明。** 平方在 $z$ 与 $-z$ 上取值相同，所以由商拓扑得到连续映射 $h$。若 $z^2=w^2$，则 $(z-w)(z+w)=0$，故 $w=z$ 或 $w=-z$，所以 $h$ 单射。每个单位复数写成 $e^{it}$ 后都有单位平方根 $e^{it/2}$，故 $h$ 满射。定义域紧致、值域 Hausdorff，因而这个连续双射是同胚。
+
+对任意辅助目标 $Y$ 及读数 $r:S^1\to Y$，
+$$
+(p,r)=(h\times\operatorname{id}_Y)\circ(q_1,r).
+$$
+故两种商下的纤维分离条件完全相同。截面也通过 $h$ 互相转换：若 $p\circ s=\operatorname{id}_{S^1}$，则 $s\circ h$ 是 $q_1$ 的截面；若 $q_1\circ t=\operatorname{id}_{\mathbb{RP}^1}$，则 $t\circ h^{-1}$ 是 $p$ 的截面。现在应用定理 15.5、15.6 即得全部结论，所列实部与虚部读数就是标准平面包含。证毕。
+
+## 追加锚（本行以下为增补区）
