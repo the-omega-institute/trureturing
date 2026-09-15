@@ -30,7 +30,7 @@ CHUNK_BYTES = 1610612736
 # configurable downward, leaves headroom over the recorded 5m08s Release fetch
 # (#2634). This is a policy choice, not a throughput derivation or a copy of the
 # C# ArchiveBudget. Review against real multipart transfers during integration.
-# Fetch includes all snapshot attempts; publish starts only after make lean.
+# Fetch includes all snapshot attempts; publish starts only after the current report succeeds.
 RELEASE_OPERATION_TIMEOUT_SECONDS = 600
 
 
@@ -218,7 +218,9 @@ def cache_guard(root, shared=False):
 def publish(root, partition, verification=None):
     # Build failures keep their status. Production transport is optional;
     # explicit verification succeeds only after the uploaded bytes restore.
-    build = subprocess.run(["make", "lean"], cwd=root)
+    # A caller's LEAN_REPORT override must not move publication outside buildDir.
+    build = subprocess.run(["make", "lean-report",
+        "LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json"], cwd=root)
     if build.returncode:
         return build.returncode
     if verification is None and (os.environ.get("GITHUB_EVENT_NAME") != "schedule"
@@ -255,7 +257,7 @@ def publish(root, partition, verification=None):
             # Never clobber an existing snapshot. Failed/racing publishers leave
             # at most a draft, which fetch never considers an applicable seed.
             gh(deadline, "release", "create", tag, "--repo", REPO, "--draft", "--target", commit,
-               "--title", "Lean cache " + partition, "--notes", "Successful Lean build; incremental seed only.")
+               "--title", "Lean cache " + partition, "--notes", "Successful current Lean build and Inspector report; incremental seed only.")
             gh(deadline, "release", "upload", tag, *(str(stage / part["name"]) for part in metadata["parts"]),
                str(stage / MANIFEST), "--repo", REPO)
             gh(deadline, "release", "edit", tag, "--repo", REPO, "--draft=false")
@@ -291,6 +293,18 @@ def legacy_manifest(path, metadata, partition, tag, deadline):
         if not separator or not key or key in fields:
             raise ValueError("invalid legacy manifest field")
         fields[key] = value
+    # Legacy address fields bind the transferred manifest to its published tag.
+    # They never select compatibility: only resolved mathlib and platform do.
+    hashes = [fields.get(key, "") for key in ("config_sha256", "sources_sha256")]
+    if "build_snapshot_sha256" in fields:
+        hashes.append(fields["build_snapshot_sha256"])
+    if any(not re.fullmatch(r"[0-9a-f]{64}", value) for value in hashes):
+        raise ValueError("invalid legacy snapshot address")
+    toolchain = fields.get("toolchain", "")
+    slug = re.sub(r"[^A-Za-z0-9]", "-", toolchain)
+    expected_tag = "lean-cache-v1-" + slug + "-" + "-".join(value[:16] for value in hashes)
+    if not toolchain or tag != expected_tag:
+        raise ValueError("legacy snapshot addresses do not match release tag")
     commit, run = fields.get("producer_commit_sha", ""), fields.get("workflow_run_id", "")
     if (fields.get("tag") != tag or not re.fullmatch(r"[0-9a-f]{40}", commit)
             or not re.fullmatch(r"[1-9][0-9]*", run) or metadata.get("target_commitish") != commit

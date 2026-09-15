@@ -38,7 +38,16 @@ Inspector 的可复用工件由 [Lake facets](lakefile.lean) 管理，均在当�
 | `report.zip` | 汇总后的完整规范报告 bundle。 |
 | `inputs/`、`inputs.json`、`compatibility` | 从登记输入生成的模块输入、成员集合及兼容标识。 |
 
-这些是构建产物，不提交为源码。正常 Lean-cache 负责依赖物化和既有构建归档；
+这些是构建产物，不提交为源码。Lean-cache 发布先经同一 `make lean-report` / `inspect.sh`
+入口完成当前默认目标、原生报告及完整校验，再打包根 buildDir；不另跑一轮 `lake build`。
+输入、编译或报告校验失败即发布失败，即使本轮发布地址已存在也不能绕过。
+归档携带原生 Inspector 可执行文件、模块与汇总工件，以及规范报告、materials、origin 和
+attestation。发布继续使用 mathlib 分区内的 run/attempt 快照及 draft 上传协议；draft
+不能作为可用种子。传输失败不改变已经完成的构建与报告结论。
+旧两段或三段哈希的 `lean-cache-v1` 归档都只作为同 mathlib/平台的增量种子，消费时核对
+manifest 与 tag 的声明地址；不恢复 config/exact/same-toolchain 选择。原生 trace 与完整
+当前输入和 materials 校验决定还原后的报告复用。
+正常 Lean-cache 负责依赖物化和既有构建归档；
 [ensure](../StrataLint.Lean/Lean/LeanCacheEnsureCommand.cs) 按 donor
 规则播种当前工作树的私有 `.lake`，支持时使用 clonefile，复制后的写入与 donor 隔离。
 `.lake` 不使用 symlink；[writer 入口](../scripts/worktree/lean-cache-run.sh)

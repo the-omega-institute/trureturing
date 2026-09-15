@@ -227,7 +227,7 @@ public sealed class LeanCacheChunkScriptTests
         Assert.Contains("\"status\":\"failed\"", result.Text, StringComparison.Ordinal);
         Assert.Contains("requires commit, run ID and attempt attribution", result.Text, StringComparison.Ordinal);
         Assert.False(fixture.HasRelease);
-        Assert.Equal(new[] { "lean" }, fixture.BuildRuns);
+        Assert.Equal(new[] { "lean-report LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json" }, fixture.BuildRuns);
     }
 
     [Fact]
