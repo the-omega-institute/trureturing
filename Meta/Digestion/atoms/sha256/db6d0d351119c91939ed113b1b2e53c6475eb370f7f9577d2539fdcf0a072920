@@ -1,0 +1,44 @@
+### 命题 56.3（几何隐藏衰减给出可计算视界）
+
+设存在 $M\ge1$ 和 $0\le\alpha<1$，使得
+
+$$
+\|D^r\|\le M\alpha^r\qquad(r\ge0).
+$$
+
+令 $g=\|G\|$、$b=\|B\|$、$c=\|C\|$。则任意 $h$ 都满足
+
+$$
+\|b_n\|+X\sum_{r=h+1}^{n}\|K_r\|
+\le
+gbM\alpha^h\left(Y+\frac{cX}{1-\alpha}\right)
+\qquad(n\ge h).
+$$
+
+因此，只要 $0<\varepsilon<gbM(Y+cX/(1-\alpha))$，取
+
+$$
+h\ge
+\left\lceil
+\frac{\log\!\left(\varepsilon/[gbM(Y+cX/(1-\alpha))]\right)}{\log\alpha}
+\right\rceil
+$$
+
+就得到一个 $(T,\varepsilon)$-记忆视界；当右端常数为零时，视界为 $0$。若 $\alpha=0$，则 $D^r=0$（$r\ge1$），记忆核在有限步内严格截断。
+
+证明。由次乘性，$\|b_n\|\le gbM\alpha^nY\le gbM\alpha^hY$。并且
+
+$$
+\|K_r\|\le gbcM\alpha^{r-1},
+$$
+
+所以
+
+$$
+X\sum_{r=h+1}^{n}\|K_r\|
+\le gbcMX\sum_{r=h+1}^{\infty}\alpha^{r-1}
+=\frac{gbcM X\alpha^h}{1-\alpha}.
+$$
+
+两式相加即得。对 $0<\alpha<1$ 取对数并注意 $\log\alpha<0$，得到给出的整数条件。证毕。
+

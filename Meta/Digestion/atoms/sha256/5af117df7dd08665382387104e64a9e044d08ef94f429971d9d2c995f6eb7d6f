@@ -1,0 +1,36 @@
+### 81.1 记录不是标签数，而是条件记录的重叠
+
+第 80 节把中心标签与块内自由度分开，但还缺少一个量化问题：当记录被压缩后，剩余的相干究竟还能被恢复多少？仓库的 `FiniteRecordRecoveryError` 给出一个直接的有限模型。
+
+取有限支持的复系数序列 $c_k$，满足
+
+$$
+\sum_{k\in\mathbb Z}\lVert c_k\rVert^2=1,
+$$
+
+并令记录的平移重叠为
+
+$$
+\gamma(\ell)
+=
+\sum_{k\in\mathbb Z}c_{k+\ell}\,\overline{c_k}.
+$$
+
+若系统构型 $i$ 被放置在整数位置 $q(i)$，记录通道对矩阵元的作用为
+
+$$
+\Lambda(A)_{ij}
+=
+\gamma\bigl(q(i)-q(j)\bigr)A_{ij}.
+$$
+
+因此对角项保持不变，而构型 $i,j$ 之间的相干按记录重叠 $gamma(q(i)-q(j))$ 缩放。这个量同时保留模长和相位；它不是“记录了几次”的计数。
+
+`coefficient_gamma_neg` 保证
+
+$$
+\gamma(-\ell)=\overline{\gamma(\ell)},
+$$
+
+所以成对的非对角矩阵元仍满足 Hermitian 对称。对于有限支持记录，$gamma$ 是记录波形与其平移的自相关；记录形状、位置差和相位约定共同决定可见相干，而不是 Zeckendorf 标签本身单独决定。
+
