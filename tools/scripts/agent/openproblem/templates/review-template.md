@@ -25,6 +25,29 @@ __GOAL_ARTIFACT__
 ## Seat-specific bias
 __BIAS__
 
+## Two contract readings that have each cost a review round — settle them from the source text, not from intuition
+
+**"One builder commit."** `skills/codex-formalize/SKILL.md` Step 7 introduces it as: *"Before pushing,
+inspect the complete **deposit-and-cover** delta and create one builder-owned commit"*, and the Step 7
+postcondition ("the complete intended delta is in one explicit builder commit") is that sentence's
+postcondition. Its scope is the **door output** — the Freeze event, the state pin, the coverage moves, the
+Problems dossier and any mirror the door regenerated — not the whole lane. `CLAUDE.md` §6.1 separately
+requires committing and pushing each logical unit as it compiles, so a lane necessarily has earlier
+content commits; reading Step 7 as "one commit for the entire lane" makes the two requirements
+unsatisfiable together. The landed precedent is uniform: e.g. `0fea3f42a3` ("evidence: freeze the A091915
+resolution", PR #8110, MERGED) is a freeze-only commit touching two Blueprint files plus the accepted
+event, the state pin and the Problems dossier. Judge whether the **deposit-and-cover delta** is in one
+commit; do not require the Lean module to be in it.
+
+**Carrier composition and its fallback.** The GoalArtifact's composition line states the intended mix, and
+`CLAUDE.md` §5.11 states the fallback that governs when a carrier is unavailable: the stage reopens the
+assignment on the highest-priority eligible untried carrier and only abstains when none remains. A stage
+whose `nyxid-oracle` pools all fail therefore runs all-codex-cli **legitimately**; §5.2 then requires the
+provenance record to disclose the carrier failure and the resulting layout change and to state that the
+judging surface is a single model family and not a diversity claim. A record that makes that disclosure is
+compliant. Treat as a finding only the opposite case: an all-codex stage presented as the designed
+composition with no fallback evidence.
+
 ## Verdict set and blocking rule
 `approve` / `comment` / `reject`. A `reject` must cite the exact file:line, the GoalArtifact term violated, the evidence in the work, the failure class (mistake / omission / uncertainty within the trust boundary). Advisory items go under `comment` findings and do not block.
 
