@@ -21,7 +21,7 @@ internal sealed class QuetRationalIterationDenominatorDocument
                 DeclarationHandle.Create(Prefix + "num"),
                 H("Pair-recurrence numerator"),
                 StatementSource.FromAuthor(NumFormula()),
-                AssessedProvenance.FromLiterature(Source),
+                AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
                     "The auxiliary numerator starts with num(0)=0 and num(1)=1. "
                         + "Each later value is the preceding numerator multiplied by "
@@ -32,7 +32,7 @@ internal sealed class QuetRationalIterationDenominatorDocument
                 DeclarationHandle.Create(Prefix + "den"),
                 H("Pair-recurrence denominator"),
                 StatementSource.FromAuthor(DenFormula()),
-                AssessedProvenance.FromLiterature(Source),
+                AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
                     "The denominator starts with den(0)=den(1)=1. Each later value "
                         + "is the preceding denominator multiplied by the sum of the "

@@ -10,7 +10,9 @@ $$\begin{aligned}num \in \left(\mathrm{Nat} \to \mathrm{Nat}\right)\\num\left(0\
 
 *Formalization.* `D5/S1/Recurrence/Residue/QuetRationalIterationDenominator.num` (`✓ std3`).
 
-*Citation.* Leroy Quet; N. J. A. Sloane (2003). *OEIS A079278, denominators of the rational iteration b(n) = b(n-1) + 1/(1 + 1/b(n-1))*. URL: <https://oeis.org/A079278>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Leroy Quet; N. J. A. Sloane (2003). *OEIS A079278, denominators of the rational iteration b(n) = b(n-1) + 1/(1 + 1/b(n-1))*. URL: <https://oeis.org/A079278>.
 
 *Commentary.*
 
@@ -22,7 +24,9 @@ $$\begin{aligned}den \in \left(\mathrm{Nat} \to \mathrm{Nat}\right)\\den\left(0\
 
 *Formalization.* `D5/S1/Recurrence/Residue/QuetRationalIterationDenominator.den` (`✓ std3`).
 
-*Citation.* Leroy Quet; N. J. A. Sloane (2003). *OEIS A079278, denominators of the rational iteration b(n) = b(n-1) + 1/(1 + 1/b(n-1))*. URL: <https://oeis.org/A079278>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Leroy Quet; N. J. A. Sloane (2003). *OEIS A079278, denominators of the rational iteration b(n) = b(n-1) + 1/(1 + 1/b(n-1))*. URL: <https://oeis.org/A079278>.
 
 *Commentary.*
 
