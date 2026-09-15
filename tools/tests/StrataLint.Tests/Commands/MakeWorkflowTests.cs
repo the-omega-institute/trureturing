@@ -73,6 +73,8 @@ public sealed partial class MakeWorkflowTests
         "quarantine-clear",
         "settle",
         "settle-clear",
+        "settle-upstream",
+        "settle-upstream-clear",
         "worktree",
         "worktree-clean",
         "worktree-remove",

@@ -154,6 +154,7 @@ internal static partial class RepositoryPathPolicy
             || value.StartsWith("tools/", StringComparison.Ordinal)
             || DigestionCasStore.IsCanonicalPath(value)
             || BackfillInventoryLoader.IsCanonicalPath(value)
+            || IsUpstreamProbePath(value)
             || IsEchoResidualShardPath(value)
             || ProblemPoolPaths.IsCanonicalPath(value)
             || FrozenLedgerChangeClassifier.IsAcceptedEventPath(value)
@@ -208,6 +209,13 @@ internal static partial class RepositoryPathPolicy
             "tools" => Sl000(value, "unknown tools artifact"),
             _ => Sl000(value, "unknown top-level artifact"),
         };
+    }
+
+    internal static bool IsUpstreamProbePath(string value)
+    {
+        const string prefix = "Meta/Digestion/upstream/";
+        return value.StartsWith(prefix, StringComparison.Ordinal) && value.EndsWith(".lean", StringComparison.Ordinal)
+            && DigestionNonpropositional.IsAtomId(value[prefix.Length..^5]);
     }
 
     internal static bool IsEchoResidualShardPath(string value)

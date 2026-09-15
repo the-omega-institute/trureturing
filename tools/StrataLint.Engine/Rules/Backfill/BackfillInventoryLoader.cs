@@ -107,9 +107,14 @@ internal sealed partial class BackfillInventoryDocument
         var receipts = ParseReceipts(
             atomId,
             entry.GetValueOrDefault("receipts"));
+        if (receipts.Upstream is not null
+            && (!coverage.IsEmpty || receipts.Quarantine is not null
+                || receipts.CoverDisposition is not null || receipts.Nonpropositional is not null
+                || !receipts.UnresolvedSubitems.IsEmpty))
+            throw new FormatException($"entry {atomId} upstream cannot coexist with coverage, quarantine, cover_disposition, nonpropositional or unresolved_subitems");
         if (receipts.Nonpropositional is not null
             && (coverage.Length > 0 || receipts.Quarantine is not null
-                || receipts.CoverDisposition is not null || !receipts.UnresolvedSubitems.IsEmpty))
+                || receipts.CoverDisposition is not null || receipts.Upstream is not null || !receipts.UnresolvedSubitems.IsEmpty))
         {
             throw new FormatException($"entry {atomId} nonpropositional cannot coexist with coverage, quarantine, cover_disposition or unresolved_subitems");
         }
@@ -189,7 +194,7 @@ internal sealed partial class BackfillInventoryDocument
         ExactKeys(
             receipts,
             ["unresolved_subitems"],
-            ["chain_atoms", "tail_authorization", "quarantine", "nonpropositional", "cover_disposition"],
+            ["chain_atoms", "tail_authorization", "quarantine", "nonpropositional", "cover_disposition", "upstream"],
             $"entry {atomId} receipts");
         DigestionExternalReceipt? tailAuthorization = null;
         if (receipts.GetValueOrDefault("tail_authorization") is { } rawTail)
@@ -260,7 +265,8 @@ internal sealed partial class BackfillInventoryDocument
             tailAuthorization,
             quarantine,
             ParseCoverDisposition(atomId, receipts),
-            ParseNonpropositional(atomId, receipts));
+            ParseNonpropositional(atomId, receipts),
+            ParseUpstream(atomId, receipts));
     }
 
     private static DigestionCoverDisposition? ParseCoverDisposition(
@@ -332,6 +338,7 @@ internal sealed partial class BackfillInventoryDocument
         "partial" => DigestionMigrationState.Partial,
         "absorbed" => DigestionMigrationState.Absorbed,
         "nonpropositional" => DigestionMigrationState.Nonpropositional,
+        "upstream" => DigestionMigrationState.Upstream,
         _ => throw new FormatException($"invalid digestion migration status: {value}"),
     };
 
@@ -441,7 +448,8 @@ internal static partial class BackfillInventoryLoader
         return state.Length == 2
             && ((state[0] is "residual" or "partial" or "absorbed"
                  && state[1] is "closed" or "tail" or "open")
-                || (state[0] == "nonpropositional" && state[1] == "inapplicable"));
+                || (state[0] == "nonpropositional" && state[1] == "inapplicable")
+                || (state[0] == "upstream" && state[1] == "closed"));
     }
 
     internal static bool IsInputPath(string path) =>

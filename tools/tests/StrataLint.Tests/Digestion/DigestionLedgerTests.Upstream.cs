@@ -1,12 +1,12 @@
 using StrataLint.Engine;
-using static StrataLint.Tests.NonpropositionalTestSupport;
+using static StrataLint.Tests.UpstreamTestSupport;
 
 namespace StrataLint.Tests;
 
 public sealed partial class DigestionLedgerTests
 {
     [Fact]
-    public void NonpropositionalDirectoryWithoutReceiptIsSl016Red()
+    public void UpstreamDirectoryWithoutReceiptIsSl016Red()
     {
         var fixture = AtomContextFixture.Create("## Claim\n\nProse.\n");
         var entry = fixture.Ledger.RequireDigestionEntries().Single();
@@ -23,7 +23,7 @@ public sealed partial class DigestionLedgerTests
     }
 
     [Fact]
-    public void NonpropositionalReceiptInOtherDirectoryIsSl016Red()
+    public void UpstreamReceiptInOtherDirectoryIsSl016Red()
     {
         var fixture = AtomContextFixture.Create("## Claim\n\nProse.\n");
         var original = fixture.Ledger.RequireDigestionEntries().Single();
@@ -36,7 +36,7 @@ public sealed partial class DigestionLedgerTests
     }
 
     [Fact]
-    public void NonpropositionalDerivesWithoutCoverageAndIsNotDeletable()
+    public void UpstreamDerivesWithoutCoverageAndIsNotDeletable()
     {
         var fixture = AtomContextFixture.Create("## Claim\n\nProse.\n");
         fixture = fixture.WithEntries([Settled(fixture.Ledger.RequireDigestionEntries().Single())]);
@@ -49,12 +49,4 @@ public sealed partial class DigestionLedgerTests
         Assert.Empty(evaluation.Findings);
     }
 
-    [Fact]
-    public void MigrationAndTruthAlphabetsAreTotal()
-    {
-        Assert.Equal(new[] { "residual", "partial", "absorbed", "nonpropositional", "upstream" },
-            Enum.GetValues<DigestionMigrationState>().Select(DigestionStatusNames.Migration));
-        Assert.Equal(new[] { "closed", "tail", "open", "inapplicable" },
-            Enum.GetValues<DigestionTruthState>().Select(DigestionStatusNames.Truth));
-    }
 }
