@@ -36,7 +36,7 @@ internal sealed class NormOneCriticalPrimeTowersDocument : IScribeDocumentDefini
                 DescribeId.Create("golden-trace-three-power-tower"),
                 DeclarationHandle.Create(Prefix + "golden_trace_three_tower"),
                 H("Every positive power of three is fixed"),
-                StatementSource.FromAuthor(Tower(F.Id("3"))),
+                StatementSource.FromAuthor(Tower(D(3))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The same integral companion A=[[47,-1],[1,0]] "
                     + "has A^3=I+3*[[34576,-736],[736,-16]]. The top-left defect "
@@ -47,7 +47,7 @@ internal sealed class NormOneCriticalPrimeTowersDocument : IScribeDocumentDefini
                 DescribeId.Create("golden-trace-five-power-tower"),
                 DeclarationHandle.Create(Prefix + "golden_trace_five_tower"),
                 H("Every positive power of five is fixed for the same parameter"),
-                StatementSource.FromAuthor(Tower(F.Id("5"))),
+                StatementSource.FromAuthor(Tower(D(5))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For the identical A, A^5=I+5*" 
                     + "[[45785971,-974611],[974611,-20746]], again with primitive "
@@ -82,7 +82,7 @@ internal sealed class NormOneCriticalPrimeTowersDocument : IScribeDocumentDefini
     }
 
     private static Formula Tower(Formula p) => Disp(Call("Implies", Call("Positive", F.Id("e")),
-        Call("Eq", Call("period", F.Id("47"), Call("Power", p, F.Id("e"))),
+        Call("Eq", Call("period", D(4, 7), Call("Power", p, F.Id("e"))),
             Call("Power", p, F.Id("e")))));
 
     private static Formula SeedTower() => Disp(Call("Eq",

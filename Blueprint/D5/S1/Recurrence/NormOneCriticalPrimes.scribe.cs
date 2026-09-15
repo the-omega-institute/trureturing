@@ -73,5 +73,5 @@ internal sealed class NormOneCriticalPrimesDocument : IScribeDocumentDefinition
 
     private static Formula PrimeFormula() => Disp(Call("Implies", Call("Prime", F.Id("p")),
         Call("Iff", Call("Eq", Call("period", F.Id("a"), F.Id("p")), F.Id("p")),
-            Call("Divides", F.Id("p"), Call("Sub", F.Id("a"), F.Id("2"))))));
+            Call("Divides", F.Id("p"), Call("Sub", F.Id("a"), D(2))))));
 }
