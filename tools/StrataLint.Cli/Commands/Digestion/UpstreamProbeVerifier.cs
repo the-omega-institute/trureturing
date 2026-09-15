@@ -36,7 +36,7 @@ internal sealed class UpstreamProbeVerifier(IUpstreamLeanProcessRunner runner, s
         @"«[^»]*»|#?(?:[A-Za-z0-9_'!?\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u017F"
         + @"\u0391-\u039F\u03A1-\u03A2\u03A4-\u03A9\u03B1-\u03BA\u03BC-\u03FB"
         + @"\u1F00-\u1FFE\u2100-\u214F\u2080-\u2089\u2090-\u209C\u1D62-\u1D6A\u2C7C]"
-        + @"|\uD835[\uDC9C-\uDD9F])+", Options);
+        + @"|\uD835[\uDC9C-\uDD9F])+|#", Options);
 
     internal static UpstreamProbeVerifier Production()
     {
@@ -214,6 +214,15 @@ internal sealed class UpstreamProbeVerifier(IUpstreamLeanProcessRunner runner, s
         var theorems = 0;
         foreach (Match token in Tokens.Matches(source))
         {
+            // Hash commands are extensible: the only allowed member is the complete
+            // column-zero axiom print line already inventoried by ScanProbe.
+            if (token.Value.StartsWith('#'))
+            {
+                if (token.Value != "#print" || (token.Index > 0 && source[token.Index - 1] != '\n')
+                    || !Regex.IsMatch(source[token.Index..], @"\A#print[ \t]+axioms[ \t]+" + Name + @"[ \t]*\r?(?:\n|\z)", Options))
+                    throw Invalid("PROBE_DECLARATION_UNSUPPORTED", $"command token outside probe dialect: {token.Value}");
+                continue;
+            }
             switch (token.Value)
             {
                 case "def" or "lemma" or "example" or "instance" or "abbrev" or "structure"
@@ -222,14 +231,14 @@ internal sealed class UpstreamProbeVerifier(IUpstreamLeanProcessRunner runner, s
                     or "macro" or "macro_rules" or "elab" or "syntax" or "notation" or "infix"
                     or "infixl" or "infixr" or "prefix" or "postfix" or "set_option" or "namespace"
                     or "section" or "end" or "variable" or "universe" or "attribute" or "deriving"
-                    or "mutual" or "open" or "#eval" or "#check" or "#reduce" or "#exit"
+                    or "mutual" or "open"
                     or "run_cmd" or "run_tac" or "builtin_initialize" or "declare_syntax_cat"
                     or "register_option" or "import":
                     throw Invalid("PROBE_DECLARATION_UNSUPPORTED", $"command token outside probe dialect: {token.Value}");
-                case "theorem" or "#print":
+                case "theorem":
                     if (token.Index > 0 && source[token.Index - 1] != '\n')
                         throw Invalid("PROBE_DECLARATION_UNSUPPORTED", $"{token.Value} must start at column 0");
-                    if (token.Value == "theorem") theorems++;
+                    theorems++;
                     break;
             }
         }
