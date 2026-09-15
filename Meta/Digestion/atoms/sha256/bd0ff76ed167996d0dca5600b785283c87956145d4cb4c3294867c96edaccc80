@@ -1,0 +1,16 @@
+### 95.4 与 Zeckendorf 历史预算的关系
+
+若把合法 Zeckendorf 构型映射为整数标签 $q_i$，则本节告诉我们：标签间距、记录窗口长度 $N$ 和自相关 $\gamma$ 共同决定系统端恢复成本。仅增加合法标签的数量并不能保证历史可恢复；还必须指定这些标签如何嵌入有限记录序列，以及记录寄存器是否仍可被联合访问。
+
+因此，对一个给定的非零间距 $\ell$，可以把
+
+$$
+\varepsilon_{N,\ell}
+=
+\frac{1-\cos\!\left(\frac{\pi}{\lfloor N/|\ell|\rfloor+2}\right)}{2}
+$$
+
+作为该有限移位记录模型中的保守恢复预算。它是标签族和记录协议的函数，不是 Zeckendorf 数值本身的普适误差，也不是对所有环境或恢复操作的定律。
+
+本节复用 `finite_record_cosine_obstruction`、`coefficient_gamma_le_cosine` 和 `finite_record_recovery_error_lower_bound`。Lean 已证明的是有限支撑、归一化记录序列、整数标签和系统端恢复通道下的具体下界；联合访问记录环境、近似无限窗口、其他编码和物理 Hamiltonian 仍需分别建模。
+
