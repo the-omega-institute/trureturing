@@ -643,7 +643,7 @@ unsafe def main (args : List String) : IO Unit := do
   let importStart ← if profiling then IO.monoNanosNow else pure 0
   enableInitializersExecution
   let env ← importModules imports {} (trustLevel := 0) (loadExts := true)
-  try
+  let produce : IO Unit := do
     if profiling then
       (← IO.getStderr).putStrLn s!"LEAN_INSPECTOR_PROFILE import_ns={(← IO.monoNanosNow) - importStart} imported_modules={env.header.moduleNames.size}"
     let cache ← IO.mkRef ({} : AxiomClosureState)
@@ -676,7 +676,7 @@ unsafe def main (args : List String) : IO Unit := do
       try writer.kill catch _ => pure ()
       try discard <| writer.wait catch _ => pure ()
       throw error
-  finally env.freeRegions
+  try produce finally env.freeRegions
 
 end LeanInformationAudit.InspectorProducer
 
