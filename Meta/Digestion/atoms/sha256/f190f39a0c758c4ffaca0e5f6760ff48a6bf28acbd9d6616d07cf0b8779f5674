@@ -1,0 +1,14 @@
+**证明。** $H_i$ 是对其余坐标的条件期望。乘积测度使不同坐标的平均交换。对 $S\subseteq\{1,\ldots,m\}$ 定义
+
+$$
+P_S=\prod_{i\in S}(I-H_i)\prod_{i\notin S}H_i.
+$$
+
+这些投影两两正交，和为恒等算子，并满足
+
+$$
+K_\beta P_S=(1-|S|/m)P_S.
+$$
+
+因此，按 $|S|=k$ 求和的投影 $\Pi_k$ 给出至多 $m+1$ 个特征值。中心化观察 $f$ 满足 $\Pi_0 f=0$，其循环空间包含于 $\operatorname{span}\{\Pi_1f,\ldots,\Pi_mf\}$。证毕。
+

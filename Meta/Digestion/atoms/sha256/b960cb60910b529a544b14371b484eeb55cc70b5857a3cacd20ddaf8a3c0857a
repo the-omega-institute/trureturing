@@ -1,0 +1,10 @@
+**推论。** 对任意正质量预算 $M$ 和任意有限不同节点族，节点均在 $[0,1]$，存在 $\delta>0$ 以及两组非负权重 $w_i^+,w_i^-$，使
+
+$$
+\sum_i(w_i^++w_i^-)\le M,
+\qquad 0\le m_n^+-m_n^-\le\delta\quad(n\ge0),
+\qquad m_n^+-m_n^-=\delta\quad(n<q),
+$$
+
+其中 $m_n^\pm=\sum_iw_i^\pm\lambda_i^n$。
+

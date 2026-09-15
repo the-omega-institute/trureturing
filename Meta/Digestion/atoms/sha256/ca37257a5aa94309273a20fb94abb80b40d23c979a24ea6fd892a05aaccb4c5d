@@ -1,0 +1,4 @@
+每个 $l\in V_E$ 满足
+$$
+(\forall c\in C\ l\preceq_E c)\iff l\preceq_E\inf C.
+$$

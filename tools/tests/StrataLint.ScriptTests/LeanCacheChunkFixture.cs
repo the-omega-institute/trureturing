@@ -30,7 +30,9 @@ internal sealed class LeanCacheChunkFixture : IDisposable
         Write(Path.Combine(temporary.Path, "archive"), archive);
         Write(Path.Combine(temporary.Path, "tags"), "");
         ScriptHarnessScratch.WriteExecutableStub(Path.Combine(repository, "tools/scripts/worktree/lean-cache-input.sh"),
-            $"printf '%s %s\\n' '{new string('3', 64)}' '{new string('4', 64)}'");
+            $"if [[ \"$1\" == build-snapshot-address ]]; then printf '%s\\n' '{new string('5', 64)}'; else printf '%s %s\\n' '{new string('3', 64)}' '{new string('4', 64)}'; fi");
+        ScriptHarnessScratch.EnsureDirectory(Path.Combine(repository, "tools/lean-inspector"));
+        ScriptHarnessScratch.WriteExecutableStub(Path.Combine(repository, "tools/lean-inspector/inspect.sh"), "exit 0");
         ScriptHarnessScratch.WriteExecutableStub(Path.Combine(bin, "lake"), """
             case "$1" in
               pack) cp "$CHUNK_FIXTURE/archive" "$2" ;;
@@ -90,7 +92,7 @@ internal sealed class LeanCacheChunkFixture : IDisposable
             """);
     }
 
-    internal string Tag => CandidateTag('4', '3');
+    internal string Tag => CandidateTag('4', '3') + "-" + new string('5', 16);
     internal string CandidateTag(char config, char sources) => $"lean-cache-v1-leanprover-lean4-v4-31-0-{new string(config, 16)}-{new string(sources, 16)}";
     internal string? Unpacked => FixtureFile.Exists(Path.Combine(temporary.Path, "unpacked"))
         ? FixtureFile.ReadAllText(Path.Combine(temporary.Path, "unpacked")) : null;
@@ -124,11 +126,18 @@ internal sealed class LeanCacheChunkFixture : IDisposable
         var directory = Path.Combine(releases, tag);
         ScriptHarnessScratch.EnsureDirectory(directory);
         var suffixes = tag.Split('-');
-        var config = new string(suffixes[^2][0], 64);
-        var sources = new string(suffixes[^1][0], 64);
+        var config = new string(suffixes[tag == Tag ? ^3 : ^2][0], 64);
+        var sources = new string(suffixes[tag == Tag ? ^2 : ^1][0], 64);
+        if (deviation == "stale-sources") sources = sources[..16] + new string('6', 48);
         var manifest = $"toolchain=leanprover/lean4:v4.31.0\nconfig_sha256={config}\nsources_sha256={sources}\n"
             + $"archive_sha256={(deviation == "bad-whole" ? new string('0', 64) : Digest(Archive))}\n"
             + $"producer_commit_sha={ProducerSha}\nworkflow_run_id=4242\n";
+        if (tag == Tag && deviation != "missing-snapshot")
+        {
+            var snapshot = deviation == "stale-snapshot" ? new string('5', 16) + new string('6', 48)
+                : deviation == "malformed-snapshot" ? "invalid" : new string('5', 64);
+            manifest += $"build_snapshot_sha256={snapshot}\n";
+        }
         if (!oldManifest) manifest += $"parts={(deviation == "invalid-parts" ? "0" : deviation == "empty-parts" ? "" : chunked ? "3" : "1")}\n";
         if (chunked)
         {

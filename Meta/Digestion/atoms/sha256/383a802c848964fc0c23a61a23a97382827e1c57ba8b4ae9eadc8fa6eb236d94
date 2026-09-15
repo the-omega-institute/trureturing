@@ -1,0 +1,85 @@
+**定理 11.3（奇偶观察在幂与减法扩签名下的精确细化）。** 固定基本观察
+
+$$
+q:\mathbb N\to\{0,1\},\qquad q(n)=n\bmod2.
+$$
+
+每个上下文是一个有限、恰含一个孔的运算表达式，其他输入位置允许填入任意固定自然数参数；参数在比较两个输入时保持不变。允许恒等上下文 $C(x)=x$。
+
+对总运算签名 $\Sigma$，定义
+
+$$
+n\equiv_\Sigma m
+\quad\Longleftrightarrow\quad
+\forall C,\ q(C(n))=q(C(m)),
+$$
+
+其中 $C$ 遍历该签名的全部有限一孔上下文。“最粗保 $q$ 的同余”指包含于 $\ker q$、且对所有基本运算相容的最大等价关系。[^rro11_contexts]
+
+令
+
+$$
+\Sigma_0=\{+,\times\},\qquad
+\Sigma_1=\{+,\times,\operatorname{pow}\},
+\qquad
+\operatorname{pow}(a,b)=a^b,
+$$
+
+其中幂是两个槽位都可参与上下文的总运算，并约定 $0^0=1$。则
+
+$$
+\equiv_{\Sigma_0}=R_{0,2}=\ker q,
+$$
+
+而
+
+$$
+n\equiv_{\Sigma_1}m
+\quad\Longleftrightarrow\quad
+q(n)=q(m)\ \land\ (n=0\Longleftrightarrow m=0).
+$$
+
+因此 $\equiv_{\Sigma_1}=R_{1,2}$，恰有三类：
+
+$$
+\{0\},\qquad
+\{2,4,6,\ldots\},\qquad
+\{1,3,5,\ldots\}.
+$$
+
+再分别向 $\Sigma_1$ 加入截断减法或严格部分减法：
+
+$$
+d_{\mathrm t}(a,b)=
+\begin{cases}
+a-b,&b\le a,\\
+0,&b>a,
+\end{cases}
+\qquad
+d_{\mathrm p}(a,b)=
+\begin{cases}
+\operatorname{ok}(a-b),&b\le a,\\
+\bot,&b>a.
+\end{cases}
+$$
+
+这里部分减法的“严格”指失败必须被记录并向外传播，准入域仍是 $b\le a$。对含部分运算的上下文，使用观察
+
+$$
+q_\bot(\operatorname{ok}(n))=\operatorname{ok}(q(n)),
+\qquad
+q_\bot(\bot)=\bot,
+$$
+
+其中失败标签与两个成功标签均不同。部分运算的强同余须同时保持准入性和成功结果的等价类。
+
+对 $\Sigma_{\mathrm t}=\Sigma_1\cup\{d_{\mathrm t}\}$ 与 $\Sigma_{\mathrm p}=\Sigma_1\cup\{d_{\mathrm p}\}$，均有
+
+$$
+\equiv_{\Sigma_{\mathrm t}}
+=\equiv_{\Sigma_{\mathrm p}}
+=\Delta_{\mathbb N}.
+$$
+
+于是这些观察商的类数依次为 $2$、$3$ 和 $\aleph_0$。这是相对于明确操作语言的身份细化，不是几何维数的增长。
+

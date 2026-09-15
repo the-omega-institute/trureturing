@@ -3,6 +3,7 @@ import hashlib
 import io
 import json
 import os
+import signal
 from pathlib import Path
 import shutil
 import struct
@@ -38,7 +39,7 @@ class NativeTestSupport:
     def setUp(self):
         self.temporary = tempfile.TemporaryDirectory(prefix='inspector-native.',
             dir=os.environ.get('STRATALINT_NATIVE_TMPDIR'))
-        self.addCleanup(self.temporary.cleanup)
+        self.addCleanup(self.cleanup_fixture)
         self.root = Path(self.temporary.name)
         self.write('lakefile.toml', '''name = "fixture"
 defaultTargets = ["Fixture", "Audit"]
@@ -124,8 +125,144 @@ root = "Cache"
         # A fresh synthetic Git repository bounds donor discovery to this
         # fixture. No host checkout or shared donor participates.
         subprocess.run(['git', 'init', '--quiet', str(self.root)], check=True, capture_output=True)
+    command_clock = staticmethod(time.monotonic)
+
+    @staticmethod
+    def command_processes():
+        # Same PID/start identity discipline as report-supervisor; ancestry and
+        # sessions, rather than process groups, include its nested worker group.
+        output = subprocess.check_output(['ps', '-axo', 'pid=,ppid=,pgid=,lstart=,stat=,command='],
+            text=True, env=dict(os.environ, LC_ALL='C'), timeout=5)
+        rows = {}
+        for line in output.splitlines():
+            fields = line.split(None, 9)
+            if len(fields) == 10:
+                pid, parent, group = map(int, fields[:3])
+                rows[pid] = dict(pid=pid, parent=parent, group=group,
+                    identity=' '.join(fields[3:8]), state=fields[8], command=fields[9])
+        return rows
+
+    def owned_processes(self, command, *, sessions=False):
+        process, identities = command
+        rows = self.command_processes()
+        owned = {pid for pid, identity in identities.items()
+                 if pid in rows and rows[pid]['identity'] == identity}
+        if process.poll() is None and process.pid in rows:
+            owned.add(process.pid)
+        if sessions:
+            # A short-lived parent may exit between samples. Its reparented
+            # children still belong to this command's private session, even
+            # after a supervisor calls setpgid. Never signal by name or cwd.
+            for pid in rows:
+                try:
+                    if os.getsid(pid) == process.pid:
+                        owned.add(pid)
+                except ProcessLookupError:
+                    pass
+        while True:
+            children = {pid for pid, row in rows.items() if row['parent'] in owned}
+            if children <= owned:
+                break
+            owned.update(children)
+        for pid in owned:
+            identities[pid] = rows[pid]['identity']
+        return [rows[pid] for pid in owned if not rows[pid]['state'].startswith('Z')]
+
+    def command_diagnostics(self, command, args, stdout, stderr):
+        roots = [self.root / '.lake/build/stratalint', self.root / 'tmp']
+        supervisor = Path(self.env.get('STRATALINT_SUPERVISOR_ROOT', self.root / 'tmp/supervisor'))
+        if supervisor.is_relative_to(self.root):
+            roots.append(supervisor)
+        logs = {}
+        for directory in roots:
+            for path in directory.rglob('*'):
+                if path.is_file() and (path.suffix in {'.log', '.jsonl'} or path.name == 'process-candidates'):
+                    try:
+                        logs[str(path.relative_to(self.root))] = path.read_bytes()[-16384:].decode('utf-8', 'replace')
+                    except FileNotFoundError:
+                        pass  # A live phase may be moving startup logs to final.
+        diagnostic = dict(command=list(args), timeout_seconds=120, fixture=str(self.root),
+            processes=self.owned_processes(command, sessions=True), logs=logs,
+            stdout=stdout, stderr=stderr)
+        self.last_command_diagnostic = diagnostic
+        print('NATIVE_COMMAND_TIMEOUT ' + json.dumps(diagnostic), file=sys.stderr, flush=True)
+        if hasattr(self, '_testMethodName'):
+            self.record_result('timeout', diagnostic)
+
+    def join_command(self, command):
+        process, _ = command
+        deadline = time.monotonic() + 10  # Cleanup grace, never command success.
+        terminate_until = time.monotonic() + 1
+        while True:
+            rows = self.owned_processes(command, sessions=True)
+            if not rows:
+                process.wait(timeout=max(0.01, deadline - time.monotonic()))
+                return
+            if time.monotonic() >= deadline:
+                raise RuntimeError('owned native processes survived cleanup; fixture retained: ' + repr(rows))
+            # Leaves first lets make/dotnet/supervisors reap their own children.
+            parents = {row['parent'] for row in rows}
+            for row in rows:
+                if row['pid'] in parents:
+                    continue
+                try:
+                    current = self.command_processes().get(row['pid'])
+                    if current and current['identity'] == row['identity']:
+                        os.kill(row['pid'], signal.SIGTERM if time.monotonic() < terminate_until else signal.SIGKILL)
+                except ProcessLookupError:
+                    pass
+            time.sleep(0.05)
+
+    def cleanup_fixture(self):
+        try:
+            for command in getattr(self, '_commands', []):
+                self.join_command(command)
+        except BaseException:
+            # TemporaryDirectory's finalizer must not delete under live writers.
+            self.temporary._finalizer.detach()
+            raise
+        self.temporary.cleanup()
+
+    def guarded_command(self, args, *, cwd=None, env=None, text=True, capture_output=True, timeout=120):
+        if timeout != 120 or not text or not capture_output:
+            raise ValueError('native fixture commands require the 120s guard and text capture')
+        temporary = self.root / 'tmp'
+        temporary.mkdir(exist_ok=True)
+        environment = dict(self.env if env is None else env, TMPDIR=str(temporary))
+        environment.setdefault('STRATALINT_SUPERVISOR_ROOT', str(temporary / 'supervisor'))
+        started = self.command_clock()
+        # Files keep output draining independent of descendant pipe lifetimes.
+        with tempfile.TemporaryFile() as stdout, tempfile.TemporaryFile() as stderr:
+            process = subprocess.Popen(args, cwd=cwd or self.root, env=environment,
+                stdout=stdout, stderr=stderr, start_new_session=True)
+            command = (process, {})
+            if not hasattr(self, '_commands'):
+                self._commands = []
+            self._commands.append(command)
+            try:
+                while True:
+                    self.owned_processes(command)
+                    if self.command_clock() - started >= timeout:
+                        stdout.seek(0); stderr.seek(0)
+                        out, err = stdout.read().decode('utf-8', 'replace'), stderr.read().decode('utf-8', 'replace')
+                        self.command_diagnostics(command, args, out, err)
+                        raise subprocess.TimeoutExpired(args, timeout, output=out, stderr=err)
+                    if process.poll() is not None:
+                        break
+                    time.sleep(0.1)
+            finally:
+                self.join_command(command)
+                self._commands.remove(command)
+                if getattr(self, 'last_command_diagnostic', {}).get('command') == list(args):
+                    print('NATIVE_COMMAND_CLEANUP ' + json.dumps(dict(
+                        pid=process.pid, owned_live_processes=0, direct_child_exit=process.returncode)),
+                        file=sys.stderr, flush=True)
+            stdout.seek(0); stderr.seek(0)
+            return subprocess.CompletedProcess(args, process.returncode,
+                stdout.read().decode('utf-8', 'replace'), stderr.read().decode('utf-8', 'replace'))
+
     def ensure(self):
-        result = subprocess.run(['make', 'lean-cache-ensure'], cwd=self.root, env=self.env,
+        result = self.guarded_command(['make', 'lean-cache-ensure'], cwd=self.root, env=self.env,
             text=True, capture_output=True, timeout=120)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         return json.loads(next(line.removeprefix('LEAN_CACHE ') for line in result.stdout.splitlines()
@@ -145,7 +282,7 @@ root = "Cache"
             resultGid='result-gid', resultModule='Fixture', resultSelector='result')]))
     def run_lake(self, *args, success=True):
         self.ensure()
-        result = subprocess.run([self.lake, *args], cwd=self.root, env=self.env, text=True, capture_output=True, timeout=120)
+        result = self.guarded_command([self.lake, *args], cwd=self.root, env=self.env, text=True, capture_output=True, timeout=120)
         if success:
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         elif success is False:
@@ -264,3 +401,89 @@ root = "Cache"
         self.assertIn(hidden['statement_id'],
             {materials.declaration_statement_id(module['source_path'], hidden['kind'], hidden['name_key'], r['statement_material'])
              for r in identities if r['part'] == 'private'})
+
+
+class GuardedCommandTests(unittest.TestCase):
+    """Lifecycle tests need no Lean build, network, or host timing verdict."""
+    def setUp(self):
+        self.fixture = NativeTestSupport()
+        self.fixture.temporary = tempfile.TemporaryDirectory(prefix='inspector-lifecycle.')
+        self.fixture.root = Path(self.fixture.temporary.name)
+        self.fixture.env = dict(os.environ)
+        self.addCleanup(self.fixture.cleanup_fixture)
+
+    def test_command_preserves_output_and_nonzero_exit(self):
+        for status in [0, 7]:
+            with self.subTest(status=status):
+                result = self.fixture.guarded_command([sys.executable, '-c',
+                    f'import sys; print("out"); print("err", file=sys.stderr); sys.exit({status})'])
+                self.assertEqual((result.returncode, result.stdout, result.stderr), (status, 'out\n', 'err\n'))
+
+    def test_timeout_joins_writers_across_groups_before_removal(self):
+        root = self.fixture.root
+        writer = '''import os, signal, sys, time
+from pathlib import Path
+root, name = Path(sys.argv[1]), sys.argv[2]
+signal.signal(signal.SIGTERM, signal.SIG_IGN)
+with (root / (name + '.ticks')).open('a') as out:
+    out.write('writing\\n'); out.flush()
+    (root / (name + '.ready')).write_text(str(os.getpid()))
+    while True:
+        out.write('writing\\n'); out.flush(); time.sleep(0.01)
+'''
+        (root / 'writer.py').write_text(writer)
+        parent = '''import os, subprocess, sys
+from pathlib import Path
+root = Path(sys.argv[1])
+(root / 'parent.ready').write_text(str(os.getpid()))
+children = [subprocess.Popen([sys.executable, str(root / 'writer.py'), str(root), name],
+    start_new_session=separate) for name, separate in [('same', False), ('separate', True)]]
+for child in children: child.wait()
+'''
+        self.fixture.write('.lake/build/stratalint/raw-lean-report.json.logs/report.stdout.log', 'report active\n')
+        self.fixture.write('.lake/build/stratalint/raw-lean-report.json.logs/native-work.jsonl', '{"kind":"extract"}\n')
+        self.fixture.write('tmp/stratalint-inspector-startup.fixture/ensure.stdout.log', 'ensure active\n')
+        control = subprocess.Popen([sys.executable, '-c', 'import signal; signal.pause()'])
+        self.addCleanup(lambda: (control.kill(), control.wait()) if control.poll() is None else None)
+        def safety_cleanup():
+            # Also keep a broken/mutated cleanup implementation safe to test.
+            for name in ['same', 'separate', 'parent']:
+                marker = root / (name + '.ready')
+                if marker.exists():
+                    pid = int(marker.read_text())
+                    row = self.fixture.command_processes().get(pid)
+                    if row and str(root) in row['command']:
+                        try:
+                            os.kill(pid, signal.SIGKILL)
+                        except ProcessLookupError:
+                            pass
+                    if name == 'parent':
+                        try:
+                            os.waitpid(pid, 0)
+                        except ChildProcessError:
+                            pass
+        self.addCleanup(safety_cleanup)
+        started = time.monotonic()
+        def deadline_after_ready():
+            if time.monotonic() - started > 120:
+                raise RuntimeError('infrastructure-hang-guard expired: writers never ready')
+            return 121 if all((root / (name + '.ready')).exists() for name in ['same', 'separate']) else 0
+        with patch.object(self.fixture, 'command_clock', side_effect=deadline_after_ready):
+            with self.assertRaises(subprocess.TimeoutExpired) as expired:
+                self.fixture.guarded_command([sys.executable, '-c', parent, str(root)])
+        self.assertEqual(expired.exception.timeout, 120)
+        pids = [int((root / (name + '.ready')).read_text()) for name in ['same', 'separate']]
+        for pid in pids:
+            with self.assertRaises(ProcessLookupError):
+                os.kill(pid, 0)
+        self.assertIsNone(control.poll(), 'cleanup must not signal an unrelated process')
+        diagnostic = self.fixture.last_command_diagnostic
+        self.assertTrue(set(pids).issubset({row['pid'] for row in diagnostic['processes']}))
+        groups = {row['pid']: row['group'] for row in diagnostic['processes']}
+        self.assertNotEqual(groups[pids[0]], groups[pids[1]])
+        self.assertIn('report active', json.dumps(diagnostic))
+        self.assertIn('ensure active', json.dumps(diagnostic))
+        self.assertIn('extract', json.dumps(diagnostic))
+        self.fixture.cleanup_fixture()
+        self.assertFalse(root.exists())
+        self.assertIsNone(control.poll())

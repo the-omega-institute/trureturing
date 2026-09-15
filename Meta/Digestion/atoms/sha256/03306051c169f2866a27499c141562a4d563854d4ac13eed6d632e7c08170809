@@ -1,0 +1,63 @@
+## PN.2 正谱测度之差中的长平台
+
+**定义。** 对 $q\ge1$ 和不同的 $\lambda_1,\ldots,\lambda_q\in(0,1)$，令
+
+$$
+c_i=\prod_{\ell\ne i}\frac{1-\lambda_\ell}{\lambda_i-\lambda_\ell},
+\qquad u_n=\sum_{i=1}^q c_i\lambda_i^n.
+$$
+
+**定理 PN1。** 对所有 $n\ge0$，$0\le u_n\le1$；对 $0\le n<q$，$u_n=1$。此外
+
+$$
+\sum_{n\ge0}u_n=\sum_{i=1}^q\frac1{1-\lambda_i}.
+$$
+
+（文献：A. Sen, N. Balakrishnan, Statist. Probab. Lett. 43 (1999) 421–426, Theorem 1）
+
+**证明。** 取相互独立的正整数值几何变量 $G_i$，$\Pr(G_i=k)=(1-\lambda_i)\lambda_i^{k-1}$，并令 $T=\sum_iG_i$。其概率生成函数为
+
+$$
+\mathbb E z^T=\frac{z^q\prod_i(1-\lambda_i)}{\prod_i(1-\lambda_i z)}.
+$$
+
+生存概率的生成函数满足
+
+$$
+\sum_{n\ge0}\Pr(T>n)z^n
+=\frac{1-\mathbb E z^T}{1-z}.
+$$
+
+右式在 $z=1$ 的因子相消。因节点不同且非零，其部分分式为 $\sum_i c_i/(1-\lambda_i z)$：在 $z=1/\lambda_i$ 处乘以 $1-\lambda_i z$ 后取值，所得系数正是所定义的 $c_i$。所以 $u_n=\Pr(T>n)$。概率属于 $[0,1]$，且 $T\ge q$，给出全部逐项结论。非负整数变量的尾和等于期望，故总和为 $\mathbb ET=\sum_i(1-\lambda_i)^{-1}$。也可从有限个绝对收敛的几何级数求和得到同一值。证毕。
+
+**命题。** 上述族可通过显式递归构造而无需预先给出生存概率表示。空节点族取零序列。若尾节点族的权重为 $w_j$，加入不同的新节点 $a$ 后，令
+
+$$
+\widetilde w_j=\frac{(1-a)w_j}{\lambda_j-a},
+\qquad w_0=1-\sum_j\widetilde w_j.
+$$
+
+所得实际指数和满足
+
+$$
+f_0=1,\qquad f_{n+1}=a f_n+(1-a)v_n,
+$$
+
+其中 $v$ 是尾节点族的指数和。在全部节点属于 $[0,1]$ 时，该递归给出所有时刻 $f_n\in[0,1]$，以及节点数以内的 $f_n=1$，包括端点节点和空族的相应边界。
+
+**证明。** 常数项由 $w_0$ 的定义得到。展开 $f_{n+1}-a f_n$，首节点项消失，其余每项的 $(\lambda_j-a)$ 消去分母，得到 $(1-a)v_n$。对节点数及时间归纳，递推右侧是两个 $[0,1]$ 值的凸组合；在初始平台内两个值均为一。证毕。
+
+**推论。** 对任意正质量预算 $M$ 和任意有限不同节点族，节点均在 $[0,1]$，存在 $\delta>0$ 以及两组非负权重 $w_i^+,w_i^-$，使
+
+$$
+\sum_i(w_i^++w_i^-)\le M,
+\qquad 0\le m_n^+-m_n^-\le\delta\quad(n\ge0),
+\qquad m_n^+-m_n^-=\delta\quad(n<q),
+$$
+
+其中 $m_n^\pm=\sum_iw_i^\pm\lambda_i^n$。
+
+**证明。** 对递归构造的权重 $c_i$，令 $S=\sum_i|c_i|$，取 $\delta=M/(1+S)$，并取 $w_i^+=\delta\max(c_i,0)$、$w_i^-=\delta\max(-c_i,0)$。合并质量为 $\delta S\le M$，矩差为 $\delta u_n$；前一命题覆盖端点和空族。证毕。
+
+这里正性属于两份测度各自；它们之差可以包含精确抵消。上述结论没有对单份正测度声称其自身具有长平台。
+

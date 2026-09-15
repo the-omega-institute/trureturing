@@ -1,0 +1,6 @@
+**命题 PN2。** PN1 中这些节点的系数满足
+
+$$
+S_q=\sum_i|c_i|\le B_\kappa^{q-1},\qquad B_\kappa=24/\kappa.
+$$
+

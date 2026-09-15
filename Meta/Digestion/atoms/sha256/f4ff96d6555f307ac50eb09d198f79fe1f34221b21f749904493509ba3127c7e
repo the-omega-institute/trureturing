@@ -1,0 +1,38 @@
+### 15.6 定理：全时间绝对噪声下的谱底 minimax 阶
+
+固定 $0\leq E_-<E_+<\infty$ 与 $0<\eta<1$。令 $\mathcal M$ 为所有支撑于 $[E_-,E_+]$ 的概率测度 $\sigma$，要求其最低支撑点
+
+\[
+g(\sigma)=\min\operatorname{supp}\sigma
+\]
+
+具有质量 $\sigma(\{g(\sigma)\})\geq\eta$。观察为任意函数 $Y:[0,\infty)\to\mathbb R$，满足
+
+\[
+\sup_{t\geq0}|Y(t)-C_\sigma(t)|\leq\varepsilon,
+\qquad C_\sigma(t)=\int e^{-tE}\,\sigma(dE).
+\]
+
+对任意估计函数 $\widehat g$，定义统一最坏误差及 minimax 误差
+
+\[
+\mathcal R(\varepsilon)=\inf_{\widehat g}\ \sup_{\sigma\in\mathcal M}
+\sup_{\|Y-C_\sigma\|_\infty\leq\varepsilon}
+|\widehat g(Y)-g(\sigma)|.
+\tag{15.11}
+\]
+
+存在只依赖固定参数的正数 $c,C,\varepsilon_0$，使
+
+\[
+\boxed{
+\frac{c}{\log^2(1/\varepsilon)}
+\leq\mathcal R(\varepsilon)
+\leq\frac{C}{\log^2(1/\varepsilon)}
+\qquad(0<\varepsilon<\varepsilon_0).
+}
+\tag{15.12}
+\]
+
+下界可以只用有限原子测度实现，但其原子数随精度增加；定理不规定一个固定维数上限。
+

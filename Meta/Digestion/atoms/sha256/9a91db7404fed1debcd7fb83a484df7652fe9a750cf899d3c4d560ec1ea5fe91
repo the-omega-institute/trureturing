@@ -1,0 +1,2 @@
+**证明。** 条件于 $X_0=b$，$\mathbb E[e(X_t)\mid X_0=b]=(K^t e)(b)$，再对初态求期望即为 $\langle e,K^t e\rangle_\pi$。证毕。
+

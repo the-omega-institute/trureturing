@@ -1,0 +1,26 @@
+## PN.3 一个显式指数质量代价
+
+**定义。** 对 $q\ge2$ 取等距节点
+
+$$
+\lambda_i=\frac\kappa4+\frac\kappa4\frac{i}{q-1},
+\qquad 0\le i<q.
+$$
+
+$q=1$ 时取唯一节点 $\kappa/4$。始终有 $\kappa/4\le\lambda_i\le\kappa/2$。
+
+**命题 PN2。** PN1 中这些节点的系数满足
+
+$$
+S_q=\sum_i|c_i|\le B_\kappa^{q-1},\qquad B_\kappa=24/\kappa.
+$$
+
+**证明。** $q=1$ 时 $S_1=1$。对 $q\ge2$，令 $r=q-1$，网格间距为 $h=\kappa/(4r)$。每个系数的分子绝对值不超过一，分母绝对值等于 $h^r i!(r-i)!$。因此
+
+$$
+S_q\le(4r/\kappa)^r\sum_{i=0}^r\frac1{i!(r-i)!}
+=\frac{(8r/\kappa)^r}{r!}.
+$$
+
+由 $\log(r!)=\sum_{j=1}^r\log j\ge\int_1^r\log x\,dx\ge r\log r-r$ 得 $r!\ge(r/e)^r$。结合 $e<3$，得到 $S_q\le(24/\kappa)^r$。证毕。
+

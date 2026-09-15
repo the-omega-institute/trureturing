@@ -1,0 +1,14 @@
+**定义。** 沿用 FM.6 的阶乘比
+
+$$
+A(n)=\frac{(30n)!n!}{(15n)!(10n)!(6n)!},\qquad n\in\mathbb N,
+$$
+
+并对正整数 $q$ 置
+
+$$
+f(n,q)=\left\lfloor\frac{30n}{q}\right\rfloor+\left\lfloor\frac n q\right\rfloor-
+\left\lfloor\frac{15n}{q}\right\rfloor-\left\lfloor\frac{10n}{q}\right\rfloor-
+\left\lfloor\frac{6n}{q}\right\rfloor.
+$$
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:59de07c1e7c7c66d06216520f7420c3f4a00049f38ea6a61234c4b75ab3a7be5
+  normalized_sha256: sha256:59de07c1e7c7c66d06216520f7420c3f4a00049f38ea6a61234c4b75ab3a7be5
+cas_ref: sha256:59de07c1e7c7c66d06216520f7420c3f4a00049f38ea6a61234c4b75ab3a7be5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: tsum_sq_fourierCoeff 对有限指数和的连续函数给 Parseval，fourierCoeff_toLp 与整数频率计数把各系数平方化为元组计数平方；AddCircle.intervalIntegral_preimage 和 AddCircle.volume_eq_smul_haarAddCircle 在周期一将 Haar 积分准确化为零一区间积分，fourier_coe_apply 与 Nat.le_floor_iff' 保留实阈值和全部整数频率之和，仓内无冻结 GID。
+    previous_atom_id: 872dda328c9a819071a1f55aa7d66ba8307fe2eb46f0af161057225ce2bdd16b
+    next_atom_id: 15dd419c45561e0e62b56aa894bf16befe0c874f88febf252c8bbb587d88ecfc

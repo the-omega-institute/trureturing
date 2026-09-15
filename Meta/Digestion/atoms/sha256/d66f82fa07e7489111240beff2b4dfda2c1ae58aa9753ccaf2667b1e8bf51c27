@@ -1,0 +1,22 @@
+**证明。** 分块消元给出形式幂级数恒等式
+
+$$
+R(z)=\sum_{n\ge0}s_nz^n,\qquad
+Q(z)=R(z)^{-1}=1-az-z^2\sum_{j\ge0}m_jz^j.
+$$
+
+由于 $D\ge0$，$m_j\ge0$。对 $I-K\ge0$ 使用 Schur 补，且 $I-D$ 可逆，得到
+
+$$
+a+\sum_{j\ge0}m_j
+=a+\langle b,(I-D)^{-1}b\rangle\le1.
+$$
+
+因此 $Q$ 的系数绝对和不超过 $2$，另一个模型同样成立。由
+
+$$
+\widetilde Q-Q=\widetilde Q\,(R-\widetilde R)\,Q,
+$$
+
+截至 $L$ 次的任一系数差不超过 $2\eta\cdot2$。第 $j+2$ 次系数正是负的记忆核差，得到结论。此证明要求两个响应序列均由相容的正收缩模型产生。证毕。
+
