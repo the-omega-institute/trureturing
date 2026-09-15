@@ -78,7 +78,7 @@ Assume delta>=0, theta nonzero, and J*delta<=1/2. There exists one observation s
 
 Strong induction on the actual renewal recurrence proves that all positive-time responses lie between zero and 2*delta. The common data are the midpoint of the responses. A coefficientwise triangle inequality, summed over the J actual taps, gives the minimax obstruction. The all-time quantifier makes additional observations at the same worst-case precision insufficient to remove it.
 
-With delta=epsilon>0, J is unrestricted apart from J*epsilon<=1/2. For any fixed C>=0 independent of J, choosing J>2*C makes the lower bound exceed C*epsilon. Thus uniformly epsilon-accurate observations do not give dimension-independent O(epsilon) recovery over this family in the first-J absolute (l1) loss, or in a full-memory loss that dominates it.
+Here J ranges over arbitrary natural values subject to the stated hypothesis J*delta<=1/2. The theorem lower-bounds the first-J absolute (l1) loss, and also any full-memory loss that dominates that prefix. It makes no claim about losses outside those scopes.
 
 A killed Markov realization, a similarity realization with strictly contractive full Hilbert dynamics, and matching asymptotic upper and lower rates are outside this module and are not established here.
 

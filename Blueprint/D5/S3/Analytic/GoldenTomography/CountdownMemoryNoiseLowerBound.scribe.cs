@@ -96,12 +96,10 @@ internal sealed class CountdownMemoryNoiseLowerBoundDocument : IScribeDocumentDe
                         + "obstruction. The all-time quantifier makes additional observations "
                         + "at the same worst-case precision insufficient to remove it.")),
                     Paragraph(Text(
-                        "With delta=epsilon>0, J is unrestricted apart from J*epsilon<=1/2. "
-                        + "For any fixed C>=0 independent of J, choosing J>2*C makes the "
-                        + "lower bound exceed C*epsilon. Thus uniformly epsilon-accurate "
-                        + "observations do not give dimension-independent O(epsilon) recovery "
-                        + "over this family in the first-J absolute (l1) loss, or in a "
-                        + "full-memory loss that dominates it.")),
+                        "Here J ranges over arbitrary natural values subject to the stated "
+                        + "hypothesis J*delta<=1/2. The theorem lower-bounds the first-J "
+                        + "absolute (l1) loss, and also any full-memory loss that dominates "
+                        + "that prefix. It makes no claim about losses outside those scopes.")),
                     Paragraph(Text(
                         "A killed Markov realization, a similarity realization with strictly "
                         + "contractive full Hilbert dynamics, and matching asymptotic upper "
