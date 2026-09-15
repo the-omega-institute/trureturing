@@ -22600,3 +22600,288 @@ $$
 顺序才会进入可观测量；在标量 $$U(1)$$ 层，交换律会把这部分信息全部压掉。这个区别与第 97 节的未来分离深度、第 98 节的切口 bond、第 100 节的联合份额访问共同说明：历史预算取决于允许的读出代数，而不是只取决于合法 Zeckendorf 标签的数量。
 
 本节复用 `prime_step_frequency_zeckendorf`、`prime_step_phase_euler`、`long_step_phase_factorization`、`ordered_phase_product_collapse`、`adjacent_step_order_invisible` 和 `complex_mode_amplitude_phase_dichotomy`。Lean 已证明的是这些显式频率—相位模型中的代数关系；它没有证明物理系统必然采用该频率定义，也没有把标量相位自动升级为量子 Hamiltonian 或实验共振谱。
+
+## 102. 时间有序记忆曲率：顺序何时重新进入观测
+
+第 101 节给出一个严格边界：如果每一步只留下一个复标量相位，那么不同频率的乘积落入交换的 $$U(1)$$，步骤排列会被压成总频率。仓库中另一个更强的构造说明，顺序信息并不必然消失；它可以转移到一个被保留、并再次参与演化的记忆坐标。
+
+### 102.1 同一个完整寄存器上的逐槽演化
+
+`SequentialRegisterCircuit` 把寄存器写成
+
+$$
+\operatorname{Register}(A,K,n)=(\operatorname{Fin}(n)\to A)\times K.
+$$
+
+第一因子保存已经访问过的物理槽，第二因子是共享记忆。`firstGate` 和 `tailGate` 都是同一个完整 Hilbert 空间上的幺正等距同构；`partial_circuit_succ_gate` 进一步给出：第 $$m+1$$ 步是在保留全部槽的空间上，追加一个明确的局部门
+
+$$
+\operatorname{partialCircuit}(U,n,m+1,t)
+=
+\operatorname{partialCircuit}(U,n,m,t)\circ
+\operatorname{slotGate}(U(t+m),n,m).
+$$
+
+因此，未被当前读出的槽并没有从整体动力学中删除。它们仍可在以后门中参与作用。对空白初态，`circuit_blank_succ` 与 `circuit_basis_coefficients` 将最终振幅递归为有限链的系数；这正是“历史被保留为可再次访问的寄存器”而不是“历史已经被重新命名为一个当前数值”的形式化版本。
+
+这一区别很重要：若每一步都把旧寄存器替换成新的无记忆环境，可以得到逐步通道的乘法衰减；若同一寄存器继续参与，后续门会看到旧的相关性，顺序效应就可能返回。
+
+### 102.2 时间有序事件的仿射记忆律
+
+在 `TimeOrderedPrimeMemoryCocycle` 中，一个带时间的事件包含局部标量因子 $$\lambda$$、基准注入 $$b$$、频率 $$\omega$$ 和时间 $$t$$。实际注入为
+
+$$
+\widetilde b
+=
+\exp(-i t\omega)b.
+$$
+
+给定稳定因子 $$a$$，它作用在二元状态 $$ (x,m) $$ 上的更新为
+
+$$
+(x,m)
+\longmapsto
+\bigl(a x+\widetilde b\,m,\;\lambda m\bigr).
+$$
+
+对事件列表 $$W=(e_1,\ldots,e_n)$$，源码定理 `time_ordered_evolution_affine` 证明整体作用仍是上三角仿射形式：
+
+$$
+(x,m)
+\longmapsto
+\left(
+ a^n x+M_a(W)m,
+ \Lambda(W)m
+\right),
+$$
+
+其中 $$\Lambda(W)=\prod_r\lambda_r$$ 是标量词，而 $$M_a(W)$$ 是记忆坐标的有序累积。
+
+对前后两段事件词，`time_ordered_cocycle_append_laws` 给出精确拼接律
+
+$$
+\Lambda(W_1W_2)=\Lambda(W_1)\Lambda(W_2),
+$$
+
+以及
+
+$$
+M_a(W_1W_2)
+=
+ a^{|W_2|}M_a(W_1)+M_a(W_2)\Lambda(W_1).
+$$
+
+第二式不是普通的交换乘法。后发生的词会把先发生的记忆注入乘上稳定传播因子；先发生的标量又会调制后续记忆。顺序因此进入一个半直积样的仿射结构，即使标量坐标本身仍然满足交换乘法。
+
+### 102.3 两步交换曲率是顺序的最小见证
+
+对两个事件 $$P,Q$$，`time_ordered_two_event_swap_curvature` 证明：交换次序时，标量输出完全相同，而记忆坐标的差为
+
+$$
+\Delta_{P,Q}
+=
+(a-\lambda_Q)\widetilde b_P
+-
+(a-\lambda_P)\widetilde b_Q.
+$$
+
+也就是
+
+$$
+\boxed{
+M_a(PQ)-M_a(QP)=\Delta_{P,Q}.
+}
+$$
+
+如果初始记忆为 $$m$$，完整状态的第一坐标差为 $$\Delta_{P,Q}m$$；第二坐标相同。于是：
+
+$$
+\text{标量读出相同}
+\quad\not\Rightarrow\quad
+\text{联合状态相同}.
+$$
+
+`PrimeSwapCurvature.prime_swap_curvature_spec` 还证明三件事：
+
+$$
+\Delta_{Q,P}=-\Delta_{P,Q},
+$$
+
+记忆原点变换
+
+$$
+\widetilde b_r\mapsto
+\widetilde b_r+(a-\lambda_r)c
+$$
+
+不改变 $$\Delta_{P,Q}$$，并且在两个共振间隙非零时，
+
+$$
+\Delta_{P,Q}
+=
+(a-\lambda_P)(a-\lambda_Q)
+\left(
+\frac{\widetilde b_P}{a-\lambda_P}
+-
+\frac{\widetilde b_Q}{a-\lambda_Q}
+\right).
+$$
+
+因此交换曲率不是任意坐标选择造成的假象。它是一个对记忆原点平移不变的顺序缺陷；曲率为零，当且仅当两个事件给出的局部观测者原点估计相同（在非共振条件下）。
+
+### 102.4 Zeckendorf 频率进入记忆，而不仅是标量相位
+
+把第 101 节的 Zeckendorf 频率选择接入事件频率：
+
+$$
+\omega_{p,\ell}
+=
+\begin{cases}
+\varphi^2\log p,&2\notin\operatorname{wdigits}(\ell),\\
+\varphi\log p,&2\in\operatorname{wdigits}(\ell).
+\end{cases}
+$$
+
+则两个事件的有效注入为
+
+$$
+\widetilde b_{p,\ell}
+=
+\exp(-it\omega_{p,\ell})b_{p,\ell}.
+$$
+
+Zeckendorf 位仍只决定局部旋转速度；顺序是否可见，取决于这些旋转后的注入是否进入共享记忆，以及稳定因子与局部因子是否产生非零曲率：
+
+$$
+\Delta_{P,Q}
+=
+(a-\lambda_Q)e^{-it_P\omega_P}b_P
+-
+(a-\lambda_P)e^{-it_Q\omega_Q}b_Q.
+$$
+
+所以同一组 Zeckendorf 标签可以有两种完全不同的接口：
+
+$$
+\Delta_{P,Q}=0
+\quad\Longrightarrow\quad
+\text{该记忆读出对这次交换不可见},
+$$
+
+而
+
+$$
+\Delta_{P,Q}\ne0
+\quad\Longrightarrow\quad
+\text{在访问记忆坐标的后续实验中，顺序可被区分}.
+$$
+
+这把“历史是否存在”改写成了可计算问题：不是问标签是否记录了先后，而是问允许的读出是否包含一个对交换曲率敏感的记忆坐标。
+
+### 102.5 对“需要保留多少历史”的新结论
+
+现在至少可以区分三个层次：
+
+$$
+\boxed{
+\begin{aligned}
+\text{只保留标量相位}
+&\Rightarrow\text{顺序按交换律折叠};\\
+\text{保留共享记忆的一维坐标}
+&\Rightarrow\text{两步顺序由 }\Delta_{P,Q}\text{ 检验};\\
+\text{保留完整寄存器与访问协议}
+&\Rightarrow\text{可继续检验更长词的历史回流}.
+\end{aligned}
+}
+$$
+
+因此，“稳定经典现实”所需的历史预算不能只按记录次数或 Zeckendorf 合法字串数量计数。对一个给定实验族，最小预算至少要保留所有会在预测窗口内产生非零交换曲率、回流核或联合恢复效应的坐标。若任务只问总频率，标量接口可能已经闭合；若任务问路径顺序、素数轴切换或可逆恢复，就必须保留共享记忆，或保留足以重建它的寄存器子空间。
+
+本节直接复用 `SequentialRegisterCircuit` 的逐槽幺正组合、`time_ordered_evolution_affine` 的仿射演化、`time_ordered_cocycle_append_laws` 的时间有序拼接律、`time_ordered_two_event_swap_curvature` 的交换缺陷，以及 `prime_swap_curvature_spec` 的反对称性与规范不变性。Lean 已证明这些有限列表和有限寄存器模型中的精确代数关系；它没有证明所有物理系统都具有该记忆坐标，也没有把非零曲率自动等同于实验上已经完成的测量。后者仍取决于实际可访问的读出、噪声模型和预测时间窗。
+
+## 103. 连续可见流与离散隐藏扇区
+
+时间有序记忆说明了“已有记忆怎样让顺序返回”。Solenoid 模块补上另一个边界：有些隐藏差异不是被连续动力学慢慢抹平，而是根本不属于同一个连续路径扇区。
+
+### 103.1 每条连续历史的唯一分解
+
+`universal_solenoid_visible_hidden_motion_classification` 证明，任意连续历史 $$\gamma:\mathbb R\to\operatorname{UniversalSolenoid}$$ 都有唯一数据
+
+$$
+(a,h)\in C(\mathbb R,\mathbb R)\times\operatorname{projection.ker}
+$$
+
+使得
+
+$$
+\boxed{
+\gamma(t)=\operatorname{realFlow}(a(t))+h.
+}
+$$
+
+其中 $$a(t)$$ 是可见的实流坐标，而 $$h$$ 是恒定的隐藏偏移；`frozen_streamline_throat_component_constant` 进一步把对应隐藏地址写成恒定的 $$\operatorname{hiddenKernelAddEquiv}^{-1}(h)$$。于是，在只允许连续实流操作的实验族中，状态自然分解为
+
+$$
+\text{可见相位流}\times\text{隐藏扇区标签}.
+$$
+
+这给出了一个比“历史可能存在”更严格的闭合候选：如果任务只允许沿 $$\operatorname{realFlow}(t)$$ 演化，那么隐藏扇区可以作为守恒的块索引；若只看投影，则它是一个潜变量。
+
+### 103.2 同投影不等于同一连续可达类
+
+同一投影纤维中的两个点不一定能由连续路径连接。`visible_path_hidden_address_dichotomy` 给出
+
+$$
+\operatorname{Joined}(x,y)
+\iff
+\exists t\in\mathbb R,
+\quad
+ y=\operatorname{realFlow}(t)+x.
+$$
+
+更精确地说，底层 `same_fiber_path_orbit_criterion` 将同投影时的可达时间收缩到整数轨道；若两个点的隐藏坐标不同，分类定理构造出非零整数作用
+
+$$
+\operatorname{jump}:\mathbb Z\to\operatorname{HiddenAddress}
+$$
+
+并证明不存在连续加法流把整数嵌入延拓为该跳跃：
+
+$$
+\neg\exists\,\operatorname{flow}:\mathbb R\to\operatorname{HiddenAddress},
+\quad
+\operatorname{flow}|_{\mathbb Z}=\operatorname{jump}.
+$$
+
+因此跨扇区变化若要发生，必须由离散操作、显式记忆寄存器或改变实验协议来承担。它不能被悄悄解释成同一连续相位的更细刻度。
+
+这里有一个必须保留的拓扑限制：该结果说的是连续路径可达性与隐藏地址的刚性，不是说整个空间不连通。源码同时证明 UniversalSolenoid 连通而非道路连通；拓扑连通与连续路径可达是两种不同性质。
+
+### 103.3 对经典接口的影响
+
+设粗观察只保留投影 $$\pi(x)$$，而不保留隐藏商坐标
+
+$$
+ c(x)=\operatorname{QuotientAddGroup.mk'}(\operatorname{range}(\operatorname{realFlowHom}))(x).
+$$
+
+对仅由连续实流组成的操作族，有
+
+$$
+ c(\gamma(t))=c(\gamma(0)).
+$$
+
+所以这类操作下，丢掉 $$c$$ 不会在同一连续扇区内立即造成预测分裂；它只是把不同扇区压进同一个粗标签。可是，一旦实验族加入离散 jump、可访问的隐藏寄存器，或第 102 节中的共享记忆回流，两个原先相同的粗读数就可能在后续被分开。
+
+因此预测闭合必须带有操作族下标：
+
+$$
+\text{closure}\bigl(\pi,\mathfrak T_{\mathrm{continuous}}\bigr)
+\ne
+\text{closure}\bigl(\pi,\mathfrak T_{\mathrm{continuous}}\cup
+\mathfrak T_{\mathrm{jump}}\bigr).
+$$
+
+这把“保留多少历史”具体化为：先规定允许的时间操作，再判断隐藏扇区是否可以安全商掉。若未来协议允许跨扇区访问，当前的经典接口必须补回 $$c$$，或保留一个能恢复它的记忆寄存器。
+
+本节使用 `visible_path_hidden_address_dichotomy` 与 `universal_solenoid_visible_hidden_motion_classification` 的现成结论。Lean 已证明的是 UniversalSolenoid、连续路径和 HiddenAddress 之间的这些结构关系；它没有证明现实物理系统必然采用该拓扑模型，也没有把“隐藏扇区”自动识别成实验中的某个具体粒子或场。

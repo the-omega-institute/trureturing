@@ -1,0 +1,24 @@
+### 103.1 每条连续历史的唯一分解
+
+`universal_solenoid_visible_hidden_motion_classification` 证明，任意连续历史 $$\gamma:\mathbb R\to\operatorname{UniversalSolenoid}$$ 都有唯一数据
+
+$$
+(a,h)\in C(\mathbb R,\mathbb R)\times\operatorname{projection.ker}
+$$
+
+使得
+
+$$
+\boxed{
+\gamma(t)=\operatorname{realFlow}(a(t))+h.
+}
+$$
+
+其中 $$a(t)$$ 是可见的实流坐标，而 $$h$$ 是恒定的隐藏偏移。对应的隐藏地址分量在整个连续时间段内保持不变。于是，在只允许连续实流操作的实验族中，状态自然分解为
+
+$$
+\text{可见相位流}\times\text{隐藏扇区标签}.
+$$
+
+这给出了一个比“历史可能存在”更严格的闭合候选：如果任务只允许沿 $$\operatorname{realFlow}(t)$$ 演化，那么隐藏扇区可以作为守恒的块索引；若只看投影，则它是一个潜变量。
+
