@@ -1,0 +1,10 @@
+对每个 $x\in K$ 和 $p\in\mathsf X_L$，完整图码分别为
+$$
+\operatorname{Enc}(x)=\operatorname{Pack}
+\{\langle\operatorname{NatZ}(j),\operatorname{NatZ}(x_j)\rangle_Z:j\in\omega\},
+$$
+$$
+\operatorname{Enc}(p)=\operatorname{Pack}
+\{\langle\operatorname{NatZ}(j),\operatorname{NatZ}(p_j)\rangle_Z:j<L\}.
+$$
+它们保留每个零值边；$L=0$ 时第二式为空字的码。

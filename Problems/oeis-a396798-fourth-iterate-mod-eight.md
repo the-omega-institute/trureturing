@@ -101,9 +101,11 @@ finite certificate.
 
 The eighth comment is separately settled by
 `IterateProductFourFiveEighthModEight.result` for n>1. Comments 2 and 6
-concern the second and sixth iterates for n>3. Comments 3,5,7 concern their
-own coefficient periods for n>1. Those five clauses and the proposed
-repair to the first comment remain separate unresolved obligations.
+concern the second and sixth iterates for n>3. Comments 3 and 7 concern their
+own coefficient periods for n>1. These four clauses and the proposed
+repair to the first comment remain separate unresolved obligations. The
+fifth comment is separately settled by `IterateProductFourFiveFifthModEight.result`
+for every n>1, with period 5,1,1,5 beginning at n=2.
 The previously recorded contradiction to the original first-comment
 period is non-kernel evidence and is not a new formal refutation here.
 

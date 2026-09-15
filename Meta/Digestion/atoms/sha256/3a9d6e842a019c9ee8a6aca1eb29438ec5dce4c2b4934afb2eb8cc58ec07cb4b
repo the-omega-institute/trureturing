@@ -1,0 +1,8 @@
+并定义全部相容关系族的集合
+$$
+\widehat{\mathscr Q}_R=
+\left\{(a_L,b_L)_{L\ge1}\in\prod_{L\ge1}\mathscr R_L^\square:
+\forall L\ge1,\quad
+\pi_{L+1,L}^*(a_{L+1})=a_L\ \land\
+\pi_{L+1,L}^*(b_{L+1})=b_L\right\}.
+$$

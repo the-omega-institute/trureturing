@@ -1,0 +1,34 @@
+**定义 497.1（展开出现数与固定原档案）。** 沿用定义496.1–496.4的同一资源模型 $B$。通过既有 `HFEncoding.toZF` 把 HF 解释为实际遗传有限集合，定义
+$$
+\nu(x)=1+\sum_{y\in x}\nu(y),\qquad
+o_n=\operatorname{natCode}(n),\qquad P(a,b)=\{\{a\},\{a,b\}\}.
+\tag{497.1a}
+$$
+成员有限且其有限秩严格下降，故递归有定义。$\nu$ 计完整集合树中结点的出现次数：同一集合内相等成员只计一次，不同位置出现的相同子树分别计数。它区别于第285条的含根传递闭包大小 $h(x)=|\operatorname{TC}(\{x\})|$，也不等于共享存储量或分帧后的实际位长。$o_n$ 是有限 von Neumann 序数，不是累积层级 $V_n$。
+
+对 $N\ge1$，任取 $2N$ 个两两不同的实际 HF 身份 $e_n^s$，其中 $1\le n\le N$、$s\in\{+,-\}$。除互异外，不限制大小、成员重合或与属性码、来源码相等。使用定义444.1、496.2的原零位置情境：
+$$
+E=O=\{e_n^s:1\le n\le N,\ s\in\{+,-\}\},\quad
+t(e_n^s)=n,\quad x(e_n^s)=(0,0,0),\quad
+\sigma(e_n^\pm)=\pm1,\quad \rho(e_n^s)=\operatorname{leaf}(n),
+$$
+$$
+e_n^s\prec e_m^t\iff n<m.
+$$
+每个时间层的两个符号相消，故 $O$ 平衡；关系传递、无自边且严格增加时间。取任意 $A\subseteq E$，包括原 Möbius 选择、该底档上导入的任意掩码、其截止视图及空选择。记
+$$
+H_N=\sum_{n=1}^N\sum_s\nu(e_n^s),\qquad
+D_n^s=\operatorname{attributesCode}\bigl(n,(0,0,0),s,\operatorname{leaf}(n)\bigr),
+$$
+$$
+F=\{P(e_n^s,D_n^s):1\le n\le N,\ s\in\{+,-\}\},\qquad
+R=\{P(e_n^s,e_m^t):1\le n<m\le N,\ s,t\in\{+,-\}\},
+$$
+$$
+C_A=P\bigl(P(P(E,P(F,R)),O),A\bigr).
+\tag{497.1b}
+$$
+此处 $s$ 在属性码中分别表示原正、负符号码，$E,O,A$ 均取实际集合码；$C_A$ 恰是(496.3a)的原 `richCode`，完整属性图与关系都不按 $A$ 裁剪。$N=0$ 时约定这些索引族及 $E,F,R,O,A$ 全为空，$H_0=0$。
+
+这些对象的直接语义来源是仓库固定版本 `c1190dc7ffe3abc1def633c2399ce485b9249422` 的 [HFEncoding.lean](https://github.com/the-omega-institute/trureturing/blob/c1190dc7ffe3abc1def633c2399ce485b9249422/D5/S0/History/Spacetime/HFEncoding.lean) 中 `toZF`、`rank_toZF`、`members_finite`、`hf_ext`、`pair`、`natCode`、`setCode`；[ArchiveCarrier.lean](https://github.com/the-omega-institute/trureturing/blob/c1190dc7ffe3abc1def633c2399ce485b9249422/D5/S0/History/Spacetime/ArchiveCarrier.lean) 中完整档案、情境及选择；[IntegerEncoding.lean](https://github.com/the-omega-institute/trureturing/blob/c1190dc7ffe3abc1def633c2399ce485b9249422/D5/S0/History/Spacetime/IntegerEncoding.lean)、[SourceTreeEncoding.lean](https://github.com/the-omega-institute/trureturing/blob/c1190dc7ffe3abc1def633c2399ce485b9249422/D5/S0/History/Spacetime/SourceTreeEncoding.lean)、[CoordinateEncoding.lean](https://github.com/the-omega-institute/trureturing/blob/c1190dc7ffe3abc1def633c2399ce485b9249422/D5/S0/History/Spacetime/CoordinateEncoding.lean) 中 `intCode`、`sourceCode`、`position_code_equiv`、`signCode`、`attributesCode`；以及 [FiniteGraphEncoding.lean](https://github.com/the-omega-institute/trureturing/blob/c1190dc7ffe3abc1def633c2399ce485b9249422/D5/S0/History/Spacetime/FiniteGraphEncoding.lean)、[ArchiveRecordEncoding.lean](https://github.com/the-omega-institute/trureturing/blob/c1190dc7ffe3abc1def633c2399ce485b9249422/D5/S0/History/Spacetime/ArchiveRecordEncoding.lean)、[ArchiveEncoding.lean](https://github.com/the-omega-institute/trureturing/blob/c1190dc7ffe3abc1def633c2399ce485b9249422/D5/S0/History/Spacetime/ArchiveEncoding.lean) 中 `graphCode`、`relationCode`、`subsetCode`、`recordCode`、`contextCode`、`richCode`。有限事件域、全属性、严格且时间相容的关系、$A\subseteq O\subseteq E$ 正是上述原定义的前提；已有各等价及两个方向的解码式直接适用。
+
