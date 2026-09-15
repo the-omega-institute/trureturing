@@ -280,6 +280,15 @@ def provenanceJudgeAPIs : Array Name := #[
   `LeanInformationAudit.InformationRegistry.hasUnit,
   `LeanInformationAudit.InformationRegistryEntry.statementIdentity,
   `LeanInformationAudit.ExpectedOccurrence.statementIdentity,
+  `LeanInformationAudit.TemplateAudit.selectedPlan,
+  `LeanInformationAudit.TemplateAudit.observeSelectedPlan,
+  `LeanInformationAudit.TemplateAudit.importedSummaryBytes,
+  `LeanInformationAudit.TemplateBinding.inventory,
+  `LeanInformationAudit.TemplateBinding.records,
+  `LeanInformationAudit.TemplateBinding.cachedJoinedRecords,
+  `LeanInformationAudit.TemplateBinding.assessJoined,
+  `LeanInformationAudit.TemplateBinding.exportSnapshot,
+  `LeanInformationAudit.TemplateBinding.observedAssessments,
   `LeanInformationAudit.theoremStatementIdentity,
   `LeanInformationAudit.Sha256.digest, `LeanInformationAudit.Sha256.hex,
   `LeanInformationAudit.StatementKey.mk, `LeanInformationAudit.StatementKey.statementId,
@@ -306,6 +315,15 @@ private def generatedAddress : Name → Bool
 private def judgePayloadType (name : Name) : Bool :=
   #[
       `LeanInformationAudit.InformationRegistryEntry, `LeanInformationAudit.ExpectedOccurrence,
+      `LeanInformationAudit.TemplateAudit.TemplatePlanData,
+      `LeanInformationAudit.TemplateAudit.TemplatePlanFrame,
+      `LeanInformationAudit.TemplateAudit.TemplateIndex,
+      `LeanInformationAudit.TemplateAudit.DependencyIdentity,
+      `LeanInformationAudit.TemplateOccurrenceKey, `LeanInformationAudit.TemplateOccurrenceEvent,
+      `LeanInformationAudit.TemplateBindingCertificate, `LeanInformationAudit.TemplateBindingResult,
+      `LeanInformationAudit.BindingRecord, `LeanInformationAudit.TemplateBindingClaim,
+      `LeanInformationAudit.TemplateBinding.JoinedRecords,
+      `LeanInformationAudit.AutoDerivedSemanticCertificate,
       `LeanInformationAudit.CatalogUnitRecord, `LeanInformationAudit.CatalogRecord,
       `LeanInformationAudit.SealTheoremRecord, `LeanInformationAudit.SealArenaRecord,
       `LeanInformationAudit.SealedOccurrenceState, `LeanInformationAudit.StagedAnalysisState,
@@ -321,6 +339,17 @@ private def judgePayload (info : ConstantInfo) : Bool :=
   match info with
   | .ctorInfo ctor => judgePayloadType ctor.induct
   | _ => false
+
+/-- Raw judge identities are rejection witnesses shared by enrollment and
+occurrence auditing. A negative answer grants no grammar admission. -/
+def isJudgeIdentity (env : Environment) (name : Name) : Bool :=
+  provenanceJudgeAPIs.contains name || generatedAddress name || judgePayloadType name ||
+    (env.find? name).any judgePayload ||
+    ((env.getProjectionFnInfo? name).bind (fun p => env.find? p.ctorName)).any judgePayload
+
+/-- A raw projection names its structure, rather than its projection function. -/
+def isJudgeProjection (name : Name) : Bool :=
+  provenanceJudgeAPIs.contains name || generatedAddress name || judgePayloadType name
 
 private def closed (e : Expr) : Bool := !e.hasLooseBVars && !e.hasFVar && !e.hasMVar
 
@@ -712,13 +741,11 @@ private def compareCanonical (a b : Expr) : WalkM Bool := do
 -- Preserve constant provenance before reduction, including constants discovered
 -- only in a constructor field's type. Direct forbidden sources take precedence.
 private def directConstant (env : Environment) (n : Name) : WalkM Unit := do
-  let payload := (env.find? n).any judgePayload ||
-    ((env.getProjectionFnInfo? n).bind (fun p => env.find? p.ctorName)).any judgePayload
-  if n == (← get).theoremName || provenanceJudgeAPIs.contains n || generatedAddress n || payload then
+  if n == (← get).theoremName || isJudgeIdentity env n then
     modify fun s => { s with forbidden := true, walked := s.walked.insert n }
 
 private def directProjection (env : Environment) (n : Name) : WalkM Unit := do
-  if provenanceJudgeAPIs.contains n || generatedAddress n || judgePayloadType n then
+  if isJudgeProjection n then
     modify fun s => { s with forbidden := true, walked := s.walked.insert n }
 
 -- Eligible instance heads still require the same structural fold over their

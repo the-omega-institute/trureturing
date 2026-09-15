@@ -1470,7 +1470,11 @@ private def checkedDictionary (info : ConstantInfo) : CompileM Bool := do
 private def staticIdentity (e : Expr) : CompileM Unit := do
   let env ← getEnv
   let name := e.getAppFn.constName?.getD .anonymous
-  if !name.isAnonymous && (InformationRegistry.hasTheorem env name || isCompanionName name) then
+  let projected := match e.getAppFn with
+    | .proj typeName _ _ => RegistrationGates.isJudgeProjection typeName
+    | _ => false
+  if projected || (!name.isAnonymous && (InformationRegistry.hasTheorem env name ||
+      isCompanionName name || RegistrationGates.isJudgeIdentity env name)) then
     throwError "forbidden_dependency:E6.registered_identity"
   if #[`Classical.choice, `Classical.propDecidable, `of_decide_eq_true, `Lean.Expr,
       `Lean.Name, `String].contains name then
@@ -1525,6 +1529,10 @@ private partial def compileNode (e : Expr) (depth : Nat)
       rule "E2.pi"
       return .forallE tp (← abstractPlan bp x) bi
   | .letE n t v b nd =>
+    -- A known raw source is forbidden even when its function type has no E2
+    -- rule. This check does not enter the value's implementation or erase it.
+    charge
+    staticIdentity v
     let tp ← compileExpr t (depth + 1) true
     let vp ← compileExpr v (depth + 1) false
     binder n .default t fun x => do
