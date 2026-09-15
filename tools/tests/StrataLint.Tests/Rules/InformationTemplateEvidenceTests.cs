@@ -115,6 +115,51 @@ public sealed class InformationTemplateEvidenceTests
         Assert.Equal(MissingDiagnostic, universe.Occurrences[Key].Diagnostic);
     }
 
+    [Fact]
+    public void generated_name_with_nested_quote_accepted()
+    {
+        // Name.toString cannot wrap a component containing » in another pair
+        // of quotes. This is the actual generated-name shape in the seed.
+        var unit = ModuleA + ".target.Fixture.Root/Fixture.arena/«causal-unified-transitions».__information_unit";
+        var realization = unit.Replace("__information_unit", "__primitive_realization", StringComparison.Ordinal);
+        var snapshot = Snapshot((PathA, TextA));
+        var wire = JsonSerializer.SerializeToNode(Wire())!.AsObject();
+        wire["records"]![0]!["unit_name"] = unit;
+        wire["records"]![0]!["realization_name"] = realization;
+        InformationTemplateUniverse? universe = null;
+        var error = Record.Exception(() =>
+        {
+            var evidence = InformationTemplateEvidence.Read(JsonSerializer.SerializeToElement(wire), PathA, snapshot);
+            universe = InformationTemplateEvidence.Collect(snapshot, LeanAxiomReport.Create(
+                new Dictionary<string, LeanFileReport>
+                {
+                    [PathA] = new([], [new(unit, "def", "fixture unit", []),
+                        new(realization, "def", "fixture realization", [])]) { InformationTemplates = evidence },
+                }));
+        });
+        Assert.True(error is null, "[FAIL] generated_name_with_nested_quote_accepted: " + error?.Message);
+        Assert.Equal(unit, Assert.Single(universe!.Occurrences).Value.UnitName);
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void ambiguous_generated_name_rejected(bool realization)
+    {
+        var snapshot = Snapshot((PathA, TextA));
+        var evidence = InformationTemplateEvidence.Read(Wire(), PathA, snapshot);
+        var module = Module(evidence);
+        // Distinct structural names can have the same display spelling. A
+        // compiler-bound declaration count, not parser acceptance, rejects it.
+        var duplicate = new LeanDeclaration(realization ? Realization : Unit, "def", "other declaration", [])
+            { NameKey = "ns(n0,9:different)" };
+        module = module with { Declarations = module.Declarations.Add(duplicate) };
+        var error = Record.Exception(() => InformationTemplateEvidence.Collect(snapshot,
+            LeanAxiomReport.Create(new Dictionary<string, LeanFileReport> { [PathA] = module })));
+        Assert.True(error is FormatException && error.Message.Contains("retained unit/realization owner", StringComparison.Ordinal),
+            "[FAIL] ambiguous_generated_" + (realization ? "realization" : "unit") + "_rejected");
+    }
+
     private static InformationTemplateUniverse ImportedRealization(bool imported)
     {
         const string bridgeSource = "-- independently owned realization fixture\n";

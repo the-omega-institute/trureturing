@@ -55,8 +55,12 @@ internal static class InformationTemplateEvidence
             var key = InformationTemplateDebtStore.ReadKey(record.GetProperty("key"));
             if (!keys.Add(key)) throw new FormatException("DTR-Evidence: duplicate binding record");
             var registration = InformationTemplateJson.String(record, "registration_source_path");
-            var unit = InformationTemplateJson.Name(InformationTemplateJson.String(record, "unit_name"));
-            var realization = InformationTemplateJson.Name(InformationTemplateJson.String(record, "realization_name"));
+            // Generated names are compiler display spellings, not source-level
+            // identifiers: a component containing » cannot be escaped by
+            // Name.toString. Collect resolves each spelling to exactly one
+            // source-bound declaration; occurrence keys keep the strict parser.
+            var unit = InformationTemplateJson.String(record, "unit_name");
+            var realization = InformationTemplateJson.String(record, "realization_name");
             if (key.RegistrationModule != ModuleForSource(registration))
                 throw new FormatException("DTR-Evidence: registration module/source owner differs");
             var statement = InformationTemplateJson.Hash(InformationTemplateJson.String(record, "statement_identity"), 64);
@@ -169,11 +173,12 @@ internal static class InformationTemplateEvidence
             var realizationOwners = LeanImportClosure.RepositoryPaths(report,
                 RepoPath.CreateKnown(original.RegistrationSourcePath));
             if (original.UnitName is null || original.RealizationName is null
+                || ownerReport.Declarations.Count(declaration => declaration.Name == original.UnitName) != 1
                 || !ownerReport.Declarations.Any(declaration => declaration.Name == original.UnitName
                     && declaration.Kind == "def")
-                || realizationOwners.Count(path => report.Files[path].Declarations.Any(
+                || realizationOwners.Sum(path => report.Files[path].Declarations.Count(
                     declaration => declaration.Name == original.RealizationName)) != 1)
-                throw new FormatException("DTR-Inventory: retained unit/realization owner is missing");
+                throw new FormatException("DTR-Inventory: retained unit/realization owner is missing or ambiguous");
             var declared = records.Where(record => record.State != InformationTemplateBindingState.Undeclared).ToArray();
             if (declared.Length > 1) throw new FormatException("DTR-Evidence: duplicate/contradictory inline or sidecar claim");
             var selected = declared.SingleOrDefault() ?? original;
