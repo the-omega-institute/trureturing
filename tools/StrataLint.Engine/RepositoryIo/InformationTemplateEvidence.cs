@@ -188,16 +188,9 @@ internal static class InformationTemplateEvidence
                 throw new FormatException("DTR-Evidence: sidecar retargets the occurrence");
             joined.Add(key, selected);
         }
-        foreach (var source in governed)
-        {
-            var expectedUnits = report.Files[RepoPath.CreateKnown(source)].Declarations
-                .Where(declaration => declaration.Name.EndsWith(".__information_unit", StringComparison.Ordinal))
-                .Select(declaration => declaration.Name).ToHashSet(StringComparer.Ordinal);
-            var actualUnits = joined.Values.Where(occurrence => occurrence.RegistrationSourcePath == source)
-                .Select(occurrence => occurrence.UnitName!).ToHashSet(StringComparer.Ordinal);
-            if (!expectedUnits.IsSubsetOf(actualUnits))
-                throw new FormatException("DTR-Inventory: retained unit hidden from occurrence inventory");
-        }
+        // Inventory is the exact join of compiler registration keys, command
+        // events and records above. Seal-generated unit abbreviations are
+        // declarations, not registrations; their suffix carries no authority.
         return new(joined.ToImmutable(), inventory.ToImmutable(), governed, assessed.ToImmutable());
     }
 

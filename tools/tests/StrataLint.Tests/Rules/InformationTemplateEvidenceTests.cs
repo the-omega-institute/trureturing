@@ -116,6 +116,38 @@ public sealed class InformationTemplateEvidenceTests
     }
 
     [Fact]
+    public void seal_generated_unit_declarations_do_not_register_occurrences()
+    {
+        var snapshot = Snapshot((PathA, TextA));
+        var module = Module(InformationTemplateEvidence.Read(Wire(), PathA, snapshot));
+        // Sealing imports creates root-qualified abbreviations of retained
+        // units without executing register_information_theorem again.
+        module = module with { Declarations = module.Declarations.Add(
+            new(ModuleA + ".sealed.__information_unit", "def", "fixture sealed unit", [])) };
+        var error = Record.Exception(() =>
+        {
+            var universe = InformationTemplateEvidence.Collect(snapshot,
+                LeanAxiomReport.Create(new Dictionary<string, LeanFileReport> { [PathA] = module }));
+            Assert.Single(universe.Inventory);
+        });
+        Assert.True(error is null,
+            "[FAIL] seal_generated_unit_declarations_do_not_register_occurrences: " + error?.Message);
+    }
+
+    [Fact]
+    public void registered_occurrence_cannot_be_hidden_with_empty_events()
+    {
+        var snapshot = Snapshot((PathA, TextA));
+        var wire = JsonSerializer.SerializeToNode(Wire())!.AsObject();
+        wire["inventory"] = new System.Text.Json.Nodes.JsonArray();
+        wire["records"] = new System.Text.Json.Nodes.JsonArray();
+        var module = Module(InformationTemplateEvidence.Read(JsonSerializer.SerializeToElement(wire), PathA, snapshot));
+        var error = Assert.Throws<FormatException>(() => InformationTemplateEvidence.Collect(snapshot,
+            LeanAxiomReport.Create(new Dictionary<string, LeanFileReport> { [PathA] = module })));
+        Assert.Contains("command inventory, retained units and binding records differ", error.Message);
+    }
+
+    [Fact]
     public void generated_name_with_nested_quote_accepted()
     {
         // Name.toString cannot wrap a component containing » in another pair
