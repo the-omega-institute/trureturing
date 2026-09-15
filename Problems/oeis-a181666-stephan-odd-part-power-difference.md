@@ -67,8 +67,20 @@ The proof is elementary and kernel-checked. It settles the named A181666
 assertion; it does not claim a new characterization of A023758 beyond the
 displayed equivalence.
 
+## Route
+
+Write `n = 2^j q`, where `q = ordCompl[2] n` is odd. If
+`3q + 1 = 4^k`, multiplying by `2^j` gives
+`3n + 2^j = 2^(j+2k)`, with a strict exponent increase because `k >= 1`.
+
+Conversely, reduce `3n + 2^j = 2^i` modulo three. Since two has order two
+modulo three, `i-j` is even; write it as `2k`. Factoring the difference of
+powers shows that three divides `2^(i-j)-1`. The remaining quotient is odd,
+because the power of two on the right has already accounted for the exact
+2-adic factor of `n`. The odd-complement identity then gives
+`3 * ordCompl[2] n + 1 = 4^k`, and `i > j` forces `k >= 1`.
+
 **Not claimed:** an exhaustive literature search or priority for this proof;
 any result about other OEIS entries; a statement about the zero term as an
 A181666 sequence member; or that finite numerical checks replace the
 unbounded formal proof.
-
