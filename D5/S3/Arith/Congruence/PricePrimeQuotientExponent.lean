@@ -130,4 +130,8 @@ theorem result_a231329 (k : ℕ)
   · simpa using hdvd
   · simpa using hp
 
+#print axioms prime_quotient_exponent_is_prime
+#print axioms result_a228558
+#print axioms result_a231329
+
 end D5.S3.Arith.Congruence.PricePrimeQuotientExponent
