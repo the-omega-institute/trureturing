@@ -12,6 +12,7 @@
 .echo-review.md
 .sshx-*
 /.lake/
+/.judge-binaries/
 /Papers/build/
 /build/
 __pycache__/

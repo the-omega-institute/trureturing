@@ -1,0 +1,494 @@
+using System.Diagnostics;
+using System.Text;
+using System.Text.Json;
+using StrataLint.Engine;
+
+namespace StrataLint.EngineeringScope;
+
+internal enum SeedExportMode { Automatic, Deferred }
+
+internal sealed class CommonStages(string root, TextWriter output, CancellationToken deadlineCancellation = default,
+    Action<Process>? processExited = null, TimeProvider? timeProvider = null, SeedExportMode seedExport = SeedExportMode.Automatic)
+{
+    private readonly List<StageStep> steps = [];
+    private string stage = "input";
+    private string? candidate;
+    private int? testsExecuted;
+    private int? testsReused;
+    private bool? testSeedSaved;
+    private ResourceExecutionPlan? resourcePlan;
+    private CommonExecutionEvidence.CheckExecution? engineeringChecks;
+    private string? attemptedEngineeringCheck;
+    private readonly bool exportSeeds = seedExport == SeedExportMode.Automatic
+        && Environment.GetEnvironmentVariable("STRATALINT_CACHE_WRITES") != "false";
+
+    internal static int Normalize(int raw, bool allowProtectedAnnotation = false) => raw switch
+    {
+        0 => 0,
+        1 => 1,
+        3 when allowProtectedAnnotation => 0,
+        _ => 2,
+    };
+
+    internal int Run(string name, string? baseSha, string? buildRound = null, string? planPath = null, string? changesPath = null)
+    {
+        stage = name;
+        var exit = 2;
+        string? failure = null;
+        try
+        {
+            if (name is not ("build" or "engineering" or "current" or "delta")) throw new ArgumentException("invalid stage");
+            if (name == "current") ClearEvidence("current");
+            resourcePlan = ResourceExecutionPlan.Load(root, planPath, changesPath);
+            if (name == "delta" && resourcePlan is not null
+                && (resourcePlan.Document.GetProperty("mode").GetString() != "pr"
+                    || resourcePlan.Document.GetProperty("base").GetString() != baseSha))
+                throw new InvalidDataException("delta requires the validated plan's explicit immutable base");
+            if (name == "delta") ValidateBase(baseSha);
+            if (resourcePlan is not null && !resourcePlan.StageRequired(name))
+            {
+                candidate = resourcePlan.Commit;
+                ClearEvidence(name);
+                if (name == "current") File.Delete(Path.Combine(root, CommonExecutionEvidence.ScribeMarkdownPaths));
+                exit = 0;
+            }
+            else
+            {
+                candidate = CommonExecutionEvidence.Candidate(root);
+                switch (name)
+                {
+                    case "build": Build(); break;
+                    case "engineering": Engineering(buildRound); break;
+                    case "current": Current(); break;
+                    case "delta": Delta(baseSha); break;
+                    default: throw new ArgumentException("stage must be build, engineering, current, or delta");
+                }
+                // Engineering checks its final source snapshot immediately before sealing.
+                if (name is not ("engineering" or "build") && candidate != CommonExecutionEvidence.Candidate(root))
+                    throw new InvalidDataException("candidate changed during stage");
+                exit = 0;
+            }
+        }
+        catch (InvalidDataException exception) when (steps.LastOrDefault() is { Status: "failed" } failed)
+        { exit = failed.Exit; failure = exception.Message; }
+        catch (StageFailure exception) { exit = exception.Exit; failure = exception.Message; }
+        catch (Exception exception) { failure = exception.Message; }
+        finally { exit = Summarize(exit, failure, baseSha); }
+        return exit;
+    }
+
+    private int Summarize(int exit, string? failure, string? baseSha)
+    {
+        var planned = stage switch
+        {
+            "build" => CommonExecutionEvidence.BuildSteps,
+            "engineering" => [.. CommonExecutionEvidence.EngineeringSteps, .. engineeringChecks?.Ids ?? CommonExecutionEvidence.EngineeringCheckIds],
+            "current" => CommonExecutionEvidence.CurrentSteps,
+            "delta" => ["check-delta"],
+            _ => [],
+        };
+        var required = resourcePlan is null || resourcePlan.StageRequired(stage);
+        var obligations = !required ? [] : stage == "current" && resourcePlan is not null ? resourcePlan.CurrentSteps : planned;
+        // Check units can be accepted from validated reuse without launching an
+        // operation. A failed unit is attempted even when its validation fails
+        // after zero-exit operations (for example, unequal selftest output).
+        var checkUnits = stage == "engineering" ? (engineeringChecks?.Ids ?? CommonExecutionEvidence.EngineeringCheckIds).Select(id =>
+        {
+            var accepted = engineeringChecks?.Completed.SingleOrDefault(unit => unit.Id == id);
+            return new { id, status = !required ? "not-required" : accepted?.Status
+                    ?? (attemptedEngineeringCheck == id ? "failed" : "not-executed"),
+                execution_candidate = accepted?.ExecutionCandidate, execution_round = accepted?.ExecutionRound };
+        }).ToArray() : [];
+        string? Artifact(string path) => required && File.Exists(Path.Combine(root, path)) ? path : null;
+        object Summary() => new { stage, candidate, git_candidate = resourcePlan?.Document.GetProperty("candidate"),
+            scope = resourcePlan?.Document, status = exit != 0 ? "failed" : required ? "completed" : "not-required",
+            base_sha = baseSha, exit, error = failure, steps,
+            artifacts = required ? new[] { CommonExecutionEvidence.BuildPath, CommonExecutionEvidence.TestsPath, CommonExecutionEvidence.EngineeringPath, CommonExecutionEvidence.CurrentPath }
+                .Where(path => File.Exists(Path.Combine(root, path))).ToArray() : [],
+            test_projects_executed = testsExecuted, test_projects_reused = testsReused, test_seed_saved = testSeedSaved,
+            check_units = checkUnits,
+            not_executed = obligations.Where(name => !steps.Any(step => step.Name == name)
+                && !checkUnits.Any(unit => unit.id == name && unit.status != "not-executed")),
+            not_required = planned.Except(obligations),
+            build_evidence = Artifact(CommonExecutionEvidence.BuildPath), test_evidence = Artifact(CommonExecutionEvidence.TestsPath),
+            engineering_evidence = Artifact(CommonExecutionEvidence.EngineeringPath),
+            current_evidence = Artifact(CommonExecutionEvidence.CurrentPath), report = required && (resourcePlan?.CurrentSteps ?? CommonExecutionEvidence.CurrentSteps).Contains("lean-report") ? Artifact(CommonExecutionEvidence.ReportPath) : null };
+        try { CommonExecutionEvidence.Write(root, CommonExecutionEvidence.RootPath + "/" + stage + "-result.json", Summary()); }
+        catch (Exception exception) { exit = 2; failure = $"{failure}; summary write failed: {exception.Message}"; }
+        output.WriteLine(JsonSerializer.Serialize(Summary()));
+        return exit;
+    }
+
+    private void ClearEvidence(params string[] stages)
+    {
+        Directory.CreateDirectory(Path.Combine(root, CommonExecutionEvidence.RootPath));
+        foreach (var name in stages)
+            foreach (var suffix in new[] { ".json", "-checks.json", "-paths.nul", "-transport.json", "-result.json" })
+                File.Delete(Path.Combine(root, CommonExecutionEvidence.RootPath, name + suffix));
+    }
+
+    private CommonStageRecord Build()
+    {
+        ClearEvidence("build", "engineering", "current");
+        File.Delete(Path.Combine(root, CommonExecutionEvidence.TestsPath));
+        var outputs = Path.Combine(root, CommonBuildOutputs.RootPath);
+        if (Directory.Exists(outputs)) Directory.Delete(outputs, recursive: true);
+        // Captured restore/build calls own their nodes until the output closes.
+        var roots = BuildRoots();
+        var logger = Environment.GetEnvironmentVariable("CI_CSC_LOGGER_ASSEMBLY");
+        string[] observation = File.Exists(logger) ? ["-logger:StrataLint.JudgeSeed.CscExecutionLogger," + logger] : [];
+        if (observation.Length == 0) output.WriteLine("JUDGE_CSC {\"status\":\"unavailable\",\"count\":null}");
+        foreach (var target in roots)
+        {
+            Step("restore-StrataLint", "dotnet", ["restore", target, "--locked-mode", "-nr:false"]);
+            Step("build", "dotnet", ["build", target, "--configuration", "Release", "--no-restore", "--warnaserror", "-nr:false",
+                "-p:CustomAfterMicrosoftCommonTargets=" + Path.Combine(root, "tools/scripts/ci-build-outputs.targets"),
+                "-p:CiRepositoryRoot=" + root, "-p:CiBuildOutputRoot=" + outputs, .. observation]);
+        }
+        return CommonExecutionEvidence.SealBuild(root, candidate!, CommonBuildOutputs.Collect(root, roots), steps.ToArray(), roots, resourcePlan?.Retain(root));
+    }
+
+    private string[] BuildRoots()
+    {
+        var registry = EngineeringProjectRegistry.Read(CommonExecutionEvidence.Snapshot(root));
+        var roots = resourcePlan?.Projects ?? registry.Projects.Where(project => project.Ci).Select(project => project.Path).Order(StringComparer.Ordinal).ToArray();
+        if (roots.Length == 0) throw new InvalidDataException("no registered requested build roots");
+        return roots;
+    }
+
+    private void Engineering(string? buildRound)
+    {
+        ClearEvidence("engineering");
+        File.Delete(Path.Combine(root, CommonExecutionEvidence.TestsPath));
+        CommonStageRecord build;
+        if (buildRound is null)
+        {
+            stage = "build";
+            build = Build();
+            if (Summarize(0, null, null) != 0) throw new StageFailure(2, "build summary failed");
+            steps.Clear();
+            stage = "engineering";
+        }
+        else build = CommonExecutionEvidence.ValidateBuild(root, buildRound);
+        var checks = engineeringChecks = CommonExecutionEvidence.BeginChecks(root, "engineering", build, output);
+        try { Step("tests", "dotnet", [CommonExecutionEvidence.RunnerPath, "--repository", root, "--build-round", build.Round]); }
+        finally
+        {
+            if (File.Exists(Path.Combine(root, CommonExecutionEvidence.TestsPath)))
+            {
+                var tests = CommonExecutionEvidence.Read<TestExecutionRecord>(root, CommonExecutionEvidence.TestsPath);
+                testsExecuted = tests.Projects.Count(project => project.Status == "executed");
+                testsReused = tests.Projects.Count(project => project.Status == "reused");
+            }
+        }
+        attemptedEngineeringCheck = "selftest-pair";
+        checks.Run(attemptedEngineeringCheck, () => new CheckWork([
+            Operation("selftest-first", [CommonExecutionEvidence.CliPath, "selftest"]),
+            Operation("selftest-second", [CommonExecutionEvidence.CliPath, "selftest"])]));
+        foreach (var (id, project) in new[] {
+            ("capability-proof", "tools/tests/CompileFailProof/CompileFailProof.csproj"),
+            ("banned-api-proof", "tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj") })
+        {
+            attemptedEngineeringCheck = id;
+            checks.Run(id, () =>
+            {
+                var restore = Operation("restore-" + Path.GetFileNameWithoutExtension(project), ["restore", project, "--locked-mode", "-nr:false"]);
+                if (restore.RawExit != 0) return new CheckWork([restore]);
+                return new CheckWork([restore, Operation(id, ["build", project, "--no-restore", "--no-dependencies", "--configuration", "Release", "-nr:false"])]);
+            });
+        }
+        _ = checks.Seal();
+        CommonExecutionEvidence.SealEngineering(root, build, steps.Where(step => step.Name == "tests").ToArray());
+        testSeedSaved = exportSeeds && CommonExecutionEvidence.ExportTestSeed(root, output);
+        if (exportSeeds) _ = CommonExecutionEvidence.ExportCheckSeed(root, "engineering", output);
+    }
+
+    private CheckOperation Operation(string name, string[] arguments)
+    {
+        var result = Capture("dotnet", arguments);
+        output.WriteLine(result.Text);
+        var proof = name == "capability-proof" ? CompilationProof.ValidateCapability(result.Exit, result.Text)
+            : name == "banned-api-proof" ? CompilationProof.ValidateBannedApi(result.Exit, result.Text,
+                File.ReadAllText(Path.Combine(root, "tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs"))) : result.Exit == 0;
+        var exit = proof ? 0 : result.Exit is 0 or 1 ? 1 : 2;
+        var log = $"{CommonExecutionEvidence.RootPath}/logs/engineering/{name}.log";
+        Directory.CreateDirectory(Path.GetDirectoryName(Path.Combine(root, log))!);
+        File.WriteAllText(Path.Combine(root, log), result.Text);
+        steps.Add(new(name, result.Exit, exit, exit == 0 ? "executed" : "failed", log));
+        return new(name, result.Exit, result.Text);
+    }
+
+    private void Current()
+    {
+        ClearEvidence("current");
+        File.Delete(Path.Combine(root, CommonExecutionEvidence.ScribeMarkdownPaths));
+        var build = CommonExecutionEvidence.ValidateBuild(root);
+        var obligations = resourcePlan?.CurrentSteps ?? CommonExecutionEvidence.CurrentSteps;
+        var ids = resourcePlan?.CheckUnits.Except(CommonExecutionEvidence.EngineeringCheckIds).Order(StringComparer.Ordinal).ToArray()
+            ?? CommonExecutionEvidence.CheckIds("current", CommonExecutionEvidence.ReadCheckManifest(CommonExecutionEvidence.Snapshot(root)));
+        var runReport = obligations.Contains("lean-report");
+        if (runReport) RequireBinary(build, CommonExecutionEvidence.LeanProducerPath);
+        if (ids.Length != 0) RequireBinary(build, CommonExecutionEvidence.CliPath);
+        var logs = Path.Combine(root, CommonExecutionEvidence.RootPath, "logs/current");
+        if (Directory.Exists(logs)) Directory.Delete(logs, recursive: true);
+        var reportBudget = TimeSpan.FromSeconds(LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds);
+        string SupervisorBudget(string name) => Environment.GetEnvironmentVariable(name) is { Length: > 0 } value
+            ? value : LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds.ToString(System.Globalization.CultureInfo.InvariantCulture);
+        // Shared current supports normal cold production within the existing Lean
+        // envelope. Nested defaults must not silently shorten that allowance.
+        if (runReport)
+        {
+            Step("lean-report", "/usr/bin/env", [$"STRATALINT_LEAN_PRODUCER_DLL={Path.Combine(root, CommonExecutionEvidence.LeanProducerPath)}",
+                $"STRATALINT_BUILD_TIMEOUT_SECONDS={SupervisorBudget("STRATALINT_BUILD_TIMEOUT_SECONDS")}",
+                $"STRATALINT_LOCK_TIMEOUT_SECONDS={SupervisorBudget("STRATALINT_LOCK_TIMEOUT_SECONDS")}",
+                $"STRATALINT_LEAN_REPORT_LOG_DIR={Path.Combine(logs, "lean-inspector")}",
+                "make", "--no-print-directory", "lean-report"], defaultTimeout: reportBudget);
+            _ = RawLeanReportArtifact.ReadFile(Path.Combine(root, CommonExecutionEvidence.ReportPath), CommonExecutionEvidence.Snapshot(root), validateMaterials: true);
+        }
+        else if (obligations.Contains("lean"))
+            Step("lean", "make", ["--no-print-directory", "lean"]);
+        if (ids.Length != 0)
+        {
+            if (ids.SequenceEqual(new[] { "filemap" }))
+            {
+                var checks = CommonExecutionEvidence.BeginChecks(root, "current", build, output, ids);
+                checks.Run("filemap", () =>
+                {
+                    var result = Capture("dotnet", [CommonExecutionEvidence.CliPath, "filemap-conform"]);
+                    return new([new("filemap", result.Exit, result.Text)]);
+                });
+                _ = checks.Seal();
+            }
+            else
+            {
+                var arguments = new List<string> { CommonExecutionEvidence.CliPath, "check-current",
+                    "--candidate-lean-report", CommonExecutionEvidence.ReportPath, "--common-build-round", build.Round };
+                if (resourcePlan is not null)
+                    arguments.AddRange(["--common-plan", resourcePlan.PlanPath, "--common-changes", resourcePlan.ChangesPath]);
+                Step(obligations.Contains("check-current") ? "check-current" : "scribe", "dotnet", arguments.ToArray());
+                // The CLI owned these units once; their original evidence supplies the
+                // corresponding stage obligations without launching them a second time.
+                steps.RemoveAt(steps.Count - 1);
+            }
+            output.WriteLine("CURRENT_FINALIZE phase=validate-checks status=started");
+            var accepted = CommonExecutionEvidence.ValidateChecks(root, "current", build, ids);
+            output.WriteLine("CURRENT_FINALIZE phase=validate-checks status=completed");
+            foreach (var name in obligations.Where(name => name is "scribe" or "filemap" or "check-current"))
+            {
+                var units = accepted.Units.Where(unit => name == "scribe" ? unit.Id.StartsWith("scribe-", StringComparison.Ordinal)
+                    : name == "filemap" ? unit.Id == "filemap" : unit.Id.StartsWith("SL-", StringComparison.Ordinal)).ToArray();
+                if (units.Length == 0) throw new InvalidDataException("missing registered units for required step: " + name);
+                steps.Add(new(name, 0, 0, units.All(unit => unit.Status == "reused") ? "reused" : "executed", units[0].Operations[0].Log));
+            }
+        }
+        output.WriteLine("CURRENT_FINALIZE phase=seal status=started");
+        CommonExecutionEvidence.SealCurrent(root, build, steps.ToArray(), resourcePlan);
+        output.WriteLine("CURRENT_FINALIZE phase=seal status=completed");
+        if (ids.Length != 0 && exportSeeds)
+        {
+            output.WriteLine("CURRENT_FINALIZE phase=seed-export status=started");
+            _ = CommonExecutionEvidence.ExportCheckSeed(root, "current", output);
+            output.WriteLine("CURRENT_FINALIZE phase=seed-export status=completed");
+        }
+    }
+
+    private void ValidateBase(string? baseSha)
+    {
+        if (baseSha is null || baseSha.Length != 40 || !baseSha.All(char.IsAsciiHexDigit))
+            throw new ArgumentException("delta requires an explicit 40-hex base commit SHA");
+        var type = Capture("git", ["cat-file", "-t", baseSha]);
+        if (type.Exit != 0 || type.Text.Trim() != "commit") throw new ArgumentException("base must be an available commit object");
+    }
+
+    private void Delta(string? baseSha)
+    {
+        var common = CommonExecutionEvidence.ValidateCommon(root);
+        RequireBinary(common.Build, CommonExecutionEvidence.CliPath);
+        Step("check-delta", "dotnet", [CommonExecutionEvidence.CliPath, "check-delta", "--protected-base", baseSha!,
+            "--candidate-lean-report", CommonExecutionEvidence.ReportPath], allowAnnotation: true);
+    }
+
+    private static void RequireBinary(CommonStageRecord record, string path)
+    {
+        if (!record.Materials.Any(material => material.Path == path)) throw new InvalidDataException("unbound candidate binary: " + path);
+    }
+
+    private string Step(string name, string executable, string[] arguments, Func<int, string, bool>? proof = null,
+        bool allowAnnotation = false, TimeSpan? defaultTimeout = null)
+    {
+        output.WriteLine("STAGE_STEP " + JsonSerializer.Serialize(new { stage, name, status = "started" }));
+        output.Flush();
+        var result = Capture(executable, arguments, defaultTimeout, streamOutput: true);
+        var log = $"{CommonExecutionEvidence.RootPath}/logs/{stage}/{name}{(steps.Any(step => step.Name == name) ? "-" + steps.Count : "")}.log";
+        var full = Path.Combine(root, log);
+        Directory.CreateDirectory(Path.GetDirectoryName(full)!);
+        File.WriteAllText(full, result.Text);
+        var exit = proof is null ? Normalize(result.Exit, allowAnnotation)
+            : result.Exit is not (0 or 1) ? 2 : proof(result.Exit, result.Text) ? 0 : 1;
+        steps.Add(new(name, result.Exit, exit, exit == 0 ? "executed" : "failed", log));
+        if (exit != 0) throw new StageFailure(exit, $"{name} failed: raw_exit={result.Exit}; log={log}");
+        return result.Text;
+    }
+
+    private (int Exit, string Text) Capture(string executable, string[] arguments, TimeSpan? defaultTimeout = null,
+        bool streamOutput = false)
+    {
+        var clock = timeProvider ?? TimeProvider.System;
+        if (deadlineCancellation.IsCancellationRequested) throw new TimeoutException("PREFLIGHT_BUDGET_EXHAUSTED owner=outer-deadline");
+        // Injected deadlines are advanced by their owner, independent of the ambient clock.
+        var timeout = deadlineCancellation.CanBeCanceled ? Timeout.InfiniteTimeSpan : defaultTimeout ?? TimeSpan.FromHours(2);
+        var deadline = deadlineCancellation.CanBeCanceled ? null : Environment.GetEnvironmentVariable("PREFLIGHT_DEADLINE_AT");
+        if (deadline is not null)
+        {
+            if (!long.TryParse(deadline, System.Globalization.NumberStyles.Integer,
+                    System.Globalization.CultureInfo.InvariantCulture, out var seconds))
+                throw new ArgumentException("invalid PREFLIGHT_DEADLINE_AT");
+            timeout = DateTimeOffset.FromUnixTimeSeconds(seconds) - clock.GetUtcNow();
+            if (timeout <= TimeSpan.Zero) throw new TimeoutException("PREFLIGHT_BUDGET_EXHAUSTED owner=outer-deadline");
+        }
+        var start = new ProcessStartInfo(executable) { WorkingDirectory = root, RedirectStandardOutput = true, RedirectStandardError = true, UseShellExecute = false };
+        start.Environment["DOTNET_CLI_UI_LANGUAGE"] = "en-US";
+        start.Environment["CI"] = "true";
+        // policy-override (2026-09-14, #7580; owner: repository CI maintainers).
+        // CI/preflight current: run 34770677471 confirmed OOM; a real two-module
+        // probe reduced overlap from 2 to 1 and preserved failures. Not capacity-derived.
+        // Review on single-worker failure or comparable hosted memory/time evidence.
+        if (stage == "current")
+        {
+            start.Environment["LEAN_NUM_THREADS"] = "1";
+            // A missing optional seed must reach the selected producer. The local
+            // ensure command retains its guard outside CI/preflight's child scope.
+            start.Environment["STRATALINT_ACCEPT_COLD_BUILD"] = "1";
+        }
+        if (stage != "build" && Directory.Exists(Path.Combine(root, CommonBuildOutputs.PackagesPath)))
+            start.Environment["NUGET_PACKAGES"] = Path.Combine(root, CommonBuildOutputs.PackagesPath);
+        foreach (var arg in arguments) start.ArgumentList.Add(arg);
+        var startedAt = clock.GetTimestamp();
+        double Elapsed() => clock.GetElapsedTime(startedAt).TotalMilliseconds;
+        using var process = Process.Start(start) ?? throw new IOException("cannot start " + executable);
+        var startedElapsed = Elapsed();
+        using var timer = new CancellationTokenSource(timeout, clock);
+        using var cancellation = CancellationTokenSource.CreateLinkedTokenSource(deadlineCancellation, timer.Token);
+        using var drainCancellation = new CancellationTokenSource();
+        using var stdoutReader = process.StandardOutput;
+        using var stderrReader = process.StandardError;
+        var stdoutText = new StringBuilder();
+        var stderrText = new StringBuilder();
+        var liveOutput = streamOutput ? TextWriter.Synchronized(output) : null;
+        var phase = "child-exit";
+        var outcome = "faulted";
+        string? cancelledPhase = null;
+        double? cancelledElapsed = null;
+        var deadlineCancelled = false;
+        var timeoutCancelled = false;
+        var childExit = new { code = (int?)null, phase = "not-observed", elapsed_ms = (double?)null };
+        var stdoutObservation = new { status = "pending", elapsed_ms = (double?)null };
+        var stderrObservation = stdoutObservation;
+        async Task WaitForExit(CancellationToken token)
+        {
+            var waitPhase = phase;
+            await process.WaitForExitAsync(token).ConfigureAwait(false);
+            if (childExit.code is null)
+                childExit = new { code = (int?)process.ExitCode, phase = waitPhase, elapsed_ms = (double?)Elapsed() };
+        }
+        var stdout = Drain(stdoutReader, stdoutText, liveOutput, drainCancellation.Token,
+            status => stdoutObservation = new { status, elapsed_ms = (double?)Elapsed() });
+        var stderr = Drain(stderrReader, stderrText, liveOutput, drainCancellation.Token,
+            status => stderrObservation = new { status, elapsed_ms = (double?)Elapsed() });
+        var drains = Task.WhenAll(stdout, stderr);
+        try
+        {
+            WaitForExit(cancellation.Token).GetAwaiter().GetResult();
+            phase = "output-drain";
+            processExited?.Invoke(process);
+            drains.WaitAsync(cancellation.Token).GetAwaiter().GetResult();
+            cancellation.Token.ThrowIfCancellationRequested();
+            outcome = "completed";
+            return (process.ExitCode, Captured(stdoutText) + Captured(stderrText));
+        }
+        catch (OperationCanceledException)
+        {
+            cancelledPhase = phase;
+            cancelledElapsed = Elapsed();
+            deadlineCancelled = deadlineCancellation.IsCancellationRequested;
+            timeoutCancelled = timer.IsCancellationRequested;
+            outcome = "cancelled";
+            phase = "cleanup";
+            // Keep reading bytes emitted before the deadline while killing/reaping
+            // the producer. An inherited pipe can stay open after its parent exits,
+            // so the readers share the existing five-second cleanup bound.
+            drainCancellation.CancelAfter(TimeSpan.FromSeconds(5));
+            try { if (!process.HasExited) process.Kill(entireProcessTree: true); }
+            catch (InvalidOperationException) { } // Exit can race the kill.
+            try
+            {
+                Task.WhenAll(drains, WaitForExit(drainCancellation.Token)).GetAwaiter().GetResult();
+            }
+            catch (OperationCanceledException) { }
+            var diagnostic = "\nstage deadline exceeded: " + executable + "\n";
+            liveOutput?.Write(diagnostic);
+            liveOutput?.Flush();
+            return (124, Captured(stdoutText) + Captured(stderrText) + diagnostic);
+        }
+        finally
+        {
+            // Join the actual collectors, including on exceptional exits; a timed
+            // wait alone could return with a collector still owning a pipe/buffer.
+            drainCancellation.Cancel();
+            try { drains.GetAwaiter().GetResult(); }
+            catch (OperationCanceledException) { }
+            finally
+            {
+                // A child may finish without a newline. Keep the observation on
+                // its own line without changing the retained predicate text.
+                liveOutput?.WriteLine();
+                output.WriteLine("STAGE_PROCESS " + JsonSerializer.Serialize(new
+                {
+                    stage, command = executable, arguments, process_id = process.Id, phase, outcome,
+                    started_elapsed_ms = startedElapsed, elapsed_ms = Elapsed(),
+                    timeout_ms = timeout == Timeout.InfiniteTimeSpan ? (double?)null : timeout.TotalMilliseconds,
+                    cancelled_phase = cancelledPhase, cancelled_elapsed_ms = cancelledElapsed,
+                    deadline_cancelled = deadlineCancelled, timeout_cancelled = timeoutCancelled,
+                    child_exit = childExit, stdout = stdoutObservation, stderr = stderrObservation,
+                }));
+                output.Flush();
+            }
+        }
+    }
+
+    private static async Task Drain(StreamReader reader, StringBuilder text, TextWriter? output,
+        CancellationToken cancellation, Action<string> observed)
+    {
+        var status = "faulted";
+        try
+        {
+            var buffer = new char[4096];
+            int count;
+            while ((count = await reader.ReadAsync(buffer.AsMemory(), cancellation).ConfigureAwait(false)) != 0)
+            {
+                lock (text) text.Append(buffer, 0, count);
+                if (output is not null)
+                {
+                    lock (output)
+                    {
+                        output.Write(buffer, 0, count);
+                        output.Flush();
+                    }
+                }
+            }
+            status = "eof";
+        }
+        catch (OperationCanceledException) { status = "cancelled"; throw; }
+        finally { observed(status); }
+    }
+
+    private static string Captured(StringBuilder text)
+    {
+        lock (text) return text.ToString();
+    }
+
+    private sealed class StageFailure(int exit, string message) : Exception(message)
+    {
+        internal int Exit { get; } = exit;
+    }
+}
