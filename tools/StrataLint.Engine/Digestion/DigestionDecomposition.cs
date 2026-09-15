@@ -179,6 +179,7 @@ internal static class DigestionDecomposition
         bool reconcileExistingChain = false, RepositorySnapshot? snapshot = null,
         TheoryAtomizerRules? rules = null)
     {
+        if (parent.Receipts.Upstream is not null) throw new FormatException("UPSTREAM_PRESENT");
         RequireValid(plan);
         if (parent.Fingerprints != plan.Parent.Fingerprints || parent.CasRef != plan.Parent.Fingerprints.RawSha256)
             throw new FormatException("CAS_MISMATCH clause plan parent");
