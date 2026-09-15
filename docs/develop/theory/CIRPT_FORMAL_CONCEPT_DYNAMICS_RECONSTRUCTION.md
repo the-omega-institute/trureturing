@@ -1011,7 +1011,7 @@ q=p\circ q'.
 \operatorname{Refines}(q',q)
 =
 \sum_{p:B'\to B}
-\prod_{x:X}
+\prod_{x:X]
 q(x)=p(q'(x)).
 \]
 
@@ -1529,7 +1529,7 @@ A(x),
 
 ## 定理 31.1　准入下降判据 `[D]`
 
-以下条件等价：
+以下等价：
 
 1. 存在 \(\overline A:B\to\mathsf{Prop}\)，使：
 
@@ -1738,7 +1738,7 @@ a_{\mathrm{model}} &: \sum_{m:\mathrm{Model}}A_{\mathrm{Model}}(m)
 \operatorname{Shadow}_q(a)
 =
 \{x:X:
-q(x)=q(a))
+q(x)=q(a)
 \land
 x\ne a\}.
 }
@@ -2522,7 +2522,7 @@ q(a_0),q(a_1),q(a_2),\ldots
 
 \[
 \boxed{
-\text{在相关 FLOW 族下稳定，并对指定行为充分的身份 CUT。}
+\text{在相关 FLOW 下稳定，并对指定行为充分的身份 CUT。}
 }
 \]
 
@@ -2871,7 +2871,7 @@ h\circ q_{\mathrm{fine}},
 &=\text{形式模型是否有现实 ANCHOR};\\
 \text{历史解释争论}
 &=\text{数学结构与文本 ANCHOR 的对应不同}.
-\end{aligned}
+\end{aligned}}
 \]
 
 这不是取消哲学争论，而是先判断争论究竟发生在哪一轴。
