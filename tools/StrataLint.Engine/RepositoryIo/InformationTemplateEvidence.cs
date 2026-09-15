@@ -166,10 +166,13 @@ internal static class InformationTemplateEvidence
             if (originals.Length != 1) throw new FormatException("DTR-Inventory: original registration owner missing/duplicate");
             var original = originals[0];
             var ownerReport = report.Files[RepoPath.CreateKnown(original.RegistrationSourcePath)];
+            var realizationOwners = LeanImportClosure.RepositoryPaths(report,
+                RepoPath.CreateKnown(original.RegistrationSourcePath));
             if (original.UnitName is null || original.RealizationName is null
                 || !ownerReport.Declarations.Any(declaration => declaration.Name == original.UnitName
                     && declaration.Kind == "def")
-                || !ownerReport.Declarations.Any(declaration => declaration.Name == original.RealizationName))
+                || realizationOwners.Count(path => report.Files[path].Declarations.Any(
+                    declaration => declaration.Name == original.RealizationName)) != 1)
                 throw new FormatException("DTR-Inventory: retained unit/realization owner is missing");
             var declared = records.Where(record => record.State != InformationTemplateBindingState.Undeclared).ToArray();
             if (declared.Length > 1) throw new FormatException("DTR-Evidence: duplicate/contradictory inline or sidecar claim");

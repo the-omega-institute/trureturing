@@ -3043,9 +3043,26 @@ def declareSidecar (theoremName arena : Name) (catalog : Option Name)
   modifyEnv fun current => bindingRecords.addEntry (bindingClaims.addEntry current claim) record
   if let .declaredUnresolved diagnostic := record.result then logWarning diagnostic
 
+/-- A realization provider may be imported by its registration source. The
+complete report environment can contain other, unrelated owners as well. -/
+private def ownerReachable (env : Environment) (root owner : Name) : Bool := Id.run do
+  let mut seen : NameSet := {}
+  let mut pending := [root]
+  while let name :: rest := pending do
+    pending := rest
+    if seen.contains name then continue
+    if name == owner then return true
+    seen := seen.insert name
+    let imports := if name == env.header.mainModule then env.header.imports else
+      match env.getModuleIdx? name with
+      | some index => env.header.moduleData[index.toNat]!.imports
+      | none => #[]
+    pending := imports.toList.map (·.module) ++ pending
+  return false
+
 /-- A replayed event cannot acquire current source or statement identities by
 being exported from a new root. Check the original owner and retained bytes. -/
-private def validateEvent (event : TemplateOccurrenceEvent) : MetaM Unit := do
+def validateEvent (event : TemplateOccurrenceEvent) : MetaM Unit := do
   let env ← getEnv
   unless event.registrationSource == sourcePath event.key.registrationModule &&
       event.key.root == event.key.registrationModule do
@@ -3059,11 +3076,15 @@ private def validateEvent (event : TemplateOccurrenceEvent) : MetaM Unit := do
   unless identity == event.statementIdentity && info.levelParams == event.levelParams &&
       info.type.equal event.statement do
     throwError "incomplete_closure:dtr.event_statement"
-  for name in #[event.unitName, event.realizationName] do
-    unless env.contains name &&
-        (RegistrationReifier.declaringModuleOf env name).getD env.header.mainModule ==
-          event.key.registrationModule do
-      throwError "incomplete_closure:dtr.event_unit_owner"
+  unless env.contains event.unitName &&
+      (RegistrationReifier.declaringModuleOf env event.unitName).getD env.header.mainModule ==
+        event.key.registrationModule do
+    throwError "incomplete_closure:dtr.event_unit_owner"
+  let realizationOwner := (RegistrationReifier.declaringModuleOf env event.realizationName).getD
+    env.header.mainModule
+  unless env.contains event.realizationName &&
+      ownerReachable env event.key.registrationModule realizationOwner do
+    throwError "incomplete_closure:dtr.event_unit_owner"
 
 /-- Snapshot for the complete imported join. Original provisional records are
 retained only for transport to the C# join; selected contains one final result. -/

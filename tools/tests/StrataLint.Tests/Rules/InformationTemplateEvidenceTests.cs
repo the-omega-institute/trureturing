@@ -115,6 +115,40 @@ public sealed class InformationTemplateEvidenceTests
         Assert.Equal(MissingDiagnostic, universe.Occurrences[Key].Diagnostic);
     }
 
+    private static InformationTemplateUniverse ImportedRealization(bool imported)
+    {
+        const string bridgeSource = "-- independently owned realization fixture\n";
+        var registrationSource = imported ? "import D5.S0.Carrier.Binding\n" + TextA : TextA;
+        var snapshot = Snapshot((PathA, registrationSource), (PathB, bridgeSource));
+        var wire = JsonSerializer.SerializeToNode(Wire())!.AsObject();
+        var inputs = new[] { Input(PathB, bridgeSource), Input(PathA, registrationSource) };
+        wire["inputs"] = JsonSerializer.SerializeToNode(inputs);
+        wire["records"]![0]!["content_inputs"] = JsonSerializer.SerializeToNode(inputs);
+        var owner = InformationTemplateEvidence.Read(JsonSerializer.SerializeToElement(wire), PathA, snapshot);
+        var bridge = InformationTemplateEvidence.Read(JsonSerializer.SerializeToElement(new
+        {
+            schema_version = 1, compatibility_version = 4,
+            inputs = new[] { Input(PathB, bridgeSource) },
+            inventory = System.Array.Empty<object>(), registered = System.Array.Empty<object>(),
+            records = System.Array.Empty<object>(),
+        }), PathB, snapshot);
+        return InformationTemplateEvidence.Collect(snapshot, LeanAxiomReport.Create(
+            new Dictionary<string, LeanFileReport>
+            {
+                [PathA] = new(imported ? ["D5.S0.Carrier.Binding"] : [],
+                    [new(Unit, "def", "fixture unit", [])]) { InformationTemplates = owner },
+                [PathB] = new([], [new(Realization, "theorem", "fixture realization", [])])
+                    { InformationTemplates = bridge },
+            }));
+    }
+
+    [Fact]
+    public void imported_realization_owner_accepted() => Assert.Single(ImportedRealization(true).Inventory);
+
+    [Fact]
+    public void unimported_realization_owner_rejected() =>
+        Assert.Throws<FormatException>(() => ImportedRealization(false));
+
     [Fact]
     public void undeclared_diagnostic_required()
     {
