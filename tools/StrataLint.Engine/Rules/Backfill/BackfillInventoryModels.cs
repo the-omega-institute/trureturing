@@ -32,7 +32,7 @@ internal sealed record DigestionUpstream(
     string? NextAtomId)
 {
     private static readonly System.Text.RegularExpressions.Regex DeclarationPattern = new(
-        @"^[\p{L}_][\p{L}\p{N}_'′]*([.][\p{L}_][\p{L}\p{N}_'′]*)+$",
+        @"^[\p{L}_][\p{L}\p{N}_'′]*([.][\p{L}_][\p{L}\p{N}_'′]*)+\z",
         System.Text.RegularExpressions.RegexOptions.CultureInvariant);
 
     internal bool IsValid => !string.IsNullOrWhiteSpace(Justification)

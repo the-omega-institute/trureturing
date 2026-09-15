@@ -232,13 +232,19 @@ internal static class BackfillInventoryWriter
     {
         if (receipt is null) return;
         Line(builder, indent + "upstream:");
-        Line(builder, indent + "  justification: " + Scalar(receipt.Justification));
+        Line(builder, indent + "  justification: " + UpstreamJustification(receipt.Justification));
         Strings(builder, indent + "  declarations", receipt.Declarations, indent.Length + 4);
         Line(builder, indent + "  mathlib_rev: " + Scalar(receipt.MathlibRev));
         Line(builder, indent + "  probe_sha256: " + Scalar(receipt.ProbeSha256));
         Strings(builder, indent + "  probe_axioms", receipt.ProbeAxioms, indent.Length + 4);
         Line(builder, indent + "  previous_atom_id: " + NullableScalar(receipt.PreviousAtomId));
         Line(builder, indent + "  next_atom_id: " + NullableScalar(receipt.NextAtomId));
+    }
+
+    private static string UpstreamJustification(string value)
+    {
+        try { return Scalar(value); }
+        catch (FormatException) { return TomlGenreToken(value); }
     }
 
     private static void Nonpropositional(StringBuilder builder, DigestionNonpropositional? receipt, string indent)
