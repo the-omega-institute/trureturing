@@ -8,7 +8,8 @@
 
 import D5.S3.Weil.Mertens.CoprimeMobiusCertificateError
 import Mathlib.Analysis.Real.Sqrt
-import Mathlib.Topology.Algebra.InfiniteSum.Basic
+import Mathlib.NumberTheory.EulerProduct.DirichletLSeries
+import D5.S3.Weil.Mertens.Third
 
 set_option autoImplicit false
 
@@ -274,6 +275,197 @@ theorem squarefree_coprime_count_error (Q : ℕ) (X : ℝ) (hQ : Squarefree Q) (
             intro n hn h
             exact hc (h.1.of_dvd_left (dvd_trans (dvd_pow_self a (by omega)) h.2))
           simp [hempty]
-  sorry
+  have hseries :
+    (∑' n : ℕ, if n.Coprime Q then (ArithmeticFunction.moebius n : ℝ) / (n : ℝ) ^ 2 else 0) *
+      ((∑' n : ℕ, ((n : ℝ) ^ 2)⁻¹) *
+        ∏ p ∈ Q.primeFactors, (1 - ((p : ℝ) ^ 2)⁻¹)) = 1 := by
+    let : NeZero Q := ⟨hQ0⟩
+    have hL (f : ℕ → ℝ) :
+        LSeries (fun n => (f n : ℂ)) 2 = ((∑' n : ℕ, f n / (n : ℝ) ^ 2) : ℝ) := by
+      rw [LSeries, Complex.ofReal_tsum]
+      apply tsum_congr
+      intro n
+      rw [LSeries.term_of_ne_zero' (by norm_num : (2 : ℂ) ≠ 0), Complex.cpow_two]
+      norm_cast
+    have hchar (q n : ℕ) : (1 : DirichletCharacter ℂ q) n =
+        ((if n.Coprime q then (1 : ℝ) else 0) : ℝ) := by
+      by_cases hc : n.Coprime q
+      · rw [if_pos hc, MulChar.one_apply ((ZMod.isUnit_iff_coprime n q).mpr hc)]
+        norm_cast
+      · rw [if_neg hc, MulChar.map_nonunit _ (by simpa only [ZMod.isUnit_iff_coprime] using hc)]
+        norm_cast
+    have hprincipal (q : ℕ) : LSeries (fun n => (1 : DirichletCharacter ℂ q) n) 2 =
+        ((∑' n : ℕ, if n.Coprime q then ((n : ℝ) ^ 2)⁻¹ else 0) : ℝ) := by
+      simp_rw [hchar]
+      rw [hL]
+      congr 1
+      apply tsum_congr
+      intro n
+      split_ifs <;> simp [one_div]
+    have hmu : LSeries ((fun n : ℕ => (1 : DirichletCharacter ℂ Q) n) *
+        (fun n => (ArithmeticFunction.moebius n : ℂ))) 2 =
+        ((∑' n : ℕ, if n.Coprime Q then (ArithmeticFunction.moebius n : ℝ) /
+          (n : ℝ) ^ 2 else 0) : ℝ) := by
+      have hf : ((fun n : ℕ => (1 : DirichletCharacter ℂ Q) n) *
+        (fun n => (ArithmeticFunction.moebius n : ℂ))) =
+        (fun n => ((if n.Coprime Q then (ArithmeticFunction.moebius n : ℝ) else 0) : ℂ)) := by
+        funext n
+        simp only [Pi.mul_apply, hchar]
+        split_ifs <;> push_cast <;> ring
+      rw [hf]
+      convert hL (fun n => if n.Coprime Q then (ArithmeticFunction.moebius n : ℝ) else 0) using 1
+      · congr 1
+        funext n
+        split_ifs <;> simp
+      · congr 1
+        apply tsum_congr
+        intro n
+        split_ifs <;> simp
+    have hm := DirichletCharacter.LSeries.mul_mu_eq_one (1 : DirichletCharacter ℂ Q)
+      (s := 2) (by norm_num)
+    rw [hprincipal Q, hmu] at hm
+    have hc := DirichletCharacter.LSeries_changeLevel (Nat.one_dvd Q)
+      (1 : DirichletCharacter ℂ 1) (s := 2) (by norm_num)
+    rw [DirichletCharacter.changeLevel_one, hprincipal Q, hprincipal 1] at hc
+    have hprod : (∏ p ∈ Q.primeFactors, (1 - (1 : DirichletCharacter ℂ 1) p *
+        (p : ℂ) ^ (-(2 : ℂ)))) =
+        ((∏ p ∈ Q.primeFactors, (1 - ((p : ℝ) ^ 2)⁻¹)) : ℝ) := by
+      push_cast
+      apply prod_congr rfl
+      intro p hp
+      rw [hchar]
+      simp [Complex.cpow_neg]
+    rw [hprod] at hc
+    rw [hc] at hm
+    have hr := congrArg Complex.re hm
+    simp only [← Complex.ofReal_mul, Complex.ofReal_re, Complex.one_re] at hr
+    simpa [mul_comm] using hr
+  have hzsum : Summable (fun n : ℕ => ((n : ℝ) ^ 2)⁻¹) :=
+    Real.summable_nat_pow_inv.mpr (by norm_num)
+  have hshift : (∑' n : ℕ, (((n : ℝ) + 1) ^ 2)⁻¹) =
+      ∑' n : ℕ, ((n : ℝ) ^ 2)⁻¹ := by
+    simpa using hzsum.sum_add_tsum_nat_add 1
+  have he_factor : e Q = (∏ p ∈ Q.primeFactors, (1 - ((p : ℝ) ^ 2)⁻¹)) *
+      ∏ p ∈ Q.primeFactors, (p : ℝ) / ((p : ℝ) + 1) := by
+    rw [he_product, ← prod_mul_distrib]
+    apply prod_congr rfl
+    intro p hp
+    have hp0 : (p : ℝ) ≠ 0 := Nat.cast_ne_zero.mpr (Nat.prime_of_mem_primeFactors hp).ne_zero
+    have hp1 : (p : ℝ) + 1 ≠ 0 := by positivity
+    field_simp
+    ring
+  let f : ℕ → ℝ := fun n => if n.Coprime Q then
+    (ArithmeticFunction.moebius n : ℝ) / (n : ℝ) ^ 2 else 0
+  have hcoefficient : e Q * (∑' n, f n) = rho Q := by
+    have hz0 : (∑' n : ℕ, ((n : ℝ) ^ 2)⁻¹) ≠ 0 := by
+      intro hz
+      rw [hz, zero_mul, mul_zero] at hseries
+      norm_num at hseries
+    rw [rho, hshift]
+    calc
+      _ = ((∑' n, f n) * ((∑' n : ℕ, ((n : ℝ) ^ 2)⁻¹) *
+            ∏ p ∈ Q.primeFactors, (1 - ((p : ℝ) ^ 2)⁻¹))) *
+          (∑' n : ℕ, ((n : ℝ) ^ 2)⁻¹)⁻¹ *
+          ∏ p ∈ Q.primeFactors, (p : ℝ) / ((p : ℝ) + 1) := by
+        rw [he_factor]
+        field_simp
+        rw [mul_div_cancel_right₀ _ (by simpa only [one_div] using hz0)]
+      _ = _ := by rw [show (∑' n, f n) * ((∑' n : ℕ, ((n : ℝ) ^ 2)⁻¹) *
+          ∏ p ∈ Q.primeFactors, (1 - ((p : ℝ) ^ 2)⁻¹)) = 1 from hseries, one_mul]
+  have hf_bound (n : ℕ) : |f n| ≤ ((n : ℝ) ^ 2)⁻¹ := by
+    dsimp [f]
+    split_ifs
+    · rw [abs_div, abs_of_nonneg (sq_nonneg (n : ℝ))]
+      have hmu : |(ArithmeticFunction.moebius n : ℝ)| ≤ 1 := by
+        exact_mod_cast (ArithmeticFunction.abs_moebius_le_one (n := n))
+      simpa only [one_div] using div_le_div_of_nonneg_right hmu (sq_nonneg (n : ℝ))
+    · simpa only [abs_zero] using inv_nonneg.mpr (sq_nonneg (n : ℝ))
+  have hf_sum : Summable f :=
+    hzsum.of_norm_bounded (fun n => by simpa only [Real.norm_eq_abs] using hf_bound n)
+  have hpartial : (∑ n ∈ range (M + 1), f n) = ∑ n ∈ A, f n := by
+    have hset : range (M + 1) = insert 0 A := by
+      ext n
+      simp only [A, mem_range, mem_insert, mem_Icc]
+      omega
+    rw [hset, sum_insert (by simp [A])]
+    simp [f]
+  have hsplit : (∑ n ∈ A, f n) + (∑' n, f (n + (M + 1))) = ∑' n, f n := by
+    simpa only [hpartial] using hf_sum.sum_add_tsum_nat_add (M + 1)
+  have htail : |∑' n, f (n + (M + 1))| ≤ 2 / ((M : ℝ) + 1) := by
+    have hzshift : Summable (fun n : ℕ => (((n + (M + 1) : ℕ) : ℝ) ^ 2)⁻¹) :=
+      (summable_nat_add_iff (M + 1)).mpr hzsum
+    have hb := tsum_of_norm_bounded (f := fun n => f (n + (M + 1))) hzshift.hasSum
+      (fun n => by simpa only [Real.norm_eq_abs] using hf_bound (n + (M + 1)))
+    apply (show |∑' n, f (n + (M + 1))| ≤
+        ∑' n : ℕ, (((n + (M + 1) : ℕ) : ℝ) ^ 2)⁻¹ from hb).trans
+    simpa only [Nat.cast_add, Nat.cast_one, one_div] using
+      (Mertens.sum_one_div_sq_le (N := (M : ℝ) + 1)
+        (le_add_of_nonneg_left (Nat.cast_nonneg M)))
+  have hfinite : |S Q X - e Q * X * ∑ a ∈ A, f a| ≤
+      (2 : ℝ) ^ Q.primeFactors.card * M := by
+    have hterm (a : ℕ) (ha : a ∈ A) :
+        |(if a.Coprime Q then
+            (ArithmeticFunction.moebius a : ℝ) * C Q (X / (a : ℝ) ^ 2) else 0) -
+          e Q * X * f a| ≤ (2 : ℝ) ^ Q.primeFactors.card := by
+      by_cases hc : a.Coprime Q
+      · rw [if_pos hc]
+        dsimp [f]
+        rw [if_pos hc]
+        have hmu : |(ArithmeticFunction.moebius a : ℝ)| ≤ 1 := by
+          exact_mod_cast (ArithmeticFunction.abs_moebius_le_one (n := a))
+        have herr : |C Q (X / (a : ℝ) ^ 2) - e Q * (X / (a : ℝ) ^ 2)| ≤
+            (2 : ℝ) ^ Q.primeFactors.card := by
+          simpa only [he_product, mul_comm] using
+            herror (X / (a : ℝ) ^ 2) (div_nonneg hX (sq_nonneg _))
+        calc
+          _ = |(ArithmeticFunction.moebius a : ℝ)| *
+              |C Q (X / (a : ℝ) ^ 2) - e Q * (X / (a : ℝ) ^ 2)| := by
+            rw [← abs_mul]
+            congr 1
+            ring
+          _ ≤ 1 * (2 : ℝ) ^ Q.primeFactors.card :=
+            mul_le_mul hmu herr (abs_nonneg _) (by norm_num)
+          _ = _ := one_mul _
+      · simp [hc, f]
+    rw [hexpansion, sum_filter, mul_sum, ← sum_sub_distrib]
+    calc
+      _ ≤ ∑ a ∈ A,
+          |(if a.Coprime Q then (ArithmeticFunction.moebius a : ℝ) *
+              C Q (X / (a : ℝ) ^ 2) else 0) - e Q * X * f a| :=
+        abs_sum_le_sum_abs _ _
+      _ ≤ ∑ _a ∈ A, (2 : ℝ) ^ Q.primeFactors.card := sum_le_sum hterm
+      _ = _ := by simp [A, mul_comm]
+  have he_nonneg : 0 ≤ e Q := by unfold e; positivity
+  have he_le_one : e Q ≤ 1 := by
+    exact (div_le_one (Nat.cast_pos.mpr (Nat.pos_of_ne_zero hQ0))).mpr
+      (Nat.cast_le.mpr (Nat.totient_le Q))
+  have hM_le : (M : ℝ) ≤ Real.sqrt X := Nat.floor_le (Real.sqrt_nonneg X)
+  have hM_upper : Real.sqrt X ≤ (M : ℝ) + 1 := (Nat.lt_floor_add_one (Real.sqrt X)).le
+  have htail_scaled : |e Q * X * ∑' n, f (n + (M + 1))| ≤ 2 * Real.sqrt X := by
+    rw [abs_mul, abs_of_nonneg (mul_nonneg he_nonneg hX)]
+    calc
+      _ ≤ e Q * X * (2 / ((M : ℝ) + 1)) :=
+        mul_le_mul_of_nonneg_left htail (mul_nonneg he_nonneg hX)
+      _ ≤ 1 * X * (2 / ((M : ℝ) + 1)) :=
+        mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_right he_le_one hX) (by positivity)
+      _ ≤ 2 * Real.sqrt X := by
+        have hden : (0 : ℝ) < (M : ℝ) + 1 := by positivity
+        rw [one_mul, ← mul_div_assoc, div_le_iff₀ hden]
+        have hs := Real.sq_sqrt hX
+        nlinarith [mul_le_mul_of_nonneg_left hM_upper (Real.sqrt_nonneg X)]
+  calc
+    |S Q X - rho Q * X| =
+        |(S Q X - e Q * X * ∑ a ∈ A, f a) -
+          e Q * X * ∑' n, f (n + (M + 1))| := by
+      rw [← hcoefficient, ← hsplit]
+      congr 1
+      ring
+    _ ≤ |S Q X - e Q * X * ∑ a ∈ A, f a| +
+        |e Q * X * ∑' n, f (n + (M + 1))| := abs_sub _ _
+    _ ≤ (2 : ℝ) ^ Q.primeFactors.card * M + 2 * Real.sqrt X :=
+      add_le_add hfinite htail_scaled
+    _ ≤ ((2 : ℝ) ^ Q.primeFactors.card + 2) * Real.sqrt X := by
+      nlinarith [mul_le_mul_of_nonneg_left hM_le
+        (show (0 : ℝ) ≤ 2 ^ Q.primeFactors.card by positivity)]
 
 end D5.S3.Weil.Mertens.CoprimeSquarefreeDensity
