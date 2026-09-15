@@ -52,7 +52,10 @@ private def signedTwist (n : ℤ) : Pi →* Pi := by
     (show surfaceRelator 0 ∈ ({surfaceRelator 0} : Set (FreeGroup Gen)) by simp)
   have hc : bracket (generator 0 (Sum.inl 0)) (generator 0 (Sum.inl 1)) *
       bracket (generator 0 (Sum.inl 2)) (generator 0 (Sum.inl 3)) = 1 := by
-    simpa [surfaceRelator, extraWord, bracket, generator, PresentedGroup.of] using hrel
+    change PresentedGroup.mk ({surfaceRelator 0} : Set (FreeGroup Gen))
+      (bracket (FreeGroup.of (Sum.inl 0)) (FreeGroup.of (Sum.inl 1)) *
+        bracket (FreeGroup.of (Sum.inl 2)) (FreeGroup.of (Sum.inl 3)) * extraWord 0) = 1 at hrel
+    simpa [extraWord, bracket, generator, PresentedGroup.of, map_mul, map_inv] using hrel
   simpa [surfaceRelator, extraWord, bracket, twistImages] using
     (show bracket (generator 0 (Sum.inl 0))
         (generator 0 (Sum.inl 1) * generator 0 (Sum.inl 0) ^ n) *
@@ -104,7 +107,7 @@ theorem result : ¬ claim := by
       FreeGroup.lift images w = 1 := by
     intro w hw
     rcases Set.mem_singleton_iff.mp hw with rfl
-    norm_num [surfaceRelator, extraWord, bracket, images]
+    norm_num [surfaceRelator, extraWord, bracket, images] <;> decide
   let φ : Pi →* DihedralGroup 4 := PresentedGroup.toGroup hrel
   have hg : ∀ i, φ (generator 0 i) = images i := by
     intro i
@@ -136,7 +139,7 @@ theorem result : ¬ claim := by
       DihedralGroup.r 1 * φ (generator 0 i) * (DihedralGroup.r 1)⁻¹
     rw [ht]
     rcases i with i | i
-    · fin_cases i <;> norm_num [twistImages, map_mul, map_zpow, hg, images]
+    · fin_cases i <;> norm_num [twistImages, map_mul, map_zpow, hg, images] <;> decide
     · exact Fin.elim0 i.1
   have hfixed : ∃ z : DihedralGroup 4, ∀ x : Pi, φ (twist x) = z * φ x * z⁻¹ := by
     refine ⟨DihedralGroup.r 1, ?_⟩
@@ -147,7 +150,7 @@ theorem result : ¬ claim := by
   rw [hg] at hbad
   change DihedralGroup.r (2 : ZMod 4) = DihedralGroup.r 0 at hbad
   have hzero := DihedralGroup.r.inj hbad
-  norm_num at hzero
+  exact (by decide : (2 : ZMod 4) ≠ 0) hzero
 
 #print axioms result
 end D5.S3.Observer.Dynamics.NonseparatingTwistStabilizerRefutation
