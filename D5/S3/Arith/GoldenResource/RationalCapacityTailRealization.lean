@@ -8,11 +8,11 @@
 import D5.S3.Analytic.WeightedCapacity.DyadicTailFilling
 import Mathlib.Data.Nat.Cast.Field
 import Mathlib.Data.Rat.BigOperators
-import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.Topology.Algebra.InfiniteSum.ENNReal
 
 set_option autoImplicit false
-open scoped BigOperators
+open scoped BigOperators Topology
+open Filter
 
 namespace D5.S3.Arith.GoldenResource.RationalCapacityTailRealization
 
@@ -144,10 +144,168 @@ noncomputable def weightedTotal (g : ℕ → ℕ) {A : ℕ → ℕ} (x : X A) : 
   ⨆ N : ℕ, ENNReal.ofReal
     (∑ n ∈ Finset.range (N + 1), ((x n : ℕ) : ℝ) / (g n : ℝ))
 
+set_option maxHeartbeats 800000 in
 /-- Every extended nonnegative real is the total reading of a capacity state when rational tails fill exactly. -/
 theorem rational_tail_filling_full_range (g A : ℕ → ℕ) (hg : ∀ n, 0 < g n)
     (hfill : FillsRationalTails g A) :
     Function.Surjective (@weightedTotal g A) := by
-  sorry
+  classical
+  have hread (u : B A) (s : Finset ℕ)
+      (hs : u.property.toFinset ⊆ s) :
+      weightedRead g u = ∑ n ∈ s, ((u.val n : ℕ) : ℚ) / g n := by
+    apply Finset.sum_subset hs
+    intro n _ hn
+    have hz : (u.val n : ℕ) = 0 := by simpa using hn
+    simp [hz]
+  have hprefix (u : B A) (s : Finset ℕ) :
+      (∑ n ∈ s, ((u.val n : ℕ) : ℚ) / g n) ≤ weightedRead g u := by
+    rw [hread u (s ∪ u.property.toFinset) Finset.subset_union_right]
+    exact Finset.sum_le_sum_of_subset_of_nonneg Finset.subset_union_left (by
+      intros; positivity)
+  have htotal (x : X A) : weightedTotal g x =
+      ∑' n, ENNReal.ofReal (((x n : ℕ) : ℝ) / g n) := by
+    unfold weightedTotal
+    simp_rw [ENNReal.ofReal_sum_of_nonneg (fun n _ =>
+      div_nonneg (Nat.cast_nonneg _) (Nat.cast_nonneg _))]
+    exact (ENNReal.tsum_eq_iSup_nat' (tendsto_add_atTop_nat 1)).symm
+  intro t
+  by_cases ht : t = ⊤
+  · let x : X A := fun n => ⟨A n, Nat.lt_succ_self _⟩
+    refine ⟨x, ?_⟩
+    rw [ht, htotal]
+    apply top_unique
+    rw [← (cofinal_capacity_rational_tail_filling g A hg).2 hfill 0]
+    apply ENNReal.tsum_le_tsum
+    intro n
+    dsimp [x]
+    split_ifs <;> simp
+  have htR : 0 ≤ t.toReal := ENNReal.toReal_nonneg
+  obtain ⟨r, hrmono, hrlt, hrlim⟩ := Real.exists_seq_rat_strictMono_tendsto t.toReal
+  let q : ℕ → ℚ := fun j => match j with
+    | 0 => 0
+    | i + 1 => max 0 (r i)
+  have hq0 (j : ℕ) : 0 ≤ q j := by cases j <;> simp [q]
+  have hqmono : Monotone q := by
+    apply monotone_nat_of_le_succ
+    intro j
+    cases j with
+    | zero => exact hq0 1
+    | succ j => exact max_le_max_left 0 (hrmono.monotone (Nat.le_succ j))
+  have hqle (j : ℕ) : (q j : ℝ) ≤ t.toReal := by
+    cases j with
+    | zero => simpa [q] using htR
+    | succ j => simpa [q, Rat.cast_max] using max_le htR (hrlt j).le
+  have hqlim : Tendsto (fun j => (q j : ℝ)) atTop (𝓝 t.toReal) := by
+    apply (tendsto_add_atTop_iff_nat 1).mp
+    simpa [q, Rat.cast_max, max_eq_right htR] using
+      (tendsto_const_nhds.max hrlim :
+        Tendsto (fun j => max (0 : ℝ) (r j)) atTop (𝓝 (max 0 t.toReal)))
+  have hstep (j : ℕ) (u : B A) (hu : weightedRead g u = q j) :
+      ∃ v : B A, weightedRead g v = q (j + 1) ∧
+        (∀ n, (u.val n : ℕ) ≤ (v.val n : ℕ)) ∧
+        (∀ n ≤ j, v.val n = u.val n) := by
+    let K := max j (u.property.toFinset.sup id)
+    have huK (n : ℕ) (hn : K < n) : (u.val n : ℕ) = 0 := by
+      by_contra h
+      have hmem : n ∈ u.property.toFinset := by simpa using h
+      have hle : n ≤ u.property.toFinset.sup id := Finset.le_sup (f := id) hmem
+      dsimp [K] at hn
+      omega
+    obtain ⟨w, hwK, hwq⟩ := hfill (q (j + 1) - q j)
+      (sub_nonneg.mpr (hqmono (Nat.le_succ j))) K
+    let v : X A := fun n => if n ≤ K then u.val n else w.val n
+    have hvsum (n : ℕ) : (v n : ℕ) = (u.val n : ℕ) + (w.val n : ℕ) := by
+      by_cases hn : n ≤ K
+      · simp [v, hn, hwK n hn]
+      · simp [v, hn, huK n (by omega)]
+    let s := u.property.toFinset ∪ w.property.toFinset
+    have hvs : Function.support (fun n => (v n : ℕ)) ⊆ (s : Set ℕ) := by
+      intro n hn
+      by_contra h
+      have hu0 : (u.val n : ℕ) = 0 := by
+        have : n ∉ u.property.toFinset := fun hn => h (Finset.mem_union_left _ hn)
+        simpa using this
+      have hw0 : (w.val n : ℕ) = 0 := by
+        have : n ∉ w.property.toFinset := fun hn => h (Finset.mem_union_right _ hn)
+        simpa using this
+      exact hn (by change (v n : ℕ) = 0; rw [hvsum, hu0, hw0])
+    let vb : B A := ⟨v, s.finite_toSet.subset hvs⟩
+    refine ⟨vb, ?_, ?_, ?_⟩
+    · have hreads : weightedRead g vb = weightedRead g u + weightedRead g w := by
+        rw [hread vb s (by intro n hn; exact hvs (by simpa using hn)),
+          hread u s Finset.subset_union_left, hread w s Finset.subset_union_right,
+          ← Finset.sum_add_distrib]
+        apply Finset.sum_congr rfl
+        intro n _
+        change ((v n : ℕ) : ℚ) / g n = _
+        rw [hvsum, Nat.cast_add, add_div]
+      rw [hreads, hu, hwq]
+      ring
+    · intro n
+      change (u.val n : ℕ) ≤ (v n : ℕ)
+      rw [hvsum]
+      omega
+    · intro n hn
+      change v n = u.val n
+      exact if_pos (hn.trans (le_max_left j (u.property.toFinset.sup id)))
+  choose next hnext using hstep
+  let z : B A := ⟨fun n => ⟨0, Nat.zero_lt_succ _⟩, by
+    simpa [Function.support] using Set.finite_empty⟩
+  have hz : weightedRead g z = q 0 := by simp [weightedRead, z, q, Function.support]
+  let U : (j : ℕ) → {u : B A // weightedRead g u = q j} :=
+    Nat.rec ⟨z, hz⟩ (fun j u => ⟨next j u.val u.property, (hnext j u.val u.property).1⟩)
+  have hUstep (j n : ℕ) : ((U j).val.val n : ℕ) ≤ ((U (j + 1)).val.val n : ℕ) :=
+    (hnext j (U j).val (U j).property).2.1 n
+  have hUfix (j n : ℕ) (hn : n ≤ j) :
+      (U (j + 1)).val.val n = (U j).val.val n :=
+    (hnext j (U j).val (U j).property).2.2 n hn
+  have hUmono (n : ℕ) : Monotone (fun j => ((U j).val.val n : ℕ)) :=
+    monotone_nat_of_le_succ (fun j => hUstep j n)
+  have hUstable (i j n : ℕ) (hij : i ≤ j) (hni : n ≤ i) :
+      (U j).val.val n = (U i).val.val n := by
+    induction j, hij using Nat.le_induction with
+    | base => rfl
+    | succ j hij ih => rw [hUfix j n (hni.trans hij), ih]
+  let x : X A := fun n => (U (n + 1)).val.val n
+  have hUx (j n : ℕ) : ((U j).val.val n : ℕ) ≤ (x n : ℕ) := by
+    by_cases hj : j ≤ n + 1
+    · exact hUmono n hj
+    · have he := hUstable (n + 1) j n (by omega) (by omega)
+      exact le_of_eq (congrArg Fin.val he)
+  have hxprefix (N n : ℕ) (hn : n ∈ Finset.range (N + 1)) :
+      x n = (U (N + 1)).val.val n := by
+    have hnN := Finset.mem_range.mp hn
+    exact (hUstable (n + 1) (N + 1) n (by omega) (by omega)).symm
+  refine ⟨x, le_antisymm ?_ ?_⟩
+  · apply iSup_le
+    intro N
+    have hpr : (∑ n ∈ Finset.range (N + 1), ((x n : ℕ) : ℚ) / g n) ≤ q (N + 1) := by
+      calc
+        _ = ∑ n ∈ Finset.range (N + 1), (((U (N + 1)).val.val n : ℕ) : ℚ) / g n := by
+          apply Finset.sum_congr rfl
+          intro n hn
+          rw [hxprefix N n hn]
+        _ ≤ weightedRead g (U (N + 1)).val := hprefix _ _
+        _ = _ := (U (N + 1)).property
+    have hprR : (∑ n ∈ Finset.range (N + 1), ((x n : ℕ) : ℝ) / g n) ≤
+        (q (N + 1) : ℝ) := by
+      have hh := Rat.cast_le (K := ℝ) |>.mpr hpr
+      simpa only [Rat.cast_sum, Rat.cast_div, Rat.cast_natCast] using hh
+    exact (ENNReal.ofReal_le_ofReal (hprR.trans (hqle (N + 1)))).trans_eq
+      (ENNReal.ofReal_toReal ht)
+  · rw [← ENNReal.ofReal_toReal ht]
+    apply le_of_tendsto' (ENNReal.tendsto_ofReal hqlim)
+    intro j
+    rw [← (U j).property, weightedRead]
+    simp only [Rat.cast_sum, Rat.cast_div, Rat.cast_natCast]
+    rw [ENNReal.ofReal_sum_of_nonneg (by intros; positivity), htotal]
+    apply le_trans (Finset.sum_le_sum ?_) (ENNReal.sum_le_tsum _)
+    intro n _
+    apply ENNReal.ofReal_le_ofReal
+    apply div_le_div_of_nonneg_right _ (Nat.cast_nonneg _)
+    exact_mod_cast hUx j n
+
+#print axioms cofinal_capacity_rational_tail_filling
+#print axioms rational_tail_filling_full_range
 
 end D5.S3.Arith.GoldenResource.RationalCapacityTailRealization
