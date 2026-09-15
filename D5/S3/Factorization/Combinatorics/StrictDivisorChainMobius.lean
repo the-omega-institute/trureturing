@@ -16,7 +16,7 @@ open D5.S3.Factorization.Combinatorics.StrictDivisorChainCount
 
 namespace D5.S3.Factorization.Combinatorics.StrictDivisorChainMobius
 
-/-- The alternating count of strict divisor chains, through the prime-factor rank of the endpoint. -/
+/-- The alternating count of strict divisor chains up to the endpoint’s prime-factor rank. -/
 noncomputable def chainSum (n : ℕ) : ℤ :=
   ∑ k ∈ Finset.range (ArithmeticFunction.cardFactors n + 1),
     (-1 : ℤ) ^ k * (Nat.card (Chain n k) : ℤ)
@@ -156,6 +156,60 @@ theorem chain_alternating_sum_eq_moebius (n : ℕ) (hn : 1 ≤ n) :
     let e : S ≃ Chain m (k + 1) := Equiv.ofBijective append ⟨hinj, hsurj⟩
     rw [← Nat.card_congr e, Nat.card_sigma]
     exact Finset.sum_coe_sort m.properDivisors (fun d => Nat.card (Chain d k))
-  sorry
+  have padded_sum : ∀ d b : ℕ, ArithmeticFunction.cardFactors d < b →
+      (∑ k ∈ Finset.range b, (-1 : ℤ) ^ k * (Nat.card (Chain d k) : ℤ)) = chainSum d := by
+    intro d b hb
+    unfold chainSum
+    symm
+    apply Finset.sum_subset (Finset.range_mono (by omega))
+    intro k hk hkn
+    have hkr : ArithmeticFunction.cardFactors d < k := by
+      simp only [Finset.mem_range] at hkn
+      omega
+    rw [rank_support d k hkr, Nat.cast_zero, mul_zero]
+  have recursion : ∀ m : ℕ, 1 < m →
+      chainSum m = -(∑ d ∈ m.properDivisors, chainSum d) := by
+    intro m hm
+    have hzero : Nat.card (Chain m 0) = 0 := by
+      rw [zero_count, if_neg (by omega)]
+    have hsigned : ∀ k : ℕ,
+        (-1 : ℤ) ^ (k + 1) * (Nat.card (Chain m (k + 1)) : ℤ) =
+          -(∑ d ∈ m.properDivisors, (-1 : ℤ) ^ k * (Nat.card (Chain d k) : ℤ)) := by
+      intro k
+      rw [last_step m k hm, Nat.cast_sum, pow_succ, Finset.mul_sum,
+        ← Finset.sum_neg_distrib]
+      apply Finset.sum_congr rfl
+      intro d hd
+      ring
+    rw [chainSum, Finset.sum_range_succ', hzero]
+    simp only [Nat.cast_zero, mul_zero, add_zero]
+    simp_rw [hsigned]
+    rw [Finset.sum_neg_distrib, Finset.sum_comm]
+    congr 1
+    apply Finset.sum_congr rfl
+    intro d hd
+    apply padded_sum
+    exact rank_lt d m (Nat.pos_of_mem_properDivisors hd)
+      (Nat.mem_properDivisors.mp hd).1 (Nat.mem_properDivisors.mp hd).2
+  induction n using Nat.strong_induction_on with
+  | h m ih =>
+    by_cases hm : m = 1
+    · subst m
+      simp only [chainSum, ArithmeticFunction.cardFactors_one, Nat.zero_add,
+        Finset.sum_range_one, pow_zero, one_mul, zero_count, ite_true,
+        Nat.cast_one, ArithmeticFunction.moebius_apply_one]
+    · have hm1 : 1 < m := by omega
+      rw [recursion m hm1]
+      have hsum : (∑ d ∈ m.properDivisors, chainSum d) =
+          ∑ d ∈ m.properDivisors, ArithmeticFunction.moebius d := by
+        apply Finset.sum_congr rfl
+        intro d hd
+        exact ih d (Nat.mem_properDivisors.mp hd).2 (Nat.pos_of_mem_properDivisors hd)
+      rw [hsum]
+      have hmu : (∑ d ∈ m.divisors, ArithmeticFunction.moebius d) = 0 := by
+        rw [← ArithmeticFunction.coe_mul_zeta_apply, ArithmeticFunction.moebius_mul_coe_zeta,
+          ArithmeticFunction.one_apply, if_neg hm]
+      rw [← Nat.cons_self_properDivisors (by omega), Finset.sum_cons] at hmu
+      omega
 
 end D5.S3.Factorization.Combinatorics.StrictDivisorChainMobius
