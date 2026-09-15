@@ -139,3 +139,201 @@ openness outside the stated search surfaces (OEIS text, OpenAlex,
 MathOverflow, GitHub code search, formal-conjectures, repository prior art)
 is unverified, and no exhaustive literature or priority claim is made. The
 bounded numerical scans do not establish the universal statement.
+
+### LS.1. The separately stated sharpness clause
+
+**Definition.** Let F_n and L_n be the original Fibonacci and Lucas
+sequences, with F_0=0, F_1=1, L_0=2 and L_1=1. Let a(n) denote the
+published entries of OEIS A319197 with offset three, and, wherever the
+prefix has been supplied, set
+
+$$D_n=2^n\prod_{j=3}^n a(j).$$
+
+The COMMENT and FORMULA of A319197 additionally assert that this
+uniform divisor is best possible, with F_(3*2^(n-2))/D_n=1. The following
+claim is the consequence of that assertion at n=7:
+
+$$\mathsf{Sharp}_7:\quad
+\nexists c\in\mathbb N:\ c>1\ \land\
+\forall m\in\mathbb N,\quad cD_7\mid F_{96m},$$
+
+where the five supplied entries fix
+
+$$D_7=2^7\cdot1\cdot9\cdot161\cdot51841\cdot6989569.$$
+
+This clause is distinct from the power-of-two divisibility statement.
+No choice of the unspecified tail of a(n) changes this finite-prefix
+consequence. Source: Wolfdieter Lang, OEIS A319197 (2018), COMMENT and
+FORMULA, https://oeis.org/A319197 .
+
+### LS.2. The exact corrected product at every level
+
+**Definition.** Independently of the published a(n), define integers
+
+$$b_0=9,\qquad b_{j+1}=2b_j^2-1,\qquad
+s_k=6\cdot2^k,\qquad C_k=2^{k+3}\prod_{0\le j<k}b_j.$$
+
+The sequence b_j is A081459(j+2), the known Newton-Pell numerator
+sequence. Its recurrence and formula b_j=L_(6*2^j)/2 are recorded in
+OEIS A081459, https://oeis.org/A081459 . The definition here fixes an
+infinite sequence without extrapolating A319197's incorrect prefix.
+
+**Theorem LS1.** For every k>=0,
+
+$$\boxed{L_{s_k}=2b_k,\qquad F_{s_k}=C_k>0.}$$
+
+For every integer d, including zero and negative integers,
+
+$$\boxed{\bigl(\forall m\ge0,\ d\mid F_{s_km}\bigr)
+\quad\Longleftrightarrow\quad d\mid C_k.}$$
+
+Thus C_k is the greatest positive common divisor of all those Fibonacci
+values. In external indexing, the corrected layer is a*(3)=1 and
+ a*(n)=b_(n-4) for n>=4.
+
+**Proof.** At k=0, L_6=18 and F_6=8. Since every s_k is even, the
+classical identities L_(2n)=L_n^2-2 and F_(2n)=F_n L_n imply
+
+$$L_{s_{k+1}}=4b_k^2-2=2b_{k+1},\qquad
+F_{s_{k+1}}=C_k(2b_k)=C_{k+1}.$$
+
+Simultaneous induction proves both equalities. Positivity follows from
+s_k>0. Fibonacci divisibility gives F_(s_k)|F_(s_km), proving the reverse
+implication in the common-divisor assertion. Its forward implication
+uses the permitted multiplier m=1. This argument also shows that zero
+cannot be a common divisor. These are applications of classical Lucas
+doubling and Fibonacci divisibility, within the correction of the
+specified sharpness assertion.
+
+### LS.3. An all-multiplier counterexample to sharpness
+
+**Theorem LS2.** The claim Sharp_7 is false. More precisely,
+
+$$D_7=67205083036226688,\qquad
+F_{96}=51680708854858323072=769D_7,$$
+
+and therefore
+
+$$\boxed{\forall m\ge0,\quad769D_7\mid F_{96m}.}$$
+
+**Proof.** LS1 at k=4 and the defining recurrence give
+
+$$b_0=9,\quad b_1=161,\quad b_2=51841,\quad
+b_3=5374978561=769\cdot6989569.$$
+
+Insert these values in C_4=2^7 b_0b_1b_2b_3. The multiplier assertion
+then follows from F_96|F_(96m). Since 769>1, it contradicts Sharp_7.
+In particular the published quotient at m=1 is 769, rather than one.
+This does not refute the published integrality assertion at that level.
+
+**Proposition LS3.** Using exactly the eight supplied entries of A319197,
+
+$$\left(\frac{F_{3\cdot2^{n-2}}}{D_n}\right)_{n=3}^{10}
+=(1,1,1,1,769,835903,1,1),\qquad835903=769\cdot1087.$$
+
+**Proof.** The next correct layer is
+
+$$b_4=57780789062419261441
+=1087\cdot53156199689438143.$$
+
+The supplied a(9) equals 835903*b_5, so the two displaced factors are
+included there. The supplied a(10) equals b_6. Together with LS1 and
+LS2 these integer identities give every displayed ratio. No assertion
+about the unprovided infinite tail is needed. Failure at n=7 alone
+already refutes the universal sharpness clause.
+
+### LS.4. Coprime layers and normalized multiplier dynamics
+
+**Theorem LS4.** All b_j are positive odd integers and, whenever i<j,
+
+$$\gcd(b_i,b_j)=1.$$
+
+Consequently the exact exponent of two in F_(6*2^k) is k+3.
+
+**Proof.** The recurrence preserves oddness and b_j>=9. It gives
+b_(i+1)=-1 modulo b_i and b_(i+2)=1 modulo b_i; every later term remains
+one modulo b_i. Thus every common divisor of b_i and b_j divides one.
+The exact exponent statement follows from the positive odd product
+in LS1.
+
+**Theorem LS5.** For fixed k, the integer quotient
+
+$$U_k(m)=F_{s_km}/C_k\quad(m\ge0)$$
+
+satisfies
+
+$$U_k(0)=0,\qquad U_k(1)=1,\qquad
+U_k(m+2)=2b_kU_k(m+1)-U_k(m).$$
+
+**Proof.** LS1 and Fibonacci divisibility make the quotient integral.
+The two roots phi^(s_k),psi^(s_k) have sum L_(s_k)=2b_k and product
+one because s_k is even. The Binet difference therefore satisfies the
+displayed second-order recurrence. Division by the fixed nonzero C_k
+preserves that recurrence and gives the two initial values. This is
+an exact corrected normalization for every multiplier, not merely a
+finite list of factors.
+
+### LS.5. Two exact-rank channels inside each later layer
+
+**Theorem LS6.** Let j>=1, t=2^(j+1), and define
+
+$$A_j=L_t,\qquad B_j=(L_t^2-3)/2.$$
+
+These are coprime positive odd integers and
+
+$$\boxed{b_j=A_jB_j.}$$
+
+Every prime p dividing A_j has exact Fibonacci rank 2t, and every
+prime p dividing B_j has exact Fibonacci rank 6t. In either case its
+exponent in b_j equals its initial depth
+
+$$h_p=v_p(F_{p-(5/p)}).$$
+
+**Proof.** For even t, the Lucas tripling identity is
+L_(3t)=L_t(L_t^2-3), while 3t=6*2^j. For t a power of two at least four,
+L_t is odd, and repeated doubling from L_4=7 gives L_t=7 modulo eight
+and L_t=1 or2 modulo three. Thus B_j is a positive odd integer and
+neither factor is divisible by three. A common odd prime divisor would
+divide three; hence the two factors are coprime. The Lucas doubling law
+modulo five gives L_t=2 or3 modulo five, excluding five as well.
+
+If p|A_j, then p|F_(2t)=F_t L_t and p does not divide F_t, since their
+greatest common divisor divides two. The rank therefore divides 2t but
+not t. These indices are consecutive powers of two, so the rank is 2t.
+If p|B_j, then p|L_(3t), hence p|F_(6t), but p does not divide F_(3t).
+As 6t has only the primes two and three in its index, its rank must be
+either 2t or6t. Rank 2t would imply p|L_t, contradicting coprimality of
+A_j and B_j. Thus it is 6t.
+
+Finally p is different from two, three and five. The multiplier between
+its exact rank and 6t is either three or one, so it does not change the
+initial valuation. The coprimality of F_(3t) and L_(3t) away from two
+identifies that valuation with the exponent in b_j. The standard rank
+bound and the Fibonacci valuation theorem identify it with h_p. The
+valuation input is Lengyel's classical formula, as recorded in Medina
+and Rowland, Fibonacci Quarterly 53 (2015), Theorem 1.4,
+https://arxiv.org/abs/0910.2907 .
+
+**Proposition LS7.** The first four later layers split as
+
+$$
+\begin{array}{c|r|r|c}
+j&A_j&B_j&\text{ranks of the two channels}\\\hline
+1&7&23&8,24\\
+2&47&1103&16,48\\
+3&2207&769\cdot3167&32,96\\
+4&1087\cdot4481&11862575248703&64,192.
+\end{array}
+$$
+
+**Proof.** Evaluate the Lucas doubling recurrence at t=4,8,16,32 and
+insert the resulting values into LS6. Trial division verifies the
+primes displayed in the products. In particular the missing 769 belongs
+to rank96, while the missing 1087 belongs to rank64. Their relocation
+in the supplied a(9) does not respect these exact-rank channels.
+
+LS6 identifies where an initial repeated factor would occur; it does
+not force one. The exceptional first layer b_0=9 is excluded from LS6:
+its factor three has rank four and its repeated exponent comes from
+an index multiple, not from a WSS exception. No WSS prime is furnished
+by the sharpness counterexample or the corrected normalization.
