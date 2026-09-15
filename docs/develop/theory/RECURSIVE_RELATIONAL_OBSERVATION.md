@@ -1726,3 +1726,571 @@ $$
 [^rro9_ultrafilter]: Tom Leinster, *Codensity and the ultrafilter monad*, *Theory and Applications of Categories* **28** (2013), 332–370，[arXiv:1209.3606v3](https://arxiv.org/html/1209.3606v3)。标准构件对应第 1 节定义 1.1–1.2、例 1.3–1.4、命题 1.5（Galvin 与 Horn），以及该节末尾关于离散空间 Stone–Čech 完成与超滤子的说明。本批核对其 HTML 正文；本节所需的闭包公式及端点复合等式在正文直接证明。
 
 ## 追加锚（本行以下为增补区）
+
+## 11. 增补·重复历史的观察商与运算扩展
+
+**定义 11.0（约定）。** 本节采用通常外部集合论中的自然数 $\mathbb N=\{0,1,2,\ldots\}$，并以外部自然数归纳解释有限迭代。对映射 $f$，记 $\ker f=\{(x,y):f(x)=f(y)\}$；这里的“核”始终指等值关系，不指零元的原像。历史载体为集合 $H$，初始历史为 $e\in H$，后继为 $S:H\to H$；端状态映射为 $E:H\to X$，观察映射为 $q:H\to B$，其中 $X,B$ 分别为端状态和观察记录的载体。历史载体、端状态、观察记录及观察记录上的运算分别指定，不预先认定它们保存相同的区别。实际像、严格响应及上下文的约定见定义 2.1、2.4 与命题 2.6。[^rro11_volume]
+
+**定理 11.1（无混淆、无遗漏生成的自然数刻画）。** 设 $H$ 为集合，$e\in H$，$S:H\to H$。以下三种表述等价。
+
+生成表述：每个历史都由有限次后继生成，而且后继无混淆、初始历史没有前驱，即
+
+$$
+H=\{S^n(e):n\in\mathbb N\},\qquad
+S\text{ 单射},\qquad
+e\notin S[H].
+$$
+
+同构表述：存在唯一双射 $\nu:\mathbb N\to H$，满足
+
+$$
+\nu(0)=e,\qquad
+\nu(n+1)=S(\nu(n)).
+$$
+
+该双射必为 $\nu(n)=S^n(e)$。
+
+归纳表述：$S$ 单射、$e\notin S[H]$，并且对每个外部子集 $A\subseteq H$ 都有
+
+$$
+e\in A\ \land\ S[A]\subseteq A
+\quad\Longrightarrow\quad
+A=H.
+$$
+
+在这些等价条件下，对任意集合 $Y$、$y_0\in Y$ 和映射 $T:Y\to Y$，存在唯一映射 $f:H\to Y$，使得
+
+$$
+f(e)=y_0,\qquad f\circ S=T\circ f.
+$$
+
+其值由
+
+$$
+f(\nu(n))=T^n(y_0)
+$$
+
+唯一确定。
+
+这里对 $A\subseteq H$ 的量化是外部全子集量化，不是仅针对某个固定语言中可定义谓词的形式归纳模式。自然数及其归纳已用于表述和证明该刻画。
+
+**证明。** 先假设生成表述成立。定义 $\nu(n)=S^n(e)$，无遗漏条件立即给出满射性。若 $\nu(m)=\nu(n)$ 且 $m<n$，则 $S^m$ 单射，故
+
+$$
+e=S^{n-m}(e)=S\bigl(S^{n-m-1}(e)\bigr),
+$$
+
+与 $e\notin S[H]$ 矛盾。因此 $\nu$ 单射。它满足所述初始值和后继方程；任何满足这两个方程的映射，均由外部自然数归纳与 $\nu$ 逐项相等，故唯一。
+
+反之，设同构表述成立。满射性给出无遗漏生成。若 $S(x)=S(y)$，写 $x=\nu(m)$、$y=\nu(n)$，则
+
+$$
+\nu(m+1)=\nu(n+1).
+$$
+
+由 $\nu$ 单射得到 $m+1=n+1$，从而 $x=y$。若存在 $x=\nu(n)$ 使 $S(x)=e$，则 $\nu(n+1)=\nu(0)$，同样矛盾。因此生成表述成立。
+
+无遗漏生成与所列全子集归纳原则等价。一个包含 $e$ 且对 $S$ 封闭的子集，依据外部自然数归纳包含每个 $S^n(e)$，故在无遗漏生成下等于 $H$。反之，轨道子集
+
+$$
+A_0=\{S^n(e):n\in\mathbb N\}
+$$
+
+包含 $e$ 且对 $S$ 封闭；将归纳原则用于 $A_0$，即得 $A_0=H$。
+
+最后，利用 $\nu$ 的双射性定义 $f(\nu(n))=T^n(y_0)$。这一定义满足两个递归方程。若 $g$ 也满足它们，外部自然数归纳给出 $g(\nu(n))=T^n(y_0)$；再由 $\nu$ 满射得到 $g=f$。
+
+原始历史的自由性不自动传给端状态 $E:H\to X$ 或观察 $q:H\to B$。例如取 $H=\mathbb N$、$e=0$、$S(n)=n+1$，令 $E(n)=*$、$q(n)=n\bmod 2$，则原始历史满足全部条件，而端状态丢失全部次数，观察只保留奇偶。对于多标记或多事件自由历史，固定一个追加操作通常不能生成整个载体；应用本条时，应限制到重复该固定标记或事件的子载体，而不能把多标记历史整体误认成单一后继轨道。[^rro11_history] 证毕。
+
+**定理 11.2（单一重复的自治观察核及运算下降）。** 设 $q:\mathbb N\twoheadrightarrow B$，不预设 $B$ 有限。以下条件等价：观察满足后继稳定性
+
+$$
+q(n)=q(m)\quad\Longrightarrow\quad q(n+1)=q(m+1);
+$$
+
+存在映射 $s:B\to B$，使 $s(q(n))=q(n+1)$；存在二元运算 $\oplus:B\times B\to B$，使
+
+$$
+q(n+m)=q(n)\oplus q(m).
+$$
+
+存在时，$s$ 和 $\oplus$ 均唯一，且 $\oplus$ 使 $B$ 成为以 $q(0)$ 为单位元、由 $q(1)$ 生成的交换幺半群。
+
+这些条件成立时，$\ker q$ 恰有以下两种可能：它是等号关系；或者存在唯一的阈值 $t\ge0$ 和周期 $p\ge1$，使
+
+$$
+n\mathrel{R_{t,p}}m
+\quad\Longleftrightarrow\quad
+n=m\ \lor\
+\bigl(n\ge t\ \land\ m\ge t\ \land\ n\equiv m\pmod p\bigr),
+$$
+
+且 $\ker q=R_{t,p}$。反之，每个 $R_{t,p}$ 都是某个满射自治观察的核。非等号情形下，$B$ 自动有限，且
+
+$$
+|B|=t+p.
+$$
+
+此外，每个这样的核都自动允许自然数乘法在两个槽位上同时下降：存在唯一运算 $\otimes:B\times B\to B$，使
+
+$$
+q(nm)=q(n)\otimes q(m).
+$$
+
+因此 $q$ 是从自然数半环到其观察商半环的满同态，允许平凡半环情形。乘法的自动下降特指自然数加法同余；它也没有推出任意新增二元运算都会下降。阈值—周期核形是自然数加法幺半群同余的标准分类。[^rro11_monogenic][^rro11_periodicity]
+
+**证明。** 写 $n\sim m$ 表示 $q(n)=q(m)$。后继稳定性通过外部自然数归纳推出
+
+$$
+n\sim m\quad\Longrightarrow\quad n+k\sim m+k
+\qquad(k\in\mathbb N).
+$$
+
+若 $a\sim a'$、$b\sim b'$，则
+
+$$
+a+b\sim a'+b\sim a'+b'.
+$$
+
+故定义 $q(a)\oplus q(b)=q(a+b)$ 与代表元无关。满射性给出唯一性，结合律、交换律和单位元律从自然数加法下降。反过来，若加法下降，则
+
+$$
+q(n+1)=q(n)\oplus q(1),
+$$
+
+立即得到后继稳定性。
+
+同样，后继稳定性恰保证 $s(q(n))=q(n+1)$ 与代表元无关；满射性给出唯一性。若这样的 $s$ 已存在，则后继稳定性显然成立。
+
+下面证明完整核形。若没有不同自然数具有相同读数，则核为等号。否则定义
+
+$$
+t=\min\{i\in\mathbb N:\exists j>i,\ i\sim j\},
+\qquad
+p=\min\{d\ge1:t\sim t+d\}.
+$$
+
+两个集合均非空，故最小值存在。由平移稳定性，
+
+$$
+n\sim n+p\qquad(n\ge t).
+$$
+
+先证明 $0,1,\ldots,t+p-1$ 的读数两两不同。若 $i<j$ 且 $i<t$，则 $i\sim j$ 直接违背 $t$ 的最小性。余下情形可写成
+
+$$
+i=t+r,\qquad j=t+s,\qquad 0\le r<s<p.
+$$
+
+假设 $i\sim j$。将两边同时平移 $p-s$，得到
+
+$$
+t+(p-s+r)\sim t+p\sim t.
+$$
+
+但 $1\le p-s+r<p$，这违背 $p$ 的最小性。因此所列代表的读数确实两两不同。此处只使用向前平移，没有对观察后的后继作未经许可的反向消去。
+
+定义规范代表
+
+$$
+\rho_{t,p}(n)=
+\begin{cases}
+n,&n<t,\\
+t+((n-t)\bmod p),&n\ge t.
+\end{cases}
+$$
+
+若 $n\ge t$，写 $n-t=kp+r$，其中 $0\le r<p$。反复使用尾部的 $p$ 步相等，得到
+
+$$
+n=t+kp+r\sim t+r=\rho_{t,p}(n).
+$$
+
+对 $n<t$ 也有 $n\sim\rho_{t,p}(n)$。因规范代表的读数两两不同，
+
+$$
+n\sim m
+\quad\Longleftrightarrow\quad
+\rho_{t,p}(n)=\rho_{t,p}(m).
+$$
+
+展开右侧，正是所述 $R_{t,p}$。规范代表共有 $t+p$ 个，且 $q$ 满射，故 $|B|=t+p$。
+
+阈值 $t$ 是首次参与向后碰撞的较小下标，周期 $p$ 是该下标的最小正返回步长，二者由核唯一确定。反之，任意给定 $t\ge0$、$p\ge1$，关系 $R_{t,p}$ 是 $\rho_{t,p}$ 的等值核，因而是等价关系。若两个相关数不相等，它们均在尾部且同余；同时加一后仍均在尾部且同余。因此 $R_{t,p}$ 满足后继稳定性，取相应商映射便得到所需自治观察。
+
+最后证明乘法下降，不再依赖核的显式分类。由加法同余性，对 $k$ 归纳可得
+
+$$
+a\sim a'\quad\Longrightarrow\quad ka\sim ka'.
+$$
+
+归纳起点是 $0\sim0$；归纳步使用 $ka+a\sim ka'+a'$。因此，当 $a\sim a'$、$b\sim b'$ 时，
+
+$$
+ab\sim a'b\sim a'b'.
+$$
+
+这保证 $\otimes$ 定义良好；满射性给出唯一性，其结合律、单位元律、零元律及对 $\oplus$ 的分配律均由自然数运算下降。证毕。
+
+**定理 11.3（奇偶观察在幂与减法扩签名下的精确细化）。** 固定基本观察
+
+$$
+q:\mathbb N\to\{0,1\},\qquad q(n)=n\bmod2.
+$$
+
+每个上下文是一个有限、恰含一个孔的运算表达式，其他输入位置允许填入任意固定自然数参数；参数在比较两个输入时保持不变。允许恒等上下文 $C(x)=x$。
+
+对总运算签名 $\Sigma$，定义
+
+$$
+n\equiv_\Sigma m
+\quad\Longleftrightarrow\quad
+\forall C,\ q(C(n))=q(C(m)),
+$$
+
+其中 $C$ 遍历该签名的全部有限一孔上下文。“最粗保 $q$ 的同余”指包含于 $\ker q$、且对所有基本运算相容的最大等价关系。[^rro11_contexts]
+
+令
+
+$$
+\Sigma_0=\{+,\times\},\qquad
+\Sigma_1=\{+,\times,\operatorname{pow}\},
+\qquad
+\operatorname{pow}(a,b)=a^b,
+$$
+
+其中幂是两个槽位都可参与上下文的总运算，并约定 $0^0=1$。则
+
+$$
+\equiv_{\Sigma_0}=R_{0,2}=\ker q,
+$$
+
+而
+
+$$
+n\equiv_{\Sigma_1}m
+\quad\Longleftrightarrow\quad
+q(n)=q(m)\ \land\ (n=0\Longleftrightarrow m=0).
+$$
+
+因此 $\equiv_{\Sigma_1}=R_{1,2}$，恰有三类：
+
+$$
+\{0\},\qquad
+\{2,4,6,\ldots\},\qquad
+\{1,3,5,\ldots\}.
+$$
+
+再分别向 $\Sigma_1$ 加入截断减法或严格部分减法：
+
+$$
+d_{\mathrm t}(a,b)=
+\begin{cases}
+a-b,&b\le a,\\
+0,&b>a,
+\end{cases}
+\qquad
+d_{\mathrm p}(a,b)=
+\begin{cases}
+\operatorname{ok}(a-b),&b\le a,\\
+\bot,&b>a.
+\end{cases}
+$$
+
+这里部分减法的“严格”指失败必须被记录并向外传播，准入域仍是 $b\le a$。对含部分运算的上下文，使用观察
+
+$$
+q_\bot(\operatorname{ok}(n))=\operatorname{ok}(q(n)),
+\qquad
+q_\bot(\bot)=\bot,
+$$
+
+其中失败标签与两个成功标签均不同。部分运算的强同余须同时保持准入性和成功结果的等价类。
+
+对 $\Sigma_{\mathrm t}=\Sigma_1\cup\{d_{\mathrm t}\}$ 与 $\Sigma_{\mathrm p}=\Sigma_1\cup\{d_{\mathrm p}\}$，均有
+
+$$
+\equiv_{\Sigma_{\mathrm t}}
+=\equiv_{\Sigma_{\mathrm p}}
+=\Delta_{\mathbb N}.
+$$
+
+于是这些观察商的类数依次为 $2$、$3$ 和 $\aleph_0$。这是相对于明确操作语言的身份细化，不是几何维数的增长。
+
+**证明。** 首先，任何包含于 $\ker q$ 的运算同余都使全部有限一孔上下文保持观察相等：对上下文的构造作归纳，孔的位置使用所给等价，其他位置使用固定参数的自反等价，再使用基本运算的相容性。部分情形同时归纳失败传播和成功结果的等价。因此，只要一个候选关系本身是相应同余，并且关系外的每一对都能被某个上下文区分，就证明了它恰为所求最粗同余。
+
+在 $\Sigma_0$ 中，加法和乘法都只依赖输入的奇偶来决定输出奇偶。故 $\ker q$ 对两种运算相容，上下文归纳给出
+
+$$
+\ker q\subseteq\equiv_{\Sigma_0}.
+$$
+
+恒等上下文给出反向包含，故二者相等。
+
+令 $R$ 表示“奇偶相同且同时为零或同时非零”。先证明 $R$ 对 $\Sigma_1$ 的全部基本运算相容。对自然数，
+
+$$
+a+b=0\Longleftrightarrow a=b=0,
+\qquad
+ab=0\Longleftrightarrow a=0\ \lor\ b=0.
+$$
+
+结合和、积的奇偶规则可知，和与积的零性及奇偶性均由两个输入的 $R$-类决定。
+
+由自然幂的递归定义，对指数归纳得到
+
+$$
+a^b=0\Longleftrightarrow a=0\ \land\ b>0,
+$$
+
+以及
+
+$$
+q(a^b)=
+\begin{cases}
+1,&b=0,\\
+q(a),&b>0.
+\end{cases}
+$$
+
+这些公式包括 $a=b=0$ 的情形。因此幂结果的零性与奇偶性也完全由两个输入的 $R$-类决定，$R$ 确为 $\Sigma_1$ 同余。上下文归纳于是给出
+
+$$
+R\subseteq\equiv_{\Sigma_1}.
+$$
+
+反向包含不能只靠一个反例，而须排除所有关系外的对。若 $n,m$ 奇偶不同，恒等上下文已经区分它们。若奇偶相同但零性不同，则其中一个为 $0$，另一个为某个正偶数 $2k$。上下文
+
+$$
+C(x)=0^x
+$$
+
+满足
+
+$$
+q(C(0))=1,\qquad q(C(2k))=0.
+$$
+
+故这类对也全部可区分。除此以外的对正是 $R$，所以 $\equiv_{\Sigma_1}=R=R_{1,2}$。
+
+对截断减法，任取 $n<m$。由于 $m\ge1$，允许的固定参数 $m-1$ 给出上下文
+
+$$
+C(x)=d_{\mathrm t}(x,m-1).
+$$
+
+此时
+
+$$
+C(n)=0,\qquad C(m)=1,
+$$
+
+故任意两个不同自然数都能被区分。相等输入当然在全部上下文中有相同响应，因此 $\equiv_{\Sigma_{\mathrm t}}=\Delta_{\mathbb N}$。
+
+对严格部分减法，任取 $n<m$，使用
+
+$$
+C(x)=d_{\mathrm p}(x,m).
+$$
+
+则
+
+$$
+C(n)=\bot,\qquad C(m)=\operatorname{ok}(0).
+$$
+
+两者在严格观察下不同，故同样得到等号关系。这一分离实际上只使用失败与成功的区别，不需要利用两个不同成功数值的奇偶差异。以上两种减法的分离均不依赖先加入幂。
+
+允许全部自然数参数是本条所述语言的明确契约，但不是这些结论的最小假设。幂的必要性分离只需一个可用的偶数底数，例如 $0$ 或 $2$。对于两种减法，只要常量 $1$ 可用并允许任意有限嵌套，就已足够：令
+
+$$
+u_{\mathrm t}(x)=d_{\mathrm t}(x,1),\qquad
+u_{\mathrm p}(x)=d_{\mathrm p}(x,1).
+$$
+
+归纳可知，$u_{\mathrm t}^{\,m-1}$ 将任意 $n<m$ 与 $m$ 分别送到 $0$ 与 $1$；严格迭代 $u_{\mathrm p}^{\,m}$ 在 $n<m$ 时失败，在 $m$ 时成功返回 $0$。所以不必把每个自然数分别设为原始常量；允许常量 $0,1$ 和加法形成闭项，也能提供全部自然数参数。这里每个上下文有限，但没有以一张预先给定的有限测试表代替全部上下文量化。
+
+新增读数 $d(n)=q(0^n)$ 不是旧读数 $q(n)$ 的后处理，因为 $q(0)=q(2)$ 而 $d(0)\ne d(2)$。证毕。
+
+**定理 11.4（交换幺半群补逆元的稳定核与观察保真）。** 设 $(M,+,0)$ 为交换幺半群，$\eta_M:M\to G(M)$ 为其 Grothendieck 群的规范同态。[^rro11_grothendieck] 则
+
+$$
+\eta_M(a)=\eta_M(b)
+\quad\Longleftrightarrow\quad
+\exists c\in M,\ a+c=b+c.
+$$
+
+因此
+
+$$
+\eta_M\text{ 单射}
+\quad\Longleftrightarrow\quad
+M\text{ 满足消去律}.
+$$
+
+进一步，设 $q:M\twoheadrightarrow B$ 为交换幺半群满同态，$B$ 只取实际像，记
+
+$$
+R=\ker q,\qquad
+K_M=\{(a,b):\exists c\in M,\ a+c=b+c\}.
+$$
+
+保留旧观察区别须区分下面两个不同要求。
+
+若只把原始载体送入 $G(M)$，要求旧读数能从补群后的原始点恢复，则存在唯一幺半群同态
+
+$$
+\bar q:\eta_M[M]\to B,\qquad
+\bar q(\eta_M(a))=q(a)
+$$
+
+的充要条件是
+
+$$
+K_M\subseteq R,
+$$
+
+也就是
+
+$$
+a+c=b+c\quad\Longrightarrow\quad q(a)=q(b).
+$$
+
+这里恢复映射的定义域是实际像 $\eta_M[M]$，不是整个群 $G(M)$。
+
+若同时对观察幺半群补逆元，则存在规范群同态 $G(q):G(M)\to G(B)$，满足
+
+$$
+G(q)\circ\eta_M=\eta_B\circ q.
+$$
+
+记 $q^{\mathrm g}=\eta_B\circ q$，则
+
+$$
+\ker q^{\mathrm g} =
+\{(a,b):\exists c\in M,\ q(a+c)=q(b+c)\}.
+$$
+
+尤其
+
+$$
+R\subseteq\ker q^{\mathrm g},
+\qquad
+\ker q^{\mathrm g}=R
+\quad\Longleftrightarrow\quad
+B\text{ 满足消去律}.
+$$
+
+所以“补群后不额外丢失既有读数”不要求 $q$ 原本单射；它要求明确比较补群前后的观察核。源载体补群的核 $K_M$、旧观察核 $R$ 和补群观察核 $\ker q^{\mathrm g}$ 不得混为一个关系。
+
+**证明。** 对一般交换幺半群，采用带稳定项的净差对构造：
+
+$$
+(a,b)\approx(a',b')
+\quad\Longleftrightarrow\quad
+\exists c\in M,\ a+b'+c=a'+b+c.
+$$
+
+该关系自反且对称。若前一关系由 $c$ 见证，后一关系
+
+$$
+(a',b')\approx(a'',b'')
+$$
+
+由 $d$ 见证，则
+
+$$
+\begin{aligned}
+a+b''+(b'+c+d)
+&=(a+b'+c)+b''+d\\
+&=(a'+b+c)+b''+d\\
+&=b+c+(a'+b''+d)\\
+&=b+c+(a''+b'+d)\\
+&=a''+b+(b'+c+d).
+\end{aligned}
+$$
+
+因此 $b'+c+d$ 见证传递性；这里没有使用 $M$ 的消去律。
+
+令 $G(M)=(M\times M)/{\approx}$。若两组代表等价分别有见证 $c,d$，则它们逐坐标相加后的等价由 $c+d$ 见证，故
+
+$$
+[(a,b)]+[(u,v)]=[(a+u,b+v)]
+$$
+
+定义良好。交换坐标也保持等价，故可定义
+
+$$
+-[(a,b)]=[(b,a)].
+$$
+
+单位元为 $[(0,0)]$；由于 $[(a+b,a+b)]=[(0,0)]$，所列负元确为逆元。其余交换群公理由 $M$ 的结合律、交换律和单位元律下降。
+
+定义 $\eta_M(a)=[(a,0)]$。任意交换群 $A$ 及幺半群同态 $f:M\to A$ 都唯一扩张为
+
+$$
+\widetilde f:G(M)\to A,\qquad
+\widetilde f([(a,b)])=f(a)-f(b).
+$$
+
+若两对由稳定项 $c$ 见证等价，将对应等式映入 $A$ 并在群中消去 $f(c)$，便得到右侧相等，故定义良好。它是群同态；每个类均为 $\eta_M(a)-\eta_M(b)$，因而扩张唯一。这确认所构造的群具有 Grothendieck 群的泛性质。
+
+直接把 $(a,0)$、$(b,0)$ 代入等价关系，得到
+
+$$
+\eta_M(a)=\eta_M(b)
+\quad\Longleftrightarrow\quad
+\exists c,\ a+c=b+c.
+$$
+
+若 $M$ 消去，则该核为等号，$\eta_M$ 单射。反之，若 $\eta_M$ 单射且 $a+c=b+c$，映入群并消去 $\eta_M(c)$ 后得到 $\eta_M(a)=\eta_M(b)$，从而 $a=b$。
+
+现在讨论旧读数恢复。若 $\bar q$ 存在，$\eta_M(a)=\eta_M(b)$ 必然推出 $q(a)=q(b)$，故 $K_M\subseteq R$。若此包含成立，则在实际像上定义
+
+$$
+\bar q(\eta_M(a))=q(a)
+$$
+
+与代表元无关。它保持加法和单位元，因为 $q$ 与 $\eta_M$ 都是幺半群同态；实际像的定义保证唯一性。这只得到实际像上的恢复，不擅自声称它能以相同目标 $B$ 延伸到全部新增逆元。
+
+将泛性质用于幺半群同态 $\eta_B\circ q$，得到唯一 $G(q)$ 及所列交换等式。由已证核公式在 $B$ 上的应用，
+
+$$
+\eta_B(q(a))=\eta_B(q(b))
+\quad\Longleftrightarrow\quad
+\exists d\in B,\ q(a)+d=q(b)+d.
+$$
+
+由于 $q$ 满射，每个 $d$ 可写成 $q(c)$；再使用同态性，即得
+
+$$
+\ker q^{\mathrm g} =
+\{(a,b):\exists c\in M,\ q(a+c)=q(b+c)\}.
+$$
+
+取 $c=0$ 给出 $R\subseteq\ker q^{\mathrm g}$。
+
+若 $B$ 消去，所列等式立即推出 $q(a)=q(b)$，故两个观察核相等。反之，设两个观察核相等。任取 $u,v,d\in B$，满足 $u+d=v+d$。由满射性取 $a,b\in M$，使 $q(a)=u$、$q(b)=v$。在 $G(B)$ 中消去 $\eta_B(d)$，得到 $q^{\mathrm g}(a)=q^{\mathrm g}(b)$；核相等于是给出 $u=q(a)=q(b)=v$。因此 $B$ 消去。
+
+上述两种保真要求确实不同。取定理 11.3 的三类观察 $\tau:\mathbb N\twoheadrightarrow B$，并使用其下降加法。因为 $\mathbb N$ 消去，$\eta_{\mathbb N}$ 单射，三个旧读数均能在 $\eta_{\mathbb N}[\mathbb N]$ 上恢复；然而
+
+$$
+\tau(0)\ne\tau(2),\qquad
+\tau(0)+\tau(1)=\tau(2)+\tau(1).
+$$
+
+所以 $\eta_B$ 必须合并零类和正偶类。奇偶观察又经 $B$ 下降到加法群 $\mathbb Z/2\mathbb Z$，其群扩张阻止奇类与偶类合并。因此补群后的旧读数恰回到两类。源载体补群没有造成这一损失；损失来自另一步对非消去观察幺半群的补群。证毕。
+
+[^rro11_volume]: [RECURSIVE_RELATIONAL_OBSERVATION.md](https://raw.githubusercontent.com/the-omega-institute/trureturing/1f193e8045b4091637dd5483f218cfc4fbfb352a/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)。引用范围为定义 2.1 的实际像、定义 2.4 的严格响应及命题 2.6 的上下文参数条件。
+
+[^rro11_history]: 固定提交 `2a79bd8d9dc9c393b30fc0a6455513008ecbcb4c`：[HistoryCarrier.lean](https://raw.githubusercontent.com/the-omega-institute/trureturing/2a79bd8d9dc9c393b30fc0a6455513008ecbcb4c/D5/S0/History/HistoryCarrier.lean) 定义自由标记历史、自由事件历史与追加；[EventHistoryInduction.lean](https://raw.githubusercontent.com/the-omega-institute/trureturing/2a79bd8d9dc9c393b30fc0a6455513008ecbcb4c/D5/S0/History/Generation/EventHistoryInduction.lean) 的 `event_history_induction` 针对任意追加事件给出归纳原则。它不直接断言整个多事件历史载体由单个固定后继生成。
+
+[^rro11_monogenic]: James East and Nik Ruškuc, *Classification of congruences of twisted partition monoids*, [arXiv:2010.04392v3，第 2.1 节](https://arxiv.org/html/2010.04392v3#S2.SS1)。该节正文明确采用 $\mathbb N=\{0,1,2,\ldots\}$，并给出每个非平凡加法幺半群同余的完整关系公式及唯一参数 $m\ge0$、$d\ge1$；它们分别对应定理 11.2 的阈值 $t$ 与周期 $p$。此处直接引用该节的分类陈述。
+
+[^rro11_periodicity]: 固定提交 `2a79bd8d9dc9c393b30fc0a6455513008ecbcb4c`：[FiniteInputGeneratorPeriodicity.lean](https://raw.githubusercontent.com/the-omega-institute/trureturing/2a79bd8d9dc9c393b30fc0a6455513008ecbcb4c/D5/S3/ObserverMemory/Prediction/FiniteInputGeneratorPeriodicity.lean)。`finite_input_generator_eventually_periodic` 的适用范围是有限状态与有限确定输入生成器构成的自治乘积轨道；它给出最终周期，不单独给出定理 11.2 的最小参数与全部核形。
+
+[^rro11_contexts]: 固定提交 `2a79bd8d9dc9c393b30fc0a6455513008ecbcb4c`：[StrictOneHoleContexts.lean](https://raw.githubusercontent.com/the-omega-institute/trureturing/2a79bd8d9dc9c393b30fc0a6455513008ecbcb4c/D5/S3/ConceptDynamics/Observation/StrictOneHoleContexts.lean)。相关声明为 `contextual_equivalence_is_greatest` 与 `signature_extension_refines`；其上下文保留任意实际非孔参数，严格记录失败。“扩签名只能细化上下文同余”的一般框架是标准复用。
+
+[^rro11_grothendieck]: mathlib 固定提交 `db584cd6d46c92f209a44c0f1c829460d327499d`：[GrothendieckGroup.lean](https://raw.githubusercontent.com/leanprover-community/mathlib4/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/GroupTheory/MonoidLocalization/GrothendieckGroup.lean) 中，`Algebra.GrothendieckGroup` 是在全体元素处作局部化；`Algebra.GrothendieckGroup.of_injective` 在交换幺半群前提外显式要求 `IsCancelMul`，`Algebra.GrothendieckGroup.lift` 给出到任意交换群的同态扩张等价。[MonoidLocalization/Basic.lean](https://raw.githubusercontent.com/leanprover-community/mathlib4/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/GroupTheory/MonoidLocalization/Basic.lean) 的 `Localization.r_iff_exists` 与 `Localization.mk_eq_mk_iff` 在一般交换幺半群上保留属于所局部化子幺半群的稳定乘子；取全体元素组成的子幺半群并按加法记号翻译，即为定理 11.4 的稳定项等价。省去稳定项的 `Localization.mk_eq_mk_iff'` 另要求消去性，不能用于一般非消去情形。
+
+## 追加锚（本行以下为增补区）
