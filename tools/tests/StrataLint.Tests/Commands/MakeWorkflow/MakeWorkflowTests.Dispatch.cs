@@ -208,7 +208,7 @@ public sealed partial class MakeWorkflowTests
         // line first checks that the build output exists and builds it when it does not, because a
         // fresh worktree carries none; on 2026-09-11 two of five implementation seats hit a raw
         // process-start exception six times between them while every brief opens by calling show-atom.
-        foreach (var noBuildTarget in new[] { "show-atom", "atom-context", "settle", "settle-clear", "settle-upstream", "settle-upstream-clear" })
+        foreach (var noBuildTarget in new[] { "show-atom", "atom-context", "settle", "settle-clear" })
         {
             var recipe = Recipe(makefile, noBuildTarget);
             Assert.Contains("dotnet run --no-build --project", recipe, StringComparison.Ordinal);
@@ -217,10 +217,6 @@ public sealed partial class MakeWorkflowTests
                 recipe,
                 StringComparison.Ordinal);
         }
-        Assert.Contains("-- settle-upstream --request \"$(REQUEST)\" --base \"$(BASE)\"", Recipe(makefile, "settle-upstream"), StringComparison.Ordinal);
-        Assert.Contains("-- settle-upstream --clear \"$(ATOM_ID)\" --base \"$(BASE)\"", Recipe(makefile, "settle-upstream-clear"), StringComparison.Ordinal);
-        Assert.Contains("make settle-upstream REQUEST=file", makefile, StringComparison.Ordinal);
-        Assert.Contains("make settle-upstream-clear ATOM_ID=x", makefile, StringComparison.Ordinal);
         Assert.Contains(
             EchoResidualSummaryScriptPath,
             Recipe(makefile, "echo-residual-summary"),

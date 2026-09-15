@@ -116,8 +116,7 @@ internal static partial class BackfillInventoryRule
 
         foreach (var path in context.Changes.Paths)
         {
-            if (path.Value.StartsWith("Meta/Digestion/upstream/", StringComparison.Ordinal)
-                || BackfillInventoryLoader.IsCanonicalPath(path.Value)
+            if (BackfillInventoryLoader.IsCanonicalPath(path.Value)
                 || DigestionCasStore.IsCanonicalPath(path.Value)
                 || path.Value == BackfillInventoryLoader.RelativePath
                 || path.Value == TheoryAtomizerDataLoader.DataPath

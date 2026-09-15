@@ -232,19 +232,6 @@ internal static partial class DigestionIngestor
             alignment.Fallbacks);
     }
 
-    private static DigestionUpstream? SingleUpstream(string atomId, IEnumerable<DigestionUpstream?> receipts)
-    {
-        DigestionUpstream? result = null;
-        foreach (var receipt in receipts.OfType<DigestionUpstream>())
-        {
-            if (result is not null && ((result with { Declarations = receipt.Declarations, ProbeAxioms = receipt.ProbeAxioms }) != receipt
-                || !result.Declarations.SequenceEqual(receipt.Declarations) || !result.ProbeAxioms.SequenceEqual(receipt.ProbeAxioms)))
-                throw new FormatException($"atom {atomId} has conflicting upstream receipts");
-            result ??= receipt;
-        }
-        return result;
-    }
-
     private static DigestionCasObject AddCasObject(
         ReadOnlySpan<byte> bytes,
         IDictionary<string, DigestionCasObject> casObjects)
@@ -356,11 +343,6 @@ internal static partial class DigestionIngestor
                 members.Select(static item => item.Entry.Receipts.CoverDisposition));
             var nonpropositional = SingleOptional(atomId, "nonpropositional",
                 members.Select(static item => item.Entry.Receipts.Nonpropositional));
-            var upstream = SingleUpstream(atomId, members.Select(static item => item.Entry.Receipts.Upstream));
-            if (upstream is not null
-                && (!coverage.IsEmpty || quarantine is not null || disposition is not null || nonpropositional is not null
-                    || members.Any(static item => !item.Entry.Receipts.UnresolvedSubitems.IsEmpty)))
-                throw new FormatException($"atom {atomId} merged upstream conflicts with live obligations");
             if (nonpropositional is not null
                 && (!coverage.IsEmpty || quarantine is not null || disposition is not null
                     || members.Any(static item => !item.Entry.Receipts.UnresolvedSubitems.IsEmpty)))
@@ -387,8 +369,7 @@ internal static partial class DigestionIngestor
                     tail,
                     quarantine,
                     disposition,
-                    nonpropositional,
-                    upstream),
+                    nonpropositional),
                 statuses[0],
                 expectedReference));
         }
