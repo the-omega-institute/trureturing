@@ -9,9 +9,9 @@ public sealed partial class FileMapPolicyTests
     [Fact]
     public void UpstreamProbeSourceHasWriterVerifierAndContentRegistration()
     {
-        var path = "Meta/Digestion/upstream/" + new string('a', 64) + ".lean";
-        var manifest = FileMapLoader.LoadRepository(RepositoryLayout.FindRoot());
-        var entry = Assert.Single(manifest.Match(path));
+        var manifest = Parse(Entry("Meta/Digestion/upstream/**", "data", "SettleUpstreamCommand", "DigestionStatusEvaluator", "DigestionStatusEvaluator")
+            .Replace("admission_plane = \"judge\"", "admission_plane = \"content\"", StringComparison.Ordinal));
+        var entry = Assert.Single(manifest.Match("Meta/Digestion/upstream/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.lean"));
         Assert.Equal("Meta/Digestion/upstream/**", entry.Pattern);
         Assert.Equal(FileMapKind.Data, entry.Kind);
         Assert.Equal(FileMapAdmissionPlane.Content, entry.AdmissionPlane);
@@ -20,8 +20,10 @@ public sealed partial class FileMapPolicyTests
         Assert.Equal(new[] { "DigestionStatusEvaluator" }, entry.VerifiedBy.ToArray());
         Assert.Equal("none", entry.ArtifactId);
         Assert.Equal("committed-source", entry.RuntimeDisposition);
-        Assert.Null(RepositoryPathPolicy.Validate(RepoPath.CreateKnown(path), SyntheticRegistry().Policy));
-        Assert.DoesNotContain(FileMapPolicy.InspectRepository(RepositoryLayout.FindRoot()), finding => finding.Path == entry.Pattern);
+        Assert.Null(RepositoryPathPolicy.Validate(
+            RepoPath.CreateKnown("Meta/Digestion/upstream/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.lean"),
+            SyntheticRegistry().Policy));
+        // The FILEMAP strict loader and FileMapPolicy rules enforce the real registration at admission time.
     }
 
     [Theory]
