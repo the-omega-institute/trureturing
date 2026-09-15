@@ -27,6 +27,20 @@ def otherEquality : DecidableEq Bool := instDecidableEqBool
 def otherInstance : PrimitiveRealization (@cutSignature Bool Bool otherEquality) :=
   @cutRealization Bool Bool otherEquality (fun x : Bool => x)
 
+-- The explicit universe is retained in the body while the result interface
+-- stays the same. Both applications below elaborate independently.
+def universeTemplate.{u} (f : Bool → Bool) : PrimitiveRealization (cutSignature Bool Bool) :=
+  let Carrier : Type u := PUnit.{u + 1}
+  cutRealization f
+
+register_information_template universeTemplate
+
+def universeLow : PrimitiveRealization (cutSignature Bool Bool) :=
+  universeTemplate.{0} (fun x : Bool => x)
+
+def universeHigh : PrimitiveRealization (cutSignature Bool Bool) :=
+  universeTemplate.{1} (fun x : Bool => x)
+
 def literalRecord : PrimitiveRealization (cutSignature Bool Bool) :=
   ⟨fun _ => (fun x : Bool => x), Fin.elim0⟩
 
@@ -96,6 +110,9 @@ run_meta do
     "explicit_argument_mismatch_rejected" (some "dtr.realization_mismatch")
   observe event ``otherInstance direct
     "implicit_instance_mismatch_rejected" (some "dtr.signature_mismatch")
+  observe event ``universeLow (← bodyOf ``universeLow) "identical_rigid_universes_accepted"
+  observe event ``universeHigh (← bodyOf ``universeLow)
+    "rigid_universe_mismatch_rejected" (some "dtr.realization_mismatch")
   observe event ``literalRecord direct "frozen_constructor_record_accepted"
   observe event ``forwardedApplication direct "saturated_forwarder_accepted"
   observe event ``projectedRecord direct "fixed_record_projection_accepted"
