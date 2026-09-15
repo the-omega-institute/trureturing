@@ -43,7 +43,11 @@ internal sealed class YanevBinaryReversalPositionIdentityDocument
                 + "gives a truncation-free form of Yanev's conjecture. Binary induction tracks "
                 + "stripTop through even and odd inputs and closes both branches from the two "
                 + "source recurrences.", DescribeRole.Theorem,
-                AssessedProvenance.FromRepo(Source)))));
+                AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "oeis-a030101-yanev-binary-reversal-position-identity"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
         string prose, DescribeRole role, AssessedProvenance provenance,

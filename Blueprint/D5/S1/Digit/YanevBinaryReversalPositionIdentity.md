@@ -48,6 +48,10 @@ $$\forall n \in Nat,\; (1 \le n) \Rightarrow (rev\left(n\right) + 2 \cdot w\left
 
 *Proof.* Machine-checked in Lean as `D5/S1/Digit/YanevBinaryReversalPositionIdentity.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a030101-yanev-binary-reversal-position-identity` (proved) by `D5/S1/Digit/YanevBinaryReversalPositionIdentity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a030101-yanev-binary-reversal-position-identity","declaration_gid":"D5/S1/Digit/YanevBinaryReversalPositionIdentity.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* David W. Wilson; Ralf Stephan; Velin Yanev; Alois P. Heinz; Henry Bottomley (2017). *OEIS A030101, binary digit reversal, with Yanev's position identity*. URL: <https://oeis.org/A030101>.
