@@ -1,0 +1,7 @@
+**定义。** 对 $N\ge1$ 定义截断矩集
+
+$$
+\mathcal C_N=\left\{\left(\int x^n\,d\nu(x)\right)_{n=1}^{N}:
+\nu\text{ 是 }[0,1]\text{ 上的概率测度}\right\}.
+$$
+

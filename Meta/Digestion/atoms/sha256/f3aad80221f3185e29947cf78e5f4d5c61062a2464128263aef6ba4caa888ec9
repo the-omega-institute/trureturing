@@ -1,0 +1,181 @@
+**命题 128.1（投影余量、唯一最优者与短窗口保真冲突）。** 对所有上述整数 $n>K\ge0$，有 $0<r_{K,n}<1$。每个 $\sigma\in\mathcal F_{K,n}$ 若记 $p=\langle a|\sigma|a\rangle$，则
+$$
+d_{\rm tr}(\rho_n,\sigma)
+\ge e_{K,n}+(1-r_{K,n})(1-p).
+$$
+因而 $\tau_{K,n}$ 是该可行域内唯一的迹距离最优者。
+
+每个可行态唯一写成 $\sigma=V\theta V^*$，其中 $\theta$ 是 $\mathcal L_K$ 上的密度算子；把 $\theta$ 在非法词方向延零，视为完整 $\mathcal K_K$ 上的算子，则其完整张量积偏迹为
+$$
+\operatorname{Tr}_{\{K,\ldots,n-1\}}\sigma=\theta.
+$$
+所以精确保留前 $K$ 位目标 $\rho_K$ 的唯一可行延拓是
+$$
+\sigma^{\rm cut}_{K,n}=V\rho_KV^*
+=\rho_K\otimes|0^{n-K}\rangle\langle0^{n-K}|.
+$$
+乘积 $V\rho_KV^*$ 中的 $\rho_K$ 取其在 $\mathcal L_K$ 上的限制，右端及偏迹仍在完整 qubit 空间中解释。此延拓也精确保留所有 $0\le j\le K$ 的目标前缀 $\rho_j$。令
+$$
+p_K=\langle\Psi_K|\rho_K|\Psi_K\rangle.
+$$
+对 $K\ge1$，有
+$$
+p_K=\alpha^{K+1}D_K+\alpha^{K+2}\frac{B_K^2}{D_K},
+\qquad 1-p_K=\kappa_K>0,
+$$
+以及严格的长窗口额外误差
+$$
+g_{K,n}:=d_{\rm tr}(\rho_n,\sigma^{\rm cut}_{K,n})-e_{K,n}
+\ge(1-r_{K,n})\kappa_K>0.
+$$
+对 $K=0$，$p_0=1$，唯一可行态就是 $\tau_{0,n}=\sigma^{\rm cut}_{0,n}$，没有这种冲突。
+
+更一般地，任取非负容差 $\varepsilon_{\rm short},\varepsilon_{\rm large}$。若某个可行态及其短窗口 $\theta$ 同时满足
+$$
+d_{\rm tr}(\theta,\rho_K)\le\varepsilon_{\rm short},
+\qquad
+d_{\rm tr}(\rho_n,\sigma)\le e_{K,n}+\varepsilon_{\rm large},
+$$
+则必有
+$$
+\varepsilon_{\rm large}
+\ge(1-r_{K,n})\max\{\kappa_K-\varepsilon_{\rm short},0\}.
+$$
+这只是必要条件，一般并不充分，也不是可达误差对的精确 Pareto 边界。
+
+对每个固定的 $K\ge1$，各有限 $n>K$ 的冲突严格为正，但实际差距满足
+$$
+0<g_{K,n}\le1-e_{K,n}<D_K\alpha^n\longrightarrow0
+\qquad(n\to\infty).
+$$
+因而不存在对所有 $n>K$ 统一成立的正差距下界。投影余量的系数也退化：
+$$
+e_{K,n}\le r_{K,n}<1,
+\qquad
+0<1-r_{K,n}\le1-e_{K,n}<D_K\alpha^n\longrightarrow0.
+$$
+
+证明。先构造实际用于余量界的测量。由于支撑中的每个词均以零结尾，
+$$
+Ps_n=Pt_n=\sqrt{D_K}\,|a\rangle.
+$$
+$Q=P-\tau$ 是正交投影，且 $Qs_n=Qt_n=0$，故 $Q\rho_n=\rho_nQ=0$ 及 $QH=HQ=0$。由
+$$
+0=QH\zeta=-eQ\zeta
+$$
+和 $e>0$ 得 $Q\zeta=0$。于是
+$$
+P\zeta=\tau\zeta=\langle a|\zeta\rangle a,
+\qquad r=|\langle a|\zeta\rangle|^2.
+$$
+若 $r=0$，则
+$$
+-e=\langle\zeta|H|\zeta\rangle
+=\langle\zeta|\rho_n|\zeta\rangle\ge0,
+$$
+矛盾。若 $r=1$，则单位向量 $\zeta$ 属于 $\operatorname{ran}P$，结合 $Q\zeta=0$ 可知它与 $a$ 平行，故 $a$ 必为 $H$ 的特征向量。然而 Q127.1 中始终非空的末位一词组给单位向量
+$$
+|v\rangle=F_n^{-1/2}\sum_{\substack{u\in W_n\\u_{n-1}=1}}|u\rangle,
+\qquad v\perp\operatorname{ran}P,
+$$
+并且由显式目标直接有
+$$
+\langle v|H|a\rangle
+=\alpha^{n+1}\sqrt{D_KF_n}>0.
+$$
+这与 $a$ 为特征向量矛盾，故 $0<r<1$。这里 $F_n>0$ 对每个 $n>K\ge0$ 成立，$n=K+1$ 也无需引入任何空词组的归一化向量。
+
+由 $Q\zeta=0$，两个正交投影 $|\zeta\rangle\langle\zeta|$ 与 $Q$ 的乘积在两个方向上均为零，因此
+$$
+E=|\zeta\rangle\langle\zeta|+Q,
+\qquad E^*=E,\qquad E^2=E,\qquad 0\le E\le I.
+$$
+它与 $I-E$ 构成二元投影测量。对任意可行 $\sigma$，支撑条件和 $P\zeta=\langle a|\zeta\rangle a$ 给
+$$
+\operatorname{Tr}(E\sigma)
+=\langle\zeta|\sigma|\zeta\rangle+\operatorname{Tr}(Q\sigma)
+=rp+1-p.
+$$
+另一方面，$Q\rho_n=0$ 及 $H\zeta=-e\zeta$ 给
+$$
+\operatorname{Tr}(E\rho_n)
+=\langle\zeta|\rho_n|\zeta\rangle
+=\langle\zeta|(H+\tau)|\zeta\rangle=r-e.
+$$
+在本次应用中，将迹零 Hermitian 算子 $Y=\sigma-\rho_n$ 写成正负谱部分 $Y_+-Y_-$；两部分的迹都是 $\|Y\|_1/2$，且 $0\le\operatorname{Tr}(EY_\pm)\le\operatorname{Tr}Y_\pm$，所以
+$$
+|\operatorname{Tr}(EY)|\le\tfrac12\|Y\|_1=d_{\rm tr}(\rho_n,\sigma).
+$$
+两个期望相减恰为 $e+(1-r)(1-p)>0$，这便证明投影余量界。
+
+Q127.1 已给 $\tau$ 达到最小值 $e$。若 $\sigma$ 也达到该值，$1-r>0$ 与 $0\le p\le1$ 迫使 $p=1$。此时
+$$
+\operatorname{Tr}\bigl((I-\tau)\sigma(I-\tau)\bigr)=1-p=0.
+$$
+括号中的算子为正，迹零使它为零，消去了 $a^\perp$ 内的全部方向。对任意 $x\perp a$，正算子的 Cauchy–Schwarz 不等式又给
+$$
+|\langle x|\sigma|a\rangle|^2
+\le\langle x|\sigma|x\rangle\langle a|\sigma|a\rangle=0,
+$$
+其共轭交叉项也为零。因此 $\sigma=p\tau=\tau$，唯一性成立；这里并未使用迹范数的严格凸性。
+
+下面核对短窗口及其唯一延拓。$V^*V=I_{\mathcal L_K}$，故可行态给出密度算子 $\theta=V^*\sigma V$，且 $V\theta V^*=P\sigma P=\sigma$；反向乘以 $V^*,V$ 也证明 $\theta$ 唯一。按合法词基展开，
+$$
+V\theta V^*
+=\sum_{w,u\in W_K}\theta_{wu}
+  |w\rangle\langle u|\otimes|0^{n-K}\rangle\langle0^{n-K}|.
+$$
+尾部秩一投影的迹为一，故在完整张量积上取尾部偏迹正好得到延零后的 $\theta$，并非在较小的合法空间上另定义偏迹。特别地，短窗口等于 $\rho_K$ 当且仅当 $\theta=\rho_K$，得到所列唯一的 $\sigma^{\rm cut}_{K,n}$。Q125.1 的完整偏迹相容性逐层迭代，使该态的前 $j$ 位等于 $\rho_j$，$1\le j\le K$；空窗口为标量迹一，即 $\rho_0$。
+
+对 $K\ge1$，末位零、末位一的词数分别为 $B_K,C_K$，两者均正。由未归一化向量的定义，
+$$
+\langle\Psi_K|s_K\rangle=\sqrt{D_K},
+\qquad
+\langle\Psi_K|t_K\rangle=\frac{B_K}{\sqrt{D_K}},
+$$
+从而得到陈述中的 $p_K$。归一化在同一记号下为
+$$
+1=\operatorname{Tr}\rho_K
+=\alpha^{K+1}D_K+\alpha^{K+2}B_K.
+$$
+两式相减，利用 $D_K-B_K=C_K$，即得
+$$
+1-p_K
+=\alpha^{K+2}\left(B_K-\frac{B_K^2}{D_K}\right)
+=\alpha^{K+2}\frac{B_KC_K}{D_K}=\kappa_K>0.
+$$
+$\sigma^{\rm cut}_{K,n}$ 的 $p$ 正是 $p_K$，代入余量界给严格额外误差。$K=0$ 时 $\mathcal L_0$ 一维，唯一密度为 $\rho_0=(1)$，$\Psi_0$ 是单位空张量；因此 $p_0=1$、$\kappa_0=0$ 及全部无冲突结论直接成立。
+
+对容差结论，$\sigma=V\theta V^*$ 给 $p=\langle\Psi_K|\theta|\Psi_K\rangle$。对完整 $\mathcal K_K$ 上的迹零算子 $\theta-\rho_K$ 应用刚才的正负部分论证，并取投影 $|\Psi_K\rangle\langle\Psi_K|$，得到
+$$
+|p-p_K|\le d_{\rm tr}(\theta,\rho_K)\le\varepsilon_{\rm short}.
+$$
+由于 $p\le1$，这蕴含
+$$
+1-p\ge\max\{\kappa_K-\varepsilon_{\rm short},0\}.
+$$
+与长窗口余量界和假设的长窗口上界合并，便是所列必要条件，$K=0$ 时右端为零。
+
+为验证它一般不充分，取 $K=1$、任意 $n>1$，以及 $\varepsilon_{\rm large}=0$、$\varepsilon_{\rm short}=\kappa_1$。这对预算满足所列必要不等式。若有可行态满足两项预算，长窗口预算及唯一性却迫使它为 $\tau_{1,n}$，短窗口只能是 $|\Psi_1\rangle\langle\Psi_1|$。此时 $\kappa_1=\alpha^3/2=\alpha-1/2>0$，由 Q125.1 的一位矩阵得到
+$$
+|\Psi_1\rangle\langle\Psi_1|-\rho_1
+=\frac12\begin{pmatrix}1&1\\1&1\end{pmatrix}
+ -\begin{pmatrix}\alpha&\alpha^2\\\alpha^2&\alpha^2\end{pmatrix}
+=\kappa_1\begin{pmatrix}-1&1\\1&1\end{pmatrix}.
+$$
+这个迹零矩阵的特征值为 $\pm\sqrt2\,\kappa_1$，故短窗口迹距离是 $\sqrt2\,\kappa_1>\varepsilon_{\rm short}$，矛盾。这给出了必要条件与可达性的严格区别。
+
+最后，任意两个密度算子的迹距离至多为一，所以对 $K\ge1$，已证的严格性与 Q127.1 的 $e_{K,n}>1-D_K\alpha^n$ 共同给
+$$
+0<g_{K,n}\le1-e_{K,n}<D_K\alpha^n.
+$$
+固定 $K$ 时右端趋零，夹逼的是实际差距本身。又因 $E$ 与 $\rho_n$ 均为正算子，
+$$
+0\le\operatorname{Tr}(E\rho_n)=r_{K,n}-e_{K,n},
+$$
+故 $r_{K,n}\ge e_{K,n}$，同时 $r_{K,n}<1$，得到所列系数退化界。证毕。
+
+本命题刻画指定相干目标与准确尾零支撑下的静态窗口相容性。Q126.2 中经典截断概率与均匀概率均优化每个固定深窗口的总变差；这里的唯一量子最优者则在 $K\ge1$ 时不能同时精确保留 $\rho_K$。投影 $E$ 是完整 $n$ 窗口上允许任意联合测量时的数学效应，未附加局域性、实施成本或可访问性条件。所证范围不包含时间演化、动态预测、任意维数预算、一般目标态或形而上必然性。
+
+本节的 Q125.1、Q126.2、Q127.1 均取[仓库不可变提交 `ac40238901406b5bba4518e306d5bb2da9fe8ba1` 的量子卷](https://github.com/the-omega-institute/trureturing/blob/ac40238901406b5bba4518e306d5bb2da9fe8ba1/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_QUANTUM.md)，依其显式普通证明使用。测量期望受迹距离控制属于 Helstrom 变分框架；Q127.1 所引同仓 `D5/S3/Quantum/Foundation/FiniteTraceDistance.lean` 提供既有有限迹距离数据处理，其覆盖范围不是本节的完整唯一性与保真冲突。命题 128.1 是 `repo-derived` 普通数学推导，不主张外部新颖性或 Lean 认证。
+
