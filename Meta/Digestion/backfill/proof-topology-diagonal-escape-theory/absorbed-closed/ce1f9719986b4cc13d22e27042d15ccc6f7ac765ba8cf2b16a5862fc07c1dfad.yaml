@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:ce1f9719986b4cc13d22e27042d15ccc6f7ac765ba8cf2b16a5862fc07c1dfad
   normalized_sha256: sha256:ce1f9719986b4cc13d22e27042d15ccc6f7ac765ba8cf2b16a5862fc07c1dfad
 cas_ref: sha256:ce1f9719986b4cc13d22e27042d15ccc6f7ac765ba8cf2b16a5862fc07c1dfad
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Arith/FactorialRatio/BalaChebyshevFiveDivisibility.bala_five_integrality
+    target_statement_id: sha256:3e2d5f42dd7144ba1552ae8375b786e0fb26a427c8949ec94a2cbcf3457c52d9
 receipts:
   unresolved_subitems: []
