@@ -1,0 +1,5 @@
+**定理 4.2（观察完备化的基本性质）。** 有限观察塔的 \(\widehat X\) 是紧致 Hausdorff 全不连通空间，柱集构成其开闭基，\(\iota_X[X]\) 稠密，并且
+\[
+\iota_X(x)=\iota_X(y)\iff\forall n,\ q_n(x)=q_n(y).
+\]
+
