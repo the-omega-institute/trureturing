@@ -10,8 +10,10 @@ from lean_seed_support import OTHER, REV, digest, write
 
 
 class ReleaseLegacyCases:
-    def legacy_fixture(self, parts=2, members=None):
-        tag = "lean-cache-v1-unrelated-toolchain-" + "a" * 16 + "-" + "b" * 16
+    def legacy_fixture(self, parts=2, members=None, report_snapshot=False):
+        tag = "lean-cache-v1-unrelated-toolchain-v0-" + "a" * 16 + "-" + "b" * 16
+        if report_snapshot:
+            tag += "-" + "e" * 16
         snapshot = self.remote / tag
         snapshot.mkdir()
         partition = json.loads(self.transport("address").stdout)["partition"]
@@ -31,6 +33,8 @@ class ReleaseLegacyCases:
             "config_sha256": "a" * 64, "sources_sha256": "b" * 64, "asset": "lean-build.tgz",
             "archive_sha256": digest(packed), "archive_bytes": str(len(packed)), "parts": str(parts),
             "producer_commit_sha": "c" * 40, "workflow_run_id": "321"}
+        if report_snapshot:
+            self.legacy_manifest["build_snapshot_sha256"] = "e" * 64
         for index in range(parts):
             payload = packed[index * len(packed) // parts:(index + 1) * len(packed) // parts]
             name = "lean-build.tgz" if parts == 1 else f"lean-build.tgz.part-{index:02d}"
@@ -62,6 +66,28 @@ class ReleaseLegacyCases:
         write(self.root / "legacy-api.json", json.dumps(self.legacy_api))
         return self.transport("fetch", FAKE_VERIFICATION_API=str(self.root / "legacy-api.json"),
             FAKE_GH_LOG=str(self.root / "legacy-gh-calls"), **environment)
+
+    def test_legacy_report_snapshot_restores_as_same_partition_seed(self):
+        tag = self.legacy_fixture(report_snapshot=True)
+        result = self.legacy_fetch()
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertIn('"mode":"partition"', result.stdout)
+        self.assertIn('"resolved":"' + tag + '"', result.stdout)
+        self.assertEqual("locally-produced-olean", (self.root / ".lake/build/lib/lean/D5/A.olean").read_text())
+        self.assertFalse((self.root / "build-runs").exists())
+
+    def test_legacy_report_snapshot_requires_its_declared_address(self):
+        self.legacy_fixture(report_snapshot=True)
+        for value in (None, "invalid", "f" * 64):
+            with self.subTest(snapshot=value):
+                if value is None:
+                    self.legacy_manifest.pop("build_snapshot_sha256", None)
+                else:
+                    self.legacy_manifest["build_snapshot_sha256"] = value
+                self.save_legacy_manifest()
+                result = self.legacy_fetch()
+                self.assertEqual(1, result.returncode, result.stdout + result.stderr)
+                self.assertFalse((self.root / ".lake/build").exists())
 
     def test_legacy_seed_uses_resolved_mathlib_and_platform_only_without_repack(self):
         tag = self.legacy_fixture()
