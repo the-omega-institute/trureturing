@@ -979,7 +979,10 @@ private partial def nominalFieldShape (env : Environment) (type : Expr)
   | _ =>
     let some (head, args) ← applicationParts concrete | return none
     unless ← chargeTraversal parameters.size do return none
-    if head.isFVar && parameters.contains head then
+    -- Supplied parameters can be projections or instantiated types, not only
+    -- local variable heads. This witnesses their role; observedType still
+    -- checks the entire instantiated parameter for statement-bearing inputs.
+    if parameters.contains concrete || (head.isFVar && parameters.contains head) then
       -- admission-exit: nominalFieldShape.4 rule=fieldParameter
       return some (witness .fieldParameter concrete)
     if let .lam .. := head then
