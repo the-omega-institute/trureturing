@@ -147,6 +147,9 @@ theorem result (T : ℕ → ℕ → ℤ) (B : ℕ → ℤ)
   norm_num
   rw [show n - 2 = n - 1 - 1 by omega, ← hBdiff]
 
+#print axioms rowSum
+#print axioms IsA054090Triangle
+#print axioms IsShiftedA006183
 #print axioms rowSum_succ
 #print axioms result
 
