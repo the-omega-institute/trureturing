@@ -6447,17 +6447,12 @@ $$
 Let $E_{200}$ denote the assertion that
 $A_{[4,200]}(q)$ is false for every prime $q>5$.
 
-**Assumption GAW8.** Assume $E_{200}$. This is the finite-exclusion input
-needed for the $q>5$ part of GAW2. The sentence in GAW2 stating that
-"the complete product, primality and proper-divisor certificates [are]
-retained at `Evidence/D5/S3/Arith/GoelAlignedWitness200/certificate.json`"
-and assigning the decoded JSON SHA-256
-`0373b90e7386142c3afd0bab7d1272ec9a1a9987321b187a1695de267f910318`
-names the intended support for this assumption. Those product, primality,
-and proper-divisor data are not available in this repository. Hence the
-exhaustive elimination of $4\le k\le200$ is not established from the
-available data and is used below only through the explicit assumption
-$E_{200}$.
+**Assumption GAW8.** Assume $E_{200}$; this assertion is not established
+here. It is precisely the finite-exclusion input required by the $q>5$
+branch of GAW2. GAW2's exhaustive elimination of even $4\le k\le200$ is
+not proved in this development. Consequently, every conclusion below that
+depends on this elimination is conditional on $E_{200}$, while Theorem GAW9
+separates the unconditional statements from the conditional ones.
 
 **Theorem GAW9.** The following statements separate the unconditional
 conclusions from the finite exclusion.
