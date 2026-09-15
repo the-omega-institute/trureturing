@@ -84,5 +84,9 @@ internal sealed class BartoliStanicaReducedCriticalPointRefutationDocument
                             + "The result uses only propext, Classical.choice and "
                             + "Quot.sound in its axiom closure. This is a fixed finite "
                             + "refutation and makes no global priority claim."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "bartoli-stanica-reduced-critical-point-conjecture"),
+                    ResolutionKind.Refuted)))));
 }

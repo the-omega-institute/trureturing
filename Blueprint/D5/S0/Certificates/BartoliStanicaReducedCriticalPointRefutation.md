@@ -48,6 +48,10 @@ Lean statement: `D5/S0/Certificates/BartoliStanicaReducedCriticalPointRefutation
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/BartoliStanicaReducedCriticalPointRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bartoli-stanica-reduced-critical-point-conjecture` (refuted) by `D5/S0/Certificates/BartoliStanicaReducedCriticalPointRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bartoli-stanica-reduced-critical-point-conjecture","declaration_gid":"D5/S0/Certificates/BartoliStanicaReducedCriticalPointRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Daniele Bartoli; Pantelimon Stănică (2026). *Reduced polynomial lifts of APN permutations over Galois rings and effective non-APN bounds*. URL: <https://arxiv.org/abs/2608.30808>.
