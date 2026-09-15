@@ -23192,3 +23192,142 @@ $$
 因此，对“用多少约束保留历史才能得到稳定经典现实”的最精确回答是：先计算允许实验族的完整未来核，再取其最大前向不变商；只有在这个商还能由物理记忆、测量和动力学实现时，它才是一个可交付的经典接口。
 
 本节复用 `finite_horizon_kernel_succ_iff`、`finite_horizon_kernel_antitone`、`complete_kernel_eq_iInf_finite_horizon`、`finite_horizon_stabilizes_at_completionDepth`、`predictive_completion_maximal_invariant_quotient`、`predictive_memory_minimal_quotient`、`prediction_completion_universality` 与 `future_readout_quotient_is_coarsest_with_unique_dynamics`。Lean 已证明的是这些有限状态和有限维线性模型中的核、商与唯一因子关系；将其具体实例化到 Zeckendorf 受限量子通道、噪声环境和实验成本函数，仍是后续形式化目标。
+
+## 106. 操作族扩大后的历史预算：从单一路径到受控闭合
+
+第 105 节固定了一个更新 $$\tau$$。真实的实验协议通常还允许选择输入、脉冲或局部门；此时只检查自然时间序列会低估历史债务。`ControlledFiniteStability` 把未来关系改为对所有有限控制词同时检查。
+
+### 106.1 控制词关系
+
+令有限状态为 $$Y$$，输入字母为 $$U$$，读出为 $$q:Y\to O$$，每个输入 $$u$$ 给出更新
+
+$$
+F_u:Y\to Y.
+$$
+
+对输入词 $$w=(u_1,\ldots,u_k)$$，记
+
+$$
+F_w=F_{u_k}\circ\cdots\circ F_{u_1}.
+$$
+
+深度 $$m$$ 的受控关系定义为
+
+$$
+R_m^{\mathrm{ctrl}}(y,y')
+\iff
+q(F_w(y))=q(F_w(y'))
+\quad\text{对所有 }|w|\le m.
+$$
+
+空词包含当前读出，所以每个 $$R_m^{\mathrm{ctrl}}$$ 都细于当前读出核。完整关系为
+
+$$
+R_\infty^{\mathrm{ctrl}}(y,y')
+\iff
+q(F_w(y))=q(F_w(y'))
+\quad\text{对所有有限控制词 }w.
+$$
+
+这比单一 $$\tau$$ 的 itinerary 更强：两个历史可能沿默认路径永远相同，但只要存在一个可执行输入词把它们分开，它们就不能在受控预测商中合并。
+
+### 106.2 一步稳定即对所有控制词永久稳定
+
+`controlled_finite_stability` 证明，在 $$Y,U,O$$ 都有限、读出满射且非空的条件下，如果某个深度满足
+
+$$
+R_m^{\mathrm{ctrl}}=R_{m+1}^{\mathrm{ctrl}},
+$$
+
+那么对所有 $$r\ge0$$ 都有
+
+$$
+R_{m+r}^{\mathrm{ctrl}}=R_m^{\mathrm{ctrl}}.
+$$
+
+原因是一步稳定等价于关系对每一个输入更新都不变；之后任意控制词都只能在这个不变关系内部演化。
+
+完整受控关系还满足最大不动点刻画：
+
+$$
+R_\infty^{\mathrm{ctrl}}
+=
+\operatorname{gfp}(\mathcal R_{\mathrm{ctrl}}),
+$$
+
+其中 $$\mathcal R_{\mathrm{ctrl}}$$ 同时要求当前读出相同，并且对每个 $$u\in U$$ 将关系保持在自身中。它也是所有“细于当前读出且对每个控制更新不变的等价关系”中的最大者。
+
+因此，扩大操作族只会细化预测商：
+
+$$
+\mathfrak U_1\subseteq\mathfrak U_2
+\quad\Longrightarrow\quad
+R_\infty(\mathfrak U_2)\subseteq R_\infty(\mathfrak U_1).
+$$
+
+一个在单一动力学下看似经典的对象，可能在加入第二种脉冲或局部重排后被分裂。这正是“相对某个操作族稳定”的精确定义。
+
+### 106.3 深度预算由商类增长支付
+
+定义深度商类数
+
+$$
+C_m=|Y/R_m^{\mathrm{ctrl}}|,
+\qquad
+C_\infty=|Y/R_\infty^{\mathrm{ctrl}}|.
+$$
+
+源码证明 $$C_m$$ 单调不减，并给出最小稳定深度 $$H_{\mathrm{ctrl}}$$ 的界：
+
+$$
+\boxed{
+H_{\mathrm{ctrl}}
+\le
+C_\infty-|O|
+\le
+|Y|-|O|.
+}
+$$
+
+这里使用了读出满射，因此深度零的商类数正好是 $$|O|$$；每一个尚未稳定的深度至少增加一个商类。这个界不是量子 Hilbert 维数界，也不是时间步数的物理定律，而是有限确定性控制模型中的结构预算。
+
+若把长度 $$L$$ 的 Zeckendorf 合法集合作为有限状态集，则
+
+$$
+|Y|=|\mathcal W_L|=F_{L+2}.
+$$
+
+在一个具体受控更新族上，能够得到的只是
+
+$$
+H_{\mathrm{ctrl}}
+\le
+F_{L+2}-|O|,
+$$
+
+以及更精确的 $$C_\infty-|O|$$ 界。不能把 $$F_{L+2}$$ 直接解释成所需历史深度；如果许多合法构型对所有允许控制词都具有相同响应，预测商会远小于原始构型集。
+
+### 106.4 对经典现实的操作性结论
+
+现在“稳定”必须带有操作族标记：
+
+$$
+\boxed{
+\text{稳定对象}
+=
+\text{受控完整响应的最大不变等价类}.
+}
+$$
+
+如果只允许连续实流，103 节的隐藏扇区可以作为不被跨越的块索引；如果加入离散 jump，它们必须在受控关系中重新测试；如果加入共享量子记忆，控制词还要作用在联合寄存器上，而不能只作用在局部粗读数上。
+
+所以增加约束并不自动产生更稳定的经典现实。约束减少初始合法构型数，操作族却可能增加未来可区分的方向。真正的历史预算是二者的交点：
+
+$$
+\text{可行历史接口}
+=
+\text{合法构型空间}
+\big/\text{对全部允许控制词的响应等价}.
+$$
+
+本节复用 `controlled_finite_stability` 的最大不变关系、永久稳定和商类深度界。Lean 已证明的是有限状态、有限输入字母和满射读出下的受控闭合；将控制输入提升为连续脉冲、量子仪器序列或含噪声的完全正通道，需要另外定义相应的控制关系和误差度量。
