@@ -38,7 +38,7 @@ internal static class ScribeNarrativeScanner
 
     internal static readonly NarrativeClass DigestionLedgerReference = new(
         nameof(DigestionLedgerReference), "digestion ledger",
-        Pattern(@"\b(?:Meta/Digestion|atom_id|coverage_gids|chain_atoms|cas_ref|residual-open|partial-closed|absorbed-closed|nonpropositional-inapplicable|upstream-closed|accepted-event|subitems?|unresolved_subitems|digestion|backfill)\b"
+        Pattern(@"\b(?:Meta/Digestion|atom_id|coverage_gids|chain_atoms|cas_ref|residual-open|partial-closed|absorbed-closed|nonpropositional-inapplicable|accepted-event|subitems?|unresolved_subitems|digestion|backfill)\b"
             + @"|\batoms?\s+(?:sha256:)?[0-9a-f]{40,64}\b"
             + @"|\b[a-z][a-z0-9-]*-residual-[0-9a-f]{8,}\b"
             + @"|\b(?:theorem|definition|lemma|corollary|remark|proposition|section|appendix)/\d+(?:\.\d+)*\b"),

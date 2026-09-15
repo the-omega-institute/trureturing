@@ -326,8 +326,6 @@ public sealed partial class LedgerAlignWriterTests
         public CommandResult SettleBatch(IReadOnlyList<string> arguments) =>
             new(false, string.Empty, "settle-batch is not configured in this fixture");
 
-        public CommandResult SettleUpstream(IReadOnlyList<string> arguments) => throw Unsupported();
-
         public CommandResult SettleAtom(IReadOnlyList<string> arguments) => throw Unsupported();
         public CommandResult DecomposeAtom(IReadOnlyList<string> arguments) => throw Unsupported();
         public CommandResult StripScribeReceipts(IReadOnlyList<string> arguments) => throw Unsupported();

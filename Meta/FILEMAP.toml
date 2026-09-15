@@ -315,15 +315,6 @@ verified_by = ["BackfillInventoryLoader"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
 [[files]]
-pattern = "Meta/Digestion/upstream/**"
-kind = "data"
-admission_plane = "content"
-produced_by = "SettleUpstreamCommand"
-consumed_by = ["DigestionStatusEvaluator"]
-verified_by = ["DigestionStatusEvaluator"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-[[files]]
 pattern = "Meta/FILEMAP.toml"
 kind = "data"
 admission_plane = "judge"

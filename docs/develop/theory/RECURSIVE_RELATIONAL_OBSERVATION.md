@@ -2358,3 +2358,1145 @@ $$
 [^rro12_product]: The Stacks Project, *Topology*，[Tychonov 定理，Tag 08ZU](https://stacks.math.columbia.edu/tag/08ZU)：紧致空间的乘积紧致；此处仅使用有限乘积情形，紧致性按定义 12.0 的开覆盖意义理解。
 
 ## 追加锚（本行以下为增补区）
+## 13. 增补·幂运算的有限观察相容性
+
+**定义 13.0（观察核、细化与数论记号）。** 本节取 $\mathbb N=\{0,1,2,\ldots\}$，使用自然数上的总幂运算
+$$
+a^0=1,\qquad a^{b+1}=a^b a,
+$$
+特别约定 $0^0=1$。对 $t\ge0$、$p\ge1$，沿用阈值—周期核
+$$
+n\mathrel{R_{t,p}}m
+\quad\Longleftrightarrow\quad
+n=m\ \lor\
+\bigl(n\ge t\ \land\ m\ge t\ \land\ n\equiv m\pmod p\bigr).
+$$
+称等价关系 $R$ 双槽保幂，若
+$$
+\forall a,a',b,b'\in\mathbb N,\qquad
+a\mathrel R a'\ \land\ b\mathrel R b'
+\quad\Longrightarrow\quad
+a^b\mathrel R (a')^{b'}.
+$$
+关系包含 $R'\subseteq R$ 表示 $R'$ 细化 $R$；某类细化中的最粗者，指该类中按关系包含排序的最大元素。
+
+对正整数 $n$，记
+$$
+\operatorname{Pr}(n)=\{\ell:\ell\text{ 为素数且 }\ell\mid n\}.
+$$
+对素数 $\ell$，$v_\ell(n)$ 表示 $\ell$ 在 $n$ 的素因子分解中的指数，并定义
+$$
+h(n)=
+\max\bigl(\{0\}\cup
+\{v_\ell(n):\ell\in\operatorname{Pr}(n)\}\bigr).
+$$
+因此 $\operatorname{Pr}(1)=\varnothing$、$h(1)=0$。记 $\ell^e\parallel n$ 表示 $e=v_\ell(n)\ge1$。
+
+有限群 $G$ 的指数定义为
+$$
+\operatorname{exp}(G)
+=\operatorname{lcm}\{\operatorname{ord}(g):g\in G\},
+$$
+其中 $\operatorname{ord}(g)$ 是 $g$ 的阶。对 $n\ge2$，令
+$$
+U(n)=(\mathbb Z/n\mathbb Z)^\times,\qquad
+\lambda(n)=\operatorname{exp}(U(n)),
+$$
+并约定 $\lambda(1)=1$。这是 Carmichael 函数的标准群指数定义，参见 Kevin Ford、Florian Luca 与 Carl Pomerance，*The image of Carmichael's $\lambda$-function*，第 1 节，[arXiv:1408.6506v2](https://arxiv.org/html/1408.6506v2)。
+
+**定理 13.1（阈值—周期核双槽保幂的完整分类）。** 对任意 $t\ge0$、$p\ge1$，关系 $R_{t,p}$ 双槽保幂，当且仅当
+$$
+(t,p)=(0,1)
+\quad\text{或}\quad
+\bigl(t\ge\max\{1,h(p)\}\ \land\ \lambda(p)\mid p\bigr).
+$$
+等价地，除单点商 $R_{0,1}$ 外，充要条件为
+$$
+t\ge1,\qquad
+\forall\,\ell^e\parallel p,\quad
+e\le t\ \land\ \ell-1\mid p.
+$$
+特别地，$p=1$ 时所有 $t\ge0$ 都允许；$p>1$ 时，阈值条件和周期条件缺一不可。
+
+这里 $\lambda(p)\mid p$ 等价于“每个素因子 $\ell\mid p$ 都满足 $\ell-1\mid p$”，是 Novák–Carmichael 数的标准判据，参见 Alexander Kalmynin，*Novák-Carmichael numbers and shifted primes without large prime factors*，第 2 节引理 1，[arXiv:1706.07343v1](https://arxiv.org/html/1706.07343v1)。下面证明本条所需的等价及其与观察核条件的联系。
+
+**证明。** 先说明有限群指数的基本性质。若 $g$ 的阶为 $r$，则对正整数 $d$ 作带余除法，得到
+$$
+g^d=1_G\quad\Longleftrightarrow\quad r\mid d.
+$$
+对群中所有元素取最小公倍数，因而
+$$
+\forall g\in G,\ g^d=1_G
+\quad\Longleftrightarrow\quad
+\operatorname{exp}(G)\mid d.
+$$
+因此，对 $p\ge2$，
+$$
+\lambda(p)\mid p
+\quad\Longleftrightarrow\quad
+\forall a\in\mathbb N,\ 
+\gcd(a,p)=1\Longrightarrow a^p\equiv1\pmod p.
+$$
+
+由定理 11.2，$R_{t,p}$ 已对乘法的两个槽位相容。固定指数 $b$，对 $b$ 归纳便得
+$$
+a\mathrel{R_{t,p}}a'
+\quad\Longrightarrow\quad
+a^b\mathrel{R_{t,p}}(a')^b.
+$$
+归纳起点是两边都等于 $1$，所以也涵盖零底数与零指数。故新增要求恰在指数槽。
+
+更精确地，双槽保幂等价于
+$$
+\forall a\in\mathbb N,\qquad
+a^t\mathrel{R_{t,p}}a^{t+p}.
+$$
+必要性来自 $t\mathrel{R_{t,p}}t+p$。反之，假设上述关系成立。对任意 $n\ge t$，利用乘法相容性得到
+$$
+a^{n+p}
+=a^{n-t}a^{t+p}
+\mathrel{R_{t,p}}
+a^{n-t}a^t
+=a^n.
+$$
+若 $b\mathrel{R_{t,p}}b'$ 且 $b\ne b'$，交换二者后可写成
+$$
+b\ge t,\qquad b'=b+kp,\qquad k\ge1.
+$$
+反复应用上述关系即得 $a^b\mathrel{R_{t,p}}a^{b'}$。结合底数槽的相容性，
+$$
+a^b\mathrel{R_{t,p}}(a')^b
+\mathrel{R_{t,p}}(a')^{b'},
+$$
+便得到双槽保幂。
+
+先处理 $t=0$。因 $0\mathrel{R_{0,p}}p$，取底数 $a=0$，保幂必要求
+$$
+1=0^0\mathrel{R_{0,p}}0^p=0.
+$$
+而 $R_{0,p}$ 就是模 $p$ 同余，所以 $p\mid1$，即 $p=1$。反之，$R_{0,1}$ 是全关系，当然保幂。
+
+以下设 $t\ge1$。底数 $a=0$ 时，
+$$
+0^t=0^{t+p}=0;
+$$
+底数 $a=1$ 时，两边都等于 $1$。当 $a\ge2$ 时，自然数归纳给出
+$$
+a^t\ge2^t\ge t,\qquad a^{t+p}\ge a^t.
+$$
+两项均在周期尾部。因此，前述指数槽条件恰等价于
+$$
+\forall a\in\mathbb N,\qquad
+a^{t+p}\equiv a^t\pmod p.
+$$
+
+假设这个同余恒等式成立。对每个 $\ell^e\parallel p$，取底数 $a=\ell$，得到
+$$
+\ell^e\mid \ell^{t+p}-\ell^t
+=\ell^t(\ell^p-1).
+$$
+由于 $\ell\nmid\ell^p-1$，右侧的 $\ell$-进赋值恰为 $t$，故 $e\le t$。于是
+$$
+h(p)\le t.
+$$
+另一方面，若 $\gcd(a,p)=1$，则可在模 $p$ 的单位群中消去 $a^t$，得到
+$$
+a^p\equiv1\pmod p.
+$$
+群指数的基本性质于是给出 $\lambda(p)\mid p$。当 $p=1$ 时，这个整除关系按约定也成立。必要性得证。
+
+现在证明所需的周期判据
+$$
+\lambda(p)\mid p
+\quad\Longleftrightarrow\quad
+\forall\ell\in\operatorname{Pr}(p),\ \ell-1\mid p.
+$$
+$p=1$ 时两边都成立，以下设 $p>1$。
+
+先设 $\lambda(p)\mid p$，固定 $\ell^e\parallel p$，写
+$$
+p=\ell^e m,\qquad \gcd(\ell,m)=1.
+$$
+每个模 $\ell$ 的非零剩余类 $x$ 都可提升为模 $p$ 的单位：取不被 $\ell$ 整除的整数代表 $u$，再由中国剩余定理选择
+$$
+a\equiv u\pmod{\ell^e},\qquad
+a\equiv1\pmod m.
+$$
+于是 $\gcd(a,p)=1$，从而 $x^p=1$ 于域 $\mathbb F_\ell$ 中。
+
+令 $d=\operatorname{exp}(\mathbb F_\ell^\times)$。有限群的陪集分割表明每个元素的阶整除群阶，故 $d\mid\ell-1$。另一方面，$\mathbb F_\ell$ 上的非零多项式 $X^d-1$ 在全部 $\ell-1$ 个非零元素处消失；域上次数为 $d$ 的非零多项式至多有 $d$ 个根，故 $d\ge\ell-1$。因此
+$$
+d=\ell-1.
+$$
+既然每个非零元素的 $p$ 次幂都是 $1$，群指数的基本性质给出 $d\mid p$，即 $\ell-1\mid p$。这个论证也包括 $\ell=2$。
+
+反之，设每个素因子 $\ell\mid p$ 都满足 $\ell-1\mid p$。对 $\ell^e\parallel p$，有
+$$
+\ell^{e-1}\mid p,\qquad
+\ell-1\mid p,\qquad
+\gcd(\ell^{e-1},\ell-1)=1,
+$$
+所以
+$$
+\ell^{e-1}(\ell-1)\mid p.
+$$
+模 $\ell^e$ 的单位群恰有
+$$
+\ell^e-\ell^{e-1}=\ell^{e-1}(\ell-1)
+$$
+个元素。因此，对任何满足 $\ell\nmid a$ 的底数，有限群的阶整除性质给出
+$$
+a^p\equiv1\pmod{\ell^e}.
+$$
+特别地，若 $\gcd(a,p)=1$，上式对 $p$ 的每个素数幂因子都成立；这些因子两两互素，故
+$$
+a^p\equiv1\pmod p.
+$$
+于是 $\lambda(p)\mid p$，周期判据得证。此证明不要求模合数的单位群为循环群，也未把非单位底数当作单位处理。
+
+最后证明充分性。设
+$$
+t\ge\max\{1,h(p)\},\qquad \lambda(p)\mid p.
+$$
+由已证周期判据，对每个 $\ell^e\parallel p$ 都有 $\ell-1\mid p$。固定任意底数 $a\in\mathbb N$。
+
+若 $\ell\mid a$，则 $t\ge e$，所以
+$$
+a^t\equiv a^{t+p}\equiv0\pmod{\ell^e}.
+$$
+若 $\ell\nmid a$，则上一段已经证明 $a^p\equiv1\pmod{\ell^e}$，故
+$$
+a^{t+p}=a^t a^p\equiv a^t\pmod{\ell^e}.
+$$
+这两个分支逐个处理了每个素数幂因子，因而也涵盖“对某些因子是单位、对另一些因子不是单位”的底数。由素数幂因子的两两互素性，
+$$
+a^{t+p}\equiv a^t\pmod p.
+$$
+$p=1$ 时该同余无条件成立。结合已经证明的阈值判断与指数槽化约，得到双槽保幂。两种参数表述的等价性也随之成立。证毕。
+
+**定理 13.2（阈值—周期核的有限保幂修复与唯一最粗细化）。** 固定任意 $t\ge0$、$p\ge1$。定义有限素数集序列
+$$
+S_0=\operatorname{Pr}(p),
+$$
+$$
+S_{j+1}
+=S_j\cup
+\bigcup_{\ell\in S_j}\operatorname{Pr}(\ell-1),
+\qquad 0\le j<p,
+$$
+并定义
+$$
+P(p)=
+\operatorname{lcm}
+\bigl(\{p\}\cup\{\ell-1:\ell\in S_p\}\bigr).
+$$
+令
+$$
+T(t,p)=
+\begin{cases}
+0,&(t,p)=(0,1),\\
+\max\{t,1,h(P(p))\},&(t,p)\ne(0,1).
+\end{cases}
+$$
+则
+$$
+R_*:=R_{T(t,p),P(p)}
+$$
+双槽保幂，且
+$$
+R_*\subseteq R_{t,p}.
+$$
+该观察商有限，恰有 $T(t,p)+P(p)$ 个类。构造只需上述明确给出的 $p$ 步有限集合运算，并有显式整除界
+$$
+P(p)\mid \operatorname{lcm}(1,2,\ldots,p).
+$$
+
+全部有限保幂细化 $R_{u,v}$ 恰由以下参数给出：$u\ge t$、$p\mid v$，且 $(u,v)$ 满足定理 13.1 的充要条件。它们具有唯一最粗者 $R_*$；亦即，对所有 $u\ge0$、$v\ge1$，
+$$
+R_{u,v}\subseteq R_{t,p}
+\ \land\
+R_{u,v}\text{ 双槽保幂}
+\quad\Longrightarrow\quad
+R_{u,v}\subseteq R_*.
+$$
+更一般地，$R_*$ 也是包含于 $R_{t,p}$、同时对 $\{+,\times,\operatorname{pow}\}$ 相容的所有等价关系中的最大者，不必预先要求这些等价关系具有有限商。
+
+**证明。** 先记录阈值—周期核的包含次序：
+$$
+R_{u,v}\subseteq R_{t,p}
+\quad\Longleftrightarrow\quad
+u\ge t\ \land\ p\mid v.
+$$
+这也是 James East 与 Nik Ruškuc，*Classification of congruences of twisted partition monoids*，第 2.1 节式 (2.2) 的标准包含判据，参见 [arXiv:2010.04392v3](https://arxiv.org/html/2010.04392v3#S2.SS1)。
+
+为明确此处的方向，若左侧成立，则
+$$
+u\mathrel{R_{u,v}}u+v
+$$
+是一对不同元素，因而 $u\mathrel{R_{t,p}}u+v$ 强制 $u\ge t$ 及 $p\mid v$。反之，若这两个参数条件成立，则任何不同的 $R_{u,v}$-相关元素均不小于 $u\ge t$，且其差为 $v$ 的倍数，从而也是 $p$ 的倍数，所以属于 $R_{t,p}$。
+
+下面证明素数集构造在给定步数内已封闭。归纳可知，每个 $S_j$ 都只含不超过 $p$ 的素数：初始素数整除 $p$；若新素数 $r$ 整除某个 $\ell-1$，则
+$$
+r\le\ell-1<\ell\le p.
+$$
+同时 $S_j\subseteq S_{j+1}$。不超过 $p$ 的素数至多有 $p-1$ 个，因此前 $p$ 步不可能每一步都严格增加。一旦某一步满足 $S_{j+1}=S_j$，该集合已经对所定义的增补操作封闭，之后各步都保持不变。故 $S_p$ 满足
+$$
+\ell\in S_p
+\quad\Longrightarrow\quad
+\operatorname{Pr}(\ell-1)\subseteq S_p.
+$$
+$p=1$ 时，各集合均为空，结论同样成立。
+
+简记 $P=P(p)$。显然 $p\mid P$。若素数 $r\mid P$，则由最小公倍数的素因子分解，$r$ 必整除 $p$，或整除某个 $\ell-1$，其中 $\ell\in S_p$。前一情形给出 $r\in S_0\subseteq S_p$；后一情形由封闭性给出 $r\in S_p$。因此
+$$
+\operatorname{Pr}(P)\subseteq S_p.
+$$
+对每个 $r\in\operatorname{Pr}(P)$，数 $r-1$ 正是定义 $P$ 时列入最小公倍数的一项，所以
+$$
+r-1\mid P.
+$$
+由定理 13.1 中已经证明的周期判据，
+$$
+\lambda(P)\mid P.
+$$
+
+令
+$$
+L_p=\operatorname{lcm}(1,2,\ldots,p).
+$$
+定义 $P$ 时使用的数 $p$ 整除 $L_p$；每个 $\ell\in S_p$ 都满足 $2\le\ell\le p$，故正整数 $\ell-1$ 也整除 $L_p$。于是
+$$
+P\mid L_p,
+$$
+得到所述显式整除界。
+
+若 $(t,p)=(0,1)$，则 $P=1$、$T(t,p)=0$，故 $R_*=R_{0,1}$，所需性质直接成立。否则，按定义
+$$
+T(t,p)\ge t,\qquad
+T(t,p)\ge\max\{1,h(P)\}.
+$$
+结合 $\lambda(P)\mid P$，定理 13.1 给出 $R_*$ 双槽保幂；再由 $p\mid P$ 及包含判据，得到
+$$
+R_*\subseteq R_{t,p}.
+$$
+阈值以下共有 $T(t,p)$ 个单元素类，尾部共有 $P$ 个剩余类，所以商的类数恰为 $T(t,p)+P$。至此已对所有 $t,p$ 给出有限修复，而非仅给出条件性的最粗性结论。
+
+进一步证明 $P$ 的精确最小性。设正整数 $v$ 满足
+$$
+p\mid v,\qquad \lambda(v)\mid v.
+$$
+由周期判据，每个素因子 $\ell\mid v$ 都满足 $\ell-1\mid v$。归纳证明
+$$
+S_j\subseteq\operatorname{Pr}(v)
+\qquad(0\le j\le p).
+$$
+起点来自 $p\mid v$。若结论对 $S_j$ 成立，则对每个 $\ell\in S_j$ 都有 $\ell\mid v$，进而 $\ell-1\mid v$；所以 $\ell-1$ 的所有素因子仍整除 $v$，得到下一步的包含。
+
+因此，每个 $\ell\in S_p$ 都整除 $v$，从而 $\ell-1\mid v$。连同 $p\mid v$，得到
+$$
+P(p)\mid v.
+$$
+故 $P(p)$ 是满足 $p\mid v$ 且 $\lambda(v)\mid v$ 的正整数中，按整除排序的最小元素。这一最小性比较的是全部正整数 $v$，不限于某个预先截断的搜索范围。
+
+现在设 $R_{u,v}\subseteq R_{t,p}$ 且 $R_{u,v}$ 双槽保幂。包含判据给出
+$$
+u\ge t,\qquad p\mid v.
+$$
+若旧核是 $R_{0,1}$，则任何关系都包含于 $R_*=R_{0,1}$，最粗性显然成立。
+
+以下设 $(t,p)\ne(0,1)$。此时 $R_{u,v}$ 不可能是全关系，因为全关系不能包含于这个非全关系旧核。故定理 13.1 给出
+$$
+u\ge\max\{1,h(v)\},\qquad \lambda(v)\mid v.
+$$
+由 $P$ 的最小性，$P\mid v$，从而逐素数比较赋值可得
+$$
+h(P)\le h(v).
+$$
+因此
+$$
+u\ge\max\{t,1,h(P)\}=T(t,p).
+$$
+再用一次包含判据，
+$$
+R_{u,v}\subseteq R_{T(t,p),P}=R_*.
+$$
+由于 $R_*$ 本身已是合格细化，它就是最大元素，而不仅是极大元素；最大元素的唯一性立即成立。包含判据与定理 13.1 的合取，也给出了定理所述全部有限细化的参数刻画。
+
+最后，设 $E\subseteq R_{t,p}$ 是任意对 $\{+,\times,\operatorname{pow}\}$ 相容的等价关系。若 $E$ 为等号关系，则显然 $E\subseteq R_*$。若不是等号关系，由定理 11.2 的自然数加法同余分类，存在有限参数 $u\ge0$、$v\ge1$，使
+$$
+E=R_{u,v}.
+$$
+于是刚才证明的最粗性适用，仍得 $E\subseteq R_*$。另一方面，$R_*$ 对加法、乘法的相容性来自定理 11.2，对幂的相容性已经证明。因此它确为该签名下所有保留旧区别的同余中的最大者。证毕。
+
+## 追加锚（本行以下为增补区）
+## 14. 增补·保幂共尾观察与逆向运算的连续性边界
+
+**定义 14.0（观察指标、相容完成与保幂子族）。** 取 $\mathbb{N}=\{0,1,2,\ldots\}$，自然数幂满足 $a^0=1$，特别地 $0^0=1$。令
+$$
+I=\mathbb{N}\times\mathbb{N}_{>0},
+\qquad
+(t,p)\preceq(u,v)\quad\Longleftrightarrow\quad t\le u\quad \land\quad p\mid v.
+$$
+指标越大表示观察越细。对 $\alpha=(t,p)$，定义
+$$
+n\mathrel{R_\alpha}m
+\quad\Longleftrightarrow\quad
+n=m\quad \lor\quad \bigl(n,m\ge t\quad \land\quad n\equiv m\pmod p\bigr),
+\qquad
+Q_\alpha=\mathbb{N}/R_\alpha,
+$$
+并记商映射为 $q_\alpha$。每个 $Q_\alpha$ 取有限离散拓扑。若 $\alpha\preceq\beta$，记规范映射为
+$$
+b_{\beta\alpha}:Q_\beta\longrightarrow Q_\alpha,
+\qquad
+b_{\beta\alpha}(q_\beta(n))=q_\alpha(n).
+$$
+自然数加法幺半群的非等号同余具有上述阈值—周期形式；其包含次序见 [East–Ruškuc，*Classification of congruences of twisted partition monoids*，arXiv:2010.04392v3，第 2.1 节及式 (2.2)](https://arxiv.org/html/2010.04392v3)。这里引用的范围是加法同余的分类与包含次序。
+
+令 $J\subseteq I$ 为双槽保幂指标集，即
+$$
+\alpha\in J
+\quad\Longleftrightarrow\quad
+\forall a,a',b,b'\in\mathbb{N},\quad
+\bigl(a\mathrel{R_\alpha}a'\quad \land\quad b\mathrel{R_\alpha}b'\bigr)
+\Longrightarrow a^b\mathrel{R_\alpha}(a')^{b'}.
+$$
+对所考虑的指标子集 $D$，定义
+$$
+K_D=
+\left\{(x_\alpha)_{\alpha\in D}\in\prod_{\alpha\in D}Q_\alpha:
+\forall\alpha,\beta\in D,\quad
+\alpha\preceq\beta\Longrightarrow b_{\beta\alpha}(x_\beta)=x_\alpha
+\right\},
+\qquad
+\iota_D(n)=(q_\alpha(n))_{\alpha\in D},
+$$
+赋予 $K_D$ 乘积拓扑的子空间拓扑，坐标投影记为 $\pi_\alpha$。保序映射 $f:D\to E$ 称为共尾映射，若对每个 $e\in E$，存在 $d\in D$ 使 $e\preceq f(d)$。
+
+**假设 14.0a（第 13 节的算术前置）。** 采用第 13.1 条的如下双槽保幂判据：
+$$
+J=\{(0,1)\}\quad \cup\quad
+\left\{(t,p):t\ge1,\quad
+\forall\,\ell^e\parallel p,\quad
+e\le t\quad \land\quad \ell-1\mid p
+\right\}.
+$$
+其中 $\ell$ 遍历素数。沿用 $\operatorname{Pr}(p)$ 表示 $p$ 的素因子集，并令
+$$
+h(p)=\max\bigl(\{0\}\cup\{v_\ell(p):\ell\in\operatorname{Pr}(p)\}\bigr).
+$$
+对每个 $p\ge1$，使用第 13.2 条的有限构造
+$$
+S_0=\operatorname{Pr}(p),
+\qquad
+S_{j+1}=S_j\cup\bigcup_{\ell\in S_j}\operatorname{Pr}(\ell-1)
+\quad(0\le j<p),
+$$
+$$
+P(p)=\operatorname{lcm}\bigl(\{p\}\cup\{\ell-1:\ell\in S_p\}\bigr),
+\qquad
+T(t,p)=
+\begin{cases}
+0,&(t,p)=(0,1),\\
+\max\{t,1,h(P(p))\},&(t,p)\ne(0,1),
+\end{cases}
+$$
+并定义 $\kappa(t,p)=(T(t,p),P(p))$。上述分类是本节明确采用的数学前置；下条证明给出所需的保幂充分性及该有限构造的最小性论证。参见[《递归关系观察》第 13.1—13.2 条](https://raw.githubusercontent.com/the-omega-institute/trureturing/d75daccad7efe749379873a4b5f8dbba95a862f9/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)。素因子条件 $\ell-1\mid p$ 与所有模 $p$ 单位的 $p$ 次幂均为 $1$ 的等价，是 [Kalmynin，*Novák-Carmichael numbers and shifted primes without large prime factors*，arXiv:1706.07343v1，第 2 节引理 1](https://arxiv.org/html/1706.07343v1) 的判据；该引文只支持周期条件，不包含阈值条件或以下连续性结论。
+
+**定理 14.1（保幂共尾性、完成比较与加乘幂的联合连续延拓）。** 在上述定义与算术前置下，有
+$$
+\alpha\preceq\beta\quad\Longleftrightarrow\quad R_\beta\subseteq R_\alpha.
+$$
+若 $\alpha=(t,p)$、$\beta=(u,v)$，则
+$$
+\alpha\vee\beta=(\max\{t,u\},\operatorname{lcm}(p,v)),
+\qquad
+R_{\alpha\vee\beta}=R_\alpha\cap R_\beta.
+$$
+映射 $\kappa:I\to J$ 满足
+$$
+\alpha\preceq\kappa(\alpha),
+\qquad
+\kappa(\alpha)\preceq\gamma
+\quad\Longleftrightarrow\quad
+\alpha\preceq\gamma
+\quad(\gamma\in J).
+$$
+因此 $\kappa$ 保序、在 $J$ 上为恒等映射且幂等；$J\hookrightarrow I$ 与 $\kappa:I\to J$ 都是共尾映射。任意两个指标的最小保幂共同细化是 $\kappa(\alpha\vee\beta)$。若两个指标本来都属于 $J$，则 $\alpha\vee\beta\in J$。
+
+一个同时共尾于 $I$ 与 $J$ 的显式可数塔为
+$$
+L_k=\operatorname{lcm}(1,2,\ldots,k),
+\qquad
+c_k=(k,L_k),
+\qquad k\ge1.
+$$
+具体地，$c_k\in J$、$c_k\preceq c_{k+1}$，且
+$$
+k\ge\max\{1,t,p\}\quad\Longrightarrow\quad (t,p)\preceq c_k.
+$$
+
+两个完成 $K_I$、$K_J$ 都是紧致 Hausdorff 空间，具有开闭柱集基，且相应的 $\iota_D$ 为稠密单射。由原 $\mathbb{N}$ 上恒等映射诱导的坐标限制
+$$
+\Phi:K_I\longrightarrow K_J,
+\qquad
+\Phi((x_\alpha)_{\alpha\in I})=(x_\gamma)_{\gamma\in J}
+$$
+是同胚，满足 $\Phi\circ\iota_I=\iota_J$；其逆映射显式为
+$$
+\bigl(\Psi(y)\bigr)_\alpha
+=b_{\kappa(\alpha),\alpha}\bigl(y_{\kappa(\alpha)}\bigr).
+$$
+二者也都通过坐标限制同胚于 $\varprojlim_k Q_{c_k}$。
+
+在这个共同完成上，自然数加法、乘法与双槽自然数幂分别具有唯一的联合连续延拓。对于指定输出指标 $\alpha$，加法与乘法可以在两个输入槽都使用精度 $\alpha$；幂可以在两个输入槽都使用精度 $\kappa(\alpha)$。这是允许输入比输出更细的因子化结论，并不要求每个 $Q_\alpha$ 本身都具有同层幂运算。
+
+**证明。** 若 $R_{u,v}\subseteq R_{t,p}$，则不同元素 $u,u+v$ 在 $R_{t,p}$ 下相关，强制 $u\ge t$ 且 $p\mid v$。反之，这两个参数条件使每对不同的 $R_{u,v}$ 相关元素也在 $R_{t,p}$ 下相关。包含判据得证。两个关系的交同时要求达到两个阈值且差被两个周期整除，故得到所述上确界公式。
+
+每个 $R_{t,p}$ 都在同时平移两个元素后保持成立，所以它是加法同余。由重复加法，固定自然数倍乘保持该同余；依次改变两个因子，得到乘法的双槽相容性。因此固定指数时，幂的底数槽也由归纳保持该同余。这正是[《递归关系观察》第 11.2 条](https://raw.githubusercontent.com/the-omega-institute/trureturing/d75daccad7efe749379873a4b5f8dbba95a862f9/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 的运算下降论证。
+
+先证明共尾构造实际使用的保幂充分性。设 $t\ge1$，且每个 $\ell^e\parallel p$ 都满足 $e\le t$ 与 $\ell-1\mid p$。若 $\ell\mid a$，则 $a^t$ 与 $a^{t+p}$ 都被 $\ell^e$ 整除。若 $\ell\nmid a$，则
+$$
+\ell^{e-1}(\ell-1)\mid p,
+$$
+因为两个因子互素且分别整除 $p$；模 $\ell^e$ 的单位群有 $\ell^{e-1}(\ell-1)$ 个元素，故 $a^p\equiv1\pmod{\ell^e}$。逐个素数幂合并得到
+$$
+a^{t+p}\equiv a^t\pmod p.
+$$
+$p=1$ 时该同余无条件成立。底数 $a=0,1$ 时两幂相等；$a\ge2$ 时，两幂均不小于 $2^t\ge t$。因此总有 $a^{t+p}\mathrel{R_{t,p}}a^t$。乘以 $a^{b-t}$ 并反复使用乘法同余，可得所有 $b\ge t$ 的 $p$ 步指数平移保持观察。结合底数槽的相容性，得到双槽保幂。全关系 $R_{0,1}$ 则直接满足保幂。
+
+现证明 $\kappa$ 的最小性。构造 $S_j$ 时，每个新加入的素数都严格小于产生它的素数，且所有素数均不超过 $p$。集合序列单调增加，而这样的素数至多有 $p-1$ 个；故前 $p$ 步内必有一次不再增加，此后保持不变。因此 $S_p$ 对所定义的增补操作封闭。由此
+$$
+p\mid P(p),
+\qquad
+\operatorname{Pr}(P(p))\subseteq S_p,
+\qquad
+r\in\operatorname{Pr}(P(p))\Longrightarrow r-1\mid P(p).
+$$
+于是，除 $(0,1)$ 的单独分支外，刚才证明的充分性适用于 $(T(t,p),P(p))$，故 $\kappa(\alpha)\in J$ 且 $\alpha\preceq\kappa(\alpha)$。
+
+设 $\gamma=(u,v)\in J$ 且 $\alpha=(t,p)\preceq\gamma$。若 $\alpha=(0,1)$，则 $\kappa(\alpha)=\alpha\preceq\gamma$。否则 $\gamma\ne(0,1)$，算术前置给出
+$$
+u\ge\max\{1,h(v)\},
+\qquad
+\ell\mid v\Longrightarrow\ell-1\mid v
+\quad(\ell\text{ 为素数}).
+$$
+由 $p\mid v$ 起步，对 $j$ 归纳得到 $S_j\subseteq\operatorname{Pr}(v)$：若 $\ell\in S_j$，则 $\ell-1\mid v$，所以它的每个素因子仍整除 $v$。故 $P(p)\mid v$，继而 $h(P(p))\le h(v)$，于是
+$$
+T(t,p)\le u,
+\qquad
+P(p)\mid v.
+$$
+即 $\kappa(\alpha)\preceq\gamma$。反方向由 $\alpha\preceq\kappa(\alpha)$ 立即得到，因而所述最小性等价式成立。
+
+若 $\alpha\preceq\beta$，则 $\kappa(\beta)$ 是 $\alpha$ 的一个保幂细化，最小性给出 $\kappa(\alpha)\preceq\kappa(\beta)$。若 $\gamma\in J$，最小性与膨胀性给出 $\kappa(\gamma)=\gamma$，从而幂等性以及两个映射的共尾性成立。保幂同余的交仍保幂，因此 $J$ 对上述有限上确界封闭；其余共同细化结论也由最小性得到。
+
+对显式塔，若 $\ell^e\parallel L_k$，则 $\ell^e\le k$，故 $e\le k$；并且 $\ell\le k$，所以 $\ell-1\mid L_k$。保幂充分性给出 $c_k\in J$。显然 $L_k\mid L_{k+1}$。又当 $k\ge p$ 时 $p\mid L_k$，故 $k\ge\max\{1,t,p\}$ 足以保证 $(t,p)\preceq c_k$。这一共尾塔的成立只需刚才证明的保幂充分性。
+
+有限离散空间的乘积紧致 Hausdorff，相容方程定义闭子集，因此 $K_I$、$K_J$ 紧致 Hausdorff；有限坐标柱集给出开闭基。这也是 profinite 空间的标准逆极限构造，见 [Stacks Project，定义 5.22.1 与引理 5.22.2](https://stacks.math.columbia.edu/tag/08ZW)；在有限幺半群范畴中的相应构造见 [Kyriakoglou–Perrin，*Profinite semigroups*，arXiv:1703.10088v1，第 5.1—5.2 节](https://arxiv.org/html/1703.10088v1)。这里所用范围是有限离散逆极限及其拓扑性质。
+
+给定一个非空基本柱邻域，选择其中全部指标的共同细化 $\delta$；对于 $K_J$，可取保幂共同细化。邻域中某点的 $\delta$ 坐标有自然数代表 $n$，而相容性保证 $\iota_D(n)$ 位于该邻域，故自然数像稠密。任意两个不同自然数，可用阈值大于二者的指标区分；再取其保幂细化，同样在 $J$ 中区分。因此两个自然数映射都单射。
+
+$\Phi$ 显然连续。由于 $\kappa$ 保序，所给 $\Psi(y)$ 满足全部相容方程，且每个输出坐标只依赖 $y$ 的一个有限坐标，故 $\Psi$ 连续。对 $\gamma\in J$，$\kappa(\gamma)=\gamma$，所以 $\Phi\Psi(y)=y$；对 $x\in K_I$，相容性给出
+$$
+b_{\kappa(\alpha),\alpha}(x_{\kappa(\alpha)})=x_\alpha,
+$$
+故 $\Psi\Phi(x)=x$。它们在自然数上的作用确为恒等比较。对于可数塔，令 $k(\alpha)=\max\{1,t,p\}$；由塔线程 $z=(z_k)$ 恢复任意坐标的公式为
+$$
+x_\alpha=b_{c_{k(\alpha)},\alpha}(z_{k(\alpha)}).
+$$
+选取更高塔层不改变该值；共同更高层保证所有坐标相容。该公式与坐标限制互逆且连续，证明两种完成都同胚于所述塔极限。
+
+最后构造运算。每个 $Q_\alpha$ 上已有加法 $+_\alpha$ 与乘法 $\cdot_\alpha$，其过渡映射保持这两种运算。故定义
+$$
+\pi_\alpha(x+y)=\pi_\alpha(x)+_\alpha\pi_\alpha(y),
+\qquad
+\pi_\alpha(xy)=\pi_\alpha(x)\cdot_\alpha\pi_\alpha(y).
+$$
+若 $\gamma\in J$，记其良定义的有限幂运算为 $E_\gamma$。对任意 $\alpha\in I$，定义
+$$
+\pi_\alpha(E(x,y))=
+b_{\kappa(\alpha),\alpha}
+\left(E_{\kappa(\alpha)}
+\bigl(\pi_{\kappa(\alpha)}(x),\pi_{\kappa(\alpha)}(y)\bigr)\right).
+$$
+保幂指标之间的过渡映射保持有限幂运算：在两个输入类中分别取自然数代表即可验证。结合 $\kappa$ 的保序性，上式的输出坐标相容，因此定义了 $K_I$ 中的点。三种运算的每个输出坐标都由两个有限输入坐标决定，故对积拓扑联合连续；它们在自然数像上分别等于原来的加法、乘法与幂。$\iota_I(\mathbb{N})^2$ 稠密而目标 Hausdorff，故每种联合连续延拓唯一。通过 $\Phi$ 搬运即得 $K_J$ 上的相同延拓；唯一性保证比较同胚保持三种运算。
+
+这里幂的因子化只使用
+$$
+a\mathrel{R_{\kappa(\alpha)}}a'
+\quad \land\quad b\mathrel{R_{\kappa(\alpha)}}b'
+\quad\Longrightarrow\quad
+q_\alpha(a^b)=q_\alpha((a')^{b'}).
+$$
+它不蕴含 $R_\alpha$ 本身保幂。例如 $\alpha=(0,2)$ 时，两个输入对 $(0,0)$、$(0,2)$ 在同层的两个槽位分别不可区分，却有 $0^0=1$、$0^2=0$，输出奇偶不同；而 $\kappa(0,2)=(1,2)$ 提供了足够的较细输入。这也与[《递归关系观察》第 11.3 条](https://raw.githubusercontent.com/the-omega-institute/trureturing/d75daccad7efe749379873a4b5f8dbba95a862f9/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 的零指数分离一致。证毕。
+
+**定义 14.0b（逆向运算、严格总响应与目标拓扑）。** 以下取 $K=K_I$，并通过定理 14.1 的同胚识别另一完成，记 $\iota=\iota_I$。定义截断减法
+$$
+F(n,m)=\max\{n-m,0\}.
+$$
+令
+$$
+K^\perp=\{\perp\}\sqcup\operatorname{ok}(K)
+$$
+取拓扑不交并，其中 $\operatorname{ok}:K\to\operatorname{ok}(K)$ 为同胚；两个分量都开闭，且 $\perp$ 为孤立点。严格部分减法的总响应定义为
+$$
+D(n,m)=
+\begin{cases}
+\operatorname{ok}(\iota(n-m)),&n\ge m,\\
+\perp,&n<m.
+\end{cases}
+$$
+其延拓要求在整个 $K^2$ 上定义，并与所有实际自然数输入的成功或失败响应相符。特别地，$\operatorname{ok}(\iota(0))\ne\perp$。
+
+有限严格输出空间与投影定义为
+$$
+Q_\alpha^\perp=\{\perp\}\sqcup\operatorname{ok}(Q_\alpha),
+\qquad
+\pi_\alpha^\perp(\perp)=\perp,
+\qquad
+\pi_\alpha^\perp(\operatorname{ok}(x))
+=\operatorname{ok}(\pi_\alpha(x)).
+$$
+所谓分别连续延拓，是指每个固定 $x\in K$ 的第二槽切片以及每个固定 $y\in K$ 的第一槽切片都连续；这里固定参数遍历整个完成，不限于实际自然数像。
+
+**定理 14.2（减法的有限逃逸、实际参数切片与分别连续性的障碍）。** 对每个非平凡输出指标 $\alpha\in I\setminus\{(0,1)\}$，都有
+$$
+\forall\beta,\gamma\in I\quad \exists n,n',m,m'\in\mathbb{N},\quad
+n\mathrel{R_\beta}n'
+\quad \land\quad m\mathrel{R_\gamma}m'
+\quad \land\quad q_\alpha(F(n,m))\ne q_\alpha(F(n',m')).
+$$
+对于 $\alpha=(0,1)$，截断减法的输出读数恒定，这是唯一例外。严格总响应则对每个输出指标，包括 $(0,1)$，都有
+$$
+\forall\alpha\in I\quad \forall\beta,\gamma\in I\quad \exists n,n',m,m'\in\mathbb{N},\quad
+n\mathrel{R_\beta}n'
+\quad \land\quad m\mathrel{R_\gamma}m'
+\quad \land\pi_\alpha^\perp(D(n,m))\ne\pi_\alpha^\perp(D(n',m')).
+$$
+因而不存在分别延拓 $\iota\circ F$ 与 $D$ 的联合连续映射
+$$
+K^2\longrightarrow K,
+\qquad
+K^2\longrightarrow K^\perp.
+$$
+这些失败结论在仅采用保幂输入精度的系统中仍成立。
+
+然而，对每个固定实际参数 $c\in\mathbb{N}$，以下四个一元映射都具有唯一连续延拓：
+$$
+n\longmapsto\iota(F(n,c)),
+\qquad
+m\longmapsto\iota(F(c,m)),
+$$
+$$
+n\longmapsto D(n,c),
+\qquad
+m\longmapsto D(c,m).
+$$
+对于指定输出指标 $\alpha=(t,p)$，第一槽变化的两个映射可使用输入精度 $(t+c,p)$；第二槽变化的两个映射可使用输入精度 $(c+1,1)$。在 $J$ 中，把这两个指标分别替换为其 $\kappa$ 细化仍足够。
+
+尽管上述所有实际参数切片都能延拓，两个二元响应均不存在定义于整个 $K^2$ 的分别连续延拓。具体地，令 $s_k=k!$，则存在
+$$
+\omega=\lim_{k\to\infty}\iota(s_k)\ne\iota(0).
+$$
+记
+$$
+f_{k,l}=\iota(F(s_k,s_l)),
+\qquad
+d_{k,l}=D(s_k,s_l).
+$$
+下面每个内层与外层极限都存在，但
+$$
+\lim_{l\to\infty}\lim_{k\to\infty}f_{k,l}=\omega,
+\qquad
+\lim_{k\to\infty}\lim_{l\to\infty}f_{k,l}=\iota(0),
+$$
+$$
+\lim_{l\to\infty}\lim_{k\to\infty}d_{k,l}=\operatorname{ok}(\omega),
+\qquad
+\lim_{k\to\infty}\lim_{l\to\infty}d_{k,l}=\perp.
+$$
+
+**证明。** 首先明确有限因子化所使用的目标。给各 $Q_\alpha^\perp$ 的过渡映射保留失败标签，并在成功分量使用 $b_{\beta\alpha}$。一个相容线程的所有坐标具有同一成功或失败标签：任意两个坐标可提升到共同更细坐标，而过渡映射不改变标签。因此全失败线程唯一；全成功线程恰对应一个 $K$ 中的点。逐坐标映射给出
+$$
+K^\perp\cong\varprojlim_{\alpha\in I}Q_\alpha^\perp,
+$$
+且两边的成功、失败分量都是开闭集，故这正是所指定的不交并拓扑。
+
+对 $H=\iota\circ F$ 或 $H=D$，分别令 $r_\alpha=\pi_\alpha$ 或 $r_\alpha=\pi_\alpha^\perp$。把[《递归关系观察》第 4.4 条](https://raw.githubusercontent.com/the-omega-institute/trureturing/d75daccad7efe749379873a4b5f8dbba95a862f9/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 应用于共同共尾塔的乘积观察，联合连续延拓存在的充要条件是
+$$
+\forall\alpha\in I\quad \exists\beta,\gamma\in I\quad
+\forall n,n',m,m'\in\mathbb{N},\quad
+\bigl(n\mathrel{R_\beta}n'\quad \land\quad m\mathrel{R_\gamma}m'\bigr)
+\Longrightarrow
+r_\alpha(H(n,m))=r_\alpha(H(n',m')).
+$$
+允许两个输入精度不同不改变该判据，因为可将二者同时提升到一个共同共尾塔层。必要性也直接来自紧致性：连续的有限输出读数有有限个常值柱邻域覆盖，两个槽位分别取这些柱邻域涉及指标的共同细化，即得到统一输入精度。这里有限开闭覆盖可在单个更细逆极限层实现，亦见 [Stacks Project 引理 5.22.4](https://stacks.math.columbia.edu/tag/08ZW)。
+
+固定输入指标 $\beta=(u,v)$、$\gamma=(w,z)$，取 $A\ge\max\{u,w\}$。先设截断减法的输出指标 $\alpha=(t,p)$ 满足 $t\ge1$。令 $M=\operatorname{lcm}(v,z)$，比较
+$$
+(n,m)=(A,A),
+\qquad
+(n',m')=(A+M,A).
+$$
+两个输入槽分别具有相同的指定读数，而截断减法的结果分别为 $0$ 与 $M$。由于 $M>0$ 且 $0<t$，$0$ 是 $R_{t,p}$ 的单元素类，故两个输出读数不同。
+
+若 $t=0$、$p>1$，令
+$$
+M=2\operatorname{lcm}(v,z,p),
+$$
+并比较
+$$
+(n,m)=(A,A+1),
+\qquad
+(n',m')=(A+M,A+1).
+$$
+两个槽位的输入读数仍分别相同；输出为 $0$ 与 $M-1$，而
+$$
+M-1\equiv-1\not\equiv0\pmod p.
+$$
+这证明每个非平凡截断减法输出层的全输入精度逃逸。对于 $(0,1)$，$Q_{0,1}$ 只有一点，输出当然恒定。
+
+对严格总响应，令 $M=\operatorname{lcm}(v,z)$，比较
+$$
+(n,m)=(A,A),
+\qquad
+(n',m')=(A,A+M).
+$$
+第一槽完全相同，第二槽在 $R_\gamma$ 下相关；两个响应却为
+$$
+D(A,A)=\operatorname{ok}(\iota(0)),
+\qquad
+D(A,A+M)=\perp.
+$$
+所有 $Q_\alpha^\perp$ 都保留这个区别，即使 $Q_\alpha$ 本身只有一点。因此严格响应在每个输出层都有所断言的逃逸。由有限因子化判据，两个联合连续延拓都不存在。反例对全部 $\beta,\gamma\in I$ 成立，自然也对 $J$ 中的输入精度成立。
+
+现在固定实际参数 $c$。若
+$$
+n\mathrel{R_{t+c,p}}n',
+$$
+则或者 $n=n'$，或者两者都不小于 $t+c\ge c$，且模 $p$ 同余。后一种情形中，两次减法均成功，差值均不小于 $t$ 且模 $p$ 同余。因此 $(t+c,p)$ 同时决定指定层的截断结果和严格响应；可能失败的输入 $n<c$ 在此精度下不会与不同输入混同。
+
+若变化的是第二槽，则 $R_{c+1,1}$ 将 $0,1,\ldots,c$ 分别保留为单元素类，并把所有 $m>c$ 放入同一尾类。在单元素类上结果完全确定；在尾类上，截断结果恒为 $0$，严格响应恒为 $\perp$。特别地，$m=c$ 的成功零值不会与 $m>c$ 的失败混同。于是对每个有限输出层都有一个足够的一元输入精度，第 4.4 条给出四种连续延拓；自然数像稠密且相应目标 Hausdorff，故延拓唯一。进一步细化输入不会破坏因子化，所以 $\kappa$ 替换同样有效。
+
+最后证明分别连续延拓的障碍。在 profinite 半群中，阶乘幂序列收敛的标准事实见 [Kyriakoglou–Perrin，*Profinite semigroups*，arXiv:1703.10088v1，第 5.5 节](https://arxiv.org/html/1703.10088v1)；以下直接给出本处所需、同时包含固定自然数偏移的坐标证明。
+
+对 $\alpha=(t,p)$，记 $\tau_\alpha(\bar r)$ 为其尾部中模 $p$ 剩余类 $\bar r$ 所对应的商类。固定 $c\in\mathbb{N}$。当 $k$ 足够大时，$p\mid k!$ 且 $k!-c\ge t$，所以
+$$
+q_\alpha(F(k!,c))=\tau_\alpha(\overline{-c}).
+$$
+因此每个有限坐标最终恒定；这些最终坐标相容，因为过渡等式在原序列的每一项上成立。于是存在
+$$
+\omega_c=\lim_{k\to\infty}\iota(F(k!,c))\in K,
+\qquad
+\pi_\alpha(\omega_c)=\tau_\alpha(\overline{-c}).
+$$
+取 $c=0$ 得 $\omega=\omega_0=\lim_k\iota(k!)$。在指标 $(1,1)$ 上，$\omega$ 的坐标是正数尾类，而 $\iota(0)$ 的坐标是零的单元素类，故 $\omega\ne\iota(0)$。
+
+再令 $c=s_l=l!$。对每个固定输出周期 $p$，当 $l$ 足够大时 $p\mid s_l$，所以
+$$
+\pi_\alpha(\omega_{s_l})
+=\tau_\alpha(\overline{-s_l})
+=\tau_\alpha(\bar0)
+=\pi_\alpha(\omega).
+$$
+因而 $\omega_{s_l}\to\omega$。固定 $l$ 后，让 $k\to\infty$，得到
+$$
+\lim_{k\to\infty}f_{k,l}=\omega_{s_l},
+\qquad
+\lim_{k\to\infty}d_{k,l}=\operatorname{ok}(\omega_{s_l}),
+$$
+因为此时最终都有 $s_k\ge s_l$。再令 $l\to\infty$，得到第一种顺序的两个极限。
+
+另一方面，固定 $k$ 后，当 $l$ 足够大时 $s_l>s_k$，所以
+$$
+f_{k,l}=\iota(0),
+\qquad
+d_{k,l}=\perp.
+$$
+先令 $l\to\infty$ 再令 $k\to\infty$，得到第二种顺序的两个极限。以上全部收敛都发生在明确指定的 $K$ 或 $K^\perp$ 拓扑中。
+
+若存在任一响应的分别连续延拓 $\widetilde H$，由于两个输入序列都收敛到 $\omega$，先对一个固定输入使用切片连续性，再对另一个输入使用切片连续性，必有
+$$
+\lim_{l\to\infty}\lim_{k\to\infty}
+\widetilde H(\iota(s_k),\iota(s_l))
+=\widetilde H(\omega,\omega)
+=\lim_{k\to\infty}\lim_{l\to\infty}
+\widetilde H(\iota(s_k),\iota(s_l)).
+$$
+对截断减法，这将强制 $\omega=\iota(0)$；对严格响应，这将强制 $\operatorname{ok}(\omega)=\perp$。二者均矛盾，故分别连续延拓也不存在。证毕。
+
+## 追加锚（本行以下为增补区）
+## 15. 连续辅助观察：有限覆盖标签与对跖商的欧氏障碍
+
+**定义 15.0（覆盖、纤维分离与三种辅助量）。** 记 $\mathbb N_0=\{0,1,2,\ldots\}$，$[N]=\{1,\ldots,N\}$，其中 $[0]=\varnothing$，并给每个 $[N]$ 离散拓扑。设 $X,B$ 为 Hausdorff 空间，$B\ne\varnothing$，$d\ge1$ 为固定整数。称连续满射 $q:X\to B$ 为固定 $d$ 页覆盖，若每个 $b\in B$ 都有开邻域 $U$，使
+$$
+q^{-1}(U)=\bigsqcup_{i=1}^{d}V_i,
+\qquad
+q|_{V_i}:V_i\longrightarrow U
+$$
+是同胚，且各 $V_i$ 在 $X$ 中开。特别地，每条纤维恰有 $d$ 个点。本节不预设 $X$ 或 $B$ 连通。
+
+对映射 $r:X\to Y$，称 $r$ 分离 $q$ 的纤维，若
+$$
+q(x)=q(y)\ \land\ r(x)=r(y)\quad\Longrightarrow\quad x=y.
+$$
+这等价于联合映射
+$$
+J_r=(q,r):X\longrightarrow B\times Y
+$$
+单射。这里对联合观察 $J_r$ 应用定理 2.2，目标取 $\operatorname{id}_X$；要求恢复的是点本身，而不是只恢复某个较粗目标。覆盖在 $B$ 上的平凡化，是满足 $\operatorname{pr}_B\circ H=q$ 的同胚 $H:X\to B\times[d]$。连续截面是满足 $q\circ s=\operatorname{id}_B$ 的连续映射 $s:B\to X$。
+
+定义
+$$
+\lambda_{\mathrm{set}}(q)
+=
+\min\{N\in\mathbb N_0:\exists r:X\to[N],\ J_r\text{ 单射}\},
+$$
+$$
+\lambda_{\mathrm{disc}}(q)
+=
+\min\{N\in\mathbb N_0:\exists\text{ 连续 }r:X\to[N],\ J_r\text{ 单射}\},
+$$
+$$
+\mu_{\mathbb R}(q)
+=
+\min\{m\in\mathbb N_0:\exists\text{ 连续 }r:X\to\mathbb R^m,\ J_r\text{ 单射}\}.
+$$
+候选集合为空时，相应值约定为 $\infty$；$\mathbb R^0$ 是单点空间。第一项不要求标签连续，第二项要求离散标签连续，第三项最小化固定商映射下连续欧氏辅助读数的坐标数。
+
+覆盖的局部页定义参考：Allen Hatcher，*Algebraic Topology*，§1.3，第 56 页，[原书](https://pi.math.cornell.edu/~hatcher/AT/AT.pdf)。
+
+**定理 15.1（恰好一页一个标签的精确等价）。** 对定义 15.0 的固定 $d$ 页覆盖，以下三种数据相互确定：
+
+（甲）连续映射 $r:X\to[d]$，在每条 $q$-纤维上单射。
+
+（乙）在 $B$ 上的平凡化 $H:X\to B\times[d]$。
+
+（丙）有序的 $d$ 条连续截面 $s_1,\ldots,s_d$，满足对每个 $b\in B$，
+$$
+s_i(b)\ne s_j(b)\quad(i\ne j),
+\qquad
+q^{-1}(b)=\{s_1(b),\ldots,s_d(b)\}.
+$$
+对应关系为
+$$
+H(x)=(q(x),r(x)),
+\qquad
+s_i(b)=H^{-1}(b,i),
+\qquad
+r(s_i(b))=i.
+$$
+因此，对给定的 $r$，逐纤维单射恰好保证 $(q,r)$ 本身是平凡化，而不只是集合双射。此结论包括 $d=1$，不要求连通性。
+
+**证明。** 先证覆盖映射 $q$ 是开映射。若 $O\subseteq X$ 开，在任意均匀覆盖邻域 $U$ 上，
+$$
+q(O)\cap U=\bigcup_{i=1}^{d}q(O\cap V_i),
+$$
+右侧在 $U$ 中开，故 $q(O)$ 在 $B$ 中开。
+
+给定甲，令 $X_i=r^{-1}(\{i\})$。这些集合开闭。每条纤维有 $d$ 个点，标签也恰有 $d$ 个，故逐纤维单射实际是逐纤维双射。因此
+$$
+q_i=q|_{X_i}:X_i\longrightarrow B
+$$
+是连续双射。由于 $X_i$ 开且 $q$ 开，$q_i$ 也是开映射，因而是同胚。令 $s_i=q_i^{-1}$，便得到丙；同时 $H=(q,r)$ 的逆映射在每个开片 $B\times\{i\}$ 上为 $(b,i)\mapsto s_i(b)$，故连续，得到乙。
+
+给定乙，公式 $s_i(b)=H^{-1}(b,i)$ 直接给出丙。为从丙恢复甲，须验证截面像确实开，而不能只用集合分解。取 $x=s_i(b)$，选取含 $b$ 的均匀覆盖邻域 $U$ 及含 $x$ 的局部页 $V$。集合
+$$
+W=U\cap s_i^{-1}(V)
+$$
+是含 $b$ 的开邻域。由截面方程和 $q|_V$ 的单射性，
+$$
+s_i(W)=V\cap q^{-1}(W),
+$$
+故 $s_i(W)$ 在 $X$ 中开。于是每个 $s_i(B)$ 都开；其补集是其余截面像的并，故也开。由穷尽性与互异性定义 $r(s_i(b))=i$，每个单点的原像均开，所以 $r$ 连续，并且逐纤维单射。
+
+上述公式还说明三次构造彼此互逆。若 $d=1$，同一证明表明 $q$ 是同胚，唯一标签与唯一截面分别为常值标签与 $q^{-1}$。证毕。
+
+**定理 15.2（增加有限离散标签不能绕过平凡化障碍）。** 对定义 15.0 的覆盖及任意 $N\in\mathbb N_0$，
+$$
+\exists\text{ 连续 }r:X\to[N]\text{ 分离 }q\text{ 的纤维}
+\quad\Longleftrightarrow\quad
+N\ge d\ \land\ q\text{ 在 }B\text{ 上平凡}.
+$$
+特别地，
+$$
+\lambda_{\mathrm{disc}}(q)=
+\begin{cases}
+d,&q\text{ 平凡},\\
+\infty,&q\text{ 不平凡}.
+\end{cases}
+$$
+此处不需要 $B$ 连通。
+
+更精确地，对任何这样的 $r$，令
+$$
+S(b)=\{r(x):q(x)=b\}\subseteq[N].
+$$
+则 $S(b)$ 恒有 $d$ 个元素，且 $b\mapsto S(b)$ 局部常值。联合映射 $(q,r)$ 是到开闭子空间
+$$
+E_r=\{(b,a)\in B\times[N]:a\in S(b)\}
+$$
+的同胚。若 $N>d$，则 $E_r\ne B\times[N]$；迫使平凡化的是可以把标签连续压缩到 $d$ 个，而不是原联合映射满射到较大乘积。
+
+**证明。** 纤维非空且恰有 $d$ 个点，逐纤维单射首先给出 $N\ge d$。固定 $b_0\in B$，取均匀覆盖邻域 $U$，记各局部逆分支为 $t_i:U\to V_i$。每个 $r\circ t_i$ 连续且值域离散，因此
+$$
+W=\bigcap_{i=1}^{d}
+(r\circ t_i)^{-1}\bigl(\{r(t_i(b_0))\}\bigr)
+$$
+是 $U$ 中含 $b_0$ 的开邻域。在 $W$ 上，每条局部页的标签都恒定，故 $S$ 恒定。这里仅取有限次交，没有使用局部连通性或连通性。
+
+按 $[N]$ 的通常次序定义
+$$
+\rho(x)
+=
+1+\#\{a\in S(q(x)):a<r(x)\}.
+$$
+对每条纤维，$\rho$ 就是其 $d$ 个不同标签的次序排名，故取遍 $[d]$ 且单射。在刚构造的 $W$ 上，$\rho$ 在每条局部页上恒定；这些局部页是开集并覆盖 $X$，所以 $\rho:X\to[d]$ 连续。由定理 15.1，$(q,\rho)$ 是平凡化。反之，平凡化提供连续的 $d$ 值标签，再与任意单射 $[d]\to[N]$ 复合即可。
+
+在同一个 $W$ 上，
+$$
+E_r\cap(W\times[N])=W\times S(b_0).
+$$
+因此 $E_r$ 及其补集都局部为开集，故 $E_r$ 开闭。映射 $(q,r)$ 在 $q^{-1}(W)$ 上把不同局部页同胚地送到不同的片 $W\times\{a\}$，所以其逆映射局部连续，进而在 $E_r$ 上连续。若 $N>d$，每个 $b$ 上都有未使用标签，故 $E_r$ 是真子集。
+
+若 $B$ 连通，局部常值映射 $S$ 进一步必为常值，此时可以固定一个 $d$ 元子集统一重编号；平凡化结论并不需要这一步。无连通性时，排名一般依赖 $(q(x),r(x))$，不能断言只对 $r(x)$ 作一个固定后处理便可压缩。对此有明确反例：令
+$$
+B=\bigl\{\{1,2\},\{1,3\},\{2,3\}\bigr\},
+\qquad
+X=\{(A,a):A\in B,\ a\in A\},
+$$
+两者都取离散拓扑，令 $q(A,a)=A$、$r(A,a)=a$。这是两页覆盖及连续三值分离标签。任意函数 $\varphi:[3]\to[2]$ 都把某两个不同元素送到同一值，而这两个元素恰构成某条纤维的标签集，故 $\varphi\circ r$ 不分离该纤维。上述依赖 $q$ 的排名仍给出连续二值分离标签。证毕。
+
+**命题 15.3（一个一般覆盖截面只保证劈出一页）。** 对定义 15.0 的覆盖，若存在连续截面 $s$，则 $s(B)$ 在 $X$ 中开闭，且
+$$
+q|_{s(B)}:s(B)\longrightarrow B
+$$
+是同胚。若 $d\ge2$，则限制映射
+$$
+q|_{X\setminus s(B)}:X\setminus s(B)\longrightarrow B
+$$
+是固定 $d-1$ 页覆盖。因此两页覆盖有一个连续截面当且仅当平凡，但一般有限覆盖不能把一个截面等同于完全平凡化；即使基空间连通也不能。
+
+**证明。** 截面像开及限制映射为同胚，已由定理 15.1 证明中的局部论证给出，该论证不需要其他截面。固定 $b\in B$，选取均匀覆盖邻域 $U$，把含 $s(b)$ 的局部页记为 $V_1$，并缩小到
+$$
+W=U\cap s^{-1}(V_1).
+$$
+在 $W$ 上，$s$ 恰为第一局部逆分支，所以
+$$
+q^{-1}(W)\setminus s(B)
+=
+\bigsqcup_{i=2}^{d}\bigl(V_i\cap q^{-1}(W)\bigr).
+$$
+这既证明补集开，也证明它是固定 $d-1$ 页覆盖。若 $d=2$，补集上的一页覆盖是同胚，其逆给出第二条截面，再用定理 15.1 即得平凡化。
+
+为证明最后的否定结论，取两个圆周的拓扑不交并
+$$
+X=S^1\sqcup S^1,\qquad B=S^1,
+$$
+并令第一份上的映射为 $z\mapsto z$，第二份上的映射为 $z\mapsto z^2$。小圆弧有两条连续平方根分支，故这是三页覆盖。第一份圆周的包含给出连续截面。然而若它平凡，定理 15.1 将给出连续三值分离标签。第二份圆周连通，所以该标签在第二份上必为常值；但其中 $z$ 与 $-z$ 是同一纤维中的不同点，矛盾。证毕。
+
+圆周幂映射的覆盖结构参考：Hatcher，*Algebraic Topology*，§1.3，第 56 页，[原书](https://pi.math.cornell.edu/~hatcher/AT/AT.pdf)。
+
+**命题 15.4（紧致自由对合的差映射桥）。** 设 $K\ne\varnothing$ 为紧致 Hausdorff 空间，$\tau:K\to K$ 连续，满足
+$$
+\tau^2=\operatorname{id}_K,
+\qquad
+\tau(x)\ne x\quad(x\in K).
+$$
+令 $Q=K/\langle\tau\rangle$ 取商拓扑，$q:K\to Q$ 为轨道商。则 $Q$ 紧致 Hausdorff，$q$ 是两页覆盖。
+
+对每个整数 $m\ge1$，以下存在性条件等价：存在连续纤维分离读数 $r:K\to\mathbb R^m$；存在连续映射 $f:K\to\mathbb R^m\setminus\{0\}$ 满足 $f(\tau x)=-f(x)$；存在连续映射 $u:K\to S^{m-1}$ 满足 $u(\tau x)=-u(x)$。其中球面取标准欧氏单位球面。
+
+对给定的连续 $r$，有精确判据
+$$
+(q,r)\text{ 单射}
+\quad\Longleftrightarrow\quad
+\Delta_r(x):=r(x)-r(\tau x)\ne0\quad(\forall x\in K).
+$$
+满足判据时，
+$$
+u_r(x)=\frac{\Delta_r(x)}{\|\Delta_r(x)\|}
+$$
+是上述奇映射，而且
+$$
+\min_{x\in K}\|\Delta_r(x)\|>0.
+$$
+此时 $(q,r)$ 是到 $Q\times\mathbb R^m$ 中闭子空间的拓扑嵌入。零维欧氏目标不可能分离纤维；一维欧氏分离读数存在，当且仅当 $q$ 平凡，也当且仅当 $q$ 有一个连续截面。
+
+**证明。** 由 $\tau^2=\operatorname{id}_K$，$\tau$ 是同胚。对开集 $V\subseteq K$，
+$$
+q^{-1}(q(V))=V\cup\tau(V)
+$$
+开，故商映射 $q$ 是开映射。对任意 $x$，用 Hausdorff 性选取分别包含 $x,\tau x$ 的不交开集 $A,C$。令 $V=A\cap\tau^{-1}(C)$，则 $x\in V$ 且 $V\cap\tau(V)=\varnothing$。于是
+$$
+q^{-1}(q(V))=V\sqcup\tau(V),
+$$
+而两片各自通过 $q$ 连续、开且双射地映到 $q(V)$，所以都是同胚。这证明两页覆盖性质。
+
+不同轨道 $O,P$ 是互不相交的有限集。对每个 $a\in O$、$b\in P$，取包含相应点的不交开集 $A_{ab},C_{ab}$。令
+$$
+A_0=\bigcup_{a\in O}\bigcap_{b\in P}A_{ab},
+\qquad
+C_0=\bigcup_{b\in P}\bigcap_{a\in O}C_{ab}.
+$$
+它们分别包含 $O,P$，都是开集且互不相交。将它们替换为
+$$
+A_0\cap\tau(A_0),
+\qquad
+C_0\cap\tau(C_0),
+$$
+得到仍包含相应轨道的不交饱和开集；它们在商中的像是不交开邻域，故 $Q$ Hausdorff。它又是紧致空间 $K$ 的连续像，所以紧致。
+
+商纤维恰为 $\{x,\tau x\}$，且两点不同。因此联合单射恰好要求 $r(x)\ne r(\tau x)$，即差映射处处非零。直接计算得到
+$$
+\Delta_r(\tau x)
+=
+r(\tau x)-r(\tau^2x)
+=
+-\Delta_r(x).
+$$
+非零差映射连续，除以其连续正范数就得到连续奇映射 $u_r$。反过来，若 $f$ 是处处非零的连续奇映射，则把 $f$ 本身作为读数，有
+$$
+f(x)-f(\tau x)=2f(x)\ne0.
+$$
+而球面值奇映射本来就处处非零。这证明三种存在性条件等价；并未假设原读数 $r$ 是奇映射。
+
+连续正函数 $x\mapsto\|\Delta_r(x)\|$ 在非空紧致空间上取得最小值，该值不能为零。又因 $Q\times\mathbb R^m$ Hausdorff，任意闭集 $F\subseteq K$ 都紧致，其像 $(q,r)(F)$ 紧致而闭。所以联合映射在其实际像上的连续逆存在，且整个实际像紧致而闭，得到所述嵌入。
+
+当 $m=0$ 时，读数只有一个值，不能区分任意一对 $x,\tau x$。当 $m=1$ 时，归一化的奇映射取值于离散两点集 $S^0=\{-1,1\}$，因而由定理 15.1 给出平凡化。反向地，任何平凡化的二值标签在每条二点纤维上取两个不同值，将它们分别记为 $-1,1$，即得连续奇实值读数。若只给一个连续截面 $s$，则 $s$ 与 $\tau\circ s$ 连续、逐点互异并穷尽纤维，仍由定理 15.1 得平凡化；平凡化当然给出截面。证毕。
+
+局部轨道商覆盖参考：Hatcher，*Algebraic Topology*，命题 1.40(a)，第 72 页，[原书](https://pi.math.cornell.edu/~hatcher/AT/AT.pdf)。差映射与归一化参考：Jiří Matoušek，*Using the Borsuk–Ulam Theorem*，§2.1，第 24 页，[第 2 章样章](https://beckassets.blob.core.windows.net/product/readingsample/250866/9783540003625_excerpt_001.pdf)。二值余坐标与截面的对应亦是《QUANTITATIVE_DIAGONALIZATION_OBSERVER_COMPLETION》[定理 5.1](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/QUANTITATIVE_DIAGONALIZATION_OBSERVER_COMPLETION.md)的两元素群特例；上面的证明只使用本条明列的假设。
+
+**定理 15.5（对跖商的集合二值补充与连续离散障碍）。** 对任意 $n\in\mathbb N_0$，令
+$$
+S^n=\left\{(x_0,\ldots,x_n)\in\mathbb R^{n+1}:
+\sum_{i=0}^{n}x_i^2=1\right\},
+\qquad
+q_n:S^n\longrightarrow\mathbb{RP}^n=S^n/(x\sim-x).
+$$
+则 $q_n$ 是紧致 Hausdorff 空间之间的两页覆盖，并且
+$$
+\lambda_{\mathrm{set}}(q_n)=2.
+$$
+当 $n\ge1$ 时，不存在到任何离散空间的连续纤维分离读数，因而
+$$
+\lambda_{\mathrm{disc}}(q_n)=\infty,
+$$
+且 $q_n$ 无连续截面、不平凡。当 $n=0$ 时，
+$$
+S^0=\{-1,1\},
+\qquad
+\mathbb{RP}^0=\{*\},
+\qquad
+\lambda_{\mathrm{disc}}(q_0)=2,
+$$
+并且 $q_0$ 平凡。
+
+**证明。** 对合 $\tau(x)=-x$ 连续且自由，因为单位向量不可能等于其负向量。球面非空、紧致 Hausdorff，故命题 15.4 给出商空间性质和两页覆盖。
+
+对于任意 $x\in S^n$，定义
+$$
+k(x)=\min\{i\in\{0,\ldots,n\}:x_i\ne0\},
+\qquad
+\varepsilon(x)=
+\begin{cases}
+1,&x_{k(x)}>0,\\
+-1,&x_{k(x)}<0.
+\end{cases}
+$$
+至少一个坐标非零，所以定义总是有意义。显然 $k(-x)=k(x)$ 且 $\varepsilon(-x)=-\varepsilon(x)$。将 $1,-1$ 重编号为 $1,2$，得到分离每条纤维的二值集合标签。另一方面，任何一条纤维都有两个不同点，故少于两个标签不可能分离它。这证明集合标签数恰为二，并且不需要从每条纤维任意选择代表。事实上还得到显式集合截面
+$$
+s([x])=\varepsilon(x)x,
+$$
+因为右侧在把 $x$ 替换成 $-x$ 时不变。
+
+当 $n\ge1$ 时，$S^n$ 道路连通：若 $x,y$ 不互为对跖点，规范化线段
+$$
+t\longmapsto
+\frac{(1-t)x+ty}{\|(1-t)x+ty\|},
+\qquad 0\le t\le1,
+$$
+给出连接二者的道路；若 $y=-x$，在 $\mathbb R^{n+1}$ 中选一个不与 $x$ 共线的单位向量，经过它连接两段上述道路。连续映射把连通空间送到连通子空间，而离散空间的非空连通子空间只能是单点。因此任何连续离散读数都恒定，不能区分 $x$ 与 $-x$。由定理 15.1 和命题 15.3，两页覆盖的平凡化及连续截面也均不存在。特别地，刚构造的集合二值标签与集合截面在这些维数下不能是连续的。
+
+当 $n=0$ 时，定义域就是离散两点集，商是单点。标签 $\varepsilon(x)=x$ 连续并分离该纤维，且 $q_0$ 显然是单点基空间上的平凡两页覆盖。证毕。
+
+**定理 15.6（对跖商的最小连续欧氏辅助坐标数）。** 对任意 $n,m\in\mathbb N_0$，
+$$
+\exists\text{ 连续 }r:S^n\to\mathbb R^m
+\text{ 使 }(q_n,r)\text{ 单射}
+\quad\Longleftrightarrow\quad
+m\ge n+1.
+$$
+因此
+$$
+\mu_{\mathbb R}(q_n)=n+1,
+$$
+且满足单射条件的每个联合映射，都是到 $\mathbb{RP}^n\times\mathbb R^m$ 中闭子空间的拓扑嵌入。结合定理 15.5，
+$$
+\bigl(\lambda_{\mathrm{set}}(q_n),
+\lambda_{\mathrm{disc}}(q_n),
+\mu_{\mathbb R}(q_n)\bigr)
+=
+\begin{cases}
+(2,2,1),&n=0,\\
+(2,\infty,n+1),&n\ge1.
+\end{cases}
+$$
+等价地，对 $m\ge1$，存在连续奇映射 $S^n\to S^{m-1}$ 当且仅当 $m\ge n+1$。
+
+**证明。** 下界使用 Borsuk–Ulam 定理的如下形式：对每个整数 $k\ge0$ 和每个连续映射 $F:S^k\to\mathbb R^k$，存在 $x\in S^k$ 使 $F(x)=F(-x)$。这里不要求 $F$ 为奇映射。参考：Matoušek，*Using the Borsuk–Ulam Theorem*，定理 2.1.1 的 BU1a，第 23 页，及第 24 页与 BU1b 的等价证明，[第 2 章样章](https://beckassets.blob.core.windows.net/product/readingsample/250866/9783540003625_excerpt_001.pdf)；亦见 Hatcher，*Algebraic Topology*，推论 2B.7，第 176 页，[原书](https://pi.math.cornell.edu/~hatcher/AT/AT.pdf)。
+
+首先，$m=0$ 时读数恒定，任意对跖点仍有相同联合读数，所以对所有 $n\ge0$ 都不可能单射。其次，设 $n\ge1$ 且 $1\le m\le n$。对任意连续 $r:S^n\to\mathbb R^m$，补零得到连续映射
+$$
+\widetilde r:S^n\longrightarrow\mathbb R^n,
+\qquad
+\widetilde r(x)=\bigl(r(x),0_{\mathbb R^{n-m}}\bigr).
+$$
+当 $m=n$ 时这里就是原映射。Borsuk–Ulam 给出 $x$ 使
+$$
+\widetilde r(x)=\widetilde r(-x),
+$$
+于是 $r(x)=r(-x)$；同时 $q_n(x)=q_n(-x)$ 且 $x\ne-x$，所以联合映射不单射。这同时覆盖 $m=n$ 和 $m<n$，证明任何可行的 $m$ 都至少为 $n+1$。
+
+反向地，对 $m\ge n+1$，取
+$$
+r_m(x_0,\ldots,x_n)
+=
+\bigl(x_0,\ldots,x_n,0_{\mathbb R^{m-n-1}}\bigr).
+$$
+这是连续映射，并且
+$$
+r_m(-x)=-r_m(x),
+\qquad
+\|r_m(x)-r_m(-x)\|=2.
+$$
+因此它分离每条对跖纤维；在最小维数 $m=n+1$ 时就是标准包含 $r(x)=x$。联合映射的闭嵌入结论由命题 15.4 的紧致到 Hausdorff 论证得到。
+
+若 $n=0$，前面已单独排除 $m=0$，而 $r(x)=x\in\mathbb R$ 区分 $S^0$ 的两点，所以最小值确为一，不需要对负维球面作任何约定。最后，奇球面映射的存在性等价由命题 15.4 直接得到。证毕。
+
+**命题 15.7（圆周平方覆盖的精确对应）。** 将 $S^1$ 视为复平面的单位圆，令
+$$
+p:S^1\longrightarrow S^1,
+\qquad p(z)=z^2.
+$$
+映射
+$$
+h:\mathbb{RP}^1\longrightarrow S^1,
+\qquad h([z])=z^2
+$$
+是同胚，且 $p=h\circ q_1$。因此 $p$ 的集合标签数为二，不存在连续离散纤维分离标签，不存在连续全局截面，而连续欧氏辅助坐标数恰为二。一个达到上界的读数为
+$$
+r(z)=(\operatorname{Re}z,\operatorname{Im}z).
+$$
+
+**证明。** 平方在 $z$ 与 $-z$ 上取值相同，所以由商拓扑得到连续映射 $h$。若 $z^2=w^2$，则 $(z-w)(z+w)=0$，故 $w=z$ 或 $w=-z$，所以 $h$ 单射。每个单位复数写成 $e^{it}$ 后都有单位平方根 $e^{it/2}$，故 $h$ 满射。定义域紧致、值域 Hausdorff，因而这个连续双射是同胚。
+
+对任意辅助目标 $Y$ 及读数 $r:S^1\to Y$，
+$$
+(p,r)=(h\times\operatorname{id}_Y)\circ(q_1,r).
+$$
+故两种商下的纤维分离条件完全相同。截面也通过 $h$ 互相转换：若 $p\circ s=\operatorname{id}_{S^1}$，则 $s\circ h$ 是 $q_1$ 的截面；若 $q_1\circ t=\operatorname{id}_{\mathbb{RP}^1}$，则 $t\circ h^{-1}$ 是 $p$ 的截面。现在应用定理 15.5、15.6 即得全部结论，所列实部与虚部读数就是标准平面包含。证毕。
+
+## 追加锚（本行以下为增补区）

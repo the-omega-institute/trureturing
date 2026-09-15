@@ -1,0 +1,109 @@
+**证明。** 首先明确有限因子化所使用的目标。给各 $Q_\alpha^\perp$ 的过渡映射保留失败标签，并在成功分量使用 $b_{\beta\alpha}$。一个相容线程的所有坐标具有同一成功或失败标签：任意两个坐标可提升到共同更细坐标，而过渡映射不改变标签。因此全失败线程唯一；全成功线程恰对应一个 $K$ 中的点。逐坐标映射给出
+$$
+K^\perp\cong\varprojlim_{\alpha\in I}Q_\alpha^\perp,
+$$
+且两边的成功、失败分量都是开闭集，故这正是所指定的不交并拓扑。
+
+对 $H=\iota\circ F$ 或 $H=D$，分别令 $r_\alpha=\pi_\alpha$ 或 $r_\alpha=\pi_\alpha^\perp$。把[《递归关系观察》第 4.4 条](https://raw.githubusercontent.com/the-omega-institute/trureturing/d75daccad7efe749379873a4b5f8dbba95a862f9/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) 应用于共同共尾塔的乘积观察，联合连续延拓存在的充要条件是
+$$
+\forall\alpha\in I\quad \exists\beta,\gamma\in I\quad
+\forall n,n',m,m'\in\mathbb{N},\quad
+\bigl(n\mathrel{R_\beta}n'\quad \land\quad m\mathrel{R_\gamma}m'\bigr)
+\Longrightarrow
+r_\alpha(H(n,m))=r_\alpha(H(n',m')).
+$$
+允许两个输入精度不同不改变该判据，因为可将二者同时提升到一个共同共尾塔层。必要性也直接来自紧致性：连续的有限输出读数有有限个常值柱邻域覆盖，两个槽位分别取这些柱邻域涉及指标的共同细化，即得到统一输入精度。这里有限开闭覆盖可在单个更细逆极限层实现，亦见 [Stacks Project 引理 5.22.4](https://stacks.math.columbia.edu/tag/08ZW)。
+
+固定输入指标 $\beta=(u,v)$、$\gamma=(w,z)$，取 $A\ge\max\{u,w\}$。先设截断减法的输出指标 $\alpha=(t,p)$ 满足 $t\ge1$。令 $M=\operatorname{lcm}(v,z)$，比较
+$$
+(n,m)=(A,A),
+\qquad
+(n',m')=(A+M,A).
+$$
+两个输入槽分别具有相同的指定读数，而截断减法的结果分别为 $0$ 与 $M$。由于 $M>0$ 且 $0<t$，$0$ 是 $R_{t,p}$ 的单元素类，故两个输出读数不同。
+
+若 $t=0$、$p>1$，令
+$$
+M=2\operatorname{lcm}(v,z,p),
+$$
+并比较
+$$
+(n,m)=(A,A+1),
+\qquad
+(n',m')=(A+M,A+1).
+$$
+两个槽位的输入读数仍分别相同；输出为 $0$ 与 $M-1$，而
+$$
+M-1\equiv-1\not\equiv0\pmod p.
+$$
+这证明每个非平凡截断减法输出层的全输入精度逃逸。对于 $(0,1)$，$Q_{0,1}$ 只有一点，输出当然恒定。
+
+对严格总响应，令 $M=\operatorname{lcm}(v,z)$，比较
+$$
+(n,m)=(A,A),
+\qquad
+(n',m')=(A,A+M).
+$$
+第一槽完全相同，第二槽在 $R_\gamma$ 下相关；两个响应却为
+$$
+D(A,A)=\operatorname{ok}(\iota(0)),
+\qquad
+D(A,A+M)=\perp.
+$$
+所有 $Q_\alpha^\perp$ 都保留这个区别，即使 $Q_\alpha$ 本身只有一点。因此严格响应在每个输出层都有所断言的逃逸。由有限因子化判据，两个联合连续延拓都不存在。反例对全部 $\beta,\gamma\in I$ 成立，自然也对 $J$ 中的输入精度成立。
+
+现在固定实际参数 $c$。若
+$$
+n\mathrel{R_{t+c,p}}n',
+$$
+则或者 $n=n'$，或者两者都不小于 $t+c\ge c$，且模 $p$ 同余。后一种情形中，两次减法均成功，差值均不小于 $t$ 且模 $p$ 同余。因此 $(t+c,p)$ 同时决定指定层的截断结果和严格响应；可能失败的输入 $n<c$ 在此精度下不会与不同输入混同。
+
+若变化的是第二槽，则 $R_{c+1,1}$ 将 $0,1,\ldots,c$ 分别保留为单元素类，并把所有 $m>c$ 放入同一尾类。在单元素类上结果完全确定；在尾类上，截断结果恒为 $0$，严格响应恒为 $\perp$。特别地，$m=c$ 的成功零值不会与 $m>c$ 的失败混同。于是对每个有限输出层都有一个足够的一元输入精度，第 4.4 条给出四种连续延拓；自然数像稠密且相应目标 Hausdorff，故延拓唯一。进一步细化输入不会破坏因子化，所以 $\kappa$ 替换同样有效。
+
+最后证明分别连续延拓的障碍。在 profinite 半群中，阶乘幂序列收敛的标准事实见 [Kyriakoglou–Perrin，*Profinite semigroups*，arXiv:1703.10088v1，第 5.5 节](https://arxiv.org/html/1703.10088v1)；以下直接给出本处所需、同时包含固定自然数偏移的坐标证明。
+
+对 $\alpha=(t,p)$，记 $\tau_\alpha(\bar r)$ 为其尾部中模 $p$ 剩余类 $\bar r$ 所对应的商类。固定 $c\in\mathbb{N}$。当 $k$ 足够大时，$p\mid k!$ 且 $k!-c\ge t$，所以
+$$
+q_\alpha(F(k!,c))=\tau_\alpha(\overline{-c}).
+$$
+因此每个有限坐标最终恒定；这些最终坐标相容，因为过渡等式在原序列的每一项上成立。于是存在
+$$
+\omega_c=\lim_{k\to\infty}\iota(F(k!,c))\in K,
+\qquad
+\pi_\alpha(\omega_c)=\tau_\alpha(\overline{-c}).
+$$
+取 $c=0$ 得 $\omega=\omega_0=\lim_k\iota(k!)$。在指标 $(1,1)$ 上，$\omega$ 的坐标是正数尾类，而 $\iota(0)$ 的坐标是零的单元素类，故 $\omega\ne\iota(0)$。
+
+再令 $c=s_l=l!$。对每个固定输出周期 $p$，当 $l$ 足够大时 $p\mid s_l$，所以
+$$
+\pi_\alpha(\omega_{s_l})
+=\tau_\alpha(\overline{-s_l})
+=\tau_\alpha(\bar0)
+=\pi_\alpha(\omega).
+$$
+因而 $\omega_{s_l}\to\omega$。固定 $l$ 后，让 $k\to\infty$，得到
+$$
+\lim_{k\to\infty}f_{k,l}=\omega_{s_l},
+\qquad
+\lim_{k\to\infty}d_{k,l}=\operatorname{ok}(\omega_{s_l}),
+$$
+因为此时最终都有 $s_k\ge s_l$。再令 $l\to\infty$，得到第一种顺序的两个极限。
+
+另一方面，固定 $k$ 后，当 $l$ 足够大时 $s_l>s_k$，所以
+$$
+f_{k,l}=\iota(0),
+\qquad
+d_{k,l}=\perp.
+$$
+先令 $l\to\infty$ 再令 $k\to\infty$，得到第二种顺序的两个极限。以上全部收敛都发生在明确指定的 $K$ 或 $K^\perp$ 拓扑中。
+
+若存在任一响应的分别连续延拓 $\widetilde H$，由于两个输入序列都收敛到 $\omega$，先对一个固定输入使用切片连续性，再对另一个输入使用切片连续性，必有
+$$
+\lim_{l\to\infty}\lim_{k\to\infty}
+\widetilde H(\iota(s_k),\iota(s_l))
+=\widetilde H(\omega,\omega)
+=\lim_{k\to\infty}\lim_{l\to\infty}
+\widetilde H(\iota(s_k),\iota(s_l)).
+$$
+对截断减法，这将强制 $\omega=\iota(0)$；对严格响应，这将强制 $\operatorname{ok}(\omega)=\perp$。二者均矛盾，故分别连续延拓也不存在。证毕。
+

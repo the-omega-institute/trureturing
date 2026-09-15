@@ -1,0 +1,12 @@
+对整数 $q\ge1$，令 $\phi_E(q)=\#\{a\in\{1,\ldots,q\}:\gcd(a,q)=1\}$。对实数 $X$，$\pi(X)=\#\{p\in\operatorname{Pr}:p\le X\}$；对整数 $Q\ge1,a\in\mathbb Z$，$\pi(X;Q,a)=\#\{p\in\operatorname{Pr}:p\le X,\ p\equiv a\pmod Q\}$。$\log$ 为自然对数。
+
+分析假设。使用以下经典分析输入，均作为引用而不在此处重证。素数定理和固定模数定理的陈述见 Terence Tao，〈The prime number theorem in arithmetic progressions, and dueling conspiracies〉（2009-09-24，[原文](https://terrytao.wordpress.com/2009/09/24/the-prime-number-theorem-in-arithmetic-progressions-and-dueling-conspiracies/)）引言；后两项见其〈254A, Notes 8 – The Hardy-Littlewood circle method and Vinogradov's theorem〉（2015-03-30，[原文](https://terrytao.wordpress.com/2015/03/30/254a-notes-8-the-hardy-littlewood-circle-method-and-vinogradovs-theorem/)）Propositions 18、24。这里引用原作者正文的陈述及所用证明接口，不把启发式讨论当作证明。
+其一为素数定理及固定模数算术级数素数定理：$\pi(X)\sim X/\log X$，且每个固定 $Q\ge1$、$(a,Q)=1$ 有 $\pi(X;Q,a)/\pi(X)\to1/\phi_E(Q)$。
+其二是 Tao Notes 8 Proposition 18 的较弱表述：固定 $\delta>0$ 后存在常数 $B,C,X_0$，若 $X\ge X_0$ 且 $|\sum_{n\le X}\Lambda(n)e(n\theta)|\ge\delta X$，则存在 $1\le q\le C(\log X)^B$，使 $\|q\theta\|\le C(\log X)^B/X$。
+其三由同文 Proposition 24 取主项绝对值得到：若 $\theta\in\mathbb R$、$a\in\mathbb Z$、$q\in\mathbb N_{\ge1}$、$\xi\in\mathbb R$ 且 $\theta=a/q+\xi/q$、$(a,q)=1$，则对 $X\ge2$ 及每个 $A>0$ 有
+$$
+\left|\sum_{n\le X}\Lambda(n)e(n\theta)\right|
+\le \frac X{\phi_E(q)}+C_A(q+X|\xi|)X(\log X)^{-A}.
+$$
+后两输入的来源是 Vaughan 型双线性估计及 Siegel–Walfisz 主弧估计；常数允许非有效，不假设 RH。一般无理参数的结论不能仅由 DMS Lemma 3.21 中含固定 $\|\theta\|$ 的上界读出。
+

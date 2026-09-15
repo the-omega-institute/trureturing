@@ -13,7 +13,6 @@ namespace StrataLint.Tests;
 /// </summary>
 public static class PinnedProductionBudgets
 {
-    public static readonly TimeSpan UpstreamProbeBudget = UpstreamProbeVerifier.HangGuardBudget; // pinned-production-constant: direct production declaration
 
     public static readonly TimeSpan BoundedProcessRunnerBudget = BoundedProcessRunner.HangDetectionBudget; // pinned-production-constant: direct production declaration
     public static readonly TimeSpan LeanCacheProvisionBudget = TimeSpan.FromSeconds(LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds); // pinned-production-constant: LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds
