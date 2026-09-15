@@ -153,7 +153,8 @@ class PublicationTests(unittest.TestCase):
                 validate()
             policy.write_text('def driver := 2\n')
             for validate in validators:
-                with self.assertRaisesRegex(ValueError, 'stale declared-template input'):
+                with self.assertRaisesRegex(ValueError, 'stale declared-template input',
+                        msg='[FAIL] native_binding_input_freshness'):
                     validate()
             policy.unlink()
             for validate in validators:
