@@ -1,0 +1,53 @@
+**定理 9.2（紧致中间空间中，单点测试已经刻画任意端点的普遍交换）。** 设 $Y$ 为集合，$K$ 为紧致 Hausdorff 空间，$j:Y\to K$ 为映射。本定理不要求中间观察系统可数。
+
+以下两个条件等价：
+
+闭包分离条件：
+
+$$
+\forall A,B\subseteq Y,\quad
+A\cap B=\varnothing
+\Longrightarrow
+\overline{j[A]}\cap\overline{j[B]}=\varnothing.
+$$
+
+普遍端点交换条件：对任意集合 $X,Z$、任意拓扑空间 $L_X,L_Z$、任意映射
+
+$$
+j_X:X\to L_X,
+\qquad
+j_Z:Z\to L_Z,
+$$
+
+以及任意关系
+
+$$
+R\subseteq X\times Y,
+\qquad
+S\subseteq Y\times Z,
+$$
+
+定义
+
+$$
+\widehat R =
+\overline{(j_X\times j)[R]},
+\qquad
+\widehat S =
+\overline{(j\times j_Z)[S]},
+$$
+
+$$
+\widehat{S\circ R} =
+\overline{(j_X\times j_Z)[S\circ R]}.
+$$
+
+则恒有
+
+$$
+\widehat{S\circ R} =
+\widehat S\circ\widehat R.
+$$
+
+特别地，在定理 9.1 的可数有限实际像塔假设下，(a)、(b)、(c) 还等价于：对任意端点观察塔及任意关系 $R,S$，上述端点交换成立。**不需要端点实际像闭，也不需要端点观察映射单射或满射到完成空间。**
+

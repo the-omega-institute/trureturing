@@ -20,7 +20,7 @@ CLAUDE.md 5⁵(开放问题线三档律)的操作面。所有脚本以宿主后�
 - `gen_stage_briefs.py SCRATCH LANE WORKTREE BRANCH MODULE`:切 Stage A / Stage B / mirror-check 三份 brief。
 - `fill_mirror_fixes.py SCRATCH LANE RESULT_JSON`:把镜像核对的 blocking/advisory 填进 Stage B brief。
 - `add_base_blocks.py FILE…`:把基底模板的三个纪律块补进缺失的 brief。
-- `gen_review.py LANE PR BRANCH WORKTREE IMPL_ENVELOPE TARGET_FILE NYXID_SEAT`:生成三席评审 brief(在 SCRATCH 目录运行)。
+- `gen_review.py LANE PR BRANCH WORKTREE IMPL_ENVELOPE TARGET_FILE NYXID_SEAT`:生成三席评审 brief(在 SCRATCH 目录运行,写到该目录的 `briefs/`)。模板取本目录 tracked 的 `templates/review-template.md`,GoalArtifact 取 `templates/impl-base-brief.md` 的 yaml 段——两者都不依赖 scratchpad,scratchpad 被清空不影响它(案号 #6220)。缺输入、席位名不是 architecture/quality、参数个数不对,一律 exit 1。
 - `op-sync-dev.sh WORKTREE BRANCH PR`:merge-only 合 dev、推送、等待三门(重算 merge ref;`gh run rerun` 不重算)。
 - `op-ingest-new-noalign.sh WORKTREE NEW_BRANCH ADDENDUM SUBJ PRMSG PATTERN [VOLUME]` / `op-ingest-noalign.sh` / `op-addendum-ingest-v3.sh`:理论卷增订 ingest(前两者绕开 align)。
 - `op-governance-pr.sh WORKTREE BRANCH COMMIT_MSG PR_MSG [AUTO]`:governance 改动的提交/推送/开 PR。

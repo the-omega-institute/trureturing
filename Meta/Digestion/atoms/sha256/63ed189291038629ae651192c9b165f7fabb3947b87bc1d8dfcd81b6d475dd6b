@@ -1,0 +1,102 @@
+**命题 7.2（关系复合与完备化交换的确切阶段判据）。** 对每个 $n\in\mathbb N$，
+
+$$
+\pi_n^{XZ}[P]=\bigcap_{m\ge n}p_{m,n}^{XZ}[D_m].
+$$
+
+右侧在有限集合中递减，故存在 $m_0\ge n$，使所有 $m\ge m_0$ 都满足 $p_{m,n}^{XZ}[D_m]=\pi_n^{XZ}[P]$。因此
+
+$$
+\widehat C=P
+\ \Longleftrightarrow\
+\forall n\in\mathbb N\ \exists m\ge n,\quad
+p_{m,n}^{XZ}[D_m]=C_n.
+$$
+
+令
+
+$$
+E_n=\{(a,b,c)\in Q_n^X\times Q_n^Y\times Q_n^Z:
+(a,b)\in R_n\land(b,c)\in S_n\},\qquad
+W_n=(q_n^X\times q_n^Y\times q_n^Z)[W].
+$$
+
+保留中间见证的交换判据为
+
+$$
+\widehat W=T
+\ \Longleftrightarrow\
+\forall n\in\mathbb N\ \exists m\ge n,\quad
+p_{m,n}^{XYZ}[E_m]=W_n.
+$$
+
+端点判据的实际元素量词版为：对每个 $n$，存在 $m\ge n$，对所有 $x\in X$、$y_0,y_1\in Y$、$z\in Z$，若
+
+$$
+R(x,y_0)\land S(y_1,z)\land q_m^Y(y_0)=q_m^Y(y_1),
+$$
+
+则存在 $(x',y,z')\in W$，使
+
+$$
+q_n^X(x')=q_n^X(x),\qquad q_n^Z(z')=q_n^Z(z).
+$$
+
+**证明。** 固定 $n$。由定理 7.1，$u\in P$ 蕴含 $\pi_m^{XZ}(u)\in D_m$，下投影即得 $\pi_n^{XZ}[P]\subseteq\bigcap_{m\ge n}p_{m,n}^{XZ}[D_m]$。反之，取右侧的 $\alpha$，对 $m\ge n$ 定义
+
+$$
+H_m=\{u\in K_X\times K_Z:
+\pi_n^{XZ}(u)=\alpha,\ \pi_m^{XZ}(u)\in D_m\}.
+$$
+
+因 $\alpha\in p_{m,n}^{XZ}[D_m]$，可取相应的 $m$ 层候选，再由 $\pi_m^{XZ}$ 满射提升，故 $H_m$ 非空。各 $H_m$ 闭且递减；紧致性取得 $u\in\bigcap_{m\ge n}H_m$。该点满足所有 $m\ge n$ 层条件，下投影又满足较低层条件，故由定理 7.1 得 $u\in P$，而 $\pi_n^{XZ}(u)=\alpha$。这证明第一式。
+
+集合 $p_{m,n}^{XZ}[D_m]$ 在有限集合 $Q_n^X\times Q_n^Z$ 中递减，只有有限次严格缩小，故最终稳定于其交集。实际共同像满足
+
+$$
+p_{m,n}^{XZ}[C_m]=C_n,\qquad
+C_m\subseteq D_m,\qquad
+C_n\subseteq p_{m,n}^{XZ}[D_m]\quad(m\ge n).
+$$
+
+第一等式的满射方向由同一个实际 $(x,z)\in C$ 的第 $m$ 层读数给出。有限层纤维开闭，取闭包不增加或丢失该层像，所以
+
+$$
+\pi_n^{XZ}[\widehat C]=C_n.
+$$
+
+若 $\widehat C=P$，第一式及有限稳定性就给出所需 $m$。反之，若每个 $n$ 有一个 $m$ 使所列阶段像等于 $C_n$，第一式和始终成立的包含给出 $\pi_n^{XZ}[P]=C_n$。$P$ 中每点因此满足 $C$ 的全部有限观察条件，由第 3.4 条属于 $\widehat C$。结合定理 7.1 的包含得等式。
+
+对于三元版本，闭包判定给出
+
+$$
+T=\bigcap_{m\ge0}(\pi_m^{XYZ})^{-1}(E_m).
+$$
+
+固定第 $n$ 层三元坐标 $\alpha\in\bigcap_{m\ge n}p_{m,n}^{XYZ}[E_m]$，用
+
+$$
+H_m^{XYZ}=\{u\in K_X\times K_Y\times K_Z:
+\pi_n^{XYZ}(u)=\alpha,\ \pi_m^{XYZ}(u)\in E_m\}
+$$
+
+重复上述论证：$\pi_m^{XYZ}$ 满射保证非空，阶段关系的相容性保证递减，各集闭；紧致性交出一个满足全部层条件的三元点。因此
+
+$$
+\pi_n^{XYZ}[T]=\bigcap_{m\ge n}p_{m,n}^{XYZ}[E_m].
+$$
+
+有限递减交最终稳定；同一实际三元组的读数又给出
+
+$$
+p_{m,n}^{XYZ}[W_m]=W_n,\qquad
+W_m\subseteq E_m,\qquad
+\pi_n^{XYZ}[\widehat W]=W_n.
+$$
+
+若 $\widehat W=T$，取稳定阶段即可得到所列三元等式。反之，每个 $n$ 的阶段等式和始终成立的 $W_n\subseteq p_{m,n}^{XYZ}[E_m]$，使 $T$ 每点满足 $W$ 的全部有限观察条件，故 $T\subseteq\widehat W$；反向包含由定理 7.1 成立。
+
+最后，任一 $D_m$ 候选可分别用 $R(x,y_0)$ 与 $S(y_1,z)$ 的实际代表表示，中间坐标相等恰为 $q_m^Y(y_0)=q_m^Y(y_1)$。其端点下投影属于 $C_n$，恰指存在所列实际共同三元组，故实际元素量词版等价于 $p_{m,n}^{XZ}[D_m]\subseteq C_n$。反向包含始终成立，遂得等价。证毕。
+
+此判据允许先提高精度再排除虚假候选，不要求同一层的 $D_n=C_n$。有限稳定只给每个固定 $n$ 的阶段存在性，不给统一阶段界或可计算的停止界。
+
