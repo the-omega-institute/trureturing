@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:35607321ce969df4c1411846b19f657a4786ac2f0e8f254eef4ece82a7f210b7
+  normalized_sha256: sha256:35607321ce969df4c1411846b19f657a4786ac2f0e8f254eef4ece82a7f210b7
+cas_ref: sha256:35607321ce969df4c1411846b19f657a4786ac2f0e8f254eef4ece82a7f210b7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本子句区分像外延拓与纤维费用，并说明极值、平均和有效费用的取值约定及无限域的达到要求，属于使用边界说明，没有待证明命题。
+    previous_atom_id: 9866d27fb4ef32e0dcc830f11adc923307b41b33cc3ec0cbad7e6231b7c4c5a7
+    next_atom_id: 03d493aa41fdb02f5370616cb484ce10bf83b46ec7a754a99bae91924ad7f2b3

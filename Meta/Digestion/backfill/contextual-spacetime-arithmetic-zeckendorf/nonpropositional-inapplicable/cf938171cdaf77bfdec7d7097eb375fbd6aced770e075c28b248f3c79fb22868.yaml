@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cf938171cdaf77bfdec7d7097eb375fbd6aced770e075c28b248f3c79fb22868
+  normalized_sha256: sha256:cf938171cdaf77bfdec7d7097eb375fbd6aced770e075c28b248f3c79fb22868
+cas_ref: sha256:cf938171cdaf77bfdec7d7097eb375fbd6aced770e075c28b248f3c79fb22868
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶只固定可数语法、参数解释及关系解释函数的使用域，并明确不假设可计算性，属于定义与范围约定，没有待证明命题。
+    previous_atom_id: f386b7b71db6091b75329f5dbdba18902883d0615b5d14fe377ee6eb7728ea16
+    next_atom_id: c07f91edf3b8fb8f3b23931b2f99d0dec46d0fc981afdd1e31e7a62e5249a272

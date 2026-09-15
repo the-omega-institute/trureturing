@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:165a3c569a7155f662efeaf8b52d715dbf2bc9870fdb5ba41c17226ebfdd600d
+  normalized_sha256: sha256:165a3c569a7155f662efeaf8b52d715dbf2bc9870fdb5ba41c17226ebfdd600d
+cas_ref: sha256:165a3c569a7155f662efeaf8b52d715dbf2bc9870fdb5ba41c17226ebfdd600d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本子句定义扩展非负实向量的序、加法、极小元与逐坐标确界，列明各分支的取值约定，没有宣称后续完备格定理。
+    previous_atom_id: ee544840f28ab984e72b713d4d6bb5d85eb94c92d1383a1d8bb0fae4af2551e6
+    next_atom_id: a95fba4b2f78854f20632217aacde3d33aaf17fe10777c9383e3ed3f435380fd

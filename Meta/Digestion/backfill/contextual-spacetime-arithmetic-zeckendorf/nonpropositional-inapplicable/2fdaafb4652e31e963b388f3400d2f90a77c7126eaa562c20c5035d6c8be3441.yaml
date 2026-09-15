@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2fdaafb4652e31e963b388f3400d2f90a77c7126eaa562c20c5035d6c8be3441
+  normalized_sha256: sha256:2fdaafb4652e31e963b388f3400d2f90a77c7126eaa562c20c5035d6c8be3441
+cas_ref: sha256:2fdaafb4652e31e963b388f3400d2f90a77c7126eaa562c20c5035d6c8be3441
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶定义带起点的合法增长词、路径复合和有限初等交换生成的等价关系，并限定所用原语，没有断言交换连通性等后续定理。
+    previous_atom_id: 9a30ecdabf081d9ec08adce7de6d709e51a78dd4d951fd21da88b3f0b80d96c1
+    next_atom_id: 5d7abe7d32403e176cf711a6903e267595108eb0b0d709d48eabea37185f0483
