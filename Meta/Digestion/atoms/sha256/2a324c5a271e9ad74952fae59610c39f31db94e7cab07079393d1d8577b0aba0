@@ -1,0 +1,50 @@
+### 86.1 记录预算应按目标算，而不是按全部状态算
+
+设当前记录效果为 $E_i$，把单位方向一并保留，定义可见算子空间
+
+$$
+\mathcal V
+=\operatorname{span}_{\mathbb R}\{I,E_i:i\in\mathcal I\}.
+$$
+
+冻结定理 `target_prediction_sufficiency` 给出一个严格的二分。
+
+若目标 observable $A$ 满足
+
+$$
+A\in\mathcal V,
+$$
+
+那么任何两个当前记录相同的物理态，对 $A$ 的期望值也相同。换言之，若任务只要求预测 $mathcal V$ 内的目标，当前记录已经对该目标充分；不需要为了一个目标自动保存完整 $d^2-1$ 个 trace-zero 方向。
+
+若
+
+$$
+A\notin\mathcal V,
+$$
+
+定理构造一个非零的 trace-zero Hermitian 残差 $D\in\mathcal V^\perp$，以及足够小的 $\varepsilon>0$，使
+
+$$
+\rho_\pm=\frac1dI\pm\varepsilon D
+$$
+
+仍是物理密度态。它们满足所有当前效果的读数相同，但
+
+$$
+\operatorname{Tr}(D A)\ne0,
+$$
+
+因而对目标 $A$ 的期望不同。当前记录对该目标不充分，不是因为缺少更精细的标签，而是因为目标方向落在可见算子空间之外。
+
+这把第 83 节的全 tomography 预算收紧成任务相对的版本：
+
+$$
+\boxed{
+\text{所需历史}\\
+\text{由目标族在可见算子空间中的覆盖决定。}
+}
+$$
+
+若目标族是所有 Hermitian observable，才需要把 $\mathcal V$ 扩展到完整载体；若目标族只包含 Zeckendorf 数值和若干局部模式，则可以只扩展到这些目标生成的子空间。
+

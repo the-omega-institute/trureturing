@@ -1,0 +1,39 @@
+### 68.6 有限 effect 证书分离全部密度态
+
+第 66.5 节把有限证书说成“当前指定密度态读出的完备性”，范围过窄。`FiniteInformationalEffectCertificate.lean` 的 `finite_informational_effect_certificate` 假设的是整个映射
+
+$$
+\rho\longmapsto
+\bigl(\operatorname{Tr}(\rho F_i)\bigr)_{i\in I}
+$$
+
+在全部 $\operatorname{DensityState}(\operatorname{Fin}d)$ 上 injective。它抽取有限 $S\subseteq I$，满足
+
+$$
+|S|\le d^2-1
+$$
+
+以及
+
+$$
+\operatorname{span}_{\mathbb R}
+\left\{
+F_i-\frac{\operatorname{Tr}(F_i)}{d}I_d:i\in S
+\right\}
+=\operatorname{Herm}_0(d),
+$$
+
+并且同一子族仍分离全部密度态：
+
+$$
+\left[
+\forall i\in S,
+\quad
+\operatorname{Tr}(\rho F_i)=\operatorname{Tr}(\sigma F_i)
+\right]
+\Longrightarrow
+\rho=\sigma.
+$$
+
+所以应把旧说法改为“指定有限维密度态读出任务的全体状态完备性”。它仍然是任务索引的：不保证环境记录已保留，不保证未来 Heisenberg 方向仍在该子族 span 内，也不保证约化不可见的联合相干可以恢复。
+

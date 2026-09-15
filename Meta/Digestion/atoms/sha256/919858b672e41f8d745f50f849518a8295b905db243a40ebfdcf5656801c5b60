@@ -1,0 +1,47 @@
+### 120.1 完整过程与保留过程
+
+设参数集为有限集合 $$\Theta$$，先验为 $$\mu$$。对每个 $$\theta\in\Theta$$，令
+
+$$
+I_\theta:X\longrightarrow Y
+$$
+
+是同一输入输出空间上的完整 $$n$$ 槽量子过程。输出空间 $$Y$$ 包含全部仍可访问的历史寄存器、活动记忆和允许保留的参考系统。压缩后的过程为
+
+$$
+\widetilde I_\theta:X\longrightarrow \widetilde Y.
+$$
+
+压缩不是把 $$Y$$ 的坐标重新命名，而是实际丢弃了一部分过程输出。设 $$S:\widetilde Y\to Y$$ 是与 $$\theta$$、输入以及后续决策均无关的 CPTP 模拟器。定义过程缺陷
+
+$$
+\boxed{
+\delta_\diamond(I\mid\widetilde I)
+=
+\inf_S\;\sup_{\theta\in\Theta}
+\frac12\left\|I_\theta-S\circ\widetilde I_\theta\right\|_\diamond .
+}
+$$
+
+diamond 范数的辅助系统量化了最坏情形下保留参考的影响；因此这里的缺陷不是某个选定初态上的迹距离。若只允许固定输入，则可把输入制备并入后处理；若允许实验者选择共同输入 $$\rho$$，则后续策略应写成一对 $$ (\rho,D)$$，其中 $$D:Y\to A$$ 是量子到经典的 CPTP 读出。
+
+对损失函数
+
+$$
+0\le \ell(\theta,a)\le 1
+$$
+
+定义完整过程的最优 Bayes 风险
+
+$$
+R^*(I)
+=
+\inf_{\rho,D}
+\sum_{\theta\in\Theta}
+\mu(\theta)\,
+\mathbb E_{a\sim D(I_\theta(\rho))}
+[\ell(\theta,a)],
+$$
+
+并以同样方式定义 $$R^*(\widetilde I)$$。这里的后处理可以包含任意对输出记忆的量子控制，但模拟器 $$S$$ 必须在所有参数之间共用。
+

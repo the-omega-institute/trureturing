@@ -1,0 +1,36 @@
+### 68.2 正权重改变的是度量尺度，不自动改变观察商
+
+第 61.5 节原先说“改变 effect 集合或权重，则半范数、商空间和容量账本都会改变”。其中关于权重的部分需要撤回并加条件。
+
+在固定 centered effect 家族、且所有权重仍满足
+
+$$
+\forall i,\qquad w_i>0,
+$$
+
+时，`D5/S3/Quantum/Measurement/OperationalObservationKernel.lean` 中的 私有引理 `operational_seminorm_kernel` 表明
+
+$$
+\ker\|D\|_{\mathrm{obs}}
+=
+\operatorname{span}_{\mathbb R}\{E_i\}^{\perp}
+$$
+
+与正权重的具体数值无关。加权读出只是对每个坐标乘以非零因子 $\sqrt{w_i}$；因此状态的零距离关系、`OperationalStateQuotient` 的商以及由 effect span 定义的
+
+$$
+C(E)=\dim\operatorname{span}(\{I\}\cup E)-1,
+\qquad
+Q(E)=\dim\operatorname{span}(\{I\}\cup E)^{\perp}
+$$
+
+保持不变。`ObserverCapacityConservation.lean` 的 `observer_capacity_conservation` 没有权重参数，正是这一点的源码边界。
+
+应保留的校准说法是：改变严格正权重通常改变半范数和距离的数值尺度；改变 effect 集合可能改变 kernel、商和容量。若允许某些权重降为零，kernel 与商应对有效家族
+
+$$
+E_{\mathrm{eff}}=\{E_i:w_i>0\}
+$$
+
+重新计算；此时由有效家族定义的容量才可能改变，而把全部未加权 effect 仍计入 $C(E),Q(E)$ 的名义账本则不会自动改变。若权重不再严格为正，`operational_observation_kernel_and_metric` 的正权重假设不再适用。
+

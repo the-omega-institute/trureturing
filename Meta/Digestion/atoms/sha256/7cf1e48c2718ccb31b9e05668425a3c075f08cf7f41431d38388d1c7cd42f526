@@ -1,0 +1,24 @@
+### 73.3 有限 Hankel 窗口与可执行校准
+
+对行数 $r$、列数 $c$ 定义有限数据 Hankel 映射
+
+$$
+H_{r,c}(u_0,\ldots,u_{c-1})
+=
+\left(
+\sum_{j=0}^{c-1}m_{i+j}(u_j)
+\right)_{0\le i<r}.
+$$
+
+当 $r,c$ 都不小于 $\operatorname{finrank}\mathcal T(m)$ 时，已有定理 `dataHankel_rank_eq_tailSpace` 给出
+
+$$
+\operatorname{rank}H_{r,c}
+=
+\operatorname{finrank}\mathcal T(m).
+$$
+
+这把“需要观察多深”变成了可校准的有限窗口条件。若实际数据带误差，不能直接把观测矩阵的数值秩当成精确秩；应使用第 67 节的条件数和最小二乘噪声界，并声明截断阈值、误差模型与任务容限。
+
+第 72 节的 diamond 距离控制的是完整仪器过程；Hankel 尾空间控制的是选定线性响应坐标。两者的连接需要一个明确的读出映射：先由过程产生记录分布或 effect 期望，再把它们送入 $Y$。没有这个映射，不能用一个状态空间秩替代过程级历史距离。
+

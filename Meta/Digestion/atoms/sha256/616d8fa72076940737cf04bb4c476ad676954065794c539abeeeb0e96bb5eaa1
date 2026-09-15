@@ -1,0 +1,89 @@
+**命题 119.12（同奇偶效应、零当前缺陷与不同的两阶段辨识风险）。** 取命题 119.8 的高位到低位合法三位集合 $X$，令
+
+$$
+\mathcal H_Z=\operatorname{span}\{|w\rangle:w\in X\},\qquad
+P_w=|w\rangle\langle w|,\qquad
+Q_b=\sum_{w\in X_b}P_w\quad(b\in\{0,1\}),
+$$
+
+其中所列基正交归一，$I$ 表示 $\mathcal H_Z$ 上的恒等算子。考虑两种理想投影测量仪器的未归一分支：粗奇偶 Lüders 仪器
+
+$$
+\mathcal L_b(\varrho)=Q_b\varrho Q_b
+$$
+
+与完整基底测量后只在经典层忘记细标签的仪器
+
+$$
+\mathcal M_b(\varrho)=\sum_{w\in X_b}P_w\varrho P_w.
+$$
+
+它们的每个分支均完全正且不增迹，全部分支之和保迹，并有相同的奇偶效应 $Q_b$，所以对每个密度算子给出相同的即时奇偶概率。令隐藏制备标签为 $\theta\in\{+,-\}$，取
+
+$$
+|\psi_+\rangle=\frac{|000\rangle+|010\rangle}{\sqrt2},\qquad
+|\psi_-\rangle=\frac{|000\rangle-|010\rangle}{\sqrt2},\qquad
+\varrho_\theta=|\psi_\theta\rangle\langle\psi_\theta|.
+$$
+
+记第一阶段粗 Lüders 奇偶记录的实验为 $E$，完整基底记录的实验为 $F$。则
+
+$$
+E_+=E_-=\delta_0,\qquad
+F_+=F_-=\tfrac12\delta_{000}+\tfrac12\delta_{010},\qquad
+\delta(F\mid E)=\delta(E\mid F)=0.
+$$
+
+这里的参数是制备标签 $\{+,-\}$，不同于命题 119.8 中待完整重建的基底标签 $X$；两个缺陷公式属于不同的实验族。令 $P_+=|\psi_+\rangle\langle\psi_+|$，在上述两种仪器之后都对残余系统实际执行第二次测量 $\{P_+,I-P_+\}$，以 $r=1$ 记 $P_+$ 结果，则
+
+$$
+\Pr_{\mathcal L}(r=1\mid+) =1,\qquad
+\Pr_{\mathcal L}(r=1\mid-) =0,\qquad
+\Pr_{\mathcal M}(r=1\mid\theta)=\frac12\quad(\theta=+,-).
+$$
+
+因此在均匀先验、动作 $\{+,-\}$ 和零一辨识损失下，以完整两阶段经典记录作决策的风险分别为
+
+$$
+R(\mathcal L\hbox{ 的两阶段记录})=0,\qquad
+R(\mathcal M\hbox{ 的两阶段记录})=\frac12.
+$$
+
+此命题是“相同即时效应不决定两步联合律”的一个合法三位实例；另一明确的二维仪器分离结论见[定理 `same_effects_different_two_step_joint_law`](../../../D5/S3/Quantum/Measurement/StaticEffectSequentialSeparation.lean)。
+
+证明。$Q_0,Q_1$ 是互相正交且和为 $I$ 的投影。$\mathcal L$ 的 Kraus 算子为 $Q_b$，$\mathcal M$ 的分支 Kraus 算子为 $\{P_w:w\in X_b\}$；分别有 $Q_b^*Q_b=Q_b$ 与 $\sum_{w\in X_b}P_w^*P_w=Q_b$。故两仪器完全正，分支不增迹，全部分支之和保迹，且
+
+$$
+\operatorname{tr}\mathcal L_b(\varrho)
+=\operatorname{tr}(\varrho Q_b)
+=\operatorname{tr}\mathcal M_b(\varrho)
+$$
+
+对全部 $\varrho$ 成立。$000,010$ 都在偶纤维中，故 $Q_0\psi_\theta=\psi_\theta$、$Q_1\psi_\theta=0$，而两个非零基底振幅的模平方均为 $1/2$，得到所述第一阶段行概率。由 $S(\cdot\mid b)=\tfrac12\delta_{000}+\tfrac12\delta_{010}$（对两个 $b$ 都取此行）可从 $E$ 精确模拟 $F$；由确定性奇偶核可从 $F$ 精确模拟 $E$。这些核与 $\theta$ 无关，故两个单向缺陷均为零。
+
+两种仪器的第一阶段实际后态则为
+
+$$
+\mathcal L_0(\varrho_\theta)=\varrho_\theta,\qquad
+\mathcal M_0(\varrho_\theta)=\tau:=\frac{P_{000}+P_{010}}2,
+\qquad
+\mathcal L_1(\varrho_\theta)=\mathcal M_1(\varrho_\theta)=0.
+$$
+
+由于偶结果概率为一，零分支以外不需要再归一。正交关系 $\langle\psi_+,\psi_-\rangle=0$ 给出 $\operatorname{tr}(P_+\varrho_+)=1$、$\operatorname{tr}(P_+\varrho_-)=0$，而
+
+$$
+\operatorname{tr}(P_+\tau)
+=\frac12\bigl(|\langle\psi_+,000\rangle|^2+|\langle\psi_+,010\rangle|^2\bigr)=\frac12.
+$$
+
+因此 $\mathcal L$ 的两阶段记录 $(b,r)$ 完全区分两种制备，按 $r=1$ 选 $+$、$r=0$ 选 $-$ 得零风险。$\mathcal M$ 的两阶段记录在两种制备下具有同一律 $J$；任意决策的均匀先验成功率为
+
+$$
+\frac12\sum_{b,r}J(b,r)\bigl(d(+\mid b,r)+d(-\mid b,r)\bigr)=\frac12,
+$$
+
+所以其风险恰为 $1/2$。即使保留完整基底的第一阶段标签 $w$，第二协议的联合概率也为 $\Pr(w,r\mid\theta)=1/4$，其中 $w\in\{000,010\}$、$r\in\{0,1\}$，仍与 $\theta$ 无关；该额外经典标签不能恢复已消去的相干项。
+
+第一阶段的 $E,F$ 只含当前经典记录，未包含测量后的量子载体与相位敏感未来，故两个当前缺陷为零与两阶段风险不同并不冲突。将第二次实际测量结果纳入观察后，两阶段行律已有上述区别，应对这些完整记录律重新计算缺陷；若还允许选择后续反馈操作，则需给定相应的路径核或量子过程及可访问载体。单步律的模拟关系并不是经典结果与量子后态联合对象的模拟关系，也不把这里的理想仪器假设推成不可逆坍缩、观察者客观性或唯一结果的结论。证毕。
+

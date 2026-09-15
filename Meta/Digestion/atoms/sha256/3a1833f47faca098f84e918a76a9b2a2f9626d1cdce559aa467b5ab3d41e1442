@@ -1,0 +1,30 @@
+### 99.3 多轴相关方向的精确盲区
+
+同一定理给出可见空间正交残差
+
+$$
+\mathsf R_{\mathrm{multi}}
+=\bigoplus_{\substack{S\subseteq\iota\\|S|\ge2}}\mathcal V_S,
+$$
+
+以及
+
+$$
+\boxed{
+\dim_{\mathbb R}\mathsf R_{\mathrm{multi}}
+=\left(\prod_{i\in\iota}d_i\right)^2
+-1
+-\sum_{i\in\iota}(d_i^2-1).
+}
+$$
+
+因此，只要这个数非零，就存在全局 Hermitian 差异，它对每条单轴读数都为零，却可能在联合 effect 上有非零响应。两因子情形退化为
+
+$$
+(d_1^2-1)(d_2^2-1),
+$$
+
+与前面二分系统的相关扇区维数一致。
+
+这说明“逐素数轴都读过了”仍不等于“整体历史已经被读出”。逐轴记录保存的是一阶轴向信息；多素数耦合、联合进位或跨轴相位可以落在 $$\mathsf R_{\mathrm{multi}}$$ 中。
+

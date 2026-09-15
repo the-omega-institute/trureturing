@@ -1,0 +1,42 @@
+### 109.1 切口只看到两种边界状态
+
+把字串切成长度 $$t$$ 与 $$s$$ 的前后两段，其中 $$t+s=L$$ 且 $$t,s\ge1$$。定义
+
+$$
+a_0=\#\{u\in\mathcal W_t:u\text{ 以 }0\text{ 结尾}\},
+\qquad
+a_1=\#\{u\in\mathcal W_t:u\text{ 以 }1\text{ 结尾}\},
+$$
+
+以及
+
+$$
+b_0=\#\{v\in\mathcal W_s:v\text{ 以 }0\text{ 开头}\},
+\qquad
+b_1=\#\{v\in\mathcal W_s:v\text{ 以 }1\text{ 开头}\}.
+$$
+
+每个前缀和后缀的内部约束已经在 $$\mathcal W_t$$、$$\mathcal W_s$$ 中满足；跨切口唯一新增的条件是
+
+$$
+u\text{ 以 }1\text{ 结尾}
+\quad\text{且}\quad
+v\text{ 以 }1\text{ 开头}
+\quad\Longrightarrow\quad
+uv\text{ 非法}.
+$$
+
+因此，把所有相同边界类型的前缀、后缀分别归一化后，完整系数矩阵等价于
+
+$$
+M_{t,s}
+=
+\frac1{\sqrt{D_L}}
+\begin{pmatrix}
+\sqrt{a_0b_0}&\sqrt{a_0b_1}\\
+\sqrt{a_1b_0}&0
+\end{pmatrix}.
+$$
+
+这不是把所有合法字串粗暴合并成一个标签；它是把矩阵中真正相同的行、列向量正交化后得到的精确边界表示。
+

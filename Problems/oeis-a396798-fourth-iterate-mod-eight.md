@@ -101,10 +101,12 @@ finite certificate.
 
 The eighth comment is separately settled by
 `IterateProductFourFiveEighthModEight.result` for n>1. Comments 2 and 6
-concern the second and sixth iterates for n>3. Comment 7 concerns its
-own coefficient period for n>1. These three clauses and the proposed
-repair to the first comment remain separate unresolved obligations. The
-third comment is separately settled by `IterateProductFourFiveThirdModEight.result`
+concern the second and sixth iterates for n>3 and remain with #6436
+(and the #6375 referral). These two clauses and the proposed repair to
+the first comment retain their separate unresolved obligations.
+`IterateProductFourFiveSeventhModEight.result` separately settles the seventh
+comment for every n>1, with period 7,1,3,5 from n=2, using the same source
+and (n-2)%4. The third comment is separately settled by `IterateProductFourFiveThirdModEight.result`
 for every n>1, with period 3,1,7,5 beginning at n=2. The
 fifth comment is separately settled by `IterateProductFourFiveFifthModEight.result`
 for every n>1, with period 5,1,1,5 beginning at n=2.

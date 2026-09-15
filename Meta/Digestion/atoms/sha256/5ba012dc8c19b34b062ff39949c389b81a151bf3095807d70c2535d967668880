@@ -1,0 +1,13 @@
+### 定义 57.1（未来可见空间与预测投影）
+
+令 $\mathcal V_0$ 是当前选定的有限 effect 家族在 traceless-Hermitian 载体中的实线性 span，令 $H$ 是 Heisenberg 迭代的实线性作用。定义
+
+$$
+\mathcal V_{\infty}
+=
+\operatorname{span}_{\mathbb R}
+\{H^n E_i:n\in\mathbb N,\ i\in I\}.
+$$
+
+记 $P_{\infty}$ 为到 $\mathcal V_{\infty}$ 的正交投影。它只保留会在某个有限未来时刻进入所选 effect 读数的方向。
+

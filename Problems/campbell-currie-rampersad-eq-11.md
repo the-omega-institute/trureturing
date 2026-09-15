@@ -20,8 +20,10 @@ that are rearrangements of one another. Campbell, Currie and Rampersad display
 
 as equation (11) in the Conclusion of arXiv:2509.16034v1, with the sentence "It
 appears that (11) holds", and state a few lines later that they leave proving it
-as an open problem. Their indices start at one; the zero-indexed reading, which
-the caller measured rather than assumed, is `t(n) = t(3n)`.
+as an open problem. The verified journal version retains equation (11) and
+this question in Section 3, printed page 14; its citation is recorded in
+`Library/Words/campbell2025reduced.md`. The paper's letter indices start at one,
+so the zero-indexed reading is `t(n) = t(3n)`. Factor lengths do not shift.
 
 ## Motivation
 
@@ -42,9 +44,10 @@ case needs the spectrum of the codes, not a length-to-length correspondence.
 
 ## Route
 
-Let `alternations n s` count the letter changes in the length-`n` factor at
-start `s`, and let `minAlternations n` and `maxAlternations n` be its extremes
-over all starts. Two steps carry the argument.
+Let `alternations n s` count the letter changes across `n` edges in the
+length-`n+1` factor at start `s`, and let `minAlternations n` and
+`maxAlternations n` be its extremes over all starts. These are the paper's
+extrema at length `n+1`. Two steps carry the argument.
 
 First, the parity of the sum of the two extremes is governed by two Thue-Morse
 letters: `(minAlternations n + maxAlternations n) % 2` is zero exactly when
@@ -76,10 +79,15 @@ theorem about the defined class count.
 
 ## Triage
 
-`theorem`. Only the displayed absolute difference is settled. The sign of
-`rho(4n+2) - rho(4n)` when the difference is nonzero, a recursion for `rho(4n)`,
-the full recursion for `rho(n)`, and non-k-automaticity of the printed sequence
-all remain open and are untouched here.
+`theorem`. This dossier's resolution concerns only the displayed absolute
+difference. The sign of `rho(4n+2) - rho(4n)` when nonzero, a recursion for
+`rho(4n)`, and the full recursion remain outside that result. For the related
+nonautomaticity question, the Library note and the existing even-complexity
+Scribe mirror explain how the extrema recurrences and weighted interval count
+give unbounded `R` on positive lengths, and hence non-k-automaticity in every
+integer base `k >= 2`. That exposition adds no separately kernel-checked
+endpoint or typed resolution claim and does not enlarge this equation-(11)
+binding. Unboundedness is compatible with `R(2^k+1) = 3`.
 
 ## ASSUMED-UNVERIFIED
 
