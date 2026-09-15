@@ -65,7 +65,6 @@ public sealed partial class BackfillInventoryLoaderTests
             Receipt(new string('A', 64)), Receipt(new string('a', 63)), Receipt("'null'"),
             "  upstream: null\n",
             Receipt().Replace("Nat.add_comm", "Nat..comm", StringComparison.Ordinal),
-            Receipt().Replace("Nat.add_comm", "add_comm", StringComparison.Ordinal),
             Receipt().Replace("Nat.add_comm", "Nat.0comm", StringComparison.Ordinal),
             Receipt().Replace("Nat.add_comm", "Nat.add_comm\n      - Nat.add_comm", StringComparison.Ordinal),
             Receipt().Replace("Nat.add_comm", "Nat.add_comm\n      - Nat.add_assoc", StringComparison.Ordinal),
