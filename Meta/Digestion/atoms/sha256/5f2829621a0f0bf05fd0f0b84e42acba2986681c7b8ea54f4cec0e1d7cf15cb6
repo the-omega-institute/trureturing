@@ -1,0 +1,54 @@
+**命题 9.3（全部有限分划给出无限反例，但单点测试与一般端点交换仍然等价）。** 设 $Y$ 为任意无限集合。以 $Y$ 的全部有限分划为观察指标：每个分划只含非空块，细分划向粗分划映射到包含它的块。记这一共滤指标系统为 $\mathfrak P_f(Y)$，并定义
+
+$$
+q_{\mathcal P}:Y\twoheadrightarrow\mathcal P,
+\qquad
+q_{\mathcal P}(y)=\text{分划 }\mathcal P\text{ 中包含 }y\text{ 的块},
+$$
+
+$$
+K_Y^{\mathrm{all}} =
+\varprojlim_{\mathcal P\in\mathfrak P_f(Y)}\mathcal P.
+$$
+
+则 $K_Y^{\mathrm{all}}$ 可识别为 $Y$ 上全部超滤子组成的 Stone 空间，即离散空间 $Y$ 的 Stone–Čech 完成；实际元素 $y$ 对应主超滤子
+
+$$
+\delta_y=\{A\subseteq Y:y\in A\}.
+$$
+
+有限分划与超滤子的标准对应见文献中的有限分划刻画。[^rro9_ultrafilter]
+
+对每个 $A\subseteq Y$，记
+
+$$
+A^\ast =
+\{\mathfrak u\in K_Y^{\mathrm{all}}:A\in\mathfrak u\}.
+$$
+
+则
+
+$$
+\overline{\delta[A]}=A^\ast,
+$$
+
+并且对所有 $A,B\subseteq Y$，
+
+$$
+\overline{\delta[A]}
+\cap
+\overline{\delta[B]} =
+(A\cap B)^\ast.
+$$
+
+因此，所有单点端点测试均通过，但 $Y$ 无限，且没有任何有限分划层能够单射。这是**去掉可数塔限制后**对有限性结论的反例，不是对定理 9.1 的反例。
+
+此外，对这个固定的中间完成，任意端点观察塔及任意关系仍满足
+
+$$
+\widehat{S\circ R} =
+\widehat S\circ\widehat R.
+$$
+
+端点无须也采用全部有限分划。
+
