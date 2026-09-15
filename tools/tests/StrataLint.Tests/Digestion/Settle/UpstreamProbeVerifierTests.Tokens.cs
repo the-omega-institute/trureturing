@@ -35,37 +35,38 @@ public sealed partial class UpstreamProbeVerifierTests
             "declare_bitwise_int_theorems declare_bitwise_uint_theorems declare_command_config_elab declare_command_config_elab_legacy declare_config_elab " +
             "declare_config_elab_legacy declare_core_config_elab declare_eval_bin declare_eval_bin_bitwise declare_eval_bin_bool_pred " +
             "declare_int_theorems declare_simp_like_tactic declare_sint_simprocs declare_syntax_cat declare_term_config_elab " +
-            "declare_uint_simprocs declare_uint_theorems def def_eval_config_item deprecate " +
-            "deprecated_module deprecated_syntax derive_eval_expr_instance_using_meta_eval deriving docs_to_verso " +
-            "dsimproc dsimproc_decl elab elab_rules elab_stx_quot " +
-            "end end_local_scope ensure_eval_expr_instance ensure_eval_term_expr_instances ensure_eval_term_instance " +
-            "erase_aesop_rules example export extend_docs extern_lib " +
-            "facet_data family_def flex? gen_cnstr_fns gen_injective_theorems " +
-            "gen_lean_encoders gen_toml_decoders gen_toml_encoders grind_annotated grind_pattern " +
-            "grind_propagator guard_decl guard_min_heartbeats hydrate_opaque_type import " +
-            "include inductive infix infixl infixr " +
-            "init_grind_norm init_quot initialize initialize_simps_projections initialize_simps_projections? " +
-            "input_dir input_file insert_to_additive_translation instance irreducible_def " +
-            "lean_exe lean_lib lemma library_data library_facet " +
-            "library_note local lrat_proof macro macro_rules " +
-            "make_elab_grind_config make_elab_simp_config meta mk_iff_of_inductive_prop module_data " +
-            "module_facet mutual name_poly_vars name_power_vars namespace " +
-            "noncomputable nonempty_type nonrec norm_cast_add_elim notation " +
-            "notation3 omit opaque open package " +
-            "package_data package_facet partial post_update postfix " +
-            "postprocess_traces prefix private protected public " +
-            "recall recall? recommended_spelling register_aesop_check_option register_builtin_option " +
-            "register_error_explanation register_grind_attr register_hint register_label_attr register_linter_set " +
-            "register_option register_simp_attr register_sym_dsimp register_sym_simp register_sym_simp_attr " +
-            "register_tactic_tag register_try?_tactic reprove require reset_grind_attrs " +
-            "run_cmd run_elab run_meta run_tac scoped " +
-            "script seal section set_library_suggestions set_option " +
-            "show_panel_widgets simproc simproc_decl simproc_pattern stop_at_first_error " +
-            "structure sudo suppress_compilation syntax tactic_extension " +
-            "target test test_extern to_additive_name_hint to_dual_insert_cast " +
-            "to_dual_insert_cast_fun to_dual_name_hint unif_hint universe unlock_limits " +
-            "unsafe unseal unset_option unsuppress_compilation variable " +
-            "variable? variables wait_for_cancel_once_command whatsnew with_weak_namespace";
+            "declare_uint_simprocs declare_uint_theorems def def_eval_config_item def_wanted " +
+            "deprecate deprecated_module deprecated_syntax derive_eval_expr_instance_using_meta_eval deriving " +
+            "docs_to_verso dsimproc dsimproc_decl elab elab_rules " +
+            "elab_stx_quot end end_local_scope ensure_eval_expr_instance ensure_eval_term_expr_instances " +
+            "ensure_eval_term_instance erase_aesop_rules example export extend_docs " +
+            "extern_lib facet_data family_def flex? gen_cnstr_fns " +
+            "gen_injective_theorems gen_lean_encoders gen_toml_decoders gen_toml_encoders grind_annotated " +
+            "grind_pattern grind_propagator guard_decl guard_min_heartbeats hydrate_opaque_type " +
+            "import include inductive infix infixl " +
+            "infixr init_grind_norm init_quot initialize initialize_simps_projections " +
+            "initialize_simps_projections? input_dir input_file insert_to_additive_translation instance " +
+            "instance_wanted irreducible_def lean_exe lean_lib lemma " +
+            "library_data library_facet library_note local lrat_proof " +
+            "macro macro_rules make_elab_grind_config make_elab_simp_config meta " +
+            "mk_iff_of_inductive_prop module_data module_facet mutual name_poly_vars " +
+            "name_power_vars namespace noncomputable nonempty_type nonrec " +
+            "norm_cast_add_elim notation notation3 omit opaque " +
+            "open package package_data package_facet partial " +
+            "post_update postfix postprocess_traces prefix private " +
+            "proof_wanted protected public recall recall? " +
+            "recommended_spelling register_aesop_check_option register_builtin_option register_error_explanation register_grind_attr " +
+            "register_hint register_label_attr register_linter_set register_option register_simp_attr " +
+            "register_sym_dsimp register_sym_simp register_sym_simp_attr register_tactic_tag register_try?_tactic " +
+            "reprove require reset_grind_attrs run_cmd run_elab " +
+            "run_meta run_tac scoped script seal " +
+            "section set_library_suggestions set_option show_panel_widgets simproc " +
+            "simproc_decl simproc_pattern stop_at_first_error structure sudo " +
+            "suppress_compilation syntax tactic_extension target test " +
+            "test_extern theorem_wanted to_additive_name_hint to_dual_insert_cast to_dual_insert_cast_fun " +
+            "to_dual_name_hint unif_hint universe unlock_limits unsafe " +
+            "unseal unset_option unsuppress_compilation variable variable? " +
+            "variables wait_for_cancel_once_command whatsnew with_weak_namespace";
         foreach (var keyword in keywords.Split(' '))
             yield return [keyword];
     }

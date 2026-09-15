@@ -38,6 +38,52 @@ internal sealed class UpstreamProbeVerifier(IUpstreamLeanProcessRunner runner, s
         + @"\u1F00-\u1FFE\u2100-\u214F\u2080-\u2089\u2090-\u209C\u1D62-\u1D6A\u2C7C]"
         + @"|\uD835[\uDC9C-\uDD9F])+|#", Options);
 
+    // Derived from Lean v4.33.0 and all lake-manifest packages, including Mathlib
+    // db584cd6d46c92f209a44c0f1c829460d327499d. Pinned ordinal-sorted command tokens;
+    // punctuation such as % is outside the identifier token. Hash commands use the rule below.
+    private static readonly string[] UnsupportedCommands =
+    [
+        "abbrev", "add_aesop_rules", "add_decl_doc", "alias", "assert_exists", "assert_no_sorry",
+        "assert_not_exists", "assert_not_imported", "attribute", "aux_def", "axiom", "binder_predicate",
+        "builtin_cbv_simproc", "builtin_cbv_simproc_decl", "builtin_cbv_simproc_pattern", "builtin_dsimproc",
+        "builtin_dsimproc_decl", "builtin_facet", "builtin_grind_propagator", "builtin_initialize",
+        "builtin_simproc", "builtin_simproc_decl", "builtin_simproc_pattern", "cbv_simproc", "cbv_simproc_decl",
+        "cbv_simproc_pattern", "class", "coinductive", "compile_def", "compile_inductive", "configuration",
+        "custom_data", "data_type", "declare_aesop_exception", "declare_aesop_rule_sets",
+        "declare_bitwise_int_theorems", "declare_bitwise_uint_theorems", "declare_command_config_elab",
+        "declare_command_config_elab_legacy", "declare_config_elab", "declare_config_elab_legacy",
+        "declare_core_config_elab", "declare_eval_bin", "declare_eval_bin_bitwise", "declare_eval_bin_bool_pred",
+        "declare_int_theorems", "declare_simp_like_tactic", "declare_sint_simprocs", "declare_syntax_cat",
+        "declare_term_config_elab", "declare_uint_simprocs", "declare_uint_theorems", "def",
+        "def_eval_config_item", "def_wanted", "deprecate", "deprecated_module", "deprecated_syntax",
+        "derive_eval_expr_instance_using_meta_eval", "deriving", "docs_to_verso", "dsimproc", "dsimproc_decl",
+        "elab", "elab_rules", "elab_stx_quot", "end", "end_local_scope", "ensure_eval_expr_instance",
+        "ensure_eval_term_expr_instances", "ensure_eval_term_instance", "erase_aesop_rules", "example", "export",
+        "extend_docs", "extern_lib", "facet_data", "family_def", "flex?", "gen_cnstr_fns",
+        "gen_injective_theorems", "gen_lean_encoders", "gen_toml_decoders", "gen_toml_encoders",
+        "grind_annotated", "grind_pattern", "grind_propagator", "guard_decl", "guard_min_heartbeats",
+        "hydrate_opaque_type", "import", "include", "inductive", "infix", "infixl", "infixr", "init_grind_norm",
+        "init_quot", "initialize", "initialize_simps_projections", "initialize_simps_projections?", "input_dir",
+        "input_file", "insert_to_additive_translation", "instance", "instance_wanted", "irreducible_def",
+        "lean_exe", "lean_lib", "lemma", "library_data", "library_facet", "library_note", "local", "lrat_proof",
+        "macro", "macro_rules", "make_elab_grind_config", "make_elab_simp_config", "meta",
+        "mk_iff_of_inductive_prop", "module_data", "module_facet", "mutual", "name_poly_vars", "name_power_vars",
+        "namespace", "noncomputable", "nonempty_type", "nonrec", "norm_cast_add_elim", "notation", "notation3",
+        "omit", "opaque", "open", "package", "package_data", "package_facet", "partial", "post_update", "postfix",
+        "postprocess_traces", "prefix", "private", "proof_wanted", "protected", "public", "recall", "recall?",
+        "recommended_spelling", "register_aesop_check_option", "register_builtin_option",
+        "register_error_explanation", "register_grind_attr", "register_hint", "register_label_attr",
+        "register_linter_set", "register_option", "register_simp_attr", "register_sym_dsimp", "register_sym_simp",
+        "register_sym_simp_attr", "register_tactic_tag", "register_try?_tactic", "reprove", "require",
+        "reset_grind_attrs", "run_cmd", "run_elab", "run_meta", "run_tac", "scoped", "script", "seal", "section",
+        "set_library_suggestions", "set_option", "show_panel_widgets", "simproc", "simproc_decl",
+        "simproc_pattern", "stop_at_first_error", "structure", "sudo", "suppress_compilation", "syntax",
+        "tactic_extension", "target", "test", "test_extern", "theorem_wanted", "to_additive_name_hint",
+        "to_dual_insert_cast", "to_dual_insert_cast_fun", "to_dual_name_hint", "unif_hint", "universe",
+        "unlock_limits", "unsafe", "unseal", "unset_option", "unsuppress_compilation", "variable", "variable?",
+        "variables", "wait_for_cancel_once_command", "whatsnew", "with_weak_namespace",
+    ];
+
     internal static UpstreamProbeVerifier Production()
     {
         if (!LeanLakeExecutable.TryResolve(out var lake, out var reason)) throw new InvalidOperationException(reason);
@@ -223,23 +269,13 @@ internal sealed class UpstreamProbeVerifier(IUpstreamLeanProcessRunner runner, s
                     throw Invalid("PROBE_DECLARATION_UNSUPPORTED", $"command token outside probe dialect: {token.Value}");
                 continue;
             }
-            switch (token.Value)
+            if (Array.BinarySearch(UnsupportedCommands, token.Value, StringComparer.Ordinal) >= 0)
+                throw Invalid("PROBE_DECLARATION_UNSUPPORTED", $"command token outside probe dialect: {token.Value}");
+            if (token.Value == "theorem")
             {
-                case "def" or "lemma" or "example" or "instance" or "abbrev" or "structure"
-                    or "inductive" or "class" or "opaque" or "axiom" or "initialize" or "nonrec"
-                    or "noncomputable" or "unsafe" or "partial" or "private" or "protected"
-                    or "macro" or "macro_rules" or "elab" or "syntax" or "notation" or "infix"
-                    or "infixl" or "infixr" or "prefix" or "postfix" or "set_option" or "namespace"
-                    or "section" or "end" or "variable" or "universe" or "attribute" or "deriving"
-                    or "mutual" or "open"
-                    or "run_cmd" or "run_tac" or "builtin_initialize" or "declare_syntax_cat"
-                    or "register_option" or "import":
-                    throw Invalid("PROBE_DECLARATION_UNSUPPORTED", $"command token outside probe dialect: {token.Value}");
-                case "theorem":
-                    if (token.Index > 0 && source[token.Index - 1] != '\n')
-                        throw Invalid("PROBE_DECLARATION_UNSUPPORTED", $"{token.Value} must start at column 0");
-                    theorems++;
-                    break;
+                if (token.Index > 0 && source[token.Index - 1] != '\n')
+                    throw Invalid("PROBE_DECLARATION_UNSUPPORTED", $"{token.Value} must start at column 0");
+                theorems++;
             }
         }
         return theorems;
