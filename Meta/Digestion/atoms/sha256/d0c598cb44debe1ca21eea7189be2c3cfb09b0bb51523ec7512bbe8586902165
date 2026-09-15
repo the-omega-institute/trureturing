@@ -1,0 +1,38 @@
+### 122.1 双向缺陷不是标签相等
+
+对经典接口定义
+
+$$
+\Delta_B(E,F)
+=
+\max\left\{\delta_B(F\mid E),\delta_B(E\mid F)\right\},
+$$
+
+对量子状态族定义
+
+$$
+\Delta_Q(E,F)
+=
+\max\left\{\delta_Q(F\mid E),\delta_Q(E\mid F)\right\}.
+$$
+
+第 121 节的有向次可加律立即给出三角不等式
+
+$$
+\Delta_B(E,G)
+\le
+\Delta_B(E,F)+\Delta_B(F,G),
+$$
+
+以及量子对应式
+
+$$
+\Delta_Q(E,G)
+\le
+\Delta_Q(E,F)+\Delta_Q(F,G).
+$$
+
+两者都满足自反性，但一般不满足严格的同一性判别：若两个接口可以在所有历史上互相近似退化，可能仍然不是字节相等、标签相等或通道同构。它们只是在指定历史实验族下操作等价。因此 $\Delta_B$ 与 $\Delta_Q$ 更准确地说是伪度量；在互相零缺陷的接口等价类上，才得到真正的度量结构。 在有限接口且模拟器集合紧的条件下，定义 $E\sim F\iff\Delta(E,F)=0$ 得到等价关系，商空间上的诱导距离才是度量；若只给定部分任务族，只能称为任务相对等价。
+
+若 $\Delta(E,F)\le\varepsilon$ 且 $\Delta(F,G)\le\varepsilon$，只能推出 $\Delta(E,G)\le2\varepsilon$。所以“误差不超过 $\varepsilon$ 的等价”本身不是传递等价关系；跨多层接口时必须把预算累加，或提高允许阈值。
+
