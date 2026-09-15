@@ -566,6 +566,15 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Verifies the uniform-survivor cylinder profile for the four-prime head.
+pattern = "docs/reports/erdos7-odd-covering/verify_uniform_head_profile.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]] # Preserves license terms for the imported partial-trace results.
 pattern = "docs/reports/inoutbalance/physlib-LICENSE.txt"
 kind = "data"

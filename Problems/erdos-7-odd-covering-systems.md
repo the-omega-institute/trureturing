@@ -28,7 +28,7 @@ Divisibility is in the integers. Set membership enforces distinct moduli;
 there is no bound on their sizes, exponents, number, or total prime support.
 A refutation requires a finite family satisfying exactly these conditions
 whose classes cover every integer. The page remained open when read on
-16 September 2026. This dossier and its finite experiments are not a proof.
+16 September 2026. The results below do not settle this unrestricted assertion.
 
 ## Motivation
 
@@ -45,6 +45,70 @@ and [some modulus with at least four distinct prime factors](../Library/Arith/sc
 These are separate restrictions. The three-factors source rebuild, axiom audits,
 and fresh kernel environment replay passed; the nine-prime source has no local
 kernel replay. The linked notes give the exact pins and verification boundaries.
+
+## Reuse of the 5040 and divisor-sum work
+
+The connection to the project's 5040 work is the same finite prime-power
+coordinate system and reciprocal-divisor weights. In particular,
+
+\[
+ 5040=2^4\cdot3^2\cdot5\cdot7=16\cdot315,\qquad
+ \sum_{d\mid N}\frac1d=\frac{\sigma(N)}N
+   =\prod_{p\mid N}\sum_{e=0}^{v_p(N)}p^{-e}.
+\]
+
+Existing frozen declarations provide the following reusable ingredients:
+
+| Existing declaration | Role here |
+|---|---|
+| [FiniteDivisorEulerProduct.divisor_sum_eq_euler_product](../D5/S3/Arith/DivisorGibbs/FiniteDivisorEulerProduct.lean) | Factor a finite divisor sum into local prime-power geometric sums. |
+| [GoldenResourceOptimalInteger.golden_resource_sigma_identity](../D5/S3/Arith/GoldenResourceOptimalInteger.lean) | Identify the project's divisor objective with `log(σ(N)/N)−λ log N`. |
+| [RobinExponentSwap.reciprocal_geom_sum_swap_strict](../D5/S3/Arith/RobinExponentSwap.lean) | Compare reciprocal-divisor products when prime exponents are reassigned. |
+| [RobinRationalBasis.log_expansion_remainder_bound](../D5/S3/Arith/GoldenResource/RobinRationalBasis.lean) | Bound the remainder of the same positive `atanh` logarithm expansion used by the finite continuation verifier. |
+| [GoldenDivisorLanguage.full_window_divisor_exponent_equiv](../D5/S3/Arith/GoldenResource/GoldenDivisorLanguage.lean) | Identify divisors with prime-exponent coordinates in Fibonacci-sized windows; its 5040 specialization has 60 divisors. |
+
+These results are reused at their existing statements; no duplicate Lean
+wrapper is introduced. The new mathematical arguments in this dossier are
+not thereby Lean-verified. For the logarithm calculation, the public remainder
+bound treats `1≤y<2` after binary range reduction; the endpoint `log 2`
+uses pinned Mathlib's `Real.sum_range_le_log_div` at parameter `1/3`.
+
+The odd part 315 lies just below a simple covering obstruction. For any
+family of distinct nonunit divisors of `N`, the union bound on a full period
+shows that covering would require `σ(N)/N≥2`. At the two adjacent heights,
+
+\[
+ \frac{\sigma(315)}{315}=\frac{208}{105},\qquad
+ \sum_{\substack{d\mid315\\d>1}}\frac1d=\frac{103}{105}<1;
+\qquad
+ \frac{\sigma(945)}{945}=\frac{128}{63},\qquad
+ \sum_{\substack{d\mid945\\d>1}}\frac1d=\frac{65}{63}>1.
+\]
+
+Thus moduli dividing `315=3²·5·7` leave at least `2/105=6/315` uncovered,
+for every residue assignment. Raising only the 3-exponent to obtain
+`945=3³·5·7` already makes this reciprocal-sum bound insufficient. It does
+not prove coverage at 945. The joint-load and survivor-profile estimates
+below retain the residue intersections that this scalar sum omits.
+
+The prime 2 matters quantitatively. The uniform lower bound for avoiding
+one pure class per prime-power modulus is
+
+\[
+ 1-\sum_{e=1}^H p^{-e}\ge\frac{p-2}{p-1}.
+\]
+
+Its right side is positive for odd primes and zero for `p=2`. This is exactly
+the positive denominator used in the odd-prime profiles, so 5040's even
+coordinate cannot be inserted into that estimate unchanged.
+
+The existing unique optimum at 5040 concerns the objective
+`log(σ(N)/N)−(1/25)log N`, not an optimization over survivor probabilities.
+Similarly, [robin_seven_smooth](../D5/S3/Arith/Robin/SevenSmooth.lean) bounds
+`σ(N)/N` for `N=2^a3^b5^c7^d>5040` by Robin's logarithmic right-hand side.
+Neither statement controls arbitrary forbidden residues or their conditioned
+joint law. They supply arithmetic and coordinate tools; an implication from
+those optimization statements to the universal Γ73 bound has not been proved.
 
 ## Gap
 
@@ -401,6 +465,183 @@ without adding forbidden classes. The same applies to each other row.
 the calibration is a sufficient implication, not a finite verification of all
 residue assignments. The height-lifting argument is not formalized in Lean.
 
+## A four-prime head and a restricted noncoverage theorem
+
+**Theorem.** A finite family of residue classes with distinct odd moduli
+greater than one cannot cover the integers if every prime divisor of every
+modulus belongs to
+
+\[
+ \{3,5,7,11\}\ \cup\ \{p:\ p\text{ prime},\ p\ge79\}.
+ \tag{P1}
+\]
+
+There is no bound on the exponents, the number of large prime divisors, or the
+number of prime divisors of a single modulus. Equivalently, any hypothetical
+distinct odd covering must use a modulus divisible by at least one of the
+primes from 13 through 73. This is a restricted theorem, not the full conjecture.
+
+The head estimate used to prove it is the following uniform statement.
+For any finite distinct-modulus family supported on `{3,5,7,11}`, its complete
+survivor set is nonempty, and the uniform survivor probability satisfies
+
+\[
+ \boxed{\Gamma\le\frac{3885}{29}<\frac{138877}{1000}.}
+ \tag{P2}
+\]
+
+**Cylinder profiles.** Fix a finite family and restrict it to each prime
+subset `S`. Let `μ_S` be the uniform probability on its complete survivor set,
+when nonempty. A profile `c_S(T)>0`, `T⊆S`, with `c_S(∅)=1`, bounds every
+cylinder supported on `T` by
+
+\[
+ \mu_S(x\equiv a\pmod{\prod_{p\in T}p^{e_p}})
+ \le\frac{c_S(T)}{\prod_{p\in T}p^{e_p}}\qquad(e_p\ge1).
+\]
+
+Projection to sub-divisors yields the stronger envelope, for nonnegative
+exponent vectors `e`,
+
+\[
+ u_c(e)=\min_{T\subseteq\operatorname{supp}(e)}
+           \frac{c(T)}{\prod_{p\in T}p^{e_p}},\qquad
+ R(c)=\sum_{e\ne0}u_c(e),\qquad
+ K(c)=\sum_e\left(\prod_p(2e_p+1)\right)u_c(e).
+ \tag{P3}
+\]
+
+These are sums over all finite nonnegative exponent vectors, providing bounds
+uniform in the finite height of the given family. They imply
+`∑_{1<d|Q} max_a μ_S(a mod d)≤R(c)` and `Γ_Q(μ_S)≤K(c)`.
+For the latter, expand a squared layout load. Compatible pairs intersect in
+one cylinder modulo their least common multiple; incompatible pairs contribute
+zero. For each prime, `2e+1` ordered exponent pairs have maximum `e`.
+No independence of `μ_S` is used.
+
+**Construction of profiles.** Start with `c_∅(∅)=1`, `R(c_∅)=0`.
+For a prime `p`, the set `X_p` avoiding the pure `p`-power classes has uniform
+density at least `(p−2)/(p−1)`. Indeed the sum of the reciprocals of distinct
+positive powers of `p` is at most `1/(p−1)`. Its uniform law `ρ_p` therefore
+has cylinder caps `C_p p^{−e}`, where `C_p=(p−1)/(p−2)`.
+
+Suppose profiles and nonempty survivors have been established for `A=S\{p}`.
+Start with `ν=μ_A×ρ_p`. Every remaining forbidden class has modulus `dp^e`
+with `d>1` supported on `A`. There is at most one class for each pair `(d,e)`,
+so their total `ν`-mass is at most
+
+\[
+ b_{A,p}=\frac{R(c_A)}{p-2}.
+\]
+
+If `b_{A,p}<1`, condition on avoiding these remaining classes. The result is
+uniform on the complete survivor set for `S`, and has the valid profile
+
+\[
+ c^{(p)}_S(T)=\frac{c_A(T\setminus\{p\})}{1-b_{A,p}}
+       \begin{cases}C_p,&p\in T,\\1,&p\notin T,\end{cases}
+ \qquad T\ne\varnothing.
+ \tag{P4}
+\]
+
+Every admissible choice of last prime produces **the same** uniform probability
+on complete survivors. Thus take `c_S(T)=min_p c^{(p)}_S(T)` separately for
+each support, over last primes with `b_{A,p}<1`. This is not a minimum over
+different measures. The marginal on `A` is reweighted by its actual conditional
+survival fraction; a completely killed fibre receives mass zero. No preservation
+of each old fibre is assumed.
+
+Applying (P3)–(P4) to all subsets of `{3,5,7,11}` gives
+
+\[
+ R(c_{\{3,5,7,11\}})=\frac{1514}{145},\qquad
+ K(c_{\{3,5,7,11\}})=\frac{3885}{29}.
+ \tag{P5}
+\]
+
+The last-prime deletion bounds for `p=3,5,7,11` are respectively
+`34/39`, `215/261`, `137/195`, `77/135`, all strictly below one.
+The complete resulting profile is:
+
+| `T` | `c(T)` | `T` | `c(T)` |
+|---|---:|---|---:|
+| ∅ | 1 | {3,5} | 540/29 |
+| {3} | 378/29 | {3,7} | 468/29 |
+| {5} | 216/29 | {3,11} | 420/29 |
+| {7} | 117/29 | {5,7} | 288/29 |
+| {11} | 75/29 | {5,11} | 240/29 |
+| {7,11} | 180/29 | {3,5,7} | 648/29 |
+| {3,5,11} | 600/29 | {3,7,11} | 540/29 |
+| {5,7,11} | 360/29 | {3,5,7,11} | 720/29 |
+
+**Exact evaluation of the infinite sums.** For each prime choose `L_p≥0`
+satisfying
+
+\[
+ p^{L_p+1}\ge\max_{T\subseteq S\setminus\{p\}}
+                         \frac{c(T\cup\{p\})}{c(T)}.
+\]
+
+If `e_p>L_p`, including `p` in a candidate support in (P3) cannot increase
+its value. Thus a minimizing support can include all such tail coordinates.
+Partition each exponent into the individual values `0,…,L_p` and one tail
+state `e_p>L_p`. For a cell with tail coordinates `J` and positive bounded
+coordinates `I`, its envelope is exactly
+
+\[
+ \left(\prod_{p\in J}p^{-e_p}\right)
+ \min_{T\subseteq I}\frac{c(J\cup T)}{\prod_{p\in T}p^{e_p}}.
+\]
+
+Sum the tail coordinates with the exact identities
+
+\[
+ \sum_{e>L}p^{-e}=\frac{1}{p^L(p-1)},\qquad
+ \sum_{e>L}(2e+1)p^{-e}
+   =\frac{(2L+3)(p-1)+2}{p^L(p-1)^2}.
+\]
+
+For the displayed four-prime profile the cutoffs are `(2,1,0,0)`, so only
+48 cells are needed. The same construction evaluates each predecessor profile
+exactly. The [profile verifier](../docs/reports/erdos7-odd-covering/verify_uniform_head_profile.py)
+checks the rational recurrence, existence of an admissible normalization at
+every nonempty subset, (P5), and its strict comparison to the tail seed.
+It uses Python 3.9+ standard-library arithmetic and no residue enumeration:
+
+```sh
+python3 docs/reports/erdos7-odd-covering/verify_uniform_head_profile.py
+```
+
+For an independent arithmetic bound, summing (P3) on the box `0≤e_p≤6`
+and bounding the complement by the raw support coefficients and exact geometric
+tails gives `K<134`, consistent with (P5). The cutoff-cell calculation retains
+the sharper exact value. These finite calculations certify the numerical
+parameters; the profile induction proves their validity for every residue
+assignment and every finite height.
+
+**Conclusion of (P1).** Apply (P2) to the classes involving only `{3,5,7,11}`.
+For any missing small prime use an unused coordinate; this does not add a
+forbidden class, and the same head bound applies. Begin the new-prime steps
+in (T6) at `79`, with absolute prime index `22`, using the checked upper seed
+`F_21=138877/1000`. There is no need to insert any prime from 13 through 73
+into the head: index 21 specifies where the tail starts, while (T1) allows
+any coprime head. The exact continuation and BBMST's analytic termination then
+leave positive mass on complete survivors. CRT and periodicity supply an
+integer avoiding every original congruence.
+
+**Literature boundary.** The searched project has the two-prime density
+theorem but no joint-load or cylinder-profile head theorem. The searched pinned
+Mathlib congruence, probability and combinatorics files provide counting,
+finite sums and Cauchy–Schwarz, with no exact profile result identified.
+Hough–Nielsen's necessary factor 2 or 3, BBMST's odd-cover restriction involving
+9 or both 3 and 5, BBMST's squarefreeness at primes at most 73, and the
+three-prime density theorem in [arXiv:2605.18644, Theorem 1.9](https://arxiv.org/abs/2605.18644)
+do not directly cover (P1). The separately verified three-factors-per-modulus
+theorem also has a different hypothesis: (P1) permits moduli divisible by four
+or more primes. No dominating theorem was identified in this searched scope;
+this is not a claim of literature priority. The theorem and its proof have
+not been formalized in Lean.
+
 ## Falsifier
 
 The [exact bridge program](../docs/reports/erdos7-odd-covering/bridge_checks.py)
@@ -592,8 +833,10 @@ checked on macOS/Python 3.14; other platforms and Python 3.8 were not tested.
 `wall`: user-selected third-tier core research. The unrestricted target remains
 open. The results are three exact obstacles to earlier proof routes, a direct
 joint-load transfer into the BBMST continuation, and a quantitative reduction
-of the arbitrary-height sufficient condition to a finite exponent cap. The
-universal finite-base bound remains unproved. No new Lean theorem, freeze,
+of the arbitrary-height sufficient condition to a finite exponent cap. A
+uniform four-prime head bound additionally proves the restricted noncoverage
+theorem (P1), allowing arbitrary prime support above 73. The universal
+finite-base bound needed for the full conjecture remains unproved. No new Lean theorem, freeze,
 or problem-resolution binding is supplied.
 
 ## ASSUMED-UNVERIFIED
@@ -601,7 +844,8 @@ or problem-resolution binding is supplied.
 The external nine-prime result has no completed local kernel replay. The
 three-factors-per-modulus theorem has the completed checks recorded in its
 Library note, but `hThree` remains essential; its paper-only largest-prime-cutoff
-extension is outside the Lean theorem. The joint-load transfer and exact finite recurrence are proved above;
+extension is outside the Lean theorem. The joint-load transfer, exact finite
+recurrence and restricted noncoverage theorem (P1) are proved above;
 the universal Γ73 bound and the sufficient finite-base bounds remain unproved.
 These mathematical arguments have not been formalized in Lean.
 H73 is refuted and supplies no lower bound for Γ73. These finite checks do not
