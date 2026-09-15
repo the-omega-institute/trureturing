@@ -135,6 +135,33 @@ theorem rational_tail_level_closure (g A : ℕ → ℕ) (hg : ∀ n, 0 < g n) :
       exact mem_of_mem_nhds (ht n)
     · change (weightedRead g u : ℝ) = c
       exact_mod_cast huq
+  have hnonneg (u : B A) : 0 ≤ weightedRead g u := by
+    unfold weightedRead
+    exact Finset.sum_nonneg (by intros; positivity)
+  have hfinite (u : B A) :
+      weightedTotal g u.val = ENNReal.ofReal (weightedRead g u) := by
+    apply le_antisymm
+    · apply (hsub u.val (weightedRead g u) (by exact_mod_cast hnonneg u)).mpr
+      intro N
+      exact_mod_cast hprefix u (Finset.range (N + 1))
+    · let N := u.property.toFinset.sup id
+      have hs : u.property.toFinset ⊆ Finset.range (N + 1) := by
+        intro n hn
+        exact Finset.mem_range.mpr (Nat.lt_succ_of_le (Finset.le_sup (f := id) hn))
+      have hp : p u.val N = weightedRead g u := (hread u _ hs).symm
+      rw [← hp, hpcast]
+      exact le_iSup (fun N => ENNReal.ofReal
+        (∑ n ∈ Finset.range (N + 1), ((u.val n : ℕ) : ℝ) / g n)) N
+  have hclosure (hfill : FillsRationalTails g A) (c : ℚ) (hc : 0 ≤ c) :
+      closure (ambientLevel g A c) = {x | weightedTotal g x ≤ ENNReal.ofReal c} ∧
+      closure (level g A c) = {u | (weightedRead g u : ℝ) ≤ c} := by
+    refine ⟨hambient hfill c hc, ?_⟩
+    rw [Topology.IsEmbedding.subtypeVal.closure_eq_preimage_closure_image]
+    change Subtype.val ⁻¹' closure (ambientLevel g A c) = _
+    rw [hambient hfill c hc]
+    ext u
+    change weightedTotal g u.val ≤ ENNReal.ofReal c ↔ (weightedRead g u : ℝ) ≤ c
+    rw [hfinite u, ENNReal.ofReal_le_ofReal_iff (by exact_mod_cast hc)]
   sorry
 
 #print axioms rational_tail_level_closure
