@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Analytic/CalibratedDiagonalHeatTrace
    mirror-E: none(waiver:exact-finite-matrix-spectrum)
    anchors: []
+   utility: none
    digest: One noisy complete heat-trace observation excludes the actual low spectrum of a band-calibrated finite diagonal matrix. -/
 
 import D5.S3.Analytic.CalibratedLaplaceBand
@@ -27,7 +28,7 @@ set_option relaxedAutoImplicit false
 noncomputable section
 namespace D5.S3.Analytic.CalibratedDiagonalHeatTrace
 
-open scoped BigOperators
+open scoped BigOperators NNReal
 open D5.S3.Analytic.CalibratedLaplaceBand
 
 variable {ι : Type*} [Fintype ι] [DecidableEq ι]
