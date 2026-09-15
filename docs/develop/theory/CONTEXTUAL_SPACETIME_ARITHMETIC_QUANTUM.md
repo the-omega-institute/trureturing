@@ -26606,3 +26606,175 @@ $$
 $$
 
 后续章节可以在这一锚上研究三类问题：不同记忆结构下的缺陷复合律、comb/strategy 范数的逐槽推广，以及 Zeckendorf 粗读出在给定实验族中的最小充分记录。若没有这些额外假设，不得把“记录看起来经典”升级为“整体过程已经经典”。
+## 121. 记录接口的 Blackwell 偏序与缺陷复合
+
+第 120 节用过程 diamond 缺陷控制任意后续量子决策风险。本节固定一个历史参数集，研究不同记录接口之间的可模拟关系：若较粗记录可以由较细记录通过与历史无关的退化得到，则较细记录对所有固定任务都不劣；若只能近似退化，则缺陷沿记录链次可加。这给“保留多少历史”提供一个偏序，而不是单一标量。
+
+### 121.1 经典记录的 Blackwell 预序
+
+设有限历史集为 $H$，有限记录集为 $Y,Z$。记录接口是条件概率核
+
+$$
+E(y\mid h),
+\qquad
+F(z\mid h),
+$$
+
+其中对每个 $h$ 有 $\sum_yE(y\mid h)=\sum_zF(z\mid h)=1$。随机退化核 $K(z\mid y)$ 作用为
+
+$$
+(K E)(z\mid h)=\sum_yK(z\mid y)E(y\mid h).
+$$
+
+定义 Blackwell 预序
+
+$$
+E\succeq_B F
+\quad\Longleftrightarrow\quad
+\exists K\;F=K\circ E.
+$$
+
+它是自反且传递的预序：自反性取恒等核；若 $F=K_1E$ 且 $G=K_2F$，则 $G=(K_2K_1)E$。互相可以退化的接口应视为同一个等价类；一般情况下预序不反对称，因此不能把所有记录接口排成一条全序链。
+
+对有限动作集 $A$、先验 $\pi$ 和损失 $0\le\ell(a,h)\le L$，记录 $E$ 的最优风险为
+
+$$
+R_E
+=
+\inf_\delta
+\sum_{h\in H}\pi(h)
+\sum_{y\in Y}E(y\mid h)
+\sum_{a\in A}\delta(a\mid y)\ell(a,h),
+$$
+
+其中 $\delta(a\mid y)$ 是从记录到动作的随机决策规则。若 $E\succeq_BF$，固定一个实现 $F=K E$。任意使用 $F$ 的决策规则都可在 $E$ 上先施加 $K$ 再执行，因此
+
+$$
+\boxed{R_E\le R_F.}
+$$
+
+该不等式对每个固定先验、动作集和有界损失分别成立；它不构成跨任务的单一风险全序，也不说明某条记录在未声明的动力学或自适应实验中仍然充分。
+
+### 121.2 经典近似缺陷的复合律
+
+定义从 $E$ 模拟 $F$ 的最坏行总变差缺陷
+
+$$
+\delta_B(F\mid E)
+=
+\inf_K\max_{h\in H}
+\operatorname{TV}\bigl(F_h,(K E)_h\bigr),
+$$
+
+其中 $E_h$、$F_h$ 表示固定历史 $h$ 的记录分布。设有第三个接口 $G$，且记录空间允许复合相应随机核。对任意 $K_1,K_2$，由三角不等式和随机核对总变差距离的收缩性，得到
+
+$$
+\operatorname{TV}\bigl(G_h,(K_2K_1E)_h\bigr)
+\le
+\operatorname{TV}\bigl(G_h,(K_2F)_h\bigr)
++
+\operatorname{TV}\bigl((K_2F)_h,(K_2K_1E)_h\bigr)
+\le
+\operatorname{TV}\bigl(G_h,(K_2F)_h\bigr)
++
+\operatorname{TV}\bigl(F_h,(K_1E)_h\bigr).
+$$
+
+取历史最坏值和两个核的下确界，得到
+
+$$
+\boxed{
+\delta_B(G\mid E)
+\le
+\delta_B(F\mid E)+\delta_B(G\mid F).
+}
+$$
+
+因此沿接口链 $E_0\succeq_B E_1\succeq_B\cdots\succeq_B E_m$，若第 $i$ 步近似缺陷为 $\varepsilon_i$，则端点缺陷至多为 $\sum_i\varepsilon_i$。对单位区间损失，记录风险的相应偏差至多为同一数值；对上界为 $L$ 的损失，乘以 $L$。
+
+### 121.3 量子记录接口
+
+经典核的退化对应量子记录态族之间的 CPTP 模拟。设每个历史 $h$ 在接口 $E$、$F$ 下分别产生密度算子 $\rho_h^E$、$\rho_h^F$。定义
+
+$$
+E\succeq_QF
+\quad\Longleftrightarrow\quad
+\exists\Lambda\ \text{CPTP},
+\quad
+\rho_h^F=\Lambda(\rho_h^E)\quad(\forall h).
+$$
+
+量子接口的状态族模拟缺陷为
+
+$$
+\delta_Q(F\mid E)
+=
+\inf_{\Lambda\ \mathrm{CPTP}}
+\max_{h\in H}
+\frac12\left\|\rho_h^F-\Lambda(\rho_h^E)\right\|_1.
+$$
+
+CPTP 映射保持迹距离收缩，因此 $E\succeq_QF$ 时，对任意 POVM 决策和有界损失都有 $R_E\le R_F$；近似情形下，被模拟方向满足 $R_E\le R_F+L\,\delta_Q(F\mid E)$。近似缺陷还满足复合律
+
+$$
+\boxed{
+\delta_Q(G\mid E)
+\le
+\delta_Q(F\mid E)+\delta_Q(G\mid F).
+}
+$$
+
+证明与经典情形相同：对近似模拟器 $\Lambda_1:E\to F$、$\Lambda_2:F\to G$ 复合，并使用
+
+$$
+\frac12\left\|\Lambda_2(\sigma)-\Lambda_2(\tau)\right\|_1
+\le
+\frac12\left\|\sigma-\tau\right\|_1.
+$$
+
+这里的量子预序只比较一组状态族和一次 CPTP 读出。若后续实验可以访问多槽活动记忆、插入自适应控制或保留参考，应回到第 120 节的过程缺陷；单次状态族的 $\delta_Q$ 不自动支配 comb 或 strategy 的风险。
+
+### 121.4 历史保留的操作判据
+
+令 $E_k$ 表示保留深度为 $k$ 的记录接口，且忘却核满足
+
+$$
+E_{k+1}\succeq_BE_k
+$$
+
+或其量子对应 $E_{k+1}\succeq_QE_k$。给定目标未来接口 $T$、损失上界 $L$ 和容许风险误差 $\varepsilon$，若存在满足条件的 $k$，则可以选择最小的 $k$ 使
+
+$$
+L\,\delta(T\mid E_k)\le\varepsilon,
+$$
+
+其中 $\delta$ 取与任务匹配的 $\delta_B$、$\delta_Q$ 或第 120 节的过程 diamond 缺陷。这个 $k$ 是相对于历史参数集、后续决策类和误差预算的最小充分记录深度；改变任一项都可能改变它。
+
+该判据不声称存在跨所有任务的唯一“客观历史长度”。Blackwell 预序提供的是可比较性：一条记录若能无损模拟另一条，就对所有固定任务支配；两条记录若互不可退化，则需要指定先验、损失或后续实验才能比较。
+
+### 121.5 与 Zeckendorf 构型的连接
+
+在合法语言
+
+$$
+\mathcal W_L
+=\{w\in\{0,1\}^L:w_jw_{j+1}=0\}
+$$
+
+上，可把 $h=w$ 作为历史参数，把 Zeckendorf 数值、奇偶性或局部模式作为不同记录接口。当 $E_k$ 是 $E_{k+1}$ 的历史无关粗粒化（由函数或随机核给出）时，存在忘却核，因而 $E_{k+1}\succeq_BE_k$。但若记录接口还包含相位、活动记忆或参考，粗粒度函数未必能由经典核模拟；必须把这些量纳入量子状态族并计算 $\delta_Q$，或回到第 120 节的过程缺陷。
+
+这解释了为什么同一组合法构型可以有不同的“现实稳定度”：稳定度不是由 Fibonacci 维数 $F_{L+2}$ 单独决定，而是由所选记录接口在 Blackwell 预序中的位置及其对目标未来的缺陷共同决定。
+
+### 121.6 形式化边界与追加锚
+
+本节的经典预序、总变差复合律、量子 CPTP 预序和状态族迹距离复合律是有限集合与有限维量子态上的普通数学推导。指定版本的 Lean 库已有随机核、有限 Kraus 通道和迹距离收缩等支点；其中 `FiniteDeficiencyTriangle.lean` 与 `FiniteDeficiencyRiskTransfer.lean` 分别提供有限缺陷三角和有界损失风险传递。Blackwell 命名、接口预序与量子状态族的统一组合尚无一个单一冻结定理；本节不冒充新增 kernel 证明。多槽自适应过程仍应使用第 120 节的过程级范数。
+
+新增锚为
+
+$$
+\boxed{
+\text{记录的充分性形成 Blackwell 预序；缺陷沿可复合的退化链次可加；在模拟方向上，风险增加至多为损失上界乘以缺陷。}
+}
+$$
+
+因此，“需要保留多少历史”可以先问三个可计算问题：哪些记录可以无损退化，近似退化的缺陷如何沿链累加，以及给定未来任务的风险预算允许多大的端点缺陷。只有在这三个量都被指定后，稳定经典现实才有可检验的记录深度。
