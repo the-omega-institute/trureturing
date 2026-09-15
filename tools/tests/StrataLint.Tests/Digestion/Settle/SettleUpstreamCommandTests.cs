@@ -142,17 +142,42 @@ public sealed partial class SettleUpstreamCommandTests
     }
 
     [Fact]
-    public void ContextPrecedesVerbSpecificStateAndChainPrecedesContext()
+    public void VerbSpecificStatePrecedesContextAndChainPrecedesBoth()
     {
         using var f = new Fixture();
         var request = f.Request.Replace("previous_atom_id = 'source-boundary'", "previous_atom_id = '" + new string('f', 64) + "'", StringComparison.Ordinal);
         var target = f.Target with { ProjectedStatus = new(DigestionMigrationState.Partial, DigestionTruthState.Open) };
         f.Context = f.Context.WithEntries([target]);
         f.ResetRaw();
-        f.Reject("CONTEXT_MISMATCH", request);
+        f.Reject("NOT_RESIDUAL_OPEN", request);
+        Assert.Empty(f.Runner.Sources);
         f.Context = f.Context.WithEntries([target with { Receipts = target.Receipts with { ChainAtoms = [new string('f', 64)] } }]);
         f.ResetRaw();
         f.Reject("CHAIN_PARENT", request);
+    }
+
+    [Fact]
+    public void NonResidualTargetPrecedesMissingSourceAndChainPrecedesBoth()
+    {
+        using var f = new Fixture();
+        var target = f.Target with { ProjectedStatus = new(DigestionMigrationState.Partial, DigestionTruthState.Open) };
+        f.Context = f.Context.WithEntries([target]);
+        f.ResetRaw(includeSource: false);
+        f.Reject("NOT_RESIDUAL_OPEN");
+        Assert.Empty(f.Runner.Sources);
+        f.Context = f.Context.WithEntries([target with { Receipts = target.Receipts with { ChainAtoms = [new string('f', 64)] } }]);
+        f.ResetRaw(includeSource: false);
+        f.Reject("CHAIN_PARENT");
+        Assert.Empty(f.Runner.Sources);
+    }
+
+    [Fact]
+    public void InTreeParentSegmentIsRejectedBeforeNormalization()
+    {
+        using var f = new Fixture();
+        TemporaryFileSystem.Directory.CreateDirectory(Path.Combine(f.Root, "subdir"));
+        f.Reject("PROBE_PATH_INVALID", f.Request.Replace("probe.lean", "subdir/../probe.lean", StringComparison.Ordinal));
+        Assert.Empty(f.Runner.Sources);
     }
 
     [Fact]

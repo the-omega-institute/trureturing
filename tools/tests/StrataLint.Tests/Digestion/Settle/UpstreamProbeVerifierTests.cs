@@ -17,7 +17,7 @@ public sealed partial class UpstreamProbeVerifierTests
     [InlineData("import Unpinned\n", "PROBE_IMPORTS_PROJECT")]
     [InlineData("", "PROBE_IMPORTS_PROJECT")]
     [InlineData("import Mathlib\n/- sorry -/\n", "PROBE_FAILED")]
-    [InlineData("import Mathlib\naxiom secret : True\n", "PROBE_FAILED")]
+    [InlineData("import Mathlib\naxiom secret : True\n", "PROBE_DECLARATION_UNSUPPORTED")]
     [InlineData("import Mathlib\n-- native_decide\n", "PROBE_FAILED")]
     public void RejectsInvalidImportsAndForbiddenSourceBeforeExecution(string imports, string code)
     {
@@ -46,16 +46,16 @@ public sealed partial class UpstreamProbeVerifierTests
     }
 
     [Theory]
-    [InlineData("theorem probe : True := by trivial\n")]
-    [InlineData("example : True := by trivial\n#print axioms probe\n")]
-    [InlineData("lemma probe : True := by trivial\n#print axioms probe\n")]
-    [InlineData("theorem probe : True := by trivial\n#print axioms probe\n#check True\n")]
-    public void RequiresNamedTheoremsAndTrailingPrints(string body)
+    [InlineData("theorem probe : True := by trivial\n", "PROBE_AXIOMS")]
+    [InlineData("example : True := by trivial\n#print axioms probe\n", "PROBE_DECLARATION_UNSUPPORTED")]
+    [InlineData("lemma probe : True := by trivial\n#print axioms probe\n", "PROBE_DECLARATION_UNSUPPORTED")]
+    [InlineData("theorem probe : True := by trivial\n#print axioms probe\n#check True\n", "PROBE_DECLARATION_UNSUPPORTED")]
+    public void RequiresNamedTheoremsAndTrailingPrints(string body, string code)
     {
         using var fixture = new ProbeFixture();
         var error = Assert.Throws<UpstreamSettlementException>(() => fixture.Verify("import Mathlib\n" + body));
-        Assert.Equal("PROBE_AXIOMS", error.Code);
-        Assert.True(fixture.Runner.Sources.Count <= 1);
+        Assert.Equal(code, error.Code);
+        Assert.Empty(fixture.Runner.Sources);
     }
 
     [Fact]
@@ -91,6 +91,25 @@ public sealed partial class UpstreamProbeVerifierTests
         Assert.Contains("full resolver diagnostics", error.Message, StringComparison.Ordinal);
         Assert.Equal(2, fixture.Runner.Sources.Count);
         Assert.All(fixture.Runner.Paths, path => Assert.False(File.Exists(path)));
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void SuccessfulCheckOutputDoesNotMarkResolvedNameUnresolved(bool stderr)
+    {
+        using var f = new ProbeFixture();
+        f.Runner.Results.Enqueue(new(0, Encoding.UTF8.GetBytes(Output), []));
+        var success = "Nat.add_comm (n m : Nat) : n + m = m + n\n";
+        var diagnostic = "check.lean:3:8: error: unknown constant 'True.intro' (see Nat.add_comm)\n";
+        f.Runner.Results.Enqueue(new(1, Encoding.UTF8.GetBytes(success + (stderr ? "" : diagnostic)),
+            Encoding.UTF8.GetBytes(stderr ? diagnostic : "")));
+        var error = Assert.Throws<UpstreamSettlementException>(() => f.Verify());
+        Assert.Equal("DECLARATION_UNRESOLVED", error.Code);
+        Assert.StartsWith("True.intro unresolved=[True.intro] exit=1\n", error.Message, StringComparison.Ordinal);
+        Assert.Contains(success, error.Message, StringComparison.Ordinal);
+        Assert.Contains(diagnostic, error.Message, StringComparison.Ordinal);
+        Assert.All(f.Runner.Paths, path => Assert.False(File.Exists(path)));
     }
 
     [Fact]
