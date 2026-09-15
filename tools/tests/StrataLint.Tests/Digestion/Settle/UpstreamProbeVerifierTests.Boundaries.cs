@@ -118,6 +118,18 @@ public sealed partial class UpstreamProbeVerifierTests
         Assert.Empty(f.Runner.Sources);
     }
 
+    [Theory]
+    [InlineData("theorem probe : True := by trivial\n  def hidden := 1\n#print axioms probe\n")]
+    [InlineData("theorem probe : True := by trivial\n  theorem hidden : True := by trivial\n#print axioms probe\n")]
+    [InlineData("  trivial\ntheorem probe : True := by trivial\n#print axioms probe\n")]
+    public void IndentationCannotIntroduceAnotherCommand(string body)
+    {
+        using var f = new ProbeFixture();
+        var error = Assert.Throws<UpstreamSettlementException>(() => f.Verify("import Mathlib\n" + body));
+        Assert.Equal("PROBE_DECLARATION_UNSUPPORTED", error.Code);
+        Assert.Empty(f.Runner.Sources);
+    }
+
     [Fact]
     public void UnprintedDefinitionCannotHideItsAxioms()
     {
