@@ -231,16 +231,21 @@ def validate_sources(rows, repository):
         evidence = row.get('utility_refutation')
         if evidence and evidence['claim_source_sha256'] != 'sha256:' + digest(inputs.safe_file(evidence['claim_source_path'])):
             raise ValueError('report claim source binding mismatch')
-    validate_template_sources(rows, repository)
+    validate_template_sources(rows, repository, inputs=inputs)
 
 
-def validate_template_sources(rows, repository):
+def validate_template_sources(rows, repository, *, inputs=None):
     """Reject stale binding inputs before native reuse or final publication.
 
     Their paths are emitted by the checked driver. This checks byte binding;
     the strict C# consumer still checks the complete evidence semantics.
     """
-    inputs = selection.Selection(repository)
+    # Selection expands the report scope. A native batch shares that immutable
+    # scope description; path checks and byte digests remain fresh per call.
+    if inputs is None:
+        inputs = selection.Selection(repository)
+    elif inputs.root != Path(repository).resolve():
+        raise ValueError('declared-template input owner mismatch')
     observed = {}
     for row in rows:
         evidence = row.get('information_templates')

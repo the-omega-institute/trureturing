@@ -109,6 +109,42 @@ class StreamingTests(unittest.TestCase):
 
 
 class PublicationTests(unittest.TestCase):
+    def test_binding_batch_scope_expanded_once(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            paths = lambda *names: dict(include=[dict(pattern=n, optional=False) for n in names], exclude=[])
+            (root / 'lean-report-inputs.json').write_text(json.dumps(dict(schema_version=1, report_semantic_version=4,
+                report_modules=paths('X*.lean'), inspector_sources=paths(), config_inputs=paths(),
+                producer_scopes={'lean-report': paths('lean-report-inputs.json',
+                    'tools/scripts/report/lean-report-selection.py'), 'scribe-content': paths()})))
+            policy = root / 'Policy.lean'
+            policy.write_text('def driver := 1\n')
+            rows, requests = {}, []
+            for i in range(8):
+                name = 'X' + str(i)
+                source = root / (name + '.lean')
+                source.write_text('def x := 1\n')
+                utility = root / (name + '.json')
+                utility.write_text(json.dumps(dict(source_path=source.name, utilities=[])))
+                rows[name] = [dict(module=name, source_path=source.name,
+                    source_sha256='sha256:' + publication.digest(source),
+                    information_templates=dict(schema_version=1, compatibility_version=4,
+                        inventory=[], registered=[], records=[],
+                        inputs=[dict(path=policy.name, sha256=publication.digest(policy))]))]
+                requests.append(['validate', [str(root), 'module', str(root), name, str(utility), 'fixture.zip']])
+            request, result = root / 'request.json', root / 'result.json'
+            request.write_text(json.dumps(requests))
+            # Isolate the source-binding boundary from ZIP decoding. The batch
+            # loop and each row's real path/hash validator still execute.
+            def validate(kind, owner, name, utility, artifact, **kwargs):
+                native.row_binding(rows[name], owner, name, utility,
+                    **{key: value for key, value in kwargs.items() if key == 'template_inputs'})
+            with patch.object(native, 'validate', side_effect=validate), patch.object(
+                    publication.selection, 'Selection', wraps=publication.selection.Selection) as selections:
+                native.batch(request, result)
+                self.assertEqual(json.loads(result.read_text()), [0] * len(requests))
+                self.assertEqual(selections.call_count, 1, '[FAIL] binding_batch_scope_expanded_once')
+
     def test_binding_evidence_survives_compaction_and_native_validation(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -147,7 +183,10 @@ class PublicationTests(unittest.TestCase):
                 inputs=[dict(path='Policy.lean', sha256=publication.digest(policy))])
             rows = [dict(module='X', source_path='X.lean', source_sha256='sha256:' + publication.digest(source),
                 information_templates=evidence)]
+            inputs = publication.selection.Selection(root)
             validators = [lambda: native.row_binding(rows, root, 'X', utility),
+                          lambda: native.row_binding(rows, root, 'X', utility, template_inputs=inputs),
+                          lambda: publication.validate_template_sources(rows, root, inputs=inputs),
                           lambda: publication.validate_sources(rows, root)]
             for validate in validators:
                 validate()
