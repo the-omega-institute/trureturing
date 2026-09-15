@@ -1,125 +1,87 @@
 {
-  "schema": 1,
-  "kind": "source-experimental-candidate",
-  "title": "GPU5040 random initialization, D=40",
   "candidate_sha256": "a552de81c7f2a95054fb84a417c79291cb343988b75b6e1ec2c35c1f8b163c75",
-  "initialization": "random",
-  "dimension": 40,
-  "model": {
-    "source": "tools/scripts/agent/gpu5040/search_config.py",
-    "occupation": [4, 2, 1, 1],
-    "alphabet": [0, 1, 2, 3],
-    "length": 8,
-    "target": "Pure state with amplitude +1/sqrt(840) on each of the 840 length-8 words of occupation (4,2,1,1), and zero on every other word.",
-    "legal_words": 840,
-    "full_words": 65536,
-    "restrictions": {
-      "field": "real",
-      "isometry": "one fixed V: R^D -> R^4 tensor R^D, used eight times",
-      "initial_memory": "one normalized trainable pure vector",
-      "final_memory": "traced, no selected final vector",
-      "postselection": false,
-      "time_varying_controls": false,
-      "entrywise_positivity": false,
-      "interpretation": "numerical candidates only; search failure is not a lower bound"
-    },
-    "objective": "||sum_legal A[w7] ... A[w0] v0 / sqrt(840)||^2",
-    "tensor_order": "A[label,next_memory,memory]; V row = label*D + next_memory. Word w=(w0,...,w7) has final-memory vector psi_w=A[w7]...A[w0]v0.",
-    "ideal_constraints": "sum_label A[label].T @ A[label] = I_D and v0.T @ v0 = 1. The same real V is repeated eight times; initial memory is pure and final memory is traced.",
-    "metric_meaning": "t=sum_legal psi_w/sqrt(840); stored target_fidelity F=||t||^2 is the raw target projection weight, with no division by output norm_squared. The target-separated-memory residual measures ||Psi - target tensor t||; forbidden leakage sums ||psi_w||^2 over illegal words."
-  },
   "checkpoint_metadata": {
-    "schema": 2,
-    "kind": "best",
-    "utc": "2026-09-09T22:12:22.086096+00:00",
     "algorithm": "householder-occupation-dp-adam-v1",
-    "source_sha256": "dccf3297f7cec095d4a2f0e5a28acac7a47a4a8d403f076a9efca739e2d61e57",
     "config_sha256": "5015718f03d5b487ef86d0563748855918df9c6e09339a828d5aaf4e9a7bab21",
-    "trial_identity": "855569b533e6ecdc074d3d4ca1ccadc069c1f9ac609c4d900226c511fbd59b99",
-    "precision": "torch.float32",
     "device": "mps:0",
+    "kind": "best",
     "metrics": {
+      "dimension": 40,
       "fidelity": 0.9194633960723877,
       "gram_max_abs_error": 4.76837158203125e-07,
       "initial_norm_squared": 1.0,
-      "dimension": 40,
-      "seed": 1007742,
-      "run_index": 2702,
       "iteration": 4663,
+      "run_index": 2702,
+      "seed": 1007742,
       "total_steps": 13514663
     },
+    "precision": "torch.float32",
+    "runtime_scope": "No historic training runtime descriptor in this checkpoint; only recorded device and precision are known here. No present-day runtime or source defaults substituted.",
+    "schema": 2,
+    "source_sha256": "dccf3297f7cec095d4a2f0e5a28acac7a47a4a8d403f076a9efca739e2d61e57",
     "training_runtime": null,
-    "runtime_scope": "No historic training runtime descriptor in this checkpoint; only recorded device and precision are known here. No present-day runtime or source defaults substituted."
+    "trial_identity": "855569b533e6ecdc074d3d4ca1ccadc069c1f9ac609c4d900226c511fbd59b99",
+    "utc": "2026-09-09T22:12:22.086096+00:00"
   },
-  "verification": {
-    "source": "history.sqlite3 / verifications, selected by candidate_sha256",
-    "status": "verified",
-    "updated_utc": "2026-09-15T21:18:41.309974+00:00",
-    "result": {
-      "best_product_memory_residual_l2": 0.18750181270876565,
-      "candidate_modified": false,
-      "candidate_sha256": "a552de81c7f2a95054fb84a417c79291cb343988b75b6e1ec2c35c1f8b163c75",
-      "chunk_size": 256,
-      "cpu_minus_training_fidelity": -9.069237971726096e-08,
-      "dimension": 40,
-      "forbidden_leakage_squared": 0.03878130175482798,
-      "full_words": 65536,
-      "gram_max_abs_error": 2.829751721833418e-07,
-      "initial_norm": 1.0000000040771084,
-      "interpretation": "finite precision evidence, not success, closure, or a lower bound",
-      "largest_memory_density_eigenvalue": 0.9648435861623685,
-      "legal_words": 840,
-      "method": "independent numpy CPU float64 full enumeration, two chunked passes",
-      "norm": 1.0000002579656875,
-      "norm_squared": 1.0000005159314416,
-      "occupation": [4, 2, 1, 1],
-      "seconds": 0.160661583,
-      "target_fidelity": 0.919463305380008,
-      "target_overlap_vector": [-0.07977676361923372, 0.2421805099352998, 0.10738739520326245, -0.16053325426463202, -0.2890666791686279, -0.22491269608302294, -0.009115407183063265, -0.08103133453136374, -0.03529893596561171, -0.16301356698556582, 0.043709143817347605, 0.19255829055259407, -0.2039727695907023, -0.06650729666519445, -0.1209568054774057, -0.11076842121062432, 0.15342308208707747, 0.18167277374790308, 0.1391126952546001, 0.12870356956754014, -0.0726133546007587, 0.144774814649239, 0.20455066372535938, -0.062128365584703533, 0.05350205671238476, -0.29948626456656946, -0.055840508690647696, 0.10019830461712555, 0.12414337696279808, -0.17167931757285196, 0.11637314122178222, 0.29372534557521235, -0.002560318378291182, 0.03434453082498453, 0.21490298235492408, 0.021218732292530875, 0.05669592741056567, 0.18480851714001928, 0.16937936897340253, 0.08903184367863985],
-      "target_separated_memory_residual_l2": 0.2837907865865868,
-      "target_separated_memory_residual_squared": 0.08053721055143365,
-      "training_fidelity": 0.9194633960723877,
-      "utc": "2026-09-15T21:18:41.293865+00:00",
-      "verification_runtime": {
-        "machine": "arm64",
-        "numpy": "2.0.2",
-        "platform": "macOS-26.6.1-arm64-arm-64bit",
-        "python": "3.9.6"
-      }
-    }
-  },
+  "dimension": 40,
+  "initialization": "random",
   "interpretation": {
-    "current_result": "A reusable numerical candidate with stored full-word CPU measurements; nonzero leakage and target residual remain.",
-    "physical_status": "The stored float32 arrays have floating Gram error and output norm different from one. They are approximate isometries, not exactly physical certified witnesses.",
     "claim_boundary": "Finite-precision F is neither a certified lower bound nor a proof. These selected candidates do not establish optimality, impossibility, or a dimension lower bound; the original mathematical goals remain open.",
-    "data_status": "Source experimental data, not a ledger entry, freeze output, or formal certificate."
+    "current_result": "A reusable numerical candidate with stored full-word CPU measurements; nonzero leakage and target residual remain.",
+    "data_status": "Source experimental data, not a ledger entry, freeze output, or formal certificate.",
+    "physical_status": "The stored float32 arrays have floating Gram error and output norm different from one. They are approximate isometries, not exactly physical certified witnesses."
   },
-  "source": {
-    "repository": "https://github.com/the-omega-institute/trureturing",
-    "reference_revision_supplied": "4893e8eaca6c8f4feeb72cb2416310d2c05f69ba",
-    "evaluation_source_sha256": {
-      "tools/scripts/agent/gpu5040/search_config.py": "f1ad821dafcaa31cc29668698b77c2032a25f4e06139617c9ec7d750ee2cba7b",
-      "tools/scripts/agent/gpu5040/tensor_core.py": "1c62fd7fc8bc7d93e7b1115760b71864ed6045081895500b90821896ede8d4f1",
-      "tools/scripts/agent/gpu5040/state_store.py": "a1eda747e24ea792caac30da136e85ba0beac6dc6f08d53880624b8ac6b1f03a"
+  "kind": "source-experimental-candidate",
+  "model": {
+    "alphabet": [0, 1, 2, 3],
+    "full_words": 65536,
+    "ideal_constraints": "sum_label A[label].T @ A[label] = I_D and v0.T @ v0 = 1. The same real V is repeated eight times; initial memory is pure and final memory is traced.",
+    "legal_words": 840,
+    "length": 8,
+    "metric_meaning": "t=sum_legal psi_w/sqrt(840); stored target_fidelity F=||t||^2 is the raw target projection weight, with no division by output norm_squared. The target-separated-memory residual measures ||Psi - target tensor t||; forbidden leakage sums ||psi_w||^2 over illegal words.",
+    "objective": "||sum_legal A[w7] ... A[w0] v0 / sqrt(840)||^2",
+    "occupation": [4, 2, 1, 1],
+    "restrictions": {
+      "entrywise_positivity": false,
+      "field": "real",
+      "final_memory": "traced, no selected final vector",
+      "initial_memory": "one normalized trainable pure vector",
+      "interpretation": "finite precision evidence, not success, closure, or a lower bound",
+      "isometry": "one fixed V: R^D -> R^4 tensor R^D, used eight times",
+      "postselection": false,
+      "time_varying_controls": false
     },
-    "license": "Apache-2.0; repository LICENSE applies to data and source.",
-    "external_imported_content": false
+    "source": "tools/scripts/agent/gpu5040/search_config.py",
+    "target": "Pure state with amplitude +1/sqrt(840) on each of the 840 length-8 words of occupation (4,2,1,1), and zero on every other word.",
+    "tensor_order": "A[label,next_memory,memory]; V row = label*D + next_memory. Word w=(w0,...,w7) has final-memory vector psi_w=A[w7]...A[w0]v0."
   },
   "reproduction": {
-    "purpose": "Reevaluate these saved arrays only; no training or checkpoint is needed.",
     "arguments": "Replace REPOSITORY_ROOT with an explicit path to the repository and RESULT_JSON with an explicit path to this file; quote paths containing spaces. Invocation is independent of the working directory.",
-    "dependencies": "Python 3 with NumPy and PyTorch on CPU; little-endian for the recorded tensor_digest. Known verification runtime versions, when available, are in verification.result.verification_runtime.",
     "command": "python3 -B - REPOSITORY_ROOT RESULT_JSON <<'PYTHON'\nimport json, sys\nfrom pathlib import Path\nimport numpy as np\nimport torch\nrepo, result_file = map(Path, sys.argv[1:])\nsys.path.insert(0, str(repo / \"tools/scripts/agent/gpu5040\"))\nfrom state_store import tensor_digest\nfrom tensor_core import verify_full_output\nr = json.loads(result_file.read_text(encoding=\"utf-8\"))\nx = r[\"tensors\"]\nassert x[\"dtype\"] == \"float32\"\na = np.asarray(x[\"matrices\"], dtype=np.float32)\nv = np.asarray(x[\"initial\"], dtype=np.float32)\nassert list(a.shape) == x[\"matrices_shape\"]\nassert list(v.shape) == x[\"initial_shape\"]\nassert sys.byteorder == x[\"digest_byte_order\"]\nassert tensor_digest(torch.from_numpy(a), torch.from_numpy(v)) == r[\"candidate_sha256\"]\nmeasured = verify_full_output(a, v, occupation=tuple(r[\"model\"][\"occupation\"]),\n                              chunk_size=r[\"verification\"][\"result\"][\"chunk_size\"])\nprint(json.dumps(measured, indent=2, allow_nan=False))\nPYTHON",
+    "comparison": "Compare measured scientific fields with verification.result. Seconds is runtime-dependent; floating reductions can differ across NumPy/BLAS/platform versions. Historical UTC/runtime metadata are not regenerated by verify_full_output.",
+    "dependencies": "Python 3 with NumPy and PyTorch on CPU; little-endian for the recorded tensor_digest. Known verification runtime versions, when available, are in verification.result.verification_runtime.",
     "precision": "Decode numeric arrays as float32 exactly. Existing verify_full_output then promotes the unchanged float32 values to NumPy float64 for its two enumeration passes; this is evaluation arithmetic, not a replacement candidate.",
-    "comparison": "Compare measured scientific fields with verification.result. Seconds is runtime-dependent; floating reductions can differ across NumPy/BLAS/platform versions. Historical UTC/runtime metadata are not regenerated by verify_full_output."
+    "purpose": "Reevaluate these saved arrays only; no training or checkpoint is needed."
+  },
+  "schema": 1,
+  "source": {
+    "evaluation_source_sha256": {
+      "tools/scripts/agent/gpu5040/search_config.py": "f1ad821dafcaa31cc29668698b77c2032a25f4e06139617c9ec7d750ee2cba7b",
+      "tools/scripts/agent/gpu5040/state_store.py": "a1eda747e24ea792caac30da136e85ba0beac6dc6f08d53880624b8ac6b1f03a",
+      "tools/scripts/agent/gpu5040/tensor_core.py": "1c62fd7fc8bc7d93e7b1115760b71864ed6045081895500b90821896ede8d4f1"
+    },
+    "external_imported_content": false,
+    "license": "Apache-2.0; repository LICENSE applies to data and source.",
+    "reference_revision_supplied": "4893e8eaca6c8f4feeb72cb2416310d2c05f69ba",
+    "repository": "https://github.com/the-omega-institute/trureturing"
   },
   "tensors": {
+    "digest_byte_order": "little",
+    "digest_function": "tools/scripts/agent/gpu5040/state_store.py:tensor_digest; SHA256 over matrices then initial, each as ASCII str(torch dtype), ASCII str(tuple(shape)), then contiguous C-order native tensor bytes, with no separators.",
     "dtype": "float32",
     "encoding": "JSON numeric arrays contain exact stored binary32 values; no rounding, refit, QR, normalization, or precision substitution.",
-    "matrices_shape": [4, 40, 40],
+    "initial": [-0.09418193250894547, 0.22613012790679932, 0.046752966940402985, 0.26426491141319275, 0.08192723244428635, 0.13111107051372528, 0.0052223228849470615, 0.14916469156742096, 0.2528497874736786, -0.1587757170200348, 0.25825056433677673, -0.007436452433466911, 0.09990881383419037, -0.3170185983181, 0.08019381761550903, -0.006582227535545826, -0.16583400964736938, -0.09480325132608414, -0.003482694271951914, 0.012729433365166187, 0.187173992395401, -0.20467017590999603, 0.19632358849048615, 0.09349355846643448, 0.04469302296638489, 0.22768612205982208, -0.008677088655531406, -0.08075009286403656, 0.021966200321912766, 0.08367042988538742, -0.0735568106174469, 0.3776654601097107, 0.03435412421822548, 0.19178584218025208, 0.28909802436828613, 0.16572539508342743, 0.009026111103594303, 0.03566142916679382, -0.1472538411617279, 0.008583495393395424],
     "initial_shape": [40],
-    "digest_function": "tools/scripts/agent/gpu5040/state_store.py:tensor_digest; SHA256 over matrices then initial, each as ASCII str(torch dtype), ASCII str(tuple(shape)), then contiguous C-order native tensor bytes, with no separators.",
-    "digest_byte_order": "little",
     "matrices": [
       [
         [0.2828352153301239, -0.1895056664943695, -0.010566450655460358, -0.06367339193820953, -0.02737314999103546, 0.10242202877998352, -0.15622082352638245, 0.3256414234638214, -0.10394871979951859, 0.12944649159908295, -0.19358384609222412, 0.13431411981582642, -0.0228252150118351, 0.060026273131370544, -0.19352632761001587, -0.12514960765838623, 0.007380888797342777, 0.11933299154043198, 0.07971423119306564, -0.01511799544095993, -0.10441289842128754, -0.12366734445095062, 0.05567718297243118, 0.15464606881141663, -0.04427575692534447, 0.03777056559920311, 0.11419259011745453, -0.021706918254494667, -0.1413007527589798, 0.08712659776210785, 0.18941065669059753, 0.001606595702469349, 0.08340884000062943, 0.08573102951049805, 0.02098274417221546, 0.13687244057655334, 0.08732771873474121, -0.07089009881019592, -0.004740998148918152, -0.11853188276290894],
@@ -290,6 +252,44 @@
         [0.12619133293628693, 0.011274514719843864, -0.03947073966264725, 0.06522809714078903, 0.05893769860267639, -0.03440504148602486, 0.00836948025971651, 0.06828057020902634, 0.01896188035607338, 0.054616402834653854, 0.056585222482681274, 0.033320821821689606, -0.05231068655848503, 0.12746301293373108, -0.08267069607973099, -0.07534158229827881, 0.006186601705849171, -0.0873093530535698, 0.054116152226924896, 0.040739450603723526, -0.020273026078939438, -0.01510186679661274, -0.02405519224703312, -0.038142167031764984, 0.003042982891201973, -0.04769601300358772, -0.015667401254177094, -0.045983195304870605, 0.1553262174129486, 0.002040640451014042, -0.01440361887216568, -0.108389712870121, -0.051352936774492264, 0.0012860996648669243, 0.07400200515985489, -0.0005444735288619995, 0.07421764731407166, 0.07978901267051697, -0.04832855612039566, -0.0019591813907027245]
       ]
     ],
-    "initial": [-0.09418193250894547, 0.22613012790679932, 0.046752966940402985, 0.26426491141319275, 0.08192723244428635, 0.13111107051372528, 0.0052223228849470615, 0.14916469156742096, 0.2528497874736786, -0.1587757170200348, 0.25825056433677673, -0.007436452433466911, 0.09990881383419037, -0.3170185983181, 0.08019381761550903, -0.006582227535545826, -0.16583400964736938, -0.09480325132608414, -0.003482694271951914, 0.012729433365166187, 0.187173992395401, -0.20467017590999603, 0.19632358849048615, 0.09349355846643448, 0.04469302296638489, 0.22768612205982208, -0.008677088655531406, -0.08075009286403656, 0.021966200321912766, 0.08367042988538742, -0.0735568106174469, 0.3776654601097107, 0.03435412421822548, 0.19178584218025208, 0.28909802436828613, 0.16572539508342743, 0.009026111103594303, 0.03566142916679382, -0.1472538411617279, 0.008583495393395424]
+    "matrices_shape": [4, 40, 40]
+  },
+  "title": "GPU5040 random initialization, D=40",
+  "verification": {
+    "result": {
+      "best_product_memory_residual_l2": 0.18750181270876565,
+      "candidate_modified": false,
+      "candidate_sha256": "a552de81c7f2a95054fb84a417c79291cb343988b75b6e1ec2c35c1f8b163c75",
+      "chunk_size": 256,
+      "cpu_minus_training_fidelity": -9.069237971726096e-08,
+      "dimension": 40,
+      "forbidden_leakage_squared": 0.03878130175482798,
+      "full_words": 65536,
+      "gram_max_abs_error": 2.829751721833418e-07,
+      "initial_norm": 1.0000000040771084,
+      "interpretation": "finite precision evidence, not success, closure, or a lower bound",
+      "largest_memory_density_eigenvalue": 0.9648435861623685,
+      "legal_words": 840,
+      "method": "independent numpy CPU float64 full enumeration, two chunked passes",
+      "norm": 1.0000002579656875,
+      "norm_squared": 1.0000005159314416,
+      "occupation": [4, 2, 1, 1],
+      "seconds": 0.160661583,
+      "target_fidelity": 0.919463305380008,
+      "target_overlap_vector": [-0.07977676361923372, 0.2421805099352998, 0.10738739520326245, -0.16053325426463202, -0.2890666791686279, -0.22491269608302294, -0.009115407183063265, -0.08103133453136374, -0.03529893596561171, -0.16301356698556582, 0.043709143817347605, 0.19255829055259407, -0.2039727695907023, -0.06650729666519445, -0.1209568054774057, -0.11076842121062432, 0.15342308208707747, 0.18167277374790308, 0.1391126952546001, 0.12870356956754014, -0.0726133546007587, 0.144774814649239, 0.20455066372535938, -0.062128365584703533, 0.05350205671238476, -0.29948626456656946, -0.055840508690647696, 0.10019830461712555, 0.12414337696279808, -0.17167931757285196, 0.11637314122178222, 0.29372534557521235, -0.002560318378291182, 0.03434453082498453, 0.21490298235492408, 0.021218732292530875, 0.05669592741056567, 0.18480851714001928, 0.16937936897340253, 0.08903184367863985],
+      "target_separated_memory_residual_l2": 0.2837907865865868,
+      "target_separated_memory_residual_squared": 0.08053721055143365,
+      "training_fidelity": 0.9194633960723877,
+      "utc": "2026-09-15T21:18:41.293865+00:00",
+      "verification_runtime": {
+        "machine": "arm64",
+        "numpy": "2.0.2",
+        "platform": "macOS-26.6.1-arm64-arm-64bit",
+        "python": "3.9.6"
+      }
+    },
+    "source": "history.sqlite3 / verifications, selected by candidate_sha256",
+    "status": "verified",
+    "updated_utc": "2026-09-15T21:18:41.309974+00:00"
   }
 }

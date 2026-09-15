@@ -1,120 +1,88 @@
 {
-  "schema": 1,
-  "kind": "source-experimental-candidate",
-  "title": "GPU5040 random initialization, D=24",
   "candidate_sha256": "fe57d5fb4c8dc2938cdab5a51b0bddebe03b77454293900d75fa969f30287197",
-  "initialization": "random",
-  "dimension": 24,
-  "model": {
-    "source": "tools/scripts/agent/gpu5040/search_config.py",
-    "occupation": [4, 2, 1, 1],
-    "alphabet": [0, 1, 2, 3],
-    "length": 8,
-    "target": "Pure state with amplitude +1/sqrt(840) on each of the 840 length-8 words of occupation (4,2,1,1), and zero on every other word.",
-    "legal_words": 840,
-    "full_words": 65536,
-    "restrictions": {
-      "field": "real",
-      "isometry": "one fixed V: R^D -> R^4 tensor R^D, used eight times",
-      "initial_memory": "one normalized trainable pure vector",
-      "final_memory": "traced, no selected final vector",
-      "postselection": false,
-      "time_varying_controls": false,
-      "entrywise_positivity": false,
-      "interpretation": "numerical candidates only; search failure is not a lower bound"
-    },
-    "objective": "||sum_legal A[w7] ... A[w0] v0 / sqrt(840)||^2",
-    "tensor_order": "A[label,next_memory,memory]; V row = label*D + next_memory. Word w=(w0,...,w7) has final-memory vector psi_w=A[w7]...A[w0]v0.",
-    "ideal_constraints": "sum_label A[label].T @ A[label] = I_D and v0.T @ v0 = 1. The same real V is repeated eight times; initial memory is pure and final memory is traced.",
-    "metric_meaning": "t=sum_legal psi_w/sqrt(840); stored target_fidelity F=||t||^2 is the raw target projection weight, with no division by output norm_squared. The target-separated-memory residual measures ||Psi - target tensor t||; forbidden leakage sums ||psi_w||^2 over illegal words."
-  },
   "checkpoint_metadata": {
-    "schema": 2,
-    "kind": "best",
-    "utc": "2026-09-07T22:10:56.967812+00:00",
     "algorithm": "householder-occupation-dp-adam-v1",
-    "source_sha256": "e2e66992c9e5209c8b37ccc3cae809d40764eee579b83e13e82a13833d284eb5",
     "config_sha256": "5015718f03d5b487ef86d0563748855918df9c6e09339a828d5aaf4e9a7bab21",
-    "preregistration_sha256": "e6207ac6a74af3d94695c44383b10fecdbb6c03d0259132d582d2121dd03dfe4",
-    "precision": "torch.float32",
     "device": "mps:0",
+    "kind": "best",
     "metrics": {
+      "dimension": 24,
       "fidelity": 0.8097063302993774,
       "gram_max_abs_error": 4.76837158203125e-07,
       "initial_norm_squared": 1.000000238418579,
-      "dimension": 24,
-      "seed": 1005230,
-      "run_index": 190,
       "iteration": 4198,
+      "run_index": 190,
+      "seed": 1005230,
       "total_steps": 954198
     },
-    "training_runtime": null,
+    "precision": "torch.float32",
+    "preregistration_sha256": "e6207ac6a74af3d94695c44383b10fecdbb6c03d0259132d582d2121dd03dfe4",
     "runtime_scope": "No historic training runtime descriptor in this checkpoint; only recorded device and precision are known here. No present-day runtime or source defaults substituted.",
+    "schema": 2,
+    "source_sha256": "e2e66992c9e5209c8b37ccc3cae809d40764eee579b83e13e82a13833d284eb5",
+    "training_runtime": null,
+    "utc": "2026-09-07T22:10:56.967812+00:00",
     "verification_runtime_scope": "The historical verification record does not contain runtime versions; they are unknown and were not reconstructed."
   },
-  "verification": {
-    "source": "history.sqlite3 / verifications, selected by candidate_sha256",
-    "status": "verified",
-    "updated_utc": "2026-09-08T10:04:27.101740+00:00",
-    "result": {
-      "best_product_memory_residual_l2": 0.2913470313085012,
-      "candidate_modified": false,
-      "candidate_sha256": "fe57d5fb4c8dc2938cdab5a51b0bddebe03b77454293900d75fa969f30287197",
-      "chunk_size": 256,
-      "cpu_minus_training_fidelity": -8.384381378068184e-08,
-      "dimension": 24,
-      "forbidden_leakage_squared": 0.08724927821401814,
-      "full_words": 65536,
-      "gram_max_abs_error": 2.443544355745786e-07,
-      "initial_norm": 1.0000000802586693,
-      "interpretation": "finite precision evidence, not success, closure, or a lower bound",
-      "largest_memory_density_eigenvalue": 0.9151179806263459,
-      "legal_words": 840,
-      "method": "independent numpy CPU float64 full enumeration, two chunked passes",
-      "norm": 1.0000005366391673,
-      "norm_squared": 1.0000010732786226,
-      "occupation": [4, 2, 1, 1],
-      "seconds": 0.12853741600000002,
-      "target_fidelity": 0.8097062464555637,
-      "target_overlap_vector": [0.16553789774934996, -0.43160520209012304, 0.2361317524913764, -0.23765350061503987, -0.027698912865682348, 0.21430742205699918, 0.06980407459117674, -0.3550371831521516, -0.04354238997753369, -0.015590325942616612, -0.0149028686757848, -0.11434728065553419, 0.12928387692314913, 0.022809110122272883, -0.11037529859672626, -0.18151721689318884, 0.12228433782380331, 0.05921360593051074, 0.3858881329059926, -0.07572936122773412, -0.22635266982465588, 0.005730108064422686, -0.040383846654365, -0.0485633949537294],
-      "target_separated_memory_residual_l2": 0.4362279528217545,
-      "target_separated_memory_residual_squared": 0.19029482682305887,
-      "training_fidelity": 0.8097063302993774,
-      "utc": "2026-09-07T22:41:28.411106+00:00"
-    }
-  },
+  "dimension": 24,
+  "initialization": "random",
   "interpretation": {
-    "current_result": "A reusable numerical candidate with stored full-word CPU measurements; nonzero leakage and target residual remain.",
-    "physical_status": "The stored float32 arrays have floating Gram error and output norm different from one. They are approximate isometries, not exactly physical certified witnesses.",
     "claim_boundary": "Finite-precision F is neither a certified lower bound nor a proof. These selected candidates do not establish optimality, impossibility, or a dimension lower bound; the original mathematical goals remain open.",
-    "data_status": "Source experimental data, not a ledger entry, freeze output, or formal certificate."
+    "current_result": "A reusable numerical candidate with stored full-word CPU measurements; nonzero leakage and target residual remain.",
+    "data_status": "Source experimental data, not a ledger entry, freeze output, or formal certificate.",
+    "physical_status": "The stored float32 arrays have floating Gram error and output norm different from one. They are approximate isometries, not exactly physical certified witnesses."
   },
-  "source": {
-    "repository": "https://github.com/the-omega-institute/trureturing",
-    "reference_revision_supplied": "4893e8eaca6c8f4feeb72cb2416310d2c05f69ba",
-    "evaluation_source_sha256": {
-      "tools/scripts/agent/gpu5040/search_config.py": "f1ad821dafcaa31cc29668698b77c2032a25f4e06139617c9ec7d750ee2cba7b",
-      "tools/scripts/agent/gpu5040/tensor_core.py": "1c62fd7fc8bc7d93e7b1115760b71864ed6045081895500b90821896ede8d4f1",
-      "tools/scripts/agent/gpu5040/state_store.py": "a1eda747e24ea792caac30da136e85ba0beac6dc6f08d53880624b8ac6b1f03a"
+  "kind": "source-experimental-candidate",
+  "model": {
+    "alphabet": [0, 1, 2, 3],
+    "full_words": 65536,
+    "ideal_constraints": "sum_label A[label].T @ A[label] = I_D and v0.T @ v0 = 1. The same real V is repeated eight times; initial memory is pure and final memory is traced.",
+    "legal_words": 840,
+    "length": 8,
+    "metric_meaning": "t=sum_legal psi_w/sqrt(840); stored target_fidelity F=||t||^2 is the raw target projection weight, with no division by output norm_squared. The target-separated-memory residual measures ||Psi - target tensor t||; forbidden leakage sums ||psi_w||^2 over illegal words.",
+    "objective": "||sum_legal A[w7] ... A[w0] v0 / sqrt(840)||^2",
+    "occupation": [4, 2, 1, 1],
+    "restrictions": {
+      "entrywise_positivity": false,
+      "field": "real",
+      "final_memory": "traced, no selected final vector",
+      "initial_memory": "one normalized trainable pure vector",
+      "interpretation": "finite precision evidence, not success, closure, or a lower bound",
+      "isometry": "one fixed V: R^D -> R^4 tensor R^D, used eight times",
+      "postselection": false,
+      "time_varying_controls": false
     },
-    "license": "Apache-2.0; repository LICENSE applies to data and source.",
-    "external_imported_content": false
+    "source": "tools/scripts/agent/gpu5040/search_config.py",
+    "target": "Pure state with amplitude +1/sqrt(840) on each of the 840 length-8 words of occupation (4,2,1,1), and zero on every other word.",
+    "tensor_order": "A[label,next_memory,memory]; V row = label*D + next_memory. Word w=(w0,...,w7) has final-memory vector psi_w=A[w7]...A[w0]v0."
   },
   "reproduction": {
-    "purpose": "Reevaluate these saved arrays only; no training or checkpoint is needed.",
     "arguments": "Replace REPOSITORY_ROOT with an explicit path to the repository and RESULT_JSON with an explicit path to this file; quote paths containing spaces. Invocation is independent of the working directory.",
-    "dependencies": "Python 3 with NumPy and PyTorch on CPU; little-endian for the recorded tensor_digest. Known verification runtime versions, when available, are in verification.result.verification_runtime.",
     "command": "python3 -B - REPOSITORY_ROOT RESULT_JSON <<'PYTHON'\nimport json, sys\nfrom pathlib import Path\nimport numpy as np\nimport torch\nrepo, result_file = map(Path, sys.argv[1:])\nsys.path.insert(0, str(repo / \"tools/scripts/agent/gpu5040\"))\nfrom state_store import tensor_digest\nfrom tensor_core import verify_full_output\nr = json.loads(result_file.read_text(encoding=\"utf-8\"))\nx = r[\"tensors\"]\nassert x[\"dtype\"] == \"float32\"\na = np.asarray(x[\"matrices\"], dtype=np.float32)\nv = np.asarray(x[\"initial\"], dtype=np.float32)\nassert list(a.shape) == x[\"matrices_shape\"]\nassert list(v.shape) == x[\"initial_shape\"]\nassert sys.byteorder == x[\"digest_byte_order\"]\nassert tensor_digest(torch.from_numpy(a), torch.from_numpy(v)) == r[\"candidate_sha256\"]\nmeasured = verify_full_output(a, v, occupation=tuple(r[\"model\"][\"occupation\"]),\n                              chunk_size=r[\"verification\"][\"result\"][\"chunk_size\"])\nprint(json.dumps(measured, indent=2, allow_nan=False))\nPYTHON",
+    "comparison": "Compare measured scientific fields with verification.result. Seconds is runtime-dependent; floating reductions can differ across NumPy/BLAS/platform versions. Historical UTC/runtime metadata are not regenerated by verify_full_output.",
+    "dependencies": "Python 3 with NumPy and PyTorch on CPU; little-endian for the recorded tensor_digest. Known verification runtime versions, when available, are in verification.result.verification_runtime.",
     "precision": "Decode numeric arrays as float32 exactly. Existing verify_full_output then promotes the unchanged float32 values to NumPy float64 for its two enumeration passes; this is evaluation arithmetic, not a replacement candidate.",
-    "comparison": "Compare measured scientific fields with verification.result. Seconds is runtime-dependent; floating reductions can differ across NumPy/BLAS/platform versions. Historical UTC/runtime metadata are not regenerated by verify_full_output."
+    "purpose": "Reevaluate these saved arrays only; no training or checkpoint is needed."
+  },
+  "schema": 1,
+  "source": {
+    "evaluation_source_sha256": {
+      "tools/scripts/agent/gpu5040/search_config.py": "f1ad821dafcaa31cc29668698b77c2032a25f4e06139617c9ec7d750ee2cba7b",
+      "tools/scripts/agent/gpu5040/state_store.py": "a1eda747e24ea792caac30da136e85ba0beac6dc6f08d53880624b8ac6b1f03a",
+      "tools/scripts/agent/gpu5040/tensor_core.py": "1c62fd7fc8bc7d93e7b1115760b71864ed6045081895500b90821896ede8d4f1"
+    },
+    "external_imported_content": false,
+    "license": "Apache-2.0; repository LICENSE applies to data and source.",
+    "reference_revision_supplied": "4893e8eaca6c8f4feeb72cb2416310d2c05f69ba",
+    "repository": "https://github.com/the-omega-institute/trureturing"
   },
   "tensors": {
+    "digest_byte_order": "little",
+    "digest_function": "tools/scripts/agent/gpu5040/state_store.py:tensor_digest; SHA256 over matrices then initial, each as ASCII str(torch dtype), ASCII str(tuple(shape)), then contiguous C-order native tensor bytes, with no separators.",
     "dtype": "float32",
     "encoding": "JSON numeric arrays contain exact stored binary32 values; no rounding, refit, QR, normalization, or precision substitution.",
-    "matrices_shape": [4, 24, 24],
+    "initial": [-0.08728407323360443, -0.1735059916973114, -0.11254707723855972, 0.41705963015556335, -0.000962019432336092, 0.0548834390938282, -0.059829309582710266, -0.18231169879436493, 0.035074613988399506, -0.044360626488924026, 0.08338509500026703, 0.08099764585494995, 0.04851190745830536, -0.176407128572464, 0.03635622560977936, 0.051283955574035645, -0.7003559470176697, -0.2271263748407364, 0.14783823490142822, -0.2477247267961502, -0.20386074483394623, -0.03745579347014427, 0.08040350675582886, 0.08348441123962402],
     "initial_shape": [24],
-    "digest_function": "tools/scripts/agent/gpu5040/state_store.py:tensor_digest; SHA256 over matrices then initial, each as ASCII str(torch dtype), ASCII str(tuple(shape)), then contiguous C-order native tensor bytes, with no separators.",
-    "digest_byte_order": "little",
     "matrices": [
       [
         [0.5634647011756897, -0.03298219293355942, 0.06498561799526215, -0.15427139401435852, 0.1460120677947998, 0.05488197132945061, 0.14952778816223145, -0.0068166013807058334, -0.02520560473203659, -0.13469594717025757, -0.14259375631809235, 0.21991074085235596, 0.11173982918262482, -0.11046472936868668, 0.08485613018274307, 0.04932452738285065, 0.10436394065618515, -0.00878970418125391, -0.07116945087909698, -0.1722877025604248, -0.06016021594405174, -0.02103603631258011, -0.12279593199491501, 0.08545311540365219],
@@ -221,6 +189,38 @@
         [0.0345582440495491, 0.007680445909500122, -0.097999706864357, -0.05935902148485184, -0.09100468456745148, -0.06270237267017365, 0.0930476114153862, -0.02817905694246292, 0.035993702709674835, 0.00022193044424057007, 0.10196657478809357, -0.008858013898134232, 0.06805577874183655, 0.05178999528288841, 0.1283821165561676, -0.00467463955283165, 0.005975259467959404, -0.18770228326320648, 0.025622285902500153, 0.06726635247468948, -0.09713906049728394, -0.019563212990760803, 0.1984066218137741, 0.03701344132423401]
       ]
     ],
-    "initial": [-0.08728407323360443, -0.1735059916973114, -0.11254707723855972, 0.41705963015556335, -0.000962019432336092, 0.0548834390938282, -0.059829309582710266, -0.18231169879436493, 0.035074613988399506, -0.044360626488924026, 0.08338509500026703, 0.08099764585494995, 0.04851190745830536, -0.176407128572464, 0.03635622560977936, 0.051283955574035645, -0.7003559470176697, -0.2271263748407364, 0.14783823490142822, -0.2477247267961502, -0.20386074483394623, -0.03745579347014427, 0.08040350675582886, 0.08348441123962402]
+    "matrices_shape": [4, 24, 24]
+  },
+  "title": "GPU5040 random initialization, D=24",
+  "verification": {
+    "result": {
+      "best_product_memory_residual_l2": 0.2913470313085012,
+      "candidate_modified": false,
+      "candidate_sha256": "fe57d5fb4c8dc2938cdab5a51b0bddebe03b77454293900d75fa969f30287197",
+      "chunk_size": 256,
+      "cpu_minus_training_fidelity": -8.384381378068184e-08,
+      "dimension": 24,
+      "forbidden_leakage_squared": 0.08724927821401814,
+      "full_words": 65536,
+      "gram_max_abs_error": 2.443544355745786e-07,
+      "initial_norm": 1.0000000802586693,
+      "interpretation": "finite precision evidence, not success, closure, or a lower bound",
+      "largest_memory_density_eigenvalue": 0.9151179806263459,
+      "legal_words": 840,
+      "method": "independent numpy CPU float64 full enumeration, two chunked passes",
+      "norm": 1.0000005366391673,
+      "norm_squared": 1.0000010732786226,
+      "occupation": [4, 2, 1, 1],
+      "seconds": 0.12853741600000002,
+      "target_fidelity": 0.8097062464555637,
+      "target_overlap_vector": [0.16553789774934996, -0.43160520209012304, 0.2361317524913764, -0.23765350061503987, -0.027698912865682348, 0.21430742205699918, 0.06980407459117674, -0.3550371831521516, -0.04354238997753369, -0.015590325942616612, -0.0149028686757848, -0.11434728065553419, 0.12928387692314913, 0.022809110122272883, -0.11037529859672626, -0.18151721689318884, 0.12228433782380331, 0.05921360593051074, 0.3858881329059926, -0.07572936122773412, -0.22635266982465588, 0.005730108064422686, -0.040383846654365, -0.0485633949537294],
+      "target_separated_memory_residual_l2": 0.4362279528217545,
+      "target_separated_memory_residual_squared": 0.19029482682305887,
+      "training_fidelity": 0.8097063302993774,
+      "utc": "2026-09-07T22:41:28.411106+00:00"
+    },
+    "source": "history.sqlite3 / verifications, selected by candidate_sha256",
+    "status": "verified",
+    "updated_utc": "2026-09-08T10:04:27.101740+00:00"
   }
 }
