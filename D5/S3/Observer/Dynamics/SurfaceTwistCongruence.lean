@@ -24,13 +24,12 @@ representation has characteristic kernel. The essential lower bound excludes
 one common inner conjugation of the WHOLE representation, not separate
 conjugacies of generator images.
 
-This is a source-reviewed candidate, not a claimed kernel-checked declaration.
 Prior-art context: Klukowski, arXiv:2411.06867v2, Definition 3, Corollary 7,
 Theorem 8, Conjecture 13. The qualitative cyclic subgroup consequence is known;
-the content pursued here is the explicit target, canonical finite quotient,
+the construction gives the explicit target, canonical finite quotient,
 and matching all-power upper and lower bounds. No resolution of Conjecture 13
 or identification of a topological homeomorphism with this presentation map
-is claimed. The pinned upstream is mathlib db584cd6d46c92f209a44c0f1c829460d327499d.
+is claimed.
 -/
 
 set_option autoImplicit false

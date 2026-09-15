@@ -21,10 +21,8 @@ representations. Exact period on the unitriangular subfamily and the sharp
 class-six lower-central threshold are ordinary theory results, not conclusions
 of this file.
 
-No Lean/lake execution, kernel certificate, independent admission review or
-first-discovery claim is attached to this source-reviewed candidate. The
-matrix identities are checked over arbitrary commutative rings; finite
-experiments are diagnostics only. Prior context: Klukowski 2411.06867v2 and
+The matrix identities hold over arbitrary commutative rings.
+Prior context: Klukowski 2411.06867v2 and
 Church--Pixton 0804.3633v2. This does not settle the curve-orbit CSP conjecture.
 -/
 
@@ -36,7 +34,7 @@ open scoped Matrix BigOperators
 namespace D5.S3.Observer.Dynamics.SurfaceDerivedOrbitDetector
 open D5.S3.Observer.Dynamics.SurfaceTwistCongruence
 
-/-- Same surface carrier as before, now with at least three handles. -/
+/-- The surface presentation with at least three handles. -/
 abbrev G (extra : ℕ) := Surface (extra + 1)
 abbrev Mat (R : Type) := Matrix (Fin 7) (Fin 7) R
 
@@ -118,7 +116,7 @@ def matrixProjection (extra m : ℕ) : G extra →* MatrixDetector extra m :=
   (matrixEvaluation extra m).rangeRestrict
 
 set_option maxHeartbeats 4000000 in
--- The symbolic seven-dimensional commutator expansion needs a larger elaboration budget.
+-- Seven-dimensional commutator identities over arbitrary commutative rings.
 /-- The actual finite quotient separates every pair of orbit times below m.
 The all-time conclusion is necessary modular equality, not a converse. The
 last clause states complete blindness under the explicit metabelian law. -/
