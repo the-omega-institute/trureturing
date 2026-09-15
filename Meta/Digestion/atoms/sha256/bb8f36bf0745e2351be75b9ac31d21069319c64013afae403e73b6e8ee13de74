@@ -1,0 +1,5 @@
+**定理 443.12（两类系数的联系及精确数值）。** 对平方自由 $Q\ge1$，
+$$
+\alpha_Q=\frac{c_Q}{\zeta_R(2)\prod_{p\mid Q}(1-p^{-2})},\qquad
+\frac{c_Q}{\zeta_R(2)}\le\alpha_Q\le c_Q.
+$$

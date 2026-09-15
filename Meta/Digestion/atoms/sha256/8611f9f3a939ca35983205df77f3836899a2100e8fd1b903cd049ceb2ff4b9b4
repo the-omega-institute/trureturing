@@ -1,0 +1,111 @@
+**命题 129.1（移动边界的非消失尾零代价）。** 对上述指定目标与具体尾零支撑，对所有整数 $K\ge0$，在完整载体上有
+$$
+\sigma^{\rm cut}_{K,K+1}=\rho_K\otimes|0\rangle\langle0|,
+\qquad
+e_{K,K+1}=d_{\rm tr}(\rho_{K+1},\tau)=s\sqrt{C(C+D)}>0.
+$$
+$H$ 在正交标准基 $(a,v)$ 上的矩阵及其平方为
+$$
+H_2=s\begin{pmatrix}-C&\sqrt{CD}\\\sqrt{CD}&C\end{pmatrix},
+\qquad H_2^2=e_{K,K+1}^2I_2.
+$$
+$H$ 在 $\mathcal M^\perp$ 上为零，其完整负谱投影为二维负谱投影的延零：
+$$
+\Pi_{-,2}=\frac{I_2-H_2/e_{K,K+1}}2,
+\qquad \Pi_-=\Pi_{-,2}\oplus0_{\mathcal M^\perp}.
+$$
+当 $K\ge1$ 时，$\dim\ker H=2^{K+1}-2>0$，而 $(I_{\rm full}-H/e_{K,K+1})/2$ 在此核上作用为单位算子的一半，故不是负谱投影。当 $K=0$ 时，$\mathcal K_1=\mathcal M$，该完整单位算子表达式成立。对所有 $K\ge0$，重叠量为
+$$
+r_{K,K+1}=\frac{1+\sqrt{F_{K+1}/F_{K+3}}}{2}.
+$$
+取 $\kappa_0=0$，则 $g_0=0$；对 $K\ge1$ 有
+$$
+g_K\ge(1-r_{K,K+1})\kappa_K>0.
+$$
+沿 $n=K+1$ 令 $K\to\infty$，有三个极限
+$$
+e_{K,K+1}\longrightarrow\frac1{\sqrt5},
+\qquad
+1-r_{K,K+1}\longrightarrow\frac{1-\alpha}{2}=\frac{\alpha^2}{2},
+\qquad
+\kappa_K\longrightarrow\frac{\alpha^3}{\sqrt5},
+$$
+以及
+$$
+\liminf_{K\to\infty}g_K\ge L:=\frac{\alpha^5}{2\sqrt5}>0.
+$$
+另一方面，固定任意整数 $K\ge1$，令 $n>K$ 增大，并沿用命题 127.1、128.1 在具体支撑 $A_{K,n}=\{w0^{n-K}:w\in W_K\}$ 上的最优误差 $e_{K,n}$，记
+$$
+D_K=F_{K+2},
+\qquad
+\sigma^{\rm cut}_{K,n}=\rho_K\otimes|0^{n-K}\rangle\langle0^{n-K}|,
+\qquad
+g_{K,n}=d_{\rm tr}(\rho_n,\sigma^{\rm cut}_{K,n})-e_{K,n}.
+$$
+则
+$$
+0<g_{K,n}\le1-e_{K,n}<D_K\alpha^n,
+\qquad
+g_{K,n}\longrightarrow0,
+\qquad
+e_{K,n}\longrightarrow1,
+\qquad
+d_{\rm tr}(\rho_n,\sigma^{\rm cut}_{K,n})\longrightarrow1.
+$$
+
+证明。按合法词基展开 $\rho_K|_{\mathcal L_K}$，每个矩阵单位 $|w\rangle\langle u|$ 经 $V$ 变为 $|w0\rangle\langle u0|$，即 $|w\rangle\langle u|\otimes|0\rangle\langle0|$。在非法词方向延零，得到陈述中的完整载体等式。
+
+命题 127.1 的计数给 $|A|=D$、末位一合法词数为 $C$，且 $C,D>0$。当 $n=K+1$ 时，$A$ 恰为全部末位零合法词，故 $(a,v)$ 正交归一，且
+$$
+|s_{K+1}\rangle=\sqrt D\,|a\rangle+\sqrt C\,|v\rangle,
+\qquad |t_{K+1}\rangle=\sqrt D\,|a\rangle.
+$$
+因此 $H$ 在 $\mathcal M^\perp$ 上为零。将这两式代入目标公式，并用命题 127.1 的归一化恒等式 $\alpha^{K+1}(D+\alpha C)=1$，即得所列 $H_2$。直接相乘，
+$$
+H_2^2=s^2
+\begin{pmatrix}C^2+CD&0\\0&CD+C^2\end{pmatrix}
+=s^2C(C+D)I_2.
+$$
+$H_2$ 的迹为零，其特征值为 $\pm s\sqrt{C(C+D)}$。命题 127.1 给 $\tau$ 达到可行域上的最小值，半迹范数遂给 $e_{K,K+1}=s\sqrt{C(C+D)}>0$。两特征值非零，故 $\ker H=\mathcal M^\perp$。有限维谱分解给 $\Pi_{-,2}=(I_2-H_2/e_{K,K+1})/2$，在正交补上延零才是完整负谱投影。$K\ge1$ 时正交补维数 $2^{K+1}-2>0$，完整单位算子表达式在该补空间上为一半；$K=0$ 时完整空间只有两维、正交补为零，因而该表达式有效。
+
+负谱为一维，取其单位向量 $\zeta$。由于 $Pa=a$、$Pv=0$ 且 $\zeta\in\mathcal M$，这里的 $r_{K,K+1}$ 与命题 128.1 的 $\|P\zeta\|^2=|\langle a|\zeta\rangle|^2$ 相同。二维投影的第一个对角元为
+$$
+r_{K,K+1}=\langle a|\Pi_-|a\rangle
+=\frac12\left(1+\frac{sC}{e_{K,K+1}}\right)
+=\frac12\left(1+\sqrt{\frac{C}{C+D}}\right).
+$$
+用 $C+D=F_{K+3}$ 即得对所有 $K\ge0$ 的重叠公式，且 $0<r_{K,K+1}<1$。
+
+令 $h_j=\alpha^jF_j$。命题 125.1 所用 Binet 公式在本参数下给精确残差
+$$
+h_j=\frac{1-(-\alpha^2)^j}{\sqrt5},
+\qquad h_j\longrightarrow\frac1{\sqrt5},
+$$
+因为 $0<\alpha<1$。边界误差、重叠比值和 $\kappa_K$ 满足三个缩放恒等式：
+$$
+e_{K,K+1}^2=\alpha^{2K+4}F_{K+1}F_{K+3}=h_{K+1}h_{K+3},
+$$
+$$
+\frac{F_{K+1}}{F_{K+3}}=\alpha^2\frac{h_{K+1}}{h_{K+3}},
+$$
+$$
+\kappa_K=\alpha^{K+2}\frac{F_{K+1}F_K}{F_{K+2}}
+=\alpha^3\frac{h_{K+1}h_K}{h_{K+2}}.
+$$
+最后一式的指数抵消为 $K+2-(K+1)-K+(K+2)=3$；它在 $K=0$ 时也因 $F_0=h_0=0$ 与定义 $\kappa_0=0$ 一致。各分母的极限严格为正，取正平方根、商及乘积的极限，结合 $1-\alpha=\alpha^2$，得到陈述中的三个极限。
+
+命题 128.1 对此 cut 态给 $1-\langle a|\sigma^{\rm cut}_{K,K+1}|a\rangle=\kappa_K$，并由其投影余量界得到
+$$
+g_K\ge(1-r_{K,K+1})\kappa_K>0\qquad(K\ge1).
+$$
+因此
+$$
+\liminf_{K\to\infty}g_K
+\ge\lim_{K\to\infty}(1-r_{K,K+1})\kappa_K
+=\frac{\alpha^2}{2}\frac{\alpha^3}{\sqrt5}
+=\frac{\alpha^5}{2\sqrt5}>0.
+$$
+$K=0$ 时，$\rho_0=(1)$ 且 $\sigma^{\rm cut}_{0,1}=\tau=|0\rangle\langle0|$，故 $g_0=0$；改变这一有限项不影响下极限。
+
+最后，对每个固定 $K\ge1$，命题 128.1 的实际上界是 $0<g_{K,n}\le1-e_{K,n}<D_K\alpha^n$。右端随 $n\to\infty$ 趋零，故 $g_{K,n}\to0$；再用 $e_{K,n}\le1$ 得 $e_{K,n}\to1$，从而 $d_{\rm tr}(\rho_n,\sigma^{\rm cut}_{K,n})=e_{K,n}+g_{K,n}\to1$。这是固定 $K$ 的窗口序列；沿 $n=K+1$ 的窗口序列则有 $e_{K,K+1}\to1/\sqrt5<1$ 及上述正的下极限界。证毕。
+
