@@ -1,0 +1,35 @@
+### 105.1 有限未来关系逐步细化
+
+设状态空间为 $$Y$$，更新为 $$\tau:Y\to Y$$，当前读出为 $$q:Y\to O$$。定义长度 $$m$$ 的未来关系
+
+$$
+R_m(y,y')
+\iff
+q(\tau^k y)=q(\tau^k y')
+\quad\text{对所有 }0\le k\le m.
+$$
+
+`finite_horizon_kernel_succ_iff` 精确给出
+
+$$
+R_{m+1}(y,y')
+\iff
+R_m(y,y')
+\land
+q(\tau^{m+1}y)=q(\tau^{m+1}y').
+$$
+
+所以每增加一个未来坐标，关系只会细化，不会重新合并：
+
+$$
+m\le n\quad\Longrightarrow\quad R_n\subseteq R_m.
+$$
+
+若某一对状态在前 $$m$$ 步相同、在第 $$m+1$$ 步第一次不同，`finite_horizon_first_new_coordinate_strict` 证明
+
+$$
+R_{m+1}\subsetneq R_m.
+$$
+
+这把“隐藏历史何时重新出现”变成一个可枚举的首次分离深度，而不是一句关于无限历史的直觉。
+

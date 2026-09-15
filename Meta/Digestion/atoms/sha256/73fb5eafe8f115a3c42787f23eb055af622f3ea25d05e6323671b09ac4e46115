@@ -1,0 +1,23 @@
+### 101.4 需要什么才能保留历史顺序
+
+若任务只关心总频率 $$\sum_r\omega_r$$，标量相位足够；若任务关心 Zeckendorf 步骤的先后、素数轴切换或进位路径，则至少需要下列一种扩展：
+
+$$
+\boxed{
+\text{时间分辨的连续读出},
+\quad
+\text{非交换算子乘积},
+\quad
+\text{或可再次访问的记忆寄存器}.
+}
+$$
+
+在非交换升格中，两个步骤一般是
+
+$$
+U_2U_1\ne U_1U_2,
+$$
+
+顺序才会进入可观测量；在标量 $$U(1)$$ 层，交换律会把这部分信息全部压掉。这个区别与第 97 节的未来分离深度、第 98 节的切口 bond、第 100 节的联合份额访问共同说明：历史预算取决于允许的读出代数，而不是只取决于合法 Zeckendorf 标签的数量。
+
+本节复用 `prime_step_frequency_zeckendorf`、`prime_step_phase_euler`、`long_step_phase_factorization`、`ordered_phase_product_collapse`、`adjacent_step_order_invisible` 和 `complex_mode_amplitude_phase_dichotomy`。Lean 已证明的是这些显式频率—相位模型中的代数关系；它没有证明物理系统必然采用该频率定义，也没有把标量相位自动升级为量子 Hamiltonian 或实验共振谱。

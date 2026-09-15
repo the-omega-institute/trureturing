@@ -1,0 +1,21 @@
+### 102.1 同一个完整寄存器上的逐槽演化
+
+`SequentialRegisterCircuit` 把寄存器写成
+
+$$
+\operatorname{Register}(A,K,n)=(\operatorname{Fin}(n)\to A)\times K.
+$$
+
+第一因子保存已经访问过的物理槽，第二因子是共享记忆。`firstGate` 和 `tailGate` 都是同一个完整 Hilbert 空间上的幺正等距同构；`partial_circuit_succ_gate` 进一步给出：第 $$m+1$$ 步是在保留全部槽的空间上，追加一个明确的局部门
+
+$$
+\operatorname{partialCircuit}(U,n,m+1,t)
+=
+\operatorname{partialCircuit}(U,n,m,t)\circ
+\operatorname{slotGate}(U(t+m),n,m).
+$$
+
+因此，未被当前读出的槽并没有从整体动力学中删除。它们仍可在以后门中参与作用。对空白初态，`circuit_blank_succ` 与 `circuit_basis_coefficients` 将最终振幅递归为有限链的系数；这正是“历史被保留为可再次访问的寄存器”而不是“历史已经被重新命名为一个当前数值”的形式化版本。
+
+这一区别很重要：若每一步都把旧寄存器替换成新的无记忆环境，可以得到逐步通道的乘法衰减；若同一寄存器继续参与，后续门会看到旧的相关性，顺序效应就可能返回。
+

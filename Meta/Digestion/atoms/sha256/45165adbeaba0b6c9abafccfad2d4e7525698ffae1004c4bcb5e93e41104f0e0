@@ -1,0 +1,22 @@
+### 96.4 与 Zeckendorf 构型的接法
+
+把 Zeckendorf 合法字串 $$w$$ 当作系统标签时，静态读出可以先定义为
+
+$$
+P_w=|w\rangle\langle w|,
+$$
+
+但这只指定了“读到哪个构型”。若构型读出后还允许执行条件更新 $$\mathcal J_w$$，则未来统计由
+
+$$
+E_{w_1\cdots w_n}
+=
+\mathcal J_{w_1}^*\cdots
+\mathcal J_{w_n}^*(I)
+$$
+
+决定，而不由 Zeckendorf 数值 $$a(w)$$ 单独决定。不同的 $$\mathcal J_w$$ 可以共享相同的单步效果，却产生不同的多步响应。
+
+因此，Zeckendorf 继续承担离散构型的合法编号；仪器分支和后续动力学承担历史如何回流。要声称某个合法字串的当前标签已经足够，必须先证明所有允许的未来词效果都由该标签因子化，或给出未因子化部分的误差界。
+
+本节复用 `same_effects_different_two_step_joint_law`，并与已有的 `target_prediction_sufficiency`、`unified_sequential_kernel` 和 `all_future_statistics_sufficiency` 相接。Lean 已证明的是明确二能级单 Kraus 仪器的有限矩阵反例；它没有证明任意 POVM 都具有该差异，也没有替具体 Zeckendorf Hamiltonian 选择唯一的分支更新。
