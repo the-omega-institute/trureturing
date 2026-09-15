@@ -6,13 +6,16 @@
    utility: none
    digest: The exact history normal form composes by translated interval intersection and classifies contextual legality. -/
 
+import D5.S0.Automata.TypedPartialDFAOOverBase
+import D5.S3.Factorization.Automata.BoundedPrimeHorizon
 import D5.S3.Factorization.Automata.PrimeHistoryNormalForm
+import Mathlib.Tactic
 
 set_option autoImplicit false
 
 namespace D5.S3.Factorization.Automata.PrimeHistoryComposition
 
-open PrimeHistoryNormalForm WordExcursionLowerBound
+open BoundedPrimeHorizon PrimeHistoryNormalForm WordExcursionLowerBound
 open D5.S0.Automata.TypedPartialDFAOOverBase
 
 /-- Chronological composition: execute s first and t second. The actual domain
