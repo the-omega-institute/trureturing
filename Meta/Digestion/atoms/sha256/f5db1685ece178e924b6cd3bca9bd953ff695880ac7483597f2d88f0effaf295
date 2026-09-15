@@ -1,0 +1,10 @@
+**定理 2.2（实际像上的精确因子化）。** 对任意 \(q:X\to Q\) 和 \(T:X\to Y\)，以下等价：
+\[
+\mathcal E(q;T)=\varnothing;
+\]
+\[
+\exists!\,\bar T:q[X]\to Y,\qquad T=\bar T\circ q.
+\]
+
+**证明。** 若 \(\bar T\) 存在，则 \(q(x)=q(y)\) 蕴含 \(T(x)=T(y)\)，故逃逸集为空。反之，对 \(z\in q[X]\) 取任意 \(x\) 使 \(q(x)=z\)，定义 \(\bar T(z)=T(x)\)。逃逸为空保证这个值与代表元无关；于是 \(T=\bar Tq\)。若还有 \(\bar T'\) 满足同式，则对每个 \(z=q(x)\) 有 \(\bar T'(z)=T(x)=\bar T(z)\)，故唯一。
+

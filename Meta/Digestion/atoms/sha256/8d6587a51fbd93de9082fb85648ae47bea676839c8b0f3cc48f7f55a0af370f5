@@ -1,0 +1,7 @@
+**定义 4.3（精度逃逸与模量）。** 设 \(F:X\to Y\) 为总函数，\(q_n:X\twoheadrightarrow Q_n\)、\(r_n:Y\twoheadrightarrow R_n\) 为有限观察塔。定义
+\[
+\mathcal E_{m,n}(F)=
+\{(x,y):q_m(x)=q_m(y)\land r_n(Fx)\ne r_n(Fy)\}.
+\]
+若对给定 \(n\) 存在 \(m\) 使该集合为空，定义 \(\mu_F(n)\) 为最小这样的 \(m\)；不存在时令 \(\mu_F(n)=\infty\)。
+

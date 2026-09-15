@@ -1,0 +1,2 @@
+**证明。** $a=s_1$，$\|b\|^2=s_2-s_1^2$。在 $[0,\kappa]$ 上 $x^2\le\kappa x$，谱定理给出 $s_2-a^2\le\kappa a-a^2\le\kappa^2/4$。又 $0\le D\le\kappa I$，得第一式。记忆非负且收敛；在 $z=1$，$1-a-M(1)=1/R(1)$，而 $R(1)\le(1-\kappa)^{-1}$。于是 $a+M(1)\le\kappa$，所以 $\|Q\|_{\ell^1}=1+a+M(1)\le1+\kappa$。证毕。
+

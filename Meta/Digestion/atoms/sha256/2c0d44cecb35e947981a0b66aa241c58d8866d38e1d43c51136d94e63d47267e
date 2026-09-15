@@ -1,0 +1,10 @@
+**定理 PM6。** 在 $\operatorname{End}(V)$ 的形式幂级数环中，
+
+$$
+R(z)=I+\sum_{n\ge1}R_nz^n,
+\qquad
+\boxed{R(z)^{-1}=I-\sum_{n\ge1}F_nz^n.}
+$$
+
+因此 $M_j$ 由 $R_1,\ldots,R_{j+2}$ 唯一决定。
+

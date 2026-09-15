@@ -1,0 +1,18 @@
+**定理 PM10。** 在每个 $W_\lambda$ 选定一个单位向量 $e_\lambda$。读取
+
+$$
+\left\langle e_a\otimes e_\lambda,K^t(e_b\otimes e_\lambda)\right\rangle,
+\quad1\le a,b\le r_\lambda,\quad1\le t\le H_0+2,
+$$
+
+足以确定全部 $0\le j\le H_0$ 的观察记忆核。每个时间所需复矩阵元数为 $\sum_\lambda r_\lambda^2$，不依赖 $\dim W_\lambda$。
+
+若逐项数据误差至多 $\epsilon$，并选取任意在这些数据上逐项残差不超过 $\epsilon$ 的共同正收缩响应实现，则令 $r_*=\max_\lambda r_\lambda$，有
+
+$$
+\boxed{
+\max_{0\le j\le H_0}\|\widehat M_j-M_j\|
+\le2r_*(r_*+1)^2\epsilon.
+}
+$$
+

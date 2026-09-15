@@ -1,0 +1,16 @@
+**定理 PN3。** 有
+
+$$
+\frac\kappa8 I\le K_\pm\le\frac{5\kappa}8 I<\kappa I,
+$$
+
+以及
+
+$$
+m_n^+-m_n^-=\delta u_n,\qquad
+\sup_n|m_n^+-m_n^-|\le\delta,
+\qquad \sum_{n<q}|m_n^+-m_n^-|=q\delta.
+$$
+
+（文献：内部正性作为辨识侧信息，见 M. Khosravi, R. S. Smith, SIAM Journal on Control and Optimization 63(1) (2025), 26–56, doi:10.1137/23M1556095）
+

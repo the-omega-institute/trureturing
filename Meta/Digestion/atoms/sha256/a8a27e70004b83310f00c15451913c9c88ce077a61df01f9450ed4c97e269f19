@@ -1,0 +1,10 @@
+**推论。** 当 $0<\epsilon<1$，取 $J=\lceil\log(1/\epsilon)/\log(1/\kappa)\rceil$。对固定 $\kappa\in(0,1)$，PN5 与 PN6 合起来给出
+
+$$
+\boxed{\mathfrak R_\kappa(\epsilon)
+=\Theta_\kappa\bigl(\epsilon\log(1/\epsilon)\bigr)
+\quad(\epsilon\downarrow0).}
+$$
+
+证明由 $\kappa^J\le\epsilon$ 和 PN5 中 $q$ 的显式定义直接完成。精确首项常数没有在此确定。
+

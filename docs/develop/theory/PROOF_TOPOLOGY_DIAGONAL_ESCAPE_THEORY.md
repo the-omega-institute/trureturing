@@ -2806,3 +2806,1139 @@ $$
 **命题。** 对每个 $a$，命令词集合是无限的，而其诱导的部分变换集合是有限的。
 
 **证明。** 前一定理给出有限性。词族 $(+)^{a+1}(+-)^n$ 随 $n\in\mathbb N$ 两两不同，却都在开头的 $(+)^{a+1}$ 后处处失败，故词集合无限。证毕。
+
+---
+
+# 补编 PM：五倍指标整除、正矩响应与一致性约束下的记忆恢复
+
+## PM.1 Bala 的五倍指标整除
+
+**定义。** 沿用 FM.6 的阶乘比
+
+$$
+A(n)=\frac{(30n)!n!}{(15n)!(10n)!(6n)!},\qquad n\in\mathbb N,
+$$
+
+并对正整数 $q$ 置
+
+$$
+f(n,q)=\left\lfloor\frac{30n}{q}\right\rfloor+\left\lfloor\frac n q\right\rfloor-
+\left\lfloor\frac{15n}{q}\right\rfloor-\left\lfloor\frac{10n}{q}\right\rfloor-
+\left\lfloor\frac{6n}{q}\right\rfloor.
+$$
+
+**定理 PM1。** 若 $q\ge6$ 且 $q\mid5n+1$，则 $f(n,q)=1$。此外，对 $n>0$，若 $10n<q\le30n$，则同样有 $f(n,q)=1$。
+
+**证明。** 先令 $r=n\bmod q$。整数部分由 $30+1=15+10+6$ 抵消，故 $f(n,q)=f(r,q)$。若 $q\mid5n+1$，则 $5r+1=tq$，其中 $t\in\{1,2,3,4\}$。当 $q\ge6$ 时，四个商 $\lfloor30r/q\rfloor,\lfloor15r/q\rfloor,\lfloor10r/q\rfloor,\lfloor6r/q\rfloor$ 依次为
+
+$$
+\begin{array}{c|rrrr}
+t&\lfloor30r/q\rfloor&\lfloor15r/q\rfloor&\lfloor10r/q\rfloor&\lfloor6r/q\rfloor\\
+1&5&2&1&1\\
+2&11&5&3&2\\
+3&17&8&5&3\\
+4&23&11&7&4
+\end{array}
+$$
+
+且 $\lfloor r/q\rfloor=0$，逐行相减得到一。对于第二项，$\lfloor n/q\rfloor,\lfloor6n/q\rfloor,\lfloor10n/q\rfloor$ 都为零。令 $k=\lfloor30n/q\rfloor\in\{1,2\}$，则 $\lfloor15n/q\rfloor=\lfloor k/2\rfloor$，所以 $f(n,q)=k-\lfloor k/2\rfloor=1$。证毕。
+
+**定理 PM2。** 对全部自然数 $n$，
+
+$$
+\boxed{(5n+1)(15n)!(10n)!(6n)!\mid(30n)!n!.}
+$$
+
+这是 Peter Bala 在 OEIS A211417 的 2025 年 8 月 28 日评注中提出的 $A(n)/(5n+1)$ 整性条款；不等同于该条目的 $3n+1$ 或 $30n-1$ 条款。来源：[OEIS A211417](https://oeis.org/A211417)。
+
+**证明。** $n=0$ 显然。设 $n>0$。由 FM5 已知分母 $(15n)!(10n)!(6n)!$ 整除分子，故 $A(n)$ 是正整数。FM.7 的余数计算给出 $f(n,q)\ge0$，而 Legendre 公式给出
+
+$$
+v_p(A(n))=\sum_{j\ge1}f(n,p^j).
+$$
+
+对 $p\ge7$，每个整除 $5n+1$ 的 $p^j$ 都满足 PM1，故各贡献一个单位。素数五不整除 $5n+1$。若 $p\nmid5n+1$，则 $v_p(A(n))\ge0=v_p(5n+1)$。
+
+对素数二，由 $v_2((2m)!)=m+v_2(m!)$ 反复化简，
+
+$$
+v_2(A(n))=7n+v_2(n!)-v_2((5n)!)-v_2((3n)!)
+=v_2\binom{8n}{5n}.
+$$
+
+若 $2\mid5n+1$，则 $n$ 为奇数，$3n$ 是二进单位。恒等式
+
+$$
+(5n+1)\binom{8n}{5n+1}=3n\binom{8n}{5n}
+$$
+
+遂给出 $v_2(A(n))\ge v_2(5n+1)$。
+
+对素数三，令 $v=v_3(5n+1)$。若 $v=0$，结论显然。否则 $3^j$ 对 $2\le j\le v$ 各贡献一，共 $v-1$ 个单位；不把 $j=1$ 的贡献假定为一。另取
+
+$$
+k=\lfloor\log_3(10n)\rfloor+1,\qquad q=3^k.
+$$
+
+则 $10n<q\le30n$，PM1 给出 $f(n,q)=1$。又 $q>5n+1$，而 $3^v\le5n+1$，故 $k>v$，这项未被前面的 $2,\ldots,v$ 重复计入。总计至少 $v$ 个单位。全部素数赋值均满足所需不等式，唯一分解给出整除。证毕。
+
+## PM.2 同一阶乘比的正矩表示
+
+**定义。** 令
+
+$$
+S=\frac{30^{30}}{15^{15}10^{10}6^6}=2^{14}3^9 5^5,
+\qquad r_n=\frac{A(n)}{S^n},
+$$
+
+并置
+
+$$
+\boldsymbol\alpha=\frac1{30}(1,7,11,13,17,19,23,29),
+\qquad
+\boldsymbol\beta=\left(\frac15,\frac13,\frac25,\frac12,\frac35,\frac23,\frac45,1\right).
+$$
+
+记 $(a)_n=a(a+1)\cdots(a+n-1)$，且 $(a)_0=1$。
+
+**定理 PM3。** 对所有 $n\ge0$，
+
+$$
+\boxed{r_n=\prod_{i=1}^{8}\frac{(\alpha_i)_n}{(\beta_i)_n}.}
+$$
+
+存在一个在 $(0,1)$ 的每个非空开区间上都有正质量的概率测度 $\mu$，使
+
+$$
+\boxed{r_n=\int_0^1 x^n\,d\mu(x).}
+$$
+
+**证明。** 阶乘的相邻项比给出
+
+$$
+\frac{r_{n+1}}{r_n}
+=\frac{\prod_{j=1}^{30}(n+j/30)(n+1)}
+{\prod_{j=1}^{15}(n+j/15)\prod_{j=1}^{10}(n+j/10)\prod_{j=1}^{6}(n+j/6)}.
+$$
+
+约去公共因子，分子留下八个 $n+\alpha_i$，分母留下八个 $n+\beta_i$；两边在零处都为一，归纳得到第一式。
+
+逐项有 $0<\alpha_i<\beta_i$。取相互独立的随机变量 $X_i$，其密度为
+
+$$
+\frac{x^{\alpha_i-1}(1-x)^{\beta_i-\alpha_i-1}}
+{\mathrm B(\alpha_i,\beta_i-\alpha_i)},\qquad0<x<1.
+$$
+
+Beta 积分给出 $\mathbb E[X_i^n]=(\alpha_i)_n/(\beta_i)_n$。令 $X=\prod_iX_i$，其分布 $\mu$ 便满足矩等式。每个因子密度在 $(0,1)$ 为正；对任意 $x\in(0,1)$，取八个因子均在 $x^{1/8}$ 附近的充分小开区间，其乘积落在 $x$ 的指定邻域，联合概率为正。因此 $\mu$ 在每个非空开区间上有正质量。证毕。
+
+阶乘比与超几何参数消去的背景见 J. W. Bober, *Factorial ratios, hypergeometric series, and a family of step functions*, J. London Math. Soc. 79 (2009), 422–444, [arXiv:0709.1977](https://arxiv.org/abs/0709.1977)。Gamma 型矩与阶乘比 Hausdorff 矩问题见 M. Wang, *Moments of Gamma type and three-parametric Mittag-Leffler function*, [arXiv:2410.19330](https://arxiv.org/abs/2410.19330)。PM3 的具体参数与概率构造由上面的约分和独立乘积给出。
+
+## PM.3 一个具有无限隐藏谱的固定观察实现
+
+**定义。** 在 $\mathcal H=L^2(\mu)$ 上取 $Kf(x)=xf(x)$，令 $e(x)=1$，令 $P$ 为到 $\mathbb C e$ 的正交投影。此处 $K$ 是固定的正收缩演化；不附加保持常数函数的随机转移要求。
+
+**定理 PM4。** 有 $0\le K\le I$、$\|e\|=1$，且
+
+$$
+r_n=\langle e,K^ne\rangle.
+$$
+
+对每个 $N\ge0$，Hankel 矩阵 $(r_{i+j})_{0\le i,j\le N}$ 严格正定。不存在有限维线性空间上的固定算子 $T$、向量 $v$ 与线性泛函 $c$，使 $r_n=c(T^nv)$ 对所有 $n$ 成立。
+
+**证明。** 乘法函数 $x$ 取值于 $[0,1]$，故算子正且收缩。概率质量为一给出单位范数，矩公式由 PM3 得到。对非零系数向量 $(a_0,\ldots,a_N)$，
+
+$$
+\sum_{i,j=0}^{N}\overline a_i r_{i+j}a_j
+=\int\left|\sum_{i=0}^{N}a_ix^i\right|^2d\mu(x)>0.
+$$
+
+最后一个严格不等式来自非零多项式在某个开区间上不为零，以及 PM3 的满区间支撑。若存在维数 $d$ 的线性实现，则每个 Hankel 矩阵通过映射 $a\mapsto\sum_j a_jT^jv$ 与 $w\mapsto(c(T^iw))_i$ 因子化，秩不超过 $d$。取 $N=d$ 与严格正定性矛盾。证毕。
+
+**命题。** PM4 的矩实现不蕴含某个指定有限群在 $\mathcal H$ 上的作用，也不蕴含该作用与 $K,P$ 的交换性。
+
+**证明。** PM4 的构造仅指定测度、乘法算子和常数投影，没有指定群到酉算子的同态；群作用及交换性是另外的数据和等式。证毕。
+
+## PM.4 正收缩系统的反馈质量界
+
+**假设。** 设 $\mathcal H=V\oplus H$ 为复 Hilbert 空间的正交分解，其中 $1\le d=\dim V<\infty$，$H$ 可为无限维。设固定有界算子满足 $0\le K\le I$，并写
+
+$$
+K=\begin{pmatrix}A&B\\B^*&D\end{pmatrix},\qquad
+R_n=\operatorname{pr}_V K^n|_V,\qquad
+M_j=BD^jB^*.
+$$
+
+**定义。** 令 $F_1=A$，$F_{j+2}=M_j$。
+
+**定理 PM5。** 每个 $F_n$ 均半正定，且对所有 $N\ge1$，
+
+$$
+\boxed{\sum_{n=1}^{N}F_n\le I_V.}
+$$
+
+**证明。** $A,D$ 是正收缩压缩，故 $BD^jB^*\ge0$。令 $H_m=\sum_{j=0}^mD^j$。由于这些幂互相交换，
+
+$$
+H_m(I-D)H_m=H_m-H_mD^{m+1}\le H_m.
+$$
+
+在 $I-K\ge0$ 的二次型中代入 $(v,H_mB^*v)$，得到
+
+$$
+\begin{aligned}
+0&\le\langle v,(I-A)v\rangle
+-2\langle B^*v,H_mB^*v\rangle
++\langle H_mB^*v,(I-D)H_mB^*v\rangle\\
+&\le\langle v,(I-A-BH_mB^*)v\rangle.
+\end{aligned}
+$$
+
+所以 $A+\sum_{j=0}^mM_j\le I$，而 $N=1$ 由 $A\le I$。证毕。
+
+**定理 PM6。** 在 $\operatorname{End}(V)$ 的形式幂级数环中，
+
+$$
+R(z)=I+\sum_{n\ge1}R_nz^n,
+\qquad
+\boxed{R(z)^{-1}=I-\sum_{n\ge1}F_nz^n.}
+$$
+
+因此 $M_j$ 由 $R_1,\ldots,R_{j+2}$ 唯一决定。
+
+**证明。** 把 MF1 应用于零隐藏初态，得到
+
+$$
+R_{n+1}=AR_n+\sum_{i=0}^{n-1}M_{n-1-i}R_i,
+\qquad R_0=I.
+$$
+
+乘以相应形式幂并求和，按既定组合次序有 $(I-zA-z^2M(z))R(z)=I$。常数项为 $I$ 的形式级数有唯一双侧逆，故得到所示等式。逐系数递归时，第 $j$ 个核只消费至 $j+2$ 的响应。证毕。
+
+**命题。** 若 $d=1$，则 $F_n\ge0$ 且 $\sum_{n\ge1}F_n\le1$；响应级数逆的系数绝对值总和至多二。
+
+**证明。** 对 PM5 的单调有界部分和取极限，逆级数的常数项为一，其余项为 $-F_n$。证毕。这与 Kaluza 的倒数级数符号判据及更新级数结构相容；参见 Á. Baricz, J. Vesti, M. Vuorinen, *On Kaluza's sign criterion for reciprocal power series*, Ann. Univ. Mariae Curie-Skłodowska Sect. A 65(2) (2011), 1–16, [arXiv:1010.5337](https://arxiv.org/abs/1010.5337)。
+
+## PM.5 不依赖滞后的有限前缀误差界
+
+**假设。** 两个系统均满足 PM.4，并使用同一个可见空间 $V$；其隐藏空间和算子可以不同。把第二个系统的响应与核记作 $\widehat R_n,\widehat M_j$。设 $H_0\ge0$，且
+
+$$
+\max_{1\le n\le H_0+2}\|\widehat R_n-R_n\|\le\eta.
+$$
+
+**定理 PM7。** 对全部 $0\le j\le H_0$，
+
+$$
+\boxed{\|\widehat M_j-M_j\|\le(d+1)^2\eta.}
+$$
+
+在标量可见空间中，该界为 $4\eta$，与 $H_0$、隐藏维数、谱分离距离及非零耦合的最小值无关。
+
+**证明。** 写 $Q(z)=R(z)^{-1}$、$\widehat Q(z)=\widehat R(z)^{-1}$。PM5 与半正定矩阵的 $\|F_n\|\le\operatorname{tr}F_n$ 给出对每个 $N$，
+
+$$
+\sum_{n=0}^{N}\|Q_n\|
+=1+\sum_{n=1}^{N}\|F_n\|
+\le1+\operatorname{tr}\left(\sum_{n=1}^{N}F_n\right)\le1+d,
+$$
+
+第二个系统同理。在非交换形式级数环中，
+
+$$
+\widehat Q-Q=\widehat Q(R-\widehat R)Q.
+$$
+
+比较第 $j+2$ 个系数；每个响应差的指标不超过 $j+2\le H_0+2$，零阶响应差为零。使用次乘法性并扩张有限求和区域，得到
+
+$$
+\|\widehat Q_{j+2}-Q_{j+2}\|
+\le\eta\left(\sum_{a=0}^{j+2}\|\widehat Q_a\|\right)
+\left(\sum_{b=0}^{j+2}\|Q_b\|\right)
+\le(d+1)^2\eta.
+$$
+
+而 $Q_{j+2}=-M_j$、$\widehat Q_{j+2}=-\widehat M_j$。证明没有分离特征值、除以耦合或选择隐藏坐标。证毕。
+
+**命题。** PM7 的前提强于分别要求每个响应矩阵范数不超过一。
+
+**证明。** 正收缩共同实现要求 $R_n$ 来自同一个算子的幂。标量情形下它还要求例如 $r_0r_2\ge r_1^2$。有界数列 $r_0=1,r_1=1,r_2=0$ 违反此式，虽各项都在 $[0,1]$。因此逐项截断到单位区间或单位球并不能履行 PM7 的前提。证毕。
+
+## PM.6 从有误差的标量数据得到相容恢复
+
+**定义。** 对 $N\ge1$ 定义截断矩集
+
+$$
+\mathcal C_N=\left\{\left(\int x^n\,d\nu(x)\right)_{n=1}^{N}:
+\nu\text{ 是 }[0,1]\text{ 上的概率测度}\right\}.
+$$
+
+**定理 PM8。** $\mathcal C_N$ 是紧集，其中每个向量都可由至多 $N+1$ 个原子的概率测度实现。给定数据 $d_1,\ldots,d_N$，最小化 $\max_{n\le N}|r_n-d_n|$ 的相容向量存在。
+
+**证明。** 令 $\gamma(x)=(x,x^2,\ldots,x^N)$。$\gamma([0,1])$ 紧。其凸包由 Carathéodory 定理表示为至多 $N+1$ 个曲线点的凸组合，因而是紧参数空间 $[0,1]^{N+1}\times\Delta_N$ 的连续像，仍紧。有限原子测度给出凸包中的每一点；任意概率测度的积分可由有限分割上的加权点和逼近，因此属于该闭凸包。最大绝对残差是连续函数，在紧集上取得最小值。证毕。
+
+**定理 PM9。** 设真实 $r_n$ 是任意 $[0,1]$ 概率测度的矩，并有 $|d_n-r_n|\le\epsilon$（$1\le n\le H_0+2$）。取 PM8 中 $N=H_0+2$ 的任一最小残差相容向量，再通过 PM6 恢复 $\widehat m_0,\ldots,\widehat m_{H_0}$。则
+
+$$
+\boxed{\max_{0\le j\le H_0}|\widehat m_j-m_j|\le8\epsilon.}
+$$
+
+**证明。** 真实矩向量属于可行集，故最优残差不超过 $\epsilon$，三角不等式给出相容估计矩与真实矩的距离至多 $2\epsilon$。对每个实现该有限向量的概率测度，取乘法算子与常数投影，均满足 PM.4，且其前 $H_0+1$ 个记忆系数只依赖这个有限向量。以 $d=1,\eta=2\epsilon$ 应用 PM7。证毕。
+
+## PM.7 对称约化后的矩阵元数量与误差
+
+**假设。** 给定有限群的已知复酉等型分解
+
+$$
+\mathcal H=\bigoplus_\lambda\left(V_\lambda\otimes W_\lambda\right),
+\qquad \rho(g)=\bigoplus_\lambda(I\otimes\rho_\lambda(g)),
+$$
+
+其中 $W_\lambda$ 是两两不等价的有限维不可约表示，重数空间 $V_\lambda$ 可含任意多个隐藏方向。设 $0\le K\le I$，且 $K,P$ 均与群作用交换；$P$ 在第 $\lambda$ 个重数空间保留 $r_\lambda<\infty$ 维，非零 $r_\lambda$ 仅有限多个。固定这些分解与观察坐标。
+
+**定理 PM10。** 在每个 $W_\lambda$ 选定一个单位向量 $e_\lambda$。读取
+
+$$
+\left\langle e_a\otimes e_\lambda,K^t(e_b\otimes e_\lambda)\right\rangle,
+\quad1\le a,b\le r_\lambda,\quad1\le t\le H_0+2,
+$$
+
+足以确定全部 $0\le j\le H_0$ 的观察记忆核。每个时间所需复矩阵元数为 $\sum_\lambda r_\lambda^2$，不依赖 $\dim W_\lambda$。
+
+若逐项数据误差至多 $\epsilon$，并选取任意在这些数据上逐项残差不超过 $\epsilon$ 的共同正收缩响应实现，则令 $r_*=\max_\lambda r_\lambda$，有
+
+$$
+\boxed{
+\max_{0\le j\le H_0}\|\widehat M_j-M_j\|
+\le2r_*(r_*+1)^2\epsilon.
+}
+$$
+
+**证明。** Schur 分解给出 $K=\bigoplus_\lambda(K_\lambda\otimes I)$ 和相应的 $P$ 分解。所列矩阵元恰是每个保留重数空间上的完整压缩响应条目；用 PM6 逐块恢复后再张量回去。真实实现本身满足数据误差条件，所以要求残差不超过 $\epsilon$ 的正收缩可行集非空。两个实现相对数据各误差至多 $\epsilon$，故每个条目之差至多 $2\epsilon$；一个 $r_\lambda$ 方阵的算子范数不超过其 Frobenius 范数，因而响应误差至多 $2r_\lambda\epsilon$。逐块应用 PM7，再取正交直和的范数上确界，即得所示界。证毕。
+
+## PM.8 有限前缀与尾部的不同要求
+
+**命题。** PM7 至 PM10 不要求任何正谱隙或非零耦合下界，但只控制由已观测前缀确定的核系数。
+
+**证明。** PM7 的卷积系数仅消费不超过 $H_0+2$ 的响应差，未约束更晚的响应；证明未使用隐藏谱间距或逆耦合。证毕。
+
+**定理 PM11。** 在 PM7 的两个系统中，若另有 $\|D\|,\|\widehat D\|\le\theta<1$，其中 $0\le\theta<1$，则
+
+$$
+\sum_{j\ge0}\|\widehat M_j-M_j\|
+\le(H_0+1)(d+1)^2\eta+\frac{2\theta^{H_0+1}}{1-\theta}.
+$$
+
+**证明。** 前 $H_0+1$ 项由 PM7 控制。正收缩的交叉块满足 $\|B\|,\|\widehat B\|\le1$，所以 $\|M_j\|,\|\widehat M_j\|\le\theta^j$；对剩余几何级数求和即得。证毕。
+
+**命题。** PM3–PM4 的具体响应满足 PM7–PM9 的正性前提，并具有无限秩 Hankel 矩阵。PM4 没有给出 $\|D\|<1$ 的严格收缩常数。
+
+**证明。** 前两项分别由乘法算子的正收缩性和 PM4 的严格正定性得到。$\mu$ 的支撑逼近一，故 $\|K\|=1$；已给出的压缩估计只能推出 $\|D\|\le1$，不能用它替代 PM11 所要求的严格上界。证毕。
+
+**定理 PM12（PM10 的更正）。** 在每个 $W_\lambda$ 选定一个单位向量 $e_\lambda$，并设至少有一个 $r_\lambda\ge1$。读取
+
+$$
+\left\langle e_a\otimes e_\lambda,K^t(e_b\otimes e_\lambda)\right\rangle,
+\quad1\le a,b\le r_\lambda,\quad1\le t\le H_0+2,
+$$
+
+足以确定全部 $0\le j\le H_0$ 的观察记忆核。每个时间所需复矩阵元数为 $\sum_\lambda r_\lambda^2$，不依赖 $\dim W_\lambda$。
+
+若逐项数据误差至多 $\epsilon$，并选取任意在这些数据上逐项残差不超过 $\epsilon$ 的共同正收缩响应实现，则令 $r_*=\max_\lambda r_\lambda$，有
+
+$$
+\boxed{
+\max_{0\le j\le H_0}\|\widehat M_j-M_j\|
+\le2r_*(r_*+1)^2\epsilon.
+}
+$$
+
+**证明。** Schur 分解给出 $K=\bigoplus_\lambda(K_\lambda\otimes I)$ 和相应的 $P$ 分解。所列矩阵元恰是每个保留重数空间上的完整压缩响应条目；用 PM6 逐块恢复后再张量回去。真实实现本身满足数据误差条件，所以要求残差不超过 $\epsilon$ 的正收缩可行集非空。两个实现相对数据各误差至多 $\epsilon$，故每个条目之差至多 $2\epsilon$；一个 $r_\lambda$ 方阵的算子范数不超过其 Frobenius 范数，因而响应误差至多 $2r_\lambda\epsilon$。逐块应用 PM7，再取正交直和的范数上确界，即得所示界。其中 $r_\lambda=0$ 的块不贡献矩阵元或记忆核系数，以下仅在 $r_\lambda\ge1$ 的块上恢复并应用 PM7。证毕。
+
+本定理取代定理 PM10 的陈述与证明；PM10 在允许全部 $r_\lambda=0$ 时其界 $r_*$ 无定义，且其证明对零维块误用 PM7。
+
+# 补编 AT：严格收缩、多重模态与全时域目标恢复
+
+## AT.1 单隐藏模态误差界的保留收缩系数形式
+
+**假设。** 沿用 FM.5 的三个测量、预处理与误差假设，并令 $0<\theta<1$、$|w|\le\theta$。在估计器中把传播参数截断到 $[-\theta,\theta]$。
+
+**命题 AT1。** 对 $j\ge0$，其中第二项在 $j=0$ 时定义为零，
+
+$$
+|\widehat m_j-gw^j|
+\le 3\epsilon\theta^j+(8+3\theta)\epsilon j\theta^{j-1}.
+$$
+
+因此
+
+$$
+\boxed{\sum_{j=0}^{\infty}|\widehat m_j-gw^j|
+\le \frac{11\epsilon}{(1-\theta)^2}.}
+$$
+
+**证明。** FM.5 的估计给出 $|\widehat g-g|\le3\epsilon$ 和 $|\widehat z-gw|\le8\epsilon$。若 $\widehat g\le0$，则 $g\le3\epsilon$，逐项误差不超过 $3\epsilon\theta^j$。若 $\widehat g>0$，截断的非扩张性给出
+
+$$
+\widehat g|\widehat w-w|
+\le |\widehat z-\widehat g w|
+\le (8+3\theta)\epsilon.
+$$
+
+利用 $|x^j-y^j|\le j\theta^{j-1}|x-y|$，分解幅度误差和传播误差即得逐项界。求和后，系数为
+
+$$
+\frac3{1-\theta}+\frac{8+3\theta}{(1-\theta)^2}
+=\frac{11}{(1-\theta)^2}.
+$$
+
+证明不需要对 $g$ 或 $\widehat g$ 设正下界。证毕。
+
+## AT.2 稳定消去多项式与尾部常数
+
+**定义。** 对序列 $u=(u_n)_{n\ge0}$，令移位算子 $(Eu)_n=u_{n+1}$。对 $0\le\theta<1$ 和整数 $q\ge0$ 定义
+
+$$
+T_q(\theta)=\frac12\left[\left(\frac{1+\theta}{1-\theta}\right)^q-1\right],
+\qquad C_q(\theta)=q+T_q(\theta).
+$$
+
+**假设。** $u_n$ 取值于复赋范空间，存在 $q$ 个复数 $\lambda_1,\ldots,\lambda_q$，允许重复，满足 $|\lambda_i|\le\theta$ 以及
+
+$$
+\prod_{i=1}^q(E-\lambda_i)u=0.
+$$
+
+空乘积按恒等算子解释，因此 $q=0$ 的假设表示 $u$ 恒为零。设 $\delta\ge0$，且 $\|u_i\|\le\delta$ 对 $0\le i<q$ 成立。
+
+**定理 AT2。** 对每个 $N\ge0$，
+
+$$
+\sum_{n=0}^{N-1}\|u_{q+n}\|\le T_q(\theta)\delta.
+$$
+
+特别地，范数序列可求和，并且
+
+$$
+\boxed{\sum_{n\ge0}\|u_n\|\le C_q(\theta)\delta.}
+$$
+
+（文献：N. G. de Bruijn, Acta Math. Acad. Sci. Hungar. 11 (1960) 213–216, §§3–5）
+
+**证明。** 对消去多项式的次数归纳。零次情形显然。设次数为 $q+1$，选取一个根 $a$，令 $v=(E-a)u$。移位与标量乘法交换，所以 $v$ 被剩余的 $q$ 个因子消去。对 $i<q$，
+
+$$
+\|v_i\|\le \|u_{i+1}\|+|a|\|u_i\|\le(1+\theta)\delta.
+$$
+
+归纳假设给出
+
+$$
+\sum_{n<N}\|v_{q+n}\|\le T_q(\theta)(1+\theta)\delta.
+$$
+
+固定有限 $N$，记
+
+$$
+S_N=\sum_{n<N}\|u_{q+1+n}\|,\qquad
+P_N=\sum_{n<N}\|u_{q+n}\|.
+$$
+
+有限和的移位恒等式与 $\|u_q\|\le\delta$ 给出 $P_N\le\delta+S_N$。又由 $u_{n+1}=a u_n+v_n$，
+
+$$
+S_N\le\theta P_N+T_q(\theta)(1+\theta)\delta.
+$$
+
+因此
+
+$$
+(1-\theta)S_N\le
+[\theta+(1+\theta)T_q(\theta)]\delta.
+$$
+
+$T_0=0$，且所定义的常数直接满足
+
+$$
+T_{q+1}(\theta)=
+\frac{\theta+(1+\theta)T_q(\theta)}{1-\theta}.
+$$
+
+这证明全部有限尾和的界。加上前 $q+1$ 项各自的观测界，得到全部有限部分和有界。非负部分和单调收敛，遂得可求和性与无穷和界。归纳过程中没有预先假设可求和性，也没有对根差、模态权重或特征向量矩阵求逆。证毕。
+
+**注。** 有理生成函数的系数控制与 Turán 型幂和不等式之间的关系见 Batenkov 与 Yomdin，*Taylor Domination, Turán lemma, and Poincaré-Perron Sequences*，arXiv:1301.6033；Contemporary Mathematics 659 (2016), 1–15。AT2 在此给出直接的有限尾和证明。
+
+## AT.3 两个实际有限模态族的目标误差
+
+**假设。** 设
+
+$$
+f_n=\sum_{i=1}^d c_i\lambda_i^n,
+\qquad \widetilde f_n=\sum_{i=1}^e\widetilde c_i\widetilde\lambda_i^n,
+$$
+
+其中节点为实数，$|\lambda_i|,|\widetilde\lambda_i|\le\theta<1$。权重允许有符号或为零，节点允许重复，两个模型可以具有不同模态数。令 $q=d+e$，并假设 $|f_i-\widetilde f_i|\le\delta$ 对 $i<q$ 成立。
+
+**推论 AT3。**
+
+$$
+\sum_{n\ge0}|f_n-\widetilde f_n|\le C_q(\theta)\delta.
+$$
+
+**证明。** 差序列被所有节点对应的一次移位因子的乘积消去，应用 AT2。也可以对实际模态逐一使用
+
+$$
+f_{n+1}-a f_n=\sum_i c_i(\lambda_i-a)\lambda_i^n,
+$$
+
+其中节点为 $a$ 的选定项恰好消失。该恒等式对零权重和重复节点同样成立。证毕。
+
+**注。** 无分离条件下的稀疏矩恢复已有相关研究：Fan 与 Li，*Efficient Algorithms for Sparse Moment Problems without Separation*，COLT 2023，PMLR 195:3510–3565，arXiv:2207.13008。该文讨论混合分布的运输距离恢复；AT3 的目标是整个输出序列的绝对误差和。
+
+## AT.4 常数在一般稳定递推类中的最优性
+
+**定理 AT4。** 对固定 $q\ge1$、$0\le\theta<1$，AT2 的常数 $C_q(\theta)$ 在满足该假设的实标量递推类上不能减小。
+
+**证明。** 取唯一满足
+
+$$
+(E-\theta)^q u=0,\qquad u_i=(-1)^{q-1-i}\quad(0\le i<q)
+$$
+
+的序列。证明其从第 $q-1$ 项开始非负，并且尾和恰为 $T_q(\theta)$，对 $q$ 归纳。$q=1$ 时 $u_n=\theta^n$。若 $q\ge2$，令 $v=(E-\theta)u$，则
+
+$$
+v_i=(1+\theta)(-1)^{q-2-i}\quad(0\le i<q-1),
+\qquad (E-\theta)^{q-1}v=0.
+$$
+
+由归纳假设，$v_n\ge0$ 对 $n\ge q-2$ 成立。又 $u_{q-1}=1$，从而递推 $u_{n+1}=\theta u_n+v_n$ 使全部 $n\ge q-1$ 的 $u_n$ 非负。AT2 已经证明这些序列绝对可求和。对 $n\ge q-1$ 的递推求和，令 $U=\sum_{n\ge q}u_n$，得到
+
+$$
+U=\theta(1+U)+(1+\theta)T_{q-1}(\theta),
+$$
+
+故 $U=T_q(\theta)$。前 $q$ 项绝对值均为一，所以总绝对和为 $C_q(\theta)$。乘以任意 $\delta\ge0$ 即得相应尺度。证毕。
+
+**推论。** 若 $\theta>0$，即使只允许实的、彼此不同的指数节点，且不对有符号权重施加统一上界，也不存在小于 $C_q(\theta)$ 的通用常数。
+
+**证明。** 选择 $q$ 个彼此不同、从下方趋近 $\theta$ 的节点，并保持 AT4 的前 $q$ 项不变。对应 Vandermonde 系统可逆，确定一个实际指数和。递推系数随节点连续变化，所以任意固定长度的输出前缀收敛到 AT4 的序列。任何小于 $C_q(\theta)$ 的数都小于该极限序列某个有限绝对部分和，故足够近的不同节点也违反这个较小常数。证毕。
+
+**注。** 本最优性允许权重在节点碰撞时变得很大。对正权重、给定总质量或正收缩整体实现的子类，本命题没有断言常数仍然最优。$\theta=0$ 的单纯指数和类与零根 Jordan 递推类也须分别处理。
+
+## AT.5 有限隐藏空间的目标核
+
+**假设。** 两个分块演化具有共同的可见空间，隐藏空间分别为有限维复空间，维数为 $d,e$；核分别为
+
+$$
+M_j=B D^j C,\qquad \widetilde M_j=\widetilde B\widetilde D^j\widetilde C.
+$$
+
+所有隐藏特征值的模不超过 $\theta<1$。在同一个算子范数中，$\|M_j-\widetilde M_j\|\le\delta$ 对 $j<d+e$ 成立。
+
+**推论 AT5。**
+
+$$
+\sum_{j\ge0}\|M_j-\widetilde M_j\|\le C_{d+e}(\theta)\delta.
+$$
+
+**证明。** Cayley–Hamilton 定理分别给出两个核序列的特征多项式消去关系。两个特征多项式的乘积消去差序列，在复数域分解后应用 AT2。该论证容许 Jordan 块，也没有要求 $B,C$ 或其乘积可逆。若已知更低次数的目标消去多项式，可用该次数替换 $d+e$。证毕。
+
+**注。** 对实自伴随隐藏传播，谱分解直接把标量矩阵元化为 AT3。对一般实算子作复化时，应显式选择与所声明算子范数相容的复化结构。
+
+## AT.6 从有噪声可见响应到全记忆核
+
+**假设。** 在标量可见空间与至多 $r$ 维实隐藏空间上，真实整体传播为
+
+$$
+K=\begin{pmatrix}a&b^*\\b&D\end{pmatrix},\qquad
+0\le K\le I,\qquad 0\le D\le\theta I,\quad \theta<1.
+$$
+
+记 $s_n=\langle e,K^n e\rangle$，$s_0=1$，$m_j=\langle b,D^j b\rangle$。另一个模型 $\widetilde K$ 满足同样的约束。设 $|s_i-\widetilde s_i|\le\eta$ 对 $1\le i\le L$ 成立。
+
+**引理。** 对 $0\le j\le L-2$，$|m_j-\widetilde m_j|\le4\eta$。
+
+**证明。** 分块消元给出形式幂级数恒等式
+
+$$
+R(z)=\sum_{n\ge0}s_nz^n,\qquad
+Q(z)=R(z)^{-1}=1-az-z^2\sum_{j\ge0}m_jz^j.
+$$
+
+由于 $D\ge0$，$m_j\ge0$。对 $I-K\ge0$ 使用 Schur 补，且 $I-D$ 可逆，得到
+
+$$
+a+\sum_{j\ge0}m_j
+=a+\langle b,(I-D)^{-1}b\rangle\le1.
+$$
+
+因此 $Q$ 的系数绝对和不超过 $2$，另一个模型同样成立。由
+
+$$
+\widetilde Q-Q=\widetilde Q\,(R-\widetilde R)\,Q,
+$$
+
+截至 $L$ 次的任一系数差不超过 $2\eta\cdot2$。第 $j+2$ 次系数正是负的记忆核差，得到结论。此证明要求两个响应序列均由相容的正收缩模型产生。证毕。
+
+**定义。** 对 $1\le i\le2r+1$ 的有噪声响应 $y_i$，假设 $|y_i-s_i|\le\epsilon$。在固定 $r+1$ 维矩阵空间中，把较低维模型补零，在上述正收缩约束集合上最小化 $\max_i|y_i-\langle e,\widetilde K^i e\rangle|$。
+
+**推论 AT6。** 该全局最小化问题有解，且任意全局最小解满足
+
+$$
+\boxed{\sum_{j\ge0}|\widetilde m_j-m_j|
+\le8\epsilon\,C_{2r}(\theta).}
+$$
+
+**证明。** 约束集合是非空紧集，目标函数连续。真实补零模型的目标值不超过 $\epsilon$，故最小解同样如此，两个模型的响应差不超过 $2\epsilon$。引理给出前 $2r$ 个记忆系数的误差至多 $8\epsilon$。两个隐藏自伴随矩阵各至多有 $r$ 个谱模态，应用 AT3。证毕。
+
+**注。** 这里证明了估计器的存在性与误差保证，没有证明全局最小化的多项式时间算法。独立逐项截断一个任意测量序列不保证它具有相容的正收缩实现。若只求得目标值至多 $\epsilon+\tau$ 的可行模型，上式中的 $8\epsilon$ 改为 $4(2\epsilon+\tau)$。
+
+## AT.7 素数寄存器的一个可逆随机演化实现
+
+**定义。** 取 $m\ge2$ 个互异素数 $p_1,\ldots,p_m$ 和平方自由容量 $N=\prod_i p_i$。状态 $b\in\{0,1\}^m$ 编码为 $n(b)=\prod_i p_i^{b_i}$，定义观察量
+
+$$
+F(b)=\boldsymbol1_{\{n(b)\text{ 为素数}\}}
+=\boldsymbol1_{\{|b|=1\}}.
+$$
+
+在均匀概率测度 $\pi$ 上定义演化
+
+$$
+(Kf)(b)=\frac12f(b)+\frac1{2m}\sum_{i=1}^m f(b\oplus e_i).
+$$
+
+这里一步操作要么不变，要么翻转一个二态寄存器。编码后的操作为在合法范围内乘以或除以一个已知素数。
+
+**命题 AT7。** $K$ 是自伴随正收缩；坐标置换群 $S_m$ 的表示与 $K$ 交换。其平凡等型分量具有维数 $m+1$。
+
+**证明。** 每条翻转边的正反概率均为 $1/(2m)$，均匀测度满足细致平衡。Walsh 函数 $\chi_S(b)=(-1)^{\sum_{i\in S}b_i}$ 是正交特征基，对应特征值 $1-|S|/m\in[0,1]$。置换同时置换翻转方向，故交换。置换不变函数恰为 Hamming 重量的函数，共有 $m+1$ 个重量层。证毕。
+
+**定义。** 令 $p=m/2^m$，$e=(F-p)/\sqrt{p(1-p)}$。在 $L^2(\pi)$ 中令 $P$ 为到 $\operatorname{span}\{1,e\}$ 的正交投影，$Q=I-P$。
+
+**命题 AT8。** 隐藏传播 $D=QKQ|_{\operatorname{ran}Q}$ 满足
+
+$$
+0\le D\le(1-1/m)I.
+$$
+
+中心化响应满足
+
+$$
+\boxed{\langle e,K^t e\rangle=
+\sum_{k=1}^m
+\frac{\binom mk(m-2k)^2}{m(2^m-m)}\left(1-\frac km\right)^t.}
+$$
+
+$t=0$ 时采用 $0^0=1$ 的幂约定。若 $m$ 为偶数，则 $k=m/2$ 项的权重恰为零。
+
+**证明。** 常数方向属于可见空间，隐藏空间正交于特征值为一的常数模态，其余特征值最大为 $1-1/m$，压缩保持二次型上下界。对 $|S|=k\ge1$，
+
+$$
+\langle F,\chi_S\rangle=\frac{m-2k}{2^m}.
+$$
+
+除以 $\|F-p\|=\sqrt{m(2^m-m)}/2^m$ 后平方，再把同一 $k$ 的 $\binom mk$ 个模态相加，即得公式。证毕。
+
+**注。** $P$ 在不变子空间内只选择两个方向；它不是投影到整个 $S_m$ 不变子空间的群平均算子。因此 $K$ 的置换对称性不强制 $PKQ=0$。这里的素数标签预先给定；该模型没有给出新素数搜索算法，也没有证明自然数序列中的素数分布。
+
+## AT.8 三个素数寄存器产生两个非零记忆模态
+
+**命题 AT9。** 对 AT.7 的 $m=3$，中心化响应为
+
+$$
+s_t=\frac15(2/3)^t+\frac15(1/3)^t+\frac35 0^t,
+$$
+
+且
+
+$$
+s_1=\frac15,\quad s_2=\frac19,\quad s_3=\frac1{15},
+\qquad m_0=\frac{16}{225},\quad m_1=\frac{34}{1125}.
+$$
+
+全部记忆系数的生成函数为
+
+$$
+\boxed{M(z)=\sum_{j\ge0}m_jz^j
+=\frac{16/225-(2/75)z}{1-(4/5)z+(2/15)z^2}.}
+$$
+
+因此
+
+$$
+m_{j+2}=\frac45m_{j+1}-\frac2{15}m_j,
+\qquad \lambda_\pm=\frac25\pm\frac{\sqrt6}{15}.
+$$
+
+两个极点没有被分子消去，对应两个非零目标模态，且都小于 $2/3$。
+
+**证明。** 在 AT8 中代入 $m=3$。相加三个几何级数得
+
+$$
+R(z)=\frac{1-(4/5)z+(2/15)z^2}{1-z+(2/9)z^2}.
+$$
+
+代入 $M(z)=[1-s_1z-R(z)^{-1}]/z^2$ 并约分得所述生成函数。分母的两个特征根为 $\lambda_\pm$，分子只有一个有理根，因而不能消去这两个无理极点。又 $m_0>0$，固定观察下的反馈记忆非零。证毕。
+
+**推论。** 在三个寄存器模型的非恒定对称子空间内，把记忆可达部分限制为两个隐藏维度，可使用 $r=2$、$\theta=2/3$ 的 AT6。由五个中心化响应样本得到的误差保证为 $8\epsilon C_4(2/3)=2528\epsilon$。
+
+**证明。** 响应有三个不同的非零权重谱原子，包括零节点，故循环空间维数为三；移除一个可见方向后，其隐藏部分维数为二。计算 $C_4(2/3)=4+(5^4-1)/2=316$ 即得。该常数是通用上界，没有声称对这个固定正模型最优。证毕。
+
+## AT.9 响应读数的轨迹含义与一个有限抽样界
+
+**命题。** 对平稳初始分布 $\pi$ 的 AT.7 马尔可夫链，
+
+$$
+s_t=\mathbb E_\pi[e(X_0)e(X_t)].
+$$
+
+这些响应是二时刻相关函数，需要以重复轨迹或具有适当误差保证的统计程序估计。一个时刻的二元读数 $F(X_t)$ 本身不等于 $s_t$。
+
+**证明。** 条件于 $X_0=b$，$\mathbb E[e(X_t)\mid X_0=b]=(K^t e)(b)$，再对初态求期望即为 $\langle e,K^t e\rangle_\pi$。证毕。
+
+**推论。** 对 $m=3$，取 $H$ 条相互独立、各自从均匀分布出发的长度五轨迹。以样本均值估计五个 $s_t$。若 $0<\alpha<1$，且
+
+$$
+H\ge\frac{32}{9\epsilon^2}\log\frac{10}{\alpha},\qquad\epsilon>0,
+$$
+
+则五个响应误差同时不超过 $\epsilon$ 的概率至少为 $1-\alpha$，相应 AT6 估计器的全核绝对误差以该概率不超过 $2528\epsilon$。
+
+**证明。** $e$ 的两个值为 $5/\sqrt{15}$ 与 $-3/\sqrt{15}$，所以乘积 $e(X_0)e(X_t)$ 位于 $[-1,5/3]$，区间长度为 $8/3$。Hoeffding 不等式给出单个时刻的尾概率上界 $2\exp(-9H\epsilon^2/32)$，再对五个时刻取并集界。轨迹间的独立性足够，同一条轨迹的不同时刻不必独立。证毕。
+
+**引文。** W. Hoeffding，*Probability Inequalities for Sums of Bounded Random Variables*，Journal of the American Statistical Association 58 (1963), 13–30，doi:10.1080/01621459.1963.10500830。
+
+## AT.10 让素数值进入热浴动力学
+
+**定义。** 对一般有限容量状态 $b_i\in\{0,\ldots,A_i\}$，$A_i\ge1$，定义能量和乘积 Gibbs 分布
+
+$$
+\mathcal E(b)=\log n(b)=\sum_i b_i\log p_i,
+\qquad
+\pi_\beta(b)=Z_\beta^{-1}n(b)^{-\beta},
+$$
+
+$$
+Z_\beta=\sum_{n\mid\prod_i p_i^{A_i}}n^{-\beta}
+=\prod_i\sum_{a=0}^{A_i}p_i^{-\beta a}.
+$$
+
+令 $H_i$ 把第 $i$ 个坐标重新抽样为分布
+
+$$
+\rho_i(a)=\frac{p_i^{-\beta a}}{\sum_{c=0}^{A_i}p_i^{-\beta c}},
+$$
+
+并保持其他坐标不变。定义 $K_\beta=m^{-1}\sum_i H_i$。
+
+**命题 AT10。** 在 $L^2(\pi_\beta)$ 中，每个 $H_i$ 是自伴随正交投影，不同 $H_i$ 交换。$K_\beta$ 满足细致平衡，且其谱包含于
+
+$$
+\{1,1-1/m,\ldots,0\}.
+$$
+
+无论容量和完整状态数多大，任一中心化标量观察的循环空间维数至多为 $m$。
+
+**证明。** $H_i$ 是对其余坐标的条件期望。乘积测度使不同坐标的平均交换。对 $S\subseteq\{1,\ldots,m\}$ 定义
+
+$$
+P_S=\prod_{i\in S}(I-H_i)\prod_{i\notin S}H_i.
+$$
+
+这些投影两两正交，和为恒等算子，并满足
+
+$$
+K_\beta P_S=(1-|S|/m)P_S.
+$$
+
+因此，按 $|S|=k$ 求和的投影 $\Pi_k$ 给出至多 $m+1$ 个特征值。中心化观察 $f$ 满足 $\Pi_0 f=0$，其循环空间包含于 $\operatorname{span}\{\Pi_1f,\ldots,\Pi_mf\}$。证毕。
+
+**推论。** 对非零中心化观察，目标核可限制在至多 $m-1$ 维的隐藏循环空间内，并且该空间的隐藏压缩满足 $0\le D\le(1-1/m)I$。可以按此目标维数应用 AT6，而无需恢复完整的 $\prod_i(A_i+1)$ 个状态坐标。
+
+**证明。** 观察的循环空间在自伴随 $K_\beta$ 下约化；从中移除一个可见方向，其余维数至多为 $m-1$。常数特征方向已经被中心化移除，所以非恒定谱的统一上界为 $1-1/m$。证毕。
+
+**注。** 对平方自由容量，$\beta=0$ 时 $H_i=(I+\operatorname{flip}_i)/2$，恰好回到 AT.7。$\beta>0$ 时素数值通过抽样概率进入动力学。对固定且不同的素数标签，坐标置换一般不再是固定参数模型的对称性；投影交换结构仍然成立。
+
+## AT.11 退化模态的出现、消失与连续恢复
+
+**假设。** 在 AT.10 中取 $A_i=1$，$m\ge2$，互异素数标签，观察仍为 $F=\boldsymbol1_{\{|b|=1\}}$。令
+
+$$
+x_i=p_i^{-\beta},\quad
+P_0=\prod_i(1+x_i)^{-1},\quad
+p_F=P_0\sum_i x_i.
+$$
+
+**命题 AT11。** 中心化归一化响应在特征值 $1-k/m$ 上的权重为
+
+$$
+W_k(\beta)=\frac{P_0^2}{p_F(1-p_F)}
+\sum_{|S|=k}\left(\prod_{i\in S}x_i\right)
+\left(\sum_{j\notin S}x_j-k\right)^2,
+\qquad 1\le k\le m.
+$$
+
+对每个 $\beta>0$，所有 $W_k(\beta)$ 都严格为正。对 $\beta=0$，恰在 $m$ 为偶数且 $k=m/2$ 时出现零权重。因此非恒定循环空间的维数在 $\beta>0$ 时为 $m$；在均匀极限，偶数 $m$ 时降为 $m-1$。
+
+**证明。** 第 $i$ 个坐标的归一化中心函数在零和一上的取值分别为 $-\sqrt{x_i}$、$1/\sqrt{x_i}$。对其乘积基函数 $\chi_S$，对恰好一个坐标为一的状态求和，得到
+
+$$
+\langle F,\chi_S\rangle
+=(-1)^{|S|}P_0\sqrt{\prod_{i\in S}x_i}
+\left(\sum_{j\notin S}x_j-|S|\right).
+$$
+
+平方并按次数相加，除以方差即得权重公式。若 $1\le k<m$ 且 $W_k=0$，每一个 $k$ 元子集都满足 $\sum_{j\notin S}x_j=k$。选择两个只交换一个元素的子集，便得到任意两个 $x_i,x_j$ 相等。$\beta>0$ 与素数互异使这不可能。$k=m$ 时括号恒为 $-m$，所以该权重也非零。$\beta=0$ 时全部 $x_i=1$，括号为 $m-2k$。互异特征值的非零谱权重数等于循环空间维数。证毕。
+
+**推论。** 若 $m$ 为偶数、$k=m/2$，则
+
+$$
+\lim_{\beta\downarrow0}\frac{W_k(\beta)}{\beta^2}
+=\frac{\displaystyle\sum_{|S|=k}
+\left(\sum_{j\notin S}\log p_j\right)^2}
+{m(2^m-m)}>0.
+$$
+
+因此，即使只考虑 $\beta>0$、所有目标谱权重均非零的模型族，也不存在对该权重有效的统一正下界。
+
+**证明。** 用 $x_i=1-\beta\log p_i+O(\beta^2)$ 展开 AT11。因 $m-k=k$，括号的常数项为零，一阶项为 $-\beta\sum_{j\notin S}\log p_j$。其他乘积因子连续趋于一，且 $P_0^2/[p_F(1-p_F)]$ 趋于 $1/[m(2^m-m)]$。有限求和允许逐项取极限；各素数对数严格为正。证毕。
+
+## AT.12 预测项的接口与初态记忆的边界
+
+**命题。** 对分块线性演化
+
+$$
+y_{n+1}=Ay_n+Bh_n,\qquad h_{n+1}=Cy_n+Dh_n,
+$$
+
+有
+
+$$
+y_{n+1}=Ay_n+BD^nh_0+\sum_{k=0}^{n-1}M_{n-1-k}y_k.
+$$
+
+若 $\sup_k\|y_k\|\le Y$，则沿同一给定历史，把 $M$ 换为 $\widetilde M$ 后，记忆卷积项的变化满足
+
+$$
+\sup_n\left\|\sum_{k=0}^{n-1}(\widetilde M_{n-1-k}-M_{n-1-k})y_k\right\|
+\le Y\sum_{j\ge0}\|\widetilde M_j-M_j\|.
+$$
+
+**证明。** 迭代隐藏更新得到 $h_n=D^nh_0+\sum_{k<n}D^{n-1-k}Cy_k$，左乘 $B$。第二式对有限和使用三角不等式与算子范数，再以全绝对和为上界。证毕。
+
+**注。** 目标核恢复本身没有确定未知初态的 $BD^nh_0$ 项，也没有恢复某条随机轨迹的完整隐藏状态。以上卷积误差比较固定同一历史；若递归使用模型自身预测的历史，还需对闭环误差传播另作稳定性证明。
+
+# 补编 PN：正可逆状态机的全记忆恢复障碍
+
+## PN.1 模型类、观察接口与风险
+
+**定义。** 固定 $0<\kappa<1$。令 $\mathcal C_\kappa$ 为全部有限维实自伴随分块算子与指定单位可见方向组成的类，
+
+$$
+K=\begin{pmatrix}a&b^*\\b&D\end{pmatrix},\qquad 0\le K\le\kappa I.
+$$
+
+隐藏维数不设统一上界。观察与目标分别为
+
+$$
+s_n(K)=\langle e,K^n e\rangle,\qquad s_0=1,
+\qquad m_j(K)=\langle b,D^j b\rangle.
+$$
+
+观察数据 $y=(y_n)_{n\ge1}$ 满足 $\sup_{n\ge1}|y_n-s_n(K)|\le\epsilon$。估计器可使用整个无限数据序列；其损失定义为 $\sum_{j\ge0}|\widehat m_j(y)-m_j(K)|$，发散时取 $+\infty$。令
+
+$$
+\mathfrak R_\kappa(\epsilon)=
+\inf_{\widehat m}\sup_{K\in\mathcal C_\kappa}
+\sup_{\|y-s(K)\|_\infty\le\epsilon}
+\sum_{j\ge0}|\widehat m_j(y)-m_j(K)|.
+$$
+
+这是逐坐标有界、可对抗的相关读数误差模型。它没有赋予估计器完整转移矩阵、所有隐藏状态、所有高阶轨迹分布或任意干预读数。
+
+## PN.2 正谱测度之差中的长平台
+
+**定义。** 对 $q\ge1$ 和不同的 $\lambda_1,\ldots,\lambda_q\in(0,1)$，令
+
+$$
+c_i=\prod_{\ell\ne i}\frac{1-\lambda_\ell}{\lambda_i-\lambda_\ell},
+\qquad u_n=\sum_{i=1}^q c_i\lambda_i^n.
+$$
+
+**定理 PN1。** 对所有 $n\ge0$，$0\le u_n\le1$；对 $0\le n<q$，$u_n=1$。此外
+
+$$
+\sum_{n\ge0}u_n=\sum_{i=1}^q\frac1{1-\lambda_i}.
+$$
+
+（文献：A. Sen, N. Balakrishnan, Statist. Probab. Lett. 43 (1999) 421–426, Theorem 1）
+
+**证明。** 取相互独立的正整数值几何变量 $G_i$，$\Pr(G_i=k)=(1-\lambda_i)\lambda_i^{k-1}$，并令 $T=\sum_iG_i$。其概率生成函数为
+
+$$
+\mathbb E z^T=\frac{z^q\prod_i(1-\lambda_i)}{\prod_i(1-\lambda_i z)}.
+$$
+
+生存概率的生成函数满足
+
+$$
+\sum_{n\ge0}\Pr(T>n)z^n
+=\frac{1-\mathbb E z^T}{1-z}.
+$$
+
+右式在 $z=1$ 的因子相消。因节点不同且非零，其部分分式为 $\sum_i c_i/(1-\lambda_i z)$：在 $z=1/\lambda_i$ 处乘以 $1-\lambda_i z$ 后取值，所得系数正是所定义的 $c_i$。所以 $u_n=\Pr(T>n)$。概率属于 $[0,1]$，且 $T\ge q$，给出全部逐项结论。非负整数变量的尾和等于期望，故总和为 $\mathbb ET=\sum_i(1-\lambda_i)^{-1}$。也可从有限个绝对收敛的几何级数求和得到同一值。证毕。
+
+**命题。** 上述族可通过显式递归构造而无需预先给出生存概率表示。空节点族取零序列。若尾节点族的权重为 $w_j$，加入不同的新节点 $a$ 后，令
+
+$$
+\widetilde w_j=\frac{(1-a)w_j}{\lambda_j-a},
+\qquad w_0=1-\sum_j\widetilde w_j.
+$$
+
+所得实际指数和满足
+
+$$
+f_0=1,\qquad f_{n+1}=a f_n+(1-a)v_n,
+$$
+
+其中 $v$ 是尾节点族的指数和。在全部节点属于 $[0,1]$ 时，该递归给出所有时刻 $f_n\in[0,1]$，以及节点数以内的 $f_n=1$，包括端点节点和空族的相应边界。
+
+**证明。** 常数项由 $w_0$ 的定义得到。展开 $f_{n+1}-a f_n$，首节点项消失，其余每项的 $(\lambda_j-a)$ 消去分母，得到 $(1-a)v_n$。对节点数及时间归纳，递推右侧是两个 $[0,1]$ 值的凸组合；在初始平台内两个值均为一。证毕。
+
+**推论。** 对任意正质量预算 $M$ 和任意有限不同节点族，节点均在 $[0,1]$，存在 $\delta>0$ 以及两组非负权重 $w_i^+,w_i^-$，使
+
+$$
+\sum_i(w_i^++w_i^-)\le M,
+\qquad 0\le m_n^+-m_n^-\le\delta\quad(n\ge0),
+\qquad m_n^+-m_n^-=\delta\quad(n<q),
+$$
+
+其中 $m_n^\pm=\sum_iw_i^\pm\lambda_i^n$。
+
+**证明。** 对递归构造的权重 $c_i$，令 $S=\sum_i|c_i|$，取 $\delta=M/(1+S)$，并取 $w_i^+=\delta\max(c_i,0)$、$w_i^-=\delta\max(-c_i,0)$。合并质量为 $\delta S\le M$，矩差为 $\delta u_n$；前一命题覆盖端点和空族。证毕。
+
+这里正性属于两份测度各自；它们之差可以包含精确抵消。上述结论没有对单份正测度声称其自身具有长平台。
+
+## PN.3 一个显式指数质量代价
+
+**定义。** 对 $q\ge2$ 取等距节点
+
+$$
+\lambda_i=\frac\kappa4+\frac\kappa4\frac{i}{q-1},
+\qquad 0\le i<q.
+$$
+
+$q=1$ 时取唯一节点 $\kappa/4$。始终有 $\kappa/4\le\lambda_i\le\kappa/2$。
+
+**命题 PN2。** PN1 中这些节点的系数满足
+
+$$
+S_q=\sum_i|c_i|\le B_\kappa^{q-1},\qquad B_\kappa=24/\kappa.
+$$
+
+**证明。** $q=1$ 时 $S_1=1$。对 $q\ge2$，令 $r=q-1$，网格间距为 $h=\kappa/(4r)$。每个系数的分子绝对值不超过一，分母绝对值等于 $h^r i!(r-i)!$。因此
+
+$$
+S_q\le(4r/\kappa)^r\sum_{i=0}^r\frac1{i!(r-i)!}
+=\frac{(8r/\kappa)^r}{r!}.
+$$
+
+由 $\log(r!)=\sum_{j=1}^r\log j\ge\int_1^r\log x\,dx\ge r\log r-r$ 得 $r!\ge(r/e)^r$。结合 $e<3$，得到 $S_q\le(24/\kappa)^r$。证毕。
+
+## PN.4 两个一致有界的正自伴随实现
+
+**假设。** 采用 PN.3 的节点，并取
+
+$$
+0<\delta S_q\le\kappa^2/64,
+\qquad w_i^\pm=\delta\max(\pm c_i,0),
+\qquad b_i^\pm=\sqrt{w_i^\pm}.
+$$
+
+**定义。** 令
+
+$$
+D=\operatorname{diag}(\lambda_i),\qquad
+K_\pm=\begin{pmatrix}\kappa/4&(b^\pm)^*\\b^\pm&D\end{pmatrix}.
+$$
+
+两个系统具有同一个可见方向、同一个可见即时项和同一个隐藏对角传播。
+
+**定理 PN3。** 有
+
+$$
+\frac\kappa8 I\le K_\pm\le\frac{5\kappa}8 I<\kappa I,
+$$
+
+以及
+
+$$
+m_n^+-m_n^-=\delta u_n,\qquad
+\sup_n|m_n^+-m_n^-|\le\delta,
+\qquad \sum_{n<q}|m_n^+-m_n^-|=q\delta.
+$$
+
+（文献：内部正性作为辨识侧信息，见 M. Khosravi, R. S. Smith, SIAM Journal on Control and Optimization 63(1) (2025), 26–56, doi:10.1137/23M1556095）
+
+**证明。** 去掉交叉块后的对角算子在 $[\kappa/4,\kappa/2]$ 内。交叉块 $\left(\begin{smallmatrix}0&b^*\\b&0\end{smallmatrix}\right)$ 的范数为 $\|b\|\le\sqrt{\delta S_q}\le\kappa/8$；二次型扰动界给出所述上下界。直接计算 $\langle b^\pm,D^nb^\pm\rangle=\sum_iw_i^\pm\lambda_i^n$，再用 PN1。证毕。
+
+**命题 PN4。** 两个可见响应在所有时刻满足
+
+$$
+\sup_{n\ge0}|s_n(K_+)-s_n(K_-)|\le\frac\delta{(1-\kappa)^2}.
+$$
+
+**证明。** 记 $R_\pm(z)=\sum_ns_n(K_\pm)z^n$、$M_\pm(z)=\sum_nm_n^\pm z^n$。分块消元与相同的即时项给出
+
+$$
+R_+(z)-R_-(z)=z^2R_+(z)[M_+(z)-M_-(z)]R_-(z).
+$$
+
+因为 $0\le K_\pm\le\kappa I$，有 $s_n(K_\pm)\ge0$ 且 $\sum_ns_n(K_\pm)\le(1-\kappa)^{-1}$。逐系数取绝对值，卷积两侧的绝对和与中间系数的上界 $\delta$ 相乘即得；这覆盖任意自然时刻，非有限截止后的外推。证毕。
+
+## PN.5 排除维数无关的线性恢复率
+
+**定理 PN5。** 令
+
+$$
+A_\kappa=\frac{\kappa^2}{128(1-\kappa)^2},
+\qquad 0<\epsilon\le A_\kappa,
+\qquad q=1+\left\lfloor\frac{\log(A_\kappa/\epsilon)}{\log B_\kappa}\right\rfloor.
+$$
+
+则
+
+$$
+\boxed{\mathfrak R_\kappa(\epsilon)\ge(1-\kappa)^2q\epsilon.}
+$$
+
+特别地，不存在只依赖 $\kappa$ 的有限常数 $C$，使全部维数与全部足够小的误差均满足 $\mathfrak R_\kappa(\epsilon)\le C\epsilon$。
+
+（文献：有界噪声下的最坏情形系统辨识与信息直径方法，见 B. Kacewicz, M. Milanese, International Journal of Adaptive Control and Signal Processing 9 (1995), 87–96, doi:10.1002/acs.4480090109）
+
+**证明。** 取 $\delta=2(1-\kappa)^2\epsilon$。PN2 和 $B_\kappa^{q-1}\le A_\kappa/\epsilon$ 给出 $\delta S_q\le\kappa^2/64$，故 PN3 的两模型合法。PN4 给出全部响应差不超过 $2\epsilon$。同一数据
+
+$$
+y_n=\frac{s_n(K_+)+s_n(K_-)}2
+$$
+
+与两模型的误差均不超过 $\epsilon$。对任意估计器，令 $L_\pm=\sum_{j<q}|\widehat m_j(y)-m_j^\pm|$。逐项三角不等式给出 $L_++L_-\ge q\delta$，故至少一个损失不小于 $q\delta/2=(1-\kappa)^2q\epsilon$。全部绝对损失不小于这个有限前缀损失。由于 $q\to\infty$ 当 $\epsilon\downarrow0$，线性率被排除。证毕。
+
+此下界在所有响应时刻都被提供时成立。它不依赖缺少足够长的观察时间、接近单位圆的隐藏根、Jordan 块、非正规放大或无界耦合范数。
+
+## PN.6 匹配的有限观察上界
+
+**引理。** 对 $K\in\mathcal C_\kappa$，其记忆满足
+
+$$
+0\le m_j\le\frac{\kappa^{j+2}}4.
+$$
+
+响应逆级数 $Q(z)=R(z)^{-1}=1-az-z^2M(z)$ 的系数绝对和不超过 $1+\kappa$。
+
+**证明。** $a=s_1$，$\|b\|^2=s_2-s_1^2$。在 $[0,\kappa]$ 上 $x^2\le\kappa x$，谱定理给出 $s_2-a^2\le\kappa a-a^2\le\kappa^2/4$。又 $0\le D\le\kappa I$，得第一式。记忆非负且收敛；在 $z=1$，$1-a-M(1)=1/R(1)$，而 $R(1)\le(1-\kappa)^{-1}$。于是 $a+M(1)\le\kappa$，所以 $\|Q\|_{\ell^1}=1+a+M(1)\le1+\kappa$。证毕。
+
+**定理 PN6。** 对每个整数 $J\ge0$，仅使用 $s_1,\ldots,s_{J+1}$ 的误差不超过 $\epsilon$ 的读数，就存在估计器满足
+
+$$
+\boxed{\sup_{K,y}\sum_{j\ge0}|\widehat m_j-m_j(K)|
+\le2(1+\kappa)^2J\epsilon+
+\frac{\kappa^{J+2}}{4(1-\kappa)}.}
+$$
+
+**证明。** 在 $[0,\kappa]$ 上的概率测度中，最小化有限响应矩向量到数据的最大坐标距离。有限矩向量构成紧集：它是紧曲线 $x\mapsto(x,\ldots,x^{J+1})$ 的凸包。因此最小值存在，且真实谱测度保证最小残差不超过 $\epsilon$。由有限维凸包定理，可用至多 $J+2$ 个原子实现同一个拟合向量。乘法算子及常数单位向量给出一个相容的有限维正收缩拟合模型 $\widetilde K$。
+
+真实响应与拟合响应在这 $J+1$ 个时刻的差不超过 $2\epsilon$。有序逆级数恒等式
+
+$$
+\widetilde Q-Q=\widetilde Q(R-\widetilde R)Q
+$$
+
+与引理的 $\ell^1$ 界，给出前 $J$ 个记忆系数差各不超过 $2(1+\kappa)^2\epsilon$。输出这些拟合记忆系数，并在 $j\ge J$ 输出零。前缀误差按项相加；真实尾部由引理给出的几何和控制。证毕。
+
+这里没有要求被测序列经逐项裁剪后自动具有相容模型，也没有要求对真实隐藏维数预先设上界。此证明给出估计器存在性；没有把有限矩拟合的数值复杂度或有限精度实现作为已经证明的结论。
+
+**推论。** 当 $0<\epsilon<1$，取 $J=\lceil\log(1/\epsilon)/\log(1/\kappa)\rceil$。对固定 $\kappa\in(0,1)$，PN5 与 PN6 合起来给出
+
+$$
+\boxed{\mathfrak R_\kappa(\epsilon)
+=\Theta_\kappa\bigl(\epsilon\log(1/\epsilon)\bigr)
+\quad(\epsilon\downarrow0).}
+$$
+
+证明由 $\kappa^J\le\epsilon$ 和 PN5 中 $q$ 的显式定义直接完成。精确首项常数没有在此确定。
+
+## PN.7 同一个平衡分布与固定观察下的可逆马尔可夫实现
+
+**定义。** 对 PN3 的两模型，本节把隐藏坐标重标为 $1,\ldots,q$，可见坐标编号为 $0$。令 $r=3\kappa/4$、$h_0=1$，并对 $1\le i\le q$ 定义
+
+$$
+h_i=\frac{\sqrt{\delta|c_i|}}{r-\lambda_i}>0,\qquad
+Z_h=\sum_{i=0}^qh_i^2,\qquad \pi_i=h_i^2/Z_h.
+$$
+
+对两个模型使用同一个 $h$，并定义
+
+$$
+T^\pm_{ij}=K^\pm_{ij}\frac{h_j}{h_i},\qquad
+ d_i^\pm=1-\sum_jT^\pm_{ij},\qquad
+ Z_d^\pm=\sum_i\pi_i d_i^\pm,\qquad
+\alpha_j^\pm=\frac{\pi_jd_j^\pm}{Z_d^\pm}.
+$$
+
+在共同状态空间 $\{0,\ldots,q\}\times\{-1,+1\}$ 上令
+
+$$
+P_\pm((i,\sigma),(j,\tau))=
+\boldsymbol1_{\{\sigma=\tau\}}T^\pm_{ij}
++\frac12d_i^\pm\alpha_j^\pm.
+$$
+
+**定理 PN7。** 两个 $P_\pm$ 都是每项严格为正的随机矩阵，具有共同的平稳分布 $\bar\pi(i,\sigma)=\pi_i/2$，且满足细致平衡。作为 $L^2(\bar\pi)$ 上的算子，它们是正算子，常数之外的谱包含于 $[\kappa/8,5\kappa/8]$。同一个中心化单位观察
+
+$$
+e(i,\sigma)=\frac{\sigma\boldsymbol1_{\{i=0\}}}{\sqrt{\pi_0}}
+$$
+
+满足
+
+$$
+\langle e,P_\pm^ne\rangle_{\bar\pi}=s_n(K_\pm),
+\qquad \|e\|_\infty\le\sqrt{5/4}.
+$$
+
+该观察的目标记忆核也等于 PN3 的 $m_n^\pm$。
+
+**证明。** 对活跃隐藏坐标，$T^\pm$ 的行和为 $\lambda_i+(r-\lambda_i)=r$；对不活跃坐标为 $\lambda_i\le r$。可见行和至多
+
+$$
+\kappa/4+\sum_i\frac{w_i^\pm}{r-\lambda_i}
+\le\kappa/4+(4/\kappa)(\kappa^2/64)=5\kappa/16<r.
+$$
+
+因此所有 $d_i^\pm\ge1-r>0$。$\pi_iT^\pm_{ij}=h_ih_jK^\pm_{ij}/Z_h$ 对 $i,j$ 对称；补充项的平衡流为 $\pi_i d_i^\pm\pi_j d_j^\pm/(4Z_d^\pm)$，也对称。行和为一且补充项严格为正，所以两个链不可约、非周期，并具有所述共同平稳分布。
+
+分解符号偶、奇两个子空间。奇子空间上的传播为 $T^\pm$，在等距坐标 $f\mapsto(h_if_i/\sqrt{Z_h})_i$ 中等于 $K_\pm$。偶子空间的对称坐标矩阵为
+
+$$
+J_\pm=K_\pm+
+\frac{v_\pm v_\pm^*}{h^*v_\pm},
+\qquad v_\pm=(I-K_\pm)h.
+$$
+
+分母 $h^*(I-K_\pm)h$ 严格为正，故 $J_\pm\ge K_\pm\ge\kappa I/8$。并且 $J_\pm h=h$。这个秩一正更新至多产生一个超过 $5\kappa/8$ 的特征值：若存在两个，取其张成空间内一个正交于 $v_\pm$ 的非零向量，该向量的 Rayleigh 商既超过 $5\kappa/8$ 又等于 $K_\pm$ 的 Rayleigh 商，矛盾。因特征值一已经存在，其余偶谱都不超过 $5\kappa/8$。奇谱使用 PN3 即得。
+
+观察 $e$ 属于奇子空间；在上述等距坐标中恰为第零个标准基向量，所以全部响应相同。奇偶子空间均约化，可见方向只在奇子空间中，消去偶子空间没有交叉贡献；故目标核仍是 $\langle b^\pm,D^nb^\pm\rangle$。最后
+
+$$
+Z_h\le1+(16/\kappa^2)\delta S_q\le5/4,
+\qquad \|e\|_\infty=\sqrt{Z_h},
+$$
+
+得到统一观察幅度界。证毕。
+
+**推论。** PN5 的下界在正、可逆、具有统一谱隙的有限马尔可夫链类上仍然成立，而且下界中的两模型具有同一状态空间、同一平稳分布及同一固定观察。对其中心化传播使用 PN6，给出同阶上界。
+
+这排除了把恢复障碍完全归因于非自伴随传播或不可逆热力学的解释。它没有证明这些链属于 AT.10 的单参数素数热浴子族，也没有证明下界对完整观察历史或可干预观察接口继续成立。

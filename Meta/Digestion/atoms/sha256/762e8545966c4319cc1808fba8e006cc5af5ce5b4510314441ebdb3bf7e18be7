@@ -1,0 +1,9 @@
+**假设。** 设
+
+$$
+f_n=\sum_{i=1}^d c_i\lambda_i^n,
+\qquad \widetilde f_n=\sum_{i=1}^e\widetilde c_i\widetilde\lambda_i^n,
+$$
+
+其中节点为实数，$|\lambda_i|,|\widetilde\lambda_i|\le\theta<1$。权重允许有符号或为零，节点允许重复，两个模型可以具有不同模态数。令 $q=d+e$，并假设 $|f_i-\widetilde f_i|\le\delta$ 对 $i<q$ 成立。
+
