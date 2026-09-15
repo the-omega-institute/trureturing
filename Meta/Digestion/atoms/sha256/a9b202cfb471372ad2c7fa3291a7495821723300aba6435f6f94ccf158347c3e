@@ -1,0 +1,150 @@
+**定理 38.1（可逆加权差的相容性与最少输出资源）。** 把第 36 节的固定存储任务推广到任意有限维 Hilbert 空间 $\mathcal H$，记 $\dim\mathcal H=d\ge1$。设 $A,J$ 为该空间上的密度矩阵，预先给定
+
+$$
+m\ge1,\qquad 0<c_1<\cdots<c_m,
+\qquad D_j=c_jA-J.
+$$
+
+假设每个 $D_j$ 都可逆，记 $P_j$ 为其正谱投影；允许 $P_j=0$ 或 $P_j=I$。所有候选输入使用同一个 CPTP 存储映射 $\Phi$，且该映射必须在实际权重揭示前固定。
+
+存在有限经典输出存储使
+
+$$
+\|\Phi(D_j)\|_1=\|D_j\|_1\qquad(j=1,\ldots,m)
+$$
+
+当且仅当正谱投影族两两对易：
+
+$$
+\boxed{P_iP_j=P_jP_i\qquad(1\le i,j\le m).}
+$$
+
+在此相容条件成立时，对 $s=(s_1,\ldots,s_m)\in\{0,1\}^m$ 定义联合符号投影
+
+$$
+R_s=\prod_{j=1}^m\bigl[s_jP_j+(1-s_j)(I-P_j)\bigr],
+\qquad
+\mathcal S=\{s:R_s\ne0\},\qquad N=|\mathcal S|.
+$$
+
+这些乘积与排列次序无关。逐项无损所需的最少非零经典输出标签数，以及允许一般量子存储时的最小输出 Hilbert 空间维数，均恰为
+
+$$
+\boxed{n_{\min}^{\mathrm{classical}}=d_{\min}^{\mathrm{quantum}}=N.}
+$$
+
+这里的维数结论只针对上述相容情形。此外，在本节递增的正权重表下，相容投影必满足
+
+$$
+P_1\le P_2\le\cdots\le P_m,
+\qquad 1\le N\le\min\{d,m+1\}.
+$$
+
+证明。先说明可逆性给出的等号刚性。对任意可逆 Hermitian 矩阵 $D$，写
+
+$$
+D=D_+-D_-,\qquad D_+,D_-\ge0,
+$$
+
+其中正、负部分支撑正交，正谱投影为 $P$。对 $0\le E\le I$ 有
+
+$$
+\operatorname{tr}(D_+)-\operatorname{tr}(ED)
+=\operatorname{tr}((I-E)D_+)+\operatorname{tr}(ED_-)\ge0.
+$$
+
+右端为零当且仅当 $E$ 在 $D_+$ 的支撑上等于恒等、在 $D_-$ 的支撑上等于零。事实上，对正矩阵 $B,C$，$\operatorname{tr}(BC)=0$ 强制 $B^{1/2}C^{1/2}=0$；把它分别应用于两项即可。可逆性使这两个支撑的直和等于整个输入空间，故最优效应唯一，恰为 $P$。特别地，
+
+$$
+\max_{0\le E\le I}\operatorname{tr}(ED)
+=\operatorname{tr}(D_+)
+=\frac{\|D\|_1+\operatorname{tr}D}{2}.
+$$
+
+现在设 $\Phi$ 为任意逐项无损的有限维输出 CPTP 映射。对每个 $j$，在输出空间选择一个达到 $\Phi(D_j)$ 的上述最大值的效应 $F_j$。输出加权差可以有零特征值，这里只需选择一个最优效应，不要求它唯一。伴随映射 $\Phi^*$ 保单位且完全正，故 $\Phi^*(F_j)$ 是输入空间上的合法效应。迹保持与范数等号给出
+
+$$
+\operatorname{tr}(\Phi^*(F_j)D_j)
+=\operatorname{tr}(F_j\Phi(D_j))
+=\frac{\|D_j\|_1+\operatorname{tr}D_j}{2}.
+$$
+
+由输入最优效应的唯一性，得到关键算子等式
+
+$$
+\boxed{\Phi^*(F_j)=P_j\qquad(j=1,\ldots,m).}
+$$
+
+若输出是有限经典标签，设对应输入 POVM 为 $(E_\ell)_\ell$。输出加权差是对角矩阵，可以选择其严格正对角元集合的指示效应作为 $F_j$。因此每个 $P_j$ 都是同一 POVM 的结果合并：
+
+$$
+P_j=\sum_{\ell\in B_j}E_\ell.
+$$
+
+对任意两个指标 $i,j$，把标签按是否属于 $B_i,B_j$ 分成四组，所得效应记作 $G_{ab}$，$a,b\in\{0,1\}$。它们满足
+
+$$
+P_i=G_{11}+G_{10},\qquad
+P_j=G_{11}+G_{01},\qquad
+0\le G_{ab}\le P_i^{(a)},P_j^{(b)},
+$$
+
+其中 $P^{(1)}=P$、$P^{(0)}=I-P$。正效应被投影 $P$ 支配时，其支撑包含在 $\operatorname{ran}P$ 中，因而 $PE=EP=E$。据此
+
+$$
+P_iP_j=P_i(G_{11}+G_{01})=G_{11}
+=P_jP_i.
+$$
+
+这证明经典逐项无损要求投影两两对易。
+
+反过来，设全部 $P_j$ 两两对易。其联合投影 $(R_s)_{s\in\mathcal S}$ 两两正交，且和为 $I$。对每个 $j$，$R_s$ 的值域完全落在 $D_j$ 的正谱子空间或负谱子空间内，取决于 $s_j$。因此
+
+$$
+\bigl|\operatorname{tr}(R_sD_j)\bigr|
+=(2s_j-1)\operatorname{tr}(R_sD_j).
+$$
+
+求和并使用 $\sum_s(2s_j-1)R_s=2P_j-I$，有
+
+$$
+\sum_{s\in\mathcal S}\bigl|\operatorname{tr}(R_sD_j)\bigr|
+=\operatorname{tr}((2P_j-I)D_j)=\|D_j\|_1.
+$$
+
+于是通道
+
+$$
+\Phi_{\rm sign}(\rho)
+=\sum_{s\in\mathcal S}\operatorname{tr}(R_s\rho)|s\rangle\langle s|
+$$
+
+同时保持所有加权差的迹范数。它有 $N$ 个非零经典标签，也给出输出维数为 $N$ 的一般量子存储上界。
+
+为证明任意量子存储都不能使用更小的输出维数，对每个 $s\in\mathcal S$ 选择单位向量 $v_s\in\operatorname{ran}R_s$，并对任意逐项无损 CPTP 映射定义
+
+$$
+\rho_s=\Phi(|v_s\rangle\langle v_s|).
+$$
+
+由前面已证的拉回等式，
+
+$$
+\operatorname{tr}(F_j\rho_s)
+=\langle v_s,P_jv_s\rangle=s_j.
+$$
+
+若密度矩阵 $\rho$ 对效应 $0\le F\le I$ 的期望为零，正性使 $\operatorname{supp}\rho\subseteq\ker F$；若期望为一，则对 $I-F$ 应用同一论证，得到 $\operatorname{supp}\rho\subseteq\ker(I-F)$。当 $s\ne t$ 时，至少存在一个 $j$ 使 $s_j\ne t_j$，故 $\rho_s$ 与 $\rho_t$ 分别支撑在 $F_j$ 的零和一本征空间内，二者正交。
+
+这样，输出空间包含 $N$ 个两两正交且非零的支撑，因为每个 $\rho_s$ 的迹都为一。输出维数至少为 $N$。这里不要求输出效应族 $(F_j)$ 彼此对易；每对不同输出状态只需由其中一个效应确定地区分。向量 $v_s$ 是检验同一 CPTP 映射的数学测试输入，并未给原判别任务增添候选态。任意有限经典输出也属于一般量子输出，故同一下界适用于其标签数。结合构造，两种最少资源都等于 $N$。
+
+最后核对投影嵌套。若 $i<j$，则
+
+$$
+D_j-D_i=(c_j-c_i)A\ge0.
+$$
+
+由于 $P_i,P_j$ 对易，若 $P_i(I-P_j)\ne0$，可在其值域中取单位向量 $v$。可逆性给出 $\langle v,D_iv\rangle>0$ 而 $\langle v,D_jv\rangle<0$，与上式矛盾。所以 $P_i\le P_j$。非零联合符号串只能由一段零接一段一组成，至多有 $m+1$ 种；两两正交的非零联合子空间数也不超过 $d$。这给出所列 $N$ 的上下界。
+
+兼容最优测量与后揭信息判别的联系沿用 Carmeli、Heinosaari 与 Toigo 的 [Theorem 1](https://arxiv.org/html/1804.09693)，第 37 节给出的归一化映射同样适用于本节任意有限维候选。锐测量可共同测量时必须对易及其联合投影形式，见 Heinosaari、Reitzner 与 Stano，*Notes on Joint Measurability of Quantum Observables*，[附录 Proposition 8](https://arxiv.org/abs/0811.0783)。本节给出了这些标准兼容性原则在指定加权差任务上的直接证明，并用输出正交支撑计算最少资源。输入可逆性用于保证最优效应唯一；带有零特征值的加权差不在本定理范围内。证毕。
+

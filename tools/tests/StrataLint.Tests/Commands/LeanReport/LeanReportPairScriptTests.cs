@@ -1,6 +1,7 @@
 using System.Text;
 using System.Text.Json;
 using StrataLint.Engine;
+using FixtureDirectory = StrataLint.TestSupport.TemporaryFileSystem.Directory;
 using FixtureFile = StrataLint.TestSupport.TemporaryFileSystem.File;
 
 namespace StrataLint.Tests;
@@ -38,6 +39,42 @@ public sealed class LeanReportPairScriptTests
             "LEAN_REPORT_PROVENANCE side=candidate mode=produced",
             Encoding.UTF8.GetString(result.StandardOutput),
             StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void PopulatedAmbientCacheDoesNotSkipOrdinaryProductionOrLogs()
+    {
+        using var cache = new TemporaryDirectory();
+        using var fixture = new LeanReportPairFixture();
+        var first = fixture.Run(reportCacheRoot: cache.Path);
+        Assert.True(first.ExitCode == 0, Encoding.UTF8.GetString(first.StandardError));
+        Assert.Equal(1, fixture.ProducerInvocationCount);
+        var producerLog = fixture.ReadCandidateLogText();
+        Assert.NotEmpty(producerLog);
+
+        var cached = fixture.Run(reportCacheRoot: cache.Path);
+        Assert.True(cached.ExitCode == 0, Encoding.UTF8.GetString(cached.StandardError));
+        Assert.Equal(1, fixture.ProducerInvocationCount);
+        using var cachedProvenance = fixture.ReadCandidateProvenance();
+        Assert.Equal("cached", cachedProvenance.RootElement.GetProperty("mode").GetString());
+        Assert.False(fixture.CandidateLogExists);
+
+        var previous = Environment.GetEnvironmentVariable("STRATALINT_REPORT_CACHE_ROOT");
+        Environment.SetEnvironmentVariable("STRATALINT_REPORT_CACHE_ROOT", cache.Path);
+        try
+        {
+            var result = fixture.Run();
+
+            Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardError));
+            Assert.Equal(2, fixture.ProducerInvocationCount);
+            Assert.Equal(producerLog, fixture.ReadCandidateLogText());
+            using var provenance = fixture.ReadCandidateProvenance();
+            Assert.Equal("produced", provenance.RootElement.GetProperty("mode").GetString());
+        }
+        finally
+        {
+            Environment.SetEnvironmentVariable("STRATALINT_REPORT_CACHE_ROOT", previous);
+        }
     }
 
     [Fact]
@@ -275,11 +312,15 @@ public sealed class LeanReportPairScriptTests
 
         internal ProcessOutput Run(
             int cacheEnsureExitCode = 0,
-            bool signalPairAfterReceipt = false)
+            bool signalPairAfterReceipt = false,
+            string? reportCacheRoot = null)
         {
             return TestProcessRunner.Run(
                 "env",
                 [
+                    "-u", "STRATALINT_REPORT_CACHE_ROOT",
+                    .. reportCacheRoot is null ? Array.Empty<string>()
+                        : [$"STRATALINT_REPORT_CACHE_ROOT={reportCacheRoot}"],
                     $"STRATALINT_SUPERVISOR_ROOT={Path.Combine(temporary.Path, "supervisor")}",
                     $"STUB_LEAN_CACHE_ENSURE_LOG={cacheEnsureLog}",
                     $"STUB_LEAN_CACHE_ENSURE_EXIT_CODE={cacheEnsureExitCode}",
@@ -335,9 +376,9 @@ public sealed class LeanReportPairScriptTests
 
         internal string ReadCandidateLogText() => string.Join(
             '\n',
-            Directory.EnumerateFiles(candidateReport + ".logs", "*", SearchOption.AllDirectories)
+            FixtureDirectory.EnumerateFiles(candidateReport + ".logs", "*", SearchOption.AllDirectories)
                 .Order(StringComparer.Ordinal)
-                .Select(File.ReadAllText));
+                .Select(FixtureFile.ReadAllText));
 
         public void Dispose() => temporary.Dispose();
 

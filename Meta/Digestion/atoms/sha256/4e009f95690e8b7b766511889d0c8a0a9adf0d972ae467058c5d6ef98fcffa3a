@@ -1,0 +1,46 @@
+## 76. 有限未来关系塔的终止、类预算与 Zeckendorf 标签边界
+
+第 75 节说明了一个选定读出何时可以由压缩状态精确产生。下一步要问的是：需要观察多少个未来时刻，才足以确定这个任务的全部未来响应？对有限状态载体，仓库已有一个不依赖收缩率的答案。
+
+设 $$X$$ 是有限状态载体，
+
+$$
+\tau:X\to X,
+\qquad
+q:X\to O
+$$
+
+分别是更新和当前读出。对每个有限深度 $$m$$，定义
+
+$$
+x\sim_m x'
+\quad\Longleftrightarrow\quad
+\forall k\le m,
+\ q\bigl(\tau^{[k]}x\bigr)=q\bigl(\tau^{[k]}x'\bigr),
+$$
+
+并定义完全未来关系
+
+$$
+ x\sim_\infty x'
+ \quad\Longleftrightarrow\quad
+ \forall k,
+ \ q\bigl(\tau^{[k]}x\bigr)=q\bigl(\tau^{[k]}x'\bigr).
+$$
+
+这里的 $$\tau^{[k]}$$ 表示迭代 $$k$$ 次。源码中的 `finiteFutureRelation` 和 `infiniteFutureRelation` 正是这两种关系。记
+
+$$
+R_m=\sim_m,
+\qquad
+R_\infty=\sim_\infty,
+$$
+
+并记相应商类数为
+
+$$
+C_m=\lvert X/R_m\rvert,
+\qquad
+C_\infty=\lvert X/R_\infty\rvert.
+$$
+

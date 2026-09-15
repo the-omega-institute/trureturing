@@ -1,0 +1,11 @@
+### 15.3 完整访问扰动的精确有限优化
+
+定义
+$$
+H_R(m,n)=G^{m,R}\odot(F_{m,n}-J),
+\qquad
+\Delta_R(m,n)=\sup_\rho
+\mathsf d\bigl(\tau_n^R(\rho),\tau_m^R(\rho)\bigr).
+$$
+$H_R(m,n)$ 为Hermitian矩阵且对角元为零。对概率单纯形中的 $p=(p_x)_{x\in\mathsf X}$，记 $D_p=\operatorname{diag}(\sqrt{p_x})$。
+

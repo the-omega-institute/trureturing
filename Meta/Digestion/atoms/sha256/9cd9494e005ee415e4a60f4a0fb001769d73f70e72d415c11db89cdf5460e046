@@ -1,0 +1,30 @@
+### 108.4 对量子实现的边界
+
+两状态自动机可以作为一个经典控制器，决定某个量子门是否允许施加；它本身不构成把所有合法字编码为两个正交量子态的物理实现。若要求保留合法构型的相干叠加，至少还要给出
+
+$$
+\mathcal H_{Z,L}
+=
+\operatorname{span}\{|w\rangle:w\in\mathcal W_L\}
+$$
+
+的编码、在该空间上保持合法性的联合演化，以及测量和恢复的完全正映射。自动机状态可以附加在寄存器上，但不能替代第 98、104 节中由切口秩决定的相干 bond。
+
+所以一个更准确的分工是：
+
+$$
+\text{自动机}
+\longrightarrow
+\text{约束可执行性},
+\qquad
+\text{预测商}
+\longrightarrow
+\text{未来响应闭合},
+\qquad
+\text{量子寄存器}
+\longrightarrow
+\text{相干历史与可恢复关联}.
+$$
+
+本节复用 `ZeckendorfBaseState`、`zeckendorfBaseStep`、`zeckendorfMSDWord_noAdjacentOnes` 和 `zeckendorfMSDWord_base_success`。Lean 已证明的是规范 Zeckendorf 字的局部合法性和两状态部分自动机的成功执行；它没有证明两状态自动机足以承载数值、相位或任意量子预测任务。
+

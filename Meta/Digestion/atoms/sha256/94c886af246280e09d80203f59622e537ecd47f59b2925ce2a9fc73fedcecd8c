@@ -1,0 +1,5 @@
+**命题 31.2（有界损失的条件核扰动界）。** 对任意 $a\in A$ 和源支持中的 $(h,q)$，有
+$$
+\bigl|r_t(a\mid h,q)-r_s(a\mid h,q)\bigr|\le M\delta(h,q).
+$$
+

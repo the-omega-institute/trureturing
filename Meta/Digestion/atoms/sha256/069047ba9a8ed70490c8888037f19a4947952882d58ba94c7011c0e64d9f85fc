@@ -1,0 +1,52 @@
+### 67.1 读出方向的数目与最弱可见方向
+
+取 $d>1$，令实内积空间
+
+$$
+\mathsf H_0=\operatorname{Herm}_0(d)
+$$
+
+由无迹 Hermitian 矩阵组成，使用 Hilbert–Schmidt 内积与范数。给定有限指标集 $I$、权重 $w_i\ge0$ 和 Hermitian 读出方向 $E_i$，定义
+
+$$
+A:\mathsf H_0\longrightarrow\mathbb R^I,
+\qquad
+A(D)_i=\sqrt{w_i}\,\langle D,E_i\rangle_{\mathrm{HS}}.
+$$
+
+这里的 $E_i$ 首先是线性读出方向。只有另行满足 $0\le E_i\le I$、适当归一化以及物理测量实现条件时，才能赋予其概率 effect 的解释。若 $D=\rho-\rho_\ast$，$A(D)$ 表示扣除已知参考读数后的加权差值，而非未经中心化的一份概率分布。
+
+令 $G=A^\ast A$，并记
+
+$$
+\alpha=\lambda_{\min}(G),
+\qquad
+\beta=\lambda_{\max}(G).
+$$
+
+源码 `D5/S3/Observer/Linear/RobustFrameBounds.lean` 的 `robust_observer_frame_bounds` 给出这一载体上的谱帧界及单射性条件：
+
+$$
+\alpha\|D\|_{\mathrm{HS}}^2
+\le\|A(D)\|_2^2
+\le\beta\|D\|_{\mathrm{HS}}^2,
+\qquad
+A\text{ 单射}\iff\alpha>0.
+$$
+
+在 $\alpha>0$ 的范围，奇异值条件数为
+
+$$
+\kappa(A)=\sqrt{\frac{\beta}{\alpha}}.
+$$
+
+源码排除 $d=1$，因为这时无迹载体为零维，其构造没有最小特征值。源码使用 Lean 的总定义除法；$\alpha=0$ 时写出的形式商不能解释为通常数值分析中有限的可逆条件数。本节所有可逆条件数与除以 $\sqrt\alpha$ 的公式都明确要求 $\alpha>0$。
+
+同一个有限维读出一旦单射就有正的 $\alpha$；但对一族不同读出而言，单射性不提供共同的正下界。稳定预算需要的是
+
+$$
+\alpha\ge\alpha_0>0,
+$$
+
+并且需要说明使用的坐标尺度、权重和噪声范数。
+

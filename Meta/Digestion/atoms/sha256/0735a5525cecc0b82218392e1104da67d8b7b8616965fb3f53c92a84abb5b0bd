@@ -1,0 +1,38 @@
+### 101.3 “共振”必须区分相位与振幅
+
+`PrimeGoldenComplexMode` 将一个素数模式写成
+
+$$
+M_p(\sigma,t)
+=
+\exp\!\left(-\sigma\,\lambda_p\right)
+\exp\!\left(i t\lambda_p\right),
+$$
+
+其中 $$\lambda_p$$ 是指定的黄金素数谱值。于是
+
+$$
+|M_p(\sigma,t)|=\exp(-\sigma\lambda_p).
+$$
+
+当 $$\sigma>0$$ 时，源码定理 `first_golden_complex_mode_injective_of_pos` 证明模长读出对素数保持单射；当 $$\sigma=0$$ 时，所有模式模长都等于一，而 `finite_zero_sigma_complex_mode_recurrence` 证明有限素数集的相位可以在任意晚时间重新接近完全相干：
+
+$$
+\forall\varepsilon>0,\ \forall B>0,
+\quad
+\exists t>B,
+\quad
+|M_p(0,t)-1|<\varepsilon
+\quad\text{对有限个 }p.
+$$
+
+因此“出现振荡”不等于“出现可区分记录”：
+
+$$
+\boxed{
+\text{振幅衰减提供可校准的大小差异；}
+\quad
+\text{纯相位运动可以长期回归而不留下单调记录。}
+}
+$$
+

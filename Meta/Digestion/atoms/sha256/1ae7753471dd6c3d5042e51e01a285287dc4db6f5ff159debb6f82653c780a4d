@@ -1,0 +1,47 @@
+**定理 8.2（任意保留时间集合的精确部分迹）。** 设$A\subseteq T$为实际执行的时间集合，$R\subseteq A$为末端保留集合，$D=A\setminus R$为丢弃集合。未执行的时间步连同其预备因子省略。输出的系统与保留记录联合态恰为
+$$
+\varrho_{SR}^{A}
+=\sum_{i,j\in\mathcal I}\varrho_{ij}
+e^{i[\Theta_i(A)-\Theta_j(A)]}\Gamma_D(i,j)
+E_{ij}\otimes|e_i^R\rangle\langle e_j^R|.
+$$
+此式对不连续的$R,D$同样成立，不要求它们是时间区间。定义
+$$
+C_{A;D}(i,j)=e^{i[\Theta_i(A)-\Theta_j(A)]}\Gamma_D(i,j),
+\qquad J_R|i\rangle=|i\rangle\otimes|e_i^R\rangle,
+$$
+则$J_R^\dagger J_R=I_S$，并且
+$$
+\varrho_{SR}^{A}=J_R(C_{A;D}\odot\varrho)J_R^\dagger.
+$$
+这里$\odot$表示逐元素乘法。若进一步把$R$也丢弃，系统态为
+$$
+\Phi_A(\varrho)=C_A\odot\varrho,\qquad
+C_A=C_{A;A},\qquad
+C_A(i,j)=e^{i[\Theta_i(A)-\Theta_j(A)]}\Gamma_A(i,j).
+$$
+只迹掉$D$时的联合态不能直接称为系统通道$\Phi_D(\varrho)$：它还含$R$的算符张量，且相位来自全部已执行步骤$A$。若实际只执行$D$并丢弃其全部环境，才得到相位为$\Theta(D)$的$\Phi_D$。
+
+证明。 对单个矩阵元，预备子空间上的指定给出
+$$
+U_t(E_{ij}\otimes|0_t\rangle\langle0_t|)U_t^\dagger
+=e^{i(\theta_{i,t}-\theta_{j,t})}E_{ij}
+\otimes|e_i^{(t)}\rangle\langle e_j^{(t)}|.
+$$
+由于后一步只触及系统及其新鲜因子，归纳得到整个$A$上的输出
+$$
+\sum_{i,j}\varrho_{ij}e^{i[\Theta_i(A)-\Theta_j(A)]}
+E_{ij}\otimes\bigotimes_{t\in A}|e_i^{(t)}\rangle\langle e_j^{(t)}|.
+$$
+对任意单位向量$u,v$及任意正交基$(a_k)_k$，
+$$
+\operatorname{tr}|u\rangle\langle v|
+=\sum_k\langle a_k,u\rangle\langle v,a_k\rangle
+=\langle v,u\rangle.
+$$
+逐因子取迹，恰得到$\prod_{t\in D}\langle e_j^{(t)},e_i^{(t)}\rangle$；保留因子的秩一算符按定义合成$|e_i^R\rangle\langle e_j^R|$。这证明第一式，也核定了内积方向。归一化及系统标签正交给
+$$
+\langle i\otimes e_i^R,j\otimes e_j^R\rangle=\delta_{ij},
+$$
+故$J_R$是等距映射，矩阵元展开即得第二式。再迹掉$R$乘上$\Gamma_R$，由$R\cap D=\varnothing$得$\Gamma_D\odot\Gamma_R=\Gamma_A$。后续操作不触及已弃因子，所以其部分迹与后续操作可交换；这也证明即时丢弃与末端丢弃等价。$D=\varnothing$时没有衰减乘子，$R=\varnothing$时$J_R$自然等同于系统恒等映射，全部公式仍成立。证毕。
+

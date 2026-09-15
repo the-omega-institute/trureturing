@@ -1,6 +1,6 @@
 # Developer-owned report producer compatibility. Bump deliberately when cached
 # reports and incremental baselines must no longer be reused with this producer.
-compatibility_version = 1
+compatibility_version = 3
 
 # Report sources also define the inspector's module enumeration. The compiled
 # Lean cache retains its broader source scope, including Inspector Lean files.

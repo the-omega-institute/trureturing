@@ -1,0 +1,8 @@
+For e(i)=q(i)-alpha-beta.phi(i) in [lower,upper] on every allowed atom, define
+
+```text
+B_eta = upper-lower + sum_j abs(beta_j)*eta_j.
+```
+
+`query_gap_le_residualBudget` reuses the earlier expectation enclosure for each law and proves `abs(E_u[q]-E_v[q]) <= B_eta`. The proof bounds the change of the two affine predictor centers, rather than assuming those centers are still equal. The full-array check is essential: a certificate verified only on the proposed optimizing supports cannot bound other admissible laws.
+

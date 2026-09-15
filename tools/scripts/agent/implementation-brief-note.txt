@@ -50,11 +50,12 @@ elaborate 失败时 Lean 自插 `sorryAx`。2026-09-11 实测:一份 125 行、`
 
 ## Library note:照抄同桶现成的,别按描述写
 
-同一个 note 在一天内于**三个不同校验层**各栽一次:
-`doi` 与 `url` 都给(`invalid-doi`)→ `doi` 键整个缺失(`missing or unknown metadata fields`)
+三个校验层各有一类红:DOI 或 URL 非规范(`invalid-doi` / `invalid-library-note`)
+→ `doi` 键整个缺失(`missing or unknown metadata fields`)
 → 正文 `## Verified locator` 段里没有出现被绑定的定位符原文(`incomplete-library-locator`)。
-契约是:**两键都要在、恰一个非 null**;仓内推导用 `doi: null` + `url: <仓库地址>`;
-**正文 locator 段必须出现那个定位符原文**。第三层 `make emit` 抓不到,只有上面那条命令会红。
+契约是:**`doi` 键必须在(无 DOI 写 `null`),`url` 键可选,至少一个非 null,DOI 与 URL 可并存**;
+仓内推导用 `doi: null` + `url: <仓库地址>`;
+**正文 locator 段必须出现每个已声明的定位符**(DOI 大小写无关,URL 逐字节;两者都给就两者都出现)。第三层 `make emit` 抓不到,只有上面那条命令会红。
 派席时点名一个同桶现成 note 让它逐字抄 frontmatter 与 locator 段结构,只改值。
 **派生判词会淹没根判词**:第二次那回有 7 条 `dangling-literature-reference` 排在根判词前面,
 先 `grep 'invalid-'`,别从第一条读起。

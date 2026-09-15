@@ -1,0 +1,160 @@
+**定理 44.1（有序权重的显式经典损失下界）。** 沿用第 43 节的有限维任务：$A,J$ 为 $\mathbb C^D$ 上的密度矩阵，$D\ge1$，且
+
+$$
+m\ge2,\qquad 0<c_1<\cdots<c_m,\qquad D_k=c_kA-J.
+$$
+
+允许这些加权差奇异。固定 $i<j$，假设相关的正、负谱投影
+
+$$
+P=P_i^+=\mathbf1_{(0,\infty)}(D_i)\ne0,\qquad
+Q=P_j^-=\mathbf1_{(-\infty,0)}(D_j)\ne0.
+$$
+
+在这两个非零支撑上定义严格正的谱间隙
+
+$$
+\alpha=\min\{\lambda>0:\lambda\in\operatorname{spec}D_i\},
+\qquad
+\beta=\min\{-\lambda:\lambda<0,\ \lambda\in\operatorname{spec}D_j\}.
+$$
+
+令 $r_P=\operatorname{rank}P$、$r_Q=\operatorname{rank}Q$，并记
+
+$$
+\boxed{
+\mathsf B_{ij}=\alpha r_P+\beta r_Q-\|\alpha P-\beta Q\|_1.
+}
+$$
+
+对任意预先固定的有限经典输出 CPTP 通道 $\Phi$，令
+
+$$
+\delta_k(\Phi)=\|D_k\|_1-\|\Phi(D_k)\|_1.
+$$
+
+则
+
+$$
+\boxed{
+\delta_i(\Phi)+\delta_j(\Phi)\ge\mathsf B_{ij}\ge0,
+\qquad
+\mathsf B_{ij}>0\ \Longleftrightarrow\ PQ\ne0.
+}
+$$
+
+特别地，一对违反第 43 节交叉支撑条件的权重，就给出对所有有限经典存储统一有效的严格正总损失下界。它针对固定的候选对与权重表，不是跨任务的统一常数。
+
+若 $P,Q$ 都为秩一投影，记 $\chi=\operatorname{tr}(PQ)\in[0,1]$，则
+
+$$
+\boxed{
+\mathsf B_{ij}
+=\alpha+\beta-\sqrt{(\alpha+\beta)^2-4\alpha\beta\chi}.
+}
+$$
+
+若相关支撑之一为零，则不使用上述谱间隙定义；这一对权重的下界可直接记为零。$\mathsf B_{ij}$ 是整体判别损失的下界，未断言它等于最优总损失。
+
+证明。固定经典存储对应的有限 POVM $(E_\ell)_\ell$。对每个权重，选取它在经典输出上的正号决策并拉回输入：
+
+$$
+F_k=\sum_{\ell:\,c_k\operatorname{tr}(E_\ell A)-\operatorname{tr}(E_\ell J)>0}E_\ell.
+$$
+
+与第 43 节相同，各输出读数随 $c_k$ 不减，所以
+
+$$
+0\le F_i\le F_j\le I_D.
+$$
+
+这里的 $F_k$ 实现存储后的最优二元决策；不要求它在原输入上已经无损，也不要求它是投影。
+
+写 $D_k=D_{k,+}-D_{k,-}$。利用 $F_k$ 的经典最优性，单项损失有精确表达
+
+$$
+\begin{aligned}
+\delta_k(\Phi)
+&=\|D_k\|_1-2\operatorname{tr}(F_kD_k)+\operatorname{tr}D_k\\
+&=2\operatorname{tr}((I_D-F_k)D_{k,+})
++2\operatorname{tr}(F_kD_{k,-}).
+\end{aligned}
+$$
+
+右端两项都非负。谱间隙定义给出 $D_{i,+}\ge\alpha P$ 和 $D_{j,-}\ge\beta Q$，所以
+
+$$
+\delta_i(\Phi)+\delta_j(\Phi)
+\ge2\alpha\operatorname{tr}((I_D-F_i)P)
++2\beta\operatorname{tr}(F_jQ).
+$$
+
+再由 $F_i\le F_j$ 得到
+
+$$
+\begin{aligned}
+\delta_i(\Phi)+\delta_j(\Phi)
+&\ge2\left[\alpha\operatorname{tr}((I_D-F_i)P)
++\beta\operatorname{tr}(F_iQ)\right]\\
+&\ge2\min_{0\le F\le I_D}
+\left[\alpha\operatorname{tr}((I_D-F)P)
++\beta\operatorname{tr}(FQ)\right].
+\end{aligned}
+$$
+
+这个辅助最小值可以精确求出。令 $T=\alpha P-\beta Q$，由正谱投影达到的变分公式，有
+
+$$
+\max_{0\le F\le I_D}\operatorname{tr}(FT)
+=\operatorname{tr}T_+
+=\frac{\|T\|_1+\operatorname{tr}T}{2}.
+$$
+
+因而
+
+$$
+\begin{aligned}
+&2\min_{0\le F\le I_D}
+\left[\alpha\operatorname{tr}((I_D-F)P)
++\beta\operatorname{tr}(FQ)\right]\\
+&=2\alpha r_P-2\operatorname{tr}T_+
+=\alpha r_P+\beta r_Q-\|\alpha P-\beta Q\|_1
+=\mathsf B_{ij}.
+\end{aligned}
+$$
+
+这证明下界。辅助二元优化的精确性不使前面的谱间隙替换、丢去非负项及 $F_i\le F_j$ 的估计自动成为等号。
+
+接着判断何时严格为正。三角不等式给出
+
+$$
+\|\alpha P-\beta Q\|_1\le\alpha r_P+\beta r_Q.
+$$
+
+第 43 节已证明，对两个正矩阵，差的迹范数等于两迹之和，当且仅当它们的支撑正交。这里 $\alpha,\beta>0$，两个支撑正好是 $\operatorname{ran}P$ 与 $\operatorname{ran}Q$，所以
+
+$$
+\mathsf B_{ij}=0\ \Longleftrightarrow\ PQ=0.
+$$
+
+如果整组任务中存在 $P_i^+P_j^-\ne0$，这两个投影自动非零，可以使用本定理。其余单项损失也非负，因此整组总损失至少为该对权重的 $\mathsf B_{ij}>0$。这个显式结论直接排除了通过增加有限经典标签数而把总损失逼近零的方案。
+
+最后计算秩一情形。写 $P=|p\rangle\langle p|$、$Q=|q\rangle\langle q|$，其中 $p,q$ 为单位向量，则 $\chi=|\langle p,q\rangle|^2$。若 $\chi<1$，在二维空间 $\operatorname{span}\{p,q\}$ 上，$T$ 的迹与行列式分别为
+
+$$
+\operatorname{tr}T=\alpha-\beta,\qquad
+\det T=-\alpha\beta(1-\chi)<0.
+$$
+
+其两个非零特征值异号，故
+
+$$
+\|T\|_1
+=\sqrt{(\alpha-\beta)^2+4\alpha\beta(1-\chi)}
+=\sqrt{(\alpha+\beta)^2-4\alpha\beta\chi}.
+$$
+
+在正交补上只有零特征值。若 $\chi=1$，则 $P=Q$，有 $\|T\|_1=|\alpha-\beta|$，同一个根式仍成立，此时 $\mathsf B_{ij}=2\min\{\alpha,\beta\}$。这给出完整的秩一公式，包括 $\chi=0$ 时下界为零的情形。
+
+上述辅助优化是标准 Helstrom 二元判别公式的直接应用。具体令 $C=\alpha r_P+\beta r_Q$，把 $P/r_P$ 与 $Q/r_Q$ 视为两个密度矩阵，先验分别取 $\alpha r_P/C$ 与 $\beta r_Q/C$；其最小错误概率乘以 $2C$ 就是 $\mathsf B_{ij}$。该公式及正谱投影达到策略见 Ballester、Wehner 与 Winter，*State Discrimination with Post-Measurement Information*，[Theorem 2.1](https://arxiv.org/html/quant-ph/0608014)，其中明确归于 Helstrom。本节把第 43 节的有序决策效应与这个标准二元公式结合；不将辅助公式本身作为新结果。证毕。
+

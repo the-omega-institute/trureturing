@@ -211,10 +211,6 @@ internal sealed class LibraryNoteCatalog
         var url = metadata.ContainsKey("url")
             ? LiteratureCitation.ParseStableUrl(RequiredLine(metadata, "url", relativePath))
             : null;
-        if (doi is not null && url is not null)
-        {
-            throw new FormatException($"{relativePath} must select DOI or URL, not both");
-        }
         if (metadata["strata_touched"] is not List<object?> rawStrata)
         {
             throw new FormatException($"{relativePath} strata_touched must be a list");

@@ -1,0 +1,14 @@
+**定理 11.2（离散乘子与流守恒，repo-derived）。** 同步梯度下降给
+$$
+p^+=(1-\alpha)^2p,\quad n^+=(1+\alpha)^2n,\quad
+\mathcal C^+=(1-\alpha^2)^2\mathcal C.
+$$
+在可微解存在的梯度流 $\dot u=-g(w)v,\dot v=-g(w)u$ 上，
+$$
+\dot w=-g(w)s,\quad \dot s=-4g(w)w,\quad
+\dot p=-2g(w)p,\quad \dot n=2g(w)n,\quad \dot{\mathcal C}=0.
+$$
+此外 $\Delta=\|u\|^2-\|v\|^2$ 在流上守恒，离散时 $\Delta^+=(1-\alpha^2)\Delta$。
+
+证明。$u^++v^+=(1-\alpha)(u+v)$，$u^+-v^+=(1+\alpha)(u-v)$，取平方得 $p,n$ 更新及乘积式。流中对内积及范数求导，交叉项分别给 $-gs,-4gw$；对 $p,n$ 同样求导，两项在乘积导数中抵消。$\Delta$ 的交叉项抵消，离散展开再给其乘子。这里只在给定流解上证明恒等式；任意可微 $\ell$ 不自动保证全局解的存在或唯一性。证毕。
+

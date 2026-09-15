@@ -1,0 +1,18 @@
+**定义 118.4（有限任务的期望动作风险）。** 取有限非空集合 $T,A$、函数 $q:T\to S$ 与必须实现的标签 $b:T\to A$，并令 $S=q[T]$。给定概率质量
+
+$$
+\mu:T\to[0,1],\qquad \sum_{v\in T}\mu(v)=1,
+\qquad T_+=\{v\in T:\mu(v)>0\}.
+$$
+
+随机策略是 $K:S\to\Delta(A)$，其中 $\Delta(A)$ 是 $A$ 上概率向量的集合；确定性策略 $\pi$ 对应 $K_s=\delta_{\pi(s)}$。零一损失及其风险定义为
+
+$$
+\ell_{01}(v,a)=\mathbf 1_{\{a\ne b(v)\}},
+\qquad
+\mathcal R_{01}(K)=
+\sum_{v\in T}\mu(v)\sum_{a\in A}K_{q(v)}(a)\ell_{01}(v,a).
+$$
+
+所有策略只能依赖 $q(v)$；这里的随机化不包含额外获知 $v$ 的旁信息。
+
