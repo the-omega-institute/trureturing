@@ -217,6 +217,50 @@ theorem factorial_block_tail_filling :
       exact (not_le_of_gt (hM n hn)) hmass
     exact ⟨hfill, hlimit, hnot⟩
   refine ⟨?_, hall⟩
-  sorry
+  have hblock : ∀ j M : ℕ, 0 < j → ∃ s : Finset ℕ,
+      s.card = j * j.factorial ∧ ∀ n ∈ s, j.factorial ∣ G n ∧ M < n := by
+    intro j M hj
+    let S : Set ℕ := {n | M < n ∧ j.factorial ∣ G n}
+    have hS : S.Infinite := by
+      intro hf
+      obtain ⟨n, hn, hd⟩ := hcof j.factorial (Nat.factorial_pos j)
+        (max M (hf.toFinset.sup id))
+      have hmem : n ∈ hf.toFinset := hf.mem_toFinset.mpr
+        ⟨lt_of_le_of_lt (le_max_left _ _) hn, hd⟩
+      have hle : n ≤ hf.toFinset.sup id := Finset.le_sup (f := id) hmem
+      have hmax := le_max_right M (hf.toFinset.sup id)
+      omega
+    obtain ⟨s, hs, hcard⟩ := hS.exists_subset_card_eq (j * j.factorial)
+    exact ⟨s, hcard, fun n hn => ⟨(hs hn).2, (hs hn).1⟩⟩
+  let I : ℕ → Finset ℕ := Nat.rec ∅ (fun j prev =>
+    Classical.choose (hblock (j + 1) (prev.sup id) (Nat.succ_pos j)))
+  have hstep (j : ℕ) : (I (j + 1)).card = (j + 1) * (j + 1).factorial ∧
+      ∀ n ∈ I (j + 1), (j + 1).factorial ∣ G n ∧ (I j).sup id < n := by
+    exact Classical.choose_spec (hblock (j + 1) ((I j).sup id) (Nat.succ_pos j))
+  have hne (j : ℕ) : (I (j + 1)).Nonempty := by
+    apply Finset.card_pos.mp
+    rw [(hstep j).1]
+    exact Nat.mul_pos (Nat.succ_pos j) (Nat.factorial_pos _)
+  have hmono : Monotone (fun j => (I j).sup id) := by
+    apply monotone_nat_of_le_succ
+    intro j
+    obtain ⟨n, hn⟩ := hne j
+    exact ((hstep j).2 n hn).2.le.trans (Finset.le_sup (f := id) hn)
+  refine ⟨I, rfl, ?_, ?_, ?_⟩
+  · intro j hj
+    cases j with
+    | zero => omega
+    | succ j => exact (hstep j).1
+  · intro j hj n hn
+    cases j with
+    | zero => omega
+    | succ j => exact ((hstep j).2 n hn).1
+  · intro j k hj hjk n hn m hm
+    cases k with
+    | zero => omega
+    | succ k =>
+      exact lt_of_le_of_lt
+        ((Finset.le_sup (f := id) hn).trans (hmono (by omega : j ≤ k)))
+        ((hstep k).2 m hm).2
 
 end D5.S3.Arith.GoldenResource.FibonacciFactorialBlockTailFilling
