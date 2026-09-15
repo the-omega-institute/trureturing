@@ -29,6 +29,14 @@ internal sealed class UpstreamProbeVerifier(IUpstreamLeanProcessRunner runner, s
     private const string Name = @"[\p{L}_][\p{L}\p{N}_'′!?]*(?:\.[\p{L}_][\p{L}\p{N}_'′!?]*)*";
     private const RegexOptions Options = RegexOptions.CultureInvariant | RegexOptions.Multiline;
     private static readonly Regex Forbidden = new(@"\b(?:sorry|sorryAx|native_decide)\b|\baxiom\s", Options);
+    // Maximal runs of Lean's isIdRest alphabet (Init.Meta.Defs), including !/?,
+    // apostrophes, subscripts and supplementary letter-like characters. .NET \b
+    // would split legal identifiers such as def!, def₁ and def𝒜 into keywords.
+    private static readonly Regex Tokens = new(
+        @"«[^»]*»|#?(?:[A-Za-z0-9_'!?\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u017F"
+        + @"\u0391-\u039F\u03A1-\u03A2\u03A4-\u03A9\u03B1-\u03BA\u03BC-\u03FB"
+        + @"\u1F00-\u1FFE\u2100-\u214F\u2080-\u2089\u2090-\u209C\u1D62-\u1D6A\u2C7C]"
+        + @"|\uD835[\uDC9C-\uDD9F])+", Options);
 
     internal static UpstreamProbeVerifier Production()
     {
@@ -146,13 +154,15 @@ internal sealed class UpstreamProbeVerifier(IUpstreamLeanProcessRunner runner, s
         var theorems = new List<string>();
         var prints = new List<string>();
         var inTheorem = false;
+        var inHeader = true;
+        var headerEnd = 0;
         for (var i = 0; i < lines.Length; i++)
         {
             var line = lines[i].TrimEnd('\r');
             if (string.IsNullOrWhiteSpace(line)) continue;
             // Validate the original import line: masking a comment must never turn a
             // continuation, trailing comment or empty module list into an accepted import.
-            if (Regex.IsMatch(line, @"\bimport\b", Options))
+            if (inHeader && Regex.IsMatch(line, @"\bimport\b", Options))
             {
                 var import = Regex.Match(original[i].TrimEnd('\r'),
                     @"\Aimport[ \t]+(" + Name + @"(?:[ \t]+" + Name + @")*)[ \t]*\z", Options);
@@ -161,8 +171,15 @@ internal sealed class UpstreamProbeVerifier(IUpstreamLeanProcessRunner runner, s
                     throw Invalid("PROBE_IMPORT_SYNTAX", $"line={i + 1}: imports must precede theorems");
                 imports.Add(import.Groups[1].Value);
                 inTheorem = false;
+                headerEnd = i + 1;
                 continue;
             }
+            if (inHeader && Regex.IsMatch(line, @"\Aopen[ \t]+" + Name + @"(?:[ \t]+" + Name + @")*[ \t]*\z", Options))
+            {
+                headerEnd = i + 1;
+                continue;
+            }
+            inHeader = false;
             if (line[0] is ' ' or '\t')
             {
                 // Lean may still parse an indented declaration as a command. Indentation
@@ -180,14 +197,42 @@ internal sealed class UpstreamProbeVerifier(IUpstreamLeanProcessRunner runner, s
                 continue;
             }
             var theorem = Regex.Match(line, @"\Atheorem[ \t]+(" + Name + @")(?=[ \t:({]|\z)", Options);
-            var open = Regex.IsMatch(line, @"\Aopen[ \t]+" + Name + @"(?:[ \t]+" + Name + @")*[ \t]*\z", Options);
-            if (!theorem.Success && !open)
+            if (!theorem.Success)
                 throw Invalid("PROBE_DECLARATION_UNSUPPORTED", $"line={i + 1}: allowed commands are import, open, theorem and #print axioms");
             if (prints.Count > 0) throw Invalid("PROBE_AXIOMS", "#print axioms commands must form the trailing block");
             inTheorem = theorem.Success;
             if (theorem.Success) theorems.Add(theorem.Groups[1].Value);
         }
+        if (CheckCommandTokens(string.Join('\n', lines.Skip(headerEnd))) != theorems.Count)
+            throw Invalid("PROBE_DECLARATION_UNSUPPORTED", "every theorem token must start an inventoried theorem");
         return new([.. imports], [.. theorems], [.. prints]);
+    }
+
+    private static int CheckCommandTokens(string source)
+    {
+        var theorems = 0;
+        foreach (Match token in Tokens.Matches(source))
+        {
+            switch (token.Value)
+            {
+                case "def" or "lemma" or "example" or "instance" or "abbrev" or "structure"
+                    or "inductive" or "class" or "opaque" or "axiom" or "initialize" or "nonrec"
+                    or "noncomputable" or "unsafe" or "partial" or "private" or "protected"
+                    or "macro" or "macro_rules" or "elab" or "syntax" or "notation" or "infix"
+                    or "infixl" or "infixr" or "prefix" or "postfix" or "set_option" or "namespace"
+                    or "section" or "end" or "variable" or "universe" or "attribute" or "deriving"
+                    or "mutual" or "open" or "#eval" or "#check" or "#reduce" or "#exit"
+                    or "run_cmd" or "run_tac" or "builtin_initialize" or "declare_syntax_cat"
+                    or "register_option" or "import":
+                    throw Invalid("PROBE_DECLARATION_UNSUPPORTED", $"command token outside probe dialect: {token.Value}");
+                case "theorem" or "#print":
+                    if (token.Index > 0 && source[token.Index - 1] != '\n')
+                        throw Invalid("PROBE_DECLARATION_UNSUPPORTED", $"{token.Value} must start at column 0");
+                    if (token.Value == "theorem") theorems++;
+                    break;
+            }
+        }
+        return theorems;
     }
 
     private static string WithoutCommentsAndStrings(string source)
