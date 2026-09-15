@@ -1954,6 +1954,7 @@ $$
 本节明确区分两类模型：前者依赖一个固定标签的有限产品记录，后者是“自由演化—新鲜固定标签Schur通道—取迹、无反馈”的交错递推。重复相互作用背景可参见Francesco Ciccarello、Salvatore Lorenzo、Vittorio Giovannetti、G. Massimo Palma，*Quantum collision models: open system dynamics from repeated interactions*，*Physics Reports* 954（2022）1--70，arXiv:2106.11974v2；Zeno背景可参见P. Facchi、S. Pascazio，*Quantum Zeno subspaces*，*Physical Review Letters* 89（2002）080401，arXiv:quant-ph/0201115v2。除已直接核查的Schur判据和二态判别基础外，不宣称这些背景文献给出本节常数或本节命题的优先性。本文没有实验、Lean或唯一结果的断言。
 
 ## 追加锚（新终端）
+
 ## 9. 有限前缀的项目一致性与辅助系统稳定性
 
 ### 9.1 固定标签模型的前缀态
@@ -21848,3 +21849,140 @@ $$
 本节复用 `finite_record_cosine_obstruction`、`coefficient_gamma_le_cosine` 和 `finite_record_recovery_error_lower_bound`。Lean 已证明的是有限支撑、归一化记录序列、整数标签和系统端恢复通道下的具体下界；联合访问记录环境、近似无限窗口、其他编码和物理 Hamiltonian 仍需分别建模。
 
 ## 追加锚（新终端）
+
+## 96. 静态效果相同，仪器历史仍可不同
+
+前面的不完整观察者结果已经说明：当前效果族存在正交残差时，不同密度态可以拥有完全相同的单次读数。本节补上一个更具体的物理桥：即使当前 POVM 的每个效果都完全相同，**仪器在分支后怎样更新状态**仍会改变下一次读数。
+
+### 96.1 同一个 POVM 不决定同一个仪器
+
+在一个量子比特上，令
+
+$$
+P_0=|0\rangle\langle0|,
+\qquad
+P_1=I-P_0,
+\qquad
+X=|0\rangle\langle1|+|1\rangle\langle0|.
+$$
+
+考虑两组单 Kraus 分支：
+
+$$
+K_b=P_b,
+\qquad
+L_b=XP_b,
+\qquad b\in\{0,1\}.
+$$
+
+它们的静态效果完全相同，因为
+
+$$
+K_b^\dagger K_b=P_b,
+$$
+
+而
+
+$$
+L_b^\dagger L_b
+=P_bX^\dagger XP_b
+=P_b.
+$$
+
+两组效果都满足
+
+$$
+\sum_{b=0}^1P_b=I.
+$$
+
+因此，只看当前一次测量的 outcome 概率，无法区分这两台仪器。
+
+### 96.2 下一步联合统计却相反
+
+取共同初态 $$\rho=P_0$$，并比较第一步得到 $$b=0$$ 后、第二步读取效果 $$P_1$$ 的概率。
+
+对于第一台仪器，分支态为
+
+$$
+K_0\rho K_0^\dagger=P_0,
+$$
+
+所以第二步的未归一化权重为
+
+$$
+\operatorname{Tr}(P_1P_0)=0.
+$$
+
+对于第二台仪器，分支态为
+
+$$
+L_0\rho L_0^\dagger
+=XP_0X^\dagger
+=P_1,
+$$
+
+所以第二步权重为
+
+$$
+\operatorname{Tr}(P_1P_1)=1.
+$$
+
+项目定理 `same_effects_different_two_step_joint_law` 已在有限矩阵中同时证明了四件事：两组分支效果逐 outcome 相等、两组效果都归一化，以及上述第二步概率分别为 $$0$$ 和 $$1$$。
+
+于是得到一个比“当前边缘读数不完整”更强的结论：
+
+$$
+\boxed{
+\text{相同 POVM 效果}
+\not\Rightarrow
+\text{相同后续过程}.
+}
+$$
+
+静态效果只记录 $$K_b^\dagger K_b$$；它没有记录 Kraus 分支留下的状态变换。后续实验访问的正是这部分历史。
+
+### 96.3 需要保留的不是全部过去，而是分支更新
+
+设当前记录只保存 outcome $$b$$，却丢弃分支后的更新算子。上面的两台仪器在当前记录层完全相同，但它们的下一步响应不同。因此，把对象压成
+
+$$
+\text{当前 outcome 分布}
+$$
+
+不足以支撑未来预测；至少要保留下面三者之一：
+
+$$
+\boxed{
+\text{分支更新 }\mathcal J_b,
+\quad
+\text{足以模拟未来的预测摘要},
+\quad或
+\quad
+\text{可访问的联合记录}.
+}
+$$
+
+这正是“保留多少历史”的操作性版本：历史预算由未来实验能否重建分支后的状态决定，而不是由已经读出的标签数量决定。若允许的未来目标只属于当前效果的线性张成，已有的 `target_prediction_sufficiency` 可以给出签名充分性；若目标包含分支更新产生的新方向，则必须扩大到相应的序列效果或 Heisenberg 闭包。
+
+### 96.4 与 Zeckendorf 构型的接法
+
+把 Zeckendorf 合法字串 $$w$$ 当作系统标签时，静态读出可以先定义为
+
+$$
+P_w=|w\rangle\langle w|,
+$$
+
+但这只指定了“读到哪个构型”。若构型读出后还允许执行条件更新 $$\mathcal J_w$$，则未来统计由
+
+$$
+E_{w_1\cdots w_n}
+=
+\mathcal J_{w_1}^*\cdots
+\mathcal J_{w_n}^*(I)
+$$
+
+决定，而不由 Zeckendorf 数值 $$a(w)$$ 单独决定。不同的 $$\mathcal J_w$$ 可以共享相同的单步效果，却产生不同的多步响应。
+
+因此，Zeckendorf 继续承担离散构型的合法编号；仪器分支和后续动力学承担历史如何回流。要声称某个合法字串的当前标签已经足够，必须先证明所有允许的未来词效果都由该标签因子化，或给出未因子化部分的误差界。
+
+本节复用 `same_effects_different_two_step_joint_law`，并与已有的 `target_prediction_sufficiency`、`unified_sequential_kernel` 和 `all_future_statistics_sufficiency` 相接。Lean 已证明的是明确二能级单 Kraus 仪器的有限矩阵反例；它没有证明任意 POVM 都具有该差异，也没有替具体 Zeckendorf Hamiltonian 选择唯一的分支更新。
