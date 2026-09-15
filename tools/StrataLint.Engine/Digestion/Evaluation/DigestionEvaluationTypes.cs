@@ -82,6 +82,7 @@ internal static class DigestionStatusNames
         DigestionMigrationState.Partial => "partial",
         DigestionMigrationState.Absorbed => "absorbed",
         DigestionMigrationState.Nonpropositional => "nonpropositional",
+        DigestionMigrationState.Upstream => "upstream",
         _ => throw new ArgumentOutOfRangeException(nameof(value)),
     };
 

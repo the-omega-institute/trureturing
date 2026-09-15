@@ -49,6 +49,7 @@ internal interface ICliEnvironment
     CommandResult QuarantineAtom(IReadOnlyList<string> arguments);
     CommandResult SettleBatch(IReadOnlyList<string> arguments);
     CommandResult SettleAtom(IReadOnlyList<string> arguments);
+    CommandResult SettleUpstream(IReadOnlyList<string> arguments);
 
     CommandResult DecomposeAtom(IReadOnlyList<string> arguments);
 
@@ -119,6 +120,8 @@ internal static class CliApplication
                 RenderCommand(environment.QuarantineAtom(tail), console),
             ["settle-batch"] = static (environment, tail, console) =>
                 RenderCommand(environment.SettleBatch(tail), console),
+            ["settle-upstream"] = static (environment, tail, console) =>
+                RenderCommand(environment.SettleUpstream(tail), console),
             ["settle-atom"] = static (environment, tail, console) =>
                 RenderCommand(environment.SettleAtom(tail), console),
             ["decompose-atom"] = static (environment, tail, console) =>

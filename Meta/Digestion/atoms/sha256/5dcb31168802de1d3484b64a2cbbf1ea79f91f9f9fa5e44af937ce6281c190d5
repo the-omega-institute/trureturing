@@ -1,0 +1,71 @@
+**定理 11.4（交换幺半群补逆元的稳定核与观察保真）。** 设 $(M,+,0)$ 为交换幺半群，$\eta_M:M\to G(M)$ 为其 Grothendieck 群的规范同态。[^rro11_grothendieck] 则
+
+$$
+\eta_M(a)=\eta_M(b)
+\quad\Longleftrightarrow\quad
+\exists c\in M,\ a+c=b+c.
+$$
+
+因此
+
+$$
+\eta_M\text{ 单射}
+\quad\Longleftrightarrow\quad
+M\text{ 满足消去律}.
+$$
+
+进一步，设 $q:M\twoheadrightarrow B$ 为交换幺半群满同态，$B$ 只取实际像，记
+
+$$
+R=\ker q,\qquad
+K_M=\{(a,b):\exists c\in M,\ a+c=b+c\}.
+$$
+
+保留旧观察区别须区分下面两个不同要求。
+
+若只把原始载体送入 $G(M)$，要求旧读数能从补群后的原始点恢复，则存在唯一幺半群同态
+
+$$
+\bar q:\eta_M[M]\to B,\qquad
+\bar q(\eta_M(a))=q(a)
+$$
+
+的充要条件是
+
+$$
+K_M\subseteq R,
+$$
+
+也就是
+
+$$
+a+c=b+c\quad\Longrightarrow\quad q(a)=q(b).
+$$
+
+这里恢复映射的定义域是实际像 $\eta_M[M]$，不是整个群 $G(M)$。
+
+若同时对观察幺半群补逆元，则存在规范群同态 $G(q):G(M)\to G(B)$，满足
+
+$$
+G(q)\circ\eta_M=\eta_B\circ q.
+$$
+
+记 $q^{\mathrm g}=\eta_B\circ q$，则
+
+$$
+\ker q^{\mathrm g} =
+\{(a,b):\exists c\in M,\ q(a+c)=q(b+c)\}.
+$$
+
+尤其
+
+$$
+R\subseteq\ker q^{\mathrm g},
+\qquad
+\ker q^{\mathrm g}=R
+\quad\Longleftrightarrow\quad
+B\text{ 满足消去律}.
+$$
+
+所以“补群后不额外丢失既有读数”不要求 $q$ 原本单射；它要求明确比较补群前后的观察核。源载体补群的核 $K_M$、旧观察核 $R$ 和补群观察核 $\ker q^{\mathrm g}$ 不得混为一个关系。
+

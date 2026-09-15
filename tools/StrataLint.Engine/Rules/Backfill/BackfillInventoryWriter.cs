@@ -34,6 +34,7 @@ internal static class BackfillInventoryWriter
         Strings(builder, "  unresolved_subitems", entry.Receipts.UnresolvedSubitems, 4);
         AtomQuarantine(builder, entry.Receipts.Quarantine);
         Nonpropositional(builder, entry.Receipts.Nonpropositional, "  ");
+        Upstream(builder, entry.Receipts.Upstream, "  ");
         CoverDisposition(builder, entry.Receipts.CoverDisposition, "  ");
         if (entry.Receipts.ChainAtoms.Length > 0)
         {
@@ -144,6 +145,7 @@ internal static class BackfillInventoryWriter
         Strings(builder, "          unresolved_subitems", entry.Receipts.UnresolvedSubitems, 12);
         Quarantine(builder, entry.Receipts.Quarantine);
         Nonpropositional(builder, entry.Receipts.Nonpropositional, "          ");
+        Upstream(builder, entry.Receipts.Upstream, "          ");
         CoverDisposition(builder, entry.Receipts.CoverDisposition, "          ");
         Strings(builder, "          chain_atoms", entry.Receipts.ChainAtoms, 12);
         if (entry.Receipts.TailAuthorization is { } tail)
@@ -226,11 +228,38 @@ internal static class BackfillInventoryWriter
         Line(builder, $"            blocker_class: {Scalar(quarantine.BlockerClass)}");
     }
 
+    private static void Upstream(StringBuilder builder, DigestionUpstream? receipt, string indent)
+    {
+        if (receipt is null) return;
+        Line(builder, indent + "upstream:");
+        Line(builder, indent + "  justification: " + JustificationScalar(receipt.Justification));
+        Strings(builder, indent + "  declarations", receipt.Declarations, indent.Length + 4);
+        Line(builder, indent + "  mathlib_rev: " + Scalar(receipt.MathlibRev));
+        Line(builder, indent + "  probe_sha256: " + Scalar(receipt.ProbeSha256));
+        Strings(builder, indent + "  probe_axioms", receipt.ProbeAxioms, indent.Length + 4);
+        Line(builder, indent + "  previous_atom_id: " + NullableScalar(receipt.PreviousAtomId));
+        Line(builder, indent + "  next_atom_id: " + NullableScalar(receipt.NextAtomId));
+    }
+
+    private static string JustificationScalar(string value)
+    {
+        // Escape before Scalar can wrap colon-space values in literal single quotes.
+        // The loader decodes these double-quoted escapes without trimming their contents.
+        if (string.IsNullOrWhiteSpace(value)
+            || value[0] is '\'' or '"' or '-' or '?' or ':' or '!' or '&' or '*' or '#' or '{' or '['
+            || value.Any(char.IsControl)
+            || value.Contains(" #", StringComparison.Ordinal)
+            || char.IsWhiteSpace(value[0])
+            || char.IsWhiteSpace(value[^1]))
+            return TomlGenreToken(value);
+        return Scalar(value);
+    }
+
     private static void Nonpropositional(StringBuilder builder, DigestionNonpropositional? receipt, string indent)
     {
         if (receipt is null) return;
         Line(builder, indent + "nonpropositional:");
-        Line(builder, indent + "  justification: " + Scalar(receipt.Justification));
+        Line(builder, indent + "  justification: " + JustificationScalar(receipt.Justification));
         Line(builder, indent + "  previous_atom_id: " + NullableScalar(receipt.PreviousAtomId));
         Line(builder, indent + "  next_atom_id: " + NullableScalar(receipt.NextAtomId));
     }

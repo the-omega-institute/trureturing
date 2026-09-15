@@ -32,6 +32,20 @@ internal static partial class IngestCommand
         var root = Path.GetFullPath(repositoryRoot);
         var actual = RequireLedgerUnchanged(root, current);
 
+        // A writer may include a companion source in the same transaction. Capture and
+        // compare those exact paths too, so both replacement and deletion can roll back.
+        foreach (var update in updates.Where(update => !IsLedgerPath(update.Path)))
+        {
+            var expected = current.Entries.SingleOrDefault(entry => entry.Path == update.Path);
+            var path = Path.Combine(root, update.Path);
+            var present = File.Exists(path);
+            var bytes = present ? File.ReadAllBytes(path) : null;
+            if (present != (expected is not null)
+                || expected is not null && !expected.Bytes.AsSpan().SequenceEqual(bytes))
+                throw new InvalidOperationException($"ledger companion changed under us: {update.Path}");
+            if (bytes is not null) actual.Add(update.Path, [.. bytes]);
+        }
+
         var originals = updates.ToDictionary(
             static update => update.Path,
             update => actual.TryGetValue(update.Path, out var bytes)
