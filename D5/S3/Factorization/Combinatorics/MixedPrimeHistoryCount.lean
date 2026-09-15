@@ -237,7 +237,11 @@ theorem history_recurrence (n : ℕ) (hn : 2 ≤ n) :
   let (q : M) : Fintype (historyFibre (n / q.val)) := (mfin q).fintype
   change Nat.card (historyFibre n) = _
   rw [← Nat.card_congr e, Nat.card_sum, Nat.card_sigma, Nat.card_sigma]
-  simp only [Nat.card_coe_set_eq, historyCount, Finset.sum_coe_sort]
+  simp only [Nat.card_coe_set_eq, historyCount]
+  exact congrArg₂ Nat.add
+    (Finset.sum_coe_sort ((Finset.range n).filter Nat.Prime)
+      (fun q => (historyFibre (n - q)).ncard))
+    (Finset.sum_coe_sort n.primeFactors (fun q => (historyFibre (n / q)).ncard))
 
 set_option maxHeartbeats 800000 in
 /-- Splitting at the last typed letter decreases the specified length by one. -/
