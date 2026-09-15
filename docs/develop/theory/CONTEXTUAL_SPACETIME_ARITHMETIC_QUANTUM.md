@@ -23331,3 +23331,117 @@ $$
 $$
 
 本节复用 `controlled_finite_stability` 的最大不变关系、永久稳定和商类深度界。Lean 已证明的是有限状态、有限输入字母和满射读出下的受控闭合；将控制输入提升为连续脉冲、量子仪器序列或含噪声的完全正通道，需要另外定义相应的控制关系和误差度量。
+
+## 107. 黄金禁词相位：局部约束保留，标量端点仍会遗失顺序
+
+第 101 节只说明 Zeckendorf 位可以选择两种相位频率。`GoldenEulerGapWordConstraints` 进一步证明，这些频率并非任意二字母串：Zeckendorf 的局部结构把它们组织成一个带禁词的时间序列。
+
+### 107.1 两种频率字母
+
+对素数 $$p$$ 和层数 $$\ell$$，定义短、长两种步长
+
+$$
+S_p=\varphi\log p,
+\qquad
+L_p=\varphi^2\log p.
+$$
+
+`golden_true_selects_long_frequency` 与 `golden_false_selects_short_frequency` 证明
+
+$$
+\operatorname{goldenWord}(\ell)=\mathrm{true}
+\Longrightarrow
+\omega_{p,\ell}=L_p,
+$$
+
+$$
+\operatorname{goldenWord}(\ell)=\mathrm{false}
+\Longrightarrow
+\omega_{p,\ell}=S_p.
+$$
+
+因此 Zeckendorf 位不是被动标签，而是频率字母的选择器。
+
+### 107.2 禁词从位约束传递到相位约束
+
+项目已有的黄金词性质给出两条局部规则：
+
+$$
+S_pS_p\quad\text{不会出现},
+$$
+
+$$
+L_pL_pL_p\quad\text{不会出现}.
+$$
+
+`short_frequency_forces_next_long` 证明每个短步之后必为长步；`two_long_frequencies_force_next_short` 证明连续两个长步之后下一步必为短步。通过 `short_phase_forces_next_long` 和 `two_long_phases_force_next_short`，同样的规则传递到
+
+$$
+\Phi_{p,\ell}(t)=\exp(i t\omega_{p,\ell})
+$$
+
+构成的相位字母：
+
+$$
+S\text{-phase}\,\Longrightarrow\,L\text{-phase},
+\qquad
+LL\text{-phase}\,\Longrightarrow\,S\text{-phase}.
+$$
+
+这给出一个比“黄金比例出现了”更严格的结构：合法时间序列属于一个局部受限语言。它与第 102、106 节的历史预算直接相连，因为预测下一步至少需要知道当前的局部禁词上下文。
+
+### 107.3 局部禁词不等于标量端点可恢复
+
+尽管相位字母满足禁词，若只保留所有步的标量乘积，则
+
+$$
+\prod_{r=1}^{m}\exp(i t\omega_r)
+=
+\exp\left(i t\sum_{r=1}^{m}\omega_r\right).
+$$
+
+由交换律，所有满足相同字母计数的排列给出同一端点相位。于是存在这样的情形：两个序列都满足
+
+$$
+SS\text{ 不出现},
+\qquad
+LLL\text{ 不出现},
+$$
+
+并且包含相同数量的 $$S$$ 与 $$L$$，但其局部先后不同；它们的标量端点读出仍然相同。
+
+所以局部约束保存了“哪些序列合法”，却没有自动保存“合法序列究竟按什么顺序发生”。要让顺序进入结果，至少要加入一种非交换或有记忆的读出：
+
+$$
+\boxed{
+\text{时间分辨相位序列}
+\quad\text{或}\quad
+\text{共享记忆中的有序注入}
+\quad\text{或}\quad
+\text{非交换事件算子}.
+}
+$$
+
+第 102 节的交换曲率正是第二种机制；它把相位旋转后的注入带入共享记忆坐标，使两个排列的差异不再被标量交换律抹掉。
+
+### 107.4 与禁止相邻 $$11$$ 的 Zeckendorf 空间不要混同
+
+本节的黄金相位字母满足的是
+
+$$
+SS\text{ 禁止},
+\qquad
+LLL\text{ 禁止},
+$$
+
+而第 79、98、104 节使用的有限 Zeckendorf 构型空间满足的是二进制约束
+
+$$
+11\text{ 禁止}.
+$$
+
+两者都来自 Fibonacci 型递归，但字母表、状态含义和可实现动力学不同。不能因为它们都出现 Fibonacci 数，就把黄金频率时间序列直接识别成一个禁止相邻激发的量子 Hilbert 空间。
+
+可以建立一个条件性桥：若给定实验把 $$S/L$$ 相位字母编码为合法构型，并且联合更新保持该编码空间，那么第 105、106 节的预测商和受控稳定深度可以应用于这个有限语言。现有 Lean 结果只证明了相位字母的频率选择和禁词继承；它没有证明该相位语言存在唯一的物理寄存器编码，也没有证明其商类数等于某个 Fibonacci Hilbert 维数。
+
+本节复用 `zeckendorf_selects_layer_gap_phase`、`golden_true_selects_long_frequency`、`golden_false_selects_short_frequency`、`short_frequency_forces_next_long`、`two_long_frequencies_force_next_short`、`short_phase_forces_next_long` 和 `two_long_phases_force_next_short`。Lean 已证明的是黄金词约束到频率与相位的精确传递；标量端点的顺序不可见性来自交换乘法，顺序恢复、物理编码和量子噪声下的稳定深度仍需另建模型。

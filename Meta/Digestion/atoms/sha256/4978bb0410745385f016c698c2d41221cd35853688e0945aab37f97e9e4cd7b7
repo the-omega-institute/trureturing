@@ -1,0 +1,26 @@
+### 107.1 两种频率字母
+
+对素数 $$p$$ 和层数 $$\ell$$，定义短、长两种步长
+
+$$
+S_p=\varphi\log p,
+\qquad
+L_p=\varphi^2\log p.
+$$
+
+`golden_true_selects_long_frequency` 与 `golden_false_selects_short_frequency` 证明
+
+$$
+\operatorname{goldenWord}(\ell)=\mathrm{true}
+\Longrightarrow
+\omega_{p,\ell}=L_p,
+$$
+
+$$
+\operatorname{goldenWord}(\ell)=\mathrm{false}
+\Longrightarrow
+\omega_{p,\ell}=S_p.
+$$
+
+因此 Zeckendorf 位不是被动标签，而是频率字母的选择器。
+

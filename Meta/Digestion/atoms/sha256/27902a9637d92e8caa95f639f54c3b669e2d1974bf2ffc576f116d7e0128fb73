@@ -1,0 +1,4 @@
+## 107. 黄金禁词相位：局部约束保留，标量端点仍会遗失顺序
+
+第 101 节只说明 Zeckendorf 位可以选择两种相位频率。`GoldenEulerGapWordConstraints` 进一步证明，这些频率并非任意二字母串：Zeckendorf 的局部结构把它们组织成一个带禁词的时间序列。
+
