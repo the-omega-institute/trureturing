@@ -1,0 +1,10 @@
+**定理。** 对每个素数 $p\ne2,5$，
+
+$$
+\boxed{
+\eta_p=-r_pq_p\quad\text{于 }\mathbb F_p,\qquad
+-r_p\in\mathbb F_p^\times.
+}
+\tag{R14}
+$$
+

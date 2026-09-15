@@ -1,0 +1,33 @@
+**定理 119.6（确定性标签压缩的精确缺陷）。** 设 $X$ 为有限非空标签集，$q:X\to B$ 满射到其实际像 $B$。取 $\Theta=Y=X$、$Z=B$，并令
+
+$$
+F_x=\delta_x,\qquad E_x=\delta_{q(x)},\qquad
+X_b=q^{-1}(b),\qquad m_b=|X_b|,\qquad m_{\max}=\max_{b\in B}m_b.
+$$
+
+则 $m_b\ge1$，且
+
+$$
+\delta(F\mid E)=1-\frac1{m_{\max}}.
+$$
+
+证明。对任意模拟器 $S:B\to\mathcal P(X)$，记 $S_b(x)=S(x\mid b)$。概率归一性给
+
+$$
+\operatorname{TV}(\delta_x,S_{q(x)})
+=\frac12\left(1-S_{q(x)}(x)+\sum_{u\ne x}S_{q(x)}(u)\right)
+=1-S_{q(x)}(x).
+$$
+
+取最大纤维 $X_{b_*}$。由于 $\sum_{x\in X_{b_*}}S_{b_*}(x)\le1$，其中至少一个 $x$ 满足 $S_{b_*}(x)\le1/m_{\max}$，所以每个模拟器的最坏参数误差至少为 $1-1/m_{\max}$。反向定义只依赖保留标签的模拟器
+
+$$
+S(x\mid b)=
+\begin{cases}
+1/m_b,&q(x)=b,\\
+0,&q(x)\ne b.
+\end{cases}
+$$
+
+每行在非空纤维上均匀且总和为一。参数 $x\in X_b$ 的误差恰为 $1-1/m_b$，其最大值为 $1-1/m_{\max}$。上下界相合，得精确公式。这个模拟器只读取 $b$，并未读取真正的 $x$。证毕。
+

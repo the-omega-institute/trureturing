@@ -1,0 +1,15 @@
+**定理。** 设 $s:\mathbb Z\to\mathcal O$ 是加法同态，且
+
+$$
+\pi(s(n))=n\qquad(n\in\mathbb Z).
+$$
+
+若 $u=c+d\varphi$ 且 $d\ne0$，则
+
+$$
+\boxed{
+\neg\,\forall n\in\mathbb Z,
+\quad u s(n)=s(\pi(u s(n))).
+}\tag{GS14}
+$$
+

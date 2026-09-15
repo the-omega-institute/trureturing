@@ -1,0 +1,20 @@
+### 102.5 对“需要保留多少历史”的新结论
+
+现在至少可以区分三个层次：
+
+$$
+\boxed{
+\begin{aligned}
+\text{只保留标量相位}
+&\Rightarrow\text{顺序按交换律折叠};\\
+\text{保留共享记忆的一维坐标}
+&\Rightarrow\text{两步顺序由 }\Delta_{P,Q}\text{ 检验};\\
+\text{保留完整寄存器与访问协议}
+&\Rightarrow\text{可继续检验更长词的历史回流}.
+\end{aligned}
+}
+$$
+
+因此，“稳定经典现实”所需的历史预算不能只按记录次数或 Zeckendorf 合法字串数量计数。对一个给定实验族，最小预算至少要保留所有会在预测窗口内产生非零交换曲率、回流核或联合恢复效应的坐标。若任务只问总频率，标量接口可能已经闭合；若任务问路径顺序、素数轴切换或可逆恢复，就必须保留共享记忆，或保留足以重建它的寄存器子空间。
+
+本节直接复用 `SequentialRegisterCircuit` 的逐槽幺正组合、`time_ordered_evolution_affine` 的仿射演化、`time_ordered_cocycle_append_laws` 的时间有序拼接律、`time_ordered_two_event_swap_curvature` 的交换缺陷，以及 `prime_swap_curvature_spec` 的反对称性与规范不变性。Lean 已证明这些有限列表和有限寄存器模型中的精确代数关系；它没有证明所有物理系统都具有该记忆坐标，也没有把非零曲率自动等同于实验上已经完成的测量。后者仍取决于实际可访问的读出、噪声模型和预测时间窗。

@@ -1,0 +1,7 @@
+**定义。** 固定 $c\in\mathbb R$，令
+
+\[
+u_*(x,y)=c\Phi_k(x,y),\qquad
+f_*(x,y)=\Gamma_kc\Phi_k(x,y).
+\]
+

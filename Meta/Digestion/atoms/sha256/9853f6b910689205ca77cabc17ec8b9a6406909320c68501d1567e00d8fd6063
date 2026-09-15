@@ -1,0 +1,5 @@
+对于 $Q=r\circ Q'$，原有限纤维求和定理直接给
+$$
+Z_Q(y)=\sum_{z\in Q'[H_{\rm fin}],\ r(z)=y}Z_{Q'}(z),\qquad
+F_Q(y)=-\beta^{-1}\log\sum_{z\in Q'[H_{\rm fin}],\ r(z)=y}e^{-\beta F_{Q'}(z)}.
+$$

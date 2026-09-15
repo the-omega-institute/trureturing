@@ -1,0 +1,38 @@
+### 79.5 可检验的“稳定经典现实”条件
+
+结合前面各节，可以把一个有限任务上的稳定对象**提议**定义为四元组
+
+$$
+\mathfrak O=(V,\mathfrak T,H,\varepsilon),
+$$
+
+其中 $V$ 是含单位的可见 operator system，$\mathfrak T$ 是允许的实验族，$H$ 是预测视界，$\varepsilon$ 是允许误差。其候选精度条件应写成：对所有密度矩阵 $\rho,\sigma$，若
+
+$$
+\forall A\in V,\quad \operatorname{tr}(\rho A)=\operatorname{tr}(\sigma A),
+$$
+
+则要求
+
+$$
+\sup_{T\in\mathfrak T,\,|w|\le H}
+\operatorname{TV}\bigl(p_T(w\mid\rho),p_T(w\mid\sigma)\bigr)
+\le\varepsilon.
+$$
+
+实验族 $\mathfrak T$ 应包含所允许的设置选择、记录和自适应停止规则。记录通道与动力学的闭合缺陷还须另行定义并纳入同一预算；这里的条件是研究接口，不是仓库现有的一个单独 Lean 判据。若再要求一个真正的量子子系统，则追加完全正的 $\iota,\mathcal R$ 及交换图条件。
+
+因此问题“保留多少历史才得到经典现实”没有独立于任务的答案。精确形式是：寻找最小的 $V$，使其在给定 $\mathfrak T$、$H$ 和 $\varepsilon$ 下闭合，同时满足所需的物理编码条件。在明确给出成本函数和闭合缺陷定义后，才可把它写成如下研究中的受约束优化问题：
+
+$$
+\min_V\ \operatorname{cost}(V)
+\quad\text{subject to}\quad
+\operatorname{closure\_defect}(V;\mathfrak T,H)\le\varepsilon,
+$$
+
+这里的 $\operatorname{cost}$ 和 $\operatorname{closure\_defect}$ 都是待定义的研究量；物理版本还须追加“存在完全正编码、恢复和交换图”的约束，不能把它替换成尚未定义的标量等式。
+
+这把“相对性”限制在明确的实验族、时间范围和误差预算内：换实验族会改变最小 $V$，增加预测视界会暴露原先隐藏的方向，要求物理可编码又会排除只有线性闭合而没有完全正回收的候选空间。
+
+本节使用的永久稳定、可见维数、有限记忆容量和对角饱和均来自现有 Lean 模块；`FutureStatisticsEquivalence` 还把“所有未来读数相同”精确连接到差态对无限 Heisenberg 生成 operator system 的湮灭。$X/Z$ 的非代数例子、完全正编码接口和 Zeckendorf 投影不变条件是对这些结果的组合解释。它们给出可形式化的后续目标，但不宣称仓库已经证明任意 operator system 都有物理回收映射，也不把任务特定的二维嵌入提升为普遍量子存储定理。
+

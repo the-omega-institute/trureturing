@@ -25,7 +25,8 @@ internal static partial class IngestCommand
         }
         try
         {
-            var baselineRevision = ParseArguments(arguments);
+            var options = ParseArguments(arguments);
+            var baselineRevision = options.BaselineRevision;
             var inputs = ReadInputs(repository, baselineRevision);
             var repositoryChanges = repository.ReadChanges(baselineRevision);
             var plan = Plan(inputs, repositoryChanges);
@@ -163,10 +164,18 @@ internal static partial class IngestCommand
                     evaluationScope,
                     evaluationChanges));
 
+            var ledgerUpdates = LedgerUpdates(
+                prepared.CurrentRaw, finalRaw, prepared.CurrentDocument, finalDocument);
+            if (options.PlanOnly)
+            {
+                return RenderAlignmentPlan(repositoryRoot, baselineRevision, prepared,
+                    finalDocument, ledgerUpdates, evaluation, evaluationScope, backfillObservations);
+            }
+
             return WriteResult(
                 repositoryRoot,
                 prepared,
-                finalRaw,
+                ledgerUpdates,
                 finalDocument,
                 evaluation,
                 backfillObservations);

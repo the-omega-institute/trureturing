@@ -1,0 +1,7 @@
+**假设。** 存在常数 $\gamma>0$ 与 $\rho\geq 0$，使每个 $t\in[0,T)$ 及 $z\in H$ 都满足
+
+\[
+\langle z,A(t)z\rangle\leq-\gamma\|z\|^2,
+\qquad \|r(t)\|\leq\rho.
+\]
+

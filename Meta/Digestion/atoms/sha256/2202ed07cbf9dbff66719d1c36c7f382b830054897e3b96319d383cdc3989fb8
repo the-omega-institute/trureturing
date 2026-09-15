@@ -1,0 +1,7 @@
+**定理。** 若 $d\ne0$ 且隐藏方程处于稳态，即 $-bx-dy=0$，则
+
+$$
+y=-\frac{b}{d}x,qquad
+-ax+by=-\left(a+\frac{b^2}{d}\right)x.
+$$
+

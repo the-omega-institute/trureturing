@@ -1,0 +1,2 @@
+**必要数学引用。** 原 P2 词域、有限性、净仿射公式和输入概率直接使用第 456.1–456.4、460.4、463.1–463.3 条；完整 CSA 实现和下降条件使用第 467.6–467.9 条及 CSA 定义 1、4–6；完整访问输入与最大图使用第 473.1–473.2、476.1–476.4 条。实际像因子化直接使用原 D5 的 HistoryPayloadFactorization.ker_beta_subset_ker_payload_iff_unique_factorization 及其所引用的 SplitSurjectionFactorization.split_surjection_factorization；这些一般结果不另作证明。
+

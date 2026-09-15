@@ -1,0 +1,10 @@
+**定义。** 设 $\pi$ 为有限生成群，$N\le\pi$ 为有限指数特征子群，$S=\pi/N$ 为中心平凡的有限群。设 $\Lambda\le\operatorname{Out}(\pi)$ 在 $S$ 上的诱导外作用平凡。对素数 $\ell$，定义
+
+$$N_\ell=[N,N]N^\ell,\qquad V_\ell=N/N_\ell,\qquad Q_\ell=\pi/N_\ell.$$
+
+$N^\ell$ 表示由全部 $\ell$ 次幂生成的子群。$N_\ell$ 在 $\pi$ 中特征，$V_\ell$ 是有限维 $\mathbb F_\ell$ 向量空间，且有实际扩张
+
+$$1\longrightarrow V_\ell\longrightarrow Q_\ell\longrightarrow S\longrightarrow1.$$
+
+$S$ 在 $V_\ell$ 上的甲板作用记为 $\lambda$：取 $s$ 的任意提升 $x\in\pi$，令 $\lambda(s)[v]=[xvx^{-1}]$。改变提升只引入 $N$ 的内作用，在其阿贝尔化上为恒等，所以该作用良定义。
+

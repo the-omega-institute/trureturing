@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9c19e023e3a5041700ece9cb5e7c97679ab1a391602870648f7c760265c64d92
+  normalized_sha256: sha256:9c19e023e3a5041700ece9cb5e7c97679ab1a391602870648f7c760265c64d92
+cas_ref: sha256:9c19e023e3a5041700ece9cb5e7c97679ab1a391602870648f7c760265c64d92
+coverage_gids:
+  - gid: D5/S3/Weil/Mertens/CoprimeMobiusCertificateError.certificate_error
+    target_statement_id: sha256:3c7f3ad9187ed9506ee69c9e312e7e3469de3e3508c75e16d91cb8740c041da8
+  - gid: D5/S3/Weil/Mertens/CoprimeSquarefreeDensity.squarefree_coprime_count_error
+    target_statement_id: sha256:eb0621e8a9a06bd9b8d61799cd05b98d5950fcae618e50794ccc996d93411eaa
+receipts:
+  unresolved_subitems: []

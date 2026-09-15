@@ -1,0 +1,66 @@
+## 129. 移动边界下的非消失尾零代价
+
+取 $\alpha=(\sqrt5-1)/2$、$F_0=0,F_1=1,F_{j+2}=F_{j+1}+F_j$，在完整 qubit 载体中记
+$$
+\mathcal K_j=(\mathbb C^2)^{\otimes j},
+\qquad
+W_j=\{w\in\{0,1\}^j:w_iw_{i+1}=0\ \text{对所有 }0\le i<j-1\},
+\qquad W_0=\{\varnothing\},
+$$
+$$
+\mathcal L_j=\operatorname{span}\{|w\rangle:w\in W_j\}\subseteq\mathcal K_j,
+\qquad \mathcal K_0=\mathcal L_0=\mathbb C.
+$$
+目标取命题 125.1 的指定密度算子 $\rho_0=(1)$ 及
+$$
+\rho_j=\alpha^{j+1}|s_j\rangle\langle s_j|
+       +\alpha^{j+2}|t_j\rangle\langle t_j|\quad(j\ge1),
+\qquad
+|s_j\rangle=\sum_{w\in W_j}|w\rangle,
+\qquad
+|t_j\rangle=\sum_{\substack{w\in W_j\\w_{j-1}=0}}|w\rangle.
+$$
+对每个整数 $K\ge0$ 取 $n=K+1$，置
+$$
+C=F_{K+1},\qquad D=F_{K+2},\qquad s=\alpha^{K+2},
+$$
+$$
+A=\{w0:w\in W_K\},
+\qquad P=\sum_{u\in A}|u\rangle\langle u|,
+\qquad
+\mathcal F_{K,K+1}=\{\sigma\ge0:\operatorname{Tr}\sigma=1,\ \sigma=P\sigma P\},
+$$
+其中 $\sigma$ 作用于完整 $\mathcal K_{K+1}$。定义精确尾零等距映射与向量
+$$
+V:\mathcal L_K\longrightarrow\mathcal K_{K+1},
+\qquad V|w\rangle=|w0\rangle,
+\qquad
+|\Psi_K\rangle=D^{-1/2}\sum_{w\in W_K}|w\rangle,
+$$
+$$
+|a\rangle=V|\Psi_K\rangle,
+\qquad \tau=|a\rangle\langle a|,
+\qquad
+|v\rangle=C^{-1/2}\sum_{\substack{u\in W_{K+1}\\u_K=1}}|u\rangle,
+\qquad \mathcal M=\operatorname{span}\{a,v\}.
+$$
+采用半迹范数约定，并以命题 127.1 的可行域定义最优误差：
+$$
+d_{\rm tr}(\rho,\sigma)=\frac12\|\rho-\sigma\|_1,
+\qquad \|X\|_1=\operatorname{Tr}\sqrt{X^*X},
+\qquad
+e_{K,K+1}=\min_{\sigma\in\mathcal F_{K,K+1}}d_{\rm tr}(\rho_{K+1},\sigma).
+$$
+记 $H=\rho_{K+1}-\tau$，令 $\Pi_-$ 为 $H$ 在完整载体上的负谱投影，定义
+$$
+r_{K,K+1}=\langle a|\Pi_-|a\rangle,
+\qquad
+\sigma^{\rm cut}_{K,K+1}=V(\rho_K|_{\mathcal L_K})V^*,
+\qquad
+g_K=d_{\rm tr}(\rho_{K+1},\sigma^{\rm cut}_{K,K+1})-e_{K,K+1}.
+$$
+这里乘积中的 $\rho_K$ 识别为它在合法支撑 $\mathcal L_K$ 上的限制；$\rho_K$ 本身仍指完整 $\mathcal K_K$ 上、在非法词方向延零的算子。对 $K\ge1$ 沿用命题 128.1 的记号
+$$
+\kappa_K=\alpha^{K+2}\frac{F_{K+1}F_K}{F_{K+2}}.
+$$
+

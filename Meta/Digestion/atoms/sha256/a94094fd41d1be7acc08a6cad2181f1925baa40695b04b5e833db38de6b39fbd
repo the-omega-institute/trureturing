@@ -1,0 +1,89 @@
+### T.5 素数平方特化与规范化周期商
+
+**定义。** 对奇素数 $p\ne5$，令
+
+$$
+\epsilon=\left(\frac5p\right),
+\qquad m=p-\epsilon.
+$$
+
+在下述整除性成立时，定义规范化商
+
+$$
+\ell_p=\frac{L_p-1}{p}\pmod p,
+\qquad q_p=\frac{F_m}{p}\pmod p.
+$$
+
+**定理。** 对每个奇素数 $p\ne5$，有
+
+$$
+p\mid L_p-1,
+\qquad p\mid F_{p-\epsilon},
+\qquad 2\ell_p=5q_p\pmod p.
+$$
+
+**证明。** 在 $\mathbb F_p[\sqrt5]$ 中，Euler 判据与 Frobenius 映射给出
+
+$$
+(\sqrt5)^p=\epsilon\sqrt5,
+\qquad L_p\equiv1\pmod p,
+\qquad F_p\equiv\epsilon\pmod p.
+$$
+
+由
+$L_p=F_p+2F_{p-1}=2F_{p+1}-F_p$，得到
+$p\mid F_{p-\epsilon}$。写
+
+$$
+F_p=\epsilon+pA,
+\qquad F_{p-\epsilon}=pB.
+$$
+
+若 $\epsilon=1$，Cassini 恒等式化为
+
+$$
+F_p^2-F_pF_{p-1}-F_{p-1}^2=1.
+$$
+
+模 $p^2$ 化简得 $2A\equiv B\pmod p$，而
+$\ell_p\equiv A+2B$、$q_p\equiv B$，所以
+$2\ell_p\equiv5q_p\pmod p$。若 $\epsilon=-1$，Cassini 恒等式化为
+
+$$
+F_{p+1}(F_{p+1}-F_p)-F_p^2=-1.
+$$
+
+模 $p^2$ 化简得 $2A\equiv-B\pmod p$，而
+$\ell_p\equiv2B-A$、$q_p\equiv B$，仍有
+$2\ell_p\equiv5q_p\pmod p$。
+
+**定义。** 奇素数 $p$ 称为 WSS 素数，当且仅当
+
+$$
+p^2\mid L_p-1.
+$$
+
+**定理。** 对每个奇素数 $p$，
+
+$$
+\boxed{
+p^2\mid\mathcal P_p(\varphi)\text{ 于 }\mathcal O
+\iff p^2\mid L_p-1\text{ 于 }\mathbb Z.
+}
+$$
+
+并且
+
+$$
+\operatorname N(\mathcal P_p(\varphi))=-(L_p-1)^2.
+$$
+
+若 $p\ne5$，上述条件还等价于
+$\ell_p=0$，也等价于 $q_p=0$。
+
+**证明。** 取 $n=p$、$q=p^2$ 代入 T2，得到第一组等价；取
+$n=p$ 代入 T4，得到范数公式。最后，
+$p^2\mid L_p-1$ 当且仅当 $\ell_p=0$；由于 $2$ 与 $5$ 在
+$\mathbb F_p$ 中均可逆，等式 $2\ell_p=5q_p$ 又给出
+$\ell_p=0\iff q_p=0$。
+

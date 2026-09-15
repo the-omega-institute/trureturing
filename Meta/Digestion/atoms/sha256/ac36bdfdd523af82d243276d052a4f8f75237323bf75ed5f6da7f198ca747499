@@ -1,0 +1,28 @@
+### 定理 57.4（预测充分 summary 的唯一因子化和维数下界）
+
+令 $S$ 是当前状态的线性 summary，并假设
+
+$$
+S(x)=S(y)
+\Longrightarrow
+\langle x,H^nE_i\rangle
+=
+\langle y,H^nE_i\rangle
+$$
+
+对所有 $n,i$ 成立。则存在唯一线性映射 $L$，使
+
+$$
+P_{\infty}=L\circ S_{\rm range},
+$$
+
+并且
+
+$$
+\operatorname{finrank}(\mathcal V_{\infty})
+\le
+\operatorname{finrank}(\operatorname{range}S).
+$$
+
+形式化定理为 `minimal_predictive_summary`。因此“保留多少历史”在该线性模型中有一条必要条件：summary 的可达维数不能小于未来预测空间的维数。summary 可以包含额外不可见坐标，但这些坐标对当前声明的未来任务不是必要的。
+

@@ -1,0 +1,53 @@
+### 88.1 可见容量与不可见残差
+
+设记忆载体为 $d$ 维 Hilbert 空间，当前效果集合为 $\mathcal E$。把单位效果也纳入后，定义
+
+$$
+\mathcal V(\mathcal E)
+=
+\operatorname{span}_{\mathbb R}
+\bigl(\{I\}\cup\mathcal E\bigr),
+$$
+
+并令
+
+$$
+C(\mathcal E)
+=
+\dim_{\mathbb R}\mathcal V(\mathcal E)-1,
+\qquad
+R(\mathcal E)
+=
+\dim_{\mathbb R}\mathcal V(\mathcal E)^\perp.
+$$
+
+现有定理 observer_capacity_conservation 给出
+
+$$
+\boxed{
+C(\mathcal E)+R(\mathcal E)=d^2-1.
+}
+$$
+
+这里的 $d^2-1$ 是完整 trace-zero Hermitian 载体的总方向数，不是历史条数或 POVM outcome 数。若粗效果集满足
+
+$$
+\mathcal E_{\mathrm{coarse}}
+\subseteq
+\mathcal E_{\mathrm{fine}},
+$$
+
+则
+
+$$
+C(\mathcal E_{\mathrm{coarse}})
+\le
+C(\mathcal E_{\mathrm{fine}}),
+\qquad
+R(\mathcal E_{\mathrm{fine}})
+\le
+R(\mathcal E_{\mathrm{coarse}}).
+$$
+
+因此细化记录只把原先不可见的方向转移到当前可见空间；线性相关的新增标签不会增加容量。
+

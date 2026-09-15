@@ -1,0 +1,8 @@
+**命题。** 若复表示分解为
+
+$$
+V=\bigoplus_\lambda W_\lambda\otimes M_\lambda,
+$$
+
+则与群作用交换的算子可在重数空间 $M_\lambda$ 内混合。因此两个算子都与群作用交换并不蕴含它们彼此交换。
+

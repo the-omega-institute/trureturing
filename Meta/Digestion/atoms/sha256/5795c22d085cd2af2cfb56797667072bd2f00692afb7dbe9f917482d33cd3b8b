@@ -1,0 +1,8 @@
+对任意 $D\subseteq A$ 及任意实际函数 $g:D\to B$，令
+$$
+g^*:D^*\to B^*,\qquad g^*(\operatorname{Enc}(a))=\operatorname{Enc}(g(a)),
+$$
+$$
+G_g=\{\langle a,g(a)\rangle:a\in D\},\qquad
+\Gamma_g^*=\{\langle\operatorname{Enc}(a),\operatorname{Enc}(g(a))\rangle:a\in D\}.
+$$

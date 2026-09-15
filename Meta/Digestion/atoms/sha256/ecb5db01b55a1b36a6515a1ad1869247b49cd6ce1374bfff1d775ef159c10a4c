@@ -1,0 +1,10 @@
+**命题。** 扰动 $w$ 满足
+
+\[
+\frac12\frac{d}{dt}\|w\|_{L^2}^2
++\nu\|\nabla w\|_{L^2}^2
+=-\int_{\mathbb T^d}w\cdot((w\cdot\nabla)u_*)
++\int_{\mathbb T^d}w\cdot r.
+\tag{11.4}
+\]
+

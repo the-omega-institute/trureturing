@@ -1,0 +1,24 @@
+**定理 50.4（量子记录的累计预测界）。** 假设记录的像空间由有限个经典记录 $\{P_i\}$ 张成，并且存在经典随机矩阵 $K$ 使
+
+$$
+\mathcal E\Phi\mathcal E(\rho)=\iota\!\left(K\,\pi(\rho)\right),
+$$
+
+其中 $\pi(\rho)$ 是 $\mathcal E(\rho)$ 在经典记录基下的权重向量，$\iota$ 将权重向量嵌回对角密度算符。令 $A=\mathcal E\Phi$、$B=\mathcal E\Phi\mathcal E$。则对每个密度算符 $\rho$ 及整数 $n\ge0$，
+
+$$
+D\bigl(A^n(\rho),B^n(\rho)\bigr)\le n\,\delta(\mathcal E,\Phi).
+$$
+
+因此以 $K^n\pi(\rho)$ 预测第 $n$ 步记录时，逐步粗读数分布的误差至多为 $n\delta$。
+
+证明。$A$ 与 $B$ 都是量子通道。望远镜分解与迹距离在量子通道下的收缩性给出
+
+$$
+D(A^n\rho,B^n\rho)
+\le\sum_{k=0}^{n-1}D\bigl(A(B^k\rho),B(B^k\rho)\bigr)
+\le n\delta.
+$$
+
+第二个不等式使用 $B^k\rho$ 仍为密度算符。对角记录上的 $B$ 正是 $K$ 的作用，所以其记录权重为 $K^n\pi(\rho)$。证毕。
+

@@ -1,0 +1,10 @@
+**定义。** Lucas 数与 Fibonacci 数分别由
+
+$$
+L_n=\varphi^n+\psi^n,
+\qquad
+F_n=\frac{\varphi^n-\psi^n}{\sqrt5}
+$$
+
+定义。
+

@@ -1,0 +1,7 @@
+**定理 346.1。** 若 $\mathsf{Fill}_F(A)$，则对每个 $c\in\mathbb Q_{\ge0}$，
+$$
+\overline{L^F_{A,c}}^{X_A^{\rm cap}}
+=\{x\in X_A^{\rm cap}:S_F(x)\le c\},\qquad
+\overline{L^F_{A,c}}^{B_A^{\rm cap}}
+=\{u\in B_A^{\rm cap}:\ell_F(u)\le c\}.
+$$

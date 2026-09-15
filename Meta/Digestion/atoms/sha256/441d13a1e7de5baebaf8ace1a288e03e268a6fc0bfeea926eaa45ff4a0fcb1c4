@@ -1,0 +1,7 @@
+**定义 17.4（随机未来伪度量）。** 对 $0<\rho<1$，设 $\mathfrak E_h$ 为明确固定的实验族，定义
+$$
+d_h(\xi,\eta)=\sup_{\pi\in\mathfrak E_h}\operatorname{TV}(\mathsf P_\xi^{\pi,h},\mathsf P_\eta^{\pi,h}),\qquad
+D_\rho(\xi,\eta)=\sup_{h\ge0}\rho^h d_h(\xi,\eta),
+$$
+其中 $\operatorname{TV}(P,Q)=\frac12\sum_z|P(z)-Q(z)|$，空实验族的上确界约定为零。
+

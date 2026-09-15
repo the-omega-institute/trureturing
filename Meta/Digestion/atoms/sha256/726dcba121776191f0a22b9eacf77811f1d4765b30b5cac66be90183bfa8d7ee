@@ -1,0 +1,9 @@
+**定理。** 设本质分离简单闭曲线 $\alpha$ 将 $\Sigma_g$ 分成亏格 $h$ 与 $g-h$ 两侧，$1\le h<g$。若字符 $\chi\ne1$ 在其中一侧为平凡，则 $p_\chi(T_\alpha)=1$；若在两侧均非平凡，则一个标准提升在 $W_\chi$ 上是非平凡秩一幺幂变换，其阶恰为 $\ell$。
+
+对通用模二覆盖上由全部提升曲线的正 Dehn 扭转之积给出的标准提升 $\widetilde T_\alpha$，有
+
+$$\boxed{\operatorname{rank}(\widetilde T_{\alpha,*}-I)=(4^h-1)(4^{g-h}-1),\qquad
+(\widetilde T_{\alpha,*}-I)^2=0.}$$
+
+并且 $a(T_\alpha)$ 在 $\operatorname{Out}(Q)$ 中的阶恰为 $\ell$。
+

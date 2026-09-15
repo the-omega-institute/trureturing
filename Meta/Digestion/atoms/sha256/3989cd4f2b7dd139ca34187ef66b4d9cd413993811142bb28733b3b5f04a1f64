@@ -1,0 +1,13 @@
+**定理。** 若 $b\ne0$，则隐藏状态由可见状态及其导数精确恢复：
+
+$$
+y=\frac{x'+ax}{b}.
+$$
+
+若观测值满足 $|\widehat x-x|\leq\varepsilon_x$ 与 $|\widehat v-x'|\leq\varepsilon_v$，则
+
+$$
+\left|\frac{\widehat v+a\widehat x}{b}-y\right|
+\leq\frac{\varepsilon_v+|a|\varepsilon_x}{|b|}.
+$$
+

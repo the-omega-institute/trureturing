@@ -1,0 +1,5 @@
+对链 $c=(d_0,\ldots,d_k)$、$u_j=d_j/d_{j-1}$，其纤维大小为
+$$
+R(c)=\prod_{j=1}^k\frac{\Omega(u_j)!}{\prod_pv_p(u_j)!}.
+\tag{475.9a}
+$$

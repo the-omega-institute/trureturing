@@ -1,0 +1,16 @@
+### 104.4 与 Zeckendorf 合法空间的严格接口
+
+对禁止相邻两个 $$1$$ 的 Zeckendorf 合法集合 $$\\mathcal W_L$$，可以把每个合法字串按切口分成前缀和后缀，并令边界集合只保留满足跨切口相邻约束的占据模式。若能证明该受限系数矩阵具有与某个 occupation sector 相同的因子化，则可以把上面的边界秩和 Schmidt 权重转移到 Zeckendorf 模型。
+
+但这一步目前不能直接从 `CoherentHistorySchmidt` 得出。现有定理的词空间是由有限多重集占据约束定义的；它没有证明“禁止相邻 $$11$$”与某个固定多重集 sector 的系数矩阵同构，也没有给出受限边界的闭式 Schmidt 谱。因此目前只能保留如下条件性桥：
+
+$$
+\\text{若给定 Zeckendorf 振幅能因子化为边界扇区，}
+\\quad
+\\text{则其精确切口记忆下界等于该边界矩阵的秩。}
+$$
+
+这正是下一步可形式化的具体目标：构造一个带相邻约束的系数矩阵，证明其切口因子化，再比较其秩与 Fibonacci 合法构型数 $$F_{L+2}$$。不能把一般 occupation 的 Schmidt 权重直接冒充 Zeckendorf 量子模型的实验谱。
+
+本节复用 `coefficient_factorization`、`coefficient_rank`、`schmidt_coefficient_sq`、`schmidt_coefficient_sq_binomial` 和 `normalized_coefficient_factorization`。Lean 已证明的是有限占据 sector 的精确切口分解、秩和权重；Zeckendorf 相邻约束的 Schmidt 理论、近似截断的多步误差以及对应的物理编码仍保持为条件性或开放问题。
+

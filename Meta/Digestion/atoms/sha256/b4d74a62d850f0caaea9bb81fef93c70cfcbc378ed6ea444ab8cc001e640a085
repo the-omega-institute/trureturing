@@ -1,0 +1,10 @@
+**定理。** 对任意奇素数 $p$ 与任意 $e\ge1$，
+
+$$
+\boxed{
+\pi(p^e)=r_p\,p^{\max(e-s_p,0)},
+\qquad s_p=\nu_p(C_{r_p}).
+}
+\tag{R18}
+$$
+

@@ -1,0 +1,6 @@
+**假设。** 固定整数 $N>1$，令 $P_N$ 为 $N$ 的素因子集合。对词 $w\in P_N^*$，令 $\operatorname{val}(w)$ 为各字母之积，并令空词之值为 $1$。考虑语言
+
+$$
+L_N=\{w\in P_N^*: \operatorname{val}(w)\mid N\}.
+$$
+

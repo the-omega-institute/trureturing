@@ -1,0 +1,45 @@
+**证明。** 使用 M. El Marraki，〈[Fonction sommatoire de la fonction de Möbius, 3. Majorations asymptotiques effectives fortes](https://www.numdam.org/item/JTNB_1995__7_2_407_0/)〉，*Journal de Théorie des Nombres de Bordeaux* **7**(2) (1995)，407–433，第410–411页引理3式(3.4)、(3.5)，第411–413页引理4及其第二版式(3.7)，第414–417页命题5与引理6。引理3实际使用的超曲线恒等式及分部求和另见 L. Schoenfeld，[1969 年原文](https://www.impan.pl/shop/publication/transaction/download/product/96913)，*Acta Arithmetica* **XV** (1969)，221–233，第227页式(18)–(21)有完整推导，其引理4型估计在第228–229页式(22)–(30)。以下直接使用这些恒等式和估计。El Marraki 第433页参考文献[5]的年份印作1960，此处依 Schoenfeld 原件刊头取1969。
+
+具体地，分部求和在 $x\ge C>1$ 给出准确恒等式
+$$
+M(x)=M(C)-\frac{N(C)}{\log C}+\frac{N(x)}{\log x}
+       +\int_C^x\frac{N(u)}{u(\log u)^2}\,du.
+\tag{494.3C}
+$$
+这些是右连续的有限求和函数；实数端点和整数跳点均已包含在该恒等式内。以下积分均在有限区间上，只有有限个跳点，不涉及无穷换序。
+
+命题5的实际内容如下。若 $|M(u)|\le Au/(\log u)^\alpha$ 对所有 $u\ge u_0$ 成立，且 $|\rho(v)|\le Bv/(\log v)^\beta$ 对所需的全部 $v\ge v_0$ 成立，令
+$$
+r=\frac{\alpha+1}{\beta+1},\quad d=1-r=\frac{\beta-\alpha}{\beta+1},\quad
+\gamma=\beta r,\quad a=\gamma-1,\quad
+D=\left(\frac{3B\beta}{\pi^2A}\right)^{1/(\beta+1)},
+$$
+$$
+y(w)=\exp\bigl(D(\log w)^r\bigr),\quad
+q(t)=D/t^d,\quad
+f(q)=2AD\left((1-q)^{-\alpha}+\frac{1-q}{\beta}\right),\quad
+E(V)=\max\{f(0),f(q(V))\}.
+\tag{494.3D}
+$$
+最后这个 $f$ 与原文相同，因为 $D^{\beta+1}=3B\beta/(\pi^2 A)$。
+当 $\alpha\ge0$、$\beta>\alpha$、$D>1$、$V>e$，并有
+$$
+V^d>\frac{0.8B}{AD^\beta\log D},
+\tag{494.3E}
+$$
+以及对全部 $w\ge e^V$ 的下列条件：
+$$
+w>y(w)>e,\quad w/y(w)\ge u_0,\quad y(w)\ge v_0,
+$$
+$$
+\frac1{2w}<\frac{0.017B}{(\log y(w))^\beta},\qquad
+(\log(w/y(w)))^\alpha\ge2.5A,
+\tag{494.3F}
+$$
+则命题5给出
+$$
+|N(w)|<E(V)\frac{w}{(\log w)^{\gamma-1}}\qquad(w\ge e^V).
+\tag{494.3G}
+$$
+对于第一个 $\rho$ 输入，本文实际验证 $y(w)>e^{22}$，所以不把其严格左端域扩大。命题5的证明先由(494.3E)和引理6保留(3.7)的非负扣除项，再用 $f''(q)=2AD\alpha(\alpha+1)/(1-q)^{\alpha+2}\ge0$ 把 $0\le q\le q(V)$ 上的 $f$ 约束于两个端点。这里直接使用该命题及其证明。
+

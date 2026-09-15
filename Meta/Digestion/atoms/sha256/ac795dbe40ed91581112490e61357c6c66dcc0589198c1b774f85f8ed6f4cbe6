@@ -1,0 +1,9 @@
+**命题 18.8（信息瓶颈的确定编码形式，repo-derived）。** 固定联合律且 $C=q(X)$ 时，
+$$
+I(X;C)+\beta I(Y;X\mid C)
+=I(X;C)-\beta I(Y;C)+\beta I(Y;X).
+$$
+所以对固定 $\beta\ge0$ 最小化左式等价于最小化信息瓶颈的前两项，但最优解不自动有零预测残差。
+
+证明。由链式法则及 $C$ 为 $X$ 的函数，$I(Y;X)=I(Y;C)+I(Y;X\mid C)$。最后一项对编码选择恒定。取 $\beta=0$ 时恒值编码最小化存储信息，但若 $Y=X$ 非恒定便有正残差。参见[Tishby、Pereira与Bialek的信息瓶颈方法](../../../Library/Dynamics/tishby2000information.md)第3.1节；其随机编码优化亦不直接提供因果保证。证毕。
+

@@ -1,0 +1,6 @@
+**定义。** 令
+
+$$
+S_N=\{d\in\mathbb N:d\mid N\}\sqcup\{\bot\}.
+$$
+

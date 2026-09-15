@@ -1,0 +1,6 @@
+**定义 1.2（固定任务与非空洞要求）。** 一个确定任务为
+$$
+\mathcal T=(\mathcal X,\mathcal A,(D_a,T_a,c_a)_{a\in\mathcal A},o,\mathcal Q),
+$$
+其中 $T_a:D_a\subseteq\mathcal X\to\mathcal X$ 为部分更新，$c_a:D_a\to\mathbb R_{\ge0}^{r}$ 为费用向量，$o$ 为当前必需输出、接受及停止标签的联合读数，$\mathcal Q$ 为必需查询函数族。所有载体均为集合。至少有一个必需查询或 $o$ 在可允许初态上非恒定。任务表示 $r$ 是模型用于完成预测或决策的表示；解释表示 $q:\mathcal X\to Q$ 是用于恢复所要求的模型行为的表示，两者不因同名“表征”而相等。称 $q$ 对任务查询充分，若每个 $f\in\mathcal Q\cup\{o\}$ 均有 $f=\bar f\circ q$，其中 $\bar f$ 的域只取实际像 $Q_q=q[\mathcal X]$。是否还保留未来、干预、费用，是另外指定的条件。
+

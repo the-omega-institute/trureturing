@@ -1,0 +1,2 @@
+**证明。** 唯一分解给出 $d\operatorname{val}(w)$ 在 $p_i$ 上的指数为 $e_i+c_i(w)$；它整除 $N$ 当且仅当对每个 $i$ 都有 $e_i+c_i(w)\le a_i$。证毕。
+

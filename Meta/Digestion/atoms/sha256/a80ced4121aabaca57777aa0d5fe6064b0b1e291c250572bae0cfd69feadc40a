@@ -1,0 +1,8 @@
+**定理。** 对自然数 $J,M$，取 $A=\{t\in\mathbb Z:t<J\}$、$B=\{t\in\mathbb Z:0\le t<M\}$，则
+
+$$
+R(A;B)=\{m:J<m\le M\}.
+$$
+
+且 $|R(A;B)|=(M-J)_+:=\max(M-J,0)$，包括 $M=0$ 的情形。
+

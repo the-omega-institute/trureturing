@@ -1,0 +1,14 @@
+**定义。** 对奇素数 $p\ne5$，令
+
+$$
+\epsilon=\left(\frac5p\right),
+\qquad m=p-\epsilon.
+$$
+
+在下述整除性成立时，定义规范化商
+
+$$
+\ell_p=\frac{L_p-1}{p}\pmod p,
+\qquad q_p=\frac{F_m}{p}\pmod p.
+$$
+

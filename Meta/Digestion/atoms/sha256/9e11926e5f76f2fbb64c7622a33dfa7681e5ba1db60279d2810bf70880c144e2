@@ -1,0 +1,13 @@
+语义子集及语义函数空间仍准确为
+$$
+\mathcal P_Z(\operatorname{Enc}(X))=\operatorname{Enc}(\mathcal P(X)),\qquad
+\operatorname{Fun}_Z(\operatorname{Enc}(X),\operatorname{Enc}(Y))
+=\operatorname{Enc}(Y^X).
+$$
+其中每个 $B\subseteq X^*$ 的对应子集码为 $\operatorname{Pack}(B)$，且
+$$
+\operatorname{El}(\operatorname{Pack}(B))=B,\qquad
+\operatorname{Pack}(\operatorname{El}(c))=c\quad(c\in\mathfrak V_Z).
+$$
+这些双射用于 $K,\mathsf X_L,\mathscr Q,\mathscr Q_R,\mathbb T$ 及其任意子集时，没有有限性或可定义性限制。
+

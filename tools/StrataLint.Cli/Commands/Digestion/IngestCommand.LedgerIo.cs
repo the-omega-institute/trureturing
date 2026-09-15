@@ -233,7 +233,7 @@ internal static partial class IngestCommand
             StringComparer.Ordinal));
     }
 
-    private static ImmutableArray<string> WriteCasObjects(
+    private static List<(DigestionCasObject Object, string FullPath)> ReadPendingCasObjects(
         string repositoryRoot,
         ImmutableArray<DigestionCasObject> casObjects)
     {
@@ -258,6 +258,14 @@ internal static partial class IngestCommand
             pending.Add((item, fullPath));
         }
 
+        return pending;
+    }
+
+    private static ImmutableArray<string> WriteCasObjects(
+        string repositoryRoot,
+        ImmutableArray<DigestionCasObject> casObjects)
+    {
+        var pending = ReadPendingCasObjects(repositoryRoot, casObjects);
         var created = ImmutableArray.CreateBuilder<string>(pending.Count);
         try
         {

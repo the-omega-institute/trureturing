@@ -1,0 +1,14 @@
+**定理。** 令
+
+$$
+G_k=P_k^{\mathsf T}P_k,qquad
+H_k=Q_kQ_k^{\mathsf T}
+=\begin{pmatrix}1&k\\k&k^2+1/4\end{pmatrix}.
+$$
+
+则 $G_kH_k=H_kG_k=I$，且 $H_k$ 正定。具体地，对 $(r,s)\ne(0,0)$，
+
+$$
+(r,s)H_k(r,s)^{\mathsf T}=(r+ks)^2+s^2/4>0.
+$$
+

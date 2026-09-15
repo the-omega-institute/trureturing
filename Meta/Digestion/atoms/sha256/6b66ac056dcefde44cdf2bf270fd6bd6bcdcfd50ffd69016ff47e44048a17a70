@@ -1,0 +1,8 @@
+**定理。** 设 a:Λ→A 为一个固定的有限观察同态，P_1,...,P_s 是在 A 的同一指定表示中预先固定的探针。凡只从 a(x)、这些固定探针及其有限乘积、迹或其他确定后处理得到的联合读数 O(x)，均满足 ker(a)⊆ker(O)，其中 ker(O) 指等读数关系。若同一个满射 f:Λ→F 满足
+
+$$\operatorname{im}(f,a)=F\times a(\Lambda),$$
+
+则还满足
+
+$$\operatorname{im}(f,O)=F\times O(\Lambda).$$
+

@@ -11,7 +11,7 @@ PROJECT="$ROOT/tools/StrataLint.Cli/StrataLint.Cli.csproj"
 
 cd "$ROOT"
 usage() {
-  echo "USAGE: ingest.sh ingest|align-digestion-status|refresh-source-registry|mathlib-reanchor|quarantine|quarantine-clear BASE [SOURCE|REQUEST|ATOM_ID] [PLAN_SHA256]" >&2
+  echo "USAGE: ingest.sh ingest|align-digestion-status|refresh-source-registry|mathlib-reanchor|quarantine|quarantine-clear BASE [SOURCE|REQUEST|ATOM_ID|1] [PLAN_SHA256]" >&2
   exit 2
 }
 
@@ -40,6 +40,11 @@ case "$VERB" in
       if [[ -n "${4:-}" ]]; then
         alignment_args+=(--apply "$4")
       else
+        alignment_args+=(--plan)
+      fi
+    else
+      [[ $# -le 3 && ( -z "$PAYLOAD" || "$PAYLOAD" == 1 ) ]] || usage
+      if [[ "$PAYLOAD" == 1 ]]; then
         alignment_args+=(--plan)
       fi
     fi

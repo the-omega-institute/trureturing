@@ -1,0 +1,14 @@
+**定理 PT1。** 对每个 $k\ge0$，存在两个非规范原始对象 $r_k,s_k$，满足
+
+$$
+v_0(r_k)=v_0(s_k)=6+8k,\qquad
+\beta(r_k)=\beta(s_k),\qquad
+\forall j\ge0,\ v_j(r_k)=v_j(s_k),\qquad c(r_k)=c(s_k),
+$$
+
+两边都可执行一次进位，但
+
+$$
+\beta(Tr_k)+1=\beta(Ts_k).
+$$
+

@@ -1,0 +1,6 @@
+拓扑三层满足
+$$
+\operatorname{El}(\operatorname{Enc}(\tau))=\operatorname{Enc}[\tau],\qquad
+\tau^*=\{\operatorname{El}(c):c\in\operatorname{Enc}[\tau]\}.
+$$
+

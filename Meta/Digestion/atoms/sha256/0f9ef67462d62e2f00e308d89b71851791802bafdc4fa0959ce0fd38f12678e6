@@ -1,0 +1,7 @@
+**定义。** 对序列 $u=(u_n)_{n\ge0}$，令移位算子 $(Eu)_n=u_{n+1}$。对 $0\le\theta<1$ 和整数 $q\ge0$ 定义
+
+$$
+T_q(\theta)=\frac12\left[\left(\frac{1+\theta}{1-\theta}\right)^q-1\right],
+\qquad C_q(\theta)=q+T_q(\theta).
+$$
+

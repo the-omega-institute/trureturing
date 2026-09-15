@@ -1,0 +1,8 @@
+**证明。** 记 $n=\|u(t)\|$、$z=z_\delta(t)$。由于 $z>0$，链式法则在 $u(t)=0$ 时仍可使用。恒等式
+
+\[
+(-\gamma z+\rho+\gamma\delta)z-(-\gamma n^2+\rho n)
+=\rho(z-n)+\gamma\delta(z-\delta)
+-\gamma(z^2-n^2-\delta^2)
+\]
+

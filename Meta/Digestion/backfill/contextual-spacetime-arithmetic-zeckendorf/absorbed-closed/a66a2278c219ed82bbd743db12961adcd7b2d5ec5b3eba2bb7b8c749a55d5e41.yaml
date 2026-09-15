@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:a66a2278c219ed82bbd743db12961adcd7b2d5ec5b3eba2bb7b8c749a55d5e41
+  normalized_sha256: sha256:a66a2278c219ed82bbd743db12961adcd7b2d5ec5b3eba2bb7b8c749a55d5e41
+cas_ref: sha256:a66a2278c219ed82bbd743db12961adcd7b2d5ec5b3eba2bb7b8c749a55d5e41
+coverage_gids:
+  - gid: D5/S0/History/Spacetime/AllSetZeckendorfHereditaryFiniteness.enc_isHF_iff
+    target_statement_id: sha256:e9908d7be5595e40c23db43f386ffe2c3b9bcb2e7a0ede34c1b88a4f7566ff60
+receipts:
+  unresolved_subitems: []

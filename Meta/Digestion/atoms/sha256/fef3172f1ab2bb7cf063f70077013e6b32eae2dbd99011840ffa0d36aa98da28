@@ -1,0 +1,8 @@
+**定理 15.1（输出流的精确核恒等式，repo-derived）。** 设 $F:\mathbb R^p\to\mathbb R^N$ 可微，$z=F(\theta)$，$J=DF(\theta)$，损失 $\ell(z)$ 可微，$H(\theta)$ 为对称正定预条件矩阵，流为 $\dot\theta=-H\nabla_\theta\ell$。沿任意可微解有
+$$
+\dot z=-K_H\nabla_z\ell,\qquad K_H=JHJ^\top\succeq0.
+$$
+$H=I$ 时为有限模型的经验 NTK 恒等式；正定参数度量写作 $M$ 时应取 $H=M^{-1}$。
+
+证明。链式法则给 $\nabla_\theta\ell=J^\top\nabla_z\ell$，再以 $J$ 左乘参数速度得第一式。对任意 $a$，$a^\top K_Ha=(J^\top a)^\top H(J^\top a)\ge0$。该式是瞬时导数恒等式，不是有限步更新的精确 Euler 等式。文献范围见[Jacot、Gabriel与Hongler](../../../Library/Dynamics/jacot2018neural.md)：其无限宽核恒定结论有激活正则性、有限时间训练方向控制和逐层宽度极限等假设，不适用于任意有限网络。证毕。
+

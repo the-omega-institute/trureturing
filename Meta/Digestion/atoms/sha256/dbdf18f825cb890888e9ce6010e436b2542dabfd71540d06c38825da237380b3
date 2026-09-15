@@ -1,0 +1,36 @@
+## SM.1 分次迹与二元 Möbius 恢复
+
+**定义。** 对具有魔群作用的非负分次空间 $V^\natural=\bigoplus_{n\ge0}V_n^\natural$，定义
+
+$$
+T_g(q)=\sum_{n\ge0}\operatorname{Tr}(g|V_n^{\natural})q^{n-1}.
+$$
+
+当 $g=1$ 时系数为各级维数；一般 $g$ 的系数为字符值。
+
+**定义。** 对整数系数族 $c$，令
+
+$$
+H_c(p,q)=\sum_{m,n>0}c(mn)p^mq^n.
+$$
+
+**定理。** 若归一化二元形式级数 $D$ 满足
+
+$$
+-\log D=\sum_{k\ge1}\frac1kH_c(p^k,q^k),
+$$
+
+则
+
+$$
+H_c(p,q)=\sum_{k\ge1}\frac{\mu(k)}k[-\log D(p^k,q^k)].
+$$
+
+**证明。** 把假设代入右侧并按同步幂代换的总指数收集项。$H_c(p^m,q^m)$ 的系数为
+
+$$
+\frac1m\sum_{d\mid m}\mu(d),
+$$
+
+它在 $m=1$ 时为一，在 $m>1$ 时为零。证毕。
+

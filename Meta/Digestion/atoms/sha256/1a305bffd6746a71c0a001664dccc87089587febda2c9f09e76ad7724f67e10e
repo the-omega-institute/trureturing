@@ -1,0 +1,7 @@
+**定义。** 在模 $p$ 下令
+
+$$
+H=\begin{pmatrix}1&2\\2&-1\end{pmatrix},\qquad
+\overline B=\begin{pmatrix}b&a\\a&b-a\end{pmatrix}.
+$$
+

@@ -1,0 +1,21 @@
+**定理。** 对每个 $k\geq0$，有
+
+$$
+\det C_k=\det D_k=1,\qquad
+\operatorname{tr}C_k=\operatorname{tr}D_k=4k+2,
+$$
+
+以及
+
+$$
+C_kP_k=P_kD_k,\qquad \det P_k=2.
+$$
+
+对每个 $n\geq0$，还有
+
+$$
+(C_k^n-I)P_k=P_k(D_k^n-I),
+\qquad
+\det(C_k^n-I)=\det(D_k^n-I).
+$$
+

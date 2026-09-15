@@ -1,0 +1,38 @@
+### 98.4 5040 的精确实例
+
+项目中的 `occupation5040` 与算术卷中的 5040 具有同一数值对象，但两者承担的编码角色不同。算术卷给出
+
+$$
+5040=2^4\cdot3^2\cdot5\cdot7
+$$
+
+及其 Zeckendorf 指数行；量子占据链把一个具体多重集的逐步历史写成振幅链。对这个占据多重集，源码证明
+
+$$
+|a|=8,
+$$
+
+并且所有精确制备链的最大 bond 都满足
+
+$$
+\boxed{
+\max_t\dim(\text{bond at }t)\ge12.
+}
+$$
+
+`history_5040_minimum_maximum_bond` 证明下界可达；`history_5040_occupation_chain_attainment` 同时给出链长为 $$8$$、最大 bond 为 $$12$$，并且每个长度八的词振幅都精确等于对应扇区向量。
+
+因此，这个实例给出一个完整的“约束—历史—量子记忆”数值链：
+
+$$
+\text{固定占据约束}
+\longrightarrow
+\text{合法边界族}
+\longrightarrow
+\text{切口秩}
+\longrightarrow
+\text{最小记忆 }12.
+$$
+
+但必须保留编码边界：源码没有证明 Zeckendorf 合法字串空间与这个 occupation boundary 空间同构，也没有证明 12 是所有能完成同一物理任务的任意量子协议的普适记忆维数。它是该多重集、该精确振幅目标和该有限链模型下的最小最大 bond。
+

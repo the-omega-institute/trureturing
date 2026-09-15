@@ -305,9 +305,11 @@ public static class CanonicalMarkdownWriter
             builder.Append("DOI: [").Append(doi.Value)
                 .Append("](https://doi.org/").Append(doi.Value).Append(").");
         }
-        else
+
+        if (citation.Url is { } url)
         {
-            builder.Append("URL: <").Append(citation.Url!.AbsoluteUri).Append(">.");
+            builder.Append(citation.Doi is null ? string.Empty : " ")
+                .Append("URL: <").Append(url.AbsoluteUri).Append(">.");
         }
     }
 

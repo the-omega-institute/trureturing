@@ -1,0 +1,7 @@
+**定理。** 对整数矩阵 $A,B$ 与自然数 $n$，
+
+$$
+f_A\circ f_B=f_{AB},qquad f_A^n=f_{A^n},qquad
+z\in K(A,n)\Longleftrightarrow f_A^n(z)=z.
+$$
+

@@ -1,0 +1,6 @@
+**假设。** 设 $I$ 为有限指标集，$p_i$ 为两两不同的素数，$a_i\in\mathbb N$。活状态为
+
+$$
+e=(e_i)_{i\in I}\in\prod_{i\in I}\{0,1,\ldots,a_i\},
+$$
+

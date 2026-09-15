@@ -1,0 +1,25 @@
+### 110.2 算术输出任务需要保存更多可区分前缀
+
+`GoldenBase4AutomataOracle` 定义了另一项任务：输入是
+
+$$
+\operatorname{zeckendorfMSDWord}(4^i),
+$$
+
+输出是
+
+$$
+\left\lfloor 4^{i+1}\varphi\right\rfloor
+-4\left\lfloor4^i\varphi\right\rfloor,
+$$
+
+的 radix-4 数字。此时前缀不仅要保持合法性，还要保留足以决定未来输出的算术信息。
+
+源码中的 `phi_base4_twenty_two_state_minimality` 给出条件性最小性结论：若存在一个 22 状态全局模型，并且对 21 状态模型的指定有限前缀反驳已经由 LRAT 证书提供，则
+
+$$
+\operatorname{IsMinimalStateCount}(\operatorname{base4Problem},22).
+$$
+
+对应的 M16 定理直接排除至多 21 状态的模型，但它的使用条件仍是显式的有限反驳证书。这里不能把“22”脱离这些前提写成无条件的现实物理常数。
+

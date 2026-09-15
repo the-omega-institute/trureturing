@@ -1,0 +1,2 @@
+**证明。** 在 RD1 中固定第二坐标 $b=n$。所得闭整数区间含 $n-\lceil n/2\rceil+1=\lfloor n/2\rfloor+1$ 个整数。证毕。
+
