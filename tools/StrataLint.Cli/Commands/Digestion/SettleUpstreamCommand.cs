@@ -158,10 +158,14 @@ internal static class SettleUpstreamCommand
     {
         try
         {
-            var path = Path.GetFullPath(Path.Combine(root, requested));
-            if (Path.IsPathRooted(requested) || !path.StartsWith(Path.TrimEndingDirectorySeparator(Path.GetFullPath(root)) + Path.DirectorySeparatorChar, StringComparison.Ordinal))
+            if (Path.IsPathRooted(requested)
+                || requested.Split(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar).Contains("..", StringComparer.Ordinal))
+                throw Invalid("PROBE_PATH_INVALID", "probe must be relative and cannot contain parent segments");
+            var requestedPath = Path.Combine(root, requested);
+            UpstreamProbeVerifier.RequireNoLinks(root, requestedPath);
+            var path = Path.GetFullPath(requestedPath);
+            if (!path.StartsWith(Path.TrimEndingDirectorySeparator(Path.GetFullPath(root)) + Path.DirectorySeparatorChar, StringComparison.Ordinal))
                 throw Invalid("PROBE_PATH_INVALID", "probe must be relative to and inside the worktree");
-            UpstreamProbeVerifier.RequireNoLinks(root, path);
             return File.ReadAllBytes(path);
         }
         catch (Exception error) when (error is IOException or UnauthorizedAccessException or ArgumentException or NotSupportedException)
