@@ -58,9 +58,9 @@ triage: anchor
 | [A397244](https://oeis.org/A397244) | A(0)=a0=1,a1=1；∀n>1，2n[x^n]A^(2n)=(2n−1)[x^n]A^(2n+1)；∀n>0，Odd(a_n) iff ∃m≥0,n=2m+1且m&(m>>1)=0。 | 1 | unknown | med | yes | note-only |
 | [A396808](https://oeis.org/A396808) | 原隐式幂系数序列的两个模3支持猜想；奇偶子命题已证并排除。 | 1 | open | med | yes | dispatch |
 | [A396806](https://oeis.org/A396806) | A=x exp(A^{∘6}) 的 EGF；∀n≥1，a_n≡n mod6，由 IterateExponentialModSix.result 证明，蕴含源 mod3；奇偶已有 parity_iterate_six。 | 1 | repo-derived | med | yes | theorem |
-| [A396805](https://oeis.org/A396805) | EGF A=x exp(A∘5)的奇偶和mod3剩余候选；mod5=a_n≡n已由n23反驳。 | 1 | unknown | med | yes | note-only |
+| [A396805](https://oeis.org/A396805) | EGF A=x exp(A∘5)：奇偶已证；n≥3的模3周期0,1,0由 IterateExponentialFiveModThree.result 证明。mod5保留n23的非kernel反例。 | 1 | repo-derived | med | yes | theorem |
 | [A396803](https://oeis.org/A396803) | A=x exp(A^{∘3})为EGF，a0=0,a1=1；∀n≥1,Odd(a_n) iff Odd(n)，且a_n≡n mod3。 | 1 | proved | med | yes | reuse |
-| [A396798](https://oeis.org/A396798) | A=x+(A∘4)(A∘5)的七条迭代mod8猜想；首条周期原起点n≥1已反驳。 | 1 | unknown | med | yes | note-only |
+| [A396798](https://oeis.org/A396798) | OGF A=x+(A∘4)(A∘5)：第四条 I4 在 n>2、第八条 I8 在 n>1 的系数模8为0分别由 IterateProductFourFiveFourthModEight.result、IterateProductFourFiveEighthModEight.result 结算；第2、3、5、6、7条及修正版首条仍未结算。 | 1 | repo-derived | med | yes | theorem |
 | [A393868](https://oeis.org/A393868) | A393866从常数项起的每个已结束极大奇偶游程长度为偶数。 | 1 | open | high | yes | note-only |
 | [A396493](https://oeis.org/A396493) | ∀n≥1，Sat4(n)=C(C(2n+2,3)+3,4)−n(16n^6+48n^5+340n^4+180n^3+2818n²−10011n+6789)/18；子句为3文字多重集，公式为4子句多重集，允许同义重复及重子句。 | out | unknown | high | yes | note-only |
 | [A396491](https://oeis.org/A396491) | ∀n≥1，n 个有标号变量、允许子句内重复文字及公式内重复子句的五子句 3-SAT 不可满足公式数，等于 %F 给定的十项二项式多项式。 | 1 | unknown | med | yes | note-only |
@@ -161,11 +161,39 @@ stepK 6 的线性固定列，再经全阶段归纳与既有模二定理合成模
 文献范围见 #7920，独立卷宗为
 `Problems/oeis-a396806-iterate-exponential-mod-six.md`。本次刷新 OEIS 与
 本仓 all-state 去重；复用先前直接引用、arXiv、MathOverflow、MSE 和
-GitHub 数列代码检索，不声称全球优先权。A396805 的模三问题仍独立开放。
+GitHub 数列代码检索，不声称全球优先权。A396805 的模三问题由独立的 IterateExponentialFiveModThree.result 结算，范围为 n≥3。
 
 ### A396805
 
-精确目标：A=x exp(A^{∘5})为EGF，a0=0,a1=1。∀n≥1,Odd(a_n) iff Odd(n)；∀n≥3,a_n≡1 mod3 iff n≡1 mod3，其余≡0；原称∀n≥1,a_n≡n mod5为假。 主风险是源码把一个已能数值反驳的命题仍标为Conjecture。已打开 https://oeis.org/A396805/b396805.txt ，逐行核对1..24，其中第23行 a_23=516114659489378430688740267292635767160672734031357，模5为2而23模5为3；第24行 a_24=454037334939528563499548911469632061937352653587474112，模5为2而预期4。`counterexamples.py` 用Bell整系数算法及源码Manyama的缓存递推 b(n,k,l)=Σ i C(n,i)b(n−i,k,l)Σ(j=1..k)b(i,j+l−1,l)/(n−1) 独立计算至24，每次除法检查整除，双方及官方b-file全一致；故这是明确反例，不是前缀未通过而已。mod5在1..64的失败下标为23,24,43,44,63,64，原命题应drop，无须再求证明。奇偶和n≥3的模3周期仍零差异，首项异常n=2必须保留。已完整读 `IntegralEGFComposition.eCoeff_composition`、`composition_map` 的整系数链式递推证明；`QuarticEGFFixedPoint.A_equation`、`fixed_unique` 把复合次数写死为4；`QuarticEGFModFour.mod_four` 与 `linear_fourth_mod_four` 也只处理第四次迭代和模4，不能以换数字包装出本条。 特别不能把 `linear_fourth_mod_four` 泛化成“素数p次迭代模p恒等”：本次 F=x exp x 的五次迭代在第22项模5为3，恰是早期错误推广的警报。整数EGF计算使用部分Bell多项式 B(m,k)=Σ(j=1..m−k+1)C(m−1,j−1)g_j B(m−j,k−1)，B(0,0)=1；复合系数为Σf_kB(m,k)。把严格前缀复合l次得g，再令 e_0=1、e_m=Σ(j=1..m)C(m−1,j−1)g_j e_(m−j)，a_n=n e_(n−1)。O(lN⁴)模运算、O(N²)存储，没有在有限特征内除n!，也不枚举排列。 可复制 `python3 probes.py A396805` 及 `python3 counterexamples.py`；主探针N=64、精确前缀16、反例复核24。外部Google/Yahoo检索失效，不能据此确定其余两条全球未证。剩余非包装逃逸是对 u_0=0,u_1=1,u_2=2,u_n=1_{n≡1 mod3}(n≥3) 证明F3中Φ_5(u)=u，并通过原EGF的前缀收缩转移；这是尚未证明的固定列消去式，不建议因mod5错误顺手重写成新的模5周期。停止条件：继续尝试原mod5命题立即停；其余若查到同源固定列证明、反例或只复述数字表也停。与l=3,6只共享Bell/收缩设施，模3结论不是同一个命题；本条余项并入该族note-only，当前0新增席，未来完整固定列证明才讨论独立席。全部直接A引用：A000169, A140054, A396799, A396800, A396803, A396804, A396806，每份文件全部字段、项目均已读完。本行档位1仅登记仍未找到证明的奇偶及模3两句；模5原句已由n23反例淘汰。三方核对是同族读者的两种算法与b-file，不冒称三席独立共识。数值步骤完全沿用A396803段Bell/exp操作，ℓ=5，N64；无需照原来源扩大到400。其余未打开的源引文及页面均ASSUMED-UNVERIFIED。
+精确目标：A=x exp(A^{∘5}) 为EGF，a(n)=n![x^n]A，a0=0、a1=1。
+`IterateExponentialParity.parity_iterate_five` 已证明全部正指标的奇偶性。
+`IterateExponentialFiveModThree.result` 证明 ∀n≥3，aK(5,n) 模3为
+`if n % 3 = 1 then 1 else 0`，即从n=3开始的0,1,0周期。
+既有 `A_equation`、`fixed_unique` 和 `eCoeff_encode` 确定原数列身份；
+source a(2)=2，故不能删除 n≥3 下界。OEIS revision13仍标原句为Conjecture；
+精确目标在 #7925 预登记，独立结算见
+`Problems/oeis-a396805-iterate-exponential-mod-three.md`。
+
+证明在整数EGF坐标中由 D(S³)=3S²DS 得立方的正次数系数被3整除，
+完整三阶链式法则经整数投影到模3。Lucas分解仅在3q截面消去最后一项，
+得到对任意外列f、内列g满足g(3q)=0且g(1)=1的两条复合截面公式。
+固定点递推依次给 b(3q)=0、b(3q+1)=1、b的j次迭代在3q+1处为j^q，
+以及 b(3q+2)=2·6^q；q=0保留2，q≥1为0。此为无界符号证明，
+不使用有限项拟合、模3中的阶乘除法或“完整五次迭代恒等”的假设。
+
+原模5猜想仍由已有精确非kernel计算反驳：官方
+https://oeis.org/A396805/b396805.txt 的第23项为
+516114659489378430688740267292635767160672734031357，模5为2而23模5为3；
+第24项为454037334939528563499548911469632061937352653587474112，模5为2而预期4。
+既有Bell整数算法、Manyama递推和b-file一致；1..64内失败指标为
+23,24,43,44,63,64。该结果没有在本次Lean定理中形式化，不新建Refuted声明。
+比较级数 F=x exp(x) 的五次迭代第22项模5为3，排除了此前的过强辅助恒等式。
+
+完整读取的直接A引用为 A000169、A140054、A396799、A396800、A396803、
+A396804、A396806。文献范围复用 #7925 所列交叉引用、arXiv、MathOverflow、
+Math StackExchange及GitHub数列代码检索；本轮刷新OEIS和仓库全状态PR，
+未重跑全部外部搜索。不可用的通用搜索引擎不作否定证据；不声称全球优先权。
+模5数值反例是已有外部计算读数，本次公开成果仅为独立模3定理。
 
 ### A396803
 
@@ -177,7 +205,15 @@ GitHub 数列代码检索，不声称全球优先权。A396805 的模三问题�
 
 ### A396798
 
-精确目标：A(0)=0,A=x+A^{∘4}A^{∘5}。原∀n≥1,a_n mod8=[1,1,5,5]为假。其余：A²,A⁶在n>3系数≡0；A⁴在n>2系数≡0；A⁸在n>1系数≡0；A³,A⁵,A⁷在n>1分别从n2起周期[3,1,7,5],[5,1,1,5],[7,1,3,5]。 这里所有 A^k 都是函数迭代，乘积才是普通乘法。源码首条%C若严格按n≥1排列[1,1,5,5]，在a3=9已错（9 mod8=1而声称5），此反例直接来自完整镜像%S和独立递推；不能默默把起点改为n=2后称原猜想成立。实际前缀模8为1,1,1,5,5,1,1,5,…，修正版是在a1=1单列后，从n=2按[1,1,5,5]循环。其余七条的各自起点必须逐项保留，上述statement已列全。已完整读D5 `CompositionalIterateCongruence.fixed_unique`/`mobius_iterate`/`coefficient_congruence`，其step固定为5与6、模10；`ThreeFourIterateProductModSix.hanna_conjecture`固定为3与4、模6。两者提供收缩和Möbius迭代方法，却不能直接覆盖4与5的模8：本目标模8不是全系数1的几何级数。Google组合精确检索无有效结果；源及全部直接引用未列本组同余证明，所以剩余仍是有限检索候选，不把相关条目已解当本条已解。可复制 `python3 probes.py A396798`，以P_n严格前缀截断Horner复合得到四次与五次迭代，取乘积n次系数；O(N⁴)模运算/O(N)存储，N=64，另算精确前缀16。原首条共有31个失败，最早n3；其余七条在指定域零差异，`counterexamples.py`保存最小反例。具体修正版逃逸为在Z/8Z[[x]]中验证 R=x+(x²+x³+5x⁴+5x⁵)/(1−x⁴)=x/(1−x)+4x⁴/((1−x)(1+x²)) 满足 R=x+R^{∘4}R^{∘5}，再以收缩唯一性连接原源；模8下4的平方为0，可用一阶扰动展开控制迭代，然后统一计算R的2..8次迭代。这是待证有理恒等式，不是已打开的文献证明；未经完成不宣称剩余猜想已解。停止条件：原首条已反驳即停；修正版若有同源已证恒等式、分母非单位或恒等式失败则撤回，不能仅加一个目标等价假设。修正首条与其余七条至多作为同一R恒等式的一席候选，当前note-only；与A396797/A396807共享工具但不是逻辑等价，不能按八个同余重复计席。全部直接A引用：A213591, A396099, A396797, A396807，每份文件全部字段、项目均已读完。本行保留原七条精确同余为1档候选，原首条起点n≥1的版本已drop；修正版起点n2是明确另拟的靶，不冒充原文。复制Horner：compose(f,g)=f₀+g(f₁+g(f₂+…))，每次乘法截断至n；以P的迭代从x开始累乘复合到4和5，a_n=[x^n](P∘4)(P∘5)，原七条再共用同一最终P求2..8次迭代。其余未打开的源引文及页面均ASSUMED-UNVERIFIED。
+源为零常数项整数普通生成函数 A=x+A^{∘4}A^{∘5}，a(n)=[x^n]A；所有 A^k 表示函数复合迭代，乘积才是普通乘法。OEIS revision12 的第四条逐字为“Conjecture: [x^n] A^4(x) == 0 (mod 8) for n > 2.”，第八条逐字为“Conjecture: [x^n] A^8(x) == 0 (mod 8) for n > 1.”。`IterateProductFourFiveFourthModEight.result` 对全部 n>2 证明第四条，`IterateProductFourFiveEighthModEight.result` 对全部 n>1 证明第八条。两个结论使用同一个 `IterateProductFourFiveEighthModEight.generatingSeries`。完整来源、量词与范围见 `Problems/oeis-a396798-fourth-iterate-mod-eight.md`、`Problems/oeis-a396798-eighth-iterate-mod-eight.md` 与 `Library/Arith/hanna2026a396798.md`。本题属于 OGF，不属于 A396803/805/806 的指数生成函数族。
+
+该源按 H(F)=X+I4(F)I5(F) 的逐系数稳定构造；来源桥给出全次数稳定、源方程、常数项零、一次项一及唯一性，并在 ZMod4 识别 A=X/(1-X)。第四条由此得到 I2(A)=X+2X² mod4；精确整数商使其模八像写成 G=X+2X²+4B。既冻 substitution annihilation 给出 4(B∘G-B)=0，环展开给出 2G²=2X²，故 G∘G=X+4X²。第八条则由 I4(A)=X+4B 的整数分解，经模八平方零迭代得到 I8(A)=X。两条都为全指标符号结论，不依赖有限前缀、完整有理式候选或第2条的模八强式；第四条没有另造源定义。
+
+原首条从 n≥1 排列 [1,1,5,5] 的版本在 a(3)=9 已错：9 mod8=1，而该周期要求5。这是既有源数据和独立递推的非kernel反例，本次不新增形式反驳。实际前缀模8为1,1,1,5,5,1,1,5,…；单列 a1=1 后从 n=2 排列 [1,1,5,5] 是另拟修正版，不能冒充原猜想。尚未结算的第2、6条要求 I2、I6 在 n>3 的系数为0 mod8；第3、5、7条要求 I3、I5、I7 在 n>1 从 n=2 起分别循环 [3,1,7,5]、[5,1,1,5]、[7,1,3,5]。这五条与修正版首条没有被上述第四、第八条结算。
+
+既有 N=64 模运算与精确前缀16的 Horner 截断实验在原首条检出31个失败、最早 n=3，其余当时七条在各自域内零差异；该旧有限结果不替代第四、第八条的证明，也不升级其余五条。保留的研究候选 R=x/(1-x)+4x^4/((1-x)(1+x^2)) 在 Z/8Z[[x]] 满足源式及完整迭代公式仍待验证；常数项为1的分母必须是单位，不能将该有理候选当已证前提。旧 `probes.py A396798` 与 `counterexamples.py` 的实验用途仍属这些有限读数。剩余范围共享同一源对象，不按各同余重复派同形任务。
+
+文献核对已读完整 revision12、直接引用 A213591/A396099/A396797/A396807，以及精确A号索引。已冻3/4、5/6与2/3定理属于不同源方程；第四、第八条的预登记分别为 #7950、#7943，旧 #6436/#6375 留有二次复合队列和转引。有效搜索范围内未找到这两条的先前证明；失败、验证码、JS或未读全文的广搜结果不作负证据，不主张全球优先权。剩余有理候选若遇同源已证结果、非单位分母或恒等式失败则停止该路线，不以额外目标等价假设替代证明。
 
 ### A393868
 
