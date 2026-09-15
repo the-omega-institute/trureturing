@@ -40,9 +40,10 @@ theorem coefficient_recurrence (R p : ℕ) (hR : Squarefree R) (hR1 : 1 < R)
   have hp1 : (1 : ℝ) < p := Nat.one_lt_cast.mpr hp.one_lt
   have hcop : R.Coprime p := (hp.coprime_iff_not_dvd.mpr hpR).symm
   have he : e (R * p) = e R * (1 - (p : ℝ)⁻¹) := by
+    have hR0 : (R : ℝ) ≠ 0 := Nat.cast_ne_zero.mpr hR.ne_zero
     simp only [e, Nat.totient_mul hcop, Nat.totient_prime hp, Nat.cast_mul,
       Nat.cast_sub hp.one_lt.le, Nat.cast_one]
-    field_simp [hp0.ne', Nat.cast_ne_zero.mpr hR.ne_zero]
+    field_simp [hp0.ne', hR0]
     <;> ring
   have hsplit (u : ℝ) : B (R * p) u = B R u - B R (u / p) := by
     have hd : (R * p).divisors = R.divisors ∪ R.divisors.image (p * ·) := by
@@ -108,6 +109,7 @@ theorem coefficient_recurrence (R p : ℕ) (hR : Squarefree R) (hR1 : 1 < R)
         (le_of_not_ge hy))
       simp [hs, Int.cast_sub, abs_of_nonneg hx', abs_of_nonpos hy',
         abs_of_nonneg (sub_nonneg.mpr (hy'.trans hx'))]
+      <;> ring
     · have hx' : (x : ℝ) ≤ 0 := by exact_mod_cast (le_of_not_ge hx)
       have hy' : (0 : ℝ) ≤ y := by exact_mod_cast hy
       have hs : ¬ 0 < x * y := not_lt.mpr (mul_nonpos_of_nonpos_of_nonneg
@@ -432,7 +434,7 @@ theorem coefficient_recurrence (R p : ℕ) (hR : Squarefree R) (hR1 : 1 < R)
           unfold J
           ring
     rw [hrepr (R * p) ((Nat.squarefree_mul hcop).mpr ⟨hR, hp.squarefree⟩)
-      (by nlinarith [hp.one_lt]), he, hsum, hrepr R hR hR1]
+      (hR1.trans_le (Nat.le_mul_of_pos_right R hp.pos)), he, hsum, hrepr R hR hR1]
     ring
   refine ⟨hrec, ?_⟩
   have hepos : 0 < e R := div_pos (Nat.cast_pos.mpr
