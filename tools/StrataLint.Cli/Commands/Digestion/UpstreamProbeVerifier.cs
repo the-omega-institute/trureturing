@@ -37,7 +37,9 @@ internal sealed class UpstreamProbeVerifier(IUpstreamLeanProcessRunner runner, s
         + @"\u0391-\u039F\u03A1-\u03A2\u03A4-\u03A9\u03B1-\u03BA\u03BC-\u03FB"
         + @"\u1F00-\u1FFE\u2100-\u214F\u2080-\u2089\u2090-\u209C\u1D62-\u1D6A\u2C7C]"
         + @"|\uD835[\uDC9C-\uDD9F])";
-    private static readonly Regex Tokens = new(@"«[^»]*»|#?" + IdentifierCharacter + @"+|#", Options);
+    private const string IdentifierAtom = @"(?:«[^»]*»|" + IdentifierCharacter + @"+)";
+    private static readonly Regex Tokens = new(@"#" + IdentifierCharacter + @"+|#|"
+        + IdentifierAtom + @"(?:\." + IdentifierAtom + @")*", Options);
     private static readonly Regex RawStringStart = new(@"\G(?<!" + IdentifierCharacter + @")r(?<hashes>#*)""", Options);
     private static readonly Regex CharacterLiteral = new(@"\G(?<!" + IdentifierCharacter
         + @")'(?:[\uD800-\uDBFF][\uDC00-\uDFFF]|[^'\\\r\n]|\\(?:x[0-9a-fA-F]{2}|u\{[0-9a-fA-F]+\}|[^\r\n]))'", Options);
@@ -273,9 +275,14 @@ internal sealed class UpstreamProbeVerifier(IUpstreamLeanProcessRunner runner, s
                     throw Invalid("PROBE_DECLARATION_UNSUPPORTED", $"command token outside probe dialect: {token.Value}");
                 continue;
             }
-            if (Array.BinarySearch(UnsupportedCommands, token.Value, StringComparer.Ordinal) >= 0)
+            // Dotted names are single identifiers, but a leading unescaped command
+            // keyword still starts a command (def.x); only later segments are exempt.
+            if (token.Value.StartsWith('«')) continue;
+            var dot = token.Value.IndexOf('.');
+            var first = dot < 0 ? token.Value : token.Value[..dot];
+            if (Array.BinarySearch(UnsupportedCommands, first, StringComparer.Ordinal) >= 0)
                 throw Invalid("PROBE_DECLARATION_UNSUPPORTED", $"command token outside probe dialect: {token.Value}");
-            if (token.Value == "theorem")
+            if (first == "theorem")
             {
                 if (token.Index > 0 && source[token.Index - 1] != '\n')
                     throw Invalid("PROBE_DECLARATION_UNSUPPORTED", $"{token.Value} must start at column 0");

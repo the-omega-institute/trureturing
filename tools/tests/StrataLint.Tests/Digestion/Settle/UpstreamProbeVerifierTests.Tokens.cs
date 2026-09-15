@@ -68,8 +68,9 @@ public sealed partial class UpstreamProbeVerifierTests
             "unseal unset_option unsuppress_compilation variable variable? " +
             "variables wait_for_cancel_once_command whatsnew with_weak_namespace";
         foreach (var keyword in keywords.Split(' '))
+        foreach (var suffix in new[] { "", ".x" })
         foreach (var separator in new[] { " ", "\n  ", "\n", "\n  exact " })
-            yield return [keyword, separator];
+            yield return [keyword + suffix, separator];
     }
 
     [Theory]
@@ -85,7 +86,7 @@ public sealed partial class UpstreamProbeVerifierTests
                  {
                      "#eval! (0 : Nat)", "#synth Nat", "#guard_msgs", "#adaptation_note",
                      "#help", "#where", "#print True", " #print axioms probe",
-                     "#future_package_command", "#"
+                     "#future_package_command", "#", "#eval!.x", "#print.x axioms probe"
                  })
         foreach (var separator in new[] { " ", "\n  ", "\n", "\n  exact " })
             yield return [command, separator];

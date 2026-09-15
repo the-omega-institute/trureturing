@@ -189,6 +189,59 @@ public sealed partial class UpstreamProbeVerifierTests
         Assert.Equal(3, result.Length);
     }
 
+    public static IEnumerable<object[]> DottedKeywordReferences()
+    {
+        foreach (var name in new[]
+                 {
+                     "Polynomial.Monic.def", "IsBaseChange.end", "OneCocycle.class", "IsReduced.infix",
+                     "Monic.def", "h.def", "Monic.theorem", "«def».end", "Monic.«def».end",
+                     "«def.x».class", "def!.theorem"
+                 })
+        foreach (var apply in new[] { false, true })
+            yield return [name, apply];
+    }
+
+    [Theory]
+    [MemberData(nameof(DottedKeywordReferences))]
+    public void DottedKeywordSegmentsDoNotCreateCommands(string name, bool apply)
+    {
+        using var f = new ProbeFixture();
+        // Fake execution isolates token admission from the referenced declarations' types.
+        var source = "import Mathlib\ntheorem probe (h : True) : True := "
+            + (apply ? "by\n  exact (" + name + ").mp h" : name)
+            + "\n#print axioms probe\n";
+        Assert.Equal(3, f.Verify(source).Length);
+        Assert.Equal(source, f.Runner.Sources[0]);
+        Assert.Equal(2, f.Runner.Sources.Count);
+    }
+
+    [Theory]
+    [InlineData("«def»")]
+    [InlineData("«def.x»")]
+    [InlineData("Monic.«def»")]
+    [InlineData("Monic.«#print»")]
+    public void EscapedKeywordSegmentsRemainIdentifiers(string name)
+    {
+        using var f = new ProbeFixture();
+        var source = "import Mathlib\ntheorem probe : True := " + name + "\n#print axioms probe\n";
+        Assert.Equal(3, f.Verify(source).Length);
+        Assert.Equal(source, f.Runner.Sources[0]);
+        Assert.Equal(2, f.Runner.Sources.Count);
+    }
+
+    [Theory]
+    [InlineData(".def x := 1")]
+    [InlineData("def.x := 1")]
+    [InlineData("instance.y : True := True.intro")]
+    [InlineData("example.foo : True := True.intro")]
+    [InlineData("theorem.bar : True := True.intro")]
+    public void LeadingKeywordSegmentsCannotHideCommands(string command)
+    {
+        foreach (var separator in new[] { " ", "\n  ", "\n", "\n  exact " })
+            AssertDialectRejected("theorem probe : True := True.intro" + separator + command
+                + "\n#print axioms probe\n");
+    }
+
     [Theory]
     [InlineData("r\"def example\"")]
     [InlineData("r#\"a\"def\"b\"#")]
