@@ -1,6 +1,7 @@
 using System.Text;
 using System.Text.Json;
 using StrataLint.Engine;
+using FixtureDirectory = StrataLint.TestSupport.TemporaryFileSystem.Directory;
 using FixtureFile = StrataLint.TestSupport.TemporaryFileSystem.File;
 
 namespace StrataLint.Tests;
@@ -375,9 +376,9 @@ public sealed class LeanReportPairScriptTests
 
         internal string ReadCandidateLogText() => string.Join(
             '\n',
-            Directory.EnumerateFiles(candidateReport + ".logs", "*", SearchOption.AllDirectories)
+            FixtureDirectory.EnumerateFiles(candidateReport + ".logs", "*", SearchOption.AllDirectories)
                 .Order(StringComparer.Ordinal)
-                .Select(File.ReadAllText));
+                .Select(FixtureFile.ReadAllText));
 
         public void Dispose() => temporary.Dispose();
 
