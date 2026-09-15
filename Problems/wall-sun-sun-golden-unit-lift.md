@@ -136,3 +136,196 @@ This is bridge validation, not evidence that the global existential is false.
   `GoldenInt` coordinate model.
 - Any novelty of the proposed bridge lemmas is unassessed and belongs to the
   theorist's search step.
+
+## FPD. Recurrence-level square transport and maximal-prime descent
+
+### FPD.1 Original objects and the square-factor threshold
+
+Use the original Fibonacci recurrence F_0=0, F_1=1 and
+F_(n+2)=F_n+F_(n+1). A positive integer M is powerful when every prime
+p dividing M also satisfies p^2|M. Thus one is powerful. In the source
+this is the existing `PowerfulDivisorTransform.Powerful` predicate.
+Put E={1,2,6,12}. For an odd prime p different from five, write
+chi(p)=(p/5)=(5/p), and N(p)=p-chi(p). The standard WSS square condition
+is p^2|F_(N(p)). Index primes and value-primes are different variables.
+
+**Theorem FPD1.** For every prime p, positive n, and natural k, if
+p|F_n, then
+
+$$
+\boxed{p^2\mid F_{nk}\quad\Longleftrightarrow\quad
+       p^2\mid F_n\ \text{or}\ p\mid k.}
+$$
+
+This includes p=2 and k=0. It does not assume any initial valuation.
+
+**Proof from the recurrence.** In R=Z/(p^2), put f=F_n, g=F_(n+1) and
+c=F_(n-1). Then g=c+f and f^2=0. The Fibonacci addition formulas imply,
+by simultaneous induction on k>=0,
+
+$$
+F_{n(k+1)}=(k+1)fg^k,\qquad
+F_{n(k+1)+1}=g^{k+1}\quad\text{in }R.
+$$
+
+For the first induction step the new coordinate is
+(k+1)fg^k c+g^(k+1)f. Replacing c by g-f gives
+(k+2)fg^(k+1)-(k+1)g^k f^2, as required. The second new coordinate is
+(k+1)f^2g^k+g^(k+2), also as required. The initial pair is (f,g).
+Consecutive Fibonacci coprimality shows gcd(p,g)=1. Consequently, for
+positive k, p^2|F_(nk) exactly when p^2|k F_n. Write F_n=p u and cancel
+one p in the integers. Primality gives p|ku exactly when p|k or p|u.
+The latter is equivalent to p^2|F_n. At k=0 both sides are true.
+
+In particular, if p does not divide k, square divisibility is exactly
+preserved between F_n and F_(nk). If p divides F_n simply and p does
+not divide k, it still divides F_(nk) simply. A square produced solely
+by multiplying the index by p is not an initial WSS exception.
+For example F_7=13, 13^2|F_91, but F_14/13=29=3 modulo thirteen.
+
+### FPD.2 The small-support case is completely eliminated
+
+**Lemma FPD2.** If m>0 has no prime divisor greater than five, then
+
+$$
+\boxed{F_m\text{ powerful}\quad\Longleftrightarrow\quad m\in E.}
+$$
+
+**Proof.** The exact small values are
+
+$$
+F_5=5,\quad F_8=3\cdot7,\quad F_9=2\cdot17,
+\quad F_{25}=5^2\cdot3001.
+$$
+
+The number 3001 is prime, by trial division through its square root,
+which is less than55. If 25|m, the factor3001 remains simple in F_m by
+FPD1, since it cannot divide this small-support index. Thus 25 does not
+divide m. If 5|m, write m=5k. The preceding exclusion makes 5 not divide
+k; FPD1 at F_5 then gives another simple factor, a contradiction.
+Likewise 9|m preserves the simple prime17 from F_9, and 8|m preserves
+seven from F_8. Hence a powerful value forces 5 not dividing m,
+9 not dividing m and 8 not dividing m. Unique factorization now gives
+m|12. The six positive divisors of12 are1,2,3,4,6,12. Indices3 and4
+give the simple values2 and3, and the four remaining values are1,1,8,144,
+all powerful. This proves both directions without an external valuation
+formula or a classification of perfect powers.
+
+### FPD.3 Prime-index factors escape the index support
+
+**Lemma FPD3.** Suppose ell>=7 is prime and p is a prime divisor of
+F_ell. Then the least positive Fibonacci zero index for p is ell, and
+p>ell.
+
+**Proof.** If p|F_j, strong divisibility gives
+p|gcd(F_ell,F_j)=F_(gcd(ell,j)). Unless ell|j, primality of ell makes
+that greatest common divisor one, impossible for p. Thus every zero
+index is a multiple of ell. The initial zero at ell proves exact rank.
+
+The cases p=2,5 are excluded by their zeros at indices3,5 respectively.
+The existing golden Frobenius/rank theorem gives ell|p-1 or ell|p+1.
+In the first case p>ell immediately. In the second, if p<=ell, the only
+positive multiple of ell that can equal p+1 is ell itself. This gives
+p+1=ell, impossible because both primes are odd. Thus p>ell in both
+cases. No lower bound on the value-primes is assumed as an input.
+
+### FPD.4 Constructive descent to a maximal prime-index WSS block
+
+**Theorem FPD4.** If m>0, m is outside E, and F_m is powerful, then
+there exists a prime ell>=7 such that
+
+$$
+\boxed{
+\ell\mid m,\qquad
+\forall q\text{ prime},\ q\mid m\Longrightarrow q\le\ell,
+\qquad F_\ell\text{ is powerful}.
+}
+$$
+
+Moreover every prime p dividing F_ell satisfies
+
+$$
+\boxed{p>\ell,\qquad p^2\mid F_{N(p)}.}
+$$
+
+**Proof.** By FPD2, m has a prime factor greater than five. Choose its
+largest prime factor ell. It is at least seven. For each prime p|F_ell,
+FPD3 gives p>ell, so p does not divide m. Write m=ell k. Fibonacci
+divisibility gives p|F_m; powerfulness gives p^2|F_m. In FPD1 the
+alternative p|k is impossible because k|m. Therefore p^2|F_ell.
+This proves powerfulness of the entire prime-index block.
+
+FPD3 gives its actual entry point ell. Apply the golden rank bound to
+obtain ell|N(p), and then F_ell|F_(N(p)). Thus the square divisibility
+also holds at p's own signed Frobenius index. Since p>ell>=7, the small
+and ramified primes are automatically absent from this endpoint.
+The theorem does not assert that the index-prime ell is WSS.
+
+### FPD.5 Consequences and the remaining open arithmetic
+
+**Corollary.** The following two assertions are equivalent:
+
+$$
+\begin{aligned}
+&\forall m>0,\quad F_m\text{ powerful}\Longrightarrow m\in E;\\
+&\forall\ell\ge7\text{ prime},\quad F_\ell\text{ is not powerful}.
+\end{aligned}
+$$
+
+If the first assertion fails, its least counterexample index is prime
+and at least seven.
+
+**Proof.** The forward implication specializes to prime indices. For
+the reverse, a nonclassical counterexample would descend by FPD4 to a
+prime-index counterexample. For the least one, the descending prime
+ell satisfies ell<=m and is itself a counterexample, so minimality
+forces ell=m. Neither assertion is established by this equivalence.
+
+For a prime index ell>=7, the existence of a simple prime divisor of
+F_ell is equivalent to the existence of a non-WSS prime of exact rank
+ell. Indeed, FPD3 supplies the exact rank, and ell|N(p) with p not
+dividing N(p)/ell allows FPD1 to identify the two square-divisibility
+conditions. Thus a remaining target is an independent simple-factor
+existence theorem at prime indices. A primitive-prime theorem only
+supplies a prime with that rank and does not assert exponent one.
+
+Absence of all WSS primes would imply the first classification above,
+since every nontrivial prime-index Fibonacci value has a prime divisor.
+The classification's failure would produce WSS primes by FPD4. The
+converse implication from a single WSS prime to failure of the powerful
+classification is not asserted: the other factors of its rank block
+may still be simple.
+
+A prospective stronger lifting theorem is preservation of the entire
+p-valuation under a multiplier coprime to p. The square-zero argument
+already identifies its mechanism: at an actual initial depth e>=1,
+F_n^2 vanishes modulo p^(e+1). Proving the corresponding depth theorem
+requires retaining the nondivisibility at p^(e+1), the nonzero index and
+the coprime multiplier. The present public transfer theorem certifies
+the square threshold only; it does not silently assert that extension.
+
+### FPD.6 Source roles and mathematical scope
+
+FPD1 is a recurrence proof of a classical special case of the Fibonacci
+valuation theory of Lengyel, recorded in Medina and Rowland,
+*p-regularity of the p-adic valuation of the Fibonacci sequence*,
+The Fibonacci Quarterly53(2015),265-271, Theorem1.4,
+https://arxiv.org/abs/0910.2907 . The source proof here does not use that
+theorem as an axiom or a lifting hypothesis. FPD4 develops the earlier
+ordinary PBC.2 reduction from PR7708 using this explicitly proved local
+step and the dev FibonacciRank owner.
+
+Bates, Jesubalan, Lee, Lu and Shim, *Powerful Fibonacci polynomials over
+finite fields*, arXiv:2601.02664v1 (2026), Theorem1.2 and Section2.1,
+https://arxiv.org/html/2601.02664v1 , classify a polynomial problem over
+finite fields and explicitly distinguish the conditional integer
+powerful-number problem. A finite-field polynomial multiplicity does
+not determine divisibility of an evaluated integer by p squared.
+Their theorem is contextual prior work, not an input to FPD1-FPD4.
+
+The companion sources are `FibonacciDepth/PrimeSquareTransport.lean`
+and `FibonacciDepth/PowerfulPrimeDescent.lean`, each with an authored
+Scribe. The latter uses the existing Powerful predicate and the actual
+signed Frobenius index. They provide complete proof-script candidates;
+no kernel acceptance is asserted here. The full classification and WSS
+existence remain open targets of this line, not conclusions of FPD4.
