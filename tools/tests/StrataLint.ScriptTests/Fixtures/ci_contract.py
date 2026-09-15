@@ -354,6 +354,19 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
                     keys.assert_not_called()
                 self.assertFalse((self.root / "build/lean-cache").exists())
 
+    def test_dependency_snapshot_omits_nested_vcs_metadata(self):
+        source = self.root / ".lake/packages"
+        (source / "mathlib/.git/objects/pack").mkdir(parents=True)
+        (source / "mathlib/.git/objects/pack/pack.idx").write_bytes(b"vcs metadata")
+        (source / "mathlib/.lake/build/lib/Mathlib.olean").parent.mkdir(parents=True)
+        (source / "mathlib/.lake/build/lib/Mathlib.olean").write_bytes(b"compiled dependency")
+        result = self.run_tool(CACHE, "snapshot", "--layers", "dependency")
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        manifest = json.loads((self.root / "build/lean-cache/dependency/manifest.json").read_text())
+        paths = {item["path"] for item in manifest["files"]}
+        self.assertIn("mathlib/.lake/build/lib/Mathlib.olean", paths)
+        self.assertFalse(any(path == ".git" or path.startswith(".git/") or "/.git/" in path for path in paths))
+
     def test_bounded_snapshot_publishes_only_after_worker_and_save_window(self):
         owner = self.restore_owner()
         from cache_deadline import CacheDeadline
