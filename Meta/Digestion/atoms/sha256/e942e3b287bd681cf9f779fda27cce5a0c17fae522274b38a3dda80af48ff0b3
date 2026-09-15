@@ -1,0 +1,7 @@
+**定理 IR4。** 两个训练步后，给定宽度上界 `m` 的全体实际初态恰为
+
+$$\boxed{\left\{\bigoplus_a M_a(c_a):
+c_a\in I_a,\quad \sum_a\operatorname{rank}M_a(c_a)\le m\right\}.}\tag{IR.5}$$
+
+这个集合可以按每个分量的“左端点、内区间、右端点”分解为有限个直积片，再用各片的常数秩和筛选。区间内的连续自由度不能被误计为有限候选。
+
