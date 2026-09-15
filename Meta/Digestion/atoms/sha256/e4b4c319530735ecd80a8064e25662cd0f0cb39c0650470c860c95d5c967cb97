@@ -1,0 +1,6 @@
+若取固定有理 $\theta=a/b$、正整数 $2a<b$，则对全部 $N\ge1$，
+$$
+\left\lfloor\frac ab\log_2N\right\rfloor
+=\left\lfloor\frac{\lfloor\log_2(N^a)\rfloor}{b}\right\rfloor,
+\tag{474.9b}
+$$

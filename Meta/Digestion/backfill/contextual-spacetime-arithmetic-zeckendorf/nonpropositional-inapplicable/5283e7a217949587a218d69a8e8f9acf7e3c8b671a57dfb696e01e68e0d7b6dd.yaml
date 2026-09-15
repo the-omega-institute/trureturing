@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5283e7a217949587a218d69a8e8f9acf7e3c8b671a57dfb696e01e68e0d7b6dd
+  normalized_sha256: sha256:5283e7a217949587a218d69a8e8f9acf7e3c8b671a57dfb696e01e68e0d7b6dd
+cas_ref: sha256:5283e7a217949587a218d69a8e8f9acf7e3c8b671a57dfb696e01e68e0d7b6dd
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本子句定义三容量单步图、原历史保留方式、边守卫、完整收费和输入概率，是明确给定的协议及假设，没有断言协议后续的成功分类。
+    previous_atom_id: 9b464016ca44e67e911287945c015d785beeef234b36690c7343442dbba43f18
+    next_atom_id: c15a0dae268137a1ddde3afbebb08d07da844f874d21d53dc49f923128b6739c

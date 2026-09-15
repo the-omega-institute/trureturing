@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:500be7f4dfdfaddd684f94264cd69e794cc08590c028874730fe3304e039079e
+  normalized_sha256: sha256:500be7f4dfdfaddd684f94264cd69e794cc08590c028874730fe3304e039079e
+cas_ref: sha256:500be7f4dfdfaddd684f94264cd69e794cc08590c028874730fe3304e039079e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Finset.sum_pos 与 Real.exp_pos 给实际非空有限纤维的严格正配分和，实数类型保证有限值；IsEmpty 消去给空输入的像与其函数图均为空，仓内无冻结 GID。
+    previous_atom_id: 03d493aa41fdb02f5370616cb484ce10bf83b46ec7a754a99bae91924ad7f2b3
+    next_atom_id: 9853f6b910689205ca77cabc17ec8b9a6406909320c68501d1567e00d8fd6063
