@@ -275,6 +275,7 @@ public sealed class StandaloneLeanInspectorTests
                     TestRepositoryLayout.FindRoot(),
                     "tools", "lean-inspector",
                     "Inspector.lean"),
+                "--statements-only",
                 "--output",
                 spoolReport,
                 "--material-spool",

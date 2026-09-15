@@ -54,7 +54,7 @@ public sealed class UtilityRefutationProducerTests
             claimSourcePath = path, claimSourceSha256 = sourceHash,
             resultGid = gid + "." + result, resultModule = module, resultSelector = result,
         } }));
-        RequireSuccess(TestProcessRunner.Run("lake", ["env", "lean", "--root=" + Path.GetDirectoryName(inspector), "--run", inspector,
+        RequireSuccess(TestProcessRunner.Run("lake", ["env", "lean", "--root=" + Path.GetDirectoryName(inspector), "--run", inspector, "--statements-only",
             "--output", output + ".spool", "--material-spool", output + ".materials",
             "--utility-input", inputs, module, path, sourceHash], root,
             TestBudgets.LeanProcessHangGuard, 8 * 1024 * 1024));
@@ -140,7 +140,7 @@ public sealed class UtilityRefutationProducerTests
                     claim == "external_law" ? externalSource : source))),
                 resultGid = gid + "." + result, resultModule = "D5.S0.Carrier.Probe", resultSelector = result,
             } }));
-            RequireSuccess(TestProcessRunner.Run("lake", ["env", "lean", "--root=" + Path.GetDirectoryName(inspector), "--run", inspector,
+            RequireSuccess(TestProcessRunner.Run("lake", ["env", "lean", "--root=" + Path.GetDirectoryName(inspector), "--run", inspector, "--statements-only",
                 "--output", output + ".spool", "--material-spool", output + ".materials",
                 "--utility-input", inputs, "D5.S0.Carrier.Probe", path,
                 "sha256:" + Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(source))),
@@ -163,7 +163,7 @@ public sealed class UtilityRefutationProducerTests
             if (claim == "external_law")
             {
                 // A delta report may inspect only the changed result, with its claim reused from the baseline.
-                RequireSuccess(TestProcessRunner.Run("lake", ["env", "lean", "--root=" + Path.GetDirectoryName(inspector), "--run", inspector,
+                RequireSuccess(TestProcessRunner.Run("lake", ["env", "lean", "--root=" + Path.GetDirectoryName(inspector), "--run", inspector, "--statements-only",
                     "--output", output + ".subset.spool", "--material-spool", output + ".subset.materials",
                     "--utility-input", inputs, "D5.S0.Carrier.Probe", path,
                     "sha256:" + Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(source)))], root,

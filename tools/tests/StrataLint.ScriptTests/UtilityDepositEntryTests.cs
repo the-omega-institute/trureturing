@@ -39,7 +39,7 @@ public sealed class UtilityDepositEntryTests
             TestBudgets.LeanProcessHangGuard, 8 * 1024 * 1024)).StandardOutput);
         var report = Path.Combine(root, ".lake", "build", "stratalint", "raw-lean-report.json");
         Directory.CreateDirectory(Path.GetDirectoryName(report)!);
-        RequireSuccess(TestProcessRunner.Run("lake", ["env", "lean", "--root=" + Path.Combine(repository, "tools/lean-inspector"), "--run", Path.Combine(repository, "tools/lean-inspector/Inspector.lean"),
+        RequireSuccess(TestProcessRunner.Run("lake", ["env", "lean", "--root=" + Path.Combine(repository, "tools/lean-inspector"), "--run", Path.Combine(repository, "tools/lean-inspector/Inspector.lean"), "--statements-only",
             "--output", report + ".spool", "--material-spool", report + ".materials",
             "--utility-input", obligations, "D5.S0.Carrier.Probe", TransactionFixture.LeanPath,
             "sha256:" + Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(source)))], root,

@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import gzip
 import hashlib
 import json
 import os
@@ -18,7 +19,7 @@ import zipfile
 SPOOL_SCHEMA = "stratalint-lean-inspector-spool-v1"
 REPORT_SCHEMA = "stratalint-raw-lean-report-v2"
 STATEMENT_DOMAIN = b"trureturing:statement:v1\0"
-MATERIAL_FILE = re.compile(r"^[0-9]+\.statement$")
+MATERIAL_FILE = re.compile(r"^[0-9]+\.statement(?:\.gz)?$")
 SUPPLEMENTARY_SCALAR = re.compile(r"[\U00010000-\U0010FFFF]")
 ARCHIVE_TIMESTAMP = (1980, 1, 1, 0, 0, 0)
 
@@ -85,6 +86,46 @@ def regular_spool_file(spool: pathlib.Path, relative: str) -> pathlib.Path:
     return path
 
 
+def open_material(path: pathlib.Path):
+    return gzip.open(path, "rb") if path.name.endswith(".gz") else path.open("rb")
+
+
+def read_material(path: pathlib.Path) -> bytes:
+    with open_material(path) as reader:
+        return reader.read()
+
+
+def stream_spool(spool: pathlib.Path) -> None:
+    """One writer process; acknowledgments delimit completed compressed files."""
+    spool.mkdir(parents=True, exist_ok=True)
+    index = 0
+    while True:
+        header = sys.stdin.buffer.readline()
+        if header == b"done\n":
+            print("done", flush=True)
+            return
+        if not re.fullmatch(rb"[1-9][0-9]*\n", header):
+            raise ValueError("invalid or missing material frame length")
+        remaining = int(header)
+        path = spool / f"{index}.statement.gz"
+        temporary = spool / f"{index}.statement.gz.tmp"
+        try:
+            with temporary.open("xb") as raw:
+                with gzip.GzipFile(filename="", mode="wb", fileobj=raw,
+                                   compresslevel=6, mtime=0) as writer:
+                    while remaining:
+                        block = sys.stdin.buffer.read(min(remaining, 1024 * 1024))
+                        if not block:
+                            raise ValueError("truncated material frame")
+                        writer.write(block)
+                        remaining -= len(block)
+            os.replace(temporary, path)
+        finally:
+            temporary.unlink(missing_ok=True)
+        index += 1
+        print("ok", flush=True)
+
+
 def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Path) -> None:
     root = json.loads(spool_report.read_text(encoding="utf-8"))
     require_keys(root, {"modules", "schema"}, "Inspector spool")
@@ -93,8 +134,7 @@ def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Pat
 
     output.parent.mkdir(parents=True, exist_ok=True)
     staged_root = pathlib.Path(tempfile.mkdtemp(prefix=".lean-materials.", dir=output.parent))
-    staged_materials = staged_root / "materials" / "sha256"
-    staged_materials.mkdir(parents=True)
+    material_sources: dict[str, pathlib.Path] = {}
     referenced_spools: set[str] = set()
     modules: list[dict] = []
     previous_module: str | None = None
@@ -182,7 +222,7 @@ def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Pat
                     raise ValueError(f"statement material spool is reused: {material_file}")
                 referenced_spools.add(material_file)
                 material_path = regular_spool_file(spool, material_file)
-                material = material_path.read_bytes()
+                material = read_material(material_path)
                 try:
                     material.decode("utf-8", errors="strict")
                 except UnicodeDecodeError as error:
@@ -190,14 +230,13 @@ def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Pat
                         f"statement material spool is not strict UTF-8: {material_file}") from error
                 type_sha256 = statement_address(material)
                 declaration_id = declaration_statement_id(source_path, kind, name_key, material.decode("utf-8"))
-                destination = staged_materials / type_sha256[7:]
-                if destination.exists():
-                    if destination.read_bytes() != material:
+                address = type_sha256[7:]
+                if address in material_sources:
+                    if read_material(material_sources[address]) != material:
                         raise ValueError(
                             f"statement material address collision: {type_sha256}")
-                    material_path.unlink()
                 else:
-                    os.replace(material_path, destination)
+                    material_sources[address] = material_path
                     material_bytes += len(material)
                 declarations.append({
                     "axioms": require_sorted_strings(
@@ -230,10 +269,10 @@ def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Pat
             path.name for path in spool.iterdir()
             if path.is_file() or path.is_symlink()
         }
-        if actual_spools:
+        if actual_spools != referenced_spools:
             raise ValueError(
                 "Inspector material spool has unreferenced files: "
-                + ", ".join(sorted(actual_spools)))
+                + ", ".join(sorted(actual_spools.symmetric_difference(referenced_spools))))
 
         report_bytes = canonical_json({"modules": modules, "schema": REPORT_SCHEMA})
         staged_report = staged_root / "report.json"
@@ -242,13 +281,18 @@ def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Pat
         with zipfile.ZipFile(
                 staged_archive, "w", compression=zipfile.ZIP_DEFLATED,
                 compresslevel=6, allowZip64=True) as archive:
-            for source in sorted(staged_materials.iterdir(), key=lambda path: path.name):
-                info = zipfile.ZipInfo(f"sha256/{source.name}", ARCHIVE_TIMESTAMP)
+            for address, source in sorted(material_sources.items()):
+                info = zipfile.ZipInfo(f"sha256/{address}", ARCHIVE_TIMESTAMP)
                 info.compress_type = zipfile.ZIP_DEFLATED
                 info.create_system = 3
                 info.external_attr = (stat.S_IFREG | 0o644) << 16
-                with source.open("rb") as reader, archive.open(info, "w") as writer:
-                    shutil.copyfileobj(reader, writer)
+                digest = hashlib.sha256(STATEMENT_DOMAIN)
+                with open_material(source) as reader, archive.open(info, "w") as writer:
+                    while block := reader.read(64 * 1024):
+                        digest.update(block)
+                        writer.write(block)
+                if digest.hexdigest() != address:
+                    raise ValueError("statement material changed during compaction")
         live_materials = pathlib.Path(str(output) + ".materials.zip")
         legacy_materials = pathlib.Path(str(output) + ".materials")
         if legacy_materials.exists():
@@ -256,6 +300,8 @@ def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Pat
         live_materials.unlink(missing_ok=True)
         os.replace(staged_archive, live_materials)
         os.replace(staged_report, output)
+        for relative in referenced_spools:
+            (spool / relative).unlink()
         print(
             "LEAN_REPORT_MATERIALS "
             f"declarations={declaration_count} unique_bytes={material_bytes} "
@@ -266,16 +312,23 @@ def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Pat
 
 
 def main() -> int:
+    if len(sys.argv) == 3 and sys.argv[1] == "stream":
+        try:
+            stream_spool(pathlib.Path(sys.argv[2]))
+            return 0
+        except (OSError, ValueError) as error:
+            print(f"lean-report-materials: {error}", file=sys.stderr)
+            return 1
     if len(sys.argv) != 5 or sys.argv[1] != "compact":
         print(
-            "usage: materials.py compact SPOOL_REPORT SPOOL_DIR OUTPUT",
+            "usage: materials.py compact SPOOL_REPORT SPOOL_DIR OUTPUT | stream SPOOL_DIR",
             file=sys.stderr,
         )
         return 2
     try:
         compact(pathlib.Path(sys.argv[2]), pathlib.Path(sys.argv[3]), pathlib.Path(sys.argv[4]))
         return 0
-    except (OSError, UnicodeError, ValueError, json.JSONDecodeError) as error:
+    except (OSError, EOFError, UnicodeError, ValueError, json.JSONDecodeError) as error:
         print(f"lean-report-materials: {error}", file=sys.stderr)
         return 1
 
