@@ -1,0 +1,181 @@
+**定理 39.1（两权重等号与全输入可恢复性）。** 设 $A,J$ 为量子比特密度矩阵，且
+
+$$
+[A,J]\ne0,\qquad c,d>0,\qquad c\ne d.
+$$
+
+记 $D_t=tA-J$，并要求两个加权差都严格不定：
+
+$$
+\det D_c<0,\qquad \det D_d<0.
+$$
+
+令 $\Phi:\mathcal L(\mathbb C^2)\to\mathcal L(\mathcal H_B)$ 为 CPTP 映射，其中输出空间 $\mathcal H_B$ 有限维。则
+
+$$
+\boxed{
+\|\Phi(D_c)\|_1=\|D_c\|_1
+\quad\text{且}\quad
+\|\Phi(D_d)\|_1=\|D_d\|_1
+\quad\Longleftrightarrow\quad
+\exists\ \mathcal R\ \mathrm{CPTP},\quad
+\mathcal R\circ\Phi=\operatorname{id}_{\mathcal L(\mathbb C^2)}.
+}
+$$
+
+右端的恢复通道定义在整个 $\mathcal L(\mathcal H_B)$ 上，恢复所有量子比特输入；它是 $\Phi$ 的 CPTP 左逆，不要求 $\Phi$ 映满全部输出状态。
+
+这些条件还等价于下面的正交等距正规形：存在整数 $r\ge1$、正数 $\lambda_1,\ldots,\lambda_r$ 及等距映射 $V_a:\mathbb C^2\to\mathcal H_B$，满足
+
+$$
+\sum_{a=1}^r\lambda_a=1,\qquad
+V_a^\dagger V_b=\delta_{ab}I_2,
+\qquad
+\Phi(X)=\sum_{a=1}^r\lambda_aV_aXV_a^\dagger
+\quad\text{对全部 }X\in\mathcal L(\mathbb C^2).
+$$
+
+特别地，$2r\le\dim\mathcal H_B$。定义
+
+$$
+\omega=\sum_{a=1}^r\lambda_a|a\rangle\langle a|,\qquad
+W(|\psi\rangle\otimes|a\rangle)=V_a|\psi\rangle,
+$$
+
+则 $W:\mathbb C^2\otimes\mathbb C^r\to\mathcal H_B$ 是等距映射，且
+
+$$
+\boxed{\Phi(\rho)=W(\rho\otimes\omega)W^\dagger.}
+$$
+
+辅助态 $\omega$ 固定且与输入无关，可以是混合态。上述表达只占用输出空间中的一个子空间，不要求输出维数为偶数。
+
+证明。先由两个范数等号推出正规形。对 $t\in\{c,d\}$，将输入加权差写成
+
+$$
+D_t=\mu_{t,+}P_t-\mu_{t,-}(I_2-P_t),\qquad
+\mu_{t,+},\mu_{t,-}>0,
+$$
+
+其中 $P_t$ 为秩一正谱投影。令
+
+$$
+\rho_{t,+}=\Phi(P_t),\qquad
+\rho_{t,-}=\Phi(I_2-P_t).
+$$
+
+两者均为输出密度矩阵。有限维输出上存在最优二元判别效应 $0\le F_t\le I_B$。对任意 Hermitian 矩阵 $H$，有
+
+$$
+\|H\|_1=2\max_{0\le F\le I}\operatorname{tr}(FH)-\operatorname{tr}H.
+$$
+
+应用于 $H=\Phi(D_t)$，再用范数等号和迹保持性，得到
+
+$$
+\operatorname{tr}\!\left[F_t
+(\mu_{t,+}\rho_{t,+}-\mu_{t,-}\rho_{t,-})\right]
+=\mu_{t,+}.
+$$
+
+等价地，
+
+$$
+\mu_{t,+}\bigl(1-\operatorname{tr}(F_t\rho_{t,+})\bigr)
++\mu_{t,-}\operatorname{tr}(F_t\rho_{t,-})=0.
+$$
+
+两项非负且两个系数严格为正，故
+
+$$
+\operatorname{tr}(F_t\rho_{t,+})=1,\qquad
+\operatorname{tr}(F_t\rho_{t,-})=0.
+$$
+
+正性将这两个条件分别化为
+
+$$
+\operatorname{supp}\rho_{t,+}\subseteq\ker(I_B-F_t),\qquad
+\operatorname{supp}\rho_{t,-}\subseteq\ker F_t.
+$$
+
+因此，$D_t$ 的两个纯本征输入经 $\Phi$ 后仍有正交支撑。
+
+取 $\Phi$ 的任意有限 Kraus 表示
+
+$$
+\Phi(X)=\sum_{a=1}^N K_aXK_a^\dagger,\qquad
+\sum_{a=1}^N K_a^\dagger K_a=I_2.
+$$
+
+若 $|t,+\rangle,|t,-\rangle$ 是 $P_t,I_2-P_t$ 的单位本征向量，则 $K_a|t,+\rangle$ 与 $K_b|t,-\rangle$ 分别落在上述正交支撑内。对任意 $a,b$，于是
+
+$$
+\langle t,+|K_a^\dagger K_b|t,-\rangle=0,\qquad
+\langle t,-|K_a^\dagger K_b|t,+\rangle=0.
+$$
+
+所以 $K_a^\dagger K_b$ 在 $P_t$ 的本征基中对角；这个矩阵不必自伴，但两个非对角元都为零。
+
+另一方面，
+
+$$
+[D_c,D_d]=(d-c)[A,J]\ne0.
+$$
+
+由于每个 $D_t$ 都是 $P_t$ 的非退化仿射函数，可知 $[P_c,P_d]\ne0$。一个二阶矩阵若在 $P_c$ 的本征基中对角，就可写为 $xI_2+yP_c$；若还与 $P_d$ 对易，则 $y[P_c,P_d]=0$，从而 $y=0$。因此存在复数 $\alpha_{ab}$，使
+
+$$
+\boxed{K_a^\dagger K_b=\alpha_{ab}I_2\qquad(1\le a,b\le N).}
+$$
+
+矩阵 $\alpha=(\alpha_{ab})$ 自伴且半正定。事实上，对任意 $z\in\mathbb C^N$，
+
+$$
+\left(\sum_a z_aK_a\right)^\dagger
+\left(\sum_b z_bK_b\right)
+=(z^\dagger\alpha z)I_2\ge0.
+$$
+
+迹保持性又给出 $\sum_a\alpha_{aa}=1$。选取酉矩阵 $U$ 使 $U^\dagger\alpha U$ 对角，并置 $L_b=\sum_aU_{ab}K_a$。这些算子仍表示同一个通道，且
+
+$$
+L_a^\dagger L_b=\delta_{ab}\lambda_aI_2,
+\qquad \lambda_a\ge0,\qquad \sum_a\lambda_a=1.
+$$
+
+删去 $\lambda_a=0$ 的零算子，对剩余算子定义 $V_a=L_a/\sqrt{\lambda_a}$，即得到所述正交等距正规形。各 $V_a$ 的像空间两两正交且均为二维，故 $2r\le\dim\mathcal H_B$。由 $V_a^\dagger V_b=\delta_{ab}I_2$ 可直接核对 $W^\dagger W=I_2\otimes I_r$，以及固定辅助态表达。
+
+现在由正规形构造恢复通道。令
+
+$$
+Q=\sum_{a=1}^rV_aV_a^\dagger,
+$$
+
+它是 $\Phi$ 所占用输出子空间的正交投影。任选一个量子比特密度矩阵 $\tau$，定义
+
+$$
+\boxed{
+\mathcal R(X)=\sum_{a=1}^rV_a^\dagger XV_a
++\operatorname{tr}\bigl[(I_B-Q)X\bigr]\tau.
+}
+$$
+
+第一项为 Kraus 形式的完全正映射，第二项为一个测量后制备固定态的完全正映射。两项的迹分别为 $\operatorname{tr}(QX)$ 与 $\operatorname{tr}((I_B-Q)X)$，故 $\mathcal R$ 保持迹，且定义覆盖整个输出空间。对任意量子比特输入矩阵 $X$，正交等距关系给出
+
+$$
+\mathcal R(\Phi(X))
+=\sum_{a=1}^r\lambda_aX=X.
+$$
+
+最后，若已有 CPTP 左逆 $\mathcal R$，对任意 Hermitian 输入 $H$，迹范数收缩性给出
+
+$$
+\|H\|_1=\|\mathcal R(\Phi(H))\|_1
+\le\|\Phi(H)\|_1\le\|H\|_1.
+$$
+
+所以 $\Phi$ 保持全部 Hermitian 输入的迹范数，特别地保持 $D_c,D_d$。这完成全部等价关系。由于恢复的是整个输入空间上的恒等通道，张量一个任意有限维参考系统后仍有恒等关系；恢复也保留输入与该参考系统的纠缠，不要求访问参考系统。
+
+上面的 $K_a^\dagger K_b=\alpha_{ab}I_2$ 是以整个量子比特作为编码空间的标准 Knill–Laflamme 条件，见 Knill 与 Laflamme，*Theory of quantum error-correcting codes*，[Theorem 3.2 的式 (19)、(20) 及 Theorem 3.3](https://arxiv.org/html/quant-ph/9604034)。可恢复通道的正交等距及固定辅助态正规形也已有一般维数的结果，见 Nayak 与 Sen，*Invertible Quantum Operations and Perfect Encryption of Quantum States*，[Theorem 2.1 及其证明中的式 (2)、(3)](https://arxiv.org/html/quant-ph/0605041)。本节的两权重判据通过两个不兼容谱基的范数等号达到这些已有条件；它不把一般纠错条件或可恢复通道正规形另作新理论。证毕。
+

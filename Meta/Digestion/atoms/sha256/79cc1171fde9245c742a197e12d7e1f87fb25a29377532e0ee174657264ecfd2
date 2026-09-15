@@ -1,0 +1,8 @@
+**命题 29.3（Walsh 共同空间与等号条件）。** 命题28.4应在同一 Hilbert 空间中解释。设 $W_0=\operatorname{span}\{\chi_S\}$，$V$ 为读出子空间，$r=\dim V$，并以 $V$ 的正交归一基 $e_1,\ldots,e_r$ 定义投影容量。则
+$$
+\sum_S c_S\le r,
+\qquad
+\sum_S c_S=r\iff V\subseteq W_0.
+$$
+当 $S$ 遍历全部子集且 $V\subseteq L^2(\sigma(H))$ 时，Walsh 族是完整基，因而必有等号；严格不等号只能来自部分目标族或读出还依赖共同空间中的其他随机状态。
+

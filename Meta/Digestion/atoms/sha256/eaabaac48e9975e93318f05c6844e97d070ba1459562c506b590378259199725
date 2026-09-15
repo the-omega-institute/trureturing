@@ -1,0 +1,8 @@
+**定理 431.2（预测十三·全部纤维、商与预测断言的双向运输）。** 对命题 431.1 中任意 $f:D\to Y$，任意 $S\subseteq D,B\subseteq Y$，有
+$$
+f^*[\operatorname{Enc}[S]]=\operatorname{Enc}[f[S]],\qquad
+(f^*)^{-1}(\operatorname{Enc}[B])=\operatorname{Enc}[f^{-1}(B)],
+$$
+$$
+\ker f^*=\{(\operatorname{Enc}(x),\operatorname{Enc}(y)):x,y\in D,\ f(x)=f(y)\}.
+$$

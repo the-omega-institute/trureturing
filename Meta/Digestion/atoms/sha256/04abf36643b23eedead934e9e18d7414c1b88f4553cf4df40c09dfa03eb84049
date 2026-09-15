@@ -1,0 +1,5 @@
+原图码的语义域、语义值域分别为 $\operatorname{Enc}(D)$、$\operatorname{Enc}(\operatorname{ran}f)$，且
+$$
+\operatorname{ev}_Z(\operatorname{Enc}(G_f),\operatorname{Enc}(x))
+=\operatorname{Enc}(f(x))\qquad(x\in D).
+$$

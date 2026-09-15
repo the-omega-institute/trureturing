@@ -1,0 +1,6 @@
+令
+$$
+\mathsf G:\mathsf N_Z\to\mathsf N_Z,\qquad
+\mathsf G(\operatorname{NatZ}(j))=\operatorname{NatZ}(G_j).
+$$
+它是原递推函数 $G$ 的共轭，

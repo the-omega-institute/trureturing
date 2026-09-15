@@ -1,0 +1,33 @@
+**定义 21.1（仅在输入和最终观察时使用的参考）。** 沿用定义 18.1 的二标签记录仪器与共同系统控制表，但允许初始活动系统 $S=\mathbb C^2$ 与一个有限维参考系统 $R$ 处于联合态 $\omega_{SR}$。每个过程内控制只作用于 $S$，只依赖已经存储的经典历史，实际与理想过程始终使用同一个表。所有记录单元新鲜准备，量子记录余系统读取后不再耦合，不后选择；没有另一个可访问辅助量子记忆，也不在过程内对 $R$ 施加操作或与它耦合。
+
+经过 $N$ 步后丢弃活动系统 $S$，保留完整经典历史 $H_N$ 和惰性参考 $R$，允许最终联合测量 $H_N R$。对固定控制表 $U$，记从初始系统到经典历史的两个通道为
+
+$$
+\mathcal C_{\mathrm{actual},N}^U,
+\qquad
+\mathcal C_{\mathrm{ideal},N}^U:
+\mathcal L(S)\longrightarrow\mathcal L(H_N).
+$$
+
+定义该访问范围中的最优差异为
+
+$$
+\begin{aligned}
+T_N^{\mathrm{ref}}(\boldsymbol\beta)
+&=\sup_{U,R,\omega_{SR}}
+\frac12\left\|
+\left[
+\bigl(\mathcal C_{\mathrm{actual},N}^U
+-\mathcal C_{\mathrm{ideal},N}^U\bigr)
+\otimes\operatorname{id}_R
+\right](\omega_{SR})
+\right\|_1\\
+&=\sup_U\frac12\left\|
+\mathcal C_{\mathrm{actual},N}^U
+-\mathcal C_{\mathrm{ideal},N}^U
+\right\|_\diamond.
+\end{aligned}
+$$
+
+输入上确界取两实验共同使用的归一化联合密度矩阵，参考维数可以是任意有限值。第二行是通道辨识中允许输入参考的半 diamond 距离。取平凡参考即可恢复定义 18.1 的观察类，因此 $T_N\le T_N^{\mathrm{ref}}$；下条给出该包含关系导致严格差异的两步见证。
+

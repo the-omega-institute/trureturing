@@ -1,0 +1,1 @@
+**定理 336.2。** $h_X$ 的像恰为 $X^*$，逆在且仅在 $X^*$ 上为 $b_X\circ\operatorname{Dec}$；$e_X$ 的像恰为 $C_X^*$，逆在且仅在 $C_X^*$ 上为 $\operatorname{Dec}$。

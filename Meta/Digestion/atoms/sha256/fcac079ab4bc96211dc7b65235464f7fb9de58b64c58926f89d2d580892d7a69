@@ -1,0 +1,10 @@
+**定理 370.3。** 对任意集合 $Y,Z$、$D\subseteq Y$ 和实际函数 $f:D\to Z$，其完整集合共轭为
+$$
+f^*:\operatorname{Enc}[D]\to Z^*,\qquad
+f^*(\operatorname{Enc}(x))=\operatorname{Enc}(f(x))\quad(x\in D).
+$$
+有精确域及值域等式
+$$
+x\in D\iff\operatorname{Enc}(x)\in\operatorname{Enc}[D],\qquad
+\operatorname{ran}(f^*)=\operatorname{Enc}[\operatorname{ran}(f)].
+$$

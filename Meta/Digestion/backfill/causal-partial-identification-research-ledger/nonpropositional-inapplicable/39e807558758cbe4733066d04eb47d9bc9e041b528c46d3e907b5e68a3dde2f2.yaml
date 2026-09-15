@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:39e807558758cbe4733066d04eb47d9bc9e041b528c46d3e907b5e68a3dde2f2
+  normalized_sha256: sha256:39e807558758cbe4733066d04eb47d9bc9e041b528c46d3e907b5e68a3dde2f2
+cas_ref: sha256:39e807558758cbe4733066d04eb47d9bc9e041b528c46d3e907b5e68a3dde2f2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Section heading and parameter setup only. Fixes a nonempty finite carrier, rational features and query, and nonnegative tolerances without asserting a conclusion. The maximum definition is retained in the separate residual-open child af738ba67c82402d906c84bd31cdfa136dc147e8379e05451de7331071c71ce2.
+    previous_atom_id: 43e87a0a901373a6c369f5f99c8b95970f348855adb1cf8ca2eb4abe1b5f4337
+    next_atom_id: af738ba67c82402d906c84bd31cdfa136dc147e8379e05451de7331071c71ce2

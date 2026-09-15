@@ -1,0 +1,25 @@
+**命题 33.3（信念半径与动作保持）。** 令 $\mu\in\mathcal{P}(\Sigma)$，并用
+$$
+d_{\rm TV}(\nu,\mu)=\frac12\sum_s|\nu(s)-\mu(s)|
+$$
+定义总变差。若非空 $\mathcal{F}$ 满足 $d_{\rm TV}(\nu,\mu)\le\varepsilon$ 对所有 $\nu\in\mathcal{F}$，则对每个 $a$：
+$$
+\left|R_{\mathcal{F}}(a)-\sum_s\mu(s)\ell(a,s)\right|\le M\varepsilon.
+$$
+若 $a_\mu$ 是点信念风险的唯一最优动作，并且
+$$
+\gamma_\mu=\min_{a\ne a_\mu}
+\left[
+\sum_s\mu(s)\ell(a,s)-\sum_s\mu(s)\ell(a_\mu,s)
+\right]>2M\varepsilon,
+$$
+则 $a_\mu$ 也是鲁棒风险 $R_{\mathcal{F}}$ 的唯一最优动作。
+
+**证明。** 有界函数的期望差满足
+$$
+\left|\sum_s(\nu(s)-\mu(s))\ell(a,s)\right|\le M d_{\rm TV}(\nu,\mu)\le M\varepsilon.
+$$
+对 $\nu\in\mathcal{F}$ 取上确界得到第一式。任意 $a\ne a_\mu$ 与 $a_\mu$ 的风险差至少为 $\gamma_\mu-2M\varepsilon>0$，故唯一最优性保持。证毕。
+
+这个命题把第31章的漂移裕量改写成可以运行的状态证书：系统不必声称知道唯一真实通道，只要维护一个半径和一个动作间隔，就能证明当前动作在整组候选后验上仍然稳定。半径、间隔和损失上界都属于任务数据；它们不能从“表示更几何化”这句话自动得到。
+

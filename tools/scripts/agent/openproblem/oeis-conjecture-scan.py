@@ -13,7 +13,10 @@ import json, re, sys, time, urllib.parse, urllib.request
 
 UA = {"User-Agent": "trureturing-openproblem/1.0"}
 SETTLED = re.compile(
-    r"\b(proved|proven|a proof|the proof|see the proof|is true|are true|now proved"
+    # "Proof:" opens a settlement comment and carries no article, which is how the
+    # settlement of A324605's even-width statement was missed on the first pass.
+    r"(?:^|\s)Proof\s*:"
+    r"|\b(proved|proven|a proof|the proof|see the proof|is true|are true|now proved"
     r"|was shown|has been shown|follows from|disproved|counterexample found"
     r"|no longer a conjecture|theorem of)\b", re.I)
 CONJ = re.compile(r"\bconjectur", re.I)
@@ -63,12 +66,25 @@ def main():
         seen = list(dict.fromkeys(seen))
     for a in seen:
         txt = entry(a)
-        conj = [l for l in lines(txt, "C") + lines(txt, "F") if CONJ.search(l)]
-        if not conj:
+        body = lines(txt, "C") + lines(txt, "F")
+        conj_idx = [i for i, l in enumerate(body) if CONJ.search(l)]
+        if not conj_idx:
             continue
-        marks = [l for l in conj if SETTLED.search(l)]
-        out.append({"a": a, "conjecture_lines": conj, "settlement_lines": marks,
-                    "status": "settled-marker" if marks else "no-marker"})
+        # Settlement is per conjecture, not per entry. An entry can carry five conjectures and one
+        # proof; reporting the entry as settled would discard four live targets. A settlement
+        # comment follows the statement it settles, so each conjecture takes the markers between
+        # it and the next conjecture line.
+        items = []
+        for j, i in enumerate(conj_idx):
+            stop = conj_idx[j + 1] if j + 1 < len(conj_idx) else len(body)
+            near = [l for l in body[i + 1:stop] if SETTLED.search(l)]
+            own = [body[i]] if SETTLED.search(body[i]) else []
+            marks = own + near
+            items.append({"conjecture": body[i], "settlement_lines": marks,
+                          "status": "settled-marker" if marks else "no-marker"})
+        out.append({"a": a, "conjectures": items,
+                    "status": "settled-marker" if all(x["status"] == "settled-marker"
+                                                      for x in items) else "mixed-or-open"})
         time.sleep(0.4)
     json.dump(out, sys.stdout, ensure_ascii=False, indent=1)
     print()
