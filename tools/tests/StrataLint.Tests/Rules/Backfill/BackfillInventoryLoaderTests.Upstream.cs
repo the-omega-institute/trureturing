@@ -111,7 +111,7 @@ public sealed partial class BackfillInventoryLoaderTests
         var lines = Receipt().Split('\n').ToList();
         var index = lines.FindIndex(line => line.StartsWith("    " + key + ":", StringComparison.Ordinal));
         var length = key == "declarations" ? 2 : 1;
-        foreach (var replacement in new[] { "", "    " + key + ": {}", "    " + key + (key == "justification" ? ": '   '" : ": invalid"), "    " + key + "_extra: invalid" })
+        foreach (var replacement in new[] { "", "    " + key + (key == "justification" ? ": []" : ": {}"), "    " + key + (key == "justification" ? ": '   '" : ": invalid"), "    " + key + "_extra: invalid" })
         {
             var invalid = lines.ToList();
             invalid.RemoveRange(index, length);

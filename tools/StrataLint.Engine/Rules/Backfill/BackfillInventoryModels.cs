@@ -22,6 +22,35 @@ internal sealed record DigestionNonpropositional(
         && value.All(static character => character is >= '0' and <= '9' or >= 'a' and <= 'f');
 }
 
+internal sealed record DigestionUpstream(
+    string Justification,
+    ImmutableArray<string> Declarations,
+    string MathlibRev,
+    string ProbeSha256,
+    ImmutableArray<string> ProbeAxioms,
+    string? PreviousAtomId,
+    string? NextAtomId)
+{
+    private static readonly System.Text.RegularExpressions.Regex DeclarationPattern = new(
+        @"^[\p{L}_][\p{L}\p{N}_'′]*([.][\p{L}_][\p{L}\p{N}_'′]*)+$",
+        System.Text.RegularExpressions.RegexOptions.CultureInvariant);
+
+    internal bool IsValid => !string.IsNullOrWhiteSpace(Justification)
+        && !Declarations.IsDefaultOrEmpty
+        && SortedDistinct(Declarations)
+        && Declarations.All(static name => DeclarationPattern.IsMatch(name))
+        && MathlibRev.Length == 40
+        && MathlibRev.All(static c => c is >= '0' and <= '9' or >= 'a' and <= 'f')
+        && DigestionFingerprint.IsCanonicalSha256(ProbeSha256)
+        && !ProbeAxioms.IsDefault && SortedDistinct(ProbeAxioms)
+        && ProbeAxioms.All(static name => name is "propext" or "Classical.choice" or "Quot.sound")
+        && (PreviousAtomId is null || DigestionNonpropositional.IsAtomId(PreviousAtomId))
+        && (NextAtomId is null || DigestionNonpropositional.IsAtomId(NextAtomId));
+
+    private static bool SortedDistinct(ImmutableArray<string> values) =>
+        values.SequenceEqual(values.Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal));
+}
+
 internal sealed record DigestionQuarantine(
     string Justification,
     string ReentryCondition,
@@ -46,14 +75,16 @@ internal sealed record DigestionReceipts(
     DigestionExternalReceipt? TailAuthorization,
     DigestionQuarantine? Quarantine = null,
     DigestionCoverDisposition? CoverDisposition = null,
-    DigestionNonpropositional? Nonpropositional = null)
+    DigestionNonpropositional? Nonpropositional = null,
+    DigestionUpstream? Upstream = null)
 {
     internal bool IsEmptyForSourceRevision =>
         UnresolvedSubitems.IsEmpty
         && ChainAtoms.IsEmpty
         && TailAuthorization is null
         && Quarantine is null
-        && Nonpropositional is null;
+        && Nonpropositional is null
+        && Upstream is null;
 
     internal bool IsEmpty =>
         IsEmptyForSourceRevision
@@ -66,6 +97,7 @@ internal enum DigestionMigrationState
     Partial,
     Absorbed,
     Nonpropositional,
+    Upstream,
 }
 
 internal enum DigestionTruthState
