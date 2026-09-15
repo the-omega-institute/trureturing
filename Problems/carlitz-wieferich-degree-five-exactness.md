@@ -64,19 +64,20 @@ $$\boxed{\sum_{i=0}^4 A_i f_i-19H=\mu(a)}. \tag{CF1}$$
 
 Their total degrees are respectively 8,8,8,8,7,12. The coefficients A_i
 are the centered representatives in [-9,9] of a finite-field elimination
-certificate. Their nonzero monomial counts are 382,135,203,182,131;
-H has 591 nonzero monomials. Their complete Horner expressions occur in
-the companion Lean proof, which uses only this integer polynomial identity
-and the five residual equalities. Expanding products and comparing integer
-coefficients verifies CF1; no assertion about a search range is involved.
-In characteristic nineteen, both terms on the left vanish under the
-hypotheses, proving the conclusion.
+certificate. Their nonzero monomial counts are 382,135,203,182,131.
+The five complete Horner expressions A_i occur in the companion Lean proof.
+Expanding their weighted sum minus mu gives integer coefficients all
+divisible by nineteen. Dividing those coefficients by nineteen defines H,
+which has 591 nonzero monomials. This is the integer identity CF1; the
+Lean proof instead checks the equivalent identity directly in characteristic
+nineteen. No assertion about a search range is involved. Under the five
+residual hypotheses both terms on the left of CF1 vanish, proving the result.
 
 The certificate can be found by linear algebra: multiply the five quartics
 by every monomial of degree at most eight, then solve for the coefficient
 vector of mu(a) in their span over F19. Degree twelve suffices. The direct
-integer identity CF1 is the proof certificate; the elimination program or
-its claimed Groebner basis is not an additional mathematical assumption.
+identity CF1 is the proof certificate; the elimination program or its claimed
+Groebner basis is not an additional mathematical assumption.
 
 ### CF2. Closure under all five conjugate equations
 
@@ -190,15 +191,38 @@ is nonzero. All its factors therefore have degree five, and their
 number is q. They are distinct by squarefreeness. The other cases
 have gcd one by CF4.
 
-A constructive description follows from the same proof. Choose any
-root eta of mu in F_(q^5). Its trace to F_q is zero by CF2. Solve the
-linear equation theta^q-theta=eta over F_(q^5), whose image is exactly
-the trace-zero subspace. Each solution has degree five, and its minimal
-polynomial is one of the required primes. The q solutions differ by
-constants in F_q. Their monic minimal polynomials are q distinct
-translates: translation by gamma changes the coefficient of T^4 by
-5gamma, nonzero when gamma is nonzero in characteristic nineteen.
-At q=19^3 these are exactly the translates of the already published P.
+**Theorem.** Define the polynomial with prime-field coefficients
+
+$$P_0(T)=T^5-6T^3+3T^2-9T-4\in\mathbb F_{19}[T].$$
+
+For every s=3 modulo five, q=19^s, the complete set of monic degree-five
+Carlitz-Wieferich primes over F_q is
+
+$$\boxed{\{P_0(T-a):a\in\mathbb F_q\}.} \tag{CF5}$$
+
+**Proof.** Choose a root eta of mu. Since s is coprime to five, eta has
+degree five over F_q and its q-trace is zero. Put
+
+$$\theta_0=\frac15\sum_{j=1}^4 j\eta^{q^j}
+=6+8\eta^3-8\eta^4.$$
+
+The first expression gives theta_0^q-theta_0=eta by telescoping: the
+numerator difference is 5eta minus the trace. The second expression
+follows from the table CF2 with q acting as the third Frobenius power.
+Reduction modulo mu verifies P_0(theta_0)=0. The element theta_0 lies
+in F_(19^5) and is not in F_q because its q-difference eta is nonzero;
+hence it has degree five over F_q. Thus P_0 is its irreducible monic
+polynomial and is Carlitz-Wieferich by CF4.
+
+All q translates are distinct: translation by a nonzero gamma changes
+the T^4 coefficient by 5gamma. They are irreducible and retain the
+Carlitz residual because q-Frobenius differences are unchanged under
+translation by F_q. The count already proved makes this the complete set.
+For q=19^3 the polynomial in the source is translated to P_0 by replacing
+T with T-(6+11c+17c^2), using c^3=8c^2+4c+11. This is a canonical member
+of the previously known class, not an additional translation class.
+The same P_0 is not Carlitz-Wieferich for the prime-field Carlitz action
+q=19. The field defining the Carlitz Frobenius must be kept fixed.
 
 ## Sources and boundaries
 
@@ -223,7 +247,7 @@ closure followed by an explicit low-degree elimination identity, not
 an identification of distinct Wieferich problems.
 
 The formal companion proves CF2 with the actual residual equations and
-an explicit integer certificate. The gcd and all-extension-degree
+an explicit coefficient certificate. The gcd and all-extension-degree
 classification above are ordinary mathematical consequences with the
 small polynomial remainders exposed. They are not asserted to have
 received Lean kernel certification merely because the certificate has
