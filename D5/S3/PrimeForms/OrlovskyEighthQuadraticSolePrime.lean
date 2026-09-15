@@ -2,13 +2,12 @@
    generality: I
    mirror-B: D5/B/S3/PrimeForms/OrlovskyEighthQuadraticSolePrime
    mirror-E: none(waiver:unbounded-arithmetic-no-numeric-artifact)
-   anchors: [mathlib/module/Mathlib.Data.Nat.Prime.Basic, mathlib/module/Mathlib.Tactic.IntervalCases, mathlib/module/Mathlib.Tactic.NormNum, mathlib/module/Mathlib.Tactic.Ring]
+   anchors: [mathlib/module/Mathlib.Data.Nat.Prime.Basic, mathlib/module/Mathlib.Tactic.IntervalCases, mathlib/module/Mathlib.Tactic.Ring]
    utility: none
    digest: Positive integral values of k(k+9)/8 have 17 as their sole prime. -/
 
 import Mathlib.Data.Nat.Prime.Basic
 import Mathlib.Tactic.IntervalCases
-import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
 
 set_option autoImplicit false
