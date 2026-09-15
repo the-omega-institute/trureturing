@@ -118,8 +118,9 @@ root = "Cache"
             LAKE_CACHE_DIR=str(self.root / '.lake/artifact-cache'), LAKE_ARTIFACT_CACHE='true', LAKE_RESTORE_ARTIFACTS='true',
             STRATALINT_LEAN_INPUT_MEMO_ROOT=str(self.root / '.lake/input-memo'),
             STRATALINT_INSPECTOR_ACTIVITY=str(self.root / 'activity.jsonl'))
-        # A fresh synthetic Git repository bounds donor discovery to this
-        # fixture. No host checkout or shared donor participates.
+        self.compiler_seed = self.env.pop('STRATALINT_NATIVE_COMPILER_SEED', None)
+        # A fresh synthetic Git repository bounds ensure donor discovery to
+        # this fixture. The compiler stage is restored separately after ensure.
         subprocess.run(['git', 'init', '--quiet', str(self.root)], check=True, capture_output=True)
     def ensure(self):
         result = subprocess.run(['make', 'lean-cache-ensure'], cwd=self.root, env=self.env,
@@ -142,6 +143,14 @@ root = "Cache"
             resultGid='result-gid', resultModule='Fixture', resultSelector='result')]))
     def run_lake(self, *args, success=True):
         self.ensure()
+        if self.compiler_seed is not None:
+            # The collection owns this read-only stage. Lake copies only its
+            # registered producer outputs into this fixture's private cache;
+            # current input traces still decide whether any artifact is usable.
+            restored = subprocess.run([self.lake, 'cache', 'unstage', self.compiler_seed, 'leanInspector'],
+                cwd=self.root, env=self.env, text=True, capture_output=True, timeout=120)
+            self.assertEqual(restored.returncode, 0, restored.stdout + restored.stderr)
+            self.compiler_seed = None
         result = subprocess.run([self.lake, *args], cwd=self.root, env=self.env, text=True, capture_output=True, timeout=120)
         if success:
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
@@ -261,3 +270,33 @@ root = "Cache"
         self.assertIn(hidden['statement_id'],
             {materials.declaration_statement_id(module['source_path'], hidden['kind'], hidden['name_key'], r['statement_material'])
              for r in identities if r['part'] == 'private'})
+
+
+def stage_compiler(output):
+    """Build the declared compiler target once; Lake owns its staged materials."""
+    registration = json.loads((ROOT / 'tools/tests/StrataLint.Lean.Tests/Fixtures/native-compiler.json').read_text())
+    if set(registration) != {'package_directory', 'target'}:
+        raise ValueError('invalid native compiler fixture registration')
+
+    class CompilerFixture(NativeTestSupport, unittest.TestCase):
+        pass
+
+    fixture = CompilerFixture()
+    fixture.setUpClass()
+    try:
+        fixture.setUp()
+        fixture.compiler_seed = None
+        mappings = fixture.root / 'compiler-outputs.jsonl'
+        fixture.run_lake('-d', registration['package_directory'], 'build',
+                         '-o', str(mappings), registration['target'])
+        fixture.run_lake('cache', 'stage', str(mappings), str(output))
+        # Access permissions apply to the directory produced by Lake stage;
+        # they do not select or discover build inputs or reusable materials.
+        for path in output.iterdir():
+            path.chmod(path.stat().st_mode & ~0o222)
+    finally:
+        fixture.doCleanups()
+
+
+if __name__ == '__main__':
+    stage_compiler(Path(sys.argv[1]).resolve())

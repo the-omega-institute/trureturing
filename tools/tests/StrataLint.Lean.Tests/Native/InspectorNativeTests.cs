@@ -3,7 +3,7 @@ using StrataLint.TestSupport;
 
 namespace StrataLint.Lean.Tests;
 
-public sealed class InspectorNativeTests
+public sealed class InspectorNativeTests(InspectorCompilerFixture compiler) : IClassFixture<InspectorCompilerFixture>
 {
     [Theory]
     [InlineData("test_streaming")]
@@ -23,6 +23,7 @@ public sealed class InspectorNativeTests
     [InlineData("test_native.NativeTests.test_exported_transitive_dependency_binding")]
     [InlineData("test_native.NativeTests.test_exported_private_dependency_and_missing_binding")]
     [InlineData("test_native.NativeTests.test_native_producer_inputs")]
+    [InlineData("test_native.NativeTests.test_native_compiler_seed_is_private")]
     [InlineData("test_native.NativeTests.test_native_semantic_version_and_config")]
     [InlineData("test_native.NativeTests.test_native_invalid_semantic_versions")]
     [InlineData("test_native.NativeTests.test_native_recovery_and_required_failures")]
@@ -42,10 +43,37 @@ public sealed class InspectorNativeTests
     {
         if (OperatingSystem.IsWindows()) return;
         var root = TestRepositoryLayout.FindRoot();
-        var result = TestProcessRunner.Run("python3",
-            ["-B", "-m", "unittest", suite, "-v"],
+        string[] environment = suite.StartsWith("test_native.", StringComparison.Ordinal)
+            ? [$"STRATALINT_NATIVE_COMPILER_SEED={compiler.Path}"] : [];
+        var result = TestProcessRunner.Run("env",
+            [.. environment, "python3", "-B", "-m", "unittest", suite, "-v"],
             Path.Combine(root, "tools/lean-inspector/tests"), TestBudgets.ReportSupervisorHangGuard, 1024 * 1024);
         Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardOutput)
             + Encoding.UTF8.GetString(result.StandardError));
     }
+}
+
+public sealed class InspectorCompilerFixture : IDisposable
+{
+    private readonly TemporaryDirectory temporary = new();
+    private readonly Lazy<string> stage;
+
+    public InspectorCompilerFixture()
+    {
+        stage = new Lazy<string>(() =>
+        {
+            var root = TestRepositoryLayout.FindRoot();
+            var result = TestProcessRunner.Run("python3",
+                ["-B", "test_native_support.py", temporary.Path],
+                System.IO.Path.Combine(root, "tools/lean-inspector/tests"),
+                TestBudgets.ReportSupervisorHangGuard, 1024 * 1024);
+            Assert.True(result.ExitCode == 0, Encoding.UTF8.GetString(result.StandardOutput)
+                + Encoding.UTF8.GetString(result.StandardError));
+            return temporary.Path;
+        });
+    }
+
+    public string Path => stage.Value;
+
+    public void Dispose() => temporary.Dispose();
 }
