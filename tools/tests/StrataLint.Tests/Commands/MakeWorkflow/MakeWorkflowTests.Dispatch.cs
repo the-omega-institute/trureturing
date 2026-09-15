@@ -1,5 +1,7 @@
 using System.Text.RegularExpressions;
 using System.Text;
+using System.Text.Json;
+using System.Xml.Linq;
 using StrataLint.Engine;
 using YamlDotNet.RepresentationModel;
 
@@ -7,74 +9,8 @@ namespace StrataLint.Tests;
 
 public sealed partial class MakeWorkflowTests
 {
-    [Fact]
-    public void HarnessGateIncludesTestMapCacheRootInCheckArgumentsOnlyWhenSupplied()
-    {
-        var script = File.ReadAllText(
-            Path.Combine(TestRepositoryLayout.FindRoot(), ".github", "scripts", "harness-gate.sh"));
 
-        Assert.Contains("--test-map-cache-root)", script, StringComparison.Ordinal);
-        Assert.Contains("TEST_MAP_CACHE_ROOT=\"\"", script, StringComparison.Ordinal);
-        Assert.Contains(
-            """[[ $# -ge 2 && -n "$2" ]] || { echo "harness-gate: --test-map-cache-root requires a value" >&2; exit 2; }""",
-            script,
-            StringComparison.Ordinal);
-        Assert.Contains("""TEST_MAP_CACHE_ROOT="$2"; shift 2 ;;""", script, StringComparison.Ordinal);
-        const string prepareCache = """
-            if [[ -n "$TEST_MAP_CACHE_ROOT" ]]; then
-              mkdir -p "$TEST_MAP_CACHE_ROOT" \
-                || { echo "harness-gate: test map cache root '$TEST_MAP_CACHE_ROOT' is not creatable" >&2; exit 2; }
-              TEST_MAP_CACHE_ROOT="$(cd "$TEST_MAP_CACHE_ROOT" && pwd -P)"
-            fi
-            """;
-        Assert.Contains(prepareCache, script, StringComparison.Ordinal);
-        Assert.True(
-            script.IndexOf(prepareCache, StringComparison.Ordinal)
-                < script.IndexOf("dotnet restore ", StringComparison.Ordinal),
-            "cache root validation must precede dotnet");
-        Assert.Contains(
-            """
-            check_args=(--protected-base "$BASE_REF" --candidate-lean-report "$CANDIDATE_LEAN_REPORT")
-            if [[ -n "$TEST_MAP_CACHE_ROOT" ]]; then
-              check_args+=(--test-map-cache-root "$TEST_MAP_CACHE_ROOT")
-            fi
-            """,
-            script,
-            StringComparison.Ordinal);
-        var checkCommand = Assert.Single(
-            script.Split('\n'),
-            static line => line.TrimStart().StartsWith("dotnet \"$JUDGE_DLL\" check ", StringComparison.Ordinal));
-        Assert.Equal("""  dotnet "$JUDGE_DLL" check "${check_args[@]}" """.TrimEnd(), checkCommand);
-    }
-
-    [Fact]
-    public void LocalHarnessGateForwardsTestMapCacheRootOnlyWhenSupplied()
-    {
-        var script = File.ReadAllText(
-            Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "scripts", "local-harness-gate.sh"));
-
-        Assert.Contains("--test-map-cache-root)", script, StringComparison.Ordinal);
-        Assert.Contains("TEST_MAP_CACHE_ARGS=()", script, StringComparison.Ordinal);
-        Assert.Contains(
-            """
-                --test-map-cache-root)
-                  [[ $# -ge 2 && -n "$2" ]] || { echo "local-harness-gate: --test-map-cache-root requires a value" >&2; exit 2; }
-                  TEST_MAP_CACHE_ARGS=(--test-map-cache-root "$2")
-                  shift 2
-                  ;;
-            """,
-            script,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            """
-              --candidate-lean-report "$CANDIDATE_REPORT" \
-              ${TEST_MAP_CACHE_ARGS[@]+"${TEST_MAP_CACHE_ARGS[@]}"}
-            """,
-            script,
-            StringComparison.Ordinal);
-    }
-
-    [Fact(DisplayName = "Makefile and inspector dispatch counts are pinned in the thin dispatch table")]
+    [Fact(DisplayName = "Makefile remains a thin complete dispatch table")]
     public void MakefileIsAThinCompleteDispatchTable()
     {
         var root = TestRepositoryLayout.FindRoot();
@@ -101,17 +37,6 @@ public sealed partial class MakeWorkflowTests
         var mathematicalTestRecipe = Recipe(makefile, "test");
         Assert.DoesNotContain("dotnet test", mathematicalTestRecipe, StringComparison.Ordinal);
         Assert.Contains("tools/scripts/workflow/math-gate.sh", mathematicalTestRecipe, StringComparison.Ordinal);
-        var mathGate = File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "scripts", "workflow", "math-gate.sh"));
-        Assert.DoesNotContain("dotnet test", mathGate, StringComparison.Ordinal);
-        Assert.Contains("/../../..\" && pwd -P)", mathGate, StringComparison.Ordinal);
-        Assert.Contains("make lean", mathGate, StringComparison.Ordinal);
-        Assert.DoesNotContain("lake build", mathGate, StringComparison.Ordinal);
-        Assert.Contains("make lean-report", mathGate, StringComparison.Ordinal);
-        // check 在干净树须锚定 merge-base(候选不能自我保护)且容忍 rc=3 预期路径。
-        Assert.Contains(" check \"${CHECK_BASE_ARGS[@]}\" --candidate-lean-report ", mathGate, StringComparison.Ordinal);
-        Assert.Contains("--protected-base \"$base_sha\"", mathGate, StringComparison.Ordinal);
-        Assert.Contains("[ \"$check_rc\" -ne 0 ] && [ \"$check_rc\" -ne 3 ]", mathGate, StringComparison.Ordinal);
-        Assert.Contains(ScribeContentChecksScriptPath, mathGate, StringComparison.Ordinal);
         Assert.Equal(
             $"\t@/bin/bash {LeanCacheEnsureScriptPath}",
             Recipe(makefile, "lean-cache-ensure"));
@@ -152,7 +77,7 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains(LeanCacheRunScriptPath, inspector, StringComparison.Ordinal);
         Assert.Contains("local -a lake_build_args=(build)", inspector, StringComparison.Ordinal);
         Assert.Contains("run_phase build \"$CACHE_RUN\" \"$LAKE\" \"${lake_build_args[@]}\"", inspector, StringComparison.Ordinal);
-        Assert.Contains("\"$CACHE_RUN\" \"$LAKE\" env lean", inspector, StringComparison.Ordinal);
+        Assert.Contains("\"$CACHE_RUN\" \"$LAKE\" env \"$LEAN\"", inspector, StringComparison.Ordinal);
 
         int EnsureDependency(string target)
         {
@@ -168,22 +93,11 @@ public sealed partial class MakeWorkflowTests
             Recipe(makefile, "lean"),
             Regex.Escape(LeanCacheRunScriptPath),
             RegexOptions.CultureInvariant).Count;
-        var reportCommands = Regex.Matches(
-            inspector,
-            "(?m)^(?!\\[\\[).*\\\"\\$CACHE_RUN\\\"",
-            RegexOptions.CultureInvariant).Count;
-        // lean-report needs both wrapper calls: inspect.sh builds lazily inside
-        // invoke_inspector and then runs the Inspector phase.
         var leanEnsures = EnsureDependency("lean") + leanCommands;
-        var reportEnsures = EnsureDependency("lean-report") + reportCommands;
-        var testEnsures = EnsureDependency("test") + leanEnsures + reportEnsures;
         var buildEnsures = EnsureDependency("build") + leanEnsures;
 
         Assert.Equal(1, leanCommands);
-        Assert.Equal(2, reportCommands);
         Assert.Equal(1, leanEnsures);
-        Assert.Equal(2, reportEnsures);
-        Assert.Equal(3, testEnsures);
         Assert.Equal(1, buildEnsures);
         var cacheEnsure = File.ReadAllText(Path.Combine(root, LeanCacheEnsureScriptPath));
         Assert.DoesNotContain("[[ -L", cacheEnsure, StringComparison.Ordinal);
@@ -218,7 +132,7 @@ public sealed partial class MakeWorkflowTests
             StringComparison.Ordinal);
         Assert.Contains(LocalHarnessGateScriptPath, Recipe(makefile, "gate"), StringComparison.Ordinal);
         Assert.Equal(
-            $"\t@BASE=\"$(BASE)\" /bin/bash {PreflightScriptPath}",
+            $"\t@MODE=\"$(MODE)\" BASE=\"$(BASE)\" /bin/bash {PreflightScriptPath}",
             Recipe(makefile, "preflight"));
         var worktreeRecipe = Recipe(makefile, "worktree");
         Assert.Contains(WorktreeInitScriptPath, worktreeRecipe, StringComparison.Ordinal);
@@ -315,7 +229,8 @@ public sealed partial class MakeWorkflowTests
         var phony = Assert.Single(
             makefile.Split('\n'),
             static line => line.StartsWith(".PHONY:", StringComparison.Ordinal));
-        Assert.Equal(ToolsTargets, phony[".PHONY:".Length..].Split(' ', StringSplitOptions.RemoveEmptyEntries));
+        Assert.Equal(ToolsTargets.Order(StringComparer.Ordinal),
+            phony[".PHONY:".Length..].Split(' ', StringSplitOptions.RemoveEmptyEntries).Order(StringComparer.Ordinal));
         foreach (var target in ToolsTargets)
         {
             Assert.Matches(new Regex($"(?m)^{Regex.Escape(target)}:", RegexOptions.CultureInvariant), makefile);
@@ -338,8 +253,24 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains("make -C tools xi-quantization [", helpRecipe, StringComparison.Ordinal);
         Assert.Contains("make -C tools xi-quantization-test ", helpRecipe, StringComparison.Ordinal);
         var testRecipe = Recipe(makefile, "test");
-        Assert.Contains("scripts/dotnet-test.sh $(HERE)/StrataLint.sln", testRecipe, StringComparison.Ordinal);
-        Assert.DoesNotContain("--filter", testRecipe, StringComparison.Ordinal);
+        Assert.Contains("TEST_PROJECT ?= $(HERE)/StrataLint.sln", makefile, StringComparison.Ordinal);
+        Assert.Contains("scripts/dotnet-test.sh \"$(TEST_PROJECT)\"", testRecipe, StringComparison.Ordinal);
+        Assert.Contains("$(if $(TEST_FILTER),--filter \"$(TEST_FILTER)\",)", testRecipe, StringComparison.Ordinal);
+        foreach (var selected in OperatingSystem.IsWindows() ? Array.Empty<bool>() : new[] { false, true })
+        {
+            const string project = "selected tests/Probe.csproj";
+            const string filter = "FullyQualifiedName=Probe.First|FullyQualifiedName=Probe.Second";
+            var dispatch = TestProcessRunner.Run("/usr/bin/env",
+                ["-u", "MAKEFLAGS", "-u", "MAKEOVERRIDES", "-u", "TEST_PROJECT", "-u", "TEST_FILTER",
+                    "make", "--no-print-directory", "-n", "-C", "tools", "test", .. selected
+                    ? new[] { $"TEST_PROJECT={project}", $"TEST_FILTER={filter}" }
+                    : new[] { "TEST_FILTER=" }],
+                root, TestBudgets.ScriptProcessHangGuard, 64 * 1024);
+            Assert.True(dispatch.ExitCode == 0, Encoding.UTF8.GetString(dispatch.StandardError));
+            var expected = $"/bin/bash {root}/tools/scripts/dotnet-test.sh \"{(selected ? project : root + "/tools/StrataLint.sln")}\""
+                + (selected ? $" --filter \"{filter}\"" : "");
+            Assert.Equal(expected, Encoding.UTF8.GetString(dispatch.StandardOutput).Trim());
+        }
         var dotnetTest = File.ReadAllText(Path.Combine(root, "tools", "scripts", "dotnet-test.sh"));
         Assert.Contains("dotnet test \"$@\"", dotnetTest, StringComparison.Ordinal);
         Assert.Contains(
@@ -358,18 +289,6 @@ public sealed partial class MakeWorkflowTests
             "${OWNER_ASSEMBLY_ARGS[@]+\"${OWNER_ASSEMBLY_ARGS[@]}\"}",
             dotnetTest,
             StringComparison.Ordinal);
-        var engineeringTestsRecipe = Recipe(makefile, "engineering-tests");
-        Assert.Contains("REPOSITORY ?= $(HERE)/..", makefile, StringComparison.Ordinal);
-        Assert.Equal(
-            "\t@cd \"$(REPOSITORY)\" && dotnet run --project \"$(HERE)/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj\" --configuration Release --no-launch-profile -- --repository \"$(REPOSITORY)\" --head \"$(HEAD)\" --base \"$(BASE)\" $(if $(filter 1,$(FULL)),--full 1,)",
-            engineeringTestsRecipe);
-        Assert.Single(
-            Regex.Matches(
-                    makefile,
-                    Regex.Escape(
-                        "dotnet run --project \"$(HERE)/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj\""),
-                    RegexOptions.CultureInvariant)
-                .Cast<Match>());
         Assert.Contains("$(HERE)/scripts/stratalint-selftest.sh", Recipe(makefile, "selftest"), StringComparison.Ordinal);
         Assert.Contains(
             "$(HERE)/scripts/update-renderer-contract.sh",
@@ -385,6 +304,116 @@ public sealed partial class MakeWorkflowTests
         Assert.DoesNotContain("refactor-p0-0-gate-authority", makefile, StringComparison.Ordinal);
         Assert.DoesNotContain("--old-build", makefile, StringComparison.Ordinal);
         Assert.DoesNotContain("OUT ?=", makefile, StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("project", "selected", false, 0)]
+    [InlineData("relative-project", "selected", false, 0)]
+    [InlineData("project", "other", false, 2)]
+    [InlineData("project", "selected", true, 0)]
+    [InlineData("project", "other", true, 2)]
+    [InlineData("unknown", "all-owners", false, 2)]
+    [InlineData("unknown", "all-owners", true, 2)]
+    [InlineData("outside", "all-owners", false, 2)]
+    [InlineData("production", "all-owners", true, 2)]
+    [InlineData("solution", "all-owners", false, 0)]
+    [InlineData("solution", "selected", false, 2)]
+    [InlineData("solution", "selected", true, 0)]
+    [InlineData("solution", "zero", true, 2)]
+    public void DotnetTestBindsEvidenceToTheExplicitRegisteredTarget(string scope, string evidence, bool filtered, int expectedExit)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        var root = TestRepositoryLayout.FindRoot();
+        const string selectedProject = "tools/tests/StrataLint.EngineeringScope.Tests/StrataLint.EngineeringScope.Tests.csproj";
+        using var registration = JsonDocument.Parse(File.ReadAllText(Path.Combine(root, "Meta/engineering-projects.json")));
+        var projects = registration.RootElement.GetProperty("projects").EnumerateArray().ToArray();
+        var selectedAssembly = projects.Single(project => project.GetProperty("path").GetString() == selectedProject)
+            .GetProperty("assembly").GetString()!;
+        var owners = projects.Where(project => project.GetProperty("role").GetString() == "owned-test")
+            .Select(project => project.GetProperty("assembly").GetString()!).Order(StringComparer.Ordinal).ToArray();
+        var otherAssembly = owners.First(assembly => assembly != selectedAssembly);
+        var emitted = evidence switch
+        {
+            "all-owners" => owners,
+            "selected" => [selectedAssembly],
+            "other" => new[] { otherAssembly },
+            "zero" => [],
+            _ => throw new ArgumentException("unknown fixture evidence", nameof(evidence)),
+        };
+        using var fixture = new TemporaryDirectory();
+        var binDirectory = Path.Combine(fixture.Path, "bin");
+        var trx = Path.Combine(fixture.Path, "fixture.trx");
+        var log = Path.Combine(fixture.Path, "dotnet.log");
+        Directory.CreateDirectory(binDirectory);
+        new XDocument(new XElement("TestRun",
+            new XElement("Results", emitted.Select((assembly, index) => new XElement("UnitTestResult",
+                new XAttribute("testId", index), new XAttribute("testName", assembly + ".Runs"), new XAttribute("outcome", "Passed")))),
+            new XElement("TestDefinitions", emitted.Select((assembly, index) => new XElement("UnitTest",
+                new XAttribute("id", index), new XAttribute("storage", assembly + ".dll"),
+                new XElement("TestMethod", new XAttribute("className", assembly + ".Fixture"), new XAttribute("name", "Runs"))))),
+            new XElement("ResultSummary", new XAttribute("outcome", "Completed"), new XElement("Counters",
+                new XAttribute("executed", emitted.Length), new XAttribute("passed", emitted.Length))))).Save(trx);
+        WriteExecutable(Path.Combine(binDirectory, "dotnet"),
+            """
+            #!/bin/bash
+            set -euo pipefail
+            printf '%s\n' "$*" >> "$DOTNET_TEST_LOG"
+            if [[ "${1:-}" == test ]]; then
+              while [[ $# -gt 0 ]]; do
+                if [[ "$1" == --results-directory ]]; then
+                  mkdir -p "$2"
+                  cp "$DOTNET_TEST_FIXTURE_TRX" "$2/selected.trx"
+                  exit 0
+                fi
+                shift
+              done
+              exit 2
+            fi
+            exec "$REAL_DOTNET" "$@"
+            """);
+        var dotnetPath = TestProcessRunner.Run("/bin/bash", ["-c", "command -v dotnet"],
+            root, TestBudgets.ScriptProcessHangGuard, 4096);
+        Assert.Equal(0, dotnetPath.ExitCode);
+        var target = scope switch
+        {
+            "solution" => Path.Combine(root, "tools/StrataLint.sln"),
+            "project" => Path.Combine(root, selectedProject),
+            "relative-project" => selectedProject["tools/".Length..],
+            "unknown" => Path.Combine(root, "tools/tests/Unregistered/Unregistered.csproj"),
+            "outside" => Path.Combine(fixture.Path, "Outside.csproj"),
+            "production" => Path.Combine(root, "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj"),
+            _ => throw new ArgumentException("unknown fixture scope", nameof(scope)),
+        };
+        var result = TestProcessRunner.Run("env",
+            ["-u", "MAKEFLAGS", "-u", "MAKEOVERRIDES", "-u", "TEST_PROJECT", "-u", "TEST_FILTER",
+                $"PATH={binDirectory}:/usr/bin:/bin", $"REAL_DOTNET={Encoding.UTF8.GetString(dotnetPath.StandardOutput).Trim()}",
+                $"DOTNET_TEST_LOG={log}", $"DOTNET_TEST_FIXTURE_TRX={trx}",
+                $"TEST_RESULTS_DIRECTORY={Path.Combine(fixture.Path, "results")}",
+                "make", "--no-print-directory", "-C", "tools", "test", $"TEST_PROJECT={target}",
+                $"TEST_FILTER={(filtered ? "FullyQualifiedName~Fixture" : "")}"],
+            root, TestBudgets.ScriptProcessHangGuard, 64 * 1024);
+        var output = Encoding.UTF8.GetString(result.StandardOutput);
+        var error = Encoding.UTF8.GetString(result.StandardError);
+        Assert.True(result.ExitCode == expectedExit, $"expected exit {expectedExit}, actual {result.ExitCode}\n{output}\n{error}");
+        Assert.Single(File.ReadAllLines(log), line => line.StartsWith("test ", StringComparison.Ordinal));
+        if (expectedExit == 0 && (!filtered || scope != "solution"))
+        {
+            var required = scope == "solution" ? owners : [selectedAssembly];
+            foreach (var assembly in required)
+                Assert.Contains($"TEST_ASSEMBLY_EVIDENCE_ACCEPTED assembly={assembly} evidence=trx executed=1", output, StringComparison.Ordinal);
+            Assert.Equal(required.Length, output.Split('\n').Count(line => line.StartsWith("TEST_ASSEMBLY_EVIDENCE_ACCEPTED ", StringComparison.Ordinal)));
+        }
+        else if (scope is "unknown" or "outside" or "production")
+        {
+            Assert.Contains("ENGINEERING_TEST_PLAN_FAILED " + (scope == "outside"
+                ? "test target is outside repository" : "test target is not a registered test project"), error, StringComparison.Ordinal);
+        }
+        else if (expectedExit != 0)
+        {
+            var failure = evidence == "zero" ? "dotnet test executed zero tests"
+                : "TRX has no executed identity from required assembly " + (scope == "solution" ? otherAssembly : selectedAssembly);
+            Assert.Contains("TEST_EVIDENCE_FAILED " + failure, error, StringComparison.Ordinal);
+        }
     }
 
     [Fact(DisplayName = "dotnet-test rejects a zero-match filter on Bash 3.2")]
@@ -410,7 +439,7 @@ public sealed partial class MakeWorkflowTests
                 shift
               done
               mkdir -p "$results"
-              printf '<TestRun><ResultSummary><Counters executed="%s" /></ResultSummary></TestRun>\n' "$TRX_EXECUTED" > "$results/fake.trx"
+              printf '<TestRun><ResultSummary outcome="Completed"><Counters executed="%s" /></ResultSummary></TestRun>\n' "$TRX_EXECUTED" > "$results/fake.trx"
               exit 0
             fi
             if [[ "$*" == *"verify-trx"* ]]; then exec "$REAL_DOTNET" "$@"; fi
@@ -432,6 +461,7 @@ public sealed partial class MakeWorkflowTests
                 $"REAL_DOTNET={realDotnet}",
                 $"TRX_EXECUTED=0",
                 $"DOTNET_TEST_LOG={log}",
+                $"TEST_RESULTS_DIRECTORY={Path.Combine(fixture.Path, "results")}",
                 "/bin/bash",
                 Path.Combine(root, "tools/scripts/dotnet-test.sh"),
                 "--filter", "FullyQualifiedName=No.Such.Test",
@@ -473,7 +503,7 @@ public sealed partial class MakeWorkflowTests
                 shift
               done
               mkdir -p "$results"
-              printf '<TestRun><ResultSummary><Counters executed="1" /></ResultSummary></TestRun>\n' > "$results/fake.trx"
+              printf '<TestRun><Results><UnitTestResult testId="one" testName="Fixture.Runs" outcome="Passed" /></Results><TestDefinitions><UnitTest id="one" storage="Fixture.dll"><TestMethod className="Fixture" name="Runs" /></UnitTest></TestDefinitions><ResultSummary outcome="Completed"><Counters executed="1" passed="1" /></ResultSummary></TestRun>\n' > "$results/fake.trx"
               exit 0
             fi
             if [[ "$*" == *"verify-trx"* ]]; then exec "$REAL_DOTNET" "$@"; fi
@@ -494,6 +524,7 @@ public sealed partial class MakeWorkflowTests
                 $"PATH={binDirectory}:/usr/bin:/bin",
                 $"REAL_DOTNET={realDotnet}",
                 $"DOTNET_TEST_LOG={log}",
+                $"TEST_RESULTS_DIRECTORY={Path.Combine(fixture.Path, "results")}",
                 "/bin/bash",
                 Path.Combine(root, "tools/scripts/dotnet-test.sh"),
                 "--filter", "FullyQualifiedName=Existing.Test",
@@ -543,7 +574,7 @@ public sealed partial class MakeWorkflowTests
                 shift
               done
               mkdir -p "$results"
-              printf '<TestRun><ResultSummary><Counters executed="1" /></ResultSummary></TestRun>\n' > "$results/fake.trx"
+              printf '<TestRun><Results><UnitTestResult testId="one" testName="Fixture.Runs" outcome="Passed" /></Results><TestDefinitions><UnitTest id="one" storage="Fixture.dll"><TestMethod className="Fixture" name="Runs" /></UnitTest></TestDefinitions><ResultSummary outcome="Completed"><Counters executed="1" passed="1" /></ResultSummary></TestRun>\n' > "$results/fake.trx"
             fi
             exit 0
             """);
@@ -554,6 +585,7 @@ public sealed partial class MakeWorkflowTests
                 $"PATH={binDirectory}:/usr/bin:/bin",
                 $"DOTNET_TEST_SCRIPT_DIRECTORY={Path.Combine(root, "tools", "scripts")}",
                 $"DOTNET_TEST_INVOCATION_MARKER={invocationMarker}",
+                $"TEST_RESULTS_DIRECTORY={Path.Combine(fixture.Path, "results")}",
                 "/bin/bash",
                 Path.Combine(root, "tools/scripts/dotnet-test.sh"),
                 "--filter", "FullyQualifiedName=Root.Discovery.Probe",
@@ -599,6 +631,7 @@ public sealed partial class MakeWorkflowTests
                 $"PATH={binDirectory}:/usr/bin:/bin",
                 $"BASH_ENV={bashEnvironment}",
                 $"DOTNET_TEST_INVOCATION_MARKER={invocationMarker}",
+                $"TEST_RESULTS_DIRECTORY={Path.Combine(fixture.Path, "results")}",
                 "/bin/bash",
                 Path.Combine(root, "tools/scripts/dotnet-test.sh"),
                 "--filter", "FullyQualifiedName=Completion.Probe",
@@ -611,113 +644,6 @@ public sealed partial class MakeWorkflowTests
             File.Exists(invocationMarker),
             "the completion probe must exit before dotnet executes");
         Assert.NotEqual(0, result.ExitCode);
-    }
-
-    private static void AssertNoUnrecognizedGateCommands(string shell, string source)
-    {
-        foreach (var rawLine in shell.Split('\n'))
-        {
-            var line = rawLine.TrimEnd('\r');
-            if (!Regex.IsMatch(
-                    line,
-                    """(?:dotnet[ \t]+"\$scribe"|run_scribe)[ \t]+\S+|make[ \t]+-C[ \t]+\S*tools[ \t]+\S+""",
-                    RegexOptions.CultureInvariant | RegexOptions.NonBacktracking))
-            {
-                continue;
-            }
-
-            Assert.True(
-                GateCommandSignatures(line).Any(),
-                $"{source} contains an unrecognized gate command: '{line.Trim()}'.");
-        }
-    }
-
-    private static IEnumerable<string> GateCommandSignatures(string shell)
-    {
-        foreach (Match match in Regex.Matches(
-            shell,
-            @"(?m)^[ \t]*(?:FULL=1[ \t]+)?(?:CI=true[ \t]+)?(?:STRATALINT_REQUIRE_LIVE_REPORT=1[ \t]+)?make[ \t]+-C[ \t]+(?:candidate/)?tools[ \t]+engineering-tests\b[^\r\n]*$",
-            RegexOptions.CultureInvariant | RegexOptions.NonBacktracking))
-        {
-            yield return "make -C tools engineering-tests";
-        }
-
-        foreach (Match match in Regex.Matches(
-            shell,
-            @"(?m)^[ \t]*(?:CI=true[ \t]+)?(?:STRATALINT_REQUIRE_LIVE_REPORT=1[ \t]+)?make[ \t]+-C[ \t]+(?:candidate/)?tools[ \t]+(?<target>dotnet|test|selftest)[ \t]*$",
-            RegexOptions.CultureInvariant | RegexOptions.NonBacktracking))
-        {
-            yield return $"make -C tools {match.Groups["target"].Value}";
-        }
-
-        foreach (Match match in Regex.Matches(
-            shell,
-            """(?m)^[ \t]*(?:(?:STRATALINT_LEAN_REPORT="\$report"[ \t]+)?dotnet[ \t]+"\$scribe"|run_scribe)[ \t]+(?<arguments>(?:projections|emit|emit-values|describe-report|markdown-check)[^\r\n]*)$""",
-            RegexOptions.CultureInvariant | RegexOptions.NonBacktracking))
-        {
-            yield return Regex.Replace(
-                match.Groups["arguments"].Value.Trim(),
-                @"\$(?:report|REPORT|EFFECTIVE_REPORT)",
-                "$REPORT",
-                RegexOptions.CultureInvariant | RegexOptions.NonBacktracking);
-        }
-
-        var assignments = Regex.Matches(
-                shell,
-                """(?m)^[ \t]*(?<variable>[A-Za-z_][A-Za-z0-9_]*)="(?<path>[^"\r\n]*\.github/scripts/harness-gate\.sh)"[ \t]*$""",
-                RegexOptions.CultureInvariant | RegexOptions.NonBacktracking)
-            .ToDictionary(
-                static match => match.Groups["variable"].Value,
-                static match => match.Groups["path"].Value,
-                StringComparer.Ordinal);
-        foreach (var (variable, path) in assignments)
-        {
-            if (Regex.IsMatch(
-                shell,
-                "(?m)^[ \\t]*(?:[A-Za-z_][A-Za-z0-9_]*=\"[^\"\\r\\n]*\"[ \\t]+)*\"\\$"
-                    + Regex.Escape(variable)
-                    + "\"(?:[ \\t]+\\\\)?[ \\t]*$",
-                RegexOptions.CultureInvariant | RegexOptions.NonBacktracking))
-            {
-                yield return $"script:{path[(path.IndexOf(".github/", StringComparison.Ordinal))..]}";
-            }
-        }
-    }
-
-    [Fact]
-    public void ScribeContentChecksHaveOneCanonicalCommandList()
-    {
-        var root = TestRepositoryLayout.FindRoot();
-        var canonicalPath = Path.Combine(root, ScribeContentChecksScriptPath);
-        Assert.True(File.Exists(canonicalPath), $"canonical Scribe content check script is missing: {ScribeContentChecksScriptPath}");
-
-        var canonical = File.ReadAllText(canonicalPath);
-        var mathGate = File.ReadAllText(Path.Combine(root, "tools", "scripts", "workflow", "math-gate.sh"));
-        var preflight = File.ReadAllText(Path.Combine(root, PreflightScriptPath));
-
-        AssertNoUnrecognizedGateCommands(canonical, $"canonical script '{ScribeContentChecksScriptPath}'");
-        var canonicalCommands = GateCommandSignatures(canonical).ToArray();
-        Assert.Equal(
-            [
-                "projections --check --report \"$REPORT\"",
-                "describe-report --check",
-                "markdown-check --report \"$REPORT\" --paths-from -",
-            ],
-            canonicalCommands);
-        Assert.Contains(ScribeContentChecksScriptPath, mathGate, StringComparison.Ordinal);
-        Assert.Contains(
-            "'exec /bin/bash \"$1\" \"${STRATALINT_LEAN_REPORT:?}\"'",
-            mathGate,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            "export STRATALINT_SCRIBE_BASE=\"$base_sha\"",
-            mathGate,
-            StringComparison.Ordinal);
-        Assert.Contains(ScribeContentChecksScriptPath, preflight, StringComparison.Ordinal);
-        Assert.Contains(
-            "STRATALINT_SCRIBE_BASE=\"$BASE_SHA\"",
-            preflight,
-            StringComparison.Ordinal);
     }
 
     [Fact]

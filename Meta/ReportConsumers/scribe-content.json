@@ -1,0 +1,27 @@
+{
+  "schema": "report-consumer-inputs-v1",
+  "producer": "Meta/ReportProducers/scribe-content.json",
+  "projects": [
+    "tools/StrataLint.Lean/StrataLint.Lean.csproj",
+    "tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj"
+  ],
+  "materials": [
+    "global.json",
+    "Directory.Build.props",
+    "Directory.Packages.props",
+    "tools/Architecture/BannedSymbols.txt",
+    "tools/Architecture/BannedSymbols.Determinism.txt",
+    "tools/Architecture/BannedSymbols.Guid.txt",
+    "tools/StrataLint.Cli/Admission/ProductionCliEnvironment.CurrentChecks.cs",
+    "tools/StrataLint.Cli/Runtime/ScribeEmissionVerifier.cs",
+    "tools/StrataLint.Lean/packages.lock.json",
+    "tools/StrataLint.Engine/packages.lock.json",
+    "tools/Trureturing.Truth/packages.lock.json",
+    "tools/StrataLint.Scribe/packages.lock.json",
+    "tools/StrataLint.Scribe.Documents/packages.lock.json",
+    "tools/StrataLint.Scribe/Vendor/Katex/katex.min.js",
+    ".editorconfig",
+    "Meta/lean-report.toml",
+    "tools/scripts/workflow/scribe-content-checks.sh"
+  ]
+}

@@ -37,6 +37,18 @@ public sealed class LeanReportCiBaselineScriptTests
     [InlineData("producer_sha256-mismatch")]
     [InlineData("repository_inspector_sha256-mismatch")]
     [InlineData("lean_config_sha256-mismatch")]
+    [InlineData("producer_sha256-missing")]
+    [InlineData("producer_sha256-malformed")]
+    [InlineData("producer_sha256-nonstring")]
+    [InlineData("repository_inspector_sha256-missing")]
+    [InlineData("repository_inspector_sha256-malformed")]
+    [InlineData("repository_inspector_sha256-nonstring")]
+    [InlineData("lean_config_sha256-missing")]
+    [InlineData("lean_config_sha256-malformed")]
+    [InlineData("lean_config_sha256-nonstring")]
+    [InlineData("input_address-missing")]
+    [InlineData("input_address-malformed")]
+    [InlineData("input_address-nonstring")]
     public void DeltaPlannerRejectsIncompleteOrInconsistentIdentity(string damage) =>
         LeanReportCiBaselineScriptContract.AssertInvalidIdentityRejected(damage, false);
 
@@ -51,6 +63,18 @@ public sealed class LeanReportCiBaselineScriptTests
     [InlineData("producer_sha256-mismatch")]
     [InlineData("repository_inspector_sha256-mismatch")]
     [InlineData("lean_config_sha256-mismatch")]
+    [InlineData("producer_sha256-missing")]
+    [InlineData("producer_sha256-malformed")]
+    [InlineData("producer_sha256-nonstring")]
+    [InlineData("repository_inspector_sha256-missing")]
+    [InlineData("repository_inspector_sha256-malformed")]
+    [InlineData("repository_inspector_sha256-nonstring")]
+    [InlineData("lean_config_sha256-missing")]
+    [InlineData("lean_config_sha256-malformed")]
+    [InlineData("lean_config_sha256-nonstring")]
+    [InlineData("input_address-missing")]
+    [InlineData("input_address-malformed")]
+    [InlineData("input_address-nonstring")]
     public void CiBaselineAdapterRejectsIncompleteOrInconsistentIdentity(string damage) =>
         LeanReportCiBaselineScriptContract.AssertInvalidIdentityRejected(damage, true);
 
@@ -125,7 +149,8 @@ internal static class LeanReportCiBaselineScriptContract
                 else if (parts[1] == "nonstring") provenance[field] = 42;
                 else provenance[field] = parts[1] == "malformed" ? "invalid"
                     : (field == "input_address" ? "sha256:" : "") + new string('0', 64);
-                if (field == "producer_sha256") attestation[2] = "producer_sha256=" + provenance[field]!.GetValue<string>();
+                if (field == "producer_sha256" && parts[1] == "mismatch")
+                    attestation[2] = "producer_sha256=" + provenance[field]!.GetValue<string>();
                 break;
         }
         File.WriteAllText(bundle + ".provenance.json", provenance.ToJsonString());
@@ -136,12 +161,12 @@ internal static class LeanReportCiBaselineScriptContract
             var result = Run(bundle, cache);
             Assert.Equal(0, result.ExitCode);
             Assert.Empty(result.StandardOutput);
-            Assert.Contains("status=fallback reason=invalid-attestation", Encoding.UTF8.GetString(result.StandardError), StringComparison.Ordinal);
+            Assert.Contains("status=fallback reason=unusable-bundle", Encoding.UTF8.GetString(result.StandardError), StringComparison.Ordinal);
             Assert.False(Directory.Exists(cache));
         }
         else
         {
-            StageBundle(bundle, cache, provenance["input_address"]!.GetValue<string>()[7..]);
+            StageBundle(bundle, cache, Address);
             using var plan = JsonDocument.Parse(FixtureFile.ReadAllText(RunDeltaPlan(temporary.Path, cache,
                 "D5.A\tD5/A.lean\nD5.B\tD5/B.lean\n")));
             Assert.Equal("fallback", plan.RootElement.GetProperty("status").GetString());
@@ -185,7 +210,7 @@ internal static class LeanReportCiBaselineScriptContract
         var output = Path.Combine(temporary.Path, "merged.json");
         var merged = TestProcessRunner.Run("python3",
             [Path.Combine(TestRepositoryLayout.FindRoot(), "tools/lean-inspector/delta.py"), "merge", planPath, subset, output],
-            temporary.Path, BoundedProcessRunner.HangDetectionBudget, 1024 * 1024);
+            temporary.Path, TestBudgets.WorkflowProcessHangGuard, 1024 * 1024);
         Assert.True(merged.ExitCode == 0, Encoding.UTF8.GetString(merged.StandardError));
         using var report = JsonDocument.Parse(File.ReadAllText(output));
         var records = report.RootElement.GetProperty("modules").EnumerateArray().ToArray();
@@ -229,7 +254,7 @@ internal static class LeanReportCiBaselineScriptContract
         var cache = Path.Combine(temporary.Path, "cache");
         WriteBundle(bundle);
         Assert.Equal(0, Run(bundle, cache).ExitCode);
-        var entry = Path.Combine(cache, Address, "raw-lean-report.json");
+        var entry = SeedReport(cache);
         Directory.CreateDirectory(entry + ".logs");
         File.WriteAllText(
             Path.Combine(entry + ".logs", "producer.log"),
@@ -249,7 +274,7 @@ internal static class LeanReportCiBaselineScriptContract
         var cache = Path.Combine(temporary.Path, "cache");
         WriteBundle(bundle);
         Assert.Equal(0, Run(bundle, cache).ExitCode);
-        var entry = Path.Combine(cache, Address, "raw-lean-report.json");
+        var entry = SeedReport(cache);
         File.CreateSymbolicLink(
             entry + ".logs",
             Path.Combine(cache, Address, "missing-producer-logs"));
@@ -275,7 +300,7 @@ internal static class LeanReportCiBaselineScriptContract
         var result = Run(bundle, cache);
 
         Assert.Equal(0, result.ExitCode);
-        var entry = Path.Combine(cache, Address, "raw-lean-report.json");
+        var entry = SeedReport(cache);
         Assert.False(Directory.Exists(entry + ".logs"));
         Assert.Contains(
             "LEAN_REPORT_CI_BASELINE status=ready",
@@ -385,7 +410,7 @@ internal static class LeanReportCiBaselineScriptContract
 
         Assert.Equal(0, result.ExitCode);
         Assert.Equal(cache, Encoding.UTF8.GetString(result.StandardOutput).Trim());
-        var entry = Path.Combine(cache, Address, "raw-lean-report.json");
+        var entry = SeedReport(cache);
         foreach (var suffix in new[]
                  {
                      "", ".sha256", ".input.attestation", ".provenance.json", ".materials.zip",
@@ -406,8 +431,8 @@ internal static class LeanReportCiBaselineScriptContract
         var delta = TestProcessRunner.Run(
             "python3",
             [Path.Combine(TestRepositoryLayout.FindRoot(), "tools/lean-inspector/delta.py"), "plan",
-                temporaryPath, cache, new string('b', 64), Producer, Resident, Config, modules, plan],
-            temporaryPath, BoundedProcessRunner.HangDetectionBudget, 1024 * 1024);
+                temporaryPath, Path.GetDirectoryName(Path.GetDirectoryName(SeedReport(cache)))!, new string('b', 64), Producer, Resident, Config, modules, plan],
+            temporaryPath, TestBudgets.WorkflowProcessHangGuard, 1024 * 1024);
         Assert.Equal(0, delta.ExitCode);
         return plan;
     }
@@ -497,6 +522,9 @@ internal static class LeanReportCiBaselineScriptContract
         Assert.False(Directory.Exists(Path.Combine(cache, Address)));
     }
 
+    private static string SeedReport(string cache) => Directory.EnumerateFiles(
+        cache, "raw-lean-report.json", SearchOption.AllDirectories).Single();
+
     private static ProcessOutput Run(string bundle, string cache)
     {
         var root = TestRepositoryLayout.FindRoot();
@@ -504,7 +532,7 @@ internal static class LeanReportCiBaselineScriptContract
             Path.Combine(root, ScriptPath),
             ["--bundle", bundle, "--cache-root", cache],
             root,
-            BoundedProcessRunner.HangDetectionBudget,
+            TestBudgets.WorkflowProcessHangGuard,
             1024 * 1024);
     }
 
@@ -525,6 +553,14 @@ internal static class LeanReportCiBaselineScriptContract
             report + ".provenance.json",
             $"{{\"schema\":\"stratalint-lean-report-provenance-v1\",\"side\":\"candidate\",\"mode\":\"produced\",\"source_side\":\"candidate\",\"input_address\":\"sha256:{Address}\",\"producer_sha256\":\"{Producer}\",\"repository_inspector_sha256\":\"{Resident}\",\"lean_sources_sha256\":\"{Sources}\",\"lean_config_sha256\":\"{Config}\",\"report_sha256\":\"{reportSha}\"}}\n",
             new UTF8Encoding(false));
-        using var materials = ZipFile.Open(report + ".materials.zip", ZipArchiveMode.Create);
+        using (ZipFile.Open(report + ".materials.zip", ZipArchiveMode.Create)) { }
+        File.WriteAllText(report + ".seed.json", JsonSerializer.Serialize(new
+        {
+            schema = "lean-report-seed-v1",
+            partition = new string('a', 40) + "/linux-x64",
+            runtime_sha256 = new string('c', 64),
+            report_sha256 = reportSha,
+            materials_sha256 = Convert.ToHexStringLower(SHA256.HashData(File.ReadAllBytes(report + ".materials.zip"))),
+        }) + "\n");
     }
 }

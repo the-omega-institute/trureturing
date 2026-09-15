@@ -26,7 +26,7 @@ public sealed class R13ScopeNarrowingTests
     {
         var unrelated = FixtureWithInvalidOldGid();
         var unrelatedResult = Execute(unrelated, UnrelatedDelta);
-        Assert.DoesNotContain(
+        Assert.Contains(
             unrelatedResult.Diagnostics,
             diagnostic => diagnostic.RuleId == RuleId.CreateKnown(15)
                 && diagnostic.Path == OldMirrorSource
@@ -79,7 +79,7 @@ public sealed class R13ScopeNarrowingTests
 
         var result = Execute(fixture, UnrelatedDelta);
 
-        Assert.DoesNotContain(
+        Assert.Contains(
             result.Diagnostics,
             diagnostic => diagnostic.RuleId == RuleId.CreateKnown(15)
                 && diagnostic.Message.Contains("duplicate GID", StringComparison.Ordinal));
@@ -90,7 +90,7 @@ public sealed class R13ScopeNarrowingTests
     {
         var unrelated = FixtureWithOldInvalidPath();
         var unrelatedResult = Execute(unrelated, UnrelatedDelta);
-        Assert.DoesNotContain(
+        Assert.Contains(
             unrelatedResult.Diagnostics,
             diagnostic => diagnostic.RuleId == RuleId.CreateKnown(0)
                 && diagnostic.Path == OldInvalidPath);
@@ -119,7 +119,7 @@ public sealed class R13ScopeNarrowingTests
         var unrelated = new RuleFixture();
         RemoveBlueprintMirror(unrelated);
         var unrelatedResult = Execute(unrelated, "Evidence/D5/S0/Carrier/Delta.check.json");
-        Assert.DoesNotContain(
+        Assert.Contains(
             unrelatedResult.Diagnostics,
             diagnostic => diagnostic.RuleId == RuleId.CreateKnown(4)
                 && diagnostic.Path == OldMirrorSource
@@ -160,7 +160,7 @@ public sealed class R13ScopeNarrowingTests
     {
         var unrelated = FixtureWithOldMalformedJson();
         var unrelatedResult = Execute(unrelated, UnrelatedDelta);
-        Assert.DoesNotContain(
+        Assert.Contains(
             unrelatedResult.Diagnostics,
             diagnostic => diagnostic.RuleId == RuleId.CreateKnown(19)
                 && diagnostic.Path == OldMalformedJson
@@ -204,7 +204,7 @@ public sealed class R13ScopeNarrowingTests
     }
 
     [Fact]
-    public void Sl019DoesNotReplayOldJsonWhenLeanDeltaPreservesTaskSet()
+    public void Sl019ChecksCurrentJsonWhenLeanDeltaPreservesTaskSet()
     {
         var fixture = new RuleFixture();
         const string task = "D5-T0099";
@@ -214,7 +214,7 @@ public sealed class R13ScopeNarrowingTests
 
         var result = Execute(fixture, RuleFixture.RingPath);
 
-        Assert.DoesNotContain(
+        Assert.Contains(
             result.Diagnostics,
             diagnostic => diagnostic.RuleId == RuleId.CreateKnown(19)
                 && diagnostic.Path == OldMalformedJson

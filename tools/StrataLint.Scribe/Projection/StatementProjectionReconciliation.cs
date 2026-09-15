@@ -1,4 +1,6 @@
 using System.Collections.Immutable;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using StrataLint.Engine;
 
 namespace StrataLint.Scribe;
@@ -7,17 +9,18 @@ public static class StatementProjectionReconciliation
 {
     private const string FixtureRoot = "Golden/Projection/";
 
-    internal static bool IsAffectedBy(RawChangeSet? changes)
+    internal static bool IsAffectedBy(RepositorySnapshot snapshot, RawChangeSet? changes)
     {
         if (changes is null)
         {
             return true;
         }
 
-        return changes.Paths.Any(static path =>
+        var implementation = RegisteredImplementationInputs(snapshot, changes);
+        return changes.Paths.Any(path =>
             path.Value.StartsWith(FixtureRoot, StringComparison.Ordinal)
                 && path.Value.EndsWith(".json", StringComparison.Ordinal)
-            || IsImplementationInput(path.Value));
+            || implementation.Contains(path.Value));
     }
 
     public static void Verify(string repositoryRoot, DeclarationCatalog catalog)
@@ -64,21 +67,44 @@ public static class StatementProjectionReconciliation
         return findings.ToImmutable();
     }
 
-    private static bool IsImplementationInput(string path)
+    private const string ProducerRegistration = "Meta/ReportProducers/scribe-content.json";
+    private sealed record ProducerScope(string Schema, string[] Scripts, string[] Projects, string[] Materials);
+    private static readonly JsonSerializerOptions Options = new()
     {
-        if ((path.StartsWith("tools/StrataLint.Scribe/", StringComparison.Ordinal)
-                || path.StartsWith("tools/StrataLint.Engine/", StringComparison.Ordinal))
-            && (path.EndsWith(".cs", StringComparison.Ordinal)
-                || path.EndsWith(".csproj", StringComparison.Ordinal)
-                || path.EndsWith("/packages.lock.json", StringComparison.Ordinal)))
-        {
-            return true;
-        }
+        PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower,
+        UnmappedMemberHandling = JsonUnmappedMemberHandling.Disallow,
+        AllowDuplicateProperties = false,
+        RespectRequiredConstructorParameters = true,
+    };
 
-        var fileName = path[(path.LastIndexOf('/') + 1)..];
-        return fileName == "global.json"
-            || fileName.StartsWith("Directory.Build.", StringComparison.Ordinal)
-            || fileName.StartsWith("Directory.Packages.", StringComparison.Ordinal)
-            || fileName.Equals("NuGet.Config", StringComparison.OrdinalIgnoreCase);
+    private static IReadOnlySet<string> RegisteredImplementationInputs(RepositorySnapshot snapshot, RawChangeSet changes)
+    {
+        if (!snapshot.TryGetFile(ProducerRegistration, out var file))
+            throw new InvalidDataException($"missing producer registration: {ProducerRegistration}");
+        try
+        {
+            var scope = JsonSerializer.Deserialize<ProducerScope>(file.Text, Options);
+            if (scope is null || scope.Schema != "report-producer-scope-v1"
+                || scope.Scripts is null || scope.Projects is null || scope.Materials is null)
+                throw new InvalidDataException($"invalid producer registration: {ProducerRegistration}");
+            var paths = scope.Scripts.Concat(scope.Projects).Concat(scope.Materials).ToArray();
+            EngineeringProjectRegistry.ValidateInputPaths(paths, ProducerRegistration);
+            if (scope.Projects.Any(path => !path.EndsWith(".csproj", StringComparison.Ordinal))
+                || scope.Scripts.Any(path => Path.GetExtension(path) is not (".sh" or ".py" or ".lean")))
+                throw new InvalidDataException($"invalid project or script registration: {ProducerRegistration}");
+            foreach (var path in paths)
+                if (!snapshot.TryGetFile(path, out _))
+                    throw new InvalidDataException($"required producer registration input is absent: {ProducerRegistration}: {path}");
+            var registry = EngineeringProjectRegistry.Read(snapshot);
+            // Changed paths are included to consume declared globs for removed/renamed sources.
+            var sources = registry.ProjectInputs(scope.Projects,
+                snapshot.Files.Keys.Select(path => path.Value), changes.Paths.Select(path => path.Value));
+            return paths.Concat(sources).Append(ProducerRegistration).Append(EngineeringProjectRegistry.ManifestPath)
+                .ToHashSet(StringComparer.Ordinal);
+        }
+        catch (JsonException exception)
+        {
+            throw new InvalidDataException($"invalid producer registration: {ProducerRegistration}: {exception.Message}", exception);
+        }
     }
 }
