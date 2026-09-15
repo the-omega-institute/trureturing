@@ -80,6 +80,24 @@ because the power of two on the right has already accounted for the exact
 2-adic factor of `n`. The odd-complement identity then gives
 `3 * ordCompl[2] n + 1 = 4^k`, and `i > j` forces `k >= 1`.
 
+## Falsifier
+
+Any positive natural `n` satisfying exactly one of the two displayed
+predicates would refute `result`. A failure of `ordCompl[2] n` to equal the
+odd part of `n` would instead refute the stated interpretation of the pinned
+Mathlib operator. Agreement on finitely many values cannot establish the
+unbounded equivalence.
+
+## Evidence
+
+- Lean module: `D5/S3/Arith/StephanOddPartPowerDifference.lean`.
+- The result is an unbounded symbolic equivalence, not a finite computation.
+- The theorem's axiom closure is `[propext, Classical.choice, Quot.sound]`.
+
+## Triage
+
+`theorem`; resolution `proved` for every natural `n` with `1 <= n`.
+
 **Not claimed:** an exhaustive literature search or priority for this proof;
 any result about other OEIS entries; a statement about the zero term as an
 A181666 sequence member; or that finite numerical checks replace the
