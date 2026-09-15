@@ -162,7 +162,35 @@ theorem rational_tail_level_closure (g A : ℕ → ℕ) (hg : ∀ n, 0 < g n) :
     ext u
     change weightedTotal g u.val ≤ ENNReal.ofReal c ↔ (weightedRead g u : ℝ) ≤ c
     rw [hfinite u, ENNReal.ofReal_le_ofReal_iff (by exact_mod_cast hc)]
-  sorry
+  constructor
+  · intro hfill
+    refine ⟨hclosure hfill, ?_⟩
+    intro c hc
+    obtain ⟨u, _, hu⟩ := hfill c hc.le 0
+    let z : B A := ⟨fun n => ⟨0, Nat.zero_lt_succ _⟩, by simp [Function.support]⟩
+    have hzread : weightedRead g z = 0 := by simp [weightedRead, z]
+    have hzambient : z.val ∈ closure (ambientLevel g A c) := by
+      rw [(hclosure hfill c hc.le).1]
+      change weightedTotal g z.val ≤ ENNReal.ofReal c
+      simp [hfinite z, hzread]
+    have hzrelative : z ∈ closure (level g A c) := by
+      rw [(hclosure hfill c hc.le).2]
+      change (weightedRead g z : ℝ) ≤ c
+      simpa [hzread] using (show (0 : ℝ) ≤ c by exact_mod_cast hc.le)
+    have hznot : z ∉ level g A c := by
+      intro hz
+      have he : (0 : ℚ) = c := by simpa [level, hzread] using hz
+      exact (ne_of_gt hc) he.symm
+    refine ⟨⟨u, by change (weightedRead g u : ℝ) = c; exact_mod_cast hu⟩, ?_, ?_⟩
+    · intro hclosed
+      rw [hclosed.closure_eq] at hzambient
+      obtain ⟨v, hv, hvz⟩ := hzambient
+      have he : v = z := Subtype.ext hvz
+      exact hznot (he ▸ hv)
+    · intro hclosed
+      rw [hclosed.closure_eq] at hzrelative
+      exact hznot hzrelative
+  · sorry
 
 #print axioms rational_tail_level_closure
 
