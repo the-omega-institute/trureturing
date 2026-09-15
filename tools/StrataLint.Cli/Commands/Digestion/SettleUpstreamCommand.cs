@@ -48,13 +48,13 @@ internal static class SettleUpstreamCommand
             }
             else
             {
+                RequireWritable(target);
                 var contexts = DigestionAtomContextProjection.ResolveOccurrences(snapshot, document, atomId);
                 // The upstream request has exactly six keys and cannot select an occurrence.
                 if (contexts.Length != 1) throw Invalid("OCCURRENCE_INDEX_REQUIRED", $"atom_id={atomId} occurrences={contexts.Length}");
                 var context = contexts[0];
                 if (context.Previous?.AtomId != request.Previous || context.Next?.AtomId != request.Next)
                     throw Invalid("CONTEXT_MISMATCH", $"atom_id={atomId}");
-                RequireWritable(target);
                 probe = ReadProbe(root, request.Probe);
                 if (!snapshot.TryGetFile("lake-manifest.json", out var manifest))
                     throw new FormatException("immutable revision is missing lake-manifest.json.");
