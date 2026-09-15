@@ -2189,20 +2189,30 @@ private partial def matchesPlan (context : MatchContext) (plan : PlanNode) (actu
     | .proj k j c => return n == k && i == j && (← child b c)
     | _ => return false
 
-private def extract (name : Name) : MetaM Expr := do
+private def extract (event : TemplateOccurrenceEvent) : CompareM Expr := do
+  debit
+  let name := event.realizationName
   let info ← getConstInfo name
-  if info.type.isAppOfArity `D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization 3 then
-    return info.type.getAppArgs[2]!
-  if isRealizationType info.type then
+  let raw ← if info.type.isAppOfArity
+      `D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization 3 then
+    pure info.type.getAppArgs[2]!
+  else if isRealizationType info.type then
     match info with
     | .defnInfo defn =>
       if defn.safety != .safe || (← isRecursiveDefinition name) || defn.all.length > 1 ||
           (Compiler.getImplementedBy? (← getEnv) name).isSome ||
           (getExternAttrData? (← getEnv) name).isSome then
         throwError "unclassified_form:dtr.extraction_kind"
-      return defn.value
+      pure defn.value
     | _ => throwError "unclassified_form:dtr.extraction_kind"
-  throwError "unclassified_form:dtr.extraction_interface"
+  else throwError "unclassified_form:dtr.extraction_interface"
+  -- The named realization is used at the occurrence's rigid universe telescope.
+  -- Renaming its binders is permitted; permutation or arity guessing is not.
+  if info.levelParams.isEmpty then return raw
+  unless info.levelParams.length == event.levelParams.length do
+    throwError "unclassified_form:dtr.extraction_universes"
+  construct fun fuel => PlanTransform.instantiateExpr raw info.levelParams
+    (event.levelParams.map Level.param) fuel
 
 private def closed (e : Expr) : MetaM Unit := do
   if e.hasMVar || e.hasFVar || e.hasLooseBVars then
@@ -2245,10 +2255,10 @@ private def validate (event : TemplateOccurrenceEvent) (descriptor : Expr) : Met
   let (argumentNames, argumentWork) ← match ← RegistrationGates.templateArgumentsCurrent event.key.theoremName arguments budget with
     | .ok result => pure result
     | .error reason => throwError reason
-  let actual ← extract event.realizationName
-  closed actual
   let compare : CompareM TemplateBindingCertificate := do
     debit plan.serializedBytes
+    let actual ← extract event
+    closed actual
     let mut body ← levels plan.levelParams universeArgs plan.plan
     let mut type ← levels plan.levelParams universeArgs plan.typePlan
     let mut obligations : Array (Expr × Array Expr) := #[]
@@ -2277,10 +2287,10 @@ private def validate (event : TemplateOccurrenceEvent) (descriptor : Expr) : Met
     let exposed ← forwardActual event.key.theoremName name actual
     if !(← equalRaw descriptor exposed) && !(← matchesPlan context body exposed) then
       throwError "unclassified_form:dtr.realization_mismatch"
-    let .ok (descriptorIdentity, descriptorWork) := TemplateAudit.rawIdentity [] descriptor (← get).remaining
+    let .ok (descriptorIdentity, descriptorWork) := TemplateAudit.rawIdentity event.levelParams descriptor (← get).remaining
       | throwError "incomplete_closure:dtr.descriptor_identity"
     debit descriptorWork
-    let .ok (actualIdentity, actualWork) := TemplateAudit.rawIdentity [] actual (← get).remaining
+    let .ok (actualIdentity, actualWork) := TemplateAudit.rawIdentity event.levelParams actual (← get).remaining
       | throwError "incomplete_closure:dtr.actual_identity"
     debit actualWork
     let argumentInputs ← argumentNames.mapM inputIdentity
