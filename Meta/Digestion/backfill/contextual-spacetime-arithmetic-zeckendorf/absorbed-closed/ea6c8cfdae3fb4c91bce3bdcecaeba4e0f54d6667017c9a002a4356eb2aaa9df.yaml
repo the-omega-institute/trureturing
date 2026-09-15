@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:ea6c8cfdae3fb4c91bce3bdcecaeba4e0f54d6667017c9a002a4356eb2aaa9df
   normalized_sha256: sha256:ea6c8cfdae3fb4c91bce3bdcecaeba4e0f54d6667017c9a002a4356eb2aaa9df
 cas_ref: sha256:ea6c8cfdae3fb4c91bce3bdcecaeba4e0f54d6667017c9a002a4356eb2aaa9df
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Arith/GoldenResource/RationalCapacityTailRealization.cofinal_capacity_rational_tail_filling
+    target_statement_id: sha256:ce84158f10caaf1b3aaf67b985faffdc671708b9726f0128d08f413027e0f433
 receipts:
   unresolved_subitems: []
