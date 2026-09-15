@@ -1,0 +1,61 @@
+**命题 125.4（有限支持基上的 normal 密度障碍及其表示边界）。** 在 $H_{\rm fs}=\ell^2(X_{\rm fs})$ 中取标准基 $(e_x)_{x\in X_{\rm fs}}$，对每个有限词 $u$ 定义柱投影
+$$
+C_ue_x=\mathbf1_{\{q_{|u|}x=u\}}e_x.
+$$
+不存在正迹类算子 $R$ 满足 $\operatorname{Tr}R=1$ 且同时对所有有限词有 $\operatorname{Tr}(RC_u)=\mu([u])$。尽管每个有限深度的全部柱读数都可由该空间上的有限秩密度精确实现，这些实现不能由一个这样的 $R$ 统一承担。此外，$\mu$ 的每个单点质量均为零，$\mu(X_{\rm fs})=0$。局部态 $\omega$ 仍有 GNS 表示及其中的秩一密度实现。
+
+证明。有限支持核心可写为
+$$
+X_{\rm fs}=\bigcup_{N\ge0}\{u0^\infty:u\in W_N\},
+$$
+故它可数；补零保持合法性。对任意 $x\in\widehat X$，递减的柱集 $[q_nx]$ 的交恰为 $\{x\}$，由概率测度的从上连续性有
+$$
+\mu(\{x\})=\lim_{n\to\infty}\mu([q_nx])
+\le\lim_{n\to\infty}\alpha^n=0.
+$$
+单点为闭集，可数个这样的单点给 $X_{\rm fs}$ 为 Borel 零测集。
+
+假设所说的 $R$ 存在。对每个 $x\in X_{\rm fs}$ 及 $n\ge1$，秩一投影满足 $|e_x\rangle\langle e_x|\le C_{q_nx}$。正迹类算子定义正迹泛函；具体地，对正有界 $B$ 有 $\operatorname{Tr}(RB)=\operatorname{Tr}(R^{1/2}BR^{1/2})\ge0$。所以
+$$
+0\le\langle e_x,Re_x\rangle
+\le\operatorname{Tr}(RC_{q_nx})
+=\mu([q_nx])\le\alpha^n\longrightarrow0.
+$$
+每个基对角元均为零，而正迹类算子的迹等于任意可数正交标准基上的对角元之和，得到
+$$
+1=\operatorname{Tr}R
+=\sum_{x\in X_{\rm fs}}\langle e_x,Re_x\rangle=0,
+$$
+矛盾。证明没有要求 $R$ 对角化或与柱投影对易，也没有假定整个 UHF 代数在 $H_{\rm fs}$ 上具有某个自然表示。
+
+为给出有限深度的准确对照，对固定 $N\ge1$ 定义
+$$
+R_N=\sum_{u\in W_N}\mu([u])
+|e_{u0^\infty}\rangle\langle e_{u0^\infty}|.
+$$
+这些不同的补零串是正交基标记，系数非负且和为 $1$，故 $R_N$ 为正归一有限秩密度。对 $|v|\le N$，深度 $N$ 的细柱分割 $[v]$，从而
+$$
+\operatorname{Tr}(R_NC_v)
+=\sum_{\substack{u\in W_N\\u|_{|v|}=v}}\mu([u])
+=\mu([v]).
+$$
+这里仅匹配对角柱读数，没有把 $R_N$ 与 Q109 的相干纯态或其约化矩阵认作同一密度。
+
+最后直接给 $\omega$ 的通常 GNS 构造。取
+$$
+\mathcal N_\omega=\{B\in\mathcal A:\omega(B^*B)=0\},
+\qquad
+\langle[B],[C]\rangle=\omega(B^*C)
+$$
+并以第二变量线性的内积约定使用此式。正性作用于 $(B+zC)^*(B+zC)$ 给 Cauchy–Schwarz 不等式，故零半范数元与所有元正交，商 $\mathcal A/\mathcal N_\omega$ 上的内积良定。由 $A^*A\le\|A\|^2I$ 得
+$$
+\omega(B^*A^*AB)\le\|A\|^2\omega(B^*B).
+$$
+因此 $\mathcal N_\omega$ 是左理想，左乘 $[B]\mapsto[AB]$ 良定且范数至多 $\|A\|$；它延拓到商内积空间的完备化 $H_\omega$，记作 $\pi_\omega(A)$。左乘保持乘法和单位，且由内积公式其伴随为 $\pi_\omega(A^*)$，所以 $\pi_\omega$ 是幺星表示。向量 $\xi=[I]$ 的范数为 $1$，$\pi_\omega(A)\xi=[A]$ 的线性张成稠密，故 $\xi$ 循环，且
+$$
+\omega(A)=\langle\xi,\pi_\omega(A)\xi\rangle
+=\operatorname{Tr}_{H_\omega}
+\bigl(|\xi\rangle\langle\xi|\,\pi_\omega(A)\bigr).
+$$
+秩一密度位于 $B(H_\omega)$，其向量态限制到 $\pi_\omega(\mathcal A)$ 不因此必为纯态。normal 实现依赖指定的可观测量与表示，不能只由抽象 Hilbert 空间的基数判断。因而本命题给的是有限支持基及上述柱投影的实现障碍，同时保留了全局代数态及其它 Hilbert 表示的实现。
+
