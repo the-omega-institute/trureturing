@@ -45,7 +45,8 @@ public sealed partial class LeanInspectorScriptTests
         Git("-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "--quiet", "-m", "declared preparation inputs");
         var commit = Git("rev-parse", "HEAD").Trim();
         var repository = TestRepositoryLayout.FindRoot();
-        var plan = Run("python3", ["-B", Path.Combine(repository, "tools/scripts/workflow/ci.py"),
+        string[] localEnvironment = [.. CiFixtureEnvironment.LocalAssignments, "GITHUB_OUTPUT=", "GITHUB_ENV="];
+        var plan = Run("env", [.. localEnvironment, "python3", "-B", Path.Combine(repository, "tools/scripts/workflow/ci.py"),
             "push-plan", "--repository", fixture.Root, "--commit", commit], fixture.Root);
         Assert.True(plan.ExitCode == 0, Encoding.UTF8.GetString(plan.StandardError));
         if (scenario == "reuse") fixture.Pair("full-fallback", 2);
@@ -57,7 +58,7 @@ public sealed partial class LeanInspectorScriptTests
         if (scenario == "missing") Directory.Delete(fixture.Preparation, true);
         foreach (var command in new[] { "keys", "restore" })
         {
-            var result = Run("env", ["GITHUB_EVENT_NAME=", "CI_WORKFLOW_INPUTS=null", "GITHUB_OUTPUT=", "GITHUB_ENV=",
+            var result = Run("env", [.. localEnvironment,
                 "GITHUB_RUN_ID=17", "GITHUB_RUN_ATTEMPT=2", $"CANDIDATE_SHA={commit}",
                 "CI_PLAN_PATH=build/ci/plan.json", "CI_CHANGES_PATH=build/ci/changes.json",
                 $"STRATALINT_LEAN_REPORT_PREPARATION={fixture.Preparation}",
