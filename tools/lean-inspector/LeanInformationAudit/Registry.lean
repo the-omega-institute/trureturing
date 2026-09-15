@@ -1108,7 +1108,281 @@ def readSourceInput (path : String) : CoreM SourceInput := do
   let bytes ← IO.FS.readBinFile path
   return { path, sha256 := Sha256.hex bytes }
 
+namespace NativeCoherence
+
+private structure Snapshot where
+  inputs : Array SourceInput
+  data : ModuleData
+
+
+private def repositoryModule (name : Name) : Bool :=
+  name.toString.startsWith "D5." || name.toString.startsWith "LeanInformationAudit."
+
+private def parseHash (text : String) : Except String UInt64 := do
+  unless text.utf8ByteSize == 16 do throw "incomplete_closure:E7.native_trace_hash"
+  text.toUTF8.foldlM (init := 0) fun result byte => do
+    let digit ← if 48 ≤ byte && byte ≤ 57 then pure (byte - 48) else
+      if 97 ≤ byte && byte ≤ 102 then pure (byte - 87)
+      else throw "incomplete_closure:E7.native_trace_hash"
+    return result * 16 + digit.toUInt64
+
+private def binaryHash (bytes : ByteArray) : UInt64 := mixHash 1723 (hash bytes)
+private def textHash (text : String) : UInt64 := mixHash 1723 (hash text.crlfToLf)
+
+private def field (json : Json) (key : String) : CoreM Json :=
+  ofExcept <| json.getObjVal? key
+
+private partial def traceHash (value : Json) (depth : Nat := 0) : Except String UInt64 := do
+  if depth > 256 then throw "incomplete_closure:E7.native_trace_depth"
+  if let .str text := value then return ← parseHash text
+  let inputs ← value.getArr?
+  inputs.foldlM (init := 1723) fun result input => do
+    let pair ← input.getArr?
+    unless pair.size == 2 do throw "incomplete_closure:E7.native_trace_pair"
+    return mixHash result (← traceHash pair[1]! (depth + 1))
+
+private def child (value : Json) (caption : String) : CoreM Json := do
+  let inputs ← ofExcept <| value.getArr?
+  let matching := inputs.filter fun input =>
+    (((input.getArr?).toOption.bind (·[0]?)).bind (·.getStr?.toOption)) == some caption
+  unless matching.size == 1 do throwError "incomplete_closure:E7.native_trace_input:{caption}"
+  let pair ← ofExcept <| matching[0]!.getArr?
+  unless pair.size == 2 do throwError "incomplete_closure:E7.native_trace_pair"
+  return pair[1]!
+
+private structure ExportHash where
+  allArts : UInt64
+  transitive : UInt64
+
+private initialize regionIndex : EnvExtension
+    (Option (Array CompactedRegion × Std.HashMap String Nat)) ←
+  registerEnvExtension (pure none)
+
+private def moduleFile (env : Environment) (name : Name) : CoreM System.FilePath := do
+  let path ← findOLean name
+  if !repositoryModule name then return path
+  let cached := regionIndex.getState (← getEnv)
+  let index ← match cached with
+    | some (regions, index) =>
+      unless (unsafe ptrEq regions env.header.regions) do
+        throwError "incomplete_closure:E7.native_regions"
+      pure index
+    | none =>
+      let mut index : Std.HashMap String Nat := {}
+      for region in env.header.regions do
+        let key := region.filePath.toString
+        index := index.insert key (index[key]?.getD 0 + 1)
+      modifyEnv fun current => regionIndex.setState current (some (env.header.regions, index))
+      pure index
+  unless index[path.toString]? == some 1 do
+    throwError "incomplete_closure:E7.native_mapping:{name}"
+  return path
+
+private structure Cache where
+  snapshots : Std.HashMap Name Snapshot := {}
+  closures : Std.HashMap Name (Array Name) := {}
+  exports : Std.HashMap Name ExportHash := {}
+  deriving Inhabited
+
+private initialize checked : EnvExtension Cache ← registerEnvExtension (pure {})
+
+private initialize observedInputs : EnvExtension (Array String) ← registerEnvExtension (pure #[])
+
+/-- Read-only observation of the files rechecked by the latest selected validation. -/
+def lastInputs (env : Environment) : Array String := observedInputs.getState env
+
+/-- Reproduce Lake.Module.computeExportInfo's legacy import hash relation.
+Compiler-owned imports have no Lake package trace and are pinned by the Lean
+version input. Package traces remain trusted upstream build metadata. -/
+private partial def exports (env : Environment) (name : Name)
+    (memo : Std.HashMap Name ExportHash) : CoreM (Option ExportHash × Std.HashMap Name ExportHash) := do
+  if let some value := memo[name]? then return (some value, memo)
+  let artifact ← moduleFile env name
+  let tracePath := artifact.withExtension "trace"
+  if !(← tracePath.pathExists) then
+    let lib ← getLibDir (← getBuildDir)
+    unless (← IO.FS.realPath artifact).toString.startsWith ((← IO.FS.realPath lib).toString ++ "/") do
+      throwError "incomplete_closure:E7.native_trace_missing:{name}"
+    return (none, memo)
+  let trace ← ofExcept <| Json.parse (← IO.FS.readFile tracePath)
+  unless trace.getObjValAs? String "schemaVersion" == .ok "2025-09-10" do
+    throwError "incomplete_closure:E7.native_trace_version:{name}"
+  let output ← field trace "outputs"
+  let oleans ← ofExcept <| output.getObjValAs? (Array String) "o"
+  let isModule ← ofExcept <| output.getObjValAs? Bool "m"
+  unless oleans.size == (if isModule then 3 else 1) do
+    throwError "incomplete_closure:E7.native_trace_outputs:{name}"
+  let mut parts := oleans
+  if isModule then
+    parts := parts.push (← ofExcept <| output.getObjValAs? String "rs")
+    parts := parts.push (← ofExcept <| output.getObjValAs? String "r")
+  let mut allArts := 1723
+  for part in parts do
+    allArts := mixHash allArts (← ofExcept <| parseHash (part.take 16).toString)
+  let some index := env.getModuleIdx? name | throwError "incomplete_closure:E7.native_module:{name}"
+  let data := env.header.moduleData[index.toNat]!
+  let mut memo := memo
+  let mut transitive := 1723
+  for imported in data.imports do
+    let (dependency, next) ← exports env imported.module memo
+    memo := next
+    if let some dependency := dependency then
+      transitive := mixHash (mixHash transitive dependency.transitive) dependency.allArts
+  let value : ExportHash := { allArts, transitive }
+  return (some value, memo.insert name value)
+
+/-- This is byte comparison of the loaded native object graph, not a semantic
+body audit. Only the pinned legacy single-part format is accepted here. -/
+private def fileHashes (paths : Array String) : IO (Array String) := do
+  let result ← IO.Process.output { cmd := "python3", args := #["-I", "-c",
+    "import hashlib,pathlib,sys; [print(hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest()) for p in sys.argv[1:]]"] ++ paths }
+  unless result.exitCode == 0 do throw <| IO.userError "incomplete_closure:E7.native_hash"
+  let hashes := result.stdout.trimAscii.toString.splitOn "\n" |>.toArray
+  unless hashes.size == paths.size && hashes.all (fun hash => hash.length == 64 &&
+      hash.toList.all (fun c => c.isDigit || ('a' ≤ c && c ≤ 'f'))) do
+    throw <| IO.userError "incomplete_closure:E7.native_hash"
+  return hashes
+
+private def unchanged (inputs : Array SourceInput) : IO Bool := do
+  if inputs.isEmpty then return true
+  let hashes ← fileHashes (inputs.map (·.path))
+  return (inputs.zip hashes).all fun (input, hash) => input.sha256 == hash
+
+private def loadedIdentity (name : Name) (data : ModuleData) (bytes : ByteArray) : IO String :=
+  IO.FS.withTempFile fun _ path => do
+    saveModuleData path name data
+    unless (← IO.FS.readBinFile path) == bytes do
+      throw <| IO.userError s!"incomplete_closure:E7.loaded_native:{name}"
+    -- Hash the independently serialized loaded image, never re-open the mutable
+    -- input path to decide which bytes were actually loaded into this Environment.
+    return (← fileHashes #[path.toString])[0]!
+
+private def verifyImported (env : Environment) (name : Name)
+    (hashes : Std.HashMap Name ExportHash) : CoreM Snapshot := do
+  let some index := env.getModuleIdx? name | throwError "incomplete_closure:E7.native_module:{name}"
+  let data := env.header.moduleData[index.toNat]!
+  if data.isModule then throwError "incomplete_closure:E7.native_format:{name}"
+  let artifact ← moduleFile env name
+  let tracePath := artifact.withExtension "trace"
+  let source := sourcePath name
+  let sourceBytes ← IO.FS.readBinFile source
+  let sourceText ← IO.FS.readFile source
+  let traceBytes ← IO.FS.readBinFile tracePath
+  let trace ← ofExcept <| Json.parse (← IO.FS.readFile tracePath)
+  unless trace.getObjValAs? String "schemaVersion" == .ok "2025-09-10" &&
+      trace.getObjValAs? Bool "synthetic" == .ok false do
+    throwError "incomplete_closure:E7.native_trace_version:{name}"
+  let inputs ← field trace "inputs"
+  let compiler ← child inputs s!"Lean {Lean.versionStringCore}, commit {Lean.githash}"
+  unless (← ofExcept <| traceHash compiler) == textHash Lean.githash do
+    throwError "incomplete_closure:E7.native_compiler:{name}"
+  let top ← ofExcept <| inputs.getArr?
+  let candidates := top.filter fun input =>
+    (((input.getArr?).toOption.bind (·[0]?)).bind (·.getStr?.toOption)).any fun caption =>
+      caption == source || caption.endsWith ("/" ++ source)
+  unless candidates.size == 1 do throwError "incomplete_closure:E7.native_source_input:{name}"
+  let pair ← ofExcept <| candidates[0]!.getArr?
+  unless pair.size == 2 && (← ofExcept <| traceHash pair[1]!) == textHash sourceText do
+    throwError "incomplete_closure:E7.native_source:{name}"
+  unless (← ofExcept <| traceHash inputs) ==
+      (← ofExcept <| parseHash (← ofExcept <| trace.getObjValAs? String "depHash")) do
+    throwError "incomplete_closure:E7.native_trace_integrity:{name}"
+  let imports ← child (← child inputs "deps") "imports"
+  -- Compare both the captions and hash values against the actual imported DAG;
+  -- implementation must retain the ordered caption/value list, not only a count.
+  let mut position := 0
+  for imported in data.imports do
+    if let some dependency := hashes[imported.module]? then
+      let trans ← child imports s!"{imported.module} transitive imports (legacy)"
+      let arts ← child imports s!"{imported.module}:importAllArts"
+      unless (← ofExcept <| traceHash trans) == dependency.transitive &&
+          (← ofExcept <| traceHash arts) == dependency.allArts do
+        throwError "incomplete_closure:E7.native_dependency:{name}:{imported.module}"
+      position := position + 2
+  if position == 0 then
+    unless (← ofExcept <| traceHash imports) == 1723 do
+      throwError "incomplete_closure:E7.native_dependencies:{name}"
+  else
+    let rows ← ofExcept <| imports.getArr?
+    unless rows.size == position do throwError "incomplete_closure:E7.native_dependencies:{name}"
+  let bytes ← IO.FS.readBinFile artifact
+  let nativeIdentity ← loadedIdentity name data bytes
+  let output ← field trace "outputs"
+  let parts ← ofExcept <| output.getObjValAs? (Array String) "o"
+  unless output.getObjValAs? Bool "m" == .ok false && parts.size == 1 &&
+      (← ofExcept <| parseHash (parts[0]!.take 16).toString) == binaryHash bytes do
+    throwError "incomplete_closure:E7.native_output:{name}"
+  let result : Snapshot := { data, inputs := #[
+    {path := source, sha256 := Sha256.hex sourceBytes},
+    {path := artifact.toString, sha256 := nativeIdentity},
+    {path := tracePath.toString, sha256 := Sha256.hex traceBytes}] }
+  -- Close source/artifact replacement during verification itself.
+  unless ← unchanged result.inputs do
+    throwError "incomplete_closure:E7.native_input_changed:{name}"
+  return result
+
+/-- Subsequent uses compare the immutable snapshot; they never issue a new
+snapshot around a changed input in an already-loaded Environment. -/
+private partial def collect (env : Environment) (root : Name) (seen : NameSet)
+    (names : Array Name) : CoreM (NameSet × Array Name) := do
+  if seen.contains root || !repositoryModule root then return (seen, names)
+  let seen := seen.insert root
+  if root == env.header.mainModule then return (seen, names.push root)
+  let imports ← do
+    let some index := env.getModuleIdx? root | throwError "incomplete_closure:E7.native_module:{root}"
+    pure env.header.moduleData[index.toNat]!.imports
+  let mut seen := seen
+  let mut names := names
+  for imported in imports do
+    let (nextSeen, nextNames) ← collect env imported.module seen names
+    seen := nextSeen
+    names := nextNames
+  return (seen, names.push root)
+
+/-- Validate selected source/native input closures. The current module is bound
+by its parser input; only explicitly supplied imported owners are traversed.
+Cached snapshots cannot be renewed around changed bytes in the same environment. -/
+def validate (roots : Array Name) : CoreM Unit := do
+  let env ← getEnv
+  let mut cache := checked.getState env
+  let mut names : NameSet := {}
+  for root in roots do
+    let closure ← if let some closure := cache.closures[root]? then pure closure else do
+      let (_, closure) ← collect env root {} #[]
+      pure closure
+    cache := { cache with closures := cache.closures.insert root closure }
+    for name in closure do names := names.insert name
+  let mut retainedInputs : Array SourceInput := #[]
+  for name in names do
+    if name == env.header.mainModule then
+      unless (← IO.FS.readFile (sourcePath name)) == (← getFileMap).source do
+        throwError "incomplete_closure:E7.current_source:{name}"
+      continue
+    if let some snapshot := cache.snapshots[name]? then
+      let some index := env.getModuleIdx? name
+        | throwError "incomplete_closure:E7.native_module:{name}"
+      unless (unsafe ptrEq snapshot.data env.header.moduleData[index.toNat]!) do
+        throwError "incomplete_closure:E7.native_environment:{name}"
+    else
+      let (_, next) ← exports env name cache.exports
+      cache := { cache with exports := next }
+      let snapshot ← verifyImported env name cache.exports
+      cache := { cache with snapshots := cache.snapshots.insert name snapshot }
+    let some snapshot := cache.snapshots[name]?
+      | throwError "incomplete_closure:E7.native_snapshot:{name}"
+    retainedInputs := retainedInputs ++ snapshot.inputs
+  unless ← unchanged retainedInputs do
+    throwError "incomplete_closure:E7.native_input_changed"
+  modifyEnv fun current => observedInputs.setState (checked.setState current cache)
+    (retainedInputs.map (·.path))
+
+end NativeCoherence
+
 private def sourceInputs (env : Environment) (dependencies : Array DependencyIdentity) : CoreM (Array SourceInput) := do
+  let policyOwners := #[`LeanInformationAudit.RegistryTypes, `LeanInformationAudit.Registry,
+    `LeanInformationAudit.ReadoutProvenance, `LeanInformationAudit.Syntax]
+    |>.filter (fun name => (env.getModuleIdx? name).isSome)
+  NativeCoherence.validate (#[env.header.mainModule] ++ policyOwners ++ dependencies.map (·.owner))
   let mut paths := policyPaths.push (sourcePath env.header.mainModule)
   for dep in dependencies do
     if dep.owner.toString.startsWith "D5." || dep.owner.toString.startsWith "LeanInformationAudit." then
@@ -2297,7 +2571,8 @@ private def diagnosticProvenance (event : TemplateOccurrenceEvent)
     return provenance
   catch _ => return Json.null
 
-private def validate (event : TemplateOccurrenceEvent) (descriptor : Expr) : MetaM TemplateBindingCertificate := do
+private def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
+    (bindingOwner : Name) : MetaM TemplateBindingCertificate := do
   closed descriptor
   let .const name universeArgs := descriptor.getAppFn
     | throwError "unclassified_form:dtr.descriptor_head"
@@ -2365,6 +2640,9 @@ private def validate (event : TemplateOccurrenceEvent) (descriptor : Expr) : Met
     debit evidenceWork
     return { certificate with evidenceRef }
   let (certificate, _) ← compare.run { remaining := budget - argumentWork }
+  NativeCoherence.validate (#[plan.definitionOwner, plan.enrollmentOwner,
+    event.key.registrationModule, bindingOwner] ++
+    (plan.dependencies ++ certificate.argumentInputs ++ certificate.extractionInputs).map (·.owner))
   return certificate
 
 private initialize assessmentEvents : EnvExtension (Array TemplateOccurrenceKey) ←
@@ -2388,7 +2666,7 @@ private def assessUncached (event : TemplateOccurrenceEvent) (claim : Option Tem
         if let some diagnostic := claim.resolutionDiagnostic then throwError diagnostic
         let some descriptor := claim.descriptor
           | throwError "unclassified_form:dtr.missing_template"
-        let certificate ← validate event descriptor
+        let certificate ← validate event descriptor claim.owner
         pure <| TemplateBindingResult.declaredValidated certificate)
       (fun error => do
         let message ← error.toMessageData.toString
@@ -2453,6 +2731,8 @@ private def cacheCurrent (cached : CachedAssessment) (event : TemplateOccurrence
       return false
   try
     validateSourceInputs cached.inputs
+    NativeCoherence.validate (#[claim.owner, event.key.registrationModule] ++
+      cached.constants.map (fun (_, _, owner, _) => owner))
     return true
   catch _ => return false
 
@@ -2736,6 +3016,8 @@ private def isRepositoryModule (name : Name) : Bool :=
 /-- Complete source inputs for this module, independent of registry membership.
 A missing imported source is incomplete rather than an empty declaration set. -/
 def moduleInputs (env : Environment) (root : Name) : CoreM (Array TemplateAudit.SourceInput) := do
+  TemplateAudit.NativeCoherence.validate (#[root] ++
+    (if root == env.header.mainModule then env.header.imports.map (·.module) else #[]))
   let mut seen : NameSet := {}
   let mut pending := [root]
   let mut paths := TemplateAudit.policyPaths
