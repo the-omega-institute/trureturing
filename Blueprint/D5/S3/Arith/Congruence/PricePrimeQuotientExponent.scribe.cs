@@ -46,7 +46,11 @@ internal sealed class PricePrimeQuotientExponentDocument
                         + "divisibility hypothesis prevents natural-number division from "
                         + "silently truncating. The general theorem applies because 4 is "
                         + "positive, 4<17, and 17 and 4 are coprime."))),
-                DescribeRole.Theorem),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "oeis-a228558-price-seventeen-four-prime-exponent"),
+                    ResolutionKind.Proved)),
             Describe.Lean(
                 DescribeId.Create("price2013-a231329-result"),
                 DeclarationHandle.Create(Prefix + "result_a231329"),
@@ -59,7 +63,11 @@ internal sealed class PricePrimeQuotientExponentDocument
                         + "divisibility hypothesis prevents natural-number division from "
                         + "silently truncating. The general theorem applies because 4 is "
                         + "positive, 4<19, and 19 and 4 are coprime."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "oeis-a231329-price-nineteen-four-prime-exponent"),
+                    ResolutionKind.Proved)))));
 
     private static Formula GeneralFormula()
     {

@@ -24,6 +24,10 @@ $$\forall k \in \mathrm{Nat},\; (21 \mid 17^{k} + 4^{k}) \Rightarrow ((Prime\lef
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Congruence/PricePrimeQuotientExponent.result_a228558` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a228558-price-seventeen-four-prime-exponent` (proved) by `D5/S3/Arith/Congruence/PricePrimeQuotientExponent.result_a228558`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a228558-price-seventeen-four-prime-exponent","declaration_gid":"D5/S3/Arith/Congruence/PricePrimeQuotientExponent.result_a228558","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Robert Price (2013). *OEIS A228558, Numbers k such that (17^k + 4^k)/21 is prime*. URL: <https://oeis.org/A228558>.
@@ -37,6 +41,10 @@ For every natural exponent k, if 21 divides 17^k+4^k and the exact quotient (17^
 $$\forall k \in \mathrm{Nat},\; (23 \mid 19^{k} + 4^{k}) \Rightarrow ((Prime\left((19^{k} + 4^{k}) / (23)\right)) \Rightarrow (Prime\left(k\right)))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Congruence/PricePrimeQuotientExponent.result_a231329` (`✓ std3`). ∎
+
+*Resolves.* `Problems/oeis-a231329-price-nineteen-four-prime-exponent` (proved) by `D5/S3/Arith/Congruence/PricePrimeQuotientExponent.result_a231329`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a231329-price-nineteen-four-prime-exponent","declaration_gid":"D5/S3/Arith/Congruence/PricePrimeQuotientExponent.result_a231329","resolution_kind":"proved"} -->
 
 *Source.* Repository-derived.
 
