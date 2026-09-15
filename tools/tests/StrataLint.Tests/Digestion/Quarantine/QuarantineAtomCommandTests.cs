@@ -538,6 +538,8 @@ public sealed class QuarantineAtomCommandTests
         public CommandResult SettleBatch(IReadOnlyList<string> arguments) =>
             new(false, string.Empty, "settle-batch is not configured in this fixture");
 
+        public CommandResult SettleUpstream(IReadOnlyList<string> arguments) => throw Unsupported();
+
         public CommandResult SettleAtom(IReadOnlyList<string> arguments) => throw Unsupported();
         public ExplicitCommandResult EchoVerify(IReadOnlyList<string> arguments) => throw Unsupported();
         public ExplicitCommandResult GateAuthority(IReadOnlyList<string> arguments) => throw Unsupported();
