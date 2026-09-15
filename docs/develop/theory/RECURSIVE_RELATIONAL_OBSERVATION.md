@@ -957,3 +957,772 @@ $$
 范围：本批为纸面陈述与证明，未新增或运行 Lean 验证。单载体源码锚不覆盖第 6 节的多种类推广；第 7 节只处理支撑关系及共同中间元素，不恢复同一三元组的多条历史或证明档案。本文不声明消化或冻结机器状态。
 
 ## 追加锚（本行以下为增补区）
+
+## 9. 增补·普遍拼接保真的有限性边界
+
+**本批导航。** 本批在完整卷基准 `1f193e8045b4091637dd5483f218cfc4fbfb352a` 之上增补：第 9 节给出普遍拼接保真的有限性边界、任意端点交换的闭包分离判据及全部有限分划的超滤子完成；第 10 节列本批来源、边界与核验。本批扩充第 7 节的关系复合与完备化交换问题，不改判既有条目；对旧推论 3.6 的引用按第 6.1 节校正后的量词解释。基线叙述中的“本次”“本轮”仍指写下它的那一次工作，本批不改写它们。
+
+本节在 ZFC 中工作，层指标从 $0$ 开始。沿用有限实际像观察塔及关系完成的定义：
+
+$$
+K_U=\varprojlim_n Q_{U,n},
+\qquad
+\iota_U(u)=(q_{U,n}(u))_{n\in\mathbb N},
+$$
+
+以及
+
+$$
+\widehat T =
+\overline{(\iota_U\times\iota_V)[T]}
+\subseteq K_U\times K_V
+\qquad
+(T\subseteq U\times V).
+$$
+
+闭包始终取在所写的完成空间中，不将其与实际像混同。沿用定理 3.4、定义 4.1、定理 4.2 与第 7 节的记号和基本性质；关系代表的解释以第 6.1 节为准。[^rro9_repo]
+
+**定理 9.1（可数有限观察塔的普遍单点拼接保真，等价于有限层已分清全部身份）。** 设 $Y\ne\varnothing$，给定满射
+
+$$
+q_n:Y\twoheadrightarrow Q_n
+\qquad(n\in\mathbb N),
+$$
+
+其中每个 $Q_n$ 有限离散，并有
+
+$$
+p_n:Q_{n+1}\to Q_n,
+\qquad
+q_n=p_n\circ q_{n+1}.
+$$
+
+令
+
+$$
+K_Y=\varprojlim_n Q_n,
+\qquad
+\iota_Y(y)=(q_n(y))_{n\in\mathbb N}.
+$$
+
+取端点 $X=Z=\{\ast\}$，均配常值精确塔。对任意 $A,B\subseteq Y$，定义
+
+$$
+R_A=\{\ast\}\times A,
+\qquad
+S_B=B\times\{\ast\}.
+$$
+
+则以下三个条件等价：
+
+$$
+\begin{aligned}
+\mathrm{(a)}\quad&
+\forall A,B\subseteq Y,\qquad
+\widehat{S_B\circ R_A} =
+\widehat S_B\circ\widehat R_A;
+\\
+\mathrm{(b)}\quad&
+Y\text{ 有限，且 }\iota_Y\text{ 单射};
+\\
+\mathrm{(c)}\quad&
+\exists N\in\mathbb N,\qquad q_N\text{ 单射}.
+\end{aligned}
+$$
+
+这些条件成立时，还有
+
+$$
+\iota_Y[Y]=K_Y,
+$$
+
+因而完成空间是与 $Y$ 双射的有限离散空间。
+
+**证明。**
+
+首先，把单点端点测试精确化。由乘积拓扑中的闭包定义，
+
+$$
+\widehat R_A =
+\{\ast\}\times\overline{\iota_Y[A]},
+\qquad
+\widehat S_B =
+\overline{\iota_Y[B]}\times\{\ast\}.
+$$
+
+两种端点复合均为 $\{(\ast,\ast)\}$ 的子集，并且
+
+$$
+\widehat{S_B\circ R_A}\ne\varnothing
+\quad\Longleftrightarrow\quad
+A\cap B\ne\varnothing,
+$$
+
+$$
+\widehat S_B\circ\widehat R_A\ne\varnothing
+\quad\Longleftrightarrow\quad
+\overline{\iota_Y[A]}
+\cap
+\overline{\iota_Y[B]}
+\ne\varnothing.
+$$
+
+若 $A\cap B\ne\varnothing$，任取其中一个元素，其观察像就在上述两个闭包中。因此，条件 (a) 等价于
+
+$$
+\mathrm{(P)}\qquad
+\forall A,B\subseteq Y,\quad
+A\cap B=\varnothing
+\Longrightarrow
+\overline{\iota_Y[A]}
+\cap
+\overline{\iota_Y[B]}
+=\varnothing.
+$$
+
+第一步：非单射产生两个实际元素即可见的障碍。
+
+若 $\iota_Y$ 不单射，存在
+
+$$
+y_0\ne y_1,
+\qquad
+\iota_Y(y_0)=\iota_Y(y_1).
+$$
+
+取
+
+$$
+A=\{y_0\},
+\qquad
+B=\{y_1\}.
+$$
+
+则 $A\cap B=\varnothing$，但两个观察像的闭包包含同一个点。于是
+
+$$
+\widehat{S_B\circ R_A}=\varnothing,
+\qquad
+\widehat S_B\circ\widehat R_A=\{(\ast,\ast)\}.
+$$
+
+所以 (a) 蕴含 $\iota_Y$ 单射。这个障碍不依赖可数性、紧致性或可度量性。
+
+第二步：单射而无限时，仍会产生共同闭包点。
+
+反设 $\iota_Y$ 单射且 $Y$ 无限。在 ZFC 中可取两两不同的元素序列
+
+$$
+y_0,y_1,y_2,\ldots\in Y.
+$$
+
+对每个 $r\in\mathbb N$，令
+
+$$
+F_r =
+\overline{\{\iota_Y(y_j):j\ge r\}}
+\subseteq K_Y.
+$$
+
+这些集合非空、闭且递减。由 $K_Y$ 紧致，
+
+$$
+\bigcap_{r\in\mathbb N}F_r\ne\varnothing.
+$$
+
+取
+
+$$
+\eta\in\bigcap_{r\in\mathbb N}F_r.
+$$
+
+记逆极限坐标投影为 $\pi_n:K_Y\to Q_n$，并令
+
+$$
+V_n(\eta) =
+\{v\in K_Y:\pi_n(v)=\pi_n(\eta)\}.
+$$
+
+由塔的相容性，$V_n(\eta)$ 是递减的开闭邻域基：任意涉及有限多个层的邻域，都包含某个 $V_n(\eta)$。
+
+递归选择严格递增的自然数序列 $(j_n)$，使
+
+$$
+\iota_Y(y_{j_n})\in V_n(\eta).
+$$
+
+其存在性如下：已选定 $j_{n-1}$ 时，由
+
+$$
+\eta\in F_{j_{n-1}+1}
+$$
+
+及 $V_n(\eta)$ 为开邻域，存在 $j>j_{n-1}$ 使
+
+$$
+\iota_Y(y_j)\in V_n(\eta).
+$$
+
+可以取满足条件的最小自然数 $j$。初始步骤同理由 $\eta\in F_0$ 得到。
+
+对任意固定的 $m$，当 $n\ge m$ 时，
+
+$$
+\iota_Y(y_{j_n})\in V_n(\eta)\subseteq V_m(\eta).
+$$
+
+故
+
+$$
+\iota_Y(y_{j_n})\longrightarrow\eta.
+$$
+
+现在定义
+
+$$
+A=\{y_{j_{2r}}:r\in\mathbb N\},
+\qquad
+B=\{y_{j_{2r+1}}:r\in\mathbb N\}.
+$$
+
+由于原序列的元素互异，$A\cap B=\varnothing$；由于两个子序列均收敛到 $\eta$，
+
+$$
+\eta\in
+\overline{\iota_Y[A]}
+\cap
+\overline{\iota_Y[B]}.
+$$
+
+这违反 (P)。
+
+事实上，这个障碍在每个有限层都有明确表现：
+
+$$
+\forall n\in\mathbb N,\qquad
+\pi_n(\eta)\in q_n[A]\cap q_n[B],
+$$
+
+尽管
+
+$$
+A\cap B=\varnothing.
+$$
+
+因此，每层都存在候选中间读数，并不提供同一个实际中间元素。
+
+结合第一步与第二步，得到 (a) 蕴含 (b)。
+
+第三步：有限且观察单射，必在某个有限层已经单射。
+
+假设 (b)。对每对不同的 $y,y'\in Y$，定义其首次分离层
+
+$$
+n(y,y') =
+\min\{n\in\mathbb N:q_n(y)\ne q_n(y')\}.
+$$
+
+该集合非空，因为 $\iota_Y$ 单射。令
+
+$$
+N =
+\max\Bigl(
+\{0\}
+\cup
+\{n(y,y'):y,y'\in Y,\ y\ne y'\}
+\Bigr).
+$$
+
+由于 $Y$ 有限，这个最大值存在。
+
+若 $q_N(y)=q_N(y')$，则沿塔下投影，在所有不高于 $N$ 的层都有相同读数。若 $y\ne y'$，这与第 $n(y,y')$ 层已经分离矛盾。因此 $q_N$ 单射，得到 (c)。
+
+反之，若 (c) 成立，则 $Y$ 单射到有限集合 $Q_N$，所以 $Y$ 有限；并且
+
+$$
+\iota_Y(y)=\iota_Y(y')
+\Longrightarrow
+q_N(y)=q_N(y')
+\Longrightarrow
+y=y'.
+$$
+
+故 (c) 蕴含 (b)。
+
+第四步：有限且观察单射，足以通过所有单点测试。
+
+假设 (b)。任意 $A,B\subseteq Y$ 的观察像都是 Hausdorff 空间 $K_Y$ 中的有限集，因而闭。于是
+
+$$
+\overline{\iota_Y[A]}
+\cap
+\overline{\iota_Y[B]} =
+\iota_Y[A]\cap\iota_Y[B] =
+\iota_Y[A\cap B].
+$$
+
+故 (P) 成立，从而 (a) 成立。
+
+最后，$\iota_Y[Y]$ 是有限闭集，又由实际像塔的基本性质稠密于 $K_Y$，因此
+
+$$
+K_Y=\iota_Y[Y].
+$$
+
+有限 Hausdorff 空间离散。证毕。
+
+假设与选择原则的使用边界。
+
+有限像保证完成空间的紧致性，也使“某层单射”推出载体有限。可数塔提供了上述可数柱邻域基；第二步正是在这里把紧致聚集现象转换成一条可拆成两部分的收敛序列。证明没有另行调用可度量性定理，所用的是更具体的可数柱邻域基；当然，该完成空间本身可度量。
+
+通常选择原理的一项明确使用，是从任意无限 $Y$ 取出互异元素序列。给定该序列与题设紧致性之后，子列指标可以用自然数最小元递归选定。有限层分离、有限集合闭性及非单射障碍均不需要无限选择。本节记录的是上述证明的依赖，不声称这是最弱的选择公理配置。
+
+**定理 9.2（紧致中间空间中，单点测试已经刻画任意端点的普遍交换）。** 设 $Y$ 为集合，$K$ 为紧致 Hausdorff 空间，$j:Y\to K$ 为映射。本定理不要求中间观察系统可数。
+
+以下两个条件等价：
+
+闭包分离条件：
+
+$$
+\forall A,B\subseteq Y,\quad
+A\cap B=\varnothing
+\Longrightarrow
+\overline{j[A]}\cap\overline{j[B]}=\varnothing.
+$$
+
+普遍端点交换条件：对任意集合 $X,Z$、任意拓扑空间 $L_X,L_Z$、任意映射
+
+$$
+j_X:X\to L_X,
+\qquad
+j_Z:Z\to L_Z,
+$$
+
+以及任意关系
+
+$$
+R\subseteq X\times Y,
+\qquad
+S\subseteq Y\times Z,
+$$
+
+定义
+
+$$
+\widehat R =
+\overline{(j_X\times j)[R]},
+\qquad
+\widehat S =
+\overline{(j\times j_Z)[S]},
+$$
+
+$$
+\widehat{S\circ R} =
+\overline{(j_X\times j_Z)[S\circ R]}.
+$$
+
+则恒有
+
+$$
+\widehat{S\circ R} =
+\widehat S\circ\widehat R.
+$$
+
+特别地，在定理 9.1 的可数有限实际像塔假设下，(a)、(b)、(c) 还等价于：对任意端点观察塔及任意关系 $R,S$，上述端点交换成立。**不需要端点实际像闭，也不需要端点观察映射单射或满射到完成空间。**
+
+**证明。**
+
+普遍端点交换蕴含闭包分离，只需取两个单点端点，并使用定理 9.1 证明开头的单点计算。该计算本身没有使用中间塔的可数性。
+
+下面证明反方向。
+
+先证明由中间紧致性保证的包含方向。
+
+令
+
+$$
+\mathcal F =
+\{(\xi,\eta,\zeta)\in L_X\times K\times L_Z:
+(\xi,\eta)\in\widehat R,\quad
+(\eta,\zeta)\in\widehat S\}.
+$$
+
+由于 $\widehat R,\widehat S$ 闭，$\mathcal F$ 闭。其端点投影恰为
+
+$$
+C =
+\widehat S\circ\widehat R.
+$$
+
+中间因子 $K$ 紧致，保证 $C$ 闭。具体地，若 $(\xi,\zeta)\notin C$，则对每个 $\eta\in K$，存在开邻域
+
+$$
+U_\eta\ni\xi,\qquad
+H_\eta\ni\eta,\qquad
+V_\eta\ni\zeta
+$$
+
+使
+
+$$
+(U_\eta\times H_\eta\times V_\eta)\cap\mathcal F =
+\varnothing.
+$$
+
+从 $(H_\eta)_{\eta\in K}$ 中取有限子覆盖，再分别交对应的 $U_\eta$ 与 $V_\eta$，便得到 $(\xi,\zeta)$ 的一个与 $C$ 不交的乘积开邻域。因此 $C$ 闭。
+
+每个实际复合见证 $y\in Y$ 都给出完成空间中的见证 $j(y)$，所以
+
+$$
+(j_X\times j_Z)[S\circ R]\subseteq C.
+$$
+
+取闭包得到
+
+$$
+\widehat{S\circ R}
+\subseteq
+\widehat S\circ\widehat R.
+$$
+
+再证明闭包分离排除额外端点。
+
+设
+
+$$
+(\xi,\zeta)\in\widehat S\circ\widehat R.
+$$
+
+取 $\eta\in K$ 使
+
+$$
+(\xi,\eta)\in\widehat R,
+\qquad
+(\eta,\zeta)\in\widehat S.
+$$
+
+任取开邻域
+
+$$
+U\ni\xi,
+\qquad
+V\ni\zeta.
+$$
+
+定义对应的实际中间见证集合
+
+$$
+A_U =
+\{y\in Y:
+\exists x\in X,\quad
+j_X(x)\in U\ \land\ (x,y)\in R\},
+$$
+
+$$
+B_V =
+\{y\in Y:
+\exists z\in Z,\quad
+j_Z(z)\in V\ \land\ (y,z)\in S\}.
+$$
+
+对 $\eta$ 的任意开邻域 $H$，由 $(\xi,\eta)\in\widehat R$ 可知
+
+$$
+(U\times H)\cap(j_X\times j)[R]\ne\varnothing.
+$$
+
+故 $H\cap j[A_U]\ne\varnothing$。因此
+
+$$
+\eta\in\overline{j[A_U]}.
+$$
+
+同理，
+
+$$
+\eta\in\overline{j[B_V]}.
+$$
+
+闭包分离条件的逆否命题给出
+
+$$
+A_U\cap B_V\ne\varnothing.
+$$
+
+取 $y\in A_U\cap B_V$。根据定义，存在 $x\in X$ 与 $z\in Z$，使
+
+$$
+j_X(x)\in U,\qquad
+j_Z(z)\in V,
+$$
+
+$$
+(x,y)\in R,\qquad
+(y,z)\in S.
+$$
+
+于是
+
+$$
+(x,z)\in S\circ R,
+$$
+
+从而
+
+$$
+(U\times V)\cap(j_X\times j_Z)[S\circ R]\ne\varnothing.
+$$
+
+由于 $U,V$ 任意，
+
+$$
+(\xi,\zeta)\in\widehat{S\circ R}.
+$$
+
+这证明了反向包含，故等式成立。证毕。
+
+适用边界。
+
+证明只在保证闭关系复合闭合的方向使用中间空间紧致性；排除虚假端点的方向使用闭包分离条件。两个端点空间甚至不必紧致或 Hausdorff。因而，端点完成所增加的点，以及端点实际像可能不闭，都不构成这里的额外障碍。
+
+上述结论比较的是两个完成关系，本身不保证关系像闭，闭包符号不能据此删去。按第 6.1 节对推论 3.6 的校正，对关系 $T\subseteq U\times V$ 及观察映射 $e:U\times V\to L_U\times L_V$，若 $e[T]$ 闭，则 $\overline{e[T]}=e[T]$，每个完成关系点已经有某个 $t\in T$ 作为实际关系代表，无须再为该存在性附加实现假设。在此闭像条件下，代表唯一当且仅当 $e|_T$ 单射。对一个指定实际端点对 $t_0$，$e(t_0)\in\overline{e[T]}$ 只保证存在 $t\in T$ 与 $t_0$ 观察相同；要推出 $t_0\in T$，还可要求 $T$ 对 $e$ 的纤维饱和，或要求 $e$ 在整个原始端点乘积上单射。整个环境 $L_U\times L_V$ 的每一点都有实际端点代表，则要求 $e$ 对该环境满射；若要求代表均取自 $T$，则要求 $e[T]=L_U\times L_V$。这些量词均不能与完成关系内部的代表存在性混同。[^rro9_repo]
+
+**命题 9.3（全部有限分划给出无限反例，但单点测试与一般端点交换仍然等价）。** 设 $Y$ 为任意无限集合。以 $Y$ 的全部有限分划为观察指标：每个分划只含非空块，细分划向粗分划映射到包含它的块。记这一共滤指标系统为 $\mathfrak P_f(Y)$，并定义
+
+$$
+q_{\mathcal P}:Y\twoheadrightarrow\mathcal P,
+\qquad
+q_{\mathcal P}(y)=\text{分划 }\mathcal P\text{ 中包含 }y\text{ 的块},
+$$
+
+$$
+K_Y^{\mathrm{all}} =
+\varprojlim_{\mathcal P\in\mathfrak P_f(Y)}\mathcal P.
+$$
+
+则 $K_Y^{\mathrm{all}}$ 可识别为 $Y$ 上全部超滤子组成的 Stone 空间，即离散空间 $Y$ 的 Stone–Čech 完成；实际元素 $y$ 对应主超滤子
+
+$$
+\delta_y=\{A\subseteq Y:y\in A\}.
+$$
+
+有限分划与超滤子的标准对应见文献中的有限分划刻画。[^rro9_ultrafilter]
+
+对每个 $A\subseteq Y$，记
+
+$$
+A^\ast =
+\{\mathfrak u\in K_Y^{\mathrm{all}}:A\in\mathfrak u\}.
+$$
+
+则
+
+$$
+\overline{\delta[A]}=A^\ast,
+$$
+
+并且对所有 $A,B\subseteq Y$，
+
+$$
+\overline{\delta[A]}
+\cap
+\overline{\delta[B]} =
+(A\cap B)^\ast.
+$$
+
+因此，所有单点端点测试均通过，但 $Y$ 无限，且没有任何有限分划层能够单射。这是**去掉可数塔限制后**对有限性结论的反例，不是对定理 9.1 的反例。
+
+此外，对这个固定的中间完成，任意端点观察塔及任意关系仍满足
+
+$$
+\widehat{S\circ R} =
+\widehat S\circ\widehat R.
+$$
+
+端点无须也采用全部有限分划。
+
+**证明。**
+
+首先，有限分划的总集合是一个集合，任意有限组分划都有由非空块交组成的共同细化。因此，上述系统确为共滤的有限实际像观察系统。
+
+每个分划空间有限离散，逆极限是其乘积中由相容等式确定的闭子空间。在 ZFC 中，由乘积紧致性可知 $K_Y^{\mathrm{all}}$ 紧致 Hausdorff。每个实际元素给出一条相容线程，故它非空。
+
+线程与超滤子的对应。
+
+给定一条线程
+
+$$
+\xi=(C_{\mathcal P})_{\mathcal P\in\mathfrak P_f(Y)},
+\qquad
+C_{\mathcal P}\in\mathcal P,
+$$
+
+定义
+
+$$
+\mathfrak u_\xi =
+\{A\subseteq Y:
+\exists\mathcal P\in\mathfrak P_f(Y),\quad
+C_{\mathcal P}\subseteq A\}.
+$$
+
+它包含 $Y$ 而不包含空集，并显然向上封闭。
+
+若 $A,B\in\mathfrak u_\xi$，分别取所需分划 $\mathcal P,\mathcal Q$，再取共同细化 $\mathcal R$。线程相容性给出
+
+$$
+C_{\mathcal R}
+\subseteq
+C_{\mathcal P}\cap C_{\mathcal Q}
+\subseteq A\cap B.
+$$
+
+故 $A\cap B\in\mathfrak u_\xi$。
+
+对任意 $A\subseteq Y$，考察删去空块后的二分划
+
+$$
+\{A,Y\setminus A\}\setminus\{\varnothing\}.
+$$
+
+线程选中的块包含于 $A$ 或 $Y\setminus A$，所以两者之一属于 $\mathfrak u_\xi$；两者不能同时属于这个真滤子。因此 $\mathfrak u_\xi$ 是超滤子。
+
+反之，一个超滤子在每个有限分划中恰含一个块：不能含两个不交块；若一个块也不含，则所有块的补集都属于它，其有限交为空，矛盾。令 $C_{\mathcal P}$ 为该唯一块。向上封闭性保证这些选择在细化下相容。两个构造互为逆。
+
+指定线程的某个分划坐标为一个块 $C$，恰对应超滤子满足 $C\in\mathfrak u$。因此，该对应也保持柱拓扑。
+
+子集闭包的精确计算。
+
+由二分划可知，对任意 $A\subseteq Y$，$A^\ast$ 开闭，且
+
+$$
+K_Y^{\mathrm{all}}\setminus A^\ast =
+(Y\setminus A)^\ast.
+$$
+
+这些集合构成拓扑基，并满足
+
+$$
+A^\ast\cap B^\ast=(A\cap B)^\ast.
+$$
+
+由于 $\delta[A]\subseteq A^\ast$ 且 $A^\ast$ 闭，
+
+$$
+\overline{\delta[A]}\subseteq A^\ast.
+$$
+
+反过来，设 $\mathfrak u\in A^\ast$，并取它的任意基本邻域 $C^\ast$。则
+
+$$
+A\in\mathfrak u,
+\qquad
+C\in\mathfrak u,
+$$
+
+所以
+
+$$
+A\cap C\in\mathfrak u,
+\qquad
+A\cap C\ne\varnothing.
+$$
+
+取 $y\in A\cap C$，便有
+
+$$
+\delta_y\in\delta[A]\cap C^\ast.
+$$
+
+故 $\mathfrak u\in\overline{\delta[A]}$，证明
+
+$$
+\overline{\delta[A]}=A^\ast.
+$$
+
+取 $A=Y$ 也得到实际像稠密。
+
+于是
+
+$$
+\overline{\delta[A]}
+\cap
+\overline{\delta[B]} =
+(A\cap B)^\ast,
+$$
+
+而
+
+$$
+(A\cap B)^\ast\ne\varnothing
+\quad\Longleftrightarrow\quad
+A\cap B\ne\varnothing.
+$$
+
+反向蕴含由交集中的任意实际元素所确定的主超滤子给出。因此所有单点端点测试均成立。
+
+与此同时，$\delta$ 单射，因为不同实际元素可由二分划分开；但 $Y$ 无限，所以它不可能单射到任何一个有限分划的块集合。故去掉可数性后，条件 (a) 可以成立，而条件 (b)、(c) 均不成立。
+
+一般端点的复合也成立。
+
+这里已有紧致中间空间和闭包分离条件，故定理 9.2 直接适用。为明确实际见证如何产生，设
+
+$$
+(\xi,\mathfrak u)\in\widehat R,
+\qquad
+(\mathfrak u,\zeta)\in\widehat S.
+$$
+
+对任意端点邻域 $U\ni\xi$、$V\ni\zeta$，采用定理 9.2 中的实际见证集合 $A_U,B_V$。由闭包定义及刚证明的闭包公式，
+
+$$
+\mathfrak u\in\overline{\delta[A_U]}=A_U^\ast,
+\qquad
+\mathfrak u\in\overline{\delta[B_V]}=B_V^\ast.
+$$
+
+所以
+
+$$
+A_U,B_V\in\mathfrak u,
+\qquad
+A_U\cap B_V\ne\varnothing.
+$$
+
+交集中的一个实际 $y$，连同其定义提供的 $x,z$，就在 $U\times V$ 中给出实际复合端点。反向包含因此成立；另一方向由中间紧致性成立。这是闭包和滤子有限交性质的直接证明，不以函子保复合或保弱拉回的名称代替论证。证毕。
+
+可数性、选择原则与实现性的边界。
+
+该反例保留了每层有限、实际像满射、共滤相容和完成空间紧致等条件；改变的是观察指标不再要求可数。定理 9.1 中提取收敛实际子列的一步不能推广到这里：若主点序列 $(\delta_{y_n})$ 的实际元素互异，取
+
+$$
+A=\{y_{2n}:n\in\mathbb N\},
+$$
+
+则序列的偶数项位于开闭集 $A^\ast$，奇数项位于其补集，因此这条序列不可能收敛。同样的分割论证适用于任何互异主点子列。
+
+无限 $Y$ 的余有限子集构成真滤子；由超滤子引理扩张得到的超滤子不含任何有限集，因而非主。[^rro9_ultrafilter] 所以
+
+$$
+\delta[Y]\subsetneq K_Y^{\mathrm{all}},
+$$
+
+尽管所有上述端点交换都成立。这里的任意指标紧致性与超滤子存在性均在 ZFC 中使用，不据此主张无选择或有效构造版本。
+
+这里使用全部有限分划组成的指标系统，不能将它视为定理 9.1 的可数塔。端点交换不把非主完成见证变成实际元素，也不包含关于其他关系提升定义或任意函子弱拉回保持性的断言。
+
+## 10. 本批的来源、边界与核验
+
+**文献表态。** 第 9 节沿用完整卷基准 `1f193e8045b4091637dd5483f218cfc4fbfb352a` 中定理 3.4、定义 4.1、定理 4.2、第 6.1 节及第 7 节的关系完成框架。[^rro9_repo] 有限分划的超滤子刻画、主超滤子、余有限滤子的非主超滤子扩张，以及离散空间的 Stone–Čech 完成，均是标准构件；Leinster 第 1 节给出相应定义、例子与命题，并将有限分划刻画归于 Galvin 与 Horn。[^rro9_ultrafilter] 定理 9.1、定理 9.2 与命题 9.3 的闭包公式及端点交换在正文给出纸面论证，不主张全球原创性，也不将这些完整陈述归为所引文献或 Mathlib 已直接证明的同名结果。
+
+源码核对固定在 Mathlib 提交 `db584cd6d46c92f209a44c0f1c829460d327499d`。在 [Mathlib/Topology/Compactification/StoneCech.lean](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Topology/Compactification/StoneCech.lean) 中，`ultrafilterBasis_is_basis`、`ultrafilter_isOpen_basic`、`ultrafilter_isClosed_basic` 对应 $A^\ast$ 的开闭基，`ultrafilter_compact` 与 `Ultrafilter.t2Space` 对应超滤子空间的紧致 Hausdorff 性，`denseRange_pure` 与 `isDenseEmbedding_pure` 对应离散载体的主超滤子稠密嵌入，`ultrafilter_extend_extends` 与 `continuous_ultrafilter_extend` 给出到紧致 Hausdorff 空间的连续延拓构件。在 [Mathlib/Topology/Ultrafilter.lean](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Topology/Ultrafilter.lean) 中，`mem_closure_iff_ultrafilter` 刻画闭包成员资格，`Ultrafilter.clusterPt_iff` 刻画超滤子的聚点与收敛关系。这些核对限于相关声明及其源码，不构成本批三条结果的 Lean 证明。
+
+**产地。** 追加结构采用 theory-volume-template 及其 APPEND 模板，协作载体为 sshx；ChatGPT Pro 提供主数学推理与正式结果草稿，Codex 依据该草稿、固定仓库来源及文献作源码核对与格式实施。
+
+**本批不主张的。** 本批是 ZFC 下的纸面结果，未新增或运行 Lean，未 kernel-verified。可数塔、紧致中间空间及所用选择原则的边界分别见三条结果正文；不把非主超滤子当作实际元素，不断言无选择或有效构造版本。
+
+[^rro9_repo]: 完整卷固定提交 `1f193e8045b4091637dd5483f218cfc4fbfb352a`，[RECURSIVE_RELATIONAL_OBSERVATION.md](https://github.com/the-omega-institute/trureturing/blob/1f193e8045b4091637dd5483f218cfc4fbfb352a/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)：定理 3.4“联合关系的有限观察闭包”、定义 4.1“有限观察塔”、定理 4.2“观察完备化的基本性质”、第 6.1 节“第 3.6 与 5.1 条：闭像、关系代表与环境满射”，以及第 7 节“观察完备化与共同中间见证的关系复合”。旧推论 3.6 的实现性措辞按第 6.1 节解释。
+
+[^rro9_ultrafilter]: Tom Leinster, *Codensity and the ultrafilter monad*, *Theory and Applications of Categories* **28** (2013), 332–370，[arXiv:1209.3606v3](https://arxiv.org/html/1209.3606v3)。标准构件对应第 1 节定义 1.1–1.2、例 1.3–1.4、命题 1.5（Galvin 与 Horn），以及该节末尾关于离散空间 Stone–Čech 完成与超滤子的说明。本批核对其 HTML 正文；本节所需的闭包公式及端点复合等式在正文直接证明。
+
+## 追加锚（本行以下为增补区）
