@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System.Text;
 using System.Text.Json;
 using StrataLint.Cli;
@@ -9,28 +10,47 @@ namespace StrataLint.Tests;
 public sealed class UpstreamConsumerTests
 {
     [Theory]
-    [InlineData("settle")]
-    [InlineData("quarantine")]
-    public void SiblingWritersRejectUpstreamWithoutWrites(string verb)
+    [InlineData("settle", "--request")]
+    [InlineData("settle", "--clear")]
+    [InlineData("quarantine", "--request")]
+    [InlineData("quarantine", "--clear")]
+    public void SiblingWritersRejectUpstreamWithoutWrites(string verb, string option)
     {
         var fixture = AtomContextFixture.Create("## Claim\n\nProse.\n");
         var entry = Settled(fixture.Ledger.RequireDigestionEntries().Single());
         fixture = fixture.WithEntries([entry]);
         var raw = WithCas(fixture);
         var gateway = new FakeRepositoryGateway(RawChangeSet.Create([]), raw, raw);
+        using var temporary = new TemporaryDirectory();
+        foreach (var file in raw.Entries)
+        {
+            var path = Path.Combine(temporary.Path, file.Path);
+            Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+            File.WriteAllBytes(path, file.Bytes.ToArray());
+        }
+        var shardPath = Path.Combine(temporary.Path, PathFor(entry));
+        var before = File.ReadAllBytes(shardPath);
         var request = $"atom_id = '{entry.AtomId}'\njustification = 'Reason'\n" + (verb == "settle"
             ? "previous_atom_id = 'source-boundary'\nnext_atom_id = 'source-boundary'\n"
             : "blocker_class = 'missing-prerequisite'\nreentry_condition = 'Supply proof'\n");
         var writes = 0;
-        var args = new[] { "--request", "request.toml", "--base", "baseline" };
+        void ApplyUpdates(string root, RawRepositorySnapshot current, ImmutableArray<IngestCommand.LedgerUpdate> updates)
+        {
+            writes++;
+            IngestCommand.ApplyLedgerUpdatesAtomically(root, current, updates);
+        }
+        var args = new[] { option, option == "--clear" ? entry.AtomId : "request.toml", "--base", "baseline" };
         var result = verb == "settle"
-            ? SettleAtomCommand.Run("synthetic", gateway, args, BackfillInventoryWriter.WriteAtom,
-                (_, _) => [.. Encoding.UTF8.GetBytes(request)], (_, _, _) => writes++)
-            : QuarantineAtomCommand.Run("synthetic", gateway, args, BackfillInventoryWriter.WriteAtom,
-                (_, _) => [.. Encoding.UTF8.GetBytes(request)], (_, _, _) => writes++);
+            ? SettleAtomCommand.Run(temporary.Path, gateway, args, BackfillInventoryWriter.WriteAtom,
+                (_, _) => [.. Encoding.UTF8.GetBytes(request)], ApplyUpdates)
+            : QuarantineAtomCommand.Run(temporary.Path, gateway, args, BackfillInventoryWriter.WriteAtom,
+                (_, _) => [.. Encoding.UTF8.GetBytes(request)], ApplyUpdates);
         Assert.False(result.Success);
-        Assert.Contains("UPSTREAM_PRESENT", result.Error, StringComparison.Ordinal);
+        Assert.Empty(result.Output);
+        var errorPrefix = verb == "settle" ? "SETTLE_INVALID" : "QUARANTINE_INVALID";
+        Assert.Equal($"{errorPrefix} UPSTREAM_PRESENT atom_id={entry.AtomId}\n", result.Error);
         Assert.Equal(0, writes);
+        Assert.Equal(before, File.ReadAllBytes(shardPath));
     }
 
     [Fact]
