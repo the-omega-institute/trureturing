@@ -45,7 +45,11 @@ internal sealed class PerryLeastFactorialDivisibleByPrefixLcmDocument
                         + "in S(n) has p dividing k!, so prime factorial divisibility "
                         + "implies p at most k. The upper bound uses Bertrand's prime gap "
                         + "and a prime-power factorial estimate, including the square case."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "oeis-a094802-perry-least-factorial-divisible-by-prefix-lcm"),
+                    ResolutionKind.Proved)))));
 
     private static Formula EndpointFormula()
     {

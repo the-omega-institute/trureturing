@@ -24,6 +24,10 @@ $$\forall n \in \mathrm{Nat}, p \in \mathrm{Nat},\; ((5 \le n) \land ((Prime\lef
 
 *Proof.* Machine-checked in Lean as `D5/S3/Factorization/PerryLeastFactorialDivisibleByPrefixLcm.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a094802-perry-least-factorial-divisible-by-prefix-lcm` (proved) by `D5/S3/Factorization/PerryLeastFactorialDivisibleByPrefixLcm.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a094802-perry-least-factorial-divisible-by-prefix-lcm","declaration_gid":"D5/S3/Factorization/PerryLeastFactorialDivisibleByPrefixLcm.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Jon Perry (2004). *OEIS A094802, a(n) = smallest k such that all of 1 through n divides k!*. URL: <https://oeis.org/A094802>.
