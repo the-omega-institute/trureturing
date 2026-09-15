@@ -17,7 +17,8 @@ namespace Trureturing.Truth;
 /// This is a correctness boundary, NOT a security sandbox: the private constructor keeps ordinary code
 /// from fabricating a "verified" value, but reflection or unsafe code in a full-trust process can still
 /// bypass it. Authenticity comes from the out-of-band digest (and, for provenance, from independently
-/// re-deriving the bundle and re-querying the commit's checks), never from this type's access modifiers.
+/// re-deriving the bundle and selecting its dev push evidence via <see cref="TruthReleasePushRunSelector"/>),
+/// never from this type's access modifiers.
 /// </para>
 /// </summary>
 public sealed class VerifiedTruthRelease

@@ -53,12 +53,16 @@ internal static class FileMapPolicy
     private static readonly IReadOnlyDictionary<string, string> DataVerifierImplementations =
         new Dictionary<string, string>(StringComparer.Ordinal)
         {
+            ["CommonExecutionEvidence"] = "tools/StrataLint.EngineeringScope/CommonExecutionEvidence.cs",
+            ["EngineeringProjectRegistry"] = "tools/StrataLint.Engine/RepositoryIo/EngineeringProjectRegistry.cs",
+            ["JudgeSeedRegistration"] = "tools/scripts/report/dotnet_producer.py",
             ["BackfillInventoryLoader"] = BackfillLoaderPath,
             ["FileMapLoader"] = FileMapLoaderPath,
             ["FrozenStateRecordLoader"] = FrozenStateRecordLoaderPath,
             ["GateAuthorityRootCatalogLoader"] = GateAuthorityRootCatalogLoaderPath,
             ["LibraryNoteCatalog"] = LibraryNoteCatalogPath,
             ["LeanReportSelection"] = "tools/scripts/report/lean-report-selection.py",
+            ["PackageMaterialRegistry"] = "tools/StrataLint.EngineeringScope/PackageMaterialRegistry.cs",
             ["ProblemCandidateCatalog"] = ProblemCandidateCatalogPath,
             ["RegistryLoader"] = RegistryLoaderPath,
             ["ScribeEmitter"] = ScribeEmitterPath,

@@ -7,6 +7,89 @@ public sealed class ResourceObservationLibraryTests
 {
     private const string LibraryPath = "tools/scripts/lib/resource-observation-lib.sh";
 
+    [Theory]
+    [InlineData("D5/Probe.lean", "D5/Probe.lean", 0)]
+    [InlineData("D5/Space Name.lean", "D5/Space\\ Name.lean", 23)]
+    public void LeanInputDiagnosticsPreserveSourceArgumentsAndCommandExit(
+        string source, string escapedSource, int commandExit)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var temporary = new TemporaryDirectory();
+        var proc = InstallLeanInputFixture(temporary, source);
+
+        var result = Run(temporary, LeanInputSampleScript,
+            $"RESOURCE_OBSERVATION_PROC_ROOT={proc}", $"COMMAND_EXIT={commandExit}");
+
+        Assert.Equal(commandExit, result.ExitCode);
+        var output = Encoding.UTF8.GetString(result.StandardOutput);
+        Assert.Contains($"RESOURCE_LEAN_INPUT sequence=0 phase=baseline pid=100 status=OBSERVED source={escapedSource}\n",
+            output, StringComparison.Ordinal);
+        Assert.Contains($"RESOURCE_LEAN_INPUT sequence=0 phase=final pid=100 status=OBSERVED source={escapedSource}\n",
+            output, StringComparison.Ordinal);
+        Assert.DoesNotContain("private-value", output, StringComparison.Ordinal);
+        Assert.DoesNotContain("Unrelated.lean", output, StringComparison.Ordinal);
+        Assert.DoesNotContain("Option.lean", output, StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("missing-process", "executable-unavailable", 0)]
+    [InlineData("missing-cmdline", "cmdline-unavailable", 23)]
+    [InlineData("unreadable-cmdline", "cmdline-unavailable", 0)]
+    [InlineData("no-proc", "proc-unavailable", 23)]
+    public void UnavailableLeanInputDiagnosticsDoNotChangeCommandExit(
+        string fault, string reason, int commandExit)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var temporary = new TemporaryDirectory();
+        var proc = InstallLeanInputFixture(temporary, "D5/Probe.lean");
+        var cmdline = Path.Combine(proc, "100/cmdline");
+        if (fault == "missing-process") Directory.Delete(Path.Combine(proc, "100"), true);
+        if (fault == "missing-cmdline") File.Delete(cmdline);
+        if (fault == "unreadable-cmdline") File.SetUnixFileMode(cmdline, UnixFileMode.None);
+        if (fault == "no-proc") proc = Path.Combine(temporary.Path, "absent-proc");
+        try
+        {
+            var result = Run(temporary, LeanInputSampleScript,
+                $"RESOURCE_OBSERVATION_PROC_ROOT={proc}", $"COMMAND_EXIT={commandExit}");
+            Assert.Equal(commandExit, result.ExitCode);
+            var output = Encoding.UTF8.GetString(result.StandardOutput);
+            Assert.Contains("RESOURCE_LEAN_INPUT sequence=0 phase=baseline", output, StringComparison.Ordinal);
+            Assert.Contains($"status=UNAVAILABLE reason={reason}", output, StringComparison.Ordinal);
+            Assert.Contains($"phase=final stall_cpu_threshold_percent=5 stall_window_seconds=600 command_exit_status={commandExit}",
+                output, StringComparison.Ordinal);
+            Assert.DoesNotContain("status=OBSERVED source=", output, StringComparison.Ordinal);
+        }
+        finally
+        {
+            if (fault == "unreadable-cmdline") File.SetUnixFileMode(cmdline, UnixFileMode.UserRead | UnixFileMode.UserWrite);
+        }
+    }
+
+    private const string LeanInputSampleScript = """
+        set -euo pipefail
+        source "$1"
+        resource_observation_process_values() {
+          printf '2\t5\tpid:100,ppid:99,pgid:99,rss_kb:200,cpu:00:00:02;pid:101,ppid:99,pgid:99,rss_kb:300,cpu:00:00:03\n'
+        }
+        resource_observe_periodically() { return 0; }
+        observed_command() { return "$COMMAND_EXIT"; }
+        resource_observe_run_periodic observed_command
+        """;
+
+    private static string InstallLeanInputFixture(TemporaryDirectory temporary, string source)
+    {
+        var proc = Path.Combine(temporary.Path, "proc");
+        foreach (var pid in new[] { "100", "101", "500" }) Directory.CreateDirectory(Path.Combine(proc, pid));
+        File.CreateSymbolicLink(Path.Combine(proc, "100/exe"), "/fixture/toolchain/bin/lean");
+        File.CreateSymbolicLink(Path.Combine(proc, "101/exe"), "/fixture/toolchain/bin/worker");
+        File.CreateSymbolicLink(Path.Combine(proc, "500/exe"), "/fixture/toolchain/bin/lean");
+        File.WriteAllText(Path.Combine(proc, "100/cmdline"),
+            $"/fixture/toolchain/bin/lean\0--run\0{source}\0--private=private-value\0--output=Option.lean\0", new UTF8Encoding(false));
+        File.WriteAllText(Path.Combine(proc, "101/cmdline"), "lean\0Unrelated.lean\0", new UTF8Encoding(false));
+        File.WriteAllText(Path.Combine(proc, "500/cmdline"), "lean\0Unrelated.lean\0", new UTF8Encoding(false));
+        return proc;
+    }
+
     [Fact]
     public void UnreadableSourcesEmitUnavailableForEveryField()
     {

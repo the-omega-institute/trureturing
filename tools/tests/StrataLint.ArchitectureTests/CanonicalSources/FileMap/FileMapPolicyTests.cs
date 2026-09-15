@@ -8,21 +8,95 @@ namespace StrataLint.ArchitectureTests;
 public sealed partial class FileMapPolicyTests
 {
     [Fact]
-    public void LeanReportConfigurationIsAdmittedByRepositoryPathPolicy()
+    public void LeanReportConfigurationIsAdmittedWithItsRuntimeVerifier()
+    {
+        const string path = "lean-report-inputs.json";
+        var root = RepositoryLayout.FindRoot();
+        var registry = Assert.IsType<RegistryLoadOutcome.Accepted>(RegistryLoader.Load(
+            File.ReadAllBytes(Path.Combine(root, "Meta/registry.yaml")),
+            File.ReadAllBytes(Path.Combine(root, "Meta/domains.yaml"))));
+        Assert.Null(RepositoryPathPolicy.Validate(RepoPath.CreateKnown(path), registry.Policy));
+        var manifest = FileMapLoader.Parse(
+            File.ReadAllBytes(Path.Combine(root, FileMapLoader.RelativePath)),
+            FileMapLoader.RelativePath);
+        var entry = Assert.Single(manifest.Match(path));
+        Assert.Equal(FileMapKind.Data, entry.Kind);
+        Assert.Equal(FileMapAdmissionPlane.Judge, entry.AdmissionPlane);
+        Assert.Equal("LeanReportSelection", Assert.Single(entry.VerifiedBy));
+        Assert.Contains("lean-report", entry.Require);
+        Assert.DoesNotContain(FileMapPolicy.InspectRepository(root), finding =>
+            finding.Path == path && finding.Code is "FILEMAP-DATA-VERIFIER" or "FILEMAP-DATA-VERIFIER-DANGLING");
+    }
+
+    [Fact]
+    public void CommonExecutionManifestsHaveRegisteredDataVerifiers()
+    {
+        var root = RepositoryLayout.FindRoot();
+        var manifest = FileMapLoader.LoadRepository(root);
+        string[] paths = ["Meta/ci-checks.json", "Meta/engineering-projects.json"];
+        Assert.All(paths, path =>
+        {
+            var entry = Assert.Single(manifest.Match(path));
+            Assert.Equal(FileMapKind.Data, entry.Kind);
+            Assert.Contains("CommonExecutionEvidence", entry.VerifiedBy);
+        });
+
+        var findings = FileMapPolicy.InspectRepository(root);
+
+        Assert.DoesNotContain(findings, finding =>
+            paths.Contains(finding.Path, StringComparer.Ordinal)
+            && finding.Code is "FILEMAP-DATA-VERIFIER" or "FILEMAP-DATA-VERIFIER-DANGLING");
+    }
+
+    [Theory]
+    [InlineData("lean-report")]
+    [InlineData("scribe-content")]
+    public void ReportProducerScopesHaveRegisteredDataVerifier(string scope)
+    {
+        var root = RepositoryLayout.FindRoot();
+        var manifest = FileMapLoader.LoadRepository(root);
+        var entry = Assert.Single(manifest.Match($"Meta/ReportProducers/{scope}.json"));
+
+        Assert.Equal(FileMapKind.Data, entry.Kind);
+        Assert.Equal(FileMapAdmissionPlane.Judge, entry.AdmissionPlane);
+        Assert.Equal("CommonExecutionEvidence", Assert.Single(entry.VerifiedBy));
+        Assert.Equal("committed-source", entry.RuntimeDisposition);
+    }
+
+    [Theory]
+    [InlineData("lean-report")]
+    [InlineData("scribe-content")]
+    public void ReportConsumerScopesAreAdmittedByRegisteredRepositoryPolicy(string scope)
+    {
+        var root = RepositoryLayout.FindRoot();
+        var registry = Assert.IsType<RegistryLoadOutcome.Accepted>(RegistryLoader.Load(
+            File.ReadAllBytes(Path.Combine(root, "Meta/registry.yaml")),
+            File.ReadAllBytes(Path.Combine(root, "Meta/domains.yaml"))));
+        var path = $"Meta/ReportConsumers/{scope}.json";
+
+        Assert.Null(RepositoryPathPolicy.Validate(RepoPath.CreateKnown(path), registry.Policy));
+        var entry = Assert.Single(FileMapLoader.LoadRepository(root).Match(path));
+        Assert.Equal(FileMapKind.Data, entry.Kind);
+        Assert.Equal(FileMapAdmissionPlane.Judge, entry.AdmissionPlane);
+        Assert.Equal("CommonExecutionEvidence", Assert.Single(entry.VerifiedBy));
+    }
+
+    [Theory]
+    [InlineData("Meta/ReportConsumers/unregistered.json")]
+    [InlineData("Meta/ReportConsumers/nested/lean-report.json")]
+    [InlineData("Meta/unregistered.json")]
+    public void UnregisteredMetaArtifactsRemainRejected(string path)
     {
         var root = RepositoryLayout.FindRoot();
         var registry = Assert.IsType<RegistryLoadOutcome.Accepted>(RegistryLoader.Load(
             File.ReadAllBytes(Path.Combine(root, "Meta/registry.yaml")),
             File.ReadAllBytes(Path.Combine(root, "Meta/domains.yaml"))));
 
-        Assert.Null(RepositoryPathPolicy.Validate(
-            RepoPath.CreateKnown("lean-report-inputs.json"), registry.Policy));
-        var manifest = FileMapLoader.Parse(
-            File.ReadAllBytes(Path.Combine(root, FileMapLoader.RelativePath)),
-            FileMapLoader.RelativePath);
-        var entry = Assert.Single(manifest.Match("lean-report-inputs.json"));
-        Assert.Equal(FileMapKind.Data, entry.Kind);
-        Assert.Equal(FileMapAdmissionPlane.Judge, entry.AdmissionPlane);
+        var issue = RepositoryPathPolicy.Validate(RepoPath.CreateKnown(path), registry.Policy);
+
+        Assert.NotNull(issue);
+        Assert.Equal("SL-000", issue.RuleId.Value);
+        Assert.Equal("unknown Meta artifact", issue.Message);
     }
 
     [Fact]
