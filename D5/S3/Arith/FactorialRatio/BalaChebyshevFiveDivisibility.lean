@@ -19,7 +19,7 @@ private def defect (n q : Nat) : Int :=
 
 /-- The new modulus-dependent fact is the unit contribution at divisors of 5n+1.
 The small moduli 2,3,4 are deliberately excluded from that stronger assertion. -/
-private theorem local_five (n q : Nat) (hq : 0 < q) :
+theorem local_five (n q : Nat) (hq : 0 < q) :
     0 ≤ defect n q ∧ (6 ≤ q → q ∣ 5*n+1 → defect n q = 1) := by
   let r := n % q
   have hr : r < q := Nat.mod_lt n hq
@@ -93,7 +93,7 @@ private theorem local_five (n q : Nat) (hq : 0 < q) :
 
 /-- A top-scale contribution compensates for the missing modulus-three term.
 It lies strictly above every prime power dividing 5n+1. -/
-private theorem top_scale_unit (n q : Nat) (hn : 0 < n)
+theorem top_scale_unit (n q : Nat) (hn : 0 < n)
     (hl : 10*n < q) (hu : q ≤ 30*n) : defect n q = 1 := by
   have hq : 0 < q := by omega
   have hnq : n < q := by omega
