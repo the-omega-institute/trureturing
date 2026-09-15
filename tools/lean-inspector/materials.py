@@ -295,13 +295,15 @@ def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Pat
                     raise ValueError("statement material changed during compaction")
         live_materials = pathlib.Path(str(output) + ".materials.zip")
         legacy_materials = pathlib.Path(str(output) + ".materials")
+        # Some callers spool directly into the legacy output directory. Remove
+        # consumed inputs before removing that directory (or one containing it).
+        for relative in referenced_spools:
+            (spool / relative).unlink()
         if legacy_materials.exists():
             shutil.rmtree(legacy_materials)
         live_materials.unlink(missing_ok=True)
         os.replace(staged_archive, live_materials)
         os.replace(staged_report, output)
-        for relative in referenced_spools:
-            (spool / relative).unlink()
         print(
             "LEAN_REPORT_MATERIALS "
             f"declarations={declaration_count} unique_bytes={material_bytes} "

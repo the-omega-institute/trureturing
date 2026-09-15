@@ -9,6 +9,9 @@ public sealed class CompressedLeanMaterialTests
     public void compressed_spool_roundtrip_accepted() => Run("equivalence");
 
     [Fact]
+    public void input_spool_at_legacy_output_path_accepted() => Run("overlap");
+
+    [Fact]
     public void changed_spool_never_published() => Run("changed");
 
     [Theory]
@@ -35,7 +38,7 @@ public sealed class CompressedLeanMaterialTests
         values = ['statement-v1(α,😀)'.encode(), b'statement-v1(' + b'payload,' * 20000 + b')']
         with tempfile.TemporaryDirectory() as directory:
             root = pathlib.Path(directory)
-            compressed = root / 'compressed'
+            compressed = root / ('compressed.json.materials' if mode == 'overlap' else 'compressed')
             framed = b''.join(str(len(v)).encode() + b'\n' + v for v in values) + b'done\n'
             if mode == 'truncated':
                 result = subprocess.run([sys.executable, str(script), 'stream', str(compressed)],
@@ -97,6 +100,7 @@ public sealed class CompressedLeanMaterialTests
             # Byte identities measured with the pre-compression compactor at 1630e64b0b.
             assert hashlib.sha256((root / 'plain.json').read_bytes()).hexdigest() == 'd2d65db0580045627827f06fb44b290f111cb74d241cf1cf222c0d0f79b921e4'
             assert hashlib.sha256((root / 'plain.json.materials.zip').read_bytes()).hexdigest() == '3645dbf13d606a04f63ffb5704fab99ffcab588dd458f8e30540bee548f2416d'
-            assert not list(plain.iterdir()) and not list(compressed.iterdir())
+            assert not list(plain.iterdir())
+            assert not compressed.exists() if mode == 'overlap' else not list(compressed.iterdir())
         """;
 }
