@@ -8,6 +8,7 @@
 
 import D5.S1.Recurrence.LucasCompanion
 import D5.S1.Scale.LucasDoubling
+import Mathlib.Algebra.DualNumber
 import Mathlib.LinearAlgebra.Matrix.Charpoly.FiniteField
 import Mathlib.Tactic
 
@@ -56,15 +57,24 @@ theorem period_dvd_iff_sequence (a : ℤ) (m t : ℕ) :
 theorem parameter_two_power (R : Type*) [CommRing R] (t : ℕ) :
     (↑(companion (2 : R) (1 : Rˣ) ^ t) : Matrix (Fin 2) (Fin 2) R) =
       !![(t : R) + 1, -(t : R); (t : R), 1 - (t : R)] := by
-  induction t with
-  | zero =>
-      ext i j
-      fin_cases i <;> fin_cases j <;> simp
-  | succ t ih =>
-      rw [pow_succ, Units.val_mul, ih]
-      ext i j
-      fin_cases i <;> fin_cases j <;>
-        simp [companion, Matrix.mul_apply, Fin.sum_univ_two] <;> ring
+  let N : Matrix (Fin 2) (Fin 2) R := !![1, -1; 1, -1]
+  have hN : N * N = 0 := by
+    ext i j
+    fin_cases i <;> fin_cases j <;> simp [N, Matrix.mul_apply, Fin.sum_univ_two]
+  let f : DualNumber R →ₐ[R] Matrix (Fin 2) (Fin 2) R :=
+    DualNumber.lift ⟨(Algebra.ofId R _, N), hN, fun r => (Algebra.commutes r N).symm⟩
+  have hf : f (1 + DualNumber.eps) =
+      (↑(companion (2 : R) (1 : Rˣ)) : Matrix (Fin 2) (Fin 2) R) := by
+    ext i j
+    fin_cases i <;> fin_cases j <;>
+      simp [f, DualNumber.lift_apply_apply, N, companion,
+        Algebra.algebraMap_eq_smul_one] <;> ring
+  rw [Units.val_pow_eq_pow_val, ← hf, ← map_pow]
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp [f, DualNumber.lift_apply_apply, TrivSqZeroExt.fst_pow, TrivSqZeroExt.snd_pow,
+      N, Algebra.algebraMap_eq_smul_one, Matrix.mul_apply, Fin.sum_univ_two,
+      Matrix.natCast_apply] <;> ring
 
 /-- Every positive modulus is its own least period when the parameter is two modulo it. -/
 theorem period_eq_modulus_of_parameter_two (a : ℤ) (m : ℕ)
