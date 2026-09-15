@@ -489,8 +489,8 @@ def seed_targets(root, sdk, projects, task, registration, repository):
     }.items():
         ET.SubElement(properties, name).text = str(value)
     materials = ET.SubElement(driver, "ItemGroup")
-    # The generated import participates in MSBuild's incremental input check.
-    # Reconcile its bytes with the receipt before recovering its previous time,
+    # The generated import participates in the compiler content identity.
+    # Reconcile its bytes with the receipt before recovering its local time,
     # including when preparation recreated it in an empty judge-seed directory.
     ET.SubElement(materials, "_JudgeSeedRegisteredMaterial", Include=str(root / "build/judge-seed/seed.targets"))
     for path in sorted(repository):
@@ -526,17 +526,35 @@ def compile_material(directory):
     return [item for item in seed_files(directory) if not item["path"].endswith("judge-seed-inputs.xml")]
 
 
+def compile_identity(value):
+    return value["semantics"], {path: item["sha256"] for path, item in value["inputs"].items()}
+
+
+def compile_stamp(capture):
+    return pathlib.Path(capture).with_name("judge-seed-validated-inputs")
+
+
+def stamp_validated_compile(capture, value):
+    # This local input is derived only after validating all compiler bytes and
+    # outputs. External SDK/package times can be newer than successful outputs.
+    # Neither those files nor downstream compiler outputs need their times changed.
+    stamp = compile_stamp(capture)
+    payload = json.dumps((compile_identity(value), value["outputs"]), sort_keys=True).encode()
+    write_if_changed(stamp, hashlib.sha256(payload).hexdigest().encode())
+    output_time = min(pathlib.Path(name).stat().st_mtime_ns for name in value["outputs"])
+    os.utime(stamp, ns=(stamp.stat().st_atime_ns, output_time))
+
+
 def reconcile(capture):
     context, root, project, receipt, outputs = compile_context(capture)
     try:
         current = current_compile(context)
         previous = json.loads(receipt.read_text())
-        identity = lambda value: (value["semantics"], {path: item["sha256"] for path, item in value["inputs"].items()})
         # Restore validated every obj byte before MSBuild entered. Resolution
         # may now legitimately refresh its own caches (e.g. AssemblyReference.cache).
         # Recheck emitted material here, not those freshly derived caches.
         emitted = {str(path): hashlib.sha256(path.read_bytes()).hexdigest() for path in outputs if path.is_file()}
-        if identity(current) != identity(previous):
+        if compile_identity(current) != compile_identity(previous):
             changed = sorted(name for name in set(current["inputs"]) | set(previous["inputs"])
                              if current["inputs"].get(name, {}).get("sha256") != previous["inputs"].get(name, {}).get("sha256"))
             raise ValueError("compiler semantics or inputs changed: " + ", ".join(changed[:3]))
@@ -544,12 +562,15 @@ def reconcile(capture):
             raise ValueError("emitted material changed")
         for name, material in previous["inputs"].items():
             path = pathlib.Path(name)
-            # Only byte-validated compiler inputs recover their prior times.
-            if path.stat().st_mtime_ns != material["mtime_ns"]:
+            # Recover local checkout times only. A registered external reference
+            # is a read-only input, including through a repository symlink.
+            if path.resolve().is_relative_to(root.resolve()) and path.stat().st_mtime_ns != material["mtime_ns"]:
                 os.utime(path, ns=(path.stat().st_atime_ns, material["mtime_ns"]))
+        stamp_validated_compile(capture, previous)
         seed_receipt("reused", project=str(project.relative_to(root)))
         return 0
     except (OSError, ValueError, KeyError, TypeError) as error:
+        compile_stamp(capture).unlink(missing_ok=True)
         for path in outputs:
             if path.is_relative_to(project.parent) and {"bin", "obj"}.intersection(path.relative_to(project.parent).parts):
                 path.unlink(missing_ok=True)
@@ -562,10 +583,12 @@ def seal(capture):
     context, root, project, receipt, outputs = compile_context(capture)
     try:
         value = current_compile(context)
-        value["material"] = compile_material(pathlib.Path(context.get("obj")))
         value["outputs"] = {str(path): hashlib.sha256(path.read_bytes()).hexdigest() for path in outputs if path.is_file()}
+        stamp_validated_compile(capture, value)
+        value["material"] = compile_material(pathlib.Path(context.get("obj")))
         write_if_changed(receipt, (json.dumps(value, sort_keys=True) + "\n").encode())
     except (OSError, ValueError, KeyError, TypeError) as error:
+        compile_stamp(capture).unlink(missing_ok=True)
         receipt.unlink(missing_ok=True)
         seed_receipt("save-failed", project=str(project.relative_to(root)), reason=str(error))
 

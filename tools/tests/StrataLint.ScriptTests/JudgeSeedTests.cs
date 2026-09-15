@@ -7,6 +7,63 @@ public sealed class JudgeSeedTests
     [Theory]
     [InlineData(false)]
     [InlineData(true)]
+    public void NewerReadOnlySdkReferenceReusesSeedWithoutChangingTheReference(bool renewedAfterBuild)
+    {
+        using var fixture = new JudgeSeedFixture();
+        var reference = fixture.AddPrivateSdkReference();
+        if (!renewedAfterBuild) File.SetLastWriteTimeUtc(reference, new DateTime(2100, 1, 1, 0, 0, 0, DateTimeKind.Utc));
+        fixture.Prepare();
+        fixture.Build("private-sdk-cold", 2, fixture.CompilerObservation());
+        fixture.RecordPrivateReference("private-sdk-cold-reference", reference);
+        fixture.Snapshot();
+        fixture.Restore();
+        var bytes = File.ReadAllBytes(reference);
+        var output = fixture.PathOf("tools/Library/obj/Release/net10.0/Library.pdb");
+        var renewed = renewedAfterBuild ? File.GetLastWriteTimeUtc(output).AddSeconds(1) : File.GetLastWriteTimeUtc(reference);
+        File.SetLastWriteTimeUtc(reference, renewed);
+        File.SetAttributes(reference, FileAttributes.ReadOnly);
+        try
+        {
+            fixture.RecordPrivateReference("private-sdk-renewed-reference", reference);
+            var warm = fixture.BuildRegisteredProjects("private-sdk-warm");
+            fixture.RecordPrivateReference("private-sdk-after-warm-reference", reference);
+            Assert.All(warm, result => Assert.Contains("\"status\": \"reused\"", result.Text, StringComparison.Ordinal));
+            Assert.Equal(0, CompilerCount(warm));
+            Assert.Equal(renewed, File.GetLastWriteTimeUtc(reference));
+            Assert.Equal(bytes, File.ReadAllBytes(reference));
+            Assert.True(File.GetAttributes(reference).HasFlag(FileAttributes.ReadOnly));
+            // A missing derived stamp cannot replace the complete input/output
+            // validation; a valid receipt can recreate it without compiling.
+            var stamp = fixture.PathOf("tools/Library/obj/Release/net10.0/judge-seed-validated-inputs");
+            File.Delete(stamp);
+            Assert.Equal(0, CompilerCount(fixture.BuildRegisteredProjects("private-sdk-missing-stamp")));
+            Assert.True(File.Exists(stamp));
+
+            File.SetAttributes(reference, FileAttributes.Normal);
+            // Neither a missing nor a forged incremental stamp may hide changed
+            // compiler bytes behind otherwise preserved timestamps.
+            if (renewedAfterBuild)
+                fixture.WritePreservingTime("tools/Library/obj/Release/net10.0/judge-seed-validated-inputs", "forged stamp");
+            else
+                File.Delete(stamp);
+            // A PE overlay changes the registered DLL's bytes while remaining a
+            // loadable reference. Preserve its time to require content validation.
+            File.WriteAllBytes(reference, [..bytes, 0]);
+            File.SetLastWriteTimeUtc(reference, renewed);
+            var changed = fixture.BuildRegisteredProjects("private-sdk-changed-bytes");
+            Assert.Equal(1, CompilerCount(changed));
+            Assert.Contains("\"status\": \"rebuild\"", changed[0].Text, StringComparison.Ordinal);
+            Assert.Contains(reference, changed[0].Text, StringComparison.Ordinal);
+        }
+        finally
+        {
+            File.SetAttributes(reference, FileAttributes.Normal);
+        }
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
     public void RestoredJudgeSeedSkipsNativeCscAfterPerProjectRestore(bool renewedNuGetImportTimes)
     {
         using var fixture = new JudgeSeedFixture();

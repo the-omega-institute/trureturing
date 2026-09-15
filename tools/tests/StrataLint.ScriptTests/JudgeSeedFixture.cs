@@ -120,6 +120,40 @@ internal sealed class JudgeSeedFixture : IDisposable
     }
 
     internal string PathOf(string relative) => Path.Combine(root, relative);
+
+    internal string AddPrivateSdkReference()
+    {
+        var source = Path.Combine(Environment.GetEnvironmentVariable("DOTNET_ROOT")
+            ?? throw new InvalidOperationException("DOTNET_ROOT is required for the pinned SDK fixture"),
+            "sdk", "10.0.103", "Microsoft.Build.dll");
+        var reference = Path.Combine(temporary.Path, "sdk-reference", "Microsoft.Build.dll");
+        Directory.CreateDirectory(Path.GetDirectoryName(reference)!);
+        File.Copy(source, reference);
+        const string project = "tools/Library/Library.csproj";
+        Write(project, File.ReadAllText(PathOf(project)).Replace("</Project>",
+            $"<ItemGroup><Reference Include=\"Microsoft.Build\"><HintPath>{System.Security.SecurityElement.Escape(reference)}</HintPath><Private>false</Private></Reference></ItemGroup></Project>",
+            StringComparison.Ordinal));
+        return reference;
+    }
+
+    internal void RecordPrivateReference(string name, string reference)
+    {
+        var capturePath = PathOf("tools/Library/obj/Release/net10.0/judge-seed-inputs.xml");
+        var captured = File.Exists(capturePath)
+            ? System.Xml.Linq.XDocument.Load(capturePath).Root!.Element("inputs")!.Elements("file").Any(item => item.Value == reference)
+            : (bool?)null;
+        var receipt = JsonNode.Parse(File.ReadAllText(PathOf("build/judge-seed/receipts/tools/Library/Library.csproj.seed.json")));
+        Assert.NotNull(receipt!["inputs"]![reference]);
+        if (captured.HasValue) Assert.True(captured.Value);
+        Record(name, new Invocation(0, JsonSerializer.Serialize(new
+        {
+            reference, sha256 = Convert.ToHexStringLower(SHA256.HashData(File.ReadAllBytes(reference))),
+            reference_time = File.GetLastWriteTimeUtc(reference),
+            captured,
+            receipt_input = receipt!["inputs"]![reference],
+        })), null);
+    }
+
     internal string Write(string relative, string text)
     {
         var path = PathOf(relative);
