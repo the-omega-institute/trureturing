@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "report_semantic_version": 3,
+  "report_semantic_version": 0,
   "report_modules": {"include": [{"pattern": "Trureturing.lean", "optional": false}, {"pattern": "D5/**/*.lean", "optional": true}], "exclude": []},
   "inspector_sources": {"include": [{"pattern": "tools/lean-inspector/**/*.lean", "optional": true}], "exclude": ["**/.lake/**"]},
   "dependency_sources": {"include": [{"pattern": "tools/lean-inspector/**/*.lean", "optional": true}], "exclude": ["**/.lake/**"]},
