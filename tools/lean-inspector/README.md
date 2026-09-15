@@ -89,6 +89,13 @@ materials 的内容字节相同。版本是明确的兼容承诺，不是机器�
 | 模块 utility 记录变化 | 对应模块报告；声明的 claim 源码、编译工件及其传递依赖同样参与，即使 claim 不在 result 的 import 闭包内。 |
 | 登记的 `config_inputs` 文件字节变化 | 各模块报告的共同依赖，包括 toolchain、依赖 pin 和 Lake 配置。 |
 | 登记的模块成员集合变化 | 汇总按当前集合重建，新成员执行所需报告工作，保留仍有效的模块工件。 |
+| 固定 Registry 驱动及其传递编译工件变化 | 全部模块报告；空注册清单也由该驱动判定。 |
+
+版本 4 的 `information_templates` 分区携带 occurrence inventory、BindingRecord 和
+当前源码输入。原生复用和发布检查这些输入的字节绑定；陈旧或缺失输入使工件失效。
+C# 消费者另行检查完整证据语义、sidecar 归属及 debt 约束。固定驱动属于 judge，
+没有模板模块的隐式导入。独立编码测试使用显式 `--statements-only`，其结果不含
+binding evidence，不能通过声明模板的严格消费者。
 
 Lake 的 `transImports` 为模块及其 utility claim 选择传递源码依赖；编译工件 trace
 包含 inspector 私有导入所需的传递依赖。捕获结果写入模块输入旁的 `.sources.json`，
