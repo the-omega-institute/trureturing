@@ -28,7 +28,9 @@ $$\forall p \in \mathbb{N},\; ((\operatorname{Prime}\left(p\right)) \land (\oper
 
 <!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a249759-krizek-sigma-prime-fermat-mersenne","declaration_gid":"D5/S3/Arith/Mersenne/KrizekSigmaPrimeFermatMersenne.result","resolution_kind":"proved"} -->
 
-*Citation.* Jaroslav Krizek (2014). *OEIS A249759, primes p for which sigma(p-1) is prime*. URL: <https://oeis.org/A249759>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Jaroslav Krizek (2014). *OEIS A249759, primes p for which sigma(p-1) is prime*. URL: <https://oeis.org/A249759>.
 
 *Commentary.*
 

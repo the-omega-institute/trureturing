@@ -36,7 +36,7 @@ internal sealed class KrizekSigmaPrimeFermatMersenneDocument
                 DeclarationHandle.Create(Prefix + "result"),
                 H("A249759 primes have Fermat and Mersenne form"),
                 StatementSource.FromAuthor(ResultFormula()),
-                AssessedProvenance.FromLiterature(Source),
+                AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
                     "Here sigma sub one has the same divisor-sum convention. The hypotheses "
                         + "exclude p equal to two because sigma sub one of one is one; hence "
