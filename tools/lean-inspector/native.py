@@ -89,8 +89,8 @@ def prepare(root):
         write_if_changed(state(root) / 'inputs' / (name + '.json'), materials.canonical_json({
             'utilities': utility, 'claims': sorted({u['claimModule'] for u in utility}), 'source_path': path}))
     write_if_changed(state(root) / 'compatibility', (inputs.compatibility() + '\n').encode('ascii'))
-    # Membership and public input coordinates affect aggregation only. Each
-    # module traces compatibility, config, source, compiler and utility inputs.
+    # Membership and full config identity affect aggregation only. Each module
+    # traces compatibility, source, utility inputs and Lake's compiler dependencies.
     write_if_changed(state(root) / 'inputs.json', materials.canonical_json({
         'modules': sorted(modules),
         'configs': inputs.expand('config_inputs'), 'coordinates': public.coordinates(root)}))
