@@ -1,0 +1,6 @@
+**定义 4.1（有限观察塔）。** 对非空集合 \(X\)，称 \(q_n:X\twoheadrightarrow Q_n\) 为有限观察塔，若每个 \(Q_n\) 有限离散，且存在 \(p_n:Q_{n+1}\to Q_n\) 满足 \(q_n=p_nq_{n+1}\)。定义
+\[
+\widehat X=\{z\in\prod_nQ_n:\forall n,\ p_n(z_{n+1})=z_n\}
+\]
+及 \(\iota_X(x)=(q_n(x))_n\)。
+

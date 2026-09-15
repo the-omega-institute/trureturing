@@ -89,6 +89,9 @@ domains:
   Factorization:
     stratum: S3
     definition: The multiplicative monoid of positive naturals as the free commutative monoid on the primes, with additive prime-exponent readouts.
+  FiniteGeometry:
+    stratum: S0
+    definition: Finite lattice point configurations, Euclidean shape families, and identifiability after deleting points.
   FixedPoints:
     stratum: S1
     definition: Least and greatest fixed-point structure and concrete gaps between inductive and coinductive solutions.
