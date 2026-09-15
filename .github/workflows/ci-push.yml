@@ -436,5 +436,6 @@ jobs:
             build/ci/plan.json
             build/ci/changes.json
             build/ci/logs/current
+            build/ci/check-material/**/*.log
           if-no-files-found: warn
           retention-days: 7
