@@ -102,3 +102,9 @@ unbounded equivalence.
 any result about other OEIS entries; a statement about the zero term as an
 A181666 sequence member; or that finite numerical checks replace the
 unbounded formal proof.
+
+## ASSUMED-UNVERIFIED
+
+Literature completeness beyond the OEIS entry, its linked b-file, its linked
+Hinz--Stockmeyer paper, and the bounded searches recorded in preregistration
+issue #8143 is unverified. No exhaustive literature or priority claim is made.
