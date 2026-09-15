@@ -183,3 +183,70 @@ rather than claim to have performed it.
 （`is wrong` / `are wrong` / `is false` / `counterexample` / `disprov` / `proved by` / `Proof:` /
 `no longer a conjecture` / `settled` 等），命中即剔除。R32 用该口径把 308 条压到 **239 条仍活**。
 这一步很便宜，而漏掉它的代价是一整条 lane 的探针与预登记。
+
+## R33(2026-09-16):作者轴与形状轴各挖一批,四条判掉,其中两条是自己造成的
+
+本轮从两条轴取候选:作者轴(Amarnath Murthy / Benoit Cloitre / Vladeta Jovovic / Zak Seidov 的
+2001–2009 条目,每人 4 页)与形状轴(`"Conjecture" "if and only if"`、`"conjecture that these are the
+only"`、`"Conjecture:" "is prime if and only if"`、`"Conjecture" "are the only" divisible`、
+`"Conjecture:" "divides"`,每条 3 页)。合计 85 条经形状与结算标记过滤后仍活,25 条仓内已有命中。
+
+### 仓内已解决
+
+- **A069208**(`%C` Werner Schulte, Jan 23 2025:multiplicative `f` 的 powerful-除数和(1)乘性、
+  (2)等于 `A112526·f` 的逆 Möbius 变换)。**本仓已证**:
+  `D5/S0/Carrier/ArithmeticFunctions/PowerfulDivisorTransform.lean`,提交 `f553846c7b`。
+  在派任何席之前由 §3.1 的检索挡下。判据提醒:按 A 号 grep 会漏,这条是按内容(`Powerful`)grep 才命中的。
+
+### 文献已结算(证明行就在猜想行下面,是本轮最贵的教训)
+
+- **A000680**(`%C` Werner Schulte, Oct 05 2025:`(2n+1) | (2n)!/2^n + 2^n ⟺ 2n+1` 素数)。
+  **下一行**即 `%C The conjecture is true (see Fried link). - _Sela Fried_, Nov 24 2025`,并附
+  `%H` 的 PDF 与 `arXiv:2607.24832`(pp. 2-4)。判据成立(实测 `1 ≤ n ≤ 400` 零例外),但「此前未被文献
+  判定」不成立,故不满足 §3.2「开放问题结算依据」。预登记 issue #8173 已关并勘误。
+- **A006472**(`%C` Werner Schulte, Oct 04 2020:`n | 2·a(n-1) + 4 ⟺ n` 素数,`a(n)=n!(n-1)!/2^(n-1)`)。
+  **下一行**即 `%C For a proof of the above conjecture see Himane. ... - _Peter Bala_, Nov 06 2024`。
+  判据成立(实测 `2 ≤ n ≤ 500` 零例外,`a(1..6) = 1,1,3,18,180,2700` 与 `%S` 一致),同样不满足准入。
+  预登记 issue #8189 已关并勘误。
+
+### 读法歧义而判掉
+
+- **A062368**(`%C` R. J. Mathar, Aug 09 2012:`this is the third inverse Mobius transform of the
+  sequence 4^A001221(n)`)。**陈述为真**,本轮符号复算:`(4^ω * 1 * 1 * 1)(p^e) = (e+1)(e+2)/2 +
+  4·Σ_{i=0}^{e-1}(i+1)(i+2)/2 = (e+1)(e+2)(4e+3)/6`,与 `%N` 的 `a(p^e)` 逐字相同,并在
+  `n = 2,4,8` 上数值核对(7 / 22 / 50)。不取的理由是条目自身的结算状态不可读:2026-07-10 Ridouane
+  Oudra 加入 `%F a(n) = Sum_{d|n} 4^omega(d)*tau_3(n/d)`——这与 Mathar 的猜想是同一句话,却写成
+  `%F` 断言、不带 conjecture 限定、也不带证明引用。同 A181741,一行的读法决定它是否仍开放。
+
+### 看过但不取的(留作后续,附理由)
+
+- **A057032**(`%C` Mikhail Kurkov, Mar 10 2022:`a(n) - 1 is prime if and only if a(n) = n + 1`)。
+  姊妹条目 **A057063** 的对应判据已由 Ilya I. Bogdanov 在 MathOverflow 证出(条目内 `%C` 注明),
+  但 A057032 用的是**前向**循环置换且固定 `s(1)..s(n-1)`,与 A057063 的反向置换加固定 `s(1)..s(n)`
+  不同,仍标 Conjecture。不取的理由是成本:序列由「对 1,2,3,… 依次施加 P(2),P(3),P(4),… 取极限」定义,
+  形式化要先构造 PS(n)、证其逐点稳定、再定义极限,不是小时级靶。
+- **A156253**(`%F` Jon Maiga, Dec 09 2021:`a(n) = (a(a(n-1)) mod 2) + a(n-2) + 1`)。Kolakoski 邻域;
+  条目 `%H` 已挂 Jon Maiga 2025 的 PDF《A Recurrence Related to the Kolakoski Sequence》,且 2023 年
+  另有一条同形 `%F` 以断言形式写入。结算状态与 A062368 同属不可读。
+- **A105801**(`%C` Giovanni Resta, Nov 17 2010:`for every k > 0 there is an index m such that all the
+  a(n) with n > m have the same residue mod 3^k`)。Fibonacci-Collatz 混合动力;`k ≤ 2` 已由条目内
+  「`n >= 10` 时 `a(n) ≡ 7 (mod 9)`」覆盖,更高的 `k` 依赖奇偶轨道的长期行为。
+- **A321084**、**A015126**、**A069051**、**A211384**:分别归结为「该族无 base-2 Fermat 伪素数」、
+  Carmichael 全序数猜想邻域、Wieferich 邻域、贪心整除递推的无界分类,均非第一档。
+
+## 本轮的方法学教训(比 R32 更贵的同一个病)
+
+R32 已经记过「形状过滤只看含 `Conjecture` 的行会漏掉别处的结算行」,并且仓内早有
+`tools/scripts/agent/openproblem/oeis-conjecture-scan.py` 执行这条——它的 `SETTLED` 正则涵盖
+`Proof\s*:`、`a proof`、`the proof`、`is true`、`proved`、`follows from`、`theorem of`、
+`counterexample found`。本轮 A000680 与 A006472 两条仍然栽进去,**原因是绕过了这个器、改用手写核对,
+而手写核对只 grep 了猜想句**。
+
+代价:两份完整预登记 issue、两棵 lane 工作树、两个探针席;更糟的是 A000680 的预登记被另一台驱动机接走
+并合入 dev(`cec4774a0a`,带 `scribe-open-problem-resolution-v1` 标记),一条本不该计数的结算进了 KPI,
+而误导它的正文出自本会话。
+
+**修法(是器不是人):候选进预登记之前必须跑扫描器,把它的 `status` 与 `settlement_lines` 原样贴进 issue;
+手写核对不能替代它。** 其次,「无证明行」是一句全称否定,写它之前要枚举过全集——这里的全集是该条目的
+全部 `%C`/`%H`/`%D` 行,不是含 `Conjecture` 的那一行。结算行最常见的位置恰恰是猜想行的**下一行**,
+因为提出者与证明者在同一处对话;读到猜想句就停手是最容易漏的姿势。
