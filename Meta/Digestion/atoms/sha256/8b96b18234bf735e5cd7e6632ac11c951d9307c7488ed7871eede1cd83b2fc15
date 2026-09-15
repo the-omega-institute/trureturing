@@ -1,0 +1,8 @@
+**假设。** 两个分块演化具有共同的可见空间，隐藏空间分别为有限维复空间，维数为 $d,e$；核分别为
+
+$$
+M_j=B D^j C,\qquad \widetilde M_j=\widetilde B\widetilde D^j\widetilde C.
+$$
+
+所有隐藏特征值的模不超过 $\theta<1$。在同一个算子范数中，$\|M_j-\widetilde M_j\|\le\delta$ 对 $j<d+e$ 成立。
+

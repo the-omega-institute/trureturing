@@ -1,0 +1,43 @@
+**定理 11.1（无混淆、无遗漏生成的自然数刻画）。** 设 $H$ 为集合，$e\in H$，$S:H\to H$。以下三种表述等价。
+
+生成表述：每个历史都由有限次后继生成，而且后继无混淆、初始历史没有前驱，即
+
+$$
+H=\{S^n(e):n\in\mathbb N\},\qquad
+S\text{ 单射},\qquad
+e\notin S[H].
+$$
+
+同构表述：存在唯一双射 $\nu:\mathbb N\to H$，满足
+
+$$
+\nu(0)=e,\qquad
+\nu(n+1)=S(\nu(n)).
+$$
+
+该双射必为 $\nu(n)=S^n(e)$。
+
+归纳表述：$S$ 单射、$e\notin S[H]$，并且对每个外部子集 $A\subseteq H$ 都有
+
+$$
+e\in A\ \land\ S[A]\subseteq A
+\quad\Longrightarrow\quad
+A=H.
+$$
+
+在这些等价条件下，对任意集合 $Y$、$y_0\in Y$ 和映射 $T:Y\to Y$，存在唯一映射 $f:H\to Y$，使得
+
+$$
+f(e)=y_0,\qquad f\circ S=T\circ f.
+$$
+
+其值由
+
+$$
+f(\nu(n))=T^n(y_0)
+$$
+
+唯一确定。
+
+这里对 $A\subseteq H$ 的量化是外部全子集量化，不是仅针对某个固定语言中可定义谓词的形式归纳模式。自然数及其归纳已用于表述和证明该刻画。
+

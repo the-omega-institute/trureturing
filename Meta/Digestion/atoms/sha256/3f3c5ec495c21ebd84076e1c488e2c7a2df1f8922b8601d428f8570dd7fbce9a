@@ -1,0 +1,8 @@
+**引理。** 对 $K\in\mathcal C_\kappa$，其记忆满足
+
+$$
+0\le m_j\le\frac{\kappa^{j+2}}4.
+$$
+
+响应逆级数 $Q(z)=R(z)^{-1}=1-az-z^2M(z)$ 的系数绝对和不超过 $1+\kappa$。
+

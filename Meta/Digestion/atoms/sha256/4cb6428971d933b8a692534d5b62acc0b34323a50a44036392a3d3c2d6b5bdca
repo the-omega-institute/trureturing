@@ -1,0 +1,15 @@
+**证明。** 取相互独立的正整数值几何变量 $G_i$，$\Pr(G_i=k)=(1-\lambda_i)\lambda_i^{k-1}$，并令 $T=\sum_iG_i$。其概率生成函数为
+
+$$
+\mathbb E z^T=\frac{z^q\prod_i(1-\lambda_i)}{\prod_i(1-\lambda_i z)}.
+$$
+
+生存概率的生成函数满足
+
+$$
+\sum_{n\ge0}\Pr(T>n)z^n
+=\frac{1-\mathbb E z^T}{1-z}.
+$$
+
+右式在 $z=1$ 的因子相消。因节点不同且非零，其部分分式为 $\sum_i c_i/(1-\lambda_i z)$：在 $z=1/\lambda_i$ 处乘以 $1-\lambda_i z$ 后取值，所得系数正是所定义的 $c_i$。所以 $u_n=\Pr(T>n)$。概率属于 $[0,1]$，且 $T\ge q$，给出全部逐项结论。非负整数变量的尾和等于期望，故总和为 $\mathbb ET=\sum_i(1-\lambda_i)^{-1}$。也可从有限个绝对收敛的几何级数求和得到同一值。证毕。
+

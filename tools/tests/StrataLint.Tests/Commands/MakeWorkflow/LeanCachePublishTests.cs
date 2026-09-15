@@ -77,6 +77,42 @@ public sealed partial class LeanCachePublishTests
         Assert.Contains("workflow_run_id=4242", manifest, StringComparison.Ordinal);
     }
 
+    [Theory]
+    [InlineData("{\"isDraft\":false}", 0, "exists")]
+    [InlineData("{\"isDraft\":true}", 0, "incomplete draft")]
+    [InlineData("{}", 0, "invalid release metadata")]
+    [InlineData("{\"isDraft\":\"false\"}", 0, "invalid release metadata")]
+    [InlineData("not-json", 0, "invalid release metadata")]
+    [InlineData("", 0, "invalid release metadata")]
+    [InlineData("", 1, "published")]
+    [InlineData("{\"isDraft\":false}", 1, "published")]
+    public void PublishRequiresPublishedMetadataBeforeReportingExists(string metadata, int viewExit, string expected)
+    {
+        using var fixture = new PublishFixture(releaseMetadata: metadata, viewExit: viewExit);
+        var result = fixture.RunPublish(ScriptPath(), new string('a', 40), "4242");
+        Assert.True(fixture.InspectorRan);
+        var success = expected is "exists" or "published";
+        Assert.Equal(success, result.ExitCode == 0);
+        Assert.Contains(expected, result.Text, StringComparison.Ordinal);
+        Assert.Equal(expected == "published", fixture.RecordedGhArguments().Length > 0);
+        if (!success)
+        {
+            Assert.DoesNotContain("LEAN_CACHE_PUBLISH ", result.Text, StringComparison.Ordinal);
+        }
+    }
+
+    [Fact]
+    public void PublishStillRequiresInspectorBeforeLookingUpPublishedRelease()
+    {
+        using var fixture = new PublishFixture(releaseMetadata: "{\"isDraft\":false}", viewExit: 0, inspectorExit: 7);
+        var result = fixture.RunPublish(ScriptPath(), new string('a', 40), "4242");
+        Assert.Equal(7, result.ExitCode);
+        Assert.True(fixture.InspectorRan);
+        Assert.False(fixture.ReleaseViewed);
+        Assert.Empty(fixture.RecordedGhArguments());
+        Assert.DoesNotContain("LEAN_CACHE_PUBLISH ", result.Text, StringComparison.Ordinal);
+    }
+
     /// <summary>
     /// Darwin's system `shasum` is a Perl program. The fixture models its exit-9 startup failure
     /// for an unavailable caller locale, including on hosts that now provide C.UTF-8.
@@ -420,7 +456,8 @@ public sealed partial class LeanCachePublishTests
     {
         private readonly TemporaryDirectory root = new();
 
-        internal PublishFixture(bool requirePortableLocaleForShasum = false)
+        internal PublishFixture(bool requirePortableLocaleForShasum = false,
+            string releaseMetadata = "", int viewExit = 1, int inspectorExit = 0)
         {
             Repository = Path.Combine(root.Path, "repo");
             Bin = Path.Combine(root.Path, "bin");
@@ -439,15 +476,25 @@ public sealed partial class LeanCachePublishTests
             Directory.CreateDirectory(Path.GetDirectoryName(helper)!);
             WriteExecutable(
                 helper,
-                "#!/usr/bin/env bash\nprintf '%s %s\\n' "
+                "#!/usr/bin/env bash\nif [[ \"$1\" == build-snapshot-address ]]; then printf '%s\\n' "
+                    + $"\"{new string('5', 64)}\"; exit; fi\n"
+                    + "printf '%s %s\\n' "
                     + $"\"{new string('1', 64)}\" \"{new string('2', 64)}\"\n");
+
+            var inspector = Path.Combine(Repository, "tools", "lean-inspector", "inspect.sh");
+            Directory.CreateDirectory(Path.GetDirectoryName(inspector)!);
+            WriteExecutable(inspector, $"#!/usr/bin/env bash\ntouch '{root.Path}/inspector-ran'\nexit {inspectorExit}\n");
+            File.WriteAllText(Path.Combine(root.Path, "release-metadata.json"), releaseMetadata);
 
             Directory.CreateDirectory(Bin);
             // release view 报「不存在」，脚本才会走到创建；create 把参数与 manifest 留证。
             WriteExecutable(
                 Path.Combine(Bin, "gh"),
                 "#!/usr/bin/env bash\n"
-                    + "if [[ \"$1\" == 'release' && \"$2\" == 'view' ]]; then exit 1; fi\n"
+                    + "if [[ \"$1\" == 'release' && \"$2\" == 'view' ]]; then\n"
+                    + $"  test -f '{root.Path}/inspector-ran' || exit 99\n"
+                    + $"  touch '{root.Path}/release-viewed'\n"
+                    + $"  cat '{root.Path}/release-metadata.json'\n  exit {viewExit}\nfi\n"
                     + "if [[ \"$1\" == 'release' && \"$2\" == 'create' ]]; then\n"
                     + $"  printf '%s\\n' \"$@\" > '{GhArgumentsPath}'\n"
                     + "  for argument in \"$@\"; do\n"
@@ -477,6 +524,10 @@ public sealed partial class LeanCachePublishTests
         private string Repository { get; }
 
         internal string Bin { get; }
+
+        internal bool InspectorRan => File.Exists(Path.Combine(root.Path, "inspector-ran"));
+
+        internal bool ReleaseViewed => File.Exists(Path.Combine(root.Path, "release-viewed"));
 
         private string GhArgumentsPath { get; }
 
@@ -569,7 +620,9 @@ public sealed partial class LeanCachePublishTests
             Directory.CreateDirectory(Path.GetDirectoryName(helper)!);
             WriteExecutable(
                 helper,
-                "#!/usr/bin/env bash\nprintf '%s %s\\n' "
+                "#!/usr/bin/env bash\nif [[ \"$1\" == build-snapshot-address ]]; then printf '%s\\n' "
+                    + $"\"{new string('5', 64)}\"; exit; fi\n"
+                    + "printf '%s %s\\n' "
                     + $"\"{new string('3', 64)}\" \"{new string('4', 64)}\"\n");
 
             var producer = deviation == "no-producer" ? "" : $"producer_commit_sha={ProducerSha}\n";
@@ -592,7 +645,7 @@ public sealed partial class LeanCachePublishTests
             File.WriteAllText(
                 Path.Combine(payload, "manifest.txt"),
                 $"toolchain=leanprover/lean4:v4.31.0\nconfig_sha256={new string('4', 64)}\n"
-                    + $"sources_sha256={new string('3', 64)}\narchive_sha256={digest}\n"
+                    + $"sources_sha256={new string('3', 64)}\nbuild_snapshot_sha256={new string('5', 64)}\narchive_sha256={digest}\n"
                     + $"archive_bytes=14\n{producer}{runId}");
 
             var archiveDigest = deviation == "wrong-archive-digest"

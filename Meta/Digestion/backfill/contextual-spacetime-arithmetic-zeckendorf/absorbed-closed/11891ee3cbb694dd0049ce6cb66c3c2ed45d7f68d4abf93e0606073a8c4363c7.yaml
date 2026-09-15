@@ -1,0 +1,14 @@
+fingerprints:
+  raw_sha256: sha256:11891ee3cbb694dd0049ce6cb66c3c2ed45d7f68d4abf93e0606073a8c4363c7
+  normalized_sha256: sha256:11891ee3cbb694dd0049ce6cb66c3c2ed45d7f68d4abf93e0606073a8c4363c7
+cas_ref: sha256:11891ee3cbb694dd0049ce6cb66c3c2ed45d7f68d4abf93e0606073a8c4363c7
+coverage_gids:
+  - gid: D5/S3/Factorization/Combinatorics/StrictDivisorChainCount.strict_divisor_chain_count
+    target_statement_id: sha256:37111772775aeadb9fbc1831daf27a4c9221f7bc53e1921787c2069ce41f9b5c
+  - gid: D5/S3/Factorization/Combinatorics/StrictDivisorChainMobius.chain_alternating_sum_eq_moebius
+    target_statement_id: sha256:fae8647d64c7239dc7982939953372724e75407443cc5af717452fc2ce2726d3
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - 57444e24d07621527647415b42ba7a121e8a04a85c1107f89dac5fdacbc651e4
+    - 84a9da4c1d397a1ac46e7988fc90fa39b1185f600e5d9d152ed0e85ba271c232

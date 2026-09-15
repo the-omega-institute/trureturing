@@ -1,0 +1,2 @@
+**证明。** 去掉交叉块后的对角算子在 $[\kappa/4,\kappa/2]$ 内。交叉块 $\left(\begin{smallmatrix}0&b^*\\b&0\end{smallmatrix}\right)$ 的范数为 $\|b\|\le\sqrt{\delta S_q}\le\kappa/8$；二次型扰动界给出所述上下界。直接计算 $\langle b^\pm,D^nb^\pm\rangle=\sum_iw_i^\pm\lambda_i^n$，再用 PN1。证毕。
+
