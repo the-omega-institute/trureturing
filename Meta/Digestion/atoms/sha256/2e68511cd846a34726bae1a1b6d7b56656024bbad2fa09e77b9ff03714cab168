@@ -1,0 +1,4 @@
+The primal is nonempty and bounded. Since its data are rational, optimal rational primal and dual witnesses exist, so the same equality applies to rational probability laws. The residual center alpha does not affect oscillation; the centered best uniform approximation splits the optimal width in half.
+
+Thus universal zero ambiguity is equivalent to affine reconstruction on S. This is a statement about all laws on the allowed carrier and their moment fibers. It is distinct from the width for one fixed observed moment vector, which can be smaller, and from preservation by one particular compression map. Nonconvex Markovian restrictions on the probability-law family require their own analysis; the displayed duality uses the full pair of simplices.
+
