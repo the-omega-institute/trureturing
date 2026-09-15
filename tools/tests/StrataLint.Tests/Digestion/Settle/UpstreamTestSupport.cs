@@ -32,7 +32,8 @@ internal static class UpstreamTestSupport
 
     internal static DigestionLedgerEntry Settled(DigestionLedgerEntry entry, string? receipt = null)
     {
-        var source = DigestionTestSupport.Document(entry.Atomizer, [entry]).RequireDigestionSources().Single();
+        var source = DigestionTestSupport.Document(entry.Atomizer, [entry]).RequireDigestionSources().Single()
+            with { SourceId = entry.SourceId, SourcePath = entry.SourcePath };
         var raw = RawRepositorySnapshot.Create([
             new(BackfillInventoryLoader.RootPath + source.SourceId + "/source.toml",
                 BackfillInventoryWriter.WriteSourceMetadata(source)),

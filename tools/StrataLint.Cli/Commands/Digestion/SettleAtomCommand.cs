@@ -91,6 +91,8 @@ internal static partial class SettleAtomCommand
 
     private static void RequireWritable(DigestionLedgerEntry entry)
     {
+        if (entry.Receipts.Upstream is not null)
+            throw Invalid("UPSTREAM_PRESENT", $"atom_id={entry.AtomId}");
         if (entry.Receipts.Nonpropositional is not null
             || entry.ProjectedStatus != new DigestionStatus(DigestionMigrationState.Residual, DigestionTruthState.Open))
             throw Invalid("NOT_RESIDUAL_OPEN", $"atom_id={entry.AtomId}");

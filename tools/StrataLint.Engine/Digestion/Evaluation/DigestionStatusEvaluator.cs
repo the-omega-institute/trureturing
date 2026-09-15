@@ -228,6 +228,7 @@ internal static partial class DigestionStatusEvaluator
     {
         var gaps = new List<DigestionGap>();
         var structured = VerifyStructuredAlignment(entry, alignment, gaps, findings);
+        VerifyUpstreamProbe(entry, snapshot, changes, authorityChanged, gaps);
         var nonpropositional = HasNonpropositionalReceipt(entry);
         var upstream = HasUpstreamReceipt(entry);
         if (entry.Receipts.Upstream is not null && !upstream)
@@ -341,7 +342,8 @@ internal static partial class DigestionStatusEvaluator
         Func<string, bool>? isBaseFactAffected)
     {
         var changedSet = changes ?? RawChangeSet.Create([]);
-        if (changes is null || DigestionCasStore.EntryChanged(entry, changedSet))
+        if (changes is null || DigestionCasStore.EntryChanged(entry, changedSet)
+            || entry.Receipts.Upstream is not null && PathChanged(changedSet, UpstreamProbePath(entry)))
         {
             return true;
         }
