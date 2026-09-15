@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:d5092d98e5fb87050bafd591ac3b4f4352531111b48eb43e68af15a7c61da855
   normalized_sha256: sha256:d5092d98e5fb87050bafd591ac3b4f4352531111b48eb43e68af15a7c61da855
 cas_ref: sha256:d5092d98e5fb87050bafd591ac3b4f4352531111b48eb43e68af15a7c61da855
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Observer/Refinement/CongruenceKernelSensorFusion.congruence_kernel_iInter
+    target_statement_id: sha256:eda95559bd45d2ab308387c49d909dcf3f5145f9a56fe7924abefbfb8f514db6
 receipts:
   unresolved_subitems: []
