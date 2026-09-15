@@ -1551,3 +1551,289 @@ ordinary derivation from these inputs and IP5. Priority for its combined
 formulation is unconfirmed. No new externally posed open problem is
 counted as resolved, and no new Lean/kernel-certified declaration is
 asserted by this theory-only continuation.
+
+
+## QR. Exact quadratic realization of finite Fibonacci-divisor spectra
+
+### QR.1 What the native-prime layers do and do not add
+
+Keep NP's actual prime-factor sums S_(p,k), epsilon=(5/p), and q_p.
+The previously proved identity NP8 gives, for every fixed prime p>=7,
+
+$$
+2\epsilon^k S_{p,k}\equiv q_p\pmod p\quad(k\ge0). \tag{QR1}
+$$
+
+Consequently all finite vectors of these normalized residues are diagonal:
+(q_p,...,q_p). For any nonempty finite set of layers, simultaneous vanishing
+is exactly the same condition as vanishing at a single layer. Distinct
+prime supports do not make these particular residue tests independent.
+This is a consequence of NP8, not a new estimate on the WSS zero set.
+It does not say that all information in the full prime factorizations is
+redundant, or that residues at different base primes are equal.
+
+The following use of primitive factors has a different endpoint. It closes
+the realization gap in the earlier A339621/FSP result and proves positive
+natural density, without any supposition that initial depths equal one.
+
+### QR.2 Definitions and the credited primitive-prime input
+
+For a positive integer M define the finite set of distinct positive
+Fibonacci divisor VALUES
+
+$$
+D_F(M)=\{F_j:j\ge2,\ F_j\mid M\},\qquad
+\sigma_F(M)=\sum_{d\in D_F(M)}d.
+$$
+
+The value one occurs once. For a set A of nonnegative integers its natural
+density is lim_(X->infinity) #(A intersect [0,X])/X, when that limit exists.
+
+We use Carmichael's classical primitive-divisor theorem in the following
+precise form: for every j>12 there is a prime q_j dividing F_j whose least
+positive Fibonacci zero index is exactly j. Different j give different
+chosen primes. The classical rank bound j|(q_j-(5/q_j)) implies
+q_j>=j-1. This implication is for the prime value, not its exponent.
+The primes q_j are different from two and five for j>12.
+
+A primary accessible statement is H. Hong, *On big primitive divisors of
+Fibonacci numbers*, arXiv:2312.04354v2, introduction. The classical result
+is also proved in M. Yabuta, *A simple proof of Carmichael's theorem on
+primitive divisors*, Fibonacci Quarterly39(5)(2001),439-443. For the few
+indices 3<=j<=12, direct Fibonacci calculations give a prime of exact
+rank j except j=6,12; for j=3,4,5,7,8,9,10,11 one may take respectively
+2,3,5,13,7,17,11,89. No simple-exponent assertion is used here.
+
+### QR.3 A uniform bound on all untested large Fibonacci divisors
+
+Let R(d) be the number of roots of x^2=-1 modulo the positive integer d.
+For d>1,
+
+$$
+R(d)\le2^{\omega(d)}\le64d^{1/4}.                 \tag{QR2}
+$$
+
+**Proof.** At every odd prime power there are at most two roots: a root
+is a unit and the derivative 2x is a unit, so each root modulo the prime
+lifts uniquely. At two there is one root modulo two and none modulo four
+or higher powers. CRT proves the first bound. For primes at least17,
+2<=q^(1/4). There are just six primes below17, so their possible factors
+of two contribute at most64; the larger primes' product is at most d.
+
+Fibonacci induction gives F_j>=(3/2)^(j-2) for j>=2. Since
+(3/2)^3>(4/3)^4, it follows that F_j^(-3/4)<=(3/4)^(j-2).
+Thus, for every integer J>=3,
+
+$$
+\sum_{j>J}\frac{R(F_j)}{F_j}
+\le256(3/4)^{J-1}=:T_J.                            \tag{QR3}
+$$
+
+**Theorem.** Uniformly for X>=2, the count of m in [0,X] for which some
+j>J satisfies F_j|m^2+1 is at most
+
+$$
+XT_J+O\bigl(X^{1/2}\log X\bigr).                  \tag{QR4}
+$$
+
+The implicit constant is absolute and independent of J.
+
+**Proof.** Only O(log X) indices can occur, since F_j<=X^2+1 and the
+preceding exponential lower bound holds. For each such j, there are at
+most R(F_j)(X/F_j+1) solutions in the interval. Sum the main terms using
+QR3. Each error term is at most64(X^2+1)^(1/4), by QR2, and there are
+O(log X) of them. This proves QR4. In particular the upper density of
+the large-divisor tail is at most T_J, tending to zero exponentially.
+The error estimate controls divisors larger than X as well as smaller
+ones; a convergent formal density series alone would not suffice.
+
+### QR.4 Every locally admissible integer has a positive-density realization
+
+**Theorem.** Let K>=1 and assume x^2=-1 modulo K has a solution. Then
+
+$$
+A_K=\{m\ge0:K\mid m^2+1,\ D_F(m^2+1)=D_F(K)\}
+$$
+
+has a positive natural density.
+
+**Proof of finite local compatibility.** Solvability is equivalent to
+v_2(K)<=1 and every odd prime divisor of K being1 modulo four. At each
+odd q^e exactly dividing K, choose a root modulo q^e and then a lift
+modulo q^(e+1) that is NOT a root at the higher precision. Such a lift
+exists: among the q lifts, precisely one is a root, because 2x is a unit.
+Thus a progression can impose v_q(m^2+1)=e. If K is odd take m=0 modulo
+four; if K is even take m=1 modulo four. These force v_2(m^2+1) to equal
+v_2(K). Also impose m=0 modulo three, since three cannot divide K.
+
+Choose an integer J0>=12 large enough that every Fibonacci divisor of K
+has index at most J0 and every prime divisor q of K has rank at most J0.
+Existence is immediate; J0=max(12,K+2) is one sufficient choice, using
+F_j>=j-1 and the rank bound, with the small primes treated directly.
+For each 3<=j<=J0 with F_j not dividing K, choose a prime q for which
+v_q(F_j)>v_q(K). If q divides K, the exact-valuation condition already
+excludes F_j. If q does not divide K, impose m=0 modulo q. Repeated
+conditions agree, and the choices at two and three are consistent.
+CRT now supplies one progression a modulo Q0 such that K|m^2+1 and
+no forbidden F_j with j<=J0 divides m^2+1. Every prime factor of Q0
+either divides K, is two or three, or divides one of those F_j. Its rank
+is therefore at most J0.
+
+**Proof of a quantitative finite exclusion bound.** For each j>J0 choose
+the classical primitive prime q_j. The q_j are distinct and coprime to
+Q0. Avoid the at most two roots of -1 modulo q_j. For J>=J0, CRT gives
+a set of progressions of density at least
+
+$$
+\frac1{Q0}\prod_{j=J0+1}^{J}\left(1-\frac2{q_j}\right)
+\ge\frac{(J0-2)(J0-1)}{Q0(J-2)(J-1)}.              \tag{QR5}
+$$
+
+The last product telescopes using q_j>=j-1; the empty product is one.
+These progressions obey every required exclusion through index J.
+
+**Proof of existence and positivity of the limiting density.** Let A_(K,J)
+be the full set with K|m^2+1 and the correct Fibonacci divisor membership
+only through index J. It is periodic, so its density d_(K,J) exists.
+These sets decrease with J. The difference A_(K,J) minus A_K is contained
+in the QR4 tail. Hence their finite counting densities differ in limsup
+by at most T_J. It follows that A_K has natural density
+lim_(J->infinity)d_(K,J).
+
+For any J>=J0 this limit is at least the right side of QR5 minus T_J.
+The first quantity decreases polynomially with J and T_J exponentially.
+Choose J so that T_J is less than half that positive rational quantity.
+This proves strictly positive density. No assertion about the primality
+or squarefreeness of m^2+1 is required.
+
+### QR.5 An exact finite-spectrum criterion
+
+**Theorem.** Let D be a finite set of distinct positive Fibonacci values,
+containing one, and let K=lcm(D). The following are equivalent:
+
+$$
+\begin{aligned}
+&\exists m\ge0:\ D_F(m^2+1)=D;\\
+&D_F(K)=D\quad\hbox{and}\quad x^2\equiv-1\pmod K
+   \hbox{ has a solution}.
+\end{aligned}                                                   \tag{QR6}
+$$
+
+If they hold, the realizing integers m have positive natural density.
+
+**Proof.** A realization implies K|m^2+1 and hence root solvability.
+Every Fibonacci divisor of K then belongs to D, while each element of D
+already divides K, giving equality. Conversely apply QR.4 to K when
+D_F(K)=D. This gives the stronger positive-density subset that also
+satisfies K|m^2+1. The full realizing set has a natural density by the
+same finite-period truncation and QR4 tail argument, so that density is
+positive. Both criteria are finite statements for the given D.
+
+### QR.6 Every even-index Fibonacci value occurs with positive density
+
+For r>=1 put
+
+$$
+D_r=\{1\}\cup\{F_{2j+1}:1\le j<r\},\qquad K_r=\operatorname{lcm}(D_r).
+$$
+
+**Lemma.** D_F(K_r)=D_r, and x^2=-1 modulo K_r is soluble.
+
+**Proof.** If an odd prime q divides any odd-index F_n, the identity
+L_n^2-5F_n^2=-4 shows that (L_n/2)^2=-1 modulo q. Thus q=1 modulo four,
+including q=5. At an odd index the Fibonacci valuation at two is at
+most one, as follows from the complete period-six recurrence modulo four.
+Hence v_2(K_r)<=1 and every odd prime in K_r is1 modulo four; CRT and
+simple-root lifting prove the root assertion. Also three does not divide
+K_r, since its rank is four and all the target indices are odd.
+
+Now suppose F_k|K_r with k>=3. For k other than6,12 there is a prime of
+exact rank k, by QR.2's classical theorem and the listed small checks.
+It divides some target F_i with i odd and i<=2r-1. The entry-point theorem
+then gives k|i. Therefore k is odd and at most2r-1, so F_k is a target
+value. The exceptions F_6=8 and F_12=144 cannot divide K_r, since its
+two-valuation is at most one. The reverse containment is the definition
+of the least common multiple. This proves the exact divisor set.
+
+**Theorem.** For every r>=1 the natural density
+
+$$
+\boxed{d_r=\lim_{X\to\infty}\frac1X
+ \#\{0\le m\le X:\sigma_F(m^2+1)=F_{2r}\}>0}       \tag{QR7}
+$$
+
+exists. In particular every F_(2r) is attained infinitely often.
+Combined with FSP, the Fibonacci-valued part of A339621's range is
+EXACTLY {F_(2r):r>=1}.
+
+**Proof.** Apply QR6 to D_r, then use the earlier full FSP classification:
+for every m, the displayed sum equals F_(2r) exactly when its full divisor
+set is D_r. The identity sum(D_r)=F_(2r) is the Fibonacci recurrence.
+
+**Explicit positive lower certificate.** For every
+J>=max(12,2r-1) satisfying the integer inequality
+
+$$
+512K_r(J-2)(J-1)3^{J-1}<4^{J-1},                  \tag{QR8}
+$$
+
+one has
+
+$$
+\boxed{d_r>\frac1{2K_r(J-2)(J-1)}.}               \tag{QR9}
+$$
+
+Such J always exist and can be found using integer arithmetic.
+
+**Proof.** Begin with one progression modulo6K_r on which K_r|m^2+1
+and three divides m. For r=1 choose the even progression; for r>=2 the
+root condition already forces m odd, since F_3=2 belongs to D_r.
+This deals with F_3 when forbidden, with F_4, and with the primitive
+exceptions F_6,F_12. For every other forbidden index5<=j<=J, choose a
+prime of exact rank j. It is coprime to6K_r: otherwise j would divide a
+target odd index and would itself be a target. These primes are distinct.
+Avoiding their at most two root classes gives a finite-good density at
+least
+
+$$
+\frac1{6K_r}\prod_{j=5}^{J}\left(1-\frac2{j-1}\right)
+=\frac1{K_r(J-2)(J-1)}.
+$$
+
+Including factors for desired or exceptional indices only lowers this
+bound, so the displayed complete product is legitimate. Subtract T_J
+from QR3. The condition QR8 says exactly that this tail is less than
+half the last lower bound, proving QR9.
+
+### QR.7 Scope and arithmetic significance
+
+QR7 supplies the realization direction deliberately not asserted in the
+old a339621_conjecture Lean candidate. The current OEIS entry lists the
+initial even Fibonacci values and a sequence of least realizing inputs;
+it does not provide a proof of the all-r positive-density assertion.
+The original one-way conjecture was already addressed and is not counted
+again. The stronger realization statement is not being relabelled as a
+second, independently posed external conjecture. Its priority remains
+unconfirmed after bounded exact-identifier and mathematical-phrase searches.
+
+These arguments require a primitive prime at each sufficiently large
+index, not a primitive prime to exponent one. All chosen primes can have
+their actual unknown Fibonacci depths. No WSS occurrence, nonoccurrence,
+or estimate on the fully exceptional block count H(X) follows from QR7.
+The role of the large-index primes here is to exclude unwanted Fibonacci
+divisors of a varying quadratic value; it does not control the exponents
+of a fixed Fibonacci value. The finite CRT step and the uniform tail
+estimate are separate and both are needed for the density conclusion.
+
+This appendix contains complete ordinary proofs using the explicitly
+credited primitive-prime theorem. It adds no Lean axiom or placeholder,
+and does not claim a newly kernel-certified density theorem. The existing
+FibonacciDivisorSumParity owner retains its previously stated scope.
+
+Primary references: Hong, arXiv:2312.04354v2, introduction,
+https://arxiv.org/html/2312.04354v2 ; Yabuta, Fibonacci Quarterly39(2001),
+439-443, DOI10.1080/00150517.2001.12428701; and the target definition and
+original conjecture in https://oeis.org/A339621 . The recurrence, root
+lifting, CRT and finite-prime divisor bounds used above are classical;
+the needed elementary proofs have been included rather than assigned
+unverified new citations.
