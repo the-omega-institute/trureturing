@@ -2,6 +2,7 @@
 import hashlib
 import builtins
 import contextlib
+import errno
 import io
 import json
 import importlib
@@ -742,6 +743,49 @@ if pathlib.Path(sys.argv[0]).name == "lean_actions.py":
                         saved.unlink(missing_ok=True)
                     saved.write_bytes(material["nested/z.olean"])
                     saved.chmod(0o640)
+
+    def test_dependency_and_project_restore_rolls_back_on_rename_or_exdev(self):
+        owner = self.restore_owner()
+        material = {"a.olean": b"cached material", "nested/z.olean": b"cached tail"}
+        for layer in ("dependency", "project"):
+            with self.subTest(layer=layer):
+                source, cached, manifest = self.restore_fixture(layer, material)
+                target_before = {path.relative_to(source).as_posix(): path.read_bytes()
+                                 for path in source.rglob("*") if path.is_file()}
+                (source / "private.keep").write_bytes(b"candidate material")
+                target_before["private.keep"] = b"candidate material"
+                original_rename = pathlib.Path.rename
+                for failure, code in (("rename", errno.EIO), ("exdev", errno.EXDEV)):
+                    with self.subTest(failure=failure):
+                        def fail_install(path, target):
+                            if path.name == "data" and target == source:
+                                raise OSError(code, "injected " + failure + " during cache install")
+                            return original_rename(path, target)
+
+                        with mock.patch.dict(os.environ, self.env), \
+                             mock.patch.object(pathlib.Path, "rename", fail_install), \
+                             contextlib.redirect_stdout(io.StringIO()) as receipts:
+                            owner.restore(self.root, owner.actions_keys(self.root),
+                                          {layer: manifest["key"]}, [layer])
+                        self.assertIn('"status": "miss"', receipts.getvalue())
+                        self.assertEqual(target_before,
+                                         {path.relative_to(source).as_posix(): path.read_bytes()
+                                          for path in source.rglob("*") if path.is_file()})
+                        self.assertEqual([], list(source.parent.glob(".actions-*")))
+
+    def test_corrupt_cache_is_rejected_before_replacing_existing_target(self):
+        owner = self.restore_owner()
+        for layer in ("dependency", "project"):
+            with self.subTest(layer=layer):
+                source, cached, manifest = self.restore_fixture(layer, {"a.olean": b"cached"})
+                (source / "private.keep").write_bytes(b"candidate material")
+                (cached / "data/a.olean").write_bytes(b"corrupt cache")
+                with mock.patch.dict(os.environ, self.env), contextlib.redirect_stdout(io.StringIO()) as receipts:
+                    owner.restore(self.root, owner.actions_keys(self.root),
+                                  {layer: manifest["key"]}, [layer])
+                self.assertIn('"status": "miss"', receipts.getvalue())
+                self.assertEqual(b"cached", (source / "a.olean").read_bytes())
+                self.assertEqual(b"candidate material", (source / "private.keep").read_bytes())
 
     def test_dependency_module_and_submodule_seed_round_trip(self):
         self.assert_module_and_submodule_seed_round_trip("dependency")

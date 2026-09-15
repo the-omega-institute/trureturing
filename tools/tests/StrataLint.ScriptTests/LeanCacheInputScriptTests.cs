@@ -54,6 +54,8 @@ public sealed class LeanCacheInputScriptTests
     [InlineData("ci_contract", "test_snapshot_publication_failure_restores_previous_seed")]
     [InlineData("ci_contract", "test_dependency_and_project_restore_read_each_material_once")]
     [InlineData("ci_contract", "test_dependency_and_project_reject_late_bad_material_without_installing")]
+    [InlineData("ci_contract", "test_dependency_and_project_restore_rolls_back_on_rename_or_exdev")]
+    [InlineData("ci_contract", "test_corrupt_cache_is_rejected_before_replacing_existing_target")]
     [InlineData("ci_contract", "test_dependency_module_and_submodule_seed_round_trip")]
     [InlineData("ci_contract", "test_project_module_and_submodule_seed_round_trip")]
     [InlineData("ci_contract", "test_internal_dependency_file_links_round_trip_as_private_material")]
