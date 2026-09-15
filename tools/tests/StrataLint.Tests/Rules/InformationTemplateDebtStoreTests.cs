@@ -68,6 +68,39 @@ public sealed class InformationTemplateDebtStoreTests
         Assert.Throws<FormatException>(() => InformationTemplateDebtStore.ReadRow(
             RowPath, Encoding.UTF8.GetBytes(Row), Seed, Snapshot()));
 
+    [Theory]
+    [InlineData("source")]
+    [InlineData("missing")]
+    [InlineData("symlink")]
+    [InlineData("manifest")]
+    public void input_snapshot_replacement_rechecked(string replacement)
+    {
+        var original = Snapshot(("Registration.lean", Source));
+        InformationTemplateDebtRow ReadFrom(RepositorySnapshot snapshot) =>
+            InformationTemplateDebtStore.ReadRow(RowPath, Encoding.UTF8.GetBytes(Row), Seed, snapshot);
+        void Accept(RepositorySnapshot snapshot) =>
+            Assert.Equal(Row, Encoding.UTF8.GetString(InformationTemplateDebtStore.WriteRow(ReadFrom(snapshot)).AsSpan()));
+        Accept(original);
+        Accept(original);
+        var next = replacement switch
+        {
+            "source" => Snapshot(("Registration.lean", Source + "-- changed\n")),
+            "missing" => Snapshot(),
+            "symlink" => Snapshot(("Registration.lean", Source), ("Meta/FILEMAP.toml", """
+                schema_version = 2
+                [[files]]
+                pattern = "Registration.lean"
+                runtime_disposition = "committed-source"
+                symlink = { target = "Original.lean", kind = "file" }
+                """ + "\n")),
+            "manifest" => Snapshot(("Registration.lean", Source), ("Meta/FILEMAP.toml", "invalid\n")),
+            _ => throw new ArgumentException(nameof(replacement)),
+        };
+        Assert.ThrowsAny<FormatException>(() => ReadFrom(next));
+        Accept(original);
+        Accept(Snapshot(("Registration.lean", Source)));
+    }
+
     [Fact]
     public void original_protected_activation_accepted()
     {

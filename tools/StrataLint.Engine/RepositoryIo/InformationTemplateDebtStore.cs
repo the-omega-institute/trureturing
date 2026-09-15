@@ -1,4 +1,6 @@
 using System.Collections.Immutable;
+using System.Collections.Concurrent;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 
@@ -22,6 +24,25 @@ internal static class InformationTemplateDebtStore
 {
     public const string Root = "Golden/InformationTemplateDebt/";
     public const string ActivationPath = Root + "activation.json";
+
+    // RepositorySnapshot and its files are immutable. Share only their parsed
+    // link policy and byte digests; every wire record is still checked below.
+    // A replacement snapshot gets an independent index, even for equal paths.
+    private static readonly ConditionalWeakTable<RepositorySnapshot, InputIndex> InputIndices = new();
+
+    private sealed class InputIndex(RepositorySnapshot snapshot)
+    {
+        private readonly ImmutableArray<FileMapSymlink> links =
+            snapshot.TryGetFile(AdmissionPlanePolicy.FileMapPath, out var manifest)
+                ? FileMapSymlinkPolicy.Parse(manifest.RawBytes.AsSpan(), AdmissionPlanePolicy.FileMapPath)
+                : [];
+        private readonly ConcurrentDictionary<string, string> hashes = new(StringComparer.Ordinal);
+
+        internal bool Matches(string path, string digest) =>
+            !links.Any(link => path == link.Path || path.StartsWith(link.Path + "/", StringComparison.Ordinal))
+            && snapshot.TryGetFile(path, out var file)
+            && hashes.GetOrAdd(path, _ => InformationTemplateJson.Sha256(file.RawBytes.AsSpan())) == digest;
+    }
 
     public static string PathFor(InformationOccurrenceKey key)
     {
@@ -110,9 +131,7 @@ internal static class InformationTemplateDebtStore
         if (value.ValueKind != JsonValueKind.Array || value.GetArrayLength() == 0)
             throw new FormatException("DTR-DebtSchema: nonempty content inputs required");
         var result = ImmutableArray.CreateBuilder<InformationTemplateContentInput>();
-        var links = inputs.TryGetFile(AdmissionPlanePolicy.FileMapPath, out var manifest)
-            ? FileMapSymlinkPolicy.Parse(manifest.RawBytes.AsSpan(), AdmissionPlanePolicy.FileMapPath)
-            : [];
+        var index = InputIndices.GetValue(inputs, static snapshot => new InputIndex(snapshot));
         string? previous = null;
         foreach (var item in value.EnumerateArray())
         {
@@ -121,10 +140,8 @@ internal static class InformationTemplateDebtStore
             var sha256 = InformationTemplateJson.Hash(InformationTemplateJson.String(item, "sha256"), 64);
             if (!RepoPath.TryCreate(path, out _) || path.Contains('\\')
                 || path.Split('/').Any(part => part is "" or "." or "..")
-                || links.Any(link => path == link.Path || path.StartsWith(link.Path + "/", StringComparison.Ordinal))
                 || previous is not null && string.CompareOrdinal(previous, path) >= 0
-                || !inputs.TryGetFile(path, out var file)
-                || InformationTemplateJson.Sha256(file.RawBytes.AsSpan()) != sha256)
+                || !index.Matches(path, sha256))
                 throw new FormatException($"DTR-DebtSchema: unavailable, changed or noncanonical input {path}");
             previous = path;
             result.Add(new(path, sha256));
