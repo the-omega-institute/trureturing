@@ -24,6 +24,10 @@ $$\forall n \in \mathrm{Nat}, k \in \mathrm{Nat},\; 1 \le n \Rightarrow (n!^{2 \
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Congruence/LaymanOddPowerFactorialResidue.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a119690-layman-odd-power-factorial-residue` (proved) by `D5/S3/Arith/Congruence/LaymanOddPowerFactorialResidue.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a119690-layman-odd-power-factorial-residue","declaration_gid":"D5/S3/Arith/Congruence/LaymanOddPowerFactorialResidue.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paolo P. Lava; Giorgio Balzarotti; John W. Layman (2010). *OEIS A119690, n! mod n*(n+1)/2*. URL: <https://oeis.org/A119690>.

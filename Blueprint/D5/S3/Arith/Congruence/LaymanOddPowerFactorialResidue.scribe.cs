@@ -47,7 +47,11 @@ internal sealed class LaymanOddPowerFactorialResidueDocument
                         + "factorial divisibility gives residue zero modulo n/2. Their "
                         + "coprime product combines these residues, and an odd power "
                         + "preserves both. The other branch uses the divisibility lemma."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "oeis-a119690-layman-odd-power-factorial-residue"),
+                    ResolutionKind.Proved)))));
 
     private static Formula DivisibilityFormula()
     {
