@@ -297,6 +297,19 @@ Its final conditioned law is unchanged, with supported value225/8;
 the gain concerns the physical certificate before conditioning.
 No all-family quantitative bound or new scalar continuation is claimed.
 
+The [finite-chain invariance and saturation criterion](../docs/reports/erdos7-odd-covering/marked_head_profile.md#survivor-invariance-along-a-finite-chain-and-density-cap-saturation)
+extends that distinction to every finite continuation: if both chains
+agree on each good transition from an all-good prefix, their final
+survivor subprobabilities agree. When both survivor masses are positive,
+changing good multipliers changes the conditioned law exactly when their
+pathwise product ratio is nonconstant. At the natural density cap,
+minimum bad charge forces good-side saturation on every row; lowering
+good mass increases bad charge by precisely the same amount. Keeping
+only the coarser global cap leaves slack on strictly uncharged rows,
+where two positive-mass good atoms permit nonconstant zero-charge
+perturbations. These ordinary deductions identify the remaining ways to
+change the supported law, without claiming a new quantitative bound.
+
 A [complete original-low-test estimate](../docs/reports/erdos7-odd-covering/marked_head_profile.md#complete-original-low-test-anchoring-at-arbitrary-prime-power-heights)
 retains the entire low load `B` in its higher-label cross terms and
 removed energy. The general inequalities apply to every finite set of

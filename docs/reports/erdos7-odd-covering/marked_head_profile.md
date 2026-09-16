@@ -9879,3 +9879,128 @@ law. The full-domain reduction is (KR7); the minimax lower bound is
 the fixed good-root test above. This refutes universal optimality of
 the constant inside multiplier for the physical complete-test objective,
 without asserting any full-family or later-prime improvement.
+
+### Survivor invariance along a finite chain and density-cap saturation
+
+Fix an initial law \(\nu_0\), an actual forbidden family, and any finite
+sequence of prime-coordinate extensions. Let \(S_i\) be the event of
+avoiding every forbidden class through stage\(i\). At an old prefix
+\(h\), write \(m_i(h,y)\) for the fixed pure-survivor base and
+\(B_i(h)\) for the entire current mixed bad set. Consider two normalized
+kernel chains \(q_i^a\), \(a\in\{0,1\}\), with these same bases.
+Suppose that whenever \(h\in S_{i-1}\) and \(y\notin B_i(h)\),
+both kernels have the same good transition
+\(q_i^a(h,y)=m_i(h,y)g_i(h,y)\). The common multiplier may depend on
+the whole prefix and current point. For every \(z=(x_0,\ldots,x_i)\in S_i\),
+successive multiplication of conditional probabilities gives
+
+\[
+ P_i^a(z)=\nu_0(x_0)\prod_{j=1}^i q_j^a(z_{<j},x_j)
+        =\nu_0(x_0)\prod_{j=1}^i m_j(z_{<j},x_j)g_j(z_{<j},x_j).
+                                                               \tag{SI1}
+\]
+
+Thus the restrictions \(P_i^0|_{S_i}\) and \(P_i^1|_{S_i}\) agree
+pointwise at every stage. No agreement is required on bad transitions
+or on any transition after an already bad prefix. In particular, arbitrary
+rearrangements confined to bad sets throughout a finite continuation
+preserve the final survivor mass and, when that mass is positive, its
+entire conditioned law and true complete-test \(\Gamma\). Later physical
+moments and expected assigned charges can change on already bad prefixes;
+such changes can tighten certificates without changing this final law.
+
+More generally, keep the same initial law, bases and final event \(S=S_n\),
+but allow different good multipliers \(g_i^a\). Assume the baseline
+\(g_i^0\) is strictly positive on positive-base good transitions, the
+comparison \(g_i^1\) is finite and nonnegative, and both survivor masses
+\(\rho_a=P_n^a(S)\) are positive. On the positive baseline survivor
+support define
+
+\[
+ \begin{aligned}
+ R(z)=\prod_{i=1}^n\frac{g_i^1(z_{<i},x_i)}{g_i^0(z_{<i},x_i)},
+ &\qquad P_n^1(z)=R(z)P_n^0(z),\\
+ P_n^1(\cdot\mid S)=P_n^0(\cdot\mid S)
+ &\ \Longleftrightarrow\ R(z)\equiv\frac{\rho_1}{\rho_0}.
+ \end{aligned}
+                                                               \tag{SI2}
+\]
+
+This follows by dividing each survivor weight by its total mass. A common
+factor can change survival probability while leaving the conditional law
+unchanged. For the standard distortion, \(0\le\delta_i(h)<1\) and
+\(\alpha_i(h)=m_i(h,B_i(h))\) give good multiplier
+\((1-\min(\alpha_i(h),\delta_i(h)))^{-1}\). A common threshold rule
+depending on the actual observed prefix therefore preserves (SI1).
+A rule depending on the whole current physical law can change the
+effective threshold at the same good prefix; it changes the final
+conditional law only when the product ratio in (SI2) is nonconstant.
+Changing between threshold values both at least \(\alpha_i(h)\) has
+no good-side effect.
+
+For the local obstruction, let \(m\) be a fixed finite probability,
+\(B\) a bad set of mass \(\alpha\), and \(q=fm\) a normalized law
+with density \(0\le f\le g\), where \(1\le g<\infty\). Define
+the available good capacity \(A=g(1-\alpha)\) and its unused mass
+\(\Delta=\int_{B^c}(g-f)\,dm\). Then
+
+\[
+ \begin{gathered}
+ \min_f q(B)=\beta:=\max(0,1-A),\qquad
+ q(B)=1-A+\Delta,\\
+ A\le1\ \Longrightarrow
+ \left[q(B)=\beta+\Delta,\quad
+ q(B)=\beta\ \Longleftrightarrow\ f=g\quad m\text{-a.e. on }B^c\right].
+ \end{gathered}
+                                                               \tag{SI3}
+\]
+
+Indeed \(q(B)=1-q(B^c)\) and \(q(B^c)\le A\). If \(A<1\),
+the minimum is attained by density \(g\) on the good set and
+\(\beta/\alpha\) on the bad set; if \(A\ge1\), use density
+\((1-\alpha)^{-1}\) on the good set and zero on the bad set.
+Both constructions also obey \(f\le1\) on the bad set, if that
+additional constraint is imposed. Equality for \(A\le1\) forces the
+nonnegative good deficit to vanish at every positive-mass good atom.
+Consequently any reduction of good mass in a saturated row increases
+its actual bad charge by exactly the same amount. If \(A_x\le1\) in
+every compared row, at fixed old law \(\nu\) the one-step charge increment is
+\(\mathbb E_\nu\Delta_x\); this is not a telescoping comparison
+between chains whose intermediate physical laws differ.
+
+The strict branch \(A>1\) has \(\beta=0\) and
+\(q(B)=\Delta-(A-1)\). Zero bad charge then leaves unused capacity
+\(A-1\) and does not force good-side saturation. With at least two
+positive-mass good atoms, nonconstant zero-charge perturbations are
+possible. The distinction between the global cap and the natural cap
+is therefore essential.
+For \(0\le\delta<1\),
+
+\[
+ \begin{aligned}
+ g_{\rm global}&=(1-\delta)^{-1},
+ &A_{\rm global}>1&\ \Longleftrightarrow\ \alpha<\delta,\\
+ g_{\rm natural}&=(1-\min(\alpha,\delta))^{-1},
+ &A_{\rm natural}&\le1,\qquad
+ \beta=\frac{(\alpha-\delta)_+}{1-\delta}.
+ \end{aligned}                                                 \tag{SI4}
+\]
+
+Under the natural cap, minimum bad charge fixes the good side in every
+row, including uncharged rows. Under only the global cap, strictly
+uncharged rows with at least two positive-mass good atoms can retain
+zero bad charge while changing their good density; (KR1) deliberately
+kept those rows fixed. In a saturated row,
+changing the good transition requires increasing bad charge as in (SI3),
+or relaxing the prior cap to allow compensating density increases.
+Together with (SI2), these identify ways to change the supported law;
+they do not establish a better numerical \(\Gamma\), a uniform family
+bound, or unrestricted noncoverage.
+
+The product and conditioning identities reuse `Erdos7.FiniteLaw.joint`,
+`condition_prob`, and `Erdos7.ThreePrime.KernelChain.law` in the existing
+`ConditionalComparison/ThreePrime` modules. The natural multiplier is
+`Erdos7.outsideMultiplier_eq_natural` in `CappedGainDistortion`;
+saturation is the finite instance of Mathlib's
+`MeasureTheory.integral_eq_iff_of_ae_le`. These are ordinary consequences
+of existing APIs, with no new Lean declarations.
