@@ -177,6 +177,32 @@ requires a seed below the exact threshold in
 `(123.058769468748,123.058769468749)`. This is a limitation of that
 scalar continuation, not a lower bound on the actual best head moment.
 
+A [complete original-low-test estimate](../docs/reports/erdos7-odd-covering/marked_head_profile.md#complete-original-low-test-anchoring-at-arbitrary-prime-power-heights)
+retains the entire low load `B` in its higher-label cross terms and
+removed energy. The general inequalities apply to every finite set of
+primes and every finite higher exponent range; a finite depth box has
+explicit complete first- and second-moment remainder coefficients.
+On PG1, fixing all twelve original low test classes to `2 mod d` gives
+`Gamma_13<=163558856448790578417793670359/1113264631887138059499843750`
+`<146.919`, with arbitrary higher test residues and exponents. This
+restricted test branch does not replace the uniform bound `<148.650`.
+The inexpensive union relaxation at reference33 fails to dominate the
+existing head bound on an actual aligned68 low test; this concerns the
+relaxation, not the actual moment.
+
+An [exact signed CRT digit optimizer](../docs/reports/erdos7-odd-covering/marked_head_profile.md#exact-signed-digit-optimization-with-the-old-load-fixed)
+now maximizes arbitrary rational score tables over all six original
+seven-label residues for a fixed old load and fixed auxiliary profile.
+It retains empty cylinders and every digit, including zero. On the
+actual PG1 law, a joint-square/weighted-charge fixture with coefficients
+`4/3` and `1/6` has independent-digit maximum
+`223040367109/3000000021`, strictly exceeding the common-digit maximum
+by `9728472/1000000007`. Thus the common-digit shortcut for positive
+square estimates cannot be imposed on that signed joint objective.
+The unresolved outer optimization still includes all11808 old-load
+vectors and all moment/charge auxiliary profiles with their full tails;
+the finite fixtures supply no global continuation bound.
+
 A [complete uniform 86-point profile](../docs/reports/erdos7-odd-covering/marked_head_profile.md#a-uniform-86-point-profile-has-all-height-moment-bound-35)
 has **Gamma≤35** on each of its six actual mask states, in three
 inclusion-minimal orbits, at arbitrary original3/5/7 heights.

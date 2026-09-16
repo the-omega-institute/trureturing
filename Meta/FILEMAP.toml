@@ -575,6 +575,24 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Exact signed CRT digit-partition optimizer preserving independent original labels.
+pattern = "docs/reports/erdos7-odd-covering/exact_signed_digit_dp.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Exact signed digit optimizer fixtures on the actual PG1 law, including a common-digit counterexample.
+pattern = "docs/reports/erdos7-odd-covering/exact_signed_digit_dp_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]] # Rational dual obstruction to optimizing independent saturated caps with fibre-uniform laws.
 pattern = "docs/reports/erdos7-odd-covering/fiber_uniform_saturated_envelope_obstruction_certificate.json"
 kind = "data"
@@ -712,6 +730,15 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 [[files]] # Same-PG1 higher hinges, fixed11/13 transfer and exact scalar17/19 boundary.
 pattern = "docs/reports/erdos7-odd-covering/original9_convex_transfer_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Complete original-low-test observations, full depth tails and one aligned PG1 branch consumer.
+pattern = "docs/reports/erdos7-odd-covering/pg1_anchored_square_certificate.json"
 kind = "data"
 admission_plane = "content"
 produced_by = "none"
@@ -953,6 +980,15 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Replays the exact signed CRT optimizer against original-residue enumeration and actual PG1 witnesses.
+pattern = "docs/reports/erdos7-odd-covering/verify_exact_signed_digit_dp.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]] # Checks actual congruences and a rational dual obstruction without a solver or enumeration cache.
 pattern = "docs/reports/erdos7-odd-covering/verify_fiber_uniform_saturated_envelope_obstruction.py"
 kind = "program"
@@ -1099,6 +1135,15 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 [[files]] # Replays same-PG1 higher hinges, full11/13 transfer and the exact scalar continuation limit.
 pattern = "docs/reports/erdos7-odd-covering/verify_original9_convex_transfer.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Recomputes anchored all-height coefficients, complete outside tails and fixed-test PG1 consumers.
+pattern = "docs/reports/erdos7-odd-covering/verify_pg1_anchored_square.py"
 kind = "program"
 admission_plane = "content"
 produced_by = "none"

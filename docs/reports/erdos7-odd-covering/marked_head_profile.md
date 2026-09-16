@@ -7039,3 +7039,388 @@ square-only 17/19 necessary threshold; the general odd-covering problem
 remains open. Replay from the repository root:
 
     python3 -I -O docs/reports/erdos7-odd-covering/verify_pg1_signed_g2.py
+
+### Complete original low-test anchoring at arbitrary prime-power heights
+
+Retaining one complete original low test gives an all-height square
+estimate in terms of its weighted cylinder caps.  Its PG1 specialization
+below certifies the aligned2 test branch at \(\Gamma_{13}<146.919\).
+The uniform PG1 bound over all low tests remains \(\Gamma_{13}<148.650\).
+
+Let \(M_0=\prod_{p\in\mathcal P}p^{h_p}\), where \(\mathcal P\) is a finite
+set of primes and \(h_p\ge1\).  Let \(\mu\) be any probability on a subset
+of \(\mathbb Z/M_0\mathbb Z\), and let \(\lambda\) be its uniform independent
+lift in the additional digits to any finite heights \(H_p\ge h_p\).
+Fix one original low class \(C_d\) for every \(d\mid M_0\), including the
+unit class, and put
+
+\[
+ B=\sum_{d\mid M_0}\mathbf1_{C_d},\qquad
+ m_d(\sigma)=\max_{a\bmod d}\sigma(a\bmod d).
+\]
+
+Every complete fine test extending those classes has \(L=B+R\), where
+\(R\) contains precisely its higher original modulus labels.  Set
+
+\[
+ S(d)=\{p:v_p(d)=h_p\},\quad
+ a_d=\prod_{p\in S(d)}\frac p{p-1},\quad \gamma_d=a_d-1,
+\]
+
+\[
+ b_{de}=\prod_{p\in S(d)\cap S(e)}\frac{p(p+1)}{(p-1)^2}
+         \prod_{p\in S(d)\triangle S(e)}\frac p{p-1},\qquad
+ \kappa_{de}=b_{de}-a_d-a_e+1.
+\]
+
+Then, uniformly over all those finite heights and higher test residues,
+
+\[
+ \mathbb E_\lambda L^2\le
+ U(B):=\mathbb E_\mu B^2+
+       2\sum_{d\mid M_0}\gamma_d m_d(B\mu)+
+       \sum_{d,e\mid M_0}\kappa_{de}m_{\operatorname{lcm}(d,e)}(\mu).
+ \tag{AF1}
+\]
+
+For proof, a higher label has the unique form
+\(m=d\prod_p p^{t_p}\), with \(d=\gcd(m,M_0)\), \(t\ne0\), and
+\(\operatorname{supp}(t)\subseteq S(d)\).  Its cross term with \(B\) is
+at most \(\prod_p p^{-t_p}m_d(B\mu)\).  Two higher labels have either
+empty intersection or a low cylinder modulo \(\operatorname{lcm}(d,e)\),
+and their extra-digit intersection probability is at most
+\(\prod_p p^{-\max(t_p,s_p)}\).  The sum over one nonzero exponent vector
+is \(\gamma_d\).  Including both zero vectors and then removing their
+two faces gives the double coefficient \(\kappa_{de}\), using
+
+\[
+ \sum_{r,s\ge0}p^{-\max(r,s)}=\frac{p(p+1)}{(p-1)^2}.
+\]
+
+All summands are nonnegative, so replacing finite exponent ranges by
+these infinite sums is an upper bound.  Expanding \((B+R)^2\) proves
+(AF1).  Original labels with equal low projection remain distinct.
+
+This uses the moment framework of BBMST,
+[arXiv:1811.03547, Theorem 3.2](https://arxiv.org/abs/1811.03547), and the
+repository's saturated-label calculations (SH1)–(SH3), (SH8).  The
+retained observation here is \(m_d(B\mu)\), with one fixed complete
+\(B\), in place of separate low-cylinder intersection maxima.
+
+#### The same complete floor inside and outside a finite depth box
+
+Let the auxiliary variables be independent with
+\(\Pr(Z_p=k)=(p-1)/p^{k+1}\), and set
+
+\[
+ w_d(z)=\prod_{p\in S(d)}(1+z_p),\qquad r_d(z)=w_d(z)-1,
+\]
+
+\[
+ S_B(z)=\max_{(D_d)}\int
+      \left(B+\sum_{d\mid M_0}r_d(z)\mathbf1_{D_d}\right)^2d\mu.
+\]
+
+Only the higher projected cylinders \(D_d\) vary.  Centering the
+additional prefixes bounds their intersection probabilities as above.
+At each auxiliary depth, average the active higher labels within each
+projection and apply convexity only to that average, leaving \(B\)
+fixed.  This gives
+
+\[
+ \mathbb E_\lambda L^2\le\mathbb E_Z S_B(Z). \tag{AF2}
+\]
+
+This is the full-low-label extension of the original9 separation in
+(M9-2)–(M9-5).  The maximizing \(D_d\)'s may depend on \(z\); the upper
+bound does not assert that one actual higher family attains all of them.
+In particular, replacing the expression by
+\(\sum_d w_d(z)\mathbf1_{C_d}\) with freely changing original \(C_d\)'s
+would lose the fixed original test needed in the deleted energy.
+
+For any finite depth box \(\mathcal B\), define
+
+\[
+ \epsilon=\Pr(Z\notin\mathcal B),\quad
+ A_d=\mathbb E[\mathbf1_{Z\notin\mathcal B}r_d(Z)],\quad
+ K_{de}=\mathbb E[\mathbf1_{Z\notin\mathcal B}r_d(Z)r_e(Z)].
+\]
+
+Expanding the square for the same \(B\) outside the box yields
+
+\[
+ \mathbb E_\lambda L^2\le
+ \sum_{z\in\mathcal B}\Pr(Z=z)S_B(z)+\epsilon\mathbb E_\mu B^2
+ +2\sum_d A_d m_d(B\mu)
+ +\sum_{d,e}K_{de}m_{\operatorname{lcm}(d,e)}(\mu). \tag{AF3}
+\]
+
+Every tail coefficient is a nonnegative rational remainder of complete
+geometric moments.  This formula still requires certified bounds for
+its inside-box maxima.  The coefficient calculation alone does not
+certify those maxima or optimize over all original low tests.
+
+The same fixed test can also weight future charge observations.  Put
+\(W_B=(C-B^2)_+\).  For an increasing convex \(\ell\)-Lipschitz cost
+\(g\), with charge cylinders independent of the final test, define
+
+\[
+ H_{B,g}(z)=\max_{(D_d)}\int W_B\,
+   g\left(\sum_d w_d(z)\mathbf1_{D_d}\right)d\mu.
+\]
+
+The usual auxiliary comparison applies after multiplication by the
+nonnegative old-point weight \(W_B\).  Comparing a fixed charge layout
+to its zero-depth load gives
+
+\[
+ H_{B,g}(z)\le H_{B,g}(0)+\ell\sum_d r_d(z)m_d(W_B\mu).
+\]
+
+Thus its complete outside contribution is bounded by
+\(\epsilon H_{B,g}(0)+\ell\sum_d A_d m_d(W_B\mu)\).  The charge layout
+remains independent of the fixed final \(B\); \(W_B\mu\) is not
+renormalized.  These observations are under \(\lambda\), and the actual
+higher-deletion transfer is still required before using them under
+\(\nu=\lambda(\cdot\mid F)\).
+
+#### A concrete aligned2 consumer on the same PG1 law
+
+Take \(M_0=315\), \(h=(2,1,1)\), and the unchanged canonical PG1
+probability on its75 actual points.  For all twelve original low labels,
+fix \(C_d=2\bmod d\).  The exact calculation gives
+
+\[
+ \mathbb E_\mu B^2=\frac{10606504844}{1000000007},\quad
+ 2\sum_d\gamma_dm_d(B\mu)=\frac{4754413927}{1000000007},
+\]
+
+\[
+ \sum_{d,e}\kappa_{de}m_{\operatorname{lcm}(d,e)}(\mu)
+   =\frac{74198115637}{24000000168},\qquad
+ U(B)=\frac{442860166141}{24000000168}.
+\]
+
+The saved cross-term amount relative to independent intersection caps
+is \(3949851830/3000000021\).  For every nonnegative low function \(f\),
+the original higher-label union bound gives
+
+\[
+ \int_{F^c}f\,d\lambda\le\mathcal R(f\mu)
+       :=\sum_d\gamma_dm_d(f\mu).
+\]
+
+Because \(L\ge B\), a head reference \(K\) satisfies
+
+\[
+ Q(\mathbb E_\nu L^2-K)
+ \le U(B)+\mathcal R((K-B^2)_+\mu)-K,
+ \qquad Q=\lambda(F).
+ \tag{AF4}
+\]
+
+At \(K=29\), the positive part is necessary since \(B\) can equal12.
+The exact deletion upper bound is \(37233260707/3000000021\), giving
+
+\[
+ e_B=\frac{14908748975}{8000000056},\qquad
+ G_B(Q)\le29+\frac{e_B}{Q}.
+\]
+
+The existing source survival lower bound
+\(q_0=25428074957/48000000336\) therefore gives
+\(G_B\le826866667603/25428074957<32.517864\).
+
+For the 11/13 consumer, the zero-tail tuple carries this complete
+original \(B\).  Keep the existing unrestricted square bound for the
+other tuples.  With \(M=4/3\) and \(P=1403/630\), its preconditioning
+square bound is \(M G_B+(P-M)G\).  Using only the independent final
+survival certificate gives \(\Gamma_{13,B}<149.020\).
+
+The stronger current signed-charge criterion uses the same actual
+source \(Q\).  In its final-root \((2,2)\) branch, replace only the
+zero-tail contribution:
+
+\[
+ A_{\rm new}=A_{\rm old}+\frac43(29-33),\qquad
+ B_{\rm new}=B_{\rm old}+\frac43(e_B-e_{22}),
+\]
+
+where \(e_{22}\) is the original9 square excess at reference33.  This
+retains the already certified charge bounds and physical kernels.  The
+resulting whole criterion is \(A_{\rm new}+B_{\rm new}/Q\), with
+
+\[
+ A_{\rm new}=-\frac{584839}{8470},\qquad
+ B_{\rm new}=\frac{9318930413060408641498726373}
+                   {262685549314111332327187500}>0.
+\]
+
+Its maximum is at \(q_0\) and is negative.  Applying the existing
+positive final surviving mass gives the concrete consumer
+
+\[
+ \Gamma_{13,B}\le
+ \frac{163558856448790578417793670359}
+      {1113264631887138059499843750}<146.919. \tag{AF5}
+\]
+
+This fixes all twelve original low classes, not just roots \((2,2)\).
+All higher original test residues and all finite physical heights
+remain unrestricted.  Equation(AF5) does not replace the uniform
+\(\Gamma_{13}<148.650\) bound over arbitrary low tests.
+
+#### Boundary of the inexpensive relaxation and replay
+
+The ordinary union-bound version of(AF4) does not uniformly dominate
+the existing global head square bound.  The genuine low test
+\(C_d=68\bmod d\), evaluated at reference33, gives
+
+\[
+ U(B)=\frac{463549739429}{24000000168},\qquad
+ \mathcal R((33-B^2)_+\mu)=\frac{340267738535}{24000000168}.
+\]
+
+The resulting value of the explicit upper-bound functional is
+\(862761418421/25428074957>33.929\), above the existing head bound
+\(33.73365775325071\).  This is a boundary fixture for that inexpensive
+relaxation, not a lower bound on the actual test moment.  A global
+improvement must control the combined objective for every independent
+low-test layout, or use a stronger observation.
+
+`verify_pg1_anchored_square.py` and
+`pg1_anchored_square_certificate.json` recompute these exact observations,
+both consumers, the boundary fixture, and all first/second outside-box
+coefficients for \((8,5,4)\).  Direct depth summation is checked against
+factored one-prime moments.  The aligned2 outside square contribution
+in(AF3) is \(26237873570245030831/918922731432459075000\); its inside
+maxima are not evaluated by this certificate.  Existing survival and
+charge inputs are separately verified hash-bound prerequisites.
+
+These are ordinary general inequalities and exact rational consumers;
+no new Lean declaration or general odd-covering resolution is claimed.
+Replay from the repository root:
+
+    python3 -I -O docs/reports/erdos7-odd-covering/verify_pg1_anchored_square.py
+
+### Exact signed digit optimization with the old load fixed
+
+`ExactSignedDigitDP` optimizes the six original labels
+`7,21,35,63,105,315` independently. Its input is the old support `X`, one
+fixed load `A[x]`, and exact integer or rational tables `scores[y][i][k]`.
+The returned maximum is over every original residue of those six labels.
+`labels` gives a realizing residue modulo each original modulus; the
+program recomputes its score directly. All seven digits participate,
+and one representative of every distinct old cylinder, including an
+empty cylinder when realizable, is retained.
+
+For example, after importing the adjacent module:
+
+```python
+oracle = ExactSignedDigitDP(old_points)
+result = oracle.optimize(old_loads, scores)
+maximum = result['value']
+original_residues = result['labels']
+```
+
+Each table row is indexed by the total load, including the old load;
+provide entries from zero through `A[i]+6`. Zero tables represent absent
+points. The constructor's old-cylinder states can be reused for multiple
+queries. The production dependency is Python's standard library only.
+
+For digit `y` and label subset `S`, the program computes exactly
+
+\[
+g_y(S)=\max_{(b_c)_{c\in S}}
+ \sum_{x\in X}\phi_{xy}\left(A_x+
+       \sum_{c\in S}1_{x\equiv b_c\pmod c}\right).
+\]
+
+Every original label belongs to precisely one digit block. Conditional
+on this partition, different blocks have disjoint labels and physical
+point sets, so their old-residue choices are independent. Conversely,
+CRT realizes every block choice separately for each original modulus.
+Thus `D[0]=0`, unreachable entries are `None`, and the recurrence
+`new[S]=max(old[S xor T]+g_y[T] for T subset S)` gives exactly the
+maximum. The nonzero baseline `g_y[empty]` is included once for each
+digit. This is a finite optimization argument and an exact arithmetic
+implementation; no Lean formalization is claimed.
+
+The old-modulus label is a singleton on the old support. After fixing
+the other old residues, its additional score is the largest pointwise
+increment. Zero is also a candidate exactly when an empty old cylinder
+exists. In particular, a full old carrier cannot replace a negative
+singleton increment by zero. On PG1 the cylinder counts are
+`1,3,5,6,8,17`; eliminating that singleton leaves 3024 old states across
+all subset masks. Seven stages use 5103 subset transitions. The full
+old-test search has 12240 mask combinations and 11808 distinct load
+vectors; only this count, not an optimization over all those vectors,
+is included here.
+
+The existing `verify_point_geometry.FixedADP` supports the nonnegative
+square bound. It adds independently maximized unary and pair terms to
+form each block, with old-residue compatibility relaxed, and processes
+digits 1 through 6. Its `point_fixedA_dp_exact.py` replay certifies those
+integer upper-bound calculations, not the exact signed block problem.
+The new program reuses the subset-partition structure while computing
+each block by compatible old-residue enumeration.
+
+After placing the files beside the canonical PG1 source, replay the
+deterministic certificate with:
+
+```text
+python3 -I -O verify_exact_signed_digit_dp.py
+```
+
+The verifier reads the adjacent
+`mod3_conditioned_geometry_certificate.json`, selects PG1, and binds
+that source file's SHA-256. `--source PATH` selects another location
+for the same canonical source. `--write` generates
+`exact_signed_digit_dp_certificate.json`; the default operation compares
+the complete exact recomputation with the stored certificate and does
+not write. The certificate contains no timing fields. Twelve seeded
+rational, signed, nonconvex fixtures agree with brute-force enumeration
+of the original modulus residues. Other checks cover the nonzero
+empty-block baseline, absent digit zero, empty singleton gain zero, and
+the unavoidable gain −1 on a full old carrier.
+
+On the actual PG1 law, fix each old residue to 2 modulo its cofactor.
+At actual points 1 and 46, set the score to
+`-mu(t)*(B(t)-A(t mod45)-1)^2`, and zero elsewhere. Both points have
+weight numerator 14690784 and common denominator 1000000007. The
+unrestricted optimum is 0; a common-digit restriction gives exactly
+`-14690784/1000000007`. A realizing independent choice uses residues
+4 modulo7 and 1 modulo21, with the other four labels at digit zero.
+This gives a strict counterexample on the original carrier and law.
+
+The concrete joint fixture is
+
+\[
+ E_\mu[\tfrac43(B+R)^2+\tfrac16(149-B^2)(L-4)_+].
+\]
+
+At depth `(1,1,1)`, `R` uses each higher-label multiplicity `w_d-1`
+and `L` uses each full multiplicity `w_d`. Their fixed auxiliary
+comparison residues are given in the certificate. These are independent
+of the fixed original low classes defining `B`. Three points have negative
+quadratic coefficient. With the old load fixed as above, the exact
+optimum is `223040367109/3000000021`. The common-digit restriction gives
+`223011181693/3000000021`, so independent digits improve the objective
+by `9728472/1000000007`. A maximizing witness assigns digits5 to the
+first five labels and digit4 to the old45 label, with original
+residues `(5,5,12,5,47,32)` modulo `(7,21,35,63,105,315)`. The checker
+replays those residues on all 75 actual points. This is a one-depth,
+fixed-auxiliary instance with coefficients `4/3`, `1/6` and threshold4;
+it is not a final continuation or all-height bound.
+
+For the whole original315 floor objective, collect the moment and
+weighted-charge terms into one point score table before this query.
+This implementation then exactly eliminates the six original7 label
+choices for one fixed old load and one fixed auxiliary profile. A
+global certificate still needs every old load and a complete bound
+over the auxiliary moment/charge profiles, including the omitted
+depth tail. At each fixed collection of auxiliary depths, finite maxima over old
+loads, auxiliary profiles, and final residues commute. This does not
+interchange a maximum with an expectation over depths, and sampled
+auxiliary profiles supply no upper bound for the complete maximum. No global-floor improvement follows
+from the two fixtures above.
