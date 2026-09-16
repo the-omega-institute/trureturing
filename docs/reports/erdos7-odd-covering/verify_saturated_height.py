@@ -1,5 +1,5 @@
 """Exact standard-library checks for the saturated all-height transfer.
-The universal inequalities are proved in marked_head_profile.md (SH1-SH9);
+The universal inequalities are proved in marked_head_profile.md (SH1-SH13);
 finite CRT checks do not
 replace their all-height argument. No independence of original forbidden
 and test classes is assumed.
@@ -116,6 +116,36 @@ Dcaps=sum((pair_coeff[d,e]*cellmax[lcm(d,e)] for d,e in product(low,repeat=2)),F
 Rsaturated=sum((aJ[j]*M[j] for j in subsets if j),F(0))
 Dsaturated=2*sum((aJ[j]*C[0,j] for j in subsets if j),F(0))+sum((K[j][k]*C[j,k] for j,k in product(subsets,repeat=2) if j and k),F(0))
 require(Rcaps==Rsaturated and Dcaps==Dsaturated,'twelve low-cylinder coefficients equal the eight-block transfer')
+
+# SH13 coefficients are nonnegative expectations outside a finite depth box.
+# Compare direct depth enumeration with products of one-prime moments.
+layout_boxes=[]
+for bounds in [(0,0,0),(1,1,1),(8,5,4)]:
+ moments=[[sum((F(p-1,p**(z+1))*(1+z)**k for z in range(n+1)),F(0))
+           for k in range(3)] for p,n in zip(P,bounds)]
+ mass=mul(row[0] for row in moments)
+ direct={d:F(0) for d in low}
+ direct_mass=F(0)
+ for zz in product(*(range(n+1) for n in bounds)):
+  prob=mul(F(p-1,p**(z+1)) for p,z in zip(P,zz))
+  direct_mass+=prob
+  weights={d:mul(1+z for z,a,hp in zip(zz,exps[d],h) if a==hp) for d in low}
+  for d,e in product(low,repeat=2):
+   direct[lcm(d,e)]+=prob*(weights[d]*weights[e]-1)
+ require(direct_mass==mass and 0<mass<1,'finite depth box mass')
+ outside={d:F(0) for d in low}
+ factored={d:F(0) for d in low}
+ for d,e in product(low,repeat=2):
+  inside=mul(moments[i][int(exps[d][i]==h[i])+int(exps[e][i]==h[i])]
+             for i in range(3))-mass
+  factored[lcm(d,e)]+=inside
+  remaining=pair_coeff[d,e]-inside
+  require(remaining>=0,'each outside ordered-pair coefficient is nonnegative')
+  outside[lcm(d,e)]+=remaining
+ require(factored==direct,'independent direct and factored weighted depth sums')
+ layout_boxes.append({'inclusive_depth_bounds':list(bounds),'points':mul(n+1 for n in bounds),
+                      'probability':str(mass),'old_square_coefficient':str(1-mass),
+                      'outside_cylinder_coefficients':{str(d):str(outside[d]) for d in low}})
 crtchecks=[]
 for seed in [1,4,11]:
  tests={m:(seed*(m//3+2*m//5+3*m//7+1)+7)%m for m in divs}
@@ -162,6 +192,7 @@ for original27 in [C9,C9+9]:
 require(vals[0][0]==vals[1][0]==1-eta/3 and vals[0][1]==0 and vals[1][1]==eta/(3-eta),'post-deletion relative-position obstruction')
 require(vals[0][2]==1 and vals[1][2]==1+3*eta/(3-eta),'conditioned-square obstruction')
 result={'scope':'ordinary all-height saturated transfer; finite checks are supplementary; delta0 supplied by existing CM8 theorem','subset_order':[[P[i] for i in range(3) if j>>i&1] for j in subsets],'saturated_low_labels':{str(j):DJ[j] for j in subsets},'infinite_kernel':[[str(v) for v in row] for row in K],'height_checks':heightchecks,'oracle_constants':original,'pure3_pure9_improvement':strong,'actual_CRT_checks':crtchecks,'actual_twelve_cap_identity':{'R':str(Rcaps),'Delta':str(Dcaps),'mean_coefficients':{str(d):str(mean_coeff[d]) for d in low},'pair_coefficients_checked':len(pair_coeff)},'post_deletion_obstruction':{'head_eta':str(eta),'q':str(vals[0][0]),'hinges':[str(a[1]) for a in vals],'squares':[str(a[2]) for a in vals]}}
+result['common_layout_depth_boxes']=layout_boxes
 parser = argparse.ArgumentParser(description=__doc__)
 mode = parser.add_mutually_exclusive_group()
 mode.add_argument("--check", type=Path, help="compare against an exact certificate")

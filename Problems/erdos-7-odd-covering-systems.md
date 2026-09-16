@@ -93,6 +93,17 @@ These are ordinary all-height arguments with an exact rational
 certificate; the error saving alone does not improve `3849/106`
 or supply the missing generic tail continuation.
 
+The transfer also retains a common weighted low layout at each auxiliary
+depth, with exact nonnegative corrections for any finite depth box and
+the full omitted geometric moments (SH10)--(SH13). This gives a finite
+convex optimization that preserves the joint test geometry. An exact
+rational dual obstruction (SH14) explains the need: for one explicit
+77-point carrier, every probability constant within each surviving
+seven-digit fibre leaves the preceding independent-cylinder/union
+formula at least `101816531/2603049`, above `3849/106`. This is a lower
+bound for that formula alone, not for actual test moments or arbitrary
+77-point probabilities.
+
 For families using only the primes 3, 5 and 7, (CM1)--(CM8) determine the
 exact infimum of uniform uncovered density: \(53/432\). Every finite
 family has strictly greater uncovered density, and an explicit family

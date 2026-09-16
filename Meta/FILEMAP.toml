@@ -557,6 +557,15 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Rational dual obstruction to optimizing independent saturated caps with fibre-uniform laws.
+pattern = "docs/reports/erdos7-odd-covering/fiber_uniform_saturated_envelope_obstruction_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]] # Exact scalar clipping boundaries and actual congruence capacity obstruction.
 pattern = "docs/reports/erdos7-odd-covering/fibre_scalar_boundary_certificate.json"
 kind = "data"
@@ -766,6 +775,15 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 [[files]] # Checks the four-prime head using the shared-cofactor bound and exact continuation.
 pattern = "docs/reports/erdos7-odd-covering/verify_common_density_head_coupled.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Checks actual congruences and a rational dual obstruction without a solver or enumeration cache.
+pattern = "docs/reports/erdos7-odd-covering/verify_fiber_uniform_saturated_envelope_obstruction.py"
 kind = "program"
 admission_plane = "content"
 produced_by = "none"

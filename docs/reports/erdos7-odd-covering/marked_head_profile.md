@@ -3785,8 +3785,9 @@ The valid reduction is the explicit finite observation above. Neither
 
 ## Saturated low labels and arbitrary 3/5/7 heights
 
-Fix P={3,5,7}, h=(2,1,1), a nonempty low survivor carrier
-Omega modulo 315, and one probability mu on Omega. Let lambda extend
+Fix P={3,5,7}, h=(2,1,1), the nonempty survivor set Omega of a
+finite family of distinct nonunit divisors of 315, and one probability
+mu on Omega. Let lambda extend
 mu by independent uniform higher prime digits, up to the original
 family's arbitrary finite heights. The following transfer preserves
 every original modulus and works for nonuniform mu. The separate
@@ -4024,3 +4025,187 @@ follow from the ordinary arguments above, not from the finite cases.
 Run `python3 -I -O docs/reports/erdos7-odd-covering/verify_saturated_height.py`
 from the repository root. No new Lean declaration or unrestricted #7
 conclusion is supplied by this transfer.
+
+### A common weighted low layout and a nonnegative tail correction
+
+The independent cylinder caps in (SH8) can lose the joint geometry.
+There is a stronger finite observation that keeps a single complete
+weighted low layout in each auxiliary outcome. Let Z_3,Z_5,Z_7 be
+independent nonnegative integers with
+
+    Pr(Z_p>=k)=p^-k,   Pr(Z_p=k)=(p-1)/p^(k+1).
+
+For d dividing315 set
+
+    w_d(Z)=product_(p:v_p(d)=h_p)(1+Z_p),
+    F_mu(Z)=max_(a_d mod d)
+      E_mu [sum_(d dividing315)w_d(Z)1_(x=a_d mod d)]^2.
+
+Then every full test at arbitrary finite 3/5/7 heights satisfies
+
+    E_lambda L^2 <= E_Z F_mu(Z).                         (SH10)
+
+To see this, first center the additional test prefixes as above,
+keeping every low residue fixed. For fixed matching depths Z, the
+number of active original labels projecting to d is
+product_(p saturated in d)(1+min(Z_p,n_p)), where n_p is the physical
+extra height. Average their low cylinder indicators. This average
+belongs to the convex hull of the cylinder indicators for that d,
+with coefficients independent of x. The squared norm of the sum
+is convex on the product of these finite convex hulls. Applying
+Jensen, one cofactor at a time, bounds it by a vertex value: one
+actual low cylinder for each d, chosen jointly for the entire cost.
+Finally increasing min(Z_p,n_p) to Z_p adds nonnegative weights.
+This proves (SH10), and also shows why choosing a different residue
+at each point x is not allowed. The vertex choice may depend on Z;
+the bound does not assert a single optimizer for all Z. The convex
+hull step directly reuses Mathlib's `ConvexOn.le_sup_of_mem_convexHull`.
+
+For the marked heads of (SH6) the same globally unused seven digit
+evaluates F_mu(Z) by only two weighted old45 layouts. In each such
+layout give cofactor c dividing45 weight
+
+    v_c(Z)=(1+Z_3)^(1_(9 divides c))
+             (1+Z_5)^(1_(5 divides c)),
+    A_Z(x)=sum_(c dividing45)v_c(Z)1_(x=a_c mod c),
+
+and define B_Z with independently chosen old45 residues. For low
+weights u_x common to the surviving seven digits, normalized by
+R=sum_x(6-b(x))u_x, the exact identity is
+
+    R F_mu(Z)=max_(A_Z,B_Z) sum_x u_x [
+      (5-b(x))A_Z(x)^2
+        +(A_Z(x)+(1+Z_7)B_Z(x))^2].                     (SH11)
+
+In particular F_mu(0)=G is the exact unweighted low square.
+All high original labels are still accounted for by their matching
+depths; this expression does not identify them as the same modulus.
+
+An exact polynomial upper bound controls the unbounded auxiliary
+depths without discarding their contribution. Write
+
+    P_mu(Z)=sum_(d,e dividing315)w_d(Z)w_e(Z)m_lcm(d,e),
+    c0=P_mu(0)-G>=0.
+
+For every fixed complete low layout, each ordered pair satisfies
+mu(C_d intersect C_e)<=m_lcm(d,e). Thus its weighted deficit from
+P_mu(Z) is a sum of nonnegative terms. Every coefficient w_d w_e
+is at least one, so this deficit is at least the same layout's
+unweighted deficit, hence at least c0. Minimizing over the layouts
+proves P_mu(Z)-F_mu(Z)>=c0 for every Z. Also (SH8) gives
+E_Z P_mu(Z)=P_mu(0)+Delta_square, using only the geometric first
+and second moments of each 1+Z_p.
+
+Consequently for any finite set B of auxiliary depth triples,
+
+    E_lambda L^2 <= G+Delta_square
+      -sum_(z in B) Pr(Z=z)[P_mu(z)-F_mu(z)-c0].         (SH12)
+
+Every correction is nonnegative. The omitted depths retain the
+entire baseline saving c0, so a small evaluated set already gives
+a valid improvement whenever one of its corrections is positive.
+Larger sets preserve the previous bound monotonically. The same
+formula remains valid if F_mu(z) is replaced by a certified upper
+bound B_z and its correction by max(0,P_mu(z)-B_z-c0).
+Divide the resulting square-minus-one by the appropriate same-law
+denominator in (SH5). This finite calculation controls arbitrary
+physical heights; it does not move the actual deletion event or
+reuse a uniform-density denominator for nonuniform weights.
+
+The corrected upper bound has a convex form useful for joint weight
+optimization. Put beta=Pr(Z in B) and
+
+    eta_out(d)=E_Z[1_(Z not in B)
+      sum_(lcm(e,f)=d)(w_e(Z)w_f(Z)-1)]>=0.
+
+Rearranging (SH12) gives the identical expression
+
+    U_B(mu)=(1-beta)G(mu)+sum_d eta_out(d)m_d(mu)
+                +sum_(z in B)Pr(Z=z)F_mu(z).            (SH13)
+
+Every coefficient is nonnegative and independent of mu. Each of G,
+m_d and F_mu(z) is the maximum of finitely many linear functions of
+the low probability. Thus U_B has a finite epigraph representation,
+and `1+(U_B(mu)-1)/(1-R_high(mu))` admits the same linear fractional
+transformation as (SH9). The coefficients eta_out are exact: subtract
+the finite-box terms from the infinite geometric coefficients in
+(SH8). Nonnegativity follows from their displayed expectation, rather
+than from a numerical tolerance. All expectations are finite since
+each Z_p has a finite second moment.
+
+### An exact obstruction to optimizing the independent cylinder formula
+
+There is an actual low family for which changing fibre weights alone
+cannot make the particular formula (SH9) improve 3849/106. This is
+a limitation of that upper-bound formula, not a lower bound for
+the actual worst test moment or for arbitrary supported probabilities.
+
+Take the eleven original classes (modulus,residue)
+
+    (3,0),(9,4),(5,0),(15,11),(45,1),(7,0),
+    (21,1),(35,9),(63,10),(105,74),(315,82).
+
+The five old45 classes leave
+
+    S=(2,7,8,14,16,17,19,23,28,29,32,34,37,38,43,44).
+
+The five mixed-seven classes delete digits 1,2,3,4,5 respectively,
+giving the actual deletion vector and fibre sizes
+
+    b=(0,1,0,2,1,0,3,0,2,2,0,2,3,0,1,2),  r=6-b.
+
+There are 77 survivors modulo315, with digit6 surviving over every
+point of S. Consider every nonnegative weight vector w with
+sum_x r_x w_x=1, assigning probability w_x to each surviving seven
+digit over x. This allows unequal fibre totals but requires equal
+point weights within each fibre.
+
+Let G(w)=F_mu(0) be the exact low square from (SH11), and let
+R(w)=R_high and Delta(w)=Delta_square from (SH8). On the nonempty
+domain R(w)<1 the independent-cylinder formula satisfies
+
+    1+[G(w)-1+Delta(w)]/[1-R(w)]
+      >=101816531/2603049 >3849/106.                     (SH14)
+
+The excess is exactly 773416685/275923194. Uniform point weights
+w_x=1/77 have R=1825/3696<1, so this is not a vacuous assertion.
+It does not exclude (SH12), which retains joint layouts, nor
+probabilities with unequal weights inside a seven-digit fibre.
+
+Here is a finite rational proof of the universal quantifier over w.
+Use the nonnegative linear fractional variables
+
+    v_x=w_x/(1-R),  t=1/(1-R),
+    zG=G/(1-R),     z_d=m_d/(1-R).
+
+Writing eta_d=sum_(lcm(e,f)=d)gamma_ef, these variables satisfy
+
+    sum_x r_x v_x-t=0,
+    t-sum_d gamma_d z_d=1,
+    z_1-t=0.
+
+Every actual low cylinder gives its mass constraint with upper
+variable z_d. Every actual pair of old45 layouts gives its square
+constraint with upper variable zG. Thus each chosen constraint
+has the form A_i x<=0, with x=(v,t,zG,(z_d)). The objective in
+(SH14) is 1+c x, where c x=zG-t+sum_d eta_d z_d.
+
+The adjacent certificate specifies 21 actual cylinder constraints
+and five actual pairs of old45 residue assignments, together with
+rational multipliers y_i<=0 and three free equality multipliers z.
+For the equality matrix E and right side b0=(0,1,0), it verifies
+
+    A^T y+E^T z<=c  in all 30 coordinates,
+    1+z dot b0=101816531/2603049.
+
+Hence c x>=y^T A x+z^T E x>=z dot b0, proving (SH14).
+Only valid explicit layout constraints are needed for this lower
+bound; no exhaustive maximization or LP solver is part of its replay.
+
+`verify_fiber_uniform_saturated_envelope_obstruction.py` uses the
+adjacent `fiber_uniform_saturated_envelope_obstruction_certificate.json`.
+It reconstructs the original family and all 315 residues, the actual
+deletion vector, all saturated coefficients, all 26 constraints,
+and the rational dual inequality. Run it with `python3 -I -O`.
+The standalone certificate proves (SH14); it makes no claim about
+attainment, the optimal joint-layout formula, or unrestricted #7.
