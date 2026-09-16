@@ -719,6 +719,15 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Same PG1 final-root weighted costs and common-denominator 11/13 bound.
+pattern = "docs/reports/erdos7-odd-covering/pg1_joint_tail_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]] # Actual75point weights and both common-digit square bounds with an arbitrary-height357 consumer.
 pattern = "docs/reports/erdos7-odd-covering/point_geometry_certificate.json"
 kind = "data"
@@ -739,6 +748,15 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 [[files]] # Exact root weighting and prime-transfer bounds for the nonuniform repair.
 pattern = "docs/reports/erdos7-odd-covering/rectangular_family_nonuniform_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Actual77point row law, uniform affine separator and exact support transport.
+pattern = "docs/reports/erdos7-odd-covering/row_weighted_geometry_certificate.json"
 kind = "data"
 admission_plane = "content"
 produced_by = "none"
@@ -1079,6 +1097,15 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Replays complete weighted costs, final roots and shared survival denominator.
+pattern = "docs/reports/erdos7-odd-covering/verify_pg1_joint_tail.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]] # Replays actual seven-digit geometry, two square bounds and full all-height transfer with exact integers.
 pattern = "docs/reports/erdos7-odd-covering/verify_point_geometry.py"
 kind = "program"
@@ -1108,6 +1135,15 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 [[files]] # Checks the refined root-fibre profile and its short bridge to the prime tail.
 pattern = "docs/reports/erdos7-odd-covering/verify_refined_head_profile.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Replays actual row law, uniform separation, full tails and carrier coverage.
+pattern = "docs/reports/erdos7-odd-covering/verify_row_weighted_geometry.py"
 kind = "program"
 admission_plane = "content"
 produced_by = "none"

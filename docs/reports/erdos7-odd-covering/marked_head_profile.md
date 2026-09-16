@@ -6591,3 +6591,360 @@ replay it from the repository root:
 
 These are ordinary all-height arguments with exact arithmetic certificates,
 not Lean kernel results or an unrestricted prime continuation for#7.
+
+### PG1 joint final-root floor and whole-cost transfer through 11/13
+
+The fixed PG1 law now satisfies
+
+\[
+ \Gamma_{13}\le
+ \frac{15072118232557475077441399589}
+      {101205875626103459954531250}
+ <148.926
+\]
+
+for the same thresholds \(T_{11}=4,T_{13}=5\), arbitrary finite original
+\(3,5,7\) heights and arbitrary finite \(11,13\) heights.  The low probability
+\(\mu\), its uniform higher357 lift \(\lambda\), the actual higher357
+survival event \(F\), and \(\nu=\lambda(\cdot\mid F)\) are unchanged.
+`verify_pg1_joint_tail.py` recomputes the rational certificate
+`pg1_joint_tail_certificate.json`; its inputs are the hash-bound canonical
+mod3, original9 and convex-transfer certificates.  This is a supported
+square bound for the stated PG1 family, not a resolution of the general
+odd-covering problem.  It remains above the existing square-only 17/19
+necessary threshold \(123.058769468749\).
+
+The direct whole-cost comparison on exactly these inputs gives
+\(\Gamma_{13}<150.396\).  Keeping the final test's original3/original9 floor
+in the deleted energy and keeping the common source-survival denominator
+through the final inequality gives the stated stronger bound.
+
+Write \(Q=\lambda(F)\), where the independent source certificate supplies
+
+\[
+ Q\ge q_0=\frac{25428074957}{48000000336}>0.
+\]
+
+Let \(e_{ij}\) be the original9 certificate's square criterion excess for
+fixed original roots \((i,j)\), at reference square 33, and let
+\(e_*=\max_{i,j}e_{ij}\).  The signed criterion retains the actual common
+\(Q\):
+
+\[
+ G_{ij}(Q)\le33+\frac{e_{ij}}Q,\qquad
+ G(Q)\le33+\frac{e_*}Q.
+\]
+
+These inequalities are used jointly; a negative excess is not divided by
+\(q_0\) and then asserted to be a separate unconditional upper bound.
+
+For the final test's original roots \((i,j)\), put
+
+\[
+ b_{ij}(x)=1+\mathbf1_{x\equiv i\pmod3}
+             +\mathbf1_{x\equiv j\pmod9},\qquad
+ W_{ij}(x)=149-b_{ij}(x)^2.
+\]
+
+Thus \(0\le W_{ij}\le148\).  These original head summands remain present in
+the final full test load \(Y\), so \(Y\ge b_{ij}\) throughout the physical
+11/13 extension.  The zero auxiliary tail tuple is always active and
+carries these same fixed roots.  Jensen's square comparison therefore
+retains its contribution separately:
+
+\[
+ J_{ij}(Q)\le M G_{ij}(Q)+(P-M)G(Q),\qquad
+ M=\frac43,\quad P=\frac{1403}{630}.
+\]
+
+Here \(M\) and \(P\) are the first and second auxiliary multiplier moments
+from the fixed two-prime schedule.  The other active head tests use the
+common square bound; their total coefficient is \(P-M\).
+
+Let \(E\) be the final good event and let \(r\) be its probability under the
+physical extension starting from \(\nu\).  Subtracting the deleted energy
+and using \(Y\ge b_{ij}\) gives
+
+\[
+ r\bigl(\mathbb E[Y^2\mid E]-149\bigr)
+ \le J_{ij}(Q)-149+
+       \int W_{ij}\,\mathbf1_{B_{11}\cup B_{13}}.
+\]
+
+The existing independent 11/13 survival certificate ensures \(r>0\).
+The original-label comparison applies after multiplication by
+\(W_{ij}(x)\), because this factor depends only on the old head and is
+unchanged by the fresh-prime kernels.  \(W_{ij}\nu\) is only a finite
+measure used in this inequality: it is not renormalized, and neither the
+physical kernels nor \(\nu\) are replaced.
+
+For each weighted measure, retain the charge test's original roots
+independently of \((i,j)\).  Define its uniform observations
+
+\[
+ H_t^W=\sup_L\mathbb E_\nu W(L-t)_+,\qquad
+ G_n^W=\sup_L\mathbb E_\nu W(nL-5)_+,\qquad
+ m_W=\mathbb E_\nu W.
+\]
+
+The charge at 11 is at most \(H_4^W/6\).  At 13 the auxiliary multiplier
+\(N=1+K_{11}\) has
+
+\[
+ \Pr(N=1)=\frac{28}{33},\qquad
+ \Pr(N=n)=\frac{50}{3\,11^n}\ (n\ge2),\qquad
+ \mathbb EN=\frac76.
+\]
+
+For integer \(L\ge1\) and \(n\ge3\),
+\((nL-5)_+\le n(L-2)_++2n-5\).  The complete \(N\ge3\) tail consequently
+has mean \(31/726\), mass \(5/363\), and mass coefficient \(2/121\).
+No multiplier tail is omitted:
+
+\[
+ \operatorname{charge}_{13}^W\le\frac17
+ \left(\frac{28}{33}G_1^W+\frac{50}{363}G_2^W
+       +\frac{31}{726}H_2^W+\frac{2}{121}m_W\right).
+\]
+
+The row oracle computes \(H_4^W,G_1^W,G_2^W\) directly.  It fixes the
+charge original9 class in the A layout before averaging auxiliary
+heights, while the B layout's cofactor9 remains unrestricted.  For
+\((nL-5)_+\), the singleton increment is multiplied by \(n\), as are the
+remaining load coefficients.  The depth box \((8,5,4)\) is supplemented
+by the complete first-moment geometric remainder; its contribution to
+\(G_n^W\) is \(n\) times the weighted first-moment remainder.  Exhaustive
+full-layout comparisons independently check selected maxima without
+singleton elimination.
+
+The signed weighted hinge uses the existing higher357 deletion bound
+\(R_{F^c}\).  For a charge pair \((a,c)\), its original baseline gives
+\((b_{ac}-2)_+=\mathbf1_{a\bmod3}\mathbf1_{c\bmod9}\).  Taking
+\(D=3\cdot148\), the measure
+
+\[
+ \bigl[D-W\mathbf1_{a\bmod3}\mathbf1_{c\bmod9}\bigr]\mu
+\]
+
+is nonnegative.  If \(U_2^W\) is the corresponding unconditional hinge
+bound, then
+
+\[
+ QH_2^W\le DQ+e_W,\qquad
+ e_W=\max_{a,c}\left[
+ U_{2,a,c}^W+
+ R_{F^c}\bigl((D-W\mathbf1_{a\bmod3}\mathbf1_{c\bmod9})\mu\bigr)-D
+ \right].
+\]
+
+The ordinary source hinge has a strictly negative maximal excess
+\(e_H\), so \(QH_2\le3Q+e_H\).  The weighted calculation can therefore
+use \(\widehat e_W=\min(e_W,148e_H)\).  Its mass also retains a signed
+source observation:
+
+\[
+ \delta_{ij}=\max\left(0,
+   \mathbb E_\mu(b_{ij}^2-1)-
+   R_{F^c}((b_{ij}^2-1)\mu)\right),\qquad
+ Qm_W\le148Q-\delta_{ij}.
+\]
+
+Denote the unconditional selected bounds for the remaining three costs
+by \(U_4,U_1,U_2\), respectively.  Multiplying the final criterion by the
+same \(Q\), substituting the preceding observations, and dividing only
+at the end yields
+
+\[
+ J_{ij}-149+\operatorname{charge}_{11}^W+
+ \operatorname{charge}_{13}^W
+ \le A+\frac{B_{ij}}Q,
+\]
+
+where
+
+\[
+ A=33P-149+\frac{148}{7}
+     \left(3\frac{31}{726}+\frac{2}{121}\right)
+   =-\frac{1840997}{25410},
+\]
+
+\[
+ B_{ij}=(P-M)e_*+Me_{ij}+\frac{U_4}{6}
+  +\frac17\left(\frac{28}{33}U_1+\frac{50}{363}U_2
+    +\frac{31}{726}\widehat e_W-\frac{2}{121}\delta_{ij}\right).
+\]
+
+Every selected \(B_{ij}\) is positive.  Thus the common-denominator
+criterion is maximized at \(Q=q_0\); no optimization over an unknown
+conditional law is needed.  Seven final-root pairs already satisfy the
+criterion using the uniform weight bound \(W\le148\).  The three weighted
+pairs are \((1,1),(2,2),(2,8)\), each retaining all ten independent charge
+root pairs.  The largest final excess occurs at \((2,2)\) and equals
+
+\[
+ \varepsilon=-\frac{7557235731940455783756661}
+                    {101205875626103459954531250}<0.
+\]
+
+Consequently \(r(\mathbb E[Y^2\mid E]-149)\le\varepsilon\).  Since
+\(0<r\le1\), the negative excess gives
+\(\mathbb E[Y^2\mid E]\le149+\varepsilon\), proving the displayed
+supported square bound.
+
+### A shared-row probability crosses a uniform-profile separation
+
+The uniform row-profile criterion does not cover every actual carrier in
+the old45 shape `root1_same_other_column`, even after taking the convex
+hull of all profiles that pass that criterion. This boundary is crossed
+by changing the probability on the same carrier.
+
+Consider the original low family
+
+    (3,0),(9,4),(5,0),(15,1),(45,37),(7,0),
+    (21,5),(35,18),(63,38),(105,2),(315,92).
+
+Its77 survivors have nonempty deletion masks
+`(1,2081,9225,41604,93629)` on digits1 through5; digit6 is untouched.
+In the old-point order
+
+    X=(2,7,8,11,14,17,19,23,26,28,29,32,34,38,41,43,44),
+
+the deletion profile is
+
+    b=(4,0,2,2,1,2,0,2,1,1,2,2,0,3,1,1,1).
+
+The mixed original labels at21,35,63,105,315 delete respectively
+12,5,4,3,1 points, the largest possible old-cylinder sizes in this
+geometry. Distinct digits make these25 deletions disjoint. No actual
+carrier in this old shape can have fewer than102−25=77 points, so this
+carrier is inclusion-minimal.
+
+#### An affine separation for the uniform sufficient criterion
+
+For the uniform probability on these77 points, the existing pure7 moment
+upper bound with its full geometric remainder and the UP-1 deletion bound
+give
+
+    q=1021/1848>0,
+    U_2=91023462067327/4332064275000,
+    R_2=13477/924,
+    35−U_2−R_2=−2586526548577/4332064275000<0.           (RW1)
+
+The first originalmod3 root passes, with margin
+2097148836808489/1061355747375000. Equation(RW1) is failure of this
+specified sufficient upper-bound test; it is not a lower bound on the
+actual conditional moment and does not refute Gamma≤35 for this carrier.
+
+Write r=6−b. For the uniform profile functions from the preceding box
+argument, define
+
+    F_2(r)=P_2(r)+V(r,h_2)/48+Σ_d ρ_d C_d(r,h_2)−35Σ_x r_x.
+
+Each maximum has a fixed choice attaining it at the displayed r. Keep
+one such original-root2 A/B layout at every auxiliary depth, together
+with the maximizing old group cylinders and residual-cap cylinders.
+Their affine evaluations sum to a support function ell(r)=a·r+c with
+
+    ell(r')≤F_2(r') for every admissible row profile r',
+    ell(r)=F_2(r)=2586526548577/56260575000>0.           (RW2)
+
+The certificate retains all exact rational coefficients of ell, an
+equivalent primitive integer coefficient vector, and the hashes of the
+active moment layouts. Every profile passing the unchanged sufficient
+criterion has ell≤0, and so does every convex combination of such
+profiles. Equation(RW2) excludes this actual minimal profile from that
+entire convex hull. The conclusion concerns the uniform criterion on
+this fixed old geometry.
+
+The three uniform grouped costs attain their UP-1 bounds, with
+48·77 times G equal to1405,45822,45922 for1,h_1,h_2. All three extra
+old5 maximizers have residue4. Digit1 misses only x=2, outside that
+cylinder, and digit6 is untouched. Put the extra35 class at residue29
+on digit1 and every E7 class on digit6. The retained actual-cylinder
+witnesses verify equality point by point. Thus the discarded
+extra35/E7 overlap term itself cannot remove the deficit in(RW1).
+
+#### A positive row law satisfying both signed criteria
+
+Assign every surviving point in old row x the mass f_x/D, where, in the
+displayed order X,
+
+    f=(85000015,85000015,92897922,114999985,85000015,
+       114999985,113531563,85000015,88133380,114999985,
+       85000015,114999985,113531563,102747938,95423755,
+       114999985,85000015),
+    D=Σ_x(6−b_x)f_x=7699999993.
+
+All masses are positive and satisfy
+
+    17/(20·77) ≤ f_x/D ≤ 23/(20·77).
+
+Thus this is a full-support law on the same77-point carrier, constant
+within each surviving old row. The globally untouched digit gives the
+weighted pure7 observation
+
+    D H_i(z)=max_(A with originalmod3 root i,B)
+               Σ_x f_x[(6−b_x)A_x²+2uA_xB_x+u²B_x²],
+    u=1+z7.                                           (RW3)
+
+All coefficients used to select that digit are nonnegative. The ordinary
+and signed caps and UP-1 costs are evaluated with these same point masses.
+The auxiliary box remains[0,8]×[0,5]×[0,4], and the complete nonnegative
+geometric remainder is retained. Original modulus labels and actual
+higher forbidden classes remain unchanged.
+
+For the independent uniform lift lambda of this low law and its actual
+higher survivor event F, the exact survival certificate is
+
+    lambda(F)≥q=14536679681/26399999976>0.               (RW4)
+
+The two root results are
+
+| Originalmod3 root | U_i | R_i for h_i mu | 35−U_i−R_i |
+| --- | --- | --- | --- |
+| 1 | 10321649656260777208162/530677873205065569375 | 338173190555/23099999979 | 483200161247896160588/530677873205065569375 |
+| 2 | 262061474318903335813313/13266946830126639234375 | 2713457477845/184799999832 | 59842230563635719352871/106135574641013113875000 |
+
+Both margins are positive, respectively greater than0.910533 and0.563828.
+As before, the unit class and the same originalmod3 test imply
+L²≥1+3·1_(root i). With h_i=34−3·1_(root i), without renormalizing h_i mu,
+
+    ∫_F(L²−35)d lambda
+       ≤U_i−35+∫_(Fᶜ)h_i d lambda
+       ≤U_i−35+R_i<0.
+
+Equation(RW4) therefore gives Gamma(lambda(.|F))≤35 for every finite
+original3/5/7 height and every higher forbidden family above this low
+carrier. An empty originalmod3 root is dominated pointwise by a nonempty
+root. This supplies a new law; it makes no assertion that the uniform
+law's actual optimal moment exceeds35.
+
+#### Original-label support transport and replay
+
+The six old-map images of this source form one minimal orbit. Exact
+deletion-mask matching transports its law to3715 actual states in531
+carrier orbits. Pulling each higher forbidden family back through the
+same allowed coordinate map preserves the original modulus labels and
+the all-height estimate. Extra low points in a containing carrier
+receive zero mass.
+
+Of these orbits,16 lie in the existing uniform-box region. The new source
+therefore adds3668 states and515 orbits, including one additional minimal
+orbit. The union for this old shape has5007 states and1077 orbits. With
+the384 certified orbits in the other two old shapes, the total is1461
+carrier orbits and11 inclusion-minimal orbits at Gamma≤35. Of the56966
+minimal orbits,56955 remain outside the certified sources; the general
+prime-tail continuation remains unresolved.
+
+`verify_row_weighted_geometry.py` and
+`row_weighted_geometry_certificate.json` reconstruct the actual family,
+both uniform and weighted270-depth calculations, the complete tails,
+the affine separation, the original-cylinder equality witnesses and
+all transport counts. The verifier uses range-guarded integer arithmetic
+and exact rational comparison; it has no optimization dependency.
+Replay from the repository root:
+
+    python3 -I -O docs/reports/erdos7-odd-covering/verify_row_weighted_geometry.py
+
+These are finite arithmetic certificates and ordinary all-height proofs,
+not Lean kernel results or a bound on all remaining low profiles.

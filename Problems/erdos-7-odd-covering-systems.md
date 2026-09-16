@@ -158,9 +158,16 @@ The [higher-hinge continuation](../docs/reports/erdos7-odd-covering/marked_head_
 retains this same PG1 probability and gives simultaneous bounds
 `H_4<1.475444` and `H_6<0.843549`, together with `H_2≤3` and the
 preceding square bound. Fixed thresholds4 and5 at primes11 and13
-give a supported **Gamma_13<152.329**, with surviving mass greater
+give a supported Gamma_13<152.329, with surviving mass greater
 than0.489822 and all original finite prime exponents retained.
-Passing this supplied square upper bound alone to the scalar(T6)
+The [joint final-root continuation](../docs/reports/erdos7-odd-covering/marked_head_profile.md#pg1-joint-final-root-floor-and-whole-cost-transfer-through-1113)
+strengthens the same law to **Gamma_13<148.926**. It keeps the final
+original3/original9 root floor, its weighted whole deletion costs,
+and the common source-survival denominator until the final inequality.
+The exact upper bound is
+`15072118232557475077441399589/101205875626103459954531250`;
+all original3/5/7 and11/13 heights and complete auxiliary tails remain.
+Passing this stronger supplied square upper bound alone to the scalar(T6)
 recurrence cannot continue through17 and19: that two-step certificate
 requires a seed below the exact threshold in
 `(123.058769468748,123.058769468749)`. This is a limitation of that
@@ -194,9 +201,20 @@ The region contains1339 states,562 carrier orbits,477 deletion
 profiles and8 inclusion-minimal orbits, including the former355
 support-inclusion orbits. Its minimum survival lower bound is
 2357/4176 and its minimum signed margin remains265/3096.
-Together with the disjoint preceding384 orbits, the current result
-certifies **946 carrier orbits and10 minimal orbits at Gamma≤35**.
-The remaining56956 minimal orbits and the general prime-tail
+Together with the disjoint preceding384 orbits, this uniform-box result
+certifies946 carrier orbits and10 minimal orbits at Gamma≤35.
+
+A [positive row law on an actual77-point carrier](../docs/reports/erdos7-odd-covering/marked_head_profile.md#a-shared-row-probability-crosses-a-uniform-profile-separation)
+adds515 carrier orbits and one minimal orbit, raising the total to
+**1461 carrier orbits and11 minimal orbits at Gamma≤35**. An exact
+affine separator places this carrier outside the convex hull of every
+profile passing the unchanged uniform sufficient criterion. Positive
+row weights within15% of uniform cross that criterion with signed
+margins greater than0.910533 and0.563828, on one actual law at all
+original3/5/7 heights. The source law has full support; containing
+carriers inherit its transported supported law. This does not assert
+that their uniform laws fail the actual moment bound.
+The remaining56955 minimal orbits and the general prime-tail
 continuation remain unresolved.
 
 The [complete actual-carrier classification](../docs/reports/erdos7-odd-covering/marked_head_profile.md#complete-low315-carrier-classification-for-actual-digit-bounds)
