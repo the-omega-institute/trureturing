@@ -1,0 +1,5 @@
+**定义 446.1（严格未来观察与递减视界）。** 视界取 $h\in\mathbb N$；446.5 至 446.7 沿用此域。对一个指定的确定部分操作语言和状态 $x$，令 $R_w(x)$ 为执行有限词 $w$ 后的 $\operatorname{ok}(\mu(n))$；任一步失败则为不交标签 $\bot$，后续不再求值。空词观察当前值。定义
+$$
+x\equiv_h y\quad\Longleftrightarrow\quad \forall w, |w|\le h\Longrightarrow R_w(x)=R_w(y),\qquad
+x\equiv_\infty y\quad\Longleftrightarrow\quad\forall w\ R_w(x)=R_w(y).
+$$

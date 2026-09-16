@@ -1,0 +1,9 @@
+**定理。** 同一精确密度还恢复两个计数：
+
+$$
+\boxed{
+ N_p=\lfloor p^e\delta(p)\rfloor,\qquad
+ Z_p=2p^{e-1}(p+1)\bigl(p^e\delta(p)-N_p\bigr).
+}\tag{FD15}
+$$
+

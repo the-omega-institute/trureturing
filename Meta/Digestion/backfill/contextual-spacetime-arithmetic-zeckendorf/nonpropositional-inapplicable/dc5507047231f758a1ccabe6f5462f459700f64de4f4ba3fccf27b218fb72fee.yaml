@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:dc5507047231f758a1ccabe6f5462f459700f64de4f4ba3fccf27b218fb72fee
+  normalized_sha256: sha256:dc5507047231f758a1ccabe6f5462f459700f64de4f4ba3fccf27b218fb72fee
+cas_ref: sha256:dc5507047231f758a1ccabe6f5462f459700f64de4f4ba3fccf27b218fb72fee
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段定义严格响应、有限及全未来等价与单位乘除语言，包含失败标签和盒守卫的约定；首个失败时刻的保留断言另列，不在本段结算中。
+    previous_atom_id: 1c87fbff23448dfffcac765ed0fc4c9ac90e2e1386d1af4ce586a120b3044096
+    next_atom_id: 1e26a9f05ce898cfaef68b86a2e4dcf293ead7c7d49542e070a7a68d33f4c291

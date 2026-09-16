@@ -1,0 +1,10 @@
+**Theorem.** For every positive M and prime ell>=7,
+
+$$
+\boxed{[F_\ell]_M\notin C(M)
+\quad\Longleftrightarrow\quad
+\exists p\text{ prime}:\ p^2\mid M,\ \rho(p)=\ell,\ q_p\ne0.}\tag{LFO4}
+$$
+
+Consequently the prime indices excluded by M are exactly the distinct prime ranks at least seven of the non-WSS primes whose squares divide M. This is a finite set, contained in [7,(P(M)+1)/2].
+

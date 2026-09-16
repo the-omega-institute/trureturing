@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b18ebdba0b1621280d6fd3dd876523d5dc2a5832005d3822a8a83cefeb1d4439
+  normalized_sha256: sha256:b18ebdba0b1621280d6fd3dd876523d5dc2a5832005d3822a8a83cefeb1d4439
+cas_ref: sha256:b18ebdba0b1621280d6fd3dd876523d5dc2a5832005d3822a8a83cefeb1d4439
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶项仅定义零化子和空族交的约定，其中公式用于指定对象与记号，没有独立待证命题，故按非命题条款结算。
+    previous_atom_id: 0d1bd6cc3b664ec37532380584f315b6226c09218f625473c7a49d4d21c1a8cc
+    next_atom_id: f85234be982ed1a9e861ce08899da9319d33dff01fecb6a3b99499eb7f721c59

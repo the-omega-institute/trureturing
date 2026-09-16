@@ -1,0 +1,21 @@
+**Theorem IP10.** For odd $n>3$ coprime to five,
+
+$$
+(-1)^{b(n)}=\chi(\mathcal R_n)=\chi(\mathcal C_n)\chi(E_n). \tag{IP10}
+$$
+
+Consequently $b(n)$ is odd exactly in the following two disjoint cases:
+
+$$
+\boxed{
+\begin{aligned}
+&n=\ell^a\text{ for a prime }\ell\text{ with }\chi(\ell)=-1,
+\quad a\ge1;\\
+&n=r(q)q^j\text{ for an odd prime }q\text{ with }\chi(q)=-1,
+\quad j\ge1.
+\end{aligned}}
+\tag{IP11}
+$$
+
+In all other cases $b(n)$ is even. An even count can be positive.
+

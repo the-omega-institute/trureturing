@@ -1,0 +1,6 @@
+**Proof.** The exponent statements follow from S8 and S9. Binary modular
+exponentiation gives the three displayed residues of $159607993$ modulo
+$5040$, and the same calculation modulo $25200$ gives equality of its first
+and thirteenth powers. Postprocessing equal residues cannot distinguish the
+corresponding exponents.
+
