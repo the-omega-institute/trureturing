@@ -220,6 +220,10 @@ remain valid, as does the restricted noncoverage theorem; their proposed
 universal head input and all eight displayed finite-base targets are refuted.
 A proof of #7 therefore needs a sufficient input that this star family does
 not contradict, rather than a sharper proof of the same universal inequality.
+The public kernel-checked lcm theorem, combined with P1, the sparse-tail
+results, two exact capacity rows, and the one-tail load calculation below,
+now gives `lcm > 17325` for every hypothetical cover. This is a finite lower
+bound and does not control the unrestricted large-lcm branches.
 
 The block-saturation theorem below supplies such an input for restricted
 extensions. For every positive head height, a complete star head cannot be
@@ -5118,6 +5122,10 @@ The block-saturation criterion gives further noncoverage theorems for
 arbitrary `{3,5,7}` heads with sparse tail interactions, and for every
 positive-height star head with matching tails. It also gives the actual
 mixed-tail budgets (BS8)--(BS9) required of any full star completion.
+The public Mian--Siddique lcm theorem plus the exact finite bridge verifier
+raises the finite exclusion boundary to `lcm > 17325`, with every candidate
+in the checked interval discharged by P1, sparse tails, capacity rows, or the
+one-tail load calculation.
 `TernaryRootLoadTail.root_load_tail_le` formalizes the finite-itinerary
 component of the actual-layout improvement, and
 `TwoRootEventMoment.two_root_event_moment_le` proves the bound for the
@@ -5161,3 +5169,7 @@ establish literature priority or an unrestricted proof or covering counterexampl
 The block-saturation criterion, its sparse-graph consequences for arbitrary
 three-prime heads, and its all-positive-height star consequences also have
 ordinary proofs and exact constant certificates, not complete Lean proofs.
+The finite lcm bridge through `17325` is likewise an ordinary composition of
+the source-pinned external Lean theorem, the dossier's ordinary P1 and
+sparse-tail proofs, and exact integer certificates; no duplicate local Lean
+declaration is claimed.
