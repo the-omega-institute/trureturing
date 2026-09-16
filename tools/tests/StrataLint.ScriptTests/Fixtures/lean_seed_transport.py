@@ -325,11 +325,14 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
     def test_publication_and_prune_share_one_deadline(self):
         for run in range(501, 506):
             self.assertEqual(0, self.transport("publish", str(run)).returncode)
-        result = self.transport("publish", "506", **self.deadline_probe(5, step=1))
+        result = self.transport("publish", "506", **self.deadline_probe(6, step=1))
         self.assertEqual(0, result.returncode, result.stdout + result.stderr)
         self.assertIn('"status":"published"', result.stdout)
         self.assertIn("deadline exhausted", result.stdout)
-        self.assertEqual([5, 4, 3, 2, 1], [call["timeout"] for call in self.gh_budgets()])
+        self.assertEqual([6, 5, 4, 3, 2, 1], [call["timeout"] for call in self.gh_budgets()])
+        self.assertEqual(["api", "create", "upload", "edit", "api", "list"],
+                         [call["args"][0] if call["args"][0] == "api" else call["args"][1]
+                          for call in self.gh_budgets()])
         self.assertEqual(6, len(list(self.remote.glob("*/release.json"))))
 
     def test_invalid_release_budget_is_optional_but_real_build_failure_is_not(self):
@@ -495,11 +498,16 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
 
     def test_draft_or_malformed_exact_metadata_fails_before_create(self):
         self.assertEqual(0, self.transport("publish").returncode)
-        before = {path.name: path.read_bytes() for path in next(self.remote.iterdir()).iterdir()}
-        for metadata in ('{"draft":true}', '{"draft":"false"}', '{}'):
+        snapshot = next(self.remote.iterdir())
+        before = {path.name: path.read_bytes() for path in snapshot.iterdir()}
+        valid = json.loads((snapshot / "release.json").read_text())
+        malformed = [dict(valid, draft=True), dict(valid, draft="false"), {},
+                     {"draft": False}, {key: value for key, value in valid.items() if key != "tag_name"},
+                     dict(valid, tag_name="other-tag"), dict(valid, target_commitish="e" * 40)]
+        for metadata in [*(json.dumps(value) for value in malformed), "not-json", ""]:
             with self.subTest(metadata=metadata):
                 (self.root / "gh.log").unlink(missing_ok=True)
-                result = self.transport("publish", FAKE_API_JSON=metadata,
+                result = self.transport("publish", FAKE_LOOKUP_API_JSON=metadata,
                                         FAKE_GH_LOG=str(self.root / "gh.log"))
                 self.assertEqual(0, result.returncode, result.stdout + result.stderr)
                 self.assertIn('"status":"failed"', result.stdout.replace(" ", ""))
@@ -507,6 +515,50 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
                 calls = [json.loads(line) for line in (self.root / "gh.log").read_text().splitlines()]
                 self.assertEqual(["api"], [call[0] for call in calls])
                 self.assertEqual(before, {path.name: path.read_bytes() for path in next(self.remote.iterdir()).iterdir()})
+
+    def test_failed_exact_lookup_stops_before_remote_writes_and_preserves_diagnostics(self):
+        for body in ('{"message":"Forbidden","status":"403"}',
+                     '{"message":"Server error","status":"500"}', 'not-json', ''):
+            with self.subTest(body=body):
+                (self.root / "gh.log").unlink(missing_ok=True)
+                diagnostic = "lookup transport failed\nsecond line\n"
+                result = self.transport("publish", FAKE_LOOKUP_API_JSON=body, FAKE_LOOKUP_API_EXIT="1",
+                                        FAKE_LOOKUP_API_STDERR=diagnostic,
+                                        FAKE_GH_LOG=str(self.root / "gh.log"))
+                self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+                report = json.loads(next(line.partition(" ")[2] for line in result.stdout.splitlines()
+                                         if line.startswith("LEAN_CACHE_PUBLISH ")))
+                self.assertEqual("failed", report["status"])
+                self.assertTrue(report["reason"].endswith("stderr: " + diagnostic), report)
+                self.assertEqual([], list(self.remote.iterdir()))
+                calls = [json.loads(line) for line in (self.root / "gh.log").read_text().splitlines()]
+                self.assertEqual(["api"], [call[0] for call in calls])
+
+    def invalid_post_edit_responses(self, tag, commit):
+        published = dict(draft=False, tag_name=tag, target_commitish=commit)
+        malformed = [dict(published, draft=True), [], {"draft": False},
+                     dict(published, tag_name="wrong-tag"), dict(published, target_commitish="e" * 40)]
+        return [*((json.dumps(value), "0") for value in malformed), ("not-json", "0"),
+                ('{"message":"Not Found","status":"404"}', "1"),
+                ('{"message":"Forbidden","status":"403"}', "1"),
+                ('{"message":"Server error","status":"500"}', "1")]
+
+    def test_post_edit_confirmation_is_required_before_publication_success(self):
+        partition = json.loads(self.transport("address").stdout)["partition"]
+        tag = "lean-cache-v2-" + partition.replace("/", "-") + "-123-1"
+        for metadata, status in self.invalid_post_edit_responses(tag, "d" * 40):
+            with self.subTest(metadata=metadata, status=status):
+                shutil.rmtree(self.remote)
+                self.remote.mkdir()
+                (self.root / "gh.log").unlink(missing_ok=True)
+                result = self.transport("publish", FAKE_POST_EDIT_API_JSON=metadata,
+                                        FAKE_POST_EDIT_API_EXIT=status, FAKE_GH_LOG=str(self.root / "gh.log"))
+                self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+                self.assertIn('"status":"failed"', result.stdout)
+                self.assertNotIn('"status":"published"', result.stdout)
+                calls = [json.loads(line) for line in (self.root / "gh.log").read_text().splitlines()]
+                self.assertEqual(["api", "create", "upload", "edit", "api"],
+                                 [call[0] if call[0] == "api" else call[1] for call in calls])
 
     def test_concurrent_publishers_keep_distinct_complete_snapshots(self):
         with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
@@ -606,6 +658,14 @@ if args[:2] == ["release", "list"]:
                       for p in root.glob("*/release.json")]))
 elif args[0] == "api":
     directory = root / args[1].split("/")[-1]
+    phase = "FAKE_POST_EDIT_API" if (root.parent / ("gh-edited-" + str(os.getppid()))).exists() else "FAKE_LOOKUP_API"
+    if phase + "_JSON" in os.environ:
+        print(os.environ[phase + "_JSON"])
+        sys.stderr.write(os.environ.get(phase + "_STDERR", ""))
+        sys.exit(int(os.environ.get(phase + "_EXIT", "0")))
+    if not directory.exists():
+        print(json.dumps({"message": "Not Found", "status": "404"}))
+        sys.exit(1)
     print(json.dumps(metadata(directory)))
 else:
     verb, tag = args[1:3]
@@ -620,6 +680,7 @@ else:
     elif verb == "edit":
         value = json.loads((directory / "release.json").read_text()); value["draft"] = False
         (directory / "release.json").write_text(json.dumps(value))
+        (root.parent / ("gh-edited-" + str(os.getppid()))).touch()
         if os.environ.get("FAKE_DAMAGE_AFTER_EDIT") == "1":
             (directory / "lean-build.tgz").write_bytes(b"damaged after upload")
         if os.environ.get("FAKE_TRUNCATE_AFTER_EDIT") == "1":

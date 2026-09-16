@@ -101,20 +101,28 @@ def receipt(verb, status, **fields):
     print("LEAN_CACHE_" + verb.upper() + " " + json.dumps({"status": status, **fields}, separators=(",", ":")))
 
 
-def existing_release(tag, deadline):
+def existing_release(tag, commit, deadline):
     """Return exact release metadata, or None when the tag is absent."""
     try:
         raw = gh(deadline, "api", f"repos/{REPO}/releases/tags/{tag}")
-    except GitHubCommandError:
-        # `gh api` uses a non-zero exit for a missing tag. The create call
-        # below remains the only writer for an absent exact address.
-        return None
+    except GitHubCommandError as error:
+        # gh uses the same nonzero exit for missing tags and transport/API
+        # errors. Only GitHub's explicit 404 response permits a create attempt.
+        try:
+            failure = json.loads(error.output)
+        except (TypeError, json.JSONDecodeError):
+            raise error
+        if isinstance(failure, dict) and failure.get("status") == "404":
+            return None
+        raise
     try:
         metadata = json.loads(raw)
     except (TypeError, json.JSONDecodeError) as error:
         raise ValueError(f"exact release {tag} returned malformed metadata: {error}") from error
     if not isinstance(metadata, dict) or type(metadata.get("draft")) is not bool:
         raise ValueError(f"exact release {tag} returned malformed metadata: expected boolean draft")
+    if metadata.get("tag_name") != tag or metadata.get("target_commitish") != commit:
+        raise ValueError(f"exact release {tag} returned malformed metadata: tag or producer commit mismatch")
     return metadata
 
 
@@ -196,9 +204,6 @@ def declared_parts(manifest, maximum_bytes=CHUNK_BYTES):
 def prune(partition, tag, deadline):
     pruned = 0
     try:
-        current = json.loads(gh(deadline, "api", f"repos/{REPO}/releases/tags/{tag}"))
-        if not isinstance(current, dict) or current.get("draft") is not False:
-            raise ValueError("new snapshot is not readable as published; pruned nothing")
         releases = json.loads(gh(deadline, "release", "list", "--repo", REPO, "--limit", "100",
             "--json", "tagName,createdAt,isDraft"))
         if not isinstance(releases, list) or any(not isinstance(item, dict)
@@ -269,7 +274,7 @@ def publish(root, partition, verification=None):
                 re.fullmatch(r"[0-9]+", value) for value in (run, attempt)):
             raise ValueError("snapshot publication requires commit, run ID and attempt attribution")
         tag = prefix(partition, verification is not None) + run + "-" + attempt
-        existing = existing_release(tag, deadline)
+        existing = existing_release(tag, commit, deadline)
         if existing is not None:
             if existing["draft"]:
                 raise ValueError(f"exact release {tag} is an incomplete draft; refusing to modify it")
@@ -311,6 +316,9 @@ def publish(root, partition, verification=None):
                 restore_snapshot(target, partition, tag, downloaded, deadline, metadata)
                 pruned, prune_error = 0, None
             else:
+                current = existing_release(tag, commit, deadline)
+                if current is None or current["draft"]:
+                    raise ValueError(f"new snapshot {tag} is not readable as published; pruned nothing")
                 pruned, prune_error = prune(partition, tag, deadline)
             receipt("publish", "published", tag=tag, pruned=pruned, prune_error=prune_error, **metadata)
     except ImportError as error:
