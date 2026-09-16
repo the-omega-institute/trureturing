@@ -6004,3 +6004,513 @@ To separate commutativity from the other regularities, take disjoint nonempty cl
 These counterexamples establish the stated nonimplications, not a classification of associative selections. In particular, the existence or nonexistence of other associative selections, and any separately defined associativity law for composed probability kernels, are not asserted here. The exact continuity obstruction, the descriptive loci, and the constructions in Theorems 22.6–22.13 require no such law.
 
 ## 追加锚（本行以下为增补区）
+## 23. Zeckendorf 加法闭图的概率结合律刚性
+
+**定义 23.0（固定数字载体与相位）。** 取 $\mathbb N=\{0,1,2,\ldots\}$，置
+$$
+G_0=1,\qquad G_1=2,\qquad G_{j+2}=G_{j+1}+G_j,\qquad
+\phi=\frac{1+\sqrt5}{2},\qquad \alpha=\phi^{-1}.
+$$
+令 $Z(n)$ 为以 $G_j$ 为权的有限 Zeckendorf 规范字按低位到高位补零后的无限字，并令
+$$
+K=\{x\in\{0,1\}^{\mathbb N}:\forall j,\ x_jx_{j+1}=0\},\qquad 0_K=Z(0).
+$$
+载体取数字乘积拓扑。定义
+$$
+\mathbb T=\mathbb R/\mathbb Z,\qquad
+F(x)=\sum_{j\ge0}(-1)^{j+1}\alpha^{j+2}x_j,\qquad H(x)=[F(x)],
+$$
+$$
+E_m=[-m\phi]\quad(m\ge1),\qquad E=\{E_m:m\ge1\},
+$$
+以及
+$$
+\Gamma=\overline{\{(Z(n),Z(m),Z(n+m)):n,m\in\mathbb N\}}^{\,K^3},
+\qquad
+\Gamma(x,y)=\{w:(x,y,w)\in\Gamma\}.
+$$
+这些记号采用[本卷定义16.0的固定文本](https://raw.githubusercontent.com/the-omega-institute/trureturing/c74985438ae17d205509255934bbd3ecf1f94d71/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)。
+
+**假设 23.1（完整纤维与精确支撑契约）。** 本节明确采用以下相位纤维及关系公式。映射 $H:K\to\mathbb T$ 满射；对 $\theta\in E$，
+$$
+H^{-1}(\{\theta\})=\{z_\theta^{+1},z_\theta^{-1}\},
+\qquad z_\theta^{+1}\ne z_\theta^{-1};
+$$
+对 $\theta\notin E$，该纤维只有一点，记为 $k_\theta$。另有
+$$
+H^{-1}(\{[n\phi]\})=\{Z(n)\}\quad(n\in\mathbb N),
+\qquad k_0=0_K.
+$$
+正负标记固定采用定义16.3的定向标记。置
+$$
+\mathcal S(x)=
+\begin{cases}
+\{\sigma\},&H(x)\in E,\ x=z_{H(x)}^\sigma,\quad \sigma\in\{-1,+1\},\\
+\{-1,+1\},&H(x)\notin E.
+\end{cases}
+$$
+对全部 $x,y\in K$，以 $\lambda=H(x)+H(y)$ 记输出相位，假设
+$$
+\Gamma(x,y)=
+\begin{cases}
+\{k_\lambda\},&\lambda\notin E,\\
+\{z_\lambda^\sigma:\sigma\in\mathcal S(x)\cup\mathcal S(y)\},&\lambda\in E.
+\end{cases}
+$$
+特别地，两个同号分裂输入只能产生同号输出；任何非分裂输入在分裂输出处允许两个符号。这里采用的是完整输入纤维公式，而不只是输出相位相加。相位前提见[Zeckendorf 理论卷第371—372节，尤其定理372.2—372.4](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md)；定向标记及关系公式见[本卷定义16.3、定理16.4](https://raw.githubusercontent.com/the-omega-institute/trureturing/c74985438ae17d205509255934bbd3ecf1f94d71/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)。
+
+**定义 23.2（有限概率核与结合律）。** 对任意集合 $X$，定义
+$$
+\mathcal D_f(X)=
+\left\{\mu:X\to[0,1]:
+\operatorname{supp}\mu=\{x:\mu(x)>0\}\text{ 有限},
+\ \sum_{x\in\operatorname{supp}\mu}\mu(x)=1\right\}.
+$$
+记 $\delta_x$ 为集中在 $x$ 的分布，$\mu(x)$ 也记为 $\mu\{x\}$。一个可容许概率核是任意函数
+$$
+P:K\times K\to\mathcal D_f(K),\qquad
+\operatorname{supp}P_{x,y}\subseteq\Gamma(x,y).
+$$
+允许一个许可输出的质量为零；不预设连续性、Borel 可测性、交换律或单位律。相对于 $P$，定义有限卷积
+$$
+\mu*\nu=
+\sum_{x\in\operatorname{supp}\mu}
+\sum_{y\in\operatorname{supp}\nu}
+\mu(x)\nu(y)P_{x,y}.
+$$
+称 $P$ 结合，若对所有 $x,y,z\in K$，
+$$
+\sum_{u\in\operatorname{supp}P_{x,y}}P_{x,y}(u)P_{u,z}
+=
+\sum_{v\in\operatorname{supp}P_{y,z}}P_{y,z}(v)P_{x,v}.
+$$
+等号是分布逐点相等，而非支撑集合相等。这里的有限凸组合与展平采用有限分布单子的通常含义，其单位和展平分别为
+$$
+\eta_X(x)=\delta_x,\qquad
+m_X\left(\sum_i a_i\delta_{\mu_i}\right)=\sum_i a_i\mu_i.
+$$
+此处单子的单位是映射 $\eta_X$，不是二元操作 $P$ 的单位元。相关定义见 Bart Jacobs，*Duality for Convexity*，[arXiv:0911.3834，§2，Example 2(3)—(4)，PDF第3—4页](https://arxiv.org/pdf/0911.3834)。
+
+**定理 23.3（有限卷积的闭合与结合延拓）。** 定义23.2的卷积总是属于 $\mathcal D_f(K)$。可容许核的点态结合律等价于 $\mathcal D_f(K)$ 上全部有限分布的结合律。每个 $P_{x,y}$ 都集中在相位 $H(x)+H(y)$；若 $\Gamma(x,y)=\{w\}$，则 $P_{x,y}=\delta_w$。
+
+**证明。** 卷积的支撑包含在有限集合
+$$
+\bigcup_{\substack{x\in\operatorname{supp}\mu\\y\in\operatorname{supp}\nu}}
+\operatorname{supp}P_{x,y}
+$$
+中，其大小至多为 $2|\operatorname{supp}\mu|\,|\operatorname{supp}\nu|$。各质量非负，总质量为
+$$
+\sum_{x,y}\mu(x)\nu(y)\sum_w P_{x,y}(w)
+=\sum_{x,y}\mu(x)\nu(y)=1.
+$$
+以上及以下求和都限制在相应有限支撑中。
+
+若点态结合律成立，把三个有限分布的卷积展开，得到
+$$
+(\mu*\nu)*\xi
+=\sum_{x,y,z}\mu(x)\nu(y)\xi(z)\bigl(P_{x,y}*\delta_z\bigr),
+$$
+$$
+\mu*(\nu*\xi)
+=\sum_{x,y,z}\mu(x)\nu(y)\xi(z)\bigl(\delta_x*P_{y,z}\bigr).
+$$
+点态结合律使每个相应括号相等，故两式相等。反向取三个 Dirac 分布即可。假设23.1给出全部许可输出的同一相位；支撑包含关系将此性质传给 $P$。支撑包含于单点而总质量为一时，该点质量只能为一。证毕。
+
+**定理 23.4（分裂相位的加法与半周平移）。** 分裂相位满足
+$$
+E_m=E_n\Longleftrightarrow m=n,\qquad E_m+E_n=E_{m+n},
+\qquad [k\phi]\notin E\quad(k\in\mathbb N).
+$$
+置 $\tau=[1/2]$，则
+$$
+\tau\notin E,\qquad (E+\tau)\cap E=\varnothing.
+$$
+因而存在唯一 $t=k_\tau\in K$。对任意可容许核，
+$$
+P_{t,t}=\delta_{0_K},
+\qquad
+P_{t,x}=P_{x,t}=\delta_{k_{\theta+\tau}}
+\quad\text{当 }H(x)=\theta\in E.
+$$
+
+**证明。** $\phi$ 无理。相位相等 $E_m=E_n$ 意味着 $(m-n)\phi$ 为整数，故 $m=n$；相位加法公式直接成立。若 $[k\phi]=E_m$，则 $(k+m)\phi$ 为整数，其中 $k+m>0$，矛盾。
+
+若 $\tau=E_m$，则 $m\phi$ 为半整数，亦矛盾。若 $E_m+\tau=E_n$，则 $(n-m)\phi+1/2$ 为整数；当 $n=m$ 时不可能，当 $n\ne m$ 时又迫使 $\phi$ 有理。所以两集合不交。假设23.1保证半周相位有唯一原像，而 $2\tau=0$ 的原像为 $0_K$。当 $\theta\in E$ 时，$\theta+\tau$ 非分裂，故两个有序乘积的许可纤维是同一单点。定理23.3遂给所列 Dirac 等式，不需要预设交换律。证毕。
+
+**定理 23.5（零切片下降与双侧平均恒等式）。** 设 $P$ 可容许且结合。则存在唯一一族 $\pi_\theta\in\mathcal D_f(K)$，使
+$$
+P_{0_K,x}=P_{x,0_K}=\pi_{H(x)}
+\quad(x\in K).
+$$
+每个 $\pi_\theta$ 支撑于 $H^{-1}(\{\theta\})$，且 $\pi_0=\delta_{0_K}$。对所有 $\theta,\rho\in\mathbb T$ 和 $x,y\in K$，
+$$
+\pi_\theta*\delta_y=\pi_{\theta+H(y)},\qquad
+\delta_x*\pi_\rho=\pi_{H(x)+\rho},\qquad
+\pi_\theta*\pi_\rho=\pi_{\theta+\rho}.
+$$
+
+**证明。** 先分别证明左、右零切片仅依赖相位。非分裂相位的输出纤维只有一个点，所以两个零切片均为 $\delta_{k_\theta}$。对分裂相位 $\theta$，置 $w_\theta=k_{\theta+\tau}$。任取 $H(x)=\theta$，在两个不同有序三元组上使用结合律及定理23.4，得到
+$$
+\delta_{0_K}*\delta_x
+=(\delta_t*\delta_t)*\delta_x
+=\delta_t*(\delta_t*\delta_x)
+=P_{t,w_\theta},
+$$
+$$
+\delta_x*\delta_{0_K}
+=\delta_x*(\delta_t*\delta_t)
+=(\delta_x*\delta_t)*\delta_t
+=P_{w_\theta,t}.
+$$
+右端均与该纤维内的输入分支无关。于是左、右零切片分别定义为 $L_\theta,R_\theta$，暂不假设二者相等。它们均支撑于相位 $\theta$。
+
+对三元组 $(0_K,x,0_K)$ 使用结合律。左括号给出
+$$
+L_\theta*\delta_{0_K}
+=\sum_{u\in\operatorname{supp}L_\theta}L_\theta(u)R_\theta
+=R_\theta,
+$$
+右括号给出
+$$
+\delta_{0_K}*R_\theta
+=\sum_{v\in\operatorname{supp}R_\theta}R_\theta(v)L_\theta
+=L_\theta.
+$$
+故 $L_\theta=R_\theta$，记为 $\pi_\theta$。满射性保证这族分布在全部相位上定义且唯一；零相位的单点纤维给 $\pi_0=\delta_{0_K}$。
+
+固定 $\theta$，由满射性取 $H(x)=\theta$。若 $H(y)=\rho$，则
+$$
+\pi_\theta*\delta_y
+=(\delta_{0_K}*\delta_x)*\delta_y
+=\delta_{0_K}*P_{x,y}
+=\sum_u P_{x,y}(u)\pi_{\theta+\rho}
+=\pi_{\theta+\rho}.
+$$
+这里每个中间点 $u$ 都具有相位 $\theta+\rho$。同理，
+$$
+\delta_x*\pi_\rho
+=\delta_x*(\delta_y*\delta_{0_K})
+=P_{x,y}*\delta_{0_K}
+=\sum_u P_{x,y}(u)\pi_{\theta+\rho}
+=\pi_{\theta+\rho}.
+$$
+最后，$\pi_\rho$ 的每个支撑点具有相位 $\rho$，故再对第一式作有限平均，得到 $\pi_\theta*\pi_\rho=\pi_{\theta+\rho}$。全程没有使用 $0_K$ 是单位元。证毕。
+
+**定理 23.6（单个分裂相位的零切片必为 Dirac 分布）。** 设 $P$ 可容许且结合。固定 $m\ge1$，记
+$$
+x_+=z_{E_m}^{+1},\quad x_-=z_{E_m}^{-1},\qquad
+y_+=z_{E_{2m}}^{+1},\quad y_-=z_{E_{2m}}^{-1},
+$$
+并定义
+$$
+p=\pi_{E_m}(x_+),\qquad q=\pi_{E_{2m}}(y_+),\qquad
+a=P_{x_+,x_-}(y_+),\qquad b=P_{x_-,x_+}(y_+).
+$$
+则以下两个恒等链同时成立：
+$$
+q=p+(1-p)b=pa,\qquad
+q=p+(1-p)a=pb.
+$$
+它们强制
+$$
+p=q=a=b\in\{0,1\}.
+$$
+特别地，每个 $\pi_{E_m}$ 都是 Dirac 分布。
+
+**证明。** 精确支撑契约给出
+$$
+P_{x_+,x_+}=\delta_{y_+},\qquad
+P_{x_-,x_-}=\delta_{y_-},
+\qquad
+\pi_{E_m}=p\delta_{x_+}+(1-p)\delta_{x_-}.
+$$
+定理23.5分别对
+$$
+\pi_{E_m}*\delta_{x_+},\quad
+\delta_{x_+}*\pi_{E_m},\quad
+\pi_{E_m}*\delta_{x_-},\quad
+\delta_{x_-}*\pi_{E_m}
+$$
+给出同一分布 $\pi_{E_{2m}}$。读取 $y_+$ 的质量，依次得到
+$$
+q=p+(1-p)b,\qquad q=p+(1-p)a,\qquad q=pa,\qquad q=pb.
+$$
+这证明两个恒等链，且没有把两个有序混合乘积预先等同。
+
+由 $0\le a,b,p\le1$，第一式给 $q\ge p$，第三式给 $q\le p$，所以 $q=p$。代回四式可得
+$$
+(1-p)b=0,\qquad (1-p)a=0,\qquad
+p(1-a)=0,\qquad p(1-b)=0.
+$$
+若 $0<p<1$，则 $(1-p)a=0$ 强制 $a=0$，而 $p(1-a)=0$ 强制 $a=1$，矛盾。因此 $p$ 只能是零或一。
+
+当 $p=0$ 时，$q=p=0$，前两条零乘积式给 $a=b=0$。当 $p=1$ 时，$q=p=1$，后两条零乘积式给 $a=b=1$。两个端点均已单独处理，没有除以可能为零的质量。两点纤维上的分布由 $p$ 完全确定，故必为 Dirac 分布。证毕。
+
+**定理 23.7（所有分裂相位共享一个符号）。** 对任意可容许结合核，存在唯一 $s\in\{-1,+1\}$，使
+$$
+\pi_{E_m}=\delta_{z_{E_m}^{s}}\qquad(m\ge1).
+$$
+
+**证明。** 定理23.6允许唯一写作 $\pi_{E_m}=\delta_{z_{E_m}^{\sigma_m}}$，其中 $\sigma_m\in\{-1,+1\}$。固定任意 $m,n\ge1$，取 $v_n=z_{E_n}^{\sigma_m}$。定理23.5和同号强制支撑共同给出
+$$
+\pi_{E_{m+n}}
+=\pi_{E_m}*\delta_{v_n}
+=P_{z_{E_m}^{\sigma_m},z_{E_n}^{\sigma_m}}
+=\delta_{z_{E_{m+n}}^{\sigma_m}}.
+$$
+再取 $v_m=z_{E_m}^{\sigma_n}$，在另一个有序位置使用平均恒等式：
+$$
+\pi_{E_{m+n}}
+=\delta_{v_m}*\pi_{E_n}
+=P_{z_{E_m}^{\sigma_n},z_{E_n}^{\sigma_n}}
+=\delta_{z_{E_{m+n}}^{\sigma_n}}.
+$$
+输出纤维的两个标记互异，故
+$$
+\sigma_m=\sigma_{m+n}=\sigma_n.
+$$
+由于 $m,n$ 任意，所有符号相同。以 $\pi_{E_1}$ 确定的符号为 $s$，同时得到存在性和唯一性。证毕。
+
+**定义 23.8（两个固定符号操作）。** 对固定 $s\in\{-1,+1\}$，定义
+$$
+c_s(\theta)=
+\begin{cases}
+z_\theta^s,&\theta\in E,\\
+k_\theta,&\theta\notin E,
+\end{cases}
+\qquad
+R_s=c_s[\mathbb T],\qquad
+N_s=\{z_{E_m}^{-s}:m\ge1\}.
+$$
+假设23.1给出 $K=R_s\sqcup N_s$。定义
+$$
+A_s(x,y)=
+\begin{cases}
+z_{H(x)+H(y)}^{-s},&x,y\in N_s,\\
+c_s(H(x)+H(y)),&\text{其余情形},
+\end{cases}
+\qquad P^s_{x,y}=\delta_{A_s(x,y)}.
+$$
+第一分支由 $E+E\subseteq E$ 保证有定义。等价地，两个分裂输入都具有符号 $-s$ 时保留强制符号 $-s$；其余分裂输出一律取符号 $s$，非分裂输出取其唯一原像。
+
+**定理 23.9（全载体概率结合核的完整分类）。** 在假设23.1下，对任意可容许概率核 $P$，
+$$
+P\text{ 结合}
+\quad\Longleftrightarrow\quad
+\exists!\,s\in\{-1,+1\}\ \forall x,y\in K,\quad P_{x,y}=P^s_{x,y}.
+$$
+因此恰有两个解，每个解逐点为 Dirac 分布，并自动满足交换律。它们包含如下全域边界公式：
+$$
+P^s_{0_K,x}=P^s_{x,0_K}=\delta_{c_s(H(x))},
+$$
+$$
+P^s_{z_{E_m}^{+1},z_{E_n}^{-1}}
+=P^s_{z_{E_m}^{-1},z_{E_n}^{+1}}
+=\delta_{z_{E_{m+n}}^s}\qquad(m,n\ge1),
+$$
+$$
+P^s_{Z(n),Z(m)}=\delta_{Z(n+m)}\qquad(n,m\in\mathbb N).
+$$
+若进一步要求全部许可输出都有严格正质量，即对所有输入都有 $\operatorname{supp}P_{x,y}=\Gamma(x,y)$，则不存在结合解。
+
+**证明。** 先证明必要性。由定理23.5—23.7及非分裂纤维的唯一性，存在唯一符号 $s$，使
+$$
+\pi_\theta=\delta_{c_s(\theta)}\qquad(\theta\in\mathbb T).
+$$
+取任意有序输入对 $(x,y)$。若 $x\in R_s$，则 $\delta_x=\pi_{H(x)}$，所以平均恒等式给
+$$
+P_{x,y}=\pi_{H(x)}*\delta_y
+=\delta_{c_s(H(x)+H(y))}.
+$$
+若 $y\in R_s$，则另一个平均恒等式同样给
+$$
+P_{x,y}=\delta_x*\pi_{H(y)}
+=\delta_{c_s(H(x)+H(y))}.
+$$
+剩下的唯一情形是 $x,y\in N_s$。此时两输入都是符号 $-s$ 的分裂点，假设23.1直接强制
+$$
+P_{x,y}=\delta_{z_{H(x)+H(y)}^{-s}}.
+$$
+这正是定义23.8，覆盖非分裂输入、零、分裂输入的两种顺序以及所有相位和；没有预设确定性选择的分类。
+
+再证明两个候选确实存在。若 $x,y\in N_s$，定义选取的点就是同号强制输出。否则，当输出相位分裂时，至少一个输入非分裂或具有符号 $s$，所以 $s\in\mathcal S(x)\cup\mathcal S(y)$，所选点属于 $\Gamma(x,y)$；当输出相位非分裂时，所选点是唯一许可输出。因此每个 $P^s$ 都可容许。
+
+为验证所有三元组的结合律，定义
+$$
+\varepsilon_s(x)=
+\begin{cases}
+1,&x\in N_s,\\
+0,&x\in R_s,
+\end{cases}
+\qquad
+M=(\mathbb T\times\{0\})\cup(E\times\{1\}),
+$$
+并在 $M$ 上定义
+$$
+(\theta,i)\cdot(\rho,j)=(\theta+\rho,ij).
+$$
+若 $ij=1$，两个相位均属于 $E$，故其和仍属于 $E$；若 $ij=0$，输出属于 $\mathbb T\times\{0\}$。所以该乘法封闭。它的结合性和交换性分别来自圆周加法及 $\{0,1\}$ 上通常乘法的结合性和交换性。
+
+映射
+$$
+\Phi_s:K\to M,\qquad \Phi_s(x)=(H(x),\varepsilon_s(x))
+$$
+是双射：$(\theta,0)$ 的唯一原像是 $c_s(\theta)$，而对 $\theta\in E$，$(\theta,1)$ 的唯一原像是 $z_\theta^{-s}$。定义23.8逐分支给出
+$$
+\Phi_s(A_s(x,y))=\Phi_s(x)\cdot\Phi_s(y).
+$$
+因而两个括号的像均为
+$$
+\bigl(H(x)+H(y)+H(z),\,
+\varepsilon_s(x)\varepsilon_s(y)\varepsilon_s(z)\bigr).
+$$
+由 $\Phi_s$ 单射，$A_s(A_s(x,y),z)=A_s(x,A_s(y,z))$。交换律同理成立。于是相应 Dirac 核满足点态结合律，定理23.3又给全部有限分布上的结合律。
+
+两个核在 $(0_K,z_{E_1}^{+1})$ 处分别输出 $z_{E_1}^{+1}$ 和 $z_{E_1}^{-1}$，故互异。必要性中的全局符号唯一，排除了任何第三个核。零切片公式由 $0_K\in R_s$ 得到；每个异号输入对恰有一个输入属于 $R_s$，给出两个有序混合公式。核心相位之和为 $[(n+m)\phi]$，其唯一原像为 $Z(n+m)$，给出核心公式。最后，$\Gamma(0_K,z_{E_1}^{+1})$ 有两个点，而每个结合解在该处只有一个正质量点，所以严格全支撑条件不可能成立。证毕。
+
+**定理 23.10（内部群、全载体无单位与超群公理障碍）。** 对每个 $s$，$R_s$ 是 $(K,A_s)$ 的双侧理想，且其内部运算使 $c_s$ 成为从圆周加法群到 $R_s$ 的抽象群同构；内部单位为 $0_K$。子半群 $N_s$ 与正整数加法半群同构。但 $(K,A_s)$ 没有左单位，也没有右单位。更一般地，任何满足假设23.1支撑契约的概率核，都不能成为全载体 $K$ 上的 DJS 超群卷积。这里使用的标准超群单位及对合支撑公理见 László Székelyhidi，*Functional Equations on Hypergroups*，[§1，公理(H3)—(H4)及(D3)—(D4)，作者提供的PDF第1—3页](https://szekelyhidilaszlo.webzenit.hu/wp-content/uploads/2014/05/Functional-equations-on-hypergroups-styled.pdf)。
+
+**证明。** 只要一个输入在 $R_s$ 中，输出就是 $c_s(H(x)+H(y))\in R_s$，故 $R_s$ 为双侧理想。又有
+$$
+A_s(c_s(\theta),c_s(\rho))=c_s(\theta+\rho),\qquad
+c_s(0)=0_K,\qquad
+A_s(c_s(\theta),c_s(-\theta))=0_K.
+$$
+$Hc_s$ 为恒等映射，而 $c_s$ 按定义满到 $R_s$，所以这给出所述抽象群同构。另一方面，
+$$
+A_s(z_{E_m}^{-s},z_{E_n}^{-s})=z_{E_{m+n}}^{-s},
+$$
+而相位指标互异，故 $m\mapsto z_{E_m}^{-s}$ 给正整数加法半群到 $N_s$ 的同构。
+
+若 $e$ 是全载体上的左单位，则 $A_s(e,0_K)=0_K$；读取相位得到 $H(e)=0$，所以 $e=0_K$。然而
+$$
+A_s(0_K,z_{E_1}^{-s})=z_{E_1}^s\ne z_{E_1}^{-s}.
+$$
+这排除左单位。右单位同样先被迫为 $0_K$，再由右零切片公式排除。
+
+最后，标准 DJS 超群公理特别要求存在单位 $e$ 和对合 $\iota$，满足
+$$
+P_{e,x}=P_{x,e}=\delta_x,\qquad
+\iota^2=\operatorname{id},\qquad
+e\in\operatorname{supp}P_{x,y}\Longleftrightarrow y=\iota(x).
+$$
+最后一式是通常对合支撑公理的等价写法。单位律在 $(e,0_K)$ 处与相位契约共同迫使 $e=0_K$。固定任意 $m\ge1$，取 $r_m=Z(m)$。由于 $H(r_m)+E_m=0$ 且零相位只有一个原像，
+$$
+P_{r_m,z_{E_m}^{+1}}=P_{r_m,z_{E_m}^{-1}}=\delta_{0_K}.
+$$
+对合支撑公理因而同时要求
+$$
+z_{E_m}^{+1}=\iota(r_m)=z_{E_m}^{-1},
+$$
+与分裂纤维的两点互异矛盾。这个障碍已经发生在单位和对合支撑公理上，无需诉诸任何拓扑或可测性条件。证毕。
+
+**定理 23.11（许可关系本身的结合律）。** 假设23.1下，集合值关系确实满足
+$$
+\bigcup_{u\in\Gamma(x,y)}\Gamma(u,z)
+=
+\bigcup_{v\in\Gamma(y,z)}\Gamma(x,v)
+\qquad(x,y,z\in K).
+$$
+更准确地，令 $\lambda=H(x)+H(y)+H(z)$，共同值为
+$$
+\begin{cases}
+\{k_\lambda\},&\lambda\notin E,\\
+\{z_\lambda^\sigma:
+\sigma\in\mathcal S(x)\cup\mathcal S(y)\cup\mathcal S(z)\},
+&\lambda\in E.
+\end{cases}
+$$
+
+**证明。** 先证明对每个输入对都有
+$$
+\bigcup_{u\in\Gamma(x,y)}\mathcal S(u)
+=\mathcal S(x)\cup\mathcal S(y).
+$$
+若 $H(x)+H(y)\in E$，许可输出恰按右侧符号逐个列出，而每个分裂输出的符号集为单点，所以等式成立。若相位和不在 $E$，唯一输出非分裂，左侧为 $\{-1,+1\}$。此时两输入不可能都分裂，因为 $E+E\subseteq E$；至少一个输入非分裂，故右侧也为 $\{-1,+1\}$。
+
+若最终相位 $\lambda$ 非分裂，两个括号中的每个最终输出均为 $k_\lambda$；中间许可纤维非空，故两边确为该单点集。若 $\lambda$ 分裂，则左括号允许的符号集合是
+$$
+\bigcup_{u\in\Gamma(x,y)}
+\bigl(\mathcal S(u)\cup\mathcal S(z)\bigr)
+=\mathcal S(x)\cup\mathcal S(y)\cup\mathcal S(z).
+$$
+右括号用同一恒等式得到完全相同的符号集合。两点纤维的标记唯一确定输出，结论成立。证毕。
+
+**定理 23.12（常偏置权重的精确结合缺陷）。** 对 $r\in[0,1]$，定义
+$$
+B^{(r)}_{x,y}=rP^{+1}_{x,y}+(1-r)P^{-1}_{x,y},
+$$
+并以 $*_r$ 表示其有限卷积。这是可容许核；在许可纤维只有一点时取该 Dirac 分布，在许可纤维有两点时，正、负标记的质量分别为 $r,1-r$。它结合当且仅当 $r\in\{0,1\}$。
+
+更具体地，固定任意 $m\ge1$，取 $x_+=z_{E_m}^{+1}$ 和 $y_\pm=z_{E_{2m}}^{\pm1}$，则
+$$
+(\delta_{0_K}*_r\delta_{x_+})*_r\delta_{x_+}
+=(2r-r^2)\delta_{y_+}+(1-r)^2\delta_{y_-},
+$$
+$$
+\delta_{0_K}*_r(\delta_{x_+}*_r\delta_{x_+})
+=r\delta_{y_+}+(1-r)\delta_{y_-}.
+$$
+特别地，对许可双点纤维赋等概率的核，在三元组 $(0_K,z_{E_1}^{+1},z_{E_1}^{+1})$ 上给出不同结果：
+$$
+\frac34\delta_{z_{E_2}^{+1}}+\frac14\delta_{z_{E_2}^{-1}}
+\ne
+\frac12\delta_{z_{E_2}^{+1}}+\frac12\delta_{z_{E_2}^{-1}}.
+$$
+
+**证明。** 两个候选均可容许，故其凸组合仍可容许。若许可纤维是单点，两候选都取该点；若许可纤维有两点，两输入不是同号分裂输入，故 $A_{+1}$ 取正号而 $A_{-1}$ 取负号，得到所述权重。
+
+另记 $x_-=z_{E_m}^{-1}$。由定义，
+$$
+B^{(r)}_{0_K,x_+}=r\delta_{x_+}+(1-r)\delta_{x_-},
+\qquad B^{(r)}_{x_+,x_+}=\delta_{y_+},
+$$
+$$
+B^{(r)}_{x_-,x_+}=r\delta_{y_+}+(1-r)\delta_{y_-},
+\qquad
+B^{(r)}_{0_K,y_+}=r\delta_{y_+}+(1-r)\delta_{y_-}.
+$$
+对第一层有限分布逐项卷积，左括号为
+$$
+r\delta_{y_+}
++(1-r)\bigl(r\delta_{y_+}+(1-r)\delta_{y_-}\bigr),
+$$
+右括号为 $B^{(r)}_{0_K,y_+}$，即得两个公式。它们在正标记处的质量差是 $r(1-r)$，故每个 $0<r<1$ 都不结合。两个端点分别为定理23.9已证明结合的 $P^{-1}$ 与 $P^{+1}$。取 $r=1/2,m=1$ 得到所列等概率反例。证毕。
+
+**定理 23.13（仅保留相位兼容时的随机边界）。** 若把精确支撑契约放宽为
+$$
+\operatorname{supp}Q_{x,y}\subseteq
+H^{-1}(\{H(x)+H(y)\}),
+$$
+则存在真正非 Dirac 的结合概率核。更一般地，任给一族
+$$
+\eta_\theta\in\mathcal D_f(K),\qquad
+\operatorname{supp}\eta_\theta\subseteq H^{-1}(\{\theta\}),
+$$
+公式 $Q_{x,y}=\eta_{H(x)+H(y)}$ 总定义一个相位兼容的结合核。
+
+**证明。** 固定 $x,y,z$。每个 $u\in\operatorname{supp}Q_{x,y}$ 都有 $H(u)=H(x)+H(y)$，所以
+$$
+\sum_u Q_{x,y}(u)Q_{u,z}
+=\sum_u Q_{x,y}(u)\eta_{H(x)+H(y)+H(z)}
+=\eta_{H(x)+H(y)+H(z)}.
+$$
+对右括号作同样的有限求和，得到同一分布，因此结合。取
+$$
+\eta_\theta=
+\begin{cases}
+\frac12\delta_{z_\theta^{+1}}+\frac12\delta_{z_\theta^{-1}},
+&\theta\in E,\\
+\delta_{k_\theta},&\theta\notin E
+\end{cases}
+$$
+即得非 Dirac 实例。但是对 $x=y=z_{E_m}^{+1}$，
+$$
+Q_{x,y}=\frac12\delta_{z_{E_{2m}}^{+1}}
++\frac12\delta_{z_{E_{2m}}^{-1}},
+\qquad
+\Gamma(x,y)=\{z_{E_{2m}}^{+1}\}.
+$$
+它给被精确关系排除的负标记赋予正质量，故不满足假设23.1的支撑契约，也不是定理23.9的反例。证毕。
+
+## 追加锚（本行以下为增补区）
