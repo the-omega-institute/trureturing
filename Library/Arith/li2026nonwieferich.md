@@ -225,3 +225,263 @@ is attached. The existing WSS target remains open. JO2 and JO3 refute the
 displayed global statements of this preprint, not separately posed open
 conjectures; the two failures have the same missing joint-orbit constraint
 and are not counted as two solved open problems.
+
+## 5. The original golden unit: curved joint orbit and a complete digit theorem
+
+The counterexample with alpha=2 does not imply that the original golden unit
+has biased high digits. The following calculation keeps the common exponent
+and proves the canonical-digit statement for phi, including inert primes.
+It uses no assumption that the initial WSS depth is one.
+
+Fix a prime p>5. Put O=Z[phi], phi^2=phi+1, and use precisely the digit set
+
+$$\mathcal D_p=\{a+b\phi:0\le a,b<p\}.$$
+
+Write eps=(5/p), N=p-eps, h=v_p(F_N)>=1, and let tau be the order of phi
+in (O/pO)^times. For m>=1 let H_m be the actual cyclic subgroup generated
+by phi modulo p^m. Norms in the integral basis are
+
+$$Q(x,y)=x^2+xy-y^2,\qquad \nabla Q(x,y)=(2x+y,x-2y).$$
+
+All appearances of h below refer to the initial depth of the ORIGINAL phi.
+A different digit representative set is not covered by this theorem.
+
+### 5.1 Exact finite orbit, including arbitrary initial depth
+
+**Lemma GD1.** For every m>=1,
+
+$$\#H_m=\tau p^{\max(0,m-h)}. \tag{GD1}$$
+
+For m>=h it is a disjoint union of tau equal-sized norm slices. For
+0<=i<tau, the i-th slice consists of all z=x+y*phi modulo p^m such that
+
+$$z\equiv\phi^i\pmod{p^h},\qquad Q(x,y)\equiv(-1)^i\pmod{p^m}.$$
+
+Each slice has exactly p^(m-h) points.
+
+**Proof.** Golden Frobenius gives phi^N=eps modulo p, so tau divides 2N
+and p does not divide tau. Taking norms shows tau is even. The exact
+identity
+
+$$(L_N-2\mathrm{eps})(L_N+2\mathrm{eps})=5F_N^2$$
+
+and L_N=2eps modulo p show v_p(L_N-2eps)=2h. In the basis (1,sqrt(5)),
+which is an integral basis locally at p, the identity
+
+$$\phi^N-\mathrm{eps}=(L_N-2\mathrm{eps}+\sqrt5 F_N)/2$$
+
+therefore has coefficientwise p-valuation h. This argument works also
+in the split quadratic algebra: valuation here means divisibility by the
+rational ideal p^e O, or the minimum of the two local valuations. The factor
+phi^N+eps is a unit, so phi^(2N)-1 also has depth h. Since 2N/tau is prime
+to p, the geometric sum identifies v_p(phi^tau-1)=h.
+
+For any p-integral z with v_p(z)>=1, binomial expansion gives
+v_p((1+z)^p-1)=v_p(z)+1. An exponent prime to p preserves that valuation.
+It follows that phi^tau has exact order p^max(0,m-h) modulo p^m, proving
+GD1. Its norm is one. The norm-one elements congruent to one modulo p^h
+number p^(m-h): at each precision, the nonzero norm gradient imposes one
+nonzero linear equation on two new base-p digits, giving exactly p lifts.
+The cyclic subgroup is contained in this kernel and has the same size,
+so the two sets coincide. Multiplication by phi^i proves the slice statement.
+The tau residues are already distinct modulo p. No WSS nonexistence
+assumption is used in the order or cardinality argument.
+
+### 5.2 Square-root cancellation on a single actual norm slice
+
+For any h>=1, m>=2h, a p-adic unit c, and z0 modulo p^h with Q(z0)=c
+modulo p^h, set
+
+$$\mathcal S_m(c,z_0)=\{z\in(\mathbb Z/p^m)^2:
+ z=z_0\pmod{p^h},\ Q(z)=c\pmod{p^m}\}.$$
+
+The value of c modulo p^m suffices. Let e_M(t)=exp(2*pi*i*t/M).
+
+**Theorem GD2.** If (u,v) is a primitive frequency, meaning that at least
+one of u,v is not divisible by p, then
+
+$$\boxed{
+\left|\frac1{\#\mathcal S_m}\sum_{(x,y)\in\mathcal S_m}
+ e_{p^m}(ux+vy)\right|\le p^{h-\lfloor m/2\rfloor}.
+} \tag{GD2}$$
+
+When m=2r, the unnormalized sum is either zero or has magnitude exactly
+p^r. The nonzero alternative occurs precisely when the stationary normal
+condition in the proof has a solution in the prescribed low residue ball.
+
+**Proof.** Put r=floor(m/2) and s=ceil(m/2). Partition the slice by its
+residues z modulo p^s. Choose one norm-c lift z* of each such residue to
+precision p^m. All other lifts are z*+p^s w, with w modulo p^r satisfying
+
+$$\nabla Q(z^*)\mathbin{\cdot}w=0\pmod{p^r}.$$
+
+The quadratic correction vanishes because 2s>=m. This kernel is a free
+rank-one module with p^r elements. Character orthogonality makes its
+contribution zero unless
+
+$$(u,v)=t\nabla Q(z^*)\pmod{p^r}$$
+
+for a scalar t. Primitivity forces t to be a unit. The matrix of the gradient
+is J=[[2,1],[1,-2]], with J^2=5I and Q(Jw)=5Q(w). Consequently every
+surviving residue satisfies
+
+$$5c t^2=Q(u,v)\pmod{p^r},\qquad z^*=J(u,v)/(5t)\pmod{p^r}.$$
+
+If Q(u,v) is divisible by p there is no such unit t. Otherwise the square
+root equation has at most two roots modulo p^r. Its unit roots lift uniquely
+from modulo p because its derivative 10ct is a unit; any two are negatives.
+They produce opposite points z and -z, which cannot both lie in the prescribed
+class modulo p^h since c is a unit and p is odd. There is thus at most ONE
+surviving norm point modulo p^r. It has p^(s-r) norm-c lifts modulo p^s.
+Each surviving inner sum has magnitude at most p^r. The whole unnormalized
+sum is bounded by p^s. Divide by #S_m=p^(m-h) to get GD2. When s=r, at most
+one inner sum survives; when it does survive, its character is constant on
+that affine lift fibre and its magnitude is p^r. This proves the sharp
+alternative at even precision.
+
+Applying GD2 to the equal-sized slices of GD1 yields exactly the same
+bound for the normalized character sum over H_m. For a frequency divisible
+by p^v in both coordinates, first reduce to H_(m-v). Reduction is surjective
+with equal fibres, so a nonzero frequency of conductor p^ell has bound
+p^(h-floor(ell/2)) whenever ell>=2h. No local direct-product independence
+is used anywhere in this argument.
+
+### 5.3 All fixed-length high digit words are uniform on average
+
+Fix r>=1 and m>=r. For z=x+y*phi modulo p^m, choose its two coefficient
+representatives in [0,p^m). Its high r-digit word is the pair
+
+$$\left(\left\lfloor x/p^{m-r}\right\rfloor,
+          \left\lfloor y/p^{m-r}\right\rfloor\right)
+\in\{0,\ldots,p^r-1\}^2.$$
+
+This is exactly a word of length r in the alphabet D_p, at digit positions
+m-r through m-1, counted from the least significant digit. It is not a
+statement about the leading digits of the positive integers F_n.
+Let P_(p,m,r)(a,b) be the proportion of H_m with the displayed word (a,b).
+
+**Theorem GD3.** For m>=2h+r-1 and 0<=a,b<p^r,
+
+$$\boxed{
+\left|P_{p,m,r}(a,b)-p^{-2r}\right|
+\le p^{h-\lfloor(m-r+1)/2\rfloor}(2+m\log p)^2.
+} \tag{GD3}$$
+
+The bound may be replaced by its minimum with one. In particular, for
+every fixed p and r, every high r-digit word has limiting frequency p^(-2r).
+This holds whether h=1 or h>=2.
+
+**Proof.** Put M=p^m and L=p^(m-r). The condition on either coefficient
+is membership in an interval I_a=[aL,(a+1)L) in Z/M. With the normalized
+finite Fourier transform, the zero coefficient of its indicator is p^(-r).
+For k nonzero modulo M its Fourier coefficient vanishes if p^r divides k,
+by summing a complete geometric progression. Otherwise
+
+$$|\widehat{1_{I_a}}(k)|\le
+ \min\{p^{-r},1/(2\min(k,M-k))\}.$$
+
+Indeed the numerator of the geometric sum has magnitude at most two,
+and sin(pi*k/M)>=2*min(k,M-k)/M. Summing the harmonic bound proves
+
+$$\sum_{k\bmod M}|\widehat{1_{I_a}}(k)|\le2+\log M.$$
+
+Expand the two interval indicators by Fourier inversion. The zero pair
+contributes p^(-2r). Every other frequency pair with a nonzero coefficient
+has common p-valuation v<=r-1: at least one of its nonzero coordinates is
+not divisible by p^r. Its conductor exponent ell=m-v is therefore at
+least m-r+1>=2h. The character bound following GD2 is at most
+p^(h-floor((m-r+1)/2)). Multiply by the product of the two Fourier l1 bounds
+to obtain GD3. The exponential decay dominates the squared logarithm for
+fixed p,r,h, proving the limit.
+
+For every fixed m the distribution on H_m is exactly the Cesaro limit
+of the word along the powers phi^n, since one full order enumerates H_m.
+Thus the order of limits is explicitly
+
+$$\lim_{m\to\infty}\lim_{X\to\infty}\frac1X
+\#\{1\le n\le X:\text{the word at positions }m-r,\ldots,m-1
+\text{ of }\phi^n\text{ equals }(a,b)\}=p^{-2r}. \tag{GD4}$$
+
+The limits are not interchanged. There is no conclusion about individual
+large exponents n, about most of their digits up to their real size, or
+about normality of a concatenation of Fibonacci numbers.
+
+**Corollary GD4.** For the canonical digit set, the source's averaged digit
+conclusion is true for alpha=phi, beta=p, for EVERY prime p>5. Moreover the
+average frequency in the first m positions is 1/p^2+O_(p,h)(1/m).
+
+**Proof.** Its Cesaro average over the exponent is the average of the m
+individual digit distributions. The finitely many levels below 2h contribute
+O_(p,h)(1/m). The errors at subsequent levels have a finite sum by GD3 with
+r=1. This proves the stated rate. In particular the split and inert cases
+are both covered, without replacing the true orbit by a product.
+The analogous statement for each fixed word length follows in the same way.
+
+### 5.4 The remaining joint constraint and the WSS information boundary
+
+For every m>=h and every retained point (x,y) modulo p^m, there are exactly
+p possible next digit pairs (a,b), out of the p^2 alphabet symbols. They form
+the affine line
+
+$$(2x+y)a+(x-2y)b\equiv\frac{c-Q(x,y)}{p^m}\pmod p, \tag{GD5}$$
+
+where c=1 or -1 is determined by the point's norm modulo p. This follows
+by expanding Q(x+p^m a,y+p^m b) to the next precision. The actual orbit
+contains every one of these lifts by GD1, and a uniform orbit point gives
+uniform mass to each lift. Thus exact joint constraints persist at EVERY
+level, despite the marginal uniformity in GD3. In entropy language, the
+next digit has conditional entropy log p given all lower digits, whereas
+its marginal entropy tends to 2log p. Their mutual information tends to
+log p. This uses ordinary finite Shannon entropy, not a new assumption.
+
+Consequently the block complexity is still 1/2, as in JO5. At base eleven,
+the original phi has asymptotically uniform high digits, whereas alpha=2
+from Section2 never has a nonzero phi-coordinate digit. Both have block
+complexity 1/2. Complexity alone therefore determines neither digit marginal.
+The norm-conic argument supplies the additional cancellation for phi.
+
+To make the role of initial depth explicit, fix an integer a>=0 and replace
+the generator by gamma=phi^(p^a). Its residue order is still tau and its
+principal depth is h+a by the same binomial proof as GD1. It has norm -1.
+The proofs GD1-GD4 apply with that depth and the corresponding residue balls.
+Hence arbitrarily large initial lifting delays coexist with the same limiting
+frequency for every fixed word, within this actual family of golden units.
+These altered generators are NOT original WSS samples. They demonstrate the
+failure of an inference from such digit uniformity alone to depth one.
+
+For the ORIGINAL phi, GD3 requires m>=2h+r-1 and its error constant depends
+on h. It cannot be specialized at a fixed small precision while silently
+assuming that condition. It supplies no uniform bound on h as p varies,
+and no new constraint forcing or excluding q_p=0 in an unbounded prime family.
+For example, if h>=2, H_2 has only tau<=2(p+1) points. Its one-digit marginal
+at precision two consequently has total variation distance from uniform at
+least 1-2(p+1)/p^2. This finite-level sparsity is fully compatible with GD3:
+the latter concerns sufficiently high precision for that fixed h.
+
+### 5.5 Established tools, target boundary and source roles
+
+The Fibonacci-coordinate and norm identities are those of the existing
+`D5/S1/Scale/Fibonacci.lean`; the finite lift and norm-one descriptions agree
+with CG.1-CG.3 in the existing WSS dossier. The present argument adds an
+explicit conic character estimate and its canonical high-word consequence.
+It does not change the prior counterexample, restore the false general CRT
+product step, or assert the digit theorem for arbitrary representative sets.
+
+Finite-character orthogonality, Hensel lifting of simple roots, and local
+stationary phase are classical. For related p-adic oscillatory estimates,
+see K. M. Rogers, *A van der Corput lemma for the p-adic numbers*, Proceedings
+of the American Mathematical Society 133 (2005),3525-3534,
+https://arxiv.org/abs/math/0311014 . GD2 is proved here directly by exact
+finite fibres and a quadratic congruence, without invoking an unverified
+uniform stationary-phase theorem. For the antecedent averaged-digit problem,
+see Taylor Dupuy and David E. Weirich, Journal of Number Theory158(2016),268-280,
+DOI10.1016/j.jnt.2015.05.022, and the stated source v1. Existing Fibonacci
+p-adic distribution theory also includes Bragman-Rowland,
+https://arxiv.org/abs/2202.00704 ; its whole-residue density is different
+from the high-word frequency GD4.
+
+These are ordinary mathematical proofs of a positive original-unit subcase
+and a limit on a proposed WSS inference. No new externally posed open problem,
+WSS existence result, unbounded WSS exclusion family, or kernel-certified
+Lean declaration is claimed. Global priority for the combined formulation
+is unconfirmed; its standard analytic mechanisms are explicitly credited.
