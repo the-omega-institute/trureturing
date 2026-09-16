@@ -10004,3 +10004,127 @@ The product and conditioning identities reuse `Erdos7.FiniteLaw.joint`,
 saturation is the finite instance of Mathlib's
 `MeasureTheory.integral_eq_iff_of_ae_le`. These are ordinary consequences
 of existing APIs, with no new Lean declarations.
+
+### A common clean-path test blocks the natural-cap charge tradeoff
+
+Fix one finite CS2 comb of height \(H\ge1\), its old probability
+\(\mu\), and its complete original old inventory of \(K\le p-3\)
+nonunit labels. Old forbidden cylinders may vary independently at every
+depth. Besides the pure root0, the \(K\) spoke roots and spine root
+\(p-2\), designate the remaining \(r=p-K-2\ge1\) roots. Their
+union \(R\) is disjoint from every forbidden prefix, on every old row.
+There can be additional clean roots; only this fixed subset is used.
+Write \(\lambda_H=1-\sum_{e=1}^Hp^{-e}\), let \(m_x\) be the
+normalized pure-survivor law, and put
+\(\alpha_x=m_x(B_x)\), \(g_x=(1-\min(\alpha_x,\delta))^{-1}\),
+\(\beta_x=(\alpha_x-\delta)_+/(1-\delta)\), with
+\(0\le\delta<1\). Thus \(m_x(R)=r/(p\lambda_H)\),
+\(\alpha_x<1\), and the BBMST law saturates all good points.
+
+Allow the larger honest row domain
+\(0\le\rho_x\le g_x\) on \(B_x^c\),
+\(0\le\rho_x\le1\) on \(B_x\), and
+\(\int\rho_x\,dm_x=1\). In particular its actual charge
+\(b_x=\int_{B_x}\rho_x\,dm_x\) may exceed \(\beta_x\).
+For fixed \(f\ge0,W>0\), minimize over this one kernel the maximum
+of \(f\mathbb E L_T^2+W\mathbb E_\mu b_x\) over all complete tests.
+
+Fix any old complete-test sequence \(A_0,\ldots,A_H\), independently
+of the forbidden layouts. Choose a root uniformly among the designated
+\(r\) roots, then an independent uniform suffix of length \(H-1\).
+Put every depth-\(e\) original test label on the corresponding prefix
+of this one path. This is one common finite mixture \(\pi\) of legal
+tests, shared across all old rows. For a point in \(R\), its depth-\(j\)
+prefix is selected with probability \(1/(rp^{j-1})\); outside \(R\)
+no positive-depth test hits. Hence, using \(Q_H\) defined before (CS5),
+
+\[
+ F_{\pi,x}(y):=\mathbb E_{T\sim\pi}L_T(x,y)^2
+ =A_0(x)^2+\frac p r Q_H(x)\mathbf1_R(y),\qquad
+ Q_H=\sum_{\substack{0\le e,j\le H\\(e,j)\ne(0,0)}}
+                      p^{-\max(e,j)}A_eA_j.
+                                                               \tag{HC1}
+\]
+
+Set \(c_H=g_x/\lambda_H\),
+\(d_x=fpQ_H(x)/r\), \(h_x=g_xr/(p\lambda_H)\), and
+\(\tau_x=\min(h_x,\alpha_x-\beta_x)\). There is an exact row identity
+for this fixed common mixture:
+
+\[
+ \min_{\rho_x}\left[f\int F_{\pi,x}\rho_x\,dm_x+Wb_x\right]
+ =f\bigl(A_0(x)^2+c_HQ_H(x)\bigr)+W\beta_x
+                     -\tau_x(d_x-W)_+.
+                                                               \tag{HC2}
+\]
+
+To prove it, let \(u\) be the lost mass from \(R\) relative to
+the saturated BBMST law, and \(v\) the lost mass from \(B_x^c\setminus R\).
+The cap makes \(u,v\ge0\), and (SI3) gives
+\(b_x=\beta_x+u+v\). Also \(u\le h_x\) and
+\(u+v\le\alpha_x-\beta_x\), because bad density is at most1.
+The objective change is exactly
+\((W-d_x)u+Wv\). Its minimum is
+\(-\tau_x(d_x-W)_+\), attained with \(v=0\), by moving either
+zero mass or \(\tau_x\) from \(R\) to unused bad capacity.
+Fractional atom densities permit that transfer even on a finite fibre.
+If the unused bad capacity is zero, \(\tau_x=0\) and no transfer is
+needed. If \(d_x<W\), equality with the BBMST value forces
+\(u=v=0\), so every positive-mass good atom remains saturated.
+Strict improvement against this fixed mixture occurs precisely when
+\(\tau_x>0\) and \(d_x>W\).
+
+At fixed \(H\) the old layout set is finite. Choose a sequence maximizing
+the BBMST complete-test objective. By (CS5), each of its nested designated
+clean-path tests attains the pair caps, so the mixture in (HC1) is
+supported on BBMST-maximizing tests. If \(d_x\le W\) on every
+positive-\(\mu\) row, (HC2) supplies a lower bound against every honest
+kernel equal to the BBMST maximum. BBMST itself is feasible. Therefore
+
+\[
+ V_{\rm honest}(H)=V_{\rm BB}(H).
+                                                               \tag{HC3}
+\]
+
+If all those row inequalities are strict, every honest minimizer agrees
+with BBMST on all positive-mass good transitions. It has the same current
+survivor subprobability and, when its mass is positive, conditioned law. Bad-side choices can still
+differ; later policies that read them must be assessed under (SI1)--(SI2).
+The common maximizing mixture is essential: improving one deterministic
+test is insufficient to improve this maximum.
+
+For a pointwise old-load bound \(A_e(x)\le R_0\), the full geometric
+sum, without identifying layouts across depths, gives
+
+\[
+ Q_H(x)\le R_0^2\sum_{j=1}^H(2j+1)p^{-j}
+ \le R_0^2\frac{3p-1}{(p-1)^2}.
+ \quad
+ W\ge\frac{fpR_0^2}{p-K-2}\frac{3p-1}{(p-1)^2}
+ \ \Longrightarrow\ \text{(HC3) for every finite }H.
+                                                               \tag{HC4}
+\]
+
+In the PG1 low315 comb at17, \(K=11\), \(R_0=12\), \(r=4\),
+\(f=59/45\), and \(W=483\). All original \(11+12H\) forbidden
+moduli and \(12(H+1)\) test labels are retained. Exactly,
+
+\[
+ d_x\le\frac{59}{45}\frac{17}{4}\,144\frac{25}{128}
+       =\frac{5015}{32}<483,
+ \qquad 483-\frac{5015}{32}=\frac{10441}{32}.
+                                                               \tag{HC5}
+\]
+
+Thus allowing good-side mass reductions with their actual charge cost
+cannot improve this family's complete-test objective at any finite
+height, even with independent old layouts at every depth. This includes
+the off-diagonal layouts left essential by (JL1)--(JL3). It does not
+evaluate the remaining old-layout maximum or improve a global bound.
+The cap here is the natural row cap: replacing it on uncharged rows by
+the larger global cap invalidates \(u,v\ge0\) relative to BBMST and is
+outside this obstruction. General original inventories with higher
+3/5/7 powers and earlier11/13 labels need not admit these designated
+clean roots. Changing the reference thresholds or the old law is also
+outside this fixed-cap comparison. This is an ordinary finite saddle argument with a complete
+geometric bound, not a new Lean theorem or a literature-priority claim.

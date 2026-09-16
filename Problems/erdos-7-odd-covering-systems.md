@@ -310,6 +310,16 @@ where two positive-mass good atoms permit nonconstant zero-charge
 perturbations. These ordinary deductions identify the remaining ways to
 change the supported law, without claiming a new quantitative bound.
 
+For the actual low315 clean comb, a [common randomized clean-path test](../docs/reports/erdos7-odd-covering/marked_head_profile.md#a-common-clean-path-test-blocks-the-natural-cap-charge-tradeoff)
+also rules out improvement by reducing good mass under the fixed natural
+cap and paying the additional actual bad charge. At17, for cost weights
+59/45 and483, its marginal square saving is at most5015/32, strictly
+below483. A finite saddle argument proves equality with the BBMST
+optimum at every finite height, retaining all original labels and
+independent old test layouts at each depth. This obstruction does not
+cover the larger global cap on uncharged rows, changes of the reference
+thresholds, or unrestricted old inventories without the clean roots.
+
 A [complete original-low-test estimate](../docs/reports/erdos7-odd-covering/marked_head_profile.md#complete-original-low-test-anchoring-at-arbitrary-prime-power-heights)
 retains the entire low load `B` in its higher-label cross terms and
 removed energy. The general inequalities apply to every finite set of
