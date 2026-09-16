@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d3f18274fa94b01e33b6e7d35573b04e30abbf43fc418935c8cba8a8b928c5a9
+  normalized_sha256: sha256:d3f18274fa94b01e33b6e7d35573b04e30abbf43fc418935c8cba8a8b928c5a9
+cas_ref: sha256:d3f18274fa94b01e33b6e7d35573b04e30abbf43fc418935c8cba8a8b928c5a9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 在原文固定非空类与共同合法动作的有限评分像上，有限集最小值及最大值引理给出区间界，绝对值规范化给出中点误差，取到的两端极值与 abs_sub_le 给出任意常数的半径下界，故得到原文对应的一致误差及精确最优半径；仓内无冻结 GID。
+    previous_atom_id: a2332a130c6c6d7f6fd61ee5f0dd185e32d7eebc89734ba032766e0d1057a3f9
+    next_atom_id: 284eba4f9c4859cb86072c63c2acb7232df0595ab9ee1c0a300eabfd66556130
