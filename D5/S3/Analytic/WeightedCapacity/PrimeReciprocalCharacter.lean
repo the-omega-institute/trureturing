@@ -9,6 +9,7 @@ import D5.S3.Analytic.WeightedCapacity.ProbeTopologySequences
 import Mathlib.Data.Nat.GCD.BigOperators
 import Mathlib.Data.Nat.Prime.Nth
 import Mathlib.Data.Int.GCD
+import Mathlib.RingTheory.Int.Basic
 import Mathlib.Analysis.Normed.Group.AddCircle
 import Mathlib.Analysis.SpecificLimits.Basic
 import Mathlib.Tactic.FieldSimp
@@ -37,7 +38,7 @@ noncomputable def unit (n : ℕ) : B (fun _ => 1) := by
 noncomputable def primeRow : ℕ → ℚ := fun n => 1 / (Nat.nth Nat.Prime n : ℚ)
 
 /-- The initial topology of the golden coordinate phases and the reciprocal prime character. -/
-noncomputable def oneRowTopology : TopologicalSpace (B (fun _ => 1)) :=
+@[instance_reducible] noncomputable def oneRowTopology : TopologicalSpace (B (fun _ => 1)) :=
   TopologicalSpace.induced psi inferInstance ⊓
     TopologicalSpace.induced (chi primeRow) inferInstance
 
@@ -176,8 +177,8 @@ theorem result :
     classical
     have hinj : Function.Injective (@chi (fun _ => 1) primeRow) :=
       prime_character_injective (Nat.nth Nat.Prime)
-        (Nat.nth_mem_of_infinite Nat.infinite_setOf_prime)
-        (Nat.nth_strictMono Nat.infinite_setOf_prime).injective
+        (Nat.nth_mem_of_infinite Nat.infinite_setOfPred_prime)
+        (Nat.nth_strictMono Nat.infinite_setOfPred_prime).injective
     have hz : chi primeRow binaryZero = 0 := by simp [chi, binaryZero, Function.support]
     refine ⟨hinj, ?_, ?_⟩
     · intro u
@@ -226,7 +227,7 @@ theorem result :
       simp [psi, unit, binaryZero, hne]
     have hp : Tendsto (fun n => (Nat.nth Nat.Prime n : ℝ)) atTop atTop :=
       tendsto_natCast_atTop_atTop.comp
-        (Nat.nth_strictMono Nat.infinite_setOf_prime).tendsto_atTop
+        (Nat.nth_strictMono Nat.infinite_setOfPred_prime).tendsto_atTop
     have hrec : Tendsto (fun n => (1 : ℝ) / (Nat.nth Nat.Prime n : ℝ)) atTop (𝓝 0) := by
       simpa only [Function.comp_def, one_div] using tendsto_inv_atTop_zero.comp hp
     have hcircle : Tendsto (fun n => chi primeRow (unit n)) atTop (𝓝 (chi primeRow binaryZero)) := by
