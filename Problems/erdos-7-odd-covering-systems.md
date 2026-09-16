@@ -188,6 +188,16 @@ combines their floors on the same actual higher357 event, and maximizes
 the two valid criterion bounds over the common survival probability.
 Ten joint evaluations and9990 rigorous upper-bound skips cover the
 complete root domain; all original exponents and tail coefficients remain.
+The [exact first nonzero-depth geometry](../docs/reports/erdos7-odd-covering/marked_head_profile.md#exact-weighted-geometry-at-the-first-nonzero-auxiliary-depth)
+further strengthens the same source to **Gamma<33.642525** and the
+same11/13 continuation to **Gamma_13<148.408087**. The exact bounds are
+`491316187201313799169931/14604022456869186140625` and
+`3452717513949582813397269113208403/23265022838471110091964891311550`.
+All39720 rooted old layouts at auxiliary depth(1,0,0) are optimized
+with independent weighted seven-label digits. The original mod9 test
+remains fixed and its higher9 auxiliary cylinder stays independently
+free. The zero-depth result, other268 depths, full tails, and actual
+source survival probability remain in the bound.
 Passing these stronger supplied square upper bounds alone to the scalar(T6)
 recurrence cannot continue through17 and19: that two-step certificate
 requires a seed below the exact threshold in
@@ -299,6 +309,22 @@ The stronger exact-zero-depth source bound increases the sufficient
 loss budget to `143201953863449880529/6891920485743443062500`, or
 `0.020778236510371237...`. Its integer lost-weight threshold is20778236.
 No new complete carrier count is asserted for that enlarged budget.
+The exact depth100 improvement raises the scalar integer loss threshold
+again to21150724, without inferring a new coverage count from it.
+
+The [joint low/high deletion transfer](../docs/reports/erdos7-odd-covering/marked_head_profile.md#joint-low-and-high-deletion-enlarges-the-transported-support-domain)
+enlarges the combined region to **2643 carrier orbits and72 minimal
+orbits at Gamma≤35**, containing16153 normalized states. Four retained
+supports of72 or73 points pass every original3/original9 root criterion
+despite exceeding both newer scalar loss limits. The proof charges the
+disjoint removed sets `S` and `S^c intersect F^c` on one source law, so
+low loss is not charged again as higher deletion. Any carrier containing
+a permitted image of a retained support inherits the all-height bound.
+The four supports cover701 orbits; exact overlap against the published
+threshold19730787 leaves242 new orbits and9 new minimal orbits. There
+remain56894 minimal orbits outside this certified region. All original
+labels and complete tails are preserved; arbitrary-prime continuation
+and unrestricted#7 remain unresolved.
 
 The [complete actual-carrier classification](../docs/reports/erdos7-odd-covering/marked_head_profile.md#complete-low315-carrier-classification-for-actual-digit-bounds)
 identifies the finite domain needed to extend those digit-sensitive bounds.

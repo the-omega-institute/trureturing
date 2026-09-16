@@ -8410,3 +8410,216 @@ Zeckendorf phase and directional-cone theorems do not themselves provide
 a CRT survivor probability, a charge estimate, or a uniform positive
 residual for arbitrary prime support. No quantitative #7 bridge or Lean
 formalization of the new RRO section is claimed here.
+
+### Exact weighted geometry at the first nonzero auxiliary depth
+
+Keep the PG1 probability, the actual higher357 survival event \(F\), and
+the original3/original9 roots from (ZD1)--(ZD4). At auxiliary depth
+\(z=(1,0,0)\), retain the old load in the form
+
+\[
+ A=1+\mathbf1_{C(i,3)}+\mathbf1_{C(j,9)}
+   +\mathbf1_{C_5}+\mathbf1_{C_{15}}
+   +2\mathbf1_{C_{45}}+\mathbf1_{C_{\mathrm{higher}9}}.       \tag{WD1}
+\]
+
+The original mod9 residue \(j\) stays fixed. The higher9 cylinder is
+independently free. The six seven-label cofactors \((1,3,5,9,15,45)\)
+have weights \((1,1,1,2,1,2)\) and independent seven digits.
+Equal-cofactor free cylinders can be pooled for this pure square maximum:
+for \(r\ge0\), convexity gives
+
+\[
+ (H+\mathbf1_C+r\mathbf1_D)^2
+ \le\frac{(H+(1+r)\mathbf1_C)^2
+          +r(H+(1+r)\mathbf1_D)^2}{1+r}.                    \tag{WD2}
+\]
+
+Each term on the right is a permitted pooled choice; conversely the
+pooled choice is realized by \(C=D\). Thus the maxima agree. This
+argument only pools free labels. It neither identifies fixed original9
+with higher9 nor applies to an arbitrary signed score.
+
+The exact weighted optimizer checks 3972 old-load vectors for each of
+the ten root pairs, hence 39720 rooted layouts. It retains all 3024
+labeled subset states, empty classes and digit zero, with maximum load
+15 or16 according to root compatibility. It strictly improves the
+inherited depth100 square bound at every root. Let \(h^{(1)}_{ij}\) be
+the new maximum and \(H_{ij}(1,0,0)\) the inherited minimum of the
+pure7 and fixed-old estimates. Since this depth has probability
+\(16/105\), replace
+
+\[
+ U''_{ij}=U'_{ij}-s_{ij},\qquad
+ s_{ij}=\frac{16}{105}
+          \bigl(H_{ij}(1,0,0)-h^{(1)}_{ij}\bigr)>0.          \tag{WD3}
+\]
+
+Keep the exact zero-depth value, the other268 inside-box observations,
+the complete outside coefficients and the root-specific deletion costs.
+The same actual source law consequently satisfies
+
+\[
+ \boxed{\displaystyle
+ \Gamma\le
+ \frac{491316187201313799169931}{14604022456869186140625}
+ <33.642525.}                                               \tag{WD4}
+\]
+
+The worst roots remain \((2,2)\). This is an improvement of
+\(4255298304/177996524699\) over the source bound in (ZD1).
+
+For the common-source continuation (JF1)--(JF7), every one of the10000
+root combinations decreases its unconditional source cost by at least
+
+\[
+ \eta=\frac{1403}{630}\min_{i,j}s_{ij}
+      =\frac{65098504112}{11025000077175}>0.                 \tag{WD5}
+\]
+
+Subtract \(\eta\) from both \(\delta\) and \(B_*\) in (JF6).
+The actual \(Q\), its interval, and the crossing are unchanged.
+Checking the same two endpoints and crossing yields
+
+\[
+ \boxed{\displaystyle
+ \Gamma_{13}\le
+ \frac{3452717513949582813397269113208403}
+      {23265022838471110091964891311550}
+ <148.408087.}                                              \tag{WD6}
+\]
+
+`verify_pg1_exact_depth100.py` and
+`pg1_exact_depth100_certificate.json` retain these exact comparisons.
+`pg1_weighted_score_oracle.py` and its C++ implementation support signed,
+nonmonotone score tables in the weighted total load. The verifier
+independently reconstructs every old domain and subset load from raw
+residues, checks each rooted winner by all \(7^6\) digit assignments,
+and evaluates its literal75-point realization. Signed comparisons
+include a case where independent digits strictly beat a common digit,
+a necessary digit-zero choice, and overflow/domain rejection checks.
+The common-digit maximum happens to agree for (WD1)'s square; it is
+not imposed on other objectives.
+
+The sufficient target35 mass-loss budget also increases to
+\(2478074848638464468993/117162648257638532062500\), with integer
+lost-weight limit21150724 at denominator1000000007. No new complete
+carrier count is inferred from this enlarged scalar budget. The
+arbitrary-prime continuation remains open; these are ordinary exact
+certificates, with no new Lean declaration.
+
+### Joint low and high deletion enlarges the transported support domain
+
+Let \(\mu\) be the same PG1 low probability, \(\lambda\) its uniform
+lift to arbitrary finite3/5/7 heights, and \(F\) any admissible actual
+higher357 survivor event. The unchanged bound is
+\(\lambda(F)\ge q_0=25428074957/48000000336\). Fix a low loss set
+\(S\), put \(t=\mu(S)\), and condition on \(A=F\cap S^c\).
+Then \(\rho=\lambda(A)\ge q_0-t\). For each original test root pair,
+write \(b_{ij}=1+\mathbf1_{C(i,3)}+\mathbf1_{C(j,9)}\) and
+\(f_{ij}=35-b_{ij}^2>0\). The complete grouped-deletion bound \(R\)
+applies to any nonnegative, possibly unnormalized low weight. Using
+the exact-zero-depth source bounds \(U'_{ij}\) gives
+
+\[
+ \boxed{\displaystyle
+ \rho\bigl(\mathbb E[L^2\mid A]-35\bigr)
+ \le U'_{ij}-35
+       +\mu(f_{ij}\mathbf1_S)
+       +R(f_{ij}\mu\mathbf1_{S^c}).}                        \tag{JT1}
+\]
+
+Indeed, the removed set is the disjoint union
+\(S\sqcup(S^c\cap F^c)\). Subtract its actual square energy from
+\(\lambda(L^2)\), bound that energy below by \(b_{ij}^2\), and apply
+the weighted grouped-deletion bound only on \(S^c\). The intersection
+\(S\cap F^c\) is charged once. Every term uses the same physical
+law and event. All higher deletion coefficients and the full auxiliary
+square tail remain present. Empty test-root branches are dominated by
+the same nonempty-root extensions as in the source estimate.
+
+Four fixed low losses pass (JT1) strictly at every one of the ten roots:
+
+| Lost source points \(S\) | Lost weight numerator | Retained support | Maximum right side of (JT1) |
+| --- | ---: | ---: | ---: |
+| \(88,208,313\) | 24940311 | 72 | \(<-0.21149\) |
+| \(43,88,253\) | 25521977 | 72 | \(<-0.19666\) |
+| \(2,128\) | 25865521 | 73 | \(<-0.19738\) |
+| \(38,143\) | 26142429 | 73 | \(<-0.14937\) |
+
+The weight denominator is1000000007. All four lost-weight numerators
+exceed both scalar limits20778236 and21150724, while each lost mass
+\(t\) is below \(q_0\). Therefore each
+conditioned law has positive survival and \(\Gamma\le35\).
+One original target family is
+\((3,0),(5,0),(7,0),(9,4),(15,11),(21,5),(35,18),(45,37),
+(63,50),(105,94),(315,79)\); its low carrier has76 points and contains
+the mapped72-point support. The certificate specifies all four actual
+families, their full coordinate maps, and exact rational criteria.
+
+More generally, let \(T\) be a permitted CRT coordinate permutation
+and let a target carrier contain \(T(\operatorname{supp}\mu\setminus S)\).
+Transport \(\mu|_{S^c}/(1-t)\) to that carrier. The low maps preserve
+the mod3 parent of each mod9 child. Extending them by leaving subsequent
+prime-adic digits unchanged preserves every original residue class at
+every height. Thus any target high event pulls back to an admissible
+source \(F\), with target high survival at least
+\((q_0-t)/(1-t)>0\), and (JT1) still applies. The target need only
+contain the retained support, not the entire initial target carrier.
+Source and target forbidden families are never merged.
+
+The four supports have48 distinct old-coordinate images. Reconstructing
+all34160 same-shape target orbits and checking inclusion gives701 orbits,
+21 inclusion-minimal orbits, and4892 normalized digit-union states.
+For these701 targets, exact matching over12 old maps and720 seven-digit
+permutations determines their overlap with the previously published
+scalar threshold19730787. The disjoint addition is242 orbits,9 minimal
+orbits, and1782 states. Thus the PG1-shape union is1414 orbits,62 minimal
+orbits, and8855 states. Including the unchanged other-shape results, the
+combined supported \(\Gamma\le35\) region is
+
+\[
+ \boxed{2643\text{ carrier orbits},\quad
+        72\text{ minimal orbits},\quad
+        16153\text{ normalized states}.}                  \tag{JT2}
+\]
+
+There remain56894 of the56966 minimal orbits outside this certified
+region. `verify_pg1_joint_carrier_transfer.py` and
+`pg1_joint_carrier_transfer_certificate.json` check all40 criteria,
+literal transport, support containment, minimality, and exact old overlap.
+The inherited complete weighted count is hash-bound; matching is newly
+computed only for included targets. The enlarged scalar budgets are not
+silently substituted into that old count. An independent coordinate
+enumeration and bipartite matching calculation agrees on the covered
+sets. These are all-height moment bounds on the specified region, not
+noncoverage for arbitrary prime support or a resolution of #7.
+
+### Arithmetic admission requires a common numerical witness
+
+[RRO section44 at devc33851543c](https://github.com/the-omega-institute/trureturing/blob/c33851543ce6ef8cc2e821a1d4fda7a49159b4f5/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md#44-arithmetic-admission-order-and-euclidean-division-in-zeckendorf-observation)
+sharpens the preceding guidance. Under its phase assumptions44.1,
+theorem44.5 gives a full closed graph for variable-divisor Euclidean
+division. Theorem44.11 exhibits two locally dense success constraints
+whose conjunction is empty: one requires \(r<b\), the other \(b<r\).
+Each separate finite-prefix image is full. Requiring one common
+numerical witness before projecting detects the incompatibility.
+
+For a literally fixed divisor \(c\), theorem44.8 retains the remainder,
+the equation \(H(x)=cH(y)+[r\phi]\), and compatible approach sides.
+Theorems44.9 and44.13 show, under those assumptions, why a finite
+Zeckendorf prefix cannot serve as the exact residue observation needed
+for #7: each completed dividend admits every remainder, and for
+\(c\ge2\) no nonconstant finite-discrete output observer descends
+continuously. The existing CRT observations retain those distinctions.
+This is an obstruction to replacing them with a fixed digit prefix;
+it is not an obstruction to exact finite integer conversion.
+
+The dev increment contains theoretical text and digestion atoms, with
+no new D5 theorem. Its topological closures and equidistribution along
+one polynomial curve supply neither the finite CRT probability used
+here nor a quantitative positive residual. In (WD1)--(WD6) and
+(JT1)--(JT2), the useful implementation of the common-witness principle
+is to keep the actual labeled layout and one source event throughout
+the calculation. A uniform extension over the remaining carriers and
+arbitrary later primes is still required.

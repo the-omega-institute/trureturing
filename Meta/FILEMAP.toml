@@ -773,8 +773,26 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Exact weighted depth100 geometry with complete-tail same-law moment improvements.
+pattern = "docs/reports/erdos7-odd-covering/pg1_exact_depth100_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]] # Exact original-root zero-depth maxima and their complete-tail PG1 consumers.
 pattern = "docs/reports/erdos7-odd-covering/pg1_exact_zero_depth_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Joint low/high deletion costs, retained support transports and exact carrier overlap.
+pattern = "docs/reports/erdos7-odd-covering/pg1_joint_carrier_transfer_certificate.json"
 kind = "data"
 admission_plane = "content"
 produced_by = "none"
@@ -834,6 +852,24 @@ admission_plane = "content"
 produced_by = "none"
 consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Integer score optimizer for independent weighted CRT labels and complete old domains.
+pattern = "docs/reports/erdos7-odd-covering/pg1_weighted_score_oracle.cpp"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Guarded weighted score queries retaining fixed and free auxiliary label roles.
+pattern = "docs/reports/erdos7-odd-covering/pg1_weighted_score_oracle.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
 [[files]] # Actual75point weights and both common-digit square bounds with an arbitrary-height357 consumer.
@@ -1250,8 +1286,26 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Reconstructs weighted depth100 maxima, independent digit checks and same-law consumers.
+pattern = "docs/reports/erdos7-odd-covering/verify_pg1_exact_depth100.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]] # Reconstructs all original low-test maxima at zero depth and complete-tail consumers.
 pattern = "docs/reports/erdos7-odd-covering/verify_pg1_exact_zero_depth.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Checks joint deletion, original-label support transport and new carrier coverage.
+pattern = "docs/reports/erdos7-odd-covering/verify_pg1_joint_carrier_transfer.py"
 kind = "program"
 admission_plane = "content"
 produced_by = "none"
