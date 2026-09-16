@@ -216,11 +216,29 @@ def cache_guard(root, shared=False):
 
 
 def publish(root, partition, verification=None):
-    # Build failures keep their status. Production transport is optional;
-    # explicit verification succeeds only after the uploaded bytes restore.
-    build = subprocess.run(["make", "lean"], cwd=root)
+    # The release is only a seed, but it must contain a complete report
+    # produced by the same Inspector entry used by current CI.  A plain
+    # `make lean` can leave a plausible-looking build directory without the
+    # report facets that downstream incremental consumers require.
+    # Build/report failures keep their status. Production transport is
+    # optional; explicit verification succeeds only after the uploaded bytes
+    # restore.
+    build = subprocess.run(["make", "lean-report"], cwd=root)
     if build.returncode:
         return build.returncode
+    report = root / ".lake/build/stratalint/raw-lean-report.json"
+    if report.is_symlink() or not report.is_file():
+        receipt("publish", "failed", reason="current Inspector report is missing")
+        return 1 if verification is not None else 0
+    try:
+        payload = json.loads(report.read_text(encoding="utf-8"))
+    except (OSError, UnicodeError, json.JSONDecodeError) as error:
+        receipt("publish", "failed", reason="current Inspector report is unreadable: " + str(error))
+        return 1 if verification is not None else 0
+    if (not isinstance(payload, dict) or payload.get("schema") != "stratalint-raw-lean-report-v2"
+            or not isinstance(payload.get("modules"), list)):
+        receipt("publish", "failed", reason="current Inspector report is malformed")
+        return 1 if verification is not None else 0
     if verification is None and (os.environ.get("GITHUB_EVENT_NAME") != "schedule"
                                  or os.environ.get("GITHUB_REF") != "refs/heads/dev"):
         receipt("publish", "skipped", reason="Release publication requires the scheduled dev producer")

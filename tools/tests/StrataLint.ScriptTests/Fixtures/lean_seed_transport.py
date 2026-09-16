@@ -19,7 +19,16 @@ class ReleaseTransportCases(PartitionFixture):
         self.bin.mkdir()
         self.remote.mkdir()
         write(self.root / ".lake/build/lib/lean/D5/A.olean", "locally-produced-olean")
-        write(self.bin / "make", '#!/bin/sh\nprintf "%s\\n" "$*" >> "$FAKE_BUILD_LOG"\nexit "${FAKE_BUILD_EXIT:-0}"\n')
+        write(self.root / ".lake/build/stratalint/raw-lean-report.json",
+              '{"modules":[],"schema":"stratalint-raw-lean-report-v2"}\n')
+        write(self.bin / "make", '''#!/bin/sh
+printf "%s\\n" "$*" >> "$FAKE_BUILD_LOG"
+if [ "$*" = "lean-report" ] && [ "${FAKE_BUILD_EXIT:-0}" = "0" ]; then
+    mkdir -p .lake/build/stratalint
+    printf '%s\\n' '{"modules":[],"schema":"stratalint-raw-lean-report-v2"}' > .lake/build/stratalint/raw-lean-report.json
+fi
+exit "${FAKE_BUILD_EXIT:-0}"
+''')
         write(self.bin / "gh", FAKE_GH)
         helper_dir = self.root / "tools/scripts/worktree"
         helper_dir.mkdir(parents=True, exist_ok=True)
@@ -129,7 +138,7 @@ shutil.copytree, tarfile.TarFile.extractall, pathlib.Path.rename = copytree, ext
         extracted = next(event for event in events if event["operation"] == "extract")
         self.assertEqual((self.root / ".lake").resolve(), pathlib.Path(extracted["path"]).parent.resolve())
         materials = [event for event in events if event["operation"] == "material"]
-        self.assertEqual(2, len(materials))
+        self.assertEqual(3, len(materials))
         for material in materials:
             status = (self.root / ".lake" / material["name"]).stat()
             self.assertEqual((material["device"], material["inode"]), (status.st_dev, status.st_ino))
@@ -277,7 +286,7 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
                     self.assertEqual([1] * len(self.gh_budgets()),
                                      [call["timeout"] for call in self.gh_budgets()])
                     self.assertFalse((self.root / ".lake/build").exists())
-        self.assertEqual(["lean"] + ["-C " + str(self.root) + " lean"] * 6,
+        self.assertEqual(["lean-report"] + ["-C " + str(self.root) + " lean"] * 6,
                          (self.root / "build-runs").read_text().splitlines())
 
     def test_fetch_deadline_is_shared_across_snapshots(self):
@@ -357,7 +366,7 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
                     self.assertEqual(build_exit, result.returncode, result.stdout + result.stderr)
                     self.assertIn('"status":"miss"', result.stdout)
                     self.assertFalse((self.root / ".lake/build").exists())
-        self.assertEqual(["lean"] + ["-C " + str(self.root) + " lean"] * 4,
+        self.assertEqual(["lean-report"] + ["-C " + str(self.root) + " lean"] * 4,
                          (self.root / "build-runs").read_text().splitlines())
 
     def test_optional_fetch_valid_seed_still_reaches_build(self):
@@ -366,7 +375,7 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
         result = self.fetch_then_build()
         self.assertEqual(0, result.returncode, result.stdout + result.stderr)
         self.assertIn('"status":"unpacked"', result.stdout)
-        self.assertEqual(["lean", "-C " + str(self.root) + " lean"],
+        self.assertEqual(["lean-report", "-C " + str(self.root) + " lean"],
                          (self.root / "build-runs").read_text().splitlines())
 
     def test_unavailable_lock_is_an_explicit_fetch_miss(self):
@@ -389,7 +398,7 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
         failed = self.transport("publish", PYTHONPATH=str(self.bin), FAKE_BUILD_EXIT="19")
         self.assertEqual(19, failed.returncode, failed.stdout + failed.stderr)
         self.assertEqual([], list(self.remote.iterdir()))
-        self.assertEqual(["lean", "lean"], (self.root / "build-runs").read_text().splitlines())
+        self.assertEqual(["lean-report", "lean-report"], (self.root / "build-runs").read_text().splitlines())
 
     def test_legacy_fetch_flag_cannot_enable_cross_partition_selection(self):
         self.assertEqual(0, self.transport("publish").returncode)

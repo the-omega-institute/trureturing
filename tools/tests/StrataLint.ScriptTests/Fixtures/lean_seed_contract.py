@@ -40,6 +40,23 @@ class TransportTests(ReleaseLegacyCases, ReleaseVerificationCases, CacheDeadline
             self.assertIn('"prune_error":', result.stdout)
         self.assertEqual(["build"] * len(malformed), calls.read_text().splitlines())
 
+    def test_publication_requires_a_current_inspector_report(self):
+        write(self.bin / "make", '#!/bin/sh\nexit 0\n')
+        report = self.root / ".lake/build/stratalint/raw-lean-report.json"
+        report.unlink()
+        missing = self.transport("publish")
+        self.assertEqual(0, missing.returncode, missing.stdout + missing.stderr)
+        self.assertIn('"status":"failed"', missing.stdout.replace(" ", ""))
+        self.assertIn("current Inspector report is missing", missing.stdout)
+        self.assertEqual([], list(self.remote.iterdir()))
+
+        write(self.bin / "make", '#!/bin/sh\nmkdir -p .lake/build/stratalint\nprintf \'%s\\n\' \'{"modules":[],"schema":"wrong"}\' > .lake/build/stratalint/raw-lean-report.json\nexit 0\n')
+        malformed = self.transport("publish")
+        self.assertEqual(0, malformed.returncode, malformed.stdout + malformed.stderr)
+        self.assertIn('"status":"failed"', malformed.stdout.replace(" ", ""))
+        self.assertIn("current Inspector report is malformed", malformed.stdout)
+        self.assertEqual([], list(self.remote.iterdir()))
+
 
 if __name__ == "__main__":
     unittest.main()
