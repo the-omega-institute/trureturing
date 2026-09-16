@@ -97,7 +97,7 @@ private theorem rational_tail (s rho : ℂ) (M : ℝ) (m : ℕ)
 private theorem rational_summable (Z : ZeroData) (s : ℂ) :
     Summable (fun n : ℕ => (Z.multiplicity n : ℂ) * (1 / (s - Z.zero n) + 1 / Z.zero n)) := by
   have h := (zeroEquiv Z).summable_iff.mpr (zero_sum_inv_sq Zeta23.zetaSeam)
-  have hw : Summable (fun n => (Z.multiplicity n : ℝ) / 
+  have hw : Summable (fun n => (Z.multiplicity n : ℝ) /
       (1 + Complex.normSq (Zeta23.gammaOf (Z.zero n)))) := by
     convert h using 1
     funext n
@@ -114,7 +114,7 @@ private theorem rational_summable (Z : ZeroData) (s : ℂ) :
       simpa [Zeta23.gammaOf, norm_div] using norm_sub_le (Z.zero n) (1 / 2 : ℂ)
     rw [gammaOf_eq_spectralParameter] at hh
     change ‖spectralParameter (Z.zero n)‖ ≤ _
-    linarith 
+    linarith
   filter_upwards [he] with n hn
   simpa [mul_div_assoc] using rational_tail s (Z.zero n) ‖s‖ (Z.multiplicity n) le_rfl hn
 
@@ -147,7 +147,7 @@ private def scaled (R : ℝ) (w : ℂ) := (2 : ℂ) * xiReading ((R : ℂ) * w)
 private theorem finite_split (Z : ZeroData) (R : ℝ) (hR : 0 < R) (s : ℂ)
     (hs : xiReading s ≠ 0) (hsR : ‖s / (R : ℂ)‖ < 22 / 25) :
     logDeriv xiReading s - logDeriv xiReading 0 =
-      (∑ n ∈ cutoff Z R, (Z.multiplicity n : ℂ) * (1 / (s - Z.zero n) + 1 / Z.zero n)) + 
+      (∑ n ∈ cutoff Z R, (Z.multiplicity n : ℂ) * (1 / (s - Z.zero n) + 1 / Z.zero n)) +
       (logDeriv (Cf (22 / 25) (scaled R)) (s / (R : ℂ)) -
         logDeriv (Cf (22 / 25) (scaled R)) 0) / (R : ℂ) := by
   classical
@@ -332,7 +332,7 @@ theorem xi_reading_normalized_resolvent_hasSum
     (hs : D5.S3.Zeros.CompletedZeta.xiReading s ≠ 0) :
     HasSum
       (fun n : ℕ =>
-        (Z.multiplicity n : ℂ) * 
+        (Z.multiplicity n : ℂ) *
           (1 / (s - Z.zero n) + 1 / Z.zero n))
       (logDeriv D5.S3.Zeros.CompletedZeta.xiReading s -
         logDeriv D5.S3.Zeros.CompletedZeta.xiReading 0) := by
@@ -364,7 +364,7 @@ theorem xi_reading_normalized_resolvent_hasSum
     logDeriv (Cf (22 / 25) (scaled R)) 0) / (R : ℂ)
   have he : Tendsto e atTop (𝓝 0) := by
     apply squeeze_zero_norm' (a := fun R : ℝ =>
-      (Real.log (2 * Real.exp (C * (1 + R) ^ (3 / 2 : ℝ))) / R ^ 2) * 
+      (Real.log (2 * Real.exp (C * (1 + R) ^ (3 / 2 : ℝ))) / R ^ 2) *
         ((2 * 44795000 / (83 / 100 : ℝ)) * ‖s‖))
     · filter_upwards [eventually_ge_atTop (max 1 (2 * ‖s‖))] with R hR
       exact (physical_error C hC hg R ‖s‖ hR s le_rfl).trans_eq (by ring)

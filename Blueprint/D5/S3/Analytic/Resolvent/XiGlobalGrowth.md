@@ -10,7 +10,9 @@ $$\exists C\in\mathbb{R},C>0\land\forall s\in\mathbb{C},\Vert\xi(s)\Vert\le\exp(
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Resolvent/XiGlobalGrowth.xi_reading_norm_le_exp_log_linear` (`✓ std3`). ∎
 
-*Citation.* Jeffrey C. Lagarias (2007). *Li Coefficients for Automorphic L-Functions*. DOI: [10.5802/aif.2311](https://doi.org/10.5802/aif.2311).
+*Source.* Repository-derived.
+
+*Acknowledgement.* Jeffrey C. Lagarias (2007). *Li Coefficients for Automorphic L-Functions*. DOI: [10.5802/aif.2311](https://doi.org/10.5802/aif.2311).
 
 *Commentary.*
 

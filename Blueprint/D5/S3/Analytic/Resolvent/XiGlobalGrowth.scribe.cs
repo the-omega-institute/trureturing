@@ -23,7 +23,7 @@ internal sealed class XiGlobalGrowthDocument : IScribeDocumentDefinition
                     Exp, Open, F.Id("C"), Open, D(1), Plus, Vert, Sp, F.Id("s"), Vert,
                     Close, Open, D(1), Plus, Log, Open, D(1), Plus, Vert, Sp, F.Id("s"),
                     Vert, Close, Close, Close))),
-                AssessedProvenance.FromLiterature(
+                AssessedProvenance.FromRepo(
                     LibraryNoteRef.Create("D5/L/Zeros/lagarias2007li")),
                 Blocks(
                     Paragraph(Text(
