@@ -85,9 +85,6 @@ internal static partial class CommonExecutionEvidence
         return ValidateCurrent(root, build, validation, out checks);
     }
 
-    private static CommonStageRecord ValidateCurrent(string root, CommonStageRecord build, RepositorySnapshot snapshot) =>
-        ValidateCurrent(root, build, new ValidationScope(snapshot), out _);
-
     private static CommonStageRecord ValidateCurrent(string root, CommonStageRecord build, ValidationScope validation,
         out CommonCheckRecord? checks)
     {

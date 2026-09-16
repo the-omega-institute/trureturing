@@ -38,7 +38,7 @@ internal sealed partial class ProductionCliEnvironment
             var current = Decode(raw);
             var validation = new CommonExecutionEvidence.ValidationScope(current);
             _ = validation.CheckManifest();
-            var report = commonRound is null
+            var report = !delta && commonRound is null
                 ? RawLeanReportArtifact.ReadFile(options.CandidateLeanReport, current, validateMaterials: true)
                 : validation.Report(options.CandidateLeanReport);
             if (!current.TryGetFile("Meta/registry.yaml", out var registry) || !current.TryGetFile("Meta/domains.yaml", out var domains))
@@ -63,7 +63,7 @@ internal sealed partial class ProductionCliEnvironment
                     .Where(project => project.Ci).Select(project => project.Path).Order(StringComparer.Ordinal).ToArray();
                 removedProjectOutput = string.Concat(baseProjects.Where(path => !current.TryGetFile(path, out _))
                     .Select(path => $"ENGINEERING_TEST_PROJECT_REMOVED project={JsonSerializer.Serialize(path)}\n"));
-                var common = CommonExecutionEvidence.ValidateCommon(repositoryRoot, baseProjects);
+                var common = CommonExecutionEvidence.ValidateCommon(repositoryRoot, validation, baseProjects);
                 acceptedBaseTests = common.Tests.Projects
                     .Where(row => baseProjects.Contains(row.Project, StringComparer.Ordinal)).ToArray();
                 if (!string.Equals(Path.GetFullPath(options.CandidateLeanReport), Path.Combine(repositoryRoot, CommonExecutionEvidence.ReportPath), StringComparison.Ordinal))
