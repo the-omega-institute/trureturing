@@ -1,0 +1,16 @@
+**定义与假设 8.1（固定标签、新鲜时间因子与一般复记录）。** 设$\mathcal I$为非空有限标签集，$n=|\mathcal I|$，$\mathcal H_S=\mathbb C^{\mathcal I}$带固定相位的正交基$(|i\rangle)_{i\in\mathcal I}$。记$P_i=|i\rangle\langle i|$、$E_{ij}=|i\rangle\langle j|$。输入为任意密度矩阵$\varrho=\sum_{i,j}\varrho_{ij}E_{ij}$，允许混态、零布居及秩亏。内积首变量共轭线性；本章专用的记录矩阵取乘子方向
+$$
+G_t(i,j)=\langle e_j^{(t)},e_i^{(t)}\rangle.
+$$
+它是第3.1条通常Gram矩阵的转置，不能把两种下标方向混用。
+
+固定有限整数$N\ge0$及时间指标集$T=\{1,\ldots,N\}$。每个$t$有非零有限维环境$\mathcal E_t$、预备单位向量$|0_t\rangle$及单位记录向量$|e_i^{(t)}\rangle$。初态严格为
+$$
+\varrho\otimes\bigotimes_{t\in T}|0_t\rangle\langle0_t|.
+$$
+因此各未用环境不仅有指定边缘态，而且与系统、旧记录及其他未用因子均无初始关联。第$t$步只作用于$\mathcal H_S\otimes\mathcal E_t$，在其预备子空间上满足受控非破坏条件
+$$
+U_t(|i\rangle\otimes|0_t\rangle)
+=e^{i\theta_{i,t}}|i\rangle\otimes|e_i^{(t)}\rangle,
+\qquad \theta_{i,t}\in\mathbb R.
+$$

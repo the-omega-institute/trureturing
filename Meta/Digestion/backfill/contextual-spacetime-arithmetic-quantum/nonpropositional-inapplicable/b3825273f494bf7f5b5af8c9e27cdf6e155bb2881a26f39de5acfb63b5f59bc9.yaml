@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b3825273f494bf7f5b5af8c9e27cdf6e155bb2881a26f39de5acfb63b5f59bc9
+  normalized_sha256: sha256:b3825273f494bf7f5b5af8c9e27cdf6e155bb2881a26f39de5acfb63b5f59bc9
+cas_ref: sha256:b3825273f494bf7f5b5af8c9e27cdf6e155bb2881a26f39de5acfb63b5f59bc9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶仅约定有限经典存储是固定正交基中的对角输出，不声称其 POVM 表示定理。
+    previous_atom_id: 28a333e8000006c3237196120f1a1bf6af57f502261913e84d163eb59c9994e4
+    next_atom_id: 4a6d9c65c80a1a1da96ef47131502d5830f003e2b173be217c1dbb267a1895fb
