@@ -1,0 +1,7 @@
+**Lemma.** For positive K and nonnegative A,B,
+
+$$
+K\mid AB\quad\Longleftrightarrow\quad
+K\mid\gcd(K,A)\gcd(K,B).\tag{FDS1}
+$$
+

@@ -1,0 +1,25 @@
+### GAW.2. Complete exclusion for multipliers through two hundred
+
+**Theorem.** Let q be an odd prime other than five, and let p=kq+1 be prime with 2<=k<=200. Then
+
+$$
+\boxed{\rho(p)\mid\pi(q)\quad\Longrightarrow\quad k=2.}\tag{GAW2}
+$$
+
+There is no bound on q or p.
+
+**Proof.** For q=3, Q^8=I modulo three and F_8=21. Thus an aligned p divides 21. The conditions p=3k+1 and k>=2 leave only p=7,k=2. Now take q>5 and even 4<=k<=200. By GAW1 it suffices to enumerate every prime divisor of the three indicated Fibonacci numbers.
+
+The complete integer factorization certificate covers the set {k,k+2,2(k-2):4<=k<=200, k even}, containing 149 different indices, all at most 396. It gives all 353 different prime divisors. For each claimed prime n>2, the certificate supplies n-1=product r^e with recursively certified smaller primes r, and an integer a satisfying
+
+$$
+a^{n-1}\equiv1\pmod n,\qquad
+\gcd(a^{(n-1)/r}-1,n)=1\quad(r\mid n-1).\tag{GAW3}
+$$
+
+This is a primality proof: modulo any prime divisor t of n, the order of a is exactly n-1, hence n-1|t-1 and t>=n. Thus t=n. The recursion ends at two. The Fibonacci factorization products equal the actual recurrence values, so no cofactor is omitted. Every composite quotient (p-1)/k>5 has an explicit proper divisor; every prime quotient has the same recursive primality certificate.
+
+After these exact tests, the only candidates are the following. Each row satisfies Q^t=I modulo q and the displayed nonzero residue F_t modulo p.
+
+| k | p | q | t | F_t mod p |
+|---:|---:|---:|---:|---:|

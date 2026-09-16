@@ -1,0 +1,9 @@
+**Proposition S12.** The bases $7$, $13$, and $23$ have the exact
+modulo-$5040$ layer residues stated below.
+
+Examples are ell=7 with residues 13,853; ell=13 with residues 233,4553;
+and ell=23 with constant residue 3457. For prime inert bases at least
+seven, all preceding primitive-support conclusions still hold: a repeated
+auxiliary residue does not imply repeated prime support or repeated
+initial depth.
+

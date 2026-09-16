@@ -1,0 +1,16 @@
+**Proof.** For $q=3$, one has $\pi(3)=8$ and $F_8=21$. Alignment makes
+$p$ divide $F_8$, while $p=3k+1$ and $k\ge2$; the only possibility is
+$p=7$ and $k=2$. This proves the first assertion without finite enumeration.
+
+For $q>5$, assertion 2 is exactly the linear-index conclusion of GAW1 and
+does not use a search over multipliers. Every aligned prime has
+$p=kq+1$ with even $k\ge2$. Partitioning those even multipliers into
+$k=2$, $4\le k\le200$, and $k>200$, and then applying GAW5 proves GAW9.
+Assumption $E_{200}$ deletes precisely the middle alternative. Together
+with the unconditional $q=3$ calculation, this gives the corrected
+conditional form of GAW2 and the forward implication of GAW6. Conversely,
+each remaining aligned-prime branch supplies the other-prime term in GAW5,
+so the reverse implication needs no finite exclusion. Finally, GAW4-GAW5
+and the residue-class theorem following GAW6 use the Fibonacci valuation
+formula and Euler's product, not $E_{200}$; their conclusions therefore
+remain unconditional.

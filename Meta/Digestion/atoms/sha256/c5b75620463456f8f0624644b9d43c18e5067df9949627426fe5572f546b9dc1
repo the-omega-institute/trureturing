@@ -1,0 +1,18 @@
+**Theorem RP5.** For all k>=0,
+
+$$
+\lambda_5(B_{\ell,k})
+\equiv\lambda_5(\ell)-3(-1)^k\pmod5,              \tag{RP5}
+$$
+
+and
+
+$$
+\boxed{
+B_{\ell,2j}\equiv F_\ell,\qquad
+B_{\ell,2j+1}\equiv-4F_\ell\pmod{25}.
+}\tag{RP6}
+$$
+
+The two displayed residues are distinct.
+

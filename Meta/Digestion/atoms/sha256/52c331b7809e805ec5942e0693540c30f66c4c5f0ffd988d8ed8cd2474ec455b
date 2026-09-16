@@ -1,0 +1,5 @@
+**命题 429.2（预测十一·完整逆式与自然分支）。** 对每个集合 $x$ 和每个有效码 $c$，
+$$
+\operatorname{Dec}(\operatorname{Enc}(x))=x,\qquad
+\operatorname{Enc}(\operatorname{Dec}(c))=c.
+$$

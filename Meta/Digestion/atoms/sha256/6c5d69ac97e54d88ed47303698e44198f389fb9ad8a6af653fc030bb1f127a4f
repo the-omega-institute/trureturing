@@ -1,0 +1,6 @@
+对全部实数 $x$，沿用实际取整定义
+$$
+\mathcal M(x)=\sum_{1\le n\le\lfloor x\rfloor_+}\mu(n)
+=M(\max(0,\lfloor x\rfloor)),
+$$
+其中 $\lfloor x\rfloor_+=\max(0,\lfloor x\rfloor)$。$x<1$ 时和为空；它的定义域仍是全部实数。

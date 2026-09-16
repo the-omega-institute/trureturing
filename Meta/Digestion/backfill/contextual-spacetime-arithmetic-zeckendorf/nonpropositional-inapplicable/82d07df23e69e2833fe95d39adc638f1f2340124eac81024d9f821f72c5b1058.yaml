@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:82d07df23e69e2833fe95d39adc638f1f2340124eac81024d9f821f72c5b1058
+  normalized_sha256: sha256:82d07df23e69e2833fe95d39adc638f1f2340124eac81024d9f821f72c5b1058
+cas_ref: sha256:82d07df23e69e2833fe95d39adc638f1f2340124eac81024d9f821f72c5b1058
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶定义 T2 的正整数状态域、初态、带素数标签的两类字母、历史相等和长度费用，没有独立待证命题，故无需证明探针。
+    previous_atom_id: 95c80d0e3d78d8f20522a477f745b9d49c5dd3571c0fbbf4638796b856e8ba37
+    next_atom_id: 36627b9abaa1ce7eebe7bed066a492a26c2bcd89e128c01b485497075406f3a9

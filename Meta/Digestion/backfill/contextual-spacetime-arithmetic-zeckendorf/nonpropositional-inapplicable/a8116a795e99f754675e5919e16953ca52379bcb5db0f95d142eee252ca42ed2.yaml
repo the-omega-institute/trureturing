@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a8116a795e99f754675e5919e16953ca52379bcb5db0f95d142eee252ca42ed2
+  normalized_sha256: sha256:a8116a795e99f754675e5919e16953ca52379bcb5db0f95d142eee252ca42ed2
+cas_ref: sha256:a8116a795e99f754675e5919e16953ca52379bcb5db0f95d142eee252ca42ed2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶给出定义 432.3所用的载体、符号或任务假设，并规定相应函数、域与约定；这些内容是定义及适用条件，没有需要证明的独立命题，故由现有结算写入器处理。
+    previous_atom_id: 8d0185ee2704697797a7999c23845662acd007973f6eafa4058d2e0046a9beb6
+    next_atom_id: 219eff89e83c92e20ea3f80e0dbf418ff593e524eb36348887b19d4122ffea68

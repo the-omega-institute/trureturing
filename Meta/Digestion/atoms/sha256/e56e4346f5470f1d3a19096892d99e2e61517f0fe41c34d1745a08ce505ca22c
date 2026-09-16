@@ -1,0 +1,17 @@
+### U.6. Half-index parity localization
+
+Set h=N/2. Then `F_N=F_h*L_h`, and `gcd(F_h,L_h)` divides two. Exactly one of F_h,L_h therefore vanishes modulo p.
+
+**Theorem.** The branch is determined by p modulo four:
+
+\[
+\begin{array}{ll}
+p\equiv1\pmod4:&p\mid F_h,\ p\nmid L_h,\ v_p(F_h)=s_p;\\
+p\equiv3\pmod4:&p\mid L_h,\ p\nmid F_h,\ v_p(L_h)=s_p.
+\end{array}\tag{U.12}
+\]
+
+**Proof.** In the original golden algebra over F_p, put x=phi^h. It satisfies `x^2=epsilon` and `norm(x)=(-1)^h`. If F_h=0 modulo p, x is scalar and `norm(x)=x^2=epsilon`. If L_h=0 modulo p, its conjugate is -x and `norm(x)=-x^2=-epsilon`. Exactly one alternative occurs. Computing the parity of `(p-epsilon)/2` in the two classes of p modulo four selects the stated alternative. The other factor in `F_N=F_h*L_h` is a unit, which proves the exact valuation statements.
+
+**Corollary.** In the first branch WSS(p) is equivalent to `p^2|F_h`; in the second it is equivalent to `p^2|L_h`. Neither branch is excluded by these identities.
+

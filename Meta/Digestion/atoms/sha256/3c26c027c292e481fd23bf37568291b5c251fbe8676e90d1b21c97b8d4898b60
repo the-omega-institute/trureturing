@@ -1,0 +1,2 @@
+**Proof.** FDS5 gives a(n)=tau(u)+tau(v)-1, with the indicated u,v. Pairing complementary divisors shows that tau(t) is odd exactly when t is square. Thus a(n) is even exactly when precisely one of u,v is square. These numbers are odd, and their difference is two or four. Distinct positive odd squares differ by at least eight, so they cannot both be square. The two initial values are FDS.2.
+
