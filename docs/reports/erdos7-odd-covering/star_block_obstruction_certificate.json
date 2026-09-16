@@ -25,6 +25,95 @@
       "scope": "Only the common-delta scalar sufficient expression; not a covering counterexample."
     }
   },
+  "extended_prime_square": {
+    "cutoff": 40000,
+    "scale": 1000000000000,
+    "prime_count": 4182,
+    "ceiling_sum": 2387697612,
+    "odd_integer_tail": "20001/1600000000",
+    "upper_bound": "2400198237/1000000000000"
+  },
+  "star_forest": [
+    {
+      "head": "star_head",
+      "tail_prime_minimum": 79,
+      "Gamma_bound": "177",
+      "maximum_center_factor": "1580/1521",
+      "prime_square_upper": "2400198237/1000000000000",
+      "loss_upper": "1243035998073/2112500000000",
+      "retained_lower": "869464001927/2112500000000"
+    },
+    {
+      "head": "arbitrary_357_head",
+      "tail_prime_minimum": 19,
+      "Gamma_bound": "1889/48",
+      "maximum_center_factor": "95/81",
+      "prime_square_upper": "167864949504642761860711/12036039018003000000000000",
+      "loss_upper": "6024840902671133365942778501/7019417955299349600000000000",
+      "retained_lower": "994577052628216234057221499/7019417955299349600000000000"
+    }
+  ],
+  "pendant_degree_two_core": {
+    "tail_prime_minimum": 37,
+    "core_threshold": "2/3",
+    "core_coefficient": "403681/2880",
+    "leaf_coefficient": "511919/10368",
+    "prime_square_upper": "231370093346855785582133/36108117054009000000000000",
+    "loss_upper": "93399710652352090379581031573/103991377115545920000000000000",
+    "retained_lower": "10591666463193829620418968427/103991377115545920000000000000"
+  },
+  "star_head_hubs": {
+    "tail_prime_minimum": 79,
+    "Gamma_bound": "177",
+    "cylinder_sum_bound": "73/10",
+    "prime_square_upper": "2400198237/1000000000000",
+    "vertex_cover_cardinality": 8,
+    "worst_hub_primes": [
+      79,
+      83,
+      89,
+      97,
+      101,
+      103,
+      107,
+      109
+    ],
+    "cube_nonnegative_remainder_margin": "1650701518477/1521000000000000",
+    "partial_derivative_lower_margin": "45351566739662291/27134686950638670",
+    "hub_cylinder_product": "6868087171373809/6309459438796800",
+    "hub_moment_factor": "2355753899781216487/1828060714734059520",
+    "vertex_cover_loss_upper": "12192740246787217690250957521427525512199605621/12396133925611839760650568282275840000000000000",
+    "vertex_cover_retained_lower": "203393678824622070399610760848314487800394379/12396133925611839760650568282275840000000000000",
+    "matching_deletion_cardinality": 1,
+    "matching_pair_factor": "24649/12168",
+    "matching_loss_upper": "33847214316501377/34273200000000000",
+    "matching_retained_lower": "425985683498623/34273200000000000"
+  },
+  "general_357_head_hubs": {
+    "tail_prime_minimum": 37,
+    "Gamma_bound": "1889/48",
+    "cylinder_sum_bound": "2009/360",
+    "prime_square_upper": "231370093346855785582133/36108117054009000000000000",
+    "vertex_cover_cardinality": 6,
+    "worst_hub_primes": [
+      37,
+      41,
+      43,
+      47,
+      53,
+      59
+    ],
+    "cube_nonnegative_remainder_margin": "64202884763480785582133/36108117054009000000000000",
+    "partial_derivative_lower_margin": "13077912259247/5289581076480",
+    "hub_cylinder_product": "9586934839/8390753280",
+    "hub_moment_factor": "2003669381351/1347337438720",
+    "vertex_cover_loss_upper": "2792346653676516265708382414137/2823523451379671040000000000000",
+    "vertex_cover_retained_lower": "31176797703154774291617585863/2823523451379671040000000000000",
+    "matching_deletion_cardinality": 2,
+    "matching_pair_factor": "5329/2592",
+    "matching_loss_upper": "100223867559296974822299294741453779/110898781501780810137600000000000000",
+    "matching_retained_lower": "10674913942483835315300705258546221/110898781501780810137600000000000000"
+  },
   "head_primes": [
     3,
     5,

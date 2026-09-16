@@ -141,6 +141,85 @@ def certificate():
     cylinder_cube_margin = general_cylinder * square_31_lower - F(17, 50) ** 3
     require(gamma_cube_margin > 0 and cylinder_cube_margin > 0,
             "prime-31 common-delta scalar obstruction")
+    # A sharper, separately retained prime bound supports the new graph
+    # criteria. The earlier 4000 certificate and its constants stay intact.
+    extended_primes = primes_to(40000)
+    extended_tail = [p for p in extended_primes if p > 73]
+    extended_scale = 10 ** 12
+    extended_ceiling = sum((extended_scale + (p - 1) ** 2 - 1) // ((p - 1) ** 2)
+                           for p in extended_tail)
+    extended_odd_tail = F(1, 1600000000) + F(1, 80000)
+    extended_square = F(extended_ceiling, extended_scale) + extended_odd_tail
+    require(len(extended_tail) == 4182 and extended_ceiling == 2387697612,
+            "extended finite prime-square sum")
+    require(extended_square == F(2400198237, 10 ** 12),
+            "extended infinite prime-square bound")
+
+    def square_upper(cutoff):
+        return extended_square + sum((F(1, (p - 1) ** 2)
+                                      for p in HEAD_PRIMES if cutoff <= p <= 73), F(0))
+
+    def graph_bounds(cutoff, gamma, cylinder, hub_count, matching_hubs):
+        a0 = F(1, cutoff - 1)
+        square = square_upper(cutoff)
+        hub_primes = [p for p in extended_primes if p >= cutoff][:hub_count]
+        weights = [F(1, p - 1) for p in hub_primes]
+        product = prod(1 + a for a in weights)
+        moment_factor = prod(1 + 3 * a + 2 * a * a for a in weights)
+        cube_margin = square - hub_count * a0 * a0
+        derivative_margin = (cylinder - 2 * gamma * a0 * (1 + a0)
+                             * (1 + 2 * a0) ** hub_count)
+        require(cube_margin >= 0 and derivative_margin > 0,
+                "hub comparison is monotone on the entire padded cube")
+        loss = (cylinder * (product - 1)
+                + gamma * moment_factor * (square - sum(a * a for a in weights)))
+        require(loss < 1, "vertex-cover exclusion")
+        matching_weights = weights[:matching_hubs]
+        pair_factor = 2 * (1 + a0 / 2) ** 2
+        matching = (cylinder * (prod(1 + a for a in matching_weights) - 1)
+                    + gamma * prod(1 + 3 * a + 2 * a * a for a in matching_weights)
+                    * pair_factor * square)
+        require(matching < 1, "hub deletion leaving a matching")
+        return {"tail_prime_minimum": cutoff, "Gamma_bound": str(gamma),
+                "cylinder_sum_bound": str(cylinder), "prime_square_upper": str(square),
+                "vertex_cover_cardinality": hub_count, "worst_hub_primes": hub_primes,
+                "cube_nonnegative_remainder_margin": str(cube_margin),
+                "partial_derivative_lower_margin": str(derivative_margin),
+                "hub_cylinder_product": str(product), "hub_moment_factor": str(moment_factor),
+                "vertex_cover_loss_upper": str(loss),
+                "vertex_cover_retained_lower": str(1 - loss),
+                "matching_deletion_cardinality": matching_hubs,
+                "matching_pair_factor": str(pair_factor), "matching_loss_upper": str(matching),
+                "matching_retained_lower": str(1 - matching)}
+
+    star_hubs = graph_bounds(79, F(177), F(73, 10), 8, 1)
+    general_hubs = graph_bounds(37, general_gamma, general_cylinder, 6, 2)
+    forest_rows = []
+    for name, cutoff, gamma, target in [
+            ("star_head", 79, F(177), F(58842, 100000)),
+            ("arbitrary_357_head", 19, general_gamma, F(858311, 1000000))]:
+        a0 = F(1, cutoff - 1)
+        factor = 1 + 3 * a0 + 2 * a0 * a0
+        loss = F(4, 3) * gamma * factor * square_upper(cutoff)
+        require(loss < target < 1, "star-forest exclusion")
+        forest_rows.append({"head": name, "tail_prime_minimum": cutoff,
+                            "Gamma_bound": str(gamma), "maximum_center_factor": str(factor),
+                            "prime_square_upper": str(square_upper(cutoff)),
+                            "loss_upper": str(loss), "retained_lower": str(1 - loss)})
+    # For a saturated star, alpha+sum beta>=1. The identity
+    # alpha^2+1-alpha = (alpha-1/2)^2+3/4 supplies the 4/3 factor.
+    require([F(1, 4) + F(3, 4), F(-1), F(1)] == [F(1), F(-1), F(1)],
+            "saturation quadratic identity coefficients")
+    leaf_moment_coefficient = general_gamma * (1 + 3 * (F(3, 36) + F(2, 36 ** 2)))
+    require(leaf_moment_coefficient == F(511919, 10368) < degree_coefficient,
+            "pendant-leaf coefficient is dominated by the degree-two core coefficient")
+    pendant_loss = degree_coefficient * square_upper(37)
+    require(pendant_loss < F(898149, 1000000) < 1, "pendant degree-two core exclusion")
+    pendant_core = {"tail_prime_minimum": 37, "core_threshold": "2/3",
+                    "core_coefficient": str(degree_coefficient),
+                    "leaf_coefficient": str(leaf_moment_coefficient),
+                    "prime_square_upper": str(square_upper(37)),
+                    "loss_upper": str(pendant_loss), "retained_lower": str(1 - pendant_loss)}
     general_head = {
         "primes": [3, 5, 7], "same_uniform_law_Gamma_bound": str(general_gamma),
         "same_uniform_law_complete_cylinder_sum_bound": str(general_cylinder),
@@ -162,6 +241,13 @@ def certificate():
             "scope": "Only the common-delta scalar sufficient expression; not a covering counterexample."}}
     return {
         "general_357_head": general_head,
+        "extended_prime_square": {"cutoff": 40000, "scale": extended_scale,
+                                  "prime_count": len(extended_tail), "ceiling_sum": extended_ceiling,
+                                  "odd_integer_tail": str(extended_odd_tail),
+                                  "upper_bound": str(extended_square)},
+        "star_forest": forest_rows, "pendant_degree_two_core": pendant_core,
+        "star_head_hubs": star_hubs,
+        "general_357_head_hubs": general_hubs,
         "head_primes": list(HEAD_PRIMES), "minimum_each_head_height": 1,
         "K0": str(k_zero), "C0": str(c_zero),
         "ternary_finite_height": {
@@ -209,6 +295,10 @@ def main():
                       "general_357_degree2_prime37_loss": data["general_357_head"]["maximum_degree_two_prime_37_loss_upper"],
                       "prime31_scalar_Gamma_cube_obstruction": data["general_357_head"]["prime_31_common_delta_scalar_boundary"]["Gamma_times_lower_exceeds_33_over_50_cubed"],
                       "prime31_scalar_cylinder_cube_obstruction": data["general_357_head"]["prime_31_common_delta_scalar_boundary"]["cylinder_times_lower_exceeds_17_over_50_cubed"],
+                      "star_forest_loss_bounds": {row["head"]: row["loss_upper"] for row in data["star_forest"]},
+                      "pendant_degree_two_core_loss": data["pendant_degree_two_core"]["loss_upper"],
+                      "star_vertex_cover_8_loss": data["star_head_hubs"]["vertex_cover_loss_upper"],
+                      "general_vertex_cover_6_loss": data["general_357_head_hubs"]["vertex_cover_loss_upper"],
                       "scope": "Exact constants; arbitrary-height lifting is an ordinary proof."}))
 
 

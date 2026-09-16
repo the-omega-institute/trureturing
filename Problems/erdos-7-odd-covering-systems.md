@@ -304,6 +304,12 @@ maximum degree at most two, or when all other primes are at least 31 and
 each interaction component has at most three vertices. These restrictions
 allow arbitrary exponents and arbitrarily many primes in total.
 
+The stronger graph criteria also exclude arbitrary `{3,5,7}` heads with
+star-forest tails from prime 19, or a degree-two tail core with arbitrarily
+many pendant leaves from prime 37. Complete star heads cannot be completed
+by star-forest tails or by tails with a vertex cover of at most eight primes.
+These statements allow unbounded vertex degrees and total prime support.
+
 **H73 — false**, with its universal candidate statement retained from
 [the target preregistration](https://github.com/the-omega-institute/trureturing/issues/8167):
 let `Q` be any product of arbitrary finite powers of odd primes at most 73.
@@ -920,6 +926,210 @@ extension. The conclusion also survives removal of redundant mixed-zero
 head classes, since that leaves the head survivors unchanged. The numerical
 proportion refers to head points under `mu_b`, not to uniform density in
 the entire period `N`.
+
+#### Star forests: arbitrarily many centres of unbounded degree
+
+Let `mu` be any actual head survivor law with `Gamma_Q(mu)<=G`. Suppose
+the tail interaction graph is a disjoint union of stars, allowing isolated
+vertices and edges. There is no bound on the number of stars or their degrees.
+For one component choose its centre `r` and write its leaves as `q`.
+For fixed head point `x`, let `alpha_r(x)` be the fraction of the `r` coordinate
+covered by actual classes with tail part a pure power of `r`. For fixed
+`r` coordinate `y`, let `alpha_q(x,y)` be the covered fraction of the `q`
+coordinate from all actual classes with tail support `{q}` or `{r,q}`.
+Put `beta_q(x)=Pr_y[alpha_q(x,y)=1]`, where `y` is uniform.
+
+If the whole component is saturated above `x`, every `y` outside the central
+pure-power union must saturate at least one leaf fibre. Otherwise choose an
+uncovered coordinate for every leaf and apply CRT. Hence
+`alpha_r+sum_q beta_q>=1` on saturation, and pointwise
+
+\[
+ 1[\text{component saturated}]
+ \le\frac43\left(\alpha_r^2+\sum_q\beta_q\right),
+ \qquad \alpha_r^2+1-\alpha_r
+       =(\alpha_r-\tfrac12)^2+\tfrac34.                 \tag{SF1}
+\]
+
+Set `a_p=1/(p-1)` and `D_p=1+3a_p+2a_p^2`. The original-label bound (BS4)
+gives `E_mu alpha_r^2<=G a_r^2`. For a leaf, regard `Qr^(v_r(N))` as the
+head, with the unconditioned law `mu` times uniform `r`. At fixed tail
+power `q^e`, every original modulus has a distinct enlarged head label;
+repeated projected `q^e` moduli are all retained. The uniform-coordinate
+transfer (T1), with `delta=0`, gives enlarged Gamma at most `G D_r`.
+Applying (BS4) there yields
+
+\[
+ \mathbb E_\mu\beta_q
+ \le\mathbb E_{\mu\otimes U_r}\alpha_q^2
+ \le G D_r a_q^2.
+\]
+
+The tail can cover a head fibre only if one of its components is saturated.
+Thus (SF1), summed over the disjoint components, proves
+
+\[
+ \mu\{x:\text{an uncovered tail lift exists}\}
+ \ge 1-\frac{4G}{3}\sum_{\text{stars}}
+       \left(a_r^2+D_r\sum_{q\text{ leaf}}a_q^2\right).
+ \tag{SF2}
+\]
+
+An isolated vertex satisfies the stronger direct bound `G a_r^2`, so it
+also satisfies this estimate. No independence of overlapping deletion
+events was assumed. Each star's centre may be chosen freely when its degree
+is at most one.
+
+For a uniform lower tail-prime cutoff `q0`, (SF2)'s loss is at most
+`(4G/3)(1+3/(q0-1)+2/(q0-1)^2) sum_q 1/(q-1)^2`. Exact constants give:
+
+| Head | Tail primes | Saturated-head mass upper bound |
+|---|---|---:|
+| Arbitrary `{3,5,7}` head, law (BS10) | `q>=19` | `<0.858311` |
+| Complete star head at any positive heights, law (BS6) | `q>73` | `<0.588420` |
+
+Both therefore exclude covering systems with any star-forest tail graph.
+The first permits arbitrarily many primes in total and original moduli
+with all three head primes and two tail primes. The second applies to the
+same star geometry that refutes the universal Gamma73 target.
+
+#### A degree-two core with arbitrarily many pendant leaves
+
+For an arbitrary `{3,5,7}` head, tail primes at least 37 also permit the
+following larger graph class. Let `K` be a set of tail vertices whose induced
+graph has maximum degree two. Require that the remaining vertices are
+independent and each has at most one neighbour in `K`. Paths and cycles
+of unbounded length with arbitrarily many leaves attached at each vertex
+are included. Equivalently, one may take the vertices of original degree
+at least two as the core when their induced graph has maximum degree two,
+then add one endpoint from each isolated edge. Isolated vertices may remain
+outside the core.
+
+For each core vertex remove its actual pure-coordinate local union and
+retain head points where every such union fraction is at most `delta=2/3`.
+Their discarded mass is at most `(9G/4) sum_(r in K) a_r^2`. At retained
+head points take the core coordinates independently and uniformly on their
+local complements. Extend each kernel by the uniform law at discarded head
+points; this defines a probability with the original old marginal everywhere,
+while the argument uses its restriction to retained heads without normalizing.
+Each core kernel has cylinder caps at most `3r^(-e)`. Core-core crossing
+classes therefore have exactly the edge and triangle bounds used in (BS11).
+
+An outside leaf `q` with neighbour `r` uses only the enlarged head `Qr^H`.
+The transfer (T1) for the extended kernel bounds its Gamma by
+`G(1+3(3a_r+2a_r^2))`. The original-label moment bound consequently charges
+leaf saturation at most this constant times `a_q^2`, even after restriction
+to retained head points. A vertex with no neighbour has the smaller constant
+`G`. Once core crossing classes and all saturated leaf fibres are avoided,
+choose one uncovered point in each leaf coordinate and use CRT.
+
+The two coefficients are
+
+\[
+ K_{\rm core}=\frac{403681}{2880},\qquad
+ K_{\rm leaf}=G\left(1+3\left(\frac3{36}+\frac2{36^2}\right)\right)
+             =\frac{511919}{10368}<K_{\rm core}.
+\]
+
+Thus the total bad mass is at most
+`K_core sum_(r in K) a_r^2 + K_leaf sum_(q outside K) a_q^2`, and hence
+strictly below **0.898149** by the exact prime-square bound below. This proves
+noncoverage for the stated graph class. Arbitrary trees are not covered by
+this argument: after deleting their leaves, their cores need not have maximum
+degree two.
+
+#### Absorbing a finite set of hub primes
+
+A complementary criterion allows arbitrary interactions among a small set
+of hubs. Let `R` be any set of tail primes, and let the remaining tail primes
+be partitioned into blocks `B`, with no actual modulus meeting two different
+blocks outside `R`. Write
+
+\[
+ P_R=\prod_{r\in R}(1+a_r),\qquad
+ D_R=\prod_{r\in R}(1+3a_r+2a_r^2).
+\]
+
+Suppose the same old head law has Gamma at most `G` and complete cylinder
+sum at most `C`. Enlarge the head by the full prime powers at `R`, using
+`nu=mu` times uniform hub coordinates. The union of the actual classes
+whose tail support lies wholly in `R` has `nu` mass at most `C(P_R-1)`.
+This follows by grouping distinct original moduli by their hub divisor and
+summing the original head cylinder caps. Iterating the unconditioned transfer
+(T1) bounds the enlarged Gamma by `G D_R`.
+
+All remaining classes are local to one residual block. Applying (BS4) and
+charging its saturation under `nu` gives the sufficient condition
+
+\[
+ C(P_R-1)+G D_R\sum_B W_B^2<1,                         \tag{HB1}
+\]
+
+where `W_B` is bounded by (BS5). The hub-forbidden union and all block
+saturations together then have mass less than one. A remaining enlarged
+head point and one uncovered point in each block give an uncovered integer.
+The enlarged law is never conditioned on hub survival; no unproved control
+of its normalized Gamma is used.
+
+In particular, when `R` is a vertex cover of the tail graph, the residual
+blocks are singletons. If `S` bounds the prime-square sum over all allowed
+tail primes, (HB1)'s loss is at most
+
+\[
+ F_R=C(P_R-1)+G D_R\left(S-\sum_{r\in R}a_r^2\right).
+ \tag{HB2}
+\]
+
+Uniform cardinality bounds need a comparison over all possible hub primes.
+Pad their weights with zeros to `k` coordinates, let `a0=1/(q0-1)`, and
+suppose `k a0^2<=S`. On the cube `[0,a0]^k`, differentiating the expression
+in (HB2), with `P_(−i)=prod_(j!=i)(1+a_j)`, gives
+
+\[
+ \partial_iF\ge P_{(-i)}
+       \left[C-2G a_0(1+a_0)(1+2a_0)^k\right].
+\]
+
+When the bracket is positive, the maximum is bounded by substituting the
+first `k` allowed primes in increasing order: the `i`th actual hub prime
+is at least the `i`th allowed prime. Both cube and derivative conditions
+are checked exactly in the certificate. If deleting the hubs leaves a
+matching instead, use `sum_B W_B^2<=2(1+a0/2)^2 S` in (HB1); this coarser
+expression is increasing in every hub weight without subtracting hub squares.
+The resulting sufficient cases are:
+
+| Head and tail cutoff | Deleted hubs | Remaining graph | Loss upper bound |
+|---|---:|---|---:|
+| Complete star head, `q>73` | at most 8 | independent | `<0.983593` |
+| Complete star head, `q>73` | at most 1 | matching | `<0.987571` |
+| Arbitrary `{3,5,7}` head, `q>=37` | at most 6 | independent | `<0.988959` |
+| Arbitrary `{3,5,7}` head, `q>=37` | at most 2 | matching | `<0.903742` |
+
+The hubs can have arbitrarily many neighbours. Internal edges among hubs
+are allowed; for example, the first case permits every residual prime to
+be adjacent to all eight hubs. These are structural exclusions with no
+bound on exponents or total prime support.
+
+**Sharper prime-square certificate.** The same verifier additionally sieves
+to 40000 and independently checks the prime list by trial division. The
+4182 primes in `(73,40000]` have
+`sum ceil(10^12/(q-1)^2)=2387697612`. Bounding the remaining primes by all
+odd integers gives
+
+\[
+ \sum_{q>73,\ q\text{ prime}}\frac1{(q-1)^2}
+ \le\frac{2387697612}{10^{12}}+\frac1{1600000000}+\frac1{80000}
+ =\frac{2400198237}{10^{12}}.                           \tag{GS1}
+\]
+
+For cutoffs below 73 add the finitely many omitted prime squares exactly.
+The earlier 4000 certificate is retained. All new graph comparisons are
+ordinary proofs with exact rational constants; they are not new Lean
+formalizations. Project search and arXiv searches combining covering systems
+with forest, graph, and odd distinct covering found no exact dominating
+star-forest or hub result in the searched scope; no literature priority is
+claimed. The unrestricted problem still requires arbitrary head geometry and
+arbitrary tail interactions.
 
 #### Every full star completion needs positive mixed-tail capacity
 
@@ -2508,6 +2718,44 @@ load and root counts together before applying the itinerary theorem; its
 axiom closure is also exactly the permitted three axioms. The congruence
 cylinder caps, arithmetic embedding, normalization and remaining parts of
 (G1) are not thereby formalized.
+
+The root-switching estimate now extends to any root type and any discount
+\(0\le r<1\). The Lean theorem
+[ArbitraryRootEventMoment.arbitrary_root_event_moment_le](../D5/S3/Arith/Congruence/ArbitraryRootEventMoment.lean)
+allows arbitrary nonnegative weights on a finite carrier, an arbitrary root
+map, an initial load at most \(1+a_i\) on root \(i\), and actual events
+whose root-specific caps are multiplied by \(r\) after every event. Any
+nonnegative common budget
+
+\[
+ M\ge d_i\left(\frac{2a_i+3}{1-r}+\frac{2r}{(1-r)^2}\right)
+ \quad\text{for every root }i                           \tag{AR1}
+\]
+
+bounds the integrated square increment of every finite event list. The
+proof updates the actual load and root counts directly. An event in root
+\(i\) costs at most \(c=(2a_i+3)d_i\); its updated constant-root cost is
+its old cost minus \(c\), while all other root costs are at most \(rM\).
+The inequality \(c\le(1-r)M\) closes the induction with budget \(M-c\).
+No finiteness assumption on the root type, event nesting, or normalization
+of the weights is needed. Zero discount and empty lists are included.
+
+For a prime-power coordinate use \(r=1/p\). If the first test cylinder
+selects root \(j\), and higher cylinders in root \(i\) have mass at most
+\(C_i p^{-e}\), take \(d_i=C_i/p^2\), \(a_j=1\), and all other counts zero.
+The remaining square increment is at most
+
+\[
+ \frac{\max\{C_j(5p-3),(3p-1)\max_{i\ne j}C_i\}}
+      {p(p-1)^2}.                                     \tag{AR2}
+\]
+
+For \(p=3\) this recovers the two-root bound below; for \(p=5\) it retains
+four possible surviving roots and gives
+\(\max\{11C_j/40,7\max_{i\ne j}C_i/40\}\). This arithmetic specialization
+is an ordinary application, not another Lean declaration. The checked
+component has only the three permitted axioms; its residue-cylinder caps
+and the complete covering argument remain separate obligations.
 
 At depth two the initial counts are `(1,0)`, so (G2), multiplied by `1/9`,
 bounds the remaining contribution by `max(d_A,2d_B/3)`. The pure ternary
@@ -5187,13 +5435,19 @@ The block-saturation criterion gives further noncoverage theorems for
 arbitrary `{3,5,7}` heads with sparse tail interactions, and for every
 positive-height star head with matching tails. It also gives the actual
 mixed-tail budgets (BS8)--(BS9) required of any full star completion.
+The new graph arguments additionally permit star-forest tails from prime 19
+for arbitrary three-prime heads, a degree-two core with unrestricted pendant
+leaves from prime 37, and the stated hub-deletion structures.
 The finite-height pure-coordinate CRT criterion and two-block refinement
 give the independent finite exclusion `lcm > 11486474`: the verifier
 discharges all 23758 odd abundant candidates in the interval from 1.
 `TernaryRootLoadTail.root_load_tail_le` formalizes the finite-itinerary
 component of the actual-layout improvement, and
 `TwoRootEventMoment.two_root_event_moment_le` proves the bound for the
-actual weighted event-load increment;
+actual weighted event-load increment.
+`ArbitraryRootEventMoment.arbitrary_root_event_moment_le` extends that
+component to arbitrary root sets and geometric discounts, using an actual
+event-chain induction;
 `PrimeRectangleTransfer.prefix_weighted_rectangle_second_moment_le` formalizes
 the weighted finite rectangle second-moment estimate underlying (W1),
 with individual layer bounds retaining the shared zero layer.
