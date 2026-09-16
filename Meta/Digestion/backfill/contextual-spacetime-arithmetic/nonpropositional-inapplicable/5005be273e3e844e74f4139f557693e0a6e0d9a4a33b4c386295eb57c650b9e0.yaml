@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5005be273e3e844e74f4139f557693e0a6e0d9a4a33b4c386295eb57c650b9e0
+  normalized_sha256: sha256:5005be273e3e844e74f4139f557693e0a6e0d9a4a33b4c386295eb57c650b9e0
+cas_ref: sha256:5005be273e3e844e74f4139f557693e0a6e0d9a4a33b4c386295eb57c650b9e0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此项是增补章节导航、阅读时序和工程来源范围说明，没有提出独立数学命题；章节引用只用于定位正文，不把工程叙述提升为证明。
+    previous_atom_id: 5c2d2cb49ce2360a6a8601679c1276179511fb89e1b463a7ff04450e95ad6974
+    next_atom_id: 13a6ab22882b3737a3ec6371e37031ce5f703d517c3879ebfbfcb90d38a7f845
