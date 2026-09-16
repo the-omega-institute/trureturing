@@ -106,7 +106,7 @@ private def observe (event : TemplateOccurrenceEvent) (actual : Name)
       ((diagnostic.splitOn s!"reason=unclassified_form rule={rule} site=").length == 2, diagnostic)
     | .declaredUnresolved diagnostic, none => (false, diagnostic)
     | _, _ => (false, "unexpected result alternative")
-  logInfo m!"[{if ok then "PASS" else "FAIL"}] {label}"
+  (if ok then logInfo else logError) m!"[{if ok then "PASS" else "FAIL"}] {label}"
   unless ok do logInfo m!"actual={diagnostic}"
 
 elab "check_body_argument_grammar" : command => do
@@ -114,7 +114,7 @@ elab "check_body_argument_grammar" : command => do
   let result ← TemplateAudit.enroll ``decisionBody
   let ok := result matches .error "unclassified_form:E3.closed_decision"
   set saved
-  logInfo m!"[{if ok then "PASS" else "FAIL"}] body_argument_closed_decision_same_rule"
+  (if ok then logInfo else logError) m!"[{if ok then "PASS" else "FAIL"}] body_argument_closed_decision_same_rule"
 check_body_argument_grammar
 
 -- Each observer calls the common assessor. The source event comes from an
@@ -139,7 +139,7 @@ run_meta do
       | .declaredUnresolved diagnostic =>
         (diagnostic.splitOn s!"reason={expected} rule=").length == 2
       | _ => false
-    logInfo m!"[{if ok then "PASS" else "FAIL"}] declared_raw_argument_{name.getString!}"
+    (if ok then logInfo else logError) m!"[{if ok then "PASS" else "FAIL"}] declared_raw_argument_{name.getString!}"
     if let .declaredUnresolved diagnostic := record.result then logInfo diagnostic
   let direct ← bodyOf ``directApplication
   observe event ``directApplication direct "identical_full_application_accepted"

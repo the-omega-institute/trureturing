@@ -22,7 +22,7 @@ elab "observe_unresolved_transaction_commit" : command => do
     InformationRegistry.hasTheorem env name && unresolved &&
     (inventory env).any (·.key.theoremName == name) && (selectedPlan env ``cutRealization).isOk
   set saved
-  logInfo m!"[{if ok then "PASS" else "FAIL"}] unresolved_evidence_transaction_commits"
+  (if ok then logInfo else logError) m!"[{if ok then "PASS" else "FAIL"}] unresolved_evidence_transaction_commits"
 
 observe_unresolved_transaction_commit
 

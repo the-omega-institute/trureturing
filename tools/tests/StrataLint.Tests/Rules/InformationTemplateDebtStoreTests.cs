@@ -41,6 +41,52 @@ public sealed class InformationTemplateDebtStoreTests
     }
 
     [Fact]
+    public void debt_snapshot_load_retains_exact_row()
+    {
+        var rows = InformationTemplateDebtStore.Load(Snapshot(
+            (RowPath, Row), (InformationTemplateDebtStore.ActivationPath, "ignored by row loader"),
+            ("Unrelated.json", "not a debt row")), new(Seed, false), Snapshot(("Registration.lean", Source)));
+        var pair = Assert.Single(rows);
+        var key = new InformationOccurrenceKey("Fixture.Root", "Fixture.Registration", "Fixture.theorem_a",
+            "Fixture.arena", "canonical");
+        Assert.Equal(key, pair.Key);
+        Assert.Equal(key, pair.Value.Key);
+        Assert.Equal(Seed, pair.Value.SeedBase);
+        Assert.Equal("c7601acced7b5f6af7aa33f628dea763c75550049f2fe0b83a7e489eb2c6c151", pair.Value.StatementIdentity);
+        Assert.Equal("8b1a59ca0701832dce71a44850507e702d9e3399af64d43523d4d50da818189a",
+            pair.Value.RegistrationSourceSha256);
+        Assert.Equal(new InformationTemplateContentInput("Registration.lean", pair.Value.RegistrationSourceSha256),
+            Assert.Single(pair.Value.ContentInputs));
+        Assert.Equal(Row, Encoding.UTF8.GetString(InformationTemplateDebtStore.WriteRow(pair.Value).AsSpan()));
+    }
+
+    [Fact]
+    public void debt_snapshot_load_empty_control() =>
+        Assert.Empty(InformationTemplateDebtStore.Load(Snapshot(), new(Seed, false), Snapshot()));
+
+    [Theory]
+    [InlineData("version")]
+    [InlineData("duplicate")]
+    [InlineData("unknown")]
+    [InlineData("whitespace")]
+    [InlineData("missing")]
+    [InlineData("path")]
+    [InlineData("input-hash")]
+    public void debt_snapshot_load_rejects_malformed_row(string mutation) =>
+        Assert.Throws<FormatException>(() => InformationTemplateDebtStore.Load(
+            Snapshot((RowPath, MalformedRow(mutation))), new(Seed, false), Snapshot(("Registration.lean", Source))));
+
+    [Theory]
+    [InlineData("path")]
+    [InlineData("seed")]
+    [InlineData("inputs")]
+    public void debt_snapshot_load_rejects_wrong_path_or_seed_or_inputs(string mutation) =>
+        Assert.Throws<FormatException>(() => InformationTemplateDebtStore.Load(
+            Snapshot((mutation == "path" ? RowPath.Replace("1a492", "2a492", StringComparison.Ordinal) : RowPath, Row)),
+            new(mutation == "seed" ? "a37c6134f47ae7f6faa9bf5d5cd0532b59c4d475" : Seed, false),
+            mutation == "inputs" ? Snapshot() : Snapshot(("Registration.lean", Source))));
+
+    [Fact]
     public void debt_wrong_path_rejected() =>
         Assert.Throws<FormatException>(() => Read(path: RowPath.Replace("1a492", "2a492", StringComparison.Ordinal)));
 
@@ -54,7 +100,10 @@ public sealed class InformationTemplateDebtStoreTests
     [InlineData("input-hash")]
     public void debt_strict_schema_rejected(string mutation)
     {
-        var bytes = mutation switch
+        Assert.Throws<FormatException>(() => Read(MalformedRow(mutation)));
+    }
+
+    private static string MalformedRow(string mutation) => mutation switch
         {
             "version" => Row.Replace("\"schema_version\":1", "\"schema_version\":2", StringComparison.Ordinal),
             "duplicate" => Row.Replace("\"schema_version\":1", "\"schema_version\":1,\"schema_version\":1", StringComparison.Ordinal),
@@ -65,8 +114,6 @@ public sealed class InformationTemplateDebtStoreTests
             "input-hash" => Row.Replace("8b1a59", "8b1a58", StringComparison.Ordinal),
             _ => throw new ArgumentException(nameof(mutation)),
         };
-        Assert.Throws<FormatException>(() => Read(bytes));
-    }
 
     [Fact]
     public void seed_retarget_rejected() =>

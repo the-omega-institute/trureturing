@@ -23,7 +23,7 @@ expect_information_occurrence selected in arena
   from "LeanInformationAudit.Tests.Seal.DeclaredSnapshot"
 
 private def observe (label : String) (ok : Bool) : CommandElabM Unit :=
-  logInfo m!"[{if ok then "PASS" else "FAIL"}] {label}"
+  (if ok then logInfo else logError) m!"[{if ok then "PASS" else "FAIL"}] {label}"
 
 private def counts : CommandElabM (Nat × Nat) := do
   let env ← getEnv

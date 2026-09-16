@@ -28,7 +28,7 @@ private def observeEnrollment (label : String) (expected : Option String) : Comm
   let present := (selectedPlan (← getEnv) `DTRNativeFixture.template).isOk
   set saved
   let ok := actual == expected && present == expected.isNone
-  logInfo m!"[{if ok then "PASS" else "FAIL"}] {label} actual={repr actual}"
+  (if ok then logInfo else logError) m!"[{if ok then "PASS" else "FAIL"}] {label} actual={repr actual}"
 
 elab "observe_native_enrollment_coherence" : command => withPrivateSources do
   observeEnrollment "fresh_native_source_plan_accepted" none
@@ -50,7 +50,7 @@ elab "observe_native_enrollment_coherence" : command => withPrivateSources do
     catch error => pure (← error.toMessageData.toString)
     set saved
     let ok := reason == s!"incomplete_closure:E7.native_source:{owner}"
-    logInfo m!"[{if ok then "PASS" else "FAIL"}] native_export_stale_source_rejected reason={reason}"
+    (if ok then logInfo else logError) m!"[{if ok then "PASS" else "FAIL"}] native_export_stale_source_rejected reason={reason}"
 
 observe_native_enrollment_coherence
 
@@ -66,7 +66,7 @@ elab "observe_empty_report_driver_coherence" : command => withPrivateSources do
       pure none
     catch error => pure (some (← error.toMessageData.toString))
     set saved
-    logInfo m!"[{if actual == expected then "PASS" else "FAIL"}] {label} actual={repr actual}"
+    (if actual == expected then logInfo else logError) m!"[{if actual == expected then "PASS" else "FAIL"}] {label} actual={repr actual}"
   observe "no_registration_current_driver_accepted" none
   let owner := `LeanInformationAudit.Registry
   let path : System.FilePath := sourcePath owner
@@ -86,7 +86,7 @@ elab "observe_report_batch_coherence" : command => withPrivateSources do
   let complete := #[owner, plain, `LeanInformationAudit.Registry,
     `LeanInformationAudit.Tests.RegistrationGates.NativeCoherence.Helper].all
       (fun name => observed.contains (sourcePath name))
-  logInfo m!"[{if complete then "PASS" else "FAIL"}] native_report_batch_union_rechecked"
+  (if complete then logInfo else logError) m!"[{if complete then "PASS" else "FAIL"}] native_report_batch_union_rechecked"
   let path : System.FilePath := sourcePath owner
   let bytes ← IO.FS.readBinFile path
   withFile path (bytes ++ "\n-- changed between report batches\n".toUTF8) do
@@ -95,7 +95,7 @@ elab "observe_report_batch_coherence" : command => withPrivateSources do
       pure ""
     catch error => pure (← error.toMessageData.toString)
     let ok := reason == "incomplete_closure:E7.native_input_changed"
-    logInfo m!"[{if ok then "PASS" else "FAIL"}] native_report_batch_cached_source_rejected reason={reason}"
+    (if ok then logInfo else logError) m!"[{if ok then "PASS" else "FAIL"}] native_report_batch_cached_source_rejected reason={reason}"
   discard <| liftTermElabM <| finiteInformationTemplateReportDriver requested
   logInfo "[PASS] native_report_batch_restored_source_accepted"
 

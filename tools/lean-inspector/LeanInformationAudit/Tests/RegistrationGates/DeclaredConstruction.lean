@@ -73,7 +73,7 @@ run_meta do
         (PlanTransform.abstractExpr argument x 0 0) "construction_work"),
       ("retained_syntax_and_supplied_origins_preserved", origin && retainedOk &&
         agrees materialized expressionP)] do
-    logInfo m!"[{if ok then "PASS" else "FAIL"}] {label}"
+    (if ok then logInfo else logError) m!"[{if ok then "PASS" else "FAIL"}] {label}"
 
 run_meta do
   let nested : MetaM Unit := withCurrHeartbeats do
@@ -87,6 +87,6 @@ run_meta do
   for (label, ok) in #[
       ("nested_meta_work_remains_cumulative", rejected),
       ("bounded_meta_work_accepted", positive)] do
-    logInfo m!"[{if ok then "PASS" else "FAIL"}] {label}"
+    (if ok then logInfo else logError) m!"[{if ok then "PASS" else "FAIL"}] {label}"
 
 end LeanInformationAudit.Tests.DeclaredConstruction

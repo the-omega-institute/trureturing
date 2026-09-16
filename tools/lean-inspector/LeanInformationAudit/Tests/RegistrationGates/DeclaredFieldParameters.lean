@@ -71,6 +71,6 @@ run_cmd Elab.Command.liftCoreM do
     let ok := if label == "parameter_arena_statement_incomplete" then
         !rejected && closure.isNone
       else if clean then !rejected && closure.isSome else rejected && closure.isSome
-    logInfo m!"[{if ok then "PASS" else "FAIL"}] {label} rejected={rejected} complete={closure.isSome}"
+    (if ok then logInfo else logError) m!"[{if ok then "PASS" else "FAIL"}] {label} rejected={rejected} complete={closure.isSome}"
 
 end DeclaredFieldParameters

@@ -53,7 +53,7 @@ elab "observe_template_alias_boundaries" : command => do
     let actual := match result with | .ok () => none | .error message => some message
     let present := (selectedPlan (← getEnv) name).isOk
     set saved
-    logInfo m!"[{if actual == expected && present == expected.isNone then "PASS" else "FAIL"}] {label} result={repr actual}"
+    (if actual == expected && present == expected.isNone then logInfo else logError) m!"[{if actual == expected && present == expected.isNone then "PASS" else "FAIL"}] {label} result={repr actual}"
 
 observe_template_alias_boundaries
 
@@ -64,6 +64,6 @@ run_cmd do
     | throwError "setup: proof family plan absent"
   let valid := plan.slots[2]?.map (·.kind) == some SlotKind.proof
   set saved
-  logInfo m!"[{if valid then "PASS" else "FAIL"}] quantified_proof_slot_retained_as_proof"
+  (if valid then logInfo else logError) m!"[{if valid then "PASS" else "FAIL"}] quantified_proof_slot_retained_as_proof"
 
 end LeanInformationAudit.Tests.DeclaredAliases

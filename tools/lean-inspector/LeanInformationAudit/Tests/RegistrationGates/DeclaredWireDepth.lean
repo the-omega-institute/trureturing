@@ -24,6 +24,6 @@ run_meta do
       ("bounded_raw_name_and_level_accepted", positiveName.isOk && positiveLevel.isOk),
       ("raw_name_depth_incomplete", nameRejected),
       ("raw_level_depth_incomplete", levelRejected)] do
-    logInfo m!"[{if ok then "PASS" else "FAIL"}] {label}"
+    (if ok then logInfo else logError) m!"[{if ok then "PASS" else "FAIL"}] {label}"
 
 end LeanInformationAudit.Tests.DeclaredWireDepth

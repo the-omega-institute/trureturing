@@ -10,7 +10,7 @@ def proofTemplate (f : Bool → Bool) (_h : True) :
 register_information_template proofTemplate
 
 private def observe (label : String) (ok : Bool) : MetaM Unit :=
-  logInfo m!"[{if ok then "PASS" else "FAIL"}] {label}"
+  (if ok then logInfo else logError) m!"[{if ok then "PASS" else "FAIL"}] {label}"
 
 private def declare (name : Name) (type value : Expr) : MetaM Unit :=
   addDecl (.defnDecl { name, levelParams := [], type, value, hints := .abbrev, safety := .safe })

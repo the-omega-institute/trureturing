@@ -14,8 +14,8 @@ elab "observe_enrollment_construction_quota" : command => do
   set saved
   let positive ← enroll ``DeclaredTemplates.symbolicPointwise
   set saved
-  logInfo m!"[{if rejected then "PASS" else "FAIL"}] enrollment_construction_debit_required"
-  logInfo m!"[{if positive.isOk then "PASS" else "FAIL"}] complete_construction_enrollment_accepted"
+  (if rejected then logInfo else logError) m!"[{if rejected then "PASS" else "FAIL"}] enrollment_construction_debit_required"
+  (if positive.isOk then logInfo else logError) m!"[{if positive.isOk then "PASS" else "FAIL"}] complete_construction_enrollment_accepted"
   logInfo m!"bounded_enrollment_result={repr bounded}"
 
 observe_enrollment_construction_quota

@@ -55,7 +55,7 @@ run_meta do
         (!shouldValidate && (diagnostic.splitOn
           "reason=unclassified_form rule=dtr.realization_mismatch site=").length == 2, diagnostic)
       | .undeclared => (false, "undeclared")
-    logInfo m!"[{if ok then "PASS" else "FAIL"}] {label}"
+    (if ok then logInfo else logError) m!"[{if ok then "PASS" else "FAIL"}] {label}"
     unless ok do logInfo m!"actual={result}"
 
 end LeanInformationAudit.Tests.DeclaredAnchors

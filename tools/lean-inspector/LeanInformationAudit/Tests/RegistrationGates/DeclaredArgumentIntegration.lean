@@ -15,8 +15,8 @@ run_meta do
     let missing ← validateFinite { entry with variationWitness := .anonymous }
     witnessControls := witnessControls && missing.any (·.startsWith "IE-C048 ")
   let after ← observedWholeReadoutCalls
-  logInfo m!"[{if witnessControls then "PASS" else "FAIL"}] finite_witness_controls_preserved"
-  logInfo m!"[{if before == after then "PASS" else "FAIL"}] finite_gates_skip_whole_readout"
+  (if witnessControls then logInfo else logError) m!"[{if witnessControls then "PASS" else "FAIL"}] finite_witness_controls_preserved"
+  (if before == after then logInfo else logError) m!"[{if before == after then "PASS" else "FAIL"}] finite_gates_skip_whole_readout"
   let some structural := (DispositionCensus.structuralProvenanceEntries (← getEnv)).find?
       (·.theoremName == `LeanInformationAudit.Tests.DeclaredStructural.declared)
     | throwError "setup: missing structural route"
@@ -25,7 +25,7 @@ run_meta do
   let after ← observedWholeReadoutCalls
   let valid := result.any fun message => message.startsWith "IE-C048 " &&
     message.endsWith "reason=missing_witness"
-  logInfo m!"[{if valid then "PASS" else "FAIL"}] structural_missing_witness_preserved"
-  logInfo m!"[{if before == after then "PASS" else "FAIL"}] structural_gates_skip_whole_readout"
+  (if valid then logInfo else logError) m!"[{if valid then "PASS" else "FAIL"}] structural_missing_witness_preserved"
+  (if before == after then logInfo else logError) m!"[{if before == after then "PASS" else "FAIL"}] structural_gates_skip_whole_readout"
 
 end LeanInformationAudit.Tests.DeclaredArgumentIntegration

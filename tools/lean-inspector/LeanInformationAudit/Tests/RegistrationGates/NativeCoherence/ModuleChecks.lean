@@ -16,7 +16,7 @@ private def observe (label : String) (root : Name) (expected : String) : CoreM B
     pure ""
   catch error => pure (← error.toMessageData.toString)
   let ok := reason == expected
-  logInfo m!"[{if ok then "PASS" else "FAIL"}] {label} actual={reason}"
+  (if ok then logInfo else logError) m!"[{if ok then "PASS" else "FAIL"}] {label} actual={reason}"
   return ok
 
 run_meta LeanInformationAudit.Tests.withPrivateSources do

@@ -5,10 +5,10 @@ namespace LeanInformationAudit.Tests.ReifierMutations
 open Lean Meta Elab Command RegistrationReifier
 open D5.S3.ConceptDynamics.InformationEscape PointwiseRegistrationTemplates
 
--- The external mutation runner fails on [FAIL]; Lean compilation must stay clean.
+-- Assertion failures are errors in the canonical build; all observations still run.
 private def observe (label : String) (check : MetaM Bool) : MetaM Unit := do
   let ok ← check
-  logInfo m!"[{if ok then "PASS" else "FAIL"}] {label}"
+  (if ok then logInfo else logError) m!"[{if ok then "PASS" else "FAIL"}] {label}"
 
 def arena := pointwiseEqArena (Arena.ofFintype Bool) Bool
 theorem clean (x : Bool) : x.not.not = x := Bool.not_not _
@@ -63,7 +63,7 @@ elab "observe_semantic_insertion" : command => do
          else (message.splitOn "rule=dtr.argument_audit").length == 2)
     set initial
     if !inserted && !rejected then throwError "unexpected semantic probe diagnostic: {label}"
-    logInfo m!"[{if !inserted && rejected then "PASS" else "FAIL"}] {label}"
+    (if !inserted && rejected then logInfo else logError) m!"[{if !inserted && rejected then "PASS" else "FAIL"}] {label}"
 
 observe_semantic_insertion
 end LeanInformationAudit.Tests.ReifierMutations

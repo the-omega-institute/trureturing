@@ -23,12 +23,12 @@ run_meta do
       TemplateBinding.validateEvent event
       accepted := accepted + 1
     catch _ => pure ()
-  logInfo m!"[{if accepted == 11 then "PASS" else "FAIL"}] \
+  (if accepted == 11 then logInfo else logError) m!"[{if accepted == 11 then "PASS" else "FAIL"}] \
     imported_realizations_keep_original_owner accepted={accepted}"
   let event := events[0]!
   let badRealization ← rejection { event with realizationName := ``foreignDeclaration }
   let badUnit ← rejection { event with unitName := ``foreignDeclaration }
-  logInfo m!"[{if badRealization then "PASS" else "FAIL"}] imported_realization_wrong_owner_rejected"
-  logInfo m!"[{if badUnit then "PASS" else "FAIL"}] generated_unit_wrong_owner_rejected"
+  (if badRealization then logInfo else logError) m!"[{if badRealization then "PASS" else "FAIL"}] imported_realization_wrong_owner_rejected"
+  (if badUnit then logInfo else logError) m!"[{if badUnit then "PASS" else "FAIL"}] generated_unit_wrong_owner_rejected"
 
 end LeanInformationAudit.Tests.ImportedRealizationOwner

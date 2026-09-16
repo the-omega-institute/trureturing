@@ -38,7 +38,7 @@ run_meta do
   let rejected := match result with
     | .error reason => reason.startsWith "unclassified_form:E"
     | _ => false
-  logInfo m!"[{if rejected then "PASS" else "FAIL"}] EquivDecidableEqRejected result={repr result}"
+  (if rejected then logInfo else logError) m!"[{if rejected then "PASS" else "FAIL"}] EquivDecidableEqRejected result={repr result}"
 
 def unlistedProducerRead (_ : Unit) (x : Bool) : Bool :=
   let d : DecidableEq Bool := Function.Injective.decidableEq (f := fun b : Bool => b) (fun _ _ h => h)

@@ -78,7 +78,7 @@ elab "observe_enrollment_boundaries" : command => do
     let actual := match result with | .ok () => none | .error text => some text
     let present := (selectedPlan (← getEnv) name).isOk
     set saved
-    logInfo m!"[{if actual == expected && present == expected.isNone then "PASS" else "FAIL"}] {label} result={repr actual}"
+    (if actual == expected && present == expected.isNone then logInfo else logError) m!"[{if actual == expected && present == expected.isNone then "PASS" else "FAIL"}] {label} result={repr actual}"
 
 observe_enrollment_boundaries
 

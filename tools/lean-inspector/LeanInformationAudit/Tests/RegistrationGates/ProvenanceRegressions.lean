@@ -193,13 +193,16 @@ run_cmd Elab.Command.liftTermElabM do
   logInfo "[PASS] ForwardingShallowControl"
   let deep ← TemplateBinding.assess
     { record.occurrence with realizationName := `RegistrationProvenance.forward |>.num 299 } (some claim)
-  let actual := match deep.result with
+  let actual : String := match deep.result with
     | .declaredUnresolved message => message
     | .declaredValidated _ => "validated"
     | .undeclared => "undeclared"
-  -- This chain exhausts cumulative identity work before the depth cap. The
-  -- error must remain unresolved, with no certificate and no larger budget.
-  unless actual.contains "reason=incomplete_closure rule=E7.type_identity" do
+  -- Types and bodies debit the same identity budget. Either field can consume
+  -- its last units; the chain must remain unresolved without a certificate.
+  let identityExhausted :=
+    actual.contains "reason=incomplete_closure rule=E7.type_identity " ||
+    actual.contains "reason=incomplete_closure rule=E7.body_identity "
+  unless identityExhausted do
     throwError "[FAIL] ForwardingExhaustion: {actual}"
   logInfo "[PASS] ForwardingExhaustion"
 

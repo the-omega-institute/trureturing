@@ -38,13 +38,13 @@ run_meta do
     let result ← RegistrationGates.templateArgumentsCurrent ``target #[mkConst name] 524288
     let ok := result matches .error "forbidden_dependency:dtr.argument_audit"
     setEnv saved
-    logInfo m!"[{if ok then "PASS" else "FAIL"}] {label} result={repr result}"
+    (if ok then logInfo else logError) m!"[{if ok then "PASS" else "FAIL"}] {label} result={repr result}"
   let result ← RegistrationGates.templateArgumentsCurrent ``target #[mkConst ``Bool.true] 524288
-  logInfo m!"[{if result.isOk then "PASS" else "FAIL"}] independent_metadata_control_accepted"
+  (if result.isOk then logInfo else logError) m!"[{if result.isOk then "PASS" else "FAIL"}] independent_metadata_control_accepted"
   let projected := Expr.proj ``TemplateBindingCertificate 0 (mkConst ``emptyCertificate)
   let result ← RegistrationGates.templateArgumentsCurrent ``target #[projected] 524288
   let ok := result matches .error "forbidden_dependency:dtr.argument_audit"
-  logInfo m!"[{if ok then "PASS" else "FAIL"}] argument_raw_certificate_projection_rejected result={repr result}"
+  (if ok then logInfo else logError) m!"[{if ok then "PASS" else "FAIL"}] argument_raw_certificate_projection_rejected result={repr result}"
 
 elab "observe_metadata_enrollment" : command => do
   for (label, name) in #[
@@ -55,7 +55,7 @@ elab "observe_metadata_enrollment" : command => do
     let noEvidence := !(TemplateAudit.selectedPlan (← getEnv) name).isOk
     let ok := result matches .error "forbidden_dependency:E6.registered_identity"
     set saved
-    logInfo m!"[{if ok && noEvidence then "PASS" else "FAIL"}] {label} result={repr result}"
+    (if ok && noEvidence then logInfo else logError) m!"[{if ok && noEvidence then "PASS" else "FAIL"}] {label} result={repr result}"
   let saved ← get
   let name := (← getEnv).header.mainModule.str "rawProjection"
   let .defnInfo info ← getConstInfo ``capturedValue | throwError "setup: value definition missing"
@@ -72,7 +72,7 @@ elab "observe_metadata_enrollment" : command => do
   let ok := result matches .error "forbidden_dependency:E6.registered_identity"
   let noEvidence := !(TemplateAudit.selectedPlan (← getEnv) name).isOk
   set saved
-  logInfo m!"[{if ok && noEvidence then "PASS" else "FAIL"}] body_raw_plan_projection_rejected result={repr result}"
+  (if ok && noEvidence then logInfo else logError) m!"[{if ok && noEvidence then "PASS" else "FAIL"}] body_raw_plan_projection_rejected result={repr result}"
 
 observe_metadata_enrollment
 

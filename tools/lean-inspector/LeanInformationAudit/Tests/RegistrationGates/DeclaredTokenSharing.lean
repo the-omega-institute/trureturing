@@ -86,7 +86,7 @@ private def runChecks : TermElabM Unit := do
         !(PlanDecoder.decode forward (32 * forward.size)).isOk),
       ("shared_plan_duplicate_literal_rejected", duplicateRejected),
       ("shared_plan_token_work_charged", workRejected)] do
-    logInfo m!"[{if passed then "PASS" else "FAIL"}] {label}"
+    (if passed then logInfo else logError) m!"[{if passed then "PASS" else "FAIL"}] {label}"
 
 run_elab runChecks
 

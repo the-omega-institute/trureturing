@@ -9,6 +9,7 @@ elab "observe_enrollment_inputs" : command => do
   let bounded ← enroll name
   let issued := (selectedPlan (← getEnv) name).isOk
   set saved
+  let positiveOk := bounded.isOk && issued
   let positive := s!"[{if bounded.isOk && issued then "PASS" else "FAIL"}] bounded_complete_enrollment_accepted"
   elabCommand (← `(command| set_option informationTemplate.work 0))
   let exhausted ← enroll name
@@ -16,6 +17,7 @@ elab "observe_enrollment_inputs" : command => do
   -- The first native dependency must serialize its type within the quota.
   let incomplete := exhausted matches .error "incomplete_closure:E7.type_identity"
   set saved
+  let budgetOk := incomplete && noEvidence
   let budget := s!"[{if incomplete && noEvidence then "PASS" else "FAIL"}] enrollment_budget_incomplete result={repr exhausted}"
   -- Missing native input at the checker boundary. No fabricated successful
   -- definition or axiom stands in for an unavailable template body.
@@ -27,9 +29,9 @@ elab "observe_enrollment_inputs" : command => do
     | .error reason => reason.startsWith "incomplete_closure:E8.elaboration:"
     | .ok () => false
   set saved
-  logInfo positive
-  logInfo budget
-  logInfo m!"[{if incomplete && noEvidence then "PASS" else "FAIL"}] enrollment_missing_body_incomplete result={repr missing}"
+  (if positiveOk then logInfo else logError) positive
+  (if budgetOk then logInfo else logError) budget
+  (if incomplete && noEvidence then logInfo else logError) m!"[{if incomplete && noEvidence then "PASS" else "FAIL"}] enrollment_missing_body_incomplete result={repr missing}"
 
 observe_enrollment_inputs
 

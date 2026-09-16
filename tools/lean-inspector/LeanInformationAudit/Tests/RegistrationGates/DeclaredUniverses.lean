@@ -41,7 +41,7 @@ private def observe (event : TemplateOccurrenceEvent) (actual : Name)
     | .declaredUnresolved diagnostic, some rule =>
       (diagnostic.splitOn s!"reason=unclassified_form rule={rule} site=").length == 2
     | _, _ => false
-  logInfo m!"[{if ok then "PASS" else "FAIL"}] {label}"
+  (if ok then logInfo else logError) m!"[{if ok then "PASS" else "FAIL"}] {label}"
   unless ok do
     if let .declaredUnresolved diagnostic := record.result then logInfo diagnostic
 

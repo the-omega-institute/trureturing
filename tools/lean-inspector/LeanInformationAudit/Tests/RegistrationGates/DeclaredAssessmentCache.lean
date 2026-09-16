@@ -6,7 +6,7 @@ namespace LeanInformationAudit.Tests.DeclaredAssessmentCache
 open Lean Meta Elab Command TemplateBinding TemplateAudit
 
 private def observe (name : String) (ok : Bool) : MetaM Unit :=
-  logInfo m!"[{if ok then "PASS" else "FAIL"}] {name}"
+  (if ok then logInfo else logError) m!"[{if ok then "PASS" else "FAIL"}] {name}"
 
 run_meta withPrivateSources do
   let initial ← getEnv

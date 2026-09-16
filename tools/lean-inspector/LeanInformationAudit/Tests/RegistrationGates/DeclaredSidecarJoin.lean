@@ -4,7 +4,7 @@ namespace LeanInformationAudit.Tests.DeclaredSidecarJoin
 open Lean Meta TemplateBinding
 
 private def observe (label : String) (ok : Bool) : MetaM Unit :=
-  logInfo m!"[{if ok then "PASS" else "FAIL"}] {label}"
+  (if ok then logInfo else logError) m!"[{if ok then "PASS" else "FAIL"}] {label}"
 
 run_meta do
   let env ← getEnv

@@ -49,12 +49,12 @@ information_theorem independent in independentArena primitives (boundTemplate 0)
 run_meta do
   let .ok decisionPlan := TemplateAudit.selectedPlan (← getEnv) ``indexedDecision
     | throwError "setup: missing indexed decision template"
-  logInfo m!"[{if decisionTypeRetained decisionPlan.plan then "PASS" else "FAIL"}] decision_proposition_type_retained"
+  (if decisionTypeRetained decisionPlan.plan then logInfo else logError) m!"[{if decisionTypeRetained decisionPlan.plan then "PASS" else "FAIL"}] decision_proposition_type_retained"
   let .ok plan := TemplateAudit.selectedPlan (← getEnv) ``boundTemplate
     | throwError "setup: missing checked template"
   let retained := (plan.dependencies.find? (·.name == ``boundProof)).any fun input =>
     !input.typeIdentity.isEmpty && input.bodyIdentity.isEmpty
-  logInfo m!"[{if retained then "PASS" else "FAIL"}] enrollment_proof_input_retained"
+  (if retained then logInfo else logError) m!"[{if retained then "PASS" else "FAIL"}] enrollment_proof_input_retained"
   for (name, label, shouldValidate) in #[
       (``target, "instantiated_proof_type_target_rejected", false),
       (``independent, "instantiated_independent_proof_type_accepted", true)] do
@@ -70,7 +70,7 @@ run_meta do
         (!shouldValidate && (diagnostic.splitOn
           "reason=forbidden_dependency rule=dtr.instantiated_type site=").length == 2, diagnostic)
       | .undeclared => (false, "undeclared")
-    logInfo m!"[{if ok then "PASS" else "FAIL"}] {label}"
+    (if ok then logInfo else logError) m!"[{if ok then "PASS" else "FAIL"}] {label}"
     unless ok do logInfo m!"actual={result}"
 
 end LeanInformationAudit.Tests.DeclaredObligations

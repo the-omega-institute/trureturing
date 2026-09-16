@@ -35,7 +35,7 @@ private def check (label : String) (argument : Expr) (expected : Option String)
     | .ok _ => none
     | .error diagnostic => some diagnostic
   setEnv saved
-  logInfo m!"[{if actual == expected then "PASS" else "FAIL"}] {label} result={repr actual}"
+  (if actual == expected then logInfo else logError) m!"[{if actual == expected then "PASS" else "FAIL"}] {label} result={repr actual}"
 
 -- Independently typed arguments pass through the production entry used by
 -- TemplateBinding.validate and P1. Every case restores the environment so
@@ -51,7 +51,7 @@ run_meta do
   let rejected := match decisionResult with
     | .error s => s == "unclassified_form:E3.closed_decision"
     | _ => false
-  logInfo m!"[{if rejected then "PASS" else "FAIL"}] argument_closed_decision_grammar_rejected result={repr decisionResult}"
+  (if rejected then logInfo else logError) m!"[{if rejected then "PASS" else "FAIL"}] argument_closed_decision_grammar_rejected result={repr decisionResult}"
   let .defnInfo recursiveInfo ← getConstInfo ``recursiveArgument | throwError "setup"
   check "argument_unsupported_nat_recursion_rejected" recursiveInfo.value
     (some "unclassified_form:E4.recursion:Nat.rec")

@@ -79,7 +79,7 @@ elab "observe_declared_evidence" : command => do
     !(records after).any (·.occurrence.key.theoremName == name) &&
     !(selectedPlan after ``cutRealization).isOk
   set before
-  logInfo m!"[{if clean then "PASS" else "FAIL"}] binding_transaction_rolls_back"
+  (if clean then logInfo else logError) m!"[{if clean then "PASS" else "FAIL"}] binding_transaction_rolls_back"
 
 observe_declared_evidence
 

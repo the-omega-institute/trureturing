@@ -49,7 +49,7 @@ run_cmd do
       | .error message => !expected &&
           (message.splitOn "IE-C043 KernelProjectionUsedForAdmission").length == 2 &&
           (message.splitOn "field=capability:").length == 2
-    logInfo m!"[{if ok then "PASS" else "FAIL"}] {label}"
+    (if ok then logInfo else logError) m!"[{if ok then "PASS" else "FAIL"}] {label}"
     unless ok do logInfo m!"actual={repr result}"
 
 end LeanInformationAudit.Tests.PointerIdentity

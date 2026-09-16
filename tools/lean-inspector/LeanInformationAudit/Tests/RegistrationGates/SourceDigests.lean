@@ -13,10 +13,10 @@ run_meta IO.FS.withTempDir fun directory => do
   let inputs ← readSourceInputs paths
   let ordered := inputs.map (·.path) == paths &&
     inputs.map (·.sha256) == #[emptyHash, abcHash, abcHash]
-  logInfo m!"[{if ordered then "PASS" else "FAIL"}] source_digest_batch_order_and_duplicates"
+  (if ordered then logInfo else logError) m!"[{if ordered then "PASS" else "FAIL"}] source_digest_batch_order_and_duplicates"
   IO.FS.writeFile empty "abc"
   let changed ← readSourceInput empty.toString
-  logInfo m!"[{if changed.sha256 == abcHash then "PASS" else "FAIL"}] source_digest_changed_bytes"
+  (if changed.sha256 == abcHash then logInfo else logError) m!"[{if changed.sha256 == abcHash then "PASS" else "FAIL"}] source_digest_changed_bytes"
   let longPath := directory / String.ofList (List.replicate 180 'x')
   IO.FS.writeFile longPath "abc"
   let largePaths := Array.replicate 10000 longPath.toString
@@ -26,13 +26,13 @@ run_meta IO.FS.withTempDir fun directory => do
   catch _ => pure false
   let transportStatus := if transported then "PASS" else "FAIL"
   let pathBytes := 10000 * (longPath.toString.utf8ByteSize + 1)
-  logInfo m!"[{transportStatus}] source_digest_large_input_transport path_bytes={pathBytes}"
+  (if transported then logInfo else logError) m!"[{transportStatus}] source_digest_large_input_transport path_bytes={pathBytes}"
   let unicodePath := directory / "λ"
   IO.FS.writeFile unicodePath "abc"
   let utf8 ← try
     pure ((← readSourceInput unicodePath.toString).sha256 == abcHash)
   catch _ => pure false
-  logInfo m!"[{if utf8 then "PASS" else "FAIL"}] source_digest_utf8_request"
+  (if utf8 then logInfo else logError) m!"[{if utf8 then "PASS" else "FAIL"}] source_digest_utf8_request"
   for _ in [:40] do
     let current ← readSourceInput empty.toString
     unless current.sha256 == abcHash do throwError "source digest changed during repeated reads"
@@ -49,14 +49,14 @@ run_meta IO.FS.withTempDir fun directory => do
     pure (first.sha256 == emptyHash && second.sha256 == abcHash)
   finally
     IO.Process.setCurrentDir originalDirectory
-  logInfo m!"[{if relocated then "PASS" else "FAIL"}] source_digest_current_directory"
+  (if relocated then logInfo else logError) m!"[{if relocated then "PASS" else "FAIL"}] source_digest_current_directory"
   IO.FS.removeFile abc
   let missing ← try
     discard <| readSourceInputs paths
     pure false
   catch _ => pure true
-  logInfo m!"[{if missing then "PASS" else "FAIL"}] source_digest_missing_input_rejected"
+  (if missing then logInfo else logError) m!"[{if missing then "PASS" else "FAIL"}] source_digest_missing_input_rejected"
   IO.FS.writeFile abc "abc"
   let recovered ← readSourceInput abc.toString
   let recoveryStatus := if recovered.sha256 == abcHash then "PASS" else "FAIL"
-  logInfo m!"[{recoveryStatus}] source_digest_error_recovery"
+  (if recovered.sha256 == abcHash then logInfo else logError) m!"[{recoveryStatus}] source_digest_error_recovery"

@@ -24,7 +24,7 @@ run_meta do
   let cached ← TemplateBinding.assess original.occurrence (some claim)
   let cachedOk := (cached.result matches .declaredValidated _) &&
     (TemplateBinding.observedAssessments (← getEnv)).size == before.size
-  logInfo m!"[{if cachedOk then "PASS" else "FAIL"}] native_cached_binding_accepted"
+  (if cachedOk then logInfo else logError) m!"[{if cachedOk then "PASS" else "FAIL"}] native_cached_binding_accepted"
   let path ← findOLean original.occurrence.key.registrationModule
   let bytes ← IO.FS.readBinFile path
   try
@@ -35,7 +35,7 @@ run_meta do
       | .declaredUnresolved diagnostic =>
         (diagnostic.splitOn "rule=E7.native_input_changed").length == 2
       | _ => false
-    logInfo m!"[{if ok then "PASS" else "FAIL"}] replaced_native_artifact_rejected"
+    (if ok then logInfo else logError) m!"[{if ok then "PASS" else "FAIL"}] replaced_native_artifact_rejected"
   finally
     replaceNative path bytes
     unless (← IO.FS.readBinFile path) == bytes do

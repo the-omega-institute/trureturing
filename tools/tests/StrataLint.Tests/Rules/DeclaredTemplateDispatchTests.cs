@@ -30,6 +30,8 @@ public sealed class DeclaredTemplateDispatchTests
             fixture.Build(RawChangeSet.CreateWithKinds(
                 [(InformationTemplateDebtStore.ActivationPath, RawChangeKind.Added)]))).Diagnostics;
         Assert.DoesNotContain(diagnostics, diagnostic => diagnostic.AdmissionEffect == AdmissionEffect.Block);
+        Assert.Contains(diagnostics, diagnostic => diagnostic.AdmissionEffect == AdmissionEffect.Observe
+            && diagnostic.Message == "DTR-Inactive installation; protected activation is absent");
     }
 
     [Fact]

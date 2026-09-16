@@ -41,10 +41,10 @@ run_meta do
     | .declaredUnresolved diagnostic => (diagnostic.splitOn "rule=dtr.missing_template").length == 2
     | _ => false
   let absentOk := match absent.result with | .undeclared => true | _ => false
-  logInfo m!"[{if validOk then "PASS" else "FAIL"}] validated_record_has_certificate"
+  (if validOk then logInfo else logError) m!"[{if validOk then "PASS" else "FAIL"}] validated_record_has_certificate"
   if let .declaredUnresolved diagnostic := valid.result then logInfo diagnostic
-  logInfo m!"[{if missingOk then "PASS" else "FAIL"}] unresolved_record_without_module_failure"
-  logInfo m!"[{if absentOk && missingOk then "PASS" else "FAIL"}] uncertified_states_have_no_certificate"
+  (if missingOk then logInfo else logError) m!"[{if missingOk then "PASS" else "FAIL"}] unresolved_record_without_module_failure"
+  (if absentOk && missingOk then logInfo else logError) m!"[{if absentOk && missingOk then "PASS" else "FAIL"}] uncertified_states_have_no_certificate"
 
 declare_information_template_binding undeclared in arena
   readout via (@cutRealization Bool Bool instDecidableEqBool (fun x : Bool => x))
@@ -54,6 +54,6 @@ run_meta do
   let some overlay := joined.find? (·.occurrence.key.theoremName == ``undeclared)
     | throwError "setup: missing joined record"
   let valid := match overlay.result with | .declaredValidated _ => true | _ => false
-  logInfo m!"[{if valid then "PASS" else "FAIL"}] sidecar_join_precedes_assessment"
+  (if valid then logInfo else logError) m!"[{if valid then "PASS" else "FAIL"}] sidecar_join_precedes_assessment"
 
 end LeanInformationAudit.Tests.DeclaredBindings

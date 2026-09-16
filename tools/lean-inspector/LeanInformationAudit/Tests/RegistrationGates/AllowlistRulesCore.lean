@@ -711,4 +711,4 @@ run_meta do
     let rejected := match result with
       | .error reason => reason.startsWith "unclassified_form:E"
       | _ => false
-    logInfo m!"[{if rejected then "PASS" else "FAIL"}] {label} result={repr result}"
+    (if rejected then logInfo else logError) m!"[{if rejected then "PASS" else "FAIL"}] {label} result={repr result}"

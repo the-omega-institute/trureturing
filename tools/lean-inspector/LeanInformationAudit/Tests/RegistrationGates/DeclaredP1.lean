@@ -23,11 +23,11 @@ run_meta do
   let valid := match record.result with
     | .declaredUnresolved message => (message.splitOn "rule=dtr.missing_template").length == 2
     | _ => false
-  logInfo m!"[{if valid && entry.derivedCertificate.isSome then "PASS" else "FAIL"}] p1_faithful_registration_accepted"
+  (if valid && entry.derivedCertificate.isSome then logInfo else logError) m!"[{if valid && entry.derivedCertificate.isSome then "PASS" else "FAIL"}] p1_faithful_registration_accepted"
   let before ← RegistrationGates.observedWholeReadoutCalls
   let diagnostic ← RegistrationGates.validateFinite entry
   let after ← RegistrationGates.observedWholeReadoutCalls
-  logInfo m!"[{if before == after && diagnostic.isNone then "PASS" else "FAIL"}] p1_argument_audit_without_template_scan"
+  (if before == after && diagnostic.isNone then logInfo else logError) m!"[{if before == after && diagnostic.isNone then "PASS" else "FAIL"}] p1_argument_audit_without_template_scan"
 
 elab "observe_p1_argument_insertion" : command => do
   let saved ← get
@@ -41,7 +41,7 @@ elab "observe_p1_argument_insertion" : command => do
   let rejected := message.startsWith "P1.SemanticRejected: IE-C050 " &&
     (message.splitOn "reason=unclassified_form rule=dtr.argument_audit").length == 2
   set saved
-  logInfo m!"[{if !inserted && rejected then "PASS" else "FAIL"}] p1_semantic_insert_still_throws"
+  (if !inserted && rejected then logInfo else logError) m!"[{if !inserted && rejected then "PASS" else "FAIL"}] p1_semantic_insert_still_throws"
   unless !inserted && rejected do logInfo m!"actual={message} inserted={inserted}"
 
 observe_p1_argument_insertion
@@ -62,6 +62,6 @@ run_meta do
     pure ((← error.toMessageData.toString) ==
       "P1.SemanticRejected: incomplete or unbound registration diagnostic")
   setEnv saved
-  logInfo m!"[{if rejected then "PASS" else "FAIL"}] p1_persisted_diagnostic_still_checked"
+  (if rejected then logInfo else logError) m!"[{if rejected then "PASS" else "FAIL"}] p1_persisted_diagnostic_still_checked"
 
 end LeanInformationAudit.Tests.DeclaredP1

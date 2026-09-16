@@ -34,7 +34,7 @@ run_meta do
   let names := finiteNames.push structuralName
   let sourceOk := finiteNames.all (InformationRegistry.hasTheorem env) &&
     (DispositionCensus.structuralProvenanceEntries env).any (·.theoremName == structuralName)
-  logInfo m!"[{if sourceOk then "PASS" else "FAIL"}] all_routes_supported_control"
+  (if sourceOk then logInfo else logError) m!"[{if sourceOk then "PASS" else "FAIL"}] all_routes_supported_control"
   let inventory := TemplateBinding.inventory env
   let records := TemplateBinding.records env
   let recorded := names.all fun name =>
@@ -46,6 +46,6 @@ run_meta do
        | .declaredUnresolved diagnostic => name != structuralName &&
           (diagnostic.splitOn "rule=dtr.missing_template").length == 2
        | .undeclared => false)
-  logInfo m!"[{if recorded then "PASS" else "FAIL"}] all_registration_routes_recorded"
+  (if recorded then logInfo else logError) m!"[{if recorded then "PASS" else "FAIL"}] all_registration_routes_recorded"
 
 end LeanInformationAudit.Tests.DeclaredRoutes

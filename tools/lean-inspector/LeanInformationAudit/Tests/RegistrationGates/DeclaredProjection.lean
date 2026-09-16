@@ -34,7 +34,7 @@ private def observe (event : TemplateOccurrenceEvent) (actual : Name)
       ((message.splitOn expected).length == 2, message)
     | .declaredUnresolved message, none => (false, message)
     | _, _ => (false, "unexpected alternative")
-  logInfo m!"[{if ok then "PASS" else "FAIL"}] {label}"
+  (if ok then logInfo else logError) m!"[{if ok then "PASS" else "FAIL"}] {label}"
   unless ok do logInfo m!"actual={result}"
 
 run_meta do

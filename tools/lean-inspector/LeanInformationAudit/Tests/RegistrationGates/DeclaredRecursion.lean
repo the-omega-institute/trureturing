@@ -75,16 +75,16 @@ elab "observe_constructor_recursion" : command => do
       let valid := match decoded with
         | .ok (plan, _) => (planEncoding plan).toOption == some bytes
         | .error _ => false
-      logInfo m!"[{if valid then "PASS" else "FAIL"}] recursion_plan_import_{name} bytes={bytes.size} work={plan.chargedWork}"
+      (if valid then logInfo else logError) m!"[{if valid then "PASS" else "FAIL"}] recursion_plan_import_{name} bytes={bytes.size} work={plan.chargedWork}"
       if let .error reason := decoded then logInfo m!"actual={reason}"
-    logInfo m!"[{if actual == expected && retained == expected.isNone then "PASS" else "FAIL"}] {label} result={repr actual}"
+    (if actual == expected && retained == expected.isNone then logInfo else logError) m!"[{if actual == expected && retained == expected.isNone then "PASS" else "FAIL"}] {label} result={repr actual}"
 
 -- The syntax gate is separate from the semantic constructor-description check.
 def futureVersion (f : Bool → Bool) : PrimitiveRealization (cutSignature Bool Bool) := cutRealization f
 register_information_template futureVersion constructors 2 [ObjectTree]
 run_meta do
   let rejected := !(selectedPlan (← getEnv) ``futureVersion).isOk
-  logInfo m!"[{if rejected then "PASS" else "FAIL"}] constructor_recursion_version_gate"
+  (if rejected then logInfo else logError) m!"[{if rejected then "PASS" else "FAIL"}] constructor_recursion_version_gate"
 
 observe_constructor_recursion
 
@@ -117,7 +117,7 @@ run_meta do
         (·.occurrence.key.theoremName == name) | throwError "setup: missing constructor binding"
     match row.result with
     | .declaredValidated _ => logInfo m!"[PASS] {label}"
-    | .declaredUnresolved diagnostic => logInfo m!"[FAIL] {label}: {diagnostic}"
+    | .declaredUnresolved diagnostic => logError m!"[FAIL] {label}: {diagnostic}"
     | .undeclared => throwError "setup: missing descriptor"
 
 end LeanInformationAudit.Tests.DeclaredRecursion

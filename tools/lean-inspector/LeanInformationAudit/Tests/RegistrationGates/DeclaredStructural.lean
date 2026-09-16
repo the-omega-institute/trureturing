@@ -30,7 +30,7 @@ run_meta do
     | throwError "setup: structural undeclared inventory missing"
   let valid := match declared.result with | .declaredValidated _ => true | _ => false
   let absent := match undeclared.result with | .undeclared => true | _ => false
-  logInfo m!"[{if valid && absent then "PASS" else "FAIL"}] structural_registration_route_recorded"
+  (if valid && absent then logInfo else logError) m!"[{if valid && absent then "PASS" else "FAIL"}] structural_registration_route_recorded"
   if let .declaredUnresolved error := declared.result then logInfo error
 
 end LeanInformationAudit.Tests.DeclaredStructural

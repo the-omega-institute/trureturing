@@ -43,8 +43,8 @@ elab "observe_import_body" : command => do
   let ordinary := ({} : TemplateIndex).addFrame frame env plan.enrollmentOwner
   let full := (ordinary.lookup name (pure () : Id Unit)).isOk
   set saved
-  logInfo m!"[{if ok then "PASS" else "FAIL"}] import_never_reaudits_body"
-  logInfo m!"[{if full then "PASS" else "FAIL"}] selective_import_within_cap_accepted"
+  (if ok then logInfo else logError) m!"[{if ok then "PASS" else "FAIL"}] import_never_reaudits_body"
+  (if full then logInfo else logError) m!"[{if full then "PASS" else "FAIL"}] selective_import_within_cap_accepted"
 
 observe_import_body
 
