@@ -38,6 +38,12 @@ class NativePublicationTests:
             for name, artifact in zip(config['modules'], artifacts)]
         output, request, result = (self.root / name for name in ['aggregate.zip', 'requests.json', 'statuses.json'])
         requests.append(['aggregate', [str(self.root), str(output), *artifacts]])
+        # Lake's FilePath.join preserves the root package's /./ component.
+        # These must take the same complete shared validation boundary.
+        requests = [[kind, [arg.replace(str(self.root) + '/', str(self.root) + '/./')
+            if arg.startswith(str(self.root) + '/') else
+            str(self.root) + '/.' if arg == str(self.root) else arg for arg in args]]
+            for kind, args in requests]
         request.write_text(json.dumps(requests))
         with patch.object(publication, 'validate_rows', wraps=publication.validate_rows) as validations:
             native.batch(request, result)

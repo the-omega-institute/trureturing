@@ -277,7 +277,14 @@ def batch(request_file, result_file):
         expected = [['validate', [root, 'module', root, name,
             str(state(root) / 'inputs' / (name + '.json')), artifact]]
             for name, artifact in zip(config['modules'], artifacts)]
-        if expected and len(artifacts) == len(config['modules']) and requests[:-1] == expected:
+        # Lake's FilePath retains /./ while pathlib renders the same lexical
+        # path without it. Compare paths without resolving symlinks or '..'.
+        same_requests = len(requests) == len(expected) + 1 and all(
+            kind == wanted_kind and len(args) == len(wanted_args) and
+            args[:4] == wanted_args[:4] and Path(args[4]) == Path(wanted_args[4]) and
+            args[5:] == wanted_args[5:]
+            for (kind, args), (wanted_kind, wanted_args) in zip(requests, expected))
+        if expected and len(artifacts) == len(config['modules']) and same_requests:
             aggregate(root, output, artifacts, verified_materials=verified_materials,
                       template_inputs=template_inputs(root), row_statuses=statuses)
             statuses.append(int(any(statuses)))
