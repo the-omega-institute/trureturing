@@ -539,19 +539,20 @@ def stoploss_product_update(weights, atoms, scale):
     return [stoploss_ceiling(w, scale) for w in raw]
 
 
-def pure_head_unrestricted_stoploss():
+def pure_head_unrestricted_stoploss(cases=None):
     """Keep mixed head exclusions until the single final conditioning."""
     import hashlib
     from runpy import run_path
     continuation = run_path(str(Path(__file__).with_name("verify_finite_continuation.py")))
     scale = 10**18
-    cases = [(head, 17 if head['period_bound'] == 315 else 19, 2048)
-             for head in finite_head_supported_laws()]
-    cases.append(({'period_bound': None, 'mixed_budget': '2/3',
-                   'product_moment_bound': '325/18',
-                   'coordinates': [{'prime': p, 'height': None,
-                                    'pure_survivor_density_lower': str(F(p-2, p-1))}
-                                   for p in (3, 5, 7)]}, 23, 8192))
+    if cases is None:
+        cases = [(head, 17 if head['period_bound'] == 315 else 19, 2048)
+                 for head in finite_head_supported_laws()]
+        cases.append(({'period_bound': None, 'mixed_budget': '2/3',
+                       'product_moment_bound': '325/18',
+                       'coordinates': [{'prime': p, 'height': None,
+                                        'pure_survivor_density_lower': str(F(p-2, p-1))}
+                                       for p in (3, 5, 7)]}, 23, 8192))
     results = []
     for head, q0, bound in cases:
         period = head['period_bound']
@@ -1494,6 +1495,9 @@ def certificate():
             "cylinder_cube_margin": str(cylinder_cube_margin),
             "scope": "Only the common-delta scalar sufficient expression; not a covering counterexample."}}
     head_mass = head_mixed_mass_improvement()
+    finite_945_tail17 = pure_head_unrestricted_stoploss(
+        [(head, 17, 8192) for head in finite_heads if head["period_bound"] == 945])
+    require(len(finite_945_tail17) == 1, "unique finite 945 head specialization")
     return {
         "general_357_head": general_head,
         "extended_prime_square": {"cutoff": 40000, "scale": extended_scale,
@@ -1510,6 +1514,7 @@ def certificate():
         "finite_support_switch": finite_support_switch_bounds(),
         "unrestricted_star_stoploss": unrestricted_star_stoploss(),
         "pure_head_unrestricted_stoploss": pure_head_unrestricted_stoploss(),
+        "finite_945_tail17_stoploss": finite_945_tail17[0],
         "head_mixed_mass_improvement": head_mass,
         "cm1_actual_head_sharpness": cm1_actual_head_sharpness(),
         "adaptive_head_stoploss": adaptive_head_stoploss(head_mass),
@@ -1579,6 +1584,8 @@ def main():
                       "coupled_mixed_head_mass_upper": data["head_mixed_mass_improvement"]["mixed_head_mass_upper"],
                       "adaptive_tail19_supported_Gamma_upper": data["adaptive_head_stoploss"]["supported_Gamma_upper"],
                       "adaptive_tail19_stopping_lower": data["adaptive_head_stoploss"]["stopping_lower"],
+                      "finite_945_tail17_supported_Gamma_upper": data["finite_945_tail17_stoploss"]["supported_Gamma_upper"],
+                      "finite_945_tail17_stopping_lower": data["finite_945_tail17_stoploss"]["stopping_lower"],
                       "comb_flow_comparisons": data["homogeneous_comb_capacity"]["flow_comparisons"],
                       "pure_head_unrestricted_Gamma_bounds": {row["head"]: row["supported_Gamma_upper"] for row in data["pure_head_unrestricted_stoploss"]},
                       "unrestricted_star_supported_Gamma_upper": data["unrestricted_star_stoploss"]["supported_Gamma_upper"],

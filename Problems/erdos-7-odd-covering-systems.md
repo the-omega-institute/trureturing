@@ -39,12 +39,19 @@ index 309 with certified supported `Gamma<4331`; the rational stopping
 threshold is greater than 4732. The proof and exact certificate are given in
 (US1)--(US12). Arbitrary head assignments remain unresolved.
 
-The pure-head continuation (PH1)--(PH6), sharpened by (AD1)--(AD4), excludes **arbitrary**
+The pure-head continuation (PH1)--(PH7), sharpened by (AD1)--(AD4), excludes **arbitrary**
 `{3,5,7}` head assignments and heights when all other primes are at least
 19, with no tail support or graph restrictions. The odd parts 315 and 945
-in the frozen 5040 fibre permit tail cutoffs 17 and 19 respectively.
+in the frozen 5040 fibre both permit tail cutoff 17, by (PH7).
 Thus a hypothetical cover must involve at least one of 11, 13 and 17.
 These missing-small-prime hypotheses remain; unrestricted #7 is open.
+
+For families using only the primes 3, 5 and 7, (CM1)--(CM8) determine the
+exact infimum of uniform uncovered density: \(53/432\). Every finite
+family has strictly greater uncovered density, and an explicit family
+with increasing prime-power heights approaches this value. The
+all-height proof has exact CRT certificates; it is not an end-to-end
+Lean theorem.
 
 ## Motivation
 
@@ -360,7 +367,7 @@ Each of the following hypotheses implies noncoverage:
 | Head period | Every other prime factor | Tail restrictions |
 |---|---:|---|
 | \(Q\mid315\) | \(\ge17\) | none |
-| \(Q\mid945\) | \(\ge19\) | none |
+| \(Q\mid945\) | \(\ge17\) | none |
 | \(Q=3^a5^b7^c\), arbitrary finite \(a,b,c\ge0\) | \(\ge19\) | none |
 
 In particular the first two rows use precisely the odd parts in the frozen
@@ -368,11 +375,12 @@ In particular the first two rows use precisely the odd parts in the frozen
 in one modulus, the total prime count, or the interaction graph. The first
 two rows bound the head exponents even in classes ending at later primes.
 The absent small primes are genuine hypotheses: the three rows respectively
-exclude \(\{11,13\}\), \(\{11,13,17\}\), and \(\{11,13,17\}\).
+exclude \(\{11,13\}\), \(\{11,13\}\), and \(\{11,13,17\}\).
 Thus the third row implies that any hypothetical odd distinct cover must
 use at least one prime in \(\{11,13,17\}\). It does not resolve #7.
-The constant-threshold proof below establishes the third row from prime
-23; the adaptive schedule (AD1)--(AD4) establishes its stated cutoff 19.
+The initial constant-threshold certificates below establish the second
+row from 19 and the third from 23. Continuing the second from 17 gives
+(PH7); the adaptive schedule (AD1)--(AD4) gives the third row's cutoff 19.
 
 **Preserve the pure-head product until the final conditioning.** Use the
 actual pure-survivor product law \(P_0\) from (FC4). For a finite endpoint
@@ -486,6 +494,35 @@ charges and the final bounds, with 815 or 3276 retained states. It is not
 an end-to-end Lean theorem. Earlier graph and bounded-support rows remain
 valid quantitative refinements; their restrictions are unnecessary for
 noncoverage under the hypotheses certified in the preceding table.
+
+**Both odd parts of the 5040 fibre permit prime 17.** For \(Q\mid945\),
+use the same finite head heights \((3,1,1)\), mixed-head charge
+\(157/336\) and head second moment \(189/16\), now processing every
+tail prime from 17. Keep \(\delta=2/5\). The additional certificate
+`finite_945_tail17_stoploss` uses the complete terminal atoms in (PH2)
+and the same directed recurrence through \(B=8192\), where the global
+index is \(k=1028\). It gives
+\[
+ \begin{aligned}
+ C_B&\le792001218575786359/10^{18}<1,\\
+ J_B&\le3198136266025222684001/10^{18},\\
+ \Gamma_{\mathrm{supported}}
+ &\le\frac{3197344264806646897642}{207998781424213641}
+ <15372<35445.
+ \end{aligned}                                     \tag{PH7}
+\]
+The stopping lower bound (PH5) is greater than 35445. Thus the identical
+same-law comparison, final conditioning and BBMST continuation prove
+noncoverage for every distinct original family with \(Q\mid945\)
+and all other prime factors at least 17. The entire-family head-height
+condition is retained; no tail exponent, support, graph or total
+prime-count restriction is added. Together with the 315 certificate,
+this gives the same tail cutoff for both odd parts of the frozen fibre.
+An independent divisor-convolution implementation reproduces all 1022
+charges using the complete finite terminal atoms. Independently,
+\(\log2>56/81\) and \(k=1028\ge1024\) give
+\(k(\log k+\log\log k-3)^2>21021572/729>28835\),
+which also suffices for (PH7).
 
 ### Adaptive kernels lower the unrestricted cutoff to 19
 
@@ -899,7 +936,7 @@ at most three from 17 or 19 respectively. These conditions allow complete
 tail graphs of unbounded size. Moreover, (RK6)--(RK8) impose those support
 bounds only on moduli with largest prime at most 8192 for 315 and 945,
 or 32768 for arbitrary 357. Above those cutoffs, each original modulus may
-have arbitrarily many tail prime factors. The unrestricted-tail theorem (PH1)--(PH6) now removes
+have arbitrarily many tail prime factors. The unrestricted-tail theorem (PH1)--(PH7) now removes
 these support restrictions entirely for the three stated head and prime-gap
 hypotheses. Thus every hypothetical cover must involve at least one of
 11, 13, 17, 19; their unrestricted interaction is not settled here.
@@ -7494,7 +7531,7 @@ allowed by (RK1)--(RK5) when each original modulus has at most two tail
 primes for the full star or three-prime heads, or at most three for the
 finite 315/945 heads, at the respective stated cutoffs. The finite
 switch (RK6)--(RK8) already removes support restrictions above its cutoffs;
-(PH1)--(PH6), sharpened by (AD1)--(AD4), further removes every tail support and graph restriction for
+(PH1)--(PH7), sharpened by (AD1)--(AD4), further removes every tail support and graph restriction for
 these head classes at the stated prime gaps. The head exponents for the
 315/945 rows and the missing primes remain genuine hypotheses. The star
 rows retain quantitative bounds, while (US1)--(US12) exclude all star
