@@ -2774,6 +2774,116 @@ def joint_cost_hinge_refinement(old_cases, shared, old, profile, fixed):
             'interpolation':profile['interpolation']}
 
 
+def joint_cost_branch_tail17(shared, old, joint):
+    """Certify unrestricted tail continuation for one actual full-fibre old branch."""
+    from runpy import run_path
+    F = Fraction
+    a = run_path(str(Path(__file__).with_name('verify_star_block_obstruction.py')))
+    b = run_path(str(Path(__file__).with_name('verify_finite_continuation.py')))
+    def ceildiv(x,y):
+     require(y>0,'positive denominator');return -((-x)//y)
+    S=10**24
+    up=lambda q:ceildiv(F(q).numerator*S,F(q).denominator)
+    shape='root2_same_other_column';N=96
+    sc=shared;source=next(r for c in sc['cases'] if c['shape']==shape for r in c['rows'] if r['survivors']==N)
+    survival_head=F(source['full_mass_lower']);clip=F(sc['clip']);old_g=F(source['square_upper']);chi=F(sc['square_reference_factor'])
+    MF=F(source['same_law_first_upper']);GF=1+(old_g-1+clip*(chi-1)*old_g-F(9,496)*old_g-F(19,496))/survival_head
+    require(MF==F(1134400,266709) and GF==F(35754161,1333545),'canonical branch moments')
+    C=up(MF);G=up(GF);ell=survival_head/clip
+    knots=next(r['full_hinge_upper_at_4_through_12'] for c in joint['cases'] if c['shape']==shape for r in c['rows'] if r['survivors']==N)
+    H={t:up(F(x)) for t,x in zip(range(4,13),knots)}
+    k=6;D=k*(k-1)
+    low_coefficient=D*S-(2*k+1)*(C-S)+(G-S)
+    require(0<=low_coefficient<=D*S,'middle moment correction coefficient')
+    X={int(k):F(p) for k,p in old['auxiliary_atoms'].items()}
+    oldmean=sum(x*p for x,p in X.items())
+    def p_factor(p,f):return F(p-2,p-1) if f==1 else F(1,p**(f-1))
+    # Positive reference convolution; no subtraction of nearly equal moments.
+    L=80
+    fp11=[None]+[p_factor(11,f) for f in range(1,L+1)]
+    fp13=[None]+[p_factor(13,f) for f in range(1,L+1)]
+    y=[0]*(12*L*L+1)
+    for x,mass in X.items():
+     for f in range(1,L+1):
+      for g in range(1,L+1):y[x*f*g]+=up(mass*fp11[f]*fp13[g])
+    tail=call=0;yc=[0]*len(y)
+    for j in range(len(y)-1,-1,-1):
+     yc[j]=call;tail+=y[j];call+=tail
+    # E[N_p; N_p>L] is the exact geometric tail mean.
+    def tail_mean(p):return F(1,p**(L-1))*(F(L+1,p-1)+F(1,(p-1)**2))
+    error=up(oldmean*(F(157,144)*tail_mean(11)+F(111,100)*tail_mean(13)))
+    ref=[ceildiv((v+error)*ell.denominator,ell.numerator) for v in yc]
+    # At r=3 the generic density domination gives this affine upper bound.
+    # Use the positive convolution itself, so the same rounding controls both sides.
+    Rmean=3*S+ref[3]
+    require(Rmean>=C,'reference bound above the fixed affine baseline')
+    def correction(T,n):
+     # Upper bound for n*Psi(T/n)-C*n/S+T, scaled by S. Psi>=C-t by definition.
+     subtract=C*n-T*S
+     if T<=3*n:
+      rc=n*(Rmean-C)
+     else:
+      j,r=divmod(T,n)
+      rc=(n-r)*ref[j]+r*ref[j+1]-subtract
+     if T*(2*k+1)<=n*(k*k+k+1):
+      mc=ceildiv(low_coefficient*(T-n),D)
+     else:
+      j=max(k+1,2*T//n)
+      if T*(2*j+1)>n*(j*j+j+1):j+=1
+      mc=ceildiv((G-S)*(j*n-T),j*j-1)-subtract
+     result=min(rc,mc)
+     if 4*n<=T<=12*n:
+      j,r=divmod(T,n)
+      gc=n*H[12] if j==12 else (n-r)*H[j]+r*H[j+1]
+      result=min(result,gc-subtract)
+     return max(0,result)
+    runs=((17,4),(19,5),(31,8),(41,12),(61,16),(73,24),(113,32),(151,48),
+          (211,64),(229,72),(293,96),(419,128),(449,144),(577,192),(809,256),
+          (883,288),(1153,384),(1601,512),(1787,576),(2377,768),(3271,1024),
+          (3719,1152),(5051,1536),(7019,2048),(8117,2304),(8191,3072))
+    B=30011;primes=list(b['segmented_primes'](0,B));choices=[];run_index=0
+    for q in primes:
+     if q<17:continue
+     if q<=8191:
+      while q>runs[run_index][0]:run_index+=1
+      T=runs[run_index][1]
+     else:T=1+3*(q-2)//8
+     choices.append((q,T))
+    require(all(1<T<q-1 for q,T in choices),'normalized kernel domain')
+    cap=max(T for q,T in choices)
+    w=[0]*(cap+1);w[1]=S;mean=S;second=G;charge=0
+    rows=[];corr_cache={}
+    for idx,(q,T) in enumerate(choices):
+     s=q-1-T
+     if T not in corr_cache:
+      corr_cache[T]=[0]+[correction(T,n) for n in range(1,T)]
+     corr=corr_cache[T]
+     numerator=C*mean-T*S*S+sum(w[n]*corr[n] for n in range(1,T))
+     require(numerator>=0,'nonnegative charge numerator upper')
+     step=ceildiv(numerator,S*s);charge+=step
+     require(charge<S,'strict positive survival at every prefix')
+     second=ceildiv(second*((q-1)*s+3*q-1),(q-1)*s)
+     if idx+1<len(choices):
+      w=a['stoploss_product_update'](w,a['stoploss_atom_bounds'](q,F(q-1,s),cap,S),S)
+      mean=ceildiv(mean*(s+1),s)
+     if q in (17,997,8191,B):
+      rows.append({'q':q,'T':T,'charge_upper':str(F(charge,S)), 'second_upper':str(F(second,S))})
+     # Only the current repeated threshold and future states are useful.
+     if idx+1<len(choices) and choices[idx+1][1]!=T:del corr_cache[T]
+    gamma=1+F(second-S,S-charge);stop=b['stopping_threshold'](len(primes))
+    require(gamma<stop,'strict exact stopping inequality')
+    output={'scope':'ordinary exact directed arithmetic; root2_same_other_column,N96 supported head and AP2/AP5/AP6 required','scale':S,'shape':shape,'old_survivors':N,'head_mean_upper':str(MF),'head_square_upper':str(GF),'head_reference_density_fraction':str(ell),'head_hinge_upper_at_4_through_12':knots,'first_tail_prime':17,'last_prime':B,'global_prime_index':len(primes),'steps_verified':len(choices),'prefix_threshold_runs':[list(row) for row in runs],'later_threshold_formula':'1+floor(3*(q-2)/8)','retained_product_states':cap,'reference_factor_cutoff':L,'reference_tail_mean_scaled_upper':error,'total_charge_upper':str(F(charge,S)),'second_upper':str(F(second,S)),'survival_lower':str(F(S-charge,S)),'Gamma_upper':str(gamma),'stopping_lower':str(stop),'stopping_margin':str(stop-gamma),'checkpoints':rows}
+    old_classes=[(3,0),(9,4),(5,0),(15,11),(45,2),(7,0)]+[(7*d,0) for d in MODULI]
+    points=old_head(2,'same_other_column')[0]
+    survivors=[x for x in range(315) if all(x%d!=a for d,a in old_classes)]
+    require(len(points)==16 and len(survivors)==96 and
+            all((x in survivors)==(x%45 in points and x%7!=0) for x in range(315)),
+            'actual complete original family realizes the full-fibre branch')
+    output['actual_old_family']=[list(row) for row in old_classes]
+    output['actual_old_survivors_verified']=len(survivors)
+    return output
+
+
 def verify(expected):
     cases = []
     old_cases = []
@@ -2813,9 +2923,11 @@ def verify(expected):
         expected["actual_rectangle_hinge_profile"]["witnesses"], shared_head, deletion_result, cases)
     fixed_hinge = fixed_count_hinge_refinement(
         fixed_count_joint_cost_comparison(old_cases), shared_head, deletion_result, hinge_profile)
+    joint_hinge = joint_cost_hinge_refinement(
+        old_cases, shared_head, deletion_result, hinge_profile, fixed_hinge)
     result = {
-        "joint_cost_hinge_refinement": joint_cost_hinge_refinement(
-            old_cases, shared_head, deletion_result, hinge_profile, fixed_hinge),
+        "joint_cost_branch_tail17": joint_cost_branch_tail17(shared_head, deletion_result, joint_hinge),
+        "joint_cost_hinge_refinement": joint_hinge,
         "fixed_count_hinge_refinement": fixed_hinge,
         "actual_rectangle_hinge_profile": hinge_profile,
         "rectangle_hinge_observation_gap": rectangle_hinge_observation_gap(),
@@ -2867,6 +2979,7 @@ def verify(expected):
                       "arbitrary_holes12_tail17_Gamma": result["arbitrary_holes12_tail17"]["Gamma_upper"],
                       "shared_count_clipped_Gamma": result["shared_count_clipped_head"]["actual_rectangle_refinement"]["Gamma_upper"],
                       "shared_count_branches": result["shared_count_clipped_head"]["shared_branches_verified"],
+                      "full_fibre_branch_tail17_Gamma": result["joint_cost_branch_tail17"]["Gamma_upper"],
                       "joint_cost_full_hinge6": result["joint_cost_hinge_refinement"]["universal_full_hinge_upper_at_4_through_12"][2],
                       "fixed_count_full_hinge6": result["fixed_count_hinge_refinement"]["universal_full_hinge6_upper"],
                       "actual_rectangle_hinge6": result["actual_rectangle_hinge_profile"]["universal_full_hinge_upper_at_4_through_12"][2],

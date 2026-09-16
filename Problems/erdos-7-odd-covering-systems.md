@@ -45,6 +45,23 @@ The pure-head continuation (PH1)--(PH7), sharpened by (AD1)--(AD5), excludes **a
 in the frozen 5040 fibre both permit tail cutoff 13, by (AD5).
 Thus a hypothetical cover must involve at least one of 11, 13 and 17.
 These missing-small-prime hypotheses remain; unrestricted #7 is open.
+
+A further [ordinary noncoverage theorem](../docs/reports/erdos7-odd-covering/marked_head_profile.md#an-actual-full-fibre-old-configuration-with-unrestricted-tails)
+allows both 11 and 13 at arbitrary finite heights, arbitrary axis and point
+deletions, and unrestricted later primes, for an explicit old geometry.
+Let U be the 16-point complement modulo 45 of `(3,0),(9,4),(5,0),(15,11),(45,2)`.
+If the full original 3/5/7 part divides 315 and the old survivors contain
+`U × {1,...,6}` in CRT coordinates modulo 45 and 7, the family cannot cover.
+The same supported law has full-height mean at most `1134400/266709` and
+square at most `35754161/1333545`. Keeping this configuration throughout a
+3240-step exact tail certificate gives residual greater than 0.04896 at
+prime 30011 and supported `Gamma<163516`, below the certified continuation
+threshold `>167115`. The finite tail certificate then permits the BBMST
+infinite continuation. One complete 315 family realizes the stated 96-point
+set with redundant mixed-seven classes; those classes are not moved in this
+argument. Thus this theorem is not an automatic elimination of a branch
+after making every such class effective, nor a solution of unrestricted #7.
+
 The same uniform complete-survivor law at arbitrary finite3,5,7heights
 also satisfies `Gamma<=3849/106` by (SD1)--(SD6), using shared cell parameters
 and signed deletion energy. This improves `937/24` by `3473/1272`
@@ -1812,7 +1829,9 @@ not a new Lean theorem or a completed unrestricted-tail certificate.
 
 These results remove the axis hypothesis for the finite head estimate.
 They do not supply the unrestricted-tail stopping certificate needed
-to remove that hypothesis from the preceding noncoverage theorem.
+to remove that hypothesis for every old configuration. The particular
+96-point configuration in (BT1)--(BT8) does have a complete unrestricted-tail
+certificate with arbitrary axis and point exclusions.
 
 The fixed-count labelled deletion refinement now closes the finite-head
 threshold-six target. On the first 17-point old shape, the five mixed-seven

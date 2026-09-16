@@ -3296,3 +3296,212 @@ numerator bounds, every full-height branch, and the maxima. All arithmetic
 in its canonical verifier uses Python integers and fractions. The result
 has the same full original 357-part-dividing-315 scope and arbitrary finite
 11/13 heights, and supplies no unrestricted-tail or new Lean conclusion.
+
+## An actual full-fibre old configuration with unrestricted tails
+
+Let U be the complement modulo 45 of the five classes
+
+    (modulus, residue) = (3,0), (9,4), (5,0), (15,11), (45,2).
+
+It has 16 points. In CRT coordinates modulo 315 put
+
+    R = U × {1,2,3,4,5,6} ⊂ (Z/45Z) × (Z/7Z).             (BT1)
+
+Consider a finite family of distinct odd nonunit moduli whose full original
+3/5/7 part divides 315. Suppose its classes with modulus dividing 315 leave
+exactly R in these coordinates. Then the family cannot cover the integers,
+even with arbitrary finite 11/13 heights and arbitrary later prime factors,
+exponents, cofactor supports and residues. The same assertion holds when
+those old survivors contain R: the construction below uses a probability
+supported on R, so it is still supported on the actual old survivors.
+
+This is a genuine restriction on the old geometry. One complete original
+315 family realizing it consists of the five displayed classes together with
+
+    (7,0), (21,0), (35,0), (63,0), (105,0), (315,0).
+
+All five mixed-seven classes in this example are redundant. The verifier
+checks all 315 residues and obtains exactly the 96 points of (BT1). No
+further move of those redundant classes is made. In particular, this result
+is not an automatic removal of one branch from a procedure that first makes
+every mixed-seven class effective. It does not settle unrestricted #7.
+
+### The same supported head law throughout the continuation
+
+Use the existing clipped construction with C_clip=40/31 on the old uniform
+law on R. This is the `root2_same_other_column`, N=96 input to (SC2)--(SC10)
+and (JC1). Those inequalities require only 0≤b≤5 and the labelled-cylinder
+upper bound on b, so they apply with b=0. Their proof does not require a
+positive effective mixed-seven deletion. In the containing-survivor case,
+use this same reference law directly; none of the later distinct-label
+estimates requires adding new original classes.
+
+The old first moment, square, threshold-two hinge and threshold-four hinge
+bounds on this branch are respectively
+
+    259/96, 21/2, 23/24, 5/16.
+
+Thus its low clipped mass is at least 1811/2232, its full clipped mass is at
+least s0=88903/119040, and its density comparison fraction is
+ell=s0/C_clip=88903/153600. After the actual-rectangle square saving, the
+same full-height supported probability nu satisfies
+
+    sup_L E_nu L ≤ M0 = 1134400/266709,
+    sup_L E_nu L² ≤ G0 = 35754161/1333545.                  (BT2)
+
+Its nine full-height hinge bounds, in increasing order of t=4,...,12, are
+
+    6877275965987/6667725000000, 333388924487/416732812500,
+    310127/533418, 3115275948431/6667725000000,
+    475717686817/1333545000000, 2048775931829/6667725000000,
+    439561169399/1666931250000, 1468244673773/6667725000000,
+    589122335161/3333862500000.                            (BT3)
+
+All moments, hinge values, high-exponent contributions and normalization
+here retain this single old configuration. No maximum over other branches
+is substituted at an intermediate tail query.
+
+### A pointwise upper function with an exact finite observation
+
+Write S=10^24, C=ceil(S M0)/S and G=ceil(S G0)/S, treating these rounded
+constants as fixed exact rationals. The following construction is an upper
+function for the actual hinge profile; it is not a probability comparator.
+
+First, for 1<t≤43/13 set a=(t-1)/30, b=1-13a. Both are nonnegative, and
+for every integer x≥1,
+
+    Q_t(x)=a(x²-1)+b(x-1) ≥ (x-t)_+,
+    Q_t(x)-(x-t)=a(x-6)(x-7).
+
+The last expression is nonnegative on integer x, while Q_t(x)≥0. Therefore
+a(G-1)+b(C-1) is a valid moment upper bound. For t>43/13 choose j≥7 with
+
+    (j²-j+1)/(2j-1) ≤ t ≤ (j²+j+1)/(2j+1).
+
+Comparing adjacent ratios (x-t)/(x²-1) shows that their positive maximum
+over integers x≥2 is (j-t)/(j²-1). Hence
+
+    E_nu(L-t)_+ ≤ (G-1)(j-t)/(j²-1).                     (BT4)
+
+Next use the existing reference Y=X N11 N13, where X is the old comparator
+and the two independent factors have probabilities
+Pr(Np=1)=(p-2)/(p-1), Pr(Np=f)=p^(1-f) for f≥2. Density domination and
+the actual hinge inequality give the reference upper function
+
+    R(t)=3-t+E(Y-3)_+/ell       for 1<t≤3,
+    R(t)=E(Y-t)_+/ell           for t≥3.
+
+For t in [4,12], also use adjacent interpolation of (BT3). Let U(t) be the
+minimum of all applicable reference, moment and interpolated upper bounds.
+Define
+
+    Psi(t)=C-t                         for t≤1,
+    Psi(t)=max(C-t,U(t))               for t>1.            (BT5)
+
+Then Psi dominates every actual complete-layout hinge. Its forced affine
+baseline makes the following identity valid even though C is only an upper
+bound on the actual first moment. For every positive integer random variable
+N of finite mean and every T>1,
+
+    E[N Psi(T/N)] = C E N - T
+      + Σ_(1≤n<T) Pr(N=n) [n Psi(T/n)-Cn+T].              (BT6)
+
+Each bracket is nonnegative by definition. This applies the finite-state
+argument to Psi itself and does not replace the exact M by a rounded bound
+inside the actual-profile identity (AP7).
+
+The finite observation has a closed update. For a fixed K≥max T, retain
+E N and Pr(N=n) for 1≤n<K. If an independent positive integer factor F is
+adjoined, then
+
+    E(NF)=E N·E F,
+    Pr(NF=n)=Σ_(d|n) Pr(N=d) Pr(F=n/d),       n<K.         (BT7)
+
+Every d on the right is less than K. A state at least K cannot return to
+the retained range because F≥1. Equivalently, pulling observations backward
+through the transition preserves the span of 1, n and the indicators
+1_(n=j), j<K. Thus the full mean and finitely many point masses suffice for
+all queries in this fixed schedule, without truncating the infinite mean.
+This is an exact observation for the auxiliary comparison process; the
+actual congruence family's labelled geometry remains an input to (AP2).
+
+This use of the observation operator is the finite version of
+[Recursive Relational Observation §32.3](https://github.com/the-omega-institute/trureturing/blob/11df59d12488feaf942a9b4c685b29c8dcc6ca4e/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md#32-bounded-borel-observation-uniqueness-and-order-sensitive-compact-completions).
+The same volume's §33.9 distinguishes two measures with the same transition
+matrix and different initial laws; here the head law and its moment/profile
+bounds are fixed together. These are source connections, not additional Lean
+verification or a deduction of positive residual mass from topology.
+
+### Directed certificate and infinite continuation
+
+Use (AP2), (AP5) and (AP6) from the Problems dossier. For each tail prime q,
+put delta_q=(T_q-1)/(q-2), d_q=q-1-T_q, c_q=(q-1)/d_q. The stored threshold
+runs specify the following inclusive endpoints; after one endpoint use the
+next row's threshold.
+
+| Prime endpoint | T | Prime endpoint | T |
+|---:|---:|---:|---:|
+|17|4|19|5|
+|31|8|41|12|
+|61|16|73|24|
+|113|32|151|48|
+|211|64|229|72|
+|293|96|419|128|
+|449|144|577|192|
+|809|256|883|288|
+|1153|384|1601|512|
+|1787|576|2377|768|
+|3271|1024|3719|1152|
+|5051|1536|7019|2048|
+|8117|2304|8191|3072|
+
+For 8191<q≤30011 use T_q=1+floor(3(q-2)/8). The exact prime list has
+pi(30011)=3246, including 2 and absent primes, and 3240 tail steps from 17.
+Every step has 1<T_q<q-1 and c_q≤q. The largest threshold is 11254.
+
+The verifier rounds every nonnegative atom, mean, correction, charge and
+square upper bound upward on the S grid. Its product probabilities use
+(BT7). The full first-moment multiplier is 1+1/d_q, and the square multiplier
+is 1+(3q-1)/((q-1)d_q). The negative affine term in (BT6) uses the one fixed
+constant C, so upward probability estimates never multiply negative
+corrections.
+
+Reference calls are evaluated by a positive convolution restricted to
+N11,N13≤80. For p in {11,13}, the omitted mean is exactly
+
+    E[Np; Np>80]
+      = p^(-79) [81/(p-1)+1/(p-1)²].
+
+The union bound on omitted factors gives an upper error
+E X·(E N13·E[N11;N11>80]+E N11·E[N13;N13>80]) for every call; its upward
+rounding is 1/S. Integer calls are interpolated exactly between adjacent
+knots before division by ell. Thus neither reference truncation nor retained
+product states discard an unaccounted tail contribution.
+
+At B=30011 the exact total charge and moment bounds are
+
+    C_B ≤ 951034037806531654678813/10^24,
+    1-C_B ≥ 48965962193468345321187/10^24 > 0.04896,
+    J_B ≤ 2001909435263859468210322417/250000000000000000000000.
+
+Every earlier charge sum is also less than one. After the single final
+conditioning in (AP6),
+
+    Gamma ≤ 2668895569005877113728870285/16321987397822781773729
+          < 163516 < 167115
+          < 3246 (log 3246+log log 3246-3)².              (BT8)
+
+The final logarithm comparison uses the existing exact positive-series
+lower bound in `verify_finite_continuation.py`. Consequently the BBMST
+continuation applies to every subsequent prime, proving the stated
+noncoverage theorem. If the family ends earlier, extend the comparison with
+absent prime coordinates; its actual violation probabilities there are zero.
+
+The `joint_cost_branch_tail17` field contains the exact inputs, thresholds,
+checkpoints, positive residual and stopping fractions. An independent
+implementation uses divisor-indexed convolution, trial-division primes,
+scale 10^30, reference cutoff 40 and a different rational logarithm lower
+bound. It checks 15,148,804 integer moment queries and also obtains (BT8);
+its Gamma upper bound differs by less than 3.01·10^-8. These are ordinary
+mathematical arguments with exact arithmetic. No new Lean endpoint, freeze
+or unrestricted-axis result for all old configurations is asserted.
