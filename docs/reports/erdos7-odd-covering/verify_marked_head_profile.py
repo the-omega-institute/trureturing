@@ -369,6 +369,106 @@ def deletion_weighted_comparison(old_cases, integer_theta):
     }
 
 
+def prime11_residual_geometry():
+    original = ((3, 0), (9, 4), (5, 0), (15, 11), (45, 1), (7, 0),
+                (21, 8), (63, 16), (35, 17), (105, 32), (315, 47))
+    divisors = [d for d in range(1, 316) if 315 % d == 0]
+    points = [x for x in range(315) if all(x % d != a for d, a in original)]
+    require(len(points) == 74, 'actual old survivor count')
+    cylinders = {d: [[x for x in points if x % d == a]
+                     for a in sorted({x % d for x in points})] for d in divisors[1:]}
+    scalar_caps = [max(map(len, cylinders[d])) for d in divisors[1:]]
+    pair = []
+    for centre in (33, 301):
+        load = {x: sum(x % d == centre % d for d in divisors) for x in points}
+        histogram = dict(sorted(Counter(load.values()).items()))
+        require(histogram == {1: 38, 2: 31, 4: 5}, 'identical complete-load histogram')
+        # For h(v)=v^2 and c=2, (c-h(load))_+ is exactly 1_{load=1}.
+        weights = {x: max(2-load[x]**2, 0) for x in points}
+        require(all(weights[x] == int(load[x] == 1) for x in points), 'exact residual weight')
+        caps = [max(sum(weights[x] for x in cylinder) for cylinder in cylinders[d])
+                for d in divisors[1:]]
+        pair.append({'test_centre': centre, 'load_histogram': {str(k):v for k,v in histogram.items()},
+                     'residual_cylinder_caps': caps, 'residual_capacity': sum(caps)})
+    require([r['residual_capacity'] for r in pair] == [98, 114],
+            'same scalar profile, distinct residual cylinder capacities')
+    require(sum(scalar_caps) == 142 and 114 < 142, 'strict improvement over scalar cap')
+
+    new_mixed = ((33, 23), (55, 2), (77, 69), (99, 92), (165, 137),
+                 (231, 83), (385, 62), (495, 272), (693, 20),
+                 (1155, 692), (3465, 3422))
+    centre = 272
+    require(centre in points, 'emptied old point was an old survivor')
+    for i, ((modulus, residue), d) in enumerate(zip(new_mixed, divisors[1:])):
+        require(modulus == 11*d and residue % d == centre % d
+                and residue % 11 == 1+i % 10, 'actual mixed cofactor and digit assignment')
+    full_original = original + ((11, 0),) + new_mixed
+    require(len(full_original) == 23 and {d for d,a in full_original}
+            == {d for d in range(2, 3466) if 3465 % d == 0},
+            'exactly one original class for every nonunit divisor of3465')
+    full = [x for x in range(3465) if all(x % d != a for d,a in full_original)]
+    counts = Counter(x % 315 for x in full)
+    empty = [x for x in points if counts[x] == 0]
+    require(empty == [272] and len(full) == 627, 'exact empty fibre and full survivor count')
+    fibre_histogram = dict(sorted(Counter(counts[x] for x in points).items()))
+    require(sum(r*n for r,n in fibre_histogram.items()) == len(full), 'fibre accounting')
+    return {
+        'schema': 'prime11-residual-geometry-v1',
+        'original315_classes': [list(pair) for pair in original],
+        'old_survivor_count': len(points), 'nonunit_old_divisors': divisors[1:],
+        'unweighted_cylinder_caps': scalar_caps, 'unweighted_capacity': sum(scalar_caps),
+        'same_histogram_pair': pair,
+        'empty_fibre_extension': {
+            'pure11_class': [11,0], 'mixed11_classes': [list(pair) for pair in new_mixed],
+            'old_coherent_centre': centre, 'empty_old_fibres': empty,
+            'full_survivor_count': len(full),
+            'fibre_size_histogram': {str(k):v for k,v in fibre_histogram.items()},
+        },
+    }
+
+
+def residual_mass_next_label_obstruction():
+    classes = ((3, 0), (9, 4), (5, 0), (15, 11), (45, 1), (7, 0),
+               (21, 8), (63, 16), (35, 17), (105, 32), (315, 47))
+    old = [x for x in range(315) if all(x % d != a for d, a in classes)]
+    require(len(old) == 74 and sum(x % 3 == 1 for x in old) == 36,
+            'actual sharp head and ternary root sizes')
+    profiles = []
+    cases = []
+    for mixed in (1, 13):
+        extended = classes + ((11, 0), (33, mixed))
+        survivors = [x for x in range(3465) if all(x % d != a for d, a in extended)]
+        counts = Counter(x % 315 for x in survivors)
+        profile = [Fraction(counts[x], 11) for x in old]
+        profiles.append(profile)
+        require(len(survivors) == 704 and all(counts[x] == (9 if x % 3 == 1 else 10)
+                                            for x in old),
+                'identical residual masses at every individual old point')
+        base_classes = extended + ((13, 0),)
+        base = [x for x in range(45045) if all(x % d != a for d, a in base_classes)]
+        hits = sum(x % 143 == 1 for x in base)
+        cases.append({
+            'mixed33_residue': mixed, 'mixed33_11_digit': mixed % 11,
+            'survivors_mod3465': len(survivors),
+            'raw_11_survival': str(Fraction(len(survivors), 74*11)),
+            'surviving11_digit1_probability': str(Fraction(sum(x % 11 == 1 for x in survivors),
+                                                         len(survivors))),
+            'base_survivors_mod45045': len(base), 'fixed143_query_hits': hits,
+            'fixed143_query_probability': str(Fraction(hits, len(base))),
+        })
+    require(profiles[0] == profiles[1], 'same complete old-point residual vector')
+    require([row['fixed143_query_probability'] for row in cases] == ['19/4224', '37/4224'],
+            'same residual vector has different next original cofactor charge')
+    return {
+        'head_classes': [list(pair) for pair in classes], 'head_survivors': len(old),
+        'root1_head_points': 36,
+        'same_old_point_residual_masses': {'root1': '9/11', 'other_root': '10/11'},
+        'same_normalized_head_marginal': True,
+        'next_original_query': {'modulus': 143, 'residue': 1}, 'cases': cases,
+        'conclusion': 'Head-indexed residual masses do not determine the next labelled cofactor probability.',
+    }
+
+
 def verify(expected):
     cases = []
     old_cases = []
@@ -413,6 +513,8 @@ def verify(expected):
         "elementary_comparison": elementary_comparison(old_cases, theta),
         "fixed_marginal_obstruction": fixed_marginal_obstruction(),
         "deletion_weighted_comparison": deletion_weighted_comparison(old_cases, theta),
+        "prime11_residual_geometry": prime11_residual_geometry(),
+        "residual_mass_next_label_obstruction": residual_mass_next_label_obstruction(),
     }
     require(result == expected, "computed exact result differs from the fixed certificate")
     print(json.dumps({"verified": True, "old_test_layouts": sum(r["test_layouts"] for r in cases),
