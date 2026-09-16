@@ -16,6 +16,8 @@ import tempfile
 import unittest
 from unittest import mock
 
+from cache_snapshot_noop import NoopSnapshotCases
+
 REPO = pathlib.Path(__file__).resolve().parents[4]
 CI = REPO / "tools/scripts/workflow/ci.py"
 CACHE = REPO / "tools/scripts/worktree/lean_actions.py"
@@ -320,7 +322,7 @@ runtime_disposition = "committed-source"
         self.assertEqual(3, len(calls))
 
 
-class SnapshotContracts(CacheFixture, unittest.TestCase):
+class SnapshotContracts(NoopSnapshotCases, CacheFixture, unittest.TestCase):
     def restore_owner(self):
         sys.path.insert(0, str(CACHE.parent))
         return importlib.import_module("lean_actions")
