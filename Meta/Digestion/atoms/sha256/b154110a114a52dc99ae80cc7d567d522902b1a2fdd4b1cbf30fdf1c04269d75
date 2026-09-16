@@ -1,0 +1,2 @@
+**theorem 48.11 (Why arbitrary parameter names are a different problem).** Consider an extension in which an input may contain a boundary parameter $c=\tau(z)$ named by a program returning the residue of $z$ modulo every positive integer. Even under the promise that the program is total and its residues are coherent, no uniform algorithm decides all positive polynomial equality sentences with such input parameters. The obstruction already occurs for the ground equation $c+c=c$.
+
