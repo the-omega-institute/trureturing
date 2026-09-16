@@ -89,8 +89,7 @@ theorem binary_refinement_entropy_budget
         (x + y) * Real.binEntropy (x / (x + y)) := by
     have hs : x + y ≠ 0 := ne_of_gt (add_pos hx hy)
     have hcomp : 1 - x / (x + y) = y / (x + y) := by
-      field_simp [hs]
-      ring
+      field_simp [hs] <;> ring
     rw [Real.binEntropy_eq_negMulLog_add_negMulLog_one_sub, hcomp]
     simp only [Real.negMulLog, Real.log_div (ne_of_gt hx) hs,
       Real.log_div (ne_of_gt hy) hs]
@@ -125,12 +124,13 @@ theorem binary_refinement_entropy_budget
           dsimp [loss]
           ring
         nlinarith
-  have entropy_lower (xs : List ℝ) (d : ℝ)
-      (hx : ∀ x ∈ xs, 0 < x) (hd : ∀ x ∈ xs, x ≤ d) :
-      -xs.sum * Real.log d ≤ H xs := by
+  have entropy_lower (xs : List ℝ) (d : ℝ) :
+      (∀ x ∈ xs, 0 < x) → (∀ x ∈ xs, x ≤ d) →
+        -xs.sum * Real.log d ≤ H xs := by
     induction xs with
-    | nil => simp [H]
+    | nil => intro hx hd; simp [H]
     | cons x xs ih =>
+        intro hx hd
         have hx0 := hx x (by simp)
         have hxd := hd x (by simp)
         have hlog := Real.log_le_log hx0 hxd
