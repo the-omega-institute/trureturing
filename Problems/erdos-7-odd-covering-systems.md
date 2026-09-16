@@ -305,15 +305,12 @@ each interaction component has at most three vertices. These restrictions
 allow arbitrary exponents and arbitrarily many primes in total.
 
 The stronger graph criteria also exclude arbitrary `{3,5,7}` heads with
-arbitrary forest tails from prime 19, or a
-degree-two tail core with arbitrarily many pendant leaves from prime 37.
-Complete star heads cannot be completed by arbitrary forest tails above 73
-or, more generally, when each tail component becomes a forest after deleting
-at most two vertices. Arbitrary `{3,5,7}` heads also allow one such deleted
-vertex per component from prime 23. The earlier vertex-cover result still
-allows at most eight hubs. These statements
-allow unbounded vertex degrees and total prime support; the forest results
-also allow unbounded depth.
+arbitrary forest tails from prime 17, `2`-degenerate tails from prime 19,
+and `5`-degenerate tails, including all planar graphs, from prime 23.
+Complete star heads cannot be completed by any `20`-degenerate tail graph
+above 73. These statements allow unbounded maximum degree, total prime
+support, exponents, feedback vertex number and treewidth. A full star
+completion must contain a nonempty 21-core in its actual tail graph.
 
 **H73 — false**, with its universal candidate statement retained from
 [the target preregistration](https://github.com/the-omega-institute/trureturing/issues/8167):
@@ -1171,6 +1168,16 @@ kernel build and source-bound report use only `propext`, `Classical.choice`,
 and `Quot.sound`. The congruence embedding, cubic potential, and moment
 estimates (AF2) remain outside that Lean theorem.
 
+[ForestConstraintEnergy.unsatisfiable_forest_square_energy](../D5/S3/Arith/Congruence/ForestConstraintEnergy.lean)
+also formalizes the actual-constraint energy estimate (AF7). Each vertex may
+carry any fixed normalized nonnegative weights. From the original unary and
+binary forbidden relations and unsatisfiability, it derives the bound
+`sum epsilon_v>=2/3`, using the exact messages, weighted union estimates,
+the cubic potential, and cancellation over the forest. It does not assume
+the local energy inequalities. Its scoped build and source-bound report
+have the same standard axiom closure. The CRT embedding, prime-coordinate
+moment bounds, and arithmetic noncoverage consequences remain separate.
+
 #### A bounded number of cycle-breaking vertices in each component
 
 The same argument extends beyond forests. A feedback vertex set is a set
@@ -1290,6 +1297,197 @@ a three-vertex binary path against its eight complete assignments, testing
 exact-message completeness and the local cubic-potential inequality.
 This finite regression checks the implementation against actual feasible
 assignments; it does not replace the arbitrary-tree proof above.
+
+#### Ordered local kernels: unbounded feedback sets and treewidth
+
+A tail graph is `d`-degenerate when it admits an ordering in which every
+vertex has at most `d` earlier neighbours. This allows unbounded maximum
+degree, feedback vertex number, treewidth and component size. The actual
+modulus labels and the conditional caps of the BBMST kernel yield:
+
+| Head | Tail primes | Tail graph | Saturated-head mass upper bound |
+|---|---|---|---:|
+| Arbitrary `{3,5,7}` head | `q>=17` | any forest | `<0.955226` |
+| Arbitrary `{3,5,7}` head | `q>=19` | `2`-degenerate | `<0.885762` |
+| Arbitrary `{3,5,7}` head | `q>=23` | `5`-degenerate, including every planar graph | `<0.945592` |
+| Complete star head | `q>73` | `20`-degenerate | `<0.990060` |
+
+Every finite simple planar graph is `5`-degenerate, by its edge bound on
+every subgraph. Thus the third row permits arbitrarily large grids and
+arbitrarily many cycles; there is no bound on exponents or total prime
+support. The last row means that any full star completion must have a
+nonempty subgraph of minimum degree at least 21, equivalently a nonempty
+21-core in its actual tail graph.
+
+**Local class assignment and kernels.** Fix an ordering of the tail primes,
+write `P_v` for the earlier neighbours of `v`, and assign every actual
+class with nontrivial tail part to its latest tail prime `v`. Every other
+tail prime in that modulus belongs to `P_v`. The assigned moduli have form
+`m v^e product_(p in P_v) p^(f_p)`, where `m|Q`, `e>=1`, and `f_p>=0`.
+Distinct original moduli mean at most one class for each full tuple; no
+projected-modulus distinctness is presumed. Moduli containing all primes
+of any allowed clique are included.
+
+Fix `0<delta<=1/2` and put `K=1/(1-delta)`. Given the head `x` and the
+entire earlier tail history, let `F_v` be the actual forbidden union in
+`Y_v` from the classes assigned to `v`, and let `alpha_v=U_v(F_v)`. Choose
+the new coordinate with the existing BBMST capped kernel (T4). Its density
+relative to the uniform coordinate is `0` on `F_v` and `1/(1-alpha_v)`
+off `F_v` when `alpha_v<=delta`; otherwise its density is
+`(alpha_v-delta)/(alpha_v(1-delta))` on `F_v` and `K` off `F_v`.
+This is normalized for every history, including completely forbidden
+fibres, and everywhere bounded by `K`. Thus the original head marginal
+stays `mu`, and every conditional cylinder obeys
+
+\[
+ \Pr(y_v=b\bmod v^e\mid x,\text{entire earlier history})
+ \le K v^{-e}\quad(e\ge1).                            \tag{DG1}
+\]
+
+Conditional on a fixed `x`, an arbitrary set `J` of queried earlier
+coordinates therefore satisfies the simultaneous-cylinder cap
+
+\[
+ \Pr\left(\bigcap_{p\in J}\{y_p=b_p\bmod p^{e_p}\}\mid x\right)
+ \le\prod_{p\in J}Kp^{-e_p}.                          \tag{DG2}
+\]
+
+Remove the latest queried coordinate using (DG1) and the tower law, then
+repeat. Unqueried intermediate coordinates integrate out without another
+factor. No independence of the sequentially chosen coordinates, and no
+conditioning on complete survival, is used.
+
+**Only the actual earlier neighbours enter the moment bound.** Put
+`s_v=sum_(e=1..H_v) v^(-e)` and `h_p=sum_(j=1..H_p)(2j+1)p^(-j)`.
+Bound `alpha_v` by its raw uniform-fibre cylinder load and expand its
+square. Group by the two full tail exponent tuples. If parent cylinders
+are incompatible the intersection is empty. Otherwise (DG2) contributes
+`K p^(-max(f_p,f'_p))` for each positive maximum, and `1` for two zero
+exponents. These bounds hold separately at every `x`. What remains for
+fixed exponent tuples is the cross moment of two partial head layouts;
+completing missing head labels and Cauchy--Schwarz bound it by `G`.
+There are exactly `2j+1` nonnegative exponent pairs with maximum `j`, so
+
+\[
+ \mathbb E\alpha_v^2
+ \le Gs_v^2\prod_{p\in P_v}(1+Kh_p).                  \tag{DG3}
+\]
+
+The expectation is under the full sequential prefix law. This estimate
+includes no factor for earlier vertices outside `P_v`; it does not bound
+the Gamma of the entire accumulated head.
+
+Let `V_v` be the event that the chosen `v` coordinate violates at least one
+class assigned to `v`. The already-established capped-kernel bound (T4) gives
+
+\[
+ \Pr(V_v)=\frac{\mathbb E(\alpha_v-\delta)_+}{1-\delta}
+ \le\frac{Gs_v^2}{4\delta(1-\delta)}
+                         \prod_{p\in P_v}(1+Kh_p).    \tag{DG4}
+\]
+
+Later normalized kernels preserve the complete prefix marginal, so this
+is also the probability of `V_v` in the final joint law. Outside the union
+of these events every original tail class is avoided at its assigned
+coordinate, and `mu` already avoids every head-only class. CRT supplies
+an uncovered integer. A saturated head forces some `V_v` under every tail
+sample, so preservation of the head marginal gives
+`mu(saturated heads)<=Pr(union_v V_v)`. Consequently the head mass with no
+avoiding lift is at most
+
+\[
+ \frac{G}{4\delta(1-\delta)}
+       \sum_v s_v^2\prod_{p\in P_v}(1+Kh_p).          \tag{DG5}
+\]
+
+This formula also applies without any uniform bound on predecessor count,
+whenever its actual weighted sum can be controlled.
+
+**Distinct parents sharpen the uniform certificate.** For a lower cutoff
+`q0`, list the allowed primes as `p_1<p_2<...`, and write
+
+\[
+ a_p=\frac1{p-1},\quad
+ T_p=1+\frac{3a_p+2a_p^2}{1-\delta},\quad
+ R_d=\prod_{i=1}^dT_{p_i}.
+\]
+
+The factors decrease with `p`. A vertex outside the first `d` primes has
+parent product at most `R_d`; for `v=p_i` with `i<=d`, the vertex cannot
+be its own parent, giving the smaller bound `R_d T_(p_(d+1))/T_(p_i)`.
+Completing absent vertices by their nonnegative contributions proves
+
+\[
+ \sum_v a_v^2\prod_{p\in P_v}T_p
+ \le R_d\left[S_{q0}+\sum_{i=1}^d a_{p_i}^2
+                   \left(\frac{T_{p_{d+1}}}{T_{p_i}}-1\right)\right].
+ \tag{DG6}
+\]
+
+Here `S_q0` is the independently checked prime-square upper bound from
+(GS1), with the omitted smaller primes added exactly. Inserting (DG6) in
+(DG5) yields the displayed table with, respectively,
+`(q0,d,delta)=(17,1,11/25),(19,2,41/100),(23,5,37/100),(79,20,9/25)`.
+The head constants are `1889/48` in the first three rows and `177` in the
+last. The adjacent certificate recomputes the distinct-prime products,
+the negative self-parent corrections and every strict rational comparison.
+The results are ordinary proofs and exact arithmetic, not a complete Lean
+formalization of the kernel construction or its graph application.
+
+The capped kernel itself is reused from (T4) and
+[BBMST](../Library/Arith/balister2018covering.md); the new point is retaining
+only the actual earlier-neighbour coordinates in (DG2)--(DG5). The forest
+and feedback-vertex arguments do not imply this bound when treewidth or
+feedback vertex number is unbounded. Arbitrary tail graphs remain open:
+(DG5)'s weighted predecessor products still need control without a fixed
+degeneracy hypothesis.
+
+#### Why scalar deletion and unrestricted message energy do not suffice
+
+If root elimination keeps only `E alpha^2<=w`, with `0<=w<=1`, and the remaining connected
+component's saturation probability `E beta<=L`, its best possible scalar
+bound on `Pr(alpha+beta>=1)` is `min(1,F(w,L))`, where
+
+\[
+ F(w,L)=L+\frac w2+\sqrt{wL+\frac{w^2}{4}},\qquad
+ \sqrt{F(w,L)}\ge\sqrt L+\frac{\sqrt w}{2}.           \tag{DG7}
+\]
+
+Minimizing `Aw+BL` subject to (FV3) gives this expression. It is sharp:
+if `0<t=F(w,L)<=1`, an event of mass `t` carrying
+`alpha=sqrt(w/t), beta=1-alpha`, with both zero outside, attains all three
+values; the zero case is immediate. If `F>=1`, constant `alpha=sqrt(w), beta=1-sqrt(w)`
+attains saturation within the budgets. This is a relaxed moment extremizer,
+not a purported distinct-modulus covering family.
+
+There is also an actual distinct congruence family showing why even exact
+scalar root moments cannot give a universal deletion certificate. For any
+finite odd-prime set `P`, prescribe `0 mod p` for every `p in P`, and
+`1 mod pq` for every pair. Its tail graph is complete. Each class has a
+private point in this union: use only the named zero for a prime class,
+or only the two named ones for a pair class, and set every other coordinate
+to two. All coordinates equal to two avoid the whole family. After any
+sequence of uniform root absorptions, each next root still forbids zero,
+so its actual squared moment is at least `1/p^2`. A clique requires all
+but two vertices to be deleted before becoming a forest. By (DG7), even
+with zero terminal loss and all distortion factors replaced by one, the
+resulting scalar budget is at least `(sum_deleted 1/p)^2/4`. Euler's
+divergence of the sum of prime reciprocals provides a finite `P` above any
+fixed cutoff for which this exceeds one in every order. The finite set is
+asserted by divergence, not by an unevaluated numerical enumeration.
+The obstruction is to this scalar compression; pointwise caps and actual
+coordinate correlations, as retained in (DG1)--(DG5), are additional data.
+
+Nor does the forest energy inequality hold on arbitrary abstract constraint
+systems. On uniform variables `x_1,...,x_n,y` of cardinality `q`, forbid
+`x_i=0` at each `x_i`, and forbid every `y` value exactly when all `x_i`
+are nonzero. Every assignment is forbidden, but the sum of uniform-parent
+square energies is `n/q^2+(1-1/q)^n`. At `q=n=3` it is `17/27<2/3`, verified
+against all 81 assignments. Taking `n=ceil(2q log q)` makes the energy tend
+to zero. The final union repeats full-point modulus labels, so this is
+**not** an odd distinct covering counterexample. It shows why the original
+modulus injectivity and the arithmetic parent caps must stay inside a
+general-graph proof; neither boundary refutes the kernel theorem above.
 
 #### A degree-two core with arbitrarily many pendant leaves
 
@@ -5742,6 +5940,11 @@ structures. The forest bound is independent of both depth and degree.
 The feedback-vertex recurrence additionally permits one cycle-breaking
 vertex per tail component from prime 23 for arbitrary three-prime heads,
 and two per component above 73 for full star heads.
+The local-parent capped-kernel criterion extends this to arbitrary
+`20`-degenerate tails above 73 for full star heads, and to forests from 17,
+`2`-degenerate graphs from 19 and planar graphs from 23 for arbitrary
+three-prime heads. Its selective parent moment bound allows unbounded
+feedback vertex number and treewidth; arbitrary tail graphs remain open.
 The finite-height pure-coordinate CRT criterion and two-block refinement
 give the independent finite exclusion `lcm > 11486474`: the verifier
 discharges all 23758 odd abundant candidates in the interval from 1.

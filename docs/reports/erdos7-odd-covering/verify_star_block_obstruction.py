@@ -91,6 +91,25 @@ def binary_path_regression():
             "scope": "Finite regression; the arbitrary-forest theorem is an ordinary proof."}
 
 
+def unrestricted_energy_boundary():
+    """A fully enumerated abstract CSP, not a distinct-modulus covering system."""
+    alphabet = range(3)
+    assignments = list(cartesian_product(alphabet, repeat=4))
+    uncovered = [assignment for assignment in assignments
+                 if not (any(value == 0 for value in assignment[:3])
+                         or all(value != 0 for value in assignment[:3]))]
+    last_energy = F(sum(all(value != 0 for value in row)
+                        for row in cartesian_product(alphabet, repeat=3)), 3 ** 3)
+    energy = 3 * F(1, 3) ** 2 + last_energy
+    require(len(assignments) == 81 and not uncovered and energy == F(17, 27) < F(2, 3),
+            "abstract full coverage refutes an unrestricted forest-energy threshold")
+    return {"alphabet_cardinality": 3, "predecessor_count": 3,
+            "assignments": len(assignments), "uncovered_assignments": len(uncovered),
+            "total_square_energy": str(energy),
+            "distinct_original_modulus_hypothesis": False,
+            "scope": "Abstract CSP boundary; not an odd distinct covering counterexample."}
+
+
 def certificate():
     all_primes = primes_to(4000)
     require(tuple(p for p in all_primes if 3 <= p <= 73) == HEAD_PRIMES,
@@ -348,6 +367,47 @@ def certificate():
             "feedback_vertices_per_component": depth, "levels": levels,
             "prime_square_upper": str(square_upper(cutoff)),
             "loss_upper": str(loss), "retained_lower": str(1 - loss)})
+    degeneracy_rows = []
+    for name, cutoff, gamma, degree, threshold, target in [
+            ("arbitrary_357_forest", 17, general_gamma, 1, F(11, 25), F(955226, 1000000)),
+            ("arbitrary_357_degree2", 19, general_gamma, 2, F(41, 100), F(885762, 1000000)),
+            ("arbitrary_357_planar", 23, general_gamma, 5, F(37, 100), F(945592, 1000000)),
+            ("star_head_degree20", 79, F(177), 20, F(9, 25), F(990060, 1000000))]:
+        require(0 < threshold <= F(1, 2), "capped-kernel threshold range")
+        primes = [p for p in extended_primes if p >= cutoff][:degree + 1]
+        require(len(primes) == degree + 1, "complete distinct-parent prefix")
+        weights = [F(1, p - 1) for p in primes]
+        factors = [1 + (3 * a + 2 * a * a) / (1 - threshold) for a in weights]
+        require(all(factors[i] > factors[i + 1] > 1 for i in range(degree)),
+                "parent factors strictly decrease along allowed primes")
+        parent_product = prod(factors[:-1])
+        square = square_upper(cutoff)
+        first_squares = sum((a * a for a in weights[:-1]), F(0))
+        correction = sum((a * a * (factors[-1] / factor - 1)
+                          for a, factor in zip(weights[:-1], factors[:-1])), F(0))
+        adjusted_square = square + correction
+        positive_decomposition = (square - first_squares
+                                  + sum((a * a * factors[-1] / factor
+                                         for a, factor in zip(weights[:-1], factors[:-1])), F(0)))
+        require(square > first_squares and correction < 0
+                and adjusted_square == positive_decomposition > 0,
+                "self-parent exclusion retains a positive completed vertex sum")
+        denominator = 4 * threshold * (1 - threshold)
+        loss = gamma * parent_product * adjusted_square / denominator
+        uniform_loss = gamma * square * factors[0] ** degree / denominator
+        require(loss < uniform_loss and loss < target < 1,
+                "local-parent capped-kernel noncoverage criterion")
+        degeneracy_rows.append({
+            "head_and_graph": name, "tail_prime_minimum": cutoff,
+            "Gamma_bound": str(gamma), "degeneracy": degree,
+            "delta": str(threshold), "kernel_density_cap": str(1 / (1 - threshold)),
+            "violation_denominator": str(denominator), "comparison_primes": primes,
+            "parent_factors": [str(factor) for factor in factors],
+            "distinct_parent_product": str(parent_product),
+            "prime_square_upper": str(square), "self_parent_correction": str(correction),
+            "adjusted_square_sum": str(adjusted_square),
+            "uniform_parent_loss_upper": str(uniform_loss),
+            "loss_upper": str(loss), "retained_lower": str(1 - loss)})
     leaf_moment_coefficient = general_gamma * (1 + 3 * (F(3, 36) + F(2, 36 ** 2)))
     require(leaf_moment_coefficient == F(511919, 10368) < degree_coefficient,
             "pendant-leaf coefficient is dominated by the degree-two core coefficient")
@@ -386,7 +446,9 @@ def certificate():
         "star_forest": forest_rows, "pendant_degree_two_core": pendant_core,
         "arbitrary_forest": arbitrary_forest_rows,
         "feedback_vertex": feedback_rows,
+        "local_parent_capped_kernel": degeneracy_rows,
         "binary_path_regression": binary_path_regression(),
+        "unrestricted_energy_boundary": unrestricted_energy_boundary(),
         "forest_potential_identity": [
             {"b_exponent": exponent[0], "c_exponent": exponent[1],
              "coefficient": str(coefficient)}
@@ -443,6 +505,7 @@ def main():
                       "star_forest_loss_bounds": {row["head"]: row["loss_upper"] for row in data["star_forest"]},
                       "arbitrary_forest_loss_bounds": {row["head"]: row["loss_upper"] for row in data["arbitrary_forest"]},
                       "feedback_vertex_loss_bounds": {row["head"]: row["loss_upper"] for row in data["feedback_vertex"]},
+                      "local_parent_capped_kernel_loss_bounds": {row["head_and_graph"]: row["loss_upper"] for row in data["local_parent_capped_kernel"]},
                       "binary_path_regression_cases": data["binary_path_regression"]["cases"],
                       "pendant_degree_two_core_loss": data["pendant_degree_two_core"]["loss_upper"],
                       "star_vertex_cover_8_loss": data["star_head_hubs"]["vertex_cover_loss_upper"],
