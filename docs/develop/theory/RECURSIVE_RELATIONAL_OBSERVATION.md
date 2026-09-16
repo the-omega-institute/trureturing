@@ -5647,3 +5647,360 @@ $$
 [^rro21_graph]: 《CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF》，定理377.1，同一固定提交；联合连续自然加法延拓的障碍。定理21.8另由加法图的闭包与二点输出给出直接证明。 ([raw.githubusercontent.com](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md))
 
 ## 追加锚（本行以下为增补区）
+## 22. Exact continuity loci and measurable outputs of closed Zeckendorf addition
+
+**Definition 22.1 (Digit space and the joint closed graph).** Work in ZFC, with zero included in $\mathbb N$. Put
+$$
+G_0=1,\qquad G_1=2,\qquad G_{j+2}=G_{j+1}+G_j,\qquad
+\phi=\frac{1+\sqrt5}{2},\quad \alpha=\phi^{-1},\quad r=-\alpha.
+$$
+Let $K$ consist of the infinite binary sequences $x$ satisfying $x_jx_{j+1}=0$, written from low to high digits. Let $Z(n)$ denote the legal Zeckendorf expansion of $n$, padded with zeros, and set
+$$
+d_K(x,y)=\sum_{j\geq0}2^{-j-1}|x_j-y_j|,\qquad
+X=K^2,\qquad
+d_X((x,y),(x',y'))=\max\{d_K(x,x'),d_K(y,y')\}.
+$$
+For a finite legal digit word $p$ of length $L$, let $C_p$ be its cylinder in $K$ and put
+$$
+S_p=\sum_{j<L}(-1)^{j+1}\alpha^{j+2}p_j.
+$$
+The empty word defines $C_{\varnothing}=K$. Define
+$$
+F(x)=\sum_{j\geq0}(-1)^{j+1}\alpha^{j+2}x_j,\qquad
+H(x)=[F(x)]\in\mathbb T=\mathbb R/\mathbb Z,
+$$
+$$
+I=[-\alpha,\alpha^2],\quad
+\gamma(n)=[n\phi],\quad
+E=\{[-m\phi]:m\geq1\},\quad
+0_K=Z(0),\quad u=(10)^\infty,\quad v=(01)^\infty.
+$$
+Concatenations such as $0v$ and $10v$ retain this digit order. The relation and its input fibers are
+$$
+\Gamma=\overline{\{(Z(n),Z(m),Z(n+m)):n,m\in\mathbb N\}}^{\,K^3},
+\qquad
+\Gamma(x,y)=\{z\in K:(x,y,z)\in\Gamma\}.
+$$
+Write $X_{\mathrm{fin}}=Z[\mathbb N]^2$ and $\Theta(x,y)=H(x)+H(y)$. All references to $\Gamma$ concern this joint graph, not merely the equation $H(z)=\Theta(x,y)$.
+
+**Assumption 22.2 (Precisely imported phase and joint-fiber classification).** Assume the phase classification of [the fixed phase source, §§371–372, particularly Theorems 372.2–372.4](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md): $F[K]=I$; each $H$-fiber outside $E$ is a singleton; and each fiber over $\theta\in E$ consists of two distinct labeled points $z_\theta^{+1},z_\theta^{-1}$. Use exactly the labels of [the fixed addition source, Definition 16.3 and Theorem 16.4](https://raw.githubusercontent.com/the-omega-institute/trureturing/c74985438ae17d205509255934bbd3ecf1f94d71/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md), so in particular
+$$
+z_{[-\phi]}^{+1}=u,\quad z_{[-\phi]}^{-1}=v,\qquad
+z_{[-2\phi]}^{+1}=0v,\quad z_{[-2\phi]}^{-1}=10v.
+$$
+Define
+$$
+\mathcal S(x)=
+\begin{cases}
+\{s\},&H(x)\in E\text{ and }x=z_{H(x)}^s,\quad s\in\{-1,+1\},\\
+\{-1,+1\},&H(x)\notin E.
+\end{cases}
+$$
+Assume the following statement about the actual joint closure in Definition 22.1, with $\theta=\Theta(x,y)$:
+$$
+\Gamma(x,y)=
+\begin{cases}
+H^{-1}(\{\theta\}),&\theta\notin E,\\
+\{z_\theta^{+1}\},&\theta\in E,\ \mathcal S(x)=\mathcal S(y)=\{+1\},\\
+\{z_\theta^{-1}\},&\theta\in E,\ \mathcal S(x)=\mathcal S(y)=\{-1\},\\
+\{z_\theta^{+1},z_\theta^{-1}\},&\theta\in E\text{ and neither same-sign case holds}.
+\end{cases}
+$$
+Every theorem below is conditional on this explicitly imported assumption; no selection law is included in it.
+
+**theorem 22.3 (Compactness, finite-core density, and interiors of cylinder phases).** The space $K$ is compact, its cylinders form a countable clopen base, and $Z[\mathbb N]$ is dense. The maps $F,H$ are continuous, $H$ is onto, and
+$$
+H(Z(n))=\gamma(n),\qquad \gamma(n)\notin E,\qquad
+\Gamma(Z(n),Z(m))=\{Z(n+m)\}.
+$$
+Both $\gamma[\mathbb N]$ and $E$ are dense in $\mathbb T$. Every nonempty cylinder has a phase image containing a nonempty open arc. More precisely,
+$$
+F[C_p]=
+\begin{cases}
+I,&L=0,\\
+S_p+r^L I,&L>0\text{ and }p_{L-1}=0,\\
+S_p+r^{L+1}I,&L>0\text{ and }p_{L-1}=1.
+\end{cases}
+$$
+
+**Proof 22.3.** The series defining $d_K$ is a metric by the coordinatewise triangle inequality and positivity of every coordinate weight. Agreement in the first $L$ coordinates gives distance at most $2^{-L}$; distance less than $2^{-L}$ forces such agreement. Thus the metric gives the product topology, with the stated countable clopen cylinder base. From any sequence in $K$, successively choose infinite subsequences constant in the next coordinate and take a diagonal subsequence. Its coordinatewise limit is still legal, since each adjacent pair eventually stabilizes. The tail estimate for $d_K$ gives metric convergence. Sequential compactness of a metric space implies compactness, proving the assertion for $K$ and hence for its finite products.
+
+For $x\in K$ put $N_L=\sum_{j<L}G_jx_j$. Truncating at $L$ and appending zeros is legal, so uniqueness of the finite Zeckendorf expansion identifies it with $Z(N_L)$. Its distance from $x$ is at most $2^{-L}$. This proves core density, also in $X$. Since $1-\alpha=\alpha^2$, the defining series for $F$ has uniform tail bound
+$$
+\sum_{j\geq L}\alpha^{j+2}=\alpha^L.
+$$
+Consequently $F$ and then $H$ are continuous. The interval $I$ has length one, so Assumption 22.2 implies that $H$ is onto.
+
+The identity
+$$
+\phi G_j-G_{j+1}=(-1)^{j+1}\alpha^{j+2}
+$$
+holds at the first two indices. Both sides satisfy the Fibonacci recurrence, since $r^2=r+1$, so it holds at every index. Multiplication by the finitely many digits of $Z(n)$ and summation give
+$$
+F(Z(n))=\phi n-\sum_{j\geq0}G_{j+1}Z(n)_j,
+$$
+whose second term is an integer. This proves the phase identity. If $\gamma(n)=[-m\phi]$ with $m\geq1$, then $(n+m)\phi$ is an integer, contradicting irrationality of $\phi$. The sum phase is therefore outside $E$, and its unique inverse under $H$ is $Z(n+m)$; Assumption 22.2 gives the asserted natural-input fiber.
+
+For every nonempty open subset of $\mathbb T$, its inverse image under the continuous surjection $H$ is nonempty and open, hence meets the finite core. Thus $\gamma[\mathbb N]$ is dense. The identity
+$$
+E=[-\phi]-\gamma[\mathbb N]
+$$
+proves density of $E$.
+
+For the cylinder formula, a prefix ending in zero permits every legal tail immediately after it, and splitting the series gives $F(pt)=S_p+r^L F(t)$. A prefix ending in one forces a zero next, after which every legal tail is permitted; splitting now gives $F(p0t)=S_p+r^{L+1}F(t)$. Surjectivity of $F$ onto $I$ proves both equalities, including both directions of each range assertion. The corresponding interval lengths are $\alpha^L$ and $\alpha^{L+1}$, respectively, and are positive. Projection to the circle therefore contains a nonempty open arc. An odd power of $r$ reverses interval orientation but does not remove these interiors. The empty-prefix case is $F[K]=I$. This proves all assertions.
+
+**theorem 22.4 (Upper semicontinuity and actual joint approximation).** The relation $\Gamma$ is compact with nonempty compact fibers. For every closed $C\subseteq K$, the hit set
+$$
+\operatorname{Hit}(C)=\{\xi\in X:\Gamma(\xi)\cap C\ne\varnothing\}
+$$
+is closed. Consequently, for every $\xi\in X$ and open $V\supseteq\Gamma(\xi)$, some neighborhood $U$ of $\xi$ satisfies $\Gamma(\eta)\subseteq V$ for all $\eta\in U$. For open $O\subseteq K$, the hit set $\operatorname{Hit}(O)$ is $F_\sigma$. Every $(x,y,z)\in\Gamma$ admits natural-number sequences $n_j,m_j$ such that
+$$
+(Z(n_j),Z(m_j),Z(n_j+m_j))\longrightarrow(x,y,z).
+$$
+
+**Proof 22.4.** Closedness in compact $K^3$ gives compactness. Fibers are closed subsets of $K$. Their nonemptiness follows also directly from the closure construction: approximate each input by finite truncations, take a convergent subsequence of their actual sums in compact $K$, and use closedness. For closed $C$, the set $\Gamma\cap(X\times C)$ is compact; its projection to $X$ is compact and hence closed. This projection is exactly $\operatorname{Hit}(C)$. If $\Gamma(\xi)\subseteq V$, the point $\xi$ is outside the closed set $\operatorname{Hit}(K\setminus V)$, and its open complement is the required neighborhood. An open $O$ is the union of the countably many cylinders contained in it. Its hit set is the corresponding countable union of closed hit sets.
+
+These are upper semicontinuity and Effros measurability in the sense of [B. Cascales, *Measurability and semi-continuity of multifunctions*, Definitions 1.3–1.4, p. 4](https://webs.um.es/beca/Investigacion/semicontinuityofmultifunctions.pdf). They also verify the open-hit measurability condition of the Kuratowski–Ryll-Nardzewski theorem as stated in [B. Cascales, V. Kadets and J. Rodríguez, *Measurability and Selections of Multi-Functions in Banach Spaces*, Theorem A, p. 1](https://webs.um.es/beca/Investigacion/PropertyP_11.pdf); the target here is separable metric and the values are nonempty and complete.
+
+Finally, equip $K^3$ with its maximum product metric. For each integer $j\geq1$, the ball of radius $1/j$ about $(x,y,z)$ meets the set whose closure defines $\Gamma$. Choose one of its actual addition triples. The same choice supplies both input approximations and their actual sum, all within $1/j$. This proves the joint convergence; no independently chosen output or merely marginal realization is used.
+
+**Definition 22.5 (Selections and the two loci).** A point selection is any function $A:X\to K$ with $A(\xi)\in\Gamma(\xi)$ for every $\xi$, without a measurability or algebraic requirement. Define
+$$
+D=\{\xi\in X:|\Gamma(\xi)|=2\},\qquad G=X\setminus D,
+\qquad
+D_n=\{\xi\in X:\operatorname{diam}_{d_K}\Gamma(\xi)\geq1/n\}\quad(n\geq1).
+$$
+Also put $K_s=\{z_\theta^s:\theta\in E\}$ for $s\in\{-1,+1\}$. A set is nowhere dense when its closure has empty interior, meagre when it is a countable union of nowhere dense sets, $F_\sigma$ when it is a countable union of closed sets, and $G_\delta$ when it is a countable intersection of open sets.
+
+**theorem 22.6 (The same exact continuity locus for every point selection).** Every point selection satisfies
+$$
+\overline{\operatorname{graph}(A)}=\Gamma,
+\qquad
+\operatorname{Cont}(A)=G.
+$$
+Every $D_n$ is closed and nowhere dense, and
+$$
+D=\bigcup_{n\geq1}D_n,\qquad
+G=\bigcap_{n\geq1}(X\setminus D_n).
+$$
+Thus $D$ is meagre $F_\sigma$ and $G$ is dense $G_\delta$. Its exact phase-and-sign description is
+$$
+D=\Theta^{-1}(E)\setminus
+\bigl((K_{+1}\times K_{+1})\cup(K_{-1}\times K_{-1})\bigr).
+$$
+
+**Proof 22.6.** Every selection graph is contained in the closed set $\Gamma$. By Theorem 22.3 it contains every actual finite addition triple, whose closure is $\Gamma$. This proves the graph equality. More precisely, for every $z\in\Gamma(\xi)$, Theorem 22.4 gives input pairs $\xi_j\in X_{\mathrm{fin}}$ tending to $\xi$ whose actual sums tend to $z$. At these inputs the selection is forced to be that actual sum. Conversely, any limit of selection outputs along inputs tending to $\xi$ belongs to $\Gamma(\xi)$ by closedness. Thus the output limits along approaching inputs are exactly the full fiber.
+
+If $\Gamma(\xi)=\{z\}$, upper semicontinuity applied to the ball of radius $\varepsilon$ about $z$ gives a neighborhood on which all permissible outputs, and hence the values of $A$, lie in that ball. Since $A(\xi)=z$, this is continuity at $\xi$. If the fiber contains distinct $z_0,z_1$, use the preceding joint approximation separately for these two outputs. This gives two sequences of actual natural input pairs converging to the same $\xi$, along which $A$ tends respectively to $z_0$ and $z_1$. Continuity at $\xi$ would make both limits equal to $A(\xi)$, which is impossible. This proves the exact locus without any regularity assumption on $A$.
+
+Suppose $\xi_j\in D_n$ and $\xi_j\to\xi$. Compactness of the fibers makes their diameters attained, so choose $z_j,w_j\in\Gamma(\xi_j)$ with $d_K(z_j,w_j)\geq1/n$. A subsequence of $(z_j,w_j)$ converges in compact $K^2$, say to $(z,w)$. Closedness gives $z,w\in\Gamma(\xi)$, and continuity of the metric gives $d_K(z,w)\geq1/n$. Hence $D_n$ is closed. It is disjoint from the dense set $X_{\mathrm{fin}}$, so it has empty interior and is nowhere dense. A fiber has two points exactly when its diameter is positive, which is equivalent to membership in some $D_n$. This proves the displayed countable union and intersection. The set $G$ contains $X_{\mathrm{fin}}$, so it is dense.
+
+The final formula is exactly the case distinction of Assumption 22.2: an exceptional sum phase gives two outputs unless both inputs carry the same forced sign. In particular, exceptional sum phase alone is not a sufficient criterion for discontinuity.
+
+**theorem 22.7 (Density with a constant two-output Cantor family).** Every nonempty open $W\subseteq X$ contains a compact set $M$ homeomorphic to $\{0,1\}^{\mathbb N}$ and some $\theta\in E$ such that
+$$
+\Gamma(\xi)=\{z_\theta^{+1},z_\theta^{-1}\}\quad(\xi\in M),
+$$
+while both input phases of every $\xi\in M$ lie outside $E$. In particular, $D$ is dense; $G$ has empty interior; and no point selection is continuous on any nonempty open subspace of $X$.
+
+**Proof 22.7.** Choose a nonempty cylinder rectangle $C_p\times C_q\subseteq W$. By Theorem 22.3 choose nonempty open arcs $J\subseteq H[C_p]$ and $L\subseteq H[C_q]$. The sum $J+L$ is nonempty and open, since it is a union of translates of $L$. Density of $E$ supplies
+$$
+\theta\in E\cap(J+L).
+$$
+Then $B=J\cap(\theta-L)$ is nonempty and open. Exclude the countable set
+$$
+T=E\cup(\theta-E).
+$$
+There is a Cantor set $C\subseteq B\setminus T$, as the following construction shows. Inside a proper circle-coordinate arc contained in $B$, choose a nondegenerate closed interval. Enumerate the points of $T$ in that arc. At stage $n$, replace each interval already chosen by two disjoint nondegenerate closed subintervals in its interior, avoiding the first $n$ enumerated points, with lengths at most $2^{-n}$. Removing finitely many points from a nonempty interval leaves room for both children. Intersect the resulting nested finite unions. Each binary branch determines a unique point because interval lengths tend to zero; distinct branches give distinct points because siblings are disjoint. Every point in the intersection determines its branch. The branch map is continuous by the length bound and is a homeomorphism from compact binary sequence space onto the intersection. Every enumerated point is excluded at its stage, proving the assertion about $C$.
+
+For $\beta\notin E$, let $h(\beta)$ be the unique element of $H^{-1}(\{\beta\})$. This inverse is continuous on the subspace $\mathbb T\setminus E$. Indeed, if $V$ is open in $K$ and contains $h(\beta)$, then the compact set $H(K\setminus V)$ does not contain $\beta$. Its complement is a neighborhood of $\beta$ whose nonexceptional phases have their unique inverses in $V$.
+
+Define
+$$
+j:C\longrightarrow X,\qquad j(\beta)=(h(\beta),h(\theta-\beta)).
+$$
+Both inverses are defined because $C$ avoids $E$ and $\theta-E$. The map is continuous and injective: its first coordinate phase recovers $\beta$. Its image $M$ is compact, and the compact-to-Hausdorff continuous bijection makes $j$ a homeomorphism onto $M$. Since $\beta\in J$ and $\theta-\beta\in L$, uniqueness of each inverse and the inclusions of these arcs in the cylinder images place $M$ inside $C_p\times C_q$.
+
+At every such input both sign sets are $\{-1,+1\}$, while the sum phase is $\theta\in E$. Assumption 22.2 therefore gives both outputs, with neither same-sign exclusion applicable. Hence $M\subseteq D\cap W$, proving density by actual cylinder interiors, not by countability of $E$ or marginal density. Density of $D$ gives empty interior of $G$. If a selection were continuous on a nonempty open subspace, choose a point of $D$ there. The actual input sequences proving its discontinuity are eventually in that open subspace, a contradiction.
+
+**Definition 22.8 (Regularity and ordered selections).** A map into a topological space $Y$ is of Baire class one here precisely when it is a pointwise limit of continuous maps with values in that same $Y$. A Borel map has Borel inverse images of open sets. A map is Baire-property measurable when every such inverse image differs from an open set by a meagre set. These latter two uses of Baire are not identified. A map is universally measurable when its open-set inverse images are measurable for the completion of every Borel probability measure on its domain. Define
+$$
+e:K\longrightarrow[0,1],\qquad e(x)=\sum_{j\geq0}\frac{2x_j}{3^{j+1}}.
+$$
+The lexicographic order on $K$ compares the first differing digit, with zero smaller than one. Write $A_{\min}(\xi)$ and $A_{\max}(\xi)$ for the least and greatest members of $\Gamma(\xi)$ in this order. Their existence and their target-valued approximation are proved next. The distinction between Borel class one and same-target Baire class one is also explicit in [V. V. Srivatsa, *Baire class 1 selectors for upper semicontinuous set-valued maps*, Transactions of the American Mathematical Society 337 (1993), 609–624, Remark 2.2 and Corollaries 2.2–2.3, p. 620](https://scispace.com/pdf/baire-class-1-selectors-for-upper-semicontinuous-set-valued-290347w76e.pdf).
+
+**theorem 22.9 (Borel selections with continuous approximants taking values in the actual digit space).** The maps $A_{\min},A_{\max}:X\to K$ exist, are Borel, and are of Baire class one with target $K$. The real-valued map $e\circ A_{\min}$ is lower semicontinuous and $e\circ A_{\max}$ is upper semicontinuous. Their Baire-one assertion does not require passing through continuous approximants outside $K$.
+
+**Proof 22.9.** The series for $e$ converges uniformly and so defines a continuous map. If $x,y$ first differ at index $j$, with $x_j=0$ and $y_j=1$, then
+$$
+e(y)-e(x)\geq \frac{2}{3^{j+1}}-\sum_{k>j}\frac{2}{3^{k+1}}
+=\frac1{3^{j+1}}>0.
+$$
+Thus $e$ is injective and preserves the stated order. Compactness makes it a homeomorphism onto $e[K]$. The image of each nonempty compact fiber has an attained minimum and maximum, giving unique $A_{\min}$ and $A_{\max}$. Moreover,
+$$
+\{\xi:e(A_{\min}(\xi))\leq t\}=\operatorname{Hit}(\{z:e(z)\leq t\}),
+$$
+$$
+\{\xi:e(A_{\max}(\xi))\geq t\}=\operatorname{Hit}(\{z:e(z)\geq t\}).
+$$
+These sets are closed by Theorem 22.4, proving the two scalar semicontinuity claims.
+
+For a same-target construction, partition $X$ by the first $n$ digits of each input. This is a finite clopen partition. Denote the cell containing $\xi$ by $C_n(\xi)$, and define
+$$
+T_n(\xi)=\bigcup_{\eta\in C_n(\xi)}\Gamma(\eta).
+$$
+It is a nonempty compact set, being the projection of $\Gamma\cap(C_n(\xi)\times K)$. These sets decrease with $n$, and
+$$
+\bigcap_{n\geq1}T_n(\xi)=\Gamma(\xi).
+$$
+The inclusion from right to left is immediate. For the reverse inclusion, if $z$ belongs to every $T_n(\xi)$, choose $\eta_n\in C_n(\xi)$ with $z\in\Gamma(\eta_n)$. The cell diameter is at most $2^{-n}$, so $\eta_n\to\xi$. Closedness gives $z\in\Gamma(\xi)$.
+
+Set
+$$
+a_n(\xi)=e^{-1}\bigl(\min e[T_n(\xi)]\bigr),\qquad
+b_n(\xi)=e^{-1}\bigl(\max e[T_n(\xi)]\bigr).
+$$
+Each map is constant on each cell of a finite clopen partition, hence is continuous as a map into $K$. At a fixed $\xi$, the numbers $e(a_n(\xi))$ increase and are bounded above by $e(A_{\min}(\xi))$. Let their limit be $\ell$. A convergent subsequence of $a_n(\xi)$ has limit in every $T_m(\xi)$: all sufficiently late terms lie there, and the set is closed. Thus its limit belongs to $\Gamma(\xi)$ and has $e$-value $\ell$. Minimality gives $\ell\geq e(A_{\min}(\xi))$, proving equality. Continuity of $e^{-1}$ on $e[K]$ now gives convergence of the full sequence to $A_{\min}(\xi)$. For the maximum, $e(b_n(\xi))$ decreases and is bounded below by $e(A_{\max}(\xi))$; the same compact-limit argument places its limiting value in the fiber, where maximality gives the reverse inequality. Hence
+$$
+a_n(\xi)\longrightarrow A_{\min}(\xi),\qquad
+b_n(\xi)\longrightarrow A_{\max}(\xi)
+$$
+in $K$ at every input. The approximants are continuous digit-space-valued maps, but are not required to be selections at their own inputs.
+
+For completeness, any pointwise limit $f$ of continuous $K$-valued maps $f_n$ is Borel. For a proper nonempty open $O\subset K$, distance to the nonempty closed set $K\setminus O$ gives
+$$
+f^{-1}(O)=
+\bigcup_{k,N\geq1}\ \bigcap_{n\geq N}
+\{\xi:d_K(f_n(\xi),K\setminus O)\geq1/k\}.
+$$
+If $f(\xi)\in O$, its distance to the complement is positive; convergence gives the displayed eventual inequality for a sufficiently large $k$. Conversely, that inequality passes to the limit and excludes membership in the complement. Each inner intersection is closed, so the inverse image is $F_\sigma$. Empty and full open sets give empty and full inverse images. Applying this to $a_n$ and $b_n$ proves Borelness. This construction, rather than an inference from meagre discontinuities or from an ambient real-valued approximation, proves the claimed target-valued Baire class.
+
+**theorem 22.10 (Strict measurable distinctions among selections).** There exist Borel selections that are not of Baire class one. There also exist selections that are not measurable for the completion of a Borel probability measure on $X$, hence are neither Borel nor universally measurable. Nevertheless every point selection is Baire-property measurable. All these selections still have exactly the continuity locus $G$.
+
+**Proof 22.10.** Choose a Cantor set $M$ as in Theorem 22.7, with its constant two-point fiber. Write the two outputs as $z^{(0)},z^{(1)}$, choosing an index $j$ at which $z^{(0)}_j=0$ and $z^{(1)}_j=1$. For any subset $B\subseteq M$, define the selection
+$$
+A_B(\xi)=
+\begin{cases}
+z^{(1)},&\xi\in B,\\
+z^{(0)},&\xi\in M\setminus B,\\
+A_{\min}(\xi),&\xi\notin M.
+\end{cases}
+$$
+Each branch lies in the required fiber, so this is a selection for every $B$, regardless of measurability.
+
+Let $R$ be a countable dense subset of $M$, obtained, for example, by carrying the eventually-zero binary sequences through a homeomorphism onto $M$. The map $A_R$ is Borel: $M$ is closed, $R$ is countable and Borel, and its three pieces use constant maps or the Borel map $A_{\min}$. We first prove that $M\setminus R$ is not $F_\sigma$ in $M$. Otherwise, write it as a countable union of relatively closed sets. Each has empty relative interior because $R$ is dense. Each singleton of $R$ also has empty relative interior because a Cantor space has no isolated points. This would express $M$ as a countable union of relatively closed nowhere dense sets. Such a covering is impossible: transfer it to binary sequence space, successively choose a nonempty cylinder inside the preceding cylinder and disjoint from the next closed nowhere dense set, and require the prescribed prefix lengths to increase. Closedness and empty interior permit each choice. The unique sequence extending all chosen prefixes avoids every member of the proposed covering, a contradiction.
+
+If continuous $K$-valued maps $f_n$ converged pointwise to $A_R$, then on $M$ the continuous real functions $g_n(\xi)=(f_n(\xi))_j$ would converge to the indicator $\mathbf1_R$. Therefore
+$$
+M\setminus R=\bigcup_{N\geq1}\ \bigcap_{n\geq N}
+\{\xi\in M:g_n(\xi)\leq1/4\},
+$$
+a relatively $F_\sigma$ set. Indeed, a limit of zero eventually satisfies the bound, whereas a limit of one cannot. This contradicts the preceding paragraph and proves that $A_R$ is not Baire one.
+
+For a precise nonmeasurable choice, equip $\mathcal C=\{0,1\}^{\mathbb N}$ with the fair-coin product probability $\mu$. Two sequences are equivalent when they differ in only finitely many coordinates. Choose one representative from each equivalence class and call the representative set $V$. For every finite $s\subseteq\mathbb N$, let $T_s$ flip exactly the coordinates in $s$. The sets $T_s[V]$ are pairwise disjoint and cover $\mathcal C$: two representations of the same point force their representatives to be equivalent and hence equal, and a nonempty finite flip fixes no sequence. There are countably infinitely many finite subsets $s$.
+
+Every $T_s$ preserves $\mu$, since it permutes cylinders of any specified length without changing their measures; uniqueness of the probability measure determined by cylinders gives invariance on Borel sets. It also preserves the completed measure, since it preserves Borel null sets and their subsets. If $V$ were measurable in this completion, all its disjoint translates would have the same measure $t$. For $t=0$, their countable union would have measure zero instead of one. For $t>0$, a sufficiently large finite union would already have measure greater than one. Thus $V$ is not completed-measurable.
+
+Fix a homeomorphism $\psi:\mathcal C\to M$, set $B=\psi[V]$, and let $\nu=\psi_*\mu$, viewed as a Borel probability on $X$ supported on $M$. If $B$ were measurable in the completion of $\nu$, pulling back a Borel representative and its Borel null error would make $V$ measurable in the completion of $\mu$. Hence it is not. Since
+$$
+M\cap A_B^{-1}(\{z\in K:z_j=1\})=B,
+$$
+and the digit cylinder is clopen, $A_B$ is not measurable for the completion of $\nu$. In particular it is not Borel or universally measurable. This construction uses choice to select the representatives.
+
+Finally, any selection $A$ agrees with $A_{\min}$ outside the meagre set $D$. Thus for every open $O\subseteq K$, the symmetric difference of $A^{-1}(O)$ and $A_{\min}^{-1}(O)$ is contained in $D$. The latter inverse image is $F_\sigma$ by Theorem 22.9 and has the Baire property: a countable union of closed sets differs from the union of their interiors by a subset of the countable union of their nowhere dense boundaries. Every subset of a meagre set is meagre, because its intersections with the given nowhere dense covering sets are still nowhere dense. This proves the Baire property for $A^{-1}(O)$, even for the nonmeasurable construction above. The common continuity locus follows from Theorem 22.6, not from any of these measurability properties.
+
+**Definition 22.11 (Admissible probability assignments and kernels).** Let $\mathcal P(K)$ be the Borel probability measures on $K$, with the weak topology generated by
+$$
+\mu\longmapsto\int_K f\,d\mu\qquad(f\in C(K,\mathbb R)).
+$$
+An admissible probability assignment is any map $P:X\to\mathcal P(K)$ such that
+$$
+P(\xi)(\Gamma(\xi))=1\qquad(\xi\in X).
+$$
+This condition expresses support inside the closed fiber. No measurability is included in the word assignment. A Borel probability kernel additionally requires $\xi\mapsto P(\xi)(B)$ to be Borel for every Borel $B\subseteq K$. A Baire-one probability assignment is a pointwise weak limit of continuous maps $X\to\mathcal P(K)$. Write $\delta_z$ for the Dirac probability at $z$.
+
+**theorem 22.12 (Probability outputs have the identical obstruction).** Every admissible probability assignment, measurable or not, satisfies
+$$
+P(Z(n),Z(m))=\delta_{Z(n+m)},\qquad
+\operatorname{Cont}(P)=G.
+$$
+In particular, no such assignment is globally continuous, or continuous on a nonempty open subspace of $X$.
+
+**Proof 22.12.** A probability giving mass one to a singleton is its Dirac probability, proving the natural-input assertion. If $\Gamma(\xi)=\{z\}$, then $P(\xi)=\delta_z$. Fix a continuous real function $f$ and a positive $\varepsilon$. Choose an open neighborhood $V$ of $z$ such that $|f(w)-f(z)|<\varepsilon/2$ for $w\in V$. Upper semicontinuity of $\Gamma$ gives an input neighborhood on which every fiber lies in $V$. For every input $\eta$ in that neighborhood, support inside its fiber implies
+$$
+\left|\int_K f\,dP(\eta)-f(z)\right|
+\leq\int_K|f-f(z)|\,dP(\eta)\leq\varepsilon/2<\varepsilon.
+$$
+Intersecting the neighborhoods for finitely many test functions verifies every basic weak neighborhood of $\delta_z$. Thus $P$ is continuous at $\xi$.
+
+If the fiber contains distinct $z_0,z_1$, Theorem 22.4 gives two sequences of actual finite input pairs tending to $\xi$, with their actual sums tending respectively to $z_0,z_1$. Along these sequences $P$ is forced to be the Dirac measure at the actual sum. These probabilities converge weakly to $\delta_{z_0}$ and $\delta_{z_1}$: each test integral is simply the value of its continuous test function at the approaching sum. Choose a digit coordinate $j$ where $z_0$ and $z_1$ differ. The continuous moment $\mu\mapsto\int z_j\,d\mu$ then has two different limiting values along these two input sequences. Continuity at $\xi$ would force both to be its value at $P(\xi)$, a contradiction. This proves the exact locus using approaching actual sums, without an appeal to compactness of the probability space. Density of $D$ and eventual membership of the sequences in any open neighborhood give the remaining assertions.
+
+**theorem 22.13 (Measurable genuine randomization and strict regularity distinctions).** For every constant $\lambda\in[0,1]$, the assignment
+$$
+P_\lambda(\xi)=(1-\lambda)\delta_{A_{\min}(\xi)}+\lambda\delta_{A_{\max}(\xi)}
+$$
+is a Borel probability kernel, a Borel map into the weak topology, and Baire one with that target topology. For $0<\lambda<1$, its support is exactly the two-point fiber on $D$. There are also Borel probability kernels that are not weakly Baire one, and admissible assignments that are not measurable for a completed Borel probability on $X$. Nevertheless all admissible probability assignments are Baire-property measurable into the weak topology.
+
+**Proof 22.13.** Both selected atoms belong to the fiber, so the support condition holds. They coincide exactly on $G$ and differ on $D$, proving the support assertion for interior weights. With the continuous $K$-valued approximants of Theorem 22.9, define
+$$
+P_{\lambda,n}(\xi)=(1-\lambda)\delta_{a_n(\xi)}+\lambda\delta_{b_n(\xi)}.
+$$
+For each continuous $f$, its integral against this measure is
+$$
+(1-\lambda)f(a_n(\xi))+\lambda f(b_n(\xi)),
+$$
+a continuous function of $\xi$. Hence $P_{\lambda,n}$ is weakly continuous. Pointwise convergence of $a_n,b_n$ gives convergence of every test integral to the corresponding integral against $P_\lambda$. This is precisely a same-target weak Baire-one approximation. Support inside the input fiber is required of the limit, not of these continuous approximating maps.
+
+The map $(z,w)\mapsto(1-\lambda)\delta_z+\lambda\delta_w$ is weakly continuous by the same test calculation. The pair $(A_{\min},A_{\max})$ is Borel into $K^2$: a countable base of product cylinders reduces inverse images of open sets to countable unions of intersections of Borel sets. Composition proves weak-topology Borelness of $P_\lambda$. Moreover, for every Borel $B\subseteq K$,
+$$
+P_\lambda(\xi)(B)=(1-\lambda)\mathbf1_B(A_{\min}(\xi))+
+\lambda\mathbf1_B(A_{\max}(\xi))
+$$
+is Borel, proving the probability-kernel assertion itself.
+
+Use the Borel non-Baire-one selection $A_R$ of Theorem 22.10. Its Dirac assignment is a Borel probability kernel and a weakly Borel map. Suppose it were the pointwise weak limit of continuous maps $Q_n:X\to\mathcal P(K)$. On the same Cantor set $M$, the continuous real functions
+$$
+g_n(\xi)=\int_K z_j\,dQ_n(\xi)
+$$
+would tend to $\mathbf1_R$. The eventual $1/4$ bound in Proof 22.10 would again make $M\setminus R$ relatively $F_\sigma$, which was proved impossible. Thus this kernel is not weakly Baire one. For the non-completed-measurable selection $A_B$ there, the same digit moment of $\delta_{A_B}$ restricts on $M$ to $\mathbf1_B$. Its inverse image of $(1/2,\infty)$, intersected with $M$, is $B$. Hence this admissible assignment is not measurable for the completion of the probability $\nu$ constructed there, and in particular is not weakly Borel.
+
+Finally let $P$ be any admissible assignment. Outside $D$ it equals $\delta_{A_{\min}}$. For a weakly open set $O\subseteq\mathcal P(K)$, the set $\{z:\delta_z\in O\}$ is open in $K$, since the Dirac map is weakly continuous. Its inverse image under $A_{\min}$ is $F_\sigma$ by Theorem 22.9. The inverse image $P^{-1}(O)$ differs from that set only inside $D$, so the same meagre-error argument as in Proof 22.10 gives the Baire property. Thus probability-valued continuity and descriptive regularity have the asserted distinct meanings and boundaries.
+
+**theorem 22.14 (Algebraic laws are not consequences of the regularity statements).** The selections $A_{\min}$ and $A_{\max}$, and each constant-weight kernel $P_\lambda$, are commutative. Both of these point selections fail associativity and fail to have $0_K$ as an identity. None of these constant-weight kernels has the Dirac identity law at $0_K$. There also exists a noncommutative Baire-one point selection. Conversely, commutativity alone forces neither Borelness nor Baire class one among selections. All these examples retain exact natural addition and the common continuity locus already proved.
+
+**Proof 22.14.** Swapping the first two coordinates preserves the set of actual finite addition triples. The swap is a homeomorphism, so it preserves its closure. Hence $\Gamma(x,y)=\Gamma(y,x)$. Taking the least or greatest element of the same fiber proves commutativity of both canonical selections. Their constant-weight mixture of Dirac probabilities is commutative as well.
+
+Put $p_2=0v$ and $q_2=10v$. Assumption 22.2, including its specified labels, gives
+$$
+\Gamma(0_K,u)=\Gamma(0_K,v)=\{u,v\},\qquad
+\Gamma(u,u)=\{p_2\},\qquad\Gamma(v,v)=\{q_2\},
+$$
+$$
+\Gamma(0_K,p_2)=\Gamma(0_K,q_2)=\{p_2,q_2\}.
+$$
+Indeed, $H(0_K)=0\notin E$, so its sign set permits both signs; the other phases in the last display are $[-2\phi]\in E$. The same-sign rule gives the two diagonal singleton fibers. In lexicographic order $v<u$ and $p_2<q_2$, as their first digits show. Consequently
+$$
+A_{\min}(0_K,u)=v\ne u,\qquad A_{\max}(0_K,v)=u\ne v,
+$$
+so the proposed identity fails. Furthermore,
+$$
+A_{\min}(A_{\min}(0_K,v),v)=q_2\ne p_2
+=A_{\min}(0_K,A_{\min}(v,v)),
+$$
+$$
+A_{\max}(A_{\max}(0_K,u),u)=p_2\ne q_2
+=A_{\max}(0_K,A_{\max}(u,u)).
+$$
+These are explicit failures of associativity for the two named selections. For the probability kernels,
+$$
+P_\lambda(0_K,u)=P_\lambda(0_K,v)=(1-\lambda)\delta_v+\lambda\delta_u.
+$$
+The identity requirement at $u$ would force $\lambda=1$, whereas the one at $v$ would force $\lambda=0$. Thus no constant weight gives the Dirac identity law.
+
+For a noncommutative Baire-one example, change $A_{\min}$ only at $\xi_*=(0_K,u)$, assigning $u$ there, and denote the result by $A_*$. It remains a selection. At the transposed input $(u,0_K)$ it still equals $v$, so it is not commutative. For the nested clopen cells $C_n(\xi_*)$ used in Theorem 22.9, define a map equal to the constant $u$ on that cell and equal to $a_n$ outside it. Each such map is continuous into $K$. At $\xi_*$ it converges to $u$. At any other input it eventually equals $a_n$, because the cells shrink to the singleton $\{\xi_*\}$. Its limit there is $A_{\min}$. These maps prove that $A_*$ is Baire one.
+
+To separate commutativity from the other regularities, take disjoint nonempty clopen cylinders $U,V\subset K$ and obtain the Cantor set $M\subset U\times V$ from Theorem 22.7. Its transpose $\tau M\subset V\times U$ is disjoint from $M$. Make either construction $A_R$ or $A_B$ from Theorem 22.10 on $M$, make the identical choices at transposed points in $\tau M$, and retain $A_{\min}$ elsewhere. Symmetry of the relation makes this a commutative selection. In the $R$ case it is Borel, since both modified sets are closed with countable distinguished subsets, but its restriction to $M$ retains the proof of failure of Baire class one. In the $B$ case its restriction to $M$ retains the failure of completed measurability for the probability supported there. Thus commutativity supplies neither missing regularity. The natural input fibers remain singleton fibers in all cases, so none of the modifications can change natural addition. Their continuity loci follow from Theorem 22.6.
+
+These counterexamples establish the stated nonimplications, not a classification of associative selections. In particular, the existence or nonexistence of other associative selections, and any separately defined associativity law for composed probability kernels, are not asserted here. The exact continuity obstruction, the descriptive loci, and the constructions in Theorems 22.6–22.13 require no such law.
+
+## 追加锚（本行以下为增补区）
