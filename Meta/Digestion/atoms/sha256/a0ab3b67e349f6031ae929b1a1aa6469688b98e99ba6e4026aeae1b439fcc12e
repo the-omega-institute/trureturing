@@ -1,0 +1,31 @@
+**定理 31.12（单位化字符、完整谱及逆元）。** 若 $a=(\lambda,\mu)\in A_t^{\#}$，且 $\Phi_t\mu=(\nu,g)$，则 $A_t^{\#}$ 的全部字符准确为
+$$
+\mathcal P_\chi^{\#}(a)=\lambda+\chi(\nu),\qquad \chi\in\Delta(\mathcal M),
+$$
+$$
+\mathcal E_z^{\#}(a)=\lambda+\mathscr G_g(z),\qquad z\in\overline{\mathbb D}.
+$$
+特别 $\mathcal E_0^{\#}(\lambda,\mu)=\lambda$ 是非零单位化字符，其在 $A_t$ 上的限制才是零泛函。字符空间同胚于 $\Delta(\mathcal M)\sqcup\overline{\mathbb D}$。完整谱为
+$$
+\sigma_{A_t^{\#}}(\lambda,\mu)=\bigl(\lambda+\sigma_{\mathcal M}(\nu)\bigr)\cup\{\lambda+\mathscr G_g(z):|z|\le1\}.
+$$
+因此 $a$ 可逆当且仅当
+$$
+\nu+\lambda\delta_0\text{ 在 }\mathcal M\text{ 中可逆},\qquad \lambda+\mathscr G_g(z)\ne0\quad\text{对每个 }|z|\le1.
+$$
+这些条件特别要求 $\lambda\ne0$。当它们成立时，令 $\xi=\nu+\lambda\delta_0$、$h=\lambda e_0+g$，则
+$$
+a^{-1}=\left(\lambda^{-1},\Psi_t\left(\xi^{-1}-\lambda^{-1}\delta_0,h^{-1}-\lambda^{-1}e_0\right)\right).
+$$
+这里 $h^{-1}$ 在 $\mathcal S_0$ 中取逆，第二个剩余参数的常数项为零。[^rro31-spectrum][^rro31-wiener]
+
+**证明。** 对单位化字符限制到 $A_t$，或者得到零泛函，此时原字符必为标量投影；或者得到定理31.7的一个字符，此时单位性迫使延拓为 $\lambda+\chi(\mu)$。这给出显示的全部字符。其拓扑描述也可通过 $\Theta_t$：两个直积幂等元将两部分分开，分别恢复 $\Delta(\mathcal M)$ 和闭圆盘的求值拓扑。
+
+直积中的一个元素可逆当且仅当两个坐标都可逆，因为任何逆元恒等式都逐坐标成立，反向把两个逆元配成一对即可。因此 $\Theta_t$ 给出
+$$
+\sigma_{A_t^{\#}}(a)=\sigma_{\mathcal M}(\nu+\lambda\delta_0)\cup\sigma_{\mathcal S_0}(\lambda e_0+g).
+$$
+第一项由谱定义等于 $\lambda+\sigma_{\mathcal M}(\nu)$；第二项由定理31.6等于显示的闭圆盘像。这里 $\mathcal M$ 和 $\mathcal S_0$ 都已具有完备复次乘法范数、交换乘法和范数为一的单位，故经典谱接口的全部假设均已满足。谱公式及可逆条件随之成立。
+
+在 $z=0$ 处的第二条件给出 $\lambda\ne0$。若 $h^{-1}=k$，卷积的常数项恒等式给出 $\lambda k_0=1$，所以 $k_0=\lambda^{-1}$。将直积逆元 $(\xi^{-1},h^{-1})$ 代入定理31.4的逆映射，就得到所列实际逆元公式。证毕。
+
