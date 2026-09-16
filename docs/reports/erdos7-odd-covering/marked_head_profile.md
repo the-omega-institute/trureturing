@@ -5043,3 +5043,139 @@ certificates are hash-bound prerequisites. This new replay owns only the
 tails, and the strict final criterion. Run it with `python3 -I -O`.
 All conclusions here are ordinary mathematics with exact arithmetic,
 not new Lean declarations or a solution of unrestricted#7.
+
+### Actual seven-digit positions at arbitrary357 heights
+
+Fix the following eleven distinct low forbidden modulus/residue pairs:
+
+```
+(3,0), (9,4), (5,0), (15,11), (45,37), (7,0),
+(21,8), (35,9), (63,59), (105,74), (315,89).
+```
+
+Their actual complement Ω in Z/315Z has75points. The certificate lists these points in increasing order and assigns each a nonnegative integer weight with total N=1000000007. Let μ be this probability law. No deleted point is filled, no digit is moved, and the weights need not be constant within an old45 fibre.
+
+For arbitrary finite nonnegative n3,n5,n7, lift μ independently and uniformly in the additional prime-power digits to period Q=3^(2+n3)5^(1+n5)7^(1+n7). Call this law λ. Above the eleven fixed low classes, allow any forbidden family with at most one original residue class for each distinct divisor of Q that does not divide315. Let F be the complement of precisely these actual higher forbidden classes. The conclusion concerns ν=λ(.|F). It does not assume that ν has unchanged low marginals or is an ambient uniform law.
+
+When this law is used before additional primes, Q includes the full
+3/5/7 part of the original common period, including heights appearing
+only in moduli with later prime factors.
+
+For a complete test family consisting of one arbitrary class C_m modulo every divisor m of Q, including C_1=the whole space, write L=Σ_(m|Q)1_Cm. The certificate and the argument below give
+
+    sup_test E_ν L² ≤ 105976769844774468812903/2920804491373837228125
+                    < 3849/106.                         (PG1)
+
+This is a result for the specified low family; it does not assert a bound for every other low315 configuration or settle unrestricted Erdős #7. All-height validity follows from the analytic estimates below. The finite verifier recomputes their coefficients and the two low geometry bounds.
+
+#### Saturated common-layout reduction and the full geometric tail
+
+Put h=(2,1,1). Each original exponent vector a has the unique saturated projection d=Π_p p^min(a_p,h_p), together with its extra exponents a_p−h_p where these are positive. These extra exponents remain part of the original modulus label. Equal projected d never identify different original moduli.
+
+Let Z3,Z5,Z7 be independent auxiliary geometric variables with
+
+    Pr(Z_p=k)=(p−1)/p^(k+1),  k≥0.
+
+For d|315 set w_d(z)=Π_(p:v_p(d)=h_p)(1+z_p). Define the genuine low-layout maximum
+
+    F_μ(z)=max_(one cylinder C_d modulo each d|315)
+                E_μ (Σ_d w_d(z)1_Cd)².
+
+The standard saturated-prefix argument gives E_λL²≤E_Z F_μ(Z). Indeed, conditionally on the low point, higher-prefix intersections are bounded by nested-prefix intersections p^−max(e,f); centering the added coordinates realizes this dominating kernel. At a fixed geometric height, the projected cylinders belonging to one d average to a point of their convex hull. Convexity of the square bounds that average by an extreme layout with one cylinder per d. Finite physical heights are truncated versions; completing labels and auxiliary heights only increases these nonnegative bounds. This centering is solely a moment bound under λ and does not alter the actual deletion event F.
+
+Let m_d=max_a μ(a mod d) and P(z)=Σ_(d,e|315)w_d(z)w_e(z)m_lcm(d,e). For each fixed low layout, its weighted-square increment from z=0 is at most P(z)−P(0), because every weight product increment is nonnegative and μ(C_d∩C_e)≤m_lcm(d,e). Therefore
+
+    F_μ(z) ≤ F_μ(0)+P(z)−P(0).
+
+Let H(z) be any valid upper bound for F_μ(z), let B=[0,8]×[0,5]×[0,4], and let β=Pr(Z∈B). Using H inside B and H(0) outside gives
+
+    E_λL² ≤ U_B
+      := (1−β)H(0)+Σ_(z∈B)Pr(Z=z)H(z)+Σ_d η_out(d)m_d.
+
+Here η_out(d) is the coefficient of m_d in E[1_(Z∉B)(P(Z)−P(0))]. All coefficients are nonnegative. The full expectation of each pair weight product is the product of the one-prime factors1 (neither exponent saturated), p/(p−1) (exactly one saturated), and p(p+1)/(p−1)² (both saturated). Subtract1 and subtract the finite-box contribution to obtain η_out exactly. No tail is discarded. In particular, this argument does not require P(0)−H(0)≥0 or monotonicity of a relaxed deficit.
+
+#### Pure7 anchored upper bound
+
+Identify Ω with its actual pairs (x,y), where x is an old45 point and y∈{1,…,6} its7digit. Write R_x=Σ_y μ_(x,y) and v_x=max_y μ_(x,y). Put C=(1,3,5,9,15,45), b=(1,1,1+z5,1+z3,1+z5,(1+z3)(1+z5)), and u=1+z7.
+
+Let A and B range independently over all complete old45 layouts with weights b, including their unit labels. Then a valid upper bound is
+
+    H_pure7(z)=max_(A,B,j) Σ_x [
+        R_x A_x²
+        +v_x(2u A_x(B_x−1)+u²(B_x−1)²)
+        +μ_(x,j)(2u A_x+u²(2B_x−1)) ].
+
+To prove it, fix a genuine low315 layout. Its non-seven part is A. Keep the actual global digit j of its pure7 label. Let B−1 be the sum of the other five high-label old cylinders. Bound every low/high term not using the pure7 label, and every high/high term not using it, by the fibre maximum v_x. Terms involving the pure7 label have mass at most μ_(x,j). Expanding the square gives the displayed expression. Maximizing over actual old layouts preserves validity.
+
+There are4480 complete old layouts and280 after omitting the45singleton. Let s=(1+z3)(1+z5). For fixed base A,B and j, adding s at singleton rows i,k gives an A-only gain a_i, B-only gain b_k, and an additional nonnegative cross gain2u v_i s² only when i=k. Hence the exact best singleton gain is
+
+    max(max_i a_i+max_k b_k, max_i(a_i+b_i+2u v_i s²)).
+
+If the independent maxima occur at the same row, the coincident term dominates them; if they occur at different rows, the independent sum is realized. This explains the verifier's280² base-pair calculation without losing any of the4480² full-layout maxima. The six digits used are the actual surviving digits; the excluded digit0 has zero mass and cannot improve a nonnegative maximum.
+
+#### Fixed-low-layout digit partition upper bound
+
+Keep a single complete old low layout A and write its load as a_A(x). For each high label7e, e∈C, and actual digit y define
+
+    R_e^A(y)=max_(old cylinder D modulo e)
+        Σ_(x∈D) μ_(x,y)[u²b_e²+2ub_e a_A(x)],
+
+    M_(c,y)=max_(old cylinder D modulo c) Σ_(x∈D) μ_(x,y),
+
+    J_(e,f)(y)=2u²b_e b_f M_(lcm(e,f),y),   e<f.
+
+The diagonal and all cross terms with the common low A use one common old cylinder inside R_e^A(y). For two high labels on the same digit, their old intersection is empty or a cylinder modulo their lcm, so J bounds their pair contribution. Labels on different digits have zero intersection. Only this high/high old-cylinder compatibility is relaxed.
+
+For a subset T of the six high labels put
+
+    H_y^A(T)=Σ_(e∈T)R_e^A(y)+Σ_(e<f in T)J_(e,f)(y).
+
+Partition the six labels among the six surviving digits. The subset recurrence
+
+    D_y(S)=max_(T⊆S)[D_(y−1)(S\T)+H_y^A(T)]
+
+computes the exact maximum of this relaxation. Initialize D_1(S)=H_1^A(S), and permit empty subsets at all digits. Digit0 has no mass; assigning a label from it to a surviving digit cannot decrease the relaxed nonnegative objective. Thus
+
+    H_DP(z)=max_A [Σ_(x,y)μ_(x,y)a_A(x)² + D_6(C)]
+
+is a valid upper bound for F_μ(z). The verifier evaluates all4480 A with64 subset states. The employed bound is H(z)=min(H_pure7(z),H_DP(z)) at the one fixed law μ. This minimum is a pointwise upper bound; no convexity or optimization property is claimed for the minimum.
+
+#### Actual grouped deletion bound for the same law
+
+Use the selected one-extra-prime blocks
+
+    E3={9,45}, E5={5,15,45,35}, E7={7,21,35,63,105,315}.
+
+For p∈{3,5,7}, the block with low projection d∈Ep includes the original moduli d p^e, e≥1. The summed conditional prefix mass is α_p=1/(p−1). The three selected blocks use independent added prime coordinates conditionally on the low point. Their true union is bounded by the maximum over their low cylinders of
+
+    G_group(μ)=max E_μ[1−Π_p(1−α_p A_p)],
+
+where A_p is the count of the selected low cylinders for p. The bounds |E3|≤2, |E5|≤4, |E7|≤6 ensure that each factor is nonnegative. For the original labels at different e, take their geometric convex averages, padding absent exponents by zero. The displayed expression is affine separately in each such average and increasing in each group count within these ranges. Maximizing selects one low cylinder for each projected label, which proves this upper bound without merging original labels or changing F.
+
+Set γ_d=Π_(p:v_p(d)=h_p)p/(p−1)−1 and ρ_d=γ_d−Σ_(p:d∈Ep)α_p. All ρ_d are nonnegative. Every unselected original higher label is bounded by the ordinary union bound, giving
+
+    λ(F) ≥ q := 1−G_group(μ)−Σ_d ρ_d m_d.
+
+The verifier maximizes G_group exactly on the actual75points. To describe its elimination, write A for the two E3 indicators, B for the three old E5 indicators at5,15,45, I for the extra35indicator, and C for the six E7 indicators. The pointwise numerator of the union with denominator48 is
+
+    24A+12B−6AB+6(2−A)I+(2−A)(4−B−I)C.
+
+For each A,B,I choice the six E7 cylinders maximize independently, since their coefficients are nonnegative. The verifier enumerates all A,B,I choices, computes these six maxima, and independently checks the final witness against the product-union formula point by point. All caps and this union maximum use the same integer weights as both numerator bounds.
+
+#### Exact values and conditioning
+
+The standalone verifier reproduces
+
+    q = 25428074957/48000000336 > 0,
+    U_B = 54284750870997693017389/2756768194297377225000.
+
+Since C_1 is the whole space, L≥1. Thus L²−1≥0, and conditioning the actual higher surviving event gives
+
+    E_ν L² ≤ 1+(E_λ L²−1)/λ(F) ≤ 1+(U_B−1)/q
+            = 105976769844774468812903/2920804491373837228125.
+
+Its difference below3849/106 is the positive rational
+
+    8638883751805796885407/309605276085626746181250.
+
+`verify_point_geometry.py` reads `point_geometry_certificate.json`, reconstructs the actual carrier, checks all weights and arithmetic bounds, recomputes both integer geometry maxima at every one of270depths, recomputes all actual cylinder caps and the grouped union maximum, and performs the geometric-tail and final comparisons with exact rational arithmetic. The largest common bound on intermediate square sums is213444001494108, below2^63. The verifier needs Python3 and NumPy; it imports no optimizer or scratch module. This is a finite computational certificate combined with the ordinary all-height proof above, not a Lean kernel verification.

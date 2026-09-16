@@ -115,6 +115,18 @@ remainder. This improves `3849/106` on that geometry. Extending this
 improved moment bound to the other low configurations, and obtaining
 a general tail continuation, remain open.
 
+For another explicit75-point low configuration, [retaining actual
+seven-digit positions](../docs/reports/erdos7-odd-covering/marked_head_profile.md#actual-seven-digit-positions-at-arbitrary357-heights)
+gives `Gamma<=105976769844774468812903/2920804491373837228125`
+`<36.283418<3849/106`, also at arbitrary finite original3/5/7 heights.
+Its point weights can differ within the old45 fibres. One square bound
+retains the pure7 digit in all its cross terms; a second retains each
+of six high labels on one global digit together with one common low
+layout. Their pointwise minimum and the actual grouped deletion bound
+use the same law and include the entire geometric tail. The specified
+75-point geometry remains a hypothesis; no unrestricted tail or global
+low-configuration bound follows from this instance.
+
 On that same77-point law, the [convex extension](../docs/reports/erdos7-odd-covering/marked_head_profile.md#convex-costs-on-the-same-arbitrary-height-probability)
 (SH19)--(SH25) adds simultaneous mean `<4.948866` and eight hinge
 bounds, including threshold-six `<0.808228`, with arbitrary original
