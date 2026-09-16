@@ -206,22 +206,10 @@ def sourcePath (name : Name) : String :=
   (if name.toString.startsWith "LeanInformationAudit." then "tools/lean-inspector/" else "") ++
     name.toString.replace "." "/" ++ ".lean"
 
+-- Judge implementation bytes do not identify binding semantics; the manual
+-- report_semantic_version does. Retain configuration and toolchain inputs.
 def policyPaths : Array String := #[
-  "lean-report-inputs.json", "lean-toolchain", "lake-manifest.json",
-  "tools/lean-inspector/native_image.c",
-  "tools/lean-inspector/LeanInformationAudit/RegistryTypes.lean",
-  "tools/lean-inspector/LeanInformationAudit/Registry.lean",
-  "tools/lean-inspector/LeanInformationAudit/Registry/Reifier.lean",
-  "tools/lean-inspector/LeanInformationAudit/Registry/Entries.lean",
-  "tools/lean-inspector/LeanInformationAudit/Registry/Evidence.lean",
-  "tools/lean-inspector/LeanInformationAudit/Registry/Enrollment.lean",
-  "tools/lean-inspector/LeanInformationAudit/Registry/Assessment.lean",
-  "tools/lean-inspector/LeanInformationAudit/ReadoutProvenance/Family.lean",
-  "tools/lean-inspector/LeanInformationAudit/ReadoutProvenance/State.lean",
-  "tools/lean-inspector/LeanInformationAudit/ReadoutProvenance/Carriers.lean",
-  "tools/lean-inspector/LeanInformationAudit/ReadoutProvenance/Types.lean",
-  "tools/lean-inspector/LeanInformationAudit/ReadoutProvenance.lean",
-  "tools/lean-inspector/LeanInformationAudit/Syntax.lean"]
+  "lean-report-inputs.json", "lean-toolchain", "lake-manifest.json"]
 
 private abbrev HashWorker := IO.Process.Child {
   stdin := .piped, stdout := .piped, stderr := .null }
@@ -681,7 +669,7 @@ def sourceInputs (env : Environment) (dependencies : Array DependencyIdentity) :
   NativeCoherence.validate (#[env.header.mainModule] ++ policyOwners ++ dependencies.map (·.owner))
   let mut paths := policyPaths.push (sourcePath env.header.mainModule)
   for dep in dependencies do
-    if dep.owner.toString.startsWith "D5." || dep.owner.toString.startsWith "LeanInformationAudit." then
+    if dep.owner.toString.startsWith "D5." || dep.owner.toString.startsWith "LeanInformationAudit.Tests." then
       let path := sourcePath dep.owner
       unless paths.contains path do paths := paths.push path
   readSourceInputs (paths.qsort (· < ·))

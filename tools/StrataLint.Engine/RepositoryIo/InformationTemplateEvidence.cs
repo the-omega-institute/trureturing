@@ -1,6 +1,5 @@
 using System.Collections.Immutable;
 using System.Text.Json;
-using System.Text.RegularExpressions;
 
 namespace StrataLint.Engine;
 
@@ -23,7 +22,7 @@ internal sealed record InformationTemplateEvidenceContext(
 internal static class InformationTemplateEvidence
 {
     // The historical content is data evaluated by today's producer. Keep its
-    // D5 sources and state; bind compiler/judge inputs to the current program.
+    // D5 sources and state; bind configuration/toolchain inputs to the current program.
     internal static RepositorySnapshot HistoricalInputs(RepositorySnapshot historical, RepositorySnapshot current)
     {
         static bool ProducerInput(string path) => path.StartsWith("tools/lean-inspector/", StringComparison.Ordinal)
@@ -130,118 +129,10 @@ internal static class InformationTemplateEvidence
         return LeanImportClosure.ModuleName(RepoPath.CreateKnown(relative));
     }
 
-    // These are the producer's unconditional policy roots. Import traversal
-    // reads snapshot source bytes, never the report's claimed input inventory.
+    // Binding compatibility is the manual report_semantic_version tag, not
+    // an Inspector source fingerprint. These are configuration/toolchain inputs.
     private static readonly string[] PolicyInputs = [
-        "lean-report-inputs.json", "lean-toolchain", "lake-manifest.json",
-        "tools/lean-inspector/native_image.c",
-        "tools/lean-inspector/LeanInformationAudit/RegistryTypes.lean",
-        "tools/lean-inspector/LeanInformationAudit/Registry.lean",
-        "tools/lean-inspector/LeanInformationAudit/Registry/Reifier.lean",
-        "tools/lean-inspector/LeanInformationAudit/Registry/Entries.lean",
-        "tools/lean-inspector/LeanInformationAudit/Registry/Evidence.lean",
-        "tools/lean-inspector/LeanInformationAudit/Registry/Enrollment.lean",
-        "tools/lean-inspector/LeanInformationAudit/Registry/Assessment.lean",
-        "tools/lean-inspector/LeanInformationAudit/ReadoutProvenance/Family.lean",
-        "tools/lean-inspector/LeanInformationAudit/ReadoutProvenance/State.lean",
-        "tools/lean-inspector/LeanInformationAudit/ReadoutProvenance/Carriers.lean",
-        "tools/lean-inspector/LeanInformationAudit/ReadoutProvenance/Types.lean",
-        "tools/lean-inspector/LeanInformationAudit/ReadoutProvenance.lean",
-        "tools/lean-inspector/LeanInformationAudit/Syntax.lean"];
-
-    // Lean 4.33 Module.header: module? prelude? (public? meta? import all? name)*.
-    // Header whitespace is not declaration indentation. Read only this prefix;
-    // declaration syntax, quoted strings and body commands cannot add imports.
-    private static IEnumerable<string> SourceImports(RepositoryFile file)
-    {
-        var source = file.Text;
-        var index = 0;
-        var token = NextToken();
-        if (token == "module") token = NextToken();
-        if (token == "prelude") token = NextToken();
-        while (true)
-        {
-            if (token == "public") token = NextToken();
-            if (token == "meta") token = NextToken();
-            if (token != "import") yield break;
-            token = NextToken();
-            if (token == "all") token = NextToken();
-            if (token is null) throw new FormatException("DTR-Evidence: missing import name in " + file.Path.Value);
-            // Source identifiers may quote an otherwise plain component;
-            // Name.toString removes that unnecessary quoting in producer paths.
-            var name = Regex.Replace(token, "«([^»]*)»", match =>
-            {
-                var part = match.Groups[1].Value;
-                if (part.Length > 0 && !part.Contains('.') && !char.IsAsciiDigit(part[0]))
-                {
-                    try { return InformationTemplateJson.Name(part); }
-                    catch (FormatException) { }
-                }
-                return match.Value;
-            }, RegexOptions.CultureInvariant);
-            yield return InformationTemplateJson.Name(name);
-            token = NextToken();
-        }
-
-        bool At(string value) => source.AsSpan(index).StartsWith(value, StringComparison.Ordinal);
-
-        string? NextToken()
-        {
-            while (index < source.Length)
-            {
-                if (char.IsWhiteSpace(source[index]) || source[index] == '\uFEFF') { index++; continue; }
-                if (At("--"))
-                {
-                    while (index < source.Length && source[index] != '\n') index++;
-                    continue;
-                }
-                if (!At("/-")) break;
-                index += 2;
-                var depth = 1;
-                while (index < source.Length && depth > 0)
-                {
-                    if (At("/-")) { depth++; index += 2; }
-                    else if (At("-/")) { depth--; index += 2; }
-                    else index++;
-                }
-                if (depth != 0) throw new FormatException("DTR-Evidence: unterminated import comment");
-            }
-            if (index == source.Length) return null;
-            var start = index;
-            var quoted = false;
-            while (index < source.Length)
-            {
-                if (!quoted && (char.IsWhiteSpace(source[index]) || At("/-") || At("--"))) break;
-                if (source[index] == '«') quoted = true;
-                else if (source[index] == '»') quoted = false;
-                index++;
-            }
-            if (quoted) throw new FormatException("DTR-Evidence: unterminated import identifier");
-            return source[start..index];
-        }
-    }
-
-    private static HashSet<string> RequiredInputs(RepositorySnapshot snapshot, string source)
-    {
-        var required = new HashSet<string>(StringComparer.Ordinal);
-        var pending = new Stack<string>(PolicyInputs.Append(source));
-        while (pending.TryPop(out var path))
-        {
-            if (!required.Add(path)) continue;
-            if (!snapshot.TryGetFile(path, out var file))
-                throw new FormatException("DTR-Evidence: missing required producer input " + path);
-            if (!path.EndsWith(".lean", StringComparison.Ordinal)) continue;
-            foreach (var module in SourceImports(file))
-            {
-                var imported = module.Replace('.', '/') + ".lean";
-                if (module.StartsWith("LeanInformationAudit.", StringComparison.Ordinal))
-                    pending.Push("tools/lean-inspector/" + imported);
-                else if (module.StartsWith("D5.", StringComparison.Ordinal) || module == "Trureturing")
-                    pending.Push(imported);
-            }
-        }
-        return required;
-    }
+        "lean-report-inputs.json", "lean-toolchain", "lake-manifest.json"];
 
     internal static InformationTemplateUniverse Collect(RepositorySnapshot snapshot, LeanAxiomReport report)
     {
@@ -257,9 +148,8 @@ internal static class InformationTemplateEvidence
             if (!report.Files.TryGetValue(RepoPath.CreateKnown(source), out var module) || module.Error is not null
                 || module.InformationTemplates is not { } evidence)
                 throw new FormatException($"DTR-Evidence: missing current producer for {source}");
-            var requiredInputs = RequiredInputs(snapshot, source);
-            requiredInputs.UnionWith(LeanImportClosure.RepositoryPaths(report, RepoPath.CreateKnown(source))
-                .Select(path => path.Value));
+            var requiredInputs = LeanImportClosure.RepositoryPaths(report, RepoPath.CreateKnown(source))
+                .Select(path => path.Value).Concat(PolicyInputs).ToHashSet(StringComparer.Ordinal);
             foreach (var required in requiredInputs.Order(StringComparer.Ordinal))
                 if (!evidence.Inputs.Any(input => input.Path == required))
                     throw new FormatException("DTR-Evidence: omitted required producer/source input " + required);

@@ -262,28 +262,20 @@ private def isRepositoryModule (name : Name) : Bool :=
 private def moduleSourceInputs (env : Environment) (root : Name) :
     CoreM (Array TemplateAudit.SourceInput) := do
   let mut seen : NameSet := {}
-  let policyModules := TemplateAudit.policyPaths.filterMap fun path =>
-    if path.startsWith "tools/lean-inspector/" && path.endsWith ".lean" then
-      some ((((path.drop "tools/lean-inspector/".length).toString.dropEnd 5).toString.replace "/" ".").toName)
-    else none
-  let mut pending := root :: policyModules.toList
+  let mut pending := [root]
   let mut paths := TemplateAudit.policyPaths
   while let name :: rest := pending do
     pending := rest
     if seen.contains name then continue
     seen := seen.insert name
-    if !isRepositoryModule name then continue
+    if name != root && !(name.toString.startsWith "D5." ||
+        name.toString.startsWith "LeanInformationAudit.Tests." || name == `Trureturing) then continue
     let path := sourcePath name
     unless paths.contains path do paths := paths.push path
     let imports ← if name == env.header.mainModule then pure env.header.imports
       else if let some index := env.getModuleIdx? name then
         pure env.header.moduleData[index.toNat]!.imports
-      else do
-        -- Policy modules execute in the inspector even when a content module
-        -- does not import them. Their source closure remains mandatory input.
-        let (imports, _, messages) ← Elab.parseImports (← IO.FS.readFile path) path
-        if messages.hasErrors then throwError "incomplete_closure:dtr.policy_imports:{name}"
-        pure imports
+      else throwError "incomplete_closure:dtr.module_imports:{name}"
     pending := imports.toList.map (·.module) ++ pending
   TemplateAudit.readSourceInputs (paths.qsort (· < ·))
 

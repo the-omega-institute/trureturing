@@ -17,37 +17,23 @@ public sealed class DeclaredTemplateReviewTests
     internal const string Judge = "tools/lean-inspector/LeanInformationAudit/Registry/Assessment.lean";
     private const string Module = "D5.S0.Carrier.Registration";
     private const string TargetModule = "D5.S0.Carrier.Target";
-    internal static readonly string[] JudgeModules = ["RegistryTypes", "Registry", "Registry/Reifier",
-        "Registry/Entries", "Registry/Evidence", "Registry/Enrollment", "Registry/Assessment",
-        "ReadoutProvenance/Family", "ReadoutProvenance/State", "ReadoutProvenance/Carriers",
-        "ReadoutProvenance/Types", "ReadoutProvenance", "Syntax"];
-
-    internal static Dictionary<string, string> PolicyFiles()
+    internal static Dictionary<string, string> PolicyFiles() => new(StringComparer.Ordinal)
     {
-        var files = JudgeModules.ToDictionary(n => "tools/lean-inspector/LeanInformationAudit/" + n + ".lean",
-            _ => "-- synthetic judge input\n", StringComparer.Ordinal);
-        files["tools/lean-inspector/LeanInformationAudit/Syntax.lean"] =
-            "import LeanInformationAudit.Registry\n";
-        files["tools/lean-inspector/LeanInformationAudit/Registry.lean"] =
-            "import LeanInformationAudit.Registry.Assessment\n";
-        files[Judge] = "import LeanInformationAudit.ExtraPolicy\n";
-        files["tools/lean-inspector/LeanInformationAudit/ExtraPolicy.lean"] = "-- transitive judge input\n";
-        files["tools/lean-inspector/native_image.c"] = "/* synthetic native input */\n";
-        files["lean-toolchain"] = "leanprover/lean4:v4.33.0\n";
-        files["lake-manifest.json"] = "{\"packages\":[]}";
-        files["lean-report-inputs.json"] = """
+        ["lean-toolchain"] = "leanprover/lean4:v4.33.0\n",
+        ["lake-manifest.json"] = "{\"packages\":[]}",
+        ["lean-report-inputs.json"] = """
             {"schema_version":1,"report_semantic_version":5,
              "report_modules":{"include":[{"pattern":"D5/**/*.lean","optional":true}],"exclude":[]},
              "inspector_sources":{"include":[],"exclude":[]},
              "dependency_sources":{"include":[],"exclude":[]},
              "config_inputs":{"include":[],"exclude":[]},"producer_scopes":{}}
-            """;
-        return files;
-    }
+            """,
+    };
 
     internal static Dictionary<string, string> Files(string seed = Seed, bool active = false)
     {
         var files = PolicyFiles();
+        files[Judge] = "-- judge implementation\n";
         files[Registration] = "import D5.S0.Carrier.Target\nimport LeanInformationAudit.Syntax\n";
         files[Target] = "-- synthetic imported theorem source\n";
         files[InformationTemplateDebtStore.ActivationPath] = Text(InformationTemplateDebtStore.WriteActivation(new(seed, active)));
@@ -68,9 +54,8 @@ public sealed class DeclaredTemplateReviewTests
         bool declared = false, string? omit = null)
     {
         var snapshot = Tree(files);
-        var inputs = files.Where(p => p.Key.EndsWith(".lean", StringComparison.Ordinal)
-                || p.Key is "lean-report-inputs.json" or "lean-toolchain" or "lake-manifest.json"
-                    or "tools/lean-inspector/native_image.c")
+        var inputs = files.Where(p => p.Key == Registration || p.Key == Target
+                || PolicyFiles().ContainsKey(p.Key))
             .Where(p => p.Key != omit).OrderBy(p => p.Key, StringComparer.Ordinal)
             .Select(p => new { path = p.Key, sha256 = Hash(p.Value) }).ToArray();
         var keys = Enumerable.Range(0, count).Select(Key).ToArray();
@@ -126,58 +111,49 @@ public sealed class DeclaredTemplateReviewTests
     private static ImmutableArray<Diagnostic> Dispatch(RuleEvaluationContext context) =>
         RuleCatalog.Default.EvaluateSingle(UtilityAdmissionTestSupport.UtilityRuleId, context).Diagnostics;
 
-    [Theory]
-    [InlineData(null)]
-    [InlineData(Judge)]
-    [InlineData("tools/lean-inspector/LeanInformationAudit/ExtraPolicy.lean")]
-    [InlineData("tools/lean-inspector/native_image.c")]
-    public void required_judge_inputs_are_independent_of_supplied_hashes(string? omitted)
+    [Fact]
+    public void same_version_changed_judge_bytes_preserve_binding_evidence()
     {
         var before = Files();
-        var after = new Dictionary<string, string>(before);
-        if (omitted is not null) after[omitted] += "-- changed after evidence production\n";
-        var report = Report(after, omit: omitted);
-        var diagnostics = Dispatch(Context(before, after, report, [InformationTemplateDebtStore.ActivationPath]));
-        var blocks = diagnostics.Where(d => d.AdmissionEffect == AdmissionEffect.Block).ToArray();
-        if (omitted is null) Assert.Empty(blocks);
-        else Assert.True(blocks.Any(d => d.Message.Contains("DTR-Evidence", StringComparison.Ordinal)
-                && d.Message.Contains("omitted", StringComparison.Ordinal)),
-            "[FAIL] required_judge_inputs_are_independent_of_supplied_hashes: omitted " + omitted);
-    }
-
-    public static IEnumerable<object[]> ImportHeaders()
-    {
-        string[] headers = [
-            "module\npublic import LeanInformationAudit.ExtraPolicy\n",
-            "module\nmeta import LeanInformationAudit.ExtraPolicy\n",
-            "module\npublic meta import LeanInformationAudit.ExtraPolicy\n",
-            "module\nimport all LeanInformationAudit.ExtraPolicy\n",
-            "  import LeanInformationAudit.ExtraPolicy\n",
-            "import Init import LeanInformationAudit.ExtraPolicy\n",
-            "module\npublic /- outer /- nested -/ comment -/ meta\nimport LeanInformationAudit.ExtraPolicy\n",
-            "import «LeanInformationAudit».«ExtraPolicy»\n",
-        ];
-        foreach (var header in headers)
-            foreach (var omitted in new[] { false, true }) yield return [header, omitted];
+        var bytes = RawLeanReportArtifact.Write(Tree(before), Report(before));
+        var after = new Dictionary<string, string>(before) { [Judge] = "-- optimized judge implementation\n" };
+        var report = RawLeanReportArtifact.Read(bytes.AsSpan(), Tree(after));
+        var diagnostics = Dispatch(Context(before, after, report, [Judge, InformationTemplateDebtStore.ActivationPath]));
+        Assert.True(!diagnostics.Any(d => d.AdmissionEffect == AdmissionEffect.Block)
+                && diagnostics.Any(d => d.Message.Contains("DTR-Inactive complete producer", StringComparison.Ordinal)),
+            "[FAIL] same_version_changed_judge_bytes_preserve_binding_evidence: "
+            + string.Join("; ", diagnostics.Select(d => d.Message)));
     }
 
     [Theory]
-    [MemberData(nameof(ImportHeaders))]
-    public void required_judge_closure_reads_lean_import_headers(string header, bool omitted)
+    [InlineData(4)]
+    [InlineData(6)]
+    public void mismatched_report_semantic_version_rejects_binding_evidence(int version)
     {
-        const string dependency = "tools/lean-inspector/LeanInformationAudit/ExtraPolicy.lean";
+        var files = Files();
+        var bytes = RawLeanReportArtifact.Write(Tree(files), Report(files));
+        var wire = System.Text.Json.Nodes.JsonNode.Parse(bytes.AsSpan())!;
+        foreach (var module in wire["modules"]!.AsArray())
+            module!["information_templates"]!["compatibility_version"] = version;
+        var changed = StructuredCanonicalWriter.WriteJson(wire.ToJsonString());
+        var error = Record.Exception(() => RawLeanReportArtifact.Read(changed.AsSpan(), Tree(files)));
+        Assert.True(error is FormatException && error.Message.Contains("DTR-Evidence", StringComparison.Ordinal),
+            "[FAIL] mismatched_report_semantic_version_rejects_binding_evidence: " + version);
+    }
+
+    [Theory]
+    [InlineData("lean-report-inputs.json")]
+    [InlineData("lean-toolchain")]
+    [InlineData("lake-manifest.json")]
+    public void required_configuration_input_omission_rejected(string omitted)
+    {
         var before = Files();
-        before[Judge] = header;
-        var after = new Dictionary<string, string>(before);
-        if (omitted) after[dependency] += "-- omitted source changed\n";
-        var report = Report(after, omit: omitted ? dependency : null);
-        var diagnostics = Dispatch(Context(before, after, report, [InformationTemplateDebtStore.ActivationPath]));
-        var blocks = diagnostics.Where(d => d.AdmissionEffect == AdmissionEffect.Block).ToArray();
-        if (!omitted) Assert.Empty(blocks);
-        else Assert.True(blocks.Any(d => d.Message.Contains("DTR-Evidence", StringComparison.Ordinal)
-                && d.Message.Contains("omitted", StringComparison.Ordinal)
-                && d.Message.Contains(dependency, StringComparison.Ordinal)),
-            "[FAIL] required_judge_closure_reads_lean_import_headers: " + header);
+        var report = Report(before, omit: omitted);
+        var diagnostics = Dispatch(Context(before, before, report, [InformationTemplateDebtStore.ActivationPath]));
+        Assert.True(diagnostics.Any(d => d.AdmissionEffect == AdmissionEffect.Block
+                && d.Message.Contains("DTR-Evidence", StringComparison.Ordinal)
+                && d.Message.Contains(omitted, StringComparison.Ordinal)),
+            "[FAIL] required_configuration_input_omission_rejected: " + omitted);
     }
 
     [Fact]
