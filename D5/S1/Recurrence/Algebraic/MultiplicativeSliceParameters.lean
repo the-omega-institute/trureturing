@@ -8,6 +8,7 @@
 
 import Mathlib.Data.Real.Basic
 import Mathlib.Algebra.Order.Ring.Abs
+import Mathlib.Algebra.Group.Nat.Hom
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.Ring
 import Mathlib.Tactic.Linarith
@@ -107,9 +108,85 @@ theorem result (p : ℕ → ℝ) (c : ℕ → ℕ → ℝ) :
       linarith
     have ha := havoid h hp₀ hp₁
     left
-    sorry
+    have hd (m : ℕ) (hm : 0 < m) : 1 - p m ≠ 0 :=
+      sub_ne_zero.mpr (Ne.symm (ha m hm).2)
+    let r : ℕ → ℝ := fun m => -p m / (1 - p m)
+    have hmul (m n : ℕ) (hm : 0 < m) (hn : 0 < n) :
+        r (m + n) = r m * r n := by
+      obtain ⟨h₁, h₂⟩ := h m n hm hn
+      dsimp [r]
+      rw [← h₂, ← h₁]
+      field_simp [hd m hm, hd n hn, hcnz h m n hm hn]
+    have hr (m : ℕ) (hm : 0 < m) : r m ≠ 1 := by
+      intro he
+      have he' := (div_eq_iff (hd m hm)).mp he
+      linarith
+    let f : Multiplicative ℕ →* ℝ :=
+      { toFun := fun k => if k.toAdd = 0 then 1 else r k.toAdd
+        map_one' := by simp
+        map_mul' := by
+          intro a b
+          change (if a.toAdd + b.toAdd = 0 then 1 else r (a.toAdd + b.toAdd)) =
+            (if a.toAdd = 0 then 1 else r a.toAdd) *
+              (if b.toAdd = 0 then 1 else r b.toAdd)
+          by_cases ha₀ : a.toAdd = 0
+          · simp [ha₀]
+          by_cases hb₀ : b.toAdd = 0
+          · simp [hb₀]
+          have ha' := Nat.pos_of_ne_zero ha₀
+          have hb' := Nat.pos_of_ne_zero hb₀
+          simp [ha₀, hb₀, hmul a.toAdd b.toAdd ha' hb'] }
+    have hpow (m : ℕ) (hm : 0 < m) : r m = (r 1) ^ m := by
+      simpa [f, Nat.ne_of_gt hm] using f.apply_mnat (Multiplicative.ofAdd m)
+    have ht (m : ℕ) (hm : 0 < m) : (r 1) ^ m ≠ 1 := by
+      rw [← hpow m hm]
+      exact hr m hm
+    have htneg : r 1 ≠ -1 := by
+      intro he
+      have ht₂ := ht 2 (by decide)
+      norm_num [he] at ht₂
+    have hA (m : ℕ) (hm : 0 < m) : (r 1) ^ m - 1 ≠ 0 :=
+      sub_ne_zero.mpr (ht m hm)
+    have hp (m : ℕ) (hm : 0 < m) : p m = (r 1) ^ m / ((r 1) ^ m - 1) := by
+      have he := (div_eq_iff (hd m hm)).mp (hpow m hm)
+      apply (eq_div_iff (hA m hm)).mpr
+      nlinarith only [he]
+    refine ⟨r 1, hr 1 (by decide), htneg, hp, ?_⟩
+    intro m n hm hn
+    have hmn : 0 < m + n := Nat.add_pos_left hm n
+    have hsum : p m + p n ≠ 1 := by
+      intro he
+      have hs := hsub h m n hm hn
+      have hz : 1 - p m - p n = 0 := by linarith only [he]
+      simp [hz] at hs
+    have he : c m n = 1 / (1 - p m - p n) := by
+      apply (eq_div_iff (by intro hz; apply hsum; linarith only [hz])).mpr
+      nlinarith only [hsub h m n hm hn]
+    have he' := (eq_div_iff (by
+      intro hz
+      apply hsum
+      linarith only [hz])).mp he
+    rw [hp m hm, hp n hn] at he'
+    apply (eq_div_iff (hA (m + n) hmn)).mpr
+    field_simp [hA m hm, hA n hn] at he'
+    rw [pow_add]
+    nlinarith only [he']
   have hsufficient : GeometricFamily p c ∨ UnitFamily p c → ForcedEquations p c := by
-    sorry
+    rintro (⟨t, ht₁, htneg, hp, hc⟩ | ⟨hp, hc⟩)
+    · have hA (m : ℕ) (hm : 0 < m) : t ^ m - 1 ≠ 0 := by
+        apply sub_ne_zero.mpr
+        intro he
+        rcases (pow_eq_one_iff_of_ne_zero (Nat.ne_of_gt hm)).mp he with he | ⟨he, _⟩
+        · exact ht₁ he
+        · exact htneg he
+      intro m n hm hn
+      have hmn : 0 < m + n := Nat.add_pos_left hm n
+      rw [hp m hm, hp n hn, hp (m + n) hmn, hc m n hm hn]
+      constructor <;>
+        (field_simp [hA m hm, hA n hn, hA (m + n) hmn]
+         simp only [pow_add] <;> ring)
+    · intro m n hm hn
+      simp [hp m hm, hp n hn, hp (m + n) (Nat.add_pos_left hm n), hc m n hm hn]
   refine ⟨⟨hnecessary, hsufficient⟩, ?_⟩
   intro h
   by_cases hp₀ : p 1 = 0
