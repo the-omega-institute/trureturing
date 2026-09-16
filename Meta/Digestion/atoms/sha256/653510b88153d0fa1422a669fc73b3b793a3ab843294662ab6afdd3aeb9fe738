@@ -1,0 +1,7 @@
+**theorem 28.12 (Setwise Borel measurability does not give norm-Borel measurability).** The maps
+$$
+x\longmapsto\delta_x\in M(K),\qquad
+\theta\longmapsto\pi_\theta\in M(K)
+$$
+are not Borel maps when the target is given its total variation norm topology. Nevertheless, their Borel-set evaluations are Borel. Moreover, the map $\theta\mapsto\pi_\theta$ is not strongly measurable for normalized Haar measure in the total variation norm, and $L_t\lambda$ cannot be interpreted as its total-variation Bochner integral.
+

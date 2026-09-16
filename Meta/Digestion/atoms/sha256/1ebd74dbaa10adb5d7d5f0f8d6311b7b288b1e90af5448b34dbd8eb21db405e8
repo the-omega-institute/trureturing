@@ -1,0 +1,13 @@
+**theorem 28.3 (The inverse away from the split phases is a homeomorphism).** The restricted map
+$$
+H|_{K^\circ}:K^\circ\longrightarrow\mathbb T^\circ
+$$
+is a homeomorphism for the subspace topologies, and hence a Borel isomorphism. In particular,
+$$
+s(\theta)=\begin{cases}
+k_\theta,&\theta\notin E,\\
+x_m^-,&\theta=E_m
+\end{cases}
+$$
+defines a Borel section $s:\mathbb T\to K$ with $H\circ s=\operatorname{id}_{\mathbb T}$.
+
