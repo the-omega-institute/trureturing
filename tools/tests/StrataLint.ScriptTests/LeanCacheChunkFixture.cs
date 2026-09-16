@@ -12,6 +12,7 @@ internal sealed class LeanCacheChunkFixture : IDisposable
 {
     internal const string Archive = "0123456789abcdefgh";
     internal const string ProducerSha = "0123456789abcdef0123456789abcdef01234567";
+    internal const string DefaultReleaseTarget = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
     private const string Revision = "4444444444444444444444444444444444444444";
     private readonly TemporaryDirectory temporary = new();
     private readonly string repository;
@@ -156,8 +157,11 @@ internal sealed class LeanCacheChunkFixture : IDisposable
         if (deviation is "missing-parts" or "old-schema") manifest.Remove("parts");
         if (deviation == "old-schema") manifest["schema"] = "lean-release-seed-v2";
         if (deviation == "no-producer") manifest.Remove("producer_commit_sha");
+        if (deviation == "invalid-producer") manifest["producer_commit_sha"] = "not-a-sha";
         if (deviation == "no-run-id") manifest.Remove("workflow_run_id");
         if (deviation == "no-attempt") manifest.Remove("workflow_run_attempt");
+        if (deviation == "wrong-run-id") manifest["workflow_run_id"] = "9999";
+        if (deviation == "wrong-attempt") manifest["workflow_run_attempt"] = "2";
         if (deviation == "wrong-partition") manifest["partition"] = "f" + Partition[1..];
         Write(Path.Combine(directory, "manifest.json"), manifest.ToJsonString());
         if (deviation == "extra-asset") Write(Path.Combine(directory, "notes.txt"), "undeclared");
@@ -170,12 +174,14 @@ internal sealed class LeanCacheChunkFixture : IDisposable
     {
         var metadata = new JsonObject
         {
-            ["tag_name"] = tag, ["target_commitish"] = deviation == "wrong-target" ? "dev" : ProducerSha,
+            ["tag_name"] = tag, ["target_commitish"] = DefaultReleaseTarget,
             ["draft"] = deviation == "draft", ["created_at"] = tag,
             ["download_failure"] = deviation == "download-failure",
             ["assets"] = new JsonArray(Assets(tag).Select(name => (JsonNode)new JsonObject
             {
                 ["name"] = name,
+                ["size"] = ReadAsset(tag, name).Length + (deviation == "bad-github-part-size"
+                    && name.EndsWith("part-01", StringComparison.Ordinal) ? 1 : 0),
                 ["digest"] = "sha256:" + (deviation == "bad-github-part-digest" && name.EndsWith("part-01", StringComparison.Ordinal)
                     || deviation == "bad-github-manifest-digest" && name == "manifest.json"
                     ? new string('0', 64) : Digest(ReadAsset(tag, name))),
@@ -197,6 +203,7 @@ internal sealed class LeanCacheChunkFixture : IDisposable
             "CI=true", "GITHUB_ACTIONS=true", "GITHUB_EVENT_NAME=schedule",
             "GITHUB_REF=refs/heads/dev", "GITHUB_REF_NAME=dev", "LC_ALL=C.UTF-8",
             $"FAKE_FAIL={failure}", $"FAKE_BUILD_EXIT={buildExit}",
+            $"FAKE_DEFAULT_RELEASE_TARGET={DefaultReleaseTarget}",
         };
         if (chunkEnvironment is not null) arguments.Add($"STRATALINT_CACHE_TEST_CHUNK_BYTES={chunkEnvironment}");
         arguments.AddRange(["/bin/bash", script, verb, "--repository", repository]);
@@ -253,7 +260,8 @@ internal sealed class LeanCacheChunkFixture : IDisposable
         def read(directory): return json.loads((directory / "release.json").read_text())
         def save(directory, value): (directory / "release.json").write_text(json.dumps(value))
         def inventory(directory):
-            return [{"name": p.name, "digest": "sha256:" + hashlib.sha256(p.read_bytes()).hexdigest()}
+            return [{"name": p.name, "size": p.stat().st_size,
+                     "digest": "sha256:" + hashlib.sha256(p.read_bytes()).hexdigest()}
                     for p in directory.iterdir() if p.name != "release.json"]
         if args[0] == "api":
             assert args[1].startswith("repos/fixture/cache/releases/tags/")
@@ -273,7 +281,8 @@ internal sealed class LeanCacheChunkFixture : IDisposable
         directory = root / "releases" / tag
         if verb == "create":
             directory.mkdir()
-            save(directory, {"tag_name": tag, "target_commitish": option("--target"),
+            target = option("--target") if "--target" in args else os.environ["FAKE_DEFAULT_RELEASE_TARGET"]
+            save(directory, {"tag_name": tag, "target_commitish": target,
                              "created_at": tag, "draft": "--draft" in args})
         elif verb == "upload":
             for value in args[3:args.index("--repo")]:

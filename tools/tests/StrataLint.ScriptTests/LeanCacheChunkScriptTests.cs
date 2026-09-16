@@ -22,7 +22,7 @@ public sealed class LeanCacheChunkScriptTests
         fixture.AssertSuccess(fixture.Fetch());
         Assert.Equal("01234567", fixture.Unpacked);
         Assert.Equal("report-seed", fixture.UnpackedReport);
-        Assert.Equal(new[] { "manifest.json", "lean-build.tgz" }, fixture.DownloadPatterns);
+        Assert.Equal(new[] { "manifest.json", "manifest.json", "lean-build.tgz" }, fixture.DownloadPatterns);
     }
 
     [Theory]
@@ -80,7 +80,10 @@ public sealed class LeanCacheChunkScriptTests
         Assert.Equal(LeanCacheChunkFixture.Digest(fixture.ArchiveBytes), manifest["archive_sha256"]!.GetValue<string>());
         Assert.Equal(fixture.ArchiveBytes.Length, manifest["archive_bytes"]!.GetValue<int>());
         var create = Assert.Single(fixture.GhCalls, args => args[1] == "create");
-        Assert.Equal(LeanCacheChunkFixture.ProducerSha, create[Array.IndexOf(create, "--target") + 1]);
+        Assert.DoesNotContain("--target", create);
+        var target = fixture.Metadata(fixture.Tag)["target_commitish"]!.GetValue<string>();
+        Assert.Equal(LeanCacheChunkFixture.DefaultReleaseTarget, target);
+        Assert.NotEqual(LeanCacheChunkFixture.ProducerSha, target);
         Assert.Equal(LeanCacheChunkFixture.ProducerSha, manifest["producer_commit_sha"]!.GetValue<string>());
         Assert.Equal("4242", manifest["workflow_run_id"]!.GetValue<string>());
         Assert.Equal("1", manifest["workflow_run_attempt"]!.GetValue<string>());
@@ -90,7 +93,29 @@ public sealed class LeanCacheChunkScriptTests
 
         Assert.Equal(LeanCacheChunkFixture.Archive, fixture.Unpacked);
         Assert.Equal("report-seed", fixture.UnpackedReport);
-        Assert.Equal(["manifest.json", .. names], fixture.DownloadPatterns);
+        Assert.Equal(["manifest.json", "manifest.json", .. names], fixture.DownloadPatterns);
+    }
+
+    [Fact]
+    public void CurrentFormatFetchKeepsManifestProducerDistinctFromReleaseTarget()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new LeanCacheChunkFixture();
+        fixture.AddRelease(fixture.Tag);
+        var producer = fixture.Manifest(fixture.Tag)["producer_commit_sha"]!.GetValue<string>();
+        var target = fixture.Metadata(fixture.Tag)["target_commitish"]!.GetValue<string>();
+        Assert.Equal(LeanCacheChunkFixture.ProducerSha, producer);
+        Assert.Equal(LeanCacheChunkFixture.DefaultReleaseTarget, target);
+        Assert.NotEqual(producer, target);
+
+        var result = fixture.Fetch();
+
+        fixture.AssertSuccess(result);
+        Assert.Contains($"\"producer_commit_sha\":\"{producer}\"", result.Text, StringComparison.Ordinal);
+        Assert.Equal(LeanCacheChunkFixture.Archive, fixture.Unpacked);
+        Assert.Equal("report-seed", fixture.UnpackedReport);
+        Assert.All(fixture.GhCalls.Where(args => args[0] == "api"),
+            args => Assert.Equal($"repos/fixture/cache/releases/tags/{fixture.Tag}", args[1]));
     }
 
     [Fact]
@@ -111,7 +136,7 @@ public sealed class LeanCacheChunkScriptTests
 
     [Theory]
     [InlineData("missing-part", "asset set")]
-    [InlineData("bad-part", "part checksum or size mismatch")]
+    [InlineData("bad-part", "transferred asset digest mismatch")]
     [InlineData("missing-part-digest", "invalid archive parts")]
     [InlineData("bad-whole", "archive checksum or size mismatch")]
     [InlineData("bad-part-size", "archive byte count")]
@@ -135,12 +160,15 @@ public sealed class LeanCacheChunkScriptTests
 
     [Theory]
     [InlineData("bad-github-part-digest", "transferred asset digest mismatch")]
+    [InlineData("bad-github-part-size", "transferred asset size mismatch")]
     [InlineData("bad-github-manifest-digest", "transferred asset digest mismatch")]
     [InlineData("extra-asset", "asset set")]
     [InlineData("no-producer", "snapshot partition or source attribution mismatch")]
+    [InlineData("invalid-producer", "snapshot partition or source attribution mismatch")]
     [InlineData("no-run-id", "snapshot partition or source attribution mismatch")]
     [InlineData("no-attempt", "snapshot partition or source attribution mismatch")]
-    [InlineData("wrong-target", "snapshot partition or source attribution mismatch")]
+    [InlineData("wrong-run-id", "snapshot partition or source attribution mismatch")]
+    [InlineData("wrong-attempt", "snapshot partition or source attribution mismatch")]
     [InlineData("wrong-partition", "snapshot partition or source attribution mismatch")]
     public void ChunkedReleaseRetainsDigestInventoryAndAttributionChecks(string deviation, string reason)
     {

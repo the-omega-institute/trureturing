@@ -307,6 +307,8 @@ engineering 与 Scribe 不按 base 选测。当前项目与检查义务由候选
 
 保留定时 Release 缓存发布;仅在 Actions 无可用种子时取**同分区成功快照**,删除 exact/config-prefix/same-toolchain 多级选择,不得跨分区借种。donor/stamp 使用同一分区;同 mathlib 的 metadata 改动不得删除 `.lake`。缺缓存、损坏、传输或保存失败须可诊断地降级为正常生产;真实 restore/build/Lean/测试/规则失败仍阻断。登记判为不需要缓存的资源不做缓存运输。
 
+新格式 Release/tag 只作运输容器,创建时使用 GitHub 的默认分支锚点,不以候选 SHA 指定 `target_commitish`,不读取或执行该锚点代码。真实 `producer_commit_sha`、run/attempt、verification source_ref 与报告来源仍绑定实际生产候选,不改写为存储锚点;验证恢复回执记录 API 返回的 Release target,该字段不承担来源认证或兼容选择。production 的已有快照复用及上传后确认共用恢复入口的小 manifest 校验:核 published/tag、manifest 资产摘要、schema/partition、完整资产清单及分片 API 大小/摘要与 manifest 的逐项一致性、本轮预期 producer/run/attempt,上传后另核本轮完整 manifest;确认失败不得报 exists/published 或 prune。确认只下载 manifest,不为已有快照下载大归档,不新增来源 API 查询。verification 仍须按本轮完整 manifest 向空目标完整恢复,其真实事件与来源核验不变;普通 fetch 仅校验新格式材料的一致性,不冒领已独立认证 producer run 成功或当前候选检查通过。
+
 正常生产 `lean-cache-v1-*` 与 `lean-cache-v2-*` 快照按同一新到旧顺序选择,不按格式设优先层。旧 `manifest.txt` 仅作已归属缓存数据过渡读取:核对 published Release、固定 producer commit、成功的 schedule/dev 生产 run、完整资产及摘要;其缺失的 mathlib 字段从该不可变 producer commit 的 `lake-manifest.json` 数据读取,复用当前结构解析器并校验 blob 身份,与显式 OS/arch 合成唯一分区。来源 SHA 只绑定缓存供给,不参与兼容选择,不进入 current 的语义 baseline,不执行旧代码。旧 manifest 未记 attempt 时不得从最新 rerun 伪造原产出 attempt。新格式不增加来源查询;旧 build-relative 归档在共用验证/安装入口映射到 build,在目标文件系统完整暂存后 rename,不另建手动转换/发布路径。该读取只恢复增量种子,不产报告或判词;Lean 与报告仍执行各自增量入口。
 
 可选缓存制作与保存共用早于 job 上限的截止时间,按真实 run/attempt/job 起始时间绑定;元数据不可用或时间不足则跳过缓存,不撤销已完成的业务判词。每层制作后立即保存,优先检查证据,再处理项目与依赖层;不得让大层制作阻塞小层全部落存。快照只读取已登记层的材料,复制时校验字节与 mode,失败只清理本次私有 staging。缓存时限不改变检查时限,外部取消仍保留取消语义。
