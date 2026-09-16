@@ -34813,3 +34813,180 @@ $$
 本命题的仪器与后验递推复用本卷命题153.1，不变区间及有缺口时的像区间复用命题154.1；误差传播使用 ML 定义21.1、定理21.2，半纤维下界及静态近似与因果实现的区分使用上述观察者闭合谱第15节、ML 命题39.3–39.4。稳定动力的有限符号近似方法参见 G. Pola、A. Girard、P. Tabuada，*Approximately bisimilar symbolic models for nonlinear control systems*，[arXiv:0706.0246](https://arxiv.org/abs/0706.0246)，[DOI:10.1016/j.automatica.2008.02.021](https://doi.org/10.1016/j.automatica.2008.02.021)；A. Girard、G. Pola、P. Tabuada，*Approximately bisimilar symbolic models for incrementally stable switched systems*，[arXiv:0807.5022](https://arxiv.org/abs/0807.5022)。这些文献提供既有的稳定性与量化方法背景，此处的全有限历史内部覆盖数比较由以上具体证明给出。S. E. Marzen、J. P. Crutchfield，*Nearly maximally predictive features and their dimensions*，[DOI:10.1103/PhysRevE.95.051301](https://doi.org/10.1103/PhysRevE.95.051301)，以及 A. M. Jurgens、J. P. Crutchfield，*Divergent predictive states: The statistical complexity dimension of stationary, ergodic hidden Markov processes*，[DOI:10.1063/5.0050460](https://doi.org/10.1063/5.0050460)，分别讨论预测特征的失真与维数、平稳遍历隐藏 Markov 过程预测特征的信息维数；其平均或平稳支撑约定不替代这里包括启动历史的逐词一致误差与内部覆盖约定。
 
 ## 追加锚（本行以下为增补区）
+
+## 156. 混合趋零时低于静态地板的有限观察者成本发散
+
+**命题 156.1（正混合的有限可近似性与趋零混合的必要状态发散）。** 固定 $0<p<1/2$，置
+$$
+d=1-2p>0,\qquad \Delta=\frac d2=\frac12-p,
+\qquad \kappa=\frac{1-p}{p}>1.
+$$
+在整个 $0\le r<1/2$ 参数族中，隐藏字母表均为 $\{0,1\}$，旧隐藏位 $i$ 先发射报告 $b$，再翻转到新隐藏位 $j$，其中
+$$
+c_{00}=c_{11}=p,\qquad c_{01}=c_{10}=1-p,
+\qquad P_{ji}(r)=\begin{cases}1-r,&j=i,\\r,&j\ne i.\end{cases}
+$$
+协议时间齐次且无控制，初态固定为 $I_2/2$。具体地，令 $E_i=|i\rangle\langle i|$、$I_2=E_0+E_1$，在 $M_2(\mathbb C)$ 上分别取 Kraus 项
+$$
+K_{bji}^{(r)}=\sqrt{c_{bi}P_{ji}(r)}\,|j\rangle\langle i|,
+\qquad
+\phi_b^{(r)}(X)=\sum_{i,j=0}^1K_{bji}^{(r)}X(K_{bji}^{(r)})^\dagger
+=\sum_{i,j=0}^1c_{bi}P_{ji}(r)X_{ii}E_j.
+$$
+各 Kraus 项分别作共轭作用后求和。$r=0$ 时非零项恰为命题152.1的两个对角秩一项，隐藏位保持不变；$0<r<1/2$ 时恰为命题153.1的四项仪器。两种情形中的每个非空报告分支均为测量制备操作；空操作仍为恒等。因而整个比较都在同一逐支测量制备族内，生成器的物理潜在空间始终只有两个经典状态。
+
+令 $\mathcal W=\{0,1\}^{*}$，包括空词 $\varnothing$；词 $w=b_1\cdots b_h$ 按时间顺序书写，
+$$
+\phi_w^{(r)}=\phi_{b_h}^{(r)}\circ\cdots\circ\phi_{b_1}^{(r)},
+\qquad \phi_\varnothing^{(r)}=\operatorname{Id}.
+$$
+以下列向量、词质量和后验均依赖 $r$：
+$$
+v_\varnothing=\binom{1/2}{1/2},\qquad
+v_{wb}=P(r)\operatorname{diag}(c_{b0},c_{b1})v_w,
+\qquad Z_w=\mathbf1^{\mathsf T}v_w,\qquad
+q_w=\frac{(v_w)_1}{Z_w}.
+$$
+它们满足 $\phi_w^{(r)}(I_2/2)=\operatorname{diag}(v_w)$。下一报告为零的条件概率记为
+$$
+f_r(w)=\frac{Z_{w0}}{Z_w}=p+dq_w.
+$$
+空词有 $Z_\varnothing=1$、$q_\varnothing=1/2$、$f_r(\varnothing)=1/2$。
+
+有限确定性观察者 $\mathcal A=(S,s_0,T_0,T_1,t)$ 的状态集 $S$ 非空且有限，初态 $s_0\in S$ 固定，两张报告标记更新表 $T_0,T_1:S\to S$ 和读出 $t:S\to[0,1]$ 固定。令
+$$
+s_{\mathcal A}(\varnothing)=s_0,\qquad
+s_{\mathcal A}(wb)=T_b(s_{\mathcal A}(w)),\qquad
+\mathcal E_r(\mathcal A)=\sup_{w\in\mathcal W}
+\bigl|t(s_{\mathcal A}(w))-f_r(w)\bigr|.
+$$
+全部可读的演化记忆均计入 $S$；没有另行可读的历史档案、时钟、隐藏位或演化实数寄存器。固定表可含任意精确实数常量，并可依赖 $p,r,\varepsilon$，但运行中不改变；同一观察者用于全部有限词长，包括空词和任意小概率的历史。对 $\varepsilon>0$ 定义扩展值状态成本
+$$
+N_{\min}^{(r)}(\varepsilon)=
+\begin{cases}
+\min\{|S|:\mathcal E_r(\mathcal A)\le\varepsilon\},&\text{存在这样的有限观察者},\\
+\infty,&\text{不存在这样的有限观察者}.
+\end{cases}
+$$
+所计的是 $|S|$，不计固定表的描述长度。则：
+
+(a) 对每个固定 $0<r<1/2$ 和每个 $\varepsilon>0$，有 $N_{\min}^{(r)}(\varepsilon)<\infty$。
+
+(b) 对每个固定 $0<\varepsilon<\Delta$ 和每个整数 $N\ge1$，存在 $r_N=r_N(p,\varepsilon)>0$，使
+$$
+\forall r\in\bigl(0,\min\{r_N,1/2\}\bigr),
+\qquad N_{\min}^{(r)}(\varepsilon)>N.
+$$
+即在固定 $p,\varepsilon$ 下，
+$$
+\lim_{r\downarrow0}N_{\min}^{(r)}(\varepsilon)=\infty.
+$$
+每个 $r$ 的观察者允许单独重新选择；结论仍排除这个邻域内的每一张至多 $N$ 状态的表及每一个实数读出。
+
+(c) 对每个 $\varepsilon\ge\Delta$ 和全部 $0\le r<1/2$，有 $N_{\min}^{(r)}(\varepsilon)=1$。在静态端点 $r=0$，有限观察者的最优全历史误差恰为
+$$
+\inf_{\mathcal A\text{ 为有限确定性观察者}}\mathcal E_0(\mathcal A)=\Delta,
+$$
+此值由单状态、恒定读出 $1/2$ 达到。因此 $0<\varepsilon<\Delta$ 时 $N_{\min}^{(0)}(\varepsilon)=\infty$。这里的地板是误差上确界，有限词上的误差无须达到它。
+
+**证明。** 先核对同一参数族的条件化。$P(r)$ 的每列和为一且各项非负，$c_{bi}\ge p>0$。从 $v_\varnothing$ 的两个正分量出发，发射乘权保持正性，且 $P_{ii}(r)=1-r>0$，故每个 $v_w$ 的两个分量仍严格为正，包括 $r=0$。于是
+$$
+Z_{wb}=\sum_i c_{bi}(v_w)_i\ge pZ_w,
+\qquad Z_\varnothing=1,
+\qquad Z_w\ge p^{|w|}>0.
+$$
+特别地每个有限词都可条件化，$0<q_w<1$，并由 $b=0$ 的质量比得到 $f_r(w)=p+dq_w\in[p,1-p]$。这里的时间顺序是 $P(r)\operatorname{diag}(c_{b0},c_{b1})$，与命题152.1在 $r=0$、命题153.1在 $r>0$ 的约定逐项相同。各支还可写成
+$$
+\phi_b^{(r)}(X)=\sum_i c_{bi}X_{ii}\,\tau_i^{(r)},
+\qquad \tau_i^{(r)}=\sum_jP_{ji}(r)E_j,
+$$
+其中 $\tau_i^{(r)}$ 为对角密度算子。这一测量制备形式及其非空复合正是前两命题的逐支结论；$r=0$ 时 $\tau_i^{(0)}=E_i$，空词则不经过任何测量。
+
+命题153.1已经对每个固定正 $r$、每个正容差，给出一个对全部有限历史满足该容差的有限确定性后缀观察者。其初态、填充期和所有可读动态记忆都已计入有限状态集，读出是固定表，所近似的正是相同先验下的 $p+dq_w$。故该观察者属于这里的类别，直接得到(a)；非空可行基数集是正整数集，因而最小值存在。此应用只取正容差。
+
+为证(b)，固定 $0<\varepsilon<\Delta$。对每一个固定的有限词 $w$，矩阵 $P(r)\operatorname{diag}(c_{b0},c_{b1})$ 的各项都是 $r$ 的多项式，有限个矩阵的乘积仍如此。因此 $v_w$ 的分量和 $Z_w$ 均为 $r$ 的多项式，而刚才的正分母下界给出
+$$
+\lim_{r\downarrow0}f_r(w)=f_0(w)
+\qquad(w\text{ 固定}).
+$$
+空词的空乘积也满足此式。这只是逐个固定词的连续性，没有关于所有词长的一致收敛断言。
+
+由命题152.1的实际静态公式，记 $k(w)=\#0(w)-\#1(w)$，便有
+$$
+f_0(w)=p+d\frac{\kappa^{k(w)}}{1+\kappa^{k(w)}}.
+$$
+因为 $2\varepsilon<d$ 且 $\kappa>1$，可以选定一个整数 $m\ge1$，使
+$$
+g_m:=d\frac{\kappa^m-1}{\kappa^m+1}>2\varepsilon.
+$$
+存在性来自 $\kappa^m\to\infty$，左侧趋于 $d$。此后 $m$ 只依赖 $p,\varepsilon$，不依赖观察者、$r$ 或 $N$。
+
+任取整数 $N\ge1$，定义有限非空指标集
+$$
+\mathcal I_N=\{(n,\ell)\in\mathbb Z^2:n\ge0,\ \ell\ge1,\ n+\ell\le N\}.
+$$
+它有 $N(N+1)/2$ 个元素，且包含 $(0,1)$。对每个 $(n,\ell)\in\mathcal I_N$ 固定两条时间顺序词
+$$
+w^-(n,\ell)=0^n1^{n+m\ell},
+\qquad
+w^+(n,\ell)=0^{n+2m\ell}1^{n+m\ell}.
+$$
+在静态模型中，二者的计数分别为 $-m\ell$、$m\ell$，故
+$$
+f_0(w^+(n,\ell))-f_0(w^-(n,\ell))
+=d\frac{\kappa^{m\ell}-1}{\kappa^{m\ell}+1}
+\ge g_m>2\varepsilon.
+$$
+这里用 $\ell\ge1$ 及 $x\mapsto(x-1)/(x+1)$ 在 $x>0$ 上递增。
+
+每一对词已经固定，故其预测差由上述逐词连续性在 $r=0$ 连续。其静态差严格大于 $2\varepsilon$，于是存在 $\rho_{n,\ell}>0$，使所有
+$0<r<\min\{\rho_{n,\ell},1/2\}$ 都满足
+$$
+f_r(w^+(n,\ell))-f_r(w^-(n,\ell))>2\varepsilon.
+$$
+有限非空族的正数最小值仍正；取
+$$
+r_N=\min\left\{\frac12,\ \min_{(n,\ell)\in\mathcal I_N}\rho_{n,\ell}\right\}>0.
+$$
+于是 $0<r<\min\{r_N,1/2\}$ 时，整族词对同时具有严格大于 $2\varepsilon$ 的预测间隙。这个邻域只由 $p,\varepsilon,N$ 确定。
+
+在此邻域内固定任意一个 $r$，再任取 $1\le|S|\le N$ 的观察者。将命题152.1所引用的既有有限轨道结论 `finite_orbit_and_readout_eventually_periodic` 应用于它的 $T_0$、初态 $s_0$ 和读出 $t$，得到 $n\ge0$、$\ell\ge1$，满足
+$$
+n+\ell\le|S|\le N,\qquad
+T_0^{\,u+\ell}(s_0)=T_0^{\,u}(s_0)\quad(u\ge n).
+$$
+幂号表示函数迭代；这里使用的是状态相等，而不仅是读出相等。重复周期等式 $2m$ 次，得到
+$$
+s_{\mathcal A}(0^{n+2m\ell})=s_{\mathcal A}(0^n).
+$$
+由于 $(n,\ell)\in\mathcal I_N$，这就是前面预先固定的一对词的零前缀。给相同状态追加共同后缀 $1^{n+m\ell}$，实际的确定性更新 $T_1$ 给出
+$$
+s_{\mathcal A}(w^+(n,\ell))
+=T_1^{\,n+m\ell}(s_{\mathcal A}(0^{n+2m\ell}))
+=T_1^{\,n+m\ell}(s_{\mathcal A}(0^n))
+=s_{\mathcal A}(w^-(n,\ell)).
+$$
+记该共同状态的读出为 $a$。三角不等式对任意实数 $a$ 都成立，因此
+$$
+\begin{aligned}
+\mathcal E_r(\mathcal A)
+&\ge\max\{|a-f_r(w^-(n,\ell))|,\ |a-f_r(w^+(n,\ell))|\}\\
+&\ge\frac{f_r(w^+(n,\ell))-f_r(w^-(n,\ell))}{2}
+>\varepsilon.
+\end{aligned}
+$$
+由此排除该邻域内所有至多 $N$ 状态的观察者，包括依赖 $r$ 重新设计的表和任意精确实数读出。由于每个整数 $N\ge1$ 都有这样的整个正邻域，得到(b)的完整极限量词；它不只是某个趋零序列上的无界性。论证只对有限多个固定词取共同连续性邻域，没有交换全历史上确界与 $r\downarrow0$ 极限。
+
+最后，对任意 $0\le r<1/2$，单状态观察者令两个更新均为恒等、读出恒为 $1/2$。由 $f_r(w)\in[p,1-p]$，对包括空词在内的每个历史均有
+$$
+|1/2-f_r(w)|\le\frac12-p=\Delta.
+$$
+故 $\varepsilon\ge\Delta$ 时一个状态可行，而非空状态集至少有一个元素，最小值恰为一，包含阈值等号。静态端点的精确下界及单状态达到者直接复用命题152.1：每个有限观察者的误差上确界至少为 $\Delta$，恒定读出 $1/2$ 的上确界等于 $\Delta$。该恒定观察者对每个有限词的误差严格小于 $\Delta$，只是沿越来越长的词逼近它。因此(c)不要求某个有限词达到地板。
+
+全历史条件不能换成有限视界条件。若只要求 $|w|\le H$，以所有长度至多 $H$ 的二元词为状态，短词按报告追加，长度为 $H$ 的状态取自环，初态为空词，固定读出为各状态所对应的 $f_r(w)$，便在该视界内精确。其状态数 $2^{H+1}-1$ 不依赖 $r$，而读出表可以依赖 $r$。这与(b)的全历史量词不同。上述结论不给出随 $r$ 的发散速率、单调性或正混合下的精确最优状态数；(a)的有限存在性仅断言 $\varepsilon>0$。证毕。
+
+本命题的静态模型、固定先验下的锐地板及同状态词对来自本卷命题152.1，正混合下全有限历史的有限观察者存在性来自命题153.1。有限轨道步骤直接使用该静态命题所引的 [`finite_orbit_and_readout_eventually_periodic`](../../../D5/S3/ObserverMemory/Prediction/FiniteOrbitPeriodBound.lean)。正混合近似的共同报告序列误差传播见[《情境时空算术·机器学习》定义21.1、定理21.2](CONTEXTUAL_SPACETIME_ARITHMETIC_ML.md)；命题154.1、155.1给出固定正 $r$ 的区间与覆盖数比较，其参数相关的上界增长不单独蕴含这里的必要状态发散。
+
+有限记忆的相邻问题参见 T. Berg、O. Shayevitz、O. Ordentlich，*Binary Hypothesis Testing with Deterministic Finite-Memory Decision Rules*，[arXiv:2005.07445](https://arxiv.org/abs/2005.07445)：其目标是长时间极限的假设检验 Bayes 错误。稳定动力的有限符号近似参见 G. Pola、A. Girard、P. Tabuada，*Approximately bisimilar symbolic models for nonlinear control systems*，[arXiv:0706.0246](https://arxiv.org/abs/0706.0246)。前者的渐近分类损失、后者的动力系统近似目标均不替代本命题对全部有限历史的下一报告预测误差；这里的趋零必要性由上面的有限词间隙与轨道应用给出。
+
+## 追加锚（本行以下为增补区）
