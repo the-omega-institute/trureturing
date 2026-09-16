@@ -1,0 +1,8 @@
+**Proof.** If a cofactor g existed, reducing and applying Frobenius gives
+
+\[
+(X-1)^d\overline g=(X-1)^p\quad\text{in }\mathbb F_p[X].
+\]
+
+Since `(X-1)^d` is nonzero, cancellation gives `bar(g)=(X-1)^(p-d)`. The complementary exponent is at least two, contradicting U.13.
+

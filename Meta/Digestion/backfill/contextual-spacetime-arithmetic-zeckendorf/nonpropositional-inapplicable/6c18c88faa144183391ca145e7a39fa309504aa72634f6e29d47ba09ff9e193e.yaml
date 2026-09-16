@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6c18c88faa144183391ca145e7a39fa309504aa72634f6e29d47ba09ff9e193e
+  normalized_sha256: sha256:6c18c88faa144183391ca145e7a39fa309504aa72634f6e29d47ba09ff9e193e
+cas_ref: sha256:6c18c88faa144183391ca145e7a39fa309504aa72634f6e29d47ba09ff9e193e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 空轴域上的状态函数由 isEmptyElim 与 funext 唯一确定，Subtype.ext 给状态相等，深度零观察核遂与相等一致；仓内无冻结 GID，未增加非空容量假设。
+    previous_atom_id: 10c941f37c2fc4ec7ff04b32e8b81ed1a4580d65b43ad2a1e1ed0c267634ab98
+    next_atom_id: 1629fb4f682e30e9c5962bfd4e623a84a0fe4b62ca459704878fb1942be65a4a

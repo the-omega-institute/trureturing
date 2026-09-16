@@ -1,0 +1,1 @@
+有效码类为 $\mathfrak V_Z=\{c:\exists x\ \operatorname{Enc}(x)=c\}$，$\operatorname{Dec}$ 只在该类上为逆。

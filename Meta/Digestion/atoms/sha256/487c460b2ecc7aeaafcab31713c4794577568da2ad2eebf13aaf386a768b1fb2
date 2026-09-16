@@ -1,0 +1,2 @@
+**Proof.** The case k=3 is 1<2. Otherwise put m=floor(k/2)>=2. Fibonacci addition gives F_(2m)=F_(m-1)F_m+F_mF_(m+1)>F_m^2, using positivity and F_(m+1)>=F_m. Monotonicity and 2m<=k finish the proof.
+

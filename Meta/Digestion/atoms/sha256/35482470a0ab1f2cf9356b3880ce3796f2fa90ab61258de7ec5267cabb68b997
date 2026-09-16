@@ -1,0 +1,22 @@
+### NP.7 Arithmetic boundary and references
+
+NP8-NP9 couple the actual depth at a base prime p to actual depths at
+other, strictly larger primes having exact ranks p^(k+1). This improves
+the bookkeeping beyond a fixed auxiliary character, but it does not
+prove that the weighted sum vanishes or stays nonzero for an unbounded
+prime family. Both signs occur and weighted contributions can cancel.
+Replacing h_q by one would assume away precisely the exceptions under
+investigation. Neither a WSS prime nor a new unbounded non-WSS prime
+family is constructed by these identities.
+
+**References for NP1-NP11.** The valuation formula is Theorem1.4 of L. A. Medina and
+E. Rowland, *p-regularity of the p-adic valuation of the Fibonacci
+sequence*, The Fibonacci Quarterly53(2015),265-271,
+https://arxiv.org/abs/0910.2907 . It leaves the initial valuation
+arbitrary. General p-adic subsequence convergence and interpolation
+appear in E. Rowland and R. Yassawi, *p-adic asymptotic properties of
+constant-recursive sequences*, Indagationes Mathematicae28(2017),205-220,
+DOI10.1016/j.indag.2016.11.019, arXiv:1602.00176, Corollary11 and
+section5.
+
+

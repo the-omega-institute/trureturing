@@ -1,0 +1,14 @@
+### EMW.5 可求和秩支持的密度放大
+
+定义
+
+\[
+\mathcal T=\{n\ge3:F_n^2-1,F_n^2,F_n^2+1\text{ 均为强力数}\}.
+\]
+
+对正整数集合 \(A\)，下渐近密度记为
+
+\[
+\underline d(A)=\liminf_{X\to\infty}\frac{\#(A\cap[1,X])}{X}.
+\]
+
