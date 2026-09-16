@@ -1,0 +1,5 @@
+**Proof.** The golden trace-norm identity gives L_n^2-5F_n^2=4 for even n, hence L_n^2+1=5(F_n^2+1). Use FDS6 with u=n-1,v=n+1 and compare with FDS4. The value five is already present exactly when 5 divides u or v, equivalently 5 divides n^2-1. At zero, L_0^2+1=5 has Fibonacci divisor values one and five.
+
+The modulo-five comparison in FDS8 is already recorded in OEIS A340542's comments, together with the comparison to A339669. FDS4-FDS9 give its full divisor-index derivation and explicit counts.
+
+

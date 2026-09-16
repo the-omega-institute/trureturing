@@ -1,0 +1,14 @@
+**证明。** GP31 给出
+
+$$
+v_p(F_{3^{j+1}})=v_p(C_j).
+$$
+
+又由 GP33，$3^{j+1}=\alpha(p)$。令 $h=N_p/\alpha(p)$。因为 $p\nmid N_p$，故 $p\nmid h$。估值定理于是给出
+
+$$
+s_p=v_p(F_{\alpha(p)h})=v_p(F_{\alpha(p)})=v_p(C_j).
+$$
+
+标准 WSS 条件为 $s_p\ge2$，由此得到第二式。
+

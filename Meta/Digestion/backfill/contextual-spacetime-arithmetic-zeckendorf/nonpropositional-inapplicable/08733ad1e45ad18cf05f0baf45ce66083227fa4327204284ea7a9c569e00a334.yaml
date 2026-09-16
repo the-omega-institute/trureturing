@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:08733ad1e45ad18cf05f0baf45ce66083227fa4327204284ea7a9c569e00a334
+  normalized_sha256: sha256:08733ad1e45ad18cf05f0baf45ce66083227fa4327204284ea7a9c569e00a334
+cas_ref: sha256:08733ad1e45ad18cf05f0baf45ce66083227fa4327204284ea7a9c569e00a334
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶限定进位路径与 T2 字母表及历史计数的作用域，并规定需要步骤顺序时保留完整路径，属于模型使用约定，没有独立待证命题，故无需证明探针。
+    previous_atom_id: 52297be038ab4f1d8d24ad03b5ca0c145d58672b5e3923a1e6054675f3dfcb44
+    next_atom_id: 4f8fa34d0bc2abfe6bdda7fa1dfe07ba9a695bf3a63640741b3ff9e37ddc4923

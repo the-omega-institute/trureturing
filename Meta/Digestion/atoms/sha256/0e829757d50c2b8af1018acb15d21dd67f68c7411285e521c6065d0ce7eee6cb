@@ -1,0 +1,6 @@
+**Theorem RP2.** For every positive integer n with $5\nmid n$,
+
+$$
+\boxed{\lambda_5(F_n)=\lambda_5(n)+1-n^2\pmod5.}\tag{RP2}
+$$
+

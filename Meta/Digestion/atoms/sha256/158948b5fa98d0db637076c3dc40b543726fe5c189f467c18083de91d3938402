@@ -1,0 +1,8 @@
+**Theorem.** For every positive odd integer m,
+
+\[
+\boxed{
+\omega(s(m))\ge\Omega(m)-\left\lfloor\frac{v_5(m)}2\right\rfloor.
+}\tag{U.6}
+\]
+

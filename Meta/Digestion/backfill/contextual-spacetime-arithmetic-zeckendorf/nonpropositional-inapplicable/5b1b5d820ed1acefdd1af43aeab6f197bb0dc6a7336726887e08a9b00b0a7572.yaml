@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5b1b5d820ed1acefdd1af43aeab6f197bb0dc6a7336726887e08a9b00b0a7572
+  normalized_sha256: sha256:5b1b5d820ed1acefdd1af43aeab6f197bb0dc6a7336726887e08a9b00b0a7572
+cas_ref: sha256:5b1b5d820ed1acefdd1af43aeab6f197bb0dc6a7336726887e08a9b00b0a7572
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段规定约化配置、窗口和标签费用、操作守卫、独立失败标签以及统一路径费用函数，属于任务语义和记号定义，没有额外最优性或可行性断言。
+    previous_atom_id: 770aeea3b5c4a1b18e8e93f335dd6c2a993f6dc72843c038dd59b7085a451c66
+    next_atom_id: 4ea9c4409f2e162423dbb743914664d299d129102e1b9ad4ae7b27a52d27b472

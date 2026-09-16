@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:065c69c8af70579e6d47bab4376089372a4ece0ecf388465d5a9ea7f9fe3ad42
+  normalized_sha256: sha256:065c69c8af70579e6d47bab4376089372a4ece0ecf388465d5a9ea7f9fe3ad42
+cas_ref: sha256:065c69c8af70579e6d47bab4376089372a4ece0ecf388465d5a9ea7f9fe3ad42
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶给出定义 417.1（半开计数与实误差）所用的载体、符号或任务假设，并规定相应函数、域与约定；这些内容是定义及适用条件，没有需要证明的独立命题，故由现有结算写入器处理。
+    previous_atom_id: cedc3f92d61432363ef82e74e31eeed1d72af7c4d773058ce3fddefbf5713140
+    next_atom_id: 662d2bf3fb3623d6dd8c72122bae2f8aaeb1180297f76d4a0fa6513e751c4af4

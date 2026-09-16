@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c27e5760c33f6dab8eebc406d6c589fed1b6514dde241ff8386b7359c5ac8f98
+  normalized_sha256: sha256:c27e5760c33f6dab8eebc406d6c589fed1b6514dde241ff8386b7359c5ac8f98
+cas_ref: sha256:c27e5760c33f6dab8eebc406d6c589fed1b6514dde241ff8386b7359c5ac8f98
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶给出假设 435.1所用的载体、符号或任务假设，并规定相应函数、域与约定；这些内容是定义及适用条件，没有需要证明的独立命题，故由现有结算写入器处理。
+    previous_atom_id: 102eb1381a4b8b7cedfbcdbb59cabe56882e825e65ea48603a039e59aa3d9da2
+    next_atom_id: 824c4215145d1248eb93290063d5c27be71aacb9bd40cbef50ebb3809f83ac67

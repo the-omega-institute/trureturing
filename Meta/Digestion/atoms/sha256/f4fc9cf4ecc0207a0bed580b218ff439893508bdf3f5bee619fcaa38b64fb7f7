@@ -1,0 +1,4 @@
+**Proof.** The corollary provides a positive powerful integer in the same class. Rejecting it would violate soundness. Equality modulo the least common multiple preserves all the individual residues. Apply the same corollary once to that modulus.
+
+This theorem concerns the specified residue-only information. It does not assert that every arithmetic argument involving congruences is powerless, nor does it apply to moduli whose prime support is allowed to grow past the stated cutoff. Replacing F_ell by a compatible powerful integer preserves polynomial congruences in the numerical Fibonacci/Lucas coordinates at those fixed moduli. It does not preserve the exact integer norm equation, the actual recurrence value, or exact ranks of the replacement integer's prime factors.
+

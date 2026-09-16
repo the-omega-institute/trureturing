@@ -1,0 +1,34 @@
+### GP3.4 每层强迫一个奇初始深度素数
+
+**定理。** 对每个 $j\ge1$，至少存在一个素数 $p_j$ 满足
+
+$$
+\boxed{
+p_j\mid C_j,\quad
+\alpha(p_j)=3^{j+1},\quad
+p_j\equiv1\pmod4,\quad s_{p_j}\text{ 为奇数}.
+}\tag{GP36}
+$$
+
+这些素数在不同层互不相同。
+
+**证明。** $C_j$ 不是完全平方数。唯一素因子分解中必有至少一个素数的指数为奇数。取这样的 $p_j$，由 GP33–GP34 得到全部结论。两两互素性或者不同的出现秩都保证各层所选素数不同。
+
+**定量推论。** 令 $\varphi=(1+\sqrt5)/2$。对 $X\ge\varphi^6$，至少有
+
+$$
+\left\lfloor\log_3\left(\frac{\log X}{2\log\varphi}\right)\right\rfloor
+\tag{GP37}
+$$
+
+个不超过 $X$ 的不同素数，具有三的纯幂出现秩、模四余一且 WSS 初始深度为奇数。
+
+**证明。** 对奇数 $n$，$L_n=\varphi^n-\varphi^{-n}$，故
+
+$$
+C_j=\varphi^{2\cdot3^j}+\varphi^{-2\cdot3^j}-1
+<\varphi^{2\cdot3^j}.
+$$
+
+令 GP37 中的整数为 $K$。对 $1\le j\le K$，有 $C_j<X$。GP36 在每个这样的层给出一个不同的素数 $p_j\le C_j<X$。
+

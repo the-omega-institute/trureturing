@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fccf8bfb78061abe0d43aa36b8dc4ad347e3975045eaf1b5e9e60e9dd3557603
+  normalized_sha256: sha256:fccf8bfb78061abe0d43aa36b8dc4ad347e3975045eaf1b5e9e60e9dd3557603
+cas_ref: sha256:fccf8bfb78061abe0d43aa36b8dc4ad347e3975045eaf1b5e9e60e9dd3557603
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段规定同一原集合宇宙内的编码、有效码域、语义成员以及成员像和打包记号，逆映射采用已有定义；这是记号与定义域声明，没有新增待证命题。
+    previous_atom_id: 44cffc9d5d03077c1361e2f9f62490ce22980d65946dfe2eefebdb3df1b39ac3
+    next_atom_id: bbba142423a30ef3e1b488ee0f93412cc5ebeedc59b8ec8fbecf2cd9afcc5808
