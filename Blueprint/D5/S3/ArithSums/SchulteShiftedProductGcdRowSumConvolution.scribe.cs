@@ -14,7 +14,7 @@ internal sealed class SchulteShiftedProductGcdRowSumConvolutionDocument
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Schulte's shifted-product gcd row sum equals a divisor convolution of squares and squared totients.",
-        H("Schulte's A347293 row-sum convolution"),
+        H("OEIS A347293 row-sum convolution"),
         Blocks(
             Node(
                 "rowSum",

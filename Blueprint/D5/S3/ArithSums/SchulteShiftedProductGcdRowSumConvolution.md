@@ -1,4 +1,4 @@
-# Schulte's A347293 row-sum convolution
+# OEIS A347293 row-sum convolution
 
 ## Abstract
 

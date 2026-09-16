@@ -8,7 +8,7 @@ motivation_gids:
   - D5/S3/ArithSums/SchulteShiftedProductGcdRowSumConvolution
 ---
 
-# Schulte's shifted-product gcd row-sum convolution
+# OEIS A347293 shifted-product gcd row-sum convolution
 
 ## Problem
 
@@ -65,15 +65,15 @@ this to `Sum_{d|n} d^2 * phi(n/d)^2`.
 
 Any positive natural `n` for which the double gcd sum differs from the
 divisor convolution would contradict the theorem. A failure of the modular
-pair count for any positive `d | n` would contradict its load-bearing
-counting lemma.
+pair count for any positive `d | n` would contradict the counting identity
+inside the proof.
 
 ## Evidence
 
 - Lean module:
   `D5/S3/ArithSums/SchulteShiftedProductGcdRowSumConvolution.lean`.
 - Public declarations: `rowSum` and `result`.
-- The load-bearing count is `card_window_solutions`.
+- The local count is `card_window_solutions` inside the proof of `result`.
 - The probe self-reported zero exceptions for `1 <= n < 80`. Independently,
   the implementation measured `n=60` and obtained `12792` on both sides.
   These finite readings support fault detection only.
