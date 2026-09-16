@@ -18000,3 +18000,451 @@ $$
 [^rro43-multi]: Y. Yifrach，A note on Weyl’s equidistribution theorem，Monatshefte für Mathematik 206(3)，2025年正式发表版，771–780，Theorem 1.2 在第772页，DOI 10.1007/s00605-025-02057-2。[正式文本](https://link.springer.com/content/pdf/10.1007/s00605-025-02057-2.pdf)。其假设为实多变量多项式至少一个非恒定单项式系数无理；Definition 1.1 在第771–772页规定欧氏球内格点计数。定理43.9所需的非负矩形盒与固定平移版本已由正文针对共同系数 $\phi$ 的整数多项式给出完整差分证明，不把不同截断约定直接等同。环面字符方法及差分方法另见前一引文的 Proposition 1、Corollary 5。
 
 ## 追加锚（本行以下为增补区）
+## 44. Arithmetic admission, order and Euclidean division in Zeckendorf observation
+
+**Definition 44.0 (Digits, phases and finite observations).** Put $\mathbb N_0=\{0,1,\ldots\}$, $G_0=1$, $G_1=2$, $G_{j+2}=G_{j+1}+G_j$, $\phi=(1+\sqrt5)/2$ and $\alpha=\phi^{-1}$. Let $Z(n)$ be the low-to-high Zeckendorf digits of $n$, padded by zeros, and put
+$$
+K=\{x\in\{0,1\}^{\mathbb N_0}:x_jx_{j+1}=0\text{ for every }j\},\qquad 0_K=Z(0).
+$$
+Give $K$ its product topology, metrized by $d_K(x,y)=\sum_{j\ge0}2^{-j-1}|x_j-y_j|$. Let $D_L$ be the legal words of length $L$, $\pi_L:K\to D_L$ the prefix map, and $Z^{\times d}$ the coordinatewise encoding. Write
+$$
+\mathbb T=\mathbb R/\mathbb Z,\qquad
+H(x)=\left[\sum_{j\ge0}(-1)^{j+1}\alpha^{j+2}x_j\right],\qquad
+\gamma(n)=[n\phi],\qquad E_m=[-m\phi],\qquad E=\{E_m:m\ge1\}.
+$$
+For $A\subseteq\mathbb R$, write $[A]=\{[t]:t\in A\}$. A point is called split when its phase belongs to $E$, and ordinary otherwise. All closures below use products of $K$ and the explicitly specified discrete spaces; they are not closures for convergence of numerical values in $\mathbb R$.
+
+**Assumption 44.1 (The phase background).** The map $H$ is continuous and onto, and $H(Z(n))=\gamma(n)$. An ordinary phase has one inverse image; a phase $\beta\in E$ has two distinct inverse images $z_\beta^{+1},z_\beta^{-1}$. The labels satisfy the following property for every $\beta\in E$ and every sequence of natural numbers:
+$$
+\gamma(n_j)=\beta+[\varepsilon_j],\quad
+0<|\varepsilon_j|<\tfrac12,\quad \varepsilon_j\longrightarrow0
+\quad\Longrightarrow\quad
+\left(
+Z(n_j)\longrightarrow z_\beta^s
+\ \Longleftrightarrow\ 
+s\varepsilon_j>0\text{ eventually}
+\right).
+$$
+Here $s\in\{-1,+1\}$. Define
+$$
+\mathcal S(x)=
+\begin{cases}
+\{s\},&x=z_{H(x)}^s,\ H(x)\in E,\\
+\{-1,+1\},&H(x)\notin E.
+\end{cases}
+$$
+These are precisely the phase and oriented-approach statements in [Definition 16.3, the proof of Theorem 16.4, and Assumption 18.1 of the fixed source](https://raw.githubusercontent.com/the-omega-institute/trureturing/492640d0651a5fca476f4b168c97a1d05f65ff8d/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md).
+
+**theorem 44.2 (Cofinal cylinders and phase neighborhoods).** The space $K$ is compact metrizable, and every nonempty digit cylinder contains $Z(n)$ for arbitrarily large $n$. Every tail $\{\gamma(n):n\ge B\}$ is dense in $\mathbb T$. Natural phases avoid $E$, and $H^{-1}(\{0\})=\{0_K\}$.
+
+For every $x\in K$ and neighborhood $U$ of $x$, there is $\delta\in(0,1/2)$ such that
+$$
+\gamma(n)\in J(x,\delta)\quad\Longrightarrow\quad Z(n)\in U,
+$$
+where
+$$
+J(x,\delta)=
+\begin{cases}
+H(x)+[(-\delta,\delta)],&H(x)\notin E,\\
+H(x)+[\{\varepsilon:0<s\varepsilon<\delta\}],&x=z_{H(x)}^s.
+\end{cases}
+$$
+The number $\delta$ can be required to be smaller than any prescribed positive number.
+
+**Proof.** The forbidden adjacent blocks define open subsets of the binary product, so $K$ is closed in that compact product. The displayed metric induces its topology. For a legal word $u=(u_0,\ldots,u_{L-1})$, set $v(u)=\sum_{i<L}u_iG_i$. For every $j\ge L+1$, the legal word having prefix $u$, one additional digit $1$ at position $j$, and zeros elsewhere represents
+$$
+n=v(u)+G_j.
+$$
+Thus its encoding has prefix $u$, while $n$ tends to infinity with $j$. This proves the cofinal assertion and density of $Z[\mathbb N_0]$. In particular, for any fixed $c$, the encodings of $c+G_j$, with $j$ beyond the support of $Z(c)$ by at least two positions, converge to $Z(c)$. No padded numerical point is isolated.
+
+Continuity and surjectivity of $H$ imply density of $\gamma[\mathbb N_0]$. Its tail starting at $B$ is the translate by $\gamma(B)$ of the same dense set. The equality $\gamma(n)=E_m$ would imply $(n+m)\phi\in\mathbb Z$, which contradicts irrationality of $\phi$. Hence $0\notin E$; its fiber is the singleton containing $Z(0)$.
+
+If $H(x)$ is ordinary, the compact set $H(K\setminus U)$ does not contain $H(x)$, after replacing $U$ by an open neighborhood when necessary. A sufficiently small phase neighborhood therefore has its whole inverse image inside $U$. If $x=z_\beta^s$ and no suitable one-sided neighborhood existed, one could choose natural numbers $n_j$ outside $U$ with
+$$
+\gamma(n_j)=\beta+[\varepsilon_j],\qquad 0<s\varepsilon_j<1/j.
+$$
+Assumption 44.1 would force $Z(n_j)\to x$, a contradiction. Shrinking a suitable $\delta$ preserves the implication. The same compactness argument also shows that, at any ordinary phase $\beta$, convergence $\gamma(n_j)\to\beta$ forces convergence of $Z(n_j)$ to its unique lift. $\square$
+
+**theorem 44.3 (Order graphs, conjunction and exact bounds).** Give $\{-,0,+\}$ the discrete topology and let $\sigma(a,b)=\operatorname{sgn}(a-b)$ with these three values. If
+$$
+G_\sigma=\{(Z(a),Z(b),\sigma(a,b)):a,b\in\mathbb N_0\},\qquad
+\Delta_K=\{(x,x):x\in K\},
+$$
+then
+$$
+\overline{G_\sigma}
+=(K^2\times\{-,+\})\ \cup\ (\Delta_K\times\{0\}).
+$$
+For $R_\diamond=\{(Z(a),Z(b)):a\diamond b\}$,
+$$
+\overline{R_<}=\overline{R_>}=\overline{R_\le}=\overline{R_\ge}=K^2,
+\qquad
+\overline{R_=}=\Delta_K.
+$$
+Each strict inequality can realize any two prescribed legal prefixes with both integers above any prescribed threshold. Nevertheless,
+$$
+\overline{R_<\cap R_>}=\varnothing
+\quad\text{but}\quad
+\overline{R_<}\cap\overline{R_>}=K^2.
+$$
+The latter intersection is not an equality assertion. More precisely, the joint comparison graph has closure
+$$
+\overline{\{(Z(a),Z(b),\sigma(a,b),\sigma(b,a)):a,b\in\mathbb N_0\}}
+=
+K^2\times\{(-,+),(+,-)\}
+\ \cup\
+\{(x,x,0,0):x\in K\}.
+$$
+For Boolean comparisons, the graph closures of both $\mathbf1_{a<b}$ and $\mathbf1_{a\le b}$ are $K^2\times\{0,1\}$, whereas the equality-indicator graph has closure
+$$
+(K^2\times\{0\})\cup(\Delta_K\times\{1\}).
+$$
+
+If the second numerical input is held literally equal to $c\in\mathbb N_0$, put $B_c=\{Z(0),\ldots,Z(c-1)\}$, with $B_0=\varnothing$. Then
+$$
+\overline{\{(Z(a),\sigma(a,c)):a\in\mathbb N_0\}}
+=
+(B_c\times\{-\})\cup\{(Z(c),0)\}\cup(K\times\{+\}).
+$$
+In particular, the closed images admitted by $a<c$, $a\le c$, and $a=c$ are respectively $B_c$, $B_{c+1}$, and $\{Z(c)\}$.
+
+**Proof.** Let $U,V$ be the prescribed cylinders and $B$ the threshold. Using the explicit integers in Theorem 44.2, choose $a\ge B$ with $Z(a)\in U$, then choose $b\ge\max(B,a+1)$ with $Z(b)\in V$. This gives $a<b$. For $a>b$, first choose $b\ge B$ in $V$, then $a\ge\max(B,b+1)$ in $U$. Applying these choices to shrinking cylinders proves density of both strict-order strata in $K^2$. The zero stratum is the numerical diagonal; its closure is $\Delta_K$, by density of $Z[\mathbb N_0]$ and closedness of the diagonal in a Hausdorff space. Since the three tags are clopen, their closures combine exactly as displayed. The admitted-relation and Boolean formulas follow by grouping the appropriate strata.
+
+The actual strict relations have empty intersection. Their closed intersection contains, for example, $(0_K,Z(1))$, which does not belong to $\Delta_K$. Thus removing the order obstruction does not identify the inputs. The joint-tag formula follows from $\sigma(b,a)=-\sigma(a,b)$ and the same three stratum closures.
+
+For literal $c$, the negative and zero strata are finite and hence closed. The positive stratum is dense because every cylinder contains an integer greater than $c$. These facts prove all fixed-bound formulas. By contrast, merely requiring $Z(b_j)\to Z(c)$ does not hold $b_j$ equal to $c$: the cofinal constructions remain available in every neighborhood of $Z(c)$. $\square$
+
+**theorem 44.4 (The required arithmetic curve is equidistributed).** For $t=1,2,\ldots$, define
+$$
+\Xi(t)=
+\bigl([(t^4+t^2)\phi],[t^3\phi],[t\phi],[t^2\phi]\bigr)\in\mathbb T^4.
+$$
+For every continuous $f:\mathbb T^4\to\mathbb C$,
+$$
+\frac1N\sum_{t=1}^N f(\Xi(t))
+\longrightarrow
+\int_{\mathbb T^4}f\,d\lambda_4,
+$$
+where $\lambda_4$ is Haar probability measure. Consequently every nonempty open box is visited for arbitrarily large positive $t$. The classical ingredients are Weyl's polynomial equidistribution theorem, originating in H. Weyl, *Über die Gleichverteilung von Zahlen mod. Eins*, Mathematische Annalen 77 (1916), 313–352, and the torus character criterion; accessible statements and proofs are [T. Tao, *254B, Notes 1: Equidistribution of polynomial sequences in tori*, Proposition 1, Lemma 4 and Corollary 6](https://terrytao.wordpress.com/2010/03/28/254b-notes-1-equidistribution-of-polynomial-sequences-in-torii/).
+
+**Proof.** Write $e(u)=\exp(2\pi i u)$. We first give the positive-integer exponential-sum argument needed here. If a real polynomial $p$ has degree one and irrational leading coefficient $\lambda$, the geometric-series formula gives
+$$
+\left|\sum_{t=1}^N e(p(t))\right|\le\frac{2}{|1-e(\lambda)|}.
+$$
+Suppose the normalized sums vanish for every polynomial of degree less than $d$ with irrational leading coefficient. For a degree-$d$ polynomial with leading coefficient $\lambda$, and every fixed integer $h\ge1$, the polynomial $p(t+h)-p(t)$ has degree $d-1$ and irrational leading coefficient $dh\lambda$. Hence
+$$
+\frac1N\sum_{t=1}^{N-h}e(p(t+h)-p(t))\longrightarrow0.
+$$
+For completeness, if $|z_t|\le1$, extend $z_t$ by zero outside $1\le t\le N$. The identity
+$$
+M\sum_{t=1}^N z_t
+=
+\sum_{u=1}^{N+M-1}\sum_{j=0}^{M-1}z_{u-j}
+$$
+and Cauchy–Schwarz, followed by expansion of the square, give, for $1\le M\le N$,
+$$
+\left|\frac1N\sum_{t=1}^N z_t\right|^2
+\le
+\frac{N+M-1}{M^2N^2}
+\left(
+MN+
+2\sum_{h=1}^{M-1}(M-h)
+\left|\sum_{t=1}^{N-h}z_{t+h}\overline{z_t}\right|
+\right).
+$$
+Indeed, the diagonal terms contribute at most $MN$, and each displacement $h$ occurs $M-h$ times in each conjugate off-diagonal part. Apply this inequality to $z_t=e(p(t))$. For fixed $M$, the induction hypothesis makes all normalized off-diagonal terms vanish, leaving a limiting upper bound $1/M$. Letting $M\to\infty$ proves vanishing of the normalized exponential sum in degree $d$.
+
+For an arbitrary nonzero character vector $h=(h_a,h_b,h_q,h_r)\in\mathbb Z^4$, its value on $\Xi(t)$ is the exponential of the real polynomial
+$$
+p_h(t)=
+\phi\bigl(h_at^4+h_bt^3+(h_a+h_r)t^2+h_qt\bigr).
+$$
+Its polynomial in parentheses cannot vanish identically: successive comparison of the coefficients of $t^4,t^3,t,t^2$ would force all four entries of $h$ to vanish. Its highest nonzero coefficient is therefore a nonzero integer times $\phi$, and is irrational. The preceding argument proves vanishing of every nontrivial character average. In particular, no nonzero integer character obstructs density.
+
+The constant character has empirical average and Haar integral one. A nontrivial character has Haar integral zero: translating by a point on which that character differs from one multiplies its integral by that value, while Haar invariance leaves the integral unchanged. The characters span a self-conjugate unital algebra separating points of $\mathbb T^4$, so their finite linear combinations are uniformly dense in the continuous functions by Stone–Weierstrass. Character convergence therefore extends to every continuous $f$: approximation within $\varepsilon$ changes each empirical average and the Haar integral by at most $\varepsilon$. This proves the stated character criterion in the present case. A nonempty open box supports a nonnegative continuous function with positive Haar integral. If the box were visited only finitely often, its empirical averages would tend to zero, contradicting that positive integral. This establishes arbitrarily late visits using only the one-variable positive-integer sequence. $\square$
+
+**theorem 44.5 (Full Euclidean-success closure with cofinal witnesses).** Let
+$$
+\mathscr D=
+\{(Z(a),Z(b),Z(q),Z(r)):
+a,b,q,r\in\mathbb N_0,\ b\ge1,\ a=bq+r,\ 0\le r<b\}.
+$$
+Then $\overline{\mathscr D}=K^4$. More strongly, for every $(x_a,x_b,x_q,x_r)\in K^4$ there are actual Euclidean divisions $(a_k,b_k,q_k,r_k)$ such that
+$$
+\min(a_k,b_k,q_k,r_k)\ge k,\qquad
+a_k=b_kq_k+r_k,\qquad 0\le r_k<b_k,
+$$
+and their four encodings converge respectively to $x_a,x_b,x_q,x_r$. The closure of the successful input domain is $K^2$.
+
+**Proof.** For each $k\ge1$ and each coordinate, apply Theorem 44.2 to the cylinder specified by the first $k$ digits of the target. This supplies a nonempty open phase arc whose natural lifts all have those digits. For a split target, the arc lies on its specified oriented side; for an ordinary target, including $0_K$ and every $Z(c)$, it lies around the unique phase lift. Their product is a nonempty open box in $\mathbb T^4$.
+
+Theorem 44.4 permits an integer $t_k\ge\max(2,k)$, chosen larger than the preceding one, with $\Xi(t_k)$ in that box. Set
+$$
+b_k=t_k^3,\qquad q_k=t_k,\qquad r_k=t_k^2,\qquad a_k=t_k^4+t_k^2.
+$$
+The identity $a_k=b_kq_k+r_k$ is exact, and $0<t_k^2<t_k^3$. All four integers are at least $k$. The four phases are exactly the four coordinates of $\Xi(t_k)$, so all four encodings have the prescribed first $k$ digits. Their distances to their targets are at most $2^{-k}$. This proves simultaneous convergence, including every requested split orientation and every finite numerical target. Projection onto the first two coordinates gives the input-domain assertion. $\square$
+
+**Definition 44.6 (Strict tagged division).** Let
+$$
+\mathcal O=(K^2)\sqcup\{\bot\}
+$$
+be the topological disjoint union, with success inclusion $\iota:K^2\to\mathcal O$. Define the strict response on numerical inputs by
+$$
+\operatorname{Div}_{\mathrm{str}}(a,b)=
+\begin{cases}
+\bot,&b=0,\\
+\iota\bigl(Z(a\operatorname{div}b),Z(a\bmod b)\bigr),&b\ge1.
+\end{cases}
+$$
+Thus success reports the ordered pair of quotient and remainder; $\bot$ is not an element of that pair space.
+
+**theorem 44.7 (Tagged closure and the exact failure support).** The graph closure of the strict response in $K^2\times\mathcal O$ is
+$$
+\{(x,z,\iota(y,w)):x,z,y,w\in K\}
+\ \cup\
+\{(x,0_K,\bot):x\in K\}.
+$$
+At each completed input $(x,0_K)$ its fiber contains every successful pair and the failure tag. At a completed divisor different from $0_K$, it contains successful pairs only. There is no continuous extension of the strict response to $K^2$. More quantitatively,
+$$
+\inf_{f\in C(K^2,[0,1])}
+\sup_{a,b\in\mathbb N_0}
+\left|f(Z(a),Z(b))-\mathbf1_{\{b>0\}}\right|
+=\frac12.
+$$
+
+**Proof.** The success and failure components of $\mathcal O$ are clopen. The success graph has closure the entire success component by Theorem 44.5. The actual failure graph is
+$$
+\{(Z(a),0_K,\bot):a\in\mathbb N_0\},
+$$
+whose closure is exactly $K\times\{0_K\}\times\{\bot\}$. Closedness of $\{0_K\}$ excludes any other failure support. Combining the component closures proves the formula.
+
+Every successful approximation in Theorem 44.5 has a positive divisor, even when its divisor encoding tends to $0_K$. Holding the numerical divisor literally equal to zero instead gives only the failure stratum. Thus the simultaneous limit values do not assert a successful witness with divisor zero. For each $x$, actual failure inputs approach $(x,0_K)$, while actual success inputs approach it with any prescribed successful output. A continuous extension into the Hausdorff space $\mathcal O$ would have a closed, single-valued graph containing all these limits, which is impossible.
+
+For the quantitative assertion, let the displayed supremum for $f$ be $\varepsilon$. Density of the successful inputs and continuity give $f\ge1-\varepsilon$ on all of $K^2$. At every actual failure input, $f\le\varepsilon$. Consequently $1-\varepsilon\le\varepsilon$. The constant function $1/2$ attains this bound. $\square$
+
+**theorem 44.8 (Complete graph criterion for a literally fixed divisor).** Fix an integer $c\ge1$, write $R_c=\{0,\ldots,c-1\}$, and let
+$$
+\mathcal F_c=
+\overline{\{(Z(cn+r),Z(n),Z(r)):n\in\mathbb N_0,\ r\in R_c\}}
+\subseteq K^3.
+$$
+This is the fixed-divisor graph in dividend, quotient, remainder coordinates. Its exact criterion is
+$$
+(x,y,z)\in\mathcal F_c
+\quad\Longleftrightarrow\quad
+\exists r\in R_c:
+\quad
+z=Z(r),\quad
+H(x)=cH(y)+[r\phi],\quad
+\mathcal S(x)\cap\mathcal S(y)\ne\varnothing.
+$$
+In particular, when both dividend and quotient are split, their labels must agree. Every permitted triple is approached with that remainder held exactly fixed and with both quotient and dividend tending to infinity numerically.
+
+**Proof.** A convergent sequence of actual remainder encodings in the finite set $Z[R_c]$ is eventually constant, say $Z(r)$. Continuity of $H$ then gives the displayed phase relation. If both $x$ and $y$ are split, write the small nonzero local quotient phase errors as
+$$
+\gamma(n_j)=H(y)+[\varepsilon_j],\qquad \varepsilon_j\to0.
+$$
+For sufficiently large $j$, $|c\varepsilon_j|<1/2$, and the dividend phase is exactly
+$$
+\gamma(cn_j+r)=H(x)+[c\varepsilon_j].
+$$
+Since $c>0$, these two local errors have the same sign. Assumption 44.1 forces the two split labels to agree. If either point is ordinary, the sign-intersection condition imposes no further restriction. This proves necessity.
+
+Conversely, suppose the criterion holds and choose $s\in\mathcal S(x)\cap\mathcal S(y)$. Set $\tau_k=1/(10c(k+1))$. By tail density, choose $n_k\ge k$ such that
+$$
+\gamma(n_k)\in H(y)+[\{su:\tau_k<u<2\tau_k\}].
+$$
+The corresponding nonzero errors $\varepsilon_k$ have sign $s$ and tend to zero; the dividend errors are $c\varepsilon_k$ and have the same sign. At split coordinates use Assumption 44.1; at ordinary coordinates use the unique-lift convergence in Theorem 44.2. They give
+$$
+Z(n_k)\longrightarrow y,\qquad Z(cn_k+r)\longrightarrow x.
+$$
+The remainder is exactly $r$ throughout, and $n_k,cn_k+r\ge k$. The same natural-number sequence thus realizes both coordinates and every permitted branch. $\square$
+
+**theorem 44.9 (Fixed-divisor fibers, boundary changes and exact numerical inputs).** For $r\in R_c$, put
+$$
+Q_{c,r}(x)=\{y:(x,y,Z(r))\in\mathcal F_c\},\qquad
+Q_c(x)=\{(y,r):r\in R_c,\ y\in Q_{c,r}(x)\}.
+$$
+For every $x$ and every $r$,
+$$
+|Q_{c,r}(x)|=c,\qquad
+|Q_c(x)|=c^2,\qquad
+\left|\bigcup_{r\in R_c}Q_{c,r}(x)\right|=c^2.
+$$
+In particular, every remainder is reachable above every completed dividend.
+
+The complete branch rule is as follows. For $\eta=H(x)$, the quotient phases are the $c$ distinct roots
+$$
+\Theta_{c,r}(\eta)=\{\theta\in\mathbb T:c\theta+[r\phi]=\eta\}.
+$$
+If $\eta\notin E$, all these roots are ordinary and each contributes its unique lift. If $x=z_{E_M}^s$, a split root exists precisely when $c$ divides $M+r$. When it exists, it is
+$$
+\theta=E_{(M+r)/c},
+$$
+and contributes exactly $z_\theta^s$; all other roots are ordinary and contribute their unique lifts. Thus an ordinary quotient can correspond to a split dividend, but a split quotient cannot correspond to an ordinary dividend.
+
+For $x^+=z_{E_M}^{+1}$ and $x^-=z_{E_M}^{-1}$, let $r_0$ be the unique remainder with $c\mid M+r_0$. The two sets $Q_{c,r}(x^+)$ and $Q_{c,r}(x^-)$ coincide when $r\ne r_0$. At $r_0$ their intersection has $c-1$ points and their union has $c+1$ points. Consequently,
+$$
+|Q_c(x^+)\cap Q_c(x^-)|=c^2-1,\qquad
+|Q_c(x^+)\cup Q_c(x^-)|=c^2+1.
+$$
+For $c=1$ the graph reduces exactly to
+$$
+\mathcal F_1=\{(x,x,0_K):x\in K\}.
+$$
+
+At a padded completed dividend $x=Z(A)$, the same fiber has $c^2$ output pairs. Exactly one has a padded quotient: the actual pair
+$$
+\bigl(Z(A\operatorname{div}c),A\bmod c\bigr).
+$$
+If the numerical dividend is held literally equal to $A$, rather than merely approached in $K$, only its actual singleton triple remains. Also,
+$$
+\{(x,Z(c),y,z):(x,y,z)\in\mathcal F_c\}
+\subsetneq
+\overline{\mathscr D}\cap\bigl(K\times\{Z(c)\}\times K^2\bigr)
+=
+K\times\{Z(c)\}\times K^2.
+$$
+
+**Proof.** For a real lift $\widetilde\eta$ of $\eta$, the roots are
+$$
+\left[\frac{\widetilde\eta-r\phi+j}{c}\right],
+\qquad 0\le j<c.
+$$
+They are distinct and exhaustive. If a root is $E_m$, then
+$$
+cE_m+[r\phi]=E_{cm-r},
+$$
+and $cm-r\ge1$, since $m\ge1$ and $r\le c-1$. Therefore a split quotient necessarily has a split dividend; in particular it never occurs over an ordinary dividend. Over $E_M$, equality $E_{cm-r}=E_M$ is equivalent, by irrationality, to $cm-r=M$. It has exactly the stated solution when $c\mid M+r$, and no solution otherwise. There is at most one split root. Theorem 44.8 selects one same-sign lift at that root and one unique lift at each ordinary root. This proves the per-remainder count and the full branch rule, including the ordinary-quotient, split-dividend case.
+
+Roots belonging to two different remainders cannot coincide: subtraction of their phase equations would give $[(r-r')\phi]=0$, forcing $r=r'$. Hence the quotient sets for different remainders are disjoint. Summing their sizes proves both $c^2$ assertions. Existence and arbitrarily large numerical dividend and quotient witnesses follow from Theorem 44.8, not merely from the count.
+
+There is exactly one $r_0\in R_c$ for which $M+r_0$ is divisible by $c$. For every other remainder, both dividend orientations see precisely the same ordinary quotient lifts. At $r_0$, they share the $c-1$ ordinary lifts but select the two different split lifts. This proves all intersection and union counts. The cardinality over each oriented input remains $c^2$; the boundary change is the exchange of one quotient branch. When $c=1$, the only remainder is zero and the only phase root is $H(x)$; unique ordinary lifts and agreement of split signs both force $y=x$.
+
+The phase of $Z(A)$ is ordinary. If a quotient in its fiber were $Z(n)$, the phase relation would give $[(A-cn-r)\phi]=0$, hence $A=cn+r$. With $0\le r<c$, this is exactly the unique numerical Euclidean quotient and remainder. To see uniqueness directly, two such decompositions give $c(n-n')=r'-r$, whose right side has absolute value less than $c$, forcing $n=n'$ and then $r=r'$. The actual decomposition supplies the one padded pair; all other quotient points are nonpadded. Holding $A$ fixed admits only that decomposition, whereas Theorem 44.8 realizes all limit pairs through dividends at least $k$.
+
+Finally, Theorem 44.5 makes the unrestricted closure slice the entire displayed product. In the literally fixed-divisor closure the remainder belongs to the finite proper subset $Z[R_c]\subset K$. Choosing a remainder point outside this set proves strict inclusion. $\square$
+
+**theorem 44.10 (Reconstruction and the failed round-trip closure identity).** Define the reconstruction graph
+$$
+\mathscr M=\{(Z(b),Z(q),Z(r),Z(bq+r)):b,q,r\in\mathbb N_0\}
+$$
+and its successful inverse domain
+$$
+\mathscr G=\{(Z(b),Z(q),Z(r)):b\ge1,\ q\ge0,\ 0\le r<b\}.
+$$
+Then $\overline{\mathscr M}=K^4$ and $\overline{\mathscr G}=K^3$. On actual inputs in $\mathscr G$, reconstruction followed by division by the same divisor returns the original quotient and remainder. The closure of this actual round-trip graph is exactly
+$$
+\{(z,y,w,y,w):z,y,w\in K\}\subset K^5.
+$$
+In contrast, replacing reconstruction and division separately by their graph closures and then composing them with the same completed divisor yields all of $K^5$, even after imposing $\overline{\mathscr G}$. Thus graph closure does not preserve this arithmetic inverse identity.
+
+**Proof.** Permuting the coordinates of $\mathscr D$ gives a subset of $\mathscr M$ dense in $K^4$, so its closure is full. Its projection to divisor, quotient and remainder lies in $\mathscr G$ and is dense in $K^3$. On actual guarded inputs, both $bq+r=bq'+r'$ and $0\le r,r'<b$ imply $b(q-q')=r'-r$. Since $|r'-r|<b$, one has $q=q'$ and $r=r'$. Conversely the original pair is itself a successful division, proving the exact round-trip identity.
+
+Its encoded graph is consequently $\{(z,y,w,y,w):(z,y,w)\in\mathscr G\}$. The diagonal constraints on its last four coordinates are closed, and density of $\mathscr G$ gives precisely the claimed closure. For the separately closed relations, however, fix arbitrary $(z,y,w,y',w')\in K^5$ and choose any intermediate $x\in K$. Fullness permits reconstruction from $(z,y,w)$ to $x$ and division of $(x,z)$ to $(y',w')$. The closed guard imposes no restriction. Thus the closed local relations compose to all of $K^5$, which is strictly larger because $K$ has at least two points. $\square$
+
+**theorem 44.11 (An empty division diagram and the common-witness criterion).** In variables $(a,b,q,r,d,s)\in\mathbb N_0^6$, consider the two local success constraints
+$$
+A_1:\quad b\ge1,\quad a=bq+r,\quad 0\le r<b,
+$$
+$$
+A_2:\quad r\ge1,\quad d=rs+b,\quad 0\le b<r.
+$$
+Regard each $A_i$ as a subset of the common six-variable domain. Each encoded local relation is dense in $K^6$, but $A_1\cap A_2=\varnothing$. For every $L\ge0$, writing $\Pi_L=\pi_L^{\times6}$, one therefore has
+$$
+\Pi_L\bigl(Z^{\times6}[A_1\cap A_2]\bigr)=\varnothing
+\quad\text{while}\quad
+\Pi_L\bigl(Z^{\times6}[A_1]\bigr)
+\cap
+\Pi_L\bigl(Z^{\times6}[A_2]\bigr)
+=D_L^6.
+$$
+
+More generally, for any finite family of constraints $A_1,\ldots,A_m\subseteq\mathbb N_0^d$ and any $x\in K^d$,
+$$
+x\in\overline{Z^{\times d}\left[\bigcap_{j=1}^m A_j\right]}
+$$
+holds if and only if
+$$
+\forall L\ge0\ \exists n\in\mathbb N_0^d:
+\quad
+\pi_L(Z(n_i))=\pi_L(x_i)\ \text{for every }i,
+\quad
+n\in A_j\ \text{for every }j.
+$$
+The same numerical tuple must satisfy every local constraint.
+
+**Proof.** Each local success relation is, after a coordinate permutation, the product of the actual division graph and two unrestricted numerical coordinates. Theorem 44.5 and density of the numerical encodings make each product dense in $K^6$. Their conjunction would require both $r<b$ and $b<r$, which is impossible. Every nonempty finite product cylinder intersects a dense set, so each individual prefix image is $D_L^6$, proving the finite-observation inequality.
+
+For the general statement, a product cylinder requiring the first $L$ digits of every coordinate is a neighborhood of $x$. Membership in the closure requires a point of the joint numerical relation in each such cylinder. Conversely these cylinders, with common length $L$, form a neighborhood base, so such joint points imply closure membership. This proves the exact quantifier criterion. Replacing its single witness by separate witnesses for different $j$ expresses only membership in the intersection of the local closures, not closure of the joint relation. The division diagram shows that these statements can differ even when every local relation has full closure at every finite observation level. $\square$
+
+**theorem 44.12 (Continuous observer rigidity for variable divisors).** Let $Y$ be Hausdorff, and let $f:K^2\to Y$ and $g:K^2\to Y$ be continuous. If
+$$
+f(Z(a),Z(b))
+=
+g\bigl(Z(a\operatorname{div}b),Z(a\bmod b)\bigr)
+\qquad(a\ge0,\ b\ge1),
+$$
+then $f$ and $g$ are the same constant value on their respective domains. Conversely, any common constant satisfies the identity.
+
+**Proof.** Hausdorffness makes the set
+$$
+\{(x,z,y,w)\in K^4:f(x,z)=g(y,w)\}
+$$
+closed. The given identities make it contain $\mathscr D$, whose closure is $K^4$. Thus the equality holds for every four-tuple. Fixing $(x,z)$ shows $g$ is constant, and fixing $(y,w)$ shows $f$ has that same constant value. The converse is immediate. $\square$
+
+**theorem 44.13 (The maximal continuous fixed-divisor output factor).** Fix $c\ge1$ and give $\mathcal Q_c=K\times R_c$ the product topology with $R_c$ discrete. Define
+$$
+P_c:\mathcal Q_c\to\mathbb T,\qquad P_c(y,r)=cH(y)+[r\phi].
+$$
+For a Hausdorff space $Y$ and continuous $g:\mathcal Q_c\to Y$, the following conditions are equivalent: there is a continuous $f:K\to Y$ satisfying
+$$
+f(Z(cn+r))=g(Z(n),r)
+\qquad(n\in\mathbb N_0,\ r\in R_c);
+$$
+and $g$ is constant on every set $Q_c(x)$.
+
+If $c\ge2$, these conditions hold precisely when there is a unique continuous $h:\mathbb T\to Y$ such that
+$$
+g=h\circ P_c.
+$$
+The corresponding input observer is exactly $f=h\circ H$. Thus $P_c$ is the maximal continuous Hausdorff-valued output factor compatible with the fixed-divisor input fibers. If $c=1$, every continuous $g$ is compatible, and the maximal factor is instead the identification $(y,0)\mapsto y$ onto $K$.
+
+In particular, the remainder label is continuously recoverable from the completed dividend only when $c=1$. For $c\ge2$, all continuously descending finite-discrete-valued readouts are constant, but the nonconstant circle-valued combination
+$$
+cH(y)+[r\phi]
+$$
+does descend, with input readout $H(x)$.
+
+**Proof.** Identify $\mathcal F_c$ with the compact relation
+$$
+\widetilde{\mathcal F}_c
+=
+\{(x,(y,r)):(x,y,Z(r))\in\mathcal F_c\}
+\subseteq K\times\mathcal Q_c.
+$$
+If $f$ exists, its equality with $g$ defines a closed equalizer because $Y$ is Hausdorff. That equalizer contains every actual fixed-divisor triple and hence $\widetilde{\mathcal F}_c$. Therefore $g$ is constant on every $Q_c(x)$.
+
+Conversely, suppose $g$ is constant on those fibers. They are nonempty by Theorem 44.9, so define $f(x)$ to be their common value. The projection $p:\widetilde{\mathcal F}_c\to K$ is a continuous surjection from a compact space onto a Hausdorff space. It is closed, since images of compact closed subsets are compact and therefore closed, and consequently it is a quotient map. If $o$ denotes output projection, then
+$$
+f\circ p=g\circ o
+$$
+is continuous. The quotient property implies that $f$ is continuous. It has the required equality on actual triples. This proves the first equivalence.
+
+Assume $c\ge2$. Fix any $\beta=E_M$ and, for example, remainder $r=0$. Of the $c$ roots of $c\theta=\beta$, at most one is split. Since $c\ge2$, an ordinary root exists. Let $y$ be its unique lift. Theorem 44.8 places the same output $(y,0)$ in both $Q_c(z_\beta^{+1})$ and $Q_c(z_\beta^{-1})$. Hence
+$$
+f(z_\beta^{+1})=g(y,0)=f(z_\beta^{-1}).
+$$
+Every other phase fiber is a singleton. Thus $f$ is constant on every fiber of $H$. The map $H:K\to\mathbb T$ is also a continuous compact-to-Hausdorff surjection and hence a quotient map. It follows that $f=h\circ H$ for a unique continuous $h:\mathbb T\to Y$.
+
+For any $(y,r)\in\mathcal Q_c$, put $\eta=P_c(y,r)$. There is an $x$ with $(x,y,Z(r))\in\mathcal F_c$: when $y$ is split with $H(y)=E_m$, $\eta=E_{cm-r}$ is split and its same-sign lift works; when $y$ is ordinary, any lift of $\eta$ works. Therefore
+$$
+g(y,r)=f(x)=h(H(x))=h(P_c(y,r)).
+$$
+This proves necessity of the factorization. Conversely, for any continuous $h$, take $g=h\circ P_c$ and $f=h\circ H$. The exact phase identity on $cn+r$ proves the required numerical equality. Surjectivity of $P_c$, already true on the component $r=0$, proves uniqueness of $h$.
+
+For $c=1$, Theorem 44.9 gives $Q_1(x)=\{(x,0)\}$, so every continuous $g$ descends by $f(x)=g(x,0)$, and no identification of different points of $K$ is forced. This proves the stated maximality in both cases.
+
+For $c\ge2$, every input fiber contains outputs with every remainder, so the label map $(y,r)\mapsto r$ cannot be constant on an input fiber. For $c=1$ it is the constant zero label. Finally, $\mathbb T$ is connected, so a continuous map from it into a finite discrete space is constant. The factorization theorem proves the finite-readout assertion, while $h$ equal to the identity on $\mathbb T$ gives the displayed nonconstant descending phase combination. $\square$
+
+## 追加锚（本行以下为增补区）
