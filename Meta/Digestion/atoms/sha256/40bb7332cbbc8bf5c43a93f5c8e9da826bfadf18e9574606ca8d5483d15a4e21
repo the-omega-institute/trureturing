@@ -1,0 +1,8 @@
+### IP.5 Complete parity classification for the primitive block
+
+Define
+
+$$
+b(n)=\#\{p:r(p)=n,\ p\text{ prime},\ \chi(p)=-1,\ h_p\text{ odd}\}.
+$$
+

@@ -1,0 +1,13 @@
+**Proof.** Construct an increasing chain of odd divisors from 1 to m as follows. First multiply by all prime factors q>=7, in nonincreasing order and with multiplicity. Write `v_5(m)=2b+delta`, with delta either zero or one. Next multiply once by five if delta=1, then multiply by 25 exactly b times. Finally multiply by three `v_3(m)` times.
+
+At a q>=7 step, or at a q=3 step, the lemma shows q does not divide the current Fibonacci number. Thus the multiplier q contributes no change to the valuation of any old odd prime divisor. Equation U.2 shows that any old factor two also retains its odd valuation, since all indices and multipliers are odd. The existing core therefore divides the next one. At the possible first five step, the current index is coprime to five, so U.1 and `v_5(F_d)=v_5(d)=0` give the same inclusion. At each 25 step the valuation at five changes by two and all other old valuations remain unchanged. Again the old core divides the new one.
+
+All indices in the chain are odd and distinct. The square-class theorem makes every inclusion strict, so every step adds at least one prime divisor. The number of steps is
+
+\[
+\sum_{q\ne5}v_q(m)+b+\delta
+=\Omega(m)-\left\lfloor v_5(m)/2\right\rfloor.
+\]
+
+The chain starts at s(1)=1, whose support is empty. Counting its strict inclusions proves U.6.
+

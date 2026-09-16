@@ -1,0 +1,78 @@
+### GAW.4 Finite exclusion with its missing hypothesis
+
+**Definition GAW7.** For a prime $q>5$ and an even integer $k\ge2$, let
+$A_k(q)$ mean that $p=kq+1$ is prime and $\rho(p)\mid\pi(q)$. Put
+
+$$
+\begin{aligned}
+A_{\{2\}}(q)&:=A_2(q),\\
+A_{[4,200]}(q)&:\Longleftrightarrow
+  \exists k\in[4,200],\ k\text{ even},\ A_k(q),\\
+A_{>200}(q)&:\Longleftrightarrow
+  \exists k>200,\ k\text{ even},\ A_k(q).
+\end{aligned}                                                    \tag{GAW7}
+$$
+
+Let $E_{200}$ denote the assertion that
+$A_{[4,200]}(q)$ is false for every prime $q>5$.
+
+**Assumption GAW8.** Assume $E_{200}$. This is the finite-exclusion input
+needed for the $q>5$ part of GAW2. The sentence in GAW2 stating that
+"the complete product, primality and proper-divisor certificates [are]
+retained at `Evidence/D5/S3/Arith/GoelAlignedWitness200/certificate.json`"
+and assigning the decoded JSON SHA-256
+`0373b90e7386142c3afd0bab7d1272ec9a1a9987321b187a1695de267f910318`
+names the intended support for this assumption. Those product, primality,
+and proper-divisor data are not available in this repository. Hence the
+exhaustive elimination of $4\le k\le200$ is not established from the
+available data and is used below only through the explicit assumption
+$E_{200}$.
+
+**Theorem GAW9.** The following statements separate the unconditional
+conclusions from the finite exclusion.
+
+1. If $q=3$, $p=kq+1$ is prime, $k\ge2$, and
+   $\rho(p)\mid\pi(q)$, then $k=2$.
+2. If $q>5$ is prime, $k\ge4$, and $A_k(q)$ holds, then the divisibility
+   alternative in GAW1 holds and
+
+   $$
+   p\mid F_kF_{k+2}F_{2(k-2)}.                         \tag{GAW8}
+   $$
+
+3. For every prime $q>5$, without $E_{200}$,
+
+   $$
+   \boxed{
+   0\in S(q)\iff q_q=0\ \text{or}\ A_{\{2\}}(q)\ \text{or}\
+   A_{[4,200]}(q)\ \text{or}\ A_{>200}(q).}           \tag{GAW9}
+   $$
+
+4. Under $E_{200}$, GAW2 follows in its stated range: for every odd prime
+   $q\ne5$, every prime $p=kq+1$ with $2\le k\le200$ and
+   $\rho(p)\mid\pi(q)$ has $k=2$. Under the same assumption, GAW9 reduces
+   to GAW6. Thus the implication in GAW6 that excludes all intermediate
+   multipliers and leaves only $k=2$ or $p>200q+1$ is conditional on
+   $E_{200}$. The reverse implication from any branch displayed in GAW6
+   to $0\in S(q)$ is unconditional.
+
+In particular, GAW1, GAW4, GAW5, the four-branch equivalence GAW9, and the
+theorem following GAW6 about external prime witnesses in residue classes do
+not require $E_{200}$.
+
+**Proof.** For $q=3$, one has $\pi(3)=8$ and $F_8=21$. Alignment makes
+$p$ divide $F_8$, while $p=3k+1$ and $k\ge2$; the only possibility is
+$p=7$ and $k=2$. This proves the first assertion without finite enumeration.
+
+For $q>5$, assertion 2 is exactly the linear-index conclusion of GAW1 and
+does not use a search over multipliers. Every aligned prime has
+$p=kq+1$ with even $k\ge2$. Partitioning those even multipliers into
+$k=2$, $4\le k\le200$, and $k>200$, and then applying GAW5 proves GAW9.
+Assumption $E_{200}$ deletes precisely the middle alternative. Together
+with the unconditional $q=3$ calculation, this gives the corrected
+conditional form of GAW2 and the forward implication of GAW6. Conversely,
+each remaining aligned-prime branch supplies the other-prime term in GAW5,
+so the reverse implication needs no finite exclusion. Finally, GAW4-GAW5
+and the residue-class theorem following GAW6 use the Fibonacci valuation
+formula and Euler's product, not $E_{200}$; their conclusions therefore
+remain unconditional.

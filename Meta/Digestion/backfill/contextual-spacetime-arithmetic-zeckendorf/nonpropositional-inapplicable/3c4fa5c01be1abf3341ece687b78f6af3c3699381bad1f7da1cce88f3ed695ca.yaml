@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3c4fa5c01be1abf3341ece687b78f6af3c3699381bad1f7da1cce88f3ed695ca
+  normalized_sha256: sha256:3c4fa5c01be1abf3341ece687b78f6af3c3699381bad1f7da1cce88f3ed695ca
+cas_ref: sha256:3c4fa5c01be1abf3341ece687b78f6af3c3699381bad1f7da1cce88f3ed695ca
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 同一权重的严格单调性给出索引不大于权重，取给定上界的后继索引便得到严格超越，故权重无界；使用 Nat.fib_add_two_strictMono 与 StrictMono.id_le，仓内无冻结 GID。
+    previous_atom_id: f2f46f42ca6e23319b486ba4e2c20bcf4c1dff554ae8594f04c5fe9ae35e85e4
+    next_atom_id: 80d8d400d856e961a926fbe717a2a67688b624a69fafaea241e2425ee151a286

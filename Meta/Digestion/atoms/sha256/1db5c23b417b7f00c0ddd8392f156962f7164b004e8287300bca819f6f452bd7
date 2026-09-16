@@ -1,0 +1,9 @@
+**Proof.** Apply IP1 to IP9 and use multiplicativity in
+$\mathcal C_n=E_n\mathcal R_n$; both characters are nonzero, so
+$\chi(E_n)^{-1}=\chi(E_n)$. IP7 and IP9 give the two cases. They are
+disjoint: if $n$ is a pure prime power, its possible largest-prime
+cofactor $t$ is one, while every prime rank is greater than one. If
+$n=r(q)q^j$, then $1<r(q)<q$ and $q\nmid r(q)$, so $n$ has at least two
+distinct prime factors. This completes both directions of the
+classification, without a hypothesis on any initial depth.
+

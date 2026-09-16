@@ -1,0 +1,2 @@
+**Definition.** For a prime q>5 and P=pi(q), let S(q) be the set of residues a modulo P such that q divides Euler's totient tot(F_m) for every positive integer m congruent to a modulo P. Only positive indices are used, so tot(F_0) is never invoked.
+

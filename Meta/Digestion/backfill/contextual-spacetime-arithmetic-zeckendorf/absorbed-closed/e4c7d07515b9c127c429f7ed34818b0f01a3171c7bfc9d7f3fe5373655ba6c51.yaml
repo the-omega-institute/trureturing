@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:e4c7d07515b9c127c429f7ed34818b0f01a3171c7bfc9d7f3fe5373655ba6c51
+  normalized_sha256: sha256:e4c7d07515b9c127c429f7ed34818b0f01a3171c7bfc9d7f3fe5373655ba6c51
+cas_ref: sha256:e4c7d07515b9c127c429f7ed34818b0f01a3171c7bfc9d7f3fe5373655ba6c51
+coverage_gids:
+  - gid: D5/S3/Weil/Mertens/CoprimeMobiusCoefficientRecurrence.coefficient_recurrence
+    target_statement_id: sha256:a53d891502d31c9da48de091a155a2e0047af120f998284581dd7feb78f373a2
+receipts:
+  unresolved_subitems: []

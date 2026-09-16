@@ -1,0 +1,6 @@
+**证明。** GP33 给出出现秩与模四条件，GP31 给出不同层的互素性，故 p_j 互不相同。令 r=r_j。模 p_j 时 Q^r=cI，其中 c=F_(r-1)，因为 F_r=0。取行列式得到 c^2=(-1)^r=-1，故 c 的阶为四。若 Q^t=I，则 r|t；写 t=rh 后有 Q^t=c^h I，因此四整除 h。这既证明 pi(p_j)=4r，又不引入新的周期约定。
+
+当 r_j>n_0 时，FD2-FD3 给出
+p_j>r_j exp(log r_j/(104 log log r_j))。再用 FD1 的
+D_k(p_j)<=pi(p_j)/p_j=4r_j/p_j，得到 FD5 的上界。严格正性来自 Bragman-Rowland 的定理 1。由于 log r_j/log log r_j 趋于无穷，右边趋于零，夹逼得到 FD6。
+

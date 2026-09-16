@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:82ee9d478c55206f47a822c47a0e8da592a137cbcdb4e9b8d84db7f219b18713
+  normalized_sha256: sha256:82ee9d478c55206f47a822c47a0e8da592a137cbcdb4e9b8d84db7f219b18713
+cas_ref: sha256:82ee9d478c55206f47a822c47a0e8da592a137cbcdb4e9b8d84db7f219b18713
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 对每个子群外元素选择上述分离字符，可数补集的像给可数字符族；有限测试集上的选择像给有限字符族，其基数不超过测试集基数，且每个所选字符均消去原子群。仓内无冻结 GID。
+    previous_atom_id: f85234be982ed1a9e861ce08899da9319d33dff01fecb6a3b99499eb7f721c59
+    next_atom_id: a172adef4c9ee5d397a14327ea120f8e6fc10ae27906203ec4f110e9228bf891
