@@ -1,0 +1,32 @@
+**theorem 42.5 (All points are finite lexicographic signatures).** Every $p\in S(V)$ has a representation by an independent list $v_1,\ldots,v_r$:
+$$
+p(\ell)=
+\begin{cases}
+\operatorname{sgn}(\ell(v_j)),&
+j=\min\{i:\ell(v_i)\ne0\},\\
+0,&\ell(v_i)=0\text{ for all }i.
+\end{cases}
+\tag{42.7}
+$$
+The empty list represents exactly $\mathbf0$. After choosing an inner product the list can be orthonormal. Its length is intrinsic:
+$$
+r=\dim U_p=\dim V-\dim Z_p,\qquad
+U_p=\operatorname{span}(v_1,\ldots,v_r).
+\tag{42.8}
+$$
+We call this integer the rank of $p$.
+Conversely, every finite independent list, including the empty list, defines a member of $S(V)$ by (42.7).
+
+**Proof.** Apply Theorem 42.4 to (42.6) in $U_p$. Every resulting vector lies in $U_p$, so every member of $Z_p$ annihilates the entire list. For a covector outside $Z_p$, the first nonzero signed evaluation is positive, which is exactly (42.7). This gives an orthonormal, hence independent, list. Its annihilator equals $Z_p$: one inclusion follows from membership in $U_p$, and the other follows because every covector outside $Z_p$ has a nonzero evaluation somewhere in the list. Finite-dimensional annihilator duality now gives (42.8). In particular, the list is empty exactly when $Z_p=V^*$, equivalently when $p=\mathbf0$.
+
+Conversely, start with an independent list and a finite set $F$ of covectors. For $t>0$ put
+$$
+\gamma(t)=\sum_{j=1}^r t^jv_j.
+$$
+If the first nonzero evaluation of $\ell$ occurs at $k$, then
+$$
+\ell(\gamma(t))
+=t^k\left(\ell(v_k)+\sum_{j>k}t^{j-k}\ell(v_j)\right).
+$$
+The expression in parentheses has the sign of $\ell(v_k)$ for all sufficiently small positive $t$. If all evaluations vanish, the polynomial is identically zero. Since $F$ is finite, one positive $t$ realizes all its prescribed signs. Equation (42.1) proves membership in $S(V)$. The empty list gives the zero vector throughout. $\square$
+
