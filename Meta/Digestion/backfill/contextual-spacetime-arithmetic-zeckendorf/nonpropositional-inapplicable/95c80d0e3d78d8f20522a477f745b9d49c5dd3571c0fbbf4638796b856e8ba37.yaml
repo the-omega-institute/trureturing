@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:95c80d0e3d78d8f20522a477f745b9d49c5dd3571c0fbbf4638796b856e8ba37
+  normalized_sha256: sha256:95c80d0e3d78d8f20522a477f745b9d49c5dd3571c0fbbf4638796b856e8ba37
+cas_ref: sha256:95c80d0e3d78d8f20522a477f745b9d49c5dd3571c0fbbf4638796b856e8ba37
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶排除反向规则进入已定义的有向重写适用域，属于作用域限定，没有独立待证命题，故无需证明探针。
+    previous_atom_id: a858f5679b4ed25d5ab86ef194d807f8baeca1e39aa45a681be5783c78ee5ef7
+    next_atom_id: 82d07df23e69e2833fe95d39adc638f1f2340124eac81024d9f821f72c5b1058

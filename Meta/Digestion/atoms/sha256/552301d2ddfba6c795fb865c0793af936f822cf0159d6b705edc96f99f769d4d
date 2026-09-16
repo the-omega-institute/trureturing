@@ -1,0 +1,10 @@
+**定理 356.1。** 沿用定义 338.1 的 $\ell_A:B_A^{\rm cap}\to\mathbb R$、$S_A:X_A^{\rm cap}\to[0,+\infty]$ 和 $M_A$，实直线始终取通常拓扑。则
+$$
+M_A<+\infty
+\iff\ell_A\text{ 在 }(B_A^{\rm cap},\tau_{+,A})\text{ 的零处连续}
+\iff\ell_A\text{ 在 }(B_A^{\rm cap},\tau_{+,A})\text{ 上连续}
+$$
+$$
+\iff\exists F:(X_A^{\rm cap},\tau_{\rm coord,A}^{X})\to\mathbb R
+\text{ 连续且 }F|_{B_A^{\rm cap}}=\ell_A.
+$$
