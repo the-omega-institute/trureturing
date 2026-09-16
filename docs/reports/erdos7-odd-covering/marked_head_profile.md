@@ -972,3 +972,187 @@ maximizing the three global unit-cofactor test choices gives square
 numerator 12522, so the joint pointwise bound itself is not asserted sharp
 after integration. In particular, these numbers are not a Gamma bound
 for all old test layouts of the family.
+
+## Exact compatibility rebate for a two-prime block
+
+For a nonempty finite grid T, let n_i,m_j be its row and column degrees,
+with maxima n_max,m_max. For nonnegative real A,B,C,D, set
+
+    a=B(2A+B),       b=C(2A+C),       e=2BC+2D min(B,C),
+    P=a n_max+b m_max,
+    E=max_((i,j) in T) (a n_i+b m_j).
+
+The operators B 2 and B 3 satisfy the exact identity
+
+    G_T-F_T = min(e,P-E)
+            = min(e, min_((i,j) in T)
+                         [a(n_max-n_i)+b(m_max-m_j)]).             (R1)
+
+Thus degrees and one scan of T suffice to evaluate the joint operator.
+
+To prove this, put u=2BD, v=2CD, c=2BC and
+K=|T|A²+2AD+D². If the selected row and column intersect in T, place
+the D-cell at that intersection. The maximum of these choices is
+K+E+c+u+v. If their intersection is absent, a surviving D-cell can lie
+in at most one of them, giving at most K+P+max(u,v). This second bound
+is attained by a maximum-degree row and column whenever their intersection
+is absent: both degrees are positive, so a D-cell can attain whichever
+of u,v is larger. If their intersection survives, the first branch
+already dominates. Consequently
+
+    F_T=K+max(E+c+u+v, P+max(u,v)),
+    G_T=K+P+c+u+v.
+
+Subtracting proves R1, including zero coefficients and empty ambient
+rows or columns. If B=0 or C=0, the rebate is zero. Otherwise a,b,e>0,
+so strict gain occurs exactly when no surviving edge joins a
+maximum-degree row to a maximum-degree column. This criterion is
+independent of A and D.
+
+For complete old test blocks A,B,C,D≥1, one has a,b≥3 and e≥4. Let
+I(T) indicate that T is nonempty and has no such maximum-degree edge.
+Integer degree deficits give
+
+    G_T-F_T ≥ min(e,min(a,b)) I(T) ≥ 3 I(T).                      (R2)
+
+Give empty grids zero contribution. With the same actual globally
+conditioned law and Z from B 1,
+
+    sum_x mu(x)F_(T_x)/Z
+      ≤ sum_x mu(x)G_(T_x)/Z - 3 mu{x:I(T_x)=1}/Z.                (R3)
+
+The event I(T_x) depends only on the actual surviving grid, so this
+subtraction remains valid after maximizing over all complete old layouts.
+No positive universal lower bound on its mass is asserted. For example,
+put each new mixed original class inside an already forbidden pure class.
+The distinct moduli remain present, but every surviving grid is a
+rectangle and I(T_x)=0.
+
+The exact verifier checks 77 targeted grid/coefficient cases against
+literal allocation squares. They include both positive branches of the
+minimum, their equality boundary, zero coefficients, rational coefficients,
+empty ambient rows and columns, and the actual four-cell witness with
+F=22,G=25. The preceding proof supplies the arbitrary nonnegative-real
+scope. The final min/max subtraction reuses the standard order identity;
+no standalone Lean wrapper is introduced.
+
+## A nonuniform law for a block with zero compatibility rebate
+
+There is a supported law that improves the complete second moment even
+when the uniform grid's rebate R1 is zero. For every positive Q coprime
+to143 and every probability mu on residues modulo Q, the explicit law rho
+below satisfies the exact identity
+
+    Gamma_(143Q)(mu × rho)
+      = (6386411/3927000) Gamma_Q(mu).                            (NT1)
+
+This allows every complete old test layout and arbitrary old prime-power
+heights. The new prime heights at11 and13 are both one.
+
+Use the actual new classes0 mod11,0 mod13 and1 mod143. Index the nonzero
+11-residues by0,...,9 and the nonzero13-residues by0,...,11. The surviving
+grid is
+
+    T=({0,...,9} × {0,...,11}) minus {(0,0)}.
+
+Its uniform law has exact factor194/119 in NT1. Every maximum-degree row
+meets a maximum-degree column in a surviving cell, so R1 is zero for
+all four nonnegative old loads. Instead assign
+
+    rho(i,j)=a=2119/238000       if exactly one of i,j is zero,
+             c=9781/1178100     if both i,j are positive.
+
+Equivalently a=1/119+1/2000 and c=1/119−20/(99·2000). There are20adjacent
+cells and99interior cells, so20a+99c=1. Both weights are positive and
+the missing cell has mass zero. The improvement in the exact factor is
+
+    194/119−6386411/3927000 = 131/33000 >0.                        (NT2)
+
+### A common quadratic bound for all four old layouts
+
+Let R_i and C_j be rho's row and column masses. For a selected row i,
+column j and surviving cell z, the indicators1, row i, column j and
+cell z have Gram matrix
+
+    M=[[1,R_i,C_j,rho(z)],
+       [R_i,R_i,rho(i,j),rho(z)·1[z_row=i]],
+       [C_j,rho(i,j),C_j,rho(z)·1[z_col=j]],
+       [rho(z),rho(z)·1[z_row=i],rho(z)·1[z_col=j],rho(z)]].
+
+Choose the interior aligned configuration i=j=1,z=(1,1), and denote
+its matrix by M*. Put R=a+11c and C=a+9c. The four row sums of M* are
+
+    lambda=(1+R+C+c, 2R+2c, 2C+2c, 4c).
+
+Simultaneously for every row, column and cell choice,
+
+    M ≤ diag(lambda) in positive-semidefinite order.              (NT3)
+
+The rational certificate proves NT3 by exact LDLᵀ factorizations of
+its20distinct matrix differences. For each one the verifier reconstructs
+every entry and checks every diagonal pivot is nonnegative, including
+the remaining column at a zero pivot. All14280choices are accounted for;
+no floating-point eigenvalue estimate is used. The coefficient sum is
+
+    sum(lambda)=6386411/3927000.
+
+Fix any complete test layout modulo143Q. At an old point x, let A_g(x)
+be the complete old cofactor load in exponent group
+ g=(0,0),(1,0),(0,1),(1,1). The new prefixes of individual old cofactors
+may differ. The convex allocation argument of B 1 remains valid with
+rho in place of counting measure: for an upper bound, concentrate each
+group's nonnegative amount into one row, column or cell. Prefixes outside
+support may be moved into support since the squared nonnegative load
+is increasing. Thus, at this same old point,
+
+    E_rho L(x,·)² ≤ max_(i,j,z) A(x)ᵀ M A(x)
+                  ≤ sum_g lambda_g A_g(x)².
+
+Every A_g is a complete Q-divisor layout. Integrating under mu gives
+at most sum(lambda) Gamma_Q(mu), proving the upper bound of NT1 for
+all old layouts simultaneously.
+
+For equality, choose an old layout attaining Gamma_Q(mu); the finite
+residue-choice set ensures it exists. Reuse that layout in all four
+exponent groups with the fixed interior aligned new row, column and
+cell. CRT gives one residue for every divisor of143Q. Its complete load
+factors as the old load times(1+row indicator+column indicator+cell
+indicator). The latter's square integral is the sum of entries of M*,
+namely sum(lambda). This gives the reverse bound of NT1.
+
+For the uniform law on T, the interior aligned Gram matrix dominates
+all other Gram matrices entrywise. Its row-sum diagonal majorant follows
+from the weighted square inequality, and the same coherent test attains
+it. This proves its exact factor194/119. Hence NT2 compares two complete
+supported laws for the same actual family, including the full old-layout
+optimization.
+
+### Actual arithmetic consumer and boundary
+
+Adjoin(11,0),(13,0),(143,1) to the sharp315head's eleven original classes.
+These14moduli are distinct, nontrivial and odd, with lcm45045. The full
+survivor set has86·119=10234points. Keeping its old uniform law and using
+rho on the new block gives the exact value
+
+    Gamma45045=(6386411/3927000)(1131/86)
+              =2407676947/112574000,
+
+compared with109707/5117 for the fully uniform survivor law. The verifier
+uses the already computed sharp315result, reconstructs every actual
+survivor in one full period, and checks the product support.
+
+This supplies one positive case for handling zero compatibility rebate;
+it does not show that every zero-rebate grid admits this improvement.
+Additional actual classes involving the new primes need not preserve
+this grid. No unrestricted tail cutoff or arbitrary-height11/13block
+bound follows from NT1.
+
+The repository's B 1 convex allocation proof is reused directly; the
+new quantitative input is the common rational quadratic bound NT3.
+[Hough–Nielsen, Lemmas5–6](https://arxiv.org/html/1703.02133) controls
+moments by maximal biases and good-fibre proportions.
+[BBMST, section5.3](https://arxiv.org/html/1901.11465) constructs nonuniform
+survivor laws by optimizing actual configurations. These provide the
+public precedents; neither cited passage supplies NT1. The result here
+is an ordinary universal proof with an exact finite certificate, not
+Lean certification.

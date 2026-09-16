@@ -1103,6 +1103,154 @@ def two_prime_block_grid_comparison():
     return result
 
 
+def two_prime_block_gap_regression():
+    """Check the general rebate identity against selected literal allocations."""
+    grids = (
+        ('singleton', 1, 1, ((0, 0),)),
+        ('rectangle', 2, 3, tuple(product(range(2), range(3)))),
+        ('incompatible_maxima', 3, 3, ((0, 1), (0, 2), (1, 0), (2, 0))),
+        ('empty_ambient_rows_columns', 4, 5, ((1, 2), (1, 3), (2, 1), (3, 1))),
+        ('missing_corner', 3, 3, tuple(p for p in product(range(3), repeat=2) if p != (0, 0))),
+        ('matching', 3, 3, ((0, 0), (1, 1), (2, 2))),
+        ('single_row', 1, 3, ((0, 0), (0, 1), (0, 2))),
+    )
+    coefficients = tuple(tuple(map(Fraction, values)) for values in (
+        (0, 0, 0, 0), (1, 1, 1, 1), (0, 1, 1, 0), (1, 1, 1, 0),
+        (1, 2, 2, 0), (0, 3, 2, 1), (1, 0, 3, 2), (1, 3, 0, 2),
+        (2, 3, 1, 0), ('1/2', '3/2', '2/3', '4/5'), (10, 1, 1, 1),
+    ))
+    branches = Counter()
+    examples = {}
+    cases = 0
+    for name, height, width, grid in grids:
+        rows = [sum(y == i for y, _ in grid) for i in range(height)]
+        columns = [sum(z == j for _, z in grid) for j in range(width)]
+        row_max, column_max = max(rows), max(columns)
+        incompatible = not any(rows[i] == row_max and columns[j] == column_max for i, j in grid)
+        for A, B, C, D in coefficients:
+            direct = max(sum((A + B*(y == i) + C*(z == j) + D*((y, z) == cell))**2
+                             for y, z in grid)
+                         for i, j, cell in product(range(height), range(width), grid))
+            a, b = B*(2*A+B), C*(2*A+C)
+            e = 2*B*C + 2*D*min(B, C)
+            P = a*row_max + b*column_max
+            E = max(a*rows[i] + b*columns[j] for i, j in grid)
+            independent = len(grid)*A*A + P + 2*B*C + 2*A*D + D*D + 2*B*D + 2*C*D
+            rebate = min(e, P-E)
+            require(independent-direct == rebate, 'literal allocations satisfy exact block rebate')
+            require((rebate > 0) == (B > 0 and C > 0 and incompatible),
+                    'strict rebate criterion includes zero coefficients and empty ambient rows')
+            if min(A, B, C, D) >= 1:
+                require(rebate >= 3*incompatible, 'complete-layout block rebate is at least three')
+            branch = ('zero' if rebate == 0 else
+                      'cross_coefficient_limited' if e < P-E else
+                      'degree_deficit_limited' if e > P-E else 'positive_branch_equality')
+            branches[branch] += 1
+            if branch not in examples:
+                examples[branch] = {
+                    'grid_name': name, 'ambient_dimensions': [height, width],
+                    'grid': [list(pair) for pair in grid],
+                    'coefficients': list(map(str, (A, B, C, D))),
+                    'direct_F': str(direct), 'independent_G': str(independent),
+                    'cross_limit': str(e), 'degree_limit': str(P-E), 'rebate': str(rebate),
+                }
+            if name == 'incompatible_maxima' and (A, B, C, D) == (1, 1, 1, 1):
+                require((direct, independent, rebate) == (22, 25, 3), 'actual four-cell witness')
+            cases += 1
+    require(cases == 77, 'declared targeted regression scope')
+    require(set(branches) == {'zero', 'cross_coefficient_limited', 'degree_deficit_limited',
+                              'positive_branch_equality'}, 'both minimum branches and their boundaries')
+    return {
+        'scope': 'targeted exact regressions of the ordinary nonnegative-real rebate identity',
+        'grid_names': [name for name, _, _, _ in grids],
+        'coefficient_tuples': [list(map(str, values)) for values in coefficients],
+        'grid_coefficient_cases': cases, 'branch_counts': dict(branches),
+        'representative_cases': examples, 'complete_layout_uniform_rebate': '3',
+    }
+
+
+def ldlt_psd(matrix):
+    n=len(matrix)
+    lower=[[Fraction(i==j) for j in range(n)] for i in range(n)]
+    diagonal=[]
+    for j in range(n):
+        pivot=matrix[j][j]-sum(lower[j][k]**2*diagonal[k] for k in range(j))
+        require(pivot>=0,'nonnegative exact LDL pivot')
+        diagonal.append(pivot)
+        for i in range(j+1,n):
+            remaining=matrix[i][j]-sum(lower[i][k]*lower[j][k]*diagonal[k] for k in range(j))
+            if pivot:
+                lower[i][j]=remaining/pivot
+            else:
+                require(remaining==0,'zero pivot has zero remaining column')
+    require(all(sum(lower[i][k]*diagonal[k]*lower[j][k] for k in range(n))==matrix[i][j]
+                for i in range(n) for j in range(n)), 'exact PSD factorization reconstruction')
+    return diagonal
+
+
+def punctured_grid_nonuniform_transfer(signed_square_result):
+    from math import lcm
+    m,n=10,12
+    grid=[(i,j) for i in range(m) for j in range(n) if (i,j)!=(0,0)]
+    epsilon=Fraction(1,2000)
+    adjacent=Fraction(1,119)+epsilon
+    interior=Fraction(1,119)-Fraction(20,99)*epsilon
+    weight={(i,j):(adjacent if i==0 or j==0 else interior) for i,j in grid}
+    require(sum(weight.values())==1 and min(weight.values())>0,'supported rational law normalized')
+    rows=[sum(weight.get((i,j),Fraction(0)) for j in range(n)) for i in range(m)]
+    cols=[sum(weight.get((i,j),Fraction(0)) for i in range(m)) for j in range(n)]
+    ri,ci=rows[1],cols[1]
+    diagonal=[1+ri+ci+interior,2*ri+2*interior,2*ci+2*interior,4*interior]
+    constant=sum(diagonal)
+    require(constant==Fraction(6386411,3927000),'universal transfer constant')
+    matrices={}
+    all_forms=[]
+    count=0
+    for i,j,z in product(range(m),range(n),grid):
+        wz=weight[z];wij=weight.get((i,j),Fraction(0))
+        wzr=wz if z[0]==i else Fraction(0);wzc=wz if z[1]==j else Fraction(0)
+        matrix=((Fraction(1),rows[i],cols[j],wz),(rows[i],rows[i],wij,wzr),
+                (cols[j],wij,cols[j],wzc),(wz,wzr,wzc,wz))
+        matrices.setdefault(matrix,[i,j,list(z)])
+        count+=1
+        all_forms.append(sum(sum(row) for row in matrix))
+    pivots=[]
+    for matrix,witness in sorted(matrices.items()):
+        difference=[[diagonal[i]*int(i==j)-matrix[i][j] for j in range(4)] for i in range(4)]
+        ds=ldlt_psd(difference)
+        pivots.append({'representative':witness,'pivots':list(map(str,ds))})
+    require(count==14280 and len(matrices)==20,'all actual row-column-cell choices and Gram types')
+    require(max(all_forms)==constant,'aligned interior unitlayout attains the transfer constant')
+    old=[(3,0),(9,4),(5,0),(15,1),(45,37),(7,0),(21,1),(35,9),(63,52),(105,4),(315,142)]
+    require(signed_square_result['actual_second_moment_upper'] == '1131/86',
+            'current sharp uniform315 square bound')
+    require(signed_square_result['sharp_witness']['original_classes'] == [list(pair) for pair in old],
+            'current sharp actual head family')
+    original=old+[(11,0),(13,0),(143,1)]
+    require(len(original)==len({d for d,a in original})==14,'fourteen distinct original moduli')
+    require(all(d>1 and d%2 and 0<=a<d for d,a in original),'ordinary odd congruence family')
+    require(lcm(*(d for d,a in original))==45045,'actual lcm')
+    old_survivors=[x for x in range(315) if all(x%d!=a for d,a in old)]
+    survivors=[x for x in range(45045) if all(x%d!=a for d,a in original)]
+    require(len(old_survivors)==86 and len(survivors)==86*119,'complete actual support is oldsupport times puncturedgrid')
+    require(all((x%11-1,x%13-1) in weight and x%315 in old_survivors for x in survivors),
+            'CRT support matches the constructed law')
+    uniform_constant=Fraction(194,119)
+    require(uniform_constant-constant==Fraction(131,33000),'strict universal multiplier improvement')
+    return {'scope':'ordinary universal Gamma tensorization with exact rational PSD certificate; not Lean verification',
+        'rows':m,'columns':n,'missing_cell':[0,0],'grid_cells':len(grid),
+        'epsilon':str(epsilon),'adjacent_cell_weight':str(adjacent),'interior_cell_weight':str(interior),
+        'row_masses':list(map(str,rows)),'column_masses':list(map(str,cols)),
+        'diagonal_majorant':list(map(str,diagonal)),'Gram_choices':count,'distinct_Gram_matrices':len(matrices),
+        'LDL_certificates':pivots,'Gamma_and_tensorization_constant':str(constant),
+        'uniform_Gamma_and_tensorization_constant':str(uniform_constant),'strict_multiplier_gain':str(uniform_constant-constant),
+        'uniform_unweighted_grid_gap':0,
+        'actual_original_classes':[list(t) for t in original],'actual_lcm':45045,
+        'actual_survivor_count':len(survivors),'sharp_old_Gamma':'1131/86',
+        'resulting_Gamma':str(constant*Fraction(1131,86)),
+        'uniform_resulting_Gamma':str(uniform_constant*Fraction(1131,86))}
+
+
 def verify(expected):
     cases = []
     old_cases = []
@@ -1153,6 +1301,8 @@ def verify(expected):
         "signed_deletion_square_comparison": signed_result,
         "uniform315_energy_rebate_obstruction": uniform315_energy_rebate_obstruction(signed_result),
         "two_prime_block_grid_comparison": two_prime_block_grid_comparison(),
+        "two_prime_block_gap": two_prime_block_gap_regression(),
+        "punctured_grid_nonuniform_transfer": punctured_grid_nonuniform_transfer(signed_result),
         "uniform315_mean_sharpness": uniform315_mean_sharpness(),
         "residual_prefix_depletion_obstruction": residual_prefix_depletion_obstruction(),
         "prime11_residual_geometry": prime11_residual_geometry(),
@@ -1166,6 +1316,8 @@ def verify(expected):
                       "deletion_weighted_mean": result["deletion_weighted_comparison"]["mean"],
                       "deletion_weighted_actual_second": result["deletion_weighted_comparison"]["actual_second_moment_upper"],
                       "sharp_actual_second": signed_result["actual_second_moment_upper"],
+                      "block_gap_regressions": result["two_prime_block_gap"]["grid_coefficient_cases"],
+                      "nonuniform_block_factor": result["punctured_grid_nonuniform_transfer"]["Gamma_and_tensorization_constant"],
                       "conditioned_3465_actual_second": result["conditioned_3465_comparison"]["actual_second_moment_upper"]}, sort_keys=True))
 
 

@@ -46,8 +46,9 @@ in the frozen 5040 fibre both permit tail cutoff 13, by (AD5).
 Thus a hypothetical cover must involve at least one of 11, 13 and 17.
 These missing-small-prime hypotheses remain; unrestricted #7 is open.
 The same uniform complete-survivor law at arbitrary finite3,5,7heights
-also satisfies `Gamma<=937/24` by (JG1)--(JG2), using shared cell parameters.
-This improves the separate-input bound1889/48 without a new tail cutoff.
+also satisfies `Gamma<=3849/106` by (SD1)--(SD6), using shared cell parameters
+and signed deletion energy. This improves `937/24` by `3473/1272`
+without a new tail cutoff.
 
 For families using only the primes 3, 5 and 7, (CM1)--(CM8) determine the
 exact infimum of uniform uncovered density: \(53/432\). Every finite
@@ -6650,6 +6651,195 @@ under `shared_three_prime_parameters`. It preserves the earlier
 72-branch square certificate. The transfer and vertex argument above
 are ordinary mathematical proofs; this is not an end-to-end Lean
 statement or a new unrestricted-tail exclusion.
+
+### Signed deletion with both initial ternary test prefixes
+
+For the same uniform law on complete actual survivors, at arbitrary finite
+heights of 3, 5 and 7, the shared-cell argument strengthens to
+
+\[
+ \boxed{\Gamma_{357}\le\frac{3849}{106}<\frac{937}{24}.} \tag{SD1}
+\]
+
+The improvement over (JG1) is `3473/1272`. This bound retains the actual
+zero-seven test layout in both its product cross terms and the energy
+removed by the mixed-seven classes. It makes no optimal-law, actual-family
+sharpness or new tail-cutoff claim.
+
+First suppose the original pure modulus-3 and modulus-9 exclusions are
+effective. Use exactly the five-cell parameters of (CM2), without moving
+any deletion between cells, and write
+
+\[
+ d_l=z-\alpha_{r(l)}-\beta_l,\qquad
+ n_l=w_ld_l/9-t_l,\quad s=\sum_ln_l,\quad
+ x=\sum_lw_l/9,\quad
+ n_r=\sum_{r(l)=r}n_l,\quad v_r=\sum_{r(l)=r}w_l/3.
+\]
+
+Let `A0` be the zero-seven block of a complete test layout; it is itself
+a complete `{3,5}` test load. Retain the root `r` and cell `j` chosen by
+the modulus-3 and modulus-9 tests in its zero-five block. If either test
+is inactive on pure survivors, changing it to any surviving root or cell
+increases the whole load pointwise. Thus it suffices to consider these
+`2*5` choices. The two choices are independent: the test cell need not
+lie in the test root.
+
+Define `c_l=3+2*1[r(l)=r]+2*1[l=j]` and
+
+\[
+ \begin{aligned}
+ P_{rj}&=s+3n_r+(3+2\mathbf1_{r(j)=r})n_j
+       +\frac{\max_l(c_ld_l)+\max_ld_l}{18},\\
+ V_{rj}&=x+v_r+(3+2\mathbf1_{r(j)=r})w_j/9
+       +\frac{\max_lc_l+1}{18},\\
+ U_{rj}&=P_{rj}+V_{rj}/4+
+                \frac58(x+\max(v_0,v_1)+1),\qquad
+ U=\max_{r,j}U_{rj}.
+ \end{aligned} \tag{SD2}
+\]
+
+Here `s E_mu35 A0²<=U_rj`, while `s Gamma35<=U`. To verify these
+statements, write the zero-five ternary load as
+`1+I_root+I_cell+sum_{a>=3} I_a`. The first three terms have exact raw
+square `s+3n_r+(3+2*1[r(j)=r])*n_j`. A depth-`a>=3` test cylinder in
+cell `l` has raw complete-survivor mass at most `d_l*3^(-a)`: it already
+avoids the pure-five exclusions and all first- and second-level mixed
+exclusions represented by `alpha,beta`. Its diagonal and cross terms
+with the first three tests have coefficient `c_l`. These terms sum to
+at most `max_l(c_l*d_l)/18`. The ordered pairs of distinct deeper tests
+are bounded by `max_l(d_l)/18`, since
+
+\[
+ \sum_{a\ge3}3^{-a}=\frac1{18},\qquad
+ 2\sum_{b\ge4}(b-3)3^{-b}=\frac1{18}.
+\]
+
+This proves `P_rj`. The same expansion under the raw pure-ternary law
+has root mass `v_r/3`, cell mass `w_j/9` and depth caps `3^(-a)`, giving
+`V_rj`. The already proved (ZG2), with its global pure-ternary norm bound
+`x+max(v_0,v_1)+1`, gives `U_rj`. No consistency between distinct test
+prefixes has been assumed. Finite sums are bounded by the displayed
+nonnegative infinite sums.
+
+Take a target `C>=9` and let
+
+\[
+ k_l=C-(1+\mathbf1_{r(l)=r}+\mathbf1_{l=j})^2\ge0.
+\]
+
+The actual complete old load satisfies `(C-A0²)_+<=k_l` in cell `l`.
+The raw weighted sum of maximum cylinder masses over all nonunit old
+cofactors is at most
+
+\[
+ \begin{aligned}
+ W_{rj}(C)={}&
+ \max_{a=0,1}\sum_{r(l)=a}k_ln_l+\max_lk_ln_l
+       +\frac{\max_lk_ld_l}{18}\\
+ &+\frac{\sum_lk_lw_l}{36}
+       +\frac{\max_{a=0,1}\sum_{r(l)=a}k_lw_l}{36}
+       +\frac{\max_lk_lw_l}{36}
+       +\frac{C-1}{72}.
+ \end{aligned} \tag{SD3}
+\]
+
+The seven terms respectively cover cofactors `3`, `9`, `3^a (a>=3)`,
+`5^b`, `3*5^b`, `9*5^b`, and `3^a*5^b (a>=3,b>=1)`. The first two
+use the actual cell masses. The third uses the residual availability
+`d_l` just proved. For the next three, drop all five-coordinate
+exclusions and use the weighted pure-ternary masses. The last drops
+both sets of exclusions and uses `max_l k_l=C-1`, together with
+`sum_{a>=3,b>=1}3^(-a)*5^(-b)=1/72`. This accounts for every old
+cofactor without identifying distinct original labels.
+
+Let `nu7` be the uniform actual pure-seven survivor law, and put
+`M=mu35 times nu7`. Its positive-depth cylinder caps `a_e` satisfy
+`sum a_e<=1/5` and `sum(2e-1)*a_e<=4/15`. For the full test load `L`,
+retain `A0` in each zero/positive-seven cross block. The same square
+inequality as in (ZG2) gives
+
+\[
+ \mathbb E_M L^2\le
+       \frac65\mathbb E_{\mu_{35}}A_0^2+
+       \frac7{15}\Gamma_{35}
+ \le\frac{(6/5)U_{rj}+(7/15)U}{s}. \tag{SD4}
+\]
+
+Let `B` be the actual mixed-seven forbidden union. Conditioning `M`
+on its complement gives precisely the uniform complete three-prime
+survivor law. Since `L>=A0` pointwise, weighted union bounding and (SD3)
+give
+
+\[
+ \begin{aligned}
+ \mathbb E_M[(L^2-C)\mathbf1_{B^c}]
+ &\le\mathbb E_M L^2-C+
+           \mathbb E_M[(C-A_0^2)_+\mathbf1_B]\\
+ &\le\frac{(6/5)U_{rj}+(7/15)U+W_{rj}(C)/5-Cs}{s}.
+ \end{aligned} \tag{SD5}
+\]
+
+For each fixed positive seven exponent the original mixed moduli have
+distinct old cofactors, so (SD3) applies before summing its cap `a_e`.
+The complete survivor set is nonempty by (CM2). Therefore a nonpositive
+right side proves `Gamma357<=C` on this same law.
+
+For `C=3849/106`, exact rational arithmetic verifies
+
+\[
+ Cs-\frac65U_{rj}-\frac7{15}U-\frac15W_{rj}(C)\ge0 \tag{SD6}
+\]
+
+at all `1296*2*5=12960` parameter-vertex/test-choice pairs. This is a
+continuous-domain certificate, not finite-height sampling. For a fixed
+test choice, expand each maximum in `U_rj,U,W` into its finitely many
+branches. Each resulting margin is affine separately in every group
+`1-w,alpha,beta,t,z`; the full margin is their pointwise minimum and
+hence concave in each group separately. Its value throughout each
+simplex or interval is at least the convex combination of its vertex
+values. Applying this successively to the five groups proves (SD6)
+everywhere. Checking the maxima at each vertex already checks the
+worst branch there, so a separate enumeration of all branch products
+is unnecessary.
+
+The least vertex margin is zero. One equality point in this relaxation
+has
+
+\[
+ \begin{gathered}
+ 1-w=(1/2,0,0,0,0),\quad\alpha=(0,1/4),\quad
+ \beta=(0,0,1/4,0,0),\\
+ t=(1/72,0,0,0,0),\quad z=3/4,\quad(r,j)=(0,1),\\
+ (n_l)=(1/36,1/12,1/36,1/18,1/18),\quad
+ s=1/4,\quad U_{rj}=U=163/48.
+ \end{gathered}
+\]
+
+This is not an assertion that an actual residue family attains (SD1).
+
+If modulus 3 is absent, reuse the same-law bounds
+`Gamma35<=215/24,R35<=17/12`; (N9) gives `Gamma357<=5273/258`.
+If modulus 3 is present but modulus 9 is absent or ineffective, the
+already proved (P11)--(P12) give the stronger input
+`Gamma35<=K35<=593/48,R35<=47/24`. Substitution in (N9) gives
+
+\[
+ \Gamma_{357}\le\frac{14543}{438}<\frac{3849}{106}.
+\]
+
+These include ternary heights below two and preserve the complete actual
+uniform law. Missing five- or seven-coordinate classes and smaller
+heights are already covered by the cap inequalities. Thus (SD1) holds
+for every finite original family with these prime supports.
+
+The existing [cofactor verifier](../docs/reports/erdos7-odd-covering/verify_uniform_gamma_cofactor_coupling.py)
+recomputes all signed margins and both fallback bounds under
+`signed_two_level_three_prime_parameters` in its
+[certificate](../docs/reports/erdos7-odd-covering/uniform_gamma_cofactor_certificate.json).
+The earlier certificate fields are retained unchanged. Equations
+(SD1)--(SD6) are ordinary mathematical proofs with exact arithmetic;
+they have not been checked end to end in Lean.
 
 ### A uniform-survivor obstruction and sharpness at two primes
 

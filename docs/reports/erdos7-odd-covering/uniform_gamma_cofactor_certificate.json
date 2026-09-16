@@ -129,5 +129,86 @@
       }
     ],
     "scope": "Upper bound from a shared actual-parameter relaxation; no actual-family sharpness or new tail cutoff asserted."
+  },
+  "signed_two_level_three_prime_parameters": {
+    "law": "uniform on the complete actual survivor set, arbitrary finite powers of3,5,7",
+    "Gamma357_upper": "3849/106",
+    "previous_joint_upper": "937/24",
+    "strict_improvement": "3473/1272",
+    "zero_seven_square_coefficient": "6/5",
+    "remaining_old_square_coefficient": "7/15",
+    "parameter_vertices": 1296,
+    "selected_layout_vertex_pairs": 12960,
+    "minimum_scaled_margin": "0",
+    "minimum_unweighted_denominator": "53/360",
+    "two_level_old_square_envelope_maximum": "497/36",
+    "relaxation_equality": {
+      "deficits": [
+        "1/2",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "alpha": [
+        "0",
+        "1/4"
+      ],
+      "beta": [
+        "0",
+        "0",
+        "1/4",
+        "0",
+        "0"
+      ],
+      "late": [
+        "1/72",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "z": "3/4",
+      "selected_root_cell": [
+        0,
+        1
+      ],
+      "cell_masses": [
+        "1/36",
+        "1/12",
+        "1/36",
+        "1/18",
+        "1/18"
+      ],
+      "s": "1/4",
+      "selected_raw_square": "163/48",
+      "global_raw_square": "163/48",
+      "weighted_cap_parts": [
+        "18715/3816",
+        "965/424",
+        "3425/2544",
+        "31673/7632",
+        "3743/1272",
+        "3743/3816",
+        "3743/7632"
+      ],
+      "weighted_cap": "130435/7632",
+      "scaled_margin": "0"
+    },
+    "missing_pure_cases": [
+      {
+        "case": "modulus3_absent",
+        "old_square": "215/24",
+        "old_cylinder_cap": "17/12",
+        "three_prime_square": "5273/258"
+      },
+      {
+        "case": "modulus9_absent_or_ineffective",
+        "old_square": "593/48",
+        "old_cylinder_cap": "47/24",
+        "three_prime_square": "14543/438"
+      }
+    ],
+    "scope": "Continuous-domain ordinary proof with exact vertices; no actual-family sharpness, optimal supported-law, or new tail cutoff claim."
   }
 }
