@@ -33020,7 +33020,7 @@ $$
 $$
 \rho_h=\sum_{\mathbf b}
 \frac{(a/2)^m w_{h,\mathbf b}\operatorname{Tr}Q(D_{\mathbf b})}
-{\operatorname{Tr}R_h},
+{\operatorname{Tr}R_h}\,
 \frac{Q(D_{\mathbf b})}{\operatorname{Tr}Q(D_{\mathbf b})}.
 $$
 零权重项省去；在非零 $F$ 情形所写原始分母均正。有限正初始混合的结论由同样的联合提升和正线性性得出，而不引入额外的初始联合态。若 $z$ 是继续执行同一协议的有限报告词、$\mathcal I_z$ 是对应次序的复合，且 $0\le E\le I_4$ 是最后一次端点效应，则正前缀处的联合条件概率为 $\operatorname{Tr}(E\mathcal I_z(R_h))/\operatorname{Tr}R_h$；这只在继续协议的末端施测，不许可在中途插入任意操作。
