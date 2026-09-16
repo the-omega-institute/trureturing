@@ -39,6 +39,12 @@ index 309 with certified supported `Gamma<4331`; the rational stopping
 threshold is greater than 4732. The proof and exact certificate are given in
 (US1)--(US12). Arbitrary head assignments remain unresolved.
 
+The pure-head continuation (PH1)--(PH6) also excludes **arbitrary**
+`{3,5,7}` head assignments and heights when all other primes are at least
+23, with no tail support or graph restrictions. The odd parts 315 and 945
+in the frozen 5040 fibre permit tail cutoffs 17 and 19 respectively.
+These missing-small-prime hypotheses remain; unrestricted #7 is open.
+
 ## Motivation
 
 The frozen module `D5/S3/Arith/Congruence/TwoOddPrimeUncoveredDensity` proves
@@ -343,6 +349,140 @@ retains the constraints of an already feasible law and does not establish
 that law's existence. The exact fibre-cap criterion below identifies one
 missing support condition, with an actual empty-fibre counterexample.
 
+### Unrestricted tails from the 5040 odd heads
+
+**Theorem.** Let the original family have finitely many distinct odd moduli
+larger than one, with arbitrary residues. Let \(Q\) be the
+\(\{3,5,7\}\)-part of the least common multiple of the **entire** family.
+Each of the following hypotheses implies noncoverage:
+
+| Head period | Every other prime factor | Tail restrictions |
+|---|---:|---|
+| \(Q\mid315\) | \(\ge17\) | none |
+| \(Q\mid945\) | \(\ge19\) | none |
+| \(Q=3^a5^b7^c\), arbitrary finite \(a,b,c\ge0\) | \(\ge23\) | none |
+
+In particular the first two rows use precisely the odd parts in the frozen
+5040 fibre. There is no bound on tail exponents, the number of prime factors
+in one modulus, the total prime count, or the interaction graph. The first
+two rows bound the head exponents even in classes ending at later primes.
+The absent small primes are genuine hypotheses: the three rows respectively
+exclude \(\{11,13\}\), \(\{11,13,17\}\), and \(\{11,13,17,19\}\).
+Thus the third row implies that any hypothetical odd distinct cover must
+use at least one prime in \(\{11,13,17,19\}\). It does not resolve #7.
+
+**Preserve the pure-head product until the final conditioning.** Use the
+actual pure-survivor product law \(P_0\) from (FC4). For a finite endpoint
+height \(h_p\), put \(u_p=\sum_{e=1}^{h_p}p^{-e}\); for the third row put
+\(u_p=1/(p-1)\). In either case use cylinder cap
+\(c_pp^{-e}\), where \(c_p=1/(1-u_p)\). These bounds hold for smaller
+physical heights and omitted classes. Before deleting any mixed head class,
+their union has \(P_0\)-mass at most
+\[
+ M=\prod_{p=3,5,7}(1+r_p)-1-\sum_{p=3,5,7}r_p,
+ \qquad r_p=\frac{u_p}{1-u_p}.
+ \tag{PH1}
+\]
+This is the original-modulus union bound from (FC1), giving
+\(M=49/120,157/336,2/3\) in the three rows.
+
+Run the normalized actual tail kernels (US4) with \(\delta=2/5\), starting
+at the indicated first tail prime. They integrate to one at **every** old
+history, including head points lying in a mixed forbidden head class.
+Therefore the head marginal stays exactly \(P_0\), and the total probability
+of mixed head violations remains at most \(M\) throughout. Tail pure powers
+have already been removed in their coordinate base laws. All physical
+coordinate heights resolve the entire original family.
+
+For finite head endpoint heights choose independent auxiliary \(K_p\) with
+\(\Pr(K_p\ge e)=c_pp^{-e}\) for \(1\le e\le h_p\) and zero thereafter.
+For the third row use these tails at all positive depths. At each old tail
+prime use \(c_p=(p-1)/((p-2)(1-\delta))\) and the infinite height law.
+All caps satisfy \(c_p\le p\). The finite multiplier \(f=1+K_p\) has atoms
+\[
+ a_1=1-c_p/p,\quad
+ a_f=c_p(p-1)p^{-f}\ (2\le f\le h_p),\quad
+ a_{h_p+1}=c_pp^{-h_p}.                               \tag{PH2}
+\]
+The terminal atom includes all remaining mass. Raising a finite endpoint
+height increases every old tail probability and adds nonnegative new ones;
+thus using the 315 or 945 endpoints bounds every divisor head period.
+Missing head primes can likewise be added as auxiliary factors at least one.
+
+Let \(D_q\) be the product of \(1+K_p\) over the head primes and earlier
+tail primes. Apply the published conditional comparison exactly as in
+(US6)--(US7). Every original label \(dq^e\) retains its own residue and
+weight \((q-1)q^{-e}\). Completing the nonunit cofactors, after summing
+these weights to one, bounds the actual assigned mixed violation by
+\[
+ b_q=\frac{\mathbb E(D_q-1-(q-2)\delta)_+}{(q-2)(1-\delta)}.
+ \tag{PH3}
+\]
+The missing unit cofactor is precisely the pure power already removed;
+projected cofactors need not be distinct. The actual head law is a product
+here, while every tail cap holds conditional on the entire past.
+
+Under this **same** actual law, comparison of every complete-layout squared
+load gives \(\Gamma\le J_B=\mathbb E D_B^2\). The mixed head and assigned
+tail violations have total mass at most
+\[
+ C_B=M+\sum_{q_0\le q\le B\atop q\ \mathrm{prime}}b_q.
+ \qquad
+ \Gamma_{\mathrm{supported}}\le
+ 1+\frac{J_B-1}{1-C_B}\quad\text{if }C_B<1.             \tag{PH4}
+\]
+The second inequality follows by conditioning **once** on avoiding all
+prefix classes, using \(L^2\ge1\) for every complete load. In particular,
+head conditioning does not enlarge each earlier tail charge separately.
+The three auxiliary head means and second moments are computed from (PH2)
+or its infinite version; the second moments are respectively
+\(399/40,189/16,325/18\), with third-row mean \(16/5\).
+
+**Exact finite certificates.** The existing
+[verifier](../docs/reports/erdos7-odd-covering/verify_star_block_obstruction.py)
+recomputes `pure_head_unrestricted_stoploss` in its
+[certificate](../docs/reports/erdos7-odd-covering/star_block_obstruction_certificate.json).
+It uses the directed positive-part identity (US10), full means and second
+moments, and upward rounding on the grid \(10^{-18}\). It retains 819 low
+product states for the first two rows and 3277 for the third. States above
+these cutoffs cannot return to a lower product because every multiplier is
+at least one; their contributions to the full moments are retained.
+
+| Head | \(B\) | Global \(k=\pi(B)\) | \(C_B\) upper | \(J_B\) upper | Supported \(\Gamma\) upper |
+|---|---:|---:|---|---|---|
+| \(Q\mid315\) | 2048 | 309 | \(161204797404174493/250000000000000000\) | \(1180711995543371791951/10^{18}\) | \(393355725451251697993/118393603461100676<3323\) |
+| \(Q\mid945\) | 2048 | 309 | \(80743815756256021/125000000000000000\) | \(1037847766022931255003/10^{18}\) | \(79784755038221631295/27234574919227064<2930\) |
+| arbitrary \(3^a5^b7^c\) | 8192 | 1028 | \(458276998847445589/500000000000000000\) | \(111217368531894713201/40000000000000000\) | \(2779517659299672938847/83446002305108822<33310\) |
+
+At \(k=309\), (US12) gives the sufficient stopping threshold greater than
+4732. At \(k=1028\), the existing positive-series logarithm calculation in
+`verify_finite_continuation.py:stopping_threshold` gives the lower bound
+\[
+ \frac{8861473523187882599326452722900980214033}
+      {250000000000000000000000000000000000}>35445.    \tag{PH5}
+\]
+An independent, shorter bound also suffices: \(\log2\ge56/81\) and
+\(\log3\ge263/240\) imply, since \(k\ge1024\) and \(\log k>6\),
+\[
+ k(\log k+\log\log k-3)^2
+ \ge1028(36941/6480)^2
+ =350711832617/10497600>33400>33310.                   \tag{PH6}
+\]
+Thus every row reaches BBMST Theorem 6.1 with positive actual survivor mass.
+Restart (T1)--(T6) using the supported law from (PH4); the usual uniform-base
+continuation covers every later prime without any support restriction.
+The global index includes 2 and absent primes, whose physical exponents
+can be zero. If the original family ends before the stopping point, its
+already positive survivor mass suffices. Finite CRT supplies an uncovered
+integer in all cases.
+
+This is an ordinary proof with exact arithmetic certificates. Independent
+divisor-convolution implementations reproduce all 303, 302 and 1020 step
+charges and the final bounds, with 815 or 3276 retained states. It is not
+an end-to-end Lean theorem. Earlier graph and bounded-support rows remain
+valid quantitative refinements; their restrictions are unnecessary for
+noncoverage under the three hypotheses just stated.
+
 ## Gap
 
 The universal joint-load target Γ73 is false. The complete star family,
@@ -394,9 +534,11 @@ at most three from 17 or 19 respectively. These conditions allow complete
 tail graphs of unbounded size. Moreover, (RK6)--(RK8) impose those support
 bounds only on moduli with largest prime at most 8192 for 315 and 945,
 or 32768 for arbitrary 357. Above those cutoffs, each original modulus may
-have arbitrarily many tail prime factors. Their small-prime support bounds
-remain unresolved; the star row is now superseded as a noncoverage result
-by (US1)--(US12).
+have arbitrarily many tail prime factors. The unrestricted-tail theorem (PH1)--(PH6) now removes
+these support restrictions entirely for the three stated head and prime-gap
+hypotheses. Thus every hypothetical cover must involve at least one of
+11, 13, 17, 19; their unrestricted interaction is not settled here.
+The star row is superseded as a noncoverage result by (US1)--(US12).
 
 **H73 — false**, with its universal candidate statement retained from
 [the target preregistration](https://github.com/the-omega-institute/trureturing/issues/8167):
@@ -1013,6 +1155,156 @@ per modulus and does not certify this extension. The local Lean result
 in (DG2) proves the selected-coordinate cylinder step, not this entire
 unrestricted-tail star theorem. The graph and bounded-support star bounds
 below remain quantitative refinements for their respective subclasses.
+
+### A continuation criterion for an arbitrary correlated head
+
+Let \(Q\) be a finite odd head period and let \(\mu\) be one fixed
+probability supported on its actual survivors. It need not be uniform or a
+product law. Every original modulus is a distinct nonunit divisor of
+\(Q\prod_p p^{H_p}\), with odd tail primes coprime to \(Q\); all physical
+heights resolve the entire original family, including later classes.
+A complete head test layout chooses one residue for every divisor of
+\(Q\), including the unit divisor. With its load denoted by \(L\), define
+\[
+ \Theta_\mu(t)=\max_L\mathbb E_\mu(L-t)_+\quad(t\ge0),
+ \qquad G\ge\Gamma_Q(\mu)=\max_L\mathbb E_\mu L^2.       \tag{AP1}
+\]
+The maximum is over finitely many layouts, all fixed before sampling the
+head point. The bound \(\Theta_\mu(t)\le G/(4t)\) for \(t>0\) is valid, but
+retaining the profile can give a stronger continuation than this relaxation.
+
+At every tail prime \(p\), use the normalized kernel (US4) relative to the
+uniform law on its actual pure-power survivors, with \(0<\delta_p<1\).
+Assume
+\[
+ c_p=\frac{p-1}{(p-2)(1-\delta_p)}\le p.
+\]
+The full-history conditional cylinder cap is \(c_pp^{-e}\). This condition
+makes the following unclipped auxiliary height law a probability:
+\(\Pr(K_p\ge e)=c_pp^{-e}\) for \(e\ge1\). Choose these heights independently
+of each other and of the head point. If \(c_p>p\), clipped tails and their
+recomputed moments are needed; the formulas below cannot be retained as stated.
+For the current tail prime \(q\), put
+\[
+ N_q=\prod_{\text{tail }p<q}(1+K_p),\qquad
+ T_q=1+(q-2)\delta_q,\qquad d_q=(q-2)(1-\delta_q)>0.
+\]
+Then its actual assigned mixed-union probability is at most
+\[
+ b_q=\frac{\mathbb E_K[N_q\Theta_\mu(T_q/N_q)]}{d_q}.    \tag{AP2}
+\]
+
+**Original labels and the single missing unit cofactor.** Fix a head point
+\(x\). Apply [Schroeder's conditional comparison](../Library/Arith/schroeder2026noncoverage.md)
+only to the old tail coordinates. Keep each original modulus
+\(m\tau q^e\) as its own label, where \(m\mid Q\) and \(\tau\) is the old
+tail cofactor, with weight \(w_e=(q-1)q^{-e}\). Its actual head-cylinder
+indicator is a fixed nonnegative coefficient at \(x\). The conditional
+tail caps hold for the entire earlier history including \(x\), and do
+not depend on \(x\); the auxiliary comparison uniforms may therefore be
+chosen independently of \(x\) when integrating against \(\mu\).
+
+For each full tuple \((\tau,e)\), original-modulus distinctness gives at
+most one residue for each head divisor \(m\). Complete that partial head
+layout to \(L_{\tau,e}\), choosing all missing residues in advance,
+independently of \(x\). Fix such completions also for missing tuples and
+depths. After comparison, exactly \(N_q\) auxiliary tail tuples are active,
+including the unit tuple; tuples beyond a physical height add only
+nonnegative completion terms. Index their completed head layouts by \(j\).
+Pure \(q\)-power classes were already removed. Thus the pair consisting of
+the unit tail tuple and unit head modulus is absent from the mixed load,
+and completion of every current depth, using \(\sum_{e\ge1}w_e=1\), gives
+\[
+ R_q^{\rm compared}\le
+       \sum_{j=1}^{N_q}\sum_{e\ge1}w_eL_{j,e}(x)-1.     \tag{AP3}
+\]
+The subtraction is exactly \(1\), not \(N_q\): a nonunit tail cofactor
+with unit head factor is a legitimate original mixed label. Completing
+missing current depths is necessary to subtract the full \(1\).
+
+For fixed auxiliary heights the weights \(w_e/N_q\), indexed by \((j,e)\),
+sum to one. The head loads are bounded by the divisor count of \(Q\), so
+countable Jensen gives
+\[
+ \begin{aligned}
+ \mathbb E_\mu\left(\sum_{j,e}w_eL_{j,e}-T_q\right)_+
+ &\le\sum_{j,e}\frac{w_e}{N_q}
+                 \mathbb E_\mu(N_qL_{j,e}-T_q)_+\\
+ &\le N_q\Theta_\mu(T_q/N_q).
+ \end{aligned}                                        \tag{AP4}
+\]
+The pure-survivor cylinder bound gives
+\(\alpha_q\le R_q/(q-2)\). Combining (AP4) with the actual kernel's
+violation formula \(\mathbb E(\alpha_q-\delta_q)_+/(1-\delta_q)\)
+proves (AP2). No projected-modulus distinctness or actual nestedness is used.
+
+**A moment and survivor bound for the same actual law.** Let \(\nu_B\)
+be the law after a finite tail prefix through \(B\), without intermediate
+conditioning. Group any complete fine test layout by its full tail
+exponent tuple. Each group is a complete head layout fixed before \(x\)
+is sampled. Tail-only comparison with the square function bounds its
+aligned load by \(\sum_{j=1}^{N_B}L_j(x)\), where
+\(N_B=\prod_{\text{tail }p\le B}(1+K_p)\). Jensen yields
+\[
+ \mathbb E_\mu\left(\sum_jL_j\right)^2
+ \le N_B\sum_j\mathbb E_\mu L_j^2\le G N_B^2.
+\]
+This is uniform over all fine layouts under the same law \(\nu_B\), hence
+\[
+ \Gamma(\nu_B)\le J_B:=G\mathbb E N_B^2
+ =G\prod_{\text{tail }p\le B}
+       \left(1+c_p\frac{3p-1}{(p-1)^2}\right).          \tag{AP5}
+\]
+This follows from comparison and Jensen, without a Gamma tensorization
+identity for the correlated head law. If \(C_B=\sum_{\text{tail }q\le B}b_q<1\), the
+actual event \(E_B\) avoiding every prefix class has mass
+\(\lambda\ge1-C_B>0\). The head and pure-tail classes already have zero
+violation probability. Since every complete load has \(L^2\ge1\),
+conditioning once gives a supported law satisfying
+\[
+ \Gamma\bigl(\nu_B(\,\cdot\mid E_B)\bigr)
+ \le1+\frac{J_B-1}{1-C_B}.                             \tag{AP6}
+\]
+For BBMST continuation, require all head primes to be at most \(B\), retain
+the full physical heights, and count every prime, including absent primes
+and \(2\), in \(k=\pi(B)\). If \(k\ge10\) and the right side of (AP6) is
+at most \(k(\log k+\log\log k-3)^2\), (T1)--(T6) and BBMST Theorem 6.1
+exclude coverage by the entire family. The supported law may be correlated
+and may have a different head marginal after this single conditioning.
+
+**An exact finite low-state identity.** Put
+\(M=\Theta_\mu(0)=\max_L\mathbb E_\mu L\), using its exact value.
+Because \(L\ge1\), one has \(\Theta_\mu(t)=M-t\) for \(0\le t\le1\);
+also \(\Theta_\mu(t)\ge M-t\) for every \(t\ge0\).
+For a positive integer-valued \(N\) of finite mean and \(T>1\), splitting
+at \(N\ge T\) therefore gives
+\[
+ \mathbb E[N\Theta_\mu(T/N)]
+ =M\mathbb E N-T+
+   \sum_{1\le n<T}\Pr(N=n)
+      \underbrace{\bigl[n\Theta_\mu(T/n)-Mn+T\bigr]}_{\ge0}.
+                                                               \tag{AP7}
+\]
+The sum is finite. For (AP2),
+\(\mathbb E N_q=\prod_{\text{tail }p<q}(1+c_p/(p-1))\).
+Thus each finite-prefix charge requires only this mean, finitely many
+low-state probabilities and finitely many head-profile values. With the
+exact \(M\), certified upper profile values yield nonnegative upper
+corrections, so upward mean and probability bounds give a safe directed
+bound. An unknown or rounded upper bound for \(M\) cannot be substituted
+while retaining either equality (AP7) or its asserted nonnegative
+corrections: the negative occurrences of \(M\) must also be justified.
+
+For the complete-star broad law, (US1)--(US3) and conditional comparison
+give \(\Theta_\mu(t)\le\mathbb E(D_{\rm head}-t)_+\) and
+\(G\le\mathbb E D_{\rm head}^2\). Independence of the head auxiliaries
+and \(N_q\) then reduces (AP2) to the positive-part bound for
+\(D_{\rm head}N_q\) already certified in (US7)--(US12). That application
+is complete. For arbitrary head geometry, constructing a supported law
+with a sufficiently small profile to satisfy (AP2), (AP5) and (AP6)
+remains a separate obligation. The criterion alone supplies no such
+universal law; a lower bound on Gamma alone does not refute its existence.
+This is an ordinary continuation proof, not a new Lean theorem.
 
 ### Block saturation and the actual crossing budget
 
@@ -6620,11 +6912,11 @@ three-prime heads. Its selective parent moment bound allows unbounded
 feedback vertex number and treewidth. Arbitrary graph structure is also
 allowed by (RK1)--(RK5) when each original modulus has at most two tail
 primes for the full star or three-prime heads, or at most three for the
-finite 315/945 heads, at the respective stated cutoffs. For these non-star
-heads, unrestricted original-modulus support remains open. The finite
-switch (RK6)--(RK8) removes every support restriction above largest-prime
-cutoff 8192 for 315 and 945 heads, or 32768 for arbitrary three-prime heads.
-Only their indicated small-prime support restrictions remain. The star
+finite 315/945 heads, at the respective stated cutoffs. The finite
+switch (RK6)--(RK8) already removes support restrictions above its cutoffs;
+(PH1)--(PH6) further removes every tail support and graph restriction for
+these head classes at the stated prime gaps. The head exponents for the
+315/945 rows and the missing primes remain genuine hypotheses. The star
 rows retain quantitative bounds, while (US1)--(US12) exclude all star
 completions without those restrictions.
 The finite supported-law bridge (FC4)--(FC5) sharpens the planar cutoff

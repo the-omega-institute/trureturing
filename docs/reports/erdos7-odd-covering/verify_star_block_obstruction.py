@@ -527,6 +527,129 @@ def stoploss_atom_bounds(p, c, cap, scale):
         denominator *= p
     return atoms
 
+
+def stoploss_product_update(weights, atoms, scale):
+    cap = len(weights)-1
+    raw = [0]*(cap+1)
+    for f in range(1, min(cap+1, len(atoms))):
+        if atoms[f]:
+            for d in range(1, cap//f+1):
+                raw[d*f] += weights[d]*atoms[f]
+    return [stoploss_ceiling(w, scale) for w in raw]
+
+
+def pure_head_unrestricted_stoploss():
+    """Keep mixed head exclusions until the single final conditioning."""
+    import hashlib
+    from runpy import run_path
+    continuation = run_path(str(Path(__file__).with_name("verify_finite_continuation.py")))
+    scale = 10**18
+    cases = [(head, 17 if head['period_bound'] == 315 else 19, 2048)
+             for head in finite_head_supported_laws()]
+    cases.append(({'period_bound': None, 'mixed_budget': '2/3',
+                   'product_moment_bound': '325/18',
+                   'coordinates': [{'prime': p, 'height': None,
+                                    'pure_survivor_density_lower': str(F(p-2, p-1))}
+                                   for p in (3, 5, 7)]}, 23, 8192))
+    results = []
+    for head, q0, bound in cases:
+        period = head['period_bound']
+        name = f'head_divides_{period}' if period else 'arbitrary_357_head'
+        cap = (2*bound+1)//5
+        primes = primes_to(bound)
+        k = len(primes)
+        require(k >= 256 and F(448, 81) > 4, 'pure-head logarithm premise')
+        stopping = (k*F(317, 81)**2 if bound == 2048
+                    else continuation['stopping_threshold'](k))
+        weights = [0]*(cap+1)
+        weights[1] = scale
+        mean = second = scale
+        exact_mean = exact_second = F(1)
+        head_law = {1: F(1)}
+        ratios = []
+        for coordinate in head['coordinates']:
+            p, h = coordinate['prime'], coordinate['height']
+            c = 1/F(coordinate['pure_survivor_density_lower'])
+            ratios.append(c-1)
+            if h is None:
+                head_law = None
+                upper_atoms = stoploss_atom_bounds(p, c, cap, scale)
+                factor1 = 1+c/F(p-1)
+                factor2 = 1+c*F(3*p-1, (p-1)**2)
+            else:
+                atoms = [F(0)]*(h+2)
+                atoms[1] = 1-c/p
+                for f in range(2, h+1):
+                    atoms[f] = c*F(p-1, p**f)
+                atoms[h+1] = c/F(p**h)
+                require(sum(atoms) == 1 and all(a >= 0 for a in atoms),
+                        'finite capped height law')
+                next_law = {}
+                for d, mass in head_law.items():
+                    for f, a in enumerate(atoms):
+                        if a:
+                            next_law[d*f] = next_law.get(d*f, F(0))+mass*a
+                head_law = next_law
+                upper_atoms = [stoploss_ceiling(scale*a.numerator, a.denominator)
+                               for a in atoms]
+                factor1 = sum(f*a for f, a in enumerate(atoms))
+                factor2 = sum(f*f*a for f, a in enumerate(atoms))
+            weights = stoploss_product_update(weights, upper_atoms, scale)
+            exact_mean *= factor1
+            exact_second *= factor2
+            mean = stoploss_ceiling(mean*factor1.numerator, factor1.denominator)
+            second = stoploss_ceiling(second*factor2.numerator, factor2.denominator)
+        require(exact_second == F(head['product_moment_bound']),
+                'finite head law recovers existing full-layout moment')
+        mixed = prod(1+r for r in ratios)-1-sum(ratios, F(0))
+        require(mixed == F(head['mixed_budget']), 'mixed head charge from cylinder caps')
+        charge = stoploss_ceiling(scale*mixed.numerator, mixed.denominator)
+        steps = []
+        for q in primes:
+            if q < q0:
+                continue
+            cutoff = (2*q+1)//5
+            numerator = (5*mean-(2*q+1)*scale
+                         + sum((2*q+1-5*d)*weights[d]
+                               for d in range(1, cutoff+1)))
+            require(numerator >= 0, 'finite-head positive-part upper numerator')
+            step = stoploss_ceiling(numerator, 3*(q-2))
+            charge += step
+            steps.append({'prime': q, 'charge_scaled_upper': step,
+                          'cumulative_scaled_upper': charge})
+            c = F(5*(q-1), 3*(q-2))
+            weights = stoploss_product_update(
+                weights, stoploss_atom_bounds(q, c, cap, scale), scale)
+            factor1 = 1+c/F(q-1)
+            factor2 = 1+c*F(3*q-1, (q-1)**2)
+            mean = stoploss_ceiling(mean*factor1.numerator, factor1.denominator)
+            second = stoploss_ceiling(second*factor2.numerator, factor2.denominator)
+        require(charge < scale, 'positive mass after head and tail deletions')
+        gamma = 1+F(second-scale, scale-charge)
+        require(gamma < stopping, 'finite-head unrestricted-tail stopping')
+        results.append({'head': name, 'head_period_bound': period,
+                        'head_primes': [r['prime'] for r in head['coordinates']],
+                        'tail_prime_lower_bound': q0,
+                        'prime_cutoff': bound, 'last_prime': primes[-1],
+                        'global_prime_index': k, 'delta': '2/5', 'scale': scale,
+                        'retained_product_states': cap,
+                        'mixed_head_charge': str(mixed),
+                        'head_product_mean': str(exact_mean),
+                        'head_product_second_moment': str(exact_second),
+                        'head_product_distribution': {str(d): str(mass)
+                            for d, mass in sorted(head_law.items())} if head_law is not None else None,
+                        'total_charge_upper': str(F(charge, scale)),
+                        'mean_upper': str(F(mean, scale)),
+                        'second_moment_upper': str(F(second, scale)),
+                        'supported_Gamma_upper': str(gamma),
+                        'stopping_lower': str(stopping),
+                        'stopping_margin': str(stopping-gamma), 'steps': steps,
+                        'final_low_state_digest': hashlib.sha256(
+                            json.dumps(weights, separators=(',', ':')).encode()).hexdigest(),
+                        'scope': 'Arbitrary head residues with full head period dividing the stated bound, or arbitrary exponents on the listed head primes when that bound is null; all tail primes at least the stated lower bound; no restrictions on original tail support, heights or graph. Ordinary comparison and BBMST continuation are separate inputs.'})
+    return results
+
+
 def unrestricted_star_stoploss():
     import hashlib
     bound = 2048
@@ -558,12 +681,7 @@ def unrestricted_star_stoploss():
                          'cumulative_scaled_upper': charge})
             c = F(p-1, p-2)/(1-delta)
         atoms = stoploss_atom_bounds(p, c, cap, scale)
-        raw = [0]*(cap+1)
-        for f in range(1, cap+1):
-            af = atoms[f]
-            for d in range(1, cap//f+1):
-                raw[d*f] += weights[d]*af
-        weights = [stoploss_ceiling(w, scale) for w in raw]
+        weights = stoploss_product_update(weights, atoms, scale)
         factor1 = 1+c/F(p-1)
         factor2 = 1+c*F(3*p-1, (p-1)**2)
         mean = stoploss_ceiling(mean*factor1.numerator, factor1.denominator)
@@ -935,6 +1053,7 @@ def certificate():
         "rank_three_tail": rank_three_tail_bounds(),
         "finite_support_switch": finite_support_switch_bounds(),
         "unrestricted_star_stoploss": unrestricted_star_stoploss(),
+        "pure_head_unrestricted_stoploss": pure_head_unrestricted_stoploss(),
         "local_kernel_crt_regression": local_kernel_crt_regression(),
         "binary_path_regression": binary_path_regression(),
         "unrestricted_energy_boundary": unrestricted_energy_boundary(),
@@ -996,6 +1115,7 @@ def main():
                       "feedback_vertex_loss_bounds": {row["head"]: row["loss_upper"] for row in data["feedback_vertex"]},
                       "local_parent_capped_kernel_loss_bounds": {row["head_and_graph"]: row["loss_upper"] for row in data["local_parent_capped_kernel"]},
                       "rank_two_tail_loss_bounds": {row["head"]: row["loss_upper"] for row in data["rank_two_tail"]["rows"]},
+                      "pure_head_unrestricted_Gamma_bounds": {row["head"]: row["supported_Gamma_upper"] for row in data["pure_head_unrestricted_stoploss"]},
                       "unrestricted_star_supported_Gamma_upper": data["unrestricted_star_stoploss"]["supported_Gamma_upper"],
                       "unrestricted_star_stopping_lower": data["unrestricted_star_stoploss"]["stopping_lower"],
                       "finite_support_switch_seed_bounds": {row["head"]: row["strict_seed_ceiling"] for row in data["finite_support_switch"]["rows"]},
