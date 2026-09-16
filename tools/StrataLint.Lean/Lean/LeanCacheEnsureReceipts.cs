@@ -68,20 +68,28 @@ internal static partial class LeanCacheEnsureCommand
     private static bool TryParseWorktreeRoot(
         string repositoryRoot,
         IReadOnlyList<string> arguments,
-        out string root)
+        out string root,
+        out string? donorRepository)
     {
         var path = repositoryRoot;
-        if (arguments.Count != 0)
+        var selectedPath = false;
+        donorRepository = null;
+        root = string.Empty;
+        for (var index = 0; index < arguments.Count; index += 2)
         {
-            if (arguments.Count != 2
-                || !string.Equals(arguments[0], "--path", StringComparison.Ordinal)
-                || string.IsNullOrWhiteSpace(arguments[1]))
+            if (index + 1 >= arguments.Count || string.IsNullOrWhiteSpace(arguments[index + 1])
+                || arguments[index + 1] is "--path" or "--donor-repository" or "--") return false;
+            switch (arguments[index])
             {
-                root = string.Empty;
-                return false;
+                case "--path" when !selectedPath:
+                    path = arguments[index + 1];
+                    selectedPath = true;
+                    break;
+                case "--donor-repository" when donorRepository is null:
+                    donorRepository = Path.GetFullPath(arguments[index + 1]);
+                    break;
+                default: return false;
             }
-
-            path = arguments[1];
         }
 
         root = Path.GetFullPath(path);

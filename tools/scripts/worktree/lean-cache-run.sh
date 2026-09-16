@@ -9,4 +9,6 @@ if [[ -n "${STRATALINT_LEAN_PRODUCER_DLL:-}" ]]; then
 else
   cli=(dotnet run --project "$ROOT/tools/StrataLint.Lean/StrataLint.Lean.csproj" --configuration Release --)
 fi
-exec "${cli[@]}" with-cache-reader -- "$@"
+donor=()
+[[ -z "${STRATALINT_LEAN_CACHE_DONOR_REPOSITORY:-}" ]] || donor=(--donor-repository "$STRATALINT_LEAN_CACHE_DONOR_REPOSITORY")
+exec "${cli[@]}" with-cache-reader ${donor[@]+"${donor[@]}"} -- "$@"

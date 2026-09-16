@@ -101,7 +101,13 @@ if [[ "$build_without_engineering" == yes ]]; then
   /bin/bash tools/scripts/ci-stage.sh "$stage"
 fi
 for stage in engineering current; do
-  /bin/bash tools/scripts/ci-stage.sh "$stage"
+  if [[ "$MODE" == pr && "$stage" == current ]]; then
+    # The private clone has its own Git inventory. Only Lean's optional seed
+    # lookup reads the source inventory; candidate code still owns all work.
+    STRATALINT_LEAN_CACHE_DONOR_REPOSITORY="$ROOT" /bin/bash tools/scripts/ci-stage.sh "$stage"
+  else
+    /bin/bash tools/scripts/ci-stage.sh "$stage"
+  fi
 done
 if [[ "$MODE" == pr ]]; then
   stage="delta"

@@ -257,6 +257,8 @@ CI/preflight 的阶段、候选报告/DLL/工程证据交接、退出与缓存�
 
 `make preflight MODE=pr BASE=<sha>` 必须显式取得不可变 base commit SHA,并要求源 HEAD 已提交且工作树干净(含未跟踪文件)。以 `git merge-tree --write-tree BASE HEAD` 构造候选;冲突或无法合并即阻断,不得退回只判源 HEAD。BASE 无须是 HEAD 的祖先,不得设 ancestry 门。只物化合成候选,固定其树身份与 BASE 后运行共享 engineering/current,再运行 delta;不得 checkout、restore、编译或执行 base 代码,base 仅作为候选判官的字节快照与差异输入。临时候选在所有出口清理,源工作树与分支不因预检改写。
 
+私有 PR 候选只在 current 子进程以 `STRATALINT_LEAN_CACHE_DONOR_REPOSITORY` 显式提供源仓路径,Lean wrapper 转为 `--donor-repository DIR`;判官 CLI 不自行读取该环境变量。该路径仅为新建 `.lake` 的可选只读 donor 清单来源,复用既有 mathlib/platform/stamp、共享锁与独立复制,不执行源仓代码、不进入候选身份或缓存分区。来源不可用或 donor 不合格回到原供给路径,已有 `.lake` 不因该选项被覆盖,Lean producer 与失败判词照常执行;工程阶段不继承此来源。
+
 **共享入口与谓词。** CI 和 preflight 共用下列阶段实现。文件分类、项目/测试归属、编译与 producer 输入、资源、影响范围、缓存及材料选择唯一取自 `Meta/FILEMAP.toml` 或由其登记的显式 manifest,按 CLAUDE.md §8.16 消费;不从 MSBuild 求值、SDK/目录/名称扫描、反射、调用图、IO 效应或宿主环境动态推导。显式 glob 的确定性展开、声明材料的哈希/完整性验证与编译器/Lake 正常增量执行只消费登记,不生成新的选择权威。漏登、矛盾或范围不完整须具名失败,不得动态补猜或回退全套检查。
 
 | 阶段入口 | 登记义务与执行边界 |

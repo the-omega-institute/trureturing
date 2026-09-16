@@ -14,4 +14,8 @@ if [[ -n "${STRATALINT_LEAN_PRODUCER_DLL:-}" ]]; then
 else
   cli=(dotnet run --project "$ROOT/tools/StrataLint.Lean/StrataLint.Lean.csproj" --configuration Release --)
 fi
-exec "${cli[@]}" ensure-cache
+# Optional read-only source inventory supplied by PR preflight. The native
+# producer accepts it explicitly; it never consumes this environment itself.
+donor=()
+[[ -z "${STRATALINT_LEAN_CACHE_DONOR_REPOSITORY:-}" ]] || donor=(--donor-repository "$STRATALINT_LEAN_CACHE_DONOR_REPOSITORY")
+exec "${cli[@]}" ensure-cache ${donor[@]+"${donor[@]}"}

@@ -31,9 +31,9 @@ internal static partial class LeanCacheEnsureCommand
             }.Where(static detail => detail is not null));
     }
 
-    internal const string Usage = "USAGE: StrataLint worktree ensure-cache [--path DIR]";
+    internal const string Usage = "USAGE: StrataLint worktree ensure-cache [--path DIR] [--donor-repository DIR]";
     internal const string WriterUsage =
-        "USAGE: StrataLint worktree with-cache-writer [--path DIR] -- COMMAND [ARG ...]";
+        "USAGE: StrataLint worktree with-cache-writer [--path DIR] [--donor-repository DIR] -- COMMAND [ARG ...]";
 
     internal static CommandResult Run(
         string repositoryRoot,
@@ -77,7 +77,7 @@ internal static partial class LeanCacheEnsureCommand
         ArgumentNullException.ThrowIfNull(runner);
         ArgumentNullException.ThrowIfNull(cloner);
         ArgumentNullException.ThrowIfNull(stateProbe);
-        if (!TryParseWorktreeRoot(repositoryRoot, arguments, out var root))
+        if (!TryParseWorktreeRoot(repositoryRoot, arguments, out var root, out var donorRepository))
         {
             return new CommandResult(false, string.Empty, Usage + "\n");
         }
@@ -128,7 +128,7 @@ internal static partial class LeanCacheEnsureCommand
             removePartial,
             continueOnCacheGetFailure,
             stateProbe,
-            out _);
+            out _, donorRepository);
     }
 
     internal static CommandResult RunWithWriter(
@@ -156,7 +156,7 @@ internal static partial class LeanCacheEnsureCommand
         ArgumentNullException.ThrowIfNull(cloner);
         ArgumentNullException.ThrowIfNull(stateProbe);
         ArgumentNullException.ThrowIfNull(readEnvironment);
-        if (!TryParseWriter(repositoryRoot, arguments, out var root, out var command))
+        if (!TryParseWriter(repositoryRoot, arguments, out var root, out var command, out var donorRepository))
         {
             return new CommandResult(false, string.Empty, WriterUsage + "\n");
         }
@@ -195,7 +195,7 @@ internal static partial class LeanCacheEnsureCommand
             removePartial: null,
             continueOnCacheGetFailure: true,
             stateProbe,
-            out var cacheState);
+            out var cacheState, donorRepository);
         if (!ensured.Success) return ensured;
 
         var receipt = ensured.Output;
@@ -264,7 +264,8 @@ internal static partial class LeanCacheEnsureCommand
         Action<string>? removePartial,
         bool continueOnCacheGetFailure,
         ILeanCacheStateProbe stateProbe,
-        out CacheState? cacheState)
+        out CacheState? cacheState,
+        string? donorRepository)
     {
         cacheState = null;
         var archive = LeanArchiveAttempt.Skipped("not reached");
@@ -490,7 +491,7 @@ internal static partial class LeanCacheEnsureCommand
                     stampMiss: stampMiss);
             }
 
-            using var selection = GitWorktreeInventory.SelectDonor(root, pins, runner);
+            using var selection = GitWorktreeInventory.SelectDonor(root, pins, runner, donorRepository);
             try
             {
                 var provisioned = removePartial is null
@@ -734,16 +735,13 @@ internal static partial class LeanCacheEnsureCommand
         string repositoryRoot,
         IReadOnlyList<string> arguments,
         out string root,
-        out string[] command)
+        out string[] command,
+        out string? donorRepository)
     {
         var index = 0;
-        root = Path.GetFullPath(repositoryRoot);
-        if (arguments.Count >= 2 && arguments[0] == "--path")
-        {
-            root = Path.GetFullPath(arguments[1]);
-            index = 2;
-        }
-        if (index >= arguments.Count || arguments[index] != "--" || index + 1 >= arguments.Count)
+        while (index < arguments.Count && arguments[index] != "--") index++;
+        if (!TryParseWorktreeRoot(repositoryRoot, arguments.Take(index).ToArray(), out root, out donorRepository)
+            || index + 1 >= arguments.Count)
         {
             command = [];
             return false;

@@ -474,24 +474,33 @@ internal static class GitWorktreeInventory
     internal static LeanCacheDonorSelection SelectDonor(
         string repositoryRoot,
         LeanPinSet basePins,
-        IWorktreeProcessRunner runner) =>
+        IWorktreeProcessRunner runner,
+        string? donorRepository = null) =>
         SelectDonor(
             repositoryRoot,
             basePins,
             runner,
             FileSystemLeanCacheStateProbe.Instance,
-            requireProjectWarm: false);
+            requireProjectWarm: false, donorRepository);
 
     internal static LeanCacheDonorSelection SelectDonor(
         string repositoryRoot,
         LeanPinSet basePins,
         IWorktreeProcessRunner runner,
         ILeanCacheStateProbe stateProbe,
-        bool requireProjectWarm)
+        bool requireProjectWarm,
+        string? donorRepository = null)
     {
         ArgumentNullException.ThrowIfNull(stateProbe);
         var targetRoot = LeanCacheGuard.PhysicalPath(repositoryRoot);
-        var ordered = ReadRoots(repositoryRoot, runner)
+        IReadOnlyList<string> roots;
+        try { roots = ReadRoots(donorRepository ?? repositoryRoot, runner); }
+        catch (Exception error) when (donorRepository is not null && error is IOException
+            or UnauthorizedAccessException or InvalidOperationException or TimeoutException or System.ComponentModel.Win32Exception)
+        {
+            return new LeanCacheDonorSelection(null, "optional donor repository unavailable: " + error.Message);
+        }
+        var ordered = roots
             .Select(LeanCacheGuard.PhysicalPath)
             .Where(root => !string.Equals(root, targetRoot, StringComparison.Ordinal))
             .Distinct(StringComparer.Ordinal);
