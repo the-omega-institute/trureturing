@@ -1,0 +1,6 @@
+解析前提 $hM(a)$ 指
+$$
+\exists A>0\ \forall x\in\mathbb R,\quad x\ge1\Longrightarrow |\mathcal M(x)|\le A x^a.
+$$
+实数幂只在此处的正基底上使用。
+
