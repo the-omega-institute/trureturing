@@ -1,0 +1,8 @@
+**定理 25.3（有限延拓、增广与相位分次）。** 定义25.2的乘法良定义，且
+$$
+\varepsilon(a*b)=\varepsilon(a)\varepsilon(b),\qquad
+A_\theta*A_\rho\subseteq A_{\theta+\rho},\qquad
+H_\#(a*b)=H_\#(a)H_\#(b).
+$$
+$H_\#$ 满射。点质量有序三元组上的结合律等价于整个 $A$ 上的结合律。
+

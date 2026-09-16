@@ -1,0 +1,124 @@
+**theorem 27.7 (Explicit bounded coordinate isomorphism).** For $a\in B$, write
+$$
+a_m^+=a(x_m^+),\qquad a_m^-=a(x_m^-).
+$$
+Define $\Phi_t(a)=(f,g)$ by
+$$
+f(\theta)=\begin{cases}
+a(k_\theta),&\theta\notin E,\\
+a_m^++a_m^-,&\theta=E_m,
+\end{cases}
+$$
+$$
+g_m=d'_m\bigl((1-p_m)a_m^+-p_m a_m^-\bigr).
+$$
+The second coordinate can equivalently be written without $p_m$ as
+$$
+g_m=\begin{cases}
+a_m^++t^m a_m^-,&t\ne\infty,\ |t|<1,\\
+t^{-m}a_m^++a_m^-,&t\ne\infty,\ |t|>1,\\
+a_m^-,&t=\infty.
+\end{cases}
+$$
+Then $\Phi_t$ is a bounded algebra isomorphism from $B_t$ to $\mathcal B$. Its inverse $\Psi_t$ is given by
+$$
+\Psi_t(f,g)(k_\theta)=f(\theta)\qquad(\theta\notin E),
+$$
+$$
+\Psi_t(f,g)(x_m^+)=p_m f(E_m)+\frac{g_m}{d'_m},\qquad
+\Psi_t(f,g)(x_m^-)=(1-p_m)f(E_m)-\frac{g_m}{d'_m}.
+$$
+In the original coefficient norm, these maps satisfy
+$$
+\|\Phi_t(a)\|_{\oplus}\le2\|a\|_1,
+$$
+$$
+\|\Psi_t(f,g)\|_1
+\le C_t\|f\|_1+\frac{2}{1-\rho_t}\|g\|_1
+\le\frac{2}{1-\rho_t}\|(f,g)\|_{\oplus}.
+$$
+In particular,
+$$
+\frac{1-\rho_t}{2}\|a\|_1\le\|\Phi_t(a)\|_{\oplus}\le2\|a\|_1.
+$$
+Under this isomorphism, the phase map is the first-coordinate projection and the augmentation is the sum of the first coordinate. All parameters yield isomorphic Banach algebras, but distinct parameters still yield distinct kernels on the fixed oriented point masses.
+
+**Proof.** The simplifications of $g_m$ follow from explicit identities. When $|t|<1$,
+$$
+p_m=-\frac{t^m}{d'_m},\qquad 1-p_m=\frac1{d'_m}.
+$$
+When $|t|>1$,
+$$
+p_m=-\frac1{d'_m},\qquad 1-p_m=\frac{t^{-m}}{d'_m}.
+$$
+For $\infty$, one has $p_m=1$ and $d'_m=-1$. Substitution gives each displayed formula for $g_m$.
+
+The coordinates of $f$ are precisely the fiber sums $H_{\#}a$, so $\|f\|_1\le\|a\|_1$. In the two finite cases the additional coefficient in the formula for $g_m$ has absolute value at most one. Consequently, including the formal case,
+$$
+\sum_{m\ge1}|g_m|\le\sum_{m\ge1}(|a_m^+|+|a_m^-|)\le\|a\|_1.
+$$
+This proves that $\Phi_t$ is a well-defined bounded linear map on the actual space of all absolutely summable families, and proves its stated upper bound.
+
+Conversely, the formulas for $\Psi_t$ specify every coordinate of $K$, because the fibers in Assumption 25.1 exhaust $K$. Theorem 27.2 and theorem 27.6 imply
+$$
+\begin{aligned}
+\|\Psi_t(f,g)\|_1
+&\le\sum_{\theta\notin E}|f(\theta)|
++\sum_{m\ge1}(|p_m|+|1-p_m|)|f(E_m)|
++2\sum_{m\ge1}\frac{|g_m|}{|d'_m|}\\
+&\le C_t\|f\|_1+\frac{2}{1-\rho_t}\|g\|_1.
+\end{aligned}
+$$
+Thus the inverse formulas also give an actual absolutely summable family. Since $C_t=(1+\rho_t)/(1-\rho_t)\le2/(1-\rho_t)$, the final inverse bound follows.
+
+The inverse identities can be checked coordinate by coordinate without any infinite basis assertion. Starting with $a$, one has
+$$
+\frac{g_m}{d'_m}
+=(1-p_m)a_m^+-p_m a_m^-
+=a_m^+-p_m f(E_m).
+$$
+Substitution into the formulas for $\Psi_t$ recovers both $a_m^+$ and $a_m^-$. Nonexceptional coordinates are unchanged. Starting instead with $(f,g)$, the two reconstructed exceptional coefficients sum to $f(E_m)$, and
+$$
+(1-p_m)\left(p_m f(E_m)+\frac{g_m}{d'_m}\right)
+-p_m\left((1-p_m)f(E_m)-\frac{g_m}{d'_m}\right)
+=\frac{g_m}{d'_m}.
+$$
+Hence the second coordinate is also recovered. Therefore $\Psi_t\Phi_t$ and $\Phi_t\Psi_t$ are the respective identity maps on their full absolutely summable spaces. The norm-equivalence inequality follows by applying the inverse bound to $\Phi_t(a)$.
+
+It remains to prove multiplicativity. On the finite core, theorem 25.5 and nonzero rescaling give an algebraic basis consisting of the $\pi_\theta$ and $u_m$. The coordinate formulas give
+$$
+\Phi_t(\pi_\theta)=(\delta_\theta,0),\qquad
+\Phi_t(u_m)=(0,\delta_m).
+$$
+The finite products of these vectors are
+$$
+\pi_\theta*_t\pi_\eta=\pi_{\theta+\eta},\qquad
+\pi_\theta*_t u_m=u_m*_t\pi_\theta=0,\qquad
+u_m*_t u_n=u_{m+n}.
+$$
+The last identity is theorem 27.6, and the others are the finite rules from Section 25. They agree exactly with the products of the corresponding coordinate vectors in $\mathcal B$. Thus $\Phi_t$ is multiplicative on the finite core. The finite core is dense, both products are bounded by theorem 27.5, and $\Phi_t$ is bounded. Taking finite-support limits proves multiplicativity on $B$. Its bounded inverse is consequently multiplicative as well. The estimates remain bounded estimates when the domain uses the equivalent norm $\|\cdot\|_{\mathrm{alg},t}$, establishing the claimed Banach-algebra isomorphism.
+
+The formula for $f$ gives $f=H_{\#}a$. Absolute summability permits regrouping by fibers and gives
+$$
+\varepsilon(a)=\sum_{\theta\in\mathbb T}f(\theta).
+$$
+The two inverse images
+$$
+V_t=\Phi_t^{-1}(\mathcal G\oplus\{0\}),\qquad
+J_t=\Phi_t^{-1}(\{0\}\oplus\mathcal S)
+$$
+are closed two-sided ideals, their cross products vanish, and $J_t=\ker H_{\#}$. Moreover,
+$$
+\Phi_t(\delta_{0_K})=(\delta_0,0),
+$$
+so $\delta_{0_K}$ is the unit of $V_t$ and annihilates $J_t$.
+
+For any two parameters, composing one coordinate isomorphism with the inverse of the other gives an abstract Banach-algebra isomorphism. This does not identify the kernels on the fixed point-mass carrier. Indeed, their actual zero-slice coefficient is
+$$
+P^{(t)}_{0_K,x_1^+}(x_1^+)=\begin{cases}
+\dfrac{t}{t-1},&t\ne\infty,\\
+1,&t=\infty.
+\end{cases}
+$$
+A finite parameter never gives the value one, and equality of the finite values implies equality of the parameters by cross multiplication. Thus distinct parameters give distinct kernels, even though the completed algebras are isomorphic. QED.
+

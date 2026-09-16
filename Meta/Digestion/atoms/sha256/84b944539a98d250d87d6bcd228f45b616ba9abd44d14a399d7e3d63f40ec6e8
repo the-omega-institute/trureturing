@@ -1,0 +1,89 @@
+**命题 153.1（正潜在混合允许任意精度的有限确定性因果后缀观察者，而精确预测商仍无限）。** 固定时间齐次、无控制的二元协议，取实数 $0<p<1/2$ 与 $0<r<1/2$。令 $E_i=|i\rangle\langle i|$、$I_2=E_0+E_1$，并定义
+$$
+c_{00}=c_{11}=p,\qquad c_{01}=c_{10}=1-p,\qquad
+P_{ji}=\begin{cases}1-r,&j=i,\\ r,&j\ne i.\end{cases}
+$$
+对每个 $b,i,j\in\{0,1\}$ 分别取秩一 Kraus 算子
+$$
+K_{bji}=\sqrt{c_{bi}P_{ji}}\;|j\rangle\langle i|,
+\qquad
+\phi_b(X)=\sum_{i,j=0}^1K_{bji}XK_{bji}^{\dagger}
+=\sum_{i,j=0}^1c_{bi}P_{ji}X_{ii}E_j
+\quad(X\in M_2(\mathbb C)).
+$$
+每支使用四个独立的 Kraus 项，不能先把它们相加成一个算子再取共轭作用。每支完全正，其效应满足
+$$
+pI_2\le\phi_b^*(I_2)=\sum_i c_{bi}E_i\le(1-p)I_2,
+\qquad \sum_b\phi_b^*(I_2)=I_2.
+$$
+非选择通道是先退相干再按 $P$ 翻转。词 $w=b_1\cdots b_n$ 按时间顺序书写，置 $\phi_w=\phi_{b_n}\circ\cdots\circ\phi_{b_1}$、$\phi_\varnothing=\operatorname{Id}$。对任意有限维参考 $A$ 及任意正联合算子 $\Omega\ge0$，每个非空词的 $(\operatorname{Id}_A\otimes\phi_w)(\Omega)$ 都是有限正乘积和；非零输入的输出归一化后可分。空词在一般输入上仍为恒等作用，可以保留纠缠。这项逐支纠缠破坏结论与下面从固定初态 $I_2/2$ 出发的标量预测结论分别成立；可分不等于参考独立，也不意味着标量后验能恢复初始参考相关性。
+
+标量过程固定初态为 $I_2/2$。取列向量约定，令
+$$
+M_b=P\operatorname{diag}(c_{b0},c_{b1}),\qquad
+v_\varnothing=\binom{1/2}{1/2},\qquad
+v_w=M_{b_n}\cdots M_{b_1}v_\varnothing,
+$$
+$$
+Q_w=\phi_w(I_2/2)=\operatorname{diag}(v_w),\qquad
+Z_w=\mathbf1^{\mathsf T}v_w,\qquad
+q_w=\frac{(v_w)_1}{Z_w},\qquad
+\rho(q)=(1-q)E_0+qE_1.
+$$
+则 $Z_w\ge p^{|w|}>0$，$\sum_{|w|=n}Z_w=1$，且 $0<q_w<1$，包括空词。给定历史后下一零报告概率及收到 $b$ 后的归一化递推分别为
+$$
+f(q)=p+(1-2p)q,\qquad
+\widetilde q=\frac{c_{b1}q}{c_{b0}(1-q)+c_{b1}q},\qquad
+q'=r+(1-2r)\widetilde q.
+$$
+即旧隐藏位先发射，随后混合；先混合后发射是另一仪器。
+
+令
+$$
+\eta=1-2r\in(0,1),\quad
+\lambda=\log\frac{1-p}{p}>0,\quad
+B=\log\frac{1-r}{r}>0,\quad
+\sigma(x)=\frac{e^x}{1+e^x},\quad
+\ell_w=\log\frac{q_w}{1-q_w},
+$$
+$$
+G(x)=\log\frac{r+(1-r)e^x}{(1-r)+re^x},\qquad
+F_b(x)=G\bigl(x+(-1)^b\lambda\bigr),\qquad
+F_w=F_{b_n}\circ\cdots\circ F_{b_1},\quad F_\varnothing=\operatorname{Id}.
+$$
+则 $\ell_w=F_w(0)$，$G$ 为奇函数，严格递增，值域为 $(-B,B)$，且 $0<G'(x)\le\eta$。对任意共同报告词 $u$，有
+$$
+|F_u(x)-F_u(y)|\le\eta^{|u|}|x-y|\qquad(x,y\in\mathbb R).
+$$
+
+对整数 $k\ge0$，定义有限观察者的全部动态记忆为
+$$
+S_k=\bigcup_{j=0}^k\{0,1\}^j,\qquad s_0=\varnothing,\qquad
+T_b(s)=\operatorname{tail}_{\min(k,|s|+1)}(sb),
+$$
+其中 $\operatorname{tail}_m$ 取时间顺序下最后 $m$ 个符号，$\operatorname{tail}_0=\varnothing$。因此 $k=0$ 时两个更新恒取空词。每个状态的后验、端点及下一零报告读出是固定表
+$$
+h_k(s)=\sigma(F_s(0)),\qquad R_k(s)=\rho(h_k(s)),\qquad a_k(s)=f(h_k(s)).
+$$
+状态递推为 $s(\varnothing)=\varnothing$、$s(wb)=T_b(s(w))$，令 $\widehat q_w=h_k(s(w))$。这些表是随 $p,r,k$ 固定的数学常数，不是另行动态存储的实数后验。所有填充阶段的长度信息已包含在 $S_k$，没有外置时钟或可读取的历史档案；连同初始空词及所有短词，指定状态总数恰为
+$$
+|S_k|=\sum_{j=0}^k2^j=2^{k+1}-1.
+$$
+
+长度 $n\le k$ 时读出精确。对全部有限历史，置 $E_k=\min(1,B\eta^k/4)$，有
+$$
+D(\rho(q_w),R_k(s(w)))=|q_w-\widehat q_w|\le E_k,
+$$
+$$
+\operatorname{TV}\bigl((f(q_w),1-f(q_w)),(a_k(s(w)),1-a_k(s(w)))\bigr)
+=(1-2p)|q_w-\widehat q_w|\le(1-2p)E_k.
+$$
+这里 $D(U,V)=\tfrac12\|U-V\|_1$，$\operatorname{TV}(\mu,\nu)=\tfrac12\sum_y|\mu(y)-\nu(y)|$。给定任意 $\varepsilon>0$，取
+$$
+k=\max\!\left(0,\left\lceil\frac{\log(C/\varepsilon)}{-\log\eta}\right\rceil\right),
+\qquad C=\frac{(1-2p)B}{4},
+$$
+即可使全部有限历史的下一报告误差不超过 $\varepsilon$；端点精度使用同式的 $C=B/4$。若报告读出另以 $\bar a_k:S_k\to[0,1]$ 近似，且 $|\bar a_k(s)-a_k(s)|\le\delta$，则报告误差至多 $\min(1,C\eta^k+\delta)$；符号更新不累积舍入误差。若 $p,r$ 有理，全部 $h_k(s),a_k(s)$ 可用概率递推精确计算为有理数，不需计算对数。对任意实参数只断言固定精确实数表的数学存在，不断言不可计算实参数的有效构造、最小状态数或位复杂度。
+
+然而，以所有有限未来报告律相等定义的精确预测商仍有无限多个类，任何固定有限状态的确定性观察者都不能精确预测每个有限历史的下一报告。混合是本模型的额外假设，不由纠缠破坏推出；本命题不以第152节的误差下界为前提。量词只涉及固定 $p,r$、固定初态、时间齐次无控制协议与全部有限历史，包括稀有历史；不主张 $r\to0$ 的一致界、历史重建、最优记忆或普遍经典性。边界值 $r=1/2$ 或 $p=1/2$ 不在严格预测区分的结论内。
+

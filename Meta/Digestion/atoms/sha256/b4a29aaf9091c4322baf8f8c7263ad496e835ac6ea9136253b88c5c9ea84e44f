@@ -1,0 +1,37 @@
+**Proof.** Let
+$$
+y_j=Z(G_j).
+$$
+This is the admissible digit word with its only nonzero digit at position $j$, so $y_j\to0_K$ in the digit topology and $y_j\ne0_K$. Finite-core consistency gives, independently of the parameter,
+$$
+P^{(t)}_{y_j,0_K}=\delta_{y_j},\qquad
+P^{(t)}_{0_K,0_K}=\delta_{0_K}.
+$$
+For every $f\in C(K)$ one has $f(y_j)\to f(0_K)$, so the displayed outputs converge measure-weakly. Also $\Gamma(0_K,0_K)=\{0_K\}$ by Assumption 25.1, and theorem 27.11 proves continuity at that pair.
+
+In contrast,
+$$
+\|\delta_{y_j}-\delta_{0_K}\|_{\mathrm{TV}}=2
+$$
+for every $j$, excluding norm continuity. The functional
+$$
+L:M(K)\to\mathbb R,\qquad L(\mu)=\mu(\{0_K\})
+$$
+is norm-continuous because $|L(\mu)|\le\|\mu\|_{\mathrm{TV}}$. It is consequently one of the tests defining the Banach weak topology. But
+$$
+L(\delta_{y_j})=0,\qquad L(\delta_{0_K})=1,
+$$
+so Banach weak continuity also fails. The same coordinate evaluation is a bounded functional on the coefficient space $B$.
+
+Every continuous-function integral is norm-continuous on $M(K)$, so the measure weak topology is weaker than the Banach weak topology, which in turn is weaker than the norm topology. The preceding sequence makes the first inclusion strict. For strictness of the second, consider any basic Banach weak neighborhood of zero, defined by finitely many bounded linear functionals $L_1,\ldots,L_N$. The $N+1$ distinct point masses $\delta_{y_1},\ldots,\delta_{y_{N+1}}$ are linearly independent, as singleton evaluation verifies. The restriction of $(L_1,\ldots,L_N)$ to their span therefore has a nonzero kernel vector $\mu$. Every scalar multiple of $\mu$ satisfies all the defining zero-centered weak inequalities. Thus this weak neighborhood is unbounded in total variation, and no weak neighborhood of zero can be contained in a norm ball. The Banach weak and norm topologies are distinct.
+
+Finally, the point-mass input map from digit $K$ to coefficient $B$ is not norm-continuous along $y_j\to0_K$, since its images stay at distance two. The bounded bilinear map in theorem 27.5 uses the coefficient norm on both input spaces, not the digit topology. There is therefore no implication from that bounded bilinearity to the digit-topology continuity excluded above. QED.
+
+[^rro27-l1]: Adam Bobrowski and Wojciech Chojnacki, *Isolated points of spaces of homomorphisms from ordered AL-algebras*, Dissertationes Mathematicae, online-first text (2022), §3.1.3, pp. 21–22, especially equation (3.2), DOI 10.4064/dm845-11-2021. The cited section defines absolutely summable families over arbitrary sets and discrete semigroup convolution. [Mathematical text](https://cs.adelaide.edu.au/~wojtek/papers/dm845-11-2021.pdf).
+
+[^rro27-ba]: Szymon Draga and Tomasz Kania, *When is multiplication in a Banach algebra open?*, arXiv:1704.08608v2, 7 October 2017, §§2.2–2.3. These sections specify the submultiplicative Banach-algebra norm convention and the convolution product for arbitrary discrete semigroups, for real or complex scalars. [Mathematical text](https://arxiv.org/html/1704.08608v2).
+
+[^rro27-measures]: Martin Herdegen, Gechun Liang, and Osian Shelley, *Vague and weak convergence of signed measures*, arXiv:2205.13207v2 (2022), §1.1, Definition 1.1 and Theorem 1.2(a), pp. 2–3. These give the continuous-test definition of weak convergence for finite signed Radon measures and the Riesz representation identification with the continuous-function dual. [Mathematical text](https://arxiv.org/pdf/2205.13207v2).
+
+[^rro27-topology]: Daniel V. Tausk, *Weak\** topology for the space of finite measures on a topological space*, notes dated 17 January 2024, Definition 3.1, p. 5; Proposition 4.1 and its proof, p. 8; Corollary C.6 and §C.1, p. 55. These distinguish the continuous-test topology from the Banach weak topology and establish continuity of the Dirac embedding in the former topology. [Mathematical text](https://www.ime.usp.br/~tausk/texts/WeakTopologyMeasures.pdf).
+

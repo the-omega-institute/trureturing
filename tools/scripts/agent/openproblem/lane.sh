@@ -82,10 +82,18 @@ verdict_of() {  # flight -> "attempt-N verdict" of the latest attempt carrying a
 import json,sys
 try:
     c=json.load(open(sys.argv[1])).get('conclusion',{})
-    # Seats do not all report the same field: review seats use "verdict", probes add
-    # "mathematical_verdict", and the implementation seat reports "status" instead. Reading only
-    # "verdict" prints "?" for every completed implementation seat, which reads as a failure.
-    print(c.get('verdict') or c.get('mathematical_verdict') or c.get('status') or '?')
+    # Seats do not all report the same field, and the implementation seat is not even consistent with
+    # itself across lanes: review seats use "verdict", probes add "mathematical_verdict", and completed
+    # implementation seats have been observed reporting "status" (A030101) and "outcome" (A126347).
+    # Reading only "verdict" prints "?" for a seat that in fact succeeded, which reads as a failure, so
+    # the fallback covers every field observed so far and the raw keys are shown when none matches -
+    # an unknown shape must look unknown rather than look like a verdict.
+    for k in ('verdict','mathematical_verdict','status','outcome','result'):
+        v=c.get(k)
+        if isinstance(v,str) and v:
+            print(v if len(v)<=40 else v[:37]+'...'); break
+    else:
+        print('?(' + ','.join(sorted(c)[:4]) + ')')
 except Exception as exc:
     print('UNREADABLE')
 PY

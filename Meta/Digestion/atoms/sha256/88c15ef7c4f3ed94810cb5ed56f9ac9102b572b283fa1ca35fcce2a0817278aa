@@ -1,0 +1,17 @@
+**定理 30.5（两个正核在全部实有符号测度上的唯一延拓）。** 固定 $t\in\{0,\infty\}$。实双线性运算 $B:M(K)^2\to M(K)$ 满足正性、全测度相位律及
+$$
+B(\delta_x,\delta_y)=P^{(t)}_{x,y}\qquad(x,y\in K)
+$$
+当且仅当
+$$
+B(\mu,\nu)=\mu\star_t\nu\qquad(\mu,\nu\in M(K)).
+$$
+特别，以上三个条件自动强制全部 Borel 集上的积分公式
+$$
+B(\mu,\nu)(A)
+=\int_K\int_KP^{(t)}_{x,y}(A)\,d\nu(y)\,d\mu(x)
+\qquad
+(\mu,\nu\in M(K),\ A\subseteq K\text{ Borel}).
+$$
+该积分表示是结论而非前提。此运算自动交换、在全部测度上结合，且双线性全变差范数为一。
+

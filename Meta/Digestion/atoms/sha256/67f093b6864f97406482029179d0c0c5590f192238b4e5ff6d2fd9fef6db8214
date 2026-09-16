@@ -1,0 +1,20 @@
+**definition 27.4 (The convolution direct sum).** Put
+$$
+\mathcal G=\ell^1(\mathbb T_{\mathrm d}),\qquad
+\mathcal S=\ell^1(\mathbb N_{>0}),\qquad
+\mathcal B=\mathcal G\oplus_1\mathcal S.
+$$
+The products within the two summands are the discrete convolutions
+$$
+(f*_{\mathbb T}f')(\theta)=\sum_{\rho\in\mathbb T}f(\rho)f'(\theta-\rho),
+$$
+$$
+(g*_{+}g')(k)=\sum_{\substack{m,n\ge1\\m+n=k}}g_mg'_n.
+$$
+An empty sum is zero; in particular, every product in $\mathcal S$ has first coordinate zero. Define
+$$
+(f,g)\diamond(f',g')=(f*_{\mathbb T}f',\ g*_{+}g'),\qquad
+\|(f,g)\|_{\oplus}=\|f\|_1+\|g\|_1.
+$$
+Thus convolution is performed separately in the two summands, and cross products between the summands vanish. It is not pointwise multiplication of the sequences.[^rro27-ba]
+

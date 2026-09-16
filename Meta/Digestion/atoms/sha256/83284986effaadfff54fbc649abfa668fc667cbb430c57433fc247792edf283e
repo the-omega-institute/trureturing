@@ -1,0 +1,2 @@
+**theorem 27.8 (Absence of every one-sided approximate identity).** The algebra $B_t$ has no left approximate identity and no right approximate identity in its norm topology, even when unbounded nets are allowed. Hence it has no two-sided approximate identity and no left or right unit.
+
