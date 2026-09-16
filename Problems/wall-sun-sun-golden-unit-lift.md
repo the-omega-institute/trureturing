@@ -629,3 +629,301 @@ Their theorem is contextual prior work, not an input to FPD1-FPD4.
 
 The full classification and WSS
 existence remain open targets of this line, not conclusions of FPD4.
+
+
+### THS. Exact theta sieving and the principal-orbit coefficient
+
+#### THS.1 The integer Fourier condition
+
+**Definition.** Put phi=(1+sqrt(5))/2, O=Z[phi], and retain the original Fibonacci and Lucas numbers. For z=x+iy with y>0, define
+
+$$
+\Theta(z)=\sum_{n\in\mathbb Z}e^{2\pi i n^2z},\qquad
+V_d(z)=\sqrt y\,\Theta(5d^2z)\overline{\Theta(z)}\quad(d\ge1),
+$$
+
+$$
+C_d(b;y)=\int_0^1\Theta(5d^2z)\overline{\Theta(z)}e^{-2\pi i b x}\,dx
+\quad(b=4,-4).
+$$
+
+**Theorem THS1.** For every positive integer d,
+
+$$
+C_d(b;y)=\sum_{5d^2u^2-v^2=b}e^{-2\pi y(5d^2u^2+v^2)},
+$$
+
+$$
+C_d(4;y)=4e^{8\pi y}\sum_{\substack{n\ge1\text{ odd}\\d\mid F_n}}
+ e^{-20\pi yF_n^2},
+$$
+
+$$
+C_d(-4;y)=2e^{-8\pi y}+4e^{-8\pi y}
+ \sum_{\substack{n\ge2\text{ even}\\d\mid F_n}}e^{-20\pi yF_n^2}.
+\tag{THS1}
+$$
+
+**Proof.** Gaussian decay gives absolute uniform convergence on each compact horizontal segment. Termwise integration retains exactly the pairs with 5d^2u^2-v^2=b. For w=d|u|>0 and |v|>0, the equation v^2-5w^2=+/-4 implies that (|v|+w sqrt(5))/2 is a positive golden unit greater than one. Its two coordinates have the same parity, so it belongs to O. The classification O^*={+/-phi^n:n in Z} gives (|v|,w)=(L_n,F_n). The norm selects even n for +4 and odd n for -4. Each positive solution has four sign choices. When b=-4 there are additionally u=0,v=+/-2; their combined weight is 2e^(-8pi y). There are no other zero-coordinate solutions. Substituting v^2=5w^2-b gives the exponential factors shown. The two indices with F_1=F_2=1 belong to different norm equations and are counted separately.
+
+The Pell-to-theta mechanism is classical and is used by E. Assaf, C. I. Kuan, D. Lowry-Duda and A. Walker, *The Fibonacci Zeta Function and Modular Forms*, arXiv:2502.01415v1, Proposition 2 and Section 3. THS1 retains an additional exact divisibility condition on the integer coordinate; no congruence approximation to the Pell equation is used.
+
+#### THS.2 All square-conductor levels and inert Hecke operators
+
+**Definition.** Let chi_5 denote the quadratic character of conductor five. The standard theta transformation law makes V_d a weight-zero automorphic function of level 20d^2 and character chi_5 induced to that level. It has moderate growth; membership in L^2 is not assumed. At a prime ell not dividing 10d, use the good Hecke normalization
+
+$$
+(T_\ell f)(z)=\ell^{-1/2}\left[
+\chi_5(\ell)f(\ell z)+\sum_{j=0}^{\ell-1}f((z+j)/\ell)\right].
+$$
+
+**Theorem THS2.** If chi_5(ell)=-1, then T_ell V_d=0. Consequently V_p-V_(p^2), viewed at common level 20p^4, is killed by every such good inert operator with ell not dividing 10p.
+
+**Proof.** Expanding the translation sum introduces
+
+$$
+\sum_{j=0}^{\ell-1}e^{2\pi i j(5d^2u^2-v^2)/\ell}.
+$$
+
+It equals ell or zero, according as 5d^2u^2-v^2 is zero or nonzero modulo ell. Inertness and ell not dividing d force both u and v to be multiples of ell in the first case. Replacing them by ell*u_0,ell*v_0 turns the surviving exponential into its value at ell*z; the scalar factor is ell*sqrt(y/ell)=sqrt(ell*y). Thus the translation sum is V_d(ell*z), and chi_5(ell)=-1 gives cancellation. Gaussian convergence justifies the interchanges. This proof uses no squarefreeness of 5d^2. The last statement follows by linearity.
+
+**Corollary THS3.** If a simultaneous good-Hecke Maass cusp eigenform g has a nonzero Petersson pairing with V_d, its cuspidal representation satisfies
+
+$$\pi_g\simeq\pi_g\otimes\chi_5.$$
+
+It is therefore dihedral. The same conclusion holds for a nonzero cusp pairing with V_p-V_(p^2).
+
+**Proof.** The cusp decay of g and moderate growth of V_d make the pairing convergent. Hecke adjointness, with the nonzero character scalar included, and THS2 force g's eigenvalue at every good inert ell to vanish. At a good split prime twisting leaves its eigenvalue unchanged; at an inert prime the zero eigenvalue is also unchanged. The local determinant is multiplied by chi_5(ell)^2=1. Strong multiplicity one gives the self-twist, and the classical quadratic-self-twist characterization gives the dihedral conclusion. Both inputs are stated in N. Walji, *Further refinement of strong multiplicity one for GL(2)*, arXiv:1308.1469. This argument concerns cuspidal projections, including oldvectors, and does not assert disappearance of all continuous or residual terms in a regularized expansion.
+
+#### THS.3 The heat coefficient with a uniform error
+
+**Definition.** For p>5 set r=rho(p), R=rho(p^2), where rho denotes the least positive Fibonacci zero index. Define
+
+$$
+K_p(t)=\sum_{\substack{n\ge1\\p\parallel F_n}}e^{-tF_n^2},\qquad
+S_a(t)=\sum_{k\ge1}e^{-tF_{ak}^2}\quad(t>0).
+$$
+
+**Theorem THS4.** The exact Fourier difference
+
+$$
+\tfrac14\left[e^{-8\pi y}(C_p(4;y)-C_{p^2}(4;y))
+ +e^{8\pi y}(C_p(-4;y)-C_{p^2}(-4;y))\right]
+$$
+
+is K_p(20pi*y). Moreover K_p(t)=S_r(t)-S_R(t), and for every a>=3 and 0<t<=1,
+
+$$
+\left|S_a(t)-\frac{\log(1/t)}{2a\log\phi}\right|\le2,
+$$
+
+$$
+\boxed{\left|K_p(t)-\kappa_p\log(1/t)\right|\le4,\qquad
+\kappa_p=\frac{1/r-1/R}{2\log\phi}.}\tag{THS4}
+$$
+
+**Proof.** Subtract THS1 at d=p and d=p^2; the zero-coordinate terms cancel. The zero indices modulo each positive modulus are precisely the multiples of its least zero index, by strong Fibonacci divisibility. This proves the two exact identities.
+
+For the estimate, phi^(n-2)<=F_n<=phi^(n-1) for n>=2. Put Q=phi^(2a) and A(v,Q)=sum_(k>=1)exp(-vQ^k). Then
+
+$$A(t\phi^{-2},Q)\le S_a(t)\le A(t\phi^{-4},Q).$$
+
+For the decreasing function x mapping to exp(-vQ^x), the integral test gives
+
+$$E_1(v)/\log Q-1\le A(v,Q)\le E_1(v)/\log Q,\qquad
+E_1(v)=\int_v^\infty e^{-u}\,du/u.$$
+
+For 0<v<=1, splitting the integral at one gives |E_1(v)+log v|<=1: the integral of (e^(-u)-1)/u from v to one lies in [-1,0], and the remaining tail lies in [0,e^(-1)]. With L=log(phi)>1/3, the resulting upper error is at most (4L+1)/(2aL)<2 and the lower error is at least -1-1/(2aL)>-2. This proves the uniform constant two; subtracting the two estimates proves the constant four.
+
+**Corollary.** With the actual initial depth h_p=v_p(F_r), one has
+
+$$
+\kappa_p=0\text{ and }K_p\equiv0\quad(h_p\ge2),\qquad
+\kappa_p=\frac{1-1/p}{2r\log\phi}>0\quad(h_p=1).
+$$
+
+**Proof.** The classical valuation theorem gives R=r in the first case and R=pr in the second. In the first case the exact difference of S-series is zero; in the second case n=r itself supplies a positive term. This uses Lengyel's valuation theorem as recorded in Medina-Rowland, *p-regularity of the p-adic valuation of the Fibonacci sequence*, Fibonacci Quarterly 53 (2015), Theorem 1.4, arXiv:0910.2907. No branch is chosen in THS4 without this actual arithmetic input.
+
+#### THS.4 The pole and the local density
+
+**Theorem THS5.** For a>=3, the series Z_a(s)=sum_(k>=1)F_(ak)^(-s), initially on Re(s)>0, has the representation
+
+$$Z_a(s)=\frac{5^{s/2}}{\phi^{as}-1}+H_a(s),$$
+
+where H_a is holomorphic on Re(s)>-2 and H_a(0)=0. Thus D_p(s)=Z_r(s)-Z_R(s) satisfies
+
+$$\operatorname{Res}_{s=0}D_p(s)=\frac{1/r-1/R}{\log\phi},\qquad
+\int_0^\infty K_p(t)t^{s-1}\,dt=\Gamma(s)D_p(2s)\quad(\Re s>0).$$
+
+**Proof.** Use F_(ak)=5^(-1/2)phi^(ak)(1-(-1)^(ak)phi^(-2ak)). The last factor is positive. After subtracting its leading value one, the summands are normally bounded on a compact subset of Re(s)>-2 by a constant times phi^(-ak(Re(s)+2)). This proves normal convergence and holomorphy of H_a; each remainder vanishes at s=0. The residue follows from the geometric term. Absolute convergence justifies Mellin integration term by term. Other geometric poles on the imaginary axis are not excluded by this representation.
+
+**Theorem THS6.** For every p>5 and k>=2, the number of pairs (v,w) modulo p^k with
+
+$$v^2-5w^2=4,\qquad p\mid w,\quad p^2\nmid w$$
+
+is 2(p-1)p^(k-2). Replacing four by minus four gives the same count when p=1 modulo four and zero otherwise.
+
+**Proof.** There are (p-1)p^(k-2) choices for w. In the first equation v has the two simple roots +2,-2 modulo p; each uniquely lifts for each w by Hensel's lemma. For minus four, the two roots exist precisely when -1 is a square modulo p, and are again simple. These are local solutions; the count does not assert that any chosen solution is a reduction of a global pair (L_n,F_n) in the simple-divisor window.
+
+
+### ROC. Fixed-golden orders, mixed-conductor kernels, and zero-parameter dihedral forms
+
+#### ROC.1 The ordinary order class group and the unit image
+
+**Definition.** Fix K=Q(sqrt(5)), O=Z[phi]. For a positive integer f coprime to ten define
+
+$$O_f=\mathbb Z+fO,\qquad P_f=\operatorname{Pic}(O_f),\qquad H(f)=|P_f|,$$
+
+$$C_f=(O/fO)^\times/(\mathbb Z/f\mathbb Z)^\times,\qquad
+r(f)=\min\{n\ge1:f\mid F_n\},\quad r(1)=1.$$
+
+P_f is the ordinary group of invertible ideal classes, with no positivity restriction on principal ideals. It is not the narrow class group. The field K remains fixed as f varies. At f=1 all finite quotient groups in the formulas are trivial.
+
+**Theorem ROC1.** There is a natural isomorphism
+
+$$\boxed{P_f\simeq C_f/\langle[\phi]\rangle,\qquad
+\operatorname{ord}_{C_f}([\phi])=r(f).}\tag{ROC1}$$
+
+If f and g are coprime, r(fg)=lcm(r(f),r(g)).
+
+**Proof.** The classical exact sequence for an order and its conductor is
+
+$$O^\times\longrightarrow (O/fO)^\times/(O_f/fO)^\times
+\longrightarrow\operatorname{Pic}(O_f)\longrightarrow\operatorname{Pic}(O)
+\longrightarrow1.$$
+
+Here O_f/fO=Z/fZ. The golden ring is norm-Euclidean, hence Pic(O)=1. For example rounding the two coefficients in the basis (1,phi) leaves norm of absolute value at most 5/16, which proves Euclidean division. Its unit group is {+/-phi^n:n in Z}. One proof normalizes a positive real unit into [1,phi); a strictly interior value would have an integral trace strictly between zero and one for norm -1, or between two and sqrt(5) for norm +1. Thus the normalized unit is one. The sign -1 is already scalar in C_f, so the unit image is generated by [phi].
+
+The coordinate identity phi^n=F_(n-1)+F_n*phi makes its class scalar precisely when f|F_n. If scalar, it is a scalar unit because phi^n is a unit and O/fO is free over Z/fZ. Thus its order is r(f). Existence follows from finiteness of C_f. For coprime f,g, divisibility by fg is simultaneous divisibility by f and g; equivalently the two cyclic components must return at the same exponent. This gives the least common multiple.
+
+The order exact sequence and its class-field interpretation are classical inputs: C. Lv and Y. Deng, *On Orders in Number Fields: Picard Groups, Ring Class Fields and Applications*, Sci. China Math. 58 (2015), 1627-1638, Proposition 2.3(e), Theorems 3.11 and 4.2, DOI 10.1007/s11425-015-4979-3, arXiv:1405.5776.
+
+#### ROC.2 The complete prime-power conductor tower
+
+**Theorem ROC2.** For p>5, a>=1, and chi_p=(5/p), the group C_(p^a) is cyclic of order (p-chi_p)p^(a-1). With the actual h_p and
+
+$$M_p=(p-\chi_p)/r(p),$$
+
+one has p not dividing M_p and
+
+$$\boxed{P_{p^a}\simeq
+\mathbb Z/\bigl(M_p p^{\min(a-1,h_p-1)}\bigr)\mathbb Z.}\tag{ROC2}$$
+
+The extension-of-ideals map P_(p^(a+1))->P_(p^a) is surjective, and its kernel has order p when a<h_p and order one when a>=h_p. In particular
+
+$$\boxed{q_p=0\iff\ker(P_{p^2}\longrightarrow P_p)\ne1.}\tag{ROC3}$$
+
+**Proof.** In the split case O tensor Z_p=Z_p x Z_p, and division by scalar units identifies the quotient with (Z/p^aZ)^*. In the inert case the Teichmueller-unit quotient is cyclic of order p+1. The principal-unit logarithm identifies the remaining quotient with
+
+$$pO_p/(p\mathbb Z_p+p^aO_p),$$
+
+a cyclic group of order p^(a-1). The two factors have coprime orders, so their product is cyclic. Reduction from a+1 to a is surjective with a cyclic order-p kernel.
+
+The classical Fibonacci valuation formula gives r(p^a)=r(p)p^max(a-h_p,0). Indeed any zero index is r(p) times an integer j, and its valuation is h_p+v_p(j); r(p) divides p-chi_p and is prime to p. Dividing the order of C_(p^a) by this unit-image order proves ROC2. This use of the full valuation formula retains h_p, as in Medina-Rowland, Theorem 1.4. Quotient reduction stays surjective since the same generator phi maps to phi. Taking the ratio of the displayed orders proves the kernel assertions and ROC3.
+
+**Corollary.** The p-primary parts of P_(p^a) stabilize to a cyclic group of order p^(h_p-1). This assertion concerns the nonmaximal orders O_(p^a) in K; it makes no claim about the full class group of the different field K(zeta_p).
+
+**Proof.** The prime-to-p factor is M_p, and min(a-1,h_p-1) becomes constant at a=h_p.
+
+#### ROC.3 The mixed-conductor kernel
+
+**Theorem ROC4.** For coprime f,g, both coprime to ten, there is a natural exact sequence
+
+$$\boxed{
+1\longrightarrow\mathbb Z/\gcd(r(f),r(g))\mathbb Z
+\longrightarrow P_{fg}\longrightarrow P_f\times P_g\longrightarrow1.
+}\tag{ROC4}$$
+
+In particular H(fg)=H(f)H(g)gcd(r(f),r(g)).
+
+**Proof.** CRT gives C_(fg)=C_f x C_g. The subgroup generated by the global unit is diagonal: it consists of ([phi]^n,[phi]^n) with a single integer n. Therefore the map to the two separate quotients is surjective and its kernel is
+
+$$(\langle\phi_f\rangle\times\langle\phi_g\rangle)/
+\langle(\phi_f,\phi_g)\rangle.$$
+
+On the numerator, send (phi_f^u,phi_g^v) to u-v modulo gcd(r(f),r(g)). This is well-defined and surjective. Its kernel consists precisely of pairs for which the simultaneous congruences n=u modulo r(f), n=v modulo r(g) are soluble, hence is the diagonal subgroup. This proves the group statement, including trivial ranks, and counting proves the formula.
+
+**Theorem ROC5.** Fix p>5 and m coprime to 10p. Put b=v_p(r(m)). For every a>=1,
+
+$$\boxed{
+\left|\ker(P_{mp^{a+1}}\longrightarrow P_{mp^a})\right|
+=\begin{cases}p,&a<h_p+b,\\1,&a\ge h_p+b.\end{cases}
+}\tag{ROC5}$$
+
+Every nontrivial kernel here is cyclic.
+
+**Proof.** The ambient C-group has a cyclic order-p reduction kernel. The p-exponent of the image of the global unit at level mp^a is
+
+$$\max\{b,\max(a-h_p,0)\},$$
+
+because its order is lcm(r(m),r(p)p^max(a-h_p,0)) and p does not divide r(p). The unit-image size increases by p at the next level exactly when a>=h_p+b; all its other prime-exponents remain unchanged. The Picard-group size ratio is consequently one in that case and p otherwise. The Picard kernel is a quotient of the ambient cyclic reduction kernel: any element mapping into the lower unit image can be multiplied by a lifted power of phi to enter that reduction kernel. This proves cyclicity as well as its exact size.
+
+**Proposition ROC6.** The increase H(mp^2)>H(mp) at a mixed conductor does not imply p is WSS. In fact
+
+$$r(7)=8,\quad h_7=1,\quad r(13)=7,\quad H(91)=2,\quad H(637)=14.$$
+
+**Proof.** F_8=21 and F_1=1,F_2=1,F_4=3 show r(7)=8 and h_7=1. F_7=13 and the prime-index argument show r(13)=7. For coprime prime powers ROC1-ROC2 give
+
+$$H(91)=\frac{8\cdot14}{\operatorname{lcm}(8,7)}=2,\qquad
+H(637)=\frac{56\cdot14}{\operatorname{lcm}(56,7)}=14.$$
+
+The order-seven kernel is caused by v_7(r(13))=1 in ROC5, although seven is non-WSS. Thus the correction b cannot be omitted when inferring initial depths from mixed-conductor growth.
+
+#### ROC.4 Finite-order characters and exact conductor
+
+**Definition.** An ordinary ring-class character of conductor dividing f is a character of P_f, inflated along the natural maps for larger conductors. Its least rational conductor is the smallest positive f through which it factors. Through classical ring class field theory it defines a finite Hecke character of K trivial at both real places and on rational ideles. For k>=1 let X_(p,k) be the set of such characters of exact order p^k whose conductor is a power of p, identifying repeated inflations of the same character.
+
+**Theorem ROC7.** For all p>5 and k>=1,
+
+$$\boxed{|X_{p,k}|=
+\begin{cases}p^{k-1}(p-1),&h_p\ge k+1,\\0,&h_p<k+1.\end{cases}}\tag{ROC7}$$
+
+When present, every character in X_(p,k) has least rational conductor p^(k+1) and Hecke conductor ideal p^(k+1)O. It satisfies eta^sigma=eta^(-1), where sigma is golden conjugation.
+
+**Proof.** By ROC2 the p-primary part of P_(p^a) is cyclic of order p^min(a-1,h_p-1), and all transition maps are surjective. A character of exact order p^k exists exactly when h_p>=k+1 and a>=k+1. At a=k+1 its number is the Euler totient p^(k-1)(p-1). At every later level all characters of that order factor uniquely through this quotient, since a cyclic p-group has a unique subgroup of each order. The prime-to-p factor contributes no nontrivial values to a p-power-order character. This proves both the count and least rational conductor.
+
+Conjugation acts by inversion on C_f, since x*sigma(x) is a scalar unit, and hence on P_f. The attached Hecke characters are therefore anticyclotomic. Their finite conductors are supported above p. If p splits, the two local conductor exponents are equal because the conjugate character is the inverse; if p is inert there is one exponent. Triviality on local scalar units and on global units shows that such a character has conductor dividing p^aO precisely when it factors through P_(p^a). Its least a is k+1, proving the stated ideal conductor in both cases. The ordinary class-group convention permits all real units at infinity, so the real components are trivial. Rational ideles are generated by rational principal ideles, the real factor, and scalar finite units; the character is trivial on each. The class-field interpretation is the one in Lv-Deng, Theorem 4.2.
+
+#### ROC.5 A precisely specified spectral family at eigenvalue one quarter
+
+**Definition.** Let D_(p,k) be the set of cuspidal GL(2)/Q representations obtained by automorphic induction from X_(p,k), up to isomorphism. Only this fixed-K, finite p-power-order, ordinary ring-class family is included in D_(p,k).
+
+**Theorem ROC8.** Every representation in D_(p,k) has weight zero, Laplace eigenvalue 1/4, central character chi_5, and exact arithmetic conductor 5p^(2k+2). Moreover
+
+$$\boxed{|D_{p,k}|=
+\frac{p^{k-1}(p-1)}2\,\mathbf1_{h_p\ge k+1}.}\tag{ROC8}$$
+
+In particular p is WSS if and only if D_(p,1) is nonempty, in which case its size is (p-1)/2 and its exact conductor is 5p^4.
+
+**Proof.** Classical Hecke-Maass automorphic induction attaches a normalized eigenform to eta, and is cuspidal when eta is not equal to eta^sigma. Here eta^sigma=eta^(-1) and eta has odd order greater than one, so cuspidality holds. The induced two-dimensional finite-image representation sends complex conjugation to the identity, because K is real and both real components of eta are trivial. Its Maass eigenvalue is therefore 1/4. The central character is chi_5 times the restriction of eta to rational ideles, hence is chi_5. These classical finite-order induction statements, including the eigenvalue, are stated in W.-C. W. Li and Z. Rudnick, *Pair arithmetical equivalence for quadratic fields*, arXiv:2007.13147v2, Section 1.3.
+
+The conductor-discriminant formula for automorphic induction gives the exact conductor |disc(K)|*N_(K/Q)(cond eta)=5p^(2k+2). See P. Humphries, *Archimedean Newform Theory for GL_n*, Theorem 3.12 and Remark 3.13, DOI 10.1017/S1474748024000227. For the same quadratic field, two induced irreducible representations are isomorphic precisely when their inducing characters agree or are conjugate: restrict the induced representation back to K to get eta plus eta^sigma. Thus the fixed-point-free pairing eta with eta^(-1) accounts for the factor two in ROC8.
+
+An explicit normalization of the corresponding even Maass form is
+
+$$
+g_\eta(x+iy)=2\sqrt y\sum_{\substack{\mathfrak a\subset O\\
+(\mathfrak a,p)=1}}\eta(\mathfrak a)
+ K_0(2\pi N\mathfrak a\,y)\cos(2\pi N\mathfrak a\,x).
+$$
+
+The term of norm one has coefficient one in the normalized exponential Fourier expansion, so the constructed form is not zero. The sum converges for y>0 by the exponential decay of K_0. This is the classical Fourier construction in Li-Rudnick, Section 1.3, applied after the ring-class characters have been obtained. It does not establish their existence without the condition in ROC7.
+
+**Corollary.** Forms in D_(p,1), when they exist, can be viewed as oldforms at the theta-sieve level 20p^4. ROC8 does not count all cusp forms, all dihedral forms from other quadratic fields, or forms induced from characters with nontrivial archimedean parameter.
+
+**Proof.** Their exact conductor 5p^4 divides 20p^4, so oldform inclusion applies. The exclusions follow from the defining restrictions on D_(p,k); no assertion about other spectral components is used in the count.
+
+#### ROC.6 The class-growth coefficient and the remaining independent condition
+
+**Theorem ROC9.** The coefficient in THS4 has the exact expression
+
+$$\boxed{\kappa_p=
+\frac{pH(p)-H(p^2)}{2p(p-\chi_p)\log\phi}.}\tag{ROC9}$$
+
+The family D_(p,1) is nonempty exactly in the branch where K_p is identically zero. Nonemptiness of this family therefore does not imply nonvanishing of the particular Fourier difference in THS4.
+
+**Proof.** ROC1-ROC2 give H(p)=(p-chi_p)/r and H(p^2)=p(p-chi_p)/R. Substitute in THS4. ROC3 and ROC8 identify nonemptiness with h_p>=2; the exact S-series difference in THS4 is then zero. This does not assert that each individual spectral projection of V_p-V_(p^2) vanishes: contributions to a selected Fourier functional may cancel, and a nonzero representation need not occur in that theta projection at all.
+
+**Proposition.** The identities THS1-THS6 and ROC1-ROC9 leave the actual set of primes with h_p>=2 undetermined. In particular, a vanishing theorem for D_(p,1) on a specified prime family would exclude WSS in that family, while an independently constructed member would give a WSS prime; neither existence nor vanishing on a new family follows from the displayed counts alone.
+
+**Proof.** ROC8 expresses the count in terms of the same actual h_p, and ROC9 expresses the heat coefficient in terms of its unit-image size. No inequality choosing a branch is among the hypotheses or conclusions used to prove those identities. The logical implications in the proposition follow directly from ROC8, but their antecedents require information additional to the formula. The fixed eigenvalue is 1/4 at every conductor, so estimates that only treat growing archimedean spectral parameter do not by themselves supply either antecedent.
