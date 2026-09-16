@@ -35224,3 +35224,241 @@ $$
 相邻文献中的损失与极限须分别理解。T. Berg、O. Ordentlich、O. Shayevitz，*Binary Hypothesis Testing with Deterministic Finite-Memory Decision Rules*，[arXiv:2005.07445](https://arxiv.org/abs/2005.07445)，第I节式(4)–(8)及定理1，研究有限状态二元检验的长时间分类错误与状态数指数。V. Sharan、S. Kakade、P. Liang、G. Valiant，*Prediction with a Short Memory*，[arXiv:1612.02526](https://arxiv.org/abs/1612.02526)，推论1，研究下一观测预测的平均损失。P. Chigansky，*Stability of the nonlinear filter for slowly switching Markov chains*，[arXiv:math/0411596](https://arxiv.org/abs/math/0411596)，第1节的几乎处处稳定指数、定理1.1及例1.2，研究初始先验扰动的渐近遗忘；在其假设下，慢切换并不迫使该指数趋于零。这三类结论均不替代这里对每个有限报告词的预测误差要求，也不作为上述状态下界的前提。
 
 ## 追加锚（本行以下为增补区）
+## 158. 平衡报告块与逆混合率的必要观察者状态成本
+
+**命题 158.1（低于半静态地板时的逆混合率下界，repo-derived）。** 固定 $0<p<1/2$，记
+$$
+d=1-2p,\qquad \Delta=\frac d2,\qquad
+\kappa=\frac{1-p}{p}>1,\qquad \lambda=\log\kappa>0.
+$$
+沿用命题153.1、156.1、157.1的二元时间齐次无控制协议：旧隐藏位 $i$ 先发射报告 $b$，然后翻转为新隐藏位 $j$，其中
+$$
+c_{00}=c_{11}=p,\qquad c_{01}=c_{10}=1-p,\qquad
+P_{ji}(r)=\begin{cases}1-r,&j=i,\\r,&j\ne i.\end{cases}
+$$
+这里 $0<r<1/2$，每个 $b,i,j\in\{0,1\}$ 对应一个单独的秩一 Kraus 算子，仪器为
+$$
+K_{bji}^{(r)}=\sqrt{c_{bi}P_{ji}(r)}\,|j\rangle\langle i|,
+\qquad
+\phi_b^{(r)}(X)=\sum_{i,j=0}^1K_{bji}^{(r)}X(K_{bji}^{(r)})^\dagger
+\quad(X\in M_2(\mathbb C)).
+$$
+初态固定为 $I_2/2$。对时间顺序词 $w$，定义
+$$
+v_\varnothing^{(r)}=\binom{1/2}{1/2},\qquad
+v_{wb}^{(r)}=P(r)\operatorname{diag}(c_{b0},c_{b1})v_w^{(r)},
+\qquad Z_w^{(r)}=\mathbf1^{\mathsf T}v_w^{(r)},
+$$
+$$
+q_w^{(r)}=\frac{(v_w^{(r)})_1}{Z_w^{(r)}},\qquad
+x_w^{(r)}=\log\frac{q_w^{(r)}}{1-q_w^{(r)}},\qquad
+h(x)=p+\frac d{1+e^{-x}}=\frac12+\Delta\tanh\frac x2.
+$$
+下一零报告的条件概率为 $f_r(w)=h(x_w^{(r)})$。
+
+观察者为 $\mathcal O=(S,s_0,T_0,T_1,t)$，其中 $S$ 非空有限，$s_0\in S$、确定性全函数 $T_b:S\to S$ 和静态读出 $t:S\to[0,1]$ 固定，且
+$$
+s_{\mathcal O}(\varnothing)=s_0,\qquad
+s_{\mathcal O}(wb)=T_b(s_{\mathcal O}(w)),\qquad
+\mathcal E_r(\mathcal O)=\sup_{w\in\{0,1\}^{*}}
+|t(s_{\mathcal O}(w))-f_r(w)|.
+$$
+全部可读的演化记忆均计入 $S$，包括任何可读时钟、档案和随机种子状态；不允许从 $S$ 之外读取演化信息。这里的更新与读出是确定性的，不另取随机观察者类别。每组 $p,r,\varepsilon$ 可分别选择观察者及含任意精确实数的固定表，但每张表必须同时满足包括空词及任意稀有历史在内的全部有限词误差要求。定义 $N_{\min}^{(r)}(\varepsilon)$ 为满足 $\mathcal E_r(\mathcal O)\le\varepsilon$ 的最小有限状态数；不存在这样的有限观察者时取 $\infty$。
+
+固定
+$$
+0<\varepsilon<\frac\Delta2,
+$$
+再选一个固定整数 $a\ge1$，使
+$$
+g_a=\Delta\tanh\frac{a\lambda}{4}>2\varepsilon.
+$$
+由于 $\tanh(a\lambda/4)\to1$，这样的 $a$ 存在。置
+$$
+D_a=\kappa^a-\kappa^{-a}>0,\qquad
+C_a=d\,aD_a>0,\qquad
+c=\frac{g_a-2\varepsilon}{2C_a}>0.
+$$
+则存在 $r_0\in(0,1/2)$，使
+$$
+\forall r\in(0,r_0),\qquad
+N_{\min}^{(r)}(\varepsilon)\ge\frac c r.
+$$
+这里先固定 $p,\varepsilon,a$，再选择 $r_0$；$c,r_0$ 不依赖观察者。此结论在较窄精度区间内加强命题157.1的必要下界，不改变该命题在 $0<\varepsilon<\Delta$ 上的结论。
+
+**证明。** 对任意复矩阵 $X$，每个独立 Kraus 项都满足
+$$
+K_{bji}^{(r)}X(K_{bji}^{(r)})^\dagger
+=c_{bi}P_{ji}(r)X_{ii}|j\rangle\langle j|.
+$$
+故从对角输入出发，新对角元 $j$ 恰为 $\sum_i c_{bi}P_{ji}(r)(v_w^{(r)})_i$，给出陈述中的列向量递推。这里求和的是各 Kraus 项的共轭作用，不是先将 Kraus 算子相加再共轭。由 $P(r)$ 每列和为一及 $c_{bi}\ge p$，
+$$
+Z_{wb}^{(r)}=\sum_i c_{bi}(v_w^{(r)})_i\ge pZ_w^{(r)},
+\qquad Z_w^{(r)}\ge p^{|w|}>0.
+$$
+初态两分量严格为正，递推保持严格正性，所以每个有限词的 $q_w^{(r)}\in(0,1)$，其对数赔率均有定义。下一零报告的条件概率为 $p+dq_w^{(r)}=h(x_w^{(r)})$；空词给 $x_\varnothing^{(r)}=0$、$f_r(\varnothing)=h(0)=1/2$。
+
+旧位发射报告零时将赔率乘以 $\kappa$，发射报告一时乘以 $\kappa^{-1}$；随后翻转。于是精确的对数赔率更新为
+$$
+F_{b,r}(x)=G_r\bigl(x+(-1)^b\lambda\bigr),\qquad
+G_r(z)=\log\frac{(1-r)e^z+r}{re^z+1-r}.
+$$
+这也说明末次已报发射后的翻转已经包含在预测状态中。$G_r$ 为奇函数，$G_r(0)=0$，并且
+$$
+G_r'(z)=\frac{1-2r}{1+2r(1-r)(\cosh z-1)}.
+$$
+令 $\eta=1-2r\in(0,1)$，便有
+$$
+0<G_r'(z)\le\eta<1,\qquad
+|G_r(z)|\le\eta|z|<|z|\quad(z\ne0).
+$$
+因此每个 $F_{b,r}$ 严格递增且为 $\eta$-Lipschitz。又
+$$
+0<h'(x)=\frac{d e^{-x}}{(1+e^{-x})^2}\le\frac d4.
+$$
+这些界对各自的全部实数自变量成立；在 $r=0$ 时 $G_0=\operatorname{id}$，不具有上述严格收缩性。
+
+固定平衡词 $v=0^a1^a$，置
+$$
+I=[-a\lambda,0],\qquad A_r=F_{0,r}^{\circ a},\qquad
+B_r(x)=-A_r(x),\qquad H_r=F_{1,r}^{\circ a}\circ F_{0,r}^{\circ a}.
+$$
+先证相关映射的保域性。若 $x\in I$，记 $x_j=F_{0,r}^{\circ j}(x)$。归纳给出
+$$
+-(a-j)\lambda\le x_j\le j\lambda\qquad(0\le j\le a).
+$$
+确实，$j=0$ 正是 $x\in I$；若结论在 $j<a$ 时成立，则送入下一次 $G_r$ 的数满足
+$$
+x_j+\lambda\in[-(a-j-1)\lambda,(j+1)\lambda].
+$$
+此区间包含零，$G_r$ 保持符号并将绝对值压向零，所以输出仍在该区间。特别地，$A_r(I)\subseteq[0,a\lambda]$，$A_r(-a\lambda)\ge0$。从零出发的第一步严格为正，往后保持正性；每次正输入经 $G_r$ 严格缩小，故
+$$
+u:=A_r(0)\in(0,a\lambda).
+$$
+$G_r$ 的奇性还给 $F_{1,r}(x)=-F_{0,r}(-x)$，迭代后得到
+$$
+F_{1,r}^{\circ a}(x)=-A_r(-x),\qquad H_r(x)=-A_r(-A_r(x))=B_r^2(x).
+$$
+所以 $B_r:I\to I$ 为 $\eta^a$-Lipschitz，$H_r:I\to I$ 为 $\eta^{2a}$-Lipschitz。
+
+闭区间 $I$ 非空且完备，直接对 $B_r$ 应用 Banach 不动点定理，得到唯一不动点 $x_r\in I$，且
+$$
+B_r(x_r)=x_r,\qquad A_r(x_r)=-x_r.
+$$
+由于 $A_r$ 递增，
+$$
+B_r(0)=-u<0,\qquad
+B_r(-a\lambda)=-A_r(-a\lambda)\ge-u>-a\lambda,
+$$
+两端点都不是不动点，故 $-a\lambda<x_r<0$。$x_r$ 也是 $H_r=B_r^2$ 的不动点；再由 $H_r$ 的严格收缩性及同一 Banach 定理，它是 $H_r$ 在 $I$ 内的唯一不动点，并且
+$$
+H_r^n(0)\longrightarrow x_r\qquad(n\to\infty).
+$$
+这里对每个固定 $r>0$ 分别应用收缩定理，不把 $\eta^{2a}<1$ 当作对 $r\downarrow0$ 一致的严格收缩常数。
+
+下面估计反射不动点的位置及整块位移。上行归纳已经表明每次送入 $G_r$ 的数都在 $[-a\lambda,a\lambda]$。下行从任意 $y_0\in[0,a\lambda]$ 开始，记 $y_j=F_{1,r}^{\circ j}(y_0)$，同理归纳得
+$$
+-j\lambda\le y_j\le(a-j)\lambda\qquad(0\le j\le a).
+$$
+在第 $j+1$ 步，输入 $y_j-\lambda$ 落在 $[-(j+1)\lambda,(a-j-1)\lambda]$，该区间仍包含零且包含于 $[-a\lambda,a\lambda]$。因此上下两程的所有中间输入都受同一个紧区间控制。
+
+对 $|z|\le a\lambda$，有恒等式
+$$
+G_r(z)-z
+=\log(1-r+re^{-z})-\log(1-r+re^z).
+$$
+两个对数自变量均至少为 $1-r$，对数函数在它们之间的导数至多为 $1/(1-r)$；又 $|e^z-e^{-z}|\le D_a$，所以
+$$
+|G_r(z)-z|\le\frac{rD_a}{1-r}.
+$$
+沿上行的 $a$ 步，将每步写成 $x_{j+1}=x_j+\lambda+[G_r(x_j+\lambda)-(x_j+\lambda)]$ 并求和，得到对所有 $x\in I$ 成立的界
+$$
+|A_r(x)-(x+a\lambda)|\le\frac{arD_a}{1-r}.
+$$
+在 $x=x_r$ 处使用精确方程 $A_r(x_r)=-x_r$，便有
+$$
+|2x_r+a\lambda|\le\frac{arD_a}{1-r},\qquad
+x_r\longrightarrow-\frac{a\lambda}{2}\quad(r\downarrow0).
+$$
+这一步只比较一个不动点方程和有限步缺陷，没有 Taylor 余项，也没有交换迭代极限与参数极限。
+
+对整个平衡块，上下两程的 $2a$ 个有符号增量相消。把同一逐步缺陷界相加，得
+$$
+|H_r(x)-x|\le\frac{2arD_a}{1-r}\le4arD_a
+\qquad(x\in I, 0<r<1/2).
+$$
+现在直接应用既有的输出轨迹误差定理 [`output_trajectory_error`](../../../D5/S3/Observer/MetricGeometry/OutputTrajectoryError.lean)：其域与映射取
+$$
+Y=I,\quad Z=\mathbb R,\quad
+\tau=H_r,\quad \sigma=\operatorname{id}_{\mathbb R},\quad
+\pi:I\hookrightarrow\mathbb R,\quad
+q_{\rm out}=h|_I,\quad o=h.
+$$
+在该定理中代入 $L=1$、$M=d/4$、一步缺陷 $\delta=4arD_a$、读出不匹配量零，并取初态 $0\in I$。恒等比较轨迹始终为零，真实块轨迹由保域性始终在 $I$，故全部假设成立。定理给出对每个整数 $n\ge0$ 的估计
+$$
+\left|h(H_r^n(0))-\frac12\right|
+\le\frac d4\,(4arD_a)\sum_{j=0}^{n-1}1^j
+=C_a n r.
+$$
+$n=0$ 时空和为零。等价地，在[《情境时空算术·机器学习》定义21.1、定理21.2](CONTEXTUAL_SPACETIME_ARITHMETIC_ML.md)中，取精确域 $I$、摘要为到 $\mathbb R$ 的包含映射、精确更新 $H_r$、模型更新及实际求值更新均为恒等映射，闭合缺陷 $4arD_a$、求值缺陷零、初始误差零、Lipschitz 常数一；输出为 $h$，输出 Lipschitz 常数 $d/4$，输出求值误差零，即得到同一估计。这里使用的比较轨迹是数学上的误差参照，没有给观察者增加演化实数寄存器。
+
+令
+$$
+g_r=\frac12-h(x_r)>0.
+$$
+由已证的不动点位置极限及 $h$ 的连续性，
+$$
+g_r\longrightarrow\frac12-h\!\left(-\frac{a\lambda}{2}\right)
+=\Delta\tanh\frac{a\lambda}{4}=g_a>2\varepsilon.
+$$
+因此可选 $r_0\in(0,1/2)$，使
+$$
+g_r-2\varepsilon\ge\frac{g_a-2\varepsilon}{2}
+\qquad(0<r<r_0).
+$$
+此选择只依赖先前固定的 $p,\varepsilon,a$。
+
+固定任意这样的 $r$，再固定任意误差至多 $\varepsilon$ 的 $m=|S|$ 状态观察者。对有限集 $S$ 上的块更新
+$$
+U=T_1^{\circ a}\circ T_0^{\circ a}
+$$
+及其初态 $s_0$、读出 $t$，直接应用 [`finite_orbit_and_readout_eventually_periodic`](../../../D5/S3/ObserverMemory/Prediction/FiniteOrbitPeriodBound.lean)，得到整数 $n\ge0$、$\ell\ge1$，使
+$$
+n+\ell\le m,\qquad
+U^{j+\ell}(s_0)=U^j(s_0)\quad(j\ge n).
+$$
+反复使用该状态等式，得 $U^{n+k\ell}(s_0)=U^n(s_0)$ 对所有 $k\ge0$ 成立。这是完整观察者状态相同；固定读出因而相同。记该读出为 $t_*=t(U^n(s_0))$。对应历史是有限词 $v^{n+k\ell}$，它的真实对数赔率为 $H_r^{n+k\ell}(0)$，故可行性给
+$$
+|t_*-h(H_r^n(0))|\le\varepsilon,\qquad
+|t_*-h(H_r^{n+k\ell}(0))|\le\varepsilon\quad(k\ge0).
+$$
+因为 $\ell\ge1$，在当前固定 $r$ 与当前固定观察者下令 $k\to\infty$，Banach 收敛及 $h$ 连续性给
+$$
+|t_*-h(x_r)|\le\varepsilon.
+$$
+这里每个被使用的有限词都有质量至少 $p^{2a(n+k\ell)}>0$；没有断言无限周期报告路径具有正概率。若 $n=0$，第一条误差约束就是空词约束，已包含在观察者定义中。
+
+最后连用三角不等式和轨迹误差界，得到
+$$
+\begin{aligned}
+g_r
+&\le\left|\frac12-h(H_r^n(0))\right|
+ +|h(H_r^n(0))-t_*|+|t_*-h(x_r)|\\
+&\le C_a n r+2\varepsilon
+\le C_a m r+2\varepsilon.
+\end{aligned}
+$$
+由于 $C_a r>0$，
+$$
+m\ge\frac{g_r-2\varepsilon}{C_a r}
+\ge\frac{g_a-2\varepsilon}{2C_a r}=\frac c r.
+$$
+有限轨道定理计数的是自映射 $U$ 的应用次数，即平衡块数 $n$，并不额外乘以词长 $2a$；这 $2a$ 步已计入整块位移估计。上述论证适用于每一个可行观察者，包括对各 $p,r,\varepsilon$ 分别重新设计的精确实数表。因此，可行有限基数集非空时，其最小元满足同一下界；该集合为空时 $N_{\min}^{(r)}(\varepsilon)=\infty$ 自动满足下界。证毕。
+
+本命题的模型、条件化与对数赔率坐标使用本卷命题153.1、156.1、157.1；块轨迹误差与有限状态周期界分别使用上述输出轨迹定理、ML 定理21.2与有限轨道定理。Banach 步骤使用非空完备度量空间上的收缩映射定理，见钉版 Mathlib 的 [`Contracting.lean`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Topology/MetricSpace/Contracting.lean) 中 `ContractingWith.fixedPoint_isFixedPt`、`ContractingWith.fixedPoint_unique` 与 `ContractingWith.tendsto_iterate_fixedPoint`。本命题给出这些既有结果在所列平衡块模型中的普通推导，不作新颖性断言。
+
+相邻文献的对象与量词不同。P. Chigansky，*Stability of the nonlinear filter for slowly switching Markov chains* (2006)，[arXiv:math/0411596](https://arxiv.org/abs/math/0411596)，第1节、定理1.1及二元例1.2，讨论不同初始先验所产生滤波器之差的几乎处处渐近指数；慢切换时该遗忘指数可以保持非零负极限。M. E. Hellman、T. M. Cover，*Learning with Finite Memory*，*The Annals of Mathematical Statistics* 41 (1970), 765–782，[原文](https://isl.stanford.edu/~cover/papers/paper018.pdf)，第0节（第765页）以长时间假设检验错误概率为损失，并允许随机化的时间齐次有限状态更新。这不同于这里的确定性逐词预测误差；上述所引结论不充当本命题的最坏有限词观察者基数界，也不作为该界的前提。
+
+结论仅限 $0<\varepsilon<\Delta/2$ 及充分小的正 $r$。本命题不对 $\varepsilon=0$ 或 $\varepsilon\ge\Delta/2$ 作出相同速率断言，不给匹配上界、最优 $a$ 或最优常数、状态成本单调性、关于容差的一致界或有限精度表的位成本。固定 $r$ 后的周期子序列极限与不动点的小 $r$ 位置估计各自独立成立，未交换两种极限。成本对象是观察者的全部演化可读状态数，潜在生成器的状态数始终为二；这不是熵、物理比特或能量下界。即使 $r=0$，每个非空报告分支也已经是测量制备映射，故此成本发散不描述量子到经典的转变。
+
+## 追加锚（本行以下为增补区）
