@@ -7424,3 +7424,687 @@ loads, auxiliary profiles, and final residues commute. This does not
 interchange a maximum with an expectation over depths, and sampled
 auxiliary profiles supply no upper bound for the complete maximum. No global-floor improvement follows
 from the two fixtures above.
+
+### Exact optimization of arbitrary point scores over all twelve low labels
+
+Fix the 75-point PG1 carrier and its original probability law from
+`mod3_conditioned_geometry_certificate.json`. Its projection modulo 45 has
+16 points. Put
+
+\[
+\mathcal C=\{1,3,5,9,15,45\},\qquad
+\mathcal D=\mathcal C\cup7\mathcal C.
+\]
+
+For each \(d\in\mathcal D\), independently choose an original residue
+\(a_d\bmod d\), and let
+
+\[
+B(x)=\sum_{d\in\mathcal D}\mathbf1_{x\equiv a_d\pmod d}.
+\]
+
+The \(d=1\) label is the constant low-test term; it is not a proposed
+admissible modulus in an odd covering. For any supplied integer tables
+\(s_x(k)\), \(x\) in the PG1 carrier and \(0\le k\le12\), the new oracle
+computes exactly
+
+\[
+\max_{(a_d)_{d\in\mathcal D}}\sum_x s_x(B(x)).
+\tag{AL1}
+\]
+
+Scores may have either sign and arbitrary curvature. Empty residue classes
+and all seven digits, including zero, remain legal. This quantifies over all
+twelve low-test labels for the supplied score table. It does not quantify
+over an external family of auxiliary profiles or arbitrary physical heights;
+those obligations remain with the caller.
+
+Write \(x_i\) for the 16 old points. The old load is
+\(A_i=\sum_{c\in\mathcal C}\mathbf1_{x_i\equiv a_c\pmod c}\).
+Keeping one original residue for each distinct old-cylinder mask gives
+\(1,3,5,6,8,17\) choices for the six cofactors, including empty masks.
+The 12,240 combinations yield exactly 11,808 distinct realizable vectors
+\(A\); one actual residue witness is retained for each vector.
+
+For fixed \(A\), each label \(7c\) independently chooses a digit
+\(y\bmod7\) and an old residue modulo \(c\). Coprimality makes these
+choices equivalent to one original residue modulo \(7c\). For a subset
+\(S\subseteq\mathcal C\), define
+
+\[
+H_y(S;A)=
+\max_{(b_c)_{c\in S}}
+\sum_i s_{y,i}\left(A_i+
+  \sum_{c\in S}\mathbf1_{x_i\equiv b_c\pmod c}\right),
+\tag{AL2}
+\]
+
+where absent physical points have identically zero tables. For subsets not
+containing 45, the implementation enumerates all 3,024 old-residue states
+across the 32 subsets. Adding label 45 either hits one old point or a legal
+empty class. At a given state with loads \(k_i\), its exact best increment is
+
+\[
+\max\left(0,\max_i[s_{y,i}(k_i+1)-s_{y,i}(k_i)]\right).
+\tag{AL3}
+\]
+
+The zero option is justified by an actual empty modulo-45 class on PG1.
+It is not a monotonicity assumption.
+
+Partition the six labels among the seven digits using
+
+\[
+V_0(\varnothing)=0,\qquad
+V_{y+1}(S)=\max_{T\subseteq S}
+  \bigl[V_y(S\setminus T)+H_y(T;A)\bigr],
+\tag{AL4}
+\]
+
+with other initial states unreachable. The empty block
+\(H_y(\varnothing;A)\) retains its actual score, which need not be zero.
+Every original residue assignment induces exactly such a partition and
+old-residue choices, and every choice in this recurrence lifts by CRT to
+original residues. Thus \(V_7(\mathcal C)\) is the exact fixed-\(A\)
+maximum. Maximizing it over all 11,808 realizable \(A\) proves (AL1).
+
+`pg1_signed_score_oracle.py` accepts either `point_scores[75][13]`, in the
+source PG1 point order, or `scores[7][16][13]`, in digit then old-point
+order. The optional positive integer `denominator` gives the common score
+denominator. It returns the exact maximum, twelve original residue labels,
+and all 75 maximizing loads. The original Python signed optimizer checks
+the maximizing old load, and a separate literal twelve-label evaluation
+checks the reported score. The C++ executable is compiled temporarily from
+the adjacent source, or supplied with `--binary`; raw inputs and complete
+value tables are temporary. The driver checks
+
+\[
+4\sum_{y,i}\max_k|s_{y,i}(k)|<2^{61},
+\]
+
+which bounds all signed 64-bit score, difference, and recurrence
+intermediates. The C++ raw-input format is an internal contract of this
+guarded driver.
+
+For the existing actual-coefficient fixture at depth \((1,1,1)\), retain
+exactly the moment and charge auxiliary residues in
+`exact_signed_digit_dp_certificate.json`. Reconstruct its objective as
+
+\[
+\mathbb E_\mu\left[
+  \frac43(B+R)^2+\frac16(149-B^2)(L-4)_+
+\right].
+\tag{AL5}
+\]
+
+Here \(\mu\) is the same PG1 law with denominator \(N=1000000007\).
+The integer score table is
+\(w_x[8(k+R(x))^2+(149-k^2)(L(x)-4)_+]\), with denominator \(6N\).
+Three actual points have negative quadratic coefficient. The exact
+all-low-label maximum is
+
+\[
+\frac{80520608091}{1000000007}
+=80.52060752735575\ldots .
+\tag{AL6}
+\]
+
+One maximizing witness has residues
+\((0,2,3,5,8,23)\) at moduli \((1,3,5,9,15,45)\), and
+\((5,5,33,5,68,68)\) at moduli \((7,21,35,63,105,315)\).
+The latter six all have digit 5. The maximum after restricting them to a
+common digit, while still maximizing over every old \(A\), equals (AL6).
+Thus the global independent-versus-common-digit gap for this particular
+fixed auxiliary profile is zero.
+
+The earlier fixed-\(A\) counterexample is unchanged: at old residues
+\((0,2,2,2,2,2)\), the independent and common-digit maxima remain
+\(223040367109/(3N)\) and \(223011181693/(3N)\), respectively, with
+strict gap \(9728472/N>0\). Equality of the two maxima after optimizing
+over all old loads does not imply equality at each old load, or validate a
+common-digit restriction for other score tables.
+
+`verify_pg1_all_low_scores.py` reconstructs (AL5) from the original
+auxiliary residues and source weights, runs the complete optimization,
+and compares 32 spread old loads, including the earlier fixed load, against
+the original Python optimizer. It compares the deterministic
+`pg1_all_low_scores_certificate.json` by default; only `--write` rewrites
+the certificate. This is an exact finite optimization program and
+certificate, not a Lean formalization or a solution of unrestricted #7.
+
+### A reference-optimal boundary for the old PG1 anchored functional
+
+Keep the actual PG1 low probability \(\mu\), its higher357 lift, the
+original modulus labels and the actual survival event \(F\) unchanged.
+Write \(Q=\Pr(F)\). The existing independent survival certificate gives
+
+\[
+ q_0=\frac{25428074957}{48000000336}\le Q\le1.
+\]
+
+For every \(d\mid315\), select the genuine original low class
+\(47\pmod d\), including the constant class at \(d=1\), and let
+\(B=\sum_{d\mid315}\mathbf1_{47\bmod d}\). The all-height AF1 estimate is
+
+\[
+ U(B)=\mathbb E_\mu B^2+
+  2\sum_{d\mid315}\gamma_d m_d(B\mu)+K_{\rm high}
+  =\frac{156034880279}{8000000056},
+ \qquad K_{\rm high}=\frac{74198115637}{24000000168}.
+\]
+
+Here, with \(S(d)=\{p:v_p(d)=h_p\}\) and \(h=(2,1,1)\),
+
+\[
+ a_d=\prod_{p\in S(d)}\frac p{p-1},\quad \gamma_d=a_d-1,
+ \quad
+ b_{de}=\prod_{p\in S(d)\cap S(e)}\frac{p(p+1)}{(p-1)^2}
+          \prod_{p\in S(d)\triangle S(e)}\frac p{p-1},
+\]
+
+and \(K_{\rm high}=\sum_{d,e}(b_{de}-a_d-a_e+1)
+m_{\operatorname{lcm}(d,e)}(\mu)\). These are complete geometric moments,
+with no finite-height cutoff.
+
+Let \(R_{\rm old}\) be the existing grouped-deletion operator, including
+its complete nonnegative remainder. Explicitly its groups are
+\((9,45)\), \((5,15,45)\), the extra class at \(35\), and
+\((7,21,35,63,105,315)\); its remaining cylinder coefficients are
+
+\[
+ \rho_d=\gamma_d-\frac12\mathbf1_{d\in\{9,45\}}
+  -\frac14\mathbf1_{d\in\{5,15,45,35\}}
+  -\frac16\mathbf1_{7\mid d}\ge0.
+\]
+
+The exact mass calculation is
+
+\[
+ R_{\rm old}(\mu)=\frac{22571925379}{48000000336}=1-q_0.
+\]
+
+For every real reference \(K\), define
+
+\[
+ e(K)=U(B)+R_{\rm old}\bigl((K-B^2)_+\mu\bigr)-K,
+ \qquad H(K)=\max_{q_0\le Q\le1}\left(K+\frac{e(K)}Q\right).
+\]
+
+Then the exact result is
+
+\[
+ \boxed{\min_{K\in\mathbb R}H(K)
+       =\frac{853585952201}{26129684197}
+       =32.66728927014747\ldots.}                                      \tag{RB1}
+\]
+
+This is a boundary for **fixed AF1, fixed \(R_{\rm old}\), and the
+independent interval \([q_0,1]\)**. It is not a lower bound for a true
+moment or an upper bound over all low tests. It does not apply to a new
+deletion operator, a larger certified survival, a stronger AF1 bound,
+or a whole-cost criterion coupling other costs to the same \(Q\).
+In particular it leaves open an improvement of the current uniform
+head bound \(33.73365775325071\ldots\) to a value above (RB1).
+
+For completeness, monotonicity, subadditivity and positive homogeneity
+of \(R_{\rm old}\) give, whenever \(K_2-K_1=\Delta>0\),
+
+\[
+ -\Delta\le e(K_2)-e(K_1)\le-q_0\Delta.                              \tag{RB2}
+\]
+
+Indeed the difference of the positive-part inputs lies pointwise between
+zero and \(\Delta\), and \(R_{\rm old}(\Delta\mu)=\Delta(1-q_0)\).
+Thus \(e\) is continuous, strictly decreasing, and tends to opposite
+infinities at the ends of the real line. It has a unique zero \(K_*\).
+For \(e(K)\ge0\), \(H(K)=K+e(K)/q_0\) is nonincreasing by (RB2).
+For \(e(K)\le0\), \(H(K)=K+e(K)=U(B)+R_{\rm old}((K-B^2)_+\mu)\)
+is nondecreasing. Therefore the global minimum is \(H(K_*)=K_*\).
+The negative excess retains the actual common denominator; it is not
+independently divided by \(q_0\).
+
+On \([32,33]\) the positive-part support is fixed to \(B\le5\).
+Every feasible combined deletion witness is consequently affine in \(K\).
+The exact endpoint oracles and one feasible original-residue witness give
+
+\[
+ R_{\rm old}((K-B^2)_+\mu)=\alpha K-\beta\quad(32\le K\le33),
+ \quad\alpha=\frac{21870316139}{48000000336},\quad
+ \beta=\frac{82623329473}{48000000336}.                              \tag{RB3}
+\]
+
+To see why the interior equality follows, the maximum of the witness
+lines is convex and lies above this feasible line. Equality at both
+endpoints forces equality throughout the interval by convexity. The
+endpoint signed excesses are
+
+\[
+ e(32)=\frac{5812019299}{16000000112}>0,\qquad
+ e(33)=-\frac{2173406575}{12000000084}<0.
+\]
+
+The unique zero is therefore in this interval, and (RB3) gives
+\(K_*=(U(B)-\beta)/(1-\alpha)\), proving (RB1).
+
+`verify_pg1_anchored_reference_boundary.py` reconstructs the law, AF1
+coefficients, complete deletion remainder, exact endpoint maxima and
+the realizing group and cylinder residues. It binds both canonical
+PG1 and original9 source certificates by SHA256. It reuses the existing
+`group_setup` and `group_oracle`; no depth-box square maxima are rerun.
+The certificate contains rational results and witnesses, with no timing
+or exploratory-search data. The default operation compares the entire
+recomputation; `--write` explicitly regenerates it:
+
+```text
+python3 -I -O verify_pg1_anchored_reference_boundary.py
+```
+
+This is an ordinary proof with an exact arithmetic verifier; no new Lean
+formalization is claimed.
+
+### Probability-capped deletion and a joint observation beyond this boundary
+
+On a finite support, the old operator has the form
+\(R(v)=\max_{g\in\mathcal G}v\cdot g\) for nonnegative finite-measure
+vectors \(v\), where \(\mathcal G\) is finite, nonempty and nonnegative.
+Define
+
+\[
+ R_{\rm cap}(v)=\min_{0\le\sigma\le v}
+       [\mathbf1\cdot(v-\sigma)+R(\sigma)].                           \tag{RC1}
+\]
+
+Using \(v=\mu f\) and \(\sigma=\mu h\) handles zero masses without any
+division: conversely set \(h_x=\sigma_x/\mu_x\) only when \(\mu_x>0\),
+and set \(h_x=0\) otherwise. If \(\theta\) is the actual conditional
+deletion vector, \(0\le\theta\le1\) and \(\theta\cdot\sigma\le R(\sigma)\)
+give \(\theta\cdot v\le R_{\rm cap}(v)\). The actual event is unchanged.
+
+Finite LP duality gives
+
+\[
+ R_{\rm cap}(v)=\max_{r\in P}v\cdot r,\qquad
+ P=\{r:0\le r\le1,\ \exists\bar g\in\operatorname{conv}\mathcal G,
+       \ r\le\bar g\}.                                               \tag{RC2}
+\]
+
+In detail, use primal variables \(t,\sigma\ge0\), constraints
+\(\sigma\le v\), \(g\cdot\sigma\le t\), and objective
+\(\mathbf1\cdot v-\mathbf1\cdot\sigma+t\). Its dual has multipliers
+\(\lambda_g,y_x\ge0\), \(\sum_g\lambda_g\le1\),
+\(y_x+\sum_g\lambda_g g_x\ge1\). Both programs are feasible.
+Minimizing \(y_x\) and filling any missing nonnegative \(\lambda\) mass
+gives \(\max_{\bar g\in\operatorname{conv}\mathcal G}
+\sum_x v_x\min(1,\bar g_x)\), equivalent to (RC2).
+The downward closure in \(P\) is necessary; \(\operatorname{conv}
+\mathcal G\cap[0,1]^X\) alone can be empty. The existing formal
+prerequisite is `FiniteStrongDuality.ValidELP.strong_duality_of_both_feasible`
+in `D5/S3/Analytic/Convexity/FiniteStrongDuality.lean`.
+
+The capped operator is monotone and sublinear. For nonnegative costs
+\(Z_j\ge b_j(x)\), coefficients \(a_j\ge0\), a common event \(F\), and
+\(\mathbb E\sum_j a_jZ_j\le U\), put \(b=\sum_j a_jb_j\). Then
+
+\[
+ Q\left(\mathbb E\left[\sum_j a_jZ_j\mid F\right]-K\right)
+ \le U-K+R_{\rm cap}((K-b)_+\mu).                                    \tag{RC3}
+\]
+
+If \(K=\sum_j a_jK_j\), the last deletion term is at most
+\(\sum_j a_jR_{\rm cap}((K_j-b_j)_+\mu)\). Taking the positive part
+after summing can exploit cancellation, and one maximizing deletion
+vector can replace several independent maximizers. This proves a
+comparison of bounds, not a strict PG1 improvement.
+
+Since \(P\) is downward closed, its support function at a signed vector
+equals its support function at that vector's positive part. If
+\(q_{\rm cap}=1-R_{\rm cap}(\mu)>0\), the unique zero of
+\(U-K+R_{\rm cap}((K-b)_+\mu)\) is therefore exactly
+
+\[
+ \max_{r\in P}
+ \frac{U-\sum_x\mu_xb_xr_x}{1-\sum_x\mu_xr_x}.                       \tag{RC4}
+\]
+
+All denominators are at least \(q_{\rm cap}\); the same vector \(r\)
+appears in the numerator and the survival probability. The maximization
+is an upper relaxation, not an assertion of physical attainability.
+
+For the AF1 head objective alone, fixing cross-cap witnesses produces
+a nonnegative linear coefficient \(a_x\). Its capped point score obeys
+
+\[
+ k^2+a_xk+r_x(K-k^2)_+
+ =\max\{k^2+a_xk,(1-r_x)k^2+a_xk+r_xK\},                             \tag{RC5}
+\]
+
+which is increasing and convex for \(k\ge0\), \(0\le r_x\le1\).
+This permits removal of empty original classes from that head-only
+maximization. It does not establish common-digit alignment or convexity
+of a full joint charge objective containing additional negative
+quadratic terms.
+
+### An auxiliary majorant covering every original low test
+
+Another sufficient global bound retains the old operator. Express
+\(U(B)+R_{\rm old}((K-B^2)_+\mu)\) as
+
+\[
+ K_{\rm high}+\max_{z_j\in Z_j}\sum_x
+       [\mu_xB_x^2+\sum_j c_{j,x}(B_x)z_{j,x}],                        \tag{MX1}
+\]
+
+where cross-cap terms have \(c_{j,x}(k)=2\gamma_d\mu_xk\), remainder
+caps have \(c_{j,x}(k)=\rho_d\mu_x(K-k^2)_+\), and the grouped term
+has \(c_{j,x}(k)=\mu_x(K-k^2)_+\). Each \(Z_j\) is its complete cylinder
+or grouped-witness family. These auxiliary maxima are independent in
+the old upper functional; no joint physical realization is assumed.
+
+Each separate witness satisfies \(0\le z_{j,x}\le1\). For the grouped
+term, writing \(A\in\{0,1,2\}\), \(B_5\in\{0,1,2,3\}\),
+\(E\in\{0,1\}\), \(S\in\{0,\ldots,6\}\), and \(b=B_5+E\), its
+numerator is
+
+\[
+ 24A+(2-A)[6b+(4-b)S]\le24A+24(2-A)=48.
+\]
+
+The complete old vector after adding remainders need not be bounded by
+one and must remain separated into these auxiliary terms.
+Choose nonnegative vectors \(q_j=(q_{j,x})_x\), fixed throughout the
+maximization over \(B\), and put \(h_j(q)=\max_{z\in Z_j}q\cdot z\).
+The pointwise inequality \(cz\le(c-q)_++qz\) yields
+
+\[
+ \max_B[U(B)+R_{\rm old}((K-B^2)_+\mu)]\le V(K;q),
+\]
+\[
+ V(K;q)=K_{\rm high}+\max_B\sum_x
+ [\mu_xB_x^2+\sum_j(c_{j,x}(B_x)-q_{j,x})_+]+\sum_jh_j(q_j).           \tag{MX2}
+\]
+
+The middle term can be evaluated by the exact independent-digit and
+all-old-layout optimizer; every \(h_j\) needs its complete cap or group
+oracle. Sampled witnesses give no upper certificate for \(h_j\).
+For the actual same survival \(Q\), the resulting uniform head bound is
+
+\[
+ \Gamma\le
+ \begin{cases}
+ K+(V-K)/q_0,&V\ge K,\\
+ V,&V\le K.
+ \end{cases}                                                         \tag{MX3}
+\]
+
+In particular, \(V(T;q)\le T\) suffices for \(\Gamma\le T\).
+Neither (RC1)--(RC5) nor (MX1)--(MX3) asserts that a concrete all-low-test
+threshold has been met; each specifies an observation beyond the fixed
+functional whose limitation is certified by (RB1).
+
+### A finite dual obstruction to the reference33 price family
+
+For every nonnegative price vector in (MX2), at the fixed reference
+\(K=33\), the unchanged PG1 law satisfies
+
+\[
+ V(33;q)\ge
+ \frac{824892275704058867603}{24000000168000000000}
+ >34.3705112470.                                                     \tag{MX4}
+\]
+
+Improving the existing uniform head bound \(G\) at this reference
+would require
+
+\[
+ V(33;q)<33+q_0(G-33)
+ =\frac{460223929211132040332029}{13783840971486886125000}
+ <33.388656338.                                                       \tag{MX5}
+\]
+
+Thus this entire price family cannot improve that head bound at
+reference33. This is a limitation of the upper-envelope family, not
+a lower bound for an actual moment. Another reference, a different
+majorant, and costs combined on one actual event remain outside it.
+
+Here is the finite certificate argument. Prices can be restricted to
+\(0\le q_{j,x}\le\max_{1\le k\le12}c_{j,x}(k)\): reducing a price
+above that endpoint leaves its positive part zero and cannot increase
+the nonnegative support function. Retain 34 actual twelve-label tests
+in the maximum over \(B\), 60 actual group profiles in its support
+function, and all original residues in every other cylinder support.
+Restricting either maximum decreases (MX2), giving a lower relaxation
+of its best achievable value.
+
+The epigraph formulation of this relaxation has 15617 variables and
+15677 inequalities. Positive-part variables are bounded by their
+coefficient maxima, cylinder and group epigraphs by the supports of
+those maxima, and the test epigraph by
+\(144+\sum_{j,x}\max_k c_{j,x}(k)\). After normalization all variables
+lie in \([0,1]\); these bounds preserve the minimum. For the negated
+objective \(c^Tx\), integer constraints \(Ax\le b\), and any
+nonnegative rational multiplier vector \(z\),
+
+\[
+ c^Tx\le b^Tz+\sum_j\max\{c_j-(A^Tz)_j,0\}
+ \qquad(0\le x_j\le1).                                               \tag{MX6}
+\]
+
+The retained dual has 1536 nonzero entries. Exact evaluation of every
+residual in (MX6), followed by negation and restoration of
+\(K_{\rm high}\), gives (MX4). This argument requires the retained
+profiles to be feasible; their completeness is unnecessary for a
+lower relaxation. In contrast, evaluating an upper certificate in
+(MX2) requires complete maximization.
+
+`verify_pg1_maxplus_obstruction.py` reconstructs every test load and
+group profile as original congruence classes on the 75 actual points,
+the complete geometric coefficients, the epigraph matrix, and the
+integer dual calculation. Its adjacent certificate binds both source
+files by SHA256. The replay uses only the Python standard library,
+with no numerical optimizer or floating-point premise:
+
+```text
+python3 -I -O verify_pg1_maxplus_obstruction.py
+```
+
+This is an ordinary finite dual argument with exact arithmetic evidence,
+not a new Lean theorem or an improved uniform PG1 constant.
+
+### Transfer of the PG1 law after a bounded loss of low mass
+
+The all-height moment bound \(35\) now covers \(1,172\) carrier orbits
+on the PG1 old45 shape, including \(53\) inclusion-minimal orbits.
+The former support-containment transfer covered \(232\) orbits and one
+minimal orbit. The increase follows from restricting the existing PG1
+probability to another actual carrier while controlling the discarded
+probability mass.
+
+Let \(A\) be the fixed PG1 low carrier, \(\mu\) its certified law,
+and \(\lambda\) its uniform lift to arbitrary finite physical 3/5/7
+heights. For an arbitrary higher forbidden family with distinct original
+moduli, let \(F\) be its actual survivor event. The source certificate
+gives, simultaneously for every original-label test load \(L\),
+
+\[
+ Q=\lambda(F)\ge q_0=\frac{25428074957}{48000000336}>0,
+ \qquad \mathbb E_\lambda[L^2\mid F]\le
+ G=\frac{492647095380812739054683}{14604022456869186140625}.
+\]
+
+For another actual low carrier \(B\), write \(t=\mu(A\setminus B)<q_0\).
+More generally, any same-law observation \(\mathbb E_\lambda[Z\mid F]\le C\)
+with a pointwise floor \(Z\ge c\) transfers on this one target law as
+\[
+ \mathbb E_\lambda[Z\mid F\cap B]
+ \le c+(C-c)\frac{q_0}{q_0-t}.                                     \tag{WL0}
+\]
+The proof below uses \(Z=L^2,c=1\); replacing \(L^2-1\) by \(Z-c\)
+proves (WL0). The coordinate map and target law are chosen once per
+carrier, independently of the test and of which observation is consumed.
+
+The unit test class gives \(L\ge1\). Use the target's higher
+forbidden family in the source theorem, so the higher event \(F\) is
+unchanged. With \(s=\lambda(F\cap B^c)\le t\),
+
+\[
+ \mathbb E_\lambda[(L^2-1)\mathbf1_{F\cap B}]
+ \le \mathbb E_\lambda[(L^2-1)\mathbf1_F]\le(G-1)Q.
+\]
+
+Since \(Q-s\ge q_0-t>0\), this proves
+
+\[
+ \mathbb E_\lambda[L^2\mid F\cap B]
+ \le1+(G-1)\frac{Q}{Q-s}
+ \le1+(G-1)\frac{q_0}{q_0-t}.                                      \tag{WL1}
+\]
+
+The target low law is \(\mu(\cdot\mid B)\); its uniform high lift,
+conditioned on \(F\), is exactly \(\lambda(\cdot\mid F\cap B)\).
+Under that normalized lift the survival lower bound is
+
+\[
+ q_{\rm target}\ge\frac{q_0-t}{1-t}>0.                              \tag{WL2}
+\]
+
+This normalization is separate from the actual \(Q\) and \(s\) used in
+(WL1). The source and target low forbidden lists are not combined into
+a new distinct-modulus family; the restricted measure is simply
+supported on the target's allowed low points.
+
+In particular the source bounds \(\mathbb E L\le5\) and
+\(\mathbb E(L-2)_+\le3\) from the same original9 certificate become
+\(\mathbb E L\le1+4q_0/(q_0-t)\) and
+\(\mathbb E(L-2)_+\le3q_0/(q_0-t)\). Any existing source bounds
+\(H_4\le C_4\), \(H_6\le C_6\) likewise transfer to
+\(H_4\le C_4q_0/(q_0-t)\), \(H_6\le C_6q_0/(q_0-t)\), using floor
+zero. These observations and the square bound hold on the same target
+law and remain available to a subsequent 11/13 argument.
+
+For target moment \(35\), (WL1) requires only
+
+\[
+ t\le t_{35}:=\frac{q_0(35-G)}{34}
+  =\frac{2311711326201096983399}{117162648257638532062500}
+  =0.019730787589554016\ldots.                                     \tag{WL3}
+\]
+
+With source denominator \(N=1000000007\), this is equivalent to an
+integer discarded numerator at most \(19730787\). All \(75\) single
+points and \(251\) of the \(2775\) unordered pairs meet the threshold.
+Three points can meet it, but no four points can; the unrestricted
+weighted matching below includes the three-point possibility.
+
+The permitted old-coordinate maps preserve the old45 support and
+permute mod9 children within their mod3 roots and mod5 columns. They
+extend to full mod9/mod5 permutations by filling the missing children
+and columns. A single common permutation of the six nonzero mod7
+digits fixes digit zero. For each prime with baseline height \(h_0\),
+extend the low permutation by
+\(a+p^{h_0}z\mapsto\pi(a)+p^{h_0}z\). This preserves every lower
+prefix and leaves higher digits unchanged. CRT therefore maps every
+original cylinder to a cylinder of the **same original modulus**, at
+every finite height, and preserves uniform high fibers. Pulling back
+the target's higher family and tests makes (WL1)--(WL2) valid after
+every permitted coordinate map. Row-dependent mod7 permutations are
+not used.
+
+For exact computation, write \(w_{s,i}\) for the PG1 weight numerator
+at seven digit \(s\) and old row \(i\), with zero for absent points.
+Let \(M_1,\ldots,M_6\) be the target's deletion masks, padded with
+empty masks. For an allowed old map \(p\), the assignment cost is
+
+\[
+ C_p(s,j)=\sum_iw_{s,i}\mathbf1_{p(i)\in M_j}.
+\]
+
+The minimum discarded numerator is exactly
+\(\min_p\min_{\pi\in S_6}\sum_sC_p(s,\pi(s))\). The verifier
+evaluates all \(12\) old maps and all \(720\) digit permutations using
+integers, then replays every chosen minimum on the \(75\) original
+source points. The old-map group and the complete digit permutations
+make eligibility invariant across each target orbit, justifying the
+state counts from orbit sizes.
+
+The complete domain is \(153,997\) actual mask states in \(34,160\)
+orbits. It contains \(102,083\) essential states in \(21,524\) orbits
+and \(10,554\) inclusion-minimal orbits. The essential and minimal
+domains are independently reconstructed and checked against the
+existing classification hashes. The resulting counts are:
+
+| Admitted source loss | Actual states | Carrier orbits | Essential orbits | Minimal orbits |
+|---|---:|---:|---:|---:|
+| Zero | 1,648 | 232 | 1 | 1 |
+| At most one point | 6,871 | 1,146 | 70 | 50 |
+| At most two points, subject to (WL3) | 7,073 | 1,172 | 73 | 53 |
+| Full weighted threshold (WL3) | 7,073 | 1,172 | 73 | 53 |
+
+Thus the full weighted search adds \(5,425\) actual states, \(940\)
+carrier orbits and \(52\) minimal orbits. The equality of the last two
+rows is a computed result, not an assumption excluding three-point loss.
+
+One newly covered minimal carrier has canonical deletion masks
+\((1,2320,8456,25352,44378)\). Its certificate gives all eleven original
+low modulus/residue pairs, reconstructs their actual complement, and
+gives an allowed coordinate map under which only source point \(271\)
+is lost. Its exact estimates are
+
+\[
+ t=\frac{14288471}{1000000007},\qquad
+ \Gamma\le
+ \frac{492253195359590634804683}{14210122435647081890625}
+ <34.642<35.
+\]
+
+For the combined count, the existing C2 law covers \(152\) orbits and
+one minimal orbit on `root2_other_same_column`. On
+`root1_same_other_column`, the uniform box and row-weighted law cover
+\(562+531-16=1077\) orbits and \(8+1=9\) minimal orbits; their overlap
+is subtracted using their existing certificate. These two shapes and
+the PG1 shape are distinct. Thus the combined target35 count increases
+from \(1461\) to \(2401\) carrier orbits and from \(11\) to \(63\)
+minimal orbits. Of the \(56966\) minimal orbits in the six-shape
+classification, \(56903\) remain outside these certified domains.
+These are conditional higher357 results; they do not complete the
+unrestricted-prime continuation or settle the general odd-covering problem.
+
+`verify_pg1_weighted_carrier_transfer.py` binds the six canonical source
+certificates by SHA256, rebuilds the entire matching domain, and compares
+the summary, witnesses and domain hashes with
+`pg1_weighted_carrier_transfer_certificate.json`. It retains no duplicate
+table of all \(34,160\) orbit calculations. Existing moment certificates
+on the other two shapes are inherited, not rerun as new moment bounds.
+No optimizer or network is needed. The default operation only compares;
+`--write` explicitly regenerates the certificate:
+
+```text
+python3 -I -O verify_pg1_weighted_carrier_transfer.py
+```
+
+The conditioning and lifting arguments are ordinary all-height proofs
+with an exact finite matching verifier. No new Lean finite-instance
+endpoint is claimed.
+
+Within the larger family of all \(2!3!4!=288\) normalized old-coordinate
+maps, dropping the source-stabilizer restriction cannot extend this
+particular transfer to another old shape. These maps fix the mod3 roots,
+missing mod9 child4 and mod5 column0. The source mass on old rows mapped
+outside the target old support is lost before any mod7 choice. Exact
+enumeration gives the following minimum lost numerators, all with
+denominator \(1000000007\):
+
+| Target old shape | Minimum lost numerator |
+|---|---:|
+| `root1_same_other_column` | 120057768 |
+| `root1_other_same_column` | 145937820 |
+| `root1_other_other_column` | 87566988 |
+| `root2_same_other_column` | 32378894 |
+| `root2_other_same_column` | 83395212 |
+
+Every value exceeds the permitted \(19730787\), independently of
+subsequent mod7 permutations or mixed-label choices. On the source
+shape exactly its twelve stabilizers pass this necessary old-row test.
+The same verifier reconstructs all \(6\times288\) old-row losses and
+checks each against the original 75-point calculation. This boundary
+concerns the fixed PG1 probability, bound35 and specified normalized
+map family; other probabilities and transfer constructions remain open.

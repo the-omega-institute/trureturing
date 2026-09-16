@@ -199,9 +199,29 @@ actual PG1 law, a joint-square/weighted-charge fixture with coefficients
 `223040367109/3000000021`, strictly exceeding the common-digit maximum
 by `9728472/1000000007`. Thus the common-digit shortcut for positive
 square estimates cannot be imposed on that signed joint objective.
-The unresolved outer optimization still includes all11808 old-load
-vectors and all moment/charge auxiliary profiles with their full tails;
-the finite fixtures supply no global continuation bound.
+The [complete twelve-label optimizer](../docs/reports/erdos7-odd-covering/marked_head_profile.md#exact-optimization-of-arbitrary-point-scores-over-all-twelve-low-labels)
+also eliminates all11808 realizable old-load vectors for any supplied
+signed point-score table. For that same fixed auxiliary fixture, its
+exact all-low-test maximum is `80520608091/1000000007`, equal to the
+all-old-load common-digit maximum. The earlier fixed-old-load strict
+gap remains valid. All moment/charge auxiliary profiles and their full
+tails still need a complete upper bound; neither finite fixture supplies
+a global continuation bound.
+
+The [reference-optimal boundary](../docs/reports/erdos7-odd-covering/marked_head_profile.md#a-reference-optimal-boundary-for-the-old-pg1-anchored-functional)
+for the aligned47 low test is exactly
+`853585952201/26129684197=32.66728927014747...`, minimizing over every
+real reference. This rules out certifying a uniform head bound32 using
+the fixed AF1 estimate, fixed old grouped deletion operator and independent
+survival interval alone. It is not an actual-moment lower bound. A
+probability-capped deletion operator and one-event joint-cost formula
+retain additional constraints, without claiming a numerical improvement.
+At the fixed reference33, a [finite exact dual certificate](../docs/reports/erdos7-odd-covering/marked_head_profile.md#a-finite-dual-obstruction-to-the-reference33-price-family)
+also excludes every nonnegative price choice in the termwise max-plus
+majorant: its value is at least `34.3705112470`, whereas improving the
+existing head bound would require a value below `33.388656338`.
+This excludes that fixed-reference majorant family, not other references
+or an improvement of the actual moment.
 
 A [complete uniform 86-point profile](../docs/reports/erdos7-odd-covering/marked_head_profile.md#a-uniform-86-point-profile-has-all-height-moment-bound-35)
 has **Gamma≤35** on each of its six actual mask states, in three
@@ -244,8 +264,20 @@ margins greater than0.910533 and0.563828, on one actual law at all
 original3/5/7 heights. The source law has full support; containing
 carriers inherit its transported supported law. This does not assert
 that their uniform laws fail the actual moment bound.
-The remaining56955 minimal orbits and the general prime-tail
-continuation remain unresolved.
+The [bounded-loss PG1 transfer](../docs/reports/erdos7-odd-covering/marked_head_profile.md#transfer-of-the-pg1-law-after-a-bounded-loss-of-low-mass)
+further enlarges the combined region to **2401 carrier orbits and63
+minimal orbits at Gamma≤35**. Restricting the mapped PG1 probability
+to the target carrier, with lost mass `t`, gives the same-law bound
+`1+(G-1)q0/(q0-t)` and survival at least `(q0-t)/(1-t)`.
+The exact admissible loss is `q0(35-G)/34=0.019730787589554016...`.
+Complete matching over34160 PG1-shape orbits,12 old maps and720 common
+seven-digit permutations raises that shape's coverage from232 to1172
+orbits and from1 to53 minimal orbits. It includes all allowed three-point
+losses and reconstructs a new minimal original-label witness.
+The same probability inherits the mean and hinge bounds with their
+explicit conditioning costs. The other two certified shapes remain
+disjoint, with their prior overlap already subtracted. The remaining
+56903 minimal orbits and the general prime-tail continuation are unresolved.
 
 The [complete actual-carrier classification](../docs/reports/erdos7-odd-covering/marked_head_profile.md#complete-low315-carrier-classification-for-actual-digit-bounds)
 identifies the finite domain needed to extend those digit-sensitive bounds.

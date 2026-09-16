@@ -737,6 +737,24 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Exact twelve-label maximum of one actual PG1 signed score table.
+pattern = "docs/reports/erdos7-odd-covering/pg1_all_low_scores_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Exact all-real-reference boundary for the fixed PG1 anchored deletion functional.
+pattern = "docs/reports/erdos7-odd-covering/pg1_anchored_reference_boundary_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]] # Complete original-low-test observations, full depth tails and one aligned PG1 branch consumer.
 pattern = "docs/reports/erdos7-odd-covering/pg1_anchored_square_certificate.json"
 kind = "data"
@@ -755,8 +773,44 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Finite rational dual obstruction for the PG1 termwise price family at reference33.
+pattern = "docs/reports/erdos7-odd-covering/pg1_maxplus_obstruction_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]] # Same PG1 signed second whole-cost rebate and complete shared-denominator criteria.
 pattern = "docs/reports/erdos7-odd-covering/pg1_signed_g2_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Integer optimizer over all PG1 old loads and independent original seven-label residues.
+pattern = "docs/reports/erdos7-odd-covering/pg1_signed_score_oracle.cpp"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Guarded portable interface and original-label replay for the PG1 integer score optimizer.
+pattern = "docs/reports/erdos7-odd-covering/pg1_signed_score_oracle.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Complete weighted PG1 carrier matching and bounded-loss transfer witnesses.
+pattern = "docs/reports/erdos7-odd-covering/pg1_weighted_carrier_transfer_certificate.json"
 kind = "data"
 admission_plane = "content"
 produced_by = "none"
@@ -1142,6 +1196,24 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Reconstructs actual signed scores and checks the complete PG1 twelve-label optimization.
+pattern = "docs/reports/erdos7-odd-covering/verify_pg1_all_low_scores.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Replays the complete-tail PG1 reference boundary and exact realizing deletion witnesses.
+pattern = "docs/reports/erdos7-odd-covering/verify_pg1_anchored_reference_boundary.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]] # Recomputes anchored all-height coefficients, complete outside tails and fixed-test PG1 consumers.
 pattern = "docs/reports/erdos7-odd-covering/verify_pg1_anchored_square.py"
 kind = "program"
@@ -1160,8 +1232,26 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Replays original-label witnesses and the exact dual obstruction for PG1 reference33 prices.
+pattern = "docs/reports/erdos7-odd-covering/verify_pg1_maxplus_obstruction.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]] # Replays signed deletions and the PG1 continuation using certified parent geometry.
 pattern = "docs/reports/erdos7-odd-covering/verify_pg1_signed_g2.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Rebuilds all PG1 weighted carrier matches and the combined original-label coverage count.
+pattern = "docs/reports/erdos7-odd-covering/verify_pg1_weighted_carrier_transfer.py"
 kind = "program"
 admission_plane = "content"
 produced_by = "none"
