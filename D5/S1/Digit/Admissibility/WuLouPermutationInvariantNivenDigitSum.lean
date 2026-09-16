@@ -2,15 +2,12 @@
    generality: G
    mirror-B: D5/B/S1/Digit/Admissibility/WuLouPermutationInvariantNivenDigitSum
    mirror-E: none(waiver:symbolic-proof-no-numeric-artifact)
-   anchors: [mathlib/module/Mathlib.Data.Nat.Digits.Lemmas, mathlib/module/Mathlib.Data.List.Perm.Basic, mathlib/module/Mathlib.Tactic.NormNum, mathlib/module/Mathlib.Tactic.Positivity, mathlib/module/Lean.Elab.Tactic.Omega]
+   anchors: [mathlib/module/Mathlib.Data.Nat.Digits.Lemmas, mathlib/module/Mathlib.Data.Nat.Prime.Basic, mathlib/module/Mathlib.Tactic.Positivity]
    utility: none
    digest: Wu and Lou's permutation-invariant decimal Niven digit-sum bound. -/
 import Mathlib.Data.Nat.Digits.Lemmas
 import Mathlib.Data.Nat.Prime.Basic
-import Mathlib.Data.List.Perm.Basic
-import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Positivity
-import Lean.Elab.Tactic.Omega
 
 namespace D5.S1.Digit.Admissibility.WuLouPermutationInvariantNivenDigitSum
 
