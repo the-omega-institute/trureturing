@@ -1,0 +1,16 @@
+**Definition 32.15 (The exact full-carrier invariance requirement).** For the actual rows $P^{(t)}$ and $f\in B_b(K)$ retain $k_f(x,y)=P^{(t)}_{x,y}(f)$. For $q\in ba(\mathcal B)$ define the pointwise bounded function
+$$
+\mathscr R_q f(x)=q\bigl(y\mapsto k_f(x,y)\bigr).
+$$
+This is defined for each $x$, because the section in $y$ is Borel, and it satisfies
+$$
+\|\mathscr R_q f\|_\infty\le C_t\|q\|\|f\|_\infty.
+$$
+Define the invariance condition
+$$
+(\mathrm I_B^{(t)})\qquad
+\mathscr R_q f\in B_b(K)
+\quad\text{for every }q\in ba(\mathcal B),\ f\in B_b(K).
+$$
+This is an additional condition, not a consequence of joint Borel measurability and not an assumption imposed on the actual carrier. Symmetry of the rows makes the corresponding condition with the two input positions exchanged identical. Theorems 32.19–32.20 determine its status for the actual rows.
+
