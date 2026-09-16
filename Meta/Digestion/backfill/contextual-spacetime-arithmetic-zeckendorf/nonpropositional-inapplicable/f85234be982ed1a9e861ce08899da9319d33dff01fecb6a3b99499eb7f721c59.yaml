@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f85234be982ed1a9e861ce08899da9319d33dff01fecb6a3b99499eb7f721c59
+  normalized_sha256: sha256:f85234be982ed1a9e861ce08899da9319d33dff01fecb6a3b99499eb7f721c59
+cas_ref: sha256:f85234be982ed1a9e861ce08899da9319d33dff01fecb6a3b99499eb7f721c59
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 对不属于子群的状态，在商群的非零类上应用字符分离，再沿商映射拉回并按单位向量求值成为总系数行；由此同时得到源句的核交等式与全部分离量词。仓内无冻结 GID。
+    previous_atom_id: b18ebdba0b1621280d6fd3dd876523d5dc2a5832005d3822a8a83cefeb1d4439
+    next_atom_id: 82ee9d478c55206f47a822c47a0e8da592a137cbcdb4e9b8d84db7f219b18713

@@ -1,0 +1,6 @@
+**Theorem.** For `2<=d<=p-2` and every f in R[X] reducing to `(X-1)^d`,
+
+\[
+\boxed{f\nmid X^p-1.}\tag{U.14}
+\]
+

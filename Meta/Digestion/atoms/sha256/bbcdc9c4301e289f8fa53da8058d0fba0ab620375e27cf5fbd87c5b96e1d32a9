@@ -1,0 +1,21 @@
+### QR.1 What the native-prime layers do and do not add
+
+Keep NP's actual prime-factor sums S_(p,k), epsilon=(5/p), and q_p.
+The identity NP8 gives, for every fixed prime p>=7,
+
+$$
+2\epsilon^k S_{p,k}\equiv q_p\pmod p\quad(k\ge0). \tag{QR1}
+$$
+
+Consequently all finite vectors of these normalized residues are diagonal:
+(q_p,...,q_p). For any nonempty finite set of layers, simultaneous vanishing
+is exactly the same condition as vanishing at a single layer. Distinct
+prime supports do not make these particular residue tests independent.
+This is a consequence of NP8, not a new estimate on the WSS zero set.
+It does not say that all information in the full prime factorizations is
+redundant, or that residues at different base primes are equal.
+
+Together with Appendix FSP.3, the following use of primitive factors
+proves positive natural density without any supposition that initial
+depths equal one.
+

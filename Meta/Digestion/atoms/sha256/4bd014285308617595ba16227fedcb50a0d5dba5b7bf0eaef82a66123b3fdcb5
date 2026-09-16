@@ -1,0 +1,12 @@
+**Proof.** If p^2|M and p divides a exactly once, every integer in the residue class has exponent exactly one at p. This proves necessity.
+
+For sufficiency write e_p=v_p(M) for p|M and let t_p be the largest t<=e_p for which p^t|a. Thus t_p=e_p if a is zero modulo p^e_p; no valuation of zero is taken. Choose nu_p=0 when t_p=0, nu_p=t_p when 0<t_p<e_p, and nu_p=max(e_p,2) when t_p=e_p. The hypothesis ensures that every positive nu_p is at least two. Hence D=product_{p|M}p^nu_p is powerful.
+
+There is a unit u modulo M with Du congruent to a. At t_p<e_p, the congruence reduces to
+
+$$
+u\equiv(a/p^{t_p})(D/p^{t_p})^{-1}\pmod{p^{e_p-t_p}}.
+$$
+
+Both factors on the right are units at p; choose any unit lift modulo p^e_p. At t_p=e_p the original congruence is automatic, and choose u=1 modulo p^e_p. The Chinese remainder theorem combines these unit classes. Choose positive x,y representing u^(-1),u modulo M. Then N=Dx^2y^3 is powerful and N congruent to Du=a modulo M. When M=1 take D=x=y=1.
+

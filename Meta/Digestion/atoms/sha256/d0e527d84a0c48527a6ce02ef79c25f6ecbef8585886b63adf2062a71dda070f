@@ -1,0 +1,6 @@
+记
+$$
+D^*=\operatorname{Enc}[D],\quad d\in_Zc\Longleftrightarrow\operatorname{Dec}(d)\in\operatorname{Dec}(c),\quad
+\operatorname{Pack}(B)=\operatorname{Enc}(\operatorname{Dec}[B])
+$$
+其中 $B$ 必须是有效码组成的集合。

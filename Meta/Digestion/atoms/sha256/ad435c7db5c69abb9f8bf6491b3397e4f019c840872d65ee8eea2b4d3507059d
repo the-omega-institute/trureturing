@@ -1,0 +1,6 @@
+**Theorem.** Suppose f,g in R[X] reduce to `(X-1)^d,(X-1)^e`, respectively, with d,e>=2. Then
+
+\[
+fg\ne X^p-1.\tag{U.13}
+\]
+

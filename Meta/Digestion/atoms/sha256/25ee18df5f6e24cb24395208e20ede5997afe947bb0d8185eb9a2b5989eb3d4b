@@ -1,0 +1,9 @@
+**Proof.** Apply the multiplicative character to the unique prime
+factorization. A split prime contributes $1$ at every exponent; an inert
+prime contributes $(-1)^{v_p(M)}$. Reducing the exponent sum modulo two
+leaves exactly the displayed count of distinct odd-exponent inert primes.
+Thus there are two linked parities: the parity of each exponent, and the
+parity of the number of negative contributions. This is a multiplicative
+readout with values in the two-element group. It retains one bit of each
+exponent and does not distinguish depths one and three.
+

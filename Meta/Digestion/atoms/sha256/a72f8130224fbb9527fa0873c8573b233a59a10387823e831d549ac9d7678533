@@ -1,0 +1,14 @@
+**定义。** 对正整数 $r$，令 $r_{\rm odd}=r/2^{v_2(r)}$。令 $\mathcal R_8(X)$ 为满足下列条件的不同秩 $r\in\mathcal R_1$ 的集合：
+
+$$
+r\le60X+2,\quad r\text{ 平方自由},\quad\gcd(r,60)\le2,\quad
+1\le\omega(r_{\rm odd})\le8,
+$$
+
+且 $r_{\rm odd}$ 的每个素因子均不小于 $y=X^{4/35}$。记
+
+$$
+R_8(X)=|\mathcal R_8(X)|,\qquad
+T_X=\#\{k\in\mathcal A_X:60k\in\mathcal T\}.
+$$
+

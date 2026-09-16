@@ -1,0 +1,6 @@
+**Lemma.** For every k>=0, F_(p^k) is a unit at p, and
+
+$$
+F_{p^k}\equiv\epsilon^k,\qquad L_{p^k}\equiv1\pmod p.       \tag{NP1}
+$$
+
