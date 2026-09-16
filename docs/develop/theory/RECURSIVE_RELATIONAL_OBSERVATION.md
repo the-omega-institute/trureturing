@@ -13905,3 +13905,716 @@ $$
 Consequently the corresponding eigenvalues for $k=G_j$ tend to one. For every fixed $n$, the norms $\|U_p^n\chi_{G_j}\|_2$ tend to one, proving the operator-norm lower bound by one. The contraction property supplies the reverse inequality. Thus finite observation size supplies neither an autonomous quotient chain nor a full-space spectral gap. $\square$
 
 ## 追加锚（本行以下为增补区）
+## 37. Successor-operator completion and the loss of common composition witnesses
+
+**Definition 37.0 (Original carrier, adopted hypotheses, and conventions).** Let
+$$
+\phi=\frac{1+\sqrt5}{2},\qquad \alpha=\phi^{-1},\qquad \delta=[\phi]\in\mathbb T=\mathbb R/\mathbb Z,
+$$
+and retain the original carrier and phase observation of §20:
+$$
+K=\{x\in\{0,1\}^{\mathbb N}:x_jx_{j+1}=0\text{ for all }j\},\qquad 0_K=Z(0),
+$$
+$$
+H(x)=\left[\sum_{j\ge0}(-1)^{j+1}\alpha^{j+2}x_j\right].
+$$
+Here $T:K\to K$ is the actual continuous successor of Definition 20.1. In particular, it is not an endpoint-selecting binary operation. We use the established facts that $K$ is compact metrizable, $Z(\mathbb N)$ is dense, $H$ is a continuous surjection, and
+$$
+T Z(n)=Z(n+1),\qquad H(Tx)=H(x)+\delta.
+$$
+Put
+$$
+E_m=-m\delta\quad(m\ge1),\qquad E=\{E_m:m\ge1\},\qquad \Sigma=\{-1,+1\}.
+$$
+For $\gamma\notin E$, let $k_\gamma$ be the unique point of $H^{-1}(\{\gamma\})$. For $\gamma=E_m$, retain the two oriented lifts $x_m^-,x_m^+$ of Theorem 20.2. Superscripts $+$ and $-$ mean $+1$ and $-1$. Signs refer to the orientation of the $H$-circle, not to the reflected mechanical intercept $[\alpha^2]-H(x)$. In particular,
+$$
+x_1^+=u=(10)^\infty,\qquad x_1^-=v=(01)^\infty,
+$$
+$$
+Tx_m^s=x_{m-1}^s\quad(m\ge2),\qquad Tx_1^s=0_K.
+$$
+We use the exact positional cylinder intervals and finite cut sets from Theorem 20.2. We also retain the one-sided normalization of Theorem 20.7:
+$$
+\Phi(0_K)=w,\qquad \Phi(x_1^-)=0w,\qquad \Phi(x_1^+)=1w,
+$$
+where $w$ is the characteristic mechanical word with slope and intercept $\alpha^2$. Thus the two predecessors coalesce under the one-sided successor; they are not identified beforehand.[^rro37_onesided]
+
+Define the set of actual self-maps
+$$
+\mathcal I=\{T^n:n\in\mathbb N\},\qquad
+\mathscr E=\overline{\mathcal I}^{\,K^K},
+$$
+where $K^K$ has the product topology. Consequently $p_i\to p$ means $p_i(x)\to p(x)$ for every $x\in K$. Multiplication is
+$$
+pq=p\circ q.
+$$
+A right translation is $R_q(p)=pq$, with $q$ fixed. A left translation is $L_p(q)=pq$, with $p$ fixed. Finally, write
+$$
+e(p)=p(0_K),\qquad \vartheta(p)=H(e(p)).
+$$
+
+**theorem 37.1 (The pointwise-completion mechanism).** The space $\mathscr E$ is a compact Hausdorff monoid under actual function composition. Its unit is $T^0=\operatorname{id}_K$, its submonoid $\mathcal I$ is dense, and every right translation is continuous. Every finite iterate commutes with every element of $\mathscr E$, and its left translation is continuous. Moreover,
+$$
+H(p(x))=H(x)+\vartheta(p)\qquad(p\in\mathscr E,\ x\in K),
+$$
+and $\vartheta:\mathscr E\to\mathbb T$ is a continuous surjective monoid homomorphism:
+$$
+\vartheta(pq)=\vartheta(p)+\vartheta(q),\qquad \vartheta(T^n)=n\delta.
+$$
+Compact Hausdorff $K$ and continuous $T$ suffice for the compact right-topological monoid assertion; metrizability is not needed for that assertion. No separate or joint continuity of arbitrary composition is included in it.[^rro37_semigroup]
+
+**Proof.** The product $K^K$ is compact Hausdorff, so its closed subset $\mathscr E$ is compact Hausdorff. All its elements are actual functions $K\to K$, although they need not be continuous.
+
+Fix $q\in\mathscr E$ and $m\ge0$. Choose a net of iterates $T^{a_i}\to q$. Such nets can be obtained by directing finite-coordinate neighborhoods by reverse inclusion. Since $T^m$ is continuous,
+$$
+T^{m+a_i}(x)=T^m(T^{a_i}x)\longrightarrow T^m(qx)
+$$
+for every $x$. Hence $T^m q\in\mathscr E$.
+
+Now choose $T^{b_j}\to p\in\mathscr E$. For every $j$, the preceding paragraph gives $T^{b_j}q\in\mathscr E$, and
+$$
+(T^{b_j}q)(x)=T^{b_j}(qx)\longrightarrow p(qx).
+$$
+Closedness therefore gives $pq\in\mathscr E$. Associativity and the identity law are inherited from function composition.
+
+For fixed $q$, the $x$-coordinate of $R_q(p)$ is the $qx$-coordinate of $p$. Thus $R_q$ is continuous in the product topology. For fixed $m$, the $x$-coordinate of $L_{T^m}(p)$ is $T^m(p(x))$, which is continuous in $p$. Taking the limit of
+$$
+T^mT^{a_i}=T^{a_i}T^m
+$$
+is now legitimate on both sides and gives $T^m q=qT^m$. This uses continuity of the finite iterate, not commutation of arbitrary limits.
+
+If $T^{b_j}\to p$, continuity of evaluation and of $H$ gives
+$$
+b_j\delta=H(T^{b_j}0_K)\longrightarrow H(p0_K)=\vartheta(p).
+$$
+For every $x$,
+$$
+H(T^{b_j}x)=H(x)+b_j\delta.
+$$
+Passing to the limit proves the phase formula. Applying it to $q0_K$ gives
+$$
+\vartheta(pq)=H(p(q0_K))=H(q0_K)+\vartheta(p).
+$$
+The map $\vartheta=H\circ e$ is continuous. Its image is compact and contains the dense irrational orbit $\{n\delta:n\ge0\}$, so it is the whole circle. $\square$
+
+**theorem 37.2 (Oriented lift limits and the actual finite branch history).** For $s\in\Sigma$ and $0<\varepsilon<1/2$, put
+$$
+I_s(\theta,\varepsilon)=\{\theta+[st]:0<t<\varepsilon\}.
+$$
+The notation $\theta_i\to_s\theta$ means that $\theta_i\to\theta$ and, eventually, $\theta_i\ne\theta$ approaches through the side $s$.
+
+Suppose $y_i\in K$ and $H(y_i)\to\gamma$. If $\gamma\notin E$, then $y_i\to k_\gamma$. If $\gamma=E_m$ and $H(y_i)\ne E_m$ eventually, then
+$$
+y_i\longrightarrow x_m^s
+\quad\Longleftrightarrow\quad
+H(y_i)\longrightarrow_s E_m.
+$$
+These assertions hold for arbitrary nets and arbitrary lifts at the approaching phases.
+
+For every $m\ge1$, $n\ge0$, and $s\in\Sigma$,
+$$
+T^n x_m^s=
+\begin{cases}
+x_{m-n}^s,&n<m,\\
+Z(n-m),&n\ge m.
+\end{cases}
+$$
+In particular, $T^n$ preserves the two incoming branches at $E_m$ whenever $m>n$. Every phase outside $E$ remains outside $E$ under nonnegative rotation by $\delta$.
+
+**Proof.** Fix a positional depth $L$. The phase boundaries of its cylinders form the finite set
+$$
+B_L^{\mathrm{pos}}=\{E_1,\ldots,E_{G_L}\}
+$$
+when $L\ge1$. If $\gamma\notin E$, it is not in this finite set. A sufficiently small phase neighborhood of $\gamma$ lies inside the phase interior of the cylinder containing $k_\gamma$, and every lift of every phase in that neighborhood belongs to this cylinder. Thus the $L$-digit prefixes of $y_i$ eventually equal that of $k_\gamma$. This holds at every depth and proves convergence.
+
+Now let $\gamma=E_m$. At a depth which separates $x_m^-$ and $x_m^+$, the two neighboring phase arcs belong to their respective cylinders, with precisely the orientations established in Theorem 20.2. Consequently convergence to $x_m^s$, together with eventual avoidance of phase $E_m$, forces eventual approach from side $s$.
+
+Conversely, suppose the phases approach from side $s$. At every depth separating the pair, the same adjacent-cylinder description forces the prefix of $x_m^s$. At a depth which does not separate the pair, $E_m$ is not a boundary of that depth, and a two-sided phase neighborhood has all its lifts in their common cylinder. Thus every prefix eventually equals that of $x_m^s$. This proves sufficiency. The proof uses eventual membership in finitely many cylinder conditions and therefore applies to nets, not just sequences.
+
+The displayed formula for $T^n x_m^s$ follows by iterating the oriented successor identities in Definition 37.0, reaching $0_K$ exactly at time $m$, and then using $T^j0_K=Z(j)$. It includes $n=0$ and the coalescence time $n=m$.
+
+Finally, if $\gamma+n\delta=E_m$, then
+$$
+\gamma=E_{m+n}\in E.
+$$
+Its contrapositive proves forward invariance of the nonsplit phases. $\square$
+
+**Definition 37.3 (The phase-selecting operators).** For every $\theta\in\mathbb T$ and $s\in\Sigma$, define the actual function $P_\theta^s:K\to K$ by
+$$
+P_\theta^s(x)=
+\begin{cases}
+k_{H(x)+\theta},&H(x)+\theta\notin E,\\
+x_m^s,&H(x)+\theta=E_m.
+\end{cases}
+$$
+The index $m$ in the second case is unique by irrationality. Put
+$$
+\mathscr D=\{P_\theta^s:\theta\in\mathbb T,\ s\in\Sigma\}.
+$$
+Each $P_\theta^s$ is constant on every $H$-fibre. Membership in $\mathscr E$ is not part of this definition.
+
+**theorem 37.4 (Exact operator classification and the complete net dichotomy).** One has the disjoint union of actual functions
+$$
+\mathscr E=\mathcal I\ \dot\cup\ \mathscr D.
+$$
+All the parameters displayed in $\mathscr D$ give distinct functions. Every $T^n$ is isolated in $\mathscr E$. For any net of nonnegative integers $(n_i)$,
+$$
+T^{n_i}\longrightarrow T^n
+\quad\Longleftrightarrow\quad
+n_i=n\text{ eventually},
+$$
+and
+$$
+T^{n_i}\longrightarrow P_\theta^s
+\quad\Longleftrightarrow\quad
+n_i\longrightarrow\infty\text{ and }n_i\delta\longrightarrow_s\theta.
+$$
+Here $n_i\to\infty$ means that for every $N$, eventually $n_i>N$.
+
+For every $\theta,s$ there is a strictly increasing ordinary sequence $(n_j)$ satisfying these conditions. The remainder is closed, and
+$$
+\mathscr D=\bigcap_{N\ge0}\overline{\{T^n:n\ge N\}}^{\,\mathscr E}.
+$$
+The double-circle classification for invertible split-rotation cascades is a classical analogue; the positive-time classification asserted here includes the noninvertible branch history of Theorem 37.2.[^rro37_double]
+
+**Proof.** First isolate a fixed $T^n$ without assuming the proposed classification. Choose disjoint clopen neighborhoods $U^+$ and $U^-$ of $x_1^+$ and $x_1^-$. By Theorem 37.2,
+$$
+T^n x_{n+1}^+=x_1^+,\qquad T^n x_{n+1}^-=x_1^-.
+$$
+For every $j>n$, the two values $T^j x_{n+1}^+$ and $T^j x_{n+1}^-$ are equal. Such an iterate cannot satisfy both evaluation conditions
+$$
+p(x_{n+1}^+)\in U^+,\qquad p(x_{n+1}^-)\in U^-.
+$$
+The phases $j\delta$, $0\le j\le n$, are distinct. Choose a circle neighborhood $J$ of $n\delta$ excluding $j\delta$ for $j<n$. The two evaluation conditions together with $\vartheta(p)\in J$ define an open neighborhood $W$ of $T^n$ whose intersection with $\mathcal I$ is exactly $\{T^n\}$. Since $\mathcal I$ is dense and $\{T^n\}$ is closed, $W\cap\mathscr E=\{T^n\}$. This also proves that a convergent net of iterates with limit $T^n$ is eventually equal to $T^n$. For $n=0$, the exclusion of earlier phases is simply empty.
+
+Fix $\theta,s$. Every tail of the irrational natural phase orbit is dense: it is a translate of the original dense orbit. We can therefore choose recursively
+$$
+n_{j+1}>n_j,\qquad n_j\delta\in I_s(\theta,\varepsilon_j),\qquad \varepsilon_j\downarrow0.
+$$
+For every $x\in K$, the phase of $T^{n_j}x$ tends to $H(x)+\theta$. If that phase is nonsplit, Theorem 37.2 gives the unique lift. If it is $E_m$, its phase approaches $E_m$ from side $s$, and the same lemma gives $x_m^s$. Thus
+$$
+T^{n_j}x\longrightarrow P_\theta^s(x)
+$$
+for every $x$. Consequently every $P_\theta^s$ belongs to $\mathscr E$. This construction works at zero, at every natural phase $n\delta$, and at every exceptional phase $E_m$; the approximating phases are chosen strictly to one side and never equal the target.
+
+We next prove that there are no other functions. Let $p\in\mathscr E\setminus\mathcal I$, and take a net $T^{n_i}\to p$. Every finite set $\{T^0,\ldots,T^N\}$ is closed and excludes $p$, so $n_i\to\infty$. Theorem 37.1 gives
+$$
+n_i\delta\longrightarrow\theta:=\vartheta(p).
+$$
+A phase $\theta$ can equal $n\delta$ for at most one nonnegative integer $n$. Escape from finite sets therefore ensures $n_i\delta\ne\theta$ eventually.
+
+Choose an actual point $b\in K$ with
+$$
+H(b)=E_1-\theta.
+$$
+The phase formula gives $H(p(b))=E_1$, so $p(b)=x_1^s$ for exactly one $s\in\Sigma$. Since $T^{n_i}b\to p(b)$ and its phase eventually differs from $E_1$, the necessity part of Theorem 37.2 forces
+$$
+n_i\delta\longrightarrow_s\theta.
+$$
+This is an eventual assertion for the whole net, not merely a choice of a one-sided subnet. Applying the lemma at every other evaluation point now gives $p=P_\theta^s$.
+
+The same argument proves necessity in the stated convergence criterion. Sufficiency follows directly from Theorem 37.2 at every coordinate. Hence a net which repeatedly returns cofinally to a bounded set of indices while also escaping cannot create an additional limit: convergence requires either eventual equality to one finite iterate or eventual escape from every finite set with one fixed approach side.
+
+For distinctness, different phases are distinguished by the phase of evaluation at zero. At the same phase $\theta$, any actual $b$ with $H(b)=E_1-\theta$ satisfies
+$$
+P_\theta^+(b)=x_1^+,\qquad P_\theta^-(b)=x_1^-.
+$$
+Thus the two signs differ at every phase, including nonsplit and zero phases where evaluation at zero alone would not distinguish them.
+
+An iterate $T^n$ and $P_\theta^s$ have different evaluation phases if $\theta\ne n\delta$. If $\theta=n\delta$, the actual split input $x_{n+1}^{-s}$ distinguishes them:
+$$
+T^n x_{n+1}^{-s}=x_1^{-s},\qquad
+P_{n\delta}^s(x_{n+1}^{-s})=x_1^s.
+$$
+This proves the disjointness, including $T^0$.
+
+The union of the isolated finite iterates is open, so $\mathscr D$ is closed. Every point of $\mathscr D$ is a limit of an increasing sequence of iterates and therefore lies in every tail closure. Conversely, $T^n$ is excluded from the closure of the tail beginning at $n+1$ because it is isolated. This proves the final formula. $\square$
+
+**theorem 37.5 (Exact multiplication and the closed ideal).** For $n,m\ge0$, $\theta,\eta\in\mathbb T$, and $s,t\in\Sigma$,
+$$
+T^nT^m=T^{n+m},
+$$
+$$
+T^nP_\theta^s=P_{\theta+n\delta}^s=P_\theta^sT^n,
+$$
+$$
+P_\theta^sP_\eta^t=P_{\theta+\eta}^s.
+$$
+Thus the left factor supplies the sign in a product of two remainder operators. The set $\mathscr D$ is a closed two-sided ideal. The unit of $\mathscr E$ is the actual identity, not either zero-phase selector.[^rro37_functions]
+
+**Proof.** The first equality is the usual iterate identity. For the second, fix $x$ and put $a=H(x)$. The phase of $T^nP_\theta^s(x)$ is $a+\theta+n\delta$.
+
+If this phase is nonsplit, there is only one possible value. If it equals $E_m$, then the intermediate phase is
+$$
+a+\theta=E_m-n\delta=E_{m+n}.
+$$
+Consequently
+$$
+T^nP_\theta^s(x)=T^nx_{m+n}^s=x_m^s.
+$$
+The inequality $n<m+n$ is exactly what prevents a seam coalescence in this split-output case. It covers $n=0$ as well. This proves $T^nP_\theta^s=P_{\theta+n\delta}^s$.
+
+For the other order, $H(T^nx)=a+n\delta$, and the definition of $P_\theta^s$ immediately gives $P_\theta^sT^n=P_{\theta+n\delta}^s$.
+
+Finally,
+$$
+H(P_\eta^t(x))=a+\eta.
+$$
+The outer operator $P_\theta^s$ therefore chooses the unique lift at $a+\eta+\theta$ when nonsplit and the lift of sign $s$ when split. The inner sign $t$ cannot affect this choice. This proves the last formula.
+
+Every product with at least one factor in $\mathscr D$ lies in $\mathscr D$, proving the ideal assertion; closedness was proved in Theorem 37.4. At zero phase,
+$$
+P_0^+(u)=P_0^+(v)=u,\qquad
+P_0^-(u)=P_0^-(v)=v,
+$$
+whereas the identity preserves both $u$ and $v$. Hence neither selector is the global unit. $\square$
+
+**theorem 37.6 (Intrinsic topology, the doubled circle, and nonmetrizability).** Choose $\varepsilon_*>0$ smaller than $1/4$ such that the phase arc of radius $\varepsilon_*$ around $E_1$ contains no other depth-one cut. For $0<\varepsilon<\varepsilon_*$, define subsets of the actual operator space by
+$$
+V_s(\theta,\varepsilon)
+=\{P_\theta^s\}
+\cup\{P_\eta^t:\eta\in I_s(\theta,\varepsilon),\ t\in\Sigma\}
+\cup\{T^n:n\delta\in I_s(\theta,\varepsilon)\}.
+$$
+These sets form a neighborhood base at $P_\theta^s$. The singletons $\{T^n\}$ form neighborhood bases at the finite iterates.
+
+In particular, the intrinsic neighborhood base on $\mathscr D$ is
+$$
+U_s(\theta,\varepsilon)
+=\{P_\theta^s\}
+\cup\{P_\eta^t:\eta\in I_s(\theta,\varepsilon),\ t\in\Sigma\}.
+$$
+Thus $\mathscr D$ is homeomorphic to the circle split at every phase, with the circular lexicographic order in which $\theta^-$ immediately precedes $\theta^+$. This is not the product topology on $\mathbb T\times\Sigma$. The full operator topology is obtained by inserting the isolated point $T^n$ between $P_{n\delta}^-$ and $P_{n\delta}^+$ at every natural phase.
+
+Both $\mathscr E$ and $\mathscr D$ have cardinality $2^{\aleph_0}$. The space $\mathscr E$ is first countable and has the countable dense set $\mathcal I$, but it is not metrizable. Each fixed-sign subset of $\mathscr D$ is dense in $\mathscr D$.[^rro37_double][^rro37_functions]
+
+**Proof.** Let $C^s$ be the depth-one cylinder containing $x_1^s$. For phases sufficiently close to $E_1$ but unequal to it, every lift belongs to $C^s$ exactly when its phase lies on side $s$ of $E_1$.
+
+Fix $\theta,s$, and choose $b\in H^{-1}(\{E_1-\theta\})$. The conditions
+$$
+\vartheta(p)\in\theta+(-\varepsilon,\varepsilon),\qquad p(b)\in C^s
+$$
+define an open subset of $\mathscr E$. For $\vartheta(p)\ne\theta$, the phase identity in Theorem 37.1 shows that these conditions hold exactly for phases in $I_s(\theta,\varepsilon)$. At phase $\theta$, the classification leaves $P_\theta^+$, $P_\theta^-$, and possibly the single iterate $T^n$ with $n\delta=\theta$. The evaluation condition selects $P_\theta^s$ from the first two. Removing that possible finite iterate, a closed singleton, produces exactly $V_s(\theta,\varepsilon)$. Hence these sets are open.
+
+To prove the base assertion, consider an arbitrary basic product neighborhood of $P_\theta^s$. It prescribes neighborhoods of $P_\theta^s(b_1),\ldots,P_\theta^s(b_r)$ at finitely many actual inputs. For each input whose target phase is nonsplit, all lifts of sufficiently nearby phases lie in its prescribed neighborhood. For each input whose target phase is split, all lifts of sufficiently nearby phases on side $s$ lie in the prescribed neighborhood of the selected branch. These are the finite-depth consequences proved in Theorem 37.2. Choosing one sufficiently small $\varepsilon$ for all the inputs shows that the entire set $V_s(\theta,\varepsilon)$ lies in the given product neighborhood. This argument applies equally to the finite iterates and selector operators occurring at the nearby phases; it does not assume their continuity as functions of the input.
+
+Intersecting with $\mathscr D$ proves the stated base there. These are precisely the circular order neighborhoods which start immediately after $\theta^-$ at $\theta^+$, or end immediately before $\theta^+$ at $\theta^-$. Equivalently, cut the doubled circle between $0^-$ and $0^+$: the resulting linear order has least point $0^+$, greatest point $0^-$, and, for $0<t<1$, the consecutive points $t^-<t^+$ ordered first by $t$. Its order topology has exactly the displayed local bases. The analogous bases with a middle isolated point at $n\delta$ give the full asserted circular order description. Therefore these are homeomorphisms of the actual function spaces, not merely bijections of labels.
+
+Restricting $\varepsilon$ to a decreasing countable sequence gives first countability. Density of $\mathcal I$ holds by definition. Every displayed neighborhood in $\mathscr D$ contains both signs at phases in a nonempty open arc, proving density of each sign subset. It also shows why the topology is not the product topology, in which the two sign subsets would be closed.
+
+For nonmetrizability, fix $0<\varepsilon<\varepsilon_*$ and represent phases in $[0,1)$. Suppose $\mathscr D$ had a countable base $\mathcal B$. For each $\theta\in(0,1/2)$ choose
+$$
+P_\theta^+\in B_\theta\subseteq U_+(\theta,\varepsilon),\qquad B_\theta\in\mathcal B.
+$$
+If $0<\theta<\eta<1/2$ and $B_\theta=B_\eta$, then $P_\theta^+$ would belong to $U_+(\eta,\varepsilon)$. This is impossible: that neighborhood contains only its starting point and phases strictly greater than $\eta$, without wrapping around the circle. Thus the $B_\theta$ are pairwise distinct, contradicting countability. A compact metrizable space is second countable, so $\mathscr D$ is not metrizable; neither is $\mathscr E$, which contains it as a closed subspace.
+
+The classification and distinctness in Theorem 37.4 give the stated cardinalities. There is no contradiction between countable density, first countability, and failure of second countability. $\square$
+
+**theorem 37.7 (Centers, minimal ideals, idempotents, and units).** Define the center associated with continuity of fixed left multiplication by
+$$
+\mathfrak Z_{\mathrm{top}}(\mathscr E)
+=\{p\in\mathscr E:L_p:\mathscr E\to\mathscr E\text{ is continuous}\}.
+$$
+With the multiplication convention of Definition 37.0, this is the topological center specified by fixed left multiplication. Then
+$$
+Z_{\mathrm{alg}}(\mathscr E)=\mathfrak Z_{\mathrm{top}}(\mathscr E)=\mathcal I.
+$$
+Consequently $\mathscr E$ is neither a semitopological semigroup nor a jointly continuous topological monoid.
+
+The unique minimal left ideal and unique minimal two-sided ideal are $\mathscr D$. The two minimal right ideals are
+$$
+\mathscr D_s=\{P_\theta^s:\theta\in\mathbb T\},\qquad s\in\Sigma.
+$$
+Each $\mathscr D_s$ is algebraically a circle group, with identity $P_0^s$ and inverse $(P_\theta^s)^{-1}=P_{-\theta}^s$. The complete list of idempotents of $\mathscr E$ is
+$$
+\operatorname{id}_K,\qquad P_0^+,\qquad P_0^-.
+$$
+The only invertible element of the full monoid $\mathscr E$ is $\operatorname{id}_K$.[^rro37_double][^rro37_tame]
+
+**Proof.** Finite iterates commute with all of $\mathscr E$ and have continuous left translations by Theorem 37.1. If $p=P_\theta^s$, then
+$$
+pP_0^{-s}=P_\theta^s,\qquad P_0^{-s}p=P_\theta^{-s}.
+$$
+The two functions are distinct by Theorem 37.4, so $p$ is not algebraically central.
+
+Choose an increasing sequence $n_j$ with $n_j\delta\to_{-s}0$. Then
+$$
+T^{n_j}\longrightarrow P_0^{-s}.
+$$
+By the multiplication table and the topology just proved,
+$$
+L_p(T^{n_j})=P_{\theta+n_j\delta}^s\longrightarrow P_\theta^{-s},
+$$
+whereas
+$$
+L_p(P_0^{-s})=P_\theta^s.
+$$
+Thus $L_p$ is not continuous. This proves both center identities. Separate continuity would require every left translation to be continuous, and joint continuity would imply that requirement, so both stronger continuity assertions fail.
+
+For any $P_\theta^s$ the multiplication table gives
+$$
+\mathscr E P_\theta^s=\mathscr D,\qquad P_\theta^s\mathscr E=\mathscr D_s.
+$$
+Indeed, an arbitrary remainder operator on the left supplies any desired sign and any desired phase; an arbitrary remainder operator on the right supplies any desired phase while the left sign remains $s$.
+
+Every nonempty left ideal containing a remainder element therefore contains $\mathscr D$. A left ideal containing $T^n$ also contains $\mathscr D$, because $\mathscr D T^n=\mathscr D$. Hence $\mathscr D$ is the unique minimal left ideal, and, since it is two-sided, the unique minimal two-sided ideal.
+
+Every nonempty right ideal contained in $\mathscr D_s$ equals $\mathscr D_s$, because it contains $p\mathscr E=\mathscr D_s$ for any one of its elements. Conversely, any right ideal containing a remainder element contains one such $\mathscr D_s$, and any right ideal containing a finite iterate contains all of $\mathscr D$. Thus exactly the two displayed subsets are minimal right ideals. In particular, they must not be substituted for the minimal left ideal. Their density from Theorem 37.6 does not make them closed.
+
+Within a fixed sign, multiplication is addition of circle phases, proving the algebraic group assertion. For idempotents, $P_\theta^sP_\theta^s=P_\theta^s$ is equivalent to $2\theta=\theta$, hence to $\theta=0$. For iterates, $T^{2n}=T^n$ implies $n=0$ by distinctness. Finally, a product involving a remainder element cannot be the identity, while $T^nT^m=\operatorname{id}_K$ with $n,m\ge0$ forces $n=m=0$. $\square$
+
+**theorem 37.8 (Baire-one operators and a Rosenthal representation).** Every element of $\mathscr E$ is a pointwise limit of a sequence of continuous maps $K\to K$. Every $P_\theta^s$ is nevertheless discontinuous at some actual input. Thus
+$$
+\mathscr E\cap C(K,K)=\mathcal I.
+$$
+The compactum $\mathscr E$ is Rosenthal: it is homeomorphic to a pointwise compact family of real-valued Baire-one functions on the Polish space $K$. In the standard compact metric semigroup-action terminology, the positive-time system $(K,T)$ is tame.[^rro37_semigroup][^rro37_tame]
+
+**Proof.** The sequential approximation follows from Theorem 37.4; for an iterate, use its constant sequence.
+
+Fix $P_\theta^s$ and set $a=E_1-\theta$. If $a\notin E$, put $b=k_a$; if $a=E_l$, put $b=x_l^{-s}$. Choose natural phases $n_j\delta\to_{-s}a$. Theorem 37.2 gives $Z(n_j)\to b$. On the other hand, the phases of $P_\theta^s(Z(n_j))$ approach $E_1$ from side $-s$, so
+$$
+P_\theta^s(Z(n_j))\longrightarrow x_1^{-s},\qquad P_\theta^s(b)=x_1^s.
+$$
+These are different, proving discontinuity.
+
+Define a continuous injection
+$$
+j:K\to[0,1],\qquad j(x)=\sum_{r\ge0}\frac{2x_r}{3^{r+1}}.
+$$
+Uniform convergence gives continuity. If two points first differ at coordinate $r$, the leading difference $2/3^{r+1}$ exceeds the maximal possible tail difference $1/3^{r+1}$, so $j$ is injective. The map
+$$
+J:\mathscr E\to\mathbb R^K,\qquad J(p)=j\circ p,
+$$
+is continuous and injective for the pointwise topologies. Compactness of $\mathscr E$ and the Hausdorff property of $\mathbb R^K$ make it a homeomorphism onto its compact image. Every $j\circ p$ is a pointwise sequential limit of continuous real-valued functions $j\circ T^{n_j}$. Hence the image lies in the Baire-one functions on $K$, which is the defining Rosenthal representation.
+
+The compact metric semigroup criterion identifies such an enveloping compactum, equivalently an enveloping semigroup consisting of Baire-one maps, with tameness. Its hypotheses apply to the continuous action of the discrete monoid $\mathbb N$ by the actual iterates. No invertibility is required for this criterion. $\square$
+
+**theorem 37.9 (Exact evaluation fibres and failure of congruence).** Evaluation $e:\mathscr E\to K$ is a continuous surjection, hence a topological quotient map. Its fibres are exactly
+$$
+e^{-1}(\{Z(n)\})=\{T^n,P_{n\delta}^+,P_{n\delta}^-\}\qquad(n\ge0),
+$$
+$$
+e^{-1}(\{x_m^s\})=\{P_{E_m}^s\}\qquad(m\ge1),
+$$
+and
+$$
+e^{-1}(\{k_\theta\})=\{P_\theta^+,P_\theta^-\}
+\quad\text{if }\theta\notin E\cup\{n\delta:n\ge0\}.
+$$
+In particular,
+$$
+e^{-1}(\{0_K\})=\{\operatorname{id}_K,P_0^+,P_0^-\}.
+$$
+Moreover,
+$$
+p(Z(k))=T^k(e(p))\qquad(k\ge0).
+$$
+Thus two operators have equal evaluation at zero exactly when they agree on the entire finite natural core. This still need not make them equal as functions on $K$.
+
+The equality kernel of $e$ is preserved by common left multiplication, but not by common right multiplication. It is therefore not a semigroup congruence, and no binary operation on $K$ can satisfy
+$$
+e(pq)=e(p)*e(q)\qquad\text{for every }p,q\in\mathscr E.
+$$
+
+**Proof.** Evaluation is a product coordinate and hence continuous. Its image is compact, contains every $Z(n)=e(T^n)$, and is therefore all of $K$. A continuous surjection from a compact space to a Hausdorff space is closed and hence quotient.
+
+The operator classification gives all possible representatives, and
+$$
+e(P_\theta^s)=
+\begin{cases}
+k_\theta,&\theta\notin E,\\
+x_m^s,&\theta=E_m.
+\end{cases}
+$$
+Natural phases avoid $E$, and distinct nonnegative integers have distinct phases. Combining these facts with the distinctness of the actual operators proves each fibre formula, including the three distinct representatives at zero.
+
+Since every $p$ commutes with $T^k$,
+$$
+p(Z(k))=p(T^k0_K)=T^k(p0_K).
+$$
+This proves the assertion about agreement on the natural core. The discontinuous operators in Theorem 37.8 explain why agreement on a dense set does not force equality here.
+
+If $e(p)=e(p')$, then for every fixed $r$,
+$$
+e(rp)=r(e(p))=r(e(p'))=e(rp').
+$$
+So common left multiplication preserves the kernel.
+
+For failure on the other side, take
+$$
+p=\operatorname{id}_K,\qquad p'=P_0^-,\qquad q=P_{E_1}^+.
+$$
+Then $e(p)=e(p')=0_K$, but
+$$
+e(pq)=x_1^+,\qquad e(p'q)=x_1^-.
+$$
+Thus common right multiplication does not preserve the kernel. Any proposed operation $*$ satisfying the displayed descent identity would assign two different values to the same input pair $(0_K,x_1^+)$, which is impossible. $\square$
+
+**Definition 37.10 (Projected composition and common witnesses).** For $x\in K$, retain the sign set of §18:
+$$
+\mathcal S(x)=
+\begin{cases}
+\Sigma,&H(x)\notin E,\\
+\{s\},&x=x_m^s.
+\end{cases}
+$$
+Define
+$$
+\mathcal R_{\mathrm{op}}(x,y)
+=\{e(pq):p,q\in\mathscr E,\ e(p)=x,\ e(q)=y\}.
+$$
+Write $x\star y=\mathcal R_{\mathrm{op}}(x,y)$, and extend this notation to subsets by taking unions over their elements. This is a relation, not a quotient binary function.
+
+The three-input relation retaining a common list of operator witnesses is
+$$
+\mathcal W_3(x,y,z)
+=\{e(pqr):e(p)=x,\ e(q)=y,\ e(r)=z\}.
+$$
+Associativity of actual composition makes the expression $pqr$ unambiguous. It does not identify $\mathcal W_3$ with either iterated projection without an additional proof.
+
+**theorem 37.11 (Exact projected relation and its associativity criterion).** Let $a=H(x)$ and $b=H(y)$. Then
+$$
+x\star y=
+\begin{cases}
+\{k_{a+b}\},&a+b\notin E,\\
+\{x_m^s:s\in\mathcal S(x)\},&a+b=E_m.
+\end{cases}
+$$
+Thus at a split output phase it is the first input, not the union of the two input sign sets, that controls the output signs.
+
+The relation has the unique strict right unit $0_K$, has no strict left unit, and is not commutative. More precisely,
+$$
+x\star0_K=\{x\},\qquad 0_K\star x=H^{-1}(\{H(x)\}).
+$$
+For three inputs, set
+$$
+a=H(x),\qquad b=H(y),\qquad c=H(z),\qquad \sigma=a+b+c.
+$$
+If $\sigma\notin E$, both bracketings and $\mathcal W_3$ equal $\{k_\sigma\}$. If $\sigma=E_m$, then
+$$
+x\star(y\star z)=\mathcal W_3(x,y,z)
+=\{x_m^s:s\in\mathcal S(x)\},
+$$
+whereas
+$$
+(x\star y)\star z=
+\begin{cases}
+\{x_m^s:s\in\mathcal S(x)\},&a+b\in E,\\
+\{x_m^-,x_m^+\},&a+b\notin E.
+\end{cases}
+$$
+Consequently the two bracketings differ exactly when
+$$
+H(x)\in E,\qquad H(x)+H(y)\notin E,\qquad H(x)+H(y)+H(z)\in E.
+$$
+In all cases,
+$$
+\mathcal W_3(x,y,z)=x\star(y\star z)\subseteq(x\star y)\star z.
+$$
+
+**Proof.** All products have output phase $a+b$. At a nonsplit phase, nonemptiness of the evaluation fibres leaves exactly the unique lift.
+
+Suppose $a+b=E_m$. For each $s\in\mathcal S(x)$, Theorem 37.9 supplies the representative $P_a^s$ of $x$. With any representative $q$ of $y$,
+$$
+e(P_a^s q)=P_a^s(y)=x_m^s.
+$$
+Thus every claimed sign occurs.
+
+These are all the possibilities when the left representative is a remainder operator. An additional left representative is possible only when $x=Z(n)$, in which case it is $T^n$. The split sum condition then forces
+$$
+H(y)=E_m-n\delta=E_{m+n},
+$$
+so $y=x_{m+n}^t$ for one sign $t$. Its output is
+$$
+e(T^nq)=T^ny=x_m^t.
+$$
+Since $x=Z(n)$ has $\mathcal S(x)=\Sigma$, this adds no sign beyond those already listed. The same reasoning covers $n=0$. This proves the exact formula.
+
+If $e(q)=0_K$, then $e(pq)=p(q0_K)=p0_K=e(p)$, proving the strict right-unit identity directly. The left-zero identity follows from the formula and $\mathcal S(0_K)=\Sigma$. A strict right unit $r$, tested against $0_K$, must have phase zero, so $r=0_K$. A strict left unit $l$, tested against $0_K$, must equal $0_K$ because $l\star0_K=\{l\}$. But $0_K\star x_1^+=\{x_1^+,x_1^-\}$, so no strict left unit exists. This same pair demonstrates noncommutativity.
+
+For the bracketings, first record the exact intermediate sign propagation:
+$$
+\bigcup_{w\in x\star y}\mathcal S(w)=
+\begin{cases}
+\mathcal S(x),&a+b\in E,\\
+\Sigma,&a+b\notin E.
+\end{cases}
+$$
+In the first case the intermediate outputs are exactly the split points indexed by $\mathcal S(x)$. In the second case the unique intermediate point is nonsplit, so its sign set is $\Sigma$.
+
+Every intermediate output has the expected sum phase. Hence when $\sigma$ is nonsplit, both bracketings give its unique lift. When $\sigma=E_m$, the left bracketing is determined by the displayed union of intermediate sign sets, proving its formula. For the right bracketing, every $w\in y\star z$ has phase $b+c$, and the rule for $x\star w$ depends only on $\mathcal S(x)$ and the total phase. Since $y\star z$ is nonempty, taking the union leaves exactly $\{x_m^s:s\in\mathcal S(x)\}$.
+
+It remains to verify the common-witness assertion rather than infer it from associativity. If $x$ is split, its unique representative is $P_a^s$. This outer operator fixes sign $s$ in every product $pqr$ with split total phase. If $x$ is nonsplit, both representatives $P_a^+$ and $P_a^-$ are available, and they realize both signs at such a total phase. All products have phase $\sigma$, so there can be no other values. This proves the formula for $\mathcal W_3$.
+
+The bracketings can therefore differ only at a split final phase, with a nonsplit left intermediate phase and a singleton $\mathcal S(x)$. These are exactly the three stated conditions. Under them one bracketing has both distinct lifts and the other has only the sign of $x$; otherwise they agree. $\square$
+
+**theorem 37.12 (The half-circle common-witness counterexample).** Put
+$$
+x=x_1^+,\qquad h=[1/2],\qquad a=k_h,\qquad b=k_{E_1+h}.
+$$
+The phases $h$ and $E_1+h$ are nonsplit and are not natural phases. The projected products satisfy
+$$
+a\star a=\{0_K\},\qquad x\star a=\{b\},\qquad x\star0_K=\{x_1^+\},
+$$
+but
+$$
+(x\star a)\star a=\{x_1^+,x_1^-\},\qquad
+x\star(a\star a)=\{x_1^+\}.
+$$
+The common-witness output is exactly
+$$
+\mathcal W_3(x,a,a)=\{x_1^+\}.
+$$
+At the intermediate state $b$, the representative $P_{E_1+h}^+$ is reachable from the original first two input fibres, whereas $P_{E_1+h}^-$ is not. The latter is introduced only when the intermediate operator is discarded and its value $b$ is represented anew.
+
+**Proof.** For any nonzero integer $r$, the phase $r\delta$ cannot equal $h$, because $r\phi$ cannot differ from $1/2$ by an integer. Also $h\ne0$. These observations show $h\notin E$ and $h\notin\{n\delta:n\ge0\}$.
+
+If $E_1+h=E_m$, then $h=(1-m)\delta$, which is impossible for $m\ne1$ by the preceding irrationality argument and for $m=1$ because $h\ne0$. If $E_1+h=n\delta$, then $h=(n+1)\delta$, again impossible. Thus both $a$ and $b$ are the asserted nonsplit, nonnatural states.
+
+The exact rule in Theorem 37.11 gives $a\star a=\{k_0\}=\{0_K\}$, since $2h=0$. It gives $x\star a=\{b\}$ because $E_1+h$ is nonsplit. The right-unit identity gives $x\star0_K=\{x_1^+\}$. Finally, $H(b)+h=E_1$ and $\mathcal S(b)=\Sigma$, so $b\star a$ contains both split lifts. This proves the unequal bracketings.
+
+For the exact operator witnesses, Theorem 37.9 gives
+$$
+e^{-1}(\{x\})=\{p\},\quad p=P_{E_1}^+,
+$$
+$$
+e^{-1}(\{a\})=\{q_+,q_-\},\quad q_t=P_h^t,
+$$
+$$
+e^{-1}(\{b\})=\{P_{E_1+h}^+,P_{E_1+h}^-\}.
+$$
+For either $t$,
+$$
+pq_t=P_{E_1+h}^+.
+$$
+Therefore only the positive representative of $b$ is produced by the original witnesses. With either representative $q_v$ of the last $a$,
+$$
+(pq_t)q_v=P_{E_1+2h}^+=P_{E_1}^+.
+$$
+Every actual triple consequently evaluates to $x_1^+$.
+
+If the intermediate operator is replaced merely by its value $b$, the next projected product admits the other representative and obtains
+$$
+P_{E_1+h}^-q_v=P_{E_1}^-,
+$$
+whose evaluation is $x_1^-$. This is the additional output, and its intermediate representative was not reachable from $e^{-1}(\{x\})e^{-1}(\{a\})$.
+
+For completeness, the reachable operators for the other intermediate product are
+$$
+\{q_tq_v:t,v\in\Sigma\}=\{P_0^+,P_0^-\}.
+$$
+Their common state is $0_K$, whose full evaluation fibre also contains the identity. But $p$ composed on the right with any of these three zero-state representatives remains $p$. That enlargement does not produce the negative output. The discrepancy is precisely the loss of the reachable positive representative at $b$. $\square$
+
+**theorem 37.13 (Comparison with the full closed finite-addition graph).** Retain the actual closed graph of §18,
+$$
+\Gamma=\overline{\{(Z(n),Z(m),Z(n+m)):n,m\ge0\}}^{\,K^3},
+$$
+and its explicitly adopted fibre classification in Assumption 18.1. Regard $\mathcal R_{\mathrm{op}}$ as a subset of $K^3$. Then
+$$
+\mathcal R_{\mathrm{op}}\subsetneq\Gamma,\qquad
+\overline{\mathcal R_{\mathrm{op}}}^{\,K^3}=\Gamma.
+$$
+An exact witness of strictness is
+$$
+(x_1^+,0_K,x_1^-)\in\Gamma\setminus\mathcal R_{\mathrm{op}}.
+$$
+Thus $\mathcal R_{\mathrm{op}}$ is not closed. Its nonassociativity differs from the set-valued associativity of $\Gamma$ established in Proposition 18.2.
+
+In particular, the map
+$$
+F:\mathscr E^2\to K^3,\qquad F(p,q)=(e(p),e(q),e(pq)),
+$$
+is not continuous. Closure equality does not supply continuous composition.
+
+**Proof.** At a nonsplit sum phase, the two relations have the same unique output. At a split sum phase, Theorem 37.11 allows exactly the signs in $\mathcal S(x)$, while Assumption 18.1 allows exactly the signs in
+$$
+\mathcal S(x)\cup\mathcal S(y).
+$$
+This proves $\mathcal R_{\mathrm{op}}\subseteq\Gamma$.
+
+The inclusion also has a direct closed-graph proof that makes the permissible order of limits explicit. Fix $q\in\mathscr E$ and choose $T^{m_j}\to q$. For every fixed nonnegative integer $n$, continuity of $T^n$ gives
+$$
+(Z(n),Z(m_j),Z(n+m_j))
+\longrightarrow (Z(n),e(q),T^n(e(q))).
+$$
+The latter triple lies in $\Gamma$. Now choose $T^{n_i}\to p$. Evaluation at the fixed point $e(q)$ gives
+$$
+(Z(n_i),e(q),T^{n_i}(e(q)))
+\longrightarrow(e(p),e(q),p(e(q)))
+=(e(p),e(q),e(pq)).
+$$
+Closedness again places the limit in $\Gamma$. These are two successive valid limits with the relevant argument fixed, not a claim about jointly varying composition.
+
+Every finite-addition triple belongs to $\mathcal R_{\mathrm{op}}$, by choosing $p=T^n$ and $q=T^m$. Hence
+$$
+\Gamma\subseteq\overline{\mathcal R_{\mathrm{op}}}^{\,K^3}\subseteq\Gamma,
+$$
+proving closure equality.
+
+For strictness, the projected right-unit law gives
+$$
+x_1^+\star0_K=\{x_1^+\}.
+$$
+But $\mathcal S(0_K)=\Sigma$, so the accepted graph classification gives
+$$
+\Gamma(x_1^+,0_K)=\{x_1^+,x_1^-\}.
+$$
+The displayed missing triple follows. The associativity comparison now uses the counterexample in Theorem 37.12 and the already established associativity theorem for $\Gamma$; it is not inferred from closure.
+
+Finally, if $F$ were continuous, its image $\mathcal R_{\mathrm{op}}$ would be compact, since $\mathscr E^2$ is compact. It would then be closed in the Hausdorff space $K^3$, contradicting strictness and closure equality. Thus $F$ is not continuous. $\square$
+
+**theorem 37.14 (The precise continuity obstruction and the distinction between operators and values).** There is no separately continuous function $A:K^2\to K$ satisfying
+$$
+A(Z(n),Z(m))=Z(n+m)\qquad(n,m\ge0).
+$$
+Consequently there is no jointly continuous extension of finite addition, and no separately continuous single-valued selection of $\Gamma$.
+
+On the larger carrier $\mathscr E$, actual composition is associative and unital, with precisely the one-sided continuity proved above. On the state carrier $K$, evaluation forgets composition witnesses. Even an injective recoding of evaluated states cannot turn evaluation into a homomorphism for all representatives. In contrast, the composite
+$$
+\mathscr E\xrightarrow{e}K\xrightarrow{H}\mathbb T
+$$
+is the genuine continuous homomorphism $\vartheta$ into circle addition.
+
+**Proof.** Suppose $A$ were separately continuous and extended finite addition. Fix $n$. The continuous maps of the second variable
+$$
+y\longmapsto A(Z(n),y),\qquad y\longmapsto T^ny
+$$
+agree on the dense natural core, so they agree everywhere. In particular,
+$$
+A(Z(n),y)=T^ny,\qquad A(0_K,y)=y.
+$$
+Choose an increasing sequence $n_j$ with $n_j\delta\to_+0$. By the nonsplit zero fibre,
+$$
+Z(n_j)\longrightarrow0_K.
+$$
+The pointwise operator limit is $T^{n_j}\to P_0^+$, and therefore
+$$
+A(Z(n_j),x_1^-)=T^{n_j}x_1^-\longrightarrow P_0^+(x_1^-)=x_1^+.
+$$
+Continuity of the first-variable slice at $(0_K,x_1^-)$ instead forces the same sequence to converge to
+$$
+A(0_K,x_1^-)=x_1^-.
+$$
+The two points are distinct, a contradiction. The argument used continuity of the second-variable slices at natural first inputs, and continuity of the first-variable slice through $x_1^-$ at zero. Thus the separate-continuity hypothesis is explicit and is stronger than what this particular contradiction needs; it has not been inferred from compactness or from right-topological composition.
+
+Joint continuity implies separate continuity. A selection of $\Gamma$ must agree with finite addition on the natural core, since those input fibres have unique outputs. These observations prove the two stated consequences.
+
+For the recoding assertion, let $j:K\to L$ be any injective function, without a topological assumption. If a binary operation $B$ on $j(K)$ satisfied
+$$
+B(j(e(p)),j(e(q)))=j(e(pq))
+$$
+for all operators, apply the counterexample of Theorem 37.9. The same left input $j(0_K)$ and right input $j(x_1^+)$ would force both $j(x_1^+)$ and $j(x_1^-)$ as outputs. Injectivity makes these different. Hence merely recoding the value cannot recover the missing operator witness.
+
+Associativity on the full operator carrier follows from actual function composition, while Theorems 37.9–37.13 identify exactly what is lost under evaluation and subsequent re-representation. The homomorphism assertion for $H\circ e$ is Theorem 37.1. None of these statements asserts nonexistence of arbitrary discontinuous state operations; the exclusions concern the all-representative evaluation quotient and extensions with the stated continuity properties. $\square$
+
+[^rro37_onesided]: Kevin Aguyar Brix, *Sturmian subshifts and their C*-algebras*, arXiv:2107.10613v1, §2.1, especially equations (2.1)–(2.3) and (2.7). The one-sided branch point has intercept equal to the slope and has the two predecessors $0\omega$ and $1\omega$; the two-sided system is separately defined as an inverse limit. The normalization used here is supplied by Theorems 20.4 and 20.7. [Primary text](https://arxiv.org/html/2107.10613v1).
+
+[^rro37_semigroup]: Eli Glasner and Michael Megrelishvili, *Circularly ordered dynamical systems*, author-hosted version dated February 18, 2018, §1, p. 3. The conventions explicitly include monoid actions; Definition 1.1 and Theorem 1.2 state the tame/Rosenthal criterion for compact metric semigroup systems. [Primary text](https://u.math.biu.ac.il/~megereli/CordDS180218.pdf).
+
+[^rro37_double]: Glasner and Megrelishvili, *Circularly ordered dynamical systems*, §6.1, p. 19, gives the classical split-orbit rotation enveloping space consisting of the double circle and isolated integer iterates, with the double circle as its minimal left ideal. That passage concerns invertible cascades; Theorems 37.2–37.7 supply the noninvertible nonnegative-time argument needed here. [Primary text](https://u.math.biu.ac.il/~megereli/CordDS180218.pdf).
+
+[^rro37_functions]: Michael Megrelishvili, *Orderable groups and semigroup compactifications*, arXiv:2112.14615v4, Example 6.8. This gives the actual phase-selecting functions in the split-rotation example and its circular lexicographic description. The multiplication and neighborhood bases on the present carrier are verified above with the orientation fixed by $H$. [Primary text](https://arxiv.org/html/2112.14615v4).
+
+[^rro37_tame]: Eli Glasner and Michael Megrelishvili, *Todorčević’s trichotomy and a hierarchy in the class of tame dynamical systems*, arXiv:2011.04376v4, §0.1, Corollary 8.3, Example 9.3(2), and §10. These passages discuss tame enveloping compacta, the Sturmian split-circle ideal, its two idempotents, and its fixed-sign groups. The Rosenthal representation used in Theorem 37.8 is constructed directly. [Primary text](https://arxiv.org/html/2011.04376v4).
+
+## 追加锚（本行以下为增补区）
