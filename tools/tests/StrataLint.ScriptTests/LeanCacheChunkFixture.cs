@@ -43,8 +43,8 @@ internal sealed class LeanCacheChunkFixture : IDisposable
             printf '%s\n' "$*" >> "$CHUNK_FIXTURE/build-runs"
             if [ "$1" = "lean-report" ] && [ "$FAKE_BUILD_EXIT" = "0" ]; then
                 mkdir -p .lake/build/stratalint
-                printf '%s\n' '{"modules":[],"schema":"stratalint-raw-lean-report-v2"}' > .lake/build/stratalint/report-fixture-$$
-                mv .lake/build/stratalint/report-fixture-$$ .lake/build/stratalint/raw-lean-report.json
+                printf '%s\n' '{"modules":[],"schema":"stratalint-raw-lean-report-v2"}' > .lake/report-fixture-$$
+                mv .lake/report-fixture-$$ .lake/build/stratalint/raw-lean-report.json
             fi
             exit "$FAKE_BUILD_EXIT"
             """);
