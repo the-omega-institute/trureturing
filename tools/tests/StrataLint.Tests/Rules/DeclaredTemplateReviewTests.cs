@@ -37,11 +37,14 @@ public sealed class DeclaredTemplateReviewTests
         files[Registration] = "import D5.S0.Carrier.Target\nimport LeanInformationAudit.Syntax\n";
         files[Target] = "-- synthetic imported theorem source\n";
         files[InformationTemplateDebtStore.ActivationPath] = Text(InformationTemplateDebtStore.WriteActivation(new(seed, active)));
-        var root = TestRepositoryLayout.FindRoot();
-        foreach (var document in FileMapDocuments.Resolve(
-            File.ReadAllBytes(Path.Combine(root, AdmissionPlanePolicy.FileMapPath)), AdmissionPlanePolicy.FileMapPath,
-            path => File.ReadAllBytes(Path.Combine(root, path))))
-            files[document.Path] = Text(document.Bytes);
+        files[AdmissionPlanePolicy.FileMapPath] = "schema_version = 2\ninclude = [\"FILEMAP.inputs.toml\"]\n";
+        files["Meta/FILEMAP.inputs.toml"] = "schema_version = 2\nfiles = [\n" + string.Join("\n",
+            new[] { ("D5/**", "content"), (InformationTemplateDebtStore.ActivationPath, "judge"),
+                ("Golden/InformationTemplateDebt/rows/*.json", "content"), ("Meta/**", "judge"), ("tools/**", "judge") }
+                .Select(pair => "{ pattern = \"" + pair.Item1 + "\", admission_plane = \"" + pair.Item2
+                    + "\", kind = \"data\", produced_by = \"none\", consumed_by = [\"StrataLint\"], "
+                    + "verified_by = [\"StrataLint\"], artifact_id = \"none\", runtime_disposition = \"committed-source\" },"))
+            + "\n]\n";
         return files;
     }
 
