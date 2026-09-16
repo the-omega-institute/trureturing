@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:56c5daf03dd29c7cec3ad0e09c52862f1da065d983329adf987c172db2402c90
+  normalized_sha256: sha256:56c5daf03dd29c7cec3ad0e09c52862f1da065d983329adf987c172db2402c90
+cas_ref: sha256:56c5daf03dd29c7cec3ad0e09c52862f1da065d983329adf987c172db2402c90
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶项仅定义全部总有理观察的初始拓扑和联合目标，其中公式用于指定对象与记号，没有独立待证命题，故按非命题条款结算。
+    previous_atom_id: e45363e4cf37a1b8a6ff92e95445abe748badd66a5e188e2b98d56660f2a6283
+    next_atom_id: d2d9755dab498e07bf34568267aa4aaeae50329c798d944ca1a58787167d4c47

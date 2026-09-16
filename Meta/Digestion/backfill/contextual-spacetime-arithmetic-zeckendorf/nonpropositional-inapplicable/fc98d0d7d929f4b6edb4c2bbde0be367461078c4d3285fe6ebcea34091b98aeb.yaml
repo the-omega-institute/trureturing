@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fc98d0d7d929f4b6edb4c2bbde0be367461078c4d3285fe6ebcea34091b98aeb
+  normalized_sha256: sha256:fc98d0d7d929f4b6edb4c2bbde0be367461078c4d3285fe6ebcea34091b98aeb
+cas_ref: sha256:fc98d0d7d929f4b6edb4c2bbde0be367461078c4d3285fe6ebcea34091b98aeb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此子叶中的黄金比倒数由 Real.inv_goldenRatio 及 Real.goldenConj_sq 代入并作代数规范化即得原二次恒等式，仓内无冻结 GID。
+    previous_atom_id: b3c554c7d87452bfbaa6931d486da93c97c0055ecd268313bb8a3ca3b726c91b
+    next_atom_id: 151a68f6f538844298ea0aa108caca4f12ae56f4752eb9466b219b61883ef775

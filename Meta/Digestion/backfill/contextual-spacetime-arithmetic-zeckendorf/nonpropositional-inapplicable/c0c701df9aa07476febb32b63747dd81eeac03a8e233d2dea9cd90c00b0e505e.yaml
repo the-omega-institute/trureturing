@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c0c701df9aa07476febb32b63747dd81eeac03a8e233d2dea9cd90c00b0e505e
+  normalized_sha256: sha256:c0c701df9aa07476febb32b63747dd81eeac03a8e233d2dea9cd90c00b0e505e
+cas_ref: sha256:c0c701df9aa07476febb32b63747dd81eeac03a8e233d2dea9cd90c00b0e505e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 有限直积元素的阶是各坐标阶的最小公倍数，整数倍为零等价于阶整除该整数；证明包含空特征族与任意有符号整数倍。仓内无冻结 GID。
+    previous_atom_id: 278c641a32882174454f1a1da9feed4d0892859a5ccf5a715b0c2408370cc337
+    next_atom_id: d6f004a9713d12c88110409babda6e1781e3d2d8298a195b98b4babab556cdea

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:922afef016688f16a6e9df32ef36ce6b469111974752aed898e707f31b99de4e
+  normalized_sha256: sha256:922afef016688f16a6e9df32ef36ce6b469111974752aed898e707f31b99de4e
+cas_ref: sha256:922afef016688f16a6e9df32ef36ce6b469111974752aed898e707f31b99de4e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 在同一合法数字空间上先用 continuous_tsum 得实级数连续，再复合 AddCircle.continuous_mk' 得实际圆周商值连续，仓内无冻结 GID。
+    previous_atom_id: 9f7628b1bf4563d5c69ec6cee1a8573e39bf4b7473e160f3e3637146a506adae
+    next_atom_id: c1aca1d8f9658f806f9bf2ecff949868b664c309bb295363e520e5de9ed98b99

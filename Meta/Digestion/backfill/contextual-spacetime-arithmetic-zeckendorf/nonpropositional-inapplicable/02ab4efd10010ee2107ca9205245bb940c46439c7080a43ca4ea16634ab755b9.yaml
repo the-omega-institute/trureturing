@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:02ab4efd10010ee2107ca9205245bb940c46439c7080a43ca4ea16634ab755b9
+  normalized_sha256: sha256:02ab4efd10010ee2107ca9205245bb940c46439c7080a43ca4ea16634ab755b9
+cas_ref: sha256:02ab4efd10010ee2107ca9205245bb940c46439c7080a43ca4ea16634ab755b9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶规定完整字面量、实际长度尺度、准确构造表达式与服务域，不断言后续实现的复杂度，故只结算定义与约定。
+    previous_atom_id: 81291b86da206a027d008dc27493b07194f17eedf9982f19f0b452ecb87c59fd
+    next_atom_id: 9be08a23301693d74c407233ed91832212d4cd58801392f0312f503a96d5c99c

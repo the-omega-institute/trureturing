@@ -1,0 +1,33 @@
+### FDS.1. A two-factor non-mixing theorem
+
+**Definition.** For a positive integer N, let D_F(N) be the set of distinct positive Fibonacci values dividing N. The value F_1=F_2=1 is included once. Let tau(N) be the number of positive divisors of N.
+
+**Lemma.** For positive K and nonnegative A,B,
+
+$$
+K\mid AB\quad\Longleftrightarrow\quad
+K\mid\gcd(K,A)\gcd(K,B).\tag{FDS1}
+$$
+
+**Proof.** For each prime power p^e exactly dividing K, the right side asserts min(e,v_p(A))+min(e,v_p(B))>=e. This is equivalent to v_p(A)+v_p(B)>=e. If A or B is zero, both divisibility statements hold, so those cases require no valuation at zero.
+
+**Lemma.** For k>=3,
+
+$$
+F_{\lfloor k/2\rfloor}^2<F_k.\tag{FDS2}
+$$
+
+**Proof.** The case k=3 is 1<2. Otherwise put m=floor(k/2)>=2. Fibonacci addition gives F_(2m)=F_(m-1)F_m+F_mF_(m+1)>F_m^2, using positivity and F_(m+1)>=F_m. Monotonicity and 2m<=k finish the proof.
+
+**Theorem.** For all natural a,b and all k>=3,
+
+$$
+\boxed{F_k\mid F_aF_b\quad\Longleftrightarrow\quad k\mid a\ \lor\ k\mid b.}\tag{FDS3}
+$$
+
+**Proof.** The reverse implication is Fibonacci divisibility. Suppose the left side holds, but neither index is divisible by k. Put d=gcd(k,a), e=gcd(k,b). These are positive proper divisors of k, hence d,e<=floor(k/2). By FDS1 and strong Fibonacci divisibility, F_k divides F_dF_e. This positive product is at most F_floor(k/2)^2, contradicting FDS2. No coprimality hypothesis is needed.
+
+**Boundary proposition.** FDS3 does not extend to three factors, and its lower bound on k cannot be dropped.
+
+**Proof.** F_6=8=F_3^3, although 6 does not divide 3. Also F_2=1 divides F_1F_1, although 2 does not divide 1.
+

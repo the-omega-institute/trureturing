@@ -1,0 +1,87 @@
+### IP.1 Fixed field and the parity readout
+
+In the notation of Appendix U.1, let $K=\mathbb Q(\sqrt5)$ and
+$\phi=(1+\sqrt5)/2$, with conjugate $\psi=1-\phi$. Write
+$\chi(m)=(m/5)$. For primes $p\ne2,5$, quadratic reciprocity identifies
+$\chi(p)$ with $(5/p)$; its value is $-1$ precisely for inert primes.
+Let $r(p)$ be the least positive index with $p\mid F_{r(p)}$, and set
+
+$$
+h_p=v_p(F_{r(p)})=v_p(F_{p-\chi(p)}).
+$$
+
+The equality uses the classical rank bound $r(p)\mid p-\chi(p)$ and the
+Fibonacci valuation formula; the multiplying index is coprime to $p$.
+The standard WSS condition is $h_p\ge2$.
+
+**Theorem IP1.** For every positive integer $M$ coprime to five,
+
+$$
+\chi(M)=(-1)^{c(M)},\qquad
+c(M)=\#\{p\mid M:p\text{ prime},\ \chi(p)=-1,\ v_p(M)\text{ odd}\}.
+$$
+
+**Proof.** Apply the multiplicative character to the unique prime
+factorization. A split prime contributes $1$ at every exponent; an inert
+prime contributes $(-1)^{v_p(M)}$. Reducing the exponent sum modulo two
+leaves exactly the displayed count of distinct odd-exponent inert primes.
+Thus there are two linked parities: the parity of each exponent, and the
+parity of the number of negative contributions. This is a multiplicative
+readout with values in the two-element group. It retains one bit of each
+exponent and does not distinguish depths one and three.
+
+**Proposition.** Fix an inert
+integer $q$, so $\chi(q)=-1$. On the integer-state carrier take
+$\operatorname{step}(M)=qM$, readout $\chi(M)$, and visible flip
+$z\mapsto-z$. Multiplicativity proves
+$\chi(\operatorname{step}(M))=-\chi(M)$, and the flip is involutive.
+Therefore
+
+$$
+\chi(q^{2j}M)=\chi(M),\qquad
+\chi(q^{2j+1}M)=-\chi(M).
+$$
+
+When $q\ge2$ and $M>0$, $q^2M>M$, even though its character has returned.
+Thus this gives an explicit arithmetic odd/even readout. Equality of that readout does not recover the exponent
+or the original integer, and no identification with Zeckendorf digit
+parity is being assumed.
+
+**Lemma IP2.** For every $n\ge1$,
+
+$$
+F_n\equiv n3^{n-1}\pmod5.
+$$
+
+In particular, for every odd $n$, $\chi(F_n)=\chi(n)$, including zero
+character at multiples of five.
+
+**Proof.** The right side has the Fibonacci initial values modulo five.
+Writing $u_n=n3^{n-1}$ gives
+$u_{n+2}-u_{n+1}-u_n=5(n+3)3^{n-1}$, so induction proves the formula.
+For odd $n$, the factor $3^{n-1}$ is a nonzero square modulo five.
+
+**Corollary IP3, the prime-index block.** For each prime
+$\ell\ge7$ with $\chi(\ell)=-1$, every prime $p\mid F_\ell$ satisfies
+$r(p)=\ell$ and $v_p(F_\ell)=h_p$. The number of such primes that are
+inert and have odd $h_p$ is odd, hence positive.
+
+**Proof.** The number $F_\ell$ is odd because its index is not divisible
+by three, and it is coprime to five by IP2. A prime divisor has rank
+strictly greater than one dividing the prime $\ell$, so its rank is
+$\ell$. Apply IP1 and IP2. The ordinary Fibonacci identities and rank
+facts here are classical; this is the fixed-field specialization of the
+character argument.
+
+For any odd index $n=r(p)$ with $p\ne2,5$, the identity
+$L_n^2-5F_n^2=-4$ shows that $-1$ is a square modulo $p$, so
+$p\equiv1\pmod4$. If $p$ is inert, then $n\mid p+1$ and consequently
+
+$$
+p\equiv2n-1\pmod{4n},\qquad p\ge2n-1,\qquad
+p\equiv13\text{ or }17\pmod{20}.                 \tag{IP4}
+$$
+
+Indeed, $(p+1)/n$ is $2$ modulo four. These congruences apply to all the
+odd-rank inert witnesses below, regardless of their actual depth.
+
