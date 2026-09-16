@@ -1,0 +1,2315 @@
+{
+  "schema": "erdos7-uniform-gamma-prime-parameter-v1",
+  "parameter_domain": "0 < y=1/(q-1) <= 1/4",
+  "law": "uniform on the complete actual {3,q} survivor set",
+  "small_y_branch": "(30*y^2+28*y+15)/(3-5*y)",
+  "large_y_branch": "5*(2*y^2+y+1)/(1-2*y)",
+  "exact_budget_envelope": "max(small_y_branch,large_y_branch)",
+  "y_switch": "(-31+sqrt(1281))/20",
+  "q_switch": "(47+sqrt(1281))/16",
+  "prime_formula": "q=5:55/4; prime q>=7:(15*q^2-2*q+17)/((q-1)*(3*q-8))",
+  "cofactor_coefficients": {
+    "y": [
+      "0",
+      "1"
+    ],
+    "a": [
+      "0",
+      "3",
+      "2"
+    ],
+    "a_minus_y": [
+      "0",
+      "2",
+      "2"
+    ],
+    "a_minus_2y": [
+      "0",
+      "1",
+      "2"
+    ]
+  },
+  "polynomial_coefficient_order": "constant to highest degree",
+  "interval_transform": "4^n*(1+t)^n*P(t/(4*(1+t))), n=degree(P)",
+  "symbolic_vertex_domination": [
+    {
+      "vertex_and_branch": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "2",
+        "23/6",
+        "4"
+      ],
+      "denominator": [
+        "1/2",
+        "-2/3"
+      ],
+      "cross_multiplied_gap": [
+        "3/2",
+        "5/2",
+        "7/2"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "24",
+        "58",
+        "75/2"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "2",
+        "29/6",
+        "5"
+      ],
+      "denominator": [
+        "1/2",
+        "-2/3"
+      ],
+      "cross_multiplied_gap": [
+        "3/2",
+        "-1/2",
+        "11/2",
+        "5"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "96",
+        "280",
+        "294",
+        "115"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "5/3",
+        "25/6",
+        "4"
+      ],
+      "denominator": [
+        "1/2",
+        "-2/3"
+      ],
+      "cross_multiplied_gap": [
+        "5/2",
+        "-1/6",
+        "31/6"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "40",
+        "238/3",
+        "89/2"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        0,
+        0,
+        0,
+        1,
+        1
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "5/3",
+        "31/6",
+        "5"
+      ],
+      "denominator": [
+        "1/2",
+        "-2/3"
+      ],
+      "cross_multiplied_gap": [
+        "5/2",
+        "-19/6",
+        "43/6",
+        "5"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "160",
+        "1288/3",
+        "1222/3",
+        "143"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "2",
+        "35/6",
+        "4"
+      ],
+      "denominator": [
+        "1/2",
+        "-1/6"
+      ],
+      "cross_multiplied_gap": [
+        "3/2",
+        "4",
+        "55/2",
+        "15"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "96",
+        "352",
+        "526",
+        "285"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        0,
+        0,
+        1,
+        0,
+        1
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "2",
+        "41/6",
+        "5"
+      ],
+      "denominator": [
+        "1/2",
+        "-1/6"
+      ],
+      "cross_multiplied_gap": [
+        "3/2",
+        "1",
+        "59/2",
+        "20"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "96",
+        "304",
+        "438",
+        "250"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "5/3",
+        "35/6",
+        "4"
+      ],
+      "denominator": [
+        "1/2",
+        "-1/6"
+      ],
+      "cross_multiplied_gap": [
+        "5/2",
+        "7/3",
+        "55/2",
+        "15"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "160",
+        "1552/3",
+        "1994/3",
+        "967/3"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        0,
+        0,
+        1,
+        1,
+        1
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "5/3",
+        "41/6",
+        "5"
+      ],
+      "denominator": [
+        "1/2",
+        "-1/6"
+      ],
+      "cross_multiplied_gap": [
+        "5/2",
+        "-2/3",
+        "59/2",
+        "20"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "160",
+        "1408/3",
+        "1730/3",
+        "862/3"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "2",
+        "13/6",
+        "4"
+      ],
+      "denominator": [
+        "1/2",
+        "-5/6"
+      ],
+      "cross_multiplied_gap": [
+        "3/2",
+        "5",
+        "-19/2",
+        "-5"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "96",
+        "368",
+        "410",
+        "133"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        0,
+        1,
+        0,
+        0,
+        1
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "2",
+        "19/6",
+        "5"
+      ],
+      "denominator": [
+        "1/2",
+        "-5/6"
+      ],
+      "cross_multiplied_gap": [
+        "3/2",
+        "2",
+        "-15/2"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "24",
+        "56",
+        "49/2"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        0,
+        1,
+        0,
+        1,
+        0
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "5/3",
+        "7/2",
+        "4"
+      ],
+      "denominator": [
+        "1/2",
+        "-5/6"
+      ],
+      "cross_multiplied_gap": [
+        "5/2",
+        "-2/3",
+        "-17/6",
+        "-5"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "160",
+        "1408/3",
+        "1342/3",
+        "133"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        0,
+        1,
+        0,
+        1,
+        1
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "5/3",
+        "9/2",
+        "5"
+      ],
+      "denominator": [
+        "1/2",
+        "-5/6"
+      ],
+      "cross_multiplied_gap": [
+        "5/2",
+        "-11/3",
+        "-5/6"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "40",
+        "196/3",
+        "49/2"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        0,
+        1,
+        1,
+        0,
+        0
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "2",
+        "25/6",
+        "4"
+      ],
+      "denominator": [
+        "1/2",
+        "-1/3"
+      ],
+      "cross_multiplied_gap": [
+        "3/2",
+        "13/2",
+        "29/2",
+        "10"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "96",
+        "392",
+        "554",
+        "268"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        0,
+        1,
+        1,
+        0,
+        1
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "2",
+        "31/6",
+        "5"
+      ],
+      "denominator": [
+        "1/2",
+        "-1/3"
+      ],
+      "cross_multiplied_gap": [
+        "3/2",
+        "7/2",
+        "33/2",
+        "15"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "96",
+        "344",
+        "466",
+        "233"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        0,
+        1,
+        1,
+        1,
+        0
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "5/3",
+        "31/6",
+        "4"
+      ],
+      "denominator": [
+        "1/2",
+        "-1/3"
+      ],
+      "cross_multiplied_gap": [
+        "5/2",
+        "11/6",
+        "39/2",
+        "10"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "160",
+        "1528/3",
+        "1850/3",
+        "832/3"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        0,
+        1,
+        1,
+        1,
+        1
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "5/3",
+        "37/6",
+        "5"
+      ],
+      "denominator": [
+        "1/2",
+        "-1/3"
+      ],
+      "cross_multiplied_gap": [
+        "5/2",
+        "-7/6",
+        "43/2",
+        "15"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "160",
+        "1384/3",
+        "1586/3",
+        "727/3"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        0,
+        2,
+        0,
+        0,
+        0
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "2",
+        "7/2",
+        "4"
+      ],
+      "denominator": [
+        "1/2",
+        "-1"
+      ],
+      "cross_multiplied_gap": [
+        "3/2",
+        "-3/2",
+        "-15/2",
+        "-10"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "96",
+        "264",
+        "210",
+        "32"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        0,
+        2,
+        0,
+        0,
+        1
+      ],
+      "dominating_branch": "large_y",
+      "numerator": [
+        "2",
+        "9/2",
+        "5"
+      ],
+      "denominator": [
+        "1/2",
+        "-1"
+      ],
+      "cross_multiplied_gap": [
+        "1/2",
+        "-3",
+        "4"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "8",
+        "4"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        0,
+        2,
+        0,
+        1,
+        0
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "5/3",
+        "19/6",
+        "4"
+      ],
+      "denominator": [
+        "1/2",
+        "-1"
+      ],
+      "cross_multiplied_gap": [
+        "5/2",
+        "-13/6",
+        "-55/6",
+        "-10"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "160",
+        "1336/3",
+        "374",
+        "236/3"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        0,
+        2,
+        0,
+        1,
+        1
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "5/3",
+        "25/6",
+        "5"
+      ],
+      "denominator": [
+        "1/2",
+        "-1"
+      ],
+      "cross_multiplied_gap": [
+        "5/2",
+        "-31/6",
+        "-43/6",
+        "-5"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "160",
+        "1192/3",
+        "286",
+        "131/3"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        0,
+        2,
+        1,
+        0,
+        0
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "2",
+        "11/2",
+        "4"
+      ],
+      "denominator": [
+        "1/2",
+        "-1/2"
+      ],
+      "cross_multiplied_gap": [
+        "3/2",
+        "0",
+        "33/2",
+        "5"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "96",
+        "288",
+        "354",
+        "167"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        0,
+        2,
+        1,
+        0,
+        1
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "2",
+        "13/2",
+        "5"
+      ],
+      "denominator": [
+        "1/2",
+        "-1/2"
+      ],
+      "cross_multiplied_gap": [
+        "3/2",
+        "-3",
+        "37/2",
+        "10"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "96",
+        "240",
+        "266",
+        "132"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        0,
+        2,
+        1,
+        1,
+        0
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "5/3",
+        "29/6",
+        "4"
+      ],
+      "denominator": [
+        "1/2",
+        "-1/2"
+      ],
+      "cross_multiplied_gap": [
+        "5/2",
+        "1/3",
+        "79/6",
+        "5"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "160",
+        "1456/3",
+        "1630/3",
+        "223"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        0,
+        2,
+        1,
+        1,
+        1
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "5/3",
+        "35/6",
+        "5"
+      ],
+      "denominator": [
+        "1/2",
+        "-1/2"
+      ],
+      "cross_multiplied_gap": [
+        "5/2",
+        "-8/3",
+        "91/6",
+        "10"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "160",
+        "1312/3",
+        "1366/3",
+        "188"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "5/2",
+        "29/6",
+        "5"
+      ],
+      "denominator": [
+        "1/2",
+        "-2/3"
+      ],
+      "cross_multiplied_gap": [
+        "0",
+        "2",
+        "11/2",
+        "5"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "0",
+        "32",
+        "86",
+        "59"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        1,
+        0,
+        0,
+        0,
+        1
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "5/2",
+        "23/6",
+        "4"
+      ],
+      "denominator": [
+        "1/2",
+        "-2/3"
+      ],
+      "cross_multiplied_gap": [
+        "0",
+        "5",
+        "7/2"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "0",
+        "20",
+        "47/2"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        1,
+        0,
+        0,
+        1,
+        0
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "13/6",
+        "31/6",
+        "5"
+      ],
+      "denominator": [
+        "1/2",
+        "-2/3"
+      ],
+      "cross_multiplied_gap": [
+        "1",
+        "-2/3",
+        "43/6",
+        "5"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "64",
+        "544/3",
+        "598/3",
+        "87"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        1,
+        0,
+        0,
+        1,
+        1
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "13/6",
+        "25/6",
+        "4"
+      ],
+      "denominator": [
+        "1/2",
+        "-2/3"
+      ],
+      "cross_multiplied_gap": [
+        "1",
+        "7/3",
+        "31/6"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "16",
+        "124/3",
+        "61/2"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        1,
+        0,
+        1,
+        0,
+        0
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "5/2",
+        "22/3",
+        "5"
+      ],
+      "denominator": [
+        "1/2",
+        "-1/6"
+      ],
+      "cross_multiplied_gap": [
+        "0",
+        "2",
+        "32",
+        "20"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "0",
+        "32",
+        "192",
+        "180"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        1,
+        0,
+        1,
+        0,
+        1
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "5/2",
+        "19/3",
+        "4"
+      ],
+      "denominator": [
+        "1/2",
+        "-1/6"
+      ],
+      "cross_multiplied_gap": [
+        "0",
+        "5",
+        "30",
+        "15"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "0",
+        "80",
+        "280",
+        "215"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        1,
+        0,
+        1,
+        1,
+        0
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "13/6",
+        "22/3",
+        "5"
+      ],
+      "denominator": [
+        "1/2",
+        "-1/6"
+      ],
+      "cross_multiplied_gap": [
+        "1",
+        "1/3",
+        "32",
+        "20"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "64",
+        "592/3",
+        "992/3",
+        "652/3"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        1,
+        0,
+        1,
+        1,
+        1
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "13/6",
+        "19/3",
+        "4"
+      ],
+      "denominator": [
+        "1/2",
+        "-1/6"
+      ],
+      "cross_multiplied_gap": [
+        "1",
+        "10/3",
+        "30",
+        "15"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "64",
+        "736/3",
+        "1256/3",
+        "757/3"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        1,
+        1,
+        0,
+        0,
+        0
+      ],
+      "dominating_branch": "large_y",
+      "numerator": [
+        "5/2",
+        "5/2",
+        "5"
+      ],
+      "denominator": [
+        "1/2",
+        "-1"
+      ],
+      "cross_multiplied_gap": [
+        "0"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "0"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        1,
+        1,
+        0,
+        0,
+        1
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "5/2",
+        "3/2",
+        "4"
+      ],
+      "denominator": [
+        "1/2",
+        "-1"
+      ],
+      "cross_multiplied_gap": [
+        "0",
+        "7",
+        "-35/2",
+        "-10"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "0",
+        "112",
+        "154",
+        "32"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        1,
+        1,
+        0,
+        1,
+        0
+      ],
+      "dominating_branch": "large_y",
+      "numerator": [
+        "13/6",
+        "23/6",
+        "5"
+      ],
+      "denominator": [
+        "1/2",
+        "-1"
+      ],
+      "cross_multiplied_gap": [
+        "1/3",
+        "-2",
+        "8/3"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "16/3",
+        "8/3"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        1,
+        1,
+        0,
+        1,
+        1
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "13/6",
+        "17/6",
+        "4"
+      ],
+      "denominator": [
+        "1/2",
+        "-1"
+      ],
+      "cross_multiplied_gap": [
+        "1",
+        "4/3",
+        "-65/6",
+        "-10"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "64",
+        "640/3",
+        "574/3",
+        "32"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        1,
+        1,
+        1,
+        0,
+        0
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "5/2",
+        "5",
+        "5"
+      ],
+      "denominator": [
+        "1/2",
+        "-1/2"
+      ],
+      "cross_multiplied_gap": [
+        "0",
+        "4",
+        "11",
+        "10"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "0",
+        "64",
+        "172",
+        "118"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        1,
+        1,
+        1,
+        0,
+        1
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "5/2",
+        "4",
+        "4"
+      ],
+      "denominator": [
+        "1/2",
+        "-1/2"
+      ],
+      "cross_multiplied_gap": [
+        "0",
+        "7",
+        "9",
+        "5"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "0",
+        "112",
+        "260",
+        "153"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        1,
+        1,
+        1,
+        1,
+        0
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "13/6",
+        "6",
+        "5"
+      ],
+      "denominator": [
+        "1/2",
+        "-1/2"
+      ],
+      "cross_multiplied_gap": [
+        "1",
+        "-2/3",
+        "16",
+        "10"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "64",
+        "544/3",
+        "704/3",
+        "382/3"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "13/6",
+        "5",
+        "4"
+      ],
+      "denominator": [
+        "1/2",
+        "-1/2"
+      ],
+      "cross_multiplied_gap": [
+        "1",
+        "7/3",
+        "14",
+        "5"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "64",
+        "688/3",
+        "968/3",
+        "487/3"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        1,
+        2,
+        0,
+        0,
+        0
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "5/2",
+        "14/3",
+        "5"
+      ],
+      "denominator": [
+        "1/2",
+        "-5/6"
+      ],
+      "cross_multiplied_gap": [
+        "0"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "0"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        1,
+        2,
+        0,
+        0,
+        1
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "5/2",
+        "11/3",
+        "4"
+      ],
+      "denominator": [
+        "1/2",
+        "-5/6"
+      ],
+      "cross_multiplied_gap": [
+        "0",
+        "3",
+        "-2",
+        "-5"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "0",
+        "48",
+        "88",
+        "35"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        1,
+        2,
+        0,
+        1,
+        0
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "13/6",
+        "13/3",
+        "5"
+      ],
+      "denominator": [
+        "1/2",
+        "-5/6"
+      ],
+      "cross_multiplied_gap": [
+        "1",
+        "-2/3",
+        "-5/3"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "16",
+        "88/3",
+        "35/3"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        1,
+        2,
+        0,
+        1,
+        1
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "13/6",
+        "10/3",
+        "4"
+      ],
+      "denominator": [
+        "1/2",
+        "-5/6"
+      ],
+      "cross_multiplied_gap": [
+        "1",
+        "7/3",
+        "-11/3",
+        "-5"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "64",
+        "688/3",
+        "252",
+        "245/3"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        1,
+        2,
+        1,
+        0,
+        0
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "5/2",
+        "43/6",
+        "5"
+      ],
+      "denominator": [
+        "1/2",
+        "-1/3"
+      ],
+      "cross_multiplied_gap": [
+        "0",
+        "0",
+        "53/2",
+        "15"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "0",
+        "0",
+        "106",
+        "121"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        1,
+        2,
+        1,
+        0,
+        1
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "5/2",
+        "37/6",
+        "4"
+      ],
+      "denominator": [
+        "1/2",
+        "-1/3"
+      ],
+      "cross_multiplied_gap": [
+        "0",
+        "3",
+        "49/2",
+        "10"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "0",
+        "48",
+        "194",
+        "156"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        1,
+        2,
+        1,
+        1,
+        0
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "13/6",
+        "13/2",
+        "5"
+      ],
+      "denominator": [
+        "1/2",
+        "-1/3"
+      ],
+      "cross_multiplied_gap": [
+        "1",
+        "1/3",
+        "139/6",
+        "15"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "64",
+        "592/3",
+        "886/3",
+        "177"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        1,
+        2,
+        1,
+        1,
+        1
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "13/6",
+        "11/2",
+        "4"
+      ],
+      "denominator": [
+        "1/2",
+        "-1/3"
+      ],
+      "cross_multiplied_gap": [
+        "1",
+        "10/3",
+        "127/6",
+        "10"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "64",
+        "736/3",
+        "1150/3",
+        "212"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "8/3",
+        "31/6",
+        "16/3"
+      ],
+      "denominator": [
+        "2/3",
+        "-5/6"
+      ],
+      "cross_multiplied_gap": [
+        "2",
+        "4",
+        "13/2",
+        "5/3"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "128",
+        "448",
+        "538",
+        "659/3"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        2,
+        0,
+        0,
+        0,
+        1
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "8/3",
+        "31/6",
+        "16/3"
+      ],
+      "denominator": [
+        "2/3",
+        "-5/6"
+      ],
+      "cross_multiplied_gap": [
+        "2",
+        "4",
+        "13/2",
+        "5/3"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "128",
+        "448",
+        "538",
+        "659/3"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        2,
+        0,
+        0,
+        1,
+        0
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "7/3",
+        "11/2",
+        "16/3"
+      ],
+      "denominator": [
+        "2/3",
+        "-5/6"
+      ],
+      "cross_multiplied_gap": [
+        "3",
+        "4/3",
+        "49/6",
+        "5/3"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "192",
+        "1792/3",
+        "1954/3",
+        "743/3"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        2,
+        0,
+        0,
+        1,
+        1
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "7/3",
+        "11/2",
+        "16/3"
+      ],
+      "denominator": [
+        "2/3",
+        "-5/6"
+      ],
+      "cross_multiplied_gap": [
+        "3",
+        "4/3",
+        "49/6",
+        "5/3"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "192",
+        "1792/3",
+        "1954/3",
+        "743/3"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        2,
+        0,
+        1,
+        0,
+        0
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "8/3",
+        "47/6",
+        "16/3"
+      ],
+      "denominator": [
+        "2/3",
+        "-1/6"
+      ],
+      "cross_multiplied_gap": [
+        "2",
+        "6",
+        "77/2",
+        "65/3"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "128",
+        "480",
+        "730",
+        "1199/3"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        2,
+        0,
+        1,
+        0,
+        1
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "8/3",
+        "47/6",
+        "16/3"
+      ],
+      "denominator": [
+        "2/3",
+        "-1/6"
+      ],
+      "cross_multiplied_gap": [
+        "2",
+        "6",
+        "77/2",
+        "65/3"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "128",
+        "480",
+        "730",
+        "1199/3"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        2,
+        0,
+        1,
+        1,
+        0
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "7/3",
+        "47/6",
+        "16/3"
+      ],
+      "denominator": [
+        "2/3",
+        "-1/6"
+      ],
+      "cross_multiplied_gap": [
+        "3",
+        "13/3",
+        "77/2",
+        "65/3"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "192",
+        "1936/3",
+        "2606/3",
+        "437"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        2,
+        0,
+        1,
+        1,
+        1
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "7/3",
+        "47/6",
+        "16/3"
+      ],
+      "denominator": [
+        "2/3",
+        "-1/6"
+      ],
+      "cross_multiplied_gap": [
+        "3",
+        "13/3",
+        "77/2",
+        "65/3"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "192",
+        "1936/3",
+        "2606/3",
+        "437"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        2,
+        1,
+        0,
+        0,
+        0
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "8/3",
+        "17/6",
+        "16/3"
+      ],
+      "denominator": [
+        "2/3",
+        "-7/6"
+      ],
+      "cross_multiplied_gap": [
+        "2",
+        "6",
+        "-29/2",
+        "-25/3"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "128",
+        "480",
+        "518",
+        "473/3"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        2,
+        1,
+        0,
+        0,
+        1
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "8/3",
+        "17/6",
+        "16/3"
+      ],
+      "denominator": [
+        "2/3",
+        "-7/6"
+      ],
+      "cross_multiplied_gap": [
+        "2",
+        "6",
+        "-29/2",
+        "-25/3"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "128",
+        "480",
+        "518",
+        "473/3"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        2,
+        1,
+        0,
+        1,
+        0
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "7/3",
+        "25/6",
+        "16/3"
+      ],
+      "denominator": [
+        "2/3",
+        "-7/6"
+      ],
+      "cross_multiplied_gap": [
+        "3",
+        "1/3",
+        "-47/6",
+        "-25/3"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "192",
+        "1744/3",
+        "1666/3",
+        "473/3"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        2,
+        1,
+        0,
+        1,
+        1
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "7/3",
+        "25/6",
+        "16/3"
+      ],
+      "denominator": [
+        "2/3",
+        "-7/6"
+      ],
+      "cross_multiplied_gap": [
+        "3",
+        "1/3",
+        "-47/6",
+        "-25/3"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "192",
+        "1744/3",
+        "1666/3",
+        "473/3"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        2,
+        1,
+        1,
+        0,
+        0
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "8/3",
+        "11/2",
+        "16/3"
+      ],
+      "denominator": [
+        "2/3",
+        "-1/2"
+      ],
+      "cross_multiplied_gap": [
+        "2",
+        "8",
+        "35/2",
+        "35/3"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "128",
+        "512",
+        "710",
+        "1013/3"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        2,
+        1,
+        1,
+        0,
+        1
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "8/3",
+        "11/2",
+        "16/3"
+      ],
+      "denominator": [
+        "2/3",
+        "-1/2"
+      ],
+      "cross_multiplied_gap": [
+        "2",
+        "8",
+        "35/2",
+        "35/3"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "128",
+        "512",
+        "710",
+        "1013/3"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        2,
+        1,
+        1,
+        1,
+        0
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "7/3",
+        "13/2",
+        "16/3"
+      ],
+      "denominator": [
+        "2/3",
+        "-1/2"
+      ],
+      "cross_multiplied_gap": [
+        "3",
+        "10/3",
+        "45/2",
+        "35/3"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "192",
+        "1888/3",
+        "2318/3",
+        "347"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        2,
+        1,
+        1,
+        1,
+        1
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "7/3",
+        "13/2",
+        "16/3"
+      ],
+      "denominator": [
+        "2/3",
+        "-1/2"
+      ],
+      "cross_multiplied_gap": [
+        "3",
+        "10/3",
+        "45/2",
+        "35/3"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "192",
+        "1888/3",
+        "2318/3",
+        "347"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        2,
+        2,
+        0,
+        0,
+        0
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "8/3",
+        "29/6",
+        "16/3"
+      ],
+      "denominator": [
+        "2/3",
+        "-7/6"
+      ],
+      "cross_multiplied_gap": [
+        "2",
+        "0",
+        "-9/2",
+        "-25/3"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "128",
+        "384",
+        "366",
+        "305/3"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        2,
+        2,
+        0,
+        0,
+        1
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "8/3",
+        "29/6",
+        "16/3"
+      ],
+      "denominator": [
+        "2/3",
+        "-7/6"
+      ],
+      "cross_multiplied_gap": [
+        "2",
+        "0",
+        "-9/2",
+        "-25/3"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "128",
+        "384",
+        "366",
+        "305/3"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        2,
+        2,
+        0,
+        1,
+        0
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "7/3",
+        "9/2",
+        "16/3"
+      ],
+      "denominator": [
+        "2/3",
+        "-7/6"
+      ],
+      "cross_multiplied_gap": [
+        "3",
+        "-2/3",
+        "-37/6",
+        "-25/3"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "192",
+        "1696/3",
+        "530",
+        "445/3"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        2,
+        2,
+        0,
+        1,
+        1
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "7/3",
+        "9/2",
+        "16/3"
+      ],
+      "denominator": [
+        "2/3",
+        "-7/6"
+      ],
+      "cross_multiplied_gap": [
+        "3",
+        "-2/3",
+        "-37/6",
+        "-25/3"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "192",
+        "1696/3",
+        "530",
+        "445/3"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        2,
+        2,
+        1,
+        0,
+        0
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "8/3",
+        "15/2",
+        "16/3"
+      ],
+      "denominator": [
+        "2/3",
+        "-1/2"
+      ],
+      "cross_multiplied_gap": [
+        "2",
+        "2",
+        "55/2",
+        "35/3"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "128",
+        "416",
+        "558",
+        "845/3"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        2,
+        2,
+        1,
+        0,
+        1
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "8/3",
+        "15/2",
+        "16/3"
+      ],
+      "denominator": [
+        "2/3",
+        "-1/2"
+      ],
+      "cross_multiplied_gap": [
+        "2",
+        "2",
+        "55/2",
+        "35/3"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "128",
+        "416",
+        "558",
+        "845/3"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        2,
+        2,
+        1,
+        1,
+        0
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "7/3",
+        "41/6",
+        "16/3"
+      ],
+      "denominator": [
+        "2/3",
+        "-1/2"
+      ],
+      "cross_multiplied_gap": [
+        "3",
+        "7/3",
+        "145/6",
+        "35/3"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "192",
+        "1840/3",
+        "2242/3",
+        "1013/3"
+      ]
+    },
+    {
+      "vertex_and_branch": [
+        2,
+        2,
+        1,
+        1,
+        1
+      ],
+      "dominating_branch": "small_y",
+      "numerator": [
+        "7/3",
+        "41/6",
+        "16/3"
+      ],
+      "denominator": [
+        "2/3",
+        "-1/2"
+      ],
+      "cross_multiplied_gap": [
+        "3",
+        "7/3",
+        "145/6",
+        "35/3"
+      ],
+      "nonnegative_transformed_coefficients": [
+        "192",
+        "1840/3",
+        "2242/3",
+        "1013/3"
+      ]
+    }
+  ],
+  "attaining_envelope_vertices": {
+    "small_y": [
+      1,
+      2,
+      0,
+      0,
+      0
+    ],
+    "large_y": [
+      1,
+      1,
+      0,
+      0,
+      0
+    ]
+  },
+  "minimum_vertex_survivor_density": "1/4",
+  "branch_difference_numerator": [
+    "0",
+    "-8",
+    "31",
+    "10"
+  ],
+  "absent_modulus_3": {
+    "numerator": [
+      "17",
+      "31",
+      "34"
+    ],
+    "denominator": [
+      "5",
+      "-8"
+    ],
+    "small_y_domination_gap": [
+      "24",
+      "12",
+      "-21",
+      "-70"
+    ],
+    "gap_transformed_coefficients": [
+      "1536",
+      "4800",
+      "4908",
+      "1574"
+    ]
+  },
+  "specializations": [
+    {
+      "q": 5,
+      "y": "1/4",
+      "small_y_bound": "191/14",
+      "large_y_bound": "55/4",
+      "uniform_Gamma_bound": "55/4",
+      "absent_modulus_3_bound": "215/24",
+      "previous_compatible_bound": "57/4",
+      "improvement": "1/2"
+    },
+    {
+      "q": 7,
+      "y": "1/6",
+      "small_y_bound": "123/13",
+      "large_y_bound": "55/6",
+      "uniform_Gamma_bound": "123/13",
+      "absent_modulus_3_bound": "208/33",
+      "previous_compatible_bound": "123/13",
+      "improvement": "0"
+    },
+    {
+      "q": 11,
+      "y": "1/10",
+      "small_y_bound": "181/25",
+      "large_y_bound": "7",
+      "uniform_Gamma_bound": "181/25",
+      "absent_modulus_3_bound": "73/15",
+      "previous_compatible_bound": "181/25",
+      "improvement": "0"
+    }
+  ],
+  "scope": "symbolic arithmetic verifies the stated analytic reduction; no Lean certification"
+}

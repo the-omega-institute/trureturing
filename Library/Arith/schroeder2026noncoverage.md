@@ -1,0 +1,63 @@
+---
+bibkey: schroeder2026noncoverage
+authors: Michael Schroeder
+year: 2026
+title: "Noncoverage for Distinct Odd Moduli with at Most Three Prime Divisors"
+doi: 10.5281/zenodo.22760638
+url: https://michaelschroeder.ai/research/ThreePrimeDivisors/three_prime_factors_complete.zip
+claim: "The author claims noncoverage for finite families of distinct odd moduli greater than one when each modulus has at most three distinct prime factors, with arbitrary exponents and arbitrary total prime support."
+strata_touched:
+  - D5/S3/Arith/Congruence/TwoOddPrimeUncoveredDensity
+license: "Paper and prose: CC BY 4.0; original Lean/Python code and certificate inputs: MIT; third-party licenses retained."
+triage: anchor
+---
+
+# Three prime factors per modulus
+
+Locator: https://doi.org/10.5281/zenodo.22760638, version 1.0, manuscript dated
+9 September and revised 15 September 2026. Metadata and supplied source read
+16 September 2026. Archive:
+https://michaelschroeder.ai/research/ThreePrimeDivisors/three_prime_factors_complete.zip.
+SHA-256: `5956327277ac47dd6e98a0a38f2a785cd61e647560c7f6ab5c73a63cf49faa51`.
+The archive root is `three-prime-factors-complete/`; its `LICENSE.md` assigns
+copyright © 2026 Michael Schroeder and the component licenses above. No source
+Git revision is supplied.
+
+The source declaration `Erdos7.noncoverage_at_most_three_prime_factors` in
+`formal/Erdos7/ThreePrime/Arithmetic.lean` takes `residue : Fin L → ℤ`,
+`modulus : Fin L → ℕ`, nontriviality, oddness, injectivity, and explicitly
+`hThree : ∀ k, (modulus k).primeFactors.card ≤ 3`. It concludes the existence
+of an integer avoiding every class. Dropping `hThree` changes the theorem.
+The paper's separate largest-prime-cutoff extension is not in this Lean result.
+
+Pins: Lean `4.32.0-rc1`; mathlib
+`360da6fa66c1273b76b6b2d8c5666fd5ac2e3b56`, as recorded in
+`formal/lean-toolchain` and `formal/lake-manifest.json`.
+The official Lean release is commit `b4812ae53eea93439ad5dce5a5c26591c31cb697`;
+its macOS ARM archive SHA-256 is
+`181f967f61bbaf4864102d69c7a2167a7e3d1939df70e3ff3b8def8202fc768e`.
+
+Completed local verification on 16 September 2026 rebuilt the author's source
+with `python3 build_three_prime.py --jobs 4`: all 90 driver steps exited zero.
+Both `lake env lean AuditThreePrime.lean` and its `--trust=0` variant exited
+zero, reporting the target's axiom closure
+`[propext, Classical.choice, Quot.sound]`. Importing with `--trust=0` alone does
+not recheck all imported `.olean` bodies. Separately,
+`lake env leanchecker --fresh --verbose Erdos7.ThreePrime.Arithmetic` exited zero:
+the official checker replayed the imported and target constant environment
+from an empty environment through `Environment.replay`. This uses the same
+official Lean kernel; it is not a second verifier implementation.
+
+The postbuild archive check rehashed all 491 manifest entries with zero
+mismatches. A token scan of the 413 Lean files under `formal/Erdos7`, with
+comments and strings removed, found no proof bypass; its only options were
+`maxHeartbeats` and `maxRecDepth`, and its two ordinary tactic macros were read.
+The supplied `verify.py`, `crosscheck.py`, and `verify_formal_appendix.py` also
+exited zero. These checks rely on the pinned official toolchain and dependencies;
+they preserve `hThree`, and add no repository Lean declaration or frozen state.
+
+The [bridge program](../../docs/reports/erdos7-odd-covering/bridge_checks.py)
+is an original repository experiment that binds selected formulas to this
+exact archive and calculates two finite
+counterexamples to proposed extensions. Substring checks are evidence binding
+only; the program neither elaborates Lean nor verifies the author's theorem.
