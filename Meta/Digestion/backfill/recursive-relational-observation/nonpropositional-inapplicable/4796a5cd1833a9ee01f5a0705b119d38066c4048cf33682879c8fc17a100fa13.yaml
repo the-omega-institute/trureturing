@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4796a5cd1833a9ee01f5a0705b119d38066c4048cf33682879c8fc17a100fa13
+  normalized_sha256: sha256:4796a5cd1833a9ee01f5a0705b119d38066c4048cf33682879c8fc17a100fa13
+cas_ref: sha256:4796a5cd1833a9ee01f5a0705b119d38066c4048cf33682879c8fc17a100fa13
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条固定数字载体、黄金相位、负轨道及实际加法闭图，并提供这些记号的来源，属于定义性材料。
+    previous_atom_id: e6d9d0c7f4cc916d124286d7df29bd6730f4f68e887575d02a032198e00cd783
+    next_atom_id: ba61e84737190076d6333191368e3a44f444c5d595f5fc68588b179d5fe91253
