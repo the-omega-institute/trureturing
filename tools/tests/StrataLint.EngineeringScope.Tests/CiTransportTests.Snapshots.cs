@@ -42,7 +42,7 @@ public sealed partial class CiTransportTests
             marker = root / 'build/acceptance-entered'
             def outside(*args):
                 raise AssertionError('optional acceptance ran outside the bounded snapshot worker')
-            lean_actions.current_built_lean = outside
+            lean_actions.current_lean_materials = outside
             cache_deadline.load_deadline = lambda *_: cache_deadline.CacheDeadline(
                 time.monotonic() + (68 if available else 0))
             launch = subprocess.Popen
@@ -56,7 +56,7 @@ public sealed partial class CiTransportTests
             def slow(root, *args):
                 (root / 'build/acceptance-entered').write_text(str(os.getpid()))
                 signal.pause()
-            owner.current_built_lean = slow
+            owner.current_lean_materials = slow
             sys.argv = [str(script), *sys.argv[2:]]
             raise SystemExit(owner.main())
             '''

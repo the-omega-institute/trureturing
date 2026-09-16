@@ -165,8 +165,9 @@ elif a[:2] == ['release', 'create']:
     destination.mkdir()
     assert a[a.index('--repo') + 1] == 'fixture/cache'
     assert '--draft' in a
+    assert '--target' not in a, 'new snapshots use the default storage anchor'
     (destination / 'release.json').write_text(json.dumps(dict(tag_name=a[2], draft=True,
-        target_commitish=a[a.index('--target') + 1], published_at='fixture')))
+        target_commitish='main', published_at='fixture')))
 elif a[:2] == ['release', 'upload']:
     for item in a[3:]:
         if item.startswith('/') and Path(item).is_file(): shutil.copyfile(item, root / a[2] / Path(item).name)
@@ -246,6 +247,11 @@ else:
         tag = address['release_prefix'] + '4242-1'
         manifest = json.loads((self.root / 'releases' / tag / 'manifest.json').read_text())
         self.assertEqual(address['partition'], manifest['partition'])
+        release = json.loads((self.root / 'releases' / tag / 'release.json').read_text())
+        self.assertEqual('main', release['target_commitish'])
+        self.assertEqual(self.env['GITHUB_SHA'], manifest['producer_commit_sha'])
+        self.assertEqual('4242', manifest['workflow_run_id'])
+        self.assertEqual('1', manifest['workflow_run_attempt'])
         shutil.rmtree(self.root / '.lake/build')
         restored = self.release_run('fetch')
         self.assertIn('"resolved":"' + tag + '"', restored.stdout)

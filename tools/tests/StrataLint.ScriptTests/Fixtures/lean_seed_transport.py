@@ -326,12 +326,14 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
     def test_publication_and_prune_share_one_deadline(self):
         for run in range(501, 506):
             self.assertEqual(0, self.transport("publish", str(run)).returncode)
-        result = self.transport("publish", "506", **self.deadline_probe(6, step=1))
+        # Include the small manifest confirmation, then exhaust the same
+        # operation window after listing so cleanup cannot reset its deadline.
+        result = self.transport("publish", "506", **self.deadline_probe(7, step=1))
         self.assertEqual(0, result.returncode, result.stdout + result.stderr)
         self.assertIn('"status":"published"', result.stdout)
         self.assertIn("deadline exhausted", result.stdout)
-        self.assertEqual([6, 5, 4, 3, 2, 1], [call["timeout"] for call in self.gh_budgets()])
-        self.assertEqual(["api", "create", "upload", "edit", "api", "list"],
+        self.assertEqual([7, 6, 5, 4, 3, 2, 1], [call["timeout"] for call in self.gh_budgets()])
+        self.assertEqual(["api", "create", "upload", "edit", "api", "download", "list"],
                          [call["args"][0] if call["args"][0] == "api" else call["args"][1]
                           for call in self.gh_budgets()])
         self.assertEqual(6, len(list(self.remote.glob("*/release.json"))))
@@ -426,6 +428,10 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
         self.assertIn('"status":"published"', saved.stdout.replace(" ", ""))
         snapshot = next(self.remote.iterdir())
         metadata = json.loads((snapshot / "manifest.json").read_text())
+        release = json.loads((snapshot / "release.json").read_text())
+        self.assertNotEqual(metadata["producer_commit_sha"], release["target_commitish"])
+        self.assertEqual(("d" * 40, "123", "1"), tuple(metadata[field] for field in
+            ("producer_commit_sha", "workflow_run_id", "workflow_run_attempt")))
         packed = (snapshot / "lean-build.tgz").read_bytes()
         self.assertEqual(digest(packed), metadata["archive_sha256"])
         self.assertEqual(len(packed), metadata["archive_bytes"])
@@ -495,7 +501,65 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
         self.assertIn('"status":"exists"', result.stdout.replace(" ", ""))
         self.assertEqual(before, {path.name: path.read_bytes() for path in next(self.remote.iterdir()).iterdir()})
         calls = [json.loads(line) for line in (self.root / "gh.log").read_text().splitlines()]
-        self.assertEqual(["api"], [call[0] for call in calls])
+        self.assertEqual(["api", "download"],
+            [call[0] if call[0] == "api" else call[1] for call in calls])
+        self.assertEqual(["manifest.json"],
+            [call[index + 1] for call in calls for index, value in enumerate(call) if value == "--pattern"])
+
+    def test_existing_snapshot_requires_this_publisher_manifest_before_reuse(self):
+        self.assertEqual(0, self.transport("publish").returncode)
+        snapshot = next(self.remote.iterdir())
+        manifest = snapshot / "manifest.json"
+        original = manifest.read_text()
+        cases = [("producer_commit_sha", "e" * 40), ("workflow_run_id", "124"),
+                 ("workflow_run_attempt", "2"), ("schema", "wrong"), ("partition", "other"),
+                 ("missing", None), ("digest", "sha256:" + "0" * 64),
+                 ("part-digest", "sha256:" + "0" * 64), ("part-size", 0)]
+        for field, value in cases:
+            with self.subTest(field=field):
+                manifest.write_text(original)
+                environment = {}
+                if field == "missing":
+                    manifest.unlink()
+                elif field == "digest":
+                    environment["FAKE_MANIFEST_DIGEST"] = value
+                elif field.startswith("part-"):
+                    environment["FAKE_PART_ASSET"] = json.dumps({field.removeprefix("part-"): value})
+                else:
+                    payload = json.loads(original)
+                    payload[field] = value
+                    manifest.write_text(json.dumps(payload))
+                before = {path.name: path.read_bytes() for path in snapshot.iterdir()}
+                (self.root / "gh.log").unlink(missing_ok=True)
+                result = self.transport("publish", FAKE_GH_LOG=str(self.root / "gh.log"), **environment)
+                self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+                self.assertIn('"status":"failed"', result.stdout)
+                self.assertNotIn('"status":"exists"', result.stdout)
+                self.assertEqual(before, {path.name: path.read_bytes() for path in snapshot.iterdir()})
+                calls = [json.loads(line) for line in (self.root / "gh.log").read_text().splitlines()]
+                self.assertFalse(any(call[:2] in (["release", "create"], ["release", "upload"],
+                    ["release", "edit"], ["release", "delete"], ["release", "list"]) for call in calls))
+                self.assertFalse(any("lean-build.tgz" in call for call in calls))
+                self.assertFalse(any(call[0] == "api" and "/releases/tags/" not in call[1] for call in calls))
+        manifest.write_text(original)
+
+    def test_post_edit_manifest_must_match_actual_publisher(self):
+        for field, value in (("producer_commit_sha", "e" * 40), ("workflow_run_id", "124"),
+                             ("workflow_run_attempt", "2"), ("part-digest", "sha256:" + "0" * 64),
+                             ("part-size", 0)):
+            with self.subTest(field=field):
+                shutil.rmtree(self.remote)
+                self.remote.mkdir()
+                (self.root / "gh.log").unlink(missing_ok=True)
+                environment = ({"FAKE_PART_ASSET": json.dumps({field.removeprefix("part-"): value})}
+                    if field.startswith("part-") else {"FAKE_MANIFEST_AFTER_EDIT": json.dumps({field: value})})
+                result = self.transport("publish", FAKE_GH_LOG=str(self.root / "gh.log"), **environment)
+                self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+                self.assertIn('"status":"failed"', result.stdout)
+                self.assertNotIn('"status":"published"', result.stdout)
+                calls = [json.loads(line) for line in (self.root / "gh.log").read_text().splitlines()]
+                self.assertFalse(any(call[:2] in (["release", "list"], ["release", "delete"]) for call in calls))
+                self.assertFalse(any(call[:2] == ["release", "download"] and "lean-build.tgz" in call for call in calls))
 
     def test_draft_or_malformed_exact_metadata_fails_before_create(self):
         self.assertEqual(0, self.transport("publish").returncode)
@@ -504,7 +568,7 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
         valid = json.loads((snapshot / "release.json").read_text())
         malformed = [dict(valid, draft=True), dict(valid, draft="false"), {},
                      {"draft": False}, {key: value for key, value in valid.items() if key != "tag_name"},
-                     dict(valid, tag_name="other-tag"), dict(valid, target_commitish="e" * 40)]
+                     dict(valid, tag_name="other-tag")]
         for metadata in [*(json.dumps(value) for value in malformed), "not-json", ""]:
             with self.subTest(metadata=metadata):
                 (self.root / "gh.log").unlink(missing_ok=True)
@@ -538,7 +602,7 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
     def invalid_post_edit_responses(self, tag, commit):
         published = dict(draft=False, tag_name=tag, target_commitish=commit)
         malformed = [dict(published, draft=True), [], {"draft": False},
-                     dict(published, tag_name="wrong-tag"), dict(published, target_commitish="e" * 40)]
+                     dict(published, tag_name="wrong-tag")]
         return [*((json.dumps(value), "0") for value in malformed), ("not-json", "0"),
                 ('{"message":"Not Found","status":"404"}', "1"),
                 ('{"message":"Forbidden","status":"403"}', "1"),
@@ -655,6 +719,13 @@ def metadata(directory):
     value = json.loads((directory / "release.json").read_text())
     value["assets"] = [{"name": p.name, "size": p.stat().st_size, "digest": "sha256:" + hashlib.sha256(p.read_bytes()).hexdigest()}
                        for p in directory.iterdir() if p.name != "release.json"]
+    if "FAKE_MANIFEST_DIGEST" in os.environ:
+        for asset in value["assets"]:
+            if asset["name"] == "manifest.json": asset["digest"] = os.environ["FAKE_MANIFEST_DIGEST"]
+    if "FAKE_PART_ASSET" in os.environ:
+        for asset in value["assets"]:
+            if asset["name"].startswith("lean-build.tgz"):
+                asset.update(json.loads(os.environ["FAKE_PART_ASSET"]))
     return value
 if args[:2] == ["release", "list"]:
     print(json.dumps([{"tagName": p.parent.name, "createdAt": p.parent.name, "isDraft": json.loads(p.read_text())["draft"]}
@@ -675,7 +746,7 @@ else:
     directory = root / tag
     if verb == "create":
         directory.mkdir()
-        (directory / "release.json").write_text(json.dumps({"tag_name": tag, "target_commitish": option("--target"), "draft": True}))
+        (directory / "release.json").write_text(json.dumps({"tag_name": tag, "target_commitish": option("--target") if "--target" in args else "a" * 40, "draft": True}))
     elif verb == "upload":
         for value in args[3:]:
             if pathlib.Path(value).is_file(): shutil.copyfile(value, directory / pathlib.Path(value).name)
@@ -684,6 +755,10 @@ else:
         value = json.loads((directory / "release.json").read_text()); value["draft"] = False
         (directory / "release.json").write_text(json.dumps(value))
         (root.parent / ("gh-edited-" + str(os.getppid()))).touch()
+        if "FAKE_MANIFEST_AFTER_EDIT" in os.environ:
+            manifest = json.loads((directory / "manifest.json").read_text())
+            manifest.update(json.loads(os.environ["FAKE_MANIFEST_AFTER_EDIT"]))
+            (directory / "manifest.json").write_text(json.dumps(manifest))
         if os.environ.get("FAKE_DAMAGE_AFTER_EDIT") == "1":
             (directory / "lean-build.tgz").write_bytes(b"damaged after upload")
         if os.environ.get("FAKE_TRUNCATE_AFTER_EDIT") == "1":

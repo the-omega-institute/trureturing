@@ -307,6 +307,8 @@ engineering 与 Scribe 不按 base 选测。当前项目与检查义务由候选
 
 保留定时 Release 缓存发布;仅在 Actions 无可用种子时取**同分区成功快照**,删除 exact/config-prefix/same-toolchain 多级选择,不得跨分区借种。donor/stamp 使用同一分区;同 mathlib 的 metadata 改动不得删除 `.lake`。缺缓存、损坏、传输或保存失败须可诊断地降级为正常生产;真实 restore/build/Lean/测试/规则失败仍阻断。登记判为不需要缓存的资源不做缓存运输。
 
+新格式 Release/tag 只作运输容器,创建时使用 GitHub 的默认分支锚点,不以候选 SHA 指定 `target_commitish`,不读取或执行该锚点代码。真实 `producer_commit_sha`、run/attempt、verification source_ref 与报告来源仍绑定实际生产候选,不改写为存储锚点;验证恢复回执记录 API 返回的 Release target,该字段不承担来源认证或兼容选择。production 的已有快照复用及上传后确认共用恢复入口的小 manifest 校验:核 published/tag、manifest 资产摘要、schema/partition、完整资产清单及分片 API 大小/摘要与 manifest 的逐项一致性、本轮预期 producer/run/attempt,上传后另核本轮完整 manifest;确认失败不得报 exists/published 或 prune。确认只下载 manifest,不为已有快照下载大归档,不新增来源 API 查询。verification 仍须按本轮完整 manifest 向空目标完整恢复,其真实事件与来源核验不变;普通 fetch 仅校验新格式材料的一致性,不冒领已独立认证 producer run 成功或当前候选检查通过。
+
 正常生产 `lean-cache-v1-*` 与 `lean-cache-v2-*` 快照按同一新到旧顺序选择,不按格式设优先层。旧 `manifest.txt` 仅作已归属缓存数据过渡读取:核对 published Release、固定 producer commit、成功的 schedule/dev 生产 run、完整资产及摘要;其缺失的 mathlib 字段从该不可变 producer commit 的 `lake-manifest.json` 数据读取,复用当前结构解析器并校验 blob 身份,与显式 OS/arch 合成唯一分区。来源 SHA 只绑定缓存供给,不参与兼容选择,不进入 current 的语义 baseline,不执行旧代码。旧 manifest 未记 attempt 时不得从最新 rerun 伪造原产出 attempt。新格式不增加来源查询;旧 build-relative 归档在共用验证/安装入口映射到 build,在目标文件系统完整暂存后 rename,不另建手动转换/发布路径。该读取只恢复增量种子,不产报告或判词;Lean 与报告仍执行各自增量入口。
 
 可选缓存制作与保存共用早于 job 上限的截止时间,按真实 run/attempt/job 起始时间绑定;元数据不可用或时间不足则跳过缓存,不撤销已完成的业务判词。每层制作后立即保存,优先检查证据,再处理项目与依赖层;不得让大层制作阻塞小层全部落存。快照只读取已登记层的材料,复制时校验字节与 mode,失败只清理本次私有 staging。缓存时限不改变检查时限,外部取消仍保留取消语义。
@@ -318,6 +320,8 @@ FILEMAP `schema_version = 4` 的每条资源登记含 `cache_activation` 表，�
 需要 Lean/report 的路由在命中后仍进入共同增量入口。`make lean-report` 使用 A14.9 的原生 Lake facets，当前默认 Lean/audit 目标和 Inspector 编译必须成功；零报告提取仍执行这些构建义务，实际 Lean 重编由 Lake traces 决定。注册模块、source hash、utility claim、传递依赖与完整材料校验仍控制失效；允许恢复的输入范围由显式清单限定，不动态生成 CI 归属。producer 兼容性只取 `lean-report-inputs.json` 的显式 `report_semantic_version`，代码字节本身不改变语义版本，复用行保留实际来源。登记配置文件字节和实际模块环境参与原生失效，不参与远端分区。相同 mathlib 的源码变更只做原生依赖要求的工作；不影响已登记报告/编译输入的 metadata 可零模块重编/重检。配置文件字节变化不冒称零报告重检。同环境增量结果须等于规范完整生产，比较时分别核对实际来源字段。
 
 current 对原生报告的五个发布材料及本轮成功步骤作候选/run/attempt 绑定。Actions 的 dependency/project 快照只有在本轮接受的 current 证据证明所选 `lean` 或 `lean-report` 步骤成功后才获授权；逐项检查材料哈希与身份，不读取已退役的报告准备收据，也不把 Lean 重编数量当作构建义务是否执行。缓存检查与制作放入共用 bounded worker，失败或超出剩余窗口仅跳过可选保存，不能改变已经验证的业务结果。检查证据优先保存，其后项目与依赖层；通用显式运输接口保留自身生产成功契约。
+
+project 层在本轮正常报告成功后，可比较已接受的 `.input.attestation` SHA 与本轮成功恢复记录所绑定的同一 project manifest 材料 SHA；相等时以 `retained-restored-seed` 省略可选目录扫描、打包与保存。这只决定保留已有种子，不证明当前 build 目录逐字不变，也不改变完整恢复校验、报告生产、候选/轮次核对或 PR 只读。所需记录或材料缺失、失配、恢复失败均沿用现有完整比较与快照路径；dependency 不使用此策略。attestation 的 producer 字段仍为 A14.9 的登记语义兼容 token，不是源码哈希；不新增缓存 schema、远端分区或 donor 身份字段。
 
 **验收矩阵。** 程序行为先测后改,不新增 workflow 文本形状测试。至少覆盖下列放行与阻断边界,以实际义务、判词与材料验证,不只比较退出码:
 

@@ -101,7 +101,7 @@ def receipt(verb, status, **fields):
     print("LEAN_CACHE_" + verb.upper() + " " + json.dumps({"status": status, **fields}, separators=(",", ":")))
 
 
-def existing_release(tag, commit, deadline):
+def existing_release(tag, deadline):
     """Return exact release metadata, or None when the tag is absent."""
     try:
         raw = gh(deadline, "api", f"repos/{REPO}/releases/tags/{tag}")
@@ -121,8 +121,8 @@ def existing_release(tag, commit, deadline):
         raise ValueError(f"exact release {tag} returned malformed metadata: {error}") from error
     if not isinstance(metadata, dict) or type(metadata.get("draft")) is not bool:
         raise ValueError(f"exact release {tag} returned malformed metadata: expected boolean draft")
-    if metadata.get("tag_name") != tag or metadata.get("target_commitish") != commit:
-        raise ValueError(f"exact release {tag} returned malformed metadata: tag or producer commit mismatch")
+    if metadata.get("tag_name") != tag:
+        raise ValueError(f"exact release {tag} returned malformed metadata: tag mismatch")
     return metadata
 
 
@@ -271,13 +271,17 @@ def publish(root, partition, verification=None):
                 re.fullmatch(r"[0-9]+", value) for value in (run, attempt)):
             raise ValueError("snapshot publication requires commit, run ID and attempt attribution")
         tag = prefix(partition, verification is not None) + run + "-" + attempt
-        existing = existing_release(tag, commit, deadline)
+        identity = {"producer_commit_sha": commit, "workflow_run_id": run, "workflow_run_attempt": attempt}
+        existing = existing_release(tag, deadline)
         if existing is not None:
             if existing["draft"]:
                 raise ValueError(f"exact release {tag} is an incomplete draft; refusing to modify it")
             if verification is not None:
                 raise ValueError(f"verification release {tag} already exists; refusing to replace it")
-            receipt("publish", "exists", tag=tag)
+            with tempfile.TemporaryDirectory(prefix="lean-release-confirm-") as temporary:
+                snapshot_manifest(partition, tag, pathlib.Path(temporary), deadline,
+                                  expected=identity, metadata=existing)
+            receipt("publish", "exists", tag=tag, release_target=existing.get("target_commitish"), **identity)
             return 0
         with tempfile.TemporaryDirectory(prefix="lean-release-") as temporary:
             stage = pathlib.Path(temporary)
@@ -299,7 +303,9 @@ def publish(root, partition, verification=None):
             (stage / MANIFEST).write_text(json.dumps(metadata, sort_keys=True) + "\n")
             # Never clobber an existing snapshot. Failed/racing publishers leave
             # at most a draft, which fetch never considers an applicable seed.
-            gh(deadline, "release", "create", tag, "--repo", REPO, "--draft", "--target", commit,
+            # The server's default branch anchors only the storage container.
+            # Actual producer identity stays in the transferred manifest.
+            gh(deadline, "release", "create", tag, "--repo", REPO, "--draft",
                "--title", "Lean cache " + partition, "--notes", "Successful current Lean build and Inspector report; incremental seed only.")
             gh(deadline, "release", "upload", tag, *(str(stage / part["name"]) for part in metadata["parts"]),
                str(stage / MANIFEST), "--repo", REPO)
@@ -313,9 +319,12 @@ def publish(root, partition, verification=None):
                 restore_snapshot(target, partition, tag, downloaded, deadline, metadata)
                 pruned, prune_error = 0, None
             else:
-                current = existing_release(tag, commit, deadline)
+                current = existing_release(tag, deadline)
                 if current is None or current["draft"]:
                     raise ValueError(f"new snapshot {tag} is not readable as published; pruned nothing")
+                confirmed = stage / "confirmed"
+                confirmed.mkdir()
+                snapshot_manifest(partition, tag, confirmed, deadline, expected=metadata, metadata=current)
                 pruned, prune_error = prune(partition, tag, deadline)
             receipt("publish", "published", tag=tag, pruned=pruned, prune_error=prune_error, **metadata)
     except ImportError as error:
@@ -398,11 +407,13 @@ def legacy_manifest(path, metadata, partition, tag, deadline):
     return manifest
 
 
-def restore_snapshot(root, partition, tag, stage, deadline, verification=None):
-    metadata = json.loads(gh(deadline, "api", f"repos/{REPO}/releases/tags/{tag}"))
+def snapshot_manifest(partition, tag, stage, deadline, expected=None, verification=False, metadata=None):
+    """Validate the small manifest and inventory before confirming or restoring a snapshot."""
+    if metadata is None:
+        metadata = json.loads(gh(deadline, "api", f"repos/{REPO}/releases/tags/{tag}"))
     if not isinstance(metadata, dict) or metadata.get("draft") is not False or metadata.get("tag_name") != tag:
         raise ValueError("snapshot is not published")
-    legacy = verification is None and legacy_tag(tag)
+    legacy = not verification and legacy_tag(tag)
     manifest_name = LEGACY_MANIFEST if legacy else MANIFEST
     assets = metadata.get("assets", [])
     if (not isinstance(assets, list) or any(not isinstance(asset, dict)
@@ -423,14 +434,29 @@ def restore_snapshot(root, partition, tag, stage, deadline, verification=None):
     if not legacy and (manifest.get("schema") != "lean-release-seed-v3" or manifest.get("partition") != partition
             or not isinstance(commit, str) or not re.fullmatch(r"[0-9a-f]{40}", commit)
             or not all(isinstance(value, str) and re.fullmatch(r"[0-9]+", value) for value in (run, attempt))
-            or tag != prefix(partition, verification is not None) + run + "-" + attempt
-            or metadata.get("target_commitish") != commit):
+            or tag != prefix(partition, verification) + run + "-" + attempt):
         raise ValueError("snapshot partition or source attribution mismatch")
-    if verification is not None and any(manifest.get(key) != value for key, value in verification.items()):
-        raise ValueError("verification snapshot does not match this exact publication")
+    if expected is not None and any(manifest.get(key) != value for key, value in expected.items()):
+        raise ValueError("snapshot does not match this exact publication")
     parts = manifest["parts"] if legacy else declared_parts(manifest)
     if sorted(recorded) != sorted([manifest_name, *[part["name"] for part in parts]]):
         raise ValueError("snapshot asset set is incomplete")
+    if not legacy:
+        assets_by_name = {asset["name"]: asset for asset in assets}
+        for part in parts:
+            asset = assets_by_name[part["name"]]
+            if asset.get("digest") != "sha256:" + part["sha256"]:
+                raise ValueError("transferred asset digest mismatch")
+            if type(asset.get("size")) is not int or asset["size"] != part["bytes"]:
+                raise ValueError("transferred asset size mismatch")
+    return metadata, manifest, parts, legacy
+
+
+def restore_snapshot(root, partition, tag, stage, deadline, verification=None):
+    metadata, manifest, parts, legacy = snapshot_manifest(partition, tag, stage, deadline,
+        expected=verification, verification=verification is not None)
+    assets = metadata["assets"]
+    commit, run = manifest["producer_commit_sha"], manifest["workflow_run_id"]
     gh(deadline, "release", "download", tag, "--repo", REPO, "--dir", str(stage),
        *(argument for part in parts for argument in ("--pattern", part["name"])))
     for part in parts:
@@ -498,7 +524,8 @@ def restore_snapshot(root, partition, tag, stage, deadline, verification=None):
     receipt("fetch", "unpacked" if installed else "skipped",
             mode="verification" if verification is not None else "partition", resolved=tag,
             installed=installed,
-            producer_commit_sha=commit, workflow_run_id=run, partition=partition)
+            producer_commit_sha=commit, workflow_run_id=run, partition=partition,
+            release_target=metadata.get("target_commitish"))
 
 
 def fetch_verification(root, partition, identity):

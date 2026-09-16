@@ -136,6 +136,12 @@ os.execv({real_git}, [{real_git}, *sys.argv[1:]])
         self.assertTrue(tag.startswith("lean-cache-verify-v1-"))
         self.assertTrue(tag.endswith("-123-1"))
         self.assertEqual("published", receipt["status"])
+        release = json.loads((self.remote / tag / "release.json").read_text())
+        manifest = json.loads((self.remote / tag / "manifest.json").read_text())
+        self.assertNotEqual(self.verification_commit, release["target_commitish"])
+        self.assertEqual(self.verification_commit, manifest["producer_commit_sha"])
+        self.assertEqual(("123", "1", self.verification_ref), tuple(manifest[field] for field in
+            ("workflow_run_id", "workflow_run_attempt", "source_ref")))
         self.assertFalse(any(event["operation"] == "copytree" for event in self.installation_events()))
         self.assertEqual(2, len(list(self.remote.iterdir())))
         self.assertFalse(any(call[:2] in (["release", "list"], ["release", "delete"])
@@ -276,12 +282,22 @@ os.execv({real_git}, [{real_git}, *sys.argv[1:]])
         shutil.rmtree(self.root / ".lake/build")
         manifest = next(self.remote.glob("*/manifest.json"))
         original = manifest.read_text()
-        data = json.loads(original)
-        data["source_ref"] = "refs/heads/integration-other"
-        write(manifest, json.dumps(data))
-        result = self.verification("fetch")
-        self.assertNotEqual(0, result.returncode)
-        self.assertIn("exact publication", result.stdout)
+        for field, value in (("source_ref", "refs/heads/integration-other"),
+                             ("producer_commit_sha", "a" * 40), ("workflow_run_id", "124"),
+                             ("workflow_run_attempt", "2")):
+            with self.subTest(field=field):
+                data = json.loads(original)
+                data[field] = value
+                write(manifest, json.dumps(data))
+                result = self.verification("fetch")
+                self.assertEqual(1, result.returncode, result.stdout + result.stderr)
+                self.assertIn('"status":"miss"', result.stdout)
+                self.assertFalse((self.root / ".lake/build").exists())
+        write(manifest, original)
+        result = self.verification("fetch", FAKE_MANIFEST_DIGEST="sha256:" + "0" * 64)
+        self.assertEqual(1, result.returncode, result.stdout + result.stderr)
+        self.assertIn("digest mismatch", result.stdout)
+        self.assertFalse((self.root / ".lake/build").exists())
         write(manifest, original)
         run_api = "repos/the-omega-institute/trureturing/actions/runs/123/attempts/"
         self.verification_api[run_api + "2"] = {**self.verification_api[run_api + "1"], "run_attempt": 2}
