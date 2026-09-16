@@ -12692,3 +12692,630 @@ Replacing $f_L$ by $f$ costs at most $(C_t+1)\omega_L(f)$, by Theorem 34.2 and t
 [^rro34-uniform]: Kawada and Ito, the same article, Theorem 9, pp. 992–993, especially formulas (50)–(51). The uniformity is over starting group elements for each fixed continuous function, not over a norm unit ball of functions. [Original article](https://www.jstage.jst.go.jp/article/ppmsj1919/22/12/22_12_977/_pdf/-char/en).
 
 ## 追加锚（本行以下为增补区）
+## 35. The critical logarithmic Hausdorff measure of temporal Zeckendorf observation
+
+**Definition 35.0 (The space, gauges and normalization).** Put
+$$
+\phi=\frac{1+\sqrt{5}}2,\qquad \alpha=\phi^{-1},\qquad \beta=\alpha^2=1-\alpha,
+$$
+$$
+G_0=1,\qquad G_1=2,\qquad G_{L+2}=G_{L+1}+G_L.
+$$
+For the single auxiliary index needed below, set $G_{-1}=1$. All other indices are nonnegative. Let
+$$
+K=\{x\in\{0,1\}^{\mathbb N}:x_jx_{j+1}=0\text{ for all }j\},\qquad \mathbb N=\{0,1,2,\ldots\}.
+$$
+Use the successor $T$, phase map $H$, coding homeomorphism $\Phi:K\to X_\beta$, and one-sided shift $S$ of Section 20. Thus $\Phi T=S\Phi$ and $HT=RH$, where $R(\theta)=\theta+[\phi]$. The exact cylinder intervals, split fibers, endpoint conventions and temporal cut sets of 20.2–20.7 are standing inputs. In particular, the cuts for a positive temporal length $t$ are exactly
+$$
+\{e_1,\ldots,e_{t+1}\},\qquad e_m=[-m\phi],
+$$
+and the temporal cylinders are the corresponding arc atoms with their assigned split endpoints, not arcs augmented by singleton boundary atoms.
+
+Use the geometric probability $\nu$ and its temporal image $\eta=\Phi_*\nu$ from Section 33. For an admissible positional word $p$ of length $L\ge1$, its cylinder $C_p$ satisfies
+$$
+\nu(C_p)=
+\begin{cases}
+\alpha^L,&p_{L-1}=0,\\
+\alpha^{L+1},&p_{L-1}=1.
+\end{cases}
+$$
+The measure $\nu$ is nonatomic, has full support, is the unique $T$-invariant probability and the unique probability lift of circle Haar measure $m$ under $H$. The probability $\eta$ is the unique $S$-invariant probability. We also use the established Markov representation of $\nu$, with initial law $(\alpha,\alpha^2)$ and transition matrix
+$$
+P=\begin{pmatrix}\alpha&\alpha^2\\1&0\end{pmatrix}.
+$$
+This is not a stationarity assumption for positional deletion.
+
+For distinct $y,z\in X_\beta$, set
+$$
+n(y,z)=\min\{n\ge0:y_n\ne z_n\},\qquad \rho(y,z)=2^{-n(y,z)},
+$$
+and set $\rho(y,y)=0$. All balls in this section are closed balls. For $p>0$, define
+$$
+h_p(0)=0,\qquad h_p(r)=\bigl(1+\log_2(1/r)\bigr)^{-p}\quad(0<r\le1),
+$$
+with the harmless extension $h_p(r)=1$ for $r>1$. In particular,
+$$
+h_p(2^{-n})=(n+1)^{-p}.
+$$
+For a gauge $g$ and an arbitrary subset $A\subseteq X_\beta$, define
+$$
+\mathcal H^g_{\rho,\delta}(A)=\inf\left\{\sum_i g(\operatorname{diam}_\rho A_i):A\subseteq\bigcup_i A_i,\ \operatorname{diam}_\rho A_i\le\delta\right\},
+\qquad
+\mathcal H^g_\rho(A)=\lim_{\delta\downarrow0}\mathcal H^g_{\rho,\delta}(A).
+$$
+The covers are at most countable; their members are arbitrary subsets and need not be measurable. Empty sets and singletons have cost zero. No multiplicative normalization is included. Write $\eta^*$ for the outer measure associated with $\eta$. Unsubscripted logarithms are natural logarithms. The constants used below are
+$$
+A_-:=\frac1{\sqrt{5}},\qquad A_0:=\frac{\phi^2}{\sqrt{5}},\qquad A_+:=\frac{\phi^3}{\sqrt{5}}.
+$$
+Finally, put $u=(10)^\infty$, $v=(01)^\infty$ and $w=\Phi(Z(0))$. The identities $\Phi(u)=1w$ and $\Phi(v)=0w$ are those of 20.7.
+
+Reference: Aedo–Grimm–Short, [Forward limit sets of semigroups of substitutions, §9, pp. 16–19](https://arxiv.org/pdf/2305.00078v2#page=16), uses arbitrary-subset diameter covers and inverse-logarithmic gauges. Its substitution-semigroup forward limit sets are different from the fixed-slope space here; its dimension statements do not determine the normalization below.
+
+**theorem 35.1 (The complete branching clock and actual cylinder diameters).** Let $\mathcal B$ be the set of finite concatenations of the blocks $0$ and $10$, including the empty word. For $p\in\mathcal B$, write
+$$
+L=|p|,\qquad N_p=\sum_{j<L}G_jp_j,\qquad D_p=\Phi(C_p),
+$$
+$$
+M_p=G_{L+1}-N_p,\qquad k_p=M_p-2.
+$$
+Here $C_{\varnothing}=K$. Then
+$$
+D_p=D_{p0}\mathbin{\dot\cup}D_{p10},\qquad
+\eta(D_p)=\alpha^L,\qquad
+\operatorname{diam}_\rho D_p=2^{-k_p}.
+$$
+The empty word has $M_{\varnothing}=2$ and $k_{\varnothing}=0$. For a nonempty block word, define its birth time by
+$$
+b_{q0}=b_{q10}=M_q-1,
+$$
+and set $b_{\varnothing}=0$. The set $D_p$ is an atom of the length-$t$ temporal partition exactly for
+$$
+b_p\le t\le k_p.
+$$
+Every nonempty temporal cylinder occurs in this way, with a unique $p\in\mathcal B$. Its displayed prefix length $t$ can therefore be strictly smaller than its actual splitting depth $k_p$.
+
+The child clocks satisfy
+$$
+M_{p0}=M_p+G_L,\qquad M_{p10}=M_p+G_{L+1}.
+$$
+For every $p$, the diameter is attained by the actual points
+$$
+\Phi(p0v),\qquad \Phi(p10v),
+$$
+whose first temporal difference is $M_p-2$.
+
+**Proof.** A nonempty admissible word belongs to $\mathcal B$ exactly when it ends in zero. At the next free positional digit, its extensions split into the two cylinders $C_{p0}$ and $C_{p10}$; the latter includes the zero forced after the new one. This proves the disjoint decomposition. The mass formula is the cylinder formula of 33.1, including mass one at the empty word.
+
+By 20.2, the internal phase boundary between these two children is $e_{M_p}$, and its two lifts are $p0v$ and $p10v$, in the parity-dependent order stated there. The same result gives, for each $L\ge1$, the bijection
+$$
+\{N_p:p\in\mathcal B,\ |p|=L\}=\{0,\ldots,G_{L-1}-1\}.
+$$
+Consequently the labels at depth $L$ are exactly
+$$
+\{M_p:|p|=L\}=\{G_L+1,\ldots,G_{L+1}\}.
+$$
+Together with the empty label $2$, these labels enumerate every integer at least two exactly once. The recurrence gives
+$$
+G_{L+2}-N_p=M_p+G_L,
+$$
+and
+$$
+G_{L+3}-N_p-G_L=M_p+G_{L+1},
+$$
+which proves the child-clock formulas. Thus every child label is strictly larger than its parent label.
+
+Start at temporal length zero with the single set $D_{\varnothing}$. The first symbol partitions it into $D_0$ and $D_{10}$. Thereafter, passage from temporal length $t$ to $t+1$ introduces exactly the new cut $e_{t+2}$. There is a unique block word $p$ with $M_p=t+2$. Its ancestors have smaller labels, whereas its descendants have larger labels, so $D_p$ is precisely a current leaf of the block-cylinder partition. Its new internal cut replaces it by $D_{p0}$ and $D_{p10}$. The full endpoint conventions of 20.2 and 20.5 identify these as the two entire new atoms; no endpoint singleton is added. Induction therefore identifies every temporal partition with the leaves obtained by processing the labels in increasing order.
+
+A child is born one step after its parent splits, namely at $M_q-1$, and survives through temporal length $M_p-2$. This proves the lifetime formula and the assertion that all temporal cylinders are block cylinders. Distinct block cylinders are either disjoint or related by a strict inclusion, so the representing block word is unique.
+
+All points of $D_p$ agree through the first $k_p$ temporal coordinates. By 20.4 the two displayed lifts of $e_{M_p}$ first differ at coordinate $M_p-2=k_p$. They belong to the two children of $D_p$. Hence the upper diameter bound is attained, proving the exact diameter. $\square$
+
+Reference: the reduction of forced vertices in a weighted cylinder tree is the general construction in Bellissard–Julien, [Bi-Lipshitz Embedding of Ultrametric Cantor Sets into Euclidean Spaces, §2.1](https://arxiv.org/pdf/1202.4330v2#page=5). The arithmetic labels $M_p$ and their endpoint witnesses above use the specific inputs of Section 20.
+
+**theorem 35.2 (Every finite gap and every closed ball).** Let $t\ge1$, and write uniquely
+$$
+t+1=G_L+a,\qquad L\ge1,\qquad 0\le a<G_{L-1}.
+$$
+The masses of the length-$t$ temporal cylinders, equivalently the lengths of their phase arcs, have the following exact multiplicities:
+$$
+\begin{array}{c|ccc}
+\text{mass or arc length}&\alpha^L&\alpha^{L+1}&\alpha^{L+2}\\ \hline
+\text{number of cylinders}&G_{L-1}-a&G_{L-2}+a&a.
+\end{array}
+$$
+An entry of multiplicity zero is absent. In particular, the smallest third length does not occur when $a=0$.
+
+For $0<r\le1$, put
+$$
+t(r)=\left\lceil\log_2(1/r)\right\rceil.
+$$
+For every $y\in X_\beta$, there is a unique block cylinder $D_p$ containing $y$ with
+$$
+b_p\le t(r)\le k_p.
+$$
+For this cylinder,
+$$
+\overline B_\rho(y,r)=D_p,\qquad
+\eta(\overline B_\rho(y,r))=\alpha^{|p|},\qquad
+\operatorname{diam}_\rho\overline B_\rho(y,r)=2^{-k_p}.
+$$
+Thus its radius-gauge ratio is exactly
+$$
+\frac{\eta(\overline B_\rho(y,r))}{h_1(r)}
+=\alpha^{|p|}\bigl(1+\log_2(1/r)\bigr).
+$$
+
+**Proof.** At $t=G_L-1$, the temporal partition is the positional length-$L$ partition by 20.6. There are $G_{L-1}$ words ending in zero, with mass $\alpha^L$, and $G_{L-2}$ words ending in one, with mass $\alpha^{L+1}$. This includes $L=1$ under the convention $G_{-1}=1$.
+
+The next $G_{L-1}$ cuts have labels $G_L+1,\ldots,G_{L+1}$. By 35.1 they split, once each, the $G_{L-1}$ cylinders represented by block words of digit length $L$. Each such split replaces one mass $\alpha^L$ by the two masses $\alpha^{L+1}$ and $\alpha^{L+2}$. The descendants cannot split again in this batch because their labels exceed $G_{L+1}$. After $a$ cuts the displayed multiplicities follow. The number of atoms is $G_L+a=t+1$, as required, but the argument also determines all their masses.
+
+The first-difference metric gives
+$$
+\rho(y,z)\le r\quad\Longleftrightarrow\quad y_j=z_j\text{ for }0\le j<t(r).
+$$
+Thus the closed ball is exactly a length-$t(r)$ temporal cylinder. Apply its unique representation and lifetime from 35.1. The mass and actual diameter then follow from that theorem, and substitution in the gauge proves the final formula. $\square$
+
+Reference: the general rotation-cut partition and its three interval lengths and multiplicities are described in Dong Han Kim, [A note on the return time of Sturmian sequences, §3, pp. 305–306](https://www.kkms.org/kkms/2008/16305.pdf#page=5). The proof here supplies the exact Fibonacci batch and the separate forced-prefix diameter information.
+
+**theorem 35.3 (Arbitrary-set mass control and preliminary measure bounds).** Define the actual-diameter cylinder density by
+$$
+\mathcal D(p):=\frac{\eta(D_p)}{h_1(\operatorname{diam}_\rho D_p)}
+=\alpha^L\bigl(G_{L+1}-N_p-1\bigr),\qquad L=|p|.
+$$
+Then $\mathcal D(\varnothing)=1$, and for every $L\ge1$,
+$$
+\alpha^LG_L\le\mathcal D(p)\le\alpha^L(G_{L+1}-1)<A_+.
+$$
+In particular $1\le\mathcal D(p)<A_+$ for every block word. At each positive depth the lower and upper displayed bounds are attained: the upper one by $p=0^L$, and the lower one by the unique block word with $N_p=G_{L-1}-1$.
+
+For every arbitrary subset $A\subseteq X_\beta$,
+$$
+\eta^*(A)\le A_+h_1(\operatorname{diam}_\rho A).
+$$
+Consequently, at every $\delta>0$,
+$$
+\frac{\eta^*(A)}{A_+}\le\mathcal H^{h_1}_{\rho,\delta}(A)
+\le\eta^*(A).
+$$
+The limiting outer measure is a finite Borel measure, and
+$$
+0<\frac1{A_+}\le\mathcal H^{h_1}_\rho(X_\beta)\le1.
+$$
+
+**Proof.** The density formula uses the exact exponent $k_p=M_p-2$, so its denominator is $k_p+1=M_p-1$. The full range of $N_p$ in 35.1 gives both finite-depth extrema. Induction on the recurrence gives $G_L\ge\phi^L$, hence $\alpha^LG_L\ge1$. The Fibonacci closed form gives
+$$
+G_L=\frac{\phi^{L+2}-(-\alpha)^{L+2}}{\sqrt{5}},
+$$
+and therefore
+$$
+\alpha^L(G_{L+1}-1)
+=A_+-\alpha^L-\frac{(-1)^{L+3}\alpha^{2L+3}}{\sqrt{5}}<A_+.
+$$
+The strict inequality follows from $\alpha^{2L+3}/\sqrt{5}<\alpha^L$. The asserted extremal words exist by the finite value bijection. Their diameter witnesses are the split pairs in 35.1.
+
+If $A$ is empty or a singleton, the mass inequality follows from nonatomicity. Otherwise, among the first-difference indices of its distinct point pairs, choose the smallest index $k$. All points of $A$ have the same prefix of length $k$, and some pair first differs at $k$. Hence
+$$
+\operatorname{diam}_\rho A=2^{-k}.
+$$
+The common length-$k$ cylinder has diameter exactly $2^{-k}$, since it contains that pair. By 35.1 it is a set $D_p$ with $k_p=k$. Consequently
+$$
+\eta^*(A)\le\eta(D_p)=\mathcal D(p)h_1(2^{-k})\le A_+h_1(\operatorname{diam}_\rho A).
+$$
+This argument applies to nonmeasurable sets as well.
+
+For every admissible diameter cover, outer subadditivity now gives
+$$
+\eta^*(A)\le\sum_i\eta^*(A_i)
+\le A_+\sum_i h_1(\operatorname{diam}_\rho A_i),
+$$
+which proves the lower content bound.
+
+For the upper bound, the clopen algebra used to construct $\nu$ in 33.1, transported by $\Phi$, gives
+$$
+\eta^*(A)=\inf\left\{\sum_i\eta(B_i):A\subseteq\bigcup_iB_i,\ B_i\text{ clopen}\right\}.
+$$
+Every clopen set is a finite disjoint union of sufficiently deep positional cylinders transported by $\Phi$. A positional word ending in one can be extended by its forced zero without changing its cylinder, making every member a set $D_p$. These refinements can have arbitrarily small temporal diameter, by 35.1. On each member,
+$$
+h_1(\operatorname{diam}_\rho D_p)=\frac{\eta(D_p)}{\mathcal D(p)}\le\eta(D_p).
+$$
+Refining a clopen cover to diameter at most $\delta$ therefore proves the upper bound.
+
+For completeness, the diameter construction is an outer measure: countable covers can be combined, and the increasing limit as $\delta\downarrow0$ preserves the resulting subadditivity bound. Every clopen set and its complement are disjoint compact sets and, when both are nonempty, have positive mutual distance. At scales below that distance, no covering set meets both. Splitting covers across the two sides proves the Carathéodory equality for the clopen set. Thus all clopen sets are measurable, and their generated Borel sigma algebra is measurable. Finiteness and positivity follow from the displayed bounds with $A=X_\beta$. $\square$
+
+Reference: the corresponding cylinder-tree cover mechanism is Bellissard–Julien, [§§6.1–6.2, Proposition 14 and its proof, pp. 21–22](https://arxiv.org/pdf/1202.4330v2#page=21). The arbitrary-subset mass inequality and its constant are proved above, rather than inferred from the number of cylinders.
+
+**theorem 35.4 (Sharp ball constants and explicit exceptional-point spectra).** Put
+$$
+\mathscr R(y,r):=\frac{\eta(\overline B_\rho(y,r))}{h_1(r)}.
+$$
+For every $y\in X_\beta$ and $0<r\le1$,
+$$
+\alpha^2\le\mathscr R(y,r)\le A_+.
+$$
+Both constants are sharp when all these radii are allowed. At small scales the sharper exact uniform limits are
+$$
+\lim_{\varepsilon\downarrow0}\inf_{\substack{y\in X_\beta\\0<r\le\varepsilon}}\mathscr R(y,r)=A_-,
+\qquad
+\lim_{\varepsilon\downarrow0}\sup_{\substack{y\in X_\beta\\0<r\le\varepsilon}}\mathscr R(y,r)=A_+.
+$$
+The exceptional points $w$ and $1w$ give the more precise witnesses
+$$
+\liminf_{r\downarrow0}\mathscr R(w,r)=A_0,\qquad
+\limsup_{r\downarrow0}\mathscr R(w,r)=A_+,
+$$
+$$
+\liminf_{r\downarrow0}\mathscr R(1w,r)=A_-,\qquad
+\limsup_{r\downarrow0}\mathscr R(1w,r)=A_0.
+$$
+
+**Proof.** Write a ball as $D_p$ using 35.2. Its diameter is at most its radius, so monotonicity of $h_1$ gives
+$$
+\mathscr R(y,r)\le\mathcal D(p)<A_+.
+$$
+For the lower bound, first suppose $r<1$, so its temporal length $t$ is positive. Write its nonempty block word as $p=q0$ or $p=q10$, and put $d=|q|$. The clock bounds give
+$$
+b_p=M_q-1\ge G_d,
+$$
+including $q=\varnothing$. Since $t\ge b_p$ and $1+\log_2(1/r)>t$, the two cases yield respectively
+$$
+\mathscr R(y,r)\ge G_d\alpha^{d+1}\ge\alpha,
+\qquad
+\mathscr R(y,r)\ge G_d\alpha^{d+2}\ge\alpha^2.
+$$
+At $r=1$ the ball is the whole space and the ratio is one. For $y=1w$ and $r<1$ tending to one, the ball is the first-symbol cylinder of mass $\alpha^2$, whereas $h_1(r)\to1$. Hence the global lower constant cannot be increased.
+
+To establish the small-scale lower limit, use $t+1=G_L+a$ as in 35.2. Since $1+\log_2(1/r)>t$, the ratios in the three mass classes are bounded below by
+$$
+(G_L-1)\alpha^L,\qquad
+(G_L-1)\alpha^{L+1},\qquad
+G_L\alpha^{L+2},
+$$
+respectively. The last bound uses $a\ge1$, which is necessary for the third class to exist. As $L\to\infty$, these three bounds tend respectively to
+$$
+A_0,\qquad \alpha A_0,\qquad A_-.
+$$
+Thus the ratios are uniformly at least $A_--o(1)$ at small scales.
+
+All block prefixes of $0^\infty$ are $0^L$. The lifetimes from 35.1 are
+$$
+b_{0^L}=G_L-1,\qquad k_{0^L}=G_{L+1}-2\qquad(L\ge1).
+$$
+Within this lifetime the ball mass is $\alpha^L$. The factor $1+\log_2(1/r)$ ranges, with the appropriate one-sided endpoint limits, from $G_L-1$ to $G_{L+1}-1$. The closed form for $G_L$ proves the two stated limits at $w$. In particular the actual radii
+$$
+r_L=2^{-(G_{L+1}-2)}
+$$
+give $\overline B_\rho(w,r_L)=D_{0^L}$ and ratios tending to $A_+$, proving sharpness of both upper assertions.
+
+For $u=(10)^\infty$, the nonempty block prefixes are $p_j=(10)^j$, of length $2j$. The recurrence gives
+$$
+N_{p_j}=G_{2j-1}-1.
+$$
+Their exact lifetimes are
+$$
+b_{p_j}=G_{2j-2},\qquad k_{p_j}=G_{2j}-1,
+$$
+and their masses are $\alpha^{2j}$. Therefore the lower and upper limiting ratios along these lifetimes are
+$$
+\lim_{j\to\infty}G_{2j-2}\alpha^{2j}=A_-,\qquad
+\lim_{j\to\infty}G_{2j}\alpha^{2j}=A_0.
+$$
+These are all sufficiently small balls about $1w=\Phi(u)$, which proves both limits there. For example the exact radii $2^{-G_{2j-2}}$ already give ratios $(G_{2j-2}+1)\alpha^{2j}\to A_-$. This supplies a fixed-point witness for the small-scale uniform lower constant. $\square$
+
+**theorem 35.5 (Local gauge invariance and the exact branch overlap).** Let $U_i=\{y\in X_\beta:y_0=i\}$ for $i=0,1$. For every subset $A\subseteq U_i$,
+$$
+\mathcal H^{h_1}_\rho(SA)=\mathcal H^{h_1}_\rho(A).
+$$
+Moreover,
+$$
+S(U_0)\cup S(U_1)=X_\beta,\qquad S(U_0)\cap S(U_1)=\{w\}.
+$$
+Consequently $\mathcal H^{h_1}_\rho$ is $S$-invariant. If
+$$
+c_0:=\mathcal H^{h_1}_\rho(X_\beta),
+$$
+then, as Borel measures,
+$$
+\mathcal H^{h_1}_\rho=c_0\eta,\qquad A_+^{-1}\le c_0\le1.
+$$
+
+**Proof.** On $U_i$, the shift is injective and satisfies the exact similarity law
+$$
+\rho(Sy,Sz)=2\rho(y,z).
+$$
+For positive $r\downarrow0$,
+$$
+\frac{h_1(2r)}{h_1(r)}
+=\frac{1+\log_2(1/r)}{\log_2(1/r)}\longrightarrow1.
+$$
+Intersect an arbitrary diameter cover of $A$ with $U_i$ and apply $S$. For every $\epsilon>0$, at sufficiently small diameters the image costs are at most $1+\epsilon$ times the original costs. Taking the infimum and then the scale limit gives
+$$
+\mathcal H^{h_1}_\rho(SA)\le(1+\epsilon)\mathcal H^{h_1}_\rho(A).
+$$
+Conversely, intersect any cover of $SA$ with $S(U_i)$ and apply the inverse of the restricted similarity. The same argument, now for multiplication of distances by $1/2$, gives the reverse inequality after $\epsilon\downarrow0$. Zero-diameter sets remain zero-cost sets. This proves equality for arbitrary subsets.
+
+The union of the images is the whole space because $S$ is surjective. Suppose $Sy=Sz$ with $y\in U_0$ and $z\in U_1$. Write $y=\Phi(x)$ and $z=\Phi(x')$. Then $Tx=Tx'$, so the injectivity of the circle rotation in $HT=RH$ gives $H(x)=H(x')$. As $x\ne x'$, they form one of the split pairs $x_m^-,x_m^+$. For $m\ge2$, their images are the distinct points $x_{m-1}^-,x_{m-1}^+$. Thus only $m=1$ is possible, giving $\{x,x'\}=\{u,v\}$ and common image $Z(0)$. Hence the only common shift image is $w$. Conversely $S(0w)=S(1w)=w$, proving the exact intersection.
+
+The restriction of $S$ to each compact $U_i$ is a homeomorphism onto its closed image. Thus it maps Borel subsets of $U_i$ to Borel subsets of $X_\beta$. Singletons have zero gauge measure. For every Borel set $B$, the local equality and the null overlap give
+$$
+\mathcal H^{h_1}_\rho(S^{-1}B)
+=\sum_{i=0}^1\mathcal H^{h_1}_\rho(U_i\cap S^{-1}B)
+=\sum_{i=0}^1\mathcal H^{h_1}_\rho(B\cap S(U_i))
+=\mathcal H^{h_1}_\rho(B).
+$$
+By 35.3 the total mass $c_0$ is finite and positive. Normalizing therefore gives an invariant probability, which is $\eta$ by 33.8. No global inverse of $S$ has been used. $\square$
+
+Reference: the general unique-branch-point formula for a one-sided Sturmian shift is Brix, [Sturmian subshifts and their C*-algebras, §2.1, equation (2.7)](https://arxiv.org/html/2107.10613v1#S2.SS1). The proof above identifies its precise word and verifies the overlap from the specified split fibers.
+
+**theorem 35.6 (Almost-everywhere upper density and long zero blocks).** For $\eta$-almost every $y$,
+$$
+\limsup_{r\downarrow0}\frac{\eta(\overline B_\rho(y,r))}{h_1(r)}=A_+.
+$$
+More precisely, for $\nu$-almost every $x$, the densities $\mathcal D(p)$ along its block prefixes have upper limit $A_+$.
+
+**Proof.** Fix an integer $k\ge1$. Conditional on any admissible positional history, the probability that the next $k$ digits are all zero is at least $\alpha^k$. If the previous state is zero, it is exactly $\alpha^k$; if that state is one, the first zero is forced and the probability is $\alpha^{k-1}\ge\alpha^k$. The initial history satisfies the same lower bound.
+
+Inspect any consecutive collection of $J$ disjoint blocks of $k$ positions. Successive conditioning shows that the probability all $J$ tests fail is at most
+$$
+(1-\alpha^k)^J.
+$$
+Letting $J\to\infty$ and then considering every starting block proves that an all-zero block of length $k$ occurs infinitely often with probability one. Intersecting these full-measure sets over $k$ proves that almost every $x$ has arbitrarily late zero runs of every prescribed length. This uses the transition law of $\nu$, not positional stationarity.
+
+If a prefix $p=x_0\cdots x_{L-1}$ ends in $k$ zeros, then it is a block word and the finite Zeckendorf value bound gives
+$$
+N_p\le G_{L-k}-1.
+$$
+Consequently
+$$
+\mathcal D(p)\ge\alpha^L\bigl(G_{L+1}-G_{L-k}\bigr).
+$$
+For fixed $k$ and $L\to\infty$, the right side tends to
+$$
+A_+-A_0\alpha^k.
+$$
+Almost every point has infinitely many such prefixes for every $k$. Letting $k\to\infty$ and using the universal upper bound $\mathcal D(p)<A_+$ proves the prefix-density assertion. At radius $2^{-k_p}$, the cylinder $D_p$ is exactly the ball about any of its points. These radii tend to zero along prefixes of unbounded length. Therefore the ball upper limit is at least $A_+$, and 35.4 supplies the reverse bound. $\square$
+
+**theorem 35.7 (Finite adaptive covers and the exact normalization).** Under the normalization of 35.0, put
+$$
+c:=\frac1{A_+}=\frac{\sqrt{5}}{\phi^3}=5-2\sqrt{5}.
+$$
+For every subset $A\subseteq X_\beta$ and every $\delta>0$,
+$$
+\boxed{\mathcal H^{h_1}_{\rho,\delta}(A)=\mathcal H^{h_1}_\rho(A)=c\eta^*(A).}
+$$
+In particular, as Borel measures,
+$$
+\mathcal H^{h_1}_\rho=c\eta,\qquad
+\mathcal H^{h_1}_\rho(X_\beta)=c,\qquad
+\mathcal H^{h_1}_\rho(D_p)=c\alpha^{|p|}.
+$$
+For every clopen $B\subseteq X_\beta$ (in particular, every block cylinder), every $\delta>0$ and every $\tau>0$, there is a finite cover of $B$ by block cylinders of $\rho$-diameter at most $\delta$ and total $h_1$-cost at most $c\eta(B)+\tau$, obtained by stopping different positional paths at different depths. For arbitrary subsets $A$, the matching upper bound is obtained from at most countable covers.
+
+**Proof.** The lower bound at every scale is already proved in 35.3. We construct the matching upper covers, including all exceptional paths.
+
+Fix $\epsilon$ with $0<\epsilon<A_+$, a scale $\delta>0$, and a block cylinder $D_q$. Choose $k\ge1$ so large that
+$$
+A_0\alpha^k<\epsilon/2.
+$$
+By the closed form for $G_L$, choose $L_0\ge k$ sufficiently large that for every $L\ge L_0$,
+$$
+\alpha^L\bigl(G_{L+1}-G_{L-k}\bigr)\ge A_+-\epsilon,
+\qquad
+2^{-(G_L-1)}\le\delta.
+$$
+Hence every block prefix of length at least $L_0$ ending in $k$ zeros satisfies
+$$
+\mathcal D(p)\ge A_+-\epsilon,
+\qquad
+\operatorname{diam}_\rho D_p\le\delta.
+$$
+The latter diameter bound follows from $k_p\ge G_L-1$.
+
+Choose $L_*\ge\max\{L_0,|q|\}$. Along each positional path in $C_q$, inspect in order the $J$ disjoint blocks of positions
+$$
+L_*+(j-1)k,\ldots,L_*+jk-1,\qquad 1\le j\le J.
+$$
+At the first all-zero test block, stop and take the cylinder of the entire prefix ending at that block. Its prefix ends in zero and has length at least $L_0$, so it is a block cylinder satisfying the preceding density and diameter bounds. Different first stops are prefix-incomparable, hence their cylinders are disjoint.
+
+For paths failing all $J$ tests, take their full positional prefixes of length $L_*+Jk$ as fallback cylinders. If such a prefix ends in one, append its forced zero without changing the cylinder. These are again block cylinders of diameter at most $\delta$. There are only finitely many stopped and fallback cylinders, and together they form a partition of $D_q$ after application of $\Phi$.
+
+Let $B_J\subseteq D_q$ be the union of the fallback cylinders. The conditional estimate in 35.6, applied inside $C_q$, gives
+$$
+\eta(B_J)\le\eta(D_q)(1-\alpha^k)^J.
+$$
+Every stopped cylinder has cost at most its mass divided by $A_+-\epsilon$. Every fallback cylinder has cost at most its mass by 35.3. Therefore this finite cover has total cost at most
+$$
+\frac{\eta(D_q)}{A_+-\epsilon}+\eta(D_q)(1-\alpha^k)^J.
+$$
+Letting $J\to\infty$ proves
+$$
+\mathcal H^{h_1}_{\rho,\delta}(D_q)\le\frac{\eta(D_q)}{A_+-\epsilon}.
+$$
+Now let $\epsilon\downarrow0$. Together with the arbitrary-cover lower bound, this gives
+$$
+\mathcal H^{h_1}_{\rho,\delta}(D_q)=\frac{\eta(D_q)}{A_+}.
+$$
+In particular, no null exceptional set was omitted from any finite covering argument.
+
+A clopen set is a finite disjoint union of block cylinders, so subadditivity gives its upper bound with the same factor $A_+^{-1}$. Finally take any countable clopen cover of an arbitrary $A$. Applying the clopen bound and then the clopen outer-measure formula of 35.3 yields
+$$
+\mathcal H^{h_1}_{\rho,\delta}(A)
+\le\frac1{A_+}\inf\left\{\sum_i\eta(B_i):A\subseteq\bigcup_iB_i,\ B_i\text{ clopen}\right\}
+=\frac{\eta^*(A)}{A_+}.
+$$
+The lower inequality holds for every arbitrary-subset diameter cover, proving equality at every scale. Taking the scale limit proves the measure identity and shows that the constant $c_0$ in 35.5 is $c$.
+
+Finally $\phi^3=2+\sqrt{5}$, so rationalization gives
+$$
+\frac{\sqrt{5}}{\phi^3}=\frac{\sqrt{5}}{2+\sqrt{5}}=5-2\sqrt{5}.
+$$
+The denominator $M_p-1$ throughout came from the actual diameter exponent $M_p-2$ and the specified additive one in the gauge. $\square$
+
+**theorem 35.8 (Complete same-level covers do not attain the Hausdorff infimum).** Let $\mathcal C_t$ be the partition of $X_\beta$ by temporal prefixes of length $t$, and define its true-diameter cost by
+$$
+J_t:=\sum_{D\in\mathcal C_t}h_1(\operatorname{diam}_\rho D).
+$$
+For $t\ge1$, write $N=t+1=G_L+a$ with $0\le a<G_{L-1}$. Then
+$$
+J_t=\sum_{j=G_L+a}^{2G_L+a-1}\frac1j
++\sum_{j=G_{L+2}}^{G_{L+2}+a-1}\frac1j,
+$$
+where the second sum is zero for $a=0$. In particular,
+$$
+J_{G_L-1}=\sum_{j=G_L}^{2G_L-1}\frac1j\longrightarrow\log2.
+$$
+More generally,
+$$
+\liminf_{t\to\infty}J_t=2\log\left(\frac{1+\sqrt\phi}{\phi}\right),\qquad
+\limsup_{t\to\infty}J_t=\log2,
+$$
+and
+$$
+5-2\sqrt{5}<2\log\left(\frac{1+\sqrt\phi}{\phi}\right).
+$$
+Thus even the best asymptotic complete same-temporal-level covers have a strictly larger cost than the arbitrary-cover Hausdorff measure.
+
+**Proof.** At $t=G_L-1$, the cylinders are the positional length-$L$ cylinders. For those ending in zero, the numbers $N_p$ run through $0,\ldots,G_{L-1}-1$, so their cost denominators $M_p-1$ run through
+$$
+G_L,\ldots,G_{L+1}-1.
+$$
+For those ending in one, append the forced zero. Their positional values run through $G_{L-1},\ldots,G_L-1$, so their denominators run through
+$$
+G_{L+1},\ldots,2G_L-1.
+$$
+The value statement follows from the finite Zeckendorf value bijection; $L=1$ is immediate separately. Hence the entire denominator set at the checkpoint is exactly $G_L,\ldots,2G_L-1$.
+
+In the next batch, a splitting length-$L$ cylinder with denominator $j=M_p-1$ is replaced by children with denominators $j+G_L$ and $j+G_{L+1}$, by 35.1. The first $a$ such splits remove the denominators $G_L,\ldots,G_L+a-1$. Their first children extend the surviving initial interval through $2G_L+a-1$; their second children add the interval $G_{L+2},\ldots,G_{L+2}+a-1$. This proves the exact formula.
+
+Put $x=a/G_L$. Integral comparison for harmonic sums, uniformly over this batch, gives
+$$
+J_t=\Psi(x)+o(1),\qquad
+\Psi(x)=\log\frac{2+x}{1+x}+\log\frac{\phi^2+x}{\phi^2},
+$$
+where the error tends to zero as $L\to\infty$ and the ranges of $x$ tend to $[0,\alpha]$. Every point of that interval is approached by admissible choices of $a/G_L$.
+
+Direct differentiation gives
+$$
+\Psi'(x)=-\frac1{(1+x)(2+x)}+\frac1{\phi^2+x}.
+$$
+Its unique zero in $[0,\alpha]$ is $x=\sqrt\phi-1$. The derivative is negative before that point and positive afterwards. At the endpoints $\Psi(0)=\Psi(\alpha)=\log2$, while at the minimum
+$$
+\Psi(\sqrt\phi-1)=2\log\left(\frac{1+\sqrt\phi}{\phi}\right).
+$$
+This proves both limiting costs.
+
+For a direct strict comparison, set $z=(1+\sqrt\phi)/\phi$. One has $z>7/5$: squaring the positive sides reduces this inequality to $\phi>37/23$, which follows from $5>(51/23)^2$. Also $\log z>2(z-1)/(z+1)$ for $z>1$, as follows by differentiating the difference and using its value zero at one. Thus $2\log z>2/3$, whereas $5-2\sqrt{5}<2/3$. The strict gap follows.
+
+The simpler assignment of the upper diameter $2^{-t}$ to each of the $t+1$ cylinders would give total cost one. Neither that upper estimate nor the actual same-level costs compute the adaptive infimum proved in 35.7. $\square$
+
+**theorem 35.9 (Critical index, general gauge comparison and normalization robustness).** Let $g$ be a continuous nondecreasing gauge with $g(0)=0$ and $g(r)>0$ for $r>0$ sufficiently small.
+
+If
+$$
+\lim_{r\downarrow0}\frac{g(r)}{h_1(r)}=a\in[0,\infty),
+$$
+then for every subset $A\subseteq X_\beta$,
+$$
+\mathcal H^g_\rho(A)=ac\eta^*(A).
+$$
+If instead $g(r)/h_1(r)\to\infty$, then
+$$
+\mathcal H^g_\rho(A)=\infty\qquad\text{whenever }\eta^*(A)>0.
+$$
+More generally, if
+$$
+0<a:=\liminf_{r\downarrow0}\frac{g(r)}{h_1(r)}
+\le b:=\limsup_{r\downarrow0}\frac{g(r)}{h_1(r)}<\infty,
+$$
+then
+$$
+ac\eta^*(A)\le\mathcal H^g_\rho(A)\le bc\eta^*(A)
+$$
+for every $A$. In particular, every positive-$\eta$ Borel set has finite positive $g$-measure in this two-sided comparison regime.
+
+For the gauges of 35.0,
+$$
+\mathcal H^{h_p}_\rho(X_\beta)=
+\begin{cases}
+\infty,&0<p<1,\\
+5-2\sqrt{5},&p=1,\\
+0,&p>1.
+\end{cases}
+$$
+For $0<p<1$, the infinity conclusion holds on every set of positive $\eta$ outer measure, not on every nonempty set.
+
+Replacing the additive one in $h_1$ by any fixed positive constant leaves its limiting Hausdorff measure unchanged. Replacing $\log_2$ by $\log_b$, for $b>1$, multiplies that measure by $\log b/\log2$.
+
+**Proof.** If $g(r)\le C h_1(r)$ for all sufficiently small $r$, every sufficiently fine admissible cover satisfies the same cost inequality, including its zero-diameter members. Thus
+$$
+\mathcal H^g_\rho(A)\le C\mathcal H^{h_1}_\rho(A).
+$$
+The reverse gauge inequality gives the reverse measure inequality. These statements concern arbitrary-subset covers, so they do not require measurability of $A$.
+
+For a finite positive limit, apply both inequalities with constants tending to $a$ and use 35.7. For a zero limit, apply the upper inequality with every positive $C$; the critical measure is finite on every subset of $X_\beta$, so the result is zero. For an infinite limit, apply the lower inequality with every finite $C$; positive $\eta^*(A)$ makes the critical measure positive, forcing infinity. The liminf and limsup bounds follow by the same argument with constants approaching their respective endpoints.
+
+Here
+$$
+\frac{h_p(r)}{h_1(r)}=\bigl(1+\log_2(1/r)\bigr)^{1-p},
+$$
+which tends to infinity for $p<1$ and to zero for $p>1$. This proves the exact critical index and all the stated subset qualifications. Every countable set has zero measure for all these gauges, since it is covered by countably many zero-cost singletons; this also shows why the positive-mass condition cannot be suppressed.
+
+Finally, for fixed $a_*>0$ and $b>1$, the gauge
+$$
+g(r)=\bigl(a_*+\log_b(1/r)\bigr)^{-1}
+$$
+satisfies
+$$
+\frac{g(r)}{h_1(r)}\longrightarrow\frac{\log b}{\log2}.
+$$
+The finite-limit comparison proves both normalization assertions. $\square$
+
+Reference: the general small-scale gauge comparison appears in Aedo–Grimm–Short, [§9, p. 16](https://arxiv.org/pdf/2305.00078v2#page=16). Its application here uses the actual finite measure and normalization established in 35.7.
+
+**theorem 35.10 (The arithmetic probability, the logarithmic metric and the two positional laws).** Define
+$$
+d_{\log}(y,z)=h_1(\rho(y,z)).
+$$
+This is an ultrametric with the same topology as $\rho$, and
+$$
+\mathcal H^p_{d_{\log}}=\mathcal H^{h_p}_\rho\quad(p>0).
+$$
+Consequently
+$$
+\dim_{\mathrm H}(X_\beta,d_{\log})=1,\qquad
+\mathcal H^1_{d_{\log}}=c\eta.
+$$
+In contrast, the ordinary Hausdorff dimension of $(X_\beta,\rho)$ is zero, as already established in 33.7.
+
+If $\widehat d(x,x')=\rho(\Phi(x),\Phi(x'))$, then
+$$
+\mathcal H^{h_1}_{\widehat d}=c\nu,\qquad
+(\Phi^{-1})_*\left(c^{-1}\mathcal H^{h_1}_\rho\right)=\nu,
+$$
+and
+$$
+(H\circ\Phi^{-1})_*\left(c^{-1}\mathcal H^{h_1}_\rho\right)=m.
+$$
+Thus the normalized temporal critical measure is precisely the arithmetic Haar lift, transported by the coding. It is not the stationary Parry probability $\mu_{\mathrm{st}}$ for positional deletion on the full carrier $K$.
+
+**Proof.** A nondecreasing function vanishing only at zero preserves the ultrametric inequality under composition, and $h_1(r)\to0$ exactly when $r\to0$, proving the metric and topology assertions. Every nonsingleton subset of $X_\beta$ has its $\rho$-diameter attained, by the minimum-first-difference argument of 35.3. Therefore
+$$
+\operatorname{diam}_{d_{\log}}A=h_1(\operatorname{diam}_\rho A),
+$$
+with the same identity for empty sets and singletons. Since $h_p=h_1^p$, the cover costs agree, and the admissible scales correspond by the continuous increasing map $h_1$. This proves the measure identity for every $p>0$. Its dimension and critical-measure consequences follow from 35.9.
+
+The map $\Phi:(K,\widehat d)\to(X_\beta,\rho)$ is an isometry by definition, so transporting the arbitrary-set identity of 35.7 gives $\mathcal H^{h_1}_{\widehat d}=c\nu$. The remaining pushforward formulas use $\eta=\Phi_*\nu$ and the existing equality $H_*\nu=m$ from 33.3 and 33.8.
+
+For the original positional first-difference metric $d$, Section 33 instead gives
+$$
+\mathcal H^s_d=\nu,\qquad s=\frac{\log\phi}{\log2}.
+$$
+The stationary positional probability is different, since 33.9 gives
+$$
+\nu(C_1)=\alpha^2,\qquad
+\mu_{\mathrm{st}}(C_1)=\frac{\alpha^2}{1+\alpha^2}.
+$$
+Its positional stationarity must not be transferred to $\nu$, nor confused with the arithmetic invariance of the normalized temporal gauge measure. The preservation result in 35.5 used explicit local similarities and a proved null branch overlap; it was not a claim that Hausdorff measures are preserved by arbitrary homeomorphisms. $\square$
+
+Reference: reciprocal-prefix metrics and bounded-type Sturmian geometry are treated in Bellissard–Julien, [§4.1 and §5.2](https://arxiv.org/pdf/1202.4330v2#page=11). Their metric uses bilateral agreement around the origin; the one-sided metric and exact measure in this theorem are determined by the preceding proofs.
+
+## 追加锚（本行以下为增补区）
