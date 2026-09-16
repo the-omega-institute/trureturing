@@ -104,6 +104,48 @@ class CacheDeadlineCases:
                 self.assertEqual([], calls)
                 self.assertFalse(path.exists())
 
+    def test_engineering_cache_has_its_own_window_after_checks_exhaust_theirs(self):
+        owner, env, epoch, clock, jobs, calls, fetch = self.deadline_fixture()
+        env["GITHUB_JOB"] = jobs["jobs"][0]["name"] = "engineering"
+        old = owner.begin(self.root, "engineering", 30, env=env, fetch_jobs=fetch,
+                          now=lambda: epoch, monotonic=lambda: clock[0])
+        self.assertEqual(0, old.snapshot_seconds())
+        jobs["jobs"][0]["status"] = "completed"
+        jobs["jobs"].append({**jobs["jobs"][0], "id": 78, "name": "engineering_cache",
+                             "status": "in_progress", "started_at": datetime.fromtimestamp(
+                                 epoch - 20, timezone.utc).isoformat().replace("+00:00", "Z")})
+        jobs["total_count"] = 2
+        env["GITHUB_JOB"] = "engineering_cache"
+        first = owner.begin(self.root, "engineering", 10, env=env, fetch_jobs=fetch,
+                            now=lambda: epoch, monotonic=lambda: clock[0])
+        self.assertEqual(395, first.snapshot_seconds())
+        later = owner.load_deadline(self.root, "engineering", env=env, monotonic=lambda: clock[0])
+        self.assertEqual({"save_allowed": True, "save_timeout_minutes": 7}, owner.save_outputs(later))
+        self.assertEqual(2, len(calls))
+        # A fresh publisher window cannot extend the checking job's own budget.
+        checking = owner.load_deadline(self.root, "engineering", env={**env, "GITHUB_JOB": "engineering"},
+                                       monotonic=lambda: clock[0])
+        self.assertEqual(0, checking.save_timeout_minutes())
+
+    def test_engineering_cache_cannot_borrow_an_existing_checking_job_window(self):
+        owner, env, epoch, clock, jobs, calls, fetch = self.deadline_fixture()
+        env["GITHUB_JOB"] = jobs["jobs"][0]["name"] = "engineering"
+        owner.begin(self.root, "engineering", 30, env=env, fetch_jobs=fetch,
+                    now=lambda: epoch - 900, monotonic=lambda: clock[0])
+        env["GITHUB_JOB"] = "engineering_cache"
+        self.assertEqual(0, owner.load_deadline(self.root, "engineering", env=env,
+                                              monotonic=lambda: clock[0]).save_timeout_minutes())
+        jobs["jobs"][0]["name"] = "engineering_cache"
+        for key, value in (("GITHUB_EVENT_NAME", "pull_request"), ("STRATALINT_CACHE_WRITES", "false"),
+                           ("CANDIDATE_SHA", "b" * 40), ("GITHUB_JOB", "current"),
+                           ("GITHUB_RUN_ATTEMPT", "0")):
+            with self.subTest(key=key):
+                calls.clear()
+                denied = owner.begin(self.root, "engineering", 10, env={**env, key: value}, fetch_jobs=fetch,
+                                     now=lambda: epoch - 2200, monotonic=lambda: clock[0])
+                self.assertEqual(0, denied.save_timeout_minutes())
+                self.assertEqual([], calls)
+
     def test_cache_deadline_checks_exact_run_attempt_candidate_and_job(self):
         for key, value in (("name", "engineering"), ("run_id", 124), ("run_attempt", 1),
                            ("head_sha", "b" * 40), ("status", "completed"),

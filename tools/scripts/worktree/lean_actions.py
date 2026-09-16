@@ -523,7 +523,9 @@ def snapshot(root, keys, layers=LAYERS, registry=None, *, deadline=None, current
                 continue
             seconds = deadline.snapshot_seconds() if deadline is not None else None
             if seconds is not None and seconds <= 0:
-                receipt(layer, "save-disabled", reason=deadline.reason)
+                receipt(layer, "save-disabled",
+                        reason=deadline.reason if deadline.cutoff is None else "insufficient-cache-window",
+                        remaining_seconds=round(deadline.remaining(), 3))
                 continue
             started = time.monotonic()
             spec = keys[layer]
