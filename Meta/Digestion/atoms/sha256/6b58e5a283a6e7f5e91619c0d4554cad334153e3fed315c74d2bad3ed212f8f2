@@ -1,0 +1,5 @@
+若 \(d:X\to D\) 是附加观察，则
+\[
+\mathcal E((q,d);T)=\mathcal E(q;T)\cap\ker d.
+\]
+
