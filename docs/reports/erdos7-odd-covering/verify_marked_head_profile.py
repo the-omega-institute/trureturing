@@ -2218,6 +2218,124 @@ def signed_conditioning_obstruction():
     return result
 
 
+def rectangle_hinge_observation_gap():
+    """Reconstruct two full labelled tests with equal coarse data and unequal hinges."""
+    F = Fraction
+    old = ((3,0),(9,4),(5,0),(15,1),(45,37),(7,0),
+           (21,16),(35,24),(63,25),(105,19),(315,109))
+    residues = dict(old)
+    old_ds = [d for d in range(1,316) if 315 % d == 0]
+    fine_ds = [d for d in range(1,45046) if 45045 % d == 0]
+    omega = [x for x in range(315) if all(x % d != a for d,a in old)]
+    old45 = [x for x in range(45) if all(x % d != a for d,a in old[:5])]
+    require(len(omega) == 86 and len(old45) == 17, "fixed shared old shape and count")
+    A = {x:sum(x % d == 8 % d for d in old_ds) for x in omega}
+    histogram = Counter(A.values())
+    require(histogram == Counter({1:5,2:38,3:14,4:18,6:8,8:2,12:1}),
+            "old load reconstructed from actual query cylinders")
+
+    def combine(a,m,b,n):
+        residue = a + m * (((b-a) * pow(m,-1,n)) % n)
+        require(0 <= residue < m*n and residue % m == a and residue % n == b,
+                "canonical CRT residue")
+        return residue
+
+    # All added nonunit old cofactors use a residue already absent from omega.
+    # Only the unit mixed label removes one cell in every remaining rectangle.
+    originals = list(old)
+    for d in old_ds:
+        originals.append((11*d, 0 if d == 1 else combine(residues[d],d,1,11)))
+        originals.append((13*d, 0 if d == 1 else combine(residues[d],d,1,13)))
+        a = 0 if d == 1 else residues[d]
+        i,j = (10,12) if d == 1 else (1,1)
+        originals.append((143*d,combine(combine(a,d,i,11),11*d,j,13)))
+    require(len(originals) == 47 and sorted(d for d,a in originals) == fine_ds[1:],
+            "one original congruence for every nonunit divisor of 45045")
+
+    def test_layout(point):
+        choices = []
+        for d in old_ds:
+            choices.extend(((d,8 % d),
+                            (11*d,combine(8 % d,d,1,11)),
+                            (13*d,combine(8 % d,d,1,13)),
+                            (143*d,combine(combine(8 % d,d,point[0],11),11*d,point[1],13))))
+        require(sorted(d for d,a in choices) == fine_ds, "complete original test labels")
+        return sorted(choices)
+
+    points = ((1,1),(2,2))
+    tests = [test_layout(p) for p in points]
+    direct = [x for x in range(45045) if all(x % d != a for d,a in originals)]
+    require(len(direct) == 86*119 == 10234, "full-period actual survivor count")
+    direct_loads = [[sum(y % d == a for d,a in test) for y in direct] for test in tests]
+    direct_histograms = [Counter(loads) for loads in direct_loads]
+    direct_hinges = [sum(max(a-6,0) for a in loads) for loads in direct_loads]
+
+    def kernel(N,r,q,u,v,t,a,threshold):
+        a0,a1,a2,a3 = a
+        phi = lambda b:max(b-threshold,0)
+        return ((N-r-q+u)*phi(a0) + (r-u)*phi(a0+a1) +
+                (q-u)*phi(a0+a2) + u*phi(a0+a1+a2) +
+                phi(a0+v*a1+t*a2+a3)-phi(a0+v*a1+t*a2))
+
+    grid_points = []
+    grid_histograms = [Counter(),Counter()]
+    kernel_checks = 0
+    for x in omega:
+        per_old = [[],[]]
+        for i in range(1,11):
+            for j in range(1,13):
+                if (i,j) == (10,12):
+                    continue
+                fine = combine(combine(x,315,i,11),3465,j,13)
+                grid_points.append(fine)
+                for index,point in enumerate(points):
+                    # Compute from all original test labels, then check block concentration.
+                    load = sum(fine % d == a for d,a in tests[index])
+                    factor = 1+(i == 1)+(j == 1)+((i,j) == point)
+                    require(load == A[x]*factor, "actual complete-label load equals four-block load")
+                    per_old[index].append(load)
+                    grid_histograms[index][load] += 1
+        for index,(v,t) in enumerate(((1,1),(0,0))):
+            for threshold in range(49):
+                actual = sum(max(a-threshold,0) for a in per_old[index])
+                require(kernel(119,12,10,1,v,t,(A[x],)*4,threshold) == actual,
+                        "five-incidence hinge kernel equals actual cell sum")
+                kernel_checks += 1
+    require(sorted(grid_points) == direct, "CRT product and full-period support agree")
+    require(grid_histograms == direct_histograms, "all full-load histograms agree")
+    require(direct_hinges == [3998,3844], "threshold-six numerators")
+    values = [F(v,len(direct)) for v in direct_hinges]
+    require(values == [F(1999,5117),F(1922,5117)] and values[0]-values[1] == F(77,5117),
+            "strict hinge gap at identical coarse observations")
+    cap = F(40,31)
+    density = min(cap,F(120,119))
+    require(density == F(120,119) and density*F(119,120) == 1,
+            "same actual clipped law is uniform on these survivors")
+    return {
+        "status":"PASS: actual complete labels, full period and independent CRT grid",
+        "scope":"failure of exact hinge determination by shared shape/count and four old block functions",
+        "original_classes":[list(v) for v in sorted(originals)],
+        "old_classes":[list(v) for v in old],
+        "old_shape":"root1_same_other_column", "old45_survivors":len(old45),
+        "old315_survivors":len(omega),
+        "old_load_histogram":{str(k):v for k,v in sorted(histogram.items())},
+        "same_four_old_blocks":"A00=A10=A01=A11=sum_{d|315} 1[x=8 mod d]",
+        "actual_grid":{"m":10,"n":12,"k":1,"Ngrid":119,
+                       "clipped_density":str(density),"old_marginal":"1"},
+        "original_class_count":len(originals),"survivors":len(direct),
+        "threshold":6,
+        "tests":[{"mixed_point":list(point),"classes":[list(v) for v in test],
+                  "incidences":{"r":12,"q":10,"u":1,"v":int(index == 0),"t":int(index == 0)},
+                  "load_histogram":{str(k):v for k,v in sorted(direct_histograms[index].items())},
+                  "hinge_numerator":direct_hinges[index],"hinge":str(values[index])}
+                 for index,(point,test) in enumerate(zip(points,tests))],
+        "hinge_difference":str(values[0]-values[1]),
+        "kernel_thresholds_checked":[0,48],"kernel_equalities_checked":kernel_checks,
+        "missing_information":"incidence of the actual mixed test point with its selected test row and column",
+        "boundary":"The five-incidence kernel is exact for concentrated four-block tests; arbitrary labelled layouts require their actual cylinder arrangement or a justified concentration upper bound. This is not a refutation of supported-law or hinge upper bounds."
+    }
+
+
 def verify(expected):
     cases = []
     old_cases = []
@@ -2253,6 +2371,7 @@ def verify(expected):
     lift_result = matching_height_lift()
     variable_head = varying_hole_head(deletion_result, signed_result)
     result = {
+        "rectangle_hinge_observation_gap": rectangle_hinge_observation_gap(),
         "shared_count_clipped_head": shared_count_clipped_head(old_cases, deletion_result, signed_result),
         "variable_axis_clipping": variable_axis_clipped_head(expected["variable_axis_clipping"]["witnesses"], deletion_result, signed_result),
         "signed_conditioning_obstruction": signed_conditioning_obstruction(),

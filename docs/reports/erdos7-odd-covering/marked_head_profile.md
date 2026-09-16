@@ -2909,3 +2909,80 @@ every CRT residue, checks the full period and the independent 86×10×12
 grid, and verifies every weighted-cylinder maximum. Its fixed
 `signed_conditioning_obstruction` certificate stores the original classes
 and load histograms. This is exact arithmetic, not a Lean theorem.
+
+## What the rectangle data do not determine about a hinge
+
+Here the input is an actual head family together with a complete test
+layout. Retaining the old shape, its survivor count, every actual rectangle
+size and all four old block functions does not determine the test's
+threshold-six hinge. This concerns exact evaluation: taking a supremum
+over the omitted configurations can still give a sound upper bound.
+
+For a concentrated four-block load on a nonempty surviving grid, let Ngrid
+be its cell count, r and c the selected surviving row and column counts,
+and u,v,t indicate, respectively, whether their intersection survives,
+whether the selected surviving point lies in the row, and whether it lies
+in the column. Put phi_tau(a)=(a-tau)_+. The exact unweighted cell sum is
+
+    H_tau=(Ngrid-r-c+u) phi_tau(A)
+          +(r-u) phi_tau(A+B)+(c-u) phi_tau(A+C)
+          +u phi_tau(A+B+C)
+          +phi_tau(A+vB+tC+D)-phi_tau(A+vB+tC).              (HO1)
+
+The first four terms partition the grid by row/column membership; the
+last difference adds the point block at its actual location. Its clipped
+fibre integral is f H_tau/120. Empty fibres contribute zero. Thus the five
+incidence values together with Ngrid and the amplitudes determine this
+concentrated hinge. General labelled tests still need their actual
+cylinder arrangement, or the justified convex-concentration upper bound;
+(HO1) does not reconstruct that arrangement from four block totals.
+
+For an actual counterexample use the 86-point old family specified in the
+preceding subsection, with its forbidden old residue a_d for every
+nonunit d|315. Add pure classes0 mod11 and0 mod13. For every d>1, add the
+11d,13d and143d classes with old residue a_d and new digits1 where present.
+All of these classes are inactive on the old survivors. The unit mixed
+143class instead deletes the cell(10,12). This specifies exactly one
+original class for every nonunit divisor of45045:47distinct moduli.
+
+Every old survivor therefore has the same10×12rectangle with one point
+hole, Ngrid=119, clipping density f=120/119 and old marginal h=1. The
+constructed law is uniform on the10234actual survivors. In both complete
+tests, all four old block functions are
+
+    A(x)=sum_(d|315) 1[x=8 mod d].
+
+For each d, the11d test chooses new digit1, and the13d test chooses digit1.
+The first test's143d block chooses point(1,1); the second chooses point(2,2).
+The old d block chooses8 mod d in both. CRT gives48actual divisor labels
+for each complete test, with all four old block functions unchanged.
+Their selected incidence data are (r,c,u)=(12,10,1) in both cases, but
+(v,t)=(1,1) and(0,0), respectively. Direct evaluation gives
+
+    sum_survivors (L_first-6)_+ =3998,
+    sum_survivors (L_second-6)_+=3844,
+
+hence
+
+    E(L_first-6)_+=1999/5117,
+    E(L_second-6)_+=1922/5117,
+    difference=11/731>0.                                   (HO2)
+
+For the observation q retaining the shared shape/count, actual scalar
+rectangle data and four old block functions, (HO2) gives equal q-values
+and unequal hinge values: ker(q) is not contained in ker(H_6). A derived
+encoding of those same readings cannot restore the missing incidence.
+Keeping the actual test cylinders together with CRT-closed intersection
+counts I_U(d,a) does distinguish the inputs: compatible cylinder
+intersections are again CRT cylinders, so their counts determine the
+joint load histogram. This is a different issue from (P13.1), which uses
+two original survivor states and one fixed next class to show that
+residual mass alone does not determine the deletion update.
+
+The verifier reconstructs all47original classes and both48-label tests,
+checks the full period modulo45045 against an independent86×119CRT grid,
+and checks(HO1)at every integer threshold0through48 for both tests above
+every old survivor:8428exact identities. The new
+`rectangle_hinge_observation_gap` certificate field retains these actual
+inputs and load histograms. This is an ordinary exact-arithmetic result;
+it asserts neither a new hinge upper bound nor a tail continuation.
