@@ -35,7 +35,7 @@ elab "observe_declared_evidence" : command => do
     ("uncertified_states_have_no_certificate", 2, ← `(command| information_theorem $target in arena
       primitives (@cutRealization Bool Bool instDecidableEqBool (fun x : Bool => x))
       : ∀ x : Bool, x = x.not.not := by intro x; exact (Bool.not_not x).symm))]
-  let mut observations : Array String := #[]
+  let mut observations : Array (String × Bool) := #[]
   for (label, kind, form) in forms do
     set initial
     modify fun state => { state with messages := {} }
@@ -56,9 +56,10 @@ elab "observe_declared_evidence" : command => do
     let ok := inventoryOk && caught.isNone && !(← get).messages.hasErrors && event.isSome && result &&
       InformationRegistry.hasTheorem env name
     set initial
-    observations := observations.push s!"[{if ok then "PASS" else "FAIL"}] {label}"
+    observations := observations.push (label, ok)
 
-  for observation in observations do logInfo observation
+  for (label, ok) in observations do
+    (if ok then logInfo else logError) m!"[{if ok then "PASS" else "FAIL"}] {label}"
 
   -- Inject after the nested command has published its event, binding record,
   -- certificate and generated declarations, and after enrollment has committed.
