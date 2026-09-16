@@ -1,0 +1,7 @@
+**Theorem.** For every n>=3,
+
+$$
+\boxed{\sigma_F(F_n^2-1)\notin\mathcal F_+.}
+\tag{FDS14}
+$$
+

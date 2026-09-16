@@ -1,0 +1,17 @@
+**定理 21.3（候选存在、完整乘法表及结合性）。** 每个 $A_s$ 均为交换、结合的全域单值选择。其完整乘法表为
+$$
+A_s(j_s(a),j_s(b))=j_s(a+b)\qquad(a,b\in\mathbb T),
+$$
+$$
+A_s(j_s(a),b_s(m))=A_s(b_s(m),j_s(a))=j_s(a+E_m)\qquad(a\in\mathbb T,\ m\ge1),
+$$
+$$
+A_s(b_s(m),b_s(n))=b_s(m+n)\qquad(m,n\ge1).
+$$
+每个全域选择，包括这两个候选，均满足
+$$
+H(A(x,y))=H(x)+H(y),\qquad
+A(Z(n),Z(k))=Z(n+k)\quad(n,k\in\mathbb N).
+$$
+两个候选不同。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:be343e38b7b9df9cab97e057e09a024e4113ae1c1e352a063cf2d27bcbc972ba
+  normalized_sha256: sha256:be343e38b7b9df9cab97e057e09a024e4113ae1c1e352a063cf2d27bcbc972ba
+cas_ref: sha256:be343e38b7b9df9cab97e057e09a024e4113ae1c1e352a063cf2d27bcbc972ba
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶项仅定义联合评价的初始拓扑，其中公式用于指定对象与记号，没有独立待证命题，故按非命题条款结算。
+    previous_atom_id: 7306deb76c603a94c422a5e9bee846b00ecb4cadefd687c8c84166cca600159e
+    next_atom_id: ec11e914025746bffdf723f562a1bbd21e7e3d0a9fce55dcaff1682c77de804a

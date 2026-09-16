@@ -1,0 +1,16 @@
+**Proof.** The pair recurrence of Appendix U.1 gives (F_24,F_25)=(0,1) modulo
+nine, hence F_(n+24)=F_n for every n by recurrence induction. The square
+values at the eight unit classes modulo twenty-four are one at classes
+1,11,13,23 and seven at classes 5,7,17,19. These are exactly 4-3*eta(n).
+All values are units at three. Dividing the square congruence minus one
+by three in the integers gives the second statement. Thus the finite
+calculation proves a universal congruence after the period reduction.
+
+For n>3 with gcd(n,30)=1, retain the actual primitive block
+R_n=C_n/E_n from IP9. All Fibonacci terms F_d with d dividing n are units
+at three. Let mu be the Moebius function, and set
+
+$$
+H(n)=(\mu*\eta)(n)=\sum_{d\mid n}\mu(n/d)\eta(d).
+$$
+

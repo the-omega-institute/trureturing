@@ -1,0 +1,2 @@
+**Proof.** The prime ell is neither three nor five, so Fibonacci parity and the rank of five exclude p=2,5. Since rho(p)|ell and F_1=1, the rank is ell. The rank bound forces ell|p-1 or ell|p+1. If p<=ell, the first alternative is impossible, and the second forces p=ell-1, an even integer greater than two. Hence p>ell and p does not divide m. Apply the valuation formula to d=ell,t=m/ell. Its last summand vanishes.
+

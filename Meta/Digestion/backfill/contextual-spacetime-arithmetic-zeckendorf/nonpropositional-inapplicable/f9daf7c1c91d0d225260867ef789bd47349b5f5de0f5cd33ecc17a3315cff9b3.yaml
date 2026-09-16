@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f9daf7c1c91d0d225260867ef789bd47349b5f5de0f5cd33ecc17a3315cff9b3
+  normalized_sha256: sha256:f9daf7c1c91d0d225260867ef789bd47349b5f5de0f5cd33ecc17a3315cff9b3
+cas_ref: sha256:f9daf7c1c91d0d225260867ef789bd47349b5f5de0f5cd33ecc17a3315cff9b3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶项仅定义二进探针、有理线性读数和黄金观察，其中公式用于指定对象与记号，没有独立待证命题，故按非命题条款结算。
+    previous_atom_id: 85c6d2c618047894b35884a1055d956bb0fca6f569097cf242abfd9de983b33f
+    next_atom_id: ac861565e515c35ab4f98c8a1931b3e85f99e058b13b7cdb48d7aed02e5d2023

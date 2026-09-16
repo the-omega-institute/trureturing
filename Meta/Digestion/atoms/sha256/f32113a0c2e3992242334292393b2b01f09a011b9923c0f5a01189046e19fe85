@@ -1,0 +1,5 @@
+第二余量的准确最小值为
+$$
+2b-a-z-\varepsilon(2b+a+z),
+$$
+由 $b'=(1-\varepsilon)b,a'=(1+\varepsilon)a,z'=(1+\varepsilon)z$ 达到。

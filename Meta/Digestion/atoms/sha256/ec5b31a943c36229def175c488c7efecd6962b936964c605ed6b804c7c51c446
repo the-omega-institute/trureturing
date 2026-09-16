@@ -1,0 +1,16 @@
+**定理 19.4（最低位加法表不存在任何分别连续紧实现）。** 不存在紧空间 $X$、集合映射 $j:\mathbb N\to X$ 及分别连续映射
+$$
+B:X\times X\to\{0,1\}
+$$
+使得
+$$
+B(j(n),j(m))=f(n+m)\qquad(n,m\in\mathbb N).
+$$
+这里不要求 $j$ 单射、连续或具有稠密像。
+
+更一般地，设 $Y$ 为任意拓扑空间，$W$ 为 Hausdorff 空间，$w_0,w_1\in W$ 且 $w_0\ne w_1$。不存在同时满足下列条件的数据：紧空间 $X$，集合映射 $j:\mathbb N\to X$，分别连续映射 $M:X\times X\to Y$，以及连续观察 $q:Y\to W$，使
+$$
+q(M(j(n),j(m)))=w_{f(n+m)}\qquad(n,m\in\mathbb N).
+$$
+特别地，将输出改为任意紧 Hausdorff 空间，并保留取值于离散二点集或实数的连续最低位观察，仍然不能得到这样的实现。若还存在 $h:\mathbb N\to Y$，满足 $q(h(n))=w_{f(n)}$，则要求 $M(j(n),j(m))=h(n+m)$ 更不可能。
+

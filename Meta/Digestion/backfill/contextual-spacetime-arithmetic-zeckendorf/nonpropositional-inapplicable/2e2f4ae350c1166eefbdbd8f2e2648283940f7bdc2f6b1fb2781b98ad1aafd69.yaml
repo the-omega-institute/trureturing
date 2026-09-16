@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:2e2f4ae350c1166eefbdbd8f2e2648283940f7bdc2f6b1fb2781b98ad1aafd69
+  normalized_sha256: sha256:2e2f4ae350c1166eefbdbd8f2e2648283940f7bdc2f6b1fb2781b98ad1aafd69
+cas_ref: sha256:2e2f4ae350c1166eefbdbd8f2e2648283940f7bdc2f6b1fb2781b98ad1aafd69
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶项仅以独立合法性条件定义既约字段及编码解码记号，其中公式用于指定对象与记号，没有独立待证命题，故按非命题条款结算。
+    previous_atom_id: 3865fba8ac0232fc7ccea24d1533ddc93e7971c316f39c605dc3102a85678cf3
+    next_atom_id: 8dc0b3ae154f56f9a451060066cd1e9ee9fcd2b4c6e7eace202f95f2269f0361

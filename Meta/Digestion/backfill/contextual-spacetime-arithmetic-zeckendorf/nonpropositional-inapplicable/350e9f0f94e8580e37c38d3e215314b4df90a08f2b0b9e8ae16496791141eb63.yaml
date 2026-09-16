@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:350e9f0f94e8580e37c38d3e215314b4df90a08f2b0b9e8ae16496791141eb63
+  normalized_sha256: sha256:350e9f0f94e8580e37c38d3e215314b4df90a08f2b0b9e8ae16496791141eb63
+cas_ref: sha256:350e9f0f94e8580e37c38d3e215314b4df90a08f2b0b9e8ae16496791141eb63
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶项仅定义逐坐标有理逼近行及全部圆周观察的初始拓扑，其中公式用于指定对象与记号，没有独立待证命题，故按非命题条款结算。
+    previous_atom_id: 39e859650708d2e067f57c74f5b1a52fd619cfcdb900610e0692134494f70802
+    next_atom_id: e4b0ff2255aa9d5f3067e83a969fd6946169b42c08fad1b703e486892b1d8ffa

@@ -1,0 +1,12 @@
+**Corollary.** At precision p^s, s>=1, the earliest starting index of
+any positive eventual period is exactly
+
+$$
+K_s=\max(0,s-h_p).                                      \tag{NP5}
+$$
+
+From K_s onward the sequence is constant epsilon and its least eventual
+period is one. It has no period of any positive length starting before
+K_s. Consequently B_(p,k) tends to epsilon in Z_p with exact distance
+p^(-h_p-k).
+

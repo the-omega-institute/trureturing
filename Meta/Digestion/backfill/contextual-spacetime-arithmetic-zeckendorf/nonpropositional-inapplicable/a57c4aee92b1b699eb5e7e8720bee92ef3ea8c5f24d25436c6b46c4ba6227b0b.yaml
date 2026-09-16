@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a57c4aee92b1b699eb5e7e8720bee92ef3ea8c5f24d25436c6b46c4ba6227b0b
+  normalized_sha256: sha256:a57c4aee92b1b699eb5e7e8720bee92ef3ea8c5f24d25436c6b46c4ba6227b0b
+cas_ref: sha256:a57c4aee92b1b699eb5e7e8720bee92ef3ea8c5f24d25436c6b46c4ba6227b0b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 展开既有 W 与 B 的定义，在正整数区间内 N 除以 d 至少为一，Nat.divisors_one 与 Finset.sum_const 将全部核值化为一，故等于平方自由过滤集的基数；仓内无冻结 GID，导入的 D5 仅提供定义。
+    previous_atom_id: 279f1b40deb5e4595fe0cde79f6630089918942b65345a43dc524e3d86d3467b
+    next_atom_id: 75c7a28f46c351999c0b2ae24ae960b73c63220b40533140630eb9624b605f0b

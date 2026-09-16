@@ -1,0 +1,15 @@
+**Theorem RP12.** In $\mathbb Z_5$, the closure of the block values is
+exactly the disjoint union
+
+$$
+\boxed{
+\overline{\{B_{\ell,k}:k\ge0\}}=
+\bigl(F_\ell+5^{s_\ell+1}\mathbb Z_5\bigr)
+\ \cup\
+\bigl(B_{\ell,1}+5^{s_\ell+1}\mathbb Z_5\bigr).
+}\tag{RP12}
+$$
+
+The limiting fraction of residue classes occupied by the block values
+modulo 5^r is $2/5^{s_\ell+1}$.
+

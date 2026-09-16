@@ -285,3 +285,62 @@ Sierpinski-type graphs do not treat this identity」——**写这句时没有�
     grep -n -F <A号> p.txt; grep -n <定义式/集合形状> p.txt                      # 按数学内容查,不只按 A 号
 
 `%H` 为空才是「无链接论文」,当场用上面第一条命令验;例如 A079278 只有 `%D`、A249759 两者皆无。
+
+## R34(2026-09-16):erdosproblems.com 的状态徽章,与 #647 的有限搜索
+
+用户的常设目标里有一句「找一些老的, erdos 上的问题试试」。此前一次尝试按题面形状盲筛 1217 条得 0;
+本轮改为先量该站点自己的状态词表,结论对今后的选题直接有用。
+
+### 两段取样(逐题取页,解析状态徽章)
+
+| 状态 | #1–60 | #600–660 |
+| --- | ---: | ---: |
+| `OPEN` | 25 | 27 |
+| `PROVED` | 18 | 17 |
+| `DISPROVED` | 11 | 7 |
+| `SOLVED` | 3 | 7 |
+| `VERIFIABLE` | 1 | 1 |
+| `DECIDABLE` | 1 | 0 |
+| `FALSIFIABLE` | 1 | 2 |
+
+两段互相印证:约一半已判定,约 43% 是 `OPEN`,约 5% 带可有限判定的徽章。取两段不同区间是因为低编号题受关注更多,单窗口不能外推(§3.5 同形纪律)。
+
+**两条对选题直接有用的事实:**
+
+1. **该题库正被系统性 Lean 形式化。** 已判定的条目里多数徽章写作 `PROVED (LEAN)` / `DISPROVED (LEAN)` /
+   `SOLVED (LEAN)`,并附「the proof verified in Lean」。按 §3.1 先库后证,盲扫这张表的重复风险很高;
+   任何候选进管线前必须先看它自己的徽章。
+2. **站点自带第二档筛子。** `VERIFIABLE`(Open, but could be proved with a finite example)、
+   `FALSIFIABLE`(Open, but could be disproved with a finite counterexample)、
+   `DECIDABLE`(Resolved up to a finite check)三个徽章,明说哪些问题能被有限计算触及——这正是
+   §3.6 第二档的定义。而 `OPEN` 的条目一律附「This is open, and cannot be resolved with a finite
+   computation」,即明确的第三档。**按徽章筛,不要按题面形状筛。**
+
+### #647 — 有限搜索,已搜到 10^8,无命中,**不构成结算**
+
+Erdős–Selfridge,`VERIFIABLE`,£25(折合 $44):设 τ 为除数个数函数,**是否存在 n > 24 使
+`max_{m<n}(m + τ(m)) ≤ n + 2`?**
+
+判据可由一次线性筛完成,不必对每个 n 重算窗口:`M(n) = max_{m<n}(m + τ(m))` 是前缀最大值,
+筛出 τ 后 `numpy.maximum.accumulate` 一遍即可。
+
+```
+$ python3 erd647.py 100000000
+N = 100000000
+tau sanity: tau[1..12] = [1, 2, 2, 3, 2, 4, 2, 4, 3, 4, 2, 6]
+n=24 check: M(23) = 26  n+2 = 26  -> True
+hits n>24: []  count: 0
+EXIT=0
+```
+
+**阳性对照是这次读数的关键**:`n = 24` 是已知的唯一例子,它在同一判据下为真,所以那个 `count: 0` 是
+「搜过了没有」而不是「判据写错了恒为假」。τ 的前十二项也与定义相符。
+
+**为什么这不是进展**:§3.6 ③ 规定有限证书只有排除此前未排除的情形才可称部分进展。该题页未记录前人的
+搜索上界,故本轮无法断言 10^8 超出了已知范围;按 §2.9 记为「已测 10^8 无命中,前人上界未知」,不写成
+推进。此外 §3.3 明禁普通正向有限实例取得用途准入——即便搜到一个 n,其交付形态也须按反驳侧组织
+(它反驳的是「不存在这样的 n」),不能作为 `certified-instance` 的正向实例入库。
+
+Erdős 本人在 [Er79] 说「it is extremely doubtful」存在无穷多个这样的 n,并指出更强的形式需要
+Schinzel 假设 H。把界继续往上推(分段筛可达 10^10 量级)不改变这个判断,故本轮不继续投入,
+按 §2.7 预算包络换靶。

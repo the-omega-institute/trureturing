@@ -1,0 +1,40 @@
+**定理 18.4（最细连续确定观察与全部允许的后处理）。** 给定连续满射 $q:K\to Q$，其中 $Q$ 是 Hausdorff 空间。以下条件等价。[^rro18_fibers][^rro18_quotient]
+
+（甲）存在全函数 $D:Q^2\to Q$，使
+$$
+\forall x,y\in K\ \forall z\in\Gamma(x,y),\qquad
+D(q(x),q(y))=q(z).
+$$
+
+（乙）存在连续满射 $p:\mathbb T\to Q$，使 $q=p\circ H$，并且其相等关系核是加法同余，即对所有 $a,a',b,b'\in\mathbb T$，
+$$
+p(a)=p(a'),\ p(b)=p(b')
+\quad\Longrightarrow\quad
+p(a+b)=p(a'+b').
+$$
+
+（丙）存在闭子群 $N\le\mathbb T$ 及同胚 $h:\mathbb T/N\to Q$，使
+$$
+q=h\circ\pi_N\circ H,
+$$
+其中 $\mathbb T/N$ 取商拓扑，$\pi_N(a)=a+N$。这里 $h$ 是空间同胚，不预设 $Q$ 上已有任何群运算。
+
+这些条件成立时，$p,N,h,D$ 均由给定的 $q$ 唯一确定，而且
+$$
+N=p^{-1}(\{p(0)\}),\qquad
+p(a)=p(b)\ \Longleftrightarrow\ a-b\in N,
+$$
+$$
+D(p(a),p(b))=p(a+b),\qquad
+e_Q=p(0)=q(0_K),\qquad
+\iota_Q(p(a))=p(-a).
+$$
+$D$ 与 $\iota_Q$ 自动连续；它们使 $Q$ 成为紧致交换拓扑群，$p$ 成为满射连续群同态。因此 $H$ 是因子化次序中最精细的连续确定观察。
+
+更具体地，允许的连续满射后处理 $p:\mathbb T\to Q$ 恰是满足乙中同余条件的那些映射，等价地，其纤维恰为某个闭子群的陪集。对任意闭子群 $N$，$q_N=\pi_N\circ H$ 都给出这种观察，并且
+$$
+q_{N_1}\succeq q_{N_2}
+\quad\Longleftrightarrow\quad N_1\subseteq N_2.
+$$
+并非每个连续满射后处理都允许确定运算；例如 $p([t])=\cos(2\pi t)$ 不允许。最后，$\Gamma$ 与 $\Lambda$ 具有完全相同的连续确定观察，尽管两关系严格不同。
+
