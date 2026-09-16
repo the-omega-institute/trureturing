@@ -24,6 +24,10 @@ $$\forall n \in \mathbb{N},\; (0 < n) \Rightarrow (\operatorname{rowSum}\left(n\
 
 *Proof.* Machine-checked in Lean as `D5/S3/ArithSums/SchulteGcdQuotientRowSumConvolution.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a350900-schulte-gcd-quotient-row-sum-convolution` (proved) by `D5/S3/ArithSums/SchulteGcdQuotientRowSumConvolution.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a350900-schulte-gcd-quotient-row-sum-convolution","declaration_gid":"D5/S3/ArithSums/SchulteGcdQuotientRowSumConvolution.result","resolution_kind":"proved"} -->
+
 *Citation.* Werner Schulte (2022). *OEIS A350900, T(n,k) = Sum_{i=1..n} gcd(i,n)/gcd(gcd(i,k),n), with the conjectured row sums (n phi(n)) * (Sum_{d|n} d phi(d))*. URL: <https://oeis.org/A350900>.
 
 *Commentary.*
