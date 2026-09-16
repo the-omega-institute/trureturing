@@ -1,6 +1,6 @@
 # A supported convex profile for the 315 head
 
-The strongest comparison below retains the original mixed-class deletions in both the load numerator and survivor denominator. On the same supported law it gives mean at most **271/86**, actual second moment at most **1091/82**, and the complete increasing-convex comparator X specified in the deletion-coupling section. Its high-threshold profile remains sharp.
+The strongest comparison below retains the original mixed-class deletions in both the load numerator and survivor denominator. On the same supported law it gives the sharp uniform-law mean bound **271/86**, actual second moment at most **1091/82**, and the complete increasing-convex comparator X specified in the deletion-coupling section. Its high-threshold profile remains sharp.
 
 For any family of residue classes with distinct nonunit moduli dividing 315, there is a probability measure μ supported on its survivors such that every complete test layout
 
@@ -198,7 +198,7 @@ Every effective old layout is enumerated; no pairwise layout search or optimizer
 | Long root, other root / same column | 16 | 234/77 | 157/77 | 91/76 | 14/19 | 2/5 | 4/15 | 993/77 |
 | Long root, other root / other column | 16 | 234/77 | 157/77 | 91/76 | 14/19 | 2/5 | 4/15 | 993/77 |
 
-The finite check covers 27,720 effective old layouts and 194,040 integer cap inequalities. It clears the denominator of each proposed rational c, computes the exact minimum scaled slack, and finds zero in all 42 cases. Zero slack certifies the displayed relaxation constants; it does **not** establish sharpness for realizable full families. All mathematical decisions use standard-library integers and fractions. The six-orbit completeness and the universal fibre argument are ordinary proof inputs to this finite certificate.
+The finite check covers 27,720 effective old layouts and 194,040 integer cap inequalities. It clears the denominator of each proposed rational c, computes the exact minimum scaled slack, and finds zero in all 42 cases. Zero slack certifies the displayed relaxation constants. The explicit witness below establishes actual-family sharpness at thresholds zero and one; zero slack alone does not establish sharpness at the other thresholds or for the square bound. All mathematical decisions use standard-library integers and fractions. The six-orbit completeness and the universal fibre argument are ordinary proof inputs to this finite certificate.
 
 ### A single improved full comparator
 
@@ -235,6 +235,53 @@ Every complete test load under the same μ is dominated by X in increasing conve
 \]
 
 The direct square bound is stronger than the comparator's second moment and may be used simultaneously with its complete hinge profile. These are supported-law head bounds; they do not by themselves establish a global tail cutoff or an end-to-end Lean proof.
+
+## Actual sharpness of the uniform315 mean bound
+
+The simultaneous uniform-pruned-survivor bounds at thresholds0 and1 are
+sharp for that prescribed law. This does not establish minimax sharpness
+over all probability laws supported on each original survivor set.
+
+Take the complete original family of modulus/residue pairs
+
+    (3,0), (9,4), (5,0), (15,1), (45,37), (7,0),
+    (21,1), (35,9), (63,52), (105,4), (315,187).
+
+Its old45 part is already the first canonical shape. The complete test
+layout, including the unit term, is
+
+    (1,0), (3,2), (5,3), (9,2), (15,2), (45,2),
+    (7,6), (21,20), (35,13), (63,20), (105,62), (315,272).
+
+Directly checking the315 residue classes gives86 surviving points and test
+load histogram
+
+| Load | 1 | 2 | 3 | 4 | 5 | 6 | 8 | 10 |
+|---|---|---|---|---|---|---|---|---|
+| Count | 5 | 28 | 29 | 11 | 5 | 6 | 1 | 1 |
+
+The total load is271, hence the uniform survivor law has E L=271/86.
+All loads are at least1, so E(L-1)+=185/86. Together with the universal
+upper bounds, these equalities establish actual-family sharpness at both
+thresholds, beyond sharpness of the deletion-cap relaxation.
+
+The deletion construction also explains why the relaxation is attained.
+For the old test load A, choose the original old cylinders at residues
+1 mod3, 4 mod5, 7 mod9, 4 mod15, and7 mod45. Assign their corresponding
+mixed7 classes the distinct septenary digits1,2,3,4,5. These cylinders
+contain5,5,3,2,1 old points, and their A-load sums are7,9,4,2,1. Every such
+load is at most3, so discarding the negative part in (271/86-A)+ loses
+nothing. Distinct septenary digits make the16 deleted lifted points
+disjoint. Put all test7 labels at the free digit6. The old test blocks
+satisfy B=A and sum A=sum B=42. Consequently the survivor count and total
+test load are
+
+    N = 6*17-(5+5+3+2+1) = 86,
+    sum L = 6*42+42-(7+9+4+2+1) = 271.
+
+The literal witness check uses only integer arithmetic and rational
+division; its runtime checks remain enabled under Python optimization.
+This is an ordinary finite certificate, not a Lean theorem.
 
 ## Actual sharpness for t≥6
 
@@ -385,6 +432,55 @@ These give exactly one original class for every nonunit divisor of 3465. Their o
 
 A supported extension cannot preserve a positive old mass at 272. The uniform full-survivor law is valid and assigns zero old mass there.
 
+## A supported full profile for the finite 3465 head
+
+Adjoin one 11 digit to the same uniform pruned315 law μ, first deleting the pure-11 forbidden digit. Let ν be μ times the uniform law on the ten remaining digits. Fibre concentration and convexity give, for every complete3465 test load L,
+
+\[
+ E_\nu h(L)\le\tfrac9{10}Eh(X)+\tfrac1{10}Eh(2X)=Eh(Z),
+\]
+
+where Z=XY, with Y independent of the comparison variable X and P(Y=1)=9/10, P(Y=2)=1/10. The actual old test blocks need not be independent. The eleven mixed original labels have ν-union mass at most (EX−1)/10=37/172. Thus the actual survivor event E has probability s≥ρ=135/172. Conditioning once on E gives one supported law μ₁₁ for all layouts; its old marginal may change.
+
+For every increasing convex h, using a=h(2) gives
+
+\[
+ E_{\mu_{11}}h(L)
+ \le a+\rho^{-1}E_\nu(h(L)-a)_+
+ \le a+\rho^{-1}E(h(Z)-a)_+.
+\]
+
+Retain the upper ρ mass of Z and normalize. Exactly 581/7740 is removed at value1 and 271/1935 at value2; part of value2 remains. The resulting probability law Y₁₁ has the following atoms:
+
+| Value | Probability |
+|---:|---:|
+| 2 | 18104/54675 |
+| 3 | 12556/78975 |
+| 4 | 203878/710775 |
+| 5 | 172/21645 |
+| 6 | 252754/2022975 |
+| 8 | 1491197/26298675 |
+| 10 | 172/194805 |
+| 12 | 989/36075 |
+| 16 | 86/24975 |
+| 24 | 43/24975 |
+
+All removed values are at most2 and all retained values are at least2, so the last bound equals E h(Y₁₁). This proves a common increasing-convex comparison for every family with distinct nonunit moduli dividing3465. Missing original labels can be added before the construction; the supported resulting law still avoids the original family. In particular,
+
+\[
+ E_{\mu_{11}}L\le\frac{4816}{1215},\qquad
+ E_{\mu_{11}}L^2\le\frac{1746200}{80919}.
+\]
+
+For t≥2, the complete comparator profile is
+
+\[
+ E(Y_{11}-t)_+
+ =\frac{9E(X-t)_++2E(X-t/2)_+}{10-(271/86-1)}.
+\]
+
+Below2 it is E(Y₁₁−2)₊+2−t; above24 it vanishes. The separate old actual moment also gives 1+((13/10)(1091/82)−1)/ρ=602284/27675, which is larger than this comparator's second moment. Both concern the same μ₁₁; the smaller bound above is used. The verifier reconstructs the exact quantile, all ten atoms and all25 integer hinge values, and independently recovers the same law by cancelling the negative value1 atom in the signed unit-loss expression. This is an ordinary proof with exact arithmetic, not a Lean theorem or a successful universal tail continuation.
+
 ## Remaining mass vectors do not determine the next original label
 
 On the same 74-point head, 36 points satisfy x≡1 mod3. Add (11,0) and either (33,1) or (33,13). In the first case the mixed class forbids 11-digit 1 over this root; in the second it forbids digit 2. Every individual old point has the same surviving fraction in both systems: 9/11 over root 1 and 10/11 elsewhere. Both have 704 survivors modulo 3465, raw surviving mass 32/37, and the same normalized old marginal.
@@ -407,3 +503,140 @@ The exact prefix data have a finite representation. For each old point x, retain
 For any old law μ and positive Z=Σ_xμ(x)V_{0,0}(x), the normalized query mass for Q=(d,a,e,b) is Z⁻¹Σ_{x≡a mod d}μ(x)V_{e,b}(x). Two compatible prefix queries intersect in the deeper prefix; incompatible queries have zero intersection. Expanding a weighted labelled load and its square therefore retains every actual head-cylinder intersection until after the cross terms are formed. The disjoint-prefix counting and finite-law conditioning reuse the existing residual-law geometry and probability interfaces; no new general clipping theorem is asserted.
 
 The repository's AP1–AP7 and W1–W5 comparisons and its scalar-fibre boundary, together with BBMST arXiv:1811.03547 §§2–3, arXiv:1901.11465 §5.3 and Hough arXiv:1307.0874 §3, supply the surrounding conditional-sieving framework. The residual operator specifies the additional labelled state exhibited by these counterexamples. It has not yet supplied a universal bound closing the tail from 11.
+
+## Survivor-weighted full convex comparison
+
+Let p be prime, p∤Q, and H≥1. Let ρ be a finite nonnegative measure on Z/QZ, and let R_x be a nonnegative row measure on Z/pᴴZ with total mass r(x)∈[0,1]. Suppose every depth-e prefix has R_x-mass at most a_e(x), where a₁≥⋯≥a_H≥0. Put
+
+\[
+ \beta_0=r,\quad\beta_e=\min(r,a_e)\ (1\le e\le H),\quad
+ \beta_{H+1}=0,\qquad w_k=\beta_k-\beta_{k+1}.
+\]
+
+For any complete enlarged layout write A_e for its complete old head layout at p-exponent e. All original pairs (old divisor,e) remain separate labels. Then every increasing convex h satisfies
+
+\[
+ \int h(L(x,y))\,dR_x(y)
+ \le\sum_{k=0}^H w_k(x)h\!\left(\sum_{e=0}^kA_e(x)\right). \tag{C1}
+\]
+
+Here is a detailed verification of the comparison step. At fixed x retain only active positive-depth labels, each contributing a Bernoulli indicator, and order them by decreasing cap β_e(x). If their count is m and their indicators are I₁,…,I_m, then for every integer j≥0,
+
+\[
+ (\sum_iI_i-j)_+\le\sum_{i>j}I_i.
+\]
+
+Therefore the hinge integral is bounded by Σ_{i>j}β_i, which is exactly the hinge integral of nested indicators of those cap masses on an interval of total mass r. Every increasing convex function on the finitely many possible integer load values is a constant plus a nonnegative linear combination of the identity and these integer hinges. The constant is integrated against the same total mass r on both sides. The active labels of each depth have the same cap; grouping the nested comparison by depth gives (C1). This proves the inequality without any actual nestedness or identification of projected labels.
+
+Jensen gives h(Σ_{e≤k}A_e)≤(k+1)⁻¹Σ_{e≤k}h((k+1)A_e). Extend Θ and Γ homogeneously to finite positive measures by maximizing, respectively, their hinge and square integrals over complete old layouts. Integrating (C1), then taking the maximum over enlarged layouts, yields
+
+\[
+ \Theta_{\rho R}(t)
+ \le\sum_{k=0}^H(k+1)\Theta_{w_k\rho}(t/(k+1)), \tag{C2}
+\]
+\[
+ \Gamma_{Qp^H}(\rho R)
+ \le\sum_{k=0}^H(k+1)^2\Gamma_Q(w_k\rho). \tag{C3}
+\]
+
+These use the same physical finite measure. Empty rows contribute zero. No product structure of ρ, constant r, or preserved normalized prefix cap is assumed.
+
+For a normalized distortion kernel relative to the actual pure-p survivor probability U_p, let B_x be the actual mixed union, α=U_p(B_x), and 0≤δ(x)<1. With θ=min(α,δ), its restriction to the good points is exactly
+
+\[
+ R_x(dy)=\frac{1_{B_x^c}(y)}{1-\theta(x)}U_p(dy),\qquad
+ r(x)=1-\frac{(\alpha(x)-\delta(x))_+}{1-\delta(x)}.
+\]
+
+Its actual unnormalized prefix maxima may be used as a_e. Those maxima decrease with depth. Row-dependent thresholds are valid here because x is the entire previous history.
+
+At a subsequent odd prime q, coprime to Qp, use one fixed threshold 0≤δ_q<1 and the actual pure-q base. Complete separately for each original q-exponent, with weights (q−1)q⁻ᶠ. Pure q classes are already absent, so completion subtracts exactly **one** unit cofactor. Jensen and the pure-q cylinder cap give the unnormalized assigned charge
+
+\[
+ b_q\le\frac{\Theta_{\rho R}(1+(q-2)\delta_q)}{(q-2)(1-\delta_q)}. \tag{C4}
+\]
+
+Combining with (C2) is valid. If the total surviving mass is s>0, normalized charges and moments divide by s. The comparison does not supply a fixed-dimensional closed recurrence.
+
+### Relation to the existing square transfer
+
+The dossier's W1 and `PrimeRectangleTransfer.prefix_weighted_rectangle_second_moment_le` already give, after normalizing each nonempty row and using old measure rρ,
+
+\[
+ \Gamma_{Qp^H}(\rho R)
+ \le\Gamma_Q(r\rho)+\sum_{e=1}^H(2e+1)\Gamma_Q(\beta_e\rho). \tag{C5}
+\]
+
+For empty rows choose any normalized kernel; its old mass is zero. Since Γ is subadditive on positive measures, r=Σ_kw_k and β_e=Σ_{k≥e}w_k imply
+
+\[
+ \Gamma_Q(r\rho)+\sum_{e=1}^H(2e+1)\Gamma_Q(\beta_e\rho)
+ \le\sum_k(k+1)^2\Gamma_Q(w_k\rho).
+\]
+
+Thus (C3) is **not** a stronger second-moment result than W1. The useful extension is the full convex/hinge formula (C2), together with its row-mass dependence and the following sharp obstruction. Existing full-label rearrangement is also present in `ConditionalComparison/CappedGainRearrangement.lean` (`finite_run_rearrangement`, `depth_rearrangement`) and the finite Abel formulas in `Runs.lean`; no claim of a new underlying rearrangement theorem is made.
+
+## Sharp geometric cap envelope
+
+Fix a row and suppose a_e=c p⁻ᵉ. Feasibility requires r≤c (sum the leaf caps), in addition to 0≤r≤1; the usual c≥1 implies this. For head layers all having common value z≥0 at the selected point, the exact cap-only upper envelope is
+
+\[
+ C_r(h;z)=r h(z)+\sum_{e=1}^H\min(r,a_e)
+                    [h(z(e+1))-h(ze)]. \tag{C6}
+\]
+
+To attain it, give a distinguished nested prefix chain masses β_e=min(r,a_e). At each branch distribute the excess β_e−β_{e+1} among the other p−1 children, and distribute each such off-chain mass uniformly below that child. The required capacity condition follows from β_e≤p a_{e+1}; the root uses r≤p a₁=c. Every deeper cap holds. Select all test p-prefixes along the chain, so (C1) is an equality and summation by parts gives (C6).
+
+For feasible r₀≥r≥a₁, the entire reduction is (r₀−r)h(z). Hence every hinge with threshold T≥z is unchanged. For the square cost,
+
+\[
+ C_r(u^2;z)=z^2[r+\sum_{e=1}^H(2e+1)\min(r,a_e)].
+\]
+
+On a_{j+1}<r<a_j the derivative of the bracket is (j+1)²; above a₁ it is only1. Actual geometry may reduce a_e independently, but residual row-mass loss alone need not do so.
+
+## The actual 45-class family
+
+The exact checker constructs all45 original `(modulus,residue)` pairs and independently evaluates the physical chain.
+
+1. For every nonunit d|315, forbid0 mod d. The survivors are the144 units modulo315, carrying the uniform head law μ.
+2. Forbid0 mod11. For d in the ordered list (3,5,7,15,21,35,105,9,45), assign distinct11 digits1,…,9 and head residue1 mod d. Use δ₁₁=2/5.
+3. Forbid0 mod31. Let w=1891 mod3465, so w=1 mod315 and w=10 mod11. For the23 nonunit divisors d|3465 in increasing order assign31 digits1,…,23, and old residue w mod d. Use δ₃₁=2/5.
+
+All45 moduli are distinct, nontrivial and odd; their lcm is107415. The largest modulus has five distinct prime factors. No three-factor hypothesis is used.
+
+Let ℓ(x)=Σ_{d|315}1_{x=1 mod d}. Its only values exceeding6 occur at x=1,106,211, where they are12,8,8. The nine active11 labels have count n(x); its complete histogram is
+
+| n | 0 | 1 | 2 | 3 | 4 | 5 | 7 | 9 |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| count |45|54|15|19|3|5|2|1|
+
+The pure11 law is uniform on ten digits. Thus α₁₁=n/10 and the exact conditional assigned charge is (n−4)₊/6. Averaging gives Pr(B₁₁)=1/54. At x=1,106,211, n=9,7,7, so the good-row masses are1/6,1/2,1/2. Digit10 is always good and has mass1/6 in every one of these rows, both before and after killing.
+
+The coherent old load for the next prime is L(x,y)=ℓ(x)(1+1_{y=10}). Because all31 colours differ, the actual number of active mixed31 colours is L−1. There is one missing unit. The pure31 law has30 digits, so the exact conditional charge is (L−13)₊/18. It is positive only at y=10 above the three specified head points. Therefore
+
+\[
+ \Pr(B_{31})
+ =\frac1{144}\frac16\left(\frac{11}{18}+\frac3{18}+\frac3{18}\right)
+ =\frac{17}{15552}.
+\]
+
+Every B₁₁ point has y≠10, where the next charge is zero. Hence
+
+\[
+ \Pr(B_{11}\cap B_{31})=0,
+ \qquad (\mu K_{11}|_{B_{11}^c})K_{31}(B_{31})=\frac{17}{15552}.
+\]
+
+Every head point carrying positive later charge was positively depleted at11, but the later unnormalized charge did not decrease. Normalizing the good restriction multiplies by54/53, giving
+
+\[
+ \frac{54}{53}\frac{17}{15552}=\frac{17}{15264}.
+\]
+
+This is a strict increase. The normalization is ν=(54/53)ρ for ρ=μK₁₁ restricted to B₁₁ᶜ.
+
+At every finite11 height H, adding the pure classes0 mod11ᵉ for2≤e≤H changes no pure survivor root. Above x=1 the free root10 and every prefix inside it have mass1/[6·11ᵉ⁻¹], before and after killing. These are also the maximum actual depth-e prefix masses. The total row mass falls from1 to1/6. A complete test coherent with x=1 and that free11 root has load12 on every deleted point, so **all real hinge thresholds at least12** have unchanged unnormalized integrals. This proves the all-height statement. The checker additionally reconstructs all prefix maxima and every hinge segment endpoint for heights1,2,3.
+
+
+The existing verifier and fixed certificate reconstruct all45 actual classes, their CRT unions, normalized kernels, total chain mass and all stated charge quantities using exact rational arithmetic. They also check the finite prefix instances at heights1 through3; the preceding argument supplies the all-height result. The comparison and obstruction are ordinary proofs, not end-to-end Lean verification or a new noncoverage cutoff.

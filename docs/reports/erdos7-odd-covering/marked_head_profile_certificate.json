@@ -775,7 +775,7 @@
     "mean": "271/86",
     "comparison_second_moment": "45292361/3350646",
     "actual_second_moment_upper": "1091/82",
-    "sharpness": "Upper bounds only; zero cap slack does not establish actual-family sharpness."
+    "sharpness": "Zero cap slack alone does not establish actual-family sharpness; the mean and first hinge are separately witnessed."
   },
   "prime11_residual_geometry": {
     "schema": "prime11-residual-geometry-v1",
@@ -1047,5 +1047,463 @@
       }
     ],
     "conclusion": "Head-indexed residual masses do not determine the next labelled cofactor probability."
+  },
+  "conditioned_3465_comparison": {
+    "law": "uniform315 times ten pure11 survivors, conditioned on the actual mixed11 survivor event",
+    "head_modulus": 3465,
+    "prime_heights": [
+      [
+        3,
+        2
+      ],
+      [
+        5,
+        1
+      ],
+      [
+        7,
+        1
+      ],
+      [
+        11,
+        1
+      ]
+    ],
+    "first_tail_prime": 13,
+    "mixed11_deleted_mass_upper": "37/172",
+    "survival_lower": "135/172",
+    "removed_product_mass": {
+      "1": "581/7740",
+      "2": "271/1935"
+    },
+    "auxiliary_atoms": {
+      "2": "18104/54675",
+      "3": "12556/78975",
+      "4": "203878/710775",
+      "5": "172/21645",
+      "6": "252754/2022975",
+      "8": "1491197/26298675",
+      "10": "172/194805",
+      "12": "989/36075",
+      "16": "86/24975",
+      "24": "43/24975"
+    },
+    "hinges_at_0_through_24": [
+      "4816/1215",
+      "3601/1215",
+      "2386/1215",
+      "70799/54675",
+      "557968/710775",
+      "399427/710775",
+      "701674/2022975",
+      "6750527/26298675",
+      "162196/974025",
+      "129602/974025",
+      "32336/324675",
+      "21758/324675",
+      "172/4995",
+      "731/24975",
+      "602/24975",
+      "473/24975",
+      "344/24975",
+      "301/24975",
+      "86/8325",
+      "43/4995",
+      "172/24975",
+      "43/8325",
+      "86/24975",
+      "43/24975",
+      "0"
+    ],
+    "mean": "4816/1215",
+    "separate_actual_second_moment_upper": "602284/27675",
+    "comparison_second_moment": "1746200/80919",
+    "actual_second_moment_upper": "1746200/80919"
+  },
+  "uniform315_mean_sharpness": {
+    "original_classes": [
+      [
+        3,
+        0
+      ],
+      [
+        9,
+        4
+      ],
+      [
+        5,
+        0
+      ],
+      [
+        15,
+        1
+      ],
+      [
+        45,
+        37
+      ],
+      [
+        7,
+        0
+      ],
+      [
+        21,
+        1
+      ],
+      [
+        35,
+        9
+      ],
+      [
+        63,
+        52
+      ],
+      [
+        105,
+        4
+      ],
+      [
+        315,
+        187
+      ]
+    ],
+    "test_classes": [
+      [
+        1,
+        0
+      ],
+      [
+        3,
+        2
+      ],
+      [
+        5,
+        3
+      ],
+      [
+        9,
+        2
+      ],
+      [
+        15,
+        2
+      ],
+      [
+        45,
+        2
+      ],
+      [
+        7,
+        6
+      ],
+      [
+        21,
+        20
+      ],
+      [
+        35,
+        13
+      ],
+      [
+        63,
+        20
+      ],
+      [
+        105,
+        62
+      ],
+      [
+        315,
+        272
+      ]
+    ],
+    "survivor_count": 86,
+    "test_load_histogram": {
+      "1": 5,
+      "2": 28,
+      "3": 29,
+      "4": 11,
+      "5": 5,
+      "6": 6,
+      "8": 1,
+      "10": 1
+    },
+    "test_load_sum": 271,
+    "mean": "271/86",
+    "hinge_at1": "185/86",
+    "scope": "sharp for the uniform law on complete canonical-pruned315 survivors; no minimax claim"
+  },
+  "residual_prefix_depletion_obstruction": {
+    "head_modulus": 315,
+    "head_survivors": 144,
+    "lcm": 107415,
+    "original_classes": [
+      [
+        3,
+        0
+      ],
+      [
+        5,
+        0
+      ],
+      [
+        7,
+        0
+      ],
+      [
+        9,
+        0
+      ],
+      [
+        15,
+        0
+      ],
+      [
+        21,
+        0
+      ],
+      [
+        35,
+        0
+      ],
+      [
+        45,
+        0
+      ],
+      [
+        63,
+        0
+      ],
+      [
+        105,
+        0
+      ],
+      [
+        315,
+        0
+      ],
+      [
+        11,
+        0
+      ],
+      [
+        33,
+        1
+      ],
+      [
+        55,
+        46
+      ],
+      [
+        77,
+        36
+      ],
+      [
+        165,
+        136
+      ],
+      [
+        231,
+        148
+      ],
+      [
+        385,
+        281
+      ],
+      [
+        1155,
+        106
+      ],
+      [
+        99,
+        19
+      ],
+      [
+        495,
+        361
+      ],
+      [
+        31,
+        0
+      ],
+      [
+        93,
+        1
+      ],
+      [
+        155,
+        126
+      ],
+      [
+        217,
+        127
+      ],
+      [
+        279,
+        190
+      ],
+      [
+        341,
+        98
+      ],
+      [
+        465,
+        316
+      ],
+      [
+        651,
+        379
+      ],
+      [
+        1023,
+        1000
+      ],
+      [
+        1085,
+        71
+      ],
+      [
+        1395,
+        1126
+      ],
+      [
+        1705,
+        1561
+      ],
+      [
+        1953,
+        694
+      ],
+      [
+        2387,
+        2276
+      ],
+      [
+        3069,
+        1099
+      ],
+      [
+        3255,
+        2836
+      ],
+      [
+        5115,
+        4201
+      ],
+      [
+        7161,
+        1660
+      ],
+      [
+        9765,
+        6931
+      ],
+      [
+        11935,
+        6126
+      ],
+      [
+        15345,
+        7336
+      ],
+      [
+        21483,
+        12979
+      ],
+      [
+        35805,
+        31921
+      ],
+      [
+        107415,
+        36541
+      ]
+    ],
+    "original_modulus_count": 45,
+    "cofactor11_order": [
+      3,
+      5,
+      7,
+      15,
+      21,
+      35,
+      105,
+      9,
+      45
+    ],
+    "coherent_old_centre_mod3465": 1891,
+    "thresholds": {
+      "11": "2/5",
+      "31": "2/5"
+    },
+    "active11_label_histogram": {
+      "0": 45,
+      "1": 54,
+      "2": 15,
+      "3": 19,
+      "4": 3,
+      "5": 5,
+      "7": 2,
+      "9": 1
+    },
+    "later_charge_head_rows": [
+      {
+        "head": 1,
+        "coherent_load": 12,
+        "active11_labels": 9,
+        "surviving_row_mass": "1/6",
+        "free11_digit10_mass": "1/6"
+      },
+      {
+        "head": 106,
+        "coherent_load": 8,
+        "active11_labels": 7,
+        "surviving_row_mass": "1/2",
+        "free11_digit10_mass": "1/6"
+      },
+      {
+        "head": 211,
+        "coherent_load": 8,
+        "active11_labels": 7,
+        "surviving_row_mass": "1/2",
+        "free11_digit10_mass": "1/6"
+      }
+    ],
+    "first_charge": "1/54",
+    "later_charge_before_killing": "17/15552",
+    "charge_event_intersection": "0",
+    "later_charge_after_killing_raw": "17/15552",
+    "remaining_mass_after11": "53/54",
+    "later_charge_after_conditioning11": "17/15264",
+    "all_later_charge_head_points_previously_depleted": true,
+    "height_prefix_checks": [
+      {
+        "height": 1,
+        "row_mass_before": "1",
+        "row_mass_after": "1/6",
+        "equal_positive_depth_prefix_caps": [
+          "1/6"
+        ]
+      },
+      {
+        "height": 2,
+        "row_mass_before": "1",
+        "row_mass_after": "1/6",
+        "equal_positive_depth_prefix_caps": [
+          "1/6",
+          "1/66"
+        ]
+      },
+      {
+        "height": 3,
+        "row_mass_before": "1",
+        "row_mass_after": "1/6",
+        "equal_positive_depth_prefix_caps": [
+          "1/6",
+          "1/66",
+          "1/726"
+        ]
+      }
+    ]
   }
 }

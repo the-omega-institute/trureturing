@@ -365,7 +365,7 @@ def deletion_weighted_comparison(old_cases, integer_theta):
         'auxiliary_atoms': {str(w): str(p) for w, p in atoms.items()},
         'mean': str(mean), 'comparison_second_moment': str(second),
         'actual_second_moment_upper': str(actual_second),
-        'sharpness': 'Upper bounds only; zero cap slack does not establish actual-family sharpness.',
+        'sharpness': 'Zero cap slack alone does not establish actual-family sharpness; the mean and first hinge are separately witnessed.',
     }
 
 
@@ -469,6 +469,266 @@ def residual_mass_next_label_obstruction():
     }
 
 
+def conditioned_3465_comparison(old_deletion_result):
+    """Exact upper-quantile transfer of the already checked uniform315 law."""
+    old = {Fraction(x): Fraction(p)
+           for x, p in old_deletion_result['auxiliary_atoms'].items()}
+    require(min(old) >= 1 and min(old.values()) > 0 and sum(old.values()) == 1,
+            'old deletion comparison is a probability law supported above one')
+    mean = sum(x*p for x, p in old.items())
+    actual_second = Fraction(old_deletion_result['actual_second_moment_upper'])
+    require(mean == Fraction(old_deletion_result['mean']) == Fraction(271, 86),
+            'same uniform315 mean bound supplies the mixed11 deletion capacity')
+    require(actual_second == Fraction(1091, 82),
+            'same uniform315 actual second-moment bound')
+    capacity = mean - 1
+    survival = 1 - capacity/10
+    product_law = {}
+    for x, p in old.items():
+        for y, weight in ((1, Fraction(9, 10)), (2, Fraction(1, 10))):
+            product_law[x*y] = product_law.get(x*y, Fraction(0)) + p*weight
+    require(sum(product_law.values()) == 1,
+            'unconditioned colour concentration comparator has total mass one')
+    remainder = 1-survival
+    atoms = {}
+    removed = {}
+    for x, p in sorted(product_law.items()):
+        cut = min(p, remainder)
+        remainder -= cut
+        if cut:
+            removed[x] = cut
+        if p > cut:
+            atoms[x] = (p-cut)/survival
+    require(remainder == 0 and min(atoms.values()) > 0 and sum(atoms.values()) == 1,
+            'exact upper survival-quantile is a positive probability law')
+    require(set(removed) == {Fraction(1), Fraction(2)} and min(atoms) == 2,
+            'conditioning trims all atom one and part of atom two')
+
+    def call(law, t):
+        return sum(p*max(x-t, 0) for x, p in law.items())
+
+    # Independently obtain the same law by repairing the signed unit-loss law.
+    signed = {x: p/survival for x, p in product_law.items()}
+    signed[Fraction(1)] -= (1-survival)/survival
+    require(signed[Fraction(1)] < 0,
+            'signed unit-loss comparator has a deficit at one')
+    signed[Fraction(2)] += signed.pop(Fraction(1))
+    require(signed == atoms,
+            'unit-loss deficit transfer equals exact upper-quantile conditioning')
+
+    hinges = [call(atoms, Fraction(t)) for t in range(25)]
+    for t in range(2, 25):
+        require(hinges[t] == (9*call(old, Fraction(t))
+                              + 2*call(old, Fraction(t, 2)))/(10-capacity),
+                'new call profile equals the scaled product call for t at least two')
+    require(hinges[:3] == [hinges[2]+2, hinges[2]+1, hinges[2]],
+            'new call profile has slope minus one below two')
+    require(all(a >= b >= 0 for a, b in zip(hinges, hinges[1:]))
+            and all(a-2*b+c >= 0 for a, b, c in zip(hinges, hinges[1:], hinges[2:]))
+            and hinges[-1] == 0,
+            'integer hinge profile is decreasing convex and ends at zero')
+    new_mean = sum(x*p for x, p in atoms.items())
+    comparator_second = sum(x*x*p for x, p in atoms.items())
+    separate_second = 1+(Fraction(13, 10)*actual_second-1)/survival
+    chosen_second = min(comparator_second, separate_second)
+    require((survival, new_mean, separate_second, comparator_second, chosen_second) == (
+        Fraction(135, 172), Fraction(4816, 1215), Fraction(602284, 27675),
+        Fraction(1746200, 80919), Fraction(1746200, 80919)),
+        'exact conditioned3465 survival and simultaneous moment bounds')
+    return {
+        'law': 'uniform315 times ten pure11 survivors, conditioned on the actual mixed11 survivor event',
+        'head_modulus': 3465,
+        'prime_heights': [[3, 2], [5, 1], [7, 1], [11, 1]],
+        'first_tail_prime': 13,
+        'mixed11_deleted_mass_upper': str(1-survival),
+        'survival_lower': str(survival),
+        'removed_product_mass': {str(x): str(p) for x, p in removed.items()},
+        'auxiliary_atoms': {str(x): str(p) for x, p in atoms.items()},
+        'hinges_at_0_through_24': list(map(str, hinges)),
+        'mean': str(new_mean),
+        'separate_actual_second_moment_upper': str(separate_second),
+        'comparison_second_moment': str(comparator_second),
+        'actual_second_moment_upper': str(chosen_second),
+    }
+
+
+def uniform315_mean_sharpness():
+    """Literal actual-family witness for the sharp uniform315 mean and first hinge."""
+    original = ((3, 0), (9, 4), (5, 0), (15, 1), (45, 37), (7, 0),
+                (21, 1), (35, 9), (63, 52), (105, 4), (315, 187))
+    test = ((1, 0), (3, 2), (5, 3), (9, 2), (15, 2), (45, 2),
+            (7, 6), (21, 20), (35, 13), (63, 20), (105, 62), (315, 272))
+    divisors = [d for d in range(1, 316) if 315 % d == 0]
+    require(sorted(d for d, _ in original) == divisors[1:],
+            'mean witness has every nonunit original divisor exactly once')
+    require(sorted(d for d, _ in test) == divisors,
+            'mean witness has a complete test layout including the unit divisor')
+    require(all(0 <= a < d for d, a in original+test),
+            'mean witness residues are canonical')
+    old = [x for x in range(45) if all(x % d != a for d, a in original[:5])]
+    require(len(old) == 17, 'mean witness uses the first canonical old shape')
+    survivors = [x for x in range(315) if all(x % d != a for d, a in original)]
+    loads = [sum(x % d == a for d, a in test) for x in survivors]
+    histogram = dict(sorted(Counter(loads).items()))
+    require(len(survivors) == 86 and sum(loads) == 271,
+            'literal mean witness has86 survivors and total load271')
+    require(histogram == {1: 5, 2: 28, 3: 29, 4: 11, 5: 5, 6: 6, 8: 1, 10: 1},
+            'exact mean-witness test-load histogram')
+    mean = Fraction(sum(loads), len(survivors))
+    first_hinge = Fraction(sum(max(load-1, 0) for load in loads), len(survivors))
+    require(mean == Fraction(271, 86) and first_hinge == Fraction(185, 86),
+            'actual uniform survivor law attains both certified low hinge bounds')
+    return {
+        'original_classes': [list(pair) for pair in original],
+        'test_classes': [list(pair) for pair in test],
+        'survivor_count': len(survivors),
+        'test_load_histogram': {str(k): v for k, v in histogram.items()},
+        'test_load_sum': sum(loads),
+        'mean': str(mean),
+        'hinge_at1': str(first_hinge),
+        'scope': 'sharp for the uniform law on complete canonical-pruned315 survivors; no minimax claim',
+    }
+
+
+def residual_prefix_depletion_obstruction():
+    from math import gcd, lcm
+    from collections import Counter
+    from fractions import Fraction
+
+    def require(condition, message):
+        if not condition:
+            raise ValueError(message)
+
+    def crt_pair(a, d, b, p):
+        return a % d + d * ((b - a) * pow(d, -1, p) % p)
+
+    def kernel(base, forbidden, delta):
+        alpha = Fraction(len(forbidden), len(base))
+        theta = min(alpha, delta)
+        row = {y: ((alpha-delta)/(len(base)*alpha*(1-delta)) if alpha > delta else Fraction(0))
+               if y in forbidden else Fraction(1, len(base))/(1-theta) for y in base}
+        require(sum(row.values()) == 1 and min(row.values()) >= 0,
+                'normalized distortion kernel reconstructed from actual union')
+        return row
+
+    div315 = [d for d in range(1, 316) if 315 % d == 0]
+    div3465 = [d for d in range(1, 3466) if 3465 % d == 0]
+    head = [(d, 0) for d in div315 if d > 1]
+    old = [x for x in range(315) if all(x % d != a for d, a in head)]
+    require(old == [x for x in range(315) if gcd(x, 315) == 1] and len(old) == 144,
+            'actual head survivors are exactly the144 units')
+    cofactors11 = (3, 5, 7, 15, 21, 35, 105, 9, 45)
+    mixed11 = [(11*d, crt_pair(1, d, colour, 11)) for colour, d in enumerate(cofactors11, 1)]
+    centre = crt_pair(1, 315, 10, 11)
+    mixed31 = [(31*d, crt_pair(centre % d, d, colour, 31))
+               for colour, d in enumerate(div3465[1:], 1)]
+    original = head + [(11, 0)] + mixed11 + [(31, 0)] + mixed31
+    require(len(original) == len({d for d, _ in original}) == 45,
+            'exactly45 distinct original moduli')
+    require(all(d > 1 and d % 2 and 0 <= a < d for d, a in original),
+            'every original class has a valid distinct nontrivial odd modulus')
+    require(lcm(*(d for d, _ in original)) == 107415, 'actual full least common multiple')
+    delta = Fraction(2, 5)
+    total = loss11 = loss31 = overlap = retained31 = Fraction(0)
+    head_high = []
+    n_counts = Counter()
+    positive_charge_head = set()
+    positive11_head = set()
+    rows11 = {}
+    for x in old:
+        lifts = {y: crt_pair(x, 315, y, 11) for y in range(1, 11)}
+        bad11 = {y for y, v in lifts.items() if any(v % d == a for d, a in mixed11)}
+        n = len(bad11)
+        require(n == sum(x % d == 1 for d in cofactors11), 'actual11 colours equal original cofactor hits')
+        A, B, C, D = (int(x % d == 1) for d in (3, 9, 5, 7))
+        require(n == (1+C)*((1+A)*(1+D)+B)-1, 'symbolic nine-label head count')
+        n_counts[n] += 1
+        k11 = kernel(tuple(range(1, 11)), bad11, delta)
+        rows11[x] = (bad11, k11)
+        charge11 = sum(k11[y] for y in bad11)
+        require(charge11 == Fraction(max(n-4, 0), 6), 'exact conditional11 charge')
+        if charge11 > 0:
+            positive11_head.add(x)
+        ell = sum(x % d == 1 % d for d in div315)
+        if ell > 6:
+            head_high.append({'head': x, 'coherent_load': ell, 'active11_labels': n,
+                              'surviving_row_mass': str(1-charge11),
+                              'free11_digit10_mass': str(k11[10])})
+        for y, old_v in lifts.items():
+            bad31 = {z for z in range(1, 31)
+                     if any(crt_pair(old_v, 3465, z, 31) % d == a for d, a in mixed31)}
+            literal_load = sum(old_v % d == centre % d for d in div3465)
+            require(literal_load == ell*(1+int(y == 10)) and len(bad31) == literal_load-1,
+                    'literal original31 labels have exactly one missing unit')
+            k31 = kernel(tuple(range(1, 31)), bad31, delta)
+            charge31 = sum(k31[z] for z in bad31)
+            require(charge31 == Fraction(max(literal_load-13, 0), 18), 'exact conditional31 charge')
+            if charge31 > 0:
+                positive_charge_head.add(x)
+            for z, conditional in k31.items():
+                mass = Fraction(1, 144)*k11[y]*conditional
+                total += mass
+                if y in bad11:
+                    loss11 += mass
+                if z in bad31:
+                    loss31 += mass
+                    if y in bad11:
+                        overlap += mass
+                    else:
+                        retained31 += mass
+    require(total == 1, 'entire normalized physical chain has massone')
+    require((loss11, loss31, overlap, retained31) == (
+        Fraction(1, 54), Fraction(17, 15552), Fraction(0), Fraction(17, 15552)),
+        'exact first charge, later charge, intersection, and survivor-weighted later charge')
+    require(positive_charge_head == {1, 106, 211} and positive_charge_head <= positive11_head,
+            'every head carrying later charge was positively depleted')
+    require({n: count for n, count in n_counts.items() if n > 4} == {5: 5, 7: 2, 9: 1},
+            'complete head multiplicities above the first charge threshold')
+    conditioned = retained31/(1-loss11)
+    require(conditioned == Fraction(17, 15264) > loss31, 'normalization increases the later charge')
+
+    # The all-height proof is in the accompanying note. These checks independently
+    # reconstruct every prefix mass and every hinge segment for heights1..3.
+    height_checks = []
+    bad11, k11 = rows11[1]
+    for height in range(1, 4):
+        row = {y: k11[y % 11]/11**(height-1) for y in range(11**height) if y % 11 != 0}
+        good = {y: v for y, v in row.items() if y % 11 not in bad11}
+        prefix_caps = []
+        for e in range(1, height+1):
+            before = [sum((v for y, v in row.items() if y % (11**e) == a), Fraction(0))
+                      for a in range(11**e)]
+            after = [sum((v for y, v in good.items() if y % (11**e) == a), Fraction(0))
+                     for a in range(11**e)]
+            require(max(before) == max(after) == Fraction(1, 6*11**(e-1)),
+                    'all positive-depth actual unnormalized prefix maxima survive unchanged')
+            prefix_caps.append(str(max(after)))
+        for threshold in range(12, 12*(height+1)+1, 12):
+            def excess(y):
+                value = 12*(1+sum(y % (11**e) == 10 for e in range(1, height+1)))
+                return max(value-threshold, 0)
+            require(sum((v*excess(y) for y, v in row.items()), Fraction(0)) ==
+                    sum((v*excess(y) for y, v in good.items()), Fraction(0)),
+                    'all hinge knot values at threshold>=12 are unchanged by actual killing')
+        height_checks.append({'height': height, 'row_mass_before': str(sum(row.values())),
+                              'row_mass_after': str(sum(good.values())),
+                              'equal_positive_depth_prefix_caps': prefix_caps})
+    return {
+        'head_modulus': 315, 'head_survivors': 144, 'lcm': 107415,
+        'original_classes': [list(pair) for pair in original], 'original_modulus_count': len(original),
+        'cofactor11_order': list(cofactors11), 'coherent_old_centre_mod3465': centre,
+        'thresholds': {'11': str(delta), '31': str(delta)},
+        'active11_label_histogram': {str(n): count for n, count in sorted(n_counts.items())},
+        'later_charge_head_rows': head_high,
+        'first_charge': str(loss11), 'later_charge_before_killing': str(loss31),
+        'charge_event_intersection': str(overlap), 'later_charge_after_killing_raw': str(retained31),
+        'remaining_mass_after11': str(1-loss11),
+        'later_charge_after_conditioning11': str(conditioned),
+        'all_later_charge_head_points_previously_depleted': True,
+        'height_prefix_checks': height_checks,
+    }
+
+
 def verify(expected):
     cases = []
     old_cases = []
@@ -499,6 +759,7 @@ def verify(expected):
     for t in THRESHOLDS:
         require(sum(p * max(k - t, 0) for k, p in atoms.items()) == theta[t],
                 "auxiliary law has the entire universal hinge profile")
+    deletion_result = deletion_weighted_comparison(old_cases, theta)
     result = {
         "schema": "marked-head-profile-v1",
         "head_modulus": 315,
@@ -512,7 +773,10 @@ def verify(expected):
         "sharp_example": sharp_example(theta),
         "elementary_comparison": elementary_comparison(old_cases, theta),
         "fixed_marginal_obstruction": fixed_marginal_obstruction(),
-        "deletion_weighted_comparison": deletion_weighted_comparison(old_cases, theta),
+        "deletion_weighted_comparison": deletion_result,
+        "conditioned_3465_comparison": conditioned_3465_comparison(deletion_result),
+        "uniform315_mean_sharpness": uniform315_mean_sharpness(),
+        "residual_prefix_depletion_obstruction": residual_prefix_depletion_obstruction(),
         "prime11_residual_geometry": prime11_residual_geometry(),
         "residual_mass_next_label_obstruction": residual_mass_next_label_obstruction(),
     }

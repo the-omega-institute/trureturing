@@ -862,23 +862,37 @@ shortest forbidden ancestors and prefix nesting. Conditioning, individual
 prefix counts and positivity are reused from the licensed development.
 The actual ordinary-cover consumer is now formalized by
 [`ActualCylinderChain.ordinary_cover_forces_charge_and_caps`](../D5/S3/Arith/Congruence/ActualCylinderChain.lean).
-For any finite distinct odd covering system and arbitrary rational thresholds
-\(0\le\delta_j<1\), it builds the full-history physical chain and proves
-\(\mathrm{totalCharge}\ge1\). The licensed CRT and prime-factorization
-interfaces supply the actual cylinders and injective original depth labels.
-The new support induction proves that the final law avoids every pure
-forbidden prefix with probability one, including on an ambient space that
-contains zero-weight points. Ordinary coverage therefore forces a mixed
-cylinder to be hit, which the imported covered-event inequality charges.
-The same theorem derives `BaseCaps` from the explicit residual-cylinder
-inequalities \(\Pr(C_{c,j})\le(1-\delta_j)\,\mathrm{survival}_{R_j}(e_{c,j})\).
-It has no restriction on the number of prime factors per modulus.
-Its base is the product of pure-coordinate residual laws; integrating an
-optimized correlated composite-head law is a separate obligation.
-The source arithmetic declarations are reused under their original names;
-no numerical noncoverage endpoint is imported. Choosing comparison runs,
-completing cofactor labels and proving total charge below one remain
-obligations for an end-to-end noncoverage theorem.
+For any finite distinct odd covering system, choose a cut after the first
+\(b\) prime coordinates and any rational probability law \(\mu\) on their
+full prime-power words. The head coordinates may be correlated. Assume
+\(\mu\) gives probability one to avoiding every actual head-only cylinder.
+For arbitrary rational tail thresholds \(0\le\delta_i<1\), the theorem
+builds the actual full-history tail chain \(P_x\) at each fixed head point
+and proves
+\[
+ 1\le\mathbb E_\mu\bigl[\mathrm{totalCharge}(P_x)\bigr].
+\]
+The licensed CRT and prime-factorization interfaces supply the actual
+cylinders and injective original depth labels. All original labels are
+retained: different original moduli can have the same tail cofactor after
+their head parts are removed. The live support induction proves pure-tail
+prefix avoidance with probability one under the same joint law
+\(\mu\mathbin{\mathrm{joint}}(x\mapsto P_x.\mathrm{law})\), including
+zero-weight ambient points. Gluing the head to the tail diagonal words
+transports ordinary coverage to a charged mixed-cylinder hit.
+The same theorem derives `BaseCaps` for every \(P_x\) from the explicit
+residual-cylinder inequalities
+\(\Pr(C_{c,b+i})\le(1-\delta_i)\,\mathrm{survival}_{R_i}(e_{c,b+i})\).
+It has no restriction on the number of prime factors per modulus. The
+empty-head specialization recovers the pure-coordinate product-base result.
+
+The head input resolves the **full** prime-power heights of the original
+family. A finite315 law directly addresses a head dividing315; preserving
+its marginal when higher head powers are added requires an additional
+argument and is not assumed. Transporting a concrete arithmetic head law
+to the full word interface, completing cofactor labels and proving an
+average charge below one remain obligations for an end-to-end noncoverage
+theorem. No numerical noncoverage endpoint is imported.
 
 #### Sharp tail profiles of maximal cylinder caps
 

@@ -231,14 +231,32 @@ applications are excluded. No arithmetic conclusion is generalized.
 `ActualCylinderChain` directly consumes the retained ordinary-cover arithmetic
 and pure-prefix interfaces. Its ending-coordinate construction is adapted
 from `formal/Erdos7/ThreePrime/Model.lean` (`bad`, `build`) and the induction
-in `ModelSemantics.lean` (`covered_build_iff`); it accepts arbitrary admissible
+in `ModelSemantics.lean` (`covered_build_iff`). It accepts arbitrary admissible
 thresholds and has no `PrefixModel` or `sparse` field. These construction ideas
-are attributed to the source. The repository's additional live argument
-propagates probability-one pure-prefix avoidance through the actual full-word
-distortion laws, then transports ordinary coverage to the final covered event.
-Its per-cylinder base-cap expressions directly use `PurePrefixResidualLaw`.
-The unrestricted noncoverage conclusion still requires a charge budget below
-one; the source excerpt and interface theorem do not provide that budget.
+are attributed to the source.
+
+The repository interface permits an arbitrary rational law `mu` on the
+complete prime-power words of the first `b` coordinates. Correlations within
+this head are unrestricted. The required `headSafe` probability is one:
+every original cylinder supported entirely in the head, including a mixed
+cylinder, must fail `headMatch`. Tail stage `i` processes coordinate `b+i`,
+retaining every original label, its head match and all preceding tail
+requirements. Distinctness of the original moduli does not imply distinctness
+of their tail cofactors.
+
+The additional live argument propagates probability-one pure-prefix avoidance
+through the full-word tail distortion laws and glues the head and tail into
+an actual CRT point. Ordinary coverage forces the final covered event under
+`mu.joint` with those same tail kernels. The imported covered-event bound
+then gives `1 <= mu.expect (fun head => totalCharge head)`.
+Its per-cylinder base-cap expressions directly use `PurePrefixResidualLaw`
+and supply `BaseCaps` for every head when the residual-probability inequalities
+hold. A law specified only modulo 315 needs a distribution on the complete
+selected prime-power words satisfying `headSafe`; this theorem does not
+construct a lift preserving an arbitrary truncated marginal.
+The unrestricted noncoverage conclusion still requires an average charge
+budget below one; the source excerpt and interface theorem do not provide
+that budget.
 
 ## Source license
 
