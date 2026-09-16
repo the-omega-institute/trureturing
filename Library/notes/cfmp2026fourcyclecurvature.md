@@ -158,3 +158,66 @@ was blocked by unavailable external DNS and no suitable connected prover
 was found. No Lean/kernel or Scribe compilation is claimed. The intended
 content/utility classification remains subject to source-bound elaboration
 and independent review; no admission or frozen state was authored.
+
+## Global incidence, quantitative margins and face-signature obstruction
+
+`FourCycleCurvature.lean` builds an actual finite incidence map
+`T x Fin(6) -> E`, counts its fibres, and reads one global real vector through
+six vertex-induced frames. Its only mathematical hypotheses are the stated
+four-cycle colouring and actual low/high fibre cardinalities. The theorem
+`fourcycle_curvature_box` constructs delta from the total occurrence count,
+proves nonemptiness and strict cosine-domain inclusion, and gives one positive
+eta on every lower and upper curvature face. No angle bound, small-enough
+parameter, curvature sign, co-volume function or solution is supplied as an
+extra hypothesis. The paired Scribe states the same quantifiers and constants.
+
+The earlier six-variable envelope remains a candidate dependency. The new
+proof consumes pinned `Real.arccos_cos`, `Real.arccos_le_arccos`,
+`Real.arccos_lt_arccos`, square-root comparisons and finite sums. The actual
+pinned trigonometric inverse source was inspected. The universal estimate
+is distinguished from the finite frame and numerical diagnostics used while
+checking its implementation. The fixed eta is independent of incidence size;
+the explicitly chosen high-edge floor tends to one as that size grows, so no
+uniform Hessian lower bound across all these boxes is inferred.
+
+`FaceColourPropagation.lean` proves `balanced_signature_constant` on a
+face-paired incidence carrier, even without a finite tetrahedron type when
+finite-path connectedness holds. Each face gluing includes a permutation of
+its three edges and equality of the corresponding global labels. Equal
+opposite colours imply equal face counts inside each tetrahedron. Summing
+the actual label equalities and reindexing by that permutation gives equality
+across each gluing; finite-path induction gives global constancy. Neither
+neighbouring type equality nor the desired global invariant is a premise.
+The same-name Scribe records this independent combinatorial scope.
+
+This rules out a proposed direct mixture of all-high, one-low-opposite-pair,
+low-four-cycle and all-low tetrahedra in a connected complex made exclusively
+of those balanced types. It does not rule out the earlier matching theorem's
+allowed single noncritical low occurrence, which is unbalanced. A three-edge
+path has face signatures (2,1,1,2) and is a concrete local transition type;
+no geometric realization of arbitrary complexes using it is asserted.
+
+Ordinary theory Sections 21-24 include the corresponding proofs and a
+prescribed-cone-curvature extension. The latter minimizes the existing
+co-volume plus a linear term for sup-norm target curvature less than eta.
+It is not yet Lean-formalized. At nonzero curvature, the edge ends induce
+cone points on the truncated boundary as well; totally geodesic boundary
+is asserted only away from these endpoints. The perturbation corollary
+requires a pointwise uniform error bound and does not assert convergence.
+
+A bounded search found no pre-existing repository owner for these two exact
+statements. Classical ingredients are reused, and no first-discovery claim
+or independent admission classification is made. Public Lean Brouwer projects
+`math-xmum/Brouwer` and `harfe/fixed-point-theorems-lean4` were located; only
+README-level descriptions/toolchain context were reviewed in this increment.
+They were not imported, independently audited or compiled here, and no
+Brouwer axiom was introduced as a replacement for such work.
+
+Executed diagnostics validate six vertex frames, all 64 Boolean edge-colour
+patterns, 6144 paired-pattern/face-permutation cases, the original genuine
+six-tetrahedron packet, nine high-precision floor cases, 816 actual global
+boundary states, and 100 independent angle-relabel comparisons. The full
+unbounded proofs are separate from these finite checks. No Lean/lake or
+.NET executable was available, so neither candidate module nor either Scribe
+has an elaboration or compilation receipt. The initial envelope dependency
+is also uncompiled. No CI, freeze state or kernel-verification claim is added.
