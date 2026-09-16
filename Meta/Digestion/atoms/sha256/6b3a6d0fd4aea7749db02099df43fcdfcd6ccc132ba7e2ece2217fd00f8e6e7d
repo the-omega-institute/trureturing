@@ -1,0 +1,4 @@
+**Proof.** The equality $7^4-1=2400=5^2\cdot96$ gives $s_7=2$.
+Substitution into RP11 at modulus $5^3$ gives period two, and RP12 gives
+density $2/5^3=2/125$. Since $F_8=21$, one has $h_7=v_7(F_8)=1$.
+

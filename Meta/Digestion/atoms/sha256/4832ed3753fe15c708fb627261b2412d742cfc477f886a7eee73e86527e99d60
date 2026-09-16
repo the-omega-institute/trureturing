@@ -1,0 +1,16 @@
+### IP.1 Fixed field and the parity readout
+
+In the notation of Appendix U.1, let $K=\mathbb Q(\sqrt5)$ and
+$\phi=(1+\sqrt5)/2$, with conjugate $\psi=1-\phi$. Write
+$\chi(m)=(m/5)$. For primes $p\ne2,5$, quadratic reciprocity identifies
+$\chi(p)$ with $(5/p)$; its value is $-1$ precisely for inert primes.
+Let $r(p)$ be the least positive index with $p\mid F_{r(p)}$, and set
+
+$$
+h_p=v_p(F_{r(p)})=v_p(F_{p-\chi(p)}).
+$$
+
+The equality uses the classical rank bound $r(p)\mid p-\chi(p)$ and the
+Fibonacci valuation formula; the multiplying index is coprime to $p$.
+The standard WSS condition is $h_p\ge2$.
+

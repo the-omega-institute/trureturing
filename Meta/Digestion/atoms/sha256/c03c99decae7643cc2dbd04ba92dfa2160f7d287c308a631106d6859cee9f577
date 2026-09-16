@@ -1,0 +1,7 @@
+**Lemma RP8.** For odd inert ell=2a+1, and distinct integers x,y divisible
+by five,
+
+$$
+v_5(P_a(x)-P_a(y))=v_5(x-y).                    \tag{RP8}
+$$
+

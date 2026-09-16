@@ -1,0 +1,2 @@
+**Proof.** This is the finite-set statement FSP2. A direct proof is as follows. The sum of F_2 through F_(n-2) is F_n-2 for n>=3. Thus an anchored set summing to F_n must contain F_(n-1), since it cannot contain F_n itself along with the additional positive term one. At n=3 such a set is impossible. For n>=4 remove F_(n-1); the remaining set still contains one and sums to F_(n-2). Induction terminates at F_2=1 and forces precisely the stated alternating shape. Conversely its sum telescopes by the recurrence. In the nonsingleton case its largest index is 2r-1.
+

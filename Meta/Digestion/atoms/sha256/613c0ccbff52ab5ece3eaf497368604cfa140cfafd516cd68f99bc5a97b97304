@@ -1,0 +1,2 @@
+**Proof.** For odd n, Cassini gives F_n^2-1=F_(n-1)F_(n+1); for even n it gives F_n^2-1=F_(n-2)F_(n+2). In both cases the factor indices u<v are positive and even, and v>=4. FDS3 shows that the largest Fibonacci divisor is F_v and that there is no larger Fibonacci divisor. The nonsingleton anchored-set classification FDS10 requires its largest Fibonacci index to be odd if the sum is Fibonacci. This contradicts the evenness of v.
+

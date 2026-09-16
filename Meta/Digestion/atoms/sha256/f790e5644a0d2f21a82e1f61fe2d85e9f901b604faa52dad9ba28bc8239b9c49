@@ -1,0 +1,23 @@
+**证明。** 写 \(r=\rho(p)\)、\(N=p-(5/p)=kr\)，并在黄金整数中写
+
+\[
+\varphi^r=a+b\varphi,
+\qquad a=F_{r-1},\quad b=F_r.
+\]
+
+有 \(p\mid b\)。范数恒等式模 \(p\) 给出
+\(a^2\equiv(-1)^r\pmod p\)，所以 \(p\nmid a\)。又因 \(p\nmid N\)，有 \(p\nmid k\)。在自由基 \(1,\varphi\) 上模 \(p^2\) 展开：
+
+\[
+\varphi^N=(a+b\varphi)^k
+\equiv a^k+ka^{k-1}b\varphi\pmod{p^2\mathcal O_K}.
+\]
+
+高于一次的项都含有 \(b^2\)。比较 \(\varphi\) 坐标，得
+
+\[
+F_N\equiv ka^{k-1}F_r\pmod{p^2}.
+\]
+
+系数 \(ka^{k-1}\) 模 \(p\) 可逆。因此 \(p^2\mid F_N\) 当且仅当 \(p^2\mid F_r\)，从而得到 (EMW-B3)。证毕。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f2f46f42ca6e23319b486ba4e2c20bcf4c1dff554ae8594f04c5fe9ae35e85e4
+  normalized_sha256: sha256:f2f46f42ca6e23319b486ba4e2c20bcf4c1dff554ae8594f04c5fe9ae35e85e4
+cas_ref: sha256:f2f46f42ca6e23319b486ba4e2c20bcf4c1dff554ae8594f04c5fe9ae35e85e4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 按本节权重定义取斐波那契数列的二位移，严格递增性直接由 Nat.fib_add_two_strictMono 给出；仓内无冻结 GID 可直接用于此命题，探针已按该权重逐项核验。
+    previous_atom_id: badf8902867c6073fd41b372c54d0cd8b62396399412402834e6bc41fe12513a
+    next_atom_id: 3c4fa5c01be1abf3341ece687b78f6af3c3699381bad1f7da1cce88f3ed695ca

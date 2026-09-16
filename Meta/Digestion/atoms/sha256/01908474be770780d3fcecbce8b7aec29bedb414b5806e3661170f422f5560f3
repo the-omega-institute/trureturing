@@ -1,0 +1,3 @@
+**Proof.** Set Y=floor(log_2 x). Every prime ell in [7,Y] has either a simple prime divisor of F_ell or a powerful block. In the first case choose one non-WSS prime; in the second choose two WSS primes by PBC8. Distinct indices give disjoint prime supports. All chosen primes are at most F_Y<=2^Y<=x. Each index contributes at least one to the weighted left side. This strengthens the counting consequence of PBC5 but does not select the zero or nonzero alternative. No bound on the exceptional-block count follows from this inequality alone.
+
+

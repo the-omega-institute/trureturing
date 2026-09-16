@@ -1,0 +1,10 @@
+
+对任意长度为 $L$ 的合法数字前缀 $p$，值域准确为
+$$
+F_{\rm infdig}[[p]_K]=
+\begin{cases}
+I,&L=0,\\
+S_p+r^L I,&L>0\text{ 且末位为 }0,\\
+S_p+r^{L+1}I,&L>0\text{ 且末位为 }1.
+\end{cases}
+$$

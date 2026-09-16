@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:229948c5f40a99006f1bdb5ed6be99d91c51b6e24b158ef789d8e880b5e768d1
+  normalized_sha256: sha256:229948c5f40a99006f1bdb5ed6be99d91c51b6e24b158ef789d8e880b5e768d1
+cas_ref: sha256:229948c5f40a99006f1bdb5ed6be99d91c51b6e24b158ef789d8e880b5e768d1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 由 abs_le 将五个绝对扰动约束化为双侧不等式，再作有序环线性归约即得三个余量的完整下界；仓内无冻结 GID。
+    previous_atom_id: 931ac004577ca80750acdb2e07e113888ae1fd5b95cd428bb622e6f0df0f104e
+    next_atom_id: f2cfd42d43334d0873d4725dcab6d606a21203f6706f309eb79ab87bab130a31
