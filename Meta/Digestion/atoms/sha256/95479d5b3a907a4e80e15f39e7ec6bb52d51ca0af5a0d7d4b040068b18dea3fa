@@ -1,0 +1,2 @@
+**证明。** $\mathcal D_F(M)$ 是有限的不同正 Fibonacci 值集合，并且因 $1\mid M$ 而包含一。其和为正，因此所给 Fibonacci 值属于 $\mathcal F_+$。应用 FSP2 即得。
+

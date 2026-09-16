@@ -1,0 +1,6 @@
+**定理。** 对每个 $b\ge0$，
+
+$$
+\boxed{\operatorname{ord}_{3^{b+1}}(2)=2\cdot3^b.}\tag{JP7}
+$$
+

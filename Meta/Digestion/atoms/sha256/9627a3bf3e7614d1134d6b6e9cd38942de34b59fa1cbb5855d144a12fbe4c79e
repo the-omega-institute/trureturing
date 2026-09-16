@@ -1,0 +1,18 @@
+**Proof.** Apply the homomorphism S1 to the exact Moebius product for C_n.
+For a reciprocal, its value is the negative of the original value; equivalently
+one can work in the units modulo nine. Equation S2 and sum_(d|n)mu(n/d)=0
+for n>1 give lambda_3(C_n)=-H(n). Subtract the contribution of the actual
+old factor E_n, then apply R_n=product_(r(p)=n)p^h_p. Finally mu and eta
+are multiplicative, and their convolution at q^a is eta(q)^a-eta(q)^(a-1).
+
+If some prime q dividing n is 1 or 11 modulo twelve, H(n)=0. If every
+prime dividing n is 5 or 7 modulo twelve, then
+
+$$
+\lambda_3(C_n)\equiv(-1)^{\Omega(n)-\omega(n)+1}\pmod3.
+$$
+
+The sum in S3 includes split primes as well as inert primes. A nonzero
+right-hand side forces a nonzero weighted contribution, but does not
+force that contributor to be inert or to have depth greater than one.
+

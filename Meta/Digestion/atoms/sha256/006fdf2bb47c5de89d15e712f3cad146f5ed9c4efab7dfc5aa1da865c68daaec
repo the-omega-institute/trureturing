@@ -1,0 +1,14 @@
+**Proof.** For each positive $m$, write the valuation formula as
+
+$$
+v_p(F_m)=h_p\,1_{r(p)\mid m}
++\sum_{j\ge1}1_{r(p)p^j\mid m}.
+$$
+
+Only finitely many summands occur for a fixed $m$. Apply divisor Moebius
+inversion to IP6. The transform of $1_{a\mid m}$ is $1_{n=a}$, since
+$\sum_{d\mid n,\ a\mid d}\mu(n/d)$ is zero unless $n=a$. This gives
+$h_p1_{n=r(p)}+\sum_{j\ge1}1_{n=r(p)p^j}$ and proves IP8. At prime two,
+for odd $m$ the valuation is $1_{3\mid m}$, so its cyclotomic valuation
+is zero for our $n>3$. At prime five it is zero because $5\nmid n$.
+
