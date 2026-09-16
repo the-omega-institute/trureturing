@@ -164,9 +164,13 @@ The [joint final-root continuation](../docs/reports/erdos7-odd-covering/marked_h
 strengthens the same law to **Gamma_13<148.926**. It keeps the final
 original3/original9 root floor, its weighted whole deletion costs,
 and the common source-survival denominator until the final inequality.
-The exact upper bound is
-`15072118232557475077441399589/101205875626103459954531250`;
-all original3/5/7 and11/13 heights and complete auxiliary tails remain.
+The [signed second whole-cost estimate](../docs/reports/erdos7-odd-covering/marked_head_profile.md#pg1-signed-original-root-floor-for-the-second-whole-cost)
+further improves that same continuation to **Gamma_13<148.650**,
+with exact upper bound
+`165486462221025969000254660209/1113264631887138059499843750`.
+It retains the original-root floor of `(2L-5)+` on the same higher357
+deletion event. All original3/5/7 and11/13 heights and complete
+auxiliary tails remain.
 Passing this stronger supplied square upper bound alone to the scalar(T6)
 recurrence cannot continue through17 and19: that two-step certificate
 requires a seed below the exact threshold in

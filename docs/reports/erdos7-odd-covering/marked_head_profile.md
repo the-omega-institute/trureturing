@@ -6948,3 +6948,94 @@ Replay from the repository root:
 
 These are finite arithmetic certificates and ordinary all-height proofs,
 not Lean kernel results or a bound on all remaining low profiles.
+
+### PG1 signed original-root floor for the second whole cost
+
+On the unchanged PG1 law and fixed 11/13 schedule, the supported square
+bound improves to
+
+\[
+ \Gamma_{13}\le
+ \frac{165486462221025969000254660209}
+      {1113264631887138059499843750}
+ <148.650.
+\]
+
+`verify_pg1_signed_g2.py` checks `pg1_signed_g2_certificate.json` by
+hash-bound consumption of `pg1_joint_tail_certificate.json` and its three
+canonical inputs. The source geometry remains the result of
+`verify_pg1_joint_tail.py`. The extension recomputes 40 signed deletion
+observations, reuses 40 already certified hinge-deletion observations,
+and evaluates the complete common-denominator criteria. The preceding
+148.926 bound remains a separately verified comparison. The probability,
+physical kernels, thresholds and all-height scope are unchanged.
+
+For a charge test with original roots \((a,c)\), write
+\(b_{ac}=1+\mathbf1_{a\bmod3}+\mathbf1_{c\bmod9}\) and
+\(g_{ac}=\mathbf1_{a\bmod3}\mathbf1_{c\bmod9}\). Its whole cost and hinge
+have the same original-root floor:
+
+\[
+ (2b_{ac}-5)_+=(b_{ac}-2)_+=g_{ac}.
+\]
+
+Fix the final-root weight \(W=149-b_{ij}^2\le148\). For either
+\(D=148\) or \(D=444\), the measure \((D-Wg_{ac})\mu\) is nonnegative.
+Using the source geometry's unconditional bound \(U_{2,a,c}\) for
+\(W(2L-5)_+\), subtraction on the same higher357 deletion event gives
+
+\[
+ QG_2^W\le DQ+e_{2,ij}^{(D)},\qquad
+ e_{2,ij}^{(D)}=\max_{a,c}\left[
+ U_{2,a,c}+R_{F^c}((D-Wg_{ac})\mu)-D\right].
+\]
+
+For \(D=148\), the verifier recomputes the displayed deletion bounds.
+For \(D=444\), the parent hinge certificate already records, at each
+individual charge pair,
+
+\[
+ e_{H,a,c}=U_{H,a,c}+R_{F^c}((444-Wg_{ac})\mu)-444.
+\]
+
+Consequently it gives the exact reusable expression
+
+\[
+ e_{2,ij}^{(444)}
+   =\max_{a,c}(U_{2,a,c}-U_{H,a,c}+e_{H,a,c}).
+\]
+
+The subtraction is performed separately at every charge pair before the
+maximum; a difference of separate maxima is not used. For branches
+using \(W\le148\), the ordinary formulas at targets1 and3 are multiplied
+by148. Original charge roots remain independent of the final test roots.
+Every deletion bound retains its complete higher357 remainder.
+
+The prior complete criterion \(A+B_{ij}/Q\) remains available. Each
+signed choice supplies a second complete inequality, valid for every
+\(Q\in[q_0,1]\):
+
+\[
+ A_D+\frac{B_{D,ij}}Q,\qquad
+ A_D=A+\frac{50D}{2541},\qquad
+ B_{D,ij}=B_{ij}+\frac{50}{2541}(e_{2,ij}^{(D)}-U_2).
+\]
+
+All three inverse-\(Q\) coefficients are positive in every final-root
+branch. Each entire criterion is maximized at \(q_0\), and the verifier
+selects the smallest of these global bounds. This keeps one common
+source probability throughout the inequality.
+
+The largest selected excess occurs at final roots \((2,5)\):
+
+\[
+ \varepsilon_*=-\frac{389967930157601865222058541}
+                     {1113264631887138059499843750}<0.
+\]
+
+The independently positive final retained mass \(r\le1\) gives
+\(\Gamma_{13}\le149+\varepsilon_*\). This still exceeds the existing
+square-only 17/19 necessary threshold; the general odd-covering problem
+remains open. Replay from the repository root:
+
+    python3 -I -O docs/reports/erdos7-odd-covering/verify_pg1_signed_g2.py
