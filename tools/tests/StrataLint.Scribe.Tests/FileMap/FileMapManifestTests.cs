@@ -1,9 +1,63 @@
 using System.Text;
+using StrataLint.Engine;
+using Tomlyn.Model;
 
 namespace StrataLint.Scribe.Tests;
 
 public sealed class FileMapManifestTests
 {
+    [Fact]
+    public void TableArrayAndInlineTableArrayDecodeIdentically()
+    {
+        var tableArray = FileMapLoader.Parse(
+            Encoding.UTF8.GetBytes(DataKeyedRunLocalEntry()), "table-array.toml");
+        var inlineTableArray = FileMapLoader.Parse(Encoding.UTF8.GetBytes("""
+            schema_version = 2
+            files = [{ pattern = "Generated/partitions/*.md", kind = "generated", admission_plane = "content", produced_by = "PartitionEmitter", consumed_by = ["reader"], verified_by = ["PartitionEmitter"], artifact_id = "none", runtime_disposition = "run-local" }]
+
+            [residence_policy]
+            case_id = "RESIDENCE-EPOCH"
+            desired = "data-must-live-outside-tools"
+            known_violation_count = 0
+            status = "closed"
+            """ + "\n"), "inline-table-array.toml");
+
+        Assert.Equal(
+            FileMapProjectionWriter.Write(tableArray).ToArray(),
+            FileMapProjectionWriter.Write(inlineTableArray).ToArray());
+    }
+
+    [Theory]
+    [InlineData("files = []\n", "at least one entry")]
+    [InlineData("files = [42]\n", "only tables")]
+    [InlineData("files = [{ pattern = \"Generated/output.md\" }, 42]\n", "only tables")]
+    public void FilesArrayRejectsEmptyWrongOrMixedElements(string files, string expected)
+    {
+        var source = "schema_version = 2\n" + files + """
+            [residence_policy]
+            case_id = "RESIDENCE-EPOCH"
+            desired = "data-must-live-outside-tools"
+            known_violation_count = 0
+            status = "closed"
+            """ + "\n";
+
+        var exception = Assert.Throws<FormatException>(() =>
+            FileMapLoader.Parse(Encoding.UTF8.GetBytes(source), "fixture.toml"));
+
+        Assert.Contains(expected, exception.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void FilesArrayRejectsNullElements()
+    {
+        var values = new TomlArray { null! };
+
+        var exception = Assert.Throws<FormatException>(() =>
+            FileMapTomlTables.Parse(values, "fixture.toml", allowEmpty: false));
+
+        Assert.Contains("only tables", exception.Message, StringComparison.Ordinal);
+    }
+
     [Fact]
     public void DataKeyedGeneratedRunLocalSetUsesTheNineKeyShape()
     {

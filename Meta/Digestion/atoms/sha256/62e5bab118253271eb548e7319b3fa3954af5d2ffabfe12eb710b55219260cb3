@@ -1,0 +1,18 @@
+### FDS.2. The complete A340542 divisor set and count
+
+**Theorem.** For even n>=2 put (u,v)=(n-1,n+1); for odd n>=3 put (u,v)=(n-2,n+2). Then
+
+$$
+\boxed{D_F(F_n^2+1)=\{1\}\cup\{F_d:d\ge3,\ d\mid u\text{ or }d\mid v\},}\tag{FDS4}
+$$
+
+$$
+\boxed{|D_F(F_n^2+1)|=\tau(u)+\tau(v)-1.}\tag{FDS5}
+$$
+
+The values at n=0,1 are respectively 1,2.
+
+**Proof.** Cassini and the Fibonacci recurrence give F_(n-1)F_(n+1)=F_n^2+(-1)^n and F_(n-2)F_(n+2)=F_n^2-(-1)^n. Thus F_n^2+1=F_uF_v in the stated cases. Apply FDS3 to every k>=3; the value one is always a divisor. The u,v are positive odd coprime integers, so their positive divisor sets overlap only at one. All their remaining divisors are at least three, where Fibonacci values are distinct. Counting the union proves FDS5. At n=0 the target is one, and at n=1 it is two.
+
+These are explicit formulas for the sequence defined by Michel Lagneau in OEIS A340542, https://oeis.org/A340542 . The definition counts divisor values rather than Fibonacci indices.
+

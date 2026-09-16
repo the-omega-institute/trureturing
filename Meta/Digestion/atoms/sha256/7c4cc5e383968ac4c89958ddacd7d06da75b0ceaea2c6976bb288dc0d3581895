@@ -1,0 +1,8 @@
+### QR.6 Every even-index Fibonacci value occurs with positive density
+
+For r>=1 put
+
+$$
+D_r=\{1\}\cup\{F_{2j+1}:1\le j<r\},\qquad K_r=\operatorname{lcm}(D_r).
+$$
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fc1a641d37204484d38379a3cd382ebe1e451d1f5233c1a9c90f2ede38a041a1
+  normalized_sha256: sha256:fc1a641d37204484d38379a3cd382ebe1e451d1f5233c1a9c90f2ede38a041a1
+cas_ref: sha256:fc1a641d37204484d38379a3cd382ebe1e451d1f5233c1a9c90f2ede38a041a1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Nat.fib_mono 与第三个 Fibonacci 数的值给全部正 L 的端点至少为二，所以一属于准确正前缀区间；Finset.le_sup 和 ArithmeticFunction.moebius_apply_one 给该完整区间最大值至少为一，仓内无冻结 GID。
+    previous_atom_id: a8e5c4180a6938ed3a87a9818fb5bd1c8c406e28e3e2f21522a23f1ba70aaa7e
+    next_atom_id: 6c5d69ac97e54d88ed47303698e44198f389fb9ad8a6af653fc030bb1f127a4f

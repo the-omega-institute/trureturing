@@ -1,0 +1,81 @@
+**命题 154.1（全有限历史下一报告精度的区间阈值、普适状态下界与因果网格上界）。** 固定已知实参数 $0<p<1/2$、$0<r<1/2$，使用命题153.1的时间齐次、无控制二元协议及固定先验 $I_2/2$。具体地，在 $M_2(\mathbb C)$ 上令 $E_i=|i\rangle\langle i|$、$I_2=E_0+E_1$，并取
+$$
+c_{00}=c_{11}=p,\qquad c_{01}=c_{10}=1-p,\qquad
+P_{ji}=\begin{cases}1-r,&j=i,\\r,&j\ne i,\end{cases}
+$$
+$$
+K_{bji}=\sqrt{c_{bi}P_{ji}}\,|j\rangle\langle i|,
+\qquad
+\phi_b(X)=\sum_{i,j=0}^1K_{bji}XK_{bji}^{\dagger}
+=\sum_{i,j=0}^1c_{bi}P_{ji}X_{ii}E_j.
+$$
+$c_{bi}$ 的指标依次为报告和旧隐藏位；每支的四个 Kraus 项分别求共轭作用再相加。物理次序为旧隐藏位先发射报告，再按 $P$ 翻转到新隐藏位。报告词 $w=b_1\cdots b_n$ 按时间顺序书写，$\phi_w=\phi_{b_n}\circ\cdots\circ\phi_{b_1}$，空操作 $\phi_\varnothing=\operatorname{Id}$。令
+$$
+v_\varnothing=\binom{1/2}{1/2},\qquad
+v_{wb}=P\operatorname{diag}(c_{b0},c_{b1})v_w,\qquad
+Z_w=\mathbf1^{\mathsf T}v_w,\qquad q_w=\frac{(v_w)_1}{Z_w}.
+$$
+这里 $\phi_w(I_2/2)=\operatorname{diag}(v_w)$，$Z_w$ 是词的标量 Born 概率，满足 $Z_w\ge p^{|w|}>0$；这不是对 $v_w$ 各分量的同一下界。所有 $q_w\in(0,1)$，且 $q_\varnothing=1/2$。下一零报告的条件概率为
+$$
+f(q)=p+dq,\qquad d=1-2p>0.
+$$
+
+观察者由有限非空集合 $S$、固定初态 $s_0\in S$、两个固定确定性更新 $T_b:S\to S$ 及固定读出 $t:S\to[0,1]$ 组成。规定
+$$
+T_w=T_{b_n}\circ\cdots\circ T_{b_1},\qquad
+T_\varnothing=\operatorname{Id},\qquad
+\mathcal E(S,s_0,T_0,T_1,t)
+=\sup_{w\in\{0,1\}^{*}}\bigl|t(T_w(s_0))-f(q_w)\bigr|.
+$$
+上确界取遍每一个有限词，包括空词及任意低概率的词。所有可读的演化记忆均计入 $S$；不另给可读时钟、历史档案、随机种子或连续运行寄存器。对 $\varepsilon>0$ 定义
+$$
+N_{\min}(\varepsilon)
+=\min\left\{|S|:\mathcal E(S,s_0,T_0,T_1,t)\le\varepsilon\right\}.
+$$
+下述有限构造保证取最小值的集合是非空的正整数集合。所计成本为观察者状态基数，不是物理隐藏态数、存储位数或固定表的描述成本；观察者可依赖已知的 $p,r,\varepsilon$，但同一观察者用于所有词长。
+
+置
+$$
+\eta=1-2r\in(0,1),\qquad
+\lambda=\log\frac{1-p}{p}>0,\qquad
+q_+=\frac{d-r+\sqrt{r^2+\eta d^2}}{2d},
+$$
+$$
+a=\log\frac{q_+}{1-q_+},\qquad I=[-a,a],\qquad
+\sigma(x)=\frac{e^x}{1+e^x},\qquad h(x)=f(\sigma(x)),
+$$
+$$
+J=[f(1-q_+),f(q_+)],\qquad
+L=d(2q_+-1)=\sqrt{r^2+\eta d^2}-r.
+$$
+则 $1/2<q_+<1$、$a>0$、$L>0$。沿用命题153.1的对数赔率及更新
+$$
+\ell_w=\log\frac{q_w}{1-q_w},\qquad\ell_\varnothing=0,\qquad
+\ell_{wb}=F_b(\ell_w),\qquad
+F_b(x)=G\bigl(x+(-1)^b\lambda\bigr),\qquad
+G(x)=\log\frac{r+(1-r)e^x}{(1-r)+re^x}.
+$$
+区间 $I$ 对两个更新均正向不变，且
+$$
+\overline{\{\ell_w:w\in\{0,1\}^{*}\}}=I
+\quad\Longleftrightarrow\quad r\le p(1-p).
+$$
+在此重叠区域，包括等号边界，每个固定深度 $n\ge0$ 的可达集合都是 $I$ 的 $a\eta^n$-网：
+$$
+\forall x\in I\ \exists w\in\{0,1\}^{n}:
+\quad |x-\ell_w|\le a\eta^n.
+$$
+有限历史的并集是可数稠密集，不等于整个非退化区间；其下一报告预测值的闭包恰为 $J$，长度为 $L$。因此对重叠区域中每组固定参数和每个 $\varepsilon>0$，
+$$
+\left\lceil\frac{L}{2\varepsilon}\right\rceil
+\le N_{\min}(\varepsilon)
+\le 2\left\lceil\frac{da}{8(1-\eta)\varepsilon}\right\rceil+1
+\le\frac{da}{4(1-\eta)\varepsilon}+3.
+$$
+下界适用于上述全部有限确定性观察者；上界由一个因果网格观察者实现，并且单独对整个 $0<p,r<1/2$ 参数域成立。于是固定重叠参数下
+$$
+N_{\min}(\varepsilon)=\Theta_{p,r}(\varepsilon^{-1})
+\qquad(\varepsilon\downarrow0).
+$$
+这是上下界的同阶结论，不给出锐常数或精确最小值。
+

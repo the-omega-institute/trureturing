@@ -1,0 +1,18 @@
+**证明。** 对素数集合 $t>5$ 使用 C. S. Franze, *Sifting Limits for the $\Lambda^2\Lambda^-$ Sieve*, Theorem 1, arXiv:1012.3809, https://arxiv.org/pdf/1012.3809 。该定理的四维参数为 $8.522$。验证其假设如下：EMWS1 给出 $f(t)=t/4$；Mertens 素数求和式给出
+
+$$
+\sum_{5<t<z}\frac{\log t}{f(t)}=4\log z+O(1).
+$$
+
+取 $D=X/(\log X)^{40}$。该定理所需的加权余项满足
+
+$$
+\sum_{\substack{d<D\ (d,30)=1}}\mu^2(d)7^{\omega(d)}|R_d(X)|
+\le\sum_{d<D}\mu^2(d)28^{\omega(d)}
+\le\sum_{d<D}\tau_{28}(d)
+\ll D(1+\log D)^{27}
+\ll\frac{X}{(\log X)^{13}}.\tag{EMWS3}
+$$
+
+这里 $\tau_{28}$ 计有序的二十八因子分解；其和的上界可由先固定二十七个因子、再以 $D$ 除以前面因子的乘积控制最后一因子得到。四维所需误差为 $O(X/(\log X)^5)$，故 EMWS3 充分。$Q(k)$ 随正整数 $k$ 严格递增，所以所筛序列恰有 $X$ 项。Franze 定理给出筛界 $z=X^{1/8.522}$；因 $4/35<1/8.522$，减小筛界的单调性得到 EMWS2。素数二、三、五不整除任何 $Q(k)$，无需加入筛集。
+

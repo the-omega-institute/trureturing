@@ -1,0 +1,4 @@
+**定义 440.8。** 对费用域 $V=\mathbb R_{\ge0}^d$，运输零、加法和序为
+$$
+0_V^*=\operatorname{Enc}(0_V),\quad\operatorname{Enc}(v)\oplus\operatorname{Enc}(w)=\operatorname{Enc}(v+w),\quad\operatorname{Enc}(v)\preceq_Z\operatorname{Enc}(w)\iff v\preceq w.
+$$

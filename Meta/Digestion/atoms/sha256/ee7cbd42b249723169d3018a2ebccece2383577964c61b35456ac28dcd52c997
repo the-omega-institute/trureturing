@@ -1,0 +1,15 @@
+**Theorem.** The unit group modulo 5040 has order 1152 and exponent twelve:
+
+$$
+(\mathbb Z/5040\mathbb Z)^\times
+\simeq C_4\times C_2\times C_6\times C_4\times C_6.
+\tag{S8}
+$$
+
+For every integer s>=1 its counterpart modulo 5040^s has exponent
+
+$$
+\boxed{L_s=12\cdot5040^{s-1}.}
+\tag{S9}
+$$
+

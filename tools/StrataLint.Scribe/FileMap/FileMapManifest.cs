@@ -1,8 +1,6 @@
 using System.Collections.Immutable;
-using System.Text;
 using System.Text.RegularExpressions;
 using StrataLint.Engine;
-using Tomlyn;
 using Tomlyn.Model;
 
 namespace StrataLint.Scribe;
@@ -104,7 +102,6 @@ internal static class FileMapLoader
 {
     internal const string RelativePath = AdmissionPlanePolicy.FileMapPath;
 
-    private static readonly UTF8Encoding StrictUtf8 = new(false, true);
     private static readonly Regex NamePattern = new(
         "^[A-Za-z][A-Za-z0-9.-]*$",
         RegexOptions.CultureInvariant | RegexOptions.NonBacktracking);
@@ -119,76 +116,61 @@ internal static class FileMapLoader
     internal static FileMapManifest LoadRepository(string repositoryRoot)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
-        var path = Path.Combine(repositoryRoot, RelativePath);
-        return Parse(File.ReadAllBytes(path), path);
+        var inspectedDirectories = new HashSet<string>(StringComparer.Ordinal);
+        byte[] Read(string relativePath)
+        {
+            FileMapSymlinkPolicy.RequirePlainAncestors(repositoryRoot, relativePath, inspectedDirectories);
+            var path = Path.Combine(repositoryRoot, relativePath);
+            if (new FileInfo(path).LinkTarget is not null)
+                throw new FileMapParseException(relativePath, "FILEMAP sources must be regular files");
+            return File.ReadAllBytes(path);
+        }
+
+        return Parse(Read(RelativePath), RelativePath, Read);
     }
 
-    internal static FileMapManifest Parse(ReadOnlySpan<byte> bytes, string location)
+    internal static FileMapManifest LoadSnapshot(RepositorySnapshot snapshot)
+    {
+        byte[] Read(string path) => snapshot.Files.TryGetValue(RepoPath.CreateKnown(path), out var file)
+            ? file.RawBytes.ToArray()
+            : throw new FileMapParseException(path, "FILEMAP source is unavailable in this snapshot");
+        return Parse(Read(RelativePath), RelativePath, Read);
+    }
+
+    internal static FileMapManifest Parse(
+        ReadOnlySpan<byte> bytes,
+        string location,
+        Func<string, byte[]>? readInclude = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(location);
-        if (bytes.Length >= 3
-            && bytes[0] == 0xEF
-            && bytes[1] == 0xBB
-            && bytes[2] == 0xBF)
-        {
-            throw new FileMapParseException(location, "bytes contain a UTF-8 BOM");
-        }
-
-        if (bytes.IsEmpty || bytes[^1] != (byte)'\n' || bytes.Contains((byte)'\r'))
-        {
-            throw Invalid(location, "bytes must be strict UTF-8 without BOM/CR and end in LF");
-        }
-
-        string text;
-        try
-        {
-            text = StrictUtf8.GetString(bytes);
-        }
-        catch (DecoderFallbackException exception)
-        {
-            throw new FileMapParseException(location, "bytes are not strict UTF-8", exception);
-        }
-
-        TomlTable root;
-        try
-        {
-            root = TomlSerializer.Deserialize<TomlTable>(text)
-                ?? throw Invalid(location, "TOML decoded to null");
-        }
-        catch (TomlException exception)
-        {
-            throw new FileMapParseException(location, $"invalid TOML: {exception.Message}", exception);
-        }
-
-        RequireExactKeys(root, location, "files", "residence_policy", "schema_version");
+        FileMapDocuments.RequireCanonicalBytes(bytes, location);
+        var documents = FileMapDocuments.Resolve(bytes, location, readInclude);
+        var root = documents[0].Table;
+        var keys = new List<string> { "residence_policy", "schema_version" };
+        if (root.ContainsKey("include")) keys.Add("include");
+        if (root.ContainsKey("files") || !root.ContainsKey("include")) keys.Add("files");
+        RequireExactKeys(root, location, keys.ToArray());
         if (root["schema_version"] is not long schemaVersion || schemaVersion != 2)
-        {
             throw Invalid(location, "schema_version must be 2");
-        }
-
-        if (root["files"] is not TomlTableArray files || files.Count == 0)
-        {
-            throw Invalid(location, "files must contain at least one entry");
-        }
-
         if (root["residence_policy"] is not TomlTable residenceTable)
-        {
             throw Invalid(location, "residence_policy must be a table");
-        }
-
-        var residencePolicy = ParseResidencePolicy(
-            residenceTable,
-            $"{location}:residence_policy");
-
-        var entries = files
-            .Select((table, index) => ParseEntry(table, $"{location}:files[{index}]") )
-            .ToImmutableArray();
-        var patterns = entries.Select(static entry => entry.Pattern).ToArray();
-        if (!patterns.SequenceEqual(patterns.Order(StringComparer.Ordinal), StringComparer.Ordinal)
-            || patterns.Distinct(StringComparer.Ordinal).Count() != patterns.Length)
+        var residencePolicy = ParseResidencePolicy(residenceTable, $"{location}:residence_policy");
+        var allEntries = ImmutableArray.CreateBuilder<FileMapEntry>();
+        foreach (var document in documents)
         {
-            throw Invalid(location, "file patterns must be unique and ordinally sorted");
+            if (!document.Table.TryGetValue("files", out var rawFiles)) continue;
+            var files = FileMapTomlTables.Parse(rawFiles, document.Path, allowEmpty: false);
+            var localEntries = files.Select((table, index) => ParseEntry(table, $"{document.Path}:files[{index}]"))
+                .ToArray();
+            var localPatterns = localEntries.Select(entry => entry.Pattern).ToArray();
+            if (!localPatterns.SequenceEqual(localPatterns.Order(StringComparer.Ordinal), StringComparer.Ordinal))
+                throw Invalid(document.Path, "file patterns must be unique and ordinally sorted");
+            allEntries.AddRange(localEntries);
         }
+
+        var entries = allEntries.OrderBy(entry => entry.Pattern, StringComparer.Ordinal).ToImmutableArray();
+        if (entries.Select(entry => entry.Pattern).Distinct(StringComparer.Ordinal).Count() != entries.Length)
+            throw Invalid(location, "file patterns must be unique and ordinally sorted across all included files");
 
         var artifactIds = entries
             .Where(static entry => entry.ArtifactId != "none")
