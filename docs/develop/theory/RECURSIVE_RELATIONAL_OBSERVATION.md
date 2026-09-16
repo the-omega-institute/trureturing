@@ -16490,3 +16490,439 @@ Theorem 40.7 gives $e_{N,\theta,p}(n)\le\varepsilon$, establishing both finitene
 Allowing the additional arc endpoint conventions of §36 does not change the global discrepancy supremum: open and closed arcs are monotone limits of half-open arcs with converging lengths, and the remaining endpoint conventions are sandwiched between them. Singleton tests follow by shrinking arcs; empty and full-circle tests have zero error. Thus Theorem 36.9 applies to the same global discrepancy and the same binomial rotation law whenever its stated approximation hypothesis holds. It rules out the global square-root discrepancy estimate, whereas Theorem 40.7 proves the square-root estimate for every one of the fixed endogenous partitions. These statements concern different collections of tests. The finite-partition proof controls a vector transfer through its consecutive orbit endpoints, and its lower bound chooses a light consecutive-index block; neither argument changes the circle, the rotation, or its arithmetic approximation properties. The resulting distinction is exactly between global interval discrepancy and the finite observation mixing budget. $\square$
 
 ## 追加锚（本行以下为增补区）
+## 41. Finite input rank and bounded lexicographic scales
+
+**Definition 41.1 (Finite feasibility, input rank, and witnesses).** Let $V$ be a real inner-product space of dimension $d<\infty$, let $I$ be a set, and let $\ell_i\in V^*$ for $i\in I$. Write
+$$
+\ell_i(v)=\langle a_i,v\rangle,\qquad
+W=\operatorname{span}_{\mathbb R}\{a_i:i\in I\},\qquad
+\mathcal N=\bigcap_{i\in I}\ker\ell_i.
+$$
+The effective input rank is
+$$
+m=\dim W=\dim\operatorname{span}_{\mathbb R}\{\ell_i:i\in I\}
+  =d-\dim\mathcal N\le d.
+$$
+Indeed, the Riesz correspondence identifies the two spans, and $\mathcal N=W^\perp$.
+
+For finite $F\subseteq I$, put
+$$
+C_F=\{v\in V:\ell_i(v)>0\text{ for every }i\in F\}.
+$$
+Finite feasibility means $C_F\ne\varnothing$ for every finite $F\subseteq I$, including $C_\varnothing=V$.
+
+A lexicographic witness of length $r\ge0$ is a list $v_1,\ldots,v_r$ such that, for every $i\in I$, there is a $k_i\in\{1,\ldots,r\}$ with
+$$
+\ell_i(v_j)=0\quad(j<k_i),\qquad \ell_i(v_{k_i})>0.
+$$
+Thus an all-zero evaluation list is not strictly positive. The empty list witnesses precisely the empty family.
+
+A polynomial curve tending to zero is an element of $tV[t]$, written
+$$
+\gamma(t)=\sum_{j=1}^{q}t^jv_j.
+$$
+It is eventually feasible when
+$$
+\forall i\in I\ \exists\varepsilon_i>0\quad
+\forall t\in(0,\varepsilon_i),\qquad \ell_i(\gamma(t))>0.
+$$
+The zero polynomial is admitted in every degree-at-most bound and is represented by the empty sum when $q=0$. Neither a common $\varepsilon$ nor a positive margin uniform in $i$ is part of this definition.
+
+**theorem 41.2 (Bounded orthonormal lexicographic realization).** A family of strict linear observations may be feasible on every finite subfamily without admitting one real direction satisfying all observations. In finite dimension, the exact replacement is a finite list of directions, ordered by decreasing asymptotic importance. The relevant bound is the rank of the forms on their common input space, not the cardinality of the family. All eventual assertions below are constraintwise.
+
+Finite feasibility, existence of a finite lexicographic witness, and existence of an eventually feasible polynomial curve in $tV[t]$ are equivalent.
+
+Whenever these conditions hold, there is an orthonormal lexicographic witness $v_1,\ldots,v_r$ contained in $W$, with
+$$
+0\le r\le m\le d.
+$$
+Consequently,
+$$
+\gamma(t)=tv_1+t^2v_2+\cdots+t^rv_r
+$$
+is eventually feasible and tends to zero. For a nonempty feasible family, $r\ge1$; the minimum possible witness length equals the minimum possible degree of a polynomial curve tending to zero and eventually feasible.
+
+These assertions hold for arbitrary set-indexed families.
+
+**Proof.** If $I=\varnothing$, then $m=0$, finite feasibility is automatic, and the empty list and zero curve suffice. If some $\ell_i$ is zero, the singleton subsystem indexed by $i$ is impossible; that row also excludes every lexicographic or eventual polynomial witness. In particular, when $V=\{0\}$, the assertions hold exactly when $I=\varnothing$. These observations settle the zero-rank case.
+
+Assume finite feasibility and $m\ge1$. We construct the orthonormal witness by induction on $m$. Projection onto $W$ preserves every evaluation:
+$$
+\ell_i(P_Wv)=\langle a_i,P_Wv\rangle=\langle a_i,v\rangle.
+$$
+On the compact, nonempty unit sphere $S(W)$, define the closed sets
+$$
+H_i=\{u\in S(W):\ell_i(u)\ge0\}.
+$$
+For every nonempty finite $F\subseteq I$, choose $v$ with $\ell_i(v)>0$ for all $i\in F$. Then $P_Wv\ne0$, and its normalization belongs to $\bigcap_{i\in F}H_i$. The empty intersection is $S(W)$ itself. The finite-intersection property therefore gives
+$$
+u\in\bigcap_{i\in I}H_i.
+$$
+This is the compactness of an ordinary finite-dimensional sphere; no enumeration of $I$ has been used.
+
+Thus $\|u\|=1$ and $\ell_i(u)\ge0$ for every $i$. At least one evaluation is strictly positive: otherwise $u$ would belong to both $W$ and $W^\perp$, contradicting its norm.
+
+Retain only the zero rows:
+$$
+J=\{i\in I:\ell_i(u)=0\},\qquad
+W'=\operatorname{span}_{\mathbb R}\{a_i:i\in J\}.
+$$
+For $i\in J$, the vector $a_i$ is orthogonal to $u$. Hence
+$$
+W'\subseteq W\cap u^\perp,\qquad \dim W'\le m-1.
+$$
+Finite feasibility survives this restriction and projection. Indeed, for finite $G\subseteq J$, choose an original feasible vector $v_G\in V$. Since $a_i\in W'$ for $i\in G$,
+$$
+\ell_i(P_{W'}v_G)=\ell_i(v_G)>0\qquad(i\in G).
+$$
+The Riesz representatives of the restricted forms on $W'$ are exactly the vectors $a_i$, so their rank is $\dim W'$.
+
+The induction hypothesis provides an orthonormal witness $w_1,\ldots,w_s$ in $W'$ for the residual family, with $s\le\dim W'$. If $J=\varnothing$, use $s=0$. The concatenated list
+$$
+u,w_1,\ldots,w_s
+$$
+is orthonormal and has length at most $m$. A row positive on $u$ is already settled at its first entry. A row zero on $u$ belongs to $J$ and has a positive first nonzero entry in the residual list. This proves the assertion for every row. Equivalently, every unresolved row is carried into a strictly lower-rank residual problem; at rank zero an unresolved nonzero row is impossible.
+
+For any finite lexicographic witness, form its polynomial curve. For fixed $i$, its first nonzero coefficient occurs at $k_i$, and
+$$
+t^{-k_i}\ell_i(\gamma(t))
+=\ell_i(v_{k_i})+\sum_{j>k_i}t^{j-k_i}\ell_i(v_j)
+\longrightarrow \ell_i(v_{k_i})>0.
+$$
+This proves eventual feasibility. For finite nonempty $F$, take a positive $t$ smaller than the minimum of the finitely many resulting $\varepsilon_i$, $i\in F$. The single vector $\gamma(t)$ belongs to $C_F$.
+
+Conversely, for an eventually feasible polynomial $\gamma(t)=\sum_{j=1}^qt^jv_j$, each scalar polynomial $\ell_i(\gamma(t))$ is nonzero and its coefficient of smallest nonzero degree is positive. Otherwise it would be zero or negative for all sufficiently small positive $t$. Thus its coefficient list is a lexicographic witness.
+
+Finally, a witness of length $r$ produces a polynomial of degree at most $r$, and a nonzero polynomial of degree $q$ produces a witness of length $q$. Taking the two minima proves their equality for nonempty feasible families.
+
+For a nonempty family, depth one is therefore equivalent to the existence of a simultaneous strict real solution. The higher-depth conclusion is genuinely different from such a solution. $\square$
+
+**theorem 41.3 (Convex-hull characterization and classical separation).** With $A=\{a_i:i\in I\}$ and $\operatorname{conv}\varnothing=\varnothing$, finite feasibility is equivalent to
+$$
+0\notin\operatorname{conv}A.
+$$
+Equivalently, there is no finitely supported family of real coefficients $\lambda_i\ge0$, not all zero, satisfying
+$$
+\sum_i\lambda_i a_i=0.
+$$
+
+**Proof.** If such a nonzero combination existed, a strict solution for its finite support would give
+$$
+0=\left\langle\sum_i\lambda_i a_i,v\right\rangle
+=\sum_i\lambda_i\ell_i(v)>0,
+$$
+a contradiction. Normalization by $\sum_i\lambda_i$ identifies these forbidden combinations with membership of zero in the convex hull.
+
+Conversely, suppose $0\notin\operatorname{conv}A$, and let $F$ be nonempty and finite. The compact convex set
+$$
+K_F=\operatorname{conv}\{a_i:i\in F\}
+$$
+has a point $b$ of minimum norm, with $\|b\|>0$. For $a\in K_F$ and $0\le s\le1$, minimality gives
+$$
+0\le\|b+s(a-b)\|^2-\|b\|^2
+=2s\langle b,a-b\rangle+s^2\|a-b\|^2.
+$$
+Divide by $s>0$ and let $s\downarrow0$. Then
+$$
+\langle b,a\rangle\ge\|b\|^2>0.
+$$
+In particular, $\ell_i(b)>0$ for all $i\in F$. The empty subsystem needs no argument.
+
+The core existence theorem is already contained in classical lexicographic separation. Martínez-Legaz's 1983 separation theorem, reproduced in [MLVP12, Theorem 2.7, p. 488], separates a convex set $C\subseteq\mathbb R^m$ from an exterior point $b$ by an orthogonal matrix $Q$ satisfying $Qx<_{\mathrm{lex}}Qb$ for every $x\in C$. For $m>0$, apply it under an orthonormal identification $W\cong\mathbb R^m$ to $C=\operatorname{conv}A$ and $b=0$. The negatives of the rows of $Q$ give an orthonormal witness of length $m$. Thus both the finite rank bound and orthonormality are consequences of that published theorem; Theorem 41.2 supplies a direct specialized proof.
+
+The semispace formulation is older: Moore [M73, Theorems 2.1 and 2.3, pp. 660–661; §3, p. 663] records Klee's structural results and finite-dimensional lexicographic separation of disjoint convex sets. A directly related matrix-consistency formulation appears in Vicente-Pérez and Rodríguez [VR26, §4.1, equation (5)]: at lexicographic length equal to the ambient dimension, their convex-hull criterion reduces to exclusion of zero from the ordinary convex hull, using the hull identity in their §3.1.
+
+Mathematical citations for the separation statements in this proof: ([M73](https://msp.org/pjm/1973/44-2/pjm-v44-n2-p24-s.pdf) C. Edward Moore, “Concrete semispaces and lexicographic separation of convex sets,” *Pacific Journal of Mathematics* 44(2) (1973), 659–670.) ([MLVP12](https://journalofconvexanalysis.com/articles/jca19026/jca19026.pdf) Juan Enrique Martínez-Legaz and José Vicente-Pérez, “Lexicographical Representation of Convex Sets,” *Journal of Convex Analysis* 19(2) (2012), 485–496. Theorem 2.7 reproduces the separation theorem from Martínez-Legaz, “Exact quasiconvex conjugation,” *Z. Oper. Res., Ser. A* 27 (1983), 257–266.) ([VR26](https://link.springer.com/article/10.1007/s11750-026-00719-4) José Vicente-Pérez and Margarita M. L. Rodríguez, “Analyzing lexicographical linear inequality systems via convex hulls,” *TOP* (2026), DOI: 10.1007/s11750-026-00719-4.)
+
+The convex hull here consists of finite combinations. Replacing it by its closure would impose a stronger condition, not an equivalent formulation. $\square$
+
+**Definition 41.4 (The ordered field at $t=0^+$).** For nonzero $f\in\mathbb R(t)$, write
+$$
+f(t)=t^\nu\frac{a(t)}{b(t)},\qquad
+\nu\in\mathbb Z,\qquad a(0)b(0)\ne0.
+$$
+Define
+$$
+\operatorname{lc}_0(f)=\frac{a(0)}{b(0)},\qquad
+f>0\ \Longleftrightarrow\ \operatorname{lc}_0(f)>0.
+$$
+Comparison is defined by $f>g$ exactly when $f-g>0$. Here “leading” refers to the smallest exponent in the expansion at zero, not the highest polynomial degree. Extend each form to the scalar extension
+$$
+V_{\mathbb R(t)}=V\otimes_{\mathbb R}\mathbb R(t),
+\qquad
+\ell_i^{\mathbb R(t)}:V_{\mathbb R(t)}\longrightarrow\mathbb R(t).
+$$
+
+**theorem 41.5 (Rational-function realization with real coefficients).** Definition 41.4 makes $\mathbb R(t)$ an ordered field extending the usual order of $\mathbb R$, with
+$$
+0<t<c\qquad\text{for every real }c>0.
+$$
+For the family of Definition 41.1,
+$$
+\text{finite feasibility}
+\quad\Longleftrightarrow\quad
+\exists z\in V_{\mathbb R(t)}\quad
+\forall i\in I,\ \ell_i^{\mathbb R(t)}(z)>0.
+$$
+Whenever such a $z$ exists, some witness can be chosen to be the polynomial curve of Theorem 41.2, of degree at most $m$ with orthonormal nonzero coefficient vectors.
+
+**Proof.** The exponent $\nu$ and the nonzero leading coefficient are intrinsic to a rational function. Factoring the numerator and denominator at zero shows that, on a sufficiently small positive interval, the rational function is defined and has the sign of $\operatorname{lc}_0(f)$. In particular, every nonzero rational function is either eventually positive or eventually negative. Sums and products of eventually positive rational functions remain eventually positive on the intersection of their intervals. This proves the positive-cone axioms and trichotomy, and hence the ordered-field assertion. Constants retain their signs, while $t$ and $c-t$ are positive.
+
+A polynomial supplied by Theorem 41.2 has a positive first nonzero coefficient after evaluation by every $\ell_i$, so it is a simultaneous solution over this ordered field.
+
+Conversely, choose a real basis of $V$ and express $z$ in its finitely many rational-function coordinates. There is a positive interval on which all coordinate denominators are nonzero. For a finite $F\subseteq I$, intersect this interval with the finitely many intervals witnessing positivity of $\ell_i^{\mathbb R(t)}(z)$, $i\in F$. Evaluation at any positive $t$ in that intersection produces one real vector satisfying every row in $F$. Thus finite feasibility holds, and Theorem 41.2 supplies the degree bound.
+
+There is also an elementary denominator-clearing observation. Write $z=P/q$ with $P\in V[t]$ and $0\ne q\in\mathbb R[t]$. Then
+$$
+\beta(t)=tq(t)^2z(t)=tq(t)P(t)
+$$
+is a polynomial tending to zero. The multiplier $tq^2$ is positive in the ordered field, so $\beta$ preserves every strict sign. This observation alone does not bound its degree by $m$; that bound comes from the finite-dimensional rank descent.
+
+The simultaneous field inequalities do not provide a common real interval of positivity for all rows. $\square$
+
+**theorem 41.6 (Sharp depth and sharp polynomial degree).** In $\mathbb R^d$, $d\ge2$, consider
+$$
+x_1>0,\qquad
+x_{j+1}-nx_j>0
+\quad(1\le j<d,\ n\in\mathbb N_{>0}).
+$$
+Every finite subsystem has an integer solution, but the complete strict real system has no solution. Its effective input rank is $d$. The curve
+$$
+\gamma_j(t)=t^{d-j+1}\qquad(1\le j\le d)
+$$
+is eventually feasible. Every polynomial curve tending to zero and eventually feasible has degree at least $d$, and every lexicographic witness has at least $d$ levels. Both lower bounds are attained.
+
+**Proof.** For a finite subsystem, choose an integer $N\ge1$ at least as large as every index $n$ occurring in it, and set
+$$
+x_j=(N+1)^{j-1}.
+$$
+Then $x_1=1$ and
+$$
+x_{j+1}-nx_j=(N+1-n)x_j>0
+$$
+for every selected row. A solution of the complete real system would satisfy $x_1>0$ and $x_2/x_1>n$ for every positive integer $n$, contradicting the Archimedean property of $\mathbb R$.
+
+For the displayed curve,
+$$
+\gamma_{j+1}(t)-n\gamma_j(t)
+=t^{d-j}(1-nt)>0\qquad(0<t<1/n),
+$$
+and $\gamma_1(t)=t^d>0$. Its coefficient list is
+$$
+e_d,e_{d-1},\ldots,e_1,
+$$
+which is orthonormal. The forms $x_1$ and $x_{j+1}-x_j$, $1\le j<d$, already span the full dual space, so the effective rank is $d$.
+
+Now let $\beta=(\beta_1,\ldots,\beta_d)$ be any eventually feasible polynomial curve tending to zero. The constraint $\beta_1>0$ and the finitely many rows with $n=1$ imply that every $\beta_j$ is eventually positive. Each is therefore nonzero, and
+$$
+\beta_j(t)=a_jt^{k_j}+O(t^{k_j+1}),
+\qquad a_j>0,\quad k_j\in\mathbb N_{>0}.
+$$
+For every fixed positive integer $n$,
+$$
+\frac{\beta_{j+1}(t)}{\beta_j(t)}>n
+$$
+eventually. Consequently this ratio tends to $+\infty$. But
+$$
+\frac{\beta_{j+1}(t)}{\beta_j(t)}
+=\frac{a_{j+1}}{a_j}t^{k_{j+1}-k_j}(1+o(1)),
+$$
+so necessarily $k_{j+1}<k_j$. Hence
+$$
+k_1>k_2>\cdots>k_d\ge1,\qquad k_1\ge d.
+$$
+The degree of $\beta$ is at least the degree of $\beta_1$, which is at least $k_1$, proving the polynomial lower bound. A lexicographic witness of length $r$ would produce an eventually feasible polynomial of degree at most $r$, so $r\ge d$ as well. The displayed curve attains both bounds.
+
+For $d=1$, the stated family reduces to $x_1>0$. It has a strict real solution, and its minimum depth and polynomial degree are both one, attained by $\gamma(t)=t$. More generally, every nonempty finitely feasible family of rank one has a strict real solution by Theorem 41.2.
+
+For $d\ge2$, no common positivity interval exists in the example: at every fixed $t>0$, some integer $n\ge1/t$ makes $1-nt\le0$. Its dual convex hull also illustrates the closure distinction:
+$$
+\frac{n}{n+1}e_1+\frac1{n+1}(e_2-ne_1)
+=\frac{e_2}{n+1}\longrightarrow0,
+$$
+although zero is not in the convex hull itself. Even depth one does not imply a uniform positive margin: the forms $\ell_n(x)=x/n$ are all positive at $x>0$, but $\inf_n\ell_n(x)=0$. $\square$
+
+**theorem 41.7 (Rational rows need not admit rational lexicographic coefficients).** Let $\alpha=\sqrt2$ and consider the rational-coefficient family
+$$
+x_1>0,\qquad
+x_2-px_1>0\quad(p\in\mathbb Q,\ p<\alpha),\qquad
+qx_1-x_2>0\quad(q\in\mathbb Q,\ q>\alpha).
+$$
+Every finite subsystem has a rational solution. Its simultaneous strict real solution set is exactly
+$$
+\{(a,\alpha a):a>0\}.
+$$
+It has a real depth-one witness, but no finite lexicographic witness all of whose vectors belong to $\mathbb Q^2$. Equivalently, no polynomial curve with rational coefficient vectors, of any finite degree and tending to zero, is eventually feasible. There is also no solution over $\mathbb Q(t)$ with the induced order at zero.
+
+**Proof.** For a finite subsystem, choose a rational $s$ larger than all selected lower bounds $p$ and smaller than all selected upper bounds $q$. Such an $s$ exists because every selected lower bound is below $\alpha$ and every selected upper bound is above it. Missing lower or upper bounds can be supplemented by $1$ or $2$, respectively. Then $(1,s)$ is a rational solution.
+
+In a simultaneous real solution, $a=x_1>0$. Dividing the remaining inequalities by $a$ forces
+$$
+p<x_2/a<q
+\qquad(p,q\in\mathbb Q,\ p<\alpha<q).
+$$
+Density of $\mathbb Q$ in $\mathbb R$ implies $x_2/a=\alpha$. Conversely, every point $(a,\alpha a)$ with $a>0$ satisfies all the strict inequalities. In particular, $(1,\alpha)$ is a real witness; its normalization is an orthonormal one-vector witness.
+
+The corresponding simultaneous weak inequalities have solution set
+$$
+K=\{(a,b):a\ge0,\ b-pa\ge0,\ qa-b\ge0
+\text{ for all indicated }p,q\}
+=\{(a,\alpha a):a\ge0\}.
+$$
+Indeed, if $a=0$, the lower and upper inequalities force $b=0$. If $a>0$, the same rational-cut argument forces $b/a=\alpha$.
+
+Suppose a finite rational lexicographic witness exists, and let $v_k$ be its first nonzero vector. Such a vector must exist because of the row $x_1>0$. Every row must evaluate nonnegatively on $v_k$: a negative evaluation would already be its first nonzero entry. Hence
+$$
+v_k\in K\cap\mathbb Q^2=\{0\},
+$$
+contradicting the choice of $v_k$, since $\sqrt2$ is irrational.
+
+The coefficient list of any eventually feasible rational polynomial would be such a witness, proving the polynomial assertion. Finally, a solution in $\mathbb Q(t)^2$ could be multiplied by $tq^2$, with a common rational-polynomial denominator $q$, to produce an eventually feasible rational polynomial tending to zero, exactly as in Theorem 41.5. This is impossible.
+
+In fact, the argument shows that the first nonzero vector of any real lexicographic witness for this family already lies on the displayed positive ray and satisfies every row strictly. The obstruction concerns the coefficient field, not the need for additional real scales. $\square$
+
+**theorem 41.8 (Stability under higher-order errors).** Let $r\ge1$, let $\gamma\in tV[t]$ have degree at most $r$, and suppose it is eventually feasible. If
+$$
+\eta(t)=\gamma(t)+e(t),\qquad \|e(t)\|=o(t^r)
+\quad(t\downarrow0),
+$$
+then $\eta$ is eventually feasible for every fixed row. No continuity of $e$ is required.
+
+**Proof.** Fix $i$. There are $1\le k_i\le r$ and $c_i>0$ such that
+$$
+\ell_i(\gamma(t))=c_it^{k_i}+O(t^{k_i+1}).
+$$
+Let $\|\ell_i\|_*$ denote its operator norm. Then
+$$
+\frac{|\ell_i(e(t))|}{t^{k_i}}
+\le
+\|\ell_i\|_*\frac{\|e(t)\|}{t^r}t^{r-k_i}
+\longrightarrow0.
+$$
+Therefore
+$$
+\frac{\ell_i(\eta(t))}{t^{k_i}}\longrightarrow c_i>0.
+$$
+This proves eventual positivity for that row. It uses only the norm of the fixed form, not a uniform bound over $I$.
+
+For the empty family, the same conclusion is vacuous with $r=0$, $\gamma=0$, and $e=o(1)$. The little-oh hypothesis cannot universally be replaced by big-oh: in $\mathbb R$, the constraint $x>0$, curve $\gamma(t)=t$, and perturbation $\eta(t)=-t$ give an error $-2t=O(t)$ but violate positivity. $\square$
+
+**Assumption 41.9 (Local density of actual inputs).** An actual set $D\subseteq V$ is locally dense around zero when there is a $\rho>0$ such that
+$$
+B_V(0,\rho)\subseteq\overline D^{\,V}.
+$$
+Closures and balls are taken in the topology of the specified input space $V$. This assumption holds when $D$ is dense in $V$. It is stronger than $0\in\overline D^{\,V}$ and does not require that $D$ itself contain a neighborhood.
+
+**theorem 41.10 (Actual simultaneous points near the polynomial curve).** Suppose Assumption 41.9 holds and $\gamma(t)=\sum_{j=1}^rt^jv_j$ is an eventually feasible curve, allowing $r=0$ for the empty family. For arbitrary $I$, there are $t_n\downarrow0$ and $d_n\in D$ with
+$$
+d_n\longrightarrow0,\qquad
+\|d_n-\gamma(t_n)\|<\frac{t_n^r}{n},
+$$
+such that every fixed inequality holds for all sufficiently large $n$.
+
+If $I$ is countable and $F_1\subseteq F_2\subseteq\cdots$ is any increasing finite exhaustion of $I$, the choices can additionally satisfy
+$$
+d_n\in C_{F_n}\qquad\text{for every }n.
+$$
+For an enumeration, this gives one actual point satisfying the first $n$ constraints simultaneously.
+
+**Proof.** For arbitrary $I$, first choose $t_n\downarrow0$ so that $\|\gamma(t_n)\|<\rho/2$. Local density permits a point $d_n\in D$ at distance less than
+$$
+\min\{\rho/2,t_n^r/n\}
+$$
+from $\gamma(t_n)$. The error divided by $t_n^r$ tends to zero, so the fixed-row calculation in Theorem 41.8 applies along this sequence and gives eventual positivity. For $r=0$, there are no rows to check. The error tends to zero and $\gamma(t_n)\to0$, proving $d_n\to0$.
+
+For the additional countable conclusion, choose the parameters recursively, with $t_0=1$, so that
+$$
+0<t_n<\min\{1/n,t_{n-1}/2\},\qquad
+\|\gamma(t_n)\|<\rho/2,\qquad
+\gamma(t_n)\in C_{F_n}.
+$$
+Such a choice exists by eventual positivity for the finite set $F_n$. If $F_n\ne\varnothing$, define
+$$
+\mu_n=
+\min_{i\in F_n}\frac{\ell_i(\gamma(t_n))}{2\|\ell_i\|_*}>0.
+$$
+All these forms are nonzero. If $F_n=\varnothing$, set $\mu_n=1$. Put
+$$
+\delta_n=\min\{\rho/2,t_n^r/n,\mu_n\}>0.
+$$
+Because $\gamma(t_n)\in\overline D^{\,V}$, choose one point
+$$
+d_n\in D\cap B_V(\gamma(t_n),\delta_n).
+$$
+For every $i\in F_n$,
+$$
+\ell_i(d_n)
+>
+\ell_i(\gamma(t_n))-\|\ell_i\|_*\delta_n
+\ge \tfrac12\ell_i(\gamma(t_n))>0.
+$$
+The approximation bound and convergence follow as before.
+
+The selected $d_n$ are actual inputs; neither the coefficient vectors nor the entire polynomial curve are asserted to belong to $D$. In particular, with $D=\mathbb Q^2$, Theorem 41.10 gives rational finite-prefix witnesses for the family of Theorem 41.7, approximating $t(1,\sqrt2)$ with error $o(t)$ along the selected parameters. This does not turn that curve into a rational-coefficient polynomial. $\square$
+
+**theorem 41.11 (Exact criterion for a restricted actual set).** Let $I$ be countable, let $(F_n)$ be an increasing finite exhaustion, and let $D\subseteq V$ be arbitrary. There exist
+$$
+d_n\in D\cap C_{F_n},\qquad d_n\longrightarrow0,
+$$
+if and only if
+$$
+0\in\overline{D\cap C_F}^{\,V}
+\qquad\text{for every finite }F\subseteq I.
+$$
+Thus mere accumulation of $D$ at zero is not a substitute for either local density or this simultaneous finite-system condition.
+
+**Proof.** Given such a sequence and finite $F$, there is an $N$ with $F\subseteq F_N$. The tail $d_n$, $n\ge N$, belongs to $D\cap C_F$ and converges to zero, proving the closure condition.
+
+Conversely, apply the closure condition to $F_n$ and choose
+$$
+d_n\in D\cap C_{F_n}\cap B_V(0,1/n).
+$$
+These choices have all the required properties.
+
+For the failure of mere accumulation, take $V=\mathbb R$, the single constraint $x>0$, and
+$$
+D=\{-1/n:n\in\mathbb N_{>0}\}.
+$$
+Then $0\in\overline D$, but $D\cap C_{\{1\}}=\varnothing$, so no actual strict witness exists.
+
+The criterion in Theorem 41.11 concerns diagonal feasibility; by itself it does not assert approximation to a specified polynomial curve. $\square$
+
+**theorem 41.12 (The common-input-variable bound).** Let $U\subseteq\mathbb R^N$ be a linear input space of dimension $d$, let $I$ be any set, and let $b_i:U\to\mathbb R$ be linear observations with prescribed signs $\sigma_i\in\{-1,1\}$. Define the common observation map
+$$
+B:U\longrightarrow\mathbb R^I,\qquad
+B(u)=(b_i(u))_{i\in I}.
+$$
+Assume simultaneous finite feasibility on this same input space:
+$$
+\forall F\subseteq I\text{ finite}\ \exists u_F\in U\quad
+\forall i\in F,\qquad \sigma_i b_i(u_F)>0.
+$$
+Then there is an orthonormal list $u_1,\ldots,u_r$ in $U$ such that
+$$
+r\le
+\dim\operatorname{span}_{\mathbb R}\{b_i:i\in I\}
+=\operatorname{rank}B
+=d-\dim\ker B
+\le d\le N,
+$$
+and the single common-input curve
+$$
+\Gamma(t)=\sum_{j=1}^rt^ju_j\in U
+$$
+eventually has every prescribed output sign. If $D\subseteq U$ is locally dense around zero in the relative topology of $U$, Theorem 41.10 supplies actual points of $D$ with these eventual signs and, for countable $I$, with the specified finite-prefix simultaneous signs.
+
+**Proof.** Multiplication by $\sigma_i$ does not change the span of the forms. Moreover,
+$$
+\ker B=\bigcap_{i\in I}\ker b_i.
+$$
+The Riesz representatives of the forms span the orthogonal complement of this kernel within $U$, while rank-nullity for the linear map $B$ gives
+$$
+\operatorname{rank}B=\dim U-\dim\ker B.
+$$
+Apply Theorem 41.2 in $V=U$ to the forms $\sigma_i b_i$. Every coefficient and hence every value of $\Gamma$ remains in the common input space. The actual-point assertion is Theorem 41.10 applied in that same relative space.
+
+If finite feasibility survives the addition of any number of constraints on a fixed $d$-dimensional input space, the required depth never exceeds $d$. Separate witnesses for separate outputs do not suffice for the hypothesis: on $U=\mathbb R$, the observations $u$ and $-u$ can each be positive at some input, but cannot both be positive at one input. $\square$
+
+## 追加锚（本行以下为增补区）
