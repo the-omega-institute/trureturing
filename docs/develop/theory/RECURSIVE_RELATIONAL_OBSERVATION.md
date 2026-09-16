@@ -9668,3 +9668,914 @@ $$
 [^rro29-ideal]: Tetsuhiro Shimizu, *L-ideals of Measure Algebras*, Proceedings of the Japan Academy 48 (1972), 172–176，§1，特别第172—173页关于通常卷积测度代数及连续测度理想的记号。本节圆周上的无原子理想性质由逐单点卷积积分另行证明。[正文](https://www.jstage.jst.go.jp/article/pjab1945/48/3/48_3_172/_pdf/-char/ja)。
 
 ## 追加锚（本行以下为增补区）
+## 30. 正性与全测度相位律的延拓唯一性
+
+**假设 30.0（固定载体、测度与全测度相位契约）。** 沿用定义25.0及假设25.1的原始紧数字空间 $K$、原始圆周群 $\mathbb T$、连续满射 $H:K\to\mathbb T$、分裂相位集 $E=\{E_m:m\ge1\}$、分裂点集 $S=H^{-1}(E)=\{x_m^+,x_m^-:m\ge1\}$ 及准确闭图 $\Gamma$。特别，$E$ 中的纤维恰有两个点，其他纤维恰有一个点。本节全部关于这些对象的结论均以该精确纤维与闭图契约为前提。
+
+对紧度量空间 $X$，$M(X)$ 表示全部有限实有符号正则 Borel 测度，$M_+(X)$ 表示其正锥，并记
+$$
+\varepsilon_X(\mu)=\mu(X),\qquad
+\|\mu\|_{\mathrm{TV}}=|\mu|(X).
+$$
+全变差不含二分之一因子。采用定理28.10的典范分解
+$$
+\mu=\mu_{\mathrm{at}}+\mu_{\mathrm{na}},
+$$
+其中非原子性指全变差测度无原子，不指相对于 Haar 测度绝对连续。Jordan 分解、全变差及测度范数的约定参见 Daniel V. Tausk，*Weak\* topology for the space of finite measures on a topological space*，[§2，PDF第2—3页](https://www.ime.usp.br/~tausk/texts/WeakTopologyMeasures.pdf)。
+
+固定定理28.3的 Borel 截面
+$$
+s(\theta)=
+\begin{cases}
+k_\theta,&\theta\notin E,\\
+x_m^-,&\theta=E_m,
+\end{cases}
+\qquad H\circ s=\operatorname{id}_{\mathbb T}.
+$$
+圆周卷积始终是定义28.6在原始圆周上定义的测度卷积。
+
+称一个实双线性映射 $B:M(K)\times M(K)\to M(K)$ 满足正性与全测度相位契约，若
+$$
+\mu,\nu\in M_+(K)\ \Longrightarrow\ B(\mu,\nu)\in M_+(K)
+$$
+且
+$$
+\forall\mu,\nu\in M_+(K),\qquad
+H_\#B(\mu,\nu)=(H_\#\mu)*_{\mathbb T}(H_\#\nu).
+$$
+后一等式是对每个 Borel 相位集合的测度相等，量词覆盖全部有限正测度；它不是仅对 Dirac 输入的要求。此定义不预设有界性、连续性、交换律、结合律或核积分表示。
+
+记
+$$
+P^{(0)}=P^{-1},\qquad P^{(\infty)}=P^{+1},
+$$
+其中右端为定义23.8的两个固定符号概率核，等同关系由定理25.12给出；$\infty$ 始终是形式参数。相应的逐集合积分运算 $\star_0,\star_\infty$ 取定理28.7的构造。
+
+**定理 30.1（可数有限分裂下的正提升判据）。** 设 $X,Y$ 为非空紧度量空间，$h:X\to Y$ 连续且满射，$D\subseteq Y$ 可数，每个纤维有限，且 $Y\setminus D$ 上的纤维为单点。置
+$$
+X_0=X\setminus h^{-1}(D),\qquad Y_0=Y\setminus D,\qquad
+D_*=\{y\in D:|h^{-1}(\{y\})|\ge2\}.
+$$
+则 $h|_{X_0}:X_0\to Y_0$ 是同胚，并存在 Borel 截面 $q:Y\to X$。
+
+对每个 $\eta\in M_+(Y)$，全部正提升 $\rho\in M_+(X)$、$h_\#\rho=\eta$ 恰为
+$$
+\rho=q_\#(\eta|_{Y_0})
++\sum_{y\in D}\ \sum_{x\in h^{-1}(\{y\})} a_{y,x}\delta_x,
+\qquad
+a_{y,x}\ge0,\qquad
+\sum_{x\in h^{-1}(\{y\})}a_{y,x}=\eta(\{y\}).
+$$
+该级数在全变差中绝对收敛。正提升唯一当且仅当 $\eta(D_*)=0$。特别，$\eta(D)=0$ 时唯一正提升为 $q_\#\eta$，与分裂纤维上的截面选择无关。此外，
+$$
+\ker h_\#\cap M_+(X)=\{0\}.
+$$
+
+**证明。** 纤维条件先给限制映射为连续双射。若 $y\in Y_0$ 的唯一原像为 $x$，且 $U\subseteq X$ 是包含 $x$ 的开集，则
+$$
+W=Y\setminus h(X\setminus U)
+$$
+为包含 $y$ 的开集：被除去的集合紧，且不能包含 $y$。对 $y'\in W\cap Y_0$，其唯一原像必在 $U$ 中。这证明逆映射连续，与定理28.3的论证相同，不要求 $X_0$ 紧。
+
+集合 $D$ 及 $h^{-1}(D)$ 均为可数 Borel 集。在 $Y_0$ 上取上述逆映射，在每个 $y\in D$ 上选取一个纤维点，得到截面 $q$。对任意 Borel 集 $A\subseteq X$，$q^{-1}(A)\cap Y_0$ 在 $Y_0$ 中为 Borel 集，因而在 $Y$ 中为 Borel 集；剩余部分是 $D$ 的一个子集，也为 Borel 集。因此 $q$ 是 Borel 映射。
+
+若 $A\subseteq X_0$ 是 Borel 集，同胚性保证 $h(A)$ 为 $Y_0$ 中、进而为 $Y$ 中的 Borel 集，且
+$$
+h^{-1}(h(A))=A.
+$$
+所以任何正提升均满足
+$$
+\rho(A)=\eta(h(A))
+=\bigl(q_\#(\eta|_{Y_0})\bigr)(A).
+$$
+这确定了它在 $X_0$ 上的限制。其余部分集中在可数集合 $h^{-1}(D)$ 上，故只能是所列点质量级数；在每个纤维上读取推前等式，恰给所列系数和条件。所有系数的和为 $\eta(D)<\infty$，因此级数全变差绝对收敛。
+
+反之，任何满足这些条件的系数都给出有限正 Borel 测度。第一项的推前是 $\eta|_{Y_0}$，级数的推前是 $\eta|_D$，所以总推前为 $\eta$。上述推前、限制及级数所得测度均正则：紧度量空间上的有限 Borel 测度正则，定理28.4已经证明此事实；亦参见 Tausk，[引理3.4、推论3.5](https://www.ime.usp.br/~tausk/texts/WeakTopologyMeasures.pdf)。这里没有用集合双射代替可测性或正则性的证明。
+
+若 $\eta(D_*)=0$，每个多点纤维的允许系数全为零，单点纤维的唯一系数又已固定，故提升唯一。若 $\eta(D_*)>0$，可数性保证存在 $y\in D_*$ 满足 $\eta(\{y\})>0$。将此质量分别全部放在该纤维的两个不同点上，并保持其他系数相同，得到两个不同正提升。这证明充要条件及其特别情形。
+
+最后，$\rho\ge0$ 且 $h_\#\rho=0$ 时，
+$$
+\rho(X)=(h_\#\rho)(Y)=0,
+$$
+故 $\rho=0$。这只是正锥与推前核的交为零，并不表示两个任意正测度的相同推前总能决定它们相等；两者之差未必正，多点纤维上的上述自由度正是区别。证毕。
+
+**定理 30.2（正性与质量给出的自动全变差压缩）。** 设 $X$ 为非空紧度量空间，$B:M(X)^2\to M(X)$ 实双线性、保持正测度对的正性，并对全部正输入满足
+$$
+\varepsilon_X(B(\mu,\nu))=\varepsilon_X(\mu)\varepsilon_X(\nu).
+$$
+则对任意实有符号输入都有测度不等式及范数估计
+$$
+|B(\mu,\nu)|\le B(|\mu|,|\nu|),\qquad
+\|B(\mu,\nu)\|_{\mathrm{TV}}
+\le\|\mu\|_{\mathrm{TV}}\|\nu\|_{\mathrm{TV}}.
+$$
+质量恒等式也对全部实有符号输入成立，并且
+$$
+\|B\|_{\mathrm{bil}}=1.
+$$
+特别，假设30.0的全测度相位契约蕴含这里的质量前提。
+
+正算子的自动连续性具有经典的一般理论，参见 Wolfgang Arendt、Robin Nittka，*Equivalent complete norms and positivity*，*Archiv der Mathematik* 92 (2009), 414–427，[定理2.8及例2.3(a)，作者公开全文](https://www.researchgate.net/publication/226200984_Equivalent_complete_norms_and_positivity)。正多线性映射的模支配也见 Geraldo Botelho、Vinícius C. C. Miranda，*Compact positive multilinear operators on Banach lattices*，[§1的正多线性映射定义之后](https://arxiv.org/html/2509.04652v1)。本结论中的精确常数由以下质量计算直接得到。
+
+**证明。** 对任意 $\mu,\nu$ 取 Jordan 分解，定义两个正测度
+$$
+U=B(\mu^+,\nu^+)+B(\mu^-,\nu^-),\qquad
+V=B(\mu^+,\nu^-)+B(\mu^-,\nu^+).
+$$
+仅由双线性即有
+$$
+B(\mu,\nu)=U-V,\qquad B(|\mu|,|\nu|)=U+V.
+$$
+对任意 Borel 集 $A$ 的有限 Borel 分割 $A=\bigsqcup_i A_i$，
+$$
+\sum_i |(U-V)(A_i)|
+\le\sum_i\bigl(U(A_i)+V(A_i)\bigr)=U(A)+V(A).
+$$
+取分割上确界得到 $|U-V|(A)\le U(A)+V(A)$，故得测度支配。再用质量前提于两个正测度 $|\mu|,|\nu|$，得到
+$$
+\|B(\mu,\nu)\|_{\mathrm{TV}}
+\le B(|\mu|,|\nu|)(X)
+=|\mu|(X)|\nu|(X).
+$$
+这没有先使用 $B$ 的任何连续性。对四个 Jordan 项分别读取质量，则得到全部有符号输入的质量恒等式。
+
+正概率输入的输出是质量一的正测度，因而范数恰为一。由于 $X$ 非空，Dirac 概率存在；它们使双线性范数下界达到一，而已证估计给上界一。因此 $\|B\|_{\mathrm{bil}}=1$。
+
+对满足假设30.0契约的 $B$，在相位等式上读取整个圆周的质量，得到
+$$
+B(\mu,\nu)(K)
+=\bigl((H_\#\mu)*_{\mathbb T}(H_\#\nu)\bigr)(\mathbb T)
+=\mu(K)\nu(K)
+$$
+对全部正输入成立。最后，$H_\#$ 线性、圆周卷积双线性，所以同样的四项 Jordan 展开还证明：相位契约对全部正输入成立，等价于它对全部实有符号输入成立。这里使用的是相位契约对四对 Jordan 正部的适用性，而不是从 Dirac 对推出全测度相位律。证毕。
+
+**定理 30.3（含非原子因子的乘积完全由相位强制）。** 对原始 $H:K\to\mathbb T$，正测度 $\mu$ 非原子当且仅当 $H_\#\mu$ 非原子。设 $B$ 满足假设30.0的正性与全测度相位契约。若 $\mu,\nu\in M_+(K)$ 且至少一个非原子，则
+$$
+B(\mu,\nu)
+=s_\#\bigl((H_\#\mu)*_{\mathbb T}(H_\#\nu)\bigr),
+$$
+其输出非原子，且在 $S$ 上质量为零。
+
+同一等式对全部实有符号 $\mu,\nu$ 仍成立，只要至少一个输入的全变差非原子；此时输出的全变差在 $S$ 上为零，且输出非原子。
+
+**证明。** 先处理正测度。对任意 $\theta\in\mathbb T$，纤维有限给出
+$$
+(H_\#\mu)(\{\theta\})
+=\sum_{x\in H^{-1}(\{\theta\})}\mu(\{x\}).
+$$
+故 $\mu$ 无单点原子时，其推前也无单点原子。反之，
+$$
+0\le\mu(\{x\})\le(H_\#\mu)(\{H(x)\})
+$$
+给出逆向蕴含。在紧度量空间上，无单点原子等价于非原子性，所需论证已包含在定理28.10的有限网格分割证明中。
+
+若 $\alpha,\beta$ 为圆周上的正测度，且 $\alpha$ 非原子，则对每个 $\theta$，由定理28.4的 Fubini 定理，
+$$
+(\alpha*_{\mathbb T}\beta)(\{\theta\})
+=\int_{\mathbb T}\alpha(\{\theta-\eta\})\,d\beta(\eta)=0.
+$$
+因此该卷积非原子；另一因子的情形由圆周卷积的交换律得到，不需要 $B$ 交换。这个非原子卷积理想是经典测度代数分解的一部分，参见 Matthew Daws，*Characterising weakly almost periodic functionals on the measure algebra*，[§3，引理3.7紧前的原子／非原子分解段落](https://arxiv.org/html/0904.0436v2)；其实有符号形式已在定理28.10证明。
+
+令
+$$
+\omega=(H_\#\mu)*_{\mathbb T}(H_\#\nu).
+$$
+在本定理的正输入情形，$\omega$ 正且非原子，所以 $\omega(E)=0$。全测度相位律与输出正性给出
+$$
+B(\mu,\nu)\ge0,\qquad H_\#B(\mu,\nu)=\omega.
+$$
+定理30.1在 $D=E$ 时给出唯一正提升 $s_\#\omega$，因而得到所列等式。它在 $S$ 上的质量为 $\omega(E)=0$；对每个 $x$，又有
+$$
+(s_\#\omega)(\{x\})
+=\omega(s^{-1}(\{x\}))
+\le\omega(\{H(x)\})=0.
+$$
+所以输出非原子。
+
+现在令 $\mu$ 为实有符号非原子测度，$\nu$ 为任意实有符号测度。由于
+$$
+0\le\mu^\pm\le|\mu|,
+$$
+两个 Jordan 部分 $\mu^\pm$ 均非原子。分别对四对正输入 $(\mu^\pm,\nu^\pm)$ 应用刚证结论，再按照双线性符号相加。Borel 推前 $s_\#$ 的线性及圆周卷积的双线性给出同一公式。每个正输出均在 $S$ 上为零且非原子；其有限有符号和也无单点质量，因而非原子，其全变差也在 $S$ 上为零。非原子因子位于第二槽时，同样在该槽取 Jordan 分解并应用正输入结论。
+
+因此本证明从未将“有符号推前为零”误当成“原测度为零”。若允许任意有符号输出，$v_m=\delta_{x_m^+}-\delta_{x_m^-}$ 的推前确实为零；这里先在四个正输出上排除所有分裂质量，再取有限有符号和，故没有留下可由正负抵消掩盖的分裂残差。证毕。
+
+**定理 30.4（正相位提升由点行唯一决定的显式公式）。** 设 $B:M(K)^2\to M(K)$ 满足假设30.0的正性与全测度相位契约，记其实际点行为
+$$
+Q_{x,y}=B(\delta_x,\delta_y).
+$$
+对任意 $\mu,\nu\in M(K)$，置
+$$
+\Omega_{\mu,\nu}
+=(H_\#\mu)*_{\mathbb T}(H_\#\nu)
+-(H_\#\mu_{\mathrm{at}})*_{\mathbb T}(H_\#\nu_{\mathrm{at}}).
+$$
+则 $\Omega_{\mu,\nu}$ 非原子，并且
+$$
+B(\mu,\nu)
+=\sum_{x,y\in K}\mu(\{x\})\nu(\{y\})Q_{x,y}
++s_\#\Omega_{\mu,\nu}.
+$$
+级数只涉及两个输入实际原子集的乘积，在全变差中绝对收敛，且
+$$
+\sum_{x,y}
+\bigl\|\mu(\{x\})\nu(\{y\})Q_{x,y}\bigr\|_{\mathrm{TV}}
+=\|\mu_{\mathrm{at}}\|_{\mathrm{TV}}\,
+ \|\nu_{\mathrm{at}}\|_{\mathrm{TV}}.
+$$
+因此，两个满足正性及全测度相位契约的实双线性运算，若在所有 Dirac 对上相同，则在整个 $M(K)^2$ 上相同。此结论不要求交换律、结合律或点行的联合 Borel 可测性。
+
+**证明。** 定理30.2保证 $B$ 自动双线性压缩。每个 $Q_{x,y}$ 为正测度，质量一，所以
+$$
+\|Q_{x,y}\|_{\mathrm{TV}}=1.
+$$
+相位律还给
+$$
+H_\#Q_{x,y}=\delta_{H(x)+H(y)}.
+$$
+由正性，$Q_{x,y}$ 集中在对应有限相位纤维上，因而也是有限原子测度。
+
+由定理28.10，$\mu,\nu$ 的实际原子集至多可数，且
+$$
+\mu_{\mathrm{at}}=\sum_x\mu(\{x\})\delta_x,\qquad
+\nu_{\mathrm{at}}=\sum_y\nu(\{y\})\delta_y
+$$
+均在全变差中绝对收敛。结合点行范数一，立即得到双重级数的所列绝对范数和，故该级数在完备空间 $M(K)$ 中收敛。
+
+为证明其和确实是 $B(\mu_{\mathrm{at}},\nu_{\mathrm{at}})$，取两个原子级数的有限截断 $a_n,b_n$。双线性压缩给
+$$
+\begin{aligned}
+&\|B(\mu_{\mathrm{at}},\nu_{\mathrm{at}})-B(a_n,b_n)\|_{\mathrm{TV}}\\
+&\quad\le
+\|\mu_{\mathrm{at}}-a_n\|_{\mathrm{TV}}\|\nu_{\mathrm{at}}\|_{\mathrm{TV}}
++\|a_n\|_{\mathrm{TV}}\|\nu_{\mathrm{at}}-b_n\|_{\mathrm{TV}}
+\longrightarrow0.
+\end{aligned}
+$$
+有限双线性展开给出 $B(a_n,b_n)$ 的对应有限双重和，故原子乘积正是所列级数。这仅使用有限原子测度在 $M_{\mathrm{at}}(K)$ 内的稠密性；定理28.11已经区分它与整个 $M(K)$ 的全变差拓扑，后者没有所需的原子稠密性。
+
+非原子有符号测度的 Jordan 部分非原子，所以定理30.3也保证其相位推前非原子。原子测度的相位推前则仍原子。展开两种输入的典范分解，得到
+$$
+\begin{aligned}
+\Omega_{\mu,\nu}
+={}&(H_\#\mu_{\mathrm{na}})*_{\mathbb T}(H_\#\nu_{\mathrm{at}})\\
+&+(H_\#\mu_{\mathrm{at}})*_{\mathbb T}(H_\#\nu_{\mathrm{na}})\\
+&+(H_\#\mu_{\mathrm{na}})*_{\mathbb T}(H_\#\nu_{\mathrm{na}}).
+\end{aligned}
+$$
+每一项均非原子，由定理28.10的非原子卷积理想性质得出 $\Omega_{\mu,\nu}$ 非原子。对 $B$ 的相应三个混合项分别应用定理30.3，再用 $s_\#$ 线性，其和恰为 $s_\#\Omega_{\mu,\nu}$。加上已经确定的原子乘积，即得全部有符号输入的公式。
+
+公式中的第一项保留 $K$ 上每个实际原子的系数，而不是仅保留其相位总质量。因此，同一分裂纤维内输入系数的正负抵消不会遗漏原子残差；这些残差的乘积已经由点行级数确定。其余三项则已经在定理30.3的正输入阶段排除了分裂残差。于是相同点行使两运算的公式逐项相同，证明唯一性。证毕。
+
+**定理 30.5（两个正核在全部实有符号测度上的唯一延拓）。** 固定 $t\in\{0,\infty\}$。实双线性运算 $B:M(K)^2\to M(K)$ 满足正性、全测度相位律及
+$$
+B(\delta_x,\delta_y)=P^{(t)}_{x,y}\qquad(x,y\in K)
+$$
+当且仅当
+$$
+B(\mu,\nu)=\mu\star_t\nu\qquad(\mu,\nu\in M(K)).
+$$
+特别，以上三个条件自动强制全部 Borel 集上的积分公式
+$$
+B(\mu,\nu)(A)
+=\int_K\int_KP^{(t)}_{x,y}(A)\,d\nu(y)\,d\mu(x)
+\qquad
+(\mu,\nu\in M(K),\ A\subseteq K\text{ Borel}).
+$$
+该积分表示是结论而非前提。此运算自动交换、在全部测度上结合，且双线性全变差范数为一。
+
+**证明。** 定理28.7已经用 Borel 点行和逐集合有符号积分构造 $\star_t$，证明其值为有限实有符号正则 Borel 测度，并证明它在两个端点参数保持正性、满足全部测度的相位律且具有指定点行。因此 $\star_t$ 本身满足本定理的三个条件。
+
+反过来，任意满足这些条件的 $B$ 与 $\star_t$ 均适用定理30.4，且点行完全相同，所以在全部实有符号输入上相同。将定理28.7的积分公式代入此相等，得到所列逐集合公式；没有对未知 $B$ 预设积分性或连续性。交换律由定理28.7、全部测度上的结合律由定理28.9传递而来，范数一也可直接由定理30.2得到。证毕。
+
+**定理 30.6（仅假设 Dirac 三元组结合的全部正运算分类）。** 设 $B:M(K)^2\to M(K)$ 实双线性。下列条件合在一起，等价于 $B$ 恰为 $\star_0$ 或 $\star_\infty$：$B$ 保持正测度对的正性；它满足假设30.0的全测度相位律；对全部 $x,y\in K$ 有准确闭图的支撑包含条件
+$$
+\operatorname{supp} B(\delta_x,\delta_y)\subseteq\Gamma(x,y);
+$$
+并且仅要求下列有序 Dirac 三元组结合律：
+$$
+B\bigl(B(\delta_x,\delta_y),\delta_z\bigr)
+=B\bigl(\delta_x,B(\delta_y,\delta_z)\bigr)
+\qquad(x,y,z\in K).
+$$
+这里支撑条件是包含于准确的 $\Gamma$，不是支撑等于 $\Gamma$。无需另行假设全部测度的结合律、交换律、有界性或积分表示。
+
+若把支撑包含条件加强为
+$$
+\operatorname{supp}B(\delta_x,\delta_y)=\Gamma(x,y)
+\qquad(x,y\in K),
+$$
+则不存在满足其余条件的运算。
+
+**证明。** 记 $Q_{x,y}=B(\delta_x,\delta_y)$。正性与相位律给出
+$$
+Q_{x,y}\ge0,\qquad Q_{x,y}(K)=1,\qquad
+Q_{x,y}\bigl(K\setminus H^{-1}(\{H(x)+H(y)\})\bigr)=0.
+$$
+该相位纤维至多两点。因此 $Q_{x,y}$ 是有限概率分布，其拓扑支撑恰为纤维内具有严格正质量的点集；支撑包含假设恰使它成为定义23.2的可容许概率核。
+
+因为每个中间行有限，双线性本身就给
+$$
+B(Q_{x,y},\delta_z)
+=\sum_{u\in\operatorname{supp}Q_{x,y}}
+Q_{x,y}(\{u\})Q_{u,z},
+$$
+$$
+B(\delta_x,Q_{y,z})
+=\sum_{v\in\operatorname{supp}Q_{y,z}}
+Q_{y,z}(\{v\})Q_{x,v}.
+$$
+故所假设的 Dirac 三元组结合律正是定义23.2的有限核结合律，没有在此处使用无限级数或全空间稠密性。定理23.9遂给出唯一全局符号，迫使 $Q=P^{-1}$ 或 $Q=P^{+1}$。由定理25.12，它们分别是 $P^{(0)}$ 和 $P^{(\infty)}$。再应用定理30.5，便得 $B=\star_0$ 或 $B=\star_\infty$。
+
+反向，定理28.7、28.9保证这两个运算保持正性、满足全测度相位律且在全部测度上结合；其点行由定理25.9满足准确支撑包含条件，故当然满足所列较弱的三元组要求。两者在 $(\delta_{0_K},\delta_{x_1^+})$ 处分别给出 $\delta_{x_1^-}$ 与 $\delta_{x_1^+}$，所以确有两个不同解。
+
+最后，假设25.1给
+$$
+\Gamma(0_K,x_1^+)=\{x_1^+,x_1^-\},
+$$
+而两个分类解在该输入对处都只有单点支撑。因此全支撑等式排除两者，故无解。
+
+本证明中，Dirac 三元组首先只决定有限概率核的结合性；从这些点行到任意测度的唯一性则另外使用定理30.4的正性、全测度相位律及典范测度分解。它不是关于任意实双线性运算都由 Dirac 值决定的断言。证毕。
+
+**定理 30.7（删去全测度相位律后的正结合反例）。** 即使保留正性、质量乘法律、双线性范数一、全部测度上的交换律及结合律，并要求在整个原子子代数上与 $\star_t$ 相同，也不能省略定理30.5中的全测度相位律。
+
+准确地，固定任一 $t\in\{0,\infty\}$，取定理28.11的非原子 Haar 概率提升 $\mathfrak m=s_\#\lambda$，并定义
+$$
+\widehat B_t(\mu,\nu)
+=\mu_{\mathrm{at}}\star_t\nu_{\mathrm{at}}
++\Bigl(\varepsilon_K(\mu)\varepsilon_K(\nu)
+-\varepsilon_K(\mu_{\mathrm{at}})
+ \varepsilon_K(\nu_{\mathrm{at}})\Bigr)\mathfrak m.
+$$
+则 $\widehat B_t$ 具有上述所有保留性质，因而有全部指定点行及其准确闭图支撑，却不满足全测度相位律，也不等于 $\star_t$。
+
+**证明。** 定理28.10保证原子投影线性，故该公式实双线性；各项均为有限实有符号正则 Borel 测度，所以运算良定义。
+
+若 $\mu,\nu\ge0$，其原子与非原子部分均正。记四部分的质量为
+$$
+a_0=\varepsilon_K(\mu_{\mathrm{at}}),\quad
+u_0=\varepsilon_K(\mu_{\mathrm{na}}),\quad
+b_0=\varepsilon_K(\nu_{\mathrm{at}}),\quad
+v_0=\varepsilon_K(\nu_{\mathrm{na}}).
+$$
+$\mathfrak m$ 的系数为
+$$
+(a_0+u_0)(b_0+v_0)-a_0b_0=a_0v_0+u_0b_0+u_0v_0\ge0.
+$$
+第一项也是正测度，故 $\widehat B_t$ 保持正性。对任意有符号输入，第一项的质量为 $\varepsilon_K(\mu_{\mathrm{at}})\varepsilon_K(\nu_{\mathrm{at}})$，故直接读取整个空间的质量得到
+$$
+\varepsilon_K(\widehat B_t(\mu,\nu))
+=\varepsilon_K(\mu)\varepsilon_K(\nu).
+$$
+因此定理30.2适用，给出双线性范数恰为一。交换律由公式及 $\star_t$ 的交换律直接得到。
+
+定理28.11保证两个原子测度的 $\star_t$ 乘积仍原子，而 $\mathfrak m$ 非原子。因此
+$$
+\bigl(\widehat B_t(\mu,\nu)\bigr)_{\mathrm{at}}
+=\mu_{\mathrm{at}}\star_t\nu_{\mathrm{at}}.
+$$
+为检查全部有符号输入的结合律，记
+$$
+a=\mu_{\mathrm{at}},\quad b=\nu_{\mathrm{at}},\quad c=\xi_{\mathrm{at}},
+\qquad
+M=\varepsilon_K(\mu),\quad N=\varepsilon_K(\nu),\quad
+R=\varepsilon_K(\xi).
+$$
+刚证的原子部分及质量公式使左括号准确等于
+$$
+(a\star_t b)\star_t c
++\Bigl(MNR-\varepsilon_K(a)\varepsilon_K(b)
+                  \varepsilon_K(c)\Bigr)\mathfrak m,
+$$
+右括号准确等于
+$$
+a\star_t(b\star_t c)
++\Bigl(MNR-\varepsilon_K(a)\varepsilon_K(b)
+                  \varepsilon_K(c)\Bigr)\mathfrak m.
+$$
+原子子代数的结合律使两式相等。这证明全部测度上的结合律，而不只是 Dirac 三元组的结合律。
+
+若 $\mu,\nu$ 均原子，$\mathfrak m$ 的系数为零，所以 $\widehat B_t(\mu,\nu)=\mu\star_t\nu$。于是整个原子子代数、所有 Dirac 点行及其闭图支撑均被保留。
+
+最后给出全测度相位律的实际失败输入。令
+$$
+J=\{[r]\in\mathbb T:0\le r<1/2\},\qquad
+\sigma=2\lambda|_J,\qquad n=s_\#\sigma.
+$$
+$J$ 是闭半圆去掉一个端点所得的 Borel 集，且 $J$ 与其半周平移不交并覆盖圆周。Haar 平移不变性给 $\lambda(J)=1/2$，所以 $\sigma$ 是非原子概率，并且
+$$
+\sigma(J)=1\ne\tfrac12=\lambda(J).
+$$
+Borel 截面推前使 $n$ 为正则概率且 $H_\#n=\sigma$；由定理30.3的正测度非原子判据，$n$ 非原子。因此公式给
+$$
+\widehat B_t(\delta_{0_K},n)=\mathfrak m,
+$$
+但
+$$
+H_\#\widehat B_t(\delta_{0_K},n)=\lambda
+\ne\sigma
+=\delta_0*_{\mathbb T}\sigma
+=(H_\#\delta_{0_K})*_{\mathbb T}(H_\#n).
+$$
+这在两个具体正概率输入处违反全测度相位契约。定理30.3则给 $\delta_{0_K}\star_t n=s_\#\sigma=n$，所以两运算确实不同。由此，正性、全变差有界性乃至完整结合律和全部原子乘法，都不能代替被省略的全测度相位要求。证毕。
+
+## 追加锚（本行以下为增补区）
+## 31. 复乘法观察的完全分类、测度重建与可逆性边界
+
+**假设 31.0（原载体、完整闭图与全测度乘法）。** 沿用定义25.0及假设25.1的固定定向。具体地，令
+$$
+\phi=\frac{1+\sqrt5}{2},\qquad \alpha=\phi^{-1},\qquad K=\{x\in\{0,1\}^{\mathbb N}:x_jx_{j+1}=0\},\qquad \mathbb T=\mathbb R/\mathbb Z,
+$$
+$$
+d_K(x,y)=\sum_{j\ge0}2^{-j-1}|x_j-y_j|,\qquad H(x)=\left[\sum_{j\ge0}(-1)^{j+1}\alpha^{j+2}x_j\right].
+$$
+这里始终使用原数字拓扑及原圆周群拓扑。令 $E_m=[-m\phi]$、$E=\{E_m:m\ge1\}$。采用准确纤维等式
+$$
+H^{-1}(\{E_m\})=\{x_m^+,x_m^-\},\qquad H^{-1}(\{\theta\})=\{k_\theta\}\quad(\theta\notin E),\qquad H^{-1}(\{[n\phi]\})=\{Z(n)\}\quad(n\ge0).
+$$
+映射 $H$ 连续且满射。符号集 $\mathcal S(x)$ 在 $x_m^+$、$x_m^-$ 处分别为 $\{+1\}$、$\{-1\}$，在其他点处为 $\{-1,+1\}$。完整加法闭图为
+$$
+\Gamma=\overline{\{(Z(a),Z(b),Z(a+b)):a,b\in\mathbb N\}}^{\,K^3},
+$$
+并采用准确输入纤维公式
+$$
+\Gamma(x,y)=\begin{cases}\{k_\sigma\},&\sigma=H(x)+H(y)\notin E,\\ \{x_r^s:s\in\mathcal S(x)\cup\mathcal S(y)\},&\sigma=H(x)+H(y)=E_r.\end{cases}
+$$
+固定 $t\in(\mathbb R\setminus\{-1,1\})\sqcup\{\infty\}$，其中 $\infty$ 是形式参数。使用定理25.9的点核 $P^{(t)}_{x,y}$，以及定理28.7—28.9在全部有限实有符号正则 Borel 测度上给出的乘法
+$$
+(\mu\star_t\eta)(D)=\int_K\int_KP^{(t)}_{x,y}(D)\,d\eta(y)\,d\mu(x)
+$$
+和实际有界代数同构
+$$
+\Phi_t^{\mathbb R}\mu=(H_\#\mu,R_t\mu),\qquad \Psi_t^{\mathbb R}(\nu,g)=L_t\nu+\sum_{m\ge1}\frac{g_m}{d'_m}v_m.
+$$
+这里 $v_m=\delta_{x_m^+}-\delta_{x_m^-}$。所采用的是逐 Borel 集积分等式和全测度同构，而不只是点质量乘法一致性。本节结论均在这些前提下成立。数学依据为假设25.1、定理25.9、定理28.2—28.9。
+
+**定义 31.1（复测度、复化与序列代数）。** 对紧致度量空间 $X$，记 $M_{\mathbb C}(X)$ 为有限复正则 Borel 测度空间，采用
+$$
+\|\mu\|_{\mathrm{TV}}=|\mu|(X),\qquad \langle f,\mu\rangle=\int_Xf\,d\mu.
+$$
+每个复测度唯一写成 $\mu=\mu_1+i\mu_2$，其中 $\mu_1,\mu_2\in M(X)$。定义实乘法的复双线性延拓为
+$$
+(\mu_1+i\mu_2)\star_t(\eta_1+i\eta_2)=\mu_1\star_t\eta_1-\mu_2\star_t\eta_2+i(\mu_1\star_t\eta_2+\mu_2\star_t\eta_1).
+$$
+同样复线性延拓 $L_t,R_t,\Phi_t^{\mathbb R},\Psi_t^{\mathbb R}$，以下仍记为 $L_t,R_t,\Phi_t,\Psi_t$。保留
+$$
+p_m=\frac{t^m}{t^m-1}\quad(t\ne\infty),\qquad p_m=1\quad(t=\infty),
+$$
+$$
+\rho_t=\begin{cases}|t|,&|t|<1,\\ |t|^{-1},&|t|>1,\\0,&t=\infty,\end{cases}\qquad C_t=\frac{1+\rho_t}{1-\rho_t},\qquad d'_m=\begin{cases}1-t^m,&|t|<1,\\t^{-m}-1,&|t|>1,\\-1,&t=\infty.\end{cases}
+$$
+有限参数分支不包括形式参数。令
+$$
+r_m=d'_m\bigl((1-p_m)\mathbf1_{\{x_m^+\}}-p_m\mathbf1_{\{x_m^-\}}\bigr),\qquad (R_t\mu)_m=\int_Kr_m\,d\mu,\qquad u_m=\frac{v_m}{d'_m}.
+$$
+置
+$$
+\mathcal M=M_{\mathbb C}(\mathbb T),\qquad \mathcal S_+=\ell^1(\mathbb N_{>0},\mathbb C),\qquad \mathcal S_0=\ell^1(\mathbb N_0,\mathbb C).
+$$
+$\mathcal M$ 使用原圆周测度卷积；两个序列空间使用指数相加的卷积。其标准向量记为 $e_m$，并把 $\mathcal S_+$ 识别为 $\mathcal S_0$ 中常数项为零的闭理想。直和 $\mathcal M\oplus_1\mathcal S_+$ 的乘法为
+$$
+(\nu,g)(\xi,h)=(\nu*\xi,g*h),\qquad \|(\nu,g)\|_\oplus=\|\nu\|_{\mathrm{TV}}+\|g\|_1.
+$$
+交叉乘积为零。
+
+**定理 31.2（全复测度接口与准确范数）。** 定义31.1的复化在全部 $M_{\mathbb C}(K)$ 上良定义、交换且结合，并仍满足逐集积分公式。其准确总变差乘法常数为
+$$
+\|\mu\star_t\eta\|_{\mathrm{TV}}\le C_t\|\mu\|_{\mathrm{TV}}\|\eta\|_{\mathrm{TV}},\qquad \|\star_t\|_{\mathrm{bil}}=C_t.
+$$
+映射
+$$
+\Phi_t\mu=(H_\#\mu,R_t\mu)
+$$
+是复代数同构，逆为
+$$
+\Psi_t(\nu,g)=L_t\nu+\sum_{m\ge1}g_mu_m.
+$$
+它满足
+$$
+\|\Phi_t\mu\|_\oplus\le2\|\mu\|_{\mathrm{TV}},\qquad \|\Psi_t(\nu,g)\|_{\mathrm{TV}}\le C_t\|\nu\|_{\mathrm{TV}}+\frac{2}{1-\rho_t}\|g\|_1,
+$$
+$$
+\frac{1-\rho_t}{2}\|\mu\|_{\mathrm{TV}}\le N_t(\mu):=\|H_\#\mu\|_{\mathrm{TV}}+\|R_t\mu\|_1\le2\|\mu\|_{\mathrm{TV}}.
+$$
+范数 $N_t$ 完备且次乘法；$C_t\|\cdot\|_{\mathrm{TV}}$ 也是完备次乘法范数。原总变差范数次乘法当且仅当 $t\in\{0,\infty\}$。以下以 $A_t$ 表示配备 $N_t$ 的这个复 Banach 代数。
+
+**证明。** 实部与虚部分解唯一，所以所给公式是唯一的复双线性延拓。展开两个复输入的实部和虚部，并使用假设31.0的实逐集公式，立即得到复逐集公式；每个输出是四个有限实正则测度的复线性组合。
+
+为取得准确常数，而非仅由四项展开得到较大常数，写 $\mu=a|\mu|$、$\eta=b|\eta|$，其中相应密度几乎处处模长为一。复乘积测度因而具有密度 $a(x)b(y)$，且其变差为 $|\mu|\otimes|\eta|$。对任意有限 Borel 分割 $D=\bigsqcup_jD_j$，有
+$$
+\sum_j|(\mu\star_t\eta)(D_j)|\le\int_{K^2}\sum_j|P^{(t)}_{x,y}(D_j)|\,d(|\mu|\otimes|\eta|)\le C_t\|\mu\|_{\mathrm{TV}}\|\eta\|_{\mathrm{TV}}.
+$$
+取分割上确界得到所述上界。定理28.2的实点质量最大化输入仍属于复测度空间，因此下界同为 $C_t$。
+
+同一分割估计应用于相位切片，给出 $\|L_t\nu\|_{\mathrm{TV}}\le C_t\|\nu\|_{\mathrm{TV}}$。推前仍为压缩映射。由定理28.2的实际 Borel 函数恒等式，
+$$
+\sum_{m\ge1}|r_m(x)|\le1,
+$$
+故
+$$
+\sum_{m\ge1}\left|\int_Kr_m\,d\mu\right|\le\int_K\sum_{m\ge1}|r_m|\,d|\mu|\le\|\mu\|_{\mathrm{TV}}.
+$$
+这证明正向界。又 $|d'_m|\ge1-\rho_t$，所以逆映射中的级数在总变差中绝对收敛，并满足所述逆向界。
+
+实映射的两个逆恒等式对实部、虚部分别成立，故复映射仍互逆。实全测度上的乘法相容恒等式两边都是复化后的双线性表达式，展开实部、虚部便得复全测度上的相容性。这一步使用的是全实测度恒等式，不使用有限原子测度的总变差稠密性。
+
+复测度空间完备：总变差 Cauchy 序列的实部、虚部分别在实测度空间中 Cauchy，而
+$$
+\|\operatorname{Re}\mu\|_{\mathrm{TV}},\ \|\operatorname{Im}\mu\|_{\mathrm{TV}}\le\|\mu\|_{\mathrm{TV}}\le\|\operatorname{Re}\mu\|_{\mathrm{TV}}+\|\operatorname{Im}\mu\|_{\mathrm{TV}}
+$$
+使两个实极限组成复总变差极限。复序列空间的完备性由逐坐标极限和绝对和估计得到。复圆周卷积通过加法推前复乘积测度，故为压缩乘法；复 Fubini 将两种三重乘积都写成同一个三重积分，证明结合性。序列卷积的相应结论由绝对求和得到。因此直和代数完备、交换、结合且次乘法，其拉回范数正是 $N_t$。
+
+准确乘法估计又给出 $C_t\|\mu\star_t\eta\|_{\mathrm{TV}}\le(C_t\|\mu\|_{\mathrm{TV}})(C_t\|\eta\|_{\mathrm{TV}})$。当 $C_t>1$ 时，已有最大化点质量对排除未缩放总变差范数的次乘法性；当 $C_t=1$ 时，上界直接证明次乘法性。参数定义给出 $C_t=1$ 恰当且仅当 $t\in\{0,\infty\}$。证毕。
+
+**定义 31.3（单位化、字符与两种弱星拓扑）。** 定义
+$$
+A_t^{\#}=\mathbb C\oplus A_t,
+$$
+$$
+(\lambda,\mu)(\kappa,\eta)=(\lambda\kappa,\lambda\eta+\kappa\mu+\mu\star_t\eta),\qquad \|(\lambda,\mu)\|_{\#}=|\lambda|+N_t(\mu).
+$$
+其单位记为 $1^{\#}=(1,0)$，原代数嵌入为 $\mu\mapsto(0,\mu)$。记 $e=\delta_{0_K}\in A_t$；$e$ 与 $1^{\#}$ 是不同对象。
+
+对复 Banach 代数 $B$，$\Delta(B)$ 表示非零、连续、复线性且满足 $\chi(ab)=\chi(a)\chi(b)$ 的泛函集合，赋予逐元素收敛的字符拓扑，即 $\sigma(B^*,B)$ 的子空间拓扑。对有单位的 $B$，定义
+$$
+\sigma_B(b)=\{w\in\mathbb C:w1_B-b\text{ 不可逆}\}.
+$$
+对本节非单位代数，约定 $\sigma_{A_t}(\mu)=\sigma_{A_t^{\#}}(0,\mu)$。
+
+原测度弱星拓扑另记为
+$$
+\tau_K=\sigma(M_{\mathbb C}(K),C(K,\mathbb C)),
+$$
+其连续测试是 $\mu\mapsto\int_Kf\,d\mu$，$f\in C(K,\mathbb C)$。它不是字符空间上逐测度收敛的拓扑，也不是总变差 Banach 弱拓扑。令 $\overline{\mathbb D}=\{z\in\mathbb C:|z|\le1\}$。
+
+**定理 31.4（单位化的实际直积模型）。** $A_t$ 没有左单位或右单位。$A_t^{\#}$ 是单位范数为一的交换复 Banach 代数，并且
+$$
+\Theta_t:A_t^{\#}\longrightarrow\mathcal M\times\mathcal S_0,\qquad \Theta_t(\lambda,\mu)=(\nu+\lambda\delta_0,\lambda e_0+g),\quad (\nu,g)=\Phi_t\mu,
+$$
+是有界有界逆的单位复代数同构。这里 $\delta_0$ 是原圆周上的零点质量。目标直积采用范数
+$$
+\|(\xi,h)\|_{\max}=\max\{\|\xi\|_{\mathrm{TV}},\|h\|_1\}.
+$$
+其逆为
+$$
+\Theta_t^{-1}(\xi,h)=\left(h_0,\Psi_t(\xi-h_0\delta_0,h-h_0e_0)\right),
+$$
+其中第二个序列参数取其正指标部分，并且
+$$
+\|\Theta_t a\|_{\max}\le\|a\|_{\#},\qquad \|\Theta_t^{-1}(\xi,h)\|_{\#}\le3\|(\xi,h)\|_{\max}.
+$$
+
+**证明。** 因为 $\Phi_tu_1=(0,e_1)$，而任意两个正指标序列的卷积在第一坐标均为零，所以任意 $a\in A_t$ 都不满足 $a\star_tu_1=u_1$，也不满足 $u_1\star_ta=u_1$。这排除两侧单位。
+
+单位化范数的完备性由直和完备性得到；次乘法性由
+$$
+|\lambda\kappa|+N_t(\lambda\eta+\kappa\mu+\mu\star_t\eta)\le(|\lambda|+N_t(\mu))(|\kappa|+N_t(\eta))
+$$
+得到。乘法公式直接给出单位 $1^{\#}$，其范数为一。
+
+把两个输入的 $\Theta_t$ 像相乘，其第一坐标为
+$$
+\nu*\xi+\lambda\xi+\kappa\nu+\lambda\kappa\delta_0,
+$$
+第二坐标为
+$$
+g*h+\lambda h+\kappa g+\lambda\kappa e_0.
+$$
+这正是单位化乘积的像。所列逆公式逐坐标恢复输入，因而证明双射及乘法相容；单位被送至 $(\delta_0,e_0)$。
+
+正向范数界来自三角不等式。逆向计算使用 $\|h-h_0e_0\|_1=\|h\|_1-|h_0|$，得到
+$$
+\|\Theta_t^{-1}(\xi,h)\|_{\#}=|h_0|+\|\xi-h_0\delta_0\|_{\mathrm{TV}}+\|h-h_0e_0\|_1\le\|\xi\|_{\mathrm{TV}}+\|h\|_1+|h_0|.
+$$
+于是得到常数三。目标两个因子分别具有范数为一的单位，最大范数使其直积单位也具有范数一。证毕。
+
+**定理 31.5（自动连续性与经典谱接口）。** 在任意完备次乘法范数的复 Banach 代数 $B$ 上，每个非零复线性乘法泛函自动连续，并满足 $|\chi(b)|\le\|b\|$。若 $B$ 另有范数为一的单位，则 $\chi(1_B)=1$，且
+$$
+\sigma_B(b)=\{\chi(b):\chi\in\Delta(B)\}.
+$$
+此时 $\Delta(B)$ 在字符拓扑下紧致。这里的谱等式是经典交换复 Banach 代数定理；谱等式及紧致性部分假设 $B$ 交换且非零。[^rro31-spectrum]
+
+**证明。** 先考虑任意非零复线性乘法泛函，不预设连续性。它在通常单位化上的延拓
+$$
+\chi^{\#}(\lambda,b)=\lambda+\chi(b)
+$$
+是单位代数同态。若 $c=\chi(b)$ 满足 $|c|>\|b\|$，则
+$$
+(c1^{\#}-b)^{-1}=c^{-1}\sum_{j\ge0}(b/c)^j
+$$
+在单位化范数中收敛。但 $\chi^{\#}(c1^{\#}-b)=0$，与单位代数同态把可逆元素送为非零标量矛盾。因此 $|\chi(b)|\le\|b\|$。这一论证只要求复线性和乘法性，不要求事先连续。
+
+若原代数有单位，选择 $b$ 使 $\chi(b)\ne0$，从 $\chi(1_B)\chi(b)=\chi(b)$ 得 $\chi(1_B)=1$。故任一字符值属于谱，否则应用字符于逆元恒等式即得矛盾。
+
+反之，若 $w1_B-b$ 不可逆，则其生成的理想为真理想，并包含于某个极大理想 $J$。这个极大理想闭：若其闭包含有单位，则某个 $j\in J$ 满足 $\|1_B-j\|<1$，Neumann 级数使 $j$ 可逆，矛盾；故闭包仍为真理想，由极大性等于 $J$。商 $B/J$ 因而是完备复 Banach 除代数。经典 Gelfand–Mazur 定理将它识别为复标量域；商映射组成的字符满足 $\chi(b)=w$。这证明谱等式。所用最大理想—Gelfand–Mazur 接口正是引文中的经典接口。
+
+最后，字符均属于对偶单位球。在逐元素收敛下，方程 $\chi(1_B)=1$ 和 $\chi(ab)=\chi(a)\chi(b)$ 定义闭集。因此 Banach–Alaoglu 定理给出字符空间的紧致性。证毕。
+
+**定理 31.6（解析 Wiener 代数及其零常数项理想）。** 对 $h\in\mathcal S_0$ 定义
+$$
+\mathscr G_h(z)=\sum_{m\ge0}h_mz^m\qquad(z\in\overline{\mathbb D}).
+$$
+该级数在闭圆盘上一致绝对收敛，在开圆盘内全纯，并将序列卷积变为函数逐点乘法。由系数绝对和赋范所得的函数代数是经典解析 Wiener 代数。[^rro31-wiener]
+
+$\mathcal S_0$ 的全部字符恰为
+$$
+\operatorname{ev}_z(h)=\mathscr G_h(z),\qquad z\in\overline{\mathbb D},
+$$
+而 $\mathcal S_+$ 的全部非零字符恰为这些求值在 $0<|z|\le1$ 时的限制。其在 $\mathcal S_+$ 上的范数准确为 $|z|$；$z=0$ 的限制是零泛函。并且
+$$
+\sigma_{\mathcal S_0}(h)=\mathscr G_h(\overline{\mathbb D}).
+$$
+
+**证明。** 闭圆盘上的一致绝对收敛由 $\sum_m|h_m|<\infty$ 得到。在任意半径 $r<1$ 的圆盘上，导数级数由 $\sup_m mr^{m-1}<\infty$ 控制，故可逐项求导。绝对收敛允许按总指数重组双重级数，所以 $\mathscr G_{h*k}=\mathscr G_h\mathscr G_k$。系数唯一性也可直接从任意 $0<r\le1$ 的公式读出：
+$$
+h_m=\frac{1}{2\pi r^m}\int_0^{2\pi}\mathscr G_h(re^{i\theta})e^{-im\theta}\,d\theta.
+$$
+逐项积分由一致收敛保证，指数函数的积分给出所列系数。
+
+设 $\chi$ 是 $\mathcal S_0$ 的字符。令 $z=\chi(e_1)$。定理31.5给出 $|z|\le1$，且 $\chi(e_0)=1$、$\chi(e_m)=z^m$。有限截断在绝对和范数中收敛，因此连续性给出 $\chi(h)=\sum_mh_mz^m$。反之，每个闭圆盘求值都是范数为一的非零乘法泛函。
+
+对 $\mathcal S_+$ 上的字符，仍有 $\chi(e_m)=\chi(e_1)^m$，自动有界性及有限截断给出同一公式。若 $\chi(e_1)=0$，它在所有有限截断上为零，从而恒为零，矛盾。因此必须 $z\ne0$。反向的非零性由 $e_1$ 检测。又
+$$
+\left|\sum_{m\ge1}g_mz^m\right|\le|z|\|g\|_1,
+$$
+而 $e_1$ 达到等号，故限制范数为 $|z|$。最后，$\mathcal S_0$ 完备、交换、复线性、次乘法且具有范数一的单位 $e_0$，所以定理31.5与已证明的字符分类给出谱公式。证毕。
+
+**定理 31.7（全部乘法观察及原测度公式）。** $A_t$ 的全部非零复线性乘法泛函恰为以下互不相交的两类：
+$$
+\mathcal P_\chi(\mu)=\chi(H_\#\mu),\qquad \chi\in\Delta(\mathcal M),
+$$
+$$
+\mathcal E_z(\mu)=\mathscr G_{R_t\mu}(z),\qquad 0<|z|\le1.
+$$
+无需另加连续性假设。对 $a_m^\pm=\mu(\{x_m^\pm\})$，第二类准确为
+$$
+\mathcal E_z(\mu)=\begin{cases}\displaystyle\sum_{m\ge1}z^m(a_m^++t^ma_m^-),&|t|<1,\\ \displaystyle\sum_{m\ge1}z^m(t^{-m}a_m^++a_m^-),&|t|>1,\\ \displaystyle\sum_{m\ge1}z^ma_m^-,&t=\infty.\end{cases}
+$$
+等价地，它是实际 Borel 读数
+$$
+\mathcal E_z(\mu)=\int_Kq_{t,z}\,d\mu,\qquad q_{t,z}(x)=\sum_{m\ge1}z^mr_m(x).
+$$
+在每个 $x$ 处，最后一个和至多有一项非零。两类泛函在 $N_t$ 范数下及原总变差范数下的算子范数分别准确为
+$$
+\|\mathcal P_\chi\|=1,\qquad \|\mathcal E_z\|=|z|.
+$$
+
+**证明。** 通过 $\Phi_t$，把任意字符写成 $\ell(\nu,g)=a(\nu)+b(g)$。若两个限制都非零，可选择 $\nu,g$ 使 $a(\nu)b(g)\ne0$；但 $(\nu,0)(0,g)=0$，乘法性将给出 $a(\nu)b(g)=0$，矛盾。因此恰有一个限制非零。第一种情形正是 $\Delta(\mathcal M)$，第二种由定理31.6分类。反向的乘法性来自各自坐标的乘法性，非零性来自坐标满射。这也证明不存在两类的非平凡混合。
+
+定理28.2中 $r_m$ 的显式系数公式在复积分中不变，代入即得原测度公式。其绝对收敛由
+$$
+\sum_{m\ge1}(|a_m^+|+|a_m^-|)\le\|\mu\|_{\mathrm{TV}}
+$$
+保证。由于 $\sum_m|z^mr_m(x)|\le|z|$，支配收敛证明级数读数与 Borel 积分相等。
+
+相位字符在 $\mathcal M$ 上具有范数一，且推前为总变差压缩，所以 $|\mathcal P_\chi(\mu)|\le\|\mu\|_{\mathrm{TV}}$；同样它不超过 $N_t(\mu)$。元素 $e$ 在这两个范数下均为一，且 $\mathcal P_\chi(e)=1$，故两种算子范数都为一。
+
+剩余读数的两种上界分别由 $\|R_t\mu\|_1\le\|\mu\|_{\mathrm{TV}}$ 和定义 $N_t$ 得到。因为 $N_t(u_1)=1$ 且 $\mathcal E_z(u_1)=z$，其 $N_t$ 算子范数为 $|z|$。在 $|t|<1$ 时取 $\delta_{x_1^+}$，在 $|t|>1$ 或 $t=\infty$ 时取 $\delta_{x_1^-}$，它们的总变差为一，剩余读数均为 $z$。因此总变差算子范数也准确为 $|z|$。证毕。
+
+**定理 31.8（字符拓扑及零点的准确地位）。** 在字符拓扑下，存在自然同胚
+$$
+\Delta(A_t)\cong\Delta(\mathcal M)\sqcup(\overline{\mathbb D}\setminus\{0\}).
+$$
+两部分各自开闭。若把零泛函也加入 $A_t^*$，则
+$$
+\Delta(A_t)\cup\{0\}\cong\Delta(\mathcal M)\sqcup\overline{\mathbb D}.
+$$
+特别，当 $z\to0$ 时，$\mathcal E_z\to0$ 甚至在算子范数中成立；它不收敛到任何非零相位字符。零点不是 $A_t$ 的剩余字符。
+
+**证明。** 相位字符的拓扑嵌入由复合 $H_\#$ 给出；其逆通过在所有 $L_t\nu$ 上求值给出，所以两向都为逐元素连续。剩余参数到泛函的映射连续，因为对每个固定 $\mu$，级数 $\mathscr G_{R_t\mu}$ 在闭圆盘上一致收敛，因而连续。逆参数映射是 $\ell\mapsto\ell(u_1)$，所以也是连续的。此论证包括把 $z=0$ 送为零泛函的情形。
+
+对相位字符有 $\mathcal P_\chi(e)=1$，对剩余字符及零泛函有 $\mathcal E_z(e)=0$。对 $e$ 的求值因此将两部分分成开闭集合，并使上述两块同胚组成整体同胚。定理31.7又给出 $\|\mathcal E_z\|=|z|$，证明算子范数收敛。零泛函不满足字符的非零条件，且对 $e$ 的求值排除任何相位字符作为该极限。证毕。
+
+**定理 31.9（原测度弱星连续乘法观察的完全分类）。** 定义
+$$
+\mathcal F_n(\mu)=\int_K\exp(2\pi i nH(x))\,d\mu(x),\qquad n\in\mathbb Z.
+$$
+这里 $\exp(2\pi i n[\theta])=\exp(2\pi i n\theta)$。$\Delta(A_t)$ 中对 $\tau_K$ 连续的元素恰为 $\{\mathcal F_n:n\in\mathbb Z\}$，且整数参数唯一。特别，没有非零剩余字符对 $\tau_K$ 连续。连续函数分解所用的逼近定理是复 Stone–Weierstrass 定理。[^rro31-sw]
+
+**证明。** 先说明连续预伴随的必要性。若复线性泛函 $\ell$ 对 $\tau_K$ 连续，则存在有限多个 $f_1,\ldots,f_N\in C(K,\mathbb C)$，使共同核
+$$
+\bigcap_{j=1}^N\ker\left(\mu\mapsto\int_Kf_j\,d\mu\right)
+$$
+包含于 $\ker\ell$。否则在一个共同核向量上任意放大将违反零点连续性。因此 $\ell$ 通过这些测试组成的有限维映射之像分解，并可把该像上的线性泛函延拓到 $\mathbb C^N$。于是某个 $f=\sum_jc_jf_j\in C(K,\mathbb C)$ 满足
+$$
+\ell(\mu)=\int_Kf\,d\mu\qquad\text{对全部 }\mu.
+$$
+反向由 $\tau_K$ 的定义成立。
+
+若 $\ell=\mathcal E_z$，则其连续预伴随必须满足 $f(x)=\mathcal E_z(\delta_x)=q_{t,z}(x)$。每个有限字 $Z(n)$ 的相位非分裂，所以这些点上的值都是零。截断任意合法无限字并补零，仍是有限合法 Zeckendorf 字，故 $Z(\mathbb N)$ 稠密于 $K$。连续性迫使 $f=0$；然而定理31.7中某个第一纤维点的读数为 $z\ne0$，矛盾。这也给出实际不连续序列：取该点的有限字截断，Dirac 测度弱星收敛，而读数从恒零变为 $z$。
+
+现在设 $\ell=\mathcal P_\chi$ 弱星连续，连续预伴随为 $f$。对点质量求值得
+$$
+f(x)=\chi(\delta_{H(x)}),
+$$
+故 $f$ 在每个完整相位纤维上常值。连续满射 $H$ 从紧致空间到 Hausdorff 空间，因而是商映射；于是存在唯一 $h\in C(\mathbb T,\mathbb C)$ 满足 $f=h\circ H$。
+
+必须同时确定字符在全部圆周测度上的作用。对任意 $\nu\in\mathcal M$，使用实际右逆而非原子稠密性，得到
+$$
+\chi(\nu)=\ell(L_t\nu)=\int_Kh\circ H\,d(L_t\nu)=\int_{\mathbb T}h\,d\nu.
+$$
+最后一步只使用 $H_\#L_t\nu=\nu$，不要求 $L_t$ 弱星连续。乘法性在圆周 Dirac 测度上给出
+$$
+h(\theta+\eta)=h(\theta)h(\eta),\qquad h(0)=1.
+$$
+所以 $h$ 处处非零。其连续像有界，若某个 $|h(\theta)|>1$，正整数次幂即无界；若小于一，则逆元素的值大于一。因此 $|h|=1$。
+
+为准确分类这样的 $h$，注意三角多项式代数包含常数、对共轭封闭，且函数 $\theta\mapsto e^{2\pi i\theta}$ 分离圆周点。复 Stone–Weierstrass 定理使它在 $C(\mathbb T,\mathbb C)$ 中一致稠密。若对所有整数 $n$ 都有
+$$
+a_n:=\int_{\mathbb T}h(\theta)e^{-2\pi i n\theta}\,d\lambda_{\mathbb T}(\theta)=0,
+$$
+其中 $\lambda_{\mathbb T}$ 是归一化 Haar 测度，则由一致逼近 $\overline h$ 得 $\int|h|^2\,d\lambda_{\mathbb T}=0$，与 $|h|=1$ 矛盾。因此某个 $a_n\ne0$。平移不变性及乘法性给出
+$$
+a_n=\int_{\mathbb T}h(\theta+\eta)e^{-2\pi i n(\theta+\eta)}\,d\lambda_{\mathbb T}(\theta)=h(\eta)e^{-2\pi i n\eta}a_n.
+$$
+故 $h(\eta)=e^{2\pi i n\eta}$，从而 $\ell=\mathcal F_n$。
+
+反之，函数 $x\mapsto e^{2\pi i nH(x)}$ 连续，故其积分给出实际连续预伴随。复 Fubini 和相位卷积恒等式给出 $\mathcal F_n(\mu\star_t\eta)=\mathcal F_n(\mu)\mathcal F_n(\eta)$，而 $\mathcal F_n(e)=1$。整数参数唯一，因为不同整数给出不同圆周指数函数，且 $H$ 满射。证毕。
+
+**定理 31.10（连续 Dirac 限制仍不足以确定字符）。** 存在显式字符
+$$
+\mathfrak a(\nu)=\sum_{\theta\in\mathbb T}\nu(\{\theta\}),\qquad \nu\in\mathcal M,
+$$
+其中只对至多可数个非零原子质量求绝对收敛和。它满足
+$$
+\mathfrak a(\delta_\theta)=1\quad\text{对所有 }\theta,\qquad \mathfrak a(\lambda_{\mathbb T})=0.
+$$
+因此 $\mathcal P_{\mathfrak a}$ 与 $\mathcal F_0$ 在整个原子子代数上一致，且 Dirac 限制都是连续常数一，但它们是不同泛函，前者不对 $\tau_K$ 连续。在原测度上，
+$$
+\mathcal P_{\mathfrak a}(\mu)=\sum_{x\in K}\mu(\{x\}).
+$$
+
+**证明。** 定理28.10的原子投影逐实部、虚部复化；也可直接用绝对收敛级数 $\nu_{\mathrm{at}}=\sum_\theta\nu(\{\theta\})\delta_\theta$ 定义。非原子复测度与任意有限复测度的卷积没有单点质量，因为复 Fubini 给出
+$$
+(\nu_{\mathrm{na}}*\xi)(\{\theta\})=\int_{\mathbb T}\nu_{\mathrm{na}}(\{\theta-\eta\})\,d\xi(\eta)=0.
+$$
+原子测度的卷积仍为原子测度，所以
+$$
+(\nu*\xi)_{\mathrm{at}}=\nu_{\mathrm{at}}*\xi_{\mathrm{at}}.
+$$
+取总质量便得 $\mathfrak a(\nu*\xi)=\mathfrak a(\nu)\mathfrak a(\xi)$；且 $|\mathfrak a(\nu)|\le\|\nu\|_{\mathrm{TV}}$、$\mathfrak a(\delta_0)=1$，故它是字符。
+
+有限相位纤维的质量等于其各单点质量之和。非原子原测度推前后仍没有单点质量，而原子部分的总质量在推前下不变。这证明原测度上的公式。Haar 测度没有原子，因此两个字符在 $L_t\lambda_{\mathbb T}$ 上分别取零和一。
+
+若 $\mathcal P_{\mathfrak a}$ 有连续预伴随 $f$，则在每个 Dirac 测度上求值将给出 $f(x)=1$，从而它在所有测度上都应等于总质量。Haar 提升已经排除这一结论。因此它不弱星连续。证毕。
+
+**定理 31.11（整个测度的精确重建）。** 全部相位 Fourier 读数和全部非零剩余求值共同分离 $M_{\mathbb C}(K)$。更准确地，
+$$
+\bigcap_{n\in\mathbb Z}\ker\mathcal F_n=\ker H_\#=\left\{\sum_{m\ge1}b_mv_m:(b_m)\in\ell^1(\mathbb N_{>0},\mathbb C)\right\},
+$$
+$$
+\bigcap_{0<|z|\le1}\ker\mathcal E_z=\ker R_t=L_t\mathcal M,
+$$
+而这两个核的交为零。固定任意非零序列 $z_j\to0$，仅保留 $\mathcal E_{z_j}$ 已经足以与全部 $\mathcal F_n$ 共同分离测度。
+
+若 $\nu=H_\#\mu$、$g=R_t\mu$，则 $\nu$ 由 $\mathcal F_n(\mu)$ 唯一确定，且对任意 $0<r\le1$，
+$$
+g_m=\frac{1}{2\pi r^m}\int_0^{2\pi}\mathcal E_{re^{i\theta}}(\mu)e^{-im\theta}\,d\theta.
+$$
+原测度随后由
+$$
+\mu=L_t\nu+\sum_{m\ge1}\frac{g_m}{d'_m}v_m
+$$
+唯一恢复，级数在总变差中绝对收敛。[^rro31-sw]
+
+**证明。** 若一个圆周复测度的全部整数 Fourier 系数为零，则它在每个三角多项式上的积分为零。定理31.9中已经检查的 Stone–Weierstrass 条件使三角多项式一致稠密，故该测度在每个连续函数上的积分都为零。实部、虚部分别应用 Riesz 唯一性，得到该测度为零。因此 Fourier 系数唯一确定 $\nu$，并给出第一个核等式；其余核描述由定理31.2的实际坐标逆映射得到。
+
+剩余系数积分公式来自定理31.6的逐项积分公式。故全部剩余求值唯一确定 $g$，得到第二个核等式及全测度恢复式。两个坐标共同为零时，$\Phi_t$ 的单射性给出原测度为零。
+
+对于趋零的可数采样，设 $g\ne0$，并令 $m$ 为其第一个非零系数。对 $0<|z|\le1$，
+$$
+\frac{\mathscr G_g(z)}{z^m}=g_m+\sum_{k>m}g_kz^{k-m},\qquad \left|\sum_{k>m}g_kz^{k-m}\right|\le|z|\sum_{k>m}|g_k|.
+$$
+所以左边在 $z\to0$ 时趋于非零数 $g_m$，不可能在所有充分大的 $z_j$ 上为零。这证明采样求值也分离 $\mathcal S_+$。应用于两个测度的差即可。
+
+这里 Fourier 系数单独重建的是圆周测度 $\nu$；在原空间上，它们的共同核正是显示的非零剩余理想。证毕。
+
+**定理 31.12（单位化字符、完整谱及逆元）。** 若 $a=(\lambda,\mu)\in A_t^{\#}$，且 $\Phi_t\mu=(\nu,g)$，则 $A_t^{\#}$ 的全部字符准确为
+$$
+\mathcal P_\chi^{\#}(a)=\lambda+\chi(\nu),\qquad \chi\in\Delta(\mathcal M),
+$$
+$$
+\mathcal E_z^{\#}(a)=\lambda+\mathscr G_g(z),\qquad z\in\overline{\mathbb D}.
+$$
+特别 $\mathcal E_0^{\#}(\lambda,\mu)=\lambda$ 是非零单位化字符，其在 $A_t$ 上的限制才是零泛函。字符空间同胚于 $\Delta(\mathcal M)\sqcup\overline{\mathbb D}$。完整谱为
+$$
+\sigma_{A_t^{\#}}(\lambda,\mu)=\bigl(\lambda+\sigma_{\mathcal M}(\nu)\bigr)\cup\{\lambda+\mathscr G_g(z):|z|\le1\}.
+$$
+因此 $a$ 可逆当且仅当
+$$
+\nu+\lambda\delta_0\text{ 在 }\mathcal M\text{ 中可逆},\qquad \lambda+\mathscr G_g(z)\ne0\quad\text{对每个 }|z|\le1.
+$$
+这些条件特别要求 $\lambda\ne0$。当它们成立时，令 $\xi=\nu+\lambda\delta_0$、$h=\lambda e_0+g$，则
+$$
+a^{-1}=\left(\lambda^{-1},\Psi_t\left(\xi^{-1}-\lambda^{-1}\delta_0,h^{-1}-\lambda^{-1}e_0\right)\right).
+$$
+这里 $h^{-1}$ 在 $\mathcal S_0$ 中取逆，第二个剩余参数的常数项为零。[^rro31-spectrum][^rro31-wiener]
+
+**证明。** 对单位化字符限制到 $A_t$，或者得到零泛函，此时原字符必为标量投影；或者得到定理31.7的一个字符，此时单位性迫使延拓为 $\lambda+\chi(\mu)$。这给出显示的全部字符。其拓扑描述也可通过 $\Theta_t$：两个直积幂等元将两部分分开，分别恢复 $\Delta(\mathcal M)$ 和闭圆盘的求值拓扑。
+
+直积中的一个元素可逆当且仅当两个坐标都可逆，因为任何逆元恒等式都逐坐标成立，反向把两个逆元配成一对即可。因此 $\Theta_t$ 给出
+$$
+\sigma_{A_t^{\#}}(a)=\sigma_{\mathcal M}(\nu+\lambda\delta_0)\cup\sigma_{\mathcal S_0}(\lambda e_0+g).
+$$
+第一项由谱定义等于 $\lambda+\sigma_{\mathcal M}(\nu)$；第二项由定理31.6等于显示的闭圆盘像。这里 $\mathcal M$ 和 $\mathcal S_0$ 都已具有完备复次乘法范数、交换乘法和范数为一的单位，故经典谱接口的全部假设均已满足。谱公式及可逆条件随之成立。
+
+在 $z=0$ 处的第二条件给出 $\lambda\ne0$。若 $h^{-1}=k$，卷积的常数项恒等式给出 $\lambda k_0=1$，所以 $k_0=\lambda^{-1}$。将直积逆元 $(\xi^{-1},h^{-1})$ 代入定理31.4的逆映射，就得到所列实际逆元公式。证毕。
+
+**定理 31.13（完全显式的剩余圆盘谱）。** 元素 $u_1=v_1/d'_1$ 满足
+$$
+\mathcal P_\chi(u_1)=0\quad\text{对全部 }\chi\in\Delta(\mathcal M),\qquad \sigma_{A_t}(u_1)=\overline{\mathbb D}.
+$$
+特别，全部相位字符不能区分 $0$ 与 $u_1$，但二者的谱分别为 $\{0\}$ 和闭单位圆盘。单位化元素
+$$
+c=1^{\#}-2u_1
+$$
+与 $1^{\#}$ 具有相同的全部相位字符值一，却不可逆。
+
+**证明。** $\Phi_tu_1=(0,e_1)$，所以所有相位字符都为零。下面直接验证圆盘谱，不依赖 Wiener–Pitt 存在性。当 $|w|>1$ 时，$w1^{\#}-u_1$ 的直积像是 $(w\delta_0,we_0-e_1)$，其逆为
+$$
+\left(w^{-1}\delta_0,\sum_{m\ge0}w^{-m-1}e_m\right).
+$$
+第二坐标绝对可和，直接卷积给出单位。当 $|w|\le1$ 时，第二坐标上的求值 $\operatorname{ev}_w$ 将 $we_0-e_1$ 送为零，所以该坐标不可逆。这证明完整闭圆盘谱。
+
+最后，$\Theta_t c=(\delta_0,e_0-2e_1)$。第一坐标的所有字符值均为一，而第二坐标在 $z=1/2$ 处的求值为零，故 $c$ 不可逆。单位 $1^{\#}$ 当然可逆。证毕。
+
+**定理 31.14（经典 Wiener–Pitt–Šreĭder 现象的准确传递）。** 存在正圆周概率测度 $\beta$，使
+$$
+\widehat\beta(n):=\int_{\mathbb T}e^{2\pi i n\theta}\,d\beta(\theta)\in[-1,1]\quad(n\in\mathbb Z),\qquad \sigma_{\mathcal M}(\beta)=\overline{\mathbb D}.
+$$
+此存在性采用经典 Šreĭder 测度定理，准确出处为 Nikolski §3.1.1，印刷页1962。[^rro31-wp] 对任一这样的 $\beta$，令
+$$
+a_\beta=L_t\beta\in A_t,\qquad b_\beta=1^{\#}+a_\beta-(1+i/2)e\in A_t^{\#}.
+$$
+则
+$$
+\sigma_{A_t}(a_\beta)=\overline{\mathbb D},\qquad \mathcal F_n(a_\beta)=\widehat\beta(n)\in\mathbb R,\qquad \mathcal E_z(a_\beta)=0,
+$$
+$$
+\sigma_{A_t^{\#}}(b_\beta)=(\overline{\mathbb D}-i/2)\cup\{1\}.
+$$
+特别 $b_\beta$ 不可逆，尽管其全部普通单位化读数满足
+$$
+\left|1+\mathcal F_n\bigl(a_\beta-(1+i/2)e\bigr)\right|=|\widehat\beta(n)-i/2|\ge\frac12,
+$$
+$$
+\mathcal E_z^{\#}(b_\beta)=1\qquad(z\in\overline{\mathbb D}).
+$$
+整数 Fourier 字符在 $\Delta(\mathcal M)$ 中不稠密；把它们连同全部剩余字符使用，也仍不穷尽 $A_t$ 的完整字符谱。
+
+**证明。** 原圆周是非离散局部紧交换群。所引经典定理因此提供一个正测度，其总变差为一、群 Fourier 值位于 $[-1,1]$，而完整 Gelfand 值域为闭单位圆盘。定理31.5把完整 Gelfand 值域识别为测度代数谱；正性及总变差一说明它是概率测度。Fourier 指数的正负约定只重排整数指标，不改变这些性质。
+
+由实际坐标恒等式，$\Phi_ta_\beta=(\beta,0)$。定理31.12立即给出 $a_\beta$ 的谱及所有显示的读数。再由 $\Phi_te=(\delta_0,0)$，得到
+$$
+\Theta_t b_\beta=(\beta-(i/2)\delta_0,e_0).
+$$
+第一坐标谱为闭单位圆盘平移 $-i/2$，第二坐标谱为 $\{1\}$。由于 $i/2\in\sigma_{\mathcal M}(\beta)$，第一坐标的平移谱包含零，故 $b_\beta$ 不可逆。普通 Fourier 值均为实数减去 $i/2$，其模长至少为 $1/2$；剩余坐标恒为单位，故全部剩余求值均为一。
+
+最后，定理31.5提供 $\chi_*\in\Delta(\mathcal M)$，使 $\chi_*(\beta)=i/2$。非空字符开集
+$$
+\{\chi\in\Delta(\mathcal M):|\chi(\beta)-i/2|<1/4\}
+$$
+不含任何整数 Fourier 字符，因为后者在 $\beta$ 上都取实值。因此这些 Fourier 字符不稠密。把 $\chi_*$ 拉回 $A_t$，它在 $a_\beta$ 上取 $i/2$；普通 Fourier 及剩余读数在该元素上却都取实值。这也直接给出完整模型字符谱中一个普通读数无法达到的非空开集。证毕。
+
+**定理 31.15（重建表示不是谱保持表示）。** 令 $\mathscr X_t$ 为下列单位化字符组成的集合：
+$$
+\mathcal F_n^{\#}(\lambda,\mu)=\lambda+\mathcal F_n(\mu)\quad(n\in\mathbb Z),\qquad \mathcal E_z^{\#}\quad(z\in\overline{\mathbb D}).
+$$
+定义普通观察表示
+$$
+\mathcal O_t:A_t^{\#}\longrightarrow\ell^\infty(\mathscr X_t),\qquad \mathcal O_t(a)(\omega)=\omega(a).
+$$
+它是有界、单射、保单位的复代数同态。若 $a=(\lambda,\mu)$、$\Phi_t\mu=(\nu,g)$，则
+$$
+\sigma_{\ell^\infty(\mathscr X_t)}(\mathcal O_t(a))=\lambda+\left(\overline{\{\widehat\nu(n):n\in\mathbb Z\}}\cup\mathscr G_g(\overline{\mathbb D})\right),
+$$
+而原单位化谱为定理31.12的较大集合。因此对这个元素保持谱，准确等价于
+$$
+\sigma_{\mathcal M}(\nu)\subseteq\overline{\{\widehat\nu(n):n\in\mathbb Z\}}\cup\mathscr G_g(\overline{\mathbb D}).
+$$
+特别，$\mathcal O_t$ 并非对所有元素保持谱，其像也不逆封闭：存在 $a$ 使 $\mathcal O_t(a)$ 在目标代数中可逆，而 $a$ 在原单位化中不可逆。
+
+**证明。** 每个 $\omega\in\mathscr X_t$ 都是单位化字符，因此逐点的线性、乘法性及保单位性质成立。定理31.5给出 $|\omega(a)|\le\|a\|_{\#}$，所以表示有界。若 $\mathcal O_t(\lambda,\mu)=0$，先在 $\mathcal E_0^{\#}$ 上求值得 $\lambda=0$；随后全部 Fourier 及剩余读数为零，定理31.11给出 $\mu=0$。所以表示单射。
+
+对任意集合 $X$ 和 $f\in\ell^\infty(X)$，函数 $w-f$ 可逆当且仅当 $\inf_{x\in X}|w-f(x)|>0$。充分性由有界逐点倒数给出；必要性来自任一有界逆函数必须满足 $(w-f(x))h(x)=1$。因此
+$$
+\sigma_{\ell^\infty(X)}(f)=\overline{f(X)}.
+$$
+应用于 $\mathcal O_t(a)$，其 Fourier 部分的值域闭包是 $\lambda+\overline{\{\widehat\nu(n)\}}$；剩余部分是连续函数在紧闭圆盘上的像 $\lambda+\mathscr G_g(\overline{\mathbb D})$，已经闭。有限并取闭包给出所述谱公式。与定理31.12比较，并使用 Fourier 字符值必属于 $\sigma_{\mathcal M}(\nu)$，即得准确等价条件。
+
+取定理31.14的 $a=b_\beta$。它的全部 $\mathscr X_t$ 读数模长至少为 $1/2$，因此 $\mathcal O_t(b_\beta)$ 在目标代数中具有有界逐点逆；但 $b_\beta$ 在原代数中不可逆。若这个目标逆属于 $\mathcal O_t(A_t^{\#})$，写成 $\mathcal O_t(c)$，则单射性会把 $\mathcal O_t(b_\beta c)=1$ 提升为 $b_\beta c=1^{\#}$，矛盾。因此像不逆封闭，表示也不保持谱。
+
+表示的单射性同时说明：完整精确读数唯一确定元素，因而也唯一确定其谱和可逆性。上面的反例所排除的是用读数值域或逐点非零条件直接替代原代数谱与可逆性，而不是排除从完整数据所确定的元素进行进一步分析。证毕。
+
+[^rro31-spectrum]: Mathlib contributors，复 Banach 代数的最大理想—字符及谱定理，固定版本 `db584cd6d46c92f209a44c0f1c829460d327499d`：[GelfandDuality，ComplexBanachAlgebra 部分，特别 Ideal.toCharacterSpace、WeakDual.CharacterSpace.exists_apply_eq_zero、WeakDual.CharacterSpace.mem_spectrum_iff_exists](https://raw.githubusercontent.com/leanprover-community/mathlib4/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/CStarAlgebra/GelfandDuality.lean)；自动连续性与字符同态接口见同版本 [Spectrum，AlgHom.toContinuousLinearMap 及 WeakDual.CharacterSpace.equivAlgHom](https://raw.githubusercontent.com/leanprover-community/mathlib4/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/Normed/Algebra/Spectrum.lean)。这里只用一般复 Banach 代数定理，不附加或假借 C*-代数结论。
+
+[^rro31-wiener]: J. Esterle、E. Strouse、F. Zouakia，Closed ideals of the algebra of absolutely convergent Taylor series，Bulletin of the American Mathematical Society 31 (1994)，39—43，§1首段，[正文](https://arxiv.org/pdf/math/9407215)。解析 Wiener 代数采用 Taylor 系数绝对和范数。闭圆盘极大理想空间的经典陈述亦见 Raymond Mortini、Amol Sasane，Some algebraic properties of the Wiener–Laplace algebra，Journal of Applied Analysis 16 (2010)，§1，第2页关于 $W^+(\mathbb D)$ 的段落，[正文](https://personal.lse.ac.uk/sasane/JAA_MS.pdf)。
+
+[^rro31-sw]: 复 Stone–Weierstrass 定理：紧致空间上的保常数、共轭封闭且分离点的复函数子代数一致稠密。对应数学条目见 Mathlib contributors，固定版本 `db584cd6d46c92f209a44c0f1c829460d327499d`，ContinuousMap.starSubalgebra_topologicalClosure_eq_top_of_separatesPoints，[数学文本](https://raw.githubusercontent.com/leanprover-community/mathlib4/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Topology/ContinuousMap/StoneWeierstrass.lean)。
+
+[^rro31-wp]: Nikolai Nikolski，In search of the invisible spectrum，Annales de l'Institut Fourier 49(6) (1999)，1925—1998，§3.1.1，印刷页1962，[正文](https://www.numdam.org/item/10.5802/aif.1743.pdf)。该处明确陈述非离散局部紧交换群上正 Šreĭder 测度的存在性、实 Fourier 值及闭单位圆盘完整谱；§0.1，页1926—1927，说明统一远离零的 Fourier 值不充分保证可逆性。圆周测度代数中的相同经典现象亦见 Przemysław Ohrysko、Michał Wojciechowski，On the relationships between Fourier–Stieltjes coefficients and spectra of measures，arXiv:1305.3324v2，§1，第1—2页，[正文](https://arxiv.org/pdf/1305.3324)。
+
+## 追加锚（本行以下为增补区）
