@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e0b31d04ed821820b77765b2b09fe510fa5bc3d7e3fb6fcab6518031f4dae5aa
+  normalized_sha256: sha256:e0b31d04ed821820b77765b2b09fe510fa5bc3d7e3fb6fcab6518031f4dae5aa
+cas_ref: sha256:e0b31d04ed821820b77765b2b09fe510fa5bc3d7e3fb6fcab6518031f4dae5aa
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本子叶固定 Fibonacci 权重的递归、黄金比、其倒数和负倒数的符号，属于定义，不提出额外恒等式。
+    previous_atom_id: 2683451c4af529f5e3588d21bb65ed73c7fb28eeac9da1c651146ea1beb3e888
+    next_atom_id: b3c554c7d87452bfbaa6931d486da93c97c0055ecd268313bb8a3ca3b726c91b

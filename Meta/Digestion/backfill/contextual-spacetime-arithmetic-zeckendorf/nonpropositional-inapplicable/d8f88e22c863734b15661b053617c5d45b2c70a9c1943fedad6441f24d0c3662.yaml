@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d8f88e22c863734b15661b053617c5d45b2c70a9c1943fedad6441f24d0c3662
+  normalized_sha256: sha256:d8f88e22c863734b15661b053617c5d45b2c70a9c1943fedad6441f24d0c3662
+cas_ref: sha256:d8f88e22c863734b15661b053617c5d45b2c70a9c1943fedad6441f24d0c3662
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶按首次相邻零及不存在相邻零两种情形定义后继函数，只给定义规则，没有断言连续性或纤维性质。
+    previous_atom_id: d6e2b596b1db860def2334eeacd1df045ade65737baa7b1e8e41b601843bd812
+    next_atom_id: bc2482b65960c3e6e93616f38483b09ea3de3bd532ee966d005d693ea612efb4
