@@ -37,7 +37,11 @@ public sealed class DeclaredTemplateReviewTests
         files[Registration] = "import D5.S0.Carrier.Target\nimport LeanInformationAudit.Syntax\n";
         files[Target] = "-- synthetic imported theorem source\n";
         files[InformationTemplateDebtStore.ActivationPath] = Text(InformationTemplateDebtStore.WriteActivation(new(seed, active)));
-        files[AdmissionPlanePolicy.FileMapPath] = File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), "Meta/FILEMAP.toml"));
+        var root = TestRepositoryLayout.FindRoot();
+        foreach (var document in FileMapDocuments.Resolve(
+            File.ReadAllBytes(Path.Combine(root, AdmissionPlanePolicy.FileMapPath)), AdmissionPlanePolicy.FileMapPath,
+            path => File.ReadAllBytes(Path.Combine(root, path))))
+            files[document.Path] = Text(document.Bytes);
         return files;
     }
 
