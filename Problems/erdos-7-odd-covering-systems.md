@@ -1161,6 +1161,16 @@ energy reduction; the cubic potential above is the present refinement.
 These are ordinary mathematical proofs, not complete Lean formalizations
 of the forest criterion.
 
+The reusable construction in
+[ExactForestMessages.exact_forest_message_feasibility](../D5/S3/Arith/Congruence/ExactForestMessages.lean)
+formalizes the exact residual-set equations and the equivalence between a
+simultaneous avoiding assignment and nonempty root residuals, for arbitrary
+finite forests and finite domains. Its two well-founded recursions construct
+messages from leaves upward and assignments from roots downward. The scoped
+kernel build and source-bound report use only `propext`, `Classical.choice`,
+and `Quot.sound`. The congruence embedding, cubic potential, and moment
+estimates (AF2) remain outside that Lean theorem.
+
 #### A bounded number of cycle-breaking vertices in each component
 
 The same argument extends beyond forests. A feedback vertex set is a set
