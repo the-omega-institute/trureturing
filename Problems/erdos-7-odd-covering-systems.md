@@ -131,7 +131,12 @@ using the universal square floor, without a separate charge-positivity
 premise. The exact two-prime consumer retains every auxiliary tail
 contribution; it does not yet
 provide the subsequent unrestricted-prime continuation or eliminate
-other low configurations.
+other low configurations. Keeping each whole convex cost on one head
+layout, then collecting the original exponent-zero label before
+maximization, improves the same-kernel result to `Gamma<153.041308`
+by (SH30). Its810 exact whole-cost observations and complete tails
+have a separate certificate; the final positive margin sharpens the
+bound without changing the cost parameter or requiring a new law.
 
 The [fixed scalar schedule obstruction](../docs/reports/erdos7-odd-covering/marked_head_profile.md#all-integer-schedules-through23-for-the-fixed-scalar-feature-map)
 excludes every one of the530145 integer threshold schedules through

@@ -4898,3 +4898,148 @@ compares every computed certificate field. NumPy is required only for
 the finite convex observations and the dense checks. These are ordinary
 all-height estimates with exact numerical verification, not a new Lean
 endpoint or a solution of unrestricted #7.
+
+### Whole convex costs with one fixed original exponent label
+
+Retain exactly the77-point carrier, nonuniform low probability, uniform
+higher-digit lift and actual conditioning event of(SH18). The full original
+3/5/7 heights remain arbitrary finite ones. Let nu be that same probability,
+q0=2577991831/4799999616 its established conditioning denominator, and
+
+    M=19618622895502373704/3964266656997890625=2+H2,
+    G=2512626164927510733601/70505216618162484375.
+
+These bound every complete old test on one fixed nu. The actual11/13
+kernels, full physical periods, original labels and parameters are those
+of(SH25): T11=4,T13=5,delta11=1/3,delta13=4/11. In particular no new
+probability is chosen to optimize a separate cost. Set W=3049/20 and use
+the complete increasing convex costs h_p of(SH27), with f11=61/42,f13=1.
+
+#### Conditioning a complete cost
+
+For any increasing convex h, put g(l)=(h(l)-h(2))_+. Since
+h(l)<=h(2)+g(l), the unchanged actual conditioned law obeys
+
+    max_L E_nu h(L) <= h(2)+[max_L E_lambda g(L)]/q0.
+
+Only the nonnegative cut cost is divided by the lower denominator. The
+constant h(2), which may be negative, is retained exactly once.
+Use(SH19)--(SH21) to bound the entire g on one weighted low layout at each
+auxiliary depth, before taking its maximum. This retains the relations
+between all slopes and hinges of h.
+
+The same270-depth box as(SH18) suffices. Let beta be its probability and
+
+    Eout=U_B-sum_(z in box)Pr(z)F_square(z)-(1-beta).
+
+For any a>=sup_(integer k>=2)g(k)/(k^2-1), the complete omitted contribution
+is at most a Eout. Hence, if V_g(z) is the exact maximum of the whole
+low cost at depth z,
+
+    max_L E_nu h(L)
+      <=h(2)+[sum_(z in box)Pr(z)V_g(z)+a Eout]/q0.
+
+This does not truncate the original heights or the auxiliary tail.
+For the costs below, g is affine from a known integer k0 onward, with
+g(k)=A k-B and2A<=B<=k0 A. The ratio to k^2-1 is decreasing for real
+k>=2k0, since its derivative numerator is at most
+-A k(k-2k0)-A<0. A finite integer scan therefore computes the global
+quadratic coefficient exactly.
+
+#### An original zero label across every auxiliary outcome
+
+At the13 step write N=1+K11. Its full comparison distribution satisfies
+
+    Pr(N=1)=28/33,
+    Pr(N=n)=50/(3*11^n) for n>=2,
+    E N=7/6.
+
+The old11 exponent label zero is active in every outcome. Its completed
+head test at each current13 depth is fixed before N is sampled. The
+original-label Jensen comparison from(FL1)--(FL4) and(SH27) assigns weight
+1/N to each of the N active old exponent labels. Thus, for any simultaneous
+upper bounds B_n>=max_L E_nu h13(nL), the zero label may be collected first:
+
+    cost13 <= max_L E_nu g0(L)
+                 +E[(1-1/N)B_N],
+    g0(l)=E[h13(Nl)/N].
+
+The current13-depth weights sum to one. Their zero-label tests may differ
+with that depth; the supremum of the same g0 bounds their weighted average.
+This argument does not interchange an unrestricted expectation and maximum.
+
+For n>=5, h13(nl)=W(nl-5)/7 for every integer l>=1. Put p_n=Pr(N=n),
+Ptail=Pr(N>=5)=5/43923 and Etail=E[N;N>=5]=17/29282, and define
+
+    gtilde(l)=sum_(n=1..4)(p_n/n)h13(nl)+(W/7)Ptail*l.
+
+The omitted constant in g0 is -(5W/7)E[1/N;N>=5]. It cancels exactly
+against the same constant from the other original labels. Therefore
+
+    cost13 <= max_L E_nu gtilde(L)
+      +sum_(n=1..4)p_n(1-1/n)B_n
+      +(W/7)[M(Etail-Ptail)-5Ptail].
+
+Every coefficient multiplying an unknown moment or test cost is
+nonnegative. The remaining negative constant is exact; no reciprocal
+moment approximation or omitted multiplier mass is used.
+
+The n=1 residual coefficient is zero. Bound B2 by the complete-cost
+calculation above. For n=3,4, h13(nl) is increasing and affine from l=2
+onward, so for every integer l>=1,
+
+    h13(nl)<=h13(2n)+(Wn/7)(l-2)_+.
+
+Consequently B_n=W(nM-5)/7 is valid using M=2+H2. These bounds continue
+to concern the same nu. At11 there is no old-tail multiplier, so its
+entire cost is bounded directly by the whole h11 calculation.
+
+#### Exact consumer
+
+The three complete costs are h11(l),h13(2l),gtilde(l). Their cut costs
+have exact common denominators17640,1680,5488560, respectively. No
+quantization is needed. The singleton45 elimination evaluates all810
+new depth-cost maxima over280^2 base-layout pairs per query. Its convex
+increment identity bounds every intermediate nonnegative sum by an
+attainable or dominated complete cost, so the integer range is at most
+D times the largest point cost. The largest certified range is
+5467332906913332456, below2^63.
+
+The resulting complete13 cost is
+
+    4078973908904062879587704261867
+      /108352191282098927867550000000.
+
+Together with the complete11 cost, J=(1403/630)G and the unchanged
+criterion(SH28), the exact positive margin is
+
+    W-[J-1+cost11+cost13]
+      =44282704320696511600648227253
+         /108352191282098927867550000000 >0.
+
+Write C=J-1+cost11+cost13. The computed margin gives 0<C<W, and for
+every final complete test the proof of(SH28) gives
+
+    E L^2-1+W B<=C.
+
+Since B>=0 and C<=W, this also gives E L^2-1+C B<=C. Applying the
+universal square floor and final conditioning as in(SH28) yields
+
+    Gamma<=1+C=16582361047917383969674899272747
+                 /108352191282098927867550000000
+               <153.041308.                            (SH30)
+
+The convex costs are still evaluated at W=3049/20; no convexity claim
+at C or new kernel is needed. In particular the original target
+Gamma<=3069/20=153.45 also holds. No independent scalar charge premise
+is required. The old low-geometry hypothesis and all original3/5/7/11/13
+physical heights remain as in(SH25). This supplies another exact head
+input for later primes; it does not prove an unrestricted tail continuation.
+
+`verify_saturated_whole_cost.py` replays the separate
+`saturated_whole_cost_certificate.json`. The existing(SH18) and(SH24)
+certificates are hash-bound prerequisites. This new replay owns only the
+810 whole-cost observations, exact tables, full geometric and multiplier
+tails, and the strict final criterion. Run it with `python3 -I -O`.
+All conclusions here are ordinary mathematics with exact arithmetic,
+not new Lean declarations or a solution of unrestricted#7.
