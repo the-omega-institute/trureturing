@@ -6854,3 +6854,562 @@ The single output tolerance $1/2$ consequently has no neighborhood of $Z(0)$ wor
 Finally, each fixed iterate is continuous by theorem 24.2 and has the explicit finite modulus proved there; compactness also implies its uniform continuity. For the joint evaluation map with discrete parameter, at any $(k,x)$ one may restrict to the open slice $\{k\}\times K$, where continuity is just continuity of $T^k$. Thus joint continuity with discrete time coexists with failure of a state-precision modulus uniform over all times. The negative conclusion concerns the latter quantifier order, not a failure of fixed-map continuity.
 
 ## 追加锚（本行以下为增补区）
+## 25. 精确 Zeckendorf 闭图上归一化实有符号结合核的完全分类
+
+**定义 25.0（载体、相位和固定定向）。** 取 $\mathbb N=\{0,1,2,\ldots\}$、$\mathbb N_{>0}=\{1,2,\ldots\}$，置
+$$
+G_0=1,\qquad G_1=2,\qquad G_{j+2}=G_{j+1}+G_j,\qquad
+\phi=\frac{1+\sqrt5}{2},\qquad \alpha=\phi^{-1},
+$$
+$$
+K=\{x\in\{0,1\}^{\mathbb N}:x_jx_{j+1}=0\text{ 对所有 }j\},\qquad
+F(x)=\sum_{j\ge0}(-1)^{j+1}\alpha^{j+2}x_j,\qquad
+H(x)=[F(x)]\in\mathbb T=\mathbb R/\mathbb Z.
+$$
+记 $Z(n)$ 为以权 $G_j$ 展开的有限 Zeckendorf 规范字补零所得的点，$0_K=Z(0)$，并沿用定义16.0的闭图
+$$
+\Gamma=\overline{\{(Z(a),Z(b),Z(a+b)):a,b\in\mathbb N\}}^{\,K^3},\qquad
+\Gamma(x,y)=\{w:(x,y,w)\in\Gamma\}.
+$$
+对 $m\ge1$，记
+$$
+E_m=[-m\phi],\qquad E=\{E_m:m\ge1\},\qquad
+x_m^+=z_{E_m}^{+1},\qquad x_m^-=z_{E_m}^{-1}.
+$$
+这里的标记严格取定义16.3的相位正、负侧定向，不另行逐纤维交换；特别 $x_1^+=(10)^{\mathbb N}$、$x_1^-=(01)^{\mathbb N}$。[^rro25-graph]
+
+**假设 25.1（精确纤维与精确闭图）。** 本节采用下述显式前提。$H$ 满射，并且
+$$
+H^{-1}(\{E_m\})=\{x_m^+,x_m^-\},\qquad x_m^+\ne x_m^-,
+$$
+$$
+H^{-1}(\{\theta\})=\{k_\theta\}\quad(\theta\notin E),\qquad
+H^{-1}(\{[n\phi]\})=\{Z(n)\}\quad(n\in\mathbb N).
+$$
+特别 $k_0=0_K$。[^rro25-phase] 定义
+$$
+\mathcal S(x)=
+\begin{cases}
+\{+1\},&x=x_m^+\text{，某个 }m\ge1,\\
+\{-1\},&x=x_m^-\text{，某个 }m\ge1,\\
+\{-1,+1\},&H(x)\notin E.
+\end{cases}
+$$
+对 $\sigma=H(x)+H(y)$，要求准确等式
+$$
+\Gamma(x,y)=
+\begin{cases}
+\{k_\sigma\},&\sigma\notin E,\\
+\{x_r^s:s\in\mathcal S(x)\cup\mathcal S(y)\},&\sigma=E_r.
+\end{cases}
+$$
+其中 $x_r^{+1}=x_r^+$、$x_r^{-1}=x_r^-$。这是定理16.4的完整输入纤维公式，而不是仅有 $H(w)=H(x)+H(y)$ 的相位条件。[^rro25-graph]
+
+**定义 25.2（归一化实有符号核与有限卷积）。** 令
+$$
+A=\mathbb R^{(K)}
+=\{a:K\to\mathbb R:\operatorname{supp}(a)\text{ 有限}\},\qquad
+\operatorname{supp}(a)=\{x:a(x)\ne0\},
+$$
+$$
+\delta_x(w)=
+\begin{cases}1,&w=x,\\0,&w\ne x,\end{cases}
+\qquad
+\varepsilon(a)=\sum_{x\in K}a(x),\qquad
+A_\theta=\{a\in A:\operatorname{supp}(a)\subseteq H^{-1}(\{\theta\})\}.
+$$
+所有和均为有限和。$\varepsilon(a)=1$ 表示仿射系数归一化，不要求各系数非负。[^rro25-affine] 一个满足精确闭图支撑条件的归一化实有符号核，是映射 $P:K^2\to A$，满足
+$$
+\varepsilon(P_{x,y})=1,\qquad
+\operatorname{supp}(P_{x,y})\subseteq\Gamma(x,y).
+$$
+这里要求的是支撑包含于准确的 $\Gamma(x,y)$，不要求支撑等于该集合。定义双线性乘法
+$$
+a*b=\sum_{x,y\in K}a(x)b(y)P_{x,y},
+\qquad \delta_x*\delta_y=P_{x,y}.
+$$
+称 $P$ 结合，若对每个有序三元组 $(x,y,z)\in K^3$，
+$$
+(\delta_x*\delta_y)*\delta_z
+=\delta_x*(\delta_y*\delta_z).
+$$
+交换律和单位律不属于此定义。用 $0_A$ 区别于点 $0_K$。另记 $\mathbb R[\mathbb T]$ 为基向量 $b_\theta$ 的有限实形式和，乘法由
+$$
+b_\theta b_\rho=b_{\theta+\rho}
+$$
+双线性扩张，并定义线性映射 $H_\#:A\to\mathbb R[\mathbb T]$，使
+$$
+H_\#(\delta_x)=b_{H(x)}.
+$$
+此处的群代数只使用有限形式和。[^rro25-algebra]
+
+**定理 25.3（有限延拓、增广与相位分次）。** 定义25.2的乘法良定义，且
+$$
+\varepsilon(a*b)=\varepsilon(a)\varepsilon(b),\qquad
+A_\theta*A_\rho\subseteq A_{\theta+\rho},\qquad
+H_\#(a*b)=H_\#(a)H_\#(b).
+$$
+$H_\#$ 满射。点质量有序三元组上的结合律等价于整个 $A$ 上的结合律。
+
+**证明。** 对给定 $a,b$，仅有有限多个输入对参与求和，每个 $P_{x,y}$ 又有有限支撑。因此乘积的支撑包含于有限多个有限集的并。由各核的系数和为一，
+$$
+\varepsilon(a*b)
+=\sum_{x,y}a(x)b(y)\varepsilon(P_{x,y})
+=\sum_{x,y}a(x)b(y)
+=\varepsilon(a)\varepsilon(b).
+$$
+假设25.1使 $P_{x,y}$ 支撑于相位 $H(x)+H(y)$；这给分次包含，并给
+$$
+H_\#(P_{x,y})=b_{H(x)+H(y)}.
+$$
+双线性扩张即得乘法相容性。每个相位有原像，所以每个 $b_\theta$ 都在像中，满射成立。最后，任意 $a,b,c$ 的结合子等于有限和
+$$
+(a*b)*c-a*(b*c)
+=\sum_{x,y,z}a(x)b(y)c(z)
+\bigl((\delta_x*\delta_y)*\delta_z-\delta_x*(\delta_y*\delta_z)\bigr).
+$$
+因此点质量上的结合律推出全空间结合律，反向是限制。证毕。
+
+**定理 25.4（零切片唯一化与有符号平均恒等式）。** 设 $P$ 结合，置 $e=\delta_{0_K}$。存在唯一一族 $\pi_\theta\in A_\theta$，使
+$$
+\varepsilon(\pi_\theta)=1,\qquad
+e*\delta_x=\delta_x*e=\pi_{H(x)}.
+$$
+此外 $\pi_0=e$、$e*e=e$，并且对 $a\in A_\theta$，
+$$
+e*a=a*e=\varepsilon(a)\pi_\theta.
+$$
+对任意 $x,y\in K$ 及 $\theta,\rho\in\mathbb T$，
+$$
+\pi_{H(x)}*\delta_y=\delta_x*\pi_{H(y)}
+=\pi_{H(x)+H(y)},\qquad
+\pi_\theta*\pi_\rho=\pi_{\theta+\rho}.
+$$
+
+**证明。** $\phi$ 无理，故 $E_m$ 两两不同，且 $E_m+E_n=E_{m+n}$。置 $\tau=[1/2]$。$\tau\notin E$：否则 $m\phi$ 与一个半整数相等，矛盾。同样，
+$$
+(E+\tau)\cap E=\varnothing,
+$$
+因为 $E_m+\tau=E_n$ 会使 $(n-m)\phi+1/2$ 为整数；$n=m$ 时不可能，$n\ne m$ 时则迫使 $\phi$ 有理。
+
+令 $h=k_\tau$、$a_h=\delta_h$。相位零只有 $0_K$，故归一化与精确支撑给
+$$
+a_h*a_h=e.
+$$
+固定 $\theta=E_m$。对该纤维的任意 $x$，因 $\theta+\tau\notin E$，
+$$
+a_h*\delta_x=\delta_x*a_h=\delta_{k_{\theta+\tau}}.
+$$
+所以
+$$
+e*\delta_x=a_h*(a_h*\delta_x)
+=a_h*\delta_{k_{\theta+\tau}},
+$$
+$$
+\delta_x*e=(\delta_x*a_h)*a_h
+=\delta_{k_{\theta+\tau}}*a_h.
+$$
+左、右零切片各自在该相位纤维上恒定。非分裂纤维只有一个输入点，恒定性也成立。分别将这两个切片记为 $L_\theta,R_\theta$。它们均属于 $A_\theta$，且系数和均为一。
+
+对 $H(x)=\theta$，结合律在 $(0_K,x,0_K)$ 上给
+$$
+L_\theta*e=e*R_\theta.
+$$
+逐项使用右切片恒定性，左边是 $\varepsilon(L_\theta)R_\theta=R_\theta$；逐项使用左切片恒定性，右边是 $\varepsilon(R_\theta)L_\theta=L_\theta$。因此二者相等，记为 $\pi_\theta$。此步只使用系数和为一，允许负系数。满射性保证每个 $\pi_\theta$ 都由这些切片唯一确定。对 $a\in A_\theta$ 逐项求和，即得所述平均恒等式。零相位单点性还给 $\pi_0=e$、$e*e=e$。
+
+最后，若 $H(x)=\theta,H(y)=\rho$，则
+$$
+\pi_\theta*\delta_y
+=(e*\delta_x)*\delta_y
+=e*P_{x,y}
+=\pi_{\theta+\rho},
+$$
+$$
+\delta_x*\pi_\rho
+=\delta_x*(\delta_y*e)
+=P_{x,y}*e
+=\pi_{\theta+\rho}.
+$$
+在第二槽对系数和为一的 $\pi_\rho$ 求和，得到 $\pi_\theta*\pi_\rho=\pi_{\theta+\rho}$。整个论证没有交换任意两个未知乘积。证毕。
+
+**定理 25.5（所有实切片系数下的实际基）。** 任取实数序列 $(p_m)_{m\ge1}$，定义
+$$
+\pi_{E_m}=p_m\delta_{x_m^+}+(1-p_m)\delta_{x_m^-},\qquad
+\pi_\theta=\delta_{k_\theta}\quad(\theta\notin E),\qquad
+v_m=\delta_{x_m^+}-\delta_{x_m^-}.
+$$
+不论该序列是否来自结合核，集合
+$$
+\{\pi_\theta:\theta\in\mathbb T\}\ \cup\ \{v_m:m\ge1\}
+$$
+都是 $A$ 的代数基。准确地，
+$$
+\delta_{x_m^+}=\pi_{E_m}+(1-p_m)v_m,\qquad
+\delta_{x_m^-}=\pi_{E_m}-p_m v_m.
+$$
+若
+$$
+V=\operatorname{span}_{\mathbb R}\{\pi_\theta:\theta\in\mathbb T\},\qquad
+J=\operatorname{span}_{\mathbb R}\{v_m:m\ge1\},
+$$
+则 $A=V\oplus J$、$\ker H_\#=J$，且 $H_\#|_V$ 是到 $\mathbb R[\mathbb T]$ 的线性同构。
+
+**证明。** 两个显示的逆变换逐项展开即可验证；非分裂纤维的点质量就是 $\pi_\theta$。因此每个点质量，进而每个有限支撑形式和，都有这些向量的有限线性展开。
+
+为证线性无关，取任意有限线性关系
+$$
+\sum_\theta a_\theta\pi_\theta+\sum_m b_m v_m=0_A.
+$$
+按相位分组。每个相位分量的系数总和为 $a_\theta$，因为 $\varepsilon(\pi_\theta)=1$、$\varepsilon(v_m)=0$。故所有 $a_\theta=0$。余下的 $v_m$ 分属不同相位，而且各自有两个不同支撑点，其系数分别为一与负一，故所有 $b_m=0$。这证明基与直和，尤其包括 $p_m=0$ 或 $p_m=1$ 的情形，没有除以这些数。
+
+又 $H_\#(\pi_\theta)=b_\theta$、$H_\#(v_m)=0$。利用已证的唯一有限展开，核恰为 $J$，在 $V$ 上的限制把一组基双射到另一组基，故为所述同构。证毕。
+
+**定理 25.6（全部乘法自由度及同号强制方程）。** 对任意结合核，以定理25.4的切片唯一写成
+$$
+\pi_{E_m}=p_m\delta_{x_m^+}+(1-p_m)\delta_{x_m^-}.
+$$
+存在唯一实数 $c_{m,n}$，使其全部乘法在定理25.5的基上满足
+$$
+\pi_\theta*\pi_\rho=\pi_{\theta+\rho},\qquad
+\pi_\theta*v_m=v_m*\pi_\theta=0_A,\qquad
+v_m*v_n=c_{m,n}v_{m+n}.
+$$
+对所有正整数 $m,n,\ell$，有
+$$
+(1-p_m)(1-p_n)c_{m,n}=1-p_{m+n},\qquad
+p_mp_nc_{m,n}=-p_{m+n},
+$$
+$$
+(1-p_m-p_n)c_{m,n}=1,\qquad
+c_{m,n}=\frac1{1-p_m-p_n}\ne0,
+$$
+$$
+p_{m+n}=\frac{p_mp_n}{p_m+p_n-1},\qquad
+c_{m,n}c_{m+n,\ell}=c_{n,\ell}c_{m,n+\ell}.
+$$
+特别 $p_m+p_n\ne1$、$p_m\ne1/2$，而且乘法必定交换。
+
+**证明。** 非分裂切片由单点性唯一确定；分裂切片由总和一唯一确定 $p_m$。定理25.4使 $\pi_\theta$ 与同一相位的两个点质量相乘时得到相同结果，两者相减给两侧湮灭恒等式。
+
+由相位分次，$v_m*v_n$ 属于 $A_{E_{m+n}}$；其系数和为 $\varepsilon(v_m)\varepsilon(v_n)=0$。该二点纤维上系数和为零的空间恰为 $\mathbb Rv_{m+n}$，所以 $c_{m,n}$ 存在且唯一。
+
+精确闭图在两个同号分裂输入处给单点支撑，因此归一化迫使
+$$
+\delta_{x_m^+}*\delta_{x_n^+}=\delta_{x_{m+n}^+},\qquad
+\delta_{x_m^-}*\delta_{x_n^-}=\delta_{x_{m+n}^-}.
+$$
+将定理25.5的逆变换代入，分别得到
+$$
+\pi_{E_{m+n}}+(1-p_m)(1-p_n)c_{m,n}v_{m+n}
+=\pi_{E_{m+n}}+(1-p_{m+n})v_{m+n},
+$$
+$$
+\pi_{E_{m+n}}+p_mp_nc_{m,n}v_{m+n}
+=\pi_{E_{m+n}}-p_{m+n}v_{m+n}.
+$$
+比较非零向量 $v_{m+n}$ 的系数即得前两个方程。第一个方程减去第二个方程，得到
+$$
+\bigl((1-p_m)(1-p_n)-p_mp_n\bigr)c_{m,n}=1,
+$$
+即 $(1-p_m-p_n)c_{m,n}=1$。因此分母和 $c_{m,n}$ 都不为零，所列递推随之成立；取 $n=m$ 排除每个 $p_m=1/2$。
+
+定理25.3允许将结合律用于 $v_m,v_n,v_\ell$。比较非零向量 $v_{m+n+\ell}$ 的系数，得到余循环等式。最后，$c_{m,n}$ 的已证公式关于 $m,n$ 对称；相位基上的乘法交换，交叉乘积两侧都为零。因此所有基向量两两交换，双线性扩张给整个 $A$ 的交换律。证毕。
+
+**定理 25.7（包括退化项的参数穷尽）。** 定理25.6的系数必且仅可能落入下列参数形式之一：
+$$
+p_m=\frac{t^m}{t^m-1},\qquad
+c_{m,n}=-\frac{(t^m-1)(t^n-1)}{t^{m+n}-1}
+\quad\text{，某个 }t\in\mathbb R\setminus\{-1,1\},
+$$
+或
+$$
+p_m=1,\qquad c_{m,n}=-1\quad\text{ 对所有 }m,n\ge1.
+$$
+第一种形式中的 $t=0$ 正是 $p_m=0,c_{m,n}=1$ 的情形。任何一项 $p_m=0$ 都迫使全部项为零；任何一项 $p_m=1$ 都迫使全部项为一。其余情形的每一项都避开零和一。
+
+**证明。** 先作必要性分类。若 $p_1=0$，由 $p_mp_1c_{m,1}=-p_{m+1}$ 得 $p_{m+1}=0$，所以全部项为零，再由 $(1-p_m-p_n)c_{m,n}=1$ 得 $c_{m,n}=1$。若 $p_1=1$，由 $(1-p_m)(1-p_1)c_{m,1}=1-p_{m+1}$ 得全部项为一，并得 $c_{m,n}=-1$。
+
+若 $p_1\notin\{0,1\}$，用
+$$
+p_{m+1}=-p_mp_1c_{m,1},\qquad
+1-p_{m+1}=(1-p_m)(1-p_1)c_{m,1}
+$$
+归纳。$c_{m,1}\ne0$ 保证每一步的两个右端都非零。因此所有 $p_m$ 都不等于零或一。这也排除了在较大指标才出现退化项的可能性。
+
+现在仅在这一非退化情形定义
+$$
+t_m=-\frac{p_m}{1-p_m}.
+$$
+两个强制方程及各个非零分母给
+$$
+t_{m+n}
+=\frac{p_mp_nc_{m,n}}{(1-p_m)(1-p_n)c_{m,n}}
+=t_mt_n.
+$$
+置 $t=t_1$，对 $m$ 归纳得 $t_m=t^m$。每个 $t_m$ 非零，而且 $t_m=1$ 会给 $-p_m=1-p_m$，矛盾。因此 $t^m\ne1$。特别 $t\ne1$，且 $t=-1$ 会使 $t_2=1$，也被排除。解出 $p_m$ 得
+$$
+p_m=\frac{t^m}{t^m-1}.
+$$
+代入 $c_{m,n}=1/(1-p_m-p_n)$，得到
+$$
+1-p_m-p_n
+=-\frac{t^{m+n}-1}{(t^m-1)(t^n-1)},
+$$
+从而得到所列 $c_{m,n}$。
+
+反向核对这些系数方程本身。实数 $t\ne\pm1$ 的任意正整数次幂均不等于一：奇数次幂等于一只能有 $t=1$；偶数次幂等于一只能有 $t=\pm1$。所以全部分母非零。令 $A_m=t^m-1$，则
+$$
+1-p_m=-\frac1{A_m},\qquad
+c_{m,n}=-\frac{A_mA_n}{A_{m+n}}.
+$$
+直接相乘给
+$$
+(1-p_m)(1-p_n)c_{m,n}=-\frac1{A_{m+n}}=1-p_{m+n},
+$$
+$$
+p_mp_nc_{m,n}=-\frac{t^{m+n}}{A_{m+n}}=-p_{m+n}.
+$$
+余循环的两个乘积都等于
+$$
+\frac{A_mA_nA_\ell}{A_{m+n+\ell}}.
+$$
+这些计算包括 $t=0$，因为全部指标严格为正，不涉及零次幂。对于另列的常值 $p_m=1,c_{m,n}=-1$，两个强制方程分别为零等于零、负一等于负一，余循环两边均为一。故列出的参数也满足全部系数方程；其确实给出全载体核将在定理25.9证明。证毕。
+
+**定义 25.8（全部候选核的显式构造）。** 取参数集合
+$$
+\Lambda=(\mathbb R\setminus\{-1,1\})\sqcup\{\infty\}.
+$$
+$\infty$ 是另加的形式符号，不表示任何极限。对有限参数 $t$，采用定理25.7的 $p_m,c_{m,n}$；对参数 $\infty$，另行定义 $p_m=1,c_{m,n}=-1$。由这些系数和定理25.5组成实际基，并在该基上定义
+$$
+\pi_\theta*_t\pi_\rho=\pi_{\theta+\rho},\qquad
+\pi_\theta*_t v_m=v_m*_t\pi_\theta=0_A,\qquad
+v_m*_t v_n=c_{m,n}v_{m+n}.
+$$
+双线性扩张后，定义
+$$
+P^{(t)}_{x,y}=\delta_x*_t\delta_y.
+$$
+每个参数的 $\pi_\theta,p_m,c_{m,n}$ 均取该参数自己的值。
+
+**定理 25.9（全载体构造、全部三元组与精确同号支撑）。** 对每个 $t\in\Lambda$，定义25.8给出一个归一化实有符号结合核。其支撑包含于准确的 $\Gamma(x,y)$，而且
+$$
+P^{(t)}_{Z(a),Z(b)}=\delta_{Z(a+b)}\qquad(a,b\in\mathbb N).
+$$
+若至少一个输入非分裂，则
+$$
+P^{(t)}_{x,y}=\pi_{H(x)+H(y)}.
+$$
+若两个输入为分裂点，则同号输入准确地给出
+$$
+P^{(t)}_{x_m^+,x_n^+}=\delta_{x_{m+n}^+},\qquad
+P^{(t)}_{x_m^-,x_n^-}=\delta_{x_{m+n}^-}.
+$$
+对有限参数，其两个有序异号公式为
+$$
+P^{(t)}_{x_m^+,x_n^-}
+=\frac{t^n(t^m-1)}{t^{m+n}-1}\delta_{x_{m+n}^+}
++\frac{t^n-1}{t^{m+n}-1}\delta_{x_{m+n}^-},
+$$
+$$
+P^{(t)}_{x_m^-,x_n^+}
+=\frac{t^m(t^n-1)}{t^{m+n}-1}\delta_{x_{m+n}^+}
++\frac{t^m-1}{t^{m+n}-1}\delta_{x_{m+n}^-}.
+$$
+对形式参数 $\infty$，两个异号输出均为 $\delta_{x_{m+n}^+}$。
+
+**证明。** 定理25.5保证构造所用的确实是一组基，每个乘法规则的输出都是有限形式和，所以双线性乘法良定义。$\varepsilon(\pi_\theta)=1$、$\varepsilon(v_m)=0$。逐对检查基向量可见
+$$
+\varepsilon(u*_t v)=\varepsilon(u)\varepsilon(v),
+$$
+故此恒等式由双线性对所有形式和成立，特别每个点质量乘积的系数和为一。
+
+逐类验证结合律。三个相位基向量的两个括号均给 $\pi_{\theta+\rho+\sigma}$。三个差分基向量的两个括号分别为
+$$
+c_{m,n}c_{m+n,\ell}v_{m+n+\ell},\qquad
+c_{n,\ell}c_{m,n+\ell}v_{m+n+\ell},
+$$
+由定理25.7中已经直接计算的余循环相等；有限参数的共同标量为
+$$
+\frac{(t^m-1)(t^n-1)(t^\ell-1)}{t^{m+n+\ell}-1},
+$$
+形式参数 $\infty$ 的共同标量为一。其余六种有序类型逐一为
+$$
+(\pi_\theta*_t\pi_\rho)*_t v_m
+=\pi_\theta*_t(\pi_\rho*_t v_m)=0_A,
+$$
+$$
+(\pi_\theta*_t v_m)*_t\pi_\rho
+=\pi_\theta*_t(v_m*_t\pi_\rho)=0_A,
+$$
+$$
+(v_m*_t\pi_\theta)*_t\pi_\rho
+=v_m*_t(\pi_\theta*_t\pi_\rho)=0_A,
+$$
+$$
+(\pi_\theta*_t v_m)*_t v_n
+=\pi_\theta*_t(v_m*_t v_n)=0_A,
+$$
+$$
+(v_m*_t\pi_\theta)*_t v_n
+=v_m*_t(\pi_\theta*_t v_n)=0_A,
+$$
+$$
+(v_m*_t v_n)*_t\pi_\theta
+=v_m*_t(v_n*_t\pi_\theta)=0_A.
+$$
+每个等式均由混合乘积为零及差分乘积仍为差分倍数得到。因此全部基三元组满足结合律；有限三线性扩张覆盖整个 $A$，当然也覆盖全部点质量有序三元组。
+
+还须验证比相位相容更强的实际支撑。若至少一个输入非分裂，其点质量为某个 $\pi_\theta$；另一个输入为 $\pi_\rho$ 或 $\pi_\rho$ 加一个差分倍数，乘积遂为 $\pi_{\theta+\rho}$。和相位非分裂时，这是唯一允许点的点质量；和相位分裂时，非分裂输入的符号集含两个符号，因此 $\Gamma(x,y)$ 允许两个分支，$\pi_{\theta+\rho}$ 的支撑合法。
+
+若两个输入分别位于 $E_m,E_n$，和相位必为 $E_{m+n}$。两个同号乘积展开为
+$$
+\pi_{E_{m+n}}+(1-p_m)(1-p_n)c_{m,n}v_{m+n}
+=\pi_{E_{m+n}}+(1-p_{m+n})v_{m+n}
+=\delta_{x_{m+n}^+},
+$$
+$$
+\pi_{E_{m+n}}+p_mp_nc_{m,n}v_{m+n}
+=\pi_{E_{m+n}}-p_{m+n}v_{m+n}
+=\delta_{x_{m+n}^-}.
+$$
+这证明同号处的反号系数准确为零，并非只检查整个二点相位纤维。
+
+对于输入 $(x_m^+,x_n^-)$，展开为
+$$
+\pi_{E_{m+n}}-(1-p_m)p_nc_{m,n}v_{m+n}.
+$$
+其正支系数利用 $p_{m+n}=-p_mp_nc_{m,n}$ 化为 $-p_nc_{m,n}$；有限参数下这等于
+$$
+\frac{t^n(t^m-1)}{t^{m+n}-1}.
+$$
+负支系数是一减正支系数，等于 $(t^n-1)/(t^{m+n}-1)$。另一个有序异号公式同理由展开 $\pi_{E_{m+n}}-p_m(1-p_n)c_{m,n}v_{m+n}$ 得到。二者的两个系数都相加为一，且异号输入允许两个分支，所以即使有负系数，其支撑仍合法。形式参数 $\infty$ 下，$p_m=p_n=1$ 使两个异号展开中的差分修正均为零，$\pi_{E_{m+n}}=\delta_{x_{m+n}^+}$。
+
+这些情况穷尽输入对，完成精确支撑验证。最后，自然数相位及其和相位都非分裂，假设25.1使相应唯一点为 $Z(a),Z(b),Z(a+b)$，从而得到自然数核心等式。证毕。
+
+**定理 25.10（完全分类及单个切片系数参数）。** 在假设25.1下，映射
+$$
+t\longmapsto P^{(t)}
+$$
+是 $\Lambda$ 到全部归一化实有符号结合核的双射。等价地，全部核由一个实数
+$$
+q=P_{0_K,x_1^+}(x_1^+)\in\mathbb R\setminus\{1/2\}
+$$
+唯一参数化。两种参数的转换为
+$$
+q=\frac{t}{t-1}\quad(t\ne\infty),\qquad
+q=1\quad(t=\infty),
+$$
+$$
+t=\frac{q}{q-1}\quad(q\ne1),\qquad
+t=\infty\quad(q=1).
+$$
+若置 $D_m(q)=q^m-(q-1)^m$，则所有情形统一为
+$$
+p_m=\frac{q^m}{D_m(q)},\qquad
+c_{m,n}=-\frac{D_m(q)D_n(q)}{D_{m+n}(q)}.
+$$
+
+**证明。** 对任意给定核，定理25.4从其实际零切片唯一确定全部 $\pi_\theta$，定理25.6唯一确定其余基乘法系数，并证明不存在额外混合项。定理25.7穷尽这些系数：全零情形对应 $t=0$，全一情形对应 $\infty$，非退化情形对应唯一的 $t=-p_1/(1-p_1)$。因此在定理25.5的实际基上，原乘法与定义25.8的对应乘法完全相同；双线性和张成性使它们在全部点质量上相同。这证明满射，不留下额外的非交换或零余循环分支。
+
+反向，对于构造出的核，由 $\delta_{0_K}=\pi_0$ 和混合湮灭式，
+$$
+P^{(t)}_{0_K,x_m^+}=P^{(t)}_{0_K,x_m^-}=\pi_{E_m}.
+$$
+所以零切片读回的确实是所指定的 $p_m$。特别读回的 $q=p_1$ 满足所列转换式；有限参数的 $q$ 不可能等于一，而 $q\ne1$ 时转换唯一可逆，故参数映射单射。$q=1/2$ 已由定理25.6的倍增方程排除；任何其他 $q$，若 $q=1$ 则对应 $\infty$，否则 $q/(q-1)$ 既不等于一，也只有在 $q=1/2$ 时才等于负一。因此每个允许的 $q$ 都有对应核。
+
+检查统一公式的分母。若奇数 $m$ 满足 $q^m=(q-1)^m$，实数奇次幂的单射性给 $q=q-1$，不可能。若偶数 $m$ 满足该等式，则 $|q|=|q-1|$，平方后得 $q=1/2$，也被排除。因此每个 $D_m(q)\ne0$。当 $q\ne1$ 时，将 $t=q/(q-1)$ 代入定理25.7公式并约去 $(q-1)$ 的幂，得到所列统一式。当 $q=1$ 时，$D_m(1)=1$，统一式直接给 $p_m=1,c_{m,n}=-1$，与另行定义的形式参数核相同，不使用极限。证毕。
+
+**定理 25.11（余边界、代数直和与单位障碍）。** 对有限参数定义 $d_m=1-t^m$，对形式参数 $\infty$ 定义 $d_m=-1$。则 $d_m\ne0$，并且
+$$
+c_{m,n}=\frac{d_md_n}{d_{m+n}}.
+$$
+因此这是正整数加法半群上的乘法余边界；这里该术语指所显示的公式。[^rro25-cocycle] 置 $u_m=v_m/d_m$，则
+$$
+u_m*_t u_n=u_{m+n}.
+$$
+作为不要求有单位的实代数，有同构
+$$
+(A,*_t)\cong\mathbb R[\mathbb T]\times X\mathbb R[X],
+$$
+其中第二因子为常数项为零的实多项式代数，两个因子的交叉乘积为零。整个 $A$ 不存在左单位或右单位，尽管 $\delta_{0_K}$ 是相位子代数 $V$ 的单位。
+
+**证明。** 有限参数的公式由
+$$
+\frac{(1-t^m)(1-t^n)}{1-t^{m+n}}
+=-\frac{(t^m-1)(t^n-1)}{t^{m+n}-1}
+$$
+得到；形式参数下 $(-1)(-1)/(-1)=-1$。全部 $d_m$ 非零已由参数域保证。故
+$$
+u_m*_t u_n
+=\frac{c_{m,n}}{d_md_n}v_{m+n}
+=\frac{v_{m+n}}{d_{m+n}}
+=u_{m+n}.
+$$
+定理25.5的基经各个非零标量重标度后，$\{\pi_\theta\}\cup\{u_m\}$ 仍为基。定义线性映射
+$$
+\pi_\theta\longmapsto(b_\theta,0),\qquad
+u_m\longmapsto(0,X^m).
+$$
+右边也是所列直积的基：两个坐标均只涉及有限形式和。因此该映射双射。相位基的乘法是群加法，正整数基的乘法是指数相加，而交叉乘积两侧都为零；逐对检查基向量，便知双射保持乘法。这也直接证明 $V,J$ 都是双侧理想，并给出代数直和，而非仅仅向量空间直和。
+
+若 $a\in A$，将它作唯一有限展开
+$$
+a=\sum_\theta a_\theta\pi_\theta+\sum_{n\ge1}b_n v_n.
+$$
+则
+$$
+a*_t v_1=\sum_{n\ge1}b_nc_{n,1}v_{n+1},\qquad
+v_1*_t a=\sum_{n\ge1}b_nc_{1,n}v_{n+1}.
+$$
+两者在基向量 $v_1$ 上的系数都为零，不可能等于 $v_1$。因此不存在任何左单位或右单位。另一方面 $\pi_0=\delta_{0_K}$ 与每个 $\pi_\theta$ 相乘给 $\pi_\theta$，确是 $V$ 的单位。上述抽象代数同构没有要求保持每个 $\delta_x$；定理25.10是在固定点质量基上的核相等分类，二者不混同。证毕。
+
+**定理 25.12（非负系数边界恰为两个确定性核）。** 对本节的任意结合核，下列条件等价：所有 $P_{x,y}(w)$ 非负；每个 $P_{x,y}$ 都是一个点质量；参数属于 $\{0,\infty\}$。参数零的核在分裂和相位处，只有两个正号分裂输入的输出为正支，其余输入输出负支。形式参数 $\infty$ 的核在分裂和相位处，只有两个负号分裂输入的输出为负支，其余输入输出正支。和相位非分裂时二者都输出其唯一点。
+
+**证明。** 假设全部点质量乘积的系数非负。由实际零切片 $P_{0_K,x_m^+}=\pi_{E_m}$，每个 $p_m$ 都属于 $[0,1]$。令 $q=p_1$。若 $0<q<1/2$，倍增递推给
+$$
+p_2=\frac{q^2}{2q-1}<0,
+$$
+矛盾。若 $1/2<q<1$，则
+$$
+p_2-1=\frac{(q-1)^2}{2q-1}>0,
+$$
+也矛盾。$q=1/2$ 对任何结合核均不可能。因此 $q=0$ 或 $q=1$，分别对应参数零与形式参数 $\infty$。
+
+当 $t=0$ 时，所有 $\pi_{E_m}=\delta_{x_m^-}$。定理25.9中同号正输入输出正支，同号负输入输出负支；两个异号公式在所有正指标处均给正支系数零、负支系数一；含非分裂输入的分裂和相位输出为其负支切片。这正是所述默认负支规则。形式参数 $\infty$ 时，切片及异号输出均为正支，同号负输入仍被强制为负支，得到所述默认正支规则。因此两个参数都给点质量核，进而给非负系数核。任何点质量核显然非负，三者等价。
+
+对其他参数，$q\notin\{0,1\}$，所以 $P_{0_K,x_1^+}$ 已有两个非零系数，不是点质量。若 $q$ 在 $[0,1]$ 之外，该切片直接含负系数；若 $q$ 在其内部，则上面的倍增计算说明第二个分裂零切片含负系数。因此其余核确实需要允许负系数。证毕。
+
+**定理 25.13（一个显式非 Dirac 核）。** 参数 $t=2$ 给出全 $K$ 上的归一化实有符号结合核，并满足
+$$
+P^{(2)}_{0_K,x_1^+}
+=P^{(2)}_{0_K,x_1^-}
+=2\delta_{x_1^+}-\delta_{x_1^-},
+$$
+$$
+P^{(2)}_{x_1^+,x_1^+}=\delta_{x_2^+},\qquad
+P^{(2)}_{x_1^-,x_1^-}=\delta_{x_2^-},
+$$
+$$
+P^{(2)}_{x_1^+,x_1^-}
+=P^{(2)}_{x_1^-,x_1^+}
+=\frac23\delta_{x_2^+}+\frac13\delta_{x_2^-}.
+$$
+因此精确闭图支撑与结合性并不单独强制 Dirac 输出，而附加系数非负性恰将全部核缩减为定理25.12的两个确定性核。
+
+**证明。** 参数二避开禁止值，故定理25.9已经证明其在全载体上的存在、结合性和精确支撑。直接代入得
+$$
+p_1=2,\qquad p_2=\frac43,\qquad c_{1,1}=-\frac13.
+$$
+零切片遂为显示的两个系数，其和是 $2-1=1$，且负支系数为负一，所以不是点质量，也不是非负系数组合。同号公式直接来自定理25.9中已经逐项证明的强制支撑恒等式；异号公式代入 $m=n=1,t=2$ 给 $2/3$ 与 $1/3$。最后的非负性结论由定理25.12的参数穷尽推出。证毕。
+
+[^rro25-graph]: *RECURSIVE_RELATIONAL_OBSERVATION*，固定提交 c74985438ae17d205509255934bbd3ecf1f94d71，定义16.0、16.3及定理16.4（包括单侧逼近与共同输入序列的完整证明），[固定文本](https://raw.githubusercontent.com/the-omega-institute/trureturing/c74985438ae17d205509255934bbd3ecf1f94d71/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)。
+
+[^rro25-phase]: *CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF*，固定提交 c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb，第371—372节，特别定理371.2、372.2—372.4，[固定文本](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md)。
+
+[^rro25-affine]: Mathlib contributors, *Affine combinations*, 关于系数和为一的有限仿射组合及其与基点无关性的定义和恒等式，[数学文档](https://leanprover-community.github.io/mathlib4_docs/Mathlib/LinearAlgebra/AffineSpace/Combination.html)。
+
+[^rro25-algebra]: Mathlib contributors, *Monoid algebras*, 关于有限形式线性组合、加法群代数及有限卷积的定义，[数学文档](https://leanprover-community.github.io/mathlib4_docs/Mathlib/Algebra/MonoidAlgebra/Defs.html)。
+
+[^rro25-cocycle]: Laurent Rigal and Pablo Zadunaisky, *Twisted semigroup algebras*, arXiv:1406.2985v2 (2014), §3.1，Definition 3.1.1、Remark 3.1.2及 Lemma 3.1.3；乘法余循环与余边界的术语参照，[正文](https://arxiv.org/html/1406.2985v2#S3.SS1)。
+
+## 追加锚（本行以下为增补区）
