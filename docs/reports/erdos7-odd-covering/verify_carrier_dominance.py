@@ -9,7 +9,7 @@ certificate and does not run an LP or evaluate a new moment bound.
 """
 from collections import Counter
 from functools import lru_cache, reduce
-from itertools import product
+from itertools import permutations, product
 from pathlib import Path
 import argparse
 import importlib.util
@@ -289,12 +289,126 @@ def pg1_coverage(masks, points, maps, minimal, geometry):
             "covered_orbits_sha256": geometry.digest(representatives)}
 
 
+MOD3_SOURCE_SHA256 = "35cd4a830d1ccb413c8530c83a9d9af0a0deb6be3f7d87dc5a82d3bd640d0662"
+C2_SHAPE = "root2_other_same_column"
+
+
+def read_mod3_source(path, geometries, geometry):
+    data = json.loads(path.read_text())
+    require(geometry.digest(data) == MOD3_SOURCE_SHA256, "mod3 source certificate identity")
+    require(type(data) is dict and data.get("schema") == "erdos7-mod3-conditioned-geometry-v1",
+            "mod3 source schema")
+    cases = data.get("cases")
+    require(type(cases) is list and len(cases) == 2
+            and [case.get("name") for case in cases] == ["PG1", "C2-minimal75"],
+            "two inherited mod3 sources")
+    require(cases[0].get("target") == "69/2" and cases[1].get("target") == "35",
+            "inherited mod3 targets")
+    source = cases[1]
+    for key in ("points", "old_points", "weight_numerators"):
+        geometry.integer_list(source.get(key), "C2 " + key)
+    family = source.get("family")
+    require(type(family) is list and len(family) == 11, "C2 original low family")
+    for pair in family:
+        geometry.integer_list(pair, "C2 modulus/residue")
+        require(len(pair) == 2 and pair[0] > 1 and 0 <= pair[1] < pair[0], "C2 pair range")
+    require({d for d, a in family} == {d for d in range(2, 316) if 315 % d == 0},
+            "C2 eleven distinct original modulus labels")
+    old_case = next(row for row in geometries if row["shape"] == C2_SHAPE)
+    old = old_case["old_points"]
+    require(source["old_points"] == old
+            and [pair for pair in family if pair[0] % 7] == old_case["old_classes"],
+            "C2 canonical old geometry")
+    points = source["points"]
+    require(points == [x for x in range(315) if all(x % d != a for d, a in family)]
+            and len(points) == 75 and [7, 0] in family, "C2 actual75 carrier")
+    weights = source["weight_numerators"]
+    require(type(source.get("weight_denominator")) is int and len(weights) == len(points)
+            and all(w > 0 for w in weights)
+            and sum(weights) == source["weight_denominator"], "C2 full positive law")
+    require({x % 45 for x in points} == set(old), "C2 support projects onto old carrier")
+    by_digit = [sum(1 << i for i, x in enumerate(old)
+                    if not any(p % 45 == x and p % 7 == digit for p in points))
+                for digit in range(1, 7)]
+    assignments = []
+    for modulus, residue in family:
+        if modulus % 7 == 0 and modulus > 7:
+            cofactor = modulus // 7
+            mask = sum(1 << i for i, x in enumerate(old) if x % cofactor == residue % cofactor)
+            assignments.append({"modulus": modulus, "residue": residue,
+                                "digit": residue % 7, "old_mask": mask})
+    for digit in range(1, 7):
+        require(reduce(int.__or__, (row["old_mask"] for row in assignments
+                                    if row["digit"] == digit), 0) == by_digit[digit - 1],
+                "C2 original-label union witness")
+    return tuple(sorted(mask for mask in by_digit if mask)), assignments
+
+
+def old_shape_embedding_counts(geometries):
+    # Exhaustive restrictions of modulus-preserving CRT tree maps: each old
+    # support occupies roots with respectively two and three mod9 children.
+    # Three nonempty children cannot inject into two, so root types must match.
+    # All four nonzero mod5 columns occur, so their images are a permutation.
+    for row in geometries:
+        points = row["old_points"]
+        require({x % 9 for x in points} == {1, 7, 2, 5, 8}
+                and {x % 5 for x in points} == {1, 2, 3, 4}, "old embedding domain")
+    counts = []
+    for source in geometries:
+        row_counts = []
+        for target in geometries:
+            allowed = {(x % 9, x % 5) for x in target["old_points"]}
+            count = 0
+            for short, long, columns in product(permutations((1, 7)),
+                                                permutations((2, 5, 8)),
+                                                permutations((1, 2, 3, 4))):
+                rows = dict(zip((1, 7, 2, 5, 8), short + long))
+                cols = dict(zip((1, 2, 3, 4), columns))
+                count += all((rows[x % 9], cols[x % 5]) in allowed
+                             for x in source["old_points"])
+            require(count > 0 if source["shape"] == target["shape"] else count == 0,
+                    "old support embeddings stay in their canonical shape")
+            row_counts.append(count)
+        counts.append(row_counts)
+    return counts
+
+
+def c2_coverage(masks, assignments, points, maps, minimal, geometry):
+    states, cylinders, widths = geometry.digit_union_states(points)
+    images = sorted({tuple(sorted(geometry.image_mask(u, p) for u in masks)) for p in maps})
+    used = {u for state in states for u in state}
+    edge_maps = [{b: sum(1 << j for j, a in enumerate(image) if b & ~a == 0) for b in used}
+                 for image in images]
+    covered = {state for state in states
+               if any(injection(tuple(sorted(edge[b] for b in state))) for edge in edge_maps)}
+    representatives = carrier_orbits(covered, maps, geometry)
+    minimal_covered = sorted(minimal.intersection(representatives))
+    require(minimal_covered == [min(images)], "C2 settles exactly one minimal orbit")
+    require(len(images) == 18 and len(covered) == 2291 and len(representatives) == 152,
+            "C2 exact support coverage")
+    return {"name": "C2-minimal75", "shape": C2_SHAPE, "target": "35",
+            "source_nonempty_deletion_masks": list(masks),
+            "canonical_source_masks": list(min(images)),
+            "source_original_label_witness": assignments,
+            "old_root_images": len(images), "covered_carriers": len(covered),
+            "covered_carrier_orbits": len(representatives),
+            "covered_minimal_carrier_orbits": len(minimal_covered),
+            "covered_orbits_by_support_size": {
+                str(k): v for k, v in sorted(Counter(6 * len(points) - sum(u.bit_count() for u in s)
+                                                   for s in representatives).items())},
+            "covered_orbits_sha256": geometry.digest(representatives)}
+
+
 def reconstruct(directory):
     geometry = geometry_module(directory)
     geometries = geometry.read_geometries(directory / "actual_deletion_profile_certificate.json")
     pg1_masks, pg1_digest = read_pg1(directory / "point_geometry_certificate.json", geometries, geometry)
+    c2_masks, c2_assignments = read_mod3_source(
+        directory / "mod3_conditioned_geometry_certificate.json", geometries, geometry)
+    embedding_counts = old_shape_embedding_counts(geometries)
     rows = []
     coverage = None
+    c2_result = None
     for old in geometries:
         points = old["old_points"]
         maps = geometry.old_maps(points)
@@ -308,18 +422,34 @@ def reconstruct(directory):
         rows.append(row)
         if old["shape"] == PG1_SHAPE:
             coverage = pg1_coverage(pg1_masks, points, maps, minimal, geometry)
+        if old["shape"] == C2_SHAPE:
+            c2_result = c2_coverage(c2_masks, c2_assignments, points, maps, minimal, geometry)
     keys = ("essential_carriers", "essential_carrier_orbits", "minimal_carrier_orbits",
             "strictly_dominated_essential_orbits")
     totals = {key: sum(row[key] for row in rows) for key in keys}
     require(totals == {"essential_carriers": 640932, "essential_carrier_orbits": 107695,
                        "minimal_carrier_orbits": 56966,
                        "strictly_dominated_essential_orbits": 50729}, "complete dominance totals")
-    require(coverage is not None, "PG1 coverage present")
+    require(coverage is not None and c2_result is not None, "both support coverages present")
     return {"schema": SCHEMA, "scope": SCOPE,
             "source_geometry_sha256": geometry.digest(geometries),
             "source_PG1_certificate_sha256": pg1_digest,
             "inherited_PG1_verification": "existing canonical verify_point_geometry.py",
-            "cases": rows, "totals": totals, "PG1_support_coverage": coverage}
+            "cases": rows, "totals": totals, "PG1_support_coverage": coverage,
+            "mod3_conditioned_support_coverage": {
+                "source_certificate_sha256": MOD3_SOURCE_SHA256,
+                "inherited_verification": "existing canonical verify_mod3_conditioned_geometry.py",
+                "old_shape_order": [row["shape"] for row in geometries],
+                "old_shape_embedding_counts": embedding_counts,
+                "C2_support_coverage": c2_result,
+                "PG1_target": "69/2",
+                "combined_target": "35",
+                "covered_carriers": coverage["covered_carriers"] + c2_result["covered_carriers"],
+                "covered_carrier_orbits": (coverage["covered_carrier_orbits"]
+                                           + c2_result["covered_carrier_orbits"]),
+                "intersection_carrier_orbits": 0,
+                "covered_minimal_carrier_orbits": 2,
+                "remaining_minimal_carrier_orbits": totals["minimal_carrier_orbits"] - 2}}
 
 
 def check_json_types(value):
@@ -351,7 +481,8 @@ def main():
     else:
         require(result == expected, "exact deterministic dominance result")
     print(json.dumps({"verified": True, **result["totals"],
-                      "PG1_covered_carrier_orbits": result["PG1_support_coverage"]["covered_carrier_orbits"]}, indent=2))
+                      "PG1_covered_carrier_orbits": result["PG1_support_coverage"]["covered_carrier_orbits"],
+                      "combined_covered_carrier_orbits": result["mod3_conditioned_support_coverage"]["covered_carrier_orbits"]}, indent=2))
 
 
 if __name__ == "__main__":

@@ -894,5 +894,153 @@
       "96": 1
     },
     "covered_orbits_sha256": "2150d8247381b7e79543bbfed14489f11290d1dcc84474086f91171d88d40aee"
+  },
+  "mod3_conditioned_support_coverage": {
+    "source_certificate_sha256": "35cd4a830d1ccb413c8530c83a9d9af0a0deb6be3f7d87dc5a82d3bd640d0662",
+    "inherited_verification": "existing canonical verify_mod3_conditioned_geometry.py",
+    "old_shape_order": [
+      "root1_same_other_column",
+      "root1_other_same_column",
+      "root1_other_other_column",
+      "root2_same_other_column",
+      "root2_other_same_column",
+      "root2_other_other_column"
+    ],
+    "old_shape_embedding_counts": [
+      [
+        12,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        24,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        8,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        8,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        36,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        12
+      ]
+    ],
+    "C2_support_coverage": {
+      "name": "C2-minimal75",
+      "shape": "root2_other_same_column",
+      "target": "35",
+      "source_nonempty_deletion_masks": [
+        1160,
+        32768,
+        33288,
+        35400,
+        42669
+      ],
+      "canonical_source_masks": [
+        1,
+        1057,
+        1160,
+        5155,
+        42669
+      ],
+      "source_original_label_witness": [
+        {
+          "modulus": 21,
+          "residue": 5,
+          "digit": 5,
+          "old_mask": 42669
+        },
+        {
+          "modulus": 35,
+          "residue": 4,
+          "digit": 4,
+          "old_mask": 35400
+        },
+        {
+          "modulus": 63,
+          "residue": 50,
+          "digit": 1,
+          "old_mask": 1160
+        },
+        {
+          "modulus": 105,
+          "residue": 59,
+          "digit": 3,
+          "old_mask": 33288
+        },
+        {
+          "modulus": 315,
+          "residue": 44,
+          "digit": 2,
+          "old_mask": 32768
+        }
+      ],
+      "old_root_images": 18,
+      "covered_carriers": 2291,
+      "covered_carrier_orbits": 152,
+      "covered_minimal_carrier_orbits": 1,
+      "covered_orbits_by_support_size": {
+        "75": 1,
+        "76": 1,
+        "78": 4,
+        "79": 2,
+        "80": 6,
+        "81": 7,
+        "82": 2,
+        "83": 10,
+        "84": 19,
+        "85": 16,
+        "86": 5,
+        "87": 15,
+        "88": 3,
+        "89": 14,
+        "90": 20,
+        "91": 3,
+        "92": 14,
+        "93": 5,
+        "94": 1,
+        "95": 3,
+        "96": 1
+      },
+      "covered_orbits_sha256": "04d436d792012b5afa7fcf3c7622fddda918e885b967c8702e54a19eac22e5ae"
+    },
+    "PG1_target": "69/2",
+    "combined_target": "35",
+    "covered_carriers": 3939,
+    "covered_carrier_orbits": 384,
+    "intersection_carrier_orbits": 0,
+    "covered_minimal_carrier_orbits": 2,
+    "remaining_minimal_carrier_orbits": 56964
   }
 }

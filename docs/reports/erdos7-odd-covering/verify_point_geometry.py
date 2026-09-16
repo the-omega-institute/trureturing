@@ -49,7 +49,7 @@ def coeffs(cut):
  require(min(eo)>=0 and min(rem)>=0,'geometric coefficient nonnegativity')
  return ds,gamma,eta,rem,depths,probs,beta,eo
 
-def exact_squares(weights,points,ri,loads,depths):
+def exact_squares(weights,points,ri,loads,depths,low_roots=None):
  nrows=int(ri.max())+1;R=np.array([sum(int(w) for w,j in zip(weights,ri) if int(j)==i) for i in range(nrows)],dtype=np.int64);v=np.array([max(int(w) for w,j in zip(weights,ri) if int(j)==i) for i in range(nrows)],dtype=np.int64);W=np.array([[sum(int(w) for w,x,j in zip(weights,points,ri) if int(j)==i and x%7==digit) for i in range(nrows)] for digit in range(1,7)],dtype=np.int64);total=int(weights.sum());records=[]
  for z3,z5,z7 in depths:
   L=loads[z3,z5];u=z7+1;s=(z3+1)*(z5+1);nl=len(L);M=L-1;maxload=int(L.max())+s;bound=(1+u)**2*maxload**2*total;require(bound<2**63,'pure7 integer range')
@@ -67,14 +67,19 @@ def exact_squares(weights,points,ri,loads,depths):
   else:ia,ib=int(av.argmax()),int(bv.argmax())
   A[ia]+=s;B[ib]+=s;cw=(A*A)[ri]+(points%7==digit+1)*(2*u*A+u*u*(2*B-1))[ri];cv=2*u*A*(B-1)+u*u*(B-1)*(B-1)
   require(sum(int(c)*int(w) for c,w in zip(cw,weights))+sum(int(c)*int(w) for c,w in zip(cv,v))==best,'pure7 maximizing witness')
-  records.append({'depth':[z3,z5,z7],'numerator':best,'pure7_digit':digit+1,'base_pair':[ai,bi],'singleton_rows':[ia,ib],'A_loads':A.tolist(),'B_loads':B.tolist(),'int64_bound':bound})
+  record={'depth':[z3,z5,z7],'numerator':best,'pure7_digit':digit+1,'base_pair':[ai,bi],'singleton_rows':[ia,ib],'A_loads':A.tolist(),'B_loads':B.tolist(),'int64_bound':bound}
+  if low_roots is not None:
+   require(len(low_roots)==nl,'one original mod3 root per low base layout')
+   # Only A carries the original mod3 label. B's cofactor3 is mod21.
+   record['root_numerators']={str(int(r)):int(scores[:,low_roots==r,:].max()) for r in np.unique(low_roots)}
+  records.append(record)
  return records,R,v,W
 
 class FixedADP:
  def __init__(self,pts,xs,ri):
   self.pts=pts;self.xs=xs;self.ri=ri;self.digit=pts%7
   self.cyl,self.features=geometry(xs)
- def query(self,w,z,return_details=False):
+ def query(self,w,z,return_details=False,root_values=False):
   require(np.issubdtype(w.dtype,np.integer),'integer DP input');dtype=np.int64
   W=np.zeros((6,len(self.xs)),dtype=dtype)
   for k in range(1,7):
@@ -103,6 +108,9 @@ class FixedADP:
    D=N
    if return_details:trace.append(arg)
   total=Q+D[63];ai=int(total.argmax());value=total[ai].item()
+  if root_values:
+   # The unchanged original mod3 test is the second feature of A.
+   return {str(int(r)):int(total[self.features[:,1,int(np.flatnonzero(self.xs%3==r)[0])]==1].max()) for r in np.unique(self.xs%3)}
   if not return_details:return value
   chosen=[];s=63
   for y in range(5,0,-1):

@@ -674,6 +674,15 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Actual75point laws with a fixed original mod3 test and signed higher-deletion bounds.
+pattern = "docs/reports/erdos7-odd-covering/mod3_conditioned_geometry_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]] # Exact adaptive root-law certificate improving the sharp uniform two-prime constant.
 pattern = "docs/reports/erdos7-odd-covering/nonuniform_coupled_certificate.json"
 kind = "data"
@@ -982,6 +991,15 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 [[files]] # Checks all finite head histograms, convex profiles and actual sharpness.
 pattern = "docs/reports/erdos7-odd-covering/verify_marked_head_profile.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Replays both fixed-mod3 square branches, weighted deletion groups and full geometric tails.
+pattern = "docs/reports/erdos7-odd-covering/verify_mod3_conditioned_geometry.py"
 kind = "program"
 admission_plane = "content"
 produced_by = "none"

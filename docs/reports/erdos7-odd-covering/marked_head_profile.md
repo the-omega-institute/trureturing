@@ -5692,7 +5692,7 @@ Considering the12 old-coordinate images and testing the exact digit-mask inclusi
 
 #### Reproduction and verification boundary
 
-Keep this new entry point separate from the existing classifier and its certificate. With the new files beside the canonical geometry classifier, canonical old-profile certificate, and canonical PG1 certificate, run
+Keep this entry point separate from the existing classifier and its certificate. With its files beside the canonical geometry classifier, canonical old-profile certificate, canonical PG1 certificate, and the mod3-conditioned certificate below, run
 
 ```sh
 python3 -I -O verify_carrier_dominance.py
@@ -5701,3 +5701,172 @@ python3 -I -O verify_carrier_dominance.py
 An external canonical directory can be selected with `--canonical-directory`; `--check` selects the small result certificate. The entry uses the canonical geometry module through an explicit adjacent path, which works under isolated Python. It imports only standard-library modules, uses unbounded integers and explicit guards, validates all consumed integer inputs, and pins the geometric domain and inherited PG1 bound.
 
 The checker reconstructs all essential carrier states, verifies root-group orbit closure and accounting, recomputes the six exact resource DPs, verifies label-disjoint constructive witnesses, and hashes the reconstructed state/orbit sets without retaining large lists. For one minimal and one dominated target in each shape, it independently scans every essential carrier using only the injection matcher and confirms the DP's maximum deletion count. It also recomputes all232 PG1-covered orbits. The small certificate retains counts, hashes, and explicit witnesses. These are finite arithmetic results and ordinary support/all-height transport proofs; no new Lean admission or resolution of unrestricted Erdős #7 is claimed.
+
+### Retaining the original mod3 test in higher-deletion energy
+
+The actual probability in PG1 admits the stronger bound Γ≤69/2=34.5.
+A second actual75point carrier admits Γ≤35, below3849/106, at arbitrary
+finite original3/5/7 heights. The new estimate keeps the original mod3
+test class in both the square bound and the energy removed by higher
+forbidden classes. The signed deletion identity is the same one used
+in(SD5); its present application retains a nonuniform actual315law and
+the three-coordinate grouped deletion bound(SH15).
+
+#### Same original test class on both sides
+
+Let μ be a probability on an actual low315survivor carrier Ω, let λ be
+its independent uniform lift in all additional3/5/7digits, and let F
+avoid every actual higher forbidden class. Write q_actual=λ(F).
+All original exponent labels remain distinct. Let R_E(σ) be the
+grouped deletion bound in(PG1), now evaluated on any nonnegative finite
+low measure σ, without renormalizing it. The proof of(SH15) gives
+
+    ∫_(Fᶜ) h(x) dλ ≤ R_E(h μ)                         (M3-1)
+
+for every nonnegative function h of the low point. Indeed, the proof
+is a pointwise conditional union bound followed by nonnegative sums
+and maxima of linear integrals. It does not require that h μ have
+mass one. Its cylinder caps and all three grouped contributions use
+precisely h μ. Independently, R_E(μ)<1 ensures q_actual>0.
+
+Fix a complete original test family L and let i be its residue for
+the original modulus3. Then
+
+    b_i=1+1_(x≡i mod3),       L≥b_i.
+
+For K≥4, put h_i=K−b_i²=K−1−3·1_(x≡i mod3)≥0. If U_i bounds E_λL²
+for every complete test whose original mod3 class is i, the exact
+deletion identity and(M3-1) give
+
+    q_actual(E_(λ|F)L²−K)
+      = E_λL²−K + ∫_(Fᶜ)(K−L²)dλ
+      ≤ U_i−K+R_E(h_i μ).                              (M3-2)
+
+Consequently the finite criterion
+
+    R_E(μ)<1,    U_i+R_E((K−1−3·1_(x≡i mod3))μ)≤K
+                 for every original test root i       (M3-3)
+
+implies Γ_(λ|F)≤K. The higher forbidden classes are arbitrary and
+are not identified with the test classes. In particular their
+maximizers in R_E are not constrained to the test root i.
+
+#### Why the all-height comparison preserves this label
+
+The saturated thresholds are h=(2,1,1). Projection d=3 has ternary
+exponent1<2 and the other two exponents0<1, so it comes from exactly
+one original label, modulus3, and w_3(Z)=1. Thus the saturated-prefix
+comparison and the convex-hull maximization can keep this cylinder
+fixed. For each fixed i the valid square comparison is
+
+    E_λ L² ≤ E_Z F_i(Z),
+    F_i(z)=max_(low layouts with C_3=i mod3)
+                 E_μ(Σ_(d|315)w_d(z)1_Cd)².           (M3-4)
+
+Other low cylinders may maximize separately at each z. The same i
+is retained throughout the expectation and in(M3-2). One cannot
+replace it by a z-dependent test root in the deletion term.
+
+The two finite relaxations from(PG1) apply with only their non-seven
+low layout A constrained to mod3 root i. The cofactor3 in B refers
+to the original modulus21 and remains unrestricted. Denote their
+pointwise minimum at the fixed law by H_i(z). No convexity of this
+minimum is asserted. The genuine-layout increment gives
+
+    F_i(z)≤F_i(0)+P(z)−P(0),
+
+with the same complete nonnegative pair-cap polynomial P as in(PG1).
+Therefore for B=[0,8]×[0,5]×[0,4], β=Pr(Z∈B), the exact full-tail bound is
+
+    U_i=(1−β)H_i(0)+Σ_(z∈B)Pr(Z=z)H_i(z)
+                         +Σ_d η_out(d)m_d.             (M3-5)
+
+The coefficients η_out include all omitted geometric depths. Finite
+physical heights, including heights appearing only in later-prime
+moduli, are bounded by these infinite geometric moments. Both
+specified carriers omit root0 at3; changing a test from that empty
+root to either nonempty root increases L pointwise, even after
+conditioning. It is therefore sufficient to check i=1,2.
+
+For probability optimization, fix K and choose one of the two square
+relaxations at each root and depth before optimizing μ. Each chosen
+relaxation, each cylinder cap, and R_E(h_i μ) is a maximum of linear
+functions of μ, with nonnegative combination coefficients. Thus
+(M3-3) gives a finite convex feasibility problem on the actual point
+weights. The pointwise minimum may still be used to evaluate a fixed
+law, as in the certificate; it is not used as a convex outer oracle.
+
+More generally, if g is increasing, V_i≥E_λg(L) and C≥g(2), the same
+proof replaces h_i by
+
+    C−g(b_i)=(C−g(1))−(g(2)−g(1))1_(x≡i mod3).
+
+If g is also convex and has finite geometric expectation, the
+fixed-i saturated comparison supplies V_i by the same convex-hull
+argument. This general statement does not supply new numerical
+hinge bounds by itself.
+
+#### Two exact actual-law certificates
+
+The first case uses the unchanged PG1 family and its75 integer
+weights of total1000000007. The second family is
+
+```
+(3,0),(9,4),(5,0),(15,11),(45,1),(7,0),
+(21,5),(35,4),(63,50),(105,59),(315,44).
+```
+
+Its actual complement has75points. The adjacent certificate lists
+every point and nonnegative integer weight, with total999999994.
+For each case the law λ|F is supported on this actual low carrier
+and avoids every higher forbidden class, at every finite3/5/7height.
+
+| Low carrier | Same-law unit-loss bound | New K | Independent lower bound for λ(F) |
+|---|---:|---:|---:|
+| PG1 |36.2834178589…|69/2|25428074957/48000000336|
+| Second75point family above |36.7917311533…|35|25170030757/47999999712|
+
+The minimum margins K−U_i−R_E(h_i μ) over both roots are respectively
+
+    2637433975198231346789/55135363885947544500000 >0,
+    697199872596794233/91892271948646365000 >0.
+
+Thus both improve3849/106. Each comparison holds on one unchanged
+probability: there is no root-dependent choice of μ or conditioning
+event. The existing support-inclusion transport applies because
+the result holds for every admissible higher forbidden family.
+
+The second carrier lies in `root2_other_same_column`. Its canonical
+nonempty deletion masks are(1,1057,1160,5155,42669), and it is another
+inclusion-minimal orbit. Its18 old-coordinate images transfer the
+Γ≤35 bound to2291 carrier states and152 carrier orbits. The source's
+original-label realization is reconstructed from the eleven classes
+above; support containment uses the same injective mask matcher as
+the preceding dominance result.
+
+These152 orbits are disjoint from the232 PG1 orbits, giving3939states
+and384orbits with Γ≤35, including two of the56966minimal orbits.
+An exact6×6 old-support embedding table has zero off-diagonal
+entries. To verify completeness, the old projection has two ternary
+roots with respectively two and three nonempty mod9 children, and
+uses all four nonzero5columns. A cylinder-preserving embedding must
+preserve these root types; its restrictions are among2!·3!·4!=288
+row/column maps. Their exhaustive checks show that the two source
+shapes cannot overlap or transfer to a third canonical old shape.
+The revised dominance entry recomputes this table and both covered
+sets, pins the complete mod3 source certificate, and retains its
+original PG1 fields unchanged. It inherits the two numerical
+endpoints from the new moment verifier; it does not reprove them.
+The other56964minimal orbits and unrestricted-prime continuation
+remain unresolved by these two certificates.
+
+`verify_mod3_conditioned_geometry.py` reconstructs both actual
+families and weights, both fixed-root square bounds at all270depths,
+the independent survival bounds, the four nonnormalized weighted
+deletion bounds, and the full geometric remainders. It uses the
+adjacent geometry evaluator with optional original-root restriction;
+the original PG1 verifier retains its unrestricted default behavior.
+Run the new entry with `python3 -I -O`. Every final comparison is
+integer or rational and all NumPy arithmetic has explicit signed64
+range guards. These certificates accompany the ordinary all-height
+proof above; they are not Lean kernel proofs of the new endpoints.

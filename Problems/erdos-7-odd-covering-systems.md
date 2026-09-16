@@ -127,6 +127,22 @@ use the same law and include the entire geometric tail. The specified
 75-point geometry remains a hypothesis; no unrestricted tail or global
 low-configuration bound follows from this instance.
 
+A [fixed-original-mod3 comparison](../docs/reports/erdos7-odd-covering/marked_head_profile.md#retaining-the-original-mod3-test-in-higher-deletion-energy)
+improves that same75-point PG1 law to **Gamma≤34.5**. A second
+actual75-point family, specified there with its integer probability,
+has **Gamma≤35**, also at arbitrary original3/5/7 heights. For each
+original mod3 test root, the square bound and the signed deletion
+bound retain the same root. Thus deleted mass also pays its own
+test energy; the grouped deletion estimate is evaluated on the
+corresponding nonnormalized positive measure. Independent positive
+survival bounds and complete geometric tails are retained. These
+are ordinary all-height proofs with exact certificates for the two
+specified geometries, not a general low-configuration bound or
+unrestricted-prime continuation. Support inclusion transfers them
+to384 distinct carrier orbits, including two inclusion-minimal
+orbits; all384 inherit Gamma≤35. The remaining56964minimal orbits
+are not certified by these two laws.
+
 The [complete actual-carrier classification](../docs/reports/erdos7-odd-covering/marked_head_profile.md#complete-low315-carrier-classification-for-actual-digit-bounds)
 identifies the finite domain needed to extend those digit-sensitive bounds.
 On the six canonical old45 shapes, the 161375 deletion vectors lift to
