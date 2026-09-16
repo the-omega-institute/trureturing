@@ -146,7 +146,7 @@ os.execv({real_git}, [{real_git}, *sys.argv[1:]])
         self.assertIn('"status":"unpacked"', fetched.stdout)
         self.assertIn(tag, fetched.stdout)
         self.assertEqual("locally-produced-olean", (self.root / ".lake/build/lib/lean/D5/A.olean").read_text())
-        self.assertEqual(["lean", "lean"], (self.root / "build-runs").read_text().splitlines())
+        self.assertEqual(["lean-report", "lean-report"], (self.root / "build-runs").read_text().splitlines())
 
     def test_verification_failure_never_falls_back_or_clobbers_tags(self):
         self.verification_fixture()
@@ -204,7 +204,7 @@ os.execv({real_git}, [{real_git}, *sys.argv[1:]])
         self.assertNotEqual(0, result.returncode)
         self.assertIn('"status":"failed"', result.stdout)
         self.assertNotIn('"status":"published"', result.stdout)
-        self.assertEqual(["lean"], (self.root / "build-runs").read_text().splitlines())
+        self.assertEqual(["lean-report"], (self.root / "build-runs").read_text().splitlines())
 
     def test_verification_truncated_gzip_normalizes_fetch_and_publish_failures(self):
         self.verification_fixture()
