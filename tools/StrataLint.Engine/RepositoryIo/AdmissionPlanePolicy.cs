@@ -1,6 +1,4 @@
 using System.Collections.Immutable;
-using System.Text;
-using Tomlyn;
 using Tomlyn.Model;
 
 namespace StrataLint.Engine;
@@ -92,7 +90,8 @@ internal static class AdmissionPlanePolicy
         {
             candidateManifest = AdmissionPlaneFileMapLoader.Parse(
                 fileMap.Bytes.AsSpan(),
-                FileMapPath);
+                FileMapPath,
+                path => ReadInclude(candidate, path));
             if (endpoints.Any(static change => change.Kind is RawChangeKind.Deleted))
             {
                 var baseFileMap = protectedBase.Entries.FirstOrDefault(
@@ -107,7 +106,8 @@ internal static class AdmissionPlanePolicy
 
                 baseManifest = AdmissionPlaneFileMapLoader.Parse(
                     baseFileMap.Bytes.AsSpan(),
-                    $"protected-base {FileMapPath}");
+                    $"protected-base {FileMapPath}",
+                    path => ReadInclude(protectedBase, path));
             }
         }
         catch (FileMapParseException exception)
@@ -151,6 +151,10 @@ internal static class AdmissionPlanePolicy
                     + $"manifest={(change.Kind is RawChangeKind.Deleted ? "protected-base" : "candidate")}");
             }
 
+            if (FileMapDocuments.IsPolicyPath(path) && match.AdmissionPlane is not FileMapAdmissionPlane.Judge)
+                return Failed("FILEMAP-ADMISSION-PLANE-INVALID", path,
+                    "FILEMAP policy source must be assigned to the judge admission plane");
+
             if (match.AdmissionPlane is FileMapAdmissionPlane.Judge)
             {
                 judgePaths.Add(path);
@@ -186,6 +190,10 @@ internal static class AdmissionPlanePolicy
             [new RawRepositoryEntry(FileMapPath, ImmutableArray.Create(candidateFileMap.ToArray()))]);
         return Evaluate(candidate, candidate, RawChangeSet.Create(changedPaths));
     }
+
+    private static byte[] ReadInclude(RawRepositorySnapshot snapshot, string path) =>
+        snapshot.Entries.FirstOrDefault(entry => entry.Path == path)?.Bytes.ToArray()
+        ?? throw new FileMapParseException(path, "included file is unavailable in this snapshot");
 
     private static AdmissionPlaneDecision Admissible(
         AdmissionPlaneClassification classification) =>
@@ -229,47 +237,28 @@ internal sealed class AdmissionPlaneFileMap
 
 internal static class AdmissionPlaneFileMapLoader
 {
-    private static readonly UTF8Encoding StrictUtf8 = new(false, true);
-
-    internal static AdmissionPlaneFileMap Parse(ReadOnlySpan<byte> bytes, string location)
+    internal static AdmissionPlaneFileMap Parse(
+        ReadOnlySpan<byte> bytes,
+        string location,
+        Func<string, byte[]>? readInclude = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(location);
-        string text;
-        try
+        var documents = FileMapDocuments.Resolve(bytes, location, readInclude);
+        var entries = ImmutableArray.CreateBuilder<AdmissionPlaneFileMapEntry>();
+        foreach (var document in documents)
         {
-            text = StrictUtf8.GetString(bytes);
-        }
-        catch (DecoderFallbackException exception)
-        {
-            throw new FileMapParseException(location, "bytes are not strict UTF-8", exception);
-        }
-
-        TomlTable root;
-        try
-        {
-            root = TomlSerializer.Deserialize<TomlTable>(text)
-                ?? throw Invalid(location, "TOML decoded to null");
-        }
-        catch (TomlException exception)
-        {
-            throw new FileMapParseException(location, $"invalid TOML: {exception.Message}", exception);
+            if (!document.Table.TryGetValue("files", out var rawFiles)) continue;
+            var files = rawFiles switch
+            {
+                TomlTableArray tables => tables.Cast<TomlTable>().ToArray(),
+                TomlArray values when values.All(static value => value is TomlTable) =>
+                    values.Cast<TomlTable>().ToArray(),
+                _ => throw Invalid(document.Path, "files must be an array of tables"),
+            };
+            entries.AddRange(files.Select((table, index) => ParseEntry(table, $"{document.Path}:files[{index}]")));
         }
 
-        if (!root.TryGetValue("files", out var rawFiles))
-        {
-            return new AdmissionPlaneFileMap([]);
-        }
-
-        var files = rawFiles switch
-        {
-            TomlTableArray tables => tables.Cast<TomlTable>().ToArray(),
-            TomlArray values when values.All(static value => value is TomlTable) =>
-                values.Cast<TomlTable>().ToArray(),
-            _ => throw Invalid(location, "files must be an array of tables"),
-        };
-        return new AdmissionPlaneFileMap(files
-            .Select((table, index) => ParseEntry(table, $"{location}:files[{index}]"))
-            .ToImmutableArray());
+        return new AdmissionPlaneFileMap(entries.ToImmutable());
     }
 
     private static AdmissionPlaneFileMapEntry ParseEntry(TomlTable table, string location)

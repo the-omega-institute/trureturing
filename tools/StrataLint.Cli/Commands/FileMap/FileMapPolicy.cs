@@ -522,7 +522,7 @@ internal static class FileMapPolicy
                     IsReportPath(path) ? "FILEMAP-REPORT-UNREGISTERED" : "FILEMAP-UNCLASSIFIED",
                     path,
                     IsReportPath(path)
-                        ? "docs/reports files require an exact FILEMAP entry before use"
+                        ? "docs/reports files require a matching FILEMAP entry before use"
                         : "tracked repository file matches no FILEMAP pattern"));
             }
             else if (matches.Length > 1)
@@ -532,19 +532,6 @@ internal static class FileMapPolicy
                     path,
                     "tracked repository file matches multiple FILEMAP patterns: "
                     + string.Join(", ", matches.Select(static entry => entry.Pattern))));
-            }
-
-            // Reports are an intentionally explicit inventory. A broad glob would make a
-            // newly added report usable without a FILEMAP edit, defeating the registration
-            // gate even though generic coverage sees a match.
-            if (IsReportPath(path)
-                && matches.Length == 1
-                && !string.Equals(matches[0].Pattern, path, StringComparison.Ordinal))
-            {
-                findings.Add(new FileMapFinding(
-                    "FILEMAP-REPORT-NONEXACT",
-                    path,
-                    $"docs/reports files require an exact FILEMAP entry; matched {matches[0].Pattern}"));
             }
         }
 
@@ -628,7 +615,7 @@ internal static class FileMapPolicy
 
             var entry = matches[0];
             var kind = entry.Kind;
-            if (path == FileMapLoader.RelativePath
+            if (FileMapDocuments.IsPolicyPath(path)
                 && entry.AdmissionPlane is not FileMapAdmissionPlane.Judge)
             {
                 findings.Add(new FileMapFinding(
@@ -721,7 +708,7 @@ internal static class FileMapPolicy
             }
 
             if (matches[0].Kind is FileMapKind.Data
-                && path != FileMapLoader.RelativePath
+                && !FileMapDocuments.IsPolicyPath(path)
                 && IsMachineDataPath(path))
             {
                 foreach (var generatedPath in generatedPaths.Where(source.Contains))

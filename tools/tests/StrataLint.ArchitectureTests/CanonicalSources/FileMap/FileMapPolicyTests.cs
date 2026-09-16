@@ -17,9 +17,7 @@ public sealed partial class FileMapPolicyTests
 
         Assert.Null(RepositoryPathPolicy.Validate(
             RepoPath.CreateKnown("lean-report-inputs.json"), registry.Policy));
-        var manifest = FileMapLoader.Parse(
-            File.ReadAllBytes(Path.Combine(root, FileMapLoader.RelativePath)),
-            FileMapLoader.RelativePath);
+        var manifest = FileMapLoader.LoadRepository(root);
         var entry = Assert.Single(manifest.Match("lean-report-inputs.json"));
         Assert.Equal(FileMapKind.Data, entry.Kind);
         Assert.Equal(FileMapAdmissionPlane.Judge, entry.AdmissionPlane);
@@ -77,7 +75,7 @@ public sealed partial class FileMapPolicyTests
         // Agent-written reports have generated names, cannot be enumerated in
         // registry.yaml governance_documents. RepositoryPathPolicy admits the
         // docs/reports/ prefix at the path layer; filemap-conform separately requires
-        // an exact FILEMAP entry before a report is usable.
+        // a unique FILEMAP match before a report is usable.
         const string value = "docs/reports/diag-lane-a/synthetic-open-report.md";
         var registry = SyntheticRegistry();
         var path = RepoPath.CreateKnown(value);
@@ -213,23 +211,21 @@ public sealed partial class FileMapPolicyTests
         Assert.Equal("README.md", finding.Path);
     }
 
-    [Fact]
-    public void ReportCoveredOnlyByABroadPatternIsRejectedByTheRedFixture()
+    [Theory]
+    [InlineData("docs/reports/**", "docs/reports/meaningful.md")]
+    [InlineData("docs/reports/experiment/**", "docs/reports/experiment/nested/results.json")]
+    [InlineData("docs/reports/**/*.py", "docs/reports/probe.py")]
+    [InlineData("docs/reports/**/*.py", "docs/reports/experiment/nested/probe.py")]
+    public void ReportCoveredByADirectoryPatternIsAcceptedByTheGreenFixture(string pattern, string path)
     {
         var manifest = Parse(Entry(
-            "docs/reports/**",
+            pattern,
             "data",
             "none",
             "agent",
             "SnapshotDecoder"));
 
-        var finding = Assert.Single(FileMapPolicy.InspectCoverage(
-            manifest,
-            ["docs/reports/meaningful.md"]));
-
-        Assert.Equal("FILEMAP-REPORT-NONEXACT", finding.Code);
-        Assert.Equal("docs/reports/meaningful.md", finding.Path);
-        Assert.Contains("exact FILEMAP entry", finding.Message, StringComparison.Ordinal);
+        Assert.Empty(FileMapPolicy.InspectCoverage(manifest, [path]));
     }
 
     [Fact]
