@@ -534,17 +534,21 @@ internal static class FileMapPolicy
                     + string.Join(", ", matches.Select(static entry => entry.Pattern))));
             }
 
-            // Reports are an intentionally explicit inventory. A broad glob would make a
-            // newly added report usable without a FILEMAP edit, defeating the registration
-            // gate even though generic coverage sees a match.
+            // Reports register by exact path or by an extension-scoped glob
+            // (`docs/reports/<dir>/*.py`, `docs/reports/**/*.json`): the kind of every
+            // report file is still fixed by its registered extension family, while a report
+            // directory no longer costs one entry per file (owner ruling 2026-09-16). A
+            // catch-all such as `docs/reports/**` would erase the per-extension kind and is
+            // rejected.
             if (IsReportPath(path)
                 && matches.Length == 1
-                && !string.Equals(matches[0].Pattern, path, StringComparison.Ordinal))
+                && !string.Equals(matches[0].Pattern, path, StringComparison.Ordinal)
+                && !IsExtensionScopedGlob(matches[0].Pattern))
             {
                 findings.Add(new FileMapFinding(
-                    "FILEMAP-REPORT-NONEXACT",
+                    "FILEMAP-REPORT-UNSCOPED",
                     path,
-                    $"docs/reports files require an exact FILEMAP entry; matched {matches[0].Pattern}"));
+                    $"docs/reports globs must end in an extension (*.<ext>); matched {matches[0].Pattern}"));
             }
         }
 
@@ -553,6 +557,18 @@ internal static class FileMapPolicy
 
     private static bool IsReportPath(string path) =>
         path.StartsWith(RepositoryPathPolicy.ReportsRootPath, StringComparison.Ordinal);
+
+    // `…/*.<ext>` or `…/**/*.<ext>`: the last segment is a single star followed by a
+    // non-empty extension, so every matched file shares one registered kind.
+    private static bool IsExtensionScopedGlob(string pattern)
+    {
+        var slash = pattern.LastIndexOf('/');
+        var last = slash < 0 ? pattern : pattern[(slash + 1)..];
+        return last.Length > 2
+            && last[0] == '*'
+            && last[1] == '.'
+            && !last[1..].Contains('*');
+    }
 
     internal static IReadOnlyList<FileMapFinding> InspectPatternPopulation(
         FileMapManifest manifest,

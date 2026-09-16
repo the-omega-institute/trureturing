@@ -214,7 +214,7 @@ public sealed partial class FileMapPolicyTests
     }
 
     [Fact]
-    public void ReportCoveredOnlyByABroadPatternIsRejectedByTheRedFixture()
+    public void ReportCoveredOnlyByACatchAllPatternIsRejectedByTheRedFixture()
     {
         var manifest = Parse(Entry(
             "docs/reports/**",
@@ -227,9 +227,24 @@ public sealed partial class FileMapPolicyTests
             manifest,
             ["docs/reports/meaningful.md"]));
 
-        Assert.Equal("FILEMAP-REPORT-NONEXACT", finding.Code);
+        Assert.Equal("FILEMAP-REPORT-UNSCOPED", finding.Code);
         Assert.Equal("docs/reports/meaningful.md", finding.Path);
-        Assert.Contains("exact FILEMAP entry", finding.Message, StringComparison.Ordinal);
+        Assert.Contains("extension", finding.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ReportCoveredByAnExtensionScopedGlobIsAccepted()
+    {
+        var manifest = Parse(Entry(
+            "docs/reports/**/*.md",
+            "data",
+            "none",
+            "agent",
+            "SnapshotDecoder"));
+
+        Assert.Empty(FileMapPolicy.InspectCoverage(
+            manifest,
+            ["docs/reports/meaningful.md", "docs/reports/nested/README.md"]));
     }
 
     [Fact]
