@@ -56,8 +56,9 @@ internal static class FileMapSymlinkPolicy
         }
 
         if (!root.TryGetValue("schema_version", out var version) || version is not 2L
-            || !root.TryGetValue("files", out var rawFiles) || rawFiles is not TomlTableArray files)
+            || !root.TryGetValue("files", out var rawFiles))
             throw Invalid(location, "symlink declarations require schema_version 2 and files tables");
+        var files = FileMapTomlTables.Parse(rawFiles, location, allowEmpty: false);
 
         var declarations = files.Select((table, index) => ParseEntry(table, $"{location}:files[{index}]"))
             .OfType<FileMapSymlink>().ToImmutableArray();

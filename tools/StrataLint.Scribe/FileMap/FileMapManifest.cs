@@ -166,10 +166,7 @@ internal static class FileMapLoader
             throw Invalid(location, "schema_version must be 2");
         }
 
-        if (root["files"] is not TomlTableArray files || files.Count == 0)
-        {
-            throw Invalid(location, "files must contain at least one entry");
-        }
+        var files = FileMapTomlTables.Parse(root["files"], location, allowEmpty: false);
 
         if (root["residence_policy"] is not TomlTable residenceTable)
         {
