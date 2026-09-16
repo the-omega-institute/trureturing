@@ -32,11 +32,13 @@ class TransportTests(ReleaseLegacyCases, ReleaseVerificationCases, CacheDeadline
     def test_malformed_cleanup_metadata_cannot_fail_or_repeat_the_build(self):
         calls = self.root / "build-calls"
         write(self.bin / "make", '#!/bin/sh\necho build >> "$FAKE_BUILD_CALLS"\nexit 0\n')
-        malformed = [("FAKE_API_JSON", "[]"), ("FAKE_LIST_JSON", '["invalid"]'),
-                     ("FAKE_LIST_JSON", '[{"tagName":12,"createdAt":"today","isDraft":false}]')]
+        malformed = [("FAKE_LIST_JSON", '["invalid"]'),
+                     ("FAKE_LIST_JSON", '[{"tagName":12,"createdAt":"today","isDraft":false}]'),
+                     ("FAKE_FAIL", "list")]
         for index, (field, value) in enumerate(malformed):
             result = self.transport("publish", str(601 + index), FAKE_BUILD_CALLS=str(calls), **{field: value})
             self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+            self.assertIn('"status":"published"', result.stdout)
             self.assertIn('"prune_error":', result.stdout)
         self.assertEqual(["build"] * len(malformed), calls.read_text().splitlines())
 
