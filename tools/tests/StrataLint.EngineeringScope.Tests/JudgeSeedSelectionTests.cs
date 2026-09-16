@@ -1,5 +1,6 @@
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using System.Security.Cryptography;
 using StrataLint.TestSupport;
 using Xunit;
 
@@ -88,6 +89,140 @@ public sealed class JudgeSeedSelectionTests
         Assert.False(Directory.Exists(Path.Combine(fixture.Root, "build/lean-cache/judge")));
     }
 
+    [Theory]
+    [InlineData("unchanged")]
+    [InlineData("no-local-material")]
+    [InlineData("changed-unselected-source")]
+    [InlineData("removed-registration")]
+    [InlineData("proof-registration")]
+    public void NarrowSnapshotRetainsOnlyDeclaredEligibleDonorProjects(string mode)
+    {
+        using var fixture = new SeedFixture();
+        fixture.Build([SeedFixture.Tests, SeedFixture.Other]);
+        Assert.Contains("judge_ready=true", fixture.Snapshot().Text, StringComparison.Ordinal);
+        var previous = File.ReadAllBytes(Path.Combine(fixture.Root, "build/lean-cache/judge/data/data", SeedFixture.Other + ".seed"));
+        fixture.Build([SeedFixture.Tests]);
+        if (mode == "no-local-material")
+        {
+            fixture.Delete(fixture.Receipt(SeedFixture.Other));
+            Directory.Delete(Path.Combine(fixture.Root, "tools/tests/Other.Tests/obj"), recursive: true);
+        }
+        if (mode == "changed-unselected-source") fixture.Write("tools/tests/Other.Tests/Value.cs", "changed since donor compilation");
+        if (mode is "removed-registration" or "proof-registration")
+        {
+            var registration = JsonNode.Parse(File.ReadAllText(Path.Combine(fixture.Root, EngineeringRegistrationFixture.Path)))!;
+            var rows = registration["projects"]!.AsArray();
+            var other = rows.Single(row => row!["path"]!.GetValue<string>() == SeedFixture.Other)!;
+            if (mode == "removed-registration")
+            {
+                rows.Remove(other);
+                SharedBuildContractTests.Git(fixture.Root, "rm", "-rf", "tools/tests/Other.Tests");
+            }
+            else
+            {
+                other["role"] = "compile-fail-proof";
+                other["ci"] = false;
+                foreach (var field in new[] { "test_partition", "execution_inputs", "execution_excludes", "execution_environment" }) other[field] = null;
+            }
+            fixture.Write(EngineeringRegistrationFixture.Path, registration.ToJsonString());
+        }
+
+        var result = fixture.Snapshot();
+
+        Assert.True(result.Exit == 0, result.Text);
+        Assert.Contains("judge_ready=true", result.Text, StringComparison.Ordinal);
+        var material = JsonNode.Parse(File.ReadAllText(Path.Combine(fixture.Root, "build/lean-cache/judge/data/material.json")))!;
+        var expected = mode is "removed-registration" or "proof-registration"
+            ? new[] { SeedFixture.Library, SeedFixture.Tests } : [SeedFixture.Library, SeedFixture.Tests, SeedFixture.Other];
+        Assert.Equal(expected.Order(StringComparer.Ordinal), material["projects"]!.AsArray().Select(row => row!.GetValue<string>()));
+        if (expected.Contains(SeedFixture.Other))
+            Assert.Equal(previous, File.ReadAllBytes(Path.Combine(fixture.Root, "build/lean-cache/judge/data/data", SeedFixture.Other + ".seed")));
+        Assert.Equal(new[] { SeedFixture.Tests }, JsonNode.Parse(File.ReadAllText(Path.Combine(fixture.Root, "build/ci/build.json")))!["projects"]!.AsArray().Select(row => row!.GetValue<string>()));
+    }
+
+    [Theory]
+    [InlineData("partition")]
+    [InlineData("key")]
+    [InlineData("damaged-object")]
+    [InlineData("foreign-root")]
+    [InlineData("duplicate-project")]
+    [InlineData("invalid-project")]
+    [InlineData("unlisted-manifest")]
+    [InlineData("unlisted-receipt")]
+    [InlineData("unlisted-object")]
+    [InlineData("late-undeclared-object")]
+    [InlineData("selected-receipt")]
+    public void DamagedDonorsFallBackToFreshSelectionWithoutHidingSelectedDefects(string defect)
+    {
+        using var fixture = new SeedFixture();
+        fixture.Build([SeedFixture.Tests, SeedFixture.Other]);
+        Assert.Contains("judge_ready=true", fixture.Snapshot().Text, StringComparison.Ordinal);
+        fixture.Build(defect == "late-undeclared-object" ? [SeedFixture.Library] : [SeedFixture.Tests]);
+        var manifestPath = Path.Combine(fixture.Root, "build/lean-cache/judge/manifest.json");
+        var manifest = JsonNode.Parse(File.ReadAllText(manifestPath))!;
+        if (defect is "partition" or "key") manifest[defect] = "different";
+        if (defect == "damaged-object") fixture.Write("build/lean-cache/judge/data/data/tools/tests/Other.Tests/obj/output.dll", "damaged");
+        if (defect == "selected-receipt") fixture.Delete(fixture.Receipt(SeedFixture.Tests));
+        if (defect.StartsWith("unlisted-", StringComparison.Ordinal) || defect == "late-undeclared-object")
+        {
+            var path = defect == "unlisted-manifest" ? "material.json" : defect == "unlisted-receipt"
+                ? "data/" + SeedFixture.Other + ".seed" : "data/tools/tests/Other.Tests/obj/output.dll";
+            var files = manifest["files"]!.AsArray();
+            files.Remove(files.Single(row => row!["path"]!.GetValue<string>() == path));
+        }
+        if (defect is "foreign-root" or "duplicate-project" or "invalid-project")
+        {
+            const string relative = "build/lean-cache/judge/data/material.json";
+            var material = JsonNode.Parse(File.ReadAllText(Path.Combine(fixture.Root, relative)))!;
+            if (defect == "foreign-root") material["root"] = fixture.Root + "-foreign";
+            else material["projects"]!.AsArray().Add(defect == "duplicate-project" ? SeedFixture.Other : "../outside.csproj");
+            fixture.Write(relative, material.ToJsonString());
+            manifest["files"]!.AsArray().Single(row => row!["path"]!.GetValue<string>() == "material.json")!["sha256"] =
+                Convert.ToHexStringLower(SHA256.HashData(File.ReadAllBytes(Path.Combine(fixture.Root, relative))));
+        }
+        fixture.Write("build/lean-cache/judge/manifest.json", manifest.ToJsonString());
+        var original = File.ReadAllBytes(manifestPath);
+
+        var result = fixture.Snapshot();
+
+        Assert.True(result.Exit == 0, result.Text);
+        if (defect == "selected-receipt")
+        {
+            Assert.Contains("judge_ready=false", result.Text, StringComparison.Ordinal);
+            Assert.Equal(original, File.ReadAllBytes(manifestPath));
+            return;
+        }
+        Assert.Contains("judge_ready=true", result.Text, StringComparison.Ordinal);
+        var expected = defect == "late-undeclared-object" ? new[] { SeedFixture.Library } : [SeedFixture.Library, SeedFixture.Tests];
+        var repairedMaterial = JsonNode.Parse(File.ReadAllText(Path.Combine(fixture.Root, "build/lean-cache/judge/data/material.json")))!;
+        Assert.Equal(expected.Order(StringComparer.Ordinal), repairedMaterial["projects"]!.AsArray().Select(row => row!.GetValue<string>()));
+        var exported = Directory.GetFiles(Path.Combine(fixture.Root, "build/lean-cache/judge/data/data"), "*.csproj.seed", SearchOption.AllDirectories);
+        Assert.Equal(expected.Length, exported.Length);
+        var restored = fixture.Restore();
+        Assert.True(restored.Exit == 0, restored.Text);
+        Assert.Contains("\"status\": \"restored\"", restored.Text, StringComparison.Ordinal);
+        Assert.Equal(File.ReadAllBytes(Path.Combine(fixture.Root, "build/lean-cache/judge/data/material.json")),
+            File.ReadAllBytes(Path.Combine(fixture.Root, ".judge-binaries/material.json")));
+    }
+
+    [Fact]
+    public void InvalidCandidateRegistrationCannotBecomeAnOptionalDonorMiss()
+    {
+        using var fixture = new SeedFixture();
+        fixture.Build([SeedFixture.Tests]);
+        Assert.Contains("judge_ready=true", fixture.Snapshot().Text, StringComparison.Ordinal);
+        var registration = JsonNode.Parse(File.ReadAllText(Path.Combine(fixture.Root, EngineeringRegistrationFixture.Path)))!;
+        registration["projects"]!.AsArray()[0]!["role"] = "unknown-role";
+        fixture.Write(EngineeringRegistrationFixture.Path, registration.ToJsonString());
+        fixture.Write("build/lean-cache/judge/manifest.json", "broken donor");
+
+        var result = fixture.Snapshot();
+
+        Assert.NotEqual(0, result.Exit);
+        Assert.DoesNotContain("judge_ready=true", result.Text, StringComparison.Ordinal);
+        Assert.Equal("broken donor", File.ReadAllText(Path.Combine(fixture.Root, "build/lean-cache/judge/manifest.json")));
+    }
+
     private sealed class SeedFixture : IDisposable
     {
         internal const string Library = "tools/FixtureLibrary/FixtureLibrary.csproj";
@@ -99,7 +234,7 @@ public sealed class JudgeSeedSelectionTests
 
         internal SeedFixture()
         {
-            Write(".gitignore", "build/\n**/obj/\n**/bin/\n");
+            Write(".gitignore", "build/\n.judge-binaries/\n**/obj/\n**/bin/\n");
             Write("lake-manifest.json", "{\"packages\":[{\"name\":\"mathlib\",\"rev\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"}]}\n");
             foreach (var project in Projects)
             {
@@ -157,8 +292,14 @@ public sealed class JudgeSeedSelectionTests
             TemporaryFileSystem.File.WriteAllText(target, contents);
         }
         internal void Delete(string path) => TemporaryFileSystem.File.Delete(Path.Combine(Root, path));
-        internal (int Exit, string Text) Snapshot(string eventName = "push") => SharedBuildContractTests.Process(Root, "python3",
-            ["-B", Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/worktree/lean_actions.py"), "snapshot", "--repository", Root, "--layers", "judge"],
+        internal (int Exit, string Text) Snapshot(string eventName = "push") => Cache("snapshot", eventName);
+        internal (int Exit, string Text) Restore()
+        {
+            var manifest = JsonNode.Parse(File.ReadAllText(Path.Combine(Root, "build/lean-cache/judge/manifest.json")))!;
+            return Cache("restore", "push", "--judge-key", manifest["key"]!.GetValue<string>());
+        }
+        private (int Exit, string Text) Cache(string command, string eventName, params string[] arguments) => SharedBuildContractTests.Process(Root, "python3",
+            ["-B", Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/worktree/lean_actions.py"), command, "--repository", Root, "--layers", "judge", .. arguments],
             new Dictionary<string, string> {
                 ["GITHUB_EVENT_NAME"] = eventName, ["GITHUB_REF"] = "refs/heads/integration-ci-fixture-tests",
                 ["GITHUB_RUN_ID"] = "17", ["GITHUB_RUN_ATTEMPT"] = "1",

@@ -82,6 +82,27 @@ public sealed class SharedBuildRuntimeTests
         Write(cliProject, File.ReadAllText(Path.Combine(root, cliProject)).Replace("</PropertyGroup>", "<OutputType>Exe</OutputType></PropertyGroup>", StringComparison.Ordinal));
         Write("tools/StrataLint.Cli/Program.cs", "System.Console.WriteLine(\"SELFTEST PASS\");\n");
         Write("Meta/ci-checks.json", CommonCheckRegistrationFixture.Manifest(cliProject));
+        Write("Meta/ci-resources.json", JsonSerializer.Serialize(new { schema = "ci-resource-execution-v1",
+            resources = new[] { new { id = "build", projects = new[] { cliProject }, checks = Array.Empty<string>(), steps = Array.Empty<string>() } } }));
+        Write("Meta/FILEMAP.toml", """
+            schema_version = 4
+            resources = [{ id = "build", stage = "build", owner = "tools/scripts/workflow/ci.py", prerequisites = [], tools = [], cache_layers = [], cache_activation = {}, materials = ["Meta/ci-checks.json", "Meta/ci-resources.json", "Meta/engineering-projects.json"] }]
+            [residence_policy]
+            case_id = "FIXTURE"
+            desired = "registered"
+            known_violation_count = 0
+            status = "closed"
+            [[files]]
+            pattern = "**"
+            require = ["build"]
+            kind = "program"
+            admission_plane = "judge"
+            produced_by = "none"
+            consumed_by = ["test"]
+            verified_by = ["test"]
+            artifact_id = "none"
+            runtime_disposition = "committed-source"
+            """ + "\n");
         const string testProject = "tools/tests/Runtime/Runtime.csproj";
         Write(testProject, """
             <Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><TargetFramework>net10.0</TargetFramework>
@@ -184,6 +205,40 @@ public sealed class SharedBuildRuntimeTests
         Assert.Equal(0, Compilers(warm));
         Assert.Equal(0, ObservedCompilers(warm));
         Assert.Contains("\"status\": \"installed\"", warm, StringComparison.Ordinal);
+        // A narrow push must preserve the explicitly declared donor projects for
+        // the next full build, without turning those projects into build roots.
+        foreach (var scenario in new[] { "unchanged", "changed-unselected", "damaged-donor" })
+        {
+            var changedUnselected = scenario == "changed-unselected";
+            NarrowPlan();
+            ResetCompiledOutputs();
+            Cache("restore", "--judge-key", key);
+            var narrow = Stage(changedUnselected ? "narrow-before-change" : "narrow", "build");
+            Assert.Equal(0, Compilers(narrow));
+            Assert.Equal(new[] { cliProject }, CommonExecutionEvidence.ValidateBuild(root).Projects);
+            if (scenario == "damaged-donor") Write("build/lean-cache/judge/manifest.json", "broken optional donor");
+            Cache("snapshot");
+            environment["CI_PLAN_PATH"] = "";
+            environment["CI_CHANGES_PATH"] = "";
+            if (changedUnselected)
+            {
+                Write("tools/tests/Runtime/RuntimeTests.cs", File.ReadAllText(Path.Combine(root, "tools/tests/Runtime/RuntimeTests.cs")) + "\n// changed while absent from the narrow build\n");
+                SharedBuildContractTests.Git(root, "add", ".");
+                SharedBuildContractTests.Git(root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", "change an unselected compiler input");
+            }
+            ResetCompiledOutputs();
+            Cache("restore", "--judge-key", key);
+            var restoredFull = Stage(scenario == "damaged-donor" ? "recovered-donor" : changedUnselected ? "retained-source-change" : "retained-full", "build");
+            var expectedCompilers = scenario == "damaged-donor" ? projects.Length + 1 : changedUnselected ? 1 : 0;
+            Assert.Equal(expectedCompilers, Compilers(restoredFull));
+            Assert.Equal(expectedCompilers, ObservedCompilers(restoredFull));
+            if (scenario == "damaged-donor")
+                Assert.DoesNotContain(restoredFull.Split('\n').Where(line => line.StartsWith("JUDGE_CSC ", StringComparison.Ordinal))
+                    .Select(line => JsonDocument.Parse(line["JUDGE_CSC ".Length..]).RootElement),
+                    row => row.GetProperty("status").GetString() == "task-started"
+                        && row.GetProperty("project").GetString() == Path.Combine(physicalRoot, cliProject));
+            Cache("snapshot");
+        }
         var fresh = CommonExecutionEvidence.ValidateBuild(root);
         Assert.NotEqual(build.Round, fresh.Round);
         build = fresh;
@@ -288,6 +343,25 @@ public sealed class SharedBuildRuntimeTests
                      CommonExecutionEvidence.CurrentPath, CommonExecutionEvidence.TestsPath })
             Assert.False(File.Exists(Path.Combine(root, path)));
 
+        void NarrowPlan()
+        {
+            var commit = SharedBuildContractTests.Git(root, "rev-parse", "HEAD");
+            var entry = SharedBuildContractTests.Git(root, "ls-tree", "HEAD", "--", "global.json").Split([' ', '\t'], StringSplitOptions.RemoveEmptyEntries);
+            Write("build/narrow-changes.json", JsonSerializer.Serialize(new { schema_version = 1, mode = "current",
+                candidate = new { commit, tree = SharedBuildContractTests.Git(root, "rev-parse", "HEAD^{tree}") }, @base = (string?)null, head = (string?)null,
+                complete = true, change_count = 1, changes = new[] { new { status = "A", old = (object?)null, @new = new { path = "global.json", mode = entry[0], oid = entry[2] } } } }));
+            Run("python3", "-B", "tools/scripts/workflow/ci.py", "plan", "--repository", physicalRoot,
+                "--commit", commit, "--changes", "build/narrow-changes.json", "--output", "build/narrow-plan.json");
+            environment["CI_PLAN_PATH"] = "build/narrow-plan.json";
+            environment["CI_CHANGES_PATH"] = "build/narrow-changes.json";
+        }
+        void ResetCompiledOutputs()
+        {
+            foreach (var project in projects.Select(item => "tools/" + item.Item1).Append("tools/tests/Runtime").Append("tools/scripts/report"))
+                foreach (var kind in new[] { "bin", "obj" })
+                    if (Directory.Exists(Path.Combine(root, project, kind))) Directory.Delete(Path.Combine(root, project, kind), recursive: true);
+            Directory.Delete(Path.Combine(root, "build/judge-seed"), recursive: true);
+        }
         void Write(string path, string text)
         {
             var full = Path.Combine(root, path);

@@ -51,6 +51,59 @@ class CacheDeadlineCases:
         self.assertEqual(0, later.snapshot_seconds())
         self.assertEqual(0, later.save_timeout_minutes())
 
+    def test_cache_deadline_sixty_minute_current_window_round_trips_to_save_outputs(self):
+        owner, env, epoch, clock, jobs, calls, fetch = self.deadline_fixture()
+        first = owner.begin(self.root, "current", 60, env=env, fetch_jobs=fetch,
+                            now=lambda: epoch, monotonic=lambda: clock[0])
+        self.assertEqual("available", first.reason)
+        self.assertEqual(1180, first.remaining())
+        self.assertEqual(1115, first.snapshot_seconds())
+        self.assertEqual(12, first.save_timeout_minutes())
+        record = json.loads(owner.state_path(self.root, "current").read_text())
+        self.assertEqual(60, record["job_timeout_minutes"])
+        clock[0] += 900
+        later = owner.load_deadline(self.root, "current", env=env, monotonic=lambda: clock[0])
+        self.assertEqual("available", later.reason)
+        self.assertEqual(280, later.remaining())
+        self.assertEqual(215, later.snapshot_seconds())
+        self.assertEqual({"save_allowed": True, "save_timeout_minutes": 4}, owner.save_outputs(later))
+        self.assertEqual(1, len(calls))
+
+    def test_cache_deadline_thirty_minute_build_and_engineering_windows_remain_available(self):
+        for stage in ("build", "engineering"):
+            with self.subTest(stage=stage):
+                owner, env, epoch, clock, jobs, calls, fetch = self.deadline_fixture()
+                env["GITHUB_JOB"] = jobs["jobs"][0]["name"] = stage
+                first = owner.begin(self.root, stage, 30, env=env, fetch_jobs=fetch,
+                                    now=lambda: epoch - 900, monotonic=lambda: clock[0])
+                self.assertEqual("available", first.reason)
+                self.assertEqual(280, first.remaining())
+                later = owner.load_deadline(self.root, stage, env=env, monotonic=lambda: clock[0])
+                self.assertEqual("available", later.reason)
+                self.assertEqual({"save_allowed": True, "save_timeout_minutes": 4}, owner.save_outputs(later))
+                self.assertEqual(1, len(calls))
+
+    def test_cache_deadline_rejects_out_of_range_or_noninteger_timeouts_at_begin_and_load(self):
+        for invalid in (61, 0, -1, True, False, 60.0, "60", None):
+            with self.subTest(timeout=invalid):
+                owner, env, epoch, clock, jobs, calls, fetch = self.deadline_fixture()
+                owner.begin(self.root, "current", 45, env=env, fetch_jobs=fetch,
+                            now=lambda: epoch, monotonic=lambda: clock[0])
+                path = owner.state_path(self.root, "current")
+                record = json.loads(path.read_text())
+                path.write_text(json.dumps({**record, "job_timeout_minutes": invalid}))
+                loaded = owner.load_deadline(self.root, "current", env=env, monotonic=lambda: clock[0])
+                self.assertEqual("deadline-state-unavailable", loaded.reason)
+                self.assertEqual({"save_allowed": False, "save_timeout_minutes": 1}, owner.save_outputs(loaded))
+                path.write_text(json.dumps(record))
+                calls.clear()
+                first = owner.begin(self.root, "current", invalid, env=env, fetch_jobs=fetch,
+                                    now=lambda: epoch, monotonic=lambda: clock[0])
+                self.assertEqual("job-metadata-unavailable", first.reason)
+                self.assertEqual({"save_allowed": False, "save_timeout_minutes": 1}, owner.save_outputs(first))
+                self.assertEqual([], calls)
+                self.assertFalse(path.exists())
+
     def test_cache_deadline_checks_exact_run_attempt_candidate_and_job(self):
         for key, value in (("name", "engineering"), ("run_id", 124), ("run_attempt", 1),
                            ("head_sha", "b" * 40), ("status", "completed"),
@@ -109,7 +162,7 @@ class CacheDeadlineCases:
         path = self.root / "build/ci/cache-deadline-current.json"
         original = json.loads(path.read_text())
         for key, value in (("started_at", False), ("cutoff_monotonic", "later"),
-                           ("sampled_monotonic", float("nan")), ("job_timeout_minutes", 46)):
+                           ("sampled_monotonic", float("nan")), ("job_timeout_minutes", 61)):
             path.write_text(json.dumps({**original, key: value}))
             self.assertEqual(0, owner.load_deadline(self.root, "current", env=env,
                              monotonic=lambda: clock[0]).save_timeout_minutes())

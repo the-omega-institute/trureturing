@@ -5,6 +5,31 @@ namespace StrataLint.Tests;
 
 public sealed partial class CommonCurrentEvidenceValidationTests
 {
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void SeedImportHashesEachSharedDestinationOncePerPhase(bool missing)
+    {
+        using var fixture = new EvidenceFixture();
+        fixture.Run("export");
+        var record = CommonExecutionEvidence.Read<CommonCheckRecord>(fixture.Root, CommonExecutionEvidence.ChecksPath("current"));
+        var shared = Assert.Single(record.Units.Where(unit => unit.Report is not null).Select(unit => unit.Report).Distinct());
+        var paths = CommonExecutionEvidence.ReportPaths.Select(path => Path.GetFullPath(Path.Combine(fixture.Root,
+            shared + path[CommonExecutionEvidence.ReportPath.Length..]))).ToArray();
+        if (missing) foreach (var path in paths) File.Delete(path);
+        var reads = paths.ToDictionary(path => path, _ => 0, StringComparer.Ordinal);
+        var previous = CommonExecutionEvidence.Hashing.Value;
+        try
+        {
+            CommonExecutionEvidence.Hashing.Value = path => { if (reads.ContainsKey(path)) reads[path]++; };
+            AssertSeedUnits(Import(fixture), record.Units.Length);
+            Assert.All(reads, read => Assert.Equal(missing ? 1 : 2, read.Value));
+            AssertSeedUnits(Import(fixture), record.Units.Length);
+            Assert.All(reads, read => Assert.Equal(missing ? 3 : 4, read.Value));
+        }
+        finally { CommonExecutionEvidence.Hashing.Value = previous; }
+    }
+
     [Fact]
     public void SeedImportValidatesSharedReportOncePerReadOnlyPhase()
     {

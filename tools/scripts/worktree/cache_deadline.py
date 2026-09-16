@@ -85,7 +85,7 @@ def begin(root, stage, job_timeout_minutes, *, env=None, fetch_jobs=None, now=No
         # Failed initialization must never leave a previously usable window.
         path.unlink(missing_ok=True)
         expected = identity(stage, env)
-        if type(job_timeout_minutes) is not int or not 1 <= job_timeout_minutes <= 45:
+        if type(job_timeout_minutes) is not int or not 1 <= job_timeout_minutes <= 60:
             raise ValueError("invalid explicit job timeout")
         query = fetch_jobs or query_jobs
         response = query(expected["repository"], expected["run_id"], expected["run_attempt"], env)
@@ -140,7 +140,7 @@ def load_deadline(root, stage, *, env=None, monotonic=None):
                 or any(record.get(key) != value for key, value in expected.items())
                 or type(record.get("job_id")) is not int or record["job_id"] < 1
                 or type(record.get("job_timeout_minutes")) is not int
-                or not 1 <= record["job_timeout_minutes"] <= 45):
+                or not 1 <= record["job_timeout_minutes"] <= 60):
             raise ValueError("cache deadline identity mismatch")
         if not isinstance(record.get("started_at"), str):
             raise ValueError("invalid cache job start")

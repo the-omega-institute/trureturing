@@ -631,11 +631,51 @@ def validate_compiled_receipt(project, receipt):
         raise ValueError(f"invalid compiled seed receipt: {project}: {error}") from error
 
 
-def stage_seed(root, destination, registry=None):
-    """Only the sealed build's registered closure; no proofs or execution verdicts."""
+def stage_seed(root, destination, registry=None, *, donor=None):
+    """Overlay the sealed build on declared donor material, never execution verdicts."""
     root = root.resolve()
     registry = registry if registry is not None else project_registry(root)
     projects = build_seed_projects(root, registry)
+    retained = []
+    donor_result = {"status": "absent"}
+    if donor is not None:
+        try:
+            directory, inventory = donor
+            declared = {item["path"] for item in inventory}
+            if "material.json" not in declared:
+                raise ValueError("donor has no declared project manifest")
+            manifest = json.loads((directory / "material.json").read_text(), object_pairs_hook=unique_object)
+            if (not isinstance(manifest, dict) or set(manifest) != {"root", "projects"}
+                    or manifest["root"] != str(root)):
+                raise ValueError("unsupported checkout relocation")
+            saved = manifest["projects"]
+            if (not isinstance(saved, list) or not saved or any(not isinstance(path, str) for path in saved)
+                    or saved != sorted(set(saved))
+                    or any(not registered_path(path).endswith(".csproj") for path in saved)):
+                raise ValueError("invalid registered donor project selection")
+            retained = sorted(set(map(pathlib.Path, saved)).intersection(solution_projects(root, registry)) - set(projects))
+            for relative in retained:
+                source = directory / "data" / (str(relative) + ".seed")
+                if source.relative_to(directory).as_posix() not in declared:
+                    raise ValueError(f"donor has no declared receipt: {relative}")
+                value = json.loads(source.read_text(), object_pairs_hook=unique_object)
+                material = value["material"]
+                # An unselected project's old input fingerprint is carried verbatim.
+                # Normal reconcile() must validate it when a later build selects it.
+                target = destination / "data" / relative.parent
+                source_obj = source.parent / "obj"
+                if any((source_obj / item["path"]).relative_to(directory).as_posix() not in declared for item in material):
+                    raise ValueError(f"donor has undeclared object material: {relative}")
+                install_material(source_obj, target / "obj", material)
+                shutil.copy2(source, target / (relative.name + ".seed"))
+            donor_result = {"status": "retained", "projects": len(retained)}
+        except (OSError, ValueError, KeyError, TypeError) as error:
+            # This destination is private staging and contains only donor bytes.
+            # A partial donor copy must not contaminate the fresh-only fallback.
+            if destination.exists():
+                shutil.rmtree(destination)
+            retained = []
+            donor_result = {"status": "miss", "reason": str(error)}
     for relative in projects:
         project = root / relative
         receipt = receipt_path(root, project)
@@ -648,8 +688,9 @@ def stage_seed(root, destination, registry=None):
         shutil.copytree(project.parent / "obj", target / "obj", symlinks=True,
                         ignore=shutil.ignore_patterns("judge-seed-inputs.xml"))
     shutil.copytree(root / "build/judge-seed/task", destination / "data/build/judge-seed/task", symlinks=True)
-    manifest = {"root": str(root), "projects": [str(project) for project in projects]}
+    manifest = {"root": str(root), "projects": sorted(str(project) for project in projects + retained)}
     (destination / "material.json").write_text(json.dumps(manifest, sort_keys=True) + "\n")
+    return donor_result
 
 
 if __name__ == "__main__":

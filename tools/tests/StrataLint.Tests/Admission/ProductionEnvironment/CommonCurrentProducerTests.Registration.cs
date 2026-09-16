@@ -215,9 +215,9 @@ public sealed class ScribeInvocationRegistrationTests(ITestOutputHelper output)
                     private ExplicitCommandResult FileMapConform(string[] args) => new(0, "independent fixture", "");
                     private ExplicitCommandResult RenderStage(RuleExecutionOutcome result) => throw new InvalidOperationException("unexpected rule execution");
                     public static int Main(string[] args) {
-                        var snapshot = CommonExecutionEvidence.Snapshot(args[0]);
-                        var report = RawLeanReportArtifact.ReadFile(Path.Combine(args[0], CommonExecutionEvidence.ReportPath), snapshot, validateMaterials: true);
-                        var result = new ProductionCliEnvironment(args[0]).ExecuteCommonCurrent(args[1], snapshot, null!, null!, report,
+                        var validation = CommonExecutionEvidence.ValidationScope.Create(args[0]);
+                        var report = validation.Report(Path.Combine(args[0], CommonExecutionEvidence.ReportPath));
+                        var result = new ProductionCliEnvironment(args[0]).ExecuteCommonCurrent(args[1], validation, null!, null!, report,
                             ["filemap", "scribe-describe", "scribe-markdown", "scribe-projections"]);
                         Console.Write(result.Output); Console.Error.Write(result.Error); return result.ExitCode;
                     }

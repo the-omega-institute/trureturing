@@ -36,8 +36,11 @@ internal sealed partial class ProductionCliEnvironment
                 throw new InvalidOperationException("check-current requires a candidate report and accepts no base; check-delta requires an explicit base and report");
             var raw = repository.ReadCurrent();
             var current = Decode(raw);
-            _ = CommonExecutionEvidence.ReadCheckManifest(current);
-            var report = RawLeanReportArtifact.ReadFile(options.CandidateLeanReport, current, validateMaterials: true);
+            var validation = new CommonExecutionEvidence.ValidationScope(current);
+            _ = validation.CheckManifest();
+            var report = commonRound is null
+                ? RawLeanReportArtifact.ReadFile(options.CandidateLeanReport, current, validateMaterials: true)
+                : validation.Report(options.CandidateLeanReport);
             if (!current.TryGetFile("Meta/registry.yaml", out var registry) || !current.TryGetFile("Meta/domains.yaml", out var domains))
                 throw new InvalidDataException("candidate policy is missing");
             var policy = RegistryLoader.Load(registry.RawBytes.AsSpan(), domains.RawBytes.AsSpan()) switch
@@ -61,7 +64,7 @@ internal sealed partial class ProductionCliEnvironment
                 removedProjectOutput = string.Concat(baseProjects.Where(path => !current.TryGetFile(path, out _))
                     .Select(path => $"ENGINEERING_TEST_PROJECT_REMOVED project={JsonSerializer.Serialize(path)}\n"));
                 var common = CommonExecutionEvidence.ValidateCommon(repositoryRoot, baseProjects);
-                acceptedBaseTests = CommonExecutionEvidence.ValidateTests(repositoryRoot, baseProjects).Projects
+                acceptedBaseTests = common.Tests.Projects
                     .Where(row => baseProjects.Contains(row.Project, StringComparer.Ordinal)).ToArray();
                 if (!string.Equals(Path.GetFullPath(options.CandidateLeanReport), Path.Combine(repositoryRoot, CommonExecutionEvidence.ReportPath), StringComparison.Ordinal))
                     throw new InvalidDataException("check-delta requires this round's canonical report");
@@ -84,7 +87,7 @@ internal sealed partial class ProductionCliEnvironment
                 {
                     if (Path.GetFullPath(options.CandidateLeanReport, repositoryRoot) != Path.Combine(repositoryRoot, CommonExecutionEvidence.ReportPath))
                         throw new InvalidDataException("common current requires canonical report material");
-                    return ExecuteCommonCurrent(commonRound, current, policy, lean, report, resourcePlan?.CheckUnits.Except(CommonExecutionEvidence.EngineeringCheckIds).Order(StringComparer.Ordinal).ToArray());
+                    return ExecuteCommonCurrent(commonRound, validation, policy, lean, report, resourcePlan?.CheckUnits.Except(CommonExecutionEvidence.EngineeringCheckIds).Order(StringComparer.Ordinal).ToArray());
                 }
                 var verified = VerifyScribeForAdmission(scribeEmissionVerifier, current, report);
                 result = AdmissionPipeline.CheckCurrent(CurrentRuleContext.Create(current, policy, lean, verified));

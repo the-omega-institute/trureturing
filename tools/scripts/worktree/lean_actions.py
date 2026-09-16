@@ -18,7 +18,7 @@ import time
 
 from lean_cache import binary_platform, partition_path, resolved_mathlib
 from lean_cache_release import cache_guard
-from cache_material import files, sha, snapshot_files, validate_manifest
+from cache_material import CacheMaterialDifference, files, sha, snapshot_files, validate_manifest
 
 LAYERS = ("dependency", "project")
 # Execution evidence is opt-in; native engineering/current owners produce it.
@@ -73,7 +73,7 @@ def output(values, destination="GITHUB_OUTPUT"):
 
 
 def receipt(layer, status, **fields):
-    print("LEAN_ACTIONS_CACHE " + json.dumps({"layer": layer, "status": status, **fields}, sort_keys=True))
+    print("LEAN_ACTIONS_CACHE " + json.dumps({"layer": layer, "status": status, **fields}, sort_keys=True), flush=True)
 
 
 def accepted_current(root):
@@ -288,21 +288,22 @@ def validate_cache_directory(directory, expected, *, small_files_first=False):
     are permitted because snapshot manifests intentionally register files only.
     """
     if directory.is_symlink() or not directory.is_dir():
-        raise ValueError("cache data is not a private directory")
+        raise CacheMaterialDifference("cache data is not a private directory", "invalid-layer-directory")
     validate_manifest(expected)
     declared = {item["path"]: item["mode"] for item in expected}
     actual = {}
     for path in directory.rglob("*"):
         relative = path.relative_to(directory).as_posix()
         if path.is_symlink():
-            raise ValueError("cache data contains a symlink: " + relative)
+            raise CacheMaterialDifference("cache data contains a symlink: " + relative, "symlink-member", relative)
         if path.is_dir():
             continue
         if not path.is_file():
-            raise ValueError("cache data member is not a regular file: " + relative)
+            raise CacheMaterialDifference("cache data member is not a regular file: " + relative,
+                                          "nonregular-member", relative)
         metadata = path.stat()
         if relative in declared and metadata.st_mode & 0o777 != declared[relative]:
-            raise ValueError("cache material integrity mismatch: " + relative)
+            raise CacheMaterialDifference("cache material integrity mismatch: " + relative, "mode-changed", relative)
         actual[relative] = metadata.st_size
     if actual.keys() != declared.keys():
         extra = sorted(actual.keys() - declared.keys())
@@ -312,7 +313,8 @@ def validate_cache_directory(directory, expected, *, small_files_first=False):
             detail.append("extra=" + ",".join(extra[:3]))
         if missing:
             detail.append("missing=" + ",".join(missing[:3]))
-        raise ValueError("cache data members differ from manifest (" + ";".join(detail) + ")")
+        raise CacheMaterialDifference("cache data members differ from manifest (" + ";".join(detail) + ")",
+                                      "extra-member" if extra else "missing-member", (extra or missing)[0])
     if small_files_first:
         expected = sorted(expected, key=lambda item: (actual[item["path"]], item["path"]))
     return files(directory, expected=expected)
@@ -372,8 +374,10 @@ def stage_snapshot(root, keys, layer, staged, registry=None, *, current=None):
             metrics = {"save_disabled_reason": "current did not execute a successful Lean build"}
             (staged / "metrics.json").write_text(json.dumps(metrics) + "\n")
             return metrics
+    difference = {}
+    judge_donor = None
     with cache_guard(root, shared=True):
-        if layer in ("dependency", "project") and unchanged_layer(root, keys[layer], layer, keys["partition"]):
+        if layer in ("dependency", "project") and unchanged_layer(root, keys[layer], layer, keys["partition"], difference):
             metrics = {"save_disabled_reason": "unchanged"}
             (staged / "metrics.json").write_text(json.dumps(metrics) + "\n")
             return metrics
@@ -381,8 +385,22 @@ def stage_snapshot(root, keys, layer, staged, registry=None, *, current=None):
             inventory = snapshot_execution(root, layer, keys, staged / "data")
         elif layer == "judge":
             sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "report"))
-            from dotnet_producer import stage_seed
-            stage_seed(root, staged / "data", registry)
+            from dotnet_producer import stage_seed, unique_object
+            cached = root / spec["path"]
+            donor = None
+            if cached.exists():
+                try:
+                    previous = json.loads((cached / "manifest.json").read_text(), object_pairs_hook=unique_object)
+                    if (not isinstance(previous, dict) or previous.get("schema") != "lean-actions-seed-v1"
+                            or previous.get("partition") != keys["partition"] or previous.get("layer") != layer
+                            or not isinstance(previous.get("key"), str)
+                            or not re.fullmatch(re.escape(spec["restore_prefix"]) + r"[0-9]+-[0-9]+", previous["key"])):
+                        raise ValueError("judge donor identity mismatch")
+                    donor = cached / "data", files(cached / "data", expected=previous.get("files"))
+                except (OSError, ValueError, KeyError, TypeError) as error:
+                    judge_donor = {"status": "miss", "reason": str(error)}
+            retained = stage_seed(root, staged / "data", registry, donor=donor)
+            judge_donor = judge_donor or retained
             inventory = files(staged / "data")
         else:
             inventory = snapshot_files(root / spec["target"], staged / "data",
@@ -394,11 +412,15 @@ def stage_snapshot(root, keys, layer, staged, registry=None, *, current=None):
     metrics = {"file_count": len(inventory), "uncompressed_bytes": sum(size for _, size in sizes),
                "largest_files": [{"path": item["path"], "sha256": item["sha256"], "size_bytes": size}
                                  for item, size in sorted(sizes, key=lambda pair: (-pair[1], pair[0]["path"]))[:5]]}
+    if difference:
+        metrics["snapshot_reason"] = difference
+    if judge_donor is not None:
+        metrics["judge_donor"] = judge_donor
     (staged / "metrics.json").write_text(json.dumps(metrics, sort_keys=True) + "\n")
     return metrics
 
 
-def unchanged_layer(root, spec, layer, partition):
+def unchanged_layer(root, spec, layer, partition, difference=None):
     """Check whether a restored layer already contains the exact current material.
 
     Only a seed successfully restored in this execution may suppress a save.
@@ -409,9 +431,14 @@ def unchanged_layer(root, spec, layer, partition):
     """
     manifest_path = root / spec["path"] / "manifest.json"
     restored_path = root / spec["path"] / "restored.json"
+    def changed(reason, path=None):
+        if difference is not None:
+            difference.update({"reason": reason, **({"path": path} if path is not None else {})})
+        return False
+
     try:
         if manifest_path.is_symlink() or restored_path.is_symlink():
-            return False
+            return changed("unsafe-cache-state")
         manifest_bytes = manifest_path.read_bytes()
         manifest = json.loads(manifest_bytes)
         restored = json.loads(restored_path.read_bytes())
@@ -420,12 +447,16 @@ def unchanged_layer(root, spec, layer, partition):
                 or manifest.get("layer") != layer
                 or restored != {"schema": "lean-actions-restored-v1", "snapshot_key": spec["key"],
                                 "manifest_sha256": hashlib.sha256(manifest_bytes).hexdigest()}):
-            return False
+            return changed("restore-record-mismatch")
         target = root / spec["target"]
         validate_cache_directory(target, manifest.get("files"), small_files_first=True)
         return True
-    except (OSError, ValueError, TypeError, KeyError, json.JSONDecodeError):
-        return False
+    except CacheMaterialDifference as error:
+        return changed(error.reason, error.path)
+    except OSError:
+        return changed("cache-state-unavailable")
+    except (ValueError, TypeError, KeyError, json.JSONDecodeError):
+        return changed("invalid-cache-state")
 
 
 def current_built_lean(root, plan, commit):
@@ -564,6 +595,7 @@ def restore(root, keys, matched, layers=LAYERS, registry=None):
         validate_judge_registration(root, layers)
     project_seeded = False
     for layer in layers:
+        started = time.monotonic()
         try:
             spec = keys[layer]
             cached = root / spec["path"]
@@ -571,7 +603,8 @@ def restore(root, keys, matched, layers=LAYERS, registry=None):
             restored_path.unlink(missing_ok=True)
             key = matched[layer]
             if not key:
-                receipt(layer, "miss", reason="Actions supplied no cache")
+                receipt(layer, "miss", reason="Actions supplied no cache",
+                        elapsed_seconds=round(time.monotonic() - started, 3))
                 continue
             if not re.fullmatch(re.escape(spec["restore_prefix"]) + r"[0-9]+-[0-9]+", key):
                 raise ValueError("Actions seed is outside the selected partition")
@@ -622,9 +655,11 @@ def restore(root, keys, matched, layers=LAYERS, registry=None):
                         "snapshot_key": spec["key"],
                         "manifest_sha256": hashlib.sha256(manifest_bytes).hexdigest()}) + "\n")
             project_seeded |= layer == "project"
-            receipt(layer, "restored", key=key, partition=keys["partition"])
+            receipt(layer, "restored", key=key, partition=keys["partition"],
+                    elapsed_seconds=round(time.monotonic() - started, 3))
         except (OSError, ValueError, TypeError, KeyError, subprocess.CalledProcessError) as error:
-            receipt(layer, "miss", reason=str(error))
+            receipt(layer, "miss", reason=str(error),
+                    elapsed_seconds=round(time.monotonic() - started, 3))
     # A dependency-only hit cannot suppress the project Release fallback.
     if "project" in layers:
         output({"STRATALINT_ACTIONS_CACHE_SEEDED": "1" if project_seeded else "0"}, "GITHUB_ENV")

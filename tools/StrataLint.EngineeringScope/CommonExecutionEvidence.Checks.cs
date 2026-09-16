@@ -25,16 +25,18 @@ internal static partial class CommonExecutionEvidence
         _ => throw new InvalidDataException("invalid common check stage: " + stage),
     };
 
-    internal static CheckExecution BeginChecks(string root, string stage, CommonStageRecord build, TextWriter output, string[]? selectedIds = null)
+    internal static CheckExecution BeginChecks(string root, string stage, CommonStageRecord build, TextWriter output,
+        string[]? selectedIds = null, ValidationScope? validation = null)
     {
-        var snapshot = Snapshot(root);
-        var registrations = ReadCheckManifest(snapshot);
+        validation ??= ValidationScope.Create(root);
+        var snapshot = validation.Snapshot;
+        var registrations = validation.CheckManifest();
         var ids = selectedIds ?? CheckIds(stage, registrations);
         if (ids.Distinct(StringComparer.Ordinal).Count() != ids.Length || ids.Except(CheckIds(stage, registrations)).Any())
             throw new InvalidDataException("unregistered selected common units");
         var environment = ExecutionEnvironment(root);
-        var inputs = CheckInputFingerprints(root, snapshot, currentReport: stage == "current", selectedIds: ids, executionEnvironment: environment);
-        ValidateStartedBuild(root, build, Candidate(root));
+        var inputs = CheckInputFingerprints(root, snapshot, currentReport: stage == "current", selectedIds: ids, executionEnvironment: environment, validation: validation);
+        ValidateStartedBuild(root, build, Candidate(root, snapshot), validation);
         File.Delete(Path.Combine(root, ChecksPath(stage)));
         return new(root, stage, build, snapshot, registrations, inputs, environment, output, ids);
     }

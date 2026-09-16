@@ -48,6 +48,8 @@ public sealed class LeanCacheInputScriptTests
     [InlineData("ci_contract", "test_execution_snapshot_consumes_the_exporters_inventory")]
     [InlineData("ci_contract", "test_snapshot_late_read_failure_keeps_published_material_and_source")]
     [InlineData("ci_contract", "test_unchanged_restored_layer_skips_snapshot_and_save")]
+    [InlineData("ci_contract", "test_bounded_snapshot_reports_first_difference_without_changing_save_decision")]
+    [InlineData("ci_contract", "test_bounded_unchanged_snapshot_still_skips_save")]
     [InlineData("ci_contract", "test_corrupt_restored_manifest_falls_through_to_normal_snapshot")]
     [InlineData("ci_contract", "test_dependency_noop_uses_the_current_snapshot_material_policy")]
     [InlineData("ci_contract", "test_noop_requires_a_successful_restore_in_this_execution")]

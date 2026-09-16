@@ -4,12 +4,12 @@ namespace StrataLint.EngineeringScope;
 
 internal static partial class CommonExecutionEvidence
 {
-    // One read-only validation against one snapshot. Never retain this across an
+    // One read-only validation against one snapshot. Never reuse this across an
     // execution callback, import copy, or write to any of the inspected paths.
     internal sealed class ValidationScope(RepositorySnapshot snapshot)
     {
         private readonly Dictionary<string, string> hashes = new(StringComparer.Ordinal);
-        private readonly HashSet<(string Report, string Archive)> reports = [];
+        private readonly Dictionary<(string Report, string Archive), LeanAxiomReport> reports = [];
         private IReadOnlyList<RegisteredCommonCheck>? checks;
         internal RepositorySnapshot Snapshot { get; } = snapshot;
 
@@ -28,19 +28,18 @@ internal static partial class CommonExecutionEvidence
             return hash;
         }
 
-        internal void Report(string path)
+        internal LeanAxiomReport Report(string path)
         {
             var archive = path + ".materials.zip";
             if (!File.Exists(path) || !File.Exists(archive))
             {
                 // Preserve the report reader's diagnostics for missing material.
-                _ = RawLeanReportArtifact.ReadFile(path, Snapshot, validateMaterials: true);
-                return;
+                return RawLeanReportArtifact.ReadFile(path, Snapshot, validateMaterials: true);
             }
             var identity = (Hash(path), Hash(archive));
-            if (reports.Contains(identity)) return;
-            _ = RawLeanReportArtifact.ReadFile(path, Snapshot, validateMaterials: true);
-            reports.Add(identity);
+            if (!reports.TryGetValue(identity, out var report))
+                reports.Add(identity, report = RawLeanReportArtifact.ReadFile(path, Snapshot, validateMaterials: true));
+            return report;
         }
     }
 }
