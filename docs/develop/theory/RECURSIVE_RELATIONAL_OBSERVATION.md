@@ -13319,3 +13319,589 @@ Its positional stationarity must not be transferred to $\nu$, nor confused with 
 Reference: reciprocal-prefix metrics and bounded-type Sturmian geometry are treated in Bellissard–Julien, [§4.1 and §5.2](https://arxiv.org/pdf/1202.4330v2#page=11). Their metric uses bilateral agreement around the origin; the one-sided metric and exact measure in this theorem are determined by the preceding proofs.
 
 ## 追加锚（本行以下为增补区）
+## 36. Quadratic observation-size mixing for the Bernoulli successor
+
+**Definition 36.1 (Fixed carrier, phase geometry, and observation classes).** Retain the original carrier and maps of Definition 20.1:
+$$
+\phi=\frac{1+\sqrt5}{2},\qquad \alpha=\phi^{-1},\qquad \beta=\alpha^2,
+$$
+$$
+K=\{x\in\{0,1\}^{\mathbb N}:x_jx_{j+1}=0\text{ for every }j\},\qquad
+H(x)=\left[\sum_{j\ge0}(-1)^{j+1}\alpha^{j+2}x_j\right].
+$$
+Here $T$ is precisely the continuous surjective successor of Definition 20.1, and $R(\theta)=\theta+[\phi]$. We use the established identities
+$$
+HT=RH,\qquad T Z(j)=Z(j+1).
+$$
+For $L\ge1$, write
+$$
+q_L(x)=(x_0,\ldots,x_{L-1}),\qquad
+\mathcal W_L=q_L[K],\qquad Q_L=|\mathcal W_L|=G_L,
+$$
+where $G_0=1$, $G_1=2$, and $G_{j+2}=G_{j+1}+G_j$. For $w\in\mathcal W_L$, put $C_w=q_L^{-1}(\{w\})$.
+
+The exact geometry imported from Theorem 20.2 is as follows. The exceptional phases are
+$$
+e_r=[-r\phi],\qquad E=\{e_r:r\ge1\}.
+$$
+Every phase outside $E$ has a singleton fiber, and the fiber over $e_r$ is $\{x_r^-,x_r^+\}$. Every $C_w$ has an open phase-arc interior $J_w$ satisfying
+$$
+H^{-1}(J_w)\subseteq C_w\subseteq H^{-1}(\overline{J_w}),\qquad
+H[C_w]=\overline{J_w}.
+$$
+The arcs $J_w$ partition the circle away from the cuts $e_1,\ldots,e_{Q_L}$. Their lengths are $\alpha^L$ when $w_{L-1}=0$ and $\alpha^{L+1}$ when $w_{L-1}=1$. Theorem 20.4 gives
+$$
+Tx_r^\pm=x_{r-1}^\pm\quad(r\ge2),\qquad
+Tx_1^-=Tx_1^+=Z(0).
+$$
+Let $\lambda$ denote normalized Haar measure on $\mathbb T=\mathbb R/\mathbb Z$. These are the standing carrier hypotheses throughout this section. Mathematical reference: [§20, especially Theorems 20.2 and 20.4](https://github.com/the-omega-institute/trureturing/blob/3a015d0d429b5ef52dcf7f04f26fa9f2c28678f0/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md).
+
+**theorem 36.2 (The invariant Haar lift and its cylinder masses).** There is a unique Borel probability measure $m$ on $K$ such that $H_\#m=\lambda$. It is atomless, regular, and satisfies $T_\#m=m$. Its cylinder masses are
+$$
+m(C_w)=\alpha^L\quad\text{if }w_{L-1}=0,
+\qquad
+m(C_w)=\alpha^{L+1}\quad\text{if }w_{L-1}=1.
+$$
+In particular,
+$$
+\min_{w\in\mathcal W_L}m(C_w)=\alpha^{L+1},\qquad
+\max_{w\in\mathcal W_L}m(C_w)=\alpha^L,
+$$
+$$
+1\le Q_L\alpha^L\le\phi,\qquad
+\frac{\alpha}{Q_L}\le m(C_w)\le\frac{\phi}{Q_L}.
+$$
+
+**Proof.** Define a section $\iota:\mathbb T\to K$ by taking the unique lift outside $E$ and setting $\iota(e_r)=x_r^-$. For every positive-depth cylinder,
+$$
+\iota^{-1}(C_w)
+=(J_w\setminus E)\cup\{e_r:\iota(e_r)\in C_w\}.
+$$
+This is Borel. The cylinders form a countable basis of $K$, so $\iota$ is Borel. Define $m=\iota_\#\lambda$. Since $H\iota$ is the identity, $H_\#m=\lambda$. The inverse image under $\iota$ of any singleton is contained in a singleton of the circle, proving atomlessness. A finite Borel measure on the compact metric space $K$ is regular.
+
+If $\eta$ is any probability with $H_\#\eta=\lambda$, the two arc inclusions in Definition 36.1 give
+$$
+\lambda(J_w)\le\eta(C_w)\le\lambda(\overline{J_w}).
+$$
+Both outer quantities equal the arc length. Thus every such lift has the displayed cylinder masses. Cylinders generate the Borel sigma algebra and are closed under intersections, so these masses determine the measure uniquely. Moreover,
+$$
+H_\#(T_\#m)=R_\#\lambda=\lambda,
+$$
+which proves invariance by uniqueness.
+
+Admissible words ending in zero and in one both exist at every positive depth, proving the extrema. Summing the mass bounds over the $Q_L$ cylinders gives
+$$
+Q_L\alpha^{L+1}\le1\le Q_L\alpha^L.
+$$
+Since $\alpha^{-1}=\phi$, the remaining inequalities follow. $\square$
+
+**Definition 36.3 (Successor kernel, full variation, and mixing time).** For $0\le p\le1$ and a finite signed Borel measure $\eta$ on $K$, define
+$$
+P_p\eta=(1-p)\eta+pT_\#\eta.
+$$
+Thus the zero step is the identity on the original carrier. Let $\mathcal P(K)$ be the Borel probability measures on $K$. We use full variation:
+$$
+\|\xi\|_{\mathrm{TV}}=|\xi|(K),\qquad
+\|\mu-\nu\|_{\mathrm{TV}}=2\sup_A|\mu(A)-\nu(A)|
+$$
+for probabilities. On a finite alphabet the norm is the sum of absolute coordinate differences, without a factor of one half.
+
+For $n\in\mathbb N_0$, $L\ge1$, and $x\in K$, define
+$$
+D_{L,p}(n,x)=\|q_{L\#}P_p^n\delta_x-q_{L\#}m\|_{\mathrm{TV}},
+$$
+$$
+e_{L,p}(n)=\sup_{\eta\in\mathcal P(K)}
+\|q_{L\#}P_p^n\eta-q_{L\#}m\|_{\mathrm{TV}}.
+$$
+Both quantities lie in $[0,2]$. Put
+$$
+v_p=p(1-p),\qquad V=np(1-p),\qquad s=\sqrt V.
+$$
+For $0<\varepsilon<1$, define
+$$
+\tau_{L,p}(\varepsilon)=\min\{n\in\mathbb N_0:e_{L,p}(n)\le\varepsilon\},
+$$
+with value $+\infty$ if the set is empty.
+
+**theorem 36.4 (Exact binomial law on the original successor).** For $0<p<1$, $n\ge0$, and every finite signed Borel measure $\eta$,
+$$
+P_p^n\eta
+=\sum_{j=0}^n\binom njp^j(1-p)^{n-j}(T^j)_\#\eta.
+$$
+Write $b_{n,p}(j)=\binom njp^j(1-p)^{n-j}$ and
+$$
+\nu_{n,p}=\sum_{j=0}^n b_{n,p}(j)\delta_{[j\phi]}.
+$$
+Then
+$$
+H_\#P_p^n\eta=\nu_{n,p}*H_\#\eta.
+$$
+In particular, $H_\#P_p^n\delta_x$ is the translate of $\nu_{n,p}$ by $H(x)$. Also $P_p^nm=m$ and $P_p^{n+r}=P_p^nP_p^r$.
+
+At every incoming split fiber, the iterates in the binomial sum are exactly
+$$
+T^j x_r^\pm=x_{r-j}^\pm\quad(0\le j<r),\qquad
+T^j x_r^\pm=Z(j-r)\quad(j\ge r).
+$$
+Consequently the two branches remain distinct until their actual coalescence, including under the identity term $j=0$.
+
+**Proof.** Pushforward is linear, and $T_\#(T^j)_\#=(T^{j+1})_\#$. Applying $P_p$ to the asserted formula and collecting adjacent terms proves the next case by Pascal's identity; the case $n=0$ is the identity. The phase formula follows from $HT^j=R^jH$. Invariance follows from Theorem 36.2, and the semigroup identity follows from composition of powers of the same operator. The split formulas follow by iterating the identities of Theorem 20.4 until the seam and then using $T^jZ(0)=Z(j)$. $\square$
+
+**theorem 36.5 (Dirac reduction and monotonicity without a quotient chain).** For every $L\ge1$, $0\le p\le1$, and $n,r\ge0$,
+$$
+e_{L,p}(n)=\max_{x\in K}D_{L,p}(n,x),
+$$
+$$
+e_{L,p}(n+r)\le e_{L,p}(n),\qquad
+e_{L,p}(n)\le e_{L+1,p}(n),
+$$
+$$
+e_{L,p}(0)=2(1-\alpha^{L+1}).
+$$
+Thus the first-passage definition of $\tau$ agrees with the definition requiring the error bound at every subsequent time.
+
+**Proof.** For every initial probability $\eta$, its readout vector is the coordinatewise integral of the readout vectors from Diracs. Hence
+$$
+\|q_{L\#}P_p^n\eta-q_{L\#}m\|_{\mathrm{TV}}
+\le\int_K D_{L,p}(n,x)\,d\eta(x)
+\le\sup_xD_{L,p}(n,x).
+$$
+The reverse inequality follows by taking $\eta=\delta_x$. Each coordinate of the readout vector is a finite linear combination of the continuous functions $\mathbf1_{C_w}\circ T^j$. Therefore $D_{L,p}(n,\cdot)$ is continuous and attains its supremum on $K$.
+
+The full semigroup gives
+$$
+e_{L,p}(n+r)
+=\sup_{\eta\in\mathcal P(K)}
+\|q_{L\#}P_p^n(P_p^r\eta)-q_{L\#}m\|_{\mathrm{TV}}
+\le e_{L,p}(n),
+$$
+since $P_p^r\eta$ is a probability. No transition matrix on $\mathcal W_L$ enters this argument. Truncation from depth $L+1$ to depth $L$ contracts variation, proving the depth monotonicity.
+
+For a point mass at a readout class $w$, the distance to $q_{L\#}m$ is $2(1-m(C_w))$. Maximizing and using Theorem 36.2 gives the time-zero formula. Finally, time monotonicity proves the assertion about the two definitions of mixing time. $\square$
+
+**theorem 36.6 (Weighted interval discrepancy, including endpoint atoms).** For a probability measure $\rho$ on the circle, define
+$$
+\widehat\rho(k)=\int_{\mathbb T}e^{2\pi ik\theta}\,d\rho(\theta).
+$$
+Let $\mathscr D(\rho)$ be the supremum of $|\rho(A)-\lambda(A)|$ over circle arcs, allowing open, closed, and either half-open endpoint convention, as well as singletons, the empty set, and the whole circle. For every integer $M\ge1$,
+$$
+\mathscr D(\rho)
+\le\frac6{M+1}+\frac4\pi\sum_{k=1}^M\frac{|\widehat\rho(k)|}{k}.
+$$
+The bound is invariant under translation of $\rho$, and applies in particular to arbitrary real probability weights on a finite support.
+
+**Proof.** The classical empirical Erdős–Turán inequality for half-open intervals has the displayed constants. For a finitely supported measure with rational probability weights, repeat each support point according to its numerator after passing to a common denominator. The empirical inequality then gives exactly the asserted inequality.
+
+For arbitrary real weights on that same finite support, choose rational probability vectors converging coordinatewise to the given vector. The sum of their absolute coordinate differences tends to zero. This bounds, uniformly over all measurable sets, the difference between the corresponding masses, and also bounds the difference of every Fourier coefficient. Passing to the limit proves the assertion for every finitely supported probability and every half-open arc.
+
+For a general probability, identify the circle with $[0,1)$ and push it forward by $t\mapsto\lfloor Nt\rfloor/N$. The resulting measures have finite support and converge weakly to the original measure: the displacement tends uniformly to zero, so integrals of continuous functions converge. For any half-open arc whose endpoints have zero original mass, its mass also converges, by pointwise convergence of the indicators away from those endpoints. The Fourier coefficients converge as well. The inequality therefore holds for all such arcs.
+
+A probability has at most countably many atoms. Any open arc is an increasing union of half-open arcs with non-atomic endpoints approaching its endpoints from inside. Any proper closed arc is a decreasing intersection of half-open arcs with non-atomic endpoints approaching from outside. Continuity of measures and convergence of arc lengths prove the same bound for both open and closed arcs. Either remaining endpoint convention is sandwiched between those two values. Shrinking closed arcs proves the singleton bound; complements also handle a circle with one point removed. Thus no endpoint atom is discarded or assumed absent.
+
+Translations preserve the family of arcs, and multiply Fourier coefficients by unimodular factors. This proves the last assertions. The imported empirical inequality is [Rivat–Tenenbaum, equation (1.2), with the admissible pair stated at the beginning of manuscript p. 2](https://tenenb.perso.math.cnrs.fr/PPP/ET.pdf). The probability-measure formulation is also stated in [Ruzsa, §2, equations (2.1)–(2.3)](https://korandi.org/docs/misc/setsgraphsnumbers/setsgraphsnumbers43.pdf). $\square$
+
+**theorem 36.7 (Golden spacing and the log-free Gaussian frequency sum).** For every integer $k\ge1$,
+$$
+\|k\phi\|>\frac1{4k},
+$$
+where $\|t\|$ denotes distance to the nearest integer. For $s\ge1$, let $M=2^J$ be the largest power of two not exceeding $s$. Then
+$$
+\sum_{k=1}^M\frac{e^{-8s^2\|k\phi\|^2}}{k}\le\frac{16}{s}.
+$$
+
+**Proof.** The established rational estimate says that for a rational $q$ with reduced positive denominator $d$,
+$$
+\left|\phi-q\right|>\frac1{\sqrt5\,d^2+d}.
+$$
+Choose an integer $a$ nearest to $k\phi$ and apply this to $a/k$, whose reduced denominator is at most $k$. Then
+$$
+\|k\phi\|
+>\frac1{\sqrt5\,k+1}
+\ge\frac1{(\sqrt5+1)k}
+>\frac1{4k}.
+$$
+This uses the exact rational-denominator statement of [GoldenHurwitzBound](https://github.com/the-omega-institute/trureturing/blob/7a2f78d2072b99bfa7b599db4ee342716fcd18dc/D5/S1/Depth/GoldenHurwitzBound.lean).
+
+Partition $1,\ldots,M$ into bands
+$$
+B_i=\{k\in\mathbb N:2^{i-1}<k\le2^i\},\qquad 0\le i\le J.
+$$
+In particular $B_0=\{1\}$. Put $m_i=2^i$ and $\delta_i=1/(4m_i)$. The signed representatives of $k\phi$ in $(-1/2,1/2]$, for $k\in B_i$, have distance greater than $\delta_i$ from zero. Distinct representatives have circle distance greater than $\delta_i$, because their frequency difference is a nonzero integer of absolute value at most $m_i$.
+
+Order the positive representatives by distance from zero, and separately order the absolute values of the negative representatives. In either list the $r$-th term is at least $r\delta_i$. It is essential here to keep the two sides separate; the folded distances are not asserted to be mutually separated. Consequently,
+$$
+\sum_{k\in B_i}e^{-8s^2\|k\phi\|^2}
+\le2\sum_{r\ge1}\exp\left(-\frac{s^2r^2}{2m_i^2}\right).
+$$
+Since $1/k\le2/m_i$ on the band, writing $t_i=s/m_i\ge1$ gives
+$$
+\sum_{k\in B_i}\frac{e^{-8s^2\|k\phi\|^2}}k
+\le\frac4{m_i}\sum_{r\ge1}e^{-t_i^2r^2/2}.
+$$
+For $t\ge1$, the inequality $r^2-1\ge3(r-1)$ for $r\ge1$ implies
+$$
+\sum_{r\ge1}e^{-t^2r^2/2}
+\le e^{-t^2/2}\sum_{r\ge1}e^{-3(r-1)/2}
+<2e^{-t^2/2}.
+$$
+Thus the contribution of the band is at most $8t_i e^{-t_i^2/2}/s$.
+
+Now $t_i=t_0'2^{J-i}$ with $t_0'=s/M\in[1,2)$. The function $t\mapsto te^{-t^2/2}$ is nonincreasing on $[1,\infty)$, so
+$$
+\sum_{i=0}^J t_i e^{-t_i^2/2}
+\le\sum_{r\ge0}2^r e^{-4^r/2}<2.
+$$
+Indeed the term at $r=0$ is less than one. For $r\ge1$, $4^r\ge4r$, so the remaining sum is bounded by $\sum_{r\ge1}(2e^{-2})^r<1$. Summing the band estimates proves the result. $\square$
+
+**theorem 36.8 (Variance-uniform binomial rotation discrepancy).** For every $0<p<1$ and $n\ge1$,
+$$
+\mathscr D(\nu_{n,p})
+\le\min\left\{1,\frac{64}{\sqrt{np(1-p)}}\right\}.
+$$
+Equivalently, the same bound holds simultaneously for every translation of the binomial rotation law and every arc with any endpoint convention.
+
+**Proof.** Direct multiplication gives
+$$
+\widehat\nu_{n,p}(k)=(1-p+pe^{2\pi ik\phi})^n,
+$$
+$$
+|1-p+pe^{2\pi ik\phi}|^2
+=1-4p(1-p)\sin^2(\pi k\phi).
+$$
+Since $\sin(\pi d)\ge2d$ for $0\le d\le1/2$, and $1-u\le e^{-u}$ for $0\le u\le1$,
+$$
+|\widehat\nu_{n,p}(k)|
+\le e^{-2np(1-p)\sin^2(\pi k\phi)}
+\le e^{-8s^2\|k\phi\|^2}.
+$$
+If $s\ge1$, choose the cutoff $M$ of Theorem 36.7. Theorems 36.6 and 36.7 yield
+$$
+\mathscr D(\nu_{n,p})
+\le\frac6{M+1}+\frac{64}{\pi s}
+\le\frac{12+64/\pi}{s}
+<\frac{64}{s}.
+$$
+For $s<1$, the trivial bound $\mathscr D\le1$ suffices. Translation and endpoint uniformity are already included in Theorem 36.6.
+
+The corresponding upper square-root bound for a fixed nondegenerate integer-step distribution and a badly approximable rotation is established in [Berkes–Borda, Proposition 2.1 and the following paragraph](https://real.mtak.hu/83655/1/paper_MTMT3.pdf#page=6). The displayed proof specifies a single constant for all Bernoulli parameters after normalization by their variance. $\square$
+
+**theorem 36.9 (Why irrationality alone cannot replace golden spacing).** Let $\theta$ be irrational and suppose that along some integers $k_\ell\to\infty$,
+$$
+k_\ell\|k_\ell\theta\|\longrightarrow0.
+$$
+For the Bernoulli rotation law with angle $\theta$ and parameter $1/2$, an estimate $\mathscr D=O(n^{-1/2})$ fails, even with a constant allowed to depend on $\theta$.
+
+**Proof.** For any circle probability $\rho$ and $k\ge1$, integration against the cumulative distribution difference gives
+$$
+|\widehat\rho(k)|\le2\pi k\,\mathscr D(\rho).
+$$
+For completeness, put $\xi=\rho-\lambda$ on $[0,1)$ and $F(t)=\xi([0,t])$. Since $\xi$ has total mass zero, Fubini applied to $e^{2\pi ikx}-1$ gives
+$$
+\widehat\rho(k)=-2\pi ik\int_0^1e^{2\pi ikt}F(t)\,dt.
+$$
+The discrepancy definition bounds $|F(t)|$, including any endpoint atoms, proving the inequality.
+
+Write $d_\ell=\|k_\ell\theta\|$ and choose
+$$
+n_\ell=\left\lfloor\frac1{16d_\ell^2}\right\rfloor.
+$$
+For all sufficiently large $\ell$, $d_\ell\le1/8$, and
+$$
+|\widehat\nu^{\theta}_{n_\ell,1/2}(k_\ell)|
+=|\cos(\pi d_\ell)|^{n_\ell}
+\ge(1-5d_\ell^2)^{n_\ell}
+\ge e^{-10n_\ell d_\ell^2}
+\ge e^{-5/8}.
+$$
+Here $\cos u\ge1-u^2/2$, $\pi^2<10$, and $\log(1-u)\ge-2u$ for $0\le u\le1/2$ justify every inequality. Also $\sqrt{n_\ell}/2\ge1/(\sqrt{128}\,d_\ell)$. Therefore
+$$
+\frac{\sqrt{n_\ell}}2\,
+\mathscr D(\nu^{\theta}_{n_\ell,1/2})
+\ge\frac{e^{-5/8}}{2\pi\sqrt{128}\,k_\ell d_\ell}
+\longrightarrow\infty.
+$$
+Such irrationals exist. For example, $\theta=\sum_{r\ge1}10^{-r!}$ is irrational because its decimal expansion has arbitrarily long zero runs and infinitely many nonzero digits, hence is not eventually periodic. For $k_r=10^{r!}$, its positive tail gives $\|k_r\theta\|\le2k_r^{-r}$ for $r\ge2$. Thus $k_r\|k_r\theta\|\to0$. $\square$
+
+**theorem 36.10 (Uniform finite-readout upper bound).** For every $L\ge1$, $0<p<1$, and $n\ge1$,
+$$
+e_{L,p}(n)
+\le\min\left\{2,\frac{64G_L}{\sqrt{np(1-p)}}\right\}.
+$$
+The bound is simultaneous over all initial probabilities on $K$, not merely over natural-core initial states.
+
+**Proof.** Fix any $x\in K$ and let $\rho=H_\#P_p^n\delta_x$. By Theorem 36.4 this is a translate of $\nu_{n,p}$. For every observation cylinder,
+$$
+\rho(J_w)\le P_p^n\delta_x(C_w)\le\rho(\overline{J_w}).
+$$
+Both phase-arc probabilities differ from their common Haar length $m(C_w)$ by at most $64/s$, by Theorem 36.8. Hence
+$$
+|P_p^n\delta_x(C_w)-m(C_w)|\le\frac{64}{s}.
+$$
+This sandwich remains valid if the law charges either member of a split fiber: it does not assign the boundary mass to a fictitious common endpoint convention. Summing over the $Q_L=G_L$ classes proves $D_{L,p}(n,x)\le64G_L/s$. The full-variation bound by two and the Dirac reduction of Theorem 36.5 finish the proof. $\square$
+
+**theorem 36.11 (Concentration witnesses and small-variance witnesses).** Write $[a]_+=\max\{a,0\}$. For every $L\ge1$, $0\le p\le1$, $n\ge0$, $x\in K$, and $t>0$,
+$$
+D_{L,p}(n,x)
+\ge2\left[1-t^{-2}-(2ts+1)\alpha^L\right]_+.
+$$
+There are also the bounds
+$$
+D_{L,p}(n,x)\ge2[1-2V-\alpha^L]_+,
+$$
+$$
+e_{L,p}(n)\ge2[1-2V-\alpha^{L+1}]_+.
+$$
+The first two inequalities hold in particular for the fixed initial state $Z(0)$. An explicit original-carrier initial state witnesses the last inequality.
+
+**Proof.** Let $J$ have the binomial distribution with parameters $n,p$. When $s>0$, Chebyshev's inequality gives
+$$
+\Pr(|J-np|\le ts)\ge1-t^{-2}.
+$$
+The interval $[np-ts,np+ts]$ contains at most $2ts+1$ integers. Define the set of readout classes
+$$
+A=\{q_L(T^j x):0\le j\le n,\ |j-np|\le ts\}.
+$$
+The actual binomial successor law assigns $A$ probability at least $1-t^{-2}$, whereas
+$$
+q_{L\#}m(A)\le(2ts+1)\alpha^L.
+$$
+Testing full variation on $A$ proves the first inequality. If $s=0$, the binomial variable is constant, the corresponding index set is a singleton, and the same lower bound follows directly.
+
+For the small-variance estimates, set $h=\min\{p,1-p\}$ and choose $j_*=0$ if $p\le1/2$, and $j_*=n$ if $p>1/2$. Then
+$$
+\Pr(J=j_*)=(1-h)^n\ge1-nh\ge1-2V,
+$$
+since $V=nh(1-h)$ and $1-h\ge1/2$. The readout class $q_L(T^{j_*}x)$ has Haar mass at most $\alpha^L$. Testing on that class proves the second inequality.
+
+To obtain the minimum-mass class explicitly, put $N_L=G_{L-1}$. Its natural expansion $Z(N_L)$ has prefix $0^{L-1}1$, whose cylinder mass is $\alpha^{L+1}$. For every $j\ge0$, define
+$$
+z_{L,j}=Z(N_L-j)\quad\text{when }j\le N_L,
+$$
+$$
+z_{L,j}=x_{j-N_L}^-\quad\text{when }j>N_L.
+$$
+The original successor identities give $T^jz_{L,j}=Z(N_L)$ in both cases. In the second case this follows by coalescing at time $j-N_L$ and then taking $N_L$ natural successor steps. Starting at $z_{L,j_*}$ therefore places probability at least $1-2V$ in a class of mass exactly $\alpha^{L+1}$. This proves the last bound with an actual specified witness. $\square$
+
+**theorem 36.12 (Quadratic mixing time at every fixed accuracy).** For every $L\ge1$, $0<p<1$, and $0<\varepsilon<1$,
+$$
+\frac{G_L^2}{16384p(1-p)}
+<\tau_{L,p}(\varepsilon)
+\le\left\lceil\frac{4096G_L^2}{\varepsilon^2p(1-p)}\right\rceil
+\le\left(4096\varepsilon^{-2}+1\right)\frac{G_L^2}{p(1-p)}.
+$$
+In particular,
+$$
+\frac{G_L^2}{16384p(1-p)}
+<\tau_{L,p}(1/4)
+\le65537\frac{G_L^2}{p(1-p)}.
+$$
+More explicitly, whenever
+$$
+np(1-p)\le\frac{G_L^2}{16384},
+$$
+one has both $e_{L,p}(n)>1$ and $D_{L,p}(n,Z(0))>1/4$.
+
+**Proof.** Write $Q=G_L$. First suppose $Q\ge16$ and $V\le Q^2/16384$, so $s\le Q/128$. Theorem 36.2 gives $\alpha^L\le\phi/Q$, and therefore
+$$
+(4s+1)\alpha^L
+\le\phi\left(\frac1{32}+\frac1Q\right)
+\le\frac{3\phi}{32}<\frac3{16}.
+$$
+Taking $t=2$ in Theorem 36.11 yields, for every initial point $x$,
+$$
+D_{L,p}(n,x)>2\left(\frac34-\frac3{16}\right)=\frac98.
+$$
+
+If $Q<16$, then $V<1/64$. The small-variance worst-start witness gives
+$$
+e_{L,p}(n)>2\alpha-\frac1{16}>1,
+$$
+because $\alpha^{L+1}\le\alpha^2=1-\alpha$. For the particular initial state $Z(0)$, the other small-variance bound gives
+$$
+D_{L,p}(n,Z(0))>2(1-\alpha)-\frac1{16}
+=2\beta-\frac1{16}>\frac14.
+$$
+All numerical comparisons follow from $\alpha=(\sqrt5-1)/2$. This covers every depth, including the smallest ones, and every variance satisfying the stated condition.
+
+Thus no integer $n\le G_L^2/(16384p(1-p))$ can meet any accuracy below one. This proves the strict lower bound for the first-passage time; no additive correction is needed.
+
+For the upper bound, take
+$$
+n=\left\lceil\frac{4096G_L^2}{\varepsilon^2p(1-p)}\right\rceil.
+$$
+Then $\sqrt{np(1-p)}\ge64G_L/\varepsilon$, so Theorem 36.10 gives $e_{L,p}(n)\le\varepsilon$. This also proves finiteness of the mixing time. Finally, $G_L\ge2$ and $p(1-p)\le1/4$, so $G_L^2/(p(1-p))\ge16>1$. The ceiling is consequently bounded by the last expression in the theorem. Substitution of $\varepsilon=1/4$ gives $4096\varepsilon^{-2}+1=65537$. $\square$
+
+**theorem 36.13 (Iteration exponent and the observation-depth budget).** For fixed $0<\varepsilon<1$,
+$$
+\log\tau_{L,p}(\varepsilon)
+=2\log G_L-\log(p(1-p))+O_\varepsilon(1),
+$$
+where the bounded term is uniform over $L\ge1$ and $0<p<1$. In particular, for every fixed $0<p<1$,
+$$
+\lim_{L\to\infty}\frac{\log\tau_{L,p}(\varepsilon)}L=2\log\phi,
+\qquad
+\lim_{L\to\infty}\frac{\log\tau_{L,p}(\varepsilon)}{\log G_L}=2.
+$$
+These assertions include $p=1/2$.
+
+For sufficiently large $s=\sqrt{np(1-p)}$, define the largest mixed observation depth by
+$$
+\mathcal L_{p,\varepsilon}(n)
+=\max\{L\ge1:e_{L,p}(n)\le\varepsilon\}.
+$$
+It satisfies
+$$
+\max\{L\ge1:G_L\le\varepsilon s/64\}
+\le\mathcal L_{p,\varepsilon}(n)
+\le\max\{L\ge1:G_L<128s\},
+$$
+and hence
+$$
+\mathcal L_{p,\varepsilon}(n)
+=\log_\phi\sqrt{np(1-p)}+O_\varepsilon(1)
+$$
+as $np(1-p)\to\infty$, uniformly in $p$.
+
+**Proof.** Taking logarithms in Theorem 36.12 proves the first assertion with constants depending only on $\varepsilon$. The established formula from Theorem 20.9,
+$$
+G_L=\frac{\phi^{L+2}-(-\phi^{-1})^{L+2}}{\sqrt5},
+$$
+then proves both limits for fixed $p$.
+
+The upper error bound ensures mixing whenever $G_L\le\varepsilon s/64$. Conversely, if $e_{L,p}(n)\le\varepsilon<1$, Theorem 36.12 excludes $s^2\le G_L^2/16384$, so $G_L<128s$. For sufficiently large $s$ the sufficient set contains depth one, while the necessary set is finite. Depth monotonicity makes the maximum well defined. Applying the displayed growth formula for $G_L$ to the two bounds proves the depth estimate.
+
+The exponent two is thus an exponent in the observation-class count $G_L$ for an iteration budget. Neither limit defines a spatial dimension or identifies the iteration count with physical time. $\square$
+
+**theorem 36.14 (Atomic full laws, noncommuting limits, and moving observation depths).** Fix $0<p<1$ and put
+$$
+d_{L,p}(n)=D_{L,p}(n,Z(0)).
+$$
+For every finite $n$,
+$$
+\|P_p^n\delta_{Z(0)}-m\|_{\mathrm{TV}}=2.
+$$
+Nevertheless,
+$$
+\lim_{L\to\infty}\lim_{n\to\infty}d_{L,p}(n)=0,
+\qquad
+\lim_{n\to\infty}\lim_{L\to\infty}d_{L,p}(n)=2.
+$$
+
+More generally, let $L_n\ge1$ and $0<p_n<1$, and set $s_n=\sqrt{np_n(1-p_n)}$. Each expression below uses the single fixed kernel $P_{p_n}$ for all $n$ steps in that expression. Then
+$$
+\frac{G_{L_n}}{s_n}\longrightarrow0
+\quad\Longrightarrow\quad
+e_{L_n,p_n}(n)\longrightarrow0,
+$$
+whereas
+$$
+\frac{s_n+1}{G_{L_n}}\longrightarrow0
+\quad\Longrightarrow\quad
+d_{L_n,p_n}(n)\longrightarrow2.
+$$
+For fixed $p$, these imply
+$$
+L_n-\frac12\log_\phi n\longrightarrow-\infty
+\quad\Longrightarrow\quad e_{L_n,p}(n)\longrightarrow0,
+$$
+$$
+L_n-\frac12\log_\phi n\longrightarrow+\infty
+\quad\Longrightarrow\quad d_{L_n,p}(n)\longrightarrow2.
+$$
+
+**Proof.** The exact law from $Z(0)$ is supported on the finite set $\{Z(0),\ldots,Z(n)\}$. This set has $m$-mass zero by atomlessness, proving singularity and full variation two.
+
+For each fixed depth, Theorem 36.10 gives $d_{L,p}(n)\to0$. In the other order, the readout support at time $n$ meets at most $n+1$ cylinders, so testing on their union gives
+$$
+d_{L,p}(n)\ge2[1-(n+1)\alpha^L]_+.
+$$
+For fixed $n$ this tends to two as $L\to\infty$. The two iterated limits follow.
+
+The sufficient moving-depth condition is an immediate application of the uniform upper bound. For the opposite condition, put $Q_n=G_{L_n}$ and
+$$
+t_n=\sqrt{\frac{Q_n}{s_n+1}}.
+$$
+Then $t_n\to\infty$, and Theorem 36.11 gives
+$$
+d_{L_n,p_n}(n)
+\ge2\left[1-t_n^{-2}-(2t_ns_n+1)\alpha^{L_n}\right]_+.
+$$
+Using $\alpha^{L_n}\le\phi/Q_n$,
+$$
+(2t_ns_n+1)\alpha^{L_n}
+\le2\phi\sqrt{\frac{s_n+1}{Q_n}}+\frac\phi{Q_n}
+\longrightarrow0.
+$$
+The lower bound therefore tends to two, as does the distance itself. Finally, for fixed $p$, $s_n$ is a positive constant times $\sqrt n$, and the growth of $G_L$ converts the two conditions into the asserted depth conditions. The bounded critical window is not assigned a limiting profile by these statements.
+
+The general distinction between weak-metric mixing and full variation for irrational circle walks is also discussed in [Berkes–Borda, introduction](https://arxiv.org/html/2204.00274v1); the equalities here concern the actual measures on $K$. $\square$
+
+**theorem 36.15 (Deterministic endpoints and failure of parameter-uniform mixing).** For every $L\ge1$ and $n\ge0$,
+$$
+e_{L,0}(n)=e_{L,1}(n)=2(1-\alpha^{L+1}).
+$$
+For either deterministic parameter and every $x\in K$,
+$$
+D_{L,p}(n,x)\ge2(1-\alpha^L)>0.
+$$
+Moreover,
+$$
+\sup_{0<p<1}e_{L,p}(n)=2(1-\alpha^{L+1})
+$$
+for every finite $n$. Thus fixed-kernel uniform-in-initial-state convergence does not imply convergence uniform over all Bernoulli parameters.
+
+If instead $p(1-p)\ge v_0>0$, the uniform estimate is
+$$
+e_{L,p}(n)\le\min\left\{2,\frac{64G_L}{\sqrt{nv_0}}\right\}\qquad(n\ge1).
+$$
+
+**Proof.** At $p=0$ the law from a Dirac is unchanged. At $p=1$ it is $\delta_{T^nx}$. Its readout distance is therefore $2(1-m(C_{q_L(T^nx)}))$, which is at least $2(1-\alpha^L)$. Surjectivity of $T^n$ makes every readout class attainable, so maximization gives the minimum-mass formula. The identity case is the same calculation.
+
+For an interior parameter, Theorem 36.5 gives $e_{L,p}(n)\le e_{L,p}(0)=2(1-\alpha^{L+1})$. Choose $x=Z(G_{L-1})$, in a minimum-mass cylinder. The no-successor term has weight $(1-p)^n$, so
+$$
+\|P_p^n\delta_x-\delta_x\|_{\mathrm{TV}}
+\le2(1-(1-p)^n).
+$$
+After readout and the reverse triangle inequality,
+$$
+e_{L,p}(n)\ge2(1-\alpha^{L+1})-2(1-(1-p)^n).
+$$
+Letting $p\downarrow0$ proves the supremum identity. The other endpoint has the same limiting error: use $x=z_{L,n}$ from Theorem 36.11, so that $T^nx$ belongs to the minimum-mass cylinder, and bound the contribution of all terms except $j=n$ by $2(1-p^n)$. The final estimate follows directly from Theorem 36.10. $\square$
+
+**theorem 36.16 (No autonomous readout kernel and no full-space spectral gap).** For every $L\ge1$ and $0<p\le1$, there is no Markov matrix $M$ on $\mathcal W_L$ satisfying
+$$
+q_{L\#}P_p\eta=M(q_{L\#}\eta)
+\qquad\text{for every }\eta\in\mathcal P(K).
+$$
+For $0<p<1$, let the dual Markov operator on complex $L^2(m)$ be
+$$
+U_pg=(1-p)g+p\,g\circ T.
+$$
+On the mean-zero subspace $L^2_0(m)$, for every $n\ge1$,
+$$
+\|U_p^n\|_{L^2_0(m)\to L^2_0(m)}=1.
+$$
+In particular the full operator has no positive $L^2$ spectral gap, despite the finite-readout mixing bounds.
+
+**Proof.** Put $Q=G_L$ and consider $x_{Q+1}^-,x_{Q+1}^+$. Theorem 20.2 gives the same depth-$L$ prefix for these two points. Their successors are $x_Q^-,x_Q^+$, whose prefixes are different. Therefore their one-step projected laws differ by
+$$
+p\left(\delta_{q_L(x_Q^-)}-\delta_{q_L(x_Q^+)}\right)\ne0,
+$$
+although their initial projected laws agree. This contradicts the proposed matrix identity.
+
+Invariance of $m$ and convexity show that $U_p$ is an $L^2$ contraction preserving the mean-zero subspace. For every integer $k\ge1$, the function
+$$
+\chi_k(x)=e^{2\pi ikH(x)}
+$$
+has mean zero and $L^2$ norm one, because $H_\#m=\lambda$. Semiconjugacy gives
+$$
+U_p\chi_k=(1-p+pe^{2\pi ik\phi})\chi_k.
+$$
+The exact approximation identity used in Theorem 20.2 is
+$$
+|\phi G_j-G_{j+1}|=\alpha^{j+2}\longrightarrow0.
+$$
+Consequently the corresponding eigenvalues for $k=G_j$ tend to one. For every fixed $n$, the norms $\|U_p^n\chi_{G_j}\|_2$ tend to one, proving the operator-norm lower bound by one. The contraction property supplies the reverse inequality. Thus finite observation size supplies neither an autonomous quotient chain nor a full-space spectral gap. $\square$
+
+## 追加锚（本行以下为增补区）

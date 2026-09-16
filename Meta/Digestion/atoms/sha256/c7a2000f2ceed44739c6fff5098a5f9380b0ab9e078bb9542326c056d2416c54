@@ -1,0 +1,23 @@
+**Proof.** Define a section $\iota:\mathbb T\to K$ by taking the unique lift outside $E$ and setting $\iota(e_r)=x_r^-$. For every positive-depth cylinder,
+$$
+\iota^{-1}(C_w)
+=(J_w\setminus E)\cup\{e_r:\iota(e_r)\in C_w\}.
+$$
+This is Borel. The cylinders form a countable basis of $K$, so $\iota$ is Borel. Define $m=\iota_\#\lambda$. Since $H\iota$ is the identity, $H_\#m=\lambda$. The inverse image under $\iota$ of any singleton is contained in a singleton of the circle, proving atomlessness. A finite Borel measure on the compact metric space $K$ is regular.
+
+If $\eta$ is any probability with $H_\#\eta=\lambda$, the two arc inclusions in Definition 36.1 give
+$$
+\lambda(J_w)\le\eta(C_w)\le\lambda(\overline{J_w}).
+$$
+Both outer quantities equal the arc length. Thus every such lift has the displayed cylinder masses. Cylinders generate the Borel sigma algebra and are closed under intersections, so these masses determine the measure uniquely. Moreover,
+$$
+H_\#(T_\#m)=R_\#\lambda=\lambda,
+$$
+which proves invariance by uniqueness.
+
+Admissible words ending in zero and in one both exist at every positive depth, proving the extrema. Summing the mass bounds over the $Q_L$ cylinders gives
+$$
+Q_L\alpha^{L+1}\le1\le Q_L\alpha^L.
+$$
+Since $\alpha^{-1}=\phi$, the remaining inequalities follow. $\square$
+

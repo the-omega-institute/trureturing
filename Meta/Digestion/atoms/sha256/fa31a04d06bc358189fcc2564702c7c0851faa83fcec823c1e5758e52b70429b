@@ -1,0 +1,35 @@
+**theorem 36.16 (No autonomous readout kernel and no full-space spectral gap).** For every $L\ge1$ and $0<p\le1$, there is no Markov matrix $M$ on $\mathcal W_L$ satisfying
+$$
+q_{L\#}P_p\eta=M(q_{L\#}\eta)
+\qquad\text{for every }\eta\in\mathcal P(K).
+$$
+For $0<p<1$, let the dual Markov operator on complex $L^2(m)$ be
+$$
+U_pg=(1-p)g+p\,g\circ T.
+$$
+On the mean-zero subspace $L^2_0(m)$, for every $n\ge1$,
+$$
+\|U_p^n\|_{L^2_0(m)\to L^2_0(m)}=1.
+$$
+In particular the full operator has no positive $L^2$ spectral gap, despite the finite-readout mixing bounds.
+
+**Proof.** Put $Q=G_L$ and consider $x_{Q+1}^-,x_{Q+1}^+$. Theorem 20.2 gives the same depth-$L$ prefix for these two points. Their successors are $x_Q^-,x_Q^+$, whose prefixes are different. Therefore their one-step projected laws differ by
+$$
+p\left(\delta_{q_L(x_Q^-)}-\delta_{q_L(x_Q^+)}\right)\ne0,
+$$
+although their initial projected laws agree. This contradicts the proposed matrix identity.
+
+Invariance of $m$ and convexity show that $U_p$ is an $L^2$ contraction preserving the mean-zero subspace. For every integer $k\ge1$, the function
+$$
+\chi_k(x)=e^{2\pi ikH(x)}
+$$
+has mean zero and $L^2$ norm one, because $H_\#m=\lambda$. Semiconjugacy gives
+$$
+U_p\chi_k=(1-p+pe^{2\pi ik\phi})\chi_k.
+$$
+The exact approximation identity used in Theorem 20.2 is
+$$
+|\phi G_j-G_{j+1}|=\alpha^{j+2}\longrightarrow0.
+$$
+Consequently the corresponding eigenvalues for $k=G_j$ tend to one. For every fixed $n$, the norms $\|U_p^n\chi_{G_j}\|_2$ tend to one, proving the operator-norm lower bound by one. The contraction property supplies the reverse inequality. Thus finite observation size supplies neither an autonomous quotient chain nor a full-space spectral gap. $\square$
+

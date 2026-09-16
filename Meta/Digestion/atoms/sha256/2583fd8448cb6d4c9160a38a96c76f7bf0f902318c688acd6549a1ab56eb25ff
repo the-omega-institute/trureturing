@@ -1,0 +1,21 @@
+**theorem 36.6 (Weighted interval discrepancy, including endpoint atoms).** For a probability measure $\rho$ on the circle, define
+$$
+\widehat\rho(k)=\int_{\mathbb T}e^{2\pi ik\theta}\,d\rho(\theta).
+$$
+Let $\mathscr D(\rho)$ be the supremum of $|\rho(A)-\lambda(A)|$ over circle arcs, allowing open, closed, and either half-open endpoint convention, as well as singletons, the empty set, and the whole circle. For every integer $M\ge1$,
+$$
+\mathscr D(\rho)
+\le\frac6{M+1}+\frac4\pi\sum_{k=1}^M\frac{|\widehat\rho(k)|}{k}.
+$$
+The bound is invariant under translation of $\rho$, and applies in particular to arbitrary real probability weights on a finite support.
+
+**Proof.** The classical empirical Erdős–Turán inequality for half-open intervals has the displayed constants. For a finitely supported measure with rational probability weights, repeat each support point according to its numerator after passing to a common denominator. The empirical inequality then gives exactly the asserted inequality.
+
+For arbitrary real weights on that same finite support, choose rational probability vectors converging coordinatewise to the given vector. The sum of their absolute coordinate differences tends to zero. This bounds, uniformly over all measurable sets, the difference between the corresponding masses, and also bounds the difference of every Fourier coefficient. Passing to the limit proves the assertion for every finitely supported probability and every half-open arc.
+
+For a general probability, identify the circle with $[0,1)$ and push it forward by $t\mapsto\lfloor Nt\rfloor/N$. The resulting measures have finite support and converge weakly to the original measure: the displacement tends uniformly to zero, so integrals of continuous functions converge. For any half-open arc whose endpoints have zero original mass, its mass also converges, by pointwise convergence of the indicators away from those endpoints. The Fourier coefficients converge as well. The inequality therefore holds for all such arcs.
+
+A probability has at most countably many atoms. Any open arc is an increasing union of half-open arcs with non-atomic endpoints approaching its endpoints from inside. Any proper closed arc is a decreasing intersection of half-open arcs with non-atomic endpoints approaching from outside. Continuity of measures and convergence of arc lengths prove the same bound for both open and closed arcs. Either remaining endpoint convention is sandwiched between those two values. Shrinking closed arcs proves the singleton bound; complements also handle a circle with one point removed. Thus no endpoint atom is discarded or assumed absent.
+
+Translations preserve the family of arcs, and multiply Fourier coefficients by unimodular factors. This proves the last assertions. The imported empirical inequality is [Rivat–Tenenbaum, equation (1.2), with the admissible pair stated at the beginning of manuscript p. 2](https://tenenb.perso.math.cnrs.fr/PPP/ET.pdf). The probability-measure formulation is also stated in [Ruzsa, §2, equations (2.1)–(2.3)](https://korandi.org/docs/misc/setsgraphsnumbers/setsgraphsnumbers43.pdf). $\square$
+
