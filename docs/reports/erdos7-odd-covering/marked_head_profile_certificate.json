@@ -338,5 +338,219 @@
       "0"
     ],
     "profile_for_real_t_at_least_6": "((12-t)_+ + 2*(8-t)_+)/74"
+  },
+  "elementary_comparison": {
+    "old_profile_thresholds": [
+      1,
+      2,
+      3,
+      4,
+      6
+    ],
+    "old_profile_bounds": {
+      "16": [
+        22,
+        10,
+        5,
+        2,
+        0
+      ],
+      "17": [
+        25,
+        11,
+        5,
+        2,
+        0
+      ]
+    },
+    "old_case_checks": [
+      {
+        "shape": "root1_same_other_column",
+        "test_layouts": 4760,
+        "exact_old_profile_at_1_2_3_4_6": [
+          25,
+          11,
+          5,
+          2,
+          0
+        ]
+      },
+      {
+        "shape": "root1_other_same_column",
+        "test_layouts": 4760,
+        "exact_old_profile_at_1_2_3_4_6": [
+          24,
+          11,
+          5,
+          2,
+          0
+        ]
+      },
+      {
+        "shape": "root1_other_other_column",
+        "test_layouts": 4760,
+        "exact_old_profile_at_1_2_3_4_6": [
+          24,
+          11,
+          5,
+          2,
+          0
+        ]
+      },
+      {
+        "shape": "root2_same_other_column",
+        "test_layouts": 4480,
+        "exact_old_profile_at_1_2_3_4_6": [
+          21,
+          10,
+          5,
+          2,
+          0
+        ]
+      },
+      {
+        "shape": "root2_other_same_column",
+        "test_layouts": 4480,
+        "exact_old_profile_at_1_2_3_4_6": [
+          22,
+          10,
+          5,
+          2,
+          0
+        ]
+      },
+      {
+        "shape": "root2_other_other_column",
+        "test_layouts": 4480,
+        "exact_old_profile_at_1_2_3_4_6": [
+          22,
+          10,
+          5,
+          2,
+          0
+        ]
+      }
+    ],
+    "transfer_formula": "(5*phi_n(t)+2*phi_n(t/2))/D_n, D_16=74, D_17=77",
+    "transfer_knots": [
+      "2",
+      "3",
+      "4",
+      "6",
+      "8",
+      "12"
+    ],
+    "transfer_values": {
+      "16": [
+        "47/37",
+        "57/74",
+        "15/37",
+        "5/37",
+        "2/37",
+        "0"
+      ],
+      "17": [
+        "15/11",
+        "61/77",
+        "32/77",
+        "10/77",
+        "4/77",
+        "0"
+      ]
+    },
+    "crossing": "117/22",
+    "auxiliary_atoms": {
+      "2": "3/7",
+      "3": "15/77",
+      "4": "18/77",
+      "117/22": "2/259",
+      "6": "7/74",
+      "8": "1/37",
+      "12": "1/74"
+    },
+    "mean": "37/11",
+    "second_moment": "909287/62678",
+    "second_moment_reduction_from_integer_law": "15/8954",
+    "profile_at_crossing": "5/22",
+    "integer_profile_at_crossing": "1025/4477",
+    "full_period_old_layouts": 91125,
+    "full_period_old_profile_at_4_5_6": [
+      2,
+      1,
+      0
+    ],
+    "all_measure_upper_tail_identity": "Theta_mu(t)=(12-t)*max_x(mu(x)), 8<=t<=12",
+    "universal_supported_law_minimax": "(12-t)/74, 8<=t<=12"
+  },
+  "fixed_marginal_obstruction": {
+    "original_classes": [
+      [
+        3,
+        0
+      ],
+      [
+        9,
+        4
+      ],
+      [
+        5,
+        0
+      ],
+      [
+        15,
+        11
+      ],
+      [
+        45,
+        37
+      ],
+      [
+        7,
+        0
+      ],
+      [
+        21,
+        8
+      ],
+      [
+        63,
+        2
+      ],
+      [
+        35,
+        3
+      ],
+      [
+        105,
+        53
+      ],
+      [
+        315,
+        173
+      ]
+    ],
+    "test_centre": 83,
+    "old_survivors": 16,
+    "complete_survivors": 75,
+    "old_load_histogram": {
+      "1": 5,
+      "2": 6,
+      "3": 2,
+      "4": 2,
+      "6": 1
+    },
+    "load_probabilities": {
+      "1": "25/96",
+      "2": "169/480",
+      "3": "3/32",
+      "4": "19/120",
+      "6": "1/32",
+      "8": "1/24",
+      "12": "1/16"
+    },
+    "mean": "63/20",
+    "second_moment": "1427/80",
+    "maximum_atom": "1/16",
+    "upper_tail": "(12-t)/16, 8<=t<=12"
   }
 }

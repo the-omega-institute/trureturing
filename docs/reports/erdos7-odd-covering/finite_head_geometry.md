@@ -215,19 +215,19 @@ must not be conflated: a tail recurrence may propagate the actual
 second-moment bound while using X for its convex stop-loss comparisons,
 because both statements refer to the same mu and all test layouts.
 
-The same [finite geometry verifier](../docs/reports/erdos7-odd-covering/verify_finite_head_geometry.py)
+The same [finite geometry verifier](verify_finite_head_geometry.py)
 derives these probabilities, quantiles and moments from the fixed rational
 laws and their already verified old-layout hinge profiles. Its
 `selected_law_convex_profile` result is included in the same certificate;
 no additional solver or measure choice is needed. This profile crosses
-the separate [uniform-law profile](erdos-7-marked-head-profile.md), so
+the separate [uniform-law profile](marked_head_profile.md), so
 neither dominates the other at all thresholds. No continuation from prime
 11 is claimed.
 
 ## Exact verification and scope
 
-The [standard-library verifier](../docs/reports/erdos7-odd-covering/verify_finite_head_geometry.py)
-reads the [fixed rational certificate](../docs/reports/erdos7-odd-covering/finite_head_geometry_certificate.json),
+The [standard-library verifier](verify_finite_head_geometry.py)
+reads the [fixed rational certificate](finite_head_geometry_certificate.json),
 reconstructs the six actual survivor sets, and checks all 140 normalized
 assignments, all 27720 independent test layouts, the primal and dual
 probabilities, the same-law hinge profiles and all six prime-7 lifts.
@@ -236,7 +236,7 @@ passes using integer and rational arithmetic only. No optimization solver
 or floating-point input is required for verification.
 
 The repository's finite-head density and marked truncation bounds are in
-[the Erdős #7 dossier](erdos-7-odd-covering-systems.md), (CM9)--(CM13).
+[the Erdős #7 dossier](../../../Problems/erdos-7-odd-covering-systems.md), (CM9)--(CM13).
 The finite minimax statement was not found among those statements or in
 the inspected public Hough minimum-modulus source
 (DOI 10.4007/annals.2015.181.1.6). No literature-priority claim is made.

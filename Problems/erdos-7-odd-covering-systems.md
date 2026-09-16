@@ -844,6 +844,24 @@ on the number of prime factors per modulus. Actual cylinder caps,
 cofactor completion and the numerical stopping bound still have to be
 connected in the end-to-end formalization.
 
+The actual uniform survivor law is supplied by
+[`PurePrefixResidualLaw.exists_exact_residual_law`](../D5/S3/Arith/Congruence/PurePrefixResidualLaw.lean).
+For every integer alphabet size \(p\ge3\), height \(H\ge0\) and one arbitrary
+forbidden prefix at each positive depth, it removes prefixes with forbidden
+ancestors, retaining a disjoint set \(R\) with the same forbidden union.
+The theorem constructs the rational law on actual surviving words and
+proves its positive normalizer
+\(Z=1-\sum_{e\in R}p^{-e}\). For every test prefix \(u\) at depth \(d\),
+a forbidden ancestor gives zero probability; otherwise its probability is
+\[
+ \frac{p^{-d}-\sum_{e\in R:\,f_e\text{ extends }u}p^{-e}}{Z}.
+\]
+The proof derives the disjoint decomposition from the given words, using
+shortest forbidden ancestors and prefix nesting. Conditioning, individual
+prefix counts and positivity are reused from the licensed development.
+This closes the pure-coordinate residual-law obligation; its application
+to actual modulus labels and the full numerical continuation remains open.
+
 #### Sharp tail profiles of maximal cylinder caps
 
 The preceding scalar boundary extends to all positive-part thresholds.
@@ -4807,7 +4825,7 @@ retains actual shared-cylinder exclusions. It does not assert that the
 resulting finite optimization already reaches prime 17 or 11.
 
 **Finite supported laws retaining actual exclusions.** The
-[finite head geometry result](erdos-7-finite-head-geometry.md) solves the
+[finite head geometry result](../docs/reports/erdos7-odd-covering/finite_head_geometry.md) solves the
 complete independent-layout minimax problem for all original families
 whose moduli divide 45:
 \[
@@ -4831,7 +4849,7 @@ conclusion is existence of a law; it does not assert monotonicity of
 uniform survivor averages. Both statements are ordinary proofs with exact
 certificates, and do not enlarge the prime-13 noncoverage range.
 
-A second [supported-law construction](erdos-7-marked-head-profile.md)
+A second [supported-law construction](../docs/reports/erdos7-odd-covering/marked_head_profile.md)
 controls the entire convex profile on the 315 head. One common law,
 uniform on a possibly smaller actual survivor set, satisfies
 \[
@@ -4846,7 +4864,21 @@ Here \(\mathbb EW=37/11\) and \(\mathbb EW^2=41336/2849\).
 Its high-threshold profile is attained by an actual 74-survivor family
 for every real threshold at least six. The mean/profile in (CM15) and
 the smaller moment in (CM14) belong to different selected laws and may
-not be combined as one law. Neither certificate closes the tail from 11.
+not be combined as one law. An elementary refinement replaces the nearby
+integer atoms by an atom at \(117/22\), preserving the mean and lowering
+the comparison second moment to \(909287/62678\). The same note proves,
+for every probability law \(\nu\) on the full period,
+\[
+ \Theta_\nu(t)=(12-t)\|\nu\|_\infty
+        \qquad(8\le t\le12).
+\]
+Thus the exact universal minimax over all supported laws is
+\((12-t)/74\) on this interval. The uniform law is the unique minimizer
+on each fixed survivor set when \(t<12\); nonuniform laws must improve
+other parts of the profile to help. A separate actual 75-survivor family
+shows that fixing the old marginal to be uniform can force second moment
+\(1427/80\) and upper profile \((12-t)/16\). These statements still do
+not close the tail from 11.
 
 **Coupled densities of the three prime-pair subsystems.** Let \(\sigma_A\)
 be the ambient density avoiding the original classes supported on \(A\),

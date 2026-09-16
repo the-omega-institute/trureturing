@@ -557,6 +557,15 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Mathematical result supporting the odd-covering finite head certificates.
+pattern = "docs/reports/erdos7-odd-covering/finite_head_geometry.md"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]] # Exact primal and dual laws for six finite head geometries.
 pattern = "docs/reports/erdos7-odd-covering/finite_head_geometry_certificate.json"
 kind = "data"
@@ -595,6 +604,15 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 [[files]] # Four outside-support coefficients and the exact three-prime continuation.
 pattern = "docs/reports/erdos7-odd-covering/lcm_block_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Mathematical result supporting the odd-covering finite head certificates.
+pattern = "docs/reports/erdos7-odd-covering/marked_head_profile.md"
 kind = "data"
 admission_plane = "content"
 produced_by = "none"
