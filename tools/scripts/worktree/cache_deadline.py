@@ -23,6 +23,10 @@ SAVE_START_SECONDS = 5
 SAVE_MINIMUM_SECONDS = 60
 METADATA_TIMEOUT_SECONDS = 15
 STAGES = ("build", "engineering", "current")
+# Cache publication consumes accepted engineering artifacts in its own job.
+# Explicit job identities prevent it from extending the checking job's window.
+JOB_STAGES = {"build": "build", "engineering": "engineering",
+              "engineering_cache": "engineering", "current": "current"}
 
 
 class CacheDeadline:
@@ -47,7 +51,8 @@ class CacheDeadline:
 
 
 def identity(stage, env):
-    if stage not in STAGES or env.get("GITHUB_JOB") != stage:
+    job = env.get("GITHUB_JOB")
+    if stage not in STAGES or JOB_STAGES.get(job) != stage:
         raise ValueError("cache job identity mismatch")
     if env.get("GITHUB_EVENT_NAME") != "push" or env.get("STRATALINT_CACHE_WRITES") != "true":
         raise ValueError("cache writes disabled")
@@ -59,7 +64,7 @@ def identity(stage, env):
             or commit != env.get("GITHUB_SHA")
             or not all(re.fullmatch(r"[1-9][0-9]*", value) for value in (run, attempt))):
         raise ValueError("cache run identity mismatch")
-    return {"stage": stage, "repository": repository, "run_id": run, "run_attempt": attempt,
+    return {"stage": stage, "job": job, "repository": repository, "run_id": run, "run_attempt": attempt,
             "candidate": commit, "runner_name": env.get("RUNNER_NAME", "")}
 
 
@@ -94,7 +99,7 @@ def begin(root, stage, job_timeout_minutes, *, env=None, fetch_jobs=None, now=No
                 or response["total_count"] != len(response["jobs"])
                 or not all(isinstance(job, dict) for job in response["jobs"])):
             raise ValueError("incomplete cache job metadata")
-        matching = [job for job in response["jobs"] if job.get("name") == stage]
+        matching = [job for job in response["jobs"] if job.get("name") == expected["job"]]
         if len(matching) != 1:
             raise ValueError("cache job is absent or ambiguous")
         job = matching[0]

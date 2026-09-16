@@ -362,11 +362,12 @@ class SnapshotContracts(NoopSnapshotCases, CacheFixture, unittest.TestCase):
         source, cached, _ = self.restore_fixture("project", {"a.olean": b"accepted"})
         before = (cached / "manifest.json").read_bytes()
         (source / "a.olean").write_bytes(b"new source")
-        for cutoff in (None, 164, 400):
+        for cutoff in (None, 100, 164, 400):
             with self.subTest(cutoff=cutoff), mock.patch.dict(os.environ, self.env), \
                  contextlib.redirect_stdout(io.StringIO()) as receipts:
                 (self.root / "outputs").unlink(missing_ok=True)
-                deadline = CacheDeadline(cutoff, monotonic=lambda: 100)
+                deadline = CacheDeadline(cutoff, reason="unavailable" if cutoff is None else "available",
+                                         monotonic=lambda: 100)
                 owner.snapshot(self.root, owner.actions_keys(self.root), ["project"], deadline=deadline)
                 outputs = (self.root / "outputs").read_text().splitlines()
                 self.assertEqual(["project_ready=" + str(cutoff == 400).lower(),
@@ -376,6 +377,10 @@ class SnapshotContracts(NoopSnapshotCases, CacheFixture, unittest.TestCase):
                     self.assertEqual(b"new source", (cached / "data/a.olean").read_bytes())
                 else:
                     self.assertEqual(before, (cached / "manifest.json").read_bytes())
+                    expected = "unavailable" if cutoff is None else "insufficient-cache-window"
+                    self.assertIn('"reason": "' + expected + '"', receipts.getvalue())
+                    self.assertIn('"remaining_seconds": ' + str(0 if cutoff is None else cutoff - 100),
+                                  receipts.getvalue())
 
     def test_bounded_snapshot_timeout_and_signals_clean_only_owned_staging(self):
         owner = self.restore_owner()

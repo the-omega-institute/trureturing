@@ -311,6 +311,8 @@ engineering 与 Scribe 不按 base 选测。当前项目与检查义务由候选
 
 可选缓存制作与保存共用早于 job 上限的截止时间,按真实 run/attempt/job 起始时间绑定;元数据不可用或时间不足则跳过缓存,不撤销已完成的业务判词。每层制作后立即保存,优先检查证据,再处理项目与依赖层;不得让大层制作阻塞小层全部落存。快照只读取已登记层的材料,复制时校验字节与 mode,失败只清理本次私有 staging。缓存时限不改变检查时限,外部取消仍保留取消语义。
 
+工程证据缓存由 push 的独立可选 `engineering_cache` job 保存,避免完整工程检查耗尽其保存窗口。该 job 消费同一候选、本轮 build 与 engineering artifact,先经现役 transport 验证身份、轮次、材料及成功证据,再导出 seed;不重建或重跑检查,不恢复 Lean/依赖缓存。截止时间绑定保存 job 自身,不得借用或延长 engineering 检查的窗口;保存失败只影响后续增量起点,不改变 required checks。PR 不执行此保存 job。
+
 FILEMAP `schema_version = 4` 的每条资源登记含 `cache_activation` 表，键集合须与 `cache_layers` 完全一致，现役阶段仅为 `stage-start`。缺项、额外项、未知阶段由 C# loader 与轻量 planner 同样拒绝；无工作仍须验证完整登记。Actions 仅恢复所选资源声明的层；需要原生报告时，由 `lean` 前置声明 dependency/project/elan，`.lake/build/lean-inspector` 随 project 一起运输，不再存在独立 report 层、prepare/resume 协议或晚启动缓存阶段。只有 filemap 等无 Lean 资源时不物化 Lean 缓存。
 
 需要 Lean/report 的路由在命中后仍进入共同增量入口。`make lean-report` 使用 A14.9 的原生 Lake facets，当前默认 Lean/audit 目标和 Inspector 编译必须成功；零报告提取仍执行这些构建义务，实际 Lean 重编由 Lake traces 决定。注册模块、source hash、utility claim、传递依赖与完整材料校验仍控制失效；允许恢复的输入范围由显式清单限定，不动态生成 CI 归属。producer 兼容性只取 `lean-report-inputs.json` 的显式 `report_semantic_version`，代码字节本身不改变语义版本，复用行保留实际来源。登记配置文件字节和实际模块环境参与原生失效，不参与远端分区。相同 mathlib 的源码变更只做原生依赖要求的工作；不影响已登记报告/编译输入的 metadata 可零模块重编/重检。配置文件字节变化不冒称零报告重检。同环境增量结果须等于规范完整生产，比较时分别核对实际来源字段。

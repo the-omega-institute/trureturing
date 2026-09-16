@@ -9,6 +9,118 @@ namespace StrataLint.EngineeringScope.Tests;
 
 public sealed class ExecutionSeedTransportBehaviorTests
 {
+    [Fact]
+    public void IsolatedEngineeringArtifactsExportReusableSeedWithoutProducerOrBuildTools()
+    {
+        if (OperatingSystem.IsWindows()) throw Xunit.Sdk.SkipException.ForSkip("native tar transport fixture is unsupported on Windows");
+        using var producer = Prepare("engineering");
+        using var storage = new CurrentExecutionContractTests.CandidateFixture();
+        var repository = TestRepositoryLayout.FindRoot();
+        var commit = SharedBuildContractTests.Git(producer.Root, "rev-parse", "HEAD");
+        var runtime = Path.GetDirectoryName(CommonExecutionEvidence.RunnerPath)!;
+        var original = CommonExecutionEvidence.ValidateEngineering(producer.Root);
+        CiTransportTests.SealEngineering(producer.Root, original.Candidate,
+            Directory.GetFiles(Path.Combine(producer.Root, runtime)).Select(path => runtime + "/" + Path.GetFileName(path)), original.Steps);
+        var checks = CommonExecutionEvidence.Read<CommonCheckRecord>(producer.Root, CommonExecutionEvidence.ChecksPath("engineering"));
+        var tests = CommonExecutionEvidence.Read<TestExecutionRecord>(producer.Root, CommonExecutionEvidence.TestsPath);
+        var archives = new Dictionary<string, string>();
+        foreach (var stage in new[] { "build", "engineering" })
+        {
+            var archive = Path.Combine(storage.Root, "build", stage + ".tgz");
+            var packed = Workflow(producer.Root, "pack", stage, commit, archive, Environment(commit, producer.Root, "81", "1"));
+            Assert.True(packed.Exit == 0, packed.Text);
+            archives.Add(stage, archive);
+        }
+        var targets = new[] { "exporter", "consumer" }.Select(name => Path.Combine(storage.Root, "build", name)).ToArray();
+        foreach (var target in targets)
+        {
+            SharedBuildContractTests.Git(producer.Root, "clone", "--quiet", "--no-hardlinks", producer.Root, target);
+            Assert.False(Directory.Exists(Path.Combine(target, "build")));
+            Assert.False(Directory.Exists(Path.Combine(target, runtime)));
+            Assert.Equal("", SharedBuildContractTests.Git(target, "status", "--porcelain", "--untracked-files=all"));
+        }
+        // Only the two normal artifacts survive; no producer seed or output
+        // directory can accidentally satisfy a missing transport dependency.
+        Directory.Delete(producer.Root, recursive: true);
+        Directory.CreateDirectory(producer.Root);
+        var dotnet = SharedBuildContractTests.Process(storage.Root, "which", ["dotnet"]).Text.Trim();
+        storage.Write("build/guard/dotnet", """
+            #!/bin/sh
+            set -eu
+            printf '%s\n' "$*" >> "$CONTRACT_CALLS"
+            case "$1" in *StrataLint.EngineeringScope.dll) ;; *) exit 91 ;; esac
+            case "$2" in transport-pack|transport-verify) ;; *) exit 92 ;; esac
+            exec "$CONTRACT_DOTNET" "$@"
+            """);
+        foreach (var command in new[] { "lake", "elan", "make", "msbuild" })
+            storage.Write("build/guard/" + command, "#!/bin/sh\nprintf '%s\\n' forbidden >> \"$CONTRACT_CALLS\"\nexit 93\n");
+        foreach (var path in Directory.GetFiles(Path.Combine(storage.Root, "build/guard")))
+            File.SetUnixFileMode(path, UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+        var calls = Path.Combine(storage.Root, "build/tool-calls");
+        Dictionary<string, string> IsolatedEnvironment(string target, string run)
+        {
+            var environment = Environment(commit, target, run, "1");
+            environment["PATH"] = Path.Combine(storage.Root, "build/guard") + Path.PathSeparator + System.Environment.GetEnvironmentVariable("PATH");
+            environment["CONTRACT_DOTNET"] = dotnet;
+            environment["CONTRACT_CALLS"] = calls;
+            environment["NUGET_PACKAGES"] = Path.Combine(target, "build/absent-packages");
+            environment["ELAN_HOME"] = Path.Combine(target, "build/absent-elan");
+            return environment;
+        }
+        var exporter = targets[0];
+        var exportEnvironment = IsolatedEnvironment(exporter, "81");
+        foreach (var stage in new[] { "build", "engineering" })
+        {
+            var restored = Workflow(exporter, "restore", stage, commit, archives[stage], exportEnvironment);
+            Assert.True(restored.Exit == 0, restored.Text);
+        }
+        Assert.Equal(original.Candidate, CommonExecutionEvidence.ValidateEngineering(exporter).Candidate);
+        Assert.False(Directory.Exists(Path.Combine(exporter, CommonExecutionEvidence.TestSeedPath)));
+        Assert.False(Directory.Exists(Path.Combine(exporter, CommonExecutionEvidence.CheckSeedPath("engineering"))));
+        AssertReceipt(Python(exporter, repository, ["snapshot", "--repository", exporter, "--layers", "engineering"], exportEnvironment), "snapshot");
+        var cached = Path.Combine(exporter, "build/lean-cache/engineering");
+        var key = JsonNode.Parse(File.ReadAllText(Path.Combine(cached, "manifest.json")))!["key"]!.GetValue<string>();
+        var consumer = targets[1];
+        var consumerEnvironment = IsolatedEnvironment(consumer, "82");
+        // The upstream artifact retains its original execution identity.
+        var restoredBuild = Workflow(consumer, "restore", "build", commit, archives["build"], IsolatedEnvironment(consumer, "81"));
+        Assert.True(restoredBuild.Exit == 0, restoredBuild.Text);
+        CopyDirectory(cached, Path.Combine(consumer, "build/lean-cache/engineering"));
+        AssertReceipt(Python(consumer, repository, ["restore", "--repository", consumer, "--layers", "engineering", "--engineering-key", key], consumerEnvironment), "restored");
+        var accepted = CommonExecutionEvidence.BeginChecks(consumer, "engineering", CommonExecutionEvidence.ValidateBuild(consumer), TextWriter.Null);
+        foreach (var id in accepted.Ids)
+        {
+            Assert.False(accepted.IsSelected(id), id);
+            accepted.Run(id, () => throw new InvalidOperationException("transport must not rerun " + id));
+        }
+        foreach (var unit in accepted.Seal().Units)
+        {
+            var prior = checks.Units.Single(row => row.Id == unit.Id);
+            Assert.Equal("reused", unit.Status);
+            Assert.Equal(prior.ExecutionCandidate, unit.ExecutionCandidate);
+            Assert.Equal(prior.ExecutionRound, unit.ExecutionRound);
+            Assert.Equal(prior.Operations, unit.Operations);
+            Assert.Equal(prior.Materials, unit.Materials);
+        }
+        Assert.Equal(0, Program.RunCurrentTests(consumer, (_, _) => throw new InvalidOperationException("transport must not rerun tests"), TextWriter.Null));
+        Assert.Equal(tests.Projects.Select(project => project with { Status = "reused" }), CommonExecutionEvidence.ValidateTests(consumer).Projects);
+        var before = Inventory(cached);
+        File.AppendAllText(Path.Combine(exporter, tests.Materials[0].Path), "corrupt evidence\n");
+        var rejected = Workflow(exporter, "verify", "engineering", commit, archives["engineering"], exportEnvironment);
+        Assert.True(rejected.Exit == 2, rejected.Text);
+        var failed = Python(exporter, repository, ["snapshot", "--repository", exporter, "--layers", "engineering"], exportEnvironment);
+        AssertReceipt(failed, "save-failed");
+        Assert.Contains("engineering_ready=false", failed.Text, StringComparison.Ordinal);
+        Assert.Equal(before, Inventory(cached));
+        foreach (var target in targets)
+            foreach (var path in new[] { ".lake", "build/absent-elan", "build/absent-packages" })
+                Assert.False(Directory.Exists(Path.Combine(target, path)), path);
+        Assert.Empty(Directory.GetFileSystemEntries(producer.Root));
+        var commands = File.ReadAllLines(calls);
+        Assert.Equal(7, commands.Length);
+        Assert.All(commands, command => Assert.Contains("StrataLint.EngineeringScope.dll transport-", command, StringComparison.Ordinal));
+    }
+
     [Theory]
     [InlineData("engineering")]
     [InlineData("current")]

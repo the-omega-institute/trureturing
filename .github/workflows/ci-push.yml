@@ -218,19 +218,6 @@ jobs:
           if-no-files-found: error
           compression-level: 0
           retention-days: 7
-      - id: snapshot_engineering
-        if: steps.cache_window.outcome == 'success' && steps.cache_window.outputs.cache_allowed == 'true' && steps.keys.outputs.engineering_key != ''
-        continue-on-error: true
-        env:
-          STRATALINT_CHECK_SUCCEEDED: 'true'
-        run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --stage engineering --layer engineering --bounded-cache
-      - if: steps.snapshot_engineering.outcome == 'success' && steps.snapshot_engineering.outputs.engineering_ready == 'true'
-        continue-on-error: true
-        timeout-minutes: ${{ fromJSON(steps.snapshot_engineering.outputs.save_timeout_minutes || '1') }}
-        uses: actions/cache/save@v4
-        with:
-          path: ${{ steps.keys.outputs.engineering_path }}
-          key: ${{ steps.keys.outputs.engineering_key }}
       - id: save_elan
         if: steps.cache_window.outcome == 'success' && steps.cache_window.outputs.cache_allowed == 'true' && steps.keys.outputs.elan_key != '' && steps.elan.outputs.cache-hit != 'true'
         continue-on-error: true
@@ -256,6 +243,61 @@ jobs:
             build/ci/trx
           if-no-files-found: warn
           retention-days: 7
+
+  engineering_cache:
+    name: engineering_cache
+    needs: [build, engineering]
+    if: github.event_name == 'push' && inputs.candidate_sha == '' && needs.engineering.result == 'success' && needs.engineering.outputs.artifact_id != ''
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 10
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.CANDIDATE_SHA }}
+          fetch-depth: 0
+          persist-credentials: false
+      - run: python3 tools/scripts/workflow/ci.py checkout --repository "$GITHUB_WORKSPACE" --commit "$CANDIDATE_SHA"
+      - id: cache_window
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/scripts/worktree/cache_deadline.py begin --repository "$GITHUB_WORKSPACE" --stage engineering --job-timeout-minutes 10
+      - uses: actions/setup-dotnet@v4
+        if: steps.cache_window.outputs.cache_allowed == 'true'
+        with:
+          global-json-file: global.json
+      - uses: actions/download-artifact@v4
+        if: steps.cache_window.outputs.cache_allowed == 'true'
+        with:
+          artifact-ids: ${{ needs.build.outputs.artifact_id }},${{ needs.engineering.outputs.artifact_id }}
+          path: ${{ runner.temp }}/engineering-cache
+          merge-multiple: true
+      - name: Validate upstream build bundle
+        if: steps.cache_window.outputs.cache_allowed == 'true'
+        env:
+          UPSTREAM_RUN: ${{ needs.build.outputs.run_id }}
+          UPSTREAM_ATTEMPT: ${{ needs.build.outputs.run_attempt }}
+        run: python3 tools/scripts/workflow/ci.py restore --repository "$GITHUB_WORKSPACE" --stage build --commit "$CANDIDATE_SHA" --run-id "$UPSTREAM_RUN" --run-attempt "$UPSTREAM_ATTEMPT" --archive "$RUNNER_TEMP/engineering-cache/ci-build.tar.gz"
+      - name: Validate accepted engineering bundle
+        if: steps.cache_window.outputs.cache_allowed == 'true'
+        env:
+          UPSTREAM_RUN: ${{ needs.engineering.outputs.run_id }}
+          UPSTREAM_ATTEMPT: ${{ needs.engineering.outputs.run_attempt }}
+        run: python3 tools/scripts/workflow/ci.py restore --repository "$GITHUB_WORKSPACE" --stage engineering --commit "$CANDIDATE_SHA" --run-id "$UPSTREAM_RUN" --run-attempt "$UPSTREAM_ATTEMPT" --archive "$RUNNER_TEMP/engineering-cache/ci-engineering.tar.gz"
+      - id: keys
+        if: steps.cache_window.outputs.cache_allowed == 'true'
+        run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE" --stage engineering
+      - id: snapshot
+        if: steps.cache_window.outputs.cache_allowed == 'true' && steps.keys.outputs.engineering_key != ''
+        env:
+          STRATALINT_CHECK_SUCCEEDED: 'true'
+        run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --stage engineering --layer engineering --bounded-cache
+      - if: steps.snapshot.outputs.engineering_ready == 'true'
+        timeout-minutes: ${{ fromJSON(steps.snapshot.outputs.save_timeout_minutes || '1') }}
+        uses: actions/cache/save@v4
+        with:
+          path: ${{ steps.keys.outputs.engineering_path }}
+          key: ${{ steps.keys.outputs.engineering_key }}
 
   current:
     name: current
