@@ -111,3 +111,50 @@ patterns and their shared variables, or to exclude flat tetrahedra in the
 global maximizing angle structure. Small average error on larger objects
 cannot replace genuine nondegenerate compactness and an undiluted residual
 criterion on a fixed object.
+
+## Formal correspondence: universal real envelopes
+
+`D5/S3/Geometry/Hyperideal/FourCycleEnvelopes.lean` contains one public
+candidate theorem, `fourcycle_envelopes`, paired with the same-name authored
+Scribe. It targets the analytic estimates already proved in theory Sections
+2 and 16. No mathematical conclusion of the theory is changed by this
+formalization, and the geometric theory remains the single ordinary-proof
+owner.
+
+The Lean definitions retain the exact six independent real coordinates,
+the original numerator, both radicands, and real square roots. The theorem
+quantifies over the whole closed cube and all three boundary faces. Its
+proof constructs the square-root/quotient derivative, proves its coupled
+polynomial sign on [1,2], derives the other coordinate comparisons by actual
+symmetries, and then derives the rational face bounds. Monotonicity,
+denominator positivity and the desired endpoint bounds are not hypotheses.
+The new live estimate is the interval sign of
+`Q=xow+xv+yo+yvw+z(1-w^2)` within the derivative computation. The mean-value
+theorem alone does not provide that sign.
+
+Pinned upstream: mathlib `db584cd6d46c92f209a44c0f1c829460d327499d`.
+Directly read `Analysis/Calculus/Deriv/MeanValue.lean` and
+`Analysis/SpecialFunctions/Sqrt.lean`; the proof consumes the actual
+`monotoneOn_of_deriv_nonneg` and `HasDerivAt.sqrt` APIs. Repository CFMP
+search returned no pre-existing matching Lean owner. A bounded external
+search did not locate a matching formal hyper-ideal cosine theorem. This
+is not a complete search of all Lean code or a priority claim. The ordinary
+monotonicity result is credited to the primary geometric sources above.
+
+The formal statement stops at rational bounds for the analytic cosine.
+Topological tetrahedron construction, the formula-to-geometry equivalence,
+strict trigonometric comparisons, global face gluing, the co-volume minimum,
+and the manifold-cover residual example are not formalized by this file.
+These boundaries prevent a real-expression theorem from being presented as
+a completed Lean proof of a geometric realization conjecture.
+
+Current validation: exact derivative-numerator and nonnegative-cone
+identities, exact symmetries, endpoint substitutions, and rational squared
+angle margins were checked independently. Ninety-six face corners and 1000
+interior samples were also evaluated as finite diagnostics. The latter do
+not prove a universal inequality. A lexical source scan is not elaboration.
+Lean/lake and .NET were absent in the active runtime; compiler installation
+was blocked by unavailable external DNS and no suitable connected prover
+was found. No Lean/kernel or Scribe compilation is claimed. The intended
+content/utility classification remains subject to source-bound elaboration
+and independent review; no admission or frozen state was authored.
