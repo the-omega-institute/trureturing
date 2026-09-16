@@ -1,0 +1,14 @@
+**theorem 39.10 (Three set-theoretic symbols, two auxiliary bits, and no continuous replacement).** Allow labels with no continuity requirement. Then
+$$
+\min\{|A|:\exists\ell:\mathscr E\to A\text{ with }(e,\ell)\text{ injective}\}=3.
+\tag{39.25}
+$$
+One optimal label is
+$$
+\ell_0(T^n)=\mathrm{iterate},\qquad
+\ell_0(P_\theta^+)=+,\qquad
+\ell_0(P_\theta^-)=-.
+\tag{39.26}
+$$
+A fixed-width binary auxiliary label requires exactly two bits. Together with all digits of $e$, these two possibly discontinuous bits give an injective countable binary record of the operator. Nevertheless, no continuous metrizable auxiliary label and no countable family of continuous metrizable auxiliary labels suffices. Evaluation $e$ is a finite-to-one quotient map but is not a covering map.
+

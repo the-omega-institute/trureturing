@@ -1,0 +1,7 @@
+**命题 12（遗漏对电荷与普适性障碍）。** 对固定输入情境与固定 $R$，
+
+$$
+q(X\boxtimes_RY)=q(X)q(Y)-
+\sum_{(a,b)\in(A_X\times A_Y)\setminus R}\sigma_X(a)\sigma_Y(b).
+$$
+

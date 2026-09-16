@@ -1,0 +1,5 @@
+$G_\mu$在$\mathbf1$方向和其正交补上的特征值分别为$1+(n-1)\mu$与$1-\mu$，故它正定。这是定理3.1的指定Gram实现，满足
+$$
+\langle e_i,e_j\rangle=
+\begin{cases}1,&i=j,\\ \mu,&i\ne j.\end{cases}
+$$

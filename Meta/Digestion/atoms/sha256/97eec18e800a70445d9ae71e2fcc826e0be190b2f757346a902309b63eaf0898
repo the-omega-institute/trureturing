@@ -1,0 +1,22 @@
+**Proof.** In the notation of Theorem 37.6, choose a decreasing sequence $\varepsilon_r\downarrow0$ with $0<\varepsilon_r<\varepsilon_*$. The sets
+$$
+V_s(\theta,\varepsilon_r)
+\quad(\theta\in\mathbb T,\ s\in\Sigma,\ r\ge1),
+$$
+together with the countably many singletons $\{T^n\}$, form a base of $\mathscr E$. There are at most $\mathfrak c$ such sets. Their intersections with $\mathscr D$ give the same upper bound for $w(\mathscr D)$.
+
+For the lower bound let $\mathcal B$ be any base of $\mathscr D$. Fix $0<\varepsilon<\min(\varepsilon_*,1/4)$ and represent phases in $[0,1)$. For every $\theta\in(0,1/2)$ choose
+$$
+P_\theta^+\in B_\theta\subseteq U_+(\theta,\varepsilon),
+\qquad B_\theta\in\mathcal B.
+$$
+Here the adopted base is explicitly
+$$
+U_+(\eta,\varepsilon)
+=\{P_\eta^+\}\cup
+\{P_\xi^t:\xi\in\eta+(0,\varepsilon),\ t\in\Sigma\}.
+$$
+For $0<\theta<\eta<1/2$ there is no wrap around the circle in the last interval, and $P_\theta^+\notin U_+(\eta,\varepsilon)$. Hence $B_\theta=B_\eta$ is impossible. The family $(B_\theta)_{0<\theta<1/2}$ consists of $\mathfrak c$ distinct base elements. Thus $w(\mathscr D)\ge\mathfrak c$. Restricting any base of $\mathscr E$ to its subspace $\mathscr D$ gives $w(\mathscr E)\ge w(\mathscr D)$, proving (39.24).
+
+A compact metric space has a countable base: finite $1/r$-nets for all positive integers $r$ give a countable dense set, and rational-radius balls about its points form a base. Consequently neither space in (39.24) is metrizable. Their countable local bases and the countable dense iterate set from Theorem 37.6 do not imply a countable global base. $\square$
+

@@ -1,0 +1,8 @@
+**Proof.** Each finite power of an at most countable alphabet is at most countable, and a countable union over the finite lengths is at most countable. Therefore $\mathcal L$ is countable. Finite lists of its elements also form a countable set, and each corresponding record is still a continuous finite-valued observation. Theorem 39.8 excludes separation, including after adjoining $e$.
+
+The hypothesis assigns one fixed observation to each closed description. A schema containing a parameter that may take every value in $K$ is not a countable list of those fixed interpretations: its fully instantiated parameters range over a set of size $\mathfrak c$. The digit family is separating by Theorem 39.8, and that theorem also proves that its collection of distinct observation maps has cardinality exactly $\mathfrak c$.
+
+The adopted operator classification gives $|\mathscr E|=\mathfrak c$, and injectivity of $\iota$ preserves this cardinality. The full binary product has cardinality $2^{|K\times\mathbb N|}=2^{\mathfrak c}$, whereas only the correlated subset $\iota(\mathscr E)$ is attained. Each $A_F$ is a nonempty subset of $\{0,1\}^F$, proving the finite-image bounds, with equality $|A_\varnothing|=1$ at the empty record. The weight equality is Theorem 39.9.
+
+One $K$-valued evaluation contains all countably many digits of one output state, while a test $\chi_{b,j}$ contains only one digit. Equation (39.30) proves that object cardinality alone permits a countable binary encoding. The failure of countably many continuous observations is therefore the continuity and parameter-family obstruction proved above, not a failure of such set-theoretic encodings. $\square$
+

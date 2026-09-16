@@ -1,0 +1,8 @@
+**命题 33.3（信念半径与动作保持）。** 令 $\mu\in\mathcal{P}(\Sigma)$，并用
+$$
+d_{\rm TV}(\nu,\mu)=\frac12\sum_s|\nu(s)-\mu(s)|
+$$
+定义总变差。若非空 $\mathcal{F}$ 满足 $d_{\rm TV}(\nu,\mu)\le\varepsilon$ 对所有 $\nu\in\mathcal{F}$，则对每个 $a$：
+$$
+\left|R_{\mathcal{F}}(a)-\sum_s\mu(s)\ell(a,s)\right|\le M\varepsilon.
+$$

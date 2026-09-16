@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6237d032016edd7345bcc91a9951f40bbc8b8f34f99fe332dcb5c957bf726b92
+  normalized_sha256: sha256:6237d032016edd7345bcc91a9951f40bbc8b8f34f99fe332dcb5c957bf726b92
+cas_ref: sha256:6237d032016edd7345bcc91a9951f40bbc8b8f34f99fe332dcb5c957bf726b92
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 原文“in the second case is unique by irrationality”是藏在定义后的唯一性命题；探针证明负黄金相位在自然数索引上单射，直接使用 Real.goldenRatio_irrational、Irrational.intCast_mul、Irrational.ne_int 与 AddCircle.coe_eq_zero_iff 加规范化，仓内无冻结 GID。
+    previous_atom_id: 5963492412e45c2e4cb892a61a069177c69db91b7a943dce7bb7a07d87da0114
+    next_atom_id: 678d68b8248edf00d28cf03c0736486ce6d36cbe04208396172c863f6437e401

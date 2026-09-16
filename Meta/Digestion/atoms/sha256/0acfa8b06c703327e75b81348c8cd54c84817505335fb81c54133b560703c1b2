@@ -1,0 +1,7 @@
+In particular,
+$$
+x_1^+=u=(10)^\infty,\qquad x_1^-=v=(01)^\infty,
+$$
+$$
+Tx_m^s=x_{m-1}^s\quad(m\ge2),\qquad Tx_1^s=0_K.
+$$
