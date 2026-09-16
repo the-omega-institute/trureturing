@@ -1,0 +1,16 @@
+**Proof.** If an odd prime q divides any odd-index F_n, the identity
+L_n^2-5F_n^2=-4 shows that (L_n/2)^2=-1 modulo q. Thus q=1 modulo four,
+including q=5. At an odd index the Fibonacci valuation at two is at
+most one, as follows from the complete period-six recurrence modulo four.
+Hence v_2(K_r)<=1 and every odd prime in K_r is1 modulo four; CRT and
+simple-root lifting prove the root assertion. Also three does not divide
+K_r, since its rank is four and all the target indices are odd.
+
+Now suppose F_k|K_r with k>=3. For k other than6,12 there is a prime of
+exact rank k, by QR.2's classical theorem and the listed small checks.
+It divides some target F_i with i odd and i<=2r-1. The entry-point theorem
+then gives k|i. Therefore k is odd and at most2r-1, so F_k is a target
+value. The exceptions F_6=8 and F_12=144 cannot divide K_r, since its
+two-valuation is at most one. The reverse containment is the definition
+of the least common multiple. This proves the exact divisor set.
+

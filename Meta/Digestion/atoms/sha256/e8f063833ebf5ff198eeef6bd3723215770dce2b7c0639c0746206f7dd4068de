@@ -1,0 +1,2 @@
+**Definition.** A positive integer is powerful when every prime divisor occurs with exponent at least two. In particular one is powerful. Let E={1,2,6,12}. A positive integer is five-smooth when all of its prime divisors belong to {2,3,5}.
+

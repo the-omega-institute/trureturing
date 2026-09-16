@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:525922d3d40f63034b54523f99c2459433d61bef1a59da429ce26f8c3e337d5a
+  normalized_sha256: sha256:525922d3d40f63034b54523f99c2459433d61bef1a59da429ce26f8c3e337d5a
+cas_ref: sha256:525922d3d40f63034b54523f99c2459433d61bef1a59da429ce26f8c3e337d5a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本子句固定任务模型、全部允许输入、正确实现、完整费用、可达成本及上界下界和取到的定义，空域与准备费均属所规定的费用契约，没有新增待证命题。
+    previous_atom_id: 41ff008a1c98000c1a5d16511297d3a713c2ab3fabe5a739f600b5050e017691
+    next_atom_id: 9679df7405f311eb0f1ddd42d60544a78caa5c0d3c6c73d9acaac9676bb76161

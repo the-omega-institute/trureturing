@@ -1,0 +1,10 @@
+**Unbounded mixed-index consequence.** Fix any odd inert prime $q$ whose
+rank $a=r(q)$ is odd. For every $j\ge1$, the primitive block at index
+$a q^j$ contains an inert prime of odd initial depth. Such witnesses in
+different $j$ are distinct, and each satisfies
+
+$$
+r(p)=a q^j,\qquad p\ge2a q^j-1,
+\qquad p\equiv13\text{ or }17\pmod{20}.
+$$
+

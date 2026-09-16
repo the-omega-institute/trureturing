@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8bff5252037cf6ab238f1d547816a985c7dadf0e6551f05458975b9474c26f1f
+  normalized_sha256: sha256:8bff5252037cf6ab238f1d547816a985c7dadf0e6551f05458975b9474c26f1f
+cas_ref: sha256:8bff5252037cf6ab238f1d547816a985c7dadf0e6551f05458975b9474c26f1f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶只定义实数求和函数、辅助记号、常数及小数和对数约定，没有断言函数的估计或数值正确性，故无命题需要证明。
+    previous_atom_id: 9eaf853638da04d010cca957ebae8f676360c42d725c6a6a5b19b415f32def06
+    next_atom_id: e62966332e370a69db23d311fa14e2ed6e685d97204c74673111482091ad7a85

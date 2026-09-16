@@ -1,0 +1,7 @@
+**引理。** 上述极限存在，并满足
+
+\[
+0\le\delta(p)\le D_{k+1}(p)\le D_k(p)\le D_1(p)\le\pi(p)/p.
+\tag{FD1}
+\]
+

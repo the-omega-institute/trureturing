@@ -1,0 +1,70 @@
+**命题 15.4（紧致自由对合的差映射桥）。** 设 $K\ne\varnothing$ 为紧致 Hausdorff 空间，$\tau:K\to K$ 连续，满足
+$$
+\tau^2=\operatorname{id}_K,
+\qquad
+\tau(x)\ne x\quad(x\in K).
+$$
+令 $Q=K/\langle\tau\rangle$ 取商拓扑，$q:K\to Q$ 为轨道商。则 $Q$ 紧致 Hausdorff，$q$ 是两页覆盖。
+
+对每个整数 $m\ge1$，以下存在性条件等价：存在连续纤维分离读数 $r:K\to\mathbb R^m$；存在连续映射 $f:K\to\mathbb R^m\setminus\{0\}$ 满足 $f(\tau x)=-f(x)$；存在连续映射 $u:K\to S^{m-1}$ 满足 $u(\tau x)=-u(x)$。其中球面取标准欧氏单位球面。
+
+对给定的连续 $r$，有精确判据
+$$
+(q,r)\text{ 单射}
+\quad\Longleftrightarrow\quad
+\Delta_r(x):=r(x)-r(\tau x)\ne0\quad(\forall x\in K).
+$$
+满足判据时，
+$$
+u_r(x)=\frac{\Delta_r(x)}{\|\Delta_r(x)\|}
+$$
+是上述奇映射，而且
+$$
+\min_{x\in K}\|\Delta_r(x)\|>0.
+$$
+此时 $(q,r)$ 是到 $Q\times\mathbb R^m$ 中闭子空间的拓扑嵌入。零维欧氏目标不可能分离纤维；一维欧氏分离读数存在，当且仅当 $q$ 平凡，也当且仅当 $q$ 有一个连续截面。
+
+**证明。** 由 $\tau^2=\operatorname{id}_K$，$\tau$ 是同胚。对开集 $V\subseteq K$，
+$$
+q^{-1}(q(V))=V\cup\tau(V)
+$$
+开，故商映射 $q$ 是开映射。对任意 $x$，用 Hausdorff 性选取分别包含 $x,\tau x$ 的不交开集 $A,C$。令 $V=A\cap\tau^{-1}(C)$，则 $x\in V$ 且 $V\cap\tau(V)=\varnothing$。于是
+$$
+q^{-1}(q(V))=V\sqcup\tau(V),
+$$
+而两片各自通过 $q$ 连续、开且双射地映到 $q(V)$，所以都是同胚。这证明两页覆盖性质。
+
+不同轨道 $O,P$ 是互不相交的有限集。对每个 $a\in O$、$b\in P$，取包含相应点的不交开集 $A_{ab},C_{ab}$。令
+$$
+A_0=\bigcup_{a\in O}\bigcap_{b\in P}A_{ab},
+\qquad
+C_0=\bigcup_{b\in P}\bigcap_{a\in O}C_{ab}.
+$$
+它们分别包含 $O,P$，都是开集且互不相交。将它们替换为
+$$
+A_0\cap\tau(A_0),
+\qquad
+C_0\cap\tau(C_0),
+$$
+得到仍包含相应轨道的不交饱和开集；它们在商中的像是不交开邻域，故 $Q$ Hausdorff。它又是紧致空间 $K$ 的连续像，所以紧致。
+
+商纤维恰为 $\{x,\tau x\}$，且两点不同。因此联合单射恰好要求 $r(x)\ne r(\tau x)$，即差映射处处非零。直接计算得到
+$$
+\Delta_r(\tau x)
+=
+r(\tau x)-r(\tau^2x)
+=
+-\Delta_r(x).
+$$
+非零差映射连续，除以其连续正范数就得到连续奇映射 $u_r$。反过来，若 $f$ 是处处非零的连续奇映射，则把 $f$ 本身作为读数，有
+$$
+f(x)-f(\tau x)=2f(x)\ne0.
+$$
+而球面值奇映射本来就处处非零。这证明三种存在性条件等价；并未假设原读数 $r$ 是奇映射。
+
+连续正函数 $x\mapsto\|\Delta_r(x)\|$ 在非空紧致空间上取得最小值，该值不能为零。又因 $Q\times\mathbb R^m$ Hausdorff，任意闭集 $F\subseteq K$ 都紧致，其像 $(q,r)(F)$ 紧致而闭。所以联合映射在其实际像上的连续逆存在，且整个实际像紧致而闭，得到所述嵌入。
+
+当 $m=0$ 时，读数只有一个值，不能区分任意一对 $x,\tau x$。当 $m=1$ 时，归一化的奇映射取值于离散两点集 $S^0=\{-1,1\}$，因而由定理 15.1 给出平凡化。反向地，任何平凡化的二值标签在每条二点纤维上取两个不同值，将它们分别记为 $-1,1$，即得连续奇实值读数。若只给一个连续截面 $s$，则 $s$ 与 $\tau\circ s$ 连续、逐点互异并穷尽纤维，仍由定理 15.1 得平凡化；平凡化当然给出截面。证毕。
+
+局部轨道商覆盖参考：Hatcher，*Algebraic Topology*，命题 1.40(a)，第 72 页，[原书](https://pi.math.cornell.edu/~hatcher/AT/AT.pdf)。差映射与归一化参考：Jiří Matoušek，*Using the Borsuk–Ulam Theorem*，§2.1，第 24 页，[第 2 章样章](https://beckassets.blob.core.windows.net/product/readingsample/250866/9783540003625_excerpt_001.pdf)。二值余坐标与截面的对应亦是《QUANTITATIVE_DIAGONALIZATION_OBSERVER_COMPLETION》[定理 5.1](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/QUANTITATIVE_DIAGONALIZATION_OBSERVER_COMPLETION.md)的两元素群特例；上面的证明只使用本条明列的假设。
+

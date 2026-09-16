@@ -1,0 +1,14 @@
+**推论 10，避开任意有限的小素因子。** 给定整数 \(B\ge5\)，令
+
+\[
+M_B=\operatorname{lcm}(60,1,2,\ldots,B).
+\]
+
+在定理 8 的前提下，存在无限多个非 WSS 素数，其不同秩满足 (EMW-G1)，且每个这样的秩 \(r\) 都有
+
+\[
+r>B,\qquad4\nmid r,\qquad
+q\mid r,\ q\text{ 为奇素数}\Longrightarrow q>B.
+\tag{EMW-G3}
+\]
+

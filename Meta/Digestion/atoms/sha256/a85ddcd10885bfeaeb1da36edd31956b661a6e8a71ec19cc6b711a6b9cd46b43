@@ -1,0 +1,29 @@
+**假设 21.1（相位资料与精确保留的闭图纤维前提）。** 采用以下相位资料：$K$ 紧致可度量，$Z[\mathbb N]$ 稠密，$H$ 连续满射，且
+$$
+H(Z(n))=[n\phi],\qquad H^{-1}(\{0\})=\{0_K\}.
+$$
+每个 $\theta\notin E$ 的纤维为单点；每个 $\theta\in E$ 的纤维恰为两个不同的点 $z_\theta^{+1},z_\theta^{-1}$。定向标记沿用定义16.3，特别
+$$
+u=(10)^\omega=z_{E_1}^{+1},\qquad v=(01)^\omega=z_{E_1}^{-1}.
+$$
+对拓扑结论另采用其具体数字纤维表示：除 $\{u,v\}$ 外，每个二点纤维均为 $\{w0v,w10v\}$，其中 $w$ 为由块 $0$、$10$ 组成的有限块字；两字首次不同的数字位置为 $w$ 的展开长度。[^rro21_phase]
+
+令
+$$
+\mathcal S(x)=
+\begin{cases}
+\{s\},&x=z_\theta^s,\ \theta\in E,\ s\in\Sigma,\\
+\Sigma,&H(x)\notin E.
+\end{cases}
+$$
+本节明确以下式为数学假设，而非仅假设输出相位正确：对每个 $x,y\in K$，令 $\theta=H(x)+H(y)$，则
+$$
+\boxed{\quad
+\Gamma(x,y)=
+\begin{cases}
+H^{-1}(\{\theta\}),&\theta\notin E,\\
+\{z_\theta^t:t\in\mathcal S(x)\cup\mathcal S(y)\},&\theta\in E.
+\end{cases}\quad}
+$$
+以下结论均以这一精确纤维式为前提。[^rro21_fibers]
+
