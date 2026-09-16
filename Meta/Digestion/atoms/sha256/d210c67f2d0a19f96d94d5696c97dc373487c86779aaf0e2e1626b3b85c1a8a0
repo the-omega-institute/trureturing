@@ -1,0 +1,106 @@
+**命题 155.1（正混合二元模型的全历史状态成本与内部覆盖数同阶）。** 固定 $0<p<1/2$、$0<r<1/2$，沿用命题153.1与154.1的二元仪器、先验 $I_2/2$ 及时间顺序约定。具体地，$c_{00}=c_{11}=p$、$c_{01}=c_{10}=1-p$，$P_{ii}=1-r$、$P_{ji}=r$（$j\ne i$）；旧隐藏位 $i$ 先发射报告 $b$，再翻转到新隐藏位 $j$，各项
+$$
+K_{bji}=\sqrt{c_{bi}P_{ji}}\,|j\rangle\langle i|,
+\qquad
+\phi_b(X)=\sum_{i,j=0}^1K_{bji}XK_{bji}^{\dagger}
+$$
+分别作共轭作用后相加。对时间顺序词 $w=b_1\cdots b_n$，令
+$$
+\phi_w=\phi_{b_n}\circ\cdots\circ\phi_{b_1},\qquad
+v_\varnothing=\binom{1/2}{1/2},\qquad
+v_{wb}=P\operatorname{diag}(c_{b0},c_{b1})v_w,
+$$
+$$
+Z_w=\mathbf1^{\mathsf T}v_w,\qquad
+q_w=\frac{(v_w)_1}{Z_w},\qquad
+\ell_w=\log\frac{q_w}{1-q_w}.
+$$
+空词作用为恒等，$Z_\varnothing=1$、$\ell_\varnothing=0$。命题153.1已经给出 $\phi_w(I_2/2)=\operatorname{diag}(v_w)$、$Z_w\ge p^{|w|}>0$ 及 $0<q_w<1$；以下对全部有限词条件化。
+
+取命题154.1中的常数及不变区间
+$$
+d=1-2p,\qquad \eta=1-2r,\qquad
+\lambda=\log\frac{1-p}{p},\qquad
+q_+=\frac{d-r+\sqrt{r^2+\eta d^2}}{2d},
+$$
+$$
+a=\log\frac{q_+}{1-q_+}>0,\qquad I=[-a,a],\qquad
+G(x)=\log\frac{r+(1-r)e^x}{(1-r)+re^x},\qquad
+F_b(x)=G\bigl(x+(-1)^b\lambda\bigr).
+$$
+直接使用前两命题的 $\ell_{wb}=F_b(\ell_w)$、$F_b(I)\subseteq I$ 及共同 Lipschitz 常数 $\eta<1$。下一零报告的概率为
+$$
+h(x)=p+\frac{d}{1+e^{-x}},\qquad
+\Pr(0\mid w)=h(\ell_w).
+$$
+定义全有限历史后验的对数赔率集合及其闭包
+$$
+\mathcal O=\{\ell_w:w\in\{0,1\}^{*}\},\qquad
+C=\overline{\mathcal O}\subseteq\mathbb R.
+$$
+此处包括空词；$C$ 不以平稳分布的支撑或仅以渐近吸引集代替。对 $\delta>0$，采用中心属于 $C$、球为闭球的内部覆盖数
+$$
+N_C(\delta)=\min\left\{|Q|:
+\varnothing\ne Q\subseteq C\text{ 为有限集},\quad
+C\subseteq\bigcup_{q\in Q}[q-\delta,q+\delta]\right\}.
+$$
+
+观察者仍取命题154.1的类别：有限非空状态集 $S$、固定初态 $s_0\in S$、固定确定性更新 $T_0,T_1:S\to S$ 和固定读出 $t:S\to[0,1]$。令 $T_w=T_{b_n}\circ\cdots\circ T_{b_1}$、$T_\varnothing=\operatorname{Id}$，并取
+$$
+N_{\min}(\varepsilon)=\min\left\{|S|:
+\sup_{w\in\{0,1\}^{*}}
+|t(T_w(s_0))-h(\ell_w)|\le\varepsilon\right\}
+\qquad(\varepsilon>0).
+$$
+所有可读的演化记忆均计入 $S$，没有另行可读的时钟、历史档案、随机种子或演化实数寄存器。允许在固定表及读出中使用精确实常数；所计成本只是 $|S|$。观察者可依赖 $p,r,\varepsilon$，但同一初态、更新表和读出必须适用于全部有限词长。
+
+则 $C$ 为包含 $0$ 的非空紧集，$F_b(C)\subseteq C$，上述两个最小值均存在。置
+$$
+A=\frac d4,\qquad
+\mu=\frac{d}{4\cosh^2(a/2)}=d q_+(1-q_+)>0.
+$$
+对每个 $\varepsilon>0$ 有
+$$
+N_C\!\left(\frac{2\varepsilon}{\mu}\right)
+\le N_{\min}(\varepsilon)
+\le N_C\!\left(\frac{(1-\eta)\varepsilon}{A}\right).
+$$
+进一步定义
+$$
+B(c)=
+\begin{cases}
+\lceil2/c\rceil,&0<c<1,\\
+1,&c\ge1.
+\end{cases}
+$$
+则同尺度比较为
+$$
+\frac{N_C(\varepsilon)}{B(\mu/2)}
+\le N_{\min}(\varepsilon)
+\le B\!\left(\frac{1-\eta}{A}\right)N_C(\varepsilon),
+\qquad
+N_{\min}(\varepsilon)=\Theta_{p,r}\bigl(N_C(\varepsilon)\bigr)
+\quad(\varepsilon\downarrow0).
+$$
+这些常数只取充分界，不作最优性断言。以
+$$
+\underline D_C=\liminf_{\delta\downarrow0}
+\frac{\log N_C(\delta)}{\log(1/\delta)},\qquad
+\overline D_C=\limsup_{\delta\downarrow0}
+\frac{\log N_C(\delta)}{\log(1/\delta)}
+$$
+定义下、上盒维数，则
+$$
+\liminf_{\varepsilon\downarrow0}
+\frac{\log N_{\min}(\varepsilon)}{\log(1/\varepsilon)}
+=\underline D_C,\qquad
+\limsup_{\varepsilon\downarrow0}
+\frac{\log N_{\min}(\varepsilon)}{\log(1/\varepsilon)}
+=\overline D_C.
+$$
+不要求这两个维数相同。若共同盒维数 $D$ 存在，则仅由该条件得到
+$$
+N_{\min}(\varepsilon)=\varepsilon^{-D+o(1)};
+$$
+该条件本身不把 $o(1)$ 提升为 $N_{\min}(\varepsilon)=\Theta(\varepsilon^{-D})$。
+
