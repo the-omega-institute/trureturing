@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1811f5d29b048108241b87bcefb24dd29263acb599d088fb592a6986a8195d80
+  normalized_sha256: sha256:1811f5d29b048108241b87bcefb24dd29263acb599d088fb592a6986a8195d80
+cas_ref: sha256:1811f5d29b048108241b87bcefb24dd29263acb599d088fb592a6986a8195d80
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本子句定义原圆周上的测度卷积及正整数序列卷积直和，说明所用圆周拓扑，交叉积与点积推论已拆出。
+    previous_atom_id: c61895c30e3e370ea7c2879fae0bbf6f7df87210caa417a5c35af569fe89d9d4
+    next_atom_id: 9968a1d7887a70a5735feb9d641b8b2eee87d0371149a8981cf915995783e85a

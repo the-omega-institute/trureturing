@@ -1,0 +1,11 @@
+No inverse of $T$ is assumed. Define
+$$
+F(x)=\sum_{j\ge0}(-1)^{j+1}\alpha^{j+2}x_j,\qquad
+H(x)=[F(x)]\in\mathbb T=\mathbb R/\mathbb Z,\qquad e_s=[-s\phi]\quad(s\ge1).
+$$
+The circle is oriented by increasing real coordinates. All subsequent fibre conditions quantify over the whole carrier $K$, including its non-eventually-zero points. Set
+$$
+\mu_k(L)=\min\{m\in\mathbb N_0:\forall x,y\in K,\ q_m(x)=q_m(y)\Longrightarrow q_L(T^kx)=q_L(T^ky)\},
+$$
+with $\min\varnothing=+\infty$ until finiteness is proved. The carrier, phase, and successor conventions are those of [Z: `CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md`, Sections 371-375, revision `c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb`](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md). The actual-image factorization convention is [R: `RECURSIVE_RELATIONAL_OBSERVATION.md`, Definition 2.1 and theorem 2.2, revision `c74985438ae17d205509255934bbd3ecf1f94d71`](https://raw.githubusercontent.com/the-omega-institute/trureturing/c74985438ae17d205509255934bbd3ecf1f94d71/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md).
+
