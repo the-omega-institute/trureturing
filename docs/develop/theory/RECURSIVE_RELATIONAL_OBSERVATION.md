@@ -7413,3 +7413,371 @@ $$
 [^rro25-cocycle]: Laurent Rigal and Pablo Zadunaisky, *Twisted semigroup algebras*, arXiv:1406.2985v2 (2014), §3.1，Definition 3.1.1、Remark 3.1.2及 Lemma 3.1.3；乘法余循环与余边界的术语参照，[正文](https://arxiv.org/html/1406.2985v2#S3.SS1)。
 
 ## 追加锚（本行以下为增补区）
+## 26. Weakly almost periodic Zeckendorf observations and the phase quotient
+
+**definition 26.0 (Carrier, observations, and one-sided compactness classes).** Put
+$$
+\mathbb N_0=\{0,1,\ldots\},\qquad
+G_0=1,\quad G_1=2,\quad G_{\ell+2}=G_{\ell+1}+G_\ell,\qquad
+\phi=\frac{1+\sqrt5}{2},\quad \alpha=\phi^{-1}.
+$$
+Use the low-to-high digit carrier and its metric
+$$
+K=\{x\in\{0,1\}^{\mathbb N_0}:x_jx_{j+1}=0\text{ for every }j\},\qquad
+d_K(x,y)=\sum_{j\ge0}2^{-j-1}|x_j-y_j|.
+$$
+Here $Z(n)$ is the unique finite legal Zeckendorf expansion of $n$, padded by zeros, so that $n=\sum_jG_jZ(n)_j$. Write
+$$
+\mathbb T=\mathbb R/\mathbb Z,\qquad
+\rho([s],[t])=\min_{k\in\mathbb Z}|s-t-k|,\qquad
+F(x)=\sum_{j\ge0}(-1)^{j+1}\alpha^{j+2}x_j,\qquad H(x)=[F(x)].
+$$
+These are the carrier and phase conventions of Definition 16.0 and the Zeckendorf volume, Definition 371.1. ([RECURSIVE_RELATIONAL_OBSERVATION.md](https://raw.githubusercontent.com/the-omega-institute/trureturing/c74985438ae17d205509255934bbd3ecf1f94d71/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md), Definition 16.0, pinned commit `c74985438ae17d205509255934bbd3ecf1f94d71`; [CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md), Definition 371.1, pinned commit `c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb`.)
+
+Fix a scalar field $\mathbb F\in\{\mathbb R,\mathbb C\}$. Let
+$$
+B_{\mathbb F}=\ell^\infty(\mathbb N_0,\mathbb F),\qquad
+(S^ka)(n)=a(n+k),\qquad
+\mathcal O(a)=\{S^ka:k\in\mathbb N_0\}.
+$$
+A sequence $a\in B_{\mathbb F}$ is AP when $\mathcal O(a)$ has compact norm closure. It is WAP when $\mathcal O(a)$ has compact closure for the Banach weak topology $\sigma(B_{\mathbb F},B_{\mathbb F}^*)$, where the dual is taken over $\mathbb F$. WAP does not mean relative compactness for pointwise convergence or for $\sigma(\ell^\infty,\ell^1)$. For $f\in C(K,\mathbb F)$ define $a_f(n)=f(Z(n))$. All translation classes in this section use nonnegative translates, including the zeroth translate.
+
+**Assumption 26.1 (Established structure of the fixed carrier).** Use the following published carrier facts. The space $K$ is compact, $Z(\mathbb N_0)$ is dense, and $H$ is a continuous surjection satisfying
+$$
+H(Z(n))=[n\phi].
+$$
+Its nonsingleton fibers are exactly
+$$
+E_m=[-m\phi],\qquad
+H^{-1}(\{E_m\})=\{x_m^-,x_m^+\}\quad(m\ge1).
+$$
+Every other fiber is a singleton; in particular $H^{-1}(\{[n\phi]\})=\{Z(n)\}$ for $n\ge0$. The orientation is
+$$
+x_1^+=u=(10)^\infty,\qquad x_1^-=v=(01)^\infty.
+$$
+For each $m$, if $\epsilon_k\to0$ with a fixed strict sign and $H(y_k)=E_m+[\epsilon_k]$, then
+$$
+y_k\longrightarrow x_m^+\ \text{if }\epsilon_k>0,\qquad
+y_k\longrightarrow x_m^-\ \text{if }\epsilon_k<0.
+$$
+This holds for arbitrary choices of the lifts $y_k$, including lifts over other split phases. There is a continuous map $T:K\to K$ with
+$$
+TZ(n)=Z(n+1),\qquad H(Tx)=H(x)+[\phi],\qquad Tu=Tv=Z(0).
+$$
+These facts are the conclusions of the Zeckendorf volume, theorems 371.2, 372.2–372.4, 375.2–375.3, 381.2, and 382.1, with the oriented labels of Definition 381.1 and Definition 16.3. ([CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md), sections 371–375 and 381–382, specifically theorems 371.2, 372.2–372.4, 375.2–375.3, 381.2 and 382.1 and Definition 381.1, pinned commit `c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb`; [RECURSIVE_RELATIONAL_OBSERVATION.md](https://raw.githubusercontent.com/the-omega-institute/trureturing/c74985438ae17d205509255934bbd3ecf1f94d71/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md), Definition 16.3, pinned commit `c74985438ae17d205509255934bbd3ecf1f94d71`.)
+
+**theorem 26.2 (Explicit full-state double limits at every split phase).** For $m\ge1$ define
+$$
+r_m=\min\{r\in\mathbb N_0:G_{2r+1}\ge m\},\qquad
+A_i^{(m)}=G_{2(i+r_m)+1}-m,\qquad B_j=G_{2j}\quad(i,j\ge0).
+$$
+These are nonnegative integer inputs. For every fixed $i$ and every fixed $j$, respectively,
+$$
+\lim_{j\to\infty}Z(A_i^{(m)}+B_j)=Z(A_i^{(m)}),\qquad
+\lim_{i\to\infty}Z(A_i^{(m)}+B_j)=T^{B_j}x_m^+.
+$$
+Both iterated limits exist in the full space $K$, and their orientations are
+$$
+\lim_{i\to\infty}\lim_{j\to\infty}Z(A_i^{(m)}+B_j)=x_m^+,\qquad
+\lim_{j\to\infty}\lim_{i\to\infty}Z(A_i^{(m)}+B_j)=x_m^-.
+$$
+Consequently every $f\in C(K,\mathbb F)$ satisfies
+$$
+\lim_{i\to\infty}\lim_{j\to\infty}a_f(A_i^{(m)}+B_j)=f(x_m^+),\qquad
+\lim_{j\to\infty}\lim_{i\to\infty}a_f(A_i^{(m)}+B_j)=f(x_m^-).
+$$
+The full-lift convergence used here is the arbitrary-lift statement of theorem 382.1, not merely a lowest-digit assertion. ([CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md), theorem 382.1, including its arbitrary-lift one-sided convergence statement and proof, pinned commit `c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb`.)
+
+**Proof.** The positive Fibonacci recurrence makes $G_\ell$ strictly increasing and unbounded, so $r_m$ exists and $A_i^{(m)}\ge0$. Also $B_j\ge1$. First establish the exact signed error
+$$
+\phi G_\ell-G_{\ell+1}=(-1)^{\ell+1}\alpha^{\ell+2}.
+$$
+The left-hand sequence satisfies the Fibonacci recurrence. The right-hand sequence does also, because $1-\alpha=\alpha^2$. Their initial values agree:
+$$
+\phi-2=-\alpha^2,\qquad 2\phi-3=\alpha^3.
+$$
+Induction therefore proves the identity. Taking classes modulo one gives
+$$
+H(Z(A_i^{(m)}))=E_m+[\alpha^{2(i+r_m)+3}],\qquad
+H(Z(B_j))=[-\alpha^{2j+2}].
+$$
+The first offset is strictly positive and tends to zero. Assumption 26.1 therefore yields
+$$
+Z(A_i^{(m)})\longrightarrow x_m^+.
+$$
+On the other hand $Z(B_j)$ has its only nonzero digit at position $2j$. Thus every fixed initial segment is eventually zero, and
+$$
+Z(B_j)\longrightarrow Z(0).
+$$
+
+Induction from $TZ(n)=Z(n+1)$ gives $T^hZ(n)=Z(n+h)$ for every nonnegative integer $h$. Fixing $i$ and using continuity of the single fixed iterate $T^{A_i^{(m)}}$ proves
+$$
+Z(A_i^{(m)}+B_j)=T^{A_i^{(m)}}Z(B_j)
+\longrightarrow T^{A_i^{(m)}}Z(0)=Z(A_i^{(m)}).
+$$
+Fixing $j$ instead and using the single fixed iterate $T^{B_j}$ proves
+$$
+Z(A_i^{(m)}+B_j)=T^{B_j}Z(A_i^{(m)})
+\longrightarrow T^{B_j}x_m^+.
+$$
+Taking the outer limit in the first identity already gives $x_m^+$.
+
+For the second outer limit, the exact forward-iterate rule is
+$$
+T^hx_m^\pm=
+\begin{cases}
+x_{m-h}^\pm,&0\le h<m,\\
+Z(h-m),&h\ge m.
+\end{cases}
+$$
+Indeed, for $h<m$, choose any lifts of $E_m\pm[\epsilon_k]$ with $\epsilon_k>0$ tending to zero. They converge to $x_m^\pm$. Their images under $T^h$ have phases $E_{m-h}\pm[\epsilon_k]$, and hence converge to $x_{m-h}^\pm$. Continuity and uniqueness of limits give the first case. For $h\ge m$, semiconjugacy gives the phase $[(h-m)\phi]$, whose fiber is the singleton $\{Z(h-m)\}$, proving the second case.
+
+Since $B_j\to\infty$, eventually
+$$
+T^{B_j}x_m^+=Z(B_j-m).
+$$
+For those indices, $B_j-m$ is a nonnegative integer and
+$$
+H(Z(B_j-m))=E_m+[-\alpha^{2j+2}].
+$$
+These phases approach from the strict negative side. The arbitrary-lift convergence in Assumption 26.1 gives $Z(B_j-m)\to x_m^-$. The finitely many indices with $B_j<m$ cause no loss of any inner limit: their values are explicitly $x_{m-B_j}^+$ by the forward-iterate rule. This proves the second full-state iterated limit.
+
+For clarity, the seam case has $r_1=0$ and the exact digit identities
+$$
+A_i^{(1)}=G_{2i+1}-1=\sum_{r=0}^{i}G_{2r},\qquad
+B_j-1=G_{2j}-1=\sum_{r=0}^{j-1}G_{2r+1}.
+$$
+For the first identity the base case is $G_0=G_1-1$, and adding $G_{2i+2}$ proves the next case by the recurrence. For the second identity the case $j=0$ is the empty sum; adding $G_{2j+1}$ again gives the next case. These sums are legal digit expansions, so
+$$
+Z(A_i^{(1)})=(10)^{i+1}0^\infty\longrightarrow u,\qquad
+Z(B_j-1)=(01)^j0^\infty\longrightarrow v,\qquad
+T^{B_j}u=Z(B_j-1).
+$$
+For general $m$ the construction is precisely
+$$
+A_i^{(m)}=A_{i+r_m}^{(1)}-(m-1).
+$$
+The truncation by $r_m$ is what makes every input nonnegative; no inverse iterate of $T$ is used. Finally, continuity of $f$ transports every inner limit and then each outer limit to the stated scalar limits. The witnesses therefore work for any continuous function separating the chosen pair. $\square$
+
+**theorem 26.3 (Necessary Banach-weak double-limit implication).** Let $a\in B_{\mathbb F}$ be WAP, and let $P_i,Q_j\in\mathbb N_0$. Suppose that each inner limit exists and that both outer limits below exist. Then
+$$
+\lim_{i\to\infty}\lim_{j\to\infty}a(P_i+Q_j)
+=
+\lim_{j\to\infty}\lim_{i\to\infty}a(P_i+Q_j).
+$$
+This is the necessary direction of Grothendieck's double-limit criterion. Its general function-space hypotheses are a topological space $X$, a dense subset $X_0$, and a bounded family in $C_b(X)$ with the uniform norm; here take $X=X_0=\mathbb N_0$ discrete and the family $\mathcal O(a)$, whose elements have norm at most $\|a\|_\infty$. Grothendieck's original Proposition 7 also explicitly allows semigroups with continuous left and right translations. Sources: A. Grothendieck, *Critères de compacité dans les espaces fonctionnels généraux*, American Journal of Mathematics 74 (1952), 168–186, theorem 6 and Proposition 7; I. Ben Yaacov, *Model theoretic stability and definability of types, after A. Grothendieck*, Fact 2. (A. Grothendieck, [Critères de compacité dans les espaces fonctionnels généraux](https://webusers.imj-prg.fr/~leila.schneps/grothendieckcircle/AG/AG-6.pdf), American Journal of Mathematics 74 (1952), 168–186, theorem 6 and Proposition 7; I. Ben Yaacov, [Model theoretic stability and definability of types, after A. Grothendieck](https://math.univ-lyon1.fr/~begnac/articles/Grothendieck.pdf), Fact 2, p. 1.)
+
+**Proof.** Write $r_i=S^{P_i}a$ and let $W$ be the weak closure of $\mathcal O(a)$. By hypothesis $W$ is weakly compact, so the sequence considered as a net has a subnet
+$$
+r_{i_\lambda}\longrightarrow r\in W
+\quad\text{in }\sigma(B_{\mathbb F},B_{\mathbb F}^*).
+$$
+For $n\in\mathbb N_0$, evaluation $\delta_n(b)=b(n)$ is an element of $B_{\mathbb F}^*$ of norm one. Banach–Alaoglu gives an independently chosen subnet
+$$
+\delta_{Q_{j_\mu}}\longrightarrow\Lambda
+\quad\text{in }\sigma(B_{\mathbb F}^*,B_{\mathbb F}),
+$$
+inside the dual unit ball. Set
+$$
+p_i=\lim_{j\to\infty}a(P_i+Q_j),\qquad
+q_j=\lim_{i\to\infty}a(P_i+Q_j).
+$$
+For each fixed $i$, the scalar limit along the full $j$-sequence exists, hence the weak-star subnet gives $p_i=\Lambda(r_i)$. For each fixed $j$, the scalar limit along the full $i$-sequence exists, hence the weak subnet gives $q_j=\delta_{Q_j}(r)$. The existing outer limits can now be computed along the respective subnets:
+$$
+\lim_{i\to\infty}p_i
+=\lim_\lambda\Lambda(r_{i_\lambda})
+=\Lambda(r)
+=\lim_\mu\delta_{Q_{j_\mu}}(r)
+=\lim_{j\to\infty}q_j.
+$$
+Only evaluation with one argument fixed has been used. In particular, the proof does not assume joint continuity of a varying vector–functional pairing, or the existence of weakly convergent subsequences. The compactness hypothesis is Banach weak compactness, not compactness of a bounded pointwise closure. The proof applies over either scalar field. $\square$
+
+**theorem 26.4 (Classification of continuous observations).** For every $f\in C(K,\mathbb F)$ the following conditions are equivalent:
+$$
+\begin{aligned}
+&a_f\text{ is WAP};\\
+&a_f\text{ is AP};\\
+&f(x_m^-)=f(x_m^+)\quad\text{for every }m\ge1;\\
+&\text{there exists a unique }g\in C(\mathbb T,\mathbb F)
+  \text{ such that }f=g\circ H.
+\end{aligned}
+$$
+For complex observations the WAP condition is also equivalent to WAP for both real and imaginary coordinate sequences; the analogous statement holds for AP.
+
+**Proof.** Suppose first that $a_f$ is WAP. For any fixed $m$, theorem 26.2 provides actual nonnegative integer sequences whose two iterated scalar limits are $f(x_m^+)$ and $f(x_m^-)$. Theorem 26.3 forces them to agree. Thus $f$ is constant on every double fiber. Since every remaining fiber is a singleton, it is constant on every fiber of $H$.
+
+Define $g(\theta)$ to be this common value on $H^{-1}(\{\theta\})$. Surjectivity makes this definition possible and gives uniqueness. We verify continuity rather than just set-theoretic factorization. The continuous map $H$ from compact $K$ to Hausdorff $\mathbb T$ is closed: the image of a closed subset of $K$ is compact, hence closed. It is therefore a quotient map. Explicitly, for every closed $D\subseteq\mathbb F$,
+$$
+g^{-1}(D)=H(f^{-1}(D)).
+$$
+The right-hand side is compact and closed in $\mathbb T$. Thus $g$ is continuous. Conversely, any factorization $f=g\circ H$ plainly makes the two values on every double fiber equal.
+
+Now suppose $f=g\circ H$ with $g$ continuous. Define
+$$
+\Phi_g:\mathbb T\longrightarrow B_{\mathbb F},\qquad
+\Phi_g(\theta)=\bigl(g(\theta+[n\phi])\bigr)_{n\ge0}.
+$$
+The map is well-defined because $g$ is bounded. Given $\epsilon>0$, uniform continuity of $g$ supplies $\delta>0$ such that $\rho(s,t)<\delta$ implies $|g(s)-g(t)|<\epsilon$. Translation invariance of $\rho$ then gives
+$$
+\rho(\theta,\eta)<\delta
+\quad\Longrightarrow\quad
+\|\Phi_g(\theta)-\Phi_g(\eta)\|_\infty\le\epsilon.
+$$
+Hence $\Phi_g$ is norm-continuous, and its image is norm-compact. Since
+$$
+S^ka_f=\Phi_g([k\phi])\qquad(k\ge0),
+$$
+this compact image contains the translation orbit and its norm closure. Therefore $a_f$ is AP.
+
+Finally, if an orbit has compact norm closure $C$, the identity from $C$ with its norm topology to $B_{\mathbb F}$ with its weak topology is continuous. Its image is weakly compact and, since the weak topology is Hausdorff, weakly closed. It contains the weak closure of the orbit, which is consequently compact. Thus AP implies WAP and the four conditions are equivalent.
+
+Everything in the argument holds separately over $\mathbb R$ and $\mathbb C$. In the complex case, equality of the two values of $f$ on every split fiber is equivalent to those equalities for both $\operatorname{Re}f$ and $\operatorname{Im}f$. Applying the already proved real and complex classifications establishes the coordinate assertions. No minimal-flow theorem or invertibility of $T$ is required. $\square$
+
+**theorem 26.5 (Finite Hausdorff observations and the required scalar coordinates).** Let $Y$ be Hausdorff and $q:K\to Y$ continuous with finite image $D=q(K)$. Let $(\psi_\lambda:D\to\mathbb F)_{\lambda\in\Lambda}$ jointly separate points of $D$, meaning that distinct points have different values for at least one coordinate. Then
+$$
+\bigl(\psi_\lambda(q(Z(n)))\bigr)_{n\ge0}
+\text{ is WAP for every }\lambda
+\quad\Longleftrightarrow\quad
+q\text{ is constant}.
+$$
+The same equivalence holds with AP in place of WAP. A single injective real-valued labelling of $D$ suffices.
+
+**Proof.** A finite Hausdorff space is discrete: each singleton is closed, and its complement, being a finite union of closed singletons, is also closed. Thus every map $\psi_\lambda$ on $D$ is continuous. The co-restriction $q:K\to D$ is continuous, so $f_\lambda=\psi_\lambda\circ q$ belongs to $C(K,\mathbb F)$.
+
+Under the WAP hypothesis, theorem 26.4 gives $f_\lambda=g_\lambda\circ H$ with $g_\lambda$ continuous. Since $H$ is onto,
+$$
+g_\lambda(\mathbb T)=f_\lambda(K)=\psi_\lambda(D),
+$$
+which is finite. The circle is connected, being the continuous image of the connected interval $[0,1]$. Its continuous image under $g_\lambda$ is therefore connected. A finite Hausdorff connected space has only one point, so every $f_\lambda$ is constant. If $q(x)\ne q(y)$, point separation would give a coordinate with $f_\lambda(x)\ne f_\lambda(y)$, a contradiction. Therefore $q$ is constant. The converse follows because a constant sequence has a singleton translation orbit. Theorem 26.4 identifies AP and WAP for each of these continuous scalar observations.
+
+To obtain one scalar coordinate, assign distinct real numbers to the finitely many elements of $D$. This is a continuous injection on $D$; no scalar embedding of all of $Y$ is needed. If coordinates are instead prescribed as continuous functions on $Y$, their restrictions must jointly separate $D$. Hausdorffness alone is not being used to assert such a global scalar representation.
+
+Both qualifications are necessary. Without separation, take the nonconstant continuous observation $q(x)=x_0$ but only the constant scalar coordinate: that coordinate gives a constant sequence. Without continuity on $K$, take
+$$
+q_0(x)=\mathbf 1_{\{u\}}(x).
+$$
+It is nonconstant, while $q_0(Z(n))=0$ for every $n$, because $u$ is not a finite padded word. Moreover $Z(A_i^{(1)})\to u$ while all those values are zero and $q_0(u)=1$, proving the discontinuity. Thus no constancy conclusion for arbitrary discontinuous finite observations follows. $\square$
+
+**theorem 26.6 (The phase observation algebra and deterministic closed-graph readout).** Define
+$$
+\mathcal R:C(K,\mathbb F)\longrightarrow B_{\mathbb F},\quad
+\mathcal Rf=a_f,\qquad
+H^*g=g\circ H,\qquad
+\mathscr A_{\mathbb F}=H^*C(\mathbb T,\mathbb F).
+$$
+Both $\mathcal R$ and $H^*$ are isometries. The space $\mathscr A_{\mathbb F}$ is a closed unital algebra, closed under conjugation when $\mathbb F=\mathbb C$, and
+$$
+\begin{aligned}
+\mathcal R(C(K,\mathbb F))\cap\operatorname{WAP}(\mathbb N_0,\mathbb F)
+&=\mathcal R(C(K,\mathbb F))\cap\operatorname{AP}(\mathbb N_0,\mathbb F)\\
+&=\mathcal R(\mathscr A_{\mathbb F}).
+\end{aligned}
+$$
+The equivalence relation detected by all these continuous WAP observations is exactly the phase relation:
+$$
+\bigl(\forall f\in\mathscr A_{\mathbb F},\ f(x)=f(y)\bigr)
+\quad\Longleftrightarrow\quad H(x)=H(y).
+$$
+
+Retain the closed addition graph
+$$
+\Gamma=\overline{\{(Z(n),Z(k),Z(n+k)):n,k\in\mathbb N_0\}}\subseteq K^3,\qquad
+\Gamma(x,y)=\{z:(x,y,z)\in\Gamma\}.
+$$
+For $f\in C(K,\mathbb F)$, the following are also equivalent to the conditions of theorem 26.4: $f$ has one common value on every nonempty output set $\Gamma(x,y)$; and there exists a continuous $D_f:K^2\to\mathbb F$ satisfying
+$$
+D_f(Z(n),Z(k))=f(Z(n+k))\qquad(n,k\ge0).
+$$
+When these conditions hold, this extension is unique and equals
+$$
+D_f(x,y)=g(H(x)+H(y)).
+$$
+The graph input-fiber classification used below is theorem 16.4. ([RECURSIVE_RELATIONAL_OBSERVATION.md](https://raw.githubusercontent.com/the-omega-institute/trureturing/c74985438ae17d205509255934bbd3ecf1f94d71/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md), theorem 16.4, complete statement and proof of the closed-addition-graph input-fiber classification, pinned commit `c74985438ae17d205509255934bbd3ecf1f94d71`.)
+
+**Proof.** Density of the finite core and continuity give
+$$
+\|\mathcal Rf\|_\infty=\sup_{n\ge0}|f(Z(n))|=\sup_{x\in K}|f(x)|.
+$$
+Surjectivity of $H$ similarly gives $\|H^*g\|_\infty=\|g\|_\infty$. Completeness of $C(\mathbb T,\mathbb F)$ and this isometry make its range closed. Pullback preserves constants, sums, products, and, over $\mathbb C$, conjugation. This proves the algebra assertions. The intersection identity is exactly theorem 26.4 applied to every $f$.
+
+Equal phases give equal values for all pullbacks. Conversely, if $H(x)\ne H(y)$, the real continuous function $g(\theta)=\rho(\theta,H(x))$ gives
+$$
+(g\circ H)(x)=0,\qquad (g\circ H)(y)>0.
+$$
+It belongs to the real algebra and, by regarding its values as complex, to the complex algebra. This proves the asserted equivalence relation.
+
+For any $x,y$, density supplies sequences of core inputs converging to $x,y$. Compactness of $K$ supplies a convergent subsequence of their sums, showing that $\Gamma(x,y)$ is nonempty. Continuity of $H$ on a convergent core triple gives
+$$
+\Gamma(x,y)\subseteq H^{-1}(\{H(x)+H(y)\}).
+$$
+In addition, theorem 16.4, with its first input $Z(0)$ having an unsplit phase, gives
+$$
+\Gamma(Z(0),x_m^+)=\{x_m^+,x_m^-\}\qquad(m\ge1).
+$$
+Thus constancy of $f$ on every graph output set forces equality on every split pair, and theorem 26.4 gives $f=g\circ H$. In the reverse direction, the displayed phase containment makes every value $f(z)$ on $\Gamma(x,y)$ equal to $g(H(x)+H(y))$.
+
+If the phase factorization holds, the displayed formula for $D_f$ is continuous and has the required core values. Conversely, suppose such a continuous extension exists. For any $(x,y,z)\in\Gamma$, metrizability gives a sequence of core triples converging to it. Continuity of $D_f$ and $f$ yields $D_f(x,y)=f(z)$. Hence $f$ is constant on every output set and therefore factors through $H$. Any two continuous extensions agree on the dense set $Z(\mathbb N_0)^2$, so agree everywhere.
+
+This scalar determinism for fixed full inputs does not assert that a binary operation can be recovered from the two scalar summaries alone. Indeed, let $g([t])=\cos(2\pi t)$ and $f=g\circ H$. Choose phases $[1/4]$ and $[3/4]$ for the first input and phase $[1/4]$ for the second. The two scalar input pairs are both $(0,0)$, whereas the prescribed outputs are respectively $-1$ and $1$. Surjectivity of $H$ realizes these choices in $K$. Thus no function of just those two scalar summaries can represent this $D_f$ on all inputs.
+
+Finally, the intersection restriction is essential. Define $b(0)=1$ and $b(n)=0$ for $n\ge1$. Its nonnegative translation orbit is $\{b,0\}$, so it is AP under Definition 26.0. Nevertheless $b$ has no continuous extension along $Z$: since $G_{2j}\ge1$ and $Z(G_{2j})\to Z(0)$, such an extension would have values zero converging to its value one at $Z(0)$. Consequently the classification does not identify the full sequence spaces $\operatorname{WAP}(\mathbb N_0,\mathbb F)$ and $\operatorname{AP}(\mathbb N_0,\mathbb F)$. $\square$
+
+**theorem 26.7 (Exact uniform distance to continuous phase observations).** For $f\in C(K,\mathbb F)$ put
+$$
+\Delta(f)=\sup_{m\ge1}|f(x_m^+)-f(x_m^-)|.
+$$
+Then
+$$
+\inf_{g\in C(\mathbb T,\mathbb F)}\|f-g\circ H\|_\infty
+=
+\inf_{b\in\mathcal R(\mathscr A_{\mathbb F})}\|a_f-b\|_\infty
+=
+\frac{\Delta(f)}2.
+$$
+In particular the sequence-space distance here is to the WAP observations already continuous on $K$, as identified in theorem 26.6, not an assertion about distance to all WAP sequences.
+
+**Proof.** Write $d=\Delta(f)/2$. For every $g$ and every split pair, the triangle inequality gives
+$$
+|f(x_m^+)-f(x_m^-)|
+\le |f(x_m^+)-g(E_m)|+|f(x_m^-)-g(E_m)|
+\le2\|f-g\circ H\|_\infty.
+$$
+Taking the supremum over $m$ gives the lower bound $d$.
+
+Fix $\epsilon>0$. For each $\theta\in\mathbb T$, choose a center $c_\theta\in\mathbb F$: use the value of $f$ on a singleton fiber, and the midpoint of its two values on a double fiber. Since every fiber has at most two points,
+$$
+|f(x)-c_\theta|\le d\qquad(H(x)=\theta).
+$$
+The set
+$$
+C_\theta=\{x\in K:|f(x)-c_\theta|\ge d+\epsilon\}
+$$
+is compact and disjoint from the fiber over $\theta$. Its image under $H$ is closed. Therefore
+$$
+U_\theta=\mathbb T\setminus H(C_\theta)
+$$
+is an open neighborhood of $\theta$, and every $x$ whose phase belongs to $U_\theta$ satisfies $|f(x)-c_\theta|<d+\epsilon$.
+
+Choose a finite subcover $U_1,\ldots,U_N$ and the corresponding centers $c_1,\ldots,c_N$. For a nonempty closed set $C$, write $\rho(t,C)=\inf_{s\in C}\rho(t,s)$. Construct continuous weights by
+$$
+w_\ell(t)=
+\begin{cases}
+\rho(t,\mathbb T\setminus U_\ell),&U_\ell\ne\mathbb T,\\
+1,&U_\ell=\mathbb T,
+\end{cases}
+\qquad
+p_\ell(t)=\frac{w_\ell(t)}{\sum_{h=1}^Nw_h(t)}.
+$$
+Here distance to a nonempty closed set is continuous. An open neighborhood contains a positive-radius ball about each of its points, so the covering property makes the denominator positive everywhere. Thus the $p_\ell$ are continuous and nonnegative, their sum is one, and $p_\ell(t)>0$ implies $t\in U_\ell$. Set
+$$
+g_\epsilon(t)=\sum_{\ell=1}^Np_\ell(t)c_\ell.
+$$
+For $x\in K$, all positively weighted centers satisfy the preceding strict estimate at $t=H(x)$. Hence
+$$
+|f(x)-g_\epsilon(H(x))|
+\le\sum_{\ell=1}^Np_\ell(H(x))|f(x)-c_\ell|
+\le d+\epsilon.
+$$
+It follows that the infimum of the uniform error is at most $d+\epsilon$. Letting $\epsilon$ decrease to zero proves equality with $d$. This midpoint and convex-combination argument is valid over both $\mathbb R$ and $\mathbb C$. Finally, the isometry $\mathcal R$ from theorem 26.6 gives the equality with the stated sequence-space infimum. The proof constructs arbitrarily accurate approximants and does not assert attainment of the infimum. $\square$
+
+## 追加锚（本行以下为增补区）
