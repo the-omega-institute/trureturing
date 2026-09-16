@@ -1,0 +1,19 @@
+**Cumulative versus layer parity.** For an inert prime $\ell$,
+
+$$
+\chi(F_{\ell^j})=(-1)^j,\qquad
+\chi(B_{\ell,k})=-1\quad\text{for every }k.
+$$
+
+At an even cumulative exponent the signs of the separate layers cancel.
+For example,
+
+$$
+F_7=13,\qquad F_{49}=13\cdot97\cdot6168709,
+\qquad B_{7,1}=97\cdot6168709.
+$$
+
+The inert factors $13$ and $97$ make the cumulative character positive,
+while the new layer still has negative character. A positive character
+therefore cannot be used to infer that no odd-depth inert factors exist.
+

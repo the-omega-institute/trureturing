@@ -1,0 +1,63 @@
+### IP.2 Every prime-power layer has negative character
+
+For an odd prime $\ell\ne5$ and $k\ge0$, define the exact integer
+
+$$
+B_{\ell,k}=\frac{F_{\ell^{k+1}}}{F_{\ell^k}}.
+$$
+
+**Theorem IP5.** If $\ell\ge7$, then every prime divisor of $B_{\ell,k}$
+has exact rank $\ell^{k+1}$, and its exponent in $B_{\ell,k}$ equals its
+initial depth $h_p$. These layers are pairwise coprime. Moreover,
+
+$$
+\chi(B_{\ell,k})=\chi(\ell),\qquad
+B_{\ell,k}\equiv\ell(-1)^{(\ell-1)/2}\pmod5.     \tag{IP5}
+$$
+
+Thus, if $\ell$ is inert, every layer contains an odd number of inert
+prime divisors having odd initial depth. In particular each layer
+supplies a new such prime; IP4 holds with $n=\ell^{k+1}$.
+
+**Proof.** Fibonacci strong divisibility makes the quotient integral.
+The rank bound excludes $\ell\mid F_{\ell^j}$: its rank would divide
+both $\ell^j$ and $\ell-\chi(\ell)$, forcing rank one. A prime divisor
+$p$ of the quotient has rank dividing $\ell^{k+1}$. If its rank divided
+$\ell^k$, the valuation formula would give
+
+$$
+v_p(F_{\ell^{k+1}})-v_p(F_{\ell^k})=v_p(\ell)=0,
+$$
+
+a contradiction. Therefore its rank is exactly $\ell^{k+1}$, and its
+quotient exponent is the initial depth. The rank also makes different
+layers disjoint in prime support. Primes two and five are absent.
+
+Apply IP2 to numerator and denominator, both units modulo five. Their
+ratio is $\ell3^{\ell^k(\ell-1)}$. Since $\ell^k$ is odd, this is
+$\ell(-1)^{(\ell-1)/2}$ modulo five. Its quadratic character is
+$\chi(\ell)$, giving the displayed identities. IP1 then proves the
+odd-count conclusion.
+
+The character identity alone holds more generally for any odd natural
+base $\ell$ with $\chi(\ell)=-1$; the exact-rank statement uses primality.
+
+**Cumulative versus layer parity.** For an inert prime $\ell$,
+
+$$
+\chi(F_{\ell^j})=(-1)^j,\qquad
+\chi(B_{\ell,k})=-1\quad\text{for every }k.
+$$
+
+At an even cumulative exponent the signs of the separate layers cancel.
+For example,
+
+$$
+F_7=13,\qquad F_{49}=13\cdot97\cdot6168709,
+\qquad B_{7,1}=97\cdot6168709.
+$$
+
+The inert factors $13$ and $97$ make the cumulative character positive,
+while the new layer still has negative character. A positive character
+therefore cannot be used to infer that no odd-depth inert factors exist.
+

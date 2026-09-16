@@ -1,0 +1,32 @@
+**定理 19.10（最低位观察不是弱殆周期函数）。** 将 $f$ 视为 $E$ 的元素，则
+$$
+f\notin\operatorname{WAP}(\mathbb N,+).
+$$
+此外，对任意紧 Hausdorff 半拓扑半群 $S$ 及任意半群同态 $\eta:\mathbb N\to S$，不存在连续函数 $h:S\to\mathbb C$ 使 $h(\eta(n))=f(n)$。后一断言甚至不要求 $\eta$ 的像稠密。其经典双极限背景为 Grothendieck 的定理 6、命题 7，以及 Akbari Tootkaboni 的定理 2.1–2.2。([webusers.imj-prg.fr](https://webusers.imj-prg.fr/~leila.schneps/grothendieckcircle/AG/AG-6.pdf)) M. Akbari Tootkaboni, *Filters and the weakly almost periodic compactification of a semitopological semigroup*, [arXiv:1302.3204v1](https://arxiv.org/pdf/1302.3204v1), p. 1（半拓扑半群定义）及 p. 3（弱殆周期定义、定理 2.1–2.2）。
+
+**证明。** 定义线性子空间
+$$
+D=\{g\in E:\lim_{l\to\infty}g(b_l)\text{ 存在}\},
+$$
+以及有界线性泛函
+$$
+L_0(g)=\lim_{l\to\infty}g(b_l)\qquad(g\in D).
+$$
+由 $|L_0(g)|\le\|g\|_\infty$ 且常值一函数属于 $D$，有 $\|L_0\|=1$。Hahn–Banach 定理给出其连续线性延拓 $L\in E^*$。
+
+反设 $f$ 弱殆周期。取 $g_k=R_{a_k}f$。轨道的弱闭包紧，因此 $g_k$ 有弱收敛子网 $g_{k(\alpha)}\to g\in E$。对每个固定 $l$，点值泛函 $g\mapsto g(b_l)$ 属于 $E^*$，而三角公式使 $g_{k(\alpha)}(b_l)$ 最终为零，所以
+$$
+g(b_l)=0\qquad(l\in\mathbb N).
+$$
+于是 $g\in D$ 且 $L(g)=L_0(g)=0$。但对每个固定 $k$，同一三角公式给 $\lim_lg_k(b_l)=1$，故 $L(g_k)=1$。弱收敛又要求
+$$
+L(g)=\lim_\alpha L(g_{k(\alpha)})=1,
+$$
+矛盾。这一论证只用了弱紧性的子网、点值泛函及 Hahn–Banach 延拓。
+
+若后一断言中的 $h$ 存在，令 $C(s,t)=h(st)$。乘法分别连续且 $h$ 连续，所以 $C:S\times S\to\mathbb C$ 分别连续，并有
+$$
+C(\eta(n),\eta(m))=h(\eta(n+m))=f(n+m).
+$$
+将连续观察取为 $h$，定理 19.4 即给矛盾。证毕。
+

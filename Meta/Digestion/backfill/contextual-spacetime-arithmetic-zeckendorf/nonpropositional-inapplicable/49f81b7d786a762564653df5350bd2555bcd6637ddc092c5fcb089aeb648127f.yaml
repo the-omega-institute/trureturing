@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:49f81b7d786a762564653df5350bd2555bcd6637ddc092c5fcb089aeb648127f
+  normalized_sha256: sha256:49f81b7d786a762564653df5350bd2555bcd6637ddc092c5fcb089aeb648127f
+cas_ref: sha256:49f81b7d786a762564653df5350bd2555bcd6637ddc092c5fcb089aeb648127f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶给出定义 421.1（预测三·实际后继与观察关系）所用的载体、符号或任务假设，并规定相应函数、域与约定；这些内容是定义及适用条件，没有需要证明的独立命题，故由现有结算写入器处理。
+    previous_atom_id: 0e32b0bb322ea6524766d1988052cfdd476f886cc99cbcf1791ac1761b844388
+    next_atom_id: 6cc467764274867063a73ccb996720a8f46278693a66623e66d235078f4952df

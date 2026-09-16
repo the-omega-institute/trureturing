@@ -1,0 +1,58 @@
+### IP.5 Complete parity classification for the primitive block
+
+Define
+
+$$
+b(n)=\#\{p:r(p)=n,\ p\text{ prime},\ \chi(p)=-1,\ h_p\text{ odd}\}.
+$$
+
+**Theorem IP10.** For odd $n>3$ coprime to five,
+
+$$
+(-1)^{b(n)}=\chi(\mathcal R_n)=\chi(\mathcal C_n)\chi(E_n). \tag{IP10}
+$$
+
+Consequently $b(n)$ is odd exactly in the following two disjoint cases:
+
+$$
+\boxed{
+\begin{aligned}
+&n=\ell^a\text{ for a prime }\ell\text{ with }\chi(\ell)=-1,
+\quad a\ge1;\\
+&n=r(q)q^j\text{ for an odd prime }q\text{ with }\chi(q)=-1,
+\quad j\ge1.
+\end{aligned}}
+\tag{IP11}
+$$
+
+In all other cases $b(n)$ is even. An even count can be positive.
+
+**Proof.** Apply IP1 to IP9 and use multiplicativity in
+$\mathcal C_n=E_n\mathcal R_n$; both characters are nonzero, so
+$\chi(E_n)^{-1}=\chi(E_n)$. IP7 and IP9 give the two cases. They are
+disjoint: if $n$ is a pure prime power, its possible largest-prime
+cofactor $t$ is one, while every prime rank is greater than one. If
+$n=r(q)q^j$, then $1<r(q)<q$ and $q\nmid r(q)$, so $n$ has at least two
+distinct prime factors. This completes both directions of the
+classification, without a hypothesis on any initial depth.
+
+**Unbounded mixed-index consequence.** Fix any odd inert prime $q$ whose
+rank $a=r(q)$ is odd. For every $j\ge1$, the primitive block at index
+$a q^j$ contains an inert prime of odd initial depth. Such witnesses in
+different $j$ are distinct, and each satisfies
+
+$$
+r(p)=a q^j,\qquad p\ge2a q^j-1,
+\qquad p\equiv13\text{ or }17\pmod{20}.
+$$
+
+**Proof.** Inertness makes $5\nmid(q+1)$, hence $5\nmid a$. The index
+$a q^j$ is odd, greater than three and coprime to five. Apply the second
+case of IP11 and then IP4. Different exact ranks give distinct primes.
+For example $q=13,a=7$ yields the entire family $7\cdot13^j$.
+
+This also permits an iterated construction: after choosing such a new
+prime $p$, its rank is again odd, so it may be used as the next input.
+The lower bound ensures strictly increasing primes. The construction
+preserves odd depth, not necessarily depth one.
+

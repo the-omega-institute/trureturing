@@ -1,0 +1,34 @@
+**theorem 22.10 (Strict measurable distinctions among selections).** There exist Borel selections that are not of Baire class one. There also exist selections that are not measurable for the completion of a Borel probability measure on $X$, hence are neither Borel nor universally measurable. Nevertheless every point selection is Baire-property measurable. All these selections still have exactly the continuity locus $G$.
+
+**Proof 22.10.** Choose a Cantor set $M$ as in Theorem 22.7, with its constant two-point fiber. Write the two outputs as $z^{(0)},z^{(1)}$, choosing an index $j$ at which $z^{(0)}_j=0$ and $z^{(1)}_j=1$. For any subset $B\subseteq M$, define the selection
+$$
+A_B(\xi)=
+\begin{cases}
+z^{(1)},&\xi\in B,\\
+z^{(0)},&\xi\in M\setminus B,\\
+A_{\min}(\xi),&\xi\notin M.
+\end{cases}
+$$
+Each branch lies in the required fiber, so this is a selection for every $B$, regardless of measurability.
+
+Let $R$ be a countable dense subset of $M$, obtained, for example, by carrying the eventually-zero binary sequences through a homeomorphism onto $M$. The map $A_R$ is Borel: $M$ is closed, $R$ is countable and Borel, and its three pieces use constant maps or the Borel map $A_{\min}$. We first prove that $M\setminus R$ is not $F_\sigma$ in $M$. Otherwise, write it as a countable union of relatively closed sets. Each has empty relative interior because $R$ is dense. Each singleton of $R$ also has empty relative interior because a Cantor space has no isolated points. This would express $M$ as a countable union of relatively closed nowhere dense sets. Such a covering is impossible: transfer it to binary sequence space, successively choose a nonempty cylinder inside the preceding cylinder and disjoint from the next closed nowhere dense set, and require the prescribed prefix lengths to increase. Closedness and empty interior permit each choice. The unique sequence extending all chosen prefixes avoids every member of the proposed covering, a contradiction.
+
+If continuous $K$-valued maps $f_n$ converged pointwise to $A_R$, then on $M$ the continuous real functions $g_n(\xi)=(f_n(\xi))_j$ would converge to the indicator $\mathbf1_R$. Therefore
+$$
+M\setminus R=\bigcup_{N\geq1}\ \bigcap_{n\geq N}
+\{\xi\in M:g_n(\xi)\leq1/4\},
+$$
+a relatively $F_\sigma$ set. Indeed, a limit of zero eventually satisfies the bound, whereas a limit of one cannot. This contradicts the preceding paragraph and proves that $A_R$ is not Baire one.
+
+For a precise nonmeasurable choice, equip $\mathcal C=\{0,1\}^{\mathbb N}$ with the fair-coin product probability $\mu$. Two sequences are equivalent when they differ in only finitely many coordinates. Choose one representative from each equivalence class and call the representative set $V$. For every finite $s\subseteq\mathbb N$, let $T_s$ flip exactly the coordinates in $s$. The sets $T_s[V]$ are pairwise disjoint and cover $\mathcal C$: two representations of the same point force their representatives to be equivalent and hence equal, and a nonempty finite flip fixes no sequence. There are countably infinitely many finite subsets $s$.
+
+Every $T_s$ preserves $\mu$, since it permutes cylinders of any specified length without changing their measures; uniqueness of the probability measure determined by cylinders gives invariance on Borel sets. It also preserves the completed measure, since it preserves Borel null sets and their subsets. If $V$ were measurable in this completion, all its disjoint translates would have the same measure $t$. For $t=0$, their countable union would have measure zero instead of one. For $t>0$, a sufficiently large finite union would already have measure greater than one. Thus $V$ is not completed-measurable.
+
+Fix a homeomorphism $\psi:\mathcal C\to M$, set $B=\psi[V]$, and let $\nu=\psi_*\mu$, viewed as a Borel probability on $X$ supported on $M$. If $B$ were measurable in the completion of $\nu$, pulling back a Borel representative and its Borel null error would make $V$ measurable in the completion of $\mu$. Hence it is not. Since
+$$
+M\cap A_B^{-1}(\{z\in K:z_j=1\})=B,
+$$
+and the digit cylinder is clopen, $A_B$ is not measurable for the completion of $\nu$. In particular it is not Borel or universally measurable. This construction uses choice to select the representatives.
+
+Finally, any selection $A$ agrees with $A_{\min}$ outside the meagre set $D$. Thus for every open $O\subseteq K$, the symmetric difference of $A^{-1}(O)$ and $A_{\min}^{-1}(O)$ is contained in $D$. The latter inverse image is $F_\sigma$ by Theorem 22.9 and has the Baire property: a countable union of closed sets differs from the union of their interiors by a subset of the countable union of their nowhere dense boundaries. Every subset of a meagre set is meagre, because its intersections with the given nowhere dense covering sets are still nowhere dense. This proves the Baire property for $A^{-1}(O)$, even for the nonmeasurable construction above. The common continuity locus follows from Theorem 22.6, not from any of these measurability properties.
+

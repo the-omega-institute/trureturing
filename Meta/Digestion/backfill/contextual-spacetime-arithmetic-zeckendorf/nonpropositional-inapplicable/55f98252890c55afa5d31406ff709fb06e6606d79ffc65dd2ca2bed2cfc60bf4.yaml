@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:55f98252890c55afa5d31406ff709fb06e6606d79ffc65dd2ca2bed2cfc60bf4
+  normalized_sha256: sha256:55f98252890c55afa5d31406ff709fb06e6606d79ffc65dd2ca2bed2cfc60bf4
+cas_ref: sha256:55f98252890c55afa5d31406ff709fb06e6606d79ffc65dd2ca2bed2cfc60bf4
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶项仅定义统一阈值和精确有理尾填充两个谓词，其中公式用于指定对象与记号，没有独立待证命题，故按非命题条款结算。
+    previous_atom_id: ea7e6681b1c24ff72e60ebacc2adbb860ae3249fa582729ed3d27b397e698b6c
+    next_atom_id: ea6c8cfdae3fb4c91bce3bdcecaeba4e0f54d6667017c9a002a4356eb2aaa9df

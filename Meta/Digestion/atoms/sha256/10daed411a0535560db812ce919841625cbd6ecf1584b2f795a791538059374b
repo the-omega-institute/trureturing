@@ -1,0 +1,6 @@
+对每个容量 $A$，其精确有界限制满足
+$$
+\tau_{\mathcal H}^{V}|_B
+=\tau_{\mathbb R}^{B}=\tau_{\mathbb Q}^{B}=\tau_{+,A}.
+$$
+

@@ -1,0 +1,41 @@
+**theorem 22.3 (Compactness, finite-core density, and interiors of cylinder phases).** The space $K$ is compact, its cylinders form a countable clopen base, and $Z[\mathbb N]$ is dense. The maps $F,H$ are continuous, $H$ is onto, and
+$$
+H(Z(n))=\gamma(n),\qquad \gamma(n)\notin E,\qquad
+\Gamma(Z(n),Z(m))=\{Z(n+m)\}.
+$$
+Both $\gamma[\mathbb N]$ and $E$ are dense in $\mathbb T$. Every nonempty cylinder has a phase image containing a nonempty open arc. More precisely,
+$$
+F[C_p]=
+\begin{cases}
+I,&L=0,\\
+S_p+r^L I,&L>0\text{ and }p_{L-1}=0,\\
+S_p+r^{L+1}I,&L>0\text{ and }p_{L-1}=1.
+\end{cases}
+$$
+
+**Proof 22.3.** The series defining $d_K$ is a metric by the coordinatewise triangle inequality and positivity of every coordinate weight. Agreement in the first $L$ coordinates gives distance at most $2^{-L}$; distance less than $2^{-L}$ forces such agreement. Thus the metric gives the product topology, with the stated countable clopen cylinder base. From any sequence in $K$, successively choose infinite subsequences constant in the next coordinate and take a diagonal subsequence. Its coordinatewise limit is still legal, since each adjacent pair eventually stabilizes. The tail estimate for $d_K$ gives metric convergence. Sequential compactness of a metric space implies compactness, proving the assertion for $K$ and hence for its finite products.
+
+For $x\in K$ put $N_L=\sum_{j<L}G_jx_j$. Truncating at $L$ and appending zeros is legal, so uniqueness of the finite Zeckendorf expansion identifies it with $Z(N_L)$. Its distance from $x$ is at most $2^{-L}$. This proves core density, also in $X$. Since $1-\alpha=\alpha^2$, the defining series for $F$ has uniform tail bound
+$$
+\sum_{j\geq L}\alpha^{j+2}=\alpha^L.
+$$
+Consequently $F$ and then $H$ are continuous. The interval $I$ has length one, so Assumption 22.2 implies that $H$ is onto.
+
+The identity
+$$
+\phi G_j-G_{j+1}=(-1)^{j+1}\alpha^{j+2}
+$$
+holds at the first two indices. Both sides satisfy the Fibonacci recurrence, since $r^2=r+1$, so it holds at every index. Multiplication by the finitely many digits of $Z(n)$ and summation give
+$$
+F(Z(n))=\phi n-\sum_{j\geq0}G_{j+1}Z(n)_j,
+$$
+whose second term is an integer. This proves the phase identity. If $\gamma(n)=[-m\phi]$ with $m\geq1$, then $(n+m)\phi$ is an integer, contradicting irrationality of $\phi$. The sum phase is therefore outside $E$, and its unique inverse under $H$ is $Z(n+m)$; Assumption 22.2 gives the asserted natural-input fiber.
+
+For every nonempty open subset of $\mathbb T$, its inverse image under the continuous surjection $H$ is nonempty and open, hence meets the finite core. Thus $\gamma[\mathbb N]$ is dense. The identity
+$$
+E=[-\phi]-\gamma[\mathbb N]
+$$
+proves density of $E$.
+
+For the cylinder formula, a prefix ending in zero permits every legal tail immediately after it, and splitting the series gives $F(pt)=S_p+r^L F(t)$. A prefix ending in one forces a zero next, after which every legal tail is permitted; splitting now gives $F(p0t)=S_p+r^{L+1}F(t)$. Surjectivity of $F$ onto $I$ proves both equalities, including both directions of each range assertion. The corresponding interval lengths are $\alpha^L$ and $\alpha^{L+1}$, respectively, and are positive. Projection to the circle therefore contains a nonempty open arc. An odd power of $r$ reverses interval orientation but does not remove these interiors. The empty-prefix case is $F[K]=I$. This proves all assertions.
+

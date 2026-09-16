@@ -1,0 +1,11 @@
+### IP.12 Mathematical boundary of the refinement
+
+RP3 does constrain the actual initial depths modulo five through a
+known weighted sum. For a fixed prime with lambda_5(p) nonzero, changing
+its depth from one to three changes its contribution by
+2 lambda_5(p). Other changes can cancel it, and lambda_5 can itself
+vanish on inert primes. The period and closure theorems describe the
+fixed-five readout completely but do not force some h_p>=2, or force
+infinitely many h_p=1. They supply additional arithmetic information
+beyond quadratic parity, without resolving the WSS zero set.
+
