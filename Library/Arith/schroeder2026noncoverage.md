@@ -9,6 +9,7 @@ claim: "The author claims noncoverage for finite families of distinct odd moduli
 strata_touched:
   - D5/S3/Arith/Congruence/TwoOddPrimeUncoveredDensity
   - D5/S3/Arith/Congruence/ConditionalComparison/ThreePrime/Comparison
+  - D5/S3/Arith/Congruence/ConditionalComparison/ThreePrime/DistortionChain
   - D5/S3/Arith/Congruence/ConditionalComparison/CappedGainTypes
 license: "Paper and prose: CC BY 4.0; original Lean/Python code and certificate inputs: MIT; third-party licenses retained."
 triage: anchor
@@ -153,23 +154,30 @@ unrestricted-tail star theorem.
 
 The repository imports the original proofs of
 `Erdos7.ThreePrime.convex_load_comparison` and
-`Erdos7.CappedGain.saturation_bound`. These declarations and their support
-modules are Michael Schroeder's results, not new repository mathematics.
-The first theorem permits arbitrary coordinate and label support; the second
+`Erdos7.CappedGain.saturation_bound`, together with
+`Erdos7.ThreePrime.PhysicalChain.covered_probability_le` and
+`Erdos7.ThreePrime.PhysicalChain.kernels_have_caps`. These declarations and
+their support modules are Michael Schroeder's results, not new repository mathematics.
+The convex comparison permits arbitrary coordinate and label support; saturation
 bounds the total geometric weight of labels with injective nonzero index-depth
-pairs. Neither theorem assumes at most three prime divisors per modulus.
+pairs. The physical chain constructs normalized full-history distortion kernels,
+bounds the final covered-event probability by accumulated charge, and derives
+conditional caps from its explicit base-law cap hypotheses. None of these
+theorems assumes at most three prime divisors per modulus.
 
 The source-module mapping replaces the prefix `formal/Erdos7/` by
-`D5/S3/Arith/Congruence/ConditionalComparison/`. It retains these 24 files:
+`D5/S3/Arith/Congruence/ConditionalComparison/`. It retains these 25 files:
 `FiniteProbability`, `Distortion`, `CappedGainProbability`, `Supermodular`,
 `Causal`, `CappedGain`, `CappedGainScalar`, `CappedGainLattice`,
 `CappedGainLift`, `Runs`, `CappedGainDepth`, `Hybrid`, `RankedRearrangement`,
 `CappedGainRearrangement`, `CappedGainDistortion`, `CappedGainBlock`,
 `CappedGainFunctional`, `CappedGainGeometric`, `Cylinders`, `TreeSelection`,
-`CappedGainTrees`, `ThreePrime/Probability`, `ThreePrime/Comparison`, and
-`CappedGainTypes`, each with its original `.lean` extension.
-This is the complete source import closure of the two roots, not a claim
-that every supporting declaration is a separate mathematical contribution.
+`CappedGainTrees`, `ThreePrime/Probability`, `ThreePrime/Comparison`,
+`CappedGainTypes`, and `ThreePrime/DistortionChain`, each with its original
+`.lean` extension.
+This is the complete source import closure of Comparison, CappedGainTypes,
+and DistortionChain, not a claim that every supporting declaration is a
+separate mathematical contribution.
 The original `Erdos7` namespaces and declaration names are retained.
 
 The repository pins Lean `v4.33.0` and Mathlib
@@ -179,8 +187,9 @@ canonical headers, attribution and mapped imports, the only source-proof
 adaptations separate simplification steps: `CausalLaw.activeWithin_snoc`
 expands finite-set membership before `reqInit` and `reqLast`, and
 `rankSet_downward` in `RankedRearrangement` expands finite-set membership
-before `rankNat`. Statements and proof arguments are unchanged. No wrapper
-or specialized covering-system theorem is introduced.
+before `rankNat`. DistortionChain requires no proof adaptation. Statements
+and proof arguments are unchanged. No wrapper or specialized covering-system
+theorem is introduced.
 
 The archive's `LICENSE.md` assigns the original Lean sources to MIT;
 `LICENSES/MIT.txt` is reproduced verbatim below. The pinned archive contains
