@@ -15258,3 +15258,615 @@ $$
 给定任意实数 $\eta>0$，先取 $n$ 使 $1/n<\eta$，再取满足这一个固定输出条件的充分大指标，即得该比值最终小于 $\eta$。故比值趋于零，证明必需的相对尺度分离。所有构造及量词均在通常实数与自然数序列内完成。证毕。
 
 ## 追加锚（本行以下为增补区）
+## 39. Separating completed successors: evaluations, continuous readouts, and finite observation completion
+
+**Assumption 39.0 (The adopted carrier and actual operator completion).** Work in ZFC and put $\mathbb N=\{0,1,2,\ldots\}$, $\mathfrak c=2^{\aleph_0}$, $\phi=(1+\sqrt5)/2$, $\delta=[\phi]\in\mathbb T=\mathbb R/\mathbb Z$, and $\Sigma=\{-,+\}$. Retain the carrier, phase map, natural points, and actual successor from Definition 20.1:
+$$
+K=\{x\in\{0,1\}^{\mathbb N}:x_jx_{j+1}=0\text{ for all }j\},\qquad 0_K=Z(0).
+$$
+The space $K$ is compact metrizable, $H:K\to\mathbb T$ is a continuous surjection, $Z(\mathbb N)$ is dense, and $T$ is continuous with $TZ(n)=Z(n+1)$. Write
+$$
+E_m=-m\delta\quad(m\ge1),\qquad E=\{E_m:m\ge1\}.
+$$
+For $\gamma\notin E$, the unique lift of $\gamma$ is $k_\gamma$; above $E_m$ the two oriented lifts are $x_m^-,x_m^+$. The phase $n\delta$ is nonsplit and has lift $Z(n)$ for every $n\ge0$.
+
+Adopt the actual-function classification and product topology of Theorems 37.1–37.4:
+$$
+\mathscr E=\overline{\{T^n:n\ge0\}}^{\,K^K}
+=\{T^n:n\ge0\}\ \dot\cup\ \{P_\theta^s:\theta\in\mathbb T,\ s\in\Sigma\}.
+$$
+All displayed operators are distinct. The space $\mathscr E$ is compact Hausdorff, its iterates are dense and isolated, and
+$$
+e(p)=p(0_K),\qquad \theta(p)=H(e(p)),\qquad
+H(p(b))=H(b)+\theta(p).
+$$
+The selector and finite-branch formulas are
+$$
+P_\theta^s(b)=
+\begin{cases}
+k_{H(b)+\theta},&H(b)+\theta\notin E,\\
+x_m^s,&H(b)+\theta=E_m,
+\end{cases}
+$$
+$$
+T^n x_m^s=
+\begin{cases}
+x_{m-n}^s,&n<m,\\
+Z(n-m),&n\ge m.
+\end{cases}
+$$
+Retain the intrinsic neighborhood bases of Theorem 37.6 and the exact evaluation fibres of Theorem 37.9. For the digit bounds below, retain $G_0=1$, $G_1=2$, $G_{L+2}=G_{L+1}+G_L$ and the following consequence of Theorem 20.2: the two lifts above $E_m$ have different prefixes of length $L\ge1$ exactly when $m\le G_L$. These are adopted results about the original successor, not definitions of a replacement dynamics.
+
+**Definition 39.1 (Evaluation families and digit tests).** For $b\in K$ and $D\subseteq K$, define
+$$
+\operatorname{ev}_b(p)=p(b),\qquad
+\operatorname{Eval}_D(p)=(p(b))_{b\in D}\in K^D.
+$$
+Set
+$$
+U(D)=\bigcup_{b\in D}(E-H(b)),\qquad
+N_s(D)=\{m\ge1:x_m^s\in D\}\quad(s\in\Sigma).
+$$
+A family separates $\mathscr E$ when its joint map is injective. Separation with $e$ supplied means injectivity of the joint map that also includes $e$. A continuous metrizable readout is a continuous map from $\mathscr E$ into a metrizable space; different readouts may have different target spaces.
+
+For $(b,j)\in K\times\mathbb N$, put
+$$
+\chi_{b,j}(p)=(p(b))_j\in\{0,1\}.
+$$
+For finite $F\subseteq K\times\mathbb N$, write
+$$
+Q_F(p)=(\chi_{b,j}(p))_{(b,j)\in F}.
+$$
+All products have their product topologies, and finite alphabets have their discrete topologies. Empty products are one-point spaces. An evaluation coordinate is $K$-valued; it is not one binary digit.
+
+**theorem 39.2 (Exact separating-evaluation criterion).** For every $D\subseteq K$, the map $\operatorname{Eval}_D$ is injective if and only if both conditions hold:
+$$
+U(D)=\mathbb T,
+\tag{39.1}
+$$
+$$
+\forall s\in\Sigma\ \forall n\ge0\ \exists m>n:
+\quad x_m^s\in D.
+\tag{39.2}
+$$
+Equivalently, each of $N_+(D)$ and $N_-(D)$ is unbounded. More precisely,
+$$
+P_\theta^+(b)\ne P_\theta^-(b)
+\quad\Longleftrightarrow\quad
+\theta\in E-H(b),
+\tag{39.3}
+$$
+and
+$$
+\{b\in K:T^n(b)\ne P_{n\delta}^s(b)\}
+=\{x_m^{-s}:m>n\}.
+\tag{39.4}
+$$
+Here $-s$ denotes the opposite sign. Operators of different phases are distinguished by every single evaluation coordinate.
+
+With $e$ supplied, the exact criterion is instead
+$$
+E\cup U(D)=\mathbb T
+\quad\text{and}\quad
+N_+(D),N_-(D)\text{ are unbounded}.
+\tag{39.5}
+$$
+
+**Proof.** The selector definition gives (39.3): at a nonsplit output phase there is one possible value, whereas at a split output phase the two selected lifts are distinct.
+
+If $H(b)\notin E$, then $H(b)+n\delta\notin E$. Indeed, equality to $E_m$ would give $H(b)=E_{m+n}$. Consequently $T^n(b)$ and $P_{n\delta}^s(b)$ are the same unique lift. If $b=x_m^t$ and $m\le n$, both operators give $Z(n-m)$. If $m>n$, their respective values are $x_{m-n}^t$ and $x_{m-n}^s$, which differ exactly when $t=-s$. This proves (39.4), including $n=0$ and the coalescence case $m=n$.
+
+For any fixed $b$, the identity
+$$
+H(p(b))-H(b)=\theta(p)
+$$
+shows that equal evaluations imply equal phases. Thus different phases require no additional sign analysis.
+
+If (39.1) fails at $\theta$, (39.3) gives two distinct selectors agreeing on all of $D$. If (39.2) fails for a sign $t$ and an index $n$, (39.4) shows that $T^n$ and $P_{n\delta}^{-t}$ agree on all of $D$. Both conditions are therefore necessary.
+
+Conversely, (39.1) implies $D\ne\varnothing$. Choose one input in $D$ to distinguish different phases. At any common phase, two distinct selectors are distinguished by (39.1) and (39.3). The only remaining possible pair is $T^n$ and $P_{n\delta}^s$; an input $x_m^{-s}\in D$ with $m>n$ distinguishes them by (39.4). Distinct finite iterates cannot have the same phase, by irrationality of $\delta$. The adopted classification exhausts all pairs, proving sufficiency.
+
+Finally, supplying $e$ is exactly adjoining $0_K$ to $D$. Since $H(0_K)=0$ and $0_K$ is not an exceptional lift,
+$$
+U(D\cup\{0_K\})=U(D)\cup E,\qquad
+N_s(D\cup\{0_K\})=N_s(D).
+$$
+Applying the criterion proves (39.5). $\square$
+
+**theorem 39.3 (Empty, finite, natural, split, and phase-section cases).** The empty family and every finite or countable evaluation family fail to separate $\mathscr E$. The two conditions in Theorem 39.2 are independent in the following explicit senses.
+
+Write
+$$
+\mathcal N=Z(\mathbb N),\qquad
+S_s=\{x_m^s:m\ge1\},\qquad S=S_-\cup S_+,
+$$
+$$
+A=\{n\delta:n\ge0\},\qquad
+G=\{k\delta:k\in\mathbb Z\},\qquad R=K\setminus S.
+$$
+For a nonempty $D\subseteq\mathcal N$, let $k_0$ be the least integer with $Z(k_0)\in D$. Then
+$$
+U(D)=\{E_m:m>k_0\},\qquad N_+(D)=N_-(D)=\varnothing.
+\tag{39.6}
+$$
+In particular, $U(\mathcal N)=E$, and equality on the entire natural core is equivalent to equality of $e$.
+
+For the exceptional inputs,
+$$
+U(S)=U(S_+)=U(S_-)=G.
+\tag{39.7}
+$$
+The family $S$ satisfies (39.2) but not (39.1). Each $S_s$ lacks the opposite signed indices. No subset of $S$ satisfies (39.1).
+
+The family of all nonsplit inputs satisfies
+$$
+U(R)=\mathbb T\setminus A,
+\tag{39.8}
+$$
+and contains no exceptional input.
+
+More generally, for any signs $(\sigma_m)_{m\ge1}$ define the set-theoretic full phase section
+$$
+D_\sigma=\{k_\gamma:\gamma\notin E\}
+\cup\{x_m^{\sigma_m}:m\ge1\}.
+\tag{39.9}
+$$
+Then $H[D_\sigma]=\mathbb T$, so (39.1) always holds, and $\operatorname{Eval}_{D_\sigma}$ is injective exactly when each sign occurs infinitely often in $(\sigma_m)$. In particular, the all-plus section $D_+$ has cardinality $\mathfrak c$ and satisfies
+$$
+\operatorname{Eval}_{D_+}(T^n)
+=\operatorname{Eval}_{D_+}(P_{n\delta}^+)
+\qquad(n\ge0).
+\tag{39.10}
+$$
+The all-minus section has the analogous minus collision. Alternating the chosen signs gives an injectively separating full phase section.
+
+**Proof.** Empty evaluation is constant, while $\mathscr E$ contains distinct operators. Every translate $E-H(b)$ is countable. A countable union of such sets is countable in ZFC and cannot cover $\mathbb T$. Thus no countable $D$ satisfies (39.1). For finite $D$, both signed index sets are also finite, so (39.2) fails as well.
+
+At $Z(k)$ one has
+$$
+E-H(Z(k))=\{-(m+k)\delta:m\ge1\}.
+$$
+These sets decrease as $k$ increases; their union over the specified indices is the set for $k_0$. Natural points are nonsplit, proving (39.6). The identity $p(Z(k))=T^k(e(p))$ from Theorem 37.9 proves that equal $e$ gives agreement on $\mathcal N$; the converse uses $Z(0)\in\mathcal N$.
+
+At $x_l^s$, the sign does not change the phase, and
+$$
+E-H(x_l^s)=\{(l-m)\delta:m\ge1\}.
+$$
+Allowing $l,m\ge1$ gives all integer multiples of $\delta$, proving (39.7). This is a countable proper subset of the circle. Both signed index sets for $S$ equal the positive integers, whereas a fixed-sign family contains none of the opposite sign. Subsets of $S$ have their translated exceptional phases contained in $G$.
+
+For $\theta=n\delta\in A$, every phase $E_m-\theta=E_{m+n}$ is exceptional. Hence no nonsplit input can distinguish the selector signs at $\theta$. Conversely, if $\theta\notin A$, then $E_1-\theta\notin E$: otherwise $E_1-\theta=E_l$ would imply $\theta=(l-1)\delta\in A$. The nonsplit point $k_{E_1-\theta}$ therefore witnesses $\theta\in U(R)$. This proves (39.8).
+
+A full phase section contains an input at $E_1-\theta$ for every $\theta$, proving (39.1) for (39.9). Its signed exceptional index sets are exactly $\{m:\sigma_m=s\}$. A subset of the positive integers is unbounded exactly when it is infinite, so Theorem 39.2 gives the stated criterion. The all-plus section contains no negative exceptional input, making (39.10) an immediate instance of (39.4); the minus case is identical with signs reversed. Choosing alternating signs makes both index sets unbounded. Finally, $H$ restricts to a bijection from any full phase section onto the circle, so its cardinality is $\mathfrak c$. $\square$
+
+**theorem 39.4 (The exact evaluation cardinal in ZFC).** One has
+$$
+\min\{|D|:D\subseteq K,\ \operatorname{Eval}_D\text{ is injective}\}
+=\mathfrak c,
+\tag{39.11}
+$$
+and
+$$
+\min\{|D|:D\subseteq K,\ (e,\operatorname{Eval}_D)\text{ is injective}\}
+=\mathfrak c.
+\tag{39.12}
+$$
+These equalities require neither the continuum hypothesis nor regularity of $\mathfrak c$.
+
+**Proof.** The inclusion $K\subseteq\{0,1\}^{\mathbb N}$ gives $|K|\le\mathfrak c$. Conversely, sending a binary sequence $a$ to the point with digits $x_{2j}=a_j$ and $x_{2j+1}=0$ injects $\{0,1\}^{\mathbb N}$ into $K$. Thus $|K|=\mathfrak c$.
+
+For $|D|<\mathfrak c$,
+$$
+|E\cup U(D)|\le\max(\aleph_0,|D|)<\mathfrak c.
+\tag{39.13}
+$$
+For finite or countable $D$ this is the countable-union bound. For any infinite cardinal $\kappa=|D|$, it uses the ZFC identity $\kappa\cdot\aleph_0=\kappa$. This is a uniform bound on countable sets indexed by a fixed cardinal, not an assertion that arbitrary unions of fewer than $\mathfrak c$ smaller cardinals remain smaller than $\mathfrak c$. Hence it does not assume continuum regularity. The necessary conditions in Theorem 39.2 now exclude every such $D$, with or without $e$.
+
+For the upper bound, evaluations at all inputs $D=K$ distinguish distinct actual functions. This family has cardinality $\mathfrak c$ and also suffices when $e$ is supplied. $\square$
+
+**theorem 39.5 (Compact-subspace coordinate dependence and continuous factorization).** Let $C$ be a nonempty compact subspace of a product $\prod_{i\in I}X_i$ of Hausdorff spaces. Let $f:C\to M$ be continuous, where $d$ is a metric inducing the topology of $M$. For every $\varepsilon>0$ there is a finite $I_\varepsilon\subseteq I$ such that
+$$
+\forall u,v\in C:\quad
+u|_{I_\varepsilon}=v|_{I_\varepsilon}
+\ \Longrightarrow\ d(f(u),f(v))<\varepsilon.
+\tag{39.14}
+$$
+There is therefore an at most countable $I_f\subseteq I$ and a unique continuous map
+$$
+\bar f:\pi_{I_f}(C)\longrightarrow M
+$$
+such that
+$$
+f=\bar f\circ(\pi_{I_f}|_C).
+\tag{39.15}
+$$
+The factor is asserted on the actual projected image, not on the whole product $\prod_{i\in I_f}X_i$. Coordinate dependence has the meaning of Karlova–Mykhaylyuk, *On $\alpha$-embedded subsets of products*, arXiv:1411.3173v1, Definition 3.1; the compact-subspace assertion here has the following direct proof.
+
+**Proof.** For each $z\in C$, continuity gives a basic ambient product cylinder $W_z$ containing $z$ such that
+$$
+f(C\cap W_z)\subseteq B_d(f(z),\varepsilon/2).
+$$
+The cylinder $W_z$ depends on finitely many coordinates, say $I_z$. Compactness of $C$ supplies $z_1,\ldots,z_r$ with
+$$
+C\subseteq W_{z_1}\cup\cdots\cup W_{z_r}.
+$$
+Put $I_\varepsilon=\bigcup_{a=1}^r I_{z_a}$. If $u,v\in C$ agree there, choose $a$ with $u\in W_{z_a}$. Membership in that cylinder depends only on $I_{z_a}$, so $v\in W_{z_a}$ as well. The triangle inequality gives
+$$
+d(f(u),f(v))
+\le d(f(u),f(z_a))+d(f(z_a),f(v))<\varepsilon.
+$$
+This proves (39.14) with one finite set working for every pair in $C$. It does not use or define $f$ outside $C$.
+
+Take $I_f=\bigcup_{r\ge1}I_{2^{-r}}$. Equality on $I_f$ makes the output distance smaller than $2^{-r}$ for every $r$, hence zero. Thus $\bar f(\pi_{I_f}(u))=f(u)$ is well defined and unique.
+
+The projection $\pi_{I_f}|_C$ is a continuous surjection onto its image. Every closed subset of $C$ is compact, and its image is compact and therefore closed in the Hausdorff space $\pi_{I_f}(C)$. The projection is consequently a closed quotient map. Since its composite with $\bar f$ is the continuous map $f$, the quotient property proves continuity of $\bar f$. Empty $I_f$, which can occur for a constant map, gives the same argument with a one-point image. $\square$
+
+**theorem 39.6 (Readouts on the actual operator space and finite digit factorization).** For every metrizable space $M$ and continuous $f:\mathscr E\to M$, there is an at most countable $D_f\subseteq K$ such that
+$$
+\operatorname{Eval}_{D_f}(p)=\operatorname{Eval}_{D_f}(q)
+\ \Longrightarrow\ f(p)=f(q)
+\qquad(p,q\in\mathscr E).
+\tag{39.16}
+$$
+Moreover,
+$$
+f=\bar f\circ\operatorname{Eval}_{D_f},\qquad
+\bar f:\operatorname{Eval}_{D_f}(\mathscr E)\to M
+$$
+with $\bar f$ continuous. The countable binary coordinate set $D_f\times\mathbb N$ also determines $f$.
+
+If the target is discrete, its attained image is finite, and finite $D_f$ suffices. More strongly, there are a finite $F\subseteq K\times\mathbb N$ and a continuous map
+$$
+h_F:Q_F(\mathscr E)\to M
+$$
+with
+$$
+f=h_F\circ Q_F.
+\tag{39.17}
+$$
+Equivalently, some finite $D\subseteq K$ and some $L\ge0$ give a factorization through
+$$
+p\longmapsto(q_L(p(b)))_{b\in D},\qquad
+q_L(x)=(x_0,\ldots,x_{L-1}),
+\tag{39.18}
+$$
+on its actual finite image.
+
+**Proof.** Apply Theorem 39.5 to the compact subspace $\mathscr E\subseteq K^K$, with the input points $b\in K$ as product-coordinate indices. Equality of all digits at a given $b$ is equality of the value $p(b)\in K$, proving the assertion about $D_f\times\mathbb N$. The continuity of the factor follows on exactly the actual image specified in Theorem 39.5.
+
+A compact subset of a discrete space is finite, since its cover by singletons has a finite subcover. For a discrete-valued continuous $f$, every $p\in\mathscr E$ has a neighborhood on which $f$ is constant. The product topology on $K^K$, followed by the binary-cylinder basis of each $K$ coordinate, gives a neighborhood $W_p$ of $p$ in $\mathscr E$ specified by finitely many digit equalities and contained in that constant fibre. Cover $\mathscr E$ by finitely many such $W_{p_1},\ldots,W_{p_r}$, and let $F$ be the union of their finite digit supports.
+
+If $Q_F(p)=Q_F(q)$, choose $a$ with $p\in W_{p_a}$. The same digit equalities place $q$ in $W_{p_a}$, and hence $f(p)=f(q)$. This defines $h_F$ on $Q_F(\mathscr E)$. That image is a finite discrete space, so $h_F$ is continuous. Taking the finite projection of $F$ onto $K$ gives finite $D_f$, and its factor is continuous by the compact-Hausdorff quotient argument.
+
+For $F\ne\varnothing$, take $D$ to be that projection and $L=1+\max\{j:(b,j)\in F\}$. The prefixes in (39.18) determine every coordinate in $F$, so they determine $f$ and give a continuous factor on their finite image. For $F=\varnothing$, the map is constant and $D=\varnothing$, $L=0$ suffice. The finite input set in this argument consists of $K$-valued evaluations; finite-valued observations arise only after the stated digit truncation. $\square$
+
+**theorem 39.7 (How many selector pairs one continuous readout can distinguish).** For a readout $f$, put
+$$
+S(f)=\{\theta\in\mathbb T:f(P_\theta^+)\ne f(P_\theta^-)\}.
+$$
+If $f$ is continuous and metrizable-valued, then
+$$
+S(f)\subseteq U(D_f),\qquad |S(f)|\le\aleph_0.
+\tag{39.19}
+$$
+For a discrete-valued continuous readout, $S(f)$ is finite. Specifically, define
+$$
+\Delta_j=\{E_m:(x_m^+)_j\ne(x_m^-)_j\}.
+$$
+Then
+$$
+\Delta_j\subseteq\{E_1,\ldots,E_{G_{j+1}}\},
+\tag{39.20}
+$$
+and a factorization (39.17) gives
+$$
+S(f)\subseteq\bigcup_{(b,j)\in F}(\Delta_j-H(b)).
+\tag{39.21}
+$$
+The countable bound for general metrizable readouts cannot be replaced by a finite bound: $S(e)=E$. There is also a continuous readout into $\{0,1\}^{\mathbb N}$ which is not determined by any finite set of full evaluation coordinates.
+
+**Proof.** If $\theta\notin U(D_f)$, (39.3) says that $P_\theta^+$ and $P_\theta^-$ agree at every input of $D_f$. Equation (39.16) makes their $f$-values equal. This proves (39.19), since $D_f$ is countable and each translated exceptional set is countable.
+
+If digit $j$ differs between $x_m^+$ and $x_m^-$, their prefixes of length $j+1$ differ. The exact prefix criterion in Theorem 20.2 gives $m\le G_{j+1}$, proving (39.20). The selector definition now gives the exact equality
+$$
+S(\chi_{b,j})=\Delta_j-H(b).
+$$
+If the values of $f=h_F\circ Q_F$ differ on a selector pair, at least one digit in $F$ must differ, proving (39.21). Its right-hand side is a finite union of finite sets.
+
+Finally, evaluation at zero gives different selector values exactly when the phase belongs to $E$, by Theorem 37.9. Irrationality makes the elements of $E$ distinct, so this is a countably infinite set.
+
+For the stronger support assertion, let $G=\{k\delta:k\in\mathbb Z\}$ and choose phases $\theta_0,\theta_1,\ldots$ in pairwise different cosets of $G$. Such a sequence exists recursively because each finite union of these countable cosets is a proper subset of the circle. Choose $b_r\in K$ with $H(b_r)=E_1-\theta_r$ and define
+$$
+g(p)=(\chi_{b_r,0}(p))_{r\ge0}\in\{0,1\}^{\mathbb N}.
+$$
+This map is continuous by coordinatewise continuity. Its $r$-th coordinate distinguishes $P_{\theta_r}^+$ and $P_{\theta_r}^-$, because the two lifts above $E_1$ have different lowest digits. Thus $\theta_r\in S(g)$ for every $r$. If a finite evaluation set $D$ determined $g$, the proof of (39.19) would give $S(g)\subseteq U(D)$. But each $E-H(b)$ lies in the single coset $G-H(b)$, so $U(D)$ lies in finitely many cosets and cannot contain all the $\theta_r$. This contradiction proves that finite evaluation support does not suffice in general. $\square$
+
+**theorem 39.8 (The exact number of continuous metrizable observations).** Let $J$ be an index set, let each $M_a$ be metrizable, and let every $f_a:\mathscr E\to M_a$ be continuous. If $|J|<\mathfrak c$, then
+$$
+p\longmapsto\bigl(e(p),(f_a(p))_{a\in J}\bigr)
+\tag{39.22}
+$$
+is not injective. In fact, there are $\mathfrak c$ phases $\theta$ at which the two distinct selectors have equal values under all these observations, including $e$.
+
+The minimum cardinality of a separating family of continuous metrizable-valued observations is exactly $\mathfrak c$, both without and with $e$ supplied. The same minimum holds when every auxiliary observation is required to be binary-valued. An upper family is
+$$
+\{\chi_{b,j}:(b,j)\in K\times\mathbb N\}.
+\tag{39.23}
+$$
+In particular, no single continuous metrizable label, and no countable family of continuous real-valued or discrete-valued labels, makes the joint map with $e$ injective.
+
+**Proof.** By Theorem 39.7 the set of phases detected by at least one observation in (39.22) is contained in
+$$
+B=E\cup\bigcup_{a\in J}S(f_a),\qquad
+|B|\le\max(\aleph_0,|J|)<\mathfrak c.
+$$
+This uses the same ZFC cardinal multiplication as Theorem 39.4 and no regularity assumption. For every $\theta\notin B$, all displayed values agree on $P_\theta^+$ and $P_\theta^-$. These are distinct actual operators.
+
+Moreover, $|\mathbb T\setminus B|=\mathfrak c$. Otherwise the union of $B$ and its complement would have cardinality less than $\mathfrak c$, since a finite sum of two infinite cardinals is their maximum, contradicting $|\mathbb T|=\mathfrak c$. This proves the stronger failure assertion. Omitting $e$ cannot restore injectivity.
+
+Each $\chi_{b,j}$ is continuous: evaluation is a product projection and a digit is continuous on $K$. Distinct functions $p,q$ differ at some actual input $b$, and the two distinct binary sequences $p(b),q(b)$ differ at some $j$. Thus (39.23) separates. Its indexing set has cardinality $|K|\cdot\aleph_0=\mathfrak c$, giving both upper bounds. Removing duplicate coordinate functions, if any, does not affect separation; the lower bound forces the remaining family still to have cardinality $\mathfrak c$.
+
+The joint binary map is a continuous injection from compact $\mathscr E$ into a Hausdorff product, hence a homeomorphism onto its image. The assertions concerning one or countably many labels are special cases of the lower bound. Discrete target spaces of arbitrary cardinality cause no exception, since they are metrizable and their compact attained images are finite. $\square$
+
+**theorem 39.9 (Exact topological weight).** If $w(X)$ denotes the least cardinality of a topological base, then
+$$
+w(\mathscr E)=w(\mathscr D)=\mathfrak c,
+\qquad \mathscr D=\{P_\theta^s:\theta\in\mathbb T,\ s\in\Sigma\}.
+\tag{39.24}
+$$
+The calculation uses the explicit bases of Theorem 37.6, not merely failure of metrizability. The classical split-rotation comparison is Megrelishvili, *Orderable groups and semigroup compactifications*, arXiv:2112.14615v4, Example 6.8; the bases used here are those of the adopted nonnegative-time operator space.
+
+**Proof.** In the notation of Theorem 37.6, choose a decreasing sequence $\varepsilon_r\downarrow0$ with $0<\varepsilon_r<\varepsilon_*$. The sets
+$$
+V_s(\theta,\varepsilon_r)
+\quad(\theta\in\mathbb T,\ s\in\Sigma,\ r\ge1),
+$$
+together with the countably many singletons $\{T^n\}$, form a base of $\mathscr E$. There are at most $\mathfrak c$ such sets. Their intersections with $\mathscr D$ give the same upper bound for $w(\mathscr D)$.
+
+For the lower bound let $\mathcal B$ be any base of $\mathscr D$. Fix $0<\varepsilon<\min(\varepsilon_*,1/4)$ and represent phases in $[0,1)$. For every $\theta\in(0,1/2)$ choose
+$$
+P_\theta^+\in B_\theta\subseteq U_+(\theta,\varepsilon),
+\qquad B_\theta\in\mathcal B.
+$$
+Here the adopted base is explicitly
+$$
+U_+(\eta,\varepsilon)
+=\{P_\eta^+\}\cup
+\{P_\xi^t:\xi\in\eta+(0,\varepsilon),\ t\in\Sigma\}.
+$$
+For $0<\theta<\eta<1/2$ there is no wrap around the circle in the last interval, and $P_\theta^+\notin U_+(\eta,\varepsilon)$. Hence $B_\theta=B_\eta$ is impossible. The family $(B_\theta)_{0<\theta<1/2}$ consists of $\mathfrak c$ distinct base elements. Thus $w(\mathscr D)\ge\mathfrak c$. Restricting any base of $\mathscr E$ to its subspace $\mathscr D$ gives $w(\mathscr E)\ge w(\mathscr D)$, proving (39.24).
+
+A compact metric space has a countable base: finite $1/r$-nets for all positive integers $r$ give a countable dense set, and rational-radius balls about its points form a base. Consequently neither space in (39.24) is metrizable. Their countable local bases and the countable dense iterate set from Theorem 37.6 do not imply a countable global base. $\square$
+
+**theorem 39.10 (Three set-theoretic symbols, two auxiliary bits, and no continuous replacement).** Allow labels with no continuity requirement. Then
+$$
+\min\{|A|:\exists\ell:\mathscr E\to A\text{ with }(e,\ell)\text{ injective}\}=3.
+\tag{39.25}
+$$
+One optimal label is
+$$
+\ell_0(T^n)=\mathrm{iterate},\qquad
+\ell_0(P_\theta^+)=+,\qquad
+\ell_0(P_\theta^-)=-.
+\tag{39.26}
+$$
+A fixed-width binary auxiliary label requires exactly two bits. Together with all digits of $e$, these two possibly discontinuous bits give an injective countable binary record of the operator. Nevertheless, no continuous metrizable auxiliary label and no countable family of continuous metrizable auxiliary labels suffices. Evaluation $e$ is a finite-to-one quotient map but is not a covering map.
+
+**Proof.** The exact fibres from Theorem 37.9 are
+$$
+e^{-1}(\{Z(n)\})=\{T^n,P_{n\delta}^+,P_{n\delta}^-\}
+\quad(n\ge0),
+\tag{39.27}
+$$
+$$
+e^{-1}(\{x_m^s\})=\{P_{E_m}^s\}
+\quad(m\ge1),
+\tag{39.28}
+$$
+and
+$$
+e^{-1}(\{k_\gamma\})=\{P_\gamma^+,P_\gamma^-\}
+\quad\bigl(\gamma\notin E\cup\{n\delta:n\ge0\}\bigr).
+\tag{39.29}
+$$
+Every state belongs to exactly one of these cases. On a three-element fibre, (39.26) gives three different labels; on a two-element fibre it gives the two signs; on a singleton fibre no separation is needed. Thus $(e,\ell_0)$ is injective.
+
+At zero, specifically,
+$$
+e^{-1}(\{0_K\})=\{\operatorname{id}_K,P_0^+,P_0^-\}.
+$$
+Any auxiliary label making $(e,\ell)$ injective must take three distinct values on this fibre. This proves the lower bound in (39.25), including impossibility of a binary label. A fixed record of $r$ binary digits offers $2^r$ labels, so $r\ge2$ is necessary, and the codes $00$, $01$, $10$ assigned to the three symbols suffice.
+
+Let $c_0,c_1$ be those two code digits. The map
+$$
+C(p)=\bigl(c_0(\ell_0(p)),c_1(\ell_0(p)),
+(e(p))_0,(e(p))_1,\ldots\bigr)
+\in\{0,1\}^{\mathbb N}
+\tag{39.30}
+$$
+is injective, because its tail reconstructs $e(p)$ and its first two digits reconstruct $\ell_0(p)$. This is a countably infinite record, not a two-bit encoding of the whole operator: the two-bit assertion is relative to the already supplied complete state $e(p)$.
+
+Theorem 39.8 excludes every continuous metrizable auxiliary label and every countable continuous family, irrespective of their target cardinalities. It also implies that the injective map $C$ in (39.30) cannot be continuous into the binary sequence space. The particular discrete label $\ell_0$ is discontinuous as well: the preimage of the closed singleton $\{\mathrm{iterate}\}$ is the dense proper subset $\{T^n:n\ge0\}$, which is not closed in $\mathscr E$.
+
+Finally, suppose $e$ were a covering map. By (39.28), a point $x_1^+$ has a singleton fibre. An evenly covered open neighborhood $W$ of $x_1^+$ would therefore have exactly one sheet, and every point of $W$ would have a singleton fibre. Density of $Z(\mathbb N)$ in $K$ supplies $Z(n)\in W$, contradicting the three-element fibre in (39.27). Thus $e$ is not a covering. Its continuity, surjectivity, and quotient property are those of Theorem 37.9; finite fibres do not provide the additional covering structure. $\square$
+
+**Definition 39.11 (Finite observations of actual iterates).** Put $\mathcal A=K\times\mathbb N$ and let $\operatorname{Fin}(\mathcal A)$ be its finite subsets, ordered by inclusion. For $F\in\operatorname{Fin}(\mathcal A)$ define
+$$
+q_F:\mathbb N\to\{0,1\}^F,\qquad
+q_F(n)=\bigl((T^n b)_j\bigr)_{(b,j)\in F},
+$$
+$$
+A_F=q_F(\mathbb N).
+\tag{39.31}
+$$
+The single integer $n$ is common to every coordinate of this record. Each $A_F$ is its actual nonempty finite image, with the discrete topology; $A_\varnothing$ is a singleton. For $F\subseteq G$, the bonding map is restriction,
+$$
+r_{GF}:A_G\to A_F,\qquad r_{GF}(a)=a|_F.
+$$
+Define the inverse limit
+$$
+L=\left\{(a_F)_F\in\prod_{F\in\operatorname{Fin}(\mathcal A)}A_F:
+ r_{GF}(a_G)=a_F\text{ whenever }F\subseteq G\right\}.
+\tag{39.32}
+$$
+These are finite observation sets. No multiplication or congruence property is stipulated for them.
+
+**theorem 39.12 (Exact finite-observation completion with common witnesses).** The maps $r_{GF}$ form a surjective inverse system, and
+$$
+A_F=Q_F(\mathscr E)
+\qquad(F\in\operatorname{Fin}(\mathcal A)).
+\tag{39.33}
+$$
+There is a canonical homeomorphism
+$$
+\Psi:\mathscr E\longrightarrow L,
+\qquad \Psi(p)=(Q_F(p))_F.
+\tag{39.34}
+$$
+The map $n\mapsto(q_F(n))_F$ embeds the discrete set $\mathbb N$ as a dense subset of $L$.
+
+More explicitly, put
+$$
+\iota(p)=\bigl((p(b))_j\bigr)_{(b,j)\in\mathcal A}.
+$$
+Then
+$$
+\iota(\mathscr E)=
+\overline{\{\iota(T^n):n\ge0\}}^{\,\{0,1\}^{\mathcal A}},
+\tag{39.35}
+$$
+and, for $z\in\{0,1\}^{\mathcal A}$,
+$$
+z\in\iota(\mathscr E)
+\quad\Longleftrightarrow\quad
+\forall F\in\operatorname{Fin}(\mathcal A)\ \exists n\ge0\quad
+\forall(b,j)\in F:\ z_{b,j}=(T^n b)_j.
+\tag{39.36}
+$$
+The integer may depend on $F$, but within each $F$ it must be the same integer for every input and digit.
+
+**Proof.** Restriction of $q_G(n)$ is $q_F(n)$, proving that each bonding map is well defined. It is surjective because an actual record $q_F(n)$ extends to $q_G(n)$ using that same $n$. Restriction also gives the identity and composition laws for the inverse system.
+
+The map $Q_F$ is continuous and finite-valued. Every nonempty fibre of $Q_F$ on $\mathscr E$ is open and therefore meets the dense set of iterates. Hence every attained value is $q_F(n)$ for some $n$, proving (39.33), including the empty coordinate set.
+
+Flattening the output digits gives a continuous injection
+$$
+\iota:K^K\longrightarrow\{0,1\}^{\mathcal A}.
+$$
+Its image is exactly the closed set
+$$
+B=\{z:z_{b,j}z_{b,j+1}=0\text{ for every }b\in K,\ j\ge0\}.
+$$
+Indeed, each row $z_{b,\cdot}$ of a member of $B$ is an element of $K$ and therefore defines the value of an actual function at $b$. Conversely every function in $K^K$ has such rows. Continuity is coordinatewise, and compactness of $K^K$ together with the Hausdorff target makes $\iota$ a homeomorphism onto $B$. Its restriction makes $\iota(\mathscr E)$ closed. Density of the iterates then proves (39.35).
+
+A basic neighborhood in the binary product prescribes the values at one finite set $F$. It meets $\{\iota(T^n):n\ge0\}$ exactly when one integer $n$ realizes all those prescribed coordinates. This proves (39.36).
+
+If $(a_F)_F\in L$, define $z_{b,j}$ to be the coordinate of $a_{\{(b,j)\}}$. Compatibility with singleton restrictions implies
+$$
+z|_F=a_F\in A_F
+\qquad\text{for every finite }F.
+$$
+Thus each finite pattern is realized by one $q_F(n)$, and (39.36) gives a unique $p\in\mathscr E$ with $\iota(p)=z$. It satisfies $Q_F(p)=a_F$ for every $F$. This proves surjectivity of $\Psi$; injectivity follows because all singleton digit tests together distinguish actual functions. The map is continuous, and $L$ is Hausdorff as a subspace of a product of finite Hausdorff spaces. A continuous bijection from compact $\mathscr E$ onto $L$ is a homeomorphism, proving (39.34).
+
+The iterate image in $L$ is dense by (39.34) and density in $\mathscr E$. It is injective because the operators $T^n$ have distinct phases; it has the discrete subspace topology because every $T^n$ is isolated by Theorem 37.4.
+
+The common-witness requirement is already substantive for two inputs. Take
+$$
+F=\{(0_K,0),(Z(1),0)\}.
+$$
+Each coordinate individually attains the value $1$ on some iterate. But the joint value $(1,1)$ is unattainable: the two values are consecutive lowest-digit successor observations, and their length-two words are exactly $01$, $00$, and $10$, by Theorem 20.6. Independent witnesses for the two singleton observations would incorrectly admit $(1,1)$.
+
+Finally, for any net $(p_\lambda)$ in $\mathscr E$, the topology just identified gives
+$$
+p_\lambda\to p
+\quad\Longleftrightarrow\quad
+\forall(b,j)\in\mathcal A:\quad
+(p_\lambda(b))_j=(p(b))_j\text{ eventually}.
+$$
+Equivalently, each fixed finite record $Q_F(p_\lambda)$ eventually equals $Q_F(p)$. The equivalence follows from the finite-cylinder basis and the discrete digit topology. There is no assertion of one eventual index working simultaneously for all $F$. This is precisely the original pointwise evaluation topology. $\square$
+
+**theorem 39.13 (Countable finite-observation towers cannot recover the completion).** Every inverse limit over a countable index set of finite discrete spaces is compact metrizable. Consequently no such inverse limit is homeomorphic to $\mathscr E$.
+
+For a countable collection of actual finite tests $F_0,F_1,\ldots$, put
+$$
+G_r=\bigcup_{i\le r}F_i,\qquad S=\bigcup_{r\ge0}G_r.
+$$
+The canonical map
+$$
+\mathscr E\longrightarrow\varprojlim_r A_{G_r}
+\tag{39.37}
+$$
+is a continuous surjection but is not injective, even if $e$ is appended to its record. Its quotient can equivalently be represented as the compact image $\pi_S(\iota(\mathscr E))\subseteq\{0,1\}^S$.
+
+**Proof.** Enumerate the factors of a countable product as $B_0,B_1,\ldots$, padding a finite list with singleton factors when necessary. Its product topology is induced by
+$$
+d(a,b)=\sum_{r\ge0}2^{-(r+1)}\mathbf 1_{a_r\ne b_r}.
+$$
+The product is compact because the factors are compact. Every bonding compatibility condition is closed, since the factors are Hausdorff and the maps between finite discrete spaces are continuous. The inverse limit is therefore a closed compact metrizable subspace of this product. The empty inverse limit, when it occurs, is also compact metrizable. Equation (39.24) excludes a homeomorphism with $\mathscr E$.
+
+For the specified tower, take a compatible point $(a_r)_r$ and define
+$$
+C_r=\{p\in\mathscr E:Q_{G_r}(p)=a_r\}.
+$$
+By (39.33), each $C_r$ is nonempty; it is closed by continuity. Compatibility makes the sets decreasing. Compactness gives a point in their intersection, proving surjectivity of (39.37). The coordinate maps give its continuity.
+
+A compatible tower record determines a binary assignment on $S$, and equality on $S$ determines all tower records. The preceding compactness argument shows that every such compatible assignment is attained by some $p\in\mathscr E$. Restriction therefore identifies the tower limit with the stated projected compact image; the identification is a homeomorphism by the compact-Hausdorff argument.
+
+The set
+$$
+D_S=\{b\in K:\exists j\ (b,j)\in S\}
+$$
+is countable. Choose
+$$
+\theta\notin E\cup U(D_S),
+$$
+which is possible by (39.13). The two distinct selectors at this phase have equal $e$ and agree at every input in $D_S$, hence on every digit of $S$ and every record of the tower. Thus (39.37) remains noninjective after adjoining $e$.
+
+The same obstruction applies to a countable tower of arbitrary continuous finite-valued readouts: Theorem 39.6 replaces each readout by finitely many digit tests, and their total union is countable. Countable density of the iterates, or sequential approximation of each operator as in Theorem 37.4, is not a countable separating family of continuous finite observations and does not contradict the result. $\square$
+
+**theorem 39.14 (No countable cofinal family, even under semantic refinement).** For finite $F,G\subseteq\mathcal A$, write $F\preceq G$ when there is a map $h:A_G\to A_F$ satisfying
+$$
+q_F=h\circ q_G\quad\text{on }\mathbb N.
+\tag{39.38}
+$$
+This condition is equivalent to $Q_F=h\circ Q_G$ on $\mathscr E$. It is a refinement preorder, and inclusion $F\subseteq G$ implies $F\preceq G$.
+
+If $\mathcal C\subseteq\operatorname{Fin}(\mathcal A)$ is cofinal for this preorder, meaning
+$$
+\forall F\in\operatorname{Fin}(\mathcal A)\ \exists G\in\mathcal C:
+\quad F\preceq G,
+$$
+then $|\mathcal C|\ge\mathfrak c$. The least cofinal cardinality is exactly $\mathfrak c$, for either this preorder or ordinary inclusion. In particular, no countable family becomes cofinal merely by allowing finite combinations of its tests.
+
+**Proof.** Every map between the finite discrete images is continuous. Thus (39.38) implies equality of the two continuous maps $Q_F$ and $h\circ Q_G$ on the dense set of iterates. Their target is Hausdorff, so their equalizer is closed and contains all of $\mathscr E$. This proves the claimed equivalence; the converse is restriction to iterates. Identity and composition of the factor maps prove reflexivity and transitivity. For inclusion, use the restriction bonding map.
+
+Suppose $p,q$ have equal $Q_G$ values for every $G\in\mathcal C$. Given any finite $F$, cofinality supplies such a $G$ and a factor $h$, so $Q_F(p)=Q_F(q)$. Taking singleton digit sets proves $p=q$. Hence $(Q_G)_{G\in\mathcal C}$ is a separating family of continuous finite-valued observations. Theorem 39.8 forces $|\mathcal C|\ge\mathfrak c$.
+
+Since $|\mathcal A|=\mathfrak c$, its set of finite subsets also has cardinality $\mathfrak c$: singleton subsets give the lower bound, and finite tuples, followed by a countable union over their lengths, give the upper bound in ZFC. The full family is cofinal for both orders. An inclusion-cofinal family is also cofinal for $\preceq$, so the same lower bound applies to it.
+
+Finally, a countable family has only countably many finite subfamilies, hence only countably many finite unions of digit supports. Such bundling cannot yield a cofinal family of cardinality $\mathfrak c$. $\square$
+
+**theorem 39.15 (Fixed finite syntax, arbitrary parameters, and the size of a record).** Let $\Lambda$ be an at most countable alphabet, let $\mathcal L\subseteq\Lambda^{<\omega}$ be a set of finite closed descriptions, and fix an interpretation assigning to each $d\in\mathcal L$ one continuous finite-valued observation $f_d$ on $\mathscr E$. Then $(e,(f_d)_{d\in\mathcal L})$ is not injective. The statement remains true after taking every finite record formed from these observations. A countable stock of fixed parameters can be included in $\Lambda$.
+
+In contrast, allowing every actual parameter $b\in K$ in the digit schema $\chi_{b,j}$ supplies a separating family of cardinality $\mathfrak c$. These observations have the following distinct cardinal properties:
+$$
+|\mathscr E|=|\iota(\mathscr E)|=\mathfrak c,
+\qquad
+|\{0,1\}^{K\times\mathbb N}|=2^{\mathfrak c},
+\tag{39.39}
+$$
+$$
+1\le |A_F|\le2^{|F|}\quad(F\text{ finite}),
+\qquad w(\mathscr E)=\mathfrak c.
+\tag{39.40}
+$$
+Thus the number of observation maps, the number of binary positions in a record, the number of attained records, and topological weight are different quantities. The countable binary injection (39.30) remains available when continuity is dropped.
+
+**Proof.** Each finite power of an at most countable alphabet is at most countable, and a countable union over the finite lengths is at most countable. Therefore $\mathcal L$ is countable. Finite lists of its elements also form a countable set, and each corresponding record is still a continuous finite-valued observation. Theorem 39.8 excludes separation, including after adjoining $e$.
+
+The hypothesis assigns one fixed observation to each closed description. A schema containing a parameter that may take every value in $K$ is not a countable list of those fixed interpretations: its fully instantiated parameters range over a set of size $\mathfrak c$. The digit family is separating by Theorem 39.8, and that theorem also proves that its collection of distinct observation maps has cardinality exactly $\mathfrak c$.
+
+The adopted operator classification gives $|\mathscr E|=\mathfrak c$, and injectivity of $\iota$ preserves this cardinality. The full binary product has cardinality $2^{|K\times\mathbb N|}=2^{\mathfrak c}$, whereas only the correlated subset $\iota(\mathscr E)$ is attained. Each $A_F$ is a nonempty subset of $\{0,1\}^F$, proving the finite-image bounds, with equality $|A_\varnothing|=1$ at the empty record. The weight equality is Theorem 39.9.
+
+One $K$-valued evaluation contains all countably many digits of one output state, while a test $\chi_{b,j}$ contains only one digit. Equation (39.30) proves that object cardinality alone permits a countable binary encoding. The failure of countably many continuous observations is therefore the continuity and parameter-family obstruction proved above, not a failure of such set-theoretic encodings. $\square$
+
+## 追加锚（本行以下为增补区）
