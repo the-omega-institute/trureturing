@@ -272,3 +272,245 @@
 [^lit-computable]: Vasco Brattka、Guido Gherardi，*Effective Choice and Boundedness Principles in Computable Analysis*，arXiv:0905.4685，[作者预印本](https://arxiv.org/abs/0905.4685)。`literature-attested` 范围：数学存在原理需要按输入输出表示区分计算内容。本文第 6 节不声称对所定义问题给出 Weihrauch 度分类，所用不可计算结论仅为正文证明的具体停机归约。
 
 ## 追加锚（本行以下为增补区）
+
+## 8. 增补一·可更新预测器的前向不变覆盖
+
+**本批导航。** 本批接续 PR #8330 的 `ae239ec5cdd39f52889ab0a7d1f62eb3325a3456`，并核对 `dev` 的 `e984c77223b55a3cda565c7694098e436926183d`。第 8 节刻画可更新近似预测器所需的覆盖条件；第 9 节把第 4.3 条的有限窗口分离加强为无理旋转上的全未来分离，并给出黄金旋转的有限时间状态复杂度；第 10 节在收缩编码上给出达到下界的有限状态构造。第 11 节列本批证明来源。原有条目及其字节保持不变。
+
+**定义 8.1（统一可更新预测与状态计费）。** 设 $X\ne\varnothing$，动作更新 $F_a:X\to X$ 总定义且确定，观察 $o:X\to Y$ 取值于度量空间。一个有限状态预测器由非空有限集 $S$、初始化 $e:X\to S$、总确定性更新 $G_a:S\to S$ 及输出 $h:S\to Y$ 组成。误差 $\varepsilon\ge0$ 的全未来要求为
+\[
+ d_Y\bigl(h(G_w(e(x))),o(F_w(x))\bigr)\le\varepsilon
+ \quad(x\in X,\ w\in\Sigma^*).
+\]
+有限时间要求将词限制为 $|w|\le H$。初始化后只能接收动作，不能再次访问真实状态，也没有不计入 $S$ 的外部时钟、计数器或随机源；更新及输出均与时刻无关。预测器可以依赖预先给定的 $H$ 和 $\varepsilon$。所计资源是 $|S|$，或编码其当前标签的 $\lceil\log_2|S|\rceil$ 比特；转移表、输出常数、初始化算法及数值精度的存储成本另计。此定义允许 $G_we(x)\ne e(F_wx)$。
+
+**定理 8.2（有限状态近似等价于确定性前向不变覆盖）。** 存在至多 $s\ge1$ 个状态、满足定义 8.1 全未来要求的预测器，当且仅当存在至多 $s$ 个非空集合 $C_i\subseteq X$ 覆盖 $X$，为每个 $i,a$ 指定唯一后继编号 $\delta(i,a)$，并存在 $y_i\in Y$，满足
+\[
+ F_a[C_i]\subseteq C_{\delta(i,a)},\qquad
+ \sup_{x\in C_i}d_Y(o(x),y_i)\le\varepsilon.
+\]
+这些集合允许重叠。若定义
+\[
+ d_\infty(x,x')=\sup_{w\in\Sigma^*}d_Y(o(F_wx),o(F_wx'))\in[0,\infty],
+\]
+则每个 $C_i$ 的 $d_\infty$ 直径至多为 $2\varepsilon$。
+
+**证明。** 给定预测器，对每个状态 $i$ 定义
+\[
+ C_i=\{F_wx:x\in X,\ w\in\Sigma^*,\ G_we(x)=i\}.
+\]
+删除空集合及其未到达状态。空词使剩余集合覆盖 $X$。若 $z=F_wx\in C_i$，则 $F_az=F_{wa}x\in C_{G_a(i)}$，故前向包含成立且后继集合非空。预测保证又给 $d_Y(o(z),h(i))\le\varepsilon$，可取 $y_i=h(i)$。同一真实状态可以由不同历史到达，因此这些 $C_i$ 没有被假定为初始化映射的纤维。
+
+反向，对每个 $x$ 选择一个包含它的 $C_i$ 作为初始标签，并用 $\delta$ 更新。沿词长归纳，真实状态始终属于当前标签对应的集合，因而输出误差始终至多为 $\varepsilon$。对于同属 $C_i$ 的两个真实状态，执行同一个动作词后仍同属同一个后继集合；它们的观察各距同一 $y_j$ 至多 $\varepsilon$，故距离至多为 $2\varepsilon$。对所有词取上确界即可。这个证明只给同动作的一侧模拟，不附加未证明的双模拟或有效可计算性。证毕。[^tcs-symbolic]
+
+## 9. 无理旋转的有限摘要、无限预测与算术状态界
+
+**定义 9.1（圆周旋转及其预测复杂度）。** 令 $\mathbb T=\mathbb R/\mathbb Z$，$\alpha\in\mathbb R\setminus\mathbb Q$，唯一动作是
+\[
+ F_\alpha(x)=x+\alpha\pmod1,\qquad o(x)=\exp(2\pi i x)\in\mathbb C.
+\]
+输出度量为复数绝对值，允许预测输出位于整个 $\mathbb C$。对 $H\in\mathbb N$、$\varepsilon>0$，记 $S_{H,\varepsilon}(\alpha)$ 为同时对全部 $x\in\mathbb T$、$0\le n\le H$ 满足定义 8.1 的最少状态数。该最小值存在，例如将有限相位网格与长度 $H+1$ 的显式计时状态组合即可。对 $t\in\mathbb R$，记 $\|t\|_{\mathbb T}=\min_{k\in\mathbb Z}|t-k|$。
+
+**定理 9.2（全未来可有限压缩与永久有限状态预测的分离）。** 此旋转系统满足
+\[
+ d_\infty(x,y)=|\exp(2\pi ix)-\exp(2\pi iy)|.
+\]
+因此对任意 $\varepsilon>0$，存在有限标签静态编码，以及接收标签和外部查询 $n$ 的解码器，使全部 $x,n$ 的预测误差不超过 $\varepsilon$。然而对任意固定初相位 $x$，任何有限状态自主预测器的全时间最坏误差均至少为 $1$；一状态、恒输出 $0$ 达到误差 $1$。特别地，$\varepsilon<1$ 时不存在定义 8.1 的全未来有限状态预测器，也不存在定理 8.2 的有限前向不变覆盖。
+
+**证明。** 两个相位的后续复数输出共同乘上单位复数 $\exp(2\pi in\alpha)$，距离保持不变，给出 $d_\infty$ 的等式。取整数 $M\ge\pi/\varepsilon$，把 $x$ 编到最近的相位 $j/M$，并令
+\[
+ D(j,n)=\exp(2\pi i(j/M+n\alpha)).
+\]
+圆周相位误差至多 $1/(2M)$，故每个时刻的输出误差至多 $\pi/M\le\varepsilon$。该静态解码器读取外部 $n$，其计算资源没有被有限标签数约束。
+
+对有限状态自主预测器，轨道在某个 $\mu\ge0$ 后以周期 $p\ge1$ 重复。在时刻 $\mu+kp$，预测输出恒为某个 $c\in\mathbb C$。由于 $p\alpha$ 无理，真实输出在单位圆上稠密；仓库的 `irrational_rotation_interval_sampling` 亦直接推出这个经典稠密性。连续性给出
+\[
+ \sup_{k\ge0}|\exp(2\pi i(x+(\mu+kp)\alpha))-c|
+ =\sup_{|z|=1}|z-c|=1+|c|\ge1.
+\]
+最后，一状态输出 $0$ 与真实输出的距离恒为 $1$。定理 8.2 给出覆盖不存在的结论。证毕。[^tcs-rotation]
+
+**定理 9.3（有限预测时间的算术下界）。** 设 $0<\varepsilon<1/2$，置
+\[
+ a_\varepsilon=\frac{\arcsin\varepsilon}{\pi},\qquad
+ \Psi_\alpha(s)=\max_{1\le p\le s}\frac{p}{\|p\alpha\|_{\mathbb T}}.
+\]
+若一个 $s$ 状态自主预测器从某个固定初相位起，在 $0\le n\le H$ 内误差至多为 $\varepsilon$，则
+\[
+ H<s+a_\varepsilon\Psi_\alpha(s).
+\]
+若另有 $c>0$、$\nu\ge1$ 满足 $\|p\alpha\|_{\mathbb T}\ge c p^{-\nu}$ 对全部正整数 $p$ 成立，则
+\[
+ H<s+\frac{a_\varepsilon}{c}s^{\nu+1}.
+\]
+这些结论对允许任意复数输出常数的预测器仍成立。
+
+**证明。** 若 $H<s$，结论立即成立。否则有限确定性轨道有 $\mu\ge0,p\ge1$ 满足 $\mu+p\le s$，并从时刻 $\mu$ 起周期为 $p$。令
+\[
+ K=\left\lfloor\frac{H-\mu}{p}\right\rfloor\ge1.
+\]
+时刻 $\mu,\mu+p,\ldots,\mu+Kp$ 的预测输出相同。把每个真实输出与时刻 $\mu$ 的真实输出比较，由三角不等式得到
+\[
+ |1-\exp(2\pi i k p\alpha)|\le2\varepsilon,
+ \qquad \|kp\alpha\|_{\mathbb T}\le a_\varepsilon
+ \quad(1\le k\le K).
+\]
+置 $\delta=\|p\alpha\|_{\mathbb T}>0$，首先有 $\delta\le a_\varepsilon$。若 $K\delta>a_\varepsilon$，取最小 $j\le K$ 使 $j\delta>a_\varepsilon$，则
+\[
+ a_\varepsilon<j\delta\le a_\varepsilon+\delta
+ \le2a_\varepsilon<1-a_\varepsilon.
+\]
+这里 $a_\varepsilon<1/6$。由于 $p\alpha$ 模整数等于 $\delta$ 或 $-\delta$，上述区间迫使 $\|jp\alpha\|_{\mathbb T}>a_\varepsilon$，矛盾。因此 $K\delta\le a_\varepsilon$，从而
+\[
+ H<\mu+(K+1)p
+ \le s+a_\varepsilon\frac{p}{\|p\alpha\|_{\mathbb T}}
+ \le s+a_\varepsilon\Psi_\alpha(s).
+\]
+代入所给丢番图下界，并用 $p\le s$，即得第二个不等式。证毕。
+
+**定理 9.4（有理相位时钟的构造上界）。** 对任意整数 $p$、正整数 $q$ 及 $H\ge0$，存在一个对全部初相位统一适用的 $q$ 状态预测器，其时间 $0\le n\le H$ 内的误差至多为
+\[
+ \frac{\pi}{q}+2\pi H\left|\alpha-\frac pq\right|.
+\]
+
+**证明。** 用 $\mathbb Z/q\mathbb Z$ 作状态集，更新 $j\mapsto j+p$，状态 $j$ 输出 $\exp(2\pi ij/q)$。把初相位 $x$ 编到最近的 $j/q$。真实相位与预测相位在第 $n$ 步的圆周距离至多为
+\[
+ \frac1{2q}+n\left|\alpha-\frac pq\right|.
+\]
+映射 $t\mapsto\exp(2\pi it)$ 对圆周距离的 Lipschitz 常数为 $2\pi$，得到所列界。更新表与输出表固定，不读取外部时刻。该构造无需假设 $p,q$ 互素。证毕。
+
+**定理 9.5（黄金旋转的匹配平方根状态律）。** 令
+\[
+ \varphi=\frac{1+\sqrt5}{2},\qquad \alpha=\varphi^{-1},\qquad
+ 0<\varepsilon<1/2.
+\]
+对 $s=S_{H,\varepsilon}(\alpha)$ 有
+\[
+ H<s+3a_\varepsilon s^2,
+\]
+并且
+\[
+ s<2\max\left\{2,\frac{2\pi}{\varepsilon},
+                      \sqrt{\frac{4\pi H}{\varepsilon}}\right\}.
+\]
+因此在固定 $\varepsilon$、$H\to\infty$ 的口径下，
+\[
+ S_{H,\varepsilon}(\varphi^{-1})=\Theta_\varepsilon(\sqrt H),\qquad
+ \left\lceil\log_2 S_{H,\varepsilon}(\varphi^{-1})\right\rceil
+ =\tfrac12\log_2 H+O_\varepsilon(1).
+\]
+这里的比特数仅指定义 8.1 中的当前内部状态。
+
+**证明。** 对正整数 $q$，取距离 $q\alpha$ 最近的整数 $p$。因 $0<\alpha<1$，可取 $0\le p\le q$。利用 $\alpha$ 的共轭为 $-\varphi$，有
+\[
+ (p-q\alpha)(p+q\varphi)=p^2+pq-q^2\in\mathbb Z\setminus\{0\}.
+\]
+而 $0<p+q\varphi\le(1+\varphi)q<3q$，故
+\[
+ \|q\alpha\|_{\mathbb T}>\frac1{3q}.
+\]
+在定理 9.3 中取 $c=1/3,\nu=1$ 即得下界。
+
+令 Fibonacci 数满足 $F_0=0,F_1=1,F_{n+2}=F_{n+1}+F_n$。由 $\alpha^2=1-\alpha$ 及递推归纳，
+\[
+ F_{n+1}\alpha-F_n=(-1)^n\alpha^{n+1}.
+\]
+另外 $F_k<\varphi^k$ 对全部 $k\ge0$ 成立，同样由递推归纳得到。因此对 $p=F_n,q=F_{n+1}$ 有
+\[
+ \left|\alpha-\frac pq\right|
+ =\frac{\alpha^{n+1}}{q}<\frac1{q^2}.
+\]
+这些正分母趋于无穷，相邻分母比至多为 $2$。置
+\[
+ T=\max\left\{2,\frac{2\pi}{\varepsilon},
+                  \sqrt{\frac{4\pi H}{\varepsilon}}\right\},
+\]
+选取第一个满足 $q\ge T$ 的 Fibonacci 分母，则 $q<2T$。定理 9.4 给出的误差小于或等于
+\[
+ \frac\pi q+\frac{2\pi H}{q^2}\le\frac\varepsilon2+\frac\varepsilon2.
+\]
+于是 $S_{H,\varepsilon}\le q<2T$。对固定 $\varepsilon$，上界为 $O_\varepsilon(\sqrt H)$；下界中 $s\ge1$ 使 $s+3a_\varepsilon s^2\le(1+3a_\varepsilon)s^2$，从而给出 $\Omega_\varepsilon(\sqrt H)$。取对数得到最后一个式子。证明同时给出可构造的时钟，没有从试验拟合渐近阶。证毕。[^tcs-golden]
+
+**命题 9.6（有限线性维数不能替代有限离散状态数）。** 固定初相位 $0$，无理旋转的复数序列 $z_n=\exp(2\pi in\alpha)$ 在 $\mathbb C$ 上的 Hankel 秩及最小线性实现维数均为 $1$。把输出视为二维实向量 $(\operatorname{Re}z_n,\operatorname{Im}z_n)$，其最小实线性实现维数为 $2$。这两种精确有限维实现与定理 9.2 的有限状态障碍同时成立。
+
+**证明。** 置 $\zeta=\exp(2\pi i\alpha)$。Hankel 矩阵为 $H(i,j)=\zeta^i\zeta^j$，它秩至多为 $1$，且 $H(0,0)=1$，故恰为 $1$。一个复寄存器按 $z\mapsto\zeta z$ 更新即可精确实现该序列。
+
+在实数上，二维旋转矩阵及初始向量 $(1,0)$ 给出实现。第零与第一步的真实输出分别为 $(1,0)$ 及 $(\cos(2\pi\alpha),\sin(2\pi\alpha))$。无理性保证 $\sin(2\pi\alpha)\ne0$，两向量线性无关；一维实状态空间经固定线性读出所得的全部输出只能位于一条直线上，故不可能实现。有限维寄存器允许无穷多个取值，而定义 8.1 计数的是实际可区分的离散内部状态。上述维数结论不提供有限精度实现的永久误差保证。证毕。
+
+## 10. 收缩编码的精确最小记忆与黄金特例
+
+**定义 10.1（两分支收缩编码）。** 给定 $0<\lambda<1/2$，令
+\[
+ K_\lambda=\left\{(1-\lambda)\sum_{j=0}^\infty b_j\lambda^j:
+                         b_j\in\{0,1\}\right\}\subseteq[0,1],
+\]
+动作及观察为
+\[
+ F_a(x)=(1-\lambda)a+\lambda x\quad(a\in\{0,1\}),\qquad o(x)=x\in\mathbb R.
+\]
+对 $\varepsilon>0$，记 $N_\varepsilon(\lambda)$ 为对全部初态及全部动作词、误差至多 $\varepsilon$ 的最少预测器状态数，采用定义 8.1 的计费口径。数字串按从当前最高权位到较低权位的顺序书写；执行动作 $a$ 把 $a$ 加到数字串开头。
+
+**定理 10.2（收缩数字前缀达到状态下界）。** 对任意整数 $L\ge1$，若
+\[
+ \frac{\lambda^L}{2}\le\varepsilon
+       <\frac{(1-\lambda)\lambda^{L-1}}2,
+\]
+则
+\[
+ N_\varepsilon(\lambda)=2^L.
+\]
+上界由保存前 $L$ 个数字、每步前插新动作并舍弃最后一位的确定性状态机达到。特别地，精度 $\varepsilon_L=\lambda^L/2$ 时恰好需要 $L$ 比特当前状态，且此保证覆盖任意长的动作序列。
+
+**证明。** 数字编码唯一。事实上，若两条无限数字串首次在位置 $k$ 不同，最高差异项的绝对值为 $(1-\lambda)\lambda^k$，全部后续项差异的绝对值之和至多为 $\lambda^{k+1}$，净差至少为 $(1-2\lambda)\lambda^k>0$。
+
+对 $u=(u_0,\ldots,u_{L-1})\in\{0,1\}^L$ 置
+\[
+ P(u)=(1-\lambda)\sum_{j=0}^{L-1}u_j\lambda^j.
+\]
+具有前缀 $u$ 的全部状态位于 $P(u)+\lambda^L K_\lambda$，因而位于长度为 $\lambda^L$ 的区间 $[P(u),P(u)+\lambda^L]$。令机器状态为 $u$，输出为区间中点 $P(u)+\lambda^L/2$，动作 $a$ 把 $u$ 更新为 $(a,u_0,\ldots,u_{L-2})$。这正是当前真实状态的新前缀，因此全部时刻的输出误差均至多为 $\lambda^L/2$，得到 $2^L$ 状态上界。
+
+为证明下界，取 $2^L$ 个真实初态 $P(u)$，即所有尾部恒零的编码。两个前缀首次在位置 $k\le L-1$ 不同，较大的前缀与较小的前缀之间的差至少为
+\[
+ (1-\lambda)\lambda^k-(1-\lambda)\sum_{j=k+1}^{L-1}\lambda^j
+ =(1-2\lambda)\lambda^k+\lambda^L
+ \ge(1-\lambda)\lambda^{L-1}.
+\]
+若两个这样的初态使用同一个机器状态，其第零步预测相同，三角不等式要求真实输出间距至多 $2\varepsilon$，与严格上界假设矛盾。因此初始化在这 $2^L$ 个初态上单射，至少需要 $2^L$ 个状态。由于 $\lambda<1/2$，$\varepsilon_L$ 确实属于所列区间。证毕。
+
+**推论 10.3（状态复杂度指数及黄金收缩实例）。** 对每个固定 $0<\lambda<1/2$，
+\[
+ \lim_{\varepsilon\downarrow0}
+ \frac{\log N_\varepsilon(\lambda)}{\log(1/\varepsilon)}
+ =\frac{\log2}{\log(1/\lambda)}.
+\]
+特别地，取 $\lambda=\varphi^{-2}$，则
+\[
+ N_{1/(2\varphi^{2L})}(\varphi^{-2})=2^L\quad(L\ge1),
+\]
+而复杂度指数为 $\log2/(2\log\varphi)$。
+
+**证明。** 对足够小的 $\varepsilon>0$，令 $m\ge2$ 为满足 $\lambda^m/2\le\varepsilon$ 的最小整数，则
+\[
+ \lambda^m/2\le\varepsilon<\lambda^{m-1}/2.
+\]
+长度 $m$ 的前缀机器给出 $N_\varepsilon\le2^m$。长度 $m-1$ 的尾零初态族两两距离至少为 $(1-\lambda)\lambda^{m-2}$，而
+\[
+ 2\varepsilon<\lambda^{m-1}<(1-\lambda)\lambda^{m-2},
+\]
+故同样的第零步单射论证给出 $N_\varepsilon\ge2^{m-1}$。于是 $\log N_\varepsilon$ 被 $(m-1)\log2$ 与 $m\log2$ 夹住，$\log(1/\varepsilon)$ 与 $m\log(1/\lambda)$ 相差有界量，取极限即得。
+
+因为 $\varphi^2>2$，黄金特例满足 $0<\varphi^{-2}<1/2$；在定理 10.2 中代入即可。这个实例的前缀被动作确定更新，而第 9 节旋转的相位持续累积；相同黄金常数没有把两种动力学的资源界识别为同一结论。证毕。
+
+## 11. 本批的数学来源与核验范围
+
+**出处 11.1（逐项来源）。** 第 8.2 条是本批从确定性模拟语义推出的覆盖刻画，相关有限符号模型背景见下列文献；第 9.2 条的稠密性复用仓库无理旋转取样结论，其余证明直接给出；第 9.3 至 9.5 条的周期、丢番图下界及有理时钟构造在本批组成匹配状态界；第 9.6 条使用第 5 节的线性实现语义并直接证明所用特例；第 10.2 至 10.3 条由数字尾项、前缀更新和分离点计数直接推出。上述八条结果均按本批证明列为 `repo-derived`，其中被引用的经典构件单列为 `literature-attested`。此分类不宣告全球首创。
+
+[^tcs-symbolic]: Giordano Pola、Antoine Girard、Paulo Tabuada，*Approximately bisimilar symbolic models for nonlinear control systems*，[arXiv:0706.0246](https://arxiv.org/abs/0706.0246)；Antoine Girard、Giordano Pola、Paulo Tabuada，*Approximately bisimilar symbolic models for incrementally stable switched systems*，[arXiv:0807.5022v1](https://arxiv.org/abs/0807.5022v1)。`literature-attested` 范围为增量稳定条件下的符号近似模型。检索读取了作者预印本条目的摘要和版本信息；这些来源不作为本批覆盖等价、黄金平方根界或精确 $2^L$ 状态数的证明，也不把本文一侧模拟称为双模拟。
+
+[^tcs-rotation]: 固定源码：[D5/S1/Phase/IntervalSampling.lean](https://github.com/the-omega-institute/trureturing/blob/e984c77223b55a3cda565c7694098e436926183d/D5/S1/Phase/IntervalSampling.lean)，声明 `irrational_rotation_interval_sampling` 对任意无理步长、任意指定初相位给出半开区间的极限取样频率。正长度区间的正频率推出稠密性；对周期子序列使用无理步长 $p\alpha$。该源码没有被当作第 9.3 至 9.5 条状态复杂度已完成形式化的证据。
+
+[^tcs-golden]: 固定源码：[D5/S1/Depth/GoldenContinuedFraction.lean](https://github.com/the-omega-institute/trureturing/blob/e984c77223b55a3cda565c7694098e436926183d/D5/S1/Depth/GoldenContinuedFraction.lean)，声明 `golden_ratio_continued_fraction` 给出黄金连分数的全一系数。第 9.5 条另以共轭乘积和 Fibonacci 递推完整证明其实际使用的误差不等式，无需假设某个未提供的最优逼近常数。
+
+**约定 11.2（本批产地与证明身份）。** 本批使用 `theory-volume-template/APPEND.md`，数学推导、来源核对、文字实施和有限自检均由本会话 ChatGPT 单席串行完成；没有独立模型评审或外部作者审定。全部新条目是带完整假设的纸面证明。本批没有新增 Lean 或 Scribe，没有运行 Lean kernel、canonical `make ingest` 或生成消化状态；文件前缀的字节核对只验证尾部追加，不替代 atom 账目核验。有限数值或有理数自检的范围仅限被实际检查的实例，不承担第 9.5 条渐近量词或全时间量词。新结果未被标为 kernel-verified，文献优先权未被确立。
+
+## 追加锚（本行以下为增补区）
