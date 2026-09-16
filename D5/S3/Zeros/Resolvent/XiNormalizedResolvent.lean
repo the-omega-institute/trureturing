@@ -17,18 +17,18 @@ import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 /-!
 The finite divisor is cut off by the physical norm of rho. Its containing
 spectral ball is enlarged by one half; it is not the shifted spectral cutoff.
-Scaling preserves analytic multiplicity. Centering the Cf logarithmic derivative
-and applying Schwarz gives a second inverse-radius factor after the chain rule.
+Scaling preserves analytic multiplicity. The transfer facts for the scaled
+function are kept local to the finite-divisor and error proofs rather than
+exported as binding declarations. Centering the Cf logarithmic derivative and
+applying Schwarz gives a second inverse-radius factor after the chain rule.
 The remainder decays like log(B_R)/R^2 for B_R = 2 exp(C (1+R)^(3/2)).
 The combined rational summand is absolutely summable by comparison with the
 actual shifted inverse-square zero sum; finite-cutoff limits identify its value.
 
-Reuse: the existing Cf split/bound, scalar-unit dressing, analytic composition,
-Schwarz, actual xi growth, and zero summability are applied directly. The pinned
-product logarithmic-derivative theorem requires an identified locally uniform
-product and is not by itself the actual xi identity. The sealed source search
-covers fixed repository/library/open-change hits only; new external searches
-were unavailable. Attribution is repository-derived, not a new literature audit.
+The Cf split/bound, scalar-unit dressing, analytic composition, Schwarz, actual
+xi growth, and zero summability supply the proof's prerequisites. A product
+logarithmic-derivative theorem alone does not identify the product with actual
+xi; the finite-divisor identity establishes that connection here.
 -/
 
 set_option autoImplicit false
@@ -42,21 +42,8 @@ open D5.S3.Analytic.Dilation.ScalarUnitDressing
 open D5.S3.Analytic.ShiftedXiPoisson.ShiftedPoissonSemigroup
 open Zeta23.WeilEF
 
-private theorem gamma_norm_le (rho : ℂ) : ‖Zeta23.gammaOf rho‖ ≤ ‖rho‖ + 1 / 2 := by
-  simpa [Zeta23.gammaOf, norm_div] using norm_sub_le rho (1 / 2 : ℂ)
-
 private noncomputable def cutoff (Z : ZeroData) (R : ℝ) : Finset ℕ :=
   (Z.symmetricIndices ((22 / 25) * R + 1 / 2)).filter (fun n => ‖Z.zero n‖ ≤ (22 / 25) * R)
-
-private theorem mem_cutoff (Z : ZeroData) (R : ℝ) (n : ℕ) :
-    n ∈ cutoff Z R ↔ ‖Z.zero n‖ ≤ (22 / 25) * R := by
-  classical
-  simp only [cutoff, Finset.mem_filter, Z.mem_symmetricIndices]
-  refine ⟨And.right, fun h => ⟨?_, h⟩⟩
-  have := gamma_norm_le (Z.zero n)
-  rw [gammaOf_eq_spectralParameter] at this
-  dsimp [ZeroData.gamma]
-  linarith
 
 private theorem cutoff_tendsto (Z : ZeroData) : Tendsto (cutoff Z) atTop atTop := by
   classical
@@ -64,7 +51,15 @@ private theorem cutoff_tendsto (Z : ZeroData) : Tendsto (cutoff Z) atTop atTop :
   intro t
   filter_upwards [eventually_ge_atTop ((25 / 22 : ℝ) * ∑ n ∈ t, ‖Z.zero n‖)] with R hR
   intro n hn
-  rw [mem_cutoff]
+  have hmem : n ∈ cutoff Z R ↔ ‖Z.zero n‖ ≤ (22 / 25) * R := by
+    simp only [cutoff, Finset.mem_filter, Z.mem_symmetricIndices]
+    refine ⟨And.right, fun h => ⟨?_, h⟩⟩
+    have : ‖Zeta23.gammaOf (Z.zero n)‖ ≤ ‖Z.zero n‖ + 1 / 2 := by
+      simpa [Zeta23.gammaOf, norm_div] using norm_sub_le (Z.zero n) (1 / 2 : ℂ)
+    rw [gammaOf_eq_spectralParameter] at this
+    dsimp [ZeroData.gamma]
+    linarith
+  rw [hmem]
   have := Finset.single_le_sum (fun n _ => norm_nonneg (Z.zero n)) hn
   nlinarith
 
@@ -88,7 +83,8 @@ private theorem rational_tail (s rho : ℂ) (M : ℝ) (m : ℕ)
     calc
       _ ≤ (m : ℝ) * (M / ((‖rho‖ / 2) * ‖rho‖)) := by gcongr
       _ = _ := by ring
-  have hg := gamma_norm_le rho
+  have hg : ‖Zeta23.gammaOf rho‖ ≤ ‖rho‖ + 1 / 2 := by
+    simpa [Zeta23.gammaOf, norm_div] using norm_sub_le rho (1 / 2 : ℂ)
   have hden : 1 + Complex.normSq (Zeta23.gammaOf rho) ≤ 4 * ‖rho‖ ^ 2 := by
     rw [Complex.normSq_eq_norm_sq]
     nlinarith [norm_nonneg (Zeta23.gammaOf rho), sq_nonneg (‖rho‖ - 1)]
@@ -114,7 +110,8 @@ private theorem rational_summable (Z : ZeroData) (s : ℂ) :
     apply hf.subset
     intro n hn
     have hn' : ‖Z.zero n‖ < max 1 (2 * ‖s‖) := not_le.mp hn
-    have hh := gamma_norm_le (Z.zero n)
+    have hh : ‖Zeta23.gammaOf (Z.zero n)‖ ≤ ‖Z.zero n‖ + 1 / 2 := by
+      simpa [Zeta23.gammaOf, norm_div] using norm_sub_le (Z.zero n) (1 / 2 : ℂ)
     rw [gammaOf_eq_spectralParameter] at hh
     change ‖spectralParameter (Z.zero n)‖ ≤ _
     linarith 
@@ -147,56 +144,6 @@ private theorem centered_cf {f : ℂ → ℂ}
     (show z ∈ Metric.ball 0 (83 / 100) by simpa using hz)
 private def scaled (R : ℝ) (w : ℂ) := (2 : ℂ) * xiReading ((R : ℂ) * w)
 
-private theorem scaled_analytic (R : ℝ) : AnalyticOnNhd ℂ (scaled R) (Metric.closedBall 0 1) :=
-  fun _w _ => analyticAt_const.mul ((xi_reading_differentiable.analyticAt _).comp
-    (analyticAt_const.mul analyticAt_id))
-
-private theorem scaled_zero (R : ℝ) : scaled R 0 = 1 := by
-  simp [scaled, D5.S3.Zeros.Endpoints.XiEndpointValues.xi_reading_endpoint_values.1]
-
-private theorem xi_order (Z : ZeroData) (n : ℕ) :
-    analyticOrderNatAt xiReading (Z.zero n) = Z.multiplicity n := by
-  have hz := Z.zero_isNontrivial n
-  have h0 : Z.zero n ≠ 0 := by intro h; simpa [h] using hz.2.1
-  have h1 : Z.zero n ≠ 1 := by intro h; simpa [h] using hz.2.2
-  have he : xiReading =ᶠ[𝓝 (Z.zero n)]
-      (fun z : ℂ => ((1 / 2 : ℂ) * z * (z - 1)) * completedRiemannZeta z) := by
-    filter_upwards [isOpen_compl_singleton.mem_nhds h0,
-      isOpen_compl_singleton.mem_nhds h1] with z hz0 hz1
-    exact xi_reading_eq_completed_zeta hz0 hz1
-  have ho := (nonzero_scalar_dressing_preserves_zero_and_analytic_order
-    (Zeta23.RvM.analyticAt_completedRiemannZeta h0 h1)
-    (g := fun z : ℂ => (1 / 2 : ℂ) * z * (z - 1)) (by fun_prop)
-    (by exact mul_ne_zero (mul_ne_zero (by norm_num) h0) (sub_ne_zero.mpr h1))).2
-  rw [analyticOrderNatAt, analyticOrderAt_congr he, ho]
-  exact (Zeta23.RvM.analyticOrderNatAt_completedRiemannZeta hz.2.1 h1).trans
-    (multiplicity_eq_zeroMult Z n).symm
-
-private theorem scaled_order (Z : ZeroData) (R : ℝ) (hR : 0 < R) (n : ℕ) :
-    analyticOrderNatAt (scaled R) (Z.zero n / (R : ℂ)) = Z.multiplicity n := by
-  have hR' : (R : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr hR.ne'
-  have hd : deriv (fun w : ℂ => (R : ℂ) * w) (Z.zero n / (R : ℂ)) = R := by simp
-  have hc := analyticOrderAt_comp_of_deriv_ne_zero (f := xiReading)
-    (g := fun w : ℂ => (R : ℂ) * w) (z₀ := Z.zero n / (R : ℂ))
-    (analyticAt_const.mul analyticAt_id) (by rw [hd]; exact hR')
-  have hs := (nonzero_scalar_dressing_preserves_zero_and_analytic_order
-    (f := fun w : ℂ => xiReading ((R : ℂ) * w)) (s := Z.zero n / (R : ℂ))
-    ((xi_reading_differentiable.analyticAt _).comp (analyticAt_const.mul analyticAt_id))
-    (g := fun _ : ℂ => (2 : ℂ)) analyticAt_const (by norm_num)).2
-  unfold scaled analyticOrderNatAt
-  rw [hs]
-  change (analyticOrderAt (xiReading ∘ (fun w : ℂ => (R : ℂ) * w)) _).toNat = _
-  rw [hc, mul_div_cancel₀ _ hR']
-  exact xi_order Z n
-
-private theorem scaled_logDeriv (R : ℝ) (w : ℂ) :
-    logDeriv (scaled R) w = (R : ℂ) * logDeriv xiReading ((R : ℂ) * w) := by
-  change logDeriv (fun z => (2 : ℂ) * xiReading ((R : ℂ) * z)) w = _
-  rw [logDeriv_const_mul _ _ (by norm_num)]
-  have hd := logDeriv_comp (xi_reading_differentiable ((R : ℂ) * w))
-    (show DifferentiableAt ℂ (fun z : ℂ => (R : ℂ) * z) w by fun_prop)
-  simpa [Function.comp_def, mul_comm] using hd
-
 private theorem finite_split (Z : ZeroData) (R : ℝ) (hR : 0 < R) (s : ℂ)
     (hs : xiReading s ≠ 0) (hsR : ‖s / (R : ℂ)‖ < 22 / 25) :
     logDeriv xiReading s - logDeriv xiReading 0 =
@@ -205,8 +152,22 @@ private theorem finite_split (Z : ZeroData) (R : ℝ) (hR : 0 < R) (s : ℂ)
         logDeriv (Cf (22 / 25) (scaled R)) 0) / (R : ℂ) := by
   classical
   have hR' : (R : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr hR.ne'
-  have hf0 : scaled R 0 ≠ 0 := by rw [scaled_zero]; exact one_ne_zero
-  have hfin := finite_SetOfZeros (scaled_analytic R) hf0
+  have hmemCutoff (n : ℕ) :
+      n ∈ cutoff Z R ↔ ‖Z.zero n‖ ≤ (22 / 25) * R := by
+    simp only [cutoff, Finset.mem_filter, Z.mem_symmetricIndices]
+    refine ⟨And.right, fun h => ⟨?_, h⟩⟩
+    have : ‖Zeta23.gammaOf (Z.zero n)‖ ≤ ‖Z.zero n‖ + 1 / 2 := by
+      simpa [Zeta23.gammaOf, norm_div] using norm_sub_le (Z.zero n) (1 / 2 : ℂ)
+    rw [gammaOf_eq_spectralParameter] at this
+    dsimp [ZeroData.gamma]
+    linarith
+  have hscaledAnalytic : AnalyticOnNhd ℂ (scaled R) (Metric.closedBall 0 1) :=
+    fun _w _ => analyticAt_const.mul ((xi_reading_differentiable.analyticAt _).comp
+      (analyticAt_const.mul analyticAt_id))
+  have hscaledZero : scaled R 0 = 1 := by
+    simp [scaled, D5.S3.Zeros.Endpoints.XiEndpointValues.xi_reading_endpoint_values.1]
+  have hf0 : scaled R 0 ≠ 0 := by rw [hscaledZero]; exact one_ne_zero
+  have hfin := finite_SetOfZeros hscaledAnalytic hf0
   let T := (finiteSetOfZeros_mono (by norm_num : (22 / 25 : ℝ) < 1) hfin).toFinset
   have hmap (n : ℕ) : scaled R (Z.zero n / (R : ℂ)) = 0 := by
     simp only [scaled, mul_div_cancel₀ _ hR']
@@ -222,7 +183,7 @@ private theorem finite_split (Z : ZeroData) (R : ℝ) (hR : 0 < R) (s : ℂ)
       rw [Set.Finite.mem_toFinset]
       refine ⟨?_, hmap n⟩
       rw [norm_div, Complex.norm_of_nonneg hR.le, div_le_iff₀ hR]
-      simpa [mul_comm] using (mem_cutoff Z R n).mp hn
+      simpa [mul_comm] using (hmemCutoff n).mp hn
     · intro a _ b _ hab
       exact Z.zero_injective ((div_left_inj' hR').mp hab)
     · intro rho hrho
@@ -232,12 +193,43 @@ private theorem finite_split (Z : ZeroData) (R : ℝ) (hR : 0 < R) (s : ℂ)
       obtain ⟨n, hn⟩ := (zeroEquiv Z).surjective
         ⟨(R : ℂ) * rho, (xiReading_eq_zero_iff_nontrivial _).mp hx⟩
       have hn' : Z.zero n = (R : ℂ) * rho := congrArg Subtype.val hn
-      refine ⟨n, (mem_cutoff Z R n).mpr ?_, ?_⟩
+      refine ⟨n, (hmemCutoff n).mpr ?_, ?_⟩
       · rw [hn', norm_mul, Complex.norm_of_nonneg hR.le]
         nlinarith [mul_le_mul_of_nonneg_left hp.1 hR.le]
       · rw [hn']; field_simp
     · intro n _
-      rw [scaled_order Z R hR]
+      have hxiOrder : analyticOrderNatAt xiReading (Z.zero n) = Z.multiplicity n := by
+        have hz := Z.zero_isNontrivial n
+        have h0 : Z.zero n ≠ 0 := by intro h; simpa [h] using hz.2.1
+        have h1 : Z.zero n ≠ 1 := by intro h; simpa [h] using hz.2.2
+        have he : xiReading =ᶠ[𝓝 (Z.zero n)]
+            (fun z : ℂ => ((1 / 2 : ℂ) * z * (z - 1)) * completedRiemannZeta z) := by
+          filter_upwards [isOpen_compl_singleton.mem_nhds h0,
+            isOpen_compl_singleton.mem_nhds h1] with z hz0 hz1
+          exact xi_reading_eq_completed_zeta hz0 hz1
+        have ho := (nonzero_scalar_dressing_preserves_zero_and_analytic_order
+          (Zeta23.RvM.analyticAt_completedRiemannZeta h0 h1)
+          (g := fun z : ℂ => (1 / 2 : ℂ) * z * (z - 1)) (by fun_prop)
+          (by exact mul_ne_zero (mul_ne_zero (by norm_num) h0) (sub_ne_zero.mpr h1))).2
+        rw [analyticOrderNatAt, analyticOrderAt_congr he, ho]
+        exact (Zeta23.RvM.analyticOrderNatAt_completedRiemannZeta hz.2.1 h1).trans
+          (multiplicity_eq_zeroMult Z n).symm
+      have hscaledOrder :
+          analyticOrderNatAt (scaled R) (Z.zero n / (R : ℂ)) = Z.multiplicity n := by
+        have hd : deriv (fun w : ℂ => (R : ℂ) * w) (Z.zero n / (R : ℂ)) = R := by simp
+        have hc := analyticOrderAt_comp_of_deriv_ne_zero (f := xiReading)
+          (g := fun w : ℂ => (R : ℂ) * w) (z₀ := Z.zero n / (R : ℂ))
+          (analyticAt_const.mul analyticAt_id) (by rw [hd]; exact hR')
+        have hscalar := (nonzero_scalar_dressing_preserves_zero_and_analytic_order
+          (f := fun w : ℂ => xiReading ((R : ℂ) * w)) (s := Z.zero n / (R : ℂ))
+          ((xi_reading_differentiable.analyticAt _).comp (analyticAt_const.mul analyticAt_id))
+          (g := fun _ : ℂ => (2 : ℂ)) analyticAt_const (by norm_num)).2
+        unfold scaled analyticOrderNatAt
+        rw [hscalar]
+        change (analyticOrderAt (xiReading ∘ (fun w : ℂ => (R : ℂ) * w)) _).toNat = _
+        rw [hc, mul_div_cancel₀ _ hR']
+        exact hxiOrder
+      rw [hscaledOrder]
       have hz0 : Z.zero n ≠ 0 := by
         intro hz; have := (Z.zero_isNontrivial n).2.1; simp [hz] at this
       have hsz : s - Z.zero n ≠ 0 := by
@@ -249,11 +241,18 @@ private theorem finite_split (Z : ZeroData) (R : ℝ) (hR : 0 < R) (s : ℂ)
       field_simp [hR', hz0, hsz, hszR]; ring
   have hs' : scaled R (s / (R : ℂ)) ≠ 0 := by
     simpa [scaled, mul_div_cancel₀ _ hR'] using mul_ne_zero (by norm_num : (2 : ℂ) ≠ 0) hs
-  have h1 := logDeriv_split (scaled_analytic R) hf0 (by norm_num : (22 / 25 : ℝ) < 1) hfin hsR hs'
-  have h0 := logDeriv_split (scaled_analytic R) hf0 (by norm_num : (22 / 25 : ℝ) < 1) hfin
+  have hscaledLogDeriv (w : ℂ) :
+      logDeriv (scaled R) w = (R : ℂ) * logDeriv xiReading ((R : ℂ) * w) := by
+    change logDeriv (fun z => (2 : ℂ) * xiReading ((R : ℂ) * z)) w = _
+    rw [logDeriv_const_mul _ _ (by norm_num)]
+    have hd := logDeriv_comp (xi_reading_differentiable ((R : ℂ) * w))
+      (show DifferentiableAt ℂ (fun z : ℂ => (R : ℂ) * z) w by fun_prop)
+    simpa [Function.comp_def, mul_comm] using hd
+  have h1 := logDeriv_split hscaledAnalytic hf0 (by norm_num : (22 / 25 : ℝ) < 1) hfin hsR hs'
+  have h0 := logDeriv_split hscaledAnalytic hf0 (by norm_num : (22 / 25 : ℝ) < 1) hfin
     (by norm_num : ‖(0 : ℂ)‖<22 / 25) hf0
-  rw [scaled_logDeriv, mul_div_cancel₀ _ hR'] at h1
-  rw [scaled_logDeriv, mul_zero] at h0
+  rw [hscaledLogDeriv, mul_div_cancel₀ _ hR'] at h1
+  rw [hscaledLogDeriv, mul_zero] at h0
   rw [he, ← Finset.sum_div, Finset.sum_sub_distrib]
   change _ = ((∑ rho ∈ T, _) - (∑ rho ∈ T, _)) / (R : ℂ) + _
   change (R : ℂ) * logDeriv xiReading s = (∑ rho ∈ T, _) + _ at h1
@@ -272,6 +271,11 @@ private theorem physical_error (C : ℝ) (hC : 0 < C)
   have hR1 : 1 ≤ R := (le_max_left _ _).trans hR
   have hRM : 2 * M ≤ R := (le_max_right _ _).trans hR
   have hR0 : 0 < R := by linarith
+  have hscaledAnalytic : AnalyticOnNhd ℂ (scaled R) (Metric.closedBall 0 1) :=
+    fun _w _ => analyticAt_const.mul ((xi_reading_differentiable.analyticAt _).comp
+      (analyticAt_const.mul analyticAt_id))
+  have hscaledZero : scaled R 0 = 1 := by
+    simp [scaled, D5.S3.Zeros.Endpoints.XiEndpointValues.xi_reading_endpoint_values.1]
   have hz : ‖s / (R : ℂ)‖ < 83 / 100 := by
     rw [norm_div, Complex.norm_of_nonneg hR0.le, div_lt_iff₀ hR0]
     linarith
@@ -289,7 +293,7 @@ private theorem physical_error (C : ℝ) (hC : 0 < C)
   calc
     _ ≤ ((2 * (44795000 * Real.log (2 * Real.exp (C * (1 + R) ^ (3 / 2 : ℝ)))) / (83 / 100 : ℝ)) *
       ‖s / (R : ℂ)‖) / R :=
-      div_le_div_of_nonneg_right (centered_cf (scaled_analytic R) (scaled_zero R) hB hfB hz) hR0.le
+      div_le_div_of_nonneg_right (centered_cf hscaledAnalytic hscaledZero hB hfB hz) hR0.le
     _ = _ := by rw [norm_div, Complex.norm_of_nonneg hR0.le]; ring
 
 private theorem growth_decay (C : ℝ) (hC : 0 < C) :
@@ -332,7 +336,29 @@ theorem xi_reading_normalized_resolvent_hasSum
           (1 / (s - Z.zero n) + 1 / Z.zero n))
       (logDeriv D5.S3.Zeros.CompletedZeta.xiReading s -
         logDeriv D5.S3.Zeros.CompletedZeta.xiReading 0) := by
-  obtain ⟨C, hC, hg⟩ := D5.S3.Analytic.Resolvent.XiGlobalGrowth.xi_reading_norm_le_exp_three_halves
+  obtain ⟨K, hK, hgrowth⟩ :=
+    D5.S3.Analytic.Resolvent.XiGlobalGrowth.xi_reading_norm_le_exp_log_linear
+  let C := 3 * K
+  have hC : 0 < C := by dsimp [C]; positivity
+  have hg : ∀ z : ℂ, ‖xiReading z‖ ≤ Real.exp (C * (1 + ‖z‖) ^ (3 / 2 : ℝ)) := by
+    intro z
+    let r := 1 + ‖z‖
+    have hr : 1 ≤ r := by dsimp [r]; linarith [norm_nonneg z]
+    have hr0 : 0 < r := lt_of_lt_of_le zero_lt_one hr
+    have hlog := Real.log_le_rpow_div hr0.le (by norm_num : (0 : ℝ) < 1 / 2)
+    have hsqrt : 1 ≤ r ^ (1 / 2 : ℝ) := Real.one_le_rpow hr (by norm_num)
+    have hlog' : 1 + Real.log r ≤ 3 * r ^ (1 / 2 : ℝ) := by
+      norm_num at hlog
+      linarith
+    refine (hgrowth z).trans (Real.exp_le_exp.mpr ?_)
+    change K * r * (1 + Real.log r) ≤ C * r ^ (3 / 2 : ℝ)
+    calc
+      K * r * (1 + Real.log r) ≤ K * r * (3 * r ^ (1 / 2 : ℝ)) :=
+        mul_le_mul_of_nonneg_left hlog' (mul_nonneg hK.le hr0.le)
+      _ = C * r ^ (3 / 2 : ℝ) := by
+        rw [show (3 / 2 : ℝ) = 1 + 1 / 2 by norm_num, Real.rpow_add hr0, Real.rpow_one]
+        dsimp [C]
+        ring
   let a := fun n : ℕ => (Z.multiplicity n : ℂ) * (1 / (s - Z.zero n) + 1 / Z.zero n)
   let e := fun R : ℝ => (logDeriv (Cf (22 / 25) (scaled R)) (s / (R : ℂ)) -
     logDeriv (Cf (22 / 25) (scaled R)) 0) / (R : ℂ)

@@ -26,8 +26,10 @@ weaker consequence of order one, not the literal statement of Theorem 2.1(6).
 The factor two and a bounded initial disk can be absorbed into C. No Riemann
 hypothesis is required for this consequence.
 
-`D5/S3/Analytic/Resolvent/XiGlobalGrowth.xi_reading_norm_le_exp_three_halves` proves
-this consequence directly from the existing symmetric theta-Mellin integral.
+`D5/S3/Analytic/Resolvent/XiGlobalGrowth.xi_reading_norm_le_exp_log_linear` proves
+the stronger bound `exp(C (1 + |s|) (1 + log(1 + |s|)))` directly from the
+existing symmetric theta-Mellin integral. The normalized resolvent derives the
+displayed three-halves consequence inside its proof.
 It does not formalize automorphic representations, an order-one theorem,
 Hadamard factorization, or the paper's Li coefficient identities. Its private
 integrand estimate keeps an unspecified positive theta decay rate and the

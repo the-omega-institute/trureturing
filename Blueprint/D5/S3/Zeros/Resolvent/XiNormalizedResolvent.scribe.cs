@@ -26,6 +26,8 @@ internal sealed class XiNormalizedResolventDocument : IScribeDocumentDefinition
                         + "the physical cutoff norm(rho) at most (22/25)R, transporting analytic multiplicities. "
                         + "On the strict disk of radius 83/100, Schwarz bounds the centered regular logarithmic "
                         + "derivative. The chain rule and centering produce two inverse-radius factors. "
+                        + "The global log-linear xi estimate and the inequality "
+                        + "1 + log(r) at most 3 times r^(1/2) give the required three-halves bound locally. "
                         + "With B_R = 2 exp(C(1+R)^(3/2)), the physical remainder is bounded by "
                         + "(2 times 44795000 divided by (83/100)) times log(B_R) times norm(s) divided by R squared.")),
                     Paragraph(Text(
