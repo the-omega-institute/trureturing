@@ -5264,3 +5264,386 @@ The same closed form gives the stated asymptotic for $G_L=t_{\min}(L)+1$. If $L=
 Attached reference: Schmieding, *Symbolic Dynamics and Subshifts of Finite Type*, §7, Definition 16 on p. 11, Theorem 20 on pp. 13–14, and its golden-mean example on p. 14, give the classical language-growth and spectral-radius entropy formulas. The open-cover argument above establishes the required one-sided formulas without assuming a nongenerating readout suffices. ([s-schmieding.github.io](https://s-schmieding.github.io/SDnotes.pdf))
 
 ## 追加锚（本行以下为增补区）
+## 21. 增补·Zeckendorf 加法闭图的全部结合单值选择
+
+**定义 21.0（载体、相位与全域选择）。** 取 $\mathbb N=\{0,1,\ldots\}$、$\mathbb N_{>0}=\{1,2,\ldots\}$，并令
+$$
+\phi=\frac{1+\sqrt5}{2},\qquad \alpha=\phi^{-1},\qquad
+G_0=1,\quad G_1=2,\quad G_{j+2}=G_{j+1}+G_j.
+$$
+令 $Z(n)$ 为自然数 $n$ 的有限 Zeckendorf 规范字按低位到高位补零所得的无限字，且
+$$
+K=\{x\in\{0,1\}^{\mathbb N}:x_jx_{j+1}=0\text{ 对所有 }j\},\qquad 0_K=Z(0).
+$$
+数字空间取乘积拓扑，置
+$$
+\mathbb T=\mathbb R/\mathbb Z,\qquad
+H(x)=\left[\sum_{j\ge0}(-1)^{j+1}\alpha^{j+2}x_j\right],\qquad
+P_L(x)=(x_0,\ldots,x_{L-1}),
+$$
+$$
+E_m=[-m\phi]\quad(m\ge1),\qquad E=\{E_m:m\ge1\},\qquad \Sigma=\{-1,+1\}.
+$$
+定义加法闭图及其输入纤维为
+$$
+\Gamma=\overline{\{(Z(n),Z(k),Z(n+k)):n,k\in\mathbb N\}}^{K^3},\qquad
+\Gamma(x,y)=\{z\in K:(x,y,z)\in\Gamma\}.
+$$
+全域单值选择是函数 $A:K^2\to K$，满足
+$$
+\forall x,y\in K,\quad A(x,y)\in\Gamma(x,y).
+$$
+结合性指 $A(A(x,y),z)=A(x,A(y,z))$ 对全部有序三元组成立；定义不预设交换性、单位或连续性。
+
+**假设 21.1（相位资料与精确保留的闭图纤维前提）。** 采用以下相位资料：$K$ 紧致可度量，$Z[\mathbb N]$ 稠密，$H$ 连续满射，且
+$$
+H(Z(n))=[n\phi],\qquad H^{-1}(\{0\})=\{0_K\}.
+$$
+每个 $\theta\notin E$ 的纤维为单点；每个 $\theta\in E$ 的纤维恰为两个不同的点 $z_\theta^{+1},z_\theta^{-1}$。定向标记沿用定义16.3，特别
+$$
+u=(10)^\omega=z_{E_1}^{+1},\qquad v=(01)^\omega=z_{E_1}^{-1}.
+$$
+对拓扑结论另采用其具体数字纤维表示：除 $\{u,v\}$ 外，每个二点纤维均为 $\{w0v,w10v\}$，其中 $w$ 为由块 $0$、$10$ 组成的有限块字；两字首次不同的数字位置为 $w$ 的展开长度。[^rro21_phase]
+
+令
+$$
+\mathcal S(x)=
+\begin{cases}
+\{s\},&x=z_\theta^s,\ \theta\in E,\ s\in\Sigma,\\
+\Sigma,&H(x)\notin E.
+\end{cases}
+$$
+本节明确以下式为数学假设，而非仅假设输出相位正确：对每个 $x,y\in K$，令 $\theta=H(x)+H(y)$，则
+$$
+\boxed{\quad
+\Gamma(x,y)=
+\begin{cases}
+H^{-1}(\{\theta\}),&\theta\notin E,\\
+\{z_\theta^t:t\in\mathcal S(x)\cup\mathcal S(y)\},&\theta\in E.
+\end{cases}\quad}
+$$
+以下结论均以这一精确纤维式为前提。[^rro21_fibers]
+
+**定义 21.2（两个候选与保留、余留部分）。** 对每个 $s\in\Sigma$，令 $j_s:\mathbb T\to K$ 为满足
+$$
+H(j_s(\theta))=\theta,\qquad j_s(E_m)=z_{E_m}^s
+$$
+的唯一函数：非分裂相位由其单点纤维决定。置
+$$
+g_s(m)=j_s(E_m),\qquad b_s(m)=z_{E_m}^{-s},\qquad
+I_s=j_s(\mathbb T),\qquad B_s=\{b_s(m):m\ge1\},\qquad c_s=j_s\circ H.
+$$
+于是 $K=I_s\sqcup B_s$，且 $I_s$ 在每个相位纤维中恰含一点。定义
+$$
+A_s(x,y)=
+\begin{cases}
+b_s(m+n),&x=b_s(m),\ y=b_s(n),\ m,n\ge1,\\
+j_s(H(x)+H(y)),&\text{其余情形}.
+\end{cases}
+$$
+等价地，输出相位分裂时，只有两个输入均为符号 $-s$ 的分裂点才选择符号 $-s$；其余输入选择符号 $s$。非分裂输出取唯一点。
+
+**定理 21.3（候选存在、完整乘法表及结合性）。** 每个 $A_s$ 均为交换、结合的全域单值选择。其完整乘法表为
+$$
+A_s(j_s(a),j_s(b))=j_s(a+b)\qquad(a,b\in\mathbb T),
+$$
+$$
+A_s(j_s(a),b_s(m))=A_s(b_s(m),j_s(a))=j_s(a+E_m)\qquad(a\in\mathbb T,\ m\ge1),
+$$
+$$
+A_s(b_s(m),b_s(n))=b_s(m+n)\qquad(m,n\ge1).
+$$
+每个全域选择，包括这两个候选，均满足
+$$
+H(A(x,y))=H(x)+H(y),\qquad
+A(Z(n),Z(k))=Z(n+k)\quad(n,k\in\mathbb N).
+$$
+两个候选不同。
+
+**证明。** $\phi$ 无理使各 $E_m$ 两两不同，并给出
+$$
+0\notin E,\qquad E_m+E_n=E_{m+n},\qquad [n\phi]\notin E\quad(n\ge0).
+$$
+最后一个断言若失败，则某个正整数倍 $(n+m)\phi$ 为整数。精确纤维式直接给任意选择的相位等式；自然和的相位不分裂，而 $Z(n+k)$ 是该纤维的一点，因此核心加法等式也被强制。
+
+若两个输入均在 $B_s$，它们是同号 $-s$ 的分裂点，纤维式恰强制输出 $b_s(m+n)$。其余情形至少一个输入在 $I_s$：该输入或者不分裂，或者具有符号 $s$，故其符号集合必含 $s$。输出相位分裂时选择 $j_s(\theta)$ 因而合法，非分裂时选择唯一点也合法。这证明选择性及显示的全部乘法表。
+
+乘法表说明 $I_s$ 为双侧理想，且两个 $B_s$ 元素的乘积仍在 $B_s$。对任意有序三元组，若三个输入都在 $B_s$，两种括号方式均得 $b_s(m+n+k)$；否则至少一个输入在 $I_s$，两种括号方式的最终输出均在 $I_s$，且具有相同的总相位。$I_s$ 每相位恰有一点，故两个输出相等。表的左右对称性给交换律。最后
+$$
+A_{+1}(0_K,u)=u,\qquad A_{-1}(0_K,u)=v,
+$$
+而 $u\ne v$，所以确有两个不同候选。证毕。
+
+**定理 21.4（不预设交换性的零作用刚性）。** 设 $A$ 为任意结合的全域选择，简记 $x*y=A(x,y)$，并置
+$$
+c_L(x)=0_K*x,\qquad c_R(x)=x*0_K.
+$$
+这两个映射均在每个 $H$ 纤维上恒定，而且 $c_L=c_R=:c$。进一步，
+$$
+H\circ c=H,\qquad c^2=c,
+$$
+$$
+c(x*y)=c(x)*y=x*c(y)=c(x)*c(y).
+$$
+因此 $M=c(K)$ 为双侧理想，$c$ 是到 $M$ 的半群收缩。存在唯一双射 $j:\mathbb T\to M$，使
+$$
+H\circ j=\operatorname{id}_{\mathbb T},\qquad j\circ H=c,\qquad
+j(a)*j(b)=j(a+b).
+$$
+特别 $M$ 是以 $0_K=j(0)$ 为单位、以 $j(-a)$ 为 $j(a)$ 之逆元的抽象交换群。
+
+**证明。** 令 $q=[1/2]$。无理性给出
+$$
+q\notin E,\qquad (q+E)\cap E=\varnothing,\qquad q+q=0.
+$$
+事实上，$q+E_m=E_n$ 将使 $(m-n)\phi$ 等于一个半整数；若 $m=n$ 则直接矛盾，若 $m\ne n$ 则使 $\phi$ 有理。$q\in E$ 同样不可能。取相位 $q$ 的唯一点 $t$，则相位等式和零纤维唯一性强制
+$$
+t*t=0_K.
+$$
+
+若 $H(x)=H(x')\in E$，则 $t*x,t*x'$ 位于同一个非分裂纤维，故相等；$x*t,x'*t$ 也相等。结合性给
+$$
+c_L(x)=(t*t)*x=t*(t*x)=t*(t*x')=c_L(x'),
+$$
+$$
+c_R(x)=x*(t*t)=(x*t)*t=(x'*t)*t=c_R(x').
+$$
+在非分裂纤维上原本只有一点，所以两映射在全部相位纤维上恒定。相位等式又给 $H(c_L(x))=H(c_R(x))=H(x)$。
+
+现在只对有序三元组 $(0_K,x,0_K)$ 使用结合性，得到
+$$
+c_R(c_L(x))=(0_K*x)*0_K=0_K*(x*0_K)=c_L(c_R(x)).
+$$
+由于两内层点均与 $x$ 同相位，纤维恒定性使左端为 $c_R(x)$、右端为 $c_L(x)$。故 $c_L=c_R=c$，并由同一纤维恒定性得到 $c^2=c$。
+
+再次分别在左端、右端乘以 $0_K$，得
+$$
+c(x*y)=(0_K*x)*y=c(x)*y,
+$$
+$$
+c(x*y)=x*(y*0_K)=x*c(y).
+$$
+于是
+$$
+c(x)*c(y)=c(x*c(y))=c(c(x*y))=c(x*y).
+$$
+这些等式证明理想性与收缩同态性质；没有交换两个一般输入。
+
+定义 $j(a)=c(x)$，其中 $H(x)=a$。满射性保证存在这种 $x$，纤维恒定性保证选择无关。$H(j(a))=a$，且 $M$ 中任何同相位两点相等，所以 $j$ 是所述双射。两个像点的乘积属于 $M$，相位为 $a+b$，故等于 $j(a+b)$。圆周加法的单位、逆元和交换律遂逐项给出所述抽象群结构。证毕。
+
+**定理 21.5（全部结合选择的二元分类）。** 对任意全函数 $A:K^2\to K$，以下条件等价：$A$ 是结合的全域单值选择；存在唯一 $s\in\Sigma$ 使 $A=A_s$。因此不存在额外的非交换结合选择。
+
+**证明。** 充分性由定理21.3得到。反向应用定理21.4，取唯一 $s$ 使 $j(E_1)=z_{E_1}^s$。证明
+$$
+j(E_m)=z_{E_m}^s\qquad(m\ge1).
+$$
+基步即 $s$ 的定义。若断言对 $m$ 成立，则像群的乘法与同号输入的强制纤维给
+$$
+j(E_{m+1})=j(E_m)*j(E_1)
+=z_{E_m}^s*z_{E_1}^s=z_{E_{m+1}}^s.
+$$
+所以分支符号不能随 $m$ 改变。非分裂相位本就没有选择，故 $j=j_s$、$M=I_s$、$c=c_s$。
+
+若 $x$ 或 $y$ 在 $I_s$，双侧理想性使 $x*y\in I_s$，相位等式遂强制
+$$
+x*y=j_s(H(x)+H(y)).
+$$
+这同时处理非分裂输入、零输入，以及两种有序混合符号输入；例如
+$$
+z_{E_m}^s*z_{E_n}^{-s}=z_{E_n}^{-s}*z_{E_m}^s=z_{E_{m+n}}^s.
+$$
+若两输入均不在 $I_s$，它们分别为 $b_s(m),b_s(n)$，同号 $-s$ 的精确纤维强制乘积为 $b_s(m+n)$。所有有序输入对已穷尽，故 $A=A_s$。定理21.3中的不同零切片值给参数唯一性。证毕。
+
+**定理 21.6（严格单位、群部分与余留半群）。** 固定 $s$。$I_s$ 是 $(K,A_s)$ 的唯一最小非空双侧理想，也是唯一最大子群；映射 $j_s$ 给出抽象群同构
+$$
+(\mathbb T,+)\cong(I_s,A_s),\qquad
+j_s(a)^{-1}=j_s(-a).
+$$
+映射 $m\mapsto b_s(m)$ 给出半群同构
+$$
+(\mathbb N_{>0},+)\cong(B_s,A_s),
+$$
+其与群部分的全部混合乘积已由定理21.3确定。唯一幂等元为 $0_K$，但整个 $K$ 没有严格左单位，也没有严格右单位。以幂等元 $0_K$ 构成的局部幺半群恰为
+$$
+0_K*K*0_K=I_s,
+$$
+其全部元素均为该局部幺半群的可逆元；不能将其称为整个 $K$ 的单位群。
+
+关系 $\Gamma$ 的唯一弱左、弱右单位均为 $0_K$，但它不是关系的严格单位。结合性对于上述函数单位障碍不可删除：存在以 $0_K$ 为严格双侧单位的非结合全域选择。
+
+**证明。** 群同构、双侧理想和正整数半群同构分别来自定理21.4与乘法表；后一个映射的单射性由各 $E_m$ 不同得到。若 $x*x=x$，则 $2H(x)=H(x)$，所以 $H(x)=0$，进而 $x=0_K$；而 $0_K*0_K=0_K$。
+
+任一子群的单位必幂等，因而只能是 $0_K$。该子群中的 $x$ 必满足 $c_s(x)=0_K*x=x$，即 $x\in I_s$，故 $I_s$ 是唯一最大子群。若 $J$ 为非空双侧理想，取 $x\in J$，则 $c_s(x)=0_K*x\in J\cap I_s$。再与其像群逆元相乘得 $0_K\in J$，继而任意 $a\in\mathbb T$ 均满足 $j_s(a)=0_K*j_s(a)\in J$。因此 $I_s\subseteq J$，证明最小理想断言。
+
+若 $e$ 是整个 $K$ 的严格左单位，则 $e*0_K=0_K$，相位等式迫使 $e=0_K$。然而
+$$
+0_K*b_s(m)=g_s(m)\ne b_s(m).
+$$
+故左单位不存在；严格右单位同理由 $0_K*e=0_K$ 和 $b_s(m)*0_K=g_s(m)$ 排除。收缩等式给 $0_K*K*0_K=I_s$。特别地，虽然
+$$
+b_s(m)*Z(m)=Z(m)*b_s(m)=0_K,
+$$
+但 $b_s(m)$ 不在任何子群中：乘积为 $0_K$ 的方程不能替代单位作用条件。
+
+由 $\mathcal S(0_K)=\Sigma$ 及精确纤维式，
+$$
+\Gamma(0_K,x)=\Gamma(x,0_K)=H^{-1}(\{H(x)\})\ni x.
+$$
+任一弱左或弱右单位对输入 $0_K$ 的相位条件都迫使它等于 $0_K$，而分裂纤维不是单点，故关系严格单位不存在。
+
+最后定义
+$$
+\widehat A_s(x,y)=
+\begin{cases}
+y,&x=0_K,\\
+x,&x\ne0_K,\ y=0_K,\\
+A_s(x,y),&x\ne0_K,\ y\ne0_K.
+\end{cases}
+$$
+刚证的弱单位包含式保证这是全域选择，并以 $0_K$ 为严格双侧单位。取定理21.4中的半转点 $t$。相位 $q+E_1$ 非分裂且非零，因此
+$$
+\widehat A_s(\widehat A_s(t,t),b_s(1))=b_s(1),
+$$
+$$
+\widehat A_s(t,\widehat A_s(t,b_s(1)))=g_s(1).
+$$
+第二式的两次外于零输入的运算分别经过非分裂相位 $q+E_1$ 和分裂相位 $E_1$，最后选择符号 $s$。两个结果不同，故这个严格有单位的选择不结合。证毕。
+
+**定理 21.7（具体半群模型、相位商与理想商）。** 在不交并
+$$
+\mathscr M=(\mathbb T\times\{0\})\sqcup(\mathbb N_{>0}\times\{1\})
+$$
+上定义
+$$
+(a,0)\circ(b,0)=(a+b,0),\qquad
+(m,1)\circ(n,1)=(m+n,1),
+$$
+$$
+(a,0)\circ(m,1)=(m,1)\circ(a,0)=(a+E_m,0).
+$$
+双射
+$$
+F_s(a,0)=j_s(a),\qquad F_s(m,1)=b_s(m)
+$$
+是到 $(K,A_s)$ 的半群同构。此模型正是二元链 $0<1$ 上的强半格半群：下层为圆周群，上层为正整数加法半群，唯一非恒等连接同态为 $m\mapsto E_m$。[^rro21_semilattice] 自然核心及相位在此模型中分别为
+$$
+Z(n)=F_s([n\phi],0),\qquad
+(H\circ F_s)(a,0)=a,\qquad(H\circ F_s)(m,1)=E_m.
+$$
+
+相位相等关系是半群同余，且
+$$
+\ker c_s=\ker H,\qquad (K,A_s)/{\ker H}\cong(\mathbb T,+).
+$$
+这里核均指相等关系核。更精确地，对所有 $z\in\Gamma(x,y)$，
+$$
+c_s(z)=A_s(c_s(x),c_s(y))=j_s(H(x)+H(y)).
+$$
+但是 $A_s$ 本身不能经 $H\times H$ 因子化，且函数 $(x,y)\mapsto j_s(H(x)+H(y))$ 并非 $\Gamma$ 的全域选择。
+
+另将整个理想 $I_s$ 压为一个吸收点 $\bot$，得到的 Rees 商为
+$$
+Q=\mathbb N_{>0}\sqcup\{\bot\},\qquad
+m\cdot n=m+n,\qquad \bot\cdot q=q\cdot\bot=\bot.
+$$
+因此 $(K,A_s)$ 是圆周群的收缩理想扩张。[^rro21_retract] 吸收点 $\bot$ 不是自然数加法的单位；该理想商也不是相位商。
+
+**证明。** 显示的模型乘法与定理21.3逐项一致，故 $F_s$ 保乘法且双射。连接映射保乘法正是 $E_{m+n}=E_m+E_n$；二元链中的其余连接映射为恒等，复合相容性随即成立。这给出所述强半格构造，而不要求上层为群。自然核心与相位的显示式由定义直接得到。
+
+$c_s=j_sH$ 且 $j_s$ 单射，故两相等关系核一致；相位等式使这个核为同余，$H$ 的满射性给所述商同构。对任意允许输出 $z$，其相位已固定，应用 $c_s$ 得到同一个 $j_s(H(x)+H(y))$；乘法表又给另一等号。然而
+$$
+A_s(b_s(m),b_s(n))=b_s(m+n),\qquad
+A_s(g_s(m),g_s(n))=g_s(m+n),
+$$
+两对输入逐槽同相位而输出不同，所以 $A_s$ 不能经 $H\times H$ 因子化。同时
+$$
+j_s(E_m+E_n)=g_s(m+n)\notin
+\Gamma(b_s(m),b_s(n))=\{b_s(m+n)\},
+$$
+排除了直接由相位截面回填整个乘法的办法。
+
+令理想商映射在 $I_s$ 上取 $\bot$，在 $b_s(m)$ 上取 $m$。混合乘积落入 $I_s$，两个余留点的乘积为 $b_s(m+n)$，所以商乘法恰为显示的 $Q$。收缩同态是 $c_s$。这个商把全部自然核心送到 $\bot$，相位商则保留 $[n\phi]$，故不能混同。证毕。
+
+**定理 21.8（闭图障碍与零切片的精确连续点）。** 不存在联合连续的全域单值选择，无须在此断言中假设结合性。[^rro21_graph] 对两个结合选择，
+$$
+A_s(0_K,x)=A_s(x,0_K)=c_s(x),
+$$
+且这两个零切片作为 $K\to K$ 的函数，其连续点集恰为 $I_s$，不连续点集恰为 $B_s$。因此 $A_s$ 也不是分别连续的二元运算。
+
+**证明。** 若选择 $A$ 联合连续，其函数图在 $K^3$ 中闭：它是映射 $(x,y,z)\mapsto(A(x,y),z)$ 下闭对角线的原像。由核心加法等式，此闭图包含全部自然加法三元组，因此包含它们的闭包 $\Gamma$。但
+$$
+(0_K,u,u),(0_K,u,v)\in\Gamma,\qquad u\ne v,
+$$
+与函数图在一个输入处只有一个输出矛盾。
+
+固定 $s$。函数 $c_s$ 在 $I_s$ 上为恒等，在 $b_s(m)$ 处改取 $g_s(m)$。对每个 $L\ge1$，令
+$$
+D_L=\{b_s(m):P_L(b_s(m))\ne P_L(g_s(m))\}.
+$$
+这是有限集：接缝纤维至多贡献一个点；其余纤维为 $\{w0v,w10v\}$，只有展开长度小于 $L$ 的 $w$ 才可能贡献，而这样的有限块字只有有限多个。这个论证不依赖分支方向的奇偶性。
+
+给定 $x\in I_s$，集合
+$$
+U_L=P_L^{-1}(\{P_L(x)\})\setminus D_L
+$$
+是包含 $x$ 的开邻域。每个 $y\in U_L$ 满足
+$$
+P_L(c_s(y))=P_L(y)=P_L(x)=P_L(c_s(x)).
+$$
+有限前缀柱集构成拓扑基，故 $c_s$ 在 $x$ 连续。
+
+反之，固定 $b_s(m)$ 并截断其数字，令
+$$
+n_L=\sum_{j<L}G_j\,b_s(m)_j,\qquad x_L=Z(n_L).
+$$
+截断后补零仍是合法规范字，故 $x_L\to b_s(m)$。自然核心不分裂，所以
+$$
+c_s(x_L)=x_L\longrightarrow b_s(m)\ne g_s(m)=c_s(b_s(m)).
+$$
+因此每个余留点都是不连续点。零切片等式来自乘法表，全部断言得证。
+
+**定理 21.9（像群的抽象结构与子空间拓扑）。** 给 $I_s$ 赋予 $K$ 的子空间拓扑。限制
+$$
+H|_{I_s}:I_s\longrightarrow\mathbb T
+$$
+是连续的抽象群同构，但不是同胚；其逆映射 $j_s$ 的连续点恰为 $\mathbb T\setminus E$。空间 $I_s$ 稠密、真包含于 $K$、非紧且零维，因此不与通常圆周同胚。更强地，限制运算 $A_s|_{I_s^2}$ 也不分别连续，故这个子空间群不是拓扑群。
+
+**证明。** 先使用紧致单点纤维事实：若 $\theta_k\to\theta$，且 $H^{-1}(\{\theta\})=\{x\}$，则任意满足 $H(x_k)=\theta_k$ 的点列均趋于 $x$。否则可在某个 $x$ 的开邻域外取子列，再由紧致可度量性取收敛子列；连续性使其极限仍在该单点纤维，与处于邻域外矛盾。
+
+这立即证明 $j_s$ 在非分裂相位连续。固定 $E_m$，使用证明21.8中的 $Z(n_L)\to b_s(m)$，则
+$$
+[n_L\phi]\longrightarrow E_m,\qquad
+j_s([n_L\phi])=Z(n_L)\longrightarrow b_s(m)\ne j_s(E_m).
+$$
+所以 $j_s$ 在每个分裂相位不连续。$H|_{I_s}$ 的连续性、双射性及保群运算性质已分别来自 $H$ 与乘法表。
+
+自然核心包含于 $I_s$，故 $I_s$ 稠密；$B_s$ 非空，故 $I_s$ 是真子集。若 $I_s$ 紧，则它在 Hausdorff 空间 $K$ 中闭，与稠密且真包含矛盾。有限前缀柱集的交给出 $I_s$ 的开闭基；不同点可被这样的集合分离，故 $I_s$ 全不连通，而通常圆周连通，所以不存在空间同胚。
+
+最后仍固定 $m\ge1$，令
+$$
+p_L=Z(n_L)\longrightarrow b_s(m),\qquad y_L=Z(n_L+m)\in I_s.
+$$
+因为
+$$
+H(y_L)=[(n_L+m)\phi]=H(p_L)-E_m\longrightarrow0,
+$$
+零相位的单点纤维事实给 $y_L\to0_K$。但是
+$$
+A_s(g_s(m),y_L)=j_s(E_m+[(n_L+m)\phi])=p_L,
+$$
+$$
+A_s(g_s(m),0_K)=g_s(m)\ne b_s(m).
+$$
+第一列在 $K$ 中趋于 $b_s(m)$，因 Hausdorff 性不可能趋于 $g_s(m)$，故在 $I_s$ 中也不趋于所需值。固定 $g_s(m)$ 的乘法切片在 $0_K$ 处不连续。这直接否定子空间上的分别连续性，而不是仅由非紧性推断。证毕。
+
+[^rro21_phase]: 《CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF》，定义371.1、定理371.2及372.2—372.4；固定提交 c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb。所用资料为紧数字载体、自然相位、全部相位纤维及有限块字形式。 ([raw.githubusercontent.com](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md))
+
+[^rro21_fibers]: 《RECURSIVE_RELATIONAL_OBSERVATION》，定义16.0、16.3及定理16.4的纤维公式；固定提交 c74985438ae17d205509255934bbd3ecf1f94d71。本节将该公式完整列为假设21.1。 ([raw.githubusercontent.com](https://raw.githubusercontent.com/the-omega-institute/trureturing/c74985438ae17d205509255934bbd3ecf1f94d71/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md))
+
+[^rro21_semilattice]: Jiangang Zhang, Yuhui Yang, Ran Shen, *The strong semilattice of $\pi$-groups*, European Journal of Pure and Applied Mathematics 11(3) (2018), 589–597，DOI: 10.29020/nybg.ejpam.v11i3.3274。所用为第1节、第589页的强半格半群一般构造及连接同态条件，不使用后文关于各分量为 $\pi$-群的分类。 ([ejpam.com](https://www.ejpam.com/ejpam/article/view/3274/661))
+
+[^rro21_retract]: Attila Nagy, *On left legal semigroups*, arXiv:2301.08793v2 (2023)，第2节关于 Rees 商、理想扩张与收缩理想的定义；不使用该文针对左合法半群的结构定理。 ([arxiv.org](https://arxiv.org/html/2301.08793v2))
+
+[^rro21_graph]: 《CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF》，定理377.1，同一固定提交；联合连续自然加法延拓的障碍。定理21.8另由加法图的闭包与二点输出给出直接证明。 ([raw.githubusercontent.com](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md))
+
+## 追加锚（本行以下为增补区）
