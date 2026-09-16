@@ -1909,6 +1909,173 @@ def variable_axis_clipped_head(witnesses, old, signed):
             'nonzero_dual_terms':len(y),'pointwise_area_triples_verified':len(points)}
 
 
+def shared_count_clipped_head(old_cases, old, signed):
+    """Recompute common-shape/count moments, then reuse the fixed VC6 dual."""
+    F = Fraction
+    clip = F(40, 31)
+    chi = F(187759, 108000)
+    height_mean = F(5809, 4800)
+    thresholds = (0, 2, 4)
+    # The local grid count is distinct from the old survivor count below.
+    caps = (F(55, 240), 26*clip/120, 22*clip/120, 4*clip/120)
+    max_center = F(0)
+    max_extra = F(0)
+    grid_cases = 0
+    maximizers = []
+    for m, n in product(range(1, 11), range(1, 13)):
+        for k in range(min(12, m*n-1)+1):
+            grid_cases += 1
+            cells = m*n-k
+            density = min(clip, F(120, cells))
+            center = density*(m+n+1)
+            q = (center/120, 2*density*(n+1)/120,
+                 2*density*(m+1)/120, 4*density/120)
+            require(all(a <= b for a, b in zip(q, caps)), 'actual rectangle diagonal caps')
+            require(sum(q) == density*(m+n+3)/40 <= F(3, 4),
+                    'actual rectangle unit-load saving')
+            if center > max_center:
+                max_center, maximizers = center, []
+            if center == max_center:
+                maximizers.append([m, n, k])
+            max_extra = max(max_extra, sum(q))
+    saving = clip*F(5, 8)-sum(caps)
+    unit_rebate = sum(caps)-max_extra
+    require(grid_cases == 1372 and max_center == F(55, 2)
+            and saving == F(9, 496) and unit_rebate == F(19, 496),
+            'complete actual-grid domain and exact two savings')
+    require(len(old_cases) == len(old['cases']) == 6, 'six common old shapes')
+    squares = [F(signed['actual_second_moment_upper'])] + [
+        F(case['second_moment_bound']) for case in old['cases'][1:]]
+    cases = []
+    branches = []
+    layout_total = 0
+    for index, (shape, points, histograms, expected_layouts) in enumerate(old_cases):
+        n = len(points)
+        groups = [[tuple(i for i, x in enumerate(points) if x % d == a)
+                   for a in sorted({x % d for x in points})] for d in MODULI]
+        minimum = 6*n - sum(max(map(len, group)) for group in groups)
+        counts = list(range(minimum, 6*n + 1))
+        loads = []
+        for cylinders in product(*groups):
+            a = [1]*n
+            for cylinder in cylinders:
+                for i in cylinder:
+                    a[i] += 1
+            loads.append(tuple(a))
+        require(len(loads) == expected_layouts, 'all effective old layouts for common count')
+        layout_total += len(loads)
+        hs = [tuple(sum(max(v-t, 0) for v in a) for t in range(5)) for a in loads]
+        maxima = [max(h[t] for h in hs) for t in range(5)]
+        q = max(sum(v*v for v in a) for a in loads)
+        require(maxima[3] <= 5 and all(max(a) <= 6 for a in loads),
+                'common-count high-hinge numerator at most ten')
+        old_bounds = list(map(F, old['cases'][index]['hinge_bounds_at_0_through_5']))
+        require(old['cases'][index]['shape'] == shape, 'same canonical shape indexing')
+        tops = [[0]*4 for _ in counts]
+        for a, h in zip(loads, hs):
+            cross = sum(a) + sum(max(sum(a[i] for i in c) for c in group) for group in groups)
+            costs = [5*h[t] + min(h[k] + maxima[t-k] for k in range(t+1))
+                     for t in thresholds]
+            costs.append(6*sum(v*v for v in a) + 2*cross + q)
+            for cost_index, cost in enumerate(costs):
+                values = ([max(v-thresholds[cost_index], 0) for v in a]
+                          if cost_index < 3 else [v*v for v in a])
+                least = [0]
+                for v in sorted(values):
+                    for _ in range(5):
+                        least.append(least[-1] + v)
+                label_bounds = []
+                for eta in sorted({0, *values}):
+                    positive = [max(eta-v, 0) for v in values]
+                    cap = sum(max(sum(positive[i] for i in c) for c in group) for group in groups)
+                    label_bounds.append((eta, cap))
+                for j, count in enumerate(counts):
+                    deleted = 6*n-count
+                    # b<=5 gives the least-entry bound; b<=sum_d 1_Cd
+                    # gives every eta*deleted-cap lower bound on sum b*h.
+                    loss = max([least[deleted]] + [eta*deleted-cap for eta, cap in label_bounds])
+                    tops[j][cost_index] = max(tops[j][cost_index], cost-loss)
+        rows = []
+        for count, top in zip(counts, tops):
+            bounds = {t: min(F(top[j], count), old_bounds[t]) for j, t in enumerate(thresholds)}
+            m, g = bounds[0], min(F(top[3], count), squares[index])
+            high6 = F(10, count)
+            z = 1-F(17, 93)*bounds[2]-F(4, 93)*bounds[4]
+            lam = F(89, 4800)*m
+            survival = z-clip*lam
+            require(m >= 1 and g >= 1 and 0 < survival <= z <= 1,
+                    'same-branch moments and positive clipped survival')
+            gamma = 1+(g-1+clip*(chi-1)*g)/survival
+            mean = 1+(m-1+clip*(height_mean-1)*m)/survival
+            row = {'survivors':count, 'mean_upper':str(m), 'square_upper':str(g),
+                   'hinge2_upper':str(bounds[2]), 'hinge4_upper':str(bounds[4]),
+                   'hinge6_upper':str(high6), 'low_mass_lower':str(z),
+                   'full_mass_lower':str(survival), 'Gamma_upper':str(gamma),
+                   'same_law_first_upper':str(mean)}
+            rows.append(row)
+            branches.append((index, row))
+        cases.append({'shape':shape, 'old_survivors':n, 'test_layouts':len(loads),
+                      'survivor_count_range_inclusive':[minimum, 6*n], 'rows':rows})
+    checked = 0
+    for a, b, d in product(range(1, 13), repeat=3):
+        area = max(max(11-a, 0)*(13-b)-d, 0)
+        dual = 93-9*max(a-2, 0)-2*max(a-4, 0)-7*max(b-2, 0)-2*max(b-4, 0)-max(d-2, 0)
+        require(dual <= min(93, area), 'common-count fixed VC6 pointwise area bound')
+        checked += 1
+    require(len(branches) == 144 and layout_total == 27720, 'complete common shape/count domain')
+    worst_shape, worst = max(branches, key=lambda pair: F(pair[1]['Gamma_upper']))
+    mean_shape, mean_worst = max(branches, key=lambda pair: F(pair[1]['same_law_first_upper']))
+    survival = min(F(row['full_mass_lower']) for _, row in branches)
+    ell = survival/clip
+    joint = max(F(row['square_upper'])+50*F(row['hinge6_upper']) for _, row in branches)
+    refined = []
+    for index, row in branches:
+        g = F(row['square_upper'])
+        numerator = g-1+clip*(chi-1)*g-saving*g-unit_rebate
+        require(numerator > 0, 'positive refined numerator before denominator replacement')
+        refined.append((1+numerator/F(row['full_mass_lower']), index, row['survivors']))
+    refined_gamma, refined_shape, refined_count = max(refined)
+    # The existing global old comparator remains valid on every branch.
+    atoms = {int(x):F(p) for x, p in old['auxiliary_atoms'].items()}
+    raw = [F(0)]*4
+    for a, p in atoms.items():
+        if a < 4:
+            raw[a] = p
+    for p in (11, 13):
+        law = [F(0), F(p-2, p-1), F(1, p), F(1, p*p)]
+        nxt = [F(0)]*4
+        for a in range(1, 4):
+            for b in range(1, 3//a+1):
+                nxt[a*b] += raw[a]*law[b]
+        raw = nxt
+    require(1-sum(raw[1:4]) < ell < 1-sum(raw[1:3]), 'shared-count reference quantile cut three')
+    comparison_mean = 3+(F(old['mean'])*height_mean-3+2*raw[1]+raw[2])/ell
+    require(F(worst['Gamma_upper']) < F(42723250051, 1147550665),
+            'common geometry strictly improves the global-marginal square bound')
+    return {'scope':'all low axis and point patterns; full original 357 part divides 315; arbitrary finite 11/13 heights; common old shape and survivor count; no tail or Lean conclusion',
+            'clip':str(clip), 'cases':cases, 'old_layouts_verified':layout_total,
+            'shared_branches_verified':len(branches), 'pointwise_area_triples_verified':checked,
+            'square_reference_factor':str(chi), 'reference_auxiliary_mean':str(height_mean),
+            'high_reference_mass_per_old_mean':'89/4800',
+            'Gamma_upper':worst['Gamma_upper'], 'worst_shape':worst_shape,
+            'worst_survivors':worst['survivors'],
+            'same_law_first_upper':mean_worst['same_law_first_upper'],
+            'worst_first_shape':mean_shape, 'worst_first_survivors':mean_worst['survivors'],
+            'full_mass_lower':str(survival), 'reference_quantile_mass':str(ell),
+            'reference_quantile_cut':3, 'reference_comparison_mean':str(comparison_mean),
+            'joint_square_plus_50_hinge6_upper':str(joint),
+            'actual_rectangle_refinement':{
+                'grid_count_triples_verified':grid_cases,
+                'max_density_times_axes_plus_one':str(max_center),
+                'maximizing_grid_counts':maximizers,
+                'low_extra_diagonal_caps':list(map(str, caps)),
+                'max_low_extra_diagonal_sum':str(max_extra),
+                'square_saving_coefficient':str(saving), 'unit_load_rebate':str(unit_rebate),
+                'high_square_coefficient':str(clip*(chi-F(13, 8))),
+                'Gamma_upper':str(refined_gamma), 'worst_shape':refined_shape,
+                'worst_survivors':refined_count}}
+
+
 def signed_conditioning_obstruction():
     """Reconstruct the actual 47-class family and signed-criterion barrier."""
     F = Fraction
@@ -2086,6 +2253,7 @@ def verify(expected):
     lift_result = matching_height_lift()
     variable_head = varying_hole_head(deletion_result, signed_result)
     result = {
+        "shared_count_clipped_head": shared_count_clipped_head(old_cases, deletion_result, signed_result),
         "variable_axis_clipping": variable_axis_clipped_head(expected["variable_axis_clipping"]["witnesses"], deletion_result, signed_result),
         "signed_conditioning_obstruction": signed_conditioning_obstruction(),
         "schema": "marked-head-profile-v1",
@@ -2131,6 +2299,8 @@ def verify(expected):
                       "matching_hole_symbolic_identities": len(result["matching_hole_common_lambda"]["symbolic_identities"]),
                       "matching_height_tail17_Gamma": result["matching_height_tail17"]["Gamma_upper"],
                       "arbitrary_holes12_tail17_Gamma": result["arbitrary_holes12_tail17"]["Gamma_upper"],
+                      "shared_count_clipped_Gamma": result["shared_count_clipped_head"]["actual_rectangle_refinement"]["Gamma_upper"],
+                      "shared_count_branches": result["shared_count_clipped_head"]["shared_branches_verified"],
                       "conditioned_3465_actual_second": result["conditioned_3465_comparison"]["actual_second_moment_upper"]}, sort_keys=True))
 
 

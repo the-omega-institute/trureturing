@@ -1708,6 +1708,15 @@ first-power axis restrictions remain genuine hypotheses. This is an
 ordinary theorem with exact arithmetic, not unrestricted Erdős #7 or
 an end-to-end Lean proof.
 
+The unnormalized weighted grid component is formalized by
+`D5.S3.Arith.Congruence.ArbitraryHoleGram.degree_reweighted_grid_second_moment_le`
+in [ArbitraryHoleGram.lean](../D5/S3/Arith/Congruence/ArbitraryHoleGram.lean),
+for arbitrary finite axes of size at least three and arbitrary hole
+relations under its small-perturbation hypothesis. The normalization,
+arithmetic head integration and tail conclusion remain ordinary proofs;
+the zero-perturbation extension to smaller axes below is also an ordinary
+Laplacian argument.
+
 ### Unrestricted axis deletions: a complete head bound
 
 The [variable-rectangle construction](../docs/reports/erdos7-odd-covering/marked_head_profile.md#unrestricted-axis-deletions-and-the-optimal-scalar-clipped-bound)
@@ -1756,6 +1765,27 @@ with a positive certified denominator. This is optimality within the
 specified marginal-information relaxation, not optimality among actual
 survivor laws. Further improvement requires information omitted by that
 certificate, such as weighted old test energy.
+
+Retaining the [common old shape and actual survivor count](../docs/reports/erdos7-odd-covering/marked_head_profile.md#retaining-the-common-old-shape-and-survivor-count)
+sharpens the same construction at the same `C=40/31` to
+
+    Gamma <= 2167128283/58962460 < 36.755,
+    sup_test E_nu L <= 24790300/4595881 < 5.395.
+
+All test and activation loads share one of the six canonical 45 shapes
+and the same actual 315 survivor count. The verifier recomputes all
+27,720 old layouts and 144 common branches. At fixed deletion count,
+the original cofactor cylinders lower-bound deleted load energy; the
+existing five-term area inequality then applies with that branch's
+mean, square and hinge bounds. The actual local rectangle's Gram diagonal
+further saves `(9G+19)/496` from the square numerator: its clipping
+density and surviving axis counts obey simultaneous coefficient bounds,
+and each complete old block load is at least one. The 1372 possible
+nonempty rectangle count triples are checked exactly. The square maximum is at the first shape
+with 81 survivors. The same law admits the upper `68561/129600` quantile
+of `X·N11·N13` as a full increasing-convex comparator, with boundary 3
+and mean `1264886009/229953594`. These stronger bounds preserve the
+full `315·11^H·13^J` scope and do not assert a new tail continuation.
 
 These results remove the axis hypothesis for the finite head estimate.
 They do not supply the unrestricted-tail stopping certificate needed

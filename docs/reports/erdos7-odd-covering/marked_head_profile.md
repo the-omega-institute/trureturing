@@ -1948,7 +1948,23 @@ an entirely removed row. The strict-improvement cutoff 12 belongs to
 this sufficient envelope; PSD validity itself extends further whenever
 the stated support and D_K positivity conditions hold.
 
-The adjacent verifier checks 11 exact polynomial identities and four nonnegative-coefficient certificates for these formulas. The graph-counting and anchored-star arguments above prove the all-pattern statement. The matching theorem, weighted-rectangle concentration and established SDP framework are reused; the degree-weight construction supplies the new estimate. No Lean formalization or literature-priority claim is made.
+The adjacent verifier checks 11 exact polynomial identities and four
+nonnegative-coefficient certificates for these formulas. The graph-counting
+and anchored-star arguments above prove the all-pattern statement. The
+matching theorem, weighted-rectangle concentration and established SDP
+framework are reused; the degree-weight construction supplies the new estimate.
+
+`D5.S3.Arith.Congruence.ArbitraryHoleGram.degree_reweighted_grid_second_moment_le`
+in [ArbitraryHoleGram.lean](../../../D5/S3/Arith/Congruence/ArbitraryHoleGram.lean)
+formalizes the unnormalized weighted grid inequality for arbitrary finite
+row and column carriers of cardinality at least three, arbitrary hole
+relations, and the stated nonnegative small perturbation. Its proof derives
+the incidence budgets and both Gram cases from the relation. Normalization,
+the denominator lower bound, integration with arithmetic head laws, and
+the tail continuation remain ordinary proof obligations. The later
+zero-perturbation extension to axes of size one or two is also supplied by
+an ordinary Laplacian proof, not by this Lean declaration. No
+literature-priority claim is made.
 
 ## Mean hole count and the complete comparison profile
 
@@ -2541,6 +2557,207 @@ two-axis area objective, retaining its rectangular overlap, and its
 exact optimization under the three complete old marginal profiles.
 This is an ordinary proof with exact rational certificates, not an
 end-to-end Lean theorem or an unrestricted solution of Erdős #7.
+
+## Retaining the common old shape and survivor count
+
+The same construction at the fixed constant C=40/31 satisfies the stronger
+simultaneous bounds
+
+    Γ≤2167128283/58962460 ≈36.754373597,
+    sup_test Eν L≤24790300/4595881 ≈5.394025651.               (SC1)
+
+These hold for every family of distinct nonunit moduli dividing
+315·11^H·13^J, with arbitrary finite H,J≥1 and arbitrary axis and point
+deletions. The full 3/5/7 part must divide 315. The improvement retains
+information from the six canonical 45 shapes and their actual septenary
+survivor count. This is the 45×7 divisor geometry of the odd part of
+5040=16·315.
+
+Fix the one old shape S selected by the original family, write n=|S|,
+and let N be its actual 315 survivor count. Every test load and every
+axis/cross activation load is evaluated on this same law. The possible
+pairs (S,N) comprise 144 branches: N ranges from (77,78,78,75,74,74),
+respectively, to 6n for the six shapes. None of the different loads may
+choose a different branch.
+
+### Deleted energy at a fixed survivor count
+
+Put D=6n−N=Σₓb(x), using the actual deleted-digit counts from (D1).
+For a nonnegative old cost h(A(x)), let T_D be the sum of the D smallest
+entries among five copies of each h(A(x)). Since 0≤b(x)≤5,
+
+    Σₓb(x)h(A(x))≥T_D.
+
+The original cofactor labels give an additional lower bound. For every
+η≥0, the identity b h=ηb−b(η−h), followed by
+b≤Σ_d 1_Cd, gives
+
+    Σₓb(x)h(A(x))
+      ≥ηD−Σ_(d∈{3,5,9,15,45}) max_C Σ_(x∈S∩C)(η−h(A(x)))_+.
+                                                                  (SC2)
+
+Thus the maximum of T_D and all the right sides of (SC2) is a valid
+deleted-energy lower bound L_D(A,h). The finite verifier takes η from
+zero and the actual cost values. This finite selection is sufficient
+for the bound; no optimality over η is required.
+
+For h_t(a)=(a−t)_+, use (D3) to obtain
+
+    Eμ(L−t)_+
+      ≤max_A [5H_t(A)+min_(0≤k≤t)(H_k(A)+M_(t−k))
+                         −L_D(A,h_t)]/N.                        (SC3)
+
+For h(a)=a², (D4)'s numerator gives
+
+    Eμ L²≤max_A [6ΣA²+2R(A)+Q−L_D(A,h)]/N.                     (SC4)
+
+Intersect these bounds with the already proved constants for this same
+shape. The resulting M_(S,N), G_(S,N), θ_(S,N)(2), θ_(S,N)(4) all hold
+simultaneously for every complete old test layout. Effective old layouts
+suffice: completing an inactive test cylinder only increases a load.
+All 27,720 such layouts are checked directly.
+
+The elementary old bound Φ(3)≤5 and old load≤6 also give
+Eμ(L−6)_+≤10/N by the fibre inequality. Consequently any two complete
+loads U,V on the same old law satisfy the useful joint restriction
+
+    Eμ U²+50 Eμ(V−6)_+≤max_(S,N)(G_(S,N)+500/N)=761/39.       (SC5)
+
+It retains a common arithmetic branch even when U and V are different
+layouts. Separate globally maximized square and hinge constants discard
+that information.
+
+### Transfer on each common branch
+
+Use exactly the existing pointwise inequality (VC6). Its average on one
+branch gives the low-mass lower bound
+
+    Z_(S,N)=1−[17θ_(S,N)(2)+4θ_(S,N)(4)]/93.
+
+The same branch's higher deletion bound is λ_(S,N)=89M_(S,N)/4800.
+Set s_(S,N)=Z_(S,N)−(40/31)λ_(S,N). Applying (VC9) and the first-moment
+argument to that one branch gives
+
+    Γ≤1+[G_(S,N)−1+(40/31)(χ0−1)G_(S,N)]/s_(S,N),
+    sup_test Eν L
+      ≤1+[M_(S,N)−1+(40/31)(5809/4800−1)M_(S,N)]/s_(S,N).
+                                                                  (SC6)
+
+Here χ0=187759/108000 as before. Every s_(S,N) is positive. The largest
+square bound occurs in the first shape at N=81, where
+
+    M=253/81, G=1131/86, θ(2)=100/81, θ(4)=32/81,
+    Z=5705/7533, s=68561/100440.
+
+Substitution gives the intermediate square bound
+547762402/14740615≈37.160077921. The actual-rectangle refinement below
+gives the square bound in (SC1). The largest first-moment
+bound occurs in the same shape at N=84 and gives the other bound in
+(SC1); these are uniform bounds on the same constructed law, not a claim
+that one family attains both extrema.
+
+The smallest certified full mass is 68561/100440. Hence that law's
+density relative to the old uniform reference is at most
+(40/31)/(68561/100440). It also has the full increasing-convex comparator
+given by the upper
+
+    ρ=68561/129600
+
+quantile of the existing Y=X N11 N13. Its boundary is at 3 and its mean
+is 1264886009/229953594. The comparator and both actual moment bounds in
+(SC1) apply to the same law.
+
+### The actual rectangle gives two further square savings
+
+At an old point x, let m≤10 and n≤12 be the actual remaining row and
+column counts after axis deletion, and let k≤12 be the number of distinct
+remaining point holes. There are twelve possible original labels 143d,
+d|315, which proves the hole cap. These are actual counts, not the
+lower bounds for axis counts used in (VC2). Write T for the local
+survivors and N_grid=mn−k for their number; N_grid is distinct from the
+common old survivor count N.
+
+When N_grid>0, the existing clipped density is f=min(40/31,120/N_grid)
+on T, with old marginal h=f N_grid/120. Empty fibres have f=h=0. No
+additional support restriction or change of probability measure is used.
+
+For a selected row, column and surviving point, write r,c for their
+surviving row/column sizes and u,v,w for the indicators that the row-column
+intersection survives, the point is in the row, and the point is in the
+column. The Gram matrix of the four indicators is
+
+    [[N_grid,r,c,1], [r,r,u,v], [c,u,c,w], [1,v,w,1]].
+
+Put d=n−r and e=m−c. Subtracting this matrix from
+diag(N_grid+m+n+1,2(n+1),2(m+1),4) gives the weighted graph Laplacian
+with edge weights r,c,1,u,v,w, plus diagonal slacks
+
+    (d+e, 2+2d−u−v, 2+2e−u−w, 2−v−w).
+
+All weights and slacks are nonnegative, so this is positive semidefinite
+for every m,n≥1 and every point-hole pattern. An absent test row, column
+or point has zero indicator and is handled by the corresponding
+principal restriction. Convex concentration of the nonnegative
+coefficients in each test block extends the bound to arbitrary row,
+column and point assignments. Multiplying by f/120 gives the diagonal
+
+    (h+f(m+n+1)/120, 2f(n+1)/120,
+                         2f(m+1)/120, 4f/120).                (SC7)
+
+The four block amplitudes A_i are complete old loads, each at least one
+and with Eμ A_i²≤G_(S,N). They need not be independent of each other or
+of the local geometry.
+
+Write q for the four coefficients in (SC7) after removing h from the
+first one, and set C=40/31. The following simultaneous bounds hold:
+
+    q≤U:=(55/2,26C,22C,4C)/120,
+    Σq=f(m+n+3)/40≤3/4,
+    ΣU=391/496.                                               (SC8)
+
+For completeness, if m+n≤20, then f(m+n+1)≤21C<55/2 and
+Σq≤23/31<3/4. If m+n=21, the dimensions are (9,12) or (10,11),
+so N_grid≥96 and f≤5/4; this gives both bounds. If m+n=22, the
+dimensions are (10,12), N_grid≥108 and f≤10/9, which also suffices.
+The other three coordinate bounds use f≤C directly. Both displayed
+maxima occur at (m,n,k)=(9,12,12). Empty fibres have q=0.
+
+Since A_i²≥1, the coordinatewise gaps in (SC8) give
+
+    Σq_i A_i²≤ΣU_i A_i²−(ΣU_i−Σq_i)
+              ≤ΣU_i A_i²−19/496.
+
+After integration, the low-block square is at most
+
+    G−1+Z+(391/496)G−19/496.
+
+Here G=G_(S,N); the h term uses the same old-marginal saving as (VC8).
+Every pair with at least one higher exponent retains the existing
+reference estimate C(χ0−13/8)G. Thus the complete square bound gains
+both a coefficient and a constant saving:
+
+    Γ(ξ)≤G−1+Z+C(χ0−1)G−(9/496)G−19/496.                    (SC9)
+
+Deleting the higher original classes and normalizing is unchanged.
+The numerator below is positive in every common branch, so replacing
+the remaining mass by its certified lower bound is valid:
+
+    Γ(ν)≤1+[G−1+C(χ0−1)G−(9/496)G−19/496]/s_(S,N).        (SC10)
+
+The maximum over the 144 branches is 2167128283/58962460, again at the
+first shape with N=81. This proves (SC1). The first-moment and full
+comparison bounds above apply to this same unchanged probability law.
+
+The `shared_count_clipped_head` field is recomputed from the existing
+old geometry by the adjacent standard-library verifier. It checks all
+144 branches, the 1728 pointwise instances of the single existing
+dual (VC6), and all 1372 nonempty actual rectangle count triples in
+(SC8). The universal Gram inequality follows from the displayed
+Laplacian identity. No optimizer output or new primal certificate is needed.
+The former scalar optimality result still concerns its stated global
+marginal information; (SC2)–(SC6) retain additional common geometry.
+These are ordinary proofs with exact arithmetic, without a new tail
+continuation or an end-to-end Lean theorem.
 
 ## Actual obstruction for uniform conditioning and its signed bound
 
