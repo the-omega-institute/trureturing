@@ -2,11 +2,12 @@
    generality: G
    mirror-B: D5/B/S3/ArithSums/SchulteShiftedProductGcdRowSumConvolution
    mirror-E: none(waiver:symbolic-proof-no-numeric-artifact)
-   anchors: [mathlib/module/Mathlib.Data.Nat.Totient]
+   anchors: [mathlib/module/Mathlib.Data.Nat.Totient, mathlib/module/Mathlib.Logic.Equiv.Fin.Basic]
    utility: none
    digest: Schulte's gcd row sum equals n squared convolved with totient squared. -/
 
 import Mathlib.Data.Nat.Totient
+import Mathlib.Logic.Equiv.Fin.Basic
 
 open scoped BigOperators
 open Finset
@@ -18,146 +19,96 @@ namespace D5.S3.ArithSums.SchulteShiftedProductGcdRowSumConvolution
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-private def residueFinEquiv (n d : ℕ) (hd : d ∣ n) (hd0 : 0 < d) :
-    Fin n ≃ ZMod d × Fin (n / d) := by
-  letI : NeZero d := ⟨Nat.ne_of_gt hd0⟩
-  let q := n / d
-  have hn : d * q = n := by
-    dsimp [q]
-    simpa [Nat.mul_comm] using (Nat.div_mul_cancel hd)
-  let e : Fin n ≃ ZMod d × Fin q :=
-    { toFun := fun x =>
-        (x.val, ⟨x.val / d, by
-          apply (Nat.div_lt_iff_lt_mul hd0).2
-          simpa [Nat.mul_comm, hn] using x.isLt⟩)
-      invFun := fun p =>
-        ⟨p.1.val + d * p.2.val, by
-          have h1 : p.1.val + d * p.2.val < d + d * p.2.val :=
-            Nat.add_lt_add_right p.1.val_lt _
-          have h2 : d + d * p.2.val ≤ d * q := by
-            have h := Nat.mul_le_mul_left d (Nat.succ_le_of_lt p.2.isLt)
-            simpa [Nat.mul_succ, Nat.add_comm] using h
-          rw [← hn]
-          exact h1.trans_le h2⟩
-      left_inv := by
-        intro x
-        apply Fin.ext
-        simp only [ZMod.val_natCast]
-        rw [Nat.mod_add_div]
-      right_inv := by
-        intro p
-        apply Prod.ext
-        · change ((p.1.val + d * p.2.val : ℕ) : ZMod d) = p.1
-          simp [ZMod.natCast_val]
-        · apply Fin.ext
-          change (p.1.val + d * p.2.val) / d = p.2.val
-          apply Nat.div_eq_of_lt_le
-          · calc
-              p.2.val * d = d * p.2.val := Nat.mul_comm _ _
-              _ ≤ p.1.val + d * p.2.val := Nat.le_add_left _ _
-          · calc
-              p.1.val + d * p.2.val = p.1.val + p.2.val * d := by rw [Nat.mul_comm]
-              _ < d + p.2.val * d := Nat.add_lt_add_right p.1.val_lt _
-              _ = (p.2.val + 1) * d := by rw [Nat.succ_mul, Nat.add_comm] }
-  simpa [q] using e
-
-private def unitSolutionEquiv (d : ℕ) (_hd0 : 0 < d) :
-    (ZMod d)ˣ ≃ {p : ZMod d × ZMod d // 1 + p.1 * p.2 = 0} := by
-  letI : NeZero d := ⟨Nat.ne_of_gt _hd0⟩
-  let hunit : ∀ p : {p : ZMod d × ZMod d // 1 + p.1 * p.2 = 0}, IsUnit p.1.1 :=
-    fun p => isUnit_iff_exists_inv.mpr ⟨-p.1.2, by
-      have hp : p.1.1 * p.1.2 = -1 := by
-        calc
-          p.1.1 * p.1.2 = (1 + p.1.1 * p.1.2) - 1 := by ring
-          _ = 0 - 1 := by rw [p.2]
-          _ = -1 := by simp
-      rw [mul_neg, hp]
-      simp⟩
-  refine
-    { toFun := fun u => ⟨((u : ZMod d), -(u⁻¹ : ZMod d)), ?_⟩
-      invFun := fun p => (hunit p).unit
-      left_inv := by
-        intro u
-        apply Units.ext
-        exact IsUnit.unit_spec _
-      right_inv := by
-        intro p
-        let hu : IsUnit p.1.1 := hunit p
-        have hpunit : (hu.unit : ZMod d) = p.1.1 := hu.unit_spec
-        have hp : p.1.1 * p.1.2 = -1 := by
-          calc
-            p.1.1 * p.1.2 = (1 + p.1.1 * p.1.2) - 1 := by ring
-            _ = 0 - 1 := by rw [p.2]
-            _ = -1 := by simp
-        have hmul : (hu.unit : ZMod d) * p.1.2 = -1 := by
-          simpa [hpunit] using hp
-        have hinv_mul : (hu.unit : ZMod d)⁻¹ * (hu.unit : ZMod d) = 1 := by
-          exact ZMod.inv_mul_of_unit _ hu
-        have hinv : (hu.unit : ZMod d)⁻¹ = -p.1.2 := by
-          calc
-            (hu.unit : ZMod d)⁻¹ = (hu.unit : ZMod d)⁻¹ * 1 := by simp
-            _ = (hu.unit : ZMod d)⁻¹ * (-((hu.unit : ZMod d) * p.1.2)) := by
-              rw [hmul]
-              simp
-            _ = -p.1.2 := by
-              rw [mul_neg, ← mul_assoc, hinv_mul, one_mul]
-        dsimp
-        apply Subtype.ext
-        change ((p.1.1, -(p.1.1)⁻¹) : ZMod d × ZMod d) = p.1
-        apply Prod.ext
-        · rfl
-        · have hinv_p : p.1.1⁻¹ = -p.1.2 := by
-            simpa [hpunit] using hinv
-          rw [hinv_p]
-          simp }
-  · simp [mul_neg]
-
-private def windowResidueEquiv (n d : ℕ) (hd : d ∣ n) (hd0 : 0 < d) :
-    {p : Fin n × Fin n // d ∣ 1 + p.1.val * p.2.val} ≃
-      {z : (ZMod d × Fin (n / d)) × (ZMod d × Fin (n / d)) //
-        1 + z.1.1 * z.2.1 = 0} := by
-  let e := Equiv.prodCongr (residueFinEquiv n d hd hd0) (residueFinEquiv n d hd hd0)
-  letI : NeZero d := ⟨Nat.ne_of_gt hd0⟩
-  refine
-    { toFun := fun p => ⟨e p, ?_⟩
-      invFun := fun z => ⟨e.symm z, ?_⟩
-      left_inv := by
-        intro p
-        apply Subtype.ext
-        change e.symm (e p.1) = p.1
-        exact e.left_inv p.1
-      right_inv := by
-        intro z
-        apply Subtype.ext
-        change e (e.symm z.1) = z.1
-        exact e.right_inv z.1 }
-  · have hp : ((1 + p.1.1.val * p.1.2.val : ℕ) : ZMod d) = 0 :=
-      (ZMod.natCast_eq_zero_iff _ _).2 p.2
-    simpa [e, residueFinEquiv] using hp
-  · rw [← ZMod.natCast_eq_zero_iff]
-    simpa [e, residueFinEquiv, ZMod.natCast_mod] using z.2
-
-private def solutionProductEquiv (d q : ℕ) :
-    ({p : ZMod d × ZMod d // 1 + p.1 * p.2 = 0} × Fin q) × Fin q ≃
-      {z : (ZMod d × Fin q) × (ZMod d × Fin q) //
-        1 + z.1.1 * z.2.1 = 0} := by
-  refine
-    { toFun := fun a =>
-        ⟨((a.1.1.1.1, a.1.2), (a.1.1.1.2, a.2)), a.1.1.2⟩
-      invFun := fun z =>
-        ⟨⟨⟨(z.1.1.1, z.1.2.1), z.2⟩, z.1.1.2⟩, z.1.2.2⟩
-      left_inv := by
-        intro a
-        rcases a with ⟨⟨⟨a1, a2⟩, ha⟩, a3⟩
-        rfl
-      right_inv := by
-        intro z
-        apply Subtype.ext
-        rfl }
-
 private theorem card_window_solutions (n d : ℕ) (hd : d ∣ n) (hd0 : 0 < d) :
     Nat.card {p : Fin n × Fin n // d ∣ 1 + p.1.val * p.2.val} =
       Nat.totient d * (n / d) ^ 2 := by
+  let residueFinEquiv (n d : ℕ) (hd : d ∣ n) (hd0 : 0 < d) :
+      Fin n ≃ ZMod d × Fin (n / d) := by
+    letI : NeZero d := ⟨Nat.ne_of_gt hd0⟩
+    have hn : (n / d) * d = n := Nat.div_mul_cancel hd
+    exact
+      (finCongr hn.symm)
+      |>.trans finProdFinEquiv.symm
+      |>.trans (Equiv.prodComm _ _)
+      |>.trans (Equiv.prodCongr (ZMod.finEquiv d).toEquiv (Equiv.refl _))
+  let unitSolutionEquiv (d : ℕ) (hd0 : 0 < d) :
+      (ZMod d)ˣ ≃ {p : ZMod d × ZMod d // 1 + p.1 * p.2 = 0} := by
+    letI : NeZero d := ⟨Nat.ne_of_gt hd0⟩
+    let negSecond : ZMod d × ZMod d ≃ ZMod d × ZMod d :=
+      Equiv.prodCongr (Equiv.refl _) (Equiv.neg _)
+    exact (unitsEquivProdSubtype (ZMod d)).trans
+      (negSecond.subtypeEquiv (by
+        intro p
+        constructor
+        · intro hp
+          change 1 + p.1 * (-p.2) = 0
+          rw [mul_neg, hp.1]
+          simp
+        · intro hp
+          change 1 + p.1 * (-p.2) = 0 at hp
+          have hneg : p.1 * (-p.2) = -1 := eq_neg_of_add_eq_zero_right hp
+          have hmul : p.1 * p.2 = 1 := by
+            apply neg_injective
+            simpa only [mul_neg] using hneg
+          exact ⟨hmul, by simpa only [mul_comm] using hmul⟩))
+  let windowResidueEquiv (n d : ℕ) (hd : d ∣ n) (hd0 : 0 < d) :
+      {p : Fin n × Fin n // d ∣ 1 + p.1.val * p.2.val} ≃
+        {z : (ZMod d × Fin (n / d)) × (ZMod d × Fin (n / d)) //
+          1 + z.1.1 * z.2.1 = 0} := by
+    let e := Equiv.prodCongr (residueFinEquiv n d hd hd0) (residueFinEquiv n d hd hd0)
+    letI : NeZero d := ⟨Nat.ne_of_gt hd0⟩
+    have finEquiv_natCast (x : Fin d) :
+        ZMod.finEquiv d x = (x.val : ZMod d) := by
+      rcases d with _ | d
+      · exact Fin.elim0 x
+      · exact (ZMod.natCast_zmod_val (n := d + 1) x).symm
+    have finEquiv_symm_natCast (z : ZMod d) :
+        (((ZMod.finEquiv d).symm z).val : ZMod d) = z := by
+      calc
+        (((ZMod.finEquiv d).symm z).val : ZMod d) =
+            ZMod.finEquiv d ((ZMod.finEquiv d).symm z) :=
+          (finEquiv_natCast _).symm
+        _ = z := (ZMod.finEquiv d).apply_symm_apply z
+    refine
+      { toFun := fun p => ⟨e p, ?_⟩
+        invFun := fun z => ⟨e.symm z, ?_⟩
+        left_inv := by
+          intro p
+          apply Subtype.ext
+          change e.symm (e p.1) = p.1
+          exact e.left_inv p.1
+        right_inv := by
+          intro z
+          apply Subtype.ext
+          change e (e.symm z.1) = z.1
+          exact e.right_inv z.1 }
+    · have hp : ((1 + p.1.1.val * p.1.2.val : ℕ) : ZMod d) = 0 :=
+        (ZMod.natCast_eq_zero_iff _ _).2 p.2
+      simpa [e, residueFinEquiv, finEquiv_natCast, ZMod.natCast_mod] using hp
+    · rw [← ZMod.natCast_eq_zero_iff]
+      simpa [e, residueFinEquiv, finEquiv_symm_natCast, ZMod.natCast_mod] using z.2
+  let solutionProductEquiv (d q : ℕ) :
+      ({p : ZMod d × ZMod d // 1 + p.1 * p.2 = 0} × Fin q) × Fin q ≃
+        {z : (ZMod d × Fin q) × (ZMod d × Fin q) //
+          1 + z.1.1 * z.2.1 = 0} := by
+    let predicate : ZMod d × ZMod d → Prop := fun p => 1 + p.1 * p.2 = 0
+    let extract : {z : (ZMod d × ZMod d) × (Fin q × Fin q) // predicate z.1} ≃
+        {p : ZMod d × ZMod d // predicate p} × (Fin q × Fin q) :=
+      Equiv.prodSubtypeFstEquivSubtypeProd
+    let associate : ({p : ZMod d × ZMod d // predicate p} × Fin q) × Fin q ≃
+        {p : ZMod d × ZMod d // predicate p} × (Fin q × Fin q) :=
+      Equiv.prodAssoc _ _ _
+    let shuffle : ((ZMod d × ZMod d) × (Fin q × Fin q)) ≃
+        (ZMod d × Fin q) × (ZMod d × Fin q) :=
+      (Equiv.prodAssoc (ZMod d) (ZMod d) (Fin q × Fin q)).trans
+        ((Equiv.refl (ZMod d)).prodCongr
+          (Equiv.prodAssoc (ZMod d) (Fin q) (Fin q)).symm)
+      |>.trans ((Equiv.refl (ZMod d)).prodCongr
+        ((Equiv.prodComm (ZMod d) (Fin q)).prodCongr (Equiv.refl (Fin q))))
+      |>.trans ((Equiv.refl (ZMod d)).prodCongr
+        (Equiv.prodAssoc (Fin q) (ZMod d) (Fin q)))
+      |>.trans (Equiv.prodAssoc (ZMod d) (Fin q) (ZMod d × Fin q)).symm
+    exact associate.trans (extract.symm.trans (shuffle.subtypeEquiv (by intro z; rfl)))
   let q := n / d
   have card_residue_solutions (d : ℕ) (hd0 : 0 < d) :
       Nat.card {p : ZMod d × ZMod d // 1 + p.1 * p.2 = 0} = Nat.totient d := by

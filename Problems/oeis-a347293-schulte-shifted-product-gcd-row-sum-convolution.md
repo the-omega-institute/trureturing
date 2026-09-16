@@ -74,8 +74,9 @@ counting lemma.
   `D5/S3/ArithSums/SchulteShiftedProductGcdRowSumConvolution.lean`.
 - Public declarations: `rowSum` and `result`.
 - The load-bearing count is `card_window_solutions`.
-- The probe found zero exceptions for `1 <= n < 80`; at `n=60`, both sides
-  equal `12792`. These finite readings support fault detection only.
+- The probe self-reported zero exceptions for `1 <= n < 80`. Independently,
+  the implementation measured `n=60` and obtained `12792` on both sides.
+  These finite readings support fault detection only.
 
 ## Triage
 
