@@ -53,8 +53,21 @@ trap 'exit 143' TERM
 
 run_phase() {
   local phase="$1" status=0
+  local phase_started="${SECONDS:-unavailable}" phase_finished phase_elapsed=unavailable
   shift
+  # Observations never participate in report reuse or change a phase's verdict.
+  [[ "$phase_started" =~ ^[0-9]+$ ]] || phase_started=unavailable
+  printf 'LEAN_INSPECTOR_PHASE phase=%s status=started clock=shell-seconds start_seconds=%s\n' \
+    "$phase" "$phase_started" >&2 || true
   (cd "$REPOSITORY" && "$@") > "$LOG_DIR/$phase.stdout.log" 2> "$LOG_DIR/$phase.stderr.log" || status=$?
+  phase_finished="${SECONDS:-unavailable}"
+  [[ "$phase_finished" =~ ^[0-9]+$ ]] || phase_finished=unavailable
+  if [[ "$phase_started" != unavailable && "$phase_finished" != unavailable ]] \
+    && (( 10#$phase_finished >= 10#$phase_started )); then
+    phase_elapsed=$((10#$phase_finished - 10#$phase_started))
+  fi
+  printf 'LEAN_INSPECTOR_PHASE phase=%s status=completed clock=shell-seconds start_seconds=%s end_seconds=%s elapsed_seconds=%s exit=%s\n' \
+    "$phase" "$phase_started" "$phase_finished" "$phase_elapsed" "$status" >&2 || true
   printf '%s\n' "$status" > "$LOG_DIR/$phase.exit.log"
   if [[ "$status" != 0 ]]; then
     printf 'LEAN_INSPECTOR_FAILED phase=%s exit=%s\n' "$phase" "$status" >&2
@@ -65,8 +78,13 @@ run_phase() {
 
 # Validate required authored inputs before provisioning or consuming artifacts.
 run_phase inputs python3 "$SCRIPT_DIR/../scripts/report/lean-report-selection.py" validate --repository "$REPOSITORY"
-run_phase utility-input-build dotnet build "$SCRIPT_DIR/../StrataLint.Cli/StrataLint.Cli.csproj" \
-  --configuration Release --nologo --verbosity quiet
+if [[ -n "${STRATALINT_LEAN_PRODUCER_DLL:-}" ]]; then
+  [[ "$STRATALINT_LEAN_PRODUCER_DLL" == /* && -f "$STRATALINT_LEAN_PRODUCER_DLL" ]] \
+    || { echo 'inspect.sh: candidate Lean producer must be an existing absolute path' >&2; exit 2; }
+else
+  run_phase utility-input-build dotnet build "$SCRIPT_DIR/../StrataLint.Lean/StrataLint.Lean.csproj" \
+    --configuration Release --nologo --verbosity quiet
+fi
 run_phase ensure /bin/bash "$REPOSITORY/tools/scripts/worktree/lean-cache-ensure.sh"
 mkdir -p "$(dirname "$OUTPUT")" "$FINAL_LOG_DIR"
 mv -f -- "$STARTUP_LOG_DIR"/* "$FINAL_LOG_DIR/"

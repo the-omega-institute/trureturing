@@ -28,6 +28,7 @@ internal static class FileMapSymlinkPolicy
         var resolved = Resolve(path, target, location);
         if (IsReserved(path) || IsReserved(resolved)
             || FileMapDocuments.IsPolicyPath(path)
+            || FileMapDocuments.IsPolicyPath(resolved)
             || AdmissionPlanePolicy.FileMapPath.StartsWith(path + "/", StringComparison.Ordinal)
             || resolved == path || resolved.StartsWith(path + "/", StringComparison.Ordinal)
             || (rawKind is "directory" && path.StartsWith(resolved + "/", StringComparison.Ordinal)))
@@ -48,8 +49,8 @@ internal static class FileMapSymlinkPolicy
         var tables = new List<(TomlTable Table, string Location)>();
         foreach (var document in documents)
         {
-            if (!document.Table.TryGetValue("schema_version", out var version) || version is not 2L)
-                throw Invalid(document.Path, "symlink declarations require schema_version 2 and files tables");
+            if (!document.Table.TryGetValue("schema_version", out var version) || version is not (2L or 3L or 4L))
+                throw Invalid(document.Path, "symlink declarations require schema_version 2, 3 or 4");
             if (!document.Table.TryGetValue("files", out var rawFiles) && document.Table.ContainsKey("include")) continue;
             var files = FileMapTomlTables.Parse(rawFiles, document.Path, allowEmpty: false);
             tables.AddRange(files.Select((table, index) => (table, $"{document.Path}:files[{index}]")));

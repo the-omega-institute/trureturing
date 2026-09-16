@@ -1,13 +1,13 @@
-schema_version = 2
+schema_version = 4
 # Experimental programs, results, and licenses; recursive patterns cover report directories.
 files = [
-{ pattern = "docs/reports/**/*.b64", kind = "data", admission_plane = "content", produced_by = "none", consumed_by = ["agent"], verified_by = ["SnapshotDecoder"], artifact_id = "none", runtime_disposition = "committed-source" },
-{ pattern = "docs/reports/**/*.c", kind = "program", admission_plane = "content", produced_by = "none", consumed_by = ["agent"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source" },
-{ pattern = "docs/reports/**/*.h", kind = "program", admission_plane = "content", produced_by = "none", consumed_by = ["agent"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source" },
-{ pattern = "docs/reports/**/*.json", kind = "data", admission_plane = "content", produced_by = "none", consumed_by = ["agent"], verified_by = ["SnapshotDecoder"], artifact_id = "none", runtime_disposition = "committed-source" },
-{ pattern = "docs/reports/**/*.lean", kind = "program", admission_plane = "content", produced_by = "none", consumed_by = ["agent"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source" },
-{ pattern = "docs/reports/**/*.md", kind = "data", admission_plane = "content", produced_by = "none", consumed_by = ["agent"], verified_by = ["SnapshotDecoder"], artifact_id = "none", runtime_disposition = "committed-source" },
-{ pattern = "docs/reports/**/*.mjs", kind = "program", admission_plane = "content", produced_by = "none", consumed_by = ["agent"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source" },
-{ pattern = "docs/reports/**/*.py", kind = "program", admission_plane = "content", produced_by = "none", consumed_by = ["agent"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source" },
-{ pattern = "docs/reports/**/*.txt", kind = "data", admission_plane = "content", produced_by = "none", consumed_by = ["agent"], verified_by = ["SnapshotDecoder"], artifact_id = "none", runtime_disposition = "committed-source" },
+{ pattern = "docs/reports/**/*.b64", require = [], kind = "data", admission_plane = "content", produced_by = "none", consumed_by = ["agent"], verified_by = ["SnapshotDecoder"], artifact_id = "none", runtime_disposition = "committed-source" },
+{ pattern = "docs/reports/**/*.c", require = [], kind = "program", admission_plane = "content", produced_by = "none", consumed_by = ["agent"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source" },
+{ pattern = "docs/reports/**/*.h", require = [], kind = "program", admission_plane = "content", produced_by = "none", consumed_by = ["agent"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source" },
+{ pattern = "docs/reports/**/*.json", require = [], kind = "data", admission_plane = "content", produced_by = "none", consumed_by = ["agent"], verified_by = ["SnapshotDecoder"], artifact_id = "none", runtime_disposition = "committed-source" },
+{ pattern = "docs/reports/**/*.lean", require = [], kind = "program", admission_plane = "content", produced_by = "none", consumed_by = ["agent"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source" },
+{ pattern = "docs/reports/**/*.md", require = [], kind = "data", admission_plane = "content", produced_by = "none", consumed_by = ["agent"], verified_by = ["SnapshotDecoder"], artifact_id = "none", runtime_disposition = "committed-source" },
+{ pattern = "docs/reports/**/*.mjs", require = [], kind = "program", admission_plane = "content", produced_by = "none", consumed_by = ["agent"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source" },
+{ pattern = "docs/reports/**/*.py", require = [], kind = "program", admission_plane = "content", produced_by = "none", consumed_by = ["agent"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source" },
+{ pattern = "docs/reports/**/*.txt", require = [], kind = "data", admission_plane = "content", produced_by = "none", consumed_by = ["agent"], verified_by = ["SnapshotDecoder"], artifact_id = "none", runtime_disposition = "committed-source" },
 ]

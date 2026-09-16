@@ -8,6 +8,35 @@ public sealed class EmissionTests
 {
 
     [Fact]
+    public void ActualProducerCapabilityMaterialRoundTripsWithoutReemissionAndBindsSource()
+    {
+        var root = TemporaryFileSystem.Directory.CreateTempSubdirectory("scribe-material-").FullName;
+        try
+        {
+            var definition = SyntheticDefinition();
+            WriteSyntheticScribeInputs(root, definition);
+            var formal = Path.Combine(root, "D5/S0/Synthetic/CheckMode.lean");
+            Directory.CreateDirectory(Path.GetDirectoryName(formal)!);
+            File.WriteAllText(formal, "def checkMode : Nat := 0\n");
+            var error = new StringWriter();
+            var capability = ScribeEmitter.Verify(root, error, LeanReportFixture.ForDocuments([definition.Document]), [definition]);
+            Assert.True(capability is not null, error.ToString());
+            var source = Path.Combine(root, definition.SourcePath);
+            RepositorySnapshot Snapshot() => Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
+                RawRepositorySnapshot.Create([RawRepositoryEntry.FromText(definition.SourcePath, File.ReadAllText(source))]))).Snapshot;
+            var material = capability.WriteMaterial();
+            var restored = VerifiedScribeEmissions.ReadMaterial(material, Snapshot());
+            Assert.True(restored.TryGet(definition.Document.Header.Gid.Value, out var record));
+            Assert.Equal(definition.SourcePath, record.DefinitionPath);
+            Assert.Equal(material, restored.WriteMaterial());
+            File.AppendAllText(source, "// changed\n");
+            Assert.Throws<InvalidDataException>(() => VerifiedScribeEmissions.ReadMaterial(material, Snapshot()));
+            Assert.Throws<InvalidDataException>(() => VerifiedScribeEmissions.ReadMaterial(VerifiedScribeEmissions.Empty.WriteMaterial(), Snapshot()));
+        }
+        finally { TemporaryFileSystem.Directory.Delete(root, true); }
+    }
+
+    [Fact]
     public void EmitWritesCanonicalFilesAndCheckIgnoresReaderSnapshotFreshness()
     {
         var root = Path.Combine(

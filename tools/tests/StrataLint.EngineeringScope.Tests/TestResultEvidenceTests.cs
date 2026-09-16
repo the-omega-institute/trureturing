@@ -67,7 +67,7 @@ public sealed class TestResultEvidenceTests
         Assert.Equal(
             (
                 ExitCode: 2,
-                Output: "ENGINEERING_BASE_FLOOR_EXECUTED assembly=Present.Owner.Tests evidence=trx executed=1\n",
+                Output: "TEST_ASSEMBLY_EVIDENCE_ACCEPTED assembly=Present.Owner.Tests evidence=trx executed=1\n",
                 Error: "TEST_EVIDENCE_FAILED TRX has no executed identity from required assembly Missing.Owner.Tests\n"),
             result);
     }
@@ -92,8 +92,8 @@ public sealed class TestResultEvidenceTests
         Assert.Equal(
             (
                 ExitCode: 0,
-                Output: "ENGINEERING_BASE_FLOOR_EXECUTED assembly=First.Owner.Tests evidence=trx executed=1\n"
-                    + "ENGINEERING_BASE_FLOOR_EXECUTED assembly=Second.Owner.Tests evidence=trx executed=1\n",
+                Output: "TEST_ASSEMBLY_EVIDENCE_ACCEPTED assembly=First.Owner.Tests evidence=trx executed=1\n"
+                    + "TEST_ASSEMBLY_EVIDENCE_ACCEPTED assembly=Second.Owner.Tests evidence=trx executed=1\n",
                 Error: ""),
             result);
     }
