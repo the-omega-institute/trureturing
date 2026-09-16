@@ -226,18 +226,18 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 # Historical rows and their protected activation authority have distinct routes.
 [[files]]
-pattern = "Golden/InformationTemplateDebt/rows/*.json"
+pattern = "Golden/InformationTemplateDebt/activation.json"
 kind = "data"
-admission_plane = "content"
+admission_plane = "judge"
 produced_by = "InformationTemplateDebtWriter"
 consumed_by = ["DeclaredTemplateBindingRule", "InformationTemplateDebtStore"]
 verified_by = ["DeclaredTemplateBindingRule", "InformationTemplateDebtStore"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
 [[files]]
-pattern = "Golden/InformationTemplateDebt/activation.json"
+pattern = "Golden/InformationTemplateDebt/rows/*.json"
 kind = "data"
-admission_plane = "judge"
+admission_plane = "content"
 produced_by = "InformationTemplateDebtWriter"
 consumed_by = ["DeclaredTemplateBindingRule", "InformationTemplateDebtStore"]
 verified_by = ["DeclaredTemplateBindingRule", "InformationTemplateDebtStore"]
