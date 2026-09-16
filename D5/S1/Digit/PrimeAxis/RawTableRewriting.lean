@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: A decreasing lexicographic triple terminates raw table carries and makes their legal words finite. -/
+   digest: Raw table carries terminate by lexicographic descent and have finitely many legal words. -/
 
 import D5.S1.Digit.PrimeAxis.ChargedTableNormalization
 import D5.S1.Digit.CarryStepConfluence
@@ -21,7 +21,7 @@ namespace D5.S1.Digit.PrimeAxis.RawTableRewriting
 open D5.S1.Digit D5.S1.Deficit D5.S0.Conventions
 open D5.S1.Digit.PrimeAxis.ChargedTableNormalization
 
-/-- A finitely supported family of prime rows, each with finitely supported natural multiplicities. -/
+/-- A finitely supported family of prime rows of natural multiplicities. -/
 abbrev RawTable := PrimeAxis →₀ RawDigits
 
 /-- The sum of multiplicities in a row against an index weight. -/
