@@ -2998,20 +2998,21 @@ deletions are allowed.
 
 | t | Certified upper bound for Theta_nu(t) | Approximation |
 |---|---|---|
-|4|7407925830803/5142075000000|1.440649122|
-|5|11428702759/10284150000|1.111292889|
-|6|19427/24198|0.802834946|
-|7|87992771107937/137483325000000|0.640025044|
+|4|1850731457651/1285518750000|1.439676752|
+|5|285616505131/257103750000|1.110899803|
+|6|321137/403528|0.795823339|
+|7|205590443009/321379687500|0.639712002|
 |8|242331326613/499400000000|0.485244948|
-|9|4663598074519/11236500000000|0.415040100|
-|10|7944529460443/22473000000000|0.353514416|
-|11|9807064477819/33423487500000|0.293418348|
+|9|129498094659/312125000000|0.414891774|
+|10|881984754807/2497000000000|0.353217764|
+|11|165110502807/565775000000|0.291830680|
 |12|47555781251/205683000000|0.231209100|
 
 The displayed decimals are rounded upward. These are pointwise hinge
 bounds on the same supported probability as (SC1), rather than a new
 probability comparator. In particular the first p=17 query in (AP2) at
-t=6 has charge at most 19427/241980. This does not establish a complete
+t=6 has charge at most 321137/4035280. The entries include the
+whole-cost refinement (JC1) below, which also uses (FD2). This does not establish a complete
 tail continuation.
 
 ### Concentrating the test and retaining the actual grid size
@@ -3134,10 +3135,11 @@ Therefore the normalized actual law satisfies
     Theta_nu(t) <= [B_t(S,N)+C(89/4800)M_(S,N)]/s_(S,N).    (HG6)
 
 The certificate evaluates (HG6) separately on all 144 existing
-branches and then takes the maximum, yielding the table above.
-It does not combine a numerator from one branch with the mass of
-another. At t=6 the maximum is the first shape with N=81 and equals
-19427/24198.
+branches and then takes the maximum. It does not combine a numerator from
+one branch with the mass of another. Before the fixed-count refinement below,
+the t=6 maximum is the first shape with N=81 and equals 19427/24198;
+all nine are retained in `actual_rectangle_hinge_profile`. The displayed
+table includes the further whole-cost refinement (JC1).
 
 Since the actual hinge function is convex, linear interpolation
 between adjacent certified knots is also a pointwise upper bound.
@@ -3158,8 +3160,30 @@ the same nonzero seven digit. A group deletes the union of the selected old
 cylinders for its labels; overlaps inside a group count once, while groups
 with different seven digits delete different lifted points.
 
-For a label subset `T`, let `b_T(u)` be the least cost of a union of
-cardinality `u`, with an empty cylinder allowed. The anchored recurrence
+For a complete old-45 test load A on this 17-point set U, write
+H_t(A)=sum_U(A-t)_+, and let M_t be its maximum over old test layouts.
+For either nonnegative hinge combination psi=sum_t w_t phi_t in (HG4), put
+
+    Jbar_psi(A)=sum_t w_t min_(0<=s<=t) [H_s(A)+M_(t-s)],
+    Kbar_psi(A)=5 sum_U psi(A)+Jbar_psi(A).
+
+For every complete old load B, the inequality
+phi_t(A+B)<=phi_s(A)+phi_(t-s)(B) proves
+sum_U psi(A+B)<=Jbar_psi(A). Across the six surviving seven digits,
+the additional test loads are nonnegative and sum to at most a complete
+old load B. Convexity at each x gives total undeleted cost at most
+5 psi(A(x))+psi(A(x)+B(x)), hence at most Kbar_psi(A) after summation.
+Every actual deletion above x removes cost at least psi(A(x)), because
+psi is nondecreasing. Thus if delta_x digits above x are deleted and
+D=sum_x delta_x=102-N,
+
+    N E psi(L315) <= Kbar_psi(A)-sum_x delta_x psi(A(x)).
+
+Ineffective test cylinders can be replaced by effective ones before this
+upper bound, so the complete effective layouts enumerated below dominate
+all tests. For fixed A, give each x cost psi(A(x)). For a label subset T,
+let b_T(u) be the least cost of a union of cardinality u, with an empty
+cylinder allowed. The anchored recurrence
 
     d_empty(0)=0,
     d_S(D)=min_{T subset S, min(S) in T, u}
@@ -3170,6 +3194,26 @@ is a lower bound for the cost removed by any actual labelled deletion with
 is safe in this direction: it can only reduce the minimum deleted cost and
 therefore can only increase the final upper bound. The five empty residue-zero
 cylinders are available on this 17-point survivor set.
+
+Every actual deletion is represented by grouping its five original labels
+by their seven digit, so (FD1) bounds its removed cost from below. Conversely,
+each partition has at most five blocks and can be assigned distinct nonzero
+seven digits. Cardinalities add across blocks. Nonnegative cardinalities
+make truncation at D=22 sufficient for D=20,21,22.
+
+Two cheaper lower bounds permit exact screening. Since delta_x<=5, the
+removed cost is at least the sum of the D smallest costs among five copies
+of each psi(A(x)). Also, for any eta>=0,
+
+    sum_x delta_x psi(A(x))
+      >= eta D - sum_(labels d) max_(a mod d)
+                       sum_(x in U, x=a mod d) (eta-psi(A(x)))_+.
+
+This follows from delta_x<=sum_d 1_(x=a_d mod d) and nonnegative positive
+parts. Taking eta in {0} union {psi(A(x)):x in U} gives the screening
+lower bound used by the verifier; it need not attain the best lower bound.
+A layout is screened only if Kbar minus this lower bound is already at most
+the target. Every remaining layout is checked using (FD1).
 
 There are 2,164 distinct union masks and 8,919 subset-union entries. The
 4,760 complete old-45 test layouts have old hinge maxima
@@ -3188,9 +3232,12 @@ For `N=80,81,82`, the resulting numerator caps are
     N E psiA <= (1986,1986,1992),
     N E psiB <= ( 728, 728, 732).                         (FD2)
 
-The other two costs in the threshold-six dual are retained from the certified
-rectangle profile. Replacing only these three branches in all 144 common
-shape/count branches gives
+The two bounds in (FD2) apply to the a and b costs of (HG4). The other
+two test costs and the hole-activation hinge retain their (HG5) bounds.
+The verifier checks that these cost coefficients reproduce the exact
+threshold-six dual, then uses the same branch mean and surviving mass in
+(HG6). Replacing only these three branches in all 144 common shape/count
+branches gives
 
     Theta_nu(6) <= 26114497/32685768
                  = 4/5 - 170587/163428840 < 4/5.           (FD3)
@@ -3201,3 +3248,51 @@ prime-17 query costs at most `26114497/326857680`. This is an ordinary
 exact-arithmetic finite-head result. It does not formalize the DP in Lean,
 extend the result to unbounded 3/5/7 powers, or provide the unrestricted
 tail stopping certificate.
+
+
+## Whole convex costs on one old layout and deletion configuration
+
+The same derivation applies to every nonnegative hinge combination appearing
+in the rectangle witnesses, including the cost of the hole activation. For
+each of the six canonical old sets U_S, put n=|U_S| and D=6n-N. For a fixed
+complete effective old-45 load A, form Kbar_psi(A) as above using that shape's
+hinge maxima. Let L_psi,D(A) be the maximum of the two cheap deleted-cost
+lower bounds established before (FD2). Then
+
+    N E psi(L315) <= B_psi(S,N),
+    B_psi(S,N)=max_A [Kbar_psi(A)-L_psi,D(A)].              (JC1)
+
+Both terms use the same A. This retains the relation between its hinge
+costs and the energy removed by the original labelled cylinders. In
+particular it improves some sums of separately maximized hinge bounds,
+even without evaluating the partition DP. The possible ineffective tests
+are dominated by complete effective layouts exactly as in the preceding
+argument. The union-bound estimate for L remains valid when several
+original labels use the same seven digit.
+
+There are 32 distinct costs after extracting their positive common integer
+factors. The verifier calculates (JC1) for all 27,720 effective layouts and
+all allowed survivor counts: 21,324,800 layout/cost/count bounds. It averages
+each whole cost using the smaller of B_psi(S,N)/N and the earlier sum of
+individual hinge bounds. For the three applicable threshold-six branches
+it also takes the smaller bound from (FD2). The hole count is bounded by a
+complete old activation load, and its cost is nondecreasing; the same
+whole-cost estimate therefore applies to it. No relation between that
+activation load and the four test loads is assumed beyond their common
+actual old shape and survivor set.
+
+Combining these five costs with the fixed rectangle constant, then adding
+higher-exponent load and dividing by the same branch's surviving mass in
+(HG6), gives the table above. All 144 branches are evaluated. The refined
+threshold-six maximum is
+
+    Theta_nu(6) <= 321137/403528 < 4/5,                    (JC2)
+
+again uniquely at `root1_same_other_column`, N=79. Seven of the nine
+threshold maxima improve on the rectangle profile with (FD3); thresholds
+8 and 12 retain their preceding values. The `joint_cost_hinge_refinement`
+certificate field stores the normalized cost coefficients, the integer
+numerator bounds, every full-height branch, and the maxima. All arithmetic
+in its canonical verifier uses Python integers and fractions. The result
+has the same full original 357-part-dividing-315 scope and arbitrary finite
+11/13 heights, and supplies no unrestricted-tail or new Lean conclusion.

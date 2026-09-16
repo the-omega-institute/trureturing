@@ -1789,9 +1789,9 @@ full `315·11^H·13^J` scope and do not assert a new tail continuation.
 
 The [actual rectangle hinge profile](../docs/reports/erdos7-odd-covering/marked_head_profile.md#actual-rectangle-hinge-bounds-on-the-same-law)
 additionally bounds the complete test-load hinges on this same law at
-all integer thresholds from 4 through 12. In particular,
+all integer thresholds from 4 through 12. With the joint-cost refinement,
 
-    Theta_nu(6) <= 19427/24198 < 0.802835.
+    Theta_nu(6) <= 321137/403528 < 4/5.
 
 Convex concentration and the sum of the largest surviving-count cell
 loads give a geometric upper envelope with the actual clipping
@@ -1803,8 +1803,9 @@ mixed-hole count is bounded by its old activation load, and the
 higher-exponent contribution and normalization retain the same one
 of 144 branches. The new `actual_rectangle_hinge_profile` certificate
 field stores every dual and the full-height bounds at thresholds
-4--12. The first prime-17 query in (AP2) at threshold 6 therefore costs
-at most `19427/241980`. Adjacent-knot interpolation is a valid
+4--12. The entries additionally use the joint-cost refinement below. The
+first prime-17 query in (AP2) at threshold 6 therefore costs at most
+`321137/4035280`. Adjacent-knot interpolation is a valid
 pointwise upper bound; the resulting curve is not asserted to be a
 probability comparator. This is an ordinary exact-arithmetic result,
 not a new Lean theorem or a completed unrestricted-tail certificate.
@@ -1828,6 +1829,16 @@ the resulting numerator caps at survivor counts 80, 81 and 82 are
 with unique worst branch `root1_same_other_column`, 79 survivors. This is
 an ordinary exact finite-head calculation for arbitrary finite 11/13 heights,
 not a Lean theorem or an unrestricted-tail conclusion.
+
+Keeping each whole convex cost on a single old layout and its labelled
+deletion configuration further improves seven of the nine hinge bounds.
+The `joint_cost_hinge_refinement` certificate recomputes 32 normalized costs
+on all 27,720 layouts and 144 shape/count branches, yielding the stronger
+`Theta_nu(6)<=321137/403528`, with the same worst branch N=79. It uses the
+existing cheap deletion lower bounds for the whole cost and retains the
+exact three-branch partition caps above. All higher-load and normalization
+terms stay on the same branch. The result proof and integer numerator
+bounds are retained in the [whole-cost derivation](../docs/reports/erdos7-odd-covering/marked_head_profile.md#whole-convex-costs-on-one-old-layout-and-deletion-configuration).
 
 The [signed-conditioning obstruction](../docs/reports/erdos7-odd-covering/marked_head_profile.md#actual-obstruction-for-uniform-conditioning-and-its-signed-bound)
 gives a complementary boundary. An actual family containing all 47

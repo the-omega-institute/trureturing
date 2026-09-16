@@ -2664,6 +2664,116 @@ def fixed_count_hinge_refinement(costs, shared, old, profile):
             'interpolation':'replace the threshold-six knot in the rectangle profile by this upper bound; adjacent-knot interpolation is valid for the convex actual hinge, without asserting a probability comparator'}
 
 
+def joint_cost_hinge_refinement(old_cases, shared, old, profile, fixed):
+    """Keep one old layout and labelled deletion cost for each whole convex cost."""
+    from itertools import accumulate
+    from math import gcd
+    F = Fraction
+    costs, assignments = [], []
+    for witness in profile['witnesses']:
+        terms = []
+        for row in witness['load_hinge_numerators'] + [witness['hole_hinge_numerators']]:
+            scale = gcd(*row)
+            normal = tuple(v // scale for v in row) if scale else (0,) * 12
+            if normal not in costs:
+                costs.append(normal)
+            terms.append((costs.index(normal), scale))
+        assignments.append(terms)
+    require(len(costs) == 32 and len(assignments) == 9,
+            'all normalized test and activation costs from the rectangle duals')
+    require(len(old_cases) == len(shared['cases']) == len(old['cases']) == len(profile['cases']) == 6,
+            'six old shapes in the joint convex-cost transfer')
+    cases, branches = [], []
+    checks = layouts_checked = 0
+    for case_index, (shape, points, _, expected) in enumerate(old_cases):
+        n = len(points)
+        sc = shared['cases'][case_index]
+        previous = old['cases'][case_index]
+        require(shape == sc['shape'] == previous['shape'] == profile['cases'][case_index]['shape'],
+                'same actual old shape in every joint-cost bound')
+        groups = [[tuple(i for i, x in enumerate(points) if x % d == a)
+                   for a in sorted({x % d for x in points})] for d in MODULI]
+        layouts = []
+        for cylinders in product(*groups):
+            load = [1] * n
+            for cylinder in cylinders:
+                for i in cylinder:
+                    load[i] += 1
+            layouts.append(tuple(load))
+        require(len(layouts) == expected, 'complete effective old test layouts for joint costs')
+        layouts_checked += expected
+        hs = [tuple(sum(max(v-t, 0) for v in a) for t in range(13)) for a in layouts]
+        maxima = [max(h[t] for h in hs) for t in range(13)]
+        counts = [source['survivors'] for source in sc['rows']]
+        deletions = [6*n-count for count in counts]
+        numerators = []
+        for cost in costs:
+            table = [sum(w*max(v-t, 0) for t, w in enumerate(cost)) for v in range(13)]
+            nonzero = [(t, w) for t, w in enumerate(cost) if w]
+            tops = [0] * len(counts)
+            for a, h in zip(layouts, hs):
+                values = [table[v] for v in a]
+                joint = sum(w*min(h[s]+maxima[t-s] for s in range(t+1)) for t, w in nonzero)
+                total = 5*sum(values)+joint
+                least = [0] + list(accumulate(sorted(values*5)))
+                label_bounds = []
+                for eta in set([0] + values):
+                    positive = [max(eta-v, 0) for v in values]
+                    cap = sum(max(sum(positive[i] for i in c) for c in group) for group in groups)
+                    label_bounds.append((eta, cap))
+                for j, deleted in enumerate(deletions):
+                    loss = max([least[deleted]] + [eta*deleted-cap for eta, cap in label_bounds])
+                    tops[j] = max(tops[j], total-loss)
+                    checks += 1
+            numerators.append(tops)
+        old_hinges = list(map(F, previous['hinge_bounds_at_0_through_5']))
+        rows = []
+        for j, source in enumerate(sc['rows']):
+            count, mean = source['survivors'], F(source['mean_upper'])
+            theta = [mean, mean-1, F(source['hinge2_upper']), old_hinges[3],
+                     F(source['hinge4_upper']), old_hinges[5]]
+            theta += [F(v, count) for v in (10, 7, 4, 3, 2, 1, 0)]
+            full = []
+            for wi, witness in enumerate(profile['witnesses']):
+                chosen = []
+                for role, (cost_index, scale) in enumerate(assignments[wi]):
+                    separate = sum(v*theta[t] for t, v in enumerate(costs[cost_index]))*scale
+                    cap = min(F(numerators[cost_index][j]*scale, count), separate)
+                    joint_fixed = fixed['fixed_count_joint_costs']
+                    if (witness['threshold'] == 6 and shape == joint_fixed['shape']
+                            and count in joint_fixed['survivor_counts'] and role < 2):
+                        index = joint_fixed['survivor_counts'].index(count)
+                        known = joint_fixed['costs'][role]['numerator_upper'][index]
+                        # fixed_count_hinge_refinement verifies the factor 1/93 in this dual.
+                        cap = min(cap, F(known*witness['denominator'], 93*count))
+                    chosen.append(cap)
+                low = (witness['constant_numerator']+sum(chosen))/witness['denominator']
+                high = F(shared['clip'])*F(shared['high_reference_mass_per_old_mean'])*mean
+                survival = F(source['full_mass_lower'])
+                require(low >= 0 and survival > 0, 'joint-cost nonnegativity and same-branch survival')
+                full.append((low+high)/survival)
+            baseline = list(map(F, profile['cases'][case_index]['rows'][j]['full_hinge_upper_at_4_through_12']))
+            require(all(a <= b for a, b in zip(full, baseline)), 'every whole-cost hinge refines the old bound')
+            rows.append({'survivors':count, 'full_hinge_upper_at_4_through_12':list(map(str, full))})
+            branches.append((shape, count, full))
+        cases.append({'shape':shape, 'survivor_counts':counts,
+                      'normalized_cost_numerator_upper':numerators, 'rows':rows})
+    maxima = [max(row[2][j] for row in branches) for j in range(9)]
+    require(layouts_checked == 27720 and len(branches) == 144
+            and maxima[2] == F(321137, 403528) < F(fixed['universal_full_hinge6_upper']),
+            'complete joint-cost profile and strict threshold-six improvement')
+    return {'scope':profile['scope'], 'thresholds':profile['thresholds'],
+            'normalized_hinge_costs':[list(row) for row in costs],
+            'normalized_cost_count':len(costs), 'old_layouts_verified':layouts_checked,
+            'layout_cost_count_bounds_verified':checks, 'shared_branches_verified':len(branches),
+            'cases':cases, 'universal_full_hinge_upper_at_4_through_12':list(map(str, maxima)),
+            'full_hinge_maximizing_branches_at_4_through_12':[
+                [{'shape':shape, 'survivors':count} for shape, count, full in branches if full[j] == value]
+                for j, value in enumerate(maxima)],
+            'prime17_threshold6_charge_upper':str(maxima[2]/10),
+            'interpolation':profile['interpolation']}
+
+
 def verify(expected):
     cases = []
     old_cases = []
@@ -2701,9 +2811,12 @@ def verify(expected):
     shared_head = shared_count_clipped_head(old_cases, deletion_result, signed_result)
     hinge_profile = actual_rectangle_hinge_profile(
         expected["actual_rectangle_hinge_profile"]["witnesses"], shared_head, deletion_result, cases)
+    fixed_hinge = fixed_count_hinge_refinement(
+        fixed_count_joint_cost_comparison(old_cases), shared_head, deletion_result, hinge_profile)
     result = {
-        "fixed_count_hinge_refinement": fixed_count_hinge_refinement(
-            fixed_count_joint_cost_comparison(old_cases), shared_head, deletion_result, hinge_profile),
+        "joint_cost_hinge_refinement": joint_cost_hinge_refinement(
+            old_cases, shared_head, deletion_result, hinge_profile, fixed_hinge),
+        "fixed_count_hinge_refinement": fixed_hinge,
         "actual_rectangle_hinge_profile": hinge_profile,
         "rectangle_hinge_observation_gap": rectangle_hinge_observation_gap(),
         "shared_count_clipped_head": shared_head,
@@ -2754,6 +2867,7 @@ def verify(expected):
                       "arbitrary_holes12_tail17_Gamma": result["arbitrary_holes12_tail17"]["Gamma_upper"],
                       "shared_count_clipped_Gamma": result["shared_count_clipped_head"]["actual_rectangle_refinement"]["Gamma_upper"],
                       "shared_count_branches": result["shared_count_clipped_head"]["shared_branches_verified"],
+                      "joint_cost_full_hinge6": result["joint_cost_hinge_refinement"]["universal_full_hinge_upper_at_4_through_12"][2],
                       "fixed_count_full_hinge6": result["fixed_count_hinge_refinement"]["universal_full_hinge6_upper"],
                       "actual_rectangle_hinge6": result["actual_rectangle_hinge_profile"]["universal_full_hinge_upper_at_4_through_12"][2],
                       "conditioned_3465_actual_second": result["conditioned_3465_comparison"]["actual_second_moment_upper"]}, sort_keys=True))
