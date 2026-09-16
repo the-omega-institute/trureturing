@@ -1,0 +1,53 @@
+**Proof.** Write a ball as $D_p$ using 35.2. Its diameter is at most its radius, so monotonicity of $h_1$ gives
+$$
+\mathscr R(y,r)\le\mathcal D(p)<A_+.
+$$
+For the lower bound, first suppose $r<1$, so its temporal length $t$ is positive. Write its nonempty block word as $p=q0$ or $p=q10$, and put $d=|q|$. The clock bounds give
+$$
+b_p=M_q-1\ge G_d,
+$$
+including $q=\varnothing$. Since $t\ge b_p$ and $1+\log_2(1/r)>t$, the two cases yield respectively
+$$
+\mathscr R(y,r)\ge G_d\alpha^{d+1}\ge\alpha,
+\qquad
+\mathscr R(y,r)\ge G_d\alpha^{d+2}\ge\alpha^2.
+$$
+At $r=1$ the ball is the whole space and the ratio is one. For $y=1w$ and $r<1$ tending to one, the ball is the first-symbol cylinder of mass $\alpha^2$, whereas $h_1(r)\to1$. Hence the global lower constant cannot be increased.
+
+To establish the small-scale lower limit, use $t+1=G_L+a$ as in 35.2. Since $1+\log_2(1/r)>t$, the ratios in the three mass classes are bounded below by
+$$
+(G_L-1)\alpha^L,\qquad
+(G_L-1)\alpha^{L+1},\qquad
+G_L\alpha^{L+2},
+$$
+respectively. The last bound uses $a\ge1$, which is necessary for the third class to exist. As $L\to\infty$, these three bounds tend respectively to
+$$
+A_0,\qquad \alpha A_0,\qquad A_-.
+$$
+Thus the ratios are uniformly at least $A_--o(1)$ at small scales.
+
+All block prefixes of $0^\infty$ are $0^L$. The lifetimes from 35.1 are
+$$
+b_{0^L}=G_L-1,\qquad k_{0^L}=G_{L+1}-2\qquad(L\ge1).
+$$
+Within this lifetime the ball mass is $\alpha^L$. The factor $1+\log_2(1/r)$ ranges, with the appropriate one-sided endpoint limits, from $G_L-1$ to $G_{L+1}-1$. The closed form for $G_L$ proves the two stated limits at $w$. In particular the actual radii
+$$
+r_L=2^{-(G_{L+1}-2)}
+$$
+give $\overline B_\rho(w,r_L)=D_{0^L}$ and ratios tending to $A_+$, proving sharpness of both upper assertions.
+
+For $u=(10)^\infty$, the nonempty block prefixes are $p_j=(10)^j$, of length $2j$. The recurrence gives
+$$
+N_{p_j}=G_{2j-1}-1.
+$$
+Their exact lifetimes are
+$$
+b_{p_j}=G_{2j-2},\qquad k_{p_j}=G_{2j}-1,
+$$
+and their masses are $\alpha^{2j}$. Therefore the lower and upper limiting ratios along these lifetimes are
+$$
+\lim_{j\to\infty}G_{2j-2}\alpha^{2j}=A_-,\qquad
+\lim_{j\to\infty}G_{2j}\alpha^{2j}=A_0.
+$$
+These are all sufficiently small balls about $1w=\Phi(u)$, which proves both limits there. For example the exact radii $2^{-G_{2j-2}}$ already give ratios $(G_{2j-2}+1)\alpha^{2j}\to A_-$. This supplies a fixed-point witness for the small-scale uniform lower constant. $\square$
+
