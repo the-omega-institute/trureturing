@@ -6,7 +6,7 @@ Problems/erdos-7-odd-covering-systems.md.
 """
 from fractions import Fraction as F
 from itertools import product
-from math import prod
+from math import gcd, prod
 import json
 from pathlib import Path
 import sys
@@ -42,8 +42,8 @@ def allowed(x,p,k,h):
             return p-k-1<=digit<=p-2
     return True
 
-def tree_law(p,k,h):
-    """Explicit leaf probabilities, for small exhaustive checks only."""
+def tree_law_data(p,k,h):
+    """Explicit leaf probabilities and coherent potential at supported centers."""
     u=[F(0)]*(h+1)
     v=[F(0)]*(h+1)
     for r in range(h-1,-1,-1):
@@ -68,6 +68,11 @@ def tree_law(p,k,h):
                 break
         weights[t]=mass
     require(sum(weights.values(),F(0))==1,'tree law normalization')
+    return weights, 1+v[0]
+
+def tree_law(p,k,h):
+    """Check the coherent potential of the explicit small-tree law."""
+    weights,coherent=tree_law_data(p,k,h)
     for x in range(p**h):
         if not allowed(x,p,k,h):
             continue
@@ -75,8 +80,77 @@ def tree_law(p,k,h):
         for t,mass in weights.items():
             ell=sum(x%(p**e)==t%(p**e) for e in range(1,h+1))
             potential+=mass*(1+ell)**2
-        require(potential==1+v[0], 'pointwise equal potential')
+        require(potential==coherent, 'pointwise equal potential')
     return len(weights)
+
+def check_coherent_gamma_boundary():
+    """A coherent-potential bound does not upper-bound arbitrary test layouts."""
+    p,h=3,4
+    period=p**h
+    weights,coherent=tree_law_data(p,1,h)
+    require(len(weights)==41 and all(w>0 for w in weights.values()),
+            'full restricted-spine support')
+    groups=[]
+    grouped=set()
+    for depth,residue,count,weight in [
+            (1,1,27,F(3671,174309)), (2,5,9,F(4628,174309)),
+            (3,17,3,F(5980,174309)), (4,53,1,F(2600,58103)),
+            (4,80,1,F(2600,58103))]:
+        modulus=p**depth
+        leaves={x for x in weights if x%modulus==residue}
+        require(len(leaves)==count and all(weights[x]==weight for x in leaves),
+                'exact restricted-spine law group')
+        require(grouped.isdisjoint(leaves), 'disjoint law groups')
+        grouped.update(leaves)
+        groups.append({'depth':depth,'residue':residue,'modulus':modulus,
+                       'leaf_count':count,'per_leaf_weight':str(weight)})
+    require(grouped==set(weights), 'law groups exhaust support')
+    require(coherent==F(248995,58103), 'exact coherent value')
+    for center in range(period):
+        moment=sum((w*(1+sum(x%p**e==center%p**e for e in range(1,h+1)))**2
+                    for x,w in weights.items()),F(0))
+        require(moment<=coherent, 'all coherent centers satisfy the bound')
+        if center in weights:
+            require(moment==coherent, 'constant coherent potential on support')
+
+    selected=[2,8,17,53]
+    require(any(selected[e] % p**e != selected[e-1] for e in range(1,h)),
+            'the selected layout is nonnested')
+    actual=sum((w*(1+sum(x%p**e==a for e,a in enumerate(selected,1)))**2
+                for x,w in weights.items()),F(0))
+    require(actual==F(249255,58103) and actual-coherent==F(260,58103)>0,
+            'nonnested layout exceeds the coherent bound')
+
+    denominator=1
+    for weight in weights.values():
+        denominator=denominator*weight.denominator//gcd(denominator,weight.denominator)
+    leaves=list(weights)
+    integer_weights=[weights[x]*denominator for x in leaves]
+    require(all(w.denominator==1 for w in integer_weights), 'exact integer weights')
+    integer_weights=[int(w) for w in integer_weights]
+    residues=[sorted({x%p**e for x in leaves}) for e in range(1,h+1)]
+    require(list(map(len,residues))==[2,5,14,41], 'supported cylinder counts')
+    # Every omitted cylinder has zero mass. Replacing such a cylinder with any
+    # supported one cannot decrease the pointwise nonnegative load. Thus this
+    # product exhausts the maximum over all unrestricted residue layouts.
+    maximum=0
+    count=0
+    for choice in product(*residues):
+        value=sum(w*(1+sum(x%p**e==a for e,a in enumerate(choice,1)))**2
+                  for x,w in zip(leaves,integer_weights))
+        maximum=max(maximum,value)
+        count+=1
+    require(count==5740 and F(maximum,denominator)==actual,
+            'exact unrestricted layout maximum')
+    return {'prime':p,'side_digit':1,'spine_digit':2,'height':h,
+            'layers':[3,5,7,9],'support_cardinality':len(weights),
+            'law_groups':groups,'coherent_centers_checked':period,
+            'coherent_value':str(coherent),'actual_Gamma':str(actual),
+            'gap':str(actual-coherent),'nonnested_residues':selected,
+            'supported_cylinder_counts':list(map(len,residues)),
+            'complete_supported_layout_count':count,
+            'scope':'Refutes the coherent-potential upper bound for actual Gamma; '
+                    'does not refute tensorization or the star-family Gamma lower bound.'}
 
 def star_family(primes,heights):
     out=[]
@@ -174,13 +248,15 @@ def main():
                            'support':tree_law(p,k,h)})
     tiny_families=[check_small_family((3,5),(3,2)),
                    check_small_family((3,5,7),(2,2,2))]
+    coherent_boundary=check_coherent_gamma_boundary()
     cert={'primes':list(PRIMES),'height_3':31,'height_other':8,
           'tree_depth':8,'scale':SCALE,'rows':rows,
           'branch_a_factor':str(A_factor),'branch_b_lower':str(lower_B),
           'mixture_weight_a':'1/100','mixture_weight_b':'99/100',
           'uniform_gamma_lower':str(uniform_lower),
           'comparison':'138877/1000','simple_strict_lower':'13959/100',
-          'small_tree_checks':tiny_trees,'small_actual_families':tiny_families}
+          'small_tree_checks':tiny_trees,'small_actual_families':tiny_families,
+          'coherent_gamma_boundary':coherent_boundary}
     target=(Path(sys.argv[1]) if len(sys.argv)>1 else
             Path(__file__).with_name('star_survivor_obstruction_certificate.json'))
     require(json.loads(target.read_text())==cert,'fixed certificate equality')
@@ -190,6 +266,8 @@ def main():
                       'uniform_gamma_lower_decimal':float(uniform_lower),
                       'strict_simple_gamma_lower':'13959/100',
                       'actual_family_points_checked':sum(r['period'] for r in tiny_families),
+                      'coherent_gamma_boundary_gap':coherent_boundary['gap'],
+                      'complete_supported_layouts_checked':coherent_boundary['complete_supported_layout_count'],
                       'scope':'Exact rational certificate plus small exhaustive regressions; full lifting is ordinary proof.'}))
 
 if __name__=='__main__':

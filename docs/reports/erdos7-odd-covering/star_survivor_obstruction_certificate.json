@@ -1035,5 +1035,73 @@
       "divisors": 27,
       "survivors": 2495
     }
-  ]
+  ],
+  "coherent_gamma_boundary": {
+    "prime": 3,
+    "side_digit": 1,
+    "spine_digit": 2,
+    "height": 4,
+    "layers": [
+      3,
+      5,
+      7,
+      9
+    ],
+    "support_cardinality": 41,
+    "law_groups": [
+      {
+        "depth": 1,
+        "residue": 1,
+        "modulus": 3,
+        "leaf_count": 27,
+        "per_leaf_weight": "3671/174309"
+      },
+      {
+        "depth": 2,
+        "residue": 5,
+        "modulus": 9,
+        "leaf_count": 9,
+        "per_leaf_weight": "4628/174309"
+      },
+      {
+        "depth": 3,
+        "residue": 17,
+        "modulus": 27,
+        "leaf_count": 3,
+        "per_leaf_weight": "5980/174309"
+      },
+      {
+        "depth": 4,
+        "residue": 53,
+        "modulus": 81,
+        "leaf_count": 1,
+        "per_leaf_weight": "2600/58103"
+      },
+      {
+        "depth": 4,
+        "residue": 80,
+        "modulus": 81,
+        "leaf_count": 1,
+        "per_leaf_weight": "2600/58103"
+      }
+    ],
+    "coherent_centers_checked": 81,
+    "coherent_value": "248995/58103",
+    "actual_Gamma": "249255/58103",
+    "gap": "260/58103",
+    "nonnested_residues": [
+      2,
+      8,
+      17,
+      53
+    ],
+    "supported_cylinder_counts": [
+      2,
+      5,
+      14,
+      41
+    ],
+    "complete_supported_layout_count": 5740,
+    "scope": "Refutes the coherent-potential upper bound for actual Gamma; does not refute tensorization or the star-family Gamma lower bound."
+  }
 }

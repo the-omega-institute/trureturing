@@ -5225,6 +5225,32 @@ both fixed shapes; `--shape 2+2` or `--shape 3+1` selects one. This is an
 ordinary mathematical polytope reduction with exact integer verification;
 no Lean formalization or general tensorization theorem is claimed.
 
+### Coherent constant potential does not bound actual Gamma
+
+The coherent-center potential is not an upper bound for arbitrary test
+layouts, even in one prime coordinate. For the ternary `RestrictedSpine`
+of height 4, with side digit 1, spine digit 2 and layer weights `3,5,7,9`,
+the recurrence law has 41 supported residues modulo 81. Its per-leaf
+weights on the disjoint groups `1 mod 3`, `5 mod 9`, `17 mod 27`, `{53}`
+and `{80}` are respectively `3671/174309`, `4628/174309`, `5980/174309`,
+`2600/58103` and `2600/58103`; their cardinalities are `27,9,3,1,1`.
+Every supported center has coherent score `248995/58103`, and every
+other center has score at most that value. The nonnested layout with
+residues `(2 mod 3, 8 mod 9, 17 mod 27, 53 mod 81)` instead has score
+`249255/58103`, exceeding it by `260/58103`. Exact enumeration of all
+`2*5*14*41=5740` supported-cylinder layouts proves that this latter score
+is the actual `Gamma`. Unsupported cylinders have zero mass, so replacing
+them by supported cylinders cannot decrease the load; the enumeration
+therefore also determines the unrestricted maximum. The
+[existing exact verifier](../docs/reports/erdos7-odd-covering/verify_star_survivor_obstruction.py)
+checks all 81 coherent centers and all 5740 layouts against its
+[certificate](../docs/reports/erdos7-odd-covering/star_survivor_obstruction_certificate.json).
+This refutes only the bridge from a coherent-potential bound to an
+actual-`Gamma` upper bound. It does not refute product tensorization or
+the existing star-family lower-bound argument, which uses a law of test
+centers. The finite computation is an exact certificate, not a Lean
+formalization.
+
 ### The boundary of scalar fibre reweighting
 
 The conditional-cap criterion alone does not improve the optimized T6
