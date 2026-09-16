@@ -49,20 +49,21 @@ def coeffs(cut):
  require(min(eo)>=0 and min(rem)>=0,'geometric coefficient nonnegativity')
  return ds,gamma,eta,rem,depths,probs,beta,eo
 
-def exact_squares(weights,points,ri,loads,depths,low_roots=None):
+def exact_squares(weights,points,ri,loads,depths,low_roots=None,high_loads=None):
  nrows=int(ri.max())+1;R=np.array([sum(int(w) for w,j in zip(weights,ri) if int(j)==i) for i in range(nrows)],dtype=np.int64);v=np.array([max(int(w) for w,j in zip(weights,ri) if int(j)==i) for i in range(nrows)],dtype=np.int64);W=np.array([[sum(int(w) for w,x,j in zip(weights,points,ri) if int(j)==i and x%7==digit) for i in range(nrows)] for digit in range(1,7)],dtype=np.int64);total=int(weights.sum());records=[]
  for z3,z5,z7 in depths:
-  L=loads[z3,z5];u=z7+1;s=(z3+1)*(z5+1);nl=len(L);M=L-1;maxload=int(L.max())+s;bound=(1+u)**2*maxload**2*total;require(bound<2**63,'pure7 integer range')
+  L=loads[z3,z5];LB=L if high_loads is None else high_loads[z3,z5];u=z7+1;s=(z3+1)*(z5+1);nl=len(L);M=LB-1;maxload=max(int(L.max()),int(LB.max()))+s;bound=(1+u)**2*maxload**2*total;require(bound<2**63,'pure7 integer range')
+  require(L.shape==LB.shape,'matching low/high base-layout dimensions and singleton weights')
   base=(L*L@R)[:,None]+2*u*(L*v)@M.T+(u*u*(M*M@v))[None,:]
-  scores0=base[None,:,:]+(2*u*(W@L.T))[:,:,None]+(u*u*(W@(2*L-1).T))[:,None,:]
+  scores0=base[None,:,:]+(2*u*(W@L.T))[:,:,None]+(u*u*(W@(2*LB-1).T))[:,None,:]
   amax=np.zeros((6,nl,nl),dtype=np.int64);bmax=amax.copy();jmax=amax.copy()
   for i in range(nrows):
-   a=L[:,i,None];b=L[None,:,i];wj=W[:,i,None,None]
+   a=L[:,i,None];b=LB[None,:,i];wj=W[:,i,None,None]
    ai=(R[i]*(2*s*a+s*s)+2*u*s*v[i]*(b-1))[None,:,:]+2*u*s*wj
    bi=(v[i]*(2*u*s*a+u*u*(2*s*(b-1)+s*s)))[None,:,:]+2*u*u*s*wj
    ji=ai+bi+2*u*v[i]*s*s
    np.maximum(amax,ai,out=amax);np.maximum(bmax,bi,out=bmax);np.maximum(jmax,ji,out=jmax)
-  scores=scores0+np.maximum(amax+bmax,jmax);digit,ai,bi=map(int,np.unravel_index(scores.argmax(),scores.shape));best=int(scores[digit,ai,bi]);A=L[ai].copy();B=L[bi].copy();av=R*(2*s*A+s*s)+2*u*s*(v*(B-1)+W[digit]);bv=v*(2*u*s*A+u*u*(2*s*(B-1)+s*s))+2*u*u*s*W[digit];jv=av+bv+2*u*v*s*s
+  scores=scores0+np.maximum(amax+bmax,jmax);digit,ai,bi=map(int,np.unravel_index(scores.argmax(),scores.shape));best=int(scores[digit,ai,bi]);A=L[ai].copy();B=LB[bi].copy();av=R*(2*s*A+s*s)+2*u*s*(v*(B-1)+W[digit]);bv=v*(2*u*s*A+u*u*(2*s*(B-1)+s*s))+2*u*u*s*W[digit];jv=av+bv+2*u*v*s*s
   if int(jv.max())>int(av.max())+int(bv.max()):ia=ib=int(jv.argmax())
   else:ia,ib=int(av.argmax()),int(bv.argmax())
   A[ia]+=s;B[ib]+=s;cw=(A*A)[ri]+(points%7==digit+1)*(2*u*A+u*u*(2*B-1))[ri];cv=2*u*A*(B-1)+u*u*(B-1)*(B-1)
@@ -79,7 +80,7 @@ class FixedADP:
  def __init__(self,pts,xs,ri):
   self.pts=pts;self.xs=xs;self.ri=ri;self.digit=pts%7
   self.cyl,self.features=geometry(xs)
- def query(self,w,z,return_details=False,root_values=False):
+ def query(self,w,z,return_details=False,root_values=False,original_nine=None):
   require(np.issubdtype(w.dtype,np.integer),'integer DP input');dtype=np.int64
   W=np.zeros((6,len(self.xs)),dtype=dtype)
   for k in range(1,7):
@@ -87,6 +88,11 @@ class FixedADP:
    np.add.at(W[k-1],self.ri[ix],w[ix])
   z3,z5,z7=z;b=np.array([1,1,1+z5,1+z3,1+z5,(1+z3)*(1+z5)],dtype=np.int64);u=1+z7
   L=np.einsum('aer,e->ar',self.features,b,dtype=np.int64)
+  if original_nine is not None:
+   require(type(original_nine) is int and original_nine in set(map(int,self.xs%9)), 'original mod9 test root')
+   # Remove the original9 contribution from its saturated aggregate and
+   # restore its prescribed cylinder. Its higher descendants remain free.
+   L=L-self.features[:,3,:]+(self.xs%9==original_nine).astype(np.int64)
   Q=(L*L)@W.sum(axis=0)
   M=np.array([(W@cy.T).max(axis=1) for cy in self.cyl]).T
   R=np.empty((6,6,len(L)),dtype=dtype)

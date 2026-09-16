@@ -1,0 +1,390 @@
+{
+  "schema": "erdos7-uniform-profile-geometry-v1",
+  "shape": "root1_same_other_column",
+  "profile": [
+    0,
+    3,
+    0,
+    0,
+    1,
+    0,
+    3,
+    0,
+    0,
+    1,
+    1,
+    0,
+    4,
+    0,
+    0,
+    2,
+    1
+  ],
+  "target": "35",
+  "depth_box": [
+    8,
+    5,
+    4
+  ],
+  "families": [
+    [
+      [
+        3,
+        0
+      ],
+      [
+        9,
+        4
+      ],
+      [
+        5,
+        0
+      ],
+      [
+        15,
+        1
+      ],
+      [
+        45,
+        37
+      ],
+      [
+        7,
+        0
+      ],
+      [
+        21,
+        1
+      ],
+      [
+        35,
+        9
+      ],
+      [
+        63,
+        52
+      ],
+      [
+        105,
+        4
+      ],
+      [
+        315,
+        187
+      ]
+    ],
+    [
+      [
+        3,
+        0
+      ],
+      [
+        9,
+        4
+      ],
+      [
+        5,
+        0
+      ],
+      [
+        15,
+        1
+      ],
+      [
+        45,
+        37
+      ],
+      [
+        7,
+        0
+      ],
+      [
+        21,
+        16
+      ],
+      [
+        35,
+        29
+      ],
+      [
+        63,
+        52
+      ],
+      [
+        105,
+        4
+      ],
+      [
+        315,
+        232
+      ]
+    ],
+    [
+      [
+        3,
+        0
+      ],
+      [
+        9,
+        4
+      ],
+      [
+        5,
+        0
+      ],
+      [
+        15,
+        1
+      ],
+      [
+        45,
+        37
+      ],
+      [
+        7,
+        0
+      ],
+      [
+        21,
+        1
+      ],
+      [
+        35,
+        9
+      ],
+      [
+        63,
+        25
+      ],
+      [
+        105,
+        94
+      ],
+      [
+        315,
+        52
+      ]
+    ]
+  ],
+  "result": {
+    "source_geometry_sha256": "cf4ac2572e609b3d51e1175534f40d2c17ccad853028ae5de2189e745528edd2",
+    "old_points": [
+      2,
+      7,
+      8,
+      11,
+      14,
+      17,
+      19,
+      23,
+      26,
+      28,
+      29,
+      32,
+      34,
+      38,
+      41,
+      43,
+      44
+    ],
+    "profile_orbit_size": 2,
+    "profile_carriers": 6,
+    "profile_carrier_orbits": 3,
+    "profile_minimal_orbits": 3,
+    "profile_states_sha256": "9429c9ab9df22f4dc8262b515c904ee21a875518a4f2c7310b8b37eb01f98c31",
+    "profile_representatives": [
+      [
+        2,
+        4160,
+        36866,
+        37442,
+        70736
+      ],
+      [
+        4160,
+        36866,
+        37442,
+        70738
+      ],
+      [
+        4162,
+        36866,
+        37442,
+        70736
+      ]
+    ],
+    "weight_denominator": 86,
+    "divisors": [
+      1,
+      7,
+      5,
+      35,
+      3,
+      21,
+      15,
+      105,
+      9,
+      63,
+      45,
+      315
+    ],
+    "common_cap_numerators": [
+      86,
+      17,
+      27,
+      5,
+      69,
+      12,
+      18,
+      3,
+      23,
+      4,
+      6,
+      1
+    ],
+    "common_weighted_cap_numerators": {
+      "1": [
+        2873,
+        563,
+        891,
+        164,
+        2346,
+        408,
+        612,
+        102,
+        782,
+        136,
+        204,
+        34
+      ],
+      "2": [
+        2717,
+        542,
+        864,
+        161,
+        2139,
+        372,
+        558,
+        93,
+        713,
+        124,
+        186,
+        34
+      ]
+    },
+    "shared_pure7_bounds": [
+      {
+        "root": 1,
+        "U": "183628451886661/10976021437500",
+        "zero_depth_numerator": 807,
+        "depth_maxima_sha256": "138f2da87108f877e9927f2222e88e081f9399832f2b7c7ac585357547a0dcb4"
+      },
+      {
+        "root": 2,
+        "U": "32905/1548",
+        "zero_depth_numerator": 1131,
+        "depth_maxima_sha256": "f63f5d2a27aeca45e82a8a159d76a812f7ea445e648b01619c0b503938cc8f2a"
+      }
+    ],
+    "cases": [
+      {
+        "masks": [
+          2,
+          4160,
+          36866,
+          37442,
+          70736
+        ],
+        "group_numerator48": 1546,
+        "survival_lower": "2333/4128",
+        "roots": [
+          {
+            "root": 1,
+            "weighted_group_numerator48": 52012,
+            "weighted_deletion_upper": "30233/2064",
+            "margin": "159032185718981/43904085750000"
+          },
+          {
+            "root": 2,
+            "weighted_group_numerator48": 48502,
+            "weighted_deletion_upper": "14095/1032",
+            "margin": "265/3096"
+          }
+        ]
+      },
+      {
+        "masks": [
+          4160,
+          36866,
+          37442,
+          70738
+        ],
+        "group_numerator48": 1546,
+        "survival_lower": "2333/4128",
+        "roots": [
+          {
+            "root": 1,
+            "weighted_group_numerator48": 52012,
+            "weighted_deletion_upper": "30233/2064",
+            "margin": "159032185718981/43904085750000"
+          },
+          {
+            "root": 2,
+            "weighted_group_numerator48": 48502,
+            "weighted_deletion_upper": "14095/1032",
+            "margin": "265/3096"
+          }
+        ]
+      },
+      {
+        "masks": [
+          4162,
+          36866,
+          37442,
+          70736
+        ],
+        "group_numerator48": 1546,
+        "survival_lower": "2333/4128",
+        "roots": [
+          {
+            "root": 1,
+            "weighted_group_numerator48": 52012,
+            "weighted_deletion_upper": "30233/2064",
+            "margin": "159032185718981/43904085750000"
+          },
+          {
+            "root": 2,
+            "weighted_group_numerator48": 48502,
+            "weighted_deletion_upper": "14095/1032",
+            "margin": "265/3096"
+          }
+        ]
+      }
+    ],
+    "minimum_margin": "265/3096",
+    "covered_carriers": 821,
+    "covered_carrier_orbits": 355,
+    "covered_minimal_carrier_orbits": 3,
+    "covered_orbits_sha256": "661c096f0f3dfab15976a88df436228900b904439781df5928b0e7b2316570a1",
+    "covered_orbits_by_support_size": {
+      "86": 3,
+      "87": 7,
+      "88": 4,
+      "89": 6,
+      "90": 18,
+      "91": 30,
+      "92": 42,
+      "93": 49,
+      "94": 33,
+      "95": 35,
+      "96": 34,
+      "97": 28,
+      "98": 34,
+      "99": 18,
+      "100": 9,
+      "101": 4,
+      "102": 1
+    },
+    "maximum_square_integer_bound": 18356184
+  }
+}

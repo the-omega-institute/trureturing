@@ -143,6 +143,33 @@ to384 distinct carrier orbits, including two inclusion-minimal
 orbits; all384 inherit Gamma≤35. The remaining56964minimal orbits
 are not certified by these two laws.
 
+[Separating the original mod9 test from its higher descendants](../docs/reports/erdos7-odd-covering/marked_head_profile.md#separating-an-original-saturated-test-from-its-higher-labels)
+further improves the unchanged PG1 law to
+`Gamma<=492647095380812739054683/14604022456869186140625<33.75`.
+The original mod9 cylinder is fixed across all auxiliary depths;
+only its higher labels are averaged. All ten original3/original9
+test pairs retain their own removed-energy bounds, with the same
+actual probability, positive survival and complete geometric tail.
+On that same probability the threshold-two hinge is at most3 and
+the mean is at most5, including all original3/5/7 heights.
+This strengthens the232 inherited PG1 carrier orbits, while the
+other configuration and general prime-tail gaps remain.
+
+A [complete uniform 86-point profile](../docs/reports/erdos7-odd-covering/marked_head_profile.md#a-uniform-86-point-profile-has-all-height-moment-bound-35)
+has **Gamma≤35** on each of its six actual mask states, in three
+inclusion-minimal orbits, at arbitrary original3/5/7 heights.
+An untouched seven digit makes the square relaxation and cylinder
+caps depend only on the common deletion vector. The grouped actual
+deletion costs are checked separately on all three representatives;
+their common survival lower bound is2333/4128, with minimum signed
+margin265/3096. Support inclusion extends the result to355 orbits,
+using a supported law on each containing carrier. Those larger
+carriers are not claimed to have this bound under their own uniform
+laws. These orbits are disjoint from the preceding384, so the five
+minimal sources together certify739 carrier orbits at Gamma≤35.
+The remaining56961 minimal orbits are not covered by these sources;
+the general prime-tail continuation is also unresolved.
+
 The [complete actual-carrier classification](../docs/reports/erdos7-odd-covering/marked_head_profile.md#complete-low315-carrier-classification-for-actual-digit-bounds)
 identifies the finite domain needed to extend those digit-sensitive bounds.
 On the six canonical old45 shapes, the 161375 deletion vectors lift to
