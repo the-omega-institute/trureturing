@@ -1,0 +1,54 @@
+**定理 29.11（任意柱集中的无原子逼近与弱星稠密性）。** 每个非空有限数字柱集都支持一个无原子概率测度。对任意 $\mu\in M(K)$，存在 $\mu_N\in M_c(K)$，使
+$$
+\|\mu_N\|_{\mathrm{TV}}\le\|\mu\|_{\mathrm{TV}},\qquad \mu_N(K)=\mu(K),\qquad \mu_N\longrightarrow\mu\text{ 于 }\sigma(M(K),C(K)).
+$$
+因此该共同拓扑中心虽然是总变差闭真理想，却在全测度空间中弱星稠密。
+
+**证明。** 固定长度为 $N$ 的合法前缀 $w$，记其非空柱集为 $C_w$。对 $u\in[0,1)$，定义二进制数字
+$$
+\epsilon_r(u)=\lfloor2^{r+1}u\rfloor-2\lfloor2^ru\rfloor\in\{0,1\}\qquad(r\ge0).
+$$
+构造 $q_w(u)\in K$：前 $N$ 位取 $w$，第 $N$ 位取零，并令
+$$
+q_w(u)_{N+1+2r}=\epsilon_r(u),\qquad q_w(u)_{N+2+2r}=0\qquad(r\ge0).
+$$
+前缀与自由尾部之间有一个零，尾部任意两个自由位之间也有零，所以所有输出均合法并属于 $C_w$。每个坐标是 Borel 函数，柱集生成数字 Borel 结构，故 $q_w$ 为 Borel 映射。令 $\xi_w$ 为 $[0,1)$ 上 Lebesgue 概率测度在 $q_w$ 下的推前。它是有限正则概率测度，并集中于 $C_w$。
+
+对任意固定点 $z\in K$，条件 $q_w(u)=z$ 会指定前 $r$ 个二进制数字，因此其原像至多包含在一个长度为 $2^{-r}$ 的半开二进制区间内，或为空。于是
+$$
+\xi_w(\{z\})\le2^{-r}\qquad(r\ge1),
+$$
+从而 $\xi_w(\{z\})=0$。这证明每个实际柱集内都有所需无原子概率测度。
+
+令 $\mathcal W_N$ 为长度 $N$ 的全部合法前缀，定义
+$$
+\mu_N=\sum_{w\in\mathcal W_N}\mu(C_w)\xi_w.
+$$
+这是有限个无原子测度的实线性组合，所以仍无原子。柱集构成有限 Borel 分割，故
+$$
+\|\mu_N\|_{\mathrm{TV}}\le\sum_{w\in\mathcal W_N}|\mu(C_w)|\le\|\mu\|_{\mathrm{TV}},\qquad \mu_N(K)=\sum_w\mu(C_w)=\mu(K).
+$$
+对 $f\in C(K)$，令
+$$
+\omega_f(r)=\sup\{|f(x)-f(y)|:d_K(x,y)\le r\}.
+$$
+紧致性使 $f$ 一致连续，所以 $\omega_f(r)\to0$ 当 $r\downarrow0$。每个 $C_w$ 的直径至多为 $2^{-N}$，于是
+$$
+\begin{aligned}
+|\langle\mu_N-\mu,f\rangle|&=\left|\sum_w\int_{C_w}\left(\int_{C_w}f(y)\,d\xi_w(y)-f(x)\right)d\mu(x)\right|\\
+&\le\omega_f(2^{-N})\sum_w|\mu|(C_w)\\
+&=\omega_f(2^{-N})\|\mu\|_{\mathrm{TV}}\longrightarrow0.
+\end{aligned}
+$$
+因此对全部连续测试弱星收敛。总变差闭性和真性来自定理29.7，拓扑中心识别来自定理29.10。此稠密性不把非中心元素的左乘算子变成弱星连续算子；定理29.10仍为每个非零原子部分提供实际连续测试障碍。证毕。
+
+[^rro29-riesz]: Martin Herdegen, Gechun Liang and Osian Shelley, *Vague and weak convergence of signed measures*, arXiv:2205.13207v2，§1.1，Definition 1.1 与 Theorem 1.2(a)。这里引用连续测试收敛、有限有符号 Radon 测度及 Riesz 等距表示。[正文](https://arxiv.org/html/2205.13207v2)。
+
+[^rro29-kernel]: Vassili N. Kolokoltsov, *Stochastic monotonicity and duality of kth order with application to put-call symmetry of powered options*, arXiv:1405.3894v1，§2.2，特别有界有符号核的定义、积分算子与测度对偶公式及 Proposition 2.1 的 Fubini 计算。[正文](https://arxiv.org/html/1405.3894v1)。
+
+[^rro29-integration]: Terence Tao, *245B, notes 0: A quick review of measure and integration theory*，2009年1月1日，Theorem 3(4)—(5) 与 Theorem 4，分别给出支配收敛、绝对可和级数积分与 Fubini–Tonelli 的可测性及绝对可积条件；*245B, notes 1: Signed measures and the Radon-Nikodym-Lebesgue theorem*，2009年1月4日，Hahn 分解、Exercises 5—8 的 Jordan 分解和总变差。本节对有符号测度的使用均明确化为有限正 Jordan 部分或变差测度。[积分正文](https://terrytao.wordpress.com/2009/01/01/245b-notes-0-a-quick-review-of-measure-and-integration-theory/)，[有符号测度正文](https://terrytao.wordpress.com/2009/01/04/245b-notes-1-signed-measures-and-the-radon-nikodym-lebesgue-theorem/)。
+
+[^rro29-center]: Stefano Ferri, Matthias Neufang and Jan Pachl, *Minimal sets determining the topological centre of the algebra LUC(G)\**, arXiv:1310.7931v2，§1，Definition 1.1；这里仅采用左乘在指定弱星拓扑中全域连续的拓扑中心定义，不移用其关于其他代数的中心分类。[正文](https://arxiv.org/html/1310.7931v2)。
+
+[^rro29-ideal]: Tetsuhiro Shimizu, *L-ideals of Measure Algebras*, Proceedings of the Japan Academy 48 (1972), 172–176，§1，特别第172—173页关于通常卷积测度代数及连续测度理想的记号。本节圆周上的无原子理想性质由逐单点卷积积分另行证明。[正文](https://www.jstage.jst.go.jp/article/pjab1945/48/3/48_3_172/_pdf/-char/ja)。
+

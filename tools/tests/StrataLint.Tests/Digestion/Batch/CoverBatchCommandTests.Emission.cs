@@ -85,6 +85,8 @@ public sealed partial class CoverBatchCommandTests
     [InlineData(FrozenPath, 4)]
     [InlineData("D5/S0/Carrier/Probe.lean", 4)]
     [InlineData(ProblemPath, 4)]
+    [InlineData("Meta/FILEMAP.docs.reports.toml", 3)]
+    [InlineData("Meta/FILEMAP.docs.reports.toml", 4)]
     public void FinalEmissionRejectsChangedAuthoritativeInputs(string changedPath, int discovery)
     {
         using var world = new BatchWorld { UseGitReader = true };
@@ -273,8 +275,13 @@ public sealed partial class CoverBatchCommandTests
             refs = {}
             computation = "none"
             """ + "\n");
-        WriteScribeFixture(root, "Meta/FILEMAP.toml",
-            File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), "Meta/FILEMAP.toml")));
+        var repositoryRoot = TestRepositoryLayout.FindRoot();
+        var documents = FileMapDocuments.Resolve(
+            File.ReadAllBytes(Path.Combine(repositoryRoot, AdmissionPlanePolicy.FileMapPath)),
+            AdmissionPlanePolicy.FileMapPath,
+            path => File.ReadAllBytes(Path.Combine(repositoryRoot, path)));
+        foreach (var document in documents)
+            WriteScribeFixture(root, document.Path, Encoding.UTF8.GetString(document.Bytes.AsSpan()));
     }
 
     private sealed class ReportLoadCounter : IDisposable

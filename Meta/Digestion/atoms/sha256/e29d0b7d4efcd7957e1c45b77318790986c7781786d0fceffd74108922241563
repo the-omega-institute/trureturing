@@ -1,0 +1,9 @@
+**定理 29.4（精确的前伴随判据）。** 对固定 $\mu$，以下条件等价：$\mu\in Z_{\mathrm{top}}(\star_t)$；对每个 $f\in C(K)$，实际有界 Borel 函数 $\mathcal T_\mu^{(t)}f$ 属于 $C(K)$。条件成立时，
+$$
+\mathcal T_\mu^{(t)}:C(K)\longrightarrow C(K)
+$$
+是有界线性算子，且
+$$
+\|\mathcal T_\mu^{(t)}\|\le C_t\|\mu\|_{\mathrm{TV}},\qquad L_\mu^{(t)}=(\mathcal T_\mu^{(t)})^*.
+$$
+

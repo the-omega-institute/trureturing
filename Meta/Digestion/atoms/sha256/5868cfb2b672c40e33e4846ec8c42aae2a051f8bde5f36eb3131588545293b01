@@ -1,0 +1,25 @@
+**Proof.** Write $r_i=S^{P_i}a$ and let $W$ be the weak closure of $\mathcal O(a)$. By hypothesis $W$ is weakly compact, so the sequence considered as a net has a subnet
+$$
+r_{i_\lambda}\longrightarrow r\in W
+\quad\text{in }\sigma(B_{\mathbb F},B_{\mathbb F}^*).
+$$
+For $n\in\mathbb N_0$, evaluation $\delta_n(b)=b(n)$ is an element of $B_{\mathbb F}^*$ of norm one. Banach–Alaoglu gives an independently chosen subnet
+$$
+\delta_{Q_{j_\mu}}\longrightarrow\Lambda
+\quad\text{in }\sigma(B_{\mathbb F}^*,B_{\mathbb F}),
+$$
+inside the dual unit ball. Set
+$$
+p_i=\lim_{j\to\infty}a(P_i+Q_j),\qquad
+q_j=\lim_{i\to\infty}a(P_i+Q_j).
+$$
+For each fixed $i$, the scalar limit along the full $j$-sequence exists, hence the weak-star subnet gives $p_i=\Lambda(r_i)$. For each fixed $j$, the scalar limit along the full $i$-sequence exists, hence the weak subnet gives $q_j=\delta_{Q_j}(r)$. The existing outer limits can now be computed along the respective subnets:
+$$
+\lim_{i\to\infty}p_i
+=\lim_\lambda\Lambda(r_{i_\lambda})
+=\Lambda(r)
+=\lim_\mu\delta_{Q_{j_\mu}}(r)
+=\lim_{j\to\infty}q_j.
+$$
+Only evaluation with one argument fixed has been used. In particular, the proof does not assume joint continuity of a varying vector–functional pairing, or the existence of weakly convergent subsequences. The compactness hypothesis is Banach weak compactness, not compactness of a bounded pointwise closure. The proof applies over either scalar field. $\square$
+

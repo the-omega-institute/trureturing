@@ -66,10 +66,11 @@ public sealed partial class FileMapPolicyTests
             StringComparison.Ordinal);
     }
 
-    [Fact]
-    public void FileMapPolicySourceMustBeInTheJudgeAdmissionPlane()
+    [Theory]
+    [InlineData("Meta/FILEMAP.toml")]
+    [InlineData("Meta/FILEMAP.docs.reports.toml")]
+    public void FileMapPolicySourceMustBeInTheJudgeAdmissionPlane(string path)
     {
-        const string path = "Meta/FILEMAP.toml";
         var manifest = Parse(AdmissionEntry(path, "data", "content"));
 
         var finding = Assert.Single(FileMapPolicy.InspectDirectoryKinds(manifest, [path]));

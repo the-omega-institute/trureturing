@@ -1,0 +1,23 @@
+**theorem 28.9 (Multiplicativity on all measures and associativity).** The coordinate bijection is an algebra isomorphism:
+$$
+\Phi_t(\mu\star_t\eta)=\Phi_t\mu\diamond\Phi_t\eta
+\qquad(\mu,\eta\in M(K)).
+$$
+Consequently $\star_t$ is associative on all of $M(K)$, and
+$$
+(M(K),\star_t)\cong M(\mathbb T)\oplus\ell^1(\mathbb N_{>0})
+$$
+as real algebras with bounded maps in both directions. The norm
+$$
+N_t(\mu)=\|H_\#\mu\|_{\mathrm{TV}}+\|R_t\mu\|_1
+$$
+is complete, equivalent to total variation, and submultiplicative. The alternative norm $C_t\|\mu\|_{\mathrm{TV}}$ is also complete and submultiplicative. The unscaled total variation norm is submultiplicative exactly for $t\in\{0,\infty\}$.
+
+Writing $g=R_t\mu$ and $h=R_t\eta$, the full product formula is
+$$
+\mu\star_t\eta
+=L_t\bigl((H_\#\mu)*_{\mathbb T}(H_\#\eta)\bigr)
++\sum_{k\ge1}\frac{(g*_+h)_k}{d'_k}v_k.
+$$
+In particular, $L_tM(\mathbb T)$ and $\ker H_\#$ are closed ideals whose cross products vanish.
+
