@@ -43,6 +43,92 @@ theorem result (p : ℕ → ℝ) (c : ℕ → ℕ → ℝ) :
       ((∃ m, 0 < m ∧ p m = 1) → ∀ n, 0 < n → p n = 1) ∧
       ((∀ m, 0 < m → p m ≠ 0) ∧ (∀ m, 0 < m → p m ≠ 1) ∨
         (∀ n, 0 < n → p n = 0) ∨ (∀ n, 0 < n → p n = 1))) := by
-  sorry
+  have hsub (h : ForcedEquations p c) (m n : ℕ) (hm : 0 < m) (hn : 0 < n) :
+      (1 - p m - p n) * c m n = 1 := by
+    obtain ⟨h₁, h₂⟩ := h m n hm hn
+    nlinarith only [h₁, h₂]
+  have hcnz (h : ForcedEquations p c) (m n : ℕ) (hm : 0 < m) (hn : 0 < n) :
+      c m n ≠ 0 := by
+    intro hc
+    simpa [hc] using hsub h m n hm hn
+  have hzero (h : ForcedEquations p c) (hp : p 1 = 0) :
+      ∀ n, 0 < n → p n = 0 := by
+    intro n hn
+    induction n, hn using Nat.le_induction with
+    | base => exact hp
+    | succ n hn _ =>
+      have he := (h n 1 hn (by decide)).2
+      simpa [hp] using he
+  have hone (h : ForcedEquations p c) (hp : p 1 = 1) :
+      ∀ n, 0 < n → p n = 1 := by
+    intro n hn
+    induction n, hn using Nat.le_induction with
+    | base => exact hp
+    | succ n hn _ =>
+      have he := (h n 1 hn (by decide)).1
+      simp only [hp, sub_self, mul_zero, zero_mul] at he
+      linarith
+  have havoid (h : ForcedEquations p c) (hp₀ : p 1 ≠ 0) (hp₁ : p 1 ≠ 1) :
+      ∀ n, 0 < n → p n ≠ 0 ∧ p n ≠ 1 := by
+    intro n hn
+    induction n, hn using Nat.le_induction with
+    | base => exact ⟨hp₀, hp₁⟩
+    | succ n hn ih =>
+      obtain ⟨h₁, h₂⟩ := h n 1 hn (by decide)
+      have hc := hcnz h n 1 hn (by decide)
+      constructor
+      · intro hz
+        have hprod := mul_ne_zero (mul_ne_zero ih.1 hp₀) hc
+        exact hprod (by simpa [hz] using h₂)
+      · intro ho
+        have hprod := mul_ne_zero
+          (mul_ne_zero (sub_ne_zero.mpr (Ne.symm ih.2))
+            (sub_ne_zero.mpr (Ne.symm hp₁))) hc
+        exact hprod (by simpa [ho] using h₁)
+  have hnecessary (h : ForcedEquations p c) : GeometricFamily p c ∨ UnitFamily p c := by
+    by_cases hp₀ : p 1 = 0
+    · have hz := hzero h hp₀
+      left
+      refine ⟨0, by norm_num, by norm_num, ?_, ?_⟩
+      · intro m hm
+        simp [hz m hm, zero_pow (Nat.ne_of_gt hm)]
+      · intro m n hm hn
+        have hc := hsub h m n hm hn
+        simp only [hz m hm, hz n hn, sub_zero, one_mul] at hc
+        simpa [zero_pow (Nat.ne_of_gt hm), zero_pow (Nat.ne_of_gt hn),
+          zero_pow (Nat.ne_of_gt (Nat.add_pos_left hm n))] using hc
+    by_cases hp₁ : p 1 = 1
+    · have ho := hone h hp₁
+      right
+      refine ⟨ho, ?_⟩
+      intro m n hm hn
+      have hc := hsub h m n hm hn
+      rw [ho m hm, ho n hn] at hc
+      linarith
+    have ha := havoid h hp₀ hp₁
+    left
+    sorry
+  have hsufficient : GeometricFamily p c ∨ UnitFamily p c → ForcedEquations p c := by
+    sorry
+  refine ⟨⟨hnecessary, hsufficient⟩, ?_⟩
+  intro h
+  by_cases hp₀ : p 1 = 0
+  · have hz := hzero h hp₀
+    refine ⟨fun _ => hz, ?_, Or.inr (Or.inl hz)⟩
+    rintro ⟨m, hm, he⟩
+    have := hz m hm
+    exact False.elim (by linarith)
+  by_cases hp₁ : p 1 = 1
+  · have ho := hone h hp₁
+    refine ⟨?_, fun _ => ho, Or.inr (Or.inr ho)⟩
+    rintro ⟨m, hm, he⟩
+    have := ho m hm
+    exact False.elim (by linarith)
+  have ha := havoid h hp₀ hp₁
+  refine ⟨?_, ?_, Or.inl ⟨fun m hm => (ha m hm).1, fun m hm => (ha m hm).2⟩⟩
+  · rintro ⟨m, hm, he⟩
+    exact False.elim ((ha m hm).1 he)
+  · rintro ⟨m, hm, he⟩
+    exact False.elim ((ha m hm).2 he)
 
 end D5.S1.Recurrence.Algebraic.MultiplicativeSliceParameters
