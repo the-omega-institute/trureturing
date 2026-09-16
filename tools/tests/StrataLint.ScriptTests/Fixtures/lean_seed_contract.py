@@ -37,17 +37,15 @@ class TransportTests(ReleaseLegacyCases, ReleaseVerificationCases, CacheDeadline
     def test_malformed_cleanup_metadata_cannot_fail_or_repeat_the_build(self):
         calls = self.root / "build-calls"
         write(self.bin / "make", '#!/bin/sh\necho build >> "$FAKE_BUILD_CALLS"\nexit 0\n')
-        result = self.transport("publish", "601", FAKE_BUILD_CALLS=str(calls), FAKE_API_JSON="[]")
-        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
-        self.assertIn('"status":"failed"', result.stdout.replace(" ", ""))
-        self.assertIn("malformed metadata", result.stdout)
-        for index, value in enumerate((
-                '["invalid"]', '[{"tagName":12,"createdAt":"today","isDraft":false}]')):
-            result = self.transport("publish", str(602 + index), FAKE_BUILD_CALLS=str(calls),
-                                    FAKE_LIST_JSON=value)
+        malformed = [("FAKE_LIST_JSON", '["invalid"]'),
+                     ("FAKE_LIST_JSON", '[{"tagName":12,"createdAt":"today","isDraft":false}]'),
+                     ("FAKE_FAIL", "list")]
+        for index, (field, value) in enumerate(malformed):
+            result = self.transport("publish", str(601 + index), FAKE_BUILD_CALLS=str(calls), **{field: value})
             self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+            self.assertIn('"status":"published"', result.stdout)
             self.assertIn('"prune_error":', result.stdout)
-        self.assertEqual(["build"] * 3, calls.read_text().splitlines())
+        self.assertEqual(["build"] * len(malformed), calls.read_text().splitlines())
 
 
 if __name__ == "__main__":

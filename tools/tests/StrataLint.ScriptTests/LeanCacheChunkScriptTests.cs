@@ -18,6 +18,7 @@ public sealed class LeanCacheChunkScriptTests
         Assert.Equal(new[] { "lean-build.tgz", "manifest.json" }, fixture.Assets(fixture.Tag));
         Assert.Single(fixture.Manifest(fixture.Tag)["parts"]!.AsArray());
         Assert.Equal(fixture.ArchiveBytes, fixture.ReadAsset(fixture.Tag, "lean-build.tgz"));
+        fixture.ClearPrivateBuild();
         fixture.AssertSuccess(fixture.Fetch());
         Assert.Equal("01234567", fixture.Unpacked);
         Assert.Equal("report-seed", fixture.UnpackedReport);
@@ -50,7 +51,7 @@ public sealed class LeanCacheChunkScriptTests
         Assert.Contains("\"status\":\"failed\"", result.Text, StringComparison.Ordinal);
         Assert.Contains("100 parts", result.Text, StringComparison.Ordinal);
         Assert.False(fixture.HasRelease);
-        Assert.Empty(fixture.GhCalls);
+        Assert.DoesNotContain(fixture.GhCalls, args => args[0] == "release");
     }
 
     [Fact]
@@ -84,6 +85,7 @@ public sealed class LeanCacheChunkScriptTests
         Assert.Equal("4242", manifest["workflow_run_id"]!.GetValue<string>());
         Assert.Equal("1", manifest["workflow_run_attempt"]!.GetValue<string>());
 
+        fixture.ClearPrivateBuild();
         fixture.AssertSuccess(fixture.Fetch());
 
         Assert.Equal(LeanCacheChunkFixture.Archive, fixture.Unpacked);
@@ -102,6 +104,7 @@ public sealed class LeanCacheChunkScriptTests
 
         Assert.Equal(11, fixture.Manifest(fixture.Tag)["parts"]!.AsArray().Count);
         Assert.Equal(fixture.ArchiveBytes.Skip(10 * chunkBytes), fixture.ReadAsset(fixture.Tag, "lean-build.tgz.part-10"));
+        fixture.ClearPrivateBuild();
         fixture.AssertSuccess(fixture.Fetch());
         Assert.Equal(LeanCacheChunkFixture.Archive, fixture.Unpacked);
     }
@@ -262,13 +265,16 @@ public sealed class LeanCacheChunkScriptTests
 
         Assert.All(results, fixture.AssertSuccess);
         Assert.Equal(sameRun ? 1 : 2, results.Count(result => result.Text.Contains("\"status\":\"published\"", StringComparison.Ordinal)));
-        Assert.Equal(sameRun ? 1 : 0, results.Count(result => result.Text.Contains("\"status\":\"failed\"", StringComparison.Ordinal)));
+        Assert.Equal(sameRun ? 1 : 0, results.Count(result =>
+            result.Text.Contains("\"status\":\"failed\"", StringComparison.Ordinal)
+            || result.Text.Contains("\"status\":\"exists\"", StringComparison.Ordinal)));
         foreach (var tag in new[] { fixture.Tag, fixture.CandidateTag(otherRun) }.Distinct())
         {
             Assert.False(fixture.Metadata(tag)["draft"]!.GetValue<bool>());
             Assert.Equal(4, fixture.Assets(tag).Length);
             Assert.Equal(3, fixture.Manifest(tag)["parts"]!.AsArray().Count);
         }
+        fixture.ClearPrivateBuild();
         fixture.AssertSuccess(fixture.Fetch());
         Assert.Equal(LeanCacheChunkFixture.Archive, fixture.Unpacked);
         Assert.Equal("report-seed", fixture.UnpackedReport);

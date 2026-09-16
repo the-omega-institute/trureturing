@@ -39,7 +39,15 @@ internal sealed class LeanCacheChunkFixture : IDisposable
             packages = new[] { new { name = "mathlib", rev = Revision, inputRev = "requested-tag" } },
         }));
         WriteStub("make",
-            """printf '%s\n' "$*" >> "$CHUNK_FIXTURE/build-runs"; exit "$FAKE_BUILD_EXIT" """);
+            """
+            printf '%s\n' "$*" >> "$CHUNK_FIXTURE/build-runs"
+            if [ "$1" = "lean-report" ] && [ "$FAKE_BUILD_EXIT" = "0" ]; then
+                mkdir -p .lake/build/stratalint
+                printf '%s\n' '{"modules":[],"schema":"stratalint-raw-lean-report-v2"}' > .lake/build/stratalint/report-fixture-$$
+                mv .lake/build/stratalint/report-fixture-$$ .lake/build/stratalint/raw-lean-report.json
+            fi
+            exit "$FAKE_BUILD_EXIT"
+            """);
         Write(Path.Combine(temporary.Path, "gh.py"), GhProgram);
         WriteStub("gh",
             """exec python3 "$CHUNK_FIXTURE/gh.py" "$@" """);
@@ -101,6 +109,9 @@ internal sealed class LeanCacheChunkFixture : IDisposable
     }
 
     internal Attempt Fetch(bool allowSeed = false) => Run("fetch", allowSeed);
+
+    internal void ClearPrivateBuild() => StrataLint.TestSupport.TemporaryFileSystem.Directory.Delete(
+        Path.Combine(repository, ".lake/build"), recursive: true);
 
     internal void ListReleases(params string[] tags)
     {
@@ -246,7 +257,11 @@ internal sealed class LeanCacheChunkFixture : IDisposable
                     for p in directory.iterdir() if p.name != "release.json"]
         if args[0] == "api":
             assert args[1].startswith("repos/fixture/cache/releases/tags/")
-            print(json.dumps(read(root / "releases" / args[1].split("/")[-1])))
+            directory = root / "releases" / args[1].split("/")[-1]
+            if not directory.exists():
+                print(json.dumps({"message": "Not Found", "status": "404"}))
+                sys.exit(1)
+            print(json.dumps(read(directory)))
             sys.exit(0)
         assert option("--repo") == "fixture/cache"
         if args[:2] == ["release", "list"]:
