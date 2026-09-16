@@ -1,7 +1,7 @@
 # Online precision switch
 
 `observer_switch.py` implements the fixed switch and exact experiments for
-[ML §43](../../develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ML.md).
+[ML observation companion §43](../../develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ML_OBSERVATION.md).
 It imports the delivered `rational_observer` constructor and verifier. Python
 3.10 or later and its standard library suffice; no installation is needed.
 
@@ -12,8 +12,8 @@ python3 -B docs/reports/contextual-spacetime-ml/observer_switch.py checks --out 
 printf '0 1 0 0 0 0 0 0\n' | python3 -B docs/reports/contextual-spacetime-ml/observer_switch.py stream --old-label 23
 ```
 
-The executable interface fixes `p=r=1/4`, the old §41 observer at tolerance
-`1/16` (`m=28`), and the new grid at target `1/1024` (`m=526`). The old label
+The executable interface fixes `p=r=1/4`, the old ML main-volume §41 observer
+at tolerance `1/16` (`m=28`), and the new grid at target `1/1024` (`m=526`). The old label
 must come from a valid run of that old observer. The interface validates its
 range, but an integer cannot establish the historical precondition. It accepts
 no pre-switch clock, replay archive, or arbitrary target threshold.
@@ -25,8 +25,8 @@ and the next-zero `prediction` as a numerator/positive-denominator string pair.
 There is one line at reset and one after every report; post-report predictions
 use the updated label. ASCII whitespace is ignored; other input is rejected.
 `certified: false` carries no new-target guarantee. Certification concerns
-prediction error, not membership in the new label's §41 interval. A later switch
-needs its own valid initialization bound.
+prediction error, not membership in the new label's ML main-volume §41 interval.
+A later switch needs its own valid initialization bound.
 
 The mathematical state has 527 label values and nine counter values: ten label
 bits plus four separately stored counter bits. The 4743 nominal pairs fit in
@@ -54,8 +54,8 @@ The retained exact results serve these comparisons:
   These intervals may include unreachable points, so this is not the optimum
   over actual histories and does not determine the minimum delay.
 
-The paper proof, using ML §21.2 and Quantum §§153/155, quantifies every old
-history and every future word at every length. Its bound is
+The companion §43 proof, using ML main-volume §21.2 and Quantum §§153/155,
+quantifies every old history and every future word at every length. Its bound is
 `(8 + 785 * 2^(-n)) / 12624`, with strict residual `1/1578 < 1/1024` and
 eight-step bound `2833/3231744 < 1/1024`. The finite experiment cross-checks
 these constants; it does not prove the unlimited quantifiers. For the separate
