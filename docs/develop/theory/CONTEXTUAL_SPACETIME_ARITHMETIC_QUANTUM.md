@@ -34584,3 +34584,232 @@ $$
 本命题的物理仪器、条件化与共同词收缩直接取自本卷命题153.1；网格误差传播直接应用[《情境时空算术·机器学习》定义21.1及定理21.2](CONTEXTUAL_SPACETIME_ARITHMETIC_ML.md)。有限收缩映射族的不变紧集与 Hausdorff 收缩为既有方法，参见 J. E. Hutchinson，*Fractals and Self Similarity*，*Indiana University Mathematics Journal* 30 (1981), 713–747，[DOI:10.1512/iumj.1981.30.30055](https://doi.org/10.1512/iumj.1981.30.30055)，[作者重排版](https://maths-people.anu.edu.au/~john/Assets/Research%20Papers/fractals_self-similarity.pdf)，第3.1节(3)及第3.2节(1)，该重排版第10–12页。这里的倒向选词证明已直接给出每个深度的网半径，状态下界只用有限闭区间覆盖的长度次可加性。
 
 ## 追加锚（本行以下为增补区）
+
+## 155. 全有限历史后验闭包的覆盖数与因果观察者成本
+
+**命题 155.1（正混合二元模型的全历史状态成本与内部覆盖数同阶）。** 固定 $0<p<1/2$、$0<r<1/2$，沿用命题153.1与154.1的二元仪器、先验 $I_2/2$ 及时间顺序约定。具体地，$c_{00}=c_{11}=p$、$c_{01}=c_{10}=1-p$，$P_{ii}=1-r$、$P_{ji}=r$（$j\ne i$）；旧隐藏位 $i$ 先发射报告 $b$，再翻转到新隐藏位 $j$，各项
+$$
+K_{bji}=\sqrt{c_{bi}P_{ji}}\,|j\rangle\langle i|,
+\qquad
+\phi_b(X)=\sum_{i,j=0}^1K_{bji}XK_{bji}^{\dagger}
+$$
+分别作共轭作用后相加。对时间顺序词 $w=b_1\cdots b_n$，令
+$$
+\phi_w=\phi_{b_n}\circ\cdots\circ\phi_{b_1},\qquad
+v_\varnothing=\binom{1/2}{1/2},\qquad
+v_{wb}=P\operatorname{diag}(c_{b0},c_{b1})v_w,
+$$
+$$
+Z_w=\mathbf1^{\mathsf T}v_w,\qquad
+q_w=\frac{(v_w)_1}{Z_w},\qquad
+\ell_w=\log\frac{q_w}{1-q_w}.
+$$
+空词作用为恒等，$Z_\varnothing=1$、$\ell_\varnothing=0$。命题153.1已经给出 $\phi_w(I_2/2)=\operatorname{diag}(v_w)$、$Z_w\ge p^{|w|}>0$ 及 $0<q_w<1$；以下对全部有限词条件化。
+
+取命题154.1中的常数及不变区间
+$$
+d=1-2p,\qquad \eta=1-2r,\qquad
+\lambda=\log\frac{1-p}{p},\qquad
+q_+=\frac{d-r+\sqrt{r^2+\eta d^2}}{2d},
+$$
+$$
+a=\log\frac{q_+}{1-q_+}>0,\qquad I=[-a,a],\qquad
+G(x)=\log\frac{r+(1-r)e^x}{(1-r)+re^x},\qquad
+F_b(x)=G\bigl(x+(-1)^b\lambda\bigr).
+$$
+直接使用前两命题的 $\ell_{wb}=F_b(\ell_w)$、$F_b(I)\subseteq I$ 及共同 Lipschitz 常数 $\eta<1$。下一零报告的概率为
+$$
+h(x)=p+\frac{d}{1+e^{-x}},\qquad
+\Pr(0\mid w)=h(\ell_w).
+$$
+定义全有限历史后验的对数赔率集合及其闭包
+$$
+\mathcal O=\{\ell_w:w\in\{0,1\}^{*}\},\qquad
+C=\overline{\mathcal O}\subseteq\mathbb R.
+$$
+此处包括空词；$C$ 不以平稳分布的支撑或仅以渐近吸引集代替。对 $\delta>0$，采用中心属于 $C$、球为闭球的内部覆盖数
+$$
+N_C(\delta)=\min\left\{|Q|:
+\varnothing\ne Q\subseteq C\text{ 为有限集},\quad
+C\subseteq\bigcup_{q\in Q}[q-\delta,q+\delta]\right\}.
+$$
+
+观察者仍取命题154.1的类别：有限非空状态集 $S$、固定初态 $s_0\in S$、固定确定性更新 $T_0,T_1:S\to S$ 和固定读出 $t:S\to[0,1]$。令 $T_w=T_{b_n}\circ\cdots\circ T_{b_1}$、$T_\varnothing=\operatorname{Id}$，并取
+$$
+N_{\min}(\varepsilon)=\min\left\{|S|:
+\sup_{w\in\{0,1\}^{*}}
+|t(T_w(s_0))-h(\ell_w)|\le\varepsilon\right\}
+\qquad(\varepsilon>0).
+$$
+所有可读的演化记忆均计入 $S$，没有另行可读的时钟、历史档案、随机种子或演化实数寄存器。允许在固定表及读出中使用精确实常数；所计成本只是 $|S|$。观察者可依赖 $p,r,\varepsilon$，但同一初态、更新表和读出必须适用于全部有限词长。
+
+则 $C$ 为包含 $0$ 的非空紧集，$F_b(C)\subseteq C$，上述两个最小值均存在。置
+$$
+A=\frac d4,\qquad
+\mu=\frac{d}{4\cosh^2(a/2)}=d q_+(1-q_+)>0.
+$$
+对每个 $\varepsilon>0$ 有
+$$
+N_C\!\left(\frac{2\varepsilon}{\mu}\right)
+\le N_{\min}(\varepsilon)
+\le N_C\!\left(\frac{(1-\eta)\varepsilon}{A}\right).
+$$
+进一步定义
+$$
+B(c)=
+\begin{cases}
+\lceil2/c\rceil,&0<c<1,\\
+1,&c\ge1.
+\end{cases}
+$$
+则同尺度比较为
+$$
+\frac{N_C(\varepsilon)}{B(\mu/2)}
+\le N_{\min}(\varepsilon)
+\le B\!\left(\frac{1-\eta}{A}\right)N_C(\varepsilon),
+\qquad
+N_{\min}(\varepsilon)=\Theta_{p,r}\bigl(N_C(\varepsilon)\bigr)
+\quad(\varepsilon\downarrow0).
+$$
+这些常数只取充分界，不作最优性断言。以
+$$
+\underline D_C=\liminf_{\delta\downarrow0}
+\frac{\log N_C(\delta)}{\log(1/\delta)},\qquad
+\overline D_C=\limsup_{\delta\downarrow0}
+\frac{\log N_C(\delta)}{\log(1/\delta)}
+$$
+定义下、上盒维数，则
+$$
+\liminf_{\varepsilon\downarrow0}
+\frac{\log N_{\min}(\varepsilon)}{\log(1/\varepsilon)}
+=\underline D_C,\qquad
+\limsup_{\varepsilon\downarrow0}
+\frac{\log N_{\min}(\varepsilon)}{\log(1/\varepsilon)}
+=\overline D_C.
+$$
+不要求这两个维数相同。若共同盒维数 $D$ 存在，则仅由该条件得到
+$$
+N_{\min}(\varepsilon)=\varepsilon^{-D+o(1)};
+$$
+该条件本身不把 $o(1)$ 提升为 $N_{\min}(\varepsilon)=\Theta(\varepsilon^{-D})$。
+
+**证明。** 由命题154.1的区间不变性及 $\ell_\varnothing=0$，$\mathcal O\subseteq I$。因此 $C$ 是紧区间 $I$ 的闭子集，非空且含 $0$。追加报告作用最后，故 $F_b(\mathcal O)\subseteq\mathcal O$。对任意 $x\in C$ 取 $x_n\in\mathcal O$ 趋于 $x$，连续性给 $F_b(x_n)\to F_b(x)$；闭性遂给 $F_b(x)\in C$。对每个 $\delta>0$，以所有 $x\in C$ 为中心的开 $\delta$-球覆盖 $C$，紧性给有限子覆盖，换成同心闭球仍覆盖。故内部有限网存在，其可能基数构成非空正整数集；良序性给最小基数及实现它的网，并不要求这些网包含 $0$。
+
+下一报告读出在整个 $I$ 上给出双向距离控制。求导得
+$$
+h'(x)=\frac{de^x}{(1+e^x)^2}
+=\frac{d}{4\cosh^2(x/2)}.
+$$
+由 $|x|\le a$ 得 $\mu\le h'(x)\le A$。又 $e^a=q_+/(1-q_+)$，所以
+$$
+\frac{1}{4\cosh^2(a/2)}
+=\frac{e^a}{(1+e^a)^2}=q_+(1-q_+).
+$$
+对 $x\le y$ 在 $[x,y]\subseteq I$ 上积分，并交换两点处理 $x>y$，得到
+$$
+\mu|x-y|\le |h(x)-h(y)|\le A|x-y|
+\qquad(x,y\in I).
+$$
+
+先证下界。取任意误差至多 $\varepsilon$ 的有限观察者，记其可达状态集为
+$$
+S_{\rm reach}=\{T_w(s_0):w\in\{0,1\}^{*}\}.
+$$
+对每个 $s\in S_{\rm reach}$ 选择一个达到它的有限词 $w_s$，置 $x_s=\ell_{w_s}\in\mathcal O\subseteq C$。任意有限词 $w$ 若达到 $s$，它与 $w_s$ 使用同一读出 $t(s)$，所以
+$$
+|h(\ell_w)-h(x_s)|
+\le |h(\ell_w)-t(s)|+|t(s)-h(x_s)|
+\le2\varepsilon,
+\qquad
+|\ell_w-x_s|\le\frac{2\varepsilon}{\mu}.
+$$
+这正是[《观察者闭合谱》第15节](OBSERVER_CLOSURE_SPECTRUM.md)及[《情境时空算术·机器学习》命题39.3](CONTEXTUAL_SPACETIME_ARITHMETIC_ML.md)所用的同纤维半直径障碍，在此应用于下一报告读出。有限闭区间并
+$$
+U=\bigcup_{s\in S_{\rm reach}}
+\left[x_s-\frac{2\varepsilon}{\mu},x_s+\frac{2\varepsilon}{\mu}\right]
+$$
+包含 $\mathcal O$，故也包含 $C=\overline{\mathcal O}$。去掉重复中心后得到内部闭球网，中心数不超过 $|S_{\rm reach}|\le|S|$。于是 $N_C(2\varepsilon/\mu)\le|S|$，对任意可行观察者成立。所选 $x_s$ 只是覆盖的证明见证，不声称任意观察者的状态中实际存有或能解码出这个后验。
+
+再证因果上界。令
+$$
+\delta=\frac{(1-\eta)\varepsilon}{A}>0,
+\qquad Q=\{q_1,\ldots,q_N\}\subseteq C,
+\qquad N=N_C(\delta),
+$$
+其中 $Q$ 是最小内部 $\delta$-网，枚举固定。对 $x\in C$，令 $R(x)$ 为使 $|x-q_j|$ 最小的首个 $q_j$。有限非空性保证选择存在且唯一，闭球覆盖保证
+$$
+R:C\to Q,\qquad |R(x)-x|\le\delta\quad(x\in C).
+$$
+取状态集 $S=Q$，初态、更新与读出为
+$$
+s_0=R(0),\qquad T_b(q)=R(F_b(q)),\qquad t(q)=h(q).
+$$
+因 $F_b(C)\subseteq C$，所有表项均有定义。$q_j$ 可等价地用有限标签 $j$ 表示；演化的只有此标签。这里没有给 $0$ 另加一个启动状态。
+
+任取有限词 $b_1\cdots b_H$，记其长度 $n$ 前缀为 $w_n$，并令
+$$
+\widehat\ell_0=R(0),\qquad
+\widehat\ell_{n+1}=R(F_{b_{n+1}}(\widehat\ell_n)),\qquad
+e_n=|\ell_{w_n}-\widehat\ell_n|.
+$$
+两条轨迹始终在 $C\subseteq I$，且 $e_0=|R(0)|\le\delta$，一般不能把它设为零。在[《情境时空算术·机器学习》定义21.1及定理21.2](CONTEXTUAL_SPACETIME_ARITHMETIC_ML.md)中，以 $C$ 为所声明域、摘要为 $\operatorname{Id}_C$、精确更新为 $F_b$、近似更新为 $R\circ F_b$，代入
+$$
+\delta_{\rm close}=0,\qquad
+\delta_{\rm eval}=\delta,\qquad
+L_{\rm ML}=\eta,\qquad L_o=A,\qquad\varepsilon_o=0.
+$$
+所需的共同 Lipschitz 性只属于精确映射 $F_b$；求值缺陷界在整个 $C$ 成立，输出为 $h$。直接应用该定理的含初始误差公式，得
+$$
+e_{n+1}\le\eta e_n+\delta\quad(0\le n<H),\qquad
+e_n\le\eta^n\delta+\delta\frac{1-\eta^n}{1-\eta}
+\le\frac{\delta}{1-\eta}\quad(0\le n\le H).
+$$
+$n=0$ 时几何和为空，初始误差项仍保留。因而包括空词在内，
+$$
+|t(T_{w_n}(s_0))-h(\ell_{w_n})|
+=|h(\widehat\ell_n)-h(\ell_{w_n})|
+\le A e_n\le\varepsilon.
+$$
+同一组 $Q,R,s_0,T_0,T_1,t$ 不依赖 $H$；任取有限词应用此界，即得对全部有限词的一致结论。舍入更新不必收缩，亦未断言 $\widehat\ell_n=R(\ell_{w_n})$。这给出一个至多 $N_C(\delta)$ 状态的可行观察者，也使可行基数集非空；再用正整数良序性得到 $N_{\min}(\varepsilon)$ 的存在及上界。[ML 命题39.4](CONTEXTUAL_SPACETIME_ARITHMETIC_ML.md)区分静态近似读出与动态实现；这里的因果性由明确的固定更新表和共同词误差递推承担。
+
+同尺度比较只需实直线上的一个覆盖事实。对任意非空紧集 $C\subseteq\mathbb R$、$\delta>0$ 和 $0<c<1$，取实现 $N_C(\delta)$ 的内部网。把每个覆盖区间 $[q-\delta,q+\delta]$ 分成
+$$
+m=\lceil2/c\rceil
+$$
+个闭子区间，各长 $2\delta/m\le c\delta$。在每个与 $C$ 相交的子区间中选择一个实际属于 $C$ 的点；同一交集中的任一点与所选点相距至多 $c\delta$。由这些点作中心的闭 $c\delta$-球便覆盖 $C$；公共端点也在覆盖内，重复中心可以删除。因此
+$$
+N_C(c\delta)\le\lceil2/c\rceil N_C(\delta)
+\qquad(0<c<1).
+$$
+$c\ge1$ 时扩大半径不增加最小基数，故统一有 $N_C(c\delta)\le B(c)N_C(\delta)$。将它先用于半径 $2\varepsilon/\mu$、比例 $\mu/2$，再用于半径 $\varepsilon$、比例 $(1-\eta)/A$，得到
+$$
+N_C(\varepsilon)
+\le B(\mu/2)N_C(2\varepsilon/\mu)
+\le B(\mu/2)N_{\min}(\varepsilon),
+$$
+$$
+N_{\min}(\varepsilon)
+\le N_C((1-\eta)\varepsilon/A)
+\le B((1-\eta)/A)N_C(\varepsilon).
+$$
+这里用的是实直线区间的有限细分性质，不把此常数尺度比较推广到任意非倍增度量空间。
+
+固定 $p,r$ 后两侧常数与精度无关，故
+$$
+\log N_{\min}(\varepsilon)
+=\log N_C(\varepsilon)+O_{p,r}(1).
+$$
+除以趋于无穷的 $\log(1/\varepsilon)$，分别取下极限、上极限即得两种指数相等。若二者均为 $D$，此式等价于 $\log N_{\min}(\varepsilon)=(D+o(1))\log(1/\varepsilon)$，指数化给所述 $\varepsilon^{-D+o(1)}$；其中剩余项未必有界，故不能仅凭维数存在就得到纯幂的双边常数界。此处没有计算缺口区域中未经确定的维数。若另由命题154.1知 $C=I$，则内部覆盖数为 $N_I(\delta)=\lceil a/\delta\rceil$：长度次可加性给下界，把 $I$ 等分为该数量的子区间并取各中点给上界。因此恢复该命题在 $r\le p(1-p)$ 下的 $\Theta_{p,r}(\varepsilon^{-1})$ 结论，重叠阈值直接沿用该命题。
+
+空词与覆盖约定在有缺口时仍不可省略。命题154.1已经证明，若 $g=G(\lambda-a)>0$，则每个非空历史的对数赔率都在 $[-a,-g]\cup[g,a]$，故
+$$
+0\in C\subseteq\{0\}\cup[-a,-g]\cup[g,a],\qquad
+C\cap(-g,g)=\{0\}.
+$$
+于是 $0$ 在 $C$ 中孤立；任何包含于 $I$ 且满足 $K=F_0(K)\cup F_1(K)$ 的吸引集都位于两个像区间中，不能包含该初始点。另以 $\{0,2\}$ 为例，半径 $1$ 的内部闭球须有两个中心，因为每个许可中心距另一点为 $2$；外部中心 $1$ 的一个球虽能覆盖却不许可。半径 $2$ 时以 $0$ 为中心的闭球已包含两点，故一个中心足够。这也说明内部中心和闭端点约定贯穿上述三处覆盖论证。
+
+有限固定实数表的存在不蕴含任意实参数下的可计算构造或位复杂度。若另把读出近似为 $\bar t$ 且 $|\bar t(q)-h(q)|\le\varepsilon_{\rm out}$，同一递推仅给总误差至多 $A\delta/(1-\eta)+\varepsilon_{\rm out}$，须另分配读出误差预算。这里的上下界只属于固定协议、固定先验下的有限确定性下一报告观察者，不给量子物理记忆下界、熵成本、平稳平均误差、整个未来报告律的近似、自适应实验保证或最小精确后验商的刻画。证毕。
+
+本命题的仪器与后验递推复用本卷命题153.1，不变区间及有缺口时的像区间复用命题154.1；误差传播使用 ML 定义21.1、定理21.2，半纤维下界及静态近似与因果实现的区分使用上述观察者闭合谱第15节、ML 命题39.3–39.4。稳定动力的有限符号近似方法参见 G. Pola、A. Girard、P. Tabuada，*Approximately bisimilar symbolic models for nonlinear control systems*，[arXiv:0706.0246](https://arxiv.org/abs/0706.0246)，[DOI:10.1016/j.automatica.2008.02.021](https://doi.org/10.1016/j.automatica.2008.02.021)；A. Girard、G. Pola、P. Tabuada，*Approximately bisimilar symbolic models for incrementally stable switched systems*，[arXiv:0807.5022](https://arxiv.org/abs/0807.5022)。这些文献提供既有的稳定性与量化方法背景，此处的全有限历史内部覆盖数比较由以上具体证明给出。S. E. Marzen、J. P. Crutchfield，*Nearly maximally predictive features and their dimensions*，[DOI:10.1103/PhysRevE.95.051301](https://doi.org/10.1103/PhysRevE.95.051301)，以及 A. M. Jurgens、J. P. Crutchfield，*Divergent predictive states: The statistical complexity dimension of stationary, ergodic hidden Markov processes*，[DOI:10.1063/5.0050460](https://doi.org/10.1063/5.0050460)，分别讨论预测特征的失真与维数、平稳遍历隐藏 Markov 过程预测特征的信息维数；其平均或平稳支撑约定不替代这里包括启动历史的逐词一致误差与内部覆盖约定。
+
+## 追加锚（本行以下为增补区）
