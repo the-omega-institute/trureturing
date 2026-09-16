@@ -1,0 +1,23 @@
+### 定理 61.3（可见容量与残差容量守恒）
+
+对任意 effect 集合 $E$，令
+
+$$
+C(E)
+=
+\dim_{\mathbb R}\mathcal V(E)-1,
+\qquad
+Q(E)
+=
+\dim_{\mathbb R}\mathcal R(E).
+$$
+
+`observer_capacity_conservation` 证明，在固定的实 Hermitian 载体上：
+
+$$
+\boxed{
+C(E)+Q(E)=d^2-1.
+}
+$$
+
+其中 $d^2$ 是完整 Hermitian 载体的实维数，减去一维单位方向后得到 traceless 方向总数。

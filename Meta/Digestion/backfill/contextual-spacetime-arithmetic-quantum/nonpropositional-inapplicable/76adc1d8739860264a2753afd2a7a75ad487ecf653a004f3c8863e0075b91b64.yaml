@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:76adc1d8739860264a2753afd2a7a75ad487ecf653a004f3c8863e0075b91b64
+  normalized_sha256: sha256:76adc1d8739860264a2753afd2a7a75ad487ecf653a004f3c8863e0075b91b64
+cas_ref: sha256:76adc1d8739860264a2753afd2a7a75ad487ecf653a004f3c8863e0075b91b64
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶给定两块线性递推、任务读出、记忆核及初态尾项的定义，消元结论已拆为另一叶。
+    previous_atom_id: 15d14cecb7ae3597ba6cfa97d8a0504bd0b2ff4c587d601a6f461371a44804a7
+    next_atom_id: 6a2014f34305540ea68452d35e3a0ff1afa4479bea462cc3ea80f627f49b9fa1

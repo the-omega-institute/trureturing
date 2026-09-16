@@ -1,0 +1,8 @@
+则 $\overline{\mathcal V}$ 是包含 $\mathcal V$ 且对 observable evolution 不变的最小扩张，$\mathcal R$ 对 adjoint evolution 不变，并且存在商上的线性演化 $\overline H$ 满足
+
+$$
+\overline H\circ\pi
+=
+\pi\circ H^*.
+$$
+

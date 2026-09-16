@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e1ddbc4c9538c07af8a29bd9f0e0816b3c089c2beee87c2cd868b9346bf1a943
+  normalized_sha256: sha256:e1ddbc4c9538c07af8a29bd9f0e0816b3c089c2beee87c2cd868b9346bf1a943
+cas_ref: sha256:e1ddbc4c9538c07af8a29bd9f0e0816b3c089c2beee87c2cd868b9346bf1a943
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶明确前述一致误差界使用算子范数收缩，要求仅有谱半径信息时另给范数转换或暂态界，属于适用范围说明。
+    previous_atom_id: 92526cf150ba092fd84df609e8f1801ff0965ed06fcc486c41e96046ae468b3d
+    next_atom_id: 87a0897a369299e7b5da0425c61a1305b8e29af6b190cf9cf2b9694043ee648f
