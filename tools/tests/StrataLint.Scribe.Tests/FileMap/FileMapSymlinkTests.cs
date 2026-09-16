@@ -48,7 +48,7 @@ public sealed class FileMapSymlinkTests
     [InlineData("schema_version = 4", "schema_version = 2")]
     [InlineData("resources = []\n", "")]
     [InlineData("require = []\n", "")]
-    public void CurrentLoaderStillRequiresSchema3AndResourceFields(string original, string replacement)
+    public void CurrentLoaderStillRequiresSchema4AndResourceFields(string original, string replacement)
     {
         var source = Manifest("AGENTS.md", "CLAUDE.md", "file")
             .Replace(original, replacement, StringComparison.Ordinal);
@@ -75,12 +75,24 @@ public sealed class FileMapSymlinkTests
     [InlineData(2, "[1]")]
     [InlineData(3, "[1]")]
     [InlineData(3, "[{ pattern = \"AGENTS.md\" }, 1]")]
-    [InlineData(2, "[{ pattern = \"AGENTS.md\" }]")]
+    [InlineData(2, "[{ pattern = \"AGENTS.md\" }, 1]")]
     public void UnsupportedLinkManifestFilesAreRejected(int version, string files)
     {
         var bytes = Encoding.UTF8.GetBytes($"schema_version = {version}\nfiles = {files}\n");
 
         Assert.ThrowsAny<FormatException>(() => FileMapSymlinkPolicy.Parse(bytes, "fixture.toml"));
+    }
+
+    [Theory]
+    [InlineData(2)]
+    [InlineData(3)]
+    [InlineData(4)]
+    public void LinkManifestFilesWithoutSymlinksAreAccepted(int version)
+    {
+        var bytes = Encoding.UTF8.GetBytes(
+            $"schema_version = {version}\nfiles = [{{ pattern = \"AGENTS.md\" }}]\n");
+
+        Assert.Empty(FileMapSymlinkPolicy.Parse(bytes, "fixture.toml"));
     }
 
     [Fact]
@@ -102,8 +114,9 @@ public sealed class FileMapSymlinkTests
     {
         var tableBytes = Encoding.UTF8.GetBytes(Manifest(".codex/skills", "../skills", "directory"));
         var inlineBytes = Encoding.UTF8.GetBytes("""
-            schema_version = 2
-            files = [{ pattern = ".codex/skills", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["agent"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source", symlink = { target = "../skills", kind = "directory" } }]
+            schema_version = 4
+            resources = []
+            files = [{ pattern = ".codex/skills", require = [], kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["agent"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source", symlink = { target = "../skills", kind = "directory" } }]
             [residence_policy]
             case_id = "RESIDENCE-EPOCH"
             desired = "data-must-live-outside-tools"

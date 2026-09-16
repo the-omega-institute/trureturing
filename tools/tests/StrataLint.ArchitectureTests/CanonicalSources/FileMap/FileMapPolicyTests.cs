@@ -16,9 +16,7 @@ public sealed partial class FileMapPolicyTests
             File.ReadAllBytes(Path.Combine(root, "Meta/registry.yaml")),
             File.ReadAllBytes(Path.Combine(root, "Meta/domains.yaml"))));
         Assert.Null(RepositoryPathPolicy.Validate(RepoPath.CreateKnown(path), registry.Policy));
-        var manifest = FileMapLoader.Parse(
-            File.ReadAllBytes(Path.Combine(root, FileMapLoader.RelativePath)),
-            FileMapLoader.RelativePath);
+        var manifest = FileMapLoader.LoadRepository(root);
         var entry = Assert.Single(manifest.Match(path));
         Assert.Equal(FileMapKind.Data, entry.Kind);
         Assert.Equal(FileMapAdmissionPlane.Judge, entry.AdmissionPlane);

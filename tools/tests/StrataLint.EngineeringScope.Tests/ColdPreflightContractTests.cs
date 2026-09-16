@@ -36,7 +36,7 @@ public sealed class ColdPreflightContractTests
             assert planner.tree_entries(root, tree)[planner.FILEMAP]['mode'] == '100644'
             assert 'fixtures/selected.txt' in planner.tree_entries(root, tree)
             filemap = root / planner.FILEMAP
-            filemap.write_bytes(filemap.read_bytes() + b'\\n')
+            filemap.write_bytes(filemap.read_bytes() + b'\n')
             try:
                 validate()
                 raise AssertionError('changed declaration accepted')
