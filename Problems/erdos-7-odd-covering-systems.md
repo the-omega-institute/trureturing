@@ -305,10 +305,15 @@ each interaction component has at most three vertices. These restrictions
 allow arbitrary exponents and arbitrarily many primes in total.
 
 The stronger graph criteria also exclude arbitrary `{3,5,7}` heads with
-star-forest tails from prime 19, or a degree-two tail core with arbitrarily
-many pendant leaves from prime 37. Complete star heads cannot be completed
-by star-forest tails or by tails with a vertex cover of at most eight primes.
-These statements allow unbounded vertex degrees and total prime support.
+arbitrary forest tails from prime 19, or a
+degree-two tail core with arbitrarily many pendant leaves from prime 37.
+Complete star heads cannot be completed by arbitrary forest tails above 73
+or, more generally, when each tail component becomes a forest after deleting
+at most two vertices. Arbitrary `{3,5,7}` heads also allow one such deleted
+vertex per component from prime 23. The earlier vertex-cover result still
+allows at most eight hubs. These statements
+allow unbounded vertex degrees and total prime support; the forest results
+also allow unbounded depth.
 
 **H73 — false**, with its universal candidate statement retained from
 [the target preregistration](https://github.com/the-omega-institute/trureturing/issues/8167):
@@ -993,6 +998,289 @@ The first permits arbitrarily many primes in total and original moduli
 with all three head primes and two tail primes. The second applies to the
 same star geometry that refutes the universal Gamma73 target.
 
+#### Arbitrary forests: a bound independent of depth and degree
+
+The actual tail interaction graph may be any finite forest. Since every
+tail support forms a clique, each actual tail modulus then involves at most
+two tail primes. There is no bound on the number of vertices, their degrees,
+tree depth, or prime-power exponents. Two resulting exclusions are:
+
+| Head | Tail primes | Saturated-head mass upper bound |
+|---|---|---:|
+| Arbitrary `{3,5,7}` head, law (BS10) | `q>=19` | `<0.965600` |
+| Complete star head at any positive heights, law (BS6) | `q>73` | `<0.661972` |
+
+Here is the finite recursive argument, with all probabilities over the
+original head law `mu`. Root every tail tree independently of the head point
+`x`. Write `Y_v=Z/v^(v_v(N))Z` for a prime coordinate and `U_v` for its
+uniform law. Assign every class with tail support `{v}` to `v`, and every
+class with tail support `{p,v}`, where `p` is the parent, to its child `v`.
+A root receives original moduli `m v^e`, where `m|Q,e>=1`; a nonroot receives
+original moduli `m p^f v^e`, where `m|Q,f>=0,e>=1`. Every actual tail class
+is assigned exactly once. Original moduli, including their full head labels,
+remain distinct labels; repeated projected tail moduli are never deleted.
+
+For fixed `x` and parent value `z`, let `F_v(x,z)` be the union of the actual
+forbidden `v` cylinders from the classes assigned to `v` whose head and
+parent conditions hold. Put `alpha_v(x,z)=U_v(F_v(x,z))`. Give a root a
+one-point parent space, so the same notation covers all vertices. Define
+
+\[
+ \epsilon_v(x)=\mathbb E_{z\sim U_{p(v)}}\alpha_v(x,z)^2,
+ \qquad
+ s_v=\sum_{e=1}^{H_v}v^{-e},\quad
+ \kappa_v=1+\sum_{e=1}^{H_v}(2e+1)v^{-e}.
+ \tag{AF1}
+\]
+
+For a root `epsilon_v=alpha_v^2`. These are actual union fractions, not raw
+sums of cylinder measures. Let `V` be the set of head points having an
+uncovered tail lift. The general forest bound is
+
+\[
+ \mu(V)\ge1-\frac32\sum_v\mathbb E_\mu\epsilon_v
+ \ge1-\frac{3G}{2}\left(\sum_{v\text{ root}}s_v^2+
+       \sum_{v\text{ nonroot}}\kappa_{p(v)}s_v^2\right).
+ \tag{AF2}
+\]
+
+**Exact subtree messages.** Fix `x`. Define `B_v` as the set of parent
+values for which no assignment to the entire subtree rooted at `v` avoids
+all classes assigned to that subtree, including its incoming parent edge.
+Write `beta_v=U_(p(v))(B_v)` and `c_v=sum_(w child of v) beta_w`. For a root,
+`beta_v` is zero or one; it is one exactly when that component is saturated.
+These sets have the exact finite recursion
+
+\[
+ z\in B_v\quad\Longleftrightarrow\quad
+ F_v(x,z)\ \cup\!\bigcup_{w\text{ child of }v}B_w=Y_v.
+ \tag{AF3}
+\]
+
+Indeed a `v` value outside the union violates none of its assigned classes
+and has an avoiding extension in each child subtree. Those extensions can
+be combined because different child subtrees have disjoint tail coordinates
+and no classes connecting them. The child sets depend on `x` and the `v`
+coordinate, not on the parent value `z`; no probabilistic independence of
+the sets is assumed. This proves (AF3) by induction on finite subtree height.
+For every `z in B_v`, the union bound gives `1<=alpha_v(x,z)+c_v`, hence
+
+\[
+ \epsilon_v\ge\beta_v(1-c_v)_+^2.                     \tag{AF4}
+\]
+
+**A potential that cancels along every tree.** Set `Phi(t)=t-t^3/3` for
+`0<=t<=1`. For `b,b_i in [0,1]` and `c=sum_i b_i`,
+
+\[
+ \Phi(b)\le b(1-c)_+^2+\sum_i\Phi(b_i).               \tag{AF5}
+\]
+
+If `c>=1`, then `sum Phi(b_i)>=2c/3>=2/3>=Phi(b)`. These bounds follow
+from `Phi(t)>=2t/3` and `2/3-Phi(t)=(1-t)^2(t+2)/3` for `t in [0,1]`.
+If `0<=c<=1`, then `sum b_i^3<=c^3`, so `sum Phi(b_i)>=Phi(c)`.
+When `b<=c`, monotonicity of `Phi` on `[0,1]` proves (AF5). When `c<=b`,
+use the exact identity
+
+\[
+ b(1-c)^2+\Phi(c)-\Phi(b)
+ =c(1-b)^2+\frac{(b-c)^3}{3}\ge0.                    \tag{AF6}
+\]
+
+This proves (AF5). Applying it to `beta_v` and its child messages, then using
+(AF4), gives `Phi(beta_v)<=epsilon_v+sum_(w child) Phi(beta_w)`.
+Summation over a tree cancels every nonroot potential exactly once:
+
+\[
+ \sum_{v\text{ in tree}}\epsilon_v
+ \ge\Phi(\beta_{\rm root})
+ =\tfrac23\,1[\text{tree saturated}].                 \tag{AF7}
+\]
+
+A tail lift exists exactly when every component has an avoiding assignment.
+Consequently `1[x not in V]<=(3/2) sum_v epsilon_v`, which proves the first
+inequality in (AF2). No fibres are discarded or conditioned on, and there
+is no factor accumulating with depth, degree, or component size.
+
+**Moment bound retaining the original labels.** For a root, (T2) gives
+`E_mu epsilon_v<=G s_v^2`. For a nonroot `v` with parent `p`, test its actual
+assigned family over the enlarged head `Q p^(H_p)` with law `mu times U_p`.
+At fixed positive `v` exponent `e`, the old divisor `m p^f` determines the
+original modulus `m p^f v^e`; there is at most one original class for that
+old divisor. Thus (T2) applies without assuming distinct projected `v^e`
+moduli. The unconditioned transfer (T1), with `delta=0`, gives
+
+\[
+ \mathbb E_\mu\epsilon_v
+ \le\Gamma_{Qp^{H_p}}(\mu\otimes U_p)s_v^2
+ \le G\kappa_p s_v^2.                                \tag{AF8}
+\]
+
+The coefficient retains both pure and incoming-edge classes: among
+nonnegative parent exponent pairs there are `2e+1` pairs with maximum `e`.
+The uniform parent law is only the testing law for this moment estimate.
+It is not asserted to survive the parent's classes; their effect is already
+present in the exact subtree recursion. This proves the second inequality
+in (AF2).
+
+For a tail cutoff `q0`, put `a0=1/(q0-1)`,
+`kappa0=1+3a0+2a0^2`, and let `S` bound `sum_(q>=q0 prime)1/(q-1)^2`.
+Since `s_v<=1/(v-1)` and `kappa_v<=kappa0`, (AF2) yields the sufficient
+condition `(3/2) G kappa0 S<1`. It also retains the stronger individual-parent
+and root coefficients when a concrete forest is known.
+
+For arbitrary `{3,5,7}` heads, take `q0=19`, `G=1889/48`, and
+`kappa0=95/81`. The sharper prime-square estimate (GS1) gives
+
+\[
+ S_{19}=\frac{2400198237}{10^{12}}+
+       \sum_{\substack{19\le p\le73\\p\text{ prime}}}\frac1{(p-1)^2},
+ \qquad
+ \frac32G\kappa_0S_{19}
+ =\frac{6024840902671133365942778501}
+        {6239482626932755200000000000}
+ <0.965600<1.                                          \tag{AF9}
+\]
+
+For a complete star head, take `q0=79`, `G=177`, `kappa0=1580/1521`, and
+`S=2400198237/10^12`. The exact loss is
+
+\[
+ \frac32G\kappa_0S=\frac{11187323982657}{16900000000000}
+ <0.661972<1.                                         \tag{AF10}
+\]
+
+Thus more than `5712676017343/16900000000000>0.338028` of its broad-branch
+head points admit an uncovered tail lift. In particular, any full star
+completion must contain a cycle in its actual tail interaction graph.
+This proportion concerns head points, not uniform density in the full
+period. These are arbitrary-finite-forest proofs; the adjacent exact
+certificate verifies their scalar constants, not a bounded enumeration of
+tree shapes. Proof provenance: the Nyx oracle supplied the exact-message
+energy reduction; the cubic potential above is the present refinement.
+These are ordinary mathematical proofs, not complete Lean formalizations
+of the forest criterion.
+
+#### A bounded number of cycle-breaking vertices in each component
+
+The same argument extends beyond forests. A feedback vertex set is a set
+of vertices whose deletion leaves a forest. Its size is measured separately
+in each connected component; the number of components remains unrestricted.
+For a tail cutoff `q0` put `D=1+3/(q0-1)+2/(q0-1)^2` and define
+
+\[
+ C_0=\frac32D,\qquad
+ z_k=C_kD,\qquad C_{k+1}=\frac{4z_k^2}{4z_k-1}.
+ \tag{FV1}
+\]
+
+If every tail component has a feedback vertex set of size at most `k`,
+then, for the same actual head law and original distinct moduli,
+
+\[
+ \mu\{x:\text{tail fibre is saturated}\}
+ \le G C_k\sum_{q\text{ tail}}\frac1{(q-1)^2}.
+ \tag{FV2}
+\]
+
+The case `k=0` is (AF2). For the induction step, choose a vertex `r` from
+a nonempty feedback set in one component `J`, independently of the head
+point. Let `alpha_r(x)` be the uniform fraction of its coordinate covered
+by actual classes whose tail support is exactly `{r}`. Absorb the full
+`r` prime power into the head with the unconditioned law `nu=mu times U_r`.
+Each component `J_i` of `J-r` has a feedback set of size at most `k`.
+Every remaining class belongs to exactly one `J_i` after this absorption:
+its residual support is a clique and is therefore connected. In particular,
+a triangle class containing `r` becomes a two-prime class in one residual
+component. No such class is omitted or assigned twice.
+
+Let `beta_i(x)` be the uniform probability over `r` that the family assigned
+to `J_i` saturates its residual fibre. Saturation of `J` implies
+`alpha_r+sum_i beta_i>=1`: otherwise some `r` value avoids its pure classes
+and every residual component has an avoiding extension, which combine by
+CRT. For any `B>1` and `A=B^2/(4(B-1))`, the identity
+
+\[
+ A t^2+B(1-t)-1=A\left(t-\frac{B}{2A}\right)^2
+ \tag{FV3}
+\]
+
+gives `1[J saturated]<=A alpha_r^2+B sum_i beta_i`. The moment bound gives
+`E_mu alpha_r^2<=G a_r^2`. The uniform transfer bounds `Gamma(nu)<=G D_r`,
+where `D_r=1+3a_r+2a_r^2<=D`. The inductive forest-deletion estimate for all
+the residual components therefore gives
+
+\[
+ \mu\{J\text{ saturated}\}
+ \le G\left[A a_r^2+B C_kD_r
+                        \sum_{q\in J\setminus\{r\}}a_q^2\right].
+ \tag{FV4}
+\]
+
+There is no requirement that `nu` survive the pure-`r` classes: those were
+separately charged through `alpha_r`. The subfamily assigned to each `J_i`
+has no class wholly in its enlarged head. At each residual tail divisor
+`t`, an enlarged head label `m r^f` determines the original modulus
+`m r^f t`; thus distinctness is preserved even when projected moduli repeat.
+
+Now set `z=C_kD`, `B=4z/(4z-1)` and `A=4z^2/(4z-1)=C_(k+1)`.
+Here `z>=3/2`, so all denominators are positive, `A=Bz`, and (FV3) applies.
+Both terms of (FV4) have coefficient at most `G C_(k+1)`.
+Components already having a smaller feedback set obey the same bound,
+because `C_(k+1)>=C_kD>=C_k`. Summation over all components proves (FV2).
+The argument permits arbitrary degrees, exponents, component counts and
+depths of attached trees. A feedback set of size one can break arbitrarily
+many cycles sharing a vertex; this is more general than a single-cycle
+component.
+
+Two exact consequences of (FV2) and the prime-square bound (GS1) are:
+
+| Head | Tail primes | Feedback vertices per component | Saturated-head mass upper bound |
+|---|---|---:|---:|
+| Arbitrary `{3,5,7}` head | `q>=23` | at most 1 | `<0.956460` |
+| Complete star head | `q>73` | at most 2 | `<0.966288` |
+
+For the first row, `D=138/121`, `C_1=3264065424/1458580343`, and
+
+\[
+ \frac{1889}{48}C_1S_{23}
+ =\frac{1175604260732733206684398339119}
+        {1229120627265994463000000000000}<1.            \tag{FV5}
+\]
+
+For the second row, `D=1580/1521`,
+`C_2=387820588344395661352960000000000/170508100702446502707449794959279`,
+and
+
+\[
+ 177C_2S_{79}
+ =\frac{16950596065609491264623331474432}
+        {17541985668975977644799361621325}<1.           \tag{FV6}
+\]
+
+Every pseudoforest, meaning at most one cycle in each component, is covered
+by the first row. Arbitrarily branching and deep trees may be attached to
+each cycle, and a modulus may contain all three tail primes of a triangular
+cycle. The second row implies that a full star completion must have a tail
+component for which deleting any two vertices still leaves a cycle. Many
+cycles in separate components do not suffice. These are ordinary proofs;
+the exact recurrence values and inequalities are checked by the same
+adjacent certificate as the forest constants.
+
+Tree elimination has public antecedents in
+[Csikvari--Nagy, *The Density Turan Problem*, Theorem 3.1 and Algorithm 3.3](https://arxiv.org/abs/1407.7873),
+which use prescribed edge densities and a matching-polynomial criterion.
+[He--Li--Liu--Wang--Xia, Theorem 6 and Corollary 38](https://arxiv.org/abs/1709.05143)
+concern a tree event-dependency graph, a different hypothesis from a tree
+of prime variables. Neither supplies the conditional square-energy and
+cubic-potential estimate used here. No exact dominating theorem was found
+in those searched scopes, and no global priority claim is made.
+The verifier also checks all 16384 unary/binary constraint assignments on
+a three-vertex binary path against its eight complete assignments, testing
+exact-message completeness and the local cubic-potential inequality.
+This finite regression checks the implementation against actual feasible
+assignments; it does not replace the arbitrary-tree proof above.
+
 #### A degree-two core with arbitrarily many pendant leaves
 
 For an arbitrary `{3,5,7}` head, tail primes at least 37 also permit the
@@ -1034,9 +1322,10 @@ The two coefficients are
 Thus the total bad mass is at most
 `K_core sum_(r in K) a_r^2 + K_leaf sum_(q outside K) a_q^2`, and hence
 strictly below **0.898149** by the exact prime-square bound below. This proves
-noncoverage for the stated graph class. Arbitrary trees are not covered by
-this argument: after deleting their leaves, their cores need not have maximum
-degree two.
+noncoverage for the stated graph class. The preceding forest theorem handles
+arbitrary trees from prime 19; this degree-two-core result additionally
+allows cycle components with attached leaves from prime 37. Such components
+are also included in the stronger one-feedback-vertex result from prime 23.
 
 #### Absorbing a finite set of hub primes
 
@@ -5435,9 +5724,14 @@ The block-saturation criterion gives further noncoverage theorems for
 arbitrary `{3,5,7}` heads with sparse tail interactions, and for every
 positive-height star head with matching tails. It also gives the actual
 mixed-tail budgets (BS8)--(BS9) required of any full star completion.
-The new graph arguments additionally permit star-forest tails from prime 19
-for arbitrary three-prime heads, a degree-two core with unrestricted pendant
-leaves from prime 37, and the stated hub-deletion structures.
+The new graph arguments additionally permit arbitrary forest tails from
+prime 19 for arbitrary three-prime heads,
+arbitrary forest tails above 73 for full star heads, a degree-two core with
+unrestricted pendant leaves from prime 37, and the stated hub-deletion
+structures. The forest bound is independent of both depth and degree.
+The feedback-vertex recurrence additionally permits one cycle-breaking
+vertex per tail component from prime 23 for arbitrary three-prime heads,
+and two per component above 73 for full star heads.
 The finite-height pure-coordinate CRT criterion and two-block refinement
 give the independent finite exclusion `lcm > 11486474`: the verifier
 discharges all 23758 odd abundant candidates in the interval from 1.

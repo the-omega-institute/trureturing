@@ -7,6 +7,7 @@ remain ordinary mathematical proofs; this is not Lean certification.
 The default run reads and checks the fixed adjacent JSON certificate.
 """
 from fractions import Fraction as F
+from itertools import product as cartesian_product
 from math import isqrt, prod
 from pathlib import Path
 import argparse
@@ -49,6 +50,45 @@ def ternary_profile(height):
     require(1 + first_sum / density == 2, "finite ternary cylinder factor")
     return {"height": height, "density": str(density), "chi_sum": str(chi_sum),
             "chi_factor": str(chi_factor), "cylinder_factor": "2"}
+
+
+def binary_path_regression():
+    """Compare exact messages with all eight assignments for every 3-node CSP."""
+    def phi(t):
+        return t - t ** 3 / 3
+
+    count = 0
+    minimum_energy = None
+    for u0, u1, u2, e1, e2 in cartesian_product(
+            range(4), range(4), range(4), range(16), range(16)):
+        rows2 = [u2 | ((e2 >> (2 * z)) & 3) for z in range(2)]
+        b2 = sum(1 << z for z in range(2) if rows2[z] == 3)
+        rows1 = [u1 | ((e1 >> (2 * z)) & 3) for z in range(2)]
+        b1 = sum(1 << z for z in range(2) if rows1[z] | b2 == 3)
+        saturated = (u0 | b1) == 3
+        solutions = [
+            (x, y, z) for x, y, z in cartesian_product(range(2), repeat=3)
+            if not ((u0 >> x) & 1 or (u1 >> y) & 1 or (u2 >> z) & 1
+                    or (e1 >> (2 * x + y)) & 1 or (e2 >> (2 * y + z)) & 1)]
+        require(saturated == (not solutions), "messages agree with exhaustive assignments")
+        energies = [F(u0.bit_count() ** 2, 4),
+                    F(sum(row.bit_count() ** 2 for row in rows1), 8),
+                    F(sum(row.bit_count() ** 2 for row in rows2), 8)]
+        betas = [F(int(saturated)), F(b1.bit_count(), 2), F(b2.bit_count(), 2), F(0)]
+        require(all(phi(betas[i]) <= energies[i] + phi(betas[i + 1])
+                    for i in range(3)), "actual-message cubic potential inequality")
+        energy = sum(energies, F(0))
+        require(not saturated or F(3, 2) * energy >= 1, "actual saturation energy")
+        if saturated:
+            minimum_energy = (energy if minimum_energy is None
+                              else min(minimum_energy, energy))
+        count += 1
+    require(count == 16384 and minimum_energy == F(3, 4),
+            "complete binary-path constraint corpus")
+    return {"vertices": 3, "coordinate_cardinality": 2, "cases": count,
+            "minimum_unsatisfiable_energy": str(minimum_energy),
+            "message_assignment_equivalence": True, "local_potential_checks": True,
+            "scope": "Finite regression; the arbitrary-forest theorem is an ordinary proof."}
 
 
 def certificate():
@@ -210,6 +250,104 @@ def certificate():
     # alpha^2+1-alpha = (alpha-1/2)^2+3/4 supplies the 4/3 factor.
     require([F(1, 4) + F(3, 4), F(-1), F(1)] == [F(1), F(-1), F(1)],
             "saturation quadratic identity coefficients")
+    # Exact polynomial arithmetic for the potential identity, with variables
+    # b,c and Phi(t)=t-t^3/3. This checks the identity for all real b,c;
+    # its sign conditions and the finite-tree cancellation are ordinary proofs.
+    def polynomial_sum(*terms):
+        result = {}
+        for term in terms:
+            for exponent, coefficient in term.items():
+                result[exponent] = result.get(exponent, F(0)) + coefficient
+        return {exponent: coefficient for exponent, coefficient in result.items()
+                if coefficient}
+
+    def polynomial_scale(coefficient, term):
+        return {exponent: coefficient * value for exponent, value in term.items()
+                if coefficient * value}
+
+    def polynomial_product(*terms):
+        result = {(0, 0): F(1)}
+        for term in terms:
+            products = [
+                {(left[0] + right[0], left[1] + right[1]): x * y}
+                for left, x in result.items() for right, y in term.items()]
+            result = polynomial_sum(*products)
+        return result
+
+    one, b, c = ({(0, 0): F(1)}, {(1, 0): F(1)}, {(0, 1): F(1)})
+    b_square = polynomial_product(b, b)
+    c_square = polynomial_product(c, c)
+    b_cube = polynomial_product(b_square, b)
+    c_cube = polynomial_product(c_square, c)
+    one_minus_c = polynomial_sum(one, polynomial_scale(-1, c))
+    one_minus_b = polynomial_sum(one, polynomial_scale(-1, b))
+    b_minus_c = polynomial_sum(b, polynomial_scale(-1, c))
+    phi_b = polynomial_sum(b, polynomial_scale(F(-1, 3), b_cube))
+    phi_c = polynomial_sum(c, polynomial_scale(F(-1, 3), c_cube))
+    potential_left = polynomial_sum(polynomial_product(b, one_minus_c, one_minus_c),
+                                    phi_c, polynomial_scale(-1, phi_b))
+    potential_right = polynomial_sum(
+        polynomial_product(c, one_minus_b, one_minus_b),
+        polynomial_scale(F(1, 3), polynomial_product(b_minus_c, b_minus_c, b_minus_c)))
+    require(potential_left == potential_right,
+            "forest potential identity holds coefficient by coefficient")
+    arbitrary_forest_rows = []
+    for name, cutoff, gamma, target, expected_loss in [
+            ("arbitrary_357_head", 19, general_gamma, F(965600, 1000000),
+             F(6024840902671133365942778501, 6239482626932755200000000000)),
+            ("star_head", 79, F(177), F(661972, 1000000),
+             F(11187323982657, 16900000000000))]:
+        a0 = F(1, cutoff - 1)
+        factor = 1 + 3 * a0 + 2 * a0 * a0
+        loss = F(3, 2) * gamma * factor * square_upper(cutoff)
+        require(loss == expected_loss < target < 1, "arbitrary-forest exclusion")
+        finite_profiles = []
+        for height in (1, 2, 8):
+            exponent_pairs = sum((F(1, cutoff ** max(e, f))
+                                  for e in range(height + 1)
+                                  for f in range(height + 1)), F(0))
+            counted_pairs = 1 + sum((F(2 * e + 1, cutoff ** e)
+                                      for e in range(1, height + 1)), F(0))
+            require(exponent_pairs == counted_pairs < factor,
+                    "finite parent coefficient retains pure and edge labels")
+            finite_profiles.append({"height": height, "coefficient": str(counted_pairs)})
+        arbitrary_forest_rows.append({
+            "head": name, "tail_prime_minimum": cutoff, "Gamma_bound": str(gamma),
+            "maximum_parent_factor": str(factor), "saturation_energy_factor": "3/2",
+            "prime_square_upper": str(square_upper(cutoff)),
+            "loss_upper": str(loss), "retained_lower": str(1 - loss),
+            "finite_parent_coefficients": finite_profiles})
+    feedback_rows = []
+    for name, cutoff, gamma, depth, target, expected_loss in [
+            ("arbitrary_357_head", 23, general_gamma, 1, F(956460, 1000000),
+             F(1175604260732733206684398339119, 1229120627265994463000000000000)),
+            ("star_head", 79, F(177), 2, F(966288, 1000000),
+             F(16950596065609491264623331474432, 17541985668975977644799361621325))]:
+        a0 = F(1, cutoff - 1)
+        parent_factor = 1 + 3 * a0 + 2 * a0 * a0
+        coefficient = F(3, 2) * parent_factor
+        levels = [{"feedback_vertices": 0, "coefficient": str(coefficient)}]
+        for level in range(1, depth + 1):
+            previous = coefficient
+            z = previous * parent_factor
+            require(z >= F(3, 2) and 4 * z - 1 > 0, "feedback recurrence denominator")
+            linear = 4 * z / (4 * z - 1)
+            coefficient = 4 * z * z / (4 * z - 1)
+            require(linear > 1 and coefficient == linear * z
+                    and linear - linear * linear / (4 * coefficient) == 1,
+                    "feedback root quadratic has exact minimum one")
+            require(coefficient >= z >= previous,
+                    "feedback recurrence dominates all smaller feedback sets")
+            levels.append({"feedback_vertices": level, "coefficient": str(coefficient),
+                           "linear_coefficient": str(linear), "z": str(z)})
+        loss = gamma * coefficient * square_upper(cutoff)
+        require(loss == expected_loss < target < 1, "bounded feedback-vertex exclusion")
+        feedback_rows.append({
+            "head": name, "tail_prime_minimum": cutoff, "Gamma_bound": str(gamma),
+            "maximum_parent_factor": str(parent_factor),
+            "feedback_vertices_per_component": depth, "levels": levels,
+            "prime_square_upper": str(square_upper(cutoff)),
+            "loss_upper": str(loss), "retained_lower": str(1 - loss)})
     leaf_moment_coefficient = general_gamma * (1 + 3 * (F(3, 36) + F(2, 36 ** 2)))
     require(leaf_moment_coefficient == F(511919, 10368) < degree_coefficient,
             "pendant-leaf coefficient is dominated by the degree-two core coefficient")
@@ -246,6 +384,13 @@ def certificate():
                                   "odd_integer_tail": str(extended_odd_tail),
                                   "upper_bound": str(extended_square)},
         "star_forest": forest_rows, "pendant_degree_two_core": pendant_core,
+        "arbitrary_forest": arbitrary_forest_rows,
+        "feedback_vertex": feedback_rows,
+        "binary_path_regression": binary_path_regression(),
+        "forest_potential_identity": [
+            {"b_exponent": exponent[0], "c_exponent": exponent[1],
+             "coefficient": str(coefficient)}
+            for exponent, coefficient in sorted(potential_left.items())],
         "star_head_hubs": star_hubs,
         "general_357_head_hubs": general_hubs,
         "head_primes": list(HEAD_PRIMES), "minimum_each_head_height": 1,
@@ -296,6 +441,9 @@ def main():
                       "prime31_scalar_Gamma_cube_obstruction": data["general_357_head"]["prime_31_common_delta_scalar_boundary"]["Gamma_times_lower_exceeds_33_over_50_cubed"],
                       "prime31_scalar_cylinder_cube_obstruction": data["general_357_head"]["prime_31_common_delta_scalar_boundary"]["cylinder_times_lower_exceeds_17_over_50_cubed"],
                       "star_forest_loss_bounds": {row["head"]: row["loss_upper"] for row in data["star_forest"]},
+                      "arbitrary_forest_loss_bounds": {row["head"]: row["loss_upper"] for row in data["arbitrary_forest"]},
+                      "feedback_vertex_loss_bounds": {row["head"]: row["loss_upper"] for row in data["feedback_vertex"]},
+                      "binary_path_regression_cases": data["binary_path_regression"]["cases"],
                       "pendant_degree_two_core_loss": data["pendant_degree_two_core"]["loss_upper"],
                       "star_vertex_cover_8_loss": data["star_head_hubs"]["vertex_cover_loss_upper"],
                       "general_vertex_cover_6_loss": data["general_357_head_hubs"]["vertex_cover_loss_upper"],
