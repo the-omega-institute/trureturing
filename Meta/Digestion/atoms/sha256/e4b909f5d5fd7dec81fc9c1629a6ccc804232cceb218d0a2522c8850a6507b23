@@ -1,0 +1,32 @@
+**theorem 36.8 (Variance-uniform binomial rotation discrepancy).** For every $0<p<1$ and $n\ge1$,
+$$
+\mathscr D(\nu_{n,p})
+\le\min\left\{1,\frac{64}{\sqrt{np(1-p)}}\right\}.
+$$
+Equivalently, the same bound holds simultaneously for every translation of the binomial rotation law and every arc with any endpoint convention.
+
+**Proof.** Direct multiplication gives
+$$
+\widehat\nu_{n,p}(k)=(1-p+pe^{2\pi ik\phi})^n,
+$$
+$$
+|1-p+pe^{2\pi ik\phi}|^2
+=1-4p(1-p)\sin^2(\pi k\phi).
+$$
+Since $\sin(\pi d)\ge2d$ for $0\le d\le1/2$, and $1-u\le e^{-u}$ for $0\le u\le1$,
+$$
+|\widehat\nu_{n,p}(k)|
+\le e^{-2np(1-p)\sin^2(\pi k\phi)}
+\le e^{-8s^2\|k\phi\|^2}.
+$$
+If $s\ge1$, choose the cutoff $M$ of Theorem 36.7. Theorems 36.6 and 36.7 yield
+$$
+\mathscr D(\nu_{n,p})
+\le\frac6{M+1}+\frac{64}{\pi s}
+\le\frac{12+64/\pi}{s}
+<\frac{64}{s}.
+$$
+For $s<1$, the trivial bound $\mathscr D\le1$ suffices. Translation and endpoint uniformity are already included in Theorem 36.6.
+
+The corresponding square-root rate for a fixed nondegenerate integer-step distribution is established in [Berkes–Borda, Theorem 1.1; see also Proposition 2.1](https://real.mtak.hu/83655/1/paper_MTMT3.pdf). The displayed proof specifies a single constant for all Bernoulli parameters after normalization by their variance. $\square$
+
