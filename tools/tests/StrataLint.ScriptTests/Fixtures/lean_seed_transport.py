@@ -23,9 +23,10 @@ class ReleaseTransportCases(PartitionFixture):
               '{"modules":[],"schema":"stratalint-raw-lean-report-v2"}\n')
         write(self.bin / "make", '''#!/bin/sh
 printf "%s\\n" "$*" >> "$FAKE_BUILD_LOG"
-if [ "$*" = "lean-report" ] && [ "${FAKE_BUILD_EXIT:-0}" = "0" ]; then
+if [ "$1" = "lean-report" ] && [ "${FAKE_BUILD_EXIT:-0}" = "0" ]; then
     mkdir -p .lake/build/stratalint
-    printf '%s\\n' '{"modules":[],"schema":"stratalint-raw-lean-report-v2"}' > .lake/build/stratalint/raw-lean-report.json
+    printf '%s\\n' '{"modules":[],"schema":"stratalint-raw-lean-report-v2"}' > .lake/report-fixture-$$
+    mv .lake/report-fixture-$$ .lake/build/stratalint/raw-lean-report.json
 fi
 exit "${FAKE_BUILD_EXIT:-0}"
 ''')
@@ -563,11 +564,13 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
     def test_concurrent_publishers_keep_distinct_complete_snapshots(self):
         with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
             results = list(pool.map(lambda run: self.transport("publish", run), ["401", "402"]))
-        self.assertEqual([0, 0], [result.returncode for result in results])
+        diagnostics = "\n".join(f"run={run} exit={result.returncode}\nstdout:\n{result.stdout}\nstderr:\n{result.stderr}"
+                                for run, result in zip(("401", "402"), results))
+        self.assertEqual([0, 0], [result.returncode for result in results], diagnostics)
         releases = [json.loads(path.read_text()) for path in self.remote.glob("*/release.json")]
-        self.assertEqual(2, len(releases))
-        self.assertTrue(all(not release["draft"] for release in releases))
-        self.assertEqual(2, len({release["tag_name"] for release in releases}))
+        self.assertEqual(2, len(releases), diagnostics)
+        self.assertTrue(all(not release["draft"] for release in releases), diagnostics)
+        self.assertEqual(2, len({release["tag_name"] for release in releases}), diagnostics)
 
     def test_direct_fetch_respects_existing_cache_writer(self):
         import fcntl
