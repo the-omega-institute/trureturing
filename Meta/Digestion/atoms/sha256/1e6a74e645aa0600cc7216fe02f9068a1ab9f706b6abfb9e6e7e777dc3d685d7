@@ -1,0 +1,16 @@
+**theorem 41.2 (Bounded orthonormal lexicographic realization).** A family of strict linear observations may be feasible on every finite subfamily without admitting one real direction satisfying all observations. In finite dimension, the exact replacement is a finite list of directions, ordered by decreasing asymptotic importance. The relevant bound is the rank of the forms on their common input space, not the cardinality of the family. All eventual assertions below are constraintwise.
+
+Finite feasibility, existence of a finite lexicographic witness, and existence of an eventually feasible polynomial curve in $tV[t]$ are equivalent.
+
+Whenever these conditions hold, there is an orthonormal lexicographic witness $v_1,\ldots,v_r$ contained in $W$, with
+$$
+0\le r\le m\le d.
+$$
+Consequently,
+$$
+\gamma(t)=tv_1+t^2v_2+\cdots+t^rv_r
+$$
+is eventually feasible and tends to zero. For a nonempty feasible family, $r\ge1$; the minimum possible witness length equals the minimum possible degree of a polynomial curve tending to zero and eventually feasible.
+
+These assertions hold for arbitrary set-indexed families.
+
