@@ -1,0 +1,24 @@
+**Theorem 35.8 (Complete same-level covers do not attain the Hausdorff infimum).** Let $\mathcal C_t$ be the partition of $X_\beta$ by temporal prefixes of length $t$, and define its true-diameter cost by
+$$
+J_t:=\sum_{D\in\mathcal C_t}h_1(\operatorname{diam}_\rho D).
+$$
+For $t\ge1$, write $N=t+1=G_L+a$ with $0\le a<G_{L-1}$. Then
+$$
+J_t=\sum_{j=G_L+a}^{2G_L+a-1}\frac1j
++\sum_{j=G_{L+2}}^{G_{L+2}+a-1}\frac1j,
+$$
+where the second sum is zero for $a=0$. In particular,
+$$
+J_{G_L-1}=\sum_{j=G_L}^{2G_L-1}\frac1j\longrightarrow\log2.
+$$
+More generally,
+$$
+\liminf_{t\to\infty}J_t=2\log\left(\frac{1+\sqrt\phi}{\phi}\right),\qquad
+\limsup_{t\to\infty}J_t=\log2,
+$$
+and
+$$
+5-2\sqrt{5}<2\log\left(\frac{1+\sqrt\phi}{\phi}\right).
+$$
+Thus even the best asymptotic complete same-temporal-level covers have a strictly larger cost than the arbitrary-cover Hausdorff measure.
+

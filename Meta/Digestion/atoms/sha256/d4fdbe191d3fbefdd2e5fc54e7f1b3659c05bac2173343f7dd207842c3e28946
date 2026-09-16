@@ -1,0 +1,33 @@
+**Theorem 35.1 (The complete branching clock and actual cylinder diameters).** Let $\mathcal B$ be the set of finite concatenations of the blocks $0$ and $10$, including the empty word. For $p\in\mathcal B$, write
+$$
+L=|p|,\qquad N_p=\sum_{j<L}G_jp_j,\qquad D_p=\Phi(C_p),
+$$
+$$
+M_p=G_{L+1}-N_p,\qquad k_p=M_p-2.
+$$
+Here $C_{\varnothing}=K$. Then
+$$
+D_p=D_{p0}\mathbin{\dot\cup}D_{p10},\qquad
+\eta(D_p)=\alpha^L,\qquad
+\operatorname{diam}_\rho D_p=2^{-k_p}.
+$$
+The empty word has $M_{\varnothing}=2$ and $k_{\varnothing}=0$. For a nonempty block word, define its birth time by
+$$
+b_{q0}=b_{q10}=M_q-1,
+$$
+and set $b_{\varnothing}=0$. The set $D_p$ is an atom of the length-$t$ temporal partition exactly for
+$$
+b_p\le t\le k_p.
+$$
+Every nonempty temporal cylinder occurs in this way, with a unique $p\in\mathcal B$. Its displayed prefix length $t$ can therefore be strictly smaller than its actual splitting depth $k_p$.
+
+The child clocks satisfy
+$$
+M_{p0}=M_p+G_L,\qquad M_{p10}=M_p+G_{L+1}.
+$$
+For every $p$, the diameter is attained by the actual points
+$$
+\Phi(p0v),\qquad \Phi(p10v),
+$$
+whose first temporal difference is $M_p-2$.
+

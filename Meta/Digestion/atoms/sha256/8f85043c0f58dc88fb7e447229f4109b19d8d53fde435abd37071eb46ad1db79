@@ -1,0 +1,61 @@
+**Theorem 35.1 (The complete branching clock and actual cylinder diameters).** Let $\mathcal B$ be the set of finite concatenations of the blocks $0$ and $10$, including the empty word. For $p\in\mathcal B$, write
+$$
+L=|p|,\qquad N_p=\sum_{j<L}G_jp_j,\qquad D_p=\Phi(C_p),
+$$
+$$
+M_p=G_{L+1}-N_p,\qquad k_p=M_p-2.
+$$
+Here $C_{\varnothing}=K$. Then
+$$
+D_p=D_{p0}\mathbin{\dot\cup}D_{p10},\qquad
+\eta(D_p)=\alpha^L,\qquad
+\operatorname{diam}_\rho D_p=2^{-k_p}.
+$$
+The empty word has $M_{\varnothing}=2$ and $k_{\varnothing}=0$. For a nonempty block word, define its birth time by
+$$
+b_{q0}=b_{q10}=M_q-1,
+$$
+and set $b_{\varnothing}=0$. The set $D_p$ is an atom of the length-$t$ temporal partition exactly for
+$$
+b_p\le t\le k_p.
+$$
+Every nonempty temporal cylinder occurs in this way, with a unique $p\in\mathcal B$. Its displayed prefix length $t$ can therefore be strictly smaller than its actual splitting depth $k_p$.
+
+The child clocks satisfy
+$$
+M_{p0}=M_p+G_L,\qquad M_{p10}=M_p+G_{L+1}.
+$$
+For every $p$, the diameter is attained by the actual points
+$$
+\Phi(p0v),\qquad \Phi(p10v),
+$$
+whose first temporal difference is $M_p-2$.
+
+**Proof.** A nonempty admissible word belongs to $\mathcal B$ exactly when it ends in zero. At the next free positional digit, its extensions split into the two cylinders $C_{p0}$ and $C_{p10}$; the latter includes the zero forced after the new one. This proves the disjoint decomposition. The mass formula is the cylinder formula of 33.1, including mass one at the empty word.
+
+By 20.2, the internal phase boundary between these two children is $e_{M_p}$, and its two lifts are $p0v$ and $p10v$, in the parity-dependent order stated there. The same result gives, for each $L\ge1$, the bijection
+$$
+\{N_p:p\in\mathcal B,\ |p|=L\}=\{0,\ldots,G_{L-1}-1\}.
+$$
+Consequently the labels at depth $L$ are exactly
+$$
+\{M_p:|p|=L\}=\{G_L+1,\ldots,G_{L+1}\}.
+$$
+Together with the empty label $2$, these labels enumerate every integer at least two exactly once. The recurrence gives
+$$
+G_{L+2}-N_p=M_p+G_L,
+$$
+and
+$$
+G_{L+3}-N_p-G_L=M_p+G_{L+1},
+$$
+which proves the child-clock formulas. Thus every child label is strictly larger than its parent label.
+
+Start at temporal length zero with the single set $D_{\varnothing}$. The first symbol partitions it into $D_0$ and $D_{10}$. Thereafter, passage from temporal length $t$ to $t+1$ introduces exactly the new cut $e_{t+2}$. There is a unique block word $p$ with $M_p=t+2$. Its ancestors have smaller labels, whereas its descendants have larger labels, so $D_p$ is precisely a current leaf of the block-cylinder partition. Its new internal cut replaces it by $D_{p0}$ and $D_{p10}$. The full endpoint conventions of 20.2 and 20.5 identify these as the two entire new atoms; no endpoint singleton is added. Induction therefore identifies every temporal partition with the leaves obtained by processing the labels in increasing order.
+
+A child is born one step after its parent splits, namely at $M_q-1$, and survives through temporal length $M_p-2$. This proves the lifetime formula and the assertion that all temporal cylinders are block cylinders. Distinct block cylinders are either disjoint or related by a strict inclusion, so the representing block word is unique.
+
+All points of $D_p$ agree through the first $k_p$ temporal coordinates. By 20.4 the two displayed lifts of $e_{M_p}$ first differ at coordinate $M_p-2=k_p$. They belong to the two children of $D_p$. Hence the upper diameter bound is attained, proving the exact diameter. $\square$
+
+Reference: the reduction of forced vertices in a weighted cylinder tree is the general construction in Bellissard–Julien, [Bi-Lipshitz Embedding of Ultrametric Cantor Sets into Euclidean Spaces, §2.1](https://arxiv.org/pdf/1202.4330v2#page=5). The arithmetic labels $M_p$ and their endpoint witnesses above use the specific inputs of Section 20.
+

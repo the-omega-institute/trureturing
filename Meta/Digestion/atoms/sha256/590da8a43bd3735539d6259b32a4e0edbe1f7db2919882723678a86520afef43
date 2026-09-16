@@ -1,0 +1,64 @@
+**Theorem 35.9 (Critical index, general gauge comparison and normalization robustness).** Let $g$ be a continuous nondecreasing gauge with $g(0)=0$ and $g(r)>0$ for $r>0$ sufficiently small.
+
+If
+$$
+\lim_{r\downarrow0}\frac{g(r)}{h_1(r)}=a\in[0,\infty),
+$$
+then for every subset $A\subseteq X_\beta$,
+$$
+\mathcal H^g_\rho(A)=ac\eta^*(A).
+$$
+If instead $g(r)/h_1(r)\to\infty$, then
+$$
+\mathcal H^g_\rho(A)=\infty\qquad\text{whenever }\eta^*(A)>0.
+$$
+More generally, if
+$$
+0<a:=\liminf_{r\downarrow0}\frac{g(r)}{h_1(r)}
+\le b:=\limsup_{r\downarrow0}\frac{g(r)}{h_1(r)}<\infty,
+$$
+then
+$$
+ac\eta^*(A)\le\mathcal H^g_\rho(A)\le bc\eta^*(A)
+$$
+for every $A$. In particular, every positive-$\eta$ Borel set has finite positive $g$-measure in this two-sided comparison regime.
+
+For the gauges of 35.0,
+$$
+\mathcal H^{h_p}_\rho(X_\beta)=
+\begin{cases}
+\infty,&0<p<1,\\
+5-2\sqrt{5},&p=1,\\
+0,&p>1.
+\end{cases}
+$$
+For $0<p<1$, the infinity conclusion holds on every set of positive $\eta$ outer measure, not on every nonempty set.
+
+Replacing the additive one in $h_1$ by any fixed positive constant leaves its limiting Hausdorff measure unchanged. Replacing $\log_2$ by $\log_b$, for $b>1$, multiplies that measure by $\log b/\log2$.
+
+**Proof.** If $g(r)\le C h_1(r)$ for all sufficiently small $r$, every sufficiently fine admissible cover satisfies the same cost inequality, including its zero-diameter members. Thus
+$$
+\mathcal H^g_\rho(A)\le C\mathcal H^{h_1}_\rho(A).
+$$
+The reverse gauge inequality gives the reverse measure inequality. These statements concern arbitrary-subset covers, so they do not require measurability of $A$.
+
+For a finite positive limit, apply both inequalities with constants tending to $a$ and use 35.7. For a zero limit, apply the upper inequality with every positive $C$; the critical measure is finite on every subset of $X_\beta$, so the result is zero. For an infinite limit, apply the lower inequality with every finite $C$; positive $\eta^*(A)$ makes the critical measure positive, forcing infinity. The liminf and limsup bounds follow by the same argument with constants approaching their respective endpoints.
+
+Here
+$$
+\frac{h_p(r)}{h_1(r)}=\bigl(1+\log_2(1/r)\bigr)^{1-p},
+$$
+which tends to infinity for $p<1$ and to zero for $p>1$. This proves the exact critical index and all the stated subset qualifications. Every countable set has zero measure for all these gauges, since it is covered by countably many zero-cost singletons; this also shows why the positive-mass condition cannot be suppressed.
+
+Finally, for fixed $a_*>0$ and $b>1$, the gauge
+$$
+g(r)=\bigl(a_*+\log_b(1/r)\bigr)^{-1}
+$$
+satisfies
+$$
+\frac{g(r)}{h_1(r)}\longrightarrow\frac{\log b}{\log2}.
+$$
+The finite-limit comparison proves both normalization assertions. $\square$
+
+Reference: the general small-scale gauge comparison appears in Aedo–Grimm–Short, [§9, p. 16](https://arxiv.org/pdf/2305.00078v2#page=16). Its application here uses the actual finite measure and normalization established in 35.7.
+

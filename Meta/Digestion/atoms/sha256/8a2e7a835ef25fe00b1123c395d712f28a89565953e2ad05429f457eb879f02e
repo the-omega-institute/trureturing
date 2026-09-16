@@ -1,0 +1,6 @@
+**Theorem 35.6 (Almost-everywhere upper density and long zero blocks).** For $\eta$-almost every $y$,
+$$
+\limsup_{r\downarrow0}\frac{\eta(\overline B_\rho(y,r))}{h_1(r)}=A_+.
+$$
+More precisely, for $\nu$-almost every $x$, the densities $\mathcal D(p)$ along its block prefixes have upper limit $A_+$.
+

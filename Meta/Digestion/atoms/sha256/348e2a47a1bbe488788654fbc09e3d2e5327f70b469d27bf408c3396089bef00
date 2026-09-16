@@ -1,0 +1,16 @@
+**Theorem 35.7 (Finite adaptive covers and the exact normalization).** Under the normalization of 35.0, put
+$$
+c:=\frac1{A_+}=\frac{\sqrt{5}}{\phi^3}=5-2\sqrt{5}.
+$$
+For every subset $A\subseteq X_\beta$ and every $\delta>0$,
+$$
+\boxed{\mathcal H^{h_1}_{\rho,\delta}(A)=\mathcal H^{h_1}_\rho(A)=c\eta^*(A).}
+$$
+In particular, as Borel measures,
+$$
+\mathcal H^{h_1}_\rho=c\eta,\qquad
+\mathcal H^{h_1}_\rho(X_\beta)=c,\qquad
+\mathcal H^{h_1}_\rho(D_p)=c\alpha^{|p|}.
+$$
+For every clopen $B\subseteq X_\beta$ (in particular, every block cylinder), every $\delta>0$ and every $\tau>0$, there is a finite cover of $B$ by block cylinders of $\rho$-diameter at most $\delta$ and total $h_1$-cost at most $c\eta(B)+\tau$, obtained by stopping different positional paths at different depths. For arbitrary subsets $A$, the matching upper bound is obtained from at most countable covers.
+
