@@ -268,6 +268,107 @@ def fixed_marginal_obstruction():
     }
 
 
+def deletion_weighted_comparison(old_cases, integer_theta):
+    """Keep each original mixed7 cylinder in the numerator/denominator bound."""
+    hinge_bounds = (
+        ('271/86', '185/86', '100/81', '61/81', '16/39', '7/26'),
+        ('263/85', '178/85', '101/84', '30/41', '32/79', '21/79'),
+        ('263/85', '178/85', '101/84', '30/41', '32/79', '21/79'),
+        ('3', '2', '89/75', '11/15', '2/5', '4/15'),
+        ('234/77', '157/77', '91/76', '14/19', '2/5', '4/15'),
+        ('234/77', '157/77', '91/76', '14/19', '2/5', '4/15'),
+    )
+    square_bounds = ('1091/82', '1103/85', '1103/85',
+                     '965/76', '993/77', '993/77')
+    require(len(old_cases) == 6, 'all six deletion-coupled canonical shapes')
+    results = []
+    for case_index, (shape, points, _, expected_layouts) in enumerate(old_cases):
+        n = len(points)
+        cylinders = [[tuple(i for i, x in enumerate(points) if x % d == a)
+                      for a in sorted({x % d for x in points})] for d in MODULI]
+        loads = []
+        for chosen in product(*cylinders):
+            load = [1] * n
+            for cylinder in chosen:
+                for i in cylinder:
+                    load[i] += 1
+            loads.append(tuple(load))
+        require(len(loads) == expected_layouts, 'all effective old test layouts')
+        hinge_sums = [tuple(sum(max(v - t, 0) for v in a) for t in range(6))
+                      for a in loads]
+        maxima = [max(h[t] for h in hinge_sums) for t in range(6)]
+        square_maximum = max(sum(v*v for v in a) for a in loads)
+        constants = [Fraction(c) for c in hinge_bounds[case_index]]
+        square_constant = Fraction(square_bounds[case_index])
+        minimum_slacks = [None] * 7
+
+        def scaled_slack(values, cost_upper, c):
+            positive = [max(c.numerator - c.denominator * v, 0) for v in values]
+            deletion_cap = sum(max(sum(positive[i] for i in cylinder)
+                                   for cylinder in group) for group in cylinders)
+            return 6*n*c.numerator - c.denominator*cost_upper - deletion_cap
+
+        for a, hinges_a in zip(loads, hinge_sums):
+            slacks = []
+            for t, c in enumerate(constants):
+                values = [max(v-t, 0) for v in a]
+                # (u+v-t)+ <= (u-k)+ + (v-(t-k))+ for every k.
+                joint_upper = min(hinges_a[k] + maxima[t-k] for k in range(t+1))
+                slacks.append(scaled_slack(values, 5*hinges_a[t] + joint_upper, c))
+            squares = [v*v for v in a]
+            # max_B sum A*B = sum A + sum_d max_C sum_C A.
+            cross_upper = sum(a) + sum(max(sum(a[i] for i in cylinder)
+                                          for cylinder in group) for group in cylinders)
+            square_cost = 6*sum(squares) + 2*cross_upper + square_maximum
+            slacks.append(scaled_slack(squares, square_cost, square_constant))
+            require(min(slacks) >= 0, 'every deletion-weighted hinge and square inequality')
+            minimum_slacks = [v if old is None else min(old, v)
+                              for old, v in zip(minimum_slacks, slacks)]
+        require(minimum_slacks == [0]*7, 'all seven stated cap bounds attain equality')
+        results.append({
+            'shape': shape, 'old_survivors': n, 'test_layouts': len(loads),
+            'maximum_old_hinge_sums_at_0_through_5': maxima,
+            'maximum_old_square_sum': square_maximum,
+            'hinge_bounds_at_0_through_5': list(hinge_bounds[case_index]),
+            'second_moment_bound': str(square_constant),
+            'minimum_scaled_slacks': minimum_slacks,
+        })
+
+    low = [max(Fraction(row[t]) for row in hinge_bounds) for t in range(6)]
+    knots = list(zip(map(Fraction, range(6)), low)) + [
+        (Fraction(t), integer_theta[t]) for t in (6, 8, 12)]
+    slopes = [(b[1]-a[1])/(b[0]-a[0]) for a, b in zip(knots, knots[1:])] + [Fraction(0)]
+    require(slopes[0] == -1 and all(a <= b for a, b in zip(slopes, slopes[1:])),
+            'hinge chord upper profile is a convex probability profile')
+    atoms = {knots[i][0]: slopes[i]-slopes[i-1] for i in range(1, len(knots))
+             if slopes[i] != slopes[i-1]}
+    require(sum(atoms.values()) == 1 and min(atoms.values()) > 0,
+            'deletion-coupled comparison atoms form a probability law')
+    for t, value in knots:
+        require(sum(p*max(w-t, 0) for w, p in atoms.items()) == value,
+                'comparison law has each certified hinge knot')
+    for t in range(6, 13):
+        require(sum(p*max(w-t, 0) for w, p in atoms.items()) == integer_theta[t],
+                'new law retains the certified sharp upper profile')
+    mean = sum(w*p for w, p in atoms.items())
+    second = sum(w*w*p for w, p in atoms.items())
+    actual_second = max(map(Fraction, square_bounds))
+    require((mean, second, actual_second) == (
+        Fraction(271, 86), Fraction(45292361, 3350646), Fraction(1091, 82)),
+        'exact simultaneous uniform-law moment constants')
+    return {
+        'law': 'uniform on the actual complete survivors after canonical old-head pruning',
+        'cases': results,
+        'old_test_layouts': sum(r['test_layouts'] for r in results),
+        'integer_cap_inequalities': 7*sum(r['test_layouts'] for r in results),
+        'hinge_knots': {str(t): str(v) for t, v in knots},
+        'auxiliary_atoms': {str(w): str(p) for w, p in atoms.items()},
+        'mean': str(mean), 'comparison_second_moment': str(second),
+        'actual_second_moment_upper': str(actual_second),
+        'sharpness': 'Upper bounds only; zero cap slack does not establish actual-family sharpness.',
+    }
+
+
 def verify(expected):
     cases = []
     old_cases = []
@@ -311,11 +412,15 @@ def verify(expected):
         "sharp_example": sharp_example(theta),
         "elementary_comparison": elementary_comparison(old_cases, theta),
         "fixed_marginal_obstruction": fixed_marginal_obstruction(),
+        "deletion_weighted_comparison": deletion_weighted_comparison(old_cases, theta),
     }
     require(result == expected, "computed exact result differs from the fixed certificate")
     print(json.dumps({"verified": True, "old_test_layouts": sum(r["test_layouts"] for r in cases),
                       "integer_hinge_cases": sum(r["integer_hinge_cases"] for r in cases),
-                      "mean": result["mean"], "second_moment": result["second_moment"]}, sort_keys=True))
+                      "mean": result["mean"], "second_moment": result["second_moment"],
+                      "deletion_weighted_inequalities": result["deletion_weighted_comparison"]["integer_cap_inequalities"],
+                      "deletion_weighted_mean": result["deletion_weighted_comparison"]["mean"],
+                      "deletion_weighted_actual_second": result["deletion_weighted_comparison"]["actual_second_moment_upper"]}, sort_keys=True))
 
 
 def main():

@@ -10,6 +10,8 @@ strata_touched:
   - D5/S3/Arith/Congruence/TwoOddPrimeUncoveredDensity
   - D5/S3/Arith/Congruence/ConditionalComparison/ThreePrime/Comparison
   - D5/S3/Arith/Congruence/ConditionalComparison/ThreePrime/DistortionChain
+  - D5/S3/Arith/Congruence/ConditionalComparison/ArithmeticCoordinates
+  - D5/S3/Arith/Congruence/ActualCylinderChain
   - D5/S3/Arith/Congruence/ConditionalComparison/CappedGainTypes
 license: "Paper and prose: CC BY 4.0; original Lean/Python code and certificate inputs: MIT; third-party licenses retained."
 triage: anchor
@@ -199,6 +201,44 @@ equivalent eligible declaration, route its consumers directly to that
 Mathlib result and retire the corresponding transplant under the applicable
 frozen-source rules. Acceptance into a future, unpinned Mathlib version is
 not the retirement trigger.
+
+## Arithmetic coordinate excerpts
+
+The additional module
+`D5/S3/Arith/Congruence/ConditionalComparison/ArithmeticCoordinates.lean`
+retains the following general source excerpts, with their original declaration
+names and proof bodies. They are reusable arithmetic interfaces, not new
+repository mathematical contributions:
+
+- `formal/Erdos7/ArithmeticReduction.lean`: `embeddedWordValue` and
+  `embeddedWordValue_prefix_eq`; the `PrimePowerCover` structure;
+  `PrimePowerCover.crtModulus`, its nonzero and pairwise-coprime proofs,
+  `modulus`, `primePowDepth_dvd_modulus`, and `covers_modulus`;
+  `finset_prod_odd_nat`; the `OddDistinctCoveringSystem` structure and its
+  namespace from `commonModulus` through `toPrimePowerCover` inclusive.
+- `formal/Erdos7/Rank8Arithmetic.lean`: the `PrimePowerCover` namespace from
+  `actualCRT` through `actualCylinder_covers` inclusive.
+- `formal/Erdos7/Rank8Cylinders.lean`: the complete `PurePrefixes` section,
+  from `purePrefixAt` through `forbidden_eq_digits` inclusive.
+- `formal/Erdos7/ThreePrime/CylinderModel.lean`: the complete
+  `Erdos7.FiniteLaw` namespace containing `piLaw_prob_coordinate`.
+
+Imports are narrowed to the existing `CappedGainTrees` transplant and the
+original Mathlib arithmetic imports. Namespace delimiters are reconstructed
+around these excerpts; unused six-block, seven-block and sparse-support
+applications are excluded. No arithmetic conclusion is generalized.
+
+`ActualCylinderChain` directly consumes the retained ordinary-cover arithmetic
+and pure-prefix interfaces. Its ending-coordinate construction is adapted
+from `formal/Erdos7/ThreePrime/Model.lean` (`bad`, `build`) and the induction
+in `ModelSemantics.lean` (`covered_build_iff`); it accepts arbitrary admissible
+thresholds and has no `PrefixModel` or `sparse` field. These construction ideas
+are attributed to the source. The repository's additional live argument
+propagates probability-one pure-prefix avoidance through the actual full-word
+distortion laws, then transports ordinary coverage to the final covered event.
+Its per-cylinder base-cap expressions directly use `PurePrefixResidualLaw`.
+The unrestricted noncoverage conclusion still requires a charge budget below
+one; the source excerpt and interface theorem do not provide that budget.
 
 ## Source license
 

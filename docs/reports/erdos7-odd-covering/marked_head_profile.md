@@ -1,12 +1,14 @@
 # A supported convex profile for the 315 head
 
+The strongest comparison below retains the original mixed-class deletions in both the load numerator and survivor denominator. On the same supported law it gives mean at most **271/86**, actual second moment at most **1091/82**, and the complete increasing-convex comparator X specified in the deletion-coupling section. Its high-threshold profile remains sharp.
+
 For any family of residue classes with distinct nonunit moduli dividing 315, there is a probability measure μ supported on its survivors such that every complete test layout
 
 \[
  L(x)=\sum_{d\mid315}1_{x\equiv b_d\pmod d}
 \]
 
-satisfies \(E_\mu h(L)\le E h(W)\) for every nonnegative increasing convex function h. The same measure μ works for all layouts and functions h. The comparison law is
+satisfies \(E_\mu h(L)\le E h(W)\) for every nonnegative increasing convex function h. The same measure μ works for all layouts and functions h. One comparison law, refined below, is
 
 | w | 2 | 3 | 4 | 5 | 6 | 8 | 12 |
 |---|---:|---:|---:|---:|---:|---:|---:|
@@ -133,6 +135,107 @@ Its nondecreasing slopes give the comparison law
 
 Thus Ψ(t)=E(W★−t)₊, EW★=37/11 and E[(W★)²]=909287/62678. The second moment is smaller than that of W by 15/8954. At integer thresholds Ψ agrees with the earlier profile B; between 5 and 6 it improves the linear interpolation, with Ψ(117/22)=5/22 whereas the integer law gives 1025/4477. Hence W★, as well as W, bounds every increasing convex function under the same supported law μ. The verifier independently checks the elementary table against every old layout, the exact transfer crossing and all law probabilities and moments; the table's proof itself is elementary.
 
+## Coupling the original deletions to the load numerator
+
+The following estimates apply simultaneously to **one law**: the uniform law on the actual complete survivors after the canonical old-head pruning already justified above. They do not assert that uniform expectations on the unpruned original set are monotone under pruning. The resulting law is supported on the original survivors.
+
+Let S be one of the six canonical old survivor sets modulo 45, n=|S|∈{16,17}, and let D₀={3,5,9,15,45}. Pure modulus 7 leaves six digits. For x∈S, write b(x) for the number of distinct remaining digits deleted by the five original mixed classes of moduli 7d, d∈D₀. Thus 0≤b(x)≤5, r(x)=6−b(x)≥1, the complete survivor count is N=6n−Σₓb(x), and μ is uniform on these N actual points. If C_d is the old cylinder of the original class 7d, then
+
+\[
+ b(x)\le \sum_{d\in D_0}1_{C_d}(x).
+\]
+
+For an arbitrary complete 315 test layout, let A(x) be its old test load and B(x) its old cofactor test load from the 7-containing labels. Each is an independently arbitrary complete 45 test load, with values in {1,…,6}. At x, the nonnegative test increments over the r(x) allowed digits have total at most B(x). For any increasing convex function h, concentrating all increments into one allowed digit gives
+
+\[
+ N E_\mu h(L)
+ \le 5\sum_x h(A(x))+\sum_xh(A(x)+B(x))-\sum_xb(x)h(A(x)). \tag{D1}
+\]
+
+This concentration is an upper bound; the concentrated test layout need not be realizable. Missing or inactive test labels can be completed upward before applying (D1).
+
+Let J_h(A) bound max_B Σₓh(A(x)+B(x)). To prove Eμh(L)≤c, it therefore suffices to check, for every A,
+
+\[
+ 5\sum_xh(A(x))+J_h(A)
+ +\sum_{d\in D_0}\max_{C\bmod d}\sum_{x\in S\cap C}(c-h(A(x)))_+
+ \le 6nc. \tag{D2}
+\]
+
+Indeed the difference between the numerator in (D1) and cN contains Σₓb(x)(c−h(A(x))). Discard its negative terms and bound b by the five original cylinder indicators. This yields exactly the positive cylinder caps in (D2). No independence assumption on the original forbidden classes or the two test blocks is used.
+
+### Hinge and square costs
+
+For integer t≥0 put H_t(A)=Σₓ(A(x)−t)₊ and M_t=max_B H_t(B). Hinge subadditivity gives the useful small verification bound
+
+\[
+ J_t(A):=\min_{0\le k\le t}\{H_k(A)+M_{t-k}\}
+ \ \ge\ \max_B\sum_x(A(x)+B(x)-t)_+ . \tag{D3}
+\]
+
+For the square cost put Q=max_BΣₓB(x)² and
+
+\[
+ R(A)=\sum_xA(x)+\sum_{d\in D_0}\max_{C\bmod d}\sum_{x\in S\cap C}A(x).
+\]
+
+Independence of the five choices defining the test load B gives R(A)=max_BΣₓA(x)B(x). Hence the square version of (D2) is implied by
+
+\[
+ 6\sum_xA(x)^2+2R(A)+Q
+ +\sum_{d\in D_0}\max_{C\bmod d}\sum_{x\in S\cap C}(c-A(x)^2)_+
+ \le 6nc. \tag{D4}
+\]
+
+Every effective old layout is enumerated; no pairwise layout search or optimizer is needed. The following exact rational constants satisfy (D2), using (D3), for t=0,…,5, and (D4) in the last column:
+
+| Old shape | n | c₀ | c₁ | c₂ | c₃ | c₄ | c₅ | Square c |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| Short root, same root / other column | 17 | 271/86 | 185/86 | 100/81 | 61/81 | 16/39 | 7/26 | 1091/82 |
+| Short root, other root / same column | 17 | 263/85 | 178/85 | 101/84 | 30/41 | 32/79 | 21/79 | 1103/85 |
+| Short root, other root / other column | 17 | 263/85 | 178/85 | 101/84 | 30/41 | 32/79 | 21/79 | 1103/85 |
+| Long root, same root / other column | 16 | 3 | 2 | 89/75 | 11/15 | 2/5 | 4/15 | 965/76 |
+| Long root, other root / same column | 16 | 234/77 | 157/77 | 91/76 | 14/19 | 2/5 | 4/15 | 993/77 |
+| Long root, other root / other column | 16 | 234/77 | 157/77 | 91/76 | 14/19 | 2/5 | 4/15 | 993/77 |
+
+The finite check covers 27,720 effective old layouts and 194,040 integer cap inequalities. It clears the denominator of each proposed rational c, computes the exact minimum scaled slack, and finds zero in all 42 cases. Zero slack certifies the displayed relaxation constants; it does **not** establish sharpness for realizable full families. All mathematical decisions use standard-library integers and fractions. The six-orbit completeness and the universal fibre argument are ordinary proof inputs to this finite certificate.
+
+### A single improved full comparator
+
+For Θμ(t)=sup_test Eμ(L−t)₊, take the largest constant in each hinge column and retain the established sharp high-profile values at t=6,8,12. The knots are
+
+\[
+\begin{array}{c|rrrrrrrrr}
+t&0&1&2&3&4&5&6&8&12\\\hline
+\Theta_\mu(t)\le&271/86&185/86&100/81&61/81&16/39&7/26&5/37&2/37&0.
+\end{array}
+\]
+
+Convexity of Θμ bounds it above by the chord on each interval. The chord slopes are
+
+\[
+-1,-6385/6966,-13/27,-361/1053,-11/78,-129/962,-3/74,-1/74,0,
+\]
+
+which are nondecreasing. Consequently this chord function is the hinge profile of the probability law X with atoms
+
+\[
+\begin{array}{c|rrrrrrrr}
+x&1&2&3&4&5&6&8&12\\\hline
+P(X=x)&581/6966&3031/6966&146/1053&425/2106&10/1443&45/481&1/37&1/74.
+\end{array}
+\]
+
+Every complete test load under the same μ is dominated by X in increasing convex order. In particular,
+
+\[
+ E_\mu L\le E X=\frac{271}{86},\qquad
+ E_\mu L^2\le\frac{1091}{82},\qquad
+ E X^2=\frac{45292361}{3350646}.
+\]
+
+The direct square bound is stronger than the comparator's second moment and may be used simultaneously with its complete hinge profile. These are supported-law head bounds; they do not by themselves establish a global tail cutoff or an end-to-end Lean proof.
+
 ## Actual sharpness for t≥6
 
 Take the original classes (modulus, residue)
@@ -223,4 +326,4 @@ Conditional comparison over later-prime coordinates leaves a sum of m complete h
  \le\frac1m\sum_{j=1}^{m}h(mL_j).
 \]
 
-The same measure μ bounds every summand by E h(mW). Thus W can replace the head in subsequent complete-cofactor convex comparisons, with zero initial deletion charge. This comparison alone makes no claim that any particular tail continuation closes.
+The same measure μ bounds every summand by E h(mX). Thus X can replace the head in subsequent complete-cofactor convex comparisons, with zero initial deletion charge. This comparison alone makes no claim that any particular tail continuation closes.

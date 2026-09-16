@@ -840,9 +840,10 @@ theorems work over any linearly ordered field, including the rationals;
 the normalized rational weights directly form the imported `FiniteLaw`.
 The licensed `ThreePrime/DistortionChain` supplies `PhysicalChain`, its
 covered-probability bound, and `BaseCaps` propagation without a restriction
-on the number of prime factors per modulus. Actual cylinder caps,
-cofactor completion and the numerical stopping bound still have to be
-connected in the end-to-end formalization.
+on the number of prime factors per modulus. The actual ordinary-cover
+connection and residual-cylinder base-cap interface are formalized below;
+cofactor completion and numerical stopping still have to be connected
+in the end-to-end formalization.
 
 The actual uniform survivor law is supplied by
 [`PurePrefixResidualLaw.exists_exact_residual_law`](../D5/S3/Arith/Congruence/PurePrefixResidualLaw.lean).
@@ -859,8 +860,25 @@ a forbidden ancestor gives zero probability; otherwise its probability is
 The proof derives the disjoint decomposition from the given words, using
 shortest forbidden ancestors and prefix nesting. Conditioning, individual
 prefix counts and positivity are reused from the licensed development.
-This closes the pure-coordinate residual-law obligation; its application
-to actual modulus labels and the full numerical continuation remains open.
+The actual ordinary-cover consumer is now formalized by
+[`ActualCylinderChain.ordinary_cover_forces_charge_and_caps`](../D5/S3/Arith/Congruence/ActualCylinderChain.lean).
+For any finite distinct odd covering system and arbitrary rational thresholds
+\(0\le\delta_j<1\), it builds the full-history physical chain and proves
+\(\mathrm{totalCharge}\ge1\). The licensed CRT and prime-factorization
+interfaces supply the actual cylinders and injective original depth labels.
+The new support induction proves that the final law avoids every pure
+forbidden prefix with probability one, including on an ambient space that
+contains zero-weight points. Ordinary coverage therefore forces a mixed
+cylinder to be hit, which the imported covered-event inequality charges.
+The same theorem derives `BaseCaps` from the explicit residual-cylinder
+inequalities \(\Pr(C_{c,j})\le(1-\delta_j)\,\mathrm{survival}_{R_j}(e_{c,j})\).
+It has no restriction on the number of prime factors per modulus.
+Its base is the product of pure-coordinate residual laws; integrating an
+optimized correlated composite-head law is a separate obligation.
+The source arithmetic declarations are reused under their original names;
+no numerical noncoverage endpoint is imported. Choosing comparison runs,
+completing cofactor labels and proving total charge below one remain
+obligations for an end-to-end noncoverage theorem.
 
 #### Sharp tail profiles of maximal cylinder caps
 
@@ -4879,6 +4897,34 @@ other parts of the profile to help. A separate actual 75-survivor family
 shows that fixing the old marginal to be uniform can force second moment
 \(1427/80\) and upper profile \((12-t)/16\). These statements still do
 not close the tail from 11.
+
+Retaining each original mixed-7 deletion in both numerator and denominator
+strengthens (CM15) on the **same** uniform pruned-survivor law:
+\[
+ \Theta_\mu(0),\ldots,\Theta_\mu(5)
+ \le\left(\frac{271}{86},\frac{185}{86},\frac{100}{81},
+          \frac{61}{81},\frac{16}{39},\frac7{26}\right),
+ \qquad \mathbb E_\mu L^2\le\frac{1091}{82}.             \tag{CM16}
+\]
+The established high-profile values at thresholds 6, 8 and 12 complete
+one convex comparator with atoms
+\[
+\begin{array}{c|rrrrrrrr}
+x&1&2&3&4&5&6&8&12\\\hline
+\Pr(X=x)&581/6966&3031/6966&146/1053&425/2106&10/1443&45/481&1/37&1/74.
+\end{array}
+\]
+Its mean is \(271/86\) and its second moment is
+\(45292361/3350646\); the smaller actual second-moment bound
+\(1091/82\) is independently valid under the same law.
+The numerator bound keeps the deletion multiplicity of each old cylinder,
+rather than replacing the actual survivor count by its minimum alone.
+The note proves the universal reduction. The standard-library verifier
+checks 194040 exact cap inequalities over all 27720 old layouts, with
+no layout-pair optimization needed for this refinement. Zero slack in
+these relaxations does not prove sharpness for actual full families.
+This improves supported-head control but does not extend the established
+prime-13 noncoverage range.
 
 **Coupled densities of the three prime-pair subsystems.** Let \(\sigma_A\)
 be the ambient density avoiding the original classes supported on \(A\),

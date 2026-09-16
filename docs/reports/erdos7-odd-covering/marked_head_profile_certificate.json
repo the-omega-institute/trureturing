@@ -552,5 +552,229 @@
     "second_moment": "1427/80",
     "maximum_atom": "1/16",
     "upper_tail": "(12-t)/16, 8<=t<=12"
+  },
+  "deletion_weighted_comparison": {
+    "law": "uniform on the actual complete survivors after canonical old-head pruning",
+    "cases": [
+      {
+        "shape": "root1_same_other_column",
+        "old_survivors": 17,
+        "test_layouts": 4760,
+        "maximum_old_hinge_sums_at_0_through_5": [
+          42,
+          25,
+          11,
+          5,
+          2,
+          1
+        ],
+        "maximum_old_square_sum": 130,
+        "hinge_bounds_at_0_through_5": [
+          "271/86",
+          "185/86",
+          "100/81",
+          "61/81",
+          "16/39",
+          "7/26"
+        ],
+        "second_moment_bound": "1091/82",
+        "minimum_scaled_slacks": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "shape": "root1_other_same_column",
+        "old_survivors": 17,
+        "test_layouts": 4760,
+        "maximum_old_hinge_sums_at_0_through_5": [
+          41,
+          24,
+          11,
+          5,
+          2,
+          1
+        ],
+        "maximum_old_square_sum": 127,
+        "hinge_bounds_at_0_through_5": [
+          "263/85",
+          "178/85",
+          "101/84",
+          "30/41",
+          "32/79",
+          "21/79"
+        ],
+        "second_moment_bound": "1103/85",
+        "minimum_scaled_slacks": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "shape": "root1_other_other_column",
+        "old_survivors": 17,
+        "test_layouts": 4760,
+        "maximum_old_hinge_sums_at_0_through_5": [
+          41,
+          24,
+          11,
+          5,
+          2,
+          1
+        ],
+        "maximum_old_square_sum": 127,
+        "hinge_bounds_at_0_through_5": [
+          "263/85",
+          "178/85",
+          "101/84",
+          "30/41",
+          "32/79",
+          "21/79"
+        ],
+        "second_moment_bound": "1103/85",
+        "minimum_scaled_slacks": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "shape": "root2_same_other_column",
+        "old_survivors": 16,
+        "test_layouts": 4480,
+        "maximum_old_hinge_sums_at_0_through_5": [
+          37,
+          21,
+          10,
+          5,
+          2,
+          1
+        ],
+        "maximum_old_square_sum": 112,
+        "hinge_bounds_at_0_through_5": [
+          "3",
+          "2",
+          "89/75",
+          "11/15",
+          "2/5",
+          "4/15"
+        ],
+        "second_moment_bound": "965/76",
+        "minimum_scaled_slacks": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "shape": "root2_other_same_column",
+        "old_survivors": 16,
+        "test_layouts": 4480,
+        "maximum_old_hinge_sums_at_0_through_5": [
+          38,
+          22,
+          10,
+          5,
+          2,
+          1
+        ],
+        "maximum_old_square_sum": 115,
+        "hinge_bounds_at_0_through_5": [
+          "234/77",
+          "157/77",
+          "91/76",
+          "14/19",
+          "2/5",
+          "4/15"
+        ],
+        "second_moment_bound": "993/77",
+        "minimum_scaled_slacks": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "shape": "root2_other_other_column",
+        "old_survivors": 16,
+        "test_layouts": 4480,
+        "maximum_old_hinge_sums_at_0_through_5": [
+          38,
+          22,
+          10,
+          5,
+          2,
+          1
+        ],
+        "maximum_old_square_sum": 115,
+        "hinge_bounds_at_0_through_5": [
+          "234/77",
+          "157/77",
+          "91/76",
+          "14/19",
+          "2/5",
+          "4/15"
+        ],
+        "second_moment_bound": "993/77",
+        "minimum_scaled_slacks": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "old_test_layouts": 27720,
+    "integer_cap_inequalities": 194040,
+    "hinge_knots": {
+      "0": "271/86",
+      "1": "185/86",
+      "2": "100/81",
+      "3": "61/81",
+      "4": "16/39",
+      "5": "7/26",
+      "6": "5/37",
+      "8": "2/37",
+      "12": "0"
+    },
+    "auxiliary_atoms": {
+      "1": "581/6966",
+      "2": "3031/6966",
+      "3": "146/1053",
+      "4": "425/2106",
+      "5": "10/1443",
+      "6": "45/481",
+      "8": "1/37",
+      "12": "1/74"
+    },
+    "mean": "271/86",
+    "comparison_second_moment": "45292361/3350646",
+    "actual_second_moment_upper": "1091/82",
+    "sharpness": "Upper bounds only; zero cap slack does not establish actual-family sharpness."
   }
 }
