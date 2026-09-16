@@ -1,0 +1,43 @@
+**Theorem 36.11 (Concentration witnesses and small-variance witnesses).** Write $[a]_+=\max\{a,0\}$. For every $L\ge1$, $0\le p\le1$, $n\ge0$, $x\in K$, and $t>0$,
+$$
+D_{L,p}(n,x)
+\ge2\left[1-t^{-2}-(2ts+1)\alpha^L\right]_+.
+$$
+There are also the bounds
+$$
+D_{L,p}(n,x)\ge2[1-2V-\alpha^L]_+,
+$$
+$$
+e_{L,p}(n)\ge2[1-2V-\alpha^{L+1}]_+.
+$$
+The first two inequalities hold in particular for the fixed initial state $Z(0)$. An explicit original-carrier initial state witnesses the last inequality.
+
+**Proof.** Let $J$ have the binomial distribution with parameters $n,p$. When $s>0$, Chebyshev's inequality gives
+$$
+\Pr(|J-np|\le ts)\ge1-t^{-2}.
+$$
+The interval $[np-ts,np+ts]$ contains at most $2ts+1$ integers. Define the set of readout classes
+$$
+A=\{q_L(T^j x):0\le j\le n,\ |j-np|\le ts\}.
+$$
+The actual binomial successor law assigns $A$ probability at least $1-t^{-2}$, whereas
+$$
+q_{L\#}m(A)\le(2ts+1)\alpha^L.
+$$
+Testing full variation on $A$ proves the first inequality. If $s=0$, the binomial variable is constant, the corresponding index set is a singleton, and the same lower bound follows directly.
+
+For the small-variance estimates, set $h=\min\{p,1-p\}$ and choose $j_*=0$ if $p\le1/2$, and $j_*=n$ if $p>1/2$. Then
+$$
+\Pr(J=j_*)=(1-h)^n\ge1-nh\ge1-2V,
+$$
+since $V=nh(1-h)$ and $1-h\ge1/2$. The readout class $q_L(T^{j_*}x)$ has Haar mass at most $\alpha^L$. Testing on that class proves the second inequality.
+
+To obtain the minimum-mass class explicitly, put $N_L=G_{L-1}$. Its natural expansion $Z(N_L)$ has prefix $0^{L-1}1$, whose cylinder mass is $\alpha^{L+1}$. For every $j\ge0$, define
+$$
+z_{L,j}=Z(N_L-j)\quad\text{when }j\le N_L,
+$$
+$$
+z_{L,j}=x_{j-N_L}^-\quad\text{when }j>N_L.
+$$
+The original successor identities give $T^jz_{L,j}=Z(N_L)$ in both cases. In the second case this follows by coalescing at time $j-N_L$ and then taking $N_L$ natural successor steps. Starting at $z_{L,j_*}$ therefore places probability at least $1-2V$ in a class of mass exactly $\alpha^{L+1}$. This proves the last bound with an actual specified witness. $\square$
+

@@ -1,0 +1,14 @@
+**Theorem 36.11 (Concentration witnesses and small-variance witnesses).** Write $[a]_+=\max\{a,0\}$. For every $L\ge1$, $0\le p\le1$, $n\ge0$, $x\in K$, and $t>0$,
+$$
+D_{L,p}(n,x)
+\ge2\left[1-t^{-2}-(2ts+1)\alpha^L\right]_+.
+$$
+There are also the bounds
+$$
+D_{L,p}(n,x)\ge2[1-2V-\alpha^L]_+,
+$$
+$$
+e_{L,p}(n)\ge2[1-2V-\alpha^{L+1}]_+.
+$$
+The first two inequalities hold in particular for the fixed initial state $Z(0)$. An explicit original-carrier initial state witnesses the last inequality.
+

@@ -1,0 +1,9 @@
+**Theorem 36.7 (Golden spacing and the log-free Gaussian frequency sum).** For every integer $k\ge1$,
+$$
+\|k\phi\|>\frac1{4k},
+$$
+where $\|t\|$ denotes distance to the nearest integer. For $s\ge1$, let $M=2^J$ be the largest power of two not exceeding $s$. Then
+$$
+\sum_{k=1}^M\frac{e^{-8s^2\|k\phi\|^2}}{k}\le\frac{16}{s}.
+$$
+

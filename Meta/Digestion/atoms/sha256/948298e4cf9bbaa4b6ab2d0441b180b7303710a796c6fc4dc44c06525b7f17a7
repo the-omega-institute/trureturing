@@ -1,0 +1,15 @@
+**Theorem 36.16 (No autonomous readout kernel and no full-space spectral gap).** For every $L\ge1$ and $0<p\le1$, there is no Markov matrix $M$ on $\mathcal W_L$ satisfying
+$$
+q_{L\#}P_p\eta=M(q_{L\#}\eta)
+\qquad\text{for every }\eta\in\mathcal P(K).
+$$
+For $0<p<1$, let the dual Markov operator on complex $L^2(m)$ be
+$$
+U_pg=(1-p)g+p\,g\circ T.
+$$
+On the mean-zero subspace $L^2_0(m)$, for every $n\ge1$,
+$$
+\|U_p^n\|_{L^2_0(m)\to L^2_0(m)}=1.
+$$
+In particular the full operator has no positive $L^2$ spectral gap, despite the finite-readout mixing bounds.
+

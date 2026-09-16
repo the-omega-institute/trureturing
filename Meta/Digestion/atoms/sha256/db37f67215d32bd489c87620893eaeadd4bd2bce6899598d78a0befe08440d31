@@ -1,0 +1,17 @@
+**Theorem 36.10 (Uniform finite-readout upper bound).** For every $L\ge1$, $0<p<1$, and $n\ge1$,
+$$
+e_{L,p}(n)
+\le\min\left\{2,\frac{64G_L}{\sqrt{np(1-p)}}\right\}.
+$$
+The bound is simultaneous over all initial probabilities on $K$, not merely over natural-core initial states.
+
+**Proof.** Fix any $x\in K$ and let $\rho=H_\#P_p^n\delta_x$. By Theorem 36.4 this is a translate of $\nu_{n,p}$. For every observation cylinder,
+$$
+\rho(J_w)\le P_p^n\delta_x(C_w)\le\rho(\overline{J_w}).
+$$
+Both phase-arc probabilities differ from their common Haar length $m(C_w)$ by at most $64/s$, by Theorem 36.8. Hence
+$$
+|P_p^n\delta_x(C_w)-m(C_w)|\le\frac{64}{s}.
+$$
+This sandwich remains valid if the law charges either member of a split fiber: it does not assign the boundary mass to a fictitious common endpoint convention. Summing over the $Q_L=G_L$ classes proves $D_{L,p}(n,x)\le64G_L/s$. The full-variation bound by two and the Dirac reduction of Theorem 36.5 finish the proof. $\square$
+

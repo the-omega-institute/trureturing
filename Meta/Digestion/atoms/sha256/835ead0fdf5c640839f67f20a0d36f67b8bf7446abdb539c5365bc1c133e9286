@@ -1,0 +1,19 @@
+**Theorem 36.15 (Deterministic endpoints and failure of parameter-uniform mixing).** For every $L\ge1$ and $n\ge0$,
+$$
+e_{L,0}(n)=e_{L,1}(n)=2(1-\alpha^{L+1}).
+$$
+For either deterministic parameter and every $x\in K$,
+$$
+D_{L,p}(n,x)\ge2(1-\alpha^L)>0.
+$$
+Moreover,
+$$
+\sup_{0<p<1}e_{L,p}(n)=2(1-\alpha^{L+1})
+$$
+for every finite $n$. Thus fixed-kernel uniform-in-initial-state convergence does not imply convergence uniform over all Bernoulli parameters.
+
+If instead $p(1-p)\ge v_0>0$, the uniform estimate is
+$$
+e_{L,p}(n)\le\min\left\{2,\frac{64G_L}{\sqrt{nv_0}}\right\}\qquad(n\ge1).
+$$
+

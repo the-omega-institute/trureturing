@@ -1,0 +1,22 @@
+**Theorem 36.4 (Exact binomial law on the original successor).** For $0<p<1$, $n\ge0$, and every finite signed Borel measure $\eta$,
+$$
+P_p^n\eta
+=\sum_{j=0}^n\binom njp^j(1-p)^{n-j}(T^j)_\#\eta.
+$$
+Write $b_{n,p}(j)=\binom njp^j(1-p)^{n-j}$ and
+$$
+\nu_{n,p}=\sum_{j=0}^n b_{n,p}(j)\delta_{[j\phi]}.
+$$
+Then
+$$
+H_\#P_p^n\eta=\nu_{n,p}*H_\#\eta.
+$$
+In particular, $H_\#P_p^n\delta_x$ is the translate of $\nu_{n,p}$ by $H(x)$. Also $P_p^nm=m$ and $P_p^{n+r}=P_p^nP_p^r$.
+
+At every incoming split fiber, the iterates in the binomial sum are exactly
+$$
+T^j x_r^\pm=x_{r-j}^\pm\quad(0\le j<r),\qquad
+T^j x_r^\pm=Z(j-r)\quad(j\ge r).
+$$
+Consequently the two branches remain distinct until their actual coalescence, including under the identity term $j=0$.
+

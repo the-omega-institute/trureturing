@@ -1,0 +1,32 @@
+**Theorem 36.5 (Dirac reduction and monotonicity without a quotient chain).** For every $L\ge1$, $0\le p\le1$, and $n,r\ge0$,
+$$
+e_{L,p}(n)=\max_{x\in K}D_{L,p}(n,x),
+$$
+$$
+e_{L,p}(n+r)\le e_{L,p}(n),\qquad
+e_{L,p}(n)\le e_{L+1,p}(n),
+$$
+$$
+e_{L,p}(0)=2(1-\alpha^{L+1}).
+$$
+Thus the first-passage definition of $\tau$ agrees with the definition requiring the error bound at every subsequent time.
+
+**Proof.** For every initial probability $\eta$, its readout vector is the coordinatewise integral of the readout vectors from Diracs. Hence
+$$
+\|q_{L\#}P_p^n\eta-q_{L\#}m\|_{\mathrm{TV}}
+\le\int_K D_{L,p}(n,x)\,d\eta(x)
+\le\sup_xD_{L,p}(n,x).
+$$
+The reverse inequality follows by taking $\eta=\delta_x$. Each coordinate of the readout vector is a finite linear combination of the continuous functions $\mathbf1_{C_w}\circ T^j$. Therefore $D_{L,p}(n,\cdot)$ is continuous and attains its supremum on $K$.
+
+The full semigroup gives
+$$
+e_{L,p}(n+r)
+=\sup_{\eta\in\mathcal P(K)}
+\|q_{L\#}P_p^n(P_p^r\eta)-q_{L\#}m\|_{\mathrm{TV}}
+\le e_{L,p}(n),
+$$
+since $P_p^r\eta$ is a probability. No transition matrix on $\mathcal W_L$ enters this argument. Truncation from depth $L+1$ to depth $L$ contracts variation, proving the depth monotonicity.
+
+For a point mass at a readout class $w$, the distance to $q_{L\#}m$ is $2(1-m(C_w))$. Maximizing and using Theorem 36.2 gives the time-zero formula. Finally, time monotonicity proves the assertion about the two definitions of mixing time. $\square$
+

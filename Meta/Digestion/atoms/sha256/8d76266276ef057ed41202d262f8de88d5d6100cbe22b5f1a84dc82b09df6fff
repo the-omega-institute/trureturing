@@ -1,0 +1,16 @@
+**Theorem 36.2 (The invariant Haar lift and its cylinder masses).** There is a unique Borel probability measure $m$ on $K$ such that $H_\#m=\lambda$. It is atomless, regular, and satisfies $T_\#m=m$. Its cylinder masses are
+$$
+m(C_w)=\alpha^L\quad\text{if }w_{L-1}=0,
+\qquad
+m(C_w)=\alpha^{L+1}\quad\text{if }w_{L-1}=1.
+$$
+In particular,
+$$
+\min_{w\in\mathcal W_L}m(C_w)=\alpha^{L+1},\qquad
+\max_{w\in\mathcal W_L}m(C_w)=\alpha^L,
+$$
+$$
+1\le Q_L\alpha^L\le\phi,\qquad
+\frac{\alpha}{Q_L}\le m(C_w)\le\frac{\phi}{Q_L}.
+$$
+

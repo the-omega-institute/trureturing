@@ -1,0 +1,11 @@
+**Theorem 36.6 (Weighted interval discrepancy, including endpoint atoms).** For a probability measure $\rho$ on the circle, define
+$$
+\widehat\rho(k)=\int_{\mathbb T}e^{2\pi ik\theta}\,d\rho(\theta).
+$$
+Let $\mathscr D(\rho)$ be the supremum of $|\rho(A)-\lambda(A)|$ over circle arcs, allowing open, closed, and either half-open endpoint convention, as well as singletons, the empty set, and the whole circle. For every integer $M\ge1$,
+$$
+\mathscr D(\rho)
+\le\frac6{M+1}+\frac4\pi\sum_{k=1}^M\frac{|\widehat\rho(k)|}{k}.
+$$
+The bound is invariant under translation of $\rho$, and applies in particular to arbitrary real probability weights on a finite support.
+

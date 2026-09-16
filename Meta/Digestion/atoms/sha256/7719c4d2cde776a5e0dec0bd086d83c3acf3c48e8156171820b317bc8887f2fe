@@ -1,0 +1,32 @@
+**Theorem 36.15 (Deterministic endpoints and failure of parameter-uniform mixing).** For every $L\ge1$ and $n\ge0$,
+$$
+e_{L,0}(n)=e_{L,1}(n)=2(1-\alpha^{L+1}).
+$$
+For either deterministic parameter and every $x\in K$,
+$$
+D_{L,p}(n,x)\ge2(1-\alpha^L)>0.
+$$
+Moreover,
+$$
+\sup_{0<p<1}e_{L,p}(n)=2(1-\alpha^{L+1})
+$$
+for every finite $n$. Thus fixed-kernel uniform-in-initial-state convergence does not imply convergence uniform over all Bernoulli parameters.
+
+If instead $p(1-p)\ge v_0>0$, the uniform estimate is
+$$
+e_{L,p}(n)\le\min\left\{2,\frac{64G_L}{\sqrt{nv_0}}\right\}\qquad(n\ge1).
+$$
+
+**Proof.** At $p=0$ the law from a Dirac is unchanged. At $p=1$ it is $\delta_{T^nx}$. Its readout distance is therefore $2(1-m(C_{q_L(T^nx)}))$, which is at least $2(1-\alpha^L)$. Surjectivity of $T^n$ makes every readout class attainable, so maximization gives the minimum-mass formula. The identity case is the same calculation.
+
+For an interior parameter, Theorem 36.5 gives $e_{L,p}(n)\le e_{L,p}(0)=2(1-\alpha^{L+1})$. Choose $x=Z(G_{L-1})$, in a minimum-mass cylinder. The no-successor term has weight $(1-p)^n$, so
+$$
+\|P_p^n\delta_x-\delta_x\|_{\mathrm{TV}}
+\le2(1-(1-p)^n).
+$$
+After readout and the reverse triangle inequality,
+$$
+e_{L,p}(n)\ge2(1-\alpha^{L+1})-2(1-(1-p)^n).
+$$
+Letting $p\downarrow0$ proves the supremum identity. The other endpoint has the same limiting error: use $x=z_{L,n}$ from Theorem 36.11, so that $T^nx$ belongs to the minimum-mass cylinder, and bound the contribution of all terms except $j=n$ by $2(1-p^n)$. The final estimate follows directly from Theorem 36.10. $\square$
+
