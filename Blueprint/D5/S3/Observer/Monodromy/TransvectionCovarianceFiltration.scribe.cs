@@ -73,7 +73,7 @@ internal sealed class TransvectionCovarianceFiltrationDocument : IScribeDocument
                             + "For an undirected graph the earliest pair depth has the "
                             + "ordinary formula min_b[d(a,b)+d(b,u)+d(b,v)]. The trace-kernel "
                             + "corollary, shortest-tree interpretation, physical Gaussian "
-                            + "state witnesses and sample-count lower bounds are ordinary "
+                            + "state witnesses and measurement-setting lower bound are ordinary "
                             + "deductions in the research text, not additional Lean "
                             + "declarations claimed by this source.")),
                     Paragraph(Text(
@@ -88,7 +88,7 @@ internal sealed class TransvectionCovarianceFiltrationDocument : IScribeDocument
                         "External context: Hjalmar Rall, Gaussian Dynamical Quantum "
                             + "State Tomography, arXiv:2602.18044v1, studies a fixed "
                             + "homogeneous Gaussian evolution with one homodyne sensor. "
-                            + "Chan Roh and coauthors, arXiv:2603.21380v1, study physical "
+                            + "Chan Roh and coauthors, arXiv:2603.21380v2, study physical "
                             + "multimode covariance reconstruction from homodyne data. "
                             + "The present statement instead allows switched signed "
                             + "rank-one controls and gives every exact graph-indexed "
