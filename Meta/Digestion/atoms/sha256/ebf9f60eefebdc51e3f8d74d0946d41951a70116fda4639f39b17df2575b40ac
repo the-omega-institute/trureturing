@@ -1,0 +1,46 @@
+**Definition 37.0 (Original carrier, adopted hypotheses, and conventions).** Let
+$$
+\phi=\frac{1+\sqrt5}{2},\qquad \alpha=\phi^{-1},\qquad \delta=[\phi]\in\mathbb T=\mathbb R/\mathbb Z,
+$$
+and retain the original carrier and phase observation of §20:
+$$
+K=\{x\in\{0,1\}^{\mathbb N}:x_jx_{j+1}=0\text{ for all }j\},\qquad 0_K=Z(0),
+$$
+$$
+H(x)=\left[\sum_{j\ge0}(-1)^{j+1}\alpha^{j+2}x_j\right].
+$$
+Here $T:K\to K$ is the actual continuous successor of Definition 20.1. In particular, it is not an endpoint-selecting binary operation. We use the established facts that $K$ is compact metrizable, $Z(\mathbb N)$ is dense, $H$ is a continuous surjection, and
+$$
+T Z(n)=Z(n+1),\qquad H(Tx)=H(x)+\delta.
+$$
+Put
+$$
+E_m=-m\delta\quad(m\ge1),\qquad E=\{E_m:m\ge1\},\qquad \Sigma=\{-1,+1\}.
+$$
+For $\gamma\notin E$, let $k_\gamma$ be the unique point of $H^{-1}(\{\gamma\})$. For $\gamma=E_m$, retain the two oriented lifts $x_m^-,x_m^+$ of Theorem 20.2. Superscripts $+$ and $-$ mean $+1$ and $-1$. Signs refer to the orientation of the $H$-circle, not to the reflected mechanical intercept $[\alpha^2]-H(x)$. In particular,
+$$
+x_1^+=u=(10)^\infty,\qquad x_1^-=v=(01)^\infty,
+$$
+$$
+Tx_m^s=x_{m-1}^s\quad(m\ge2),\qquad Tx_1^s=0_K.
+$$
+We use the exact positional cylinder intervals and finite cut sets from Theorem 20.2. We also retain the one-sided normalization of Theorem 20.7:
+$$
+\Phi(0_K)=w,\qquad \Phi(x_1^-)=0w,\qquad \Phi(x_1^+)=1w,
+$$
+where $w$ is the characteristic mechanical word with slope and intercept $\alpha^2$. Thus the two predecessors coalesce under the one-sided successor; they are not identified beforehand.[^rro37_onesided]
+
+Define the set of actual self-maps
+$$
+\mathcal I=\{T^n:n\in\mathbb N\},\qquad
+\mathscr E=\overline{\mathcal I}^{\,K^K},
+$$
+where $K^K$ has the product topology. Consequently $p_i\to p$ means $p_i(x)\to p(x)$ for every $x\in K$. Multiplication is
+$$
+pq=p\circ q.
+$$
+A right translation is $R_q(p)=pq$, with $q$ fixed. A left translation is $L_p(q)=pq$, with $p$ fixed. Finally, write
+$$
+e(p)=p(0_K),\qquad \vartheta(p)=H(e(p)).
+$$
+

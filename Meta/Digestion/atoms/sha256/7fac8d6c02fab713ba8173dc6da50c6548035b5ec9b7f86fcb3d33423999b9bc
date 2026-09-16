@@ -1,0 +1,27 @@
+**theorem 37.9 (Exact evaluation fibres and failure of congruence).** Evaluation $e:\mathscr E\to K$ is a continuous surjection, hence a topological quotient map. Its fibres are exactly
+$$
+e^{-1}(\{Z(n)\})=\{T^n,P_{n\delta}^+,P_{n\delta}^-\}\qquad(n\ge0),
+$$
+$$
+e^{-1}(\{x_m^s\})=\{P_{E_m}^s\}\qquad(m\ge1),
+$$
+and
+$$
+e^{-1}(\{k_\theta\})=\{P_\theta^+,P_\theta^-\}
+\quad\text{if }\theta\notin E\cup\{n\delta:n\ge0\}.
+$$
+In particular,
+$$
+e^{-1}(\{0_K\})=\{\operatorname{id}_K,P_0^+,P_0^-\}.
+$$
+Moreover,
+$$
+p(Z(k))=T^k(e(p))\qquad(k\ge0).
+$$
+Thus two operators have equal evaluation at zero exactly when they agree on the entire finite natural core. This still need not make them equal as functions on $K$.
+
+The equality kernel of $e$ is preserved by common left multiplication, but not by common right multiplication. It is therefore not a semigroup congruence, and no binary operation on $K$ can satisfy
+$$
+e(pq)=e(p)*e(q)\qquad\text{for every }p,q\in\mathscr E.
+$$
+
