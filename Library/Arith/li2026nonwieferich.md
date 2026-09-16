@@ -485,3 +485,247 @@ and a limit on a proposed WSS inference. No new externally posed open problem,
 WSS existence result, unbounded WSS exclusion family, or kernel-certified
 Lean declaration is claimed. Global priority for the combined formulation
 is unconfirmed; its standard analytic mechanisms are explicitly credited.
+
+## 6. Exact golden conic transforms at every sufficiently high precision
+
+Keep the original golden norm Q(x,y)=x^2+xy-y^2. The following refines
+GD2 at odd precision, supplies the exact phase rather than only an upper
+bound, and counts the active primitive frequencies. It remains in the same
+Wieferich problem family and the same actual coordinate carrier.
+
+### 6.1 An exact chart, with its inverse and its quadratic normal phase
+
+Put
+
+$$J=\begin{pmatrix}2&1\\1&-2\end{pmatrix},\qquad
+V(x,y)=(x-2y,-2x-y).$$
+
+Work first in any commutative residue ring R=Z/M. Assume that two and
+c=Q(z) are units. For a parameter t with 1-5t^2 a unit, define
+
+$$\Gamma_z(t)=\frac{(1+5t^2)z+2tV(z)}{1-5t^2}. \tag{ES1}$$
+
+All inverses here are of explicitly specified units. No inverse of the
+modulus or of a nonunit is used.
+
+**Theorem ES1.** The point Gamma_z(t) has norm c. If Q(w)=c, put
+
+$$A=\frac{Jz\cdot w}{2c},\qquad
+B=\frac{z_2w_1-z_1w_2}{2c}.$$
+
+Then w=Az+BV(z) and A^2-5B^2=1. Whenever 1+A is a unit, the unique
+chart parameter of w is t=B/(1+A); its denominator inverse is
+(1+A)/2. For every scalar lambda,
+
+$$\lambda Jz\cdot\Gamma_z(t)
+ =2c\lambda+\frac{20c\lambda t^2}{1-5t^2}. \tag{ES2}$$
+
+If t^3=0 in R, these exact identities simplify to
+
+$$\Gamma_z(t)=(1+10t^2)z+2tV(z),\qquad
+\lambda Jz\cdot\Gamma_z(t)=2c\lambda+20c\lambda t^2. \tag{ES3}$$
+
+**Proof.** Direct polynomial identities give
+Q(V(z))=-5c, Jz dot V(z)=0, and det(z,V(z))=-2c. The latter is a unit,
+so the displayed inverse coordinates give w=Az+BV(z), and the norm
+is c(A^2-5B^2). For a chart point those coordinates are
+A=(1+5t^2)/(1-5t^2) and B=2t/(1-5t^2). Conversely, substituting
+A^2-5B^2=1 and e(1+A)=1 gives 1-5(Be)^2=2e, proving the asserted
+inverse denominator and reconstruction. Every chart representation
+satisfies (1+A)t=B, which proves uniqueness. Pairing the chart with
+lambda Jz gives ES2. If t^3=0, then t^4=0 and
+(1-5t^2)^(-1)=1+5t^2; expansion yields ES3. These are identities in
+rings with zero divisors as well as in fields.
+
+At R=Z/p^m, p>5, fix a norm-c point z. ES1 gives a bijection
+
+$$p^hR\ \longleftrightarrow\
+\{w:Q(w)=c,\ w=z\pmod{p^h}\},\qquad h\ge1. \tag{ES4}$$
+
+Indeed, the forward map stays in that ball. Conversely A=1 and B=0
+modulo p^h, so 1+A is a unit and the recovered parameter lies in p^hR.
+Thus the slice has exactly p^(m-h) points, and the chart covers ALL
+of them, not only a selected family of lifts.
+
+### 6.2 Exact vanishing criterion and the unique normal point
+
+Fix p>5, h>=1, m>=2h, c prime to p and z0 modulo p^h with Q(z0)=c.
+Let S_m=S_m(c,z0) be the same actual norm slice as in GD2. Let
+xi=(u,v) modulo p^m be primitive, meaning xi is nonzero modulo p, and
+write
+
+$$\mathcal F_m(\xi)=\sum_{z\in S_m}e_{p^m}(\xi\cdot z),\qquad
+ e_N(a)=\exp(2\pi i a/N).$$
+
+**Theorem ES2.** The sum is nonzero if and only if
+
+$$\exists\lambda_0\in(\mathbb Z/p^h)^\times:
+\quad\xi=\lambda_0Jz_0\pmod{p^h}. \tag{ES5}$$
+
+When this holds, there is a unique pair (lambda,z*) modulo p^m such that
+
+$$5c\lambda^2=Q(\xi),\qquad
+z_*=(5\lambda)^{-1}J\xi,\qquad z_*=z_0\pmod{p^h}.
+\tag{ES6}$$
+
+It satisfies Q(z*)=c and xi=lambda Jz*. If ES5 fails, the sum is zero.
+If it holds, put r=floor(m/2) and
+
+$$G_p(a)=\sum_{s\bmod p}e_p(as^2).$$
+
+The entire complex value is
+
+$$\boxed{
+\mathcal F_m(\xi)=
+\begin{cases}
+p^r e_{p^m}(2c\lambda),&m=2r,\\
+p^r e_{p^m}(2c\lambda)G_p(5c\lambda),&m=2r+1.
+\end{cases}} \tag{ES7}$$
+
+**Proof of existence and uniqueness of the normal point.** A unit norm
+makes one coordinate of Jz0 a unit, so ES5 determines lambda0 uniquely.
+Applying Q and using Q(Jw)=5Q(w) gives the square equation modulo p^h.
+Its derivative 10c lambda0 is a unit, hence each next base-p digit of
+lambda is uniquely determined up to precision p^m. Formula ES6 then
+provides z*, with the required norm and normal vector. If a normal point
+exists modulo p^r, reducing it gives ES5. Globally the square equation
+has at most two roots, with opposite signs and opposite points. Since
+h>=1 and c is a unit, at most one lies in the prescribed residue ball.
+
+**Proof of the sum formula.** As in GD2, partition the slice by its
+residues modulo p^ceil(m/2). In the remaining affine norm-lift fibre,
+character orthogonality kills every term unless xi is proportional to
+the norm gradient modulo p^r. All surviving points are therefore
+congruent to z* modulo p^r. ES4 parametrizes their ENTIRE contribution
+by t in p^r R. No enumeration of all residues is used to justify this
+reduction.
+
+If m=2r, t^2=0, so ES2 gives the constant phase 2c lambda. There are
+p^r parameters. If m=2r+1, then r>=1 and t^3=0, since 3r>=2r+1.
+Write t=p^r s, with s modulo p^(r+1). ES3 gives the phase
+2c lambda+20c lambda p^(2r)s^2. Its second part depends only on s
+modulo p, and each such residue has p^r lifts. The sum is therefore
+p^r e_(p^m)(2c lambda)G_p(20c lambda). The substitution s -> 2s in
+the finite field makes G_p(20c lambda)=G_p(5c lambda), proving ES7.
+
+Finally, for a nonzero modulo p, exact additive-character orthogonality
+and the invertible substitution (x,y)=(s-t,s+t) give
+
+$$|G_p(a)|^2=\sum_{x,y\bmod p}e_p(axy)=p.$$
+
+Thus ES7 is nonzero in every case satisfying ES5. This proves both
+directions of the claimed vanishing criterion, including odd precision.
+
+### 6.3 Sharp magnitude and the complete primitive-frequency support
+
+**Corollary ES3.** For every primitive xi and m>=2h,
+
+$$\boxed{|\mathcal F_m(\xi)|^2\in\{0,p^m\}.} \tag{ES8}$$
+
+For the normalized transform on the slice the nonzero squared modulus
+is p^(2h-m). Exactly
+
+$$\boxed{(p-1)p^{2m-h-1}} \tag{ES9}$$
+
+primitive frequencies have that nonzero value. Equivalently, the
+fraction of primitive frequencies that survive is p^(1-h)/(p+1).
+The total squared normalized transform over primitive frequencies is
+(p-1)p^(m+h-1).
+
+**Proof.** ES8 follows from ES7 and the Gauss-sum energy identity.
+There are exactly (p-1)p^(h-1) unit normal vectors lambda0 Jz0 modulo
+p^h. Each has p^(2(m-h)) lifts as a frequency modulo p^m. ES5 shows
+that these and only these survive. Multiplication gives ES9. Divide
+by p^(2m)-p^(2m-2) for the proportion, and multiply by p^(2h-m) for
+the energy. These formulas apply to a SINGLE prescribed norm slice;
+phases from different slices may cancel.
+
+In particular the original GD2 bound improves from p^(h-floor(m/2))
+to the sharp value p^(h-m/2). At odd precision the previous bound
+lost a factor sqrt(p). The old bound is valid but need not be attained.
+For p=7,h=1,m=3,c=1,z0=(1,0), the normal frequency (2,1) has exact
+squared sum 343 on a slice of 49 points. Its magnitude is 7*sqrt(7),
+not the former upper bound 49.
+
+### 6.4 At most four critical contributions on the original golden orbit
+
+Return to the original phi, its residue order tau and its ACTUAL initial
+WSS depth h, as in GD1. Assume m>=2h. Its full orbit H_m is the union
+of the tau residue slices specified there, with norms either one or
+minus one.
+
+**Theorem ES4.** For a primitive frequency xi, its unnormalized transform
+over H_m is the sum of the terms ES7 indexed by
+
+$$\mathcal K_m(\xi)=\{(c,\lambda):c\in\{1,-1\},\
+\lambda\text{ a unit},\ 5c\lambda^2=Q(\xi)\pmod{p^m},\
+(5\lambda)^{-1}J\xi\pmod{p^h}\in H_h\}.$$
+
+This set has at most four elements. If p=3 modulo four it has at most
+two. If p divides Q(xi), it is empty. In particular, putting C_p=2
+for p=3 modulo four and C_p=4 otherwise,
+
+$$\boxed{
+\left|\frac1{\#H_m}\sum_{z\in H_m}e_{p^m}(\xi\cdot z)\right|
+\le\frac{C_p}{\tau}p^{h-m/2}.} \tag{ES10}$$
+
+The bound may be capped by one. No independence of the slices is asserted.
+
+**Proof.** Apply ES2 to each actual slice. A unit square equation has
+at most two roots for each of the two possible norms. If -1 is a
+nonsquare modulo p, only one of Q(xi)/5 and -Q(xi)/5 can be a unit
+square. A nonunit Q(xi) allows neither norm. Thus at most C_p slices
+can contribute, even when tau is much larger. Each nonzero sum has
+magnitude p^(m/2), and #H_m=tau*p^(m-h). The triangle inequality gives
+ES10, with any inter-slice cancellations retained in the exact formula.
+
+Using the same interval Fourier expansion as GD3 consequently gives
+for m-r+1>=2h
+
+$$\boxed{
+|P_{p,m,r}(a,b)-p^{-2r}|
+\le\frac{C_p}{\tau}p^{h-(m-r+1)/2}(2+m\log p)^2.
+} \tag{ES11}$$
+
+Indeed, every nonzero frequency with a nonzero interval coefficient has
+conductor exponent at least m-r+1. Reduction of the actual orbit is
+surjective with equal fibres, so ES10 applies at that conductor. The
+two interval Fourier l1 norms are each at most 2+m log p, as proved in
+GD3. This proves ES11 without an exchange of limiting operations.
+
+### 6.5 What this does and does not resolve
+
+ES1 supplies the exact finite-ring parametrization used in the sum proof.
+ES7 determines phase and magnitude, not merely a decay estimate. ES9
+shows that conditioning on another low digit changes the surviving
+normal-frequency support. ES10 uses the global quadratic geometry to
+replace a sum over tau possible slices by at most four actual critical
+contributions. These are refinements of the existing golden-unit digit
+subcase of the source problem, within the same proof family.
+
+They do not produce a WSS prime. In particular ES10-ES11 still require
+m>=2h, or its stated conductor version. No estimate independent of the
+unknown h is thereby available at modulus p^2. The spectral support of
+a slice defined using p^h cannot independently prove what that h is.
+The exact phase formula keeps the initial choice of the original phi
+rather than replacing it by a freely adjusted generator.
+
+The formal companion is
+`D5/S3/Arith/GoldenConicStationaryChart.lean`, with its authored Scribe.
+It uses GoldenApparition.GoldenMod M and proves the norm, inverse and
+quadratic phase theorem ES1 by explicit ring identities. Its assumptions
+are only the displayed inverse certificates. The exact Fourier-sum,
+support-count and original-orbit statements ES2-ES4 are ordinary proofs
+above, not additional claims of Lean kernel certification.
+
+Rational parametrization of a nonsingular conic, quadratic Gauss sums
+and p-adic stationary phase are classical mechanisms. Related primary
+literature includes Keith M. Rogers, *A van der Corput lemma for the
+p-adic numbers*, Proc. Amer. Math. Soc.133(2005),3525-3534,
+https://arxiv.org/abs/math/0311014 ; and Djordje Milicevic and Sichen Zhang,
+*Distribution of Kloosterman paths to high prime power moduli*,
+https://arxiv.org/abs/2005.08865 . The present formulas are a direct
+specialization and refinement for the actual constrained golden norm
+orbits. No first-ever claim for stationary phase, Gauss evaluation, or
+conic parametrization is made, and no separately posed external open
+problem is counted as newly solved.
