@@ -1,0 +1,10 @@
+**Definition 20.3 (Mechanical words and future coding).** For a real intercept $\rho$, define the lower and upper mechanical words of slope $\beta$ by
+$$
+M^{\mathrm{lo}}_\rho(n)
+=\lfloor\rho+(n+1)\beta\rfloor-\lfloor\rho+n\beta\rfloor,
+$$
+$$
+M^{\mathrm{up}}_\rho(n)
+=\lceil\rho+(n+1)\beta\rceil-\lceil\rho+n\beta\rceil
+\qquad(n\ge0).
+$$

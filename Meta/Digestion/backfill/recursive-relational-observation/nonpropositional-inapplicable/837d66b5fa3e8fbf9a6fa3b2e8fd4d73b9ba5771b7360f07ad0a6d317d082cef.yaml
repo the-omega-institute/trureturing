@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:837d66b5fa3e8fbf9a6fa3b2e8fd4d73b9ba5771b7360f07ad0a6d317d082cef
+  normalized_sha256: sha256:837d66b5fa3e8fbf9a6fa3b2e8fd4d73b9ba5771b7360f07ad0a6d317d082cef
+cas_ref: sha256:837d66b5fa3e8fbf9a6fa3b2e8fd4d73b9ba5771b7360f07ad0a6d317d082cef
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本子句定义任意指标非负和、绝对可和系数空间、有限原子总变差以及参数范数常数，后续数值推论已拆出，故仅登记定义性材料。
+    previous_atom_id: 47e231a04b0be7f918ade1644c6ef37ca109e9957d76d81f27470a0195218200
+    next_atom_id: e80744a60a86987f8eb2703cd294ed8f109be79a124b971c744636f0c592c66b

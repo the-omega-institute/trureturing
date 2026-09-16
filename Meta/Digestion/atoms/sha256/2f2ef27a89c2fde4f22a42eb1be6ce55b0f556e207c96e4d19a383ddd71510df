@@ -1,0 +1,12 @@
+**定理 38.2（有限联合闭图的准确相位—严格锥判据）。** 在假设38.0下，对定义38.1中的全部 $d,r,A,x,y$，
+$$
+(x,y)\in\mathcal G_A
+\quad\Longleftrightarrow\quad
+\left[
+H(y_j)=\sum_{i=1}^d A_{ji}H(x_i)\quad(1\le j\le r)
+\right]
+\quad\land\quad
+\left[\exists\xi\in\mathbb R^d,\ B(A;x,y)\xi>0\right].
+$$
+右侧成立时，可以用一列实际自然数向量同时逼近全部输入和全部输出；当 $d>0$ 时，还可要求其第 $k$ 项的每个输入整数都不小于 $k$。所用单侧收敛前提是[定理16.4证明中的定向逼近等价](https://raw.githubusercontent.com/the-omega-institute/trureturing/48b8fc89309eb665163095a8a9602798f11179b4/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)。
+
