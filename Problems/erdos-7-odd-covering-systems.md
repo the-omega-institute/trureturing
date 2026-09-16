@@ -160,6 +160,17 @@ by (SH30). Its810 exact whole-cost observations and complete tails
 have a separate certificate; the final positive margin sharpens the
 bound without changing the cost parameter or requiring a new law.
 
+A [fixed convex-potential envelope](../docs/reports/erdos7-odd-covering/marked_head_profile.md#fixed-convex-potentials-for-the-actual-cap-charge)
+bounds the actual-cap energy and assigned charge by two scalar whole costs.
+It retains a single potential before conditional comparison, with a complete
+auxiliary tail whose cutoff is determined by that potential. A separate
+clipped joint comparison justifies potentials chosen after the common
+auxiliary value; the scalar comparison alone does not. On the SH18 law,
+the explicit potential `(0,56,128,512)/315` at prime11, threshold4 and
+`W=10000` gives contribution `<2386.505900`, improving the diagonal
+contribution by `>0.069949731`. Its exact replay uses no quantization.
+This one-step improvement does not close the five-prime continuation.
+
 The [fixed scalar schedule obstruction](../docs/reports/erdos7-odd-covering/marked_head_profile.md#all-integer-schedules-through23-for-the-fixed-scalar-feature-map)
 excludes every one of the530145 integer threshold schedules through
 11,13,17,19,23 for the specified (SH24) feature certificate. Its

@@ -5262,3 +5262,343 @@ python3 -I -O verify_seven_digit_classification.py
 ```
 
 Alternatively pass the canonical input path through `--source-certificate` and the result path through `--check`. The program uses only the Python standard library, with unbounded integer arithmetic and explicit guards unaffected by optimization. It checks raw types on all consumed integer geometry fields, pins the six canonical shapes and their original old classes, reconstructs all carrier states, checks the old maps form a group preserving every cofactor-cylinder family, checks disjoint orbit coverage, and compares the complete deterministic result. It records hashes of all reconstructed state sets and orbit-representative sets without storing the large sets. It also verifies the displayed two-carrier witness and the exact203 digit-orbit sizes against all16807 digit tuples. The results are finite arithmetic certificates with the ordinary equivalence and all-height transport proofs above; no Lean kernel verification or universal numerical moment bound is claimed.
+
+### Fixed convex potentials for the actual-cap charge
+
+This result uses the same normalized physical kernels, supported head law,
+original modulus labels and complete test loads as AP1–AP5 and W1 in
+`Problems/erdos-7-odd-covering-systems.md`. It is an ordinary analytic bridge.
+No new Lean declaration or unrestricted-prime endpoint is asserted.
+
+#### Fixed-potential envelope
+
+Fix an integer 2≤T<p−1 and W>0. Put
+
+    d=p−1−T, a=(3p−1)/(p−1)², c=(p−1)/d,
+    κ(z)=(p−1)/(p−1−min(z,T)), z≥1,
+    H0(z,y)=W(z−T)_+/d+aκ(z)y², z,y≥1.
+
+Choose real knots q1,…,qT with q1=0 and
+
+    0≤q2−q1≤q3−q2≤…≤qT−q_(T−1)≤W/d.                (1)
+
+Let P_q interpolate these knots linearly, and extend it for z≥T by
+
+    P_q(z)=qT+W(z−T)/d.
+
+Define
+
+    V_q(y)=max_(1≤k≤T) {aκ(k)y²−qk}.                 (2)
+
+Then P_q and V_q are nonnegative, increasing and convex on[1,∞), and
+
+    H0(z,y)≤P_q(z)+V_q(y)                            (3)
+
+for all real z,y≥1. More precisely,
+
+    V_q(y)=sup_(z≥1) [H0(z,y)−P_q(z)].               (4)
+
+For each fixed y, the expression on the right is convex in z inside each
+unit cell belowT: κ is convex there and P_q is affine. Its maximum on each
+cell is attained at an endpoint. For z≥T the expression is constantly
+acy²−qT. This proves(4). Equation(2) then makes V_q an increasing convex
+maximum of positive quadratics minus constants; its k=1 term is positive.
+Condition(1) gives the assertions for P_q.
+
+The global z-convexity of H0 is NOT needed. In particular this result does
+not require the stronger W bound needed for the clipped joint cost H_K.
+
+Define diagonal integer potentials by u(1)=v(1)=0 and
+
+    u(k+1)−u(k)=H0(k+1,k)−H0(k,k),
+    v(k+1)−v(k)=H0(k+1,k+1)−H0(k+1,k),
+
+with linear interpolation. Supermodularity bounds H0 by H0(1,1)+u+v
+on the integer grid; separate convexity inside every unit cell extends
+that bound to real arguments. The u increments beforeT are
+ak²[κ(k+1)−κ(k)], followed by W/d; those of v are
+aκ(k+1)(2k+1). Thus u is convex provided
+W≥a(T−1)²(p−1)/(d+1), while v is convex automatically.
+These diagonal potentials are included. Whenever u is convex, choose
+qk=u(k); this diagonal majorant implies V_q≤H0(1,1)+v. Thus this
+family weakly improves that majorant. A different fixed q can improve it
+strictly, as the exact p11 calculation below demonstrates.
+
+#### Physical scalar comparison and finite survivor criterion
+
+Let ν be the actual full old law at this prime. Let R be its original
+weighted mixed load, w=c_actual its natural prefix-cap multiplier, and b
+its conditional assigned mixed-union probability. The existing AP/SH26
+estimates say
+
+    w≤κ(1+R), b≤(1+R−T)_+/d.
+
+For every complete old test A,
+
+    Wb+a w A²≤P_q(1+R)+V_q(A).                        (5)
+
+Let μ be the fixed full head law, and let N be the AP auxiliary multiplier
+from the preceding tail primes. Write F_μ(g)=max_L E_μg(L), over complete
+head tests fixed before sampling the head point. Applying the existing
+scalar original-label comparison and Jensen separately to P_q and V_q gives
+
+    Wβ+aΓ(wν)≤C_p(q),
+    C_p(q)=E_N[F_μ(L↦P_q(NL))+F_μ(L↦V_q(NL))],       (6)
+
+where β=E_νb. Both scalar comparisons use the same actual law and the same
+distribution of N. No physical independence of R and A is asserted.
+W1 then proves
+
+    Γ_new+Wβ≤Γ_old+C_p(q).                            (7)
+
+For a finite schedule with one fixed admissible q_p at each prime, summing
+(7) gives
+
+    Γ_final+WΣ_pβ_p≤G_head+Σ_pC_p(q_p).               (8)
+
+Consequently
+
+    G_head−1+Σ_pC_p(q_p)≤W                            (9)
+
+is sufficient for positive final survivor mass and Γ_conditioned≤1+W,
+using the existing SH28 witness and final conditioning. The full positive
+cap energy is already included in C_p. Criterion(9) is a finite supported
+probability result, not an infinite-prime noncoverage endpoint. A separate
+valid tail theorem is needed to continue it to all remaining primes.
+
+The feasible knot set(1) is compact. For a fixed full head law, C_p(q) is
+convex in q: P_q(z) is affine in q and V_q(y) is a maximum of affine
+functions of q; expectations and suprema preserve convexity. Quadratic
+moment bounds give a uniform integrable envelope. Rational candidate knots
+can therefore be checked independently of any numerical optimizer.
+
+#### Order of optimization and conditioning
+
+In(5)–(6), q is fixed BEFORE scalar conditional comparison. Therefore
+
+    inf_q E_N C(q,N)
+
+is a valid optimized upper bound. The smaller expression
+
+    E_N inf_q C(q,N)
+
+does not follow from that proof. Choosing separate q_n after observing the
+auxiliary N requires a genuine prior comparison of the physical JOINT cost
+to a cost under that common auxiliary. Introducing an independent random q
+only produces a second independent auxiliary variable in the scalar proof;
+it does not justify matching the two indices.
+
+All finite-n head observations must use the full actual head law. In the
+SH18 construction write μ=λ(.|F), with λ(F)≥ρ0>0. For g=P_q or g=V_q,
+if B_g(n) bounds max_L E_λg(nL), then
+
+    F_μ(L↦g(nL))≤g(n)+[B_g(n)−g(n)]/ρ0.             (10)
+
+Every complete L≥1 and g is increasing, so the numerator is nonnegative.
+This saves the minimum cost on the deleted event. The original low315 law
+cannot replace the conditional low marginal without this lifting and
+conditioning argument. A scalar finite-cost representation with signed
+hinge coefficients must use the correct upper/lower bounds for each sign.
+
+#### Complete auxiliary tail; the threshold depends on q
+
+Set
+
+    R_q=max_(1≤k<T) (qT−qk)/[a(c−κ(k))],
+    m_q=min{m∈positive integers : m²≥R_q},
+    B_q=max(T,m_q).
+
+The denominators are positive. For y≥m_q, the k=T term in(2) dominates,
+so V_q(y)=acy²−qT. For every integer n≥B_q, all complete L≥1 satisfy
+
+    P_q(nL)=qT+W(nL−T)/d,
+    V_q(nL)=acn²L²−qT.
+
+Thus, for M≥max_LE_μL and G≥Γ(μ),
+
+    F_μ(P_q(nL))+F_μ(V_q(nL))
+        ≤W(nM−T)/d+acn²G.                           (11)
+
+The qT constants cancel. Equality holds with exact M,G. Generic optimized
+knots do NOT guarantee m_q≤T; assuming the old cutoff T without checking
+R_q is invalid. The diagonal knots satisfy m_q≤T−1.
+
+Let π_n=Pr(N=n), and form the exact tail probability and moments
+
+    P_tail=1−Σ_(n<B_q)π_n,
+    M_tail=E N−Σ_(n<B_q)nπ_n,
+    S_tail=E N²−Σ_(n<B_q)n²π_n.
+
+With certified finite costs U_n,V_n from(10) or a stronger whole-cost
+calculation, a complete bound is
+
+    C_p(q)≤Σ_(n<B_q)π_n(U_n+V_n)
+       +W(M M_tail−T P_tail)/d+acG S_tail.            (12)
+
+No auxiliary tail is discarded. AP supplies
+
+    E N=Π_(r<p)[1+c_r/(r−1)],
+    E N²=Π_(r<p)[1+c_r(3r−1)/(r−1)²].
+
+#### Original zero and unit labels remain available
+
+The fixed-q route also permits the existing FL1–FL4 order of operations.
+Let h be an original old-tail exponent tuple and let A_h be the event
+h≤K for the auxiliary height vector. Keep that tuple's head layout fixed
+across every auxiliary outcome. Define
+
+    g_h^P(z)=E[1_(A_h) P_q(Nz)/N],
+    g_h^V(z)=E[1_(A_h) V_q(Nz)/N].
+
+Collecting each original layout before maximizing yields the valid bounds
+
+    Wβ+aΓ(wν)≤C_p^labels(q)
+      :=Σ_h[F_μ(g_h^P)+F_μ(g_h^V)]≤C_p(q).            (13)
+
+The mixed current-depth weights sum to1, exactly as in AP3–AP4. The tested
+family has one completed head layout per old-tail tuple. No q depending
+on the sampled N is introduced. Selected tuples, including the always
+active zero tuple, can be evaluated before relaxing the remainder.
+
+No new inverse-moment constant is necessary. Define
+
+    Pcor(n,z)=P_q(nz)−Wnz/d−qT+WT/d,
+    Vcor(n,z)=V_q(nz)−acn²z²+qT.
+
+These are nonnegative; Pcor vanishes for n≥T and Vcor for n≥m_q. With
+w_h=Pr(A_h), r_h=E[N1_(A_h)], and π_h(n)=Pr(A_h,N=n), put
+
+    f_h^P(z)=(W/d)w_h z+Σ_(n<T)π_h(n)Pcor(n,z)/n,
+    f_h^V(z)=ac r_h z²+Σ_(n<m_q)π_h(n)Vcor(n,z)/n.
+
+They differ from g_h^P,g_h^V only by constants, hence retain convexity and
+monotonicity. The identity Σ_h1_(A_h)=N gives exactly
+
+    C_p^labels(q)=Σ_h[F_μ(f_h^P)+F_μ(f_h^V)]−WT/d.    (14)
+
+The inverse-N constants cancel globally. This is a reorganization of the
+existing original-label Jensen proof, not a new independence assertion.
+
+#### A separate valid route allowing q_n
+
+For a cutoff K0≥0 satisfying W≥aK0(p−1)/d, define
+
+    H_K0(z,y)=W(z−T)_+/d
+      +a[cy²−(c−κ(z))min(y²,K0)].
+
+This majorizes H0 and is increasing, separately convex and supermodular;
+it is also jointly convex under that condition. At a fixed head point,
+form a tagged union of original mixed labels and NONUNIT test labels,
+keeping the test unit class as a fixed offset1. The set functional is
+H_K0(1+Σmixed,1+Σnonunit_test), so every intermediate subset remains in
+the domain z,y≥1. Each tag adds a nonnegative amount to only one coordinate.
+Separate convexity and
+increasing differences make this Boolean set functional supermodular.
+The existing `KernelChain.comparison` therefore compares both families
+with ONE common vector of auxiliary heights.
+
+After AP3 completion the coordinates are bounded by
+Σ_(j,e)w_e L_(j,e) and Σ_j B_j on the same N active tuples. Joint Jensen,
+or successive separate Jensen, proves
+
+    E_νH0(1+R,A)
+      ≤E_N max_(L,B) E_μH_K0(NL,NB).                 (15)
+
+At this stage q_n MAY be selected separately for each n. Its right-hand
+potential must majorize H_K0, namely
+
+    V_(q,K0)(y)=max_(k≤T)
+       {a[cy²−(c−κ(k))min(y²,K0)]−qk}.               (16)
+
+Using the cutoff-free V_q in(16)'s place is not justified: it majorizes
+H0, not necessarily H_K0. For n≥T the actual joint cost in(15) is already
+exactly W(nL−T)/d+acn²B², so its tail uses(11) directly without potentials.
+This distinguishes the valid clipped common-N route from the fixed-q
+cutoff-free scalar route; it does not reject adaptive potentials wholesale.
+
+#### Exact improvement at11 on the SH18 probability
+
+Fix `p=11,T=4,W=10000,a=8/25,c=5/3,d=6` and
+
+    kappa(z)=10/(10-min(z,4)),
+    q=(0,56/315,128/315,512/315).
+
+Let `Pq` interpolate these four values linearly on[1,4], then continue
+with slope `W/d`. Its consecutive slopes are56/315,72/315,384/315,W/d,
+which are nonnegative and increasing. Define
+
+    Vq(y)=max_(k=1,2,3,4) [a kappa(k)y²-q_k].
+
+It is the maximum of four nonnegative-leading-coefficient increasing
+quadratics and therefore increasing convex on y>=1. Its exact branches are
+
+    (16/45)y²,                     1<=y<=2,
+    (16/35)y²-128/315,             2<=y<=4,
+    (8/15)y²-512/315,              y>=4.
+
+The middle k=2 candidate only touches the maximum at y=2. In particular
+`Vq(1)=16/45` and `Vq(y)-(8/15)y²` is nonincreasing.
+
+For every real z,y>=1,
+
+    W(z-4)_+/6 + a kappa(z)y² <= Pq(z)+Vq(y).
+
+At integer z from1 to4 this follows from the definition ofVq. On each
+unit interval below4, `a kappa(z)y²-Pq(z)` is convex in z, so its
+maximum lies at an endpoint. Above4 both sides have identical z slope.
+This proves the majorant on the actual pair, without a bivariate
+conditional-comparison assertion. The q values are fixed before any
+auxiliary outcome is sampled.
+
+At the first later prime11 there are no earlier-prime multipliers.
+The existing scalar original-label comparison therefore bounds the
+same-law combined charge and weighted-cap contribution by
+
+    C11=F_nu[Pq(L)]+F_nu[Vq(L)].
+
+Here nu is exactly the77-point SH18 probability extended and conditioned
+as specified by its hash-bound certificate, at arbitrary finite3/5/7
+heights. The actual low weights and the survival denominator remain those of SH18.
+
+For Pq, use centerPq(2), the nonnegative increasing convex cut
+`(Pq(L)-Pq(2))_+`, and the existing exact affine-tail ratio toL²-1.
+For Vq, use centerVq(1)=16/45. Each branch ofVq minus`(8/15)y²` is
+nonincreasing, so their maximum is too. Consequently
+
+    0<=Vq(L)-Vq(1)<=(8/15)(L²-1).
+
+The complete omitted-depth square-minus-one budget is multiplied by8/15.
+Only the nonnegative cuts are divided by the positive SH18 survival
+denominator. Both finite-box maxima use the existing exact280²
+singleton-elimination evaluator. All cost entries, maxima, geometric
+remainders and final comparisons are rational or bounded integers,
+without quantization or optimizer dependence.
+
+The verifier also recomputes the previous diagonal-potential contribution
+on the identical law. It establishes a strict improvement of thep11
+upper-certificate contribution; it does not assert optimization over all
+potentials or close the five-prime continuation. The five-step W=10000
+experiment remains unsuccessful.
+
+Run from any working directory with Python3 and NumPy:
+
+    python3 -I -O verify_fixed_q_p11.py
+
+The adjacent source directory (or an explicit --source-dir) must contain the three canonical prerequisites
+named and SHA256-bound in`fixed_q_p11_certificate.json`. The verifier
+imports only the bound canonical whole-cost module plus the standard
+library and NumPy. It reconstructs both candidates'1080 depth-cost
+observations and compares the full small certificate. No scratch module,
+optimizer or saved floating search state is used.
+
+The exact new contribution and saving are
+
+    C11 ≤ 123671919835372486258252472/51821334214349426015625
+        < 2386.505900,
+    old diagonal bound − new bound
+        = 310704719600900799682/4441828646944236515625
+        > 0.069949731.
+
+The largest integer intermediate bound is8015014558798784, below2^63.
+This compares two upper-certificate formulas; it is not a decrease of the
+actual system's assigned charge or a claim of optimality over all potentials.

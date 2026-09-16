@@ -602,6 +602,15 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Exact fixed convex-potential costs on the same arbitrary-height SH18 law.
+pattern = "docs/reports/erdos7-odd-covering/fixed_q_p11_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]] # Exact core congruences and rational dual weights refuting H73.
 pattern = "docs/reports/erdos7-odd-covering/h73_dual.json"
 kind = "data"
@@ -892,6 +901,15 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 [[files]] # Checks exhaustive finite head layouts and rational minimax witnesses.
 pattern = "docs/reports/erdos7-odd-covering/verify_finite_head_geometry.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Replays fixed-potential and diagonal costs with complete tails and exact arithmetic.
+pattern = "docs/reports/erdos7-odd-covering/verify_fixed_q_p11.py"
 kind = "program"
 admission_plane = "content"
 produced_by = "none"
