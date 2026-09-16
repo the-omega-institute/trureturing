@@ -6514,3 +6514,343 @@ $$
 它给被精确关系排除的负标记赋予正质量，故不满足假设23.1的支撑契约，也不是定理23.9的反例。证毕。
 
 ## 追加锚（本行以下为增补区）
+## 24. Sharp Zeckendorf translation precision and prefix-ultrametric sensitivity
+
+**Definition 24.1 (Standing assumptions, carrier, and observation budget).** All indices and translation parameters belong to $\mathbb N_0=\{0,1,2,\ldots\}$. Fix
+$$
+G_0=1,\qquad G_1=2,\qquad G_{j+2}=G_{j+1}+G_j,\qquad
+\phi=\frac{1+\sqrt5}{2},\qquad \alpha=\phi^{-1},\qquad \lambda=-\alpha.
+$$
+The carrier and its finite observations are
+$$
+K=\{x\in\{0,1\}^{\mathbb N_0}:x_jx_{j+1}=0\text{ for every }j\},\qquad
+q_L(x)=(x_0,\ldots,x_{L-1}),\qquad X_L=q_L[K].
+$$
+Here $q_0$ has the unique value $\varnothing$, and digits are ordered from low to high. For $p\in X_L$, put
+$$
+V_L(p)=\sum_{j<L}G_jp_j,\qquad C_p=q_L^{-1}(\{p\}).
+$$
+Write $Z(n)$ for the zero-padded legal Zeckendorf expansion of $n$. Give $K$ the subspace topology of the product of discrete digit spaces. If $x$ has an actual adjacent pair $00$, let $j$ be its first position and define
+$$
+(Tx)_i=\begin{cases}
+0,&i<j,\\
+1,&i=j,\\
+x_i,&i>j.
+\end{cases}
+$$
+If there is no adjacent $00$, set $Tx=Z(0)$. Thus the two alternating points $u=(10)^\infty$ and $v=(01)^\infty$ both map to $Z(0)$. No inverse of $T$ is assumed. Define
+$$
+F(x)=\sum_{j\ge0}(-1)^{j+1}\alpha^{j+2}x_j,\qquad
+H(x)=[F(x)]\in\mathbb T=\mathbb R/\mathbb Z,\qquad e_s=[-s\phi]\quad(s\ge1).
+$$
+The circle is oriented by increasing real coordinates. All subsequent fibre conditions quantify over the whole carrier $K$, including its non-eventually-zero points. Set
+$$
+\mu_k(L)=\min\{m\in\mathbb N_0:\forall x,y\in K,\ q_m(x)=q_m(y)\Longrightarrow q_L(T^kx)=q_L(T^ky)\},
+$$
+with $\min\varnothing=+\infty$ until finiteness is proved. The carrier, phase, and successor conventions are those of [Z: `CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md`, Sections 371-375, revision `c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb`](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md). The actual-image factorization convention is [R: `RECURSIVE_RELATIONAL_OBSERVATION.md`, Definition 2.1 and theorem 2.2, revision `c74985438ae17d205509255934bbd3ecf1f94d71`](https://raw.githubusercontent.com/the-omega-institute/trureturing/c74985438ae17d205509255934bbd3ecf1f94d71/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md).
+
+**theorem 24.2 (Exact uniform precision and finite sharpness).** For every $k\ge0$, $\mu_k(0)=0$. For every $k\ge0$, $L\ge1$, and $m\ge0$, the following are equivalent:
+$$
+\forall x,y\in K,\quad q_m(x)=q_m(y)\Longrightarrow q_L(T^kx)=q_L(T^ky);
+$$
+$$
+\exists!\,f_{k,L,m}:X_m\longrightarrow X_L,\qquad q_L\circ T^k=f_{k,L,m}\circ q_m;
+$$
+$$
+G_m\ge G_L+k.
+$$
+The same criterion holds if the fibre implication is required only for $x=Z(a)$ and $y=Z(b)$ with $a,b\in\mathbb N_0$. Whenever the factor exists, it is
+$$
+f_{k,L,m}(p)=q_L\bigl(Z(V_m(p)+k)\bigr).
+$$
+Consequently,
+$$
+\boxed{\ \mu_k(L)=\min\{m\ge0:G_m\ge G_L+k\}\quad(L\ge1).\ }
+$$
+For $J=\mu_k(L)$, there are distinct nonnegative integers $a,b<G_{L+k}$ such that $Z(a)$ and $Z(b)$ first differ at position $J-1$, whereas $Z(a+k)$ and $Z(b+k)$ first differ at position $L-1$. In particular these same integers refute every input depth $m<J$.
+
+All Fibonacci threshold equalities belong to the sufficient side: for $L\ge1$ and $m\ge1$,
+$$
+\mu_k(L)=m\quad\Longleftrightarrow\quad G_{m-1}<G_L+k\le G_m.
+$$
+In particular,
+$$
+\mu_0(L)=L,\qquad \mu_1(L)=L+1,\qquad L\le\mu_k(L)\le L+k\qquad(L\ge1).
+$$
+[Z, Sections 372.3-372.4 and 381-384; R, theorem 2.2.]
+
+**Proof.** The recurrence makes $G_j$ strictly increasing and unbounded, with each increment at least one. First, $V_d$ is a bijection from $X_d$ onto the integer interval $\{0,\ldots,G_d-1\}$. For $d=0$ and $d=1$ this follows from the empty word and the two one-digit words. For $d\ge2$, a legal word whose last digit is zero has exactly the values $0,\ldots,G_{d-1}-1$. A word whose last digit is one has its preceding digit forced to zero, so its values are exactly $G_{d-1},\ldots,G_{d-1}+G_{d-2}-1$. The two ranges are disjoint and exhaust $0,\ldots,G_d-1$, and induction gives uniqueness. In particular, padding any legal prefix with zeros gives $Z(V_d(p))$. Such padded prefixes approximate every point of $K$. The countable product topology is metrizable, and a coordinatewise diagonal subsequence of any sequence in $K$ converges to a binary sequence still satisfying the adjacent-digit restriction. This proves compactness.
+
+There is an elementary preliminary bound independent of the asserted exact formula:
+$$
+q_{D+1}(x)=q_{D+1}(y)\quad\Longrightarrow\quad q_D(Tx)=q_D(Ty)\qquad(D\ge0).
+$$
+Indeed, if an actual $00$ starts at some $j<D$, its first position and all retained output digits below $D$ are determined by those $D+1$ input digits. Otherwise the first $00$ starts at or above $D$, or does not exist, and all output digits below $D$ are zero. Iteration gives
+$$
+q_{L+k}(x)=q_{L+k}(y)\quad\Longrightarrow\quad q_L(T^kx)=q_L(T^ky).
+$$
+Thus $T$ and all its fixed iterates are continuous. If its first $00$ starts at $j$, the preceding alternating word has value $G_j-1$: its values $A_j$ satisfy $A_0=0$, $A_1=1$, and $A_j=G_{j-1}+A_{j-2}$ for $j\ge2$. Clearing that word and setting position $j$ to one increases a finite input's value by exactly one. The resulting word remains legal, since its lower digits are zero and the retained digit at $j+1$ is zero. Uniqueness of the legal finite expansion therefore gives
+$$
+T^kZ(n)=Z(n+k).
+$$
+Moreover, the recurrence and its initial values give
+$$
+\eta_j:=\phi G_j-G_{j+1}=(-1)^{j+1}\alpha^{j+2}.
+$$
+The series defining $F$ has uniformly vanishing tails, so $F$ and $H$ are continuous; the displayed identity gives $H(Z(n))=[n\phi]$. Equality on the dense padded core, followed by continuity, yields
+$$
+H(T^kx)=H(x)+[k\phi]\qquad(x\in K).
+$$
+This also supplies the successor and phase identities used below without assuming the desired modulus. [Z, Sections 371.2 and 375.2-375.3.]
+
+We next establish the full cylinder geometry, including endpoint ownership. Put
+$$
+a_0=-\alpha,\qquad b_0=\alpha^2,\qquad I=[a_0,b_0],\qquad c=-\alpha^3.
+$$
+The total negative and positive coefficient sums bound $F$ below by $a_0$ and above by $b_0$. Equality forces respectively every even digit to be one and every odd digit to be zero, or the reverse. Hence the extreme fibres are $\{u\}$ and $\{v\}$. Every legal infinite word has a unique parsing into blocks $0$ and $10$. Their affine maps are
+$$
+f_0(t)=\lambda t,\qquad f_{10}(t)=-\alpha^2+\lambda^2t,
+$$
+with
+$$
+f_0(I)=[c,b_0],\qquad f_{10}(I)=[a_0,c],\qquad f_0(b_0)=f_{10}(b_0)=c.
+$$
+These identities follow from $\alpha+\alpha^2=1$. Repeatedly choosing an inverse branch whose image contains a prescribed point of $I$ constructs legal blocks; the residual interval length tends to zero because both branches contract. Their infinite concatenation has precisely the prescribed value. Thus $F[K]=I$.
+
+For a finite block word $w$ of digit length $t$, put
+$$
+S_w=\sum_{j<t}\eta_jw_j,\qquad s_w=\sum_{j<t}G_jw_j,\qquad f_w(z)=S_w+\lambda^tz.
+$$
+Splitting the convergent series gives $F(wy)=f_w(F(y))$, and $f_w$ is injective. If two different words have the same real value, at their first distinct block they enter the two branches above, whose images intersect only at $c$. Their remaining tails must both have value $b_0$ and hence must equal $v$. The two words are therefore exactly $w0v$ and $w10v$. Conversely these two words have the same value $f_w(c)$. There cannot be a third preimage, since at the first branching each occupied branch has its endpoint tail uniquely determined. The block word $w$ is recovered as the longest common block prefix of the pair. This proves the real-fibre classification needed here. [Z, Section 372.2.]
+
+Since $b_0-a_0=1$, passing to the circle identifies only the two extreme real values, in addition to the real double fibres. Their common phase is $e_1$, with the orientation
+$$
+x_1^-=v,\qquad x_1^+=u.
+$$
+For an internal pair, the identity $\eta_{t+1}=-\lambda^tc$ gives
+$$
+[f_w(c)]=[\phi(s_w-G_{t+1})].
+$$
+The empty block word has $t=0$ and gives index $s=2$. For $t\ge1$, a block word of digit length $t$ is exactly a legal word ending in zero. Removing that last zero and applying the proved finite-value bijection shows that $s_w$ runs bijectively through $0,\ldots,G_{t-1}-1$. Consequently the associated indices $s=G_{t+1}-s_w$ run bijectively through
+$$
+G_t+1,\ldots,G_{t+1}.
+$$
+These ranges together with $s=2$ exhaust all $s\ge2$. Irrationality of $\phi$ makes the phases distinct. Every other circle fibre is a singleton. A natural phase $[n\phi]$ cannot equal $e_s$, since that would make the nonzero multiple $(n+s)\phi$ an integer. In particular
+$$
+H^{-1}(\{[n\phi]\})=\{Z(n)\}\qquad(n\ge0).
+$$
+For $s\ge2$, let $w$ be its unique block word and $t$ its digit length. The correctly oriented pair is
+$$
+(x_s^-,x_s^+)=\begin{cases}
+(w10v,w0v),&t\text{ even},\\
+(w0v,w10v),&t\text{ odd}.
+\end{cases}
+$$
+Indeed, before the common prefix is attached, the $10$ branch approaches $c$ from below and the $0$ branch from above. The factor $\lambda^t$ preserves this order for even $t$ and reverses it for odd $t$. At the seam, approach through $b_0$ is the negative side and departure through $a_0$ is the positive side, giving the stated order at $s=1$. For $s\ge2$, the two words first differ exactly at position $t$, where
+$$
+G_t<s\le G_{t+1}.
+$$
+[Z, Sections 372.4 and 381.1.]
+
+For $p\in X_D$, $D\ge1$, append its forced next zero if its last digit is one; denote the resulting complete block word by $\widehat p$. Its digit length is $d=D+p_{D-1}$. Hence
+$$
+F[C_p]=I_p=S_p+\lambda^dI=[\ell_p,b_p].
+$$
+For $D=0$ the image is $I$. Distinct length-$D$ prefixes give incomparable complete block words. At their first branching the two ancestor interval images meet in only one point, so their descendant images have disjoint interiors. The finitely many positive-length intervals $I_p$ cover $I$. Each has length $\alpha^d<1$, and its endpoints have unique preimages within $C_p$, by the extreme-fibre uniqueness for the remaining tail. An interior point of $I_p$ cannot belong to a second interval, even as that interval's endpoint, since that interval has positive length. Thus the entire fibre above every interior point belongs to $C_p$.
+
+An internal phase is a boundary of this partition exactly when its two lifts have different $D$-prefixes. For $s\ge2$, their first-difference description shows that this happens exactly when $t<D$, equivalently $s\le G_D$. The seam pair already differs at position zero. It follows that the exact circle boundary set is
+$$
+B_D=\{e_s:1\le s\le G_D\}\qquad(D\ge1).
+$$
+At depth zero there are no boundaries: $B_0=\varnothing$. If $[\ell_p]=e_i$, $[b_p]=e_j$, and $A_p$ is the oriented open arc given by the image of $(\ell_p,b_p)$, endpoint ownership is exactly
+$$
+C_p=H^{-1}(A_p)\ \cup\ \{x_i^+,x_j^-\}.
+$$
+An internal split phase lying in $A_p$ contributes both of its lifts; the left endpoint contributes only its positive lift, and the right endpoint only its negative lift. This formula also treats the seam and does not introduce any artificial boundary at a chosen representative of zero on the circle. [Z, Sections 372.3 and 381.2.]
+
+We must justify how the two lifts, rather than only their phases, move. For fixed $s$, choose $D\ge1$ with $s\le G_D$. A sufficiently small strict negative-side arc at $e_s$ lies in the interior arc of its negative-side $D$-cylinder. Every lift of every point in that small arc therefore belongs to that cylinder. For a sequence of such phases tending to $e_s$, compactness ensures subsequential limits of arbitrary chosen lifts. Continuity of $H$ and closedness of the cylinder force every such limit to be its unique endpoint lift $x_s^-$. Hence the entire lift sequence converges to $x_s^-$. The positive side gives $x_s^+$ in the same way, including at the seam. This argument allows the approaching phases themselves to be other split phases and permits either lift at every term.
+
+Apply this fact to phases approaching $e_{s+k}$ from either side. Their images under the rotation by $[k\phi]$ approach $e_s$ from the same side. Continuity of $T^k$ and the phase identity now give
+$$
+T^kx_{s+k}^-=x_s^-,\qquad T^kx_{s+k}^+=x_s^+\qquad(s\ge1).
+$$
+For an earlier pair, the natural phase fibre is instead a singleton, so
+$$
+T^kx_s^-=T^kx_s^+=Z(k-s)\qquad(1\le s\le k).
+$$
+Thus no selection of an unverified phase lift has entered these identities. [Z, Section 382.1.]
+
+For an output cylinder $C_p$, $p\in X_L$, with arc and endpoints as above, the complete preimage formula is therefore
+$$
+(T^k)^{-1}(C_p)=H^{-1}(A_p-[k\phi])\ \cup\ \{x_{i+k}^+,x_{j+k}^-\}.
+$$
+The interior part follows from the full-fibre formula for $C_p$ and the phase identity. At each endpoint the two possible input lifts are exactly the displayed split pair, and their proven images determine which one belongs. Thus the exact translated cut set is
+$$
+B_{L,k}=\{e_s:k+1\le s\le k+G_L\}.
+$$
+Each listed cut is genuine, because its two lifts have different output $L$-prefixes. There are no other cuts by the full preimage formula. In particular the pairs with indices at most $k$, which have already collapsed, introduce no extra boundary. [Z, Section 382.2.]
+
+Suppose now that $G_m\ge G_L+k$. Then necessarily $m\ge L\ge1$, and $B_{L,k}\subseteq B_m$. The interior arc of any input $m$-cylinder contains no translated cut, so, by connectedness of that arc, it is contained in one component of the circle minus $B_{L,k}$. The full-fibre preimage formula puts all lifts over that component in one output preimage cylinder. Check the input cylinder's left endpoint separately: if it is a translated cut, the input cylinder contains its positive lift, exactly the lift assigned to the component immediately on its positive side. If it is not a translated cut, its entire fibre belongs to that same component's preimage. At the right endpoint the identical argument uses the negative lift and the component on its negative side. Both arguments apply at the seam. Thus the entire input cylinder, including both endpoint assignments and all its internal split fibres, lies in a single output preimage cylinder.
+
+It follows that $q_LT^k$ is constant on every actual $q_m$-fibre. Define $f_{k,L,m}(p)$ to be this constant. The map $q_m:K\to X_m$ is onto, so the factor is unique. Choosing the padded representative $Z(V_m(p))$ in the fibre gives the asserted formula for $f$. Conversely, any such factor forces fibre constancy simply by evaluating two representatives of the same prefix. This proves the factorization claim, not merely a comparison of the numbers of prefixes. [Z, Section 383.1; R, theorem 2.2.]
+
+For necessity, put $M=G_L+k\ge2$, and let $t\ge0$ be determined by
+$$
+G_t<M\le G_{t+1}.
+$$
+The pair $x_M^-,x_M^+$ first differs at $t$. If $G_m<M$, then $m\le t$, including $m=0$, so the pair has identical $m$-prefixes. Its images are $x_{G_L}^-,x_{G_L}^+$. For index $G_L$, the common block word is $0^{L-1}$, including the empty word when $L=1$. Its two lifts therefore have respective $L$-prefixes, in some order,
+$$
+0^L\quad\text{and}\quad 0^{L-1}1.
+$$
+They agree through position $L-2$ and differ at $L-1$. This rules out the fibre implication at every depth with $G_m<M$. Together with sufficiency it proves $J=\mu_k(L)=t+1$ and the exact formula, including all depths below $L$.
+
+Here are finite integer witnesses with a fixed truncation length. Put $N=L+k$. Since every increment of the integer sequence $G_j$ is at least one,
+$$
+G_N\ge G_L+k=M,
+$$
+so $t<N$. For $t=0$, let $w$ be empty and $s=0$. For $t\ge1$, set $s=G_{t+1}-M$, so $0\le s<G_{t-1}$; take the unique length-$(t-1)$ legal word of value $s$ and append zero to obtain $w$. In both cases the two lifts, without imposing their sign order, are
+$$
+\xi=w0v,\qquad \xi'=w10v.
+$$
+Their zero-padded $N$-digit truncations are $Z(a)$ and $Z(b)$, where explicitly
+$$
+a=s+\sum_{\substack{h\ge0\\t+2+2h<N}}G_{t+2+2h},\qquad
+b=s+G_t+\sum_{\substack{h\ge0\\t+3+2h<N}}G_{t+3+2h}.
+$$
+All sums are finite and an empty sum is zero. Both truncated words are legal, and the finite-value bijection gives $0\le a,b<G_N$. Their first difference is still at $t$, so they are distinct. The preliminary $N=L+k$ precision bound gives
+$$
+q_LT^kZ(a)=q_LT^k\xi,\qquad q_LT^kZ(b)=q_LT^k\xi'.
+$$
+The two output prefixes are therefore exactly $0^L$ and $0^{L-1}1$, in some order. Since $T^kZ(n)=Z(n+k)$, these are the claimed actual integer witnesses. In topological terms, the witnesses lie in the nonempty clopen tests specifying the required common input prefix and the two different output prefixes; the construction realizes them by explicit points of the dense padded core. It follows in particular that restriction to that core cannot improve the minimum. [Z, Section 384.1.]
+
+Finally, $L=0$ gives the constant empty observation, so its minimum is zero for every $k$. For $L\ge1$, the strictly increasing sequence $G_m$ makes its first successful index characterize precisely $G_{m-1}<G_L+k\le G_m$ for $m\ge1$. Since $G_0=1<G_L+k$, depth zero never succeeds at positive output depth. For $k=0$ the first successful index is $L$. For $k=1$, index $L$ fails and index $L+1$ succeeds. The already proved inequality $G_{L+k}\ge G_L+k$ gives the upper bound. No strictness is introduced at a successful Fibonacci threshold. This completes the proof.
+
+**Definition 24.3 (Prefix ultrametric and optimal distortion).** For $x,y\in K$, define
+$$
+d_*(x,y)=\begin{cases}
+0,&x=y,\\
+2^{-\min\{j\ge0:x_j\ne y_j\}},&x\ne y.
+\end{cases}
+$$
+Set
+$$
+C(k)=\operatorname{Lip}_{d_*}(T^k)=\sup_{x\ne y}\frac{d_*(T^kx,T^ky)}{d_*(x,y)}.
+$$
+This is the prefix metric on the digit carrier, not the sum metric $d_\Sigma(x,y)=\sum_{j\ge0}2^{-j-1}|x_j-y_j|$ of [Z, Definition 371.1]. In particular $d_*(Z(0),Z(1))=1$, while $d_\Sigma(Z(0),Z(1))=1/2$.
+
+**theorem 24.4 (Optimal Fibonacci-step distortion and failure of a uniform-in-time budget).** Define
+$$
+r(k)=\min\{r\ge0:G_{r+1}\ge k+2\},\qquad \beta=\log_\phi2.
+$$
+For every $k\ge0$,
+$$
+\sup_{L\ge1}\bigl(\mu_k(L)-L\bigr)=\mu_k(1)-1=r(k),
+$$
+$$
+\boxed{\ C(k)=2^{r(k)}.\ }
+$$
+The supremum defining $C(k)$ is attained, and it is attained by a pair of actual finite integer expansions. More precisely, at every $L\ge1$ the witnesses of theorem 24.2 attain the ratio $2^{\mu_k(L)-L}$; taking $L=1$ attains the optimal constant.
+
+For every integer $r\ge0$, the exact plateaus are
+$$
+C(k)=2^r\quad\Longleftrightarrow\quad G_r-1\le k\le G_{r+1}-2.
+$$
+In particular $C(0)=1$, and for all $k\ge0$,
+$$
+\frac14(k+1)^\beta\le C(k)\le(k+1)^\beta.
+$$
+For all $k,h\ge0$,
+$$
+C(k+h)\le C(k)C(h),\qquad r(k+h)\le r(k)+r(h).
+$$
+Equality is not required; for example $C(4)=8<16=C(2)^2$.
+
+Each fixed $T^k$ is uniformly continuous on the compact metric space $(K,d_*)$. There is nevertheless no finite input depth that determines the first output digit uniformly over all $k$. Indeed,
+$$
+\mu_{G_m-1}(1)=m+1\qquad(m\ge0).
+$$
+The family $\{T^k:k\ge0\}$ is not equicontinuous, even at $Z(0)$, and this failure has witnesses from the finite integer core. With the parameter space $\mathbb N_0$ given its discrete topology, the evaluation map
+$$
+\mathbb N_0\times K\longrightarrow K,\qquad (k,x)\longmapsto T^kx
+$$
+is nonetheless jointly continuous.
+
+**Proof.** Agreement of two pairs of sequences through the shorter common prefix gives
+$$
+d_*(x,z)\le\max\{d_*(x,y),d_*(y,z)\},
+$$
+so $d_*$ is an ultrametric. Its exact relation to the observations is
+$$
+q_D(x)=q_D(y)\quad\Longleftrightarrow\quad d_*(x,y)\le2^{-D}\qquad(D\ge0).
+$$
+Thus its topology is the product topology. Also, the first differing term and the full geometric tail give $d_*/2\le d_\Sigma\le d_*$. This identifies the compact topology without identifying the two metrics or transferring their optimal Lipschitz constants.
+
+Fix $r\ge0$ and set $D_r(L)=G_{L+r}-G_L$ for $L\ge1$. Using the recurrence at indices at least one,
+$$
+D_r(L+1)-D_r(L)=G_{L+r-1}-G_{L-1}\ge0.
+$$
+Consequently
+$$
+G_{L+r}-G_L\ge G_{r+1}-G_1=G_{r+1}-2.
+$$
+For $r=r(k)$ the right side is at least $k$. The exact modulus theorem therefore gives $\mu_k(L)\le L+r(k)$ for every $L\ge1$. At $L=1$, the first successful index $m$ satisfies $G_m\ge k+2$ and is at least one, so it is exactly $r(k)+1$. This proves both the upper bound for the supremum and its attainment at $L=1$, including $k=0$.
+
+To obtain the precise metric constant, suppose $x,y$ first differ at $j$ and their images under $T^k$ are distinct and first differ at $\ell$. The images disagree under $q_{\ell+1}$. If $j\ge\mu_k(\ell+1)$, the inputs would agree at that sufficient precision, a contradiction. Hence
+$$
+j\le\mu_k(\ell+1)-1,
+$$
+and therefore
+$$
+\frac{d_*(T^kx,T^ky)}{d_*(x,y)}
+=2^{j-\ell}
+\le2^{\mu_k(\ell+1)-(\ell+1)}
+\le2^{r(k)}.
+$$
+If the images coincide, the ratio is zero and the same upper bound holds. Conversely, the split pair with index $M=G_L+k$ first differs at $\mu_k(L)-1$ and its images first differ at $L-1$, so its ratio is exactly $2^{\mu_k(L)-L}$. The finite witnesses in theorem 24.2 preserve these very same first-difference positions. Taking $L=1$ proves actual attainment of $2^{r(k)}$ on the finite core. This supplies the lower bound and settles both off-by-one indices.
+
+The threshold definition gives $G_r<k+2\le G_{r+1}$ at the successful value of $r$, also for $r=0$, where necessarily $k=0$. Since these thresholds are integers, this is precisely $G_r-1\le k\le G_{r+1}-2$, proving the plateau formula. For the quantitative growth estimate, induction from $G_0=1$, $G_1=2$, and $\phi^2=\phi+1$ gives
+$$
+\phi^n\le G_n\le\phi^{n+1}\qquad(n\ge0).
+$$
+Putting $r=r(k)$ in the threshold inequalities yields
+$$
+\phi^r\le G_r\le k+1<G_{r+1}\le\phi^{r+2}.
+$$
+Raising to the positive power $\beta$, with $\phi^\beta=2$, gives
+$$
+2^r\le(k+1)^\beta<4\,2^r,
+$$
+which implies the stated two-sided bounds. The exact law remains the Fibonacci-step formula, not an equality with a smooth power function.
+
+For composition, the already proved Lipschitz inequalities give, for every $x,y$,
+$$
+d_*(T^{k+h}x,T^{k+h}y)
+\le C(k)d_*(T^hx,T^hy)
+\le C(k)C(h)d_*(x,y).
+$$
+Taking the supremum proves submultiplicativity. Substituting $C(n)=2^{r(n)}$ and using strict monotonicity of $2^s$ proves the integer subadditivity. The values $G_2=3$, $G_3=5$, $G_4=8$ give $r(2)=2$ and $r(4)=3$, proving the strict example.
+
+The uniform-in-time precision obstruction follows directly from actual fibres, rather than from growth of metric constants. For any $m\ge0$, the nonnegative integer $k=G_m-1$ satisfies
+$$
+G_m<k+2=G_m+1\le G_{m+1}.
+$$
+Thus theorem 24.2 gives $\mu_k(1)=m+1$ and supplies finite inputs with the same $m$-prefix but different first output digits. This rules out any common finite depth at the first output digit.
+
+For the stronger pointwise failure at $Z(0)$, take $j\ge0$ and
+$$
+k_j=G_{j+1}-2,\qquad M_j=k_j+2=G_{j+1}.
+$$
+The split pair at $M_j$ has common block word $0^j$ and consists, without specifying its sign order, of
+$$
+0^{j+1}v\quad\text{and}\quad 0^j10v.
+$$
+Its two images under $T^{k_j}$ have opposite first digits. Apply the finite truncation construction of theorem 24.2 with $L=1$ and $N=k_j+1$. It gives two finite-core points both starting with $j$ zeros whose images still have opposite first digits. At least one of these points, call it $y_j$, has an output first digit different from that of $T^{k_j}Z(0)$. Therefore
+$$
+d_*(y_j,Z(0))\le2^{-j}\longrightarrow0,\qquad
+d_*(T^{k_j}y_j,T^{k_j}Z(0))=1.
+$$
+The single output tolerance $1/2$ consequently has no neighborhood of $Z(0)$ working for every iterate. This proves non-equicontinuity with actual finite integer inputs.
+
+Finally, each fixed iterate is continuous by theorem 24.2 and has the explicit finite modulus proved there; compactness also implies its uniform continuity. For the joint evaluation map with discrete parameter, at any $(k,x)$ one may restrict to the open slice $\{k\}\times K$, where continuity is just continuity of $T^k$. Thus joint continuity with discrete time coexists with failure of a state-precision modulus uniform over all times. The negative conclusion concerns the latter quantifier order, not a failure of fixed-map continuity.
+
+## 追加锚（本行以下为增补区）
