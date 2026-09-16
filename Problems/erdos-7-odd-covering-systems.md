@@ -4951,6 +4951,20 @@ in the note.
 This improves supported-head control but does not extend the established
 prime-13 noncoverage range.
 
+The same [supported-law note](../docs/reports/erdos7-odd-covering/marked_head_profile.md)
+also gives a general two-prime construction for an `m` by `n` survivor
+grid with matching holes, where `m,n>=3` and the hole count is below
+`min(m,n)`. Its explicit common quadratic coefficients work even when
+the row sets, column sets and hole locations vary with the old residue;
+the constructed law preserves the old marginal. A variable hole count
+gives an additional mean-count subtraction, bounded using the original
+cross-modulus cofactor labels. Fixed row, column and point-deletion
+budgets also reduce arbitrary hole patterns to the one-hole case by
+discarding a controlled number of rows and columns. These are ordinary
+symbolic proofs for two new prime coordinates of height one and arbitrary
+old heights. They do not provide the missing universal weighted estimate
+for arbitrary new-prime heights or a new tail cutoff.
+
 **Coupled densities of the three prime-pair subsystems.** Let \(\sigma_A\)
 be the ambient density avoiding the original classes supported on \(A\),
 and put \(z_p=\sigma_{\{p\}}\). These are subsets of the same fixed family.
@@ -6721,6 +6735,18 @@ has root mass `v_r/3`, cell mass `w_j/9` and depth caps `3^(-a)`, giving
 `x+max(v_0,v_1)+1`, gives `U_rj`. No consistency between distinct test
 prefixes has been assumed. Finite sums are bounded by the displayed
 nonnegative infinite sums.
+
+The existing Lean theorem
+`ArbitraryRootEventMoment.arbitrary_root_event_moment_le` supplies this
+tail estimate directly, and even bounds it by the smaller quantity
+`max_l((c_l+1)*d_l)/18`. Use the five surviving cells as root labels,
+discount `1/3`, initial caps `d_l/27`, and initial counts
+`1[r(l)=r]+1[l=j]`. The actual depth-`a` tests restricted to complete
+survivors satisfy its geometric caps by the preceding product-count
+bound; empty tests remain at their original depths. For the pure-ternary
+law, use initial caps `1/27`. This is direct library reuse inside the
+ordinary arithmetic argument, not an additional Lean declaration or a
+claim that the actual-family extraction has been formalized end to end.
 
 Take a target `C>=9` and let
 

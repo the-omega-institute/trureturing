@@ -1251,6 +1251,107 @@ def punctured_grid_nonuniform_transfer(signed_square_result):
         'uniform_resulting_Gamma':str(uniform_constant*Fraction(1131,86))}
 
 
+def matching_hole_common_lambda():
+    """Check symbolic identities and PSD proof patterns, without grid instances."""
+    class Polynomial(dict):
+        # Sparse integer polynomials in m,n,k,epsilon,j, used only below.
+        def __init__(self, value=0):
+            super().__init__(value if isinstance(value, dict) else
+                             ({(0,)*5: value} if value else {}))
+
+        def __add__(self, other):
+            out = dict(self)
+            for powers, value in Polynomial(other).items():
+                out[powers] = out.get(powers, 0)+value
+            return Polynomial({powers: value for powers, value in out.items() if value})
+
+        __radd__ = __add__
+
+        def __mul__(self, other):
+            out = {}
+            for a, x in self.items():
+                for b, y in Polynomial(other).items():
+                    powers = tuple(i+j for i, j in zip(a, b))
+                    out[powers] = out.get(powers, 0)+x*y
+            return Polynomial({powers: value for powers, value in out.items() if value})
+
+        __rmul__ = __mul__
+
+        def __sub__(self, other):
+            return self + Polynomial(other)*(-1)
+
+        def __rsub__(self, other):
+            return Polynomial(other) + self*(-1)
+
+    m,n,k,e,j = [Polynomial({tuple(int(i==q) for i in range(5)): 1}) for q in range(5)]
+    identities = []
+
+    def identity(name, left, right):
+        require(not Polynomial(left)-Polynomial(right), name)
+        identities.append(name)
+
+    S,V,H = m+n,m*n-k,k*(m+n-k-1)
+    A = 3*(S+3)
+    B = m*m+n*n+(2-k)*S-k-3
+    identity('probability normalization', H*(1+e)+(m-k)*(n-k), V+H*e)
+    identity('coefficient sum numerator',
+             S+1+2*k*e+2*(n+1+k*e)+2*(m+1+k*e)+4, A+6*k*e)
+    identity('strict multiplier gain numerator', A*H-6*k*V, 3*k*B)
+    mx,ny = k+1+m,k+1+n
+    identity('positive gain polynomial after translation',
+             mx*mx+ny*ny+(2-k)*(mx+ny)-k-3,
+             5*k+3+(k+4)*(m+n)+m*m+n*n)
+    identity('row perturbation bound first slack', 2*n-(2*k+2), 2*(n-k-1))
+    identity('row perturbation bound second slack', 2*n-(2*n-2*k), 2*k)
+    D = lambda index: m*n-index+e*index*(S-index-1)
+    N = lambda index: A+6*e*index
+    delta = lambda index: 1-e*(S-2*index-2)
+    T = lambda index: 6*e*D(index)+N(index)*delta(index)
+    identity('varying-count denominator difference', D(j)-D(j+1), delta(j))
+    identity('varying-count factor difference numerator', N(j+1)*D(j)-N(j)*D(j+1), T(j))
+    identity('increasing difference numerator', T(j+1)-T(j), 2*e*N(j+1))
+    identity('mean-count saving numerator', N(1)*D(0)-N(0)*D(1),
+             6*e*m*n+A*(1-e*(S-2)))
+
+    patterns = 0
+    for hi,hj,u,v,t in product((0,1), repeat=5):
+        r,q = n-hi,m-hj
+        matrix = [[V,r,q,1],[r,r,u,v],[q,u,q,t],[1,v,t,1]]
+        diagonal = [V+S+1,2*(n+1),2*(m+1),4]
+        slacks = [hi+hj,2+2*hi-u-v,2+2*hj-u-t,2-v-t]
+        require(all(not diagonal[a]-sum(matrix[a])-Polynomial(slacks[a]) for a in range(4)),
+                'symbolic uniform Gram row-sum slack formula')
+        require(min(slacks)>=0, 'all abstract row-sum slacks nonnegative')
+        require((max(slacks)==0)==(hi==hj==0 and u==v==t==1),
+                'only untouched aligned configurations have zero slack')
+        patterns += 1
+
+    norms = []
+    for ell in range(4):
+        transform = []
+        for i in range(4):
+            row = [1,0,0,0]
+            if ell:
+                row[ell] += 1
+            if i:
+                row[i] -= 1
+            transform.append(row)
+        recover = [[int(i==ell) for i in range(4)], [1,-1,0,0], [1,0,-1,0], [1,0,0,-1]]
+        require(all(sum(transform[a][q]*recover[q][b] for q in range(4))==int(a==b)
+                    for a in range(4) for b in range(4)), 'exact anchored-star coordinate inverse')
+        norms.append(sum(value*value for row in transform for value in row))
+    require(norms==[7,9,9,9], 'anchored-star squared Frobenius norms')
+    return {
+        'scope': 'symbolic identities and abstract PSD proof patterns; ordinary proof, not Lean verification',
+        'parameter_domain': 'm,n>=3; 0<=k<min(m,n)',
+        'epsilon_interval': '0<=epsilon<=1/(9*max(m+n+2*k-1,2*m,2*n))',
+        'symbolic_identities': identities,
+        'abstract_incidence_slack_patterns': patterns,
+        'anchor_squared_Frobenius_norms': norms,
+        'concrete_grid_instances': 0,
+    }
+
+
 def verify(expected):
     cases = []
     old_cases = []
@@ -1303,6 +1404,7 @@ def verify(expected):
         "two_prime_block_grid_comparison": two_prime_block_grid_comparison(),
         "two_prime_block_gap": two_prime_block_gap_regression(),
         "punctured_grid_nonuniform_transfer": punctured_grid_nonuniform_transfer(signed_result),
+        "matching_hole_common_lambda": matching_hole_common_lambda(),
         "uniform315_mean_sharpness": uniform315_mean_sharpness(),
         "residual_prefix_depletion_obstruction": residual_prefix_depletion_obstruction(),
         "prime11_residual_geometry": prime11_residual_geometry(),
@@ -1318,6 +1420,7 @@ def verify(expected):
                       "sharp_actual_second": signed_result["actual_second_moment_upper"],
                       "block_gap_regressions": result["two_prime_block_gap"]["grid_coefficient_cases"],
                       "nonuniform_block_factor": result["punctured_grid_nonuniform_transfer"]["Gamma_and_tensorization_constant"],
+                      "matching_hole_symbolic_identities": len(result["matching_hole_common_lambda"]["symbolic_identities"]),
                       "conditioned_3465_actual_second": result["conditioned_3465_comparison"]["actual_second_moment_upper"]}, sort_keys=True))
 
 

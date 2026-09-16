@@ -1156,3 +1156,203 @@ survivor laws by optimizing actual configurations. These provide the
 public precedents; neither cited passage supplies NT1. The result here
 is an ordinary universal proof with an exact finite certificate, not
 Lean certification.
+
+## Rectangular matching holes: a symbolic common quadratic bound
+
+The preceding finite construction extends to every m×n rectangle with
+m,n≥3 and a matching of k deleted cells, where0≤k<min(m,n). Relabel the
+holes as(0,0),…,(k−1,k−1), and call their rows and columns affected. Put
+
+    S=m+n,  V=mn−k,  H=k(m+n−k−1),
+    C=max(m+n+2k−1,2m,2n),  0≤epsilon≤1/(9C),
+    c=1/(V+H epsilon),  a=(1+epsilon)c.
+
+Assign mass zero to holes, mass a to every surviving cell touching an
+affected row or column, and mass c elsewhere. There are H cells of the
+first positive type and(m−k)(n−k) of the second; their masses sum to one.
+Here epsilon is a ratio perturbation, distinct from NT1's additive
+probability perturbation. The explicit interval is sufficient; it is
+not sharp and does not recover NT1's larger specific perturbation.
+
+Untouched rows have mass c(n+k epsilon), untouched columns have mass
+c(m+k epsilon), and untouched cells have mass c. Define
+
+    lambda=(1+c(S+1+2k epsilon),
+            2c(n+1+k epsilon), 2c(m+1+k epsilon), 4c).
+
+For every selected row i, column j and surviving cell z, its four
+indicator Gram matrix M, as in NT3, satisfies
+
+    M ≤ diag(lambda).                                           (MT1)
+
+All four coefficients depend only on(m,n,k,epsilon), including when
+m≠n. They do not depend on hole positions or selected coordinate labels.
+
+### A uniform Laplacian estimate
+
+Divide by c and write D(epsilon)=(diag(lambda)−M)/c=D_0+epsilon Delta.
+At epsilon=0, let h_i,h_j indicate whether the selected row and column
+are affected; put u=1[(i,j) survives],v=1[z_row=i],t=1[z_col=j]. The
+unnormalized row and column masses are n−h_i,m−h_j. Decompose D_0 into
+the graph Laplacian whose off-diagonal edge weights are(M/c)_ab plus
+the diagonal matrix of row-sum slacks. Those slacks are exactly
+
+    h_i+h_j,  2+2h_i−u−v,  2+2h_j−u−t,  2−v−t.                 (MT2)
+
+They are nonnegative integers, and all vanish exactly for an untouched
+aligned row, column and intersection cell. In that exceptional case,
+lambda is the row-sum vector of M at every epsilon, so D(epsilon) is
+itself a nonnegative weighted graph Laplacian for every epsilon≥0.
+
+Otherwise at least one slack is at least one. The three Laplacian edges
+from coordinate0 have weights n−h_i,m−h_j,1, each at least one. For
+some ell∈{0,1,2,3}, therefore,
+
+    xᵀD_0x ≥ sum_(j=1)^3(x_0−x_j)²+x_ell² ≥ ||x||²/9.           (MT3)
+
+For the last inequality, express x in coordinates
+(x_ell,x_0−x_1,x_0−x_2,x_0−x_3). The inverse transformation has squared
+Frobenius norm7 for ell=0 and9 otherwise; rowwise Cauchy–Schwarz proves
+MT3. This bound is independent of the grid dimensions.
+
+The unnormalized row derivative r_i' is n−1 on affected rows and k
+otherwise; the column derivative q_j' is m−1 or k. Every cell-weight
+derivative w' is zero or one. Consequently
+
+    Delta_00=2k, Delta_01=−r_i', Delta_02=−q_j', Delta_03=−w_z',
+    Delta_11=2k−r_i', Delta_22=2k−q_j', Delta_33=−w_z',
+    Delta_12=−w_ij', Delta_13=−w_z'v, Delta_23=−w_z't.
+
+Its absolute row sums are bounded respectively by
+m+n+2k−1,2n,2m,4. For example, row1 is at most r_i'+|2k−r_i'|+2:
+the cases r_i'=k and r_i'=n−1 give either2k+2 or2n−2k, both at most2n.
+The other bounds follow directly from k≤min(m,n)−1. Thus every row sum
+is at most C. Applying2|x_ax_b|≤x_a²+x_b² gives
+
+    |xᵀDelta x|≤C||x||²,
+    D(epsilon)≥(1/9−epsilon C)I≥0
+
+for all nonexceptional configurations. Together with the aligned
+Laplacian case, this proves MT1 symbolically, without a grid enumeration.
+
+### Exact factor, positive gain and moving fibres
+
+The coefficient sum and its uniform-law counterpart are
+
+    F_k=1+[3(S+3)+6k epsilon]/[V+H epsilon],
+    U_k=1+3(S+3)/V.
+
+Their exact difference is
+
+    U_k−F_k=3k epsilon B/[V(V+H epsilon)],
+    B=m²+n²+(2−k)(m+n)−k−3>0.                                  (MT4)
+
+Indeed m=k+1+x,n=k+1+y with x,y≥0 gives
+B=5k+3+(k+4)(x+y)+x²+y². Hence the gain is strict for k≥1,epsilon>0.
+At epsilon=1/(9C), it is3kB/[V(9CV+H)]. For k=0 the law is uniform,
+independent of epsilon, and F_0=U_0=(1+3/m)(1+3/n).
+
+The B1 convex allocation argument and MT1 apply to all four complete
+old-cofactor groups. For a fixed grid, the aligned untouched test
+attains the upper bound by reusing one maximizing old layout in all
+four groups, exactly as in NT1. Thus, for every old law mu,
+
+    Gamma_new(mu×rho)=F_k Gamma_old(mu).                          (MT5)
+
+This arithmetic statement uses a coprime pair of new height-one primes
+with m,n actual available residue counts; old heights are unrestricted.
+For the uniform punctured grid, the aligned untouched Gram matrix
+entrywise dominates every other Gram matrix. The same allocation and
+row-sum argument gives its exact factor U_k, proving that MT4 compares
+complete laws on the same support, including the old-layout maximum.
+
+If instead each old point x has available row and column sets of the
+same sizes m,n and at most k matching holes, extend its matching to
+exactly k by pairing unused rows and columns. Extra virtual holes only
+restrict support. Construct rho_x after any fibrewise relabeling. Each
+rho_x sums to one, so nu(x,y)=mu(x)rho_x(y) preserves the old marginal.
+Because lambda is common to all fibres, integration of MT1 gives
+
+    Gamma_new(nu)≤F_k Gamma_old(mu).                             (MT6)
+
+The matching, row and column sets, and virtual holes may all move with
+x. Equality is not asserted: one global test layout need not align in
+every fibre. MT4 does not compare the padded law with each original
+fibre's uniform law when it originally had fewer than k holes.
+
+### Keeping the actual hole count gives an additive saving
+
+Fix1≤K<min(m,n) and one0≤epsilon≤1/(9C_K). If fibre x has exactly k_x
+matching holes with0≤k_x≤K, use its own law without virtual holes. Put
+
+    D_j=mn−j+epsilon j(S−j−1), N_j=3(S+3)+6epsilon j, F_j=1+N_j/D_j.
+
+The positive denominators strictly decrease, since
+delta_j=D_j−D_(j+1)=1−epsilon(S−2j−2)>0. Each lambda coordinate has a
+nondecreasing positive numerator and this decreasing denominator, so
+lambda_g(j) increases. Every complete old load A_g includes its unit
+cofactor and is at least one. Therefore, pointwise,
+
+    sum_g lambda_g(k_x)A_g²
+      ≤sum_g lambda_g(K)A_g²−(F_K−F_(k_x)).
+
+After integration this strengthens MT6 to
+
+    Gamma_new≤F_K Gamma_old−E_mu[F_K−F_(k_x)].                   (MT7)
+
+The successive differences F_(j+1)−F_j have numerator
+T_j=6epsilon D_j+N_j delta_j and denominator D_jD_(j+1). Their
+numerators increase by T_(j+1)−T_j=2epsilon N_(j+1)≥0 and their
+denominators decrease. Thus every difference is at least
+
+    gamma=F_1−F_0
+      =[6epsilon mn+3(S+3)(1−epsilon(S−2))]
+        /[mn(mn−1+(S−2)epsilon)]>0,
+
+and
+
+    Gamma_new≤F_K Gamma_old−gamma(K−E_mu k_x).                  (MT8)
+
+This holds also at epsilon=0. K=0 uses the full-rectangle bound alone.
+
+For actual mixed moduli qrd with distinct old cofactors d, each class
+activates on one old residue. The number of distinct forbidden cells
+k_x is at most this activation count, which is at most one complete
+old test load L_cross(x), obtained by filling any missing cofactors.
+Writing R_mu for the sum of nonunit old cylinder maxima gives
+E_mu k_x≤E_mu L_cross≤1+R_mu. Hence, whenever the remaining holes are
+a partial matching and their count is at most K, MT8 gives
+
+    Gamma_new≤F_K Gamma_old−gamma(K−1−R_mu)_+.                  (MT9)
+
+This uses actual cofactor labels. It does not assume globally distinct
+new digits, and it retains the hypotheses of fixed available dimensions
+and a matching within each fibre.
+
+### Arbitrary holes via fixed row and column deletion budgets
+
+Suppose an ambient M×N fibre excludes at most a entire rows, b entire
+columns and L individual cells. For L≥1 choose any fixed nonnegative
+A,B with A+B≥L−1 and m=M−a−A≥3,n=N−b−B≥3. First pad the original
+axis exclusions to exactly a,b. Of the remaining point holes, select
+all but at most one; there are at most L−1 selected holes. Assign at
+most A to their row endpoints and at most B to their column endpoints,
+then delete those endpoints. Repeated endpoints save budget. Pad these
+additional deletions to exactly A rows and B columns. The remaining
+m×n rectangle has at most one hole. If necessary, add one virtual hole.
+
+The k=1 law now has common lambda across all such fibres, is supported
+on the original survivor set, and preserves the old marginal; MT6
+applies. Endpoint choices and all padded deletions may vary with x.
+For L=0, use the k=0 full rectangle after padding the original axis
+exclusions. These are support constructions, not comparisons with the
+uniform laws on the original irregular fibres.
+
+The standard-library verifier checks10 sparse polynomial identities,
+all32 abstract Boolean incidence/slack patterns in MT2, and the four
+exact anchor transformations in MT3. It adds no concrete grid instances.
+The universal inequalities and support arguments above are ordinary
+proofs, independently reviewed; they are not Lean certification. Full
+matchings k=min(m,n), higher new prime heights and varying dimensions
+without fixed deletion budgets are outside the stated hypotheses. No
+unrestricted tail cutoff follows from these bounds.

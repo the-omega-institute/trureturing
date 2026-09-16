@@ -3068,5 +3068,30 @@
     "sharp_old_Gamma": "1131/86",
     "resulting_Gamma": "2407676947/112574000",
     "uniform_resulting_Gamma": "109707/5117"
+  },
+  "matching_hole_common_lambda": {
+    "scope": "symbolic identities and abstract PSD proof patterns; ordinary proof, not Lean verification",
+    "parameter_domain": "m,n>=3; 0<=k<min(m,n)",
+    "epsilon_interval": "0<=epsilon<=1/(9*max(m+n+2*k-1,2*m,2*n))",
+    "symbolic_identities": [
+      "probability normalization",
+      "coefficient sum numerator",
+      "strict multiplier gain numerator",
+      "positive gain polynomial after translation",
+      "row perturbation bound first slack",
+      "row perturbation bound second slack",
+      "varying-count denominator difference",
+      "varying-count factor difference numerator",
+      "increasing difference numerator",
+      "mean-count saving numerator"
+    ],
+    "abstract_incidence_slack_patterns": 32,
+    "anchor_squared_Frobenius_norms": [
+      7,
+      9,
+      9,
+      9
+    ],
+    "concrete_grid_instances": 0
   }
 }
