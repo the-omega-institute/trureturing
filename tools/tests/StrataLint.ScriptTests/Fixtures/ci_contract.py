@@ -607,6 +607,49 @@ if pathlib.Path(sys.argv[0]).name == "lean_actions.py":
                 self.assertEqual(b"new source", (source / "a.olean").read_bytes())
                 self.assertFalse(list(cached.parent.glob(".snapshot-*")))
 
+    def test_unchanged_restored_layer_skips_snapshot_and_save(self):
+        owner = self.restore_owner()
+        source, cached, manifest = self.restore_fixture("project", {"a.olean": b"accepted"})
+        (source / "current-only").unlink()
+        before = {path.relative_to(cached).as_posix(): path.read_bytes()
+                  for path in cached.rglob("*") if path.is_file()}
+        with mock.patch.dict(os.environ, self.env), contextlib.redirect_stdout(io.StringIO()) as receipts:
+            owner.snapshot(self.root, owner.actions_keys(self.root), ["project"])
+        output = receipts.getvalue()
+        self.assertIn('"status": "save-disabled"', output)
+        self.assertIn('"reason": "unchanged"', output)
+        self.assertIn("project_ready=false", output)
+        self.assertEqual(before, {path.relative_to(cached).as_posix(): path.read_bytes()
+                                  for path in cached.rglob("*") if path.is_file()})
+        self.assertFalse(list(cached.parent.glob(".snapshot-*")))
+
+    def test_corrupt_restored_manifest_falls_through_to_normal_snapshot(self):
+        owner = self.restore_owner()
+        source, cached, manifest = self.restore_fixture("project", {"a.olean": b"accepted"})
+        (source / "current-only").unlink()
+        manifest["files"][0]["sha256"] = "b" * 64
+        (cached / "manifest.json").write_text(json.dumps(manifest))
+        with mock.patch.dict(os.environ, self.env), contextlib.redirect_stdout(io.StringIO()) as receipts:
+            owner.snapshot(self.root, owner.actions_keys(self.root), ["project"])
+        self.assertIn('"status": "snapshot"', receipts.getvalue())
+        self.assertIn("project_ready=true", receipts.getvalue())
+
+    def test_dependency_seed_with_vcs_metadata_is_not_treated_as_unchanged(self):
+        owner = self.restore_owner()
+        source, cached, manifest = self.restore_fixture("dependency", {"a.olean": b"accepted"})
+        (source / "current-only").unlink()
+        legacy = source / ".git/config"
+        legacy.parent.mkdir()
+        legacy.write_bytes(b"legacy metadata")
+        manifest["files"].append({"path": ".git/config",
+                                  "sha256": hashlib.sha256(legacy.read_bytes()).hexdigest(), "mode": 0o640})
+        (cached / "manifest.json").write_text(json.dumps(manifest))
+        with mock.patch.dict(os.environ, self.env), contextlib.redirect_stdout(io.StringIO()) as receipts:
+            owner.snapshot(self.root, owner.actions_keys(self.root), ["dependency"])
+        output = receipts.getvalue()
+        self.assertIn('"status": "snapshot"', output)
+        self.assertIn("dependency_ready=true", output)
+
     def test_same_filesystem_restore_moves_validated_material_without_copy(self):
         owner = self.restore_owner()
         source, cached, manifest = self.restore_fixture("project", {"a.olean": b"cached", "nested/z.olean": b"tail"})

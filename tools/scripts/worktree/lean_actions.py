@@ -368,6 +368,10 @@ def stage_snapshot(root, keys, layer, staged, registry=None, *, current=None):
             (staged / "metrics.json").write_text(json.dumps(metrics) + "\n")
             return metrics
     with cache_guard(root, shared=True):
+        if layer in ("dependency", "project") and unchanged_layer(root, keys[layer], layer, keys["partition"]):
+            metrics = {"save_disabled_reason": "unchanged"}
+            (staged / "metrics.json").write_text(json.dumps(metrics) + "\n")
+            return metrics
         if layer in EXECUTION_LAYERS:
             inventory = snapshot_execution(root, layer, keys, staged / "data")
         elif layer == "judge":
@@ -387,6 +391,33 @@ def stage_snapshot(root, keys, layer, staged, registry=None, *, current=None):
                                  for item, size in sorted(sizes, key=lambda pair: (-pair[1], pair[0]["path"]))[:5]]}
     (staged / "metrics.json").write_text(json.dumps(metrics, sort_keys=True) + "\n")
     return metrics
+
+
+def unchanged_layer(root, spec, layer, partition):
+    """Check whether a restored layer already contains the exact current material.
+
+    The manifest is only a transport hint.  Every declared file is re-hashed
+    against the target before skipping a new snapshot; malformed or stale
+    manifests simply fall through to a normal snapshot.
+    """
+    manifest_path = root / spec["path"] / "manifest.json"
+    try:
+        manifest = json.loads(manifest_path.read_text())
+        if (not isinstance(manifest, dict) or manifest.get("schema") != "lean-actions-seed-v1"
+                or manifest.get("partition") != partition
+                or manifest.get("layer") != layer):
+            return False
+        declared = manifest.get("files")
+        if layer == "dependency" and any(".git" in pathlib.PurePosixPath(item.get("path", "")).parts
+                                         for item in declared if isinstance(item, dict)):
+            # The current dependency snapshot policy deliberately excludes
+            # nested package VCS metadata; an older seed must be rewritten once.
+            return False
+        target = root / spec["target"]
+        actual = validate_cache_directory(target, declared)
+        return actual == sorted(declared, key=lambda item: item["path"])
+    except (OSError, ValueError, TypeError, KeyError, json.JSONDecodeError):
+        return False
 
 
 def current_built_lean(root, plan, commit):
