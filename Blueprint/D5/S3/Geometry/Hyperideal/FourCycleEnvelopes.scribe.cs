@@ -16,7 +16,7 @@ internal sealed class FourCycleEnvelopesDocument : IScribeDocumentDefinition
         H("Whole-face hyper-ideal angle envelopes"),
         Blocks(
             Paragraph(Text("All variables below are real numbers. Icc(a,b) denotes the closed "
-                + "interval [a,b]. In the local edge order (12,13,14,34,24,23), the inputs "
+                + "interval [a,b]. In the local edge order (12,13,14,34,24,24), the inputs "
                 + "(x,y,z,o,v,w) keep all six coordinates independent. The four-cycle occupies "
                 + "coordinates x,y,o,v. Coordinates x and o are opposite.")),
             Paragraph(Text("Define rad(x,y,z)=2xyz+x^2+y^2+z^2-1 and "
@@ -25,6 +25,21 @@ internal sealed class FourCycleEnvelopesDocument : IScribeDocumentDefinition
                 + "This is the actual formula in Zhao, arXiv:2601.15174v2, Lemma 2.2. "
                 + "Both radicands are proved positive on the box. No assertion about an "
                 + "abstract angle with assumed bounds is substituted for this formula.")),
+            Describe.Lean(
+                DescribeId.Create("hyperideal-mixed-coordinate-comparison"),
+                DeclarationHandle.Create("D5/S3/Geometry/Hyperideal/FourCycleEnvelopes.cosine_mixed_comparison"),
+                H("The shared mixed-coordinate comparison"),
+                StatementSource.FromAuthor(F.Disp(ComparisonStatement())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("All eleven variables lie in [1,2]. Increasing the four "
+                    + "neighbouring coordinates and decreasing the opposite coordinate cannot "
+                    + "decrease the actual cosine. The proof differentiates the original "
+                    + "square-root expression and derives the nonnegative coupled numerator "
+                    + "(x^2-1)(xow+xv+yo+yvw+z(1-w^2)). It retains endpoint continuity, "
+                    + "positive denominators and the two actual tetrahedral symmetries. This "
+                    + "is the former local comparison proof exposed at the same source owner; "
+                    + "the original envelope theorem now consumes it without copying the derivative."))),
+                DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("fourcycle-whole-face-envelopes"),
                 DeclarationHandle.Create(Declaration),
@@ -55,6 +70,18 @@ internal sealed class FourCycleEnvelopesDocument : IScribeDocumentDefinition
                         + "thresholds, and the global co-volume existence argument are outside "
                         + "this declaration. It does not claim the complete CFMP conjecture."))),
                 DescribeRole.Theorem))));
+
+    private static Formula ComparisonStatement()
+    {
+        string[] names=["x","y","z","o","v","w","Y","Z","O","V","W"];
+        var a=names.Select(F.Id).ToArray();
+        var intervals=a.Select(t=>In(t,F.D(1),F.D(2))).ToArray();
+        Formula[] orders=[Le(a[1],a[6]),Le(a[2],a[7]),Le(a[8],a[3]),
+            Le(a[4],a[9]),Le(a[5],a[10])];
+        return ForAll(names,Implies(And([..intervals,..orders]),
+            Le(Call("cosine",a[0],a[1],a[2],a[3],a[4],a[5]),
+               Call("cosine",a[0],a[6],a[7],a[8],a[9],a[10]))));
+    }
 
     private static Formula Statement()
     {
