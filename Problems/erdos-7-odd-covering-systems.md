@@ -45,6 +45,9 @@ The pure-head continuation (PH1)--(PH7), sharpened by (AD1)--(AD5), excludes **a
 in the frozen 5040 fibre both permit tail cutoff 13, by (AD5).
 Thus a hypothetical cover must involve at least one of 11, 13 and 17.
 These missing-small-prime hypotheses remain; unrestricted #7 is open.
+The same uniform complete-survivor law at arbitrary finite3,5,7heights
+also satisfies `Gamma<=937/24` by (JG1)--(JG2), using shared cell parameters.
+This improves the separate-input bound1889/48 without a new tail cutoff.
 
 For families using only the primes 3, 5 and 7, (CM1)--(CM8) determine the
 exact infimum of uniform uncovered density: \(53/432\). Every finite
@@ -6546,6 +6549,107 @@ program in [BBMST, section 5.3](../Library/Arith/balister2019erdos.md)
 is a squarefree predecessor; it does not supply this arbitrary-power
 weighted-envelope certificate.
 
+
+### A shared-parameter improvement for arbitrary three-prime heights
+
+For every finite family with distinct nonunit moduli supported on
+`{3,5,7}`, the uniform law on its complete actual survivor set satisfies
+
+\[
+ \boxed{\Gamma_{357}\le\frac{937}{24}<\frac{1889}{48}.} \tag{JG1}
+\]
+
+The improvement is `5/16`. It keeps the old square bound and cylinder
+sum in the same actual five-cell domain, rather than independently
+maximizing the two inputs of (N9). It is an upper bound; sharpness for
+actual families and a new tail cutoff are not asserted.
+
+When the pure modulus-3 and modulus-9 exclusions are effective, use the
+five cells and budgets of (CM2). Put `r(j)=(0,0,1,1,1)`, and retain
+
+\[
+ n_j=\frac{w_j(z-\alpha_{r(j)}-\beta_j)}9-t_j,
+ \quad s=\sum_jn_j,\quad x=\frac{\sum_jw_j}9,
+ \quad n_r=\sum_{r(j)=r}n_j,\quad
+ v_r=\frac{\sum_{r(j)=r}w_j}3,\quad d_r=z-\alpha_r.
+\]
+
+Thus `v_r/3` is the actual pure-ternary mass in root `r`, and `n_r`
+is its complete two-prime survivor mass. The deeper mixed deletion in
+that root is exactly `sum_{r(j)=r}(w_j beta_j/9+t_j)`. Its total over
+the two roots is at most `1/36+1/72=1/24`, so these quantities satisfy
+the hypotheses of the unshifted (ZG3). In particular, the same law has
+
+\[
+ \Gamma_{35}\le U/s,\qquad R_{35}\le T/s,
+\]
+\[
+ \begin{aligned}
+ U&=s+\max_{r=0,1}\left\{3n_r+
+       \max(d_r,2d_{1-r}/3)+\frac{x+v_r+1}4+
+       \frac58(x+\max(v_0,v_1)+1)\right\},\\
+ T&=\max(n_0,n_1)+\max_jn_j+z/18+x/4+1/8.
+ \end{aligned}
+\]
+
+Here (ZG3) is used before moving any deletion between roots. Its actual
+zero-exponent layout and the cylinder masses therefore use identical
+cell parameters. Form the product with the actual pure-7 survivor law
+and condition away the original mixed-7 classes. This produces the
+uniform complete three-prime survivor law. Applying (N9) with these
+same-parameter bounds gives
+
+\[
+ \Gamma_{357}\le
+       \frac{(5/3)U-T/5}{s-T/5}.                     \tag{JG2}
+\]
+
+For fixed `s,U`, the displayed quotient increases in `T`, since
+`U>=s>0`; it also increases in `U`. The maxima may consequently be
+expanded into `2*2*2*2*5=80` branches: selected test root, its tail
+choice, the pure square-norm root, the cylinder root, and the cylinder
+cell. For each branch, both numerator and denominator of (JG2) are
+affine separately in each of the five groups `1-w,alpha,beta,t,z`.
+Their domain is precisely the product of the four budget simplexes
+and the interval used in (CM2).
+
+The denominator-weighted vertex identity therefore reduces each
+branch to the same `6*3*6*6*2=1296` vertices. Exact arithmetic checks
+all **103680** branch-vertex pairs: every denominator is at least
+`53/360`, and every margin
+
+\[
+ (937/24)(s-T/5)-((5/3)U-T/5)
+\]
+
+is nonnegative. Separate affinity also transports denominator positivity
+throughout the continuous domain. The relaxed maximum is `937/24`.
+At one maximizing vertex the cell masses are
+`(1/72,1/36,1/12,1/12,1/12)`, with
+
+\[
+ s=7/24,\quad U=191/48,\quad T=5/8,\quad
+ U/s=191/14<55/4,\quad T/s=15/7.
+\]
+
+This explains why the independent input maxima lose information.
+The maximizer is a parameter-relaxation certificate, not a claim of
+attainment by actual residue classes.
+
+If modulus 3 is absent, the established same-law bounds
+`Gamma35<=215/24` and `R35<=17/12` give `Gamma357<=5273/258` by (N9).
+If modulus 3 is present but modulus 9 is absent or ineffective, use
+`Gamma35<=55/4` and `R35<=47/24`, giving `Gamma357<=2703/73`.
+Both are strictly below `937/24`; these cases include smaller actual
+ternary heights. Arbitrary finite heights at 5 and 7 are already
+covered by the geometric sums and missing-class allowances.
+
+The existing [cofactor verifier](../docs/reports/erdos7-odd-covering/verify_uniform_gamma_cofactor_coupling.py)
+checks the continuous-domain certificate and both missing-class branches
+under `shared_three_prime_parameters`. It preserves the earlier
+72-branch square certificate. The transfer and vertex argument above
+are ordinary mathematical proofs; this is not an end-to-end Lean
+statement or a new unrestricted-tail exclusion.
 
 ### A uniform-survivor obstruction and sharpness at two primes
 

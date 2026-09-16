@@ -573,6 +573,81 @@ For t≥2, the complete comparator profile is
 
 Below2 it is E(Y₁₁−2)₊+2−t; above24 it vanishes. The comparator has second moment 1746200/80919. The sharp old actual moment gives the smaller bound 1+((13/10)(1131/86)−1)/ρ=14518/675, since L≥1 before conditioning. Both concern the same μ₁₁; the smaller actual bound above is used while all comparator atoms and hinges remain unchanged. The verifier reconstructs the exact quantile, all ten atoms and all25 integer hinge values, and independently recovers the same law by cancelling the negative value1 atom in the signed unit-loss expression. This is an ordinary proof with exact arithmetic, not a Lean theorem or a successful universal tail continuation.
 
+## Uniform sharp-head obstruction to an excess energy rebate
+
+This strengthens the previously retained arbitrary-law/Dirac saturation obstruction to the complete actual uniform315 survivor law attaining the sharp second-moment constant1131/86. All masses below belong to one actual normalized physical chain. The equal prefix caps are UNNORMALIZED caps of the good restriction; conditioning that restriction changes its caps.
+
+Take the sharp head's eleven original classes
+
+    (3,0),(9,4),(5,0),(15,1),(45,37),(7,0),
+    (21,1),(35,9),(63,52),(105,4),(315,142).
+
+Its complete survivor set S has86points. Let mu be uniform on S. The complete test layout
+
+    (1,0),(3,2),(5,3),(9,2),(15,8),(45,38),(7,6),
+    (21,20),(35,13),(63,20),(105,83),(315,83)
+
+has load L* and E_mu(L*)²=1131/86. The separately proved sharp upper bound therefore gives Gamma315(mu)=1131/86. Its five load-one points include c=19.
+
+Adjoin the pure class0 mod11. For d=35,45,63,105,315 in this order, adjoin the unique CRT class whose old residue is19 mod d and whose11digit is respectively1,2,3,4,5. Original moduli11d are all distinct. Put delta11=2/5 and use the ordinary clipped kernel with base uniform on digits1,...,10.
+
+At x in S let n(x) count active old cofactors. Their assigned digits are distinct. We have0<=n<=5, and n=5 exactly when x=19 because their least common multiple is315. Thus the actual conditional11charge is
+
+    b11(x)=(n(x)-4)_+/6=1[x=19]/6.
+
+The total charge is b=1/516. If r(x) is the good restriction's row mass, then r=1 away from19 and r(19)=5/6. Every complete head layout A has A>=1. Hence
+
+    E_mu[r A²] <= E_mu[A²]-b <= Gamma315(mu)-b.
+
+Equality holds for L*, because L*(19)=1. Consequently
+
+    Gamma315(r mu)=1131/86-1/516=6785/516.
+
+After normalization the exact old energy is `1357/103`, strictly greater than `1131/86`.
+
+There is no old-layout suboptimality or excess loss available to pay an additional universal rebate. This conclusion concerns the maximum over ALL complete head layouts, not just the displayed layout. Its upper bound uses the existing verified sharp uniform315 theorem; the new exact verifier directly consumes that theorem's freshly computed result and sharp-witness fields.
+
+The clipped mass of each good11digit is
+
+    c(x)=1/[10-min(n(x),4)].
+
+At least five good digits remain at every x. Therefore the largest depth-one prefix mass is c(x) both before and after killing the forbidden digits. The cap functions themselves agree pointwise, so Gamma315(c mu) also agrees before and after killing. At x=19 the unnormalized good cap is1/6, whereas the cap after row normalization is1/5; these are not confused.
+
+### Same-law later charge with no intersection
+
+Complete a test layout on3465 by retaining the twelve classes of L* at11exponent0 and using, for each old divisor d, the corresponding L* residue together with11digit10 at11exponent1. Its literal load is
+
+    L(x,y)=L*(x)(1+1[y=10]).
+
+Adjoin0 mod31 and, for each of the23nonunit divisors of3465, one original mixed31class at this test residue, assigning distinct31digits1,...,23. These are ordinary distinct moduli. Altogether there are41distinct odd original moduli, with actual lcm107415.
+
+With delta31=2/5, the actual conditional31charge is
+
+    b31(x,y)=(L(x,y)-13)_+/18.
+
+The entire positive11charge lies over x=19, where L* is1 and L<=2, so the two charge events have zero intersection. The positive31charge lies over x=83,188,293 at y=10. Exact enumeration of actual CRT classes and normalized kernels gives
+
+    P(B11)=1/516,
+    P(B31)=17/15480,
+    P(B11 intersect B31)=0.
+
+Thus killing B11 leaves raw later charge17/15480 unchanged. Conditioning on avoiding B11 makes it17/15450, strictly larger. No later-charge saving is inferred from the first charge.
+
+### All 11 heights
+
+For any H>1, add the redundant pure class0 mod11^H. It is contained in0 mod11, preserves original-modulus distinctness, and makes the true lcm315*31*11^H. The actual pure base and both mixed bad events depend only on the first11digit. The normalized11kernel is therefore the preceding kernel extended uniformly over higher digits. At every positive depth e<=H its maximal prefix mass, before and after killing, is exactly
+
+    c(x)*11^(-(e-1)).
+
+The root charge, weighted old Gamma, and later-charge intersection are unchanged. This is an arbitrary-height actual congruence construction; the checker independently reconstructs every cap for H=1,2,3. It does not assert unchanged normalized caps.
+
+### Scope and source reuse
+
+This refutes any positive excess rebate asserted solely from: uniformity on the full actual315survivor set, the sharp old Gamma, positive first charge, original-modulus injectivity, and actual prefix caps. In particular those data need not force any of positive-depth cap loss, old-energy loss beyond b, or positive later-charge intersection. It does not rule out improvements requiring additional residue alignment or a different optimized head law, and does not settle unrestricted Erdos7.
+
+Repository search reused the existing actual forbidden-class Gram projection, its old-layout deficit identity, the previously retained Dirac saturation and45-class residual obstruction, and the new sharp uniform315 square. Public Hough-Nielsen arXiv:1703.02133, Lemmas5-6, controls moments by bias statistics and transports them using good-fibre proportion and maximal biases; it does not supply a guaranteed positive test/forbidden alignment. BBMST arXiv:1901.11465, section5.3, constructs nonuniform survivor laws by optimizing over actual configurations. Those results remain reusable tools and do not imply the refuted uniform-law rebate. Both public HTML sources were retrieved and their cited passages read for this check.
+
+
 ## Remaining mass vectors do not determine the next original label
 
 On the same 74-point head, 36 points satisfy x≡1 mod3. Add (11,0) and either (33,1) or (33,13). In the first case the mixed class forbids 11-digit 1 over this root; in the second it forbids digit 2. Every individual old point has the same surviving fraction in both systems: 9/11 over root 1 and 10/11 elsewhere. Both have 704 survivors modulo 3465, raw surviving mass 32/37, and the same normalized old marginal.
@@ -732,3 +807,168 @@ At every finite11 height H, adding the pure classes0 mod11ᵉ for2≤e≤H chang
 
 
 The existing verifier and fixed certificate reconstruct all45 actual classes, their CRT unions, normalized kernels, total chain mass and all stated charge quantities using exact rational arithmetic. They also check the finite prefix instances at heights1 through3; the preceding argument supplies the all-height result. The comparison and obstruction are ordinary proofs, not end-to-end Lean verification or a new noncoverage cutoff.
+
+## A block transfer retaining row, column and cell compatibility
+
+This gives a universal finite two-coordinate transfer inequality and an
+actual 11/13 example where it is strictly stronger than sequential scalar
+prefix completion. It does not give a universal numerical head Gamma or
+an odd-covering conclusion. All mathematical proof below is ordinary
+finite convexity; the witness is checked by exact arithmetic, not Lean.
+
+### Existing results and the retained distinction
+
+The searched project already has the one-coordinate weighted-prefix
+theorem PrimeRectangleTransfer.prefix_weighted_rectangle_second_moment_le,
+the dossier's W 1--W 5, the full convex comparison C 1--C 5 in the marked-head
+note, and the actual two-prime root estimates G 1/ZG 3. These retain old-point
+weights or separate prefix caps. No two-coordinate surviving-grid maximum
+was identified in the searched congruence files and odd-covering notes.
+The distinction below is compatibility: maxima for a row, a column, and
+their intersection cannot always be attained together on the actual grid.
+
+### Universal finite-height statement
+
+Let S be an old supported finite set with a probability mu, and let q,r
+be new coprime primes. Fix finite heights H,K. Remove the actual pure-q
+and pure-r classes, giving coordinate sets P and R; their uniform product
+is the new base. Keep every other original label (d,a,b), representing
+old divisor d and new prime exponents a,b, distinct. At old point x define
+T_x subset P times R by deleting exactly the new original rectangles
+whose old congruence cylinder contains x. Thus a label containing both
+new primes deletes a cell-prefix rectangle, an axis label deletes a strip,
+and overlaps are counted as unions. Put
+
+    N_x=|T_x|,   Z=sum_x mu(x) N_x.
+
+Assume Z>0 and globally condition mu times the uniform product on these
+actual survivors. The resulting law can change the old marginal.
+
+For a complete test layout and exponent pair (a,b), let A_(a,b)(x) be
+the complete old test load obtained by summing its old cofactor indicators.
+Its individual labels can have different new prefixes. For nonnegative
+numbers v_(a,b), define
+
+    B_h(T;v)=max_(one prefix rectangle C_(a,b) for each pair)
+               sum_(y,z in T) h(sum_(a,b) v_(a,b) 1_C_(a,b)(y,z)),
+
+where C_(0,0) is the entire grid. Empty prefixes and prefixes outside the
+pure survivor sets are permitted. Then for every increasing convex h,
+
+    E_survivors h(L)
+      <= Z^(-1) sum_x mu(x) B_h(T_x; (A_(a,b)(x))).                 (B 1)
+
+The assertion is simultaneous for the one actual conditioned law. It
+does not replace original labels by a family of projected distinct moduli.
+
+Proof: at fixed x, group active old indicators by their selected new
+prefix within each exponent pair. Their nonnegative amounts have total
+A_(a,b)(x). The sum of h over T_x is convex in the allocation vector for
+one pair while all other allocations are fixed. Allowing arbitrary
+nonnegative allocations with this same total enlarges the feasible set:
+individual labels need not be splittable, and the pointwise maximizing
+allocation need not come from one common global test layout. Both facts
+are harmless for this upper bound. A convex function on a
+simplex is at most its maximum at a vertex, which places the whole amount
+in one prefix. Apply this successively to the finitely many exponent pairs,
+then integrate. Normalization is exactly Z; the pure-product size cancels.
+This argument needs neither independence of the old test loads nor a
+nonempty fibre at every old point.
+
+Unlike replacing every rectangle by an independent prefix-mass cap, B 1
+preserves the common actual grid until all cross terms are formed. The
+operator can be expensive at large heights; no fixed-dimensional closure
+or arbitrary-height numerical bound is claimed.
+
+### Explicit one-height square operator
+
+For H=K=1 write A,B,C,D for the old test loads at exponent pairs
+(0,0),(1,0),(0,1),(1,1). Let T be the actual surviving grid, N=|T|, and
+let n_i,m_j be its row and column counts. If N=0 set F_T=0. Otherwise
+the convex concentration above gives the explicit expression
+
+    F_T(A,B,C,D)=N A^2 + max_(i in rows,j in columns,z in T) [
+        n_i (2 AB+B^2) + m_j (2 AC+C^2)
+        +2 BC 1_((i,j) in T) +2 AD+D^2
+        +2 BD 1_(z_row=i) +2 CD 1_(z_col=j)].                       (B 2)
+
+Here i is any row, j any column, and z any surviving cell; i,j need not
+themselves form a surviving cell. The notation max means independent
+choices of i,j and z with only z constrained to T. The D contribution may
+be placed in T because h is increasing. Formula B 1 with h(t)=t^2 therefore
+has right side Z^(-1)sum_x mu(x)F_(T_x)(A(x),B(x),C(x),D(x)).
+
+This is an upper bound for each fixed four old test layouts. Taking the
+maximum over those layouts gives a universal second-moment bound, but
+that old-layout optimization has not been evaluated for arbitrary families.
+
+Independent scalar intersection caps instead give
+
+    G_T=N A^2+n_max(2 AB+B^2)+m_max(2 AC+C^2)
+        +2 BC+2 AD+D^2+2 BD+2 CD.                                   (B 3)
+
+Always F_T<=G_T. Equality can fail because the row and column maxima
+and the three positive mixed intersections must share one grid.
+
+### Strict gain in a complete original 315 times 11 times 13 family
+
+Use the 86-point old survivor family
+
+    (3,0),(9,4),(5,0),(15,1),(45,37),(7,0),
+    (21,1),(35,9),(63,52),(105,4),(315,142).
+
+Let d run increasingly through
+
+    1,3,5,7,9,15,21,35,45,63,105,315.
+
+All new old cofactor conditions are x=2 mod d. For the 11 axis, use digit 0
+for d=1 and for the last four nonunit cofactors; for the first seven
+nonunit cofactors use digits 4,5,...,10. For the 13 axis, similarly use
+digits 4,5,...,12 for the first nine nonunit cofactors and digit 0 otherwise.
+For the 143 d cross labels, use respectively
+
+    (1,1),(2,2),(2,3),(3,2),(3,3)
+
+at the first five cofactors d=1,3,5,7,9, and use (0,0) for all others.
+CRT defines one residue for each modulus. Together with the old classes,
+these are exactly all 47 nonunit divisors of 45045, without duplication.
+
+At old point x=2, the surviving grid is exactly
+
+    T={(1,2),(1,3),(2,1),(3,1)}.
+
+Its unique largest row and largest column both have size 2, but their
+intersection (1,1) is forbidden. With A=B=C=D=1, the exact block maximum
+is 22, attained for example by row 1, column 2, and cell(1,2). The independent
+intersection-cap bound is 25.
+
+For comparison with sequential W 1 scalar completion, let k be the number
+of nonempty rows. Its marginal old square contribution is N+3 n_max.
+Under the conditional-prefix weight, every nonempty row has mass 1; the
+two completed old layouts each have maximum square k+3. The one-height
+W 1 coefficient therefore gives
+
+    N+3 n_max+3(k+3).
+
+This is 28 on T. Reversing the prime order also gives 28. Thus the strict
+gain persists even after using actual conditional row caps in sequential
+scalar completion; it is not an improvement obtained by changing the law.
+
+The exact verifier also checks all 86 old points of this one actual family.
+There are 7128 complete survivors. Take every nonunit old test cofactor
+in each of the four groups to be its original forbidden residue. Then
+A=B=C=D=1 throughout the old survivor set, so the same comparison applies
+to one legitimate set of old test blocks. Summed square numerators are
+
+| Bound | Numerator | Divided by 7128 |
+|---|---:|---:|
+| Joint surviving-grid operator | 12618 | 701/396 |
+| Independent row/column/intersection caps | 12621 | 4207/2376 |
+| Sequential scalar completion, either order | 12624 | 526/297 |
+
+The extra compatibility gain beyond independent intersection caps is
+1/2376. The gain over sequential scalar completion is 1/1188. Directly
+maximizing the three global unit-cofactor test choices gives square
+numerator 12522, so the joint pointwise bound itself is not asserted sharp
+after integration. In particular, these numbers are not a Gamma bound
+for all old test layouts of the family.

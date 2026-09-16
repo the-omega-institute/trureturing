@@ -57,5 +57,77 @@
     "coupled_envelope": "55/4",
     "n": "1/8",
     "m": "1/8"
+  },
+  "shared_three_prime_parameters": {
+    "law": "uniform on the complete actual survivor set, arbitrary finite powers of3,5,7",
+    "Gamma357_upper": "937/24",
+    "previous_separate_upper": "1889/48",
+    "strict_improvement": "5/16",
+    "parameter_vertices": 1296,
+    "affine_branches": 103680,
+    "minimum_denominator": "53/360",
+    "minimum_scaled_margin": "0",
+    "relaxation_maximizer": {
+      "deficits": [
+        "1/2",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "alpha": [
+        "1/4",
+        "0"
+      ],
+      "beta": [
+        "0",
+        "1/4",
+        "0",
+        "0",
+        "0"
+      ],
+      "late": [
+        "1/72",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "z": "3/4",
+      "cell_masses": [
+        "1/72",
+        "1/36",
+        "1/12",
+        "1/12",
+        "1/12"
+      ],
+      "s": "7/24",
+      "raw_old_square_bound": "191/48",
+      "raw_cylinder_cap": "5/8",
+      "old_square_bound": "191/14",
+      "old_cylinder_cap": "15/7",
+      "branches": [
+        1,
+        0,
+        1,
+        1,
+        2
+      ]
+    },
+    "missing_pure_cases": [
+      {
+        "case": "modulus3_absent",
+        "old_square": "215/24",
+        "old_cylinder_cap": "17/12",
+        "three_prime_square": "5273/258"
+      },
+      {
+        "case": "modulus9_absent_or_ineffective",
+        "old_square": "55/4",
+        "old_cylinder_cap": "47/24",
+        "three_prime_square": "2703/73"
+      }
+    ],
+    "scope": "Upper bound from a shared actual-parameter relaxation; no actual-family sharpness or new tail cutoff asserted."
   }
 }

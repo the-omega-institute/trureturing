@@ -1670,5 +1670,745 @@
       "second_moment": "1131/86"
     },
     "sharpness": "Sharp for the prescribed uniform law; no minimax claim over other supported laws."
+  },
+  "uniform315_energy_rebate_obstruction": {
+    "scope": "actual ordinary proof plus exact arithmetic, no new Lean theorem",
+    "old_gamma_upper_source": "5506e7f580; marked_head_profile.md sharp uniform315 square1131/86",
+    "head_original_classes": [
+      [
+        3,
+        0
+      ],
+      [
+        9,
+        4
+      ],
+      [
+        5,
+        0
+      ],
+      [
+        15,
+        1
+      ],
+      [
+        45,
+        37
+      ],
+      [
+        7,
+        0
+      ],
+      [
+        21,
+        1
+      ],
+      [
+        35,
+        9
+      ],
+      [
+        63,
+        52
+      ],
+      [
+        105,
+        4
+      ],
+      [
+        315,
+        142
+      ]
+    ],
+    "complete_head_test_layout": [
+      [
+        1,
+        0
+      ],
+      [
+        3,
+        2
+      ],
+      [
+        5,
+        3
+      ],
+      [
+        9,
+        2
+      ],
+      [
+        15,
+        8
+      ],
+      [
+        45,
+        38
+      ],
+      [
+        7,
+        6
+      ],
+      [
+        21,
+        20
+      ],
+      [
+        35,
+        13
+      ],
+      [
+        63,
+        20
+      ],
+      [
+        105,
+        83
+      ],
+      [
+        315,
+        83
+      ]
+    ],
+    "head_survivors": [
+      2,
+      8,
+      11,
+      17,
+      19,
+      23,
+      26,
+      29,
+      32,
+      34,
+      38,
+      41,
+      47,
+      53,
+      59,
+      62,
+      68,
+      71,
+      73,
+      74,
+      83,
+      86,
+      88,
+      89,
+      92,
+      97,
+      101,
+      104,
+      107,
+      113,
+      116,
+      118,
+      122,
+      124,
+      128,
+      131,
+      134,
+      137,
+      143,
+      146,
+      152,
+      158,
+      163,
+      164,
+      167,
+      173,
+      176,
+      179,
+      187,
+      188,
+      191,
+      194,
+      197,
+      199,
+      206,
+      208,
+      209,
+      212,
+      218,
+      221,
+      223,
+      227,
+      233,
+      236,
+      239,
+      242,
+      244,
+      248,
+      251,
+      257,
+      263,
+      268,
+      269,
+      272,
+      277,
+      278,
+      281,
+      284,
+      293,
+      296,
+      298,
+      299,
+      302,
+      311,
+      313,
+      314
+    ],
+    "head_size": 86,
+    "head_load_histogram": {
+      "1": 5,
+      "2": 38,
+      "3": 14,
+      "4": 18,
+      "6": 8,
+      "8": 2,
+      "12": 1
+    },
+    "minimal_load_centres": [
+      19,
+      124,
+      187,
+      199,
+      277
+    ],
+    "chosen_centre": 19,
+    "mixed11_cofactors": [
+      35,
+      45,
+      63,
+      105,
+      315
+    ],
+    "all_original_classes": [
+      [
+        3,
+        0
+      ],
+      [
+        9,
+        4
+      ],
+      [
+        5,
+        0
+      ],
+      [
+        15,
+        1
+      ],
+      [
+        45,
+        37
+      ],
+      [
+        7,
+        0
+      ],
+      [
+        21,
+        1
+      ],
+      [
+        35,
+        9
+      ],
+      [
+        63,
+        52
+      ],
+      [
+        105,
+        4
+      ],
+      [
+        315,
+        142
+      ],
+      [
+        11,
+        0
+      ],
+      [
+        385,
+        89
+      ],
+      [
+        495,
+        244
+      ],
+      [
+        693,
+        586
+      ],
+      [
+        1155,
+        334
+      ],
+      [
+        3465,
+        2854
+      ],
+      [
+        31,
+        0
+      ],
+      [
+        93,
+        32
+      ],
+      [
+        155,
+        33
+      ],
+      [
+        279,
+        65
+      ],
+      [
+        465,
+        128
+      ],
+      [
+        1395,
+        1028
+      ],
+      [
+        217,
+        6
+      ],
+      [
+        651,
+        503
+      ],
+      [
+        1085,
+        783
+      ],
+      [
+        1953,
+        1280
+      ],
+      [
+        3255,
+        1343
+      ],
+      [
+        9765,
+        9218
+      ],
+      [
+        341,
+        43
+      ],
+      [
+        1023,
+        230
+      ],
+      [
+        1705,
+        758
+      ],
+      [
+        3069,
+        263
+      ],
+      [
+        5115,
+        4883
+      ],
+      [
+        15345,
+        14618
+      ],
+      [
+        2387,
+        1847
+      ],
+      [
+        7161,
+        6467
+      ],
+      [
+        11935,
+        6313
+      ],
+      [
+        21483,
+        15707
+      ],
+      [
+        35805,
+        27488
+      ],
+      [
+        107415,
+        103718
+      ]
+    ],
+    "class_count": 41,
+    "actual_lcm": 107415,
+    "delta11": "2/5",
+    "delta31": "2/5",
+    "first_hit_histogram": {
+      "0": 78,
+      "1": 6,
+      "2": 1,
+      "5": 1
+    },
+    "first_charge_support": [
+      19
+    ],
+    "first_charge": "1/516",
+    "old_gamma": "1131/86",
+    "weighted_old_gamma": "6785/516",
+    "weighted_old_gamma_proof": "Lower bound by the displayed maximizing layout; upper bound Gamma(rmu)<=Gamma(mu)-b since every complete layout has load>=1.",
+    "prefix_caps_by_hit_count": {
+      "0": "1/10",
+      "1": "1/9",
+      "2": "1/8",
+      "5": "1/6"
+    },
+    "all_actual_positive_depth_prefix_caps_equal": true,
+    "height_checks": [
+      {
+        "height": 1,
+        "class_count": 41,
+        "actual_lcm": 107415,
+        "all_positive_depth_caps_equal": true
+      },
+      {
+        "height": 2,
+        "class_count": 42,
+        "actual_lcm": 1181565,
+        "all_positive_depth_caps_equal": true
+      },
+      {
+        "height": 3,
+        "class_count": 42,
+        "actual_lcm": 12997215,
+        "all_positive_depth_caps_equal": true
+      }
+    ],
+    "same_positive_depth_weighted_gamma": true,
+    "later_charge": "17/15480",
+    "charge_intersection": "0",
+    "later_raw_charge_after_deletion": "17/15480",
+    "later_charge_after_conditioning": "17/15450",
+    "later_charge_head_support": [
+      83,
+      188,
+      293
+    ],
+    "normalized_old_gamma": "1357/103"
+  },
+  "two_prime_block_grid_comparison": {
+    "scope": "single height at 11 and 13; prescribed constant old test blocks only; no universal Gamma or prime-cutoff claim",
+    "prescribed_old_blocks": {
+      "A": "1",
+      "B": "1",
+      "C": "1",
+      "D": "1",
+      "realization": "every nonunit old test cofactor uses its original forbidden residue"
+    },
+    "old_original_classes": [
+      [
+        3,
+        0
+      ],
+      [
+        9,
+        4
+      ],
+      [
+        5,
+        0
+      ],
+      [
+        15,
+        1
+      ],
+      [
+        45,
+        37
+      ],
+      [
+        7,
+        0
+      ],
+      [
+        21,
+        1
+      ],
+      [
+        35,
+        9
+      ],
+      [
+        63,
+        52
+      ],
+      [
+        105,
+        4
+      ],
+      [
+        315,
+        142
+      ]
+    ],
+    "old_survivor_count": 86,
+    "new_prime_heights": [
+      [
+        11,
+        1
+      ],
+      [
+        13,
+        1
+      ]
+    ],
+    "complete_original_classes": [
+      [
+        3,
+        0
+      ],
+      [
+        9,
+        4
+      ],
+      [
+        5,
+        0
+      ],
+      [
+        15,
+        1
+      ],
+      [
+        45,
+        37
+      ],
+      [
+        7,
+        0
+      ],
+      [
+        21,
+        1
+      ],
+      [
+        35,
+        9
+      ],
+      [
+        63,
+        52
+      ],
+      [
+        105,
+        4
+      ],
+      [
+        315,
+        142
+      ],
+      [
+        11,
+        0
+      ],
+      [
+        33,
+        26
+      ],
+      [
+        55,
+        27
+      ],
+      [
+        77,
+        72
+      ],
+      [
+        99,
+        29
+      ],
+      [
+        165,
+        107
+      ],
+      [
+        231,
+        86
+      ],
+      [
+        385,
+        142
+      ],
+      [
+        495,
+        407
+      ],
+      [
+        693,
+        506
+      ],
+      [
+        1155,
+        737
+      ],
+      [
+        3465,
+        1892
+      ],
+      [
+        13,
+        0
+      ],
+      [
+        39,
+        17
+      ],
+      [
+        65,
+        57
+      ],
+      [
+        91,
+        58
+      ],
+      [
+        117,
+        20
+      ],
+      [
+        195,
+        47
+      ],
+      [
+        273,
+        191
+      ],
+      [
+        455,
+        387
+      ],
+      [
+        585,
+        362
+      ],
+      [
+        819,
+        506
+      ],
+      [
+        1365,
+        1157
+      ],
+      [
+        4095,
+        2522
+      ],
+      [
+        143,
+        1
+      ],
+      [
+        429,
+        2
+      ],
+      [
+        715,
+        497
+      ],
+      [
+        1001,
+        366
+      ],
+      [
+        1287,
+        146
+      ],
+      [
+        2145,
+        572
+      ],
+      [
+        3003,
+        1430
+      ],
+      [
+        5005,
+        3432
+      ],
+      [
+        6435,
+        4862
+      ],
+      [
+        9009,
+        7436
+      ],
+      [
+        15015,
+        13442
+      ],
+      [
+        45045,
+        43472
+      ]
+    ],
+    "full_survivor_count": 7128,
+    "local_old_point": 2,
+    "local_survivor_grid": [
+      [
+        1,
+        2
+      ],
+      [
+        1,
+        3
+      ],
+      [
+        2,
+        1
+      ],
+      [
+        3,
+        1
+      ]
+    ],
+    "local_square_numerators": {
+      "joint": 22,
+      "independent_intersection_caps": 25,
+      "sequential_qr": 28,
+      "sequential_rq": 28
+    },
+    "aggregate_square_numerators": {
+      "joint": 12618,
+      "independent_intersection_caps": 12621,
+      "sequential_qr": 12624,
+      "sequential_rq": 12624
+    },
+    "aggregate_normalized_bounds": [
+      "701/396",
+      "4207/2376",
+      "526/297",
+      "526/297"
+    ],
+    "strict_compatibility_gain": "1/2376",
+    "constant_old_block_actual_maximum": {
+      "square_numerator": 12522,
+      "second_moment": "2087/1188",
+      "row": 10,
+      "column": 10,
+      "cell": [
+        10,
+        10
+      ]
+    }
   }
 }

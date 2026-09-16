@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Exact uniform Gamma35 bound from coupling the shared zero-exponent layout.
+"""Exact uniform Gamma35 and Gamma357 bounds from shared actual parameters.
 
 Python3.9+ standard library only. The accompanying proof gives the layout
 inequality and the continuous linear-fractional vertex reduction. This checks
-all72 rational branches and the absent-modulus-3 branch, with no solver.
+all72 old branches and103680 three-prime branches, plus missing-class cases,
+with no solver.
 """
 from fractions import Fraction as F
 from itertools import product
@@ -14,6 +15,90 @@ import json
 def require(condition,message):
     if not condition:
         raise ValueError(message)
+
+
+def joint_three_prime_bound():
+    """One actual five-cell domain controls the old square and cylinder sums."""
+    def simplex(size, budget):
+        yield (F(0),)*size
+        for j in range(size):
+            yield tuple(budget if i == j else F(0) for i in range(size))
+
+    roots = (0, 0, 1, 1, 1)
+    cap = F(937, 24)
+    counts = vertices = 0
+    minimum_denominator = minimum_margin = None
+    maximum = F(0)
+    witness = None
+    for deficits, alpha, beta, late, z in product(
+            simplex(5, F(1, 2)), simplex(2, F(1, 4)),
+            simplex(5, F(1, 4)), simplex(5, F(1, 72)), (F(3, 4), F(1))):
+        widths = [1-d for d in deficits]
+        x = sum(widths)/9
+        cells = [widths[j]*(z-alpha[roots[j]]-beta[j])/9-late[j]
+                 for j in range(5)]
+        s = sum(cells)
+        root_mass = [sum(cells[j] for j in range(5) if roots[j] == r)
+                     for r in (0, 1)]
+        root_width = [sum(widths[j] for j in range(5) if roots[j] == r)/3
+                      for r in (0, 1)]
+        require(min(cells) >= 0 and s >= F(1, 4), 'actual five-cell positivity')
+        require(sum(root_width) == 3*x and min(root_width) >= F(1, 2),
+                'same pure-ternary roots in the square and cylinder bounds')
+        for selected, tail_choice, norm_choice, cap_root, cap_cell in product(
+                range(2), range(2), range(2), range(2), range(5)):
+            d = z-alpha[selected]
+            e = z-alpha[1-selected]
+            extra = d if tail_choice == 0 else F(2, 3)*e
+            U = (s+3*root_mass[selected]+extra
+                 +F(1, 4)*(x+root_width[selected]+1)
+                 +F(5, 8)*(x+root_width[norm_choice]+1))
+            T = root_mass[cap_root]+cells[cap_cell]+z/18+x/4+F(1, 8)
+            denominator = s-T/5
+            numerator = F(5, 3)*U-T/5
+            require(U >= s and T >= 0 and denominator > 0,
+                    'positive branch domain and monotonicity in the cylinder cap')
+            margin = cap*denominator-numerator
+            require(margin >= 0, 'joint square/cylinder branch proves Gamma357<=937/24')
+            value = numerator/denominator
+            counts += 1
+            minimum_denominator = denominator if minimum_denominator is None else min(minimum_denominator, denominator)
+            minimum_margin = margin if minimum_margin is None else min(minimum_margin, margin)
+            if value > maximum:
+                maximum = value
+                witness = {
+                    'deficits': list(map(str, deficits)), 'alpha': list(map(str, alpha)),
+                    'beta': list(map(str, beta)), 'late': list(map(str, late)), 'z': str(z),
+                    'cell_masses': list(map(str, cells)), 's': str(s),
+                    'raw_old_square_bound': str(U), 'raw_cylinder_cap': str(T),
+                    'old_square_bound': str(U/s), 'old_cylinder_cap': str(T/s),
+                    'branches': [selected, tail_choice, norm_choice, cap_root, cap_cell],
+                }
+        vertices += 1
+    require(vertices == 1296 and counts == 103680 and maximum == cap,
+            'complete multi-affine vertex and branch domain')
+    require(minimum_margin == 0 and minimum_denominator == F(53, 360),
+            'exact relaxed margin and positive denominator')
+    missing = []
+    for name, G, R in (
+            ('modulus3_absent', F(215, 24), F(17, 12)),
+            ('modulus9_absent_or_ineffective', F(55, 4), F(47, 24))):
+        bound = (F(5, 3)*G-R/5)/(1-R/5)
+        require(R < 5 and bound < cap, 'missing pure-class branch is strictly smaller')
+        missing.append({'case': name, 'old_square': str(G), 'old_cylinder_cap': str(R),
+                        'three_prime_square': str(bound)})
+    require(witness['old_square_bound'] == '191/14'
+            and witness['old_cylinder_cap'] == '15/7',
+            'the joint extremum does not independently attain the old square maximum55/4')
+    return {
+        'law': 'uniform on the complete actual survivor set, arbitrary finite powers of3,5,7',
+        'Gamma357_upper': str(cap), 'previous_separate_upper': str(F(1889, 48)),
+        'strict_improvement': str(F(1889, 48)-cap),
+        'parameter_vertices': vertices, 'affine_branches': counts,
+        'minimum_denominator': str(minimum_denominator), 'minimum_scaled_margin': str(minimum_margin),
+        'relaxation_maximizer': witness, 'missing_pure_cases': missing,
+        'scope': 'Upper bound from a shared actual-parameter relaxation; no actual-family sharpness or new tail cutoff asserted.',
+    }
 
 
 def compute_certificate():
@@ -73,7 +158,8 @@ def compute_certificate():
             'absent_modulus_3_bound':str(absent),
             'absent_modulus_3_denominator':str(absent_denominator),
             'old_budget_extremum':{'old_envelope':str(old),'coupled_envelope':str(new),
-                                   'n':str(n),'m':str(m)}}
+                                   'n':str(n),'m':str(m)},
+            'shared_three_prime_parameters':joint_three_prime_bound()}
 
 
 def main():
@@ -83,6 +169,8 @@ def main():
     print('Verified all72 continuous-envelope branches: uniform Gamma35 <=55/4.')
     print('Positive denominators and absent-modulus-3 bound215/24 verified; '
           'the old57/4 extremal budget now has coupled bound55/4.')
+    print('Verified103680 shared-parameter branches: uniform Gamma357<=937/24; '
+          'all denominator and missing-pure-class checks passed.')
 
 
 if __name__=='__main__':
