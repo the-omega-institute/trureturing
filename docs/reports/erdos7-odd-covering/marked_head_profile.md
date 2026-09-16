@@ -2285,3 +2285,410 @@ and likewise for 13. Several different forbidden axis digits can
 violate that hypothesis. Higher 3/5/7 powers also remain outside this
 statement. The result is an ordinary proof with exact certificates,
 not an unrestricted solution of Erdős #7 or an end-to-end Lean theorem.
+
+
+# Unrestricted axis deletions and the optimal scalar clipped bound
+
+For every family of distinct nonunit moduli dividing
+315·11^H·13^J, H,J≥1, the construction below gives one probability
+supported on the full survivors with
+
+    Γ≤42723250051/1147550665 ≈37.229946663.                    (VC1)
+
+There is no restriction on the original axis deletions or point-hole
+pattern. The bound covers all finite H,J. The full3/5/7part must still
+divide315. The same law has a full increasing-convex comparator of mean
+
+    1263555626/229510133 ≈5.50545,
+
+specified below. These are head bounds, not a completed unrestricted-tail
+continuation. An exact robust linear program proves that(VC1)is the
+best bound from the stated scalar clipped certificate for all C≥1;
+it does not prove optimality among actual supported laws.
+
+### Actual varying rectangles and their area
+
+Use the canonical supported old315law μ, with common old comparator X,
+EX=M=271/86, Γ315(μ)≤G=1131/86, and complete old loads in{1,…,12}.
+First exclude the actual pure11and13root classes. If a root class is
+absent, an arbitrary virtual root exclusion only restricts support.
+The reference first-digit carrier is a10×12rectangle.
+
+Let u(x),v(x) be the numbers of distinct remaining rows and columns
+deleted by actual axis classes. By original-modulus distinctness there
+are complete old layouts A,B with
+
+    u≤A−1, v≤B−1.
+
+Let D be a third complete old layout whose load bounds the number of
+active mixed11·13·d labels. There is at most one original label per
+d|315; repeated cells only reduce the number of holes. If N(x) is the
+actual remaining first-digit cell count, then
+
+    N(x)≥S(A,B,D):=[(11−A)_+(13−B)−D]_+.                    (VC2)
+
+This retains the rectangular overlap u·v. It does not spend one common
+vertex budget on both axes or select a fixed smaller rectangle. It
+allows N=0 and makes no independence assumption about A,B,D.
+
+Let τ sample x from μ, then sample uniformly from the10×12reference
+rectangle and all extra11/13digits. Write s(x)=N(x)/120. Fix C≥1 and
+define a subprobability measure ξ on the actual low survivors by the
+following density relative to τ:
+
+    f(x,y)=1_low-survives(x,y) min(C,1/s(x)).
+
+Set f=0 when s=0. Its old row mass is
+
+    h_C(x)=min(1,Cs(x)),    Z=Eμ h_C≤1.                      (VC3)
+
+Thus empty fibres receive zero mass automatically, and the old marginal
+is allowed to change. The density is at most C, while the old marginal
+is bounded by μ. These two properties are used separately.
+
+### Exact area information
+
+For each of A,B,D impose all known marginal hinge bounds
+
+    t: 0,1,2,3,4,5,6,8;
+    θ(t):271/86,185/86,100/81,61/81,16/39,7/26,5/37,2/37,
+
+and the square bound1131/86. Let P range over probability distributions
+on the1728triples{1,…,12}³ satisfying these constraints. Then
+
+    Z≥Z_*(C):=min_P E_P min(1,C S(A,B,D)/120).                (VC4)
+
+This is an information relaxation: its distributions need not arise as
+three actual arithmetic layouts. A feasible dual gives a universal
+lower bound, and exact feasible primal distributions establish sharpness
+within this specified marginal information.
+
+At C=1 the exact optimum is
+
+    Z_*(1)=3705715/6185808.
+
+One pointwise certificate is
+
+    S≥110−7(A−1)_+−4(A−2)_+−(A−6)_+
+           −5(B−1)_+−4(B−2)_+−(B−6)_+−(D−1)_+.
+
+At C=3/2 the exact optimum is1004221/1246752. Their finite marginal-profile optima are exact; the global clipped certificate below resolves the choice of C.
+
+The constant used in(VC1)is
+
+    C*=40/31,        Z_*(C*)=74101/97929.                    (VC5)
+
+Its particularly short pointwise dual is
+
+    min(1,S/93)
+      ≥1−3(A−2)_+/31−2(A−4)_+/93
+          −7(B−2)_+/93−2(B−4)_+/93−(D−2)_+/93.             (VC6)
+
+The finite certificate verifies(VC6)for every triple. Averaging the
+five hinge terms gives exactly the value in(VC5).
+
+### High-class deletion and the complete-square bound
+
+The uniform higher-digit reference has per-prefix caps
+11^(−(a−1))/10,13^(−(b−1))/12 and their product. The sum over all
+actual high original labels therefore has τ-mass at most
+
+    λ0=M[(13/120)(1/10)+(11/120)(1/12)
+                           +(1/120)(1/10)(1/12)]
+       =24119/412800.                                       (VC7)
+
+This is the existing distinct-cofactor height count; finite heights only
+decrease it. Since ξ≤Cτ, the actual high deleted ξ-mass β is at most
+Cλ0. No disjointness or preservation of every old fibre is assumed.
+
+For a complete fine test layout, group its load by the full11/13
+exponent pair. The old-only group A00 has
+
+    ∫h_C A00² dμ≤G−Eμ(1−h_C)=G−1+Z.
+
+Every other ordered pair has at least one positive new exponent.
+The ξ-prefix intersection mass is at most C times the reference cap;
+the old load product has expectation at most G by Cauchy–Schwarz.
+The sum of all reference coefficients, including the old-only pair, is
+
+    χ0=(1+(3+13/25)/10)(1+(3+31/72)/12)
+       =187759/108000.
+
+Consequently
+
+    Γ(ξ)≤G−1+Z+C(χ0−1)G.                                   (VC8)
+
+Here Γ is extended homogeneously to finite measures, as in the existing
+weighted rectangle transfer. This uses the actual old marginal cap and
+does not replace the entire right side by CΓ(τ).
+
+Delete all actual high classes and normalize. The remaining mass is
+at least Z_*(C)−Cλ0. Every full load is at least one, so deleting β
+saves at least β from its square integral. Whenever the mass bound is
+positive, the resulting single supported probability ν_C satisfies
+
+    Γ(ν_C)≤1+[G−1+C(χ0−1)G]/[Z_*(C)−Cλ0].                  (VC9)
+
+At(VC5)the denominator is
+
+    Z_*(C*)−C*λ0=229510133/336875760>0,
+
+and(VC9)is exactly(VC1). At heights H=J=1 there are no high exclusions
+and the reference square factor is13/8. The same C* gives
+
+    Γ≤99014608/3186343 ≈31.075.
+
+This improves the earlier unrestricted first-height sequential bound
+388385/10979≈35.375. It is not asserted to be the optimal first-height
+choice of C.
+
+### Full profile on the same law
+
+Under τ the existing conditional comparison gives the common auxiliary
+
+    Y=X N11 N13,
+
+with independent factors and Pr(Np=1)=1−1/(p−1),
+Pr(Np=k)=p^(1−k)for k≥2. The old/reference sets are fixed at10×12;
+actual low deletions are in ξ and may vary arbitrarily with x.
+
+The final law has density at most C/[Z_*(C)−Cλ0]relative to τ. Hence
+its full increasing-convex comparator is the normalized upper ρ_C
+quantile of Y, where
+
+    ρ_C=Z_*(C)/C−λ0.
+
+At C*, this fraction is229510133/434678400. The boundary is strictly
+inside the atom at3. The reference mean and first masses give
+
+    E comparator
+      =3+[EY−3+2Pr(Y=1)+Pr(Y=2)]/ρ_C
+      =1263555626/229510133.                                (VC10)
+
+This comparator and(VC1)bound the same ν_C*. The scalar density
+comparison is a limitation of the current argument: C=1 has a weaker
+square bound≈41.440but a slightly smaller comparison mean≈5.447.
+Thus square improvement must not be advertised as a simultaneous
+improvement of every profile value. These head bounds alone do not provide a certified unrestricted-tail continuation.
+
+### A sharper first moment under the same law
+
+The old marginal cap also gives a first-moment estimate stronger than
+(VC10). For each complete old test load A, the unit term gives
+`∫h_C A dμ≤M−1+Z`. All positive new-exponent groups have total reference
+first-moment coefficient `Nmean−1`, where
+
+    Nmean=E(N11 N13)=(111/100)(157/144)=5809/4800.
+
+Their ξ-integral is at most `C(Nmean−1)M`. Deleting high-class mass β
+saves at least β from every complete-load integral. The same normalization
+as (VC9) therefore gives
+
+    sup_test Eν_C L
+      ≤1+[M−1+C(Nmean−1)M]/[Z_*(C)−Cλ0].
+
+At C=40/31 this is
+
+    M*=1242116000/229510133≈5.41203120.                     (VC11)
+
+It holds simultaneously with the actual square bound (VC1) and the
+full comparator (VC10). The comparator's own mean remains the larger
+`1263555626/229510133`; inserting M* in an identity for that comparator
+would be invalid.
+
+### Global optimization of this scalar certificate
+
+For a fixed C, the dual to(VC4)maximizes
+
+    Z=ν+Σ_i y_i b_i,
+    y_i≤0,
+    ν+Σ_i y_i f_i(l)≤1,
+    ν+Σ_i y_i f_i(l)≤C S_l/120   for every triple l.
+
+The f_i are the27marginal hinge/square features and b_i their bounds.
+Set A0=G−1,B0=(χ0−1)G. To minimize(VC9)over all C≥1 and all valid
+dual lower bounds, apply the standard linear-fractional substitution
+
+    t=1/(Z−Cλ0), z=Ct, v=νt, w_i=y_it.
+
+The objective becomes1+A0t+B0z, subject to
+
+    v+Σ_iw_i b_i−zλ0≥1,
+    v+Σ_iw_i f_i(l)≤t,
+    v+Σ_iw_i f_i(l)≤z S_l/120,
+    w_i≤0, t≥0, z≥t.
+
+This is one linear program with30variables and3458constraints. Finite
+LP duality makes the formulation exact for the current information
+relaxation. A positive feasible denominator exists by(VC5); scaling
+forces equality in the normalization constraint at an optimum.
+
+The retained exact primal and dual have equal objective
+
+    1+41575699386/1147550665.
+
+The primal yields C=40/31; the dual has15nonzero inequality multipliers.
+The independent verifier checks every primal inequality, every dual
+sign, all30stationarity coordinates and exact equality. This proves
+global optimality for this particular scalar clipped proof, without a
+parameter grid. Improving its all-height square conclusion requires
+additional information, such as the actual weighted old test energy,
+rather than further optimization of C within the same certificate.
+
+The measure construction reuses the residual-capacity and weighted
+conditional comparisons above. The quantitative input is the actual
+two-axis area objective, retaining its rectangular overlap, and its
+exact optimization under the three complete old marginal profiles.
+This is an ordinary proof with exact rational certificates, not an
+end-to-end Lean theorem or an unrestricted solution of Erdős #7.
+
+## Actual obstruction for uniform conditioning and its signed bound
+
+At first 11/13 height, fix the reference law τ=μ times the uniform
+10×12 pure-survivor rectangle. For the four complete old test blocks
+A,B,C,D, the fine test's reference square is at most
+
+    E[A²+(2AB+B²)/10+(2AC+C²)/12
+                       +(2BC+2AD+2BD+2CD+D²)/120].
+
+Write `Rμ(A)=max_B Eμ AB`. Cauchy–Schwarz on the other old products
+bounds this by `Eμ A²+(23/60)Rμ(A)+(29/120)G`.
+Every deleted cell has full load at least A. For a candidate final
+bound z, union-bound only the positive deletion contribution `(z−A²)_+`.
+Each nonunit old label contributes row, column and point caps totaling
+`1/10+1/12+1/120=23/120`; the unit cross label contributes `1/120`.
+Thus the following condition for every A is sufficient for the normalized
+uniform-survivor law to have Γ≤z:
+
+    Eμ A²+(23/60)Rμ(A)+(29/120)G
+      +(23/120) Σ_{d|315,d>1} max_a Eμ[(z−A²)_+ 1_{x=a mod d}]
+      +(1/120)Eμ(z−A²)_+ ≤ z.                              (SC1)
+
+The low surviving mass is positive: its union bound is at least
+`1−(23/120)(M−1)−1/120=1993/3440`. The signed argument retains
+the same μ and every distinct original label. The exact examples below
+bound the scope of this sufficient criterion and of this particular
+conditioned law; they do not rule out different supported laws.
+
+### Same old law and exact sufficient-criterion barrier
+
+The old original classes are
+
+```
+(3,0),(9,4),(5,0),(15,1),(45,37),(7,0),
+(21,16),(35,24),(63,25),(105,19),(315,109).
+```
+
+Their complement Omega modulo 315 has size 86. With mu uniform on Omega
+and the complete coherent layout `A(x)=sum_{d|315}1[x=8 mod d]`, its
+histogram is
+
+```
+A:       1  2  3  4  6  8  12
+count:   5 38 14 18  8  2   1.
+```
+
+Consequently `sum A=271` and `sum A^2=1131`. Direct maximization of every
+individual divisor cylinder gives
+
+```
+max_B E_mu B = 271/86,
+R_mu(A):=max_B E_mu AB = 1131/86 = G,
+E_mu A^2 = G.
+```
+
+Here B ranges over all independent complete old layouts; the maximum
+separates exactly into one finite residue maximization per divisor.
+
+Put `h_z=(z−A^2)_+` and
+`W(z)=sum_{d|315,d>1}max_a E_mu[h_z 1[x=a mod d]]`.
+For the proposed sufficient criterion,
+
+```
+Phi(A;z)=E_mu A^2+(23/60)R_mu(A)+(29/120)G
+         +(23/120)W(z)+(1/120)E_mu h_z.
+```
+
+For 25<=z<=35 the direct cylinder checks give
+
+```
+86 E_mu h_z=75z−571,
+86 W(z)=164z−1197.
+```
+
+Each recorded cylinder witness maximizes at both endpoints and therefore
+throughout the interval: every cylinder expression is affine there.
+The verifier computes its own maximizers instead of trusting the oracle's
+compressed witness table. Substitution gives
+
+```
+Phi(A;z)=(192443+3847z)/10320,
+Phi(A;z)−z=(192443−6473z)/10320.
+```
+
+Globally the map Phi is Lipschitz with constant at most
+
+```
+(23/120)(271/86−1)+1/120=1447/3440<1.
+```
+
+Thus Phi(z)−z is strictly decreasing, and its unique zero is
+`z*=192443/6473`. The sufficient criterion fails for every positive
+z<z*, not just the portion in [25,35]. At 30 it succeeds on this example:
+`Phi(30)=30−1747/10320`. This does not establish a universal bound of 30.
+
+### Actual conditioned moment and its narrower scope
+
+Add pure classes 0 mod 11 and 0 mod 13. For each old divisor d the table
+below specifies additional row, column and point exclusions, respectively
+by `(old residue,11-residue)`, `(old residue,13-residue)` and
+`(old residue,11-residue,13-residue)`.
+
+| d | Row | Column | Point |
+|---|---|---|---|
+|1|—|—|(0,9,8)|
+|3|(2,6)|(1,11)|(2,10,11)|
+|5|(2,2)|(4,2)|(2,10,5)|
+|7|(5,5)|(6,3)|(6,10,6)|
+|9|(2,3)|(5,4)|(2,9,6)|
+|15|(2,7)|(11,2)|(2,9,10)|
+|21|(2,4)|(20,12)|(2,10,6)|
+|35|(17,5)|(34,9)|(34,2,7)|
+|45|(2,8)|(41,5)|(11,2,9)|
+|63|(47,4)|(34,12)|(23,8,3)|
+|105|(17,4)|(34,10)|(26,8,7)|
+|315|(52,7)|(244,4)|(97,10,7)|
+
+The complete family contains exactly one congruence for every nonunit
+divisor of 45045, hence 47 distinct odd nonunit moduli. The coherent fine
+test center is 17018, which reduces to 8 modulo 315 and 1 modulo both
+11 and 13. Its complete load is
+
+```
+F(x,i,j)=A(x)(1+1[i=1])(1+1[j=1]).
+```
+
+Among 10320 equally weighted reference cells, exactly 6872 survive every
+original class. Their squared-load sum is 177110. Therefore, for the law
+nu obtained by uniform conditioning on these actual survivors,
+
+```
+E_nu F^2=177110/6872=88555/3436>25,
+retained reference mass=6872/10320=859/1290.
+```
+
+This proves `Gamma(nu)>=88555/3436`; it is not a claim that equality is
+the maximum over all fine test layouts. The pre-deletion estimate is sharp
+for this layout, since `E_tau F^2=(13/8)G` exactly. The additional loss in
+the threshold 29.7301 therefore comes from the sufficient deletion bound.
+
+These are obstructions for this prescribed uniform-conditioning method
+and its sufficient criterion. They do not obstruct all supported laws,
+do not apply automatically to higher 11/13 exponents, and do not exhibit
+an odd covering system: this actual family has 6872 uncovered residues.
+
+The actual family was supplied by Nyx. The adjacent verifier reconstructs
+every CRT residue, checks the full period and the independent 86×10×12
+grid, and verifies every weighted-cylinder maximum. Its fixed
+`signed_conditioning_obstruction` certificate stores the original classes
+and load histograms. This is exact arithmetic, not a Lean theorem.

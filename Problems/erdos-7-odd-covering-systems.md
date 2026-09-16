@@ -1708,6 +1708,67 @@ first-power axis restrictions remain genuine hypotheses. This is an
 ordinary theorem with exact arithmetic, not unrestricted Erdős #7 or
 an end-to-end Lean proof.
 
+### Unrestricted axis deletions: a complete head bound
+
+The [variable-rectangle construction](../docs/reports/erdos7-odd-covering/marked_head_profile.md#unrestricted-axis-deletions-and-the-optimal-scalar-clipped-bound)
+removes the preceding axis restrictions at the level of the supported
+head bound. For every family of distinct nonunit moduli dividing
+`315·11^H·13^J`, with arbitrary finite `H,J≥1`, it constructs one complete
+survivor probability satisfying
+
+    Gamma <= 42723250051/1147550665 < 37.230.
+
+No restriction on the number of deleted rows, columns, point holes, or
+empty old fibres is imposed. The full `{3,5,7}` part must still divide 315.
+
+If `A,B,D` are the three complete old loads dominating the original axis
+and cross-point activation counts, the number of remaining first-digit
+cells is at least `S=[(11-A)_+(13-B)-D]_+`. This retains the actual
+rectangular overlap. The clipped subprobability law has old row mass
+`min(1,C·S_actual/120)` and density at most `C` relative to the uniform
+ten-by-twelve reference law. Empty fibres receive zero mass.
+
+At `C=40/31`, the exact marginal-profile bound for the low surviving mass
+is `74101/97929`. Uniform higher digits and the distinct original-label
+count give higher deleted mass at most `24119/319920`, leaving mass at
+least `229510133/336875760`. The weighted old square and the minimum-load
+deletion saving yield the displayed complete head bound.
+
+The same supported law has a full increasing-convex comparator: take
+the upper `229510133/434678400` quantile of `X·N11·N13`, where `X` is the
+published old 315 comparator and the independent auxiliaries have
+`Pr(Np=1)=(p-2)/(p-1)` and `Pr(Np=k)=p^(1-k)` for `k≥2`. Its boundary is
+at 3 and its exact mean is `1263555626/229510133`. This comparison mean
+does not assert equality with the actual maximum head-load mean. At
+heights `H=J=1`, the same clipping constant gives the stronger square
+bound `99014608/3186343 < 31.075`.
+The same law also satisfies the sharper actual first-moment bound
+`1242116000/229510133 < 5.413`, by retaining the old marginal cap and
+the unit-load saving during deletion. This is distinct from the
+comparison distribution’s larger mean.
+
+The certificate also settles the scalar clipping parameter globally.
+A linear-fractional transformation gives one linear program with 30
+variables and 3458 constraints, using every old marginal hinge bound
+and the sharp square bound. Exact primal-dual equality proves that
+`C=40/31` minimizes the all-height square certificate over every `C≥1`
+with a positive certified denominator. This is optimality within the
+specified marginal-information relaxation, not optimality among actual
+survivor laws. Further improvement requires information omitted by that
+certificate, such as weighted old test energy.
+
+These results remove the axis hypothesis for the finite head estimate.
+They do not supply the unrestricted-tail stopping certificate needed
+to remove that hypothesis from the preceding noncoverage theorem.
+
+The [signed-conditioning obstruction](../docs/reports/erdos7-odd-covering/marked_head_profile.md#actual-obstruction-for-uniform-conditioning-and-its-signed-bound)
+gives a complementary boundary. An actual family containing all 47
+nonunit divisors of 45045 has 6872 survivors and forces
+`Γ≥88555/3436` for its uniformly conditioned reference law. Its signed
+sufficient criterion cannot certify a value below `192443/6473`.
+These are different statements: the second number is not an actual
+moment lower bound, and neither excludes other supported laws.
+
 ### A continuation criterion for an arbitrary correlated head
 
 Let \(Q\) be a finite odd head period and let \(\mu\) be one fixed
