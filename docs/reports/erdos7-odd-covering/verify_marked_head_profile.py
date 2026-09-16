@@ -1352,6 +1352,172 @@ def matching_hole_common_lambda():
     }
 
 
+def matching_height_lift():
+    """Exact constants and regressions for the ordinary all-height theorem."""
+    def tail(p, height):
+        u = sum((Fraction(1, p**t) for t in range(1, height)), Fraction(0))
+        v = sum((Fraction(2*t-1, p**t) for t in range(1, height)), Fraction(0))
+        return u, 4*u+v
+
+
+    def bound(m, n, k, epsilon, uq, ur, wq, wr, G, M):
+        V, H = m*n-k, k*(m+n-k-1)
+        D = V+H*epsilon
+        c = 1/D
+        atom = c*(1+epsilon) if k else c
+        row, col = c*(n+k*epsilon), c*(m+k*epsilon)
+        F = 1+c*(3*(m+n+3)+6*k*epsilon)
+        E = (row+3*atom)*wq+(col+3*atom)*wr+atom*wq*wr
+        lam = M*((row+atom)*uq+(col+atom)*ur+atom*uq*ur)
+        require(lam < 1, "positive supported mass")
+        return {"F": F, "E": E, "lambda": lam,
+                "square": (F+E)*G, "conditioned": ((F+E)*G-lam)/(1-lam)}
+
+
+    q, r, m, n, k = 11, 13, 10, 12, 1
+    epsilon = Fraction(1, 216)
+    G, M = Fraction(1131, 86), Fraction(271, 86)
+    uq, ur = Fraction(1, 10), Fraction(1, 12)
+    wq, wr = Fraction(13, 25), Fraction(31, 72)
+    require(wq == 4*uq+Fraction(12, 100), "q infinite pair sum")
+    require(wr == 4*ur+Fraction(14, 144), "r infinite pair sum")
+    uniform = bound(m,n,k,Fraction(0),uq,ur,wq,wr,G,M)
+    perturbed = bound(m,n,k,epsilon,uq,ur,wq,wr,G,M)
+    require(perturbed["conditioned"] < uniform["conditioned"], "infinite-tail gain")
+
+    V, H = Fraction(119), Fraction(20)
+    Lmax = 13*uq+11*ur+uq*ur
+    Nmax = V+75+15*wq+13*wr+wq*wr
+    drop_min = 786-176*wq-216*wr-99*wq*wr
+    charge_slope_max = Fraction(3,2)
+    corners = [-22*x+18*y+99*x*y for x in (Fraction(0), uq) for y in (Fraction(0),ur)]
+    require(max(corners) == charge_slope_max, "bilinear maximum")
+    require(Lmax == Fraction(89,40), "largest unscaled high charge")
+    margin40 = drop_min*(V-40*Lmax)-Nmax*40*charge_slope_max
+    require(margin40 > 0, "uniform derivative margin for all M <= 40")
+    denominator40 = V+H*epsilon-40*(Lmax+epsilon*(2*(uq+ur)+uq*ur))
+    require(denominator40 > 0, "all-height positive denominator for M <= 40")
+
+    checked = 0
+    for hq in range(1, 9):
+        for hr in range(1, 9):
+            au, aw = tail(q,hq)
+            bu, bw = tail(r,hr)
+            require(0 <= au <= uq and 0 <= bu <= ur, "tail mass range")
+            require(0 <= aw <= wq and 0 <= bw <= wr, "pair sum range")
+            pair_q = sum((Fraction(1, q**(max(i,j)-1))
+                          for i in range(hq+1) for j in range(hq+1)
+                          if max(i,j) >= 1), Fraction(0))
+            require(pair_q == 3+aw, "ordered exponent-pair count")
+            a = bound(m,n,k,Fraction(0),au,bu,aw,bw,G,M)
+            b = bound(m,n,k,epsilon,au,bu,aw,bw,G,M)
+            require(b["conditioned"] < a["conditioned"], "finite-height gain")
+            N0=V+75+15*aw+13*bw+aw*bw
+            N1=H+6+4*(aw+bw)+aw*bw
+            L0=13*au+11*bu+au*bu
+            L1=2*(au+bu)+au*bu
+            delta=(G*N0-M*L0)*(H-M*L1)-(G*N1-M*L1)*(V-M*L0)
+            exact_gain=epsilon*delta/((V-M*L0)*(V+epsilon*H-M*(L0+epsilon*L1)))
+            require(exact_gain == a["conditioned"]-b["conditioned"], "gain identity")
+            require(delta > 0, "derivative certificate")
+            checked += 1
+
+    certificate = {
+        "scope": "ordinary symbolic transfer with exact rational regressions; not Lean",
+        "parameters": {"q":q,"r":r,"m":m,"n":n,"k":k,"epsilon":str(epsilon),"G":str(G),"M":str(M)},
+        "infinite_tail_uniform": {x:str(y) for x,y in uniform.items()},
+        "infinite_tail_perturbed": {x:str(y) for x,y in perturbed.items()},
+        "strict_gain": str(uniform["conditioned"]-perturbed["conditioned"]),
+        "all_height_proof_constants": {"Lmax":str(Lmax),"Nmax":str(Nmax),"drop_min":str(drop_min),"charge_slope_max":str(charge_slope_max),"derivative_margin_at_M40":str(margin40),"denominator_at_M40":str(denominator40)},
+        "finite_height_pairs_checked": checked,
+    }
+    return certificate
+
+
+def matching_height_tail17(old_result, lift_result):
+    """Fixed tail17 schedule, using the verified comparator and actual square."""
+    import hashlib
+    from runpy import run_path
+    arithmetic=run_path(str(Path(__file__).with_name('verify_star_block_obstruction.py')))
+    continuation=run_path(str(Path(__file__).with_name('verify_finite_continuation.py')))
+    SCALE=10**18
+    runs=((17,4),(23,6),(31,8),(47,12),(61,16),(67,18),(89,24),(127,32),
+          (131,36),(137,40),(191,48),(251,64),(271,72),(397,96),(523,128),
+          (577,144),(587,160),(857,192),(859,216),(863,240),(1129,256),
+          (1289,288),(1297,320),(1693,384))
+    ps=list(continuation['segmented_primes'](0,runs[-1][0]))
+    choices=[]
+    previous=16
+    for end,t in runs:
+        require(end in ps and previous<end,'schedule endpoints are increasing primes')
+        choices.extend((q,t) for q in ps if previous<q<=end)
+        previous=end
+    def up_fraction(x):
+        return arithmetic['stoploss_ceiling'](SCALE*x.numerator,x.denominator)
+    ceil_ratio=arithmetic['stoploss_ceiling']
+    require([q for q,t in choices]==[q for q in ps if q>=17], 'consecutive full tail primes')
+    require(all(isinstance(t,int) and 1<t<=q-2 for q,t in choices), 'normalized kernel domains')
+    cap=max(t for q,t in choices)
+    atoms={1:Fraction(581,6966),2:Fraction(3031,6966),3:Fraction(146,1053),4:Fraction(425,2106),5:Fraction(10,1443),6:Fraction(45,481),8:Fraction(1,37),12:Fraction(1,74)}
+    require(atoms=={int(k):Fraction(v) for k,v in old_result['auxiliary_atoms'].items()},
+            'directly reuse the verified old315 comparator')
+    require(sum(atoms.values())==1,'old315 comparator probability')
+    mean=sum(d*v for d,v in atoms.items())
+    require(mean==Fraction(271,86),'old315 comparator mean')
+    exact=[Fraction(0)]*(cap+1)
+    for d,v in atoms.items():exact[d]=v
+    for p,c in ((11,Fraction(11,10)),(13,Fraction(13,12))):
+        law=[Fraction(0),1-c/p]+[c*(p-1)/p**f for f in range(2,cap+1)]
+        new=[Fraction(0)]*(cap+1)
+        for f in range(1,cap+1):
+            for d in range(1,cap//f+1):
+                new[f*d]+=law[f]*exact[d]
+        exact=new
+        mean*=1+c/(p-1)
+    bad=Fraction(lift_result['infinite_tail_perturbed']['lambda'])
+    head_second=Fraction(lift_result['infinite_tail_perturbed']['conditioned'])
+    amax=(1+Fraction(1,216))/(119+20*Fraction(1,216))
+    require((bad,amax,head_second)==(Fraction(5213769,88490560),Fraction(217,25724),Fraction(6074954672,249830373)),
+            'same actual law supplies reference density and separate square bound')
+    ell=(1-bad)/(120*amax)
+    require(ell==Fraction(83276791,89577600), 'reference density fraction')
+    require(1-exact[1]-exact[2]<=ell<=1-exact[1], 'upper quantile threshold two')
+    mass2=(ell-1+exact[1]+exact[2])/ell
+    mean=2+(mean-2+exact[1])/ell
+    w=[up_fraction(v/ell if d>2 else mass2 if d==2 else Fraction(0)) for d,v in enumerate(exact)]
+    mean_scaled=up_fraction(mean);second=up_fraction(head_second)
+    charge=0;rows=[]
+    for q,t in choices:
+        s=q-1-t;c=Fraction(q-1,s)
+        require(0<c<=q,'conditional geometric law probability')
+        numerator=mean_scaled-t*SCALE+sum((t-d)*w[d] for d in range(1,t))
+        require(numerator>=0,'nonnegative hinge upper')
+        step=ceil_ratio(numerator,s);charge+=step
+        require(charge<SCALE,'survival at every prefix')
+        w=arithmetic['stoploss_product_update'](w,arithmetic['stoploss_atom_bounds'](q,c,cap,SCALE),SCALE)
+        a=1+c/(q-1);b=1+c*Fraction(3*q-1,(q-1)**2)
+        mean_scaled=ceil_ratio(mean_scaled*a.numerator,a.denominator)
+        second=ceil_ratio(second*b.numerator,b.denominator)
+        rows.append({'prime':q,'threshold':t,'s':s,'delta':str(Fraction(t-1,q-2)),
+                     'charge_scaled_upper':step,'cumulative_scaled_upper':charge})
+    gamma=1+Fraction(second-SCALE,SCALE-charge)
+    stop=continuation['stopping_threshold'](len(ps))
+    require(gamma<4856<4868<stop,'strict rational stopping chain')
+    result={'scope':'Exact directed arithmetic; comparator proof and BBMST continuation are separate ordinary mathematical inputs.',
+            'scale':SCALE,'retained_product_states':cap,'first_tail_prime':17,
+            'last_prime':choices[-1][0],'global_prime_index':len(ps),'head_density_fraction':str(ell),
+            'reference_mass_at_one':str(exact[1]),'reference_mass_at_two':str(exact[2]),
+            'reference_mean':str(Fraction(271,86)*Fraction(111,100)*Fraction(157,144)),
+            'head_quantile_mass_at_two':str(mass2),'head_comparator_mean':str(mean),
+            'head_actual_second_upper':str(head_second),
+            'mean_upper':str(Fraction(mean_scaled,SCALE)), 'second_moment_upper':str(Fraction(second,SCALE)),
+            'total_charge_upper':str(Fraction(charge,SCALE)), 'survival_lower':str(Fraction(SCALE-charge,SCALE)),
+            'Gamma_upper':str(gamma),'stopping_lower':str(stop),'stopping_margin':str(stop-gamma),
+            'steps':rows,'final_low_state_digest':hashlib.sha256(json.dumps(w,separators=(',',':')).encode()).hexdigest()}
+    result['threshold_runs']=[{'last_prime':q,'threshold':t} for q,t in runs]
+    return result
+
+
 def verify(expected):
     cases = []
     old_cases = []
@@ -1384,6 +1550,7 @@ def verify(expected):
                 "auxiliary law has the entire universal hinge profile")
     deletion_result = deletion_weighted_comparison(old_cases, theta)
     signed_result = signed_deletion_square_comparison(old_cases, deletion_result)
+    lift_result = matching_height_lift()
     result = {
         "schema": "marked-head-profile-v1",
         "head_modulus": 315,
@@ -1405,6 +1572,8 @@ def verify(expected):
         "two_prime_block_gap": two_prime_block_gap_regression(),
         "punctured_grid_nonuniform_transfer": punctured_grid_nonuniform_transfer(signed_result),
         "matching_hole_common_lambda": matching_hole_common_lambda(),
+        "matching_height_lift": lift_result,
+        "matching_height_tail17": matching_height_tail17(deletion_result, lift_result),
         "uniform315_mean_sharpness": uniform315_mean_sharpness(),
         "residual_prefix_depletion_obstruction": residual_prefix_depletion_obstruction(),
         "prime11_residual_geometry": prime11_residual_geometry(),
@@ -1421,6 +1590,7 @@ def verify(expected):
                       "block_gap_regressions": result["two_prime_block_gap"]["grid_coefficient_cases"],
                       "nonuniform_block_factor": result["punctured_grid_nonuniform_transfer"]["Gamma_and_tensorization_constant"],
                       "matching_hole_symbolic_identities": len(result["matching_hole_common_lambda"]["symbolic_identities"]),
+                      "matching_height_tail17_Gamma": result["matching_height_tail17"]["Gamma_upper"],
                       "conditioned_3465_actual_second": result["conditioned_3465_comparison"]["actual_second_moment_upper"]}, sort_keys=True))
 
 

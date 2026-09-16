@@ -1676,6 +1676,37 @@ in (DG2) proves the selected-coordinate cylinder step, not this entire
 unrestricted-tail star theorem. The graph and bounded-support star bounds
 below remain quantitative refinements for their respective subclasses.
 
+### A matching 11/13 head with arbitrary heights
+
+A further noncoverage theorem permits both 11 and 13 under a low-digit
+geometric hypothesis. Let the full `{3,5,7}` part of every original modulus
+divide 315, and choose the canonical supported 315 law. At every point in
+its support require a 10-by-12 rectangle of first 11- and 13-digits, minus
+at most one cell, avoiding all actual head classes whose new exponents
+are at most one. The rectangle and hole may depend on the old point.
+Then the family cannot cover, with arbitrary finite 11/13 heights and
+no restriction on the primes, heights or interactions of tails from 17.
+
+The [matching-height proof](../docs/reports/erdos7-odd-covering/marked_head_profile.md#arbitrary-height-transfer-for-matching-kernels)
+retains the matching common quadratic bound when uniformly extending higher
+digits, then conditions away every original high head class. The same
+actual law has second-moment bound `6074954672/249830373` and a full convex
+comparator obtained from the upper `83276791/89577600` quantile of
+`X N_11 N_13`, with the published 315 comparator X. Its exact mean is
+`3016548085/749491119`; this is a comparator mean, not the asserted actual
+maximum head mean. The fixed 258-step tail schedule ends at 1693, global
+prime index 264, with
+
+    survivor mass >= 240819191260897231/10^18,
+    Gamma <= 1169229336100810112644/240819191260897231
+          < 4856 < 4868 < 264(log 264 + log log 264 - 3)^2.
+
+The full proof and exact certificate give an ordinary theorem. The entire
+original family must satisfy the 315 height restriction, including moduli
+assigned to later primes. General low-digit layouts need not contain the
+required rectangle. These remain genuine hypotheses; the result does not
+settle unrestricted Erdős #7 and is not end-to-end Lean verified.
+
 ### A continuation criterion for an arbitrary correlated head
 
 Let \(Q\) be a finite odd head period and let \(\mu\) be one fixed
