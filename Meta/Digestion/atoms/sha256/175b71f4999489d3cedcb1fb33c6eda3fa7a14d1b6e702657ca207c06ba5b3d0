@@ -1,0 +1,40 @@
+**定义 47.0（全阈值—周期完成与尾线程）。** 令 $\mathbb N_0=\{0,1,2,\ldots\}$，取指标集及其次序
+$$
+I=\mathbb N_0\times\mathbb N_{>0},\qquad
+(t,p)\preceq(u,q)\Longleftrightarrow t\le u\land p\mid q.
+$$
+对 $\alpha=(t,p)$，令
+$$
+nR_{t,p}m\Longleftrightarrow n=m\ \lor\ (n,m\ge t\land n\equiv m\pmod p),
+\qquad Q_{t,p}=\mathbb N_0/R_{t,p},
+$$
+商映射记为 $q_{t,p}$，每个商取有限离散拓扑。若 $\alpha\preceq\beta$，过渡映射及商运算按下列代表元公式给出：
+$$
+b_{\beta\alpha}(q_\beta(n))=q_\alpha(n),\qquad
+q_\alpha(n)+q_\alpha(m)=q_\alpha(n+m),\qquad
+q_\alpha(n)q_\alpha(m)=q_\alpha(nm).
+$$
+定义
+$$
+K=\left\{(x_\alpha)_{\alpha\in I}\in\prod_{\alpha\in I}Q_\alpha:
+\forall\alpha\preceq\beta,\ b_{\beta\alpha}(x_\beta)=x_\alpha\right\},
+\qquad
+\iota(n)=(q_\alpha(n))_{\alpha\in I}.
+$$
+在 $K$ 上取乘积拓扑的子空间拓扑及逐坐标加乘，坐标投影记为 $\pi_\alpha$。环境常量记为
+$$
+0_K=\iota(0),\qquad 1_K=\iota(1).
+$$
+将正整数指标集按整除排序；对于 $p\mid q$，令 $\rho_{q,p}:\mathbb Z/q\mathbb Z\to\mathbb Z/p\mathbb Z$ 为剩余类约化。定义
+$$
+\widehat{\mathbb Z}
+:=\varprojlim_{(\mathbb N_{>0},\,\mid)}(\mathbb Z/p\mathbb Z,\rho_{q,p})
+=\left\{(r_p)_{p>0}\in\prod_{p>0}\mathbb Z/p\mathbb Z:
+\forall p\mid q,\ \rho_{q,p}(r_q)=r_p\right\},
+$$
+赋予逐坐标环运算及乘积子空间拓扑。整数在这个环中的对角像仍用该整数表示。对 $a\in\mathbb Z/p\mathbb Z$，以 $\theta_{t,p}(a)$ 表示任取 $n\ge t$ 且 $n\bmod p=a$ 所给出的类 $q_{t,p}(n)$，称为剩余类 $a$ 的尾类。对 $r=(r_p)_p$，按坐标公式定义
+$$
+\tau(r)=(\theta_{t,p}(r_p))_{(t,p)\in I}.
+$$
+记 $A:=\iota[\mathbb N_0]$、$B:=\tau[\widehat{\mathbb Z}]$。
+
