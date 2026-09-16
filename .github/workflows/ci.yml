@@ -373,8 +373,11 @@ jobs:
         run: |
           set -euo pipefail
           PATH="$HOME/.elan/bin:$PATH" make -C candidate lean
-      - name: Save Lean dependency artifacts (push only)
-        if: always() && steps.lean-build.outcome == 'success' && steps.lake-deps-cache.outputs.cache-hit != 'true' && github.event_name == 'push'
+      # Saved on push and pull_request alike: GitHub scopes a pull_request run's caches to that PR
+      # (readable by its later runs, invisible to dev/integration pushes), while PR runs still read
+      # the base branch's caches. A judge-changing PR therefore pays its rebuild once, not per push.
+      - name: Save Lean dependency artifacts
+        if: always() && steps.lean-build.outcome == 'success' && steps.lake-deps-cache.outputs.cache-hit != 'true'
         continue-on-error: true
         timeout-minutes: 12
         uses: actions/cache/save@v4
@@ -406,8 +409,8 @@ jobs:
             --candidate-output "$reports/candidate-lean-report.json"
       # Save the existing native build snapshot after the report attempt. A
       # report failure does not revoke successful Lean-build cache supply.
-      - name: Save Lean project build artifacts (push only)
-        if: always() && steps.lean-build.outcome == 'success' && steps.lake-build-cache.outputs.cache-hit != 'true' && github.event_name == 'push'
+      - name: Save Lean project build artifacts
+        if: always() && steps.lean-build.outcome == 'success' && steps.lake-build-cache.outputs.cache-hit != 'true'
         continue-on-error: true
         timeout-minutes: 12
         uses: actions/cache/save@v4
