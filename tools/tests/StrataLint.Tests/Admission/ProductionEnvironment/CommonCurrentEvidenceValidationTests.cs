@@ -14,9 +14,11 @@ public sealed partial class CommonCurrentEvidenceValidationTests
     [InlineData("export")]
     [InlineData("pack")]
     [InlineData("verify")]
+    [InlineData("finalize")]
     public void EachEntryValidatesSharedReportOnceAndNextEntryValidatesAgain(string entry)
     {
         using var fixture = new EvidenceFixture();
+        if (entry == "finalize") fixture.Run(entry);
         var current = fixture.Read(CommonExecutionEvidence.CurrentPath);
         var transport = fixture.Read(CiTransport.ManifestPath("current"));
         var previous = RawLeanReportArtifact.Reading.Value;
@@ -55,6 +57,7 @@ public sealed partial class CommonCurrentEvidenceValidationTests
     [InlineData("export")]
     [InlineData("pack")]
     [InlineData("verify")]
+    [InlineData("finalize")]
     public void ResealedRetainedZipStillRequiresStatementMaterialValidation(string entry)
     {
         using var fixture = new EvidenceFixture();
@@ -73,6 +76,23 @@ public sealed partial class CommonCurrentEvidenceValidationTests
         Assert.Contains("artifact integrity mismatch", error.Message, StringComparison.Ordinal);
     }
 
+    [Theory]
+    [InlineData("canonical-report")]
+    [InlineData("retained-report")]
+    [InlineData("canonical-material")]
+    [InlineData("retained-material")]
+    [InlineData("unit-log")]
+    [InlineData("candidate")]
+    [InlineData("input")]
+    [InlineData("round")]
+    public void CompletionRevalidatesEvidenceReplacedAfterPreviousValidation(string damage)
+    {
+        using var fixture = new EvidenceFixture();
+        fixture.Run("checks");
+        fixture.Damage(damage);
+        Assert.ThrowsAny<Exception>(() => fixture.Complete());
+    }
+
     private sealed class EvidenceFixture : IDisposable
     {
         private const string Project = "fixtures/Producer.csproj";
@@ -81,6 +101,7 @@ public sealed partial class CommonCurrentEvidenceValidationTests
         private readonly TemporaryDirectory temporary = new();
         private readonly string commit;
         private readonly string retained;
+        private readonly CommonStageRecord build;
         internal string Root => temporary.Path;
         internal EvidenceFixture()
         {
@@ -119,7 +140,7 @@ public sealed partial class CommonCurrentEvidenceValidationTests
             foreach (var suffix in new[] { ".input.attestation", ".provenance.json" })
                 Write(CommonExecutionEvidence.ReportPath + suffix, "fixture companion\n");
             Write(Log, "fixture build\n");
-            var build = CommonExecutionEvidence.SealBuild(Root, CommonExecutionEvidence.Candidate(Root), [Log],
+            build = CommonExecutionEvidence.SealBuild(Root, CommonExecutionEvidence.Candidate(Root), [Log],
                 CommonExecutionEvidence.BuildSteps.Select(name => new StageStep(name, 0, 0, "executed", Log)).ToArray());
             var checks = CommonExecutionEvidence.BeginChecks(Root, "current", build, TextWriter.Null);
             foreach (var id in checks.Ids)
@@ -135,6 +156,13 @@ public sealed partial class CommonCurrentEvidenceValidationTests
         }
         internal void Run(string entry)
         {
+            if (entry == "checks") { _ = CommonExecutionEvidence.ValidateChecks(Root, "current", build); return; }
+            if (entry == "finalize")
+            {
+                var completed = Complete();
+                Assert.Equal(CommonExecutionEvidence.CurrentSteps, completed.Select(step => step.Name));
+                return;
+            }
             if (entry == "validate") { _ = CommonExecutionEvidence.ValidateCurrent(Root); return; }
             if (entry == "export") { Assert.True(CommonExecutionEvidence.ExportCheckSeed(Root, "current", TextWriter.Null)); return; }
             var arguments = new[] { entry == "pack" ? "transport-pack" : "transport-verify", "--repository", Root,
@@ -142,9 +170,19 @@ public sealed partial class CommonCurrentEvidenceValidationTests
             if (entry == "pack") arguments = [.. arguments, "--archive", Path.Combine(Root, "build/current.tgz")];
             Assert.Equal(0, CiTransport.Run(arguments, TextWriter.Null));
         }
+        internal StageStep[] Complete() => CommonExecutionEvidence.CompleteCurrent(Root, build,
+            [new("lean-report", 0, 0, "executed", Log)]);
         internal byte[] Read(string path) => File.ReadAllBytes(Path.Combine(Root, path));
         internal void Damage(string damage)
         {
+            if (damage is "input" or "round")
+            {
+                var checkPath = CommonExecutionEvidence.ChecksPath("current");
+                var checks = CommonExecutionEvidence.Read<CommonCheckRecord>(Root, checkPath);
+                CommonExecutionEvidence.Write(Root, checkPath, damage == "round" ? checks with { Round = new string('a', 32) }
+                    : checks with { Units = checks.Units.Select(unit => unit with { InputFingerprint = new string('0', 64) }).ToArray() });
+                return;
+            }
             var path = damage switch
             {
                 "canonical-report" => CommonExecutionEvidence.ReportPath,
@@ -154,7 +192,8 @@ public sealed partial class CommonCurrentEvidenceValidationTests
                 "candidate" => Source,
                 _ => CommonExecutionEvidence.Read<CommonCheckRecord>(Root, CommonExecutionEvidence.ChecksPath("current")).Units[0].Operations[0].Log,
             };
-            File.AppendAllText(Path.Combine(Root, path), "damage");
+            if (damage == "canonical-material") File.WriteAllText(Path.Combine(Root, path), "not a ZIP archive");
+            else File.AppendAllText(Path.Combine(Root, path), "damage");
         }
         internal void CorruptAndResealRetainedZip()
         {
