@@ -7,6 +7,110 @@ namespace StrataLint.Tests;
 public sealed partial class LeanCacheProvisionerTests
 {
     [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void CanonicalReaderPreservesRestoredDependencyBytesAndDetectsDirtyContent(bool dirty)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new PrivateReaderFixture();
+        var dependency = CreateRestoredGitDependency(fixture);
+        if (dirty) File.AppendAllText(Path.Combine(dependency, "tracked.txt"), "dirty-content\n");
+        var before = GitMaterialBytes(dependency);
+
+        var result = RunGitReader(fixture, dependency, "diff", "--exit-code", "HEAD");
+
+        Assert.Equal(dirty ? 1 : 0, result.ExitCode);
+        var output = Encoding.UTF8.GetString(result.StandardOutput);
+        Assert.Contains("preserved-value\n", output, StringComparison.Ordinal);
+        Assert.Equal(dirty, output.Contains("+dirty-content", StringComparison.Ordinal));
+        Assert.Equal(before, GitMaterialBytes(dependency));
+    }
+
+    [Fact]
+    public void CanonicalReaderStillAllowsNecessaryGitCheckoutWrites()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new PrivateReaderFixture();
+        var dependency = CreateRestoredGitDependency(fixture);
+        var tracked = Path.Combine(dependency, "tracked.txt");
+        File.WriteAllText(tracked, "dirty-content\n");
+
+        var result = RunGitReader(fixture, dependency, "checkout", "HEAD", "--", "tracked.txt");
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal("clean-content\n", File.ReadAllText(tracked));
+        Assert.Equal(0, RunGitReader(fixture, dependency, "diff", "--exit-code", "HEAD").ExitCode);
+    }
+
+    [Theory]
+    [InlineData("-1")]
+    [InlineData("1+1")]
+    [InlineData("2147483647")]
+    [InlineData("99999999999999999999")]
+    [InlineData("index[$(touch config-count-evaluated)]")]
+    public void CanonicalReaderRejectsInvalidGitConfigurationCountsWithoutEvaluatingThem(string count)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new PrivateReaderFixture();
+
+        var result = RunGitReaderWithConfiguration(fixture, fixture.Reader, count, "--version");
+
+        Assert.Equal(2, result.ExitCode);
+        Assert.Contains("GIT_CONFIG_COUNT", Encoding.UTF8.GetString(result.StandardError), StringComparison.Ordinal);
+        Assert.False(File.Exists(Path.Combine(fixture.Reader, "config-count-evaluated")));
+    }
+
+    private static string CreateRestoredGitDependency(PrivateReaderFixture fixture)
+    {
+        var donor = Path.Combine(fixture.Reader, "donor");
+        Directory.CreateDirectory(donor);
+        File.WriteAllText(Path.Combine(donor, "tracked.txt"), "clean-content\n");
+        foreach (var arguments in new[]
+        {
+            new[] { "init", "--quiet" }, new[] { "add", "tracked.txt" },
+            new[] { "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid",
+                "-c", "commit.gpgsign=false", "commit", "--quiet", "-m", "fixture" },
+        })
+            Assert.Equal(0, TestProcessRunner.Run("git", arguments, donor,
+                TestBudgets.ScriptProcessHangGuard, 64 * 1024).ExitCode);
+        var dependency = Path.Combine(fixture.Reader, ".lake", "packages", "fixture");
+        foreach (var path in Directory.GetFiles(donor, "*", SearchOption.AllDirectories))
+        {
+            var target = Path.Combine(dependency, Path.GetRelativePath(donor, path));
+            Directory.CreateDirectory(Path.GetDirectoryName(target)!);
+            File.Copy(path, target);
+        }
+        File.SetLastWriteTimeUtc(Path.Combine(dependency, "tracked.txt"), DateTime.UnixEpoch);
+        return dependency;
+    }
+
+    private static string[] GitMaterialBytes(string root) => Directory.GetFiles(root, "*", SearchOption.AllDirectories)
+        .Order(StringComparer.Ordinal)
+        .Select(path => Path.GetRelativePath(root, path) + ":" + Convert.ToHexString(
+            System.Security.Cryptography.SHA256.HashData(File.ReadAllBytes(path))))
+        .ToArray();
+
+    private static StrataLint.Engine.ProcessOutput RunGitReader(
+        PrivateReaderFixture fixture, string dependency, params string[] arguments) =>
+        RunGitReaderWithConfiguration(fixture, dependency, "02", arguments);
+
+    private static StrataLint.Engine.ProcessOutput RunGitReaderWithConfiguration(
+        PrivateReaderFixture fixture, string dependency, string count, params string[] arguments)
+    {
+        var script = Path.Combine(fixture.Reader, "tools/scripts/worktree/lean-cache-run.sh");
+        Directory.CreateDirectory(Path.GetDirectoryName(script)!);
+        File.Copy(Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/worktree/lean-cache-run.sh"), script, true);
+        return TestProcessRunner.Run("/usr/bin/env",
+            ["STRATALINT_LEAN_PRODUCER_DLL=" + typeof(LeanProgram).Assembly.Location,
+                "LAKE_BIN=" + fixture.Lake, "GIT_CONFIG_COUNT=" + count,
+                "GIT_CONFIG_KEY_0=test.preserved", "GIT_CONFIG_VALUE_0=preserved-value",
+                "GIT_CONFIG_KEY_1=diff.autoRefreshIndex", "GIT_CONFIG_VALUE_1=true",
+                "/bin/bash", script, "/bin/bash", "-c",
+                "git config --get test.preserved && exec git -C \"$@\"", "git-reader", dependency, .. arguments],
+            fixture.Reader, TestBudgets.ScriptProcessHangGuard, 64 * 1024);
+    }
+
+    [Theory]
     [InlineData(0)]
     [InlineData(37)]
     public void CanonicalReaderPublishesBothStreamsBeforeChildExit(int childExit)
