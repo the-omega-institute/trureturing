@@ -1,0 +1,104 @@
+{
+  "schema": "permanental-bruhat-source-map-v1",
+  "target": {
+    "paper": "Permanental Inequalities and Unit Interval Orders",
+    "authors": [
+      "Sihong Pan",
+      "Mark Skandera",
+      "Jiayuan Wang"
+    ],
+    "citation": "EPTCS 445 (2026), 139–147",
+    "doi": "10.4204/EPTCS.445.17",
+    "url": "https://arxiv.org/pdf/2606.13162v1",
+    "conjecture": "7.8",
+    "section": "7, printed pp.144–146",
+    "pdf_sha256": "762b7440a42f55c9353d24855b2493905f76fe1dad11344efcf7b6d05bd5e536"
+  },
+  "thesis": {
+    "author": "Sihong Pan",
+    "date": "May 2026",
+    "url": "https://preserve.lehigh.edu/_flysystem/fedora/2026-06/Pan_lehigh_0105A_13246.pdf",
+    "source": "Chapter 7, printed pp.43–60 / PDF pp.48–65",
+    "conjecture": "7.25",
+    "pdf_sha256": "64fffd4489baad45f364a0ccdec2dfe416bc8d16aefab7c01b21e95271f86c8d"
+  },
+  "author_implementation": {
+    "repository": "https://github.com/SihongPan/General-TNN-Matrices-Per-Top-Bottom--Per-Odd-Even-Test",
+    "commit": "8d9cbc8a4518c9eefc409f45c39d10e3232e5fe9",
+    "matlab_sha256": "6dcd3549389fb00c2b27971674b01def758d4103195eb682782e7d04393d23da",
+    "license": "MIT",
+    "license_url": "https://raw.githubusercontent.com/SihongPan/General-TNN-Matrices-Per-Top-Bottom--Per-Odd-Even-Test/8d9cbc8a4518c9eefc409f45c39d10e3232e5fe9/LICENSE",
+    "retained_notice": "AUTHOR-MIT.txt",
+    "use": "Independent C implementation of the public mathematical operations; no substantial MATLAB code copied. Author notice retained for attribution."
+  },
+  "bruhat_criterion": {
+    "authors": [
+      "Drake",
+      "Gerrish",
+      "Skandera"
+    ],
+    "doi": "10.37236/1847",
+    "source": "Theorem 1 and permutation-matrix convention",
+    "pdf_sha256": "d7af993dbcd2952b46a4c8c6505a29a9d7a1a29ac51c8f960599805c4a11d3a4",
+    "inequality": "For every r,c, count(i<=r with w_i<=c) >= count(i<=r with f_n(w)_i<=c)."
+  },
+  "implementation_map": [
+    {
+      "symbols": [
+        "block_member",
+        "parity_member"
+      ],
+      "meaning": "Source domain A_n preserves floor(n/2) initial labels and complementary final labels; the tilde domain uses ceil(n/2). Target B_n preserves position/value parity."
+    },
+    {
+      "symbols": [
+        "insert",
+        "insert_swap",
+        "ru",
+        "extend_pair",
+        "stages"
+      ],
+      "meaning": "Maximum insertion including the append slot, parity-compatible insertion followed by adjacent swaps, reverse-complement, and the source recursive f_n construction."
+    },
+    {
+      "symbols": [
+        "point_image"
+      ],
+      "meaning": "Independent maximum-removal/direct-index reconstruction, used for literal source examples and candidate verification; it is not called for every successful n=14 input."
+    },
+    {
+      "symbols": [
+        "source_controls",
+        "source_cases"
+      ],
+      "meaning": "Ten literal f4/f5/f6 examples plus operation, direction and displayed-obstruction controls; 25 checks in total."
+    },
+    {
+      "symbols": [
+        "all_nw",
+        "direct_rank",
+        "direct_le"
+      ],
+      "meaning": "Streaming northwest rank comparison, with direct counting used in source controls and candidate verification."
+    },
+    {
+      "symbols": [
+        "scan"
+      ],
+      "meaning": "Depth-first enumeration of the fixed construction from the four A4 seeds through n=14, using fixed storage."
+    }
+  ],
+  "source_clarifications": [
+    "The complementary block split is ceil(n/2); its labels begin at ceil(n/2)+1. Use the type-correct complementary-domain map.",
+    "Maximum insertion permits the final append position n+1 when extending a permutation of size n.",
+    "The thesis p.60 displayed obstruction determines insertion slots 6 and 5, whereas its printed indices say 5 and 4. The source controls use the displayed permutations and verify both the failed comparison and that the example is not the special recursive f6 pair.",
+    "The explicit f6 worked example is used instead of duplicating misprinted table entries.",
+    "The northwest rank direction is checked in both directions against a published comparable pair."
+  ],
+  "source_file_sha256": {
+    "checker.c": "66ad936d835fe17fcc616f9636b91c448931333d11cae774d2f0e27c8c58d405",
+    "source_tests.h": "26c9002455b7531f4b5567848474c02875dea7b40dd50843d6060359854b1d0a",
+    "AUTHOR-MIT.txt": "f9ced8aeac0943b9e1ab6ef174aaf5e384bdfe83eccb28485c678f5664a3c6b9"
+  },
+  "literature_scope": "The named paper and thesis report n<=13. The n=14 check here is not a claim of worldwide novelty or an exhaustive later-literature audit."
+}
