@@ -1,0 +1,14 @@
+**定理 43.9（单项式相位的矩形等分布与单变量实现）。** 在定义43.8的记号下，若 $d\ge1$，则 $V_M(\mathbf n)$ 在矩形盒
+$$
+B_{\mathbf N}=\prod_{i=1}^d\{0,\ldots,N_i-1\}
+$$
+上相对于 $\mathbb T^m$ 的归一化 Haar 测度等分布，极限取 $\min_iN_i\to\infty$。同一结论适用于任意固定的非负整数平移 $\mathbf a+B_{\mathbf N}$。
+
+此外，取整数
+$$
+B>\max\{\nu_i:\nu\in M,\ 1\le i\le d\},\qquad
+w_i=B^{i-1},\qquad
+\mathbf n(t)=(t^{w_1},\ldots,t^{w_d}).
+$$
+则 $V_M(\mathbf n(t))$ 随 $t=1,2,\ldots$ 在 $\mathbb T^m$ 上等分布。因此每个非空开集都含有某个 $V_M(\mathbf n)$，其中全部 $n_i\ge T$；而且可以要求 $\mathbf n=\mathbf n(t)$ 及 $t\ge\max\{T,1\}$。[^rro43-multi]
+
