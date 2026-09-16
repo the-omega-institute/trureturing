@@ -276,6 +276,32 @@ class NativePublicationTests:
                     self.assertTrue(failed)
                     self.assertEqual(before, {suffix: publication.member(destination, suffix).read_bytes()
                                              for suffix in publication.SUFFIXES})
+    def test_native_compiler_seed_is_private(self):
+        self.assertFalse((self.root / '.lake').exists())
+        if self.compiler_seed is None:
+            stage = self.root / 'compiler-stage'
+            stage_compiler(stage)
+            self.compiler_seed = str(stage)
+        stage = Path(self.compiler_seed)
+        before = {path.name: (publication.digest(path), path.stat().st_mode)
+                  for path in stage.iterdir()}
+        self.run_lake('env', 'true')
+        # Unstage admits only compiler artifacts; each fixture still creates
+        # its own producer build, reports, utility inputs, and ensure stamp.
+        self.assertFalse((self.root / '.lake/build/lean-inspector').exists())
+        for name in before:
+            if name == 'outputs.jsonl':
+                continue
+            donor = stage / name
+            private = self.root / '.lake/artifact-cache/artifacts' / name
+            self.assertEqual(publication.digest(private), before[name][0])
+            self.assertFalse(os.path.samestat(donor.stat(), private.stat()))
+            self.assertEqual(donor.stat().st_mode & 0o222, 0)
+            private.unlink()
+            private.write_bytes(b'fixture-private damage')
+        self.assertEqual(before, {path.name: (publication.digest(path), path.stat().st_mode)
+                                  for path in stage.iterdir()})
+
     def test_native_producer_inputs(self):
         self.build()
         before = self.stamps()
@@ -301,7 +327,7 @@ class NativePublicationTests:
                                   ('tools/lean-inspector/native.py', '#'),
                                   ('tools/lean-inspector/lakefile.lean', '--'),
                                   ('tools/scripts/report/lean-report-input.sh', '#'),
-                                  ('tools/StrataLint.Cli/Commands/LeanUtilityInputCommand.cs', '//')]:
+                                  ('tools/StrataLint.Lean/Lean/LeanUtilityInputCommand.cs', '//')]:
             with self.subTest(producer=producer):
                 calls = (self.root / 'utility-calls').read_text().splitlines()
                 implementation = (self.root / producer).read_text()
@@ -380,9 +406,42 @@ class NativePublicationTests:
         self.build()
         self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
         before = self.stamps()
+        origins = self.origins()
+        oleans = {str(path.relative_to(self.root)): (path.stat().st_mtime_ns, publication.digest(path))
+                  for path in (self.root / '.lake/build/lib/lean').rglob('*.olean*')}
+        inputs = publication.coordinates(self.root)
         self.write('lakefile.toml', (self.root / 'lakefile.toml').read_text() + '\n# config bytes\n')
+        current = publication.coordinates(self.root)
+        self.assertNotEqual(inputs['config'], current['config'])
+        with self.assertRaisesRegex(ValueError, 'stale input/provenance'):
+            publication.validate_bundle(self.root / 'public.json', current, self.root)
+        self.run_lake('--no-build', 'build', ':report', success=False)
+        self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
+        self.assertEqual(before, self.stamps())
+        built = self.build()
+        records = [json.loads(line) for line in (self.root / 'activity.jsonl').read_text().splitlines()]
+        result = dict(extracted=sum(r['count'] for r in records if r['kind'] == 'extract'),
+            aggregated=sum(r['count'] for r in records if r['kind'] == 'aggregate'),
+            compiled_modules=[name for name in [*before, 'Audit', 'External', 'ClaimSupport', 'Cache']
+                              if f'Built {name} (' in built.stdout + built.stderr],
+            unchanged_rows=before == self.stamps(), unchanged_origins=origins == self.origins(),
+            unchanged_oleans=oleans == {str(path.relative_to(self.root)):
+                (path.stat().st_mtime_ns, publication.digest(path))
+                for path in (self.root / '.lake/build/lib/lean').rglob('*.olean*')})
+        self.record_result('config-metadata', result)
+        self.assertEqual(result['extracted'], 0)
+        self.assertEqual(result['aggregated'], 1)
+        self.assertEqual(result['compiled_modules'], [])
+        self.assertTrue(result['unchanged_rows'])
+        self.assertTrue(result['unchanged_origins'])
+        self.assertTrue(result['unchanged_oleans'])
+        self.assertEqual(original, self.report()[1:])
+        self.publish()
+        published = publication.read_json(publication.member(self.root / 'public.json', '.provenance.json').read_bytes())
+        self.assertEqual(published['lean_config_sha256'], current['config'])
         self.build()
-        self.assertEqual({name for name, value in self.stamps().items() if value != before[name]}, set(before))
+        self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
+        self.assertEqual(before, self.stamps())
     def test_native_invalid_semantic_versions(self):
         self.build()
         before = self.stamps()

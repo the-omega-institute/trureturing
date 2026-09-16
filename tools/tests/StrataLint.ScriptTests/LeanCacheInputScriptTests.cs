@@ -1,354 +1,101 @@
-using System.Security.Cryptography;
 using System.Text;
-using System.Text.Json;
-using StrataLint.Engine;
-using FixtureFile = StrataLint.TestSupport.TemporaryFileSystem.File;
 
 namespace StrataLint.Tests;
 
 public sealed class LeanCacheInputScriptTests
 {
+    [Fact]
+    public void TruthReleaseConsumesOnlySelectedValidatedPushBundles()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        var root = TestRepositoryLayout.FindRoot();
+        var result = TestProcessRunner.Run("python3",
+            [Path.Combine(root, "tools/tests/StrataLint.ScriptTests/Fixtures/truth_release_contract.py")],
+            root, TestBudgets.ScriptProcessHangGuard, 1024 * 1024);
+        Assert.True(result.ExitCode == 0,
+            Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
+    }
+
     [Theory]
-    [InlineData("address")]
-    [InlineData("fetch")]
-    [InlineData("publish")]
-    public void CompleteSnapshotRejectsReportAddressFailure(string verb)
+    [InlineData("Contracts.test_resolver_fixes_merge_and_first_parent_before_merge_ref_moves")]
+    [InlineData("Contracts.test_parentless_checkout_needs_no_base_or_remote")]
+    [InlineData("Contracts.test_reusable_input_cannot_fall_back_to_event_sha_when_empty")]
+    [InlineData("Contracts.test_native_checkout_accepts_empty_actions_input_context")]
+    [InlineData("Contracts.test_valid_actions_seed_still_enters_production_and_signals_release_skip")]
+    [InlineData("Contracts.test_corruption_and_transfer_miss_reach_production_under_set_e")]
+    [InlineData("Contracts.test_foreign_partition_is_a_miss_and_snapshot_save_failure_is_nonfatal")]
+    [InlineData("Contracts.test_malformed_actions_manifest_cannot_stop_normal_production")]
+    [InlineData("Contracts.test_pull_request_cannot_publish_snapshot")]
+    [InlineData("Contracts.test_pull_request_restores_seed_with_writes_disabled")]
+    [InlineData("Contracts.test_transport_delegates_to_common_owner_without_a_package_cache")]
+    [InlineData("LegacyCallerTests.test_gate_preserves_checks_and_annotation_with_candidate_runtime")]
+    [InlineData("LegacyCallerTests.test_gate_build_failure_stops_before_checks")]
+    [InlineData("LegacyCallerTests.test_judge_address_uses_real_pinned_runtime_and_source")]
+    public void ImmutableResolutionAndOptionalActionsSeeds(string behavior)
     {
         if (OperatingSystem.IsWindows()) return;
-        using var fixture = new LeanInputFixture();
+        var root = TestRepositoryLayout.FindRoot();
+        var result = TestProcessRunner.Run("python3",
+            [Path.Combine(root, "tools/tests/StrataLint.ScriptTests/Fixtures/ci_contract.py"),
+                behavior],
+            root, TestBudgets.WorkflowProcessHangGuard, 1024 * 1024);
+        Assert.True(result.ExitCode == 0,
+            Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
+    }
 
-        var result = fixture.RunPublisher(verb);
-
-        Assert.NotEqual(0, result.ExitCode);
-        Assert.Contains("snapshot address is unavailable", result.Text, StringComparison.Ordinal);
-        Assert.Empty(fixture.LakeCalls);
+    [Theory]
+    [InlineData("ci_contract", "test_large_layer_snapshot_copies_and_hashes_in_one_read")]
+    [InlineData("ci_contract", "test_execution_snapshot_consumes_the_exporters_inventory")]
+    [InlineData("ci_contract", "test_snapshot_late_read_failure_keeps_published_material_and_source")]
+    [InlineData("ci_contract", "test_unchanged_restored_layer_skips_snapshot_and_save")]
+    [InlineData("ci_contract", "test_corrupt_restored_manifest_falls_through_to_normal_snapshot")]
+    [InlineData("ci_contract", "test_dependency_noop_uses_the_current_snapshot_material_policy")]
+    [InlineData("ci_contract", "test_noop_requires_a_successful_restore_in_this_execution")]
+    [InlineData("ci_contract", "test_changed_restored_shape_is_snapshotted_in_one_read")]
+    [InlineData("ci_contract", "test_noop_rejects_symlinks_and_special_material")]
+    [InlineData("ci_contract", "test_layer_filter_cannot_expand_registered_stage_scope")]
+    [InlineData("ci_contract", "test_bounded_snapshot_publishes_only_after_worker_and_save_window")]
+    [InlineData("ci_contract", "test_bounded_snapshot_timeout_and_signals_clean_only_owned_staging")]
+    [InlineData("ci_contract", "test_bounded_snapshot_cleans_descendants_after_worker_exits")]
+    [InlineData("ci_contract", "test_snapshot_publication_failure_restores_previous_seed")]
+    [InlineData("ci_contract", "test_same_filesystem_restore_moves_validated_material_without_copy")]
+    [InlineData("ci_contract", "test_same_filesystem_restore_rejects_extra_member_before_publication")]
+    [InlineData("ci_contract", "test_same_filesystem_restore_allows_unlisted_empty_directory")]
+    [InlineData("ci_contract", "test_same_filesystem_restore_rolls_back_install_failure_and_source")]
+    [InlineData("ci_contract", "test_dependency_and_project_restore_read_each_material_once")]
+    [InlineData("ci_contract", "test_dependency_and_project_reject_late_bad_material_without_installing")]
+    [InlineData("ci_contract", "test_dependency_and_project_restore_rolls_back_on_rename_or_exdev")]
+    [InlineData("ci_contract", "test_corrupt_cache_is_rejected_before_replacing_existing_target")]
+    [InlineData("ci_contract", "test_dependency_module_and_submodule_seed_round_trip")]
+    [InlineData("ci_contract", "test_project_module_and_submodule_seed_round_trip")]
+    [InlineData("ci_contract", "test_internal_dependency_file_links_round_trip_as_private_material")]
+    [InlineData("report_snapshot_contract", "test_invalid_dependency_links_disable_only_that_save_with_an_offending_path")]
+    [InlineData("ci_contract", "test_corrupt_dependency_seed_falls_back_without_replacing_current_material")]
+    [InlineData("report_snapshot_contract", "test_snapshot_readiness_and_material_follow_writer_permissions")]
+    [InlineData("report_snapshot_contract", "test_native_report_is_normal_project_material")]
+    [InlineData("report_snapshot_contract", "test_current_handoff_accepts_native_five_members_without_preparation")]
+    [InlineData("report_snapshot_contract", "test_current_handoff_rejects_each_missing_or_damaged_member")]
+    [InlineData("report_snapshot_contract", "test_current_handoff_rejects_wrong_execution_and_skipped_lean")]
+    public void SnapshotReadinessAndMaterialRespectWriterPermissions(string fixture, string behavior)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        var root = TestRepositoryLayout.FindRoot();
+        var result = TestProcessRunner.Run("python3",
+            [Path.Combine(root, "tools/tests/StrataLint.ScriptTests/Fixtures", fixture + ".py"), "SnapshotContracts." + behavior],
+            root, TestBudgets.WorkflowProcessHangGuard, 1024 * 1024);
+        Assert.True(result.ExitCode == 0,
+            Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
     }
 
     [Fact]
-    public void ReportOnlyChangeKeepsLeanInputAddresses()
+    public void ResolvedMathlibPartitionBehavior()
     {
         if (OperatingSystem.IsWindows()) return;
-        using var fixture = new LeanInputFixture();
-        var before = fixture.ReadAddresses();
-
-        fixture.Write("tools/lean-inspector/inspect.sh", "#!/bin/bash\nexit 99\n");
-        fixture.Write("tools/lean-inspector/native.py", "raise RuntimeError('report only')\n");
-        fixture.Write("tools/StrataLint.Engine/CanonicalWriter.cs", "// changed report writer\n");
-
-        Assert.Equal(before, fixture.ReadAddresses());
-        Assert.Equal($"{fixture.ExpectedSources} {fixture.ExpectedConfig}\n", before);
-    }
-
-    [Fact]
-    public void LeanSourceChangeChangesOnlySourcesAddress()
-    {
-        if (OperatingSystem.IsWindows()) return;
-        using var fixture = new LeanInputFixture();
-        var before = fixture.ReadAddresses().TrimEnd().Split(' ');
-
-        fixture.Write("D5/Zeta.lean", "theorem changed : True := by trivial\n");
-        var after = fixture.ReadAddresses().TrimEnd().Split(' ');
-
-        Assert.NotEqual(before[0], after[0]);
-        Assert.Equal(before[1], after[1]);
-        Assert.Equal(fixture.ExpectedSources, after[0]);
-    }
-
-    [Fact]
-    public void LeanConfigChangeChangesConfigAddress()
-    {
-        if (OperatingSystem.IsWindows()) return;
-        foreach (var path in new[] { "lean-toolchain", "lake-manifest.json", "lakefile.toml", "lakefile.lean" })
-        {
-            using var fixture = new LeanInputFixture();
-            var before = fixture.ReadAddresses().TrimEnd().Split(' ');
-            fixture.Write(path, fixture.Inputs[path] + "\n");
-            var after = fixture.ReadAddresses().TrimEnd().Split(' ');
-
-            Assert.Equal(before[0], after[0]);
-            Assert.NotEqual(before[1], after[1]);
-            Assert.Equal(fixture.ExpectedConfig, after[1]);
-        }
-    }
-
-    [Fact]
-    public void MissingLeanInputFailsClosed()
-    {
-        if (OperatingSystem.IsWindows()) return;
-        foreach (var path in new[] { "Trureturing.lean", "lean-toolchain", "lake-manifest.json", "lakefiles", "D5" })
-        {
-            using var fixture = new LeanInputFixture();
-            fixture.ReadAddresses();
-            fixture.RemoveInput(path);
-
-            var result = fixture.RunLeaf();
-
-            Assert.NotEqual(0, result.ExitCode);
-            Assert.Equal(string.Empty, result.Output);
-        }
-    }
-
-    [Fact]
-    public void ExistingLeanInputAddressesStayByteIdentical()
-    {
-        if (OperatingSystem.IsWindows()) return;
-        using var fixture = new LeanInputFixture();
-
-        Assert.Equal(
-            Encoding.ASCII.GetBytes($"{fixture.ExpectedSources} {fixture.ExpectedConfig}\n"),
-            Encoding.ASCII.GetBytes(fixture.ReadAddresses()));
-    }
-
-    [Fact]
-    public void DependencyAddressTracksOnlyPinnedInputs()
-    {
-        if (OperatingSystem.IsWindows()) return;
-        using var fixture = new LeanInputFixture();
-        var before = fixture.ReadDependencyAddress();
-        foreach (var path in new[] { "lakefile.toml", "lakefile.lean", "D5/Zeta.lean" })
-        {
-            fixture.Write(path, fixture.Inputs[path] + "\n");
-            Assert.Equal(before, fixture.ReadDependencyAddress());
-        }
-        foreach (var path in new[] { "lean-toolchain", "lake-manifest.json" })
-        {
-            fixture.Write(path, fixture.Inputs[path] + "\n");
-            var after = fixture.ReadDependencyAddress();
-            Assert.NotEqual(before, after);
-            before = after;
-        }
-    }
-
-    [Fact]
-    public void DependencyAddressRejectsMissingPinnedInputs()
-    {
-        if (OperatingSystem.IsWindows()) return;
-        foreach (var path in new[] { "lean-toolchain", "lake-manifest.json" })
-        {
-            using var fixture = new LeanInputFixture();
-            fixture.ReadDependencyAddress();
-            fixture.RemoveInput(path);
-
-            var result = fixture.RunLeaf("dependency-address");
-
-            Assert.Equal(2, result.ExitCode);
-            Assert.Equal(string.Empty, result.Output);
-        }
-    }
-
-    [Fact]
-    public void LeanInspectorDefaultTargetRemainsASourceInput()
-    {
-        if (OperatingSystem.IsWindows()) return;
-        using var fixture = new LeanInputFixture();
-        var before = fixture.ReadAddresses().TrimEnd().Split(' ');
-
-        fixture.Write("tools/lean-inspector/LeanInformationAudit.lean", "def audit := 2\n");
-        var after = fixture.ReadAddresses().TrimEnd().Split(' ');
-
-        Assert.NotEqual(before[0], after[0]);
-        Assert.Equal(before[1], after[1]);
-        Assert.Equal(fixture.ExpectedSources, after[0]);
-    }
-
-    [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
-    private sealed class LeanInputFixture : IDisposable
-    {
-        internal const string ProducerSha = "0123456789abcdef0123456789abcdef01234567";
-        private const string LeafPath = "tools/scripts/worktree/lean-cache-input.sh";
-        private const string PublisherPath = "tools/scripts/worktree/lean-cache-publish.sh";
-        private readonly TemporaryDirectory temporary = new();
-        private readonly string repository;
-        private readonly string bin;
-        private readonly string candidateLeaf;
-        private readonly string reportCalls;
-        private readonly string lakeCalls;
-        private readonly string payload;
-        private readonly string publishedManifest;
-
-        internal LeanInputFixture()
-        {
-            repository = Path.Combine(temporary.Path, "repository");
-            bin = Path.Combine(temporary.Path, "bin");
-            payload = Path.Combine(temporary.Path, "payload");
-            reportCalls = Path.Combine(temporary.Path, "report.calls");
-            lakeCalls = Path.Combine(temporary.Path, "lake.calls");
-            publishedManifest = Path.Combine(temporary.Path, "published.manifest");
-            candidateLeaf = Path.Combine(temporary.Path, "candidate-leaf.sh");
-            foreach (var directory in new[] { repository, bin, payload, Path.Combine(repository, ".lake/build") })
-                ScriptHarnessScratch.EnsureDirectory(directory);
-            Write("Trureturing.lean", "import D5.Zeta\n");
-            Write("D5/Zeta.lean", "theorem zeta : True := by trivial\n");
-            Write("D5/Alpha/Nested.lean", "def nested := 1\n");
-            Write("tools/lean-inspector/LeanInformationAudit.lean", "def audit := 1\n");
-            Write("tools/lean-inspector/Inspector.lean", "def inspector := 0\n");
-            Write("lean-toolchain", "leanprover/lean4:v4.31.0\n");
-            Write("lake-manifest.json", "{\"version\":\"1.1.0\"}\n");
-            Write("lakefile.toml", "name = \"fixture\"\n");
-            Write("lakefile.lean", "import Lake\n");
-            Write("tools/lean-inspector/inspect.sh", "#!/bin/bash\n");
-            Write("tools/lean-inspector/native.py", "# report only\n");
-            Write("tools/StrataLint.Engine/CanonicalWriter.cs", "// report only\n");
-            ScriptHarnessScratch.CopyScriptInto(
-                Path.Combine(TestRepositoryLayout.FindRoot(), PublisherPath), Path.Combine(repository, PublisherPath));
-            ScriptHarnessScratch.CopyScriptInto(
-                Path.Combine(TestRepositoryLayout.FindRoot(), LeafPath), candidateLeaf);
-            WriteStub(Path.Combine(repository, LeafPath), "exec /bin/bash \"$LEAN_INPUT_CANDIDATE\" \"$@\"");
-            WriteStub(Path.Combine(repository, "tools/scripts/report/lean-report-input.sh"),
-                "printf 'called\\n' >> \"$LEAN_INPUT_REPORT_CALLS\"\nexit 73");
-            WriteStub(Path.Combine(bin, "dotnet"), "printf 'unexpected MSBuild call\\n' >&2\nexit 74");
-            WriteStub(Path.Combine(bin, "lake"), """
-                printf '%s\n' "$1" >> "$LEAN_INPUT_LAKE_CALLS"
-                case "$1" in
-                  pack) cp "$LEAN_INPUT_PAYLOAD/lean-build.tgz" "$2" ;;
-                  unpack) cmp "$2" "$LEAN_INPUT_PAYLOAD/lean-build.tgz" ;;
-                  *) exit 75 ;;
-                esac
-                """);
-            ScriptHarnessScratch.WriteScratchText(Path.Combine(payload, "lean-build.tgz"), "fixture archive\n");
-            var archiveSha = Hash("fixture archive\n");
-            ScriptHarnessScratch.WriteScratchText(Path.Combine(payload, "manifest.txt"),
-                $"toolchain=leanprover/lean4:v4.31.0\nconfig_sha256={ExpectedConfig}\nsources_sha256={ExpectedSources}\n"
-                + $"archive_sha256={archiveSha}\nproducer_commit_sha={ProducerSha}\nworkflow_run_id=4242\n");
-            ScriptHarnessScratch.WriteScratchText(Path.Combine(payload, "release.json"), JsonSerializer.Serialize(new
-            {
-                target_commitish = ProducerSha,
-                assets = new[]
-                {
-                    new { name = "lean-build.tgz", digest = "sha256:" + archiveSha },
-                    new { name = "manifest.txt", digest = "sha256:" + Hash(FixtureFile.ReadAllText(Path.Combine(payload, "manifest.txt"))) },
-                },
-            }));
-            WriteStub(Path.Combine(bin, "gh"), """
-                case "$1 $2" in
-                  'release view') exit 1 ;;
-                  'release download')
-                    [[ "$3" == "$LEAN_INPUT_TAG" ]] || exit 76
-                    shift 3
-                    destination=''
-                    while [[ $# -gt 0 ]]; do
-                      case "$1" in
-                        --dir) destination="$2"; shift 2 ;;
-                        --repo|--pattern) shift 2 ;;
-                        *) exit 77 ;;
-                      esac
-                    done
-                    [[ -n "$destination" ]] || exit 78
-                    cp "$LEAN_INPUT_PAYLOAD/lean-build.tgz" "$LEAN_INPUT_PAYLOAD/manifest.txt" "$destination/"
-                    ;;
-                  'release create')
-                    [[ "$3" == "$LEAN_INPUT_TAG" ]] || exit 79
-                    shift 3
-                    target=''
-                    while [[ $# -gt 0 ]]; do
-                      case "$1" in
-                        --target) target="$2"; shift 2 ;;
-                        --repo|--title|--notes) shift 2 ;;
-                        --latest=false) shift ;;
-                        */manifest.txt) cp "$1" "$LEAN_INPUT_PUBLISHED_MANIFEST"; shift ;;
-                        */lean-build.tgz) cmp "$1" "$LEAN_INPUT_PAYLOAD/lean-build.tgz"; shift ;;
-                        *) exit 80 ;;
-                      esac
-                    done
-                    [[ "$target" == "$GITHUB_SHA" ]]
-                    ;;
-                  "api repos/fixture/lean-cache/releases/tags/$LEAN_INPUT_TAG") cat "$LEAN_INPUT_PAYLOAD/release.json" ;;
-                  *) exit 81 ;;
-                esac
-                """);
-        }
-
-        internal Dictionary<string, string> Inputs { get; } = new(StringComparer.Ordinal);
-        // Independent v1 preimages: root first, then each source family in byte order;
-        // config follows the declared toolchain, manifest, TOML, Lean order.
-        internal string ExpectedSources => HashManifest(new[] { "Trureturing.lean" }
-            .Concat(Inputs.Keys.Where(path => path.StartsWith("D5/", StringComparison.Ordinal) && path.EndsWith(".lean", StringComparison.Ordinal)).Order(StringComparer.Ordinal))
-            .Concat(Inputs.Keys.Where(path => path.StartsWith("tools/lean-inspector/", StringComparison.Ordinal) && path.EndsWith(".lean", StringComparison.Ordinal)).Order(StringComparer.Ordinal)));
-        internal string ExpectedConfig => HashManifest(["lean-toolchain", "lake-manifest.json", "lakefile.toml", "lakefile.lean"]);
-        internal string ExpectedDependency => HashManifest(["lean-toolchain", "lake-manifest.json"]);
-        internal string Tag => $"lean-cache-v1-leanprover-lean4-v4-31-0-{ExpectedConfig[..16]}-{ExpectedSources[..16]}";
-        internal string[] LakeCalls => ScriptHarnessScratch.ReadRecordedCalls(lakeCalls);
-        internal string PublishedManifest => FixtureFile.ReadAllText(publishedManifest);
-
-        internal void Write(string path, string text)
-        {
-            Inputs[path] = text;
-            var absolute = Path.Combine(repository, path);
-            ScriptHarnessScratch.EnsureDirectory(Path.GetDirectoryName(absolute)!);
-            ScriptHarnessScratch.WriteScratchText(absolute, text);
-        }
-
-        internal void RemoveInput(string path)
-        {
-            if (path == "D5")
-            {
-                var result = Run("/bin/mv", Path.Combine(repository, "D5"), Path.Combine(repository, "absent-D5"));
-                Assert.Equal(0, result.ExitCode);
-                return;
-            }
-            foreach (var relative in path == "lakefiles" ? new[] { "lakefile.toml", "lakefile.lean" } : new[] { path })
-                ScriptHarnessScratch.DeleteScratchFile(Path.Combine(repository, relative));
-        }
-
-        internal Attempt RunLeaf(string verb = "address") => Run("/bin/bash", candidateLeaf, verb, "--repository", repository);
-        internal Attempt RunPublisher(string verb) => Run("/bin/bash", Path.Combine(repository, PublisherPath), verb, "--repository", repository);
-
-        internal string ReadAddresses()
-        {
-            var result = RunLeaf();
-            AssertIndependentSuccess(result);
-            Assert.Matches("^[0-9a-f]{64} [0-9a-f]{64}\n$", result.Output);
-            return result.Output;
-        }
-
-        internal string ReadDependencyAddress()
-        {
-            var result = RunLeaf("dependency-address");
-            AssertIndependentSuccess(result);
-            Assert.Equal($"{ExpectedDependency}\n", result.Output);
-            return result.Output;
-        }
-
-        internal void AssertIndependentSuccess(Attempt result)
-        {
-            var calls = ScriptHarnessScratch.ReadRecordedCalls(reportCalls);
-            Assert.True(result.ExitCode == 0 && calls.Length == 0,
-                $"exit={result.ExitCode}; report_helper_calls={calls.Length}\n{result.Text}");
-        }
-
-        private Attempt Run(params string[] arguments)
-        {
-            var process = TestProcessRunner.Run("/usr/bin/env",
-                new[]
-                {
-                    $"PATH={bin}:{Environment.GetEnvironmentVariable("PATH")}",
-                    $"LEAN_INPUT_CANDIDATE={candidateLeaf}",
-                    $"LEAN_INPUT_REPORT_CALLS={reportCalls}",
-                    $"LEAN_INPUT_LAKE_CALLS={lakeCalls}",
-                    $"LEAN_INPUT_PAYLOAD={payload}",
-                    $"LEAN_INPUT_PUBLISHED_MANIFEST={publishedManifest}",
-                    $"LEAN_INPUT_TAG={Tag}",
-                    $"STRATALINT_LEAN_INPUT_MEMO_ROOT={temporary.Path}/memo",
-                    "STRATALINT_CACHE_REPO=fixture/lean-cache",
-                    $"GITHUB_SHA={ProducerSha}",
-                    "GITHUB_RUN_ID=4242",
-                }.Concat(arguments).ToArray(), repository, TestBudgets.ScriptProcessHangGuard, 64 * 1024);
-            return new Attempt(process.ExitCode, Encoding.UTF8.GetString(process.StandardOutput), Encoding.UTF8.GetString(process.StandardError));
-        }
-
-        private string HashManifest(IEnumerable<string> paths) => Hash(string.Concat(paths.Select(path => $"{Hash(Inputs[path])}  {path}\n")));
-        private static string Hash(string value) => Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(value)));
-        private static void WriteStub(string path, string body)
-        {
-            ScriptHarnessScratch.EnsureDirectory(Path.GetDirectoryName(path)!);
-            ScriptHarnessScratch.WriteExecutableStub(path, body);
-        }
-
-        public void Dispose() => temporary.Dispose();
-    }
-
-    private sealed record Attempt(int ExitCode, string Output, string Error)
-    {
-        internal string Text => Output + Error;
+        var root = TestRepositoryLayout.FindRoot();
+        var result = TestProcessRunner.Run("python3",
+            [Path.Combine(root, "tools/tests/StrataLint.ScriptTests/Fixtures/lean_input_contract.py"), "PartitionTests"],
+            root, TestBudgets.WorkflowProcessHangGuard, 1024 * 1024);
+        Assert.True(result.ExitCode == 0,
+            Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
     }
 }
