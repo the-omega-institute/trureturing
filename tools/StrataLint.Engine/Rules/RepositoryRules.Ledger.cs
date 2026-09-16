@@ -180,5 +180,5 @@ internal static partial class RepositoryRules
         || path.StartsWith("Chronicle/", StringComparison.Ordinal);
 
     internal static bool IsLedgerPolicyDataPath(string path) =>
-        LedgerPolicyDataPaths.Contains(path);
+        LedgerPolicyDataPaths.Contains(path) || FileMapDocuments.IsPolicyPath(path);
 }

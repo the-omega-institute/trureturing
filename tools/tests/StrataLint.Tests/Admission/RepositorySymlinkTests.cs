@@ -6,6 +6,29 @@ namespace StrataLint.Tests;
 
 public sealed class RepositorySymlinkTests
 {
+    [Fact]
+    public void IncludedLinkDeclarationsUseTheirOwnGitRevision()
+    {
+        using var repository = new TemporaryDirectory();
+        Initialize(repository.Path);
+        AddSkillAliases(repository.Path);
+        const string fragment = "Meta/FILEMAP.skills.toml";
+        var original = File.ReadAllText(Path.Combine(repository.Path, "Meta/FILEMAP.toml"));
+        var declarations = "schema_version = 2\n" + original[original.IndexOf("[[files]]", StringComparison.Ordinal)..];
+        Write(repository.Path, fragment, declarations);
+        Write(repository.Path, "Meta/FILEMAP.toml",
+            "schema_version = 2\ninclude = [\"FILEMAP.skills.toml\"]\n");
+        Commit(repository.Path);
+
+        Assert.Equal("../skills", Text(GitRepositorySnapshotReader.ReadCurrent(repository.Path), ".codex/skills"));
+        Write(repository.Path, fragment, declarations.Replace("../skills", "../missing", StringComparison.Ordinal));
+        Assert.Throws<InvalidOperationException>(() => GitRepositorySnapshotReader.ReadCurrent(repository.Path));
+        Assert.Equal("../skills", Text(GitRepositorySnapshotReader.ReadRevision(repository.Path, "HEAD"), ".codex/skills"));
+        File.Delete(Path.Combine(repository.Path, fragment));
+        Assert.Throws<InvalidOperationException>(() => GitRepositorySnapshotReader.ReadCurrent(repository.Path));
+        Assert.Equal("../skills", Text(GitRepositorySnapshotReader.ReadRevision(repository.Path, "HEAD"), ".codex/skills"));
+    }
+
     [Theory]
     [InlineData(false)]
     [InlineData(true)]
