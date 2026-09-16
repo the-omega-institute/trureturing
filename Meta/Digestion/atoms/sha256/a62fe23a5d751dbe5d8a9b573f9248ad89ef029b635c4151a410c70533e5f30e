@@ -1,0 +1,32 @@
+**证明 43.13。** $ab$ 与 $a(b+1)$ 都是二变量非线性非负系数多项式，故定理43.12给出两个边缘闭图的满性。实际电路具有恒等式
+$$
+s=r+a,
+$$
+从而在每个实际元组上有 $H(Z(s))=H(Z(r))+H(Z(a))$，取共同极限后仍成立。第一个所列元组的右侧为零，左侧为 $[\phi]\ne0$，故不可能。同时，$t=b+1$ 在输入极限 $0_K$ 处的精确仿射闭图输出为 $Z(1)$，所以这不是因忽略加一门而产生的矛盾。
+
+对于第二个元组，按单项式 $a,b,ab$ 排列相位坐标。相位向量
+$$
+p=(E_1,0,E_1)\in\mathbb T^3
+$$
+是该目标的一个共同原像：前三个相关相位分别给出输入 $E_1,0$、中间量 $[\phi]$，而 $r$ 的相位为 $E_1$，$s$ 的相位为 $2E_1=E_2$。故全部整数线性相位关系确实成立。
+
+然而，若存在逼近该目标的实际元组列，把 $a_k$ 与 $a_kb_k$ 相对于 $E_1$ 的小实相位误差分别记为 $\varepsilon_k,\delta_k$。两个数字目标均为 $U=z_{E_1}^{+1}$，所以假设43.1给出
+$$
+\varepsilon_k>0,\qquad\delta_k>0
+$$
+最终成立。由同一个整数恒等式 $a_k(b_k+1)=a_kb_k+a_k$，末坐标相对于 $E_2$ 的小相位误差为 $\varepsilon_k+\delta_k>0$。它只能趋于 $z_{E_2}^{+1}=0V$，不能趋于 $z_{E_2}^{-1}=10V$。两种数字字的最低位分别为零和一，所以该阻碍不仅是标签区别，也是实际低位区别。
+
+等价地，若以 $u_a,u_b,u_{ab}$ 表示共同单项式误差，错误目标要求
+$$
+u_a>0,\qquad u_{ab}>0,\qquad u_a+u_{ab}<0,
+$$
+严格锥为空。改取末目标 $0V$ 后，最后一个要求变为 $u_a+u_{ab}>0$，向量 $(1,0,1)$ 即满足全部分裂条件。相位共同原像仍是上述 $p$，故定理43.11给出全部实际输入同时趋于无穷的共同逼近。
+
+最后，重复多项式及 $ab=ba$ 在每个实际元组上都给出完全相同的数字字，闭对角线使该相等关系传到极限。$U\ne V$，故不能分别选为两个重复输出。上述全部恒等式对每个实际自然元组保持成立；满边缘闭图仅说明指定低位极限不能确定单个非线性输出，并不允许同一元组的不同出现位置使用互不相容的逼近列。证毕。
+
+[^rro43-phase]: RECURSIVE_RELATIONAL_OBSERVATION.md，固定版本 492640d0651a5fca476f4b168c97a1d05f65ff8d，定义16.0、定义16.3、定理16.4证明中的单侧等价，以及假设18.1。[固定文本](https://raw.githubusercontent.com/the-omega-institute/trureturing/492640d0651a5fca476f4b168c97a1d05f65ff8d/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)。本节采用的单侧等价位于该固定文本定理16.4证明开头；不需要其他新增节的结论。
+
+[^rro43-weyl]: H. Weyl，Über die Gleichverteilung von Zahlen mod. Eins，Mathematische Annalen 77(3)，1916，313–352，DOI 10.1007/BF01475864。所用精确表述见 T. Tao，254B, Notes 1: Equidistribution of polynomial sequences in tori，2010年3月28日网络版，第1节，Proposition 1 与 Corollary 6；该网络版无印刷页码。[正文及证明](https://terrytao.wordpress.com/2010/03/28/254b-notes-1-equidistribution-of-polynomial-sequences-in-torii/)。Proposition 1 的假设为环面值序列全部非零整数字符的平均趋于零；本节对 Corollary 6 只使用标量情形，假设为正次数实一元多项式的首项系数无理。该文对整数索引等分布的定义要求正、负两个半序列分别等分布，故包含这里所用的正整数结论。
+
+[^rro43-multi]: Y. Yifrach，A note on Weyl’s equidistribution theorem，Monatshefte für Mathematik 206(3)，2025年正式发表版，771–780，Theorem 1.2 在第772页，DOI 10.1007/s00605-025-02057-2。[正式文本](https://link.springer.com/content/pdf/10.1007/s00605-025-02057-2.pdf)。其假设为实多变量多项式至少一个非恒定单项式系数无理；Definition 1.1 在第771–772页规定欧氏球内格点计数。定理43.9所需的非负矩形盒与固定平移版本已由正文针对共同系数 $\phi$ 的整数多项式给出完整差分证明，不把不同截断约定直接等同。环面字符方法及差分方法另见前一引文的 Proposition 1、Corollary 5。
+

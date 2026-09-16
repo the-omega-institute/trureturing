@@ -1,0 +1,57 @@
+**证明 43.9。** 先证明矩形盒结论所需的标量事实：对每个非恒定整数系数多项式 $Q$，有
+$$
+\lim_{\min_iN_i\to\infty}
+\frac1{|B_{\mathbf N}|}\sum_{\mathbf n\in B_{\mathbf N}}
+\exp(2\pi i\phi Q(\mathbf n))=0.
+$$
+对 $D=\deg Q$ 归纳。若 $D=1$，写 $Q(\mathbf n)=c+\sum_i a_in_i$，其中某个 $a_i\ne0$。平均分解为各坐标的几何级数平均之积，其中该坐标的模不超过
+$$
+\frac{2}{N_i|1-\exp(2\pi i\phi a_i)|}\longrightarrow0,
+$$
+其余因子的模均不超过一。
+
+设 $D\ge2$ 且低次数情形已经成立。选取坐标 $i$，使 $Q$ 的最高次齐次部分 $Q_D$ 满足 $\partial_iQ_D\ne0$。记
+$$
+a(\mathbf n)=\exp(2\pi i\phi Q(\mathbf n)),\qquad
+A_{\mathbf N}=\frac1{|B_{\mathbf N}|}\sum_{\mathbf n\in B_{\mathbf N}}a(\mathbf n).
+$$
+固定正整数 $H$，并以 $\mathbb E_{\mathbf n\in B_{\mathbf N}}$ 表示该盒上的算术平均。平移盒的两个边界条带给出
+$$
+\left|A_{\mathbf N}-
+\mathbb E_{\mathbf n\in B_{\mathbf N}}
+\frac1H\sum_{h=0}^{H-1}a(\mathbf n+h\mathbf e_i)\right|
+\le\frac{H-1}{N_i}.
+$$
+由 Cauchy–Schwarz 不等式，平滑后平均的模平方不超过
+$$
+\frac1H+
+\frac{2}{H^2}\sum_{0\le h<k<H}
+\left|\mathbb E_{\mathbf n\in B_{\mathbf N}}
+ a(\mathbf n+k\mathbf e_i)\overline{a(\mathbf n+h\mathbf e_i)}\right|.
+$$
+每个相关项的相位为
+$$
+\phi\bigl(Q(\mathbf n+k\mathbf e_i)-Q(\mathbf n+h\mathbf e_i)\bigr).
+$$
+括号内是整数系数多项式，其最高次齐次部分为 $(k-h)\partial_iQ_D$，故次数恰为 $D-1\ge1$。由归纳假设，固定 $h,k$ 后该相关平均趋于零。因此先固定 $H$ 令所有边长趋于无穷，可得
+$$
+\limsup_{\min_iN_i\to\infty}|A_{\mathbf N}|^2\le\frac1H.
+$$
+再令 $H\to\infty$，即证标量事实。
+
+现在对任意非零整数向量 $h=(h_\nu)_{\nu\in M}$，取
+$$
+Q_h(\mathbf n)=\sum_{\nu\in M}h_\nu\mathbf n^\nu.
+$$
+由于 $M$ 中的单项式不同且均非常数，$Q_h$ 非恒定。刚证明的事实使 $V_M$ 的每个非平凡字符平均趋于零。字符判据的证明同样适用于这些有限盒平均：先对有限三角多项式逐项求极限，再以一致范数逼近任意连续函数；平均与 Haar 积分各自的逼近误差均不超过该一致误差。因此得到矩形盒上的 Haar 等分布。固定平移只把 $Q_h(\mathbf n)$ 换为非恒定整数多项式 $Q_h(\mathbf a+\mathbf n)$，故结论不变。
+
+再证单变量实现。由于 $M$ 包含输入单项式，所选 $B$ 至少为二。对 $\nu\in M$ 置
+$$
+e(\nu)=\sum_{i=1}^d\nu_iB^{i-1}.
+$$
+各 $\nu_i$ 均严格小于 $B$，故有限进位表示的唯一性说明不同 $\nu$ 给出不同的正整数 $e(\nu)$。而
+$$
+\mathbf n(t)^\nu=t^{e(\nu)}.
+$$
+定理43.3遂给出曲线上的联合等分布。各 $w_i\ge1$，所以 $t\ge1$ 时 $n_i(t)\ge t$。应用任意尾部的开集访问性质，就得到最后的实际元组断言。这里所有单项式始终在同一个整数元组、乃至同一个参数 $t$ 上求值。证毕。
+
