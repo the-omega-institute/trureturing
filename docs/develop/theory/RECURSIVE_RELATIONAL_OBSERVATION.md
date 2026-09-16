@@ -9668,3 +9668,416 @@ $$
 [^rro29-ideal]: Tetsuhiro Shimizu, *L-ideals of Measure Algebras*, Proceedings of the Japan Academy 48 (1972), 172–176，§1，特别第172—173页关于通常卷积测度代数及连续测度理想的记号。本节圆周上的无原子理想性质由逐单点卷积积分另行证明。[正文](https://www.jstage.jst.go.jp/article/pjab1945/48/3/48_3_172/_pdf/-char/ja)。
 
 ## 追加锚（本行以下为增补区）
+## 30. 正性与全测度相位律的延拓唯一性
+
+**假设 30.0（固定载体、测度与全测度相位契约）。** 沿用定义25.0及假设25.1的原始紧数字空间 $K$、原始圆周群 $\mathbb T$、连续满射 $H:K\to\mathbb T$、分裂相位集 $E=\{E_m:m\ge1\}$、分裂点集 $S=H^{-1}(E)=\{x_m^+,x_m^-:m\ge1\}$ 及准确闭图 $\Gamma$。特别，$E$ 中的纤维恰有两个点，其他纤维恰有一个点。本节全部关于这些对象的结论均以该精确纤维与闭图契约为前提。
+
+对紧度量空间 $X$，$M(X)$ 表示全部有限实有符号正则 Borel 测度，$M_+(X)$ 表示其正锥，并记
+$$
+\varepsilon_X(\mu)=\mu(X),\qquad
+\|\mu\|_{\mathrm{TV}}=|\mu|(X).
+$$
+全变差不含二分之一因子。采用定理28.10的典范分解
+$$
+\mu=\mu_{\mathrm{at}}+\mu_{\mathrm{na}},
+$$
+其中非原子性指全变差测度无原子，不指相对于 Haar 测度绝对连续。Jordan 分解、全变差及测度范数的约定参见 Daniel V. Tausk，*Weak\* topology for the space of finite measures on a topological space*，[§2，PDF第2—3页](https://www.ime.usp.br/~tausk/texts/WeakTopologyMeasures.pdf)。
+
+固定定理28.3的 Borel 截面
+$$
+s(\theta)=
+\begin{cases}
+k_\theta,&\theta\notin E,\\
+x_m^-,&\theta=E_m,
+\end{cases}
+\qquad H\circ s=\operatorname{id}_{\mathbb T}.
+$$
+圆周卷积始终是定义28.6在原始圆周上定义的测度卷积。
+
+称一个实双线性映射 $B:M(K)\times M(K)\to M(K)$ 满足正性与全测度相位契约，若
+$$
+\mu,\nu\in M_+(K)\ \Longrightarrow\ B(\mu,\nu)\in M_+(K)
+$$
+且
+$$
+\forall\mu,\nu\in M_+(K),\qquad
+H_\#B(\mu,\nu)=(H_\#\mu)*_{\mathbb T}(H_\#\nu).
+$$
+后一等式是对每个 Borel 相位集合的测度相等，量词覆盖全部有限正测度；它不是仅对 Dirac 输入的要求。此定义不预设有界性、连续性、交换律、结合律或核积分表示。
+
+记
+$$
+P^{(0)}=P^{-1},\qquad P^{(\infty)}=P^{+1},
+$$
+其中右端为定义23.8的两个固定符号概率核，等同关系由定理25.12给出；$\infty$ 始终是形式参数。相应的逐集合积分运算 $\star_0,\star_\infty$ 取定理28.7的构造。
+
+**定理 30.1（可数有限分裂下的正提升判据）。** 设 $X,Y$ 为非空紧度量空间，$h:X\to Y$ 连续且满射，$D\subseteq Y$ 可数，每个纤维有限，且 $Y\setminus D$ 上的纤维为单点。置
+$$
+X_0=X\setminus h^{-1}(D),\qquad Y_0=Y\setminus D,\qquad
+D_*=\{y\in D:|h^{-1}(\{y\})|\ge2\}.
+$$
+则 $h|_{X_0}:X_0\to Y_0$ 是同胚，并存在 Borel 截面 $q:Y\to X$。
+
+对每个 $\eta\in M_+(Y)$，全部正提升 $\rho\in M_+(X)$、$h_\#\rho=\eta$ 恰为
+$$
+\rho=q_\#(\eta|_{Y_0})
++\sum_{y\in D}\ \sum_{x\in h^{-1}(\{y\})} a_{y,x}\delta_x,
+\qquad
+a_{y,x}\ge0,\qquad
+\sum_{x\in h^{-1}(\{y\})}a_{y,x}=\eta(\{y\}).
+$$
+该级数在全变差中绝对收敛。正提升唯一当且仅当 $\eta(D_*)=0$。特别，$\eta(D)=0$ 时唯一正提升为 $q_\#\eta$，与分裂纤维上的截面选择无关。此外，
+$$
+\ker h_\#\cap M_+(X)=\{0\}.
+$$
+
+**证明。** 纤维条件先给限制映射为连续双射。若 $y\in Y_0$ 的唯一原像为 $x$，且 $U\subseteq X$ 是包含 $x$ 的开集，则
+$$
+W=Y\setminus h(X\setminus U)
+$$
+为包含 $y$ 的开集：被除去的集合紧，且不能包含 $y$。对 $y'\in W\cap Y_0$，其唯一原像必在 $U$ 中。这证明逆映射连续，与定理28.3的论证相同，不要求 $X_0$ 紧。
+
+集合 $D$ 及 $h^{-1}(D)$ 均为可数 Borel 集。在 $Y_0$ 上取上述逆映射，在每个 $y\in D$ 上选取一个纤维点，得到截面 $q$。对任意 Borel 集 $A\subseteq X$，$q^{-1}(A)\cap Y_0$ 在 $Y_0$ 中为 Borel 集，因而在 $Y$ 中为 Borel 集；剩余部分是 $D$ 的一个子集，也为 Borel 集。因此 $q$ 是 Borel 映射。
+
+若 $A\subseteq X_0$ 是 Borel 集，同胚性保证 $h(A)$ 为 $Y_0$ 中、进而为 $Y$ 中的 Borel 集，且
+$$
+h^{-1}(h(A))=A.
+$$
+所以任何正提升均满足
+$$
+\rho(A)=\eta(h(A))
+=\bigl(q_\#(\eta|_{Y_0})\bigr)(A).
+$$
+这确定了它在 $X_0$ 上的限制。其余部分集中在可数集合 $h^{-1}(D)$ 上，故只能是所列点质量级数；在每个纤维上读取推前等式，恰给所列系数和条件。所有系数的和为 $\eta(D)<\infty$，因此级数全变差绝对收敛。
+
+反之，任何满足这些条件的系数都给出有限正 Borel 测度。第一项的推前是 $\eta|_{Y_0}$，级数的推前是 $\eta|_D$，所以总推前为 $\eta$。上述推前、限制及级数所得测度均正则：紧度量空间上的有限 Borel 测度正则，定理28.4已经证明此事实；亦参见 Tausk，[引理3.4、推论3.5](https://www.ime.usp.br/~tausk/texts/WeakTopologyMeasures.pdf)。这里没有用集合双射代替可测性或正则性的证明。
+
+若 $\eta(D_*)=0$，每个多点纤维的允许系数全为零，单点纤维的唯一系数又已固定，故提升唯一。若 $\eta(D_*)>0$，可数性保证存在 $y\in D_*$ 满足 $\eta(\{y\})>0$。将此质量分别全部放在该纤维的两个不同点上，并保持其他系数相同，得到两个不同正提升。这证明充要条件及其特别情形。
+
+最后，$\rho\ge0$ 且 $h_\#\rho=0$ 时，
+$$
+\rho(X)=(h_\#\rho)(Y)=0,
+$$
+故 $\rho=0$。这只是正锥与推前核的交为零，并不表示两个任意正测度的相同推前总能决定它们相等；两者之差未必正，多点纤维上的上述自由度正是区别。证毕。
+
+**定理 30.2（正性与质量给出的自动全变差压缩）。** 设 $X$ 为非空紧度量空间，$B:M(X)^2\to M(X)$ 实双线性、保持正测度对的正性，并对全部正输入满足
+$$
+\varepsilon_X(B(\mu,\nu))=\varepsilon_X(\mu)\varepsilon_X(\nu).
+$$
+则对任意实有符号输入都有测度不等式及范数估计
+$$
+|B(\mu,\nu)|\le B(|\mu|,|\nu|),\qquad
+\|B(\mu,\nu)\|_{\mathrm{TV}}
+\le\|\mu\|_{\mathrm{TV}}\|\nu\|_{\mathrm{TV}}.
+$$
+质量恒等式也对全部实有符号输入成立，并且
+$$
+\|B\|_{\mathrm{bil}}=1.
+$$
+特别，假设30.0的全测度相位契约蕴含这里的质量前提。
+
+正算子的自动连续性具有经典的一般理论，参见 Wolfgang Arendt、Robin Nittka，*Equivalent complete norms and positivity*，*Archiv der Mathematik* 92 (2009), 414–427，[定理2.8及例2.3(a)，作者公开全文](https://www.researchgate.net/publication/226200984_Equivalent_complete_norms_and_positivity)。正多线性映射的模支配也见 Geraldo Botelho、Vinícius C. C. Miranda，*Compact positive multilinear operators on Banach lattices*，[§1的正多线性映射定义之后](https://arxiv.org/html/2509.04652v1)。本结论中的精确常数由以下质量计算直接得到。
+
+**证明。** 对任意 $\mu,\nu$ 取 Jordan 分解，定义两个正测度
+$$
+U=B(\mu^+,\nu^+)+B(\mu^-,\nu^-),\qquad
+V=B(\mu^+,\nu^-)+B(\mu^-,\nu^+).
+$$
+仅由双线性即有
+$$
+B(\mu,\nu)=U-V,\qquad B(|\mu|,|\nu|)=U+V.
+$$
+对任意 Borel 集 $A$ 的有限 Borel 分割 $A=\bigsqcup_i A_i$，
+$$
+\sum_i |(U-V)(A_i)|
+\le\sum_i\bigl(U(A_i)+V(A_i)\bigr)=U(A)+V(A).
+$$
+取分割上确界得到 $|U-V|(A)\le U(A)+V(A)$，故得测度支配。再用质量前提于两个正测度 $|\mu|,|\nu|$，得到
+$$
+\|B(\mu,\nu)\|_{\mathrm{TV}}
+\le B(|\mu|,|\nu|)(X)
+=|\mu|(X)|\nu|(X).
+$$
+这没有先使用 $B$ 的任何连续性。对四个 Jordan 项分别读取质量，则得到全部有符号输入的质量恒等式。
+
+正概率输入的输出是质量一的正测度，因而范数恰为一。由于 $X$ 非空，Dirac 概率存在；它们使双线性范数下界达到一，而已证估计给上界一。因此 $\|B\|_{\mathrm{bil}}=1$。
+
+对满足假设30.0契约的 $B$，在相位等式上读取整个圆周的质量，得到
+$$
+B(\mu,\nu)(K)
+=\bigl((H_\#\mu)*_{\mathbb T}(H_\#\nu)\bigr)(\mathbb T)
+=\mu(K)\nu(K)
+$$
+对全部正输入成立。最后，$H_\#$ 线性、圆周卷积双线性，所以同样的四项 Jordan 展开还证明：相位契约对全部正输入成立，等价于它对全部实有符号输入成立。这里使用的是相位契约对四对 Jordan 正部的适用性，而不是从 Dirac 对推出全测度相位律。证毕。
+
+**定理 30.3（含非原子因子的乘积完全由相位强制）。** 对原始 $H:K\to\mathbb T$，正测度 $\mu$ 非原子当且仅当 $H_\#\mu$ 非原子。设 $B$ 满足假设30.0的正性与全测度相位契约。若 $\mu,\nu\in M_+(K)$ 且至少一个非原子，则
+$$
+B(\mu,\nu)
+=s_\#\bigl((H_\#\mu)*_{\mathbb T}(H_\#\nu)\bigr),
+$$
+其输出非原子，且在 $S$ 上质量为零。
+
+同一等式对全部实有符号 $\mu,\nu$ 仍成立，只要至少一个输入的全变差非原子；此时输出的全变差在 $S$ 上为零，且输出非原子。
+
+**证明。** 先处理正测度。对任意 $\theta\in\mathbb T$，纤维有限给出
+$$
+(H_\#\mu)(\{\theta\})
+=\sum_{x\in H^{-1}(\{\theta\})}\mu(\{x\}).
+$$
+故 $\mu$ 无单点原子时，其推前也无单点原子。反之，
+$$
+0\le\mu(\{x\})\le(H_\#\mu)(\{H(x)\})
+$$
+给出逆向蕴含。在紧度量空间上，无单点原子等价于非原子性，所需论证已包含在定理28.10的有限网格分割证明中。
+
+若 $\alpha,\beta$ 为圆周上的正测度，且 $\alpha$ 非原子，则对每个 $\theta$，由定理28.4的 Fubini 定理，
+$$
+(\alpha*_{\mathbb T}\beta)(\{\theta\})
+=\int_{\mathbb T}\alpha(\{\theta-\eta\})\,d\beta(\eta)=0.
+$$
+因此该卷积非原子；另一因子的情形由圆周卷积的交换律得到，不需要 $B$ 交换。这个非原子卷积理想是经典测度代数分解的一部分，参见 Matthew Daws，*Characterising weakly almost periodic functionals on the measure algebra*，[§3，引理3.7紧前的原子／非原子分解段落](https://arxiv.org/html/0904.0436v2)；其实有符号形式已在定理28.10证明。
+
+令
+$$
+\omega=(H_\#\mu)*_{\mathbb T}(H_\#\nu).
+$$
+在本定理的正输入情形，$\omega$ 正且非原子，所以 $\omega(E)=0$。全测度相位律与输出正性给出
+$$
+B(\mu,\nu)\ge0,\qquad H_\#B(\mu,\nu)=\omega.
+$$
+定理30.1在 $D=E$ 时给出唯一正提升 $s_\#\omega$，因而得到所列等式。它在 $S$ 上的质量为 $\omega(E)=0$；对每个 $x$，又有
+$$
+(s_\#\omega)(\{x\})
+=\omega(s^{-1}(\{x\}))
+\le\omega(\{H(x)\})=0.
+$$
+所以输出非原子。
+
+现在令 $\mu$ 为实有符号非原子测度，$\nu$ 为任意实有符号测度。由于
+$$
+0\le\mu^\pm\le|\mu|,
+$$
+两个 Jordan 部分 $\mu^\pm$ 均非原子。分别对四对正输入 $(\mu^\pm,\nu^\pm)$ 应用刚证结论，再按照双线性符号相加。Borel 推前 $s_\#$ 的线性及圆周卷积的双线性给出同一公式。每个正输出均在 $S$ 上为零且非原子；其有限有符号和也无单点质量，因而非原子，其全变差也在 $S$ 上为零。非原子因子位于第二槽时，同样在该槽取 Jordan 分解并应用正输入结论。
+
+因此本证明从未将“有符号推前为零”误当成“原测度为零”。若允许任意有符号输出，$v_m=\delta_{x_m^+}-\delta_{x_m^-}$ 的推前确实为零；这里先在四个正输出上排除所有分裂质量，再取有限有符号和，故没有留下可由正负抵消掩盖的分裂残差。证毕。
+
+**定理 30.4（正相位提升由点行唯一决定的显式公式）。** 设 $B:M(K)^2\to M(K)$ 满足假设30.0的正性与全测度相位契约，记其实际点行为
+$$
+Q_{x,y}=B(\delta_x,\delta_y).
+$$
+对任意 $\mu,\nu\in M(K)$，置
+$$
+\Omega_{\mu,\nu}
+=(H_\#\mu)*_{\mathbb T}(H_\#\nu)
+-(H_\#\mu_{\mathrm{at}})*_{\mathbb T}(H_\#\nu_{\mathrm{at}}).
+$$
+则 $\Omega_{\mu,\nu}$ 非原子，并且
+$$
+B(\mu,\nu)
+=\sum_{x,y\in K}\mu(\{x\})\nu(\{y\})Q_{x,y}
++s_\#\Omega_{\mu,\nu}.
+$$
+级数只涉及两个输入实际原子集的乘积，在全变差中绝对收敛，且
+$$
+\sum_{x,y}
+\bigl\|\mu(\{x\})\nu(\{y\})Q_{x,y}\bigr\|_{\mathrm{TV}}
+=\|\mu_{\mathrm{at}}\|_{\mathrm{TV}}\,
+ \|\nu_{\mathrm{at}}\|_{\mathrm{TV}}.
+$$
+因此，两个满足正性及全测度相位契约的实双线性运算，若在所有 Dirac 对上相同，则在整个 $M(K)^2$ 上相同。此结论不要求交换律、结合律或点行的联合 Borel 可测性。
+
+**证明。** 定理30.2保证 $B$ 自动双线性压缩。每个 $Q_{x,y}$ 为正测度，质量一，所以
+$$
+\|Q_{x,y}\|_{\mathrm{TV}}=1.
+$$
+相位律还给
+$$
+H_\#Q_{x,y}=\delta_{H(x)+H(y)}.
+$$
+由正性，$Q_{x,y}$ 集中在对应有限相位纤维上，因而也是有限原子测度。
+
+由定理28.10，$\mu,\nu$ 的实际原子集至多可数，且
+$$
+\mu_{\mathrm{at}}=\sum_x\mu(\{x\})\delta_x,\qquad
+\nu_{\mathrm{at}}=\sum_y\nu(\{y\})\delta_y
+$$
+均在全变差中绝对收敛。结合点行范数一，立即得到双重级数的所列绝对范数和，故该级数在完备空间 $M(K)$ 中收敛。
+
+为证明其和确实是 $B(\mu_{\mathrm{at}},\nu_{\mathrm{at}})$，取两个原子级数的有限截断 $a_n,b_n$。双线性压缩给
+$$
+\begin{aligned}
+&\|B(\mu_{\mathrm{at}},\nu_{\mathrm{at}})-B(a_n,b_n)\|_{\mathrm{TV}}\\
+&\quad\le
+\|\mu_{\mathrm{at}}-a_n\|_{\mathrm{TV}}\|\nu_{\mathrm{at}}\|_{\mathrm{TV}}
++\|a_n\|_{\mathrm{TV}}\|\nu_{\mathrm{at}}-b_n\|_{\mathrm{TV}}
+\longrightarrow0.
+\end{aligned}
+$$
+有限双线性展开给出 $B(a_n,b_n)$ 的对应有限双重和，故原子乘积正是所列级数。这仅使用有限原子测度在 $M_{\mathrm{at}}(K)$ 内的稠密性；定理28.11已经区分它与整个 $M(K)$ 的全变差拓扑，后者没有所需的原子稠密性。
+
+非原子有符号测度的 Jordan 部分非原子，所以定理30.3也保证其相位推前非原子。原子测度的相位推前则仍原子。展开两种输入的典范分解，得到
+$$
+\begin{aligned}
+\Omega_{\mu,\nu}
+={}&(H_\#\mu_{\mathrm{na}})*_{\mathbb T}(H_\#\nu_{\mathrm{at}})\\
+&+(H_\#\mu_{\mathrm{at}})*_{\mathbb T}(H_\#\nu_{\mathrm{na}})\\
+&+(H_\#\mu_{\mathrm{na}})*_{\mathbb T}(H_\#\nu_{\mathrm{na}}).
+\end{aligned}
+$$
+每一项均非原子，由定理28.10的非原子卷积理想性质得出 $\Omega_{\mu,\nu}$ 非原子。对 $B$ 的相应三个混合项分别应用定理30.3，再用 $s_\#$ 线性，其和恰为 $s_\#\Omega_{\mu,\nu}$。加上已经确定的原子乘积，即得全部有符号输入的公式。
+
+公式中的第一项保留 $K$ 上每个实际原子的系数，而不是仅保留其相位总质量。因此，同一分裂纤维内输入系数的正负抵消不会遗漏原子残差；这些残差的乘积已经由点行级数确定。其余三项则已经在定理30.3的正输入阶段排除了分裂残差。于是相同点行使两运算的公式逐项相同，证明唯一性。证毕。
+
+**定理 30.5（两个正核在全部实有符号测度上的唯一延拓）。** 固定 $t\in\{0,\infty\}$。实双线性运算 $B:M(K)^2\to M(K)$ 满足正性、全测度相位律及
+$$
+B(\delta_x,\delta_y)=P^{(t)}_{x,y}\qquad(x,y\in K)
+$$
+当且仅当
+$$
+B(\mu,\nu)=\mu\star_t\nu\qquad(\mu,\nu\in M(K)).
+$$
+特别，以上三个条件自动强制全部 Borel 集上的积分公式
+$$
+B(\mu,\nu)(A)
+=\int_K\int_KP^{(t)}_{x,y}(A)\,d\nu(y)\,d\mu(x)
+\qquad
+(\mu,\nu\in M(K),\ A\subseteq K\text{ Borel}).
+$$
+该积分表示是结论而非前提。此运算自动交换、在全部测度上结合，且双线性全变差范数为一。
+
+**证明。** 定理28.7已经用 Borel 点行和逐集合有符号积分构造 $\star_t$，证明其值为有限实有符号正则 Borel 测度，并证明它在两个端点参数保持正性、满足全部测度的相位律且具有指定点行。因此 $\star_t$ 本身满足本定理的三个条件。
+
+反过来，任意满足这些条件的 $B$ 与 $\star_t$ 均适用定理30.4，且点行完全相同，所以在全部实有符号输入上相同。将定理28.7的积分公式代入此相等，得到所列逐集合公式；没有对未知 $B$ 预设积分性或连续性。交换律由定理28.7、全部测度上的结合律由定理28.9传递而来，范数一也可直接由定理30.2得到。证毕。
+
+**定理 30.6（仅假设 Dirac 三元组结合的全部正运算分类）。** 设 $B:M(K)^2\to M(K)$ 实双线性。下列条件合在一起，等价于 $B$ 恰为 $\star_0$ 或 $\star_\infty$：$B$ 保持正测度对的正性；它满足假设30.0的全测度相位律；对全部 $x,y\in K$ 有准确闭图的支撑包含条件
+$$
+\operatorname{supp} B(\delta_x,\delta_y)\subseteq\Gamma(x,y);
+$$
+并且仅要求下列有序 Dirac 三元组结合律：
+$$
+B\bigl(B(\delta_x,\delta_y),\delta_z\bigr)
+=B\bigl(\delta_x,B(\delta_y,\delta_z)\bigr)
+\qquad(x,y,z\in K).
+$$
+这里支撑条件是包含于准确的 $\Gamma$，不是支撑等于 $\Gamma$。无需另行假设全部测度的结合律、交换律、有界性或积分表示。
+
+若把支撑包含条件加强为
+$$
+\operatorname{supp}B(\delta_x,\delta_y)=\Gamma(x,y)
+\qquad(x,y\in K),
+$$
+则不存在满足其余条件的运算。
+
+**证明。** 记 $Q_{x,y}=B(\delta_x,\delta_y)$。正性与相位律给出
+$$
+Q_{x,y}\ge0,\qquad Q_{x,y}(K)=1,\qquad
+Q_{x,y}\bigl(K\setminus H^{-1}(\{H(x)+H(y)\})\bigr)=0.
+$$
+该相位纤维至多两点。因此 $Q_{x,y}$ 是有限概率分布，其拓扑支撑恰为纤维内具有严格正质量的点集；支撑包含假设恰使它成为定义23.2的可容许概率核。
+
+因为每个中间行有限，双线性本身就给
+$$
+B(Q_{x,y},\delta_z)
+=\sum_{u\in\operatorname{supp}Q_{x,y}}
+Q_{x,y}(\{u\})Q_{u,z},
+$$
+$$
+B(\delta_x,Q_{y,z})
+=\sum_{v\in\operatorname{supp}Q_{y,z}}
+Q_{y,z}(\{v\})Q_{x,v}.
+$$
+故所假设的 Dirac 三元组结合律正是定义23.2的有限核结合律，没有在此处使用无限级数或全空间稠密性。定理23.9遂给出唯一全局符号，迫使 $Q=P^{-1}$ 或 $Q=P^{+1}$。由定理25.12，它们分别是 $P^{(0)}$ 和 $P^{(\infty)}$。再应用定理30.5，便得 $B=\star_0$ 或 $B=\star_\infty$。
+
+反向，定理28.7、28.9保证这两个运算保持正性、满足全测度相位律且在全部测度上结合；其点行由定理25.9满足准确支撑包含条件，故当然满足所列较弱的三元组要求。两者在 $(\delta_{0_K},\delta_{x_1^+})$ 处分别给出 $\delta_{x_1^-}$ 与 $\delta_{x_1^+}$，所以确有两个不同解。
+
+最后，假设25.1给
+$$
+\Gamma(0_K,x_1^+)=\{x_1^+,x_1^-\},
+$$
+而两个分类解在该输入对处都只有单点支撑。因此全支撑等式排除两者，故无解。
+
+本证明中，Dirac 三元组首先只决定有限概率核的结合性；从这些点行到任意测度的唯一性则另外使用定理30.4的正性、全测度相位律及典范测度分解。它不是关于任意实双线性运算都由 Dirac 值决定的断言。证毕。
+
+**定理 30.7（删去全测度相位律后的正结合反例）。** 即使保留正性、质量乘法律、双线性范数一、全部测度上的交换律及结合律，并要求在整个原子子代数上与 $\star_t$ 相同，也不能省略定理30.5中的全测度相位律。
+
+准确地，固定任一 $t\in\{0,\infty\}$，取定理28.11的非原子 Haar 概率提升 $\mathfrak m=s_\#\lambda$，并定义
+$$
+\widehat B_t(\mu,\nu)
+=\mu_{\mathrm{at}}\star_t\nu_{\mathrm{at}}
++\Bigl(\varepsilon_K(\mu)\varepsilon_K(\nu)
+-\varepsilon_K(\mu_{\mathrm{at}})
+ \varepsilon_K(\nu_{\mathrm{at}})\Bigr)\mathfrak m.
+$$
+则 $\widehat B_t$ 具有上述所有保留性质，因而有全部指定点行及其准确闭图支撑，却不满足全测度相位律，也不等于 $\star_t$。
+
+**证明。** 定理28.10保证原子投影线性，故该公式实双线性；各项均为有限实有符号正则 Borel 测度，所以运算良定义。
+
+若 $\mu,\nu\ge0$，其原子与非原子部分均正。记四部分的质量为
+$$
+a_0=\varepsilon_K(\mu_{\mathrm{at}}),\quad
+u_0=\varepsilon_K(\mu_{\mathrm{na}}),\quad
+b_0=\varepsilon_K(\nu_{\mathrm{at}}),\quad
+v_0=\varepsilon_K(\nu_{\mathrm{na}}).
+$$
+$\mathfrak m$ 的系数为
+$$
+(a_0+u_0)(b_0+v_0)-a_0b_0=a_0v_0+u_0b_0+u_0v_0\ge0.
+$$
+第一项也是正测度，故 $\widehat B_t$ 保持正性。对任意有符号输入，第一项的质量为 $\varepsilon_K(\mu_{\mathrm{at}})\varepsilon_K(\nu_{\mathrm{at}})$，故直接读取整个空间的质量得到
+$$
+\varepsilon_K(\widehat B_t(\mu,\nu))
+=\varepsilon_K(\mu)\varepsilon_K(\nu).
+$$
+因此定理30.2适用，给出双线性范数恰为一。交换律由公式及 $\star_t$ 的交换律直接得到。
+
+定理28.11保证两个原子测度的 $\star_t$ 乘积仍原子，而 $\mathfrak m$ 非原子。因此
+$$
+\bigl(\widehat B_t(\mu,\nu)\bigr)_{\mathrm{at}}
+=\mu_{\mathrm{at}}\star_t\nu_{\mathrm{at}}.
+$$
+为检查全部有符号输入的结合律，记
+$$
+a=\mu_{\mathrm{at}},\quad b=\nu_{\mathrm{at}},\quad c=\xi_{\mathrm{at}},
+\qquad
+M=\varepsilon_K(\mu),\quad N=\varepsilon_K(\nu),\quad
+R=\varepsilon_K(\xi).
+$$
+刚证的原子部分及质量公式使左括号准确等于
+$$
+(a\star_t b)\star_t c
++\Bigl(MNR-\varepsilon_K(a)\varepsilon_K(b)
+                  \varepsilon_K(c)\Bigr)\mathfrak m,
+$$
+右括号准确等于
+$$
+a\star_t(b\star_t c)
++\Bigl(MNR-\varepsilon_K(a)\varepsilon_K(b)
+                  \varepsilon_K(c)\Bigr)\mathfrak m.
+$$
+原子子代数的结合律使两式相等。这证明全部测度上的结合律，而不只是 Dirac 三元组的结合律。
+
+若 $\mu,\nu$ 均原子，$\mathfrak m$ 的系数为零，所以 $\widehat B_t(\mu,\nu)=\mu\star_t\nu$。于是整个原子子代数、所有 Dirac 点行及其闭图支撑均被保留。
+
+最后给出全测度相位律的实际失败输入。令
+$$
+J=\{[r]\in\mathbb T:0\le r<1/2\},\qquad
+\sigma=2\lambda|_J,\qquad n=s_\#\sigma.
+$$
+$J$ 是闭半圆去掉一个端点所得的 Borel 集，且 $J$ 与其半周平移不交并覆盖圆周。Haar 平移不变性给 $\lambda(J)=1/2$，所以 $\sigma$ 是非原子概率，并且
+$$
+\sigma(J)=1\ne\tfrac12=\lambda(J).
+$$
+Borel 截面推前使 $n$ 为正则概率且 $H_\#n=\sigma$；由定理30.3的正测度非原子判据，$n$ 非原子。因此公式给
+$$
+\widehat B_t(\delta_{0_K},n)=\mathfrak m,
+$$
+但
+$$
+H_\#\widehat B_t(\delta_{0_K},n)=\lambda
+\ne\sigma
+=\delta_0*_{\mathbb T}\sigma
+=(H_\#\delta_{0_K})*_{\mathbb T}(H_\#n).
+$$
+这在两个具体正概率输入处违反全测度相位契约。定理30.3则给 $\delta_{0_K}\star_t n=s_\#\sigma=n$，所以两运算确实不同。由此，正性、全变差有界性乃至完整结合律和全部原子乘法，都不能代替被省略的全测度相位要求。证毕。
+
+## 追加锚（本行以下为增补区）
