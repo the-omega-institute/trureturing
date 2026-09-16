@@ -264,7 +264,7 @@ jobs:
     env:
       CI_NEEDS: '{"build":{"result":${{ toJSON(needs.build.result) }}}}'
     runs-on: ubuntu-24.04-arm
-    timeout-minutes: 45
+    timeout-minutes: 60
     outputs:
       artifact_id: ${{ steps.upload.outputs.artifact-id }}
       artifact_name: ${{ steps.pack.outputs.artifact_name }}
@@ -292,7 +292,7 @@ jobs:
         continue-on-error: true
         env:
           GH_TOKEN: ${{ github.token }}
-        run: python3 tools/scripts/worktree/cache_deadline.py begin --repository "$GITHUB_WORKSPACE" --stage current --job-timeout-minutes 45
+        run: python3 tools/scripts/worktree/cache_deadline.py begin --repository "$GITHUB_WORKSPACE" --stage current --job-timeout-minutes 60
       - uses: actions/setup-dotnet@v4
         if: steps.route.outputs.dotnet == 'true'
         with:
