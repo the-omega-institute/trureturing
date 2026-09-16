@@ -764,6 +764,24 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # One-event PG1 cost bound with all original-root floors and the common survival envelope.
+pattern = "docs/reports/erdos7-odd-covering/pg1_common_source_floor_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Exact original-root zero-depth maxima and their complete-tail PG1 consumers.
+pattern = "docs/reports/erdos7-odd-covering/pg1_exact_zero_depth_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]] # Same PG1 final-root weighted costs and common-denominator 11/13 bound.
 pattern = "docs/reports/erdos7-odd-covering/pg1_joint_tail_certificate.json"
 kind = "data"
@@ -1216,6 +1234,24 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 [[files]] # Recomputes anchored all-height coefficients, complete outside tails and fixed-test PG1 consumers.
 pattern = "docs/reports/erdos7-odd-covering/verify_pg1_anchored_square.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Replays complete common-source floors, grouped deletions and rigorous root pruning.
+pattern = "docs/reports/erdos7-odd-covering/verify_pg1_common_source_floor.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Reconstructs all original low-test maxima at zero depth and complete-tail consumers.
+pattern = "docs/reports/erdos7-odd-covering/verify_pg1_exact_zero_depth.py"
 kind = "program"
 admission_plane = "content"
 produced_by = "none"

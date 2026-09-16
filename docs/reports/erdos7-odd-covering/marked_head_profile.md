@@ -8108,3 +8108,305 @@ The same verifier reconstructs all \(6\times288\) old-row losses and
 checks each against the original 75-point calculation. This boundary
 concerns the fixed PG1 probability, bound35 and specified normalized
 map family; other probabilities and transfer constructions remain open.
+
+### Exact zero-depth geometry strengthens the same PG1 law
+
+Keeping one realizable layout for all twelve original low labels gives
+the all-height bounds
+
+\[
+ G_{\rm new}=
+ \frac{491665320264992331169931}{14604022456869186140625}
+ <33.666432,\qquad
+ \Gamma_{13}\le
+ \frac{165356424839074723126151405953}
+      {1113264631887138059499843750}<148.532901.                 \tag{ZD1}
+\]
+
+These use the same PG1 low probability, its uniform higher357 lift,
+the target's actual higher357 survival event, and the same subsequent
+11/13 kernels. All finite physical exponents and complete auxiliary tails
+remain included. The mean and hinge estimates on this law still apply.
+The improvement does not settle the other low geometries or the
+unrestricted prime continuation.
+
+For the original roots \((i,j)\), let \(H_{ij}(z)\) be the previously
+certified minimum of the pure7 and fixed-A square relaxations. At
+\(z=(0,0,0)\), there are no higher auxiliary labels. The all-low-label
+integer oracle therefore computes the exact value
+
+\[
+ h_{ij}=\max_{\substack{\text{all twelve original low classes}\\
+                         C_3=i,\ C_9=j}}
+             \mathbb E_\mu B^2.                              \tag{ZD2}
+\]
+
+All 11808 distinct old loads are evaluated. The restriction to each
+root pair is reconstructed from every original old-cylinder choice
+before deduplication, so a load with several original-label realizations
+retains every admissible root pair. The six seven-divisible labels keep
+their independent digits, including digit zero and empty cylinders.
+Each of the ten maximizing witnesses is independently evaluated by the
+Python subset recurrence and by its literal twelve congruences on all
+75 points. All ten values improve their previous relaxations. For the
+source's worst pair \((2,2)\),
+
+\[
+ H_{22}(0)=\frac{11408985958}{1000000007},\qquad
+ h_{22}=\frac{11331111635}{1000000007}.                         \tag{ZD3}
+\]
+
+At this depth each root's unrestricted digit optimum equals its common
+digit optimum. Thus this particular gain comes from retaining the
+realizable old-cylinder geometry, without requiring a strict gap between
+those two digit maxima. Other signed costs have the distinct behavior
+documented above.
+
+The complete outside-box estimate (M9-5) remains valid with its exact
+zero-depth term: for each actual layout its nonnegative square increment
+is bounded by the same pair-cap polynomial increment, after which its
+zero-depth square is at most \(h_{ij}\). For
+\(\mathcal B=[0,8]\times[0,5]\times[0,4]\), write
+
+\[
+ p_0=\Pr(Z=0)=\frac{16}{35},\qquad
+ \beta=\Pr(Z\in\mathcal B)
+  =(1-3^{-9})(1-5^{-6})(1-7^{-5}).
+\]
+
+Replacing only that depth and the outside-box anchor therefore gives
+
+\[
+ U'_{ij}=U_{ij}-(p_0+1-\beta)(H_{ij}(0)-h_{ij}).               \tag{ZD4}
+\]
+
+The other 269 depth bounds and every outside increment coefficient are
+unchanged. With the original deletion functional and reference33, put
+\(e'_{ij}=U'_{ij}+R((33-b_{ij}^2)\mu)-33\). The common positive survival
+bound is still \(q_0=25428074957/48000000336\). Applying (M9-6) gives
+\(G_{\rm new}=33+\max(0,\max e'_{ij})/q_0\), the first value in (ZD1).
+The maximum remains at \((2,2)\).
+
+For the signed 11/13 consumer, let \(e_*\) and \(e'_*\) denote the old
+and new root maxima. In each of its three complete criterion candidates,
+replace the inverse-\(Q\) coefficient \(B_{ij}\) by
+
+\[
+ B'_{ij}=B_{ij}-(P-M)(e_*-e'_*)-M(e_{ij}-e'_{ij}),\qquad
+ M=\frac43,\quad P=\frac{1403}{630}.                          \tag{ZD5}
+\]
+
+Every resulting coefficient remains positive. Consequently each complete
+criterion is still largest at \(Q=q_0\); its constant and all charge
+observations remain unchanged. Selecting complete candidates and then
+maximizing over all final roots gives the second value in (ZD1), now
+with worst roots \((2,5)\). Positive final survival is supplied by the
+same independent bound as before. This remains above the square-only
+17/19 seed threshold; it is an improved upper bound, not a lower bound
+on the actual moment.
+
+The bounded-loss transfer also permits the larger sufficient budget
+
+\[
+ t\le\frac{q_0(35-G_{\rm new})}{34}
+  =\frac{143201953863449880529}{6891920485743443062500}
+  =0.020778236510371237\ldots.                                \tag{ZD6}
+\]
+
+For the integer source weights this is a lost numerator of at most
+20778236. The previously certified carrier counts remain valid; no
+new complete orbit count is asserted for the larger budget.
+
+`verify_pg1_exact_zero_depth.py` and
+`pg1_exact_zero_depth_certificate.json` reconstruct (ZD2), the original
+root domains, all complete geometric coefficients, (ZD4)--(ZD6), and the
+prior rational criteria from hash-bound source certificates. The 269
+nonzero-depth maxima and earlier charge geometry are inherited, separately
+verified prerequisites. This is an ordinary all-height argument with an
+exact arithmetic certificate, without a new Lean endpoint.
+
+### Combining all original-root floors on one source event
+
+The square and charge estimates can retain all their original-root floors
+before using the higher357 deletion functional. Fix the final root pair
+\(i\), put \(C=149\), \(W_i=C-b_i^2\), and write
+\(g_j=(b_j-2)_+\). Because \(b_j\in\{1,2,3\}\), this also equals
+\((2b_j-5)_+\), the floor for the second whole charge cost. Let
+
+\[
+ M=\frac43,\quad P=\frac{1403}{630},\quad
+ c_1=\frac4{33},\quad c_2=\frac{50}{2541},\quad
+ c_h=\frac{31}{5082},\quad c_0=\frac2{847}.
+\]
+
+The coefficients \(c_h,c_0\) include the complete multiplier tail from
+13. Retain independent original-root pairs \(h,u,v\) for the other head
+square, second whole charge and threshold-two hinge. Their joint floor is
+
+\[
+ f_{i,h,u,v}=M b_i^2+(P-M)b_h^2
+                +c_2W_i g_u+c_hW_i g_v+c_0W_i.              \tag{JF1}
+\]
+
+The threshold-four and first whole costs have nonnegative floor zero;
+their upper contributions remain present. Denote their existing
+unconditional weighted upper bounds by \(U_{4,i}\) and \(U_{1,i}\),
+and denote the second whole and hinge upper bounds by
+\(U_{2,i,u}\) and \(U_{H,i,v}\). The ordinary source square bounds
+\(U'_i,U'_h\) are those of (ZD4). Put
+
+\[
+ V_{i,h,u,v}=MU'_i+(P-M)U'_h+\frac{U_{4,i}}6+c_1U_{1,i}
+               +c_2U_{2,i,u}+c_hU_{H,i,v}
+               +c_0\mathbb E_\mu W_i.                     \tag{JF2}
+\]
+
+For each set of actual tests realizing these roots, its nonnegative
+combined source cost \(Z\) satisfies \(Z\ge f_{i,h,u,v}\) and
+\(\mathbb E_\lambda Z\le V_{i,h,u,v}\). These are bounds on the
+same source law. No simultaneous attainment of the individual upper
+bounds is assumed. Auxiliary mixtures are covered by their pure-root
+vertices: their integral bound is affine, and the positive-part deletion
+bound below is convex, in each such mixture. Empty original classes may
+first be moved to nonempty classes at the nonnegative actual-cost level;
+no monotonicity of the resulting signed criterion is assumed.
+
+For any source reference \(K\), use the actual common event \(F\),
+\(Q=\lambda(F)\), and the existing nonnegative deletion functional \(R\):
+
+\[
+ \begin{aligned}
+ Q(\mathbb E_\nu Z-K)
+ &=\mathbb E_\lambda Z-K
+       +\mathbb E_\lambda[(K-Z)\mathbf1_{F^c}]\\
+ &\le V_{i,h,u,v}-K+
+       R\bigl((K-f_{i,h,u,v})_+\mu\bigr).                  \tag{JF3}
+ \end{aligned}
+\]
+
+Thus all ten choices of each of \(h,u,v\) must be retained for each
+of the ten final pairs. Combining their floors before the positive part
+and deletion support can improve over taking separate deletion bounds.
+This argument uses the published \(R\); it does not require the further
+probability-capped functional \(R_{\rm cap}\).
+
+Let \(\delta\) upper-bound the right side of (JF3) for all 10000
+combinations. Since \(q_0\le Q\le1\), a valid source bound is
+
+\[
+ T=\begin{cases}K+\delta/q_0,&\delta\ge0,\\
+                 K+\delta,&\delta<0.\end{cases}           \tag{JF4}
+\]
+
+The physical 11/13 estimate still uses \(C=149\), independently of
+the auxiliary source reference \(K\). Its positive final survival
+\(r\le1\) satisfies
+\(r(\Gamma_{13}-C)\le\mathbb E_\nu Z-C\le T-C\).
+When \(T<C\), this gives \(\Gamma_{13}\le T\); a negative source
+excess is never divided by the smaller lower bound \(q_0\).
+
+Keeping the separate criterion as a second bound sharpens (JF4). Put
+\(E^S_j=U'_j+R((33-b_j^2)\mu)-33\), and for the final weight define
+
+\[
+ \begin{aligned}
+ E^N_{i,u}&=U_{2,i,u}+R((444-W_i g_u)\mu)-444,\\
+ E^H_{i,v}&=U_{H,i,v}+R((444-W_i g_v)\mu)-444,\\
+ E^W_i&=\mathbb E_\mu W_i+R((b_i^2-1)\mu)-148.
+ \end{aligned}
+\]
+
+All deletion inputs here are nonnegative. Applying the separate signed
+inequalities on the same event gives
+
+\[
+ Q(\mathbb E_\nu Z-K)\le A Q+B_{i,h,u,v},\qquad
+ A=33P+444(c_2+c_h)+148c_0-K,
+\]
+\[
+ B_{i,h,u,v}=ME^S_i+(P-M)E^S_h+\frac{U_{4,i}}6+c_1U_{1,i}
+                 +c_2E^N_{i,u}+c_hE^H_{i,v}+c_0E^W_i.       \tag{JF5}
+\]
+
+For the fixed \(K=297/2\), \(A=-803146/12705<0\). Hence
+\(Aq_0+B_{i,h,u,v}\) is a rigorous upper bound on the source excess.
+It also bounds the joint expression in (JF3): expand \(K-f\) as the
+sum of the preceding nonnegative deletion costs and the nonnegative
+constant \(-A\), and use the positive homogeneity and subadditivity
+of \(R\), with \(R(\mu)=1-q_0\). In decreasing order of these separate
+bounds, a combination can be skipped once its bound is no larger than
+the greatest joint expression already evaluated. This covers all 10000
+combinations with ten direct joint evaluations and 9990 justified skips.
+Sixteen new distinct grouped-deletion evaluations suffice, with other
+queries inherited from their hash-bound prior certificates.
+
+Exact calculation with the new source squares gives
+
+\[
+ \delta=-\frac{167157392171127017840563}
+                 {3898857874792004932500000},\qquad
+ B_*:=\max B_{i,h,u,v}
+   =\frac{35204985686553987468638773289}
+          {1050742197256445329308750000}>0.
+\]
+
+Both inequalities apply for every \(Q\in[q_0,1]\). Therefore
+
+\[
+ \mathbb E_\nu Z\le
+ \max_{q_0\le Q\le1}
+ \left[K+\frac{\min(\delta,AQ+B_*)}{Q}\right].              \tag{JF6}
+\]
+
+The two terms inside this minimum are monotone after division by \(Q\):
+\(\delta/Q\) increases because \(\delta<0\), whereas
+\(A+B_*/Q\) decreases because \(B_*>0\). The maximum is consequently
+found among the two endpoints and the unique crossing, if it lies in
+the interval. Here the crossing
+
+\[
+ Q_* =\frac{19341582772973446474593583}
+                 {36445882274521174135800000}
+\]
+
+lies in that interval and supplies the largest of the three exact
+values. It follows that the same physical 11/13 law satisfies
+
+\[
+ \boxed{\displaystyle
+ \Gamma_{13}\le
+ \frac{3452976366440462440938598284408403}
+      {23265022838471110091964891311550}
+ <148.419213.}                                              \tag{JF7}
+\]
+
+`verify_pg1_common_source_floor.py` and
+`pg1_common_source_floor_certificate.json` reconstruct the original
+root domain, every pruning bound, the new grouped-deletion evaluations
+and the three complete \(Q\) candidates. They bind the original
+charge tables and the zero-depth certificate by hash; the full prior
+profile geometry is a separately verified prerequisite. The remaining
+arbitrary-prime continuation is open. This certificate supplies ordinary
+exact arithmetic, not a new Lean theorem.
+
+### Joint-observation guidance from the polynomial closed graphs
+
+[RRO section43 at dev34c829dfb0](https://github.com/the-omega-institute/trureturing/blob/34c829dfb0791b4a40bbf98c232db6f2d49efba4/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md#43-增补乘法满闭图与有限多项式联合闭图的定向判据)
+gives a concrete boundary for assembling observations. Under its stated
+phase assumptions, theorem43.11 characterizes joint polynomial limits by
+a common phase preimage and one error vector satisfying every required
+strict sign. Theorem43.13 exhibits two full marginal nonlinear graphs
+whose joint circuit still obeys the relation \(a(b+1)=ab+a\); even all
+linear phase identities can leave an impossible combination of boundary
+directions. The ordinary polynomial equidistribution input is Weyl's
+theorem, in the scalar form stated in
+[Tao's Corollary6](https://terrytao.wordpress.com/2010/03/28/254b-notes-1-equidistribution-of-polynomial-sequences-in-torii/).
+
+For the covering problem this motivates retaining the actual joint
+configuration before maximizing, as in (ZD2), and retaining one deletion
+event and probability when combining costs. Separate maxima remain valid
+upper bounds but need not have a simultaneous actual maximizer. The
+Zeckendorf phase and directional-cone theorems do not themselves provide
+a CRT survivor probability, a charge estimate, or a uniform positive
+residual for arbitrary prime support. No quantitative #7 bridge or Lean
+formalization of the new RRO section is claimed here.

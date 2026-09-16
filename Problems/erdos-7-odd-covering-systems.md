@@ -171,7 +171,24 @@ with exact upper bound
 It retains the original-root floor of `(2L-5)+` on the same higher357
 deletion event. All original3/5/7 and11/13 heights and complete
 auxiliary tails remain.
-Passing this stronger supplied square upper bound alone to the scalar(T6)
+The [exact zero-depth comparison](../docs/reports/erdos7-odd-covering/marked_head_profile.md#exact-zero-depth-geometry-strengthens-the-same-pg1-law)
+further gives **Gamma<33.666432** and **Gamma_13<148.532901** on these
+same laws. It computes the full twelve-label square maximum for each
+original3/original9 root pair at zero auxiliary depth, replacing both
+that depth and the complete outside-box anchor. All other269 depth
+bounds, deletion costs and tails remain included. Its exact source
+bound is `491665320264992331169931/14604022456869186140625`; the
+11/13 bound is
+`165356424839074723126151405953/1113264631887138059499843750`.
+The [common-source floor combination](../docs/reports/erdos7-odd-covering/marked_head_profile.md#combining-all-original-root-floors-on-one-source-event)
+then strengthens **Gamma_13<148.419213**, with exact bound
+`3452976366440462440938598284408403/23265022838471110091964891311550`.
+It retains all10000 independent final/head/charge root combinations,
+combines their floors on the same actual higher357 event, and maximizes
+the two valid criterion bounds over the common survival probability.
+Ten joint evaluations and9990 rigorous upper-bound skips cover the
+complete root domain; all original exponents and tail coefficients remain.
+Passing these stronger supplied square upper bounds alone to the scalar(T6)
 recurrence cannot continue through17 and19: that two-step certificate
 requires a seed below the exact threshold in
 `(123.058769468748,123.058769468749)`. This is a limitation of that
@@ -278,6 +295,10 @@ The same probability inherits the mean and hinge bounds with their
 explicit conditioning costs. The other two certified shapes remain
 disjoint, with their prior overlap already subtracted. The remaining
 56903 minimal orbits and the general prime-tail continuation are unresolved.
+The stronger exact-zero-depth source bound increases the sufficient
+loss budget to `143201953863449880529/6891920485743443062500`, or
+`0.020778236510371237...`. Its integer lost-weight threshold is20778236.
+No new complete carrier count is asserted for that enlarged budget.
 
 The [complete actual-carrier classification](../docs/reports/erdos7-odd-covering/marked_head_profile.md#complete-low315-carrier-classification-for-actual-digit-bounds)
 identifies the finite domain needed to extend those digit-sensitive bounds.
