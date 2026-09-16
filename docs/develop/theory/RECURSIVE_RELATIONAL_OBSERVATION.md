@@ -16926,3 +16926,587 @@ Apply Theorem 41.2 in $V=U$ to the forms $\sigma_i b_i$. Every coefficient and h
 If finite feasibility survives the addition of any number of constraints on a fixed $d$-dimensional input space, the required depth never exceeds $d$. Separate witnesses for separate outputs do not suffice for the hypothesis: on $U=\mathbb R$, the observations $u$ and $-u$ can each be positive at some input, but cannot both be positive at one input. $\square$
 
 ## 追加锚（本行以下为增补区）
+## 42. Joint directional witnesses, oriented flags, and finite-scale depth
+
+**Definition 42.1 (Sign observation and its actual finite images).** All vector spaces in this section are finite-dimensional over $\mathbb R$, and all indexing collections are sets. We work in ordinary set theory with choice. Put $D=\{-1,0,1\}$ with the discrete topology. For a vector space $V$, write $d=\dim V$ and define
+$$
+\sigma_V(v)(\ell)=\operatorname{sgn}(\ell(v)),
+\qquad
+S(V)=\overline{\sigma_V[V]}\subseteq D^{V^*}.
+$$
+The closure uses the product topology. The zero signature is denoted by $\mathbf 0$. For a finite subset $F\subseteq V^*$, put
+$$
+q_F(v)=\sigma_V(v)|_F,\qquad Q_F=q_F[V]\subseteq D^F.
+$$
+For $p\in S(V)$, its basic sign cylinder at $F$ is
+$$
+N(p;F)=\{q\in S(V):q|_F=p|_F\}.
+$$
+These observations are discrete sign tests, not continuous real-valued evaluations. No assertion that $\sigma_V$ is continuous for the usual Euclidean topology is included in the definition.
+
+**theorem 42.2 (Compact actual-image inverse limit).** The space $S(V)$ is compact, Hausdorff, and zero-dimensional, with the cylinders $N(p;F)$ as a clopen base. Moreover,
+$$
+p\in S(V)
+\quad\Longleftrightarrow\quad
+\forall F\subseteq V^*\text{ finite}\ \exists v\in V\quad
+\forall\ell\in F,\quad \operatorname{sgn}(\ell(v))=p(\ell).
+\tag{42.1}
+$$
+Restriction gives a canonical homeomorphism
+$$
+S(V)\cong\varprojlim_{F\subseteq V^*,\ F\ {\rm finite}}Q_F,
+\tag{42.2}
+$$
+where the order is inclusion and every bonding map is surjective. The image $\sigma_V[V]$ is dense. Its distinct nonzero points correspond exactly to oriented rays:
+$$
+\sigma_V(v)=\sigma_V(w),\quad v\ne0
+\quad\Longleftrightarrow\quad
+w=cv\text{ for some }c>0.
+\tag{42.3}
+$$
+
+**Proof.** A product of finite discrete spaces is compact. Explicitly, extend any family of closed subsets with the finite intersection property to an ultrafilter. In each finite coordinate partition exactly one cell belongs to the ultrafilter. The selected coordinate values define a point. Every finite cylinder about that point belongs to the ultrafilter and therefore meets every closed set in the original family; the point belongs to all those closed sets. This proves compactness by the closed-set formulation. Distinct points are separated by a coordinate, and finite cylinders are clopen. The closed subspace $S(V)$ inherits these properties.
+
+A point belongs to the closure of $\sigma_V[V]$ precisely when every finite cylinder about it meets that image. This is (42.1). If $F\subseteq G$, restriction maps $Q_G$ onto $Q_F$: a vector realizing a member of $Q_F$ also supplies an extension in $Q_G$. Every $p\in S(V)$ supplies a compatible thread. Conversely, a compatible thread determines $p(\ell)$ from the singleton coordinate $\{\ell\}$; compatibility implies that its $F$-coordinate is $p|_F$. Thus (42.1) places $p$ in $S(V)$. The correspondence and its inverse are continuous because all their finite coordinates are restrictions. Density is the defining closure statement.
+
+For (42.3), equality of signatures gives equality of the annihilators of $v$ and $w$. It also rules out $w=0$. Hence $\mathbb Rv=\mathbb Rw$: otherwise a linear functional vanishing on one vector and not the other would contradict the equality. Write $w=cv$ with $c\ne0$ and choose $\ell(v)=1$. Equality at $\ell$ gives $c>0$. Positive scalar multiplication plainly preserves every sign.
+
+The inverse limit in (42.2) uses all finite subsets, not an assumed countable tower. The countable-tower hypotheses in [RRO, Theorems 3.4 and 4.2] therefore cannot supply countability here.
+
+[RRO](https://github.com/the-omega-institute/trureturing/blob/c57bf72f087dae3bb5f5cc886c850649d7cb5593/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md) *递归关系的观察商、严格拼接与相容完备化*, public manuscript at revision c57bf72f087dae3bb5f5cc886c850649d7cb5593, Sections 1–4. $\square$
+
+**theorem 42.3 (Sign calculus and exact zero equations).** For $p\in S(V)$, define
+$$
+Z_p=\{\ell\in V^*:p(\ell)=0\},
+\qquad
+U_p=Z_p^\circ=\{v\in V:\ell(v)=0\text{ for every }\ell\in Z_p\}.
+$$
+We call $U_p$ the support of $p$. Then $Z_p$ is a linear subspace,
+$$
+p(0)=0,\qquad p(-\ell)=-p(\ell),\qquad p(a\ell)=p(\ell)\quad(a>0),
+\tag{42.4}
+$$
+and
+$$
+p(\ell+z)=p(\ell)\qquad(z\in Z_p).
+\tag{42.5}
+$$
+If $p(\alpha),p(\beta)$ are not opposite nonzero signs, then $p(\alpha+\beta)$ is their common nonzero sign, their unique nonzero sign, or zero when both vanish. Finally, the set-indexed family
+$$
+\mathcal A_p=\{\,p(\ell)\ell|_{U_p}:\ell\in V^*\setminus Z_p\,\}
+\tag{42.6}
+$$
+is finitely strictly feasible on $U_p$: every finite subfamily is simultaneously positive at some vector of $U_p$.
+
+**Proof.** Each identity or sign implication involves only finitely many covectors. Apply (42.1) to those covectors and their indicated linear combinations; the corresponding identity or implication holds for their evaluations at the resulting vector. In particular, if $z,z'\in Z_p$ and $a,b\in\mathbb R$, a vector realizing the signs of $z,z',az+bz'$ forces $p(az+bz')=0$. This proves that $Z_p$ is a subspace, and the same finite realization proves (42.4), (42.5), and the addition rule.
+
+Choose a basis $z_1,\ldots,z_m$ of $Z_p$. For any finitely many nonzero-sign covectors $\ell_1,\ldots,\ell_k$, apply (42.1) to these covectors together with all the $z_a$. The resulting vector annihilates the whole of $Z_p$, hence belongs to $U_p$, and satisfies
+$$
+p(\ell_i)\ell_i(v)>0\qquad(1\le i\le k).
+$$
+This proves the last assertion, including its exact zero constraints. $\square$
+
+**theorem 42.4 (Real finite-rank lexicographic feasibility).** Let $H$ be a finite-dimensional real inner-product space and $(\alpha_i)_{i\in I}$ a set-indexed family in $H^*$. Suppose every finite subfamily is simultaneously strictly positive at some vector of $H$. Then there is an orthonormal list $u_1,\ldots,u_k$, with $0\le k\le\dim H$, such that, for every $i$, the tuple
+$$
+(\alpha_i(u_1),\ldots,\alpha_i(u_k))
+$$
+has a first nonzero entry and that entry is positive. The empty list is used when $I$ is empty.
+
+**Proof.** We induct on $\dim H$. If $I$ is empty, the empty list works in every dimension. If $\dim H=0$, any nonempty family would contain a form whose inequality is impossible, so this case has already been handled.
+
+Assume $I\ne\varnothing$ and $\dim H>0$. On the compact unit sphere consider the closed sets
+$$
+C_i=\{u:\|u\|=1,\ \alpha_i(u)\ge0\}.
+$$
+They have the finite intersection property. Indeed, a vector satisfying a nonempty finite subsystem is nonzero and can be normalized; the empty subsystem only requires that the sphere be nonempty. Choose $u_1\in\bigcap_iC_i$.
+
+Let $I_0=\{i:\alpha_i(u_1)=0\}$ and $H_1=u_1^\perp$. The restrictions $(\alpha_i|_{H_1})_{i\in I_0}$ remain finitely strictly feasible. To see this, take a witness $x\in H$ for a finite subset of $I_0$ and replace it by
+$$
+x-\langle x,u_1\rangle u_1.
+$$
+This lies in $H_1$ and preserves all those evaluations. The induction hypothesis supplies an orthonormal list in $H_1$ of length at most $\dim H-1$. Prepend $u_1$. For $i\notin I_0$, the first evaluation is positive. For $i\in I_0$, the induction hypothesis gives the required first positive entry later in the list. Orthogonality and the dimension bound follow from the construction. $\square$
+
+**theorem 42.5 (All points are finite lexicographic signatures).** Every $p\in S(V)$ has a representation by an independent list $v_1,\ldots,v_r$:
+$$
+p(\ell)=
+\begin{cases}
+\operatorname{sgn}(\ell(v_j)),&
+j=\min\{i:\ell(v_i)\ne0\},\\
+0,&\ell(v_i)=0\text{ for all }i.
+\end{cases}
+\tag{42.7}
+$$
+The empty list represents exactly $\mathbf0$. After choosing an inner product the list can be orthonormal. Its length is intrinsic:
+$$
+r=\dim U_p=\dim V-\dim Z_p,\qquad
+U_p=\operatorname{span}(v_1,\ldots,v_r).
+\tag{42.8}
+$$
+We call this integer the rank of $p$.
+Conversely, every finite independent list, including the empty list, defines a member of $S(V)$ by (42.7).
+
+**Proof.** Apply Theorem 42.4 to (42.6) in $U_p$. Every resulting vector lies in $U_p$, so every member of $Z_p$ annihilates the entire list. For a covector outside $Z_p$, the first nonzero signed evaluation is positive, which is exactly (42.7). This gives an orthonormal, hence independent, list. Its annihilator equals $Z_p$: one inclusion follows from membership in $U_p$, and the other follows because every covector outside $Z_p$ has a nonzero evaluation somewhere in the list. Finite-dimensional annihilator duality now gives (42.8). In particular, the list is empty exactly when $Z_p=V^*$, equivalently when $p=\mathbf0$.
+
+Conversely, start with an independent list and a finite set $F$ of covectors. For $t>0$ put
+$$
+\gamma(t)=\sum_{j=1}^r t^jv_j.
+$$
+If the first nonzero evaluation of $\ell$ occurs at $k$, then
+$$
+\ell(\gamma(t))
+=t^k\left(\ell(v_k)+\sum_{j>k}t^{j-k}\ell(v_j)\right).
+$$
+The expression in parentheses has the sign of $\ell(v_k)$ for all sufficiently small positive $t$. If all evaluations vanish, the polynomial is identically zero. Since $F$ is finite, one positive $t$ realizes all its prescribed signs. Equation (42.1) proves membership in $S(V)$. The empty list gives the zero vector throughout. $\square$
+
+**theorem 42.6 (Exact oriented-flag classification).** An oriented flag of length $r$ in $V$ means
+$$
+0=L_0<L_1<\cdots<L_r,\qquad \dim L_j=j,
+$$
+together with an orientation of each real line $L_j/L_{j-1}$. Such flags, including the empty flag, are in bijection with $S(V)$. A representing list defines $L_j=\operatorname{span}(v_1,\ldots,v_j)$ and declares the class of $v_j$ positive.
+
+More precisely, independent column lists $v=(v_1,\ldots,v_r)$ and $w=(w_1,\ldots,w_s)$ define the same signature if and only if $r=s$ and
+$$
+w=vC,\qquad
+C\in B_r^+,
+\tag{42.9}
+$$
+where $B_r^+$ is the group of invertible upper triangular real matrices with positive diagonal entries. Entries strictly above the diagonal are unrestricted. Thus
+$$
+w_j=\sum_{i\le j}v_iC_{ij},\qquad C_{jj}>0.
+$$
+For a fixed inner product every oriented flag has exactly one compatible orthonormal list.
+
+**Proof.** If (42.9) holds and $k$ is the first nonzero evaluation index for $v$, then every $\ell(w_j)$ with $j<k$ vanishes and
+$$
+\ell(w_k)=C_{kk}\ell(v_k).
+$$
+All-zero evaluations also remain all zero. Hence the signatures agree.
+
+For the converse, equality of zero sets gives $r=s$ and equality of the final spans by (42.8). If the common rank is positive, the first vectors must lie on the same positive ray. Indeed, for independent first vectors one can prescribe evaluations $1$ and $-1$ and extend linearly to $V$; for negatively proportional first vectors any nonvanishing evaluation has opposite signs. Either possibility contradicts equality of signatures. Consequently $w_1=cv_1$ for some $c>0$.
+
+Restrict the signatures to covectors annihilating $L_1=\mathbb Rv_1$. These are the dual covectors of $V/L_1$, and the restricted signatures are represented by the independent projected lists beginning with $v_2$ and $w_2$. Induction on the common rank identifies their oriented flags. Pulling back gives equality of every $L_j$ and agreement of the orientation of every quotient $L_j/L_{j-1}$. It follows that $w_j$ is a linear combination of $v_1,\ldots,v_j$ with positive coefficient at $v_j$, which is precisely (42.9).
+
+Given any oriented flag, choose $v_j\in L_j$ with positive nonzero quotient class. These vectors are independent, so Theorem 42.5 supplies a signature. The result does not depend on the choices by (42.9), and the preceding argument proves injectivity.
+
+Finally, Gram-Schmidt subtracts combinations of earlier vectors and divides by a positive norm, so it preserves the oriented flag and signature. At stage $j$, the line $L_j\cap L_{j-1}^\perp$ has exactly one unit vector with the required quotient orientation. This proves uniqueness of the orthonormal list. $\square$
+
+**theorem 42.7 (Polynomial realization, sharp depth, and nonuniformity).** For a rank-$r$ point represented by $v_1,\ldots,v_r$,
+$$
+\gamma(t)=tv_1+\cdots+t^rv_r,\qquad t>0,
+\tag{42.10}
+$$
+satisfies $\sigma_V(\gamma(t))\to p$ as $t\downarrow0$. Every individual covector has its prescribed sign eventually, and every zero coordinate is exactly zero for all $t$. In particular, for any fixed positive sequence $t_n\to0$, the sequence $\sigma_V(\gamma(t_n))$ converges to $p$. Thus the ordinary image is sequentially dense, even with all covectors as observations.
+
+For $p\ne\mathbf0$, its rank is the smallest possible degree of a polynomial curve $h$ with $h(0)=0$ and $\sigma_V(h(t))\to p$ as $t\downarrow0$. A single sufficiently small interval on which all covectors simultaneously have their limiting signs exists for (42.10) if and only if $r\le1$.
+
+**Proof.** The polynomial calculation in Theorem 42.5 proves the eventual sign separately for each covector. Finitely many such eventual statements hold simultaneously after taking the minimum of their positive thresholds. This is precisely convergence in the product topology and proves the assertion for every $t_n\to0$.
+
+Suppose
+$$
+h(t)=\sum_{j=1}^m t^ja_j,\qquad h(0)=0,
+$$
+and its signature converges to $p$. A covector belongs to $Z_p$ if and only if $\ell(h(t))$ is zero for all sufficiently small positive $t$, because zero is isolated in $D$. A real polynomial vanishing on an interval is identically zero. Conversely, a nonzero real polynomial has the eventual nonzero sign of its first nonzero coefficient. Therefore
+$$
+Z_p=\operatorname{span}(a_1,\ldots,a_m)^\circ.
+$$
+Equation (42.8) gives
+$$
+r=\dim\operatorname{span}(a_1,\ldots,a_m)\le m.
+$$
+Curve (42.10) has degree exactly $r$ when $r>0$, proving sharpness. The zero signature is realized by the identically zero curve.
+
+For $r=0$ or $r=1$, all signs in (42.10) agree with $p$ for every $t>0$. If $r\ge2$, fix any $t>0$ and choose a covector with
+$$
+\ell(v_1)=1,\qquad
+\ell(v_2)=-2/t,\qquad
+\ell(v_j)=0\quad(j>2).
+$$
+Independence permits these prescriptions. Then $p(\ell)=1$ but $\ell(\gamma(t))=-t<0$. Since this works at every positive $t$, there is no common positive threshold for all covectors. The covector used here depends on $t$; this does not contradict coordinatewise eventual agreement.
+
+The finite scale bound concerns the number of independent input directions. $\square$
+
+**theorem 42.8 (The precise classical order and oriented-matroid connections).** For $p\in S(V)$, the quotient $E=V^*/Z_p$ carries an algebraic real-linear total order whose strictly positive elements are
+$$
+P_p=\{[\ell]\in E:p(\ell)=1\}.
+$$
+The set $P_p$ is a semispace at zero: a maximal convex subset of $E\setminus\{0\}$. Under a representing flag, the map
+$$
+E\longrightarrow\mathbb R^r,\qquad
+[\ell]\longmapsto(\ell(v_1),\ldots,\ell(v_r))
+\tag{42.11}
+$$
+is a linear order isomorphism to the first-nonzero-positive lexicographic order. No closed-positive-cone assumption is being imposed.
+
+For each finite $F$, the actual image $Q_F$ is exactly the covector set of the realizable oriented matroid of the finite configuration $F\subseteq V^*$. This statement concerns finite ground sets only.
+
+**Proof.** Equation (42.5) makes the definition of $P_p$ independent of representatives. The sign calculus shows that it is closed under addition and positive scalar multiplication, contains no zero, and that exactly one of $x,-x$ belongs to it for every nonzero $x\in E$. Defining $x<y$ when $y-x\in P_p$ therefore gives a translation-invariant total order preserved by positive real scalars. The cone is convex. A convex subset of $E\setminus\{0\}$ strictly larger than $P_p$ would contain some $x\notin P_p$, $x\ne0$, while $-x\in P_p$; their segment contains zero, a contradiction. Thus $P_p$ is a semispace. Map (42.11) is well-defined and injective by the annihilator identity, and is surjective by finite-dimensional duality. Formula (42.7) identifies its order.
+
+For the finite assertion, an observation vector is exactly
+$$
+(\operatorname{sgn}(\ell(v)))_{\ell\in F},
+$$
+the standard covector of the configuration of covectors $\ell$ under evaluation by $v\in V^{**}=V$. One can also check the covector axioms directly. Zero and sign reversal are realized by $0$ and $-v$. For signatures represented by $v,w$, their sign composition is realized by $v+\varepsilon w$ for sufficiently small positive $\varepsilon$, because $F$ is finite. If their signs at a specified test $\ell_0$ are opposite, the vector $|\ell_0(w)|v+|\ell_0(v)|w$ cancels that test. Its two coefficients are positive, so at every test without opposite nonzero signs its sign is the composed sign. This is the elimination axiom. These are precisely the finite covector conventions in [Liu, Definition 2.1 and Section 2.2].
+
+The finite-dimensional order classification is classical: [K56, (2.2)–(2.3), pp. 55–56] proves the finite-dimensional recursive halfspace and ordered-basis descriptions of semispaces; (2.5) gives the general ordered-functional representation. Theorems 42.4–42.6 supplied a direct real finite-rank proof here. [M73, Theorems 2.1, 2.3, and 3.1] treats the corresponding semispace representations and their continuous-functional form. In finite dimension the functionals in (42.11) are continuous. Neither the finite-ground-set statement nor this order interpretation identifies $S(V)$ with a real spectrum or equips it with an ordinary flag-manifold topology.
+
+[K56](https://journals.msp.org/mscand/article/download/2864/2863/2895) V. L. Klee, Jr., *The structure of semispaces*, Mathematica Scandinavica **4** (1956), 54–64; especially (2.1)–(2.3) and (2.5), pp. 55–57. DOI: [10.7146/math.scand.a-10455](https://doi.org/10.7146/math.scand.a-10455); [publisher metadata](https://journals.msp.org/mscand/article/view/2864). [M73](https://msp.org/pjm/1973/44-2/pjm-v44-n2-p24-s.pdf) C. Edward Moore, *Concrete semispaces and lexicographic separation of convex sets*, Pacific Journal of Mathematics **44** (1973), 659–670; especially Theorems 2.1, 2.3, and 3.1, pp. 660–661. [Liu](https://arxiv.org/pdf/1606.05033v2) Gaku Liu, *A counterexample to the extension space conjecture for realizable oriented matroids*, arXiv:1606.05033v2, Sections 2.1–2.2, pp. 4–5. $\square$
+
+**theorem 42.9 (An explicit countable local base at every flag).** Fix an inner product and let $e_1,\ldots,e_r$ be the orthonormal list of $p$. Write $U=U_p$, choose a basis $z_1,\ldots,z_{d-r}$ of $U^\circ\subseteq V^*$, and put $f_j(v)=\langle v,e_j\rangle$. For integers $n\ge2$, define
+$$
+\begin{split}
+B_n(p)=\{q\in S(V):\;&q(z_a)=0\ \text{for every }a,\\
+&q(f_j)=1\ \text{for }1\le j\le r,\\
+&q(f_j-nf_{j+1})=1\ \text{for }1\le j<r\}.
+\end{split}
+\tag{42.12}
+$$
+These are nested clopen neighborhoods and form a complete local base at $p$. For $r=0$ or $r=1$, each is the singleton $\{p\}$. Different auxiliary choices give the same neighborhood filter.
+
+**Proof.** Each condition is a finite sign condition, so $B_n(p)$ is clopen. Its defining signs agree with the lexicographic signature of $e_1,\ldots,e_r$, so it contains $p$.
+
+For an ordinary point $\sigma_V(x)\in B_n(p)$, the zero equations force $x\in U$. Write
+$$
+x=\sum_{j=1}^r x_je_j.
+$$
+When $r>0$, the other conditions are exactly
+$$
+x_j>0,\qquad 0<x_{j+1}<x_j/n.
+\tag{42.13}
+$$
+Thus $B_{n+1}(p)\cap\sigma_V[V]\subseteq B_n(p)$. The ordinary image is dense in every open subset of $S(V)$, and $B_n(p)$ is closed, so $B_{n+1}(p)\subseteq B_n(p)$.
+
+Let $\ell\in V^*$ and set $a_j=\ell(e_j)$. If every $a_j$ vanishes, then $\ell(x)=0$ on all the ordinary points in every $B_n(p)$; density and the closed zero cylinder imply the same for every point of $B_n(p)$. Otherwise let $k$ be the first index with $a_k\ne0$. Choose $n$ so large that
+$$
+\sum_{j>k}|a_j|n^{-(j-k)}<|a_k|.
+$$
+For every $x$ satisfying (42.13),
+$$
+\left|\sum_{j>k}a_jx_j\right|
+\le x_k\sum_{j>k}|a_j|n^{-(j-k)}
+<|a_k|x_k.
+$$
+Hence $\operatorname{sgn}(\ell(x))=\operatorname{sgn}(a_k)=p(\ell)$. Again density inside the clopen set and closedness of the desired sign cylinder give this equality for every $q\in B_n(p)$. For finitely many tests, take a sufficiently large $n$ for all of them. Then $B_n(p)\subseteq N(p;F)$, proving the local-base assertion.
+
+When $r=0$, the equations impose all basis covectors to be zero and hence force the zero signature. When $r=1$, they restrict support to the single oriented line and impose its positive orientation, hence force $p$. The proof works for every choice of the inner product and annihilator basis; each resulting family is cofinal in the same cylinder neighborhood filter. Thus the local topology is intrinsic to the signature, not to those choices. $\square$
+
+**theorem 42.10 (Exact size and topology).** If $d=\dim V=0$, then $S(V)$ is a singleton. If $d=1$, it is a discrete three-point space. If $d\ge2$ and $\mathfrak c=|\mathbb R|$, then
+$$
+|S(V)|=\operatorname{dens}S(V)=w(S(V))=\mathfrak c.
+\tag{42.14}
+$$
+In every dimension the isolated points are exactly $\sigma_V[V]$, namely the zero point and the rank-one flags. Every point is first countable; every point of rank at least two has character exactly $\aleph_0$. For $d\ge2$, the space is nonseparable and nonmetrizable.
+
+**Proof.** The rank bound gives the assertions for dimensions zero and one. Zero is isolated by imposing zero on a basis of $V^*$. A nonzero ray is isolated by imposing zero on a basis of its annihilator, consisting of $d-1$ tests, and then one positive orientation test. The annihilator and sign calculus force every signature in that cylinder to be the specified ray. Conversely, a rank-at-least-two point is not in the ordinary image by (42.8). Since that image is dense, such a point cannot be isolated.
+
+For $d\ge2$, the oriented rays have cardinal $\mathfrak c$: a fixed two-dimensional subspace already supplies the distinct rays through $a+tb$ for $t\in\mathbb R$, while $|V|=\mathfrak c$ gives the upper bound. Every dense subset must contain every isolated point, so density is at least $\mathfrak c$; the ordinary image is dense and has that cardinality. The number of finite coordinate cylinders is at most $\mathfrak c$, since $|V^*|=\mathfrak c$. This gives $w(S(V))\le\mathfrak c$. Any base must contain the singleton of every isolated point, so the reverse inequality holds.
+
+There are at most $\mathfrak c$ finite lists of length at most $d$ in $V$, and every signature has such a list. Thus $|S(V)|\le\mathfrak c$, with equality supplied by the rays.
+
+First countability follows from Theorem 42.9. In a Hausdorff space a finite local base at a point would, by intersecting its members, give the singleton as an open set: every other point can be excluded by a neighborhood and hence by one base member. Consequently the nonisolated points have no finite local base, so their character is exactly $\aleph_0$.
+
+Nonseparability follows from (42.14). A compact metric space is separable: choose a finite $1/n$-net for each positive integer $n$ and take their countable union. Therefore $S(V)$ is not metrizable when $d\ge2$. No assumption about the continuum hypothesis or the cofinality of $\mathfrak c$ was used.
+
+In particular, the rank-one stratum has a discrete topology here, unlike the usual topology on oriented projective space when $d\ge2$. Its singleton preimages under $\sigma_V$ are positive rays, which are not Euclidean open. At zero, the singleton preimage is $\{0\}$, also not open when $d>0$. Thus this construction is an observation completion, not a topological compactification of Euclidean $V$ via a continuous $\sigma_V$. $\square$
+
+**theorem 42.11 (Finite continuous observers versus a countable global tower).** Every continuous map $f:S(V)\to E$ to a finite discrete set factors through a single finite actual image:
+$$
+f=\bar f\circ\pi_F,\qquad \pi_F:S(V)\twoheadrightarrow Q_F
+\tag{42.15}
+$$
+for some finite $F\subseteq V^*$. Conversely, every such factorization is continuous.
+
+If $d\ge2$, no countable family of linear sign tests separates all points of $S(V)$, and no inverse limit of a countable tower of finite discrete spaces is homeomorphic to $S(V)$.
+
+**Proof.** For each point choose a finite cylinder on which $f$ is constant. Compactness gives finitely many such cylinders covering $S(V)$. Let $F$ be the union of their finite test sets. Two points agreeing on $F$ belong together to any one of these cylinders that contains the first point, so they have the same $f$-value. This defines $\bar f$ on the actual image $Q_F$. The projection is surjective because every member of $Q_F$ is realized by an ordinary vector. The converse follows because $\pi_F$ is continuous and $Q_F$ is finite discrete.
+
+Now let $C\subseteq V^*$ be countable and choose independent $a,b\in V$. For every $\ell\in C$ whose restriction to $\operatorname{span}(a,b)$ is nonzero, the expression $\ell(a)+t\ell(b)$ has at most one zero, or no zero. Choose $t$ outside the resulting countable set of forbidden real numbers. Put $v=a+tb$. The rank-one flag $(v)$ and the rank-two flag $(v,b)$ agree on every $\ell\in C$: either $\ell(v)\ne0$ decides both signs, or $\ell$ annihilates the entire two-plane and gives zero to both. Their ranks differ, so they are distinct. Combining this with (42.15), no countable family of finite-valued continuous observers separates all points either: the union of their finite test sets is countable. The test family in a countable local base can depend on the point.
+
+Finally, a countable product of finite discrete spaces has a countable cylinder base; every subspace has a countable base as well. A countable finite inverse limit therefore cannot have weight $\mathfrak c$ as in (42.14). This also shows why the separate sequential approximations in Theorem 42.7 do not provide a countable global observation tower.
+
+The topology nevertheless requires uncountably many sign tests globally. $\square$
+
+**theorem 42.12 (Exact linear functoriality and image).** A linear map $A:V\to W$ induces
+$$
+S(A):S(V)\to S(W),\qquad
+S(A)(p)(\lambda)=p(\lambda\circ A).
+\tag{42.16}
+$$
+This map is continuous, satisfies
+$$
+S(A)\sigma_V=\sigma_WA,\qquad
+S(BA)=S(B)S(A),\qquad S(\operatorname{id}_V)=\operatorname{id}_{S(V)},
+\tag{42.17}
+$$
+and has
+$$
+U_{S(A)(p)}=A(U_p),\qquad
+\operatorname{rank}S(A)(p)=\dim A(U_p).
+\tag{42.18}
+$$
+For a representing list, scan $Av_1,\ldots,Av_r$ in order and retain an entry exactly when it lies outside the span of previously retained entries. The resulting independent list represents $S(A)(p)$.
+
+For an inclusion $i:U\hookrightarrow W$, the map $S(i)$ is a homeomorphism onto the clopen subspace
+$$
+\{q\in S(W):q(z)=0\text{ for every }z\in U^\circ\}.
+\tag{42.19}
+$$
+Consequently
+$$
+S(A)[S(V)]=S(i)[S(\operatorname{im}A)]
+\tag{42.20}
+$$
+for the natural inclusion $i:\operatorname{im}A\hookrightarrow W$. In particular, surjective linear maps induce surjective maps of signature spaces.
+
+**Proof.** Given finitely many $\lambda\in W^*$, apply (42.1) to their pullbacks along $A$. If $v$ realizes those signs for $p$, then $Av$ realizes the prescribed output signs. Thus (42.16) belongs to $S(W)$. Each output coordinate is an input coordinate, so the map is continuous. The identities in (42.17) follow by evaluating at every covector.
+
+The output sign is the first nonzero entry of $(\lambda(Av_j))_j$. A deleted vector is a linear combination of previously retained vectors. If those earlier evaluations all vanish, its evaluation also vanishes; if some earlier evaluation does not vanish, the deleted entry cannot change the first nonzero sign. Deletion therefore preserves the signature. The retained list spans $A(U_p)$, proving (42.18), including the case in which every image vanishes.
+
+Every functional on $U$ extends to $W$, so $S(i)$ is injective. Its image consists precisely of signatures whose flags are supported in $U$, by Theorem 42.5; these are exactly (42.19). Zero on a basis of $U^\circ$ is enough, by Theorem 42.3, so the subspace is clopen. A continuous injection from a compact space into a Hausdorff space is a homeomorphism onto its image: it sends closed sets to compact, hence closed, subsets.
+
+If $A$ is surjective, the compact image of $S(A)$ is closed and contains every ordinary signature in $S(W)$ by (42.17). Density makes that image all of $S(W)$. Apply this to $V\twoheadrightarrow\operatorname{im}A$ and then compose with the inclusion to obtain (42.20). $\square$
+
+**theorem 42.13 (Joint surjectivity and exact rank range).** For the direct sum define
+$$
+J=(S(\operatorname{pr}_V),S(\operatorname{pr}_W)):
+S(V\oplus W)\longrightarrow S(V)\times S(W).
+\tag{42.21}
+$$
+It is a continuous surjection. It is injective if and only if $V=0$ or $W=0$.
+
+If $p,q$ have ranks $r,s$, then every joint witness $h\in J^{-1}(p,q)$ has rank $m$ satisfying
+$$
+\max(r,s)\le m\le r+s,
+\tag{42.22}
+$$
+and every integer in this interval occurs. A fiber with a zero marginal is a singleton. Every fiber with both marginals nonzero has cardinality $\mathfrak c$.
+
+**Proof.** Let $(v_1,\ldots,v_r)$ and $(w_1,\ldots,w_s)$ represent $p,q$. The independent joint list
+$$
+(v_1,0),\ldots,(v_r,0),(0,w_1),\ldots,(0,w_s)
+\tag{42.23}
+$$
+has those two marginals by the deletion rule, proving surjectivity. Continuity follows from Theorem 42.12.
+
+For any joint support $L=U_h$, its projections are $U_p,U_q$. Hence $L\subseteq U_p\oplus U_q$, while the projection dimensions give $\dim L\ge r,s$. This proves (42.22). To attain $m=r+s-k$, where $0\le k\le\min(r,s)$, use the list
+$$
+(v_1,w_1),\ldots,(v_k,w_k),
+(v_{k+1},0),\ldots,(v_r,0),
+(0,w_{k+1}),\ldots,(0,w_s).
+\tag{42.24}
+$$
+Its independence follows first by projecting a linear relation to $V$, which kills all coefficients involving a $v_i$, and then to $W$, which kills the remaining coefficients. Its marginals are the required lists.
+
+If $q=\mathbf0$, then $L\subseteq V\oplus0$, and the inclusion theorem gives exactly one joint witness with first marginal $p$. The other zero case is the same argument with the factors exchanged. Thus if one vector space is zero, $J$ is injective.
+
+If $r,s>0$, the lists
+$$
+(v_1,cw_1),(v_2,0),\ldots,(v_r,0),
+(0,w_2),\ldots,(0,w_s),\qquad c>0,
+\tag{42.25}
+$$
+are independent and lie in the specified fiber. Their first oriented rays differ for distinct $c$, so Theorem 42.6 makes their signatures distinct. There are $\mathfrak c$ of them, and Theorem 42.10 bounds the entire joint space by $\mathfrak c$. This proves the fiber cardinality. When both vector spaces are nonzero, choose nonzero rank-one marginals; their fiber is not a singleton, proving the remaining noninjectivity assertion. $\square$
+
+**theorem 42.14 (A full matrix formula for every joint fiber).** Fix representing bases $v_1,\ldots,v_r$ of $U_p$ and $w_1,\ldots,w_s$ of $U_q$. For an integer $m$ in (42.22), let $\mathcal M_m(r,s)$ be the set of block matrices
+$$
+M=\begin{pmatrix}X\\Y\end{pmatrix},
+\qquad
+X\in\mathbb R^{r\times m},\quad
+Y\in\mathbb R^{s\times m},
+\tag{42.26}
+$$
+with the following conditions. The stacked matrix has column rank $m$. Every row of $X$ must be nonzero; let $\tau_i$ be its first nonzero column. Require
+$$
+\tau_1<\cdots<\tau_r,\qquad X_{i,\tau_i}>0.
+\tag{42.27}
+$$
+Similarly, the rows of $Y$ have first nonzero columns
+$$
+\upsilon_1<\cdots<\upsilon_s,\qquad Y_{k,\upsilon_k}>0.
+\tag{42.28}
+$$
+Entries after a row's first nonzero entry are arbitrary real numbers, subject to the stacked rank condition. Conditions for a block with zero rows are vacuous. Then there is an exact set-theoretic bijection
+$$
+J^{-1}(p,q)
+\cong
+\bigsqcup_{m=\max(r,s)}^{r+s}\mathcal M_m(r,s)/B_m^+,
+\tag{42.29}
+$$
+where $B_m^+$ acts by right multiplication. When $r=s=0$, the empty matrix and the trivial group give the single zero witness.
+
+The class of $M$ represents the independent joint list
+$$
+z_j=\left(\sum_{i=1}^rX_{ij}v_i,\quad
+             \sum_{k=1}^sY_{kj}w_k\right),
+\qquad 1\le j\le m.
+\tag{42.30}
+$$
+For a mixed test $(\alpha,\beta)\in V^*\oplus W^*$, its signature is the sign of the first nonzero entry of
+$$
+a^\mathsf TX+b^\mathsf TY,\qquad
+a_i=\alpha(v_i),\quad b_k=\beta(w_k),
+\tag{42.31}
+$$
+or zero when this row is zero. Finite prescribed signs in (42.31) describe exactly the inherited fiber topology. Formula (42.29) does not assert a quotient of the usual Euclidean matrix topology.
+
+**Proof.** Conditions (42.27) have a direct column interpretation. Before column $\tau_1$, every column of $X$ is zero. At column $\tau_i$, rows larger than $i$ vanish and the coefficient of the $i$-th standard vector is positive. Between $\tau_i$ and $\tau_{i+1}$, columns lie in the span of the first $i$ standard vectors. Inductively, the greedy independent columns of $X$ therefore have the oriented flag
+$$
+\mathbb Re_1<\operatorname{span}(e_1,e_2)<\cdots<\mathbb R^r.
+$$
+Conversely, if the greedy columns have this flag, let $\tau_i$ be the column where the projected span first reaches dimension $i$. Earlier columns have zero $i$-th coordinate, that column has positive $i$-th coordinate, and higher rows vanish there. These are exactly (42.27). The same reasoning proves the equivalence for $Y$.
+
+The rank condition makes (42.30) independent. The preceding characterization and Theorem 42.12 give marginals $p,q$, so every permitted matrix defines a witness in the fiber. Conversely, any witness in the fiber has support in $U_p\oplus U_q$ by Theorem 42.13. Express any independent representing list in the fixed bases. Its coefficient matrix has full column rank, and the required projected flags force (42.27) and (42.28). Thus every witness occurs.
+
+Right multiplication by an upper triangular matrix with positive diagonal preserves each row's first nonzero column and multiplies its first entry by a positive number. It also preserves full column rank. By Theorem 42.6, two independent joint lists represent the same signature precisely when they have the same length and differ by this right action. This proves both injectivity on the indicated orbit sets and the disjointness across lengths.
+
+Finally, evaluation of (42.30) is exactly the row (42.31). Every joint linear test has this form, and sign cylinders define the topology. This proves the topological assertion without substituting the Euclidean topology on the parameters.
+
+This formula retains more than an interleaving of two finite lists. The two blocks may have a first nonzero entry at the same column, with a variable positive relative coefficient. Furthermore, a later joint column may be independent even when neither marginal span increases. Both effects occur in the following complete two-dimensional example.
+
+Joint witnesses retain relative coefficients and relative vanishing orders; a marginal product retains neither in general. $\square$
+
+**theorem 42.15 (The full positive-positive fiber for two real lines).** Identify $S(\mathbb R)$ with $\{-1,0,1\}$ by evaluation at the identity functional. The fiber $J^{-1}(1,1)\subseteq S(\mathbb R^2)$ consists exactly of
+$$
+E_0=[(1,0),(0,1)],\qquad
+E_\infty=[(0,1),(1,0)],
+\tag{42.32}
+$$
+and, for every $\rho>0$, the three points
+$$
+H_\rho^0=[(1,\rho)],\qquad
+H_\rho^\eta=[(1,\rho),(0,\eta)]
+\quad(\eta\in\{-1,1\}).
+\tag{42.33}
+$$
+Brackets denote lexicographic signatures, not ordinary vector tuples. All listed points are distinct. For $\ell_{a,b}(x,y)=ax+by$,
+$$
+H_\rho^\eta(\ell_{a,b})=
+\begin{cases}
+\operatorname{sgn}(a+b\rho),&a+b\rho\ne0,\\
+\operatorname{sgn}(\eta b),&a+b\rho=0,
+\end{cases}
+\qquad \eta\in\{-1,0,1\}.
+\tag{42.34}
+$$
+The values at $E_0,E_\infty$ are respectively the first-nonzero signs of $(a,b)$ and $(b,a)$. The fibers with two other nonzero marginal signs are obtained by the corresponding coordinate reflections; every fiber with a zero marginal is the singleton described in Theorem 42.13.
+
+**Proof.** A joint witness in this fiber has rank one or two. Its first vector $(a,b)$ has $a,b\ge0$, since a negative first coordinate would already make the corresponding marginal negative. The first vector is nonzero.
+
+If $a,b>0$, normalize it to $(1,\rho)$ with $\rho>0$. A rank-one witness is $H_\rho^0$. For rank two, subtract an appropriate multiple of the first vector from the second to make its first coordinate zero. Independence makes its remaining coordinate nonzero. Positive rescaling then gives $(0,1)$ or $(0,-1)$, exactly the two quotient orientations in (42.33).
+
+If $a>0,b=0$, rank one cannot give positive second marginal. Rank two requires the second vector's second coordinate to be positive; the permitted triangular changes give exactly $E_0$. If $a=0,b>0$, the symmetric argument gives $E_\infty$. These exhaust all possibilities. Different first rays, different ranks, and the two distinct quotient orientations establish distinctness by Theorem 42.6. Evaluation gives (42.34) and the endpoint formulas. Coordinate reflections are invertible linear maps, so their induced homeomorphisms give the stated other fibers.
+
+Already the three ordinary vectors
+$$
+(1,2),\qquad(1,1),\qquad(2,1)
+\tag{42.35}
+$$
+have identical positive marginal signatures, while $x-y$ has signs $-1,0,1$. Thus marginal ambiguity is present before completion, because positive magnitude has been forgotten.
+
+There is also genuinely relative scale information inside the same leading ray. The points $H_1^1,H_1^0,H_1^{-1}$ have $x-y$ signs $-1,0,1$ and are realized by
+$$
+(t,t+t^2),\qquad(t,t),\qquad(t,t-t^2),
+\quad t\downarrow0.
+\tag{42.36}
+$$
+In the rank-two cases both marginal flags are already decided at the first column; the second column records a joint distinction that neither marginal retains. Equations (42.35) and (42.36) are finite-dimensional sign calculations, not an assertion about any infinite-expansion addition law. $\square$
+
+**theorem 42.16 (Actual joint images and the exact descent criterion).** Let $\Omega\subseteq V\oplus W$ and put
+$$
+C_\Omega=\overline{\sigma_{V\oplus W}[\Omega]}.
+$$
+For every finite $F\subseteq(V\oplus W)^*$, use the actual image $q_F[\Omega]$. Then
+$$
+C_\Omega
+=\{h\in S(V\oplus W):h|_F\in q_F[\Omega]
+                    \text{ for every finite }F\},
+\tag{42.37}
+$$
+and
+$$
+J(C_\Omega)
+=
+\overline{\{(\sigma_V(v),\sigma_W(w)):(v,w)\in\Omega\}}.
+\tag{42.38}
+$$
+These formulas assert closure, not the existence of an original representative for every completed point.
+
+More generally, let $C\subseteq S(V\oplus W)$ be compact, let $Y$ be Hausdorff, and let $T:C\to Y$ be continuous. There exists a unique continuous map
+$$
+\bar T:J(C)\to Y,\qquad T=\bar T\circ(J|_C),
+\tag{42.39}
+$$
+if and only if
+$$
+h,h'\in C,\quad J(h)=J(h')\quad\Longrightarrow\quad T(h)=T(h').
+\tag{42.40}
+$$
+Equivalently, the actual joint image
+$$
+\mathcal G_{C,T}=\{(J(h),T(h)):h\in C\}
+\tag{42.41}
+$$
+has exactly one output over every point of $J(C)$.
+
+**Proof.** A finite cylinder containing a point of $C_\Omega$ must meet $\sigma[\Omega]$, which proves one inclusion in (42.37). Conversely, a point satisfying its right-hand side has an actual $\Omega$-representative in every finite cylinder, and therefore belongs to the closure. The compact image $J(C_\Omega)$ is closed and contains the set whose closure appears in (42.38). For the reverse inclusion, continuity implies that the image of any point in the closure of $\sigma[\Omega]$ lies in the closure of $J(\sigma[\Omega])$: the preimage of a neighborhood of its image is a neighborhood meeting $\sigma[\Omega]$. This proves (42.38).
+
+A factorization implies (42.40). Conversely, under (42.40), assign to each $b\in J(C)$ the common value of $T$ on its nonempty fiber. This is well-defined and unique. To prove continuity, for a closed set $K\subseteq Y$ observe that
+$$
+\bar T^{-1}(K)=J(T^{-1}(K)).
+$$
+The set $T^{-1}(K)$ is closed in compact $C$, so its image is compact and hence closed in the Hausdorff space $J(C)$. Thus $\bar T$ is continuous. The graph formulation states the same fiber condition.
+
+The underlying set-theoretic factorization is the actual-image principle of [RRO, Theorem 2.2]; compactness supplies continuity here. Reachability alone is different: for $\Omega=\{(x,x):x\in\mathbb R\}$ the actual marginal pairs are only $(-1,-1),(0,0),(1,1)$, although the product of the two marginal images has nine points. For the unrestricted direct sum, $J$ is surjective, so there is no missing-pair obstruction, but Theorem 42.15 still exhibits multiple outputs over one marginal pair. $\square$
+
+**theorem 42.17 (Addition: global failure and its exact legitimate domain).** Let
+$$
+a:V\oplus V\to V,\qquad a(x,y)=x+y.
+$$
+Then $S(a)$ is continuous. It descends through
+$$
+J:S(V\oplus V)\to S(V)\times S(V)
+$$
+on the whole product if and only if $V=0$.
+
+There is an exact fiberwise criterion. For $p,q\in S(V)$, the following are equivalent:
+
+(a) $S(a)$ is constant on $J^{-1}(p,q)$.
+
+(b) There is no $\ell\in V^*$ with $p(\ell)=-q(\ell)\ne0$.
+
+(c) One oriented flag is an initial segment of the other, including all orientations on the shared quotients.
+
+When these conditions hold, the output is the longer flag. In particular the output is $p$ when $p=q$, and is the nonzero marginal when the other marginal is zero. The domain
+$$
+\mathcal C=
+\{(p,q):\text{there is no }\ell\text{ with }p(\ell)=-q(\ell)\ne0\}
+\tag{42.42}
+$$
+is closed in $S(V)^2$, and the longer-flag rule is a continuous map $\mathcal C\to S(V)$.
+
+**Proof.** Continuity of $S(a)$ is Theorem 42.12. For a fixed output covector $\ell$, let
+$$
+\alpha(x,y)=\ell(x),\qquad \beta(x,y)=\ell(y).
+$$
+A joint witness with marginals $p,q$ satisfies $h(\alpha)=p(\ell)$ and $h(\beta)=q(\ell)$, while
+$$
+S(a)(h)(\ell)=h(\alpha+\beta).
+$$
+Under (b), the sign addition rule in Theorem 42.3 determines this value uniquely at every $\ell$. Hence (b) implies (a).
+
+If (b) fails, take representing lists for $p$ and $q$. The concatenated joint list with every first-factor vector preceding every second-factor vector, as in (42.23), makes the output sign at the conflicting $\ell$ equal to $p(\ell)$. Reversing the two blocks makes it equal to $q(\ell)$. Both lists are independent joint witnesses with the same marginals, and the two output signs differ. Thus (a) implies (b).
+
+To prove (b) implies (c), use induction on the shorter flag length. If one flag is empty, the assertion holds. Otherwise let $v_1,w_1$ be their first vectors. Unless they are positive multiples, a functional can give them opposite nonzero signs, either by prescribing $1,-1$ when they are independent or by evaluating negatively proportional vectors. Condition (b) excludes both cases, so the first oriented lines agree. Restrict to covectors annihilating that line and pass to the quotient by it. The two projected lists are independent, condition (b) persists, and their lengths decrease by one. Induction gives agreement of every shared subspace and quotient orientation, which is (c).
+
+Conversely, if the flag of $p$ is an initial segment of that of $q$, then every nonzero sign of $p$ is the same nonzero sign of $q$. All remaining signs of $p$ are zero. Hence (b) holds, and the sign addition rule gives precisely $q$ as the output. This also covers equal flags and zero flags.
+
+Each forbidden pair of coordinate signs defines a clopen subset of $S(V)^2$. Therefore (42.42), the intersection of their closed complements, is closed. Its inverse image under $J$ is compact. Apply Theorem 42.16 to this compact subspace and $S(a)$; fiber constancy has just been proved, so the longer-flag rule is continuous on $\mathcal C$.
+
+If $V\ne0$, choose $v\ne0$. The three ordinary joint vectors
+$$
+(2v,-v),\qquad(v,-v),\qquad(v,-2v)
+$$
+have the same two marginal signatures but have output signatures $\sigma_V(v),\mathbf0,\sigma_V(-v)$, which are distinct. Thus global descent fails even as a set map. If $V=0$, every space involved is a singleton and descent holds. For $V=\mathbb R$, equal nonzero marginal signs and pairs with a zero marginal are exactly the legitimate pairs; opposite nonzero signs permit all three output signs. In particular, the positive-positive difference example in Theorem 42.15 is not a counterexample to addition on that particular fiber: its sums are all positive. The obstruction is quotient well-definedness already for finite real vectors, while joint addition remains continuous. No Zeckendorf infinite-addition result is used.
+
+The continuous linear map on the joint witness space descends exactly on the actual fibers where that lost information does not affect the required output. $\square$
+
+## 追加锚（本行以下为增补区）
