@@ -221,7 +221,7 @@ jobs:
   lean-inspect:
     name: Canonical Lean report production
     runs-on: ubuntu-24.04-arm
-    timeout-minutes: 45
+    timeout-minutes: 60
     env:
       # 缓存作用域:dev 为空串(key 与既往逐字节相同);integration-* 为「<分支>-」,使前缀回落先取本分支 push 存的层,再回落无作用域前缀。
       CACHE_SCOPE: ${{ startsWith(github.base_ref || github.ref_name, 'integration-') && format('{0}-', github.base_ref || github.ref_name) || '' }}
