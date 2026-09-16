@@ -3,7 +3,6 @@
    mirror-B: D5/B/S1/Recurrence/Invariants/CloitreNestedRecurrenceFloorRefutation
    mirror-E: none(waiver:kernel-checked-refutation)
    anchors: [mathlib/module/Mathlib.Topology.Instances.Real.Lemmas]
-   utility: kind=certified-instance; basis=refutes=gid:D5/S1/Recurrence/Invariants/CloitreNestedRecurrenceFloorRefutation.claim; result=D5/S1/Recurrence/Invariants/CloitreNestedRecurrenceFloorRefutation.result; claim=D5/S1/Recurrence/Invariants/CloitreNestedRecurrenceFloorRefutation.claim
    digest: At n = 1167, the literal nested recurrence is 664 while the conjectured cubic-root floor is 665. -/
 
 import Mathlib.Topology.Instances.Real.Lemmas
