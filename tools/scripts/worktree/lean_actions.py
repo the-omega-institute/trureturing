@@ -539,6 +539,26 @@ def snapshot(root, keys, layers=LAYERS, registry=None, *, deadline=None, current
             output(values)
 
 
+def stamp_restored_dependency(root, keys):
+    """Publish the LeanCacheStamp contract after verified dependency installation.
+
+    This records partition identity only, just like the C# producer's stamp.
+    It does not attest cache completeness or a successful build/report.
+    The restore caller owns the shared cache writer guard through publication.
+    """
+    lake = root / ".lake"
+    descriptor, name = tempfile.mkstemp(prefix=".stratalint-lean-cache-stamp.", suffix=".tmp", dir=lake)
+    temporary = pathlib.Path(name)
+    try:
+        with os.fdopen(descriptor, "w", encoding="utf-8") as stream:
+            json.dump({"schema": "stratalint-lean-cache-v2", "mathlib_revision": keys["mathlib_revision"],
+                       "os": keys["os"], "arch": keys["arch"]}, stream)
+            stream.write("\n")
+        temporary.replace(lake / ".stratalint-lean-cache-stamp.json")
+    finally:
+        temporary.unlink(missing_ok=True)
+
+
 def restore(root, keys, matched, layers=LAYERS, registry=None):
     if registry is None:
         validate_judge_registration(root, layers)
@@ -599,6 +619,8 @@ def restore(root, keys, matched, layers=LAYERS, registry=None):
                     restored_path.write_text(json.dumps({"schema": "lean-actions-restored-v1",
                         "snapshot_key": spec["key"],
                         "manifest_sha256": hashlib.sha256(manifest_bytes).hexdigest()}) + "\n")
+                if layer == "dependency":
+                    stamp_restored_dependency(root, keys)
             project_seeded |= layer == "project"
             receipt(layer, "restored", key=key, partition=keys["partition"])
         except (OSError, ValueError, TypeError, KeyError, subprocess.CalledProcessError) as error:
