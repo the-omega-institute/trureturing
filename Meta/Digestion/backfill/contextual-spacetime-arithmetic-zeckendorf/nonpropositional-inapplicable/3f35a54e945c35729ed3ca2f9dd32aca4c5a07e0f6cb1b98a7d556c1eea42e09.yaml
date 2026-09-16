@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3f35a54e945c35729ed3ca2f9dd32aca4c5a07e0f6cb1b98a7d556c1eea42e09
+  normalized_sha256: sha256:3f35a54e945c35729ed3ca2f9dd32aca4c5a07e0f6cb1b98a7d556c1eea42e09
+cas_ref: sha256:3f35a54e945c35729ed3ca2f9dd32aca4c5a07e0f6cb1b98a7d556c1eea42e09
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶明确规定附加资源模型的输入语法、接口要求和收费规则，终止与拒绝行为在此作为服务规格而非实现存在性定理，故仅结算定义性规格。
+    previous_atom_id: 743e863f1ddb6ada36bd27cc72ede23f85fceef9cab49bbdceb29be02f3cdf36
+    next_atom_id: 3f9ffb708ae8189184cd16a2f6545d96862b6b9b450953004e5c6b4509edbf97
