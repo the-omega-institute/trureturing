@@ -1022,7 +1022,8 @@ U_i^*\widehat\ell_bU_i
 对 r∈K，
 
 \[
-\Omega(rx,ry)=N(r)\Omega(x,y),\quad \Omega(\bar x,\bar y)=-\Omega(x,y).
+\Omega(rx,ry)=N(r)\Omega(x,y),
+\quad \Omega(\bar x,\bar y)=-\Omega(x,y).
 \]
 
 **证明。** 展开 (a+b phi)(c+d(1−phi))，其 phi 系数为 bc−ad。Tr((2phi−1)/5)=0，Tr((2phi−1)phi/5)=1，所以迹恰提取该系数。r bar r=N(r)∈Q 给出第一等式；共轭改变 (2phi−1) 的符号给出第二等式。矩阵形式为 [[0,−I],[I,0]]，行列式为一。证毕。
@@ -1521,3 +1522,201 @@ https://arxiv.org/abs/quant-ph/9909044
 
 [Nielsen22] F. Nielsen. Revisiting Chernoff Information with Likelihood Ratio Exponential Families. arXiv:2207.03745. 单变量Gaussian及缩放协方差族的Chernoff信息为既有理论；第45节单独推导所用标量公式。
 https://arxiv.org/abs/2207.03745
+
+## 49. 设置随机化与任意快的平衡校准漂移
+
+第46节要求四设置共用同一组校准。若先把不同校准的数据合并再计算非线性分数，那个结论不再自动成立。本节研究一个不同且明确的协议：每次采集前随机选择四个已有设置之一，选择与当次的潜在校准独立。校准可以随时间任意变化，但不能因本次随机标签而另选其值。随机化使四设置面对同一校准分布，成立的是期望层面的平衡，不能把它误读成任意有限随机排列都恰好平衡。
+
+继续第42节的实际矩阵方差v_c(s,t)。有限校准情景r的曝光比例p_r与探测器增益g_r合并为w_r=p_r g_r≥0，偏置写成o_r=p_r nu_r。允许所有o_r、g_r、s_r、t_r变化，要求W=sum w_r>0，且s_r,t_r∈[1-delta,1+delta]，其中0≤delta<1。四个池化二阶矩是实际记录的和：
+
+\[
+z_k=\sum_r \operatorname{records}(c,w_r,o_r,s_r,t_r)_k.
+\]
+
+定义A=sum w_r s_r²、B=sum w_r t_r²、C=sum w_r s_r t_r，则直接从记录得到
+
+\[
+a=z_1-z_0=A,\quad b=z_2-z_0=2B,\quad d=z_3-z_1-z_2+z_0=2cC.
+\]
+
+A、B、C均严格正。所有设置都使用同一加权情景族是本节的实质前件。设置依赖漂移、不同采样权重以及随机化之后的标签相关串扰，均不能直接套用。
+
+## 50. 定理：四个池化矩的全部解码器具有精确漂移边界
+
+令
+
+\[
+\kappa(\delta)=\left(\frac{1-\delta^2}{1+\delta^2}\right)^2,
+\qquad R(z)=\frac{d^2}{2ab}.
+\]
+
+### 定理50.1. 全解码器可辨识性
+
+固定0<cLo<cHi。存在同一个函数D:R⁴→{Lo,Hi}，对任意有限规模及任意第49节允许的校准情景族，均正确判别两个候选，当且仅当
+
+\[
+\boxed{(cLo+cHi)\delta^2<cHi-cLo.}\tag{50.1}
+\]
+
+充分性可由明确阈值实现；必要性排除所有非线性解码器，不只排除阈值规则。
+
+**证明充分性。** 由实际记录，R=c² C²/(AB)。加权Cauchy–Schwarz给出C²≤AB。反向界需要保留两侧增益约束。写l=1-delta、u=1+delta。每个情景中us-lt≥0且ut-ls≥0，所以
+
+\[
+(1-\delta^2)(s^2+t^2)\le2(1+\delta^2)st.
+\]
+
+乘w并求和，再用(A+B)²≥4AB，得到
+
+\[
+\kappa AB\le C^2\le AB,
+\qquad \kappa c^2\le R(z)\le c^2.\tag{50.2}
+\]
+
+这是经典Pólya–Szegő/Cassels型反Cauchy–Schwarz界的此处特化 [Dragomir04]，不作为新不等式申报。若(50.1)成立，则cLo²<kappa cHi²，取
+
+\[
+\tau=\frac{cLo^2+\kappa cHi^2}{2},\qquad
+D(z)=\begin{cases}\mathrm{Hi},&R(z)>\tau,\\\mathrm{Lo},&R(z)\le\tau.\end{cases}
+\]
+
+即可同时处理所有允许情景，无需估计当次的校准或情景数。
+
+**证明必要性。** 若(50.1)失败，令
+
+\[
+x=\frac{cHi-cLo}{cHi+cLo},\quad d_*=\sqrt x\le\delta,
+\quad a_*=\sqrt{1+x}.
+\]
+
+高类使用两个等权情景(s,t)=(1-d_*,1+d_*)、(1+d_*,1-d_*)，探测器实际增益为一、偏置为零。低类使用一个常值情景s=t=a_*，同样增益一、偏置零。a_*≥1且a_*≤1+d_*，因此全部控制都在允许区间。高类完整四记录为
+
+\[
+(1,\ 2+x,\ 3+2x,\ 4+3x+2cHi(1-x)),
+\]
+
+低类为
+
+\[
+(1,\ 2+x,\ 3+2x,\ 1+(3+2cLo)(1+x)).
+\]
+
+恒等式(cLo+cHi)x=cHi-cLo使第四项也相等，故两个不同候选的完整四实数记录完全碰撞。任何仅依赖该记录的函数都不能同时正确。证毕。
+
+有限和、非零分母、上下界、显式阈值与两个不同规模情景族的完整记录碰撞，共同构成形式化声明uniform_mixture_decoder_iff。四阶矩和概率测度不在其结论中。
+
+## 51. 旧分数失效、锐界与第四阶信息
+
+### 命题51.1. 共享参数分数不能直接用于池化漂移
+
+取c=1，两个等权校准(s,t)=(2/5,8/5)、(8/5,2/5)，探测器增益一、偏置零。则A=B=34/25、C=16/25。第46节的旧分数为
+
+\[
+F=d^2-ab=4C^2-2AB=-\frac{1288}{625}<0.
+\]
+
+因此旧协议会将这个可分候选的精确池化记录判到相反类；这不是有限shots误差，而是使用了不满足原共享前件的新数据。按(50.1)重新设计的分数仍可处理delta=3/5。
+
+### 命题51.2. 两个已有物理候选的精确池化边界
+
+对cHi=1、cLo=1/5，(50.1)化为delta²<2/3，即delta<sqrt(2/3)。边界上的高类采用两情景1±sqrt(2/3)，低类采用常值sqrt(5/3)，完整四记录均为
+
+\[
+\boxed{(1,\ 8/3,\ 13/3,\ 20/3).}\tag{51.1}
+\]
+
+这约81.65%的相对半宽是该具体四矩、平衡漂移模型的数学边界。它与第44节单设置、固定未知校准下的9.6118%属于不同协议，不构成对一般硬件容差的比较。
+
+### 命题51.3. 碰撞没有扩展到完整概率律
+
+上述高类第一单脉冲设置的输出是两个中心Gaussian分布的等权混合，其条件方差为8/3±2sqrt(2/3)；低类输出是单个中心Gaussian，方差8/3。利用条件四阶矩3v²，有
+
+\[
+E_{Hi}[X^4]=88/3,\qquad E_{Lo}[X^4]=64/3.
+\]
+
+故四阶矩相差8，完整概率律不同。一般地，中心Gaussian方差混合满足
+
+\[
+E[X^4]-3(E[X^2])^2=3\operatorname{Var}(v).
+\]
+
+当输入Gaussian而控制漂移时，所记录的混合输出可以非Gaussian；它的高阶矩可能保留被池化二阶观察删除的时间校准信息。不能由同二阶矩宣称所有测量、所有有限样本分布或任意数据保留策略都无法区分。定理50.1的不可辨识性只针对完整的四个理想池化二阶矩。保存原始数据或时间标签改变了观察对象。
+
+## 52. 同一个漂移判别器的可观测误差证书
+
+以下从真实池化记录z得到估计y，假设每项|y_k-z_k|≤epsilon。仍只考虑cHi=1、cLo=1/5及delta²<2/3，令tau=(1/25+kappa)/2>0。用观测自身计算
+
+\[
+a_y=y_1-y_0,\quad b_y=y_2-y_0,\quad d_y=y_3-y_1-y_2+y_0,
+\quad F_\tau(y)=d_y^2-2\tau a_yb_y.
+\]
+
+### 推论52.1. 数据依赖的统一正确性证书
+
+\[
+|F_\tau(y)-F_\tau(z)|\le
+R_\tau(y,\epsilon):=
+(8|d_y|+4\tau(|a_y|+|b_y|))\epsilon+(16+8\tau)\epsilon^2.
+\]
+
+所以F_tau(y)>R_tau必为高类，F_tau(y)<-R_tau必为低类；其余不作认证。
+
+**证明。** a、b、d的误差上界分别为2epsilon、2epsilon、4epsilon。对d²及ab使用第47节的乘积扰动估计，并将后者乘2tau。定理50.1的严格分离保证真实分数的符号正确。证毕。这是对相关记录误差也有效的普通确定性推论，未增加新的Lean声明。
+
+## 53. 任意快的前置漂移下，一个有限样本保证
+
+本节给出普通概率证明，明确不使用“池化输出仍Gaussian”的假设。第r次采集前，潜在校准g_r、nu_r、s_r、t_r可以依赖此前全部历史，但必须在本次随机设置选择之前确定。设置L_r在{0,1,2,3}上条件均匀且独立于当前潜在校准。条件于历史及L_r=k，观测X_r为中心Gaussian，方差v_(r,k)=records(c,g_r,nu_r,s_r,t_r)_k。一般混合后的无条件分布无需Gaussian，也无需各次同分布。
+
+### 推论53.1. 平衡二阶矩的随机化估计
+
+定义真实的、可能随历史随机变化的目标z_k=N^{-1}sum_r v_(r,k)，并采用逆选择概率权重
+
+\[
+\widehat z_k=\frac4N\sum_{r=1}^N1_{L_r=k}X_r^2.
+\]
+
+若所有条件方差不超过Vmax，则
+
+\[
+P\left(\max_k|\widehat z_k-z_k|>\epsilon\right)
+\le\frac{48Vmax^2}{N\epsilon^2}.\tag{53.1}
+\]
+
+**证明。** Y_(r,k)=4 1_(L_r=k)X_r²的条件均值为v_(r,k)，条件二阶矩为12v_(r,k)²≤12Vmax²。因此Y_(r,k)-v_(r,k)是平方可积鞅差，不同r的交叉期望为零。平均误差的二阶矩≤12Vmax²/N；Chebyshev及四设置并集界给出(53.1)。即使z由自适应历史决定，该鞅差等式仍成立。证毕。若当前校准能在看到L_r后改变，条件均值步骤失败，此推论不适用。
+
+进一步设0<g0≤g_r≤G、0≤nu_r≤nuMax、s_r,t_r∈[l,u]，l=1-delta、u=1+delta。可取
+
+\[
+Vmax=nuMax+G(1+5u^2),\quad
+D=2g0^2l^4(\kappa-1/25)>0,
+\]
+\[
+L=(16+12\tau)Gu^2,\qquad Q=16+8\tau.
+\]
+
+由A,B≥g0 l²及(50.2)，真实分数绝对值至少D。其误差≤L epsilon+Q epsilon²，而观测证书半径≤L epsilon+3Q epsilon²。因此选择
+
+\[
+2L\epsilon+4Q\epsilon^2<D,\qquad
+N\ge\frac{48Vmax^2}{\alpha\epsilon^2}
+\]
+
+即可使同一个、不依赖实际漂移路径的判别器，以至少1-alpha概率正确且不拒判。N是全部随机设置的总采集次数，此处不是每个设置N次。该预算保守，没有宣称最优，更没有把Chebyshev界认定为新概率理论。
+
+## 54. 科研归属与下一项信息问题
+
+本节相对第48节解决的是一个明确的受限问题：四设置不再需要逐次固定的共享校准，而是要求平衡的潜在校准情景，给出所有四矩解码器的存在性锐边界和完整记录碰撞。物理候选继续是第42节的两个已知输入，未升级为任意未知态纠缠认证；原Fano几何比较没有因此闭合。
+
+反Cauchy–Schwarz、Gaussian四阶矩、逆概率加权和鞅差二阶矩均为既有数学输入。针对性检索没有找到本具体全解码器边界的同一陈述，不能据此确立全球新颖性。量子器件漂移诊断已有 [Proctor20]，快速反馈校准已有 [Magann25]；本研究不宣称重新发现这些问题或替代这些实验方法。
+
+下一项真正不同的问题是：允许校准混合而保留完整homodyne特征函数时，两候选的整个统计族是否仍会相交？第51.3节只证明当前极端见证可被四阶矩解除，未证明全部允许漂移都能通过四阶矩识别。时间标签、联合参考或更多控制幅度分别增加不同信息，需要求各自的精确观察核，不能从一个成功见证推广为统一全态恢复。
+
+[Dragomir04] S. S. Dragomir. Reverses of the Cauchy–Bunyakovsky–Schwarz inequality for n-tuples of complex numbers. Bulletin of the Australian Mathematical Society 69 (2004), 465–480. arXiv:math/0311212. 反Cauchy–Schwarz及Cassels型常数的已有背景。
+https://arxiv.org/abs/math/0311212
+
+[Proctor20] T. Proctor et al. Detecting and tracking drift in quantum information processors. Nature Communications 11, 5396 (2020). arXiv:1907.13608. 使用带时间标签的实验数据检测并定位漂移。
+https://arxiv.org/abs/1907.13608
+
+[Magann25] A. B. Magann, N. E. Miller, R. Blume-Kohout, P. Maunz, K. C. Young. Fast-feedback protocols for calibration and drift control in quantum computers. arXiv:2512.07815. 逐次或批次反馈校准的相关研究，未被本节替代。
+https://arxiv.org/abs/2512.07815
