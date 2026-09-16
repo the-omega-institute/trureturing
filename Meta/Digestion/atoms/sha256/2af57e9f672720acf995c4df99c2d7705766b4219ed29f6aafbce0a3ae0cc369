@@ -1,0 +1,22 @@
+**theorem 28.10 (Atomic and non-atomic signed parts are linear projections).** Let $X$ be a compact metric space. Every $\mu\in M(X)$ has a unique decomposition
+$$
+\mu=\mu_{\mathrm{at}}+\mu_{\mathrm{na}},\qquad
+\mu_{\mathrm{at}}=\sum_{x\in X}\mu(\{x\})\delta_x,
+$$
+where the sum has at most countably many nonzero terms and converges in total variation, while $\mu_{\mathrm{na}}$ is non-atomic. Here non-atomic means that its variation measure has no atoms, not that it is absolutely continuous with respect to Haar measure. The two parts are mutually singular in variation and satisfy
+$$
+\|\mu\|_{\mathrm{TV}}=\|\mu_{\mathrm{at}}\|_{\mathrm{TV}}+\|\mu_{\mathrm{na}}\|_{\mathrm{TV}}.
+$$
+Both assignments are bounded linear projections of norm at most one. Their ranges $M_{\mathrm{at}}(X)$ and $M_{\mathrm{na}}(X)$ are closed.
+
+On the circle, $M_{\mathrm{at}}(\mathbb T)$ is a convolution subalgebra, $M_{\mathrm{na}}(\mathbb T)$ is a convolution ideal, and
+$$
+(\nu*_{\mathbb T}\xi)_{\mathrm{at}}
+=\nu_{\mathrm{at}}*_{\mathbb T}\xi_{\mathrm{at}}.
+$$
+In particular,
+$$
+a:M(\mathbb T)\to\mathbb R,\qquad a(\nu)=\nu_{\mathrm{na}}(\mathbb T)
+$$
+is a bounded linear functional with $|a(\nu)|\le\|\nu\|_{\mathrm{TV}}$, and vanishes on every atomic measure. It is not asserted to be multiplicative. This classical measure-algebra decomposition is recalled in [Daws, §3, the paragraph immediately preceding Lemma 3.7](https://arxiv.org/html/0904.0436v2).
+
