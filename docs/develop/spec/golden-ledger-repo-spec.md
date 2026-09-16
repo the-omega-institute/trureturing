@@ -321,6 +321,8 @@ FILEMAP `schema_version = 4` 的每条资源登记含 `cache_activation` 表，�
 
 current 对原生报告的五个发布材料及本轮成功步骤作候选/run/attempt 绑定。Actions 的 dependency/project 快照只有在本轮接受的 current 证据证明所选 `lean` 或 `lean-report` 步骤成功后才获授权；逐项检查材料哈希与身份，不读取已退役的报告准备收据，也不把 Lean 重编数量当作构建义务是否执行。缓存检查与制作放入共用 bounded worker，失败或超出剩余窗口仅跳过可选保存，不能改变已经验证的业务结果。检查证据优先保存，其后项目与依赖层；通用显式运输接口保留自身生产成功契约。
 
+project 层在本轮正常报告成功后，可比较已接受的 `.input.attestation` SHA 与本轮成功恢复记录所绑定的同一 project manifest 材料 SHA；相等时以 `retained-restored-seed` 省略可选目录扫描、打包与保存。这只决定保留已有种子，不证明当前 build 目录逐字不变，也不改变完整恢复校验、报告生产、候选/轮次核对或 PR 只读。所需记录或材料缺失、失配、恢复失败均沿用现有完整比较与快照路径；dependency 不使用此策略。attestation 的 producer 字段仍为 A14.9 的登记语义兼容 token，不是源码哈希；不新增缓存 schema、远端分区或 donor 身份字段。
+
 **验收矩阵。** 程序行为先测后改,不新增 workflow 文本形状测试。至少覆盖下列放行与阻断边界,以实际义务、判词与材料验证,不只比较退出码:
 
 | 场景 | 必须观察到的结果 |

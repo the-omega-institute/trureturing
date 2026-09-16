@@ -1,6 +1,8 @@
 """Native project cache and accepted current handoff behavior contracts."""
 import hashlib
 import importlib
+import contextlib
+import io
 import json
 import os
 import pathlib
@@ -96,17 +98,91 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
         plan, commit = self.prepare_current()
         owner = self.owner()
         with mock.patch.dict(os.environ, self.env, clear=True):
-            self.assertTrue(owner.current_built_lean(self.root, plan, commit))
+            self.assertIn(REPORT, owner.current_lean_materials(self.root, plan, commit))
             staged = self.root / "snapshot"
             staged.mkdir()
             metrics = owner.stage_snapshot(self.root, owner.actions_keys(self.root), "project", staged,
                                            current=(plan, commit))
         self.assertNotIn("save_disabled_reason", metrics)
         self.assertTrue((staged / "data/lean-inspector/report.zip").is_file())
+        self.restore_current_project()
+        material = self.root / ".lake/build/lean-inspector/report.zip"
+        original_open, original_glob = pathlib.Path.open, pathlib.Path.rglob
+        for changed in (False, True):
+            with self.subTest(changed_other_material=changed):
+                if changed: material.write_bytes(b"new native material after successful production\n")
+                observed = {"material_reads": 0, "layer_walks": 0}
+
+                def counted_open(path, mode="r", *args, **kwargs):
+                    if path == material and mode == "rb": observed["material_reads"] += 1
+                    return original_open(path, mode, *args, **kwargs)
+
+                def counted_glob(path, *args, **kwargs):
+                    if path == self.root / ".lake/build": observed["layer_walks"] += 1
+                    return original_glob(path, *args, **kwargs)
+
+                with mock.patch.dict(os.environ, self.env, clear=True), \
+                        mock.patch.object(pathlib.Path, "open", counted_open), \
+                        mock.patch.object(pathlib.Path, "rglob", counted_glob), \
+                        contextlib.redirect_stdout(io.StringIO()) as receipts:
+                    owner.snapshot(self.root, owner.actions_keys(self.root), ["project"], current=(plan, commit))
+                self.assertEqual({"material_reads": 0, "layer_walks": 0}, observed)
+                self.assertIn('"reason": "retained-restored-seed"', receipts.getvalue())
+                self.assertNotIn('"reason": "unchanged"', receipts.getvalue())
+                self.assertIn("project_ready=false", receipts.getvalue())
+                self.assertFalse((self.root / "build/lean-cache/project/data").exists())
+
+        for fault in ("no-restore", "failed-restore", "missing-attestation", "different-attestation",
+                      "missing-record", "invalid-record", "stale-record", "changed-manifest"):
+            with self.subTest(fallback=fault):
+                self.restore_current_project(fault=fault)
+                with mock.patch.dict(os.environ, self.env, clear=True), \
+                        contextlib.redirect_stdout(io.StringIO()) as receipts:
+                    owner.snapshot(self.root, owner.actions_keys(self.root), ["project"], current=(plan, commit))
+                self.assertNotIn('"reason": "retained-restored-seed"', receipts.getvalue())
+                self.assertIn('"status": "snapshot"', receipts.getvalue())
+                self.assertIn("project_ready=true", receipts.getvalue())
+                self.assertEqual(material.read_bytes(),
+                    (self.root / "build/lean-cache/project/data/lean-inspector/report.zip").read_bytes())
+
+    def restore_current_project(self, *, fault=None):
+        cached = self.root / "build/lean-cache/project"
+        shutil.rmtree(cached, ignore_errors=True)
+        attestation = pathlib.Path(str(self.report) + ".input.attestation")
+        current_bytes = attestation.read_bytes()
+        if fault == "missing-attestation": attestation.unlink()
+        elif fault == "different-attestation": attestation.write_bytes(b"older registered input\n")
+        created = self.run_tool(CACHE, "snapshot", "--layers", "project")
+        self.assertEqual(0, created.returncode, created.stdout + created.stderr)
+        self.assertIn("project_ready=true", created.stdout)
+        manifest = json.loads((cached / "manifest.json").read_text())
+        if fault == "failed-restore":
+            (cached / "data/lean-inspector/report.zip").write_bytes(b"corrupt seed")
+        if fault != "no-restore":
+            restored = self.run_tool(CACHE, "restore", "--layers", "project", "--project-key", manifest["key"])
+            self.assertEqual(0, restored.returncode, restored.stdout + restored.stderr)
+            self.assertIn('"status": "miss"' if fault == "failed-restore" else '"status": "restored"',
+                          restored.stdout)
+        if fault == "missing-record": (cached / "restored.json").unlink()
+        elif fault == "invalid-record": (cached / "restored.json").write_text("invalid")
+        elif fault == "stale-record":
+            record = json.loads((cached / "restored.json").read_text())
+            record["snapshot_key"] += "0"
+            (cached / "restored.json").write_text(json.dumps(record))
+        elif fault == "changed-manifest":
+            manifest["key"] += "0"
+            (cached / "manifest.json").write_text(json.dumps(manifest))
+        # Model the accepted producer handoff after normal production, including
+        # cases where its current attestation differs from the restored donor.
+        attestation.write_bytes(current_bytes)
+        self.write_handoff()
 
     def test_current_handoff_rejects_each_missing_or_damaged_member(self):
         plan, commit = self.prepare_current()
+        self.restore_current_project()
         owner = self.owner()
+        staged = self.root / "snapshot"
+        staged.mkdir()
         for suffix in SUFFIXES:
             path = pathlib.Path(str(self.report) + suffix)
             data = path.read_bytes()
@@ -116,21 +192,40 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
                     else: path.write_bytes(b"damaged producer handoff")
                     try:
                         with self.assertRaises((ValueError, OSError, KeyError)):
-                            owner.current_built_lean(self.root, plan, commit)
+                            owner.stage_snapshot(self.root, owner.actions_keys(self.root), "project", staged,
+                                                 current=(plan, commit))
                     finally:
                         path.write_bytes(data)
 
     def test_current_handoff_rejects_wrong_execution_and_skipped_lean(self):
         plan, commit = self.prepare_current()
+        self.restore_current_project()
         owner = self.owner()
+        staged = self.root / "snapshot"
+        staged.mkdir()
+
+        def rejected():
+            with self.assertRaises((ValueError, OSError)):
+                owner.stage_snapshot(self.root, owner.actions_keys(self.root), "project", staged,
+                                     current=(plan, commit))
+
         for key, value in {"CANDIDATE_SHA": "f" * 40, "GITHUB_RUN_ID": "99",
                            "GITHUB_RUN_ATTEMPT": "99", "GITHUB_REPOSITORY": "other/repository"}.items():
             with self.subTest(field=key), mock.patch.dict(os.environ, dict(self.env, **{key: value}), clear=True):
-                with self.assertRaises(ValueError): owner.current_built_lean(self.root, plan, commit)
+                rejected()
+        transport = self.root / "build/ci/current-transport.json"
+        original = transport.read_bytes()
+        for key, value in (("candidate", "f" * 64), ("round", "different-round")):
+            changed = json.loads(original)
+            changed[key] = value
+            transport.write_text(json.dumps(changed))
+            try:
+                with self.subTest(transport=key), mock.patch.dict(os.environ, self.env, clear=True): rejected()
+            finally: transport.write_bytes(original)
         for status in ("reused", "skipped", "failed"):
             self.write_handoff(status=status)
             with self.subTest(status=status), mock.patch.dict(os.environ, self.env, clear=True):
-                with self.assertRaises(ValueError): owner.current_built_lean(self.root, plan, commit)
+                rejected()
         self.write_handoff()
         for name in ("current-result.json", "current.json", "current-transport.json"):
             path = self.root / "build/ci" / name
@@ -138,7 +233,7 @@ class SnapshotContracts(CacheFixture, unittest.TestCase):
             path.unlink()
             try:
                 with self.subTest(missing=name), mock.patch.dict(os.environ, self.env, clear=True):
-                    with self.assertRaises(OSError): owner.current_built_lean(self.root, plan, commit)
+                    rejected()
             finally: path.write_bytes(original)
 
     def test_invalid_dependency_links_disable_only_that_save_with_an_offending_path(self):

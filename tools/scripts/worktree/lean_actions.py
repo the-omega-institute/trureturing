@@ -369,16 +369,21 @@ def replace_restored_directory(staged, target, rollback_root):
 def stage_snapshot(root, keys, layer, staged, registry=None, *, current=None):
     """Produce a private layer; only the parent may publish it and report ready."""
     spec = keys[layer]
+    current_materials = None
     if current is not None and layer in ("dependency", "project"):
-        if not current_built_lean(root, *current):
+        current_materials = current_lean_materials(root, *current)
+        if current_materials is None:
             metrics = {"save_disabled_reason": "current did not execute a successful Lean build"}
             (staged / "metrics.json").write_text(json.dumps(metrics) + "\n")
             return metrics
     difference = {}
     judge_donor = None
     with cache_guard(root, shared=True):
-        if layer in ("dependency", "project") and unchanged_layer(root, keys[layer], layer, keys["partition"], difference):
-            metrics = {"save_disabled_reason": "unchanged"}
+        reason = (restored_save_reason(root, spec, layer, keys["partition"], difference,
+                                      current_materials=current_materials)
+                  if layer in ("dependency", "project") else None)
+        if reason:
+            metrics = {"save_disabled_reason": reason}
             (staged / "metrics.json").write_text(json.dumps(metrics) + "\n")
             return metrics
         if layer in EXECUTION_LAYERS:
@@ -420,21 +425,20 @@ def stage_snapshot(root, keys, layer, staged, registry=None, *, current=None):
     return metrics
 
 
-def unchanged_layer(root, spec, layer, partition, difference=None):
-    """Check whether a restored layer already contains the exact current material.
+def restored_save_reason(root, spec, layer, partition, difference=None, *, current_materials=None):
+    """Choose whether to omit an optional save of a successfully restored seed.
 
-    Only a seed successfully restored in this execution may suppress a save.
-    Check shape and modes first, then compare small files before large ones so
-    changed provenance avoids hashing all large materials before a new snapshot.
-    Every declared file must match; malformed, stale or rejected seeds fall
-    through to a new snapshot.
+    An accepted current report with the donor's input attestation can retain a
+    project seed without comparing the whole build directory. This is a save
+    policy, not evidence that its other bytes are unchanged. Otherwise preserve
+    the full shape/mode/byte comparison, checking small files first.
     """
     manifest_path = root / spec["path"] / "manifest.json"
     restored_path = root / spec["path"] / "restored.json"
     def changed(reason, path=None):
         if difference is not None:
             difference.update({"reason": reason, **({"path": path} if path is not None else {})})
-        return False
+        return None
 
     try:
         if manifest_path.is_symlink() or restored_path.is_symlink():
@@ -448,9 +452,16 @@ def unchanged_layer(root, spec, layer, partition, difference=None):
                 or restored != {"schema": "lean-actions-restored-v1", "snapshot_key": spec["key"],
                                 "manifest_sha256": hashlib.sha256(manifest_bytes).hexdigest()}):
             return changed("restore-record-mismatch")
+        if layer == "project" and current_materials is not None:
+            attestation = "stratalint/raw-lean-report.json.input.attestation"
+            current_sha = current_materials.get(spec["target"] + "/" + attestation)
+            validate_manifest(manifest.get("files"))
+            if current_sha is not None and any(item["path"] == attestation and item["sha256"] == current_sha
+                                               for item in manifest["files"]):
+                return "retained-restored-seed"
         target = root / spec["target"]
         validate_cache_directory(target, manifest.get("files"), small_files_first=True)
-        return True
+        return "unchanged"
     except CacheMaterialDifference as error:
         return changed(error.reason, error.path)
     except OSError:
@@ -459,20 +470,22 @@ def unchanged_layer(root, spec, layer, partition, difference=None):
         return changed("invalid-cache-state")
 
 
-def current_built_lean(root, plan, commit):
-    """Bind heavy current snapshots to accepted work from this execution."""
+def current_lean_materials(root, plan, commit):
+    """Accept executed Lean work once; expose only its validated report material."""
     step = "lean-report" if "lean-report" in plan["execution"]["steps"] else "lean"
     if step not in plan["execution"]["steps"]:
-        return False
-    transport, current, report, _ = accepted_current(root)
+        return None
+    transport, current, report, accepted = accepted_current(root)
     if transport["commit"] != commit:
         raise ValueError("current Lean build belongs to another candidate")
     # Native report execution always requires the default Lean targets and
     # inspector build. An executed, accepted report therefore attests both.
     if step == "lean-report" and report is None:
         raise ValueError("current Lean build has no accepted native report")
-    return any(item["name"] == step and item["status"] == "executed" and item["raw_exit"] == 0
-        and item["exit"] == 0 for item in current["steps"])
+    if any(item["name"] == step and item["status"] == "executed" and item["raw_exit"] == 0
+           and item["exit"] == 0 for item in current["steps"]):
+        return accepted if report is not None else {}
+    return None
 
 
 def bounded_snapshot(root, layer, staged, seconds, *, current=False):
