@@ -1082,6 +1082,176 @@ def cm1_actual_head_sharpness():
             'scope': 'Actual 357 families approach mixed mass 82/135 under their pure-survivor product law and ambient uncovered density 53/432. Every finite prime-7 union bound is exact; arbitrary-height sharpness is an ordinary proof.'}
 
 
+def finite_head_sharp_density(actual_sharpness):
+    """Exact all-parameter CM2 bound for heads dividing 3^H*35, H>=2."""
+    import hashlib
+
+    def add(*polynomials):
+        out = [F(0)]*max(map(len, polynomials))
+        for polynomial in polynomials:
+            for i, coefficient in enumerate(polynomial):
+                out[i] += coefficient
+        return tuple(out)
+
+    def scale(c, polynomial):
+        return tuple(c*coefficient for coefficient in polynomial)
+
+    def mul(left, right):
+        out = [F(0)]*(len(left)+len(right)-1)
+        for i, a in enumerate(left):
+            for j, b in enumerate(right):
+                out[i+j] += a*b
+        return tuple(out)
+
+    def value(polynomial, a):
+        return sum((c*a**i for i, c in enumerate(polynomial)), F(0))
+
+    def vertex(size, index, budget):
+        out = [(F(0),)]*size
+        if index:
+            out[index-1] = budget
+        return out
+
+    lower, upper = F(1, 27), F(1, 18)
+    denominator, numerator = (F(40), F(-72)), (F(25), F(-102))
+    roots = (0, 0, 1, 1, 1)
+    unique, branch_count, zero_count = {}, 0, 0
+    h2_count, h2_minimum = 0, None
+    minimum_cell = F(1)
+
+    def bernstein(polynomial):
+        require(len(polynomial) == 3, 'degree at most two after clearing the target denominator')
+        a, b, c = polynomial
+        return (value(polynomial, lower),
+                value(polynomial, lower)+(upper-lower)*(b+2*c*lower)/2,
+                value(polynomial, upper))
+
+    # For fixed A, each branch is affine separately in every simplex block
+    # and z. Its complete vertex values therefore interpolate the whole domain.
+    # Each such value is a quadratic in A; nonnegative Bernstein coefficients
+    # certify every A in [1/27,1/18], rather than only sampled heights.
+    for di, ai, bi, ti, z in cartesian_product(
+            range(6), range(3), range(6), range(6), (F(4, 5), F(1))):
+        deficits = vertex(5, di, (F(0), F(9)))
+        alpha = vertex(2, ai, (F(1, 5),))
+        beta = vertex(5, bi, (F(1, 5),))
+        late = vertex(5, ti, (F(0), F(1, 5)))
+        weights = [add((F(1),), scale(-1, d)) for d in deficits]
+        x = scale(F(1, 9), add(*weights))
+        cells = [add(scale(F(1, 9), mul(weights[j], add(
+                    (z,), scale(-1, alpha[roots[j]]), scale(-1, beta[j])))),
+                    scale(-1, late[j])) for j in range(5)]
+        mass = add(*cells)
+        base = add((F(0), z), scale(F(1, 5), x), (F(4, 45), F(1, 5)))
+        for cell in cells:
+            cell_min = min(value(cell, lower), value(cell, upper))
+            require(cell_min > 0, 'positive cells throughout the A interval')
+            minimum_cell = min(minimum_cell, cell_min)
+        for root, cell in cartesian_product((0, 1), range(5)):
+            root_mass = add(*(cells[j] for j in range(5) if roots[j] == root))
+            load = add(base, root_mass, cells[cell])
+            surviving = add(mass, scale(F(-1, 6), load))
+            polynomial = add(mul(denominator, surviving),
+                             scale(-1, mul(numerator, scale(z, x))))
+            coefficients = bernstein(polynomial)
+            require(min(coefficients) >= 0, 'all-height sharp-density Bernstein certificate')
+            unique[polynomial] = coefficients
+            branch_count += 1
+            zero_count += int(all(c == 0 for c in polynomial))
+            if di == ti == 0:
+                h2_value = value(surviving, F(0))/(value(x, F(0))*z)
+                require(h2_value >= F(37, 60), 'height-two exact vertex bound')
+                h2_minimum = h2_value if h2_minimum is None else min(h2_minimum, h2_value)
+                h2_count += 1
+    require(branch_count == 12960 and len(unique) == 656 and zero_count == 20,
+            'complete universal parameter and root-cell branch set')
+    require(h2_count == 360 and h2_minimum == F(37, 60), 'sharp height-two vertex minimum')
+    require(minimum_cell == F(1, 90), 'exact common vertex-cell lower bound')
+
+    missing = []
+    for name, x in [('modulus3_absent', (F(8, 9), F(-1))),
+                    ('modulus9_absent_or_ineffective', (F(2, 3), F(-1)))]:
+        z, u = F(4, 5), (F(4, 9), F(1))
+        load = add(scale(z, u), scale(F(1, 5), x), scale(F(1, 5), u))
+        surviving = add(scale(z, x), scale(F(-1, 5), u), scale(F(-1, 6), load))
+        polynomial = add(mul(denominator, surviving),
+                         scale(-1, mul(numerator, scale(z, x))))
+        coefficients = bernstein(polynomial)
+        require(min(coefficients) > 0, 'missing low-pure-class branch throughout the interval')
+        h2_value = value(surviving, F(0))/(value(x, F(0))*z)
+        require(h2_value >= F(37, 60), 'height-two missing-pure branch')
+        missing.append({'case': name, 'polynomial_coefficients': list(map(str, polynomial)),
+                        'Bernstein_coefficients': list(map(str, coefficients)),
+                        'height_two_survival_lower': str(h2_value)})
+
+    # The CM3--CM7 family attains equality symbolically for every H>=3.
+    x, z = (F(5, 9), F(-1)), F(4, 5)
+    mass, load = (F(16, 45), F(-1)), (F(7, 15), F(4, 5))
+    require(all(c == 0 for c in add(
+        mul(denominator, add(mass, scale(F(-1, 6), load))),
+        scale(-1, mul(numerator, scale(z, x))))), 'all-height CM7 equality identity')
+    ambient = add(scale(F(6, 7), mass), scale(F(-1, 7), load))
+    require(ambient == (F(5, 21), F(-34, 35)), 'sharp ambient density as a function of A')
+    require(value(ambient, F(1, 18)) == F(58, 315), 'sharp infinite-height density infimum')
+    family_rows = []
+    for row in actual_sharpness['full_head_cases']:
+        if row['quinary_height'] != 1 or row['septenary_height'] != 1:
+            continue
+        height = row['ternary_height']
+        require(height >= 3, 'CM7 sharp-family height domain')
+        a_sum = F(1, 18)*(1-F(1, 3**(height-2)))
+        expected_count = 58*3**(height-2)+17
+        require(row['period'] == 35*3**height and row['survivors'] == expected_count,
+                'reuse actual CM7 sharp-family residue counts')
+        require(F(row['ambient_uncovered_density']) == value(ambient, a_sum)
+                and F(row['pure_product_survival']) ==
+                value(numerator, a_sum)/value(denominator, a_sum),
+                'actual CM7 families attain both universal lower bounds')
+        family_rows.append({'ternary_height': height, 'period': row['period'],
+                            'survivors': expected_count,
+                            'pure_product_survival': row['pure_product_survival']})
+    require({row['ternary_height'] for row in family_rows} == {3, 4},
+            'both existing squarefree-five-seven CM7 cases reused')
+
+    classes315 = [(3, 0), (9, 4), (5, 0), (15, 11), (45, 37), (7, 0),
+                  (21, 8), (63, 16), (35, 3), (105, 53), (315, 313)]
+    expected_moduli = {3**a*5**b*7**c for a in range(3) for b in range(2)
+                       for c in range(2) if a or b or c}
+    require(len(classes315) == len(expected_moduli)
+            and {m for m, r in classes315} == expected_moduli
+            and all(0 <= r < m for m, r in classes315), 'one valid class per nonunit315 divisor')
+    count315 = sum(all(v % m != r for m, r in classes315) for v in range(315))
+    pure315 = [(3, 0), (9, 4), (5, 0), (7, 0)]
+    pure_count = sum(all(v % m != r for m, r in pure315) for v in range(315))
+    require(count315 == 74 and pure_count == 120 and F(count315, pure_count) == h2_minimum,
+            'actual315 family attains the sharp height-two density')
+    polynomial_rows = [{'coefficients': list(map(str, p)),
+                        'Bernstein_coefficients': list(map(str, unique[p]))} for p in sorted(unique)]
+    return {'parameter_interval': [str(lower), str(upper)],
+            'all_height_survival_lower': '(25-102*A)/(40-72*A)',
+            'all_height_mixed_mass_upper': '(15+30*A)/(40-72*A)',
+            'ambient_density_lower': '5/21-34*A/35',
+            'survivor_count_lower': '58*3^(H-2)+17 for H>=3',
+            'infinite_height_density_infimum': '58/315',
+            'parameter_vertices': 1296, 'root_cell_branches': branch_count,
+            'unique_quadratics': len(unique), 'identically_zero_branches': zero_count,
+            'minimum_Bernstein_coefficient': str(min(c for bs in unique.values() for c in bs)),
+            'minimum_cell': str(minimum_cell),
+            'coefficient_encoding': 'JSON sorted rational coefficient/Bernstein rows, separators comma and colon',
+            'coefficient_sha256': hashlib.sha256(json.dumps(
+                polynomial_rows, separators=(',', ':')).encode()).hexdigest(),
+            'missing_pure_branches': missing,
+            'height_two': {'parameter_vertices': 36, 'root_cell_branches': h2_count,
+                           'pure_product_survival_lower': str(h2_minimum),
+                           'mixed_mass_upper': str(1-h2_minimum),
+                           'ambient_density_lower': str(F(74, 315)),
+                           'period': 315, 'survivors': count315,
+                           'pure_survivors': pure_count,
+                           'extremizing_classes': [list(pair) for pair in classes315]},
+            'actual_CM7_equality_cases': family_rows,
+            'scope': 'For any distinct nonunit moduli dividing 3^H*35, all H>=2, arbitrary residues. Universal polynomial bounds are certified on the entire A interval; all-height CRT sharpness uses the ordinary CM3--CM7 construction. This is not a Lean kernel proof.'}
+
+
 def comb_stoploss_dual_transport():
     """Exact primal/dual witnesses for complete cylinder-cap tail sums."""
     rows = []
@@ -1567,6 +1737,7 @@ def certificate():
             finite_head=head, threshold_runs=finite_adaptive_runs[head['period_bound']], first=13)
         for head in finite_heads
     }
+    actual_sharpness = cm1_actual_head_sharpness()
     return {
         "general_357_head": general_head,
         "extended_prime_square": {"cutoff": 40000, "scale": extended_scale,
@@ -1587,7 +1758,8 @@ def certificate():
         "finite_315_tail13_adaptive": finite_adaptive[315],
         "finite_945_tail13_adaptive": finite_adaptive[945],
         "head_mixed_mass_improvement": head_mass,
-        "cm1_actual_head_sharpness": cm1_actual_head_sharpness(),
+        "cm1_actual_head_sharpness": actual_sharpness,
+        "finite_head_sharp_density": finite_head_sharp_density(actual_sharpness),
         "adaptive_head_stoploss": adaptive_head_stoploss(head_mass),
         "homogeneous_comb_capacity": homogeneous_comb_capacity(),
         "comb_stoploss_dual_transport": comb_stoploss_dual_transport(),

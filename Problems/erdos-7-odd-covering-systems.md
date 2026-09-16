@@ -51,7 +51,10 @@ exact infimum of uniform uncovered density: \(53/432\). Every finite
 family has strictly greater uncovered density, and an explicit family
 with increasing prime-power heights approaches this value. The
 all-height proof has exact CRT certificates; it is not an end-to-end
-Lean theorem.
+Lean theorem. The sharp finite minima for the two 5040 odd heads are
+74 uncovered residues modulo 315 and 191 modulo 945. More generally,
+(CM9)--(CM11) give the exact minimum \(58\cdot3^{H-2}+17\) modulo
+\(3^H\cdot35\) for every \(H\ge3\).
 
 ## Motivation
 
@@ -210,6 +213,11 @@ gives the stronger bounds:
 | \(315\) | \(49/120\) | \(71\) |
 | \(945\) | \(157/336\) | \(179\) |
 | \(45045\) | \(233/320\) | \(3915\) |
+
+The shared-cell argument (CM9)--(CM11) sharpens the first two rows to
+**74 and 191**, respectively, and constructs assignments attaining both.
+Their sharp mixed budgets under the same pure-product law are
+\(23/60\) and \(145/336\).
 
 The existing `golden_fiber_5040` theorem gives exactly
 \(\{5040,10080,15120,20160,30240,60480\}\). Removing powers of 2 from
@@ -821,9 +829,15 @@ Its Boolean obstacle predicate is on actual finite words; the per-depth
 count includes redundant forbidden descendants. It proves the comparison
 for arbitrary \(p\ge2\), heights and nonnegative capacity profiles,
 without assuming the deficit aggregation inequality. Its formal conclusion
-compares the explicit min/sum recursions; attainment by a supported leaf
-measure is the ordinary recursive construction above, not an additional
-conclusion of this Lean theorem.
+compares the explicit min/sum recursions. The separate constructive theorem
+[`PrefixCapacityRealization.exists_comb_capped_probability`](../D5/S3/Arith/Congruence/PrefixCapacityRealization.lean)
+now realizes these capacities by actual nonnegative leaf weights with total
+mass one. Every forbidden prefix has zero mass, and every depth-\(d\)
+prefix has probability at most \(\beta(d)/\mathrm{combFlow}\), provided
+the comb flow is positive. Its proof constructs actual child measures and
+scales their sums before applying the existing comparison. A rational
+`FiniteLaw` representation and the conditional-kernel application remain
+separate formal obligations.
 
 #### Sharp tail profiles of maximal cylinder caps
 
@@ -4598,6 +4612,115 @@ then enumerates eight complete three-prime families with
 prime-7 deletion and (CM7). The all-height construction and its limiting
 sharpness are proved above.
 
+**Exact finite densities for the two 5040 odd heads and all ternary heights.**
+Among distinct nonunit divisors of \(315\), the minimum number of uncovered
+residues in one period is **74**. Among distinct nonunit divisors of
+\(3^H\cdot35\), for every \(H\ge3\), that minimum is
+\[
+ 58\cdot3^{H-2}+17.                                  \tag{CM9}
+\]
+In particular, the minimum at \(945\) is **191**. These are minima over
+all residue assignments and all subsets of the indicated divisor sets;
+the constructions attaining them use every nonunit divisor once.
+The corresponding sharp mixed-head probabilities under the actual
+pure-survivor product are \(23/60\) at 315 and \(145/336\) at 945.
+These improve the earlier (FC1)--(FC2) bounds without changing the
+already valid tail certificates.
+
+For the lower bounds, retain the actual five-cell parameters from (CM2),
+but put
+\[
+ A=\sum_{a=3}^H3^{-a},\quad u=4/9+A,\qquad
+ \sum_j(1-w_j)\le9A,\quad \sum_r\alpha_r\le1/5,\quad
+ \sum_j\beta_j\le1/5,\quad\sum_jt_j\le A/5,
+ \quad4/5\le z\le1.
+\]
+The same actual identities give \(x=\sum_jw_j/9\),
+\(n_j=w_j(z-\alpha_{r(j)}-\beta_j)/9-t_j\) and
+\(s=\sum_jn_j\). Since there is at most one pure septenary class,
+its normalized cylinder mass is at most \(1/6\). The complete
+\(\{3,5\}\) cylinder sum consequently gives
+\[
+ T=N_1+N_2+zA+x/5+u/5,\qquad
+ \lambda\ge\frac{s-T/6}{xz}.                         \tag{CM10}
+\]
+Here \(N_1,N_2\) are the actual largest root and cell masses, as before.
+The relaxed cells stay positive: \(n_j\ge1/90\), and \(x\ge1/2\),
+\(z\ge4/5\). For each fixed \(A\), the denominator-weighted vertex
+identity reduces the inequality to the same budget-simplex vertices.
+At \(H=2\), the deficit and late-deletion budgets are zero, leaving
+36 distinct vertices. Their exact minimum is \(37/60\).
+
+For every \(H\ge3\), one has \(1/27\le A<1/18\), and the uniform
+vertex bound is
+\[
+ \lambda\ge L(A):=\frac{25-102A}{40-72A}.             \tag{CM11}
+\]
+This is an interval certificate, not sampling of heights. For each of
+1296 vertex choices and each of the two target roots and five target
+cells, replace \(N_1,N_2\) by those target masses and form
+\[
+ P(A)=(40-72A)(s-T/6)-(25-102A)xz.
+\]
+The vertex deficits are either zero or \(9A\) in one coordinate, and
+the late deletion is either zero or \(A/5\) in one coordinate. Thus
+\(P\) has degree at most two. Write \(a=1/27\), \(b=1/18\) and
+\(v=(A-a)/(b-a)\). Its Bernstein representation is
+\[
+ P(A)=P(a)(1-v)^2+
+ 2\left(P(a)+\tfrac12(b-a)P'(a)\right)v(1-v)+P(b)v^2.
+\]
+All three coefficients are nonnegative for every one of the 12960
+branches; there are 656 distinct polynomials. Exact rational coefficient
+verification therefore proves (CM11) over the whole interval, including
+all finite heights. Taking the worst target root and cell recovers both
+maxima in (CM10).
+
+If the pure modulus-3 class is absent, use \(x\ge8/9-A\); if the
+modulus-9 class is absent or ineffective, use \(x\ge2/3-A\).
+The unsplit bound is
+\[
+ \lambda\ge
+ \frac{xz-u/5-(zu+x/5+u/5)/6}{xz}.
+\]
+It increases with \(x,z\). At their respective lower endpoints,
+subtracting \(L(A)\) and multiplying by the positive denominators
+gives \(80/27+(148/15)A\) and \(16/27+4A\), respectively.
+Both are positive. At \(H=2\), the two unsplit bounds are
+\(35/48\) and \(47/72\), both above \(37/60\).
+These cases also cover divisor families with smaller physical heights.
+
+Multiplying (CM11) by the pure-density lower bound
+\((5/9-A)(4/5)(6/7)\) gives ambient uncovered density at least
+\[
+ \frac5{21}-\frac{34}{35}A
+ =\frac{58+17\cdot3^{-(H-2)}}{315}.
+\]
+The actual construction (CM3)--(CM7), with \(K=L=1\), attains this
+quantity for every \(H\ge3\), proving (CM9). Its densities decrease
+to \(58/315\), the exact infimum with arbitrary ternary height and
+squarefree 5 and 7.
+
+At 315, the lower pure density is \((5/9)(4/5)(6/7)=8/21\), so
+\(\lambda\ge37/60\) leaves at least 74 residues. Equality is attained
+by the following explicit \((\text{modulus},\text{residue})\) list:
+\[
+ (3,0),(9,4),(5,0),(15,11),(45,37),(7,0),
+ (21,8),(63,16),(35,3),(105,53),(315,313).
+\]
+The first five classes leave cell masses \((3,4,3,3,3)/45\) in the
+order \((1,7,2,5,8)\pmod9\). Maximizing old cylinders have
+\((d,a)=(3,2),(9,7),(5,3),(15,8),(45,43)\); extending them with
+distinct septenary residues 1 through 5 makes their deletions disjoint
+and avoids the pure septenary class. Their total old cylinder mass is
+\(22/45\), so the final survivor count is
+\(315[(16/45)(6/7)-(22/45)/7]=74\).
+
+The existing verifier records the vertex and interval certificate and
+these attaining constructions under **finite_head_sharp_density**.
+This is an ordinary universal proof with an exact polynomial certificate;
+the endpoint density statement is not yet an end-to-end Lean theorem.
+
 **Coupled densities of the three prime-pair subsystems.** Let \(\sigma_A\)
 be the ambient density avoiding the original classes supported on \(A\),
 and put \(z_p=\sigma_{\{p\}}\). These are subsets of the same fixed family.
@@ -7606,6 +7729,9 @@ kernels, directly reusing Mathlib's prefix-preservation result.
 `HomogeneousCombCapacity.comb_le_actual_prefix_flow` formalizes the
 all-height comparison between the actual forbidden-prefix flow recursion
 and the extremal comb recursion, with arbitrary nonnegative capacities.
+`PrefixCapacityRealization.exists_comb_capped_probability` constructs
+an actual supported leaf probability from those capacities and derives
+all prefix marginal caps after normalization.
 No freeze or problem-resolution binding is supplied, and neither (P1) nor
 (G1) is a complete Lean theorem.
 
