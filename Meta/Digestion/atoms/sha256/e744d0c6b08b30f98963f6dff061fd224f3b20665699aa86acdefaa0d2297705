@@ -1,0 +1,9 @@
+**Theorem.** For every k>=0,
+
+$$
+\boxed{v_p(B_{p,k}-\epsilon)=h_p+k.}                       \tag{NP2}
+$$
+
+All arguments of valuations here are nonzero; valuations of negative
+integers mean valuations of their absolute values.
+

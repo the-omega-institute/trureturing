@@ -1,0 +1,7 @@
+**Proof.** A prime rank ell in [y,60X+1] is squarefree, is coprime to 60, and has one odd prime factor at least y. Thus each G rank is counted by R_8(X). Apply PBC5 to obtain PBC6. The prime number theorem gives Pi(y,60X+1) asymptotic to 60X/log X; subtract the hypothesized H bound for PBC7.
+
+For each G rank select one supporting non-WSS prime p. Different ranks have different supporting primes, and p divides F_ell<=2^ell. Take X=floor(log(x)/(120 log 2)). Then 2^(60X+1)<=2sqrt(x)<=x for large x. PBC7 therefore supplies the stated lower bound on primes up to x.
+
+Since the right side of PBC6 has order X/log X, this direct partition is stronger than ZBD3's lower bound of order X^(4/35)/(log X)^4. It needs no four-form sieve. It also weakens the sufficient H-smallness assumption used in ZBD.2. No bound on H is proved by this comparison; the separate EMW-based implication in EMWS.4 is unchanged.
+
+

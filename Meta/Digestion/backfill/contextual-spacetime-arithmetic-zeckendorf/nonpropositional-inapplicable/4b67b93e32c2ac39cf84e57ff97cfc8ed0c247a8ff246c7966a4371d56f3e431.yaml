@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4b67b93e32c2ac39cf84e57ff97cfc8ed0c247a8ff246c7966a4371d56f3e431
+  normalized_sha256: sha256:4b67b93e32c2ac39cf84e57ff97cfc8ed0c247a8ff246c7966a4371d56f3e431
+cas_ref: sha256:4b67b93e32c2ac39cf84e57ff97cfc8ed0c247a8ff246c7966a4371d56f3e431
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶只限定前述分离结论的有限词和标记域，属于范围备注，没有待证明命题。
+    previous_atom_id: 7c7930585d3a9af7d1d528c75221bb69b32d84a6fe5ce3153f056ef8f6700a58
+    next_atom_id: 39eaf3eb8937ef97611db3fd933249a7a40bf12edc7fc06a49343fee4bc4028b

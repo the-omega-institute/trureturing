@@ -1,0 +1,31 @@
+**Proof.** Each coordinate of $\Phi$ is continuous. If $\Phi(x)=\Phi(y)$, then $v_{G_L-1}(x)=v_{G_L-1}(y)$ for every $L$. Theorem 20.6 gives $q_L(x)=q_L(y)$ for every $L$, hence $x=y$. A continuous injection from compact $K$ into the Hausdorff binary sequence space is a homeomorphism onto its image: images of closed subsets are compact and therefore closed.
+
+Coordinatewise evaluation gives $\Phi(Tx)=S(\Phi(x))$. By continuity, compactness, and density of the natural core,
+$$
+\Phi[K]
+=\overline{\{\Phi(Z(n)):n\ge0\}}
+=\overline{\{S^n w:n\ge0\}}
+=X_\beta.
+$$
+Surjectivity of $T$ gives $S[X_\beta]=X_\beta$.
+
+Every finite temporal word occurs on the natural core because its fiber is nonempty and open. Since $T^nZ(0)=Z(n)$, these are exactly the factors of $w$. Theorem 20.5 therefore gives the language count. This is precisely Sturmian factor complexity.
+
+To prove minimality directly, choose any $x\in K$ and any nonempty positional cylinder. Its phase image has a nonempty open arc interior, all of whose fibers lie in that cylinder. The set
+$$
+\{R^nH(x):n\ge0\}
+=H(x)+\{[n\phi]:n\ge0\}
+$$
+is dense, being a translate of the dense natural phase orbit. Some iterate consequently enters that arc and the corresponding iterate of $x$ enters the cylinder. Cylinders form a basis, so every $T$-orbit is dense. The homeomorphism transfers this property to $X_\beta$.
+
+For either mechanical convention, the number of ones in a prefix of length $n$ differs from $n\beta$ by less than one, by telescoping its defining floor or ceiling differences. Theorem 20.4 supplies one of these formulas for every $x\in K$, including every split point. Hence every itinerary has frequency $\beta$. An eventually periodic binary word has rational limiting frequency, so none is eventually periodic.
+
+The depth-two calculation in Theorem 20.6 shows that no itinerary contains $11$: apply that calculation to $T^j x$ for each $j$. Thus $X_\beta\subseteq K$. The sequence $0^\infty$ belongs to $K$ but has frequency zero, so it does not belong to $X_\beta$. Finally, $S|_K=\sigma$ as coordinate deletion, while the target here is only $X_\beta$. In particular,
+$$
+\Phi(u)=1w,\qquad\Phi(v)=0w,\qquad
+S(1w)=S(0w)=w,
+$$
+which retains, rather than discards, the two distinct predecessors at the seam. $\square$
+
+Attached reference: Berstel, §3.1, p. 31, identifies irrational mechanical words with Sturmian words and specifies the characteristic intercept. The finite generator and the particular carrier conjugacy are established above. ([ligm.univ-eiffel.fr](https://ligm.univ-eiffel.fr/~berstel/Articles/2007SturmianThessalonique.pdf))
+

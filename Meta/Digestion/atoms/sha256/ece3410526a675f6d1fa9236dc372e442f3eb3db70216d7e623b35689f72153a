@@ -1,0 +1,23 @@
+### QR.5 An exact finite-spectrum criterion
+
+**Theorem.** Let D be a finite set of distinct positive Fibonacci values,
+containing one, and let K=lcm(D). The following are equivalent:
+
+$$
+\begin{aligned}
+&\exists m\ge0:\ D_F(m^2+1)=D;\\
+&D_F(K)=D\quad\hbox{and}\quad x^2\equiv-1\pmod K
+   \hbox{ has a solution}.
+\end{aligned}                                                   \tag{QR6}
+$$
+
+If they hold, the realizing integers m have positive natural density.
+
+**Proof.** A realization implies K|m^2+1 and hence root solvability.
+Every Fibonacci divisor of K then belongs to D, while each element of D
+already divides K, giving equality. Conversely apply QR.4 to K when
+D_F(K)=D. This gives the stronger positive-density subset that also
+satisfies K|m^2+1. The full realizing set has a natural density by the
+same finite-period truncation and QR4 tail argument, so that density is
+positive. Both criteria are finite statements for the given D.
+

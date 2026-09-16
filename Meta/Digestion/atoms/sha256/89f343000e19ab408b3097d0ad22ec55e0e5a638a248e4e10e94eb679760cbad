@@ -1,0 +1,5 @@
+
+$$
+\operatorname{El}(\operatorname{Enc}(G_f))
+=\{\langle\operatorname{Enc}(x),\operatorname{Enc}(f(x))\rangle_Z:x\in D\}.
+$$

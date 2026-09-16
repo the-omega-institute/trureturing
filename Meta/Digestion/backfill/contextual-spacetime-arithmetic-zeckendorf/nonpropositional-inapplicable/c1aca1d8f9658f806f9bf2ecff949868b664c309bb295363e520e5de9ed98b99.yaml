@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c1aca1d8f9658f806f9bf2ecff949868b664c309bb295363e520e5de9ed98b99
+  normalized_sha256: sha256:c1aca1d8f9658f806f9bf2ecff949868b664c309bb295363e520e5de9ed98b99
+cas_ref: sha256:c1aca1d8f9658f806f9bf2ecff949868b664c309bb295363e520e5de9ed98b99
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 共同前缀内各项为零，逐项差至多一，利用 summable_geometric_of_lt_one、sum_add_tsum_nat_add 和 tsum_geometric_of_lt_one 得精确几何尾和上界，包含长度零情形；仓内无冻结 GID。
+    previous_atom_id: 922afef016688f16a6e9df32ef36ce6b469111974752aed898e707f31b99de4e
+    next_atom_id: c8158738430a952dc30d8ae7b780d4227fca21ad9fc18fcdc8713805d711a465

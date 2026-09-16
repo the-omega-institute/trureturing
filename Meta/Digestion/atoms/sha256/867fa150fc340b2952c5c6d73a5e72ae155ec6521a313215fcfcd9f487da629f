@@ -1,0 +1,35 @@
+**定义 16.3（二点相位纤维的定向标记）。** 置
+$$
+a=-\alpha,\qquad b=\alpha^2,\qquad I=[a,b],\qquad c_*=-\alpha^3,\qquad \theta_*=[-\phi].
+$$
+将无限合法字唯一解析为块 $0$、$10$。对有限块字 $w$，记展开后的数字长度为 $L(w)$，并置
+$$
+S_w=\sum_{j<L(w)}(-1)^{j+1}\alpha^{j+2}w_j,\qquad
+f_w(t)=S_w+r^{L(w)}t.
+$$
+空块字允许出现。既有实相位纤维分类给出：端点纤维分别为 $\{u\}$、$\{v\}$；每个内部二点纤维唯一写成
+$$
+F^{-1}(\{f_w(c_*)\})=\{w0v,w10v\}.
+$$
+相应内部相位恰遍历 $E\setminus\{\theta_*\}$。[^rro16_phase] 定义
+$$
+z_{\theta_*}^{+1}=u,\qquad z_{\theta_*}^{-1}=v.
+$$
+对 $\theta=[f_w(c_*)]\ne\theta_*$，定义
+$$
+(z_\theta^{+1},z_\theta^{-1})=
+\begin{cases}
+(w0v,w10v),&L(w)\text{ 为偶数},\\
+(w10v,w0v),&L(w)\text{ 为奇数}.
+\end{cases}
+$$
+连接记号均按低位到高位解释。最后置
+$$
+\mathcal S(x)=
+\begin{cases}
+\{+1\},&H(x)\in E,\ x=z_{H(x)}^{+1},\\
+\{-1\},&H(x)\in E,\ x=z_{H(x)}^{-1},\\
+\{-1,+1\},&H(x)\notin E.
+\end{cases}
+$$
+

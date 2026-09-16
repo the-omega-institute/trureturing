@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1ecccfb37bb9ab488663e683b3e252e4f0076b3c0cb6365b4fc427027f4c6b5b
+  normalized_sha256: sha256:1ecccfb37bb9ab488663e683b3e252e4f0076b3c0cb6365b4fc427027f4c6b5b
+cas_ref: sha256:1ecccfb37bb9ab488663e683b3e252e4f0076b3c0cb6365b4fc427027f4c6b5b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶项仅固定二进读数的原定义域和值域包含，其中公式用于指定对象与记号，没有独立待证命题，故按非命题条款结算。
+    previous_atom_id: 681d0898c89ff129f8fee10ac8d3db0712b2babcc5484ef45cad6c6a6fa74104
+    next_atom_id: 7911d64f91f9ecce342a9a1d6302b34b0aa63f556cdfd953796750caa40d2439

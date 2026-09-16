@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:17c3a4ada470027a6a3d8833b4e9d8cdb38793d14849e067f1f759bb1bd37984
+  normalized_sha256: sha256:17c3a4ada470027a6a3d8833b4e9d8cdb38793d14849e067f1f759bb1bd37984
+cas_ref: sha256:17c3a4ada470027a6a3d8833b4e9d8cdb38793d14849e067f1f759bb1bd37984
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶定义严格整除链计数和长度核，并单独规定一的平凡链分支，没有断言下一条的计数公式。
+    previous_atom_id: 7bc244037362177fde818dd3a13b2890399e273f496ed509524bc9581da67d13
+    next_atom_id: 23466f9827c002962a75c807a61326f66db204f10e193748f4dd7cfd1e5a1d30

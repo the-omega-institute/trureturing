@@ -1,0 +1,10 @@
+**定义 448.1（同一全集合解释及两种集合对象）。** 沿用原 69–90、418 及 429–431 的同一 $\operatorname{Enc},\operatorname{Dec}$，不另造宇宙编码：
+$$
+\operatorname{NatZ}(n)=\langle0,\zeta(n)\rangle,\qquad
+\operatorname{Enc}(x)=
+\begin{cases}
+\operatorname{NatZ}(x),&x\in\omega,\\
+\langle1,\{\operatorname{Enc}(y):y\in x\}\rangle,&x\notin\omega.
+\end{cases}
+$$
+有效码类为 $\mathfrak V_Z=\{c:\exists x,\operatorname{Enc}(x)=c\}$，$\operatorname{Dec}$ 仅在该类上有定义。

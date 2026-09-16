@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a1d6ce778dee030ade603f768129ab764c26357071774076a5fa9e69b8ba8286
+  normalized_sha256: sha256:a1d6ce778dee030ade603f768129ab764c26357071774076a5fa9e69b8ba8286
+cas_ref: sha256:a1d6ce778dee030ade603f768129ab764c26357071774076a5fa9e69b8ba8286
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶项仅定义全部代数特征及由其生成的初始拓扑，其中公式用于指定对象与记号，没有独立待证命题，故按非命题条款结算。
+    previous_atom_id: ae78b1146e7190f32c1dea1f1a5fa5c2275b93b9a40161c851d3f8671be1ad08
+    next_atom_id: 9b3ef949ecc1c544b49bcb50a96588f10e776656287fab25eaf75b3436ef7f83

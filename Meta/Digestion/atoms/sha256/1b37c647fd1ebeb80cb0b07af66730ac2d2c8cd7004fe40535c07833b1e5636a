@@ -1,0 +1,8 @@
+### ZBD.2. Four fully exceptional blocks at a failing window
+
+Retain the definitions Q(k), y=X^(4/35), A_X, T_X and R_8(X) from EMWS. Let
+
+$$
+H(X)=\#\{\ell\text{ prime}:y\le\ell\le60X+1,\ F_\ell\text{ powerful}\}.
+$$
+
