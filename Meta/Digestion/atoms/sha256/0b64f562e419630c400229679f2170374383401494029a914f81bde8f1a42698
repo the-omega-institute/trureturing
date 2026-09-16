@@ -1,0 +1,27 @@
+**Proof.** The first equality is the usual iterate identity. For the second, fix $x$ and put $a=H(x)$. The phase of $T^nP_\theta^s(x)$ is $a+\theta+n\delta$.
+
+If this phase is nonsplit, there is only one possible value. If it equals $E_m$, then the intermediate phase is
+$$
+a+\theta=E_m-n\delta=E_{m+n}.
+$$
+Consequently
+$$
+T^nP_\theta^s(x)=T^nx_{m+n}^s=x_m^s.
+$$
+The inequality $n<m+n$ is exactly what prevents a seam coalescence in this split-output case. It covers $n=0$ as well. This proves $T^nP_\theta^s=P_{\theta+n\delta}^s$.
+
+For the other order, $H(T^nx)=a+n\delta$, and the definition of $P_\theta^s$ immediately gives $P_\theta^sT^n=P_{\theta+n\delta}^s$.
+
+Finally,
+$$
+H(P_\eta^t(x))=a+\eta.
+$$
+The outer operator $P_\theta^s$ therefore chooses the unique lift at $a+\eta+\theta$ when nonsplit and the lift of sign $s$ when split. The inner sign $t$ cannot affect this choice. This proves the last formula.
+
+Every product with at least one factor in $\mathscr D$ lies in $\mathscr D$, proving the ideal assertion; closedness was proved in Theorem 37.4. At zero phase,
+$$
+P_0^+(u)=P_0^+(v)=u,\qquad
+P_0^-(u)=P_0^-(v)=v,
+$$
+whereas the identity preserves both $u$ and $v$. Hence neither selector is the global unit. $\square$
+
