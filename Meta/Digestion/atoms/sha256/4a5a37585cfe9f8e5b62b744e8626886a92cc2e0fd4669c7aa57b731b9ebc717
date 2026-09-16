@@ -1,0 +1,13 @@
+**theorem 39.13 (Countable finite-observation towers cannot recover the completion).** Every inverse limit over a countable index set of finite discrete spaces is compact metrizable. Consequently no such inverse limit is homeomorphic to $\mathscr E$.
+
+For a countable collection of actual finite tests $F_0,F_1,\ldots$, put
+$$
+G_r=\bigcup_{i\le r}F_i,\qquad S=\bigcup_{r\ge0}G_r.
+$$
+The canonical map
+$$
+\mathscr E\longrightarrow\varprojlim_r A_{G_r}
+\tag{39.37}
+$$
+is a continuous surjection but is not injective, even if $e$ is appended to its record. Its quotient can equivalently be represented as the compact image $\pi_S(\iota(\mathscr E))\subseteq\{0,1\}^S$.
+
