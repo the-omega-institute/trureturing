@@ -551,9 +551,9 @@ internal static class FileMapPolicy
         return manifest.Entries
             .Where(static entry => entry.RuntimeDisposition != "run-local")
             // SL-029 separates a FILEMAP registration from its content addition.
-            // An exact report path is therefore a reservation, including between
+            // A report pattern is therefore a reservation, including between
             // content deletion and the subsequent registration cleanup.
-            .Where(static entry => !IsReportPath(entry.Pattern) || entry.Pattern.Contains('*'))
+            .Where(static entry => !IsReportPath(entry.Pattern))
             .Where(entry => !trackedPaths.Any(entry.Matches))
             .Select(static entry => new FileMapFinding(
                 "FILEMAP-PATTERN-EMPTY",

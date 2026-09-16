@@ -23,6 +23,29 @@ internal sealed class FileMapAdmissionPlaneException(
 internal sealed class FileMapParseException(string location, string message, Exception? inner = null)
     : FormatException($"Invalid FILEMAP at {location}: {message}.", inner);
 
+internal static class FileMapTomlTables
+{
+    internal static TomlTable[] Parse(object? value, string location, bool allowEmpty)
+    {
+        var tables = value switch
+        {
+            TomlTableArray tableArray => tableArray.Cast<TomlTable>().ToArray(),
+            TomlArray array when array.All(static item => item is TomlTable) =>
+                array.Cast<TomlTable>().ToArray(),
+            _ => throw Invalid(location, "files must be an array containing only tables"),
+        };
+        if (!allowEmpty && tables.Length == 0)
+        {
+            throw Invalid(location, "files must contain at least one entry");
+        }
+
+        return tables;
+    }
+
+    private static FormatException Invalid(string location, string message) =>
+        new($"Invalid FILEMAP at {location}: {message}.");
+}
+
 internal enum AdmissionPlaneClassification
 {
     Empty,
@@ -248,13 +271,7 @@ internal static class AdmissionPlaneFileMapLoader
         foreach (var document in documents)
         {
             if (!document.Table.TryGetValue("files", out var rawFiles)) continue;
-            var files = rawFiles switch
-            {
-                TomlTableArray tables => tables.Cast<TomlTable>().ToArray(),
-                TomlArray values when values.All(static value => value is TomlTable) =>
-                    values.Cast<TomlTable>().ToArray(),
-                _ => throw Invalid(document.Path, "files must be an array of tables"),
-            };
+            var files = FileMapTomlTables.Parse(rawFiles, document.Path, allowEmpty: true);
             entries.AddRange(files.Select((table, index) => ParseEntry(table, $"{document.Path}:files[{index}]")));
         }
 

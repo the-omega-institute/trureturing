@@ -159,8 +159,7 @@ internal static class FileMapLoader
         foreach (var document in documents)
         {
             if (!document.Table.TryGetValue("files", out var rawFiles)) continue;
-            if (rawFiles is not TomlTableArray { Count: > 0 } files)
-                throw Invalid(document.Path, "files must contain at least one entry");
+            var files = FileMapTomlTables.Parse(rawFiles, document.Path, allowEmpty: false);
             var localEntries = files.Select((table, index) => ParseEntry(table, $"{document.Path}:files[{index}]"))
                 .ToArray();
             var localPatterns = localEntries.Select(entry => entry.Pattern).ToArray();

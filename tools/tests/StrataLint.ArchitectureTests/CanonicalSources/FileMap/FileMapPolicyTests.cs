@@ -279,13 +279,14 @@ public sealed partial class FileMapPolicyTests
     }
 
     [Fact]
-    public void EmptyReportGlobCannotReserveUnregisteredContent()
+    public void ReportDirectoryPatternCanBeRegisteredBeforeContentIsAdded()
     {
         var manifest = Parse(Entry("docs/reports/experiment/*", "data", "none", "agent", "SnapshotDecoder"));
 
-        var finding = Assert.Single(FileMapPolicy.InspectPatternPopulation(manifest, []));
-
-        Assert.Equal("FILEMAP-PATTERN-EMPTY", finding.Code);
+        Assert.Empty(FileMapPolicy.InspectPatternPopulation(manifest, []));
+        Assert.Empty(FileMapPolicy.InspectCoverage(manifest, ["docs/reports/experiment/result.json"]));
+        var finding = Assert.Single(FileMapPolicy.InspectCoverage(manifest, ["docs/reports/other/result.json"]));
+        Assert.Equal("FILEMAP-REPORT-UNREGISTERED", finding.Code);
     }
 
     [Fact]

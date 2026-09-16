@@ -60,9 +60,11 @@ internal static class FileMapDocuments
             RequireCanonicalBytes(includedBytes, path);
             var document = Decode(includedBytes, path);
             if (document.Table.Keys.Order(StringComparer.Ordinal).SequenceEqual(["files", "schema_version"])
-                && document.Table["schema_version"] is 2L
-                && document.Table["files"] is TomlTableArray { Count: > 0 })
+                && document.Table["schema_version"] is 2L)
+            {
+                _ = FileMapTomlTables.Parse(document.Table["files"], path, allowEmpty: false);
                 documents.Add(document);
+            }
             else
                 throw new FileMapParseException(path,
                     "included files require exactly schema_version = 2 and nonempty files tables; nested include and residence_policy are not allowed");

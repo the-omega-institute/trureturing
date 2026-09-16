@@ -502,7 +502,7 @@ recipe(A11)→ `Meta/papergen`(决定论):拉 Blueprint 散文 + **语法生成�
 
 ## 11.13 实验程序与结果数据
 
-`Meta/FILEMAP.toml` 可在顶层用 `include = ["FILEMAP.docs.reports.toml"]` 显式引入同一 `Meta/` 目录的分片。文件名固定为 `FILEMAP.<范围>.toml`；范围由一个或多个小写 ASCII 字母开头、后接小写字母或数字的段组成，段间只用 `.`，例如 `FILEMAP.docs.reports.toml`，不用 `-`、`_`、路径或 glob。include 名称按 Ordinal 排序且不重复。分片恰含 `schema_version = 2` 和非空 `[[files]]`，不含 `residence_policy` 或嵌套 include；居所策略只在主文件定义。主文件可保留自身的 `[[files]]`，也可只用 include 提供登记项。
+`Meta/FILEMAP.toml` 可在顶层用 `include = ["FILEMAP.docs.reports.toml"]` 显式引入同一 `Meta/` 目录的分片。文件名固定为 `FILEMAP.<范围>.toml`；范围由一个或多个小写 ASCII 字母开头、后接小写字母或数字的段组成，段间只用 `.`，例如 `FILEMAP.docs.reports.toml`，不用 `-`、`_`、路径或 glob。include 名称按 Ordinal 排序且不重复。分片恰含 `schema_version = 2` 和非空 `files` 表数组（紧凑的 `files = [{ … }]` 或 TOML 的 `[[files]]`），不含 `residence_policy` 或嵌套 include；居所策略只在主文件定义。主文件可保留自身的 `[[files]]`，也可只用 include 提供登记项。
 
 每份文件内部的 pattern 按 Ordinal 排序；合并后 pattern 和非 `none` 的 artifact_id 全局唯一，重叠匹配仍由原检查拒绝，不存在覆盖优先级。主文件与分片均为普通文件、属判官面；缺失分片、非法命名、重复引入及坏格式均失败。工作树加载读取同一工作树，历史检查读取同一 Git 快照，禁止用当前文件补齐历史缺项。reports 登记保存在 `Meta/FILEMAP.docs.reports.toml`。
 
@@ -512,7 +512,7 @@ recipe(A11)→ `Meta/papergen`(决定论):拉 Blueprint 散文 + **语法生成�
 
 保留文件在 `Meta/FILEMAP.toml` 登记到目录级即可，可用递归通配符并按扩展名区分程序与数据，无须逐文件列出完整路径。每个文件须唯一匹配一条登记；`filemap-conform` 对未覆盖文件报 `FILEMAP-REPORT-UNREGISTERED`，对重复覆盖报 `FILEMAP-AMBIGUOUS`。实验程序记 `kind=program`，数据和许可证记 `kind=data`，均属内容面；登记本身属判官面。
 
-依 SL-029，需要新增或调整登记规则时，通过独立的判官拉取请求修改，再通过内容拉取请求添加材料；已被目录规则覆盖的文件可直接走内容拉取请求。精确路径登记仍允许暂时无文件，供预登记及删除后的分步清账使用；目录通配登记须匹配现有材料。目录规则仍有匹配文件时，增删单个文件无须调整登记。
+依 SL-029，需要新增或调整登记规则时，通过独立的判官拉取请求修改，再通过内容拉取请求添加材料；已被目录规则覆盖的文件可直接走内容拉取请求。报告的精确路径和目录通配登记均允许暂时无文件，供预登记及删除后的分步清账使用。目录规则仍有匹配文件时，增删单个文件无须调整登记。
 
 ## 11.14 判词可诉制(当庭勘正为荣誉事件)
 任何在册评注/判词/裁决可经问答轮挑战;挑战成立 ⟹ 直接勘正当前记录或新增勘正条目,改删历史由 git 保存——**勘正入荣誉榜非耻辱柱**(本账先例:27.79 第二层经对手反击当庭撤销,为全程最佳轮次之一);对手官宪章增:定期抽查在册判词之可攻性。

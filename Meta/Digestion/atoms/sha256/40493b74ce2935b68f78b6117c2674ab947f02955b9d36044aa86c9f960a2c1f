@@ -1,0 +1,91 @@
+**证明。** 全部熵使用自然对数及约定 $0\log0=0$。有限分割 $\mathcal A$ 的熵记为
+$$
+\mathsf H_\mu(\mathcal A)
+=-\sum_{A\in\mathcal A}\mu(A)\log\mu(A),
+$$
+$h_\mu(\sigma)$ 定义为所有有限 Borel 分割的迭代熵率之上确界。置 $X_j(x)=x_j$。
+
+先说明位置坐标确实计算全部测度熵。有限柱代数生成 Borel 集。可在 $\mu$ 测度下由该代数逼近的 Borel 集构成一个 $\sigma$ 代数：补集与有限并的逼近直接成立；可数并先以有限部分逼近，再用有限测度的下连续性控制余项。因此每个有限 Borel 分割 $\mathcal A$ 都能以只依赖有限前缀的标签预测，且错误概率 $e$ 任意小：分别用柱代数中的集合逼近各原子，输出包含该点的第一个逼近集合的标签，无匹配时输出固定标签；错误集合包含于各对称差之并。若 $\mathcal A$ 有 $r$ 个原子，加入预测是否错误的二元变量给出
+$$
+\mathsf H_\mu(\mathcal A\mid\mathcal Q_L)
+\le -e\log e-(1-e)\log(1-e)+e\log r.
+$$
+当无错误时真实标签已确定；错误时至多有 $r$ 个可能标签，这证明该界。因此条件熵随 $L\to\infty$ 趋于零。
+
+链式法则、增加条件不增熵及不变性给出
+$$
+\mathsf H_\mu\left(\bigvee_{j=0}^{n-1}\sigma^{-j}\mathcal A\right)
+\le
+\mathsf H_\mu(\mathcal Q_{n+L-1})
++n\,\mathsf H_\mu(\mathcal A\mid\mathcal Q_L).
+$$
+这里使用位置窗口的精确恒等式
+$$
+\bigvee_{j=0}^{n-1}\sigma^{-j}\mathcal Q_L=\mathcal Q_{n+L-1}.
+$$
+除以 $n$，先令 $n\to\infty$，再令 $L\to\infty$，并对 $\mathcal A$ 取上确界；反向使用分割 $\mathcal Q_1$，得到
+$$
+h_\mu(\sigma)=
+\lim_{n\to\infty}\frac1n
+\mathsf H_\mu(X_0,\ldots,X_{n-1}).
+$$
+极限存在，因为不变性与链式法则使块熵次可加。这同时给出了此处所需的单侧生成分割论证。
+
+现在取允许转移矩阵及正向量
+$$
+A=\begin{pmatrix}1&1\\1&0\end{pmatrix},\qquad
+v_0=1,\quad v_1=\alpha.
+$$
+直接计算 $Av=\phi v$，且在所有允许边上
+$$
+P_{ij}=\frac{A_{ij}v_j}{\phi v_i},\qquad
+-\log P_{ij}=\log\phi+\log v_i-\log v_j.
+$$
+对长度 $n\ge1$ 且 $\mu(C_u)>0$ 的历史 $u$，令 $q^u$ 为下一位的条件分布。它仅支持于从末状态 $u_{n-1}$ 出发的允许边。定义
+$$
+D(q^u\Vert P_{u_{n-1},\cdot})
+=\sum_{j:q^u_j>0}q^u_j
+\log\frac{q^u_j}{P_{u_{n-1},j}}.
+$$
+这是非负的，且等号当且仅当两行概率完全相等。确实，由 $\log z\le z-1$，
+$$
+\sum_{j:q_j>0}q_j\log\frac{P_j}{q_j}
+\le\sum_{j:q_j>0}P_j-1\le0.
+$$
+若等号成立，所有正质量位置都满足 $P_j=q_j$，且不存在被 $q$ 遗漏的正 $P_j$；反之显然。上述相对熵非负性也证明混合分布的熵不小于分量熵的平均，因而证明前面使用的增加条件不增熵。
+
+令
+$$
+h_n=\mathsf H_\mu(X_n\mid X_0,\ldots,X_{n-1}).
+$$
+相对熵恒等式及相邻坐标具有相同边缘分布给出
+$$
+h_n=\log\phi-
+\sum_{\substack{|u|=n\\\mu(C_u)>0}}
+\mu(C_u)\,
+D(q^u\Vert P_{u_{n-1},\cdot})
+\le\log\phi.
+$$
+其中势差 $\log v_{X_{n-1}}-\log v_{X_n}$ 的期望为零，正是使用 $\sigma$ 不变性的地方。进一步，
+$$
+h_{n+1}
+\le\mathsf H_\mu(X_{n+1}\mid X_1,\ldots,X_n)
+=h_n,
+$$
+故 $h_n$ 单调下降。由块熵链式法则，
+$$
+\mathsf H_\mu(X_0,\ldots,X_{n-1})
+=\mathsf H_\mu(X_0)+\sum_{j=1}^{n-1}h_j,
+$$
+所以 $h_\mu(\sigma)=\lim_{n\to\infty}h_n\le\log\phi$。
+
+若等号成立，单调性与每个 $h_n\le\log\phi$ 迫使所有 $h_n=\log\phi$。每个正质量历史的相对熵因此都为零，故该历史后的条件转移恰为 $P$。于是 $\mu$ 是转移矩阵为 $P$ 的 Markov 概率。其初始边缘 $a=(a_0,a_1)$ 因不变性满足 $aP=a$，即
+$$
+a_1=\alpha^2a_0,\qquad a_0+a_1=1,
+$$
+从而 $a=\pi$。所有柱质量均等于 $\mu_{\mathrm{st}}$，故 $\mu=\mu_{\mathrm{st}}$。这个论证未预先要求 $\mu$ 满支撑。
+
+反之，在 $\mu_{\mathrm{st}}$ 下，每个正质量历史后的条件分布都是 $P$，上述所有相对熵为零，因而 $h_n=\log\phi$ 对每个 $n\ge1$ 成立，得到 $h_{\mu_{\mathrm{st}}}(\sigma)=\log\phi$。定理 33.9 已证明 $\nu\ne\mu_{\mathrm{st}}$ 且 $\nu$ 不在位置移位下不变，所以不能将临界 Hausdorff 概率与位置最大熵概率混同。证毕。
+
+附引：单侧生成分割定理见 B. Solomyak，[Ergodic Theory—Lecture 6 Summary，Theorem 1.6(i)，第 3 页](https://u.math.biu.ac.il/~solomyb/GRAD/15/ET/Lec6.pdf#page=3)；经典最大熵唯一性见 W. Parry，[Intrinsic Markov chains，§4，Theorem 10，印刷页 65–66](https://scispace.com/pdf/intrinsic-markov-chains-4eajvwuaan.pdf#page=11)。此处对所有位置不变概率的不等式及等号情形已直接证明。
+
