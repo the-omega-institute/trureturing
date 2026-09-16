@@ -20,6 +20,8 @@ Repository tree laws, pinned Mathlib finite-sum and tree declarations, the
 public Loogle index, and Schroeder's packed and regular tree laws supplied no
 arbitrary-capacity realization theorem. This symbolic construction has no
 finite-instance, enumeration, checker or numerical-reduction content.
+The scalar field is arbitrary, so the same construction yields exact rational
+weights suitable for FiniteLaw as well as the real specialization.
 -/
 
 open scoped BigOperators
@@ -31,10 +33,12 @@ namespace D5.S3.Arith.Congruence.PrefixCapacityRealization
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
+variable {K : Type*} [Field K] [LinearOrder K] [IsStrictOrderedRing K]
+
 /-- The actual prefix marginal: fix the requested coordinates, then sum all
 remaining leaf weights. Prefixes longer than the tree have zero mass. -/
 noncomputable def prefixMass {p : ℕ} :
-    (n : ℕ) → (Word (Fin p) n → ℝ) → List (Fin p) → ℝ
+    (n : ℕ) → (Word (Fin p) n → K) → List (Fin p) → K
   | _, μ, [] => ∑ w, μ w
   | 0, _, _ :: _ => 0
   | n + 1, μ, a :: u => prefixMass n (fun w => μ (a, w)) u
@@ -42,23 +46,23 @@ noncomputable def prefixMass {p : ℕ} :
 /-- Every actual forbidden-prefix tree with positive comb flow admits a
 normalized supported leaf law with all the comb-normalized prefix caps. -/
 theorem exists_comb_capped_probability
-    (p H : ℕ) (hp : 2 ≤ p) (β : ℕ → ℝ) (hβ : ∀ d, 0 ≤ β d)
+    (p H : ℕ) (hp : 2 ≤ p) (β : ℕ → K) (hβ : ∀ d, 0 ≤ β d)
     (f : List (Fin p) → Bool) (hroot : f [] = false)
     (hlevels : ∀ d < H, forbiddenCount p f (d + 1) ≤ 1)
     (hcomb : 0 < combFlow p H β) :
-    ∃ μ : Word (Fin p) H → ℝ,
+    ∃ μ : Word (Fin p) H → K,
       (∀ w, 0 ≤ μ w) ∧ (∑ w, μ w) = 1 ∧
       ∀ u : List (Fin p), u.length ≤ H →
         prefixMass H μ u ≤ β u.length / combFlow p H β ∧
         (f u = true → prefixMass H μ u = 0) := by
   classical
   have zeroMass : ∀ n (u : List (Fin p)),
-      prefixMass n (fun _ => 0) u = 0 := by
+      prefixMass n (fun _ => (0 : K)) u = 0 := by
     intro n
     induction n with
     | zero => intro u; cases u <;> simp [prefixMass]
     | succ n ih => intro u; cases u <;> simp [prefixMass, ih]
-  have scale : ∀ n (μ : Word (Fin p) n → ℝ) (u : List (Fin p)) (r : ℝ),
+  have scale : ∀ n (μ : Word (Fin p) n → K) (u : List (Fin p)) (r : K),
       prefixMass n (fun w => r * μ w) u = r * prefixMass n μ u := by
     intro n
     induction n with
@@ -68,9 +72,9 @@ theorem exists_comb_capped_probability
         cases u with
         | nil => simp [prefixMass, Finset.mul_sum]
         | cons a u => exact ih (fun w => μ (a, w)) u r
-  have realize : ∀ n (b : ℕ → ℝ) (g : List (Fin p) → Bool),
+  have realize : ∀ n (b : ℕ → K) (g : List (Fin p) → Bool),
       (∀ d, 0 ≤ b d) →
-      ∃ μ : Word (Fin p) n → ℝ,
+      ∃ μ : Word (Fin p) n → K,
         (∀ w, 0 ≤ μ w) ∧ (∑ w, μ w) = prefixFlow p n b g ∧
         ∀ u : List (Fin p), u.length ≤ n →
           prefixMass n μ u ≤ b u.length ∧
@@ -93,7 +97,7 @@ theorem exists_comb_capped_probability
           · simp [prefixFlow, hg]
           · intro u _; simp [zeroMass, hb]
         · have hc : ∀ i : Fin p,
-              ∃ μ : Word (Fin p) n → ℝ,
+              ∃ μ : Word (Fin p) n → K,
                 (∀ w, 0 ≤ μ w) ∧
                 (∑ w, μ w) = prefixFlow p n (fun d => b (d + 1))
                   (fun u => g (i :: u)) ∧
@@ -113,7 +117,7 @@ theorem exists_comb_capped_probability
           by_cases hs : S = 0
           · refine ⟨fun _ => 0, fun _ => le_rfl, ?_, ?_⟩
             · simp only [prefixFlow, hg, Bool.false_eq_true, ↓reduceIte]
-              change (∑ _ : Word (Fin p) (n + 1), (0 : ℝ)) = min (b 0) S
+              change (∑ _ : Word (Fin p) (n + 1), (0 : K)) = min (b 0) S
               rw [hs, min_eq_right (hb 0)]
               simp
             · intro u _; simp [zeroMass, hb]
@@ -121,7 +125,7 @@ theorem exists_comb_capped_probability
             let r := min (b 0) S / S
             have hr0 : 0 ≤ r := div_nonneg (le_min (hb 0) hS) hS
             have hr1 : r ≤ 1 := (div_le_one hspos).2 (min_le_right _ _)
-            let ν : Word (Fin p) (n + 1) → ℝ := fun w => r * μ w.1 w.2
+            let ν : Word (Fin p) (n + 1) → K := fun w => r * μ w.1 w.2
             have htotal : (∑ w, ν w) = prefixFlow p (n + 1) b g := by
               change (∑ w : Fin p × Word (Fin p) n, r * μ w.1 w.2) = _
               rw [Fintype.sum_prod_type]
@@ -152,7 +156,7 @@ theorem exists_comb_capped_probability
   obtain ⟨ν, hν, htotal, hprefix⟩ := realize H β f hβ
   have hcomparison := comb_le_actual_prefix_flow p H hp β hβ f hroot hlevels
   have hflow : 0 < prefixFlow p H β f := lt_of_lt_of_le hcomb hcomparison
-  let μ : Word (Fin p) H → ℝ := fun w => (prefixFlow p H β f)⁻¹ * ν w
+  let μ : Word (Fin p) H → K := fun w => (prefixFlow p H β f)⁻¹ * ν w
   refine ⟨μ, fun w => mul_nonneg (inv_nonneg.mpr hflow.le) (hν w), ?_, ?_⟩
   · dsimp [μ]
     rw [← Finset.mul_sum, htotal, inv_mul_cancel₀ hflow.ne']

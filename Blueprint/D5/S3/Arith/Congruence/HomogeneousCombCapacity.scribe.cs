@@ -18,8 +18,10 @@ internal sealed class HomogeneousCombCapacityDocument : IScribeDocumentDefinitio
                 Blocks(
                     Paragraph(Text(
                         "Let p >= 2 and H >= 0 be arbitrary integers. Give every node "
-                        + "of the full p-ary tree at depth d the same nonnegative real "
-                        + "capacity beta(d), with no monotonicity requirement. An "
+                        + "of the full p-ary tree at depth d the same nonnegative "
+                        + "capacity beta(d) in any linearly ordered field, with no "
+                        + "monotonicity requirement. Rationals and reals are both "
+                        + "direct specializations. An "
                         + "arbitrary Boolean predicate on finite words over Fin p "
                         + "marks forbidden nodes. The root is allowed, and at each "
                         + "positive depth through H at most one word is forbidden. "

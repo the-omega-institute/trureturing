@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Arith/Congruence/HomogeneousCombCapacity.comb_le_actual_p
 
 *Commentary.*
 
-Let p >= 2 and H >= 0 be arbitrary integers. Give every node of the full p-ary tree at depth d the same nonnegative real capacity beta(d), with no monotonicity requirement. An arbitrary Boolean predicate on finite words over Fin p marks forbidden nodes. The root is allowed, and at each positive depth through H at most one word is forbidden. The count includes redundant forbidden descendants.
+Let p >= 2 and H >= 0 be arbitrary integers. Give every node of the full p-ary tree at depth d the same nonnegative capacity beta(d) in any linearly ordered field, with no monotonicity requirement. Rationals and reals are both direct specializations. An arbitrary Boolean predicate on finite words over Fin p marks forbidden nodes. The root is allowed, and at each positive depth through H at most one word is forbidden. The count includes redundant forbidden descendants.
 
 The actual prefixFlow recursion returns zero at a forbidden node. At an allowed leaf it returns that depth's capacity; at an allowed internal node it returns the minimum of the node capacity and the sum of its actual child flows. For an unobstructed subtree the corresponding fullFlow recursion has p equal children. The combFlow recursion has one blocked child, p-2 full children, and one continuing comb child. The theorem proves combFlow <= prefixFlow at the root for every actual obstacle predicate.
 

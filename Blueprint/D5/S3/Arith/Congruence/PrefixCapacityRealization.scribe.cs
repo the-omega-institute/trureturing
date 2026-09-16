@@ -18,7 +18,8 @@ internal sealed class PrefixCapacityRealizationDocument : IScribeDocumentDefinit
                 Blocks(
                     Paragraph(Text(
                         "Fix any alphabet size p >= 2, finite height H, and "
-                        + "nonnegative real capacity beta(d) at each depth. "
+                        + "nonnegative capacity beta(d) in any linearly ordered "
+                        + "field at each depth. "
                         + "An arbitrary Boolean predicate on actual finite words "
                         + "marks forbidden prefixes. The root is allowed and "
                         + "there is at most one forbidden word at every positive "
@@ -49,9 +50,13 @@ internal sealed class PrefixCapacityRealizationDocument : IScribeDocumentDefinit
                         + "the constructed measure by its actual root mass "
                         + "gives the stated probability law. No monotonicity of "
                         + "the depth capacities is assumed. The formal result "
-                        + "supplies real finite leaf weights and their marginal "
-                        + "caps; a rational FiniteLaw representation and its "
-                        + "subsequent conditional-kernel application are separate "
-                        + "proof obligations."))),
+                        + "supplies finite leaf weights and their marginal caps "
+                        + "over the chosen field. At rational scalars, the "
+                        + "weights, nonnegativity and unit-sum fields directly "
+                        + "construct the imported FiniteLaw structure; no "
+                        + "approximation or rationalization step is required. "
+                        + "Transport to the physical prime-power coordinates "
+                        + "and the subsequent conditional-kernel application "
+                        + "remain separate proof obligations."))),
                 DescribeRole.Theorem))));
 }
