@@ -13,10 +13,11 @@ public sealed class ExecutionSeedTransportBehaviorTests
     public void IsolatedEngineeringArtifactsExportReusableSeedWithoutProducerOrBuildTools()
     {
         if (OperatingSystem.IsWindows()) throw Xunit.Sdk.SkipException.ForSkip("native tar transport fixture is unsupported on Windows");
-        using var producer = Prepare("engineering");
+        using var producer = Prepare("engineering", plannedEngineering: true);
         using var storage = new CurrentExecutionContractTests.CandidateFixture();
         var repository = TestRepositoryLayout.FindRoot();
         var commit = SharedBuildContractTests.Git(producer.Root, "rev-parse", "HEAD");
+        var beforeCommit = SharedBuildContractTests.Git(producer.Root, "rev-parse", "HEAD^1");
         var runtime = Path.GetDirectoryName(CommonExecutionEvidence.RunnerPath)!;
         var original = CommonExecutionEvidence.ValidateEngineering(producer.Root);
         CiTransportTests.SealEngineering(producer.Root, original.Candidate,
@@ -54,6 +55,17 @@ public sealed class ExecutionSeedTransportBehaviorTests
             """);
         foreach (var command in new[] { "lake", "elan", "make", "msbuild" })
             storage.Write("build/guard/" + command, "#!/bin/sh\nprintf '%s\\n' forbidden >> \"$CONTRACT_CALLS\"\nexit 93\n");
+        storage.Write("build/guard/gh", """
+            #!/bin/sh
+            set -eu
+            test "$*" = 'api repos/fixture/repo/actions/runs/81/attempts/1/jobs?per_page=100'
+            cat "$CONTRACT_JOBS"
+            """);
+        storage.Write("build/cache-jobs.json", JsonSerializer.Serialize(new { total_count = 1, jobs = new[] { new
+        {
+            id = 91, name = "engineering_cache", run_id = 81, run_attempt = 1, head_sha = commit,
+            status = "in_progress", runner_name = "fixture-runner", started_at = "2026-01-01T00:00:00Z",
+        } } }));
         foreach (var path in Directory.GetFiles(Path.Combine(storage.Root, "build/guard")))
             File.SetUnixFileMode(path, UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
         var calls = Path.Combine(storage.Root, "build/tool-calls");
@@ -63,12 +75,62 @@ public sealed class ExecutionSeedTransportBehaviorTests
             environment["PATH"] = Path.Combine(storage.Root, "build/guard") + Path.PathSeparator + System.Environment.GetEnvironmentVariable("PATH");
             environment["CONTRACT_DOTNET"] = dotnet;
             environment["CONTRACT_CALLS"] = calls;
+            environment["CONTRACT_JOBS"] = Path.Combine(storage.Root, "build/cache-jobs.json");
             environment["NUGET_PACKAGES"] = Path.Combine(target, "build/absent-packages");
             environment["ELAN_HOME"] = Path.Combine(target, "build/absent-elan");
+            environment["CI_PLAN_PATH"] = "build/ci/plan.json";
+            environment["CI_CHANGES_PATH"] = "build/ci/changes.json";
+            environment["CI_PUSH_BEFORE"] = "";
+            environment["CI_PUSH_AFTER"] = "";
+            environment["CI_NEEDS"] = "{\"build\":{\"result\":\"success\"},\"engineering\":{\"result\":\"success\"}}";
+            environment["GITHUB_SHA"] = commit;
+            environment["GITHUB_JOB"] = "engineering_cache";
+            environment["RUNNER_NAME"] = "fixture-runner";
+            environment["GITHUB_EVENT_PATH"] = Path.Combine(storage.Root, "build/push-event.json");
             return environment;
         }
+        storage.Write("build/push-event.json", JsonSerializer.Serialize(new { before = beforeCommit, after = commit }));
         var exporter = targets[0];
         var exportEnvironment = IsolatedEnvironment(exporter, "81");
+        var missingPlan = Python(exporter, repository, ["keys", "--repository", exporter, "--stage", "engineering"], exportEnvironment);
+        Assert.True(missingPlan.Exit == 2, missingPlan.Text);
+        Assert.Contains("changes.json", missingPlan.Text, StringComparison.Ordinal);
+        var missingEvent = StageInput(exporter, commit, new(exportEnvironment) { ["GITHUB_EVENT_PATH"] = "" });
+        Assert.True(missingEvent.Exit == 2, missingEvent.Text);
+        Assert.Contains("native push requires the actual fixed event input", missingEvent.Text, StringComparison.Ordinal);
+        Assert.False(File.Exists(Path.Combine(exporter, "build/ci/plan.json")));
+        var planned = StageInput(exporter, commit, exportEnvironment);
+        Assert.True(planned.Exit == 0, planned.Text);
+        Assert.Contains("\"required\": true", planned.Text, StringComparison.Ordinal);
+        var plan = JsonNode.Parse(File.ReadAllText(Path.Combine(exporter, exportEnvironment["CI_PLAN_PATH"])))!;
+        Assert.Equal("push", plan["mode"]!.ToString());
+        Assert.Null(plan["base"]);
+        Assert.Null(plan["head"]);
+        Assert.Equal(beforeCommit, plan["origin"]!["before"]!.ToString());
+        Assert.Equal(commit, plan["origin"]!["after"]!.ToString());
+        Assert.Equal("not-applicable", plan["stages"]!["delta"]!["status"]!.ToString());
+        var changesPath = Path.Combine(exporter, exportEnvironment["CI_CHANGES_PATH"]);
+        var completeChanges = File.ReadAllText(changesPath);
+        var incomplete = JsonNode.Parse(completeChanges)!;
+        Assert.NotEmpty(incomplete["changes"]!.AsArray());
+        incomplete["changes"] = new JsonArray();
+        incomplete["change_count"] = 0;
+        File.WriteAllText(changesPath, incomplete.ToJsonString());
+        var badRange = StageInput(exporter, commit, exportEnvironment);
+        Assert.True(badRange.Exit == 2, badRange.Text);
+        Assert.Contains("changed-path", badRange.Text, StringComparison.Ordinal);
+        var badKeys = Python(exporter, repository, ["keys", "--repository", exporter, "--stage", "engineering"], exportEnvironment);
+        Assert.True(badKeys.Exit == 2, badKeys.Text);
+        string[] snapshotArguments = ["snapshot", "--repository", exporter, "--stage", "engineering", "--layer", "engineering", "--bounded-cache"];
+        var badSnapshot = CacheWithFixedClock(exporter, repository, "lean_actions", snapshotArguments, exportEnvironment);
+        Assert.True(badSnapshot.Exit == 2, badSnapshot.Text);
+        Assert.DoesNotContain("engineering_ready=true", badSnapshot.Text, StringComparison.Ordinal);
+        File.WriteAllText(changesPath, completeChanges);
+        // The rejected invocations end their jobs. Reset their local failure
+        // receipt before exercising the independent successful job below.
+        File.Delete(Path.Combine(exporter, "build/ci/engineering-result.json"));
+        planned = StageInput(exporter, commit, exportEnvironment);
+        Assert.True(planned.Exit == 0, planned.Text);
         foreach (var stage in new[] { "build", "engineering" })
         {
             var restored = Workflow(exporter, "restore", stage, commit, archives[stage], exportEnvironment);
@@ -77,9 +139,19 @@ public sealed class ExecutionSeedTransportBehaviorTests
         Assert.Equal(original.Candidate, CommonExecutionEvidence.ValidateEngineering(exporter).Candidate);
         Assert.False(Directory.Exists(Path.Combine(exporter, CommonExecutionEvidence.TestSeedPath)));
         Assert.False(Directory.Exists(Path.Combine(exporter, CommonExecutionEvidence.CheckSeedPath("engineering"))));
-        AssertReceipt(Python(exporter, repository, ["snapshot", "--repository", exporter, "--layers", "engineering"], exportEnvironment), "snapshot");
+        var keys = Python(exporter, repository, ["keys", "--repository", exporter, "--stage", "engineering"], exportEnvironment);
+        Assert.True(keys.Exit == 0, keys.Text);
+        var deadline = CacheWithFixedClock(exporter, repository, "cache_deadline",
+            ["begin", "--repository", exporter, "--stage", "engineering", "--job-timeout-minutes", "10"], exportEnvironment);
+        Assert.True(deadline.Exit == 0, deadline.Text);
+        Assert.Contains("\"cache_allowed\": true", deadline.Text, StringComparison.Ordinal);
+        var snapshot = CacheWithFixedClock(exporter, repository, "lean_actions", snapshotArguments, exportEnvironment);
+        AssertReceipt(snapshot, "snapshot");
+        Assert.Equal("true", Key(snapshot.Text, "engineering_ready"));
+        Assert.Equal("7", Key(snapshot.Text, "save_timeout_minutes"));
         var cached = Path.Combine(exporter, "build/lean-cache/engineering");
         var key = JsonNode.Parse(File.ReadAllText(Path.Combine(cached, "manifest.json")))!["key"]!.GetValue<string>();
+        Assert.Equal(Key(keys.Text, "engineering_key"), key);
         var consumer = targets[1];
         var consumerEnvironment = IsolatedEnvironment(consumer, "82");
         // The upstream artifact retains its original execution identity.
@@ -108,7 +180,7 @@ public sealed class ExecutionSeedTransportBehaviorTests
         File.AppendAllText(Path.Combine(exporter, tests.Materials[0].Path), "corrupt evidence\n");
         var rejected = Workflow(exporter, "verify", "engineering", commit, archives["engineering"], exportEnvironment);
         Assert.True(rejected.Exit == 2, rejected.Text);
-        var failed = Python(exporter, repository, ["snapshot", "--repository", exporter, "--layers", "engineering"], exportEnvironment);
+        var failed = CacheWithFixedClock(exporter, repository, "lean_actions", snapshotArguments, exportEnvironment);
         AssertReceipt(failed, "save-failed");
         Assert.Contains("engineering_ready=false", failed.Text, StringComparison.Ordinal);
         Assert.Equal(before, Inventory(cached));
@@ -594,6 +666,25 @@ public sealed class ExecutionSeedTransportBehaviorTests
             command, "--repository", root, "--stage", stage, "--commit", commit, "--archive", archive], environment,
             TestBudgets.LongWorkflowProcessHangGuard);
 
+    private static (int Exit, string Text) StageInput(string root, string commit, Dictionary<string, string> environment) =>
+        SharedBuildContractTests.Process(root, "python3", ["-B", Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/workflow/ci.py"),
+            "stage-input", "--repository", root, "--stage", "engineering", "--commit", commit], environment,
+            TestBudgets.LongWorkflowProcessHangGuard);
+
+    private static (int Exit, string Text) CacheWithFixedClock(string root, string repository, string module, string[] arguments,
+        Dictionary<string, string> environment) => SharedBuildContractTests.Process(root, "python3", ["-B", "-c", """
+            import importlib, sys, types
+            sys.path.insert(0, sys.argv.pop(1))
+            import cache_deadline
+            # Only the deadline's two clock dependencies are deterministic.
+            # Its CLI, metadata validation, state writer/reader and the native
+            # snapshot worker execute normally, with their real hang guards.
+            cache_deadline.time = types.SimpleNamespace(time=lambda: 1767225600, monotonic=lambda: 1000)
+            command = importlib.import_module(sys.argv.pop(1))
+            raise SystemExit(command.main())
+            """, Path.Combine(repository, "tools/scripts/worktree"), module, .. arguments], environment,
+            TestBudgets.LongWorkflowProcessHangGuard);
+
     private static void AssertReceipt((int Exit, string Text) result, string status)
     {
         Assert.True(result.Exit == 0, result.Text);
@@ -604,12 +695,44 @@ public sealed class ExecutionSeedTransportBehaviorTests
         .Order(StringComparer.Ordinal).Select(path => (Path.GetRelativePath(root, path), CommonExecutionEvidence.Hash(path),
             OperatingSystem.IsWindows() ? 0 : (int)File.GetUnixFileMode(path))).ToArray();
 
-    private static CurrentExecutionContractTests.CandidateFixture Prepare(string stage)
+    private static CurrentExecutionContractTests.CandidateFixture Prepare(string stage, bool plannedEngineering = false)
     {
         var fixture = new CurrentExecutionContractTests.CandidateFixture();
         fixture.Write("lean-toolchain", "leanprover/lean4:v4.19.0\n");
         fixture.Write("lake-manifest.json", "{\"packages\":[{\"name\":\"mathlib\",\"rev\":\"0123456789012345678901234567890123456789\",\"dir\":\".lake/packages/mathlib\"}]}\n");
         fixture.Write("lakefile.toml", "name = 'fixture'\n");
+        if (plannedEngineering)
+        {
+            fixture.Write("Meta/FILEMAP.toml", """
+                schema_version = 4
+                resources = [
+                  { id = "build", stage = "build", owner = "tools/tests/First/First.csproj", prerequisites = [], tools = [], cache_layers = [], cache_activation = {}, materials = ["Meta/ci-checks.json", "Meta/ci-resources.json", "Meta/engineering-projects.json"] },
+                  { id = "engineering", stage = "engineering", owner = "tools/tests/First/First.csproj", prerequisites = ["build"], tools = ["dotnet"], cache_layers = ["engineering"], cache_activation = { engineering = "stage-start" }, materials = [] }
+                ]
+                [residence_policy]
+                case_id = "fixture"
+                desired = "registered"
+                known_violation_count = 0
+                status = "active"
+                [[files]]
+                pattern = "**"
+                require = ["engineering"]
+                kind = "program"
+                admission_plane = "judge"
+                produced_by = "none"
+                consumed_by = ["test"]
+                verified_by = ["test"]
+                artifact_id = "none"
+                runtime_disposition = "committed-source"
+                """ + "\n");
+            fixture.Write("Meta/ci-resources.json", JsonSerializer.Serialize(new { schema = "ci-resource-execution-v1", resources = new[]
+            {
+                new { id = "build", projects = Array.Empty<string>(), checks = Array.Empty<string>(), steps = Array.Empty<string>() },
+                new { id = "engineering", projects = new[] { CurrentExecutionContractTests.CandidateFixture.First, CurrentExecutionContractTests.CandidateFixture.Second },
+                    checks = new[] { "banned-api-proof", "capability-proof", "selftest-pair" }, steps = Array.Empty<string>() },
+            } }));
+            SharedBuildContractTests.Git(fixture.Root, "add", "Meta/FILEMAP.toml", "Meta/ci-resources.json");
+        }
         SharedBuildContractTests.Git(fixture.Root, "add", "lean-toolchain", "lake-manifest.json", "lakefile.toml");
         SharedBuildContractTests.Git(fixture.Root, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", "commit", "-qm", "seed inputs");
         fixture.Build();

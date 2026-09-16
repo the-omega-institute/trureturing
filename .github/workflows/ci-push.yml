@@ -262,6 +262,9 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: python3 tools/scripts/worktree/cache_deadline.py begin --repository "$GITHUB_WORKSPACE" --stage engineering --job-timeout-minutes 10
+      - name: Validate plan for engineering cache
+        if: steps.cache_window.outputs.cache_allowed == 'true'
+        run: python3 tools/scripts/workflow/ci.py stage-input --repository "$GITHUB_WORKSPACE" --stage engineering
       - uses: actions/setup-dotnet@v4
         if: steps.cache_window.outputs.cache_allowed == 'true'
         with:

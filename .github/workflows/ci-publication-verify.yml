@@ -81,7 +81,7 @@ jobs:
         run: make lean-cache-from-github-without-mathlib || printf '%s\n' 'Optional Release seed unavailable; production continues'
       - name: Publish and restore an isolated verification snapshot
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.CI_PUBLISH_TOKEN }}
         run: make lean-cache-to-github-without-mathlib LEAN_CACHE_MODE=verification LEAN_CACHE_SOURCE_REF="$GITHUB_REF" LEAN_CACHE_SOURCE_COMMIT="$GITHUB_SHA"
 
   truth:
