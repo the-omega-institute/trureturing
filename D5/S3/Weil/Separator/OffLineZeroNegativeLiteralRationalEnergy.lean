@@ -3,7 +3,6 @@
    mirror-B: D5/B/S3/Weil/Separator/OffLineZeroNegativeLiteralRationalEnergy
    mirror-E: none(waiver:analytic-erased-existence-without-numerical-extraction)
    anchors: []
-   utility: none
    digest: An actual off-line zero produces a literal rational test with negative full energy. -/
 
 import D5.S3.Weil.TestFunctions.RationalCutoffApproximation

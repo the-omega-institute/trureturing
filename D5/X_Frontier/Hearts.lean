@@ -104,3 +104,4 @@ def o6WeilPositivityStatement : Prop :=
     0 ≤ (zeroSum Z (convolutionSquare g) hZero).re
 
 end D5.X_Frontier.Hearts
+
