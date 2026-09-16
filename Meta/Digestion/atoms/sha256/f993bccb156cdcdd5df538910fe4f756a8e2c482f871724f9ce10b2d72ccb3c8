@@ -1,0 +1,26 @@
+**theorem 49.13（最大同阈值周期存在；$t=1$ 显式，$t\ge2$ 不作枚举断言）。** 对每个有限 $t\ge1$，$D_t^{\max}$ 本身属于 $\mathcal D_t$，故它是同一阈值 $t$ 下允许的最大 supernatural。特别地
+$$
+D_1^{\max}=1806.
+$$
+本结论不需要、也不推出对 $t\ge2$ 的素因子集合有有限显式枚举。
+
+**证明。** 显然
+$$
+H(D_t^{\max})\le t.
+$$
+取任意有限 $m\mid D_t^{\max}$。对每个 $p^e\parallel m$，因为 $e\le e_p(D_t^{\max})$ 且右侧是集合 $\{0,1,\ldots,t\}$ 中某些整数的上确界，所以存在某个 $D_p\in\mathcal D_t$ 满足 $p^e\mid D_p$。由 $D_p$ Carmichael 闭合，
+$$
+\lambda(p^e)\mid D_p\mid D_t^{\max}.
+$$
+又由 Carmichael 函数的素数幂最小公倍数公式，
+$$
+\lambda(m)=\operatorname{lcm}_{p^e\parallel m}\lambda(p^e),
+$$
+所以
+$$
+\lambda(m)\mid D_t^{\max}.
+$$
+因此 $D_t^{\max}$ Carmichael 闭合，属于 $\mathcal D_t$。它按定义包含所有 $\mathcal D_t$ 的成员，故为最大元。
+
+$t=1$ 时由 theorem 49.9，所有允许 $D$ 都整除 $1806$，而 $1806$ 自身允许，所以最大元正是 $1806$。证毕。
+
