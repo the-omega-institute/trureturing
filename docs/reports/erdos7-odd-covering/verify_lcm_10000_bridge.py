@@ -1,21 +1,21 @@
 #!/usr/bin/env python3
-"""Check the finite lcm bridge from the external 10000 theorem.
+"""Check a finite odd-lcm exclusion using pure-coordinate CRT bounds.
 
-The arithmetic is standard-library exact integer arithmetic.  The two
-capacity rows are direct instances of the kernel-checked `capacity_exclusion`
-theorem in Mian--Siddique's Centurion source; this program checks their
-decidable inequalities and enumerates the odd abundant candidates through
-17325.  It does not duplicate that Lean theorem.
+Python 3 standard library only; all arithmetic and comparisons are exact.
+The retained filename also locates the earlier external-10000 bridge. The
+current calculation starts at 1 and does not depend on that external theorem.
+This checks a certificate of an ordinary proof, not a Lean proof.
 """
+from array import array
+from fractions import Fraction
+from hashlib import sha256
 from pathlib import Path
 import json
 import math
-from fractions import Fraction
 
 
-EXPECTED = (10395, 11025, 11655, 12285, 12705, 12915, 13545,
-            14175, 14805, 15015, 15435, 16065, 16695, 17325)
-P1_PRIMES = {3, 5, 7, 11}
+FIRST_UNRESOLVED = 11486475
+BOUND = FIRST_UNRESOLVED - 1
 
 
 def require(condition, message):
@@ -23,94 +23,155 @@ def require(condition, message):
         raise ValueError(message)
 
 
-def divisors(n):
-    out = []
-    root = math.isqrt(n)
-    for d in range(1, root + 1):
-        if n % d:
-            continue
-        out.append(d)
-        if d * d != n:
-            out.append(n // d)
-    return sorted(out)
-
-
 def factorization(n):
     factors = {}
-    p = 2
+    p = 3
+    require(n > 0 and n % 2 == 1, "positive odd input")
     while p * p <= n:
         while n % p == 0:
             factors[p] = factors.get(p, 0) + 1
             n //= p
-        p += 1
+        p += 2
     if n > 1:
-        factors[n] = factors.get(n, 0) + 1
+        factors[n] = 1
     return factors
 
 
-def capacity_row(n, tail):
-    ds = divisors(n)
-    lhs = sum(n // d for d in ds if d > 1 and d not in tail)
-    product = math.prod(tail)
-    rhs = (n // product) * math.prod(d - 1 for d in tail)
-    require(all(n % d == 0 and d > 1 for d in tail), "capacity divisor")
-    require(all(math.gcd(d, e) == 1 for i, d in enumerate(tail)
-                for e in tail[i + 1:]), "capacity coprimality")
-    require(lhs < rhs, "capacity inequality")
-    return {"N": n, "T": list(tail), "left": lhs, "right": rhs,
-            "gap": rhs - lhs}
+def sigma_sieve(limit):
+    """At index n//2, sum all positive divisors of the odd integer n."""
+    sums = array('Q', [1]) * ((limit + 1) // 2)
+    for d in range(3, limit + 1, 2):
+        for index in range(d // 2, len(sums), d):
+            sums[index] += d
+    return sums
 
 
-def p1_supported(n):
-    return all(p in P1_PRIMES or p >= 67 for p in factorization(n))
+def coordinate_data(factors):
+    # P=p^h, U=sum_{e=1}^h p^(h-e), L=P-U.
+    return [(p, p ** h, (p ** h - 1) // (p - 1),
+             p ** h - (p ** h - 1) // (p - 1))
+            for p, h in factors.items()]
 
 
-def sparse_supported(n):
-    factors = factorization(n)
-    tail = [p for p in factors if p >= 37]
-    return all(p in {3, 5, 7} or p >= 37 for p in factors) and len(tail) <= 1
+def mixed_budget(coords):
+    period = math.prod(row[1] for row in coords)
+    surviving = math.prod(row[3] for row in coords)
+    singleton = sum(u * (surviving // lower) for _, _, u, lower in coords)
+    numerator = period - surviving - singleton
+    require(numerator >= 0, "nonnegative mixed budget")
+    return numerator, surviving
+
+
+def best_two_block(coords):
+    """Maximize the independent-block rebate, requiring both budgets <1."""
+    best = (0, None)
+    full = (1 << len(coords)) - 1
+    for mask in range(1, full, 2):  # First coordinate in A; no duplicate partitions.
+        a = [row for i, row in enumerate(coords) if mask & (1 << i)]
+        b = [row for i, row in enumerate(coords) if not mask & (1 << i)]
+        if min(len(a), len(b)) < 2:
+            continue
+        na, da = mixed_budget(a)
+        nb, db = mixed_budget(b)
+        if na >= da or nb >= db:
+            continue
+        rebate = na * nb  # da*db is the complete product denominator.
+        if rebate > best[0]:
+            best = (rebate, {
+                "A": [row[0] for row in a], "B": [row[0] for row in b],
+                "A_mixed_bound": str(Fraction(na, da)),
+                "B_mixed_bound": str(Fraction(nb, db))})
+    return best
+
+
+def row(n, factors, use_blocks=False):
+    coords = coordinate_data(factors)
+    numerator, denominator = mixed_budget(coords)
+    rebate, partition = best_two_block(coords) if use_blocks else (0, None)
+    result = {
+        "N": n,
+        "factorization": {str(p): h for p, h in factors.items()},
+        "pure_survivor_count_lower": denominator,
+        "mixed_bound": str(Fraction(numerator, denominator)),
+        "uncovered_count_lower": denominator - numerator + rebate}
+    if use_blocks:
+        result.update({"partition": partition,
+                       "two_block_bound": str(Fraction(numerator - rebate, denominator))})
+    return result
 
 
 def compute():
-    candidates = tuple(n for n in range(10001, 17326, 2)
-                      if 2 * n <= sum(divisors(n)))
-    require(candidates == EXPECTED, "odd abundant candidate list")
-    rows = [capacity_row(15015, (3, 5, 7, 11, 13)),
-            capacity_row(16065, (3, 5, 7, 17))]
-    one_tail_loss = Fraction(1889, 48) * Fraction(1, 12) ** 2
-    require(one_tail_loss == Fraction(1889, 6912) < 1,
-            "single tail 13 load")
-    p1 = [n for n in candidates if p1_supported(n)]
-    sparse = [n for n in candidates if sparse_supported(n)]
-    covered = set(p1) | set(sparse) | {row["N"] for row in rows} | {12285}
-    require(covered == set(candidates), "finite bridge classification")
+    sigmas = sigma_sieve(FIRST_UNRESOLVED)
+    count = perfect = 0
+    digest = sha256()
+    exceptions = []
+    max_n = 1
+    max_num, max_den = 0, 1
+    for n in range(1, BOUND + 1, 2):
+        sigma = sigmas[n // 2]
+        if sigma < 2 * n:
+            continue
+        factors = factorization(n)
+        coords = coordinate_data(factors)
+        require(math.prod(p + u for _, p, u, _ in coords) == sigma,
+                "sieve versus multiplicative divisor sum")
+        count += 1
+        perfect += sigma == 2 * n
+        digest.update(f"{n}:{sigma}\n".encode('ascii'))
+        numerator, denominator = mixed_budget(coords)
+        if numerator < denominator:
+            if numerator * max_den > max_num * denominator:
+                max_n, max_num, max_den = n, numerator, denominator
+            continue
+        result = row(n, factors, use_blocks=True)
+        require(result["uncovered_count_lower"] > 0, f"unresolved candidate {n}")
+        exceptions.append(result)
+    require(count == 23758 and perfect == 0, "abundant and perfect counts")
+    require([item["N"] for item in exceptions] == [6891885], "pure-bound exceptions")
+    require(sigmas[FIRST_UNRESOLVED // 2] >= 2 * FIRST_UNRESOLVED,
+            "next obstruction is abundant")
+    next_row = row(FIRST_UNRESOLVED, factorization(FIRST_UNRESOLVED), use_blocks=True)
+    require(next_row["uncovered_count_lower"] <= 0, "stopping criterion")
+    examples = [row(n, factorization(n)) for n in (315, 945, 45045)]
+    require([item["uncovered_count_lower"] for item in examples] == [71, 179, 3915],
+            "5040 odd-part and finite extension examples")
+    golden_fiber = [5040, 10080, 15120, 20160, 30240, 60480]
+    odd_parts = []
+    for n in golden_fiber:
+        while n % 2 == 0:
+            n //= 2
+        odd_parts.append(n)
+    require(set(odd_parts) == {315, 945}, "odd parts of existing golden fiber")
+    even_cover = [(2, 0), (3, 0), (4, 1), (6, 5), (12, 7)]
+    require(all(5040 % d == 0 for d, _ in even_cover), "even example divisors")
+    require(all(any((x - a) % d == 0 for d, a in even_cover) for x in range(12)),
+            "even covering example")
     return {
-        "interval": [10001, 17325],
-        "odd_abundant_candidates": list(candidates),
-        "p1_supported_candidates": p1,
-        "degree_two_single_tail_candidates": sparse,
-        "external_capacity_rows": rows,
-        "single_tail_12285_gamma_bound": "1889/48",
-        "single_tail_12285_W_bound": "1/12",
-        "single_tail_12285_loss": str(one_tail_loss),
-        "only_unresolved_candidate": None,
-        "factorizations": {
-            str(n): {str(p): exponent for p, exponent in factorization(n).items()}
-            for n in candidates},
-        "conclusion": "hypothetical odd-cover lcm is 12285 or exceeds 17325",
-    }
+        "interval": [1, BOUND],
+        "odd_abundant_candidates": count,
+        "odd_perfect_candidates": perfect,
+        "candidate_digest_format": "ASCII decimal N:sigma(N), newline, ascending N",
+        "candidate_sha256": digest.hexdigest(),
+        "pure_bound_exclusions": count - len(exceptions),
+        "largest_successful_pure_bound": {"N": max_n, "bound": str(Fraction(max_num, max_den))},
+        "two_block_exclusions": exceptions,
+        "first_unresolved_by_these_criteria": next_row,
+        "examples": examples,
+        "golden_fiber_5040": golden_fiber,
+        "golden_fiber_odd_parts": odd_parts,
+        "even_cover": [{"modulus": d, "residue": a} for d, a in even_cover],
+        "conclusion": f"hypothetical odd-cover lcm exceeds {BOUND}",
+        "verification_boundary": "ordinary CRT proof and exact integer enumeration; not Lean formalized"}
 
 
 def main():
-    path = Path(__file__).with_name("lcm_10000_bridge_certificate.json")
     data = compute()
-    require(json.loads(path.read_text(encoding="utf-8")) == data,
-            "fixed lcm bridge certificate")
-    print(json.dumps({"result": "PASS", "candidates": len(data["odd_abundant_candidates"]),
-                      "only_unresolved_candidate": data["only_unresolved_candidate"],
-                      "finite_lcm_boundary": "lcm > 17325",
-                      "capacity_gaps": [row["gap"] for row in data["external_capacity_rows"]]},
-                     sort_keys=True))
+    path = Path(__file__).with_name("lcm_10000_bridge_certificate.json")
+    require(json.loads(path.read_text(encoding="utf-8")) == data, "fixed lcm certificate")
+    print(json.dumps({"result": "PASS", "candidates": data["odd_abundant_candidates"],
+                      "pure_exclusions": data["pure_bound_exclusions"],
+                      "two_block_exclusions": len(data["two_block_exclusions"]),
+                      "finite_lcm_boundary": f"lcm > {BOUND}"}, sort_keys=True))
 
 
 if __name__ == "__main__":

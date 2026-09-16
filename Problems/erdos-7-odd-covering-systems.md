@@ -56,42 +56,85 @@ unresolved lcm values to 10395, 12285, and 17325 in that finite-certificate
 route. We reuse it as a citation-only boundary and do not add a bind-only
 Lean wrapper.
 
-### Finite lcm bridge through 17325
+### Independent finite lcm exclusion through 11486474
 
-The external lcm theorem reduces the next finite search to odd abundant or
-perfect lcm values above 10000. Exact integer enumeration of the interval
-`10001 ≤ N ≤ 17325` finds 14 odd abundant candidates. The existing restricted
-theorem (P1) excludes the candidates whose prime support lies in
-`{3,5,7,11}`; the degree-two tail theorem above excludes the candidates with
-one tail prime at least 37. The two remaining capacity rows are direct
-instances of the public source's kernel-checked `capacity_exclusion_int`
-theorem:
+The existing common product-law argument below has a finite-height version
+that gives an elementary exclusion independently of the external 10000 theorem.
+Let \(N\) be odd. Complete any proposed family to one forbidden class for each
+nonunit divisor of \(N\); avoiding this completion suffices to avoid the
+original family. For every \(p^h\parallel N\), put
 
 \[
-\begin{array}{c|c|c|c}
-N&T&\text{non-}T\text{ capacity}&(N/\prod T)\prod_{d\in T}(d-1)\\
-15015&\{3,5,7,11,13\}&4568&5760\\
-16065&\{3,5,7,17\}&6687&6912
-\end{array}
+ u_p=\sum_{e=1}^h p^{-e},\qquad s_p=\frac{u_p}{1-u_p},\qquad
+ M_N=\prod_{p\mid N}(1+s_p)-1-\sum_{p\mid N}s_p.
+ \tag{FC1}
 \]
 
-The exact candidate list, factorizations, and both strict inequalities are
-checked by the [finite bridge verifier](../docs/reports/erdos7-odd-covering/verify_lcm_10000_bridge.py)
-and its [fixed certificate](../docs/reports/erdos7-odd-covering/lcm_10000_bridge_certificate.json).
-The remaining value `12285=3^3·5·7·13` is also excluded directly by the
-block criterion: it has one tail prime, so there is no crossing class, and
-the existing same-law head bound gives
+First remove the pure \(p\)-power classes in each prime-power coordinate.
+The surviving density is at least \(1-u_p>0\). Under the uniform law on
+that coordinate's actual survivors, each \(p^e\) cylinder has mass at most
+\(p^{-e}/(1-u_p)\). The product of these laws is supported on points
+avoiding every pure-power class. A mixed modulus has at least two prime
+factors; summing its product cylinder bound over all distinct mixed
+moduli gives exactly \(M_N\). Thus \(M_N<1\) excludes a cover and gives
 
 \[
- \sum_B A_B\le\frac{1889}{48}\left(\frac1{13-1}\right)^2
-       =\frac{1889}{6912}<1.
+ \frac{\#\{\text{uncovered residues modulo }N\}}{N}
+ \ge \prod_{p\mid N}(1-u_p)(1-M_N)>0.
+ \tag{FC2}
 \]
 
-Thus the external theorem, (P1), the sparse-tail theorem, the two public
-capacity instances, and this one-tail calculation give the strict finite
-boundary `lcm > 17325`. The exact certificate records the 12285 row and its
-strict load inequality; this is a finite exclusion, not a resolution of the
-unrestricted problem.
+A two-block refinement also uses the same law. Partition the primes into
+nonempty disjoint sets \(A,B\), and let \(a=M_A\), \(b=M_B\) be their
+internal mixed-class budgets, computed by (FC1) with the same heights.
+When \(0\le a,b<1\), the two internal deletion events are independent,
+and their union has mass at most \(a+b-ab\). The remaining, crossing
+classes have total mass at most \(M_N-a-b\). Consequently the full
+mixed deletion has mass at most \(M_N-ab\). Replacing \(M_N\) by
+\(M_N-ab<1\) in (FC2) is valid. This independence concerns disjoint
+coordinate blocks; no independence of overlapping mixed classes is assumed.
+
+These tests need only integers. Set
+\(P_p=p^h\), \(U_p=(P_p-1)/(p-1)\), \(L_p=P_p-U_p\), and
+\(D=\prod_p L_p\). Then
+
+\[
+ M_N=\frac{N-D-\sum_p U_pD/L_p}{D}.
+ \tag{FC3}
+\]
+
+The [exact verifier](../docs/reports/erdos7-odd-covering/verify_lcm_10000_bridge.py)
+uses an odd-divisor sieve to enumerate all odd abundant or perfect
+\(N\le11486474\), starting at 1. Abundance is necessary because covering
+requires \(\sigma(N)/N\ge2\). There are **23758** candidates, all abundant,
+and **23757** have \(M_N<1\). The sole remaining candidate is
+
+\[
+ N=6891885=3^4\cdot5\cdot7\cdot11\cdot13\cdot17.
+\]
+
+Take \(A=\{3,5\}\) and \(B=\{7,11,13,17\}\). Here
+
+\[
+ a=\frac{10}{41},\quad b=\frac{149}{2304},\quad
+ M_N-ab=\frac{1877957}{1889280}<1.
+\]
+
+The resulting uncovered-count lower bound is **11323** per period.
+Therefore every hypothetical distinct odd covering system has
+**least common multiple greater than 11486474**. The
+[fixed certificate](../docs/reports/erdos7-odd-covering/lcm_10000_bridge_certificate.json)
+contains the exact exceptional row, candidate count and digest, extremal
+successful bound, and next failed criterion.
+
+The first integer not excluded by these two elementary tests is
+\(11486475=3^3\cdot5^2\cdot7\cdot11\cdot13\cdot17\); its best two-block
+bound is \(1095631/1021440>1\). Failure of a sufficient test does not
+establish a cover or exclude other methods. This is an ordinary CRT proof
+with exact arithmetic, not a local Lean formalization or a claim of a new
+best literature bound. In particular, Schroeder's nine-prime claim would
+exclude this six-prime case as well; its verification boundary remains
+that of the linked source note. No bind-only Lean declaration is added.
 
 ### Reuse of the 5040 and divisor-sum work
 
@@ -112,6 +155,7 @@ Existing frozen declarations provide the following reusable ingredients:
 | [GoldenResourceOptimalInteger.golden_resource_sigma_identity](../D5/S3/Arith/GoldenResourceOptimalInteger.lean) | Identify the project's divisor objective with `log(σ(N)/N)−λ log N`. |
 | [RobinExponentSwap.reciprocal_geom_sum_swap_strict](../D5/S3/Arith/RobinExponentSwap.lean) | Compare reciprocal-divisor products when prime exponents are reassigned. |
 | [RobinRationalBasis.log_expansion_remainder_bound](../D5/S3/Arith/GoldenResource/RobinRationalBasis.lean) | Bound the remainder of the same positive `atanh` logarithm expansion used by the finite continuation verifier. |
+| [GoldenDivisorLanguage.golden_fiber_5040](../D5/S3/Arith/GoldenResource/GoldenDivisorLanguage.lean) | The six integers with golden observation 5040 have exactly the two odd parts 315 and 945. |
 | [GoldenDivisorLanguage.full_window_divisor_exponent_equiv](../D5/S3/Arith/GoldenResource/GoldenDivisorLanguage.lean) | Identify divisors with prime-exponent coordinates in Fibonacci-sized windows; its 5040 specialization has 60 divisors. |
 
 These results are reused at their existing statements; no duplicate Lean
@@ -135,8 +179,29 @@ shows that covering would require `σ(N)/N≥2`. At the two adjacent heights,
 Thus moduli dividing `315=3²·5·7` leave at least `2/105=6/315` uncovered,
 for every residue assignment. Raising only the 3-exponent to obtain
 `945=3³·5·7` already makes this reciprocal-sum bound insufficient. It does
-not prove coverage at 945. The joint-load and survivor-profile estimates
-below retain the residue intersections that this scalar sum omits.
+not prove coverage at 945. The finite-height CRT criterion (FC1)--(FC2)
+gives the stronger bounds:
+
+| Period \(N\) | Mixed budget \(M_N\) | Guaranteed uncovered residues |
+|---|---:|---:|
+| \(315\) | \(49/120\) | \(71\) |
+| \(945\) | \(157/336\) | \(179\) |
+| \(45045\) | \(233/320\) | \(3915\) |
+
+The existing `golden_fiber_5040` theorem gives exactly
+\(\{5040,10080,15120,20160,30240,60480\}\). Removing powers of 2 from
+these six integers gives precisely \(\{315,945\}\). Thus the same golden
+observation contains both sides of the simple reciprocal-sum threshold;
+retaining the exact prime exponents and CRT coordinates supplies the
+stronger exclusion. The verifier checks these arithmetic specializations
+without duplicating the existing theorem.
+
+The even coordinate also admits a concrete contrast: the five distinct
+classes \(0\bmod2,0\bmod3,1\bmod4,5\bmod6,7\bmod12\) cover every integer,
+and all five moduli divide 5040. Checking one period of length 12 verifies
+this example. This does not settle whether an all-odd cover can exist.
+The joint-load and survivor-profile estimates below retain additional
+residue intersections for the unrestricted problem.
 
 The prime 2 matters quantitatively. The uniform lower bound for avoiding
 one pure class per prime-power modulus is
@@ -220,9 +285,9 @@ remain valid, as does the restricted noncoverage theorem; their proposed
 universal head input and all eight displayed finite-base targets are refuted.
 A proof of #7 therefore needs a sufficient input that this star family does
 not contradict, rather than a sharper proof of the same universal inequality.
-The public kernel-checked lcm theorem, combined with P1, the sparse-tail
-results, two exact capacity rows, and the one-tail load calculation below,
-now gives `lcm > 17325` for every hypothetical cover. This is a finite lower
+The finite-height pure-coordinate CRT criterion and its independent two-block
+refinement give `lcm > 11486474` for every hypothetical cover, independently
+of the external lcm theorem. This is a finite lower
 bound and does not control the unrestricted large-lcm branches.
 
 The block-saturation theorem below supplies such an input for restricted
@@ -5122,10 +5187,9 @@ The block-saturation criterion gives further noncoverage theorems for
 arbitrary `{3,5,7}` heads with sparse tail interactions, and for every
 positive-height star head with matching tails. It also gives the actual
 mixed-tail budgets (BS8)--(BS9) required of any full star completion.
-The public Mian--Siddique lcm theorem plus the exact finite bridge verifier
-raises the finite exclusion boundary to `lcm > 17325`, with every candidate
-in the checked interval discharged by P1, sparse tails, capacity rows, or the
-one-tail load calculation.
+The finite-height pure-coordinate CRT criterion and two-block refinement
+give the independent finite exclusion `lcm > 11486474`: the verifier
+discharges all 23758 odd abundant candidates in the interval from 1.
 `TernaryRootLoadTail.root_load_tail_le` formalizes the finite-itinerary
 component of the actual-layout improvement, and
 `TwoRootEventMoment.two_root_event_moment_le` proves the bound for the
@@ -5169,7 +5233,6 @@ establish literature priority or an unrestricted proof or covering counterexampl
 The block-saturation criterion, its sparse-graph consequences for arbitrary
 three-prime heads, and its all-positive-height star consequences also have
 ordinary proofs and exact constant certificates, not complete Lean proofs.
-The finite lcm bridge through `17325` is likewise an ordinary composition of
-the source-pinned external Lean theorem, the dossier's ordinary P1 and
-sparse-tail proofs, and exact integer certificates; no duplicate local Lean
-declaration is claimed.
+The independent finite lcm exclusion through `11486474` likewise consists
+of an ordinary CRT product-law proof and exact integer enumeration; no
+local Lean formalization or duplicate declaration is claimed.
