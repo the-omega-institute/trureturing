@@ -15870,3 +15870,623 @@ The adopted operator classification gives $|\mathscr E|=\mathfrak c$, and inject
 One $K$-valued evaluation contains all countably many digits of one output state, while a test $\chi_{b,j}$ contains only one digit. Equation (39.30) proves that object cardinality alone permits a countable binary encoding. The failure of countably many continuous observations is therefore the continuity and parameter-family obstruction proved above, not a failure of such set-theoretic encodings. $\square$
 
 ## 追加锚（本行以下为增补区）
+## 40. Uniform quadratic mixing for endogenous orbit partitions
+
+**Definition 40.1 (Actual circular order, observation, and error).** Let $\theta\in(0,1)\setminus\mathbb Q$, let $\mathbb T=\mathbb R/\mathbb Z$, and let $R_\theta x=x+\theta$. Haar probability is denoted by $\lambda$, and $\{u\}=u-\lfloor u\rfloor$ denotes fractional part. For $N\ge2$, put
+$$
+t_k=\{k\theta\},\qquad 0\le k<N,
+$$
+and let $\sigma$ be the unique permutation such that
+$$
+0=t_{\sigma_0}<t_{\sigma_1}<\cdots<t_{\sigma_{N-1}}<1.
+$$
+Thus $\sigma_0=0$. Set $s_i=t_{\sigma_i}$ for $i<N$, $s_N=1$, and, when endpoint indices are used cyclically, $\sigma_N=\sigma_0=0$. The observation cells and their actual masses are
+$$
+I_i=[s_i,s_{i+1}),\qquad
+\mu_i=s_{i+1}-s_i,\qquad
+\pi_{N,\theta}(x)=i\ \Longleftrightarrow\ \{x\}\in I_i.
+$$
+In particular, a cut belongs to the cell immediately to its right. Write $\boldsymbol\mu=(\mu_i)_{i<N}$, $\mu_{\min}=\min_i\mu_i$, and $\mu_{\max}=\max_i\mu_i$. No comparability between these masses is assumed.
+
+Let $\mathcal P(\mathbb T)$ denote the Borel probability measures. For $p\in[0,1]$ and a finite signed Borel measure $\eta$, define
+$$
+P_p\eta=(1-p)\eta+p(R_\theta)_\#\eta.
+$$
+For $n\in\mathbb N_0$, let $b_{n,p}(j)=\Pr(J=j)$ for $J\sim\operatorname{Bin}(n,p)$, extended by zero outside $0\le j\le n$, and put
+$$
+M_{n,p}=\max_j b_{n,p}(j),\qquad
+v=p(1-p),\qquad V=nv,\qquad s=\sqrt V.
+$$
+For a starting phase $x$, define the probability vector and its full-variation error by
+$$
+\boldsymbol r_{n,p}(x)
+ =\bigl(\Pr(x+J\theta\in I_i)\bigr)_{i<N},
+\qquad
+D_{N,\theta,p}(n,x)
+ =\|\boldsymbol r_{n,p}(x)-\boldsymbol\mu\|_1,
+$$
+$$
+e_{N,\theta,p}(n)=\sup_{x\in\mathbb T}D_{N,\theta,p}(n,x),
+\qquad
+\tau_{N,\theta,p}(\varepsilon)
+ =\inf\{n\in\mathbb N_0:e_{N,\theta,p}(n)\le\varepsilon\}.
+$$
+Here $0<\varepsilon<1$, $\inf\varnothing=+\infty$, and $[a]_+=\max\{a,0\}$. Full variation on a finite alphabet is the sum of absolute coordinate differences, without a factor of one half. For $N=1$, separately define $I_0=\mathbb T$ and $\mu_0=1$.
+
+The fixed countable set
+$$
+\mathcal G_\theta=\{[k\theta]:k\in\mathbb Z\}
+$$
+contains every cut for every observation size. The classical three-gap statement concerns the number of distinct gap lengths, not a bound on $\mu_{\max}/\mu_{\min}$; see [the fixed-revision three-gap statements, especially `three_gap_card_le_three` and `three_gap_lengths_eq`](https://github.com/the-omega-institute/trureturing/blob/698e9f0de668cd049829b372eb436849db61bd1b/D5/S1/Phase/ThreeGap/Main.lean#L221-L246).
+
+**theorem 40.2 (Binomial law, Dirac reduction, monotonicity, and deterministic parameters).** For every finite signed Borel measure $\eta$,
+$$
+P_p^n\eta
+ =\sum_{j=0}^n b_{n,p}(j)(R_\theta^j)_\#\eta,
+\qquad
+P_p^{n+r}=P_p^nP_p^r,
+\qquad
+P_p^n\lambda=\lambda.
+$$
+For every $N\ge2$, $n,r\ge0$, and $p\in[0,1]$,
+$$
+e_{N,\theta,p}(n)
+ =\sup_{\eta\in\mathcal P(\mathbb T)}
+   \|(\pi_{N,\theta})_\#P_p^n\eta-\boldsymbol\mu\|_1
+ =\max_{x\in\mathbb T\setminus\mathcal G_\theta}
+   D_{N,\theta,p}(n,x),
+$$
+$$
+e_{N,\theta,p}(n+r)\le e_{N,\theta,p}(n),
+\qquad
+e_{N,\theta,p}(n)\le e_{N+1,\theta,p}(n).
+$$
+Moreover,
+$$
+e_{N,\theta,p}(0)=2(1-\mu_{\min}),
+\qquad
+e_{N,\theta,0}(n)=e_{N,\theta,1}(n)=2(1-\mu_{\min}),
+$$
+$$
+\lim_{p\downarrow0}e_{N,\theta,p}(n)
+ =\lim_{p\uparrow1}e_{N,\theta,p}(n)
+ =\sup_{0<p<1}e_{N,\theta,p}(n)
+ =2(1-\mu_{\min}).
+$$
+Consequently $\tau_{N,\theta,0}(\varepsilon)=\tau_{N,\theta,1}(\varepsilon)=+\infty$. For $N=1$, the error and mixing time are identically zero for every parameter. The first-passage definition of $\tau$ agrees with requiring the error bound at all subsequent times.
+
+**Proof.** The identity operator commutes with pushforward by $R_\theta$. Induction and Pascal's identity therefore give the binomial formula. For $0<p<1$ its coefficients are
+$$
+b_{n,p}(j)=\binom njp^j(1-p)^{n-j};
+$$
+at $p=0$ the law is concentrated at $j=0$, and at $p=1$ at $j=n$. This also includes $n=0$. The semigroup identity is the identity for powers of one operator. Haar invariance under rotations gives the last measure identity.
+
+For an initial probability $\eta$, its observation vector is the coordinatewise integral of the vectors from point masses. Convexity of the norm gives
+$$
+\|(\pi_{N,\theta})_\#P_p^n\eta-\boldsymbol\mu\|_1
+ \le\int D_{N,\theta,p}(n,x)\,d\eta(x)
+ \le\sup_xD_{N,\theta,p}(n,x).
+$$
+Point masses give the reverse inequality. Each coordinate of $\boldsymbol r_{n,p}$ is a finite sum of right-continuous step functions. All their possible discontinuities belong to
+$$
+\{[k\theta]:-n\le k\le N-1\}.
+$$
+On each complementary open arc the whole vector is constant, and its value at a cut equals its value immediately to the right. Thus every attained vector also occurs on an open arc. There are finitely many such vectors, and every such arc meets the complement of the countable set $\mathcal G_\theta$. This proves the asserted maximum, including its restriction to that single exceptional-set complement.
+
+Using the preceding Dirac reduction,
+$$
+e_{N,\theta,p}(n+r)
+ =\sup_\eta
+   \|(\pi_{N,\theta})_\#P_p^n(P_p^r\eta)-\boldsymbol\mu\|_1
+ \le e_{N,\theta,p}(n).
+$$
+This argument uses the full semigroup, not a transition matrix on observation labels. Adding the cut $[N\theta]$ refines the partition. Summing finer coordinates into their coarser cells contracts the norm by the triangle inequality, proving monotonicity in $N$.
+
+A point mass in cell $i$ has distance $2(1-\mu_i)$ from $\boldsymbol\mu$. At a deterministic parameter the law remains a point mass; the bijectivity of $R_\theta^n$ makes every cell available as a terminal cell. This proves the displayed deterministic identities. Since $\mu_{\min}\le1/N\le1/2$, their value is at least one.
+
+Time monotonicity bounds every interior-parameter error by its time-zero value. Start in a minimum-mass cell. The probability of any nonzero step count is $1-(1-p)^n$, so contraction under observation and the reverse triangle inequality give
+$$
+e_{N,\theta,p}(n)
+ \ge2(1-\mu_{\min})-2\bigl(1-(1-p)^n\bigr).
+$$
+For the other endpoint, choose the initial point so that its $n$-th rotation lies in a minimum-mass cell, obtaining
+$$
+e_{N,\theta,p}(n)
+ \ge2(1-\mu_{\min})-2(1-p^n).
+$$
+The two limits and the supremum formula follow. A one-cell observation always has probability vector $(1)$, proving the separate $N=1$ statement. Finally, time monotonicity proves the assertion about first passage. $\square$
+
+**theorem 40.3 (Endpoint atoms and coherent endpoint conventions).** Let $\pi^-_{N,\theta}$ instead use the cells $(s_i,s_{i+1}]$ on the circle, with the same labels and masses. Define
+$$
+B_{N,\theta,p}(n,x)
+ =\sum_{j=0}^n b_{n,p}(j)
+   \mathbf1_{\{t_0,\ldots,t_{N-1}\}}(x+j\theta).
+$$
+Then
+$$
+B_{N,\theta,p}(n,x)\le\min\{1,NM_{n,p}\},
+$$
+$$
+\|(\pi_{N,\theta})_\#P_p^n\delta_x
+   -(\pi^-_{N,\theta})_\#P_p^n\delta_x\|_1
+ \le2B_{N,\theta,p}(n,x).
+$$
+The absolute difference of the corresponding pointwise errors has the same upper bound. Their worst-start errors are equal, although their pointwise probability vectors need not be equal.
+
+For every $x\notin\mathcal G_\theta$, the boundary term is zero simultaneously for all $N\ge2$, $n\ge0$, and $p\in[0,1]$.
+
+**Proof.** Couple the two observations using the same random integer $J$. Their labels can differ only at a cut. Changing a single label changes its point-mass vector by norm at most two, which proves the vector bound; the reverse triangle inequality proves the error bound. Irrationality makes the phases $x+j\theta$ distinct for distinct integers $j$, so at most $N$ indices can hit the cut set.
+
+For fixed $n,p$, the probability vector for the right-closed convention at $x$ is the left-hand limit of the left-closed probability vector at $x$. Conversely, the left-closed vector is a right-hand limit of the right-closed vectors. Norm continuity and taking suprema give equality of the two worst-start errors. Finally, if $x+j\theta=[k\theta]$ for any integers $j,k$, then $x=[(k-j)\theta]\in\mathcal G_\theta$. This single implication proves the simultaneous assertion, without parameter-dependent null sets. $\square$
+
+**Definition 40.4 (Vector transfer and its finite endpoint data).** Let $\mathbf e_i$ denote the $i$-th coordinate vector and, for a set of labels $A$, let $\mathbf1_A=\sum_{i\in A}\mathbf e_i$. Define
+$$
+F_q(x)=\sum_{r=1}^q\{x-r\theta\},\qquad F_0=0,
+$$
+$$
+g_i(x)=F_{\sigma_{i+1}}(x)-F_{\sigma_i}(x),
+\qquad
+\mathbf g(x)=(g_i(x))_{i<N},
+\qquad
+\mathbf f(x)=\mathbf e_{\pi_{N,\theta}(x)}-\boldsymbol\mu.
+$$
+Set
+$$
+\Delta_{N,\theta}
+ =\sup_{x,y\in\mathbb T}\|\mathbf g(x)-\mathbf g(y)\|_1.
+$$
+For a bounded scalar function $h$, write $\operatorname{osc}(h)=\sup_xh(x)-\inf_xh(x)$. The actual right and left labels of the endpoint with time index $r$ are
+$$
+a_r^+=\sigma^{-1}(r),
+\qquad
+a_r^-=a_r^+-1\pmod N.
+$$
+For $0\le k<N$ and $\eta\in\{+,-\}$, put
+$$
+A_k^\eta=\{a_r^\eta:0\le r<k\},
+\qquad
+\mathbf v_k^\eta=k\boldsymbol\mu-\mathbf1_{A_k^\eta}.
+$$
+Each $A_k^\eta$ has exactly $k$ elements.
+
+The scalar transfer used here is the Hecke–Ostrowski fractional-part construction; see [the fixed-revision identity `hecke_ostrowski_coboundary`](https://github.com/the-omega-institute/trureturing/blob/698e9f0de668cd049829b372eb436849db61bd1b/D5/S1/Phase/HeckeOstrowskiCoboundary.lean#L29-L78) and [Grepstad–Lev, Proposition 2.3, Proposition 2.5, and Theorem 2.6](https://arxiv.org/html/1404.0165v2#S2). The identities below use actual one-sided values, not merely almost-everywhere representatives.
+
+**theorem 40.5 (Pointwise coboundary and exact vector oscillation).** For every $x\in\mathbb T$,
+$$
+\mathbf f(x)=\mathbf g(x)-\mathbf g(x+\theta).
+$$
+The vector oscillation is given by the finite formula
+$$
+\Delta_{N,\theta}
+ =\max_{\substack{0\le k,l<N\\ \eta,\zeta\in\{+,-\}}}
+ \left\|(k-l)\boldsymbol\mu
+       -\mathbf1_{A_k^\eta}
+       +\mathbf1_{A_l^\zeta}\right\|_1
+ \le2(N-1).
+$$
+In particular, for every $m\ge1$,
+$$
+\sup_x\left\|
+ \sum_{j=0}^{m-1}
+ \bigl(\mathbf e_{\pi_{N,\theta}(x+j\theta)}
+       -\boldsymbol\mu\bigr)\right\|_1
+ \le\Delta_{N,\theta}.
+$$
+There is also the nonsharp coordinatewise estimate
+$$
+\Delta_{N,\theta}
+ \le\sum_{i=0}^{N-1}\operatorname{osc}(g_i)
+ \le\sum_{i=0}^{N-1}|\sigma_{i+1}-\sigma_i|
+ \le N(N-1).
+$$
+
+**Proof.** Finite telescoping gives, pointwise,
+$$
+F_q(x)-F_q(x+\theta)=\{x-q\theta\}-\{x\}.
+$$
+For a positively oriented half-open arc $[a,b)$ of length $\ell\in(0,1)$, interpreted modulo one,
+$$
+\{x-b\}-\{x-a\}=\mathbf1_{[a,b)}(x)-\ell.
+$$
+Indeed, put $u=\{x-a\}$. Since $b=a+\ell$ modulo one, the left side is $\{u-\ell\}-u$, equal to $1-\ell$ for $0\le u<\ell$ and to $-\ell$ for $\ell\le u<1$. This includes both endpoints with the specified convention. Subtracting the two transfer identities for $\sigma_{i+1}$ and $\sigma_i$ proves the vector coboundary, including the wraparound cell.
+
+The only possible jumps of $\mathbf g$ occur at $t_1,\ldots,t_{N-1}$. In particular, $\mathbf g$ is continuous at $t_0=0$. On each open cell it is affine, with constant vector slope
+$$
+(\sigma_{i+1}-\sigma_i)_{i<N}.
+$$
+Rotation preserves the direction of one-sided limits. Applying the coboundary successively at $t_0,\ldots,t_{k-1}$, first with right-hand values and then with left-hand values, gives
+$$
+\mathbf g(t_k^\eta)
+ =\mathbf g(0)
+   -\sum_{r=0}^{k-1}
+      (\mathbf e_{a_r^\eta}-\boldsymbol\mu)
+ =\mathbf g(0)+\mathbf v_k^\eta.
+$$
+For the minus sign, this uses the left limit of the pointwise identity; continuity at zero supplies the same initial value for both chains.
+
+The closure of the image of each open cell is the line segment between its two appropriate endpoint values. Thus every image point is a convex combination of endpoint values, and every endpoint value is a limit of image points. For any two such convex combinations, the norm of their difference is at most the largest norm of a difference of endpoint values, by double averaging and the triangle inequality. Conversely, each endpoint pair can be approached by image-point pairs. This proves the exact finite maximum formula for $\Delta_{N,\theta}$.
+
+To bound that maximum, suppose $k\ge l$, put $A=A_k^\eta$ and $B=A_l^\zeta$, and use $|A|=k$, $|B|=l$, and $\|\boldsymbol\mu\|_1=1$:
+$$
+\|(k-l)\boldsymbol\mu-\mathbf1_A+\mathbf1_B\|_1
+ \le k-l+|A\mathbin{\triangle}B|
+ =2k-2|A\cap B|
+ \le2(N-1).
+$$
+Interchanging the pair handles $k<l$. This argument uses the fact that both one-sided lists of labels are permutations; it does not replace the actual masses by uniform masses.
+
+The unweighted discrepancy identity telescopes to $\mathbf g(x)-\mathbf g(x+m\theta)$ and is therefore bounded by $\Delta_{N,\theta}$. Finally, each $g_i$ is a signed sum of $|\sigma_{i+1}-\sigma_i|$ fractional-part functions, each of oscillation one. Summing these coordinatewise estimates proves the last display. Unlike the finite endpoint-vector estimate, that last estimate alone can lose an extra factor of $N$. $\square$
+
+**theorem 40.6 (Summation by parts with the vector oscillation).** Let $w_0,\ldots,w_m$ be nonnegative weights summing to one, extended by zero at indices $-1$ and $m+1$. Define
+$$
+\mathcal V(w)=\frac12\sum_{j=0}^{m+1}|w_j-w_{j-1}|.
+$$
+Then
+$$
+\sup_x\left\|
+ \sum_{j=0}^m w_j\mathbf e_{\pi_{N,\theta}(x+j\theta)}
+ -\boldsymbol\mu\right\|_1
+ \le\Delta_{N,\theta}\mathcal V(w).
+$$
+For the binomial weights, including $n=0$ and the deterministic parameters,
+$$
+\mathcal V(b_{n,p})=M_{n,p}.
+$$
+Consequently,
+$$
+e_{N,\theta,p}(n)
+ \le\min\{2(1-\mu_{\min}),\Delta_{N,\theta}M_{n,p}\}.
+$$
+
+**Proof.** Put $c_j=w_j-w_{j-1}$. Summation by parts and Theorem 40.5 give
+$$
+\sum_{j=0}^m w_j\mathbf f(x+j\theta)
+ =\sum_{j=0}^{m+1}c_j\mathbf g(x+j\theta).
+$$
+The coefficients $c_j$ sum to zero, and their positive and negative masses both equal $\mathcal V(w)$. When this mass is positive, divide each part by it. The right side becomes $\mathcal V(w)$ times a difference of two convex combinations of transfer values. Its norm is at most $\mathcal V(w)\Delta_{N,\theta}$, by double averaging. If the mass is zero, the displayed sum is zero and the bound is immediate.
+
+For $0<p<1$, the consecutive binomial ratios
+$$
+\frac{b_{n,p}(j+1)}{b_{n,p}(j)}
+ =\frac{n-j}{j+1}\frac p{1-p}
+$$
+decrease with $j$. Hence the sequence is unimodal, possibly with two equal adjacent modes. The zero-extended sequence rises from zero to its maximum and then falls to zero, so its total variation is twice that maximum. A point mass has the same property, covering the remaining cases. Apply the first part with binomial weights and combine it with time monotonicity from Theorem 40.2. $\square$
+
+**theorem 40.7 (An absolute observation-error bound for every irrational angle).** For every $N\ge2$, $\theta\in(0,1)\setminus\mathbb Q$, $0<p<1$, and $n\ge1$,
+$$
+M_{n,p}
+ \le\min\left\{1,\frac{\sqrt\pi}{2\sqrt{2np(1-p)}}\right\},
+$$
+$$
+e_{N,\theta,p}(n)
+ \le\min\left\{
+ 2(1-\mu_{\min}),
+ \Delta_{N,\theta}M_{n,p},
+ \sqrt{\frac\pi2}\,
+ \frac{N-1}{\sqrt{np(1-p)}}
+ \right\}.
+$$
+In particular the proposed absolute-constant inequality is true, with
+$$
+C=\sqrt{\frac\pi2},
+\qquad
+e_{N,\theta,p}(n)
+ \le\min\left\{2,\frac{CN}{\sqrt{np(1-p)}}\right\}.
+$$
+Every fixed observation therefore mixes uniformly in its initial phase. The bound is also uniform in the angle, and uniform in $p$ on every set where $p(1-p)$ has a positive lower bound.
+
+**Proof.** Expanding the binomial and integrating integer exponentials gives
+$$
+b_{n,p}(j)
+ =\frac1{2\pi}\int_{-\pi}^{\pi}
+   (1-p+pe^{it})^n e^{-ijt}\,dt.
+$$
+The modulus identity
+$$
+|1-p+pe^{it}|^2=1-4p(1-p)\sin^2(t/2)
+$$
+and $1-u\le e^{-u}$ imply
+$$
+b_{n,p}(j)
+ \le\frac1{2\pi}\int_{-\pi}^{\pi}
+       e^{-2V\sin^2(t/2)}\,dt.
+$$
+Concavity of sine on $[0,\pi/2]$ gives $\sin(|t|/2)\ge |t|/\pi$ for $|t|\le\pi$. Extending the resulting Gaussian integral to the real line yields
+$$
+b_{n,p}(j)
+ \le\frac1{2\pi}\int_{\mathbb R}e^{-2Vt^2/\pi^2}\,dt
+ =\frac{\sqrt\pi}{2\sqrt2\,s}.
+$$
+The probability bound by one supplies the other term. Theorems 40.5 and 40.6 now give the error bounds. Letting $np(1-p)$ tend to infinity proves the stated uniform convergence.
+
+No step restricts continued-fraction coefficients. Large partial quotients change the endpoint permutation and the masses, but the endpoint-vector diameter remains at most $2(N-1)$. Thus the mechanism does not pass through a global interval-discrepancy estimate. $\square$
+
+**theorem 40.8 (The mass condition for a concentration lower bound).** For every $t>1$, every starting phase, and every $n\ge0$, $p\in[0,1]$,
+$$
+D_{N,\theta,p}(n,x)
+ \ge2\left[1-t^{-2}-(2ts+1)\mu_{\max}\right]_+.
+$$
+For a given $K\ge1$, the count-to-mass bound
+$$
+\sum_{i\in A}\mu_i\le\frac{K|A|}{N}
+\quad\text{for every set of labels }A
+$$
+holds if and only if $\mu_{\max}\le K/N$. Under this hypothesis, if
+$$
+N\ge16K,\qquad V\le\frac{N^2}{1024K^2},
+$$
+then every initial phase satisfies $D_{N,\theta,p}(n,x)\ge9/8$.
+
+There are also the small-variance bounds
+$$
+D_{N,\theta,p}(n,x)\ge2[1-2V-\mu_{\max}]_+,
+$$
+$$
+e_{N,\theta,p}(n)\ge2[1-2V-\mu_{\min}]_+
+ \ge[1-4V]_+.
+$$
+
+**Proof.** Let
+$$
+B_t=\{j\in\{0,\ldots,n\}:|j-np|\le ts\}.
+$$
+For $s>0$, Chebyshev's inequality gives $\Pr(J\in B_t)\ge1-t^{-2}$. For $s=0$, $J$ is constant, so the same inequality holds directly. In either case, $B_t$ contains at most $2ts+1$ integers. Put
+$$
+A_x=\{\pi_{N,\theta}(x+j\theta):j\in B_t\}.
+$$
+The observation law assigns this set probability at least $1-t^{-2}$, and its stationary mass is at most $(2ts+1)\mu_{\max}$. For probability vectors $u,w$,
+$$
+\|u-w\|_1=2\max_A(u(A)-w(A)).
+$$
+Indeed, the sum of positive coordinates of $u-w$ equals the sum of the absolute values of its negative coordinates, and choosing the positive coordinates maximizes the set sum. Testing on $A_x$ proves the first lower bound.
+
+The count-to-mass equivalence follows by testing singletons in one direction and summing the singleton bounds in the other. Under the stated numerical hypotheses, $s\le N/(32K)$, so
+$$
+(4s+1)\mu_{\max}
+ \le\frac18+\frac K N\le\frac3{16}.
+$$
+The first inequality with $t=2$ gives $D\ge2(3/4-3/16)=9/8$.
+
+For the small-variance assertion, put $h=\min(p,1-p)$ and choose $j_*=0$ for $p\le1/2$, and $j_*=n$ otherwise. Bernoulli's inequality gives
+$$
+\Pr(J=j_*)=(1-h)^n\ge1-nh\ge1-2V,
+$$
+because $V=nh(1-h)$ and $1-h\ge1/2$. Testing on the cell containing $x+j_*\theta$ proves the bound involving $\mu_{\max}$. To obtain $\mu_{\min}$, choose a point $z$ in a minimum-mass cell and start at $x=z-j_*\theta$. Finally, $\mu_{\min}\le1/N\le1/2$ yields the last inequality. The point $z$ may be chosen outside $\mathcal G_\theta$, since its cell has positive length. $\square$
+
+**theorem 40.9 (A worst-start witness without a mesh assumption).** For $1\le h\le N$, define the actual consecutive-index mass
+$$
+\beta_h
+ =\min_{0\le a\le N-h}
+   \sum_{k=a}^{a+h-1}\mu_{\sigma^{-1}(k)}.
+$$
+Then
+$$
+\beta_h\le\frac1{\lfloor N/h\rfloor}
+ \le\frac{h}{N-h+1}.
+$$
+For any consecutive integer block $B=\{r,\ldots,r+h-1\}\subseteq\{0,\ldots,n\}$,
+$$
+e_{N,\theta,p}(n)
+ \ge2[\Pr(J\in B)-\beta_h]_+.
+$$
+In particular, if $h=|B_t|\le N$, where $B_t$ is the nonempty central block of Theorem 40.8, then
+$$
+e_{N,\theta,p}(n)
+ \ge2[1-t^{-2}-\beta_h]_+
+ \ge2\left[1-t^{-2}-\frac{h}{N-h+1}\right]_+.
+$$
+
+A single choice
+$$
+\delta\in(0,\mu_{\min})\setminus\mathcal G_\theta
+$$
+works as a reference phase for all these witnesses for the fixed pair $(N,\theta)$: if $a$ attains $\beta_h$, the starting point
+$$
+x=\delta+(a-r)\theta
+$$
+is a witness. Every such witness lies outside $\mathcal G_\theta$. The starting point itself is allowed to depend on the block and hence on $n,p$.
+
+**Proof.** The sequence $(\mu_{\sigma^{-1}(k)})_{0\le k<N}$ is a permutation of the cell masses, so its sum is one. Its first $\lfloor N/h\rfloor$ disjoint blocks of length $h$ have total mass at most one. One of them has mass at most $1/\lfloor N/h\rfloor$, proving the first bound. If $N=qh+r_0$ with $0\le r_0<h$, then
+$$
+N-h+1=(q-1)h+r_0+1\le qh,
+$$
+which proves the second bound.
+
+The set $\mathcal G_\theta$ is countable, whereas $(0,\mu_{\min})$ is a nonempty interval, so the stated $\delta$ exists and can be fixed before choosing $p,n,B$. For $j=r+u\in B$,
+$$
+x+j\theta=\delta+(a+u)\theta.
+$$
+Since $0\le a+u<N$ and $0<\delta<\mu_{\min}$, this point lies strictly inside the cell immediately to the right of $t_{a+u}$. These are $h$ distinct cells, and their stationary mass is precisely $\beta_h$. The observation law assigns their union probability at least $\Pr(J\in B)$. Testing variation on that union proves the bound with the displayed actual starting point. Substituting the central-block probability proves the remaining estimates. Finally, an integer rotation of $\delta\notin\mathcal G_\theta$ cannot enter $\mathcal G_\theta$.
+
+For $t>1$, Chebyshev's lower bound is positive when $s>0$, so $B_t$ is nonempty; when $s=0$, it contains the deterministic value of $J$. Thus no empty central-block case has been suppressed. $\square$
+
+**theorem 40.10 (Unequal masses and a large-partial-quotient separation).** Suppose $(N-1)\theta<1$. Then the cells are
+$$
+I_i=[i\theta,(i+1)\theta)\quad(0\le i<N-1),
+\qquad
+I_{N-1}=[(N-1)\theta,1),
+$$
+with masses $\theta,\ldots,\theta,1-(N-1)\theta$. If $n\theta<1$, their probabilities from the actual endpoint start $x=0$ are exactly
+$$
+r_{n,p,i}(0)=b_{n,p}(i)\quad(0\le i<N-1),
+\qquad
+r_{n,p,N-1}(0)=1-\sum_{i=0}^{N-2}b_{n,p}(i).
+$$
+If $(n+N-1)\theta<1$, every
+$$
+x\in[(N-1)\theta,1-n\theta)
+$$
+has
+$$
+D_{N,\theta,p}(n,x)=2(N-1)\theta.
+$$
+In particular, for each fixed $N\ge2,n,p$, the infimum of $D_{N,\theta,p}(n,1/2)$ over irrational $\theta\in(0,1)$ is zero. A lower bound valid for every starting phase therefore cannot be inferred from the class count alone.
+
+There is also an explicit family along which global interval discrepancy tends to one while the worst-start endogenous observation error tends to zero. Put
+$$
+\alpha=\frac{\sqrt5-1}{2},\qquad
+\theta_A=\frac1{A+\alpha}=[0;A,1,1,\ldots],
+$$
+$$
+N_A=\lfloor A^{1/4}\rfloor,\qquad
+n_A=\lfloor A^{3/4}\rfloor,\qquad p=\frac12,
+$$
+for integers $A\ge16$. Let
+$$
+\nu_A=\sum_{j=0}^{n_A}b_{n_A,1/2}(j)\delta_{[j\theta_A]},
+\qquad
+\mathscr D(\rho)=\sup_{\text{half-open circle arcs }I}
+ |\rho(I)-\lambda(I)|.
+$$
+Then
+$$
+\mathscr D(\nu_A)\longrightarrow1,
+\qquad
+e_{N_A,\theta_A,1/2}(n_A)\longrightarrow0.
+$$
+
+**Proof.** Under $(N-1)\theta<1$, the endpoint indices are already in increasing circular order. Under $n\theta<1$, no sampled point $j\theta$ wraps around zero. It belongs to the $i$-th short cell exactly when $j=i$, with the left endpoint included; all remaining indices belong to the last cell. This proves the exact probabilities, with the zero extension of $b_{n,p}$ handling indices larger than $n$.
+
+For the displayed range of $x$, all points $x+j\theta$, $0\le j\le n$, lie in the last cell. Its observation law is therefore a point mass there, giving error $2(1-\mu_{N-1})=2(N-1)\theta$. For fixed $N,n$, the phase $1/2$ lies in this range for all sufficiently small positive $\theta$. Taking irrational $\theta\downarrow0$ proves the infimum assertion.
+
+The equation $\alpha=1/(1+\alpha)$ gives the stated continued fraction; in particular $\theta_A$ is irrational and its first partial quotient is $A$. For $A\ge16$, we have $n_A+1\le A^{3/4}+1\le A/2+1<A+\alpha$, so $(n_A+1)\theta_A<1$. The half-open arc
+$$
+[0,(n_A+1)\theta_A)
+$$
+contains every atom of $\nu_A$. Consequently
+$$
+1\ge\mathscr D(\nu_A)
+ \ge1-(n_A+1)\theta_A\longrightarrow1.
+$$
+On the other hand, Theorem 40.7 gives
+$$
+e_{N_A,\theta_A,1/2}(n_A)
+ \le2\sqrt{\frac\pi2}\,
+      \frac{N_A-1}{\sqrt{n_A}}
+ =O(A^{-1/8})\longrightarrow0.
+$$
+This family has only two cell lengths, while its largest cell mass tends to one. It therefore also verifies directly that a bound on the number of gap lengths supplies no near-uniform-mass conclusion. $\square$
+
+**theorem 40.11 (Exact golden-cylinder relation, with boundary costs retained).** Retain the carrier $K$, successor $T$, phase map $H$, invariant measure $m$, cylinders $C_w$, and numbers $Q_L=G_L$ of [§36, Definition 36.1 and Theorems 36.2, 36.4, and 36.5](#36-quadratic-observation-size-mixing-for-the-bernoulli-successor). Let $\alpha=\phi^{-1}$. For every $L\ge1$, translation by $Q_L\alpha$ carries the depth-$L$ phase cuts onto
+$$
+\{0,\alpha,\ldots,(Q_L-1)\alpha\}\pmod1.
+$$
+There is a bijection $\gamma_L:\mathcal W_L\to\{0,\ldots,Q_L-1\}$ matching the open cylinder arcs to the open interiors of the cells of $\pi_{Q_L,\alpha}$. It satisfies
+$$
+(\gamma_L)_\#q_{L\#}m=\boldsymbol\mu_{Q_L,\alpha}.
+$$
+Write $P_p^K$ and $P_p^{\mathbb T}$ for the two kernels, and put
+$$
+y_L=H(x)+Q_L\alpha.
+$$
+For every $x\in K$, $n\ge0$, and $p\in[0,1]$,
+$$
+\|(\gamma_L)_\#q_{L\#}(P_p^K)^n\delta_x
+  -(\pi_{Q_L,\alpha})_\#(P_p^{\mathbb T})^n\delta_{y_L}\|_1
+ \le2B_{Q_L,\alpha,p}(n,y_L)
+ \le2\min\{1,Q_LM_{n,p}\}.
+$$
+Nevertheless, the worst-start errors and mixing times agree exactly:
+$$
+e_{L,p}(n)=e_{Q_L,\alpha,p}(n),
+\qquad
+\tau_{L,p}(\varepsilon)=\tau_{Q_L,\alpha,p}(\varepsilon).
+$$
+In particular, for $0<p<1$ and $n\ge1$,
+$$
+e_{L,p}(n)
+ \le\sqrt{\frac\pi2}\,
+      \frac{G_L-1}{\sqrt{np(1-p)}}.
+$$
+The dense, full-$m$-measure set
+$$
+K_{\mathrm{reg}}
+ =H^{-1}(\mathbb T\setminus\mathcal G_\alpha)
+$$
+is a common set on which the two probability vectors agree simultaneously for every $L,n,p$.
+
+**Proof.** Since $\phi=1+\alpha$, the cuts $e_r=[-r\phi]$ of §36 are $[-r\alpha]$. Adding $Q_L\alpha$ gives $[(Q_L-r)\alpha]$ for $1\le r\le Q_L$, exactly the claimed cut set. Translation preserves orientation and lengths, so the open cylinder arcs determine the bijection $\gamma_L$. The cylinder masses from Theorem 36.2 equal those arc lengths, proving the stationary-vector identity.
+
+Use the same binomial integer $J$ for the two laws. The semiconjugacy in §36 gives
+$$
+H(T^j x)+Q_L\alpha=y_L+j\alpha.
+$$
+Away from the depth-$L$ cuts, the inclusions
+$$
+H^{-1}(J_w)\subseteq C_w
+ \subseteq H^{-1}(\overline{J_w})
+$$
+identify the cylinder label uniquely with the phase-cell label. At a cut they need not do so: the two oriented split points of $K$ are not being identified with one chosen half-open endpoint. Thus the labels in this coupling can differ only on the event counted by $B_{Q_L,\alpha,p}(n,y_L)$. Each disagreement costs at most two in full variation, proving the first estimate. The second follows from Theorem 40.3.
+
+Because $H_\#m=\lambda$ and $\mathcal G_\alpha$ is countable, $m(K_{\mathrm{reg}})=1$. Every nonempty cylinder has positive $m$-mass by Theorem 36.2, and cylinders form a basis of $K$. Hence $K_{\mathrm{reg}}$ is dense. For any point in this set, every forward phase lies outside $\mathcal G_\alpha$, so no cut at any depth is encountered. This proves the simultaneous vector equality for all $L,n,p$ on that one set; it is not a separate almost-everywhere assertion for each parameter.
+
+For fixed $L,n,p$, the original-carrier error is continuous in $x$, since its coordinates are finite combinations of indicators of clopen cylinders composed with the continuous maps $T^j$. Its maximum therefore equals its supremum on the dense set $K_{\mathrm{reg}}$. Every phase outside $\mathcal G_\alpha$ has a unique lift, by the carrier hypotheses in §36, and translation by $Q_L\alpha$ preserves this exceptional-set complement. Consequently the last supremum equals the supremum of the circle error over $\mathbb T\setminus\mathcal G_\alpha$. Theorem 40.2 identifies this with the full circle maximum. This proves exact equality of the worst-start errors without asserting pointwise equality at split endpoints. Equality of mixing times follows from their definitions, and the numerical upper bound follows from Theorem 40.7. $\square$
+
+**theorem 40.12 (Uniform two-sided quadratic budget and the global-discrepancy distinction).** For every irrational $\theta\in(0,1)$, every $N\ge2$, every $0<p<1$, and every $0<\varepsilon<1$,
+$$
+\frac{(1-\varepsilon)N^2}{1024p(1-p)}
+ <\tau_{N,\theta,p}(\varepsilon)
+ \le
+ \left\lceil
+ \frac{\pi(N-1)^2}{2\varepsilon^2p(1-p)}
+ \right\rceil
+ \le
+ \left(\frac{\pi}{2\varepsilon^2}+1\right)
+ \frac{N^2}{p(1-p)}.
+$$
+More explicitly,
+$$
+np(1-p)\le\frac{(1-\varepsilon)N^2}{1024}
+\quad\Longrightarrow\quad
+e_{N,\theta,p}(n)>\varepsilon.
+$$
+Thus the specified worst-start mixing time is comparable to $N^2/[p(1-p)]$ at each fixed accuracy, uniformly over all irrational angles, without a mesh hypothesis. Equivalently,
+$$
+\log\tau_{N,\theta,p}(\varepsilon)
+ =2\log N-\log(p(1-p))+O_\varepsilon(1),
+$$
+where the bounded term is uniform in $\theta,N,p$.
+
+These conclusions also hold when the fixed irrational angle satisfies the hypothesis of [Theorem 36.9](#36-quadratic-observation-size-mixing-for-the-bernoulli-successor), for which the global interval discrepancy at $p=1/2$ is not $O(n^{-1/2})$. In that case, every fixed endogenous finite partition still has an $O_N(n^{-1/2})$ error bound. The iteration exponent here belongs to the specified observation budget; it does not identify iterations with physical time or the exponent with a spatial dimension.
+
+**Proof.** Suppose first that $N\ge16$ and
+$$
+V\le\frac{(1-\varepsilon)N^2}{1024}.
+$$
+Then $s\le N/32$. Take $t=2$ in Theorem 40.9. Its central block has a positive integer length $h$ satisfying
+$$
+h\le4s+1\le\frac N8+\frac N{16}=\frac{3N}{16}<N.
+$$
+Therefore
+$$
+\frac{h}{N-h+1}\le\frac3{13},
+$$
+and the explicitly constructed nonexceptional starting point in that theorem gives
+$$
+e_{N,\theta,p}(n)
+ \ge2\left(\frac34-\frac3{13}\right)
+ =\frac{27}{26}>1>\varepsilon.
+$$
+This does not require the individual cell masses to be small.
+
+For $2\le N<16$, Theorem 40.8 gives
+$$
+e_{N,\theta,p}(n)\ge[1-4V]_+.
+$$
+Under the same variance hypothesis,
+$$
+4V\le\frac{225}{256}(1-\varepsilon)<1-\varepsilon.
+$$
+Hence $1-4V>\varepsilon$, proving the required strict inequality also in this range. The minimum-mass-cell construction in Theorem 40.8 supplies an actual starting point. These arguments include $n=0$. Thus every integer $n$ not exceeding the claimed real lower threshold fails the requested accuracy, and the strict lower bound on $\tau$ follows.
+
+For the upper bound, choose
+$$
+n=\left\lceil
+ \frac{\pi(N-1)^2}{2\varepsilon^2p(1-p)}
+ \right\rceil.
+$$
+Theorem 40.7 gives $e_{N,\theta,p}(n)\le\varepsilon$, establishing both finiteness and the stated upper bound. Since $(N-1)^2\le N^2$ and $N^2/[p(1-p)]\ge16$, the ceiling is bounded by the final displayed expression. Taking logarithms of the two positive bounds proves the uniform logarithmic formula.
+
+Allowing the additional arc endpoint conventions of §36 does not change the global discrepancy supremum: open and closed arcs are monotone limits of half-open arcs with converging lengths, and the remaining endpoint conventions are sandwiched between them. Singleton tests follow by shrinking arcs; empty and full-circle tests have zero error. Thus Theorem 36.9 applies to the same global discrepancy and the same binomial rotation law whenever its stated approximation hypothesis holds. It rules out the global square-root discrepancy estimate, whereas Theorem 40.7 proves the square-root estimate for every one of the fixed endogenous partitions. These statements concern different collections of tests. The finite-partition proof controls a vector transfer through its consecutive orbit endpoints, and its lower bound chooses a light consecutive-index block; neither argument changes the circle, the rotation, or its arithmetic approximation properties. The resulting distinction is exactly between global interval discrepancy and the finite observation mixing budget. $\square$
+
+## 追加锚（本行以下为增补区）
