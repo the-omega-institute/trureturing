@@ -1295,3 +1295,165 @@ $M$ 个正增量之和固定为 $\psi(m)-\psi(a)$，其最大值至少为该和�
 [19-B] Ken'ichiro Tanaka and Alexis Akira Toda. *Discretizing Distributions with Exact Moments: Error Estimate and Convergence Analysis*. SIAM Journal on Numerical Analysis 53(5), 2158--2177, 2015. DOI: 10.1137/140971269. https://epubs.siam.org/doi/10.1137/140971269 . 研究矩保持离散化的误差与收敛；其给定分布的近似问题与本节两种可变测度间的最坏端点质量问题不同。
 
 [19-C] Vinesha Peiris, Nadezda Sukhorukova and Duy Khoa Pham. *Best free knot linear spline approximation and its application to neural networks*. IMA Journal of Applied Mathematics 91(3), 273--292, June 2026. DOI: 10.1093/imamat/hxag015. https://academic.oup.com/imamat/advance-article/doi/10.1093/imamat/hxag015/8706326 . 研究一般自由节点一致逼近，给出单内部节点的优化与充分最优性条件。这里的有限网格公式针对特殊矩极值曲线的受限设计类，不替代该文的一般问题。
+
+## 20. 鸽笼平均界、嵌套网格与逐次加点的精确代价
+
+### 20.1 定义与命题：按误差坐标分配有限区间
+
+沿用第 19 节的 $0\leq a<b<1$、$m=(a+b)/2$、$K=(1-b)(2+b)$ 和 $\psi(t)=\sqrt{(2+t)/(1-t)}$。记
+\[
+L=\psi(m)-\psi(a)>0,\qquad A=KL^2/9>0.
+\]
+对校准网格 $G=\{a=g_0<\cdots<g_M=m,b\}$，其中 $M\geq1$，定义归一化区间长度
+\[
+p_j=\frac{\psi(g_{j+1})-\psi(g_j)}L\quad(0\leq j<M),\qquad D(G)=\max_jp_j.
+\]
+这些数严格为正且总和为一。第 19.4--19.6 节的实际两矩极值证明给出
+\[
+\mathcal E(G):=\sup_{\varepsilon\geq0}\bigl(W(\varepsilon)-W_G(\varepsilon)\bigr)=A D(G)^2.
+\tag{20.1}
+\]
+因此
+\[
+D(G)\geq1/M,\qquad \mathcal E(G)\geq A/M^2,
+\tag{20.2}
+\]
+等号成立当且仅当全部 $p_j=1/M$。
+
+**证明。** 若每个 $p_j<1/M$，求和将严格小于一。若每个 $p_j\leq1/M$ 且有一项严格小于，则总和同样严格小于一。因此最大值至少为平均值，而达到平均值时全部相等。这是有限实权重的鸽笼平均论证 [20-A]。式 (20.1) 依赖此前构造的真实正测度与精确单元代价；鸽笼论证自身不提供变换 $\psi$，也不构造不可辨识的谱测度。
+
+### 20.2 命题：近最优网格在变换坐标中的稳定性
+
+若 $\rho\geq0$ 且 $\mathcal E(G)\leq(1+\rho)A/M^2$，令 $q=\sqrt{1+\rho}-1$，则
+\[
+\sum_{j=0}^{M-1}(p_j-1/M)^2\leq\frac qM.
+\tag{20.3}
+\]
+对每个 $0\leq j\leq M$，还满足
+\[
+-\frac{(M-j)q}{M}\leq
+\frac{\psi(g_j)-\psi(a)}L-\frac jM
+\leq\frac{jq}{M}.
+\tag{20.4}
+\]
+
+**证明。** 式 (20.1) 给每个 $p_j\leq(1+q)/M$，故 $\sum p_j^2\leq(\max p_j)\sum p_j\leq(1+q)/M$。展开平方和得到式 (20.3)。对前 $j$ 个长度分别求和得到式 (20.4) 的上界，对其余 $M-j$ 个求和再从一中减去得到下界。$q=0$ 恢复唯一最优网格。本节给出有效的定量界，不宣称每个稳定性常数均尖锐。
+
+### 20.3 定义与定理：保留旧节点的真实细分历史
+
+一个嵌套校准历史是网格族 $G_M$，$M\geq1$，满足 $G_1=\{a,m,b\}$，并且每次只在 $[a,m]$ 中某个已有开单元加入一个新节点，旧节点永不移动或删除。在归一化的 $\psi$ 坐标中，这等价于从长度列表 $[1]$ 开始，每步将一个正长度 $\ell_k$ 分成 $\alpha_k\ell_k$ 和 $(1-\alpha_k)\ell_k$，其中 $0<\alpha_k<1$。第 $M$ 阶段有 $M$ 个正单元，总长为一。记它们为 $p_{M,j}$，最大长度为 $D_M$，并定义
+\[
+H_M=-\sum_{j=1}^M p_{M,j}\ln p_{M,j},\qquad
+h(\alpha)=-\alpha\ln\alpha-(1-\alpha)\ln(1-\alpha).
+\]
+对任意这样的历史，定义逐步损失
+\[
+z_k=(D_k-\ell_k)\ln2+\ell_k\bigl(\ln2-h(\alpha_k)\bigr)\geq0.
+\tag{20.5}
+\]
+则对每个 $M\geq1$ 有有限历史界
+\[
+\boxed{\ln(1/D_M)+\sum_{k=1}^{M-1}z_k
+\leq\ln2\sum_{k=1}^{M-1}D_k.}
+\tag{20.6}
+\]
+第一部分损失记录没有选择最大单元，第二部分记录分裂比例偏离一半。
+
+**证明。** 分裂的两个子长度之和等于父长度，所以由历史归纳得到始终正且总长为一。逐项展开对数，未改变的单元全部抵消，得到真实熵增
+\[
+H_{k+1}-H_k=\ell_k h(\alpha_k).
+\]
+二元熵满足 $h(\alpha)\leq\ln2$ [20-B]，父单元长度也满足 $\ell_k\leq D_k$，所以式 (20.5) 非负。由于 $H_1=0$，精确求和给出
+\[
+H_M+\sum_{k=1}^{M-1}z_k=\ln2\sum_{k=1}^{M-1}D_k.
+\]
+另一方面，每个 $p_{M,j}\leq D_M$，对数单调性及总长一给出
+\[
+H_M\geq-\sum_jp_{M,j}\ln D_M=\ln(1/D_M).
+\]
+两式合并即得式 (20.6)。候选 Lean `NestedGridEntropy.binary_refinement_entropy_budget` 从实际列表替换恒等式推导该链条，并允许用每阶段任意合法上界代替精确最大单元。源码以零次分裂对应 $M=1$；没有把熵增或最终熵下界放入假设。
+
+### 20.4 定理：嵌套历史的严格额外代价
+
+每个嵌套历史都满足
+\[
+\boxed{\limsup_{M\to\infty} M D_M\geq\frac1{\ln2}.}
+\tag{20.7}
+\]
+
+**证明。** 假设存在 $c<1/\ln2$ 和 $M_0$，使所有 $M\geq M_0$ 都有 $D_M\leq c/M$。因为 $D_M>0$，可以取 $c>0$。丢掉式 (20.6) 中的非负损失，有限个初始阶段的贡献记入常数 $B$，得到
+\[
+\ln M-\ln c\leq \ln(1/D_M)
+\leq B+c\ln2\sum_{k=M_0}^{M-1}\frac1k
+\leq B+c\ln2(1+\ln M).
+\]
+由于 $1-c\ln2>0$，这对任意大 $M$ 不可能成立。因此对每个 $c<1/\ln2$ 都有任意晚的阶段满足 $MD_M>c$，得到式 (20.7)。这条证明区分了单个阶段的平均界与整条历史受到的约束。
+
+### 20.5 构造：达到下界的经典对数细分
+
+定义正长度
+\[
+\ell_j=\frac{\ln((j+1)/j)}{\ln2}\quad(j\geq1).
+\tag{20.8}
+\]
+从标签为一、长度为 $\ell_1=1$ 的单元开始。当有 $M$ 个单元时，选择标签为 $M$ 的单元，以固定左右次序分成标签 $2M$ 与 $2M+1$ 的两段。恒等式
+\[
+\ell_{2M}+\ell_{2M+1}=\ell_M
+\]
+保证这是保持旧边界的合法二分。归纳可知第 $M$ 阶段的标签集恰为 $\{M,M+1,\ldots,2M-1\}$。由于 $\ell_j$ 随 $j$ 严格递减，此时
+\[
+\boxed{D_M=\ell_M=\frac{\ln(1+1/M)}{\ln2},\qquad
+MD_M<\frac1{\ln2},\qquad MD_M\longrightarrow\frac1{\ln2}.}
+\tag{20.9}
+\]
+最后两个结论来自 $\ln(1+x)<x$ 以及 $\ln(1+x)/x\to1$。
+
+这一空间分割还可显式给出。标签 $j$ 若满足 $2^q\leq j<2^{q+1}$，其对应区间为
+\[
+[\log_2j-q,\ \log_2(j+1)-q].
+\]
+它的两个孩子具有相同外边界，内部新增点为 $\{\log_2(2j+1)\}$。因此，第 $j$ 次插入的归一化坐标是
+\[
+s_j=\{\log_2(2j+1)\}\quad(j\geq1).
+\tag{20.10}
+\]
+这正是 Niederreiter 的经典低离散度对数序列，在已放置零端点后重新编号；Weiss 的论文明确给出其历史归属及精确间隔结构 [20-C,20-D]。此处不将该序列或常数 $1/\ln2$ 归为新的数论发现。上述标签证明说明该构造确实是一条保留全部旧节点的历史。
+
+### 20.6 定理：实际两矩误差的最佳全程倍率
+
+令 $\mathcal E_M^*=A/M^2$ 为单独给定 $M$ 时允许重新布点的最优误差。对全部嵌套校准历史，有
+\[
+\boxed{
+\inf_{(G_M)\,\mathrm{nested}}\sup_{M\geq1}
+\frac{\mathcal E(G_M)}{\mathcal E_M^*}
+=\frac1{(\ln2)^2}=2.081368981\ldots.
+}
+\tag{20.11}
+\]
+将上确界换成 $M\to\infty$ 的上极限，最优值相同。
+
+**证明。** 式 (20.1) 使每阶段比值精确等于 $(MD_M)^2$。式 (20.7) 给出所有历史的下界。将式 (20.10) 的新增点送回原始支撑坐标，取
+\[
+v_j=\psi(a)+Ls_j,\qquad g^{\mathrm{new}}_j=\frac{v_j^2-2}{v_j^2+1},
+\]
+并始终保留 $a,m,b$。这给出合法的嵌套校准网格，式 (20.9) 给所有有限阶段的比值严格小于 $1/(\ln2)^2$，而极限恰好等于该值，所以它的上确界取得所需最优值。
+
+对照地，每次在最大归一化单元的中点插入，若 $2^q\leq M<2^{q+1}$，则 $D_M=2^{-q}$。因此此常用二分策略的全程倍率上确界为四。每次二等分最大化当前父单元的熵增，但不保证所有未来节点预算上的最大单元最小。单次均匀网格与逐次保留旧点的最优性是两个不同的量词问题。
+
+更简单地，$M$ 等分网格包含在 $N$ 等分网格中，当且仅当 $M$ 整除 $N$：必要性由节点 $1/M$ 必须等于某个 $k/N$ 得到，充分性直接逐节点验证。故 $2$ 等分到 $3$ 等分已经排除了每个相邻预算都保持单次唯一最优的可能。式 (20.11) 给出这项不相容性的精确全程误差代价。
+
+### 20.7 形式化范围与后续问题
+
+本轮候选 Lean 证明的是第 20.3 节的实际二分历史熵预算，包括显式非负损失。静态平均界直接复用既有数学，不另增包装定理。第 20.2、20.4--20.6 节在此给出普通证明；完整上极限推导、经典对数序列的空间实现和它与第 19 节的实际矩极值之间的形式化连接仍需各自完成。未将普通推导冒充已通过 Lean 内核的结果。
+
+本节回答了指定两矩模型中保留校准节点、一次只加一点时的最佳全程倍率。它不证明此前的维数、时长与噪声联合 minimax 上界，不宣称解决外部具名开放猜想。更高阶矩下还需从真实极值构造判断是否存在能将单元代价化为长度幂的坐标；只有建立该联系，经典分割序列才能提供相应的实际误差保证。
+
+### 20.8 来源
+
+[20-A] Mathlib, `Mathlib/Combinatorics/Pigeonhole.lean`. https://leanprover-community.github.io/mathlib4_docs/Mathlib/Combinatorics/Pigeonhole.html . 有限权重鸽笼及平均值形式的已有基础。
+
+[20-B] Mathlib, commit `db584cd6d46c92f209a44c0f1c829460d327499d`, `Mathlib/Analysis/SpecialFunctions/BinaryEntropy.lean`, `Real.binEntropy_le_log_two` 与 `Real.binEntropy_eq_negMulLog_add_negMulLog_one_sub`. https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/SpecialFunctions/BinaryEntropy.lean . 本轮实际调用的二元熵基础。
+
+[20-C] Christian Weiss. *An Explicit non-Poissonian Pair Correlation Function*. arXiv:2304.14202v3, 16 June 2026. https://arxiv.org/html/2304.14202v3 . Introduction 与 Proposition 2.1 给出经典低离散度对数序列的归属与间隔结构。本节只使用并重新证明所需间隔结构，不使用该文的成对相关主定理。
+
+[20-D] Harald Niederreiter. *On a measure of denseness for sequences*. In *Topics in Classical Number Theory*, Budapest 1981, Colloquia Mathematica Societatis Janos Bolyai 34, North-Holland, Amsterdam, 1984, pp. 1163--1208. 原始出处由 [20-C] 明确引用；本轮未取得其原始全文，不声称直接核查了 1984 年证明。
