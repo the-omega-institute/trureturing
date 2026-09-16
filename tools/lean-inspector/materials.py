@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import gzip
 import hashlib
 import codecs
 import json
@@ -21,7 +22,7 @@ from typing import BinaryIO, Iterable
 SPOOL_SCHEMA = "stratalint-lean-inspector-spool-v1"
 REPORT_SCHEMA = "stratalint-raw-lean-report-v2"
 STATEMENT_DOMAIN = b"trureturing:statement:v1\0"
-MATERIAL_FILE = re.compile(r"^[0-9]+\.statement$")
+MATERIAL_FILE = re.compile(r"^[0-9]+\.statement(?:\.gz)?$")
 SUPPLEMENTARY_SCALAR = re.compile(r"[\U00010000-\U0010FFFF]")
 ARCHIVE_TIMESTAMP = (1980, 1, 1, 0, 0, 0)
 BUFFER_BYTES = 64 * 1024
@@ -151,6 +152,74 @@ def regular_spool_file(spool: pathlib.Path, relative: str) -> pathlib.Path:
     return path
 
 
+def open_material(path: pathlib.Path):
+    return gzip.open(path, "rb") if path.name.endswith(".gz") else path.open("rb")
+
+
+def read_material(path: pathlib.Path) -> bytes:
+    with open_material(path) as reader:
+        return reader.read()
+
+
+def stream_spool(spool: pathlib.Path) -> None:
+    """One writer process; acknowledgments delimit completed compressed files."""
+    spool.mkdir(parents=True, exist_ok=True)
+    index = 0
+    while True:
+        header = sys.stdin.buffer.readline()
+        if header == b"done\n":
+            print("done", flush=True)
+            return
+        chunked = header == b"chunks\n"
+        if not chunked and not re.fullmatch(rb"[1-9][0-9]*\n", header):
+            raise ValueError("invalid or missing material frame length")
+        remaining = 0 if chunked else int(header)
+        path = spool / f"{index}.statement.gz"
+        temporary = spool / f"{index}.statement.gz.tmp"
+        try:
+            with temporary.open("xb") as raw:
+                with gzip.GzipFile(filename="", mode="wb", fileobj=raw,
+                                   compresslevel=6, mtime=0) as writer:
+                    total = 0
+                    while True:
+                        if chunked:
+                            size = sys.stdin.buffer.readline(32)
+                            if not re.fullmatch(rb"(?:0|[1-9][0-9]*)\n", size):
+                                raise ValueError("invalid or missing material chunk length")
+                            remaining = int(size)
+                            if remaining > BUFFER_BYTES:
+                                raise ValueError("material chunk exceeds writer buffer")
+                        if not remaining:
+                            if not total:
+                                raise ValueError("empty material frame")
+                            break
+                        while remaining:
+                            block = sys.stdin.buffer.read(min(remaining, BUFFER_BYTES))
+                            if not block:
+                                raise ValueError("truncated material frame")
+                            writer.write(block)
+                            remaining -= len(block)
+                            total += len(block)
+                        if not chunked:
+                            break
+            os.replace(temporary, path)
+        finally:
+            temporary.unlink(missing_ok=True)
+        index += 1
+        print("ok", flush=True)
+
+
+def validate_template_evidence(value: object) -> None:
+    evidence = require_keys(value,
+        {"schema_version", "compatibility_version", "inventory", "registered", "records", "inputs"},
+        "Inspector declared-template evidence")
+    if (type(evidence["schema_version"]) is not int or evidence["schema_version"] != 1
+            or type(evidence["compatibility_version"]) is not int or evidence["compatibility_version"] != 6
+            or any(not isinstance(evidence[field], list)
+                   for field in ("inventory", "registered", "records", "inputs"))):
+        raise ValueError("Inspector declared-template evidence is malformed")
+
+
 def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Path) -> None:
     started = time.perf_counter_ns()
     root = json.loads(spool_report.read_text(encoding="utf-8"))
@@ -160,8 +229,7 @@ def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Pat
 
     output.parent.mkdir(parents=True, exist_ok=True)
     staged_root = pathlib.Path(tempfile.mkdtemp(prefix=".lean-materials.", dir=output.parent))
-    staged_materials = staged_root / "materials" / "sha256"
-    staged_materials.mkdir(parents=True)
+    material_sources: dict[str, pathlib.Path] = {}
     referenced_spools: set[str] = set()
     modules: list[dict] = []
     previous_module: str | None = None
@@ -172,6 +240,8 @@ def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Pat
             module_keys = {"declarations", "imports", "module", "source_path", "source_sha256"}
             if "information_registration_errors" in raw_module:
                 module_keys.add("information_registration_errors")
+            if "information_templates" in raw_module:
+                module_keys.add("information_templates")
             if "utility_refutation" in raw_module:
                 module_keys.add("utility_refutation")
             module = require_keys(
@@ -195,6 +265,9 @@ def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Pat
                     or any(not isinstance(item, str) for item in registration_errors)
                     or registration_errors != sorted(set(registration_errors))):
                 raise ValueError("Inspector registration evidence is malformed")
+            information_templates = module.get("information_templates")
+            if information_templates is not None:
+                validate_template_evidence(information_templates)
             refutation = module.get("utility_refutation")
             if refutation is not None:
                 require_keys(refutation, {"claim_gid", "claim_source_path", "claim_source_sha256", "result_gid", "is_closed_negation"},
@@ -237,21 +310,22 @@ def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Pat
                     raise ValueError(f"statement material spool is reused: {material_file}")
                 referenced_spools.add(material_file)
                 material_path = regular_spool_file(spool, material_file)
+
                 try:
-                    with material_path.open("rb") as source:
+                    with open_material(material_path) as source:
                         type_sha256, declaration_id = material_identities(source, source_path, kind, name_key)
+                        decoded_bytes = source.tell()
                 except UnicodeDecodeError as error:
                     raise ValueError(
                         f"statement material spool is not strict UTF-8: {material_file}") from error
-                destination = staged_materials / type_sha256[7:]
-                if destination.exists():
-                    with destination.open("rb") as left, material_path.open("rb") as right:
+                address = type_sha256[7:]
+                if address in material_sources:
+                    with open_material(material_sources[address]) as left, open_material(material_path) as right:
                         if not streams_equal(left, right):
                             raise ValueError(f"statement material address collision: {type_sha256}")
-                    material_path.unlink()
                 else:
-                    material_bytes += material_path.stat().st_size
-                    os.replace(material_path, destination)
+                    material_sources[address] = material_path
+                    material_bytes += decoded_bytes
                 declarations.append({
                     "axioms": require_sorted_strings(
                         declaration["axioms"], "Inspector spool declaration axioms"),
@@ -273,6 +347,8 @@ def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Pat
             }
             if registration_errors is not None:
                 report_module["information_registration_errors"] = registration_errors
+            if information_templates is not None:
+                report_module["information_templates"] = information_templates
             if refutation is not None:
                 report_module["utility_refutation"] = refutation
             modules.append(report_module)
@@ -281,10 +357,10 @@ def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Pat
             path.name for path in spool.iterdir()
             if path.is_file() or path.is_symlink()
         }
-        if actual_spools:
+        if actual_spools != referenced_spools:
             raise ValueError(
                 "Inspector material spool has unreferenced files: "
-                + ", ".join(sorted(actual_spools)))
+                + ", ".join(sorted(actual_spools.symmetric_difference(referenced_spools))))
 
         report_bytes = canonical_json({"modules": modules, "schema": REPORT_SCHEMA})
         staged_report = staged_root / "report.json"
@@ -293,15 +369,24 @@ def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Pat
         with zipfile.ZipFile(
                 staged_archive, "w", compression=zipfile.ZIP_DEFLATED,
                 compresslevel=6, allowZip64=True) as archive:
-            for source in sorted(staged_materials.iterdir(), key=lambda path: path.name):
-                info = zipfile.ZipInfo(f"sha256/{source.name}", ARCHIVE_TIMESTAMP)
+            for address, source in sorted(material_sources.items()):
+                info = zipfile.ZipInfo(f"sha256/{address}", ARCHIVE_TIMESTAMP)
                 info.compress_type = zipfile.ZIP_DEFLATED
                 info.create_system = 3
                 info.external_attr = (stat.S_IFREG | 0o644) << 16
-                with source.open("rb") as reader, archive.open(info, "w") as writer:
-                    shutil.copyfileobj(reader, writer)
+                digest = hashlib.sha256(STATEMENT_DOMAIN)
+                with open_material(source) as reader, archive.open(info, "w") as writer:
+                    while block := reader.read(64 * 1024):
+                        digest.update(block)
+                        writer.write(block)
+                if digest.hexdigest() != address:
+                    raise ValueError("statement material changed during compaction")
         live_materials = pathlib.Path(str(output) + ".materials.zip")
         legacy_materials = pathlib.Path(str(output) + ".materials")
+        # Some callers spool directly into the legacy output directory. Remove
+        # consumed inputs before removing that directory (or one containing it).
+        for relative in referenced_spools:
+            (spool / relative).unlink()
         if legacy_materials.exists():
             shutil.rmtree(legacy_materials)
         live_materials.unlink(missing_ok=True)
@@ -323,16 +408,23 @@ def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Pat
 
 
 def main() -> int:
+    if len(sys.argv) == 3 and sys.argv[1] == "stream":
+        try:
+            stream_spool(pathlib.Path(sys.argv[2]))
+            return 0
+        except (OSError, ValueError) as error:
+            print(f"lean-report-materials: {error}", file=sys.stderr)
+            return 1
     if len(sys.argv) != 5 or sys.argv[1] != "compact":
         print(
-            "usage: materials.py compact SPOOL_REPORT SPOOL_DIR OUTPUT",
+            "usage: materials.py compact SPOOL_REPORT SPOOL_DIR OUTPUT | stream SPOOL_DIR",
             file=sys.stderr,
         )
         return 2
     try:
         compact(pathlib.Path(sys.argv[2]), pathlib.Path(sys.argv[3]), pathlib.Path(sys.argv[4]))
         return 0
-    except (OSError, UnicodeError, ValueError, json.JSONDecodeError) as error:
+    except (OSError, EOFError, UnicodeError, ValueError, json.JSONDecodeError) as error:
         print(f"lean-report-materials: {error}", file=sys.stderr)
         return 1
 

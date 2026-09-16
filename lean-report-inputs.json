@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "report_semantic_version": 3,
+  "report_semantic_version": 6,
   "report_modules": {"include": [{"pattern": "Trureturing.lean", "optional": false}, {"pattern": "D5/**/*.lean", "optional": true}], "exclude": []},
   "inspector_sources": {"include": [{"pattern": "tools/lean-inspector/**/*.lean", "optional": true}], "exclude": ["**/.lake/**"]},
   "dependency_sources": {"include": [{"pattern": "tools/lean-inspector/**/*.lean", "optional": true}], "exclude": ["**/.lake/**"]},
@@ -43,6 +43,7 @@
         {"pattern": "tools/scripts/workflow/judge-content-address.sh", "optional": false},
         {"pattern": "Directory.Build.targets", "optional": true},
         {"pattern": "tools/lean-inspector/native.py", "optional": false},
+        {"pattern": "tools/lean-inspector/native_image.c", "optional": false},
         {"pattern": "tools/lean-inspector/publication.py", "optional": false},
         {"pattern": "tools/lean-inspector/lake-manifest.json", "optional": false},
         {"pattern": "tools/lean-inspector/lakefile.lean", "optional": false}
