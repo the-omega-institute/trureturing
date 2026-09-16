@@ -1,0 +1,45 @@
+**theorem 40.10 (Unequal masses and a large-partial-quotient separation).** Suppose $(N-1)\theta<1$. Then the cells are
+$$
+I_i=[i\theta,(i+1)\theta)\quad(0\le i<N-1),
+\qquad
+I_{N-1}=[(N-1)\theta,1),
+$$
+with masses $\theta,\ldots,\theta,1-(N-1)\theta$. If $n\theta<1$, their probabilities from the actual endpoint start $x=0$ are exactly
+$$
+r_{n,p,i}(0)=b_{n,p}(i)\quad(0\le i<N-1),
+\qquad
+r_{n,p,N-1}(0)=1-\sum_{i=0}^{N-2}b_{n,p}(i).
+$$
+If $(n+N-1)\theta<1$, every
+$$
+x\in[(N-1)\theta,1-n\theta)
+$$
+has
+$$
+D_{N,\theta,p}(n,x)=2(N-1)\theta.
+$$
+In particular, for each fixed $N\ge2,n,p$, the infimum of $D_{N,\theta,p}(n,1/2)$ over irrational $\theta\in(0,1)$ is zero. A lower bound valid for every starting phase therefore cannot be inferred from the class count alone.
+
+There is also an explicit family along which global interval discrepancy tends to one while the worst-start endogenous observation error tends to zero. Put
+$$
+\alpha=\frac{\sqrt5-1}{2},\qquad
+\theta_A=\frac1{A+\alpha}=[0;A,1,1,\ldots],
+$$
+$$
+N_A=\lfloor A^{1/4}\rfloor,\qquad
+n_A=\lfloor A^{3/4}\rfloor,\qquad p=\frac12,
+$$
+for integers $A\ge16$. Let
+$$
+\nu_A=\sum_{j=0}^{n_A}b_{n_A,1/2}(j)\delta_{[j\theta_A]},
+\qquad
+\mathscr D(\rho)=\sup_{\text{half-open circle arcs }I}
+ |\rho(I)-\lambda(I)|.
+$$
+Then
+$$
+\mathscr D(\nu_A)\longrightarrow1,
+\qquad
+e_{N_A,\theta_A,1/2}(n_A)\longrightarrow0.
+$$
+
