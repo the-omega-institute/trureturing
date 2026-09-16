@@ -764,6 +764,15 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Actual all-height comb sharpness, independent-depth layouts and exact truncation checks.
+pattern = "docs/reports/erdos7-odd-covering/pg1_comb_sharpness_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]] # One-event PG1 cost bound with all original-root floors and the common survival envelope.
 pattern = "docs/reports/erdos7-odd-covering/pg1_common_source_floor_certificate.json"
 kind = "data"
@@ -1297,6 +1306,15 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 [[files]] # Recomputes anchored all-height coefficients, complete outside tails and fixed-test PG1 consumers.
 pattern = "docs/reports/erdos7-odd-covering/verify_pg1_anchored_square.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Replays original CRT comb witnesses, actual kernel sums and complete-tail error bounds.
+pattern = "docs/reports/erdos7-odd-covering/verify_pg1_comb_sharpness.py"
 kind = "program"
 admission_plane = "content"
 produced_by = "none"

@@ -226,8 +226,37 @@ For one family the new-coordinate square increment is disjoint from
 the actual bad union. Thus these scalar observations are insufficient
 for the exact update; joint test–bad-set incidence is needed. The
 example does not assume either family covers and supplies no actual
-Gamma lower bound. Latest dev RRO45 supplies a common finite CRT
-observation framework, but no uniform positive overlap or survivor bound.
+Gamma lower bound. Both families have a common clean root, so their
+complete-test suprema nevertheless agree by the exact formula (CS1).
+Latest dev RRO46 distinguishes actual common witnesses from solutions
+in every finite arithmetic quotient. It reinforces the need for a
+single realizable layout, but supplies no positive survivor bound or
+undecidability conclusion for #7.
+
+The [current-prime comb construction](../docs/reports/erdos7-odd-covering/marked_head_profile.md#a-clean-cylinder-makes-all-current-prime-pair-caps-exact)
+gives an exact reduction when the entire old nonunit cofactor inventory
+has `K<=p-3` labels. Every old forbidden and complete test layout may
+vary independently with current-prime depth. One actual distinct-modulus
+family simultaneously attains the mixed-union bound, the assigned charge,
+and every test-pair cap. Its new-square increment has zero bad overlap.
+For PG1 at17 or19 this gives `11+12H` actual forbidden classes at every
+finite height, with a fixed positive charge floor. It excludes a universal
+positive extra-overlap rebate under the local hypotheses; it does not
+saturate the SH26 unit-floor or later scalar relaxations. Original higher
+old powers and earlier11/13 labels cannot be projected away to satisfy K.
+
+The [uniform finite truncation](../docs/reports/erdos7-odd-covering/marked_head_profile.md#effective-truncation-of-both-forbidden-and-test-layouts)
+reduces the all-height joint maximum in that small-inventory class to
+`M_k <= sup_H M_H <= M_k+E_k`, with explicit `E_k=O(k p^(-k))`.
+It controls both forbidden and test tails under one fixed old probability;
+the finite old-layout maximum has not been evaluated. For an arbitrary
+fixed actual forbidden family, a [separate complete test tail](../docs/reports/erdos7-odd-covering/marked_head_profile.md#complete-test-tails-for-one-arbitrary-actual-forbidden-family)
+retains the entire actual prefix table and gives a uniform square error
+`G_c p^(-k)((2k+3)/(p-1)+2/(p-1)^2)`. A finite joint support envelope
+can sharpen it, with an exactly summable eventual geometric tail. Only
+tests are truncated in that result; uniform optimization over unrestricted
+forbidden families remains unresolved. These are ordinary arguments and
+exact experimental checks, not new Lean conclusions or a solution of #7.
 
 A [complete original-low-test estimate](../docs/reports/erdos7-odd-covering/marked_head_profile.md#complete-original-low-test-anchoring-at-arbitrary-prime-power-heights)
 retains the entire low load `B` in its higher-label cross terms and

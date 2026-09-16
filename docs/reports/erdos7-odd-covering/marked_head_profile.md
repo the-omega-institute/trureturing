@@ -8921,5 +8921,456 @@ cost must remain together. Separate maximization of the positive
 part and minimization of the subtracted overlap loses that constraint.
 The pair matrix is an exact representation, not a proved compression
 or a newly evaluated upper bound. Physical antichain depth is
-unbounded across input families; no uniform height cutoff or complete
-tail estimate for this new optimization is asserted here.
+unbounded across input families. The bounds below control complete
+test tails for a fixed actual family and, separately, both forbidden
+and test tails when the entire old cofactor inventory is small.
+
+### Latest dev: finite solutions and a common actual witness
+
+[RRO section46 at devdbbe3c44b8](https://github.com/the-omega-institute/trureturing/blob/dbbe3c44b82a352d5d1380cdd10e7b8d7ef491e7/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md#46-增补有限算术解共同自然见证与有效性边界)
+distinguishes the actual image of simultaneous natural solutions,
+the intersection of separately attained images, and solutions of
+the quotient equations. These sets need not agree. Its system
+\(x^2=x,\ x=z+2\) has compatible solutions in every stated finite
+arithmetic quotient, but no natural solution. Sections46.7--46.8
+identify a uniform bound on the natural witnesses as a sufficient
+way to recover an actual witness from those approximations.
+
+For the present optimization, this requires every pair entry, row
+charge and test load to come from one actual original-label layout.
+Separately attainable extrema cannot be assembled into a fictitious
+joint witness. Conversely, an explicit finite CRT construction does
+supply the needed actual witness; the comb below provides one.
+Section46's H10 statements concern uniformly arbitrary polynomial
+systems. They give no undecidability conclusion for #7 or for checking
+one finite covering family: the latter is exactly decidable on its
+finite least-common-multiple period. The inspected increment after
+devd3774401e0 adds305 theory lines and digestion records, with no D5
+change. It supplies neither a new survivor probability nor the missing
+quantitative bound for unrestricted #7.
+
+The subsequent [RRO section47 at dev947f585f61](https://github.com/the-omega-institute/trureturing/blob/947f585f613318920f48aa35859b360649e22409/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md#47-全阈值周期完成中的自然锚边界环与判定边界)
+identifies its completion as natural anchors together with a closed
+profinite-integer boundary, with different internal and ambient zero
+and unit elements. It separates logical definability of natural anchors
+from continuous finite observation and effective membership decisions.
+For any fixed finite covering family, however, all congruence conditions
+factor through its one full period \(M\). A surviving profinite point
+projects to a residue modulo \(M\), whose integer representative in
+\([0,M-1]\) survives the same family. This finite CRT lifting has no
+natural-anchor obstruction. Section47.10 adopts a published decision
+theorem for the common first-order theory of all finite residue rings;
+it does not supply a quantitative bound for the varying original-label
+inventories here. This later increment adds407 theory lines and45 new
+atom/residual pairs, with no D5 change or new #7 probability estimate.
+
+There is an exact fixed-cardinality connection to the decision theorem
+adopted in section47.10. In the language of rings put
+\(D(u,v)\iff\exists t\ (v=ut)\), and let \(\Phi_N\) say
+
+\[
+ \exists u,d_1,\ldots,d_N,a_1,\ldots,a_N\quad
+ 2u=1\ \land\ \bigwedge_i\neg D(d_i,1)
+ \ \land\ \bigwedge_{i<j}\neg(D(d_i,d_j)\land D(d_j,d_i))
+ \ \land\ \forall x\ \bigvee_i D(d_i,x-a_i).
+\]
+
+For each fixed \(N\ge1\), some \(\mathbb Z/m\mathbb Z\),
+\(m>1\), satisfies \(\Phi_N\) if and only if there exists an
+\(N\)-class distinct odd-modulus cover. Forward, take integer
+representatives and \(n_i=\gcd(d_i,m)\). The unit condition makes
+\(m\) odd; proper, pairwise different principal ideals give distinct
+odd \(n_i>1\). Ideal membership is exactly congruence modulo
+\(n_i\), so the last clause covers every integer. Reverse, use
+\(m=\operatorname{lcm}(n_1,\ldots,n_N)\) and \(d_i=n_i\)
+as ring elements. Thus, conditional on the external common-theory
+decision theorem adopted there, applying it to \(\neg\Phi_N\)
+decides existence at that fixed class count, uniformly in \(N\).
+This exact reduction does not decide the unrestricted quantifier over
+all \(N\) in one call, give a bound on \(N\), or improve the
+survivor estimates. The cited Cambridge primary text returned HTTP503
+in this source check; the external algorithm is not independently
+implemented or formally replayed here. No new Lean wrapper is added.
+
+### A clean cylinder makes all current-prime pair caps exact
+
+The fixed-test distinction (PO3) need not survive maximization over
+all tests. At height one, suppose a root avoids both the pure forbidden
+root and every actual mixed bad class. Fix arbitrary independent old
+complete test loads \(A_0,A_1\). Placing every positive-depth test
+label on that root simultaneously attains all current-prefix caps,
+so the maximal new square for these old loads is
+
+\[
+ \mathbb E_\mu\left[A_0^2+
+       \frac{g_x}{p-1}(2A_0A_1+A_1^2)\right].          \tag{CS1}
+\]
+
+The exponent-zero term follows from preserved old marginals; the
+other terms are supported in the clean root. The same expression is
+an upper bound for every current-root assignment, since the actual
+kernel density is at most \(g_x\). Both families in (PO3) have a
+common clean root and the same \(g_x\). Maximizing (CS1) over their
+identical old test domain therefore gives identical complete-test
+suprema, although their common fixed test has different values.
+
+A common clean path does not suffice for this argument: every shallow
+test cylinder on that path must itself be clean to attain its cap.
+For example, at17 delete pure root0 and, for \(2\le e\le17\),
+use the original mixed modulus \(3\cdot17^e\), old class1 modulo3,
+and current residue \(e-1\) modulo \(17^e\). Each surviving root
+contains some bad mass on that old row, although their total Haar
+mass is less than \(\sum_{e\ge2}17^{-e}\) and a positive-measure
+common clean set remains. This does not assert that every complete
+test has positive overlap: a test can instead sacrifice shallow
+energy on deleted cylinders.
+
+Here is an exact arbitrary-height construction that also allows the
+old layouts to vary independently with depth. Let \(M\) be odd,
+\(p\nmid M\) prime, and
+
+\[
+ D=\{d>1:d\mid M\},\qquad K=|D|\le p-3.
+\]
+
+Fix one old probability \(\mu\). At each \(1\le e\le H\),
+fix arbitrary old forbidden cylinders \(C_{d,e}\) for every
+\(d\in D\). Independently, at every \(0\le e\le H\), fix
+a complete old test layout with load \(A_e\). No old residues need
+agree across depths or between forbidden and test layouts. The new
+forbidden inventory contains exactly one class of each modulus
+\(p^e\) and \(dp^e\), \(d\in D\), \(1\le e\le H\).
+If an input omits some of these moduli, this is an enlarged admissible
+inventory, not an assertion of equality within that smaller inventory.
+
+Assign distinct spokes \(j_d\in\{1,\ldots,K\}\), reserve the
+spine digit \(s=p-2\) and the test root \(r=p-1\). Digits below
+are least significant first. Choose forbidden prefixes
+
+\[
+ p^e:\ s^{e-1}0,\qquad
+ dp^e:\ (C_{d,e},s^{e-1}j_d).                         \tag{CS2}
+\]
+
+CRT realizes each pair as a residue modulo the stated original
+modulus. No moduli are identified: \(p\nmid d\) separates current
+exponents, and the old divisors are distinct. All current forbidden
+prefixes are disjoint. At different depths they differ where the
+shorter prefix leaves the spine; at the same depth their final digits
+differ. The whole first-level cylinder \([r]\) is clean. Put
+
+\[
+ \begin{aligned}
+ s_H&=\sum_{e=1}^H p^{-e},&\lambda_H&=1-s_H,\\
+ R_e(x)&=\sum_{d\in D}\mathbf1_{C_{d,e}}(x),&
+ b_H(x)&=\sum_{e=1}^H p^{-e}R_e(x),&
+ \alpha_H(x)&=b_H(x)/\lambda_H.
+ \end{aligned}                                       \tag{CS3}
+\]
+
+These are actual pure-survivor and mixed-union masses, not union
+relaxations. In particular \(\lambda_H>(p-2)/(p-1)>0\) and
+\(\alpha_H<K/(p-2)<1\) when \(K>0\); for \(K=0\) it is zero.
+Fix \(0\le\delta<1\). For the normalized kernel (PO1), let
+
+\[
+ c_H=\frac1{\max\{\lambda_H-b_H,\lambda_H(1-\delta)\}},
+ \qquad \beta_H=\frac{(\alpha_H-\delta)_+}{1-\delta}.
+                                                               \tag{CS4}
+\]
+
+Thus \(c_H=g_H/\lambda_H\), and \(\beta_H\) is its actual
+assigned bad mass. Place every depth-\(e\) test prefix at
+\(r00\cdots0\), independently of its old label. Define
+
+\[
+ Q_H(x)=\sum_{\substack{0\le e,f\le H\\(e,f)\ne(0,0)}}
+                  p^{-\max(e,f)}A_e(x)A_f(x).
+\]
+
+Every positive-depth pair intersection is then a nested clean prefix
+of Haar mass \(p^{-\max(e,f)}\). The entire new square increment
+vanishes on the actual bad union, while the old baseline is preserved.
+Consequently
+
+\[
+ \mathbb E_{\rm new}[L_H^2\mid x]=A_0(x)^2+c_H(x)Q_H(x).
+                                                               \tag{CS5}
+\]
+
+This is also the maximum over all current-prime forbidden residues
+and all current-prime test prefixes with the specified old layouts.
+Indeed, for any alternative, its pure-survivor Haar mass \(\lambda\)
+and conditional mixed density \(\alpha\) obey
+\(\lambda\ge\lambda_H\) and \(\lambda\alpha\le b_H\).
+Its kernel cap therefore satisfies
+
+\[
+ \frac g\lambda=
+ \frac1{\max\{\lambda(1-\alpha),\lambda(1-\delta)\}}
+ \le c_H,
+\]
+
+and its charge is at most \(\beta_H\). Expanding every original
+test-label pair gives the upper bound in (CS5). Construction (CS2)
+attains it and the charge simultaneously, at every old point. For
+any \(f,W\ge0\), the exact joint maximum is thus
+
+\[
+ \mathbb E_\mu\left[f(A_0^2+c_HQ_H)+W\beta_H\right]. \tag{CS6}
+\]
+
+The current-prime optimization has been eliminated in this specified
+domain; the old forbidden and test layouts still have to be optimized
+together. The count \(K\) is the number of actual original old
+cofactors, not their number after projection to315 and not the number
+active at one old point. Higher old prime powers, and previously
+introduced11/13 labels, cannot be discarded to meet this hypothesis.
+
+For the specialization \(R_e=R\) and \(A_e=A\) at every depth,
+write \(C=1+R\), \(\delta=(T-1)/(p-2)\),
+\(1\le T<p-1\), and \(d_p=p-1-T\). Then
+
+\[
+ \begin{aligned}
+ Q_H&=a_H A^2,&a_H&=\sum_{j=1}^H(2j+1)p^{-j},\\
+ a_H&\uparrow a_p=\frac{3p-1}{(p-1)^2},&
+ a_p-a_H&=p^{-H}\left(\frac{2H}{p-1}+a_p\right),\\
+ c_H&\uparrow\kappa(C)=\frac{p-1}{p-1-\min(C,T)},&
+ \beta_H&\uparrow\frac{(C-T)_+}{d_p}.
+ \end{aligned}                                       \tag{CS7}
+\]
+
+Hence the supremum over legitimate finite heights, with these old
+layouts repeated, is exactly
+
+\[
+ \mathbb E_\mu\left[f(1+a_p\kappa(C))A^2+
+                         \frac W{d_p}(C-T)_+\right]. \tag{CS8}
+\]
+
+This is a limit of finite actual families, not an infinite covering
+system. Repeated old layouts are only a specialization of (CS6);
+no claim that they optimize its full old-layout domain is made.
+
+For PG1 at \(M=315\), \(K=11\), so both17 and19 admit the
+construction. Including its eleven original old forbidden classes
+gives exactly \(11+12H\) distinct odd moduli. Center both old
+layouts at2, so \(R(2)=11\) and \(A=1+R\). At \(T=8\),
+already at \(H=1\),
+
+\[
+ \beta_{17}(2)=53/128,\qquad \beta_{19}(2)=61/180.
+\]
+
+The global charge is at least these constants times
+\(\mu(2)=13119398/1000000007>0\), yet new-square bad overlap is
+exactly zero for every height. This rules out a universal positive
+extra-overlap rebate under the local hypotheses alone. It does not
+saturate the later (SH26) unit-floor relaxation, Jensen comparisons,
+the scalar certificate or the final17/19 criterion, and it imposes
+no eventual-cover assumption. The useful remaining target is the
+joint old-layout energy and charge in (CS6), and control when the
+actual cofactor inventory exceeds this construction's range.
+
+`verify_pg1_comb_sharpness.py` and its adjacent certificate retain
+exact finite realizations and kernel checks for this obstruction.
+The all-height and optimization statements above have ordinary
+proofs; no new Lean declaration or unrestricted resolution is claimed.
+
+### Effective truncation of both forbidden and test layouts
+
+In the precise small-inventory domain of (CS2)--(CS6), let \(M_H\)
+be the maximum of (CS6) over every old forbidden and complete test
+layout through height \(H\). Keep the same old law, cofactor inventory,
+\(\delta,f,W\) at all heights. Suppose
+\(\mathbb E_\mu A^2\le J\) for every complete old layout; the
+elementary choice \(J=(K+1)^2\) always works here. Define
+
+\[
+ \begin{aligned}
+ \lambda_*&=\frac{p-2}{p-1},& c_*&=\frac1{\lambda_*(1-\delta)},\\
+ t_k&=\frac{p^{-k}}{p-1},&
+ \varepsilon_k&=p^{-k}\left(\frac{2k+3}{p-1}
+                                      +\frac2{(p-1)^2}\right).
+ \end{aligned}
+\]
+
+For every extension from \(k\) to \(H\ge k\),
+\(\lambda_k-\lambda_H\le t_k\) and
+\(b_H-b_k\le Kt_k\). Both arguments of the maximum in the
+denominator of (CS4) decrease, and its decrease is at most
+\((K+1)t_k\). Its reciprocal never exceeds \(c_*\). Therefore
+
+\[
+ 0\le c_H-c_k\le c_*^2(K+1)t_k,\qquad
+ 0\le\beta_H-\beta_k\le
+                  \frac{Kt_k}{\lambda_*^2(1-\delta)}. \tag{CS9}
+\]
+
+For the second inequality, first bound
+\(b_H/\lambda_H-b_k/\lambda_k\) by
+\(Kt_k/\lambda_*+Kt_k/((p-1)\lambda_*^2)
+=Kt_k/\lambda_*^2\), and then use the Lipschitz constant
+\((1-\delta)^{-1}\) of the positive-part charge function.
+For arbitrary independent old test loads, Cauchy--Schwarz gives
+\(\mathbb E A_eA_f\le J\). Counting the \(2n+1\) ordered
+exponent pairs with maximum \(n\) yields
+
+\[
+ \mathbb E Q_k\le a_pJ,\qquad
+ 0\le\mathbb E(Q_H-Q_k)\le J\varepsilon_k.
+\]
+
+Use the positive decomposition
+\(c_HQ_H-c_kQ_k=c_H(Q_H-Q_k)+(c_H-c_k)Q_k\). Taking maxima gives
+the effective enclosure
+
+\[
+ \boxed{M_k\le\sup_{H<\infty}M_H\le M_k+E_k},\qquad
+ E_k=fJ\left[c_*\varepsilon_k+c_*^2(K+1)a_pt_k\right]
+             +\frac{WKt_k}{\lambda_*^2(1-\delta)}.     \tag{CS10}
+\]
+
+The lower side follows by extending any maximizing old layouts;
+all added terms and changes in (CS9) are nonnegative. The upper side
+holds for each such extension before maximizing. For finite old period
+and rational source data, \(M_k\) is a finite rational optimization,
+and \(E_k\to0\). This is an algorithm for an arbitrary prescribed
+precision, not a claim that a finite height attains the supremum or
+that the finite optimization has been evaluated on PG1. Unlike a test
+tail estimate, (CS10) also truncates the varying actual forbidden
+families. The hypothesis \(K\le p-3\) and fixed old probability
+are essential to the exact reduction used here. No bound on the
+unrestricted old inventories or resulting \(\Gamma_{19}\) follows.
+
+### Complete test tails for one arbitrary actual forbidden family
+
+A separate estimate applies without the small-inventory hypothesis,
+provided the actual forbidden family is fixed. Let \(P\) be its
+minimal pure-prefix antichain, \(B_x\) its actual mixed union, and
+\(\lambda\) Haar prefix mass. Put \(s=\lambda(P^c)>0\),
+\(m=\lambda|_{P^c}/s\), and take the row coefficients \(g_x,h_x\)
+from (PO1). For any prefix \(C\), write
+\(R_F(C)=\lambda(C\setminus F)\). The exact kernel table is
+
+\[
+ K_x(C)=\frac{(g_x-h_x)R_P(C)+h_xR_{P\cup B_x}(C)}s.   \tag{KT1}
+\]
+
+Both coefficients are nonnegative. Reducing each actual union to
+its minimal forbidden-prefix antichain makes (KT1) a finite residual
+calculation as in (P13.2); forbidden descendants deeper than the query
+remain in the calculation. This computes actual nonnegative pair
+masses directly rather than assigning separate signed tail bounds.
+
+Let \(D_0\) be the maximum actual forbidden depth. Above it extend
+the actual law by uniform independent suffixes; below it use its
+marginals. These consistent finite laws define every expectation
+below. A complete test through \(H\) retains one independently chosen
+CRT class per original label \(dp^e\), \(d\mid M\),
+\(0\le e\le H\). If \(H>D_0\), these are auxiliary tests on
+the extended period. Their supremum is an upper domain for the
+original finite-period tests; a lower bound for the extended supremum
+is not a lower bound for the original finite-period maximum.
+
+Suppose \(K_x(C_e)\le c(x)p^{-e}\) for every positive-depth
+prefix, and \(\mathbb E_\mu[cA^2]\le G_c\) for every complete
+old layout. One may always use \(c=g/s\). For any test through
+\(H\ge k\), retain its original labels through \(k\), with load
+\(U=L_{\le k}\). Expanding the actual nonnegative pair masses gives
+
+\[
+ 0\le\mathbb E L_H^2-\mathbb E U^2\le G_c\varepsilon_k.
+                                                               \tag{KT2}
+\]
+
+Indeed, a pair of exponents \(e,f\) has mass at most
+\(p^{-\max(e,f)}\mathbb E[cA_eA_f]\), bounded by
+\(p^{-\max(e,f)}G_c\) by weighted Cauchy--Schwarz. Sum precisely
+the pairs with maximum above \(k\). This is the complete-tail
+application of the existing
+`PrimeRectangleTransfer.prefix_weighted_rectangle_second_moment_le`
+pair estimate; no new Lean wrapper is needed. Consequently the exact
+finite maximum \(\Gamma_k\), computed with the entire actual
+forbidden family, satisfies
+
+\[
+ \Gamma_k\le\sup_{H<\infty}\Gamma_H
+                  \le\Gamma_k+G_c\varepsilon_k.       \tag{KT3}
+\]
+
+Here only tests are truncated. Dropping deeper forbidden prefixes
+would change the actual kernel and is not justified by (KT2).
+
+A correlated finite support function can sharpen this tail. Take
+\(k\ge D_0\), fix one truncated test \(U\), and let \(V\)
+range over the finite set of loads
+
+\[
+ V(x,a)=\sum_{d\mid M}\mathbf1_{x=u_d\bmod d}
+                        \mathbf1_{a=v_d\bmod p^k}.
+\]
+
+Each pair \((u_d,v_d)\) is chosen globally for its original label,
+before sampling \((x,a)\); these are not pointwise choices in each
+old row. For the actual joint law \(\nu_k\), define
+
+\[
+ b(V)=\mathbb E_{\nu_k}UV,\quad s(V)=\mathbb E_{\nu_k}V^2,
+ \qquad h_U(t)=\max_V\{2b(V)+ts(V)\}.
+\]
+
+Uniformity after \(k\) implies that, for any independent projected
+layers \(V_1,\ldots,V_n\), the largest extra energy equals
+
+\[
+ 2\sum_{j=1}^np^{-j}\langle U,V_j\rangle+
+ \sum_{j,l=1}^np^{-\max(j,l)}\langle V_j,V_l\rangle.  \tag{KT4}
+\]
+
+The intersection cap supplies the upper bound. It is simultaneously
+attained by setting every additional test suffix to zero, leaving its
+old residue and first \(k\) digits unchanged. Equal first prefixes
+then have compatible suffixes, while unequal first prefixes still
+have empty intersection. This alignment applies only beyond the
+complete actual forbidden depth; it does not identify the independent
+\(V_j\)'s or their old layouts.
+
+Let \(T(U)\) be the supremum of (KT4) over all finite lengths and
+allowed layers. Repeating one layer gives the lower bound below;
+\(2\langle V_j,V_l\rangle\le s(V_j)+s(V_l)\) gives the upper:
+
+\[
+ \frac{h_U((p+1)/(p-1))}{p-1}\le T(U)
+ \le\sum_{j\ge1}p^{-j}h_U\left(j+\frac1{p-1}\right)
+ \le G_c\varepsilon_k.                              \tag{KT5}
+\]
+
+For the last step use
+\(\max_V b(V)\le(k+1)p^{-k}G_c\) and
+\(\max_V s(V)\le p^{-k}G_c\), proved by the same original-pair
+expansion as (KT2). Maximizing \(\mathbb E U^2\) plus a chosen
+side of (KT5) must keep the same \(U\) in both terms. Repeating
+one \(V\) is a lower construction, not a proved optimizer.
+
+For rational source data, \(h_U\) is a finite upper envelope of
+rational lines. If \(S=\max s(V)\) and
+\(b_* =\max\{b(V):s(V)=S\}\), choose an integer \(N\ge1\)
+at least every
+\(2(b(V)-b_*)/(S-s(V))-1/(p-1)\) with \(s(V)<S\).
+For \(j\ge N\), the line \((b_*,S)\) dominates, so the remaining
+sum in (KT5) is exactly geometric. With \(r=1/p\) and
+\(a=2b_*+S/(p-1)\), it is
+
+\[
+ \sum_{j=N}^{\infty}r^j(a+Sj)
+ =r^N\left[\frac a{1-r}
+       +S\left(\frac N{1-r}+\frac r{(1-r)^2}\right)\right].
+\]
+
+The finite support enumeration or a valid dominance certificate must
+cover every realizable \(V\); a sampled support function gives no
+upper certificate. These formulas give a complete-tail optimization
+framework for a fixed actual family. Uniform maximization over all
+forbidden families with unrestricted old inventories remains unresolved.
