@@ -7781,3 +7781,646 @@ $$
 It follows that the infimum of the uniform error is at most $d+\epsilon$. Letting $\epsilon$ decrease to zero proves equality with $d$. This midpoint and convex-combination argument is valid over both $\mathbb R$ and $\mathbb C$. Finally, the isometry $\mathcal R$ from theorem 26.6 gives the equality with the stated sequence-space infimum. The proof constructs arbitrarily accurate approximants and does not assert attainment of the infimum. $\square$
 
 ## 追加锚（本行以下为增补区）
+## 27. Absolute summability, exact norms, and the compact digit topology
+
+**Assumption 27.0 (Fixed carrier, exact graph, and classified finite multiplication).** Retain the carrier, phase map, oriented exceptional fibers, and finite addition graph of Definition 25.0, together with the exact-fiber and exact-graph hypotheses of Assumption 25.1. In particular,
+$$
+\Gamma=\overline{\{(Z(a),Z(b),Z(a+b)):a,b\in\mathbb N\}}^{\,K^3}.
+$$
+Fix
+$$
+t\in\Lambda=(\mathbb R\setminus\{-1,1\})\sqcup\{\infty\},
+$$
+and use the finite multiplication and kernel of Definitions 25.2 and 25.8 and theorems 25.6–25.9. Thus the product on $A=\mathbb R^{(K)}$ is associative and commutative, each row has coefficient sum one and support contained in the exact set $\Gamma(x,y)$, and
+$$
+P^{(t)}_{Z(a),Z(b)}=\delta_{Z(a+b)}\qquad(a,b\in\mathbb N).
+$$
+The symbols $p_m,c_{m,n},\pi_\theta,v_m$ always have their values for this fixed parameter. The parameter $\infty$ remains a separate formal symbol.
+
+**definition 27.1 (Absolute sums and norm constants).** For a nonnegative family $(h_s)_{s\in S}$ over an arbitrary set, define
+$$
+\sum_{s\in S}h_s=\sup_{F\subseteq S,\ F\text{ finite}}\sum_{s\in F}h_s.
+$$
+Define
+$$
+\ell^1(S)=\left\{a:S\to\mathbb R:\|a\|_1:=\sum_{s\in S}|a(s)|<\infty\right\}.
+$$
+No support restriction is imposed in this definition. A subscript ${\mathrm d}$ on a topological set denotes its underlying set equipped with the discrete topology. Thus $\ell^1(K_{\mathrm d})$ and $\ell^1(\mathbb T_{\mathrm d})$ use counting sums, not integration against a measure associated with their original compact topologies.[^rro27-l1]
+
+For a finite signed atomic measure, use the total variation norm
+$$
+\left\|\sum_{w\in F}a_w\delta_w\right\|_{\mathrm{TV}}=\sum_{w\in F}|a_w|,
+$$
+where the points of $F$ are distinct. This convention has no factor of one half. Define
+$$
+\rho_t=\begin{cases}
+|t|,&t\ne\infty,\ |t|<1,\\
+|t|^{-1},&t\ne\infty,\ |t|>1,\\
+0,&t=\infty,
+\end{cases}
+\qquad
+C_t=\frac{1+\rho_t}{1-\rho_t}.
+$$
+Consequently,
+$$
+0\le\rho_t<1,\qquad
+C_t=\frac{1+|t|}{|1-|t||}\quad(t\ne\infty),\qquad C_\infty=1.
+$$
+
+**theorem 27.2 (Exact row variation and exact finite bilinear norm).** For every parameter in Assumption 27.0,
+$$
+\max_{x,y\in K}\|P^{(t)}_{x,y}\|_{\mathrm{TV}}=C_t.
+$$
+The maximum is attained at $(0_K,x_1^+)$ for every finite $t\ge0$ in the parameter domain, at $(x_1^+,x_1^-)$ for every $t<0$ in the parameter domain, and at $(0_K,0_K)$ for the formal parameter $\infty$. Moreover,
+$$
+\sup_{\substack{a,b\in A\\\|a\|_1\le1,\ \|b\|_1\le1}}\|a*_t b\|_1=C_t.
+$$
+
+**Proof.** We first bound every row. When at least one input is nonexceptional, theorem 25.9 gives the output $\pi_{H(x)+H(y)}$. A nonexceptional output phase gives a Dirac measure and hence norm one. At an exceptional phase, for finite $t$ and $r=|t|$,
+$$
+\|\pi_{E_m}\|_{\mathrm{TV}}
+=|p_m|+|1-p_m|
+=\frac{1+r^m}{|1-t^m|}.
+$$
+If $t<0$ and $m$ is odd, this expression is one. In every other finite-parameter case it equals
+$$
+\frac{1+\rho_t^m}{1-\rho_t^m}\le\frac{1+\rho_t}{1-\rho_t}=C_t.
+$$
+Here the inequality follows from $0\le\rho_t^m\le\rho_t<1$ and the monotonicity of $(1+u)/(1-u)$ on $[0,1)$. This also covers $t=0$. For the formal parameter, every $\pi_\theta$ is a Dirac measure.
+
+Two exceptional inputs with the same sign give a Dirac measure by theorem 25.9, for all indices and every parameter. It remains to bound the two mixed-sign types. For finite $t$, put
+$$
+M_{m,n}(t)=\|P^{(t)}_{x_m^+,x_n^-}\|_{\mathrm{TV}}
+=\frac{|t|^n|t^m-1|+|t^n-1|}{|t^{m+n}-1|}.
+$$
+The reversed-sign type has norm $M_{n,m}(t)$, as is seen directly from its formula in theorem 25.9. For $t=0$, the mixed row is $\delta_{x_{m+n}^-}$, so its norm is one. For $t>0$, both mixed coefficients are nonnegative: when $t<1$, their relevant factors and denominator have the corresponding negative signs, and when $t>1$ all those factors are positive. Their sum is one, so again $M_{m,n}(t)=1$.
+
+Suppose next that $t=-r$ with $0<r<1$. Write $u=r^m$ and $v=r^n$. Direct substitution into the two mixed coefficients gives the exhaustive parity cases
+$$
+M_{m,n}(-r)=\begin{cases}
+1,&n\text{ even},\\
+\dfrac{1+2v-uv}{1+uv},&n\text{ odd},\ m\text{ even},\\
+\dfrac{1+2v+uv}{1-uv},&n\text{ odd},\ m\text{ odd}.
+\end{cases}
+$$
+Indeed, $t^m-1$, $t^n-1$, and $t^{m+n}-1$ are all negative, so the second mixed coefficient is positive and the first has the sign of $t^n$. This establishes the first case and gives the two displayed absolute-value expressions in the remaining cases. Since $0<u,v\le r<1$, the even-$m$, odd-$n$ case satisfies
+$$
+\frac{1+2v-uv}{1+uv}
+=1+\frac{2v(1-u)}{1+uv}
+\le1+2r
+\le\frac{1+r}{1-r}.
+$$
+The odd-$m$, odd-$n$ case satisfies
+$$
+\frac{1+2v+uv}{1-uv}
+=1+\frac{2v(1+u)}{1-uv}
+\le1+\frac{2r(1+r)}{1-r^2}
+=\frac{1+r}{1-r}.
+$$
+Thus every parity case is bounded by $C_t$ when $-1<t<0$.
+
+For every nonzero admissible finite parameter, direct multiplication of numerator and denominator by $|t|^{m+n}$ gives
+$$
+M_{m,n}(t)=M_{n,m}(t^{-1}).
+$$
+More explicitly, the numerator of $M_{n,m}(t^{-1})$, after that multiplication, becomes
+$$
+|t^n-1|+|t|^n|t^m-1|.
+$$
+The denominator becomes $|t^{m+n}-1|$. Therefore all cases $t<-1$, including every parity combination, reduce to the preceding proof for $t^{-1}\in(-1,0)$, and $C_{t^{-1}}=C_t$. Swapping $m,n$ also bounds every reversed-sign row. For the formal parameter, both mixed rows are Dirac measures by theorem 25.9. These cases exhaust all input pairs.
+
+For finite $t\ge0$, the actual zero slice gives
+$$
+\|P^{(t)}_{0_K,x_1^+}\|_{\mathrm{TV}}
+=\|\pi_{E_1}\|_{\mathrm{TV}}
+=\frac{1+t}{|1-t|}=C_t.
+$$
+For finite $t<0$, the actual first mixed pair gives, after cancelling the nonzero factor $t-1$,
+$$
+P^{(t)}_{x_1^+,x_1^-}
+=\frac{t}{t+1}\delta_{x_2^+}+\frac1{t+1}\delta_{x_2^-}.
+$$
+Since $t\ne-1$ and the two output points are distinct, its norm is
+$$
+\frac{|t|+1}{|t+1|}=\frac{1+|t|}{|1-|t||}=C_t.
+$$
+For $\infty$, the row at $(0_K,0_K)$ is $\delta_{0_K}$ and attains $C_\infty=1$.
+
+Finally, finite bilinearity and the row bound give
+$$
+\|a*_t b\|_1
+\le\sum_{x,y}|a(x)|\,|b(y)|\,\|P^{(t)}_{x,y}\|_1
+\le C_t\|a\|_1\|b\|_1.
+$$
+The two point masses associated with each attaining pair have norm one, and their product has norm $C_t$. Hence the bilinear norm is exactly $C_t$. QED.
+
+**theorem 27.3 (The actual discrete completion).** For every set $S$, each member of $\ell^1(S)$ has at most countable support. The normed space $\ell^1(S)$ is complete, and $\mathbb R^{(S)}$ is dense in it. In particular, the completion of $A$ in the point-mass coefficient norm is precisely $\ell^1(K_{\mathrm d})$.
+
+**Proof.** Let $a\in\ell^1(S)$. For every integer $j\ge1$, the set
+$$
+S_j=\{s\in S:|a(s)|\ge1/j\}
+$$
+is finite. Otherwise finite subsets of arbitrarily large cardinality would make the defining supremum for $\|a\|_1$ infinite. Every nonzero coefficient belongs to some $S_j$, so
+$$
+\operatorname{supp}(a)=\bigcup_{j\ge1}S_j
+$$
+is at most countable. The sum defining the norm is therefore the usual absolutely convergent sum on this support, with its value independent of enumeration.
+
+For every $\epsilon>0$, the definition by finite suprema supplies a finite $F\subseteq S$ with
+$$
+\sum_{s\in F}|a(s)|>\|a\|_1-\epsilon.
+$$
+Taking finite suprema on the complement gives
+$$
+\|a-a\mathbf1_F\|_1=\sum_{s\notin F}|a(s)|<\epsilon.
+$$
+This proves finite-support density.
+
+For completeness, let $(a_j)$ be a Cauchy sequence. Each coordinate is Cauchy because
+$$
+|a_j(s)-a_k(s)|\le\|a_j-a_k\|_1.
+$$
+Let $a(s)$ be its limit. The Cauchy sequence has bounded norms, say bounded by $M$. For every finite $F$,
+$$
+\sum_{s\in F}|a(s)|=\lim_{j\to\infty}\sum_{s\in F}|a_j(s)|\le M.
+$$
+Thus $a\in\ell^1(S)$. Given $\epsilon>0$, take $N$ such that $\|a_j-a_k\|_1<\epsilon$ for $j,k\ge N$. Fixing $j\ge N$, taking the limit in each finite coordinate sum, and then taking its finite supremum yields
+$$
+\|a_j-a\|_1\le\epsilon.
+$$
+Therefore $a_j\to a$ in norm. The triangle inequality, homogeneity, and definiteness of the norm follow directly from its finite-supremum definition. QED.
+
+**definition 27.4 (The convolution direct sum).** Put
+$$
+\mathcal G=\ell^1(\mathbb T_{\mathrm d}),\qquad
+\mathcal S=\ell^1(\mathbb N_{>0}),\qquad
+\mathcal B=\mathcal G\oplus_1\mathcal S.
+$$
+The products within the two summands are the discrete convolutions
+$$
+(f*_{\mathbb T}f')(\theta)=\sum_{\rho\in\mathbb T}f(\rho)f'(\theta-\rho),
+$$
+$$
+(g*_{+}g')(k)=\sum_{\substack{m,n\ge1\\m+n=k}}g_mg'_n.
+$$
+An empty sum is zero; in particular, every product in $\mathcal S$ has first coordinate zero. Define
+$$
+(f,g)\diamond(f',g')=(f*_{\mathbb T}f',\ g*_{+}g'),\qquad
+\|(f,g)\|_{\oplus}=\|f\|_1+\|g\|_1.
+$$
+Thus convolution is performed separately in the two summands, and cross products between the summands vanish. It is not pointwise multiplication of the sequences.[^rro27-ba]
+
+**theorem 27.5 (Unique bounded multiplication, augmentation, and phase map).** There is a unique bounded bilinear extension of $*_t$ to
+$$
+B=\ell^1(K_{\mathrm d}).
+$$
+It is associative and commutative, has exact bilinear norm $C_t$ in the coefficient norm, and is given by the unconditionally convergent series
+$$
+a*_t b=\sum_{x,y\in K}a(x)b(y)P^{(t)}_{x,y}.
+$$
+In particular,
+$$
+(a*_t b)(w)=\sum_{x,y\in K}a(x)b(y)P^{(t)}_{x,y}(w),
+$$
+with the absolute-summability estimate
+$$
+\sum_{x,y,w\in K}|a(x)b(y)P^{(t)}_{x,y}(w)|
+\le C_t\|a\|_1\|b\|_1.
+$$
+The maps
+$$
+\varepsilon(a)=\sum_{x\in K}a(x),\qquad
+(H_{\#}a)(\theta)=\sum_{H(x)=\theta}a(x)
+$$
+are bounded linear maps of norm one, and
+$$
+\varepsilon(a*_t b)=\varepsilon(a)\varepsilon(b),\qquad
+H_{\#}(a*_t b)=(H_{\#}a)*_{\mathbb T}(H_{\#}b).
+$$
+The phase map $H_{\#}:B\to\mathcal G$ is surjective.
+
+With the equivalent norm
+$$
+\|a\|_{\mathrm{alg},t}=C_t\|a\|_1,
+$$
+the resulting algebra, denoted $B_t$, is a Banach algebra with a submultiplicative norm. The original coefficient norm itself is submultiplicative exactly for $t\in\{0,\infty\}$.
+
+**Proof.** By theorem 27.3, the supports of $a$ and $b$ are at most countable. Their Cartesian product is at most countable, and the union of the finite row supports over these pairs is also at most countable. Moreover,
+$$
+\sum_{x,y}\|a(x)b(y)P^{(t)}_{x,y}\|_1
+\le C_t\sum_{x,y}|a(x)|\,|b(y)|
+=C_t\|a\|_1\|b\|_1.
+$$
+The last equality follows by taking suprema of finite rectangular sums of a nonnegative product family. Consequently the vector-valued series has arbitrarily small norm tails and converges in the complete space $B$, independently of its ordering. Expanding the row norms gives the stated absolute sum over $x,y,w$. Absolute convergence permits every regrouping used in the coordinate formula. Bounded coordinate evaluation shows that the coordinate formula agrees with the vector-valued sum.
+
+The sum is bilinear and satisfies
+$$
+\|a*_t b\|_1\le C_t\|a\|_1\|b\|_1.
+$$
+In particular,
+$$
+\|a*_t b-a' *_t b'\|_1
+\le C_t\bigl(\|a-a'\|_1\|b\|_1+\|a'\|_1\|b-b'\|_1\bigr).
+$$
+Choose finite-support sequences converging respectively to $a,b,c$. Their norms are bounded, their pairwise products converge by this inequality, and applying the inequality a second time shows that both bracketings of their triple products converge to the corresponding bracketings for $a,b,c$. The finite associativity identity therefore passes to the limit. Finite commutativity passes to the limit in the same way. Any bounded bilinear extension must agree on limits of finite-support pairs, proving uniqueness. The attaining point-mass pairs from theorem 27.2 still belong to $B$, so the extended bilinear norm remains exactly $C_t$.
+
+The same absolute-sum argument applies to any discrete semigroup with rows $\delta_s*\delta_u=\delta_{su}$: every row has norm one, and semigroup associativity holds on the finite core. Applied to the group $\mathbb T_{\mathrm d}$ and the additive semigroup $\mathbb N_{>0}$, it proves that both convolutions in Definition 27.4 are associative bounded products satisfying
+$$
+\|f*_{\mathbb T}f'\|_1\le\|f\|_1\|f'\|_1,\qquad
+\|g*_{+}g'\|_1\le\|g\|_1\|g'\|_1.
+$$
+Together with theorem 27.3 this also proves completeness and submultiplicativity for $\mathcal B$, since
+$$
+\|(f,g)\diamond(f',g')\|_{\oplus}
+\le\|f\|_1\|f'\|_1+\|g\|_1\|g'\|_1
+\le\|(f,g)\|_{\oplus}\|(f',g')\|_{\oplus}.
+$$
+
+Absolute summability gives
+$$
+|\varepsilon(a)|\le\|a\|_1,\qquad
+\|H_{\#}a\|_1\le\sum_{\theta}\sum_{H(x)=\theta}|a(x)|=\|a\|_1.
+$$
+Both operator norms equal one by evaluation on $\delta_{0_K}$. On finite-support inputs, multiplicativity is theorem 25.3. Finite-support density and the established continuity of all the products and linear maps extend both identities to $B$.
+
+For surjectivity, if $f\in\mathcal G$, the series
+$$
+a=\sum_{\theta\in\mathbb T}f(\theta)\pi_\theta
+$$
+converges absolutely in $B$, because theorem 27.2 bounds every $\|\pi_\theta\|_1$ by $C_t$. Since $H_{\#}\pi_\theta=\delta_\theta$, boundedness of $H_{\#}$ gives $H_{\#}a=f$.
+
+Finally,
+$$
+\|a*_t b\|_{\mathrm{alg},t}
+=C_t\|a*_t b\|_1
+\le C_t^2\|a\|_1\|b\|_1
+=\|a\|_{\mathrm{alg},t}\|b\|_{\mathrm{alg},t}.
+$$
+Completeness is unchanged by this positive scalar rescaling. Under the convention that a Banach-algebra norm is submultiplicative, this supplies such a norm.[^rro27-ba] If $t=0$ or $t=\infty$, then $C_t=1$, so the coefficient norm already suffices. Every other admissible parameter has $C_t>1$, and an attaining pair of norm-one point masses has product norm greater than one. Thus the unscaled coefficient norm is not submultiplicative in those cases. QED.
+
+**theorem 27.6 (Uniformly bounded nonzero coboundary representatives).** Define
+$$
+d'_m=\begin{cases}
+1-t^m,&t\ne\infty,\ |t|<1,\\
+t^{-m}-1,&t\ne\infty,\ |t|>1,\\
+-1,&t=\infty.
+\end{cases}
+$$
+For every positive $m,n$,
+$$
+1-\rho_t\le|d'_m|\le1+\rho_t,\qquad
+c_{m,n}=\frac{d'_m d'_n}{d'_{m+n}}.
+$$
+In particular every $d'_m$ is nonzero, and the finite vectors
+$$
+u_m=\frac{v_m}{d'_m}
+$$
+satisfy
+$$
+u_m*_t u_n=u_{m+n}.
+$$
+
+**Proof.** For finite $t$ with $|t|<1$, the identity is the direct calculation
+$$
+\frac{(1-t^m)(1-t^n)}{1-t^{m+n}}
+=-\frac{(t^m-1)(t^n-1)}{t^{m+n}-1}
+=c_{m,n}.
+$$
+For $|t|>1$, write
+$$
+d'_m=t^{-m}(1-t^m).
+$$
+The factors $t^{-m}$ form a multiplicative character of the positive-index additive semigroup, so they cancel in the quotient:
+$$
+\frac{d'_m d'_n}{d'_{m+n}}
+=\frac{t^{-m}t^{-n}}{t^{-(m+n)}}
+\frac{(1-t^m)(1-t^n)}{1-t^{m+n}}
+=c_{m,n}.
+$$
+This calculation is valid for negative $t$ as well; no positivity of the character is needed. For the formal parameter, the quotient is $(-1)(-1)/(-1)=-1=c_{m,n}$.
+
+In each finite case, $|d'_m|$ has the form $|1-s^m|$ with $|s|=\rho_t<1$. Hence
+$$
+1-\rho_t\le1-\rho_t^m\le|1-s^m|\le1+\rho_t^m\le1+\rho_t.
+$$
+This proves the bounds for every index and sign. For $\infty$, both bounds are one. Therefore division by $d'_m$ is legitimate, and
+$$
+u_m*_t u_n
+=\frac{c_{m,n}}{d'_m d'_n}v_{m+n}
+=\frac{v_{m+n}}{d'_{m+n}}
+=u_{m+n}.
+$$
+In particular $d'_m=1$ at $t=0$, whereas $d'_m=-1$ at the formal parameter; neither case requires a limiting argument. QED.
+
+**theorem 27.7 (Explicit bounded coordinate isomorphism).** For $a\in B$, write
+$$
+a_m^+=a(x_m^+),\qquad a_m^-=a(x_m^-).
+$$
+Define $\Phi_t(a)=(f,g)$ by
+$$
+f(\theta)=\begin{cases}
+a(k_\theta),&\theta\notin E,\\
+a_m^++a_m^-,&\theta=E_m,
+\end{cases}
+$$
+$$
+g_m=d'_m\bigl((1-p_m)a_m^+-p_m a_m^-\bigr).
+$$
+The second coordinate can equivalently be written without $p_m$ as
+$$
+g_m=\begin{cases}
+a_m^++t^m a_m^-,&t\ne\infty,\ |t|<1,\\
+t^{-m}a_m^++a_m^-,&t\ne\infty,\ |t|>1,\\
+a_m^-,&t=\infty.
+\end{cases}
+$$
+Then $\Phi_t$ is a bounded algebra isomorphism from $B_t$ to $\mathcal B$. Its inverse $\Psi_t$ is given by
+$$
+\Psi_t(f,g)(k_\theta)=f(\theta)\qquad(\theta\notin E),
+$$
+$$
+\Psi_t(f,g)(x_m^+)=p_m f(E_m)+\frac{g_m}{d'_m},\qquad
+\Psi_t(f,g)(x_m^-)=(1-p_m)f(E_m)-\frac{g_m}{d'_m}.
+$$
+In the original coefficient norm, these maps satisfy
+$$
+\|\Phi_t(a)\|_{\oplus}\le2\|a\|_1,
+$$
+$$
+\|\Psi_t(f,g)\|_1
+\le C_t\|f\|_1+\frac{2}{1-\rho_t}\|g\|_1
+\le\frac{2}{1-\rho_t}\|(f,g)\|_{\oplus}.
+$$
+In particular,
+$$
+\frac{1-\rho_t}{2}\|a\|_1\le\|\Phi_t(a)\|_{\oplus}\le2\|a\|_1.
+$$
+Under this isomorphism, the phase map is the first-coordinate projection and the augmentation is the sum of the first coordinate. All parameters yield isomorphic Banach algebras, but distinct parameters still yield distinct kernels on the fixed oriented point masses.
+
+**Proof.** The simplifications of $g_m$ follow from explicit identities. When $|t|<1$,
+$$
+p_m=-\frac{t^m}{d'_m},\qquad 1-p_m=\frac1{d'_m}.
+$$
+When $|t|>1$,
+$$
+p_m=-\frac1{d'_m},\qquad 1-p_m=\frac{t^{-m}}{d'_m}.
+$$
+For $\infty$, one has $p_m=1$ and $d'_m=-1$. Substitution gives each displayed formula for $g_m$.
+
+The coordinates of $f$ are precisely the fiber sums $H_{\#}a$, so $\|f\|_1\le\|a\|_1$. In the two finite cases the additional coefficient in the formula for $g_m$ has absolute value at most one. Consequently, including the formal case,
+$$
+\sum_{m\ge1}|g_m|\le\sum_{m\ge1}(|a_m^+|+|a_m^-|)\le\|a\|_1.
+$$
+This proves that $\Phi_t$ is a well-defined bounded linear map on the actual space of all absolutely summable families, and proves its stated upper bound.
+
+Conversely, the formulas for $\Psi_t$ specify every coordinate of $K$, because the fibers in Assumption 25.1 exhaust $K$. Theorem 27.2 and theorem 27.6 imply
+$$
+\begin{aligned}
+\|\Psi_t(f,g)\|_1
+&\le\sum_{\theta\notin E}|f(\theta)|
++\sum_{m\ge1}(|p_m|+|1-p_m|)|f(E_m)|
++2\sum_{m\ge1}\frac{|g_m|}{|d'_m|}\\
+&\le C_t\|f\|_1+\frac{2}{1-\rho_t}\|g\|_1.
+\end{aligned}
+$$
+Thus the inverse formulas also give an actual absolutely summable family. Since $C_t=(1+\rho_t)/(1-\rho_t)\le2/(1-\rho_t)$, the final inverse bound follows.
+
+The inverse identities can be checked coordinate by coordinate without any infinite basis assertion. Starting with $a$, one has
+$$
+\frac{g_m}{d'_m}
+=(1-p_m)a_m^+-p_m a_m^-
+=a_m^+-p_m f(E_m).
+$$
+Substitution into the formulas for $\Psi_t$ recovers both $a_m^+$ and $a_m^-$. Nonexceptional coordinates are unchanged. Starting instead with $(f,g)$, the two reconstructed exceptional coefficients sum to $f(E_m)$, and
+$$
+(1-p_m)\left(p_m f(E_m)+\frac{g_m}{d'_m}\right)
+-p_m\left((1-p_m)f(E_m)-\frac{g_m}{d'_m}\right)
+=\frac{g_m}{d'_m}.
+$$
+Hence the second coordinate is also recovered. Therefore $\Psi_t\Phi_t$ and $\Phi_t\Psi_t$ are the respective identity maps on their full absolutely summable spaces. The norm-equivalence inequality follows by applying the inverse bound to $\Phi_t(a)$.
+
+It remains to prove multiplicativity. On the finite core, theorem 25.5 and nonzero rescaling give an algebraic basis consisting of the $\pi_\theta$ and $u_m$. The coordinate formulas give
+$$
+\Phi_t(\pi_\theta)=(\delta_\theta,0),\qquad
+\Phi_t(u_m)=(0,\delta_m).
+$$
+The finite products of these vectors are
+$$
+\pi_\theta*_t\pi_\eta=\pi_{\theta+\eta},\qquad
+\pi_\theta*_t u_m=u_m*_t\pi_\theta=0,\qquad
+u_m*_t u_n=u_{m+n}.
+$$
+The last identity is theorem 27.6, and the others are the finite rules from Section 25. They agree exactly with the products of the corresponding coordinate vectors in $\mathcal B$. Thus $\Phi_t$ is multiplicative on the finite core. The finite core is dense, both products are bounded by theorem 27.5, and $\Phi_t$ is bounded. Taking finite-support limits proves multiplicativity on $B$. Its bounded inverse is consequently multiplicative as well. The estimates remain bounded estimates when the domain uses the equivalent norm $\|\cdot\|_{\mathrm{alg},t}$, establishing the claimed Banach-algebra isomorphism.
+
+The formula for $f$ gives $f=H_{\#}a$. Absolute summability permits regrouping by fibers and gives
+$$
+\varepsilon(a)=\sum_{\theta\in\mathbb T}f(\theta).
+$$
+The two inverse images
+$$
+V_t=\Phi_t^{-1}(\mathcal G\oplus\{0\}),\qquad
+J_t=\Phi_t^{-1}(\{0\}\oplus\mathcal S)
+$$
+are closed two-sided ideals, their cross products vanish, and $J_t=\ker H_{\#}$. Moreover,
+$$
+\Phi_t(\delta_{0_K})=(\delta_0,0),
+$$
+so $\delta_{0_K}$ is the unit of $V_t$ and annihilates $J_t$.
+
+For any two parameters, composing one coordinate isomorphism with the inverse of the other gives an abstract Banach-algebra isomorphism. This does not identify the kernels on the fixed point-mass carrier. Indeed, their actual zero-slice coefficient is
+$$
+P^{(t)}_{0_K,x_1^+}(x_1^+)=\begin{cases}
+\dfrac{t}{t-1},&t\ne\infty,\\
+1,&t=\infty.
+\end{cases}
+$$
+A finite parameter never gives the value one, and equality of the finite values implies equality of the parameters by cross multiplication. Thus distinct parameters give distinct kernels, even though the completed algebras are isomorphic. QED.
+
+**theorem 27.8 (Absence of every one-sided approximate identity).** The algebra $B_t$ has no left approximate identity and no right approximate identity in its norm topology, even when unbounded nets are allowed. Hence it has no two-sided approximate identity and no left or right unit.
+
+**Proof.** In $\mathcal B$, let $z=(0,\delta_1)$. For any $(f,g)\in\mathcal B$, the second coordinate of
+$$
+(f,g)\diamond z
+$$
+has first coefficient zero: positive integers cannot sum to one. The second coordinate of $z$ has first coefficient one. Therefore
+$$
+\|(f,g)\diamond z-z\|_{\oplus}\ge1.
+$$
+The identical argument gives
+$$
+\|z\diamond(f,g)-z\|_{\oplus}\ge1.
+$$
+Since $\Phi_t(u_1)=z$, the forward bound in theorem 27.7 yields, for every $a\in B$,
+$$
+\|a*_t u_1-u_1\|_1\ge\frac12,\qquad
+\|u_1*_t a-u_1\|_1\ge\frac12.
+$$
+No net can therefore approximate the identity on even this one element, on either side. The coefficient norm and the Banach-algebra norm induce the same topology. A one-sided unit would provide a constant one-sided approximate identity, so units are excluded as well. The element $(\delta_0,0)$ is nevertheless a unit on the first summand alone; it annihilates $z$ and is not a unit of the direct sum. QED.
+
+**definition 27.9 (Measure topologies).** Give $K$ its original digit topology, metrized by
+$$
+d_K(x,y)=\sum_{j\ge0}2^{-j-1}|x_j-y_j|.
+$$
+Let $C(K)$ denote the real continuous functions with the supremum norm, and let $M(K)$ denote the finite signed regular Borel measures with norm
+$$
+\|\mu\|_{\mathrm{TV}}=|\mu|(K).
+$$
+The measure weak topology used here is
+$$
+\sigma(M(K),C(K)),
+$$
+namely the topology generated by the maps
+$$
+\mu\longmapsto\int_K f\,d\mu\qquad(f\in C(K)).
+$$
+On a compact space, continuous functions are bounded, so this agrees with weak convergence of signed measures tested against all bounded continuous functions. Under the Riesz representation identification $M(K)=C(K)^*$, it is exactly the weak-star topology on that dual.[^rro27-measures]
+
+The Banach weak topology on the measure space is instead
+$$
+\sigma(M(K),M(K)^*),
+$$
+where $M(K)^*$ is the full norm-continuous dual of the total-variation Banach space. The norm topology is the topology of $\|\cdot\|_{\mathrm{TV}}$. These definitions distinguish the measure weak topology from the Banach weak topology.[^rro27-topology]
+
+**theorem 27.10 (Compactness and the atomic isometric embedding).** The digit space $K$ is compact and metrizable by $d_K$. Every $a\in B$ defines a finite signed regular Borel measure
+$$
+\iota(a)(D)=\sum_{x\in D}a(x)\qquad(D\subseteq K\text{ Borel}),
+$$
+and this gives a linear isometric embedding
+$$
+\iota:B\longrightarrow M(K),\qquad
+\|\iota(a)\|_{\mathrm{TV}}=\|a\|_1.
+$$
+In particular, all the kernels can be regarded as finite signed regular Borel measures. For distinct points,
+$$
+\|\delta_x-\delta_y\|_1
+=\|\delta_x-\delta_y\|_{\mathrm{TV}}=2.
+$$
+
+**Proof.** Agreement of the first $N$ digits bounds $d_K$ by the tail sum $2^{-N}$, while $d_K(x,y)<2^{-N}$ forces agreement of the first $N$ digits. Thus the metric induces the digit topology. Given a sequence in $K$, successively choose subsequences constant in each digit and take a diagonal subsequence. It converges coordinatewise, hence in $d_K$. Its limit still has no adjacent ones, since each prohibited adjacent pair is determined by two coordinates. Therefore $K$ is sequentially compact, and hence compact as a metric space.
+
+For $a\in B$, theorem 27.3 gives at most countable support. Absolute summability permits interchange over disjoint Borel sets, so the displayed formula for $\iota(a)$ is countably additive. Splitting the coefficients into their positive and negative parts shows that its variation is
+$$
+|\iota(a)|(D)=\sum_{x\in D}|a(x)|.
+$$
+For completeness, the positive and negative coefficient measures are concentrated on disjoint countable Borel sets, so they are mutually singular and form the Jordan decomposition. The asserted variation formula follows.
+
+This variation measure is regular. Given a Borel set $D$ and $\epsilon>0$, choose a finite subset of $D\cap\operatorname{supp}(a)$ whose omitted mass inside $D$ is less than $\epsilon$; this subset is compact and proves inner regularity. For outer regularity, choose a finite $F\subseteq\operatorname{supp}(a)$ with total omitted mass less than $\epsilon$. The open set
+$$
+U=K\setminus(F\setminus D)
+$$
+contains $D$ and satisfies
+$$
+|\iota(a)|(U\setminus D)<\epsilon.
+$$
+Thus the variation, and consequently both Jordan parts, are regular. Taking $D=K$ in the variation formula proves the isometry. Linearity follows from absolute summability, and injectivity follows by evaluating singleton sets. Finally, for $x\ne y$, the two nonzero coefficients of $\delta_x-\delta_y$ have absolute value one, giving norm two. QED.
+
+**theorem 27.11 (Exact continuity locus for the compact digit topology).** For each fixed parameter, the map
+$$
+K^2\longrightarrow M(K),\qquad (x,y)\longmapsto P^{(t)}_{x,y},
+$$
+with the digit topology on its domain and $\sigma(M(K),C(K))$ on its codomain, is continuous at $(x,y)$ if and only if $\Gamma(x,y)$ is a singleton. Equivalently, its continuity locus is exactly
+$$
+\{(x,y):H(x)+H(y)\notin E\}
+\ \cup\ 
+\{(x_m^s,x_n^s):m,n\ge1,\ s\in\{+1,-1\}\}.
+$$
+No parameter gives a jointly continuous map on all of $K^2$.
+
+**Proof.** First suppose $\Gamma(x,y)=\{w\}$. Normalization and support inclusion imply
+$$
+P^{(t)}_{x,y}=\delta_w.
+$$
+Let $U$ be any open neighborhood of $w$. The set
+$$
+\Gamma\cap\bigl(K^2\times(K\setminus U)\bigr)
+$$
+is compact: $K^3$ is compact and $\Gamma$ is closed. Its projection to $K^2$ is compact, hence closed, and does not contain $(x,y)$. Its complement therefore supplies a neighborhood $W$ of $(x,y)$ such that
+$$
+\Gamma(x',y')\subseteq U\qquad((x',y')\in W).
+$$
+
+Fix $f\in C(K)$ and $\epsilon>0$. Choose $U$ small enough that
+$$
+|f(z)-f(w)|<\frac{\epsilon}{C_t}\qquad(z\in U).
+$$
+For the corresponding neighborhood $W$, normalization of every row and theorem 27.2 give
+$$
+\begin{aligned}
+\left|\int_K f\,dP^{(t)}_{x',y'}-f(w)\right|
+&=\left|\int_K(f-f(w))\,dP^{(t)}_{x',y'}\right|\\
+&\le\int_K|f-f(w)|\,d|P^{(t)}_{x',y'}|\\
+&\le\|P^{(t)}_{x',y'}\|_{\mathrm{TV}}\,\frac{\epsilon}{C_t}
+\le\epsilon.
+\end{aligned}
+$$
+One may shrink $U$ further to make the last bound strict. Thus every continuous test integral is continuous at $(x,y)$, which is precisely continuity into $\sigma(M(K),C(K))$. This argument uses the uniform variation bound for signed rows; normalization alone would not control the absolute value of the integral.
+
+Conversely, suppose $\Gamma(x,y)$ has two points. By Assumption 25.1 there is an index $r$ such that these points are
+$$
+w^+=x_r^+,\qquad w^-=x_r^-,\qquad w^+\ne w^-.
+$$
+Use the maximum product metric on $K^3$. For each sign $s$ and each integer $j\ge1$, membership of $(x,y,w^s)$ in the closure defining $\Gamma$ supplies actual natural numbers $a_j^s,b_j^s$ such that
+$$
+\max\left\{
+ d_K(Z(a_j^s),x),\ d_K(Z(b_j^s),y),\ d_K(Z(a_j^s+b_j^s),w^s)
+\right\}<\frac1j.
+$$
+For each sign this is one simultaneous approximation by a genuine input pair and its genuine finite sum, not a choice of unrelated input and output approximations. In particular,
+$$
+(Z(a_j^s),Z(b_j^s))\longrightarrow(x,y),\qquad
+Z(a_j^s+b_j^s)\longrightarrow w^s.
+$$
+Finite-core consistency yields
+$$
+P^{(t)}_{Z(a_j^s),Z(b_j^s)}=\delta_{Z(a_j^s+b_j^s)}.
+$$
+For every $f\in C(K)$, its integral against the right side tends to $f(w^s)$. Thus these two sequences of output measures tend in the measure weak topology to $\delta_{w^+}$ and $\delta_{w^-}$, respectively. The continuity of point masses in this topology follows directly from evaluation on continuous functions.[^rro27-topology]
+
+The two limits are distinct: some digit $q$ satisfies $w_q^+\ne w_q^-$, and the continuous function $f_q(z)=z_q$ separates the corresponding Dirac measures. Interleave the two actual input-pair sequences. The interleaved sequence still converges to $(x,y)$, whereas the integrals of its output measures against $f_q$ have two different subsequential limits. Hence the output map is not continuous at $(x,y)$. This conclusion applies even if the particular row $P^{(t)}_{x,y}$ itself is a Dirac measure.
+
+It remains to identify the singleton locus. For a nonexceptional sum phase the exact graph formula in Assumption 25.1 gives a singleton. For an exceptional sum phase, the union of the two input sign sets is a singleton exactly when both inputs are exceptional and have the same sign. Their indices then add, producing precisely the second set in the displayed locus. Finally, $0_K$ is nonexceptional and
+$$
+\Gamma(0_K,x_1^+)=\{x_1^+,x_1^-\},
+$$
+so every parameter has at least this discontinuity. QED.
+
+**theorem 27.12 (Separation from Banach weak and norm continuity).** For every parameter, the kernel map is measure-weak continuous at $(0_K,0_K)$ but is neither Banach-weak continuous nor total-variation-norm continuous there. The measure weak topology equals the weak-star topology specified in Definition 27.9, is strictly weaker than the Banach weak topology on $M(K)$, and the latter is strictly weaker than the total variation norm topology. Bounded bilinearity on $\ell^1(K_{\mathrm d})$ therefore does not imply digit-topology continuity of the point-mass kernel.
+
+**Proof.** Let
+$$
+y_j=Z(G_j).
+$$
+This is the admissible digit word with its only nonzero digit at position $j$, so $y_j\to0_K$ in the digit topology and $y_j\ne0_K$. Finite-core consistency gives, independently of the parameter,
+$$
+P^{(t)}_{y_j,0_K}=\delta_{y_j},\qquad
+P^{(t)}_{0_K,0_K}=\delta_{0_K}.
+$$
+For every $f\in C(K)$ one has $f(y_j)\to f(0_K)$, so the displayed outputs converge measure-weakly. Also $\Gamma(0_K,0_K)=\{0_K\}$ by Assumption 25.1, and theorem 27.11 proves continuity at that pair.
+
+In contrast,
+$$
+\|\delta_{y_j}-\delta_{0_K}\|_{\mathrm{TV}}=2
+$$
+for every $j$, excluding norm continuity. The functional
+$$
+L:M(K)\to\mathbb R,\qquad L(\mu)=\mu(\{0_K\})
+$$
+is norm-continuous because $|L(\mu)|\le\|\mu\|_{\mathrm{TV}}$. It is consequently one of the tests defining the Banach weak topology. But
+$$
+L(\delta_{y_j})=0,\qquad L(\delta_{0_K})=1,
+$$
+so Banach weak continuity also fails. The same coordinate evaluation is a bounded functional on the coefficient space $B$.
+
+Every continuous-function integral is norm-continuous on $M(K)$, so the measure weak topology is weaker than the Banach weak topology, which in turn is weaker than the norm topology. The preceding sequence makes the first inclusion strict. For strictness of the second, consider any basic Banach weak neighborhood of zero, defined by finitely many bounded linear functionals $L_1,\ldots,L_N$. The $N+1$ distinct point masses $\delta_{y_1},\ldots,\delta_{y_{N+1}}$ are linearly independent, as singleton evaluation verifies. The restriction of $(L_1,\ldots,L_N)$ to their span therefore has a nonzero kernel vector $\mu$. Every scalar multiple of $\mu$ satisfies all the defining zero-centered weak inequalities. Thus this weak neighborhood is unbounded in total variation, and no weak neighborhood of zero can be contained in a norm ball. The Banach weak and norm topologies are distinct.
+
+Finally, the point-mass input map from digit $K$ to coefficient $B$ is not norm-continuous along $y_j\to0_K$, since its images stay at distance two. The bounded bilinear map in theorem 27.5 uses the coefficient norm on both input spaces, not the digit topology. There is therefore no implication from that bounded bilinearity to the digit-topology continuity excluded above. QED.
+
+[^rro27-l1]: Adam Bobrowski and Wojciech Chojnacki, *Isolated points of spaces of homomorphisms from ordered AL-algebras*, Dissertationes Mathematicae, online-first text (2022), §3.1.3, pp. 21–22, especially equation (3.2), DOI 10.4064/dm845-11-2021. The cited section defines absolutely summable families over arbitrary sets and discrete semigroup convolution. [Mathematical text](https://cs.adelaide.edu.au/~wojtek/papers/dm845-11-2021.pdf).
+
+[^rro27-ba]: Szymon Draga and Tomasz Kania, *When is multiplication in a Banach algebra open?*, arXiv:1704.08608v2, 7 October 2017, §§2.2–2.3. These sections specify the submultiplicative Banach-algebra norm convention and the convolution product for arbitrary discrete semigroups, for real or complex scalars. [Mathematical text](https://arxiv.org/html/1704.08608v2).
+
+[^rro27-measures]: Martin Herdegen, Gechun Liang, and Osian Shelley, *Vague and weak convergence of signed measures*, arXiv:2205.13207v2 (2022), §1.1, Definition 1.1 and Theorem 1.2(a), pp. 2–3. These give the continuous-test definition of weak convergence for finite signed Radon measures and the Riesz representation identification with the continuous-function dual. [Mathematical text](https://arxiv.org/pdf/2205.13207v2).
+
+[^rro27-topology]: Daniel V. Tausk, *Weak\** topology for the space of finite measures on a topological space*, notes dated 17 January 2024, Definition 3.1, p. 5; Proposition 4.1 and its proof, p. 8; Corollary C.6 and §C.1, p. 55. These distinguish the continuous-test topology from the Banach weak topology and establish continuity of the Dirac embedding in the former topology. [Mathematical text](https://www.ime.usp.br/~tausk/texts/WeakTopologyMeasures.pdf).
+
+## 追加锚（本行以下为增补区）
