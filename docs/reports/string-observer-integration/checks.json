@@ -1,0 +1,93 @@
+{
+  "base_commit": "e984c77223b55a3cda565c7694098e436926183d",
+  "seed": 20260917,
+  "numerical_tolerance": 1e-10,
+  "software": {
+    "numpy": "2.3.5",
+    "sympy": "1.14.0"
+  },
+  "proof_status": "Ordinary proofs in the appendix; these are finite exact/numerical checks only.",
+  "exact": {
+    "golden_O22_identity": true,
+    "golden_orbit_k0_to20": [
+      1,
+      5,
+      34,
+      233,
+      1597,
+      10946,
+      75025,
+      514229,
+      3524578,
+      24157817,
+      165580141,
+      1134903170,
+      7778742049,
+      53316291173,
+      365435296162,
+      2504730781961,
+      17167680177565,
+      117669030460994,
+      806515533049393,
+      5527939700884757,
+      37889062373143906
+    ],
+    "O11_bounded_search": [
+      [
+        -1,
+        0,
+        0,
+        -1
+      ],
+      [
+        0,
+        -1,
+        -1,
+        0
+      ],
+      [
+        0,
+        1,
+        1,
+        0
+      ],
+      [
+        1,
+        0,
+        0,
+        1
+      ]
+    ],
+    "transported_quadratic_checks": 625,
+    "circle_T_duality_checks": 243,
+    "caveat": "Bounded checks do not replace the general algebraic proofs."
+  },
+  "matrices": {
+    "samples": 64,
+    "max_residuals": {
+      "schur": 1.4229661346422922e-14,
+      "response": 6.7906796455160115e-15,
+      "entropy_identity": 1.7053025658242404e-13,
+      "entropy_covariance": 3.659295089164516e-13,
+      "erasure_covariance": 7.771561172376096e-16,
+      "erasure_trace": 8.881784197001252e-16
+    },
+    "wrong_fixed_window": {
+      "original": 1.0,
+      "untransported": 0.6250000000000001
+    }
+  },
+  "quantum": {
+    "instrument_word_checks": 5460,
+    "max_word_residual": 1.110969778498854e-15,
+    "adaptive_samples": 64,
+    "max_adaptive_residual": 6.661338147750939e-16,
+    "approximate_dictionary_samples": 64,
+    "max_noise_record_TV": 0.017235024673052508,
+    "composable_noise_TV_bound": 0.15,
+    "dephasing_recovery_samples": 64,
+    "min_recovery_inequality_slack": 0.00014970692089745562,
+    "max_recovery_record_TV": 0.20294894150204096,
+    "caveat": "Recovery probes cover only dephasing with maximally mixed reference, not universal recovery construction."
+  }
+}
