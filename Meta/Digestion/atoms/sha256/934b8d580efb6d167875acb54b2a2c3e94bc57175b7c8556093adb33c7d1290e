@@ -1,0 +1,42 @@
+**Theorem 34.8 (Natural finite-support walks and all endpoint laws).** Let $D\subseteq\mathbb N$ be finite and nonempty, let $a_d>0$ for $d\in D$, and suppose $\sum_{d\in D}a_d=1$. Put
+$$
+\mu=\sum_{d\in D}a_d\delta_{Z(d)}.
+$$
+For every $t\in\Lambda$ and every $n\ge1$,
+$$
+\mu_t^{(n)}
+=\sum_{s\in nD}\left(\sum_{\substack{d_1,\ldots,d_n\in D\\d_1+\cdots+d_n=s}}
+\prod_{j=1}^n a_{d_j}\right)\delta_{Z(s)},
+$$
+where $nD$ is the set of sums of $n$ members of $D$. This is a probability, its support is exactly $Z(nD)$, and it is independent of the parameter. Furthermore,
+$$
+R_t\mu=0,\qquad \mu_t^{(n)}=L_t\nu^{(n)},\qquad
+\mu_t^{(n)}(\{x_m^\pm\})=0\quad(m\ge1).
+$$
+Ordinary convergence to $\mathfrak m$ holds exactly when $D$ has at least two elements. Cesaro convergence holds exactly when $D$ contains a positive integer.
+
+In particular, the deterministic step $\delta_{Z(1)}$ has powers $\delta_{Z(n)}$, which do not converge to $\mathfrak m$, while
+$$
+\frac1N\sum_{n=1}^N\delta_{Z(n)}\longrightarrow\mathfrak m.
+$$
+The lazy step
+$$
+\mu_{\mathrm{lazy}}=\frac12\bigl(\delta_{Z(0)}+\delta_{Z(1)}\bigr)
+$$
+has the ordinary limit
+$$
+\mu_{\mathrm{lazy},t}^{(n)}
+=2^{-n}\sum_{j=0}^n\binom nj\delta_{Z(j)}
+\longrightarrow\mathfrak m.
+$$
+Its two extreme coefficients, at $Z(0)$ and $Z(n)$, are both $2^{-n}$. Whenever ordinary convergence holds, the exact limiting cylinder probabilities are
+$$
+\mu_t^{(n)}(C_p)\longrightarrow\mathfrak m(C_p)=
+\begin{cases}
+\alpha^L,&L\ge1,\ p_{L-1}=0,\\
+\alpha^{L+1},&L\ge1,\ p_{L-1}=1,\\
+1,&L=0.
+\end{cases}
+$$
+The analogous statement holds for Cesaro averages under their criterion.
+

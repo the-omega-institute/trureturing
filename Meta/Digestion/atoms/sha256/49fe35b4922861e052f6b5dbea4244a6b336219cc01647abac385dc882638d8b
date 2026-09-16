@@ -1,0 +1,46 @@
+**Theorem 34.5 (Weak-star escape and the exact residual norm dichotomy).** For every probability input and every fixed admissible parameter,
+$$
+D_{t,n}\longrightarrow0\quad\text{in }\sigma(M(K),C(K)).
+$$
+More precisely, with
+$$
+\Delta_n(f)=\sup_{m\ge n}|f(x_m^+)-f(x_m^-)|,
+$$
+one has
+$$
+\left|\int_K f\,dD_{t,n}\right|
+\le\frac{\Delta_n(f)}{1-\rho_t^n}\|R_t\mu\|_1^n,\qquad
+\Delta_n(f)\longrightarrow0.
+$$
+Let $S^{\sigma_t}$ be the sign class selected in the proof of Theorem 34.3. Then
+$$
+\|R_t\mu\|_1=1\quad\Longleftrightarrow\quad\mu(S^{\sigma_t})=1.
+$$
+Consequently there is the dichotomy
+$$
+\|D_{t,n}\|_{\mathrm{TV}}\longrightarrow
+\begin{cases}
+0,&\mu(S^{\sigma_t})<1,\\
+2,&\mu(S^{\sigma_t})=1.
+\end{cases}
+$$
+In the first case the bound in Theorem 34.2 gives geometric decay with base $\|R_t\mu\|_1<1$.
+
+**Proof.** For $n>G_L$, every pair entering the supremum defining $\Delta_n(f)$ has the same length-$L$ prefix. Hence $\Delta_n(f)\le\omega_L(f)$, which proves its convergence to zero. Testing the absolutely convergent residual series and applying the denominator bound gives the asserted inequality. Its right side tends to zero, because the residual norm is at most one. This also proves weak-star convergence of the Cesaro residual averages by ordinary scalar averaging.
+
+On the selected sign class, the nonzero residual scalar is exactly one. On the opposite sign class its absolute value is at most $\rho_t$, and it vanishes outside $S$. Therefore, if $b=\mu(S^{\sigma_t})$,
+$$
+\|R_t\mu\|_1\le b+\rho_t(1-b).
+$$
+This is strictly less than one when $b<1$. If $b=1$, then
+$$
+g_m=\mu(\{x_m^{\sigma_t}\})\ge0,\qquad\sum_m g_m=1,
+$$
+so the residual norm equals one. This proves the equivalence.
+
+When that norm is less than one, Theorem 34.2 proves total-variation decay. In the other case every $g^{(n)}$ is a probability distribution on the positive integers, supported in indices at least $n$. The exact variation formula then gives
+$$
+\frac2{1+\rho_t^n}\le\|D_{t,n}\|_{\mathrm{TV}}\le\frac2{1-\rho_t^n}.
+$$
+Both bounds tend to two. This persistent norm concerns the difference from the own phase lift; it is compatible with vanishing against every fixed continuous readout. $\square$
+

@@ -1,0 +1,23 @@
+**Theorem 34.11 (Positive endpoint dynamics, arbitrary starting laws, and switching).** Fix a probability step $\mu$ and put $\nu=H_\#\mu$. Let $\eta_0$ be any probability on $K$, choose any sequence
+$$
+\boldsymbol\tau=(\tau_1,\tau_2,\ldots)\in\{0,\infty\}^{\mathbb N_{>0}},
+$$
+and define recursively
+$$
+\eta_n=\eta_{n-1}\star_{\tau_n}\mu\quad(n\ge1).
+$$
+These are probabilities and
+$$
+H_\#\eta_n=(H_\#\eta_0)*_{\mathbb T}\nu^{(n)}.
+$$
+If $|\widehat\nu(k)|<1$ for every $k\ne0$, then $\eta_n\to\mathfrak m$. More strongly, for each fixed $f\in C(K)$,
+$$
+\lim_{n\to\infty}\sup_{\eta_0,\boldsymbol\tau}
+\left|\int f\,d\eta_n-\int f\,d\mathfrak m\right|=0,
+$$
+where the supremum is over initial probabilities and endpoint sequences.
+
+If $\widehat\nu(k)\ne1$ for every $k\ne0$, the analogous statement holds for the averages $N^{-1}\sum_{n=1}^N\eta_n$. Each criterion is also necessary for its conclusion to hold for every initial probability. It need not be necessary for convergence from a particular initial law, such as $\mathfrak m$ itself.
+
+The displayed uniformity concerns each fixed continuous readout, not the supremum over its unit ball. The varying-parameter recursion is not asserted to be a power in a single algebra.
+

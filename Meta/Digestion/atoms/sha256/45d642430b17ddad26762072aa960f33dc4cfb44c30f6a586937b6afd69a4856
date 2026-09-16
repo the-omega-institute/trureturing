@@ -1,0 +1,70 @@
+**Theorem 34.3 (Exact finite-prefix disappearance and the boundary-incidence test).** Fix $L\ge1$ and put $M=G_L$. For $1\le m\le M$, write
+$$
+w_{m,L}=\delta_{q_L(x_m^+)}-\delta_{q_L(x_m^-)}.
+$$
+Then
+$$
+(q_L)_\#D_{t,n}
+=\sum_{m=1}^{M}b_m^{(n)}w_{m,L},\qquad
+b_m^{(n)}=\frac{g_m^{(n)}}{d'_m}.
+$$
+The exact vanishing test is
+$$
+(q_L)_\#D_{t,n}=0
+\quad\Longleftrightarrow\quad
+b_1^{(n)}=\cdots=b_M^{(n)}.
+$$
+In particular, for $n\ge2$ this is equivalent to $g_m^{(n)}=0$ for every $m\le M$. If $g\ne0$ and
+$$
+a=\min\{m\ge1:g_m\ne0\},
+$$
+then, for every $n\ge2$,
+$$
+(q_L)_\#D_{t,n}=0\quad\Longleftrightarrow\quad na>G_L.
+$$
+If $g=0$, the residual is identically zero at every time.
+
+Uniformly over all probability inputs, the exact disappearance threshold is
+$$
+\boxed{\ n>G_L.\ }
+$$
+At depth zero the residual is invisible for every $n\ge1$.
+
+The Cesaro residual satisfies
+$$
+\left\|(q_L)_\#\bigl(\overline\mu_{t,N}-L_t\overline\nu_N\bigr)\right\|_{\mathrm{TV}}
+\le\frac{2C_t\min\{N,G_L\}}{N}.
+$$
+
+**Proof.** Theorem 20.2 makes $(q_L)_\#v_m$ zero precisely for $m>M$, proving the finite formula. Arrange the boundary indices in their circular order as $r_1,\ldots,r_M$, with indices interpreted cyclically. Let the cylinder associated with the arc from $E_{r_i}$ to $E_{r_{i+1}}$ be $C_i$. The fixed side convention implies that the coefficient of $C_i$ in $\sum_m b_mw_{m,L}$ is
+$$
+b_{r_i}-b_{r_{i+1}}.
+$$
+Consequently the resulting histogram is zero exactly when all boundary coefficients are equal. This also explains why individual nonzero boundary terms can cancel at time one: the complete boundary cycle has the relation $\sum_{m=1}^M w_{m,L}=0$.
+
+For $n\ge2$, the first residual coordinate is zero, so $b_1^{(n)}=0$. Equality of all the boundary coefficients therefore means that they all vanish. If $a$ is the first nonzero coordinate of $g$, then
+$$
+g_k^{(n)}=0\quad(k<na),\qquad g_{na}^{(n)}=g_a^n\ne0.
+$$
+Indeed, every participating index is at least $a$, and equality of their sum to $na$ forces all of them to equal $a$. This proves the input-dependent equivalence.
+
+The universal upper bound follows directly from the support restriction $m\ge n$. To prove sharpness with actual probabilities, choose the sign
+$$
+\sigma_t=
+\begin{cases}
++,&t\ne\infty,\ |t|<1,\\
+-,&t\ne\infty,\ |t|>1\text{ or }t=\infty.
+\end{cases}
+$$
+For $\mu=\delta_{x_1^{\sigma_t}}$, the explicit residual functions of Theorem 28.2 give $R_t\mu=e_1$. The exact same-sign law gives
+$$
+\mu_t^{(n)}=\delta_{x_n^{\sigma_t}},\qquad D_{t,n}=\frac1{d'_n}v_n.
+$$
+Thus every $1\le n\le G_L$ is detected at depth $L$. In particular, at the claimed endpoint,
+$$
+\left\|(q_L)_\#D_{t,G_L}\right\|_{\mathrm{TV}}=\frac2{|d'_{G_L}|}>0.
+$$
+At depth zero every residual has mass zero and hence has zero pushforward.
+
+For the Cesaro estimate, terms with $n>G_L$ vanish after pushforward. Each remaining term has variation at most $2C_t$, because both $\mu_t^{(n)}$ and $L_t\nu^{(n)}$ have variation at most $C_t$. Pushforward is contractive, and averaging proves the bound. $\square$
+

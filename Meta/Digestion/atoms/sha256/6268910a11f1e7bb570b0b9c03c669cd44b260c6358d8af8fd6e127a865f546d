@@ -1,0 +1,39 @@
+**Theorem 34.6 (Continuity at an exceptional-set-null phase target).** Suppose $\xi_j,\xi$ are circle probabilities,
+$$
+\xi_j\longrightarrow\xi\quad\text{weak-star},\qquad \xi(E)=0.
+$$
+For every fixed admissible $t$,
+$$
+L_t\xi_j\longrightarrow L_t\xi=s_\#\xi\quad\text{weak-star in }M(K),
+$$
+where $s$ is the Borel section of Theorem 28.3. The measures $L_t\xi_j$ may be signed, but have variation at most $C_t$.
+
+There is a second assertion requiring positivity rather than a chosen lift: if $\eta_j$ are arbitrary probabilities on $K$ with $H_\#\eta_j\to\xi$ and $\xi(E)=0$, then
+$$
+\eta_j\longrightarrow s_\#\xi\quad\text{weak-star}.
+$$
+In particular, $s_\#\xi$ is the unique positive lift of such a phase probability. The condition $\xi(E)=0$ is weaker than non-atomicity.
+
+**Proof.** For real $f\in C(K)$ define
+$$
+h_{t,f}(\theta)=\int_K f\,d\pi^{(t)}_\theta.
+$$
+This is a bounded Borel function with $\|h_{t,f}\|_\infty\le C_t\|f\|_\infty$, by the setwise kernel results of Section 28. It is continuous at every $\theta_0\notin E$, including with respect to approaches through exceptional phases. Indeed, choose a neighborhood $U$ of the unique point $k_{\theta_0}$ on which $|f-f(k_{\theta_0})|<\varepsilon/C_t$. The compact set $H(K\setminus U)$ does not contain $\theta_0$. For all phases sufficiently close to $\theta_0$, the entire fiber therefore lies in $U$. Since every slice has mass one and variation at most $C_t$,
+$$
+|h_{t,f}(\theta)-f(k_{\theta_0})|<\varepsilon.
+$$
+Thus its discontinuities are contained in $E$.
+
+Apply the positive-measure bounded-Borel testing criterion to the probabilities $\xi_j$, the target $\xi$, and the function $h_{t,f}$. It gives
+$$
+\int_K f\,dL_t\xi_j=\int_{\mathbb T}h_{t,f}\,d\xi_j
+\longrightarrow\int_{\mathbb T}h_{t,f}\,d\xi=\int_K f\,dL_t\xi.
+$$
+This is Proposition 4.9(g) of Tausk, applied on the circle before lifting.[^rro34-port] It is not an application of positive Portmanteau inequalities to the signed measures $L_t\xi_j$. The atom-correction formula gives $L_t\xi=s_\#\xi$ because $\xi(E)=0$. No assertion that $\xi_j(E)\to0$ has been used.
+
+For the second assertion put $\zeta_j=H_\#\eta_j$. Positivity and the exact cylinder inclusions give
+$$
+\zeta_j(J_p)\le\eta_j(C_p)\le\zeta_j(\overline{J_p}).
+$$
+The two endpoints belong to $E$ and have zero $\xi$-mass. The continuity-set part of the same theorem therefore makes both outside quantities converge to $\xi(J_p)$. The middle quantity converges to this value, which is also $(s_\#\xi)(C_p)$. Finite linear combinations of cylinder indicators approximate every continuous function uniformly: choose one function value in each depth-$L$ cylinder and use $\omega_L(f)\to0$. All measures here are probabilities, so these approximations pass to their integrals uniformly in $j$. This proves weak-star convergence. Applying it to a constant sequence of positive lifts proves uniqueness. $\square$
+

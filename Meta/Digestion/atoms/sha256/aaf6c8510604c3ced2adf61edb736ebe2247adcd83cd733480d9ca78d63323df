@@ -1,0 +1,21 @@
+**Theorem 34.7 (Necessary and sufficient ordinary and Cesaro Haar criteria).** For a circle measure use the Fourier convention
+$$
+\chi_k(\theta)=e^{2\pi i k\theta},\qquad
+\widehat\nu(k)=\int_{\mathbb T}\chi_k\,d\nu\quad(k\in\mathbb Z).
+$$
+Complex testing means testing the real and imaginary parts. Let $\mu$ be any fixed probability on $K$ and $\nu=H_\#\mu$. For every admissible $t$,
+$$
+\boxed{\ \mu_t^{(n)}\longrightarrow\mathfrak m\text{ weak-star}
+\quad\Longleftrightarrow\quad
+|\widehat\nu(k)|<1\text{ for every }k\ne0.\ }
+$$
+Likewise,
+$$
+\boxed{\ \overline\mu_{t,N}\longrightarrow\mathfrak m\text{ weak-star}
+\quad\Longleftrightarrow\quad
+\widehat\nu(k)\ne1\text{ for every }k\ne0.\ }
+$$
+These criteria and the limiting measure are independent of $t$, although the finite-time laws need not be.
+
+For $k\ne0$, failure of the strict-modulus condition means that the support of $\nu$ lies in one level set of $\chi_k$, equivalently a coset of $\ker\chi_k$. Failure of the Cesaro condition means that its support lies in $\ker\chi_k$ itself.
+

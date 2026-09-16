@@ -1,0 +1,66 @@
+**Theorem 34.2 (Exact powers and an n-independent total-variation bound).** For every probability $\mu$, every admissible $t$, and every $n\ge1$,
+$$
+\Phi_t\mu_t^{(n)}=(\nu^{(n)},g^{(n)}),\qquad
+\mu_t^{(n)}=L_t\nu^{(n)}+\sum_{k\ge n}\frac{g^{(n)}_k}{d'_k}v_k,
+$$
+$$
+\mu_t^{(n)}(K)=1,\qquad
+\|g^{(n)}\|_1\le\|g\|_1^n\le1,
+$$
+$$
+\|D_{t,n}\|_{\mathrm{TV}}
+=2\sum_{k\ge n}\frac{|g^{(n)}_k|}{|d'_k|}
+\le\frac{2\|g\|_1^n}{1-\rho_t^n}.
+$$
+Moreover,
+$$
+\boxed{\ \|\mu_t^{(n)}\|_{\mathrm{TV}}\le C_t\quad(n\ge1).\ }
+$$
+In fact, for arbitrary signed $\eta_1,\ldots,\eta_n\in M(K)$,
+$$
+\|\eta_1\star_t\cdots\star_t\eta_n\|_{\mathrm{TV}}
+\le C_t\prod_{j=1}^n\|\eta_j\|_{\mathrm{TV}}.
+$$
+For $n=1$ the product means the single measure. No zero-fold product is specified.
+
+**Proof.** Multiplicativity of $\Phi_t$ proves the coordinate formula by induction. A sum of $n$ strictly positive residual indices is at least $n$, so $g^{(n)}_k=0$ for $k<n$. Absolute convolution gives $\|g^{(n)}\|_1\le\|g\|_1^n$. Since $\mu$ is a probability, Theorem 28.8 gives $\|g\|_1\le1$. The phase component is a probability, and the residual component has mass zero, proving the mass identity.
+
+For $k\ge n$, the explicit denominators satisfy
+$$
+1-\rho_t^n\le |d'_k|\le1+\rho_t^n.
+$$
+The supports of the $v_k$ are pairwise disjoint and each $v_k$ has variation two. This proves both the exact variation formula and its estimate. Already these facts give a uniform bound by combining the residual estimate with $\|L_t\nu^{(n)}\|\le C_t$; the stronger displayed bound follows from the actual point products.
+
+Let
+$$
+Q^{(n)}_{x_1,\ldots,x_n}=\delta_{x_1}\star_t\cdots\star_t\delta_{x_n}.
+$$
+If at least one input is nonsplit, its residual coordinate is zero. The coordinate product therefore gives
+$$
+Q^{(n)}_{x_1,\ldots,x_n}=\pi^{(t)}_{H(x_1)+\cdots+H(x_n)},
+$$
+whose variation is at most $C_t$. If all inputs are split and have the same sign, the exact same-sign law of Theorem 25.9 gives a Dirac measure at the split point whose index is the sum of the input indices. If both signs occur, let $A$ be the sum of the positive-input indices and $B$ the sum of the negative-input indices. Associativity, commutativity, and that same-sign law give
+$$
+Q^{(n)}_{x_1,\ldots,x_n}=P^{(t)}_{x_A^+,x_B^-}.
+$$
+Both $A,B$ are positive, so this row also has variation at most $C_t$. These cases exhaust all point tuples.
+
+For completeness, the setwise integration of these rows is legitimate. If $r_m$ denotes the bounded Borel coordinate function from Definition 28.1, their explicit formula is
+$$
+Q^{(n)}_{x_1,\ldots,x_n}
+=\pi^{(t)}_{\sum_jH(x_j)}
++\sum_{m_1,\ldots,m_n\ge1}
+\frac{\prod_{j=1}^n r_{m_j}(x_j)}{d'_{m_1+\cdots+m_n}}v_{m_1+\cdots+m_n}.
+$$
+At each tuple at most one correction term is nonzero. Set evaluations are Borel. Variation evaluations agree with those of the base slice off the countable set $S^n$, and are Borel on that countable set as well. The signed-kernel integration theorem 28.4 thus applies with bound $C_t$.
+
+Integrating against $\eta_1\otimes\cdots\otimes\eta_n$ gives a measure of variation at most $C_t\prod_j\|\eta_j\|$. Its phase coordinate is the convolution of the phase measures. For each fixed residual output index, the sum over compositions of that index into $n$ positive indices is finite, so signed Fubini gives the convolution of the residual coordinates. Injectivity of $\Phi_t$ identifies this integral with the algebraic product. This proves the stronger multilinear estimate and hence the probability-power bound.
+
+The estimates do not require positive outputs. For example, put $\theta=E_1+[1/2]$. Irrationality of $\phi$ implies $\theta\notin E$, whereas $2\theta=E_2$. Thus
+$$
+\delta_{k_\theta}\star_t\delta_{k_\theta}=\pi^{(t)}_{E_2}.
+$$
+For every finite admissible $t\ne0$, the coefficient $t^2/(t^2-1)$ lies outside $[0,1]$, so this square of a probability is signed.
+
+Finally, a global identity would have a residual coordinate $h$ satisfying $h*_+e_1=e_1$. The first coordinate of the left side is zero and that of the right side is one. Hence the all-measure algebra has no global identity. $\square$
+
