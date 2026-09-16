@@ -55,9 +55,19 @@ internal static class FileMapSymlinkPolicy
             throw new FileMapParseException(location, "invalid UTF-8 TOML", exception);
         }
 
-        if (!root.TryGetValue("schema_version", out var version) || version is not 2L
-            || !root.TryGetValue("files", out var rawFiles) || rawFiles is not TomlTableArray files)
-            throw Invalid(location, "symlink declarations require schema_version 2 and files tables");
+        // Historical snapshots retain their own declarations; the current
+        // resource contract remains the strict FILEMAP loader's responsibility.
+        if (!root.TryGetValue("schema_version", out var version) || version is not (2L or 3L or 4L))
+            throw Invalid(location, "symlink declarations require schema_version 2, 3 or 4");
+        if (!root.TryGetValue("files", out var rawFiles))
+            throw Invalid(location, "symlink declarations require files tables");
+        var files = rawFiles switch
+        {
+            TomlTableArray array => array.ToArray(),
+            TomlArray array when version is 3L or 4L && array.All(static value => value is TomlTable)
+                => array.Cast<TomlTable>().ToArray(),
+            _ => throw Invalid(location, "files must be tables; inline arrays require schema_version 3 or 4"),
+        };
 
         var declarations = files.Select((table, index) => ParseEntry(table, $"{location}:files[{index}]"))
             .OfType<FileMapSymlink>().ToImmutableArray();

@@ -169,6 +169,20 @@ public sealed partial class ProductionEnvironmentTests
     public void AlignmentPlanRetainsProductionScribeSnapshotLifecycle(bool throws)
     {
         var fixture = AlignmentPlanFixture();
+        const string producer = "Meta/ReportProducers/scribe-content.json";
+        const string registration = """
+            {"schema":"report-producer-scope-v2","registration":"lean-report-inputs.json",
+             "scope":"scribe-content","projects":["tools/StrataLint.Scribe/StrataLint.Scribe.csproj"]}
+            """;
+        fixture.Files[producer] = registration;
+        fixture.Baseline[producer] = registration;
+        const string inputs = """
+            {"inspector_sources":{"include":[],"exclude":[]},"producer_scopes":{
+             "lean-report":{"include":[],"exclude":[]},
+             "scribe-content":{"include":[],"exclude":[]}}}
+            """;
+        fixture.Files["lean-report-inputs.json"] = inputs;
+        fixture.Baseline["lean-report-inputs.json"] = inputs;
         using var temporary = new TemporaryDirectory();
         WriteDirectoryLedger(temporary.Path, fixture.Files);
         var before = DirectoryLedgerTestSupport.RepositoryImage(temporary);
@@ -189,7 +203,7 @@ public sealed partial class ProductionEnvironmentTests
                 Snapshot(fixture.Files), Snapshot(fixture.Baseline)),
             new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)), verifier);
         var result = environment.AlignDigestionStatus(["--base", "baseline", "--plan"]);
-        Assert.NotNull(snapshotRoot);
+        Assert.True(snapshotRoot is not null, result.Error);
         Assert.False(Directory.Exists(snapshotRoot));
         Assert.Equal(!throws, result.Success);
         if (throws)

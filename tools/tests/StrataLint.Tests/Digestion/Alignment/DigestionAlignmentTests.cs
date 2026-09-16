@@ -668,6 +668,7 @@ public sealed partial class DigestionAlignmentTests
     {
         var entries = new List<RawRepositoryEntry>
         {
+            RawRepositoryEntry.FromText(EngineeringRegistrationFixture.Path, EngineeringRegistrationFixture.Manifest()),
             new(sourcePath, ImmutableArray.CreateRange(sourceBytes)),
             new(
                 TheoryAtomizerDataLoader.DataPath,
