@@ -1,0 +1,12 @@
+**定理 33.10（位置最大熵概率的完整不等式与唯一等号情形）。** 对任意 $\sigma$ 不变 Borel 概率 $\mu$，
+$$
+h_\mu(\sigma)\le\log\phi,
+$$
+并且
+$$
+h_\mu(\sigma)=\log\phi
+\quad\Longleftrightarrow\quad
+\mu=\mu_{\mathrm{st}}.
+$$
+因此，结合第 20.9 条既有的 $h_{\mathrm{top}}(\sigma)=\log\phi$，$\mu_{\mathrm{st}}$ 是完整位置移位的唯一最大熵概率，而临界 Hausdorff 概率是与它不同的 $\nu$。
+
