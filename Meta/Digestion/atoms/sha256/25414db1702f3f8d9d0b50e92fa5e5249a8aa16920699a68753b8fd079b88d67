@@ -1,0 +1,47 @@
+### GP3.3 实际 WSS 深度等于该层中的素因子重数
+
+记
+
+$$
+\epsilon_p=\left(\frac5p\right),\qquad
+N_p=p-\epsilon_p,\qquad
+s_p=v_p(F_{N_p}).
+$$
+
+使用标准 Fibonacci 出现秩定理和估值定理：$\alpha(p)\mid N_p$，且对 $p\ne2,5$，在 $p\mid F_d$ 时
+
+$$
+v_p(F_{dk})=v_p(F_d)+v_p(k).
+$$
+
+这里的初始估值不预设为一。
+
+**定理。** 对每个素数 $p\mid C_j$，
+
+$$
+\boxed{s_p=v_p(C_j).}\tag{GP34}
+$$
+
+因此
+
+$$
+\boxed{
+p\mid C_j\quad\Longrightarrow\quad
+\bigl(\mathrm{WSS}(p)\iff p^2\mid C_j\bigr).
+}\tag{GP35}
+$$
+
+**证明。** GP31 给出
+
+$$
+v_p(F_{3^{j+1}})=v_p(C_j).
+$$
+
+又由 GP33，$3^{j+1}=\alpha(p)$。令 $h=N_p/\alpha(p)$。因为 $p\nmid N_p$，故 $p\nmid h$。估值定理于是给出
+
+$$
+s_p=v_p(F_{\alpha(p)h})=v_p(F_{\alpha(p)})=v_p(C_j).
+$$
+
+标准 WSS 条件为 $s_p\ge2$，由此得到第二式。
+

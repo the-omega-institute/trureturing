@@ -1,0 +1,16 @@
+### IP.3 Cyclotomic blocks and the ramified specialization
+
+For odd $n>3$ with $5\nmid n$, define
+
+$$
+\mathcal C_n=\Phi_n(\phi,\psi)
+=\prod_{d\mid n}F_d^{\mu(n/d)},                  \tag{IP6}
+$$
+
+where $\Phi_n(X,Y)$ is the homogeneous cyclotomic polynomial and $\mu$
+is the integer Moebius function. This is a positive integer: the
+homogeneous polynomial is integral and symmetric for $n>1$, so its value
+at the conjugates is a rational algebraic integer; the displayed
+positive rational product fixes its sign. The product identity follows
+from the cyclotomic factorization of $\phi^n-\psi^n$ by Moebius inversion.
+

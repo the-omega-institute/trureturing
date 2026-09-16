@@ -1,0 +1,21 @@
+**定理 4，条件于 EMW。** 给定任意有限素数集合 \(S\)，令
+
+\[
+M=\operatorname{lcm}\bigl(60,\{\rho(p):p\in S\}\bigr).
+\]
+
+则存在素数 \(p\notin S\cup\{2,5\}\)，使
+
+\[
+q_p\ne0,\qquad
+\gcd(\rho(p),M)\le2,\qquad
+p\le F_{M+2}.
+\tag{EMW-D1}
+\]
+
+**证明。** 对每个 \(p\in S\) 及 \(s\in\{-2,-1,1,2\}\)，\(\rho(p)\mid M\) 且 \(\rho(p)\ge3\)，故 \(\rho(p)\nmid M+s\)。由 (EMW-B1)，\(p\nmid F_{M+s}\)。
+
+EMW 排除中心 \(F_M^2\) 的强力数三元组，故至少一个外侧数不是强力数。由 (EMW-C2)，四个相邻 Fibonacci 数中至少一个有简单素因子 \(p\)。\(M\) 被 60 整除，也排除了秩分别为 3、4、5 的素数 2、3、5。推论 2 给出 \(q_p\ne0\)。
+
+由 \(\rho(p)\mid M+s\) 得 \(\gcd(\rho(p),M)\mid s\)，因此最大公约数不超过 2。最后，\(p\mid F_{M+s}\le F_{M+2}\)。证毕。
+
