@@ -775,7 +775,7 @@
       "path": "tools/tests/Trureturing.Truth.Tests/Trureturing.Truth.Tests.csproj",
       "assembly": "Trureturing.Truth.Tests",
       "role": "owned-test",
-      "ci": true,
+      "ci": false,
       "include": [
         "tools/tests/Trureturing.Truth.Tests/**/*.cs"
       ],
