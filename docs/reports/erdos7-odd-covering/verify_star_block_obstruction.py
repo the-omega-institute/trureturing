@@ -707,6 +707,196 @@ def unrestricted_star_stoploss():
 
 
 
+
+def head_mixed_mass_improvement():
+    """Couple actual head density and cylinder load before deleting prime 7."""
+    from runpy import run_path
+    source = run_path(str(Path(__file__).with_name("verify_joint_density_certificate.py")))
+    vertices = source['budget_vertices']
+    roots = (0, 0, 1, 1, 1)
+    minimum, witness, count = None, None, 0
+    for deficits, alpha, beta, late, z in cartesian_product(
+            vertices(5, F(1, 2)), vertices(2, F(1, 4)),
+            vertices(5, F(1, 4)), vertices(5, F(1, 72)), (F(3, 4), F(1))):
+        w = [1-d for d in deficits]
+        x = sum(w)/9
+        cells = [w[j]*(z-alpha[roots[j]]-beta[j])/9-late[j] for j in range(5)]
+        mass = sum(cells)
+        require(min(cells) >= 0 and mass >= F(1, 4) and x*z > 0,
+                'positive actual-cell parameter domain')
+        root_mass = max(sum(cells[j] for j in range(5) if roots[j] == r)
+                        for r in (0, 1))
+        raw_load = root_mass+max(cells)+z/18+x/4+F(1, 8)
+        lower = (mass-raw_load/5)/(x*z)
+        require(lower >= F(53, 135), 'coupled mixed-head survival lower bound')
+        if minimum is None or lower < minimum:
+            minimum = lower
+            witness = {'pure_ternary_deficits': list(map(str, deficits)),
+                       'first_deletions': list(map(str, alpha)),
+                       'second_deletions': list(map(str, beta)),
+                       'late_deletions': list(map(str, late)), 'z': str(z),
+                       'x': str(x), 'cells': list(map(str, cells)),
+                       'mass': str(mass), 'raw_load_upper': str(raw_load)}
+        count += 1
+    require(count == 1296 and minimum == F(53, 135), 'sharp coupled relaxation')
+    missing = []
+    for name, x in [('modulus3_absent', F(5, 6)),
+                    ('modulus9_absent_or_ineffective', F(11, 18))]:
+        z = F(3, 4)
+        lower = (x*z-F(1, 8)-(z/2+x/4+F(1, 8))/5)/(x*z)
+        require(lower >= minimum, 'missing low-pure-class branch')
+        missing.append({'case': name, 'survival_lower': str(lower)})
+    # Positive actual head and tail violations can be disjoint.
+    r, q = 23, 29
+    moduli = [3, 5, 7, 15]+[3*r**f*q for f in range(1, q+1)]
+    require(len(set(moduli)) == len(moduli), 'disjoint-event original moduli')
+    current_residues = []
+    for f in range(1, q+1):
+        power = r**f
+        multiplier = next(k for k in range(3*q)
+                          if power*k % 3 == 2 and power*k % q == f-1)
+        residue = power*multiplier
+        require(residue % 3 == 2 and residue % power == 0,
+                'tail classes all miss the mixed-head ternary root')
+        current_residues.append(residue % q)
+    require(set(current_residues) == set(range(q)), 'entire forced tail fibre')
+    return {'vertices_checked': count, 'pure_product_survival_lower': str(minimum),
+            'mixed_head_mass_upper': str(1-minimum), 'relaxation_minimizer': witness,
+            'missing_pure_branches': missing,
+            'disjoint_actual_events': {'mixed_head_class': '1 mod 15',
+                'pure_head_classes': ['0 mod 3', '0 mod 5', '0 mod 7'],
+                'head_bad_mass': '1/8', 'tail_bad_mass_lower': str(F(1, 2*r**q)),
+                'intersection_mass': '0', 'tail_primes': [r, q],
+                'original_modulus_count': len(moduli)},
+            'scope': 'Exact P12 parameter extrema plus actual CRT regression; the arbitrary-height density inequality is an ordinary proof.'}
+
+
+
+def comb_stoploss_dual_transport():
+    """Exact primal/dual witnesses for complete cylinder-cap tail sums."""
+    rows = []
+    for prime in (3, 5, 7):
+        for height in range(2, 9):
+            # Aggregate the p-2 escape groups at each depth; the final
+            # group also includes the single surviving spine leaf.
+            sizes = {d: (prime-2)*prime**(height-d)+(d == height)
+                     for d in range(1, height+1)}
+            total = ((prime-2)*prime**height+1)//(prime-1)
+            require(sum(sizes.values()) == total, 'complete comb survivor groups')
+            for threshold in range(2, height+1):
+                optimum = F(prime**(height-threshold+1)-1,
+                            (prime-2)*prime**height+1)
+                demands = {d: optimum*size for d, size in sizes.items()}
+                original = demands.copy()
+                plan = {}
+                for e in range(height, threshold-1, -1):
+                    supply = F(prime**(height-e))
+                    for d in range(e, 0, -1):
+                        mass = min(supply, demands[d])
+                        if mass:
+                            plan[e, d] = mass
+                        supply -= mass
+                        demands[d] -= mass
+                    require(supply == 0, 'nested transport uses every depth budget')
+                require(all(mass == 0 for mass in demands.values()),
+                        'nested transport gives every leaf the constant dual weight')
+                for d in sizes:
+                    require(sum(mass for (e, group), mass in plan.items() if group == d)
+                            == original[d], 'group demand equality')
+                    require(sum(mass/F(sizes[d]) for (e, group), mass in plan.items() if group == d)
+                            == optimum, 'constant per-leaf dual coverage')
+                for e in range(threshold, height+1):
+                    # A full depth-e cylinder has p^(H-e) leaves. Dividing
+                    # transported mass by this size gives its total dual budget.
+                    budget = sum(mass/F(prime**(height-e))
+                                 for (depth, d), mass in plan.items() if depth == e)
+                    require(budget == 1, 'unit dual budget at each selected depth')
+                uniform = sum((F(prime**(height-e), total)
+                               for e in range(threshold, height+1)), F(0))
+                require(uniform == optimum, 'uniform actual law attains the dual lower bound')
+                rows.append({'branching': prime, 'height': height,
+                             'first_charged_depth': threshold,
+                             'survivor_count': total, 'minimum_cap_tail_sum': str(optimum),
+                             'transport_nonzero_entries': len(plan)})
+    require(len(rows) == 84, 'finite dual-transport regression count')
+    return {'rows': rows, 'scope': 'Exact feasible primal and dual regressions; the all-height nested-transport proof is stated separately. Each tail objective has its own dual.'}
+
+
+def homogeneous_comb_capacity():
+    """Actual leaf-flow regressions and exact finite comb cap-sum witnesses."""
+    def actual_flow(forbidden, beta):
+        b1, b2, b3 = beta
+        f1, f2, f3 = forbidden
+        level2 = [0 if n//3 == f1 or n == f2 else min(b2, (3-int(f3//3 == n))*b3)
+                  for n in range(9)]
+        level1 = [min(b1, sum(level2[3*n:3*n+3])) for n in range(3)]
+        return min(81, sum(level1))
+
+    def comb_flow(beta):
+        full = critical = beta[-1]
+        for depth in (2, 1, 0):
+            bound = 81 if depth == 0 else beta[depth-1]
+            full, critical = min(bound, 3*full), min(bound, full+critical)
+        return critical
+
+    # All forbidden configurations, with profiles spanning degeneracy,
+    # saturation equalities, both sides of them, and nonmonotone capacities.
+    profiles = [(0, 0, 0), (54, 18, 6), (40, 20, 10), (81, 27, 9),
+                (81, 28, 9), (80, 26, 8), (9, 40, 2), (1, 162, 81)]
+    comparisons = strict = 0
+    for beta in profiles:
+        bound = comb_flow(beta)
+        require(bound == actual_flow((0, 6, 24), beta), 'explicit comb matches recursion')
+        for forbidden in cartesian_product(range(3), range(9), range(27)):
+            value = actual_flow(forbidden, beta)
+            require(value >= bound, 'comb minimizes root flow')
+            comparisons += 1
+            strict += value > bound
+    laws = []
+    for height in range(1, 7):
+        law = {}
+        for value in range(3**height):
+            digits, weight = value, F(1)
+            for depth in range(1, height+1):
+                digit, digits = digits % 3, digits//3
+                if digit == 0:
+                    weight = F(0)
+                    break
+                weight /= 2
+                if digit == 1:
+                    weight /= 3**(height-depth)
+                    break
+            if weight:
+                law[value] = weight
+        require(sum(law.values(), F(0)) == 1, 'actual binary-split comb law')
+        caps = []
+        for depth in range(1, height+1):
+            masses = [F(0)]*3**depth
+            for value, weight in law.items():
+                masses[value % 3**depth] += weight
+            cap = max(masses)
+            require(cap == F(1, 2**depth), 'all actual cylinder caps')
+            caps.append(cap)
+        mean = 1+sum(caps)
+        second = 1+sum((2*e+1)*caps[e-1] for e in range(1, height+1))
+        require(mean == 2-F(1, 2**height) and second == 6-F(2*height+5, 2**height),
+                'full comparison moments')
+        stops = []
+        for j in range(1, height+1):
+            stop = sum(caps[j-1:], F(0))
+            require(stop == F(1, 2**(j-1))-F(1, 2**height), 'integer positive-part profile')
+            stops.append(str(stop))
+        laws.append({'height': height, 'support_size': len(law), 'caps': list(map(str, caps)),
+                     'minimum_cap_sum': str(sum(caps)), 'comparison_mean': str(mean),
+                     'comparison_second_moment': str(second),
+                     'stoploss_at_integer_thresholds_1_to_height': stops})
+    return {'branching': 3, 'regression_depth': 3, 'capacity_scale': 81,
+            'capacity_profiles_scaled': [list(row) for row in profiles], 'forbidden_assignments': 729,
+            'flow_comparisons': comparisons, 'strict_comparisons': strict,
+            'binary_split_laws': laws,
+            'scope': 'Finite actual-cylinder and flow regressions. General comb extremality and all-height cap-sum optimality are separate ordinary proofs; no optimal convex-profile claim.'}
+
+
 def certificate():
     all_primes = primes_to(4000)
     require(tuple(p for p in all_primes if 3 <= p <= 73) == HEAD_PRIMES,
@@ -1054,6 +1244,9 @@ def certificate():
         "finite_support_switch": finite_support_switch_bounds(),
         "unrestricted_star_stoploss": unrestricted_star_stoploss(),
         "pure_head_unrestricted_stoploss": pure_head_unrestricted_stoploss(),
+        "head_mixed_mass_improvement": head_mixed_mass_improvement(),
+        "homogeneous_comb_capacity": homogeneous_comb_capacity(),
+        "comb_stoploss_dual_transport": comb_stoploss_dual_transport(),
         "local_kernel_crt_regression": local_kernel_crt_regression(),
         "binary_path_regression": binary_path_regression(),
         "unrestricted_energy_boundary": unrestricted_energy_boundary(),
@@ -1115,6 +1308,8 @@ def main():
                       "feedback_vertex_loss_bounds": {row["head"]: row["loss_upper"] for row in data["feedback_vertex"]},
                       "local_parent_capped_kernel_loss_bounds": {row["head_and_graph"]: row["loss_upper"] for row in data["local_parent_capped_kernel"]},
                       "rank_two_tail_loss_bounds": {row["head"]: row["loss_upper"] for row in data["rank_two_tail"]["rows"]},
+                      "coupled_mixed_head_mass_upper": data["head_mixed_mass_improvement"]["mixed_head_mass_upper"],
+                      "comb_flow_comparisons": data["homogeneous_comb_capacity"]["flow_comparisons"],
                       "pure_head_unrestricted_Gamma_bounds": {row["head"]: row["supported_Gamma_upper"] for row in data["pure_head_unrestricted_stoploss"]},
                       "unrestricted_star_supported_Gamma_upper": data["unrestricted_star_stoploss"]["supported_Gamma_upper"],
                       "unrestricted_star_stopping_lower": data["unrestricted_star_stoploss"]["stopping_lower"],

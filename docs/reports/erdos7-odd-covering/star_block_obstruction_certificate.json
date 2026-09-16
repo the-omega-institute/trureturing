@@ -10360,6 +10360,914 @@
       "scope": "Arbitrary head residues with full head period dividing the stated bound, or arbitrary exponents on the listed head primes when that bound is null; all tail primes at least the stated lower bound; no restrictions on original tail support, heights or graph. Ordinary comparison and BBMST continuation are separate inputs."
     }
   ],
+  "head_mixed_mass_improvement": {
+    "vertices_checked": 1296,
+    "pure_product_survival_lower": "53/135",
+    "mixed_head_mass_upper": "82/135",
+    "relaxation_minimizer": {
+      "pure_ternary_deficits": [
+        "1/2",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "first_deletions": [
+        "0",
+        "1/4"
+      ],
+      "second_deletions": [
+        "0",
+        "1/4",
+        "0",
+        "0",
+        "0"
+      ],
+      "late_deletions": [
+        "1/72",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "z": "3/4",
+      "x": "1/2",
+      "cells": [
+        "1/36",
+        "1/18",
+        "1/18",
+        "1/18",
+        "1/18"
+      ],
+      "mass": "1/4",
+      "raw_load_upper": "37/72"
+    },
+    "missing_pure_branches": [
+      {
+        "case": "modulus3_absent",
+        "survival_lower": "43/75"
+      },
+      {
+        "case": "modulus9_absent_or_ineffective",
+        "survival_lower": "73/165"
+      }
+    ],
+    "disjoint_actual_events": {
+      "mixed_head_class": "1 mod 15",
+      "pure_head_classes": [
+        "0 mod 3",
+        "0 mod 5",
+        "0 mod 7"
+      ],
+      "head_bad_mass": "1/8",
+      "tail_bad_mass_lower": "1/6182117286187075045599091677080086678126",
+      "intersection_mass": "0",
+      "tail_primes": [
+        23,
+        29
+      ],
+      "original_modulus_count": 33
+    },
+    "scope": "Exact P12 parameter extrema plus actual CRT regression; the arbitrary-height density inequality is an ordinary proof."
+  },
+  "homogeneous_comb_capacity": {
+    "branching": 3,
+    "regression_depth": 3,
+    "capacity_scale": 81,
+    "capacity_profiles_scaled": [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        54,
+        18,
+        6
+      ],
+      [
+        40,
+        20,
+        10
+      ],
+      [
+        81,
+        27,
+        9
+      ],
+      [
+        81,
+        28,
+        9
+      ],
+      [
+        80,
+        26,
+        8
+      ],
+      [
+        9,
+        40,
+        2
+      ],
+      [
+        1,
+        162,
+        81
+      ]
+    ],
+    "forbidden_assignments": 729,
+    "flow_comparisons": 5832,
+    "strict_comparisons": 0,
+    "binary_split_laws": [
+      {
+        "height": 1,
+        "support_size": 2,
+        "caps": [
+          "1/2"
+        ],
+        "minimum_cap_sum": "1/2",
+        "comparison_mean": "3/2",
+        "comparison_second_moment": "5/2",
+        "stoploss_at_integer_thresholds_1_to_height": [
+          "1/2"
+        ]
+      },
+      {
+        "height": 2,
+        "support_size": 5,
+        "caps": [
+          "1/2",
+          "1/4"
+        ],
+        "minimum_cap_sum": "3/4",
+        "comparison_mean": "7/4",
+        "comparison_second_moment": "15/4",
+        "stoploss_at_integer_thresholds_1_to_height": [
+          "3/4",
+          "1/4"
+        ]
+      },
+      {
+        "height": 3,
+        "support_size": 14,
+        "caps": [
+          "1/2",
+          "1/4",
+          "1/8"
+        ],
+        "minimum_cap_sum": "7/8",
+        "comparison_mean": "15/8",
+        "comparison_second_moment": "37/8",
+        "stoploss_at_integer_thresholds_1_to_height": [
+          "7/8",
+          "3/8",
+          "1/8"
+        ]
+      },
+      {
+        "height": 4,
+        "support_size": 41,
+        "caps": [
+          "1/2",
+          "1/4",
+          "1/8",
+          "1/16"
+        ],
+        "minimum_cap_sum": "15/16",
+        "comparison_mean": "31/16",
+        "comparison_second_moment": "83/16",
+        "stoploss_at_integer_thresholds_1_to_height": [
+          "15/16",
+          "7/16",
+          "3/16",
+          "1/16"
+        ]
+      },
+      {
+        "height": 5,
+        "support_size": 122,
+        "caps": [
+          "1/2",
+          "1/4",
+          "1/8",
+          "1/16",
+          "1/32"
+        ],
+        "minimum_cap_sum": "31/32",
+        "comparison_mean": "63/32",
+        "comparison_second_moment": "177/32",
+        "stoploss_at_integer_thresholds_1_to_height": [
+          "31/32",
+          "15/32",
+          "7/32",
+          "3/32",
+          "1/32"
+        ]
+      },
+      {
+        "height": 6,
+        "support_size": 365,
+        "caps": [
+          "1/2",
+          "1/4",
+          "1/8",
+          "1/16",
+          "1/32",
+          "1/64"
+        ],
+        "minimum_cap_sum": "63/64",
+        "comparison_mean": "127/64",
+        "comparison_second_moment": "367/64",
+        "stoploss_at_integer_thresholds_1_to_height": [
+          "63/64",
+          "31/64",
+          "15/64",
+          "7/64",
+          "3/64",
+          "1/64"
+        ]
+      }
+    ],
+    "scope": "Finite actual-cylinder and flow regressions. General comb extremality and all-height cap-sum optimality are separate ordinary proofs; no optimal convex-profile claim."
+  },
+  "comb_stoploss_dual_transport": {
+    "rows": [
+      {
+        "branching": 3,
+        "height": 2,
+        "first_charged_depth": 2,
+        "survivor_count": 5,
+        "minimum_cap_tail_sum": "1/5",
+        "transport_nonzero_entries": 2
+      },
+      {
+        "branching": 3,
+        "height": 3,
+        "first_charged_depth": 2,
+        "survivor_count": 14,
+        "minimum_cap_tail_sum": "2/7",
+        "transport_nonzero_entries": 4
+      },
+      {
+        "branching": 3,
+        "height": 3,
+        "first_charged_depth": 3,
+        "survivor_count": 14,
+        "minimum_cap_tail_sum": "1/14",
+        "transport_nonzero_entries": 3
+      },
+      {
+        "branching": 3,
+        "height": 4,
+        "first_charged_depth": 2,
+        "survivor_count": 41,
+        "minimum_cap_tail_sum": "13/41",
+        "transport_nonzero_entries": 6
+      },
+      {
+        "branching": 3,
+        "height": 4,
+        "first_charged_depth": 3,
+        "survivor_count": 41,
+        "minimum_cap_tail_sum": "4/41",
+        "transport_nonzero_entries": 5
+      },
+      {
+        "branching": 3,
+        "height": 4,
+        "first_charged_depth": 4,
+        "survivor_count": 41,
+        "minimum_cap_tail_sum": "1/41",
+        "transport_nonzero_entries": 4
+      },
+      {
+        "branching": 3,
+        "height": 5,
+        "first_charged_depth": 2,
+        "survivor_count": 122,
+        "minimum_cap_tail_sum": "20/61",
+        "transport_nonzero_entries": 8
+      },
+      {
+        "branching": 3,
+        "height": 5,
+        "first_charged_depth": 3,
+        "survivor_count": 122,
+        "minimum_cap_tail_sum": "13/122",
+        "transport_nonzero_entries": 7
+      },
+      {
+        "branching": 3,
+        "height": 5,
+        "first_charged_depth": 4,
+        "survivor_count": 122,
+        "minimum_cap_tail_sum": "2/61",
+        "transport_nonzero_entries": 6
+      },
+      {
+        "branching": 3,
+        "height": 5,
+        "first_charged_depth": 5,
+        "survivor_count": 122,
+        "minimum_cap_tail_sum": "1/122",
+        "transport_nonzero_entries": 5
+      },
+      {
+        "branching": 3,
+        "height": 6,
+        "first_charged_depth": 2,
+        "survivor_count": 365,
+        "minimum_cap_tail_sum": "121/365",
+        "transport_nonzero_entries": 10
+      },
+      {
+        "branching": 3,
+        "height": 6,
+        "first_charged_depth": 3,
+        "survivor_count": 365,
+        "minimum_cap_tail_sum": "8/73",
+        "transport_nonzero_entries": 9
+      },
+      {
+        "branching": 3,
+        "height": 6,
+        "first_charged_depth": 4,
+        "survivor_count": 365,
+        "minimum_cap_tail_sum": "13/365",
+        "transport_nonzero_entries": 8
+      },
+      {
+        "branching": 3,
+        "height": 6,
+        "first_charged_depth": 5,
+        "survivor_count": 365,
+        "minimum_cap_tail_sum": "4/365",
+        "transport_nonzero_entries": 7
+      },
+      {
+        "branching": 3,
+        "height": 6,
+        "first_charged_depth": 6,
+        "survivor_count": 365,
+        "minimum_cap_tail_sum": "1/365",
+        "transport_nonzero_entries": 6
+      },
+      {
+        "branching": 3,
+        "height": 7,
+        "first_charged_depth": 2,
+        "survivor_count": 1094,
+        "minimum_cap_tail_sum": "182/547",
+        "transport_nonzero_entries": 12
+      },
+      {
+        "branching": 3,
+        "height": 7,
+        "first_charged_depth": 3,
+        "survivor_count": 1094,
+        "minimum_cap_tail_sum": "121/1094",
+        "transport_nonzero_entries": 11
+      },
+      {
+        "branching": 3,
+        "height": 7,
+        "first_charged_depth": 4,
+        "survivor_count": 1094,
+        "minimum_cap_tail_sum": "20/547",
+        "transport_nonzero_entries": 10
+      },
+      {
+        "branching": 3,
+        "height": 7,
+        "first_charged_depth": 5,
+        "survivor_count": 1094,
+        "minimum_cap_tail_sum": "13/1094",
+        "transport_nonzero_entries": 9
+      },
+      {
+        "branching": 3,
+        "height": 7,
+        "first_charged_depth": 6,
+        "survivor_count": 1094,
+        "minimum_cap_tail_sum": "2/547",
+        "transport_nonzero_entries": 8
+      },
+      {
+        "branching": 3,
+        "height": 7,
+        "first_charged_depth": 7,
+        "survivor_count": 1094,
+        "minimum_cap_tail_sum": "1/1094",
+        "transport_nonzero_entries": 7
+      },
+      {
+        "branching": 3,
+        "height": 8,
+        "first_charged_depth": 2,
+        "survivor_count": 3281,
+        "minimum_cap_tail_sum": "1093/3281",
+        "transport_nonzero_entries": 14
+      },
+      {
+        "branching": 3,
+        "height": 8,
+        "first_charged_depth": 3,
+        "survivor_count": 3281,
+        "minimum_cap_tail_sum": "364/3281",
+        "transport_nonzero_entries": 13
+      },
+      {
+        "branching": 3,
+        "height": 8,
+        "first_charged_depth": 4,
+        "survivor_count": 3281,
+        "minimum_cap_tail_sum": "121/3281",
+        "transport_nonzero_entries": 12
+      },
+      {
+        "branching": 3,
+        "height": 8,
+        "first_charged_depth": 5,
+        "survivor_count": 3281,
+        "minimum_cap_tail_sum": "40/3281",
+        "transport_nonzero_entries": 11
+      },
+      {
+        "branching": 3,
+        "height": 8,
+        "first_charged_depth": 6,
+        "survivor_count": 3281,
+        "minimum_cap_tail_sum": "13/3281",
+        "transport_nonzero_entries": 10
+      },
+      {
+        "branching": 3,
+        "height": 8,
+        "first_charged_depth": 7,
+        "survivor_count": 3281,
+        "minimum_cap_tail_sum": "4/3281",
+        "transport_nonzero_entries": 9
+      },
+      {
+        "branching": 3,
+        "height": 8,
+        "first_charged_depth": 8,
+        "survivor_count": 3281,
+        "minimum_cap_tail_sum": "1/3281",
+        "transport_nonzero_entries": 8
+      },
+      {
+        "branching": 5,
+        "height": 2,
+        "first_charged_depth": 2,
+        "survivor_count": 19,
+        "minimum_cap_tail_sum": "1/19",
+        "transport_nonzero_entries": 2
+      },
+      {
+        "branching": 5,
+        "height": 3,
+        "first_charged_depth": 2,
+        "survivor_count": 94,
+        "minimum_cap_tail_sum": "3/47",
+        "transport_nonzero_entries": 4
+      },
+      {
+        "branching": 5,
+        "height": 3,
+        "first_charged_depth": 3,
+        "survivor_count": 94,
+        "minimum_cap_tail_sum": "1/94",
+        "transport_nonzero_entries": 3
+      },
+      {
+        "branching": 5,
+        "height": 4,
+        "first_charged_depth": 2,
+        "survivor_count": 469,
+        "minimum_cap_tail_sum": "31/469",
+        "transport_nonzero_entries": 6
+      },
+      {
+        "branching": 5,
+        "height": 4,
+        "first_charged_depth": 3,
+        "survivor_count": 469,
+        "minimum_cap_tail_sum": "6/469",
+        "transport_nonzero_entries": 5
+      },
+      {
+        "branching": 5,
+        "height": 4,
+        "first_charged_depth": 4,
+        "survivor_count": 469,
+        "minimum_cap_tail_sum": "1/469",
+        "transport_nonzero_entries": 4
+      },
+      {
+        "branching": 5,
+        "height": 5,
+        "first_charged_depth": 2,
+        "survivor_count": 2344,
+        "minimum_cap_tail_sum": "39/586",
+        "transport_nonzero_entries": 8
+      },
+      {
+        "branching": 5,
+        "height": 5,
+        "first_charged_depth": 3,
+        "survivor_count": 2344,
+        "minimum_cap_tail_sum": "31/2344",
+        "transport_nonzero_entries": 7
+      },
+      {
+        "branching": 5,
+        "height": 5,
+        "first_charged_depth": 4,
+        "survivor_count": 2344,
+        "minimum_cap_tail_sum": "3/1172",
+        "transport_nonzero_entries": 6
+      },
+      {
+        "branching": 5,
+        "height": 5,
+        "first_charged_depth": 5,
+        "survivor_count": 2344,
+        "minimum_cap_tail_sum": "1/2344",
+        "transport_nonzero_entries": 5
+      },
+      {
+        "branching": 5,
+        "height": 6,
+        "first_charged_depth": 2,
+        "survivor_count": 11719,
+        "minimum_cap_tail_sum": "781/11719",
+        "transport_nonzero_entries": 10
+      },
+      {
+        "branching": 5,
+        "height": 6,
+        "first_charged_depth": 3,
+        "survivor_count": 11719,
+        "minimum_cap_tail_sum": "156/11719",
+        "transport_nonzero_entries": 9
+      },
+      {
+        "branching": 5,
+        "height": 6,
+        "first_charged_depth": 4,
+        "survivor_count": 11719,
+        "minimum_cap_tail_sum": "31/11719",
+        "transport_nonzero_entries": 8
+      },
+      {
+        "branching": 5,
+        "height": 6,
+        "first_charged_depth": 5,
+        "survivor_count": 11719,
+        "minimum_cap_tail_sum": "6/11719",
+        "transport_nonzero_entries": 7
+      },
+      {
+        "branching": 5,
+        "height": 6,
+        "first_charged_depth": 6,
+        "survivor_count": 11719,
+        "minimum_cap_tail_sum": "1/11719",
+        "transport_nonzero_entries": 6
+      },
+      {
+        "branching": 5,
+        "height": 7,
+        "first_charged_depth": 2,
+        "survivor_count": 58594,
+        "minimum_cap_tail_sum": "1953/29297",
+        "transport_nonzero_entries": 12
+      },
+      {
+        "branching": 5,
+        "height": 7,
+        "first_charged_depth": 3,
+        "survivor_count": 58594,
+        "minimum_cap_tail_sum": "781/58594",
+        "transport_nonzero_entries": 11
+      },
+      {
+        "branching": 5,
+        "height": 7,
+        "first_charged_depth": 4,
+        "survivor_count": 58594,
+        "minimum_cap_tail_sum": "78/29297",
+        "transport_nonzero_entries": 10
+      },
+      {
+        "branching": 5,
+        "height": 7,
+        "first_charged_depth": 5,
+        "survivor_count": 58594,
+        "minimum_cap_tail_sum": "31/58594",
+        "transport_nonzero_entries": 9
+      },
+      {
+        "branching": 5,
+        "height": 7,
+        "first_charged_depth": 6,
+        "survivor_count": 58594,
+        "minimum_cap_tail_sum": "3/29297",
+        "transport_nonzero_entries": 8
+      },
+      {
+        "branching": 5,
+        "height": 7,
+        "first_charged_depth": 7,
+        "survivor_count": 58594,
+        "minimum_cap_tail_sum": "1/58594",
+        "transport_nonzero_entries": 7
+      },
+      {
+        "branching": 5,
+        "height": 8,
+        "first_charged_depth": 2,
+        "survivor_count": 292969,
+        "minimum_cap_tail_sum": "19531/292969",
+        "transport_nonzero_entries": 14
+      },
+      {
+        "branching": 5,
+        "height": 8,
+        "first_charged_depth": 3,
+        "survivor_count": 292969,
+        "minimum_cap_tail_sum": "3906/292969",
+        "transport_nonzero_entries": 13
+      },
+      {
+        "branching": 5,
+        "height": 8,
+        "first_charged_depth": 4,
+        "survivor_count": 292969,
+        "minimum_cap_tail_sum": "781/292969",
+        "transport_nonzero_entries": 12
+      },
+      {
+        "branching": 5,
+        "height": 8,
+        "first_charged_depth": 5,
+        "survivor_count": 292969,
+        "minimum_cap_tail_sum": "156/292969",
+        "transport_nonzero_entries": 11
+      },
+      {
+        "branching": 5,
+        "height": 8,
+        "first_charged_depth": 6,
+        "survivor_count": 292969,
+        "minimum_cap_tail_sum": "31/292969",
+        "transport_nonzero_entries": 10
+      },
+      {
+        "branching": 5,
+        "height": 8,
+        "first_charged_depth": 7,
+        "survivor_count": 292969,
+        "minimum_cap_tail_sum": "6/292969",
+        "transport_nonzero_entries": 9
+      },
+      {
+        "branching": 5,
+        "height": 8,
+        "first_charged_depth": 8,
+        "survivor_count": 292969,
+        "minimum_cap_tail_sum": "1/292969",
+        "transport_nonzero_entries": 8
+      },
+      {
+        "branching": 7,
+        "height": 2,
+        "first_charged_depth": 2,
+        "survivor_count": 41,
+        "minimum_cap_tail_sum": "1/41",
+        "transport_nonzero_entries": 2
+      },
+      {
+        "branching": 7,
+        "height": 3,
+        "first_charged_depth": 2,
+        "survivor_count": 286,
+        "minimum_cap_tail_sum": "4/143",
+        "transport_nonzero_entries": 4
+      },
+      {
+        "branching": 7,
+        "height": 3,
+        "first_charged_depth": 3,
+        "survivor_count": 286,
+        "minimum_cap_tail_sum": "1/286",
+        "transport_nonzero_entries": 3
+      },
+      {
+        "branching": 7,
+        "height": 4,
+        "first_charged_depth": 2,
+        "survivor_count": 2001,
+        "minimum_cap_tail_sum": "19/667",
+        "transport_nonzero_entries": 6
+      },
+      {
+        "branching": 7,
+        "height": 4,
+        "first_charged_depth": 3,
+        "survivor_count": 2001,
+        "minimum_cap_tail_sum": "8/2001",
+        "transport_nonzero_entries": 5
+      },
+      {
+        "branching": 7,
+        "height": 4,
+        "first_charged_depth": 4,
+        "survivor_count": 2001,
+        "minimum_cap_tail_sum": "1/2001",
+        "transport_nonzero_entries": 4
+      },
+      {
+        "branching": 7,
+        "height": 5,
+        "first_charged_depth": 2,
+        "survivor_count": 14006,
+        "minimum_cap_tail_sum": "200/7003",
+        "transport_nonzero_entries": 8
+      },
+      {
+        "branching": 7,
+        "height": 5,
+        "first_charged_depth": 3,
+        "survivor_count": 14006,
+        "minimum_cap_tail_sum": "57/14006",
+        "transport_nonzero_entries": 7
+      },
+      {
+        "branching": 7,
+        "height": 5,
+        "first_charged_depth": 4,
+        "survivor_count": 14006,
+        "minimum_cap_tail_sum": "4/7003",
+        "transport_nonzero_entries": 6
+      },
+      {
+        "branching": 7,
+        "height": 5,
+        "first_charged_depth": 5,
+        "survivor_count": 14006,
+        "minimum_cap_tail_sum": "1/14006",
+        "transport_nonzero_entries": 5
+      },
+      {
+        "branching": 7,
+        "height": 6,
+        "first_charged_depth": 2,
+        "survivor_count": 98041,
+        "minimum_cap_tail_sum": "2801/98041",
+        "transport_nonzero_entries": 10
+      },
+      {
+        "branching": 7,
+        "height": 6,
+        "first_charged_depth": 3,
+        "survivor_count": 98041,
+        "minimum_cap_tail_sum": "400/98041",
+        "transport_nonzero_entries": 9
+      },
+      {
+        "branching": 7,
+        "height": 6,
+        "first_charged_depth": 4,
+        "survivor_count": 98041,
+        "minimum_cap_tail_sum": "57/98041",
+        "transport_nonzero_entries": 8
+      },
+      {
+        "branching": 7,
+        "height": 6,
+        "first_charged_depth": 5,
+        "survivor_count": 98041,
+        "minimum_cap_tail_sum": "8/98041",
+        "transport_nonzero_entries": 7
+      },
+      {
+        "branching": 7,
+        "height": 6,
+        "first_charged_depth": 6,
+        "survivor_count": 98041,
+        "minimum_cap_tail_sum": "1/98041",
+        "transport_nonzero_entries": 6
+      },
+      {
+        "branching": 7,
+        "height": 7,
+        "first_charged_depth": 2,
+        "survivor_count": 686286,
+        "minimum_cap_tail_sum": "3268/114381",
+        "transport_nonzero_entries": 12
+      },
+      {
+        "branching": 7,
+        "height": 7,
+        "first_charged_depth": 3,
+        "survivor_count": 686286,
+        "minimum_cap_tail_sum": "2801/686286",
+        "transport_nonzero_entries": 11
+      },
+      {
+        "branching": 7,
+        "height": 7,
+        "first_charged_depth": 4,
+        "survivor_count": 686286,
+        "minimum_cap_tail_sum": "200/343143",
+        "transport_nonzero_entries": 10
+      },
+      {
+        "branching": 7,
+        "height": 7,
+        "first_charged_depth": 5,
+        "survivor_count": 686286,
+        "minimum_cap_tail_sum": "19/228762",
+        "transport_nonzero_entries": 9
+      },
+      {
+        "branching": 7,
+        "height": 7,
+        "first_charged_depth": 6,
+        "survivor_count": 686286,
+        "minimum_cap_tail_sum": "4/343143",
+        "transport_nonzero_entries": 8
+      },
+      {
+        "branching": 7,
+        "height": 7,
+        "first_charged_depth": 7,
+        "survivor_count": 686286,
+        "minimum_cap_tail_sum": "1/686286",
+        "transport_nonzero_entries": 7
+      },
+      {
+        "branching": 7,
+        "height": 8,
+        "first_charged_depth": 2,
+        "survivor_count": 4804001,
+        "minimum_cap_tail_sum": "137257/4804001",
+        "transport_nonzero_entries": 14
+      },
+      {
+        "branching": 7,
+        "height": 8,
+        "first_charged_depth": 3,
+        "survivor_count": 4804001,
+        "minimum_cap_tail_sum": "19608/4804001",
+        "transport_nonzero_entries": 13
+      },
+      {
+        "branching": 7,
+        "height": 8,
+        "first_charged_depth": 4,
+        "survivor_count": 4804001,
+        "minimum_cap_tail_sum": "2801/4804001",
+        "transport_nonzero_entries": 12
+      },
+      {
+        "branching": 7,
+        "height": 8,
+        "first_charged_depth": 5,
+        "survivor_count": 4804001,
+        "minimum_cap_tail_sum": "400/4804001",
+        "transport_nonzero_entries": 11
+      },
+      {
+        "branching": 7,
+        "height": 8,
+        "first_charged_depth": 6,
+        "survivor_count": 4804001,
+        "minimum_cap_tail_sum": "57/4804001",
+        "transport_nonzero_entries": 10
+      },
+      {
+        "branching": 7,
+        "height": 8,
+        "first_charged_depth": 7,
+        "survivor_count": 4804001,
+        "minimum_cap_tail_sum": "8/4804001",
+        "transport_nonzero_entries": 9
+      },
+      {
+        "branching": 7,
+        "height": 8,
+        "first_charged_depth": 8,
+        "survivor_count": 4804001,
+        "minimum_cap_tail_sum": "1/4804001",
+        "transport_nonzero_entries": 8
+      }
+    ],
+    "scope": "Exact feasible primal and dual regressions; the all-height nested-transport proof is stated separately. Each tail objective has its own dual."
+  },
   "local_kernel_crt_regression": {
     "cases": 8,
     "full_assignments": 6160,
