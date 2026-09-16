@@ -1,0 +1,19 @@
+**Proof.** Enumerate the nonzero elements of $G$ as $g_1,g_2,\ldots$ and all elements of $G$ as $h_1,h_2,\ldots$. Construct closed nondegenerate arcs $I_s$ indexed by finite binary words $s$, beginning with a closed arc having nonempty interior. At level $n\ge1$ require: each child arc is contained in the interior of its parent; all level-$n$ arcs are pairwise disjoint and have diameter at most $2^{-n}$; every level-$n$ arc avoids $h_1,\ldots,h_n$; and
+$$
+(I_s+g_j)\cap I_t=\varnothing
+\quad\text{for all level-}n\text{ words }s,t\text{ and }1\le j\le n.
+$$
+The last requirement includes $s=t$.
+
+Here is the construction step. In the interior of each of the finitely many parent arcs choose two different centers. Choose the total finite list sequentially, excluding $h_1,\ldots,h_n$ and excluding the points whose difference from an already chosen center is one of $0,\pm g_1,\ldots,\pm g_n$. At each choice only finitely many points are forbidden in a nonempty open arc, so a choice remains. A center never equals its own translate by $g_j$, because $g_j\ne0$. Thus all the desired center inequalities, including the self-translate inequalities, hold. Shrink sufficiently small closed neighborhoods around the centers. There are only finitely many constraints, each separated by positive distance in the circle metric, so all can be preserved while placing the neighborhoods inside the parent interiors and imposing the diameter bound. This gives the next level.
+
+Set
+$$
+A=\bigcap_{n\ge1}\bigcup_{|s|=n}I_s.
+$$
+For every binary sequence, its nested arcs have a unique common point by compactness and vanishing diameters. Distinct sequences eventually enter disjoint arcs and give distinct points. Conversely every point of $A$ has a unique nested sequence of arcs. This defines a bijection $\kappa$ from Cantor space onto $A$. Agreement on a sufficiently long prefix places the images in an arc of arbitrarily small diameter, so the map is continuous. It is a homeomorphism, being a continuous bijection from a compact space to a Hausdorff space.
+
+For each $h_j$, all sufficiently late levels avoid it, so $A\cap G=\varnothing$. If $a,b\in A$ and $a-b=g_j\ne0$, choose a level $n\ge j$. The arcs containing $a$ and $b$ would violate the required translate disjointness. Thus no nonzero element of $G$ belongs to $A-A$, while zero does because $A$ is nonempty.
+
+Finally, $a+[n\phi]=b+[m\phi]$ with $n\ne m$ would give the forbidden nonzero difference $a-b=[(m-n)\phi]\in G$, nonzero by irrationality of $\phi$. Hence the translates are disjoint. The exceptional set $E$ is contained in $G$, so $A$ avoids $E$. QED.
+

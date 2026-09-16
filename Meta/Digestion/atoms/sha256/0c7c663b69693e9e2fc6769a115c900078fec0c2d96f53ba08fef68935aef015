@@ -1,0 +1,11 @@
+**Definition 32.6 (Charges on a specified sigma-algebra).** Write $\operatorname{Pow}(X)=\{A:A\subseteq X\}$ for the full power set, keeping $\mathcal P(K)$ for Radon probabilities. For a nonempty measurable space $(X,\Sigma)$, let $ba(X,\Sigma)$ be the real vector space of finitely additive functions $q:\Sigma\to\mathbb R$ with $q(\varnothing)=0$ and finite variation norm
+$$
+\|q\|_{ba}=\sup_{\mathcal P}\sum_{A\in\mathcal P}|q(A)|,
+$$
+where $\mathcal P$ ranges over finite measurable partitions of $X$. A probability charge is a positive member with $q(X)=1$. Write $B_b(X,\Sigma)$ for the bounded real $\Sigma$-measurable functions. On the actual carrier abbreviate
+$$
+ba(\mathcal B)=ba(K,\mathcal B(K)),\qquad
+\mathcal Q_B(K)=\{q\in ba(\mathcal B):q\ge0,\ q(K)=1\}.
+$$
+Finite additivity is part of this definition; countable additivity is not.
+

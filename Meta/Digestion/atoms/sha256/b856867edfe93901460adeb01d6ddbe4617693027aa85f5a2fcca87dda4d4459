@@ -1,0 +1,33 @@
+**theorem 32.7 (The actual bounded-Borel dual).** Integration gives an isometric identification
+$$
+B_b(X,\Sigma)^*=ba(X,\Sigma).
+$$
+Under this identification, positivity and probability normalization agree on the two sides. For compact metric $K$, the canonical embedding
+$$
+J:M(K)\longrightarrow B_b(K)^*,\qquad J\mu(f)=\int_K f\,d\mu,
+$$
+is isometric, and its image consists exactly of the countably additive members of $ba(\mathcal B)$. The topology induced on this image by $\sigma(B_b(K)^*,B_b(K))$ is exactly $\tau_B$.
+
+**Proof.** Given $q\in ba(X,\Sigma)$ and a simple function $s=\sum_{A\in\mathcal P}a_A\mathbf1_A$, define
+$$
+I_q(s)=\sum_{A\in\mathcal P}a_Aq(A).
+$$
+A common refinement of any two representing partitions, followed by finite additivity, proves independence of representation. Moreover
+$$
+|I_q(s)|\le\|s\|_\infty\sum_{A\in\mathcal P}|q(A)|
+\le\|s\|_\infty\|q\|_{ba}.
+$$
+Uniform density of simple functions therefore extends $I_q$ uniquely to a bounded linear functional on $B_b(X,\Sigma)$. For every finite partition choose $a_A$ to be the sign of $q(A)$, with sign zero at zero. The resulting simple function has norm at most one and gives
+$$
+I_q(s)=\sum_{A\in\mathcal P}|q(A)|.
+$$
+Taking the supremum proves $\|I_q\|=\|q\|_{ba}$.
+
+Conversely, for $L\in B_b(X,\Sigma)^*$ put $q(A)=L(\mathbf1_A)$. Finite additivity follows from the indicator identity for disjoint sets. Using the same sign function on a partition gives
+$$
+\sum_{A\in\mathcal P}|q(A)|\le\|L\|.
+$$
+Thus $q$ has bounded variation. The functional $I_q$ agrees with $L$ on simple functions and hence everywhere. The constructions are inverse isometries. A positive charge has a nonnegative integral on nonnegative simple functions and then on all bounded nonnegative functions by uniform approximation. Conversely, positivity of the functional implies positivity on indicators. For a positive functional, $|I_q(f)|\le q(X)\|f\|_\infty$, and equality at the constant one gives $\|q\|_{ba}=q(X)$. This proves the assertions about states. The duality and its simple-function construction are also given in Müller, Theorems 3 and 6.[^rro32-ba]
+
+For $\mu\in M(K)$, its charge norm is its total variation by the finite-partition definition of variation. Conversely a countably additive bounded-variation Borel charge is a finite signed Borel measure. Its positive and negative parts are finite Borel measures and are regular on compact metric $K$, by the regularity argument in Theorem 28.4. It therefore belongs to $M(K)$. Finally, restricting the weak-star tests $L\mapsto L(f)$ to $J(M(K))$ gives precisely the tests defining $\tau_B$. QED.
+
