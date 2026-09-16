@@ -237,6 +237,66 @@ classes is precisely the extra obligation addressed by the common-density
 and weighted-root arguments below; the numerical product alone does not
 supply that obligation. No duplicate Lean declaration is introduced.
 
+The finite-height coordinate law supplies that support obligation for both
+odd parts of the 5040 fibre. For an odd head
+\(Q=\prod_p p^{H_p}\), retain \(u_p\) and \(M_Q\) from (FC1), and put
+
+\[
+ \kappa_p=1+\sum_{e=1}^{H_p}(2e+1)p^{-e},\qquad
+ A_Q=\prod_{p\mid Q}\left(1+\frac{\kappa_p-1}{1-u_p}\right).
+ \tag{FC4}
+\]
+
+In each coordinate remove the **actual** pure-prime-power forbidden
+classes, and let \(P_0\) be the product of the uniform laws on their actual
+survivors. A cylinder modulo \(p^e\) has probability at most
+\(p^{-e}/(1-u_p)\). Two cylinders intersect in either the empty set or a
+cylinder at their larger exponent. Expanding any complete test-layout
+load \(L=\sum_{d\mid Q}1_{x\equiv b_d\bmod d}\) therefore gives
+\(\mathbb E_{P_0}L^2\le A_Q\): there are \(2e+1\) exponent pairs with
+maximum \(e\), while the pair of zero exponents contributes 1.
+
+Let \(E\) be avoidance of every actual mixed head class. Distinct original
+moduli and (FC1) give \(\lambda=P_0(E)\ge1-M_Q\). If \(M_Q<1\), the law
+\(\mu=P_0(\,\cdot\mid E)\) is uniform on the complete actual head survivor
+set, because \(P_0\) was uniform on the Cartesian product of pure survivors.
+Every complete layout includes the unit divisor, so \(L^2\ge1\) everywhere.
+Consequently
+
+\[
+ \mathbb E_\mu L^2
+ \le\frac{A_Q-(1-\lambda)}{\lambda}
+ =1+\frac{A_Q-1}{\lambda}
+ \le1+\frac{A_Q-1}{1-M_Q},\qquad
+ \Gamma_Q(\mu)\le1+\frac{A_Q-1}{1-M_Q}.
+ \tag{FC5}
+\]
+
+This holds uniformly over complete layouts, so taking their maximum is
+legitimate. Missing forbidden classes, omitted primes and smaller heights
+preserve the stated upper bounds. Exact evaluation yields
+
+| Head period bound | \(M_Q\) | \(A_Q\) | Supported-law \(\Gamma\) bound |
+|---|---:|---:|---:|
+| \(Q\mid315\) | \(49/120\) | \(399/40\) | \(1148/71\) |
+| \(Q\mid945\) | \(157/336\) | \(189/16\) | \(3812/179\) |
+
+Substituting these supported-law bounds into the ordered local-kernel
+criterion (DG5)--(DG6) below gives two further noncoverage theorems:
+
+| Head | Tail primes | Tail graph | \(\delta\) | Saturated-head mass upper bound |
+|---|---|---|---:|---:|
+| \(Q\mid315\) | \(q\ge17\) | \(5\)-degenerate, including every planar graph | \(7/20\) | \(<0.808363\) |
+| \(Q\mid945\) | \(q\ge19\) | \(5\)-degenerate, including every planar graph | \(9/25\) | \(<0.732710\) |
+
+The tail exponents, prime count, maximum degree and treewidth remain
+unbounded. The [exact verifier](../docs/reports/erdos7-odd-covering/verify_star_block_obstruction.py)
+recomputes \(M_Q,A_Q,\Gamma\) and both strict rational comparisons in its
+[certificate](../docs/reports/erdos7-odd-covering/star_block_obstruction_certificate.json).
+This is an ordinary deduction from the actual-survivor construction and
+the local-kernel criterion; it adds no Lean binding declaration and does
+not settle the unrestricted problem.
+
 More generally, if `mu` is any probability on an odd period `Q` and `u`
 is uniform on `Z/2^a Z`, the actual-layout transfer and a product maximizing
 layout give the exact identity
@@ -311,6 +371,9 @@ Complete star heads cannot be completed by any `20`-degenerate tail graph
 above 73. These statements allow unbounded maximum degree, total prime
 support, exponents, feedback vertex number and treewidth. A full star
 completion must contain a nonempty 21-core in its actual tail graph.
+For the finite heads supplied by the 5040 connection, the stronger
+supported-law bounds additionally exclude every planar tail from prime 17
+when the head divides 315, and from prime 19 when it divides 945.
 
 **H73 — false**, with its universal candidate statement retained from
 [the target preregistration](https://github.com/the-omega-institute/trureturing/issues/8167):
@@ -1431,6 +1494,13 @@ Here `S_q0` is the independently checked prime-square upper bound from
 The head constants are `1889/48` in the first three rows and `177` in the
 last. The adjacent certificate recomputes the distinct-prime products,
 the negative self-parent corrections and every strict rational comparison.
+It also checks eight actual CRT instances modulo 1155, retaining all
+15 distinct nonunit divisor labels and a nonuniform law on the two actual
+surviving head residues modulo 3. Across 6160 complete assignments and
+9200 conditional cylinder queries, the regression checks normalization,
+selective-coordinate caps, the actual-load second moment, preservation
+of assigned violation probabilities by later kernels, and the final
+union bound. This exercises (DG2)--(DG4) with actual arithmetic classes.
 The results are ordinary proofs and exact arithmetic, not a complete Lean
 formalization of the kernel construction or its graph application.
 
@@ -5945,6 +6015,9 @@ The local-parent capped-kernel criterion extends this to arbitrary
 `2`-degenerate graphs from 19 and planar graphs from 23 for arbitrary
 three-prime heads. Its selective parent moment bound allows unbounded
 feedback vertex number and treewidth; arbitrary tail graphs remain open.
+The finite supported-law bridge (FC4)--(FC5) sharpens the planar cutoff
+to 17 for heads dividing 315 and to 19 for heads dividing 945, the two odd
+parts in the frozen 5040 fibre.
 The finite-height pure-coordinate CRT criterion and two-block refinement
 give the independent finite exclusion `lcm > 11486474`: the verifier
 discharges all 23758 odd abundant candidates in the interval from 1.

@@ -164,6 +164,74 @@
       "retained_lower": "591389603366486380176030146893/17541985668975977644799361621325"
     }
   ],
+  "finite_head_supported_laws": [
+    {
+      "period_bound": 315,
+      "coordinates": [
+        {
+          "prime": 3,
+          "height": 2,
+          "u": "4/9",
+          "pure_survivor_density_lower": "5/9",
+          "uniform_kappa": "23/9",
+          "survivor_pair_factor": "19/5"
+        },
+        {
+          "prime": 5,
+          "height": 1,
+          "u": "1/5",
+          "pure_survivor_density_lower": "4/5",
+          "uniform_kappa": "8/5",
+          "survivor_pair_factor": "7/4"
+        },
+        {
+          "prime": 7,
+          "height": 1,
+          "u": "1/7",
+          "pure_survivor_density_lower": "6/7",
+          "uniform_kappa": "10/7",
+          "survivor_pair_factor": "3/2"
+        }
+      ],
+      "mixed_budget": "49/120",
+      "product_moment_bound": "399/40",
+      "Gamma_bound": "1148/71",
+      "uncovered_count_lower": "71"
+    },
+    {
+      "period_bound": 945,
+      "coordinates": [
+        {
+          "prime": 3,
+          "height": 3,
+          "u": "13/27",
+          "pure_survivor_density_lower": "14/27",
+          "uniform_kappa": "76/27",
+          "survivor_pair_factor": "9/2"
+        },
+        {
+          "prime": 5,
+          "height": 1,
+          "u": "1/5",
+          "pure_survivor_density_lower": "4/5",
+          "uniform_kappa": "8/5",
+          "survivor_pair_factor": "7/4"
+        },
+        {
+          "prime": 7,
+          "height": 1,
+          "u": "1/7",
+          "pure_survivor_density_lower": "6/7",
+          "uniform_kappa": "10/7",
+          "survivor_pair_factor": "3/2"
+        }
+      ],
+      "mixed_budget": "157/336",
+      "product_moment_bound": "189/16",
+      "Gamma_bound": "3812/179",
+      "uncovered_count_lower": "179"
+    }
+  ],
   "local_parent_capped_kernel": [
     {
       "head_and_graph": "arbitrary_357_forest",
@@ -308,8 +376,100 @@
       "uniform_parent_loss_upper": "3345555293413580787690093702050561225390399607897900232308917712240029435618196321665353866355127/2237059921658042918803355498176393117351335877006315402472127193638631371113980343667916800000000",
       "loss_upper": "8839164237839722924094840650003154042025388053307399225609101498895285904612580747137383685141563869610048528034557018999/8927916421244407659343858336504559777940946523251845492116725229034512496958118759562761491399128864289456128000000000000",
       "retained_lower": "88752183404684735249017686501405735915558469944446266507623730139226592345538012425377806257564994679407599965442981001/8927916421244407659343858336504559777940946523251845492116725229034512496958118759562761491399128864289456128000000000000"
+    },
+    {
+      "head_and_graph": "finite_315_head_planar",
+      "tail_prime_minimum": 17,
+      "Gamma_bound": "1148/71",
+      "degeneracy": 5,
+      "delta": "7/20",
+      "kernel_density_cap": "20/13",
+      "violation_denominator": "91/100",
+      "comparison_primes": [
+        17,
+        19,
+        23,
+        29,
+        31,
+        37
+      ],
+      "parent_factors": [
+        "541/416",
+        "1333/1053",
+        "1913/1573",
+        "1489/1274",
+        "677/585",
+        "2381/2106"
+      ],
+      "distinct_parent_product": "1390675331493517/513541704836160",
+      "prime_square_upper": "214880726918716980610711/12036039018003000000000000",
+      "self_parent_correction": "-4500644372256548854253/4274370798556352292691200",
+      "adjusted_square_sum": "843615082725924135816074786044160531761/50214667653690680556122359653000000000000",
+      "uniform_parent_loss_upper": "408288969261071711318306112035440902851/346012628625784707204104847360000000000",
+      "loss_upper": "34588218391762889568459066227810581802201/42788027857708177146451301752800000000000",
+      "retained_lower": "8199809465945287577992235524989418197799/42788027857708177146451301752800000000000"
+    },
+    {
+      "head_and_graph": "finite_945_head_planar",
+      "tail_prime_minimum": 19,
+      "Gamma_bound": "3812/179",
+      "degeneracy": 5,
+      "delta": "9/25",
+      "kernel_density_cap": "25/16",
+      "violation_denominator": "576/625",
+      "comparison_primes": [
+        19,
+        23,
+        29,
+        31,
+        37,
+        41
+      ],
+      "parent_factors": [
+        "823/648",
+        "2361/1936",
+        "7347/6272",
+        "167/144",
+        "11743/10368",
+        "573/512"
+      ],
+      "distinct_parent_product": "3110705411588669/1305273075499008",
+      "prime_square_upper": "167864949504642761860711/12036039018003000000000000",
+      "self_parent_correction": "-6136209655530450166873/9561044244544298870918400",
+      "adjusted_square_sum": "1494447948959946545036608246343105400977/112321715122182904700765424021000000000000",
+      "uniform_parent_loss_upper": "60402108741825620833122051468296159150969/56714501877603942210801685128806400000000",
+      "loss_upper": "1424208895358829057419887658764979447131081/1943755911144356404165305806566195200000000",
+      "retained_lower": "519547015785527346745418147801215752868919/1943755911144356404165305806566195200000000"
     }
   ],
+  "local_kernel_crt_regression": {
+    "cases": 8,
+    "full_assignments": 6160,
+    "conditional_cylinder_queries": 9200,
+    "period": 1155,
+    "head_weights": [
+      "1/3",
+      "2/3"
+    ],
+    "original_distinct_moduli": [
+      3,
+      5,
+      7,
+      11,
+      15,
+      21,
+      33,
+      35,
+      55,
+      77,
+      105,
+      165,
+      231,
+      385,
+      1155
+    ],
+    "scope": "Actual CRT regression; the general local-kernel theorem is an ordinary proof."
+  },
   "binary_path_regression": {
     "vertices": 3,
     "coordinate_cardinality": 2,

@@ -7,7 +7,7 @@ remain ordinary mathematical proofs; this is not Lean certification.
 The default run reads and checks the fixed adjacent JSON certificate.
 """
 from fractions import Fraction as F
-from itertools import product as cartesian_product
+from itertools import combinations, product as cartesian_product
 from math import isqrt, prod
 from pathlib import Path
 import argparse
@@ -108,6 +108,131 @@ def unrestricted_energy_boundary():
             "total_square_energy": str(energy),
             "distinct_original_modulus_hypothesis": False,
             "scope": "Abstract CSP boundary; not an odd distinct covering counterexample."}
+
+
+def finite_head_supported_laws():
+    """Recompute finite pure-survivor caps and the unit-load conditioning gain."""
+    rows = []
+    for period, heights, expected_mixed, expected_square, expected_gamma in [
+            (315, ((3, 2), (5, 1), (7, 1)), F(49, 120), F(399, 40), F(1148, 71)),
+            (945, ((3, 3), (5, 1), (7, 1)), F(157, 336), F(189, 16), F(3812, 179))]:
+        require(prod(p ** h for p, h in heights) == period, "finite head factorization")
+        coordinate_rows = []
+        ratios = []
+        factors = []
+        densities = []
+        for prime, height in heights:
+            u = sum((F(1, prime ** e) for e in range(1, height + 1)), F(0))
+            kappa = sum((F(2 * e + 1, prime ** e) for e in range(height + 1)), F(0))
+            pair_sum = sum((F(1, prime ** max(e, f))
+                            for e in range(height + 1) for f in range(height + 1)), F(0))
+            require(kappa == pair_sum and 0 < u < 1, "finite exponent-pair mass")
+            rho = 1 - u
+            ratios.append(u / rho)
+            factors.append(1 + (kappa - 1) / rho)
+            densities.append(rho)
+            coordinate_rows.append({"prime": prime, "height": height, "u": str(u),
+                                    "pure_survivor_density_lower": str(rho),
+                                    "uniform_kappa": str(kappa),
+                                    "survivor_pair_factor": str(factors[-1])})
+        mixed = prod(1 + ratio for ratio in ratios) - 1 - sum(ratios, F(0))
+        square = prod(factors)
+        require(mixed == expected_mixed < 1 and square == expected_square,
+                "finite-head mixed deletion and product moment")
+        gamma = 1 + (square - 1) / (1 - mixed)
+        require(gamma == expected_gamma < square / (1 - mixed),
+                "unit-divisor lower bound improves conditioned second moment")
+        survivor_count = period * prod(densities) * (1 - mixed)
+        require(survivor_count == (71 if period == 315 else 179),
+                "finite-head actual-survivor count lower bound")
+        rows.append({"period_bound": period, "coordinates": coordinate_rows,
+                     "mixed_budget": str(mixed), "product_moment_bound": str(square),
+                     "Gamma_bound": str(gamma), "uncovered_count_lower": str(survivor_count)})
+    return rows
+
+
+def local_kernel_crt_regression():
+    """Check sequential kernels against actual, distinct CRT modulus labels."""
+    primes = (3, 5, 7, 11)
+    tails = primes[1:]
+    moduli = sorted(prod(subset) for size in range(1, 5)
+                    for subset in combinations(primes, size))
+    head = {1: F(1, 3), 2: F(2, 3)}
+    gamma = 1 + 3 * max(head.values())
+    cases = queries = assignment_count = 0
+    for seed, delta in cartesian_product((1, 7, 19, 113), (F(1, 3), F(2, 5))):
+        state = seed
+        residue = {}
+        for modulus in moduli:
+            state = (1664525 * state + 1013904223) % (2 ** 32)
+            residue[modulus] = state % modulus
+        residue[3] = 0
+        labels = {v: [d for d in moduli if any(d % p == 0 for p in tails)
+                      and max(p for p in tails if d % p == 0) == v] for v in tails}
+        law = {(x,): mass for x, mass in head.items()}
+        earlier = []
+        born = {}
+        cap = 1 / (1 - delta)
+        for vertex in tails:
+            extended = {}
+            moment = forbidden_probability = F(0)
+            for history, mass in law.items():
+                coords = dict(zip((3, *earlier), history))
+                forbidden = {residue[d] % vertex for d in labels[vertex]
+                             if all(coords[p] == residue[d] % p
+                                    for p in coords if d % p == 0)}
+                alpha = F(len(forbidden), vertex)
+                moment += mass * alpha ** 2
+                forbidden_probability += mass * max(F(0), alpha - delta) / (1 - delta)
+                for value in range(vertex):
+                    if alpha <= delta:
+                        density = F(0) if value in forbidden else 1 / (1 - alpha)
+                    else:
+                        density = ((alpha - delta) / (alpha * (1 - delta))
+                                   if value in forbidden else cap)
+                    require(0 <= density <= cap, "pointwise capped-kernel bound")
+                    extended[(*history, value)] = mass * density / vertex
+            require(sum(extended.values(), F(0)) == 1, "normalized complete prefix law")
+            moment_bound = gamma * F(1, vertex ** 2) * prod(1 + cap * F(3, p) for p in earlier)
+            require(moment <= moment_bound, "actual-label local moment bound")
+            require(forbidden_probability <= moment_bound / (4 * delta * (1 - delta)),
+                    "assigned violation bound")
+            born[vertex] = forbidden_probability
+            law = extended
+            earlier.append(vertex)
+        direct = {v: F(0) for v in tails}
+        union_mass = F(0)
+        for history, mass in law.items():
+            coords = dict(zip(primes, history))
+            some = False
+            for vertex in tails:
+                bad = any(all(coords[p] == residue[d] % p for p in primes if d % p == 0)
+                          for d in labels[vertex])
+                if bad:
+                    direct[vertex] += mass
+                    some = True
+            if some:
+                union_mass += mass
+            assignment_count += 1
+        require(direct == born, "future kernels preserve actual violation probabilities")
+        require(union_mass <= sum(direct.values(), F(0)), "actual final union bound")
+        for size in range(1, 4):
+            for subset in combinations(range(1, 4), size):
+                marginal = {}
+                for history, mass in law.items():
+                    key = (history[0], *(history[i] for i in subset))
+                    marginal[key] = marginal.get(key, F(0)) + mass
+                bound = prod(cap / primes[i] for i in subset)
+                for key, mass in marginal.items():
+                    require(mass <= head[key[0]] * bound, "conditional selective-coordinate cap")
+                    queries += 1
+        cases += 1
+    require(cases == 8 and assignment_count == 6160 and queries == 9200,
+            "complete fixed actual-CRT kernel corpus")
+    return {"cases": cases, "full_assignments": assignment_count,
+            "conditional_cylinder_queries": queries, "period": 1155,
+            "head_weights": ["1/3", "2/3"], "original_distinct_moduli": moduli,
+            "scope": "Actual CRT regression; the general local-kernel theorem is an ordinary proof."}
 
 
 def certificate():
@@ -367,12 +492,16 @@ def certificate():
             "feedback_vertices_per_component": depth, "levels": levels,
             "prime_square_upper": str(square_upper(cutoff)),
             "loss_upper": str(loss), "retained_lower": str(1 - loss)})
+    finite_heads = finite_head_supported_laws()
+    finite_gamma = {row["period_bound"]: F(row["Gamma_bound"]) for row in finite_heads}
     degeneracy_rows = []
     for name, cutoff, gamma, degree, threshold, target in [
             ("arbitrary_357_forest", 17, general_gamma, 1, F(11, 25), F(955226, 1000000)),
             ("arbitrary_357_degree2", 19, general_gamma, 2, F(41, 100), F(885762, 1000000)),
             ("arbitrary_357_planar", 23, general_gamma, 5, F(37, 100), F(945592, 1000000)),
-            ("star_head_degree20", 79, F(177), 20, F(9, 25), F(990060, 1000000))]:
+            ("star_head_degree20", 79, F(177), 20, F(9, 25), F(990060, 1000000)),
+            ("finite_315_head_planar", 17, finite_gamma[315], 5, F(7, 20), F(808363, 1000000)),
+            ("finite_945_head_planar", 19, finite_gamma[945], 5, F(9, 25), F(732710, 1000000))]:
         require(0 < threshold <= F(1, 2), "capped-kernel threshold range")
         primes = [p for p in extended_primes if p >= cutoff][:degree + 1]
         require(len(primes) == degree + 1, "complete distinct-parent prefix")
@@ -446,7 +575,9 @@ def certificate():
         "star_forest": forest_rows, "pendant_degree_two_core": pendant_core,
         "arbitrary_forest": arbitrary_forest_rows,
         "feedback_vertex": feedback_rows,
+        "finite_head_supported_laws": finite_heads,
         "local_parent_capped_kernel": degeneracy_rows,
+        "local_kernel_crt_regression": local_kernel_crt_regression(),
         "binary_path_regression": binary_path_regression(),
         "unrestricted_energy_boundary": unrestricted_energy_boundary(),
         "forest_potential_identity": [
@@ -506,6 +637,8 @@ def main():
                       "arbitrary_forest_loss_bounds": {row["head"]: row["loss_upper"] for row in data["arbitrary_forest"]},
                       "feedback_vertex_loss_bounds": {row["head"]: row["loss_upper"] for row in data["feedback_vertex"]},
                       "local_parent_capped_kernel_loss_bounds": {row["head_and_graph"]: row["loss_upper"] for row in data["local_parent_capped_kernel"]},
+                      "finite_head_supported_Gamma_bounds": {row["period_bound"]: row["Gamma_bound"] for row in data["finite_head_supported_laws"]},
+                      "local_kernel_crt_regression_cases": data["local_kernel_crt_regression"]["cases"],
                       "binary_path_regression_cases": data["binary_path_regression"]["cases"],
                       "pendant_degree_two_core_loss": data["pendant_degree_two_core"]["loss_upper"],
                       "star_vertex_cover_8_loss": data["star_head_hubs"]["vertex_cover_loss_upper"],
