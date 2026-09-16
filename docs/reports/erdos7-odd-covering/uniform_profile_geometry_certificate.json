@@ -310,6 +310,20 @@
             "weighted_deletion_upper": "14095/1032",
             "margin": "265/3096"
           }
+        ],
+        "row_count_attainment_digits": [
+          [
+            5,
+            6
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            5,
+            6
+          ]
         ]
       },
       {
@@ -334,6 +348,20 @@
             "weighted_deletion_upper": "14095/1032",
             "margin": "265/3096"
           }
+        ],
+        "row_count_attainment_digits": [
+          [
+            6,
+            5
+          ],
+          [
+            6,
+            5
+          ],
+          [
+            6,
+            5
+          ]
         ]
       },
       {
@@ -358,6 +386,115 @@
             "weighted_deletion_upper": "14095/1032",
             "margin": "265/3096"
           }
+        ],
+        "row_count_attainment_digits": [
+          [
+            6,
+            5
+          ],
+          [
+            6,
+            5
+          ],
+          [
+            6,
+            5
+          ]
+        ]
+      }
+    ],
+    "row_count_group_bounds": [
+      {
+        "numerator48": 1546,
+        "A_residues": [
+          2,
+          2
+        ],
+        "B_residues": [
+          3,
+          8,
+          8
+        ],
+        "extra_old5_residue": 4,
+        "E7_old_residues": [
+          0,
+          2,
+          4,
+          5,
+          14,
+          44
+        ],
+        "base": 1236,
+        "extra": 54,
+        "E7_terms": [
+          100,
+          64,
+          36,
+          28,
+          20,
+          8
+        ]
+      },
+      {
+        "numerator48": 52012,
+        "A_residues": [
+          2,
+          2
+        ],
+        "B_residues": [
+          3,
+          8,
+          8
+        ],
+        "extra_old5_residue": 4,
+        "E7_old_residues": [
+          0,
+          2,
+          4,
+          5,
+          14,
+          44
+        ],
+        "base": 41700,
+        "extra": 1764,
+        "E7_terms": [
+          3292,
+          2176,
+          1176,
+          952,
+          680,
+          272
+        ]
+      },
+      {
+        "numerator48": 48502,
+        "A_residues": [
+          2,
+          2
+        ],
+        "B_residues": [
+          3,
+          8,
+          8
+        ],
+        "extra_old5_residue": 4,
+        "E7_old_residues": [
+          0,
+          2,
+          4,
+          5,
+          14,
+          34
+        ],
+        "base": 38640,
+        "extra": 1746,
+        "E7_terms": [
+          3208,
+          1984,
+          1164,
+          868,
+          620,
+          272
         ]
       }
     ],

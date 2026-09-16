@@ -6259,3 +6259,77 @@ inclusion-minimal sources with an inherited bound35. The stronger PG1
 bounds still apply to its own232 containing orbits. Among the56966
 minimal orbits,56961 remain outside these five sources; the general
 continuation through11,13,17 and all later primes remains unresolved.
+
+#### A deletion bound determined by row counts, with an exactness criterion
+
+The grouped deletion cost admits a sufficient upper observation even when
+the deletion vector does not determine the actual carrier. Fix a finite
+old-coordinate set X⊆Z/45Z, numbers f_x≥0 for every x∈X, and N>0.
+Let S be a subset of X×{1,…,6}, with exactly6−b_x retained points in row x,
+and let the nonnegative finite measure σ give every retained point in
+that row mass f_x/N. No probability normalization is required.
+Keep the same original projected blocks E3,E5,E7 defined above. Write
+A for a choice of the two old cylinders at9,45, and B for a choice of
+the three old cylinders at5,15,45. Set T=2−A and M=T(4−B), pointwise on X.
+For each choice define
+
+    J_f(b;A,B) = Σ_x(6−b_x)f_x(24A_x+6T_xB_x)
+                  +6 max_(a mod5) Σ_(x≡a mod5) f_xT_x
+                  +Σ_(c|45) max_(a modc) Σ_(x≡a modc) f_xM_x.
+
+Then the actual grouped cost satisfies
+
+    48N G(σ) ≤ max_(A,B) J_f(b;A,B).                  (UP-1)
+
+Thus this upper bound uses only X,b,f,N. If there are at least two
+distinct digits y with X×{y} contained in S, equality holds in(UP-1).
+
+To prove the upper bound, let I be the extra original mod35 cylinder
+and C the sum of the six original E7 cylinders. The exact product-union
+expansion on the actual carrier has numerator
+
+    24A+6TB+6TI+MC−TIC.
+
+All of T,I,C and f are nonnegative. Dropping the last term increases
+the integral. The old-coordinate part integrates with row multiplicity
+6−b_x. The single I cylinder is bounded by the displayed mod5 maximum;
+each of the six C cylinders is bounded by its displayed old-cofactor
+maximum. This proves(UP-1), without moving the actual forbidden family
+or replacing its measure.
+
+For equality, choose maximizing old A,B. Put I on one wholly retained
+digit and all six C cylinders on the other. Choose each old residue to
+attain its own maximum. These are allowed choices of the distinct
+original projected labels, their digit supports are disjoint, and every
+row used by any of them is retained. Hence TIC=0 and every preceding
+upper comparison is an equality. This construction concerns the
+maximization defining G; it does not identify or move actual higher
+forbidden cylinders.
+
+There is a weaker, layout-dependent equality criterion. Keep one wholly
+retained digit for the six C cylinders. For some maximizing A,B and a
+maximizing old mod5 residue a for I, it suffices that a different digit y
+has zero missing fT mass on that old cylinder:
+
+    Σ_(x≡a mod5, (x,y)∉S) f_xT_x = 0.                 (UP-2)
+
+The same construction then attains the I maximum, while the two digit
+supports still make TIC=0. All other upper comparisons are unchanged.
+
+For the preceding profile, the three measures f=1,h_1,h_2 give exactly
+1546,52012,48502 in the right-hand side of(UP-1). The two four-mask
+representatives have two wholly retained digits. In the five-mask
+representative, digit6 is wholly retained and digit5 is missing only
+x=7. All three computed maximizers use old mod5 residue4 for I, so
+(UP-2) holds on digit5. Thus the row-count formula independently
+recovers all nine actual grouped maxima, including the five-mask case.
+
+The verifier enumerates every distinct old cylinder, including one
+representative of the empty cylinder when that cofactor has an empty
+residue class. This is necessary for the general relaxed maximum:
+dropping TIC does not justify assuming monotonicity in A or B.
+Its witness check uses the reconstructed original-family carriers to
+verify(UP-2). With only one wholly retained digit and no such witness,
+(UP-1) remains an upper bound; equality is not asserted. This separates
+sufficiency for a numerical upper bound from reconstruction of the
+full carrier.

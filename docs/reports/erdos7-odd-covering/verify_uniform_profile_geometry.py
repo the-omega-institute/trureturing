@@ -36,6 +36,61 @@ def caps(weights, points, divisors):
                 for a in range(d)) for d in divisors]
 
 
+def profile_group_bound_numerator(points, b, f):
+    """Return the exact b-only bound and one old-coordinate maximizer."""
+    n = len(points)
+    if (not n or len(b) != n or len(f) != n or len(set(points)) != n
+            or any(type(x) is not int or not 0 <= x < 45 for x in points)
+            or any(type(x) is not int or not 0 <= x <= 6 for x in b)
+            or any(type(x) is not int or x < 0 for x in f)):
+        raise ValueError("distinct old45 points, deletion counts, nonnegative integer weights required")
+    mods = (1, 3, 5, 9, 15, 45)
+    cylinders = {}
+    for d in mods:
+        rows, empty_added = [], False
+        for a in range(d):
+            indices = tuple(i for i, x in enumerate(points) if x % d == a)
+            if indices or not empty_added:
+                rows.append((a, indices))
+                empty_added = empty_added or not indices
+        cylinders[d] = rows
+
+    def layouts(labels):
+        rows = []
+        for selection in product(*(cylinders[d] for d in labels)):
+            counts = [0] * n
+            for _, indices in selection:
+                for i in indices:
+                    counts[i] += 1
+            rows.append((tuple(a for a, _ in selection), counts))
+        return rows
+
+    def cylinder_max(weights, d):
+        return max((sum(weights[i] for i in indices), a)
+                   for a, indices in cylinders[d])
+
+    arows, brows = layouts((9, 45)), layouts((5, 15, 45))
+    row_weights = [(6 - bi) * fi for bi, fi in zip(b, f)]
+    best = None
+    for ares, a in arows:
+        t = [2 - ai for ai in a]
+        ft = [fi * ti for fi, ti in zip(f, t)]
+        extra, eres = cylinder_max(ft, 5)
+        for bres, bb in brows:
+            base = sum(w * (24 * ai + 6 * ti * bi)
+                       for w, ai, ti, bi in zip(row_weights, a, t, bb))
+            fm = [v * (4 - bi) for v, bi in zip(ft, bb)]
+            seven = [cylinder_max(fm, d) for d in mods]
+            value = base + 6 * extra + sum(v for v, _ in seven)
+            if best is None or value > best["numerator48"]:
+                best = {"numerator48": value, "A_residues": list(ares),
+                        "B_residues": list(bres), "extra_old5_residue": eres,
+                        "E7_old_residues": [a for _, a in seven],
+                        "base": base, "extra": 6 * extra,
+                        "E7_terms": [v for v, _ in seven]}
+    return best
+
+
 def evaluate(data, directory):
     geometry = read_module("uniform_profile_classification", directory / "verify_seven_digit_classification.py")
     dominance = read_module("uniform_profile_dominance", directory / "verify_carrier_dominance.py")
@@ -132,6 +187,9 @@ def evaluate(data, directory):
                        "depth_maxima_sha256": geometry.digest(numerators)})
 
     target = F(data["target"])
+    profile_weights = [[1] * len(old)] + [
+        [34 - 3 * int(x % 3 == root) for x in old] for root in (1, 2)]
+    profile_groups = [profile_group_bound_numerator(old, profile, f) for f in profile_weights]
     results = []
     common_weighted_caps = {}
     for rawpoints, masks, canonical in cases:
@@ -161,8 +219,37 @@ def evaluate(data, directory):
             require(margin >= 0, "signed criterion for this actual carrier and root")
             roots.append({"root": root, "weighted_group_numerator48": weighted_best["value"],
                           "weighted_deletion_upper": str(deletion), "margin": str(margin)})
+        actual_groups = [best["value"]] + [r["weighted_group_numerator48"] for r in roots]
+        require(actual_groups == [b["numerator48"] for b in profile_groups],
+                "row-count upper bound equals all three actual grouped costs")
+        support = {(int(p % 45), int(p % 7)) for p in rawpoints}
+        complete_digits = [y for y in range(1, 7) if all((x, y) in support for x in old)]
+        attainment = []
+        for f, bound in zip(profile_weights, profile_groups):
+            a9, a45 = bound["A_residues"]
+            t = [2 - int(x % 9 == a9) - int(x == a45) for x in old]
+            pairs = [(y, z) for z in complete_digits for y in range(1, 7) if y != z
+                     and sum(fi * ti for x, fi, ti in zip(old, f, t)
+                             if x % 5 == bound["extra_old5_residue"]
+                             and (x, y) not in support) == 0]
+            require(bool(pairs), "disjoint extra35 and E7 digits attain row-count bound")
+            extra_digit, seven_digit = pairs[0]
+            by_old = dict(zip(old, f))
+            total = 0
+            for x, y in support:
+                a = int(x % 9 == a9) + int(x == a45)
+                b = sum(int(x % d == r) for d, r in
+                        zip((5, 15, 45), bound["B_residues"]))
+                extra = int(y == extra_digit and x % 5 == bound["extra_old5_residue"])
+                c = sum(int(y == seven_digit and x % d == r) for d, r in
+                        zip((1, 3, 5, 9, 15, 45), bound["E7_old_residues"]))
+                total += by_old[x] * (24 * a + 6 * (2 - a) * b + 6 * (2 - a) * extra
+                                      + (2 - a) * (4 - b - extra) * c)
+            require(total == bound["numerator48"], "pointwise actual grouped-union equality witness")
+            attainment.append([extra_digit, seven_digit])
         results.append({"masks": list(masks), "group_numerator48": best["value"],
-                        "survival_lower": str(survival), "roots": roots})
+                        "survival_lower": str(survival), "roots": roots,
+                        "row_count_attainment_digits": attainment})
 
     # Coverage is by actual mask inclusion, retaining multiplicities. The three
     # source orbit images are exactly the six profile states already rebuilt.
@@ -183,6 +270,7 @@ def evaluate(data, directory):
             "common_cap_numerators": common_caps,
             "common_weighted_cap_numerators": {str(root): row for root, row in common_weighted_caps.items()},
             "shared_pure7_bounds": shared, "cases": results,
+            "row_count_group_bounds": profile_groups,
             "minimum_margin": str(min(F(row["margin"]) for result in results for row in result["roots"])),
             "covered_carriers": len(covered), "covered_carrier_orbits": len(covered_orbits),
             "covered_minimal_carrier_orbits": len(representatives),

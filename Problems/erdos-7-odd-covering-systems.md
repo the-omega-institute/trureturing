@@ -170,6 +170,15 @@ minimal sources together certify739 carrier orbits at Gamma≤35.
 The remaining56961 minimal orbits are not covered by these sources;
 the general prime-tail continuation is also unresolved.
 
+The same result includes a general row-count upper bound for the
+grouped deletion cost of any nonnegative measure constant within
+each surviving row. Two wholly retained seven digits guarantee
+equality; a weaker weighted-cylinder condition also suffices.
+All three 86-point representatives meet that condition, and nine
+explicit original-label witnesses attain the formula. Thus their
+deletion bounds can be recovered from the row profile, even though
+that profile does not reconstruct the actual carrier.
+
 The [complete actual-carrier classification](../docs/reports/erdos7-odd-covering/marked_head_profile.md#complete-low315-carrier-classification-for-actual-digit-bounds)
 identifies the finite domain needed to extend those digit-sensitive bounds.
 On the six canonical old45 shapes, the 161375 deletion vectors lift to
