@@ -683,6 +683,15 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Same-law convex maxima, complete geometric corrections and the two-prime consumer.
+pattern = "docs/reports/erdos7-odd-covering/saturated_convex_profile_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]] # Exact saturated-label kernels, all-height transfer constants and actual CRT cases.
 pattern = "docs/reports/erdos7-odd-covering/saturated_height_certificate.json"
 kind = "data"
@@ -928,6 +937,15 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 [[files]] # Checks the refined root-fibre profile and its short bridge to the prime tail.
 pattern = "docs/reports/erdos7-odd-covering/verify_refined_head_profile.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Replays singleton elimination, same-law convex bounds and the complete two-prime transfer.
+pattern = "docs/reports/erdos7-odd-covering/verify_saturated_convex_profile.py"
 kind = "program"
 admission_plane = "content"
 produced_by = "none"

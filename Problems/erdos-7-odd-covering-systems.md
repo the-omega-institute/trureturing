@@ -115,6 +115,19 @@ remainder. This improves `3849/106` on that geometry. Extending this
 improved moment bound to the other low configurations, and obtaining
 a general tail continuation, remain open.
 
+On that same77-point law, the [convex extension](../docs/reports/erdos7-odd-covering/marked_head_profile.md#convex-costs-on-the-same-arbitrary-height-probability)
+(SH19)--(SH25) adds simultaneous mean `<4.948866` and eight hinge
+bounds, including threshold-six `<0.808228`, with arbitrary original
+3/5/7 heights. Eliminating two singleton45 choices reduces each
+complete convex query from20,070,400 to78,400 layout pairs, with
+an exact equality proof. A direct threshold-two decomposition keeps
+the remaining geometric correction small. These observations feed
+the same physical11/13 prime extension at arbitrary heights and give
+supported `Gamma<153.979740` after both primes. The exact two-prime
+consumer retains every auxiliary tail contribution; it does not yet
+provide the subsequent unrestricted-prime continuation or eliminate
+other low configurations.
+
 For families using only the primes 3, 5 and 7, (CM1)--(CM8) determine the
 exact infimum of uniform uncovered density: \(53/432\). Every finite
 family has strictly greater uncovered density, and an explicit family

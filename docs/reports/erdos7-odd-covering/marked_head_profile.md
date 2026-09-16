@@ -4362,3 +4362,201 @@ files. An independent standard-library calculation also checks
 the complete grouped denominator. The all-height theorem uses
 the ordinary arguments (SH10)--(SH17); this is not an end-to-end
 Lean result or an optimality claim for the selected weights.
+
+### Convex costs on the same arbitrary-height probability
+
+The common-layout argument also supplies the observations needed by
+subsequent prime steps. Keep the actual low law mu, its independent
+higher-digit lift lambda, and its actual conditioned law nu from (SH18).
+For a nonnegative increasing convex function h, define
+
+    F_h(z)=max_(one low cylinder per d)
+      E_mu h(sum_(d dividing315)w_d(z)1_(x=a_d mod d)).
+
+The prefix centering and convex-hull argument of (SH10) give
+
+    E_lambda h(L)<=E_Z F_h(Z).                          (SH19)
+
+Center only the test prefixes before conditioning. Conditional on the
+low point and other prime coordinates, their nested coupling maximizes
+each convex cost, as in the earlier survivor-weighted comparison (C1).
+For fixed depths, Jensen then replaces each cofactor's average indicator
+by one cylinder, with mixing coefficients independent of the low point.
+These two steps hold for h as well as for the square. The auxiliary
+expectation may be infinite for unrestricted h; the hinge bounds below
+are finite. Under fibre-constant weights w_x with sum_x r_x w_x=1,
+the common surviving seven digit gives the exact formula
+
+    F_h(z)=max_(A,B) sum_x w_x[
+      (r_x-1)h(A_x)+h(A_x+(1+z_7)B_x)].
+
+Let F_2 denote the square cost, and let U_B and beta be the square
+upper bound and depth-box mass in (SH13). Put
+
+    V_out=U_B-sum_(z in B)Pr(Z=z)F_2(z)-(1-beta)>=0.
+
+For any integer threshold t>=1,
+
+    H_lambda(t)<=sum_(z in B)Pr(Z=z)F_((.-t)_+)(z)
+                      +t V_out/(4t^2-1),
+    H_nu(t)<=H_lambda(t)/q_*.                           (SH20)
+
+Indeed every complete load is an integer k>=1 and
+(k-t)_+<=t(k^2-1)/(4t^2-1). On the positive branch the cleared
+majorant difference is (k-2t)(t(k-2t)+1)>=0, by integrality;
+equality at k=2t shows the coefficient is exact. Apply this inequality
+outside the box, then use its complete square-minus-one budget V_out.
+The box complement is never discarded. Conditioning only divides the
+nonnegative hinge integral by its same-law lower denominator q_*.
+
+There is an exact elimination of the two modulus45 choices. It makes
+these convex observations substantially cheaper without approximating
+the maximizing layout. Fix base old45 layouts A0,B0 omitting45, and put
+v=(1+z_3)(1+z_5), u=1+z_7, X=A0+uB0. Their baseline cost is
+
+    C=sum_x w_x[(r_x-1)h(A0_x)+h(X_x)].
+
+For each old45 point i, define the increments
+
+    a_i=w_i[(r_i-1)(h(A0_i+v)-h(A0_i))+h(X_i+v)-h(X_i)],
+    b_i=w_i[h(X_i+uv)-h(X_i)],
+    j_i=w_i[(r_i-1)(h(A0_i+v)-h(A0_i))
+                      +h(X_i+(1+u)v)-h(X_i)].
+
+The exact best cost after restoring both singleton45 labels is
+
+    C+max(max_i a_i+max_j b_j, max_i j_i).               (SH21)
+
+Different-point choices give a_i+b_j; coincident choices give j_i.
+Convexity implies j_i>=a_i+b_i. If the independent maxima use
+different points they are attained; if they coincide their value is
+dominated by the attainable same-point choice. This proves both
+inequalities in (SH21). Nonempty45 cylinders are precisely singleton
+points, and empty choices are dominated by nonempty choices for these
+costs. On the (SH18) carrier there are only 280 base layouts, compared
+with 4480 after restoring45, so each convex query uses 78,400 base
+pairs instead of 20,070,400 full pairs. The proof also applies to other
+finite carriers with the stated singleton structure.
+
+### A direct threshold-two correction and simultaneous bounds
+
+Threshold two has an additional exact linear decomposition. For a
+complete old45 layout A with weights v_c(z_3,z_5) from (SH11), put
+
+    m_A(z)=max_A sum_x r_x w_x A_x,
+    m_B(z)=max_B sum_x w_x B_x,
+    bonus(A)=sum_x(r_x-1)w_x 1_(A_x=1),
+    g(z_3,z_5)=max_A[bonus(A)-(m_A(z)-sum_x r_x w_x A_x)].
+
+All cofactor weights are positive, so A_x=1 means that none of its
+five nonunit old45 cylinders hits x; this observation is independent
+of the depths. Since A>=1 and A+(1+z_7)B>=2, direct expansion gives
+
+    F_((.-2)_+)(z)=m_A(z)+(1+z_7)m_B(z)-2+g(z_3,z_5).
+                                                               (SH22)
+
+The mean deficit of each layout is a sum of nonnegative individual
+cylinder deficits multiplied by v_c. Each v_c is nondecreasing in
+z_3,z_5. Thus g is nonincreasing in each coordinate. Also g>=0:
+choose each cylinder to attain its independent mean maximum, leaving
+zero deficit and a nonnegative bonus. The expected linear part in
+(SH22), before subtracting two, is exactly
+
+    M_lambda=sum_(d dividing315)(1+gamma_d)m_d.
+
+For a finite box 0<=z_3<=n_3, 0<=z_5<=n_5, write
+pi_p(k)=(p-1)/p^(k+1) and t_p=p^(-(n_p+1)). Monotonicity yields
+
+    E g <= sum_(inside)pi_3(z_3)pi_5(z_5)g(z_3,z_5)
+      +t_3 sum_(z_5<=n_5)pi_5(z_5)g(n_3+1,z_5)
+      +t_5 sum_(z_3<=n_3)pi_3(z_3)g(z_3,n_5+1)
+      +t_3 t_5 g(n_3+1,n_5+1).                         (SH23)
+
+The three complement regions are disjoint and exhaust both infinite
+tails. This gives H_nu(2)<=(M_lambda-2+E g upper)/q_* without
+charging the omitted higher depths to a square bound.
+
+On exactly the probability and low geometry in (SH18), use its
+270-point box in (SH20), and n_3=12,n_5=8 in (SH23). The same
+probability nu simultaneously satisfies
+
+    E_nu L<=19618622895502373704/3964266656997890625
+            <4.948866,
+    E_nu L^2<=2512626164927510733601/70505216618162484375,
+    E_nu(L-t)_+<=H_t,                                   (SH24)
+
+where the displayed decimal bounds are rounded upward:
+
+| t | H_t upper |
+|---|---|
+| 2 | 2.948865602 |
+| 3 | 2.058624315 |
+| 4 | 1.420795591 |
+| 5 | 1.089549227 |
+| 6 | 0.808227449 |
+| 8 | 0.504434647 |
+| 10 | 0.338457518 |
+| 12 | 0.217859420 |
+
+Every entry has an exact fraction in the adjacent certificate.
+In particular H_2=11690089581506592454/3964266656997890625 and
+H_6=171123706666048609715948/211727165504341940578125.
+The mean follows from L<=2+(L-2)_+. Between listed thresholds,
+the chord of the two hinge upper bounds is valid by convexity in t;
+below two, H_2+2-t is valid. These are bounds for every complete
+test on one fixed law. Taking a different law for each cost is not
+part of the construction. All original3/5/7 heights remain arbitrary;
+the specified low geometry remains a hypothesis.
+
+### A same-law two-prime consumer
+
+The pure-power prime extension (AP2), its convex comparison (AP5),
+and its square update (AP6) can consume (SH24) directly. Let G be
+its square bound and use thresholds T_11=4, T_13=5. The first charge
+is at most H_4/6. Its comparison multiplier N has
+
+    E N=7/6, Pr(N=1)=28/33, Pr(N=2)=50/363.
+
+At the next prime, use H_5 at N=1, the chord
+H(5/2)<=(H_2+H_3)/2 at N=2, and H(t)<=2+H_2-t at N>=3.
+The complete remaining multiplier tail is handled by E N. Thus
+
+    b_11<=H_4/6,
+    b_13<=[131 H_2/726+50 H_3/363+28 H_5/33+2/121]/7,
+    J_13<=(1403/630)G,
+    q_13>=1-b_11-b_13,
+    Gamma_13<=1+(J_13-1)/q_13.                          (SH25)
+
+Here the charges are those of the physical probability chain in
+(AP2), and q_13 is measured relative to its normalized starting
+law nu. This is not an assertion that the conditional low marginal
+remains mu. The old period Q is the full3/5/7 part of the entire
+original family's period, including exponents occurring in later-prime
+moduli. Uniformly pad the (SH18) lift to these physical heights before
+conditioning. Likewise extend11/13 to their full physical heights.
+The distortion parameters are delta_11=1/3, c_11=5/3<=11 and
+delta_13=4/11, c_13=12/7<=13, as required by (AP5).
+With the exact (SH24) inputs,
+
+    q_13>=1769882874608640689865554/3455108140373052546796875,
+    Gamma_13<=3815365447008599276017720573/24778360244520969658117756
+               <153.979740.
+
+This allows arbitrary finite11/13 heights and residues in addition
+to the arbitrary3/5/7 heights already present in (SH18). It supplies
+a supported probability for further prime steps under that same low
+geometry, not a general tail continuation or a solution of #7.
+
+`verify_saturated_convex_profile.py` reconstructs its adjacent
+`saturated_convex_profile_certificate.json`. The (SH18) certificate
+is a hash-bound prerequisite checked by `verify_saturated_joint_head.py`.
+The new replay checks all2160 hinge observations, compares the reduced
+square evaluator with every one of the270 independently enumerated
+square maxima, and checks the direct threshold-two identity against
+all270 hinge observations. It reconstructs140 two-coordinate correction
+values, including the23 boundary values for the omitted regions.
+The largest certified vector-arithmetic range is85,377,593,169,792,
+below2^63. Geometric sums, conditioning and the two-prime consumer use
+exact fractions. Run the new replay with `python3 -I -O`.
+The arbitrary-height conclusions use the ordinary proofs above;
+no new Lean theorem or unrestricted noncoverage endpoint is asserted.
