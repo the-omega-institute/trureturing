@@ -174,6 +174,20 @@ universal head input and all eight displayed finite-base targets are refuted.
 A proof of #7 therefore needs a sufficient input that this star family does
 not contradict, rather than a sharper proof of the same universal inequality.
 
+The block-saturation theorem below supplies such an input for restricted
+extensions. For every positive head height, a complete star head cannot be
+completed by tails whose prime interaction graph is a matching. More than
+one tenth of its broad-branch head points retain an uncovered tail lift.
+For unrestricted tails the theorem instead gives a necessary positive
+mixed-tail budget. It does not exclude arbitrary smooth heads or prove
+that this budget is small in a hypothetical full cover.
+
+For arbitrary `{3,5,7}` heads the same criterion also proves noncoverage
+when all other primes are at least 37 and their interaction graph has
+maximum degree at most two, or when all other primes are at least 31 and
+each interaction component has at most three vertices. These restrictions
+allow arbitrary exponents and arbitrarily many primes in total.
+
 **H73 — false**, with its universal candidate statement retained from
 [the target preregistration](https://github.com/the-omega-institute/trureturing/issues/8167):
 let `Q` be any product of arbitrary finite powers of odd primes at most 73.
@@ -464,6 +478,394 @@ The q distinct odd moduli `3^i q`, `1<=i<=q`, with CRT residues
 `x_3=-1 mod 3^H_3` as its q-coordinate varies. This explicitly fills a fibre
 missed by the head. It is not a full cover: the ternary root `1 mod 3`
 misses every one of these new classes.
+
+The published essential-class constraints are stronger than merely counting
+the children in this top fibre. [Lettl--Sun, Theorems 1.3 and
+2.1](../Library/Arith/lettlsun2008cosets.md), imply that an essential modulus
+`d_t` in a cover by `k` classes satisfies
+`k >= 1 + sum_p v_p(d_t)(p-1)`. At a private point `a` of this class,
+retain the original labels `j` whose prime-to-p part divides `a_j-a` but
+whose whole modulus does not. Their weighted capacity obeys
+
+\[
+ \sum_j p^{-(v_p(d_j)-v_p(a_j-a)-1)}
+ \ge v_p(d_t)(p-1).
+\]
+
+The integer ordinary-cover case of the first bound is attributed to
+Znám (1975). These public results require a cover of the full period;
+they give no such inequalities for an isolated noncovering head.
+
+### Block saturation and the actual crossing budget
+
+Let `D` be a finite set of distinct odd moduli greater than one, with actual
+residues `a_d`, and let `N=lcm(D)=QT`, where `gcd(Q,T)=1`. Use the actual
+head survivors `R_Q`, obtained by removing exactly the classes with `d|Q`,
+and suppose a probability `mu` supported on `R_Q` is given. Partition the
+primes of `T` into arbitrary finite nonempty blocks `B`, and set
+`T_B=prod_(q in B) q^(v_q(N))`. Empty tail support is allowed: all block
+sums are then empty. Write `d=m_d t_d` with `m_d|Q`, `t_d|T`, and put
+`h_d(x)=1[x=a_d mod m_d]` (identically one when `m_d=1`).
+
+A tail class is local to `B` when `t_d>1` and its entire prime support
+lies in `B`; otherwise it is crossing if it meets two or more blocks.
+For each head point, let `U_B(x)` be the union of the actual local tail
+cylinders whose head incidence is one. All original labels are retained:
+different head labels can have the same projected tail modulus. Define
+
+\[
+ \alpha_B(x)=\frac{|U_B(x)|}{T_B},\qquad
+ A_B=\mathbb E_\mu\alpha_B^2.
+\]
+
+For a crossing class put `t_(d,B)=gcd(t_d,T_B)` and, when this is greater
+than one, define the remaining cylinder fraction
+
+\[
+ r_{B,d}(x)=\frac{|\{y\bmod T_B:y\equiv a_d\pmod{t_{d,B}}\}
+                    \setminus U_B(x)|}{T_B}
+ \le\frac1{t_{d,B}}.
+\]
+
+For thresholds `0<delta_B<1`, set
+
+\[
+ E=\sum_B\frac{A_B}{\delta_B^2},\qquad
+ J=\sum_{d\text{ crossing}}\mathbb E_\mu
+       \left[h_d\prod_{B:t_{d,B}>1}\frac{r_{B,d}}{1-\delta_B}\right].
+ \tag{BS1}
+\]
+
+**Block criterion.** If `E+J<1`, the system does not cover. A sufficient
+upper bound for `J` is
+
+\[
+ J_{\rm raw}=\sum_{d\text{ crossing}}
+ \frac{\mu(h_d=1)}{t_d\prod_{B:t_{d,B}>1}(1-\delta_B)}.
+ \tag{BS2}
+\]
+
+If there are no crossing classes, the stronger endpoint bound is
+
+\[
+ \mu\{x:\text{the tail fibre at }x\text{ has an uncovered point}\}
+ \ge 1-\sum_B A_B.                                      \tag{BS3}
+\]
+
+**Proof.** On `G={x:alpha_B(x)<=delta_B for every B}`, every local
+complement is nonempty. Markov's inequality and a union bound give
+`mu(G)>=1-E`. For a fixed `x in G`, choose the block coordinates
+independently and uniformly on their respective local complements.
+The conditional probability of a crossing class is exactly
+
+\[
+ h_d(x)\prod_{B:t_{d,B}>1}\frac{r_{B,d}(x)}{1-\alpha_B(x)},
+\]
+
+and is bounded by its integrand in (BS1). Keep `mu` restricted to `G`
+**unnormalized**; the resulting head-and-tail measure has mass at least
+`1-E`. Summing the crossing probabilities leaves uncovered mass at least
+`1-E-J`. CRT realizes an uncovered residue as an integer. The cylinder
+bound and `prod_B t_(d,B)=t_d` prove (BS2).
+
+Without crossing classes, the tail fibre is covered exactly when at least
+one block is saturated. If no block is saturated, choose one point in
+each complement and use CRT. Since `1[alpha_B=1]<=alpha_B^2`, the union
+bound proves (BS3). No assumption on block cardinality was used.
+
+#### Moment bounds preserve the original labels
+
+Let `F_B=sum_(d local to B) h_d/t_d`, let `mathcal T_B` be the set of
+distinct tail parts occurring locally, and set `W_B=sum_(t in mathcal T_B)1/t`.
+The two available moment bounds are
+
+\[
+ A_B\le\sum_{d,e\text{ local to }B}
+       \frac{\mu(h_dh_e=1)}{t_dt_e},\qquad
+ A_B\le\Gamma_Q(\mu)W_B^2.                              \tag{BS4}
+\]
+
+The first follows from `alpha_B<=F_B` and retains incompatible head
+intersections as zero. For the second, fix a tail part `t`. Distinctness
+of the **original** moduli implies at most one class for each head label
+`m` with `mt in D`. Completing the missing head labels to a complete test
+layout shows that `L_t=sum_(mt in D)h_(mt)` satisfies
+`||L_t||_2<=sqrt(Gamma_Q(mu))`. Minkowski applied to
+`F_B=sum_t L_t/t` gives (BS4). In particular,
+
+\[
+ W_B\le\prod_{q\in B}\sum_{e=0}^{v_q(N)}q^{-e}-1
+       <\prod_{q\in B}\left(1+\frac1{q-1}\right)-1.
+ \tag{BS5}
+\]
+
+This is where the existing reciprocal-divisor Euler product enters the
+new criterion. The same divisor coordinates used at 5040 supply `W_B`;
+the squared block loads in (BS4) additionally account for the actual head
+incidences. No two-prime distinct-modulus theorem is applied to a projected
+family with repeated tail moduli. No general tensorization of Gamma is used.
+
+#### Arbitrary three-prime heads with sparse tail interactions
+
+The existing common uniform law on the actual complete `{3,5,7}` head
+survivors satisfies
+
+\[
+ \Gamma_Q(\mu)\le G=\frac{1889}{48},\qquad
+ \sum_{m\mid Q}c_\mu(m)\le C=1+\frac{1649}{360}
+                         =\frac{2009}{360}.             \tag{BS10}
+\]
+
+The Gamma bound is the consequence of (ZG1) displayed after (N9), and the
+nonunit cylinder sum is the common-density bound preceding (P14). Both
+hold for the same uniform law, arbitrary finite heights, arbitrary actual
+head residues, and missing head classes. Unlike the star application,
+no particular head assignment is imposed here.
+
+**Degree-two tail theorem.** Distinct odd moduli cannot cover if every
+prime factor belongs to `{3,5,7}` or is at least 37, and the actual
+interaction graph on primes at least 37 has maximum degree at most two.
+There is no exponent bound or bound on the total number of primes.
+Arbitrarily long path and cycle components, as well as triangles, are allowed.
+
+To prove this, set `a_q=1/(q-1)`, `S=sum_q a_q^2`, and take singleton
+blocks with threshold `delta=2/3`. A tail support must be a clique in the
+interaction graph, so it has size at most three. Triangles are pairwise
+vertex-disjoint components. The degree bound and `a_q<=1/36` give
+
+\[
+ \sum_{\{q,r\}\in\mathcal E}a_qa_r\le S,\qquad
+ \sum_{\{q,r,s\}\text{ triangle}}a_qa_ra_s\le\frac{S}{108}.
+\]
+
+For the first inequality use `2ab<=a^2+b^2` and count vertex degrees.
+For the second, average the three bounds `abc<=(1/36)ab` and use the
+same square inequality within each disjoint triangle. For a fixed tail
+part `t`, distinct original moduli give
+`sum_(d:t_d=t)mu(h_d=1)<=sum_(m|Q)c_mu(m)<=C`. Summing all positive
+prime powers on a fixed support then gives the product of its `a_q`.
+Consequently (BS1)--(BS2) satisfy
+
+\[
+ E+J\le E+J_{\rm raw}
+ \le\frac94 GS+C\left(9S+27\frac{S}{108}\right)
+ =\frac{403681}{2880}S.                                 \tag{BS11}
+\]
+
+The exact prime bound already used above gives
+
+\[
+ S<\frac{4976233}{2000000000}
+     +\sum_{\substack{37\le q\le73\\q\text{ prime}}}
+                 \frac1{(q-1)^2}
+  =\frac{469089312556889868097}{72216234108018000000000},
+\]
+
+so the right side of (BS11) is less than
+`189362442782277858843265057/207982754231091840000000000 < 0.91048 < 1`.
+This proves the theorem using (BS1).
+
+**Three-vertex component theorem.** The lower cutoff can instead be 31
+if every tail interaction component has at most three vertices. Use each
+component as one block; there are no crossing classes. Now `a_q<=1/30`
+and (BS5) gives, for each such component,
+
+\[
+ W_B\le\frac{2791}{2700}\sum_{q\in B}a_q,\qquad
+ W_B^2\le3\left(\frac{2791}{2700}\right)^2
+                    \sum_{q\in B}a_q^2.
+\]
+
+Indeed the pair terms in the three-variable product sum to at most
+`(1/30)sum a_q`, and its triple term to at most
+`(1/(3*30^2))sum a_q`. The same coefficient covers smaller components.
+Using (BS3)--(BS4) and (BS10), the total loss is strictly below
+
+\[
+ 3G\left(\frac{2791}{2700}\right)^2
+ \left(\frac{4976233}{2000000000}
+        +\sum_{\substack{31\le q\le73\\q\text{ prime}}}
+                              \frac1{(q-1)^2}\right)
+ =\frac{8083223933051729599312138630673}{8423301546359219520000000000000}
+ <0.95963<1.                                             \tag{BS12}
+\]
+
+Both statements allow a modulus with all three head primes and all three
+primes of a tail triangle, hence six distinct prime factors. They allow
+arbitrarily many distinct prime factors across the whole family. They are
+not direct specializations of the published at-most-three-factors-per-modulus
+or at-most-eight-total-primes results, or of (P1)'s cutoff 67. They do not
+claim global literature priority.
+
+More generally, for any actual head law with the two bounds `G,C`, a tail
+graph of maximum degree `Delta` and `a_q<=a` satisfies the sufficient criterion
+
+\[
+ S\left[\frac{G}{\delta^2}
+   +C\sum_{k=2}^{\Delta+1}\frac{\binom\Delta{k-1}}{k}
+                    \frac{a^{k-2}}{(1-\delta)^k}\right]<1.
+ \tag{BS13}
+\]
+
+Every tail support is a clique. On a `k`-clique, averaging pairwise products
+gives `prod a_q<=a^(k-2)sum a_q^2/k`; each vertex belongs to at most
+`binom(Delta,k-1)` such cliques. Grouping original labels as above proves
+(BS13), without bounding the number of graph components.
+
+The fixed-constant singleton criterion for degree two cannot reach cutoff
+31 merely by changing its common threshold. Let
+
+\[
+ L=\frac{2363054-529}{10^9}
+       +\sum_{\substack{31\le q\le73\\q\text{ prime}}}\frac1{(q-1)^2}
+    <\sum_{q\ge31,\ q\text{ prime}}\frac1{(q-1)^2}.
+\]
+
+Exact arithmetic gives `GL>(33/50)^3` and `CL>(17/50)^3`. For every
+`0<delta<1`, Hölder's inequality therefore gives
+`GL/delta^2+CL/(1-delta)^2 >= ((GL)^(1/3)+(CL)^(1/3))^3 > 1`, even before
+the nonnegative triangle term. This limits this scalar certificate with
+the constants (BS10); it does not refute noncoverage at cutoff 31 or exclude
+estimates retaining the actual graph and residues. All constants in
+(BS10)--(BS13) and these strict comparisons are checked by the same fixed
+block certificate linked below. The general arguments are ordinary proofs,
+not new Lean declarations.
+
+#### Every positive-height star head admits the required broad law
+
+Take the complete star assignment defined above, now at **arbitrary
+positive heights** `H_p>=1` on any set `P` of odd primes at most 73
+containing 3. This extends the positive result beyond the heights needed
+for the earlier lower-bound refutation; that refutation still uses 31/8.
+Let `Q` be the full prime-power part of `N` at primes at most 73, with
+support exactly `P`, and suppose the actual classes with `d|Q` are this
+star assignment at these full heights. All tail primes are greater than 73.
+
+The same exact survivor decomposition holds, and use only its broad branch
+
+\[
+ R_b=C_3\times\prod_{p\in P\setminus\{3\}}D_p,\qquad
+ \mu_b=\operatorname{Unif}(R_b).
+\]
+
+Its coordinate densities are `s_3=(1-3^(-H_3))/2` and
+`s_p=(p-3+2p^(-H_p))/(p-1)` for `p>=5`; all are positive.
+For every positive exponent, a coordinate cylinder has mass at most
+`p^(-e)/s_p`. Expanding any complete layout square bounds its moment by
+`sum_(m|Q) chi(m)c_mu(m)`: each intersection is empty or a cylinder modulo
+the lcm, and exactly `2e+1` ordered exponent pairs have maximum `e`.
+Factoring these cylinder bounds for the explicitly product law yields
+
+\[
+ \Gamma_Q(\mu_b)\le
+ \prod_{p\in P}\left(1+s_p^{-1}
+                 \sum_{e=1}^{H_p}(2e+1)p^{-e}\right)<K_0<177,
+ \quad K_0=5\prod_{\substack{5\le p\le73\\p\text{ prime}}}
+                   \frac{p^2-p+2}{(p-3)(p-1)}.           \tag{BS6}
+\]
+
+The finite ternary factor is exactly `5-2H_3/(3^(H_3)-1)<5`, since its
+weighted sum is `2-(H_3+2)3^(-H_3)`. For the other coordinates use
+`sum_(e>=1)(2e+1)p^(-e)=(3p-1)/(p-1)^2` and the lower bound on `s_p`.
+All omitted-prime factors exceed one. The unweighted cylinder sum similarly
+satisfies
+
+\[
+ \sum_{m\mid Q}c_{\mu_b}(m)\le C_0<\frac{73}{10},\qquad
+ C_0=2\prod_{\substack{5\le p\le73\\p\text{ prime}}}
+                \frac{p-2}{p-3}.                       \tag{BS7}
+\]
+
+Here the finite ternary factor is exactly 2. These bounds concern the
+specific star law; no bound for arbitrary head assignments is asserted.
+
+#### Matching tails cannot complete a star
+
+The actual tail interaction graph has the primes greater than 73 dividing
+`N` as vertices, and an edge `{q,r}` when an original modulus contains
+both. If this graph is a matching, its components are singleton or pair
+blocks, and every tail class is local to one block. All residues, exponents,
+numbers of tail primes, and head factors within tail moduli remain arbitrary.
+
+Write `a=1/(q-1)`, `b=1/(r-1)`. Since `q,r>=79`, the pair load satisfies
+`W_B<=a+b+ab<=(157/156)(a+b)`. Thus
+`W_B^2<=2(157/156)^2(a^2+b^2)`, with the same upper coefficient valid for
+singletons. The exact prime-tail bound gives
+
+\[
+ \sum_{q>73,\ q\text{ prime}}\frac1{(q-1)^2}<\frac1{400},
+ \qquad \sum_B A_B<177\cdot2\left(\frac{157}{156}\right)^2\frac1{400}
+       =\frac{1454291}{1622400}<\frac9{10}.
+\]
+
+By (BS3), more than `168109/1622400>1/10` of the broad-branch head points
+have an uncovered tail lift. This proves noncoverage of every such star
+extension. The conclusion also survives removal of redundant mixed-zero
+head classes, since that leaves the head survivors unchanged. The numerical
+proportion refers to head points under `mu_b`, not to uniform density in
+the entire period `N`.
+
+#### Every full star completion needs positive mixed-tail capacity
+
+Use singleton blocks for arbitrary tails, and choose every threshold to be
+`3/4`. By (BS4) and (BS6), `E<59/75`. Hence a full cover must satisfy
+
+\[
+ \sum_{\omega(t_d)\ge2}4^{\omega(t_d)}
+      \mathbb E_{\mu_b}\left[h_d\prod_{q\mid t_d}r_{q,d}\right]
+       >\frac{16}{75}.                                 \tag{BS8}
+\]
+
+Replacing each remaining cylinder fraction by `q^(-v_q(t_d))` gives the
+weaker necessary inequality
+`sum_(omega(t_d)>=2)4^(omega(t_d))mu_b(h_d=1)/t_d > 16/75`.
+When every tail part has at most two distinct prime factors, this requires
+`sum_(omega(t_d)=2)mu_b(h_d=1)/t_d > 1/75`. Grouping by tail part and
+using (BS7) then gives the graph-only necessary condition
+
+\[
+ \sum_{\{q,r\}\in\mathcal E}\frac1{(q-1)(r-1)}
+       >\frac{2}{1095}.                                \tag{BS9}
+\]
+
+These are actual-residue constraints, with single-prime tail classes already
+accounted for. They impose no unjustified survival requirement on the
+exceptional ternary branch. In particular, any full star completion must
+have a tail prime with at least two distinct graph neighbours.
+
+#### Exact constants and the remaining unrestricted obligation
+
+The [standard-library verifier](../docs/reports/erdos7-odd-covering/verify_star_block_obstruction.py)
+reconstructs the [fixed rational certificate](../docs/reports/erdos7-odd-covering/star_block_obstruction_certificate.json),
+including `176.921<K_0<176.922`, `C_0<73/10`, and all budget comparisons.
+For the prime tail it sieves to 4000: the 529 primes in `(73,4000]` give
+`sum ceil(10^9/(q-1)^2)=2363054`. Above 4000, overcount by odd integers
+`q=2j+1`, `j>=2000`, and use the decreasing integral bound to obtain
+
+\[
+ \sum_{q>73,\ q\text{ prime}}\frac1{(q-1)^2}
+ \le\frac{2363054}{10^9}+\frac1{16000000}+\frac1{8000}
+ =\frac{4976233}{2000000000}<\frac1{400}.
+\]
+
+The small crossing-budget condition does not follow from star geometry
+alone. Add the 210 classes `0 mod qr` for the 21 primes `79<=q<r<=181`.
+This remains a noncover: use any star head survivor and tail coordinates
+all equal to one. Yet exact arithmetic gives `sum 1/(qr)>14/1000>1/75`.
+There are no single-prime tail classes in this example, so even the actual
+singleton-block crossing budget exceeds the sufficient threshold.
+
+Here the exceeded threshold is the uniform simplified bound `16/75`.
+The full criterion itself still certifies this example: its actual `E=0`
+and `J=16 sum 1/(qr)<1`. The example only excludes imposing the simplified
+small-budget condition on every extension.
+
+For unrestricted #7, one must still handle arbitrary heads and interactions
+between tail blocks. A minimal hypothetical cover with `T>1` has nonempty
+actual head survivors, but this fact supplies neither a controlled head law
+nor small `E+J`. When `T=1`, arbitrary 73-smooth covers must separately be
+excluded. The present block and star results have ordinary mathematical
+proofs and exact numerical certificates; they are not complete Lean theorems.
 
 
 ### Arbitrary-head transfer by the joint-load invariant
@@ -4665,6 +5067,10 @@ uniform four-prime head bound additionally proves the restricted noncoverage
 theorem (P1), allowing arbitrary prime support at or above 67. The star-family
 pointwise layout certificate refutes Γ73 and every displayed universal
 finite-base bound, while leaving the unrestricted conjecture open.
+The block-saturation criterion gives further noncoverage theorems for
+arbitrary `{3,5,7}` heads with sparse tail interactions, and for every
+positive-height star head with matching tails. It also gives the actual
+mixed-tail budgets (BS8)--(BS9) required of any full star completion.
 `TernaryRootLoadTail.root_load_tail_le` formalizes the finite-itinerary
 component of the actual-layout improvement, and
 `TwoRootEventMoment.two_root_event_moment_le` proves the bound for the
@@ -4705,3 +5111,6 @@ mathematical proofs, not complete Lean formalizations. Universal strict conflict
 the star family; the conditional query theorem remains valid. No replacement
 sufficient bound for unrestricted #7 is established here. These finite checks do not
 establish literature priority or an unrestricted proof or covering counterexample.
+The block-saturation criterion, its sparse-graph consequences for arbitrary
+three-prime heads, and its all-positive-height star consequences also have
+ordinary proofs and exact constant certificates, not complete Lean proofs.
