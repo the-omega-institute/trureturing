@@ -86,16 +86,9 @@
       ]
     }
   },
-  "expected_readout_rejection": {
-    "failures": [
-      "accuracy:14:upper"
-    ],
-    "index_bits": 5,
-    "max_supplied_integer_bits": 25,
-    "scalar_comparisons": 321,
-    "states": 29,
-    "valid": false
-  },
+  "expected_readout_rejection": [
+    "accuracy:14:upper"
+  ],
   "initial_prediction_gap": [
     "1",
     "253"

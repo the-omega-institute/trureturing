@@ -41,8 +41,13 @@ The retained results check:
   independent hidden-mass recurrence; the tracker uses the existing scalar
   rational update from its old center.
 - Named rejection of invalid threshold targets and of a corrupted ordinary
-  readout certificate. Successful verifier objects omit `failures`; the
-  expected rejected object has `valid: false` and nonempty failure labels.
+  readout certificate. The corrupted readout must be rejected with exactly
+  `["accuracy:14:upper"]`. After both assertions pass, the successful
+  negative-test summary saves the verifier's actual diagnostic list in
+  `expected_readout_rejection`. The raw verifier response has `valid: false`
+  and a `failures` list; that object is not embedded in the successful summary.
+  Unexpected acceptance or different diagnostics raises before writing a
+  report and exits nonzero. Successful verifier objects omit `failures`.
 
 For `eps=1/1024`, the quantities have distinct meanings:
 

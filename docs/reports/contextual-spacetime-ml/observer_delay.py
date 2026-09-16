@@ -169,8 +169,9 @@ def checks():
     corrupted = copy.deepcopy(old)
     corrupted["states"][old["initial"]]["readout"] = ["0", "1"]
     rejected_certificate = verify(corrupted)
-    require(not rejected_certificate["valid"] and rejected_certificate.get("failures"),
-            "ordinary verifier must name rejected readout")
+    require(not rejected_certificate["valid"], "corrupt readout accepted")
+    require(rejected_certificate.get("failures") == ["accuracy:14:upper"],
+            "corrupt readout diagnostics")
 
     return {
         "valid": True,
@@ -191,7 +192,7 @@ def checks():
                                     "maximum_prediction_error": pair(max_error), "witness": witness,
                                     "scope": "All 29 old intervals, both endpoints, all 64 six-report words."},
         "rejected_inputs": rejected,
-        "expected_readout_rejection": rejected_certificate,
+        "expected_readout_rejection": rejected_certificate["failures"],
     }
 
 
