@@ -1,0 +1,1141 @@
+{
+  "schema": "erdos7-pg1-color-collision-v1",
+  "source_sha256": {
+    "mod3_conditioned_geometry_certificate.json": "9a0e265a456ab133389202abd5ef91ac6826957f74c24b1e8bd055a97cea0a0a"
+  },
+  "parameters": {
+    "prime": 17,
+    "threshold": 8,
+    "delta": "7/15",
+    "base_cylinders": [
+      [
+        3,
+        2
+      ],
+      [
+        5,
+        4
+      ],
+      [
+        7,
+        4
+      ]
+    ],
+    "multipliers": [
+      1,
+      11,
+      13,
+      121,
+      143,
+      169
+    ],
+    "pure_old_classes": [
+      [
+        11,
+        0
+      ],
+      [
+        121,
+        0
+      ],
+      [
+        13,
+        0
+      ],
+      [
+        169,
+        0
+      ]
+    ]
+  },
+  "result": {
+    "source_case": "PG1",
+    "source_base_point_count": 75,
+    "source_base_weight_denominator": 1000000007,
+    "base_pair_intersections": [
+      {
+        "bases": [
+          0,
+          1
+        ],
+        "points": [
+          104,
+          164,
+          194,
+          209,
+          269,
+          299,
+          314
+        ],
+        "mass": "106787589/1000000007",
+        "numerator": 106787589
+      },
+      {
+        "bases": [
+          0,
+          2
+        ],
+        "points": [
+          32,
+          53,
+          137,
+          158,
+          242,
+          263
+        ],
+        "mass": "81877150/1000000007",
+        "numerator": 81877150
+      },
+      {
+        "bases": [
+          1,
+          2
+        ],
+        "points": [
+          109,
+          214
+        ],
+        "mass": "28161457/1000000007",
+        "numerator": 28161457
+      }
+    ],
+    "base_pattern_numerators": {
+      "0": 315298920,
+      "1": 293805988,
+      "2": 110777572,
+      "3": 106787589,
+      "4": 63291331,
+      "5": 81877150,
+      "6": 28161457,
+      "7": 0
+    },
+    "base_triple_mass": "0",
+    "categories11": [
+      {
+        "depth": 0,
+        "representative": 2,
+        "count": 99
+      },
+      {
+        "depth": 1,
+        "representative": 12,
+        "count": 10
+      },
+      {
+        "depth": 2,
+        "representative": 1,
+        "count": 1
+      }
+    ],
+    "categories13": [
+      {
+        "depth": 0,
+        "representative": 2,
+        "count": 143
+      },
+      {
+        "depth": 1,
+        "representative": 14,
+        "count": 12
+      },
+      {
+        "depth": 2,
+        "representative": 1,
+        "count": 1
+      }
+    ],
+    "original_labels": [
+      {
+        "index": 0,
+        "base": 0,
+        "base_modulus": 3,
+        "base_residue": 2,
+        "multiplier": 1,
+        "e11": 0,
+        "e13": 0,
+        "old_modulus": 3,
+        "old_residue": 2,
+        "current_modulus": 51
+      },
+      {
+        "index": 1,
+        "base": 0,
+        "base_modulus": 3,
+        "base_residue": 2,
+        "multiplier": 11,
+        "e11": 1,
+        "e13": 0,
+        "old_modulus": 33,
+        "old_residue": 23,
+        "current_modulus": 561
+      },
+      {
+        "index": 2,
+        "base": 0,
+        "base_modulus": 3,
+        "base_residue": 2,
+        "multiplier": 13,
+        "e11": 0,
+        "e13": 1,
+        "old_modulus": 39,
+        "old_residue": 14,
+        "current_modulus": 663
+      },
+      {
+        "index": 3,
+        "base": 0,
+        "base_modulus": 3,
+        "base_residue": 2,
+        "multiplier": 121,
+        "e11": 2,
+        "e13": 0,
+        "old_modulus": 363,
+        "old_residue": 122,
+        "current_modulus": 6171
+      },
+      {
+        "index": 4,
+        "base": 0,
+        "base_modulus": 3,
+        "base_residue": 2,
+        "multiplier": 143,
+        "e11": 1,
+        "e13": 1,
+        "old_modulus": 429,
+        "old_residue": 287,
+        "current_modulus": 7293
+      },
+      {
+        "index": 5,
+        "base": 0,
+        "base_modulus": 3,
+        "base_residue": 2,
+        "multiplier": 169,
+        "e11": 0,
+        "e13": 2,
+        "old_modulus": 507,
+        "old_residue": 170,
+        "current_modulus": 8619
+      },
+      {
+        "index": 6,
+        "base": 1,
+        "base_modulus": 5,
+        "base_residue": 4,
+        "multiplier": 1,
+        "e11": 0,
+        "e13": 0,
+        "old_modulus": 5,
+        "old_residue": 4,
+        "current_modulus": 85
+      },
+      {
+        "index": 7,
+        "base": 1,
+        "base_modulus": 5,
+        "base_residue": 4,
+        "multiplier": 11,
+        "e11": 1,
+        "e13": 0,
+        "old_modulus": 55,
+        "old_residue": 34,
+        "current_modulus": 935
+      },
+      {
+        "index": 8,
+        "base": 1,
+        "base_modulus": 5,
+        "base_residue": 4,
+        "multiplier": 13,
+        "e11": 0,
+        "e13": 1,
+        "old_modulus": 65,
+        "old_residue": 14,
+        "current_modulus": 1105
+      },
+      {
+        "index": 9,
+        "base": 1,
+        "base_modulus": 5,
+        "base_residue": 4,
+        "multiplier": 121,
+        "e11": 2,
+        "e13": 0,
+        "old_modulus": 605,
+        "old_residue": 364,
+        "current_modulus": 10285
+      },
+      {
+        "index": 10,
+        "base": 1,
+        "base_modulus": 5,
+        "base_residue": 4,
+        "multiplier": 143,
+        "e11": 1,
+        "e13": 1,
+        "old_modulus": 715,
+        "old_residue": 144,
+        "current_modulus": 12155
+      },
+      {
+        "index": 11,
+        "base": 1,
+        "base_modulus": 5,
+        "base_residue": 4,
+        "multiplier": 169,
+        "e11": 0,
+        "e13": 2,
+        "old_modulus": 845,
+        "old_residue": 339,
+        "current_modulus": 14365
+      },
+      {
+        "index": 12,
+        "base": 2,
+        "base_modulus": 7,
+        "base_residue": 4,
+        "multiplier": 1,
+        "e11": 0,
+        "e13": 0,
+        "old_modulus": 7,
+        "old_residue": 4,
+        "current_modulus": 119
+      },
+      {
+        "index": 13,
+        "base": 2,
+        "base_modulus": 7,
+        "base_residue": 4,
+        "multiplier": 11,
+        "e11": 1,
+        "e13": 0,
+        "old_modulus": 77,
+        "old_residue": 67,
+        "current_modulus": 1309
+      },
+      {
+        "index": 14,
+        "base": 2,
+        "base_modulus": 7,
+        "base_residue": 4,
+        "multiplier": 13,
+        "e11": 0,
+        "e13": 1,
+        "old_modulus": 91,
+        "old_residue": 53,
+        "current_modulus": 1547
+      },
+      {
+        "index": 15,
+        "base": 2,
+        "base_modulus": 7,
+        "base_residue": 4,
+        "multiplier": 121,
+        "e11": 2,
+        "e13": 0,
+        "old_modulus": 847,
+        "old_residue": 606,
+        "current_modulus": 14399
+      },
+      {
+        "index": 16,
+        "base": 2,
+        "base_modulus": 7,
+        "base_residue": 4,
+        "multiplier": 143,
+        "e11": 1,
+        "e13": 1,
+        "old_modulus": 1001,
+        "old_residue": 144,
+        "current_modulus": 17017
+      },
+      {
+        "index": 17,
+        "base": 2,
+        "base_modulus": 7,
+        "base_residue": 4,
+        "multiplier": 169,
+        "e11": 0,
+        "e13": 2,
+        "old_modulus": 1183,
+        "old_residue": 508,
+        "current_modulus": 20111
+      }
+    ],
+    "positive_overlap_edges": 153,
+    "overlap_graph": "K18",
+    "chromatic_number": 18,
+    "maximum_row_active_labels": 12,
+    "reduced_source_states": [
+      {
+        "active_labels": [],
+        "mass": "315298920/1000000007"
+      },
+      {
+        "active_labels": [
+          0
+        ],
+        "mass": "2423899401/10000000070"
+      },
+      {
+        "active_labels": [
+          0,
+          1
+        ],
+        "mass": "73451497/3000000021"
+      },
+      {
+        "active_labels": [
+          0,
+          2
+        ],
+        "mass": "1322126946/65000000455"
+      },
+      {
+        "active_labels": [
+          0,
+          1,
+          3
+        ],
+        "mass": "73451497/30000000210"
+      },
+      {
+        "active_labels": [
+          0,
+          1,
+          2,
+          4
+        ],
+        "mass": "293805988/143000001001"
+      },
+      {
+        "active_labels": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "mass": "146902994/715000005005"
+      },
+      {
+        "active_labels": [
+          0,
+          2,
+          5
+        ],
+        "mass": "220354491/130000000910"
+      },
+      {
+        "active_labels": [
+          0,
+          1,
+          2,
+          4,
+          5
+        ],
+        "mass": "73451497/429000003003"
+      },
+      {
+        "active_labels": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mass": "73451497/4290000030030"
+      },
+      {
+        "active_labels": [
+          6
+        ],
+        "mass": "913914969/10000000070"
+      },
+      {
+        "active_labels": [
+          0,
+          6
+        ],
+        "mass": "3523990437/40000000280"
+      },
+      {
+        "active_labels": [
+          6,
+          7
+        ],
+        "mass": "27694393/3000000021"
+      },
+      {
+        "active_labels": [
+          0,
+          1,
+          6,
+          7
+        ],
+        "mass": "35595863/4000000028"
+      },
+      {
+        "active_labels": [
+          6,
+          8
+        ],
+        "mass": "498499074/65000000455"
+      },
+      {
+        "active_labels": [
+          0,
+          2,
+          6,
+          8
+        ],
+        "mass": "961088301/130000000910"
+      },
+      {
+        "active_labels": [
+          6,
+          7,
+          9
+        ],
+        "mass": "27694393/30000000210"
+      },
+      {
+        "active_labels": [
+          0,
+          1,
+          3,
+          6,
+          7,
+          9
+        ],
+        "mass": "35595863/40000000280"
+      },
+      {
+        "active_labels": [
+          6,
+          7,
+          8,
+          10
+        ],
+        "mass": "110777572/143000001001"
+      },
+      {
+        "active_labels": [
+          0,
+          1,
+          2,
+          4,
+          6,
+          7,
+          8,
+          10
+        ],
+        "mass": "106787589/143000001001"
+      },
+      {
+        "active_labels": [
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "mass": "55388786/715000005005"
+      },
+      {
+        "active_labels": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "mass": "106787589/1430000010010"
+      },
+      {
+        "active_labels": [
+          6,
+          8,
+          11
+        ],
+        "mass": "83083179/130000000910"
+      },
+      {
+        "active_labels": [
+          0,
+          2,
+          5,
+          6,
+          8,
+          11
+        ],
+        "mass": "320362767/520000003640"
+      },
+      {
+        "active_labels": [
+          6,
+          7,
+          8,
+          10,
+          11
+        ],
+        "mass": "27694393/429000003003"
+      },
+      {
+        "active_labels": [
+          0,
+          1,
+          2,
+          4,
+          5,
+          6,
+          7,
+          8,
+          10,
+          11
+        ],
+        "mass": "35595863/572000004004"
+      },
+      {
+        "active_labels": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "mass": "27694393/4290000030030"
+      },
+      {
+        "active_labels": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "mass": "35595863/5720000040040"
+      },
+      {
+        "active_labels": [
+          12
+        ],
+        "mass": "2088613923/40000000280"
+      },
+      {
+        "active_labels": [
+          0,
+          12
+        ],
+        "mass": "270194595/4000000028"
+      },
+      {
+        "active_labels": [
+          6,
+          12
+        ],
+        "mass": "929328081/40000000280"
+      },
+      {
+        "active_labels": [
+          12,
+          13
+        ],
+        "mass": "63291331/12000000084"
+      },
+      {
+        "active_labels": [
+          0,
+          1,
+          12,
+          13
+        ],
+        "mass": "40938575/6000000042"
+      },
+      {
+        "active_labels": [
+          6,
+          7,
+          12,
+          13
+        ],
+        "mass": "28161457/12000000084"
+      },
+      {
+        "active_labels": [
+          12,
+          14
+        ],
+        "mass": "569621979/130000000910"
+      },
+      {
+        "active_labels": [
+          0,
+          2,
+          12,
+          14
+        ],
+        "mass": "73689435/13000000091"
+      },
+      {
+        "active_labels": [
+          6,
+          8,
+          12,
+          14
+        ],
+        "mass": "253453113/130000000910"
+      },
+      {
+        "active_labels": [
+          12,
+          13,
+          15
+        ],
+        "mass": "63291331/120000000840"
+      },
+      {
+        "active_labels": [
+          0,
+          1,
+          3,
+          12,
+          13,
+          15
+        ],
+        "mass": "8187715/12000000084"
+      },
+      {
+        "active_labels": [
+          6,
+          7,
+          9,
+          12,
+          13,
+          15
+        ],
+        "mass": "28161457/120000000840"
+      },
+      {
+        "active_labels": [
+          12,
+          13,
+          14,
+          16
+        ],
+        "mass": "63291331/143000001001"
+      },
+      {
+        "active_labels": [
+          0,
+          1,
+          2,
+          4,
+          12,
+          13,
+          14,
+          16
+        ],
+        "mass": "81877150/143000001001"
+      },
+      {
+        "active_labels": [
+          6,
+          7,
+          8,
+          10,
+          12,
+          13,
+          14,
+          16
+        ],
+        "mass": "28161457/143000001001"
+      },
+      {
+        "active_labels": [
+          12,
+          13,
+          14,
+          15,
+          16
+        ],
+        "mass": "63291331/1430000010010"
+      },
+      {
+        "active_labels": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          12,
+          13,
+          14,
+          15,
+          16
+        ],
+        "mass": "8187715/143000001001"
+      },
+      {
+        "active_labels": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          12,
+          13,
+          14,
+          15,
+          16
+        ],
+        "mass": "28161457/1430000010010"
+      },
+      {
+        "active_labels": [
+          12,
+          14,
+          17
+        ],
+        "mass": "189873993/520000003640"
+      },
+      {
+        "active_labels": [
+          0,
+          2,
+          5,
+          12,
+          14,
+          17
+        ],
+        "mass": "24563145/52000000364"
+      },
+      {
+        "active_labels": [
+          6,
+          8,
+          11,
+          12,
+          14,
+          17
+        ],
+        "mass": "84484371/520000003640"
+      },
+      {
+        "active_labels": [
+          12,
+          13,
+          14,
+          16,
+          17
+        ],
+        "mass": "63291331/1716000012012"
+      },
+      {
+        "active_labels": [
+          0,
+          1,
+          2,
+          4,
+          5,
+          12,
+          13,
+          14,
+          16,
+          17
+        ],
+        "mass": "40938575/858000006006"
+      },
+      {
+        "active_labels": [
+          6,
+          7,
+          8,
+          10,
+          11,
+          12,
+          13,
+          14,
+          16,
+          17
+        ],
+        "mass": "28161457/1716000012012"
+      },
+      {
+        "active_labels": [
+          12,
+          13,
+          14,
+          15,
+          16,
+          17
+        ],
+        "mass": "63291331/17160000120120"
+      },
+      {
+        "active_labels": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17
+        ],
+        "mass": "8187715/1716000012012"
+      },
+      {
+        "active_labels": [
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17
+        ],
+        "mass": "28161457/17160000120120"
+      }
+    ],
+    "partition_optimum": {
+      "partition_counts": {
+        "triple": 816,
+        "two-pairs": 9180
+      },
+      "partition_outcomes_sha256": "bc6b739d84be29885d360f65897d71143e79253be21a3d656abeca4a519839d0",
+      "minimum_collision_loss": "28161457/8580000060060",
+      "minimum_assigned_charge_gap": "28161457/73216000512512",
+      "mean_active_labels": "1245009177823/1144000008008",
+      "max_mean_occupied_surviving_roots": "18675081344431/17160000120120",
+      "max_mean_mixed_haar_mass": "18675081344431/291720002042040",
+      "max_mean_conditional_mixed_density": "18675081344431/274560001921920",
+      "ideal_row_union_charge": "12630125917/68640000480480",
+      "maximum_actual_assigned_charge": "201659592817/1098240007687680",
+      "collision_minimizer_count": 1,
+      "charge_minimizer_count": 1,
+      "achiever": {
+        "blocks": [
+          [
+            9,
+            17
+          ],
+          [
+            11,
+            15
+          ]
+        ],
+        "loss_numerator": 56322914,
+        "charge_gap_numerator": 844843710
+      }
+    },
+    "universal_charge_argument": {
+      "nonempty_color_count_patterns": 342,
+      "deep_deficit_triples_checked": 2193,
+      "minimum_deep_pair_event_mass": "28161457/17160000120120",
+      "ideal_deep_pair_charge": "17/32",
+      "charge_after_one_lost_root_upper": "53/128",
+      "universal_assigned_charge_gap": "28161457/73216000512512",
+      "clipped_loss_rule": "min(15*d/128,17/32) >= 15*min(d,2)/128",
+      "all_assignment_reason": "For each non-pure color, the number of active base-pair groups is at most its label count plus one. Across at most16 colors this totals at most34, against36 occurrences; pure-root labels cannot improve the bound."
+    },
+    "literal_actual_achiever": {
+      "old_original_class_count": 15,
+      "total_original_class_count": 34,
+      "old_period": 6441435,
+      "period": 109504395,
+      "old_representative_rows": 675,
+      "literal_current_point_evaluations": 10800,
+      "old_source_denominator": 17160000120120,
+      "old_family": [
+        [
+          3,
+          0
+        ],
+        [
+          9,
+          4
+        ],
+        [
+          5,
+          0
+        ],
+        [
+          15,
+          11
+        ],
+        [
+          45,
+          37
+        ],
+        [
+          7,
+          0
+        ],
+        [
+          21,
+          8
+        ],
+        [
+          35,
+          9
+        ],
+        [
+          63,
+          59
+        ],
+        [
+          105,
+          74
+        ],
+        [
+          315,
+          89
+        ],
+        [
+          11,
+          0
+        ],
+        [
+          121,
+          0
+        ],
+        [
+          13,
+          0
+        ],
+        [
+          169,
+          0
+        ]
+      ],
+      "new_current_family": [
+        [
+          17,
+          0
+        ],
+        [
+          51,
+          20
+        ],
+        [
+          561,
+          89
+        ],
+        [
+          663,
+          209
+        ],
+        [
+          6171,
+          3389
+        ],
+        [
+          7293,
+          6722
+        ],
+        [
+          8619,
+          1691
+        ],
+        [
+          85,
+          9
+        ],
+        [
+          935,
+          639
+        ],
+        [
+          1105,
+          79
+        ],
+        [
+          10285,
+          8229
+        ],
+        [
+          12155,
+          3004
+        ],
+        [
+          14365,
+          11324
+        ],
+        [
+          119,
+          81
+        ],
+        [
+          1309,
+          1068
+        ],
+        [
+          1547,
+          508
+        ],
+        [
+          14399,
+          3147
+        ],
+        [
+          17017,
+          13157
+        ],
+        [
+          20111,
+          2874
+        ]
+      ],
+      "original_cofactor_to_root": {
+        "3": 3,
+        "33": 4,
+        "39": 5,
+        "363": 6,
+        "429": 7,
+        "507": 8,
+        "5": 9,
+        "55": 10,
+        "65": 11,
+        "605": 1,
+        "715": 12,
+        "845": 2,
+        "7": 13,
+        "77": 14,
+        "91": 15,
+        "847": 2,
+        "1001": 16,
+        "1183": 1
+      },
+      "literal_row_values_sha256": "cca89ce8f2e9729b95904658ec18f4aaafefd34900f750331b130c46e8788942",
+      "mean_occupied_roots": "18675081344431/17160000120120",
+      "mean_conditional_mixed_density": "18675081344431/274560001921920",
+      "mean_assigned_charge": "201659592817/1098240007687680"
+    },
+    "partition_reduction": "Translate the unique pure17 root to0. Move every mixed label on it to any surviving root, then split color classes until sixteen roots are used; these operations cannot decrease occupied-root counts or assigned charge on any old row. Every resulting partition has one triple or two disjoint pairs. The9996 possibilities are exhausted.",
+    "scope": "One fixed actual PG1 source times independent pure11/13 survivor laws, and eighteen distinct specified mixed17 original moduli. All current17 forbidden-root assignments are covered. Assigned charge is independent of complete-test prefixes, so its gap remains valid for any tests. No complete-test energy maximum, full Gamma improvement, arbitrary old-layout optimization, or unrestricted covering conclusion is claimed. The finite partition reduction and all-assignment counting argument are ordinary proofs checked by exact arithmetic, not Lean verification."
+  }
+}

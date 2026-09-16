@@ -9374,3 +9374,253 @@ cover every realizable \(V\); a sampled support function gives no
 upper certificate. These formulas give a complete-tail optimization
 framework for a fixed actual family. Uniform maximization over all
 forbidden families with unrestricted old inventories remains unresolved.
+
+### Original-label coloring extends the exact comb reduction
+
+The small total inventory condition in (CS2) has a useful sufficient
+replacement. At each depth \(e\), form the graph on the original
+nonunit old cofactors, joining \(d,d'\) when
+\(\mu(C_{d,e}\cap C_{d',e})>0\). Suppose it has a proper coloring
+with at most \(q\le p-3\) colors. Each coloring is chosen globally
+before sampling the old point; it may vary with depth. Assign its colors
+to the spokes of (CS2), retaining every original modulus \(dp^e\).
+Same-color old cylinders are disjoint almost everywhere, and different
+depths leave the spine at different digits. Thus
+
+\[
+ R_e\le q\quad\mu\text{-a.e.},\qquad
+ b_H=\sum_{e=1}^Hp^{-e}R_e,\qquad
+ \max\mathbb E[fL_H^2+W\beta]
+ =\mathbb E_\mu[f(A_0^2+c_HQ_H)+W\beta_H].             \tag{CC1}
+\]
+
+The coefficients are exactly (CS4). The same union and pair-cap proof
+gives the upper bound for arbitrary alternative current residues;
+the colored comb attains it. The complete test layouts remain independent
+of the forbidden layouts. The construction is a sufficient condition,
+not a characterization of every exact arrangement.
+
+This permits arbitrarily many original labels. On the uniform higher-3
+lift of PG1, the cylinders \(2+3^{a-1}\bmod3^a\),
+\(3\le a\le A\), are positive and pairwise disjoint: for \(a<b\),
+the latter cylinder reduces to \(2\bmod3^a\). They use one color
+for every \(A\). Other old divisors can take cylinders disjoint from
+the old support. Their labels still occur in the complete test domain.
+If \(J\) bounds every complete old test square for that full period,
+(CS9)--(CS10) hold with \(q\) replacing \(K\):
+
+\[
+ E_k=fJ[c_*\varepsilon_k+c_*^2(q+1)a_pt_k]
+       +\frac{Wqt_k}{\lambda_*^2(1-\delta)}.           \tag{CC2}
+\]
+
+This follows from \(R_e\le q\) in each tail estimate. It does not
+replace \(J\) by a bound for only the colored or low-power labels.
+For a supremum over colorable families and \(k\ge1\), repeating any
+already admissible properly colored old forbidden layout preserves
+the domain and supplies the lower truncation bound.
+
+For a palette assignment that is not proper, put
+\(N_{e,j}=\sum_{d:\,\mathrm{color}_e(d)=j}\mathbf1_{C_{d,e}}\),
+\(U_e=\sum_j\mathbf1_{N_{e,j}>0}\), and
+\(D_e=R_e-U_e=\sum_j(N_{e,j}-1)_+\). Its legal comb has actual
+mixed mass \(b_1=\sum_ep^{-e}U_e\), while the counting relaxation
+has \(b_0=\sum_ep^{-e}R_e\). For fixed \(\lambda=\lambda_H\),
+write
+
+\[
+ \ell_< =\min(b_0,\delta\lambda)-\min(b_1,\delta\lambda),\qquad
+ \ell_> =(b_0-\delta\lambda)_+-(b_1-\delta\lambda)_+.
+\]
+
+Their sum is \(b_0-b_1\). Subtracting the actual cost from the
+counting-relaxation cost gives exactly
+
+\[
+ \mathbb E_\mu\left[
+ \frac{fQ_H\ell_<}
+ {(\lambda-\min(b_0,\delta\lambda))
+  (\lambda-\min(b_1,\delta\lambda))}
+ +\frac{W\ell_>}{\lambda(1-\delta)}\right].          \tag{CC3}
+\]
+
+This is an identity for that assigned comb, not an assertion that it
+maximizes the unrestricted current-prefix problem. It locates losses
+below and above the clipping threshold on the same actual old rows.
+
+### A genuine seventeen-step collision with an exact charge correction
+
+Use PG1 with denominator \(D=1000000007\), and independently uniform
+coordinates modulo \(121\) and \(169\) conditional on nonzero
+roots modulo \(11\) and \(13\). This is an actual old law for the
+eleven PG1 classes and the four pure zero classes modulo
+\(11,121,13,169\); its old period is \(6441435\).
+The old cylinders
+\(C_3=(2\bmod3),C_5=(4\bmod5),C_7=(4\bmod7)\)
+have empty triple intersection on this support and pair masses
+
+\[
+ \mu_0(C_3\cap C_5)=\frac{106787589}{D},\qquad
+ \mu_0(C_3\cap C_7)=\frac{81877150}{D},\qquad
+ \mu_0(C_5\cap C_7)=\frac{28161457}{D}.                \tag{CC4}
+\]
+
+For each \(d\in\{3,5,7\}\) and
+\(t\in\{1,11,13,121,143,169\}\), retain the original
+cofactor \(dt\), with old condition \(C_d\) and residue \(1\)
+modulo \(t\). These eighteen old events form \(K_{18}\), although
+no old point activates more than twelve of them. Add pure zero modulo
+\(17\) and one class of each original modulus \(17dt\), with
+arbitrary current roots. This is a family of thirty-four distinct odd
+moduli, with period \(109504395\). The sixteen surviving current
+roots cannot make all eighteen labels pairwise disjoint on old support.
+
+Let \(E_{ij}\) require \(C_i\cap C_j\) and the common deep slice
+\(z_{11}=1\bmod121,z_{13}=1\bmod169\). These three events are
+disjoint and each has mass at least
+\(m=28161457/(17160D)\). If \(S_i\) is the set of nonpure
+roots assigned to the six labels in group \(i\), set
+\(d_{ij}=12-|S_i\cup S_j|\). With
+\(D_i=6-|S_i|\), inclusion-exclusion gives
+
+\[
+ \sum_{i<j}d_{ij}=2\sum_iD_i+\sum_{i<j}|S_i\cap S_j|
+ \ge18-\left|\bigcup_i S_i\right|\ge2.
+\]
+
+This also permits repeated roots within a group or assignments to the
+deleted pure root. At \(\delta=7/15\), the ideal row charge on
+\(E_{ij}\) is \(17/32\), and losing \(d_{ij}\) roots reduces
+it by \(\min(15d_{ij},68)/128\). These are nonnegative integer
+deficits whose sum is at least two; consequently their three charge
+reductions sum to at least \(30/128\). Every current-root assignment
+therefore satisfies
+
+\[
+ \mathbb E\beta_{\rm actual}
+ \le\mathbb E\beta_{\rm count}-\Delta,\qquad
+ \Delta=\frac{15m}{64}
+       =\frac{28161457}{73216000512512}.              \tag{CC5}
+\]
+
+The bound is attained. Give one shared root to the pair
+\((5\cdot121,7\cdot169)\), another to
+\((5\cdot169,7\cdot121)\), and distinct roots to the other
+fourteen labels. Only \(E_{57}\) loses roots, exactly two there.
+The resulting exact maximum charge is
+\(201659592817/1098240007687680\), compared with the counting
+upper value \(12630125917/68640000480480\).
+
+The minimum mean union-count loss is exactly \(2m\). To see the
+lower bound, move pure-root labels to surviving roots and split groups
+until sixteen roots are occupied; neither operation decreases any
+row's union. A partition of eighteen labels into sixteen nonempty
+groups has one triple or two disjoint pairs. Each pair intersection
+has mass at least \(m\); a triple contributes its three pair masses
+minus its triple mass, hence at least \(2m\). The displayed two
+pairs attain that loss. There are precisely \(816+9180=9996\)
+such partitions, all included in the exact verifier.
+
+For this fixed inventory and these fixed old cylinders, \(W\Delta\)
+may be subtracted from the union/cap joint upper functional for every
+test and every \(f,W\ge0\). Optimal charge does not assert optimal
+test square. Every row has density at most \(3/4\), so a pointwise
+near-full-union overlap correction requiring density greater than
+\(15/16\) detects none of this gain.
+
+The graph alone supplies no positive height-uniform gap. For
+\(N\ge0\), replace every multiplier \(t\) by \(11^Nt\),
+preserving its compatible residue \(1\). Keep the fifteen old
+forbidden classes and lift the old law uniformly through height
+\(N+2\) at \(11\). The actual full period is now
+\(315\cdot11^{N+2}\cdot13^2\cdot17\). The graph is still
+\(K_{18}\), the maximum row activity is still twelve, and the
+same two pairs attain
+
+\[
+ \min\mathbb E(R-U)=2m\,11^{-N},\qquad
+ \min\mathbb E(\beta_{\rm count}-\beta_{\rm actual})
+       =\Delta\,11^{-N}.                            \tag{CC6}
+\]
+
+Indeed the three common deep pair events now require
+\(z_{11}=1\bmod11^{N+2}\); their masses scale by \(11^{-N}\).
+Every pair intersection still has mass at least \(m11^{-N}\),
+and the two chosen pairs intersect only on the smallest deep event.
+The preceding lower and upper constructions apply unchanged. This
+does not say that all other intersection masses scale equally.
+Thus class count, row activity and unweighted overlap graph leave a
+genuine quantitative gap: the intersection masses must be retained.
+
+`verify_pg1_color_collision.py` checks the adjacent certificate with
+exact arithmetic: all9996 partitions,55 reduced source states,
+675 weighted old CRT representatives and10800 literal current-point
+checks. It reconstructs the same actual probability, original residues
+and normalized kernels. The coloring extension and (CC6) are ordinary
+arguments above; the certificate covers the \(N=0\) instance.
+
+### Repeating one diagonal old layout does not maximize the joint cost
+
+Even within the low315 comb domain, identifying the forbidden and
+test layouts loses possibilities. Fix \(p=17,T=8,f=59/45,W=483\),
+and let \(A,C\) be independent complete old twelve-label loads,
+each repeated at every current depth; \(C\) includes the unit term.
+The limit of (CS6) is
+
+\[
+ \Phi(A,C)=\mathbb E_\mu\left[
+ \frac{59}{45}\left(1+\frac{25}{128}
+             \frac{16}{16-\min(C,8)}\right)A^2
+ +\frac{483}{8}(C-8)_+\right].                      \tag{JL1}
+\]
+
+The existing complete twelve-label oracle enumerates every independent
+old residue choice for a common load \(B\), not only coherent centers.
+Round each whole weighted point cost upward at scale32768 and apply
+that oracle. It gives the rigorous bound
+
+\[
+ \max_B\Phi(B,B)\le
+ \frac{746858239119517}{32768000229376}
+ =22.792304501083659\ldots.                           \tag{JL2}
+\]
+
+The maximum's rounding gap is less than
+\(75/32768000229376\). This also bounds every finite-height
+family with one such repeated common old layout and arbitrary current
+prefixes. In fact \(s_H\le1/16\) and
+\(a_H=\sum_{e=1}^H(2e+1)17^{-e}\le25/128\).
+Both denominator branches of
+\(c_H(B)=1/\max\{1-Bs_H,(1-s_H)8/15\}\) decrease with
+\(s_H\), while \((B-1)s_H/(1-s_H)\) increases. They are
+positive for \(1\le B\le12\). Thus the finite joint cost is
+at most (JL1) with \(A=C=B\), and (CS6) covers arbitrary current
+prefix choices for those old layouts.
+
+Now choose the forbidden old center257 and test old center47:
+\(C(x)=\sum_{d\mid315}\mathbf1_{x=257\bmod d}\) and
+\(A(x)=\sum_{d\mid315}\mathbf1_{x=47\bmod d}\).
+The actual height-three comb has47 distinct forbidden moduli,
+48 complete test labels and period1547595. Its exact joint cost is
+
+\[
+ \frac{3843229007141107789887039465169}
+      {168205257902111866972725489300}
+ =22.848447516294048\ldots>\max_B\Phi(B,B).           \tag{JL3}
+\]
+
+Its limit is \(74868660065651/3276000022932\); the full
+omitted tail difference is
+\(440164771212699691855269553/84102628951055933486362744650\).
+`verify_pg1_joint_layout_gap.py` reconstructs the directed full-domain
+upper bound and all345450 supported CRT/kernel point evaluations for
+the finite witness. Both the forbidden and test tails are retained.
+
+This refutes domination by a single repeated diagonal old layout.
+It does not compare against the larger class of common layouts
+\(A_e=C_e\) varying independently with depth, nor optimize arbitrary
+higher old powers or the later-prime continuation. Together with
+(CC5)--(CC6), it identifies actual joint information required by the
+next bound; no new global \(\Gamma\) improvement or unrestricted
+noncoverage theorem follows. These are ordinary mathematical arguments
+and exact experimental certificates, not new Lean conclusions.

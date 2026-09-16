@@ -764,6 +764,15 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Actual eighteen-label overlap graph, exact collision charge and original-root achiever.
+pattern = "docs/reports/erdos7-odd-covering/pg1_color_collision_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]] # Actual all-height comb sharpness, independent-depth layouts and exact truncation checks.
 pattern = "docs/reports/erdos7-odd-covering/pg1_comb_sharpness_certificate.json"
 kind = "data"
@@ -811,6 +820,15 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 [[files]] # Joint low/high deletion costs, retained support transports and exact carrier overlap.
 pattern = "docs/reports/erdos7-odd-covering/pg1_joint_carrier_transfer_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Complete repeated-diagonal upper bound and actual finite off-diagonal counterexample.
+pattern = "docs/reports/erdos7-odd-covering/pg1_joint_layout_gap_certificate.json"
 kind = "data"
 admission_plane = "content"
 produced_by = "none"
@@ -1313,6 +1331,15 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Replays all original-label color partitions and the actual CRT collision-charge achiever.
+pattern = "docs/reports/erdos7-odd-covering/verify_pg1_color_collision.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]] # Replays original CRT comb witnesses, actual kernel sums and complete-tail error bounds.
 pattern = "docs/reports/erdos7-odd-covering/verify_pg1_comb_sharpness.py"
 kind = "program"
@@ -1360,6 +1387,15 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 [[files]] # Checks joint deletion, original-label support transport and new carrier coverage.
 pattern = "docs/reports/erdos7-odd-covering/verify_pg1_joint_carrier_transfer.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Recomputes the complete diagonal majorant and finite joint-layout CRT counterexample.
+pattern = "docs/reports/erdos7-odd-covering/verify_pg1_joint_layout_gap.py"
 kind = "program"
 admission_plane = "content"
 produced_by = "none"

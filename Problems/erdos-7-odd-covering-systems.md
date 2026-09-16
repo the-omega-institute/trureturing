@@ -258,6 +258,29 @@ tests are truncated in that result; uniform optimization over unrestricted
 forbidden families remains unresolved. These are ordinary arguments and
 exact experimental checks, not new Lean conclusions or a solution of #7.
 
+The [original-label coloring extension](../docs/reports/erdos7-odd-covering/marked_head_profile.md#original-label-coloring-extends-the-exact-comb-reduction)
+replaces the small total inventory requirement by a proper coloring of
+each actual old overlap graph with at most `p-3` colors. This can retain
+arbitrarily many original labels; the complete-test bound must still
+cover the entire old period. Row activity alone cannot replace a global
+coloring: an actual34-class PG1/11/13/17 family has overlap graph `K18`
+and at most12 simultaneously active mixed labels, but only16 nonpure
+current roots. Its [exact maximal assigned charge](../docs/reports/erdos7-odd-covering/marked_head_profile.md#a-genuine-seventeen-step-collision-with-an-exact-charge-correction)
+is below the counting relaxation by `28161457/73216000512512`.
+This correction holds for every17-root assignment and every test for
+those fixed old cylinders. Moving them to higher11 powers preserves
+the graph and row maximum but scales the exact gap by `11^(-N)`;
+no positive height-uniform gain follows from those unweighted features.
+
+A separate [finite joint-layout counterexample](../docs/reports/erdos7-odd-covering/marked_head_profile.md#repeating-one-diagonal-old-layout-does-not-maximize-the-joint-cost)
+refutes identifying one repeated forbidden old layout with the repeated
+test layout. At17/8 and cost weights59/45,483, the complete repeated
+diagonal limit is at most22.792304501084, while an actual height-three
+47-class family with independent old centers reaches22.848447516294.
+The comparison does not cover common layouts varying with depth.
+These results preserve one actual probability and original moduli;
+they give no new global Gamma bound or unrestricted #7 conclusion.
+
 A [complete original-low-test estimate](../docs/reports/erdos7-odd-covering/marked_head_profile.md#complete-original-low-test-anchoring-at-arbitrary-prime-power-heights)
 retains the entire low load `B` in its higher-label cross terms and
 removed energy. The general inequalities apply to every finite set of

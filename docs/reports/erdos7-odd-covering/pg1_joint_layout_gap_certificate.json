@@ -1,0 +1,961 @@
+{
+  "schema": "erdos7-pg1-joint-layout-gap-v1",
+  "source_sha256": {
+    "mod3_conditioned_geometry_certificate.json": "9a0e265a456ab133389202abd5ef91ac6826957f74c24b1e8bd055a97cea0a0a"
+  },
+  "parameters": {
+    "old_period": 315,
+    "prime": 17,
+    "threshold": 8,
+    "delta": "7/15",
+    "energy_weight": "59/45",
+    "charge_weight": "483",
+    "height": 3,
+    "forbidden_center": 257,
+    "test_center": 47,
+    "rounding_scale": 32768
+  },
+  "result": {
+    "scope": "Refutes Phi(A,C)<=max_B Phi(B,B) for one complete old layout repeated at every current-prime depth. The diagonal maximum includes all independent twelve original old residues. No conclusion for independently varying common layouts A_e=C_e, higher old357 powers, later-prime iteration or unrestricted #7.",
+    "objective": "E_mu[(59/45)*(1+(25/128)*16/(16-min(C,8)))*A^2+(483/8)*(C-8)_+]; includes the old square baseline",
+    "rounding_rule": "ceil(scale*source_weight_numerator*point_cost)/(scale*source_weight_denominator)",
+    "diagonal_oracle": {
+      "scope": "exact maximum of the supplied point-score table over the original twelve low labels on PG1; no quantification over outer auxiliary profiles or heights",
+      "source_sha256": "9a0e265a456ab133389202abd5ef91ac6826957f74c24b1e8bd055a97cea0a0a",
+      "domain_sha256": "67a11b0d0a27861a1445ac451c659e6a5e6c8d3f1cca68a9709eaaa0995c2d5c",
+      "score_sha256": "22b429d562d858d935e8c4962eed0434ec2776fee5b2e9ab7f25c198970d4007",
+      "old_A_count": 11808,
+      "old_subset_state_count": 3024,
+      "score_abs_bound": 16516710515617006,
+      "int64_guard": "4*score_abs_bound < 2^61",
+      "maximum_numerator": 746858239119517,
+      "denominator": 32768000229376,
+      "maximum": "746858239119517/32768000229376",
+      "common_digit_maximum_numerator": 746858239119517,
+      "common_digit_maximum": "746858239119517/32768000229376",
+      "common_maximizing_A_index": 4295,
+      "maximizing_A_index": 4295,
+      "old_points": [
+        1,
+        2,
+        7,
+        8,
+        14,
+        16,
+        17,
+        19,
+        23,
+        28,
+        29,
+        32,
+        34,
+        38,
+        43,
+        44
+      ],
+      "maximizing_A": [
+        1,
+        4,
+        2,
+        2,
+        3,
+        1,
+        4,
+        1,
+        3,
+        1,
+        2,
+        6,
+        1,
+        2,
+        1,
+        2
+      ],
+      "old_residues": [
+        0,
+        2,
+        2,
+        5,
+        2,
+        32
+      ],
+      "twelve_labels": [
+        {
+          "modulus": 1,
+          "residue": 0
+        },
+        {
+          "modulus": 3,
+          "residue": 2
+        },
+        {
+          "modulus": 5,
+          "residue": 2
+        },
+        {
+          "modulus": 9,
+          "residue": 5
+        },
+        {
+          "modulus": 15,
+          "residue": 2
+        },
+        {
+          "modulus": 45,
+          "residue": 32
+        },
+        {
+          "cofactor": 1,
+          "modulus": 7,
+          "old_residue": 0,
+          "digit": 5,
+          "residue": 5
+        },
+        {
+          "cofactor": 3,
+          "modulus": 21,
+          "old_residue": 2,
+          "digit": 5,
+          "residue": 5
+        },
+        {
+          "cofactor": 5,
+          "modulus": 35,
+          "old_residue": 2,
+          "digit": 5,
+          "residue": 12
+        },
+        {
+          "cofactor": 9,
+          "modulus": 63,
+          "old_residue": 5,
+          "digit": 5,
+          "residue": 5
+        },
+        {
+          "cofactor": 15,
+          "modulus": 105,
+          "old_residue": 2,
+          "digit": 5,
+          "residue": 47
+        },
+        {
+          "cofactor": 45,
+          "modulus": 315,
+          "old_residue": 32,
+          "digit": 5,
+          "residue": 257
+        }
+      ],
+      "digit_partition": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        63,
+        0
+      ],
+      "points": [
+        1,
+        2,
+        16,
+        17,
+        19,
+        23,
+        32,
+        34,
+        38,
+        43,
+        46,
+        47,
+        52,
+        53,
+        61,
+        62,
+        64,
+        68,
+        73,
+        83,
+        88,
+        97,
+        104,
+        106,
+        107,
+        109,
+        118,
+        124,
+        128,
+        136,
+        137,
+        142,
+        143,
+        151,
+        152,
+        158,
+        163,
+        164,
+        167,
+        169,
+        173,
+        178,
+        181,
+        187,
+        188,
+        194,
+        199,
+        208,
+        209,
+        212,
+        214,
+        223,
+        226,
+        227,
+        232,
+        233,
+        241,
+        242,
+        244,
+        253,
+        257,
+        263,
+        268,
+        269,
+        271,
+        272,
+        277,
+        278,
+        286,
+        293,
+        298,
+        299,
+        304,
+        313,
+        314
+      ],
+      "B_loads": [
+        1,
+        4,
+        1,
+        4,
+        2,
+        3,
+        6,
+        1,
+        2,
+        1,
+        1,
+        8,
+        2,
+        2,
+        2,
+        4,
+        1,
+        6,
+        1,
+        2,
+        1,
+        2,
+        3,
+        1,
+        4,
+        1,
+        1,
+        2,
+        2,
+        1,
+        4,
+        2,
+        2,
+        1,
+        8,
+        3,
+        1,
+        2,
+        6,
+        1,
+        4,
+        1,
+        1,
+        4,
+        2,
+        6,
+        1,
+        2,
+        2,
+        6,
+        1,
+        1,
+        1,
+        4,
+        2,
+        2,
+        1,
+        4,
+        1,
+        1,
+        12,
+        2,
+        1,
+        2,
+        2,
+        4,
+        2,
+        4,
+        1,
+        3,
+        1,
+        4,
+        1,
+        2,
+        2
+      ],
+      "python_comparisons": []
+    },
+    "diagonal_exact_winning_witness": "64000791487045/2808000019656",
+    "diagonal_directed_upper": "746858239119517/32768000229376",
+    "strict_rounding_error_bound": "75/32768000229376",
+    "finite_to_limit": {
+      "s_infinity": "1/16",
+      "a_infinity": "25/128",
+      "all_height_reason": "For 1<=B<=12, both positive cap denominator branches decrease with s, and alpha=(B-1)*s/(1-s) increases. Thus s_H<=s_infinity and a_H<=a_infinity imply f*(1+a_H*c_H)*B^2+W*beta_H<=Phi_point(B,B).",
+      "load_endpoint_checks": [
+        {
+          "B": 1,
+          "first_denominator_decrease_rate": 1,
+          "second_denominator_decrease_rate": "8/15",
+          "alpha_derivative_numerator": 0,
+          "first_denominator_endpoint": "15/16",
+          "second_denominator_endpoint": "1/2",
+          "limit_cap": "16/15",
+          "limit_charge": "0"
+        },
+        {
+          "B": 2,
+          "first_denominator_decrease_rate": 2,
+          "second_denominator_decrease_rate": "8/15",
+          "alpha_derivative_numerator": 1,
+          "first_denominator_endpoint": "7/8",
+          "second_denominator_endpoint": "1/2",
+          "limit_cap": "8/7",
+          "limit_charge": "0"
+        },
+        {
+          "B": 3,
+          "first_denominator_decrease_rate": 3,
+          "second_denominator_decrease_rate": "8/15",
+          "alpha_derivative_numerator": 2,
+          "first_denominator_endpoint": "13/16",
+          "second_denominator_endpoint": "1/2",
+          "limit_cap": "16/13",
+          "limit_charge": "0"
+        },
+        {
+          "B": 4,
+          "first_denominator_decrease_rate": 4,
+          "second_denominator_decrease_rate": "8/15",
+          "alpha_derivative_numerator": 3,
+          "first_denominator_endpoint": "3/4",
+          "second_denominator_endpoint": "1/2",
+          "limit_cap": "4/3",
+          "limit_charge": "0"
+        },
+        {
+          "B": 5,
+          "first_denominator_decrease_rate": 5,
+          "second_denominator_decrease_rate": "8/15",
+          "alpha_derivative_numerator": 4,
+          "first_denominator_endpoint": "11/16",
+          "second_denominator_endpoint": "1/2",
+          "limit_cap": "16/11",
+          "limit_charge": "0"
+        },
+        {
+          "B": 6,
+          "first_denominator_decrease_rate": 6,
+          "second_denominator_decrease_rate": "8/15",
+          "alpha_derivative_numerator": 5,
+          "first_denominator_endpoint": "5/8",
+          "second_denominator_endpoint": "1/2",
+          "limit_cap": "8/5",
+          "limit_charge": "0"
+        },
+        {
+          "B": 7,
+          "first_denominator_decrease_rate": 7,
+          "second_denominator_decrease_rate": "8/15",
+          "alpha_derivative_numerator": 6,
+          "first_denominator_endpoint": "9/16",
+          "second_denominator_endpoint": "1/2",
+          "limit_cap": "16/9",
+          "limit_charge": "0"
+        },
+        {
+          "B": 8,
+          "first_denominator_decrease_rate": 8,
+          "second_denominator_decrease_rate": "8/15",
+          "alpha_derivative_numerator": 7,
+          "first_denominator_endpoint": "1/2",
+          "second_denominator_endpoint": "1/2",
+          "limit_cap": "2",
+          "limit_charge": "0"
+        },
+        {
+          "B": 9,
+          "first_denominator_decrease_rate": 9,
+          "second_denominator_decrease_rate": "8/15",
+          "alpha_derivative_numerator": 8,
+          "first_denominator_endpoint": "7/16",
+          "second_denominator_endpoint": "1/2",
+          "limit_cap": "2",
+          "limit_charge": "1/8"
+        },
+        {
+          "B": 10,
+          "first_denominator_decrease_rate": 10,
+          "second_denominator_decrease_rate": "8/15",
+          "alpha_derivative_numerator": 9,
+          "first_denominator_endpoint": "3/8",
+          "second_denominator_endpoint": "1/2",
+          "limit_cap": "2",
+          "limit_charge": "1/4"
+        },
+        {
+          "B": 11,
+          "first_denominator_decrease_rate": 11,
+          "second_denominator_decrease_rate": "8/15",
+          "alpha_derivative_numerator": 10,
+          "first_denominator_endpoint": "5/16",
+          "second_denominator_endpoint": "1/2",
+          "limit_cap": "2",
+          "limit_charge": "3/8"
+        },
+        {
+          "B": 12,
+          "first_denominator_decrease_rate": 12,
+          "second_denominator_decrease_rate": "8/15",
+          "alpha_derivative_numerator": 11,
+          "first_denominator_endpoint": "1/4",
+          "second_denominator_endpoint": "1/2",
+          "limit_cap": "2",
+          "limit_charge": "1/2"
+        }
+      ]
+    },
+    "off_diagonal": {
+      "old_forbidden_layout": [
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          5,
+          2
+        ],
+        [
+          7,
+          5
+        ],
+        [
+          9,
+          5
+        ],
+        [
+          15,
+          2
+        ],
+        [
+          21,
+          5
+        ],
+        [
+          35,
+          12
+        ],
+        [
+          45,
+          32
+        ],
+        [
+          63,
+          5
+        ],
+        [
+          105,
+          47
+        ],
+        [
+          315,
+          257
+        ]
+      ],
+      "old_test_layout": [
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          5,
+          2
+        ],
+        [
+          7,
+          5
+        ],
+        [
+          9,
+          2
+        ],
+        [
+          15,
+          2
+        ],
+        [
+          21,
+          5
+        ],
+        [
+          35,
+          12
+        ],
+        [
+          45,
+          2
+        ],
+        [
+          63,
+          47
+        ],
+        [
+          105,
+          47
+        ],
+        [
+          315,
+          47
+        ]
+      ],
+      "limit_cost": "74868660065651/3276000022932",
+      "finite_cost": "3843229007141107789887039465169/168205257902111866972725489300",
+      "finite_minus_diagonal_upper": "77361564490675459584903191354873/1377937472734100414240567208345600",
+      "limit_minus_diagonal_upper": "1647165418928569/26836992187858944",
+      "complete_limit_minus_finite_gap": "440164771212699691855269553/84102628951055933486362744650",
+      "omitted_prefix_sum": "1/78608",
+      "omitted_pair_energy_sum": "73/628864",
+      "finite_prefix_sum": "307/4913",
+      "finite_pair_energy_sum": "959/4913",
+      "pure_survivor_haar_mass": "4606/4913",
+      "period": 1547595,
+      "original_class_count": 47,
+      "complete_test_count": 48,
+      "original_forbidden_family": [
+        [
+          3,
+          0
+        ],
+        [
+          9,
+          4
+        ],
+        [
+          5,
+          0
+        ],
+        [
+          15,
+          11
+        ],
+        [
+          45,
+          37
+        ],
+        [
+          7,
+          0
+        ],
+        [
+          21,
+          8
+        ],
+        [
+          35,
+          9
+        ],
+        [
+          63,
+          59
+        ],
+        [
+          105,
+          74
+        ],
+        [
+          315,
+          89
+        ],
+        [
+          17,
+          0
+        ],
+        [
+          289,
+          15
+        ],
+        [
+          4913,
+          270
+        ],
+        [
+          51,
+          35
+        ],
+        [
+          85,
+          2
+        ],
+        [
+          119,
+          54
+        ],
+        [
+          153,
+          140
+        ],
+        [
+          255,
+          107
+        ],
+        [
+          357,
+          278
+        ],
+        [
+          595,
+          432
+        ],
+        [
+          765,
+          212
+        ],
+        [
+          1071,
+          383
+        ],
+        [
+          1785,
+          1727
+        ],
+        [
+          5355,
+          572
+        ],
+        [
+          867,
+          32
+        ],
+        [
+          1445,
+          627
+        ],
+        [
+          2023,
+          355
+        ],
+        [
+          2601,
+          950
+        ],
+        [
+          4335,
+          3857
+        ],
+        [
+          6069,
+          4163
+        ],
+        [
+          10115,
+          712
+        ],
+        [
+          13005,
+          9977
+        ],
+        [
+          18207,
+          18086
+        ],
+        [
+          30345,
+          22727
+        ],
+        [
+          91035,
+          3092
+        ],
+        [
+          14739,
+          10385
+        ],
+        [
+          24565,
+          15587
+        ],
+        [
+          34391,
+          25702
+        ],
+        [
+          44217,
+          40730
+        ],
+        [
+          73695,
+          45932
+        ],
+        [
+          103173,
+          21656
+        ],
+        [
+          171955,
+          66162
+        ],
+        [
+          221085,
+          149972
+        ],
+        [
+          309519,
+          155174
+        ],
+        [
+          515865,
+          440417
+        ],
+        [
+          1547595,
+          1138352
+        ]
+      ],
+      "complete_test_labels": [
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          5,
+          2
+        ],
+        [
+          7,
+          5
+        ],
+        [
+          9,
+          2
+        ],
+        [
+          15,
+          2
+        ],
+        [
+          21,
+          5
+        ],
+        [
+          35,
+          12
+        ],
+        [
+          45,
+          2
+        ],
+        [
+          63,
+          47
+        ],
+        [
+          105,
+          47
+        ],
+        [
+          315,
+          47
+        ],
+        [
+          17,
+          16
+        ],
+        [
+          51,
+          50
+        ],
+        [
+          85,
+          67
+        ],
+        [
+          119,
+          33
+        ],
+        [
+          153,
+          101
+        ],
+        [
+          255,
+          152
+        ],
+        [
+          357,
+          152
+        ],
+        [
+          595,
+          152
+        ],
+        [
+          765,
+          407
+        ],
+        [
+          1071,
+          866
+        ],
+        [
+          1785,
+          152
+        ],
+        [
+          5355,
+          1937
+        ],
+        [
+          289,
+          16
+        ],
+        [
+          867,
+          305
+        ],
+        [
+          1445,
+          1172
+        ],
+        [
+          2023,
+          1461
+        ],
+        [
+          2601,
+          1172
+        ],
+        [
+          4335,
+          1172
+        ],
+        [
+          6069,
+          5507
+        ],
+        [
+          10115,
+          5507
+        ],
+        [
+          13005,
+          1172
+        ],
+        [
+          18207,
+          11576
+        ],
+        [
+          30345,
+          5507
+        ],
+        [
+          91035,
+          66197
+        ],
+        [
+          4913,
+          16
+        ],
+        [
+          14739,
+          9842
+        ],
+        [
+          24565,
+          9842
+        ],
+        [
+          34391,
+          19668
+        ],
+        [
+          44217,
+          24581
+        ],
+        [
+          73695,
+          9842
+        ],
+        [
+          103173,
+          54059
+        ],
+        [
+          171955,
+          157232
+        ],
+        [
+          221085,
+          157232
+        ],
+        [
+          309519,
+          157232
+        ],
+        [
+          515865,
+          157232
+        ],
+        [
+          1547595,
+          157232
+        ]
+      ],
+      "disjoint_prefix_pairs_checked": 630,
+      "row_values_sha256": "39c0f7adc1078d9b6743ffc6f2bb9412354f12552f038b9d4b4cac49ec034970",
+      "literal_check": {
+        "variant": "comb",
+        "period": 1547595,
+        "literal_supported_points": 345450,
+        "pure_survivor_haar_mass": "4606/4913",
+        "original_class_count": 47,
+        "strict_square_rows": 0,
+        "strict_charge_rows": 0,
+        "extra_square_bad_overlap": "0",
+        "row_values_sha256": "788f9a47f3c914c7dcc93d959bf86ed51c9d4196f16154a61eaba0bd5f3def1e",
+        "square": "27549188321029980801105064633/1868947310023465188585838770",
+        "charge": "67173883101/9212000064484",
+        "weighted_cost": "3843229007141107789887039465169/168205257902111866972725489300"
+      }
+    }
+  }
+}
