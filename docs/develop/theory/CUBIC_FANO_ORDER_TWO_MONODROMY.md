@@ -275,7 +275,7 @@ L_X=X\otimes1+1\otimes X,
 
 **证明。** 在 V⊗V 上用反对称投影 P=(1-τ)/2 计算迹。
 利用 tr(A⊗B)=tr(A)tr(B) 和 tr(τ(A⊗B))=tr(AB)。
-辛李代数元素迹为零，于是两因子公式为 (n-3)tr(XYZ)-tr(XZY) 的三因子对应计算给出下式，而两因子为 (n-2)tr(XY)：
+辛李代数元素迹为零，于是两因子公式为 (n-2)tr(XY)，三因子的一般迹零公式为
 
 \[
 (n-3)\operatorname{tr}(XYZ)-\operatorname{tr}(XZY).
@@ -1022,13 +1022,12 @@ U_i^*\widehat\ell_bU_i
 对 r∈K，
 
 \[
-\Omega(rx,ry)=N(r)\Omega(x,y),
-\quad \Omega(\bar x,\bar y)=-\Omega(x,y).
+\Omega(rx,ry)=N(r)\Omega(x,y),\quad \Omega(\bar x,\bar y)=-\Omega(x,y).
 \]
 
 **证明。** 展开 (a+b phi)(c+d(1−phi))，其 phi 系数为 bc−ad。Tr((2phi−1)/5)=0，Tr((2phi−1)phi/5)=1，所以迹恰提取该系数。r bar r=N(r)∈Q 给出第一等式；共轭改变 (2phi−1) 的符号给出第二等式。矩阵形式为 [[0,−I],[I,0]]，行列式为一。证毕。
 
-所以一次黄金乘法 x↦phi x 是反辛，二次 x↦phi²x 是辛。八维中前者的行列式仍为 +1，说明整体定向保持不足以证明辛性。
+所以一次黄金乘法 x↦phi x 是反辛，二次 x↦phi²x 是辛。八维中前者的整体行列式仍为 +1，说明整体定向保持不足以证明辛性。
 
 ### 命题 30.2. 一次 Fibonacci 乘法不能保持任何非零双线性形式
 
@@ -1375,7 +1374,7 @@ y_{k+3}=8y_{k+2}-8y_{k+1}+y_k.
 A=1+5(1-\delta)^2,\quad B=1+\frac{17}{5}(1+\delta)^2,\quad B<A.
 \]
 
-可分输入的输出方差至少A，纠缠输入至多B。对N个独立零均值Gaussian观测，令S_N=sum X_r²，采用同一个阈值
+可分输入的输出方差至少A，纠缠输入至多B。对N≥1个独立零均值Gaussian观测，令S_N=sum X_r²，采用同一个阈值
 
 \[
 \tau_N^*=\frac{AB\log(A/B)}{A-B},\qquad
@@ -1405,7 +1404,7 @@ P(\chi_N^2\ge Nx)\le e^{-NI(x)}\ (x>1),\quad
 P(\chi_N^2\le Nx)\le e^{-NI(x)}\ (0<x<1).
 \]
 
-(45.1)使I(tau*/A)=I(tau*/B)=:C_*>0。因此两类的最坏错误率都≤exp(-NC_*)，一个充分预算是N≥log(1/alpha)/C_*。这是经典Gaussian Chernoff计算[Nielsen22]在本明确控制族上的应用，未声称量子最优测量或新的Chernoff理论。
+(45.1)使I(tau*/A)=I(tau*/B)=:C_*>0。因此两类的最坏错误率都≤exp(-NC_*)，对0<alpha<1，一个充分预算是N≥log(1/alpha)/C_*。这是经典Gaussian Chernoff计算[Nielsen22]在本明确控制族上的应用，未声称量子最优测量或新的Chernoff理论。
 
 |增益半宽delta|A|B|达到错误率上界1%的充分N|
 |---:|---:|---:|---:|
@@ -1487,16 +1486,16 @@ R(z,\epsilon)=(8|d|+2|a|+2|b|)\epsilon+20\epsilon^2.
 
 保证所有满足四记录误差界的结果都被正确认证。
 
-若另假定每个设置是独立零均值Gaussian观测，包括独立Gaussian探测器噪声，样本二阶矩hat v=N^{-1}sum X_r²满足，对0<epsilon≤Vmax，
+若另假定每个设置是独立零均值Gaussian观测，包括独立Gaussian探测器噪声，样本二阶矩hat v=N^{-1}sum X_r²满足，对0<epsilon≤Vmax及N≥1，
 
 \[
 P\bigl(\max_{k=0,1,2,3}|\widehat v_k-r_k|>\epsilon\bigr)
 \le8\exp\left(-\frac{N\epsilon^2}{8Vmax^2}\right).
 \]
 
-**证明。** 每个设置的方差≤Vmax，将其平方和归一化成chi-square。I(1+r)≥r²/8及I(1-r)≥r²/4在0<r≤1成立，前者由导数或积分下界、后者由-log(1-r)级数得到；r=1的下尾按极限或零概率处理。使用r=epsilon/Vmax和事件包含，再对四个设置作并集界。设置之间的独立性不是并集界所需，但每个设置内的标准chi-square模型需要独立同分布Gaussian制备。证毕。
+**证明。** 每个设置的方差≤Vmax，将其平方和归一化成chi-square。I(1+r)≥r²/8及I(1-r)≥r²/4在0<r<1成立，前者由导数或积分下界、后者由-log(1-r)级数得到；r=1的下尾按极限或零概率处理。使用r=epsilon/Vmax和事件包含，再对四个设置作并集界。设置之间的独立性不是并集界所需，但每个设置内的标准chi-square模型需要独立同分布Gaussian制备。证毕。
 
-因此选择满足(47.1)的epsilon和
+因此对0<alpha<1，选择满足(47.1)的epsilon和
 
 \[
 N\ge\frac{8Vmax^2}{\epsilon^2}\log\frac8\alpha
