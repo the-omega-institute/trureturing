@@ -1,0 +1,13 @@
+### IP.7 A first ramified digit beyond the quadratic character
+
+Retain the Fibonacci sequence and discriminant-five field of Appendix U.1.
+For a positive integer x coprime to five define
+
+$$
+\lambda_5(x)=\frac{x^4-1}{5}\pmod5\in\mathbb F_5.
+$$
+
+This is the Fermat quotient at the FIXED prime five, with varying integer
+base x. It must not be confused with the WSS quotient
+$q_p=F_{p-(5/p)}/p\pmod p$ at the varying prime p.
+

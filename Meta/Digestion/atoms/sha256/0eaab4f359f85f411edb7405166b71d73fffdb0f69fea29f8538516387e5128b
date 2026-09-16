@@ -1,0 +1,7 @@
+**Assumption GAW8.** Assume $E_{200}$; this assertion is not established
+here. It is precisely the finite-exclusion input required by the $q>5$
+branch of GAW2. GAW2's exhaustive elimination of even $4\le k\le200$ is
+not proved in this development. Consequently, every conclusion below that
+depends on this elimination is conditional on $E_{200}$, while Theorem GAW9
+separates the unconditional statements from the conditional ones.
+

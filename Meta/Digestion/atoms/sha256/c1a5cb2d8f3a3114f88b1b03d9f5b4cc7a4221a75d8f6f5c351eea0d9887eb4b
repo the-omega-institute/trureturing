@@ -1,0 +1,15 @@
+**Explicit positive lower certificate.** For every
+J>=max(12,2r-1) satisfying the integer inequality
+
+$$
+512K_r(J-2)(J-1)3^{J-1}<4^{J-1},                  \tag{QR8}
+$$
+
+one has
+
+$$
+\boxed{d_r>\frac1{2K_r(J-2)(J-1)}.}               \tag{QR9}
+$$
+
+Such J always exist and can be found using integer arithmetic.
+
