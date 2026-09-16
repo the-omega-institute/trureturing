@@ -3297,6 +3297,177 @@ in its canonical verifier uses Python integers and fractions. The result
 has the same full original 357-part-dividing-315 scope and arbitrary finite
 11/13 heights, and supplies no unrestricted-tail or new Lean conclusion.
 
+## Actual deletion vectors and a common full-height law
+
+For every family whose original 3/5/7 part divides 315, the construction
+with C=40/31 admits the following simultaneous bounds, allowing arbitrary
+finite 11/13 heights and arbitrary axis and point deletions:
+
+    Gamma <= 591122424341/16497075000 < 35.831954,
+    sup_test E_nu L <= 1175795/219961 < 5.345471,
+    Theta_nu(6) <= 306627/391318 < 0.783575.                 (DV1)
+
+These are bounds for one supported probability nu for each original
+family. The proof retains its actual old deletion vector throughout
+the mass, moment and hinge estimates. It does not extend the original
+3/5/7 exponents or establish a general tail continuation.
+
+### Exact optimized costs of an actual deletion vector
+
+Choose the canonical modulo-45 survivor set S by the preceding
+support-shrinking reduction. All subsequent statements concern this
+chosen carrier and its actual mixed-seven classes. Let b(x) count
+the distinct deleted nonzero seven digits over x in S, and put
+N=sum_x(6-b(x)). Five original mixed-seven labels use at most five
+of the six nonzero digits. Consequently a single digit y_star survives
+over every x in S, including when labels are absent, redundant or
+assigned to the already excluded zero digit.
+
+For a complete old-315 test, separate its zero-seven block A and project
+its positive-seven block onto a complete old-45 load B. At each x,
+concentrating the nonnegative positive-seven increments gives
+
+    sum_(surviving y) psi(L(x,y))
+      <= (5-b(x)) psi(A(x)) + psi(A(x)+B(x)).
+
+This holds for every increasing convex psi. Conversely, choose any
+actual old tests A,B, and place every positive-seven test class at
+y_star. CRT realizes these residues for their original distinct test
+moduli, and equality holds at every x. Thus, for the uniform law mu
+on this actual old survivor set,
+
+    N sup_test E_mu psi(L)
+      = max_A [sum_x (5-b(x)) psi(A(x)) + J_psi(A)],
+    J_psi(A) = max_B sum_x psi(A(x)+B(x)).                  (DV2)
+
+Effective old test cylinders suffice: replacing an empty test cylinder
+by a nonempty one only increases its load. The maximizing A can differ
+between costs, but b and mu are fixed. In particular, b is sufficient
+for these optimized convex costs; it need not determine an individual
+test histogram or the effect or legality of a later original deletion.
+
+The attainable b vectors also have an exact finite description. For
+each labelled cofactor d in {3,5,9,15,45}, choose its cylinder on S,
+allowing the empty mask. Partition the five labels by their nonzero
+seven digit. A block deletes the union of its old cylinders at one
+digit; summing these block indicators gives b. Conversely any such
+partition uses at most five digits and is realized by CRT. Inactive
+labels can be included with empty masks. This represents every original
+mixed-seven assignment without an irredundancy assumption.
+
+There are respectively 27679, 28939, 28735, 25813, 25238 and 24971
+different b vectors on the six canonical shapes, totaling 161375.
+The experimental verifier reconstructs these sets both by cylinder
+choices and set partitions and by successive labelled digit-union
+updates, then compares the complete resulting sets. It does not use
+an independently optimized b for the mass denominator.
+
+### A common matrix bound for all actual rectangles
+
+Let an actual nonempty 11/13 fibre be an m-by-n rectangle with k
+remaining point holes, where m<=10, n<=12 and k<=12. The existing
+clipped density satisfies
+
+    f/120 = 1/max(93,mn-k),    h=f(mn-k)/120.
+
+For four nonnegative old test amplitudes A=(a,b,c,d), the row, column
+and point intersection counts directly bound its low-block square by
+
+    integral_fibre xi L_low^2 <= h a^2 + (f/120) A^T B(m,n) A,
+    B(m,n) = [[0,n,m,1],[n,n,1,1],[m,1,m,1],[1,1,1,1]].
+
+Absent test indicators only reduce this nonnegative expression. Convex
+concentration within each test block extends it to arbitrary test
+assignments. Set
+
+    U=(228733,264815,215188,41873)/1000000.
+
+For all 120 dimension pairs, the matrix
+diag(U)-B(m,n)/max(93,mn-12) is positive definite. The adjacent
+standard-library verifier checks exact rational LDL decompositions
+and reconstructs every matrix. Since B has nonnegative entries and
+A is nonnegative, this also bounds every actual k and empty fibres.
+The sum of the common diagonal is 750609/1000000. Averaging its
+four squares on the same old law, and using the existing marginal
+and higher-exponent estimates, gives
+
+    Gamma(nu) <= 1+[(1+750609/1000000+12259/83700)G-1]/s.  (DV3)
+
+Here G is any simultaneous old square bound, and s is the certified
+remaining mass on this same construction. The higher-exponent
+coefficient is exactly (40/31)(chi0-13/8), as in (SC9).
+
+For the first moment the three positive-exponent coefficients satisfy
+
+    q=(fn,fm,f)/120 <= (4/31,10/93,1/93),
+    sum(q)<=11/48.
+
+All 1372 nonempty count triples satisfy these rational inequalities.
+Each old test amplitude is at least one, so their unused coefficient
+mass saves 23/93-11/48=9/496. Including the same high-exponent mean
+coefficient 89/3720 gives
+
+    sup_test E_nu L <= 1+[(1+1009/3720)M-1-9/496]/s.      (DV4)
+
+Neither matrix nor first-moment refinement changes the probability law.
+
+### Simultaneous transfer and exact arithmetic
+
+For one b, let H_t be the unnormalized numerator in (DV2) for
+psi(z)=(z-t)_+, and let G_num be its numerator for psi(z)=z^2.
+Compute H_0,H_2,H_3,H_4,H_5 and G_num exactly; H_1=H_0-N because
+every complete load is at least one. For t=6,...,12 retain the valid
+numerator upper bounds (10,7,4,3,2,1,0). Put
+
+    D_b=3720N-680H_2-160H_4-89H_0,
+    s_b=D_b/(3720N),    ell_b=D_b/(4800N).                (DV5)
+
+Every D_b is positive. Substituting M=H_0/N and G=G_num/N in
+(DV3)--(DV4), always with this same D_b, proves the two bounds in
+(DV1). Both maxima occur on the first shape at N=86, with
+
+    M=271/86, G=1131/86, H_2/N=52/43, H_4/N=16/43,
+    s_b=219961/319920.
+
+The reference fraction is uniformly at least
+ell_b>=108683/204000. Thus the existing upper-quantile comparator
+may use this fraction while retaining all moment and hinge bounds
+for the same nu.
+
+For each rectangle dual, form each whole hinge cost on this b. Its
+unnormalized numerator is bounded by the smaller of the sum of its
+H_t bounds and the already certified (JC1) bound at this same (S,N).
+The first-shape costs at N=77,...,83 can also use exact (DV2) maxima
+over all actual b with that count. Including the rectangle constant
+gives a numerator low_b and a positive dual denominator den. The
+same high-exponent and mass transfer is
+
+    Theta_nu(t) <= (3720 low_b+89 den H_0)/(den D_b).       (DV6)
+
+Maximizing only after forming this ratio gives:
+
+| t | Uniform upper bound for Theta_nu(t) |
+|---|---|
+| 4 | 1896712717819/1358537500000 |
+| 5 | 5263525792649/4891475000000 |
+| 6 | 306627/391318 |
+| 7 | 306152576027/489147500000 |
+| 8 | 2291713236139/4843600000000 |
+| 9 | 1964369484727/4843600000000 |
+| 10 | 169349448989/489147500000 |
+| 11 | 21945226346/76429296875 |
+| 12 | 111549448277/489147500000 |
+
+The [actual-deletion experiment](verify_actual_deletion_profile.py)
+and [exact result data](actual_deletion_profile_certificate.json)
+reconstruct the complete finite geometry and costs. This separate
+entry point explicitly requires NumPy; the original marked-profile
+verifier remains standard-library only. Array arithmetic uses integers
+with checked range bounds, and final rational comparisons use Python
+integers. These are ordinary proofs with reproducible finite arithmetic,
+not newly frozen Lean results. The unrestricted original 3/5/7 exponents
+and a general successful tail certificate remain open.
+
 ## An actual full-fibre old configuration with unrestricted tails
 
 Let U be the complement modulo 45 of the five classes
@@ -3505,3 +3676,109 @@ bound. It checks 15,148,804 integer moment queries and also obtains (BT8);
 its Gamma upper bound differs by less than 3.01·10^-8. These are ordinary
 mathematical arguments with exact arithmetic. No new Lean endpoint, freeze
 or unrestricted-axis result for all old configurations is asserted.
+
+## Retaining an original exponent label across the full auxiliary law
+
+The conditional comparison in (AP3)--(AP4) permits a stronger order of
+averaging and maximization than the separate scalar calls in (BT6).
+Fix one supported head probability mu and write
+F_mu(f)=sup_test E_mu f(L). Every complete head load is at least one.
+Let K be the auxiliary vector of old-tail heights, independent of the
+head point, and put N=product_p(1+K_p). Original exponent labels a are
+fixed before K is sampled. There are exactly N labels with a<=K.
+For each label define
+
+    p_a(n)=Pr(a<=K,N=n),   w_a=Pr(a<=K),
+    v_a=E[1_(a<=K)/N],
+    g_a(z)=E[1_(a<=K)(z-T/N)_+].
+
+Each original head test belonging to a is the same in every auxiliary
+outcome that includes a. Applying the existing Jensen comparison,
+then collecting this test's contributions before taking its supremum,
+therefore gives
+
+    d_q b_q <= sum_a F_mu(g_a).                            (FL1)
+
+The current-prime depth weights sum to one, as in (AP4). Missing
+original tuples can be completed in advance by arbitrary fixed tests;
+the extra terms are nonnegative. No test choice depends on the sampled
+head point. This is a direct reorganization of the existing original
+label comparison, rather than a new independence assumption.
+
+On z>=1, the exact finite-cost representation is
+
+    f_a(z)=w_a z+sum_(1<=n<T)p_a(n)(T/n-z)_+,
+    g_a(z)=f_a(z)-T v_a.                                 (FL2)
+
+The omitted put terms vanish because n>=T. Each f_a is convex and
+nondecreasing: its slope is at least w_a-sum_(n<T)p_a(n)>=0.
+Since mu has mass one, F_mu(g_a)=F_mu(f_a)-Tv_a. Counting active
+original labels gives the exact identities
+
+    sum_a w_a=E N,    sum_a v_a=1,
+    sum_a p_a(n)=n Pr(N=n).
+
+All sums are legitimate. For a fixed finite physical head its test
+loads have a finite bound D, so F_mu(g_a)<=D w_a; also E N is finite.
+Consequently (FL1) is at most sum_a F_mu(f_a)-T.
+
+Let C bound all first moments on this same mu, and let Psi bound all
+hinges, enlarged to satisfy Psi(t)>=C-t. Define the nonnegative
+quantity kappa_n=Psi(T/n)-C+T/n. Put P_a=sum_(n<T)p_a(n).
+For every actual head test there is an exact decomposition
+
+    E_mu f_a(L)=(w_a-P_a)E_mu L
+       +sum_(n<T)p_a(n)[E_mu(L-T/n)_++T/n].
+
+The mean coefficient is nonnegative. Substituting the simultaneous
+upper bounds directly proves
+F_mu(f_a)<=Cw_a+sum_(n<T)p_a(n)kappa_n. Thus for any selected finite
+set J of original exponent labels, with certified B_a>=F_mu(f_a),
+
+    d_q b_q <= sum_(a in J)B_a + C(E N-sum_(a in J)w_a)-T
+      +sum_(n<T)[n Pr(N=n)-sum_(a in J)p_a(n)] kappa_n.    (FL3)
+
+Every bracket in the finite correction is nonnegative, by the active
+label count. The subtractions here remove exact labelled contributions
+from a specified upper-bound decomposition; they do not subtract two
+unrelated bounds for an unknown physical mass.
+
+In particular, the zero exponent label is always active. For J={0},
+
+    f_0(z)=z+sum_(n<T)Pr(N=n)(T/n-z)_+,
+    d_q b_q <= B_0+C(E N-1)-T
+      +sum_(n<T)(n-1)Pr(N=n)kappa_n.                     (FL4)
+
+The linear coefficient one retains the entire auxiliary law, including
+all N>=T. Only the put corrections require low multiplier probabilities.
+One can take B_0 to be the smaller of a whole-cost bound and
+C+sum_(n<T)Pr(N=n)kappa_n. Both bound the same F_mu(f_0), so this
+choice guarantees that (FL4) is no worse than the corresponding (BT6).
+Using the zero-label constants for a nonzero label would be invalid;
+the general formula is (FL3).
+
+For fixed maximum query threshold R, the probabilities Pr(N=n), n<R,
+and the full mean E N form a closed observation for (FL4). Inserting
+an independent positive integer multiplier updates each low probability
+by divisor convolution; every predecessor of n<R is itself below R.
+The full mean updates multiplicatively. For additional selected labels,
+retain their restricted low probabilities p_a(n) and w_a as well.
+The first and second moments and all hinge bounds must continue to
+belong to the same actual head law.
+
+Directed evaluation also preserves these distinctions. With C and Psi
+fixed, upper probability and mean bounds multiply nonnegative remaining
+coefficients. A rounded cost built with upper probabilities still
+dominates f_0 pointwise. Before applying a theorem restricted to
+increasing convex costs, verify their sum is at most one, or add
+max(0,sum p_upper-1)z to restore monotonicity while keeping domination.
+
+The finite observation principle agrees with the repository's recursive
+relational observation analysis. Its newer
+[convolution result, section 34](https://github.com/the-omega-institute/trureturing/blob/5744e73ad2/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)
+has a different additional premise: its residual index grows by at least
+one per factor. Here an auxiliary multiplier can equal one. Every finite
+admitted prefix has positive probability of N=1, so that theorem's
+finite-time disappearance cannot be transferred to this recursion.
+The valid reduction is the explicit finite observation above. Neither
+(FL3) nor (FL4) alone proves positive final residual or settles #7.

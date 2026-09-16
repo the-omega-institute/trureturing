@@ -62,6 +62,19 @@ set with redundant mixed-seven classes; those classes are not moved in this
 argument. Thus this theorem is not an automatic elimination of a branch
 after making every such class effective, nor a solution of unrestricted #7.
 
+For arbitrary original residues with 3/5/7 part dividing 315, a
+[stronger generic head estimate](../docs/reports/erdos7-odd-covering/marked_head_profile.md#actual-deletion-vectors-and-a-common-full-height-law)
+retains every actual mixed-seven deletion vector. On one supported law,
+with arbitrary finite 11/13 heights and arbitrary axis and point holes,
+it gives `Gamma<=591122424341/16497075000` (less than 35.831954),
+mean at most `1175795/219961`, and threshold-six hinge at most
+`306627/391318`. Two complete enumerations recover all 161375 possible
+old deletion vectors; none are discarded for redundancy. The optimized
+old convex cost has an exact CRT realization at a globally unused
+nonzero seven digit. These ordinary bounds strengthen the general
+315-based head estimates, but do not supply its general tail continuation
+or remove the original 3/5/7 exponent restriction.
+
 The same uniform complete-survivor law at arbitrary finite3,5,7heights
 also satisfies `Gamma<=3849/106` by (SD1)--(SD6), using shared cell parameters
 and signed deletion energy. This improves `937/24` by `3473/1272`

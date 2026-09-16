@@ -521,6 +521,15 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Exact all-deletion-vector head bounds and independent geometry counts.
+pattern = "docs/reports/erdos7-odd-covering/actual_deletion_profile_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]] # Checks exact CRT counterexamples to quadratic and survivor-conditioning bridges.
 pattern = "docs/reports/erdos7-odd-covering/bridge_checks.py"
 kind = "program"
@@ -717,6 +726,15 @@ admission_plane = "content"
 produced_by = "none"
 consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # NumPy experiment rebuilding all actual deletion vectors and exact head costs.
+pattern = "docs/reports/erdos7-odd-covering/verify_actual_deletion_profile.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
 [[files]] # Checks exact transfer saturation with positive actual deletion and distortion.

@@ -2076,6 +2076,121 @@ def shared_count_clipped_head(old_cases, old, signed):
                 'worst_survivors':refined_count}}
 
 
+def common_rectangle_moment_transfer(mean, square, survival, coefficients):
+    """Transfer moments on one old law using the checked rectangle coefficients."""
+    F = Fraction
+    mean, square, survival = map(F, (mean, square, survival))
+    require(mean >= 1 and square >= 1 and 0 < survival <= 1,
+            'common rectangle transfer has valid moments and positive mass')
+    square_extra = F(coefficients['square_extra_coefficient_sum'])
+    high_square = F(coefficients['high_square_coefficient'])
+    positive_first = F(coefficients['positive_first_coefficient'])
+    first_saving = F(coefficients['first_numerator_saving'])
+    square_numerator = square-1+(square_extra+high_square)*square
+    first_numerator = mean-1+positive_first*mean-first_saving
+    require(square_numerator > 0 and first_numerator > 0,
+            'positive common rectangle numerators before mass replacement')
+    return {'Gamma_upper':str(1+square_numerator/survival),
+            'same_law_first_upper':str(1+first_numerator/survival)}
+
+
+def common_rectangle_moment_bounds(shared, diagonal):
+    """Check one common PSD diagonal and the same-law first-moment saving.
+
+    After removing the old-marginal term h*a^2, the actual low square
+    is bounded by (f/120)*A^T B A, where B has rows
+    (0,n,m,1), (n,n,1,1), (m,1,m,1), (1,1,1,1).
+    All allocations and deleted-cell patterns obey this bound.  A checked
+    diagonal dominates B for the largest allowed f in each rectangle;
+    convex combination with the nonnegative diagonal covers every smaller f.
+    """
+    F = Fraction
+    clip = F(shared['clip'])
+    require(clip == F(40, 31), 'common rectangle uses the existing clipped law')
+    caps = tuple(map(F, diagonal))
+    require(len(caps) == 4 and all(c > 0 for c in caps),
+            'four positive common diagonal coefficients')
+    first_caps = (clip/10, clip/12, clip/120)
+    first_sum = F(0)
+    first_maximizers = []
+    rectangles = grids = reconstruction_entries = 0
+    smallest_pivots = [None]*4
+    for m, n in product(range(1, 11), range(1, 13)):
+        max_holes = min(12, m*n-1)
+        density = min(clip, F(120, m*n-max_holes))
+        b = ((0,n,m,1), (n,n,1,1), (m,1,m,1), (1,1,1,1))
+        matrix = [[(caps[i] if i == j else 0)-density*b[i][j]/120
+                   for j in range(4)] for i in range(4)]
+        lower = [[F(i == j) for j in range(4)] for i in range(4)]
+        pivots = [F(0)]*4
+        for i in range(4):
+            pivots[i] = matrix[i][i]-sum(lower[i][j]**2*pivots[j]
+                                       for j in range(i))
+            require(pivots[i] > 0, 'common rectangle diagonal positive LDL pivot')
+            smallest_pivots[i] = (pivots[i] if smallest_pivots[i] is None
+                                  else min(smallest_pivots[i], pivots[i]))
+            for r in range(i+1, 4):
+                lower[r][i] = (matrix[r][i]-sum(lower[r][j]*pivots[j]*lower[i][j]
+                                               for j in range(i)))/pivots[i]
+        for i, j in product(range(4), repeat=2):
+            require(matrix[i][j] == sum(lower[i][r]*pivots[r]*lower[j][r]
+                                       for r in range(4)),
+                    'common rectangle exact LDL reconstruction')
+            reconstruction_entries += 1
+        rectangles += 1
+        for k in range(max_holes+1):
+            f = min(clip, F(120, m*n-k))
+            require(0 < f <= density, 'every actual rectangle density is dominated')
+            q = (f*n/120, f*m/120, f/120)
+            require(all(x <= y for x, y in zip(q, first_caps)),
+                    'actual rectangle first-moment coordinate caps')
+            require(sum(q) <= F(11, 48), 'actual rectangle first-moment sum cap')
+            if sum(q) > first_sum:
+                first_sum, first_maximizers = sum(q), []
+            if sum(q) == first_sum:
+                first_maximizers.append([m, n, k])
+            grids += 1
+    saving = sum(first_caps)-first_sum
+    require(rectangles == 120 and grids == 1372 and first_sum == F(11, 48)
+            and saving == F(9, 496), 'complete common rectangle domain and first saving')
+    coefficients = {
+        'square_extra_coefficient_sum':str(sum(caps)),
+        'high_square_coefficient':str(clip*(F(shared['square_reference_factor'])-F(13, 8))),
+        'positive_first_coefficient':str(clip*(F(shared['reference_auxiliary_mean'])-1)),
+        'first_numerator_saving':str(saving),
+    }
+    cases = []
+    all_rows = []
+    for index, case in enumerate(shared['cases']):
+        rows = []
+        for old_row in case['rows']:
+            row = {'survivors':old_row['survivors'], **common_rectangle_moment_transfer(
+                old_row['mean_upper'], old_row['square_upper'],
+                old_row['full_mass_lower'], coefficients)}
+            rows.append(row)
+            all_rows.append((index, row))
+        cases.append({'shape':case['shape'], 'rows':rows})
+    require(len(all_rows) == 144, 'all existing common shape/count moment transfers')
+    gamma_shape, gamma = max(all_rows, key=lambda item: F(item[1]['Gamma_upper']))
+    mean_shape, mean = max(all_rows, key=lambda item: F(item[1]['same_law_first_upper']))
+    return {
+        'scope':'same existing clipped law and previous hinge bounds; arbitrary low axis and point patterns and finite 11/13 heights; full original 357 part divides 315; no new tail or Lean conclusion',
+        'clip':str(clip), 'diagonal_witness':list(map(str, caps)), **coefficients,
+        'positive_definite_rectangles_verified':rectangles,
+        'ldl_reconstruction_entries_verified':reconstruction_entries,
+        'ldl_pivot_lower_bounds':list(map(str, smallest_pivots)),
+        'first_moment_grid_triples_verified':grids,
+        'low_first_coordinate_caps':list(map(str, first_caps)),
+        'low_first_coefficient_sum_upper':str(first_sum),
+        'maximizing_first_grid_counts':first_maximizers,
+        'shared_branches_verified':len(all_rows), 'cases':cases,
+        'Gamma_upper':gamma['Gamma_upper'], 'worst_shape':gamma_shape,
+        'worst_survivors':gamma['survivors'],
+        'same_law_first_upper':mean['same_law_first_upper'],
+        'worst_first_shape':mean_shape, 'worst_first_survivors':mean['survivors'],
+    }
+
+
 def signed_conditioning_obstruction():
     """Reconstruct the actual 47-class family and signed-criterion barrier."""
     F = Fraction
@@ -2919,6 +3034,8 @@ def verify(expected):
     lift_result = matching_height_lift()
     variable_head = varying_hole_head(deletion_result, signed_result)
     shared_head = shared_count_clipped_head(old_cases, deletion_result, signed_result)
+    rectangle_moments = common_rectangle_moment_bounds(
+        shared_head, expected['common_rectangle_moment_bounds']['diagonal_witness'])
     hinge_profile = actual_rectangle_hinge_profile(
         expected["actual_rectangle_hinge_profile"]["witnesses"], shared_head, deletion_result, cases)
     fixed_hinge = fixed_count_hinge_refinement(
@@ -2926,6 +3043,7 @@ def verify(expected):
     joint_hinge = joint_cost_hinge_refinement(
         old_cases, shared_head, deletion_result, hinge_profile, fixed_hinge)
     result = {
+        "common_rectangle_moment_bounds": rectangle_moments,
         "joint_cost_branch_tail17": joint_cost_branch_tail17(shared_head, deletion_result, joint_hinge),
         "joint_cost_hinge_refinement": joint_hinge,
         "fixed_count_hinge_refinement": fixed_hinge,
@@ -2977,6 +3095,8 @@ def verify(expected):
                       "matching_hole_symbolic_identities": len(result["matching_hole_common_lambda"]["symbolic_identities"]),
                       "matching_height_tail17_Gamma": result["matching_height_tail17"]["Gamma_upper"],
                       "arbitrary_holes12_tail17_Gamma": result["arbitrary_holes12_tail17"]["Gamma_upper"],
+                      "common_rectangle_Gamma": rectangle_moments["Gamma_upper"],
+                      "common_rectangle_first": rectangle_moments["same_law_first_upper"],
                       "shared_count_clipped_Gamma": result["shared_count_clipped_head"]["actual_rectangle_refinement"]["Gamma_upper"],
                       "shared_count_branches": result["shared_count_clipped_head"]["shared_branches_verified"],
                       "full_fibre_branch_tail17_Gamma": result["joint_cost_branch_tail17"]["Gamma_upper"],

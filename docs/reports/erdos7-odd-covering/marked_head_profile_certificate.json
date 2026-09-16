@@ -27181,5 +27181,800 @@
       ]
     ],
     "actual_old_survivors_verified": 96
+  },
+  "common_rectangle_moment_bounds": {
+    "scope": "same existing clipped law and previous hinge bounds; arbitrary low axis and point patterns and finite 11/13 heights; full original 357 part divides 315; no new tail or Lean conclusion",
+    "clip": "40/31",
+    "diagonal_witness": [
+      "228733/1000000",
+      "52963/200000",
+      "53797/250000",
+      "41873/1000000"
+    ],
+    "square_extra_coefficient_sum": "750609/1000000",
+    "high_square_coefficient": "12259/83700",
+    "positive_first_coefficient": "1009/3720",
+    "first_numerator_saving": "9/496",
+    "positive_definite_rectangles_verified": 120,
+    "ldl_reconstruction_entries_verified": 1920,
+    "ldl_pivot_lower_bounds": [
+      "228733/1000000",
+      "2769346429719/43962482600000",
+      "7170563122107158997/327305637372900250000",
+      "1195745669782130122811/222287456785321928907000000"
+    ],
+    "first_moment_grid_triples_verified": 1372,
+    "low_first_coordinate_caps": [
+      "4/31",
+      "10/93",
+      "1/93"
+    ],
+    "low_first_coefficient_sum_upper": "11/48",
+    "maximizing_first_grid_counts": [
+      [
+        9,
+        12,
+        12
+      ]
+    ],
+    "shared_branches_verified": 144,
+    "cases": [
+      {
+        "shape": "root1_same_other_column",
+        "rows": [
+          {
+            "survivors": 77,
+            "Gamma_upper": "772945468369/22360050000",
+            "same_law_first_upper": "2046325/397512"
+          },
+          {
+            "survivors": 78,
+            "Gamma_upper": "801221213563/22473000000",
+            "same_law_first_upper": "207859/39952"
+          },
+          {
+            "survivors": 79,
+            "Gamma_upper": "46696780397939/1301377800000",
+            "same_law_first_upper": "2112855/403528"
+          },
+          {
+            "survivors": 80,
+            "Gamma_upper": "591046968716/16421619375",
+            "same_law_first_upper": "119800/22631"
+          },
+          {
+            "survivors": 81,
+            "Gamma_upper": "5319034294069/147406150000",
+            "same_law_first_upper": "2190665/411366"
+          },
+          {
+            "survivors": 82,
+            "Gamma_upper": "24231622897981/671983575000",
+            "same_law_first_upper": "1113145/208367"
+          },
+          {
+            "survivors": 83,
+            "Gamma_upper": "49055182945303/1361278950000",
+            "same_law_first_upper": "2261915/422102"
+          },
+          {
+            "survivors": 84,
+            "Gamma_upper": "4137274470387/114897025000",
+            "same_law_first_upper": "24668395/4595881"
+          },
+          {
+            "survivors": 85,
+            "Gamma_upper": "10047943613797/279312675000",
+            "same_law_first_upper": "19973347/3724169"
+          },
+          {
+            "survivors": 86,
+            "Gamma_upper": "591071424341/16446075000",
+            "same_law_first_upper": "1175115/219281"
+          },
+          {
+            "survivors": 87,
+            "Gamma_upper": "29790747427/835252500",
+            "same_law_first_upper": "2377935/445468"
+          },
+          {
+            "survivors": 88,
+            "Gamma_upper": "224219524319/6364012500",
+            "same_law_first_upper": "299545/56569"
+          },
+          {
+            "survivors": 89,
+            "Gamma_upper": "450016885871/12927262500",
+            "same_law_first_upper": "2414785/459636"
+          },
+          {
+            "survivors": 90,
+            "Gamma_upper": "1568037233/45578125",
+            "same_law_first_upper": "243321/46672"
+          },
+          {
+            "survivors": 91,
+            "Gamma_upper": "453172560337/13325737500",
+            "same_law_first_upper": "79085/15284"
+          },
+          {
+            "survivors": 92,
+            "Gamma_upper": "45475039757/1352497500",
+            "same_law_first_upper": "617515/120222"
+          },
+          {
+            "survivors": 93,
+            "Gamma_upper": "202285490557/6101875000",
+            "same_law_first_upper": "495841/97630"
+          },
+          {
+            "survivors": 94,
+            "Gamma_upper": "911068619873/27866925000",
+            "same_law_first_upper": "1244175/247706"
+          },
+          {
+            "survivors": 95,
+            "Gamma_upper": "1823705064479/56550825000",
+            "same_law_first_upper": "2497495/502674"
+          },
+          {
+            "survivors": 96,
+            "Gamma_upper": "152106074101/4780650000",
+            "same_law_first_upper": "156665/31871"
+          },
+          {
+            "survivors": 97,
+            "Gamma_upper": "365368142789/11636955000",
+            "same_law_first_upper": "2515785/517198"
+          },
+          {
+            "survivors": 98,
+            "Gamma_upper": "914204269339/29500875000",
+            "same_law_first_upper": "252493/52446"
+          },
+          {
+            "survivors": 99,
+            "Gamma_upper": "609992121137/19939575000",
+            "same_law_first_upper": "2534075/531722"
+          },
+          {
+            "survivors": 100,
+            "Gamma_upper": "114471511759/3789731250",
+            "same_law_first_upper": "635805/134746"
+          },
+          {
+            "survivors": 101,
+            "Gamma_upper": "1833112012877/61452675000",
+            "same_law_first_upper": "2552365/546246"
+          },
+          {
+            "survivors": 102,
+            "Gamma_upper": "20385331529/691885000",
+            "same_law_first_upper": "1280755/276754"
+          }
+        ]
+      },
+      {
+        "shape": "root1_other_same_column",
+        "rows": [
+          {
+            "survivors": 78,
+            "Gamma_upper": "167744046431/5098125000",
+            "same_law_first_upper": "203963/40785"
+          },
+          {
+            "survivors": 79,
+            "Gamma_upper": "174027545363/5123225000",
+            "same_law_first_upper": "2071895/409858"
+          },
+          {
+            "survivors": 80,
+            "Gamma_upper": "200694756449/5819990625",
+            "same_law_first_upper": "1053080/206933"
+          },
+          {
+            "survivors": 81,
+            "Gamma_upper": "40764438683/1175270625",
+            "same_law_first_upper": "2140425/417874"
+          },
+          {
+            "survivors": 82,
+            "Gamma_upper": "68983210127/1977571875",
+            "same_law_first_upper": "1087345/210941"
+          },
+          {
+            "survivors": 83,
+            "Gamma_upper": "1470566565179/41950640625",
+            "same_law_first_upper": "9278767/1789894"
+          },
+          {
+            "survivors": 84,
+            "Gamma_upper": "213223629313/6064565625",
+            "same_law_first_upper": "1122290/215629"
+          },
+          {
+            "survivors": 85,
+            "Gamma_upper": "1729373680499/49120425000",
+            "same_law_first_upper": "2280205/436626"
+          },
+          {
+            "survivors": 86,
+            "Gamma_upper": "217931406637/6218043750",
+            "same_law_first_upper": "1153275/221086"
+          },
+          {
+            "survivors": 87,
+            "Gamma_upper": "48604516723/1403925000",
+            "same_law_first_upper": "2324975/449256"
+          },
+          {
+            "survivors": 88,
+            "Gamma_upper": "21950924387/641728125",
+            "same_law_first_upper": "117170/22817"
+          },
+          {
+            "survivors": 89,
+            "Gamma_upper": "440596324973/13033800000",
+            "same_law_first_upper": "2361825/463424"
+          },
+          {
+            "survivors": 90,
+            "Gamma_upper": "73695693701/2205506250",
+            "same_law_first_upper": "1190125/235254"
+          },
+          {
+            "survivors": 91,
+            "Gamma_upper": "443751999439/13432275000",
+            "same_law_first_upper": "2398675/477592"
+          },
+          {
+            "survivors": 92,
+            "Gamma_upper": "1776575822489/54546075000",
+            "same_law_first_upper": "1203910/242427"
+          },
+          {
+            "survivors": 93,
+            "Gamma_upper": "98785758179/3075725000",
+            "same_law_first_upper": "2416965/492116"
+          },
+          {
+            "survivors": 94,
+            "Gamma_upper": "355942294391/11236005000",
+            "same_law_first_upper": "1213055/249689"
+          },
+          {
+            "survivors": 95,
+            "Gamma_upper": "111329956043/3562312500",
+            "same_law_first_upper": "487051/101328"
+          },
+          {
+            "survivors": 96,
+            "Gamma_upper": "594282373807/19271325000",
+            "same_law_first_upper": "1222200/256951"
+          },
+          {
+            "survivors": 97,
+            "Gamma_upper": "892207473077/29315475000",
+            "same_law_first_upper": "2453545/521164"
+          },
+          {
+            "survivors": 98,
+            "Gamma_upper": "1785982770887/59447925000",
+            "same_law_first_upper": "1231345/264213"
+          },
+          {
+            "survivors": 99,
+            "Gamma_upper": "29792509927/1004415000",
+            "same_law_first_upper": "2471835/535688"
+          },
+          {
+            "survivors": 100,
+            "Gamma_upper": "1789118420353/61081875000",
+            "same_law_first_upper": "248098/54295"
+          },
+          {
+            "survivors": 101,
+            "Gamma_upper": "895343122543/30949425000",
+            "same_law_first_upper": "2490125/550212"
+          },
+          {
+            "survivors": 102,
+            "Gamma_upper": "199139341091/6968425000",
+            "same_law_first_upper": "1249635/278737"
+          }
+        ]
+      },
+      {
+        "shape": "root1_other_other_column",
+        "rows": [
+          {
+            "survivors": 78,
+            "Gamma_upper": "167744046431/5098125000",
+            "same_law_first_upper": "203963/40785"
+          },
+          {
+            "survivors": 79,
+            "Gamma_upper": "174027545363/5123225000",
+            "same_law_first_upper": "2071895/409858"
+          },
+          {
+            "survivors": 80,
+            "Gamma_upper": "200694756449/5819990625",
+            "same_law_first_upper": "1053080/206933"
+          },
+          {
+            "survivors": 81,
+            "Gamma_upper": "40764438683/1175270625",
+            "same_law_first_upper": "2140425/417874"
+          },
+          {
+            "survivors": 82,
+            "Gamma_upper": "68983210127/1977571875",
+            "same_law_first_upper": "1087345/210941"
+          },
+          {
+            "survivors": 83,
+            "Gamma_upper": "1470566565179/41950640625",
+            "same_law_first_upper": "9278767/1789894"
+          },
+          {
+            "survivors": 84,
+            "Gamma_upper": "213223629313/6064565625",
+            "same_law_first_upper": "1122290/215629"
+          },
+          {
+            "survivors": 85,
+            "Gamma_upper": "1729373680499/49120425000",
+            "same_law_first_upper": "2280205/436626"
+          },
+          {
+            "survivors": 86,
+            "Gamma_upper": "217931406637/6218043750",
+            "same_law_first_upper": "1153275/221086"
+          },
+          {
+            "survivors": 87,
+            "Gamma_upper": "48604516723/1403925000",
+            "same_law_first_upper": "2324975/449256"
+          },
+          {
+            "survivors": 88,
+            "Gamma_upper": "21950924387/641728125",
+            "same_law_first_upper": "117170/22817"
+          },
+          {
+            "survivors": 89,
+            "Gamma_upper": "440596324973/13033800000",
+            "same_law_first_upper": "2361825/463424"
+          },
+          {
+            "survivors": 90,
+            "Gamma_upper": "73695693701/2205506250",
+            "same_law_first_upper": "1190125/235254"
+          },
+          {
+            "survivors": 91,
+            "Gamma_upper": "443751999439/13432275000",
+            "same_law_first_upper": "2398675/477592"
+          },
+          {
+            "survivors": 92,
+            "Gamma_upper": "1776575822489/54546075000",
+            "same_law_first_upper": "1203910/242427"
+          },
+          {
+            "survivors": 93,
+            "Gamma_upper": "98785758179/3075725000",
+            "same_law_first_upper": "2416965/492116"
+          },
+          {
+            "survivors": 94,
+            "Gamma_upper": "355942294391/11236005000",
+            "same_law_first_upper": "1213055/249689"
+          },
+          {
+            "survivors": 95,
+            "Gamma_upper": "111329956043/3562312500",
+            "same_law_first_upper": "487051/101328"
+          },
+          {
+            "survivors": 96,
+            "Gamma_upper": "594282373807/19271325000",
+            "same_law_first_upper": "1222200/256951"
+          },
+          {
+            "survivors": 97,
+            "Gamma_upper": "892207473077/29315475000",
+            "same_law_first_upper": "2453545/521164"
+          },
+          {
+            "survivors": 98,
+            "Gamma_upper": "1785982770887/59447925000",
+            "same_law_first_upper": "1231345/264213"
+          },
+          {
+            "survivors": 99,
+            "Gamma_upper": "29792509927/1004415000",
+            "same_law_first_upper": "2471835/535688"
+          },
+          {
+            "survivors": 100,
+            "Gamma_upper": "1789118420353/61081875000",
+            "same_law_first_upper": "248098/54295"
+          },
+          {
+            "survivors": 101,
+            "Gamma_upper": "895343122543/30949425000",
+            "same_law_first_upper": "2490125/550212"
+          },
+          {
+            "survivors": 102,
+            "Gamma_upper": "199139341091/6968425000",
+            "same_law_first_upper": "1249635/278737"
+          }
+        ]
+      },
+      {
+        "shape": "root2_same_other_column",
+        "rows": [
+          {
+            "survivors": 75,
+            "Gamma_upper": "29785492927/871848000",
+            "same_law_first_upper": "1937955/387488"
+          },
+          {
+            "survivors": 76,
+            "Gamma_upper": "302571858469/8839260000",
+            "same_law_first_upper": "164465/32738"
+          },
+          {
+            "survivors": 77,
+            "Gamma_upper": "763468432471/22410112500",
+            "same_law_first_upper": "1999925/398402"
+          },
+          {
+            "survivors": 78,
+            "Gamma_upper": "255538031479/7599525000",
+            "same_law_first_upper": "1013815/202654"
+          },
+          {
+            "survivors": 79,
+            "Gamma_upper": "69978159673/2107912500",
+            "same_law_first_upper": "2055335/412214"
+          },
+          {
+            "survivors": 80,
+            "Gamma_upper": "772828918369/23499000000",
+            "same_law_first_upper": "26021/5222"
+          },
+          {
+            "survivors": 81,
+            "Gamma_upper": "17243879563/530832500",
+            "same_law_first_upper": "2109385/424666"
+          },
+          {
+            "survivors": 82,
+            "Gamma_upper": "779130254801/24285937500",
+            "same_law_first_upper": "212781/43175"
+          },
+          {
+            "survivors": 83,
+            "Gamma_upper": "311965666867/9877770000",
+            "same_law_first_upper": "2136955/439012"
+          },
+          {
+            "survivors": 84,
+            "Gamma_upper": "130116346589/4183818750",
+            "same_law_first_upper": "1073050/223137"
+          },
+          {
+            "survivors": 85,
+            "Gamma_upper": "1562963983801/51022800000",
+            "same_law_first_upper": "2155245/453536"
+          },
+          {
+            "survivors": 86,
+            "Gamma_upper": "782265904267/25919887500",
+            "same_law_first_upper": "1082195/230399"
+          },
+          {
+            "survivors": 87,
+            "Gamma_upper": "58003690121/1950250000",
+            "same_law_first_upper": "434707/93612"
+          },
+          {
+            "survivors": 88,
+            "Gamma_upper": "1567667458/53473725",
+            "same_law_first_upper": "25380/5527"
+          },
+          {
+            "survivors": 89,
+            "Gamma_upper": "1569235282733/54290700000",
+            "same_law_first_upper": "2191825/482584"
+          },
+          {
+            "survivors": 90,
+            "Gamma_upper": "261800517911/9184612500",
+            "same_law_first_upper": "1100485/244923"
+          },
+          {
+            "survivors": 91,
+            "Gamma_upper": "1572370932199/55924650000",
+            "same_law_first_upper": "2210115/497108"
+          },
+          {
+            "survivors": 92,
+            "Gamma_upper": "393484689233/14185406250",
+            "same_law_first_upper": "221926/50437"
+          },
+          {
+            "survivors": 93,
+            "Gamma_upper": "325181957/11880000",
+            "same_law_first_upper": "2228405/511632"
+          },
+          {
+            "survivors": 94,
+            "Gamma_upper": "788537203199/29187787500",
+            "same_law_first_upper": "1118775/259447"
+          },
+          {
+            "survivors": 95,
+            "Gamma_upper": "1578642231131/59192550000",
+            "same_law_first_upper": "2246695/526156"
+          },
+          {
+            "survivors": 96,
+            "Gamma_upper": "21947361887/833465625",
+            "same_law_first_upper": "1127920/266709"
+          }
+        ]
+      },
+      {
+        "shape": "root2_other_same_column",
+        "rows": [
+          {
+            "survivors": 74,
+            "Gamma_upper": "8507942747/256865625",
+            "same_law_first_upper": "966085/191793"
+          },
+          {
+            "survivors": 75,
+            "Gamma_upper": "246088633081/7258725000",
+            "same_law_first_upper": "1956515/387132"
+          },
+          {
+            "survivors": 76,
+            "Gamma_upper": "255551381479/7333875000",
+            "same_law_first_upper": "99539/19557"
+          },
+          {
+            "survivors": 77,
+            "Gamma_upper": "518964311623/14869050000",
+            "same_law_first_upper": "2026405/396508"
+          },
+          {
+            "survivors": 78,
+            "Gamma_upper": "261828417911/7538512500",
+            "same_law_first_upper": "342125/67009"
+          },
+          {
+            "survivors": 79,
+            "Gamma_upper": "788640928199/23014012500",
+            "same_law_first_upper": "2071175/409138"
+          },
+          {
+            "survivors": 80,
+            "Gamma_upper": "158359320533/4682497500",
+            "same_law_first_upper": "1044800/208111"
+          },
+          {
+            "survivors": 81,
+            "Gamma_upper": "264984092377/7936987500",
+            "same_law_first_upper": "8675/1742"
+          },
+          {
+            "survivors": 82,
+            "Gamma_upper": "798107951597/24209437500",
+            "same_law_first_upper": "212645/43039"
+          },
+          {
+            "survivors": 83,
+            "Gamma_upper": "801263626063/24607912500",
+            "same_law_first_upper": "2144875/437474"
+          },
+          {
+            "survivors": 84,
+            "Gamma_upper": "534691683953/16670925000",
+            "same_law_first_upper": "360550/74093"
+          },
+          {
+            "survivors": 85,
+            "Gamma_upper": "200702856449/6351215625",
+            "same_law_first_upper": "2181725/451642"
+          },
+          {
+            "survivors": 86,
+            "Gamma_upper": "64286826053/2064267000",
+            "same_law_first_upper": "1100075/229363"
+          },
+          {
+            "survivors": 87,
+            "Gamma_upper": "29791082427/970437500",
+            "same_law_first_upper": "147905/31054"
+          },
+          {
+            "survivors": 88,
+            "Gamma_upper": "1610266250791/53200575000",
+            "same_law_first_upper": "1118500/236447"
+          },
+          {
+            "survivors": 89,
+            "Gamma_upper": "402953512631/13499381250",
+            "same_law_first_upper": "2255425/479978"
+          },
+          {
+            "survivors": 90,
+            "Gamma_upper": "537793958419/18271500000",
+            "same_law_first_upper": "226457/48724"
+          },
+          {
+            "survivors": 91,
+            "Gamma_upper": "2212259863/76207500",
+            "same_law_first_upper": "757905/164834"
+          },
+          {
+            "survivors": 92,
+            "Gamma_upper": "1616517524723/56448450000",
+            "same_law_first_upper": "570715/125441"
+          },
+          {
+            "survivors": 93,
+            "Gamma_upper": "67420222894/2386059375",
+            "same_law_first_upper": "2292005/509026"
+          },
+          {
+            "survivors": 94,
+            "Gamma_upper": "1619653174189/58082400000",
+            "same_law_first_upper": "383525/86048"
+          },
+          {
+            "survivors": 95,
+            "Gamma_upper": "810610499461/29449687500",
+            "same_law_first_upper": "462059/104710"
+          },
+          {
+            "survivors": 96,
+            "Gamma_upper": "36061973859/1327030000",
+            "same_law_first_upper": "579860/132703"
+          }
+        ]
+      },
+      {
+        "shape": "root2_other_other_column",
+        "rows": [
+          {
+            "survivors": 74,
+            "Gamma_upper": "8507942747/256865625",
+            "same_law_first_upper": "966085/191793"
+          },
+          {
+            "survivors": 75,
+            "Gamma_upper": "246088633081/7258725000",
+            "same_law_first_upper": "1956515/387132"
+          },
+          {
+            "survivors": 76,
+            "Gamma_upper": "255551381479/7333875000",
+            "same_law_first_upper": "99539/19557"
+          },
+          {
+            "survivors": 77,
+            "Gamma_upper": "518964311623/14869050000",
+            "same_law_first_upper": "2026405/396508"
+          },
+          {
+            "survivors": 78,
+            "Gamma_upper": "261828417911/7538512500",
+            "same_law_first_upper": "342125/67009"
+          },
+          {
+            "survivors": 79,
+            "Gamma_upper": "788640928199/23014012500",
+            "same_law_first_upper": "2071175/409138"
+          },
+          {
+            "survivors": 80,
+            "Gamma_upper": "158359320533/4682497500",
+            "same_law_first_upper": "1044800/208111"
+          },
+          {
+            "survivors": 81,
+            "Gamma_upper": "264984092377/7936987500",
+            "same_law_first_upper": "8675/1742"
+          },
+          {
+            "survivors": 82,
+            "Gamma_upper": "798107951597/24209437500",
+            "same_law_first_upper": "212645/43039"
+          },
+          {
+            "survivors": 83,
+            "Gamma_upper": "801263626063/24607912500",
+            "same_law_first_upper": "2144875/437474"
+          },
+          {
+            "survivors": 84,
+            "Gamma_upper": "534691683953/16670925000",
+            "same_law_first_upper": "360550/74093"
+          },
+          {
+            "survivors": 85,
+            "Gamma_upper": "200702856449/6351215625",
+            "same_law_first_upper": "2181725/451642"
+          },
+          {
+            "survivors": 86,
+            "Gamma_upper": "64286826053/2064267000",
+            "same_law_first_upper": "1100075/229363"
+          },
+          {
+            "survivors": 87,
+            "Gamma_upper": "29791082427/970437500",
+            "same_law_first_upper": "147905/31054"
+          },
+          {
+            "survivors": 88,
+            "Gamma_upper": "1610266250791/53200575000",
+            "same_law_first_upper": "1118500/236447"
+          },
+          {
+            "survivors": 89,
+            "Gamma_upper": "402953512631/13499381250",
+            "same_law_first_upper": "2255425/479978"
+          },
+          {
+            "survivors": 90,
+            "Gamma_upper": "537793958419/18271500000",
+            "same_law_first_upper": "226457/48724"
+          },
+          {
+            "survivors": 91,
+            "Gamma_upper": "2212259863/76207500",
+            "same_law_first_upper": "757905/164834"
+          },
+          {
+            "survivors": 92,
+            "Gamma_upper": "1616517524723/56448450000",
+            "same_law_first_upper": "570715/125441"
+          },
+          {
+            "survivors": 93,
+            "Gamma_upper": "67420222894/2386059375",
+            "same_law_first_upper": "2292005/509026"
+          },
+          {
+            "survivors": 94,
+            "Gamma_upper": "1619653174189/58082400000",
+            "same_law_first_upper": "383525/86048"
+          },
+          {
+            "survivors": 95,
+            "Gamma_upper": "810610499461/29449687500",
+            "same_law_first_upper": "462059/104710"
+          },
+          {
+            "survivors": 96,
+            "Gamma_upper": "36061973859/1327030000",
+            "same_law_first_upper": "579860/132703"
+          }
+        ]
+      }
+    ],
+    "Gamma_upper": "5319034294069/147406150000",
+    "worst_shape": 0,
+    "worst_survivors": 81,
+    "same_law_first_upper": "24668395/4595881",
+    "worst_first_shape": 0,
+    "worst_first_survivors": 84
   }
 }
