@@ -12,7 +12,7 @@ $$\begin{aligned}\operatorname{qBell}\left(0\right) = 1\\\forall n \in \mathbb{N
 
 *Formalization.* `D5/S1/Recurrence/Algebraic/KurkovReversedQBellRowPolynomial.qBell` (`✓ std3`).
 
-*Citation.* Paul D. Hanna; Carl G. Wagner; Jianping Pan; Tianyi Yu; Mikhail Kurkov (2025). *OEIS A126347 q-Bell coefficient triangle and Kurkov's reversed-row conjecture*. URL: <https://oeis.org/A126347>.
+*Citation.* Paul D. Hanna; Mikhail Kurkov (2025). *OEIS A126347 q-Bell coefficient triangle and Kurkov's reversed-row conjecture*. URL: <https://oeis.org/A126347>.
 
 *Commentary.*
 
@@ -26,7 +26,7 @@ $$\begin{aligned}\operatorname{R}\left(0, 0\right) = 1\\\forall k \in \mathbb{N}
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Paul D. Hanna; Carl G. Wagner; Jianping Pan; Tianyi Yu; Mikhail Kurkov (2025). *OEIS A126347 q-Bell coefficient triangle and Kurkov's reversed-row conjecture*. URL: <https://oeis.org/A126347>.
+*Acknowledgement.* Paul D. Hanna; Mikhail Kurkov (2025). *OEIS A126347 q-Bell coefficient triangle and Kurkov's reversed-row conjecture*. URL: <https://oeis.org/A126347>.
 
 *Commentary.*
 
@@ -44,7 +44,7 @@ $$\forall n \in \mathbb{N}, \operatorname{R}\left(n, n\right) = \operatorname{re
 
 *Source.* Repository-derived.
 
-*Acknowledgement.* Paul D. Hanna; Carl G. Wagner; Jianping Pan; Tianyi Yu; Mikhail Kurkov (2025). *OEIS A126347 q-Bell coefficient triangle and Kurkov's reversed-row conjecture*. URL: <https://oeis.org/A126347>.
+*Acknowledgement.* Paul D. Hanna; Mikhail Kurkov (2025). *OEIS A126347 q-Bell coefficient triangle and Kurkov's reversed-row conjecture*. URL: <https://oeis.org/A126347>.
 
 *Commentary.*
 
