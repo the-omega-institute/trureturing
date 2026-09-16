@@ -8,9 +8,14 @@ open Lean (Json)
 package leanInspector where
   buildDir := "../../.lake/build/lean-inspector/producer"
 
+target nativeImage pkg : FilePath := do
+  buildLeanO (pkg.buildDir / "c" / "native_image.o")
+    (← inputFile (pkg.dir / "native_image.c") true) #[] #["-O3", "-DLEAN_EXPORTING"]
+
 lean_exe reportInspector where
   root := `Inspector
   supportInterpreter := true
+  moreLinkObjs := #[{key := .mk (.packageTarget .anonymous `nativeImage)}]
 
 private def inspectorDir (pkg : Package) : FilePath := pkg.dir / "tools" / "lean-inspector"
 

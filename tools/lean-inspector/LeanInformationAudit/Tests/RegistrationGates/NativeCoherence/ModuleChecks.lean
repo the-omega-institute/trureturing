@@ -1,6 +1,7 @@
 import LeanInformationAudit.Registry
 import LeanInformationAudit.Tests.RegistrationGates.NativeCoherence.Plain
 import LeanInformationAudit.Tests.RegistrationGates.NativeCoherence.Modern
+import LeanInformationAudit.Tests.SourceIsolation
 
 open Lean LeanInformationAudit LeanInformationAudit.TemplateAudit
 
@@ -18,7 +19,7 @@ private def observe (label : String) (root : Name) (expected : String) : CoreM B
   logInfo m!"[{if ok then "PASS" else "FAIL"}] {label} actual={reason}"
   return ok
 
-run_meta do
+run_meta LeanInformationAudit.Tests.withPrivateSources do
   let saved ← getEnv
   let root := `LeanInformationAudit.Tests.RegistrationGates.NativeCoherence.Modern
   let legacy := `LeanInformationAudit.Tests.RegistrationGates.NativeCoherence.Plain

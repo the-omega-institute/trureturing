@@ -1100,6 +1100,7 @@ def sourcePath (name : Name) : String :=
 
 def policyPaths : Array String := #[
   "lean-report-inputs.json", "lean-toolchain", "lake-manifest.json",
+  "tools/lean-inspector/native_image.c",
   "tools/lean-inspector/LeanInformationAudit/RegistryTypes.lean",
   "tools/lean-inspector/LeanInformationAudit/Registry.lean",
   "tools/lean-inspector/LeanInformationAudit/ReadoutProvenance.lean",
@@ -1337,15 +1338,6 @@ private def unchanged (inputs : Array SourceInput) : IO Bool := do
   let hashes ← fileHashes (inputs.map (·.path))
   return (inputs.zip hashes).all fun (input, hash) => input.sha256 == hash
 
-private def loadedIdentity (name : Name) (data : ModuleData) (bytes : ByteArray) : IO String :=
-  IO.FS.withTempFile fun _ path => do
-    saveModuleData path name data
-    unless (← IO.FS.readBinFile path) == bytes do
-      throw <| IO.userError s!"incomplete_closure:E7.loaded_native:{name}"
-    -- Hash the independently serialized loaded image, never re-open the mutable
-    -- input path to decide which bytes were actually loaded into this Environment.
-    return (← fileHashes #[path.toString])[0]!
-
 /-- Exact runtime layout of the pinned compiler's CompactedRegion. Its private
 root is a boxed ModuleData for the engine-loaded olean/IR parts selected below.
 This cast never reads a fresh disk image or interprets a content-owned value. -/
@@ -1359,6 +1351,29 @@ private structure RegionLayout where
 
 private unsafe def loadedPart (region : CompactedRegion) : ModuleData :=
   unsafeCast (unsafeCast region : RegionLayout).root
+
+/-- The inspector links this fixed native comparison primitive. Interpreted
+callers return zero and retain the serialization check below. The object-valued
+Nat result and owned parameters match the interpreter's exported-function ABI. -/
+@[noinline, export lean_dtr_mapped_image_match]
+private unsafe def mappedImageMatch (_root : NonScalar) (_coordinates : Array USize)
+    (_bytes : ByteArray) : Nat := 0
+
+private unsafe def matchesLoadedImage (region : CompactedRegion) (bytes : ByteArray) : Bool :=
+  let view : RegionLayout := unsafeCast region
+  mappedImageMatch view.root #[view.size, view.baseAddr, view.bufferOffset,
+    if view.isMemoryMapped then 1 else 0] bytes == 1
+
+private def loadedIdentity (name : Name) (data : ModuleData) (bytes : ByteArray)
+    (region : CompactedRegion) : IO String := do
+  if (unsafe ptrEq data (loadedPart region)) && (unsafe matchesLoadedImage region bytes) then
+    -- Hash the exact captured image, never a later read of its mutable path.
+    return (← capturedHashes #[bytes])[0]!
+  IO.FS.withTempFile fun _ path => do
+    saveModuleData path name data
+    unless (← IO.FS.readBinFile path) == bytes do
+      throw <| IO.userError s!"incomplete_closure:E7.loaded_native:{name}"
+    return (← fileHashes #[path.toString])[0]!
 
 /-- Re-serialize the original loaded chains, including their cross-part sharing.
 Missing private/server/IR regions remain incomplete; disk-only hashes cannot
@@ -1444,7 +1459,7 @@ private def verifyImported (env : Environment) (name : Name)
         throwError "incomplete_closure:E7.native_dependency:{name}:{caption}"
   let (nativeInputs, nativeHashes) ← if data.isModule then loadedModuleParts env name artifact else do
     let bytes ← IO.FS.readBinFile artifact
-    let nativeIdentity ← loadedIdentity name data bytes
+    let nativeIdentity ← loadedIdentity name data bytes (← loadedRegion env artifact)
     pure (#[{path := artifact.toString, sha256 := nativeIdentity}], #[binaryHash bytes])
   let output ← field trace "outputs"
   let mut parts ← ofExcept <| output.getObjValAs? (Array String) "o"
@@ -1488,6 +1503,8 @@ private partial def collect (env : Environment) (root : Name) (seen : NameSet)
 by its parser input; only explicitly supplied imported owners are traversed.
 Cached snapshots cannot be renewed around changed bytes in the same environment. -/
 def validate (roots : Array Name) : CoreM Unit := do
+  let profiling := (← IO.getEnv "STRATALINT_INSPECTOR_PROFILE") == some "1"
+  let started ← if profiling then IO.monoNanosNow else pure 0
   let env ← getEnv
   let mut cache := checked.getState env
   let mut names : NameSet := {}
@@ -1497,6 +1514,10 @@ def validate (roots : Array Name) : CoreM Unit := do
       pure closure
     cache := { cache with closures := cache.closures.insert root closure }
     for name in closure do names := names.insert name
+  let collected ← if profiling then IO.monoNanosNow else pure 0
+  let mut exportNanos := 0
+  let mut verifyNanos := 0
+  let mut fresh := 0
   let mut retainedInputs : Array SourceInput := #[]
   for name in names do
     if name == env.header.mainModule then
@@ -1509,17 +1530,30 @@ def validate (roots : Array Name) : CoreM Unit := do
       unless (unsafe ptrEq snapshot.data env.header.moduleData[index.toNat]!) do
         throwError "incomplete_closure:E7.native_environment:{name}"
     else
+      let beforeExport ← if profiling then IO.monoNanosNow else pure 0
       let (_, next) ← exports env name cache.exports
       cache := { cache with exports := next }
+      let beforeVerify ← if profiling then IO.monoNanosNow else pure 0
       let snapshot ← verifyImported env name cache.exports
       cache := { cache with snapshots := cache.snapshots.insert name snapshot }
+      if profiling then
+        exportNanos := exportNanos + beforeVerify - beforeExport
+        verifyNanos := verifyNanos + (← IO.monoNanosNow) - beforeVerify
+        fresh := fresh + 1
     let some snapshot := cache.snapshots[name]?
       | throwError "incomplete_closure:E7.native_snapshot:{name}"
     retainedInputs := retainedInputs ++ snapshot.inputs
+  let beforeHashes ← if profiling then IO.monoNanosNow else pure 0
   unless ← unchanged retainedInputs do
     throwError "incomplete_closure:E7.native_input_changed"
   modifyEnv fun current => observedInputs.setState (checked.setState current cache)
     (retainedInputs.map (·.path))
+  if profiling then
+    let finished ← IO.monoNanosNow
+    (← IO.getStderr).putStrLn s!"LEAN_INSPECTOR_PROFILE native_roots={roots.size} \
+      fresh_modules={fresh} files={retainedInputs.size} closure_ns={collected - started} \
+      export_ns={exportNanos} verify_ns={verifyNanos} rehash_ns={finished - beforeHashes} \
+      total_ns={finished - started}"
 
 end NativeCoherence
 
@@ -3183,11 +3217,8 @@ private def isRepositoryModule (name : Name) : Bool :=
   name.toString.startsWith "D5." || name.toString.startsWith "LeanInformationAudit." ||
     name == `Trureturing
 
-/-- Complete source inputs for this module, independent of registry membership.
-A missing imported source is incomplete rather than an empty declaration set. -/
-def moduleInputs (env : Environment) (root : Name) : CoreM (Array TemplateAudit.SourceInput) := do
-  TemplateAudit.NativeCoherence.validate (#[root] ++
-    (if root == env.header.mainModule then env.header.imports.map (·.module) else #[]))
+private def moduleSourceInputs (env : Environment) (root : Name) :
+    CoreM (Array TemplateAudit.SourceInput) := do
   let mut seen : NameSet := {}
   let mut pending := [root]
   let mut paths := TemplateAudit.policyPaths
@@ -3204,6 +3235,13 @@ def moduleInputs (env : Environment) (root : Name) : CoreM (Array TemplateAudit.
       pure env.header.moduleData[index.toNat]!.imports
     pending := imports.toList.map (·.module) ++ pending
   TemplateAudit.readSourceInputs (paths.qsort (· < ·))
+
+/-- Complete source inputs for an independently requested module. Batch reports
+use the same source walk inside their union's native-validation boundaries. -/
+def moduleInputs (env : Environment) (root : Name) : CoreM (Array TemplateAudit.SourceInput) := do
+  TemplateAudit.NativeCoherence.validate (#[root] ++
+    (if root == env.header.mainModule then env.header.imports.map (·.module) else #[]))
+  moduleSourceInputs env root
 
 /-- Content touches follow actual constant dependencies, including complete
 arena/realization types, while theorem proof implementations are never entered. -/
@@ -3254,7 +3292,7 @@ def recordJson (record : BindingRecord) : MetaM Json := do
 
 /-- Records are partitioned by their actual producing module. An original
 undeclared row and a sidecar overlay remain distinguishable until the final join. -/
-def moduleJson (snapshot : JoinedRecords) (moduleName : Name)
+private def moduleJson (snapshot : JoinedRecords) (moduleName : Name)
     (registered : Array TemplateOccurrenceKey) : MetaM Json := do
   let env ← getEnv
   let originals := snapshot.originals.filter (·.occurrence.key.registrationModule == moduleName)
@@ -3269,7 +3307,24 @@ def moduleJson (snapshot : JoinedRecords) (moduleName : Name)
     ("inventory", Json.arr ((inventory env).filter
       (·.key.registrationModule == moduleName) |>.map (keyJson ∘ TemplateOccurrenceEvent.key))),
     ("registered", Json.arr (registered.map keyJson)), ("records", Json.arr rows),
-    ("inputs", Json.arr ((← moduleInputs env moduleName).map inputJson))]
+    ("inputs", Json.arr ((← moduleSourceInputs env moduleName).map inputJson))]
+
+/-- Validate the complete native union around a report transaction. Each native
+snapshot is still checked against the loaded image; shared imports are rehashed
+once per boundary, rather than once for every module that imports them. Neither
+source hashes nor a caller-supplied validation flag can authorize this API. -/
+def reportJson (modules : Array (Name × Array TemplateOccurrenceKey)) : MetaM (Array Json) := do
+  let env ← getEnv
+  let roots := #[`LeanInformationAudit.Registry] ++ modules.map Prod.fst ++
+    (if modules.any (fun row => row.1 == env.header.mainModule) then
+      env.header.imports.map (·.module) else #[])
+  TemplateAudit.NativeCoherence.validate roots
+  let snapshot ← exportSnapshot
+  let rows ← modules.mapM fun (moduleName, registered) => moduleJson snapshot moduleName registered
+  -- Compare the original snapshots after all source hashes and records have
+  -- been read. A replacement during this transaction cannot renew them.
+  TemplateAudit.NativeCoherence.validate roots
+  return rows
 
 end LeanInformationAudit.TemplateBinding
 
@@ -3307,13 +3362,13 @@ The standalone inspector requires this owner-bound API whenever Registry occurs
 in the actual import closure, including roots with an empty inventory. -/
 def finiteInformationTemplateReportDriver : InformationTemplateReportDriver := fun moduleNames => do
   let env ← getEnv
-  let snapshot ← TemplateBinding.exportSnapshot
-  moduleNames.mapM fun moduleName => do
+  let modules := moduleNames.map fun moduleName => Id.run do
     let registered := (InformationRegistry.entries env).filter
       (·.registrationModuleName == moduleName) |>.map fun entry => {
         root := moduleName, registrationModule := moduleName, theoremName := entry.theoremName,
         objectArena := entry.canonicalObjectArenaName, «catalog» := entry.effectiveCatalogId :
           TemplateOccurrenceKey }
-    TemplateBinding.moduleJson snapshot moduleName registered
+    return (moduleName, registered)
+  TemplateBinding.reportJson modules
 
 end LeanInformationAudit

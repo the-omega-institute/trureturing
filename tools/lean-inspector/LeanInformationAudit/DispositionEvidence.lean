@@ -826,8 +826,7 @@ open Lean Meta
 def informationTemplateReportDriver : InformationTemplateReportDriver := fun moduleNames => do
     let env ← getEnv
     TemplateAudit.NativeCoherence.validate #[`LeanInformationAudit.DispositionEvidence]
-    let snapshot ← TemplateBinding.exportSnapshot
-    moduleNames.mapM fun moduleName => do
+    let modules := moduleNames.map fun moduleName => Id.run do
       let finite := (InformationRegistry.entries env).filter
         (·.registrationModuleName == moduleName) |>.map fun entry => {
           root := moduleName, registrationModule := moduleName, theoremName := entry.theoremName,
@@ -837,6 +836,9 @@ def informationTemplateReportDriver : InformationTemplateReportDriver := fun mod
         (·.registrationModule == moduleName) |>.map fun entry => {
           root := moduleName, registrationModule := moduleName, theoremName := entry.theoremName,
           objectArena := entry.canonicalArena, «catalog» := entry.canonicalArena : TemplateOccurrenceKey }
-      TemplateBinding.moduleJson snapshot moduleName (finite ++ structural)
+      return (moduleName, finite ++ structural)
+    let rows ← TemplateBinding.reportJson modules
+    TemplateAudit.NativeCoherence.validate #[`LeanInformationAudit.DispositionEvidence]
+    return rows
 
 end LeanInformationAudit

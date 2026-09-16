@@ -77,4 +77,28 @@ elab "observe_empty_report_driver_coherence" : command => withPrivateSources do
 
 observe_empty_report_driver_coherence
 
+elab "observe_report_batch_coherence" : command => withPrivateSources do
+  let owner := `LeanInformationAudit.Tests.RegistrationGates.NativeCoherence.Owner
+  let plain := `LeanInformationAudit.Tests.RegistrationGates.NativeCoherence.Plain
+  let requested := #[owner, plain]
+  discard <| liftTermElabM <| finiteInformationTemplateReportDriver requested
+  let observed := NativeCoherence.lastInputs (← getEnv)
+  let complete := #[owner, plain, `LeanInformationAudit.Registry,
+    `LeanInformationAudit.Tests.RegistrationGates.NativeCoherence.Helper].all
+      (fun name => observed.contains (sourcePath name))
+  logInfo m!"[{if complete then "PASS" else "FAIL"}] native_report_batch_union_rechecked"
+  let path : System.FilePath := sourcePath owner
+  let bytes ← IO.FS.readBinFile path
+  withFile path (bytes ++ "\n-- changed between report batches\n".toUTF8) do
+    let reason ← try
+      discard <| liftTermElabM <| finiteInformationTemplateReportDriver requested
+      pure ""
+    catch error => pure (← error.toMessageData.toString)
+    let ok := reason == "incomplete_closure:E7.native_input_changed"
+    logInfo m!"[{if ok then "PASS" else "FAIL"}] native_report_batch_cached_source_rejected reason={reason}"
+  discard <| liftTermElabM <| finiteInformationTemplateReportDriver requested
+  logInfo "[PASS] native_report_batch_restored_source_accepted"
+
+observe_report_batch_coherence
+
 end LeanInformationAudit.Tests.NativeCoherence
