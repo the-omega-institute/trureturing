@@ -1,0 +1,2 @@
+**theorem 45.17（可数开放同余何时给出可度量性）。** 设 $X$ 为紧致 Hausdorff 空间，$i:\mathbb N_0\to X$ 有稠密像，并存在连续后继 $s:X\to X$ 满足 $s(i(n))=i(n+1)$。则 $X$ 上的开放后继同余至多可数。只有再证明这些同余分离点，才能由它们推出 $X$ 可度量。特别地，$\beta\mathbb N_0$ 的连续后继结构给出一个稠密可数核心但不具有这种分离性的例子。此处对应 Schneider–Zumbrägel，Example 6.1；自然同余的正确分支是对角关系或阈值—周期关系。[Schneider–Zumbrägel, Example 6.1](https://arxiv.org/html/1506.00212v4)
+

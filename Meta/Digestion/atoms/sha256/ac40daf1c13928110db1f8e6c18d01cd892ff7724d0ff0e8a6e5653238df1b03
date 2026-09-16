@@ -1,0 +1,4 @@
+**theorem 45.6（紧致 Hausdorff 幺环的有限商定理）。** 设 $R$ 为紧致 Hausdorff 拓扑幺环，乘法不必交换。则每个连续加法特征 $R_+\to\mathbb T$ 都有有限像，其中 $\mathbb T=\mathbb R/\mathbb Z$。开双边理想构成零点邻域基，有限连续环商分离点，且 $R$ 是这些有限离散环商的逆极限。此结论不要求 Noetherian 或 Artinian 条件。
+
+经典来源为 Anzai，*On Compact Topological Rings*，Theorems 2–3，pp. 614–615；幺元排除了该文所排除的非零左或右全零因子。另见 Numakura，*Theory of compact rings*，§2，Lemma 5，p. 82。下证使用紧交换群的特征分离定理，其精确出处可取 Dikranjan，*Introduction to Topological Groups*，Theorem 9.3.2 后的交换情形，printed p. 63。[Anzai, Theorems 2–3, pp. 614–615](https://www.jstage.jst.go.jp/article/pjab1912/19/10/19_10_613/_pdf#page=2)；[Numakura, §2, Lemma 5, p. 82](https://www.math.okayama-u.ac.jp/mjou/mjou1-46/mjou_pdf/mjou_05/mjou_05_079.pdf#page=4)；[Dikranjan, Theorem 9.3.2 and abelian case, p. 63](https://users.dimi.uniud.it/~dikran.dikranjan/ITG.pdf#page=68)
+
