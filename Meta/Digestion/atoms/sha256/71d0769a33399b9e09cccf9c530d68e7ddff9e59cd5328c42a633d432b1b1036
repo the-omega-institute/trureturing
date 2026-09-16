@@ -1,0 +1,10 @@
+**theorem 37.1 (The pointwise-completion mechanism).** The space $\mathscr E$ is a compact Hausdorff monoid under actual function composition. Its unit is $T^0=\operatorname{id}_K$, its submonoid $\mathcal I$ is dense, and every right translation is continuous. Every finite iterate commutes with every element of $\mathscr E$, and its left translation is continuous. Moreover,
+$$
+H(p(x))=H(x)+\vartheta(p)\qquad(p\in\mathscr E,\ x\in K),
+$$
+and $\vartheta:\mathscr E\to\mathbb T$ is a continuous surjective monoid homomorphism:
+$$
+\vartheta(pq)=\vartheta(p)+\vartheta(q),\qquad \vartheta(T^n)=n\delta.
+$$
+Compact Hausdorff $K$ and continuous $T$ suffice for the compact right-topological monoid assertion; metrizability is not needed for that assertion. No separate or joint continuity of arbitrary composition is included in it.[^rro37_semigroup]
+

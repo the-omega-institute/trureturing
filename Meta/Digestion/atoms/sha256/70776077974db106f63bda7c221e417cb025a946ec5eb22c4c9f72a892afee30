@@ -1,0 +1,36 @@
+**Proof.** All products have output phase $a+b$. At a nonsplit phase, nonemptiness of the evaluation fibres leaves exactly the unique lift.
+
+Suppose $a+b=E_m$. For each $s\in\mathcal S(x)$, Theorem 37.9 supplies the representative $P_a^s$ of $x$. With any representative $q$ of $y$,
+$$
+e(P_a^s q)=P_a^s(y)=x_m^s.
+$$
+Thus every claimed sign occurs.
+
+These are all the possibilities when the left representative is a remainder operator. An additional left representative is possible only when $x=Z(n)$, in which case it is $T^n$. The split sum condition then forces
+$$
+H(y)=E_m-n\delta=E_{m+n},
+$$
+so $y=x_{m+n}^t$ for one sign $t$. Its output is
+$$
+e(T^nq)=T^ny=x_m^t.
+$$
+Since $x=Z(n)$ has $\mathcal S(x)=\Sigma$, this adds no sign beyond those already listed. The same reasoning covers $n=0$. This proves the exact formula.
+
+If $e(q)=0_K$, then $e(pq)=p(q0_K)=p0_K=e(p)$, proving the strict right-unit identity directly. The left-zero identity follows from the formula and $\mathcal S(0_K)=\Sigma$. A strict right unit $r$, tested against $0_K$, must have phase zero, so $r=0_K$. A strict left unit $l$, tested against $0_K$, must equal $0_K$ because $l\star0_K=\{l\}$. But $0_K\star x_1^+=\{x_1^+,x_1^-\}$, so no strict left unit exists. This same pair demonstrates noncommutativity.
+
+For the bracketings, first record the exact intermediate sign propagation:
+$$
+\bigcup_{w\in x\star y}\mathcal S(w)=
+\begin{cases}
+\mathcal S(x),&a+b\in E,\\
+\Sigma,&a+b\notin E.
+\end{cases}
+$$
+In the first case the intermediate outputs are exactly the split points indexed by $\mathcal S(x)$. In the second case the unique intermediate point is nonsplit, so its sign set is $\Sigma$.
+
+Every intermediate output has the expected sum phase. Hence when $\sigma$ is nonsplit, both bracketings give its unique lift. When $\sigma=E_m$, the left bracketing is determined by the displayed union of intermediate sign sets, proving its formula. For the right bracketing, every $w\in y\star z$ has phase $b+c$, and the rule for $x\star w$ depends only on $\mathcal S(x)$ and the total phase. Since $y\star z$ is nonempty, taking the union leaves exactly $\{x_m^s:s\in\mathcal S(x)\}$.
+
+It remains to verify the common-witness assertion rather than infer it from associativity. If $x$ is split, its unique representative is $P_a^s$. This outer operator fixes sign $s$ in every product $pqr$ with split total phase. If $x$ is nonsplit, both representatives $P_a^+$ and $P_a^-$ are available, and they realize both signs at such a total phase. All products have phase $\sigma$, so there can be no other values. This proves the formula for $\mathcal W_3$.
+
+The bracketings can therefore differ only at a split final phase, with a nonsplit left intermediate phase and a singleton $\mathcal S(x)$. These are exactly the three stated conditions. Under them one bracketing has both distinct lifts and the other has only the sign of $x$; otherwise they agree. $\square$
+

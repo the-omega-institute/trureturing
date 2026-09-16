@@ -1,0 +1,64 @@
+**theorem 36.14 (Atomic full laws, noncommuting limits, and moving observation depths).** Fix $0<p<1$ and put
+$$
+d_{L,p}(n)=D_{L,p}(n,Z(0)).
+$$
+For every finite $n$,
+$$
+\|P_p^n\delta_{Z(0)}-m\|_{\mathrm{TV}}=2.
+$$
+Nevertheless,
+$$
+\lim_{L\to\infty}\lim_{n\to\infty}d_{L,p}(n)=0,
+\qquad
+\lim_{n\to\infty}\lim_{L\to\infty}d_{L,p}(n)=2.
+$$
+
+More generally, let $L_n\ge1$ and $0<p_n<1$, and set $s_n=\sqrt{np_n(1-p_n)}$. Each expression below uses the single fixed kernel $P_{p_n}$ for all $n$ steps in that expression. Then
+$$
+\frac{G_{L_n}}{s_n}\longrightarrow0
+\quad\Longrightarrow\quad
+e_{L_n,p_n}(n)\longrightarrow0,
+$$
+whereas
+$$
+\frac{s_n+1}{G_{L_n}}\longrightarrow0
+\quad\Longrightarrow\quad
+d_{L_n,p_n}(n)\longrightarrow2.
+$$
+For fixed $p$, these imply
+$$
+L_n-\frac12\log_\phi n\longrightarrow-\infty
+\quad\Longrightarrow\quad e_{L_n,p}(n)\longrightarrow0,
+$$
+$$
+L_n-\frac12\log_\phi n\longrightarrow+\infty
+\quad\Longrightarrow\quad d_{L_n,p}(n)\longrightarrow2.
+$$
+
+**Proof.** The exact law from $Z(0)$ is supported on the finite set $\{Z(0),\ldots,Z(n)\}$. This set has $m$-mass zero by atomlessness, proving singularity and full variation two.
+
+For each fixed depth, Theorem 36.10 gives $d_{L,p}(n)\to0$. In the other order, the readout support at time $n$ meets at most $n+1$ cylinders, so testing on their union gives
+$$
+d_{L,p}(n)\ge2[1-(n+1)\alpha^L]_+.
+$$
+For fixed $n$ this tends to two as $L\to\infty$. The two iterated limits follow.
+
+The sufficient moving-depth condition is an immediate application of the uniform upper bound. For the opposite condition, put $Q_n=G_{L_n}$ and
+$$
+t_n=\sqrt{\frac{Q_n}{s_n+1}}.
+$$
+Then $t_n\to\infty$, and Theorem 36.11 gives
+$$
+d_{L_n,p_n}(n)
+\ge2\left[1-t_n^{-2}-(2t_ns_n+1)\alpha^{L_n}\right]_+.
+$$
+Using $\alpha^{L_n}\le\phi/Q_n$,
+$$
+(2t_ns_n+1)\alpha^{L_n}
+\le2\phi\sqrt{\frac{s_n+1}{Q_n}}+\frac\phi{Q_n}
+\longrightarrow0.
+$$
+The lower bound therefore tends to two, as does the distance itself. Finally, for fixed $p$, $s_n$ is a positive constant times $\sqrt n$, and the growth of $G_L$ converts the two conditions into the asserted depth conditions. The bounded critical window is not assigned a limiting profile by these statements.
+
+The general distinction between weak-metric mixing and full variation for irrational circle walks is also discussed in [Berkes–Borda, introduction](https://arxiv.org/html/2204.00274v1); the equalities here concern the actual measures on $K$. $\square$
+

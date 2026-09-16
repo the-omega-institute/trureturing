@@ -13319,3 +13319,1942 @@ Its positional stationarity must not be transferred to $\nu$, nor confused with 
 Reference: reciprocal-prefix metrics and bounded-type Sturmian geometry are treated in Bellissard–Julien, [§4.1 and §5.2](https://arxiv.org/pdf/1202.4330v2#page=11). Their metric uses bilateral agreement around the origin; the one-sided metric and exact measure in this theorem are determined by the preceding proofs.
 
 ## 追加锚（本行以下为增补区）
+## 36. Quadratic observation-size mixing for the Bernoulli successor
+
+**Definition 36.1 (Fixed carrier, phase geometry, and observation classes).** Retain the original carrier and maps of Definition 20.1:
+$$
+\phi=\frac{1+\sqrt5}{2},\qquad \alpha=\phi^{-1},\qquad \beta=\alpha^2,
+$$
+$$
+K=\{x\in\{0,1\}^{\mathbb N}:x_jx_{j+1}=0\text{ for every }j\},\qquad
+H(x)=\left[\sum_{j\ge0}(-1)^{j+1}\alpha^{j+2}x_j\right].
+$$
+Here $T$ is precisely the continuous surjective successor of Definition 20.1, and $R(\theta)=\theta+[\phi]$. We use the established identities
+$$
+HT=RH,\qquad T Z(j)=Z(j+1).
+$$
+For $L\ge1$, write
+$$
+q_L(x)=(x_0,\ldots,x_{L-1}),\qquad
+\mathcal W_L=q_L[K],\qquad Q_L=|\mathcal W_L|=G_L,
+$$
+where $G_0=1$, $G_1=2$, and $G_{j+2}=G_{j+1}+G_j$. For $w\in\mathcal W_L$, put $C_w=q_L^{-1}(\{w\})$.
+
+The exact geometry imported from Theorem 20.2 is as follows. The exceptional phases are
+$$
+e_r=[-r\phi],\qquad E=\{e_r:r\ge1\}.
+$$
+Every phase outside $E$ has a singleton fiber, and the fiber over $e_r$ is $\{x_r^-,x_r^+\}$. Every $C_w$ has an open phase-arc interior $J_w$ satisfying
+$$
+H^{-1}(J_w)\subseteq C_w\subseteq H^{-1}(\overline{J_w}),\qquad
+H[C_w]=\overline{J_w}.
+$$
+The arcs $J_w$ partition the circle away from the cuts $e_1,\ldots,e_{Q_L}$. Their lengths are $\alpha^L$ when $w_{L-1}=0$ and $\alpha^{L+1}$ when $w_{L-1}=1$. Theorem 20.4 gives
+$$
+Tx_r^\pm=x_{r-1}^\pm\quad(r\ge2),\qquad
+Tx_1^-=Tx_1^+=Z(0).
+$$
+Let $\lambda$ denote normalized Haar measure on $\mathbb T=\mathbb R/\mathbb Z$. These are the standing carrier hypotheses throughout this section. Mathematical reference: [§20, especially Theorems 20.2 and 20.4](https://github.com/the-omega-institute/trureturing/blob/3a015d0d429b5ef52dcf7f04f26fa9f2c28678f0/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md).
+
+**theorem 36.2 (The invariant Haar lift and its cylinder masses).** There is a unique Borel probability measure $m$ on $K$ such that $H_\#m=\lambda$. It is atomless, regular, and satisfies $T_\#m=m$. Its cylinder masses are
+$$
+m(C_w)=\alpha^L\quad\text{if }w_{L-1}=0,
+\qquad
+m(C_w)=\alpha^{L+1}\quad\text{if }w_{L-1}=1.
+$$
+In particular,
+$$
+\min_{w\in\mathcal W_L}m(C_w)=\alpha^{L+1},\qquad
+\max_{w\in\mathcal W_L}m(C_w)=\alpha^L,
+$$
+$$
+1\le Q_L\alpha^L\le\phi,\qquad
+\frac{\alpha}{Q_L}\le m(C_w)\le\frac{\phi}{Q_L}.
+$$
+
+**Proof.** Define a section $\iota:\mathbb T\to K$ by taking the unique lift outside $E$ and setting $\iota(e_r)=x_r^-$. For every positive-depth cylinder,
+$$
+\iota^{-1}(C_w)
+=(J_w\setminus E)\cup\{e_r:\iota(e_r)\in C_w\}.
+$$
+This is Borel. The cylinders form a countable basis of $K$, so $\iota$ is Borel. Define $m=\iota_\#\lambda$. Since $H\iota$ is the identity, $H_\#m=\lambda$. The inverse image under $\iota$ of any singleton is contained in a singleton of the circle, proving atomlessness. A finite Borel measure on the compact metric space $K$ is regular.
+
+If $\eta$ is any probability with $H_\#\eta=\lambda$, the two arc inclusions in Definition 36.1 give
+$$
+\lambda(J_w)\le\eta(C_w)\le\lambda(\overline{J_w}).
+$$
+Both outer quantities equal the arc length. Thus every such lift has the displayed cylinder masses. Cylinders generate the Borel sigma algebra and are closed under intersections, so these masses determine the measure uniquely. Moreover,
+$$
+H_\#(T_\#m)=R_\#\lambda=\lambda,
+$$
+which proves invariance by uniqueness.
+
+Admissible words ending in zero and in one both exist at every positive depth, proving the extrema. Summing the mass bounds over the $Q_L$ cylinders gives
+$$
+Q_L\alpha^{L+1}\le1\le Q_L\alpha^L.
+$$
+Since $\alpha^{-1}=\phi$, the remaining inequalities follow. $\square$
+
+**Definition 36.3 (Successor kernel, full variation, and mixing time).** For $0\le p\le1$ and a finite signed Borel measure $\eta$ on $K$, define
+$$
+P_p\eta=(1-p)\eta+pT_\#\eta.
+$$
+Thus the zero step is the identity on the original carrier. Let $\mathcal P(K)$ be the Borel probability measures on $K$. We use full variation:
+$$
+\|\xi\|_{\mathrm{TV}}=|\xi|(K),\qquad
+\|\mu-\nu\|_{\mathrm{TV}}=2\sup_A|\mu(A)-\nu(A)|
+$$
+for probabilities. On a finite alphabet the norm is the sum of absolute coordinate differences, without a factor of one half.
+
+For $n\in\mathbb N_0$, $L\ge1$, and $x\in K$, define
+$$
+D_{L,p}(n,x)=\|q_{L\#}P_p^n\delta_x-q_{L\#}m\|_{\mathrm{TV}},
+$$
+$$
+e_{L,p}(n)=\sup_{\eta\in\mathcal P(K)}
+\|q_{L\#}P_p^n\eta-q_{L\#}m\|_{\mathrm{TV}}.
+$$
+Both quantities lie in $[0,2]$. Put
+$$
+v_p=p(1-p),\qquad V=np(1-p),\qquad s=\sqrt V.
+$$
+For $0<\varepsilon<1$, define
+$$
+\tau_{L,p}(\varepsilon)=\min\{n\in\mathbb N_0:e_{L,p}(n)\le\varepsilon\},
+$$
+with value $+\infty$ if the set is empty.
+
+**theorem 36.4 (Exact binomial law on the original successor).** For $0<p<1$, $n\ge0$, and every finite signed Borel measure $\eta$,
+$$
+P_p^n\eta
+=\sum_{j=0}^n\binom njp^j(1-p)^{n-j}(T^j)_\#\eta.
+$$
+Write $b_{n,p}(j)=\binom njp^j(1-p)^{n-j}$ and
+$$
+\nu_{n,p}=\sum_{j=0}^n b_{n,p}(j)\delta_{[j\phi]}.
+$$
+Then
+$$
+H_\#P_p^n\eta=\nu_{n,p}*H_\#\eta.
+$$
+In particular, $H_\#P_p^n\delta_x$ is the translate of $\nu_{n,p}$ by $H(x)$. Also $P_p^nm=m$ and $P_p^{n+r}=P_p^nP_p^r$.
+
+At every incoming split fiber, the iterates in the binomial sum are exactly
+$$
+T^j x_r^\pm=x_{r-j}^\pm\quad(0\le j<r),\qquad
+T^j x_r^\pm=Z(j-r)\quad(j\ge r).
+$$
+Consequently the two branches remain distinct until their actual coalescence, including under the identity term $j=0$.
+
+**Proof.** Pushforward is linear, and $T_\#(T^j)_\#=(T^{j+1})_\#$. Applying $P_p$ to the asserted formula and collecting adjacent terms proves the next case by Pascal's identity; the case $n=0$ is the identity. The phase formula follows from $HT^j=R^jH$. Invariance follows from Theorem 36.2, and the semigroup identity follows from composition of powers of the same operator. The split formulas follow by iterating the identities of Theorem 20.4 until the seam and then using $T^jZ(0)=Z(j)$. $\square$
+
+**theorem 36.5 (Dirac reduction and monotonicity without a quotient chain).** For every $L\ge1$, $0\le p\le1$, and $n,r\ge0$,
+$$
+e_{L,p}(n)=\max_{x\in K}D_{L,p}(n,x),
+$$
+$$
+e_{L,p}(n+r)\le e_{L,p}(n),\qquad
+e_{L,p}(n)\le e_{L+1,p}(n),
+$$
+$$
+e_{L,p}(0)=2(1-\alpha^{L+1}).
+$$
+Thus the first-passage definition of $\tau$ agrees with the definition requiring the error bound at every subsequent time.
+
+**Proof.** For every initial probability $\eta$, its readout vector is the coordinatewise integral of the readout vectors from Diracs. Hence
+$$
+\|q_{L\#}P_p^n\eta-q_{L\#}m\|_{\mathrm{TV}}
+\le\int_K D_{L,p}(n,x)\,d\eta(x)
+\le\sup_xD_{L,p}(n,x).
+$$
+The reverse inequality follows by taking $\eta=\delta_x$. Each coordinate of the readout vector is a finite linear combination of the continuous functions $\mathbf1_{C_w}\circ T^j$. Therefore $D_{L,p}(n,\cdot)$ is continuous and attains its supremum on $K$.
+
+The full semigroup gives
+$$
+e_{L,p}(n+r)
+=\sup_{\eta\in\mathcal P(K)}
+\|q_{L\#}P_p^n(P_p^r\eta)-q_{L\#}m\|_{\mathrm{TV}}
+\le e_{L,p}(n),
+$$
+since $P_p^r\eta$ is a probability. No transition matrix on $\mathcal W_L$ enters this argument. Truncation from depth $L+1$ to depth $L$ contracts variation, proving the depth monotonicity.
+
+For a point mass at a readout class $w$, the distance to $q_{L\#}m$ is $2(1-m(C_w))$. Maximizing and using Theorem 36.2 gives the time-zero formula. Finally, time monotonicity proves the assertion about the two definitions of mixing time. $\square$
+
+**theorem 36.6 (Weighted interval discrepancy, including endpoint atoms).** For a probability measure $\rho$ on the circle, define
+$$
+\widehat\rho(k)=\int_{\mathbb T}e^{2\pi ik\theta}\,d\rho(\theta).
+$$
+Let $\mathscr D(\rho)$ be the supremum of $|\rho(A)-\lambda(A)|$ over circle arcs, allowing open, closed, and either half-open endpoint convention, as well as singletons, the empty set, and the whole circle. For every integer $M\ge1$,
+$$
+\mathscr D(\rho)
+\le\frac6{M+1}+\frac4\pi\sum_{k=1}^M\frac{|\widehat\rho(k)|}{k}.
+$$
+The bound is invariant under translation of $\rho$, and applies in particular to arbitrary real probability weights on a finite support.
+
+**Proof.** The classical empirical Erdős–Turán inequality for half-open intervals has the displayed constants. For a finitely supported measure with rational probability weights, repeat each support point according to its numerator after passing to a common denominator. The empirical inequality then gives exactly the asserted inequality.
+
+For arbitrary real weights on that same finite support, choose rational probability vectors converging coordinatewise to the given vector. The sum of their absolute coordinate differences tends to zero. This bounds, uniformly over all measurable sets, the difference between the corresponding masses, and also bounds the difference of every Fourier coefficient. Passing to the limit proves the assertion for every finitely supported probability and every half-open arc.
+
+For a general probability, identify the circle with $[0,1)$ and push it forward by $t\mapsto\lfloor Nt\rfloor/N$. The resulting measures have finite support and converge weakly to the original measure: the displacement tends uniformly to zero, so integrals of continuous functions converge. For any half-open arc whose endpoints have zero original mass, its mass also converges, by pointwise convergence of the indicators away from those endpoints. The Fourier coefficients converge as well. The inequality therefore holds for all such arcs.
+
+A probability has at most countably many atoms. Any open arc is an increasing union of half-open arcs with non-atomic endpoints approaching its endpoints from inside. Any proper closed arc is a decreasing intersection of half-open arcs with non-atomic endpoints approaching from outside. Continuity of measures and convergence of arc lengths prove the same bound for both open and closed arcs. Either remaining endpoint convention is sandwiched between those two values. Shrinking closed arcs proves the singleton bound; complements also handle a circle with one point removed. Thus no endpoint atom is discarded or assumed absent.
+
+Translations preserve the family of arcs, and multiply Fourier coefficients by unimodular factors. This proves the last assertions. The imported empirical inequality is [Rivat–Tenenbaum, equation (1.2), with the admissible pair stated at the beginning of manuscript p. 2](https://tenenb.perso.math.cnrs.fr/PPP/ET.pdf). The probability-measure formulation is also stated in [Ruzsa, §2, equations (2.1)–(2.3)](https://korandi.org/docs/misc/setsgraphsnumbers/setsgraphsnumbers43.pdf). $\square$
+
+**theorem 36.7 (Golden spacing and the log-free Gaussian frequency sum).** For every integer $k\ge1$,
+$$
+\|k\phi\|>\frac1{4k},
+$$
+where $\|t\|$ denotes distance to the nearest integer. For $s\ge1$, let $M=2^J$ be the largest power of two not exceeding $s$. Then
+$$
+\sum_{k=1}^M\frac{e^{-8s^2\|k\phi\|^2}}{k}\le\frac{16}{s}.
+$$
+
+**Proof.** The established rational estimate says that for a rational $q$ with reduced positive denominator $d$,
+$$
+\left|\phi-q\right|>\frac1{\sqrt5\,d^2+d}.
+$$
+Choose an integer $a$ nearest to $k\phi$ and apply this to $a/k$, whose reduced denominator is at most $k$. Then
+$$
+\|k\phi\|
+>\frac1{\sqrt5\,k+1}
+\ge\frac1{(\sqrt5+1)k}
+>\frac1{4k}.
+$$
+This uses the exact rational-denominator statement of [GoldenHurwitzBound](https://github.com/the-omega-institute/trureturing/blob/7a2f78d2072b99bfa7b599db4ee342716fcd18dc/D5/S1/Depth/GoldenHurwitzBound.lean).
+
+Partition $1,\ldots,M$ into bands
+$$
+B_i=\{k\in\mathbb N:2^{i-1}<k\le2^i\},\qquad 0\le i\le J.
+$$
+In particular $B_0=\{1\}$. Put $m_i=2^i$ and $\delta_i=1/(4m_i)$. The signed representatives of $k\phi$ in $(-1/2,1/2]$, for $k\in B_i$, have distance greater than $\delta_i$ from zero. Distinct representatives have circle distance greater than $\delta_i$, because their frequency difference is a nonzero integer of absolute value at most $m_i$.
+
+Order the positive representatives by distance from zero, and separately order the absolute values of the negative representatives. In either list the $r$-th term is at least $r\delta_i$. It is essential here to keep the two sides separate; the folded distances are not asserted to be mutually separated. Consequently,
+$$
+\sum_{k\in B_i}e^{-8s^2\|k\phi\|^2}
+\le2\sum_{r\ge1}\exp\left(-\frac{s^2r^2}{2m_i^2}\right).
+$$
+Since $1/k\le2/m_i$ on the band, writing $t_i=s/m_i\ge1$ gives
+$$
+\sum_{k\in B_i}\frac{e^{-8s^2\|k\phi\|^2}}k
+\le\frac4{m_i}\sum_{r\ge1}e^{-t_i^2r^2/2}.
+$$
+For $t\ge1$, the inequality $r^2-1\ge3(r-1)$ for $r\ge1$ implies
+$$
+\sum_{r\ge1}e^{-t^2r^2/2}
+\le e^{-t^2/2}\sum_{r\ge1}e^{-3(r-1)/2}
+<2e^{-t^2/2}.
+$$
+Thus the contribution of the band is at most $8t_i e^{-t_i^2/2}/s$.
+
+Now $t_i=t_0'2^{J-i}$ with $t_0'=s/M\in[1,2)$. The function $t\mapsto te^{-t^2/2}$ is nonincreasing on $[1,\infty)$, so
+$$
+\sum_{i=0}^J t_i e^{-t_i^2/2}
+\le\sum_{r\ge0}2^r e^{-4^r/2}<2.
+$$
+Indeed the term at $r=0$ is less than one. For $r\ge1$, $4^r\ge4r$, so the remaining sum is bounded by $\sum_{r\ge1}(2e^{-2})^r<1$. Summing the band estimates proves the result. $\square$
+
+**theorem 36.8 (Variance-uniform binomial rotation discrepancy).** For every $0<p<1$ and $n\ge1$,
+$$
+\mathscr D(\nu_{n,p})
+\le\min\left\{1,\frac{64}{\sqrt{np(1-p)}}\right\}.
+$$
+Equivalently, the same bound holds simultaneously for every translation of the binomial rotation law and every arc with any endpoint convention.
+
+**Proof.** Direct multiplication gives
+$$
+\widehat\nu_{n,p}(k)=(1-p+pe^{2\pi ik\phi})^n,
+$$
+$$
+|1-p+pe^{2\pi ik\phi}|^2
+=1-4p(1-p)\sin^2(\pi k\phi).
+$$
+Since $\sin(\pi d)\ge2d$ for $0\le d\le1/2$, and $1-u\le e^{-u}$ for $0\le u\le1$,
+$$
+|\widehat\nu_{n,p}(k)|
+\le e^{-2np(1-p)\sin^2(\pi k\phi)}
+\le e^{-8s^2\|k\phi\|^2}.
+$$
+If $s\ge1$, choose the cutoff $M$ of Theorem 36.7. Theorems 36.6 and 36.7 yield
+$$
+\mathscr D(\nu_{n,p})
+\le\frac6{M+1}+\frac{64}{\pi s}
+\le\frac{12+64/\pi}{s}
+<\frac{64}{s}.
+$$
+For $s<1$, the trivial bound $\mathscr D\le1$ suffices. Translation and endpoint uniformity are already included in Theorem 36.6.
+
+The corresponding upper square-root bound for a fixed nondegenerate integer-step distribution and a badly approximable rotation is established in [Berkes–Borda, Proposition 2.1 and the following paragraph](https://real.mtak.hu/83655/1/paper_MTMT3.pdf#page=6). The displayed proof specifies a single constant for all Bernoulli parameters after normalization by their variance. $\square$
+
+**theorem 36.9 (Why irrationality alone cannot replace golden spacing).** Let $\theta$ be irrational and suppose that along some integers $k_\ell\to\infty$,
+$$
+k_\ell\|k_\ell\theta\|\longrightarrow0.
+$$
+For the Bernoulli rotation law with angle $\theta$ and parameter $1/2$, an estimate $\mathscr D=O(n^{-1/2})$ fails, even with a constant allowed to depend on $\theta$.
+
+**Proof.** For any circle probability $\rho$ and $k\ge1$, integration against the cumulative distribution difference gives
+$$
+|\widehat\rho(k)|\le2\pi k\,\mathscr D(\rho).
+$$
+For completeness, put $\xi=\rho-\lambda$ on $[0,1)$ and $F(t)=\xi([0,t])$. Since $\xi$ has total mass zero, Fubini applied to $e^{2\pi ikx}-1$ gives
+$$
+\widehat\rho(k)=-2\pi ik\int_0^1e^{2\pi ikt}F(t)\,dt.
+$$
+The discrepancy definition bounds $|F(t)|$, including any endpoint atoms, proving the inequality.
+
+Write $d_\ell=\|k_\ell\theta\|$ and choose
+$$
+n_\ell=\left\lfloor\frac1{16d_\ell^2}\right\rfloor.
+$$
+For all sufficiently large $\ell$, $d_\ell\le1/8$, and
+$$
+|\widehat\nu^{\theta}_{n_\ell,1/2}(k_\ell)|
+=|\cos(\pi d_\ell)|^{n_\ell}
+\ge(1-5d_\ell^2)^{n_\ell}
+\ge e^{-10n_\ell d_\ell^2}
+\ge e^{-5/8}.
+$$
+Here $\cos u\ge1-u^2/2$, $\pi^2<10$, and $\log(1-u)\ge-2u$ for $0\le u\le1/2$ justify every inequality. Also $\sqrt{n_\ell}/2\ge1/(\sqrt{128}\,d_\ell)$. Therefore
+$$
+\frac{\sqrt{n_\ell}}2\,
+\mathscr D(\nu^{\theta}_{n_\ell,1/2})
+\ge\frac{e^{-5/8}}{2\pi\sqrt{128}\,k_\ell d_\ell}
+\longrightarrow\infty.
+$$
+Such irrationals exist. For example, $\theta=\sum_{r\ge1}10^{-r!}$ is irrational because its decimal expansion has arbitrarily long zero runs and infinitely many nonzero digits, hence is not eventually periodic. For $k_r=10^{r!}$, its positive tail gives $\|k_r\theta\|\le2k_r^{-r}$ for $r\ge2$. Thus $k_r\|k_r\theta\|\to0$. $\square$
+
+**theorem 36.10 (Uniform finite-readout upper bound).** For every $L\ge1$, $0<p<1$, and $n\ge1$,
+$$
+e_{L,p}(n)
+\le\min\left\{2,\frac{64G_L}{\sqrt{np(1-p)}}\right\}.
+$$
+The bound is simultaneous over all initial probabilities on $K$, not merely over natural-core initial states.
+
+**Proof.** Fix any $x\in K$ and let $\rho=H_\#P_p^n\delta_x$. By Theorem 36.4 this is a translate of $\nu_{n,p}$. For every observation cylinder,
+$$
+\rho(J_w)\le P_p^n\delta_x(C_w)\le\rho(\overline{J_w}).
+$$
+Both phase-arc probabilities differ from their common Haar length $m(C_w)$ by at most $64/s$, by Theorem 36.8. Hence
+$$
+|P_p^n\delta_x(C_w)-m(C_w)|\le\frac{64}{s}.
+$$
+This sandwich remains valid if the law charges either member of a split fiber: it does not assign the boundary mass to a fictitious common endpoint convention. Summing over the $Q_L=G_L$ classes proves $D_{L,p}(n,x)\le64G_L/s$. The full-variation bound by two and the Dirac reduction of Theorem 36.5 finish the proof. $\square$
+
+**theorem 36.11 (Concentration witnesses and small-variance witnesses).** Write $[a]_+=\max\{a,0\}$. For every $L\ge1$, $0\le p\le1$, $n\ge0$, $x\in K$, and $t>0$,
+$$
+D_{L,p}(n,x)
+\ge2\left[1-t^{-2}-(2ts+1)\alpha^L\right]_+.
+$$
+There are also the bounds
+$$
+D_{L,p}(n,x)\ge2[1-2V-\alpha^L]_+,
+$$
+$$
+e_{L,p}(n)\ge2[1-2V-\alpha^{L+1}]_+.
+$$
+The first two inequalities hold in particular for the fixed initial state $Z(0)$. An explicit original-carrier initial state witnesses the last inequality.
+
+**Proof.** Let $J$ have the binomial distribution with parameters $n,p$. When $s>0$, Chebyshev's inequality gives
+$$
+\Pr(|J-np|\le ts)\ge1-t^{-2}.
+$$
+The interval $[np-ts,np+ts]$ contains at most $2ts+1$ integers. Define the set of readout classes
+$$
+A=\{q_L(T^j x):0\le j\le n,\ |j-np|\le ts\}.
+$$
+The actual binomial successor law assigns $A$ probability at least $1-t^{-2}$, whereas
+$$
+q_{L\#}m(A)\le(2ts+1)\alpha^L.
+$$
+Testing full variation on $A$ proves the first inequality. If $s=0$, the binomial variable is constant, the corresponding index set is a singleton, and the same lower bound follows directly.
+
+For the small-variance estimates, set $h=\min\{p,1-p\}$ and choose $j_*=0$ if $p\le1/2$, and $j_*=n$ if $p>1/2$. Then
+$$
+\Pr(J=j_*)=(1-h)^n\ge1-nh\ge1-2V,
+$$
+since $V=nh(1-h)$ and $1-h\ge1/2$. The readout class $q_L(T^{j_*}x)$ has Haar mass at most $\alpha^L$. Testing on that class proves the second inequality.
+
+To obtain the minimum-mass class explicitly, put $N_L=G_{L-1}$. Its natural expansion $Z(N_L)$ has prefix $0^{L-1}1$, whose cylinder mass is $\alpha^{L+1}$. For every $j\ge0$, define
+$$
+z_{L,j}=Z(N_L-j)\quad\text{when }j\le N_L,
+$$
+$$
+z_{L,j}=x_{j-N_L}^-\quad\text{when }j>N_L.
+$$
+The original successor identities give $T^jz_{L,j}=Z(N_L)$ in both cases. In the second case this follows by coalescing at time $j-N_L$ and then taking $N_L$ natural successor steps. Starting at $z_{L,j_*}$ therefore places probability at least $1-2V$ in a class of mass exactly $\alpha^{L+1}$. This proves the last bound with an actual specified witness. $\square$
+
+**theorem 36.12 (Quadratic mixing time at every fixed accuracy).** For every $L\ge1$, $0<p<1$, and $0<\varepsilon<1$,
+$$
+\frac{G_L^2}{16384p(1-p)}
+<\tau_{L,p}(\varepsilon)
+\le\left\lceil\frac{4096G_L^2}{\varepsilon^2p(1-p)}\right\rceil
+\le\left(4096\varepsilon^{-2}+1\right)\frac{G_L^2}{p(1-p)}.
+$$
+In particular,
+$$
+\frac{G_L^2}{16384p(1-p)}
+<\tau_{L,p}(1/4)
+\le65537\frac{G_L^2}{p(1-p)}.
+$$
+More explicitly, whenever
+$$
+np(1-p)\le\frac{G_L^2}{16384},
+$$
+one has both $e_{L,p}(n)>1$ and $D_{L,p}(n,Z(0))>1/4$.
+
+**Proof.** Write $Q=G_L$. First suppose $Q\ge16$ and $V\le Q^2/16384$, so $s\le Q/128$. Theorem 36.2 gives $\alpha^L\le\phi/Q$, and therefore
+$$
+(4s+1)\alpha^L
+\le\phi\left(\frac1{32}+\frac1Q\right)
+\le\frac{3\phi}{32}<\frac3{16}.
+$$
+Taking $t=2$ in Theorem 36.11 yields, for every initial point $x$,
+$$
+D_{L,p}(n,x)>2\left(\frac34-\frac3{16}\right)=\frac98.
+$$
+
+If $Q<16$, then $V<1/64$. The small-variance worst-start witness gives
+$$
+e_{L,p}(n)>2\alpha-\frac1{16}>1,
+$$
+because $\alpha^{L+1}\le\alpha^2=1-\alpha$. For the particular initial state $Z(0)$, the other small-variance bound gives
+$$
+D_{L,p}(n,Z(0))>2(1-\alpha)-\frac1{16}
+=2\beta-\frac1{16}>\frac14.
+$$
+All numerical comparisons follow from $\alpha=(\sqrt5-1)/2$. This covers every depth, including the smallest ones, and every variance satisfying the stated condition.
+
+Thus no integer $n\le G_L^2/(16384p(1-p))$ can meet any accuracy below one. This proves the strict lower bound for the first-passage time; no additive correction is needed.
+
+For the upper bound, take
+$$
+n=\left\lceil\frac{4096G_L^2}{\varepsilon^2p(1-p)}\right\rceil.
+$$
+Then $\sqrt{np(1-p)}\ge64G_L/\varepsilon$, so Theorem 36.10 gives $e_{L,p}(n)\le\varepsilon$. This also proves finiteness of the mixing time. Finally, $G_L\ge2$ and $p(1-p)\le1/4$, so $G_L^2/(p(1-p))\ge16>1$. The ceiling is consequently bounded by the last expression in the theorem. Substitution of $\varepsilon=1/4$ gives $4096\varepsilon^{-2}+1=65537$. $\square$
+
+**theorem 36.13 (Iteration exponent and the observation-depth budget).** For fixed $0<\varepsilon<1$,
+$$
+\log\tau_{L,p}(\varepsilon)
+=2\log G_L-\log(p(1-p))+O_\varepsilon(1),
+$$
+where the bounded term is uniform over $L\ge1$ and $0<p<1$. In particular, for every fixed $0<p<1$,
+$$
+\lim_{L\to\infty}\frac{\log\tau_{L,p}(\varepsilon)}L=2\log\phi,
+\qquad
+\lim_{L\to\infty}\frac{\log\tau_{L,p}(\varepsilon)}{\log G_L}=2.
+$$
+These assertions include $p=1/2$.
+
+For sufficiently large $s=\sqrt{np(1-p)}$, define the largest mixed observation depth by
+$$
+\mathcal L_{p,\varepsilon}(n)
+=\max\{L\ge1:e_{L,p}(n)\le\varepsilon\}.
+$$
+It satisfies
+$$
+\max\{L\ge1:G_L\le\varepsilon s/64\}
+\le\mathcal L_{p,\varepsilon}(n)
+\le\max\{L\ge1:G_L<128s\},
+$$
+and hence
+$$
+\mathcal L_{p,\varepsilon}(n)
+=\log_\phi\sqrt{np(1-p)}+O_\varepsilon(1)
+$$
+as $np(1-p)\to\infty$, uniformly in $p$.
+
+**Proof.** Taking logarithms in Theorem 36.12 proves the first assertion with constants depending only on $\varepsilon$. The established formula from Theorem 20.9,
+$$
+G_L=\frac{\phi^{L+2}-(-\phi^{-1})^{L+2}}{\sqrt5},
+$$
+then proves both limits for fixed $p$.
+
+The upper error bound ensures mixing whenever $G_L\le\varepsilon s/64$. Conversely, if $e_{L,p}(n)\le\varepsilon<1$, Theorem 36.12 excludes $s^2\le G_L^2/16384$, so $G_L<128s$. For sufficiently large $s$ the sufficient set contains depth one, while the necessary set is finite. Depth monotonicity makes the maximum well defined. Applying the displayed growth formula for $G_L$ to the two bounds proves the depth estimate.
+
+The exponent two is thus an exponent in the observation-class count $G_L$ for an iteration budget. Neither limit defines a spatial dimension or identifies the iteration count with physical time. $\square$
+
+**theorem 36.14 (Atomic full laws, noncommuting limits, and moving observation depths).** Fix $0<p<1$ and put
+$$
+d_{L,p}(n)=D_{L,p}(n,Z(0)).
+$$
+For every finite $n$,
+$$
+\|P_p^n\delta_{Z(0)}-m\|_{\mathrm{TV}}=2.
+$$
+Nevertheless,
+$$
+\lim_{L\to\infty}\lim_{n\to\infty}d_{L,p}(n)=0,
+\qquad
+\lim_{n\to\infty}\lim_{L\to\infty}d_{L,p}(n)=2.
+$$
+
+More generally, let $L_n\ge1$ and $0<p_n<1$, and set $s_n=\sqrt{np_n(1-p_n)}$. Each expression below uses the single fixed kernel $P_{p_n}$ for all $n$ steps in that expression. Then
+$$
+\frac{G_{L_n}}{s_n}\longrightarrow0
+\quad\Longrightarrow\quad
+e_{L_n,p_n}(n)\longrightarrow0,
+$$
+whereas
+$$
+\frac{s_n+1}{G_{L_n}}\longrightarrow0
+\quad\Longrightarrow\quad
+d_{L_n,p_n}(n)\longrightarrow2.
+$$
+For fixed $p$, these imply
+$$
+L_n-\frac12\log_\phi n\longrightarrow-\infty
+\quad\Longrightarrow\quad e_{L_n,p}(n)\longrightarrow0,
+$$
+$$
+L_n-\frac12\log_\phi n\longrightarrow+\infty
+\quad\Longrightarrow\quad d_{L_n,p}(n)\longrightarrow2.
+$$
+
+**Proof.** The exact law from $Z(0)$ is supported on the finite set $\{Z(0),\ldots,Z(n)\}$. This set has $m$-mass zero by atomlessness, proving singularity and full variation two.
+
+For each fixed depth, Theorem 36.10 gives $d_{L,p}(n)\to0$. In the other order, the readout support at time $n$ meets at most $n+1$ cylinders, so testing on their union gives
+$$
+d_{L,p}(n)\ge2[1-(n+1)\alpha^L]_+.
+$$
+For fixed $n$ this tends to two as $L\to\infty$. The two iterated limits follow.
+
+The sufficient moving-depth condition is an immediate application of the uniform upper bound. For the opposite condition, put $Q_n=G_{L_n}$ and
+$$
+t_n=\sqrt{\frac{Q_n}{s_n+1}}.
+$$
+Then $t_n\to\infty$, and Theorem 36.11 gives
+$$
+d_{L_n,p_n}(n)
+\ge2\left[1-t_n^{-2}-(2t_ns_n+1)\alpha^{L_n}\right]_+.
+$$
+Using $\alpha^{L_n}\le\phi/Q_n$,
+$$
+(2t_ns_n+1)\alpha^{L_n}
+\le2\phi\sqrt{\frac{s_n+1}{Q_n}}+\frac\phi{Q_n}
+\longrightarrow0.
+$$
+The lower bound therefore tends to two, as does the distance itself. Finally, for fixed $p$, $s_n$ is a positive constant times $\sqrt n$, and the growth of $G_L$ converts the two conditions into the asserted depth conditions. The bounded critical window is not assigned a limiting profile by these statements.
+
+The general distinction between weak-metric mixing and full variation for irrational circle walks is also discussed in [Berkes–Borda, introduction](https://arxiv.org/html/2204.00274v1); the equalities here concern the actual measures on $K$. $\square$
+
+**theorem 36.15 (Deterministic endpoints and failure of parameter-uniform mixing).** For every $L\ge1$ and $n\ge0$,
+$$
+e_{L,0}(n)=e_{L,1}(n)=2(1-\alpha^{L+1}).
+$$
+For either deterministic parameter and every $x\in K$,
+$$
+D_{L,p}(n,x)\ge2(1-\alpha^L)>0.
+$$
+Moreover,
+$$
+\sup_{0<p<1}e_{L,p}(n)=2(1-\alpha^{L+1})
+$$
+for every finite $n$. Thus fixed-kernel uniform-in-initial-state convergence does not imply convergence uniform over all Bernoulli parameters.
+
+If instead $p(1-p)\ge v_0>0$, the uniform estimate is
+$$
+e_{L,p}(n)\le\min\left\{2,\frac{64G_L}{\sqrt{nv_0}}\right\}\qquad(n\ge1).
+$$
+
+**Proof.** At $p=0$ the law from a Dirac is unchanged. At $p=1$ it is $\delta_{T^nx}$. Its readout distance is therefore $2(1-m(C_{q_L(T^nx)}))$, which is at least $2(1-\alpha^L)$. Surjectivity of $T^n$ makes every readout class attainable, so maximization gives the minimum-mass formula. The identity case is the same calculation.
+
+For an interior parameter, Theorem 36.5 gives $e_{L,p}(n)\le e_{L,p}(0)=2(1-\alpha^{L+1})$. Choose $x=Z(G_{L-1})$, in a minimum-mass cylinder. The no-successor term has weight $(1-p)^n$, so
+$$
+\|P_p^n\delta_x-\delta_x\|_{\mathrm{TV}}
+\le2(1-(1-p)^n).
+$$
+After readout and the reverse triangle inequality,
+$$
+e_{L,p}(n)\ge2(1-\alpha^{L+1})-2(1-(1-p)^n).
+$$
+Letting $p\downarrow0$ proves the supremum identity. The other endpoint has the same limiting error: use $x=z_{L,n}$ from Theorem 36.11, so that $T^nx$ belongs to the minimum-mass cylinder, and bound the contribution of all terms except $j=n$ by $2(1-p^n)$. The final estimate follows directly from Theorem 36.10. $\square$
+
+**theorem 36.16 (No autonomous readout kernel and no full-space spectral gap).** For every $L\ge1$ and $0<p\le1$, there is no Markov matrix $M$ on $\mathcal W_L$ satisfying
+$$
+q_{L\#}P_p\eta=M(q_{L\#}\eta)
+\qquad\text{for every }\eta\in\mathcal P(K).
+$$
+For $0<p<1$, let the dual Markov operator on complex $L^2(m)$ be
+$$
+U_pg=(1-p)g+p\,g\circ T.
+$$
+On the mean-zero subspace $L^2_0(m)$, for every $n\ge1$,
+$$
+\|U_p^n\|_{L^2_0(m)\to L^2_0(m)}=1.
+$$
+In particular the full operator has no positive $L^2$ spectral gap, despite the finite-readout mixing bounds.
+
+**Proof.** Put $Q=G_L$ and consider $x_{Q+1}^-,x_{Q+1}^+$. Theorem 20.2 gives the same depth-$L$ prefix for these two points. Their successors are $x_Q^-,x_Q^+$, whose prefixes are different. Therefore their one-step projected laws differ by
+$$
+p\left(\delta_{q_L(x_Q^-)}-\delta_{q_L(x_Q^+)}\right)\ne0,
+$$
+although their initial projected laws agree. This contradicts the proposed matrix identity.
+
+Invariance of $m$ and convexity show that $U_p$ is an $L^2$ contraction preserving the mean-zero subspace. For every integer $k\ge1$, the function
+$$
+\chi_k(x)=e^{2\pi ikH(x)}
+$$
+has mean zero and $L^2$ norm one, because $H_\#m=\lambda$. Semiconjugacy gives
+$$
+U_p\chi_k=(1-p+pe^{2\pi ik\phi})\chi_k.
+$$
+The exact approximation identity used in Theorem 20.2 is
+$$
+|\phi G_j-G_{j+1}|=\alpha^{j+2}\longrightarrow0.
+$$
+Consequently the corresponding eigenvalues for $k=G_j$ tend to one. For every fixed $n$, the norms $\|U_p^n\chi_{G_j}\|_2$ tend to one, proving the operator-norm lower bound by one. The contraction property supplies the reverse inequality. Thus finite observation size supplies neither an autonomous quotient chain nor a full-space spectral gap. $\square$
+
+## 追加锚（本行以下为增补区）
+## 37. Successor-operator completion and the loss of common composition witnesses
+
+**Definition 37.0 (Original carrier, adopted hypotheses, and conventions).** Let
+$$
+\phi=\frac{1+\sqrt5}{2},\qquad \alpha=\phi^{-1},\qquad \delta=[\phi]\in\mathbb T=\mathbb R/\mathbb Z,
+$$
+and retain the original carrier and phase observation of §20:
+$$
+K=\{x\in\{0,1\}^{\mathbb N}:x_jx_{j+1}=0\text{ for all }j\},\qquad 0_K=Z(0),
+$$
+$$
+H(x)=\left[\sum_{j\ge0}(-1)^{j+1}\alpha^{j+2}x_j\right].
+$$
+Here $T:K\to K$ is the actual continuous successor of Definition 20.1. In particular, it is not an endpoint-selecting binary operation. We use the established facts that $K$ is compact metrizable, $Z(\mathbb N)$ is dense, $H$ is a continuous surjection, and
+$$
+T Z(n)=Z(n+1),\qquad H(Tx)=H(x)+\delta.
+$$
+Put
+$$
+E_m=-m\delta\quad(m\ge1),\qquad E=\{E_m:m\ge1\},\qquad \Sigma=\{-1,+1\}.
+$$
+For $\gamma\notin E$, let $k_\gamma$ be the unique point of $H^{-1}(\{\gamma\})$. For $\gamma=E_m$, retain the two oriented lifts $x_m^-,x_m^+$ of Theorem 20.2. Superscripts $+$ and $-$ mean $+1$ and $-1$. Signs refer to the orientation of the $H$-circle, not to the reflected mechanical intercept $[\alpha^2]-H(x)$. In particular,
+$$
+x_1^+=u=(10)^\infty,\qquad x_1^-=v=(01)^\infty,
+$$
+$$
+Tx_m^s=x_{m-1}^s\quad(m\ge2),\qquad Tx_1^s=0_K.
+$$
+We use the exact positional cylinder intervals and finite cut sets from Theorem 20.2. We also retain the one-sided normalization of Theorem 20.7:
+$$
+\Phi(0_K)=w,\qquad \Phi(x_1^-)=0w,\qquad \Phi(x_1^+)=1w,
+$$
+where $w$ is the characteristic mechanical word with slope and intercept $\alpha^2$. Thus the two predecessors coalesce under the one-sided successor; they are not identified beforehand.[^rro37_onesided]
+
+Define the set of actual self-maps
+$$
+\mathcal I=\{T^n:n\in\mathbb N\},\qquad
+\mathscr E=\overline{\mathcal I}^{\,K^K},
+$$
+where $K^K$ has the product topology. Consequently $p_i\to p$ means $p_i(x)\to p(x)$ for every $x\in K$. Multiplication is
+$$
+pq=p\circ q.
+$$
+A right translation is $R_q(p)=pq$, with $q$ fixed. A left translation is $L_p(q)=pq$, with $p$ fixed. Finally, write
+$$
+e(p)=p(0_K),\qquad \vartheta(p)=H(e(p)).
+$$
+
+**theorem 37.1 (The pointwise-completion mechanism).** The space $\mathscr E$ is a compact Hausdorff monoid under actual function composition. Its unit is $T^0=\operatorname{id}_K$, its submonoid $\mathcal I$ is dense, and every right translation is continuous. Every finite iterate commutes with every element of $\mathscr E$, and its left translation is continuous. Moreover,
+$$
+H(p(x))=H(x)+\vartheta(p)\qquad(p\in\mathscr E,\ x\in K),
+$$
+and $\vartheta:\mathscr E\to\mathbb T$ is a continuous surjective monoid homomorphism:
+$$
+\vartheta(pq)=\vartheta(p)+\vartheta(q),\qquad \vartheta(T^n)=n\delta.
+$$
+Compact Hausdorff $K$ and continuous $T$ suffice for the compact right-topological monoid assertion; metrizability is not needed for that assertion. No separate or joint continuity of arbitrary composition is included in it.[^rro37_semigroup]
+
+**Proof.** The product $K^K$ is compact Hausdorff, so its closed subset $\mathscr E$ is compact Hausdorff. All its elements are actual functions $K\to K$, although they need not be continuous.
+
+Fix $q\in\mathscr E$ and $m\ge0$. Choose a net of iterates $T^{a_i}\to q$. Such nets can be obtained by directing finite-coordinate neighborhoods by reverse inclusion. Since $T^m$ is continuous,
+$$
+T^{m+a_i}(x)=T^m(T^{a_i}x)\longrightarrow T^m(qx)
+$$
+for every $x$. Hence $T^m q\in\mathscr E$.
+
+Now choose $T^{b_j}\to p\in\mathscr E$. For every $j$, the preceding paragraph gives $T^{b_j}q\in\mathscr E$, and
+$$
+(T^{b_j}q)(x)=T^{b_j}(qx)\longrightarrow p(qx).
+$$
+Closedness therefore gives $pq\in\mathscr E$. Associativity and the identity law are inherited from function composition.
+
+For fixed $q$, the $x$-coordinate of $R_q(p)$ is the $qx$-coordinate of $p$. Thus $R_q$ is continuous in the product topology. For fixed $m$, the $x$-coordinate of $L_{T^m}(p)$ is $T^m(p(x))$, which is continuous in $p$. Taking the limit of
+$$
+T^mT^{a_i}=T^{a_i}T^m
+$$
+is now legitimate on both sides and gives $T^m q=qT^m$. This uses continuity of the finite iterate, not commutation of arbitrary limits.
+
+If $T^{b_j}\to p$, continuity of evaluation and of $H$ gives
+$$
+b_j\delta=H(T^{b_j}0_K)\longrightarrow H(p0_K)=\vartheta(p).
+$$
+For every $x$,
+$$
+H(T^{b_j}x)=H(x)+b_j\delta.
+$$
+Passing to the limit proves the phase formula. Applying it to $q0_K$ gives
+$$
+\vartheta(pq)=H(p(q0_K))=H(q0_K)+\vartheta(p).
+$$
+The map $\vartheta=H\circ e$ is continuous. Its image is compact and contains the dense irrational orbit $\{n\delta:n\ge0\}$, so it is the whole circle. $\square$
+
+**theorem 37.2 (Oriented lift limits and the actual finite branch history).** For $s\in\Sigma$ and $0<\varepsilon<1/2$, put
+$$
+I_s(\theta,\varepsilon)=\{\theta+[st]:0<t<\varepsilon\}.
+$$
+The notation $\theta_i\to_s\theta$ means that $\theta_i\to\theta$ and, eventually, $\theta_i\ne\theta$ approaches through the side $s$.
+
+Suppose $y_i\in K$ and $H(y_i)\to\gamma$. If $\gamma\notin E$, then $y_i\to k_\gamma$. If $\gamma=E_m$ and $H(y_i)\ne E_m$ eventually, then
+$$
+y_i\longrightarrow x_m^s
+\quad\Longleftrightarrow\quad
+H(y_i)\longrightarrow_s E_m.
+$$
+These assertions hold for arbitrary nets and arbitrary lifts at the approaching phases.
+
+For every $m\ge1$, $n\ge0$, and $s\in\Sigma$,
+$$
+T^n x_m^s=
+\begin{cases}
+x_{m-n}^s,&n<m,\\
+Z(n-m),&n\ge m.
+\end{cases}
+$$
+In particular, $T^n$ preserves the two incoming branches at $E_m$ whenever $m>n$. Every phase outside $E$ remains outside $E$ under nonnegative rotation by $\delta$.
+
+**Proof.** Fix a positional depth $L$. The phase boundaries of its cylinders form the finite set
+$$
+B_L^{\mathrm{pos}}=\{E_1,\ldots,E_{G_L}\}
+$$
+when $L\ge1$. If $\gamma\notin E$, it is not in this finite set. A sufficiently small phase neighborhood of $\gamma$ lies inside the phase interior of the cylinder containing $k_\gamma$, and every lift of every phase in that neighborhood belongs to this cylinder. Thus the $L$-digit prefixes of $y_i$ eventually equal that of $k_\gamma$. This holds at every depth and proves convergence.
+
+Now let $\gamma=E_m$. At a depth which separates $x_m^-$ and $x_m^+$, the two neighboring phase arcs belong to their respective cylinders, with precisely the orientations established in Theorem 20.2. Consequently convergence to $x_m^s$, together with eventual avoidance of phase $E_m$, forces eventual approach from side $s$.
+
+Conversely, suppose the phases approach from side $s$. At every depth separating the pair, the same adjacent-cylinder description forces the prefix of $x_m^s$. At a depth which does not separate the pair, $E_m$ is not a boundary of that depth, and a two-sided phase neighborhood has all its lifts in their common cylinder. Thus every prefix eventually equals that of $x_m^s$. This proves sufficiency. The proof uses eventual membership in finitely many cylinder conditions and therefore applies to nets, not just sequences.
+
+The displayed formula for $T^n x_m^s$ follows by iterating the oriented successor identities in Definition 37.0, reaching $0_K$ exactly at time $m$, and then using $T^j0_K=Z(j)$. It includes $n=0$ and the coalescence time $n=m$.
+
+Finally, if $\gamma+n\delta=E_m$, then
+$$
+\gamma=E_{m+n}\in E.
+$$
+Its contrapositive proves forward invariance of the nonsplit phases. $\square$
+
+**Definition 37.3 (The phase-selecting operators).** For every $\theta\in\mathbb T$ and $s\in\Sigma$, define the actual function $P_\theta^s:K\to K$ by
+$$
+P_\theta^s(x)=
+\begin{cases}
+k_{H(x)+\theta},&H(x)+\theta\notin E,\\
+x_m^s,&H(x)+\theta=E_m.
+\end{cases}
+$$
+The index $m$ in the second case is unique by irrationality. Put
+$$
+\mathscr D=\{P_\theta^s:\theta\in\mathbb T,\ s\in\Sigma\}.
+$$
+Each $P_\theta^s$ is constant on every $H$-fibre. Membership in $\mathscr E$ is not part of this definition.
+
+**theorem 37.4 (Exact operator classification and the complete net dichotomy).** One has the disjoint union of actual functions
+$$
+\mathscr E=\mathcal I\ \dot\cup\ \mathscr D.
+$$
+All the parameters displayed in $\mathscr D$ give distinct functions. Every $T^n$ is isolated in $\mathscr E$. For any net of nonnegative integers $(n_i)$,
+$$
+T^{n_i}\longrightarrow T^n
+\quad\Longleftrightarrow\quad
+n_i=n\text{ eventually},
+$$
+and
+$$
+T^{n_i}\longrightarrow P_\theta^s
+\quad\Longleftrightarrow\quad
+n_i\longrightarrow\infty\text{ and }n_i\delta\longrightarrow_s\theta.
+$$
+Here $n_i\to\infty$ means that for every $N$, eventually $n_i>N$.
+
+For every $\theta,s$ there is a strictly increasing ordinary sequence $(n_j)$ satisfying these conditions. The remainder is closed, and
+$$
+\mathscr D=\bigcap_{N\ge0}\overline{\{T^n:n\ge N\}}^{\,\mathscr E}.
+$$
+The double-circle classification for invertible split-rotation cascades is a classical analogue; the positive-time classification asserted here includes the noninvertible branch history of Theorem 37.2.[^rro37_double]
+
+**Proof.** First isolate a fixed $T^n$ without assuming the proposed classification. Choose disjoint clopen neighborhoods $U^+$ and $U^-$ of $x_1^+$ and $x_1^-$. By Theorem 37.2,
+$$
+T^n x_{n+1}^+=x_1^+,\qquad T^n x_{n+1}^-=x_1^-.
+$$
+For every $j>n$, the two values $T^j x_{n+1}^+$ and $T^j x_{n+1}^-$ are equal. Such an iterate cannot satisfy both evaluation conditions
+$$
+p(x_{n+1}^+)\in U^+,\qquad p(x_{n+1}^-)\in U^-.
+$$
+The phases $j\delta$, $0\le j\le n$, are distinct. Choose a circle neighborhood $J$ of $n\delta$ excluding $j\delta$ for $j<n$. The two evaluation conditions together with $\vartheta(p)\in J$ define an open neighborhood $W$ of $T^n$ whose intersection with $\mathcal I$ is exactly $\{T^n\}$. Since $\mathcal I$ is dense and $\{T^n\}$ is closed, $W\cap\mathscr E=\{T^n\}$. This also proves that a convergent net of iterates with limit $T^n$ is eventually equal to $T^n$. For $n=0$, the exclusion of earlier phases is simply empty.
+
+Fix $\theta,s$. Every tail of the irrational natural phase orbit is dense: it is a translate of the original dense orbit. We can therefore choose recursively
+$$
+n_{j+1}>n_j,\qquad n_j\delta\in I_s(\theta,\varepsilon_j),\qquad \varepsilon_j\downarrow0.
+$$
+For every $x\in K$, the phase of $T^{n_j}x$ tends to $H(x)+\theta$. If that phase is nonsplit, Theorem 37.2 gives the unique lift. If it is $E_m$, its phase approaches $E_m$ from side $s$, and the same lemma gives $x_m^s$. Thus
+$$
+T^{n_j}x\longrightarrow P_\theta^s(x)
+$$
+for every $x$. Consequently every $P_\theta^s$ belongs to $\mathscr E$. This construction works at zero, at every natural phase $n\delta$, and at every exceptional phase $E_m$; the approximating phases are chosen strictly to one side and never equal the target.
+
+We next prove that there are no other functions. Let $p\in\mathscr E\setminus\mathcal I$, and take a net $T^{n_i}\to p$. Every finite set $\{T^0,\ldots,T^N\}$ is closed and excludes $p$, so $n_i\to\infty$. Theorem 37.1 gives
+$$
+n_i\delta\longrightarrow\theta:=\vartheta(p).
+$$
+A phase $\theta$ can equal $n\delta$ for at most one nonnegative integer $n$. Escape from finite sets therefore ensures $n_i\delta\ne\theta$ eventually.
+
+Choose an actual point $b\in K$ with
+$$
+H(b)=E_1-\theta.
+$$
+The phase formula gives $H(p(b))=E_1$, so $p(b)=x_1^s$ for exactly one $s\in\Sigma$. Since $T^{n_i}b\to p(b)$ and its phase eventually differs from $E_1$, the necessity part of Theorem 37.2 forces
+$$
+n_i\delta\longrightarrow_s\theta.
+$$
+This is an eventual assertion for the whole net, not merely a choice of a one-sided subnet. Applying the lemma at every other evaluation point now gives $p=P_\theta^s$.
+
+The same argument proves necessity in the stated convergence criterion. Sufficiency follows directly from Theorem 37.2 at every coordinate. Hence a net which repeatedly returns cofinally to a bounded set of indices while also escaping cannot create an additional limit: convergence requires either eventual equality to one finite iterate or eventual escape from every finite set with one fixed approach side.
+
+For distinctness, different phases are distinguished by the phase of evaluation at zero. At the same phase $\theta$, any actual $b$ with $H(b)=E_1-\theta$ satisfies
+$$
+P_\theta^+(b)=x_1^+,\qquad P_\theta^-(b)=x_1^-.
+$$
+Thus the two signs differ at every phase, including nonsplit and zero phases where evaluation at zero alone would not distinguish them.
+
+An iterate $T^n$ and $P_\theta^s$ have different evaluation phases if $\theta\ne n\delta$. If $\theta=n\delta$, the actual split input $x_{n+1}^{-s}$ distinguishes them:
+$$
+T^n x_{n+1}^{-s}=x_1^{-s},\qquad
+P_{n\delta}^s(x_{n+1}^{-s})=x_1^s.
+$$
+This proves the disjointness, including $T^0$.
+
+The union of the isolated finite iterates is open, so $\mathscr D$ is closed. Every point of $\mathscr D$ is a limit of an increasing sequence of iterates and therefore lies in every tail closure. Conversely, $T^n$ is excluded from the closure of the tail beginning at $n+1$ because it is isolated. This proves the final formula. $\square$
+
+**theorem 37.5 (Exact multiplication and the closed ideal).** For $n,m\ge0$, $\theta,\eta\in\mathbb T$, and $s,t\in\Sigma$,
+$$
+T^nT^m=T^{n+m},
+$$
+$$
+T^nP_\theta^s=P_{\theta+n\delta}^s=P_\theta^sT^n,
+$$
+$$
+P_\theta^sP_\eta^t=P_{\theta+\eta}^s.
+$$
+Thus the left factor supplies the sign in a product of two remainder operators. The set $\mathscr D$ is a closed two-sided ideal. The unit of $\mathscr E$ is the actual identity, not either zero-phase selector.[^rro37_functions]
+
+**Proof.** The first equality is the usual iterate identity. For the second, fix $x$ and put $a=H(x)$. The phase of $T^nP_\theta^s(x)$ is $a+\theta+n\delta$.
+
+If this phase is nonsplit, there is only one possible value. If it equals $E_m$, then the intermediate phase is
+$$
+a+\theta=E_m-n\delta=E_{m+n}.
+$$
+Consequently
+$$
+T^nP_\theta^s(x)=T^nx_{m+n}^s=x_m^s.
+$$
+The inequality $n<m+n$ is exactly what prevents a seam coalescence in this split-output case. It covers $n=0$ as well. This proves $T^nP_\theta^s=P_{\theta+n\delta}^s$.
+
+For the other order, $H(T^nx)=a+n\delta$, and the definition of $P_\theta^s$ immediately gives $P_\theta^sT^n=P_{\theta+n\delta}^s$.
+
+Finally,
+$$
+H(P_\eta^t(x))=a+\eta.
+$$
+The outer operator $P_\theta^s$ therefore chooses the unique lift at $a+\eta+\theta$ when nonsplit and the lift of sign $s$ when split. The inner sign $t$ cannot affect this choice. This proves the last formula.
+
+Every product with at least one factor in $\mathscr D$ lies in $\mathscr D$, proving the ideal assertion; closedness was proved in Theorem 37.4. At zero phase,
+$$
+P_0^+(u)=P_0^+(v)=u,\qquad
+P_0^-(u)=P_0^-(v)=v,
+$$
+whereas the identity preserves both $u$ and $v$. Hence neither selector is the global unit. $\square$
+
+**theorem 37.6 (Intrinsic topology, the doubled circle, and nonmetrizability).** Choose $\varepsilon_*>0$ smaller than $1/4$ such that the phase arc of radius $\varepsilon_*$ around $E_1$ contains no other depth-one cut. For $0<\varepsilon<\varepsilon_*$, define subsets of the actual operator space by
+$$
+V_s(\theta,\varepsilon)
+=\{P_\theta^s\}
+\cup\{P_\eta^t:\eta\in I_s(\theta,\varepsilon),\ t\in\Sigma\}
+\cup\{T^n:n\delta\in I_s(\theta,\varepsilon)\}.
+$$
+These sets form a neighborhood base at $P_\theta^s$. The singletons $\{T^n\}$ form neighborhood bases at the finite iterates.
+
+In particular, the intrinsic neighborhood base on $\mathscr D$ is
+$$
+U_s(\theta,\varepsilon)
+=\{P_\theta^s\}
+\cup\{P_\eta^t:\eta\in I_s(\theta,\varepsilon),\ t\in\Sigma\}.
+$$
+Thus $\mathscr D$ is homeomorphic to the circle split at every phase, with the circular lexicographic order in which $\theta^-$ immediately precedes $\theta^+$. This is not the product topology on $\mathbb T\times\Sigma$. The full operator topology is obtained by inserting the isolated point $T^n$ between $P_{n\delta}^-$ and $P_{n\delta}^+$ at every natural phase.
+
+Both $\mathscr E$ and $\mathscr D$ have cardinality $2^{\aleph_0}$. The space $\mathscr E$ is first countable and has the countable dense set $\mathcal I$, but it is not metrizable. Each fixed-sign subset of $\mathscr D$ is dense in $\mathscr D$.[^rro37_double][^rro37_functions]
+
+**Proof.** Let $C^s$ be the depth-one cylinder containing $x_1^s$. For phases sufficiently close to $E_1$ but unequal to it, every lift belongs to $C^s$ exactly when its phase lies on side $s$ of $E_1$.
+
+Fix $\theta,s$, and choose $b\in H^{-1}(\{E_1-\theta\})$. The conditions
+$$
+\vartheta(p)\in\theta+(-\varepsilon,\varepsilon),\qquad p(b)\in C^s
+$$
+define an open subset of $\mathscr E$. For $\vartheta(p)\ne\theta$, the phase identity in Theorem 37.1 shows that these conditions hold exactly for phases in $I_s(\theta,\varepsilon)$. At phase $\theta$, the classification leaves $P_\theta^+$, $P_\theta^-$, and possibly the single iterate $T^n$ with $n\delta=\theta$. The evaluation condition selects $P_\theta^s$ from the first two. Removing that possible finite iterate, a closed singleton, produces exactly $V_s(\theta,\varepsilon)$. Hence these sets are open.
+
+To prove the base assertion, consider an arbitrary basic product neighborhood of $P_\theta^s$. It prescribes neighborhoods of $P_\theta^s(b_1),\ldots,P_\theta^s(b_r)$ at finitely many actual inputs. For each input whose target phase is nonsplit, all lifts of sufficiently nearby phases lie in its prescribed neighborhood. For each input whose target phase is split, all lifts of sufficiently nearby phases on side $s$ lie in the prescribed neighborhood of the selected branch. These are the finite-depth consequences proved in Theorem 37.2. Choosing one sufficiently small $\varepsilon$ for all the inputs shows that the entire set $V_s(\theta,\varepsilon)$ lies in the given product neighborhood. This argument applies equally to the finite iterates and selector operators occurring at the nearby phases; it does not assume their continuity as functions of the input.
+
+Intersecting with $\mathscr D$ proves the stated base there. These are precisely the circular order neighborhoods which start immediately after $\theta^-$ at $\theta^+$, or end immediately before $\theta^+$ at $\theta^-$. Equivalently, cut the doubled circle between $0^-$ and $0^+$: the resulting linear order has least point $0^+$, greatest point $0^-$, and, for $0<t<1$, the consecutive points $t^-<t^+$ ordered first by $t$. Its order topology has exactly the displayed local bases. The analogous bases with a middle isolated point at $n\delta$ give the full asserted circular order description. Therefore these are homeomorphisms of the actual function spaces, not merely bijections of labels.
+
+Restricting $\varepsilon$ to a decreasing countable sequence gives first countability. Density of $\mathcal I$ holds by definition. Every displayed neighborhood in $\mathscr D$ contains both signs at phases in a nonempty open arc, proving density of each sign subset. It also shows why the topology is not the product topology, in which the two sign subsets would be closed.
+
+For nonmetrizability, fix $0<\varepsilon<\varepsilon_*$ and represent phases in $[0,1)$. Suppose $\mathscr D$ had a countable base $\mathcal B$. For each $\theta\in(0,1/2)$ choose
+$$
+P_\theta^+\in B_\theta\subseteq U_+(\theta,\varepsilon),\qquad B_\theta\in\mathcal B.
+$$
+If $0<\theta<\eta<1/2$ and $B_\theta=B_\eta$, then $P_\theta^+$ would belong to $U_+(\eta,\varepsilon)$. This is impossible: that neighborhood contains only its starting point and phases strictly greater than $\eta$, without wrapping around the circle. Thus the $B_\theta$ are pairwise distinct, contradicting countability. A compact metrizable space is second countable, so $\mathscr D$ is not metrizable; neither is $\mathscr E$, which contains it as a closed subspace.
+
+The classification and distinctness in Theorem 37.4 give the stated cardinalities. There is no contradiction between countable density, first countability, and failure of second countability. $\square$
+
+**theorem 37.7 (Centers, minimal ideals, idempotents, and units).** Define the center associated with continuity of fixed left multiplication by
+$$
+\mathfrak Z_{\mathrm{top}}(\mathscr E)
+=\{p\in\mathscr E:L_p:\mathscr E\to\mathscr E\text{ is continuous}\}.
+$$
+With the multiplication convention of Definition 37.0, this is the topological center specified by fixed left multiplication. Then
+$$
+Z_{\mathrm{alg}}(\mathscr E)=\mathfrak Z_{\mathrm{top}}(\mathscr E)=\mathcal I.
+$$
+Consequently $\mathscr E$ is neither a semitopological semigroup nor a jointly continuous topological monoid.
+
+The unique minimal left ideal and unique minimal two-sided ideal are $\mathscr D$. The two minimal right ideals are
+$$
+\mathscr D_s=\{P_\theta^s:\theta\in\mathbb T\},\qquad s\in\Sigma.
+$$
+Each $\mathscr D_s$ is algebraically a circle group, with identity $P_0^s$ and inverse $(P_\theta^s)^{-1}=P_{-\theta}^s$. The complete list of idempotents of $\mathscr E$ is
+$$
+\operatorname{id}_K,\qquad P_0^+,\qquad P_0^-.
+$$
+The only invertible element of the full monoid $\mathscr E$ is $\operatorname{id}_K$.[^rro37_double][^rro37_tame]
+
+**Proof.** Finite iterates commute with all of $\mathscr E$ and have continuous left translations by Theorem 37.1. If $p=P_\theta^s$, then
+$$
+pP_0^{-s}=P_\theta^s,\qquad P_0^{-s}p=P_\theta^{-s}.
+$$
+The two functions are distinct by Theorem 37.4, so $p$ is not algebraically central.
+
+Choose an increasing sequence $n_j$ with $n_j\delta\to_{-s}0$. Then
+$$
+T^{n_j}\longrightarrow P_0^{-s}.
+$$
+By the multiplication table and the topology just proved,
+$$
+L_p(T^{n_j})=P_{\theta+n_j\delta}^s\longrightarrow P_\theta^{-s},
+$$
+whereas
+$$
+L_p(P_0^{-s})=P_\theta^s.
+$$
+Thus $L_p$ is not continuous. This proves both center identities. Separate continuity would require every left translation to be continuous, and joint continuity would imply that requirement, so both stronger continuity assertions fail.
+
+For any $P_\theta^s$ the multiplication table gives
+$$
+\mathscr E P_\theta^s=\mathscr D,\qquad P_\theta^s\mathscr E=\mathscr D_s.
+$$
+Indeed, an arbitrary remainder operator on the left supplies any desired sign and any desired phase; an arbitrary remainder operator on the right supplies any desired phase while the left sign remains $s$.
+
+Every nonempty left ideal containing a remainder element therefore contains $\mathscr D$. A left ideal containing $T^n$ also contains $\mathscr D$, because $\mathscr D T^n=\mathscr D$. Hence $\mathscr D$ is the unique minimal left ideal, and, since it is two-sided, the unique minimal two-sided ideal.
+
+Every nonempty right ideal contained in $\mathscr D_s$ equals $\mathscr D_s$, because it contains $p\mathscr E=\mathscr D_s$ for any one of its elements. Conversely, any right ideal containing a remainder element contains one such $\mathscr D_s$, and any right ideal containing a finite iterate contains all of $\mathscr D$. Thus exactly the two displayed subsets are minimal right ideals. In particular, they must not be substituted for the minimal left ideal. Their density from Theorem 37.6 does not make them closed.
+
+Within a fixed sign, multiplication is addition of circle phases, proving the algebraic group assertion. For idempotents, $P_\theta^sP_\theta^s=P_\theta^s$ is equivalent to $2\theta=\theta$, hence to $\theta=0$. For iterates, $T^{2n}=T^n$ implies $n=0$ by distinctness. Finally, a product involving a remainder element cannot be the identity, while $T^nT^m=\operatorname{id}_K$ with $n,m\ge0$ forces $n=m=0$. $\square$
+
+**theorem 37.8 (Baire-one operators and a Rosenthal representation).** Every element of $\mathscr E$ is a pointwise limit of a sequence of continuous maps $K\to K$. Every $P_\theta^s$ is nevertheless discontinuous at some actual input. Thus
+$$
+\mathscr E\cap C(K,K)=\mathcal I.
+$$
+The compactum $\mathscr E$ is Rosenthal: it is homeomorphic to a pointwise compact family of real-valued Baire-one functions on the Polish space $K$. In the standard compact metric semigroup-action terminology, the positive-time system $(K,T)$ is tame.[^rro37_semigroup][^rro37_tame]
+
+**Proof.** The sequential approximation follows from Theorem 37.4; for an iterate, use its constant sequence.
+
+Fix $P_\theta^s$ and set $a=E_1-\theta$. If $a\notin E$, put $b=k_a$; if $a=E_l$, put $b=x_l^{-s}$. Choose natural phases $n_j\delta\to_{-s}a$. Theorem 37.2 gives $Z(n_j)\to b$. On the other hand, the phases of $P_\theta^s(Z(n_j))$ approach $E_1$ from side $-s$, so
+$$
+P_\theta^s(Z(n_j))\longrightarrow x_1^{-s},\qquad P_\theta^s(b)=x_1^s.
+$$
+These are different, proving discontinuity.
+
+Define a continuous injection
+$$
+j:K\to[0,1],\qquad j(x)=\sum_{r\ge0}\frac{2x_r}{3^{r+1}}.
+$$
+Uniform convergence gives continuity. If two points first differ at coordinate $r$, the leading difference $2/3^{r+1}$ exceeds the maximal possible tail difference $1/3^{r+1}$, so $j$ is injective. The map
+$$
+J:\mathscr E\to\mathbb R^K,\qquad J(p)=j\circ p,
+$$
+is continuous and injective for the pointwise topologies. Compactness of $\mathscr E$ and the Hausdorff property of $\mathbb R^K$ make it a homeomorphism onto its compact image. Every $j\circ p$ is a pointwise sequential limit of continuous real-valued functions $j\circ T^{n_j}$. Hence the image lies in the Baire-one functions on $K$, which is the defining Rosenthal representation.
+
+The compact metric semigroup criterion identifies such an enveloping compactum, equivalently an enveloping semigroup consisting of Baire-one maps, with tameness. Its hypotheses apply to the continuous action of the discrete monoid $\mathbb N$ by the actual iterates. No invertibility is required for this criterion. $\square$
+
+**theorem 37.9 (Exact evaluation fibres and failure of congruence).** Evaluation $e:\mathscr E\to K$ is a continuous surjection, hence a topological quotient map. Its fibres are exactly
+$$
+e^{-1}(\{Z(n)\})=\{T^n,P_{n\delta}^+,P_{n\delta}^-\}\qquad(n\ge0),
+$$
+$$
+e^{-1}(\{x_m^s\})=\{P_{E_m}^s\}\qquad(m\ge1),
+$$
+and
+$$
+e^{-1}(\{k_\theta\})=\{P_\theta^+,P_\theta^-\}
+\quad\text{if }\theta\notin E\cup\{n\delta:n\ge0\}.
+$$
+In particular,
+$$
+e^{-1}(\{0_K\})=\{\operatorname{id}_K,P_0^+,P_0^-\}.
+$$
+Moreover,
+$$
+p(Z(k))=T^k(e(p))\qquad(k\ge0).
+$$
+Thus two operators have equal evaluation at zero exactly when they agree on the entire finite natural core. This still need not make them equal as functions on $K$.
+
+The equality kernel of $e$ is preserved by common left multiplication, but not by common right multiplication. It is therefore not a semigroup congruence, and no binary operation on $K$ can satisfy
+$$
+e(pq)=e(p)*e(q)\qquad\text{for every }p,q\in\mathscr E.
+$$
+
+**Proof.** Evaluation is a product coordinate and hence continuous. Its image is compact, contains every $Z(n)=e(T^n)$, and is therefore all of $K$. A continuous surjection from a compact space to a Hausdorff space is closed and hence quotient.
+
+The operator classification gives all possible representatives, and
+$$
+e(P_\theta^s)=
+\begin{cases}
+k_\theta,&\theta\notin E,\\
+x_m^s,&\theta=E_m.
+\end{cases}
+$$
+Natural phases avoid $E$, and distinct nonnegative integers have distinct phases. Combining these facts with the distinctness of the actual operators proves each fibre formula, including the three distinct representatives at zero.
+
+Since every $p$ commutes with $T^k$,
+$$
+p(Z(k))=p(T^k0_K)=T^k(p0_K).
+$$
+This proves the assertion about agreement on the natural core. The discontinuous operators in Theorem 37.8 explain why agreement on a dense set does not force equality here.
+
+If $e(p)=e(p')$, then for every fixed $r$,
+$$
+e(rp)=r(e(p))=r(e(p'))=e(rp').
+$$
+So common left multiplication preserves the kernel.
+
+For failure on the other side, take
+$$
+p=\operatorname{id}_K,\qquad p'=P_0^-,\qquad q=P_{E_1}^+.
+$$
+Then $e(p)=e(p')=0_K$, but
+$$
+e(pq)=x_1^+,\qquad e(p'q)=x_1^-.
+$$
+Thus common right multiplication does not preserve the kernel. Any proposed operation $*$ satisfying the displayed descent identity would assign two different values to the same input pair $(0_K,x_1^+)$, which is impossible. $\square$
+
+**Definition 37.10 (Projected composition and common witnesses).** For $x\in K$, retain the sign set of §18:
+$$
+\mathcal S(x)=
+\begin{cases}
+\Sigma,&H(x)\notin E,\\
+\{s\},&x=x_m^s.
+\end{cases}
+$$
+Define
+$$
+\mathcal R_{\mathrm{op}}(x,y)
+=\{e(pq):p,q\in\mathscr E,\ e(p)=x,\ e(q)=y\}.
+$$
+Write $x\star y=\mathcal R_{\mathrm{op}}(x,y)$, and extend this notation to subsets by taking unions over their elements. This is a relation, not a quotient binary function.
+
+The three-input relation retaining a common list of operator witnesses is
+$$
+\mathcal W_3(x,y,z)
+=\{e(pqr):e(p)=x,\ e(q)=y,\ e(r)=z\}.
+$$
+Associativity of actual composition makes the expression $pqr$ unambiguous. It does not identify $\mathcal W_3$ with either iterated projection without an additional proof.
+
+**theorem 37.11 (Exact projected relation and its associativity criterion).** Let $a=H(x)$ and $b=H(y)$. Then
+$$
+x\star y=
+\begin{cases}
+\{k_{a+b}\},&a+b\notin E,\\
+\{x_m^s:s\in\mathcal S(x)\},&a+b=E_m.
+\end{cases}
+$$
+Thus at a split output phase it is the first input, not the union of the two input sign sets, that controls the output signs.
+
+The relation has the unique strict right unit $0_K$, has no strict left unit, and is not commutative. More precisely,
+$$
+x\star0_K=\{x\},\qquad 0_K\star x=H^{-1}(\{H(x)\}).
+$$
+For three inputs, set
+$$
+a=H(x),\qquad b=H(y),\qquad c=H(z),\qquad \sigma=a+b+c.
+$$
+If $\sigma\notin E$, both bracketings and $\mathcal W_3$ equal $\{k_\sigma\}$. If $\sigma=E_m$, then
+$$
+x\star(y\star z)=\mathcal W_3(x,y,z)
+=\{x_m^s:s\in\mathcal S(x)\},
+$$
+whereas
+$$
+(x\star y)\star z=
+\begin{cases}
+\{x_m^s:s\in\mathcal S(x)\},&a+b\in E,\\
+\{x_m^-,x_m^+\},&a+b\notin E.
+\end{cases}
+$$
+Consequently the two bracketings differ exactly when
+$$
+H(x)\in E,\qquad H(x)+H(y)\notin E,\qquad H(x)+H(y)+H(z)\in E.
+$$
+In all cases,
+$$
+\mathcal W_3(x,y,z)=x\star(y\star z)\subseteq(x\star y)\star z.
+$$
+
+**Proof.** All products have output phase $a+b$. At a nonsplit phase, nonemptiness of the evaluation fibres leaves exactly the unique lift.
+
+Suppose $a+b=E_m$. For each $s\in\mathcal S(x)$, Theorem 37.9 supplies the representative $P_a^s$ of $x$. With any representative $q$ of $y$,
+$$
+e(P_a^s q)=P_a^s(y)=x_m^s.
+$$
+Thus every claimed sign occurs.
+
+These are all the possibilities when the left representative is a remainder operator. An additional left representative is possible only when $x=Z(n)$, in which case it is $T^n$. The split sum condition then forces
+$$
+H(y)=E_m-n\delta=E_{m+n},
+$$
+so $y=x_{m+n}^t$ for one sign $t$. Its output is
+$$
+e(T^nq)=T^ny=x_m^t.
+$$
+Since $x=Z(n)$ has $\mathcal S(x)=\Sigma$, this adds no sign beyond those already listed. The same reasoning covers $n=0$. This proves the exact formula.
+
+If $e(q)=0_K$, then $e(pq)=p(q0_K)=p0_K=e(p)$, proving the strict right-unit identity directly. The left-zero identity follows from the formula and $\mathcal S(0_K)=\Sigma$. A strict right unit $r$, tested against $0_K$, must have phase zero, so $r=0_K$. A strict left unit $l$, tested against $0_K$, must equal $0_K$ because $l\star0_K=\{l\}$. But $0_K\star x_1^+=\{x_1^+,x_1^-\}$, so no strict left unit exists. This same pair demonstrates noncommutativity.
+
+For the bracketings, first record the exact intermediate sign propagation:
+$$
+\bigcup_{w\in x\star y}\mathcal S(w)=
+\begin{cases}
+\mathcal S(x),&a+b\in E,\\
+\Sigma,&a+b\notin E.
+\end{cases}
+$$
+In the first case the intermediate outputs are exactly the split points indexed by $\mathcal S(x)$. In the second case the unique intermediate point is nonsplit, so its sign set is $\Sigma$.
+
+Every intermediate output has the expected sum phase. Hence when $\sigma$ is nonsplit, both bracketings give its unique lift. When $\sigma=E_m$, the left bracketing is determined by the displayed union of intermediate sign sets, proving its formula. For the right bracketing, every $w\in y\star z$ has phase $b+c$, and the rule for $x\star w$ depends only on $\mathcal S(x)$ and the total phase. Since $y\star z$ is nonempty, taking the union leaves exactly $\{x_m^s:s\in\mathcal S(x)\}$.
+
+It remains to verify the common-witness assertion rather than infer it from associativity. If $x$ is split, its unique representative is $P_a^s$. This outer operator fixes sign $s$ in every product $pqr$ with split total phase. If $x$ is nonsplit, both representatives $P_a^+$ and $P_a^-$ are available, and they realize both signs at such a total phase. All products have phase $\sigma$, so there can be no other values. This proves the formula for $\mathcal W_3$.
+
+The bracketings can therefore differ only at a split final phase, with a nonsplit left intermediate phase and a singleton $\mathcal S(x)$. These are exactly the three stated conditions. Under them one bracketing has both distinct lifts and the other has only the sign of $x$; otherwise they agree. $\square$
+
+**theorem 37.12 (The half-circle common-witness counterexample).** Put
+$$
+x=x_1^+,\qquad h=[1/2],\qquad a=k_h,\qquad b=k_{E_1+h}.
+$$
+The phases $h$ and $E_1+h$ are nonsplit and are not natural phases. The projected products satisfy
+$$
+a\star a=\{0_K\},\qquad x\star a=\{b\},\qquad x\star0_K=\{x_1^+\},
+$$
+but
+$$
+(x\star a)\star a=\{x_1^+,x_1^-\},\qquad
+x\star(a\star a)=\{x_1^+\}.
+$$
+The common-witness output is exactly
+$$
+\mathcal W_3(x,a,a)=\{x_1^+\}.
+$$
+At the intermediate state $b$, the representative $P_{E_1+h}^+$ is reachable from the original first two input fibres, whereas $P_{E_1+h}^-$ is not. The latter is introduced only when the intermediate operator is discarded and its value $b$ is represented anew.
+
+**Proof.** For any nonzero integer $r$, the phase $r\delta$ cannot equal $h$, because $r\phi$ cannot differ from $1/2$ by an integer. Also $h\ne0$. These observations show $h\notin E$ and $h\notin\{n\delta:n\ge0\}$.
+
+If $E_1+h=E_m$, then $h=(1-m)\delta$, which is impossible for $m\ne1$ by the preceding irrationality argument and for $m=1$ because $h\ne0$. If $E_1+h=n\delta$, then $h=(n+1)\delta$, again impossible. Thus both $a$ and $b$ are the asserted nonsplit, nonnatural states.
+
+The exact rule in Theorem 37.11 gives $a\star a=\{k_0\}=\{0_K\}$, since $2h=0$. It gives $x\star a=\{b\}$ because $E_1+h$ is nonsplit. The right-unit identity gives $x\star0_K=\{x_1^+\}$. Finally, $H(b)+h=E_1$ and $\mathcal S(b)=\Sigma$, so $b\star a$ contains both split lifts. This proves the unequal bracketings.
+
+For the exact operator witnesses, Theorem 37.9 gives
+$$
+e^{-1}(\{x\})=\{p\},\quad p=P_{E_1}^+,
+$$
+$$
+e^{-1}(\{a\})=\{q_+,q_-\},\quad q_t=P_h^t,
+$$
+$$
+e^{-1}(\{b\})=\{P_{E_1+h}^+,P_{E_1+h}^-\}.
+$$
+For either $t$,
+$$
+pq_t=P_{E_1+h}^+.
+$$
+Therefore only the positive representative of $b$ is produced by the original witnesses. With either representative $q_v$ of the last $a$,
+$$
+(pq_t)q_v=P_{E_1+2h}^+=P_{E_1}^+.
+$$
+Every actual triple consequently evaluates to $x_1^+$.
+
+If the intermediate operator is replaced merely by its value $b$, the next projected product admits the other representative and obtains
+$$
+P_{E_1+h}^-q_v=P_{E_1}^-,
+$$
+whose evaluation is $x_1^-$. This is the additional output, and its intermediate representative was not reachable from $e^{-1}(\{x\})e^{-1}(\{a\})$.
+
+For completeness, the reachable operators for the other intermediate product are
+$$
+\{q_tq_v:t,v\in\Sigma\}=\{P_0^+,P_0^-\}.
+$$
+Their common state is $0_K$, whose full evaluation fibre also contains the identity. But $p$ composed on the right with any of these three zero-state representatives remains $p$. That enlargement does not produce the negative output. The discrepancy is precisely the loss of the reachable positive representative at $b$. $\square$
+
+**theorem 37.13 (Comparison with the full closed finite-addition graph).** Retain the actual closed graph of §18,
+$$
+\Gamma=\overline{\{(Z(n),Z(m),Z(n+m)):n,m\ge0\}}^{\,K^3},
+$$
+and its explicitly adopted fibre classification in Assumption 18.1. Regard $\mathcal R_{\mathrm{op}}$ as a subset of $K^3$. Then
+$$
+\mathcal R_{\mathrm{op}}\subsetneq\Gamma,\qquad
+\overline{\mathcal R_{\mathrm{op}}}^{\,K^3}=\Gamma.
+$$
+An exact witness of strictness is
+$$
+(x_1^+,0_K,x_1^-)\in\Gamma\setminus\mathcal R_{\mathrm{op}}.
+$$
+Thus $\mathcal R_{\mathrm{op}}$ is not closed. Its nonassociativity differs from the set-valued associativity of $\Gamma$ established in Proposition 18.2.
+
+In particular, the map
+$$
+F:\mathscr E^2\to K^3,\qquad F(p,q)=(e(p),e(q),e(pq)),
+$$
+is not continuous. Closure equality does not supply continuous composition.
+
+**Proof.** At a nonsplit sum phase, the two relations have the same unique output. At a split sum phase, Theorem 37.11 allows exactly the signs in $\mathcal S(x)$, while Assumption 18.1 allows exactly the signs in
+$$
+\mathcal S(x)\cup\mathcal S(y).
+$$
+This proves $\mathcal R_{\mathrm{op}}\subseteq\Gamma$.
+
+The inclusion also has a direct closed-graph proof that makes the permissible order of limits explicit. Fix $q\in\mathscr E$ and choose $T^{m_j}\to q$. For every fixed nonnegative integer $n$, continuity of $T^n$ gives
+$$
+(Z(n),Z(m_j),Z(n+m_j))
+\longrightarrow (Z(n),e(q),T^n(e(q))).
+$$
+The latter triple lies in $\Gamma$. Now choose $T^{n_i}\to p$. Evaluation at the fixed point $e(q)$ gives
+$$
+(Z(n_i),e(q),T^{n_i}(e(q)))
+\longrightarrow(e(p),e(q),p(e(q)))
+=(e(p),e(q),e(pq)).
+$$
+Closedness again places the limit in $\Gamma$. These are two successive valid limits with the relevant argument fixed, not a claim about jointly varying composition.
+
+Every finite-addition triple belongs to $\mathcal R_{\mathrm{op}}$, by choosing $p=T^n$ and $q=T^m$. Hence
+$$
+\Gamma\subseteq\overline{\mathcal R_{\mathrm{op}}}^{\,K^3}\subseteq\Gamma,
+$$
+proving closure equality.
+
+For strictness, the projected right-unit law gives
+$$
+x_1^+\star0_K=\{x_1^+\}.
+$$
+But $\mathcal S(0_K)=\Sigma$, so the accepted graph classification gives
+$$
+\Gamma(x_1^+,0_K)=\{x_1^+,x_1^-\}.
+$$
+The displayed missing triple follows. The associativity comparison now uses the counterexample in Theorem 37.12 and the already established associativity theorem for $\Gamma$; it is not inferred from closure.
+
+Finally, if $F$ were continuous, its image $\mathcal R_{\mathrm{op}}$ would be compact, since $\mathscr E^2$ is compact. It would then be closed in the Hausdorff space $K^3$, contradicting strictness and closure equality. Thus $F$ is not continuous. $\square$
+
+**theorem 37.14 (The precise continuity obstruction and the distinction between operators and values).** There is no separately continuous function $A:K^2\to K$ satisfying
+$$
+A(Z(n),Z(m))=Z(n+m)\qquad(n,m\ge0).
+$$
+Consequently there is no jointly continuous extension of finite addition, and no separately continuous single-valued selection of $\Gamma$.
+
+On the larger carrier $\mathscr E$, actual composition is associative and unital, with precisely the one-sided continuity proved above. On the state carrier $K$, evaluation forgets composition witnesses. Even an injective recoding of evaluated states cannot turn evaluation into a homomorphism for all representatives. In contrast, the composite
+$$
+\mathscr E\xrightarrow{e}K\xrightarrow{H}\mathbb T
+$$
+is the genuine continuous homomorphism $\vartheta$ into circle addition.
+
+**Proof.** Suppose $A$ were separately continuous and extended finite addition. Fix $n$. The continuous maps of the second variable
+$$
+y\longmapsto A(Z(n),y),\qquad y\longmapsto T^ny
+$$
+agree on the dense natural core, so they agree everywhere. In particular,
+$$
+A(Z(n),y)=T^ny,\qquad A(0_K,y)=y.
+$$
+Choose an increasing sequence $n_j$ with $n_j\delta\to_+0$. By the nonsplit zero fibre,
+$$
+Z(n_j)\longrightarrow0_K.
+$$
+The pointwise operator limit is $T^{n_j}\to P_0^+$, and therefore
+$$
+A(Z(n_j),x_1^-)=T^{n_j}x_1^-\longrightarrow P_0^+(x_1^-)=x_1^+.
+$$
+Continuity of the first-variable slice at $(0_K,x_1^-)$ instead forces the same sequence to converge to
+$$
+A(0_K,x_1^-)=x_1^-.
+$$
+The two points are distinct, a contradiction. The argument used continuity of the second-variable slices at natural first inputs, and continuity of the first-variable slice through $x_1^-$ at zero. Thus the separate-continuity hypothesis is explicit and is stronger than what this particular contradiction needs; it has not been inferred from compactness or from right-topological composition.
+
+Joint continuity implies separate continuity. A selection of $\Gamma$ must agree with finite addition on the natural core, since those input fibres have unique outputs. These observations prove the two stated consequences.
+
+For the recoding assertion, let $j:K\to L$ be any injective function, without a topological assumption. If a binary operation $B$ on $j(K)$ satisfied
+$$
+B(j(e(p)),j(e(q)))=j(e(pq))
+$$
+for all operators, apply the counterexample of Theorem 37.9. The same left input $j(0_K)$ and right input $j(x_1^+)$ would force both $j(x_1^+)$ and $j(x_1^-)$ as outputs. Injectivity makes these different. Hence merely recoding the value cannot recover the missing operator witness.
+
+Associativity on the full operator carrier follows from actual function composition, while Theorems 37.9–37.13 identify exactly what is lost under evaluation and subsequent re-representation. The homomorphism assertion for $H\circ e$ is Theorem 37.1. None of these statements asserts nonexistence of arbitrary discontinuous state operations; the exclusions concern the all-representative evaluation quotient and extensions with the stated continuity properties. $\square$
+
+[^rro37_onesided]: Kevin Aguyar Brix, *Sturmian subshifts and their C*-algebras*, arXiv:2107.10613v1, §2.1, especially equations (2.1)–(2.3) and (2.7). The one-sided branch point has intercept equal to the slope and has the two predecessors $0\omega$ and $1\omega$; the two-sided system is separately defined as an inverse limit. The normalization used here is supplied by Theorems 20.4 and 20.7. [Primary text](https://arxiv.org/html/2107.10613v1).
+
+[^rro37_semigroup]: Eli Glasner and Michael Megrelishvili, *Circularly ordered dynamical systems*, author-hosted version dated February 18, 2018, §1, p. 3. The conventions explicitly include monoid actions; Definition 1.1 and Theorem 1.2 state the tame/Rosenthal criterion for compact metric semigroup systems. [Primary text](https://u.math.biu.ac.il/~megereli/CordDS180218.pdf).
+
+[^rro37_double]: Glasner and Megrelishvili, *Circularly ordered dynamical systems*, §6.1, p. 19, gives the classical split-orbit rotation enveloping space consisting of the double circle and isolated integer iterates, with the double circle as its minimal left ideal. That passage concerns invertible cascades; Theorems 37.2–37.7 supply the noninvertible nonnegative-time argument needed here. [Primary text](https://u.math.biu.ac.il/~megereli/CordDS180218.pdf).
+
+[^rro37_functions]: Michael Megrelishvili, *Orderable groups and semigroup compactifications*, arXiv:2112.14615v4, Example 6.8. This gives the actual phase-selecting functions in the split-rotation example and its circular lexicographic description. The multiplication and neighborhood bases on the present carrier are verified above with the orientation fixed by $H$. [Primary text](https://arxiv.org/html/2112.14615v4).
+
+[^rro37_tame]: Eli Glasner and Michael Megrelishvili, *Todorčević’s trichotomy and a hierarchy in the class of tame dynamical systems*, arXiv:2011.04376v4, §0.1, Corollary 8.3, Example 9.3(2), and §10. These passages discuss tame enveloping compacta, the Sturmian split-circle ideal, its two idempotents, and its fixed-sign groups. The Rosenthal representation used in Theorem 37.8 is constructed directly. [Primary text](https://arxiv.org/html/2011.04376v4).
+
+## 追加锚（本行以下为增补区）
+## 38. 增补·共同输入的线性联合闭图、有限符号证书与可数多尺度逼近
+
+**假设 38.0（相位、分裂点及单侧收敛前提）。** 沿用[第16节定义16.0、16.3、定理16.4及其证明，以及第18节假设18.1](https://raw.githubusercontent.com/the-omega-institute/trureturing/48b8fc89309eb665163095a8a9602798f11179b4/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)中的对象与结论。取
+$$
+\mathbb N_0=\{0,1,2,\ldots\},\qquad
+\phi=\frac{1+\sqrt5}{2},\qquad
+\alpha=\phi^{-1},\qquad
+\mathbb T=\mathbb R/\mathbb Z,
+$$
+$$
+K=\{x\in\{0,1\}^{\mathbb N_0}:\forall j\in\mathbb N_0,\ x_jx_{j+1}=0\},\qquad
+\gamma(n)=[n\phi],\qquad
+E_m=[-m\phi],\qquad E=\{E_m:m\ge1\}.
+$$
+这里 $K$ 取数字乘积拓扑，$Z(n)$ 为低位到高位排列、补零后的有限规范字。空间 $K$ 紧致可度量，$Z[\mathbb N_0]$ 稠密；连续满射 $H:K\to\mathbb T$ 满足 $H\circ Z=\gamma$。相位不在 $E$ 时纤维为单点；相位 $\beta\in E$ 时纤维为两个不同的定向点 $z_\beta^+,z_\beta^-$。特别，
+$$
+H^{-1}(\{0\})=\{0_K\},\qquad
+u=z_{E_1}^+=(10)^\omega,\qquad
+v=z_{E_1}^-=(01)^\omega,
+$$
+$$
+z_{E_2}^+=0v,\qquad z_{E_2}^-=10v.
+$$
+这些符号中的有限字与无限尾均按低位到高位连接；正负号完全采用定义16.3的方向。
+
+采用定理16.4证明中的以下准确收敛规则。若 $H(w)=\beta\notin E$，则
+$$
+\gamma(n_k)\longrightarrow\beta
+\quad\Longrightarrow\quad Z(n_k)\longrightarrow w.
+$$
+若 $\beta\in E$，
+$$
+\gamma(n_k)=\beta+[\varepsilon_k],\qquad
+0<|\varepsilon_k|<\tfrac12,\qquad \varepsilon_k\longrightarrow0,
+$$
+则对 $s\in\{-1,+1\}$，
+$$
+Z(n_k)\longrightarrow z_\beta^s
+\quad\Longleftrightarrow\quad
+s\varepsilon_k>0\text{ 最终成立}.
+$$
+实相位纤维、端点及方向的前置分类见[固定相位文本的定理371.2、372.2—372.4](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md)。
+
+另沿用
+$$
+\Gamma=\overline{\{(Z(a),Z(b),Z(a+b)):a,b\in\mathbb N_0\}}.
+$$
+记分裂点的符号为 $s(z_\beta^\pm)=\pm1$，并置
+$$
+\mathcal S(w)=
+\begin{cases}
+\{s(w)\},&H(w)\in E,\\
+\{-1,+1\},&H(w)\notin E.
+\end{cases}
+$$
+采用定理16.4的分类：输出相位不在 $E$ 时 $\Gamma(w,w')$ 是该相位的唯一纤维点；输出相位 $\theta=H(w)+H(w')$ 在 $E$ 时，
+$$
+\Gamma(w,w')=\{z_\theta^s:s\in\mathcal S(w)\cup\mathcal S(w')\}.
+$$
+
+**定义 38.1（有限联合闭图与带位置标记的符号矩阵）。** 令 $d,r\in\mathbb N_0$，$A\in\mathbb N_0^{r\times d}$，其第 $j$ 行记为 $a_j$。定义
+$$
+\mathcal G_A=
+\overline{\left\{
+\bigl((Z(n_i))_{i=1}^d,(Z(a_j\cdot n))_{j=1}^r\bigr):
+n\in\mathbb N_0^d
+\right\}}^{K^d\times K^r}.
+$$
+所有输出均使用同一个自然数向量 $n$。约定零维直积为单点，空和为零。
+
+给定 $(x,y)\in K^d\times K^r$，置
+$$
+I_x=\{i:H(x_i)\in E\},\qquad
+J_y=\{j:H(y_j)\in E\}.
+$$
+符号矩阵 $B=B(A;x,y)$ 的行由带位置标记的不交并
+$$
+(\{\mathrm{in}\}\times I_x)\sqcup(\{\mathrm{out}\}\times J_y)
+$$
+索引，并定义为
+$$
+B_{\mathrm{in},i}=s(x_i)e_i^{\mathsf T},\qquad
+B_{\mathrm{out},j}=s(y_j)a_j.
+$$
+这里 $e_i$ 是第 $i$ 个标准基向量。不同位置的行不因系数相同而被识别。记行数为 $m$。符号 $B\xi>0$ 始终表示每一行的值都严格为正，而不是向量偏序中的非零非负条件；当 $m=0$ 时它为空的合取。非分裂坐标不增加符号约束，方向 $\xi\in\mathbb R^d$ 不受非负性限制。
+
+**定理 38.2（有限联合闭图的准确相位—严格锥判据）。** 在假设38.0下，对定义38.1中的全部 $d,r,A,x,y$，
+$$
+(x,y)\in\mathcal G_A
+\quad\Longleftrightarrow\quad
+\left[
+H(y_j)=\sum_{i=1}^d A_{ji}H(x_i)\quad(1\le j\le r)
+\right]
+\quad\land\quad
+\left[\exists\xi\in\mathbb R^d,\ B(A;x,y)\xi>0\right].
+$$
+右侧成立时，可以用一列实际自然数向量同时逼近全部输入和全部输出；当 $d>0$ 时，还可要求其第 $k$ 项的每个输入整数都不小于 $k$。所用单侧收敛前提是[定理16.4证明中的定向逼近等价](https://raw.githubusercontent.com/the-omega-institute/trureturing/48b8fc89309eb665163095a8a9602798f11179b4/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)。
+
+**证明。** 先记录两个轨道事实。若 $\gamma(n)=E_h$，其中 $n\ge0,h\ge1$，则 $(n+h)\phi$ 为整数，与 $\phi$ 无理矛盾。因此
+$$
+\gamma[\mathbb N_0]\cap E=\varnothing.
+$$
+又因 $H$ 连续满射且 $Z[\mathbb N_0]$ 稠密，每个非空圆周开集的非空开原像都遇到 $Z[\mathbb N_0]$，故自然相位轨道稠密。对任意 $M\in\mathbb N_0$，
+$$
+\{\gamma(n):n\ge M\}=\gamma(M)+\gamma[\mathbb N_0]
+$$
+也稠密。于是有限多个输入可以分别从任意给定的非空开弧中选取自然相位，且同时满足任意预定的自然数下界；这里各输入的轨道指标彼此独立。
+
+若 $d=0$，实际向量只有空向量，每个输出恒为 $Z(0)=0_K$。右侧相位恒等式同样迫使所有输出等于 $0_K$，因而没有分裂行，零维方向满足空约束。这证明该情形，包括 $r=0$。以下设 $d>0$。
+
+先证必要性。有限乘积 $K^{d+r}$ 可度量，因此闭包中的点有同一列实际见证 $n^{(k)}\in\mathbb N_0^d$，满足
+$$
+Z(n_i^{(k)})\longrightarrow x_i,\qquad
+Z(a_j\cdot n^{(k)})\longrightarrow y_j.
+$$
+连续性与自然数上的相位加法给出所有相位恒等式。记 $\beta_i=H(x_i)$。对充分大的 $k$，取趋于零的唯一局部实偏移
+$$
+\gamma(n_i^{(k)})=\beta_i+[\varepsilon_i^{(k)}],
+\qquad |\varepsilon_i^{(k)}|<\tfrac12.
+$$
+对每个输出，由相位恒等式，
+$$
+\gamma(a_j\cdot n^{(k)})
+=H(y_j)+[a_j\cdot\varepsilon^{(k)}].
+$$
+因为行数有限且各行系数固定，可把 $k$ 同时取得足够大，使
+$$
+|a_j\cdot\varepsilon^{(k)}|<\tfrac12
+\quad\text{对所有 }j.
+$$
+此时输出的局部实偏移准确等于 $a_j\cdot\varepsilon^{(k)}$，不是另行选择的偏移，也不附加任意整数。这里先在圆周上使用恒等式，再将趋零的偏移和放进同一个局部区间，已经处理了模一代表跨越接缝的情形。
+
+每个分裂输入的单侧收敛规则给
+$$
+s(x_i)\varepsilon_i^{(k)}>0
+$$
+最终成立。每个分裂输出的同一规则给
+$$
+s(y_j)a_j\cdot\varepsilon^{(k)}>0
+$$
+最终成立。实际输出是非负整数的规范字，故其相位不在 $E$；因此分裂输出的这些局部偏移不能等于零。只有有限多个约束，遂有一个共同的充分大指标 $k$，使
+$$
+B\varepsilon^{(k)}>0.
+$$
+取 $\xi=\varepsilon^{(k)}$ 即得所需方向。此处选取的是同一个实际见证的误差向量，而不是各门分别选取误差，更不是假设归一化误差存在极限。若没有约束，则直接取零方向。
+
+再证充分性。设所有相位恒等式成立，并取 $B\xi>0$。当 $m>0$ 时，置
+$$
+\mu=\min_{\ell=1,\ldots,m}(B\xi)_\ell>0,\qquad
+C=\max\left(\{1\}\cup\left\{\sum_{i=1}^d|B_{\ell i}|:\ell=1,\ldots,m\right\}\right),
+$$
+$$
+\eta=\min\{1,\mu/(2C)\}>0.
+$$
+若 $\|w-\xi\|_\infty<\eta$，则逐行有
+$$
+(Bw)_\ell
+\ge (B\xi)_\ell-\sum_i|B_{\ell i}|\,\|w-\xi\|_\infty
+>\mu/2.
+$$
+当 $m=0$ 时，改取 $\xi=0,\eta=1$；以下不再需要 $\mu$，所有符号断言均为空条件。
+
+置
+$$
+L=\max\left(\{1\}\cup\left\{\sum_iA_{ji}:1\le j\le r\right\}\right),\qquad
+M=\max\{1,\|\xi\|_\infty+\eta\},
+$$
+$$
+t_k=\frac1{8(k+1)LM}\qquad(k\ge1).
+$$
+对每个 $i$ 使用非空开区间
+$$
+I_{i,k}=\bigl(t_k(\xi_i-\eta),\,t_k(\xi_i+\eta)\bigr).
+$$
+轨道尾部稠密，故可以分别选择 $n_i^{(k)}\ge k$，使
+$$
+\gamma(n_i^{(k)})\in\beta_i+[I_{i,k}].
+$$
+取对应的 $\varepsilon_i^{(k)}\in I_{i,k}$。这些区间位于 $(-1/2,1/2)$ 内，因而这些偏移就是唯一的局部偏移。令 $w^{(k)}=\varepsilon^{(k)}/t_k$，则
+$$
+\|w^{(k)}-\xi\|_\infty<\eta,\qquad
+|\varepsilon_i^{(k)}|<t_kM,
+$$
+$$
+|a_j\cdot\varepsilon^{(k)}|
+\le\left(\sum_iA_{ji}\right)\|\varepsilon^{(k)}\|_\infty
+<\frac1{8(k+1)}<\tfrac12.
+$$
+全部输入偏移与全部输出偏移都趋于零。若 $m>0$，还逐行有共同的严格余量
+$$
+(B\varepsilon^{(k)})_\ell>t_k\mu/2>0.
+$$
+因此分裂输入和输出全具有所要求的方向；非分裂坐标则只需其相位收敛。
+
+最后，对这一组实际输入，全部实际输出同时满足
+$$
+\gamma(a_j\cdot n^{(k)})
+=\sum_iA_{ji}\bigl(\beta_i+[\varepsilon_i^{(k)}]\bigr)
+=H(y_j)+[a_j\cdot\varepsilon^{(k)}].
+$$
+非负整数系数保证 $a_j\cdot n^{(k)}\in\mathbb N_0$。分别应用假设38.0的单点纤维规则和单侧规则，得到
+$$
+Z(n_i^{(k)})\longrightarrow x_i,\qquad
+Z(a_j\cdot n^{(k)})\longrightarrow y_j
+$$
+对所有输入与输出同时成立。没有为输出另行选择轨道指标。这证明充分性及所声明的自然数下界。证毕。
+
+**定理 38.3（空约束、零行、重复行、核心与同一输入复用）。** 定理38.2具有以下全部边界结论。没有分裂约束时，相位恒等式本身就是充分必要条件。若 $r=0$，则 $\mathcal G_A=K^d$；若 $d=0$，则全部输出必须为 $0_K$；若 $d=r=0$，闭图是唯一的空元组。零行对应的输出必须为 $0_K$。相同的两行对应的输出必须相等。恒等行 $a_j=e_i^{\mathsf T}$ 对应的输出必须等于输入 $x_i$。
+
+对单个倍乘行 $a_j=q e_i^{\mathsf T}$，其中 $q\ge1$，若 $x_i=z_{E_h}^s$，则其输出只能为 $z_{E_{qh}}^s$。若输入相位不分裂而倍乘后的相位分裂，则在只请求这个倍乘输出时，两种输出方向都可实现。若所有输入均为有限核心点，则
+$$
+\{y:(Z(n_1),\ldots,Z(n_d),y)\in\mathcal G_A\}
+=\left\{\bigl(Z((An)_j)\bigr)_{j=1}^r\right\}.
+$$
+
+**证明。** 空约束按定义由任意方向满足，直接应用定理38.2。若 $r=0$，相位条件为空，对每个分裂输入取 $\xi_i=s(x_i)$，对其余输入取 $\xi_i=0$，即满足所有输入约束，所以得到整个 $K^d$。零维输入及双零维情形已在定理38.2证明中直接处理。
+
+零行的相位等式为 $H(y_j)=0$，由零相位单点纤维知 $y_j=0_K$；实际输出也恒为这个点。若两行相同，则输出相位相同。非分裂相位的输出自动相等；分裂相位若选不同点，其两个符号行恰为 $a_j$ 与 $-a_j$，不可能同时严格为正。因此输出也必须相等。这与实际图上的两个输出始终相等一致；重复记录相同的目标点只重复同一个约束，不增加限制。
+
+恒等行与对应输入相位相同。在分裂情形，若输入与输出方向不同，符号约束包含某行及其相反行；若相位不分裂，单点纤维已经迫使相等。因此该输出只能是 $x_i$。这也说明输入坐标和输出坐标之间的重复不能被当作互相独立的近似。
+
+对倍乘行，$qE_h=E_{qh}$，输入要求 $s\xi_i>0$。输出若取符号 $t$，则要求 $tq\xi_i>0$，与前式相容当且仅当 $t=s$。若输入相位不分裂且输出相位分裂，则没有输入符号约束；指定输出符号 $t$ 后取 $\xi_i=t$，其他输入坐标按各自分裂符号取值，就实现这一个输出。因此同一变量出现 $q$ 次时，所使用的是同一个误差的 $q$ 倍，而非 $q$ 个自由误差。不同自由输入即使具有相同的极限点，也仍对应不同的矩阵列，不由极限点相等额外产生误差相等条件。
+
+最后，若 $x_i=Z(n_i)$，相位恒等式给
+$$
+H(y_j)=\gamma\left(\sum_iA_{ji}n_i\right)\notin E.
+$$
+这个相位的唯一纤维点是 $Z((An)_j)$，故输出被唯一确定；常值输入序列已经实现它。部分输入位于有限核心时则仅按非分裂坐标处理，并不强迫逼近它的自然数序列最终恒定，也不强迫其局部偏移为零。以上论证还覆盖 $n_i=0$、零行与空输出的交叉情形。证毕。
+
+**定理 38.4（严格择一、整系数证书及支撑界）。** 设 $B\in\mathbb R^{m\times d}$，两个维数均允许为零。以下两者恰有一个成立：
+$$
+\exists\xi\in\mathbb R^d,\quad B\xi>0;
+$$
+$$
+\exists\lambda\in\mathbb R^m,\quad
+\lambda\ge0,\quad \sum_{\ell=1}^m\lambda_\ell=1,\quad B^{\mathsf T}\lambda=0.
+$$
+第二式等价于存在 $\lambda\ge0,\lambda\ne0$ 且 $B^{\mathsf T}\lambda=0$。第一式等价于存在不受符号限制的 $\xi$ 满足 $B\xi\ge\mathbf1$。
+
+若 $B$ 为有理矩阵，第二种情形总有有理证书。每个包含极小的非零非负证书支撑 $S$ 都满足
+$$
+|S|\le\operatorname{rank}_{\mathbb R}(B)+1\le d+1;
+$$
+在该支撑上归一化到系数和为一后，证书唯一且为有理向量。清除分母得到同支撑的非零非负整数证书。当 $B$ 为整数矩阵时，第一种情形又等价于
+$$
+\exists z\in\mathbb Z^d,\qquad Bz\ge\mathbf1.
+$$
+因此，在相位恒等式成立的前提下，
+$$
+(x,y)\notin\mathcal G_A
+\quad\Longleftrightarrow\quad
+\exists c\in\mathbb N_0^m\setminus\{0\},\qquad B(A;x,y)^{\mathsf T}c=0.
+$$
+右侧可要求支撑大小至多为 $\operatorname{rank}_{\mathbb R}(B)+1$。这里不对证书系数大小作额外断言。
+
+所用成熟择一形式为 Dvorak–Kolmogorov，[《Duality theory in linear optimization and its extensions: formally verified》，第1节定理1.1、1.2](https://arxiv.org/html/2409.08119v3#S1)，对应固定声明 [equality_farkas、inequality_farkas](https://github.com/the-omega-institute/trureturing/blob/48b8fc89309eb665163095a8a9602798f11179b4/D5/S3/Analytic/Convexity/FarkasAlternative.lean#L700-L783)。有理权重的反证条件与 [RationalFarkas 的 Certificate 及 infeasible_of_certificate](https://github.com/the-omega-institute/trureturing/blob/48b8fc89309eb665163095a8a9602798f11179b4/D5/S0/Certificates/RationalFarkas.lean#L22-L114)相同；证书存在性另由以下论证给出。
+
+**证明。** 当 $m>0$ 且 $B\xi>0$，有限最小值
+$$
+\mu=\min_\ell(B\xi)_\ell
+$$
+严格为正，故 $B(\xi/\mu)\ge\mathbf1$。反向显然。当 $m=0$，这两种可行性均为空约束，而系数和为一的空向量不存在。因此该边界完全符合断言。
+
+为在 $m>0$ 时应用非负变量版本的 Farkas 择一定理，必须先处理原变量不受符号限制这一点。写
+$$
+\xi=p-q,\qquad p,q\ge0.
+$$
+每个实向量都有这种分解，例如逐坐标取正负部分。于是
+$$
+\exists\xi\in\mathbb R^d,\quad B\xi\ge\mathbf1
+\quad\Longleftrightarrow\quad
+\exists p,q\in\mathbb R^d,\quad p,q\ge0,\quad
+\begin{pmatrix}-B&B\end{pmatrix}
+\binom pq\le-\mathbf1.
+$$
+对
+$$
+C=\begin{pmatrix}-B&B\end{pmatrix},\qquad b=-\mathbf1
+$$
+应用所引不等式 Farkas 定理。它的另一个且互斥的分支是
+$$
+\lambda\ge0,\qquad C^{\mathsf T}\lambda\ge0,\qquad
+b\cdot\lambda<0.
+$$
+两个列块分别要求 $-B^{\mathsf T}\lambda\ge0$ 与 $B^{\mathsf T}\lambda\ge0$，合起来恰为 $B^{\mathsf T}\lambda=0$；最后一个条件恰为 $\sum_\ell\lambda_\ell>0$。除以这个正和，便得到归一化证书。这一应用也允许 $d=0$，因为其非负原变量集合可以为空。
+
+两分支不能同时成立还可直接核对：若 $B\xi>0$ 且 $\lambda\ge0,\lambda\ne0$，则
+$$
+0=(B^{\mathsf T}\lambda)\cdot\xi
+=\sum_\ell\lambda_\ell(B\xi)_\ell>0,
+$$
+矛盾。最后一步使用至少一个权重严格为正。正和归一化及反向去掉归一化，证明两种证书表述等价。
+
+以下证明有理性与支撑界，不从证书健全性推出存在性。设 $B$ 的各行为 $b_\ell\in\mathbb Q^d$，并且实归一化证书存在。有限的行集合保证所有证书支撑中存在包含极小者。任取这样的支撑 $S$，并取其归一化系数 $\lambda_\ell>0$，$\ell\in S$。考虑有理增广列
+$$
+\widetilde b_\ell=\binom{b_\ell^{\mathsf T}}1\in\mathbb Q^{d+1}.
+$$
+这些列在实数域上线性无关。否则，存在不全为零的实数 $h_\ell$，满足
+$$
+\sum_{\ell\in S}h_\ell b_\ell=0,\qquad
+\sum_{\ell\in S}h_\ell=0.
+$$
+因此 $h$ 同时具有正分量与负分量。置
+$$
+t=\min_{h_\ell>0}\frac{\lambda_\ell}{h_\ell}>0,\qquad
+\lambda'_\ell=\lambda_\ell-th_\ell\quad(\ell\in S),
+$$
+并在 $S$ 外补零。对于正的 $h_\ell$，这些新系数非负且至少一个为零；对于非正的 $h_\ell$，新系数仍为正。两条等式保证系数和仍为一且仍有
+$$
+\sum_\ell\lambda'_\ell b_\ell=0.
+$$
+这给出支撑严格包含于 $S$ 的证书，矛盾。
+
+故增广列满列秩。它们位于
+$$
+\operatorname{span}_{\mathbb R}\{b_1,\ldots,b_m\}\times\mathbb R
+$$
+中，所以 $|S|\le\operatorname{rank}_{\mathbb R}(B)+1$。这已经证明所需界。
+
+令 $s=|S|$。从这些线性无关的增广列中选出一个非零的 $s$ 阶子式，即选取 $s$ 个坐标行得到可逆的有理方阵 $M$。归一化证书的等式为
+$$
+\sum_{\ell\in S}\lambda_\ell\widetilde b_\ell
+=\binom{0_d}1.
+$$
+限制到所选坐标行，得到 $M\lambda_S=q$，其中 $q$ 为有理向量。于是
+$$
+\lambda_S=M^{-1}q
+=\frac{\operatorname{adj}(M)q}{\det M}\in\mathbb Q^s.
+$$
+这是原实证书的同一个向量，不是可能破坏严格正性的近似。增广列线性无关也保证归一化解唯一。取所有分母的一个正公倍数即可得到非负整数证书，且不改变其支撑。
+
+再设整数矩阵 $B$ 的严格系统在实数上可行。若 $m=0$，取 $z=0$。若 $m>0$，在一个实可行点附近，有限多个严格线性不等式共同保留正余量；具体可用定理38.2中的行范数估计得到一个仍全可行的开盒。逐坐标有理数稠密，故盒内有 $q\in\mathbb Q^d$，满足 $Bq>0$。清除 $q$ 的分母，得到 $z\in\mathbb Z^d$ 且 $Bz>0$。由于 $Bz$ 的每个分量都是整数，它们均不小于一。反向由 $\mathbb Z^d\subseteq\mathbb R^d$ 立即成立。
+
+最后，对整数证书 $c$，将有理不等式系统写为 $(-B)\xi\le-\mathbf1$，则
+$$
+c_\ell\ge0,\qquad
+\sum_\ell c_\ell(-B_{\ell i})=0,\qquad
+\sum_\ell c_\ell(-1)=-\sum_\ell c_\ell<0.
+$$
+这正是所引有理反证条件；同一个加权求和论证也排除实数解。结合定理38.2即得联合闭图的证书判据。若相位恒等式不成立，不归属已经由相位排除，不要求另有符号证书。证毕。
+
+**定义 38.5（二元加法图的实际联合关系与逐门关系）。** 一个有限无常量二元加法图具有 $d$ 个独立自然输入，后继门按一个有限次序排列；每个门取两个较早的输入或门输出之和。允许一个父结点占据两个端口，也允许不同的门计算相同的线性形式。所有输入及所有门输出均被记录。
+
+令输入结点的系数向量为 $e_i$，每个后继结点的系数向量为两个父结点系数向量之和。将全部门输出的系数向量列为 $A$ 的各行，得到一个非负整数矩阵。该图的实际联合闭关系记为 $\mathcal J=\mathcal G_A$。逐门关系 $\mathcal L$ 则由所有满足
+$$
+(w_p,w_q,w_t)\in\Gamma
+$$
+的结点赋值组成，其中 $p,q$ 是门 $t$ 的两个父结点。这里同一个结点在所有出现位置都只有一个 $K$ 值；但逐门属于闭图的自然数逼近见证没有被预先要求相同。
+
+**定理 38.6（逐门合法不蕴含共同可逼近）。** 对定义38.5中的每个图，$\mathcal J\subseteq\mathcal L$，且这个包含可以严格。以下两个无常量有向无环图均给出严格包含。
+
+第一例有四个独立输入，其极限为 $(u,u,v,v)$，依次请求四个输出形式
+$$
+a+c,\qquad a+d,\qquad b+c,\qquad b+d
+$$
+及其极限
+$$
+(0v,\,10v,\,10v,\,0v).
+$$
+每个门都属于 $\Gamma$，但整个元组不属于实际联合闭图。
+
+第二例有两个独立输入，极限为 $(u,v)$，三个门为
+$$
+p=x+y,\qquad q=x+x,\qquad r=q+y,
+$$
+并请求
+$$
+p\longrightarrow0v,\qquad q\longrightarrow0v,\qquad r\longrightarrow00v.
+$$
+这里
+$$
+z_{E_3}^+=010v,\qquad z_{E_3}^-=00v.
+$$
+三个门仍分别合法，但整个元组不属于实际联合闭图。此例的三个输出形式彼此不同。即使只记录 $x+y$ 的正分支和 $2x+y$ 的负分支，这两个不同输出就已构成一个包含极小的不相容输出族，输入极限仍固定为 $(u,v)$。
+
+这些严格包含不否定[第18节命题18.2的集合值结合律](https://raw.githubusercontent.com/the-omega-institute/trureturing/48b8fc89309eb665163095a8a9602798f11179b4/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)。
+
+**证明。** 每个门的三坐标投影连续，而 $\Gamma$ 闭，故 $\mathcal L$ 是有限多个闭集的交。实际自然数图上的每个门都执行真实加法，所以实际联合像包含于 $\mathcal L$；取闭包得到 $\mathcal J\subseteq\mathcal L$。
+
+第一例的矩阵为
+$$
+A_\square=
+\begin{pmatrix}
+1&0&1&0\\
+1&0&0&1\\
+0&1&1&0\\
+0&1&0&1
+\end{pmatrix}.
+$$
+四个输出相位都为 $E_2$。由 $\Gamma(u,v)=\{0v,10v\}$，所指定的每一个门均合法。若存在共同实际逼近，定理38.2必要性给出同一个误差向量 $(\varepsilon_a,\varepsilon_b,\varepsilon_c,\varepsilon_d)$，使
+$$
+\varepsilon_a+\varepsilon_c>0,\qquad
+\varepsilon_a+\varepsilon_d<0,\qquad
+\varepsilon_b+\varepsilon_c<0,\qquad
+\varepsilon_b+\varepsilon_d>0.
+$$
+第一式与第四式相加，和严格为正；第二式与第三式相加，和严格为负；两边却都是
+$$
+\varepsilon_a+\varepsilon_b+\varepsilon_c+\varepsilon_d.
+$$
+矛盾。等价的整数证书是：给四个带符号的输出行各权重一，给所有输入行权重零，因为
+$$
+(1,0,1,0)-(1,0,0,1)-(0,1,1,0)+(0,1,0,1)=0.
+$$
+
+为准确确定第二例的字，使用定义16.3中的 $c_*=-\alpha^3$ 与 $f_0(t)=-\alpha t$。由 $\alpha^2+\alpha=1$，
+$$
+f_0(c_*)=\alpha^4=5-3\phi,\qquad [f_0(c_*)]=E_3.
+$$
+前缀 $w=0$ 的长度为奇数，故该定义的定向规则给
+$$
+z_{E_3}^+=w10v=010v,\qquad
+z_{E_3}^-=w0v=00v.
+$$
+于是第二例的三个局部门分别满足
+$$
+0v\in\Gamma(u,v),\qquad
+0v\in\Gamma(u,u),\qquad
+00v\in\Gamma(0v,v).
+$$
+最后一个门的两个输入符号分别为正与负，输出相位为 $E_3$，所以负分支确实被允许。
+
+但其矩阵为
+$$
+A_\triangle=
+\begin{pmatrix}
+1&1\\
+2&0\\
+2&1
+\end{pmatrix},
+$$
+按两个输入、再按三个输出的顺序，其符号矩阵为
+$$
+B_\triangle=
+\begin{pmatrix}
+1&0\\
+0&-1\\
+1&1\\
+2&0\\
+-2&-1
+\end{pmatrix}.
+$$
+非负整数权重
+$$
+c=(1,0,1,0,1)^{\mathsf T}
+$$
+满足 $B_\triangle^{\mathsf T}c=0$。直接说，就是
+$$
+\varepsilon_x>0,\qquad
+\varepsilon_x+\varepsilon_y>0
+\quad\Longrightarrow\quad
+2\varepsilon_x+\varepsilon_y>0,
+$$
+与最后一个输出要求的负偏移矛盾。中间输出 $2x$ 的符号约束在此已经由输入 $x$ 的正号蕴含。
+
+只保留两个输出 $x+y$ 与 $2x+y$ 时，上述矛盾仍成立。分别只要求其中一个输出，则方向 $(2,-1)$ 实现前者的正分支，方向 $(1,-3)$ 实现后者的负分支；两者都符合固定输入的正、负符号。各自的相位恒等式均成立，故定理38.2将这两个方向分别提升为真实自然数逼近。删去任一输出后的剩余族因而可行，证明所说的包含极小性，而非宣称三门在所有互异输出形式的图中具有最少门数。
+
+最后，用同一批显式字可直接看到结合律没有受到反驳：
+$$
+\Gamma(\Gamma(u,u),v)
+=\Gamma(u,\Gamma(u,v))
+=\{010v,00v\}.
+$$
+左式中 $\Gamma(u,u)=\{0v\}$，再与负号输入 $v$ 运算得到两个分支。右式中 $\Gamma(u,v)=\{0v,10v\}$；与正号输入 $u$ 运算后也得到相同的两个分支。若在右括号方式中取得最终负分支，中间值可以取 $10v$，但不能被额外固定为 $0v$。实际方向 $(1,-3)$ 同样实现最终的 $2x+y$ 负分支，却使 $x+y$ 取负分支。集合值复合只要求存在适当的中间值；第二例还要求另一个复用输入的输出同时取指定值。两种量词条件不同，前者的结合律不推出后者的共同逼近。证毕。
+
+**定理 38.7（允许重复形式时的准确最少门数）。** 在定义38.5的无常量图类中，零门或一门总有 $\mathcal J=\mathcal L$，而两个门已经可以有严格包含。因此，在允许不同门重复计算同一形式的这个图类中，反例的最少门数恰为二。一个输入、两个重复倍乘门即足够。这个最少门数结论不包含要求全部输出形式互异的附加条件。
+
+**证明。** 零门时两关系都是整个输入空间。只有一个门且两个父输入位置不同时，属于 $\Gamma$ 的定义提供该输入对及其实际和的一列共同自然数见证；其余输入独立选取趋向各自目标的自然数序列，与这列见证合并即得到整个图的实际逼近。
+
+若唯一的门重复使用同一个输入 $x_i$，则输出形式为 $2n_i$。设 $\beta=H(x_i)$。当 $\beta\in E$ 时，$2\beta\in E$，而 $\Gamma(x_i,x_i)$ 只允许与输入相同的方向；取这个方向的实误差即满足定理38.2。若 $\beta\notin E$ 而 $2\beta\in E$，$\Gamma(x_i,x_i)$ 允许两个方向，对任一指定输出方向 $s$ 取 $\xi_i=s$ 即可。若 $2\beta\notin E$，输出相位的纤维为单点；此时 $\beta$ 也不在 $E$，可取 $\xi_i=0$。其余输入方向按自己的分裂符号独立选择。定理38.2遂在所有情形给出共同逼近，证明一门时相等。
+
+为构造两门反例，置
+$$
+\beta=[-\phi/2].
+$$
+若 $\beta=E_h$，则 $(2h-1)\phi$ 为偶整数，与 $\phi$ 无理矛盾，故 $\beta\notin E$。令 $w$ 为 $H^{-1}(\{\beta\})$ 的唯一点。由于 $2\beta=E_1$，
+$$
+\Gamma(w,w)=\{u,v\}.
+$$
+取一个独立输入趋向 $w$，两个门都计算该输入与自身之和，却分别请求输出趋向 $u$ 与 $v$。两门各自合法；实际两个输出对每个自然输入都完全相等，故不可能分别收敛到不同的 $u,v$。其矩阵两行都是 $(2)$，符号行则是 $(2)$ 与 $(-2)$，权重 $(1,1)$ 也是直接证书。既已排除零门和一门，最少门数恰为二。该证明没有把允许重行的极小值移用于互异输出形式的子类。证毕。
+
+**定义 38.8（可数输出的联合闭图）。** 固定有限 $d\in\mathbb N_0$，令 $J$ 为至多可数集合，并给定每个 $j\in J$ 的非负整数行向量 $a_j\in\mathbb N_0^d$。允许这些行的系数无统一上界。定义
+$$
+\mathcal G_J=
+\overline{\left\{
+\bigl((Z(n_i))_{i=1}^d,(Z(a_j\cdot n))_{j\in J}\bigr):
+n\in\mathbb N_0^d
+\right\}}^{K^d\times K^J}.
+$$
+闭包取乘积拓扑。对有限 $F\subseteq J$，令 $A_F$ 为这些行组成的有限矩阵，$p_F$ 为保留所有输入和 $F$ 中输出的投影；$B_F=B(A_F;x,y_F)$ 始终包含全部分裂输入约束。
+
+**定理 38.9（可数联合闭图的有限子系统判据与共同对角序列）。** 对定义38.8的全部数据，
+$$
+\mathcal G_J
+=\bigcap_{\substack{F\subseteq J\\F\text{ 有限}}}
+p_F^{-1}(\mathcal G_{A_F}).
+$$
+因此 $(x,y)\in\mathcal G_J$ 当且仅当所有输出的相位恒等式成立，并且
+$$
+\forall F\subseteq J\text{ 有限}\quad
+\exists\xi_F\in\mathbb R^d,\qquad B_F\xi_F>0.
+$$
+成立时有一列共同的实际自然数输入向量，使所有固定输入坐标和所有固定输出坐标收敛到指定值。
+
+若相位恒等式全部成立，但该元组不在 $\mathcal G_J$，则已有一个有限子系统拥有非零非负整数证书，且证书支撑至多涉及 $d+1$ 个带位置标记的输入或输出符号行。一个严格实方向同时满足全部无限约束是充分条件，但一般不是必要条件。
+
+**证明。** 若一个元组属于 $\mathcal G_J$，任意有限投影的每个邻域，其原像都是原元组的邻域；该原像遇到实际联合像，因此投影元组属于对应有限联合闭图。这证明一个包含方向。
+
+反之，设全部有限投影均属于相应闭图。取该元组的任意基本乘积邻域。它只限制有限多个输出坐标，并限制输入空间中的一个开邻域；将涉及的输出指标并成有限集 $F$，不受限制的输入坐标赋以整个 $K$，即可把该邻域写成某个有限乘积邻域的逆像。有限闭图归属保证这个有限邻域遇到某一个实际输入向量及其全部 $F$ 输出。用同一输入向量计算所有剩余输出，便得到原邻域中的实际联合像点。因此原元组属于闭包。
+
+对每个有限 $F$ 应用定理38.2，就得到相位与有限严格可行性的等价。每个单独输出也包含在某个有限 $F$ 中，所以这些有限相位条件准确合成为全部相位条件。
+
+为给出一列共同见证，取有限集递增列 $F_k$，其并为 $J$；有限或空的 $J$ 允许 $F_k$ 最终恒定。由 $p_{F_k}(x,y)\in\mathcal G_{A_{F_k}}$，可以选择一个 $n^{(k)}\in\mathbb N_0^d$，使所有输入和 $F_k$ 中所有输出的前 $k$ 位分别与目标相同。这里所指定的是一个非空的开闭柱邻域，故闭包归属确实提供同一个实际见证。于是每个输入的任意固定前缀最终正确；对每个固定输出 $j$，一旦 $j\in F_k$，其任意固定前缀也最终正确。因此全部固定坐标同时按乘积拓扑收敛。零维输入时所有见证都是同一个空向量，论证不变。
+
+若相位条件全成立而不归属，刚证明的交式给出一个不归属的有限投影。定理38.4为其符号系统给出支撑至多为
+$$
+\operatorname{rank}_{\mathbb R}(B_F)+1\le d+1
+$$
+的整数证书。反向，任一这样的有限证书排除该有限投影，也排除整体归属。
+
+最后，一个实方向满足全部约束时，它当然满足每个有限子系统，所以充分。以下定理38.10给出不必要性的实际自然数反例，而不交换
+$$
+\forall F\ \exists\xi_F
+\quad\text{与}\quad
+\exists\xi\ \forall F
+$$
+这两个量词。证毕。
+
+**定理 38.10（没有统一严格方向的共同自然数逼近及必需的相对尺度分离）。** 取两个输入极限 $(u,v)$，并对每个 $n\ge1$ 请求输出形式
+$$
+a_n=(n,1)
+$$
+的极限
+$$
+y_n=z_{E_{n+1}}^-.
+$$
+该整个可数元组属于 $\mathcal G_{\mathbb N_{\ge1}}$。每个有限符号子系统可行，却不存在一个实方向同时严格满足全部输入和输出符号约束。
+
+更准确地，存在共同实际自然数序列 $P_k,Q_k\ge k$，其局部相位偏移满足
+$$
+\gamma(P_k)=E_1+[\varepsilon_k],\qquad
+\gamma(Q_k)=E_1+[\delta_k],
+$$
+$$
+t_k=\frac1{8(k+1)},\qquad
+|\varepsilon_k-t_k^2|<t_k^3,\qquad
+|\delta_k+t_k|<t_k^2,
+$$
+并且
+$$
+Z(P_k)\longrightarrow u,\qquad
+Z(Q_k)\longrightarrow v,\qquad
+Z(nP_k+Q_k)\longrightarrow z_{E_{n+1}}^-
+\quad\text{对每个固定 }n\ge1.
+$$
+对任意实现同一可数元组的实际共同序列，取其趋零局部偏移 $\varepsilon_k,\delta_k$，必有
+$$
+\varepsilon_k>0,\qquad\delta_k<0
+\quad\text{最终成立},\qquad
+\frac{\varepsilon_k}{-\delta_k}\longrightarrow0.
+$$
+因此本例中相对尺度分离不仅是一种构造选择，也是所有共同逼近必须满足的条件；并不要求偏移恰为二次与一次幂。
+
+**证明。** 全部相位恒等式成立，因为
+$$
+nH(u)+H(v)=(n+1)E_1=E_{n+1}.
+$$
+输入符号要求方向的第一分量为正、第二分量为负。若有限输出集非空，令其最大指标为 $N$；取
+$$
+\xi_N=(1,-N-1).
+$$
+则对所有被请求的 $n\le N$，
+$$
+n(\xi_N)_1+(\xi_N)_2=n-N-1\le-1<0,
+$$
+所以这个有限系统严格可行。空输出集取 $(1,-1)$ 即可。
+
+若存在统一实方向 $(a,b)$，则 $a>0$ 且 $na+b<0$ 对每个正整数 $n$ 成立。由实数的阿基米德性质，选择整数 $n>-b/a$，便有 $na+b>0$，矛盾。这里缺少的正是统一严格方向，而不是有限子系统的相容性。
+
+下面直接构造实际共同序列。对 $k\ge1$，置
+$$
+I_k=(t_k^2-t_k^3,\ t_k^2+t_k^3),\qquad
+J_k=(-t_k-t_k^2,\ -t_k+t_k^2).
+$$
+两区间非空，分别严格位于正半轴与负半轴，并且都包含于 $(-1/2,1/2)$。由定理38.2证明中已经给出的轨道尾部稠密性，集合
+$$
+\{h\in\mathbb N_0:h\ge k,\ \gamma(h)\in E_1+[I_k]\},
+$$
+$$
+\{h\in\mathbb N_0:h\ge k,\ \gamma(h)\in E_1+[J_k]\}
+$$
+均非空。分别取它们的最小元为 $P_k,Q_k$，并取唯一局部偏移
+$$
+\varepsilon_k\in I_k,\qquad\delta_k\in J_k.
+$$
+这给出显示的两条误差估计，尤其
+$$
+\varepsilon_k>0,\qquad\delta_k<0,\qquad
+\frac{\varepsilon_k}{t_k^2}\longrightarrow1,\qquad
+\frac{\delta_k}{-t_k}\longrightarrow1.
+$$
+单侧规则立即给出两个输入的目标极限。
+
+对 $1\le n\le k$，因 $\varepsilon_k>0$，
+$$
+n\varepsilon_k+\delta_k>-t_k-t_k^2.
+$$
+另一方面，$t_k<1$ 给 $\varepsilon_k<2t_k^2$，所以
+$$
+n\varepsilon_k+\delta_k
+<2nt_k^2-t_k+t_k^2
+\le2(k+1)t_k^2-t_k
+=-\frac34t_k<0.
+$$
+故前 $k$ 个输出的全部局部偏移同时位于
+$$
+(-t_k-t_k^2,\,-3t_k/4)\subset(-1/2,0).
+$$
+由于使用的是同一对实际自然数，
+$$
+\gamma(nP_k+Q_k)
+=E_{n+1}+[n\varepsilon_k+\delta_k].
+$$
+对每个固定 $n$，当 $k\ge n$ 时，该和已是输出的准确局部实偏移，始终为负并趋于零。因此假设38.0给
+$$
+Z(nP_k+Q_k)\longrightarrow z_{E_{n+1}}^-.
+$$
+每个 $nP_k+Q_k$ 都是非负整数。这不是对各输出分别选自然数，而是同一对 $P_k,Q_k$ 的全部实际线性输出。乘积收敛只要求每个固定坐标最终满足所需条件；这里在第 $k$ 步同时控制了前 $k$ 个输出。
+
+最后，设任意共同实际序列实现同一个元组。输入的单侧收敛迫使 $\varepsilon_k>0,\delta_k<0$ 最终成立。对每个固定正整数 $n$，输出相位的准确局部偏移最终等于 $n\varepsilon_k+\delta_k$，而指定输出的负方向迫使
+$$
+n\varepsilon_k+\delta_k<0
+$$
+最终成立。因此对每个固定 $n$，最终有
+$$
+0<\frac{\varepsilon_k}{-\delta_k}<\frac1n.
+$$
+给定任意实数 $\eta>0$，先取 $n$ 使 $1/n<\eta$，再取满足这一个固定输出条件的充分大指标，即得该比值最终小于 $\eta$。故比值趋于零，证明必需的相对尺度分离。所有构造及量词均在通常实数与自然数序列内完成。证毕。
+
+## 追加锚（本行以下为增补区）

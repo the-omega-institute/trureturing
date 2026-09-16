@@ -1,0 +1,24 @@
+**theorem 37.4 (Exact operator classification and the complete net dichotomy).** One has the disjoint union of actual functions
+$$
+\mathscr E=\mathcal I\ \dot\cup\ \mathscr D.
+$$
+All the parameters displayed in $\mathscr D$ give distinct functions. Every $T^n$ is isolated in $\mathscr E$. For any net of nonnegative integers $(n_i)$,
+$$
+T^{n_i}\longrightarrow T^n
+\quad\Longleftrightarrow\quad
+n_i=n\text{ eventually},
+$$
+and
+$$
+T^{n_i}\longrightarrow P_\theta^s
+\quad\Longleftrightarrow\quad
+n_i\longrightarrow\infty\text{ and }n_i\delta\longrightarrow_s\theta.
+$$
+Here $n_i\to\infty$ means that for every $N$, eventually $n_i>N$.
+
+For every $\theta,s$ there is a strictly increasing ordinary sequence $(n_j)$ satisfying these conditions. The remainder is closed, and
+$$
+\mathscr D=\bigcap_{N\ge0}\overline{\{T^n:n\ge N\}}^{\,\mathscr E}.
+$$
+The double-circle classification for invertible split-rotation cascades is a classical analogue; the positive-time classification asserted here includes the noninvertible branch history of Theorem 37.2.[^rro37_double]
+
