@@ -4510,8 +4510,8 @@ the specified low geometry remains a hypothesis.
 
 ### A same-law two-prime consumer
 
-The pure-power prime extension (AP2), its convex comparison (AP5),
-and its square update (AP6) can consume (SH24) directly. Let G be
+The pure-power charge bound (AP2), its convex comparison (AP3)--(AP4),
+square bound (AP5) and final conditioning (AP6) consume (SH24) directly. Let G be
 its square bound and use thresholds T_11=4, T_13=5. The first charge
 is at most H_4/6. Its comparison multiplier N has
 
@@ -4560,3 +4560,134 @@ below2^63. Geometric sums, conditioning and the two-prime consumer use
 exact fractions. Run the new replay with `python3 -I -O`.
 The arbitrary-height conclusions use the ordinary proofs above;
 no new Lean theorem or unrestricted noncoverage endpoint is asserted.
+
+### Combining actual prefix-cap savings with their own coverage charge
+
+The preceding continuation admits a refinement that leaves every
+physical prime kernel unchanged. Start with one fixed supported head
+law mu, and a finite deterministic admissible schedule from (AP1)--(AP6).
+At each prime p write
+
+    d_p=p-1-T_p, delta_p=(T_p-1)/(p-2),
+    c_p=(p-1)/d_p<=p,
+    a_p=(3p-1)/(p-1)^2, k_p=1+a_p c_p.
+
+Let alpha_p(x) be the actual mixed forbidden density in row x relative
+to its uniform pure-power survivor law. The existing distortion kernel
+has its natural density multiplier bounded by
+1/(1-min(alpha_p(x),delta_p)). Consequently its actual depth-e prefix
+cap is c_actual(x)p^(-e), where
+
+    c_actual(x)=(p-1)/[(p-2)(1-min(alpha_p(x),delta_p))]<=c_p.
+
+These are the natural caps already retained by
+`FiniteLaw.distort_prob_le_natural` and
+`CappedGain.distorted_prefix_le`. Define D_p=E(c_p-c_actual)>=0
+under the actual previous-history law. If J bounds every old complete
+test square, two such tests A_e,A_f satisfy
+
+    E[c_actual A_e A_f]<=c_p J-D_p,
+    Gamma_new<=k_p J-a_p D_p.                           (SH26)
+
+For the first inequality use Cauchy--Schwarz to bound E A_e A_f by J,
+and A_e A_f>=1 to retain at least D_p from the density deficit.
+For the second, expand an arbitrary new test over every ordered pair
+of p-exponents. The zero-zero pair contributes at most J; every other
+pair has intersection cap c_actual p^(-max(e,f)). Individual residues
+may vary with the old modulus: expansion into old labelled indicators
+still gives the complete loads A_e A_f after applying the cap.
+Their finite coefficient is bounded by sum_(j>=1)(2j+1)p^-j=a_p.
+This enlargement is valid because c_p J-D_p>=E c_actual>0.
+
+Write f_p=product_(later r)k_r and P=product_p k_p. Let beta_p be
+the actual assigned mixed-union probability at step p, and B=sum beta_p.
+All these expectations are preserved by later normalized kernels.
+Iterating (SH26) bounds every final complete test by
+
+    E L^2<=G P-sum_p f_p a_p D_p.
+
+For W>0 satisfying W>=f_p a_p(p-1)/d_p at each prime, define on z>=1
+
+    h_p(z)=W(z-T_p)_+/d_p
+       +f_p a_p[(p-1)/(p-1-min(z,T_p))-c_p].
+
+This function is increasing and convex: below T_p its derivative is
+f_p a_p(p-1)/(p-1-z)^2, above T_p it is W/d_p, and the stated condition
+is exactly the nondecreasing slope condition at the join. Using the
+original weighted mixed load R_p from (AP3), alpha_p<=R_p/(p-2) gives
+
+    W beta_p-f_p a_p D_p
+      <=E h_p(1+R_p)
+      <=E_(N_p) max_L E_mu h_p(N_p L).                  (SH27)
+
+The last comparison preserves the original labels and the single missing
+unit in (AP3), then applies Jensen exactly as in (AP4). Its N_p is the
+same auxiliary multiplier as in the original schedule. When h_p(1)<0,
+apply the nonnegative convex comparison to h_p(1+R)-h_p(1), and restore
+the constant once. No density deficit is estimated independently from
+the negative intercept of this combined cost.
+
+Suppose C_p(W) bounds the right side of (SH27). The finite criterion
+
+    G P-1+sum_p C_p(W)<=W                               (SH28)
+
+alone implies a positive final survivor law with Gamma<=1+W. No
+separate scalar charge bound below one is needed. To see this, combine
+(SH26)--(SH28): for every final complete test L,
+
+    E L^2-1+W B<=W.
+
+The normalized physical kernels exist on the entire earlier history;
+none conditions on previous good events. Their union bound for final
+bad mass therefore applies even before positivity is known. If3 divides
+the full physical period, some mod3 cylinder has probability at least1/3.
+Complete a test containing that cylinder and the unit class. Its load
+is at least1+I, so its square expectation is at least2. Applying the
+last inequality to this test gives B<=1-1/W<1. More generally any
+nonunit divisor d gives B<=1-3/(dW)<1 by the same argument.
+Thus final survivor mass rho>=1-B is positive. For every test,
+E L^2-1<=W(1-B)<=W rho; discarding the complement saves at least
+its mass, and one final conditioning proves Gamma<=1+W. The test
+chosen to establish positivity does not change the physical law.
+
+The costs in (SH27) have an exact finite observation formula for integer
+head loads. For fixed n, put v_j=h_p(nj) and K=ceil(T_p/n). Then
+
+    E_mu h_p(nL)=v_1+(v_2-v_1)(E_mu L-1)
+       +sum_(j=2..K)(v_(j+1)-2v_j+v_(j-1))E_mu(L-j)_+.
+
+All feature coefficients are nonnegative under the final W condition.
+For n>=T_p the entire cost equals W(nL-T_p)/d_p, so the infinite
+auxiliary tail is computed from its remaining probability and first
+moment. For a fixed set of mean and hinge upper bounds, the resulting
+certificate is affine in W. Algebraic evaluation at zero and one may
+extract its coefficients, but only the final W satisfying convexity
+gives a probability bound.
+
+Using the exact same-law observations (SH24) and the unchanged schedule
+11/T4,13/T5, the certificate (SH28) gives
+
+    Gamma_13<=20165592223021484810434066670921
+                 /131127082414004971430759164752
+                <153.786631.                           (SH29)
+
+The saving over (SH25) is exactly
+25321722548022558251710601395/131127082414004971430759164752.
+All physical heights and the low-geometry hypothesis remain as in
+(SH25). The adjacent convex-profile verifier checks every active
+integer cost coefficient, the full multiplier tail, convexity at the
+final W, and exact equality in (SH28). This is an ordinary refinement
+of the existing normalized distortion construction, not a new Lean
+declaration or a complete unrestricted-prime continuation.
+
+Repository searches covered (AP1)--(AP6), the scalar fibre boundary,
+the actual clipped rectangle estimates, `PrimeRectangleTransfer`,
+`ConditionalComparison/Distortion`, `CappedGainDistortion`, and
+`ThreePrime/DistortionChain`. The existing natural-cap and full-history
+union-bound results are reused directly. Public sources checked on
+16 September2026 include BBMST [1811.03547](https://arxiv.org/abs/1811.03547),
+its scalar potential in Section6, the geometry optimization in Section5.3
+of [1901.11465](https://arxiv.org/abs/1901.11465), and Hough--Nielsen
+[1703.02133](https://arxiv.org/abs/1703.02133), Lemmas5--6. No directly
+applicable arbitrary-height11/13 endpoint was found in those statements;
+no literature-priority claim is made for the refinement.

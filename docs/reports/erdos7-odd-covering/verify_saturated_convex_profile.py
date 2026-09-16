@@ -1,4 +1,4 @@
-"""Rebuild SH19--SH25 on the single probability certified by SH18.
+"""Rebuild SH19--SH29 on the single probability certified by SH18.
 
 Requires NumPy. The adjacent SH18 certificate is an explicit, hash-bound
 prerequisite; verify_saturated_joint_head.py verifies that prerequisite.
@@ -124,6 +124,63 @@ def refine_hinge_two(points, sizes, nums, denominator, mean, q, records):
             'lambda_upper': str(upper), 'nu_upper': str(upper/q)}
 
 
+def combined_prime_cost(square, mean, hinges, standard):
+    """Exact natural-cap/charge consumer; no change of actual prime kernels."""
+    def features(p, threshold, n, target, future):
+        d = p-1-threshold
+        aa, cap = F(3*p-1, (p-1)**2), F(p-1, d)
+
+        def cost(z):
+            return target*max(F(0), F(z-threshold))/d + future*aa*(
+                F(p-1, p-1-min(z, threshold))-cap)
+
+        top = (threshold+n-1)//n
+        values = {k: cost(n*k) for k in range(1, top+2)}
+        linear = values[2]-values[1]
+        coeff = {k: values[k+1]-2*values[k]+values[k-1] for k in range(2, top+1)}
+        bound = values[1]+linear*(mean-1)+sum(v*hinges[k] for k, v in coeff.items())
+        for k in range(1, threshold+3):
+            require(cost(n*k) == values[1]+linear*(k-1)+
+                    sum(v*max(k-j, 0) for j, v in coeff.items()), 'integer cost expansion')
+        return bound, linear, coeff
+
+    probabilities = {1: F(28, 33), **{n: F(50, 3*11**n) for n in range(2, 5)}}
+    tail_mass = 1-sum(probabilities.values())
+    tail_mean = F(7, 6)-sum(n*pr for n, pr in probabilities.items())
+    require(tail_mass > 0 and tail_mean >= 5*tail_mass, 'complete N>=5 multiplier tail')
+
+    def costs(target):
+        first = features(11, 4, 1, target, F(61, 42))[0]
+        second = sum(pr*features(13, 5, n, target, F(1))[0] for n, pr in probabilities.items())
+        second += target*(mean*tail_mean-5*tail_mass)/7
+        return first+second
+
+    # Evaluations at zero and one only extract an affine expression. They
+    # are not claimed as probability bounds before final convexity checks.
+    intercept = costs(F(0))
+    slope = costs(F(1))-intercept
+    require(slope == F(standard['total_charge_upper']) < 1, 'same fixed-schedule scalar coefficient')
+    unconditioned = F(1403, 630)*square
+    target = (unconditioned-1+intercept)/(1-slope)
+    require(target > 1, 'positive final target compatible with the universal square floor')
+    observations = []
+    for p, threshold, future, ns in [(11, 4, F(61, 42), [1]), (13, 5, F(1), range(1, 5))]:
+        require(target >= future*F(3*p-1, (p-1)**2)*F(p-1, p-1-threshold),
+                'increasing continuous convex cost at final target')
+        for n in ns:
+            value, linear, coeff = features(p, threshold, n, target, future)
+            require(linear >= 0 and all(v >= 0 for v in coeff.values()), 'nonnegative active features')
+            observations.append({'p': p, 'n': n, 'upper': str(value), 'linear': str(linear),
+                                 'hinge_coefficients': {str(k): str(v) for k, v in coeff.items()}})
+    require(unconditioned-1+costs(target) == target, 'combined criterion closes at its exact target')
+    require(target+1 < F(standard['supported_square_upper']), 'strict improvement on identical kernels')
+    return {'target_excess': str(target), 'supported_square_upper': str(target+1),
+            'affine_slope': str(slope), 'affine_intercept': str(intercept),
+            'self_certified_survival_lower': str(1/target),
+            'saving': str(F(standard['supported_square_upper'])-target-1),
+            'observations': observations}
+
+
 def compute(head_path):
     raw = head_path.read_bytes()
     head = json.loads(raw)
@@ -192,6 +249,9 @@ def compute(head_path):
                     'total_charge_upper': str(charge11+charge13),
                     'survival_lower': str(joint_survival), 'square_before_conditioning': str(joint_square),
                     'supported_square_upper': str(1+(joint_square-1)/joint_survival)}
+    selected_hinges = {int(t): F(row['nu_upper']) for t, row in hinges.items()}
+    selected_hinges[2] = F(refined['nu_upper'])
+    combined = combined_prime_cost(F(head['Gamma']), first, selected_hinges, continuation)
     result = {'schema': 1, 'scope': 'SH18 carrier and law; arbitrary finite original357 heights',
               'head_certificate_sha256': sha256(raw).hexdigest(),
               'thresholds': list(thresholds), 'base_layouts': len(features),
@@ -199,7 +259,7 @@ def compute(head_path):
               'outside_square_excess': str(outside_excess), 'survival_lower': str(q),
               'mean_lambda_upper': str(mean), 'mean_nu_upper': str(first),
               'square_nu_upper': head['Gamma'], 'hinges': hinges, 'refined_hinge2': refined,
-              'continuation11_13': continuation}
+              'continuation11_13': continuation, 'combined_prime_cost': combined}
     stats = {'verified': True, 'depth_count': len(rows), 'base_pairs_per_query': len(features)**2,
              'hinge_queries': len(rows)*len(thresholds),
              'independent_square_comparisons': len(rows), 'integer_range_bound': largest_range,

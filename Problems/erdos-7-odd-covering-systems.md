@@ -123,8 +123,13 @@ complete convex query from20,070,400 to78,400 layout pairs, with
 an exact equality proof. A direct threshold-two decomposition keeps
 the remaining geometric correction small. These observations feed
 the same physical11/13 prime extension at arbitrary heights and give
-supported `Gamma<153.979740` after both primes. The exact two-prime
-consumer retains every auxiliary tail contribution; it does not yet
+supported `Gamma<153.979740` after both primes. Keeping the actual
+prefix-cap savings combined with their own coverage charge further
+gives `Gamma<153.786631` on the identical kernels, by (SH26)--(SH29).
+The combined finite criterion itself proves positive survivor mass,
+using the universal square floor, without a separate charge-positivity
+premise. The exact two-prime consumer retains every auxiliary tail
+contribution; it does not yet
 provide the subsequent unrestricted-prime continuation or eliminate
 other low configurations.
 
