@@ -12,6 +12,7 @@ public sealed class SharedBuildRuntimeTests
     public void CompilerOwnedRuntimeMovesAndExecutesWithoutProducerOrPackagePaths()
     {
         if (OperatingSystem.IsWindows()) return;
+        using var ciEnvironment = new CiFixtureEnvironment();
         using var fixture = new CurrentExecutionContractTests.CandidateFixture();
         var root = fixture.Root;
         var repository = TestRepositoryLayout.FindRoot();
