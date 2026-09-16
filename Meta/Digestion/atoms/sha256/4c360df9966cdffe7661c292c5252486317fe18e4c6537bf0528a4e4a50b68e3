@@ -1,0 +1,17 @@
+再由输出映射得到
+
+$$
+\boxed{
+\|y_n-\widetilde y_n\|
+\le
+\|C\|
+\sum_{k=0}^{n-1}
+\|A\|^{n-1-k}
+\left(
+\|R_A\|\,\|\widetilde x_k\|
++
+\|R_B\|\,\|u_k\|
+\right).
+}
+$$
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:ed223fdcd2bfd19b90cc35ddfd9f2519d878044131338cbb3c549bfe46facfc7
+  normalized_sha256: sha256:ed223fdcd2bfd19b90cc35ddfd9f2519d878044131338cbb3c549bfe46facfc7
+cas_ref: sha256:ed223fdcd2bfd19b90cc35ddfd9f2519d878044131338cbb3c549bfe46facfc7
+coverage_gids:
+  - gid: D5/S0/Rewriting/Quotients/DynamicsDescent.dynamics_descends_iff
+    target_statement_id: sha256:1597f85593485709f45a1213c2894b011254268c520083900fa931f9f261c89f
+receipts:
+  unresolved_subitems: []
