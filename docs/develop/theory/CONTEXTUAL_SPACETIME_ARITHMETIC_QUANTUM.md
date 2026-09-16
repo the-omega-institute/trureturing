@@ -33613,7 +33613,7 @@ $$
 所有后继分支仍有相同的左正因子，正迹时为乘积密度。若 $W$ 两列相同，写 $W(y\mid0)=W(y\mid1)=p_y$，则命题 149.1 的单步分解给
 $$
 \phi_y=p_y\mathcal T,\qquad
-\mathcal T=2\psi_0,\qquad
+\mathcal T=2\psi_{\nu=0},\qquad
 \mathcal T\begin{pmatrix}x&u\\v&w\end{pmatrix}
 =x\begin{pmatrix}a&a^2\\a^2&a^2\end{pmatrix}+wE_0.
 $$
