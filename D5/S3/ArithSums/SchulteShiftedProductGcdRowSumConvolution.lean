@@ -69,6 +69,17 @@ private theorem card_window_solutions (n d : ℕ) (hd : d ∣ n) (hd0 : 0 < d) :
             ZMod.finEquiv d ((ZMod.finEquiv d).symm z) :=
           (finEquiv_natCast _).symm
         _ = z := (ZMod.finEquiv d).apply_symm_apply z
+    have residueFinEquiv_fst (x : Fin n) :
+        (residueFinEquiv n d hd hd0 x).1 = (x.val : ZMod d) := by
+      change ZMod.finEquiv d ⟨x.val % d, Nat.mod_lt _ hd0⟩ = (x.val : ZMod d)
+      rw [finEquiv_natCast]
+      exact ZMod.natCast_mod x.val d
+    have residueFinEquiv_symm_fst (z : ZMod d × Fin (n / d)) :
+        (((residueFinEquiv n d hd hd0).symm z).val : ZMod d) = z.1 := by
+      change
+        (((((ZMod.finEquiv d).symm z.1).val + d * z.2.val : ℕ) : ZMod d)) = z.1
+      rw [Nat.cast_add, Nat.cast_mul, finEquiv_symm_natCast]
+      simp
     refine
       { toFun := fun p => ⟨e p, ?_⟩
         invFun := fun z => ⟨e.symm z, ?_⟩
@@ -84,9 +95,18 @@ private theorem card_window_solutions (n d : ℕ) (hd : d ∣ n) (hd0 : 0 < d) :
           exact e.right_inv z.1 }
     · have hp : ((1 + p.1.1.val * p.1.2.val : ℕ) : ZMod d) = 0 :=
         (ZMod.natCast_eq_zero_iff _ _).2 p.2
-      simpa [e, residueFinEquiv, finEquiv_natCast, ZMod.natCast_mod] using hp
+      change
+        1 + (residueFinEquiv n d hd hd0 p.1.1).1 *
+          (residueFinEquiv n d hd hd0 p.1.2).1 = 0
+      rw [residueFinEquiv_fst, residueFinEquiv_fst]
+      simpa only [Nat.cast_add, Nat.cast_one, Nat.cast_mul] using hp
     · rw [← ZMod.natCast_eq_zero_iff]
-      simpa [e, residueFinEquiv, finEquiv_symm_natCast, ZMod.natCast_mod] using z.2
+      change
+        ((1 + ((residueFinEquiv n d hd hd0).symm z.1.1).val *
+          ((residueFinEquiv n d hd hd0).symm z.1.2).val : ℕ) : ZMod d) = 0
+      rw [Nat.cast_add, Nat.cast_mul, residueFinEquiv_symm_fst,
+        residueFinEquiv_symm_fst]
+      simpa only [Nat.cast_one] using z.2
   let solutionProductEquiv (d q : ℕ) :
       ({p : ZMod d × ZMod d // 1 + p.1 * p.2 = 0} × Fin q) × Fin q ≃
         {z : (ZMod d × Fin q) × (ZMod d × Fin q) //
