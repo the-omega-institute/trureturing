@@ -1,0 +1,47 @@
+**theorem 42.16 (Actual joint images and the exact descent criterion).** Let $\Omega\subseteq V\oplus W$ and put
+$$
+C_\Omega=\overline{\sigma_{V\oplus W}[\Omega]}.
+$$
+For every finite $F\subseteq(V\oplus W)^*$, use the actual image $q_F[\Omega]$. Then
+$$
+C_\Omega
+=\{h\in S(V\oplus W):h|_F\in q_F[\Omega]
+                    \text{ for every finite }F\},
+\tag{42.37}
+$$
+and
+$$
+J(C_\Omega)
+=
+\overline{\{(\sigma_V(v),\sigma_W(w)):(v,w)\in\Omega\}}.
+\tag{42.38}
+$$
+These formulas assert closure, not the existence of an original representative for every completed point.
+
+More generally, let $C\subseteq S(V\oplus W)$ be compact, let $Y$ be Hausdorff, and let $T:C\to Y$ be continuous. There exists a unique continuous map
+$$
+\bar T:J(C)\to Y,\qquad T=\bar T\circ(J|_C),
+\tag{42.39}
+$$
+if and only if
+$$
+h,h'\in C,\quad J(h)=J(h')\quad\Longrightarrow\quad T(h)=T(h').
+\tag{42.40}
+$$
+Equivalently, the actual joint image
+$$
+\mathcal G_{C,T}=\{(J(h),T(h)):h\in C\}
+\tag{42.41}
+$$
+has exactly one output over every point of $J(C)$.
+
+**Proof.** A finite cylinder containing a point of $C_\Omega$ must meet $\sigma[\Omega]$, which proves one inclusion in (42.37). Conversely, a point satisfying its right-hand side has an actual $\Omega$-representative in every finite cylinder, and therefore belongs to the closure. The compact image $J(C_\Omega)$ is closed and contains the set whose closure appears in (42.38). For the reverse inclusion, continuity implies that the image of any point in the closure of $\sigma[\Omega]$ lies in the closure of $J(\sigma[\Omega])$: the preimage of a neighborhood of its image is a neighborhood meeting $\sigma[\Omega]$. This proves (42.38).
+
+A factorization implies (42.40). Conversely, under (42.40), assign to each $b\in J(C)$ the common value of $T$ on its nonempty fiber. This is well-defined and unique. To prove continuity, for a closed set $K\subseteq Y$ observe that
+$$
+\bar T^{-1}(K)=J(T^{-1}(K)).
+$$
+The set $T^{-1}(K)$ is closed in compact $C$, so its image is compact and hence closed in the Hausdorff space $J(C)$. Thus $\bar T$ is continuous. The graph formulation states the same fiber condition.
+
+The underlying set-theoretic factorization is the actual-image principle of [RRO, Theorem 2.2]; compactness supplies continuity here. Reachability alone is different: for $\Omega=\{(x,x):x\in\mathbb R\}$ the actual marginal pairs are only $(-1,-1),(0,0),(1,1)$, although the product of the two marginal images has nine points. For the unrestricted direct sum, $J$ is surjective, so there is no missing-pair obstruction, but Theorem 42.15 still exhibits multiple outputs over one marginal pair. $\square$
+

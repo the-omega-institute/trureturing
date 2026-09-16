@@ -1,0 +1,26 @@
+**theorem 42.8 (The precise classical order and oriented-matroid connections).** For $p\in S(V)$, the quotient $E=V^*/Z_p$ carries an algebraic real-linear total order whose strictly positive elements are
+$$
+P_p=\{[\ell]\in E:p(\ell)=1\}.
+$$
+The set $P_p$ is a semispace at zero: a maximal convex subset of $E\setminus\{0\}$. Under a representing flag, the map
+$$
+E\longrightarrow\mathbb R^r,\qquad
+[\ell]\longmapsto(\ell(v_1),\ldots,\ell(v_r))
+\tag{42.11}
+$$
+is a linear order isomorphism to the first-nonzero-positive lexicographic order. No closed-positive-cone assumption is being imposed.
+
+For each finite $F$, the actual image $Q_F$ is exactly the covector set of the realizable oriented matroid of the finite configuration $F\subseteq V^*$. This statement concerns finite ground sets only.
+
+**Proof.** Equation (42.5) makes the definition of $P_p$ independent of representatives. The sign calculus shows that it is closed under addition and positive scalar multiplication, contains no zero, and that exactly one of $x,-x$ belongs to it for every nonzero $x\in E$. Defining $x<y$ when $y-x\in P_p$ therefore gives a translation-invariant total order preserved by positive real scalars. The cone is convex. A convex subset of $E\setminus\{0\}$ strictly larger than $P_p$ would contain some $x\notin P_p$, $x\ne0$, while $-x\in P_p$; their segment contains zero, a contradiction. Thus $P_p$ is a semispace. Map (42.11) is well-defined and injective by the annihilator identity, and is surjective by finite-dimensional duality. Formula (42.7) identifies its order.
+
+For the finite assertion, an observation vector is exactly
+$$
+(\operatorname{sgn}(\ell(v)))_{\ell\in F},
+$$
+the standard covector of the configuration of covectors $\ell$ under evaluation by $v\in V^{**}=V$. One can also check the covector axioms directly. Zero and sign reversal are realized by $0$ and $-v$. For signatures represented by $v,w$, their sign composition is realized by $v+\varepsilon w$ for sufficiently small positive $\varepsilon$, because $F$ is finite. If their signs at a specified test $\ell_0$ are opposite, the vector $|\ell_0(w)|v+|\ell_0(v)|w$ cancels that test. Its two coefficients are positive, so at every test without opposite nonzero signs its sign is the composed sign. This is the elimination axiom. These are precisely the finite covector conventions in [Liu, Definition 2.1 and Section 2.2].
+
+The finite-dimensional order classification is classical: [K56, (2.2)–(2.3), pp. 55–56] proves the finite-dimensional recursive halfspace and ordered-basis descriptions of semispaces; (2.5) gives the general ordered-functional representation. Theorems 42.4–42.6 supplied a direct real finite-rank proof here. [M73, Theorems 2.1, 2.3, and 3.1] treats the corresponding semispace representations and their continuous-functional form. In finite dimension the functionals in (42.11) are continuous. Neither the finite-ground-set statement nor this order interpretation identifies $S(V)$ with a real spectrum or equips it with an ordinary flag-manifold topology.
+
+[K56](https://journals.msp.org/mscand/article/download/2864/2863/2895) V. L. Klee, Jr., *The structure of semispaces*, Mathematica Scandinavica **4** (1956), 54–64; especially (2.1)–(2.3) and (2.5), pp. 55–57. DOI: [10.7146/math.scand.a-10455](https://doi.org/10.7146/math.scand.a-10455); [publisher metadata](https://journals.msp.org/mscand/article/view/2864). [M73](https://msp.org/pjm/1973/44-2/pjm-v44-n2-p24-s.pdf) C. Edward Moore, *Concrete semispaces and lexicographic separation of convex sets*, Pacific Journal of Mathematics **44** (1973), 659–670; especially Theorems 2.1, 2.3, and 3.1, pp. 660–661. [Liu](https://arxiv.org/pdf/1606.05033v2) Gaku Liu, *A counterexample to the extension space conjecture for realizable oriented matroids*, arXiv:1606.05033v2, Sections 2.1–2.2, pp. 4–5. $\square$
+
