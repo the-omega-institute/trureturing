@@ -16,7 +16,7 @@ internal sealed class FourCycleEnvelopesDocument : IScribeDocumentDefinition
         H("Whole-face hyper-ideal angle envelopes"),
         Blocks(
             Paragraph(Text("All variables below are real numbers. Icc(a,b) denotes the closed "
-                + "interval [a,b]. In the local edge order (12,13,14,34,24,24), the inputs "
+                + "interval [a,b]. In the local edge order (12,13,14,34,24,23), the inputs "
                 + "(x,y,z,o,v,w) keep all six coordinates independent. The four-cycle occupies "
                 + "coordinates x,y,o,v. Coordinates x and o are opposite.")),
             Paragraph(Text("Define rad(x,y,z)=2xyz+x^2+y^2+z^2-1 and "
