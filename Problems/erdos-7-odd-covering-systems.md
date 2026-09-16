@@ -46,6 +46,16 @@ These are separate restrictions. The three-factors source rebuild, axiom audits,
 and fresh kernel environment replay passed; the nine-prime source has no local
 kernel replay. The linked notes give the exact pins and verification boundaries.
 
+An independent public Lean development now proves the finite lcm exclusion
+`10000 < lcm(D)` for every finite distinct odd covering family. Its exact
+statement, source commit, archive hashes, and trust boundary are recorded in
+[Mian--Siddique 2026](../Library/Arith/mian2026lcm10000.md). This is a direct
+kernel-checked theorem for the original quantifiers, not a numerical search or
+a reformulation of the Gamma estimates below. It pushes the first possible
+unresolved lcm values to 10395, 12285, and 17325 in that finite-certificate
+route. We reuse it as a citation-only boundary and do not add a bind-only
+Lean wrapper.
+
 ### Reuse of the 5040 and divisor-sum work
 
 The connection to the project's 5040 work is the same finite prime-power
