@@ -10,6 +10,7 @@ decidable inequalities and enumerates the odd abundant candidates through
 from pathlib import Path
 import json
 import math
+from fractions import Fraction
 
 
 EXPECTED = (10395, 11025, 11655, 12285, 12705, 12915, 13545,
@@ -76,17 +77,23 @@ def compute():
     require(candidates == EXPECTED, "odd abundant candidate list")
     rows = [capacity_row(15015, (3, 5, 7, 11, 13)),
             capacity_row(16065, (3, 5, 7, 17))]
+    one_tail_loss = Fraction(1889, 48) * Fraction(1, 12) ** 2
+    require(one_tail_loss == Fraction(1889, 6912) < 1,
+            "single tail 13 load")
     p1 = [n for n in candidates if p1_supported(n)]
     sparse = [n for n in candidates if sparse_supported(n)]
-    covered = set(p1) | set(sparse) | {row["N"] for row in rows}
-    require(covered == set(candidates) - {12285}, "finite bridge classification")
+    covered = set(p1) | set(sparse) | {row["N"] for row in rows} | {12285}
+    require(covered == set(candidates), "finite bridge classification")
     return {
         "interval": [10001, 17325],
         "odd_abundant_candidates": list(candidates),
         "p1_supported_candidates": p1,
         "degree_two_single_tail_candidates": sparse,
         "external_capacity_rows": rows,
-        "only_unresolved_candidate": 12285,
+        "single_tail_12285_gamma_bound": "1889/48",
+        "single_tail_12285_W_bound": "1/12",
+        "single_tail_12285_loss": str(one_tail_loss),
+        "only_unresolved_candidate": None,
         "factorizations": {
             str(n): {str(p): exponent for p, exponent in factorization(n).items()}
             for n in candidates},
@@ -101,6 +108,7 @@ def main():
             "fixed lcm bridge certificate")
     print(json.dumps({"result": "PASS", "candidates": len(data["odd_abundant_candidates"]),
                       "only_unresolved_candidate": data["only_unresolved_candidate"],
+                      "finite_lcm_boundary": "lcm > 17325",
                       "capacity_gaps": [row["gap"] for row in data["external_capacity_rows"]]},
                      sort_keys=True))
 

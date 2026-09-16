@@ -141,7 +141,7 @@
     16695,
     17325
   ],
-  "only_unresolved_candidate": 12285,
+  "only_unresolved_candidate": null,
   "p1_supported_candidates": [
     10395,
     11025,
@@ -149,5 +149,8 @@
     14175,
     15435,
     17325
-  ]
+  ],
+  "single_tail_12285_W_bound": "1/12",
+  "single_tail_12285_gamma_bound": "1889/48",
+  "single_tail_12285_loss": "1889/6912"
 }

@@ -78,11 +78,20 @@ N&T&\text{non-}T\text{ capacity}&(N/\prod T)\prod_{d\in T}(d-1)\\
 The exact candidate list, factorizations, and both strict inequalities are
 checked by the [finite bridge verifier](../docs/reports/erdos7-odd-covering/verify_lcm_10000_bridge.py)
 and its [fixed certificate](../docs/reports/erdos7-odd-covering/lcm_10000_bridge_certificate.json).
-Thus, combining the external theorem, (P1), the sparse-tail theorem, and the
-two public capacity instances, any hypothetical cover has lcm exactly
-`12285=3^3·5·7·13` or greater than `17325`. The residual value `12285` is a
-single finite branch, not an unrestricted proof; its four-prime support is
-outside the current sparse-tail cutoff and outside (P1).
+The remaining value `12285=3^3·5·7·13` is also excluded directly by the
+block criterion: it has one tail prime, so there is no crossing class, and
+the existing same-law head bound gives
+
+\[
+ \sum_B A_B\le\frac{1889}{48}\left(\frac1{13-1}\right)^2
+       =\frac{1889}{6912}<1.
+\]
+
+Thus the external theorem, (P1), the sparse-tail theorem, the two public
+capacity instances, and this one-tail calculation give the strict finite
+boundary `lcm > 17325`. The exact certificate records the 12285 row and its
+strict load inequality; this is a finite exclusion, not a resolution of the
+unrestricted problem.
 
 ### Reuse of the 5040 and divisor-sum work
 
