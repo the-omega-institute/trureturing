@@ -25,7 +25,7 @@ It does not construct a tetrahedron, a face pairing, a co-volume function,
 a manifold or a Ricci-flow solution. The formula-to-tetrahedron realization
 and the global existence argument remain separate ordinary mathematics.
 
-The single public theorem is an unbounded real inequality. Numeric endpoint
+The public comparisons are unbounded real inequalities. Numeric endpoint
 reductions are internal steps, not standalone finite-instance declarations.
 The intended utility classification is none: this is neither bounded
 enumeration, a certificate checker, a supplied-numeric-premise reduction,
@@ -50,28 +50,15 @@ def numerator (x y z o v w : ℝ) : ℝ :=
 def cosine (x y z o v w : ℝ) : ℝ :=
   numerator x y z o v w / Real.sqrt (rad x y w) / Real.sqrt (rad x z v)
 
-/-- Endpoint envelopes and the three uniform whole-face estimates used by
- the four-cycle incidence theorem. All displayed intervals are closed. -/
-theorem fourcycle_envelopes :
-    (∀ x y z o v w : ℝ,
+/-- Mixed-coordinate comparison on the entire real cube. This exposes the
+existing derivative proof so subsequent shapes reuse one analytic owner. -/
+theorem cosine_mixed_comparison : ∀ x y z o v w Y Z O V W : ℝ,
       x ∈ Set.Icc 1 2 → y ∈ Set.Icc 1 2 → z ∈ Set.Icc 1 2 →
       o ∈ Set.Icc 1 2 → v ∈ Set.Icc 1 2 → w ∈ Set.Icc 1 2 →
-      2*(2-x)/(x+1) ≤ cosine x y z o v w ∧
-      cosine x y z o v w ≤ (9-x)/(7+x)) ∧
-    (∀ y z o v w : ℝ,
-      y ∈ Set.Icc (5/4) 2 → z ∈ Set.Icc 1 (8/5) →
-      o ∈ Set.Icc (5/4) 2 → v ∈ Set.Icc (5/4) 2 →
-      w ∈ Set.Icc 1 (8/5) →
-      (293:ℝ)/400 ≤ cosine (5/4) y z o v w) ∧
-    (∀ y z o v w : ℝ,
-      y ∈ Set.Icc (5/4) 2 → z ∈ Set.Icc 1 (8/5) →
-      o ∈ Set.Icc (5/4) 2 → v ∈ Set.Icc (5/4) 2 →
-      w ∈ Set.Icc 1 (8/5) →
-      cosine 2 y z o v w ≤ (1577:ℝ)/2236) ∧
-    (∀ y z o v w : ℝ,
-      y ∈ Set.Icc 1 2 → z ∈ Set.Icc 1 2 →
-      o ∈ Set.Icc 1 2 → v ∈ Set.Icc 1 2 → w ∈ Set.Icc 1 2 →
-      cosine (8/5) y z o v w ≤ (37:ℝ)/43) := by
+      Y ∈ Set.Icc 1 2 → Z ∈ Set.Icc 1 2 → O ∈ Set.Icc 1 2 →
+      V ∈ Set.Icc 1 2 → W ∈ Set.Icc 1 2 →
+      y ≤ Y → z ≤ Z → O ≤ o → v ≤ V → w ≤ W →
+      cosine x y z o v w ≤ cosine x Y Z O V W := by
   -- Positivity is established for the actual radicand, not postulated.
   have hr : ∀ x y z : ℝ, 1 ≤ x → 1 ≤ y → 1 ≤ z → 0 < rad x y z := by
     intro x y z hx hy hz
@@ -217,6 +204,42 @@ theorem fourcycle_envelopes :
           nlinarith [mul_nonneg hs (sub_nonneg.mpr hOo)]
         exact div_le_div_of_nonneg_right
           (div_le_div_of_nonneg_right hp (Real.sqrt_nonneg _)) (Real.sqrt_nonneg _)
+
+  exact cmp
+
+/-- Endpoint envelopes and the three uniform whole-face estimates used by
+ the four-cycle incidence theorem. All displayed intervals are closed. -/
+theorem fourcycle_envelopes :
+    (∀ x y z o v w : ℝ,
+      x ∈ Set.Icc 1 2 → y ∈ Set.Icc 1 2 → z ∈ Set.Icc 1 2 →
+      o ∈ Set.Icc 1 2 → v ∈ Set.Icc 1 2 → w ∈ Set.Icc 1 2 →
+      2*(2-x)/(x+1) ≤ cosine x y z o v w ∧
+      cosine x y z o v w ≤ (9-x)/(7+x)) ∧
+    (∀ y z o v w : ℝ,
+      y ∈ Set.Icc (5/4) 2 → z ∈ Set.Icc 1 (8/5) →
+      o ∈ Set.Icc (5/4) 2 → v ∈ Set.Icc (5/4) 2 →
+      w ∈ Set.Icc 1 (8/5) →
+      (293:ℝ)/400 ≤ cosine (5/4) y z o v w) ∧
+    (∀ y z o v w : ℝ,
+      y ∈ Set.Icc (5/4) 2 → z ∈ Set.Icc 1 (8/5) →
+      o ∈ Set.Icc (5/4) 2 → v ∈ Set.Icc (5/4) 2 →
+      w ∈ Set.Icc 1 (8/5) →
+      cosine 2 y z o v w ≤ (1577:ℝ)/2236) ∧
+    (∀ y z o v w : ℝ,
+      y ∈ Set.Icc 1 2 → z ∈ Set.Icc 1 2 →
+      o ∈ Set.Icc 1 2 → v ∈ Set.Icc 1 2 → w ∈ Set.Icc 1 2 →
+      cosine (8/5) y z o v w ≤ (37:ℝ)/43) := by
+  -- Positivity is established for the actual radicand, not postulated.
+  have hr : ∀ x y z : ℝ, 1 ≤ x → 1 ≤ y → 1 ≤ z → 0 < rad x y z := by
+    intro x y z hx hy hz
+    have hx2 : 1 ≤ x^2 := by nlinarith [sq_nonneg (x-1)]
+    have hy2 : 1 ≤ y^2 := by nlinarith [sq_nonneg (y-1)]
+    have hz2 : 1 ≤ z^2 := by nlinarith [sq_nonneg (z-1)]
+    have hp : 0 ≤ 2*x*y*z := by positivity
+    unfold rad
+    linarith
+
+  have cmp := cosine_mixed_comparison
 
   have hc1 : (1:ℝ) ∈ Set.Icc 1 2 := by constructor <;> norm_num
   have hc2 : (2:ℝ) ∈ Set.Icc 1 2 := by constructor <;> norm_num
