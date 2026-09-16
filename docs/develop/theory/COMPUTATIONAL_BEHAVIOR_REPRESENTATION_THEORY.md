@@ -514,3 +514,292 @@
 **约定 11.2（本批产地与证明身份）。** 本批使用 `theory-volume-template/APPEND.md`，数学推导、来源核对、文字实施和有限自检均由本会话 ChatGPT 单席串行完成；没有独立模型评审或外部作者审定。全部新条目是带完整假设的纸面证明。本批没有新增 Lean 或 Scribe，没有运行 Lean kernel、canonical `make ingest` 或生成消化状态；文件前缀的字节核对只验证尾部追加，不替代 atom 账目核验。有限数值或有理数自检的范围仅限被实际检查的实例，不承担第 9.5 条渐近量词或全时间量词。新结果未被标为 kernel-verified，文献优先权未被确立。
 
 ## 追加锚（本行以下为增补区）
+
+## 12. 增补二·有限时间预测的熵、状态数与线性维数
+
+**本批导航。** 本批接续 PR #8330 的 `f4202aa59e6053e4be883d7667f3d972946ff628`，读取的 dev 为 `630aac657042e88ca8bb69ee272cfcc6eb070bb8`。第 12 节把第 4、8 节的有限预测问题连接到观察熵；第 13、14 节把仿射状态保持与误差控制的前沿结论连接到仓库的核不变性和记忆核；第 15 节在严格稳定的一阶模型上求出带噪有限样本的外推风险阶。既有第 1 至 11 节不改判、不改字节。第 14.3 条限定所读外部预印本 v1 的一项投影递推，其精确状态保持定理不受此限定影响。
+
+**定义 12.1（自主预测的观察覆盖数）。** 设非空紧致度量空间 $X$ 上有连续总更新 $F:X\to X$ 和连续观察 $o:X\to Y$，其中 $Y$ 为度量空间。令
+\[
+ B_H(x)=(o(x),o(Fx),\ldots,o(F^Hx)),\qquad
+ d_H(x,y)=\max_{0\le t\le H}d_Y(o(F^tx),o(F^ty)).
+\]
+以响应集 $B_H[X]$ 自身的点作球心，记半径 $\varepsilon>0$ 的最少闭球覆盖数为 $C_H(\varepsilon)$。记 $S_H(\varepsilon)$ 为定义 8.1 中同时对全部初态、时刻 $0\le t\le H$ 正确至误差 $\varepsilon$ 的最少自主状态数。定义
+\[
+ h_o(F)=\lim_{\varepsilon\downarrow0}\limsup_{H\to\infty}
+                   H^{-1}\log C_H(\varepsilon).
+\]
+本节除比特计数外使用自然对数。这是指定观察的熵；观察丢失信息时，不将它自动等同于完整系统的拓扑熵。
+
+**定理 12.2（自主状态增长与观察熵的精确指数接口）。** 对定义 12.1 的系统，
+\[
+ C_H(2\varepsilon)\le S_H(\varepsilon)
+                \le (H+1)C_H(\varepsilon),
+\]
+因而
+\[
+ \lim_{\varepsilon\downarrow0}\limsup_{H\to\infty}
+            H^{-1}\log S_H(\varepsilon)=h_o(F).
+\]
+若 $o$ 是到 $o[X]$ 的拓扑嵌入，则 $h_o(F)$ 等于采用相容度量 $d_Y(o(x),o(y))$ 定义的拓扑熵。
+
+**证明。** 紧致性和连续性使有限响应集紧致，故覆盖数有限。对任意正确预测器，在每个非空初始化纤维中选一个代表 $x_i$。同一纤维中的两条真实响应各距同一预测响应至多 $\varepsilon$，所以 $d_H(x,x_i)\le2\varepsilon$；这些代表给出左侧覆盖。
+
+对右侧，选取覆盖中心 $B_H(x_i)$。用全部 $(i,t)$、$0\le t\le H$ 作状态，输出 $o(F^tx_i)$，更新 $(i,t)\mapsto(i,\min(t+1,H))$。把 $x$ 初始化为覆盖其响应的 $(i,0)$。该机器正确到时刻 $H$，并且时间坐标已计入状态总数。对不等式取对数、除以 $H$，使用 $\log(H+1)/H\to0$，再令 $\varepsilon\downarrow0$，两侧给出相同极限。最后，嵌入观察给出相容度量，所用覆盖正是该度量的轨道覆盖。此构造针对单一更新；多动作的整棵响应树不具有同样的线性大小上界。证毕。[^tcs2-dmd]
+
+**定理 12.3（二进制移位的精确线性比特律）。** 取 $X=\{0,1\}^{\mathbb N}$，$F(x)_j=x_{j+1}$，$o(x)=(-1)^{x_0}\in\mathbb R$。对 $H\ge0$、$0\le\varepsilon<1$，最少自主预测状态数和当前状态比特数分别为
+\[
+ S_H(\varepsilon)=2^{H+1},\qquad
+ \lceil\log_2 S_H(\varepsilon)\rceil=H+1.
+\]
+
+**证明。** 前 $H+1$ 位共有 $2^{H+1}$ 种取值。两种不同前缀在某个时刻 $t\le H$ 的真实输出相差 $2$；若共享一个初始内部状态，届时预测相同，与 $2\varepsilon<2$ 矛盾。反向，把长度 $H+1$ 的二进制词作为状态，输出首位的符号，每步左移并在末尾补零。初始化保存真实前缀，前 $H+1$ 次读出完全正确。这一结果的每个内部标签只表示一条前缀，没有使用未计费的外部时钟。证毕。
+
+**定理 12.4（同一移位的线性特征维数界）。** 在定理 12.3 的 $X$ 上取独立公平比特的乘积概率测度，令 $f_t(x)=(-1)^{x_t}$。若 $V\subseteq L^2(X;\mathbb R)$ 是 $r$ 维子空间，且对每个 $0\le t\le H$ 存在 $g_t\in V$ 满足 $\|f_t-g_t\|_2\le\eta<1$，则
+\[
+ r\ge(H+1)(1-\eta^2).
+\]
+误差零时，$H+1$ 维线性移位寄存器达到最小值。这里的线性维数与定理 12.3 的离散状态数不是同一个资源。
+
+**证明。** $f_0,\ldots,f_H$ 两两正交且范数为一。设 $P_V$ 是正交投影，则
+\[
+ \|P_Vf_t\|_2^2=1-\|f_t-P_Vf_t\|_2^2\ge1-\eta^2.
+\]
+取 $V$ 的标准正交基 $v_1,\ldots,v_r$，对每个 $v_j$ 使用 Bessel 不等式得到
+\[
+ \sum_{t=0}^H\|P_Vf_t\|_2^2
+ =\sum_{j=1}^r\sum_{t=0}^H|\langle f_t,v_j\rangle|^2\le r.
+\]
+合并即得下界。上界存储向量 $(f_0(x),\ldots,f_H(x))$，用左移补零的线性映射和首坐标读出，正好实现全部指定时刻。虽然维数为 $H+1$，这个精确构造有 $2^{H+1}$ 种初始向量。论证同样约束任何固定线性读出和线性潜在更新，只要其全部预测函数属于同一个 $r$ 维特征空间；不约束任意非线性解码器。证毕。[^tcs2-dmd]
+
+## 13. 仿射返回映射的定量保持与收缩代价
+
+**定义 13.1（表示几何与返回缺陷）。** 给定不全相同的有限码点 $c_1,\ldots,c_m\in\mathbb R^d$，令
+\[
+ \bar c=m^{-1}\sum_i c_i,\quad u_i=c_i-\bar c,\quad
+ U=\operatorname{span}\{u_i\},\quad
+ \Sigma=m^{-1}\sum_i u_i u_i^{\mathsf T},\quad V_c=\operatorname{tr}\Sigma>0.
+\]
+记 $\gamma^2>0$ 为 $\Sigma$ 限制到 $U$ 的最小特征值。对仿射返回映射 $T(z)=Az+b$，定义均方根表示缺陷
+\[
+ \eta(T)^2=m^{-1}\sum_i\|T(c_i)-c_i\|_2^2.
+\]
+返回任务要求每个码点代表的符号状态保持不变；不预设 $T$ 已经精确满足该要求。
+
+**定理 13.2（近似状态保持的定量中性界）。** 对上述数据有恒等式
+\[
+ \eta(T)^2=\|T(\bar c)-\bar c\|_2^2
+       +\operatorname{tr}\bigl((A-I)\Sigma(A-I)^{\mathsf T}\bigr),
+\]
+以及
+\[
+ \|(A-I)|_U\|_{\mathrm{op}}\le\eta(T)/\gamma,
+ \qquad
+ \|Av\|_2\ge(1-\eta(T)/\gamma)\|v\|_2\quad(v\in U).
+\]
+特别地，$\eta(T)=0$ 强制 $A|_U=I$。
+
+**证明。** 写 $T(c_i)-c_i=(A-I)u_i+r$，其中 $r=T(\bar c)-\bar c$。因 $\sum_i u_i=0$，平方展开的交叉项求和为零，得到恒等式。取 $\Sigma|_U$ 的标准正交特征基 $e_j$，对应特征值 $\lambda_j\ge\gamma^2$。于是
+\[
+ \eta(T)^2\ge\sum_j\lambda_j\|(A-I)e_j\|_2^2
+ \ge\gamma^2\sum_j\|(A-I)e_j\|_2^2
+ \ge\gamma^2\|(A-I)|_U\|_{\mathrm{op}}^2.
+\]
+最后对 $Av=v+(A-I)v$ 使用逆三角不等式。无需假设 $A$ 保持 $U$；限制算子可以取值于整个 $\mathbb R^d$。误差为零的特例对应所引文献的精确仿射中性定理。证毕。[^tcs2-error]
+
+**定理 13.3（固定码本上的最优保持与收缩权衡）。** 对每个 $0\le q\le1$，
+\[
+ \inf_{T(z)=Az+b,\ \|A|_U\|_{\mathrm{op}}\le q}\eta(T)
+       =(1-q)\sqrt{V_c}.
+\]
+最优值由 $T_q(z)=\bar c+q(z-\bar c)$ 达到。
+
+**证明。** 对每个中心化码点，约束给出
+\[
+ \|(A-I)u_i\|_2\ge\|u_i\|_2-\|Au_i\|_2
+                         \ge(1-q)\|u_i\|_2.
+\]
+把这些不等式平方求平均，代入定理 13.2 的恒等式并丢掉非负的中心偏移项，得到 $\eta(T)^2\ge(1-q)^2V_c$。映射 $T_q$ 固定中心，对全部 $u_i$ 恰产生 $(q-1)u_i$ 的误差，故取到该下界。这给出固定欧氏码本、共同仿射返回和所列算子范数约束下的精确最优值；不把它扩展到状态依赖的局部收缩。证毕。
+
+## 14. 投影误差的交叉输入、记忆核与纠错构造
+
+**定义 14.1（状态保持下的分块误差）。** 设仿射 $T(z)=Az+b$ 精确固定定义 13.1 的全部码点，$P$ 为到 $U$ 的正交投影，$Q=I-P$。置 $W=U^\perp$，
+\[
+ B=PA|_W:W\to U,\qquad D=QA|_W:W\to W.
+\]
+固定一个码点 $c$，考虑实际迭代 $h_{t+1}=T(h_t)+\xi_t$。写
+\[
+ u_t=P(h_t-c),\quad v_t=Q(h_t-c),\quad
+ r_t=P\xi_t,\quad s_t=Q\xi_t.
+\]
+驱动 $\xi_t$ 可以依赖当前状态；下列代数恒等式不使用独立性或零均值假设。
+
+**定理 14.2（完整投影递推与核不变性的充要条件）。** 在定义 14.1 下，
+\[
+ u_{t+1}=u_t+Bv_t+r_t,\qquad v_{t+1}=Dv_t+s_t,
+\]
+所以
+\[
+ u_{t+1}-u_t
+ =r_t+BD^t v_0+\sum_{j=0}^{t-1}BD^{t-1-j}s_j.
+\]
+对所有初误差和所有驱动都有 $u_n=u_0+\sum_{t<n}r_t$，当且仅当 $B=0$，也当且仅当 $\ker P$ 被 $A$ 保持。对某一指定轨迹，逐步简化只要求该轨迹满足 $Bv_t=0$。
+
+**证明。** 定理 13.2 的零缺陷特例给 $A|_U=I$，因此相对于 $U\oplus W$，
+\[
+ A=\begin{pmatrix}I&B\\0&D\end{pmatrix}.
+\]
+又因 $T(c)=c$，全误差满足 $h_{t+1}-c=A(h_t-c)+\xi_t$。投影后即得两条递推。归纳得到 $v_t=D^t v_0+\sum_{j<t}D^{t-1-j}s_j$，代回第一条得到记忆核公式。若 $B=0$，简化式立即成立；若简化式对所有初误差成立，令 $r_t=s_t=0$、$v_0$ 任意，在第一步得到 $Bv_0=0$，故 $B=0$。最后 $\ker P=W$，而 $Av=(Bv,Dv)$，故核不变恰好等价于 $B=0$。这是仓库零记忆判据在当前正交投影上的具体接口。证毕。[^tcs2-zero-memory]
+
+**命题 14.3（精确仿射中性不足以推出无交叉项的投影递推）。** 存在精确固定两个不同码点的仿射返回映射，满足 $A|_U=I$、$\xi_t=0$，但 $u_1\ne u_0$。因此仅以上述条件不能推出所读预印本 v1 Corollary 1 的简单投影累加式。
+
+**证明。** 在 $\mathbb R^2$ 取
+\[
+ c_-=(-1,0),\quad c_+=(1,0),\quad
+ A=\begin{pmatrix}1&1\\0&1/2\end{pmatrix},\quad b=0.
+\]
+两个码点均固定，$U=\mathbb R(1,0)$，$A|_U=I$，但 $B=1$。令 $h_0=c_-+(0,1)$，不加任何驱动，则
+\[
+ v_t=2^{-t},\qquad u_t=\sum_{j=0}^{t-1}2^{-j}=2(1-2^{-t}).
+\]
+所以 $u_0=0$、$u_1=1$，而全部投影残差 $r_t$ 为零。预印本 v1 的 Appendix D.3 从 $PA(h_t-c)$ 转到 $P(h_t-c)$ 时，需要另外保证 $PAQ=0$，或误差一直位于 $U$，或至少沿实际轨迹满足 $Bv_t=0$。该反例不否定原文 Theorem 1 的 $A|_U=I$；它限定的是全空间扰动投影后的递推。证毕。[^tcs2-error]
+
+**定理 14.4（稳定隐藏误差仍能产生可见的线性漂移）。** 另设 $\|D\|_{\mathrm{op}}\le\lambda<1$，并令 $r_t=0$、$s_t=w\in W$ 恒定。置 $K=B(I-D)^{-1}$。则
+\[
+ u_n-u_0=nKw+B\left(\sum_{t=0}^{n-1}D^t\right)
+                         \bigl(v_0-(I-D)^{-1}w\bigr),
+\]
+从而
+\[
+ \left\|u_n-u_0-nKw\right\|_2
+ \le\frac{\|B\|_{\mathrm{op}}}{1-\lambda}
+                    \left\|v_0-(I-D)^{-1}w\right\|_2,
+ \qquad
+ \frac{u_n-u_0}{n}\longrightarrow Kw.
+\]
+同时 $v_n$ 有界。对全部常值隐藏驱动都没有此线性漂移，当且仅当 $B=0$。
+
+**证明。** Neumann 级数给出 $(I-D)^{-1}=\sum_{j\ge0}D^j$。直接解出
+\[
+ v_t=(I-D)^{-1}w+D^t\bigl(v_0-(I-D)^{-1}w\bigr).
+\]
+将其代入 $u_n-u_0=\sum_{t<n}Bv_t$ 得到恒等式；用几何级数的范数界得到余项界，除以 $n$ 即得极限。上式也使 $v_n$ 有界。最后，全部 $w$ 的漂移为零等价于 $K=0$；由于 $I-D$ 可逆，这等价于 $B=0$。这里增长由隐藏驱动经记忆核 $BD^j$ 累积产生，当前可见的直接驱动始终为零。证毕。
+
+**定理 14.5（保持码点读数的唯一自治斜投影）。** 在定理 14.4 的条件下，存在唯一线性映射 $\Pi_*:U\oplus W\to U$ 满足
+\[
+ \Pi_*|_U=I,\qquad \Pi_*A=\Pi_*.
+\]
+它由
+\[
+ \Pi_*(u,v)=u+Kv,\qquad K=B(I-D)^{-1}
+\]
+给出，且
+\[
+ \ker\Pi_*=\{(-Kv,v):v\in W\},\qquad
+ \|\Pi_*\|_{\mathrm{op}}=\sqrt{1+\|K\|_{\mathrm{op}}^2}.
+\]
+对于任意驱动，新的误差读数 $z_t=u_t+Kv_t$ 满足精确自治递推
+\[
+ z_{t+1}=z_t+r_t+Ks_t.
+\]
+
+**证明。** 任意在 $U$ 上为恒等的线性读数必形如 $(u,v)\mapsto u+Lv$。条件 $\Pi A=\Pi$ 等价于 $B+LD=L$，即 $L(I-D)=B$；可逆性给唯一解 $L=K$。核的表达式随定义得到。因为 $U\ne\{0\}$，算子 $[I,K][I,K]^*=I+KK^*$ 的范数为 $1+\|K\|^2$，给出投影范数。将两条分块递推代入，并用 $B+KD=K$，得到 $z_{t+1}=z_t+r_t+Ks_t$。
+
+所有码点差属于 $U$，所以新的读数保持这些差；其核是 $A$ 不变的稳定图子空间。该变换消除读数的隐藏依赖，但把隐藏驱动显式变成 $Ks_t$，并可能放大测量误差。它不构成自动纠错，亦不使定理 14.4 的漂移消失。证毕。
+
+**定理 14.6（有限符号机的局部非线性纠错实现）。** 给定至少含两个元素的有限状态集 $S$、有限动作集、任意确定性转移 $\delta_a:S\to S$ 及输出 $y_i\in Y$。在 $\mathbb R^d$ 中选互异码点 $c_i$，最小距离为 $\Delta>0$。对任意 $0\le\nu<r<R<\Delta/2$，存在全空间 $C^1$ 更新 $T_a$，使从任意 $\|h_0-c_i\|_2\le r$ 出发，每步在更新之后添加任意范数至多 $\nu$ 的扰动，仍能在全部动作词后精确解码正确符号状态及其输出。
+
+**证明。** 取 $C^1$ 函数
+\[
+ \theta(t)=\begin{cases}
+ 1,&t\le0,\\
+ 1-3t^2+2t^3,&0\le t\le1,\\
+ 0,&t\ge1,
+ \end{cases}
+ \qquad
+ \chi_i(z)=\theta\left(\frac{\|z-c_i\|_2^2-r^2}{R^2-r^2}\right).
+\]
+两个接合点的导数均为零。各 $\chi_i$ 在半径 $r$ 球上为一，在半径 $R$ 球外为零；这些支撑彼此不交。固定一个码点 $c_*$，定义
+\[
+ T_a(z)=c_*+\sum_{i\in S}\chi_i(z)(c_{\delta_a(i)}-c_*).
+\]
+在 $\overline B(c_i,r)$ 上，$T_a$ 恒等于目标码点 $c_{\delta_a(i)}$。扰动之后距该码点至多 $\nu<r$，故归纳保证轨道始终处于正确的互不相交解码球中。将每个球解码成其编号，再读出 $y_i$ 即可。这里的收缩只在各个不同的局部邻域发生；同一个全局仿射算子没有被要求同时收缩所有码点差。该构造不声称某个指定 SSM、神经网络宽度或训练算法必然实现这些映射。证毕。
+
+## 15. 半正定 Hankel 数据的外推风险与谱隙
+
+**定义 15.1（严格稳定一阶响应的带噪外推）。** 对 $a\in(0,1)$ 定义 $m_a(k)=a^k$。它具有严格稳定的一维线性实现；任意有限 Hankel 矩阵 $(m_a(i+j))_{i,j=0}^N$ 都是半正定秩一矩阵。给定整数 $1\le T\le H$ 及 $\eta>0$，观察 $y=(y_0,\ldots,y_T)$ 满足 $|y_k-a^k|\le\eta$。定义确定性最坏情形风险
+\[
+ \mathcal R_{T,H}(\eta)=
+ \inf_{\Psi:\mathbb R^{T+1}\to\mathbb R}
+ \sup_{a\in(0,1)}\ \sup_{\max_{k\le T}|y_k-a^k|\le\eta}
+                      |\Psi(y)-a^H|.
+\]
+这里允许任意估计器，不限制其计算量，故下界不是算法运行时间造成的。误差是逐样本有界误差，不是随机噪声方差。
+
+**定理 15.2（一阶稳定模型的匹配有限外推风险阶）。** 对定义 15.1 的全部参数，
+\[
+ \min\left\{\frac{\eta H}{2T},\frac1{16}\right\}
+ \le\mathcal R_{T,H}(\eta)
+ \le\min\left\{\frac12,\frac{\eta H}{T}\right\}.
+\]
+因此在绝对常数意义下，
+\[
+ \mathcal R_{T,H}(\eta)=\Theta\bigl(\min\{1,\eta H/T\}\bigr).
+\]
+
+**证明。** 为证下界，置
+\[
+ d=\min\{2\eta/T,1/(4H)\},\qquad a=1-d,\quad b=1-2d.
+\]
+因 $0<d\le1/4$，两者均属于 $(0,1)$。对 $0\le k\le T$，幂差公式给 $0\le a^k-b^k\le kd\le2\eta$，故中点观测 $y_k=(a^k+b^k)/2$ 对两个系统都合法。又有
+\[
+ a^H-b^H=d\sum_{j=0}^{H-1}a^{H-1-j}b^j
+ \ge Hd(1-2d)^{H-1}\ge Hd/2.
+\]
+末步使用 Bernoulli 不等式以及 $Hd\le1/4$。同一数据上的任意预测值，至少对其中一个系统有误差 $(a^H-b^H)/2\ge Hd/4$，恰好给出所列下界。
+
+为证上界，把 $y_T$ 截断到 $[0,1]$ 得到 $z$，并输出 $z^{H/T}$。截断不会增大它与 $a^T$ 的距离；函数 $x\mapsto x^{H/T}$ 在 $[0,1]$ 的 Lipschitz 常数至多为 $H/T$，所以误差至多为 $\eta H/T$。恒输出 $1/2$ 的估计器误差至多为 $1/2$，择优给出右侧。下界又至少为 $\frac1{16}\min\{1,\eta H/T\}$，上界至多为 $\min\{1,\eta H/T\}$，得到匹配阶。这里全局秩已经固定为一；不确定性来自有限精度下的动力参数。证毕。[^tcs2-hankel]
+
+**定理 15.3（无共同谱隙时的全未来风险恰为二分之一）。** 定义 15.1 中保持 $T<\infty$、$\eta>0$，允许估计器输出全部 $n\ge T$ 的预测序列，并以全部这些时刻的误差上确界计费，则对应最坏情形最优风险为
+\[
+ \mathcal R_{T,\infty}(\eta)=\frac12.
+\]
+该结论仍只涉及每个实例自身严格稳定、半正定 Hankel 秩一的系统。
+
+**证明。** 恒输出 $1/2$ 给出上界。令 $d\downarrow0$，取 $a_d=1-d^2$、$b_d=1-d$。对足够小的 $d$，两者合法且全部 $k\le T$ 的响应差至多 $Td\le2\eta$，所以中点数据对二者共同合法。令 $n_d=\lfloor d^{-3/2}\rfloor$，则最终 $n_d\ge T$，并且
+\[
+ 1-a_d^{n_d}\le n_d d^2\longrightarrow0,\qquad
+ b_d^{n_d}\le e^{-n_dd}\longrightarrow0.
+\]
+因此二者在某个允许预测时刻的差趋于一。对任意完整序列估计器，使用这一共同数据时，至少一个系统的全时间误差不小于该差的一半；取上确界及极限得到 $1/2$ 的下界。任意正噪声预算都允许这组趋近单位特征值的系统；$\eta=0$ 不属于本命题。证毕。
+
+**定理 15.4（共同谱隙恢复一致的全未来精度）。** 若另外已知 $0<a\le\rho<1$，定义 15.3 的全未来最优风险满足
+\[
+ \mathcal R^{(\rho)}_{T,\infty}(\eta)
+ \le\min\left\{\frac12,\frac{\eta}{1-\rho}\right\}.
+\]
+
+**证明。** 令 $\hat a$ 为 $y_1$ 截断到 $[0,\rho]$ 的值，则 $|\hat a-a|\le\eta$。预测 $\hat a^n$，由幂差公式对全部 $n\ge1$ 有
+\[
+ |\hat a^n-a^n|\le n\rho^{n-1}\eta
+ \le\eta\sum_{j=0}^{n-1}\rho^j\le\eta/(1-\rho).
+\]
+再与恒输出 $1/2$ 比较。该证明使用已知的共同标量谱隙；它不将谱半径小于一自动当作任意非正规矩阵族的一致幂界。证毕。
+
+## 16. 本批来源、限定条件与证明身份
+
+**出处 16.1（文献锚与推导范围）。** 第 12 节从原卷的有限行为响应出发给出观察熵接口和明确移位实例，相关前沿背景是 Hauser 与 Hölz 的 DMD 维数下界；两者分别使用最坏情形状态数与 $L^2$ 特征维数，本文不混用。第 13 节给出精确仿射中性结果的定量版本和固定码本上的最优化值。第 14 节核对 Chung、Choi、Kim 预印本 v1 的投影计算，并以分块恒等式、具体反例、记忆核和自治斜投影补足所需条件。第 15 节受到半正定 Hankel 低秩近似工作的启发，讨论其有限矩阵近似保证之外的外推义务；没有把该文未承诺的外推结论当作其主张。
+
+**出处 16.2（文献状态）。** 本批 13 条结果均有上述完整纸面证明，列为 `repo-derived`；其中精确仿射中性、Bessel 方法、熵覆盖和两点风险下界属于已有数学方法。下列文献的特定范围列为 `literature-attested`。未建立本批定量式的全球优先权，不列 `suspected-novel`，也不声称解决一个外部开放问题。
+
+[^tcs2-dmd]: Till Hauser、Julian Hölz，*Entropy based lower dimension bounds for finite-time prediction of Dynamic Mode Decomposition algorithms*，arXiv:2504.20269v1，提交于 2025-04-28，[原文](https://arxiv.org/abs/2504.20269v1)。核对了摘要及 PDF 的解析正文，包括第 1 节对有限分区与一般 $L^2$ 子空间的区分。截图接口未成功返回图像，因此不引用其图表。`literature-attested` 范围为熵与预测子空间维数的关系；第 12.2 条的自主状态实现及第 12.3、12.4 条的具体常数由本卷自证。
+
+[^tcs2-error]: Jiwan Chung、Heechan Choi、Seon Joo Kim，*Rethinking State Tracking in Recurrent Models Through Error Control Dynamics*，arXiv:2605.07755v1，2026-05-08，[第 3.1、3.2 节及 Appendix D.1 至 D.3](https://arxiv.org/html/2605.07755v1)。`literature-attested` 范围是 Theorem 1 的精确仿射中性及状态依赖纠错的研究背景。本批第 14.3 条针对该固定版本的 Corollary 1 及其投影推导补条件；不据此否定其 Theorem 1、实验结果或所有仿射架构的有限时间表现。本文也不把平均误差与类别间距之比当作逐样本正确性的保证。
+
+[^tcs2-hankel]: Michael Kapralov、Cameron Musco、Kshiteej Sheth，*Sublinear Time Low-Rank Approximation of Hankel Matrices*，arXiv:2511.21418v1，2025-11-26，条目注明 SODA 2026，[第 1.2 节 Theorem 1、2](https://arxiv.org/html/2511.21418v1)。核对的定理使用半正定 Hankel 矩阵、逐项访问、带噪 Frobenius 范数保证及结构保持的低秩输出。第 15 节使用真实的半正定秩一实例，但风险针对未观测的未来响应；有限矩阵误差界本身不包含这个量词。本文未运行或修改该文算法。
+
+[^tcs2-zero-memory]: 当前源码 [D5/S3/Observer/LinearMemory/ZeroMemoryCriterion.lean](https://github.com/the-omega-institute/trureturing/blob/630aac657042e88ca8bb69ee272cfcc6eb070bb8/D5/S3/Observer/LinearMemory/ZeroMemoryCriterion.lean)，已读取 `eventualKernel`、`eventualKernel_is_greatest`、`zero_memory_iff_eventualKernel_eq_ker` 及核不变构件。它们给出零记忆和核不变性的既有基础；第 14 节的具体文献反例、受迫漂移及斜投影公式不因引用该源文件而自动获得 Lean 证明身份。
+
+**约定 16.3（本批产地）。** 本批使用 `theory-volume-template/APPEND.md`；数学推导、原文核对、文字实施和有限检错由本会话 ChatGPT 单席串行完成，没有独立模型评审。正文只追加必要定义、结果、证明及来源。未新增 Lean 或 Scribe，未运行 Lean kernel、canonical `make ingest` 或生成消化账目；有限算术、矩阵和状态机检查只用于发现实现与公式错误。全称结论以本文证明为依据，未标为 kernel-verified。
+
+## 追加锚（本行以下为增补区）
