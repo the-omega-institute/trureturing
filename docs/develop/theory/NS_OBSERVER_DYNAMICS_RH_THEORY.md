@@ -1329,3 +1329,214 @@ L(f)=\sum_{i=1}^{d}u_i f(x_i)+
 \leq2^D\varepsilon+\tau
 \leq2^{2d-1}\varepsilon+\tau.
 \]
+
+## 22. 二进制极限逼近、机械读出敏感性与保序权重
+
+### 22.1 定义与已有完成结果的边界
+
+对 $0\leq\alpha<1$、$x\in[0,1)$，使用已有实际机械词
+\[
+s_k(\alpha,x)=\lfloor x+(k+1)\alpha\rfloor-\lfloor x+k\alpha\rfloor\in\{0,1\},\qquad
+O_n(\alpha,x)=(s_0,\ldots,s_{n-1}).
+\]
+它等于窗口 $[1-\alpha,1)$ 对真实旋转 $\{x+k\alpha\}$ 的读出。定义
+\[
+E_n(\alpha,\beta)=\{x\in[0,1):O_n(\alpha,x)\neq O_n(\beta,x)\}.
+\tag{22.1}
+\]
+测度 $\lambda$ 为长度测度，亦为该单位相位区间上的均匀概率。
+
+当前 `BisectionCompletion` 证明有理二分区间的精确宽度 $(u-l)2^{-p}$、端点 Cauchy 性及共同完成极限；其中对任意集合的上界判断使用经典选择，不能直接视为可执行的比较 oracle。`ReadoutTopology` 在其指定的有理探针拓扑与容量空间中刻画了有限总容量与连续实值延拓的等价。以下处理参数完成之后的真实离散读出，没有将这些连续延拓结论自动应用到不连续的阈值函数。
+
+### 22.2 定理：构造局部参数区间及全部错误区域
+
+固定无理 $\alpha\in(0,1)$ 和整数 $n\geq0$。对 $1\leq k\leq n$ 令 $c_k=1-\{k\alpha\}$，并令
+\[
+g_n=\min\bigl(\{1-\alpha\}\cup\{c_k:1\leq k\leq n\}
+\cup\{|c_i-c_j|:1\leq i<j\leq n\}\bigr),\qquad
+r_n=\frac{g_n}{2(n+1)}.
+\]
+有限集合中全部元素严格为正，故 $r_n>0$。对全部 $0\leq\delta\leq r_n$，有 $\alpha+\delta<1$，且
+\[
+\boxed{E_n(\alpha,\alpha+\delta)
+=\bigsqcup_{k=1}^n[c_k-k\delta,c_k),\qquad
+\lambda(E_n)=\frac{n(n+1)}2\delta.}
+\tag{22.2}
+\]
+对第 $k$ 个区域内的每个相位，实际有符号读出差为
+\[
+\boxed{s_j(\alpha+\delta,x)-s_j(\alpha,x)
+=\mathbf1_{\{j=k-1\}}-\mathbf1_{\{j=k\}},\quad 0\leq j<n.}
+\tag{22.3}
+\]
+当 $k=n$ 时只有最后一位增加一；当 $k<n$ 时实际出现相邻 $01\to10$，其余位不变。$n=0$ 时错误集为空。
+
+**证明。** 无理性使每个 $k\alpha$ 非整数；若两个 $c_k$ 相等，则某个非零整数倍的 $\alpha$ 是整数，矛盾。参数区间满足 $0\leq k\delta<g_n$，所以切点不越过零，实际 $k\alpha$ 的整数部分保持不变，且各扫过区间两两不交。直接展开取整进位得到
+\[
+D_k(x):=\lfloor x+k(\alpha+\delta)\rfloor-\lfloor x+k\alpha\rfloor
+=\mathbf1_{[c_k-k\delta,c_k)}(x),\quad D_0=0.
+\]
+相邻累计整数相减给 $s_j(\alpha+\delta,x)-s_j(\alpha,x)=D_{j+1}-D_j$。区间不交保证至多一个 $D_k$ 非零，故得到式 (22.3)。在区间并集之外所有 $D_k$ 为零；在每个区间内第 $k-1$ 位实际改变，故错误集恰为该并集。有限测度可加性及 $\sum_{k=1}^n k=n(n+1)/2$ 给出测度公式。
+
+`MechanicalSlopeSensitivity.local_slope_disagreement_law` 的候选 Lean 证明构造上述正半径，证明真实取整差、区间不交、错误集等式、测度及全部有符号变化。半径仅为明确的充分半径，没有被宣称最大。
+
+**推论。** 对 $n\geq1$，记实际 Hamming 差为 $H_n(x)$，则在同一参数区间内
+\[
+\lambda(H_n=1)=n\delta,\qquad
+\lambda(H_n=2)=\frac{n(n-1)}2\delta,\qquad
+\lambda(H_n=0)=1-\frac{n(n+1)}2\delta,
+\]
+\[
+\int_0^1 H_n(x)\,dx=n^2\delta.
+\tag{22.4}
+\]
+**证明。** 最后一个扫过区间长度为 $n\delta$，此前每个区域改变两位，且没有其他错误区域。各区域的长度直接给出全部公式。
+
+### 22.3 定理：保序数值读出的完整权重分类
+
+对任意实权重 $w_0,\ldots,w_m$，定义非空有限读出
+\[
+V_w(\alpha,x)=\sum_{j=0}^m w_j s_j(\alpha,x).
+\]
+对每个固定无理 $\alpha\in(0,1)$，以下两项等价：
+\[
+\exists r>0,\quad \alpha+r<1,\quad
+\forall\delta\in[0,r],\ \forall x\in[0,1),\quad
+V_w(\alpha+\delta,x)\geq V_w(\alpha,x);
+\]
+\[
+\boxed{w_0\geq w_1\geq\cdots\geq w_m\geq0.}
+\tag{22.5}
+\]
+
+**必要性证明。** 将任何声称有效的正半径与第 22.2 节的正半径取较小值的一半，得到严格正扰动。每个扫过区间都非空，可选择其中点。对第 $k$ 个区域，实际数值变化为 $w_{k-1}-w_k$，$1\leq k\leq m$；最后一个区域的变化为 $w_m$。因此保序性强制全部列出的不等式。若任一条件失败，同一构造给出任意小参数扰动下的真实反例相位，没有假设任意二元模式均能由旋转实现。
+
+**充分性证明。** 对任意 $\alpha\leq\beta$ 和同一实相位 $x$，令
+\[
+D_k=\lfloor x+k\beta\rfloor-\lfloor x+k\alpha\rfloor\geq0,\qquad D_0=0.
+\]
+从实际机械词展开，有限求和分部恒等式给
+\[
+V_w(\beta,x)-V_w(\alpha,x)
+=w_mD_{m+1}+\sum_{k=1}^m(w_{k-1}-w_k)D_k\geq0.
+\tag{22.6}
+\]
+该恒等式可按观察长度归纳：增加最后一项后，中间边界项恰好抵消。它还证明满足式 (22.5) 的权重在整个斜率顺序上保序。取任意 $r\in(0,1-\alpha)$ 得到所需局部命题。
+
+候选 Lean `MechanicalReadoutOrder.local_order_iff_decreasing_weights` 承载这一等价，必要性直接消费已构造的实际错误区域，充分性在证明内推出真实累计取整的求和分部恒等式。求和分部方法本身属于已有数学。
+
+### 22.4 定理：二进制数值完成是一个全局 L1 等距读出
+
+定义
+\[
+B_n(\alpha,x)=\sum_{j=0}^{n-1}2^{-j-1}s_j(\alpha,x),\qquad
+B_\infty(\alpha,x)=\sum_{j=0}^{\infty}2^{-j-1}s_j(\alpha,x).
+\]
+该级数一致收敛，且 $0\leq B_\infty-B_n\leq2^{-n}$。对任意 $0\leq\alpha,\beta<1$，不要求无理，也不要求局部扰动，
+\[
+\boxed{\int_0^1|B_n(\beta,x)-B_n(\alpha,x)|\,dx
+=(1-2^{-n})|\beta-\alpha|,}
+\]
+\[
+\boxed{\int_0^1|B_\infty(\beta,x)-B_\infty(\alpha,x)|\,dx
+=|\beta-\alpha|.}
+\tag{22.7}
+\]
+因此 $\alpha\mapsto B_\infty(\alpha,\cdot)$ 给出到 $L^1([0,1])$ 的保序等距嵌入。这里的对象是关于同一均匀相位的函数，不是一个标量就无损恢复任意无限词的声明。
+
+**证明。** 二进制权重非负且递减，式 (22.6) 给出 $\alpha\leq\beta$ 时每个相位上的 $B_n(\alpha,x)\leq B_n(\beta,x)$，一致极限也保持这一顺序。对每个固定 $k$，旋转窗口读出的积分为 $\alpha$：把 $x\mapsto\{x+k\alpha\}$ 在其唯一回绕点切成两段平移，窗口原像的总长度就是 $\alpha$。所以
+\[
+\int_0^1 B_n(\alpha,x)\,dx=\alpha(1-2^{-n}).
+\]
+有序情况下绝对差就是差，积分给有限公式；交换两参数覆盖另一顺序。最后由一致尾界交换极限与积分，得到无限公式。所有函数都是有限取整组合的可测函数或其一致极限。
+
+**推论。** 在第 22.2 节的局部区间中，同一对模型同时满足
+\[
+\lambda(O_n(\alpha,\cdot)\neq O_n(\alpha+\delta,\cdot))
+=\frac{n(n+1)}2\delta,
+\qquad
+\|B_n(\alpha+\delta,\cdot)-B_n(\alpha,\cdot)\|_1
+=(1-2^{-n})\delta.
+\tag{22.8}
+\]
+完整记录相等与数值编码接近是两个不同的目标。这条等式不声称 $L^\infty$ 参数稳定性。
+
+### 22.5 命题：定向二进制逼近与边界不稳定
+
+对无理 $\alpha\in(0,1)$，设
+\[
+\alpha_p^-=2^{-p}\lfloor2^p\alpha\rfloor,\qquad
+\alpha_p^+=2^{-p}\lceil2^p\alpha\rceil.
+\]
+两种有理逼近到 $\alpha$ 的误差都严格小于 $2^{-p}$，并分别从下方、上方逼近。对固定有限 $n$，若 $x+k\alpha$ 对 $1\leq k\leq n$ 全都不是整数，则任意收敛参数序列最终都给出正确的长度 $n$ 词。
+
+**证明。** 有限多个非整数各自到相邻整数有正距离。取这些距离除以相应 $k$ 后的正最小值，参数误差小于它时全部累计取整保持不变，从而全部 bit 保持不变。
+
+这个结论不能同时覆盖全部相位。固定 $x=1-\alpha$，则
+\[
+s_0(\alpha,x)=1,\qquad s_0(\alpha_p^-,x)=0\quad\text{对每个 }p.
+\tag{22.9}
+\]
+**证明。** $x+\alpha=1$，但 $x+\alpha_p^-\in(0,1)$；直接取整即可。即使参数的每一位精度持续增加，指定边界上的 bit 仍不等于极限处的读出。相反，从上方逼近时，有限多个取整函数的右连续性使每个固定相位、固定长度的读出最终正确；这个起始精度依赖相位，不能取为一个统一的有限值。
+
+已有 `MechanicalPeriodicity` 还证明有理斜率的机械词从起点周期，而 $(0,1)$ 中无理斜率的机械词不最终周期。因此有限精度参数的无限时间周期性，不能被转述为极限动力系统的周期性。普通二进制与带符号数字表示之间的可计算性差异见 [22-A,22-B]。
+
+### 22.6 推论：黄金斜率下的显式参数位数预算
+
+令 $\alpha=\phi-1=\phi^{-1}$，$n\geq1$。已有 `GoldenHurwitzBound.golden_hurwitz_bound` 对有理数 $a/k$ 的约分分母给出
+\[
+\|k\phi\|>\frac1{\sqrt5\,k+1}>\frac1{4k},
+\]
+其中 $\|\cdot\|$ 为到最近整数的距离。于是第 22.2 节所有切点到零的距离及不同切点的距离均大于 $1/(4n)$，且 $1-\alpha>1/4$，故 $g_n>1/(4n)$。因此
+\[
+0\leq\delta\leq\frac1{8n(n+1)}
+\quad\Longrightarrow\quad
+\lambda(E_n(\alpha,\alpha+\delta))=\frac{n(n+1)}2\delta.
+\tag{22.10}
+\]
+
+**证明。** 对 $a/k$ 应用上述有理逼近界，其约分分母至多为 $k$，再乘 $k$ 得最近整数界。两个切点之差的圆距离是 $(i-j)\alpha$ 到整数的距离，线性距离至少为圆距离。代入实际半径公式即可。该推导复用了新 dev 混合性论证中同一个算术间隔来源，没有把混合时间定理当成斜率稳定性定理。
+
+对 $0<\eta\leq1/16$，只要
+\[
+\boxed{2^{-p}\leq\frac{2\eta}{n(n+1)},}
+\tag{22.11}
+\]
+上方二进制逼近 $\alpha_p^+$ 引起错误记录的相位比例就严格小于 $\eta$。等价的充分整数预算为
+\[
+p\geq\left\lceil\log_2\frac{n(n+1)}{2\eta}\right\rceil.
+\]
+**证明。** 式 (22.11) 蕴含 $2^{-p}\leq1/[8n(n+1)]$，故实际误差 $\delta_p<2^{-p}$ 位于已证局部区间。将它代入式 (22.10) 即得结论。该预算控制均匀相位下的错误比例，不保证每个相位的所有 bit 精确，也不是对某个特定二进制尾误差的必要位数声明。
+
+### 22.7 定理：联合相位校准的局部精确代价
+
+固定无理 $\alpha\in(0,1)$ 和 $n\geq1$。令 $g>0$ 不大于 $\alpha,1-\alpha$、全部 $c_k,1-c_k$ 和不同切点的两两距离。对足够小的 $\delta,u$，满足
+\[
+\max_{0\leq k\leq n}|u+k\delta|\leq g/4,\qquad 0<\alpha+\delta<1,
+\]
+则
+\[
+\boxed{\lambda\{x:O_n(\alpha+\delta,x+u)\neq O_n(\alpha,x)\}
+=\sum_{k=0}^n|u+k\delta|.}
+\tag{22.12}
+\]
+机械词对相位的一周期平移不变，故这里 $x+u$ 不需要限制在 $[0,1)$。
+
+**证明。** 对 $k\geq1$，累计取整差仅在切点 $c_k$ 扫过的长度 $|u+k\delta|$ 区间上非零，符号是 $u+k\delta$ 的符号。对 $k=0$，当 $u>0$ 时该区域是 $[1-u,1)$，当 $u<0$ 时是 $[0,-u)$，符号分别为正、负。各区域两两不交，且其端点处理与取整约定一致。每个区域恰好改变一个累计整数，因 $n\geq1$ 必然改变至少一位实际读出。区域之外全部累计整数不变。有限可加性给出式 (22.12)。
+
+当 $n|\delta|\leq g/4$ 时，在上述局部校准类内，最小错误比例为
+\[
+\boxed{|\delta|\left\lfloor\frac{(n+1)^2}{4}\right\rfloor.}
+\tag{22.13}
+\]
+**证明。** $\sum_{k=0}^n|u+k\delta|$ 在 $u=-\delta t$、$t$ 为 $0,1,\ldots,n$ 的任一中位数时最小。可取 $t=n/2$，它满足局部条件。将两端关于中位数配对求和，得到 $\lfloor(n+1)^2/4\rfloor|\delta|$。这将零相位校准的主系数约减半，但保留 $n^2|\delta|$ 阶；没有对局部参数区间以外的全部相位平移声称全局最优。
+
+### 22.8 形式化范围与下一项问题
+
+两个候选 Lean 主定理分别给出第 22.2 节的单侧精确敏感性及第 22.3 节的完整保序权重分类。第 22.4--22.7 节为上述普通数学证明，尚未声称完成其积分、无限和、黄金预算或联合校准的内核验证。下一项承重义务是把真实窗口的积分和无限加权极限接为 $L^1$ 等距定理，并研究带误码圆相位恢复；有限记录一致性与加权数值接近应保留不同的损失函数。
+
+[22-A] Donghyun Lim and Martin Ziegler. *Quantitative Coding and Complexity Theory of Continuous Data*. arXiv:2002.04005v5, 2021. https://arxiv.org/abs/2002.04005v5 . 连续数据表示与定量可接受性的背景，不将有理完成等同于任意离散后处理的有效性。
+
+[22-B] Franziskus Wiesnet and Nils Köpp. *Limits of real numbers in the binary signed digit representation*. Logical Methods in Computer Science 18(3:24), 2022. DOI: 10.46298/lmcs-18(3:24)2022. https://arxiv.org/abs/2103.15702v5 . 带收敛模量的带符号数字流极限与可验证程序提取；其 Minlog 结果不被算作本库新的 Lean 声明。
+
+[22-C] The Omega Institute, trureturing, inspected dev `6b430a6586586f56ae4f8f66c0e513f39db9fdeb`. `BisectionCompletion.lean`、`ReadoutTopology.lean`、`MechanicalBalance.lean`、`MechanicalPeriodicity.lean`、`GoldenHurwitzBound.lean` 为本节读取的实际源。新合入 PR #8335 在 `RECURSIVE_RELATIONAL_OBSERVATION.md` 第 36 节研究固定精确动力下的有限读出混合性；这里不将其有限混合性转述为全空间谱隙或数值替代后的同一性质。
