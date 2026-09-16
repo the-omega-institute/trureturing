@@ -183,6 +183,9 @@ elif a[:2] == ['release', 'download']:
             for item in matches: shutil.copyfile(item, destination / item.name)
 elif a[0] == 'api' and '/releases/tags/' in a[1]:
     directory = root / a[1].split('/')[-1]
+    if not directory.exists():
+        print(json.dumps(dict(message='Not Found', status='404')))
+        raise SystemExit(1)
     record = metadata(directory)
     record['assets'] = [dict(name=p.name, size=p.stat().st_size,
         digest='sha256:' + hashlib.sha256(p.read_bytes()).hexdigest())
