@@ -9155,3 +9155,516 @@ $$
 Consequently the two output sequences have weak-star limits $\delta_{x_1^+}$ and $\delta_{x_1^-}$. They are distinct: a digit coordinate at which the two points differ is a continuous function separating the limits. Interleaving the input sequences still gives convergence to $(0_K,x_1^+)$, but the corresponding continuous-test integrals have two different subsequential limits. The point-row map is therefore discontinuous there, independently of the parameter and independently of whether its value at that pair is itself a Dirac measure. This contradicts the proposed global joint continuity. QED.
 
 ## 追加锚（本行以下为增补区）
+## 29. 原数字拓扑下的弱星拓扑中心与参数无关无原子理想
+
+**定义 29.0（原载体、实测度与核记号）。** 沿用第25节的原数字载体及相位映射
+$$
+K=\{x\in\{0,1\}^{\mathbb N}:x_jx_{j+1}=0\text{ 对所有 }j\},\qquad d_K(x,y)=\sum_{j\ge0}2^{-j-1}|x_j-y_j|,
+$$
+$$
+\phi=\frac{1+\sqrt5}{2},\qquad \alpha=\phi^{-1},\qquad H(x)=\left[\sum_{j\ge0}(-1)^{j+1}\alpha^{j+2}x_j\right]\in\mathbb T=\mathbb R/\mathbb Z.
+$$
+记
+$$
+E_m=[-m\phi],\qquad E=\{E_m:m\ge1\},\qquad S=H^{-1}(E),\qquad \mathcal O_+=\{[n\phi]:n\ge0\}.
+$$
+分裂纤维的定向点仍为 $x_m^+,x_m^-$，非分裂纤维的唯一点记为 $k_\theta$。记 $M(K)$ 为全部有限实有符号正则 Borel 测度，$C(K)$ 为实连续函数空间，并置
+$$
+\|\mu\|_{\mathrm{TV}}=|\mu|(K),\qquad \langle\mu,f\rangle=\int_K f\,d\mu,\qquad M_c(K)=\{\mu\in M(K):\mu(\{x\})=0\text{ 对每个 }x\in K\}.
+$$
+这里的无原子条件约束每个单点质量，不是仅要求总质量为零。圆周上的 $M(\mathbb T)$ 与 $M_c(\mathbb T)$ 同样定义。对 Borel 映射 $R$，推前定义为 $R_\#\mu(D)=\mu(R^{-1}(D))$。由 Riesz 表示定理，$M(K)=C(K)^*$，本文的弱星拓扑严格指
+$$
+\sigma(M(K),C(K)),
+$$
+而不是 $\sigma(M(K),M(K)^*)$ 或总变差范数拓扑。[^rro29-riesz]
+
+取
+$$
+\Lambda=(\mathbb R\setminus\{-1,1\})\sqcup\{\infty\},\qquad P_t=P^{(t)},\qquad v_m=\delta_{x_m^+}-\delta_{x_m^-},
+$$
+其中 $P^{(t)}$ 是定义25.8的固定点核，$\infty$ 是独立的形式参数。$\pi_\theta,p_m,c_{m,n}$ 均使用该参数在第25节中的值。行界记为
+$$
+C_t=\frac{1+|t|}{\bigl|1-|t|\bigr|}\quad(t\ne\infty),\qquad C_\infty=1.
+$$
+
+**假设 29.1（精确几何与全测度逐集合积分契约）。** 采用假设25.1的精确相位纤维及精确闭图公式、假设26.1的任意提升严格单侧收敛，以及定理25.6—25.9的有限核恒等式和定理27.2的统一行界。特别，$K$ 紧致，$H$ 连续满射，
+$$
+H^{-1}(\{E_m\})=\{x_m^+,x_m^-\},\qquad H^{-1}(\{\theta\})=\{k_\theta\}\quad(\theta\notin E),\qquad H^{-1}(\{[n\phi]\})=\{Z(n)\}\quad(n\ge0).
+$$
+闭集 $\Gamma\subseteq K^3$ 是实际有限加法图的闭包，每行满足
+$$
+P_t(a,x)(K)=1,\qquad \operatorname{supp}P_t(a,x)\subseteq\Gamma(a,x)\subseteq H^{-1}(\{H(a)+H(x)\}),\qquad \|P_t(a,x)\|_{\mathrm{TV}}\le C_t.
+$$
+若 $\theta\notin E$，则相位 $\theta$ 的纤维为单点；若 $\epsilon_n>0$ 趋于零，且任意所选提升满足 $H(y_n)=E_j+[s\epsilon_n]$，其中 $s\in\{+1,-1\}$ 固定，则 $y_n\to x_j^s$。
+
+对每个所讨论的参数 $t$，另假定给定有界双线性运算
+$$
+\star_t:M(K)\times M(K)\longrightarrow M(K),
+$$
+并满足以下逐集合契约：对每个 Borel 集 $D\subseteq K$，函数 $(a,x)\mapsto P_t(a,x)(D)$ 在 $K^2$ 上联合 Borel 可测，且
+$$
+(\mu\star_t\nu)(D)=\int_K\left(\int_K P_t(a,x)(D)\,d\mu(a)\right)d\nu(x).
+$$
+各行均为有限实有符号测度，且具有上述统一总变差界。本节关于全测度乘法的结论均以这一契约为前提。这里的有界有符号核及其积分算子采用通常的逐集合可测定义。[^rro29-kernel]
+
+**定理 29.2（直接有符号积分恒等式与结合交换律）。** 对任意有界 Borel 实函数 $f$，定义
+$$
+P_{t,f}(a,x)=\int_K f(z)\,dP_t(a,x)(z).
+$$
+该函数联合 Borel 可测，并且
+$$
+|P_{t,f}(a,x)|\le C_t\|f\|_\infty,
+$$
+$$
+\langle\mu\star_t\nu,f\rangle=\int_K\int_K P_{t,f}(a,x)\,d\mu(a)\,d\nu(x).
+$$
+这些积分可交换顺序。运算满足
+$$
+\|\mu\star_t\nu\|_{\mathrm{TV}}\le C_t\|\mu\|_{\mathrm{TV}}\|\nu\|_{\mathrm{TV}},\qquad (\mu\star_t\nu)(K)=\mu(K)\nu(K),
+$$
+且在全部 $M(K)$ 上结合、交换。
+
+**证明。** 对简单 Borel 函数，$P_{t,f}$ 的可测性及测试积分公式直接来自逐集合契约和线性。任意有界 Borel 实函数均可由简单 Borel 函数一致逼近。行界给出
+$$
+\sup_{a,x}|P_{t,f}(a,x)-P_{t,g}(a,x)|\le C_t\|f-g\|_\infty,
+$$
+故一致极限仍可测，并给出所述界。测试积分公式的左边可用输出测度的有限总变差取一致极限，右边则由上述界取一致极限，因此公式对全部有界 Borel $f$ 成立。
+
+对任意输入测度，实际绝对可积界为
+$$
+\int_K\int_K|P_{t,f}(a,x)|\,d|\mu|(a)\,d|\nu|(x)\le C_t\|f\|_\infty\|\mu\|_{\mathrm{TV}}\|\nu\|_{\mathrm{TV}}<\infty.
+$$
+将每个有符号输入写成其两个有限正 Jordan 部分，对所得四个正乘积测度应用 Fubini 定理，便可交换两个积分。此处使用联合 Borel 可测性、有限性及明确的绝对可积界，不仅使用两个迭代积分各自存在。相同的 Jordan 分解也把下文的有符号支配收敛化为对有限正变差测度的通常支配收敛。[^rro29-integration]
+
+对 $\|f\|_\infty\le1$ 的连续函数取上确界，并使用 Riesz 等距表示，即得乘法范数估计。取 $f=1$，由每行质量为一得到质量恒等式。取两个点质量，逐集合契约给
+$$
+\delta_a\star_t\delta_x=P_t(a,x).
+$$
+因此第25节的每条有限线性组合恒等式，对这些有限测度同样成立。
+
+第25节的点核交换律由其实际基乘法推出：相位基按圆周加法相乘，混合项为零，而 $c_{m,n}=c_{n,m}$。故 $P_t(a,x)=P_t(x,a)$。结合上面已经合法的有符号 Fubini，得到 $\mu\star_t\nu=\nu\star_t\mu$。
+
+为证明全测度结合律，固定有界 Borel $f$，置
+$$
+A_f(a,b,c)=\int_K P_{t,f}(u,c)\,dP_t(a,b)(u),\qquad B_f(a,b,c)=\int_K P_{t,f}(a,v)\,dP_t(b,c)(v).
+$$
+有限点核的结合律给出每个有序三元组上的实际等式 $A_f(a,b,c)=B_f(a,b,c)$。二者均为 Borel 函数：带参数核积分的可测性先对函数 $\mathbf1_D(u)\mathbf1_F(c)$ 由逐集合可测性成立，再对有界单调极限使用每行有限变差的支配收敛；函数单调类定理遂覆盖全部有界联合 Borel 被积函数。并且
+$$
+|A_f(a,b,c)|,\ |B_f(a,b,c)|\le C_t^2\|f\|_\infty.
+$$
+两次应用已证的测试积分公式，并对有限 Jordan 部分应用 Fubini，得到
+$$
+\langle(\mu\star_t\nu)\star_t\omega,f\rangle=\iiint A_f(a,b,c)\,d\mu(a)\,d\nu(b)\,d\omega(c),
+$$
+$$
+\langle\mu\star_t(\nu\star_t\omega),f\rangle=\iiint B_f(a,b,c)\,d\mu(a)\,d\nu(b)\,d\omega(c).
+$$
+每次展开的绝对积分不超过
+$$
+C_t^2\|f\|_\infty\|\mu\|_{\mathrm{TV}}\|\nu\|_{\mathrm{TV}}\|\omega\|_{\mathrm{TV}}.
+$$
+逐点等式 $A_f=B_f$ 因而给出两种括号的积分相等。对指标函数取值即得测度相等。这一证明直接积分点核恒等式，没有使用原子测度在全测度空间中的总变差稠密性。证毕。
+
+**定义 29.3（指定乘法的弱星拓扑中心）。** 对 $\mu\in M(K)$，定义
+$$
+L_\mu^{(t)}\nu=\mu\star_t\nu,\qquad \mathcal T_\mu^{(t)}f(x)=\int_K P_{t,f}(a,x)\,d\mu(a).
+$$
+令
+$$
+Z_{\mathrm{top}}(\star_t)=\{\mu\in M(K):L_\mu^{(t)}\text{ 在全部 }M(K)\text{ 上弱星连续}\}.
+$$
+这里弱星连续是相对于定义29.0的同一个拓扑，在定义域和陪域上均取 $\sigma(M(K),C(K))$。该定义采用左乘算子的全域弱星连续性这一通常的拓扑中心含义；不预先假设整个乘法具有任何一侧的全域弱星连续性。[^rro29-center]
+
+**定理 29.4（精确的前伴随判据）。** 对固定 $\mu$，以下条件等价：$\mu\in Z_{\mathrm{top}}(\star_t)$；对每个 $f\in C(K)$，实际有界 Borel 函数 $\mathcal T_\mu^{(t)}f$ 属于 $C(K)$。条件成立时，
+$$
+\mathcal T_\mu^{(t)}:C(K)\longrightarrow C(K)
+$$
+是有界线性算子，且
+$$
+\|\mathcal T_\mu^{(t)}\|\le C_t\|\mu\|_{\mathrm{TV}},\qquad L_\mu^{(t)}=(\mathcal T_\mu^{(t)})^*.
+$$
+
+**证明。** 对任意 $g\in C(K)$，$\langle\delta_x,g\rangle=g(x)$，故 $x\mapsto\delta_x$ 从 $K$ 到弱星测度空间连续。若 $L_\mu^{(t)}$ 弱星连续，则
+$$
+x\longmapsto\langle L_\mu^{(t)}\delta_x,f\rangle=\mathcal T_\mu^{(t)}f(x)
+$$
+是连续映射的复合，得到必要性。
+
+反之，假定每个实际函数 $\mathcal T_\mu^{(t)}f$ 连续。积分线性及定理29.2的界表明它们组成所述有界线性算子。对任意 $\nu\in M(K)$，直接有符号积分给
+$$
+\langle L_\mu^{(t)}\nu,f\rangle=\int_K\mathcal T_\mu^{(t)}f(x)\,d\nu(x)=\langle\nu,\mathcal T_\mu^{(t)}f\rangle.
+$$
+因此它正是前伴随。若任意网 $\nu_i\to\nu$ 弱星收敛，对每个固定 $f\in C(K)$，右边按弱星收敛定义趋于 $\langle\nu,\mathcal T_\mu^{(t)}f\rangle$，所以 $L_\mu^{(t)}\nu_i\to L_\mu^{(t)}\nu$ 弱星收敛。这里不对输入网另加范数有界假设。判据约束全部连续测试在全部 $K$ 上的连续性，不是只检查若干输入处的点行连续性。证毕。
+
+**定理 29.5（无原子测度的充分性）。** 对每个参数及每个 $\mu\in M_c(K)$，
+$$
+\mu\in Z_{\mathrm{top}}(\star_t),\qquad \|\mathcal T_\mu^{(t)}\|\le\|\mu\|_{\mathrm{TV}}.
+$$
+
+**证明。** 对实有符号测度，单点上的变差满足 $|\mu|(\{a\})=|\mu(\{a\})|$。因此无原子 $\mu$ 的变差对每个可数集合为零。
+
+固定极限输入 $x$，考虑
+$$
+N_x=H^{-1}\bigl(E\cup(E-H(x))\bigr),\qquad E-H(x)=\{E_r-H(x):r\ge1\}.
+$$
+集合 $E$ 与 $E-H(x)$ 都可数，而每个 $H$ 纤维至多含两个点，所以 $N_x$ 可数，并且 $|\mu|(N_x)=0$。这同时涵盖固定分裂集与该输入所对应的平移分裂集。
+
+设 $x_n\to x$，固定 $a\notin N_x$。此时 $H(a)+H(x)\notin E$，精确闭图给 $\Gamma(a,x)=\{w\}$。对任意 $w$ 的开邻域 $U$，最终有 $\Gamma(a,x_n)\subseteq U$。否则可取子列及 $w_n\in\Gamma(a,x_n)\setminus U$；由紧致性再取 $w_n$ 的收敛子列，闭图性使其极限属于 $\Gamma(a,x)$，同时属于闭集 $K\setminus U$，矛盾。
+
+固定 $f\in C(K)$。利用行质量一、行支撑及统一总变差界，得到
+$$
+|P_{t,f}(a,x_n)-f(w)|\le C_t\sup_{z\in\Gamma(a,x_n)}|f(z)-f(w)|\longrightarrow0.
+$$
+且 $P_{t,f}(a,x)=f(w)$。所以被积函数对 $|\mu|$ 几乎处处收敛，差值由可积常数 $2C_t\|f\|_\infty$ 支配。对 $|\mu|$ 使用支配收敛，再用 Jordan 分解，得到
+$$
+\mathcal T_\mu^{(t)}f(x_n)\longrightarrow\mathcal T_\mu^{(t)}f(x).
+$$
+由于 $K$ 为度量空间，这证明实际函数连续。定理29.4给出弱星连续性。
+
+对每个固定 $x$，在 $N_x$ 外的实际行是点质量，故还有
+$$
+|\mathcal T_\mu^{(t)}f(x)|\le\|f\|_\infty|\mu|(K).
+$$
+取上确界即得改进的算子范数界。证明只得到连续测试积分的收敛，并未把不同点质量误认为在总变差范数中相近。证毕。
+
+**定理 29.6（Borel 截面与无原子相位提升）。** 对 $s\in\{+1,-1\}$，定义实际截面 $s_s:\mathbb T\to K$：当 $\theta\notin E$ 时，$s_s(\theta)=k_\theta$；当 $\theta=E_m$ 时，$s_s(\theta)=x_m^s$。这两个截面均为 Borel 映射，并满足 $H\circ s_s=\operatorname{id}_{\mathbb T}$。推前限制
+$$
+H_\#:M_c(K)\longrightarrow M_c(\mathbb T)
+$$
+是等距线性双射，其逆为任一 $(s_s)_\#$。特别，对 $\eta\in M_c(\mathbb T)$，两个截面给出同一个提升。
+
+**证明。** 若 $F\subseteq K$ 闭，则 $H(F)$ 紧而闭，且
+$$
+s_s^{-1}(F)=\bigl(H(F)\setminus E\bigr)\cup\{E_m:x_m^s\in F\}.
+$$
+右边是 Borel 集，所以 $s_s$ 为 Borel 映射。截面恒等式由定义逐相位成立。
+
+为说明这些 Borel 推前仍属于所指定的正则测度空间，先核对紧度量空间上有限 Borel 测度的正则性。对有限正 Borel 测度 $\xi$，闭集 $F$ 可由开集 $\{x:d(x,F)<1/n\}$ 从外逼近；由有限测度的向下连续性，外误差趋于零。开集 $U$ 可由闭集 $\{x:d(x,X\setminus U)\ge1/n\}$ 从内逼近；$U=X$ 时直接取 $X$。允许任意小紧内逼近及开外逼近误差的 Borel 集族对补集封闭。它也对可数并封闭：外逼近选可求和误差，内逼近先用有限性截取有限个集合使遗漏质量任意小，再取这些集合的有限个紧内逼近之并。该集族包含闭集，故包含全部 Borel 集。对有限有符号测度的两个 Jordan 部分分别应用，即得所需正则性。
+
+任意 Borel 推前均满足
+$$
+\|R_\#\xi\|_{\mathrm{TV}}\le\|\xi\|_{\mathrm{TV}},
+$$
+因为任意有限 Borel 分割的原像仍是可测分割。若 $\eta\in M_c(\mathbb T)$，则 $s_s^{-1}(\{x\})$ 至多为单点，故 $(s_s)_\#\eta$ 无原子。反之，若 $\mu\in M_c(K)$，每个 $H$ 纤维至多为二点，故 $H_\#\mu$ 无原子。
+
+截面恒等式给 $H_\#(s_s)_\#\eta=\eta$。另一方面，$s_s\circ H$ 与 $\operatorname{id}_K$ 只可能在可数集 $S$ 上不同，而 $|\mu|(S)=0$，所以对每个 Borel $D$，其两个原像的对称差为 $|\mu|$ 零集。因此
+$$
+(s_s)_\#H_\#\mu=\mu.
+$$
+这证明互逆关系及截面选择无关性。对互逆映射分别使用推前范数不增，便得
+$$
+\|H_\#\mu\|_{\mathrm{TV}}=\|\mu\|_{\mathrm{TV}},\qquad \|(s_s)_\#\eta\|_{\mathrm{TV}}=\|\eta\|_{\mathrm{TV}}.
+$$
+整个逆构造使用了实际 Borel 截面，而不是集合基数比较。证毕。
+
+**定理 29.7（共同闭理想、通常圆周卷积与 Haar 提升）。** 在原圆周上，以
+$$
+(\eta*_{\mathbb T}\beta)(B)=\int_{\mathbb T}\int_{\mathbb T}\mathbf1_B(\lambda+\rho)\,d\eta(\lambda)\,d\beta(\rho)
+$$
+表示通常的有限有符号测度卷积。对任意 $\mu,\nu\in M(K)$，
+$$
+H_\#(\mu\star_t\nu)=(H_\#\mu)*_{\mathbb T}(H_\#\nu).
+$$
+若两个输入至少一个属于 $M_c(K)$，则对任一截面 $s_s$，都有更强的实际测度等式
+$$
+\mu\star_t\nu=(s_s)_\#\bigl((H_\#\mu)*_{\mathbb T}(H_\#\nu)\bigr)\in M_c(K),
+$$
+$$
+\|\mu\star_t\nu\|_{\mathrm{TV}}\le\|\mu\|_{\mathrm{TV}}\|\nu\|_{\mathrm{TV}}.
+$$
+因此只要所比较的运算均满足假设29.1，这个乘积就与参数无关。$M_c(K)$ 是所有这些代数共同的非零、真、总变差闭双侧理想，且
+$$
+H_\#:(M_c(K),\star_t)\longrightarrow(M_c(\mathbb T),*_{\mathbb T})
+$$
+是等距实代数同构。通常测度代数中的连续测度理想采用的正是这种无单点原子的含义。[^rro29-ideal]
+
+此外，若 $\mu\in M_c(K)$、$f\in C(K)$，则
+$$
+\mathcal T_\mu^{(t)}f=g_{\mu,f}\circ H,\qquad g_{\mu,f}(\theta)=\int_{\mathbb T}f(s_s(\lambda+\theta))\,d(H_\#\mu)(\lambda),\qquad g_{\mu,f}\in C(\mathbb T).
+$$
+令 $m_{\mathbb T}$ 为圆周上的归一化 Haar 测度，定义
+$$
+\lambda_K=(s_s)_\#m_{\mathbb T}.
+$$
+该定义与符号选择无关，且对每个 $\mu\in M(K)$，
+$$
+\lambda_K\star_t\mu=\mu\star_t\lambda_K=\mu(K)\lambda_K.
+$$
+
+**证明。** 圆周加法连续，因此上述通常卷积是有限有符号乘积测度在加法映射下的推前；有限 Jordan 分解及定理29.6证明中的正则性论证保证它是有限正则测度。其总变差不超过 $\|\eta\|_{\mathrm{TV}}\|\beta\|_{\mathrm{TV}}$。
+
+对 Borel $B\subseteq\mathbb T$，点核的相位支撑及行质量给
+$$
+P_t(a,x)(H^{-1}(B))=\mathbf1_B(H(a)+H(x)).
+$$
+直接代入逐集合积分契约，再用推前的积分公式，即得对任意两个全测度成立的相位乘法恒等式。
+
+现设 $\mu\in M_c(K)$。固定第二输入 $x$，除去定理29.5中的可数集 $N_x$ 后，和相位非分裂，故实际行准确等于
+$$
+P_t(a,x)=\delta_{s_s(H(a)+H(x))}.
+$$
+两个逐集合被积函数在 $N_x$ 上可能不同，但该集对 $|\mu|$ 为零。所以对每个 Borel $D\subseteq K$，
+$$
+\int_K P_t(a,x)(D)\,d\mu(a)=\int_K\mathbf1_D(s_s(H(a)+H(x)))\,d\mu(a).
+$$
+右边的联合被积函数是 Borel 且有界。对 $x$ 积分，并应用有限有符号 Fubini 及两次推前公式，得到所述提升公式。
+
+若 $\eta\in M_c(\mathbb T)$、$\beta\in M(\mathbb T)$，则对每个 $\theta\in\mathbb T$，直接有符号积分给
+$$
+(\eta*_{\mathbb T}\beta)(\{\theta\})=\int_{\mathbb T}\eta(\{\theta-\rho\})\,d\beta(\rho)=0.
+$$
+因此圆周卷积无原子。定理29.6表明其提升也无原子，并且两个截面产生同一个实际测度。所得公式不含参数，给出参数独立性。范数不等式由圆周卷积范数界及提升等距性得到。若第二输入无原子，则利用定理29.2已经由积分证明的交换律，得到同样结论。
+
+每个单点评价 $\mu\mapsto\mu(\{x\})$ 都是总变差有界线性泛函，所以
+$$
+M_c(K)=\bigcap_{x\in K}\ker\bigl(\mu\mapsto\mu(\{x\})\bigr)
+$$
+是闭线性子空间。刚证明的乘积性质使其成为双侧理想。定理29.6的等距双射与相位乘法恒等式给出等距代数同构；在该理想上，总变差范数本身具有常数一的次乘性。
+
+取第二输入为 $\delta_x$，提升公式给出所述 $g_{\mu,f}$ 的逐点表达。它表明 $\mathcal T_\mu^{(t)}f$ 在每个 $H$ 纤维上恒定，而该函数由定理29.5连续。连续满射 $H$ 从紧空间到 Hausdorff 空间，因而是闭商映射。具体地，对闭集 $F\subseteq\mathbb R$，
+$$
+g_{\mu,f}^{-1}(F)=H\bigl((\mathcal T_\mu^{(t)}f)^{-1}(F)\bigr)
+$$
+为闭集，故 $g_{\mu,f}$ 连续。此结论不把截面本身称为连续映射。
+
+归一化圆周 Haar 测度可取为 $[0,1)$ 上 Lebesgue 测度的商推前，因而无原子且质量为一。定理29.6保证其无原子提升唯一。圆周平移不变性及有符号积分给
+$$
+(m_{\mathbb T}*_{\mathbb T}\beta)(B)=\int_{\mathbb T}m_{\mathbb T}(B-\rho)\,d\beta(\rho)=m_{\mathbb T}(B)\beta(\mathbb T).
+$$
+对 $\beta=H_\#\mu$ 应用提升公式，得到 Haar 提升恒等式。$\lambda_K(K)=1$，所以共同理想非零；任一点质量不属于它，所以它是真理想。证毕。
+
+**定理 29.8（全部有符号原子分解与连续柱集检测）。** 任意 $\mu\in M(K)$ 唯一分解为
+$$
+\mu=\mu_c+\mu_a,\qquad \mu_c\in M_c(K),\qquad \mu_a=\sum_{a\in A_\mu}\mu(\{a\})\delta_a,
+$$
+其中
+$$
+A_\mu=\{a\in K:\mu(\{a\})\ne0\}
+$$
+至多可数，级数在总变差范数中绝对收敛，并且
+$$
+\|\mu\|_{\mathrm{TV}}=\|\mu_c\|_{\mathrm{TV}}+\|\mu_a\|_{\mathrm{TV}},\qquad \|\mu_a\|_{\mathrm{TV}}=\sum_{a\in A_\mu}|\mu(\{a\})|.
+$$
+任意非零绝对可和原子测度 $\zeta$，都可由某个有限数字柱集的连续指示函数检测，即存在柱集 $U\subseteq K$ 使
+$$
+\mathbf1_U\in C(K),\qquad \langle\zeta,\mathbf1_U\rangle\ne0.
+$$
+特别，对任意绝对可和实序列 $(q_r)_{r\ge1}$，
+$$
+\left\|\sum_{r\ge1}q_rv_r\right\|_{\mathrm{TV}}=2\sum_{r\ge1}|q_r|,
+$$
+该和是正则有符号测度，且它对全部连续测试为零当且仅当每个 $q_r=0$。
+
+**证明。** 对每个正整数 $j$，集合 $\{a:|\mu(\{a\})|\ge1/j\}$ 有限，否则有限子集上的变差可以任意大。因此 $A_\mu$ 可数。单点分割给
+$$
+\sum_{a\in A_\mu}|\mu(\{a\})|\le|\mu|(K).
+$$
+由有符号测度的可数可加性及该绝对可和性，$\mu_a$ 正是 $\mu$ 在可数 Borel 集 $A_\mu$ 上的限制，$\mu_c$ 则是其在补集上的限制。逐点检查得 $\mu_c(\{a\})=0$。两个限制的变差集中于互不相交的 Borel 集，故范数相加。唯一性由每个单点质量唯一确定全部原子系数而得。
+
+一般地，若不同点 $z_i$ 的实系数满足 $\sum_i|d_i|<\infty$，则
+$$
+\zeta(D)=\sum_{z_i\in D}d_i
+$$
+可数可加，其正负系数部分集中于不交可数集，故
+$$
+|\zeta|(D)=\sum_{z_i\in D}|d_i|.
+$$
+这也直接证明总变差绝对收敛。正则性还可不依赖一般正则性定理而核对：对 Borel $D$，从 $D$ 内的原子选有限子集，使遗漏质量任意小，得到紧内逼近；从全部原子选有限集 $F$ 使尾质量任意小，则开集 $K\setminus(F\setminus D)$ 包含 $D$，并给出同样小的外误差。
+
+若 $\zeta\ne0$，选 $z$ 使 $d_z\ne0$，再选包含 $z$ 的有限原子集 $F$，使
+$$
+\sum_{y\notin F}|d_y|<|d_z|/2.
+$$
+每个 $F\setminus\{z\}$ 中的点与 $z$ 在某个有限位不同。取足够长的 $z$ 的前缀，其柱集 $U$ 包含 $z$ 而排除 $F\setminus\{z\}$。柱集在数字拓扑中既开又闭，所以 $\mathbf1_U$ 连续，且
+$$
+\left|\int_K\mathbf1_U\,d\zeta\right|\ge|d_z|-\sum_{y\notin F}|d_y|>|d_z|/2>0.
+$$
+因此无限原子的正负尾项也不能使所有连续测试同时看不见这个非零测度。
+
+不同 $E_r$ 互异，每对 $x_r^+,x_r^-$ 中两点不同，故不同 $v_r$ 的有限二点支撑两两不交。将上述变差公式用于这些实际原子，就得到最后的准确范数公式及检测结论。这里比较的是各原子的实际系数，不要求无限原子集合的拓扑闭包彼此分离。
+
+最后，若 $\eta\in M_c(K)$ 而 $\zeta$ 为可数原子测度，$|\eta|$ 对 $\zeta$ 的可数原子集为零，故
+$$
+\|\eta-\zeta\|_{\mathrm{TV}}=\|\eta\|_{\mathrm{TV}}+\|\zeta\|_{\mathrm{TV}}.
+$$
+因此非零无原子测度不可能由原子测度在总变差范数中逼近。证毕。
+
+**定理 29.9（完整原子测度的两个单侧极限与精确跳跃）。** 设 $\sigma\in M(K)$ 为任意可数原子测度，并记
+$$
+\beta=H_\#\sigma,\qquad b_\lambda=\beta(\{\lambda\}),\qquad \sum_\lambda|b_\lambda|\le\|\sigma\|_{\mathrm{TV}}.
+$$
+对每个 $\theta\in\mathbb T$，存在两条非分裂输入序列 $y_n^+,y_n^-$，其相位分别从严格正侧、负侧趋于 $\theta$，使
+$$
+\sigma\star_t\delta_{y_n^s}\longrightarrow R_\theta^s:=\sum_\lambda b_\lambda\delta_{s_s(\lambda+\theta)}\quad\text{于 }\sigma(M(K),C(K)),\qquad s\in\{+1,-1\}.
+$$
+若 $\theta\notin E$，两条输入序列均趋于 $k_\theta$；若 $\theta=E_j$，则分别趋于 $x_j^+$、$x_j^-$。两个极限测度及其差都是正则有符号测度，且
+$$
+\|R_\theta^s\|_{\mathrm{TV}}\le\|\beta\|_{\mathrm{TV}},\qquad J_\theta:=R_\theta^+-R_\theta^-=\sum_{r\ge1}b_{E_r-\theta}v_r,
+$$
+$$
+\|J_\theta\|_{\mathrm{TV}}=2\sum_{r\ge1}|b_{E_r-\theta}|\le2\|\beta\|_{\mathrm{TV}}.
+$$
+
+**证明。** 令 $A=\{a:\sigma(\{a\})\ne0\}$，这是实际原子集合，不是其可能更大的拓扑闭包。集合
+$$
+F_\sigma=E\cup\bigcup_{a\in A}(E-H(a))
+$$
+可数。对每个 $n\ge1$ 和每个符号 $s$，可选
+$$
+0<\epsilon_n^s<\min(1/4,1/n),\qquad \theta_n^s=\theta+[s\epsilon_n^s]\notin F_\sigma,
+$$
+因为非空圆周开弧不可能由可数集合耗尽。定义 $y_n^s=k_{\theta_n^s}$。若 $\theta$ 非分裂，紧致性及唯一纤维保证任意这些提升趋于 $k_\theta$：任何子列聚点都必须落在该唯一纤维。若 $\theta=E_j$，假设29.1的严格单侧任意提升结论给出对应的定向极限。
+
+对每个实际原子 $a$，$H(a)+\theta_n^s\notin E$，所以实际核行准确为
+$$
+P_t(a,y_n^s)=\delta_{k_{H(a)+\theta_n^s}}.
+$$
+在逐集合积分中对可数原子求和，并按相位 regroup，得到
+$$
+\sigma\star_t\delta_{y_n^s}=\sum_\lambda b_\lambda\delta_{k_{\lambda+\theta_n^s}}.
+$$
+重排合法，因为原始系数的绝对和不超过 $\|\sigma\|_{\mathrm{TV}}$。特别，同一相位上的正负分支在此处以它们的完整相位质量相加，不能遗漏这种抵消。
+
+对每个固定 $\lambda$，相位 $\lambda+\theta_n^s$ 以同一严格符号趋于 $\lambda+\theta$。若极限相位非分裂，其唯一提升给出收敛；若它是 $E_r$，严格单侧提升给出收敛至 $x_r^s$。因此对任意 $f\in C(K)$，
+$$
+f(k_{\lambda+\theta_n^s})\longrightarrow f(s_s(\lambda+\theta)).
+$$
+各项由 $\|f\|_\infty|b_\lambda|$ 支配，而该系数族绝对可和。对级数使用支配收敛，得到声明的全部连续测试极限。定理29.8保证这些绝对可和原子和是实际正则测度。
+
+两个截面只在 $E$ 上不同，所以极限差仅保留 $\lambda+\theta=E_r$ 的项，准确地给出 $J_\theta$。指标 $r$ 对应互异相位 $E_r-\theta$，故系数绝对和不超过 $\|\beta\|_{\mathrm{TV}}$；再用定理29.8的二点差分变差公式，得到准确范数。所有极限均为连续测试意义的弱星极限，不声称总变差收敛。证毕。
+
+**定理 29.10（任意实有符号原子的排除与拓扑中心完全分类）。** 在假设29.1下，对每个 $t\in\Lambda$，
+$$
+Z_{\mathrm{top}}(\star_t)=M_c(K).
+$$
+更具体地，若 $\mu$ 的原子部分非零，则存在有限数字柱集 $U$、点 $x\in K$ 及序列 $x_n\to x$，使
+$$
+\mathcal T_\mu^{(t)}\mathbf1_U(x_n)\not\longrightarrow\mathcal T_\mu^{(t)}\mathbf1_U(x).
+$$
+结论包括总质量为零、相位推前原子部分为零以及同一分裂纤维正负质量抵消的情形，也包括参数 $0$ 与形式参数 $\infty$。
+
+**证明。** 无原子的充分性已经由定理29.5证明。拓扑中心是线性子空间，因为定理29.4中的连续函数条件对线性组合封闭。若 $\mu$ 属于拓扑中心，作定理29.8的分解 $\mu=\mu_c+\sigma$，其中 $\sigma=\mu_a$。由于 $\mu_c$ 已在中心中，$\sigma$ 也在中心中。因此必要性归结为证明：中心中的可数原子测度只能为零。
+
+先对 $\sigma$ 使用定理29.9，记其完整相位质量为 $b_\lambda$。若 $\theta\notin E$，两条输入序列均趋于同一点 $k_\theta$。弱星连续性使它们的输出极限相同，故 $J_\theta=0$。由于 $J_\theta$ 是总变差绝对可和的正则原子测度，定理29.8给出
+$$
+b_{E_r-\theta}=0\qquad(r\ge1,\ \theta\notin E).
+$$
+现固定 $\lambda\notin\mathcal O_+$，取 $\theta=E_1-\lambda$。这个 $\theta$ 不属于 $E$：否则 $\theta=E_j$ 会推出
+$$
+\lambda=E_1-E_j=[(j-1)\phi]\in\mathcal O_+,
+$$
+矛盾。上式取 $r=1$ 得 $b_\lambda=0$。所以完整相位原子质量只能留在非负整数旋转轨道 $\mathcal O_+$ 上。
+
+由于 $\phi$ 无理，$E\cap\mathcal O_+=\varnothing$，故每个分裂纤维的完整相位质量已经为零。非分裂纤维只有一个点，且 $[n\phi]$ 的唯一点为 $Z(n)$。因此 $\sigma$ 必有准确展开
+$$
+\sigma=\sum_{n\ge0}b_n\delta_{Z(n)}+\sum_{m\ge1}a_mv_m,
+$$
+$$
+b_n=\sigma(\{Z(n)\}),\qquad a_m=\sigma(\{x_m^+\})=-\sigma(\{x_m^-\}),\qquad \|\sigma\|_{\mathrm{TV}}=\sum_{n\ge0}|b_n|+2\sum_{m\ge1}|a_m|.
+$$
+第一项保留全部尚未排除的相位原子，第二项保留相位推前完全看不见的分支差分；两者不能混同。
+
+固定 $j\ge1$。定理29.9在输入相位 $E_j$ 给出
+$$
+R_{E_j}^s=\sum_{n=0}^{j-1}b_n\delta_{x_{j-n}^s}+\sum_{n\ge j}b_n\delta_{Z(n-j)},
+$$
+因为 $[n\phi]+E_j=E_{j-n}$ 当 $n<j$，而当 $n\ge j$ 时该相位为 $[(n-j)\phi]$。置
+$$
+Q_j=\sum_{n=0}^{j-1}b_n\pi_{E_{j-n}}+\sum_{n\ge j}b_n\delta_{Z(n-j)},\qquad W_j=\sum_{m\ge1}a_mc_{m,j}v_{m+j}.
+$$
+这两个和都是总变差绝对收敛的实际测度。对 $Q_j$，使用 $\|\pi_\theta\|_{\mathrm{TV}}\le C_t$。对 $W_j$，有限差分恒等式及定理29.2给
+$$
+2|c_{m,j}|=\|v_m\star_t v_j\|_{\mathrm{TV}}\le C_t\|v_m\|_{\mathrm{TV}}\|v_j\|_{\mathrm{TV}}=4C_t,
+$$
+所以 $\sum_m|a_mc_{m,j}|<\infty$。
+
+实际两个分支行必须由第25节的有限核恒等式逐项积分计算，而不是由单侧极限指定。具体地，$\delta_{Z(n)}=\pi_{[n\phi]}$，混合相位差分乘积为零，且
+$$
+\delta_{x_j^+}=\pi_{E_j}+(1-p_j)v_j,\qquad \delta_{x_j^-}=\pi_{E_j}-p_jv_j.
+$$
+因此直接对上述绝对可和原子系数积分，得到
+$$
+\sigma\star_t\delta_{x_j^+}=Q_j+(1-p_j)W_j,\qquad \sigma\star_t\delta_{x_j^-}=Q_j-p_jW_j.
+$$
+逐项积分的绝对收敛由统一行界与 $\sum_n|b_n|+2\sum_m|a_m|<\infty$ 保证。这特别给出不含任何 $p_j$ 分母的准确差值
+$$
+\sigma\star_t\delta_{x_j^+}-\sigma\star_t\delta_{x_j^-}=W_j.
+$$
+
+由于 $\sigma$ 在中心中，分别趋于 $x_j^+$ 与 $x_j^-$ 的单侧输入序列必须趋于各自的实际输出行。相减得到
+$$
+\sum_{m\ge1}a_mc_{m,j}v_{m+j}=\sum_{n=0}^{j-1}b_nv_{j-n}.
+$$
+左边的原子对指标严格大于 $j$，右边的指标介于一与 $j$。不同指标的二点支撑不交；即使无限原子集的闭包有共同聚点，也不会改变单点质量。定理29.8因此给出准确的缺陷范数
+$$
+\left\|W_j-\sum_{n=0}^{j-1}b_nv_{j-n}\right\|_{\mathrm{TV}}=2\sum_{m\ge1}|a_mc_{m,j}|+2\sum_{n=0}^{j-1}|b_n|.
+$$
+中心条件使该范数为零。取 $j=1$，由于每个 $c_{m,1}\ne0$，得到全部 $a_m=0$，同时得到 $b_0=0$。再对任意 $n\ge0$ 取 $j=n+1$，得到 $b_n=0$。因此 $\sigma=0$，必要性成立。
+
+这里 $c_{m,j}\ne0$ 对所有允许的有限实参数由定理25.7给出；参数 $0$ 时 $c_{m,j}=1$，形式参数 $\infty$ 时 $c_{m,j}=-1$。整个排除过程没有除以 $p_j$ 或 $1-p_j$，也没有要求任何原子系数或核系数为正。
+
+最后核对声明的实际连续测试见证，而不只给出形式系数矛盾。给定非零原子测度 $\sigma$，若某个非零 $b_\lambda$ 位于 $\mathcal O_+$ 外，取上述 $\theta=E_1-\lambda$，则 $J_\theta$ 在 $v_1$ 上的系数非零。定理29.8给出连续柱集指示函数 $f$ 使 $\langle J_\theta,f\rangle\ne0$。两条输入序列趋于同一 $k_\theta$，而其标量输出极限不同，故至少一条不趋于实际行在该点的测试值。
+
+若全部完整相位质量均在 $\mathcal O_+$ 上，则 $\sigma$ 具有上面的 $b_n,a_m$ 展开。若某个 $a_m\ne0$，取 $j=1$；否则选 $b_n\ne0$ 并取 $j=n+1$。准确缺陷范数表明
+$$
+D_j:=W_j-(R_{E_j}^+-R_{E_j}^-)\ne0.
+$$
+再用定理29.8选连续柱集指示函数 $f$ 检测 $D_j$。两个实际行与两个对应单侧极限不可能同时在该测试上相等，因为两种差值的差正是 $\langle D_j,f\rangle\ne0$。所以至少一个定向分裂输入处有标量不连续。
+
+对于原始测度 $\mu=\mu_c+\sigma$，定理29.5保证 $\mathcal T_{\mu_c}^{(t)}f$ 连续；把它加回不会消除上述实际行与其单侧极限之间的非零差。于是同一个连续柱集测试也检测 $\mu$ 的不连续性。这覆盖了所有可数有符号抵消情形。证毕。
+
+**定理 29.11（任意柱集中的无原子逼近与弱星稠密性）。** 每个非空有限数字柱集都支持一个无原子概率测度。对任意 $\mu\in M(K)$，存在 $\mu_N\in M_c(K)$，使
+$$
+\|\mu_N\|_{\mathrm{TV}}\le\|\mu\|_{\mathrm{TV}},\qquad \mu_N(K)=\mu(K),\qquad \mu_N\longrightarrow\mu\text{ 于 }\sigma(M(K),C(K)).
+$$
+因此该共同拓扑中心虽然是总变差闭真理想，却在全测度空间中弱星稠密。
+
+**证明。** 固定长度为 $N$ 的合法前缀 $w$，记其非空柱集为 $C_w$。对 $u\in[0,1)$，定义二进制数字
+$$
+\epsilon_r(u)=\lfloor2^{r+1}u\rfloor-2\lfloor2^ru\rfloor\in\{0,1\}\qquad(r\ge0).
+$$
+构造 $q_w(u)\in K$：前 $N$ 位取 $w$，第 $N$ 位取零，并令
+$$
+q_w(u)_{N+1+2r}=\epsilon_r(u),\qquad q_w(u)_{N+2+2r}=0\qquad(r\ge0).
+$$
+前缀与自由尾部之间有一个零，尾部任意两个自由位之间也有零，所以所有输出均合法并属于 $C_w$。每个坐标是 Borel 函数，柱集生成数字 Borel 结构，故 $q_w$ 为 Borel 映射。令 $\xi_w$ 为 $[0,1)$ 上 Lebesgue 概率测度在 $q_w$ 下的推前。它是有限正则概率测度，并集中于 $C_w$。
+
+对任意固定点 $z\in K$，条件 $q_w(u)=z$ 会指定前 $r$ 个二进制数字，因此其原像至多包含在一个长度为 $2^{-r}$ 的半开二进制区间内，或为空。于是
+$$
+\xi_w(\{z\})\le2^{-r}\qquad(r\ge1),
+$$
+从而 $\xi_w(\{z\})=0$。这证明每个实际柱集内都有所需无原子概率测度。
+
+令 $\mathcal W_N$ 为长度 $N$ 的全部合法前缀，定义
+$$
+\mu_N=\sum_{w\in\mathcal W_N}\mu(C_w)\xi_w.
+$$
+这是有限个无原子测度的实线性组合，所以仍无原子。柱集构成有限 Borel 分割，故
+$$
+\|\mu_N\|_{\mathrm{TV}}\le\sum_{w\in\mathcal W_N}|\mu(C_w)|\le\|\mu\|_{\mathrm{TV}},\qquad \mu_N(K)=\sum_w\mu(C_w)=\mu(K).
+$$
+对 $f\in C(K)$，令
+$$
+\omega_f(r)=\sup\{|f(x)-f(y)|:d_K(x,y)\le r\}.
+$$
+紧致性使 $f$ 一致连续，所以 $\omega_f(r)\to0$ 当 $r\downarrow0$。每个 $C_w$ 的直径至多为 $2^{-N}$，于是
+$$
+\begin{aligned}
+|\langle\mu_N-\mu,f\rangle|&=\left|\sum_w\int_{C_w}\left(\int_{C_w}f(y)\,d\xi_w(y)-f(x)\right)d\mu(x)\right|\\
+&\le\omega_f(2^{-N})\sum_w|\mu|(C_w)\\
+&=\omega_f(2^{-N})\|\mu\|_{\mathrm{TV}}\longrightarrow0.
+\end{aligned}
+$$
+因此对全部连续测试弱星收敛。总变差闭性和真性来自定理29.7，拓扑中心识别来自定理29.10。此稠密性不把非中心元素的左乘算子变成弱星连续算子；定理29.10仍为每个非零原子部分提供实际连续测试障碍。证毕。
+
+[^rro29-riesz]: Martin Herdegen, Gechun Liang and Osian Shelley, *Vague and weak convergence of signed measures*, arXiv:2205.13207v2，§1.1，Definition 1.1 与 Theorem 1.2(a)。这里引用连续测试收敛、有限有符号 Radon 测度及 Riesz 等距表示。[正文](https://arxiv.org/html/2205.13207v2)。
+
+[^rro29-kernel]: Vassili N. Kolokoltsov, *Stochastic monotonicity and duality of kth order with application to put-call symmetry of powered options*, arXiv:1405.3894v1，§2.2，特别有界有符号核的定义、积分算子与测度对偶公式及 Proposition 2.1 的 Fubini 计算。[正文](https://arxiv.org/html/1405.3894v1)。
+
+[^rro29-integration]: Terence Tao, *245B, notes 0: A quick review of measure and integration theory*，2009年1月1日，Theorem 3(4)—(5) 与 Theorem 4，分别给出支配收敛、绝对可和级数积分与 Fubini–Tonelli 的可测性及绝对可积条件；*245B, notes 1: Signed measures and the Radon-Nikodym-Lebesgue theorem*，2009年1月4日，Hahn 分解、Exercises 5—8 的 Jordan 分解和总变差。本节对有符号测度的使用均明确化为有限正 Jordan 部分或变差测度。[积分正文](https://terrytao.wordpress.com/2009/01/01/245b-notes-0-a-quick-review-of-measure-and-integration-theory/)，[有符号测度正文](https://terrytao.wordpress.com/2009/01/04/245b-notes-1-signed-measures-and-the-radon-nikodym-lebesgue-theorem/)。
+
+[^rro29-center]: Stefano Ferri, Matthias Neufang and Jan Pachl, *Minimal sets determining the topological centre of the algebra LUC(G)\**, arXiv:1310.7931v2，§1，Definition 1.1；这里仅采用左乘在指定弱星拓扑中全域连续的拓扑中心定义，不移用其关于其他代数的中心分类。[正文](https://arxiv.org/html/1310.7931v2)。
+
+[^rro29-ideal]: Tetsuhiro Shimizu, *L-ideals of Measure Algebras*, Proceedings of the Japan Academy 48 (1972), 172–176，§1，特别第172—173页关于通常卷积测度代数及连续测度理想的记号。本节圆周上的无原子理想性质由逐单点卷积积分另行证明。[正文](https://www.jstage.jst.go.jp/article/pjab1945/48/3/48_3_172/_pdf/-char/ja)。
+
+## 追加锚（本行以下为增补区）

@@ -1,0 +1,76 @@
+**定理 29.7（共同闭理想、通常圆周卷积与 Haar 提升）。** 在原圆周上，以
+$$
+(\eta*_{\mathbb T}\beta)(B)=\int_{\mathbb T}\int_{\mathbb T}\mathbf1_B(\lambda+\rho)\,d\eta(\lambda)\,d\beta(\rho)
+$$
+表示通常的有限有符号测度卷积。对任意 $\mu,\nu\in M(K)$，
+$$
+H_\#(\mu\star_t\nu)=(H_\#\mu)*_{\mathbb T}(H_\#\nu).
+$$
+若两个输入至少一个属于 $M_c(K)$，则对任一截面 $s_s$，都有更强的实际测度等式
+$$
+\mu\star_t\nu=(s_s)_\#\bigl((H_\#\mu)*_{\mathbb T}(H_\#\nu)\bigr)\in M_c(K),
+$$
+$$
+\|\mu\star_t\nu\|_{\mathrm{TV}}\le\|\mu\|_{\mathrm{TV}}\|\nu\|_{\mathrm{TV}}.
+$$
+因此只要所比较的运算均满足假设29.1，这个乘积就与参数无关。$M_c(K)$ 是所有这些代数共同的非零、真、总变差闭双侧理想，且
+$$
+H_\#:(M_c(K),\star_t)\longrightarrow(M_c(\mathbb T),*_{\mathbb T})
+$$
+是等距实代数同构。通常测度代数中的连续测度理想采用的正是这种无单点原子的含义。[^rro29-ideal]
+
+此外，若 $\mu\in M_c(K)$、$f\in C(K)$，则
+$$
+\mathcal T_\mu^{(t)}f=g_{\mu,f}\circ H,\qquad g_{\mu,f}(\theta)=\int_{\mathbb T}f(s_s(\lambda+\theta))\,d(H_\#\mu)(\lambda),\qquad g_{\mu,f}\in C(\mathbb T).
+$$
+令 $m_{\mathbb T}$ 为圆周上的归一化 Haar 测度，定义
+$$
+\lambda_K=(s_s)_\#m_{\mathbb T}.
+$$
+该定义与符号选择无关，且对每个 $\mu\in M(K)$，
+$$
+\lambda_K\star_t\mu=\mu\star_t\lambda_K=\mu(K)\lambda_K.
+$$
+
+**证明。** 圆周加法连续，因此上述通常卷积是有限有符号乘积测度在加法映射下的推前；有限 Jordan 分解及定理29.6证明中的正则性论证保证它是有限正则测度。其总变差不超过 $\|\eta\|_{\mathrm{TV}}\|\beta\|_{\mathrm{TV}}$。
+
+对 Borel $B\subseteq\mathbb T$，点核的相位支撑及行质量给
+$$
+P_t(a,x)(H^{-1}(B))=\mathbf1_B(H(a)+H(x)).
+$$
+直接代入逐集合积分契约，再用推前的积分公式，即得对任意两个全测度成立的相位乘法恒等式。
+
+现设 $\mu\in M_c(K)$。固定第二输入 $x$，除去定理29.5中的可数集 $N_x$ 后，和相位非分裂，故实际行准确等于
+$$
+P_t(a,x)=\delta_{s_s(H(a)+H(x))}.
+$$
+两个逐集合被积函数在 $N_x$ 上可能不同，但该集对 $|\mu|$ 为零。所以对每个 Borel $D\subseteq K$，
+$$
+\int_K P_t(a,x)(D)\,d\mu(a)=\int_K\mathbf1_D(s_s(H(a)+H(x)))\,d\mu(a).
+$$
+右边的联合被积函数是 Borel 且有界。对 $x$ 积分，并应用有限有符号 Fubini 及两次推前公式，得到所述提升公式。
+
+若 $\eta\in M_c(\mathbb T)$、$\beta\in M(\mathbb T)$，则对每个 $\theta\in\mathbb T$，直接有符号积分给
+$$
+(\eta*_{\mathbb T}\beta)(\{\theta\})=\int_{\mathbb T}\eta(\{\theta-\rho\})\,d\beta(\rho)=0.
+$$
+因此圆周卷积无原子。定理29.6表明其提升也无原子，并且两个截面产生同一个实际测度。所得公式不含参数，给出参数独立性。范数不等式由圆周卷积范数界及提升等距性得到。若第二输入无原子，则利用定理29.2已经由积分证明的交换律，得到同样结论。
+
+每个单点评价 $\mu\mapsto\mu(\{x\})$ 都是总变差有界线性泛函，所以
+$$
+M_c(K)=\bigcap_{x\in K}\ker\bigl(\mu\mapsto\mu(\{x\})\bigr)
+$$
+是闭线性子空间。刚证明的乘积性质使其成为双侧理想。定理29.6的等距双射与相位乘法恒等式给出等距代数同构；在该理想上，总变差范数本身具有常数一的次乘性。
+
+取第二输入为 $\delta_x$，提升公式给出所述 $g_{\mu,f}$ 的逐点表达。它表明 $\mathcal T_\mu^{(t)}f$ 在每个 $H$ 纤维上恒定，而该函数由定理29.5连续。连续满射 $H$ 从紧空间到 Hausdorff 空间，因而是闭商映射。具体地，对闭集 $F\subseteq\mathbb R$，
+$$
+g_{\mu,f}^{-1}(F)=H\bigl((\mathcal T_\mu^{(t)}f)^{-1}(F)\bigr)
+$$
+为闭集，故 $g_{\mu,f}$ 连续。此结论不把截面本身称为连续映射。
+
+归一化圆周 Haar 测度可取为 $[0,1)$ 上 Lebesgue 测度的商推前，因而无原子且质量为一。定理29.6保证其无原子提升唯一。圆周平移不变性及有符号积分给
+$$
+(m_{\mathbb T}*_{\mathbb T}\beta)(B)=\int_{\mathbb T}m_{\mathbb T}(B-\rho)\,d\beta(\rho)=m_{\mathbb T}(B)\beta(\mathbb T).
+$$
+对 $\beta=H_\#\mu$ 应用提升公式，得到 Haar 提升恒等式。$\lambda_K(K)=1$，所以共同理想非零；任一点质量不属于它，所以它是真理想。证毕。
+
