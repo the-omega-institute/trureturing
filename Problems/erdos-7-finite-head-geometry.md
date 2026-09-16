@@ -140,6 +140,90 @@ All R45 are below6. The largest lifted bound is198583/15619, attained
 among these candidate laws by the long-root/same-column case. This does
 not assert that the actual315 minimax value is that bound.
 
+## Full convex profile for the same supported law
+
+Fix one of the six canonical 45 survivor sets and its already certified
+rational minimax law nu. The law is chosen once, independently of the test
+layout and the cost function. For every integer k=0,...,6 the existing
+certificate gives V(k)=max_layout E_nu(L45-k)+. These values form a decreasing
+convex sequence with V(0)-V(1)=1 and V(6)=0. Its second differences define
+a probability law Y on {1,...,6}. Since all old loads are integers, linear
+interpolation gives E_nu(L45-t)+<=E(Y-t)+ for every real t. Finite hinge
+expansion then gives E_nu h(L45)<=E h(Y) for every increasing convex h.
+
+Let rho=nu x Unif(six pure-7 survivors). Any 315 test load equals
+A(x)+B_z(x), where A is a complete 45 test load and the nonnegative B_z
+partition terms of another complete 45 load B. Complete any inactive test
+terms as necessary, which only increases an increasing cost. Convexity
+in the allocation among six colours gives pointwise
+
+    (1/6) sum_z h(A+B_z) <= (5/6)h(A)+(1/6)h(A+B).
+
+This follows repeatedly from h(a+b)+h(a+c)<=h(a)+h(a+b+c) for b,c>=0.
+Midpoint convexity gives h(A+B)<=[h(2A)+h(2B)]/2. Applying the same fixed
+nu comparison separately to A and B yields
+
+    E_rho h(L315) <= (5/6)E h(Y)+(1/6)E h(2Y)=E h(Z),
+
+where Z is the indicated mixture. The two old test layouts need not be
+coherent or equal; no independence of A and B is used.
+
+Write R=sum_{d=3,9,5,15,45} max_a nu(x=a mod d). The actual mixed-7 forbidden
+union has rho-mass at most R/6, so the actual surviving probability is at
+least lambda=1-R/6>0. Condition rho on this one actual survivor event to
+obtain mu. This mu is independent of every test layout and threshold.
+For any increasing convex h and any real a,
+
+    E_mu h(L) <= a + lambda^(-1) E_rho(h(L)-a)+
+              <= a + lambda^(-1) E(h(Z)-a)+.
+
+The second inequality is valid because (h(.)-a)+ is again increasing
+convex. Taking the infimum over a is the usual finite CVaR formula. Since
+h is increasing, it equals E h(Z_top), where Z_top is Z restricted to its
+upper lambda probability mass, with partial removal at the boundary and
+normalization by lambda. Thus Z_top is a positive probability comparison
+law valid for all increasing convex costs of the same actual mu.
+
+Do this deterministically for the six already selected rational laws.
+At integer thresholds 0,...,12 take the maximum of their six Z_top call
+values. The maximum sequence is convex. Interpolating its values linearly
+majorizes each old call function on every interval between successive
+integers, since those old call functions are linear there. Taking second
+differences therefore yields one universal probability comparator X on
+{1,...,12}. In the order 1,2,3,4,5,6,7,12 its masses are
+
+    4580325986/523303739795,
+    507130548159/1046607479590,
+    123339486624/523303739795,
+    85358829221/1046607479590,
+    479757327/523303739795,
+    85984156821/523303739795,
+    479757327/523303739795,
+    364/15619.
+
+All are nonnegative and sum to 1. Every distinct forbidden family with
+nonunit moduli dividing 315 has a common supported law mu satisfying
+
+    E_mu h(L)<=E h(X) for every test layout and increasing convex h,
+    E_mu L <=110151471/33504305,
+    E_mu L^2 <=198583/15619.
+
+The actual second-moment bound here is the separately certified tensor/
+unit-loss bound for these same selected laws. The comparator itself has
+second moment 7698860774322/523303739795, which is larger. These numbers
+must not be conflated: a tail recurrence may propagate the actual
+second-moment bound while using X for its convex stop-loss comparisons,
+because both statements refer to the same mu and all test layouts.
+
+The same [finite geometry verifier](../docs/reports/erdos7-odd-covering/verify_finite_head_geometry.py)
+derives these probabilities, quantiles and moments from the fixed rational
+laws and their already verified old-layout hinge profiles. Its
+`selected_law_convex_profile` result is included in the same certificate;
+no additional solver or measure choice is needed. This profile crosses
+the separate [uniform-law profile](erdos-7-marked-head-profile.md), so
+neither dominates the other at all thresholds. No continuation from prime
+11 is claimed.
+
 ## Exact verification and scope
 
 The [standard-library verifier](../docs/reports/erdos7-odd-covering/verify_finite_head_geometry.py)

@@ -94,6 +94,79 @@ def verify_case(row):
  return {'root':root,'deleted45_orbit':kind,'survivors':len(S),'test_layouts':layout_count,
          'minimax_Gamma45':str(G),'R45':str(R),'supported_Gamma315_upper':str(lift)}
 
+def selected_law_convex_profile(rows):
+    """Full315 increasing-convex profile for the fixed rational45 laws."""
+    def atoms_from_calls(calls):
+        require(calls[0]-calls[1] == 1 and calls[-1] == 0,
+                'unit lower support and zero terminal stoploss')
+        atoms = {k: calls[k-1]-2*calls[k]+(calls[k+1] if k+1 < len(calls) else 0)
+                 for k in range(1, len(calls))}
+        require(min(atoms.values()) >= 0 and sum(atoms.values()) == 1,
+                'convex integer-threshold calls define a probability law')
+        return {k: p for k, p in atoms.items() if p}
+
+    def call(atoms, threshold):
+        return sum((p*max(F(k)-threshold, 0) for k, p in atoms.items()), F(0))
+
+    def encode(atoms):
+        return {str(k): str(p) for k, p in sorted(atoms.items())}
+
+    cases, common_calls = [], [F(0)]*13
+    require([(r['root'], r['deleted45_orbit']) for r in rows] ==
+            [(r, k) for r in (1, 2) for k in
+             ('same_root', 'same_column', 'different_column')], 'six selected head laws')
+    for row in rows:
+        calls35 = [F(row['selected_optimal_Gamma_law_stoploss_profile'][str(t)])
+                   for t in range(7)]
+        old_atoms = atoms_from_calls(calls35)
+        # Distribute a convex increment among six prime7 colours, then use
+        # h(a+b) <= (h(2a)+h(2b))/2 for the two independent old test layouts.
+        pre = {}
+        for k, probability in old_atoms.items():
+            pre[k] = pre.get(k, F(0))+F(5, 6)*probability
+            pre[2*k] = pre.get(2*k, F(0))+probability/6
+        removed = F(row['R45'])/6
+        survival = 1-removed
+        require(0 < survival <= 1, 'positive same-law prime7 survival')
+        conditioned = {}
+        # Keep the upper survival quantile. Increasing-convex comparison
+        # passes to this worst conditional law by the CVaR variational bound.
+        for k, probability in sorted(pre.items()):
+            take = min(removed, probability)
+            removed -= take
+            if probability > take:
+                conditioned[k] = (probability-take)/survival
+        require(removed == 0 and sum(conditioned.values()) == 1,
+                'exact top-quantile comparison probability')
+        calls = [call(conditioned, F(t)) for t in range(13)]
+        common_calls = [max(a, b) for a, b in zip(common_calls, calls)]
+        actual_gamma = 1+(F(3, 2)*F(row['minimax_Gamma'])-1)/survival
+        require(actual_gamma == F(row['supported_Gamma315_upper']),
+                'same selected law also has its separate exact unit-loss moment bound')
+        cases.append({'root': row['root'], 'deleted45_orbit': row['deleted45_orbit'],
+                      'old_comparison_atoms': encode(old_atoms),
+                      'survival_lower': str(survival),
+                      'conditioned_comparison_atoms': encode(conditioned),
+                      'mean_upper': str(call(conditioned, F(0))),
+                      'actual_Gamma_upper': str(actual_gamma)})
+    # All loads are integers1..12. Between consecutive integers, linear
+    # interpolation of the pointwise maximum endpoint bounds dominates each
+    # old call function. Convexity ensures nonnegative second differences.
+    common = atoms_from_calls(common_calls)
+    mean = sum(k*p for k, p in common.items())
+    comparator_second = sum(k*k*p for k, p in common.items())
+    actual_second = max(F(r['actual_Gamma_upper']) for r in cases)
+    require(mean == F(110151471, 33504305)
+            and comparator_second == F(7698860774322, 523303739795)
+            and actual_second == F(198583, 15619), 'exact universal same-law profile constants')
+    return {'cases': cases, 'universal_comparison_atoms': encode(common),
+            'integer_threshold_stoploss_bounds': list(map(str, common_calls)),
+            'universal_mean_upper': str(mean),
+            'universal_actual_Gamma_upper': str(actual_second),
+            'comparison_law_second_moment': str(comparator_second),
+            'scope': 'For each distinct forbidden family with moduli dividing315 there is one supported probability law, common to all test layouts and all increasing convex costs, dominated by the displayed comparison law and satisfying the separate actual second-moment bound. No tail11 continuation or315 minimax optimality is claimed.'}
+
+
 def verify(certificate):
  expected=list(product((1,2),KINDS));rows=certificate['cases']
  require([(r['root'],r['deleted45_orbit']) for r in rows]==expected,'exactly the six required canonical cases')
@@ -104,7 +177,10 @@ def verify(certificate):
  summary={'normalized_assignments':140,'canonical_orbits':orbits,'effective_test_layouts':sum(r['test_layouts'] for r in results),
           'universal_sharp_minimax_Gamma45':str(G45),'universal_supported_Gamma315_upper':str(G315),'cases':results}
  require(summary==certificate['verified_result'],'fixed result equals recomputed exact certificate')
- return summary
+ profile=selected_law_convex_profile(rows)
+ require(profile==certificate['selected_law_convex_profile'],'fixed same-law full convex profile')
+ return {**summary, 'same_law_mean_upper':profile['universal_mean_upper'],
+         'same_law_Gamma_upper':profile['universal_actual_Gamma_upper']}
 
 def main():
  parser=argparse.ArgumentParser(description=__doc__)

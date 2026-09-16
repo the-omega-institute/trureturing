@@ -4822,7 +4822,11 @@ layouts. Extending the same selected law by a uniform pure-7 coordinate
 and conditioning once gives, for every original family with moduli
 dividing 315, a supported law with
 \(\Gamma\le198583/15619<12.715\). This latter upper bound is not
-asserted sharp. The reduction permits shrinking the support because the
+asserted sharp. For this same chosen law, its full convex profile is
+also bounded by the explicit finite comparison law in that note, with
+mean at most \(110151471/33504305\). The separate second-moment bound
+remains \(198583/15619\); the comparison distribution's larger second
+moment need not replace it. The reduction permits shrinking the support because the
 conclusion is existence of a law; it does not assert monotonicity of
 uniform survivor averages. Both statements are ordinary proofs with exact
 certificates, and do not enlarge the prime-13 noncoverage range.
