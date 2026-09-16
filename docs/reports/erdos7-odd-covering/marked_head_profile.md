@@ -4691,3 +4691,210 @@ of [1901.11465](https://arxiv.org/abs/1901.11465), and Hough--Nielsen
 [1703.02133](https://arxiv.org/abs/1703.02133), Lemmas5--6. No directly
 applicable arbitrary-height11/13 endpoint was found in those statements;
 no literature-priority claim is made for the refinement.
+
+### All integer schedules through23 for the fixed scalar feature map
+
+Fix the probability law and exact mean, square and hinge bounds in
+`saturated_convex_profile_certificate.json`, SHA-256
+82b5211366625c3c9eed79d8124db700f7b24bd7a43f088d9b4487492c32d940.
+The numerical statement below concerns the SH27--SH28 upper-certificate
+functional built from these data. It does not lower-bound actual covering
+probabilities or refute the existence of better supported laws.
+
+For each p in 11,13,17,19,23 allow every integer 1<=T_p<=p-2. There are
+9*11*15*17*21=530145 schedules. Put d=p-1-T, c=(p-1)/d,
+a=(3p-1)/(p-1)^2 and k=1+ac. Every listed choice has d>=1,c<=p, so the
+normalized full-history AP kernel and its auxiliary law exist.
+
+#### The exact scalar feature map
+
+Use the source's refined hinge2, H1=M-1, and its stated H3,H4,H5,H6,H8,
+H10,H12. Put H7=(H6+H8)/2, H9=(H8+H10)/2, H11=(H10+H12)/2 and
+Hj=H12 for 13<=j<=21. These are respectively convex interpolation and
+monotonicity of the actual hinge transform. No separate law, uniform
+comparator, altered source threshold or empirical fit is substituted.
+
+Let w_n=Pr(N=n), n<22, and E=E N be the complete auxiliary mean for the
+chosen earlier prime kernels. For 1<=n<T define
+
+    r_(p,T,n)=n*H(T/n)-n*M+T>=0,
+
+where H(T/n) is interpolation between its two adjacent integer knots.
+For the charge hinge this is the exact positive-part representation on
+integer initial test loads, with each hinge expectation then replaced
+by its specified upper bound. The scalar charge coefficient is
+
+    u_(p,T)=[M E-T+sum_(n<T)w_n r_(p,T,n)]/d.           (SO1)
+
+For the non-charge part of SH27 put
+
+    g(j)=a[(p-1)/(p-1-min(nj,T))-c], K=ceil(T/n),
+    v_(p,T,n)=g(1)+(g(2)-g(1))(M-1)
+             +sum_(j=2)^K[g(j+1)-2g(j)+g(j-1)]Hj.
+
+It vanishes for n>=T. This is an affine-intercept calculation, not a
+claim that the possibly nonconvex g has this expectation bound by itself.
+The final SH27 combined cost has nonnegative feature coefficients under
+its stated final-W condition. Define v_(p,T)=sum_(n<T)w_n v_(p,T,n).
+
+Starting with B=0 and Z=G, update
+
+    B_new=B+u_(p,T),       Z_new=k Z+v_(p,T).            (SO2)
+
+The final SH28 certificate is exactly
+
+    cert(W)-W=(Z-1)+(B-1)W.                            (SO3)
+
+The multiplication in (SO2) accounts for all future square multipliers
+on the earlier cost intercepts. The replay independently checks its
+11/T4,13/T5 rational slope and intercept against the published SH29
+fields, so the enumerated functional matches that published consumer.
+
+The auxiliary update is exact divisor convolution:
+
+    Pr(F=1)=1-c/p, Pr(F=f)=c(p-1)p^(-f) for f>=2,
+    w'_n=sum_(m|n)w_m Pr(F=n/m), E'=E(1+1/d).          (SO4)
+
+All divisors of n<22 are themselves below22. Higher states cannot
+return to the stored range because F>=1. Their contribution to (SO1)
+is exactly the affine full-mean term, and their contribution to v is
+zero. No auxiliary mean or high-state contribution is truncated.
+
+#### Directed integer bounds
+
+Let S=10^18. All grid integers represent their value divided by S.
+The verifier keeps lower and upper bounds on each low probability,
+a lower complete mean, a lower accumulated B and a lower accumulated Z.
+Initial lower constants are floor(SM),floor(SG); probability and mean
+start exactly at one.
+
+The fixed r values are nonnegative and rounded downward. In (SO1), use
+the lower mean, lower probability and lower r in every positive product,
+round every division downward, and subtract the exact integer T*S.
+The result is a lower bound on the exact scalar certificate coefficient.
+Taking max(0,lower) remains valid because that exact coefficient is
+nonnegative. Adding these step lower bounds bounds B downward.
+
+For the intercepts v_n, round each exact rational down. If this rounded
+value is negative, multiply by the UPPER probability; otherwise multiply
+by the LOWER probability. Floor each product after dividing by S. In
+either case the result is <=w_n*v_n. Multiplying the previous lower Z
+by the exact positive k and flooring, then adding these signed lower
+products, bounds the new Z downward.
+
+Convolution uses exact rational factor probabilities. Sum floor(w^-*Pr)
+for each lower output and ceil(w^+*Pr) for each upper output. The full
+mean update uses floor(E^-*(d+1)/d). These preserve the intervals by
+induction, including all negative-intercept signs. They are bounds on
+the exact certificate functional, not bounds on the actual physical
+law's unknown charge or deficits.
+
+#### Finite conclusion
+
+The verifier visits exactly 9,99,1485,25245,530145 prefixes at the five
+successive depths, with no pruning. Across every terminal schedule it
+finds the uniform lower bounds
+
+    B >=515109547377609039/500000000000000000 >103/100,
+    Z-1>=10102503029019284371/100000000000000000 >101.
+
+The grid-bound minimizers occur at thresholds (4,4,8,8,12) and
+(1,1,1,1,1), respectively. They need not be the same schedule: both
+lower bounds hold for every schedule, so they may be combined to give
+
+    cert(W)-W >101+(3/100)W>0 for every W>0.
+
+Consequently none of these 530145 schedules can satisfy SH28 using this
+specific scalar feature upper bound. This is stronger than failing one
+chosen W or one greedy policy. It remains a bounded numerical strategy
+obstruction, not an impossibility theorem for SH28 with sharper whole
+costs, other initial laws, noninteger thresholds, or different blocks.
+
+#### The missing observation
+
+The existing feature map takes separate maxima for M and each H_j, and
+then another separate maximum for every auxiliary N. A next observation
+that preserves original labels is
+
+    F_mu(g_(p,b)),
+    g_(p,b)(z)=E[1_(b<=K) h_p(Nz)/N],
+
+where b is one fixed original earlier-prime exponent label. Its head
+test cannot vary with N. The conditional comparison/Jensen step gives
+the sum of these support functions; the current scalar map replaces
+them by sums of independent feature maxima. The zero original label is
+always active and is the cheapest initial query. The existing FL1--FL4
+label-retention calculation supplies the finite-observation bookkeeping;
+it must be evaluated on the same SH18 probability, including its actual
+higher357 conditioning. Another possible new observation is the joint
+weighted pair deficit E[(c_p-c_actual)A_e A_f], whose present proof only
+uses A_e A_f>=1. Neither missing value is determined by the listed
+separate scalar upper bounds.
+
+The adjacent `verify_combined_schedule_obstruction.py` reconstructs
+`combined_schedule_obstruction_certificate.json` using only the Python
+standard library. Run it with `python3 -I -O`; the source profile is a
+hash-bound prerequisite. All 530145 schedules are visited without
+pruning. Directed-grid arithmetic bounds exact rational expressions;
+it does not rely on floating optimization or a solver. This result
+is an experimental strategy obstruction with the ordinary derivation
+(SO1)--(SO4), not a new Lean declaration.
+
+### Higher hinge observations on the same supported law
+
+Keep exactly the (SH18) probability, original-label comparison, 270-depth
+box and same-law survival denominator. Applying (SH20)--(SH21) at the
+nine further integer thresholds gives the following simultaneous bounds;
+the displayed decimals are rounded upward.
+
+| t | H_nu(t) upper bound |
+|---:|---:|
+|13|0.189271|
+|14|0.161741|
+|15|0.135712|
+|16|0.112043|
+|17|0.095693|
+|18|0.079571|
+|19|0.069949|
+|20|0.060411|
+|21|0.053283|
+
+Each finite-box numerator maximizes over all 280-by-280 base layouts,
+with both singleton45 labels restored exactly by (SH21). The entire
+outside box is included through t*V_out/(4t^2-1), then divided by the
+same positive q_* as in (SH20). No original high exponent is truncated
+and no new supported probability is chosen.
+
+These values improve the preceding monotonicity bound H_nu(t)<=H_nu(12)
+for every listed threshold. Replace those nine constant extensions in
+the existing (SH27) scalar feature map, keeping all its other features
+and the integer schedule domain unchanged. The complete directed
+enumeration again checks all 530145 threshold schedules through23 and
+obtains the same uniform bounds
+
+    B>=515109547377609039/500000000000000000>103/100,
+    Z-1>=10102503029019284371/100000000000000000>101.
+
+Hence its combined certificate still satisfies
+cert(W)-W=(Z-1)+(B-1)W>101+(3/100)W for every W>0. Improving the flat hinge
+extension by these nine same-law observations does not remove this
+bounded strategy obstruction. This does not exclude sharper joint
+costs, further improvements of the individual hinge bounds, another
+initial probability, noninteger thresholds or a different prime block.
+
+The separate `saturated_high_hinges_certificate.json` binds both prior
+certificates by their hashes and retains all 2430 new integer maxima,
+the complete geometric remainders and the enhanced schedule replay.
+Three of those maxima are independently checked without (SH21), using
+all 4480^2 ordered full-layout pairs at each selected depth/threshold:
+(2,1,1)/13, (3,0,2)/17 and (8,5,4)/21. Their exact weighted numerators
+are 79299012, 80659542 and 1403702325, respectively. The existing
+low-law normalization supplies their common denominator.
+
+Run `python3 -I -O docs/reports/erdos7-odd-covering/verify_saturated_high_hinges.py`.
+The verifier reuses the current convex-query and directed-schedule
+implementations, checks the three dense independent calculations, and
+compares every computed certificate field. NumPy is required only for
+the finite convex observations and the dense checks. These are ordinary
+all-height estimates with exact numerical verification, not a new Lean
+endpoint or a solution of unrestricted #7.

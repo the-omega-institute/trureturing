@@ -539,6 +539,15 @@ consumed_by = ["agent"]
 verified_by = ["repository-policy"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Exact obstruction for all integer prime schedules through 23 with one scalar feature map.
+pattern = "docs/reports/erdos7-odd-covering/combined_schedule_obstruction_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]] # Six common-density inequalities and exact infinite profile-cell certificate.
 pattern = "docs/reports/erdos7-odd-covering/common_density_head_certificate.json"
 kind = "data"
@@ -701,6 +710,15 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Nine higher same-law hinge bounds and their complete integer-schedule obstruction.
+pattern = "docs/reports/erdos7-odd-covering/saturated_high_hinges_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]] # One actual low geometry, rational law and exact joint bounds at arbitrary 3/5/7 heights.
 pattern = "docs/reports/erdos7-odd-covering/saturated_joint_head_certificate.json"
 kind = "data"
@@ -775,6 +793,15 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 [[files]] # Checks exact transfer saturation with positive actual deletion and distortion.
 pattern = "docs/reports/erdos7-odd-covering/verify_actual_union_saturation.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Replays every integer schedule through 23 with directed exact arithmetic and full auxiliary tails.
+pattern = "docs/reports/erdos7-odd-covering/verify_combined_schedule_obstruction.py"
 kind = "program"
 admission_plane = "content"
 produced_by = "none"
@@ -955,6 +982,15 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 [[files]] # Reconstructs saturated-label moment kernels and exact arbitrary-height transfer constants.
 pattern = "docs/reports/erdos7-odd-covering/verify_saturated_height.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Replays higher convex observations, three independent dense maxima and all integer schedules.
+pattern = "docs/reports/erdos7-odd-covering/verify_saturated_high_hinges.py"
 kind = "program"
 admission_plane = "content"
 produced_by = "none"

@@ -133,6 +133,17 @@ contribution; it does not yet
 provide the subsequent unrestricted-prime continuation or eliminate
 other low configurations.
 
+The [fixed scalar schedule obstruction](../docs/reports/erdos7-odd-covering/marked_head_profile.md#all-integer-schedules-through23-for-the-fixed-scalar-feature-map)
+excludes every one of the530145 integer threshold schedules through
+11,13,17,19,23 for the specified (SH24) feature certificate. Its
+combined criterion misses by more than `101+0.03W` for every `W>0`.
+This is a limitation of those numerical observations, not a lower
+bound on actual covered mass or an obstruction to whole convex costs,
+other laws or noninteger thresholds. Nine additional same-law bounds
+at thresholds13 through21 improve the flat monotonicity extension,
+but leave this complete schedule obstruction unchanged. Their separate
+certificate retains all2430 new maxima and three independent dense checks.
+
 For families using only the primes 3, 5 and 7, (CM1)--(CM8) determine the
 exact infimum of uniform uncovered density: \(53/432\). Every finite
 family has strictly greater uncovered density, and an explicit family
