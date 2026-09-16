@@ -62,4 +62,16 @@ run_cmd Elab.Command.liftTermElabM do
     | throwError "IffBridge: accepted an Iff.rfl bridge as Law variation"
   unless message.endsWith "reason=invalid_witness" do throwError "{message}"
   logInfo "IE-C048"
+
+run_cmd Elab.Command.liftCoreM do
+  let root := `LeanInformationAudit.Tests.RegistrationGates.Positive
+  let inputs ← TemplateBinding.moduleInputs (← getEnv) root
+  let paths := inputs.map (·.path)
+  let theoremUnit := "D5/S3/ConceptDynamics/InformationEscape/TheoremUnit.lean"
+  unless paths.contains theoremUnit do
+    throwError "[FAIL] indirect_judge_import_retains_content_input"
+  let judgePaths := paths.filter (·.startsWith "tools/lean-inspector/")
+  unless judgePaths.all (· == TemplateAudit.sourcePath root) do
+    throwError "[FAIL] indirect_judge_import_excludes_judge_inputs"
+  logInfo "[PASS] indirect_judge_import_content_closure"
 end RegistrationPositive

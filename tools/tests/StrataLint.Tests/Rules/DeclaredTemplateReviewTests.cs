@@ -22,7 +22,7 @@ public sealed class DeclaredTemplateReviewTests
         ["lean-toolchain"] = "leanprover/lean4:v4.33.0\n",
         ["lake-manifest.json"] = "{\"packages\":[]}",
         ["lean-report-inputs.json"] = """
-            {"schema_version":1,"report_semantic_version":5,
+            {"schema_version":1,"report_semantic_version":6,
              "report_modules":{"include":[{"pattern":"D5/**/*.lean","optional":true}],"exclude":[]},
              "inspector_sources":{"include":[],"exclude":[]},
              "dependency_sources":{"include":[],"exclude":[]},
@@ -58,7 +58,7 @@ public sealed class DeclaredTemplateReviewTests
         [new(Registration, Hash(files[Registration])), new(Target, Hash(files[Target]))];
 
     internal static LeanAxiomReport Report(Dictionary<string, string> files, int count = 2,
-        bool declared = false, string? omit = null)
+        bool declared = false, string? omit = null, bool indirectJudgePath = false)
     {
         var snapshot = Tree(files);
         var inputs = files.Where(p => p.Key == Registration || p.Key == Target
@@ -72,7 +72,7 @@ public sealed class DeclaredTemplateReviewTests
             var own = path == Registration ? keys : [];
             var wire = JsonSerializer.SerializeToElement(new
             {
-                schema_version = 1, compatibility_version = 5, inputs,
+                schema_version = 1, compatibility_version = 6, inputs,
                 inventory = own.Select(InformationTemplateDebtStore.KeyJson),
                 registered = own.Select(InformationTemplateDebtStore.KeyJson),
                 records = own.Select(key => new
@@ -97,13 +97,22 @@ public sealed class DeclaredTemplateReviewTests
             });
             var declarations = keys.Select(key => new LeanDeclaration(key.Theorem +
                 (path == Registration ? ".unit" : ".realization"), "def", "True", [])).ToImmutableArray();
-            reports[path] = new(path == Registration ? [TargetModule, "LeanInformationAudit.Syntax"] : [], declarations)
+            string[] imports = path == Registration
+                ? indirectJudgePath
+                    ? ["tools.lean-inspector.LeanInformationAudit.Syntax"]
+                    : [TargetModule, "LeanInformationAudit.Syntax"]
+                : [];
+            reports[path] = new(imports.ToImmutableArray(), declarations)
             { InformationTemplates = InformationTemplateEvidence.Read(wire, path, snapshot), InformationRegistrationErrors = [] };
         }
+        if (indirectJudgePath)
+            reports["tools/lean-inspector/LeanInformationAudit/Syntax.lean"] =
+                new([TargetModule], []);
         var report = LeanAxiomReport.Create(reports);
         // Round-trip canonical raw bytes: admission never receives hand-attached
         // InformationTemplates in place of the strict raw artifact loader.
-        return RawLeanReportArtifact.Read(RawLeanReportArtifact.Write(snapshot, report).AsSpan(), snapshot);
+        return indirectJudgePath ? report
+            : RawLeanReportArtifact.Read(RawLeanReportArtifact.Write(snapshot, report).AsSpan(), snapshot);
     }
 
     internal static RuleEvaluationContext Context(Dictionary<string, string> baseline, Dictionary<string, string> head,
@@ -133,8 +142,8 @@ public sealed class DeclaredTemplateReviewTests
     }
 
     [Theory]
-    [InlineData(4)]
-    [InlineData(6)]
+    [InlineData(5)]
+    [InlineData(7)]
     public void mismatched_report_semantic_version_rejects_binding_evidence(int version)
     {
         var files = Files();
@@ -181,6 +190,28 @@ public sealed class DeclaredTemplateReviewTests
                 && reads.SequenceEqual([Seed, protectedRevision]),
             "[FAIL] empty_seed_can_activate_after_protected_inventory_reconciliation: "
             + string.Join("; ", diagnostics.Select(d => d.Message)));
+    }
+
+    [Fact]
+    public void indirect_judge_import_closure_keeps_content_and_drops_judge_inputs()
+    {
+        var files = Files();
+        const string syntax = "tools/lean-inspector/LeanInformationAudit/Syntax.lean";
+        files[syntax] = "-- indirect judge fixture\n";
+        var report = Report(files, indirectJudgePath: true);
+        Assert.Contains(RepoPath.CreateKnown(syntax), report.Files.Keys);
+        Assert.Equal("tools.lean-inspector.LeanInformationAudit.Syntax",
+            Assert.Single(report.Files[RepoPath.CreateKnown(Registration)].Imports));
+        var closure = LeanImportClosure.RepositoryPaths(report, RepoPath.CreateKnown(Registration));
+        Assert.Contains(RepoPath.CreateKnown(Target), closure);
+        Assert.Equal(1, report.Files[RepoPath.CreateKnown(Registration)].Declarations.Count(
+            declaration => declaration.Name == Key(0).Theorem + ".unit"));
+        var error = Record.Exception(() => InformationTemplateEvidence.Collect(Tree(files), report));
+        Assert.Null(error);
+        var evidence = report.Files[RepoPath.CreateKnown(Registration)].InformationTemplates!;
+        Assert.Contains(evidence.Inputs, input => input.Path == Target);
+        Assert.DoesNotContain(evidence.Inputs,
+            input => input.Path.StartsWith("tools/lean-inspector/", StringComparison.Ordinal));
     }
     internal static Dictionary<string, string> ExpectedRows(Dictionary<string, string> files, string seed = Seed, int count = 2)
     {

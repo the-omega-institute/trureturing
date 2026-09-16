@@ -259,6 +259,10 @@ private def isRepositoryModule (name : Name) : Bool :=
   name.toString.startsWith "D5." || name.toString.startsWith "LeanInformationAudit." ||
     name == `Trureturing
 
+private def isRecordedModule (name : Name) : Bool :=
+  name.toString.startsWith "D5." || name.toString.startsWith "LeanInformationAudit.Tests." ||
+    name == `Trureturing
+
 private def moduleSourceInputs (env : Environment) (root : Name) :
     CoreM (Array TemplateAudit.SourceInput) := do
   let mut seen : NameSet := {}
@@ -268,10 +272,10 @@ private def moduleSourceInputs (env : Environment) (root : Name) :
     pending := rest
     if seen.contains name then continue
     seen := seen.insert name
-    if name != root && !(name.toString.startsWith "D5." ||
-        name.toString.startsWith "LeanInformationAudit.Tests." || name == `Trureturing) then continue
-    let path := sourcePath name
-    unless paths.contains path do paths := paths.push path
+    unless isRepositoryModule name do continue
+    if isRecordedModule name then
+      let path := sourcePath name
+      unless paths.contains path do paths := paths.push path
     let imports ← if name == env.header.mainModule then pure env.header.imports
       else if let some index := env.getModuleIdx? name then
         pure env.header.moduleData[index.toNat]!.imports
@@ -346,7 +350,7 @@ private def moduleJson (snapshot : JoinedRecords) (moduleName : Name)
       | throwError "incomplete_closure:dtr.final_record"
     recordJson (if selected.bindingOwner == some moduleName then selected else row)
   return Json.mkObj [
-    ("schema_version", toJson (1 : Nat)), ("compatibility_version", toJson (5 : Nat)),
+    ("schema_version", toJson (1 : Nat)), ("compatibility_version", toJson (6 : Nat)),
     ("inventory", Json.arr ((inventory env).filter
       (·.key.registrationModule == moduleName) |>.map (keyJson ∘ TemplateOccurrenceEvent.key))),
     ("registered", Json.arr (registered.map keyJson)), ("records", Json.arr rows),

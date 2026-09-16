@@ -38,7 +38,7 @@ internal static class InformationTemplateEvidence
         InformationTemplateJson.Fields(value, "schema_version", "compatibility_version", "inventory",
             "records", "registered", "inputs");
         InformationTemplateJson.Version(value);
-        if (value.GetProperty("compatibility_version").GetRawText() != "5")
+        if (value.GetProperty("compatibility_version").GetRawText() != "6")
             throw new FormatException("DTR-Evidence: old report is not current binding evidence");
         var inputs = InformationTemplateDebtStore.ReadInputs(value.GetProperty("inputs"), snapshot);
         if (!inputs.Any(input => input.Path == sourcePath))
@@ -149,6 +149,8 @@ internal static class InformationTemplateEvidence
                 || module.InformationTemplates is not { } evidence)
                 throw new FormatException($"DTR-Evidence: missing current producer for {source}");
             var requiredInputs = LeanImportClosure.RepositoryPaths(report, RepoPath.CreateKnown(source))
+                .Where(path => path.Value.StartsWith("D5/", StringComparison.Ordinal)
+                    || path.Value == "Trureturing.lean")
                 .Select(path => path.Value).Concat(PolicyInputs).ToHashSet(StringComparer.Ordinal);
             foreach (var required in requiredInputs.Order(StringComparer.Ordinal))
                 if (!evidence.Inputs.Any(input => input.Path == required))
