@@ -1,0 +1,18 @@
+**Theorem 32.20 (All-subset Arens products exist but do not descend to Borel charges).** On
+$$
+ba(K,\operatorname{Pow}(K))=\ell^1(K_{\mathrm d})^{**}
+$$
+the finite rows of Assumption 32.0 do define both iterated products
+$$
+(\widetilde p\mathbin{\square_t^{\mathrm{all}}}\widetilde q)(f)
+=\widetilde p\bigl(x\mapsto\widetilde q(y\mapsto P^{(t)}_{x,y}(f))\bigr),
+$$
+$$
+(\widetilde p\mathbin{\lozenge_t^{\mathrm{all}}}\widetilde q)(f)
+=\widetilde q\bigl(y\mapsto\widetilde p(x\mapsto P^{(t)}_{x,y}(f))\bigr),
+\qquad f\in\ell^\infty(K).
+$$
+They are associative bounded bilinear products of norm $C_t$, extending the finite-row product and its $\ell^1(K_{\mathrm d})$ extension. They have the corresponding one-sided weak-star continuities. Neither product descends through $\operatorname{res}$ to a product on $ba(\mathcal B)$.
+
+Thus the countable-core Arens theorem is valid, and the all-subset Arens theorem is valid, but neither supplies an unqualified full-Borel-carrier Arens product. In particular the actual Radon product's separate bounded-Borel continuity and uniqueness do not extend to its compact probability-charge closure.
+

@@ -1,0 +1,6 @@
+**Theorem 32.9 (Descending events, an ultrafilter limit, and loss of Radon compactness).** A positive probability charge $q$ is countably additive if and only if
+$$
+D_n\downarrow\varnothing\quad\Longrightarrow\quad q(D_n)\longrightarrow0.
+$$
+There is a weak-star limit of Dirac probabilities in $\mathcal Q_B(K)$ which fails this condition. Consequently $\mathcal P(K)$ is not compact for $\tau_B$, although it is compact for $\tau_C$.
+

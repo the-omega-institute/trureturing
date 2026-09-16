@@ -1,0 +1,77 @@
+**Theorem 32.20 (All-subset Arens products exist but do not descend to Borel charges).** On
+$$
+ba(K,\operatorname{Pow}(K))=\ell^1(K_{\mathrm d})^{**}
+$$
+the finite rows of Assumption 32.0 do define both iterated products
+$$
+(\widetilde p\mathbin{\square_t^{\mathrm{all}}}\widetilde q)(f)
+=\widetilde p\bigl(x\mapsto\widetilde q(y\mapsto P^{(t)}_{x,y}(f))\bigr),
+$$
+$$
+(\widetilde p\mathbin{\lozenge_t^{\mathrm{all}}}\widetilde q)(f)
+=\widetilde q\bigl(y\mapsto\widetilde p(x\mapsto P^{(t)}_{x,y}(f))\bigr),
+\qquad f\in\ell^\infty(K).
+$$
+They are associative bounded bilinear products of norm $C_t$, extending the finite-row product and its $\ell^1(K_{\mathrm d})$ extension. They have the corresponding one-sided weak-star continuities. Neither product descends through $\operatorname{res}$ to a product on $ba(\mathcal B)$.
+
+Thus the countable-core Arens theorem is valid, and the all-subset Arens theorem is valid, but neither supplies an unqualified full-Borel-carrier Arens product. In particular the actual Radon product's separate bounded-Borel continuity and uniqueness do not extend to its compact probability-charge closure.
+
+**Proof.** For any bounded function $f$ on the underlying set $K$, integration against a finite row means a finite sum and is defined without any measurability condition. It satisfies
+$$
+|P^{(t)}_{x,y}(f)|\le C_t\|f\|_\infty.
+$$
+Applying a bounded functional in one variable therefore produces a bounded function in the other, and every such function belongs to $\ell^\infty(K)$. The invariance condition required in Theorem 32.16 is consequently automatic when $B_b(K)$ is replaced by $\ell^\infty(K)$. The finite-row associativity proof in that theorem applies to bounded functions on this underlying set: it used finite sums, row associativity, and invariant bounded-function evaluation, not countable additivity. It proves associativity and the norm upper bounds. The same norm-attaining Dirac rows give norm $C_t$, and the same fixed-test argument proves the stated continuity sides.
+
+For $u,v\in\ell^1(K_{\mathrm d})$, the series
+$$
+\sum_{x,y\in K}u_xv_yP^{(t)}_{x,y}
+$$
+converges absolutely in the atomic $\ell^1$ norm, because the sum of term norms is at most $C_t\|u\|_1\|v\|_1$. This gives a bounded extension of the finite multiplication. Finite vectors are norm dense, so its associativity follows by taking norm limits of the finite associative identities. Pairing with any bounded function and using absolute convergence identifies it with either displayed iterated product. Equivalently one may scale the norm by $C_t$ to obtain a Banach algebra before taking its Arens extensions. These arguments establish existence on all-subset charges, not on the Borel quotient.
+
+To prove failure of descent, take the Borel test $f$ and Borel probability charge $q$ from Theorem 32.19, and write
+$$
+g=\mathscr R_qf\in\ell^\infty(K)\setminus B_b(K).
+$$
+Extend $q$ to a bounded functional $\widetilde q$ on $\ell^\infty(K)$ by Hahn–Banach. Each section $y\mapsto P^{(t)}_{x,y}(f)$ is Borel, so the extension agrees with $q$ on that section. Hence
+$$
+\widetilde q\bigl(y\mapsto P^{(t)}_{x,y}(f)\bigr)=g(x)
+\qquad(x\in K).
+$$
+This identity is independent of the chosen extension.
+
+Because $B_b(K)$ is a closed subspace and $g$ is outside it, the distance $d=\operatorname{dist}(g,B_b(K))$ is positive. On the direct sum $B_b(K)+\mathbb Rg$, define $L_0(b+ag)=a$. It is well-defined and bounded, since
+$$
+\|b+ag\|_\infty\ge |a|d.
+$$
+Hahn–Banach extends it to $L\in\ell^\infty(K)^*$ with
+$$
+L|_{B_b(K)}=0,\qquad L(g)=1.
+$$
+Consequently $\operatorname{res}(L)=0$, but the first all-subset product satisfies
+$$
+\bigl[\operatorname{res}(L\mathbin{\square_t^{\mathrm{all}}}\widetilde q)\bigr](f)
+=L(g)=1.
+$$
+Replacing $L$ by the zero all-subset functional leaves its restriction unchanged but changes this output restriction. Thus the product of two restrictions cannot be determined from the restrictions alone. The opposite-product identity gives
+$$
+\widetilde q\mathbin{\lozenge_t^{\mathrm{all}}}L
+=L\mathbin{\square_t^{\mathrm{all}}}\widetilde q,
+$$
+so the second product fails to descend as well.
+
+The impossibility of a separately weak-star continuous product on the compact Borel probability-charge closure is already the stronger, purely natural-core obstruction of Theorem 32.13. The present argument separately identifies the measurability defect in the canonical full-carrier iterated formulas. It does not assert nonexistence of every conceivable algebraic operation on $ba(\mathcal B)$ with other requirements; it proves the specific failure of these formulas and of quotient descent. QED.
+
+[^rro32-setwise]: Liangang Ma, *Topological description of the Borel probability space*, arXiv:2101.09702v2, Definitions 2.8–2.11, Theorem 2.13 and its proof in Section 3, [full text](https://arxiv.org/html/2101.09702v2). The cited equivalence concerns probabilities. The signed-net qualification and counterexample here are established in Theorem 32.2.
+
+[^rro32-kernels]: Riccardo Passeggeri, *On the extension and kernels of signed bimeasures and their role in stochastic integration*, arXiv:2009.10657v2, Theorem 3.4(d)–(e′), [full text](https://arxiv.org/html/2009.10657v2). The cited clauses specify signed kernels and measurability of their set evaluations and Jordan parts. The bounded-Borel preadjoint used here is proved in Theorem 32.3 from the explicit bounded signed-kernel hypotheses of Theorem 28.4.
+
+[^rro32-fubini]: John K. Hunter, *Measure Theory* (2011), Theorems 5.15 and 5.18, printed pages 60–61, [author's text](https://www.math.ucdavis.edu/~hunter/measure_theory/measure_notes.pdf). Here the measures are finite, the tests are bounded, and the positive product of the variation measures makes the integrability hypotheses automatic; signed integrals are obtained through Jordan decomposition as in Theorem 28.4.
+
+[^rro32-ba]: Johannes Müller, *Weak compactness of probability measures* (7 February 2019), Theorems 3 and 6, printed pages 3–4, [author's notes](https://muellerjohannes.github.io/files/measures-scr-style.pdf). These are the simple-function integral and the isometric duality between bounded measurable functions and bounded-variation finitely additive measures. Theorem 32.7 gives the full construction used here.
+
+[^rro32-alaoglu]: Daniel V. Tausk, *Weak∗ topology for the space of finite measures on a topological space*, Section 6, opening paragraph, printed page 21, [author's text](https://www.ime.usp.br/~tausk/texts/WeakTopologyMeasures.pdf). The invoked statement is Banach–Alaoglu for a normed space and its dual closed unit ball. The Radon representation convention is the one fixed in Definition 28.1.
+
+[^rro32-arens]: Julien Hennefeld, *A note on the Arens products*, Pacific Journal of Mathematics 26 (1968), 115–119, Definitions 1.1–1.2, Lemmas 1.4–1.5 and 2.2, [published paper](https://msp.org/pjm/1968/26-1/pjm-v26-n1-p13-p.pdf). The cited passages give the two orders, their respective one-sided weak-star continuities, agreement with a base-algebra factor, and the two iterated weak-star limit formulas. The explicit convolution, associativity and arithmetic witnesses used here are proved in Theorems 32.11–32.13.
+
+[^rro32-ultrafilters]: Neil Hindman and Dona Strauss, *Some new results about the smallest ideal of βS*, New York Journal of Mathematics 25 (2019), 897–913, Section 1, printed pages 897–898, [published paper](https://nyjm.albany.edu/j/2019/25-38p.pdf). The cited construction identifies the compact ultrafilter space, its clopen event basis, its ordered extension of a discrete semigroup operation, and the corresponding membership formula. The finite binary witness and its Zeckendorf transport in this section are proved directly.
+

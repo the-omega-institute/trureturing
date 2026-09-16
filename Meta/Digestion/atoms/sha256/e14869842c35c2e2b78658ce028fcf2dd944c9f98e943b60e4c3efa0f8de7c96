@@ -1,0 +1,51 @@
+**Theorem 32.9 (Descending events, an ultrafilter limit, and loss of Radon compactness).** A positive probability charge $q$ is countably additive if and only if
+$$
+D_n\downarrow\varnothing\quad\Longrightarrow\quad q(D_n)\longrightarrow0.
+$$
+There is a weak-star limit of Dirac probabilities in $\mathcal Q_B(K)$ which fails this condition. Consequently $\mathcal P(K)$ is not compact for $\tau_B$, although it is compact for $\tau_C$.
+
+**Proof.** Countable additivity implies continuity from above for a finite positive measure. Conversely, let $(A_n)_{n\ge0}$ be pairwise disjoint measurable sets and $A=\bigcup_{n\ge0}A_n$. The sets
+$$
+D_N=A\setminus\bigcup_{n<N}A_n
+$$
+decrease to the empty set. Finite additivity and the assumed descending-event continuity give
+$$
+q(A)=\sum_{n<N}q(A_n)+q(D_N)\longrightarrow\sum_{n\ge0}q(A_n).
+$$
+Thus $q$ is countably additive.
+
+Choose a free ultrafilter $\mathcal U$ on $\mathbb N$: it is an upward-closed family of sets, closed under finite intersections, containing no empty or finite set, and containing exactly one of each set and its complement. Such an ultrafilter exists by extending the cofinite filter with the ultrafilter lemma. For a bounded real sequence $u$, define $\lim_{\mathcal U}u_n$ to be the unique real $l$ satisfying
+$$
+\{n:|u_n-l|<\epsilon\}\in\mathcal U\qquad(\epsilon>0).
+$$
+Existence follows by applying compactness to the closures of the sets of values indexed by members of $\mathcal U$ inside a fixed compact interval. They have the finite intersection property. If a point of their intersection failed the displayed neighborhood condition, the complementary index set would belong to the ultrafilter and its value closure would exclude that point. Uniqueness follows because disjoint neighborhoods of two proposed limits cannot both have preimages in an ultrafilter. Intersecting the good index sets for two convergent bounded sequences proves additivity and scalar homogeneity. Order is preserved, and the constant one has limit one. Thus ultrafilter limit is a positive norm-one linear functional on $\ell^\infty(\mathbb N)$.
+
+Take distinct points $y_n=Z(n)$; their distinctness also follows from the distinct phases $[n\phi]$. Define
+$$
+Q_{\mathcal U}(f)=\lim_{\mathcal U} f(y_n)\qquad(f\in B_b(K)).
+$$
+This is a probability charge, and for a Borel set $D$,
+$$
+Q_{\mathcal U}(D)=
+\begin{cases}
+1,&\{n:y_n\in D\}\in\mathcal U,\\
+0,&\{n:y_n\in D\}\notin\mathcal U.
+\end{cases}
+$$
+The countable sets $S_N=\{y_n:n\ge N\}$ are Borel, decrease to the empty set, and satisfy $Q_{\mathcal U}(S_N)=1$. Thus this charge is not countably additive. Equivalently, it assigns mass one to $S_0$ and zero to each of its singleton subsets, which no Radon probability can do.
+
+It is an actual weak-star limit of a net of Dirac measures. Direct $\mathcal U$ by reverse inclusion and choose $n(A)\in A$ for every $A\in\mathcal U$. For each bounded Borel $f$ and each $\epsilon>0$, its good index set belongs to $\mathcal U$, and every sufficiently late $A$ is contained in that set. Consequently
+$$
+\delta_{y_{n(A)}}\longrightarrow Q_{\mathcal U}
+\quad\text{in }\sigma(B_b(K)^*,B_b(K)).
+$$
+If $\mathcal P(K)$ were $\tau_B$-compact, its image under $J$ would be compact in a Hausdorff space and hence closed. The preceding limit contradicts closedness. In contrast, Riesz representation identifies $\mathcal P(K)$ with the positive norm-one functionals on $C(K)$, a weak-star closed subset of its compact dual unit ball. It is therefore $\tau_C$-compact.
+
+The finite-constraint assertion has a precise scope. For finitely many Borel events, the ultrafilter chooses their membership or nonmembership patterns with a nonempty common index set. A single $y_n$ in that set reproduces all the corresponding values of $Q_{\mathcal U}$ exactly. More generally Theorem 32.8 puts finite atomic probabilities in every weak-star neighborhood specified by finitely many tests and positive tolerances. These consistencies do not impose descending-event continuity.
+
+This does not say that arbitrary exact finite constraints are always realizable by Radon measures, or that no finite constraint can force countable additivity. For example the bounded Borel function
+$$
+b(y_n)=\frac1{n+1},\qquad b(x)=1\quad(x\notin S_0)
+$$
+is strictly positive everywhere but has $Q_{\mathcal U}(b)=0$. Every countably additive probability has positive integral of $b$: the increasing union of the sets $\{b\ge1/j\}$ is $K$, so one of them has positive measure. Thus this one exact function value is not a Radon probability value. Conversely the event constraint $q(\{x\})=1$ forces a positive probability charge to be $\delta_x$. The closure theorem concerns finite observation neighborhoods and exact finite event marginals, not these different exact-constraint assertions. QED.
+

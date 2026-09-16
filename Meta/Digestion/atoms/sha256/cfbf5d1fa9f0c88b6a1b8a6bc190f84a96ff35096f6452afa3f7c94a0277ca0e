@@ -1,0 +1,28 @@
+**Theorem 32.4 (Finite-partition density is a net statement).** For every $\mu\in M(K)$ there is a net of finite atomic measures $\mu_{\mathcal P}$ such that
+$$
+\mu_{\mathcal P}\longrightarrow\mu\quad\text{for }\tau_B,\qquad
+\|\mu_{\mathcal P}\|_{\mathrm{TV}}\le\|\mu\|_{\mathrm{TV}},\qquad
+\mu_{\mathcal P}(K)=\mu(K).
+$$
+If $\mu$ is positive or is a probability, every approximant can have the same property. No sequence of finite atomic signed measures can converge eventwise to a nonatomic probability. In particular, finite atomic probabilities are $\tau_B$-dense but not sequentially dense in $\mathcal P(K)$.
+
+**Proof.** Direct all finite Borel partitions of $K$ into nonempty cells by refinement. Choose one point $x_A\in A$ for each cell of each partition and define
+$$
+\mu_{\mathcal P}=\sum_{A\in\mathcal P}\mu(A)\delta_{x_A}.
+$$
+The mass identity, positivity assertions, and variation bound follow immediately from finite additivity and the definition of variation. For every bounded Borel $f$,
+$$
+|\langle\mu_{\mathcal P}-\mu,f\rangle|
+\le \sum_{A\in\mathcal P}\int_A|f(x_A)-f(x)|\,d|\mu|(x)
+\le \|\mu\|_{\mathrm{TV}}\max_{A\in\mathcal P}\operatorname{osc}_A(f),
+$$
+where $\operatorname{osc}_A(f)=\sup_{x,y\in A}|f(x)-f(y)|$. For any finite family of tests and any $\epsilon>0$, partition their bounded ranges into intervals of length at most $\epsilon$ and take the common Borel refinement. Every finer partition has oscillation at most $\epsilon$ for all those tests. This proves convergence of the displayed net.
+
+For a sequence $(\alpha_n)$ of finite atomic measures, let $D$ be the countable union of their finite supports. It is Borel. Then $\alpha_n(K\setminus D)=0$ for every $n$, whereas a nonatomic probability $\mu$ has $\mu(K\setminus D)=1$. Eventwise convergence is impossible. The same argument works for a sequence of countably atomic measures, using countable sets on which their variations are concentrated.
+
+The nonatomic Haar lift $\mathfrak m$ of Theorem 28.11 supplies such a probability on this actual $K$. Its variation distance from a finite atomic signed $\alpha$ is
+$$
+\|\mathfrak m-\alpha\|_{\mathrm{TV}}=1+\|\alpha\|_{\mathrm{TV}},
+$$
+because $\mathfrak m$ and $|\alpha|$ are concentrated on disjoint measurable parts. Thus the preceding density is not total-variation density. Also, allowing atoms at all points of $K$ is essential: probabilities concentrated on the countable set $Z(\mathbb N)$ cannot approximate $\mathfrak m$ under the event test $Z(\mathbb N)$. QED.
+

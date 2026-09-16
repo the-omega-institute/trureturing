@@ -1,0 +1,32 @@
+**Theorem 32.13 (Transport to the actual Zeckendorf core and the compact-extension obstruction).** Put $C=Z(\mathbb N)$. There is an isometric weak-star topological embedding
+$$
+\iota:ba(\mathbb N)\longrightarrow ba(\mathcal B),\qquad
+\iota(p)(D)=p(\{n:Z(n)\in D\}),
+$$
+with pairing
+$$
+\iota(p)(f)=p(f\circ Z).
+$$
+Its image is the weak-star closed subspace of charges concentrated on $C$, where concentration means
+$$
+q(D)=q(D\cap C)\qquad(D\in\mathcal B).
+$$
+For positive probabilities this condition is equivalent to $q(C)=1$. For signed charges the full displayed condition is intended, not merely $q(K\setminus C)=0$.
+
+The two products transport to this subspace by
+$$
+\iota(p)\mathbin{\square_Z}\iota(q)=\iota(p\mathbin{\square}q),\qquad
+\iota(p)\mathbin{\lozenge_Z}\iota(q)=\iota(p\mathbin{\lozenge}q).
+$$
+They extend the actual $\star_t$ product on all countably additive measures concentrated on $C$, for every $t$. For $D$ in Theorem 32.12, the countable Borel set $D_K=Z(D)$ supplies the exact finite witnesses
+$$
+\mathbf1_{D_K}(Z(a_i+b_j))=\mathbf1_{\{i<j\}}.
+$$
+Thus the same opposite values zero and one, and the same norm separation two, occur on the actual Zeckendorf core.
+
+There is no separately weak-star continuous map
+$$
+B:\mathcal Q_B(K)\times\mathcal Q_B(K)\longrightarrow ba(\mathcal B)
+$$
+that agrees with the natural-core point rows on every pair $(\delta_{Z(a)},\delta_{Z(b)})$. This impossibility does not require bilinearity or positivity of $B$.
+

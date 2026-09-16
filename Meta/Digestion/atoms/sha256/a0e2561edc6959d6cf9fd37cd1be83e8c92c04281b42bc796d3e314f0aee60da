@@ -1,0 +1,10 @@
+**Theorem 32.18 (A Cantor set separated from all natural phase translates).** Let
+$$
+G=\{[k\phi]:k\in\mathbb Z\}\subseteq\mathbb T.
+$$
+There is a compact set $A\subseteq\mathbb T$ and a homeomorphism $\kappa:\{0,1\}^{\mathbb N}\to A$ such that
+$$
+A\cap G=\varnothing,\qquad (A-A)\cap G=\{0\}.
+$$
+In particular the compact sets $A+[n\phi]$, $n\in\mathbb N$, are pairwise disjoint, and $A\subseteq\mathbb T\setminus E$.
+

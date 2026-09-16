@@ -1,0 +1,24 @@
+**Theorem 32.11 (Bounded associative extensions and their actual continuity sides).** Both products of Definition 32.10 are bounded bilinear associative products of bilinear norm one. They preserve positivity, have unit $\delta_0$, and satisfy
+$$
+\|p\mathbin{\square}q\|\le\|p\|\|q\|,\qquad
+\|p\mathbin{\lozenge}q\|\le\|p\|\|q\|,
+$$
+$$
+(p\mathbin{\square}q)(1)=(p\mathbin{\lozenge}q)(1)=p(1)q(1),\qquad
+p\mathbin{\lozenge}q=q\mathbin{\square}p.
+$$
+They extend convolution on $\ell^1(\mathbb N)$ and agree whenever at least one factor is in $\ell^1(\mathbb N)$. For fixed $q$, the map $p\mapsto p\mathbin{\square}q$ is weak-star continuous. For fixed $p$, the map $q\mapsto p\mathbin{\lozenge}q$ is weak-star continuous. Here and below the weak-star topology is $\sigma(ba(\mathbb N),\ell^\infty(\mathbb N))$.
+
+If finite atomic nets $u_i\to p$ and $v_j\to q$ weak-star, their two iterated limits exist and are
+$$
+p\mathbin{\square}q
+=\mathop{\mathrm{w}^{*}\!\text{-}\!\lim}_i\,
+\mathop{\mathrm{w}^{*}\!\text{-}\!\lim}_j(u_i*v_j),
+$$
+$$
+p\mathbin{\lozenge}q
+=\mathop{\mathrm{w}^{*}\!\text{-}\!\lim}_j\,
+\mathop{\mathrm{w}^{*}\!\text{-}\!\lim}_i(u_i*v_j).
+$$
+Such approximating nets exist for every signed pair by Theorem 32.8. No interchange of the two limits is asserted.
+

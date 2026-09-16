@@ -1,0 +1,10 @@
+**Theorem 32.7 (The actual bounded-Borel dual).** Integration gives an isometric identification
+$$
+B_b(X,\Sigma)^*=ba(X,\Sigma).
+$$
+Under this identification, positivity and probability normalization agree on the two sides. For compact metric $K$, the canonical embedding
+$$
+J:M(K)\longrightarrow B_b(K)^*,\qquad J\mu(f)=\int_K f\,d\mu,
+$$
+is isometric, and its image consists exactly of the countably additive members of $ba(\mathcal B)$. The topology induced on this image by $\sigma(B_b(K)^*,B_b(K))$ is exactly $\tau_B$.
+

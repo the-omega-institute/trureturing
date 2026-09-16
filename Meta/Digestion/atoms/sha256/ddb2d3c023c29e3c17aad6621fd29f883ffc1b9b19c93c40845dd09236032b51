@@ -1,0 +1,4 @@
+**Theorem 32.2 (Bounded nets and the signed-net distinction).** The space $B_b(K)$ is Banach, and its simple Borel functions are uniformly dense. Every $\tau_B$-convergent net is eventwise convergent. Conversely, if a net $(\mu_i)$ is eventually bounded in total variation and $\mu_i(D)\to\mu(D)$ for every Borel $D$, then $\mu_i\to\mu$ for $\tau_B$. Consequently $\tau_B$ and $\tau_{\mathrm{ev}}$ induce the same topology on every fixed total-variation ball and on $\mathcal P(K)$. They also have the same convergent nets on the positive cone, without a separately imposed bound.
+
+For arbitrary signed nets the two topologies differ. In fact, there is a net of two-point signed measures converging eventwise to zero but not even converging to zero for $\tau_C$.
+

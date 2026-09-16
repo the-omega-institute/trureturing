@@ -1,0 +1,30 @@
+**Theorem 32.12 (Ultrafilter products and an exact arithmetic double limit).** The zero-one probability charges on $\operatorname{Pow}(\mathbb N)$ form the usual ultrafilter space $\beta\mathbb N$, compact for its inherited weak-star topology, with the principal ultrafilters dense. Both products in Definition 32.10 preserve this space. For the first order the exact event formula is
+$$
+A\in p\mathbin{\square}q
+\quad\Longleftrightarrow\quad
+\{m:\{n:m+n\in A\}\in q\}\in p,
+$$
+where an ultrafilter is identified with its probability charge. This is the classical ultrafilter semigroup order described by Hindman and Strauss, Section 1.[^rro32-ultrafilters]
+
+Choose any free ultrafilters $\mathcal U,\mathcal V$ on $\mathbb N$ and put
+$$
+a_i=2^{2i},\qquad b_j=2^{2j+1},\qquad
+D=\{a_i+b_j:i<j\},\qquad f=\mathbf1_D,
+$$
+$$
+p(u)=\lim_{\mathcal U}u(a_i),\qquad
+q(u)=\lim_{\mathcal V}u(b_j).
+$$
+Then $p,q$ are ultrafilter probability charges and
+$$
+(p\mathbin{\square}q)(f)=1,\qquad
+(p\mathbin{\lozenge}q)(f)=0,\qquad
+(q\mathbin{\square}p)(f)=0,\qquad
+(q\mathbin{\lozenge}p)(f)=1.
+$$
+In particular both extended products are noncommutative, the two orders differ, and
+$$
+\|p\mathbin{\square}q-p\mathbin{\lozenge}q\|=2.
+$$
+The first product is not everywhere continuous in its second variable, and the second is not everywhere continuous in its first variable, even on ultrafilter probabilities.
+

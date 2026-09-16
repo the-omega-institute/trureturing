@@ -1,0 +1,71 @@
+**Theorem 32.13 (Transport to the actual Zeckendorf core and the compact-extension obstruction).** Put $C=Z(\mathbb N)$. There is an isometric weak-star topological embedding
+$$
+\iota:ba(\mathbb N)\longrightarrow ba(\mathcal B),\qquad
+\iota(p)(D)=p(\{n:Z(n)\in D\}),
+$$
+with pairing
+$$
+\iota(p)(f)=p(f\circ Z).
+$$
+Its image is the weak-star closed subspace of charges concentrated on $C$, where concentration means
+$$
+q(D)=q(D\cap C)\qquad(D\in\mathcal B).
+$$
+For positive probabilities this condition is equivalent to $q(C)=1$. For signed charges the full displayed condition is intended, not merely $q(K\setminus C)=0$.
+
+The two products transport to this subspace by
+$$
+\iota(p)\mathbin{\square_Z}\iota(q)=\iota(p\mathbin{\square}q),\qquad
+\iota(p)\mathbin{\lozenge_Z}\iota(q)=\iota(p\mathbin{\lozenge}q).
+$$
+They extend the actual $\star_t$ product on all countably additive measures concentrated on $C$, for every $t$. For $D$ in Theorem 32.12, the countable Borel set $D_K=Z(D)$ supplies the exact finite witnesses
+$$
+\mathbf1_{D_K}(Z(a_i+b_j))=\mathbf1_{\{i<j\}}.
+$$
+Thus the same opposite values zero and one, and the same norm separation two, occur on the actual Zeckendorf core.
+
+There is no separately weak-star continuous map
+$$
+B:\mathcal Q_B(K)\times\mathcal Q_B(K)\longrightarrow ba(\mathcal B)
+$$
+that agrees with the natural-core point rows on every pair $(\delta_{Z(a)},\delta_{Z(b)})$. This impossibility does not require bilinearity or positivity of $B$.
+
+**Proof.** The set $C$ and all its subsets are countable and therefore Borel in $K$. The map $Z$ is injective, by its prescribed distinct phases. For every $u\in\ell^\infty(\mathbb N)$ the function
+$$
+\widetilde u(Z(n))=u(n),\qquad \widetilde u(x)=0\quad(x\notin C)
+$$
+is bounded Borel and has the same norm as $u$. Consequently restriction $f\mapsto f\circ Z$ maps $B_b(K)$ onto $\ell^\infty(\mathbb N)$ and has this isometric right inverse. Its adjoint is the displayed isometric embedding $\iota$. Since every bounded sequence is a restriction of a Borel test, the embedding is topological for the indicated weak-star topologies.
+
+Every charge in the image is concentrated on $C$. Conversely, if $q$ has the stated concentration property, define $p(u)=q(\widetilde u)$. This is a bounded functional on $\ell^\infty$. The concentration property, first for simple functions and then by uniform approximation, says that $q$ annihilates every Borel function vanishing on $C$. It follows that $q(f)=p(f\circ Z)$, so $q=\iota(p)$. This also identifies the image as the annihilator of
+$$
+\{f\in B_b(K):f|_C=0\},
+$$
+which is weak-star closed. For positive probability charges, $q(C)=1$ makes every subset of $K\setminus C$ have zero mass by positivity, proving the stated equivalence.
+
+The countably additive charges on $\mathbb N$ are exactly the absolutely summable singleton coefficients. Indeed, bounded variation gives $\sum_n|p(\{n\})|\le\|p\|$, and countable additivity determines each event value as the sum of its singleton values. Conversely an absolutely summable sequence defines a countably additive charge. Hence the countably additive part of the embedded subspace is precisely the measures
+$$
+\sum_{n\ge0}u_n\delta_{Z(n)},\qquad u\in\ell^1(\mathbb N).
+$$
+For two such measures, the setwise kernel integral is the absolutely convergent sum of their point rows. Each row is exactly $\delta_{Z(m+n)}$, by Assumption 32.0. Its coefficients are therefore the ordinary $\ell^1$ convolution coefficients. Theorem 32.11 proves agreement with both transported orders. This argument uses only the core rows, independently of $t$.
+
+The set $D_K$ is Borel, and injectivity of $Z$ together with the binary encoding in Theorem 32.12 gives the stated witness identity. The isometry and pairing for $\iota$ transport the product evaluations and exact norm difference.
+
+For the final assertion use the principal nets from Theorem 32.12 and put
+$$
+\xi_\alpha=\delta_{Z(a_{i(\alpha)})}\longrightarrow\iota(p),\qquad
+\eta_\beta=\delta_{Z(b_{j(\beta)})}\longrightarrow\iota(q).
+$$
+These are convergent nets in $\mathcal Q_B(K)$. Suppose such a separately continuous $B$ exists. For a fixed $i$, its actual finite-core values and second-variable continuity give
+$$
+B(\delta_{Z(a_i)},\iota(q))(\mathbf1_{D_K})=1.
+$$
+First-variable continuity along $\xi_\alpha$ then gives
+$$
+B(\iota(p),\iota(q))(\mathbf1_{D_K})=1.
+$$
+For a fixed $j$, first-variable continuity and the finite-core witness instead give
+$$
+B(\iota(p),\delta_{Z(b_j)})(\mathbf1_{D_K})=0.
+$$
+Second-variable continuity along $\eta_\beta$ now forces the same final value to be zero. This is a contradiction. There is no conflict with Theorem 32.3: its domain contains countably additive Radon measures, whereas the two new limit charges are not Radon measures. QED.
+

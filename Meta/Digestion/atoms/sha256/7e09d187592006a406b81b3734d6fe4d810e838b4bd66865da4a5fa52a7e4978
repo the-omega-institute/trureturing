@@ -1,0 +1,9 @@
+**Theorem 32.8 (Compact charge completion and exact finite-event marginals).** In the dual of Theorem 32.7,
+$$
+\overline{J(\mathcal P(K))}^{\,\sigma(B_b(K)^*,B_b(K))}
+=\mathcal Q_B(K).
+$$
+The right side is compact and Hausdorff for this weak-star topology. Finite atomic probabilities already have this closure. More precisely, every probability charge has finite atomic probabilities that reproduce any specified finite family of event values exactly and converge to it on all bounded Borel tests as a net.
+
+For any measurable space $(X,\Sigma)$, every signed $q\in ba(X,\Sigma)$ likewise has a weak-star convergent net of finite atomic charges with norms at most $\|q\|_{ba}$. This latter statement refers to charge duality, not to total-variation approximation of Radon measures.
+

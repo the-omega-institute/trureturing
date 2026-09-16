@@ -1,0 +1,48 @@
+**Theorem 32.11 (Bounded associative extensions and their actual continuity sides).** Both products of Definition 32.10 are bounded bilinear associative products of bilinear norm one. They preserve positivity, have unit $\delta_0$, and satisfy
+$$
+\|p\mathbin{\square}q\|\le\|p\|\|q\|,\qquad
+\|p\mathbin{\lozenge}q\|\le\|p\|\|q\|,
+$$
+$$
+(p\mathbin{\square}q)(1)=(p\mathbin{\lozenge}q)(1)=p(1)q(1),\qquad
+p\mathbin{\lozenge}q=q\mathbin{\square}p.
+$$
+They extend convolution on $\ell^1(\mathbb N)$ and agree whenever at least one factor is in $\ell^1(\mathbb N)$. For fixed $q$, the map $p\mapsto p\mathbin{\square}q$ is weak-star continuous. For fixed $p$, the map $q\mapsto p\mathbin{\lozenge}q$ is weak-star continuous. Here and below the weak-star topology is $\sigma(ba(\mathbb N),\ell^\infty(\mathbb N))$.
+
+If finite atomic nets $u_i\to p$ and $v_j\to q$ weak-star, their two iterated limits exist and are
+$$
+p\mathbin{\square}q
+=\mathop{\mathrm{w}^{*}\!\text{-}\!\lim}_i\,
+\mathop{\mathrm{w}^{*}\!\text{-}\!\lim}_j(u_i*v_j),
+$$
+$$
+p\mathbin{\lozenge}q
+=\mathop{\mathrm{w}^{*}\!\text{-}\!\lim}_j\,
+\mathop{\mathrm{w}^{*}\!\text{-}\!\lim}_i(u_i*v_j).
+$$
+Such approximating nets exist for every signed pair by Theorem 32.8. No interchange of the two limits is asserted.
+
+**Proof.** First, $\ell^1(\mathbb N)^*=\ell^\infty(\mathbb N)$: a bounded functional is determined by its values on the vectors $\delta_n$, these values form a bounded sequence, and absolute convergence represents its action on any $\ell^1$ element. Conversely every bounded sequence defines such a functional with the same norm. Together with Theorem 32.7 this identifies $ba(\mathbb N)$ with the bidual of $\ell^1(\mathbb N)$.
+
+For the first order, the inner function satisfies
+$$
+\sup_m|q(n\mapsto f(m+n))|\le\|q\|\|f\|_\infty.
+$$
+Applying $p$ proves boundedness and the norm estimate; linearity at each stage proves bilinearity. The proof for the other order is identical. Dirac factors show the bilinear norms are exactly one. If $p,q$ are positive and $f\ge0$, both inner and outer evaluations are nonnegative, proving positivity. The constant-one calculation proves multiplicativity of mass, and substitution of $\delta_0$ proves both unit identities. Renaming the two variables and using $m+n=n+m$ proves the opposite-product identity $p\mathbin{\lozenge}q=q\mathbin{\square}p$.
+
+For associativity of the first order, evaluating $((p\mathbin{\square}q)\mathbin{\square}r)$ at $f$ gives
+$$
+p\bigl(i\mapsto q(j\mapsto r(k\mapsto f((i+j)+k)))\bigr).
+$$
+Evaluating $p\mathbin{\square}(q\mathbin{\square}r)$ gives the same expression with $f(i+(j+k))$. These functions are equal by associativity of natural addition. All functions on which a functional is applied are bounded, and no evaluation orders have been exchanged. This proves associativity. The second order is the opposite of an associative product, so it is associative as well.
+
+For $u\in\ell^1(\mathbb N)$ the series
+$$
+\sum_m u_m(n\mapsto f(m+n))
+$$
+converges uniformly in $n$, since its uniform tail is bounded by $\|f\|_\infty$ times the corresponding $\ell^1$ tail of $u$. A bounded functional may therefore pass through this series. This proves agreement of the two orders when the first factor is $u$; the opposite-product identity gives agreement when the second factor is in $\ell^1$. When both are in $\ell^1$, the absolutely convergent double series is the usual convolution pairing. Absolute summation also gives $\|u*v\|_1\le\|u\|_1\|v\|_1$.
+
+For a fixed $q$ and a fixed test $f$, the outer function $m\mapsto q(n\mapsto f(m+n))$ is a single member of $\ell^\infty$. This proves weak-star continuity in $p$ of the first order. The second continuity assertion is proved from its displayed formula in the same way. These are the exact continuity sides and base-factor agreement in Hennefeld, Lemmas 1.4–1.5.[^rro32-arens]
+
+For fixed finite $u_i$, agreement of the orders and their stated continuity give $u_i*v_j\to u_i\mathbin{\square}q$ as $j$ varies. Then first-variable continuity gives $u_i\mathbin{\square}q\to p\mathbin{\square}q$. For the reverse iteration, first let $i$ vary with finite $v_j$ fixed, obtaining $p\mathbin{\lozenge}v_j$, and then let $j$ vary using second-variable continuity. This proves both iterated formulas, the special case here of Hennefeld, Lemma 2.2.[^rro32-arens] QED.
+

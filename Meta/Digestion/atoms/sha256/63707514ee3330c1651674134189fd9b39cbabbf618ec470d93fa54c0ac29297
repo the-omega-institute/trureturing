@@ -1,0 +1,36 @@
+**Theorem 32.3 (Actual bounded-Borel preadjoints).** Every signed kernel $Q_y\in M(X)$ satisfying the hypotheses of Theorem 28.4 has the bounded linear observation operator
+$$
+Q^\flat:B_b(X)\to B_b(Y),\qquad
+Q^\flat f(y)=\int_X f\,dQ_y,
+$$
+with $\|Q^\flat f\|_\infty\le B\|f\|_\infty$. Its integrated operator satisfies
+$$
+\langle I_Q\eta,f\rangle=\langle\eta,Q^\flat f\rangle
+$$
+and is continuous for the corresponding bounded-Borel observation topologies. This is a preadjoint for the indicated dual pairing, not an assertion that $M(X)=B_b(X)^*$.
+
+For the actual product of Assumption 32.0, put
+$$
+k_f(x,y)=\int_K f\,dP^{(t)}_{x,y}.
+$$
+For every $f\in B_b(K)$ this is jointly Borel and bounded by $C_t\|f\|_\infty$. For $\eta\in M(K)$ the actual preadjoint is
+$$
+T_\eta f(x)=\int_K k_f(x,y)\,d\eta(y),\qquad
+\|T_\eta f\|_\infty\le C_t\|\eta\|_{\mathrm{TV}}\|f\|_\infty,
+$$
+and
+$$
+\langle\mu\star_t\eta,f\rangle
+=\langle\mu,T_\eta f\rangle
+=\langle\eta,T_\mu f\rangle.
+$$
+Thus $\star_t$ is separately $\tau_B$-continuous for every allowed parameter.
+
+**Proof.** For simple $f$, measurability of $Q^\flat f$ follows from the set evaluations of the kernel. Uniform simple approximation and the row-variation bound show that $Q^\flat f$ is a uniform limit of Borel functions, with the displayed bound. The integration identity is first finite linearity for simple functions and then uniform approximation on both sides. This proves the first assertion and its continuity directly from the defining seminorms. The measurable signed-row and Jordan-part hypotheses are the ones recorded in Passeggeri, Theorem 3.4(d)–(e′); the present bounded operator conclusion follows from this argument and Theorem 28.4.[^rro32-kernels]
+
+Apply the same simple-approximation argument to parameter space $K^2$ and the rows $P^{(t)}_{x,y}$. This proves joint Borel measurability and boundedness of $k_f$.
+
+We spell out the remaining parameter integration. For a finite positive Borel measure $\eta$, the collection of Borel sets $A\subseteq K^2$ for which $x\mapsto\eta(A_x)$ is Borel contains rectangles. It is closed under complements and countable disjoint unions, by finiteness and countable additivity. The pi-lambda theorem therefore gives every member of $\mathcal B\otimes\mathcal B$. This is the Borel sigma-algebra of $K^2$, since $K$ is second countable. Simple approximation then proves Borel measurability of $x\mapsto\int g(x,y)\,d\eta(y)$ for every bounded jointly Borel $g$. Applying this to the two Jordan parts proves the signed version. These are the parameter-integration and Fubini facts of Hunter, Theorems 5.15 and 5.18.[^rro32-fubini]
+
+It follows that $T_\eta f\in B_b(K)$, with the asserted bound. Theorem 28.4 and the actual setwise integration law yield the first pairing identity. Signed Fubini and symmetry of the rows give the second. For fixed $\eta$, each output test is therefore a single bounded-Borel input test. This proves separate continuity; measurability alone has not been substituted for continuity. QED.
+

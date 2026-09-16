@@ -1,0 +1,8 @@
+**Theorem 32.4 (Finite-partition density is a net statement).** For every $\mu\in M(K)$ there is a net of finite atomic measures $\mu_{\mathcal P}$ such that
+$$
+\mu_{\mathcal P}\longrightarrow\mu\quad\text{for }\tau_B,\qquad
+\|\mu_{\mathcal P}\|_{\mathrm{TV}}\le\|\mu\|_{\mathrm{TV}},\qquad
+\mu_{\mathcal P}(K)=\mu(K).
+$$
+If $\mu$ is positive or is a probability, every approximant can have the same property. No sequence of finite atomic signed measures can converge eventwise to a nonatomic probability. In particular, finite atomic probabilities are $\tau_B$-dense but not sequentially dense in $\mathcal P(K)$.
+
