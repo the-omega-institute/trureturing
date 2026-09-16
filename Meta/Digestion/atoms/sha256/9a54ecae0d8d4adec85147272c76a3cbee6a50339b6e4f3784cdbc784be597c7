@@ -1,0 +1,32 @@
+**定理 25.5（所有实切片系数下的实际基）。** 任取实数序列 $(p_m)_{m\ge1}$，定义
+$$
+\pi_{E_m}=p_m\delta_{x_m^+}+(1-p_m)\delta_{x_m^-},\qquad
+\pi_\theta=\delta_{k_\theta}\quad(\theta\notin E),\qquad
+v_m=\delta_{x_m^+}-\delta_{x_m^-}.
+$$
+不论该序列是否来自结合核，集合
+$$
+\{\pi_\theta:\theta\in\mathbb T\}\ \cup\ \{v_m:m\ge1\}
+$$
+都是 $A$ 的代数基。准确地，
+$$
+\delta_{x_m^+}=\pi_{E_m}+(1-p_m)v_m,\qquad
+\delta_{x_m^-}=\pi_{E_m}-p_m v_m.
+$$
+若
+$$
+V=\operatorname{span}_{\mathbb R}\{\pi_\theta:\theta\in\mathbb T\},\qquad
+J=\operatorname{span}_{\mathbb R}\{v_m:m\ge1\},
+$$
+则 $A=V\oplus J$、$\ker H_\#=J$，且 $H_\#|_V$ 是到 $\mathbb R[\mathbb T]$ 的线性同构。
+
+**证明。** 两个显示的逆变换逐项展开即可验证；非分裂纤维的点质量就是 $\pi_\theta$。因此每个点质量，进而每个有限支撑形式和，都有这些向量的有限线性展开。
+
+为证线性无关，取任意有限线性关系
+$$
+\sum_\theta a_\theta\pi_\theta+\sum_m b_m v_m=0_A.
+$$
+按相位分组。每个相位分量的系数总和为 $a_\theta$，因为 $\varepsilon(\pi_\theta)=1$、$\varepsilon(v_m)=0$。故所有 $a_\theta=0$。余下的 $v_m$ 分属不同相位，而且各自有两个不同支撑点，其系数分别为一与负一，故所有 $b_m=0$。这证明基与直和，尤其包括 $p_m=0$ 或 $p_m=1$ 的情形，没有除以这些数。
+
+又 $H_\#(\pi_\theta)=b_\theta$、$H_\#(v_m)=0$。利用已证的唯一有限展开，核恰为 $J$，在 $V$ 上的限制把一组基双射到另一组基，故为所述同构。证毕。
+
