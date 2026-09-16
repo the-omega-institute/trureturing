@@ -9624,3 +9624,258 @@ higher old powers or the later-prime continuation. Together with
 next bound; no new global \(\Gamma\) improvement or unrestricted
 noncoverage theorem follows. These are ordinary mathematical arguments
 and exact experimental certificates, not new Lean conclusions.
+
+### A common dual test law for redistributing charged bad mass
+
+For one fixed actual forbidden family and one fixed old law \(\nu\),
+the density in (PO1) has an additional admissible degree of freedom.
+Write \(m_x\) for the normalized pure-survivor law on a finite
+current fibre, \(B_x\) for its entire actual mixed bad union, and
+\(\alpha_x=m_x(B_x)\). On rows with \(\alpha_x>\delta\), put
+
+\[
+ C=(1-\delta)^{-1},\quad
+ \beta_x=\frac{\alpha_x-\delta}{1-\delta},\quad
+ r_x=\frac{\beta_x}{\alpha_x},\qquad
+ \frac{dq_{v,x}}{dm_x}=C\mathbf1_{B_x^c}+v_x\mathbf1_{B_x},
+ \quad 0\le v_x\le1,\quad\int_{B_x}v_x\,dm_x=\beta_x.
+                                                               \tag{KR1}
+\]
+
+The constant choice \(v_x=r_x\) is the existing kernel. Every
+choice in (KR1) has total mass \(C(1-\alpha_x)+\beta_x=1\),
+the same charge \(q_{v,x}(B_x)=\beta_x\), the same density cap
+\(C\), and \(q_{v,x}(S)\le m_x(S)\) for \(S\subseteq B_x\).
+Normalization preserves all old marginals. These are precisely the
+pointwise cap and bad-subset properties used here from
+[BBMST, section2, Lemma2.2](https://arxiv.org/html/1811.03547#S2.Thmtheorem2).
+The existing `ConditionalComparison/Distortion` module fixes the
+constant inside multiplier; it is reused as that special choice.
+
+Keep uncharged and degenerate rows at their existing kernels by
+definition. Nonconstant choices within this specified class require
+\(0<\delta<\alpha_x<1\) and at least two positive-mass bad atoms.
+No optimum over every possible physical law is asserted: the exterior
+density and uncharged rows have deliberately been fixed.
+
+Let \(\mathcal T\) be the finite set of all globally legal complete
+tests at the chosen finite height, preserving every original modulus.
+Let \(L_T\) be the actual load, \(Q_{\rm BB}(T)\) its square
+expectation for the constant-inside kernel, and
+\(V_{\rm BB}=\max_TQ_{\rm BB}(T)\). Choose one kernel before
+the test is selected, and define
+\(V_* =\min_v\max_T\mathbb E_{\nu q_v}L_T^2\).
+For a single common distribution \(\pi\) on \(\mathcal T\), put
+\(F_{\pi,x}(y)=\sum_T\pi_TL_T(x,y)^2\). On a flexible row,
+the exact minimum bad contribution and its saving are
+
+\[
+ \begin{aligned}
+ \ell_x(F)&=\min_{0\le v\le1,\,\int_Bv\,dm=\beta_x}
+                     \int_BvF\,dm\\
+ &=\max_{\tau\in\mathbb R}
+       \left[\beta_x\tau-\int_B(\tau-F)_+\,dm\right],\\
+ D_x(F)&=r_x\int_BF\,dm-\ell_x(F)\ge0.
+ \end{aligned}                                                 \tag{KR2}
+\]
+
+This directly reuses `FractionalKnapsackDual.fractional_knapsack_strong_duality`
+and `greedy_attains_duality`: on positive-mass bad atoms take item
+weights \(m_x(y)\), values \(m_x(y)F(y)\), budget
+\(\alpha_x-\beta_x\), and item variables \(1-v(y)\).
+Since \(F\ge0\), unused budget can be filled without decreasing
+the objective. Subtracting the resulting maximum from \(\int_BF\,dm\)
+gives (KR2); negative prices cannot improve its right side. Thus fill
+the lowest \(F\) levels with density one, the highest with zero,
+and split at a boundary level to give exactly \(\beta_x\).
+Set \(D_x=0\) on unchanged rows. No duplicate duality theorem is needed.
+
+Finite minimax (the compact convex affine case of Mathlib's
+`Sion.minimax'`), followed by this separate row minimization, gives
+
+\[
+ \begin{aligned}
+ V_*&=\max_{\pi\in\Delta(\mathcal T)}
+       \left[\sum_T\pi_TQ_{\rm BB}(T)
+                         -\mathbb E_\nu D_x(F_{\pi,x})\right],\\
+ V_{\rm BB}-V_*&=\min_{\pi\in\Delta(\mathcal T)}
+       \left[V_{\rm BB}-\sum_T\pi_TQ_{\rm BB}(T)
+                         +\mathbb E_\nu D_x(F_{\pi,x})\right].
+ \end{aligned}                                                 \tag{KR3}
+\]
+
+Both terms on the second line are nonnegative. On a flexible row,
+\(D_x(F)=0\) exactly when \(F\) is constant on the positive-mass
+part of \(B_x\). One direct quantitative proof is to let
+\(a=\mathbb E[F\mid B_x]\),
+\(\omega=\max_{B_x}F-\min_{B_x}F>0\), taking extrema only on
+positive-mass atoms, and choose
+\(v=r_x-\min(r_x,1-r_x)(F-a)/\omega\). Its density lies in
+\([0,1]\), its mass is \(\beta_x\), and hence
+
+\[
+ D_x(F)\ge
+ \frac{\alpha_x\min(r_x,1-r_x)}{\omega}
+                 \operatorname{Var}_{m_x(\cdot\mid B_x)}(F).
+                                                               \tag{KR4}
+\]
+
+For constant \(F\) set this lower bound to zero. For nonconstant
+\(F\) its right side is positive. Compactness of the finite simplex
+in (KR3) now gives an exact strict-improvement criterion: \(V_*<V_{\rm BB}\)
+if and only if there is no common mixture supported on
+BBMST-maximizing tests for which \(F_{\pi,x}\) is constant on
+every flexible bad fibre of positive \(\nu\)-mass. For rational
+data, absence of such a mixture is a finite rational feasibility
+question, using equations
+\(\sum_T\pi_T(L_T(x,y)^2-L_T(x,z)^2)=0\) for positive-mass
+bad atoms \(y,z\). The optimal values are rational.
+Replacing each \(D_x\) in (KR3) by (KR4) also gives a sufficient
+lower bound for the improvement, but it still requires minimizing
+over that single common \(\pi\). Separate row mixtures or gains
+against only one test do not supply it.
+
+The threshold formula in (KR2) solves the inner problem for a
+fixed \(\pi\). Arbitrary choices at tied threshold levels of a
+dual optimum need not give a primal minimax kernel. A realizing law
+must come from a saddle-compatible primal solution or be checked
+against every legal test. The strict criterion above is finite;
+an infinite test domain need not have a maximizing face.
+
+The clean comb passes this test with equality. It has a maximizing
+complete test whose positive-depth labels are all on the clean root.
+On every actual bad fibre its load equals the old load \(A_0(x)\),
+independent of the current point. The point mass on this test makes
+every \(D_x\) zero, so (KR3) gives \(V_*=V_{\rm BB}\).
+The coloring extension has the same property. Thus the new kernel
+class does not contradict the sharpness obstruction.
+
+Complete test tails remain controlled for an arbitrary fixed family.
+Let \(D_0\) be its actual forbidden depth and \(k\ge D_0\).
+Allow uniform independent suffix coordinates as in (KT2)--(KT3).
+Project any feasible density to its conditional expectation on the
+first \(k\) digits; since \(B_x\) is already measurable there,
+this preserves all row constraints and every depth-at-most-\(k\)
+test. Conversely, extend a finite feasible kernel uniformly in the
+suffix. Let \(V_k^*\) be its finite minimax value and \(V_\infty^*\)
+the infimum, over these full feasible densities, of the supremum
+over all finite complete test heights. If
+\(\mathbb E_\nu[cA^2]\le G_c\) for every complete old layout,
+where \(c=g_x/s\) is the unchanged cap relative to Haar measure,
+the same original-pair proof gives
+
+\[
+ V_k^*\le V_\infty^*\le V_k^*+
+ G_cp^{-k}\left[\frac{2k+3}{p-1}+\frac2{(p-1)^2}\right].
+                                                               \tag{KR5}
+\]
+
+For the upper bound, uniformly extend a finite minimizer and use
+(KT2); the lower bound follows from projection. The old law and
+complete forbidden antichain are fixed throughout. Tests beyond the
+family's own period are auxiliary, so their supremum is an upper
+domain, not a lower bound for the original finite-period problem.
+This truncates tests only and gives no uniform family truncation.
+
+At the final prime of a continuation, the new kernel can be consumed
+without changing any earlier observation. Write \(B_{<p}\) for
+accumulated earlier assigned charge and \(b_p=\mathbb E_\nu\beta_x\).
+Here \(V_p^*\) denotes the attained finite minimax on the actual
+family's full period; an upper certificate from an explicitly feasible
+kernel with its complete tail may be substituted for it.
+For \(W>0\), if a common history domain satisfies
+\(V_p^*-1+W(B_{<p}+b_p)\le C_0<W\), then the same final
+conditioning proof as (SH28) gives positive survivor mass and
+\(\Gamma\le1+C_0\). Indeed \(V_p^*\ge1\) forces \(C_0\ge0\),
+the total charge is at most \(C_0/W<1\), and
+\(V_p^*-1\le C_0(1-B_{<p}-b_p)\). An earlier-prime change
+requires recomputing any later statistics tied to the old law.
+
+The optimized value concerns the physical law before final conditioning.
+All admissible kernels agree on \(B_x^c\); therefore they agree on
+the final survivor event, which is contained in that complement.
+Its mass and its conditioned law, when that mass is positive, are
+unchanged. At the last prime this procedure can sharpen the physical
+moment/charge certificate, but cannot change the actual final supported
+law or its true complete-test \(\Gamma\).
+No bound \(C_0<483\) through19, uniform improvement over all
+forbidden families, or unrestricted noncoverage conclusion is established here. These
+are ordinary finite optimization and tail arguments, not new Lean
+declarations or a claim of literature priority.
+
+### The constant bad multiplier need not minimize the physical test square
+
+There is an exact finite counterexample to universal optimality of the
+constant inside multiplier. Use old period9, old forbidden classes
+\(0\bmod3,0\bmod9\), and old probability concentrated at1.
+This is a supplied supported old law, as permitted in (KR1); it is
+not asserted to arise from an earlier standard distortion of Haar law.
+At prime5 through height2 take the additional original classes
+
+\[
+ 0\bmod5,\quad0\bmod25,\quad1\bmod15,\quad
+ 37\bmod45,\quad28\bmod75,\quad154\bmod225.          \tag{KR6}
+\]
+
+All eight moduli are distinct odd integers greater than one. On the
+old row1, let \(y\) be the current residue modulo25. The pure law
+is uniform on the twenty \(y\not\equiv0\pmod5\). The mixed bad
+set consists of the ten leaves on roots1 and2, together with the
+leaves3 and4 on the other two surviving roots. Thus
+\(\alpha=3/5\). At \(\delta=2/5\) its assigned charge is
+\(\beta=1/3\). The constant kernel gives each good leaf mass
+\(1/12\) and each bad leaf mass \(1/36\).
+
+An admissible alternative keeps each good leaf at \(1/12\), assigns
+\(1/30\) to each of the ten leaves on roots1 and2, and assigns zero
+to bad leaves3 and4. Its bad density relative to the pure law is
+\(2/3\) or zero, so (KR1) holds with unchanged charge and cap.
+
+The complete test domain has all nine original divisor labels
+\(d5^e\), \(d\in\{1,3,9\},0\le e\le2\).
+On the old atom, every inactive old residue can be made active without
+reducing the load. Its zero layer can therefore be set to3.
+For the three remaining root choices \(r_i\) and three leaf choices
+\(s_j\), the full load divided by3 is the average of
+\(1+\mathbf1_{y=r_i\bmod5}+\mathbf1_{y=s_j\bmod25}\)
+over all nine pairs \((i,j)\). Convexity of the square and taking
+all roots equal and all leaves equal consequently prove the exact
+full-domain reduction
+
+\[
+ V(q)=9\max_{0\le r<5,\,0\le s<25}
+     \mathbb E_q(1+\mathbf1_{y=r\bmod5}
+                    +\mathbf1_{y=s\bmod25})^2.       \tag{KR7}
+\]
+
+All125 choices give
+
+\[
+ V_{\rm BB}=\frac{45}{2},\qquad
+ V(q_*)=V_* =\frac{87}{4},\qquad
+ V_{\rm BB}-V_* =\frac34.                            \tag{KR8}
+\]
+
+For the matching minimax lower bound, choose root3 and a good leaf
+above it. Under every admissible kernel, its four good leaves retain
+total mass \(1/3\), and that leaf retains mass \(1/12\).
+The nested aligned test therefore has square at least
+\(9[1+3/3+5/12]=87/4\); other bad contributions are nonnegative.
+Thus the alternative attains the exact optimum of (KR1), with no
+unexamined complete tests or sampled maximum.
+
+Both laws condition on the same eight final good leaves to the same
+uniform law. Its complete-test value, again by (KR7), is
+\(9[1+3/2+5/8]=225/8\). The strict improvement in (KR8) is a
+physical moment improvement before conditioning, not an improvement
+in this final supported value. It occurs for a fixed small-inventory
+family without a common clean root; the separate clean-comb worst
+family obstruction remains intact.
+
+`verify_bad_mass_rearrangement.py` reconstructs the actual eight-class
+family and checks its adjacent exact certificate, including all125
+aligned tests under both physical laws and the common final survivor
+law. The full-domain reduction is (KR7); the minimax lower bound is
+the fixed good-root test above. This refutes universal optimality of
+the constant inside multiplier for the physical complete-test objective,
+without asserting any full-family or later-prime improvement.

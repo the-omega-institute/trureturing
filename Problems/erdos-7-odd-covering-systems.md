@@ -281,6 +281,22 @@ The comparison does not cover common layouts varying with depth.
 These results preserve one actual probability and original moduli;
 they give no new global Gamma bound or unrestricted #7 conclusion.
 
+The [common dual kernel criterion](../docs/reports/erdos7-odd-covering/marked_head_profile.md#a-common-dual-test-law-for-redistributing-charged-bad-mass)
+allows redistributing probability within a charged bad fibre while
+preserving its actual total charge, old marginal and natural prefix cap.
+Existing fractional-knapsack duality and finite minimax reduce the
+finite complete-test optimum to one common mixture of globally legal
+tests. Strict improvement occurs exactly when no mixture of the old
+maximizers has constant square cost on every positive-mass flexible
+bad fibre. A variance bound quantifies that defect; the complete
+test-tail estimate still applies with the whole forbidden family fixed.
+The clean comb has zero improvement. An [actual eight-class counterexample](../docs/reports/erdos7-odd-covering/marked_head_profile.md#the-constant-bad-multiplier-need-not-minimize-the-physical-test-square)
+has physical complete-test value45/2 for the constant kernel and exact
+optimum87/4 for the enlarged kernel class, with unchanged charge1/3.
+Its final conditioned law is unchanged, with supported value225/8;
+the gain concerns the physical certificate before conditioning.
+No all-family quantitative bound or new scalar continuation is claimed.
+
 A [complete original-low-test estimate](../docs/reports/erdos7-odd-covering/marked_head_profile.md#complete-original-low-test-anchoring-at-arbitrary-prime-power-heights)
 retains the entire low load `B` in its higher-label cross terms and
 removed energy. The general inequalities apply to every finite set of
