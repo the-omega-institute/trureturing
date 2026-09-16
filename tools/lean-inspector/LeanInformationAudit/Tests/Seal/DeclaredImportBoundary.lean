@@ -11,5 +11,6 @@ run_cmd do
   let core := #[`LeanInformationAudit.Registry, `LeanInformationAudit.Syntax,
     `LeanInformationAudit.SealCommand].all modules.contains
   logInfo m!"[{if core then "PASS" else "FAIL"}] existing_finite_seal_core_accepted"
-  logInfo m!"[{if modules.size == 89 then "PASS" else "FAIL"}] finite_seal_family_closure_unchanged"
-  logInfo m!"DTR_FINITE_IMPORTS modules={modules.size} expected=89"
+  -- The original 89 modules plus nine generic judge modules split for capacity.
+  logInfo m!"[{if modules.size == 98 then "PASS" else "FAIL"}] finite_seal_family_closure_unchanged"
+  logInfo m!"DTR_FINITE_IMPORTS modules={modules.size} expected=98"
