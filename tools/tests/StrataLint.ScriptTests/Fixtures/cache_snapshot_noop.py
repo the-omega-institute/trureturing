@@ -50,6 +50,26 @@ class NoopSnapshotCases:
         self.assertIn('"reason": "unchanged"', output)
         self.assertIn("dependency_ready=false", output)
 
+    def test_failed_dependency_stamp_cannot_authorize_noop_snapshot(self):
+        owner = self.restore_owner()
+        source, cached, manifest = self.restore_fixture("dependency", {"a.olean": b"accepted"})
+        stamp = self.root / ".lake/.stratalint-lean-cache-stamp.json"
+        stamp.mkdir()
+        with mock.patch.dict(os.environ, self.env), contextlib.redirect_stdout(io.StringIO()) as restored:
+            keys = owner.actions_keys(self.root)
+            owner.restore(self.root, keys, {"dependency": manifest["key"]}, ["dependency"])
+        self.assertIn('"status": "miss"', restored.getvalue())
+        self.assertNotIn('"status": "restored"', restored.getvalue())
+        self.assertEqual(b"accepted", (source / "a.olean").read_bytes())
+        with mock.patch.dict(os.environ, self.env), contextlib.redirect_stdout(io.StringIO()) as receipts:
+            owner.snapshot(self.root, keys, ["dependency"])
+        self.assertIn('"status": "snapshot"', receipts.getvalue())
+        self.assertNotIn('"reason": "unchanged"', receipts.getvalue())
+        self.assertIn("dependency_ready=true", receipts.getvalue())
+        self.assertEqual(b"accepted", (cached / "data/a.olean").read_bytes())
+        self.assertFalse((cached / "restored.json").exists())
+        self.assertFalse(list(stamp.parent.glob(".stratalint-lean-cache-stamp.*.tmp")))
+
     def test_noop_requires_a_successful_restore_in_this_execution(self):
         owner = self.restore_owner()
         for failure in ("never-restored", "corrupt", "missing", "stale-run", "later-miss",

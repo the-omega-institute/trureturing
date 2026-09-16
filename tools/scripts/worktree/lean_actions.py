@@ -615,12 +615,12 @@ def restore(root, keys, matched, layers=LAYERS, registry=None):
                             if direct and staged.exists() and not (cached / "data").exists():
                                 staged.rename(cached / "data")
                             raise
+                if layer == "dependency":
+                    stamp_restored_dependency(root, keys)
                 if stream_copy:
                     restored_path.write_text(json.dumps({"schema": "lean-actions-restored-v1",
                         "snapshot_key": spec["key"],
                         "manifest_sha256": hashlib.sha256(manifest_bytes).hexdigest()}) + "\n")
-                if layer == "dependency":
-                    stamp_restored_dependency(root, keys)
             project_seeded |= layer == "project"
             receipt(layer, "restored", key=key, partition=keys["partition"])
         except (OSError, ValueError, TypeError, KeyError, subprocess.CalledProcessError) as error:
