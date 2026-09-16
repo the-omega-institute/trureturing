@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3b3643e6c5b6a4b0a1e147eb06e48e9dc842713e80e1d278b60d3e219871b4b0
+  normalized_sha256: sha256:3b3643e6c5b6a4b0a1e147eb06e48e9dc842713e80e1d278b60d3e219871b4b0
+cas_ref: sha256:3b3643e6c5b6a4b0a1e147eb06e48e9dc842713e80e1d278b60d3e219871b4b0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条定义选择、单双输出集合、直径阈值集合以及拓扑类别的术语，没有断言这些集合已经具有后续定理所列性质。
+    previous_atom_id: bb80803d45f85c8bc25bdaf2305179d9a345bfd0662bc8de8f4c61604f56a65b
+    next_atom_id: 34bff24d3b414e8a4c12d684383afce5d1e6eb191dbd98746a606ca9c1c72b30
