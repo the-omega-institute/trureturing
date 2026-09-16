@@ -8,11 +8,15 @@ url: https://michaelschroeder.ai/research/ThreePrimeDivisors/three_prime_factors
 claim: "The author claims noncoverage for finite families of distinct odd moduli greater than one when each modulus has at most three distinct prime factors, with arbitrary exponents and arbitrary total prime support."
 strata_touched:
   - D5/S3/Arith/Congruence/TwoOddPrimeUncoveredDensity
+  - D5/S3/Arith/Congruence/ConditionalComparison/ThreePrime/Comparison
+  - D5/S3/Arith/Congruence/ConditionalComparison/CappedGainTypes
 license: "Paper and prose: CC BY 4.0; original Lean/Python code and certificate inputs: MIT; third-party licenses retained."
 triage: anchor
 ---
 
 # Three prime factors per modulus
+
+## Verified locator
 
 Locator: https://doi.org/10.5281/zenodo.22760638, version 1.0, manuscript dated
 9 September and revised 15 September 2026. Metadata and supplied source read
@@ -53,8 +57,9 @@ mismatches. A token scan of the 413 Lean files under `formal/Erdos7`, with
 comments and strings removed, found no proof bypass; its only options were
 `maxHeartbeats` and `maxRecDepth`, and its two ordinary tactic macros were read.
 The supplied `verify.py`, `crosscheck.py`, and `verify_formal_appendix.py` also
-exited zero. These checks rely on the pinned official toolchain and dependencies;
-they preserve `hThree`, and add no repository Lean declaration or frozen state.
+exited zero. These checks rely on the pinned official toolchain and dependencies
+and preserve `hThree`. The source transplant below does not include that
+arithmetic noncoverage endpoint.
 
 The [bridge program](../../docs/reports/erdos7-odd-covering/bridge_checks.py)
 is an original repository experiment that binds selected formulas to this
@@ -142,3 +147,73 @@ arbitrary tails above 73 for that specific head assignment. This is a
 new application of the paper's ordinary propositions, not a claim that
 the upstream Lean development formalizes the changed head law or the
 unrestricted-tail star theorem.
+
+
+## MIT source transplant for conditional comparison
+
+The repository imports the original proofs of
+`Erdos7.ThreePrime.convex_load_comparison` and
+`Erdos7.CappedGain.saturation_bound`. These declarations and their support
+modules are Michael Schroeder's results, not new repository mathematics.
+The first theorem permits arbitrary coordinate and label support; the second
+bounds the total geometric weight of labels with injective nonzero index-depth
+pairs. Neither theorem assumes at most three prime divisors per modulus.
+
+The source-module mapping replaces the prefix `formal/Erdos7/` by
+`D5/S3/Arith/Congruence/ConditionalComparison/`. It retains these 24 files:
+`FiniteProbability`, `Distortion`, `CappedGainProbability`, `Supermodular`,
+`Causal`, `CappedGain`, `CappedGainScalar`, `CappedGainLattice`,
+`CappedGainLift`, `Runs`, `CappedGainDepth`, `Hybrid`, `RankedRearrangement`,
+`CappedGainRearrangement`, `CappedGainDistortion`, `CappedGainBlock`,
+`CappedGainFunctional`, `CappedGainGeometric`, `Cylinders`, `TreeSelection`,
+`CappedGainTrees`, `ThreePrime/Probability`, `ThreePrime/Comparison`, and
+`CappedGainTypes`, each with its original `.lean` extension.
+This is the complete source import closure of the two roots, not a claim
+that every supporting declaration is a separate mathematical contribution.
+The original `Erdos7` namespaces and declaration names are retained.
+
+The repository pins Lean `v4.33.0` and Mathlib
+`db584cd6d46c92f209a44c0f1c829460d327499d`, so the upstream package's different
+pins exclude the direct Lake dependency form under spec A17.2. Besides the
+canonical headers, attribution and mapped imports, the only source-proof
+adaptations separate simplification steps: `CausalLaw.activeWithin_snoc`
+expands finite-set membership before `reqInit` and `reqLast`, and
+`rankSet_downward` in `RankedRearrangement` expands finite-set membership
+before `rankNat`. Statements and proof arguments are unchanged. No wrapper
+or specialized covering-system theorem is introduced.
+
+The archive's `LICENSE.md` assigns the original Lean sources to MIT;
+`LICENSES/MIT.txt` is reproduced verbatim below. The pinned archive contains
+no NOTICE file. Dependencies retain their own licenses and are not copied.
+Retirement condition: when this repository's own pinned Mathlib provides an
+equivalent eligible declaration, route its consumers directly to that
+Mathlib result and retire the corresponding transplant under the applicable
+frozen-source rules. Acceptance into a future, unpinned Mathlib version is
+not the retirement trigger.
+
+## Source license
+
+```text
+MIT License
+
+Copyright (c) 2026 Michael Schroeder
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+```
