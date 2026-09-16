@@ -4918,7 +4918,7 @@ strengthens (CM15) on the **same** uniform pruned-survivor law:
  \Theta_\mu(0),\ldots,\Theta_\mu(5)
  \le\left(\frac{271}{86},\frac{185}{86},\frac{100}{81},
           \frac{61}{81},\frac{16}{39},\frac7{26}\right),
- \qquad \mathbb E_\mu L^2\le\frac{1091}{82}.             \tag{CM16}
+ \qquad \mathbb E_\mu L^2\le\frac{1131}{86}.             \tag{CM16}
 \]
 The established high-profile values at thresholds 6, 8 and 12 complete
 one convex comparator with atoms
@@ -4930,13 +4930,20 @@ x&1&2&3&4&5&6&8&12\\\hline
 \]
 Its mean is \(271/86\) and its second moment is
 \(45292361/3350646\); the smaller actual second-moment bound
-\(1091/82\) is independently valid under the same law.
+\(1131/86\) is independently valid under the same law.
 The numerator bound keeps the deletion multiplicity of each old cylinder,
 rather than replacing the actual survivor count by its minimum alone.
 The note proves the universal reduction. The standard-library verifier
 checks 194040 exact cap inequalities over all 27720 old layouts, with
-no layout-pair optimization needed for this refinement. Zero slack in
-these relaxations does not prove sharpness for actual full families.
+no layout-pair optimization needed for this refinement. Retaining signed deletion unions gives the sharper square bound above:
+4754 first-shape layouts pass a positive-cap screen and six require an
+exact five-label partition calculation; the other shapes have smaller bounds.
+An explicit 86-survivor family simultaneously attains mean 271/86 and
+second moment 1131/86. Thus both are sharp for this prescribed uniform
+law, without a minimax claim over all supported laws. Conditioning globally
+after one 11-height also gives a supported 3465 law with mean at most
+4816/1215, actual second moment at most 14518/675 and the full comparator
+in the note.
 This improves supported-head control but does not extend the established
 prime-13 noncoverage range.
 

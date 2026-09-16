@@ -1,6 +1,6 @@
 # A supported convex profile for the 315 head
 
-The strongest comparison below retains the original mixed-class deletions in both the load numerator and survivor denominator. On the same supported law it gives the sharp uniform-law mean bound **271/86**, actual second moment at most **1091/82**, and the complete increasing-convex comparator X specified in the deletion-coupling section. Its high-threshold profile remains sharp.
+The strongest comparison below retains the original mixed-class deletions in both the load numerator and survivor denominator. On the same supported law it gives the sharp uniform-law mean bound **271/86**, sharp uniform-law second-moment bound **1131/86**, and the complete increasing-convex comparator X specified in the deletion-coupling section. Its high-threshold profile remains sharp.
 
 For any family of residue classes with distinct nonunit moduli dividing 315, there is a probability measure μ supported on its survivors such that every complete test layout
 
@@ -198,7 +198,7 @@ Every effective old layout is enumerated; no pairwise layout search or optimizer
 | Long root, other root / same column | 16 | 234/77 | 157/77 | 91/76 | 14/19 | 2/5 | 4/15 | 993/77 |
 | Long root, other root / other column | 16 | 234/77 | 157/77 | 91/76 | 14/19 | 2/5 | 4/15 | 993/77 |
 
-The finite check covers 27,720 effective old layouts and 194,040 integer cap inequalities. It clears the denominator of each proposed rational c, computes the exact minimum scaled slack, and finds zero in all 42 cases. Zero slack certifies the displayed relaxation constants. The explicit witness below establishes actual-family sharpness at thresholds zero and one; zero slack alone does not establish sharpness at the other thresholds or for the square bound. All mathematical decisions use standard-library integers and fractions. The six-orbit completeness and the universal fibre argument are ordinary proof inputs to this finite certificate.
+The finite check covers 27,720 effective old layouts and 194,040 integer cap inequalities. It clears the denominator of each proposed rational c, computes the exact minimum scaled slack, and finds zero in all 42 cases. Zero slack certifies the displayed relaxation constants. The explicit witness below establishes actual-family sharpness at thresholds zero and one; zero slack alone does not establish sharpness at the other thresholds or for the square bound. The signed-union argument below further improves the square bound and supplies a simultaneous sharp witness. All mathematical decisions use standard-library integers and fractions. The six-orbit completeness and the universal fibre argument are ordinary proof inputs to this finite certificate.
 
 ### A single improved full comparator
 
@@ -235,6 +235,98 @@ Every complete test load under the same μ is dominated by X in increasing conve
 \]
 
 The direct square bound is stronger than the comparator's second moment and may be used simultaneously with its complete hinge profile. These are supported-law head bounds; they do not by themselves establish a global tail cutoff or an end-to-end Lean proof.
+
+## A sharp second-moment bound from signed deletion unions
+
+For the same uniform law on complete survivors after canonical old-head
+pruning, every complete 315 test load satisfies
+
+    E L^2 <= 1131/86.
+
+This improves 1091/82. The new bound is attained by an actual original family
+and test layout, and the same example attains E L=271/86. The claim concerns
+this prescribed uniform law, not minimax optimization over all supported laws.
+
+Let S be an old 45 survivor set, n=|S|, A an old complete test load, and
+B the old test load belonging to the 7-containing block. Put
+
+    Q = max_B sum B^2,
+    R(A) = max_B sum AB
+         = sum A + sum_d max_(C mod d) sum_C A,
+    K(A) = 6 sum A^2 + 2 R(A) + Q,
+
+where d ranges over 3,5,9,15,45. With b(x) distinct deleted nonzero septenary
+digits at x, the square numerator is at most K(A)-sum b(x)A(x)^2 and the
+survivor count is 6 n-sum b(x). Thus a constant c is sufficient if
+
+    K(A) + max_deletions sum_x b(x)(c-A(x)^2) <= 6 nc
+
+for every A. Unlike the earlier cap estimate, the deletion maximum retains
+the signed weights.
+
+Partition the five original mixed 7 labels by their nonzero septenary digit.
+For a block T, choose one old cylinder for each label and take their union
+U. The block deletes exactly one digit on U, contributing sum_U(c-A^2).
+Different blocks add, including where their old unions overlap. A label
+may be inactive by using the already forbidden zero digit; this is modeled
+by a virtual empty cylinder. There are at most five active blocks, leaving
+a sixth digit globally free. Therefore every such partition/union choice
+is realizable by original congruence classes, and all test 7 increments may
+be placed at the free digit.
+
+The verifier enumerates every attainable union mask for each of the 32
+label subsets. If U_T is the maximum signed weight of a union for T, define
+
+    D(empty)=0,
+    D(S)=max_(T subset S, min(S) in T) [U_T+D(S\T)].
+
+This subset recurrence enumerates every set partition exactly up to its
+canonical first block. It computes the exact signed deletion maximum.
+The separate bound K(A) can still have slack unless one B simultaneously
+attains Q and R(A); the literal sharp witness below has B=A and attains both.
+
+The first canonical old shape has 17 points and 4760 effective old layouts.
+There are 2164 distinct union masks and 8919 mask entries across all subsets.
+At c=1131/86, the verifier first tries the valid, cheaper positive-cap
+upper bound. Exactly 4754 layouts pass this screen; the remaining 6 need the signed DP.
+It then checks K(A)+D(all)<=6 nc by exact integer arithmetic after multiplying
+by 86. The other five canonical shapes have previously verified constants
+1103/85,1103/85,965/76,993/77,993/77, all strictly smaller than 1131/86.
+
+For sharpness, use the original family
+
+    (3,0), (9,4), (5,0), (15,1), (45,37), (7,0),
+    (21,1), (35,9), (63,52), (105,4), (315,142),
+
+and complete test layout
+
+    (1,0), (3,2), (5,3), (9,2), (15,8), (45,38),
+    (7,6), (21,20), (35,13), (63,20), (105,83), (315,83).
+
+There are 86 actual survivors. Their test-load histogram is
+
+| Load | 1 | 2 | 3 | 4 | 6 | 8 | 12 |
+|---|---|---|---|---|---|---|---|
+| Count | 5 | 38 | 14 | 18 | 8 | 2 | 1 |
+
+Hence sum L=271 and sum L^2=1131. On the old 17-point set, A=B has
+sum A^2=sum AB=sum B^2=130; the original classes delete 16 lifted points
+with deleted old square sum 39. The attained ratio is therefore
+
+    (6*130+2*130+130-39)/(6*17-16)=1131/86.
+
+The same-law finite 3465 transfer keeps its existing comparison atoms and
+hinges. Its separate actual moment now improves to
+
+    1+[(13/10)(1131/86)-1]/(135/172)=14518/675,
+
+which is smaller than that comparator's second moment 1746200/80919. This
+is exact transfer arithmetic; it is not a new tail-feasibility result.
+
+All displayed finite bounds and the literal witness are checked with
+standard-library integer and rational arithmetic. The probabilistic
+transfer and canonical pruning remain ordinary proof inputs; no Lean
+verification or unrestricted odd-covering exclusion is claimed here.
 
 ## Actual sharpness of the uniform315 mean bound
 
@@ -469,7 +561,7 @@ All removed values are at most2 and all retained values are at least2, so the la
 
 \[
  E_{\mu_{11}}L\le\frac{4816}{1215},\qquad
- E_{\mu_{11}}L^2\le\frac{1746200}{80919}.
+ E_{\mu_{11}}L^2\le\frac{14518}{675}.
 \]
 
 For t≥2, the complete comparator profile is
@@ -479,7 +571,7 @@ For t≥2, the complete comparator profile is
  =\frac{9E(X-t)_++2E(X-t/2)_+}{10-(271/86-1)}.
 \]
 
-Below2 it is E(Y₁₁−2)₊+2−t; above24 it vanishes. The separate old actual moment also gives 1+((13/10)(1091/82)−1)/ρ=602284/27675, which is larger than this comparator's second moment. Both concern the same μ₁₁; the smaller bound above is used. The verifier reconstructs the exact quantile, all ten atoms and all25 integer hinge values, and independently recovers the same law by cancelling the negative value1 atom in the signed unit-loss expression. This is an ordinary proof with exact arithmetic, not a Lean theorem or a successful universal tail continuation.
+Below2 it is E(Y₁₁−2)₊+2−t; above24 it vanishes. The comparator has second moment 1746200/80919. The sharp old actual moment gives the smaller bound 1+((13/10)(1131/86)−1)/ρ=14518/675, since L≥1 before conditioning. Both concern the same μ₁₁; the smaller actual bound above is used while all comparator atoms and hinges remain unchanged. The verifier reconstructs the exact quantile, all ten atoms and all25 integer hinge values, and independently recovers the same law by cancelling the negative value1 atom in the signed unit-loss expression. This is an ordinary proof with exact arithmetic, not a Lean theorem or a successful universal tail continuation.
 
 ## Remaining mass vectors do not determine the next original label
 

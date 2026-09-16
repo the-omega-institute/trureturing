@@ -469,18 +469,19 @@ def residual_mass_next_label_obstruction():
     }
 
 
-def conditioned_3465_comparison(old_deletion_result):
+def conditioned_3465_comparison(old_deletion_result, signed_deletion_result):
     """Exact upper-quantile transfer of the already checked uniform315 law."""
     old = {Fraction(x): Fraction(p)
            for x, p in old_deletion_result['auxiliary_atoms'].items()}
     require(min(old) >= 1 and min(old.values()) > 0 and sum(old.values()) == 1,
             'old deletion comparison is a probability law supported above one')
     mean = sum(x*p for x, p in old.items())
-    actual_second = Fraction(old_deletion_result['actual_second_moment_upper'])
+    actual_second = Fraction(signed_deletion_result['actual_second_moment_upper'])
     require(mean == Fraction(old_deletion_result['mean']) == Fraction(271, 86),
             'same uniform315 mean bound supplies the mixed11 deletion capacity')
-    require(actual_second == Fraction(1091, 82),
-            'same uniform315 actual second-moment bound')
+    require(actual_second == Fraction(1131, 86)
+            and actual_second < Fraction(old_deletion_result['actual_second_moment_upper']),
+            'same uniform315 law has the improved signed-deletion square bound')
     capacity = mean - 1
     survival = 1 - capacity/10
     product_law = {}
@@ -532,14 +533,15 @@ def conditioned_3465_comparison(old_deletion_result):
     separate_second = 1+(Fraction(13, 10)*actual_second-1)/survival
     chosen_second = min(comparator_second, separate_second)
     require((survival, new_mean, separate_second, comparator_second, chosen_second) == (
-        Fraction(135, 172), Fraction(4816, 1215), Fraction(602284, 27675),
-        Fraction(1746200, 80919), Fraction(1746200, 80919)),
+        Fraction(135, 172), Fraction(4816, 1215), Fraction(14518, 675),
+        Fraction(1746200, 80919), Fraction(14518, 675)),
         'exact conditioned3465 survival and simultaneous moment bounds')
     return {
         'law': 'uniform315 times ten pure11 survivors, conditioned on the actual mixed11 survivor event',
         'head_modulus': 3465,
         'prime_heights': [[3, 2], [5, 1], [7, 1], [11, 1]],
         'first_tail_prime': 13,
+        'input315_actual_second_moment_upper': str(actual_second),
         'mixed11_deleted_mass_upper': str(1-survival),
         'survival_lower': str(survival),
         'removed_product_mass': {str(x): str(p) for x, p in removed.items()},
@@ -729,6 +731,120 @@ def residual_prefix_depletion_obstruction():
     }
 
 
+def signed_deletion_square_comparison(old_cases, old_deletion_result):
+    """Exact signed union caps give the sharp prescribed uniform315 square bound."""
+    bound = Fraction(1131, 86)
+    require(len(old_cases) == 6 and len(old_deletion_result['cases']) == 6,
+            'all canonical old shapes are covered')
+    shape, points, _, expected_layouts = old_cases[0]
+    require(shape == 'root1_same_other_column' and len(points) == 17
+            and expected_layouts == 4760, 'signed square check selects the first canonical shape')
+    moduli = (3, 5, 9, 15, 45)
+    cylinders = [[sum(1 << i for i, x in enumerate(points) if x % d == a)
+                  for a in sorted({x % d for x in points})] for d in moduli]
+    unions = [{0}]
+    for subset in range(1, 32):
+        bit = subset & -subset
+        label = bit.bit_length()-1
+        unions.append({old | cylinder for old in unions[subset ^ bit]
+                       for cylinder in [0]+cylinders[label]})
+
+    def mask_sum(mask, values):
+        total = 0
+        while mask:
+            bit = mask & -mask
+            total += values[bit.bit_length()-1]
+            mask ^= bit
+        return total
+
+    layouts = []
+    for choices in product(*cylinders):
+        load = tuple(1+sum(bool(mask & (1 << i)) for mask in choices)
+                     for i in range(len(points)))
+        layouts.append(load)
+    require(len(layouts) == expected_layouts, 'all effective old test layouts enumerated')
+    Q = max(sum(a*a for a in load) for load in layouts)
+    require(Q == 130, 'old square maximum for the first canonical shape')
+    screened = exact = 0
+    signed_slacks = []
+    for load in layouts:
+        squares = [a*a for a in load]
+        cross = sum(load)+sum(max(mask_sum(mask, load) for mask in group)
+                             for group in cylinders)
+        numerator = 6*sum(squares)+2*cross+Q
+        weights = [bound.numerator-bound.denominator*a for a in squares]
+        positive = [max(w, 0) for w in weights]
+        clipped = sum(max(mask_sum(mask, positive) for mask in group)
+                      for group in cylinders)
+        allowance = 6*len(points)*bound.numerator-bound.denominator*numerator
+        if clipped <= allowance:
+            screened += 1
+            continue
+        exact += 1
+        values = {mask: mask_sum(mask, weights) for mask in unions[31]}
+        block = [max(values[mask] for mask in group) for group in unions]
+        dp = [0]*32
+        for subset in range(1, 32):
+            anchor = subset & -subset
+            first = subset
+            best = 0
+            while first:
+                if first & anchor:
+                    best = max(best, block[first]+dp[subset ^ first])
+                first = (first-1) & subset
+            dp[subset] = best
+        require(dp[31] <= clipped, 'signed union cap refines the positive independent cap')
+        slack = allowance-dp[31]
+        require(slack >= 0, 'exact signed partition cap proves the proposed square bound')
+        signed_slacks.append(slack)
+    require(screened+exact == expected_layouts and signed_slacks
+            and min(signed_slacks) == 0, 'all layouts bounded and signed bound attained algebraically')
+    other_bounds = [Fraction(row['second_moment_bound'])
+                    for row in old_deletion_result['cases'][1:]]
+    require(all(c < bound for c in other_bounds),
+            'existing bounds for the other five shapes are strictly smaller')
+
+    original = ((3, 0), (9, 4), (5, 0), (15, 1), (45, 37), (7, 0),
+                (21, 1), (35, 9), (63, 52), (105, 4), (315, 142))
+    test = ((1, 0), (3, 2), (5, 3), (9, 2), (15, 8), (45, 38),
+            (7, 6), (21, 20), (35, 13), (63, 20), (105, 83), (315, 83))
+    divisors = [d for d in range(1, 316) if 315 % d == 0]
+    require(sorted(d for d, _ in original) == divisors[1:]
+            and sorted(d for d, _ in test) == divisors,
+            'sharp square witness has all original and test labels exactly once')
+    require(all(0 <= a < d for d, a in original+test), 'square witness residues are canonical')
+    require([x for x in range(45) if all(x % d != a for d, a in original[:5])] == points,
+            'literal witness uses the canonical old survivor set checked above')
+    survivors = [x for x in range(315) if all(x % d != a for d, a in original)]
+    loads = [sum(x % d == a for d, a in test) for x in survivors]
+    histogram = dict(sorted(Counter(loads).items()))
+    require(len(survivors) == 86 and sum(loads) == 271
+            and sum(a*a for a in loads) == 1131,
+            'literal actual-family witness attains the mean and square bounds simultaneously')
+    require(histogram == {1: 5, 2: 38, 3: 14, 4: 18, 6: 8, 8: 2, 12: 1},
+            'literal sharp square witness histogram')
+    return {
+        'law': 'uniform on actual complete survivors after canonical old-head pruning',
+        'actual_second_moment_upper': str(bound),
+        'shape': shape, 'old_test_layouts': expected_layouts,
+        'clipped_screened_layouts': screened, 'signed_union_dp_layouts': exact,
+        'union_counts_by_label_subset': [len(group) for group in unions],
+        'minimum_scaled_signed_slack': min(signed_slacks),
+        'other_shape_square_bounds': list(map(str, other_bounds)),
+        'sharp_witness': {
+            'original_classes': [list(pair) for pair in original],
+            'test_classes': [list(pair) for pair in test],
+            'survivor_count': len(survivors),
+            'test_load_histogram': {str(k): v for k, v in histogram.items()},
+            'test_load_sum': sum(loads), 'test_load_square_sum': sum(a*a for a in loads),
+            'mean': str(Fraction(sum(loads), len(survivors))),
+            'hinge_at1': str(Fraction(sum(a-1 for a in loads), len(survivors))),
+            'second_moment': str(Fraction(sum(a*a for a in loads), len(survivors))),
+        },
+        'sharpness': 'Sharp for the prescribed uniform law; no minimax claim over other supported laws.',
+    }
+
+
 def verify(expected):
     cases = []
     old_cases = []
@@ -760,6 +876,7 @@ def verify(expected):
         require(sum(p * max(k - t, 0) for k, p in atoms.items()) == theta[t],
                 "auxiliary law has the entire universal hinge profile")
     deletion_result = deletion_weighted_comparison(old_cases, theta)
+    signed_result = signed_deletion_square_comparison(old_cases, deletion_result)
     result = {
         "schema": "marked-head-profile-v1",
         "head_modulus": 315,
@@ -774,7 +891,8 @@ def verify(expected):
         "elementary_comparison": elementary_comparison(old_cases, theta),
         "fixed_marginal_obstruction": fixed_marginal_obstruction(),
         "deletion_weighted_comparison": deletion_result,
-        "conditioned_3465_comparison": conditioned_3465_comparison(deletion_result),
+        "conditioned_3465_comparison": conditioned_3465_comparison(deletion_result, signed_result),
+        "signed_deletion_square_comparison": signed_result,
         "uniform315_mean_sharpness": uniform315_mean_sharpness(),
         "residual_prefix_depletion_obstruction": residual_prefix_depletion_obstruction(),
         "prime11_residual_geometry": prime11_residual_geometry(),
@@ -786,7 +904,9 @@ def verify(expected):
                       "mean": result["mean"], "second_moment": result["second_moment"],
                       "deletion_weighted_inequalities": result["deletion_weighted_comparison"]["integer_cap_inequalities"],
                       "deletion_weighted_mean": result["deletion_weighted_comparison"]["mean"],
-                      "deletion_weighted_actual_second": result["deletion_weighted_comparison"]["actual_second_moment_upper"]}, sort_keys=True))
+                      "deletion_weighted_actual_second": result["deletion_weighted_comparison"]["actual_second_moment_upper"],
+                      "sharp_actual_second": signed_result["actual_second_moment_upper"],
+                      "conditioned_3465_actual_second": result["conditioned_3465_comparison"]["actual_second_moment_upper"]}, sort_keys=True))
 
 
 def main():
