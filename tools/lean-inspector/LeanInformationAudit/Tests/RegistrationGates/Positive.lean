@@ -74,4 +74,23 @@ run_cmd Elab.Command.liftCoreM do
   unless judgePaths.all (· == TemplateAudit.sourcePath root) do
     throwError "[FAIL] indirect_judge_import_excludes_judge_inputs"
   logInfo "[PASS] indirect_judge_import_content_closure"
+
+run_meta do
+  let root := `LeanInformationAudit.Tests.RegistrationGates.Positive
+  let theoremUnit := "D5/S3/ConceptDynamics/InformationEscape/TheoremUnit.lean"
+  let snapshot ← TemplateBinding.exportSnapshot
+  let registered := snapshot.originals.filter (·.occurrence.key.registrationModule == root)
+    |>.map (·.occurrence.key)
+  let wires ← TemplateBinding.reportJson #[(root, registered)]
+  let some wire := wires[0]? | throwError "[FAIL] indirect_judge_import_retains_content_input"
+  let .ok wireInputs := wire.getObjValAs? (Array Json) "inputs"
+    | throwError "[FAIL] indirect_judge_import_retains_content_input"
+  let wirePaths := wireInputs.map fun input =>
+    match input.getObjValAs? String "path" with | .ok path => path | .error _ => ""
+  logInfo s!"[METADATA] indirect_judge_import_wire_paths={wirePaths.toList}"
+  unless wirePaths.contains theoremUnit do
+    throwError "[FAIL] indirect_judge_import_retains_content_input"
+  let wireJudgePaths := wirePaths.filter (·.startsWith "tools/lean-inspector/")
+  unless wireJudgePaths.all (· == TemplateAudit.sourcePath root) do
+    throwError "[FAIL] indirect_judge_import_excludes_judge_inputs"
 end RegistrationPositive

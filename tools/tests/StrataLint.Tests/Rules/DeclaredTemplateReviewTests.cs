@@ -109,10 +109,10 @@ public sealed class DeclaredTemplateReviewTests
             reports["tools/lean-inspector/LeanInformationAudit/Syntax.lean"] =
                 new([TargetModule], []);
         var report = LeanAxiomReport.Create(reports);
-        // Round-trip canonical raw bytes: admission never receives hand-attached
+        // Round-trip canonical raw bytes for every fixture, including the
+        // indirect judge-import case. Admission never receives hand-attached
         // InformationTemplates in place of the strict raw artifact loader.
-        return indirectJudgePath ? report
-            : RawLeanReportArtifact.Read(RawLeanReportArtifact.Write(snapshot, report).AsSpan(), snapshot);
+        return RawLeanReportArtifact.Read(RawLeanReportArtifact.Write(snapshot, report).AsSpan(), snapshot);
     }
 
     internal static RuleEvaluationContext Context(Dictionary<string, string> baseline, Dictionary<string, string> head,
@@ -198,7 +198,14 @@ public sealed class DeclaredTemplateReviewTests
         var files = Files();
         const string syntax = "tools/lean-inspector/LeanInformationAudit/Syntax.lean";
         files[syntax] = "-- indirect judge fixture\n";
-        var report = Report(files, indirectJudgePath: true);
+        var loaded = Report(files, indirectJudgePath: true);
+        // The raw artifact is the strict reader boundary. The synthetic judge
+        // module is then supplied as import metadata so this same fixture can
+        // exercise the repository closure across an excluded judge module.
+        var reportFiles = loaded.Files.ToDictionary(pair => pair.Key.Value, pair => pair.Value,
+            StringComparer.Ordinal);
+        reportFiles[syntax] = new([TargetModule], []);
+        var report = LeanAxiomReport.Create(reportFiles);
         Assert.Contains(RepoPath.CreateKnown(syntax), report.Files.Keys);
         Assert.Equal("tools.lean-inspector.LeanInformationAudit.Syntax",
             Assert.Single(report.Files[RepoPath.CreateKnown(Registration)].Imports));
