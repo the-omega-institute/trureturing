@@ -25,6 +25,9 @@ except ImportError:
 else:
     LZMA_ERRORS = (LZMAError,)
 
+ROW_ERRORS = (OSError, UnicodeError, ValueError, KeyError, TypeError,
+              zipfile.BadZipFile, zlib.error, NotImplementedError) + LZMA_ERRORS
+
 import materials
 import publication as public
 
@@ -264,6 +267,23 @@ def batch(request_file, result_file):
             source_scopes[root] = selection.Selection(root)
         return source_scopes[root]
 
+    # The canonical Lake batch asks for each module's validation followed by
+    # aggregation of exactly those modules. The builder already performs that
+    # same complete validation, so let its row results serve both demands.
+    # Other request shapes retain the ordinary independent boundaries.
+    if requests and requests[-1][0] == 'aggregate':
+        root, output, *artifacts = requests[-1][1]
+        config = public.read_json((state(root) / 'inputs.json').read_bytes())
+        expected = [['validate', [root, 'module', root, name,
+            str(state(root) / 'inputs' / (name + '.json')), artifact]]
+            for name, artifact in zip(config['modules'], artifacts)]
+        if expected and len(artifacts) == len(config['modules']) and requests[:-1] == expected:
+            aggregate(root, output, artifacts, verified_materials=verified_materials,
+                      template_inputs=template_inputs(root), row_statuses=statuses)
+            statuses.append(int(any(statuses)))
+            Path(result_file).write_text(json.dumps(statuses))
+            return
+
     for kind, args in requests:
         if kind == 'produce':
             statuses.append(0)
@@ -272,8 +292,7 @@ def batch(request_file, result_file):
                 validate(*args[1:], verified_materials=verified_materials,
                          template_inputs=template_inputs(args[0]))
                 statuses.append(0)
-            except (OSError, UnicodeError, ValueError, KeyError, TypeError,
-                    zipfile.BadZipFile, zlib.error, NotImplementedError) + LZMA_ERRORS as error:
+            except ROW_ERRORS as error:
                 print(f'LEAN_INSPECTOR_REJECT {error}', file=sys.stderr)
                 statuses.append(1)
         elif kind == 'aggregate':
@@ -289,7 +308,7 @@ def batch(request_file, result_file):
     Path(result_file).write_text(json.dumps(statuses))
 
 
-def aggregate(root, output, artifacts, verified_materials=None, *, template_inputs=None):
+def aggregate(root, output, artifacts, verified_materials=None, *, template_inputs=None, row_statuses=None):
     root, output = Path(root), Path(output)
     if template_inputs is None:
         template_inputs = selection.Selection(root)
@@ -297,43 +316,69 @@ def aggregate(root, output, artifacts, verified_materials=None, *, template_inpu
     if len(artifacts) != len(config['modules']):
         raise ValueError('native aggregate membership mismatch')
     output.parent.mkdir(parents=True, exist_ok=True)
-    with tempfile.TemporaryDirectory(prefix='.aggregate.', dir=output.parent) as directory:
+    with tempfile.TemporaryDirectory(prefix='.aggregate.', dir=output.parent) as directory, \
+            tempfile.TemporaryFile(dir=output.parent) as material_spool:
         directory = Path(directory)
-        material_dir = directory / 'sha256'
-        material_dir.mkdir()
+        material_offsets = {}
         rows = []
         origins = {}
         for name, artifact in zip(config['modules'], artifacts):
             with tempfile.TemporaryDirectory(prefix='row.', dir=directory) as row_dir:
-                report = public.unpack(artifact, row_dir, ROW_SUFFIXES)
-                current = public.validate_rows(report, public.member(report, '.materials.zip'), verified_materials)
-                row_binding(current, root, name, state(root) / 'inputs' / (name + '.json'),
-                            template_inputs=template_inputs)
-                origins[name] = public.validate_origin(report, current, config['coordinates']['producer'])
-                if origins[name]['input_sources'] != input_sources(root, state(root) / 'inputs' / (name + '.json')):
-                    raise ValueError('native dependency source binding mismatch')
+                try:
+                    report = public.unpack(artifact, row_dir, ROW_SUFFIXES)
+                    current, origin = validate_module(report, root, name,
+                        state(root) / 'inputs' / (name + '.json'),
+                        verified_materials=verified_materials, template_inputs=template_inputs)
+                    if origin['compatibility_sha256'] != config['coordinates']['producer']:
+                        raise ValueError('native aggregate compatibility mismatch')
+                except ROW_ERRORS as error:
+                    if row_statuses is None:
+                        raise
+                    print(f'LEAN_INSPECTOR_REJECT {error}', file=sys.stderr)
+                    row_statuses.append(1)
+                    continue
+                if row_statuses is not None:
+                    row_statuses.append(0)
+                origins[name] = origin
                 rows.extend(current)
                 with zipfile.ZipFile(public.member(report, '.materials.zip')) as archive:
                     for entry in archive.infolist():
-                        destination = material_dir / entry.filename[7:]
-                        if destination.exists():
-                            with destination.open('rb') as left, archive.open(entry) as right:
-                                if not materials.streams_equal(left, right):
+                        with archive.open(entry) as reader:
+                            if entry.filename in material_offsets:
+                                offset, size = material_offsets[entry.filename]
+                                material_spool.seek(offset)
+                                seen = 0
+                                for block in iter(lambda: reader.read(materials.BUFFER_BYTES), b''):
+                                    seen += len(block)
+                                    if seen > size or block != material_spool.read(len(block)):
+                                        raise ValueError('statement material address collision')
+                                if seen != size:
                                     raise ValueError('statement material address collision')
-                        else:
-                            with archive.open(entry) as reader, destination.open('wb') as writer:
-                                shutil.copyfileobj(reader, writer, materials.BUFFER_BYTES)
+                            else:
+                                material_spool.seek(0, os.SEEK_END)
+                                offset = material_spool.tell()
+                                shutil.copyfileobj(reader, material_spool, materials.BUFFER_BYTES)
+                                material_offsets[entry.filename] = (offset, material_spool.tell() - offset)
+        if row_statuses is not None and any(row_statuses):
+            return
         report = directory / public.RAW
         report.write_bytes(materials.canonical_json({'modules': rows, 'schema': materials.REPORT_SCHEMA}))
         with zipfile.ZipFile(public.member(report, '.materials.zip'), 'w', compression=zipfile.ZIP_DEFLATED,
                              compresslevel=6, allowZip64=True) as archive:
-            for source in sorted(material_dir.iterdir()):
-                info = zipfile.ZipInfo('sha256/' + source.name, materials.ARCHIVE_TIMESTAMP)
+            for name, (offset, size) in sorted(material_offsets.items()):
+                info = zipfile.ZipInfo(name, materials.ARCHIVE_TIMESTAMP)
                 info.compress_type = zipfile.ZIP_DEFLATED
                 info.create_system = 3
                 info.external_attr = (stat.S_IFREG | 0o644) << 16
-                with source.open('rb') as reader, archive.open(info, 'w') as writer:
-                    shutil.copyfileobj(reader, writer, materials.BUFFER_BYTES)
+                material_spool.seek(offset)
+                with archive.open(info, 'w') as writer:
+                    remaining = size
+                    while remaining:
+                        block = material_spool.read(min(materials.BUFFER_BYTES, remaining))
+                        if not block:
+                            raise ValueError('truncated private material spool')
+                        writer.write(block)
+                        remaining -= len(block)
         public.write_sidecars(report, config['coordinates'], origins)
         # The native aggregate facet validates the completed bundle before
         # exposing it. Do not repeat that complete pass inside its builder.
@@ -344,6 +389,17 @@ def aggregate(root, output, artifacts, verified_materials=None, *, template_inpu
         print(f'LEAN_INSPECTOR_AGGREGATE modules={len(rows)} declarations={sum(len(row["declarations"]) for row in rows)}')
 
 
+def validate_module(report, root, name, utility, *, verified_materials=None, template_inputs=None):
+    rows = public.validate_rows(report, public.member(report, '.materials.zip'), verified_materials)
+    row_binding(rows, root, name, utility, template_inputs=template_inputs)
+    # prepare validated the manifest before any facet could accept an artifact.
+    compatibility = (state(root) / 'compatibility').read_text(encoding='ascii').strip()
+    origin = public.validate_origin(report, rows, compatibility)
+    if origin['input_sources'] != input_sources(root, utility):
+        raise ValueError('native dependency source binding mismatch')
+    return rows, origin
+
+
 def validate(kind, root, *args, verified_materials=None, template_inputs=None):
     if template_inputs is None:
         template_inputs = selection.Selection(root)
@@ -351,15 +407,8 @@ def validate(kind, root, *args, verified_materials=None, template_inputs=None):
         if kind == 'module':
             name, utility, artifact = args
             report = public.unpack(artifact, directory, ROW_SUFFIXES)
-            rows = public.validate_rows(report, public.member(report, '.materials.zip'), verified_materials)
-            row_binding(rows, root, name, utility, template_inputs=template_inputs)
-            # prepare validated the manifest before any facet could accept an
-            # artifact. Read its small derived token, not the full module scope
-            # again for each row in a large validation batch.
-            compatibility = (state(root) / 'compatibility').read_text(encoding='ascii').strip()
-            origin = public.validate_origin(report, rows, compatibility)
-            if origin['input_sources'] != input_sources(root, utility):
-                raise ValueError('native dependency source binding mismatch')
+            validate_module(report, root, name, utility, verified_materials=verified_materials,
+                            template_inputs=template_inputs)
         elif kind == 'report':
             report = public.unpack(args[0], directory)
             config = public.read_json((state(root) / 'inputs.json').read_bytes())

@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import argparse
 from contextlib import nullcontext
+from functools import lru_cache
 import hashlib
 import importlib.util
 import json
@@ -26,6 +27,20 @@ _selection_spec = importlib.util.spec_from_file_location('report_selection',
     Path(__file__).resolve().parent.parent / 'scripts/report/lean-report-selection.py')
 selection = importlib.util.module_from_spec(_selection_spec)
 _selection_spec.loader.exec_module(selection)
+
+# This Selection module is private to the inspector. Only the pure grammar
+# computation is memoized; safe_file still checks every current path component.
+_compile_glob = selection.compile_glob
+_compiled_glob = lru_cache(maxsize=16384)(_compile_glob)
+
+
+def compile_glob(pattern, location):
+    if not isinstance(pattern, str) or not isinstance(location, str):
+        return _compile_glob(pattern, location)
+    return _compiled_glob(pattern, location)
+
+
+selection.compile_glob = compile_glob
 
 RAW = 'raw-lean-report.json'
 SUFFIXES = ('', '.sha256', '.input.attestation', '.provenance.json', '.materials.zip')

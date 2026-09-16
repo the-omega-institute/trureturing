@@ -109,6 +109,26 @@ class StreamingTests(unittest.TestCase):
 
 
 class PublicationTests(unittest.TestCase):
+    def test_pattern_cache_keeps_path_checks_live(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / (Path(directory).name + '.lean')
+            path.write_text('def input := 1\n')
+            inputs = object.__new__(publication.selection.Selection)
+            inputs.root = Path(directory)
+            compile_pattern = publication.selection.re.compile
+            with patch.object(publication.selection.re, 'compile', wraps=compile_pattern) as compiler:
+                for _ in range(8):
+                    self.assertEqual(inputs.safe_file(path.name), path)
+                self.assertEqual(compiler.call_count, 1, '[FAIL] pattern_cache_keeps_path_checks_live')
+                path.unlink()
+                with self.assertRaises(ValueError):
+                    inputs.safe_file(path.name)
+                target = Path(directory) / 'Target.lean'
+                target.write_text('def input := 1\n')
+                path.symlink_to(target)
+                with self.assertRaises(ValueError):
+                    inputs.safe_file(path.name)
+
     def test_binding_batch_scope_expanded_once(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

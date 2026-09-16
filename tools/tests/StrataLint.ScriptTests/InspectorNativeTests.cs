@@ -13,6 +13,7 @@ public sealed class InspectorNativeTests
     [InlineData("test_native.NativeTests.test_input_verification_is_read_only")]
     [InlineData("test_native.NativeTests.test_native_no_build_rejects_corruption_without_production")]
     [InlineData("test_native.NativeTests.test_publication_validates_material_identities_once")]
+    [InlineData("test_native.NativeTests.test_aggregation_validates_each_row_once_and_preserves_rejection_statuses")]
     [InlineData("test_native.NativeTests.test_native_publication_rejects_incoming_damage_before_normalization")]
     [InlineData("test_native.NativeTests.test_publication_snapshot_integrity_and_replace_failure")]
     [InlineData("test_native.NativeTests.test_public_module_validates_and_private_job_is_not_a_target")]
