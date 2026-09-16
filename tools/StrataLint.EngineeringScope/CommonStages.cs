@@ -294,8 +294,8 @@ internal sealed class CommonStages(string root, TextWriter output, CancellationT
 
     private void Delta(string? baseSha)
     {
-        var common = CommonExecutionEvidence.ValidateCommon(root);
-        RequireBinary(common.Build, CommonExecutionEvidence.CliPath);
+        var build = CommonExecutionEvidence.ValidateBuild(root);
+        RequireBinary(build, CommonExecutionEvidence.CliPath);
         Step("check-delta", "dotnet", [CommonExecutionEvidence.CliPath, "check-delta", "--protected-base", baseSha!,
             "--candidate-lean-report", CommonExecutionEvidence.ReportPath], allowAnnotation: true);
     }

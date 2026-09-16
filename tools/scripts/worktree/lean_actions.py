@@ -73,7 +73,7 @@ def output(values, destination="GITHUB_OUTPUT"):
 
 
 def receipt(layer, status, **fields):
-    print("LEAN_ACTIONS_CACHE " + json.dumps({"layer": layer, "status": status, **fields}, sort_keys=True))
+    print("LEAN_ACTIONS_CACHE " + json.dumps({"layer": layer, "status": status, **fields}, sort_keys=True), flush=True)
 
 
 def accepted_current(root):
@@ -564,6 +564,7 @@ def restore(root, keys, matched, layers=LAYERS, registry=None):
         validate_judge_registration(root, layers)
     project_seeded = False
     for layer in layers:
+        started = time.monotonic()
         try:
             spec = keys[layer]
             cached = root / spec["path"]
@@ -571,7 +572,8 @@ def restore(root, keys, matched, layers=LAYERS, registry=None):
             restored_path.unlink(missing_ok=True)
             key = matched[layer]
             if not key:
-                receipt(layer, "miss", reason="Actions supplied no cache")
+                receipt(layer, "miss", reason="Actions supplied no cache",
+                        elapsed_seconds=round(time.monotonic() - started, 3))
                 continue
             if not re.fullmatch(re.escape(spec["restore_prefix"]) + r"[0-9]+-[0-9]+", key):
                 raise ValueError("Actions seed is outside the selected partition")
@@ -622,9 +624,11 @@ def restore(root, keys, matched, layers=LAYERS, registry=None):
                         "snapshot_key": spec["key"],
                         "manifest_sha256": hashlib.sha256(manifest_bytes).hexdigest()}) + "\n")
             project_seeded |= layer == "project"
-            receipt(layer, "restored", key=key, partition=keys["partition"])
+            receipt(layer, "restored", key=key, partition=keys["partition"],
+                    elapsed_seconds=round(time.monotonic() - started, 3))
         except (OSError, ValueError, TypeError, KeyError, subprocess.CalledProcessError) as error:
-            receipt(layer, "miss", reason=str(error))
+            receipt(layer, "miss", reason=str(error),
+                    elapsed_seconds=round(time.monotonic() - started, 3))
     # A dependency-only hit cannot suppress the project Release fallback.
     if "project" in layers:
         output({"STRATALINT_ACTIONS_CACHE_SEEDED": "1" if project_seeded else "0"}, "GITHUB_ENV")

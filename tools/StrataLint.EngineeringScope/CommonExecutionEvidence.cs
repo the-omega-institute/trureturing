@@ -56,6 +56,11 @@ internal static partial class CommonExecutionEvidence
     private static string Candidate(string root, out RepositorySnapshot snapshot)
     {
         snapshot = Snapshot(root);
+        return Candidate(root, snapshot);
+    }
+
+    private static string Candidate(string root, RepositorySnapshot snapshot)
+    {
         var files = snapshot.Files.Values.Select(file => new EngineeringSource(file.Path.Value, file.Text)).ToArray();
         var registry = EngineeringProjectRegistry.Read(files);
         _ = registry.Sources(files);
@@ -151,7 +156,12 @@ internal static partial class CommonExecutionEvidence
     private static bool UsesScribe(RegisteredCommonCheck check) =>
         check.ReportInputs.Any(report => report.Artifact == "VerifiedScribeEmissions");
 
-    internal static string Hash(string path) => Convert.ToHexStringLower(SHA256.HashData(File.ReadAllBytes(path)));
+    internal static readonly AsyncLocal<Action<string>?> Hashing = new();
+    internal static string Hash(string path)
+    {
+        Hashing.Value?.Invoke(Path.GetFullPath(path));
+        return Convert.ToHexStringLower(SHA256.HashData(File.ReadAllBytes(path)));
+    }
 
     internal static void Write<T>(string root, string path, T value)
     {
@@ -182,6 +192,9 @@ internal static partial class CommonExecutionEvidence
 
     internal static CommonStageRecord ValidateBuild(string root, string? round = null) =>
         ValidateBuild(root, Candidate(root), round);
+
+    internal static CommonStageRecord ValidateBuild(string root, ValidationScope validation, string round) =>
+        ValidateBuild(root, Candidate(root, validation.Snapshot), round, validation);
 
     private static CommonStageRecord ValidateBuild(string root, string candidate, string? round, ValidationScope? validation = null)
     {
@@ -238,10 +251,6 @@ internal static partial class CommonExecutionEvidence
     }
 
     private static CommonStageRecord ValidateEngineering(string root, CommonStageRecord build,
-        RepositorySnapshot snapshot, IEnumerable<string>? baseProjects = null) =>
-        ValidateEngineering(root, build, new ValidationScope(snapshot), out _, out _, baseProjects);
-
-    private static CommonStageRecord ValidateEngineering(string root, CommonStageRecord build,
         ValidationScope validation, out TestExecutionRecord tests, out CommonCheckRecord checks, IEnumerable<string>? baseProjects = null)
     {
         tests = ValidateTests(root, Read<TestExecutionRecord>(root, TestsPath), build.Candidate, validation.Snapshot, baseProjects, validation);
@@ -258,13 +267,13 @@ internal static partial class CommonExecutionEvidence
         return record;
     }
 
-    internal static (CommonStageRecord Current, CommonStageRecord Engineering, CommonStageRecord Build) ValidateCommon(
+    internal static (CommonStageRecord Current, CommonStageRecord Engineering, CommonStageRecord Build, TestExecutionRecord Tests) ValidateCommon(
         string root, IEnumerable<string>? baseProjects = null)
     {
         var candidate = Candidate(root, out var snapshot);
         var build = ValidateBuild(root, candidate, null);
-        var engineering = ValidateEngineering(root, build, snapshot, baseProjects);
-        return (ValidateCurrent(root, build, snapshot), engineering, build);
+        var engineering = ValidateEngineering(root, build, new ValidationScope(snapshot), out var tests, out _, baseProjects);
+        return (ValidateCurrent(root, build, snapshot), engineering, build, tests);
     }
 
     private static void ValidateRecord(string root, CommonStageRecord record, string candidate, string round, ValidationScope? validation = null)

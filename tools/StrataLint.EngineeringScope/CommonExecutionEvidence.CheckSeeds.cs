@@ -50,20 +50,27 @@ internal static partial class CommonExecutionEvidence
                     sources.Add(unit);
                 });
         }
+        var destinations = new Dictionary<string, string>(StringComparer.Ordinal);
         foreach (var unit in sources)
             Attempt(unit.Id, () =>
             {
                 foreach (var material in unit.Materials)
                 {
-                    var destination = Path.Combine(root, material.Path);
-                    Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
                     // Identical original paths are shared by multiple units. A differing
                     // destination is a corrupt optional seed, never permission to overwrite.
-                    if (File.Exists(destination))
+                    if (!destinations.TryGetValue(material.Path, out var actual))
                     {
-                        if (Hash(destination) != material.Sha256) throw new InvalidDataException("conflicting original common material: " + material.Path);
+                        var destination = Path.Combine(root, material.Path);
+                        Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
+                        if (File.Exists(destination)) actual = Hash(destination);
+                        else
+                        {
+                            File.Copy(Path.Combine(seedRoot, material.Path), destination);
+                            actual = material.Sha256;
+                        }
+                        destinations.Add(material.Path, actual);
                     }
-                    else File.Copy(Path.Combine(seedRoot, material.Path), destination);
+                    if (actual != material.Sha256) throw new InvalidDataException("conflicting original common material: " + material.Path);
                 }
                 copied.Add(unit);
             });

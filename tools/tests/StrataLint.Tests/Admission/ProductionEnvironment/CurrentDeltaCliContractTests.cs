@@ -137,13 +137,25 @@ public sealed class CurrentDeltaCliContractTests(Xunit.Abstractions.ITestOutputH
         fixture.Files["Meta/domains.yaml"] = TestRegistry.Domains;
         if (selected)
         {
+            const string producer = "Meta/ReportProducers/fixture.json";
+            const string consumer = "Meta/ReportConsumers/fixture.json";
+            fixture.Files[producer] = "{\"schema\":\"report-producer-scope-v2\",\"registration\":\"lean-report-inputs.json\",\"scope\":\"lean-report\",\"projects\":[]}";
+            fixture.Files["lean-report-inputs.json"] = "{\"producer_scopes\":{\"lean-report\":{\"include\":[{\"pattern\":\"global.json\",\"optional\":false}],\"exclude\":[]}}}";
+            fixture.Files[consumer] = JsonSerializer.Serialize(new
+            {
+                schema = "report-consumer-inputs-v1", producer, projects = Array.Empty<string>(), materials = new[] { "global.json" },
+            });
+            var registration = JsonNode.Parse(fixture.Files[CommonExecutionEvidence.CheckManifestPath])!;
+            registration["checks"]!.AsArray().Single(row => row!["id"]!.ToString() == "SL-012")!["report_inputs"] =
+                JsonSerializer.SerializeToNode(new[] { new { producer, consumer, artifact = "raw-lean-report", materials = new[] { "global.json" } } });
+            fixture.Files[CommonExecutionEvidence.CheckManifestPath] = registration.ToJsonString();
             var repository = TestRepositoryLayout.FindRoot();
             foreach (var path in new[] { "tools/scripts/workflow/ci.py", "tools/scripts/workflow/ci_plan.py" })
                 fixture.Files[path] = File.ReadAllText(Path.Combine(repository, path));
             fixture.Files["Meta/ci-resources.json"] = JsonSerializer.Serialize(new {
                 schema = "ci-resource-execution-v1", resources = new[] {
                     new { id = "current", projects = new[] { "tools/StrataLint.Scribe/StrataLint.Scribe.csproj" },
-                        checks = new[] { "SL-012" }, steps = new[] { "check-current" } } } });
+                        checks = new[] { "SL-012" }, steps = new[] { "check-current", "lean-report" } } } });
             fixture.Files["Meta/FILEMAP.toml"] = """
                 schema_version = 4
                 resources = [
@@ -179,14 +191,30 @@ public sealed class CurrentDeltaCliContractTests(Xunit.Abstractions.ITestOutputH
         var report = Path.Combine(temporary.Path, ".lake/build/stratalint/raw-lean-report.json");
         WriteReport();
         var environment = new ProductionCliEnvironment(temporary.Path, new GitRepositoryGateway(temporary.Path), new FakeLeanReportSource(null));
-        var result = environment.CheckCurrent(Arguments());
+        var arguments = Arguments();
+        var reads = 0;
+        var previous = RawLeanReportArtifact.Reading.Value;
+        ExplicitCommandResult result;
+        try
+        {
+            RawLeanReportArtifact.Reading.Value = () => reads++;
+            result = environment.CheckCurrent(arguments);
+        }
+        finally { RawLeanReportArtifact.Reading.Value = previous; }
         Assert.True(result.ExitCode == 0, result.Output + result.Error);
         if (selected)
         {
+            // One initial read, one after the selected predicate writes its retained
+            // material, and one at seal. The initial CLI and input owner share a read.
+            Assert.Equal(3, reads);
             Assert.Equal(new[] { "SL-012" }, CommonExecutionEvidence.Read<CommonCheckRecord>(temporary.Path,
                 CommonExecutionEvidence.ChecksPath("current")).Units.Select(unit => unit.Id));
             using var verdict = JsonDocument.Parse(result.Output[result.Output.IndexOf("{\"executed\"", StringComparison.Ordinal)..]);
             Assert.Equal(new[] { "SL-012" }, verdict.RootElement.GetProperty("executed").EnumerateArray().Select(value => value.GetString()));
+            File.AppendAllText(report, "damage");
+            var damaged = environment.CheckCurrent(arguments);
+            Assert.Equal(2, damaged.ExitCode);
+            Assert.Contains("Raw Lean report", damaged.Error, StringComparison.Ordinal);
         }
         File.WriteAllText(Path.Combine(temporary.Path, RuleFixture.RingPath), "def invalid : Nat := 0\n");
         WriteReport();
@@ -221,6 +249,8 @@ public sealed class CurrentDeltaCliContractTests(Xunit.Abstractions.ITestOutputH
         {
             var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(GitRepositorySnapshotReader.ReadCurrent(temporary.Path))).Snapshot;
             RawLeanReportArtifact.WriteFile(report, snapshot, LeanAxiomReport.Create(fixture.Reports));
+            foreach (var suffix in new[] { ".sha256", ".input.attestation", ".provenance.json" })
+                File.WriteAllText(report + suffix, "fixture companion\n");
         }
     }
 
@@ -259,8 +289,17 @@ public sealed class CurrentDeltaCliContractTests(Xunit.Abstractions.ITestOutputH
     [InlineData("missing-report", 2, "")]
     [InlineData("candidate-mismatch", 2, "candidate identity")]
     [InlineData("failed-trx", 2, "artifact integrity")]
+    [InlineData("missing-current", 2, "current.json")]
+    [InlineData("staged-valid", 0, "")]
+    [InlineData("staged-missing-current", 2, "current.json")]
+    [InlineData("staged-failed-trx", 2, "artifact integrity")]
+    [InlineData("staged-invalid-dll", 2, "artifact integrity")]
+    [InlineData("staged-unbound-dll", 2, "unbound candidate binary")]
+    [InlineData("staged-candidate-mismatch", 2, "candidate identity")]
     public void DeltaConsumesValidatedCommonResultsAndEnforcesOnlyCrossTreePredicates(string scenario, int expectedExit, string diagnostic)
     {
+        var staged = scenario.StartsWith("staged-", StringComparison.Ordinal);
+        var defect = staged ? scenario["staged-".Length..] : scenario;
         using var temporary = new TemporaryDirectory();
         var root = temporary.Path;
         var fixture = new RuleFixture();
@@ -269,7 +308,7 @@ public sealed class CurrentDeltaCliContractTests(Xunit.Abstractions.ITestOutputH
         fixture.Files["global.json"] = "{\"sdk\":{\"version\":\"10.0.103\"}}";
         fixture.Files["tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs"] = "// banned-api-proof\n";
         foreach (var pair in fixture.Files) Write(pair.Key, pair.Value);
-        Write(".gitignore", ".lake/\nbuild/\n");
+        Write(".gitignore", ".lake/\nbuild/\ntools/StrataLint.Cli/bin/\n");
         Write("Meta/FILEMAP.toml", File.ReadAllText(
             Path.Combine(TestRepositoryLayout.FindRoot(), "Meta/FILEMAP.toml")));
         if (scenario == "ratchet")
@@ -396,7 +435,20 @@ public sealed class CurrentDeltaCliContractTests(Xunit.Abstractions.ITestOutputH
         var inventory = registered.Select(project => new BuiltTestProject(project.Path, "build/ci/bin/" + project.Assembly + ".dll")).ToArray();
         foreach (var test in inventory) Write(test.Assembly, "synthetic runtime");
         CommonExecutionEvidence.Write(root, CommonBuildOutputs.TestsPath, inventory);
-        var build = CommonExecutionEvidence.SealBuild(root, CommonExecutionEvidence.Candidate(root), inventory.Select(test => test.Assembly).Append(CommonBuildOutputs.TestsPath).Append(log),
+        var runtimeFiles = new List<string>();
+        if (staged)
+        {
+            var runtime = Path.GetDirectoryName(Path.Combine(root, CommonExecutionEvidence.CliPath))!;
+            Directory.CreateDirectory(runtime);
+            foreach (var file in Directory.GetFiles(Path.GetDirectoryName(typeof(StrataLint.Cli.Program).Assembly.Location)!))
+            {
+                var destination = Path.Combine(runtime, Path.GetFileName(file));
+                File.Copy(file, destination);
+                var relative = Path.GetRelativePath(root, destination).Replace('\\', '/');
+                if (defect != "unbound-dll" || relative != CommonExecutionEvidence.CliPath) runtimeFiles.Add(relative);
+            }
+        }
+        var build = CommonExecutionEvidence.SealBuild(root, CommonExecutionEvidence.Candidate(root), inventory.Select(test => test.Assembly).Append(CommonBuildOutputs.TestsPath).Append(log).Concat(runtimeFiles),
             CommonExecutionEvidence.BuildSteps.Select(name => new StageStep(name, 0, 0, "executed", log)).ToArray());
         Assert.Equal(0, StrataLint.EngineeringScope.Program.RunCurrentTests(root, (project, results) =>
         {
@@ -439,9 +491,11 @@ public sealed class CurrentDeltaCliContractTests(Xunit.Abstractions.ITestOutputH
                         file.Path.Value[..^".scribe.cs".Length] + ".md", "sha256:" + new string('a', 64)))).WriteMaterial() : null));
             checks.Seal();
         }
-        switch (scenario)
+        switch (defect)
         {
             case "missing-report": File.Delete(report); break;
+            case "missing-current": File.Delete(Path.Combine(root, CommonExecutionEvidence.CurrentPath)); break;
+            case "invalid-dll": File.AppendAllText(Path.Combine(root, CommonExecutionEvidence.CliPath), "damage"); break;
             case "candidate-mismatch": File.AppendAllText(Path.Combine(root, RuleFixture.BlueprintPath), "new round\n"); break;
             case "failed-trx":
                 var trx = Directory.GetFiles(Path.Combine(root, CommonExecutionEvidence.RootPath), "*.trx", SearchOption.AllDirectories).First();
@@ -449,21 +503,59 @@ public sealed class CurrentDeltaCliContractTests(Xunit.Abstractions.ITestOutputH
                 break;
         }
         var console = new BufferedConsole();
-        var exit = CliApplication.Run(["check-delta", "--protected-base", basis, "--candidate-lean-report", report], environment, console);
+        var hashes = CommonExecutionEvidence.Read<TestExecutionRecord>(root, CommonExecutionEvidence.TestsPath).Materials
+            .ToDictionary(material => Path.GetFullPath(Path.Combine(root, material.Path)), _ => 0, StringComparer.Ordinal);
+        var previousHashing = CommonExecutionEvidence.Hashing.Value;
+        var previousReading = RawLeanReportArtifact.Reading.Value;
+        var parentReportReads = 0;
+        int exit;
+        try
+        {
+            CommonExecutionEvidence.Hashing.Value = path => { if (hashes.ContainsKey(path)) hashes[path]++; };
+            RawLeanReportArtifact.Reading.Value = () => parentReportReads++;
+            if (staged)
+            {
+                using var output = new StringWriter();
+                exit = new CommonStages(root, output).Run("delta", basis);
+                console.WriteOutput(output.ToString());
+            }
+            else exit = CliApplication.Run(["check-delta", "--protected-base", basis, "--candidate-lean-report", report], environment, console);
+        }
+        finally
+        {
+            CommonExecutionEvidence.Hashing.Value = previousHashing;
+            RawLeanReportArtifact.Reading.Value = previousReading;
+        }
         Assert.True(exit == expectedExit, $"expected exit {expectedExit}, got {exit}: {console.Output}{console.Error}");
         Assert.Contains(diagnostic, console.Output + console.Error, StringComparison.Ordinal);
+        if (scenario is "valid" or "reused")
+        {
+            Assert.All(hashes, row => Assert.Equal(1, row.Value));
+            using var verdict = JsonDocument.Parse(console.Output);
+            Assert.Equal(CommonExecutionEvidence.Read<TestExecutionRecord>(root, CommonExecutionEvidence.TestsPath).Projects
+                .Select(row => (row.Project, row.Status, row.ExecutionCandidate, row.ExecutionRound)),
+                verdict.RootElement.GetProperty("accepted_base_tests").EnumerateArray().Select(row => (
+                    row.GetProperty("project").GetString()!, row.GetProperty("status").GetString()!,
+                    row.GetProperty("execution_candidate").GetString()!, row.GetProperty("execution_round").GetString()!)));
+        }
+        if (staged)
+        {
+            // The real candidate CLI owns common acceptance; its parent authenticates
+            // the runtime before launching it and retains the child's failure code.
+            var launches = defect is not ("invalid-dll" or "unbound-dll" or "candidate-mismatch");
+            using var summary = JsonDocument.Parse(File.ReadAllText(Path.Combine(root, "build/ci/delta-result.json")));
+            var steps = summary.RootElement.GetProperty("steps").EnumerateArray().ToArray();
+            Assert.Equal(launches ? 1 : 0, steps.Length);
+            if (launches) Assert.Equal(expectedExit, steps[0].GetProperty("raw_exit").GetInt32());
+            Assert.Equal(0, parentReportReads);
+            Assert.All(hashes, row => Assert.Equal(0, row.Value));
+        }
         if (scenario is "missing-base-project" or "premanifest-missing-base-project" or "original-registration-missing-base-project")
         {
             Assert.Contains($"ENGINEERING_TEST_PROJECT_REMOVED project={JsonSerializer.Serialize(firstProject)}",
                 console.Output, StringComparison.Ordinal);
             Assert.Contains($"base test project has no current accepted-success coverage: {firstProject}",
                 console.Error, StringComparison.Ordinal);
-        }
-        if (scenario == "reused")
-        {
-            using var json = JsonDocument.Parse(console.Output);
-            Assert.All(json.RootElement.GetProperty("accepted_base_tests").EnumerateArray(), row =>
-                Assert.Equal("reused", row.GetProperty("status").GetString()));
         }
         if (scenario == "annotation")
         {

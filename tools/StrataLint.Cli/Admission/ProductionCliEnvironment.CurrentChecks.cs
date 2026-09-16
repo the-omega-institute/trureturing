@@ -8,12 +8,13 @@ namespace StrataLint.Cli;
 
 internal sealed partial class ProductionCliEnvironment
 {
-    private ExplicitCommandResult ExecuteCommonCurrent(string round, RepositorySnapshot snapshot,
+    private ExplicitCommandResult ExecuteCommonCurrent(string round, CommonExecutionEvidence.ValidationScope validation,
         ValidatedPolicy policy, AcceptedLeanClosure lean, LeanAxiomReport report, string[]? selectedIds = null)
     {
         using var trace = new StringWriter(System.Globalization.CultureInfo.InvariantCulture);
-        var build = CommonExecutionEvidence.ValidateBuild(repositoryRoot, round);
-        var checks = CommonExecutionEvidence.BeginChecks(repositoryRoot, "current", build, trace, selectedIds);
+        var snapshot = validation.Snapshot;
+        var build = CommonExecutionEvidence.ValidateBuild(repositoryRoot, validation, round);
+        var checks = CommonExecutionEvidence.BeginChecks(repositoryRoot, "current", build, trace, selectedIds, validation);
         var assembly = typeof(DocumentAssembly).Assembly;
         CheckWork Scribe(string id, string[] arguments, bool capability = false)
         {
