@@ -109,6 +109,14 @@ private def observe (event : TemplateOccurrenceEvent) (actual : Name)
   logInfo m!"[{if ok then "PASS" else "FAIL"}] {label}"
   unless ok do logInfo m!"actual={diagnostic}"
 
+elab "check_body_argument_grammar" : command => do
+  let saved ← get
+  let result ← TemplateAudit.enroll ``decisionBody
+  let ok := result matches .error "unclassified_form:E3.closed_decision"
+  set saved
+  logInfo m!"[{if ok then "PASS" else "FAIL"}] body_argument_closed_decision_same_rule"
+check_body_argument_grammar
+
 -- Each observer calls the common assessor. The source event comes from an
 -- actual successful command; no result is inserted into a producer extension.
 run_meta do
@@ -120,9 +128,12 @@ run_meta do
       (``rawCarrierProdBad, "forbidden_dependency"), (``rawCarrierClean, "validated"),
       (``decisionArgument, "unclassified_form")] do
     let descriptor ← bodyOf name
-    let record ← TemplateBinding.assess { event with realizationName := name }
-      (some { key := event.key, arena := event.arena, descriptor := some descriptor,
-        owner := env.header.mainModule })
+    let claim : TemplateBindingClaim := {
+      key := event.key
+      arena := event.arena
+      descriptor := some descriptor
+      owner := env.header.mainModule }
+    let record ← TemplateBinding.assess { event with realizationName := name } (some claim)
     let ok := match record.result with
       | .declaredValidated _ => expected == "validated"
       | .declaredUnresolved diagnostic =>

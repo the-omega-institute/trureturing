@@ -288,10 +288,10 @@ def provenanceErrorCurrent (root catalog theoremName realization : Name) : CoreM
 def provenanceError (env : Environment) (root catalog theoremName realization : Name) : CoreM (Option String) :=
   withEnv env (provenanceErrorCurrent root catalog theoremName realization)
 
-/-- Declared-template provenance enters the existing fail-closed walker only at
-raw supplied arguments. All arguments share one lower-only debit, including
+/-- The independently retained P1 provider contract audits its raw reifier
+arguments. Declared templates use the enrollment grammar instead. All arguments share one lower-only debit, including
 reused syntax summaries; no template body is sent through this path. -/
-def templateArgumentsCurrent (theoremName : Name) (arguments : Array Expr)
+def providerArgumentsCurrent (theoremName : Name) (arguments : Array Expr)
     (availableWork : Nat) : CoreM (Except String (Array Name × Nat)) := do
   let mut remaining := min 524288 availableWork
   let mut inputs : NameSet := {}
@@ -311,6 +311,36 @@ def templateArgumentsCurrent (theoremName : Name) (arguments : Array Expr)
       return .error "unclassified_form:dtr.argument_audit"
     for name in result.inputNames do inputs := inputs.insert name
   return .ok (inputs.toArray, min 524288 availableWork - remaining)
+
+/-- One raw node's occurrence-relative rejection checks. This grants no
+executable/type admission; the shared E2–E5 compiler owns that judgment. -/
+def argumentIdentityNode (env : Environment) (expression : Expr) : WalkM Unit := do
+  unless ← chargeTraversal do return
+  if let .const name _ := expression.getAppFn then directConstant env name
+  if let .proj name _ _ := expression then directProjection env name
+  let some type ← occurrenceType expression | return
+  let exact ← exactScalarStatement type
+  let decision ← if type.isAppOfArity ``Decidable 1 then
+    exactScalarStatement type.getAppArgs[0]! else pure false
+  if exact || decision then modify fun s => { s with forbidden := true }
+  let proposition := type == .sort .zero
+  let some proof ← boundedMeta (Meta.isProp type) `raw_argument_proof_type | return
+  if proposition || proof then
+    let candidate := if proposition then expression else type
+    if candidate.equal (← get).statement then
+      modify fun s => { s with forbidden := true }
+    else if (← checkedStatementType env candidate).isNone then
+      noteUnclassified ⟨"unresolved_statement_identity", (← get).currentFirst,
+        "argument", (← get).currentOrigin⟩
+
+/-- Initialize identity-only state once for the whole supplied telescope. -/
+def argumentIdentityState (theoremName : Name) (available : Nat) : Meta.MetaM WalkState := do
+  let env ← getEnv
+  let info ← getConstInfo theoremName
+  let (_, state) ← (statementAliases env).run {
+    theoremName, statement := info.type,
+    decision := mkApp (mkConst ``Decidable) info.type, exprFuel := available }
+  return state
 
 -- Enrollment supplies the positive E2 grammar judgment. Consumption checks
 -- only statement identity in the retained, instantiated syntax and inferred

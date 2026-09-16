@@ -266,7 +266,7 @@ structure TemplatePlanData where
   schemaVersion : Nat := 1
   grammarVersion : Nat := 1
   constructorRecursionVersion : Nat := 1
-  compatibilityVersion : Nat := 4
+  compatibilityVersion : Nat := 5
   compiler : String
   toolchain : String
   policyIdentity : String
@@ -276,6 +276,7 @@ structure TemplatePlanData where
   enrollmentOwner : Name
   levelParams : List Name
   slots : Array Slot
+  constructorTypes : Array Name := #[]
   typeIdentity : String
   bodyIdentity : String
   planIdentity : String
@@ -518,8 +519,8 @@ private def digest : M String := do
   return value
 
 private def payload : M TemplatePlanData := do
-  expect "DTR-checked-plan-v2"
-  for version in #[1, 1, 1, 4] do unless (← natural) == version do fail
+  expect "DTR-checked-plan-v3"
+  for version in #[1, 1, 1, 5] do unless (← natural) == version do fail
   let compiler ← token
   let toolchain ← token
   let policyIdentity ← digest
@@ -545,6 +546,7 @@ private def payload : M TemplatePlanData := do
     unless bodyIdentity.isEmpty || (bodyIdentity.utf8ByteSize == 64 &&
         bodyIdentity.all (fun c => ('0' ≤ c && c ≤ '9') || ('a' ≤ c && c ≤ 'f'))) do fail
     return { name := n, owner, typeIdentity, bodyIdentity : DependencyIdentity }
+  let constructorTypes ← sequence 4096 name
   let sourceInputs ← sequence 4096 do
     let path ← token
     let sha256 ← digest
@@ -558,7 +560,7 @@ private def payload : M TemplatePlanData := do
   return {
     compiler, toolchain, policyIdentity, sourceInputs, name := templateName,
     definitionOwner, enrollmentOwner, levelParams, slots, typeIdentity, bodyIdentity,
-    dependencies, plan := bodyPlan, typePlan, rules, chargedWork, planIdentity := "", serializedBytes := 0 }
+    dependencies, constructorTypes, plan := bodyPlan, typePlan, rules, chargedWork, planIdentity := "", serializedBytes := 0 }
 
 /-- Pure decoding cannot confer enrollment authority. The private persistent
 extension checks frame identity and actual imported ownership around this call. -/
@@ -611,7 +613,7 @@ inductive TemplateBindingResult where
 
 structure BindingRecord where
   schemaVersion : Nat := 1
-  compatibilityVersion : Nat := 4
+  compatibilityVersion : Nat := 5
   occurrence : TemplateOccurrenceEvent
   descriptor : Option Expr
   bindingOwner : Option Name

@@ -169,7 +169,7 @@ outputs of this encoding and are not recursively encoded inside themselves. -/
 def planEncodingWithWork (plan : TemplatePlanData) (fuel : Nat := 524288) :
     Except String (ByteArray × Nat) := do
   let action : WireM Unit := do
-    emit "DTR-checked-plan-v2"
+    emit "DTR-checked-plan-v3"
     for version in #[plan.schemaVersion, plan.grammarVersion, plan.constructorRecursionVersion,
         plan.compatibilityVersion] do emit (toString version)
     emit plan.compiler; emit plan.toolchain; emit plan.policyIdentity
@@ -183,6 +183,8 @@ def planEncodingWithWork (plan : TemplatePlanData) (fuel : Nat := 524288) :
     emit (toString plan.dependencies.size)
     for dep in plan.dependencies do
       wireName dep.name; wireName dep.owner; emit dep.typeIdentity; emit dep.bodyIdentity
+    emit (toString plan.constructorTypes.size)
+    for ast in plan.constructorTypes do wireName ast
     emit (toString plan.sourceInputs.size)
     for input in plan.sourceInputs do emit input.path; emit input.sha256
     emit (toString plan.rules.size)

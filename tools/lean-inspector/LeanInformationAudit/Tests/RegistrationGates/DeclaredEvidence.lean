@@ -1,4 +1,5 @@
 import LeanInformationAudit.Tests.RegistrationGates.DeclaredTemplates
+import LeanInformationAudit.Tests.RegistrationGates.InventoryAssertions
 
 namespace LeanInformationAudit.Tests.DeclaredEvidence
 open Lean Meta Elab Command TemplateAudit TemplateBinding
@@ -41,6 +42,9 @@ elab "observe_declared_evidence" : command => do
     let .ok () ← enroll ``cutRealization | throwError "setup: independent template enrollment failed"
     let caught ← commandException (elabCommand form)
     let env ← getEnv
+    let inventoryOk ← if kind == 2 then
+        liftTermElabM <| Tests.assertUndeclaredInventory env env.header.mainModule 1
+      else pure true
     let retained := (records env).find? (·.occurrence.key.theoremName == name)
     let event := (inventory env).find? (·.key.theoremName == name)
     let result := match retained.map (·.result), kind with
@@ -49,7 +53,7 @@ elab "observe_declared_evidence" : command => do
         (message.splitOn "rule=dtr.missing_template").length == 2
       | some .undeclared, 2 => true
       | _, _ => false
-    let ok := caught.isNone && !(← get).messages.hasErrors && event.isSome && result &&
+    let ok := inventoryOk && caught.isNone && !(← get).messages.hasErrors && event.isSome && result &&
       InformationRegistry.hasTheorem env name
     set initial
     observations := observations.push s!"[{if ok then "PASS" else "FAIL"}] {label}"

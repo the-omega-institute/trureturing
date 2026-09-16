@@ -7,7 +7,7 @@ from streaming import canonical
 
 
 def incomplete(diagnostic):
-    return {"schema_version": 1, "compatibility_version": 4, "query_completed": False,
+    return {"schema_version": 1, "compatibility_version": 5, "query_completed": False,
             "diagnostic": diagnostic, "records": [], "source_inputs": []}
 
 
@@ -23,7 +23,7 @@ def validate(value):
 
     require(isinstance(value, dict) and set(value) == {
         "schema_version", "compatibility_version", "query_completed", "diagnostic", "records", "source_inputs"})
-    require(value["schema_version"] == 1 and value["compatibility_version"] == 4)
+    require(value["schema_version"] == 1 and value["compatibility_version"] == 5)
     require(type(value["query_completed"]) is bool)
     require(isinstance(value["records"], list) and isinstance(value["source_inputs"], list))
     if value["query_completed"]:

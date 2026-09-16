@@ -52,7 +52,7 @@ elab "observe_declared_template_enrollment" : command => do
       some "unclassified_form:E4.recursion:Eq.rec"),
     ("telescope_prop_slot_rejected", ``propositionSlot, some "unclassified_form:E1.proposition_slot"),
     ("telescope_wrong_interface_rejected", ``wrongInterface, some "unclassified_form:E1.return_interface"),
-    ("body_closed_decision_rejected", ``closedDecision, some "forbidden_dependency:E6.closed_decision"),
+    ("body_closed_decision_rejected", ``closedDecision, some "unclassified_form:E3.closed_decision"),
     ("body_recursive_definition_rejected", ``recursiveBody, some "unclassified_form:E4.recursion:Nat.rec")]
   for (label, name, expected) in cases do
     let state ← get

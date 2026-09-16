@@ -50,7 +50,7 @@ def prepareBindingSnapshot (evidenceModules : Array Name) :
   catch error => return .error (← error.toMessageData.toString)
 
 def incompleteBindingEvidence (diagnostic : String) : Json := Json.mkObj [
-  ("schema_version", toJson (1 : Nat)), ("compatibility_version", toJson (4 : Nat)),
+  ("schema_version", toJson (1 : Nat)), ("compatibility_version", toJson (5 : Nat)),
   ("query_completed", toJson false), ("diagnostic", toJson diagnostic),
   ("records", Json.arr #[]), ("source_inputs", Json.arr #[])]
 
@@ -88,7 +88,7 @@ def bindingEvidence (index : Index) (theoremName : Name)
         unless sources.contains input do sources := sources.push input
     let rows ← selected.mapM TemplateBinding.recordJson
     return Json.mkObj [
-      ("schema_version", toJson (1 : Nat)), ("compatibility_version", toJson (4 : Nat)),
+      ("schema_version", toJson (1 : Nat)), ("compatibility_version", toJson (5 : Nat)),
       ("query_completed", toJson true), ("diagnostic", Json.null),
       ("records", Json.arr rows), ("source_inputs", Json.arr ((sources.qsort
         (fun a b => a.path < b.path)).map fun input => Json.mkObj [

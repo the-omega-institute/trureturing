@@ -214,7 +214,7 @@ def validate_template_evidence(value: object) -> None:
         {"schema_version", "compatibility_version", "inventory", "registered", "records", "inputs"},
         "Inspector declared-template evidence")
     if (type(evidence["schema_version"]) is not int or evidence["schema_version"] != 1
-            or type(evidence["compatibility_version"]) is not int or evidence["compatibility_version"] != 4
+            or type(evidence["compatibility_version"]) is not int or evidence["compatibility_version"] != 5
             or any(not isinstance(evidence[field], list)
                    for field in ("inventory", "registered", "records", "inputs"))):
         raise ValueError("Inspector declared-template evidence is malformed")

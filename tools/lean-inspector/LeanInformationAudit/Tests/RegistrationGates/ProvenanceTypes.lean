@@ -96,18 +96,18 @@ noncomputable def structuralBinderDecision (_ : Unit) (x : Nat) : Nat :=
 -- Structural witness validation no longer audits an undeclared realization.
 -- Assess exact applications against an existing declared structural occurrence.
 -- These noncomputable negative providers are inspected, never executed.
-noncomputable def structuralAliasRealization := structuralTemplate structuralAliasDecision
-noncomputable def structuralBinderRealization := structuralTemplate structuralBinderDecision
+noncomputable def structuralAliasRealization := structuralTemplate (fun i x => structuralAliasDecision i x)
+noncomputable def structuralBinderRealization := structuralTemplate (fun i x => structuralBinderDecision i x)
 def structuralAliasClean := structuralTemplate (fun _ x => x)
 
 run_cmd Elab.Command.liftTermElabM do
   let some source := (TemplateBinding.records (← getEnv)).find?
       (·.occurrence.key.theoremName == ``cleanStructural)
     | throwError "setup: missing declared structural occurrence"
-  for (name, label, rejected) in [
-      (``structuralAliasRealization, "OpenAliasDecisionStructural", true),
-      (``structuralBinderRealization, "OpenAliasBinderControlStructural", true),
-      (``structuralAliasClean, "OpenAliasStructuralClean", false)] do
+  for (name, label, expected) in [
+      (``structuralAliasRealization, "OpenAliasDecisionStructural", some "reason=unclassified_form rule=E2.closed_proposition"),
+      (``structuralBinderRealization, "OpenAliasBinderControlStructural", some "reason=forbidden_dependency rule=E6.closed_identity"),
+      (``structuralAliasClean, "OpenAliasStructuralClean", none)] do
     let .defnInfo info ← getConstInfo name
       | throwError "setup: missing structural provider {name}"
     let claim : TemplateBindingClaim := {
@@ -115,10 +115,9 @@ run_cmd Elab.Command.liftTermElabM do
       descriptor := some info.value, owner := (← getEnv).header.mainModule }
     let row ← TemplateBinding.assess { source.occurrence with realizationName := name }
       (some claim)
-    let ok := match row.result, rejected with
-      | .declaredUnresolved diagnostic, true =>
-          diagnostic.contains "reason=unclassified_form rule=dtr.argument_audit"
-      | .declaredValidated _, false => true
+    let ok := match row.result, expected with
+      | .declaredUnresolved diagnostic, some fragment => diagnostic.contains fragment
+      | .declaredValidated _, none => true
       | _, _ => false
     let actual := match row.result with
       | .declaredUnresolved diagnostic => diagnostic

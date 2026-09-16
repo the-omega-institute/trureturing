@@ -66,7 +66,7 @@ elab "observe_enrollment_boundaries" : command => do
     ("body_registered_truth_rejected", ``registeredCapture,
       some "forbidden_dependency:E6.registered_identity"),
     ("body_closed_decision_rejected", ``closedDecision,
-      some "forbidden_dependency:E6.closed_decision"),
+      some "unclassified_form:E3.closed_decision"),
     ("body_certificate_capture_rejected", ``certificateCapture,
       some "forbidden_dependency:E6.registered_identity"),
     ("body_forbidden_proof_type_rejected", ``forbiddenProofType,

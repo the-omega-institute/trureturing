@@ -55,12 +55,14 @@ elab "check_imported_template_queries" : command => do
     row.visits == first.visits && row.retainedBytes == first.retainedBytes)
   let bound := 2 * "DTRIndex.A.selected".utf8ByteSize + 1
   let within := all.all (·.visits ≤ bound)
+  let positive := rows.all (·.visits == bound)
   let nativeStable := !first.nativeInputs.isEmpty && rows.all (·.nativeInputs == first.nativeInputs)
   let growing := all[0]!.retainedBytes < all[1]!.retainedBytes &&
     all[1]!.retainedBytes < all[2]!.retainedBytes
   unless growing do throwError "setup: All workload did not import a growing index"
   logInfo m!"[{if control then "PASS" else "FAIL"}] selective_n_scaling_control"
   logInfo m!"[{if stable then "PASS" else "FAIL"}] selected_query_result_accepted"
+  logInfo m!"[{if positive then "PASS" else "FAIL"}] selected_query_counter_counts_key_path"
   logInfo m!"[{if within then "PASS" else "FAIL"}] selected_query_work_independent_of_n"
   logInfo m!"[{if nativeStable then "PASS" else "FAIL"}] native_selected_inputs_independent_of_n"
   for row in rows do

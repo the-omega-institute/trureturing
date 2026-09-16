@@ -6,6 +6,7 @@ open Lean Meta TemplateAudit
 private structure CompareState where
   remaining : Nat
   extractionNames : NameSet := {}
+  constructorTypes : Array Name := #[]
 
 private abbrev CompareM := StateT CompareState MetaM
 private def debit (n : Nat := 1) : CompareM Unit := do
@@ -97,10 +98,13 @@ private def forwardActual (theoremName selected : Name) (initial : Expr) : Compa
         let .bvar index := argument | return actual
         forwarded := forwarded.push index
     unless forwarded == (List.range arity).reverse.toArray do return actual
-    let (dependencies, typeWork) ← checkExtractionType info.type (← get).remaining
+    let (dependencies, typeWork) ← checkExtractionType info.type (← get).remaining (← get).constructorTypes
     debit typeWork
+    let indices := indexPositions info.type
+    debit indices.size
     let (argumentNames, argumentWork) ← match ←
-        RegistrationGates.templateArgumentsCurrent theoremName arguments (← get).remaining with
+        RegistrationGates.templateArgumentsCurrent theoremName arguments (← get).remaining
+          (← get).constructorTypes indices with
       | .ok result => pure result
       | .error diagnostic => throwError diagnostic
     debit argumentWork
@@ -272,8 +276,11 @@ private partial def matchesPlan (context : MatchContext) (plan : PlanNode) (actu
               (projection.universeArgs.isNone || projection.universeArgs == some universeArgs) then
             -- Audit the entire literal receiver before selecting a field. An
             -- unused anchor or signature parameter is still an extraction input.
+            let indices := indexPositions info.type
+            debit (indices.size + projection.parameters.size)
             let (names, work) ← match ← RegistrationGates.templateArgumentsCurrent
-                context.theoremName (fields ++ projection.parameters) (← get).remaining with
+                context.theoremName (fields ++ projection.parameters) (← get).remaining
+                (← get).constructorTypes (indices ++ indices.extract 0 projection.parameters.size) with
               | .ok result => pure result
               | .error diagnostic => throwError diagnostic
             debit work
@@ -435,7 +442,8 @@ private def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
     throwError "unclassified_form:dtr.descriptor_telescope"
   let arguments := descriptor.getAppArgs
   let budget := min 524288 (TemplateAudit.informationTemplate.work.get (← getOptions))
-  let (argumentNames, argumentWork) ← match ← RegistrationGates.templateArgumentsCurrent event.key.theoremName arguments budget with
+  let (argumentNames, argumentWork) ← match ← RegistrationGates.templateArgumentsCurrent event.key.theoremName arguments budget plan.constructorTypes
+      (plan.slots.map fun slot => slot.type.isConstOf ``Nat) with
     | .ok result => pure result
     | .error reason => throwError reason
   let compare : CompareM TemplateBindingCertificate := do
@@ -486,7 +494,7 @@ private def validate (event : TemplateOccurrenceEvent) (descriptor : Expr)
       | throwError "incomplete_closure:E8.evidence_identity"
     debit evidenceWork
     return { certificate with evidenceRef }
-  let (certificate, _) ← compare.run { remaining := budget - argumentWork }
+  let (certificate, _) ← compare.run { remaining := budget - argumentWork, constructorTypes := plan.constructorTypes }
   NativeCoherence.validate (#[plan.definitionOwner, plan.enrollmentOwner,
     event.key.registrationModule, bindingOwner] ++
     (plan.dependencies ++ certificate.argumentInputs ++ certificate.extractionInputs).map (·.owner))

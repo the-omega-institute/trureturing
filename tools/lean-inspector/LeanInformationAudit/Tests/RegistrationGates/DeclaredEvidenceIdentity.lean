@@ -40,12 +40,12 @@ run_meta do
   let buildArgument := fun value => do
     setEnv saved
     declare functionName functionType value
-    let descriptor ← mkAppM ``cutRealization #[mkConst functionName]
+    let descriptor ← mkAppM ``cutRealization #[mkLambda `x .default bool (mkApp (mkConst functionName) (.bvar 0))]
     declare actualName realizationType descriptor
     certificate { event with realizationName := actualName } descriptor
   let first ← buildArgument identity
   let repeated ← buildArgument identity
-  let changed ← buildArgument (mkConst ``Bool.not)
+  let changed ← buildArgument (mkLambda `x .default bool (mkApp (mkConst ``Bool.not) (.bvar 0)))
   observe "identical_dependency_reuses_evidence" (first.evidenceRef == repeated.evidenceRef)
   observe "argument_dependency_changes_evidence" (first.evidenceRef != changed.evidenceRef)
 

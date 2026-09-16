@@ -102,7 +102,7 @@ private def expectBinding (name : Name) (label : String) (reason : Option String
   let ok := match row.result, reason with
     | .declaredValidated _, none => true
     | .declaredUnresolved diagnostic, some reason =>
-        diagnostic.contains s!"reason={reason} rule=dtr.argument_audit"
+        diagnostic.contains s!"reason={reason}"
     | _, _ => false
   let actual := match row.result with
     | .declaredValidated _ => "validated"
@@ -112,23 +112,23 @@ private def expectBinding (name : Name) (label : String) (reason : Option String
   logInfo m!"[PASS] {label}"
 
 def aliasReads : PrimitiveRealization RegistrationPositive.arena.signature :=
-  finiteTemplate aliasRead
+  finiteTemplate (fun i x => aliasRead i x)
 local instance : DecidableEq RegistrationPositive.arena.State :=
   RegistrationPositive.arena.toArena.stateDecidableEq
 theorem aliasRealization : LegacyPrimitiveRealization RegistrationPositive.arena True aliasReads :=
   ⟨⟨fun _ => rfl, fun _ => True.intro⟩⟩
 register_information_theorem aliasRegistered in RegistrationPositive.arena
-  readout via (finiteTemplate aliasRead)
+  readout via (finiteTemplate (fun i x => aliasRead i x))
   primitives aliasReads.toPrimitiveBundle realization aliasRealization
   variation RegistrationPositive.lawVariation sensitivity RegistrationPositive.slotSensitivity
 run_cmd Elab.Command.liftTermElabM do
-  expectBinding ``aliasRegistered "EscapeRegistrationFinite" (some "unclassified_form")
+  expectBinding ``aliasRegistered "EscapeRegistrationFinite" (some "unclassified_form rule=E6.argument_identity")
 
 information_theorem cleanFinite in RegistrationPositive.arena
-  readout via (finiteTemplate clean)
-  primitives (finiteTemplate clean)
+  readout via (finiteTemplate (fun i x => clean i x))
+  primitives (finiteTemplate (fun i x => clean i x))
   variation RegistrationPositive.lawVariation sensitivity RegistrationPositive.slotSensitivity
-  : RegistrationPositive.arena.Law (finiteTemplate clean) := rfl
+  : RegistrationPositive.arena.Law (finiteTemplate (fun i x => clean i x)) := rfl
 run_cmd Elab.Command.liftTermElabM do
   expectBinding ``cleanFinite "DeclaredEscapeCleanFinite" none
 
@@ -138,12 +138,12 @@ def escapedRead (_ : Unit) (x : Nat) : Nat :=
   let _ := StatementKey.mk
   if escapedCert.bit then x else 0
 structural_theorem escapedStructural in RegistrationStructural.law
-  readout via (structuralTemplate escapedRead)
-  realization (structuralTemplate escapedRead) nondegeneracy RegistrationStructural.lawVariation
+  readout via (structuralTemplate (fun i x => escapedRead i x))
+  realization (structuralTemplate (fun i x => escapedRead i x)) nondegeneracy RegistrationStructural.lawVariation
   sensitivity RegistrationStructural.slotSensitivity := rfl
 example : structuralKey = ``escapedStructural := rfl
 run_cmd Elab.Command.liftTermElabM do
-  expectBinding ``escapedStructural "EscapeRegistrationStructural" (some "forbidden_dependency")
+  expectBinding ``escapedStructural "EscapeRegistrationStructural" (some "forbidden_dependency rule=E6.registered_identity")
 
 structural_theorem cleanStructural in RegistrationStructural.law
   readout via (structuralTemplate (fun _ x => x))
@@ -199,7 +199,7 @@ run_cmd Elab.Command.liftTermElabM do
     | .undeclared => "undeclared"
   -- This chain exhausts cumulative identity work before the depth cap. The
   -- error must remain unresolved, with no certificate and no larger budget.
-  unless actual.contains "reason=incomplete_closure rule=E7.body_identity" do
+  unless actual.contains "reason=incomplete_closure rule=E7.type_identity" do
     throwError "[FAIL] ForwardingExhaustion: {actual}"
   logInfo "[PASS] ForwardingExhaustion"
 

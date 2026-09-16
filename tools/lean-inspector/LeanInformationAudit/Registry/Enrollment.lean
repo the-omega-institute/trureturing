@@ -113,7 +113,7 @@ private structure CheckedTemplatePlan where
 private initialize templateIndexExt : PersistentEnvExtension TemplatePlanFrame CheckedTemplatePlan TemplateIndex ←
   registerPersistentEnvExtension {
     -- A new entry layout must not reinterpret an old olean extension payload.
-    name := `LeanInformationAudit.TemplateAudit.checkedPlanFramesV2
+    name := `LeanInformationAudit.TemplateAudit.checkedPlanFramesV3
     mkInitial := pure {}
     addEntryFn := fun index checked =>
       { (index.insertChecked checked.data checked.frame.retainedBytes) with
@@ -151,6 +151,7 @@ open Lean Meta
 
 private structure CompileState where
   remaining : Nat := 524288
+  identityState : Option RegistrationGates.WalkState := none
   dependencies : Array DependencyIdentity := #[]
   rules : Array String := #[]
   constructorTypes : NameSet := {}
@@ -339,6 +340,17 @@ private def checkedDictionary (info : ConstantInfo) : CompileM Bool := do
   rule "E2.dictionary"
   return true
 
+private def occurrenceIdentity (e : Expr) : CompileM Unit := do
+  let some identity := (← get).identityState | return
+  let available := (← get).remaining
+  let (_, identity) ← (RegistrationGates.argumentIdentityNode (← getEnv) e).run
+    { identity with exprFuel := available }
+  charge (available - identity.exprFuel)
+  modify fun s => { s with identityState := some identity }
+  if identity.incomplete then throwError "incomplete_closure:dtr.argument_audit"
+  if identity.forbidden then throwError "forbidden_dependency:dtr.argument_audit"
+  if identity.unclassified.isSome then throwError "unclassified_form:E6.argument_identity"
+
 private def staticIdentity (e : Expr) : CompileM Unit := do
   let env ← getEnv
   let name := e.getAppFn.constName?.getD .anonymous
@@ -366,6 +378,7 @@ private partial def compileNode (e : Expr) (depth : Nat)
   charge
   if depth > 256 then throwError "incomplete_closure:E8.depth"
   if e.hasMVar then throwError "incomplete_closure:E7.metavariable"
+  occurrenceIdentity e
   staticIdentity e
   -- Prop *values* are erased only after their entire proposition is classified.
   -- A proposition expression itself is not a proof value.
@@ -480,7 +493,7 @@ private partial def compileNode (e : Expr) (depth : Nat)
       return plan
     if name == ``decide then
       unless args.size == 2 && args[0]!.hasFVar && args[1]!.hasFVar do
-        throwError "forbidden_dependency:E6.closed_decision"
+        throwError "unclassified_form:E3.closed_decision"
       let mut plan := PlanNode.atom head
       for arg in args do plan := .app plan (← child arg)
       rule "E3.symbolic_decide"
@@ -678,7 +691,7 @@ private def compileTemplate (name : Name) (constructors : Array Name) : MetaM Ch
     compiler := Lean.versionString, toolchain := Lean.versionString,
     policyIdentity, sourceInputs := inputs,
     name, definitionOwner := owner, enrollmentOwner := env.header.mainModule,
-    levelParams := info.levelParams, slots,
+    levelParams := info.levelParams, slots, constructorTypes := constructors,
     typeIdentity, bodyIdentity, planIdentity := "", dependencies := state.dependencies,
     plan, typePlan, rules := state.rules,
     chargedWork := limit - state.remaining + typeBytes + bodyBytes, serializedBytes := 0 }
@@ -741,12 +754,58 @@ def enroll (name : Name) (constructors : Array Name := #[]) : CommandElabM (Exce
   if answer matches .error _ then setEnv saved
   return answer
 
+/-- Numeric literals are indices only at explicit Nat telescope positions. -/
+def indexPositions (type : Expr) : Array Bool := Id.run do
+  let mut current := type
+  let mut positions := #[]
+  while let .forallE _ domain body _ := current do
+    positions := positions.push (domain.isConstOf ``Nat)
+    current := body
+  return positions
+
+/-- Supplied arguments and every expanded executable dependency use exactly
+ the enrollment compiler. Raw identity checks precede proof erasure, projection
+ reduction and definition substitution. There is no carrier-decoding shortcut. -/
+def checkArguments (theoremName : Name) (arguments : Array Expr) (available : Nat)
+    (constructors : Array Name := #[]) (indices : Array Bool := #[]) : MetaM (Array Name × Nat) := do
+  let limit := min (min 524288 available)
+    (RegistrationGates.provenanceExpressionLimit.get (← getOptions))
+  if limit == 0 then throwError "incomplete_closure:E8.argument_work"
+  let identity ← RegistrationGates.argumentIdentityState theoremName limit
+  let action : CompileM Unit := do
+    for ast in constructors do checkConstructorType ast
+    for i in [:arguments.size] do
+      discard <| compileExpr arguments[i]! 0 (indices[i]?.getD false)
+  let (_, state) ← action.run { remaining := identity.exprFuel, identityState := some identity }
+  return (state.dependencies.map (·.name), limit - state.remaining)
+
 /-- Extraction helper types satisfy the same E2/E6 judgment. This examines a
 helper's type, not the selected template body, and returns its actual work debit. -/
-def checkExtractionType (type : Expr) (available : Nat) :
-    MetaM (Array DependencyIdentity × Nat) := do
+def checkExtractionType (type : Expr) (available : Nat)
+    (constructors : Array Name := #[]) : MetaM (Array DependencyIdentity × Nat) := do
   let limit := min 524288 available
-  let (_, state) ← (compileExpr type 0 true).run { remaining := limit }
+  let action : CompileM Unit := do
+    for ast in constructors do checkConstructorType ast
+    discard <| compileExpr type 0 true
+  let (_, state) ← action.run { remaining := limit }
   return (state.dependencies, limit - state.remaining)
 
 end LeanInformationAudit.TemplateAudit
+
+namespace LeanInformationAudit.RegistrationGates
+open Lean
+
+/-- Current declared argument entry, shared with enrollment's finite grammar. -/
+def templateArgumentsCurrent (theoremName : Name) (arguments : Array Expr)
+    (availableWork : Nat) (constructors : Array Name := #[]) (indices : Array Bool := #[]) :
+    CoreM (Except String (Array Name × Nat)) :=
+  Meta.MetaM.run' <| tryCatchRuntimeEx
+    (TemplateAudit.withCumulativeBudget <| .ok <$> TemplateAudit.checkArguments
+      theoremName arguments availableWork constructors indices)
+    (fun error => do
+      let message ← error.toMessageData.toString
+      return .error (if message.startsWith "unclassified_form:" ||
+          message.startsWith "forbidden_dependency:" || message.startsWith "incomplete_closure:"
+        then message else "incomplete_closure:E8.argument_elaboration:" ++ message))
+
+end LeanInformationAudit.RegistrationGates

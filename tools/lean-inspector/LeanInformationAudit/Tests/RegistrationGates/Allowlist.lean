@@ -32,7 +32,13 @@ check_provenance "ClosedPredicateArgumentAdmitted" using closedPredicateRead exp
 
 def equivDecisionRead (_ : Unit) (x : Bool) : Bool :=
   if @decide (x = true) ((Equiv.refl Bool).decidableEq x true) then x else false
-check_provenance "EquivDecidableEqAdmitted" using equivDecisionRead expects "clean" for specificTruth
+run_meta do
+  let .defnInfo info ← getConstInfo ``equivDecisionRead | throwError "setup: dictionary argument"
+  let result ← RegistrationGates.templateArgumentsCurrent ``specificTruth #[info.value] 524288
+  let rejected := match result with
+    | .error reason => reason.startsWith "unclassified_form:E"
+    | _ => false
+  logInfo m!"[{if rejected then "PASS" else "FAIL"}] EquivDecidableEqRejected result={repr result}"
 
 def unlistedProducerRead (_ : Unit) (x : Bool) : Bool :=
   let d : DecidableEq Bool := Function.Injective.decidableEq (f := fun b : Bool => b) (fun _ _ h => h)

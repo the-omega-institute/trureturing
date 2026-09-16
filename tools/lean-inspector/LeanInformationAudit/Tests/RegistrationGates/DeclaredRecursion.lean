@@ -79,6 +79,45 @@ elab "observe_constructor_recursion" : command => do
       if let .error reason := decoded then logInfo m!"actual={reason}"
     logInfo m!"[{if actual == expected && retained == expected.isNone then "PASS" else "FAIL"}] {label} result={repr actual}"
 
+-- The syntax gate is separate from the semantic constructor-description check.
+def futureVersion (f : Bool → Bool) : PrimitiveRealization (cutSignature Bool Bool) := cutRealization f
+register_information_template futureVersion constructors 2 [ObjectTree]
+run_meta do
+  let rejected := !(selectedPlan (← getEnv) ``futureVersion).isOk
+  logInfo m!"[{if rejected then "PASS" else "FAIL"}] constructor_recursion_version_gate"
+
 observe_constructor_recursion
+
+def treeTemplate (_ : ObjectTree) (f : Bool → Bool) :
+    PrimitiveRealization (cutSignature Bool Bool) := cutRealization f
+register_information_template treeTemplate constructors 1 [ObjectTree]
+
+def forwardTree (tree : ObjectTree) (f : Bool → Bool) := treeTemplate tree f
+
+def treeArena : PrimitiveLawArena where
+  toArena := Arena.ofFintype Bool
+  signature := cutSignature Bool Bool
+  Law r := ∀ x : Bool, r.readout () x = x.not.not
+instance : DecidableEq treeArena.State := instDecidableEqBool
+
+information_theorem directTree in treeArena
+  readout via (treeTemplate (.leaf true) (fun x => x))
+  primitives (treeTemplate (.leaf true) (fun x => x))
+  : ∀ x : Bool, x = x.not.not := by intro x; exact (Bool.not_not x).symm
+
+information_theorem forwardedTree in treeArena
+  readout via (treeTemplate (.leaf true) (fun x => x))
+  primitives (forwardTree (.leaf true) (fun x => x))
+  : ∀ x : Bool, x = x.not.not := by intro x; exact (Bool.not_not x).symm
+
+run_meta do
+  for (name, label) in #[(``directTree, "constructor_description_argument_accepted"),
+      (``forwardedTree, "constructor_description_forwarding_accepted")] do
+    let some row := (TemplateBinding.records (← getEnv)).find?
+        (·.occurrence.key.theoremName == name) | throwError "setup: missing constructor binding"
+    match row.result with
+    | .declaredValidated _ => logInfo m!"[PASS] {label}"
+    | .declaredUnresolved diagnostic => logInfo m!"[FAIL] {label}: {diagnostic}"
+    | .undeclared => throwError "setup: missing descriptor"
 
 end LeanInformationAudit.Tests.DeclaredRecursion

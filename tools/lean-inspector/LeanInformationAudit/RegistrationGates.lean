@@ -131,7 +131,7 @@ def validateFinite (entry : InformationRegistryEntry) : MetaM (Option String) :=
   -- Declared-template assessment owns the readout plan and its argument audit;
   -- witness validation never expands a whole realization as a fallback.
   if let some certificate := entry.derivedCertificate then
-    if let .error diagnostic ← templateArgumentsCurrent entry.theoremName
+    if let .error diagnostic ← providerArgumentsCurrent entry.theoremName
         certificate.descriptor.getAppArgs 524288 then
       let parts := diagnostic.splitOn ":"
       let reason := parts.head!

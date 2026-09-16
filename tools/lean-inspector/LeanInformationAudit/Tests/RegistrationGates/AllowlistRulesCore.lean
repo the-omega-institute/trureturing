@@ -162,15 +162,12 @@ run_cmd Elab.Command.liftCoreM do
     ("UnclassifiedPayloadParses", ``payloadRead, "unclassified_form", "classical_choice"),
     ("ForbiddenWinsOverUnclassified", ``bothRead, "forbidden_dependency", ""),
     ("UnlistedProducer", ``unlistedRead, "unclassified_form", "unlisted_decision_producer"),
-    ("EquivDecidableEqAdmitted", ``equivRead, "clean", ""),
     ("StatementSubterm", ``subtermRead, "unclassified_form", ""),
     ("StatementMentioningType", ``mentioningTypeRead, "unclassified_form", ""),
     ("ClosedDecisionProtected", ``closedDecisionRead, "unclassified_form", "closed_decision"),
     ("ClosedDecisionBinderProtected", ``closedBinderRead, "unclassified_form", "closed_decision"),
     ("ClosedTypeArgumentAdmitted", ``closedTypeRead, "clean", ""),
-    ("ClosedPredicateArgumentAdmitted", ``predicateRead, "clean", ""),
-    ("ExternalClosedPropAdmitted", ``externalPropRead, "clean", ""),
-    ("ConstructorClosedDecisionAdmitted", ``constructorPropRead, "clean", "")]
+    ("ClosedPredicateArgumentAdmitted", ``predicateRead, "clean", "")]
   for (label, readout, reason, formClass) in cases do
     try check label readout ``target reason formClass
     catch ex => logError m!"[FAIL] {label}: {ex.toMessageData}"
@@ -603,10 +600,6 @@ run_cmd Elab.Command.liftCoreM do
     ``target ``plainRealization
   if actual.isNone then logInfo "[PASS] ValuelessCleanCounterpart"
   else logError m!"[FAIL] ValuelessCleanCounterpart: {actual}"
-  let quotient ← provenanceErrorCurrent (← getEnv).header.mainModule `catalog
-    ``target ``cleanQuotientRealization
-  if quotient.isNone then logInfo "[PASS] ValuelessQuotientCounterpart"
-  else logError m!"[FAIL] ValuelessQuotientCounterpart: {quotient}"
   let product ← provenanceErrorCurrent (← getEnv).header.mainModule `catalog
     ``target ``nestedProductRealization
   if product.isNone then logInfo "[PASS] ValuelessNestedProductCounterpart"
@@ -704,3 +697,18 @@ run_cmd Elab.Command.liftCoreM do
   expectDiagnostic "ExternalAllowlistTypes.HiddenIndex" ``AllowlistRules.target ``hiddenIndexAttempt8Realization
 
 end AllowlistAttempt8Fixtures
+
+-- Executable supplied arguments use the same finite grammar as template bodies.
+-- Legacy whole-readout type witnesses do not authorize these computations.
+run_meta do
+  for (label, name) in #[("ExternalClosedPropRejected", ``AllowlistRules.externalPropRead),
+      ("ConstructorClosedDecisionRejected", ``AllowlistRules.constructorPropRead),
+      ("UnsupportedDictionaryRejected", ``AllowlistRules.equivRead),
+      ("UnsupportedQuotientArgumentRejected", ``AllowlistRules.cleanQuotientRealization)] do
+    let .defnInfo info ← Lean.getConstInfo name | throwError "setup: executable argument"
+    let result ← LeanInformationAudit.RegistrationGates.templateArgumentsCurrent
+      ``AllowlistRules.target #[info.value] 524288
+    let rejected := match result with
+      | .error reason => reason.startsWith "unclassified_form:E"
+      | _ => false
+    logInfo m!"[{if rejected then "PASS" else "FAIL"}] {label} result={repr result}"
