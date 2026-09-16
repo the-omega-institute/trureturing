@@ -268,12 +268,16 @@ internal static partial class CommonExecutionEvidence
     }
 
     internal static (CommonStageRecord Current, CommonStageRecord Engineering, CommonStageRecord Build, TestExecutionRecord Tests) ValidateCommon(
-        string root, IEnumerable<string>? baseProjects = null)
+        string root, IEnumerable<string>? baseProjects = null) =>
+        ValidateCommon(root, ValidationScope.Create(root), baseProjects);
+
+    internal static (CommonStageRecord Current, CommonStageRecord Engineering, CommonStageRecord Build, TestExecutionRecord Tests) ValidateCommon(
+        string root, ValidationScope validation, IEnumerable<string>? baseProjects = null)
     {
-        var candidate = Candidate(root, out var snapshot);
-        var build = ValidateBuild(root, candidate, null);
-        var engineering = ValidateEngineering(root, build, new ValidationScope(snapshot), out var tests, out _, baseProjects);
-        return (ValidateCurrent(root, build, snapshot), engineering, build, tests);
+        var candidate = Candidate(root, validation.Snapshot);
+        var build = ValidateBuild(root, candidate, null, validation);
+        var engineering = ValidateEngineering(root, build, validation, out var tests, out _, baseProjects);
+        return (ValidateCurrent(root, build, validation, out _), engineering, build, tests);
     }
 
     private static void ValidateRecord(string root, CommonStageRecord record, string candidate, string round, ValidationScope? validation = null)

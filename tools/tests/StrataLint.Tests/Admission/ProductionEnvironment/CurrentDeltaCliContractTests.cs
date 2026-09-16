@@ -290,6 +290,15 @@ public sealed class CurrentDeltaCliContractTests(Xunit.Abstractions.ITestOutputH
     [InlineData("candidate-mismatch", 2, "candidate identity")]
     [InlineData("failed-trx", 2, "artifact integrity")]
     [InlineData("missing-current", 2, "current.json")]
+    [InlineData("after-valid-missing-report", 2, "raw-lean-report.json")]
+    [InlineData("after-valid-invalid-report", 2, "Raw Lean report is not valid JSON")]
+    [InlineData("after-valid-missing-report-archive", 2, "materials")]
+    [InlineData("after-valid-stale-report", 2, "source")]
+    [InlineData("after-valid-candidate-mismatch", 2, "candidate identity")]
+    [InlineData("after-valid-failed-trx", 2, "artifact integrity")]
+    [InlineData("after-valid-current-round", 2, "round mismatch")]
+    [InlineData("after-valid-unbound-report-archive", 2, "missing required materials")]
+    [InlineData("after-valid-contradictory-material", 2, "artifact integrity")]
     [InlineData("staged-valid", 0, "")]
     [InlineData("staged-missing-current", 2, "current.json")]
     [InlineData("staged-failed-trx", 2, "artifact integrity")]
@@ -299,7 +308,8 @@ public sealed class CurrentDeltaCliContractTests(Xunit.Abstractions.ITestOutputH
     public void DeltaConsumesValidatedCommonResultsAndEnforcesOnlyCrossTreePredicates(string scenario, int expectedExit, string diagnostic)
     {
         var staged = scenario.StartsWith("staged-", StringComparison.Ordinal);
-        var defect = staged ? scenario["staged-".Length..] : scenario;
+        var afterValid = scenario.StartsWith("after-valid-", StringComparison.Ordinal);
+        var defect = staged ? scenario["staged-".Length..] : afterValid ? scenario["after-valid-".Length..] : scenario;
         using var temporary = new TemporaryDirectory();
         var root = temporary.Path;
         var fixture = new RuleFixture();
@@ -491,9 +501,38 @@ public sealed class CurrentDeltaCliContractTests(Xunit.Abstractions.ITestOutputH
                         file.Path.Value[..^".scribe.cs".Length] + ".md", "sha256:" + new string('a', 64)))).WriteMaterial() : null));
             checks.Seal();
         }
+        if (afterValid)
+        {
+            var accepted = environment.CheckDelta(["--protected-base", basis, "--candidate-lean-report", report]);
+            Assert.True(accepted.ExitCode == 0, accepted.Output + accepted.Error);
+            AssertAcceptedBaseTests(accepted.Output);
+        }
         switch (defect)
         {
             case "missing-report": File.Delete(report); break;
+            case "invalid-report": File.WriteAllText(report, "not JSON"); break;
+            case "missing-report-archive": File.Delete(report + ".materials.zip"); break;
+            case "stale-report": File.AppendAllText(Path.Combine(root, RuleFixture.RingPath), "-- changed source\n"); break;
+            case "current-round":
+            case "unbound-report-archive":
+            case "contradictory-material":
+                var evidence = CommonExecutionEvidence.Read<CommonStageRecord>(root, CommonExecutionEvidence.CurrentPath);
+                CommonExecutionEvidence.Write(root, CommonExecutionEvidence.CurrentPath, defect switch
+                {
+                    "current-round" => evidence with { Round = "another-round" },
+                    "unbound-report-archive" => evidence with
+                    {
+                        Materials = evidence.Materials.Where(material => material.Path != CommonExecutionEvidence.ReportPath + ".materials.zip").ToArray(),
+                    },
+                    _ => evidence with
+                    {
+                        // This operation log is also bound by build and engineering.
+                        // Sharing validated bytes must still compare each claimed digest.
+                        Materials = evidence.Materials.Select(material => material.Path == log
+                            ? material with { Sha256 = new string('0', 64) } : material).ToArray(),
+                    },
+                });
+                break;
             case "missing-current": File.Delete(Path.Combine(root, CommonExecutionEvidence.CurrentPath)); break;
             case "invalid-dll": File.AppendAllText(Path.Combine(root, CommonExecutionEvidence.CliPath), "damage"); break;
             case "candidate-mismatch": File.AppendAllText(Path.Combine(root, RuleFixture.BlueprintPath), "new round\n"); break;
@@ -531,7 +570,11 @@ public sealed class CurrentDeltaCliContractTests(Xunit.Abstractions.ITestOutputH
         if (scenario is "valid" or "reused")
         {
             Assert.All(hashes, row => Assert.Equal(1, row.Value));
-            using var verdict = JsonDocument.Parse(console.Output);
+            AssertAcceptedBaseTests(console.Output);
+        }
+        void AssertAcceptedBaseTests(string output)
+        {
+            using var verdict = JsonDocument.Parse(output);
             Assert.Equal(CommonExecutionEvidence.Read<TestExecutionRecord>(root, CommonExecutionEvidence.TestsPath).Projects
                 .Select(row => (row.Project, row.Status, row.ExecutionCandidate, row.ExecutionRound)),
                 verdict.RootElement.GetProperty("accepted_base_tests").EnumerateArray().Select(row => (
