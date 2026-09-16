@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bb34e9b9a537f39bcb61860e0fe94e407603b1f4692090d0c2256a6040a89c1f
+  normalized_sha256: sha256:bb34e9b9a537f39bcb61860e0fe94e407603b1f4692090d0c2256a6040a89c1f
+cas_ref: sha256:bb34e9b9a537f39bcb61860e0fe94e407603b1f4692090d0c2256a6040a89c1f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶只规定进位费用与历史不计入已定义的 H，并结束证明，属于计数作用域说明，没有独立待证命题，故无需证明探针。
+    previous_atom_id: 7c092f89bc578820b29e47eea9162a71fdb82d0e7aec791b078cf2e8bfb73ee6
+    next_atom_id: 691f3d641907408d6fd62867d47eb8d525d1f927306280795cf969909240706a
