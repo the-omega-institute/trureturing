@@ -1,0 +1,6 @@
+**theorem 37.7 (Centers, minimal ideals, idempotents, and units).** Define the center associated with continuity of fixed left multiplication by
+$$
+\mathfrak Z_{\mathrm{top}}(\mathscr E)
+=\{p\in\mathscr E:L_p:\mathscr E\to\mathscr E\text{ is continuous}\}.
+$$
+With the multiplication convention of Definition 37.0, this is the topological center specified by fixed left multiplication. 

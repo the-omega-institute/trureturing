@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:e173402c7b7e3f3e9357040c68e81ebe6b82cdd395227af39fa0f6895a8f7a54
+  normalized_sha256: sha256:e173402c7b7e3f3e9357040c68e81ebe6b82cdd395227af39fa0f6895a8f7a54
+cas_ref: sha256:e173402c7b7e3f3e9357040c68e81ebe6b82cdd395227af39fa0f6895a8f7a54
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Interventions/CounterfactualIdentifiabilityCriterion.counterfactual_identifiable_iff_constant_on_fiber
+    target_statement_id: sha256:e8bf99d64f2851fefcf10f0877283c803e2ebc202dca327dceb1ca0fab750973
+receipts:
+  unresolved_subitems: []
