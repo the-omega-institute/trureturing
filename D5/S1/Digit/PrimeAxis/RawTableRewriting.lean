@@ -45,10 +45,6 @@ def S (t : RawTable) : ℕ := moment (fun j => j^2) t
 /-- One directed carry in one prime row, with its charge left unspecified. -/
 def Reduces (t u : RawTable) : Prop := ∃ p z, TableStep t u p z
 
-/-- The finite set of indices whose Fibonacci weights do not exceed the given value. -/
-def weightIndices (v : ℕ) : Finset ℕ :=
-  (Finset.range (v+1)).filter fun j => wValue j ≤ v
-
 /-- The token count, index sum, and bounded complementary square sum. -/
 def triple (v J : ℕ) (t : RawTable) : ℕ × ℕ × ℕ := (C t, I t, v*J^2-S t)
 
@@ -132,25 +128,6 @@ def LegalWord : RawTable → List Rule → Prop
 def rowFiber (t : RawTable) : Set RawTable :=
   {u | ∀ p, rawValue (u p) = rawValue (t p)}
 
-/-- An index required by the left side of a row carry. -/
-def pivot : RuleKind → ℕ
-  | .adjacent j => j
-  | .doubleZero => 0
-  | .doubleOne => 1
-  | .doubleSucc j => j+2
-
-/-- A finite set containing every rule enabled at the given table. -/
-def ruleCandidates (t : RawTable) : Finset Rule :=
-  t.support.product
-    (((Finset.range (V t+1)).image RuleKind.adjacent ∪
-      (Finset.range (V t+1)).image RuleKind.doubleSucc) ∪
-      {RuleKind.doubleZero, RuleKind.doubleOne})
-
-/-- The coefficientwise bound with the given prime support and uniform index and multiplicity bounds. -/
-noncomputable def box (t : RawTable) : RawTable :=
-  ∑ p ∈ t.support, Finsupp.single p
-    (∑ j ∈ Finset.range (V t+1), Finsupp.single j (V t))
-
 /-- The exact changes in token count, index sum, and square sum for the four directed carries. -/
 def RuleEffect (t u : RawTable) : RuleKind → Prop
   | .adjacent _ => C u + 1 = C t
@@ -181,13 +158,17 @@ theorem table_rewriting_terminates :
     (∀ t u p z, TableStep t u p z →
       ∃ a : Rule, a.1 = p ∧ Enabled t a ∧ applyRule t a = u ∧ RuleEffect t u a.2) ∧
     (∀ e : Execution, Maximal e →
-      ∃ finite : FiniteExecution, e = .inl finite ∧ Irreducible finite.last) ∧
+      ∃ finite : FiniteExecution, e = .inl finite ∧ Irreducible finite.last ∧
+        finite.last = rowNormalize (finite.states 0)) ∧
     (∀ t : RawTable, Irreducible t ↔ ∀ p, CanonicalRaw (t p)) ∧
     (∀ t u c, TablePath t u c → Irreducible u →
       (∀ p j, u p j ≤ 1) ∧ (∀ p j, u p j = 1 → u p (j+1) = 0) ∧
       u = rowNormalize t ∧
       ∀ v d, TablePath t v d → Irreducible v → v = u) := by
   classical
+  let weightIndices (v : ℕ) : Finset ℕ :=
+    (Finset.range (v+1)).filter fun j => wValue j ≤ v
+
   have rowMoment_add (w : ℕ → ℕ) (r s : RawDigits) :
       rowMoment w (r+s) = rowMoment w r + rowMoment w s := by
     classical
@@ -342,27 +323,6 @@ theorem table_rewriting_terminates :
         unfold triple TripleLt
         rw [hC]
         exact Prod.Lex.right _ (Prod.Lex.left _ _ (by omega))
-  have exact_triple_clause (t : RawTable) (ht : 0 < V t) :
-      ∃ J : ℕ, wValue J ≤ V t ∧
-        (∀ j, wValue j ≤ V t → j ≤ J) ∧
-        ∀ u charge, TablePath t u charge →
-          S u ≤ V t * J^2 ∧
-          ∀ v p z, TableStep u v p z →
-            S v ≤ V t * J^2 ∧
-            TripleLt (triple (V t) J v) (triple (V t) J u) := by
-    obtain ⟨J, hJ, hmax, hbound⟩ := reachable_index_bound t ht
-    refine ⟨J, hJ, hmax, ?_⟩
-    intro u charge hu
-    have hs : S u ≤ V t * J^2 := by
-      rw [path_value t u charge hu]
-      exact square_bound u J (fun p j hj => (hbound u charge hu p j hj).2)
-    refine ⟨hs, ?_⟩
-    intro v p z huv
-    have hv := TablePath.tail hu huv
-    have hsv : S v ≤ V t * J^2 := by
-      rw [path_value t v _ hv]
-      exact square_bound v J (fun q j hj => (hbound v _ hv q j hj).2)
-    exact ⟨hsv, triple_step (V t) J huv hsv⟩
   have triple_wellFounded : WellFounded TripleLt :=
     Nat.lt_wfRel.wf.prod_lex (Nat.lt_wfRel.wf.prod_lex Nat.lt_wfRel.wf)
   have no_infinite_table_path :
@@ -528,8 +488,24 @@ theorem table_rewriting_terminates :
         simpa [applyRule, he] using congrArg (fun r : RawDigits => r j) hf.symm
       · simp [applyRule, Finsupp.update_apply, hq, h.2 q hq]
     exact ⟨(p,k), rfl, hen, hout, hout ▸ rule_effects u (p,k) hen⟩
+  have maximal_normal_form (e : Execution) (he : Maximal e) :
+      ∃ finite : FiniteExecution, e = .inl finite ∧ Irreducible finite.last ∧
+        finite.last = rowNormalize (finite.states 0) := by
+    obtain ⟨finite, heq, hir⟩ := maximal_execution_clause e he
+    have path : ∀ n (hn : n ≤ finite.length),
+        ∃ charge, TablePath (finite.states 0) (finite.states ⟨n, by omega⟩) charge := by
+      intro n
+      induction n with
+      | zero => intro hn; exact ⟨0, TablePath.refl _⟩
+      | succ n ih =>
+          intro hn
+          obtain ⟨charge, hp⟩ := ih (by omega)
+          obtain ⟨p, z, hs⟩ := finite.legal ⟨n, by omega⟩
+          exact ⟨charge + Finsupp.single p z, TablePath.tail hp hs⟩
+    obtain ⟨charge, hp⟩ := path finite.length le_rfl
+    exact ⟨finite, heq, hir, (irreducible_unique_clause _ _ charge hp hir).2.2.1⟩
   refine ⟨table_strong_termination, no_infinite_table_path, triple_wellFounded,
-    token_bound, zero_table_clause, ?_, effects, maximal_execution_clause,
+    token_bound, zero_table_clause, ?_, effects, maximal_normal_form,
     irreducible_iff_canonical, irreducible_unique_clause⟩
   intro t ht
   obtain ⟨J, hJ, hmax, hb⟩ := reachable_index_bound t ht
@@ -556,6 +532,20 @@ theorem finite_legal_words (t : RawTable) :
     (∀ u p z, TableStep t u p z ↔
       ∃ k : RuleKind, Enabled t (p,k) ∧ applyRule t (p,k) = u ∧ ruleCharge k = z) := by
   classical
+  let pivot : RuleKind → ℕ := fun
+    | .adjacent j => j
+    | .doubleZero => 0
+    | .doubleOne => 1
+    | .doubleSucc j => j+2
+  let ruleCandidates (u : RawTable) : Finset Rule :=
+    u.support.product
+      (((Finset.range (V u+1)).image RuleKind.adjacent ∪
+        (Finset.range (V u+1)).image RuleKind.doubleSucc) ∪
+        {RuleKind.doubleZero, RuleKind.doubleOne})
+  let box (u : RawTable) : RawTable :=
+    ∑ p ∈ u.support, Finsupp.single p
+      (∑ j ∈ Finset.range (V u+1), Finsupp.single j (V u))
+
   have weight_pos (j : ℕ) : 0 < wValue j := Nat.fib_pos.mpr (by omega)
   have coefficient_value_le (t : RawTable) (p : PrimeAxis) (j : ℕ) :
       t p j * wValue j ≤ V t := by
