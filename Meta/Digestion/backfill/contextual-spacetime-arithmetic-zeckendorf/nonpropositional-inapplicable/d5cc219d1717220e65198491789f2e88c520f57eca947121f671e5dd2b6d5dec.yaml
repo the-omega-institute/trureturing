@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d5cc219d1717220e65198491789f2e88c520f57eca947121f671e5dd2b6d5dec
+  normalized_sha256: sha256:d5cc219d1717220e65198491789f2e88c520f57eca947121f671e5dd2b6d5dec
+cas_ref: sha256:d5cc219d1717220e65198491789f2e88c520f57eca947121f671e5dd2b6d5dec
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 同一 volume 的单点零测度由 AddCircle.volume_closedBall 得到，再由 Set.Countable.measure_zero 对任意可数集合直接应用，仓内无冻结 GID。
+    previous_atom_id: 37adf95cec112d591ee8bf14ca75754553b624e9c60a41206f9cb8402a71f7f0
+    next_atom_id: 19d1b3798870fc7184b345fe091f45cee40088ecb950abdd70404bd0b49b2cf3
