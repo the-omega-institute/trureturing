@@ -7,6 +7,13 @@ import re
 _UNSPECIFIED = object()
 
 
+class CacheMaterialDifference(ValueError):
+    """A fixed mismatch category and relative member, without material bytes."""
+    def __init__(self, message, reason, path=None):
+        super().__init__(message)
+        self.reason, self.path = reason, path
+
+
 def sha(path):
     value = hashlib.sha256()
     with path.open("rb") as source:
@@ -99,7 +106,8 @@ def files(directory, *, expected=_UNSPECIFIED, copy_to=None):
                 digest, mode = copy_hash(path, copy_to / name)
             actual = {"path": name, "sha256": digest, "mode": mode}
             if actual != item:
-                raise ValueError(f"cache material integrity mismatch: {name}")
+                raise CacheMaterialDifference(f"cache material integrity mismatch: {name}",
+                    "mode-changed" if mode != item["mode"] else "content-changed", name)
             result.append(actual)
         return sorted(result, key=lambda item: item["path"])
     result = []

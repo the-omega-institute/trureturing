@@ -9,6 +9,60 @@ from unittest import mock
 
 
 class NoopSnapshotCases:
+    def test_bounded_snapshot_reports_first_difference_without_changing_save_decision(self):
+        owner = self.restore_owner()
+        from cache_deadline import CacheDeadline
+        cases = (("bytes", {"reason": "content-changed", "path": "a.olean"}),
+                 ("mode", {"reason": "mode-changed", "path": "a.olean"}),
+                 ("added", {"reason": "extra-member", "path": "new.olean"}),
+                 ("removed", {"reason": "missing-member", "path": "a.olean"}),
+                 ("missing-record", {"reason": "cache-state-unavailable"}),
+                 ("invalid-record", {"reason": "invalid-cache-state"}),
+                 ("foreign-record", {"reason": "restore-record-mismatch"}))
+        for change, expected in cases:
+            with self.subTest(change=change):
+                shutil.rmtree(self.root / ".lake/build", ignore_errors=True)
+                shutil.rmtree(self.root / "build/lean-cache/project", ignore_errors=True)
+                source, cached, manifest = self.restore_fixture("project", {
+                    "a.olean": b"accepted", "z.olean": b"tail"})
+                with mock.patch.dict(os.environ, self.env), contextlib.redirect_stdout(io.StringIO()):
+                    keys = owner.actions_keys(self.root)
+                    owner.restore(self.root, keys, {"project": manifest["key"]}, ["project"])
+                if change == "bytes": (source / "a.olean").write_bytes(b"changed")
+                elif change == "mode": (source / "a.olean").chmod(0o755)
+                elif change == "added": (source / "new.olean").write_bytes(b"new")
+                elif change == "removed": (source / "a.olean").unlink()
+                elif change == "missing-record": (cached / "restored.json").unlink()
+                elif change == "invalid-record": (cached / "restored.json").write_text("private-token")
+                else: (cached / "restored.json").write_text('{}')
+                with mock.patch.dict(os.environ, self.env), contextlib.redirect_stdout(io.StringIO()) as receipts:
+                    owner.snapshot(self.root, keys, ["project"],
+                                   deadline=CacheDeadline(400, monotonic=lambda: 100))
+                output = receipts.getvalue()
+                published = [json.loads(line.removeprefix("LEAN_ACTIONS_CACHE "))
+                             for line in output.splitlines() if line.startswith("LEAN_ACTIONS_CACHE ")]
+                self.assertEqual(1, len(published))
+                self.assertEqual("snapshot", published[0]["status"])
+                self.assertIn("snapshot_reason", published[0])
+                self.assertEqual(expected, published[0]["snapshot_reason"])
+                self.assertIn("project_ready=true", output)
+                self.assertNotIn("private-token", output)
+                self.assertEqual(b"tail", (cached / "data/z.olean").read_bytes())
+
+    def test_bounded_unchanged_snapshot_still_skips_save(self):
+        owner = self.restore_owner()
+        from cache_deadline import CacheDeadline
+        source, cached, manifest = self.restore_fixture("project", {"a.olean": b"accepted"})
+        with mock.patch.dict(os.environ, self.env), contextlib.redirect_stdout(io.StringIO()):
+            keys = owner.actions_keys(self.root)
+            owner.restore(self.root, keys, {"project": manifest["key"]}, ["project"])
+        with mock.patch.dict(os.environ, self.env), contextlib.redirect_stdout(io.StringIO()) as receipts:
+            owner.snapshot(self.root, keys, ["project"],
+                           deadline=CacheDeadline(400, monotonic=lambda: 100))
+        self.assertIn('"reason": "unchanged"', receipts.getvalue())
+        self.assertIn("project_ready=false", receipts.getvalue())
+        self.assertNotIn("snapshot_reason", receipts.getvalue())
+
     def test_unchanged_restored_layer_skips_snapshot_and_save(self):
         owner = self.restore_owner()
         source, cached, manifest = self.restore_fixture("project", {"a.olean": b"accepted"})

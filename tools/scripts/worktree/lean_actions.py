@@ -18,7 +18,7 @@ import time
 
 from lean_cache import binary_platform, partition_path, resolved_mathlib
 from lean_cache_release import cache_guard
-from cache_material import files, sha, snapshot_files, validate_manifest
+from cache_material import CacheMaterialDifference, files, sha, snapshot_files, validate_manifest
 
 LAYERS = ("dependency", "project")
 # Execution evidence is opt-in; native engineering/current owners produce it.
@@ -288,21 +288,22 @@ def validate_cache_directory(directory, expected, *, small_files_first=False):
     are permitted because snapshot manifests intentionally register files only.
     """
     if directory.is_symlink() or not directory.is_dir():
-        raise ValueError("cache data is not a private directory")
+        raise CacheMaterialDifference("cache data is not a private directory", "invalid-layer-directory")
     validate_manifest(expected)
     declared = {item["path"]: item["mode"] for item in expected}
     actual = {}
     for path in directory.rglob("*"):
         relative = path.relative_to(directory).as_posix()
         if path.is_symlink():
-            raise ValueError("cache data contains a symlink: " + relative)
+            raise CacheMaterialDifference("cache data contains a symlink: " + relative, "symlink-member", relative)
         if path.is_dir():
             continue
         if not path.is_file():
-            raise ValueError("cache data member is not a regular file: " + relative)
+            raise CacheMaterialDifference("cache data member is not a regular file: " + relative,
+                                          "nonregular-member", relative)
         metadata = path.stat()
         if relative in declared and metadata.st_mode & 0o777 != declared[relative]:
-            raise ValueError("cache material integrity mismatch: " + relative)
+            raise CacheMaterialDifference("cache material integrity mismatch: " + relative, "mode-changed", relative)
         actual[relative] = metadata.st_size
     if actual.keys() != declared.keys():
         extra = sorted(actual.keys() - declared.keys())
@@ -312,7 +313,8 @@ def validate_cache_directory(directory, expected, *, small_files_first=False):
             detail.append("extra=" + ",".join(extra[:3]))
         if missing:
             detail.append("missing=" + ",".join(missing[:3]))
-        raise ValueError("cache data members differ from manifest (" + ";".join(detail) + ")")
+        raise CacheMaterialDifference("cache data members differ from manifest (" + ";".join(detail) + ")",
+                                      "extra-member" if extra else "missing-member", (extra or missing)[0])
     if small_files_first:
         expected = sorted(expected, key=lambda item: (actual[item["path"]], item["path"]))
     return files(directory, expected=expected)
@@ -372,8 +374,9 @@ def stage_snapshot(root, keys, layer, staged, registry=None, *, current=None):
             metrics = {"save_disabled_reason": "current did not execute a successful Lean build"}
             (staged / "metrics.json").write_text(json.dumps(metrics) + "\n")
             return metrics
+    difference = {}
     with cache_guard(root, shared=True):
-        if layer in ("dependency", "project") and unchanged_layer(root, keys[layer], layer, keys["partition"]):
+        if layer in ("dependency", "project") and unchanged_layer(root, keys[layer], layer, keys["partition"], difference):
             metrics = {"save_disabled_reason": "unchanged"}
             (staged / "metrics.json").write_text(json.dumps(metrics) + "\n")
             return metrics
@@ -394,11 +397,13 @@ def stage_snapshot(root, keys, layer, staged, registry=None, *, current=None):
     metrics = {"file_count": len(inventory), "uncompressed_bytes": sum(size for _, size in sizes),
                "largest_files": [{"path": item["path"], "sha256": item["sha256"], "size_bytes": size}
                                  for item, size in sorted(sizes, key=lambda pair: (-pair[1], pair[0]["path"]))[:5]]}
+    if difference:
+        metrics["snapshot_reason"] = difference
     (staged / "metrics.json").write_text(json.dumps(metrics, sort_keys=True) + "\n")
     return metrics
 
 
-def unchanged_layer(root, spec, layer, partition):
+def unchanged_layer(root, spec, layer, partition, difference=None):
     """Check whether a restored layer already contains the exact current material.
 
     Only a seed successfully restored in this execution may suppress a save.
@@ -409,9 +414,14 @@ def unchanged_layer(root, spec, layer, partition):
     """
     manifest_path = root / spec["path"] / "manifest.json"
     restored_path = root / spec["path"] / "restored.json"
+    def changed(reason, path=None):
+        if difference is not None:
+            difference.update({"reason": reason, **({"path": path} if path is not None else {})})
+        return False
+
     try:
         if manifest_path.is_symlink() or restored_path.is_symlink():
-            return False
+            return changed("unsafe-cache-state")
         manifest_bytes = manifest_path.read_bytes()
         manifest = json.loads(manifest_bytes)
         restored = json.loads(restored_path.read_bytes())
@@ -420,12 +430,16 @@ def unchanged_layer(root, spec, layer, partition):
                 or manifest.get("layer") != layer
                 or restored != {"schema": "lean-actions-restored-v1", "snapshot_key": spec["key"],
                                 "manifest_sha256": hashlib.sha256(manifest_bytes).hexdigest()}):
-            return False
+            return changed("restore-record-mismatch")
         target = root / spec["target"]
         validate_cache_directory(target, manifest.get("files"), small_files_first=True)
         return True
-    except (OSError, ValueError, TypeError, KeyError, json.JSONDecodeError):
-        return False
+    except CacheMaterialDifference as error:
+        return changed(error.reason, error.path)
+    except OSError:
+        return changed("cache-state-unavailable")
+    except (ValueError, TypeError, KeyError, json.JSONDecodeError):
+        return changed("invalid-cache-state")
 
 
 def current_built_lean(root, plan, commit):
