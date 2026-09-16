@@ -1,0 +1,77 @@
+**theorem 37.4 (Exact operator classification and the complete net dichotomy).** One has the disjoint union of actual functions
+$$
+\mathscr E=\mathcal I\ \dot\cup\ \mathscr D.
+$$
+All the parameters displayed in $\mathscr D$ give distinct functions. Every $T^n$ is isolated in $\mathscr E$. For any net of nonnegative integers $(n_i)$,
+$$
+T^{n_i}\longrightarrow T^n
+\quad\Longleftrightarrow\quad
+n_i=n\text{ eventually},
+$$
+and
+$$
+T^{n_i}\longrightarrow P_\theta^s
+\quad\Longleftrightarrow\quad
+n_i\longrightarrow\infty\text{ and }n_i\delta\longrightarrow_s\theta.
+$$
+Here $n_i\to\infty$ means that for every $N$, eventually $n_i>N$.
+
+For every $\theta,s$ there is a strictly increasing ordinary sequence $(n_j)$ satisfying these conditions. The remainder is closed, and
+$$
+\mathscr D=\bigcap_{N\ge0}\overline{\{T^n:n\ge N\}}^{\,\mathscr E}.
+$$
+The double-circle classification for invertible split-rotation cascades is a classical analogue; the positive-time classification asserted here includes the noninvertible branch history of Theorem 37.2.[^rro37_double]
+
+**Proof.** First isolate a fixed $T^n$ without assuming the proposed classification. Choose disjoint clopen neighborhoods $U^+$ and $U^-$ of $x_1^+$ and $x_1^-$. By Theorem 37.2,
+$$
+T^n x_{n+1}^+=x_1^+,\qquad T^n x_{n+1}^-=x_1^-.
+$$
+For every $j>n$, the two values $T^j x_{n+1}^+$ and $T^j x_{n+1}^-$ are equal. Such an iterate cannot satisfy both evaluation conditions
+$$
+p(x_{n+1}^+)\in U^+,\qquad p(x_{n+1}^-)\in U^-.
+$$
+The phases $j\delta$, $0\le j\le n$, are distinct. Choose a circle neighborhood $J$ of $n\delta$ excluding $j\delta$ for $j<n$. The two evaluation conditions together with $\vartheta(p)\in J$ define an open neighborhood $W$ of $T^n$ whose intersection with $\mathcal I$ is exactly $\{T^n\}$. Since $\mathcal I$ is dense and $\{T^n\}$ is closed, $W\cap\mathscr E=\{T^n\}$. This also proves that a convergent net of iterates with limit $T^n$ is eventually equal to $T^n$. For $n=0$, the exclusion of earlier phases is simply empty.
+
+Fix $\theta,s$. Every tail of the irrational natural phase orbit is dense: it is a translate of the original dense orbit. We can therefore choose recursively
+$$
+n_{j+1}>n_j,\qquad n_j\delta\in I_s(\theta,\varepsilon_j),\qquad \varepsilon_j\downarrow0.
+$$
+For every $x\in K$, the phase of $T^{n_j}x$ tends to $H(x)+\theta$. If that phase is nonsplit, Theorem 37.2 gives the unique lift. If it is $E_m$, its phase approaches $E_m$ from side $s$, and the same lemma gives $x_m^s$. Thus
+$$
+T^{n_j}x\longrightarrow P_\theta^s(x)
+$$
+for every $x$. Consequently every $P_\theta^s$ belongs to $\mathscr E$. This construction works at zero, at every natural phase $n\delta$, and at every exceptional phase $E_m$; the approximating phases are chosen strictly to one side and never equal the target.
+
+We next prove that there are no other functions. Let $p\in\mathscr E\setminus\mathcal I$, and take a net $T^{n_i}\to p$. Every finite set $\{T^0,\ldots,T^N\}$ is closed and excludes $p$, so $n_i\to\infty$. Theorem 37.1 gives
+$$
+n_i\delta\longrightarrow\theta:=\vartheta(p).
+$$
+A phase $\theta$ can equal $n\delta$ for at most one nonnegative integer $n$. Escape from finite sets therefore ensures $n_i\delta\ne\theta$ eventually.
+
+Choose an actual point $b\in K$ with
+$$
+H(b)=E_1-\theta.
+$$
+The phase formula gives $H(p(b))=E_1$, so $p(b)=x_1^s$ for exactly one $s\in\Sigma$. Since $T^{n_i}b\to p(b)$ and its phase eventually differs from $E_1$, the necessity part of Theorem 37.2 forces
+$$
+n_i\delta\longrightarrow_s\theta.
+$$
+This is an eventual assertion for the whole net, not merely a choice of a one-sided subnet. Applying the lemma at every other evaluation point now gives $p=P_\theta^s$.
+
+The same argument proves necessity in the stated convergence criterion. Sufficiency follows directly from Theorem 37.2 at every coordinate. Hence a net which repeatedly returns cofinally to a bounded set of indices while also escaping cannot create an additional limit: convergence requires either eventual equality to one finite iterate or eventual escape from every finite set with one fixed approach side.
+
+For distinctness, different phases are distinguished by the phase of evaluation at zero. At the same phase $\theta$, any actual $b$ with $H(b)=E_1-\theta$ satisfies
+$$
+P_\theta^+(b)=x_1^+,\qquad P_\theta^-(b)=x_1^-.
+$$
+Thus the two signs differ at every phase, including nonsplit and zero phases where evaluation at zero alone would not distinguish them.
+
+An iterate $T^n$ and $P_\theta^s$ have different evaluation phases if $\theta\ne n\delta$. If $\theta=n\delta$, the actual split input $x_{n+1}^{-s}$ distinguishes them:
+$$
+T^n x_{n+1}^{-s}=x_1^{-s},\qquad
+P_{n\delta}^s(x_{n+1}^{-s})=x_1^s.
+$$
+This proves the disjointness, including $T^0$.
+
+The union of the isolated finite iterates is open, so $\mathscr D$ is closed. Every point of $\mathscr D$ is a limit of an increasing sequence of iterates and therefore lies in every tail closure. Conversely, $T^n$ is excluded from the closure of the tail beginning at $n+1$ because it is isolated. This proves the final formula. $\square$
+
