@@ -1,0 +1,27 @@
+**theorem 39.8 (The exact number of continuous metrizable observations).** Let $J$ be an index set, let each $M_a$ be metrizable, and let every $f_a:\mathscr E\to M_a$ be continuous. If $|J|<\mathfrak c$, then
+$$
+p\longmapsto\bigl(e(p),(f_a(p))_{a\in J}\bigr)
+\tag{39.22}
+$$
+is not injective. In fact, there are $\mathfrak c$ phases $\theta$ at which the two distinct selectors have equal values under all these observations, including $e$.
+
+The minimum cardinality of a separating family of continuous metrizable-valued observations is exactly $\mathfrak c$, both without and with $e$ supplied. The same minimum holds when every auxiliary observation is required to be binary-valued. An upper family is
+$$
+\{\chi_{b,j}:(b,j)\in K\times\mathbb N\}.
+\tag{39.23}
+$$
+In particular, no single continuous metrizable label, and no countable family of continuous real-valued or discrete-valued labels, makes the joint map with $e$ injective.
+
+**Proof.** By Theorem 39.7 the set of phases detected by at least one observation in (39.22) is contained in
+$$
+B=E\cup\bigcup_{a\in J}S(f_a),\qquad
+|B|\le\max(\aleph_0,|J|)<\mathfrak c.
+$$
+This uses the same ZFC cardinal multiplication as Theorem 39.4 and no regularity assumption. For every $\theta\notin B$, all displayed values agree on $P_\theta^+$ and $P_\theta^-$. These are distinct actual operators.
+
+Moreover, $|\mathbb T\setminus B|=\mathfrak c$. Otherwise the union of $B$ and its complement would have cardinality less than $\mathfrak c$, since a finite sum of two infinite cardinals is their maximum, contradicting $|\mathbb T|=\mathfrak c$. This proves the stronger failure assertion. Omitting $e$ cannot restore injectivity.
+
+Each $\chi_{b,j}$ is continuous: evaluation is a product projection and a digit is continuous on $K$. Distinct functions $p,q$ differ at some actual input $b$, and the two distinct binary sequences $p(b),q(b)$ differ at some $j$. Thus (39.23) separates. Its indexing set has cardinality $|K|\cdot\aleph_0=\mathfrak c$, giving both upper bounds. Removing duplicate coordinate functions, if any, does not affect separation; the lower bound forces the remaining family still to have cardinality $\mathfrak c$.
+
+The joint binary map is a continuous injection from compact $\mathscr E$ into a Hausdorff product, hence a homeomorphism onto its image. The assertions concerning one or countably many labels are special cases of the lower bound. Discrete target spaces of arbitrary cardinality cause no exception, since they are metrizable and their compact attained images are finite. $\square$
+

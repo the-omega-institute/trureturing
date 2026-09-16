@@ -1,0 +1,31 @@
+**theorem 39.6 (Readouts on the actual operator space and finite digit factorization).** For every metrizable space $M$ and continuous $f:\mathscr E\to M$, there is an at most countable $D_f\subseteq K$ such that
+$$
+\operatorname{Eval}_{D_f}(p)=\operatorname{Eval}_{D_f}(q)
+\ \Longrightarrow\ f(p)=f(q)
+\qquad(p,q\in\mathscr E).
+\tag{39.16}
+$$
+Moreover,
+$$
+f=\bar f\circ\operatorname{Eval}_{D_f},\qquad
+\bar f:\operatorname{Eval}_{D_f}(\mathscr E)\to M
+$$
+with $\bar f$ continuous. The countable binary coordinate set $D_f\times\mathbb N$ also determines $f$.
+
+If the target is discrete, its attained image is finite, and finite $D_f$ suffices. More strongly, there are a finite $F\subseteq K\times\mathbb N$ and a continuous map
+$$
+h_F:Q_F(\mathscr E)\to M
+$$
+with
+$$
+f=h_F\circ Q_F.
+\tag{39.17}
+$$
+Equivalently, some finite $D\subseteq K$ and some $L\ge0$ give a factorization through
+$$
+p\longmapsto(q_L(p(b)))_{b\in D},\qquad
+q_L(x)=(x_0,\ldots,x_{L-1}),
+\tag{39.18}
+$$
+on its actual finite image.
+
