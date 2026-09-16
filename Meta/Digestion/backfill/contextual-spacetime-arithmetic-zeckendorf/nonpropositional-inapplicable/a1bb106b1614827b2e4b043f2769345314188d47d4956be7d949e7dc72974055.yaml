@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a1bb106b1614827b2e4b043f2769345314188d47d4956be7d949e7dc72974055
+  normalized_sha256: sha256:a1bb106b1614827b2e4b043f2769345314188d47d4956be7d949e7dc72974055
+cas_ref: sha256:a1bb106b1614827b2e4b043f2769345314188d47d4956be7d949e7dc72974055
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 元数为一时全部孔位由 Fin.eq_zero 等于零；空集上的参数函数由空消去构造，函数外延给出唯一性，恰为源句的两项唯一性断言。仓内无冻结 GID，未假设状态载体非空。
+    previous_atom_id: ff1483ea1c3edc753ee683d2bb6d75db54ba6fb2eafa07cef835543d260b8dca
+    next_atom_id: 7a044c60b0431984097577192e78765203b8872bb1681e7cc3d95c7c477bbe93
