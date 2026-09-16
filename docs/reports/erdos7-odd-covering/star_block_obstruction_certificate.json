@@ -45279,6 +45279,214 @@
     ],
     "scope": "For any distinct nonunit moduli dividing 3^H*35, all H>=2, arbitrary residues. Universal polynomial bounds are certified on the entire A interval; all-height CRT sharpness uses the ordinary CM3--CM7 construction. This is not a Lean kernel proof."
   },
+  "sharp_head_unmarked_comparison": {
+    "coordinate_cases": [
+      {
+        "prime": 3,
+        "height": 3,
+        "centre": 5,
+        "pure_survivors": 14,
+        "count_histogram": [
+          5,
+          6,
+          2,
+          1
+        ],
+        "tail_probabilities": [
+          "9/14",
+          "3/14",
+          "1/14"
+        ]
+      },
+      {
+        "prime": 3,
+        "height": 4,
+        "centre": 5,
+        "pure_survivors": 41,
+        "count_histogram": [
+          14,
+          18,
+          6,
+          2,
+          1
+        ],
+        "tail_probabilities": [
+          "27/41",
+          "9/41",
+          "3/41",
+          "1/41"
+        ]
+      },
+      {
+        "prime": 5,
+        "height": 1,
+        "centre": 2,
+        "pure_survivors": 4,
+        "count_histogram": [
+          3,
+          1
+        ],
+        "tail_probabilities": [
+          "1/4"
+        ]
+      },
+      {
+        "prime": 5,
+        "height": 2,
+        "centre": 2,
+        "pure_survivors": 19,
+        "count_histogram": [
+          14,
+          4,
+          1
+        ],
+        "tail_probabilities": [
+          "5/19",
+          "1/19"
+        ]
+      },
+      {
+        "prime": 7,
+        "height": 1,
+        "centre": 2,
+        "pure_survivors": 6,
+        "count_histogram": [
+          5,
+          1
+        ],
+        "tail_probabilities": [
+          "1/6"
+        ]
+      },
+      {
+        "prime": 7,
+        "height": 2,
+        "centre": 2,
+        "pure_survivors": 41,
+        "count_histogram": [
+          34,
+          6,
+          1
+        ],
+        "tail_probabilities": [
+          "7/41",
+          "1/41"
+        ]
+      }
+    ],
+    "full_head_cases": [
+      {
+        "heights": [
+          3,
+          1,
+          1
+        ],
+        "pure_survivors": 336,
+        "load_states": 8,
+        "mean": "45/16",
+        "second_moment": "189/16",
+        "CM7_survival": "191/336",
+        "CM7_mixed_mass": "145/336"
+      },
+      {
+        "heights": [
+          3,
+          1,
+          2
+        ],
+        "pure_survivors": 2296,
+        "load_states": 11,
+        "mean": "945/328",
+        "second_moment": "4221/328",
+        "CM7_survival": "1227/2296",
+        "CM7_mixed_mass": "1069/2296"
+      },
+      {
+        "heights": [
+          3,
+          2,
+          1
+        ],
+        "pure_survivors": 1596,
+        "load_states": 11,
+        "mean": "225/76",
+        "second_moment": "1053/76",
+        "CM7_survival": "113/228",
+        "CM7_mixed_mass": "115/228"
+      },
+      {
+        "heights": [
+          3,
+          2,
+          2
+        ],
+        "pure_survivors": 10906,
+        "load_states": 13,
+        "mean": "4725/1558",
+        "second_moment": "23517/1558",
+        "CM7_survival": "358/779",
+        "CM7_mixed_mass": "421/779"
+      },
+      {
+        "heights": [
+          4,
+          1,
+          1
+        ],
+        "pure_survivors": 984,
+        "load_states": 11,
+        "mean": "945/328",
+        "second_moment": "4137/328",
+        "CM7_survival": "539/984",
+        "CM7_mixed_mass": "445/984"
+      },
+      {
+        "heights": [
+          4,
+          1,
+          2
+        ],
+        "pure_survivors": 6724,
+        "load_states": 16,
+        "mean": "19845/6724",
+        "second_moment": "92393/6724",
+        "CM7_survival": "21/41",
+        "CM7_mixed_mass": "20/41"
+      },
+      {
+        "heights": [
+          4,
+          2,
+          1
+        ],
+        "pure_survivors": 4674,
+        "load_states": 16,
+        "mean": "4725/1558",
+        "second_moment": "23049/1558",
+        "CM7_survival": "58/123",
+        "CM7_mixed_mass": "65/123"
+      },
+      {
+        "heights": [
+          4,
+          2,
+          2
+        ],
+        "pure_survivors": 31939,
+        "load_states": 19,
+        "mean": "99225/31939",
+        "second_moment": "514761/31939",
+        "CM7_survival": "13859/31939",
+        "CM7_mixed_mass": "18080/31939"
+      }
+    ],
+    "limit_mixed_mass": "82/135",
+    "limit_mean": "16/5",
+    "limit_second_moment": "325/18",
+    "uniform_divisor_sum": "35/16",
+    "uniform_pair_sum": "35/4",
+    "scope": "Exact coordinate enumeration and product-law comparison for eight existing CM7 families. Their mixed mass and unmarked convex-comparison law are simultaneously sharp in the limit; the all-height argument is an ordinary proof."
+  },
   "adaptive_head_stoploss": {
     "head": "arbitrary_357_head",
     "head_period_bound": null,

@@ -1252,6 +1252,98 @@ def finite_head_sharp_density(actual_sharpness):
             'scope': 'For any distinct nonunit moduli dividing 3^H*35, all H>=2, arbitrary residues. Universal polynomial bounds are certified on the entire A interval; all-height CRT sharpness uses the ordinary CM3--CM7 construction. This is not a Lean kernel proof.'}
 
 
+def sharp_head_unmarked_comparison(actual_sharpness):
+    """The CM7 families simultaneously attain the full unmarked load law."""
+    coordinates = {}
+    coordinate_rows = []
+    for prime, heights, centre in ((3, (3, 4), 5), (5, (1, 2), 2), (7, (1, 2), 2)):
+        for height in heights:
+            period = prime**height
+            excluded = ([(3, 0), (9, 4)] + [
+                (3**a, 3**(a-1)-8) for a in range(3, height+1)] if prime == 3 else
+                [(prime**a, prime**(a-1)-1) for a in range(1, height+1)])
+            survivors = [value for value in range(period)
+                         if all(value % modulus != residue for modulus, residue in excluded)]
+            density = F(len(survivors), period)
+            require(density == 1-sum((F(1, prime**a) for a in range(1, height+1)), F(0)),
+                    'sharp-head pure classes have exact disjoint exclusion mass')
+            counts = Counter(sum(value % prime**a == centre % prime**a
+                                 for a in range(1, height+1)) for value in survivors)
+            tails = [F(1)]
+            for a in range(1, height+1):
+                tail = F(sum(number for count, number in counts.items() if count >= a),
+                         len(survivors))
+                require(tail == 1/(density*prime**a),
+                        'every selected nested cylinder attains its exact pure-survivor cap')
+                tails.append(tail)
+            tails.append(F(0))
+            atoms = {count+1: tails[count]-tails[count+1] for count in range(height+1)}
+            require({count+1: F(number, len(survivors)) for count, number in counts.items()} == atoms,
+                    'entire finite auxiliary count law, including its terminal atom')
+            coordinates[prime, height] = (counts, atoms, len(survivors), density)
+            coordinate_rows.append({'prime': prime, 'height': height, 'centre': centre,
+                                    'pure_survivors': len(survivors),
+                                    'count_histogram': [counts[count] for count in range(height+1)],
+                                    'tail_probabilities': list(map(str, tails[1:-1]))})
+    source_rows = actual_sharpness['full_head_cases']
+    by_height = {(row['ternary_height'], row['quinary_height'], row['septenary_height']): row
+                 for row in source_rows}
+    expected_heights = set(cartesian_product((3, 4), (1, 2), (1, 2)))
+    require(len(source_rows) == len(by_height) == 8 and set(by_height) == expected_heights,
+            'exactly the eight existing CM7 full-head cases')
+    rows = []
+    for heights in sorted(expected_heights):
+        observed, canonical = {1: 1}, {1: F(1)}
+        total = 1
+        for prime, height in zip((3, 5, 7), heights):
+            counts, atoms, size, density = coordinates[prime, height]
+            next_observed, next_canonical = Counter(), {}
+            for load, number in observed.items():
+                for count, frequency in counts.items():
+                    next_observed[load*(count+1)] += number*frequency
+            for load, probability in canonical.items():
+                for factor, atom in atoms.items():
+                    key = load*factor
+                    next_canonical[key] = next_canonical.get(key, F(0))+probability*atom
+            observed, canonical = next_observed, next_canonical
+            total *= size
+        require(sum(observed.values()) == total and sum(canonical.values()) == 1
+                and {load: F(number, total) for load, number in observed.items()} == canonical,
+                'entire complete-head product distribution equals the canonical law')
+        mean = sum((F(load*number, total) for load, number in observed.items()), F(0))
+        second = sum((F(load*load*number, total) for load, number in observed.items()), F(0))
+        densities = [coordinates[p, h][3] for p, h in zip((3, 5, 7), heights)]
+        require(mean == prod(1/density for density in densities), 'exact complete-head mean')
+        require(second == prod(1+sum((F(2*a+1, p**a) for a in range(1, h+1)), F(0))/density
+                               for p, h, density in zip((3, 5, 7), heights, densities)),
+                'exact complete-layout second moment')
+        source = by_height[heights]
+        require(source['period'] == prod(p**h for p, h in zip((3, 5, 7), heights))
+                and F(source['survivors'], total) == F(source['pure_product_survival'])
+                and 1-F(source['survivors'], total) == F(source['pure_product_mixed_mass']),
+                'same actual family as the existing CM7 survivor identity')
+        rows.append({'heights': list(heights), 'pure_survivors': total,
+                     'load_states': len(observed), 'mean': str(mean), 'second_moment': str(second),
+                     'CM7_survival': source['pure_product_survival'],
+                     'CM7_mixed_mass': source['pure_product_mixed_mass']})
+    uniform_divisor_sum = prod(F(p, p-1) for p in (3, 5, 7))
+    uniform_pair_sum = prod(1+F(3*p-1, (p-1)**2) for p in (3, 5, 7))
+    require((uniform_divisor_sum, uniform_pair_sum) == (F(35, 16), F(35, 4)),
+            'complete uniform divisor and ordered-pair sums for finite truncation errors')
+    limiting_densities = (F(1, 2), F(3, 4), F(5, 6))
+    limiting_mean = prod(1/density for density in limiting_densities)
+    limiting_second = prod(1+F(3*p-1, (p-1)**2)/density
+                           for p, density in zip((3, 5, 7), limiting_densities))
+    require(limiting_mean == F(16, 5) and limiting_second == F(325, 18)
+            and actual_sharpness['limit_pure_product_mixed_mass'] == '82/135',
+            'simultaneous sharp limiting head mass, mean and second moment')
+    return {'coordinate_cases': coordinate_rows, 'full_head_cases': rows,
+            'limit_mixed_mass': '82/135', 'limit_mean': str(limiting_mean),
+            'limit_second_moment': str(limiting_second),
+            'uniform_divisor_sum': str(uniform_divisor_sum), 'uniform_pair_sum': str(uniform_pair_sum),
+            'scope': 'Exact coordinate enumeration and product-law comparison for eight existing CM7 families. Their mixed mass and unmarked convex-comparison law are simultaneously sharp in the limit; the all-height argument is an ordinary proof.'}
+
+
 def comb_stoploss_dual_transport():
     """Exact primal/dual witnesses for complete cylinder-cap tail sums."""
     rows = []
@@ -1760,6 +1852,7 @@ def certificate():
         "head_mixed_mass_improvement": head_mass,
         "cm1_actual_head_sharpness": actual_sharpness,
         "finite_head_sharp_density": finite_head_sharp_density(actual_sharpness),
+        "sharp_head_unmarked_comparison": sharp_head_unmarked_comparison(actual_sharpness),
         "adaptive_head_stoploss": adaptive_head_stoploss(head_mass),
         "homogeneous_comb_capacity": homogeneous_comb_capacity(),
         "comb_stoploss_dual_transport": comb_stoploss_dual_transport(),

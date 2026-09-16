@@ -4721,6 +4721,86 @@ these attaining constructions under **finite_head_sharp_density**.
 This is an ordinary universal proof with an exact polynomial certificate;
 the endpoint density statement is not yet an end-to-end Lean theorem.
 
+**Simultaneous sharpness of the mixed mass and the unmarked comparison law.**
+The sharp head families also rule out a uniform limiting tradeoff between
+mixed-head mass and the unmarked load distribution. In the actual
+(CM3)--(CM7) construction, choose the test residue for every divisor by
+coherent CRT centres \((5,2,2)\). These test residues are independent of
+the forbidden residues assigned to the original moduli. Their three
+first-level roots are \((2,2,2)\). All pure ternary forbidden cylinders
+lie in roots 0 or 1, all pure quinary cylinders in roots 0 or 4, and all
+pure septenary cylinders in roots 0 or 6. Every chosen test cylinder
+therefore lies entirely inside its coordinate's pure survivor set.
+
+If \(x_p\) is that pure survivor density and \(N_p\) counts the nested
+test cylinders containing the coordinate, then
+\[
+ P_0(N_p\ge a)=\frac{p^{-a}}{x_p}\quad(1\le a\le h_p),
+ \qquad L=\prod_{p=3,5,7}(1+N_p).                    \tag{CM12}
+\]
+The three counts are independent under the actual law \(P_0\). Thus
+this complete test load has exactly the finite canonical auxiliary
+product law from (PH2), including the terminal atoms. In particular,
+\[
+ \mathbb E_{P_0}L=\prod_p x_p^{-1},\qquad
+ \mathbb E_{P_0}L^2=\prod_p\left(1+x_p^{-1}
+                      \sum_{a=1}^{h_p}(2a+1)p^{-a}\right).
+\]
+As all three heights increase, these laws increase stochastically to the
+infinite comparison law, while the same families satisfy
+\[
+ P_0(B_{\rm mixed})\longrightarrow82/135,\qquad
+ \mathbb E_{P_0}L\longrightarrow16/5,\qquad
+ \mathbb E_{P_0}L^2\longrightarrow325/18.
+\]
+Monotone convergence gives the same simultaneous sharpness for every
+nonnegative increasing convex cost with finite comparison expectation,
+including every fixed positive-part threshold. Consequently, approaching
+the maximal mixed mass does not force a positive uniform deficit in this
+unmarked comparison. This statement leaves open estimates involving the
+actual mixed-head survivor indicator, such as
+\(\mathbb E_{P_0}[\mathbf1_S(L-t)_+]\), and alternative supported laws.
+The verifier's **sharp_head_unmarked_comparison** entry checks the exact
+coordinate and product laws for the eight existing actual CRT families.
+
+**Finite reduction retaining the survivor geometry.** A candidate bound
+for the actual uniform survivor law can be reduced to a finite head
+optimization with explicit high-height error. Fix truncation heights
+\(h_p\), let \(Q=\prod_{p=3,5,7}p^{h_p}\), and let \(S_h\) be the
+residues avoiding all original classes whose moduli divide \(Q\). Set
+\[
+ R_h=\frac{35}{16}-\prod_p\sum_{a=0}^{h_p}p^{-a},\quad
+ K_h=\prod_p\sum_{a=0}^{h_p}(2a+1)p^{-a},\quad
+ \Delta_h=\frac{35}{4}-K_h,\qquad
+ d_h=\max\left\{\frac{53}{432},\frac{|S_h|}{Q}-R_h\right\}.
+\]
+For any extension to arbitrary finite heights, its full survivor set
+\(S\) has ambient density at least \(d_h>0\): the omitted original
+classes have total density at most \(R_h\), and (CM8) gives the other
+lower bound. Split a complete test load as \(L=L_h+L_{>h}\), according
+to whether its divisor divides \(Q\). Its omitted ambient mean is at
+most \(R_h\). Expanding ordered divisor pairs gives
+\(\mathbb E(L^2-L_h^2)\le\Delta_h\): a compatible pair has probability
+\(1/\operatorname{lcm}(d,e)\), and the number of exponent pairs with
+maximum \(a\) is \(2a+1\). Incompatible pairs only lower that sum.
+For every real threshold \(t\), it follows that
+\[
+ \begin{aligned}
+ \mathbb E_{\mathrm{Unif}(S)}(L-t)_+
+ &\le\frac{\mathbb E_{\mathrm{Unif}(Q)}
+                   [\mathbf1_{S_h}(L_h-t)_+]+R_h}{d_h},\\
+ \mathbb E_{\mathrm{Unif}(S)}L^2
+ &\le\frac{\mathbb E_{\mathrm{Unif}(Q)}
+                   [\mathbf1_{S_h}L_h^2]+\Delta_h}{d_h}.
+ \end{aligned}                                      \tag{CM13}
+\]
+Here \(S\subseteq S_h\), and
+\((a+b-t)_+\le(a-t)_++b\) for \(b\ge0\). Maximizing the numerators
+over the finitely many low-head forbidden assignments and test layouts
+therefore gives universal profiles usable in (AP1)--(AP6). This reduction
+retains actual shared-cylinder exclusions. It does not assert that the
+resulting finite optimization already reaches prime 17 or 11.
+
 **Coupled densities of the three prime-pair subsystems.** Let \(\sigma_A\)
 be the ambient density avoiding the original classes supported on \(A\),
 and put \(z_p=\sigma_{\{p\}}\). These are subsets of the same fixed family.
