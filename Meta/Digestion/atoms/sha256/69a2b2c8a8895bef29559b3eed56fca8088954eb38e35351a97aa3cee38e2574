@@ -1,0 +1,60 @@
+**theorem 20.9 (Two different entropies on the same carrier).** The lowest-digit partition is a generating observation for each of the two dynamics, but their iterated observation partitions differ:
+$$
+h_{\mathrm{top}}(T)=0,\qquad
+h_{\mathrm{top}}(\sigma)=\log\phi.
+$$
+More precisely, for all $L,n\ge1$,
+$$
+\#\left(\bigvee_{j=0}^{n-1}T^{-j}\mathcal Q_L\right)
+=n+G_L-1,
+$$
+whereas
+$$
+\#\left(\bigvee_{j=0}^{n-1}\sigma^{-j}\mathcal Q_L\right)
+=G_{n+L-1}.
+$$
+The exact precision/history conversion also has the asymptotics
+$$
+t_{\min}(L)+1\sim\frac{\phi^{L+2}}{\sqrt5}\quad(L\to\infty),
+\qquad
+L_{\min}(t)=\log_\phi(t+1)+O(1)\quad(t\to\infty).
+$$
+
+**Proof.** Put $\mathcal P=\mathcal Q_1$. Since $f$ is its readout,
+$$
+\mathcal V_k=\bigvee_{i=0}^{k-1}T^{-i}\mathcal P.
+$$
+Theorem 20.6 gives $\mathcal Q_L=\mathcal V_s$ with $s=G_L-1\ge1$. Taking $n$ consecutive joins yields
+$$
+\bigvee_{j=0}^{n-1}T^{-j}\mathcal Q_L
+=\mathcal V_{n+s-1}.
+$$
+Theorem 20.5 counts its atoms as $n+s=n+G_L-1$. Since the $\mathcal Q_L$ form the cylinder basis, this also proves that the future iterates of $\mathcal P$ generate the topology for $T$.
+
+Every finite open cover of $K$ is refined by some $\mathcal Q_L$ with $L\ge1$: choose at each point a cylinder contained in one cover member, take a finite subcover of these cylinders, and increase all their depths to a common $L$. Its $n$-fold temporal join is then refined by the displayed join of $\mathcal Q_L$, so
+$$
+N(\mathcal U_T^{(n)})\le n+G_L-1.
+$$
+For every such cover, division of the logarithm by $n$ tends to zero. Nonnegativity of entropy proves $h_{\mathrm{top}}(T)=0$. Thus this conclusion uses a proved generator and all open covers, not merely the complexity of one potentially nongenerating readout.
+
+Positional deletion preserves the no11 constraint and is continuous, since each output coordinate is an input coordinate. Its joined windows reveal exactly the coordinates from zero through $n+L-2$. Therefore
+$$
+\bigvee_{j=0}^{n-1}\sigma^{-j}\mathcal Q_L
+=\mathcal Q_{n+L-1},
+$$
+which has $G_{n+L-1}$ atoms. In particular, $\mathcal P$ is a generator for $\sigma$ as well. The recurrence and its two initial values give
+$$
+G_k=\frac{\phi^{k+2}-(-\phi^{-1})^{k+2}}{\sqrt5},
+\qquad
+\lim_{k\to\infty}\frac{\log G_k}{k}=\log\phi.
+$$
+The cover $\mathcal P$ gives the entropy lower bound $\log\phi$, since its $n$-fold join consists of $G_n$ pairwise disjoint nonempty sets. For any open cover refined by $\mathcal Q_L$,
+$$
+N(\mathcal U_\sigma^{(n)})\le G_{n+L-1},
+$$
+giving the matching upper bound. This proves the second entropy formula directly for the one-sided carrier.
+
+The same closed form gives the stated asymptotic for $G_L=t_{\min}(L)+1$. If $L=L_{\min}(t)\ge1$, then $G_{L-1}\le t<G_L$; the closed form bounds both adjacent terms above and below by fixed positive multiples of $\phi^L$, giving the logarithmic inverse estimate. These statements compare positional depth with the number of consecutive successor observations. $\square$
+
+Attached reference: Schmieding, *Symbolic Dynamics and Subshifts of Finite Type*, §7, Definition 16 on p. 11, Theorem 20 on pp. 13–14, and its golden-mean example on p. 14, give the classical language-growth and spectral-radius entropy formulas. The open-cover argument above establishes the required one-sided formulas without assuming a nongenerating readout suffices. ([s-schmieding.github.io](https://s-schmieding.github.io/SDnotes.pdf))
+
