@@ -17510,3 +17510,493 @@ have the same two marginal signatures but have output signatures $\sigma_V(v),\m
 The continuous linear map on the joint witness space descends exactly on the actual fibers where that lost information does not affect the required output. $\square$
 
 ## 追加锚（本行以下为增补区）
+## 43. 增补·乘法满闭图与有限多项式联合闭图的定向判据
+
+**定义 43.0（数字空间、柱集与算术闭图）。** 置 $\mathbb N_0=\{0,1,2,\ldots\}$，$G_0=1$，$G_1=2$，$G_{j+2}=G_{j+1}+G_j$，并令 $Z(n)$ 为 $n$ 的 Zeckendorf 规范字按低位到高位排列后补零所得的无限字。置
+$$
+\phi=\frac{1+\sqrt5}{2},\qquad \alpha=\phi^{-1},\qquad
+K=\{x\in\{0,1\}^{\mathbb N_0}:x_jx_{j+1}=0\text{ 对所有 }j\},
+$$
+$$
+d_K(x,y)=\sum_{j\ge0}2^{-j-1}|x_j-y_j|,\qquad
+F(x)=\sum_{j\ge0}(-1)^{j+1}\alpha^{j+2}x_j,
+$$
+$$
+\mathbb T=\mathbb R/\mathbb Z,\qquad H(x)=[F(x)],\qquad
+\gamma(n)=[n\phi],\qquad E_m=[-m\phi],\qquad E=\{E_m:m\ge1\}.
+$$
+记 $D_L$ 为长度 $L$ 的合法数字字，$\pi_L:K\to D_L$ 为前 $L$ 位投影，$q_L=\pi_L\circ Z$。对 $w\in D_L$，柱集记为 $[w]_K=\pi_L^{-1}(\{w\})$；$D_0$ 只含空字。定义
+$$
+\Gamma_{\mathrm{mul}}=
+\overline{\{(Z(a),Z(b),Z(ab)):a,b\in\mathbb N_0\}}\subseteq K^3.
+$$
+所有闭包均取相应有限乘积的乘积拓扑。[^rro43-phase]
+
+**假设 43.1（明确采用的相位与定向背景）。** 采用如下相位结论：$K$ 紧致可度量，$Z[\mathbb N_0]$ 稠密；$H$ 连续满射且 $H(Z(n))=\gamma(n)$；$\beta\notin E$ 时 $H^{-1}(\{\beta\})$ 为单点，$\beta\in E$ 时该纤维恰为两个不同的定向点 $z_\beta^{+1},z_\beta^{-1}$。此外，
+$$
+H^{-1}(\{0\})=\{0_K\},\qquad
+U:=z_{E_1}^{+1}=(10)^\omega,\qquad V:=z_{E_1}^{-1}=(01)^\omega,
+$$
+$$
+z_{E_2}^{+1}=0V,\qquad z_{E_2}^{-1}=10V.
+$$
+若 $\beta\in E$、$s\in\{-1,+1\}$，且自然数列满足
+$$
+\gamma(n_k)=\beta+[\varepsilon_k],\qquad
+0<|\varepsilon_k|<\tfrac12,\qquad \varepsilon_k\longrightarrow0,
+$$
+则
+$$
+Z(n_k)\longrightarrow z_\beta^s
+\quad\Longleftrightarrow\quad
+s\varepsilon_k>0\text{ 最终成立}.
+$$
+这里的标签与单侧等价严格采用定义16.3及定理16.4证明中的约定。[^rro43-phase]
+
+**定理 43.2（相位小邻域到实际数字柱集的提升）。** 设 $x\in K$，$O\subseteq K$ 为含 $x$ 的开集，$\beta=H(x)$。存在 $0<\eta<1/2$，使下列断言对所有 $n\in\mathbb N_0$ 成立。若 $\beta\notin E$，则
+$$
+\gamma(n)=\beta+[\varepsilon],\quad |\varepsilon|<\eta
+\quad\Longrightarrow\quad Z(n)\in O.
+$$
+若 $x=z_\beta^s$、$\beta\in E$，则
+$$
+\gamma(n)=\beta+[\varepsilon],\quad 0<s\varepsilon<\eta
+\quad\Longrightarrow\quad Z(n)\in O.
+$$
+特别，每个目标柱集都有一个非空开相位弧，其上的所有实际自然数读数均落入该柱集；分裂目标的相位弧可以完全位于指定一侧。
+
+**证明 43.2。** 先注意自然相位不属于 $E$。否则 $[n\phi]=[-m\phi]$，其中 $n\ge0,m\ge1$，便有 $(n+m)\phi\in\mathbb Z$，与 $\phi$ 无理矛盾。
+
+若 $\beta\notin E$，任何满足 $\gamma(n_k)\to\beta$ 的数列都有 $Z(n_k)\to x$：任一收敛子列的极限由 $H$ 连续性属于单点纤维 $H^{-1}(\{\beta\})$；若整列不趋于 $x$，紧致性将在某个固定邻域外给出另一聚点，矛盾。若第一项不存在所需的 $\eta$，取 $|\varepsilon_k|<1/k$ 且 $Z(n_k)\notin O$ 的反例，即与此收敛结论矛盾。
+
+分裂情形若不存在所需的 $\eta$，同样取得 $0<s\varepsilon_k<1/k$ 且 $Z(n_k)\notin O$ 的反例。假设43.1的单侧等价却给出 $Z(n_k)\to z_\beta^s=x$，仍矛盾。非分裂情形取 $\beta+[(-\eta,\eta)]$，分裂情形取 $\beta+[\{\varepsilon:0<s\varepsilon<\eta\}]$，即得到所述开弧。证毕。
+
+**定理 43.3（不同正整数幂的共同相位稠密性）。** 设 $e_1,\ldots,e_m$ 为两两不同的正整数，$m\ge1$。序列
+$$
+t\longmapsto ([\phi t^{e_1}],\ldots,[\phi t^{e_m}])\in\mathbb T^m,
+\qquad t=1,2,\ldots,
+$$
+相对于 $\mathbb T^m$ 的归一化 Haar 测度等分布。因而任意非空开集均被任意尾部访问，且访问次数无穷。[^rro43-weyl]
+
+**证明 43.3。** 对任意 $h=(h_1,\ldots,h_m)\in\mathbb Z^m\setminus\{0\}$，对应的标量字符由实多项式
+$$
+p_h(t)=\phi\sum_{j=1}^m h_jt^{e_j}
+$$
+给出。不同幂次不能相消为常数；最高非零项的系数为 $h_j\phi$，其中 $h_j$ 为非零整数，故该系数无理。Weyl 的一元多项式定理给出
+$$
+\lim_{N\to\infty}\frac1N\sum_{t=1}^N
+\exp(2\pi i p_h(t))=0.
+$$
+逐一对全部非零整数字符应用此式，再由环面字符判据得到所述联合等分布。这里应用的是每个标量字符的无理首项系数，并没有要求向量多项式的最高次系数本身具有所有方向的无理性。
+
+任取非空开集 $W\subseteq\mathbb T^m$。它包含一个开矩形，故存在连续函数 $f\ge0$，其支集包含于 $W$ 且 Haar 积分严格为正。若 $W$ 只被访问有限次，则 $f$ 沿该序列的平均趋于零，与等分布矛盾。因此访问无穷，删除任意有限初段后仍有访问。证毕。
+
+**定理 43.4（乘法满闭图及所有输入的共同尾部逼近）。** 对任意 $x,y,z\in K$，存在严格递增的正整数列 $t_k\ge k$，使
+$$
+Z(t_k)\longrightarrow x,\qquad
+Z(t_k^2)\longrightarrow y,\qquad
+Z(t_k^3)\longrightarrow z.
+$$
+因此，令 $a_k=t_k$、$b_k=t_k^2$，便有 $a_k,b_k\ge k$、$a_kb_k=t_k^3$，并且
+$$
+\Gamma_{\mathrm{mul}}=K^3,
+\qquad
+\overline{\{(Z(a),Z(b),Z(ab)):a,b\ge T\}}=K^3
+\quad(T\in\mathbb N_0).
+$$
+三个坐标可以独立指定任意分裂端点及其定向。结论包括 $x$ 或 $y$ 为 $0_K$、$Z(c)$ 的情形；这些点是极限目标，并非被固定不变的数值输入。
+
+**证明 43.4。** 对每个 $k\ge1$，取三个目标的长度 $k$ 柱集。由定理43.2，分别选取非空开相位弧 $J_{1,k},J_{2,k},J_{3,k}$，使实际自然数的相位落入相应弧时，其数字字落入相应目标柱集。若目标为分裂点，所选弧完全处于指定一侧。
+
+由定理43.3应用于幂次 $1,2,3$，可递归选择
+$$
+t_k\ge\max\{k,t_{k-1}+1\}
+$$
+使
+$$
+([\phi t_k],[\phi t_k^2],[\phi t_k^3])
+\in J_{1,k}\times J_{2,k}\times J_{3,k}.
+$$
+于是三个数字字分别与目标具有相同的前 $k$ 位，其距离均不超过 $2^{-k}$。这证明三个收敛结论；并且三个数确实满足同一个乘法等式 $t_k\cdot t_k^2=t_k^3$。令 $k$ 足够大还保证两个输入均超过任意给定的 $T$，故每个尾部的闭包都是 $K^3$。
+
+当目标为有限字时，同一构造仍适用。由于 $t_k\to\infty$，这些逼近并不是将该有限整数最终固定下来。特别，有限整数点不能在此空间中被当作孤立点。证毕。
+
+**定理 43.5（幂图、零次幂、一次幂与重复坐标）。** 若 $d_1,\ldots,d_r\ge2$ 两两不同，则
+$$
+\overline{\{(Z(n),Z(n^{d_1}),\ldots,Z(n^{d_r})):n\in\mathbb N_0\}}
+=K^{r+1},
+$$
+且每个目标都可以由 $n_k\ge k$ 的同一自然数列逼近，包括各坐标任意指定的分裂定向。
+
+更一般地，取 $e_0=1$ 及任意 $e_1,\ldots,e_r\in\mathbb N_0$，将 $X^0$ 解释为恒等于 $1$ 的常数多项式，包括在 $n=0$ 处。则
+$$
+\overline{\{(Z(n^{e_0}),\ldots,Z(n^{e_r})):n\in\mathbb N_0\}}
+$$
+恰由满足下列条件的 $(x_0,\ldots,x_r)\in K^{r+1}$ 组成：若 $e_j=0$，则 $x_j=Z(1)$；若 $e_i=e_j$，则 $x_i=x_j$。不同正幂次的坐标之间没有其他条件。所有这些目标仍可由 $n_k\ge k$ 逼近。特别，零次幂图为 $K\times\{Z(1)\}$，一次幂图为对角线 $\{(x,x):x\in K\}$。
+
+**证明 43.5。** 对不同的正幂次，使用定理43.3的联合相位等分布，并如定理43.4那样对所有目标柱集同时使用定理43.2，逐次选择 $n_k\ge k$。所得是同一个 $n_k$ 的全部幂，因此得到第一项及一般情形的充分性。
+
+对于必要性，零次幂在每个实际输入上都等于整数 $1$，其极限坐标必为 $Z(1)$。相同幂次在每个实际输入上都给出相同数字字，而 $K$ 的对角线闭，故极限坐标必须相等。反过来，满足这些条件的目标只需对每个不同正幂次保留一个坐标，完成上述共同逼近，再复制重复坐标并插入固定的零次幂坐标即可。$r=0$ 时同一论证给出 $Z[\mathbb N_0]$ 的每个尾部在 $K$ 中稠密。证毕。
+
+**定理 43.6（非负仿射图与精确固定的乘法输入）。** 对 $\lambda,\mu\in\mathbb N_0$，定义
+$$
+\mathcal A_{\lambda,\mu}=
+\overline{\{(Z(n),Z(\lambda n+\mu)):n\in\mathbb N_0\}},
+\qquad
+\mathcal A_{\lambda,\mu}(x)=\{y:(x,y)\in\mathcal A_{\lambda,\mu}\}.
+$$
+若 $\lambda=0$，则
+$$
+\mathcal A_{0,\mu}=K\times\{Z(\mu)\}.
+$$
+若 $\lambda\ge1$，令 $\beta=H(x)$、$\theta=\lambda\beta+[\mu\phi]$。则当 $\theta\notin E$ 时，$\mathcal A_{\lambda,\mu}(x)=H^{-1}(\{\theta\})$；当 $\theta\in E$ 且 $x=z_\beta^s$、$\beta\in E$ 时，
+$$
+\mathcal A_{\lambda,\mu}(x)=\{z_\theta^s\};
+$$
+当 $\theta\in E$ 且 $\beta\notin E$ 时，
+$$
+\mathcal A_{\lambda,\mu}(x)=\{z_\theta^{+1},z_\theta^{-1}\}.
+$$
+将定义中的 $n\in\mathbb N_0$ 换为 $n\ge T$，闭包不变。映射 $Z(n)\mapsto Z(\lambda n+\mu)$ 有连续延拓到 $K$，当且仅当 $\lambda\in\{0,1\}$。
+
+特别，对精确固定的整数 $c\ge0$，
+$$
+\overline{\{(Z(c),Z(n),Z(cn)):n\in\mathbb N_0\}}
+=\{Z(c)\}\times\mathcal A_{c,0}.
+$$
+$c=0$ 时输出恒为 $0_K$，$c=1$ 时第二输入与输出相等；$c\ge2$ 时输出相位为 $cH(x)$，其分裂定向遵从上述分类。与此不同，
+$$
+\Gamma_{\mathrm{mul}}\cap(\{Z(c)\}\times K^2)
+=\{Z(c)\}\times K^2.
+$$
+后一个切片只固定极限读数，不固定逼近数列中的第一个整数。
+
+**证明 43.6。** $\lambda=0$ 时输出在实际图上恒为 $Z(\mu)$，而输入的每个尾部在 $K$ 中稠密，故得到所述乘积。
+
+设 $\lambda\ge1$。任何实际图的收敛列都由连续性给出输出相位 $\theta$。若 $\theta\notin E$，单点纤维使输出至多一个。若输入相位也分裂，把输入局部误差写为 $\varepsilon_k\to0$。当 $x=z_\beta^s$ 时，假设43.1保证 $s\varepsilon_k>0$ 最终成立。输出的局部相位误差为 $\lambda\varepsilon_k$，对充分大的 $k$ 其绝对值小于 $1/2$，且由于 $\lambda>0$ 与输入误差同号。所以输出相位分裂时只能取得相同定向。输入相位不分裂时，必要性只给出输出属于所述二点纤维。
+
+证明每个允许的输出均可实现。若输入相位分裂，规定输入误差取其定向；若输出相位分裂而输入相位不分裂，规定输入误差取目标输出的定向；若两者均不分裂，任选一个方向。两者都分裂时，分类恰要求这两个规定一致。利用定理43.3在幂次 $1$ 的尾部稠密性，可选择 $n_k\ge k$，使输入误差具有该方向且趋于零。定理43.2及假设43.1分别保证输入、输出趋于指定目标；输出误差始终等于 $\lambda$ 倍的输入误差。这也证明删除任意有限初段后闭包不变。
+
+$\lambda=0$ 的常数延拓连续。若 $\lambda=1$，输出相位为 $E_m$ 时输入相位必为 $E_{m+\mu}\in E$，故上述分类在每个输入上都只有一个输出。该单值图紧致。对于任意闭集 $C\subseteq K$，其逆像是该图与 $K\times C$ 的交在第一坐标上的投影，因而紧致且闭，所以相应函数连续。
+
+若 $\lambda\ge2$，选 $m\ge1$ 使 $\lambda$ 不整除 $\mu+m$，并置
+$$
+\beta=\left[-\frac{\mu+m}{\lambda}\phi\right].
+$$
+若 $\beta=E_\ell$，则 $(\lambda\ell-\mu-m)\phi/\lambda\in\mathbb Z$；括号中的整数非零，矛盾。因此 $\beta\notin E$，但 $\lambda\beta+[\mu\phi]=E_m$。其唯一输入点有两个不同的闭图输出。任何连续延拓的闭图都必须包含实际图的闭包，不可能在该输入处同时包含两个输出，故不存在连续延拓。
+
+最后，精确固定 $c$ 后的实际图正是上述仿射图嵌入第一坐标为 $Z(c)$ 的闭切片；该嵌入与取闭包相容。极限切片的另一等式则直接来自定理43.4。证毕。
+
+**定理 43.7（任意有限乘法前缀与连续输出的不确定性）。** 对任意 $L_1,L_2,L_3,T\in\mathbb N_0$，有
+$$
+\{(q_{L_1}(a),q_{L_2}(b),q_{L_3}(ab)):a,b\ge T\}
+=D_{L_1}\times D_{L_2}\times D_{L_3}.
+$$
+因此，每个固定的合法输入前缀对均能与每个合法输出前缀由实际整数同时实现。
+
+设 $D$ 为有限离散空间，$\psi:K\to D$ 连续且非恒定。则无论取多大的有限 $L_1,L_2$，都不存在函数 $B:D_{L_1}\times D_{L_2}\to D$ 使
+$$
+B(q_{L_1}(a),q_{L_2}(b))=\psi(Z(ab))
+\qquad\text{对所有 }a,b\ge T.
+$$
+任意有限组输入塔层也不能做到这一点，因为有限组前缀均被各输入的最大深度前缀决定。
+
+更一般地，若 $Y$ 为 Hausdorff 空间，$\psi:K\to Y$ 连续，则存在连续 $B:K^2\to Y$ 满足
+$$
+B(Z(a),Z(b))=\psi(Z(ab))\qquad(a,b\in\mathbb N_0)
+$$
+当且仅当 $\psi$ 恒定。另一方面，$\Gamma_{\mathrm{mul}}$ 存在连续单值选择；这种选择不必延拓给定乘法，也没有任何连续选择能够延拓给定乘法。
+
+**证明 43.7。** 每个合法有限字补零仍合法，所以三个指定柱集均非空。它们的乘积是 $K^3$ 的非空开集。定理43.4的尾部稠密性给出其中的实际乘法三元组，证明第一式，包括长度为零的情形。
+
+每个连续有限值观察 $\psi$ 都通过某个有限前缀因子化。事实上，对每个 $x\in K$，可取含 $x$ 且包含于 $\psi^{-1}(\{\psi(x)\})$ 的柱集。紧致性给出有限子覆盖，令 $L$ 为其中柱集长度的最大值。若两个点有相同的前 $L$ 位，选一个包含第一个点的覆盖柱集，第二个点也属于它，故两点的 $\psi$ 值相等。因此 $\psi=\chi\circ\pi_L$，其中 $\chi:D_L\to D$。由于 $\psi$ 非恒定，存在 $w,w'\in D_L$ 使 $\chi(w)\ne\chi(w')$。对同一个任意指定的输入前缀对，第一式分别实现输出前缀 $w,w'$，所得两个实际输入对会迫使 $B$ 在同一参数上取不同值，矛盾。
+
+对于 Hausdorff 值域，固定任意 $x,y,z\in K$，取定理43.4给出的共同乘法逼近列。若连续 $B$ 存在，则
+$$
+B(x,y)=\lim_k B(Z(a_k),Z(b_k))
+=\lim_k\psi(Z(a_kb_k))=\psi(z).
+$$
+极限的唯一性使用了 $Y$ 的 Hausdorff 性。固定 $x,y$ 而任取 $z$，便知 $\psi$ 恒定；反向取常数 $B$ 即可。
+
+由于 $\Gamma_{\mathrm{mul}}=K^3$，任意函数 $S:K^2\to K$ 都是该关系的单值选择，特别常数函数是连续选择。但是取 $\psi=\operatorname{id}_K$，上一结论排除了延拓给定乘法的连续选择。集合意义的延拓选择则可以定义为：当 $x=Z(a),y=Z(b)$ 时令 $S(x,y)=Z(ab)$，其余输入令 $S(x,y)=0_K$。$Z$ 的单射性使该定义无歧义；它是选择，却不是连续延拓。证毕。
+
+**定义 43.8（有限多项式族的单项式坐标与定向锥）。** 取 $d,r\in\mathbb N_0$，以及非负整数系数多项式
+$$
+P_1,\ldots,P_r\in\mathbb N_0[X_1,\ldots,X_d].
+$$
+令 $q=d+r$，并依次记
+$$
+R_i=X_i\quad(1\le i\le d),\qquad R_{d+j}=P_j\quad(1\le j\le r).
+$$
+设 $M\subseteq\mathbb N_0^d\setminus\{0\}$ 为这些多项式中出现的全部不同非恒定单项式的指数集，$m=|M|$。于是
+$$
+R_j(\mathbf X)=c_j+\sum_{\nu\in M}A_{j\nu}\mathbf X^\nu,
+\qquad c_j,A_{j\nu}\in\mathbb N_0.
+$$
+输入单项式 $X_i$ 包含在 $M$ 中。常数单项式不属于 $M$，其相位不作为自由坐标。置
+$$
+\mathbf b=([\phi c_j])_{j=1}^q\in\mathbb T^q,\qquad
+V_M(\mathbf n)=([\phi\mathbf n^\nu])_{\nu\in M}\in\mathbb T^m,
+$$
+$$
+\Gamma_T(P)=\overline{\{(Z(R_j(\mathbf n)))_{j=1}^q:
+\mathbf n\in\mathbb N_0^d,\ n_i\ge T\text{ 对所有 }i\}},
+\qquad \Gamma(P)=\Gamma_0(P).
+$$
+对目标 $\boldsymbol\xi=(\xi_1,\ldots,\xi_q)\in K^q$，记
+$$
+\boldsymbol\theta=(H(\xi_j))_{j=1}^q,\qquad
+I(\boldsymbol\xi)=\{j:\theta_j\in E\}.
+$$
+对 $j\in I(\boldsymbol\xi)$，以 $s_j\in\{-1,+1\}$ 表示 $\xi_j=z_{\theta_j}^{s_j}$，并定义同一个实误差空间中的严格锥
+$$
+\mathcal C(\boldsymbol\xi)=
+\{u\in\mathbb R^m:s_j(Au)_j>0\text{ 对所有 }j\in I(\boldsymbol\xi)\}.
+$$
+当 $I(\boldsymbol\xi)$ 为空时，此锥为整个 $\mathbb R^m$。零维空间 $\mathbb T^0,\mathbb R^0,K^0,\mathbb N_0^0$ 均取为单点；零变量多项式均为常数。
+
+**定理 43.9（单项式相位的矩形等分布与单变量实现）。** 在定义43.8的记号下，若 $d\ge1$，则 $V_M(\mathbf n)$ 在矩形盒
+$$
+B_{\mathbf N}=\prod_{i=1}^d\{0,\ldots,N_i-1\}
+$$
+上相对于 $\mathbb T^m$ 的归一化 Haar 测度等分布，极限取 $\min_iN_i\to\infty$。同一结论适用于任意固定的非负整数平移 $\mathbf a+B_{\mathbf N}$。
+
+此外，取整数
+$$
+B>\max\{\nu_i:\nu\in M,\ 1\le i\le d\},\qquad
+w_i=B^{i-1},\qquad
+\mathbf n(t)=(t^{w_1},\ldots,t^{w_d}).
+$$
+则 $V_M(\mathbf n(t))$ 随 $t=1,2,\ldots$ 在 $\mathbb T^m$ 上等分布。因此每个非空开集都含有某个 $V_M(\mathbf n)$，其中全部 $n_i\ge T$；而且可以要求 $\mathbf n=\mathbf n(t)$ 及 $t\ge\max\{T,1\}$。[^rro43-multi]
+
+**证明 43.9。** 先证明矩形盒结论所需的标量事实：对每个非恒定整数系数多项式 $Q$，有
+$$
+\lim_{\min_iN_i\to\infty}
+\frac1{|B_{\mathbf N}|}\sum_{\mathbf n\in B_{\mathbf N}}
+\exp(2\pi i\phi Q(\mathbf n))=0.
+$$
+对 $D=\deg Q$ 归纳。若 $D=1$，写 $Q(\mathbf n)=c+\sum_i a_in_i$，其中某个 $a_i\ne0$。平均分解为各坐标的几何级数平均之积，其中该坐标的模不超过
+$$
+\frac{2}{N_i|1-\exp(2\pi i\phi a_i)|}\longrightarrow0,
+$$
+其余因子的模均不超过一。
+
+设 $D\ge2$ 且低次数情形已经成立。选取坐标 $i$，使 $Q$ 的最高次齐次部分 $Q_D$ 满足 $\partial_iQ_D\ne0$。记
+$$
+a(\mathbf n)=\exp(2\pi i\phi Q(\mathbf n)),\qquad
+A_{\mathbf N}=\frac1{|B_{\mathbf N}|}\sum_{\mathbf n\in B_{\mathbf N}}a(\mathbf n).
+$$
+固定正整数 $H$，并以 $\mathbb E_{\mathbf n\in B_{\mathbf N}}$ 表示该盒上的算术平均。平移盒的两个边界条带给出
+$$
+\left|A_{\mathbf N}-
+\mathbb E_{\mathbf n\in B_{\mathbf N}}
+\frac1H\sum_{h=0}^{H-1}a(\mathbf n+h\mathbf e_i)\right|
+\le\frac{H-1}{N_i}.
+$$
+由 Cauchy–Schwarz 不等式，平滑后平均的模平方不超过
+$$
+\frac1H+
+\frac{2}{H^2}\sum_{0\le h<k<H}
+\left|\mathbb E_{\mathbf n\in B_{\mathbf N}}
+ a(\mathbf n+k\mathbf e_i)\overline{a(\mathbf n+h\mathbf e_i)}\right|.
+$$
+每个相关项的相位为
+$$
+\phi\bigl(Q(\mathbf n+k\mathbf e_i)-Q(\mathbf n+h\mathbf e_i)\bigr).
+$$
+括号内是整数系数多项式，其最高次齐次部分为 $(k-h)\partial_iQ_D$，故次数恰为 $D-1\ge1$。由归纳假设，固定 $h,k$ 后该相关平均趋于零。因此先固定 $H$ 令所有边长趋于无穷，可得
+$$
+\limsup_{\min_iN_i\to\infty}|A_{\mathbf N}|^2\le\frac1H.
+$$
+再令 $H\to\infty$，即证标量事实。
+
+现在对任意非零整数向量 $h=(h_\nu)_{\nu\in M}$，取
+$$
+Q_h(\mathbf n)=\sum_{\nu\in M}h_\nu\mathbf n^\nu.
+$$
+由于 $M$ 中的单项式不同且均非常数，$Q_h$ 非恒定。刚证明的事实使 $V_M$ 的每个非平凡字符平均趋于零。字符判据的证明同样适用于这些有限盒平均：先对有限三角多项式逐项求极限，再以一致范数逼近任意连续函数；平均与 Haar 积分各自的逼近误差均不超过该一致误差。因此得到矩形盒上的 Haar 等分布。固定平移只把 $Q_h(\mathbf n)$ 换为非恒定整数多项式 $Q_h(\mathbf a+\mathbf n)$，故结论不变。
+
+再证单变量实现。由于 $M$ 包含输入单项式，所选 $B$ 至少为二。对 $\nu\in M$ 置
+$$
+e(\nu)=\sum_{i=1}^d\nu_iB^{i-1}.
+$$
+各 $\nu_i$ 均严格小于 $B$，故有限进位表示的唯一性说明不同 $\nu$ 给出不同的正整数 $e(\nu)$。而
+$$
+\mathbf n(t)^\nu=t^{e(\nu)}.
+$$
+定理43.3遂给出曲线上的联合等分布。各 $w_i\ge1$，所以 $t\ge1$ 时 $n_i(t)\ge t$。应用任意尾部的开集访问性质，就得到最后的实际元组断言。这里所有单项式始终在同一个整数元组、乃至同一个参数 $t$ 上求值。证毕。
+
+**定理 43.10（相位像的全部整数线性关系）。** 对定义43.8中的整数矩阵 $A$，其像
+$$
+\mathcal T_A=A(\mathbb T^m)\subseteq\mathbb T^q
+$$
+是维数为 $\operatorname{rank}_{\mathbb R}A$ 的紧致环面子群。对于任意 $\boldsymbol\theta\in\mathbb T^q$，下列两项等价：存在 $p\in\mathbb T^m$ 使
+$$
+\boldsymbol\theta=\mathbf b+Ap;
+$$
+对每个 $\ell\in\mathbb Z^q$，有
+$$
+A^{\mathsf T}\ell=0
+\quad\Longrightarrow\quad
+\sum_{j=1}^q\ell_j\theta_j=
+\left[\phi\sum_{j=1}^q\ell_jc_j\right].
+$$
+不要求 $A:\mathbb T^m\to\mathcal T_A$ 单射。例如输入 $X$ 与输出 $2X^2$ 的矩阵为 $\operatorname{diag}(1,2)$，两个不同点 $(0,0)$、$(0,[1/2])$ 有相同像。
+
+**证明 43.10。** 连续群同态的像在此为紧致子群。为确定其形状，用整数初等行列变换将 $A$ 化为对角矩阵。具体地，把任一非零元素移至当前左上角；若当前首行或首列的某个元素不能被该主元整除，则带余除法及一次交换给出绝对值更小的非零主元。正整数绝对值不能无限严格下降，故最终主元整除当前首行、首列的全部元素。将它们消去后，在余下子矩阵上递归。于是存在整数可逆矩阵 $U,V$，使
+$$
+UAV=D,
+$$
+其中 $D$ 只有前 $\rho=\operatorname{rank}A$ 个对角元非零。这里不需要对角元之间的整除链。
+
+$U,V$ 在相应环面上均为自同构，而任何非零整数倍映射 $\mathbb T\to\mathbb T$ 均满射。因此 $D$ 的像为 $\mathbb T^\rho\times\{0\}^{q-\rho}$，给出所述维数与环面性质。
+
+若 $\boldsymbol\theta-\mathbf b=Ap$，所有满足 $A^{\mathsf T}\ell=0$ 的字符当然在该差上为零。反之，设全部所列字符关系成立，令 $w=\boldsymbol\theta-\mathbf b$。对每个 $j>\rho$，取 $\ell=U^{\mathsf T}\mathbf e_j$。由 $UAV=D$ 得 $A^{\mathsf T}\ell=0$，故 $(Uw)_j=0$。于是 $Uw$ 属于 $D$ 的像，因而 $w$ 属于 $A$ 的像。这证明等价性。零行数或零列数时，同一结论按空矩阵约定成立。所列非单射例子由第二坐标的二倍映射直接算出。证毕。
+
+**定理 43.11（有限多项式完整联合闭图的严格锥判据）。** 采用定义43.8。对任意 $\boldsymbol\xi\in K^q$，以下三项等价：$\boldsymbol\xi\in\Gamma(P)$；$\boldsymbol\xi\in\Gamma_T(P)$ 对所有 $T\in\mathbb N_0$ 成立；同时满足
+$$
+A_{j\nu}=0\text{ 对所有 }\nu\in M
+\quad\Longrightarrow\quad \xi_j=Z(c_j),
+$$
+$$
+\exists p\in\mathbb T^m,\qquad
+\boldsymbol\theta=\mathbf b+Ap,
+$$
+$$
+\mathcal C(\boldsymbol\xi)\ne\varnothing.
+$$
+相位条件可以等价地换成定理43.10的全部整数线性关系，但不能删除严格锥条件。
+
+更准确地，只要这些条件成立，对任意含 $\xi_j$ 的开集 $O_j\subseteq K$ 及任意 $T$，就存在一个实际元组 $\mathbf n\in\mathbb N_0^d$，使全部 $n_i\ge T$ 且
+$$
+Z(R_j(\mathbf n))\in O_j\qquad(1\le j\le q).
+$$
+$d\ge1$ 时还可以把该元组限制为定理43.9的同一条固定曲线 $\mathbf n(t)$。相位共同原像可以不唯一；严格锥始终在同一个单项式误差向量上施加全部条件。
+
+**证明 43.11。** 先证必要性。由 $K^q$ 可度量，若 $\boldsymbol\xi\in\Gamma(P)$，则存在实际元组列 $\mathbf n^{(k)}$，使
+$$
+(Z(R_j(\mathbf n^{(k)})))_{j=1}^q\longrightarrow\boldsymbol\xi.
+$$
+常数行的数字字在整列上恒为 $Z(c_j)$，所以其极限必须等于该点。又有实际相位恒等式
+$$
+(H(Z(R_j(\mathbf n))))_{j=1}^q=\mathbf b+A V_M(\mathbf n).
+$$
+环面 $\mathbb T^m$ 紧致，故在原序列的一个子列上可以令 $V_M(\mathbf n^{(k)})\to p$。由连续性得到 $\boldsymbol\theta=\mathbf b+Ap$。这一步不要求共同原像唯一。
+
+在 $p$ 附近使用环面的局部实坐标。丢弃有限初段后，可写
+$$
+V_M(\mathbf n^{(k)})=p+[u_k],\qquad
+u_k\in\mathbb R^m,\qquad u_k\longrightarrow0.
+$$
+每个输出或输入坐标的相位遂为
+$$
+H(Z(R_j(\mathbf n^{(k)})))=\theta_j+[(Au_k)_j].
+$$
+对充分大的 $k$，全部 $(Au_k)_j$ 的绝对值小于 $1/2$。当 $j\in I(\boldsymbol\xi)$ 时，该误差不可能为零，因为 $R_j(\mathbf n^{(k)})\in\mathbb N_0$，其自然相位不属于 $E$。由假设43.1及该数字坐标的收敛，
+$$
+s_j(Au_k)_j>0
+$$
+最终成立。只有有限多个分裂坐标，所以存在一个共同的充分大指标，使全部严格不等式同时成立。该 $u_k$ 就是 $\mathcal C(\boldsymbol\xi)$ 中的一个向量。这里没有把严格不等式传到可能退化的归一化极限上。
+
+再证充分性及实际元组断言。$d=0$ 时所有行均为常数，目标被常数行条件唯一确定，唯一的空输入元组已经实现它。以下设 $d\ge1$，于是 $m\ge1$。固定一个共同原像 $p$，并取 $v\in\mathcal C(\boldsymbol\xi)$。对各个非恒定行，应用定理43.2于 $\xi_j\in O_j$，取得相应的 $\eta_j>0$。常数行已精确等于目标，无需逼近。
+
+因为严格不等式只有有限个，可先把 $v$ 乘以足够小的正数 $\tau$，再选取以 $\tau v$ 为中心的一个非空实开球 $W\subseteq\mathbb R^m$，使对所有 $u\in W$ 均有
+$$
+\|u\|_\infty<\tfrac14,\qquad
+|(Au)_j|<\eta_j\text{ 对每个非恒定行 }j,
+$$
+$$
+s_j(Au)_j>0\text{ 对所有 }j\in I(\boldsymbol\xi).
+$$
+若没有分裂坐标，可直接使用零向量附近足够小的开球。如此选球的理由是：有限个严格线性不等式在 $\tau v$ 处仍严格成立，而所有线性误差随 $\tau\to0$ 趋于零。
+
+$p+[W]$ 是 $\mathbb T^m$ 的非空开集。由定理43.9，可以在同一曲线上选择一个 $t\ge\max\{T,1\}$，使
+$$
+V_M(\mathbf n(t))\in p+[W].
+$$
+故对某个 $u\in W$，有 $V_M(\mathbf n(t))=p+[u]$。实际相位恒等式给出
+$$
+H(Z(R_j(\mathbf n(t))))=\theta_j+[(Au)_j].
+$$
+非分裂目标使用小误差条件，分裂目标同时使用小误差及指定严格符号条件，由定理43.2均得到 $Z(R_j(\mathbf n(t)))\in O_j$。常数行则精确等于 $Z(c_j)=\xi_j$。因此同一个实际自然元组实现了全部邻域要求。
+
+取 $O_j=[\pi_k(\xi_j)]_K$ 并取 $T=k$，便得到全部输入同时趋于无穷的共同逼近列。这证明条件推出每个 $\Gamma_T(P)$ 的归属；后者当然推出 $\Gamma(P)$ 的归属，三项因而等价。定理43.10给出相位条件的整数关系表述。
+
+边界情形也由此完全确定。若 $r=0$，仅有输入行，$A$ 为单位矩阵，故 $\Gamma_T(P)=K^d$。若 $d=0$，图为固定常数输出元组的单点；$d=r=0$ 时就是 $K^0$。若两个多项式行相同，则常数及系数行均相同，目标相位也相同；该相位非分裂时目标字由单点纤维相等，分裂时相反标签将同时要求同一个实数严格为正和严格为负，故仍必须为同一数字点。因此重复多项式要求完整数字相等，而不只是相位相等。证毕。
+
+**定理 43.12（满联合闭图的秩判据与单个非线性输出）。** 对定义43.8中的完整输入输出族，
+$$
+\Gamma(P)=K^q
+\quad\Longleftrightarrow\quad
+\operatorname{rank}_{\mathbb R}A=q.
+$$
+等价地，$R_1-c_1,\ldots,R_q-c_q$ 在有理数域上线性无关。此处只要求模去常数后的线性无关，不要求这些多项式代数无关。
+
+特别，若 $d\ge1$ 且单个 $P\in\mathbb N_0[X_1,\ldots,X_d]$ 含有总次数至少为二的项，则
+$$
+\overline{\{(Z(n_1),\ldots,Z(n_d),Z(P(\mathbf n))):\mathbf n\in\mathbb N_0^d\}}
+=K^{d+1},
+$$
+并且同一结论对全部同时输入尾部成立。若该单个输出是仿射多项式，则其完整图不是 $K^{d+1}$。
+
+**证明 43.12。** 若 $A$ 满行秩，定理43.10说明其环面像是整个 $\mathbb T^q$，所以任意目标均有共同相位原像。对给定目标，取 $w\in\mathbb R^q$，在分裂坐标令 $w_j=s_j$，其余坐标令 $w_j=0$。实线性映射 $A:\mathbb R^m\to\mathbb R^q$ 满射，故存在 $u$ 使 $Au=w$，于是 $u\in\mathcal C(\boldsymbol\xi)$。满行秩时不存在零行；零行数情形按空约定处理。定理43.11遂给出所有目标以及全部尾部的满性。
+
+反之，若 $\Gamma(P)=K^q$，由 $H$ 满射及定理43.11的必要相位条件，$\mathbf b+A(\mathbb T^m)$ 必为整个 $\mathbb T^q$。定理43.10给出的维数于是为 $q$，故 $A$ 满行秩。整数矩阵在 $\mathbb Q$ 与 $\mathbb R$ 上的秩相同，而行向量恰为 $R_j-c_j$ 的单项式系数，得到线性无关的等价表述。
+
+对单个含非线性项的 $P$，输入行是 $d$ 个不同一次单项式的单位行。任何带非零 $P$ 系数的行关系都在某个次数至少为二的列上非零，不能被输入行抵消。因此全部 $d+1$ 行线性无关。反之，仿射输出的非恒定部分属于输入行的张成空间，秩至多为 $d$。应用已证等价性即得结论。证毕。
+
+**定理 43.13（共同算术电路中的相位约束与定向约束）。** 考虑同一实际自然数对 $a,b$ 产生的电路
+$$
+t=b+1,\qquad r=ab,\qquad s=at=a(b+1).
+$$
+分别只保留 $(Z(a),Z(b),Z(r))$ 或 $(Z(a),Z(b),Z(s))$ 时，两个闭图均为 $K^3$。但是完整五坐标闭图中始终满足
+$$
+H(Z(s))=H(Z(r))+H(Z(a))
+$$
+的极限形式，所以
+$$
+(0_K,0_K,Z(1),0_K,Z(1))
+$$
+不是完整电路的极限元组。
+
+更强地，所有整数线性相位关系均成立的元组
+$$
+(U,0_K,Z(1),U,10V)
+$$
+仍不是完整电路的极限元组；把末坐标换成 $0V$ 后则可以由全部 $a_k,b_k\ge k$ 的共同实际元组逼近。
+
+此外，将同一多项式重复输出，或者分别以 $ab$ 与 $ba$ 输出，所得两个数字坐标必须完全相等。因此不能以两个满乘法边缘闭图为依据，为这两个位置分别选择 $U$ 与 $V$，即使 $H(U)=H(V)$。
+
+**证明 43.13。** $ab$ 与 $a(b+1)$ 都是二变量非线性非负系数多项式，故定理43.12给出两个边缘闭图的满性。实际电路具有恒等式
+$$
+s=r+a,
+$$
+从而在每个实际元组上有 $H(Z(s))=H(Z(r))+H(Z(a))$，取共同极限后仍成立。第一个所列元组的右侧为零，左侧为 $[\phi]\ne0$，故不可能。同时，$t=b+1$ 在输入极限 $0_K$ 处的精确仿射闭图输出为 $Z(1)$，所以这不是因忽略加一门而产生的矛盾。
+
+对于第二个元组，按单项式 $a,b,ab$ 排列相位坐标。相位向量
+$$
+p=(E_1,0,E_1)\in\mathbb T^3
+$$
+是该目标的一个共同原像：前三个相关相位分别给出输入 $E_1,0$、中间量 $[\phi]$，而 $r$ 的相位为 $E_1$，$s$ 的相位为 $2E_1=E_2$。故全部整数线性相位关系确实成立。
+
+然而，若存在逼近该目标的实际元组列，把 $a_k$ 与 $a_kb_k$ 相对于 $E_1$ 的小实相位误差分别记为 $\varepsilon_k,\delta_k$。两个数字目标均为 $U=z_{E_1}^{+1}$，所以假设43.1给出
+$$
+\varepsilon_k>0,\qquad\delta_k>0
+$$
+最终成立。由同一个整数恒等式 $a_k(b_k+1)=a_kb_k+a_k$，末坐标相对于 $E_2$ 的小相位误差为 $\varepsilon_k+\delta_k>0$。它只能趋于 $z_{E_2}^{+1}=0V$，不能趋于 $z_{E_2}^{-1}=10V$。两种数字字的最低位分别为零和一，所以该阻碍不仅是标签区别，也是实际低位区别。
+
+等价地，若以 $u_a,u_b,u_{ab}$ 表示共同单项式误差，错误目标要求
+$$
+u_a>0,\qquad u_{ab}>0,\qquad u_a+u_{ab}<0,
+$$
+严格锥为空。改取末目标 $0V$ 后，最后一个要求变为 $u_a+u_{ab}>0$，向量 $(1,0,1)$ 即满足全部分裂条件。相位共同原像仍是上述 $p$，故定理43.11给出全部实际输入同时趋于无穷的共同逼近。
+
+最后，重复多项式及 $ab=ba$ 在每个实际元组上都给出完全相同的数字字，闭对角线使该相等关系传到极限。$U\ne V$，故不能分别选为两个重复输出。上述全部恒等式对每个实际自然元组保持成立；满边缘闭图仅说明指定低位极限不能确定单个非线性输出，并不允许同一元组的不同出现位置使用互不相容的逼近列。证毕。
+
+[^rro43-phase]: RECURSIVE_RELATIONAL_OBSERVATION.md，固定版本 492640d0651a5fca476f4b168c97a1d05f65ff8d，定义16.0、定义16.3、定理16.4证明中的单侧等价，以及假设18.1。[固定文本](https://raw.githubusercontent.com/the-omega-institute/trureturing/492640d0651a5fca476f4b168c97a1d05f65ff8d/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)。本节采用的单侧等价位于该固定文本定理16.4证明开头；不需要其他新增节的结论。
+
+[^rro43-weyl]: H. Weyl，Über die Gleichverteilung von Zahlen mod. Eins，Mathematische Annalen 77(3)，1916，313–352，DOI 10.1007/BF01475864。所用精确表述见 T. Tao，254B, Notes 1: Equidistribution of polynomial sequences in tori，2010年3月28日网络版，第1节，Proposition 1 与 Corollary 6；该网络版无印刷页码。[正文及证明](https://terrytao.wordpress.com/2010/03/28/254b-notes-1-equidistribution-of-polynomial-sequences-in-torii/)。Proposition 1 的假设为环面值序列全部非零整数字符的平均趋于零；本节对 Corollary 6 只使用标量情形，假设为正次数实一元多项式的首项系数无理。该文对整数索引等分布的定义要求正、负两个半序列分别等分布，故包含这里所用的正整数结论。
+
+[^rro43-multi]: Y. Yifrach，A note on Weyl’s equidistribution theorem，Monatshefte für Mathematik 206(3)，2025年正式发表版，771–780，Theorem 1.2 在第772页，DOI 10.1007/s00605-025-02057-2。[正式文本](https://link.springer.com/content/pdf/10.1007/s00605-025-02057-2.pdf)。其假设为实多变量多项式至少一个非恒定单项式系数无理；Definition 1.1 在第771–772页规定欧氏球内格点计数。定理43.9所需的非负矩形盒与固定平移版本已由正文针对共同系数 $\phi$ 的整数多项式给出完整差分证明，不把不同截断约定直接等同。环面字符方法及差分方法另见前一引文的 Proposition 1、Corollary 5。
+
+## 追加锚（本行以下为增补区）
