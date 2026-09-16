@@ -1697,3 +1697,591 @@ theorem. This is an ordinary proof with an exact arithmetic certificate,
 not an unrestricted solution of Erdős #7 or end-to-end Lean verification.
 
 The fixed schedule and its 258 charges are retained in `matching_height_tail17` in the adjacent certificate. The verifier reuses the existing directed convolution and logarithm routines. It retains 384 low states, bounds all omitted states through the full exact mean, and rounds upwards on a grid of 10^-18. Independent arithmetic at scale 10^-24 gives charge < 0.759181, second moment < 1170 and Γ < 4856. These are finite arithmetic certificates for the ordinary proof, not a claim that the selected schedule is optimal.
+
+## Arbitrary point holes and a common diagonal
+
+### Statement
+
+Let m,n>=3, let E be an arbitrary set of k holes in an m by n grid, and
+assume k<mn. Write d_i and e_j for the row and column degrees of E. Set
+
+```
+C0 = max(m+n+1, 2(m−1), 2(n−1), 4),
+0 <= epsilon <= 1/(9 k C0)                 (k>0),
+w_ij = 1+epsilon(d_i+e_j)                  ((i,j) outside E),
+H = k(m+n)−sum_i d_i^2−sum_j e_j^2,
+Z = mn−k+epsilon H,
+rho(i,j)=w_ij/Z.
+```
+
+For k=0 use the uniform full-grid law. The following diagonal dominates
+every independently chosen row/column/single-cell Gram matrix of rho:
+
+```
+lambda_E = (1+(m+n+1+2k epsilon)/Z,
+            2(n+1+k epsilon)/Z,
+            2(m+1+k epsilon)/Z,
+            4/Z).                                        (AH1)
+```
+
+Thus, for all real four-vectors A and every test row i, column j and cell z,
+
+```
+E_rho (A0+A1*1[row=i]+A2*1[column=j]+A3*1[cell=z])^2
+    <= sum_g lambda_E[g] A_g^2.                          (AH2)
+```
+
+Now fix K>=1 and choose one epsilon<=1/(9 K C0). If K<mn and
+
+```
+D_K=mn−K+epsilon K(m+n−K−1)>0,
+```
+
+then every arbitrary hole pattern with 0<=k<=K admits the same diagonal
+
+```
+lambda_K = (1+(m+n+1+2K epsilon)/D_K,
+            2(n+1+K epsilon)/D_K,
+            2(m+1+K epsilon)/D_K,
+            4/D_K).                                      (AH3)
+```
+
+The row, column and point probabilities of this same law satisfy
+
+```
+R_k=(n+k epsilon)/D_k,
+C_k=(m+k epsilon)/D_k,
+a_k=(1+k epsilon)/D_k,                                    (AH4)
+```
+
+where D_k=mn−k+epsilon k(m+n−k−1). These bounds are continuous at k=0.
+All three increase with k, so the K-bounds work in every fibre. No extra
+row/column deletion or matching hypothesis is used.
+
+### Proof of the new Gram estimate
+
+Use unnormalized matrices. For selected row i, column j and surviving
+cell z, let r=n−d_i, c=m−e_j, u=1[(i,j) survives],
+v=1[z lies in row i], and t=1[z lies in column j]. At epsilon=0 the Gram is
+
+```
+M0 = [[mn−k,r,c,1], [r,r,u,v], [c,u,c,t], [1,v,t,1]].
+```
+
+The unnormalized diagonal from (AH1) is initially
+`(mn−k+m+n+1,2(n+1),2(m+1),4)`. Its difference D0 from M0 is a
+nonnegative weighted graph Laplacian plus diagonal slacks
+
+```
+(d_i+e_j, 2+2d_i−u−v, 2+2e_j−u−t, 2−v−t).               (AH5)
+```
+
+All slacks are nonnegative integers. They all vanish precisely when
+d_i=e_j=0 and z=(i,j). In that exceptional case both axes and their
+intersection are untouched by holes.
+
+In every other case D0 >= I/9. Here is a proof including fully missing
+rows or columns, so k<min(m,n) is unnecessary. If r,c>=1, the graph
+contains the unit star 01,02,03 and some vertex has a unit diagonal
+anchor. Expressing four coordinates through the anchor and the three
+star differences gives a matrix with squared Frobenius norm at most 9.
+Thus `sum x_g^2 <= 9(x_anchor^2+sum_{a=1}^3(x0−xa)^2)`.
+
+If r=0 then d_i=n. The center slack is at least n>=3 and the vertex-1
+slack is at least 2n+2. Use two units of each slack and
+`2x0^2+2x1^2 >= (x0−x1)^2` to restore the missing star edge 01.
+The analogous construction restores 02 if c=0. If either edge was
+missing, the remaining center slack is at least
+`n*1[r=0]+m*1[c=0]−2(1[r=0]+1[c=0]) >=1`.
+The full star and its center anchor therefore remain, giving the same
+I/9 bound. All other edge and diagonal terms are nonnegative.
+
+Write h=d_{z_row}+e_{z_column}, and let r',c' be the derivatives of the
+selected raw row/column masses. Let u'=d_i+e_j if (i,j) survives and 0
+otherwise. On a surviving cell, its row-incident and column-incident
+hole sets are disjoint, so h<=k and u'<=k. Moreover
+
+```
+0<=r'<=k(n−1),    0<=c'<=k(m−1).
+```
+
+For a row with a hole this follows by summing at most n−1 cell
+derivatives bounded by k. A row without holes has r'=sum e_j=k.
+The column statement is identical. The difference matrix is affine:
+
+```
+D(epsilon)=D0+epsilon Delta,
+Delta = [[2k, −r', −c', −h],
+         [−r',2k−r',−u',−hv],
+         [−c',−u',2k−c',−ht],
+         [−h,−hv,−ht,−h]].                                (AH6)
+```
+
+Its absolute row sums are bounded respectively by
+
+```
+k(m+n+1), 2k(n−1), 2k(m−1), 4k.
+```
+
+For the second bound, use
+`|2k−r'|+r'+u'+hv <= max(2k,2r'−2k)+2k
+                    <= max(4k,2r') <=2k(n−1)`.
+Symmetry and `2|xy|<=x^2+y^2` imply
+`|x^T Delta x|<=k C0 ||x||^2`. Hence the nonexceptional matrices satisfy
+`D(epsilon)>=(1/9−epsilon k C0)I>=0`.
+
+In the exceptional case r'=c'=k and h=u'=0. Then Delta is itself the
+nonnegative star Laplacian with weight k on 01 and 02. Thus D remains
+positive semidefinite there too. This proves (AH1)–(AH2).
+
+A test cell outside the survivor support has zero indicator. Its Gram
+inequality follows by taking the upper-left principal submatrix for any
+surviving test cell, together with the nonnegative fourth diagonal.
+Test rows or columns outside chosen axis sets are likewise zero blocks.
+
+### The graph identity and common coefficients
+
+Summing cell derivatives gives exactly H above. If t(E) counts unordered
+pairs of holes sharing neither row nor column, then
+
+```
+sum_i d_i^2+sum_j e_j^2 = k^2+k−2t(E),
+H = k(m+n−k−1)+2t(E).                                    (AH7)
+```
+
+Indeed each pair of distinct holes shares at most one endpoint. It is
+counted twice in the sum of degree squares when it shares an endpoint,
+and zero times otherwise. Thus H>=k(m+n−k−1), and Z>=D_k.
+Replacing Z by D_k in the positive fractions of (AH1) only increases
+the diagonal. Also
+
+```
+D_j−D_(j+1)=1−epsilon(m+n−2j−2)>0,
+```
+
+since epsilon(m+n−2)<1. Positive numerators in all four coordinates
+increase with j. Therefore their D_j-envelopes are coordinatewise
+increasing, and D_K>0 ensures every earlier denominator positive.
+This proves the shared vector (AH3) for all patterns with at most K holes.
+
+Within this particular degree-weight certificate, for fixed m,n,k,epsilon,
+all four coordinates improve as t(E) increases. Stars have t=0 and
+matchings have t=binomial(k,2), when these patterns fit. This is an
+ordering of these sufficient certificates, not an assertion about the
+true minimax laws or all possible certificates.
+
+### Same-law probability caps and arithmetic use
+
+The selected raw row derivative has the exact expression
+
+```
+r'_i = d_i(n−d_i)+k−sum_{j:(i,j) in E} e_j
+      <= k+d_i(n−d_i−1).
+```
+
+Consequently, since epsilon(n−2)<=1,
+
+```
+raw row mass = n−d_i+epsilon r'_i <= n+k epsilon.
+```
+
+The same argument gives raw column mass <=m+k epsilon. The disjoint
+incident-hole observation above gives every raw point mass <=1+k epsilon.
+Normalize by Z>=D_k to obtain (AH4). This point cap is different from
+the old indicator-weight matching law's 1+epsilon cap.
+
+Let an arbitrary old law mu index varying row/column sets and arbitrary
+hole patterns E_x, always of size at most K and with the same m,n.
+Use the conditional law rho_x above in each fibre. The old marginal is
+exactly preserved. Apply (AH2) with the four old complete block loads,
+then integrate using the common diagonal (AH3), to obtain
+
+```
+Gamma_new <= F_K Gamma_old,
+F_K = sum lambda_K = 1+3(m+n+3+2K epsilon)/D_K.             (AH8)
+```
+
+The existing convex-concentration reduction allows each block's residue
+choices to vary independently by original cofactor. Actual original
+labels must remain distinct. This argument neither assumes independent
+old coordinates nor mixes different selected old laws. The caps (AH4)
+hold for the very same conditional laws and can be used in the existing
+full-height extension and weighted-profile arguments.
+
+One may retain the actual k(x) envelope. Since every complete old block
+load includes the unit cofactor and hence is at least 1, subtraction gives
+
+```
+Gamma_new <= F_K Gamma_old − E_mu[F_K−F_(k(x))].           (AH9)
+```
+
+This is the same valid unit-load rebate as in the matching case, now for
+arbitrary point-hole geometry. Any sharper use of H or t(E) must retain
+the same-law weighted old-load bookkeeping.
+
+### Concrete m=10,n=12,K=12 boundary
+
+For the coarse common envelope, compare with the uniform-count factor
+`F0_K=1+3(m+n+3)/(mn−K)`. Exact algebra gives
+
+```
+F0_K−F_K = 3K epsilon B_K / [(mn−K)D_K],
+B_K=m^2+n^2+(2−K)(m+n)−K−3.
+```
+
+For m=10,n=12 this is B_K=285−23K. Thus the envelope is strictly better
+for every integer 1<=K<=12 and epsilon>0; at K=12, B_K=9. Choosing the
+conservative epsilon=1/(207 K) gives
+
+```
+epsilon=1/2484,
+D_12=2485/23,
+F_12=12632/7455,
+R_12=1/9,
+C_12=2071/22365,
+a_12=208/22365.
+```
+
+The strict gain over the uniform-count factor 61/36 is exactly 1/89460.
+All 12 point exclusions are allowed in arbitrary positions, including
+an entirely removed row. The strict-improvement cutoff 12 belongs to
+this sufficient envelope; PSD validity itself extends further whenever
+the stated support and D_K positivity conditions hold.
+
+The adjacent verifier checks 11 exact polynomial identities and four nonnegative-coefficient certificates for these formulas. The graph-counting and anchored-star arguments above prove the all-pattern statement. The matching theorem, weighted-rectangle concentration and established SDP framework are reused; the degree-weight construction supplies the new estimate. No Lean formalization or literature-priority claim is made.
+
+## Mean hole count and the complete comparison profile
+
+This result combines the degree-weighted point-hole kernel with the
+repository's existing weighted conditional comparison, old 315 convex
+profile, and high-digit lift. Its improvement comes from retaining the
+correlation between hole count and old test loads. Replacing a supremum
+density by its average while keeping the original comparator would not
+be justified.
+
+### Kernel inputs and one actual law
+
+Use one old probability μ with common complete-load comparator X,
+EX=M=271/86 and Γ(μ)≤G=1131/86. Above every old point x suppose there is
+a 10×12 rectangle of first 11/13 digits. Its row and column sets may move
+with x. Delete k(x) arbitrary cells, where 0≤k(x)≤K≤12, and suppose the
+remaining cells avoid all actual classes with both new exponents at
+most one. No matching assumption is made.
+
+Use the degree-weighted kernel on that punctured rectangle, with one
+common 0≤ε≤1/(207K). A surviving cell (i,j) receives unnormalized weight
+1+ε(d_i+e_j), where d_i,e_j are the row/column hole degrees. The kernel
+construction gives the following common bounds at hole count j:
+
+    D_j=120−j+εj(21−j),
+    R_j=(12+jε)/D_j,       C_j=(10+jε)/D_j,
+    a_j=(1+jε)/D_j,        d_j=120a_j,
+    F_j=1+(75+6jε)/D_j.                                      (VH1)
+
+Here R,C,a are row, column and atom caps; d is the density cap relative
+to the full uniform 10×12 rectangle. F is the sum of the common diagonal
+quadratic coefficients
+
+    1+(23+2jε)/D_j, 2(13+jε)/D_j, 2(11+jε)/D_j, 4/D_j.
+
+The proof of this degree-weighted kernel, including wholly deleted rows
+or columns, is a separate input. Its actual normalization may exceed
+D_j; all displayed quantities are upper bounds, which is sufficient.
+
+Uniformly lift all additional 11/13 digits to their full finite original
+heights. Denote this probability by ν0. After deleting all actual high
+classes, condition once, producing ν. All bounds below refer to these
+same two laws, without choosing a new law for each test load.
+
+Suppose in addition
+
+    Eμ k≤M.                                                   (VH2)
+
+For actual point holes from distinct original mixed moduli 11·13·d,
+d|315, this follows because their activation count is bounded by one
+complete old load. There are only 12 old divisor labels, so K=12 applies
+automatically. Repeated forbidden cells reduce k. Virtual added holes
+must not be counted under (VH2) without a separate justification.
+
+### The weighted upper-quantile lemma
+
+Put α=min(1,M/K). Let X_α be the upper α-quantile of X, splitting the
+boundary atom as necessary, and put T_α=αEX_α. For every complete old
+load A and nonnegative increasing convex g,
+
+    Eμ[k g(A)]≤KαE g(X_α).                                   (VH3)
+
+Proof: write w=k/K, so 0≤w≤1 and Ew≤α. At a quantile boundary t choose
+z=g(t)≥0. Then
+
+    E[w g(A)]≤αz+E(g(A)−z)_+
+               ≤αz+E(g(X)−z)_+=αE g(X_α).
+
+The middle step uses the old increasing-convex comparison. It neither
+asserts nor requires independence of k and A. This is the same
+upper-quantile argument already used for survivor conditioning, now
+applied to the old-point weight.
+
+For 0≤j≤K≤12, D_j is positive, decreasing and concave. Every numerator
+in (VH1) is a positive affine function with nonnegative slope. Such a
+ratio is increasing and convex: differentiating twice gives
+
+    (N/D)''=−2N'D'/D²+N[2(D')²/D³−D''/D²]≥0.
+
+The same differentiation applies to each of the four individual
+diagonal coefficients, not just their sum F_j. Consequently every
+individual low or high coefficient is monotone, and each scalar bound
+f_j used below satisfies
+
+    f_j≤f_0+(f_K−f_0)j/K.                                   (VH4)
+
+In particular, for each complete old load A,
+
+    Eμ[f_k A]≤f_0M+(f_K−f_0)T_α.                            (VH5)
+
+The same statement holds for partial original cofactor loads by
+completing them before applying the inequality.
+
+### Better high-class mass and square bounds
+
+For the actual finite higher heights put
+
+    u_p=Σ_(t=1)^(H_p−1)p^(−t),
+    v_p=Σ_(t=1)^(H_p−1)(2t−1)p^(−t), w_p=4u_p+v_p.
+
+Uniform bounds for all finite heights use
+
+    u11=1/10, u13=1/12, w11=13/25, w13=31/72.
+
+Define
+
+    T_j=(R_j+a_j)u11+(C_j+a_j)u13+a_j u11u13,
+    E_j=(R_j+3a_j)w11+(C_j+3a_j)w13+a_j w11w13,
+    χ_j=F_j+E_j.                                             (VH6)
+
+The functions T_j,χ_j are again increasing and convex. Apply (VH5) to
+each original exponent group in the high-class union bound. Distinct
+original labels give at most one old cofactor class per divisor in each
+group, exactly as in the existing height theorem. The actual removed
+mass is at most
+
+    Λ=T_0M+(T_K−T_0)T_α.                                   (VH7)
+
+This improves the worst-K value T_KM whenever K>M: since X≥1 and α<1,
+T_α<M, and T_K>T_0 whenever a higher digit is present.
+
+There is also a rebate in the high square terms. Every complete old
+load A_e is at least one, and therefore A_eA_f≥1 pointwise. If a high
+pair has cap κ_j, replace κ_k A_eA_f by
+
+    κ_K A_eA_f−(κ_K−κ_k).
+
+Integrating uses E A_eA_f≤G. Summing all high pairs, and retaining the
+existing common-diagonal low-group rebate, gives
+
+    Γ(ν0)≤χ_KG−Eμ(χ_K−χ_k)
+           ≤U:=χ_KG−(χ_K−χ_0)(1−α).                        (VH8)
+
+Thus the same minimum-load argument applies to both the low and high
+parts. In particular the low contribution alone retains the stronger
+mean-hole saving (F_K−F_0)(1−α), which dominates the previously available
+γ(K−M)_+ bound.
+
+If Λ<1, condition ν0 on actual high-class survival. Every full load has
+square at least one, so
+
+    Γ(ν)≤J:=(U−Λ)/(1−Λ).                                   (VH9)
+
+U≥1 follows from its valid bound on the square of a complete load. The
+survival probability used here and below is s=1−Λ; it is a lower bound
+on the true surviving mass, not an equality claim.
+
+### A weighted full comparator
+
+Let τ be the reference law that is uniform on each available 10×12
+rectangle, given the old point x, and uniform on all higher digits.
+Its constant conditional prefix caps give the independent auxiliaries
+N=N11N13 used in MH3, independent of X. The weighted C1 comparison is
+valid for the finite old measure kμ as well as for μ. Combining it with
+(VH3) and Jensen for the complete old loads gives, for every nonnegative
+increasing convex g,
+
+    Eτ g(L)≤E g(XN),
+    Eτ[k g(L)]≤KαE g(X_αN).                                (VH10)
+
+The conditional reference kernels can depend on x through the available
+sets: their common caps are what make the auxiliary N independent of x.
+Each old load used after comparison is fixed before x is sampled.
+
+The actual degree-weighted kernel has pointwise density at most d_k
+relative to τ. Apply (VH4) to d, noting d_0=1. Then
+
+    Eν0 g(L)≤E g(XN)+(d_K−1)αE g(X_αN).                     (VH11)
+
+Define the finite comparison measure on old load values
+
+    W_old=Law(X)+(d_K−1)αLaw(X_α),
+    Dbar=mass(W_old)=1+(d_K−1)α.                            (VH12)
+
+Multiply its old values by the independent N11N13; call the resulting
+finite measure W. It has the same mass Dbar. The full comparator for
+ν is the upper s-mass of W, normalized to mass one, equivalently the
+upper ell-quantile of W/Dbar with ell=s/Dbar.
+
+Indeed for every nonnegative increasing convex h and every real z,
+
+    Eν h(L)≤z+(1/s)∫(h(y)−z)_+ dW(y).                       (VH13)
+
+Take z at the corresponding quantile boundary. This proves a common
+full convex comparison on exactly the law used in (VH9).
+
+The formula is not an average-density replacement. The excess density
+has been assigned to the upper old-load quantile X_α, which accounts
+for the worst permitted correlation with hole count. The old finite
+measure has total mass Dbar, so it must be normalized or integrated as
+a finite measure; treating its atoms as a probability would be wrong.
+
+#### Strict improvement over the worst-K comparison
+
+For every nonnegative g,
+
+    ∫g dW=E g(XN)+(d_K−1)αE g(X_αN)≤d_K E g(XN),
+
+since the upper old quantile is a submeasure of Law(X). Simultaneously
+Λ≤T_KM and U≤χ_KG. Thus (VH9) and (VH13) improve the same-law worst-K
+height and density bounds. For K>M, the square, removed-mass, and
+every finite hinge bounds improve strictly at positive higher heights.
+The hinge statement uses the unbounded positive auxiliary N: even the
+discarded lower old quantile contributes a positive hinge expectation.
+
+#### Dependence on K
+
+At fixed ε and within a common valid kernel range, all these bounds
+are nondecreasing as K increases. For K≥M, write α=M/K. The secant
+slopes(f_K−f_0)/K increase by convexity, and expectations under the
+upper α-quantile increase as α decreases. These observations prove
+monotonicity of Λ and of the raw comparison cost in (VH13). Also
+
+    U=χ_0G+(χ_K−χ_0)(G−1)+M(χ_K−χ_0)/K
+
+is nondecreasing, since G≥1. The survivor lower bound decreases, so J
+and the final full comparator increase. For K≤M the formulas reduce
+to the already monotone worst-K values. This is monotonicity of the
+guaranteed bounds, not a claim about the optimized Γ of different
+physical laws.
+
+Choosing a different ε for each K changes the comparison and requires
+separate evaluation. The exact verifier evaluates ε=1/(207K) for
+K=1,…,12; no tail scheduling is part of that computation.
+
+### Exact K=12 input
+
+Take ε=1/2484 and the infinite geometric majorants, which cover every
+finite 11/13 height. Then
+
+    α=271/1032,        T_α=1633/1118,
+    d_K=1664/1491,     Dbar=1585595/1538712,
+    Λ=164881/2683200,  s=2518319/2683200,
+    U=3968983906721/166180896000,
+    J=51464038499033/2027599359660.                          (VH14)
+
+The upper old α-quantile starts at 4. Its raw subprobability atoms are
+1631/13416 at 4 and the original X masses at 5,6,8,12, with zero below 4.
+Consequently W_old has these exact atoms:
+
+| Value | Unnormalized mass |
+| ---: | ---: |
+|1|581/6966|
+|2|3031/6966|
+|3|146/1053|
+|4|5552881/25718472|
+|5|1280/165501|
+|6|1920/18389|
+|8|1664/55167|
+|12|832/55167|
+
+After multiplying by the independent auxiliaries,
+
+    ∫y dW(y)=226440629/56347200,
+    W{1}=6391/92880, W{2}=807835/2173392,
+    ell=s/Dbar=3754813629/4122547000.
+
+The upper s-mass of W starts at 2, strictly inside its atom. The final
+comparison law Z therefore has
+
+    Pr(Z=2)=37653203663/101379967983,
+    Pr(Z=z)=W{z}/s for integer z>2,
+    EZ=46851298771/11264440887.                              (VH15)
+
+Numerically J≈25.38175910 and EZ≈4.159220972. The corresponding
+worst-K bounds are J≈25.53775188 and comparison mean≈4.246698684.
+The next theorem uses these head inputs in a fully certified tail continuation.
+
+### Reuse, verification and scope
+
+The kernel PSD bound is supplied by the independent degree-weighted
+point-hole proof. Existing repository inputs are C1–C3 for arbitrary
+finite old measures, AP2–AP7 for conditional comparison with original
+labels, MT7 for the low minimum-load rebate, the established high pair
+count, and the old 315 comparator X. The upper-quantile lemma itself is
+standard reuse. The quantitative new combination retains the same
+hole-count weight through high deletion, square, density and profile;
+it does not create a bind-only Lean wrapper.
+
+The adjacent standard-library verifier recomputes these exact inputs for K=1,…,12, all individual coefficient chord inequalities and 300 hinge comparisons. The symbolic argument establishes the continuous-domain bounds; the finite checks verify the displayed arithmetic.
+
+## All cross-point labels with arbitrary heights and unrestricted tails
+
+**Theorem.** Let a finite family have distinct odd nonunit moduli, and let
+the full 3/5/7 part of every original modulus divide 315. Choose the
+canonical supported old law μ. At each old point x suppose there are
+10 first 11-digits avoiding all active classes of moduli d·11, and
+12 first 13-digits avoiding all active classes of moduli d·13, for d|315.
+The available sets may depend on x. Then the family cannot cover.
+There is no restriction on the residues of the classes of moduli d·143,
+on any higher 11/13 exponents, or on the number, exponents and interactions
+of tail primes from 17.
+
+Choose such available sets A_x,B_x. The actual d·143 classes remove
+at most twelve distinct points of A_x×B_x, with hole count k(x) bounded
+by one complete old cofactor load. Thus 0≤k≤12 and Eμk≤271/86.
+Apply AH1–AH9 and VH1–VH15 to these actual holes, without adding virtual
+holes. All complete original labels remain distinct even when their
+projections coincide. After lifting to the full original heights and
+conditioning away high head classes, the same supported law has
+
+    J_head≤51464038499033/2027599359660,
+    Θ_head(t)≤E(Z−t)_+,   EZ=46851298771/11264440887.
+
+Use this complete comparator in AP2 and the separate square bound in
+AP5. The fixed schedule in `arbitrary_holes12_tail17` processes every
+prime from 17 through 2903: 414 steps, global prime index 420. Directed
+exact arithmetic gives
+
+    C_tail≤205435101024428611/250000000000000000,
+    survivor mass≥44564898975571389/250000000000000000,
+    Γ_stop≤1751428432885843299077/178259595902285556
+           <9826<9833<420(log420+loglog420−3)^2.              (AH10)
+
+For the last inequality, independent positive rational atanh sums give
+log420>604025/100000 and loglog420>179844/100000. The resulting lower
+bound is 4916713392381/500000000>9833. AP6 and the T1–T6 transfer to
+BBMST Theorem 6.1 continue through every later prime. If the family
+ends sooner, the positive prefix survivor mass already suffices. CRT
+then supplies an integer outside every original class.
+
+The verifier retains 768 low product states and includes the entire
+omitted tail through the exact comparator mean. Probabilities and
+moments are rounded upwards on a grid of 10^-18, and every hinge
+correction has a nonnegative coefficient. An independent implementation
+with trial-division prime generation and a 10^-24 grid confirms Γ<9826.
+The prior single-hole certificate is retained unchanged and gives its
+stronger numerical bound on that smaller class.
+
+This theorem removes the earlier point-hole restriction entirely. The
+axis hypothesis is still substantial: at any old point the active
+first-power 11-axis classes must forbid at most one distinct digit,
+and likewise for 13. Several different forbidden axis digits can
+violate that hypothesis. Higher 3/5/7 powers also remain outside this
+statement. The result is an ordinary proof with exact certificates,
+not an unrestricted solution of Erdős #7 or an end-to-end Lean theorem.

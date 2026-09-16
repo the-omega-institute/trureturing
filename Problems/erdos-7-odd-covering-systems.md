@@ -1676,36 +1676,37 @@ in (DG2) proves the selected-coordinate cylinder step, not this entire
 unrestricted-tail star theorem. The graph and bounded-support star bounds
 below remain quantitative refinements for their respective subclasses.
 
-### A matching 11/13 head with arbitrary heights
+### Arbitrary cross-point 11/13 heads and full-height continuation
 
-A further noncoverage theorem permits both 11 and 13 under a low-digit
-geometric hypothesis. Let the full `{3,5,7}` part of every original modulus
-divide 315, and choose the canonical supported 315 law. At every point in
-its support require a 10-by-12 rectangle of first 11- and 13-digits, minus
-at most one cell, avoiding all actual head classes whose new exponents
-are at most one. The rectangle and hole may depend on the old point.
-Then the family cannot cover, with arbitrary finite 11/13 heights and
-no restriction on the primes, heights or interactions of tails from 17.
+A further noncoverage theorem permits both 11 and 13 at arbitrary finite
+heights. Let the full `{3,5,7}` part of every original modulus divide 315,
+and choose the canonical supported 315 law. At every point in its support,
+suppose the active classes d·11 forbid at most one first 11-digit and the
+active classes d·13 forbid at most one first 13-digit, for d|315. Then the
+family cannot cover. All twelve possible d·143 classes may have arbitrary
+residues, and the later prime heights and interactions are unrestricted.
 
-The [matching-height proof](../docs/reports/erdos7-odd-covering/marked_head_profile.md#arbitrary-height-transfer-for-matching-kernels)
-retains the matching common quadratic bound when uniformly extending higher
-digits, then conditions away every original high head class. The same
-actual law has second-moment bound `6074954672/249830373` and a full convex
-comparator obtained from the upper `83276791/89577600` quantile of
-`X N_11 N_13`, with the published 315 comparator X. Its exact mean is
-`3016548085/749491119`; this is a comparator mean, not the asserted actual
-maximum head mean. The fixed 258-step tail schedule ends at 1693, global
-prime index 264, with
+The [degree-weighted grid proof](../docs/reports/erdos7-odd-covering/marked_head_profile.md#arbitrary-point-holes-and-a-common-diagonal)
+allows arbitrary point-hole patterns in each available 10-by-12 rectangle,
+including a whole row deleted by cross classes. The number of actual holes
+has mean at most 271/86. Retaining its correlation with old complete test
+loads gives the same full-height supported law both a square bound
+`51464038499033/2027599359660` and a complete convex comparator of mean
+`46851298771/11264440887`. The mean belongs to the comparator and is not
+asserted to equal the actual maximum old-load mean.
 
-    survivor mass >= 240819191260897231/10^18,
-    Gamma <= 1169229336100810112644/240819191260897231
-          < 4856 < 4868 < 264(log 264 + log log 264 - 3)^2.
+The fixed 414-step certificate ends at 2903, global prime index 420:
 
-The full proof and exact certificate give an ordinary theorem. The entire
-original family must satisfy the 315 height restriction, including moduli
-assigned to later primes. General low-digit layouts need not contain the
-required rectangle. These remain genuine hypotheses; the result does not
-settle unrestricted Erdős #7 and is not end-to-end Lean verified.
+    survivor mass >= 44564898975571389/250000000000000000,
+    Gamma <= 1751428432885843299077/178259595902285556
+          < 9826 < 9833 < 420(log420 + loglog420 - 3)^2.
+
+AP2–AP6 and the existing BBMST transfer finish every later prime. The
+previous single-hole result remains a quantitative refinement with its
+258-step certificate. The full-family 315 height restriction and the
+first-power axis restrictions remain genuine hypotheses. This is an
+ordinary theorem with exact arithmetic, not unrestricted Erdős #7 or
+an end-to-end Lean proof.
 
 ### A continuation criterion for an arbitrary correlated head
 
