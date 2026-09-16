@@ -1,0 +1,10 @@
+**定理 46.4（商方程的紧致拼接与可延伸读数）。** 有
+$$
+E_\Sigma=\bigcap_{\alpha\in I}(\pi_\alpha^d)^{-1}(B_\alpha)\cong\varprojlim_{\alpha\in I}B_\alpha,
+$$
+且下列条件等价：$E_\Sigma\ne\varnothing$；每个 $B_\alpha$ 非空；对每个有限 $F\subseteq I$，存在一个自然元组 $\mathbf n$，使所有 $j$ 和所有 $\alpha\in F$ 同时满足 $P_j^+(\mathbf n)R_\alpha P_j^-(\mathbf n)$。此外
+$$
+\pi_\alpha^d(E_\Sigma)=\bigcap_{\beta\succeq\alpha}b_{\beta\alpha}^d[B_\beta].
+$$
+同一紧致拼接结论适用于任意非空有向指标集上的有限交换半环逆系统及有限组相容系数的多项式等式。只要求解集间的遗忘映射是处处定义且相容的映射，不要求它们满射。
+
