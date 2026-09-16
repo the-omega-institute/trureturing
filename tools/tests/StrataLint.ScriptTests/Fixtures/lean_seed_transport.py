@@ -139,7 +139,7 @@ shutil.copytree, tarfile.TarFile.extractall, pathlib.Path.rename = copytree, ext
         extracted = next(event for event in events if event["operation"] == "extract")
         self.assertEqual((self.root / ".lake").resolve(), pathlib.Path(extracted["path"]).parent.resolve())
         materials = [event for event in events if event["operation"] == "material"]
-        self.assertEqual(2, len(materials))
+        self.assertEqual(3, len(materials))
         for material in materials:
             status = (self.root / ".lake" / material["name"]).stat()
             self.assertEqual((material["device"], material["inode"]), (status.st_dev, status.st_ino))

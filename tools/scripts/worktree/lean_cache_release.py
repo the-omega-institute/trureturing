@@ -245,6 +245,19 @@ def publish(root, partition, verification=None):
         "LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json"], cwd=root)
     if build.returncode:
         return build.returncode
+    report = root / ".lake/build/stratalint/raw-lean-report.json"
+    if report.is_symlink() or not report.is_file():
+        receipt("publish", "failed", reason="current Inspector report is missing")
+        return 1 if verification is not None else 0
+    try:
+        payload = json.loads(report.read_text(encoding="utf-8"))
+    except (OSError, UnicodeError, json.JSONDecodeError) as error:
+        receipt("publish", "failed", reason="current Inspector report is unreadable: " + str(error))
+        return 1 if verification is not None else 0
+    if (not isinstance(payload, dict) or payload.get("schema") != "stratalint-raw-lean-report-v2"
+            or not isinstance(payload.get("modules"), list)):
+        receipt("publish", "failed", reason="current Inspector report is malformed")
+        return 1 if verification is not None else 0
     if verification is None and (os.environ.get("GITHUB_EVENT_NAME") != "schedule"
                                  or os.environ.get("GITHUB_REF") != "refs/heads/dev"):
         receipt("publish", "skipped", reason="Release publication requires the scheduled dev producer")
