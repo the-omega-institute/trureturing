@@ -101,6 +101,23 @@ def receipt(verb, status, **fields):
     print("LEAN_CACHE_" + verb.upper() + " " + json.dumps({"status": status, **fields}, separators=(",", ":")))
 
 
+def existing_release(tag, deadline):
+    """Return exact release metadata, or None when the tag is absent."""
+    try:
+        raw = gh(deadline, "api", f"repos/{REPO}/releases/tags/{tag}")
+    except GitHubCommandError:
+        # `gh api` uses a non-zero exit for a missing tag. The create call
+        # below remains the only writer for an absent exact address.
+        return None
+    try:
+        metadata = json.loads(raw)
+    except (TypeError, json.JSONDecodeError) as error:
+        raise ValueError(f"exact release {tag} returned malformed metadata: {error}") from error
+    if not isinstance(metadata, dict) or type(metadata.get("draft")) is not bool:
+        raise ValueError(f"exact release {tag} returned malformed metadata: expected boolean draft")
+    return metadata
+
+
 def prefix(partition, verification=False):
     namespace = "lean-cache-verify-v1-" if verification else "lean-cache-v2-"
     return namespace + partition.replace("/", "-") + "-"
@@ -236,6 +253,14 @@ def publish(root, partition, verification=None):
                 re.fullmatch(r"[0-9]+", value) for value in (run, attempt)):
             raise ValueError("snapshot publication requires commit, run ID and attempt attribution")
         tag = prefix(partition, verification is not None) + run + "-" + attempt
+        existing = existing_release(tag, deadline)
+        if existing is not None:
+            if existing["draft"]:
+                raise ValueError(f"exact release {tag} is an incomplete draft; refusing to modify it")
+            if verification is not None:
+                raise ValueError(f"verification release {tag} already exists; refusing to replace it")
+            receipt("publish", "exists", tag=tag)
+            return 0
         with tempfile.TemporaryDirectory(prefix="lean-release-") as temporary:
             stage = pathlib.Path(temporary)
             with cache_guard(root, shared=True):

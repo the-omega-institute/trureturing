@@ -474,6 +474,31 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
         self.assertIn("stderr: <empty>", report["reason"])
         self.assertEqual([], list(self.remote.iterdir()))
 
+    def test_existing_published_release_is_reused_without_remote_mutation(self):
+        self.assertEqual(0, self.transport("publish").returncode)
+        before = {path.name: path.read_bytes() for path in next(self.remote.iterdir()).iterdir()}
+        result = self.transport("publish", FAKE_GH_LOG=str(self.root / "gh.log"))
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+        self.assertIn('"status":"exists"', result.stdout.replace(" ", ""))
+        self.assertEqual(before, {path.name: path.read_bytes() for path in next(self.remote.iterdir()).iterdir()})
+        calls = [json.loads(line) for line in (self.root / "gh.log").read_text().splitlines()]
+        self.assertEqual(["api"], [call[0] for call in calls])
+
+    def test_draft_or_malformed_exact_metadata_fails_before_create(self):
+        self.assertEqual(0, self.transport("publish").returncode)
+        before = {path.name: path.read_bytes() for path in next(self.remote.iterdir()).iterdir()}
+        for metadata in ('{"draft":true}', '{"draft":"false"}', '{}'):
+            with self.subTest(metadata=metadata):
+                (self.root / "gh.log").unlink(missing_ok=True)
+                result = self.transport("publish", FAKE_API_JSON=metadata,
+                                        FAKE_GH_LOG=str(self.root / "gh.log"))
+                self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+                self.assertIn('"status":"failed"', result.stdout.replace(" ", ""))
+                self.assertIn("exact release", result.stdout)
+                calls = [json.loads(line) for line in (self.root / "gh.log").read_text().splitlines()]
+                self.assertEqual(["api"], [call[0] for call in calls])
+                self.assertEqual(before, {path.name: path.read_bytes() for path in next(self.remote.iterdir()).iterdir()})
+
     def test_concurrent_publishers_keep_distinct_complete_snapshots(self):
         with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
             results = list(pool.map(lambda run: self.transport("publish", run), ["401", "402"]))
