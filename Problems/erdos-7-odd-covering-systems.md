@@ -379,6 +379,10 @@ restrictions: full star heads admit at most two tail primes per modulus,
 as do arbitrary `{3,5,7}` heads with tails from 23; heads dividing 315 or
 945 admit at most three tail primes per modulus from 17 or 19 respectively.
 These conditions allow complete tail graphs of unbounded size.
+Moreover, (RK6)--(RK8) impose those support bounds only on moduli with
+largest prime at most 8192 (star, 315 and 945) or 32768 (arbitrary 357).
+Above those cutoffs, each original modulus may have arbitrarily many
+tail prime factors; the exact prefix seed enters the BBMST continuation.
 
 **H73 — false**, with its universal candidate statement retained from
 [the target preregistration](https://github.com/the-omega-institute/trureturing/issues/8167):
@@ -1646,6 +1650,97 @@ through 73 have exponent at most one, not arbitrary head heights. No exact
 dominating statement was found in the searched sources; no literature
 priority is asserted. Arbitrary tail support and arbitrary head geometry
 remain unresolved.
+
+#### The support restriction is needed only below a finite largest prime
+
+The support bounds above can be removed entirely for every modulus with
+sufficiently large **largest prime factor**. In the following table, impose
+the tail-support bound only on original moduli whose largest prime factor
+is at most `B`. Every original modulus with largest prime factor greater
+than `B` may contain arbitrarily many tail prime factors. Under each row,
+the original distinct odd family cannot cover the integers.
+
+| Head | Allowed tail primes | Tail-support bound when `P+(d)<=B` | `B` | Certified continuation seed upper bound |
+|---|---|---:|---:|---:|
+| Complete star through 73 | `q>73` | 2 | 8192 | `<34474` |
+| Arbitrary `{3,5,7}` head | `q>=23` | 2 | 32768 | `<160112` |
+| Head period divides 315 | `q>=17` | 3 | 8192 | `<28830` |
+| Head period divides 945 | `q>=19` | 3 | 8192 | `<34675` |
+
+No graph, tail-exponent-height or total-prime-count restriction is imposed;
+the two finite-head rows retain their stated head-period bounds.
+Thus any hypothetical covering completion of the full star head must
+contain a modulus with at least three tail prime factors **and largest
+prime factor at most 8192**. For the 315 and 945 rows, the required
+obstruction has at least four tail prime factors and largest prime at
+most 8192. The head and allowed-prime conditions remain essential.
+
+**Finite prefix and actual survivor mass.** Use the same increasing-prime
+kernels as in (RK1)--(RK2), stopping after all primes at most `B`. Each
+coordinate height is taken from the entire original family, including
+exponents that occur only in moduli with a later largest prime. At this
+stage delete only the classes whose latest tail prime has been processed.
+This retains the exact earlier-prime factors needed by every later class.
+
+Let `r` be one less than the support bound in the table and let
+
+\[
+ L_B=\frac{G}{4\delta(1-\delta)}
+       \sum_{q_0\le v\le B\atop v\text{ prime}}a_v^2 B_r(v),
+ \qquad
+ P_B=\prod_{q_0\le p\le B\atop p\text{ prime}}
+           \left(1+\frac{3p-1}{(1-\delta)(p-1)^2}\right).
+ \tag{RK6}
+\]
+
+The product accounts for the **full** layout moment, without a support
+truncation. The prefix law `nu_B` is normalized; (RK2) gives mass at least
+`1-L_B` to points avoiding every processed class, while repeated (T1)
+gives `Gamma(nu_B)<=G P_B`. The certificate proves `L_B<1` in each row.
+Restricting once to the actual prefix survivors and normalizing is
+therefore legitimate and gives a survivor law with
+
+\[
+ \Gamma\le F_B:=\frac{G P_B}{1-L_B}.                  \tag{RK7}
+\]
+
+Equivalently, one can keep the unconditioned prefix law and start (T6)
+with the separate bounds `G P_B` and `1-L_B`. No independence is asserted
+after conditioning. T1--T3 apply to arbitrary old laws, and every later
+modulus keeps its complete expanded-head divisor. In particular, the
+future step does not identify moduli whose tail projections coincide.
+
+**Unrestricted continuation.** Put `k=pi(B)`, counting all primes including
+2. Omitted primes have unused coordinates and may be padded with exponent
+zero. The supplied seed satisfies the exact sufficient condition
+
+\[
+ F_B<k(\log k+\log\log k-3)^2,\qquad k\ge10.           \tag{RK8}
+\]
+
+At `B=8192`, `k=1028`, and the certificate's rational lower bound for
+the right-hand side is greater than `35445`. At `B=32768`, `k=3512`,
+and that lower bound is greater than `185296`. These strictly exceed all
+corresponding seed bounds in the table. Starting here,
+[BBMST](../Library/Arith/balister2018covering.md), Theorem 6.1 and its
+Lemma 6.2, continue the same recurrence (T6) with `delta=1/2` for every
+later prime. Their proof uses only positive survivor mass, (RK8), the
+recurrence and the published lower bound for the indexed primes. Every
+finite continuation therefore has positive survivor mass, with no
+restriction on the number of prime factors of a later modulus.
+If the family has no later primes, the already positive prefix mass
+suffices directly.
+
+The [existing exact verifier](../docs/reports/erdos7-odd-covering/verify_star_block_obstruction.py)
+recomputes the finite coefficient sums, full-moment products, all four
+positive survivor margins and the strict stopping comparisons. It reuses
+`verify_finite_continuation.py:stopping_threshold` for the rational lower
+logarithm bounds, so no new analytic estimate is assumed. All rounding of
+prefix costs and moment products is upward. This is an ordinary proof
+using a published continuation theorem with exact numerical premises;
+it is not an end-to-end Lean proof or a resolution of unrestricted #7.
+The unrestricted remainder is now localized to the stated small-prime
+support conditions and the head geometry, not to large-prime support.
 
 #### Why scalar deletion and unrestricted message energy do not suffice
 
@@ -6179,7 +6274,10 @@ feedback vertex number and treewidth. Arbitrary graph structure is also
 allowed by (RK1)--(RK5) when each original modulus has at most two tail
 primes for the full star or three-prime heads, or at most three for the
 finite 315/945 heads, at the respective stated cutoffs. Unrestricted
-original-modulus support remains open.
+original-modulus support remains open. The finite switch (RK6)--(RK8)
+removes every support restriction above largest-prime cutoff 8192 for
+star, 315 and 945 heads, or 32768 for arbitrary three-prime heads.
+Only the indicated small-prime support restrictions remain.
 The finite supported-law bridge (FC4)--(FC5) sharpens the planar cutoff
 to 17 for heads dividing 315 and to 19 for heads dividing 945, the two odd
 parts in the frozen 5040 fibre.

@@ -440,6 +440,72 @@ def rank_three_tail_bounds():
             "scope": "Exact certificate for the ordinary bounded-tail-support theorem; no graph restriction."}
 
 
+def finite_support_switch_bounds():
+    """Release every support restriction after a certified BBMST starting point."""
+    from runpy import run_path
+    continuation = run_path(str(Path(__file__).with_name("verify_finite_continuation.py")))
+    threshold_lower = continuation["stopping_threshold"]
+    scale = 10 ** 12
+    rows = []
+    for head, first, gamma, delta, support, cutoff, expected_rank, seed_ceiling in [
+            ("complete_star_head", 79, F(177), F(2, 5), 2, 8192, 1028, F(34474)),
+            ("arbitrary_357_head", 23, F(1889, 48), F(3, 8), 2, 32768, 3512, F(160112)),
+            ("head_divides_315", 17, F(1148, 71), F(3, 10), 3, 8192, 1028, F(28830)),
+            ("head_divides_945", 19, F(3812, 179), F(7, 20), 3, 8192, 1028, F(34675))]:
+        primes = support_rank_primes(cutoff)
+        require(len(primes) == expected_rank >= 10, "BBMST theorem prime-index domain")
+        cap = 1 / (1 - delta)
+        coefficients = [[0] * support for _ in range(support)]
+        coefficients[0][0] = scale
+        total = 0
+        full_product = scale
+        for prime in primes:
+            if prime < first:
+                continue
+            denominator = prime - 1
+            a = (scale + denominator - 1) // denominator
+            b = (scale * (denominator + 2) + denominator ** 2 - 1) // denominator ** 2
+            square = (scale + denominator ** 2 - 1) // denominator ** 2
+            total += (square * sum(map(sum, coefficients)) + scale - 1) // scale
+            old = coefficients
+            coefficients = [row[:] for row in old]
+            for i in range(support):
+                for j in range(support):
+                    numerator = cap.numerator * (
+                        (a * old[i - 1][j] if i else 0)
+                        + (a * old[i][j - 1] if j else 0)
+                        + (b * old[i - 1][j - 1] if i and j else 0))
+                    divisor = cap.denominator * scale
+                    coefficients[i][j] += (numerator + divisor - 1) // divisor
+            factor = 1 + cap * F(3 * prime - 1, denominator ** 2)
+            numerator = full_product * factor.numerator
+            full_product = (numerator + factor.denominator - 1) // factor.denominator
+            require(0 <= full_product * factor.denominator - numerator < factor.denominator,
+                    "full Gamma product upward rounding")
+        finite_moment = F(total, scale)
+        loss = gamma * finite_moment / (4 * delta * (1 - delta))
+        require(0 <= loss < 1, "positive actual prefix survivor mass")
+        gamma_upper = gamma * F(full_product, scale)
+        seed = gamma_upper / (1 - loss)
+        threshold = threshold_lower(len(primes))
+        require(seed < seed_ceiling < threshold, "strict BBMST continuation starting inequality")
+        rows.append({"head": head, "tail_prime_minimum": first,
+                     "maximum_tail_support_when_largest_prime_at_most_cutoff": support,
+                     "largest_prime_cutoff": cutoff, "global_prime_index": len(primes),
+                     "last_prime_at_most_cutoff": primes[-1],
+                     "Gamma_head_bound": str(gamma), "delta_before_cutoff": str(delta),
+                     "finite_moment_sum_upper": str(finite_moment),
+                     "prefix_loss_upper": str(loss), "prefix_survivor_mass_lower": str(1 - loss),
+                     "full_Gamma_product_upper": str(F(full_product, scale)),
+                     "prefix_Gamma_upper": str(gamma_upper),
+                     "continuation_seed_upper": str(seed), "strict_seed_ceiling": str(seed_ceiling),
+                     "BBMST_threshold_lower": str(threshold), "strict_threshold_margin": str(threshold - seed),
+                     "support_restriction_above_cutoff": None})
+    return {"rounding_scale": scale, "rows": rows,
+            "logarithm_bound_source": "verify_finite_continuation.py:stopping_threshold",
+            "scope": "Exact finite premises for BBMST Theorem 6.1; arbitrary later support, exponents, and graph."}
+
+
 def certificate():
     all_primes = primes_to(4000)
     require(tuple(p for p in all_primes if 3 <= p <= 73) == HEAD_PRIMES,
@@ -784,6 +850,7 @@ def certificate():
         "local_parent_capped_kernel": degeneracy_rows,
         "rank_two_tail": rank_two_tail_bounds(),
         "rank_three_tail": rank_three_tail_bounds(),
+        "finite_support_switch": finite_support_switch_bounds(),
         "local_kernel_crt_regression": local_kernel_crt_regression(),
         "binary_path_regression": binary_path_regression(),
         "unrestricted_energy_boundary": unrestricted_energy_boundary(),
@@ -845,6 +912,7 @@ def main():
                       "feedback_vertex_loss_bounds": {row["head"]: row["loss_upper"] for row in data["feedback_vertex"]},
                       "local_parent_capped_kernel_loss_bounds": {row["head_and_graph"]: row["loss_upper"] for row in data["local_parent_capped_kernel"]},
                       "rank_two_tail_loss_bounds": {row["head"]: row["loss_upper"] for row in data["rank_two_tail"]["rows"]},
+                      "finite_support_switch_seed_bounds": {row["head"]: row["strict_seed_ceiling"] for row in data["finite_support_switch"]["rows"]},
                       "rank_three_tail_loss_bounds": {row["head"]: row["loss_upper"] for row in data["rank_three_tail"]["rows"]},
                       "finite_head_supported_Gamma_bounds": {row["period_bound"]: row["Gamma_bound"] for row in data["finite_head_supported_laws"]},
                       "local_kernel_crt_regression_cases": data["local_kernel_crt_regression"]["cases"],
