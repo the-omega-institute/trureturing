@@ -33038,3 +33038,251 @@ $$
 故 $\mathcal L^{-1}(X_+)$ 非正半定，$X_+\notin\mathcal K$。同一个逆像还是形式表达式 $V\mathcal L^{-1}(X_+)V^\dagger$ 在记忆 $|0\rangle$ 上的压缩，因此该表达式也非正半定；这排除了把所给 $\Gamma$ 公式当作全正半定锥上的正恢复映射。此计算仅说明命题的代数适用边界，没有在所定义的原协议中添加这次幺正操作。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 149. 单步有限报告的端点纠缠与右通道的纠缠破坏判据
+
+**命题 149.1（固定单滤波下的逐报告纠缠分类与旗标通道判据）。** 沿用命题 130.1、137.1、145.1—148.1 的纯记忆、输出次序及复向量化。各 qubit 取正交标准基，$\dagger$ 表示共轭转置，$\mathsf T$ 表示普通转置，$\operatorname{outer}(v)=vv^\dagger$，并置
+$$
+\alpha=\frac{\sqrt5-1}{2},\qquad s=\sqrt\alpha,\qquad
+\alpha+\alpha^2=1,\qquad
+J=\begin{pmatrix}1&1\\1&0\end{pmatrix},\qquad
+Z=\operatorname{diag}(1,-1),\qquad
+E_0=\operatorname{diag}(1,0),\qquad E_1=\operatorname{diag}(0,1).
+$$
+初始记忆为 $m_0=s|0\rangle+\alpha|1\rangle$，$m_1=|0\rangle$，等距为 $T|j\rangle=|j\rangle_{\rm out}\otimes m_j$。先恰好发出 $L,R_0$，再对 $L$ 施加一个固定的复成功 Kraus 算子 $F$，$F^\dagger F\le I_2$，保留共同成功事件。以下关于制备态的断言分别量化于每一个这样的固定 $F$，包括奇异矩阵和零矩阵；模拟器仅接收约化端点与成功旗标，不取得经典 $F$ 标签、原始记忆或其副本；这里不把若干不同 $F$ 的隐藏随机选择平均为单次制备。记
+$$
+C_0=s^3J,\qquad C=FC_0,\qquad
+\operatorname{vec}_{LR}(C)=\sum_{i,j=0}^1C_{ij}|i\rangle_L\otimes|j\rangle_R,
+$$
+$$
+\chi(C)=\operatorname{vec}_{LR_0}(C)\otimes|0\rangle_M
++s\operatorname{vec}_{LR_0}(CE_0)\otimes|1\rangle_M,\qquad
+Q(C)=\operatorname{outer}(\operatorname{vec}(C))
++\alpha\operatorname{outer}(\operatorname{vec}(CE_0)),\qquad
+q_F=\operatorname{Tr}Q(C).
+$$
+$\chi(C)$ 是实际成功后的联合向量，$Q(C)$ 是其记忆偏迹。端点使用完整 $\mathbb C^2\otimes\mathbb C^2$，不要求滤波后的态仍在原来的无 $11$ 支撑内。
+
+保留同一个原始相关记忆，以 $T$ 发出 $R_1$，在退役的 $R_0$ 上测量固定基
+$$
+|\eta_b\rangle=\frac{|0\rangle+(-1)^b|1\rangle}{\sqrt2},\qquad b\in\{0,1\},
+$$
+对最终记忆取偏迹。给定 $b$，以一个固定的有限列随机矩阵 $W:Y\leftarrow\{0,1\}$ 独立于其余系统和制备设置抽取报告 $y$；$Y$ 非空，$W(y\mid b)\ge0$、$\sum_yW(y\mid b)=1$，全过程无反馈。只保留 $y,L,R_1$。命题 145.1、147.1、148.1 的实际单步分支与其 Born 权重为
+$$
+Q_b(C)=\frac\alpha2 Q(CZ^bJ),\qquad
+R_y(C)=\sum_{b=0}^1W(y\mid b)Q_b(C),\qquad
+r_y(C)=\operatorname{Tr}R_y(C),\qquad \sum_yr_y(C)=q_F.
+$$
+这里相加的是未归一化算子。写
+$$
+c_y=W(y\mid0)+W(y\mid1),\qquad
+ d_y=W(y\mid0)-W(y\mid1),\qquad
+ d_y^2\le\alpha c_y^2\quad(y\in Y).
+$$
+按命题 147.1 的逐行完全正判据，匹配全部复收缩制备的固定端点仪器为 $\mathcal I_y=\operatorname{Id}_L\otimes\phi_y$，其中
+$$
+\phi_y=\begin{cases}c_y\psi_{d_y/c_y},&c_y>0,\\0,&c_y=0,\end{cases}
+\qquad
+\psi_\nu\!\begin{pmatrix}x&u\\v&w\end{pmatrix}
+=\frac12\begin{pmatrix}
+\alpha x+w+\nu(u+v)&\alpha^2x+\nu\alpha v\\
+\alpha^2x+\nu\alpha u&\alpha^2x
+\end{pmatrix},
+\qquad x,u,v,w\in\mathbb C.
+$$
+定义保留有限正交旗标的右通道
+$$
+\mathcal J_W:\mathcal L(R_0)\longrightarrow\mathcal L(\mathbb C^Y\otimes R_1),\qquad
+\mathcal J_W(X)=\sum_{y\in Y}|y\rangle\langle y|\otimes\phi_y(X).
+$$
+可分密度按命题 132.1、133.1 的有限凸乘积密度和定义：在指定分割 $U\mid V$ 上，$\rho=\sum_{k=1}^N p_k\rho_k^U\otimes\rho_k^V$，其中 $p_k\ge0$、$\sum_kp_k=1$，两因子皆为正半定单位迹算子；不可分者称为纠缠态。称 $\mathcal J_W$ 为纠缠破坏通道（EB），是指对每个有限维辅助空间 $A$ 及每个 $A\otimes R_0$ 上的密度 $\sigma$，$(\operatorname{Id}_A\otimes\mathcal J_W)(\sigma)$ 均在 $A\mid(\mathbb C^Y\otimes R_1)$ 上可分。这是右通道的性质；$\operatorname{Id}_L\otimes\mathcal J_W$ 把 $L$ 保持不变，其相对于另一个外部参考的 EB 性不是此定义。
+
+在上述假设下，有以下四项结论。
+
+1. 若 $F\ne0$，则 $r_y(C)>0$ 当且仅当 $c_y>0$。对这样的报告，成功条件下的报告概率为 $r_y(C)/q_F$，而条件端点密度 $R_y(C)/r_y(C)$ 在 $L\mid R_1$ 上纠缠，当且仅当 $\operatorname{rank}F=2$ 且 $d_y\ne0$。
+2. 若 $F\ne0$，保留报告的完整归一化输出
+$$
+\rho_F^W=(\operatorname{Id}_L\otimes\mathcal J_W)\bigl(Q(C)/q_F\bigr)
+$$
+在 $L\mid(\mathbb C^Y\otimes R_1)$ 上纠缠，当且仅当 $\operatorname{rank}F=2$ 且存在 $y$ 使 $d_y\ne0$。
+3. $\mathcal J_W$ 是 EB，当且仅当 $W(\cdot\mid0)=W(\cdot\mid1)$。
+4. 丢弃旗标给出命题 145.1、147.1 的同一个通道
+$$
+\mathcal T:=\operatorname{Tr}_Y\circ\mathcal J_W,\qquad
+\mathcal T\!\begin{pmatrix}x&u\\v&w\end{pmatrix}
+=x\tau_0+wE_0,\qquad
+\tau_0=\begin{pmatrix}\alpha&\alpha^2\\\alpha^2&\alpha^2\end{pmatrix}.
+$$
+此右通道对每个有限维辅助输入均为 EB。对不满足逐行 CP 不等式的实际列随机 $W$，总和 $\sum_y\phi_y=\mathcal T$ 及实际算子恒等式 $\sum_yR_y(C)=(\operatorname{Id}_L\otimes\mathcal T)(Q(C))$ 仍成立；其各个强制端点分支则不必完全正。
+
+若 $F=0$，所有上述实际算子均为零，不定义成功条件密度；若 $c_y=0$，该报告算子为零，不定义报告条件密度。第一、二项仅分类这一次延长的输出。
+
+证明。命题 147.1 的一步匹配与命题 148.1 的同记忆联合收缩均适用：纯初态、$T$、复 $F$ 的全部允许范围、固定 $\eta_b$、给定 $b$ 的独立报告及无反馈假设完全相同。故可直接使用所列 $Q_b(C)$ 与 $\mathcal I_y(Q(C))=R_y(C)$。各 $\phi_y$ 完全正且其和保迹，添加正交旗标后仍完全正保迹，所以 $\mathcal J_W$ 确为右通道。尤其 $Q_b(C)$ 同时保留两个正交记忆列的外积，系数分别为 $\alpha/2$ 与 $\alpha^2/2$。
+
+先沿用命题 147.1 的事件计数。每个 $Z^bJ$ 可逆，故 $C\ne0$ 时
+$$
+q_b(C):=\operatorname{Tr}Q_b(C)
+=\frac\alpha2\left(\|CZ^bJ\|_F^2
++\alpha\|CZ^bJE_0\|_F^2\right)>0.
+$$
+$C_0$ 可逆给出 $C\ne0$ 当且仅当 $F\ne0$，并给出 $\operatorname{rank}C=\operatorname{rank}F$。因此非负和 $r_y(C)=\sum_bW(y\mid b)q_b(C)$ 严格为正恰当该行非零，即 $c_y>0$。若写 $C=(r,t)$，同一 Born 公式还给
+$$
+q_F=(1+\alpha)\|r\|^2+\|t\|^2,\qquad
+q_b(C)=q_F/2+(-1)^b\operatorname{Re}(r^\dagger t),\qquad
+r_y(C)=c_yq_F/2+d_y\operatorname{Re}(r^\dagger t).
+$$
+在正分母处，条件混合准确为
+$$
+\frac{R_y(C)}{r_y(C)}
+=\sum_{b=0}^1\frac{W(y\mid b)q_b(C)}{r_y(C)}
+\frac{Q_b(C)}{q_b(C)}.
+$$
+故须先相加未归一化算子，再除以其总迹。
+
+固定一行，简记 $c=c_y$、$d=d_y$，在 $00,01,10,11$ 次序下置 $D(c,d)=D_y:=R_y(I_2)$。从两列公式代入 $C=I_2$，使用 $\alpha(1+\alpha)=1$，逐项得到
+$$
+D_y=\frac12\begin{pmatrix}
+c&\alpha c&d&0\\
+\alpha c&\alpha c&\alpha d&0\\
+d&\alpha d&c&0\\
+0&0&0&0
+\end{pmatrix}.
+$$
+对任意复 $C$，$\operatorname{vec}(CA)=(C\otimes I_2)\operatorname{vec}(A)$；将它同时用于 $A=Z^bJ$ 及 $A=Z^bJE_0$，得
+$$
+R_y(C)=(C\otimes I_2)D_y(C^\dagger\otimes I_2).
+$$
+这是全复矩阵恒等式，不限制 $C$ 的支撑。可分正算子的有限乘积分解在左合同下仍为有限正乘积和。
+
+以 $\operatorname{PT}_{R_1}(|ij\rangle\langle kl|)=|il\rangle\langle kj|$ 定义右偏转置。逐块转置给
+$$
+D_y^{\operatorname{PT}_{R_1}}
+=\frac12\begin{pmatrix}
+c&\alpha c&d&\alpha d\\
+\alpha c&\alpha c&0&0\\
+d&0&c&0\\
+\alpha d&0&0&0
+\end{pmatrix},\qquad
+\det\left(D_y^{\operatorname{PT}_{R_1}}\big|_{\{00,11\}}\right)
+=-\frac{\alpha^2d^2}{4}.
+$$
+若 $c>0$、$d\ne0$，向量
+$$
+h=|11\rangle-\frac{\alpha d}{c}|00\rangle
+\quad\text{满足}\quad
+h^\dagger D_y^{\operatorname{PT}_{R_1}}h
+=-\frac{\alpha^2d^2}{2c}<0.
+$$
+偏转置与左合同可交换，故若 $C$ 可逆，令 $k=((C^\dagger)^{-1}\otimes I_2)h$，则
+$$
+k^\dagger R_y(C)^{\operatorname{PT}_{R_1}}k
+=h^\dagger D_y^{\operatorname{PT}_{R_1}}h<0.
+$$
+这里传递的是负二次型方向，未要求任意左合同后同一个坐标主子式仍负；逆矩阵仅用于此代数等式。若 $B\ge0$，谱分解 $B=\sum_j\lambda_jz_jz_j^\dagger$ 给出 $B^{\mathsf T}=\sum_j\lambda_j\overline{z_j}\,\overline{z_j}^{\dagger}\ge0$。因此有限正乘积和的右偏转置必正半定，正迹归一化也不改变负二次型的符号。由此 $\operatorname{rank}C=2$、$d\ne0$ 时条件态纠缠；此论证只用偏转置正性的必要条件。
+
+若 $d=0$，则
+$$
+D(c,0)=\frac c2\left((1+\alpha)E_0\otimes\tau_0+E_1\otimes E_0\right),\qquad
+\operatorname{Tr}\tau_0=1,\qquad \det\tau_0=\alpha^5>0.
+$$
+$\tau_0$ 的首个对角元 $\alpha>0$，故它是正定密度。于是任意左合同均保留上述有限正乘积和；正迹时按各项的迹归一化即得可分密度。若 $C$ 非零且秩一，写 $C=\ell v^{\mathsf T}$，$\ell,v\in\mathbb C^2\setminus\{0\}$，这里 $\mathsf T$ 是普通转置。因此 $\operatorname{vec}(C)=\ell\otimes v$，且每个尖锐子分支为
+$$
+Q_b(C)=\operatorname{outer}(\ell)\otimes
+\frac\alpha2\left[
+\operatorname{outer}(JZ^bv)
++\alpha\operatorname{outer}(E_0JZ^bv)\right].
+$$
+按 $W(y\mid b)$ 相加仍有同一个正左因子，正迹时是乘积密度。结合零矩阵及前述正概率判据，第一项得证。这里秩二判据指 $F$；事实上对每个允许的非零行，$D_y$ 前三维主块满足
+$$
+\det\left(D_y\big|_{\{00,01,10\}}\right)
+=\frac{\alpha^3c(c^2-d^2)}8>0,
+$$
+因为 $d^2\le\alpha c^2<c^2$。由最后一行、列为零，$D_y$ 的秩为三；可逆 $C$ 的报告态也秩三。
+
+对任意有限旗标块态，可分性恰等价于每个正迹块归一化后的可分性。必要性来自右侧局部压缩 $I_L\otimes\langle y|\otimes I_{R_1}$：它把有限正乘积和送为有限正乘积和。充分性可显式写出：若
+$$
+\frac{R_y(C)}{r_y(C)}=\sum_kp_{yk}A_{yk}\otimes B_{yk},\qquad
+\sum_kp_{yk}=1,
+$$
+则在 $L,\mathbb C^Y,R_1$ 次序下
+$$
+\rho_F^W=\sum_{\substack{y\in Y\\r_y(C)>0}}\sum_k
+\frac{r_y(C)}{q_F}p_{yk}\,
+A_{yk}\otimes\bigl(|y\rangle\langle y|\otimes B_{yk}\bigr)
+$$
+是有限凸乘积密度和，因 $\sum_yr_y(C)=q_F$。这说明旗标的对角性本身不蕴含此分割上的可分性。应用第一项即得第二项。
+
+为证明第四项，直接引用命题 145.1 的总通道公式及命题 147.1 对任意列随机 $W$ 的总和恒等式：$\sum_yc_y=2$、$\sum_yd_y=0$ 消去全部对比项，给出 $\sum_y\phi_y=2\psi_0=\mathcal T$。有限辅助空间的可分分解正是命题 133.1 所用的正对角块论证：对 $A\otimes R_0$ 上任意密度 $\sigma$，置
+$$
+A_j=(I_A\otimes\langle j|)\sigma(I_A\otimes|j\rangle)\ge0,\qquad
+w_j=\operatorname{Tr}A_j,\qquad w_0+w_1=1.
+$$
+于是
+$$
+(\operatorname{Id}_A\otimes\mathcal T)(\sigma)
+=A_0\otimes\tau_0+A_1\otimes E_0
+=\sum_{\substack{j=0,1\\w_j>0}}w_j\frac{A_j}{w_j}\otimes\tau_j,
+\qquad \tau_1=E_0.
+$$
+正半定且迹零的块为零，故省略它们后，右式是明确的有限凸乘积密度分解。这证明任意有限辅助系统上的 EB 性，也证明保留 $L$ 与另一个外部参考的纠缠并不在此消除范围内。总和等式本身只用列随机性，故亦适用于逐行 CP 域外的 $W$；这不改变命题 147.1 对其独立分支的完全正判据。
+
+若所有 $d_y=0$，则两列相同，记 $p_y=W(y\mid0)=W(y\mid1)$。此时 $c_y=2p_y$，从而
+$$
+\phi_y=p_y\mathcal T,\qquad
+\mathcal J_W(X)=\left(\sum_yp_y|y\rangle\langle y|\right)\otimes\mathcal T(X).
+$$
+将旗标密度附在刚才分解的右因子上，对每个有限辅助输入仍可分，故 $\mathcal J_W$ 是 EB。
+
+反之，设某个 $d_y\ne0$。取实际允许的固定滤波
+$$
+F_*=\frac14J^{-1},\qquad
+\|F_*\|_{\rm op}\le\|F_*\|_F=\frac{\sqrt3}{4}<1,\qquad
+C=F_*C_0=\kappa I_2,\qquad \kappa=\frac{s^3}{4}.
+$$
+其成功概率为
+$$
+q_{F_*}=\kappa^2\operatorname{Tr}Q(I_2)
+=\frac{\alpha^3}{16}(2+\alpha)=\frac\alpha{16}>0,
+\qquad 2+\alpha=\alpha^{-2}.
+$$
+因此可在 EB 定义中取辅助 $A=L$ 及物理兼容输入
+$$
+\sigma_*=\frac{Q(I_2)}{2+\alpha}
+=\frac{\operatorname{outer}(|00\rangle+|11\rangle)
++\alpha\operatorname{outer}(|00\rangle)}{2+\alpha}.
+$$
+由第一、二项，该输入的带旗标输出纠缠，遂反驳 EB。这给出第三项的必要性，所用输入正是原相关记忆经 $F_*$ 成功制备的约化密度。
+
+具体取命题 147.1 的允许边界
+$$
+W=B_s=\frac12\begin{pmatrix}1+s&1-s\\1-s&1+s\end{pmatrix}.
+$$
+两行分别为 $(c_y,d_y)=(1,s),(1,-s)$，均满足 $d_y^2=\alpha c_y^2$。因 $\operatorname{Tr}D_y=(2+\alpha)/2$，各个实际成功与报告的联合概率、成功条件下的报告概率以及归一化输出为
+$$
+r_y(\kappa I_2)=\kappa^2\frac{2+\alpha}{2}=\frac\alpha{32},\qquad
+\frac{r_y(\kappa I_2)}{q_{F_*}}=\frac12,\qquad
+\theta_y=\frac{2D_y}{2+\alpha}.
+$$
+其右偏转置的 $00,11$ 主子式精确为
+$$
+\det\left(\theta_y^{\operatorname{PT}_{R_1}}\big|_{\{00,11\}}\right)
+=-\frac{\alpha^2s^2}{(2+\alpha)^2}=-\alpha^7<0.
+$$
+若改取 $B_t=\frac12\begin{pmatrix}1+t&1-t\\1-t&1+t\end{pmatrix}$，$0<|t|<s$，同一子式为 $-\alpha^2t^2/(2+\alpha)^2<0$。因此允许域内部任意小的非零对比度也保留此纠缠，没有非零幅度下界。每个允许分支局部作用于右因子，故可分输入的有限正乘积和经其作用仍是有限正乘积和；这里保留的是已有纠缠。
+
+最后，固定 $F$ 的限定可由同一计算显示。以相等的隐藏先验选择
+$$
+F_0=\frac14J^{-1},\qquad F_1=\frac14ZJ^{-1}.
+$$
+两者皆为可逆收缩，分别给 $C_0'=\kappa I_2$、$C_1'=\kappa Z$，成功概率同为 $\alpha/16$。忘记这一选择后，报告的平均未归一化算子是
+$$
+\frac{R_y(C_0')+R_y(C_1')}{2}
+=\frac{\kappa^2}{2}\left[D(c_y,d_y)
++(Z\otimes I_2)D(c_y,d_y)(Z\otimes I_2)\right]
+=\kappa^2D(c_y,0).
+$$
+其每个正迹报告块由上面的乘积分解可分。这是由 $F_0/\sqrt2,F_1/\sqrt2$ 给出的平均多 Kraus 成功制备，属于单个固定 $F$ 分类之外。证毕。
+
+本命题中可分态的偏转置正性必要条件参见 Asher Peres，*Separability Criterion for Density Matrices*，Physical Review Letters 77，1413–1415（1996），[DOI:10.1103/PhysRevLett.77.1413](https://doi.org/10.1103/PhysRevLett.77.1413)；纠缠破坏通道与测量后制备的术语参见 M. Horodecki、P. W. Shor、M. B. Ruskai，*Entanglement Breaking Channels*，Reviews in Mathematical Physics 15，629–641（2003），[DOI:10.1142/S0129055X03001709](https://doi.org/10.1142/S0129055X03001709)。
+
+## 追加锚（本行以下为增补区）
