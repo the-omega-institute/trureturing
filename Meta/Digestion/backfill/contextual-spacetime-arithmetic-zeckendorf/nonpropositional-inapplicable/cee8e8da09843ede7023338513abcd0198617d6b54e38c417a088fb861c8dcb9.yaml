@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cee8e8da09843ede7023338513abcd0198617d6b54e38c417a088fb861c8dcb9
+  normalized_sha256: sha256:cee8e8da09843ede7023338513abcd0198617d6b54e38c417a088fb861c8dcb9
+cas_ref: sha256:cee8e8da09843ede7023338513abcd0198617d6b54e38c417a088fb861c8dcb9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本段定义初始素数积、有限欧拉权和素数对数和，量词与空索引约定由定义指定，没有新的命题需要证明。
+    previous_atom_id: 5aa6bb5f860a9ff1fffcaa45966e1ea03d037bdccebf65ad2b5ff65ea8734ccb
+    next_atom_id: 974f4585e536df691ba8c67ece6252cb141da47123366d22ed00cadac0945fd9

@@ -1,0 +1,15 @@
+### IP.4 Exact removal of the old prime
+
+Use the classical Fibonacci valuation theorem for $p\ne2,5$:
+
+$$
+v_p(F_m)=
+\begin{cases}
+h_p+v_p(m),&r(p)\mid m,\\
+0,&r(p)\nmid m.
+\end{cases}
+$$
+
+The rank bound ensures $p\nmid r(p)$. This formula retains arbitrary
+$h_p\ge1$ and does not assume WSS primes are absent.
+

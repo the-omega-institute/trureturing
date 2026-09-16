@@ -1,0 +1,38 @@
+### ZBD.2. Four fully exceptional blocks at a failing window
+
+Retain the definitions Q(k), y=X^(4/35), A_X, T_X and R_8(X) from EMWS. Let
+
+$$
+H(X)=\#\{\ell\text{ prime}:y\le\ell\le60X+1,\ F_\ell\text{ powerful}\}.
+$$
+
+**Theorem.** For sufficiently large X, each k counted by T_X forces four distinct fully exceptional prime-index blocks, at indices at least y. Each block contains an odd-depth-at-least-three WSS prime; these four witness primes are distinct.
+
+**Proof.** The four adjacent Fibonacci terms are powerful by EMW-C3. Take the largest prime factor of each of 60k-1,60k+1,30k-1,30k+1. The linear forms are pairwise coprime, so their four largest prime factors are distinct. All are at least y>5. For an adjacent even index, its largest prime factor is the largest prime factor of its odd half. Apply ZBD1 to the four adjacent indices and then its corollary. Distinct prime indices give coprime Fibonacci numbers by strong divisibility; alternatively a witness cannot have two different least ranks. The preceding proposition supplies the odd-depth witnesses.
+
+**Theorem.** For sufficiently large X,
+
+$$
+\boxed{4T_X\le\frac{8X}{y}H(X),}\tag{ZBD2}
+$$
+
+and consequently
+
+$$
+\boxed{8R_8(X)+2H(X)\ge\frac yX|\mathcal A_X|
+\ge c\frac{X^{4/35}}{(\log X)^4}.}\tag{ZBD3}
+$$
+
+**Proof.** Count all four distinct incidences from each failing window. A fixed ell>5 divides one of the four forms at no more than 4X/ell+4<=8X/y values of k. Only the H(X) fully exceptional indices can occur in these incidences. This proves ZBD2. Substitute T_X<=(2X/y)H(X) in EMWS6 and multiply by y/X. The final lower bound is EMWS4, which explicitly uses Franze's established four-dimensional lower-bound sieve.
+
+**Corollary.** If H(X)=o(X^(4/35)/(log X)^4), then R_8(X)>>X^(4/35)/(log X)^4, so the non-WSS prime-family bound EMWS8 follows without assuming EMW.
+
+**Proof.** Absorb 2H(X) in the rightmost lower bound of ZBD3 and apply the same passage from ranks to supporting primes as in EMWS.4.
+
+**Proposition.** Let D_3(X) count distinct prime indices ell in [y,60X+1] for which some p of rank ell has odd h_p>=3. Then H(X)<=D_3(X), and ZBD3 remains true with H(X) replaced by D_3(X).
+
+**Proof.** Each H block supplies such a witness by ZBD.1. This is an inclusion of sets of indices, so no repeated counting of supporting primes is involved.
+
+ZBD3 is a disjunction concerning the actual zero and nonzero initial-quotient supports. It does not assert that either term alone has the displayed order of growth. No estimate on H(X) or D_3(X) is assumed implicitly, and no failing window or WSS witness is asserted to exist by these implications.
+
+

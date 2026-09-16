@@ -1,0 +1,16 @@
+**Proposition IP14.** The old prime thirteen at indices $7$ and $91$ has the
+valuation and initial quotient stated below.
+
+One must distinguish initial depth from later index lifting. For the
+old prime thirteen,
+
+$$
+v_{13}(F_7)=1,\qquad v_{13}(F_{91})=2,
+\qquad q_{13}=F_{14}/13\equiv3\pmod{13}.
+$$
+
+The square factor in $F_{91}$ is automatic from multiplying the index
+by thirteen; it does not make thirteen a WSS prime. The exact
+cyclotomic removal in IP8-IP9 is what separates this automatic factor
+from genuinely repeated primitive factors.
+

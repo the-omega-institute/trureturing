@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:484464d851c1df22ebafb1932aee8cf75f8a090be5c9bb74dcb2e56311c5c0a9
+  normalized_sha256: sha256:484464d851c1df22ebafb1932aee8cf75f8a090be5c9bb74dcb2e56311c5c0a9
+cas_ref: sha256:484464d851c1df22ebafb1932aee8cf75f8a090be5c9bb74dcb2e56311c5c0a9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本子叶只列出任务概率或有限时域递推所采用的数据和假设，含费用及域的约定，没有独立数学结论；附带的数学断言已经拆入另一子叶，本子叶无需新增证明。
+    previous_atom_id: 69904175ca0e599cf4ee0872ace5e85b0d3cc59bdb8deafb1c1a9433b6cd7132
+    next_atom_id: e99f0e209e8adb6ed7b848a42cec327da61b7f53bf3c8bd3909794baf2b95a04

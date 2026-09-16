@@ -3884,3 +3884,2633 @@ $$
 [^rro16_phase]: *CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF*，第371—377节，特别是定理371.2、372.2—372.4、373.2、375.2—375.3与377.1；固定文本为提交 c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb 的 [Zeckendorf 理论卷](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md)。
 
 ## 追加锚（本行以下为增补区）
+## 17. 完整历史见证、可逆后继与选史障碍
+
+**定义与假设 17.0（完整过去空间及 Zeckendorf 前置）。** 在 ZFC 中取 $\mathbb N=\{0,1,\ldots\}$。对非空紧致 Hausdorff 空间 $X$ 及连续满射 $f:X\to X$，定义
+$$
+\mathcal L_f=\{(x_0,x_1,\ldots)\in X^{\mathbb N}:f(x_{j+1})=x_j\text{ 对每个 }j\ge0\},
+$$
+赋予乘积空间的子空间拓扑，记 $p_j(x_0,x_1,\ldots)=x_j$、$P_f=p_0$，并定义候选演化
+$$
+U_f(x_0,x_1,\ldots)=(f(x_0),x_0,x_1,\ldots).
+$$
+
+具体情形沿用[前置卷第371–375节](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md)的对象，在本节简记为
+$$
+\phi=\frac{1+\sqrt5}{2},\qquad \mathbb T=\mathbb R/\mathbb Z,\qquad K=\{x\in\{0,1\}^{\mathbb N}:x_ix_{i+1}=0\text{ 对所有 }i\ge0\}.
+$$
+$K$ 取乘积子空间拓扑。令 $G_0=1$、$G_1=2$、$G_{i+2}=G_{i+1}+G_i$，$Z(n)$ 为权值 $G_i$ 下低位起的有限 Zeckendorf 表示补零，$0=Z(0)$ 为全零状态，并记
+$$
+u=(10)^\omega,\qquad v=(01)^\omega,\qquad D=Z[\mathbb N],\qquad H(x)=\left[\sum_{i\ge0}(-1)^{i+1}\phi^{-i-2}x_i\right].
+$$
+$T$ 为前置卷定义375.1的首个相邻零后继：在首个 $00$ 的位置清零此前缀并置该位为一；无 $00$ 时输出 $0$。本节使用前置卷定理371.2、372.4、375.2–375.3的以下结论：$K$ 紧致可度量，$Z$ 单射且 $D$ 稠密；$T$ 连续满射，且
+$$
+TZ(n)=Z(n+1),\qquad T^{-1}(\{0\})=\{u,v\},
+$$
+每个非零状态的前驱唯一；$H$ 连续满射，且
+$$
+H(Z(n))=[n\phi],\qquad H(Tx)=H(x)+[\phi].
+$$
+$H$ 的二点纤维恰位于
+$$
+E_- =\{[-m\phi]:m\ge1\},
+$$
+其余相位的纤维均为单点，特别
+$$
+H^{-1}(\{[n\phi]\})=\{Z(n)\}\qquad(n\ge0).
+$$
+在此具体情形记 $L=\mathcal L_T$、$P=P_T$、$U=U_T$、$Q=H\circ P$，并置
+$$
+E_+=\{[n\phi]:n\ge0\},\qquad \mathcal O=\{[k\phi]:k\in\mathbb Z\}=E_-\cup E_+.
+$$
+由 $\phi$ 无理，$E_-\cap E_+=\varnothing$，且整数 $k$ 由相位 $[k\phi]$ 唯一确定。
+
+**定理 17.1（主定理组：自然扩张及其准确泛性质）。** 对定义17.0的一般系统 $(X,f)$，$\mathcal L_f$ 非空、紧致且 Hausdorff；每个坐标投影 $p_j$ 都是连续满射，$P_f$ 还是闭映射及商映射。$U_f$ 是同胚，其逆为
+$$
+U_f^{-1}(x_0,x_1,x_2,\ldots)=(x_1,x_2,x_3,\ldots),
+$$
+并满足
+$$
+P_fU_f=fP_f,\qquad p_j=P_fU_f^{-j}.
+$$
+
+空间 $\mathcal L_f$ 连同各 $p_j$ 是逆系统
+$$
+X\xleftarrow{f}X\xleftarrow{f}X\xleftarrow{f}\cdots
+$$
+在拓扑空间范畴中的逆极限：若拓扑空间 $Y$ 上的连续映射 $a_j:Y\to X$ 满足 $fa_{j+1}=a_j$，则存在唯一连续映射 $a:Y\to\mathcal L_f$，使 $p_ja=a_j$ 对所有 $j$ 成立。
+
+对于动力系统，令对象为三元组 $(Y,S,g)$，其中 $Y$ 是非空紧致 Hausdorff 空间，$S:Y\to Y$ 是同胚，$g:Y\to X$ 连续且 $gS=fg$。从 $(Y,S,g)$ 到 $(Y',S',g')$ 的箭头为满足
+$$
+hS=S'h,\qquad g'h=g
+$$
+的连续映射 $h:Y\to Y'$。在此范畴中，$(\mathcal L_f,U_f,P_f)$ 是终对象。准确地说，每个对象具有唯一的箭头
+$$
+\widetilde g:Y\longrightarrow\mathcal L_f,\qquad \widetilde g(y)=\bigl(g(y),g(S^{-1}y),g(S^{-2}y),\ldots\bigr),
+$$
+满足
+$$
+P_f\widetilde g=g,\qquad \widetilde gS=U_f\widetilde g.
+$$
+若 $g$ 满射，则 $\widetilde g$ 也满射。因此，进一步要求底映射 $g$ 和箭头 $h$ 均满射时，同一三元组仍是该可逆扩张范畴的终对象。这些性质将该扩张确定到唯一的、与底投影相容的动力学同胚。
+
+一般逆极限的成熟框架见 Ingram–Mahavier，*Inverse Limits: From Continua to Chaos*，第2章“[Inverse Limits in a General Setting](https://doi.org/10.1007/978-1-4614-1797-2_2)”，第75–129页；上述移位同胚及自然扩张的动力学定位见 Boroński–Minc–Štimac，“[On conjugacy of natural extensions of one-dimensional maps](https://arxiv.org/html/2110.11440v1#S1)”，第1节，期刊 DOI：10.1017/etds.2022.62。
+
+**证明。** 对每个 $j\ge0$，集合
+$$
+C_j=\{\xi\in X^{\mathbb N}:f(\xi_{j+1})=\xi_j\}
+$$
+是闭集：映射 $\xi\mapsto(f(\xi_{j+1}),\xi_j)$ 连续，而 Hausdorff 空间 $X$ 的对角线在 $X\times X$ 中闭。因此 $\mathcal L_f=\bigcap_{j\ge0}C_j$ 是紧致 Hausdorff 乘积空间 $X^{\mathbb N}$ 的闭子空间。
+
+固定任意 $x\in X$。对 $N\ge0$ 置
+$$
+A_N(x)=\{\xi\in X^{\mathbb N}:\xi_0=x,\ f(\xi_{j+1})=\xi_j\text{ 对 }0\le j<N\}.
+$$
+这些是递减的闭集。由 $f^N$ 满射，存在 $y\in X$ 使 $f^N(y)=x$；令 $\xi_j=f^{N-j}(y)$ 对 $0\le j\le N$ 成立，并用任一固定状态填充其余坐标，即得 $A_N(x)$ 的元素。紧性与有限交性质给出
+$$
+\varnothing\ne\bigcap_{N\ge0}A_N(x)=P_f^{-1}(\{x\}).
+$$
+于是 $P_f$ 满射，且 $\mathcal L_f$ 非空。投影连续。若 $B\subseteq\mathcal L_f$ 闭，则 $B$ 紧，其像 $P_f(B)$ 在 Hausdorff 空间 $X$ 中闭，故 $P_f$ 是闭映射。连续闭满射是商映射：若 $P_f^{-1}(A)$ 闭，则 $A=P_f(P_f^{-1}(A))$ 闭，反向由连续性成立。
+
+若 $\ell=(x_0,x_1,\ldots)\in\mathcal L_f$，则插入的首条关系为 $f(x_0)=f(x_0)$，其余关系来自 $\ell$，故 $U_f\ell\in\mathcal L_f$。删除首坐标也保留全部相容关系，定义映射 $V(\ell)=(x_1,x_2,\ldots)$。逐坐标检查得到
+$$
+VU_f=\operatorname{id}_{\mathcal L_f},\qquad U_fV=\operatorname{id}_{\mathcal L_f},
+$$
+其中第二式的首坐标使用 $f(x_1)=x_0$。两个映射的每个坐标函数均连续，所以两者连续，$U_f$ 为同胚且逆为 $V$。首坐标直接给出 $P_fU_f=fP_f$，反复删除首坐标给出 $p_j=P_fU_f^{-j}$；因此所有 $p_j$ 满射。
+
+对于相容映射族 $(a_j)$，唯一可能的映射是 $a(y)=(a_j(y))_{j\ge0}$。相容性保证其值在 $\mathcal L_f$ 中，乘积拓扑保证其连续；逐坐标相等又保证唯一性。这证明拓扑逆极限的泛性质。
+
+同时记录一个后面使用的柱集事实。由相容关系，对 $0\le i\le N$ 有 $p_i=f^{N-i}p_N$。因而，对开集 $O_0,\ldots,O_N\subseteq X$，
+$$
+\bigcap_{i=0}^N p_i^{-1}(O_i)=p_N^{-1}(W),\qquad W=\bigcap_{i=0}^N(f^{N-i})^{-1}(O_i).
+$$
+$W$ 开；左侧非空时 $W$ 非空。任意非空开子集均包含这样的非空柱集。
+
+现在取 $(Y,S,g)$。对每个 $j\ge0$，由 $gS=fg$ 得
+$$
+f\bigl(g(S^{-j-1}y)\bigr)=g(S^{-j}y),
+$$
+故所给 $\widetilde g$ 落在 $\mathcal L_f$，且由各坐标连续而连续。首坐标给 $P_f\widetilde g=g$；比较首坐标及所有其余坐标，得到 $\widetilde gS=U_f\widetilde g$。
+
+若 $h:Y\to\mathcal L_f$ 也满足这两式，则 $S,U_f$ 可逆使 $hS^{-j}=U_f^{-j}h$，所以
+$$
+p_jh(y)=P_fU_f^{-j}h(y)=P_fh(S^{-j}y)=g(S^{-j}y).
+$$
+全部坐标被强制为 $\widetilde g$ 的坐标，故 $h=\widetilde g$。
+
+再设 $g$ 满射。给定 $\ell=(x_j)_{j\ge0}\in\mathcal L_f$，令
+$$
+B_N=\{y\in Y:g(S^{-j}y)=x_j\text{ 对所有 }0\le j\le N\}.
+$$
+这些是递减闭集。选取 $z\in Y$ 使 $g(z)=x_N$，置 $y=S^Nz$；则对 $0\le j\le N$，
+$$
+g(S^{-j}y)=g(S^{N-j}z)=f^{N-j}(x_N)=x_j.
+$$
+所以 $B_N$ 非空。$Y$ 的紧性给出 $y\in\bigcap_NB_N$，而此时 $\widetilde g(y)=\ell$，证明提升满射。
+
+最后，两个满足所述终对象性质的三元组之间各有唯一箭头。两个复合都是相应终对象的自箭头，故由唯一性等于恒等。两箭头因而互为连续逆映射，并保持底投影与演化。这证明唯一的动力学同胚。证毕。
+
+**命题 17.2（直接支持组一：全部历史纤维、边界与相位拆分）。** 在定义17.0的 Zeckendorf 系统中，对 $x\in K\setminus D$，其唯一前驱仍在 $K\setminus D$，记为 $r(x)$，并定义
+$$
+\lambda(x)=(r^j(x))_{j\ge0}.
+$$
+对 $\varepsilon\in\{u,v\}$ 定义双向状态序列及完整历史
+$$
+c_n^\varepsilon=Z(n)\quad(n\ge0),\qquad c_{-m}^\varepsilon=r^{m-1}(\varepsilon)\quad(m\ge1),\qquad \ell_k^\varepsilon=(c_{k-j}^\varepsilon)_{j\ge0}\quad(k\in\mathbb Z).
+$$
+这些对象均有定义，并满足
+$$
+Tc_k^\varepsilon=c_{k+1}^\varepsilon,\qquad U\ell_k^\varepsilon=\ell_{k+1}^\varepsilon,\qquad P\ell_k^\varepsilon=c_k^\varepsilon,\qquad Q\ell_k^\varepsilon=[k\phi].
+$$
+
+$P$ 的全部纤维准确为
+$$
+P^{-1}(\{Z(n)\})=\{\ell_n^u,\ell_n^v\}\quad(n\ge0),\qquad P^{-1}(\{x\})=\{\lambda(x)\}\quad(x\notin D).
+$$
+对于 $n\ge0$，这两个历史的第 $0,\ldots,n$ 个坐标相同，准确等于 $Z(n),Z(n-1),\ldots,Z(0)$，首次区别在第 $n+1$ 个坐标：
+$$
+p_{n+1}(\ell_n^u)=u,\qquad p_{n+1}(\ell_n^v)=v.
+$$
+特别地，零状态有且仅有两条历史
+$$
+\ell_0^u=(0,u,r(u),r^2(u),\ldots),\qquad \ell_0^v=(0,v,r(v),r^2(v),\ldots).
+$$
+两个交替状态 $u,v$ 自身却各只有一条完整历史。
+
+原相位映射与历史相位映射的纤维区别准确如下。对每个 $m\ge1$，
+$$
+H^{-1}(\{[-m\phi]\})=\{c_{-m}^u,c_{-m}^v\},\qquad P^{-1}(\{c_{-m}^\varepsilon\})=\{\ell_{-m}^\varepsilon\}.
+$$
+$Q$ 连续满射，其二点纤维恰位于整个整数轨道 $\mathcal O$，具体为
+$$
+Q^{-1}(\{[k\phi]\})=\{\ell_k^u,\ell_k^v\}\qquad(k\in\mathbb Z).
+$$
+若 $\theta\notin\mathcal O$，以 $x_\theta$ 表示其唯一的 $H$ 原像，则
+$$
+Q^{-1}(\{\theta\})=\{\lambda(x_\theta)\}.
+$$
+因此，负轨道 $E_-$ 上原有的两个当前状态各自只提升为一条历史；非负轨道 $E_+$ 上原有的唯一当前状态提升为两条历史；其余相位保持单点。新出现的二点相位准确是 $E_+$，没有四点纤维。
+
+此外，对任意 $\ell\in L$ 及 $k\in\mathbb Z$，
+$$
+H(P(U^k\ell))=Q(\ell)+[k\phi].
+$$
+所以即使保留全部双向相位读数，仍然只有 $Q$ 的区分能力：
+$$
+\bigl(H(P(U^k\ell))\bigr)_{k\in\mathbb Z}=\bigl(H(P(U^k\ell'))\bigr)_{k\in\mathbb Z}\quad\Longleftrightarrow\quad Q(\ell)=Q(\ell').
+$$
+本条使用的单步分支与原相位纤维分别是[前置卷定理375.2及372.4](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md)；完整历史纤维由以下证明确定。
+
+**证明。** 因 $D$ 中每一点仅有有限个非零数字，而 $u,v$ 各有无限多个非零数字，所以 $u,v\notin D$。若 $x\notin D$，则 $x\ne0$，故有唯一前驱 $y$。假如 $y=Z(n)$，则 $x=Ty=Z(n+1)\in D$，矛盾。因此 $r:K\setminus D\to K\setminus D$ 有定义，所有迭代 $r^j(x)$ 都有定义。
+
+若 $\ell=(x_j)_{j\ge0}\in P^{-1}(\{x\})$ 且 $x\notin D$，则每个 $x_j$ 都不在 $D$：否则 $x_j=Z(a)$ 会给出 $x=T^jZ(a)=Z(a+j)\in D$。所以逐次前驱都唯一，强制 $x_j=r^j(x)$。反之，$T(r^{j+1}(x))=r^j(x)$ 保证 $\lambda(x)\in L$。这证明全部非核心状态的单点历史纤维，包括 $u,v$。
+
+由 $TZ(n)=Z(n+1)$ 及 $Z$ 单射，对 $a\ge1$，状态 $Z(a)$ 非零，而 $Z(a-1)$ 已是其前驱，故它是唯一前驱。因此任取 $\ell\in P^{-1}(\{Z(n)\})$，其前 $n+1$ 个坐标被强制为
+$$
+Z(n),Z(n-1),\ldots,Z(0).
+$$
+随后唯一可能的选择为 $u$ 或 $v$。选定其一后，该点属于 $K\setminus D$，由上一段，全部更早历史唯一。这既排除后续分支，也排除其他完整历史，故恰有两条，且首次差别准确位于第 $n+1$ 个坐标。这里 $n=0$ 无须另加假设，直接给出显示的两条零历史。
+
+由 $Tr(x)=x$、$Tu=Tv=0$ 及有限核心后继式，分 $k\le-2$、$k=-1$、$k\ge0$ 三种情形得到 $Tc_k^\varepsilon=c_{k+1}^\varepsilon$。这保证每个 $\ell_k^\varepsilon$ 属于 $L$，并逐坐标给出 $U\ell_k^\varepsilon=\ell_{k+1}^\varepsilon$ 与 $P\ell_k^\varepsilon=c_k^\varepsilon$。
+
+对 $m\ge1$，有
+$$
+T^{m-1}c_{-m}^u=u,\qquad T^{m-1}c_{-m}^v=v.
+$$
+因此 $c_{-m}^u\ne c_{-m}^v$。它们都属于 $K\setminus D$，各自的唯一历史为 $\ell_{-m}^u$、$\ell_{-m}^v$。又由 $T^mc_{-m}^\varepsilon=0$ 和相位交换式，
+$$
+H(c_{-m}^\varepsilon)+[m\phi]=H(0)=0,
+$$
+故它们均位于相位 $[-m\phi]$ 的纤维。该纤维按前置恰有两点，所以所列两点就是其全部原像。这也验证了负一时刻的边界为 $\{u,v\}$，而零时刻的当前状态已合为 $\{0\}$。
+
+$Q=HP$ 连续满射，且 $QU=R Q$，其中 $R(\theta)=\theta+[\phi]$。因为 $U,R$ 都可逆，将该式与逆映射复合，得到 $QU^{-1}=R^{-1}Q$，继而对所有整数 $k$ 有 $QU^k=R^kQ$。在上述轨道上，这给出 $Q\ell_k^\varepsilon=[k\phi]$。对 $k\ge0$，两条历史在第 $k+1$ 个坐标不同；对 $k<0$，它们已在第零个坐标不同。因此所有显示的二点集合确实各含两个不同元素。
+
+现在穷尽全部相位。若 $\theta=[n\phi]\in E_+$，则 $H^{-1}(\{\theta\})=\{Z(n)\}$，其 $P$ 纤维恰有上述两条历史。若 $\theta=[-m\phi]\in E_-$，则 $H$ 纤维恰为 $c_{-m}^u,c_{-m}^v$，而这两个状态的 $P$ 纤维各为单点。若 $\theta\notin\mathcal O$，则 $\theta\notin E_-$，所以 $H$ 纤维只有一点 $x_\theta$；该点不能属于 $D$，否则其相位属于 $E_+$。因此其 $P$ 纤维同样只有一点。三种情形互斥且穷尽圆周，证明完整分类，并说明为何不能把两个二点纤维数目相乘得到四点。
+
+最后，$QU^k=R^kQ$ 就是所有双向相位读数的显示公式。相位 $Q(\ell)$ 相等时，全部读数相等；全部读数相等时，取 $k=0$ 即得 $Q(\ell)=Q(\ell')$。证毕。
+
+**命题 17.3（直接支持组二：极小性与连续选史的准确障碍）。** 本模型的 $(K,T)$ 与 $(L,U)$ 均为极小系统，此处极小指每一点的非负时间轨道稠密。特别地，对任取 $\ell_0\in P^{-1}(\{0\})$，
+$$
+\overline{\{U^n\ell_0:n\ge0\}}=L.
+$$
+集合 $Q^{-1}(\mathcal O)$ 准确分解为两条互不相交的稠密整数轨道
+$$
+\{\ell_k^u:k\in\mathbb Z\},\qquad \{\ell_k^v:k\in\mathbb Z\}.
+$$
+
+集合意义的截面 $s:K\to L$、$Ps=\operatorname{id}_K$ 存在，但每一个这样的截面的连续点集都准确等于 $K\setminus D$。因此 $P$ 没有连续全局截面。更强地，对任何非空开集 $V\subseteq K$，不存在连续映射 $s:V\to L$ 使 $P(s(x))=x$ 对所有 $x\in V$ 成立。即使不要求连续，也不存在满足
+$$
+Ps=\operatorname{id}_K,\qquad sT=Us
+$$
+的全局截面。
+
+极小性所需的稠密核心、单点相位纤维及相位交换式，均取自[前置卷定理371.2、372.4、375.3](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md)，不额外假设极小性。
+
+**证明。** 先建立原系统的极小性。$H$ 连续满射且 $D$ 稠密，所以 $H(D)=\{[n\phi]:n\ge0\}$ 在圆周稠密：任一非空圆周开集的 $H$ 原像是非空开集，必与 $D$ 相交。圆周平移是同胚，故任意相位 $\theta$ 的非负旋转轨道
+$$
+\{\theta+[n\phi]:n\ge0\}
+$$
+也稠密。
+
+任取 $x\in K$，令
+$$
+A=\overline{\{T^nx:n\ge0\}}.
+$$
+$A$ 紧，因而 $H(A)$ 在圆周闭；相位交换式使 $H(A)$ 包含稠密集合 $\{H(x)+[n\phi]:n\ge0\}$，所以 $H(A)=\mathbb T$。对于每个 $a\ge0$，存在 $y\in A$ 使 $H(y)=[a\phi]$；这个相位的唯一原像是 $Z(a)$，故 $Z(a)\in A$。因此 $D\subseteq A$，再由 $D$ 稠密得 $A=K$。这证明每个原状态的非负轨道稠密。
+
+再取任意 $\ell\in L$ 及非空开集 $B\subseteq L$。由定理17.1的柱集等式，$B$ 包含某个非空柱集 $p_N^{-1}(W)$，其中 $W\subseteq K$ 非空且开。置 $x=P\ell$。刚证的原系统极小性给出 $m\ge0$ 使 $T^mx\in W$。由移位公式，
+$$
+p_N(U^{N+m}\ell)=T^m(P\ell)=T^mx\in W.
+$$
+于是 $U^{N+m}\ell\in B$，证明 $(L,U)$ 极小。若 $P\ell=0$，同一柱集论证只需使用 $T^m0=Z(m)$ 及 $D$ 稠密，亦直接证明题设两条零历史各自的非负轨道稠密。
+
+命题17.2给出 $U\ell_k^\varepsilon=\ell_{k+1}^\varepsilon$，所以两组显示的点各是一条整数轨道，且各包含一条已证稠密的非负轨道。若两组中的点相等，则其相位相等，$\phi$ 无理迫使两个整数指标相同；随后与命题17.2中同一指标的两条历史不同相矛盾。因此两轨道不交；它们穷尽 $Q^{-1}(\mathcal O)$，亦由该命题的相位纤维分类得到。
+
+接着证明截面断言。令每个 $Z(n)$ 选择 $\ell_n^u$，每个 $x\notin D$ 选择唯一的 $\lambda(x)$，便定义了集合截面，故这里不是集合选取的存在障碍。
+
+设 $s$ 为任意集合截面，$x\notin D$。此时 $P^{-1}(\{x\})=\{s(x)\}$。若 $O\subseteq L$ 是包含 $s(x)$ 的开集，则 $P(L\setminus O)$ 闭且不含 $x$。因而
+$$
+W=K\setminus P(L\setminus O)
+$$
+是 $x$ 的开邻域。对每个 $y\in W$，其全部 $P$ 原像均在 $O$ 中，特别 $s(y)\in O$。所以 $s$ 在 $x$ 连续。这一论证不要求 $s$ 在其他点连续。
+
+现在固定 $n\ge0$。对 $\varepsilon\in\{u,v\}$ 及 $a\ge1$，令 $\varepsilon^{(a)}$ 为 $\varepsilon$ 的前 $a$ 位截断后补零。它仍是合法有限表示，故
+$$
+\varepsilon^{(a)}=Z(A_a^\varepsilon),\qquad A_a^\varepsilon=\sum_{i<a}G_i\varepsilon_i,
+$$
+并且 $\varepsilon^{(a)}\to\varepsilon$。令
+$$
+y_a^\varepsilon=T^{n+1}\varepsilon^{(a)}=Z(A_a^\varepsilon+n+1).
+$$
+由 $T$ 连续及 $T\varepsilon=0$，两列满足
+$$
+y_a^u\longrightarrow Z(n),\qquad y_a^v\longrightarrow Z(n).
+$$
+然而，命题17.2中有限核心历史的强制前缀表明：无论截面在这两个状态上选择哪条历史，都有
+$$
+p_{n+1}(s(y_a^\varepsilon))=Z(A_a^\varepsilon)=\varepsilon^{(a)}.
+$$
+若 $s$ 在 $Z(n)$ 连续，则连续坐标映射 $p_{n+1}$ 与它复合后，在两列上必须趋于同一个值 $p_{n+1}(s(Z(n)))$。第一列却趋于 $u$，第二列趋于 $v$；$K$ 为 Hausdorff 且 $u\ne v$，矛盾。因此每个集合截面在每个 $Z(n)$ 都不连续。结合上一段，其连续点集恰为 $K\setminus D$。
+
+同样的两列也排除局部连续截面：若截面只定义在含 $Z(n)$ 的开邻域内，两列最终仍位于其定义域，矛盾不变。任意非空开集与稠密集 $D$ 相交，故任何非空开集上都不存在连续截面。
+
+最后，假设某个集合截面还满足 $sT=Us$。由 $Tu=Tv=0$，
+$$
+Us(u)=s(0)=Us(v).
+$$
+$U$ 单射推出 $s(u)=s(v)$，再应用 $P$ 得 $u=v$，矛盾。因此不存在这样的动力学截面，即使舍弃连续性也不例外。
+
+综上，$P$ 以连续满射保留当前状态，$L$ 以全部相容过去提供可逆演化，但把每个当前状态连续地选成一条完整历史不可行；两条零历史各有稠密正向轨道并不改变这一截面障碍。证毕。
+
+## 追加锚（本行以下为增补区）
+## 18. 增补·加法闭图的结合律与最细确定观察商
+
+**定义 18.0（关系复合、确定观察与因子化次序）。** 沿用定义16.0、16.3中的数字载体 $K$、有限核心 $Z$、零点 $0_K$、相位映射 $H:K\to\mathbb T$、加法闭图 $\Gamma$ 及分裂纤维的定向标记 $z_\theta^s$。特别，
+$$
+\mathbb T=\mathbb R/\mathbb Z,\qquad
+\Gamma=\overline{\{(Z(n),Z(m),Z(n+m)):n,m\in\mathbb N\}}^{K^3}.
+$$
+记
+$$
+E_m=[-m\phi]\quad(m\ge1),\qquad E=\{E_m:m\ge1\},\qquad \Sigma=\{-1,+1\}.
+$$
+若 $H(x)\notin E$，置 $\mathcal S(x)=\Sigma$；若 $x=z_\theta^s$ 且 $\theta\in E$，置 $\mathcal S(x)=\{s\}$。[^rro18_phase][^rro18_fibers]
+
+对 $A,B\subseteq K$，定义
+$$
+\Gamma(A,B)=\bigcup_{a\in A,\,b\in B}\Gamma(a,b).
+$$
+其中 $\Gamma(A,y)$、$\Gamma(x,B)$ 分别表示 $\Gamma(A,\{y\})$、$\Gamma(\{x\},B)$。再定义
+$$
+C(x)=\Gamma(0_K,x),\qquad C(A)=\bigcup_{x\in A}C(x),\qquad
+\Lambda(x,y)=H^{-1}(\{H(x)+H(y)\}),
+$$
+并以 $\Lambda$ 同时表示由这些输入纤维组成的三元关系。严格左单位是满足 $\Gamma(e,x)=\{x\}$ 对所有 $x\in K$ 成立的点 $e$；严格右单位作对称定义。弱左单位只要求 $x\in\Gamma(e,x)$。
+
+称连续满射 $q:K\to Q$ 为一个连续确定观察，若 $Q$ 是 Hausdorff 空间，且存在全函数 $D:Q^2\to Q$，满足
+$$
+\forall x,y\in K\ \forall z\in\Gamma(x,y),\qquad
+D(q(x),q(y))=q(z).
+$$
+此定义不预设 $D$ 连续、结合、交换或具有单位。对两个连续满射观察，记 $q_1\succeq q_2$，若存在连续映射 $r:Q_1\to Q_2$ 使 $q_2=r\circ q_1$；此时 $r$ 自动满射，称 $q_1$ 比 $q_2$ 精细。
+
+单值选择则是函数 $A:K^2\to K$，满足 $A(x,y)\in\Gamma(x,y)$，只要求选中一个输出，而不是将全部输出观察为同一点。另一个载体 $L$ 连同投影 $P:L\to K$ 属于状态提升的数据，其映射方向与观察商 $q:K\to Q$ 不同；以下结论不以这种提升为前提。
+
+**假设 18.1（相位前置与明确采用的闭图分类）。** 采用如下前提。$K$ 是紧致 Hausdorff 空间，$Z[\mathbb N]$ 在其中稠密，$H$ 连续满射且满足 $H(Z(n))=[n\phi]$。相位 $\theta\notin E$ 的纤维恰有一点，相位 $\theta\in E$ 的纤维恰为两个不同的点 $z_\theta^{+1},z_\theta^{-1}$，并且
+$$
+H^{-1}(\{0\})=\{0_K\},\qquad
+z_{E_1}^{+1}=u=(10)^\omega,\qquad z_{E_1}^{-1}=v=(01)^\omega,
+$$
+$$
+z_{E_2}^{+1}=0v,\qquad z_{E_2}^{-1}=10v.
+$$
+这里 $0v,10v$ 仍按低位到高位连接。上述相位与定向约定采用定理371.2、372.2—372.4及定义16.3。[^rro18_phase][^rro18_fibers]
+
+本节把定理16.4的完整输入纤维分类作为明确的数学前提。用定义18.0的符号，其等价写法是：令 $\theta=H(x)+H(y)$，当 $\theta\notin E$ 时，
+$$
+\Gamma(x,y)=H^{-1}(\{\theta\});
+$$
+当 $\theta\in E$ 时，
+$$
+\Gamma(x,y)=\{z_\theta^s:s\in\mathcal S(x)\cup\mathcal S(y)\}.
+$$
+这个写法与原分类一致，因为两个非空集合 $\mathcal S(x),\mathcal S(y)$ 的并恰为单点 $\{s\}$，当且仅当它们都等于 $\{s\}$；其余情形的并均为 $\Sigma$。以下命题及定理均在本假设下成立。[^rro18_fibers]
+
+**命题 18.2（集合值结合律与全部点单位的排除）。** $\Gamma$ 非空值且交换，并且对任意 $x,y,z\in K$，
+$$
+\bigcup_{w\in\Gamma(x,y)}\Gamma(w,z)
+=
+\bigcup_{w\in\Gamma(y,z)}\Gamma(x,w).
+$$
+更准确地，令
+$$
+\sigma=H(x)+H(y)+H(z),\qquad
+U=\mathcal S(x)\cup\mathcal S(y)\cup\mathcal S(z).
+$$
+若 $\sigma\notin E$，两边都等于单点纤维 $H^{-1}(\{\sigma\})$；若 $\sigma\in E$，两边都等于
+$$
+\{z_\sigma^s:s\in U\}.
+$$
+因此，最终相位分裂时，恰在三个输入全为同号分裂点时只保留该号，其余情形保留两个号。$0_K$ 是唯一弱左单位，也因交换性成为唯一弱右单位；但是 $K$ 中不存在严格左单位或严格右单位。[^rro18_fibers]
+
+**证明。** 首先，
+$$
+E_m+E_n=E_{m+n}\in E\qquad(m,n\ge1),
+$$
+所以 $E$ 对相位加法封闭。这并不使其补集封闭，也不阻止与补集相加后离开 $E$。例如 $[-\phi/2]\notin E$，但它与自身之和为 $E_1$；又有 $E_1+[\phi]=0\notin E$。第一个非归属断言若不成立，便有 $(2m-1)\phi\in2\mathbb Z$，与 $\phi$ 无理矛盾；零不属于 $E$ 也由无理性得到。
+
+假设18.1立即给出每个 $\Gamma(x,y)$ 非空，而且二元分类对 $x,y$ 对称，所以 $\Gamma$ 交换。关键是对所有输入均成立的符号传播等式
+$$
+\bigcup_{w\in\Gamma(x,y)}\mathcal S(w)
+=
+\mathcal S(x)\cup\mathcal S(y).
+$$
+为完整证明此式，分两种情况。若 $H(x)+H(y)\in E$，分类给出的输出恰为右侧所列符号对应的分裂点，而每个这种输出的符号集合是相应单点，取并即得等式。若 $H(x)+H(y)\notin E$，输出是非分裂相位的唯一点，故左侧为 $\Sigma$。此时 $H(x),H(y)$ 不可能都属于 $E$，否则由 $E+E\subseteq E$ 得到矛盾。因此至少一个输入的符号集合为 $\Sigma$，右侧也为 $\Sigma$。两种情况穷尽了所有中间相位，包括由非分裂输入进入 $E$ 及由混合输入离开 $E$ 的情况。
+
+现在比较两个括号方式。每个 $w\in\Gamma(x,y)$ 均满足 $H(w)=H(x)+H(y)$，每个 $w\in\Gamma(y,z)$ 均满足 $H(w)=H(y)+H(z)$。若 $\sigma\notin E$，两边的每个末次运算都给同一个单点纤维 $H^{-1}(\{\sigma\})$；中间纤维非空，所以两边的并都恰为此纤维。
+
+若 $\sigma\in E$，左边按末次运算的分类等于
+$$
+\left\{z_\sigma^s:
+ s\in\left(\bigcup_{w\in\Gamma(x,y)}\mathcal S(w)\right)\cup\mathcal S(z)
+\right\}
+=
+\{z_\sigma^s:s\in U\}.
+$$
+右边同样等于
+$$
+\left\{z_\sigma^s:
+ s\in\mathcal S(x)\cup\left(\bigcup_{w\in\Gamma(y,z)}\mathcal S(w)\right)
+\right\}
+=
+\{z_\sigma^s:s\in U\}.
+$$
+这里对两个中间和分别应用了已经覆盖 $E$ 内外全部情况的传播等式，没有要求二者具有相同的归属类型。这证明结合律及完整三输入分类。由于 $U$ 为单点当且仅当三个输入符号集合是同一个单点，关于唯一分支的断言也成立。
+
+最后，$H(0_K)=0\notin E$，故 $\mathcal S(0_K)=\Sigma$。分类使 $x\in\Gamma(0_K,x)$ 对每个 $x$ 成立，所以 $0_K$ 是弱左单位。反之，若 $e$ 是弱左单位，将 $x=0_K$ 代入，得到 $0_K\in\Gamma(e,0_K)$。相位等式迫使 $H(e)=0$，再由零相位的单点纤维得到 $e=0_K$。然而
+$$
+\Gamma(0_K,u)=\{u,v\}\ne\{u\}.
+$$
+因此这个唯一可能的严格左单位并不严格，严格左单位不存在；交换性给出全部右单位结论。证毕。
+
+**命题 18.3（零相位作用、纤维饱和与单值选择的区别）。** 对任意 $x,y\in K$，
+$$
+C(x)=H^{-1}(\{H(x)\}),\qquad C(C(x))=C(x),
+$$
+并且
+$$
+\Lambda(x,y)
+=C(\Gamma(x,y))
+=\Gamma(C(x),y)
+=\Gamma(x,C(y))
+=\Gamma(C(x),C(y)).
+$$
+原关系并不已经饱和：
+$$
+\Gamma(u,u)=\{0v\},\qquad
+\Lambda(u,u)=\{0v,10v\},\qquad
+\Gamma\subsetneq\Lambda.
+$$
+存在全域单值选择 $A:K^2\to K$，但不存在联合连续的这种选择。[^rro18_fibers][^rro18_phase]
+
+**证明。** 由于 $\mathcal S(0_K)=\Sigma$，假设18.1在分裂相位处给出全部两个输出，在非分裂相位处给出唯一输出。因此 $C(x)$ 恰为 $H(x)$ 的整个纤维。该纤维非空，且其中每个 $w$ 都满足 $C(w)=C(x)$，所以
+$$
+C(C(x))=\bigcup_{w\in C(x)}C(w)=C(x).
+$$
+对任意集合 $A\subseteq K$ 再取并，也得到 $C(C(A))=C(A)$，包括空集情形。
+
+固定 $x,y$，令 $\theta=H(x)+H(y)$。每个 $w\in\Gamma(x,y)$ 都满足 $C(w)=H^{-1}(\{\theta\})$，而 $\Gamma(x,y)$ 非空，故
+$$
+C(\Gamma(x,y))=H^{-1}(\{\theta\})=\Lambda(x,y).
+$$
+命题18.2的结合律给出
+$$
+\Gamma(C(x),y)
+=\Gamma(\Gamma(0_K,x),y)
+=\Gamma(0_K,\Gamma(x,y))
+=C(\Gamma(x,y)).
+$$
+交换性同样给出 $\Gamma(x,C(y))=\Lambda(x,y)$。最后，对每个 $y'\in C(y)$，有 $H(y')=H(y)$，于是
+$$
+\Gamma(C(x),C(y))
+=\bigcup_{y'\in C(y)}\Gamma(C(x),y')
+=\bigcup_{y'\in C(y)}\Lambda(x,y')
+=\Lambda(x,y).
+$$
+最后一个并取在非空集合上，且每项是同一纤维。
+
+由 $H(u)=E_1$、$\mathcal S(u)=\{+1\}$、$E_1+E_1=E_2$，分类给出 $\Gamma(u,u)=\{z_{E_2}^{+1}\}=\{0v\}$。但 $E_2$ 的整个纤维是 $\{0v,10v\}$，且这两个字不同。因此严格包含成立，不能把 $\Gamma$ 本身替换为饱和关系。
+
+逐点单值选择可以明确规定：输出相位不在 $E$ 时取唯一输出；输出相位在 $E$ 且正号被允许时取正号输出，否则取负号输出。分类保证每个输入对都恰落入一个这样的规定，且选中的点属于 $\Gamma(x,y)$。
+
+假设存在联合连续的单值选择 $A$。自然相位不属于 $E$，因为 $[n\phi]=[-m\phi]$、$n\ge0,m\ge1$ 将迫使 $(n+m)\phi\in\mathbb Z$。因此分类与 $H(Z(n))=[n\phi]$ 给出
+$$
+\Gamma(Z(n),Z(m))=\{Z(n+m)\},\qquad
+A(Z(n),Z(m))=Z(n+m).
+$$
+$A$ 的图在 $K^3$ 中闭：它是连续映射 $(x,y,z)\mapsto(A(x,y),z)$ 下的闭对角线的原像。这个闭图包含全部自然加法三元组，所以也包含其闭包 $\Gamma$。但 $\Gamma$ 同时包含 $(0_K,u,u)$ 和 $(0_K,u,v)$，与函数在输入 $(0_K,u)$ 处只能有一个值矛盾。这证明连续选择不存在；逐点选择的存在既不提供这种连续性，也没有断言该选择满足结合律或单位律。证毕。
+
+**定理 18.4（最细连续确定观察与全部允许的后处理）。** 给定连续满射 $q:K\to Q$，其中 $Q$ 是 Hausdorff 空间。以下条件等价。[^rro18_fibers][^rro18_quotient]
+
+（甲）存在全函数 $D:Q^2\to Q$，使
+$$
+\forall x,y\in K\ \forall z\in\Gamma(x,y),\qquad
+D(q(x),q(y))=q(z).
+$$
+
+（乙）存在连续满射 $p:\mathbb T\to Q$，使 $q=p\circ H$，并且其相等关系核是加法同余，即对所有 $a,a',b,b'\in\mathbb T$，
+$$
+p(a)=p(a'),\ p(b)=p(b')
+\quad\Longrightarrow\quad
+p(a+b)=p(a'+b').
+$$
+
+（丙）存在闭子群 $N\le\mathbb T$ 及同胚 $h:\mathbb T/N\to Q$，使
+$$
+q=h\circ\pi_N\circ H,
+$$
+其中 $\mathbb T/N$ 取商拓扑，$\pi_N(a)=a+N$。这里 $h$ 是空间同胚，不预设 $Q$ 上已有任何群运算。
+
+这些条件成立时，$p,N,h,D$ 均由给定的 $q$ 唯一确定，而且
+$$
+N=p^{-1}(\{p(0)\}),\qquad
+p(a)=p(b)\ \Longleftrightarrow\ a-b\in N,
+$$
+$$
+D(p(a),p(b))=p(a+b),\qquad
+e_Q=p(0)=q(0_K),\qquad
+\iota_Q(p(a))=p(-a).
+$$
+$D$ 与 $\iota_Q$ 自动连续；它们使 $Q$ 成为紧致交换拓扑群，$p$ 成为满射连续群同态。因此 $H$ 是因子化次序中最精细的连续确定观察。
+
+更具体地，允许的连续满射后处理 $p:\mathbb T\to Q$ 恰是满足乙中同余条件的那些映射，等价地，其纤维恰为某个闭子群的陪集。对任意闭子群 $N$，$q_N=\pi_N\circ H$ 都给出这种观察，并且
+$$
+q_{N_1}\succeq q_{N_2}
+\quad\Longleftrightarrow\quad N_1\subseteq N_2.
+$$
+并非每个连续满射后处理都允许确定运算；例如 $p([t])=\cos(2\pi t)$ 不允许。最后，$\Gamma$ 与 $\Lambda$ 具有完全相同的连续确定观察，尽管两关系严格不同。
+
+**证明。** 先证甲推出乙。命题18.3给出 $C(x)=H^{-1}(\{H(x)\})$，特别 $x\in C(x)$。对任何 $z\in C(x)=\Gamma(0_K,x)$，甲分别应用于输出 $x$ 和 $z$，得到
+$$
+q(z)=D(q(0_K),q(x))=q(x).
+$$
+因此 $q$ 在每个 $H$ 纤维上恒定。$H$ 满射，所以存在唯一的满射函数 $p:\mathbb T\to Q$，满足 $q=p\circ H$。
+
+这个因子映射连续，而不是额外假设连续。事实上，$H$ 是从紧致空间到 Hausdorff 空间的连续满射，所以是闭映射：每个闭集在 $K$ 中紧，其像在 $\mathbb T$ 中紧而闭。闭满射是商映射，因为若 $H^{-1}(V)$ 开，则
+$$
+\mathbb T\setminus V=H(K\setminus H^{-1}(V))
+$$
+闭，故 $V$ 开。于是对每个开集 $O\subseteq Q$，由
+$$
+H^{-1}(p^{-1}(O))=q^{-1}(O)
+$$
+开，得到 $p^{-1}(O)$ 开。
+
+任取 $a,b\in\mathbb T$，利用 $H$ 满射选择 $x,y$ 使 $H(x)=a,H(y)=b$，再利用非空值性选择 $z\in\Gamma(x,y)$。甲和相位等式给出
+$$
+D(p(a),p(b))=q(z)=p(a+b).
+$$
+因此若 $p(a)=p(a')$ 且 $p(b)=p(b')$，同一个 $D$ 值同时等于 $p(a+b)$ 和 $p(a'+b')$，得到乙的同余条件。$p$ 满射又说明这条公式已经唯一确定 $D$。
+
+反过来，若乙成立，规定 $D(p(a),p(b))=p(a+b)$。同余条件保证更换任一代表均不改变结果，满射性保证在 $Q^2$ 上处处有定义。对任意 $z\in\Gamma(x,y)$，有 $H(z)=H(x)+H(y)$，所以
+$$
+D(q(x),q(y))=p(H(x)+H(y))=p(H(z))=q(z).
+$$
+这证明乙推出甲。
+
+接着证明闭子群描述。乙中的双槽同余条件等价于所有平移都保持相等关系核：
+$$
+p(a)=p(b)\quad\Longrightarrow\quad
+p(a+t)=p(b+t)\qquad(t\in\mathbb T).
+$$
+双槽条件取相同的第二槽即得平移条件；反向先以平移条件替换第一槽，再利用加法交换性替换第二槽，即得双槽条件。
+
+置 $N=p^{-1}(\{p(0)\})$。$Q$ Hausdorff，使单点 $\{p(0)\}$ 闭，故 $N$ 闭。显然 $0\in N$。若 $n,m\in N$，同余条件给出 $p(n+m)=p(0+0)=p(0)$，所以 $n+m\in N$。若 $n\in N$，将 $p(n)=p(0)$ 平移 $-n$，得到 $p(0)=p(-n)$，所以 $-n\in N$。因此 $N$ 是闭子群。对任意 $a,b$，先平移 $-b$、反向再平移 $b$，得到
+$$
+p(a)=p(b)
+\quad\Longleftrightarrow\quad
+p(a-b)=p(0)
+\quad\Longleftrightarrow\quad a-b\in N.
+$$
+
+所以 $h(a+N)=p(a)$ 定义良好且双射。由于 $p=h\circ\pi_N$ 且 $\pi_N$ 是商映射，$h$ 连续。$\mathbb T/N$ 是紧空间的连续像，故紧；连续双射 $h$ 的目标 $Q$ Hausdorff，因此 $h$ 是闭映射，其逆连续。这证明乙推出丙。反向，若丙成立，令 $p=h\circ\pi_N$。它连续满射，而 $h$ 单射保证 $p(a)=p(b)$ 当且仅当 $a-b\in N$。子群对加法封闭，故这个关系是加法同余，得到乙。$p$ 已由 $q$ 唯一确定，$N$ 由显示的零纤维公式唯一确定，$h$ 又由 $h\circ\pi_N=p$ 唯一确定。
+
+现在证明全部群结构与连续性。$Q$ 是 $K$ 的连续像，故紧。任取 $a,b,c\in\mathbb T$，已经证明的公式给出
+$$
+D(D(p(a),p(b)),p(c))=p((a+b)+c)
+=p(a+(b+c))=D(p(a),D(p(b),p(c))).
+$$
+$ p $ 满射，因此 $D$ 结合。交换性同理由 $a+b=b+a$ 得到，单位律由 $a+0=0+a=a$ 得到。若 $p(a)=p(b)$，则 $a-b\in N$，从而 $(-a)-(-b)\in N$，故 $p(-a)=p(-b)$；所以 $\iota_Q(p(a))=p(-a)$ 定义良好。两侧乘积公式均给
+$$
+D(p(a),\iota_Q(p(a)))=D(\iota_Q(p(a)),p(a))=p(0).
+$$
+因此这些数据确实构成交换群，而不是只构成一个结合的二元运算。
+
+为证明联合连续性，考虑连续满射
+$$
+p\times p:\mathbb T^2\longrightarrow Q^2.
+$$
+其定义域紧，目标 Hausdorff，所以如前述论证一样，它是闭的商映射。圆周加法连续，且
+$$
+D\circ(p\times p)=p\circ +.
+$$
+右侧连续。对于任意开集 $O\subseteq Q$，
+$$
+(p\times p)^{-1}(D^{-1}(O))=(p\circ +)^{-1}(O)
+$$
+开，商映射性质遂给出 $D^{-1}(O)$ 开。这是 $D$ 的联合连续性证明，并未使用一般的两个商映射之积仍为商映射这一断言。取逆连续性同样由
+$$
+\iota_Q\circ p=p\circ(a\mapsto-a)
+$$
+以及 $p$ 是商映射得到。于是 $Q$ 为紧致交换拓扑群。显示的运算公式还说明 $p$ 保持运算和单位，故是连续群同态。
+
+为确认每个闭子群确实产生所列 Hausdorff 观察，固定任意闭子群 $N\le\mathbb T$。商映射 $\pi_N$ 是开映射：对开集 $V\subseteq\mathbb T$，
+$$
+\pi_N^{-1}(\pi_N(V))=V+N=\bigcup_{n\in N}(V+n)
+$$
+开。若 $a+N\ne b+N$，则 $d=a-b\notin N$。$N$ 闭，所以存在零的开邻域 $W$，使 $(d+W)\cap N=\varnothing$。由圆周减法在 $(0,0)$ 连续，可取零的开邻域 $V$，满足 $V-V\subseteq W$。开集 $\pi_N(a+V)$ 和 $\pi_N(b+V)$ 分别包含两个陪集，且互不相交；否则存在 $v,w\in V$ 使 $d+v-w\in N$，与 $(d+W)\cap N=\varnothing$ 矛盾。因此 $\mathbb T/N$ Hausdorff。它又是紧空间的连续像，故紧。$\pi_N$ 的相等关系核为陪集同余，所以将已证的乙推出甲及连续性结论应用于 $p=\pi_N$，即得 $q_N=\pi_N\circ H$ 是连续确定观察。
+
+$H$ 自身满足甲，只需取 $Q=\mathbb T$ 和圆周加法为 $D$。任意满足甲的 $q$ 均已证明唯一地连续因子化为 $p\circ H$，所以 $H\succeq q$；这正是所定义次序中的最精细性，而不是关于任意后处理的无条件断言。
+
+对规范商，若 $N_1\subseteq N_2$，则
+$$
+r(a+N_1)=a+N_2
+$$
+定义良好且满射。等式 $r\circ\pi_{N_1}=\pi_{N_2}$ 与 $\pi_{N_1}$ 的商映射性质保证 $r$ 连续，并且 $q_{N_2}=r\circ q_{N_1}$。反之，若这个观察因子化成立，$H$ 满射给出 $\pi_{N_2}=r\circ\pi_{N_1}$。任取 $n\in N_1$，有
+$$
+\pi_{N_2}(n)=r(\pi_{N_1}(n))=r(\pi_{N_1}(0))=\pi_{N_2}(0),
+$$
+所以 $n\in N_2$。这证明因子化次序的闭子群包含描述。
+
+为否定所有连续后处理都允许确定运算，取连续满射
+$$
+p:\mathbb T\to[-1,1],\qquad p([t])=\cos(2\pi t).
+$$
+令 $a=[1/4]$、$b=[-1/4]$、$t=[1/4]$，则
+$$
+p(a)=p(b)=p(t)=0,\qquad p(a+t)=-1,\qquad p(b+t)=1.
+$$
+相等关系核不被这个平移保持。等价地，任何所需运算都将同时被迫满足 $D(0,0)=-1$ 与 $D(0,0)=1$，故不存在。
+
+最后，若 $q,D$ 对 $\Gamma$ 满足甲，前面已证 $q$ 在每个 $C$ 纤维上恒定。对 $r\in\Lambda(x,y)$，取任意 $w\in\Gamma(x,y)$；命题18.3给出 $r\in C(w)$，因而
+$$
+q(r)=q(w)=D(q(x),q(y)).
+$$
+所以同一个 $q,D$ 对 $\Lambda$ 也确定。反向由 $\Gamma\subseteq\Lambda$ 立即成立。这只说明两关系具有相同的确定观察，并不消除命题18.3中的严格关系差异。商上的单位 $q(0_K)$ 来自对 $C$ 纤维的识别，也不使 $0_K$ 成为原关系的严格单位。证毕。
+
+[^rro18_phase]: 《CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF》，定理371.2、372.2—372.4及377.1；固定提交 c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb 的[相位前置文本](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md)。其中定理372.2—372.3给出两分支的实值域及公共前缀的奇偶定向，定理372.4给出全部圆周分裂纤维。
+
+[^rro18_fibers]: 第16节定义16.3及定理16.4：定向标记与加法闭图的完整输入纤维分类。本节在假设18.1中明确采用该分类；结合律及确定观察商的结论由命题18.2—定理18.4另行证明。
+
+[^rro18_quotient]: Nicolas Bourbaki, *General Topology: Chapters 1–4*，第I章 Topological Structures 与第III章 Topological Groups，Springer，DOI：[10.1007/978-3-642-61701-0](https://doi.org/10.1007/978-3-642-61701-0)。本节所需的商映射下降、闭子群陪集与连续群运算论证均在定理18.4的证明中给出。
+
+## 追加锚（本行以下为增补区）
+## 19. Zeckendorf 最低位的三角阵与分别连续紧实现障碍
+
+**定义 19.1（规范数字与最低位观察）。** 在通常 ZFC 中，取 $\mathbb N=\{0,1,\ldots\}$，并定义
+$$
+G_0=1,\qquad G_1=2,\qquad G_{j+2}=G_{j+1}+G_j.
+$$
+数字按低位到高位排列。令
+$$
+K=\{x\in\{0,1\}^{\mathbb N}:x_jx_{j+1}=0\text{ 对所有 }j\in\mathbb N\},
+$$
+其中 $\{0,1\}$ 取离散拓扑，$K$ 取乘积子空间拓扑。以 $Z(n)$ 表示 $n$ 的有限支撑规范数字向量，并在其后补零；亦即
+$$
+n=\sum_{j\ge0}G_jZ(n)_j.
+$$
+记 $e_i$ 为仅在位置 $i$ 取一的数字向量，并置
+$$
+d_0(x)=x_0,\qquad f(n)=d_0(Z(n)),\qquad o=Z(0),\qquad u=(10)^\infty,\qquad v=(01)^\infty.
+$$
+本节的 $f$ 专指最低位观察。再定义
+$$
+a_k=\sum_{j=0}^{k}G_{2j},\qquad b_l=G_{2l}\qquad(k,l\in\mathbb N).
+$$
+空和取零。数字向量的有限和按坐标作通常整数加法。载体及规范字的记号对应《情境时空算术：Zeckendorf》第 371.1 条。([raw.githubusercontent.com](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md))
+
+**定理 19.2（全部指标上的规范展开与严格三角公式）。** 对所有 $k,l\in\mathbb N$，有
+$$
+a_k=G_{2k+1}-1,\qquad G_{2l}-1=\sum_{j=0}^{l-1}G_{2j+1}.
+$$
+当 $k<l$ 时，准确的规范展开为
+$$
+Z(a_k+b_l)=\sum_{j=0}^{k}e_{2j}+e_{2l}.
+$$
+当 $k\ge l$ 时，准确的规范展开为
+$$
+Z(a_k+b_l)=e_{2k+1}+\sum_{j=0}^{l-1}e_{2j+1}.
+$$
+因此
+$$
+f(a_k+b_l)=1\quad\Longleftrightarrow\quad k<l.
+$$
+
+**证明。** 先说明检验规范性的唯一性依据。长度为 $L$ 的合法数字窗，经权值求和，恰好且不重复地表示 $0,\ldots,G_L-1$。当 $L=0$ 时只有空窗，其值为零；当 $L=1$ 时值为零或一。若 $L\ge2$，最高位为零的窗，由归纳假设恰给区间 $[0,G_{L-1}-1]$ 中的整数。最高位为一时，次高位必须为零，其余长度为 $L-2$ 的窗恰给
+$$
+G_{L-1}+[0,G_{L-2}-1]=[G_{L-1},G_L-1]
+$$
+中的整数。这两个整数区间不交，且并为全部目标区间，故存在性及唯一性同时归纳成立。由于 $G_L$ 无界，每个自然数都有有限规范展开；任意两个有限展开均可补零到同一长度，因而全局唯一。
+
+第一个求和恒等式在 $k=0$ 时为 $1=2-1$；若它对 $k$ 成立，则
+$$
+a_{k+1}=G_{2k+1}-1+G_{2k+2}=G_{2k+3}-1.
+$$
+第二个恒等式在 $l=0$ 时为 $G_0-1=0$；由 $l$ 到 $l+1$ 的归纳步为
+$$
+G_{2l}-1+G_{2l+1}=G_{2l+2}-1.
+$$
+
+若 $k<l$，原来的非零位置为 $0,2,\ldots,2k$，新位置为 $2l$。它与前一非零位置的距离至少为二，所以显示的向量各位均为零或一，且没有相邻的一。其权值正是 $a_k+b_l$，唯一性使它成为规范展开，最低位为一。
+
+若 $k\ge l$，两个恒等式给出
+$$
+a_k+b_l=G_{2k+1}+(G_{2l}-1)
+=G_{2k+1}+\sum_{j=0}^{l-1}G_{2j+1}.
+$$
+当 $l\ge1$ 时，下部非零位置为 $1,3,\ldots,2l-1$，最高位置为 $2k+1$，两部分之间的距离为 $2(k-l+1)\ge2$。因此该展开合法且规范，位置零取零。当 $l=0$ 时下部为空，所得展开仅在位置 $2k+1$ 取一，仍然最低位为零。特别地，$a_k+b_0=a_k+1=G_{2k+1}$，包括 $k=l=0$ 时的 $2=G_1$。
+
+当 $k=l$ 时，上述第二种展开准确化为
+$$
+Z(a_k+b_k)=\sum_{j=0}^{k}e_{2j+1},\qquad a_k+b_k=G_{2k+2}-1,
+$$
+所以对角线上同样为零。全部情形均已包含，三角公式成立。证毕。
+
+**定理 19.3（紧输入与分别连续映射的双极限必要条件）。** 设 $P,Q$ 为紧拓扑空间，$W$ 为 Hausdorff 空间，$C:P\times Q\to W$ 分别连续。输入空间不要求 Hausdorff，输出空间不要求紧。给定序列 $x_k\in P$、$y_l\in Q$，假定下列所有内层及外层极限均存在：
+$$
+r_k=\lim_{l\to\infty}C(x_k,y_l),\qquad
+s_l=\lim_{k\to\infty}C(x_k,y_l),
+$$
+$$
+r=\lim_{k\to\infty}r_k,\qquad
+s=\lim_{l\to\infty}s_l.
+$$
+则 $r=s$。
+
+**证明。** 对序列 $x_k$，令
+$$
+F_N=\overline{\{x_k:k\ge N\}}\subseteq P.
+$$
+这些非空闭集递减，由紧性得 $\bigcap_NF_N\ne\varnothing$。取其中一点 $x$。为明确使用子网而非子序列，令 $D_x$ 由满足 $x_k\in U$ 的二元组 $(k,U)$ 组成，其中 $U$ 是 $x$ 的开邻域，并规定
+$$
+(k,U)\preceq(k',U')\quad\Longleftrightarrow\quad k\le k'\text{ 且 }U'\subseteq U.
+$$
+因为 $x$ 属于每个尾集的闭包，任意两个这样的二元组，都有一个指标不小于二者、邻域包含于二者交集的共同上界。因此 $D_x$ 有向。投影 $(k,U)\mapsto k$ 保序且共尾，所得子网收敛到 $x$。同理，$y_l$ 有收敛到某个 $y\in Q$ 的子网。记这两个子网为 $x_{k(\alpha)}\to x$ 与 $y_{l(\beta)}\to y$。
+
+固定 $k$，第二变量的连续性给
+$$
+C(x_k,y)=\lim_\beta C(x_k,y_{l(\beta)})=r_k.
+$$
+最后一个等号使用原内层极限及其子网具有同一极限，并使用 $W$ 中极限的唯一性。同理，对每个固定 $l$，有
+$$
+C(x,y_l)=s_l.
+$$
+再分别沿两个已选子网取极限，得到
+$$
+C(x,y)=\lim_\alpha C(x_{k(\alpha)},y)
+=\lim_\alpha r_{k(\alpha)}=r,
+$$
+$$
+C(x,y)=\lim_\beta C(x,y_{l(\beta)})
+=\lim_\beta s_{l(\beta)}=s.
+$$
+所以 $r=s$。此证明没有要求任何输入序列存在收敛子序列。证毕。
+
+**定理 19.4（最低位加法表不存在任何分别连续紧实现）。** 不存在紧空间 $X$、集合映射 $j:\mathbb N\to X$ 及分别连续映射
+$$
+B:X\times X\to\{0,1\}
+$$
+使得
+$$
+B(j(n),j(m))=f(n+m)\qquad(n,m\in\mathbb N).
+$$
+这里不要求 $j$ 单射、连续或具有稠密像。
+
+更一般地，设 $Y$ 为任意拓扑空间，$W$ 为 Hausdorff 空间，$w_0,w_1\in W$ 且 $w_0\ne w_1$。不存在同时满足下列条件的数据：紧空间 $X$，集合映射 $j:\mathbb N\to X$，分别连续映射 $M:X\times X\to Y$，以及连续观察 $q:Y\to W$，使
+$$
+q(M(j(n),j(m)))=w_{f(n+m)}\qquad(n,m\in\mathbb N).
+$$
+特别地，将输出改为任意紧 Hausdorff 空间，并保留取值于离散二点集或实数的连续最低位观察，仍然不能得到这样的实现。若还存在 $h:\mathbb N\to Y$，满足 $q(h(n))=w_{f(n)}$，则要求 $M(j(n),j(m))=h(n+m)$ 更不可能。
+
+**证明。** 在较一般的情形中，$C=q\circ M$ 分别连续。取
+$$
+x_k=j(a_k),\qquad y_l=j(b_l).
+$$
+定理 19.2 给出：对每个固定 $k$，当 $l>k$ 时 $C(x_k,y_l)=w_1$；对每个固定 $l$，当 $k\ge l$ 时 $C(x_k,y_l)=w_0$。因此
+$$
+\lim_{k\to\infty}\lim_{l\to\infty}C(x_k,y_l)=w_1,
+\qquad
+\lim_{l\to\infty}\lim_{k\to\infty}C(x_k,y_l)=w_0.
+$$
+这与定理 19.3 矛盾。取 $Y=W=\{0,1\}$、$q$ 为恒等映射，即得第一项断言。证明只使用观察后的常值尾，不要求未观察输出在 $Y$ 中的任何迭代极限存在。证毕。
+
+**定理 19.5（任意紧标签及保留读数的紧历史扩张）。** 设 $A$ 为任意紧标签空间，$t:\mathbb N\to A$ 为任意集合映射，并令
+$$
+j(n)=(Z(n),t(n)).
+$$
+对任何包含 $j[\mathbb N]$ 的闭子空间 $X\subseteq K\times A$，定义连续读数
+$$
+r=d_0\circ\operatorname{pr}_K:X\to\{0,1\}.
+$$
+不存在分别连续的 $\mu:X\times X\to X$ 使
+$$
+r(\mu(j(n),j(m)))=f(n+m)\qquad(n,m\in\mathbb N).
+$$
+这包括整个 $K\times A$ 以及 $j[\mathbb N]$ 的闭包，也包括要求 $\mu(j(n),j(m))=j(n+m)$ 的更强情形。
+
+又设 $\widetilde X$ 为紧 Hausdorff 空间，$\pi:\widetilde X\to K$ 为连续满射。任取满足
+$$
+\pi(\widetilde j(n))=Z(n)
+$$
+的提升 $\widetilde j:\mathbb N\to\widetilde X$。不存在分别连续的 $\widetilde\mu:\widetilde X\times\widetilde X\to\widetilde X$，使得对全部 $n,m\in\mathbb N$ 有
+$$
+d_0\bigl(\pi(\widetilde\mu(\widetilde j(n),\widetilde j(m)))\bigr)=f(n+m).
+$$
+因而，仅要求
+$$
+\pi(\widetilde\mu(\widetilde j(n),\widetilde j(m)))=Z(n+m)
+$$
+而允许输出历史在该数字纤维内任意变化，也不能避开障碍。
+
+**证明。** 违反无相邻一条件的数字向量构成开柱集的并，所以 $K$ 是紧 Hausdorff 乘积 $\{0,1\}^{\mathbb N}$ 的闭子空间。坐标观察 $d_0$ 连续。故 $K\times A$ 紧，闭子空间 $X$ 紧，且所定义的 $r$ 连续。将 $q=r$ 代入定理 19.4，即得标签空间上的结论。
+
+历史扩张上，$d_0\circ\pi$ 同样连续。满射性在 ZFC 中保证可以选择所述提升，而定理 19.4 对每一种这样的选择均适用。证明不要求 $\pi$ 有连续截面，也不要求 $\widetilde\mu$ 结合、交换、有单位或可逆。证毕。
+
+**定理 19.6（逐个固定平移不能补成全参数分别连续运算）。** 令 $T:K\to K$ 为连续后继，满足 $T(Z(n))=Z(n+1)$。对每个固定 $h\in\mathbb N$，$T^h$ 连续，并且是 $Z(n)\mapsto Z(n+h)$ 的唯一连续延拓。然而
+$$
+Z(b_l)\longrightarrow o,\qquad
+T^{b_l}(u)=Z(b_l-1)\longrightarrow v\ne u=T^0(u).
+$$
+因此，逐个固定自然参数的连续平移族不能补成分别连续映射 $K\times K\to K$，使第二参数 $Z(h)$ 对应 $T^h$。连续后继的存在见《情境时空算术：Zeckendorf》第 375.2 条。([raw.githubusercontent.com](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md))
+
+**证明。** 任意 $x\in K$ 的有限前缀补零后仍合法，故由规范唯一性，它是某个自然数的 $Z$ 像。这些截断逐坐标收敛到 $x$，所以 $Z[\mathbb N]$ 在 $K$ 中稠密。连续复合及对 $h$ 的归纳给出 $T^h$ 的连续性与核心等式；两个连续映射若在该稠密集上相同，由目标的 Hausdorff 性便处处相同。
+
+由数字展开，$Z(a_k)\to u$，而 $a_k+1=G_{2k+1}$ 使
+$$
+T(Z(a_k))=Z(G_{2k+1})=e_{2k+1}\longrightarrow o.
+$$
+连续性给 $T(u)=o$。因此，对每个 $h\ge1$，
+$$
+T^h(u)=T^{h-1}(o)=Z(h-1).
+$$
+取 $h=b_l$，定理 19.2 的奇数位置求和式给
+$$
+T^{b_l}(u)=\sum_{j=0}^{l-1}e_{2j+1}\longrightarrow v.
+$$
+同时 $Z(b_l)=e_{2l}\to o$。
+
+若存在所述分别连续映射 $M$，则 $M(u,Z(b_l))=T^{b_l}(u)$，而 $M(u,o)=T^0(u)=u$。第二变量的连续性将迫使同一输出序列收敛到 $u$，与其极限 $v$ 不同矛盾。若只给定核心上的完整加法等式，则第一变量的连续性及稠密性已迫使每个切片 $M(\,·\,,Z(h))=T^h$，故同一矛盾仍成立。证毕。
+
+**定理 19.7（加法图闭包的一个精确二点纤维与选择障碍）。** 定义闭关系
+$$
+\Gamma=\overline{\{(Z(n),Z(m),Z(n+m)):n,m\in\mathbb N\}}\subseteq K^3,
+$$
+以及其输出纤维
+$$
+\Gamma(x,y)=\{z\in K:(x,y,z)\in\Gamma\}.
+$$
+每个 $\Gamma(x,y)$ 均为非空紧集，并有
+$$
+\Gamma(Z(n),Z(m))=\{Z(n+m)\},\qquad
+\Gamma(u,o)=\{u,v\}.
+$$
+不存在分别连续的选择 $s:K\times K\to K$ 满足 $s(x,y)\in\Gamma(x,y)$。
+
+**证明。** $\Gamma$ 是紧 Hausdorff 空间 $K^3$ 的闭子空间，因此紧。它向前两个坐标的投影是 $K^2$ 的紧闭子集，包含稠密集 $Z[\mathbb N]\times Z[\mathbb N]$，故投影为整个 $K^2$。这给出每个纤维的非空性；纤维在 $K$ 中闭，因而紧。
+
+取 $\phi=(1+\sqrt5)/2$、$\alpha=\phi^{-1}$，并令
+$$
+\theta(x)=\left[\sum_{j\ge0}(-1)^{j+1}\alpha^{j+2}x_j\right]\in\mathbb T=\mathbb R/\mathbb Z.
+$$
+由《情境时空算术：Zeckendorf》第 371.2、372.4 条，$\theta$ 连续，且
+$$
+\theta(Z(n))=[n\phi],\qquad
+\theta^{-1}(\{[n\phi]\})=\{Z(n)\}\quad(n\in\mathbb N),
+$$
+$$
+\theta(o)=0,\qquad
+\theta(u)=\theta(v)=[-\phi],\qquad
+\theta^{-1}(\{[-\phi]\})=\{u,v\}.
+$$
+这些是同一圆周映射在自然相位及接缝相位处的准确纤维。([raw.githubusercontent.com](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md))
+
+条件 $\theta(z)=\theta(x)+\theta(y)$ 在 $K^3$ 中定义闭集，且包含原始加法图，所以
+$$
+(x,y,z)\in\Gamma\quad\Longrightarrow\quad
+\theta(z)=\theta(x)+\theta(y).
+$$
+在输入 $(Z(n),Z(m))$ 处，输出因而属于自然相位 $[(n+m)\phi]$ 的单点纤维；原始图又包含 $Z(n+m)$，故得到第一个纤维等式。
+
+在输入 $(u,o)$ 处，相位条件给 $\Gamma(u,o)\subseteq\{u,v\}$。另一方面，
+$$
+a_k+b_{k+1}=a_{k+1}
+$$
+使原始图中的三元组 $(Z(a_k),Z(b_{k+1}),Z(a_{k+1}))$ 收敛到 $(u,o,u)$。定理 19.2 的对角展开又使
+$$
+(Z(a_k),Z(b_k),Z(a_k+b_k))\longrightarrow(u,o,v).
+$$
+因此两个输出都属于该闭包纤维，得到准确等式 $\Gamma(u,o)=\{u,v\}$。
+
+任意选择 $s$ 都因核心纤维的单点性而满足 $s(Z(n),Z(m))=Z(n+m)$。若它分别连续，$d_0\circ s$ 就违反定理 19.4。证毕。
+
+**定理 19.8（固定素数乘法上的同一障碍）。** 固定素数 $p$，令
+$$
+P_p=\{p^n:n\in\mathbb N\},\qquad f_p(p^n)=f(n).
+$$
+不存在紧空间 $X$、集合映射 $\iota:P_p\to X$ 及分别连续映射 $B:X\times X\to\{0,1\}$，使
+$$
+B(\iota(r),\iota(s))=f_p(rs)\qquad(r,s\in P_p).
+$$
+特别地，不存在同时具有连续读数 $d:X\to\{0,1\}$ 和分别连续乘法 $\mu:X\times X\to X$ 的紧实现，使
+$$
+d(\iota(p^n))=f(n),\qquad
+\mu(\iota(p^n),\iota(p^m))=\iota(p^{n+m}).
+$$
+
+**证明。** 素数幂的指数唯一，故 $f_p$ 定义良好。令 $j(n)=\iota(p^n)$。恒等式
+$$
+p^np^m=p^{n+m}
+$$
+将第一项假设变为 $B(j(n),j(m))=f(n+m)$，与定理 19.4 矛盾。第二项中的 $B=d\circ\mu$ 分别连续，并满足同一等式。其显式三角见证为
+$$
+f_p\bigl(p^{a_k}p^{b_l}\bigr)=1\quad\Longleftrightarrow\quad k<l.
+$$
+指数零对应乘法单位 $p^0=1$，其读数为 $f(0)=0$，不需排除该情形。证毕。
+
+**定义 19.9（弱殆周期函数与半拓扑紧化）。** 令 $E=\ell^\infty(\mathbb N;\mathbb C)$，赋予上确界范数，$E^*$ 为其连续线性对偶。对 $g\in E$ 定义
+$$
+(R_tg)(s)=g(s+t),\qquad \mathcal O(g)=\{R_tg:t\in\mathbb N\}.
+$$
+称 $g$ 为弱殆周期函数，若 $\mathcal O(g)$ 在弱拓扑 $\sigma(E,E^*)$ 中的闭包紧。紧 Hausdorff 半拓扑半群是具有结合运算、且该运算分别连续的紧 Hausdorff 空间。其作为 $(\mathbb N,+)$ 的半拓扑紧化时，另带一个具有稠密像的半群同态 $\eta:\mathbb N\to S$；不要求 $\eta$ 单射。弱殆周期的平移轨道定义见 Grothendieck 的命题 7；半拓扑紧化的通常范围见 Akbari Tootkaboni 的定理 2.2。([webusers.imj-prg.fr](https://webusers.imj-prg.fr/~leila.schneps/grothendieckcircle/AG/AG-6.pdf)) M. Akbari Tootkaboni, *Filters and the weakly almost periodic compactification of a semitopological semigroup*, [arXiv:1302.3204v1](https://arxiv.org/pdf/1302.3204v1), p. 1（半拓扑半群定义）及 p. 3（弱殆周期定义、定理 2.1–2.2）。
+
+**定理 19.10（最低位观察不是弱殆周期函数）。** 将 $f$ 视为 $E$ 的元素，则
+$$
+f\notin\operatorname{WAP}(\mathbb N,+).
+$$
+此外，对任意紧 Hausdorff 半拓扑半群 $S$ 及任意半群同态 $\eta:\mathbb N\to S$，不存在连续函数 $h:S\to\mathbb C$ 使 $h(\eta(n))=f(n)$。后一断言甚至不要求 $\eta$ 的像稠密。其经典双极限背景为 Grothendieck 的定理 6、命题 7，以及 Akbari Tootkaboni 的定理 2.1–2.2。([webusers.imj-prg.fr](https://webusers.imj-prg.fr/~leila.schneps/grothendieckcircle/AG/AG-6.pdf)) M. Akbari Tootkaboni, *Filters and the weakly almost periodic compactification of a semitopological semigroup*, [arXiv:1302.3204v1](https://arxiv.org/pdf/1302.3204v1), p. 1（半拓扑半群定义）及 p. 3（弱殆周期定义、定理 2.1–2.2）。
+
+**证明。** 定义线性子空间
+$$
+D=\{g\in E:\lim_{l\to\infty}g(b_l)\text{ 存在}\},
+$$
+以及有界线性泛函
+$$
+L_0(g)=\lim_{l\to\infty}g(b_l)\qquad(g\in D).
+$$
+由 $|L_0(g)|\le\|g\|_\infty$ 且常值一函数属于 $D$，有 $\|L_0\|=1$。Hahn–Banach 定理给出其连续线性延拓 $L\in E^*$。
+
+反设 $f$ 弱殆周期。取 $g_k=R_{a_k}f$。轨道的弱闭包紧，因此 $g_k$ 有弱收敛子网 $g_{k(\alpha)}\to g\in E$。对每个固定 $l$，点值泛函 $g\mapsto g(b_l)$ 属于 $E^*$，而三角公式使 $g_{k(\alpha)}(b_l)$ 最终为零，所以
+$$
+g(b_l)=0\qquad(l\in\mathbb N).
+$$
+于是 $g\in D$ 且 $L(g)=L_0(g)=0$。但对每个固定 $k$，同一三角公式给 $\lim_lg_k(b_l)=1$，故 $L(g_k)=1$。弱收敛又要求
+$$
+L(g)=\lim_\alpha L(g_{k(\alpha)})=1,
+$$
+矛盾。这一论证只用了弱紧性的子网、点值泛函及 Hahn–Banach 延拓。
+
+若后一断言中的 $h$ 存在，令 $C(s,t)=h(st)$。乘法分别连续且 $h$ 连续，所以 $C:S\times S\to\mathbb C$ 分别连续，并有
+$$
+C(\eta(n),\eta(m))=h(\eta(n+m))=f(n+m).
+$$
+将连续观察取为 $h$，定理 19.4 即给矛盾。证毕。
+
+**定理 19.11（删除连续最低位观察后，紧算术实现仍可存在）。** 令 $X=\mathbb T$，定义
+$$
+j(n)=[n\phi],\qquad M(s,t)=s+t.
+$$
+则 $X$ 紧 Hausdorff，$j$ 单射，$M$ 联合连续，且
+$$
+M(j(n),j(m))=j(n+m).
+$$
+但是不存在连续函数 $q:\mathbb T\to\mathbb R$ 满足 $q(j(n))=f(n)$。
+
+**证明。** 通常圆周是紧 Hausdorff 空间。若 $j(n)=j(m)$，则 $(n-m)\phi$ 是整数；由 $\phi$ 无理，必有 $n=m$。圆周加法保留所示核心等式，并且圆周距离满足
+$$
+\rho(s+t,s'+t')\le\rho(s,s')+\rho(t,t'),
+$$
+所以 $M$ 联合连续。若所述 $q$ 存在，则 $q\circ M$ 分别连续，且在核心上等于 $f(n+m)$，违反定理 19.4。因此，被排除的不是一切紧空间上的加法实现，而是同时保留该连续最低位观察的分别连续实现。证毕。
+
+## 追加锚（本行以下为增补区）
+## 20. Positional precision and arithmetic-time observation on the Zeckendorf compactum
+
+**Definition 20.1 (The carrier and the two observations).** Put
+$$
+\phi=\frac{1+\sqrt5}{2},\qquad
+\alpha=\phi^{-1},\qquad
+\beta=\alpha^2=1-\alpha,\qquad r=-\alpha,
+$$
+$$
+G_0=1,\qquad G_1=2,\qquad G_{j+2}=G_{j+1}+G_j.
+$$
+Use the low-to-high digit carrier
+$$
+K=\{x\in\{0,1\}^{\mathbb N}:x_jx_{j+1}=0\text{ for every }j\},
+$$
+with its product topology, and write $Z(n)$ for the finite Zeckendorf expansion of $n$, padded by zeros. The phase maps and rotation are
+$$
+F(x)=\sum_{j\ge0}(-1)^{j+1}\alpha^{j+2}x_j,\qquad
+H(x)=[F(x)],\qquad R(\theta)=\theta+[\phi].
+$$
+The successor $T$ replaces the alternating prefix before the first occurrence $x_jx_{j+1}=00$ by zeros and sets position $j$ to one, leaving higher positions unchanged; if there is no such occurrence, it sends the sequence to $Z(0)$. Set
+$$
+q_L(x)=(x_0,\ldots,x_{L-1}),\qquad f(x)=x_0,\qquad
+v_t(x)=(f(T^i x))_{0\le i<t}.
+$$
+Both $q_0$ and $v_0$ have the single value given by the empty word. Let $\mathcal Q_L$ and $\mathcal V_t$ be their partitions into nonempty fibers. For a map $g$, its equality kernel is
+$$
+\ker(g)=\{(x,y)\in K^2:g(x)=g(y)\}.
+$$
+Finally, positional deletion is the different map $\sigma:K\to K$ defined by $(\sigma x)_j=x_{j+1}$.
+
+The carrier, phase maps and successor are those of the Zeckendorf theory volume, §§371–375; in particular, the established properties used below are compactness, density of $Z(\mathbb N)$, continuity and surjectivity of $T$, and $TZ(n)=Z(n+1)$, $HT=RH$. ([raw.githubusercontent.com](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md))
+
+**theorem 20.2 (Exact positional cuts, including the split endpoints).** Write
+$$
+a=-\alpha,\qquad b=\beta,\qquad c=-\alpha^3,\qquad
+I=[a,b],\qquad u=(10)^\infty,\qquad v=(01)^\infty,
+$$
+and
+$$
+e_m=[-m\phi]\quad(m\ge1),\qquad E=\{e_m:m\ge1\}.
+$$
+There are exactly $G_L$ admissible words of length $L$. For such a word $p$, let $C_p=q_L^{-1}(\{p\})$ and
+$$
+S_p=\sum_{j<L}(-1)^{j+1}\alpha^{j+2}p_j.
+$$
+Its real phase interval is
+$$
+I_p=F[C_p]=
+\begin{cases}
+I,&L=0,\\
+S_p+r^L I,&L>0,\ p_{L-1}=0,\\
+S_p+r^{L+1}I,&L>0,\ p_{L-1}=1.
+\end{cases}
+$$
+The circle boundaries of these images are exactly
+$$
+B_0^{\mathrm{pos}}=\varnothing,\qquad
+B_L^{\mathrm{pos}}
+=\bigcup_p\partial_{\mathbb T}H[C_p]
+=\{e_1,\ldots,e_{G_L}\}\quad(L\ge1).
+$$
+These are boundaries in the circle, not boundaries of the clopen sets $C_p$ in $K$.
+
+Every phase outside $E$ has a singleton $H$-fiber, and each $e_m$ has exactly two lifts. Give these two lifts their negative-side and positive-side names $x_m^-,x_m^+$. At the circle seam they are
+$$
+x_1^-=v,\qquad x_1^+=u.
+$$
+For $m\ge2$, there is a unique finite word $w$ made of the blocks $0$ and $10$ such that, with digit length $d=|w|$ and $N_w=\sum_{j<d}G_jw_j$,
+$$
+m=G_{d+1}-N_w.
+$$
+For this word,
+$$
+(x_m^-,x_m^+)=
+\begin{cases}
+(w10v,w0v),&d\text{ even},\\
+(w0v,w10v),&d\text{ odd}.
+\end{cases}
+$$
+For every $L\ge1$, these two points have different $L$-digit prefixes exactly when $m\le G_L$.
+
+For every positive-depth cylinder, its phase image has an open arc interior $J_p$, and its full atom, with the correct split endpoints, satisfies
+$$
+C_p=\overline{\{Z(n):H(Z(n))\in J_p\}}^{\,K}.
+$$
+
+**Proof.** The finite value map $p\mapsto\sum_{j<L}G_jp_j$ is a bijection onto the integers from zero to $G_L-1$. At lengths zero and one this is immediate. For $L\ge2$, splitting according to the highest digit gives the disjoint value ranges
+$$
+[0,G_{L-1}-1]\cap\mathbb Z,\qquad
+[G_{L-1},G_{L-1}+G_{L-2}-1]\cap\mathbb Z.
+$$
+In the second range the preceding digit is forced to zero. Induction proves both exhaustiveness and uniqueness, hence the count.
+
+The interval formula is the exact cylinder formula of §372.3. Every positive-depth interval has positive length less than one. Distinct length-$L$ prefixes, completed by a forced zero when necessary, give incomparable block prefixes. The intersection classification of §372.3 therefore makes their interval interiors disjoint. They cover $I$, so they form consecutive intervals without gaps.
+
+For completeness, enumerate their endpoints using the full fibers of §372.2 rather than merely counting intervals. A finite block word $w$ acts on real phases by
+$$
+A_w(s)=S_w+r^d s.
+$$
+The internal double fiber at $A_w(c)$ consists of $w0v$ and $w10v$. The recurrence and its initial values give
+$$
+\eta_j=\phi G_j-G_{j+1}=(-1)^{j+1}\alpha^{j+2},
+\qquad r^d c=-\eta_{d+1}.
+$$
+Consequently,
+$$
+[A_w(c)]=[\phi(N_w-G_{d+1})]=e_{G_{d+1}-N_w}.
+$$
+The empty block word gives $d=0$ and $m=2$. For $d\ge1$, block words of digit length $d$ are exactly admissible words ending in zero. Removing this final zero and applying the finite value bijection shows that their values run once through
+$$
+0,\ldots,G_{d-1}-1.
+$$
+Their indices $m$ thus run once through
+$$
+G_d+1,\ldots,G_{d+1}.
+$$
+These disjoint successive ranges exhaust the integers at least three. The cited full-fiber classification has no other nonsingleton fibers beyond these internal pairs and the seam.
+
+An internal endpoint is precisely a phase whose two lifts belong to different cylinders: adjacent positive intervals meet there, whereas their interiors do not overlap. The two sequences $w0v,w10v$ first differ at digit $d$. Thus their prefixes of length $L$ differ exactly when $d<L$. The displayed index ranges show that the internal fibers separated at depth $L\ge1$ have exactly the indices $2,\ldots,G_L$. The remaining circle identification joins $a$ and $b$, whose unique real preimages are $u$ and $v$; they differ already at digit zero. Its index is $m=1$. Irrationality of $\phi$ makes all the $e_m$ distinct. This proves the stated cut set. At depth zero the image is the whole circle, which has empty boundary.
+
+Before application of $A_w$, the $10$ branch has real image $[a,c]$, while the $0$ branch has image $[c,b]$. The affine map $A_w$ preserves orientation for even $d$ and reverses it for odd $d$, giving the two oriented formulas. At the seam, approaching through $b$ gives $v$, and leaving through $a$ gives $u$.
+
+No other cylinder image can contain an interior point of $I_p$: its positive length would force an overlap of interval interiors. Hence the entire fiber above every point of $J_p$ belongs to $C_p$. Natural phases avoid $E$, since $[n\phi]=[-m\phi]$ would make $(n+m)\phi$ an integer. Therefore
+$$
+C_p\cap Z(\mathbb N)=\{Z(n):H(Z(n))\in J_p\}.
+$$
+The left-hand side is dense in $C_p$, because $C_p$ is open and closed and $Z(\mathbb N)$ is dense. This proves the closure formula.
+
+It also proves the asserted side interpretation. Choose a depth that separates the two points above $e_m$. Sufficiently close phases on either side belong to the corresponding adjacent cylinder. A convergent subsequence of their natural lifts has phase $e_m$ and lies in that cylinder, so it can have only the indicated one of the two limits. Compactness then gives convergence of the whole sequence. Such approaching natural phases exist because the continuous surjection $H$ takes the dense core to a dense subset of the circle. The same argument at the seam uses its two adjacent cylinders. This establishes the endpoint conventions on all of $K$. $\square$
+
+Attached reference: the cylinder and double-fiber inputs are precisely §§372.2–372.4 of the Zeckendorf volume. ([raw.githubusercontent.com](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md))
+
+**Definition 20.3 (Mechanical words and future coding).** For a real intercept $\rho$, define the lower and upper mechanical words of slope $\beta$ by
+$$
+M^{\mathrm{lo}}_\rho(n)
+=\lfloor\rho+(n+1)\beta\rfloor-\lfloor\rho+n\beta\rfloor,
+$$
+$$
+M^{\mathrm{up}}_\rho(n)
+=\lceil\rho+(n+1)\beta\rceil-\lceil\rho+n\beta\rceil
+\qquad(n\ge0).
+$$
+An integer change in $\rho$ changes neither word. The lower convention assigns digit one to $[1-\beta,1)$; the upper convention assigns it to $(1-\beta,1]$, with the circle point zero represented by one in the latter interval. Define
+$$
+\Phi(x)=(f(T^n x))_{n\ge0},
+\qquad
+S((y_n)_{n\ge0})=(y_{n+1})_{n\ge0}.
+$$
+Here $S$ is the ordinary one-sided shift on binary itineraries.
+
+Attached reference: Berstel, *Sturmian and Episturmian Words* (2007), §3.1, pp. 30–31, gives these lower/upper conventions and their rotation interpretation. ([ligm.univ-eiffel.fr](https://ligm.univ-eiffel.fr/~berstel/Articles/2007SturmianThessalonique.pdf))
+
+**theorem 20.4 (The exact mechanical coordinate and every split itinerary).** For $x\in K$, take any real lift $\rho$ of
+$$
+[\rho]=[\beta]-H(x).
+$$
+If $H(x)\notin E$, then
+$$
+\Phi(x)=M^{\mathrm{lo}}_\rho=M^{\mathrm{up}}_\rho.
+$$
+For every $m\ge1$, put $\rho_m=(1-m)\beta$. Then
+$$
+\Phi(x_m^-)=M^{\mathrm{lo}}_{\rho_m},
+\qquad
+\Phi(x_m^+)=M^{\mathrm{up}}_{\rho_m}.
+$$
+For $m=1$ these words differ only at coordinate zero, with respective digits zero and one. For $m\ge2$ they differ exactly at coordinates $m-2,m-1$, where the respective pairs are
+$$
+10\qquad\text{and}\qquad01.
+$$
+In particular, a length-$t$ itinerary separates the two members of the fiber above $e_m$ exactly when
+$$
+t\ge1\quad\text{and}\quad m\le t+1.
+$$
+The successor respects their orientation until the seam:
+$$
+Tx_m^\pm=x_{m-1}^\pm\quad(m\ge2),\qquad
+Tx_1^-=Tx_1^+=Z(0).
+$$
+On the natural core the chosen word is exactly
+$$
+w_n:=f(Z(n))
+=\lfloor(n+2)\beta\rfloor-\lfloor(n+1)\beta\rfloor,
+$$
+so $w=\Phi(Z(0))$ is the lower mechanical word with slope and intercept both equal to $\beta$.
+
+**Proof.** In real phase coordinates the one-digit intervals are $F[C_1]=[a,c]$ and $F[C_0]=[c,b]$. Under the reflected and translated coordinate $[\rho]=[\beta]-[F(x)]$, their interiors become respectively $(1-\beta,1)$ and $(0,1-\beta)$. Moreover,
+$$
+[\beta]-H(Tx)=[\beta]-H(x)-[\phi]=[\rho+\beta].
+$$
+Thus rotation by $[\phi]=[\alpha]$ becomes rotation by $[\beta]$ in this coordinate.
+
+If $H(x)\notin E$, its forward phase orbit never meets $e_1$ or $e_2$. Nor can any $\rho+n\beta$ be an integer: that would give
+$$
+H(x)=[(n+1)\beta]=e_{n+1}.
+$$
+Reading the two interval interiors therefore gives the lower formula at every time. The upper formula agrees, since neither endpoint of its difference is an integer.
+
+At a split phase, approach $x_m^-$ by natural lifts from the negative phase side, as established in Theorem 20.2. Reflection makes the corresponding intercepts approach $\rho_m$ from above. Every coordinate $f\circ T^n$ is continuous, and floors are right-continuous, so the limit is $M^{\mathrm{lo}}_{\rho_m}(n)$. Approaching $x_m^+$ reverses this direction. The identity
+$$
+\lim_{\varepsilon\downarrow0}\lfloor z-\varepsilon\rfloor=\lceil z\rceil-1
+$$
+makes the two subtracted constants cancel, giving the upper formula. This argument applies separately to every coordinate, including the seam coordinate.
+
+Set
+$$
+D_k=\lceil\rho_m+k\beta\rceil-\lfloor\rho_m+k\beta\rfloor.
+$$
+Irrationality gives $D_k=0$ precisely at $k=m-1$, and $D_k=1$ at every other nonnegative integer $k$. Since
+$$
+M^{\mathrm{up}}_{\rho_m}(n)-M^{\mathrm{lo}}_{\rho_m}(n)=D_{n+1}-D_n,
+$$
+the asserted differences and their exact positions follow. In particular there is no additional endpoint word obtained by choosing the two conventions independently at different times.
+
+For $m\ge2$, rotation sends a same-side sequence approaching $e_m$ to a same-side sequence approaching $e_{m-1}$. Apply continuity of $T$, its successor formula on the natural core, and the side-limit statement of Theorem 20.2. This gives the oriented successor identity. Both alternating sequences are sent to zero by the definition of $T$.
+
+Finally, $H(Z(n))=[n\phi]$ gives the intercept class $[(n+1)\beta]$. Substituting this lift into the time-zero formula yields the displayed formula for $w_n$. At $n=0$ the intercept is $\beta$, not zero. $\square$
+
+Attached reference: Berstel, §3.1, p. 31, calls the equal-slope-and-intercept word the characteristic word; the identification with this particular Zeckendorf observation follows from the proof above. ([ligm.univ-eiffel.fr](https://ligm.univ-eiffel.fr/~berstel/Articles/2007SturmianThessalonique.pdf))
+
+**theorem 20.5 (Exact temporal complexity and temporal phase cuts).** For every $t\ge0$,
+$$
+|v_t[K]|=t+1.
+$$
+The temporal phase cut set is
+$$
+B_0^{\mathrm{time}}=\varnothing,\qquad
+B_t^{\mathrm{time}}=\{e_1,\ldots,e_{t+1}\}\quad(t\ge1).
+$$
+For positive $t$, the atoms of $\mathcal V_t$ are exactly
+$$
+A_J=\overline{\{Z(n):H(Z(n))\in J\}}^{\,K},
+$$
+where $J$ runs through the open arcs complementary to $B_t^{\mathrm{time}}$. Different arcs give different words. Thus the count includes both members of every split fiber without adding singleton boundary atoms.
+
+**Proof.** The empty observation has one value. For $t\ge1$, the possible cuts of the successive readouts are
+$$
+\bigcup_{i=0}^{t-1}R^{-i}\{e_1,e_2\}
+=\bigcup_{i=0}^{t-1}\{e_{i+1},e_{i+2}\}
+=\{e_1,\ldots,e_{t+1}\}.
+$$
+It remains to prove that no two resulting arcs carry the same word; the cut count alone does not establish this.
+
+Use the intercept coordinate from Theorem 20.4 and a representative $0\le\rho<1$. The cuts become zero and the $t$ distinct points
+$$
+c_j=\{-j\beta\},\qquad1\le j\le t,
+$$
+where braces denote fractional part. Away from these cuts, the partial sums of the first $t$ lower mechanical digits are
+$$
+\sum_{i=0}^{j-1}M^{\mathrm{lo}}_\rho(i)
+=\lfloor\rho+j\beta\rfloor,\qquad1\le j\le t.
+$$
+As $\rho$ increases from zero to one, the $j$-th function increases exactly once, at $c_j$, and never decreases. Consequently two different intervals between the sorted cuts have different vectors of partial sums. The digit word determines, and is determined by, those partial sums. Hence these $t+1$ intervals carry $t+1$ different words, including the intervals adjacent to zero on its two sides.
+
+The natural phase orbit is dense and avoids all cuts, so all these words occur on the natural core. Conversely, $v_t$ is continuous with finite discrete target. Every nonempty fiber is open and therefore meets the dense core; there can be no additional word supported only on split points. Each fiber is also closed, and its core intersection is exactly the core phases in the unique arc carrying its word. Density in this clopen fiber proves the formula for $A_J$ and proves that these are all its atoms.
+
+At an endpoint $e_m$, Theorem 20.4 assigns its two lifts the words of the corresponding adjacent arcs whenever $m\le t+1$. For $m>t+1$ the two lifts have the same word and lie in one atom. Continuity and compactness give $H[A_J]=\overline J$: the image is contained in this closed arc and contains the dense natural phases in $J$. Its phase boundaries are therefore exactly the displayed cut set. $\square$
+
+Attached reference: the classical complexity characterization of Sturmian words is stated in Glen–Justin, *Episturmian Words: A Survey*, §1.1, p. 1; Berstel, §2.1, p. 25, Theorem 1 gives the associated eventual-periodicity threshold. The concrete arc distinction and endpoint count here are proved directly. ([arxiv.org](https://arxiv.org/pdf/0801.1655))
+
+**theorem 20.6 (Equal partitions, both exact moduli, and sharpness).** For all $L,t\ge0$,
+$$
+\mathcal Q_L=\mathcal V_{G_L-1},
+\qquad
+\ker(q_L)=\ker(v_{G_L-1}),
+$$
+and more generally
+$$
+\ker(v_t)\subseteq\ker(q_L)
+\quad\Longleftrightarrow\quad t\ge G_L-1,
+$$
+$$
+\ker(q_L)\subseteq\ker(v_t)
+\quad\Longleftrightarrow\quad t\le G_L-1.
+$$
+Thus the least length of consecutive lowest-digit observations determining the first $L$ positional digits is
+$$
+t_{\min}(L)=G_L-1,
+$$
+and the least positional depth determining a prescribed length-$t$ itinerary is
+$$
+L_{\min}(t)=\min\{L\ge0:G_L\ge t+1\}.
+$$
+In particular $L_{\min}(0)=0$, and for $L\ge1$,
+$$
+L_{\min}(t)=L
+\quad\Longleftrightarrow\quad
+G_{L-1}\le t\le G_L-1.
+$$
+
+**Proof.** At $L=0$ both relevant partitions have one atom. For $L\ge1$, put $s=G_L-1$. Theorems 20.2 and 20.5 give exactly the same circle cut set for $\mathcal Q_L$ and $\mathcal V_s$. Their atoms are also exactly the same closures of the same natural-core points in the complementary arcs. This proves equality on the full compact carrier, rather than only equality on its natural core. The orientation formulas assign each boundary lift to the same atom in both descriptions.
+
+There is an explicit relabeling. For an admissible prefix $p$, let $N_p=\sum_{j<L}G_jp_j$ and define
+$$
+A_L(p)=v_s(Z(N_p)).
+$$
+The point $Z(N_p)$ has prefix $p$. Equality of the two partitions makes $A_L$ a bijection from positional words to temporal words and gives
+$$
+v_s=A_L\circ q_L.
+$$
+If $t\le s$, truncate this equality to the first $t$ entries. If $t\ge s$, use
+$$
+q_L(x)=A_L^{-1}\bigl(\operatorname{pref}_s(v_t(x))\bigr).
+$$
+These are the required upper-bound factorizations, not cardinality arguments.
+
+For sharpness of the first implication, suppose $t<s$. Take $m=t+2\le G_L$. The pair $x_m^-,x_m^+$ is separated by $q_L$, but its first temporal difference is at index $m-2=t$, which is not included in a length-$t$ observation. Hence no shorter temporal observation determines $q_L$.
+
+For sharpness of the second implication, suppose $t>s$, and take $m=G_L+1$. The pair above $e_m$ has the same $L$-digit prefix, including the case $L=0$, but its first temporal difference is at index $G_L-1=s<t$. Thus $q_L$ cannot determine that longer itinerary. These two pairs establish both converses. Monotonicity and unboundedness of $G_L$ now give the least-index formulas.
+
+The first three depths have no exceptional convention. At depth zero there is one empty word and no circle cut. At depth one,
+$$
+G_1-1=1,\qquad q_1(x)=v_1(x)=(f(x)),
+$$
+and the phase cuts are $e_1,e_2$. At depth two the real cylinder intervals are
+$$
+F[C_{00}]=[c,\alpha^4],\qquad
+F[C_{01}]=[\alpha^4,b],\qquad
+F[C_{10}]=[a,c],
+$$
+with $[\alpha^4]=e_3$, and the relabeling is
+$$
+00\longmapsto01,\qquad
+01\longmapsto00,\qquad
+10\longmapsto10.
+$$
+These follow by substituting into the cylinder formula and the first-successor rule. Thus equality is equality of observation partitions, not generally equality of the word-valued maps. The alternating endpoints and all internal double fibers are already included by Theorems 20.2 and 20.4. $\square$
+
+**theorem 20.7 (Generating itinerary and one-sided Sturmian conjugacy).** Let
+$$
+w_n=\lfloor(n+2)\beta\rfloor-\lfloor(n+1)\beta\rfloor,\qquad
+X_\beta=\overline{\{S^n w:n\ge0\}}
+\subseteq\{0,1\}^{\mathbb N}.
+$$
+Then
+$$
+\Phi:K\longrightarrow X_\beta
+$$
+is a homeomorphism, and
+$$
+\Phi\circ T=S\circ\Phi.
+$$
+The space $X_\beta$ is the one-sided Sturmian subshift of slope $\beta$ with the endpoint conventions of Theorem 20.4. Every orbit in it is dense; its length-$t$ language has exactly $t+1$ words. Every point in it has limiting frequency of digit one equal to the irrational number $\beta$, and is not eventually periodic.
+
+Moreover, $X_\beta$ is a proper closed subset of the positional carrier $K$. The shift in this conjugacy is the restriction of positional deletion to $X_\beta$, not positional deletion on all of $K$.
+
+**Proof.** Each coordinate of $\Phi$ is continuous. If $\Phi(x)=\Phi(y)$, then $v_{G_L-1}(x)=v_{G_L-1}(y)$ for every $L$. Theorem 20.6 gives $q_L(x)=q_L(y)$ for every $L$, hence $x=y$. A continuous injection from compact $K$ into the Hausdorff binary sequence space is a homeomorphism onto its image: images of closed subsets are compact and therefore closed.
+
+Coordinatewise evaluation gives $\Phi(Tx)=S(\Phi(x))$. By continuity, compactness, and density of the natural core,
+$$
+\Phi[K]
+=\overline{\{\Phi(Z(n)):n\ge0\}}
+=\overline{\{S^n w:n\ge0\}}
+=X_\beta.
+$$
+Surjectivity of $T$ gives $S[X_\beta]=X_\beta$.
+
+Every finite temporal word occurs on the natural core because its fiber is nonempty and open. Since $T^nZ(0)=Z(n)$, these are exactly the factors of $w$. Theorem 20.5 therefore gives the language count. This is precisely Sturmian factor complexity.
+
+To prove minimality directly, choose any $x\in K$ and any nonempty positional cylinder. Its phase image has a nonempty open arc interior, all of whose fibers lie in that cylinder. The set
+$$
+\{R^nH(x):n\ge0\}
+=H(x)+\{[n\phi]:n\ge0\}
+$$
+is dense, being a translate of the dense natural phase orbit. Some iterate consequently enters that arc and the corresponding iterate of $x$ enters the cylinder. Cylinders form a basis, so every $T$-orbit is dense. The homeomorphism transfers this property to $X_\beta$.
+
+For either mechanical convention, the number of ones in a prefix of length $n$ differs from $n\beta$ by less than one, by telescoping its defining floor or ceiling differences. Theorem 20.4 supplies one of these formulas for every $x\in K$, including every split point. Hence every itinerary has frequency $\beta$. An eventually periodic binary word has rational limiting frequency, so none is eventually periodic.
+
+The depth-two calculation in Theorem 20.6 shows that no itinerary contains $11$: apply that calculation to $T^j x$ for each $j$. Thus $X_\beta\subseteq K$. The sequence $0^\infty$ belongs to $K$ but has frequency zero, so it does not belong to $X_\beta$. Finally, $S|_K=\sigma$ as coordinate deletion, while the target here is only $X_\beta$. In particular,
+$$
+\Phi(u)=1w,\qquad\Phi(v)=0w,\qquad
+S(1w)=S(0w)=w,
+$$
+which retains, rather than discards, the two distinct predecessors at the seam. $\square$
+
+Attached reference: Berstel, §3.1, p. 31, identifies irrational mechanical words with Sturmian words and specifies the characteristic intercept. The finite generator and the particular carrier conjugacy are established above. ([ligm.univ-eiffel.fr](https://ligm.univ-eiffel.fr/~berstel/Articles/2007SturmianThessalonique.pdf))
+
+**Definition 20.8 (Topological entropy).** For a continuous self-map $A$ of a compact space and a finite open cover $\mathcal U$, write
+$$
+\mathcal U_A^{(n)}
+=\bigvee_{j=0}^{n-1}A^{-j}\mathcal U,
+$$
+where the join consists of nonempty intersections. If $N(\mathcal U)$ is the least cardinality of a subcover, define, using natural logarithms,
+$$
+h_{\mathrm{top}}(A)
+=\sup_{\mathcal U}
+\limsup_{n\to\infty}\frac1n\log N(\mathcal U_A^{(n)}).
+$$
+For a finite partition, its number of nonempty atoms will be denoted by $\#\mathcal U$.
+
+**theorem 20.9 (Two different entropies on the same carrier).** The lowest-digit partition is a generating observation for each of the two dynamics, but their iterated observation partitions differ:
+$$
+h_{\mathrm{top}}(T)=0,\qquad
+h_{\mathrm{top}}(\sigma)=\log\phi.
+$$
+More precisely, for all $L,n\ge1$,
+$$
+\#\left(\bigvee_{j=0}^{n-1}T^{-j}\mathcal Q_L\right)
+=n+G_L-1,
+$$
+whereas
+$$
+\#\left(\bigvee_{j=0}^{n-1}\sigma^{-j}\mathcal Q_L\right)
+=G_{n+L-1}.
+$$
+The exact precision/history conversion also has the asymptotics
+$$
+t_{\min}(L)+1\sim\frac{\phi^{L+2}}{\sqrt5}\quad(L\to\infty),
+\qquad
+L_{\min}(t)=\log_\phi(t+1)+O(1)\quad(t\to\infty).
+$$
+
+**Proof.** Put $\mathcal P=\mathcal Q_1$. Since $f$ is its readout,
+$$
+\mathcal V_k=\bigvee_{i=0}^{k-1}T^{-i}\mathcal P.
+$$
+Theorem 20.6 gives $\mathcal Q_L=\mathcal V_s$ with $s=G_L-1\ge1$. Taking $n$ consecutive joins yields
+$$
+\bigvee_{j=0}^{n-1}T^{-j}\mathcal Q_L
+=\mathcal V_{n+s-1}.
+$$
+Theorem 20.5 counts its atoms as $n+s=n+G_L-1$. Since the $\mathcal Q_L$ form the cylinder basis, this also proves that the future iterates of $\mathcal P$ generate the topology for $T$.
+
+Every finite open cover of $K$ is refined by some $\mathcal Q_L$ with $L\ge1$: choose at each point a cylinder contained in one cover member, take a finite subcover of these cylinders, and increase all their depths to a common $L$. Its $n$-fold temporal join is then refined by the displayed join of $\mathcal Q_L$, so
+$$
+N(\mathcal U_T^{(n)})\le n+G_L-1.
+$$
+For every such cover, division of the logarithm by $n$ tends to zero. Nonnegativity of entropy proves $h_{\mathrm{top}}(T)=0$. Thus this conclusion uses a proved generator and all open covers, not merely the complexity of one potentially nongenerating readout.
+
+Positional deletion preserves the no11 constraint and is continuous, since each output coordinate is an input coordinate. Its joined windows reveal exactly the coordinates from zero through $n+L-2$. Therefore
+$$
+\bigvee_{j=0}^{n-1}\sigma^{-j}\mathcal Q_L
+=\mathcal Q_{n+L-1},
+$$
+which has $G_{n+L-1}$ atoms. In particular, $\mathcal P$ is a generator for $\sigma$ as well. The recurrence and its two initial values give
+$$
+G_k=\frac{\phi^{k+2}-(-\phi^{-1})^{k+2}}{\sqrt5},
+\qquad
+\lim_{k\to\infty}\frac{\log G_k}{k}=\log\phi.
+$$
+The cover $\mathcal P$ gives the entropy lower bound $\log\phi$, since its $n$-fold join consists of $G_n$ pairwise disjoint nonempty sets. For any open cover refined by $\mathcal Q_L$,
+$$
+N(\mathcal U_\sigma^{(n)})\le G_{n+L-1},
+$$
+giving the matching upper bound. This proves the second entropy formula directly for the one-sided carrier.
+
+The same closed form gives the stated asymptotic for $G_L=t_{\min}(L)+1$. If $L=L_{\min}(t)\ge1$, then $G_{L-1}\le t<G_L$; the closed form bounds both adjacent terms above and below by fixed positive multiples of $\phi^L$, giving the logarithmic inverse estimate. These statements compare positional depth with the number of consecutive successor observations. $\square$
+
+Attached reference: Schmieding, *Symbolic Dynamics and Subshifts of Finite Type*, §7, Definition 16 on p. 11, Theorem 20 on pp. 13–14, and its golden-mean example on p. 14, give the classical language-growth and spectral-radius entropy formulas. The open-cover argument above establishes the required one-sided formulas without assuming a nongenerating readout suffices. ([s-schmieding.github.io](https://s-schmieding.github.io/SDnotes.pdf))
+
+## 追加锚（本行以下为增补区）
+## 21. 增补·Zeckendorf 加法闭图的全部结合单值选择
+
+**定义 21.0（载体、相位与全域选择）。** 取 $\mathbb N=\{0,1,\ldots\}$、$\mathbb N_{>0}=\{1,2,\ldots\}$，并令
+$$
+\phi=\frac{1+\sqrt5}{2},\qquad \alpha=\phi^{-1},\qquad
+G_0=1,\quad G_1=2,\quad G_{j+2}=G_{j+1}+G_j.
+$$
+令 $Z(n)$ 为自然数 $n$ 的有限 Zeckendorf 规范字按低位到高位补零所得的无限字，且
+$$
+K=\{x\in\{0,1\}^{\mathbb N}:x_jx_{j+1}=0\text{ 对所有 }j\},\qquad 0_K=Z(0).
+$$
+数字空间取乘积拓扑，置
+$$
+\mathbb T=\mathbb R/\mathbb Z,\qquad
+H(x)=\left[\sum_{j\ge0}(-1)^{j+1}\alpha^{j+2}x_j\right],\qquad
+P_L(x)=(x_0,\ldots,x_{L-1}),
+$$
+$$
+E_m=[-m\phi]\quad(m\ge1),\qquad E=\{E_m:m\ge1\},\qquad \Sigma=\{-1,+1\}.
+$$
+定义加法闭图及其输入纤维为
+$$
+\Gamma=\overline{\{(Z(n),Z(k),Z(n+k)):n,k\in\mathbb N\}}^{K^3},\qquad
+\Gamma(x,y)=\{z\in K:(x,y,z)\in\Gamma\}.
+$$
+全域单值选择是函数 $A:K^2\to K$，满足
+$$
+\forall x,y\in K,\quad A(x,y)\in\Gamma(x,y).
+$$
+结合性指 $A(A(x,y),z)=A(x,A(y,z))$ 对全部有序三元组成立；定义不预设交换性、单位或连续性。
+
+**假设 21.1（相位资料与精确保留的闭图纤维前提）。** 采用以下相位资料：$K$ 紧致可度量，$Z[\mathbb N]$ 稠密，$H$ 连续满射，且
+$$
+H(Z(n))=[n\phi],\qquad H^{-1}(\{0\})=\{0_K\}.
+$$
+每个 $\theta\notin E$ 的纤维为单点；每个 $\theta\in E$ 的纤维恰为两个不同的点 $z_\theta^{+1},z_\theta^{-1}$。定向标记沿用定义16.3，特别
+$$
+u=(10)^\omega=z_{E_1}^{+1},\qquad v=(01)^\omega=z_{E_1}^{-1}.
+$$
+对拓扑结论另采用其具体数字纤维表示：除 $\{u,v\}$ 外，每个二点纤维均为 $\{w0v,w10v\}$，其中 $w$ 为由块 $0$、$10$ 组成的有限块字；两字首次不同的数字位置为 $w$ 的展开长度。[^rro21_phase]
+
+令
+$$
+\mathcal S(x)=
+\begin{cases}
+\{s\},&x=z_\theta^s,\ \theta\in E,\ s\in\Sigma,\\
+\Sigma,&H(x)\notin E.
+\end{cases}
+$$
+本节明确以下式为数学假设，而非仅假设输出相位正确：对每个 $x,y\in K$，令 $\theta=H(x)+H(y)$，则
+$$
+\boxed{\quad
+\Gamma(x,y)=
+\begin{cases}
+H^{-1}(\{\theta\}),&\theta\notin E,\\
+\{z_\theta^t:t\in\mathcal S(x)\cup\mathcal S(y)\},&\theta\in E.
+\end{cases}\quad}
+$$
+以下结论均以这一精确纤维式为前提。[^rro21_fibers]
+
+**定义 21.2（两个候选与保留、余留部分）。** 对每个 $s\in\Sigma$，令 $j_s:\mathbb T\to K$ 为满足
+$$
+H(j_s(\theta))=\theta,\qquad j_s(E_m)=z_{E_m}^s
+$$
+的唯一函数：非分裂相位由其单点纤维决定。置
+$$
+g_s(m)=j_s(E_m),\qquad b_s(m)=z_{E_m}^{-s},\qquad
+I_s=j_s(\mathbb T),\qquad B_s=\{b_s(m):m\ge1\},\qquad c_s=j_s\circ H.
+$$
+于是 $K=I_s\sqcup B_s$，且 $I_s$ 在每个相位纤维中恰含一点。定义
+$$
+A_s(x,y)=
+\begin{cases}
+b_s(m+n),&x=b_s(m),\ y=b_s(n),\ m,n\ge1,\\
+j_s(H(x)+H(y)),&\text{其余情形}.
+\end{cases}
+$$
+等价地，输出相位分裂时，只有两个输入均为符号 $-s$ 的分裂点才选择符号 $-s$；其余输入选择符号 $s$。非分裂输出取唯一点。
+
+**定理 21.3（候选存在、完整乘法表及结合性）。** 每个 $A_s$ 均为交换、结合的全域单值选择。其完整乘法表为
+$$
+A_s(j_s(a),j_s(b))=j_s(a+b)\qquad(a,b\in\mathbb T),
+$$
+$$
+A_s(j_s(a),b_s(m))=A_s(b_s(m),j_s(a))=j_s(a+E_m)\qquad(a\in\mathbb T,\ m\ge1),
+$$
+$$
+A_s(b_s(m),b_s(n))=b_s(m+n)\qquad(m,n\ge1).
+$$
+每个全域选择，包括这两个候选，均满足
+$$
+H(A(x,y))=H(x)+H(y),\qquad
+A(Z(n),Z(k))=Z(n+k)\quad(n,k\in\mathbb N).
+$$
+两个候选不同。
+
+**证明。** $\phi$ 无理使各 $E_m$ 两两不同，并给出
+$$
+0\notin E,\qquad E_m+E_n=E_{m+n},\qquad [n\phi]\notin E\quad(n\ge0).
+$$
+最后一个断言若失败，则某个正整数倍 $(n+m)\phi$ 为整数。精确纤维式直接给任意选择的相位等式；自然和的相位不分裂，而 $Z(n+k)$ 是该纤维的一点，因此核心加法等式也被强制。
+
+若两个输入均在 $B_s$，它们是同号 $-s$ 的分裂点，纤维式恰强制输出 $b_s(m+n)$。其余情形至少一个输入在 $I_s$：该输入或者不分裂，或者具有符号 $s$，故其符号集合必含 $s$。输出相位分裂时选择 $j_s(\theta)$ 因而合法，非分裂时选择唯一点也合法。这证明选择性及显示的全部乘法表。
+
+乘法表说明 $I_s$ 为双侧理想，且两个 $B_s$ 元素的乘积仍在 $B_s$。对任意有序三元组，若三个输入都在 $B_s$，两种括号方式均得 $b_s(m+n+k)$；否则至少一个输入在 $I_s$，两种括号方式的最终输出均在 $I_s$，且具有相同的总相位。$I_s$ 每相位恰有一点，故两个输出相等。表的左右对称性给交换律。最后
+$$
+A_{+1}(0_K,u)=u,\qquad A_{-1}(0_K,u)=v,
+$$
+而 $u\ne v$，所以确有两个不同候选。证毕。
+
+**定理 21.4（不预设交换性的零作用刚性）。** 设 $A$ 为任意结合的全域选择，简记 $x*y=A(x,y)$，并置
+$$
+c_L(x)=0_K*x,\qquad c_R(x)=x*0_K.
+$$
+这两个映射均在每个 $H$ 纤维上恒定，而且 $c_L=c_R=:c$。进一步，
+$$
+H\circ c=H,\qquad c^2=c,
+$$
+$$
+c(x*y)=c(x)*y=x*c(y)=c(x)*c(y).
+$$
+因此 $M=c(K)$ 为双侧理想，$c$ 是到 $M$ 的半群收缩。存在唯一双射 $j:\mathbb T\to M$，使
+$$
+H\circ j=\operatorname{id}_{\mathbb T},\qquad j\circ H=c,\qquad
+j(a)*j(b)=j(a+b).
+$$
+特别 $M$ 是以 $0_K=j(0)$ 为单位、以 $j(-a)$ 为 $j(a)$ 之逆元的抽象交换群。
+
+**证明。** 令 $q=[1/2]$。无理性给出
+$$
+q\notin E,\qquad (q+E)\cap E=\varnothing,\qquad q+q=0.
+$$
+事实上，$q+E_m=E_n$ 将使 $(m-n)\phi$ 等于一个半整数；若 $m=n$ 则直接矛盾，若 $m\ne n$ 则使 $\phi$ 有理。$q\in E$ 同样不可能。取相位 $q$ 的唯一点 $t$，则相位等式和零纤维唯一性强制
+$$
+t*t=0_K.
+$$
+
+若 $H(x)=H(x')\in E$，则 $t*x,t*x'$ 位于同一个非分裂纤维，故相等；$x*t,x'*t$ 也相等。结合性给
+$$
+c_L(x)=(t*t)*x=t*(t*x)=t*(t*x')=c_L(x'),
+$$
+$$
+c_R(x)=x*(t*t)=(x*t)*t=(x'*t)*t=c_R(x').
+$$
+在非分裂纤维上原本只有一点，所以两映射在全部相位纤维上恒定。相位等式又给 $H(c_L(x))=H(c_R(x))=H(x)$。
+
+现在只对有序三元组 $(0_K,x,0_K)$ 使用结合性，得到
+$$
+c_R(c_L(x))=(0_K*x)*0_K=0_K*(x*0_K)=c_L(c_R(x)).
+$$
+由于两内层点均与 $x$ 同相位，纤维恒定性使左端为 $c_R(x)$、右端为 $c_L(x)$。故 $c_L=c_R=c$，并由同一纤维恒定性得到 $c^2=c$。
+
+再次分别在左端、右端乘以 $0_K$，得
+$$
+c(x*y)=(0_K*x)*y=c(x)*y,
+$$
+$$
+c(x*y)=x*(y*0_K)=x*c(y).
+$$
+于是
+$$
+c(x)*c(y)=c(x*c(y))=c(c(x*y))=c(x*y).
+$$
+这些等式证明理想性与收缩同态性质；没有交换两个一般输入。
+
+定义 $j(a)=c(x)$，其中 $H(x)=a$。满射性保证存在这种 $x$，纤维恒定性保证选择无关。$H(j(a))=a$，且 $M$ 中任何同相位两点相等，所以 $j$ 是所述双射。两个像点的乘积属于 $M$，相位为 $a+b$，故等于 $j(a+b)$。圆周加法的单位、逆元和交换律遂逐项给出所述抽象群结构。证毕。
+
+**定理 21.5（全部结合选择的二元分类）。** 对任意全函数 $A:K^2\to K$，以下条件等价：$A$ 是结合的全域单值选择；存在唯一 $s\in\Sigma$ 使 $A=A_s$。因此不存在额外的非交换结合选择。
+
+**证明。** 充分性由定理21.3得到。反向应用定理21.4，取唯一 $s$ 使 $j(E_1)=z_{E_1}^s$。证明
+$$
+j(E_m)=z_{E_m}^s\qquad(m\ge1).
+$$
+基步即 $s$ 的定义。若断言对 $m$ 成立，则像群的乘法与同号输入的强制纤维给
+$$
+j(E_{m+1})=j(E_m)*j(E_1)
+=z_{E_m}^s*z_{E_1}^s=z_{E_{m+1}}^s.
+$$
+所以分支符号不能随 $m$ 改变。非分裂相位本就没有选择，故 $j=j_s$、$M=I_s$、$c=c_s$。
+
+若 $x$ 或 $y$ 在 $I_s$，双侧理想性使 $x*y\in I_s$，相位等式遂强制
+$$
+x*y=j_s(H(x)+H(y)).
+$$
+这同时处理非分裂输入、零输入，以及两种有序混合符号输入；例如
+$$
+z_{E_m}^s*z_{E_n}^{-s}=z_{E_n}^{-s}*z_{E_m}^s=z_{E_{m+n}}^s.
+$$
+若两输入均不在 $I_s$，它们分别为 $b_s(m),b_s(n)$，同号 $-s$ 的精确纤维强制乘积为 $b_s(m+n)$。所有有序输入对已穷尽，故 $A=A_s$。定理21.3中的不同零切片值给参数唯一性。证毕。
+
+**定理 21.6（严格单位、群部分与余留半群）。** 固定 $s$。$I_s$ 是 $(K,A_s)$ 的唯一最小非空双侧理想，也是唯一最大子群；映射 $j_s$ 给出抽象群同构
+$$
+(\mathbb T,+)\cong(I_s,A_s),\qquad
+j_s(a)^{-1}=j_s(-a).
+$$
+映射 $m\mapsto b_s(m)$ 给出半群同构
+$$
+(\mathbb N_{>0},+)\cong(B_s,A_s),
+$$
+其与群部分的全部混合乘积已由定理21.3确定。唯一幂等元为 $0_K$，但整个 $K$ 没有严格左单位，也没有严格右单位。以幂等元 $0_K$ 构成的局部幺半群恰为
+$$
+0_K*K*0_K=I_s,
+$$
+其全部元素均为该局部幺半群的可逆元；不能将其称为整个 $K$ 的单位群。
+
+关系 $\Gamma$ 的唯一弱左、弱右单位均为 $0_K$，但它不是关系的严格单位。结合性对于上述函数单位障碍不可删除：存在以 $0_K$ 为严格双侧单位的非结合全域选择。
+
+**证明。** 群同构、双侧理想和正整数半群同构分别来自定理21.4与乘法表；后一个映射的单射性由各 $E_m$ 不同得到。若 $x*x=x$，则 $2H(x)=H(x)$，所以 $H(x)=0$，进而 $x=0_K$；而 $0_K*0_K=0_K$。
+
+任一子群的单位必幂等，因而只能是 $0_K$。该子群中的 $x$ 必满足 $c_s(x)=0_K*x=x$，即 $x\in I_s$，故 $I_s$ 是唯一最大子群。若 $J$ 为非空双侧理想，取 $x\in J$，则 $c_s(x)=0_K*x\in J\cap I_s$。再与其像群逆元相乘得 $0_K\in J$，继而任意 $a\in\mathbb T$ 均满足 $j_s(a)=0_K*j_s(a)\in J$。因此 $I_s\subseteq J$，证明最小理想断言。
+
+若 $e$ 是整个 $K$ 的严格左单位，则 $e*0_K=0_K$，相位等式迫使 $e=0_K$。然而
+$$
+0_K*b_s(m)=g_s(m)\ne b_s(m).
+$$
+故左单位不存在；严格右单位同理由 $0_K*e=0_K$ 和 $b_s(m)*0_K=g_s(m)$ 排除。收缩等式给 $0_K*K*0_K=I_s$。特别地，虽然
+$$
+b_s(m)*Z(m)=Z(m)*b_s(m)=0_K,
+$$
+但 $b_s(m)$ 不在任何子群中：乘积为 $0_K$ 的方程不能替代单位作用条件。
+
+由 $\mathcal S(0_K)=\Sigma$ 及精确纤维式，
+$$
+\Gamma(0_K,x)=\Gamma(x,0_K)=H^{-1}(\{H(x)\})\ni x.
+$$
+任一弱左或弱右单位对输入 $0_K$ 的相位条件都迫使它等于 $0_K$，而分裂纤维不是单点，故关系严格单位不存在。
+
+最后定义
+$$
+\widehat A_s(x,y)=
+\begin{cases}
+y,&x=0_K,\\
+x,&x\ne0_K,\ y=0_K,\\
+A_s(x,y),&x\ne0_K,\ y\ne0_K.
+\end{cases}
+$$
+刚证的弱单位包含式保证这是全域选择，并以 $0_K$ 为严格双侧单位。取定理21.4中的半转点 $t$。相位 $q+E_1$ 非分裂且非零，因此
+$$
+\widehat A_s(\widehat A_s(t,t),b_s(1))=b_s(1),
+$$
+$$
+\widehat A_s(t,\widehat A_s(t,b_s(1)))=g_s(1).
+$$
+第二式的两次外于零输入的运算分别经过非分裂相位 $q+E_1$ 和分裂相位 $E_1$，最后选择符号 $s$。两个结果不同，故这个严格有单位的选择不结合。证毕。
+
+**定理 21.7（具体半群模型、相位商与理想商）。** 在不交并
+$$
+\mathscr M=(\mathbb T\times\{0\})\sqcup(\mathbb N_{>0}\times\{1\})
+$$
+上定义
+$$
+(a,0)\circ(b,0)=(a+b,0),\qquad
+(m,1)\circ(n,1)=(m+n,1),
+$$
+$$
+(a,0)\circ(m,1)=(m,1)\circ(a,0)=(a+E_m,0).
+$$
+双射
+$$
+F_s(a,0)=j_s(a),\qquad F_s(m,1)=b_s(m)
+$$
+是到 $(K,A_s)$ 的半群同构。此模型正是二元链 $0<1$ 上的强半格半群：下层为圆周群，上层为正整数加法半群，唯一非恒等连接同态为 $m\mapsto E_m$。[^rro21_semilattice] 自然核心及相位在此模型中分别为
+$$
+Z(n)=F_s([n\phi],0),\qquad
+(H\circ F_s)(a,0)=a,\qquad(H\circ F_s)(m,1)=E_m.
+$$
+
+相位相等关系是半群同余，且
+$$
+\ker c_s=\ker H,\qquad (K,A_s)/{\ker H}\cong(\mathbb T,+).
+$$
+这里核均指相等关系核。更精确地，对所有 $z\in\Gamma(x,y)$，
+$$
+c_s(z)=A_s(c_s(x),c_s(y))=j_s(H(x)+H(y)).
+$$
+但是 $A_s$ 本身不能经 $H\times H$ 因子化，且函数 $(x,y)\mapsto j_s(H(x)+H(y))$ 并非 $\Gamma$ 的全域选择。
+
+另将整个理想 $I_s$ 压为一个吸收点 $\bot$，得到的 Rees 商为
+$$
+Q=\mathbb N_{>0}\sqcup\{\bot\},\qquad
+m\cdot n=m+n,\qquad \bot\cdot q=q\cdot\bot=\bot.
+$$
+因此 $(K,A_s)$ 是圆周群的收缩理想扩张。[^rro21_retract] 吸收点 $\bot$ 不是自然数加法的单位；该理想商也不是相位商。
+
+**证明。** 显示的模型乘法与定理21.3逐项一致，故 $F_s$ 保乘法且双射。连接映射保乘法正是 $E_{m+n}=E_m+E_n$；二元链中的其余连接映射为恒等，复合相容性随即成立。这给出所述强半格构造，而不要求上层为群。自然核心与相位的显示式由定义直接得到。
+
+$c_s=j_sH$ 且 $j_s$ 单射，故两相等关系核一致；相位等式使这个核为同余，$H$ 的满射性给所述商同构。对任意允许输出 $z$，其相位已固定，应用 $c_s$ 得到同一个 $j_s(H(x)+H(y))$；乘法表又给另一等号。然而
+$$
+A_s(b_s(m),b_s(n))=b_s(m+n),\qquad
+A_s(g_s(m),g_s(n))=g_s(m+n),
+$$
+两对输入逐槽同相位而输出不同，所以 $A_s$ 不能经 $H\times H$ 因子化。同时
+$$
+j_s(E_m+E_n)=g_s(m+n)\notin
+\Gamma(b_s(m),b_s(n))=\{b_s(m+n)\},
+$$
+排除了直接由相位截面回填整个乘法的办法。
+
+令理想商映射在 $I_s$ 上取 $\bot$，在 $b_s(m)$ 上取 $m$。混合乘积落入 $I_s$，两个余留点的乘积为 $b_s(m+n)$，所以商乘法恰为显示的 $Q$。收缩同态是 $c_s$。这个商把全部自然核心送到 $\bot$，相位商则保留 $[n\phi]$，故不能混同。证毕。
+
+**定理 21.8（闭图障碍与零切片的精确连续点）。** 不存在联合连续的全域单值选择，无须在此断言中假设结合性。[^rro21_graph] 对两个结合选择，
+$$
+A_s(0_K,x)=A_s(x,0_K)=c_s(x),
+$$
+且这两个零切片作为 $K\to K$ 的函数，其连续点集恰为 $I_s$，不连续点集恰为 $B_s$。因此 $A_s$ 也不是分别连续的二元运算。
+
+**证明。** 若选择 $A$ 联合连续，其函数图在 $K^3$ 中闭：它是映射 $(x,y,z)\mapsto(A(x,y),z)$ 下闭对角线的原像。由核心加法等式，此闭图包含全部自然加法三元组，因此包含它们的闭包 $\Gamma$。但
+$$
+(0_K,u,u),(0_K,u,v)\in\Gamma,\qquad u\ne v,
+$$
+与函数图在一个输入处只有一个输出矛盾。
+
+固定 $s$。函数 $c_s$ 在 $I_s$ 上为恒等，在 $b_s(m)$ 处改取 $g_s(m)$。对每个 $L\ge1$，令
+$$
+D_L=\{b_s(m):P_L(b_s(m))\ne P_L(g_s(m))\}.
+$$
+这是有限集：接缝纤维至多贡献一个点；其余纤维为 $\{w0v,w10v\}$，只有展开长度小于 $L$ 的 $w$ 才可能贡献，而这样的有限块字只有有限多个。这个论证不依赖分支方向的奇偶性。
+
+给定 $x\in I_s$，集合
+$$
+U_L=P_L^{-1}(\{P_L(x)\})\setminus D_L
+$$
+是包含 $x$ 的开邻域。每个 $y\in U_L$ 满足
+$$
+P_L(c_s(y))=P_L(y)=P_L(x)=P_L(c_s(x)).
+$$
+有限前缀柱集构成拓扑基，故 $c_s$ 在 $x$ 连续。
+
+反之，固定 $b_s(m)$ 并截断其数字，令
+$$
+n_L=\sum_{j<L}G_j\,b_s(m)_j,\qquad x_L=Z(n_L).
+$$
+截断后补零仍是合法规范字，故 $x_L\to b_s(m)$。自然核心不分裂，所以
+$$
+c_s(x_L)=x_L\longrightarrow b_s(m)\ne g_s(m)=c_s(b_s(m)).
+$$
+因此每个余留点都是不连续点。零切片等式来自乘法表，全部断言得证。
+
+**定理 21.9（像群的抽象结构与子空间拓扑）。** 给 $I_s$ 赋予 $K$ 的子空间拓扑。限制
+$$
+H|_{I_s}:I_s\longrightarrow\mathbb T
+$$
+是连续的抽象群同构，但不是同胚；其逆映射 $j_s$ 的连续点恰为 $\mathbb T\setminus E$。空间 $I_s$ 稠密、真包含于 $K$、非紧且零维，因此不与通常圆周同胚。更强地，限制运算 $A_s|_{I_s^2}$ 也不分别连续，故这个子空间群不是拓扑群。
+
+**证明。** 先使用紧致单点纤维事实：若 $\theta_k\to\theta$，且 $H^{-1}(\{\theta\})=\{x\}$，则任意满足 $H(x_k)=\theta_k$ 的点列均趋于 $x$。否则可在某个 $x$ 的开邻域外取子列，再由紧致可度量性取收敛子列；连续性使其极限仍在该单点纤维，与处于邻域外矛盾。
+
+这立即证明 $j_s$ 在非分裂相位连续。固定 $E_m$，使用证明21.8中的 $Z(n_L)\to b_s(m)$，则
+$$
+[n_L\phi]\longrightarrow E_m,\qquad
+j_s([n_L\phi])=Z(n_L)\longrightarrow b_s(m)\ne j_s(E_m).
+$$
+所以 $j_s$ 在每个分裂相位不连续。$H|_{I_s}$ 的连续性、双射性及保群运算性质已分别来自 $H$ 与乘法表。
+
+自然核心包含于 $I_s$，故 $I_s$ 稠密；$B_s$ 非空，故 $I_s$ 是真子集。若 $I_s$ 紧，则它在 Hausdorff 空间 $K$ 中闭，与稠密且真包含矛盾。有限前缀柱集的交给出 $I_s$ 的开闭基；不同点可被这样的集合分离，故 $I_s$ 全不连通，而通常圆周连通，所以不存在空间同胚。
+
+最后仍固定 $m\ge1$，令
+$$
+p_L=Z(n_L)\longrightarrow b_s(m),\qquad y_L=Z(n_L+m)\in I_s.
+$$
+因为
+$$
+H(y_L)=[(n_L+m)\phi]=H(p_L)-E_m\longrightarrow0,
+$$
+零相位的单点纤维事实给 $y_L\to0_K$。但是
+$$
+A_s(g_s(m),y_L)=j_s(E_m+[(n_L+m)\phi])=p_L,
+$$
+$$
+A_s(g_s(m),0_K)=g_s(m)\ne b_s(m).
+$$
+第一列在 $K$ 中趋于 $b_s(m)$，因 Hausdorff 性不可能趋于 $g_s(m)$，故在 $I_s$ 中也不趋于所需值。固定 $g_s(m)$ 的乘法切片在 $0_K$ 处不连续。这直接否定子空间上的分别连续性，而不是仅由非紧性推断。证毕。
+
+[^rro21_phase]: 《CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF》，定义371.1、定理371.2及372.2—372.4；固定提交 c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb。所用资料为紧数字载体、自然相位、全部相位纤维及有限块字形式。 ([raw.githubusercontent.com](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md))
+
+[^rro21_fibers]: 《RECURSIVE_RELATIONAL_OBSERVATION》，定义16.0、16.3及定理16.4的纤维公式；固定提交 c74985438ae17d205509255934bbd3ecf1f94d71。本节将该公式完整列为假设21.1。 ([raw.githubusercontent.com](https://raw.githubusercontent.com/the-omega-institute/trureturing/c74985438ae17d205509255934bbd3ecf1f94d71/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md))
+
+[^rro21_semilattice]: Jiangang Zhang, Yuhui Yang, Ran Shen, *The strong semilattice of $\pi$-groups*, European Journal of Pure and Applied Mathematics 11(3) (2018), 589–597，DOI: 10.29020/nybg.ejpam.v11i3.3274。所用为第1节、第589页的强半格半群一般构造及连接同态条件，不使用后文关于各分量为 $\pi$-群的分类。 ([ejpam.com](https://www.ejpam.com/ejpam/article/view/3274/661))
+
+[^rro21_retract]: Attila Nagy, *On left legal semigroups*, arXiv:2301.08793v2 (2023)，第2节关于 Rees 商、理想扩张与收缩理想的定义；不使用该文针对左合法半群的结构定理。 ([arxiv.org](https://arxiv.org/html/2301.08793v2))
+
+[^rro21_graph]: 《CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF》，定理377.1，同一固定提交；联合连续自然加法延拓的障碍。定理21.8另由加法图的闭包与二点输出给出直接证明。 ([raw.githubusercontent.com](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md))
+
+## 追加锚（本行以下为增补区）
+## 22. Exact continuity loci and measurable outputs of closed Zeckendorf addition
+
+**Definition 22.1 (Digit space and the joint closed graph).** Work in ZFC, with zero included in $\mathbb N$. Put
+$$
+G_0=1,\qquad G_1=2,\qquad G_{j+2}=G_{j+1}+G_j,\qquad
+\phi=\frac{1+\sqrt5}{2},\quad \alpha=\phi^{-1},\quad r=-\alpha.
+$$
+Let $K$ consist of the infinite binary sequences $x$ satisfying $x_jx_{j+1}=0$, written from low to high digits. Let $Z(n)$ denote the legal Zeckendorf expansion of $n$, padded with zeros, and set
+$$
+d_K(x,y)=\sum_{j\geq0}2^{-j-1}|x_j-y_j|,\qquad
+X=K^2,\qquad
+d_X((x,y),(x',y'))=\max\{d_K(x,x'),d_K(y,y')\}.
+$$
+For a finite legal digit word $p$ of length $L$, let $C_p$ be its cylinder in $K$ and put
+$$
+S_p=\sum_{j<L}(-1)^{j+1}\alpha^{j+2}p_j.
+$$
+The empty word defines $C_{\varnothing}=K$. Define
+$$
+F(x)=\sum_{j\geq0}(-1)^{j+1}\alpha^{j+2}x_j,\qquad
+H(x)=[F(x)]\in\mathbb T=\mathbb R/\mathbb Z,
+$$
+$$
+I=[-\alpha,\alpha^2],\quad
+\gamma(n)=[n\phi],\quad
+E=\{[-m\phi]:m\geq1\},\quad
+0_K=Z(0),\quad u=(10)^\infty,\quad v=(01)^\infty.
+$$
+Concatenations such as $0v$ and $10v$ retain this digit order. The relation and its input fibers are
+$$
+\Gamma=\overline{\{(Z(n),Z(m),Z(n+m)):n,m\in\mathbb N\}}^{\,K^3},
+\qquad
+\Gamma(x,y)=\{z\in K:(x,y,z)\in\Gamma\}.
+$$
+Write $X_{\mathrm{fin}}=Z[\mathbb N]^2$ and $\Theta(x,y)=H(x)+H(y)$. All references to $\Gamma$ concern this joint graph, not merely the equation $H(z)=\Theta(x,y)$.
+
+**Assumption 22.2 (Precisely imported phase and joint-fiber classification).** Assume the phase classification of [the fixed phase source, §§371–372, particularly Theorems 372.2–372.4](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md): $F[K]=I$; each $H$-fiber outside $E$ is a singleton; and each fiber over $\theta\in E$ consists of two distinct labeled points $z_\theta^{+1},z_\theta^{-1}$. Use exactly the labels of [the fixed addition source, Definition 16.3 and Theorem 16.4](https://raw.githubusercontent.com/the-omega-institute/trureturing/c74985438ae17d205509255934bbd3ecf1f94d71/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md), so in particular
+$$
+z_{[-\phi]}^{+1}=u,\quad z_{[-\phi]}^{-1}=v,\qquad
+z_{[-2\phi]}^{+1}=0v,\quad z_{[-2\phi]}^{-1}=10v.
+$$
+Define
+$$
+\mathcal S(x)=
+\begin{cases}
+\{s\},&H(x)\in E\text{ and }x=z_{H(x)}^s,\quad s\in\{-1,+1\},\\
+\{-1,+1\},&H(x)\notin E.
+\end{cases}
+$$
+Assume the following statement about the actual joint closure in Definition 22.1, with $\theta=\Theta(x,y)$:
+$$
+\Gamma(x,y)=
+\begin{cases}
+H^{-1}(\{\theta\}),&\theta\notin E,\\
+\{z_\theta^{+1}\},&\theta\in E,\ \mathcal S(x)=\mathcal S(y)=\{+1\},\\
+\{z_\theta^{-1}\},&\theta\in E,\ \mathcal S(x)=\mathcal S(y)=\{-1\},\\
+\{z_\theta^{+1},z_\theta^{-1}\},&\theta\in E\text{ and neither same-sign case holds}.
+\end{cases}
+$$
+Every theorem below is conditional on this explicitly imported assumption; no selection law is included in it.
+
+**theorem 22.3 (Compactness, finite-core density, and interiors of cylinder phases).** The space $K$ is compact, its cylinders form a countable clopen base, and $Z[\mathbb N]$ is dense. The maps $F,H$ are continuous, $H$ is onto, and
+$$
+H(Z(n))=\gamma(n),\qquad \gamma(n)\notin E,\qquad
+\Gamma(Z(n),Z(m))=\{Z(n+m)\}.
+$$
+Both $\gamma[\mathbb N]$ and $E$ are dense in $\mathbb T$. Every nonempty cylinder has a phase image containing a nonempty open arc. More precisely,
+$$
+F[C_p]=
+\begin{cases}
+I,&L=0,\\
+S_p+r^L I,&L>0\text{ and }p_{L-1}=0,\\
+S_p+r^{L+1}I,&L>0\text{ and }p_{L-1}=1.
+\end{cases}
+$$
+
+**Proof 22.3.** The series defining $d_K$ is a metric by the coordinatewise triangle inequality and positivity of every coordinate weight. Agreement in the first $L$ coordinates gives distance at most $2^{-L}$; distance less than $2^{-L}$ forces such agreement. Thus the metric gives the product topology, with the stated countable clopen cylinder base. From any sequence in $K$, successively choose infinite subsequences constant in the next coordinate and take a diagonal subsequence. Its coordinatewise limit is still legal, since each adjacent pair eventually stabilizes. The tail estimate for $d_K$ gives metric convergence. Sequential compactness of a metric space implies compactness, proving the assertion for $K$ and hence for its finite products.
+
+For $x\in K$ put $N_L=\sum_{j<L}G_jx_j$. Truncating at $L$ and appending zeros is legal, so uniqueness of the finite Zeckendorf expansion identifies it with $Z(N_L)$. Its distance from $x$ is at most $2^{-L}$. This proves core density, also in $X$. Since $1-\alpha=\alpha^2$, the defining series for $F$ has uniform tail bound
+$$
+\sum_{j\geq L}\alpha^{j+2}=\alpha^L.
+$$
+Consequently $F$ and then $H$ are continuous. The interval $I$ has length one, so Assumption 22.2 implies that $H$ is onto.
+
+The identity
+$$
+\phi G_j-G_{j+1}=(-1)^{j+1}\alpha^{j+2}
+$$
+holds at the first two indices. Both sides satisfy the Fibonacci recurrence, since $r^2=r+1$, so it holds at every index. Multiplication by the finitely many digits of $Z(n)$ and summation give
+$$
+F(Z(n))=\phi n-\sum_{j\geq0}G_{j+1}Z(n)_j,
+$$
+whose second term is an integer. This proves the phase identity. If $\gamma(n)=[-m\phi]$ with $m\geq1$, then $(n+m)\phi$ is an integer, contradicting irrationality of $\phi$. The sum phase is therefore outside $E$, and its unique inverse under $H$ is $Z(n+m)$; Assumption 22.2 gives the asserted natural-input fiber.
+
+For every nonempty open subset of $\mathbb T$, its inverse image under the continuous surjection $H$ is nonempty and open, hence meets the finite core. Thus $\gamma[\mathbb N]$ is dense. The identity
+$$
+E=[-\phi]-\gamma[\mathbb N]
+$$
+proves density of $E$.
+
+For the cylinder formula, a prefix ending in zero permits every legal tail immediately after it, and splitting the series gives $F(pt)=S_p+r^L F(t)$. A prefix ending in one forces a zero next, after which every legal tail is permitted; splitting now gives $F(p0t)=S_p+r^{L+1}F(t)$. Surjectivity of $F$ onto $I$ proves both equalities, including both directions of each range assertion. The corresponding interval lengths are $\alpha^L$ and $\alpha^{L+1}$, respectively, and are positive. Projection to the circle therefore contains a nonempty open arc. An odd power of $r$ reverses interval orientation but does not remove these interiors. The empty-prefix case is $F[K]=I$. This proves all assertions.
+
+**theorem 22.4 (Upper semicontinuity and actual joint approximation).** The relation $\Gamma$ is compact with nonempty compact fibers. For every closed $C\subseteq K$, the hit set
+$$
+\operatorname{Hit}(C)=\{\xi\in X:\Gamma(\xi)\cap C\ne\varnothing\}
+$$
+is closed. Consequently, for every $\xi\in X$ and open $V\supseteq\Gamma(\xi)$, some neighborhood $U$ of $\xi$ satisfies $\Gamma(\eta)\subseteq V$ for all $\eta\in U$. For open $O\subseteq K$, the hit set $\operatorname{Hit}(O)$ is $F_\sigma$. Every $(x,y,z)\in\Gamma$ admits natural-number sequences $n_j,m_j$ such that
+$$
+(Z(n_j),Z(m_j),Z(n_j+m_j))\longrightarrow(x,y,z).
+$$
+
+**Proof 22.4.** Closedness in compact $K^3$ gives compactness. Fibers are closed subsets of $K$. Their nonemptiness follows also directly from the closure construction: approximate each input by finite truncations, take a convergent subsequence of their actual sums in compact $K$, and use closedness. For closed $C$, the set $\Gamma\cap(X\times C)$ is compact; its projection to $X$ is compact and hence closed. This projection is exactly $\operatorname{Hit}(C)$. If $\Gamma(\xi)\subseteq V$, the point $\xi$ is outside the closed set $\operatorname{Hit}(K\setminus V)$, and its open complement is the required neighborhood. An open $O$ is the union of the countably many cylinders contained in it. Its hit set is the corresponding countable union of closed hit sets.
+
+These are upper semicontinuity and Effros measurability in the sense of [B. Cascales, *Measurability and semi-continuity of multifunctions*, Definitions 1.3–1.4, p. 4](https://webs.um.es/beca/Investigacion/semicontinuityofmultifunctions.pdf). They also verify the open-hit measurability condition of the Kuratowski–Ryll-Nardzewski theorem as stated in [B. Cascales, V. Kadets and J. Rodríguez, *Measurability and Selections of Multi-Functions in Banach Spaces*, Theorem A, p. 1](https://webs.um.es/beca/Investigacion/PropertyP_11.pdf); the target here is separable metric and the values are nonempty and complete.
+
+Finally, equip $K^3$ with its maximum product metric. For each integer $j\geq1$, the ball of radius $1/j$ about $(x,y,z)$ meets the set whose closure defines $\Gamma$. Choose one of its actual addition triples. The same choice supplies both input approximations and their actual sum, all within $1/j$. This proves the joint convergence; no independently chosen output or merely marginal realization is used.
+
+**Definition 22.5 (Selections and the two loci).** A point selection is any function $A:X\to K$ with $A(\xi)\in\Gamma(\xi)$ for every $\xi$, without a measurability or algebraic requirement. Define
+$$
+D=\{\xi\in X:|\Gamma(\xi)|=2\},\qquad G=X\setminus D,
+\qquad
+D_n=\{\xi\in X:\operatorname{diam}_{d_K}\Gamma(\xi)\geq1/n\}\quad(n\geq1).
+$$
+Also put $K_s=\{z_\theta^s:\theta\in E\}$ for $s\in\{-1,+1\}$. A set is nowhere dense when its closure has empty interior, meagre when it is a countable union of nowhere dense sets, $F_\sigma$ when it is a countable union of closed sets, and $G_\delta$ when it is a countable intersection of open sets.
+
+**theorem 22.6 (The same exact continuity locus for every point selection).** Every point selection satisfies
+$$
+\overline{\operatorname{graph}(A)}=\Gamma,
+\qquad
+\operatorname{Cont}(A)=G.
+$$
+Every $D_n$ is closed and nowhere dense, and
+$$
+D=\bigcup_{n\geq1}D_n,\qquad
+G=\bigcap_{n\geq1}(X\setminus D_n).
+$$
+Thus $D$ is meagre $F_\sigma$ and $G$ is dense $G_\delta$. Its exact phase-and-sign description is
+$$
+D=\Theta^{-1}(E)\setminus
+\bigl((K_{+1}\times K_{+1})\cup(K_{-1}\times K_{-1})\bigr).
+$$
+
+**Proof 22.6.** Every selection graph is contained in the closed set $\Gamma$. By Theorem 22.3 it contains every actual finite addition triple, whose closure is $\Gamma$. This proves the graph equality. More precisely, for every $z\in\Gamma(\xi)$, Theorem 22.4 gives input pairs $\xi_j\in X_{\mathrm{fin}}$ tending to $\xi$ whose actual sums tend to $z$. At these inputs the selection is forced to be that actual sum. Conversely, any limit of selection outputs along inputs tending to $\xi$ belongs to $\Gamma(\xi)$ by closedness. Thus the output limits along approaching inputs are exactly the full fiber.
+
+If $\Gamma(\xi)=\{z\}$, upper semicontinuity applied to the ball of radius $\varepsilon$ about $z$ gives a neighborhood on which all permissible outputs, and hence the values of $A$, lie in that ball. Since $A(\xi)=z$, this is continuity at $\xi$. If the fiber contains distinct $z_0,z_1$, use the preceding joint approximation separately for these two outputs. This gives two sequences of actual natural input pairs converging to the same $\xi$, along which $A$ tends respectively to $z_0$ and $z_1$. Continuity at $\xi$ would make both limits equal to $A(\xi)$, which is impossible. This proves the exact locus without any regularity assumption on $A$.
+
+Suppose $\xi_j\in D_n$ and $\xi_j\to\xi$. Compactness of the fibers makes their diameters attained, so choose $z_j,w_j\in\Gamma(\xi_j)$ with $d_K(z_j,w_j)\geq1/n$. A subsequence of $(z_j,w_j)$ converges in compact $K^2$, say to $(z,w)$. Closedness gives $z,w\in\Gamma(\xi)$, and continuity of the metric gives $d_K(z,w)\geq1/n$. Hence $D_n$ is closed. It is disjoint from the dense set $X_{\mathrm{fin}}$, so it has empty interior and is nowhere dense. A fiber has two points exactly when its diameter is positive, which is equivalent to membership in some $D_n$. This proves the displayed countable union and intersection. The set $G$ contains $X_{\mathrm{fin}}$, so it is dense.
+
+The final formula is exactly the case distinction of Assumption 22.2: an exceptional sum phase gives two outputs unless both inputs carry the same forced sign. In particular, exceptional sum phase alone is not a sufficient criterion for discontinuity.
+
+**theorem 22.7 (Density with a constant two-output Cantor family).** Every nonempty open $W\subseteq X$ contains a compact set $M$ homeomorphic to $\{0,1\}^{\mathbb N}$ and some $\theta\in E$ such that
+$$
+\Gamma(\xi)=\{z_\theta^{+1},z_\theta^{-1}\}\quad(\xi\in M),
+$$
+while both input phases of every $\xi\in M$ lie outside $E$. In particular, $D$ is dense; $G$ has empty interior; and no point selection is continuous on any nonempty open subspace of $X$.
+
+**Proof 22.7.** Choose a nonempty cylinder rectangle $C_p\times C_q\subseteq W$. By Theorem 22.3 choose nonempty open arcs $J\subseteq H[C_p]$ and $L\subseteq H[C_q]$. The sum $J+L$ is nonempty and open, since it is a union of translates of $L$. Density of $E$ supplies
+$$
+\theta\in E\cap(J+L).
+$$
+Then $B=J\cap(\theta-L)$ is nonempty and open. Exclude the countable set
+$$
+T=E\cup(\theta-E).
+$$
+There is a Cantor set $C\subseteq B\setminus T$, as the following construction shows. Inside a proper circle-coordinate arc contained in $B$, choose a nondegenerate closed interval. Enumerate the points of $T$ in that arc. At stage $n$, replace each interval already chosen by two disjoint nondegenerate closed subintervals in its interior, avoiding the first $n$ enumerated points, with lengths at most $2^{-n}$. Removing finitely many points from a nonempty interval leaves room for both children. Intersect the resulting nested finite unions. Each binary branch determines a unique point because interval lengths tend to zero; distinct branches give distinct points because siblings are disjoint. Every point in the intersection determines its branch. The branch map is continuous by the length bound and is a homeomorphism from compact binary sequence space onto the intersection. Every enumerated point is excluded at its stage, proving the assertion about $C$.
+
+For $\beta\notin E$, let $h(\beta)$ be the unique element of $H^{-1}(\{\beta\})$. This inverse is continuous on the subspace $\mathbb T\setminus E$. Indeed, if $V$ is open in $K$ and contains $h(\beta)$, then the compact set $H(K\setminus V)$ does not contain $\beta$. Its complement is a neighborhood of $\beta$ whose nonexceptional phases have their unique inverses in $V$.
+
+Define
+$$
+j:C\longrightarrow X,\qquad j(\beta)=(h(\beta),h(\theta-\beta)).
+$$
+Both inverses are defined because $C$ avoids $E$ and $\theta-E$. The map is continuous and injective: its first coordinate phase recovers $\beta$. Its image $M$ is compact, and the compact-to-Hausdorff continuous bijection makes $j$ a homeomorphism onto $M$. Since $\beta\in J$ and $\theta-\beta\in L$, uniqueness of each inverse and the inclusions of these arcs in the cylinder images place $M$ inside $C_p\times C_q$.
+
+At every such input both sign sets are $\{-1,+1\}$, while the sum phase is $\theta\in E$. Assumption 22.2 therefore gives both outputs, with neither same-sign exclusion applicable. Hence $M\subseteq D\cap W$, proving density by actual cylinder interiors, not by countability of $E$ or marginal density. Density of $D$ gives empty interior of $G$. If a selection were continuous on a nonempty open subspace, choose a point of $D$ there. The actual input sequences proving its discontinuity are eventually in that open subspace, a contradiction.
+
+**Definition 22.8 (Regularity and ordered selections).** A map into a topological space $Y$ is of Baire class one here precisely when it is a pointwise limit of continuous maps with values in that same $Y$. A Borel map has Borel inverse images of open sets. A map is Baire-property measurable when every such inverse image differs from an open set by a meagre set. These latter two uses of Baire are not identified. A map is universally measurable when its open-set inverse images are measurable for the completion of every Borel probability measure on its domain. Define
+$$
+e:K\longrightarrow[0,1],\qquad e(x)=\sum_{j\geq0}\frac{2x_j}{3^{j+1}}.
+$$
+The lexicographic order on $K$ compares the first differing digit, with zero smaller than one. Write $A_{\min}(\xi)$ and $A_{\max}(\xi)$ for the least and greatest members of $\Gamma(\xi)$ in this order. Their existence and their target-valued approximation are proved next. The distinction between Borel class one and same-target Baire class one is also explicit in [V. V. Srivatsa, *Baire class 1 selectors for upper semicontinuous set-valued maps*, Transactions of the American Mathematical Society 337 (1993), 609–624, Remark 2.2 and Corollaries 2.2–2.3, p. 620](https://scispace.com/pdf/baire-class-1-selectors-for-upper-semicontinuous-set-valued-290347w76e.pdf).
+
+**theorem 22.9 (Borel selections with continuous approximants taking values in the actual digit space).** The maps $A_{\min},A_{\max}:X\to K$ exist, are Borel, and are of Baire class one with target $K$. The real-valued map $e\circ A_{\min}$ is lower semicontinuous and $e\circ A_{\max}$ is upper semicontinuous. Their Baire-one assertion does not require passing through continuous approximants outside $K$.
+
+**Proof 22.9.** The series for $e$ converges uniformly and so defines a continuous map. If $x,y$ first differ at index $j$, with $x_j=0$ and $y_j=1$, then
+$$
+e(y)-e(x)\geq \frac{2}{3^{j+1}}-\sum_{k>j}\frac{2}{3^{k+1}}
+=\frac1{3^{j+1}}>0.
+$$
+Thus $e$ is injective and preserves the stated order. Compactness makes it a homeomorphism onto $e[K]$. The image of each nonempty compact fiber has an attained minimum and maximum, giving unique $A_{\min}$ and $A_{\max}$. Moreover,
+$$
+\{\xi:e(A_{\min}(\xi))\leq t\}=\operatorname{Hit}(\{z:e(z)\leq t\}),
+$$
+$$
+\{\xi:e(A_{\max}(\xi))\geq t\}=\operatorname{Hit}(\{z:e(z)\geq t\}).
+$$
+These sets are closed by Theorem 22.4, proving the two scalar semicontinuity claims.
+
+For a same-target construction, partition $X$ by the first $n$ digits of each input. This is a finite clopen partition. Denote the cell containing $\xi$ by $C_n(\xi)$, and define
+$$
+T_n(\xi)=\bigcup_{\eta\in C_n(\xi)}\Gamma(\eta).
+$$
+It is a nonempty compact set, being the projection of $\Gamma\cap(C_n(\xi)\times K)$. These sets decrease with $n$, and
+$$
+\bigcap_{n\geq1}T_n(\xi)=\Gamma(\xi).
+$$
+The inclusion from right to left is immediate. For the reverse inclusion, if $z$ belongs to every $T_n(\xi)$, choose $\eta_n\in C_n(\xi)$ with $z\in\Gamma(\eta_n)$. The cell diameter is at most $2^{-n}$, so $\eta_n\to\xi$. Closedness gives $z\in\Gamma(\xi)$.
+
+Set
+$$
+a_n(\xi)=e^{-1}\bigl(\min e[T_n(\xi)]\bigr),\qquad
+b_n(\xi)=e^{-1}\bigl(\max e[T_n(\xi)]\bigr).
+$$
+Each map is constant on each cell of a finite clopen partition, hence is continuous as a map into $K$. At a fixed $\xi$, the numbers $e(a_n(\xi))$ increase and are bounded above by $e(A_{\min}(\xi))$. Let their limit be $\ell$. A convergent subsequence of $a_n(\xi)$ has limit in every $T_m(\xi)$: all sufficiently late terms lie there, and the set is closed. Thus its limit belongs to $\Gamma(\xi)$ and has $e$-value $\ell$. Minimality gives $\ell\geq e(A_{\min}(\xi))$, proving equality. Continuity of $e^{-1}$ on $e[K]$ now gives convergence of the full sequence to $A_{\min}(\xi)$. For the maximum, $e(b_n(\xi))$ decreases and is bounded below by $e(A_{\max}(\xi))$; the same compact-limit argument places its limiting value in the fiber, where maximality gives the reverse inequality. Hence
+$$
+a_n(\xi)\longrightarrow A_{\min}(\xi),\qquad
+b_n(\xi)\longrightarrow A_{\max}(\xi)
+$$
+in $K$ at every input. The approximants are continuous digit-space-valued maps, but are not required to be selections at their own inputs.
+
+For completeness, any pointwise limit $f$ of continuous $K$-valued maps $f_n$ is Borel. For a proper nonempty open $O\subset K$, distance to the nonempty closed set $K\setminus O$ gives
+$$
+f^{-1}(O)=
+\bigcup_{k,N\geq1}\ \bigcap_{n\geq N}
+\{\xi:d_K(f_n(\xi),K\setminus O)\geq1/k\}.
+$$
+If $f(\xi)\in O$, its distance to the complement is positive; convergence gives the displayed eventual inequality for a sufficiently large $k$. Conversely, that inequality passes to the limit and excludes membership in the complement. Each inner intersection is closed, so the inverse image is $F_\sigma$. Empty and full open sets give empty and full inverse images. Applying this to $a_n$ and $b_n$ proves Borelness. This construction, rather than an inference from meagre discontinuities or from an ambient real-valued approximation, proves the claimed target-valued Baire class.
+
+**theorem 22.10 (Strict measurable distinctions among selections).** There exist Borel selections that are not of Baire class one. There also exist selections that are not measurable for the completion of a Borel probability measure on $X$, hence are neither Borel nor universally measurable. Nevertheless every point selection is Baire-property measurable. All these selections still have exactly the continuity locus $G$.
+
+**Proof 22.10.** Choose a Cantor set $M$ as in Theorem 22.7, with its constant two-point fiber. Write the two outputs as $z^{(0)},z^{(1)}$, choosing an index $j$ at which $z^{(0)}_j=0$ and $z^{(1)}_j=1$. For any subset $B\subseteq M$, define the selection
+$$
+A_B(\xi)=
+\begin{cases}
+z^{(1)},&\xi\in B,\\
+z^{(0)},&\xi\in M\setminus B,\\
+A_{\min}(\xi),&\xi\notin M.
+\end{cases}
+$$
+Each branch lies in the required fiber, so this is a selection for every $B$, regardless of measurability.
+
+Let $R$ be a countable dense subset of $M$, obtained, for example, by carrying the eventually-zero binary sequences through a homeomorphism onto $M$. The map $A_R$ is Borel: $M$ is closed, $R$ is countable and Borel, and its three pieces use constant maps or the Borel map $A_{\min}$. We first prove that $M\setminus R$ is not $F_\sigma$ in $M$. Otherwise, write it as a countable union of relatively closed sets. Each has empty relative interior because $R$ is dense. Each singleton of $R$ also has empty relative interior because a Cantor space has no isolated points. This would express $M$ as a countable union of relatively closed nowhere dense sets. Such a covering is impossible: transfer it to binary sequence space, successively choose a nonempty cylinder inside the preceding cylinder and disjoint from the next closed nowhere dense set, and require the prescribed prefix lengths to increase. Closedness and empty interior permit each choice. The unique sequence extending all chosen prefixes avoids every member of the proposed covering, a contradiction.
+
+If continuous $K$-valued maps $f_n$ converged pointwise to $A_R$, then on $M$ the continuous real functions $g_n(\xi)=(f_n(\xi))_j$ would converge to the indicator $\mathbf1_R$. Therefore
+$$
+M\setminus R=\bigcup_{N\geq1}\ \bigcap_{n\geq N}
+\{\xi\in M:g_n(\xi)\leq1/4\},
+$$
+a relatively $F_\sigma$ set. Indeed, a limit of zero eventually satisfies the bound, whereas a limit of one cannot. This contradicts the preceding paragraph and proves that $A_R$ is not Baire one.
+
+For a precise nonmeasurable choice, equip $\mathcal C=\{0,1\}^{\mathbb N}$ with the fair-coin product probability $\mu$. Two sequences are equivalent when they differ in only finitely many coordinates. Choose one representative from each equivalence class and call the representative set $V$. For every finite $s\subseteq\mathbb N$, let $T_s$ flip exactly the coordinates in $s$. The sets $T_s[V]$ are pairwise disjoint and cover $\mathcal C$: two representations of the same point force their representatives to be equivalent and hence equal, and a nonempty finite flip fixes no sequence. There are countably infinitely many finite subsets $s$.
+
+Every $T_s$ preserves $\mu$, since it permutes cylinders of any specified length without changing their measures; uniqueness of the probability measure determined by cylinders gives invariance on Borel sets. It also preserves the completed measure, since it preserves Borel null sets and their subsets. If $V$ were measurable in this completion, all its disjoint translates would have the same measure $t$. For $t=0$, their countable union would have measure zero instead of one. For $t>0$, a sufficiently large finite union would already have measure greater than one. Thus $V$ is not completed-measurable.
+
+Fix a homeomorphism $\psi:\mathcal C\to M$, set $B=\psi[V]$, and let $\nu=\psi_*\mu$, viewed as a Borel probability on $X$ supported on $M$. If $B$ were measurable in the completion of $\nu$, pulling back a Borel representative and its Borel null error would make $V$ measurable in the completion of $\mu$. Hence it is not. Since
+$$
+M\cap A_B^{-1}(\{z\in K:z_j=1\})=B,
+$$
+and the digit cylinder is clopen, $A_B$ is not measurable for the completion of $\nu$. In particular it is not Borel or universally measurable. This construction uses choice to select the representatives.
+
+Finally, any selection $A$ agrees with $A_{\min}$ outside the meagre set $D$. Thus for every open $O\subseteq K$, the symmetric difference of $A^{-1}(O)$ and $A_{\min}^{-1}(O)$ is contained in $D$. The latter inverse image is $F_\sigma$ by Theorem 22.9 and has the Baire property: a countable union of closed sets differs from the union of their interiors by a subset of the countable union of their nowhere dense boundaries. Every subset of a meagre set is meagre, because its intersections with the given nowhere dense covering sets are still nowhere dense. This proves the Baire property for $A^{-1}(O)$, even for the nonmeasurable construction above. The common continuity locus follows from Theorem 22.6, not from any of these measurability properties.
+
+**Definition 22.11 (Admissible probability assignments and kernels).** Let $\mathcal P(K)$ be the Borel probability measures on $K$, with the weak topology generated by
+$$
+\mu\longmapsto\int_K f\,d\mu\qquad(f\in C(K,\mathbb R)).
+$$
+An admissible probability assignment is any map $P:X\to\mathcal P(K)$ such that
+$$
+P(\xi)(\Gamma(\xi))=1\qquad(\xi\in X).
+$$
+This condition expresses support inside the closed fiber. No measurability is included in the word assignment. A Borel probability kernel additionally requires $\xi\mapsto P(\xi)(B)$ to be Borel for every Borel $B\subseteq K$. A Baire-one probability assignment is a pointwise weak limit of continuous maps $X\to\mathcal P(K)$. Write $\delta_z$ for the Dirac probability at $z$.
+
+**theorem 22.12 (Probability outputs have the identical obstruction).** Every admissible probability assignment, measurable or not, satisfies
+$$
+P(Z(n),Z(m))=\delta_{Z(n+m)},\qquad
+\operatorname{Cont}(P)=G.
+$$
+In particular, no such assignment is globally continuous, or continuous on a nonempty open subspace of $X$.
+
+**Proof 22.12.** A probability giving mass one to a singleton is its Dirac probability, proving the natural-input assertion. If $\Gamma(\xi)=\{z\}$, then $P(\xi)=\delta_z$. Fix a continuous real function $f$ and a positive $\varepsilon$. Choose an open neighborhood $V$ of $z$ such that $|f(w)-f(z)|<\varepsilon/2$ for $w\in V$. Upper semicontinuity of $\Gamma$ gives an input neighborhood on which every fiber lies in $V$. For every input $\eta$ in that neighborhood, support inside its fiber implies
+$$
+\left|\int_K f\,dP(\eta)-f(z)\right|
+\leq\int_K|f-f(z)|\,dP(\eta)\leq\varepsilon/2<\varepsilon.
+$$
+Intersecting the neighborhoods for finitely many test functions verifies every basic weak neighborhood of $\delta_z$. Thus $P$ is continuous at $\xi$.
+
+If the fiber contains distinct $z_0,z_1$, Theorem 22.4 gives two sequences of actual finite input pairs tending to $\xi$, with their actual sums tending respectively to $z_0,z_1$. Along these sequences $P$ is forced to be the Dirac measure at the actual sum. These probabilities converge weakly to $\delta_{z_0}$ and $\delta_{z_1}$: each test integral is simply the value of its continuous test function at the approaching sum. Choose a digit coordinate $j$ where $z_0$ and $z_1$ differ. The continuous moment $\mu\mapsto\int z_j\,d\mu$ then has two different limiting values along these two input sequences. Continuity at $\xi$ would force both to be its value at $P(\xi)$, a contradiction. This proves the exact locus using approaching actual sums, without an appeal to compactness of the probability space. Density of $D$ and eventual membership of the sequences in any open neighborhood give the remaining assertions.
+
+**theorem 22.13 (Measurable genuine randomization and strict regularity distinctions).** For every constant $\lambda\in[0,1]$, the assignment
+$$
+P_\lambda(\xi)=(1-\lambda)\delta_{A_{\min}(\xi)}+\lambda\delta_{A_{\max}(\xi)}
+$$
+is a Borel probability kernel, a Borel map into the weak topology, and Baire one with that target topology. For $0<\lambda<1$, its support is exactly the two-point fiber on $D$. There are also Borel probability kernels that are not weakly Baire one, and admissible assignments that are not measurable for a completed Borel probability on $X$. Nevertheless all admissible probability assignments are Baire-property measurable into the weak topology.
+
+**Proof 22.13.** Both selected atoms belong to the fiber, so the support condition holds. They coincide exactly on $G$ and differ on $D$, proving the support assertion for interior weights. With the continuous $K$-valued approximants of Theorem 22.9, define
+$$
+P_{\lambda,n}(\xi)=(1-\lambda)\delta_{a_n(\xi)}+\lambda\delta_{b_n(\xi)}.
+$$
+For each continuous $f$, its integral against this measure is
+$$
+(1-\lambda)f(a_n(\xi))+\lambda f(b_n(\xi)),
+$$
+a continuous function of $\xi$. Hence $P_{\lambda,n}$ is weakly continuous. Pointwise convergence of $a_n,b_n$ gives convergence of every test integral to the corresponding integral against $P_\lambda$. This is precisely a same-target weak Baire-one approximation. Support inside the input fiber is required of the limit, not of these continuous approximating maps.
+
+The map $(z,w)\mapsto(1-\lambda)\delta_z+\lambda\delta_w$ is weakly continuous by the same test calculation. The pair $(A_{\min},A_{\max})$ is Borel into $K^2$: a countable base of product cylinders reduces inverse images of open sets to countable unions of intersections of Borel sets. Composition proves weak-topology Borelness of $P_\lambda$. Moreover, for every Borel $B\subseteq K$,
+$$
+P_\lambda(\xi)(B)=(1-\lambda)\mathbf1_B(A_{\min}(\xi))+
+\lambda\mathbf1_B(A_{\max}(\xi))
+$$
+is Borel, proving the probability-kernel assertion itself.
+
+Use the Borel non-Baire-one selection $A_R$ of Theorem 22.10. Its Dirac assignment is a Borel probability kernel and a weakly Borel map. Suppose it were the pointwise weak limit of continuous maps $Q_n:X\to\mathcal P(K)$. On the same Cantor set $M$, the continuous real functions
+$$
+g_n(\xi)=\int_K z_j\,dQ_n(\xi)
+$$
+would tend to $\mathbf1_R$. The eventual $1/4$ bound in Proof 22.10 would again make $M\setminus R$ relatively $F_\sigma$, which was proved impossible. Thus this kernel is not weakly Baire one. For the non-completed-measurable selection $A_B$ there, the same digit moment of $\delta_{A_B}$ restricts on $M$ to $\mathbf1_B$. Its inverse image of $(1/2,\infty)$, intersected with $M$, is $B$. Hence this admissible assignment is not measurable for the completion of the probability $\nu$ constructed there, and in particular is not weakly Borel.
+
+Finally let $P$ be any admissible assignment. Outside $D$ it equals $\delta_{A_{\min}}$. For a weakly open set $O\subseteq\mathcal P(K)$, the set $\{z:\delta_z\in O\}$ is open in $K$, since the Dirac map is weakly continuous. Its inverse image under $A_{\min}$ is $F_\sigma$ by Theorem 22.9. The inverse image $P^{-1}(O)$ differs from that set only inside $D$, so the same meagre-error argument as in Proof 22.10 gives the Baire property. Thus probability-valued continuity and descriptive regularity have the asserted distinct meanings and boundaries.
+
+**theorem 22.14 (Algebraic laws are not consequences of the regularity statements).** The selections $A_{\min}$ and $A_{\max}$, and each constant-weight kernel $P_\lambda$, are commutative. Both of these point selections fail associativity and fail to have $0_K$ as an identity. None of these constant-weight kernels has the Dirac identity law at $0_K$. There also exists a noncommutative Baire-one point selection. Conversely, commutativity alone forces neither Borelness nor Baire class one among selections. All these examples retain exact natural addition and the common continuity locus already proved.
+
+**Proof 22.14.** Swapping the first two coordinates preserves the set of actual finite addition triples. The swap is a homeomorphism, so it preserves its closure. Hence $\Gamma(x,y)=\Gamma(y,x)$. Taking the least or greatest element of the same fiber proves commutativity of both canonical selections. Their constant-weight mixture of Dirac probabilities is commutative as well.
+
+Put $p_2=0v$ and $q_2=10v$. Assumption 22.2, including its specified labels, gives
+$$
+\Gamma(0_K,u)=\Gamma(0_K,v)=\{u,v\},\qquad
+\Gamma(u,u)=\{p_2\},\qquad\Gamma(v,v)=\{q_2\},
+$$
+$$
+\Gamma(0_K,p_2)=\Gamma(0_K,q_2)=\{p_2,q_2\}.
+$$
+Indeed, $H(0_K)=0\notin E$, so its sign set permits both signs; the other phases in the last display are $[-2\phi]\in E$. The same-sign rule gives the two diagonal singleton fibers. In lexicographic order $v<u$ and $p_2<q_2$, as their first digits show. Consequently
+$$
+A_{\min}(0_K,u)=v\ne u,\qquad A_{\max}(0_K,v)=u\ne v,
+$$
+so the proposed identity fails. Furthermore,
+$$
+A_{\min}(A_{\min}(0_K,v),v)=q_2\ne p_2
+=A_{\min}(0_K,A_{\min}(v,v)),
+$$
+$$
+A_{\max}(A_{\max}(0_K,u),u)=p_2\ne q_2
+=A_{\max}(0_K,A_{\max}(u,u)).
+$$
+These are explicit failures of associativity for the two named selections. For the probability kernels,
+$$
+P_\lambda(0_K,u)=P_\lambda(0_K,v)=(1-\lambda)\delta_v+\lambda\delta_u.
+$$
+The identity requirement at $u$ would force $\lambda=1$, whereas the one at $v$ would force $\lambda=0$. Thus no constant weight gives the Dirac identity law.
+
+For a noncommutative Baire-one example, change $A_{\min}$ only at $\xi_*=(0_K,u)$, assigning $u$ there, and denote the result by $A_*$. It remains a selection. At the transposed input $(u,0_K)$ it still equals $v$, so it is not commutative. For the nested clopen cells $C_n(\xi_*)$ used in Theorem 22.9, define a map equal to the constant $u$ on that cell and equal to $a_n$ outside it. Each such map is continuous into $K$. At $\xi_*$ it converges to $u$. At any other input it eventually equals $a_n$, because the cells shrink to the singleton $\{\xi_*\}$. Its limit there is $A_{\min}$. These maps prove that $A_*$ is Baire one.
+
+To separate commutativity from the other regularities, take disjoint nonempty clopen cylinders $U,V\subset K$ and obtain the Cantor set $M\subset U\times V$ from Theorem 22.7. Its transpose $\tau M\subset V\times U$ is disjoint from $M$. Make either construction $A_R$ or $A_B$ from Theorem 22.10 on $M$, make the identical choices at transposed points in $\tau M$, and retain $A_{\min}$ elsewhere. Symmetry of the relation makes this a commutative selection. In the $R$ case it is Borel, since both modified sets are closed with countable distinguished subsets, but its restriction to $M$ retains the proof of failure of Baire class one. In the $B$ case its restriction to $M$ retains the failure of completed measurability for the probability supported there. Thus commutativity supplies neither missing regularity. The natural input fibers remain singleton fibers in all cases, so none of the modifications can change natural addition. Their continuity loci follow from Theorem 22.6.
+
+These counterexamples establish the stated nonimplications, not a classification of associative selections. In particular, the existence or nonexistence of other associative selections, and any separately defined associativity law for composed probability kernels, are not asserted here. The exact continuity obstruction, the descriptive loci, and the constructions in Theorems 22.6–22.13 require no such law.
+
+## 追加锚（本行以下为增补区）
+## 23. Zeckendorf 加法闭图的概率结合律刚性
+
+**定义 23.0（固定数字载体与相位）。** 取 $\mathbb N=\{0,1,2,\ldots\}$，置
+$$
+G_0=1,\qquad G_1=2,\qquad G_{j+2}=G_{j+1}+G_j,\qquad
+\phi=\frac{1+\sqrt5}{2},\qquad \alpha=\phi^{-1}.
+$$
+令 $Z(n)$ 为以 $G_j$ 为权的有限 Zeckendorf 规范字按低位到高位补零后的无限字，并令
+$$
+K=\{x\in\{0,1\}^{\mathbb N}:\forall j,\ x_jx_{j+1}=0\},\qquad 0_K=Z(0).
+$$
+载体取数字乘积拓扑。定义
+$$
+\mathbb T=\mathbb R/\mathbb Z,\qquad
+F(x)=\sum_{j\ge0}(-1)^{j+1}\alpha^{j+2}x_j,\qquad H(x)=[F(x)],
+$$
+$$
+E_m=[-m\phi]\quad(m\ge1),\qquad E=\{E_m:m\ge1\},
+$$
+以及
+$$
+\Gamma=\overline{\{(Z(n),Z(m),Z(n+m)):n,m\in\mathbb N\}}^{\,K^3},
+\qquad
+\Gamma(x,y)=\{w:(x,y,w)\in\Gamma\}.
+$$
+这些记号采用[本卷定义16.0的固定文本](https://raw.githubusercontent.com/the-omega-institute/trureturing/c74985438ae17d205509255934bbd3ecf1f94d71/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)。
+
+**假设 23.1（完整纤维与精确支撑契约）。** 本节明确采用以下相位纤维及关系公式。映射 $H:K\to\mathbb T$ 满射；对 $\theta\in E$，
+$$
+H^{-1}(\{\theta\})=\{z_\theta^{+1},z_\theta^{-1}\},
+\qquad z_\theta^{+1}\ne z_\theta^{-1};
+$$
+对 $\theta\notin E$，该纤维只有一点，记为 $k_\theta$。另有
+$$
+H^{-1}(\{[n\phi]\})=\{Z(n)\}\quad(n\in\mathbb N),
+\qquad k_0=0_K.
+$$
+正负标记固定采用定义16.3的定向标记。置
+$$
+\mathcal S(x)=
+\begin{cases}
+\{\sigma\},&H(x)\in E,\ x=z_{H(x)}^\sigma,\quad \sigma\in\{-1,+1\},\\
+\{-1,+1\},&H(x)\notin E.
+\end{cases}
+$$
+对全部 $x,y\in K$，以 $\lambda=H(x)+H(y)$ 记输出相位，假设
+$$
+\Gamma(x,y)=
+\begin{cases}
+\{k_\lambda\},&\lambda\notin E,\\
+\{z_\lambda^\sigma:\sigma\in\mathcal S(x)\cup\mathcal S(y)\},&\lambda\in E.
+\end{cases}
+$$
+特别地，两个同号分裂输入只能产生同号输出；任何非分裂输入在分裂输出处允许两个符号。这里采用的是完整输入纤维公式，而不只是输出相位相加。相位前提见[Zeckendorf 理论卷第371—372节，尤其定理372.2—372.4](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md)；定向标记及关系公式见[本卷定义16.3、定理16.4](https://raw.githubusercontent.com/the-omega-institute/trureturing/c74985438ae17d205509255934bbd3ecf1f94d71/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)。
+
+**定义 23.2（有限概率核与结合律）。** 对任意集合 $X$，定义
+$$
+\mathcal D_f(X)=
+\left\{\mu:X\to[0,1]:
+\operatorname{supp}\mu=\{x:\mu(x)>0\}\text{ 有限},
+\ \sum_{x\in\operatorname{supp}\mu}\mu(x)=1\right\}.
+$$
+记 $\delta_x$ 为集中在 $x$ 的分布，$\mu(x)$ 也记为 $\mu\{x\}$。一个可容许概率核是任意函数
+$$
+P:K\times K\to\mathcal D_f(K),\qquad
+\operatorname{supp}P_{x,y}\subseteq\Gamma(x,y).
+$$
+允许一个许可输出的质量为零；不预设连续性、Borel 可测性、交换律或单位律。相对于 $P$，定义有限卷积
+$$
+\mu*\nu=
+\sum_{x\in\operatorname{supp}\mu}
+\sum_{y\in\operatorname{supp}\nu}
+\mu(x)\nu(y)P_{x,y}.
+$$
+称 $P$ 结合，若对所有 $x,y,z\in K$，
+$$
+\sum_{u\in\operatorname{supp}P_{x,y}}P_{x,y}(u)P_{u,z}
+=
+\sum_{v\in\operatorname{supp}P_{y,z}}P_{y,z}(v)P_{x,v}.
+$$
+等号是分布逐点相等，而非支撑集合相等。这里的有限凸组合与展平采用有限分布单子的通常含义，其单位和展平分别为
+$$
+\eta_X(x)=\delta_x,\qquad
+m_X\left(\sum_i a_i\delta_{\mu_i}\right)=\sum_i a_i\mu_i.
+$$
+此处单子的单位是映射 $\eta_X$，不是二元操作 $P$ 的单位元。相关定义见 Bart Jacobs，*Duality for Convexity*，[arXiv:0911.3834，§2，Example 2(3)—(4)，PDF第3—4页](https://arxiv.org/pdf/0911.3834)。
+
+**定理 23.3（有限卷积的闭合与结合延拓）。** 定义23.2的卷积总是属于 $\mathcal D_f(K)$。可容许核的点态结合律等价于 $\mathcal D_f(K)$ 上全部有限分布的结合律。每个 $P_{x,y}$ 都集中在相位 $H(x)+H(y)$；若 $\Gamma(x,y)=\{w\}$，则 $P_{x,y}=\delta_w$。
+
+**证明。** 卷积的支撑包含在有限集合
+$$
+\bigcup_{\substack{x\in\operatorname{supp}\mu\\y\in\operatorname{supp}\nu}}
+\operatorname{supp}P_{x,y}
+$$
+中，其大小至多为 $2|\operatorname{supp}\mu|\,|\operatorname{supp}\nu|$。各质量非负，总质量为
+$$
+\sum_{x,y}\mu(x)\nu(y)\sum_w P_{x,y}(w)
+=\sum_{x,y}\mu(x)\nu(y)=1.
+$$
+以上及以下求和都限制在相应有限支撑中。
+
+若点态结合律成立，把三个有限分布的卷积展开，得到
+$$
+(\mu*\nu)*\xi
+=\sum_{x,y,z}\mu(x)\nu(y)\xi(z)\bigl(P_{x,y}*\delta_z\bigr),
+$$
+$$
+\mu*(\nu*\xi)
+=\sum_{x,y,z}\mu(x)\nu(y)\xi(z)\bigl(\delta_x*P_{y,z}\bigr).
+$$
+点态结合律使每个相应括号相等，故两式相等。反向取三个 Dirac 分布即可。假设23.1给出全部许可输出的同一相位；支撑包含关系将此性质传给 $P$。支撑包含于单点而总质量为一时，该点质量只能为一。证毕。
+
+**定理 23.4（分裂相位的加法与半周平移）。** 分裂相位满足
+$$
+E_m=E_n\Longleftrightarrow m=n,\qquad E_m+E_n=E_{m+n},
+\qquad [k\phi]\notin E\quad(k\in\mathbb N).
+$$
+置 $\tau=[1/2]$，则
+$$
+\tau\notin E,\qquad (E+\tau)\cap E=\varnothing.
+$$
+因而存在唯一 $t=k_\tau\in K$。对任意可容许核，
+$$
+P_{t,t}=\delta_{0_K},
+\qquad
+P_{t,x}=P_{x,t}=\delta_{k_{\theta+\tau}}
+\quad\text{当 }H(x)=\theta\in E.
+$$
+
+**证明。** $\phi$ 无理。相位相等 $E_m=E_n$ 意味着 $(m-n)\phi$ 为整数，故 $m=n$；相位加法公式直接成立。若 $[k\phi]=E_m$，则 $(k+m)\phi$ 为整数，其中 $k+m>0$，矛盾。
+
+若 $\tau=E_m$，则 $m\phi$ 为半整数，亦矛盾。若 $E_m+\tau=E_n$，则 $(n-m)\phi+1/2$ 为整数；当 $n=m$ 时不可能，当 $n\ne m$ 时又迫使 $\phi$ 有理。所以两集合不交。假设23.1保证半周相位有唯一原像，而 $2\tau=0$ 的原像为 $0_K$。当 $\theta\in E$ 时，$\theta+\tau$ 非分裂，故两个有序乘积的许可纤维是同一单点。定理23.3遂给所列 Dirac 等式，不需要预设交换律。证毕。
+
+**定理 23.5（零切片下降与双侧平均恒等式）。** 设 $P$ 可容许且结合。则存在唯一一族 $\pi_\theta\in\mathcal D_f(K)$，使
+$$
+P_{0_K,x}=P_{x,0_K}=\pi_{H(x)}
+\quad(x\in K).
+$$
+每个 $\pi_\theta$ 支撑于 $H^{-1}(\{\theta\})$，且 $\pi_0=\delta_{0_K}$。对所有 $\theta,\rho\in\mathbb T$ 和 $x,y\in K$，
+$$
+\pi_\theta*\delta_y=\pi_{\theta+H(y)},\qquad
+\delta_x*\pi_\rho=\pi_{H(x)+\rho},\qquad
+\pi_\theta*\pi_\rho=\pi_{\theta+\rho}.
+$$
+
+**证明。** 先分别证明左、右零切片仅依赖相位。非分裂相位的输出纤维只有一个点，所以两个零切片均为 $\delta_{k_\theta}$。对分裂相位 $\theta$，置 $w_\theta=k_{\theta+\tau}$。任取 $H(x)=\theta$，在两个不同有序三元组上使用结合律及定理23.4，得到
+$$
+\delta_{0_K}*\delta_x
+=(\delta_t*\delta_t)*\delta_x
+=\delta_t*(\delta_t*\delta_x)
+=P_{t,w_\theta},
+$$
+$$
+\delta_x*\delta_{0_K}
+=\delta_x*(\delta_t*\delta_t)
+=(\delta_x*\delta_t)*\delta_t
+=P_{w_\theta,t}.
+$$
+右端均与该纤维内的输入分支无关。于是左、右零切片分别定义为 $L_\theta,R_\theta$，暂不假设二者相等。它们均支撑于相位 $\theta$。
+
+对三元组 $(0_K,x,0_K)$ 使用结合律。左括号给出
+$$
+L_\theta*\delta_{0_K}
+=\sum_{u\in\operatorname{supp}L_\theta}L_\theta(u)R_\theta
+=R_\theta,
+$$
+右括号给出
+$$
+\delta_{0_K}*R_\theta
+=\sum_{v\in\operatorname{supp}R_\theta}R_\theta(v)L_\theta
+=L_\theta.
+$$
+故 $L_\theta=R_\theta$，记为 $\pi_\theta$。满射性保证这族分布在全部相位上定义且唯一；零相位的单点纤维给 $\pi_0=\delta_{0_K}$。
+
+固定 $\theta$，由满射性取 $H(x)=\theta$。若 $H(y)=\rho$，则
+$$
+\pi_\theta*\delta_y
+=(\delta_{0_K}*\delta_x)*\delta_y
+=\delta_{0_K}*P_{x,y}
+=\sum_u P_{x,y}(u)\pi_{\theta+\rho}
+=\pi_{\theta+\rho}.
+$$
+这里每个中间点 $u$ 都具有相位 $\theta+\rho$。同理，
+$$
+\delta_x*\pi_\rho
+=\delta_x*(\delta_y*\delta_{0_K})
+=P_{x,y}*\delta_{0_K}
+=\sum_u P_{x,y}(u)\pi_{\theta+\rho}
+=\pi_{\theta+\rho}.
+$$
+最后，$\pi_\rho$ 的每个支撑点具有相位 $\rho$，故再对第一式作有限平均，得到 $\pi_\theta*\pi_\rho=\pi_{\theta+\rho}$。全程没有使用 $0_K$ 是单位元。证毕。
+
+**定理 23.6（单个分裂相位的零切片必为 Dirac 分布）。** 设 $P$ 可容许且结合。固定 $m\ge1$，记
+$$
+x_+=z_{E_m}^{+1},\quad x_-=z_{E_m}^{-1},\qquad
+y_+=z_{E_{2m}}^{+1},\quad y_-=z_{E_{2m}}^{-1},
+$$
+并定义
+$$
+p=\pi_{E_m}(x_+),\qquad q=\pi_{E_{2m}}(y_+),\qquad
+a=P_{x_+,x_-}(y_+),\qquad b=P_{x_-,x_+}(y_+).
+$$
+则以下两个恒等链同时成立：
+$$
+q=p+(1-p)b=pa,\qquad
+q=p+(1-p)a=pb.
+$$
+它们强制
+$$
+p=q=a=b\in\{0,1\}.
+$$
+特别地，每个 $\pi_{E_m}$ 都是 Dirac 分布。
+
+**证明。** 精确支撑契约给出
+$$
+P_{x_+,x_+}=\delta_{y_+},\qquad
+P_{x_-,x_-}=\delta_{y_-},
+\qquad
+\pi_{E_m}=p\delta_{x_+}+(1-p)\delta_{x_-}.
+$$
+定理23.5分别对
+$$
+\pi_{E_m}*\delta_{x_+},\quad
+\delta_{x_+}*\pi_{E_m},\quad
+\pi_{E_m}*\delta_{x_-},\quad
+\delta_{x_-}*\pi_{E_m}
+$$
+给出同一分布 $\pi_{E_{2m}}$。读取 $y_+$ 的质量，依次得到
+$$
+q=p+(1-p)b,\qquad q=p+(1-p)a,\qquad q=pa,\qquad q=pb.
+$$
+这证明两个恒等链，且没有把两个有序混合乘积预先等同。
+
+由 $0\le a,b,p\le1$，第一式给 $q\ge p$，第三式给 $q\le p$，所以 $q=p$。代回四式可得
+$$
+(1-p)b=0,\qquad (1-p)a=0,\qquad
+p(1-a)=0,\qquad p(1-b)=0.
+$$
+若 $0<p<1$，则 $(1-p)a=0$ 强制 $a=0$，而 $p(1-a)=0$ 强制 $a=1$，矛盾。因此 $p$ 只能是零或一。
+
+当 $p=0$ 时，$q=p=0$，前两条零乘积式给 $a=b=0$。当 $p=1$ 时，$q=p=1$，后两条零乘积式给 $a=b=1$。两个端点均已单独处理，没有除以可能为零的质量。两点纤维上的分布由 $p$ 完全确定，故必为 Dirac 分布。证毕。
+
+**定理 23.7（所有分裂相位共享一个符号）。** 对任意可容许结合核，存在唯一 $s\in\{-1,+1\}$，使
+$$
+\pi_{E_m}=\delta_{z_{E_m}^{s}}\qquad(m\ge1).
+$$
+
+**证明。** 定理23.6允许唯一写作 $\pi_{E_m}=\delta_{z_{E_m}^{\sigma_m}}$，其中 $\sigma_m\in\{-1,+1\}$。固定任意 $m,n\ge1$，取 $v_n=z_{E_n}^{\sigma_m}$。定理23.5和同号强制支撑共同给出
+$$
+\pi_{E_{m+n}}
+=\pi_{E_m}*\delta_{v_n}
+=P_{z_{E_m}^{\sigma_m},z_{E_n}^{\sigma_m}}
+=\delta_{z_{E_{m+n}}^{\sigma_m}}.
+$$
+再取 $v_m=z_{E_m}^{\sigma_n}$，在另一个有序位置使用平均恒等式：
+$$
+\pi_{E_{m+n}}
+=\delta_{v_m}*\pi_{E_n}
+=P_{z_{E_m}^{\sigma_n},z_{E_n}^{\sigma_n}}
+=\delta_{z_{E_{m+n}}^{\sigma_n}}.
+$$
+输出纤维的两个标记互异，故
+$$
+\sigma_m=\sigma_{m+n}=\sigma_n.
+$$
+由于 $m,n$ 任意，所有符号相同。以 $\pi_{E_1}$ 确定的符号为 $s$，同时得到存在性和唯一性。证毕。
+
+**定义 23.8（两个固定符号操作）。** 对固定 $s\in\{-1,+1\}$，定义
+$$
+c_s(\theta)=
+\begin{cases}
+z_\theta^s,&\theta\in E,\\
+k_\theta,&\theta\notin E,
+\end{cases}
+\qquad
+R_s=c_s[\mathbb T],\qquad
+N_s=\{z_{E_m}^{-s}:m\ge1\}.
+$$
+假设23.1给出 $K=R_s\sqcup N_s$。定义
+$$
+A_s(x,y)=
+\begin{cases}
+z_{H(x)+H(y)}^{-s},&x,y\in N_s,\\
+c_s(H(x)+H(y)),&\text{其余情形},
+\end{cases}
+\qquad P^s_{x,y}=\delta_{A_s(x,y)}.
+$$
+第一分支由 $E+E\subseteq E$ 保证有定义。等价地，两个分裂输入都具有符号 $-s$ 时保留强制符号 $-s$；其余分裂输出一律取符号 $s$，非分裂输出取其唯一原像。
+
+**定理 23.9（全载体概率结合核的完整分类）。** 在假设23.1下，对任意可容许概率核 $P$，
+$$
+P\text{ 结合}
+\quad\Longleftrightarrow\quad
+\exists!\,s\in\{-1,+1\}\ \forall x,y\in K,\quad P_{x,y}=P^s_{x,y}.
+$$
+因此恰有两个解，每个解逐点为 Dirac 分布，并自动满足交换律。它们包含如下全域边界公式：
+$$
+P^s_{0_K,x}=P^s_{x,0_K}=\delta_{c_s(H(x))},
+$$
+$$
+P^s_{z_{E_m}^{+1},z_{E_n}^{-1}}
+=P^s_{z_{E_m}^{-1},z_{E_n}^{+1}}
+=\delta_{z_{E_{m+n}}^s}\qquad(m,n\ge1),
+$$
+$$
+P^s_{Z(n),Z(m)}=\delta_{Z(n+m)}\qquad(n,m\in\mathbb N).
+$$
+若进一步要求全部许可输出都有严格正质量，即对所有输入都有 $\operatorname{supp}P_{x,y}=\Gamma(x,y)$，则不存在结合解。
+
+**证明。** 先证明必要性。由定理23.5—23.7及非分裂纤维的唯一性，存在唯一符号 $s$，使
+$$
+\pi_\theta=\delta_{c_s(\theta)}\qquad(\theta\in\mathbb T).
+$$
+取任意有序输入对 $(x,y)$。若 $x\in R_s$，则 $\delta_x=\pi_{H(x)}$，所以平均恒等式给
+$$
+P_{x,y}=\pi_{H(x)}*\delta_y
+=\delta_{c_s(H(x)+H(y))}.
+$$
+若 $y\in R_s$，则另一个平均恒等式同样给
+$$
+P_{x,y}=\delta_x*\pi_{H(y)}
+=\delta_{c_s(H(x)+H(y))}.
+$$
+剩下的唯一情形是 $x,y\in N_s$。此时两输入都是符号 $-s$ 的分裂点，假设23.1直接强制
+$$
+P_{x,y}=\delta_{z_{H(x)+H(y)}^{-s}}.
+$$
+这正是定义23.8，覆盖非分裂输入、零、分裂输入的两种顺序以及所有相位和；没有预设确定性选择的分类。
+
+再证明两个候选确实存在。若 $x,y\in N_s$，定义选取的点就是同号强制输出。否则，当输出相位分裂时，至少一个输入非分裂或具有符号 $s$，所以 $s\in\mathcal S(x)\cup\mathcal S(y)$，所选点属于 $\Gamma(x,y)$；当输出相位非分裂时，所选点是唯一许可输出。因此每个 $P^s$ 都可容许。
+
+为验证所有三元组的结合律，定义
+$$
+\varepsilon_s(x)=
+\begin{cases}
+1,&x\in N_s,\\
+0,&x\in R_s,
+\end{cases}
+\qquad
+M=(\mathbb T\times\{0\})\cup(E\times\{1\}),
+$$
+并在 $M$ 上定义
+$$
+(\theta,i)\cdot(\rho,j)=(\theta+\rho,ij).
+$$
+若 $ij=1$，两个相位均属于 $E$，故其和仍属于 $E$；若 $ij=0$，输出属于 $\mathbb T\times\{0\}$。所以该乘法封闭。它的结合性和交换性分别来自圆周加法及 $\{0,1\}$ 上通常乘法的结合性和交换性。
+
+映射
+$$
+\Phi_s:K\to M,\qquad \Phi_s(x)=(H(x),\varepsilon_s(x))
+$$
+是双射：$(\theta,0)$ 的唯一原像是 $c_s(\theta)$，而对 $\theta\in E$，$(\theta,1)$ 的唯一原像是 $z_\theta^{-s}$。定义23.8逐分支给出
+$$
+\Phi_s(A_s(x,y))=\Phi_s(x)\cdot\Phi_s(y).
+$$
+因而两个括号的像均为
+$$
+\bigl(H(x)+H(y)+H(z),\,
+\varepsilon_s(x)\varepsilon_s(y)\varepsilon_s(z)\bigr).
+$$
+由 $\Phi_s$ 单射，$A_s(A_s(x,y),z)=A_s(x,A_s(y,z))$。交换律同理成立。于是相应 Dirac 核满足点态结合律，定理23.3又给全部有限分布上的结合律。
+
+两个核在 $(0_K,z_{E_1}^{+1})$ 处分别输出 $z_{E_1}^{+1}$ 和 $z_{E_1}^{-1}$，故互异。必要性中的全局符号唯一，排除了任何第三个核。零切片公式由 $0_K\in R_s$ 得到；每个异号输入对恰有一个输入属于 $R_s$，给出两个有序混合公式。核心相位之和为 $[(n+m)\phi]$，其唯一原像为 $Z(n+m)$，给出核心公式。最后，$\Gamma(0_K,z_{E_1}^{+1})$ 有两个点，而每个结合解在该处只有一个正质量点，所以严格全支撑条件不可能成立。证毕。
+
+**定理 23.10（内部群、全载体无单位与超群公理障碍）。** 对每个 $s$，$R_s$ 是 $(K,A_s)$ 的双侧理想，且其内部运算使 $c_s$ 成为从圆周加法群到 $R_s$ 的抽象群同构；内部单位为 $0_K$。子半群 $N_s$ 与正整数加法半群同构。但 $(K,A_s)$ 没有左单位，也没有右单位。更一般地，任何满足假设23.1支撑契约的概率核，都不能成为全载体 $K$ 上的 DJS 超群卷积。这里使用的标准超群单位及对合支撑公理见 László Székelyhidi，*Functional Equations on Hypergroups*，[§1，公理(H3)—(H4)及(D3)—(D4)，作者提供的PDF第1—3页](https://szekelyhidilaszlo.webzenit.hu/wp-content/uploads/2014/05/Functional-equations-on-hypergroups-styled.pdf)。
+
+**证明。** 只要一个输入在 $R_s$ 中，输出就是 $c_s(H(x)+H(y))\in R_s$，故 $R_s$ 为双侧理想。又有
+$$
+A_s(c_s(\theta),c_s(\rho))=c_s(\theta+\rho),\qquad
+c_s(0)=0_K,\qquad
+A_s(c_s(\theta),c_s(-\theta))=0_K.
+$$
+$Hc_s$ 为恒等映射，而 $c_s$ 按定义满到 $R_s$，所以这给出所述抽象群同构。另一方面，
+$$
+A_s(z_{E_m}^{-s},z_{E_n}^{-s})=z_{E_{m+n}}^{-s},
+$$
+而相位指标互异，故 $m\mapsto z_{E_m}^{-s}$ 给正整数加法半群到 $N_s$ 的同构。
+
+若 $e$ 是全载体上的左单位，则 $A_s(e,0_K)=0_K$；读取相位得到 $H(e)=0$，所以 $e=0_K$。然而
+$$
+A_s(0_K,z_{E_1}^{-s})=z_{E_1}^s\ne z_{E_1}^{-s}.
+$$
+这排除左单位。右单位同样先被迫为 $0_K$，再由右零切片公式排除。
+
+最后，标准 DJS 超群公理特别要求存在单位 $e$ 和对合 $\iota$，满足
+$$
+P_{e,x}=P_{x,e}=\delta_x,\qquad
+\iota^2=\operatorname{id},\qquad
+e\in\operatorname{supp}P_{x,y}\Longleftrightarrow y=\iota(x).
+$$
+最后一式是通常对合支撑公理的等价写法。单位律在 $(e,0_K)$ 处与相位契约共同迫使 $e=0_K$。固定任意 $m\ge1$，取 $r_m=Z(m)$。由于 $H(r_m)+E_m=0$ 且零相位只有一个原像，
+$$
+P_{r_m,z_{E_m}^{+1}}=P_{r_m,z_{E_m}^{-1}}=\delta_{0_K}.
+$$
+对合支撑公理因而同时要求
+$$
+z_{E_m}^{+1}=\iota(r_m)=z_{E_m}^{-1},
+$$
+与分裂纤维的两点互异矛盾。这个障碍已经发生在单位和对合支撑公理上，无需诉诸任何拓扑或可测性条件。证毕。
+
+**定理 23.11（许可关系本身的结合律）。** 假设23.1下，集合值关系确实满足
+$$
+\bigcup_{u\in\Gamma(x,y)}\Gamma(u,z)
+=
+\bigcup_{v\in\Gamma(y,z)}\Gamma(x,v)
+\qquad(x,y,z\in K).
+$$
+更准确地，令 $\lambda=H(x)+H(y)+H(z)$，共同值为
+$$
+\begin{cases}
+\{k_\lambda\},&\lambda\notin E,\\
+\{z_\lambda^\sigma:
+\sigma\in\mathcal S(x)\cup\mathcal S(y)\cup\mathcal S(z)\},
+&\lambda\in E.
+\end{cases}
+$$
+
+**证明。** 先证明对每个输入对都有
+$$
+\bigcup_{u\in\Gamma(x,y)}\mathcal S(u)
+=\mathcal S(x)\cup\mathcal S(y).
+$$
+若 $H(x)+H(y)\in E$，许可输出恰按右侧符号逐个列出，而每个分裂输出的符号集为单点，所以等式成立。若相位和不在 $E$，唯一输出非分裂，左侧为 $\{-1,+1\}$。此时两输入不可能都分裂，因为 $E+E\subseteq E$；至少一个输入非分裂，故右侧也为 $\{-1,+1\}$。
+
+若最终相位 $\lambda$ 非分裂，两个括号中的每个最终输出均为 $k_\lambda$；中间许可纤维非空，故两边确为该单点集。若 $\lambda$ 分裂，则左括号允许的符号集合是
+$$
+\bigcup_{u\in\Gamma(x,y)}
+\bigl(\mathcal S(u)\cup\mathcal S(z)\bigr)
+=\mathcal S(x)\cup\mathcal S(y)\cup\mathcal S(z).
+$$
+右括号用同一恒等式得到完全相同的符号集合。两点纤维的标记唯一确定输出，结论成立。证毕。
+
+**定理 23.12（常偏置权重的精确结合缺陷）。** 对 $r\in[0,1]$，定义
+$$
+B^{(r)}_{x,y}=rP^{+1}_{x,y}+(1-r)P^{-1}_{x,y},
+$$
+并以 $*_r$ 表示其有限卷积。这是可容许核；在许可纤维只有一点时取该 Dirac 分布，在许可纤维有两点时，正、负标记的质量分别为 $r,1-r$。它结合当且仅当 $r\in\{0,1\}$。
+
+更具体地，固定任意 $m\ge1$，取 $x_+=z_{E_m}^{+1}$ 和 $y_\pm=z_{E_{2m}}^{\pm1}$，则
+$$
+(\delta_{0_K}*_r\delta_{x_+})*_r\delta_{x_+}
+=(2r-r^2)\delta_{y_+}+(1-r)^2\delta_{y_-},
+$$
+$$
+\delta_{0_K}*_r(\delta_{x_+}*_r\delta_{x_+})
+=r\delta_{y_+}+(1-r)\delta_{y_-}.
+$$
+特别地，对许可双点纤维赋等概率的核，在三元组 $(0_K,z_{E_1}^{+1},z_{E_1}^{+1})$ 上给出不同结果：
+$$
+\frac34\delta_{z_{E_2}^{+1}}+\frac14\delta_{z_{E_2}^{-1}}
+\ne
+\frac12\delta_{z_{E_2}^{+1}}+\frac12\delta_{z_{E_2}^{-1}}.
+$$
+
+**证明。** 两个候选均可容许，故其凸组合仍可容许。若许可纤维是单点，两候选都取该点；若许可纤维有两点，两输入不是同号分裂输入，故 $A_{+1}$ 取正号而 $A_{-1}$ 取负号，得到所述权重。
+
+另记 $x_-=z_{E_m}^{-1}$。由定义，
+$$
+B^{(r)}_{0_K,x_+}=r\delta_{x_+}+(1-r)\delta_{x_-},
+\qquad B^{(r)}_{x_+,x_+}=\delta_{y_+},
+$$
+$$
+B^{(r)}_{x_-,x_+}=r\delta_{y_+}+(1-r)\delta_{y_-},
+\qquad
+B^{(r)}_{0_K,y_+}=r\delta_{y_+}+(1-r)\delta_{y_-}.
+$$
+对第一层有限分布逐项卷积，左括号为
+$$
+r\delta_{y_+}
++(1-r)\bigl(r\delta_{y_+}+(1-r)\delta_{y_-}\bigr),
+$$
+右括号为 $B^{(r)}_{0_K,y_+}$，即得两个公式。它们在正标记处的质量差是 $r(1-r)$，故每个 $0<r<1$ 都不结合。两个端点分别为定理23.9已证明结合的 $P^{-1}$ 与 $P^{+1}$。取 $r=1/2,m=1$ 得到所列等概率反例。证毕。
+
+**定理 23.13（仅保留相位兼容时的随机边界）。** 若把精确支撑契约放宽为
+$$
+\operatorname{supp}Q_{x,y}\subseteq
+H^{-1}(\{H(x)+H(y)\}),
+$$
+则存在真正非 Dirac 的结合概率核。更一般地，任给一族
+$$
+\eta_\theta\in\mathcal D_f(K),\qquad
+\operatorname{supp}\eta_\theta\subseteq H^{-1}(\{\theta\}),
+$$
+公式 $Q_{x,y}=\eta_{H(x)+H(y)}$ 总定义一个相位兼容的结合核。
+
+**证明。** 固定 $x,y,z$。每个 $u\in\operatorname{supp}Q_{x,y}$ 都有 $H(u)=H(x)+H(y)$，所以
+$$
+\sum_u Q_{x,y}(u)Q_{u,z}
+=\sum_u Q_{x,y}(u)\eta_{H(x)+H(y)+H(z)}
+=\eta_{H(x)+H(y)+H(z)}.
+$$
+对右括号作同样的有限求和，得到同一分布，因此结合。取
+$$
+\eta_\theta=
+\begin{cases}
+\frac12\delta_{z_\theta^{+1}}+\frac12\delta_{z_\theta^{-1}},
+&\theta\in E,\\
+\delta_{k_\theta},&\theta\notin E
+\end{cases}
+$$
+即得非 Dirac 实例。但是对 $x=y=z_{E_m}^{+1}$，
+$$
+Q_{x,y}=\frac12\delta_{z_{E_{2m}}^{+1}}
++\frac12\delta_{z_{E_{2m}}^{-1}},
+\qquad
+\Gamma(x,y)=\{z_{E_{2m}}^{+1}\}.
+$$
+它给被精确关系排除的负标记赋予正质量，故不满足假设23.1的支撑契约，也不是定理23.9的反例。证毕。
+
+## 追加锚（本行以下为增补区）

@@ -1,0 +1,13 @@
+**定理。** 若 $S\subset\mathcal F_+$ 是有限集且 $1\in S$，则
+
+$$
+\boxed{
+\sum_{x\in S}x\in\mathcal F_+
+\iff
+\exists r\ge1:\quad
+S=\{1\}\cup\{F_{2j+1}:1\le j<r\}.
+}\tag{FSP2}
+$$
+
+在成立时 $r$ 唯一，且 $\sum_{x\in S}x=F_{2r}$。
+

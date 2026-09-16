@@ -1,0 +1,6 @@
+并且对每个集合 $X$、每个有效码 $c$ 和每个集合 $B\subseteq\mathfrak V_Z$，
+$$
+\operatorname{El}(\operatorname{Enc}(X))=\operatorname{Enc}[X]=X^*,\qquad
+\operatorname{El}(\operatorname{Pack}(B))=B,\qquad
+\operatorname{Pack}(\operatorname{El}(c))=c.
+$$

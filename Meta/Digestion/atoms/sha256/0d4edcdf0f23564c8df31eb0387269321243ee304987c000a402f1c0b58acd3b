@@ -1,0 +1,20 @@
+### U.2. Support transport under odd square multipliers
+
+**Theorem.** For every m>=1 and every odd t>1,
+
+\[
+\boxed{s(m)\mid s(mt^2),\qquad s(m)\ne s(mt^2).}\tag{U.4}
+\]
+
+**Proof.** If an odd prime r has odd valuation in F_m, then U.1 changes that valuation by `v_r(t^2)=2v_r(t)`, so r still occurs in the core. For r=2, oddness of t preserves whether m is even and preserves v_2(m). If 3 divides m, U.2 therefore gives the same v_2 for F_m and F_(mt^2). If 3 does not divide m, the prime 2 is absent from s(m), which is sufficient for core divisibility. Thus every prime of s(m) remains in s(mt^2).
+
+Equality would put the distinct indices m and mt^2 in one exceptional square class. The ratios of distinct larger to smaller indices in those classes are 2,6,12, and none is an odd square greater than one. Equality is impossible.
+
+**Corollary.** For fixed m>=1, fixed odd t>1 and j>=0,
+
+\[
+\omega(s(mt^{2j}))\ge\omega(s(m))+j.\tag{U.5}
+\]
+
+**Proof.** Every step in U.4 is strict divisibility between squarefree integers, hence adds at least one prime divisor. Induction on j proves the bound.
+

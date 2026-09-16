@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c8b0adb727c994bb54b005b3df103d03ddbc3eb42aa260357b7027d67dab241c
+  normalized_sha256: sha256:c8b0adb727c994bb54b005b3df103d03ddbc3eb42aa260357b7027d67dab241c
+cas_ref: sha256:c8b0adb727c994bb54b005b3df103d03ddbc3eb42aa260357b7027d67dab241c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本子句限定跨表示成本比较所须固定的数据和比较关系，是使用范围约定，没有待证明命题。
+    previous_atom_id: 9679df7405f311eb0f1ddd42d60544a78caa5c0d3c6c73d9acaac9676bb76161
+    next_atom_id: fbcbc9e12f39f329d18ad8eb6da30e97f5f378c45f808d1efa64e2e4a09b1122
