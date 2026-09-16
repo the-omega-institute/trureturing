@@ -17,7 +17,6 @@
   },
   "malformed_rational_rejections": 4,
   "nongrid_one_state": {
-    "failures": [],
     "index_bits": 0,
     "max_supplied_integer_bits": 3,
     "scalar_comparisons": 13,
@@ -635,7 +634,6 @@
     }
   ],
   "representative": {
-    "failures": [],
     "index_bits": 5,
     "max_supplied_integer_bits": 25,
     "scalar_comparisons": 321,

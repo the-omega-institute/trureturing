@@ -20,6 +20,14 @@ The retained certificate has 29 states, initial index 14, and zero-report target
 malformed input. A rejected certificate need not disprove accuracy on reachable
 histories. Generation uses the uniform grid even when a smaller observer exists.
 
+Successful verification outputs have `valid: true` and omit `failures`; state,
+comparison, and integer/index bit counts remain present. Failed scalar checks
+have `valid: false` and a nonempty `failures` list containing every failed check
+label from the evaluated comparisons. The retained `checks` summaries use the
+same sparse success shape and keep the exact expected corruption labels in
+`corrupt_rejections`. An unexpected check failure raises before a report is
+written and exits nonzero.
+
 The JSON schema has `schema`, `parameters`, `initial`, and `states`. Each state
 has `lo`, `hi`, `readout`, and two `targets` in report order 0, 1. Rational values
 are pairs of decimal strings with positive denominators, such as `["1", "4"]`;

@@ -180,10 +180,13 @@ def verify(certificate):
     def result():
         operand_bits = max(max(abs(q.n).bit_length(), q.d.bit_length())
                            for q in [p, r, eps] + [q for row in parsed for q in row[:3]])
-        return {"valid": not failures, "states": n,
-                "scalar_comparisons": comparisons, "failures": failures,
-                "max_supplied_integer_bits": operand_bits,
-                "index_bits": (n - 1).bit_length()}
+        outcome = {"valid": not failures, "states": n,
+                   "scalar_comparisons": comparisons,
+                   "max_supplied_integer_bits": operand_bits,
+                   "index_bits": (n - 1).bit_length()}
+        if failures:
+            outcome["failures"] = failures
+        return outcome
 
     for j, (lo, hi, y, _) in enumerate(parsed):
         check(r, lo, f"range:{j}:lower")
@@ -241,6 +244,7 @@ def checks():
                 cert = construct(p, r, eps)
                 outcome = verify(cert)
                 require(outcome["valid"], f"sweep failed: {p_text}, {r_text}, {eps}")
+                require("failures" not in outcome, "successful verification includes failures")
                 require(outcome["scalar_comparisons"] == 11 * len(cert["states"]) + 2,
                         "comparison count")
                 cases.append({"p": p.pair(), "r": r.pair(), "eps": eps.pair(),
@@ -256,9 +260,14 @@ def checks():
     base = construct(Q(1, 4), Q(1, 4), Q(1, 16))
     require(len(base["states"]) == 29 and base["initial"] == 14
             and base["states"][14]["targets"][0] == 21, "representative grid")
+    representative = verify(base)
+    require(representative["valid"] and "failures" not in representative,
+            "representative verification output")
 
     rejections = {}
-    for kind in ("transition", "readout", "initial"):
+    for kind, expected in (("transition", "transition:14:0:upper"),
+                           ("readout", "accuracy:14:upper"),
+                           ("initial", "initial:upper")):
         bad = copy.deepcopy(base)
         if kind == "transition":
             bad["states"][14]["targets"][0] = 0
@@ -268,18 +277,23 @@ def checks():
             bad["initial"] = 0
         outcome = verify(bad)
         require(not outcome["valid"], f"corrupt {kind} accepted")
+        require(outcome["failures"] == [expected], f"corrupt {kind} diagnostics")
         rejections[kind] = outcome["failures"]
 
     altered = copy.deepcopy(base)
     altered["states"][14]["readout"] = Q(501, 1000).pair()
-    require(verify(altered)["valid"], "valid altered readout rejected")
+    altered_outcome = verify(altered)
+    require(altered_outcome["valid"] and "failures" not in altered_outcome,
+            "valid altered readout verification output")
     # A genuinely nongrid certificate checks generic N=1 and interval semantics.
     one = {"schema": SCHEMA,
            "parameters": {"p": Q(1, 4).pair(), "r": Q(1, 4).pair(), "eps": Q(1, 4).pair()},
            "initial": 0,
            "states": [{"lo": Q(1, 4).pair(), "hi": Q(3, 4).pair(),
                        "readout": HALF.pair(), "targets": [0, 0]}]}
-    require(verify(one)["valid"] and verify(one)["scalar_comparisons"] == 13,
+    one_outcome = verify(one)
+    require(one_outcome["valid"] and "failures" not in one_outcome
+            and one_outcome["scalar_comparisons"] == 13,
             "nongrid one-state certificate")
     malformed = 0
     for wrong in ([0.25, "4"], ["1", "0"], ["1", "-4"], [True, "4"]):
@@ -326,9 +340,9 @@ def checks():
                         == u1 / (u0 + u1), "scalar versus two-component update")
                 stack.append((word + str(b), u0, u1, row["targets"][b]))
     return {"parameter_sweeps": cases, "sweep_count": len(cases),
-            "representative": verify(base), "corrupt_rejections": rejections,
+            "representative": representative, "corrupt_rejections": rejections,
             "valid_altered_readout": "501/1000 at state 14",
-            "nongrid_one_state": verify(one), "malformed_rational_rejections": malformed,
+            "nongrid_one_state": one_outcome, "malformed_rational_rejections": malformed,
             "source_order": {"emit_then_flip": str(source_order), "flip_then_emit": str(flip_first)},
             "bounded_history_crosscheck": {"parameter_triples": 3, "max_length": 8,
                                            "words_including_empty": history_count}}
