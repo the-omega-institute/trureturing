@@ -344,3 +344,112 @@ EXIT=0
 Erdős 本人在 [Er79] 说「it is extremely doubtful」存在无穷多个这样的 n,并指出更强的形式需要
 Schinzel 假设 H。把界继续往上推(分段筛可达 10^10 量级)不改变这个判断,故本轮不继续投入,
 按 §2.7 预算包络换靶。
+
+## R35(2026-09-16):erdosproblems.com 全库徽章普查(1–1200),与 #458 的等价归约
+
+R34 只取了两段各 60 题的样本。本轮把全库 1–1200 逐页取下并解析徽章,器与读数都入仓,
+以后选题不必再重取。
+
+```
+$ python3 tools/scripts/agent/openproblem/erdos-badge-scan.py \
+    --start 1 --end 1200 --cache <cache> --badges VERIFIABLE,FALSIFIABLE,DECIDABLE
+OPEN         582
+PROVED       331
+DISPROVED    137
+SOLVED        98
+FALSIFIABLE   25
+NO-BADGE      11
+DECIDABLE      9
+VERIFIABLE     7
+EXIT=0
+```
+
+合计 1200,与编号区间一致;`NO-BADGE` 11 条是页面无 `prize` 块的条目,按 §2.9 单列而不并入任何
+一栏——**未解析出的徽章不得看起来像某个徽章**。
+
+**可有限判定的一档共 41 条**(`VERIFIABLE` 7 + `FALSIFIABLE` 25 + `DECIDABLE` 9),
+**其中 `(LEAN)` 标记为 0 条**——已 Lean 验证的徽章只出现在已判定条目上,故这 41 条都还没有被
+形式化结算。这与 R34 的第 1 条观察一致:该题库正被系统性 Lean 形式化,盲扫已判定条目重复风险高,
+而这一档是尚未被触及的那部分。
+
+**`FALSIFIABLE` 才是本仓可用的那一栏。** §3.3 禁止普通正向有限实例取得用途准入,
+`certified-instance` 与 `bounded-enumeration` 只能走经验证的 `refutes`;而 `FALSIFIABLE` 的定义
+正是「open, but could be disproved with a finite counterexample」,反例的交付形态天然是 `refutes`。
+`VERIFIABLE`(有限例子即可证明)找到例子也只能按反驳侧组织(它反驳的是「不存在这样的对象」),
+`DECIDABLE`(已归约到一次有限检查)通常那次检查本身超出本机预算。
+
+### 41 条里按可计算性排序的前五,及为何只跑了一条
+
+| # | 徽章 | 判据的计算形状 | 处置 |
+| --- | --- | --- | --- |
+| 458 | FALSIFIABLE | 素数间隙内的素数幂之积,一次线性筛 | **已跑,见下** |
+| 699 | FALSIFIABLE | Kummer 进位数给出 `v_p(C(n,i))`,每个 n 是 O(n²) 对 | **已跑,见下** |
+| 993 | FALSIFIABLE | 枚举 n 点树 + 独立集 DP,n≈20 时 823065 棵 | 未跑 |
+| 287 | FALSIFIABLE | 单位分数、相邻差 ≤2:区间补集是非相邻子集和 | **不可穷举**,见下 |
+| 779 | FALSIFIABLE | 反例须遍历 `(p_n, P)` 内全部素数,P 为素数阶乘 | **不可穷举** |
+
+#287 的不可行性是算出来的,不是感觉:相邻差 ≤2 等价于 `S = [a,b] \ M` 且 `M` 无相邻元,于是
+`H(b)-H(a-1) - Σ_{m∈M} 1/m = 1`;`M` 至多取一半元素,故 `H(b)-H(a-1) ∈ [1,2]`,即 `b/a ∈ [e,e²]`。
+`a=100` 时区间长约 638,其无相邻子集数是 Fibonacci(640) 量级,折半相遇也无济于事。`a` 只能扫到十几。
+
+### #458 — 判据可化简为一行,已查到 `p_k < 2×10⁷`,无反例
+
+Erdős–Graham,`FALSIFIABLE`:记 `[1,…,m] = lcm(1..m)`,是否对所有 `k ≥ 1` 有
+`[1,…,p_{k+1}-1] < p_k·[1,…,p_k]`?
+
+**不必物化任何 lcm。** `L(p_k) = p_k·L(p_k - 1)`,而在 `(p_k, p_{k+1})` 内 lcm 只因素数幂 `q^a`
+(`a ≥ 2`)各增加一个因子 `q`,故原式等价于
+
+  `∏ { q : q^a 是 (p_k, p_{k+1}) 内的素数幂 } < p_k`。
+
+```
+$ python3 tools/scripts/agent/openproblem/erdos458-lcm-gap-check.py 20000000
+primes below 20000000: 1270607
+prime powers q^a (a>=2) below 20000000: 732
+  control k=1 p_k=2 p_(k+1)=3 prod=1 < p_k -> True
+  control k=2 p_k=3 p_(k+1)=5 prod=2 < p_k -> True
+  control k=3 p_k=5 p_(k+1)=7 prod=1 < p_k -> True
+  control k=4 p_k=7 p_(k+1)=11 prod=6 < p_k -> True
+  control k=5 p_k=11 p_(k+1)=13 prod=1 < p_k -> True
+  control k=6 p_k=13 p_(k+1)=17 prod=2 < p_k -> True
+counterexamples (prod >= p_k): 0
+EXIT=0
+```
+
+**阳性对照说明那个 0 是搜过了。** `prod` 在前六个 k 上取到 1、2、1、6、1、2 三个不同值,判据不是恒真;
+`k=4` 处 `prod = 2·3 = 6`(间隙 `(7,11)` 含 8 与 9)对 `p_k = 7`,只差 1 就相等——最紧的一处在最前面,
+往后 `q ≤ p_{k+1}^{1/2}` 而 `p_k` 线性增长,余量迅速拉开。
+
+**这不是进展,按 §3.6 ③ 记。** 该题页未记录前人搜索上界,故不能声称 `2×10⁷` 超出已知范围;
+按 §2.9 记为「已测 `p_k < 2×10⁷` 无命中,前人上界未知」。归约本身(等价于素数幂之积的不等式)
+是可复用的结论,故留在此处;继续把界往上推不改变判断,按 §2.7 预算包络换靶。
+
+### #699 — 已查到 `n ≤ 400`,无反例;判据的界属于「对」不属于任一下标
+
+Erdős–Graham,`FALSIFIABLE`:是否对每个 `1 ≤ i < j ≤ n/2` 都存在素数 `p ≥ i` 使
+`p | gcd(C(n,i), C(n,j))`?
+
+Kummer 定理给出 `v_p(C(n,i))` = 以 p 为基数做 `i + (n-i)` 的进位数,于是「p 整除 C(n,i)」不必造出
+任何二项式系数;每个 i 做一个素数位图,配对时取交。
+
+```
+$ python3 tools/scripts/agent/openproblem/erdos699-binomial-gcd-check.py 400
+control (stronger demand p>=j) first failure: (6, 1, 3)
+  n<=100 ok / n<=200 ok / n<=300 ok / n<=400 ok
+result: no counterexample for n <= 400
+EXIT=0
+```
+
+**`p ≥ i` 这个界是「对」的性质,不是任一下标自己的性质。** 若把它写成每行位图只保留 `p ≥` 自己的
+下标,算出来的其实是更强的 `p ≥ j`,它在 `(n,i,j) = (6,1,3)` 处就假——`gcd(C(6,1), C(6,3)) = gcd(6,20) = 2`,
+`p = 2` 满足 `p ≥ i = 1` 但不满足 `p ≥ j = 3`。这条更强判据因此正好用作阳性对照,器里以断言钉住:
+**扫不出反例的判据必须先证明它能失败**。
+
+同 §3.6 ③:该题页未记录前人搜索上界,故 `n ≤ 400` 不作进展,按 §2.9 记为「已测 `n ≤ 400` 无命中,
+前人上界未知」。
+
+### 对选题函数的结论
+
+Erdős 这条线的可结算面就是上表那 41 条,已全部列名。本轮跑掉两条(#458、#699),两条都无反例,
+且两条都没有前人上界可比,故按 §3.6 ③ 都不作进展;#993 仍在预算内未跑。相较之下 OEIS 的 `%F`/`%C` 猜想线本会话产出 8 条已合入的结算。
+**按每小时结算数排序,OEIS 线优先;Erdős 线按上表逐条推进,不再重新普查徽章。**
