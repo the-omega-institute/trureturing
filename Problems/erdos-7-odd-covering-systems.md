@@ -39,10 +39,10 @@ index 309 with certified supported `Gamma<4331`; the rational stopping
 threshold is greater than 4732. The proof and exact certificate are given in
 (US1)--(US12). Arbitrary head assignments remain unresolved.
 
-The pure-head continuation (PH1)--(PH7), sharpened by (AD1)--(AD4), excludes **arbitrary**
+The pure-head continuation (PH1)--(PH7), sharpened by (AD1)--(AD5), excludes **arbitrary**
 `{3,5,7}` head assignments and heights when all other primes are at least
 19, with no tail support or graph restrictions. The odd parts 315 and 945
-in the frozen 5040 fibre both permit tail cutoff 17, by (PH7).
+in the frozen 5040 fibre both permit tail cutoff 13, by (AD5).
 Thus a hypothetical cover must involve at least one of 11, 13 and 17.
 These missing-small-prime hypotheses remain; unrestricted #7 is open.
 
@@ -366,8 +366,8 @@ Each of the following hypotheses implies noncoverage:
 
 | Head period | Every other prime factor | Tail restrictions |
 |---|---:|---|
-| \(Q\mid315\) | \(\ge17\) | none |
-| \(Q\mid945\) | \(\ge17\) | none |
+| \(Q\mid315\) | \(\ge13\) | none |
+| \(Q\mid945\) | \(\ge13\) | none |
 | \(Q=3^a5^b7^c\), arbitrary finite \(a,b,c\ge0\) | \(\ge19\) | none |
 
 In particular the first two rows use precisely the odd parts in the frozen
@@ -375,12 +375,14 @@ In particular the first two rows use precisely the odd parts in the frozen
 in one modulus, the total prime count, or the interaction graph. The first
 two rows bound the head exponents even in classes ending at later primes.
 The absent small primes are genuine hypotheses: the three rows respectively
-exclude \(\{11,13\}\), \(\{11,13\}\), and \(\{11,13,17\}\).
+exclude \(\{11\}\), \(\{11\}\), and \(\{11,13,17\}\).
 Thus the third row implies that any hypothetical odd distinct cover must
 use at least one prime in \(\{11,13,17\}\). It does not resolve #7.
-The initial constant-threshold certificates below establish the second
-row from 19 and the third from 23. Continuing the second from 17 gives
-(PH7); the adaptive schedule (AD1)--(AD4) gives the third row's cutoff 19.
+The initial constant-threshold certificates below establish these rows
+from 17, 19 and 23, respectively. The adaptive schedules (AD1)--(AD5)
+give the stated cutoffs. In particular, a hypothetical odd cover with
+no prime factor 11 must have \(3^4\), \(5^2\), or \(7^2\) dividing
+its least common multiple.
 
 **Preserve the pure-head product until the final conditioning.** Use the
 actual pure-survivor product law \(P_0\) from (FC4). For a finite endpoint
@@ -629,6 +631,49 @@ An independent implementation using target-state divisor convolution
 reproduces every charge and the full retained-state digest; independent
 trial division and positive-series logarithm bounds also give
 \(k=1395\) and stopping threshold greater than 53976.
+
+**Adaptive continuation of both 5040 odd heads from prime 13.** The
+same argument applies to the finite head laws (PH2), retaining their
+terminal atoms. For \(Q\mid315\), use head mean \(21/8\), second
+moment \(399/40\) and mixed charge \(49/120\). For \(Q\mid945\),
+these are \(45/16\), \(189/16\) and \(157/336\). Process every
+tail prime from 13 with a fixed integer-threshold schedule as in (AD1).
+The directed certificates give:
+
+| Head bound | Last prime | Global index | Tail steps | Total charge upper | Supported \(\Gamma\) upper |
+|---|---:|---:|---:|---|---|
+| 315 | 1021 | 172 | 167 | \(808205363366166533/10^{18}\) | \(470837795264907661091/191794636633833467<2455\) |
+| 945 | 32141 | 3448 | 3443 | \(243263384072888041/(25\cdot10^{16})\) | \(4873698555453475972051/26946463708447836<180866\) |
+
+For the two rows the exact second-moment upper bounds are respectively
+\(58955750078534228453/(125\cdot10^{15})\) and
+\(974934321797953504843/(2\cdot10^{17})\). The verified BBMST
+stopping lower bounds are
+\[
+ \begin{aligned}
+ k=172:\quad&
+ \frac{616354713939123394926331754277098284347}
+      {25\cdot10^{34}}>2465>2455,\\
+ k=3448:\quad&
+ \frac{22610845432447282250071455861855940497071}
+      {125\cdot10^{33}}>180886>180866.
+ \end{aligned}                                     \tag{AD5}
+\]
+Both total charges are strictly below one. All comparisons and the
+single final conditioning concern the same actual measure, so (AD5)
+restarts BBMST and proves noncoverage with unrestricted tails from 13.
+The existing verifier reproduces `finite_315_tail13_adaptive` and
+`finite_945_tail13_adaptive` in its adjacent certificate, including
+every selected threshold and charge.
+The certificate retains 192 and 8192 low product states, respectively;
+their omitted high-state contributions remain in the full moments.
+As in the arbitrary-height case, the schedules are verified directly
+without requiring a proof of global control optimality. The head
+exponents bound the entire original family, including later-ending
+moduli. Independent divisor-convolution implementations reproduce every
+step and both full retained-state digests; independent prime counting
+and positive-series logarithm bounds verify the displayed stopping
+inequalities. These are ordinary proofs with exact certificates.
 
 ### Homogeneous cylinder capacities and the extremal comb
 
@@ -7531,7 +7576,7 @@ allowed by (RK1)--(RK5) when each original modulus has at most two tail
 primes for the full star or three-prime heads, or at most three for the
 finite 315/945 heads, at the respective stated cutoffs. The finite
 switch (RK6)--(RK8) already removes support restrictions above its cutoffs;
-(PH1)--(PH7), sharpened by (AD1)--(AD4), further removes every tail support and graph restriction for
+(PH1)--(PH7), sharpened by (AD1)--(AD5), further removes every tail support and graph restriction for
 these head classes at the stated prime gaps. The head exponents for the
 315/945 rows and the missing primes remain genuine hypotheses. The star
 rows retain quantitative bounds, while (US1)--(US12) exclude all star

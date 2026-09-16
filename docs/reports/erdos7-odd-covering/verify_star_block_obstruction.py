@@ -652,31 +652,33 @@ def pure_head_unrestricted_stoploss(cases=None):
     return results
 
 
-def adaptive_head_stoploss(head_mass):
+def adaptive_head_stoploss(head_mass=None, *, finite_head=None,
+                           threshold_runs=None, first=19):
     """Certify a fixed varying-delta schedule; greedy selection is not trusted."""
     import hashlib
     from runpy import run_path
     continuation = run_path(str(Path(__file__).with_name("verify_finite_continuation.py")))
     # Each pair ends an inclusive prime interval on which the threshold is fixed.
     # The schedule is data: validity and the final strict inequality are rechecked.
-    threshold_runs = (
-        (19, 6), (29, 8), (31, 9), (41, 12), (43, 14),
-        (53, 16), (59, 18), (61, 20), (79, 24), (83, 30),
-        (103, 32), (113, 36), (157, 48), (163, 60), (199, 64),
-        (227, 72), (233, 80), (239, 84), (311, 96), (313, 108),
-        (317, 120), (401, 128), (449, 144), (467, 160), (619, 192),
-        (631, 216), (641, 224), (653, 240), (811, 256), (919, 288),
-        (971, 320), (977, 336), (983, 360), (1291, 384), (1319, 432),
-        (1327, 448), (1373, 480), (1697, 512), (1951, 576), (2069, 640),
-        (2083, 672), (2089, 720), (2797, 768), (2801, 800), (2861, 864),
-        (2903, 896), (3001, 960), (3011, 1008), (3739, 1024), (4363, 1152),
-        (4649, 1280), (4657, 1296), (4691, 1344), (4729, 1440), (6427, 1536),
-        (6451, 1600), (6661, 1728), (6737, 1792), (7001, 1920), (7013, 2016),
-        (8831, 2048), (8837, 2112), (8839, 2160), (8849, 2240), (10477, 2304),
-        (10487, 2400), (11239, 2560), (11261, 2592), (11369, 2688), (11471, 2880),
-        (11593, 3072),
-    )
-    first, last, scale = 19, threshold_runs[-1][0], 10**18
+    if threshold_runs is None:
+        threshold_runs = (
+            (19, 6), (29, 8), (31, 9), (41, 12), (43, 14),
+            (53, 16), (59, 18), (61, 20), (79, 24), (83, 30),
+            (103, 32), (113, 36), (157, 48), (163, 60), (199, 64),
+            (227, 72), (233, 80), (239, 84), (311, 96), (313, 108),
+            (317, 120), (401, 128), (449, 144), (467, 160), (619, 192),
+            (631, 216), (641, 224), (653, 240), (811, 256), (919, 288),
+            (971, 320), (977, 336), (983, 360), (1291, 384), (1319, 432),
+            (1327, 448), (1373, 480), (1697, 512), (1951, 576), (2069, 640),
+            (2083, 672), (2089, 720), (2797, 768), (2801, 800), (2861, 864),
+            (2903, 896), (3001, 960), (3011, 1008), (3739, 1024), (4363, 1152),
+            (4649, 1280), (4657, 1296), (4691, 1344), (4729, 1440), (6427, 1536),
+            (6451, 1600), (6661, 1728), (6737, 1792), (7001, 1920), (7013, 2016),
+            (8831, 2048), (8837, 2112), (8839, 2160), (8849, 2240), (10477, 2304),
+            (10487, 2400), (11239, 2560), (11261, 2592), (11369, 2688), (11471, 2880),
+            (11593, 3072),
+        )
+    last, scale = threshold_runs[-1][0], 10**18
     primes = primes_to(last)
     tail_primes = [q for q in primes if q >= first]
     cap = max(t for _, t in threshold_runs)
@@ -688,27 +690,58 @@ def adaptive_head_stoploss(head_mass):
         choices.extend((q, threshold) for q in tail_primes if previous < q <= end)
         previous = end
     require([q for q, _ in choices] == tail_primes,
-            'every prime from 19 through the stopping prime is processed')
+            'every prime from the first tail prime through stopping is processed')
     require(all(type(t) is int and 1 <= t <= q-2 for q, t in choices),
             'integer thresholds give nonnegative delta and positive denominator')
-    mixed = F(head_mass['mixed_head_mass_upper'])
-    require(mixed == F(82, 135) and 1-mixed == F(head_mass['pure_product_survival_lower']),
-            'same-law mixed-head charge from the coupled density certificate')
+    if finite_head is None:
+        mixed = F(head_mass['mixed_head_mass_upper'])
+        require(mixed == F(82, 135) and 1-mixed == F(head_mass['pure_product_survival_lower']),
+                'same-law mixed-head charge from the coupled density certificate')
+        coordinates = [(3, None, F(2)), (5, None, F(4, 3)), (7, None, F(6, 5))]
+    else:
+        coordinates = [(r['prime'], r['height'], 1/F(r['pure_survivor_density_lower']))
+                       for r in finite_head['coordinates']]
+        ratios = [c-1 for _, _, c in coordinates]
+        mixed = prod(1+r for r in ratios)-1-sum(ratios, F(0))
+        require(mixed == F(finite_head['mixed_budget']),
+                'finite mixed-head charge from the full-family cylinder caps')
     weights = [0]*(cap+1)
     weights[1] = scale
     mean = second = scale
 
-    def append_prime(p, c):
+    def append_prime(p, c, height=None):
         nonlocal weights, mean, second
         require(0 < c <= p, 'valid auxiliary height tails')
+        if height is None:
+            atoms = stoploss_atom_bounds(p, c, cap, scale)
+            factor1, factor2 = 1+c/F(p-1), 1+c*F(3*p-1, (p-1)**2)
+        else:
+            require(type(height) is int and height >= 1, 'positive finite head height')
+            exact_atoms = [F(0)]*(height+2)
+            exact_atoms[1] = 1-c/p
+            for f in range(2, height+1):
+                exact_atoms[f] = c*F(p-1, p**f)
+            # The terminal atom is the entire tail at the final allowed height.
+            exact_atoms[height+1] = c/F(p**height)
+            require(sum(exact_atoms) == 1 and min(exact_atoms) >= 0,
+                    'finite auxiliary head law including its terminal atom')
+            atoms = [stoploss_ceiling(scale*a.numerator, a.denominator)
+                     for a in exact_atoms]
+            factor1 = sum(f*a for f, a in enumerate(exact_atoms))
+            factor2 = sum(f*f*a for f, a in enumerate(exact_atoms))
         weights = stoploss_product_update(
-            weights, stoploss_atom_bounds(p, c, cap, scale), scale)
-        factor1, factor2 = 1+c/F(p-1), 1+c*F(3*p-1, (p-1)**2)
+            weights, atoms, scale)
         mean = stoploss_ceiling(mean*factor1.numerator, factor1.denominator)
         second = stoploss_ceiling(second*factor2.numerator, factor2.denominator)
+        return factor1, factor2
 
-    for p, c in ((3, F(2)), (5, F(4, 3)), (7, F(6, 5))):
-        append_prime(p, c)
+    head_mean = head_second = F(1)
+    for p, height, c in coordinates:
+        factor1, factor2 = append_prime(p, c, height)
+        head_mean *= factor1
+        head_second *= factor2
+    require(head_second == F(finite_head['product_moment_bound'] if finite_head else '325/18'),
+            'adaptive head law recovers the full-layout moment')
     charge = stoploss_ceiling(scale*mixed.numerator, mixed.denominator)
     steps = []
     for q, threshold in choices:
@@ -736,12 +769,14 @@ def adaptive_head_stoploss(head_mass):
     require(k >= 10, 'BBMST stopping index domain')
     stopping = continuation['stopping_threshold'](k)
     require(gamma < stopping, 'adaptive unrestricted-tail BBMST stopping')
-    return {'head': 'arbitrary_357_head', 'head_period_bound': None,
+    period = finite_head['period_bound'] if finite_head else None
+    result = {'head': f'head_divides_{period}' if period else 'arbitrary_357_head',
+            'head_period_bound': period,
             'head_primes': [3, 5, 7], 'tail_prime_lower_bound': first,
-            'omitted_prime_factors': [2, 11, 13, 17],
+            'omitted_prime_factors': [p for p in primes if p < first and p not in (3, 5, 7)],
             'last_prime': last, 'global_prime_index': k, 'scale': scale,
             'retained_product_states': cap, 'mixed_head_charge': str(mixed),
-            'head_product_mean': '16/5', 'head_product_second_moment': '325/18',
+            'head_product_mean': str(head_mean), 'head_product_second_moment': str(head_second),
             'threshold_runs': [{'last_prime': q, 'threshold': t} for q, t in threshold_runs],
             'total_charge_upper': str(F(charge, scale)),
             'survival_lower': str(F(scale-charge, scale)),
@@ -754,6 +789,15 @@ def adaptive_head_stoploss(head_mass):
             'final_low_state_digest': hashlib.sha256(
                 json.dumps(weights, separators=(',', ':')).encode()).hexdigest(),
             'scope': 'Distinct odd original moduli with arbitrary {3,5,7} exponents and every other prime at least 19; no tail support, exponent, graph or prime-count restriction. The full-family head heights, comparison, coupled head density and BBMST restart are separate ordinary mathematical inputs. No greedy optimality claim is needed.'}
+    if finite_head is not None:
+        result['head_heights'] = [[p, height] for p, height, _ in coordinates]
+        result['scope'] = ('Distinct odd original moduli with the full-family {3,5,7} head period '
+                           f'dividing {period} and every other prime at least {first}; '
+                           'the head-height bound includes moduli ending at future primes. '
+                           'No tail support, exponent, graph or prime-count restriction. '
+                           'The comparison and BBMST restart are separate ordinary mathematical '
+                           'inputs. No greedy optimality claim is needed.')
+    return result
 
 
 def unrestricted_star_stoploss():
@@ -1498,6 +1542,31 @@ def certificate():
     finite_945_tail17 = pure_head_unrestricted_stoploss(
         [(head, 17, 8192) for head in finite_heads if head["period_bound"] == 945])
     require(len(finite_945_tail17) == 1, "unique finite 945 head specialization")
+    finite_adaptive_runs = {
+        315: (
+            (17, 4), (23, 6), (31, 8), (47, 12), (67, 16), (71, 18),
+            (97, 24), (101, 27), (137, 32), (139, 36), (199, 48),
+            (277, 64), (293, 72), (307, 80), (443, 96), (449, 108),
+            (613, 128), (673, 144), (1021, 192),
+        ),
+        945: (
+            (17, 4), (19, 6), (31, 8), (37, 12), (59, 16), (61, 18),
+            (73, 24), (109, 32), (113, 36), (149, 48), (211, 64),
+            (227, 72), (283, 96), (419, 128), (443, 144), (571, 192),
+            (823, 256), (881, 288), (883, 320), (1129, 384), (1657, 512),
+            (1789, 576), (2357, 768), (2371, 864), (3467, 1024),
+            (3793, 1152), (3797, 1296), (5059, 1536), (5101, 1728),
+            (7591, 2048), (8423, 2304), (8431, 2560), (11551, 3072),
+            (11657, 3456), (11677, 3840), (17827, 4096), (20071, 4608),
+            (20101, 5120), (20113, 5184), (28517, 6144), (28817, 6912),
+            (28837, 7680), (32141, 8192),
+        ),
+    }
+    finite_adaptive = {
+        head['period_bound']: adaptive_head_stoploss(
+            finite_head=head, threshold_runs=finite_adaptive_runs[head['period_bound']], first=13)
+        for head in finite_heads
+    }
     return {
         "general_357_head": general_head,
         "extended_prime_square": {"cutoff": 40000, "scale": extended_scale,
@@ -1515,6 +1584,8 @@ def certificate():
         "unrestricted_star_stoploss": unrestricted_star_stoploss(),
         "pure_head_unrestricted_stoploss": pure_head_unrestricted_stoploss(),
         "finite_945_tail17_stoploss": finite_945_tail17[0],
+        "finite_315_tail13_adaptive": finite_adaptive[315],
+        "finite_945_tail13_adaptive": finite_adaptive[945],
         "head_mixed_mass_improvement": head_mass,
         "cm1_actual_head_sharpness": cm1_actual_head_sharpness(),
         "adaptive_head_stoploss": adaptive_head_stoploss(head_mass),
@@ -1586,6 +1657,12 @@ def main():
                       "adaptive_tail19_stopping_lower": data["adaptive_head_stoploss"]["stopping_lower"],
                       "finite_945_tail17_supported_Gamma_upper": data["finite_945_tail17_stoploss"]["supported_Gamma_upper"],
                       "finite_945_tail17_stopping_lower": data["finite_945_tail17_stoploss"]["stopping_lower"],
+                      "finite_tail13_adaptive_Gamma_bounds": {
+                          q: data[f"finite_{q}_tail13_adaptive"]["supported_Gamma_upper"]
+                          for q in (315, 945)},
+                      "finite_tail13_adaptive_stopping_lower": {
+                          q: data[f"finite_{q}_tail13_adaptive"]["stopping_lower"]
+                          for q in (315, 945)},
                       "comb_flow_comparisons": data["homogeneous_comb_capacity"]["flow_comparisons"],
                       "pure_head_unrestricted_Gamma_bounds": {row["head"]: row["supported_Gamma_upper"] for row in data["pure_head_unrestricted_stoploss"]},
                       "unrestricted_star_supported_Gamma_upper": data["unrestricted_star_stoploss"]["supported_Gamma_upper"],
