@@ -1,7 +1,8 @@
 # Rational observer certificates
 
 `rational_observer.py` constructs and checks the finite interval certificates in
-[ML §41](../../develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ML.md).
+[ML §41](../../develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ML.md) and the
+table-free integer evaluator in ML §42.
 It uses only the Python standard library. The model emits from the old hidden
 bit and then flips it; the initial hidden bit is uniform. The output predicts
 the **next zero report** after the supplied history.
@@ -12,7 +13,25 @@ From the repository root:
 python3 docs/reports/contextual-spacetime-ml/rational_observer.py generate --p 1/4 --r 1/4 --eps 1/16 --out docs/reports/contextual-spacetime-ml/rational_observer_certificate.json
 python3 docs/reports/contextual-spacetime-ml/rational_observer.py verify docs/reports/contextual-spacetime-ml/rational_observer_certificate.json
 python3 docs/reports/contextual-spacetime-ml/rational_observer.py checks --out docs/reports/contextual-spacetime-ml/rational_observer_results.json
+python3 docs/reports/contextual-spacetime-ml/rational_observer.py integer-checks --out docs/reports/contextual-spacetime-ml/integer_observer_results.json
+printf '0 1 0\n' | python3 docs/reports/contextual-spacetime-ml/rational_observer.py stream --p 1/4 --r 1/4 --eps 1/16
 ```
+
+`integer-checks` compares every grid readout and both successors against an
+independent `fractions.Fraction` reference, the retained 29-state table, reduced
+and unreduced inputs, the `k=1` saturation equality, both exact lower-index
+ties, parameter boundaries, a 10,000-report stream, and the pinned full-interval
+quotient counterexample. Its result is the registered
+`integer_observer_results.json` file.
+
+`stream` consumes one ASCII report bit at a time from standard input (whitespace
+is ignored). It emits one compact JSON line for the empty history and one after
+each report: `{"index": j, "prediction": ["numerator", "denominator"]}`.
+The prediction is the exact current `V0(j)/(A*B*m)` pair; no old transition
+denominator or report history is emitted or retained. The decimal JSON encoding
+is a transport format; ML §42's `O(b)` space and `O(b²)` per-report bound is for
+the explicitly charged binary fixed-buffer transducer, not for Python object
+allocation, JSON bytes, or host timing.
 
 The retained certificate has 29 states, initial index 14, and zero-report target
 21 at that index. Complete verification performs 321 scalar comparisons:
