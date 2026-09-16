@@ -1,0 +1,41 @@
+**theorem 36.13 (Iteration exponent and the observation-depth budget).** For fixed $0<\varepsilon<1$,
+$$
+\log\tau_{L,p}(\varepsilon)
+=2\log G_L-\log(p(1-p))+O_\varepsilon(1),
+$$
+where the bounded term is uniform over $L\ge1$ and $0<p<1$. In particular, for every fixed $0<p<1$,
+$$
+\lim_{L\to\infty}\frac{\log\tau_{L,p}(\varepsilon)}L=2\log\phi,
+\qquad
+\lim_{L\to\infty}\frac{\log\tau_{L,p}(\varepsilon)}{\log G_L}=2.
+$$
+These assertions include $p=1/2$.
+
+For sufficiently large $s=\sqrt{np(1-p)}$, define the largest mixed observation depth by
+$$
+\mathcal L_{p,\varepsilon}(n)
+=\max\{L\ge1:e_{L,p}(n)\le\varepsilon\}.
+$$
+It satisfies
+$$
+\max\{L\ge1:G_L\le\varepsilon s/64\}
+\le\mathcal L_{p,\varepsilon}(n)
+\le\max\{L\ge1:G_L<128s\},
+$$
+and hence
+$$
+\mathcal L_{p,\varepsilon}(n)
+=\log_\phi\sqrt{np(1-p)}+O_\varepsilon(1)
+$$
+as $np(1-p)\to\infty$, uniformly in $p$.
+
+**Proof.** Taking logarithms in Theorem 36.12 proves the first assertion with constants depending only on $\varepsilon$. The established formula from Theorem 20.9,
+$$
+G_L=\frac{\phi^{L+2}-(-\phi^{-1})^{L+2}}{\sqrt5},
+$$
+then proves both limits for fixed $p$.
+
+The upper error bound ensures mixing whenever $G_L\le\varepsilon s/64$. Conversely, if $e_{L,p}(n)\le\varepsilon<1$, Theorem 36.12 excludes $s^2\le G_L^2/16384$, so $G_L<128s$. For sufficiently large $s$ the sufficient set contains depth one, while the necessary set is finite. Depth monotonicity makes the maximum well defined. Applying the displayed growth formula for $G_L$ to the two bounds proves the depth estimate.
+
+The exponent two is thus an exponent in the observation-class count $G_L$ for an iteration budget. Neither limit defines a spatial dimension or identifies the iteration count with physical time. $\square$
+
