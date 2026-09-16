@@ -1,0 +1,34 @@
+**Proof.** Let $a\in\ell^1(S)$. For every integer $j\ge1$, the set
+$$
+S_j=\{s\in S:|a(s)|\ge1/j\}
+$$
+is finite. Otherwise finite subsets of arbitrarily large cardinality would make the defining supremum for $\|a\|_1$ infinite. Every nonzero coefficient belongs to some $S_j$, so
+$$
+\operatorname{supp}(a)=\bigcup_{j\ge1}S_j
+$$
+is at most countable. The sum defining the norm is therefore the usual absolutely convergent sum on this support, with its value independent of enumeration.
+
+For every $\epsilon>0$, the definition by finite suprema supplies a finite $F\subseteq S$ with
+$$
+\sum_{s\in F}|a(s)|>\|a\|_1-\epsilon.
+$$
+Taking finite suprema on the complement gives
+$$
+\|a-a\mathbf1_F\|_1=\sum_{s\notin F}|a(s)|<\epsilon.
+$$
+This proves finite-support density.
+
+For completeness, let $(a_j)$ be a Cauchy sequence. Each coordinate is Cauchy because
+$$
+|a_j(s)-a_k(s)|\le\|a_j-a_k\|_1.
+$$
+Let $a(s)$ be its limit. The Cauchy sequence has bounded norms, say bounded by $M$. For every finite $F$,
+$$
+\sum_{s\in F}|a(s)|=\lim_{j\to\infty}\sum_{s\in F}|a_j(s)|\le M.
+$$
+Thus $a\in\ell^1(S)$. Given $\epsilon>0$, take $N$ such that $\|a_j-a_k\|_1<\epsilon$ for $j,k\ge N$. Fixing $j\ge N$, taking the limit in each finite coordinate sum, and then taking its finite supremum yields
+$$
+\|a_j-a\|_1\le\epsilon.
+$$
+Therefore $a_j\to a$ in norm. The triangle inequality, homogeneity, and definiteness of the norm follow directly from its finite-supremum definition. QED.
+

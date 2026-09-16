@@ -1,0 +1,36 @@
+**theorem 26.6 (The phase observation algebra and deterministic closed-graph readout).** Define
+$$
+\mathcal R:C(K,\mathbb F)\longrightarrow B_{\mathbb F},\quad
+\mathcal Rf=a_f,\qquad
+H^*g=g\circ H,\qquad
+\mathscr A_{\mathbb F}=H^*C(\mathbb T,\mathbb F).
+$$
+Both $\mathcal R$ and $H^*$ are isometries. The space $\mathscr A_{\mathbb F}$ is a closed unital algebra, closed under conjugation when $\mathbb F=\mathbb C$, and
+$$
+\begin{aligned}
+\mathcal R(C(K,\mathbb F))\cap\operatorname{WAP}(\mathbb N_0,\mathbb F)
+&=\mathcal R(C(K,\mathbb F))\cap\operatorname{AP}(\mathbb N_0,\mathbb F)\\
+&=\mathcal R(\mathscr A_{\mathbb F}).
+\end{aligned}
+$$
+The equivalence relation detected by all these continuous WAP observations is exactly the phase relation:
+$$
+\bigl(\forall f\in\mathscr A_{\mathbb F},\ f(x)=f(y)\bigr)
+\quad\Longleftrightarrow\quad H(x)=H(y).
+$$
+
+Retain the closed addition graph
+$$
+\Gamma=\overline{\{(Z(n),Z(k),Z(n+k)):n,k\in\mathbb N_0\}}\subseteq K^3,\qquad
+\Gamma(x,y)=\{z:(x,y,z)\in\Gamma\}.
+$$
+For $f\in C(K,\mathbb F)$, the following are also equivalent to the conditions of theorem 26.4: $f$ has one common value on every nonempty output set $\Gamma(x,y)$; and there exists a continuous $D_f:K^2\to\mathbb F$ satisfying
+$$
+D_f(Z(n),Z(k))=f(Z(n+k))\qquad(n,k\ge0).
+$$
+When these conditions hold, this extension is unique and equals
+$$
+D_f(x,y)=g(H(x)+H(y)).
+$$
+The graph input-fiber classification used below is theorem 16.4. ([RECURSIVE_RELATIONAL_OBSERVATION.md](https://raw.githubusercontent.com/the-omega-institute/trureturing/c74985438ae17d205509255934bbd3ecf1f94d71/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md), theorem 16.4, complete statement and proof of the closed-addition-graph input-fiber classification, pinned commit `c74985438ae17d205509255934bbd3ecf1f94d71`.)
+
