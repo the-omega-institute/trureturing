@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e7be07996c312600572f755b8f2590c83c2c51aafc21b4bbb2e504fb5ee9617a
+  normalized_sha256: sha256:e7be07996c312600572f755b8f2590c83c2c51aafc21b4bbb2e504fb5ee9617a
+cas_ref: sha256:e7be07996c312600572f755b8f2590c83c2c51aafc21b4bbb2e504fb5ee9617a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶给出可数等价关系一词的定义，未声称任何具体关系满足该条件。
+    previous_atom_id: 2bedc55e68c9ccb68622e3ede062555a6b3b389d7a95645d61db8b449d7cd8d3
+    next_atom_id: cac0c8ba2eb034b87ec484b0e0cee1ecfa49aeb04ca8af5e46deaad086f367b1

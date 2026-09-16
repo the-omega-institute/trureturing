@@ -1,0 +1,13 @@
+### IP.9 Uniform two-cycle modulo 25
+
+Let ell>1 be an odd integer with $\chi(\ell)=-1$, and retain the actual
+integer quotient
+
+$$
+B_{\ell,k}=F_{\ell^{k+1}}/F_{\ell^k}\quad(k\ge0).
+$$
+
+Primality of ell is not needed in this section. When ell is a prime at
+least seven, IP5 identifies its factors and exponents with exact ranks
+and initial depths.
+

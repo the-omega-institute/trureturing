@@ -1,0 +1,5 @@
+**定理 326.2。** 对每个 $t\in\mathbb Z_o$，
+$$
+\bigl(\forall 1\le i\le k,\ \chi^{\rm rat}_{\theta^i}(tu)=0\bigr)
+\iff L\mid t.
+$$

@@ -1,0 +1,23 @@
+**Proof.** Subtract the two divisor sums at successive p-powers to
+obtain the exact integer quotient; positivity follows from increasing
+Lucas numbers at these positive indices. With m=p^(k+1), n=p^k both
+odd, the trace-norm and Catalan identities give
+
+$$
+(L_m-L_n)(L_m+L_n)=5(F_m^2-F_n^2)=5F_{m+n}F_{m-n}.
+$$
+
+NP1 makes L_m+L_n=2 modulo p, a unit. The same valuation argument as
+NP2 therefore gives v_p(L_m-L_n)=h_p+k. Divide by p^(k+1) to obtain
+NP11. For the first digit, take traces in NP7 after multiplication by
+Q^(epsilon*n), using tr(Q^a H)=5F_a and F_(epsilon*n)=F_n. This gives
+
+$$
+\frac{L_m-L_n}{p^{k+1}}
+ \equiv\frac52\epsilon^k q_p\pmod p.
+$$
+
+Together with NP8 this proves the last statement. Orbit integrality
+comes from the actual graph action, not from assuming the desired
+prime divisibility.
+

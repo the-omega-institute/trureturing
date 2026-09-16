@@ -1,0 +1,9 @@
+### FSP.3 全部正整数上的 Fibonacci 约数和
+
+对正整数 $M$，定义实际约数值集合与和
+
+$$
+\mathcal D_F(M)=\{d>0:d\mid M,\ d\in\mathcal F_+\},\qquad
+\sigma_F(M)=\sum_{d\in\mathcal D_F(M)}d.
+$$
+

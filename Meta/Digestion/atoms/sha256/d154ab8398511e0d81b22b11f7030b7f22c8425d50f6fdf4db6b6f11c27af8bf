@@ -1,0 +1,29 @@
+### S5040.2 A modulo-nine identity and its primitive-block consequence
+
+Define the integer-valued character
+
+$$
+\eta(n)=\begin{cases}
+1,&n\equiv1,11\pmod{12},\\
+-1,&n\equiv5,7\pmod{12},\\
+0,&\gcd(n,6)>1.
+\end{cases}
+$$
+
+It is multiplicative: on the units modulo twelve the classes 1,11 form the
+kernel of an index-two character, and multiplying a nonunit leaves a nonunit.
+For integers x coprime to three define
+
+$$
+\lambda_3(x)=\frac{x^2-1}{3}\pmod3.
+$$
+
+The division takes place in the integers. The residue depends only on x
+modulo nine, and expansion of (xy)^2-1 gives
+
+$$
+\lambda_3(xy)=\lambda_3(x)+\lambda_3(y),\qquad
+\lambda_3(x^h)=h\lambda_3(x).
+\tag{S1}
+$$
+

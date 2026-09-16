@@ -1,0 +1,19 @@
+### LFO.5. The exact finite set of exclusions
+
+**Theorem.** For every positive M and prime ell>=7,
+
+$$
+\boxed{[F_\ell]_M\notin C(M)
+\quad\Longleftrightarrow\quad
+\exists p\text{ prime}:\ p^2\mid M,\ \rho(p)=\ell,\ q_p\ne0.}\tag{LFO4}
+$$
+
+Consequently the prime indices excluded by M are exactly the distinct prime ranks at least seven of the non-WSS primes whose squares divide M. This is a finite set, contained in [7,(P(M)+1)/2].
+
+**Proof.** By LFO1, exclusion is equivalent to p dividing F_ell exactly once for some p^2|M. Such p is different from two and five and has rank ell by LFO3; its exponent is its initial depth. EMW-B3 makes exponent one equivalent to q_p nonzero. These steps reverse to prove both implications. Finally p<=P(M) and p>=2ell-1 give the bound on ell.
+
+**Proposition.** The integers F_7=13 and N=29^2*37^3=42599173 have the same residue four modulo nine. The latter is powerful, is not a perfect power, and its two prime divisors exceed thirteen and are both one modulo four.
+
+**Proof.** The displayed factorizations and residues are exact integer calculations, and the exponents two and three have gcd one. The primes twenty-nine and thirty-seven do not divide F_7 and are not asserted to have rank seven. This example records the distinction between residue compatibility and membership in an actual prime-index Fibonacci block.
+
+
