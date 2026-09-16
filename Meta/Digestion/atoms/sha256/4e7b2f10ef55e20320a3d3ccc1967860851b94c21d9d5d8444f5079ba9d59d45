@@ -1,0 +1,33 @@
+**定理 25.13（一个显式非 Dirac 核）。** 参数 $t=2$ 给出全 $K$ 上的归一化实有符号结合核，并满足
+$$
+P^{(2)}_{0_K,x_1^+}
+=P^{(2)}_{0_K,x_1^-}
+=2\delta_{x_1^+}-\delta_{x_1^-},
+$$
+$$
+P^{(2)}_{x_1^+,x_1^+}=\delta_{x_2^+},\qquad
+P^{(2)}_{x_1^-,x_1^-}=\delta_{x_2^-},
+$$
+$$
+P^{(2)}_{x_1^+,x_1^-}
+=P^{(2)}_{x_1^-,x_1^+}
+=\frac23\delta_{x_2^+}+\frac13\delta_{x_2^-}.
+$$
+因此精确闭图支撑与结合性并不单独强制 Dirac 输出，而附加系数非负性恰将全部核缩减为定理25.12的两个确定性核。
+
+**证明。** 参数二避开禁止值，故定理25.9已经证明其在全载体上的存在、结合性和精确支撑。直接代入得
+$$
+p_1=2,\qquad p_2=\frac43,\qquad c_{1,1}=-\frac13.
+$$
+零切片遂为显示的两个系数，其和是 $2-1=1$，且负支系数为负一，所以不是点质量，也不是非负系数组合。同号公式直接来自定理25.9中已经逐项证明的强制支撑恒等式；异号公式代入 $m=n=1,t=2$ 给 $2/3$ 与 $1/3$。最后的非负性结论由定理25.12的参数穷尽推出。证毕。
+
+[^rro25-graph]: *RECURSIVE_RELATIONAL_OBSERVATION*，固定提交 c74985438ae17d205509255934bbd3ecf1f94d71，定义16.0、16.3及定理16.4（包括单侧逼近与共同输入序列的完整证明），[固定文本](https://raw.githubusercontent.com/the-omega-institute/trureturing/c74985438ae17d205509255934bbd3ecf1f94d71/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)。
+
+[^rro25-phase]: *CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF*，固定提交 c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb，第371—372节，特别定理371.2、372.2—372.4，[固定文本](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md)。
+
+[^rro25-affine]: Mathlib contributors, *Affine combinations*, 关于系数和为一的有限仿射组合及其与基点无关性的定义和恒等式，[数学文档](https://leanprover-community.github.io/mathlib4_docs/Mathlib/LinearAlgebra/AffineSpace/Combination.html)。
+
+[^rro25-algebra]: Mathlib contributors, *Monoid algebras*, 关于有限形式线性组合、加法群代数及有限卷积的定义，[数学文档](https://leanprover-community.github.io/mathlib4_docs/Mathlib/Algebra/MonoidAlgebra/Defs.html)。
+
+[^rro25-cocycle]: Laurent Rigal and Pablo Zadunaisky, *Twisted semigroup algebras*, arXiv:1406.2985v2 (2014), §3.1，Definition 3.1.1、Remark 3.1.2及 Lemma 3.1.3；乘法余循环与余边界的术语参照，[正文](https://arxiv.org/html/1406.2985v2#S3.SS1)。
+
