@@ -11,6 +11,7 @@ import Mathlib.Algebra.BigOperators.Intervals
 import Mathlib.Tactic.Choose
 import Mathlib.Tactic.Push
 import D5.S3.Analytic.WeightedCapacity.DyadicTailFilling
+import Mathlib.Analysis.Normed.Group.AddCircle
 import Mathlib.Analysis.Normed.Group.FunctionSeries
 import Mathlib.Topology.Algebra.InfiniteSum.Real
 import Mathlib.Topology.Algebra.InfiniteSum.ENNReal
@@ -27,9 +28,9 @@ open D5.S3.Analytic.WeightedCapacity.ProbeTopologySequences
 noncomputable def zeroState (A : ℕ → ℕ) : B A :=
   ⟨fun n => ⟨0, Nat.zero_lt_succ _⟩, by simpa [Function.support] using Set.finite_empty⟩
 
+set_option maxHeartbeats 1600000 in
 /-- Finite total capacity characterizes continuity and a unique continuous real extension;
 infinite mass gives discontinuity everywhere, and infinitely many active coordinates exclude isolated points. -/
-set_option maxHeartbeats 1600000 in
 theorem result (A : ℕ → ℕ) :
   (((M A < ⊤) ↔ @ContinuousAt (B A) ℝ (tauPlus A) inferInstance readout (zeroState A)) ∧
     ((M A < ⊤) ↔ @Continuous (B A) ℝ (tauPlus A) inferInstance readout) ∧
@@ -230,7 +231,8 @@ theorem result (A : ℕ → ℕ) :
       intro n
       apply div_le_div_of_nonneg_right _ (by positivity)
       exact_mod_cast Nat.le_of_lt_succ (x n).isLt
-    rw [realSum, ENNReal.ofReal_tsum_of_nonneg (fun _ => by positivity) hsum,
+    dsimp only [realSum]
+    rw [ENNReal.ofReal_tsum_of_nonneg (fun _ => by positivity) hsum,
       ENNReal.tsum_eq_iSup_nat]
     apply le_antisymm
     · apply iSup_le
