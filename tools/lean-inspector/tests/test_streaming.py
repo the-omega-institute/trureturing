@@ -148,7 +148,7 @@ class PublicationTests(unittest.TestCase):
                 utility.write_text(json.dumps(dict(source_path=source.name, utilities=[])))
                 rows[name] = [dict(module=name, source_path=source.name,
                     source_sha256='sha256:' + publication.digest(source),
-                    information_templates=dict(schema_version=1, compatibility_version=5,
+                    information_templates=dict(schema_version=1, compatibility_version=6,
                         inventory=[], registered=[], records=[],
                         inputs=[dict(path=policy.name, sha256=publication.digest(policy))]))]
                 requests.append(['validate', [str(root), 'module', str(root), name, str(utility), 'fixture.zip']])
@@ -169,7 +169,7 @@ class PublicationTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             (root / 'spool').mkdir()
-            evidence = dict(schema_version=1, compatibility_version=5,
+            evidence = dict(schema_version=1, compatibility_version=6,
                 inventory=[], registered=[], records=[], inputs=[])
             raw = dict(schema=materials.SPOOL_SCHEMA, modules=[dict(module='X', source_path='X.lean',
                 source_sha256='sha256:' + 'a'*64, imports=[], declarations=[], information_templates=evidence)])
@@ -178,7 +178,9 @@ class PublicationTests(unittest.TestCase):
             materials.compact(source, root / 'spool', report)
             rows = publication.validate_rows(report, publication.member(report, '.materials.zip'))
             self.assertEqual(rows[0]['information_templates'], evidence)
-            for field, value in [('compatibility_version', 3), ('compatibility_version', 4), ('schema_version', True), ('inputs', {}), ('extra', [])]:
+            for field, value in [('compatibility_version', 3), ('compatibility_version', 4),
+                                 ('compatibility_version', 5), ('compatibility_version', 7),
+                                 ('schema_version', True), ('inputs', {}), ('extra', [])]:
                 with self.subTest(field=field):
                     rows[0]['information_templates'] = dict(evidence, **{field: value})
                     report.write_bytes(materials.canonical_json(dict(schema=materials.REPORT_SCHEMA, modules=rows)))
@@ -199,7 +201,7 @@ class PublicationTests(unittest.TestCase):
             source.write_text('def x := 1\n')
             utility = root / 'utility.json'
             utility.write_text(json.dumps(dict(source_path='X.lean', utilities=[])))
-            evidence = dict(schema_version=1, compatibility_version=5, inventory=[], registered=[], records=[],
+            evidence = dict(schema_version=1, compatibility_version=6, inventory=[], registered=[], records=[],
                 inputs=[dict(path='Policy.lean', sha256=publication.digest(policy))])
             rows = [dict(module='X', source_path='X.lean', source_sha256='sha256:' + publication.digest(source),
                 information_templates=evidence)]
