@@ -39,10 +39,11 @@ index 309 with certified supported `Gamma<4331`; the rational stopping
 threshold is greater than 4732. The proof and exact certificate are given in
 (US1)--(US12). Arbitrary head assignments remain unresolved.
 
-The pure-head continuation (PH1)--(PH6) also excludes **arbitrary**
+The pure-head continuation (PH1)--(PH6), sharpened by (AD1)--(AD4), excludes **arbitrary**
 `{3,5,7}` head assignments and heights when all other primes are at least
-23, with no tail support or graph restrictions. The odd parts 315 and 945
+19, with no tail support or graph restrictions. The odd parts 315 and 945
 in the frozen 5040 fibre permit tail cutoffs 17 and 19 respectively.
+Thus a hypothetical cover must involve at least one of 11, 13 and 17.
 These missing-small-prime hypotheses remain; unrestricted #7 is open.
 
 ## Motivation
@@ -360,16 +361,18 @@ Each of the following hypotheses implies noncoverage:
 |---|---:|---|
 | \(Q\mid315\) | \(\ge17\) | none |
 | \(Q\mid945\) | \(\ge19\) | none |
-| \(Q=3^a5^b7^c\), arbitrary finite \(a,b,c\ge0\) | \(\ge23\) | none |
+| \(Q=3^a5^b7^c\), arbitrary finite \(a,b,c\ge0\) | \(\ge19\) | none |
 
 In particular the first two rows use precisely the odd parts in the frozen
 5040 fibre. There is no bound on tail exponents, the number of prime factors
 in one modulus, the total prime count, or the interaction graph. The first
 two rows bound the head exponents even in classes ending at later primes.
 The absent small primes are genuine hypotheses: the three rows respectively
-exclude \(\{11,13\}\), \(\{11,13,17\}\), and \(\{11,13,17,19\}\).
+exclude \(\{11,13\}\), \(\{11,13,17\}\), and \(\{11,13,17\}\).
 Thus the third row implies that any hypothetical odd distinct cover must
-use at least one prime in \(\{11,13,17,19\}\). It does not resolve #7.
+use at least one prime in \(\{11,13,17\}\). It does not resolve #7.
+The constant-threshold proof below establishes the third row from prime
+23; the adaptive schedule (AD1)--(AD4) establishes its stated cutoff 19.
 
 **Preserve the pure-head product until the final conditioning.** Use the
 actual pure-survivor product law \(P_0\) from (FC4). For a finite endpoint
@@ -387,7 +390,8 @@ This is the original-modulus union bound from (FC1), giving
 \(M=49/120,157/336,2/3\) in the three rows.
 
 Run the normalized actual tail kernels (US4) with \(\delta=2/5\), starting
-at the indicated first tail prime. They integrate to one at **every** old
+at 17, 19 and 23 respectively for these three constant schedules.
+They integrate to one at **every** old
 history, including head points lying in a mixed forbidden head class.
 Therefore the head marginal stays exactly \(P_0\), and the total probability
 of mixed head violations remains at most \(M\) throughout. Tail pure powers
@@ -481,7 +485,113 @@ divisor-convolution implementations reproduce all 303, 302 and 1020 step
 charges and the final bounds, with 815 or 3276 retained states. It is not
 an end-to-end Lean theorem. Earlier graph and bounded-support rows remain
 valid quantitative refinements; their restrictions are unnecessary for
-noncoverage under the three hypotheses just stated.
+noncoverage under the hypotheses certified in the preceding table.
+
+### Adaptive kernels lower the unrestricted cutoff to 19
+
+Keep the same actual pure-head product law \(P_0\), but use the coupled
+mixed-head bound \(M=82/135\) proved in (CM1)--(CM2). The full initial
+auxiliary product has mean \(16/5\) and second moment \(325/18\).
+All physical coordinate heights resolve the entire original family,
+including classes whose largest prime has not yet been processed.
+Its head caps remain \(2\cdot3^{-e},(4/3)5^{-e},(6/5)7^{-e}\).
+For each successive prime \(q\ge19\), choose a deterministic integer
+threshold \(1\le t_q\le q-2\), and set
+\[
+ s_q=q-1-t_q,\qquad
+ \delta_q=\frac{t_q-1}{q-2},\qquad c_q=\frac{q-1}{s_q}.
+ \tag{AD1}
+\]
+Then \(s_q\ge1\), \(0\le\delta_q<1\), and \(c_q<q\), so
+\(\Pr(K_q\ge e)=c_qq^{-e}\) is a valid auxiliary height law.
+The normalized actual kernel preserves every old marginal, including
+\(P_0\), and satisfies these caps conditional on the entire history.
+At \(t_q=1\), the kernel has \(\delta_q=0\) and equals the identity
+density relative to the pure-survivor base law; this endpoint is valid.
+
+Let \(D_q\) be the completed auxiliary product for the earlier primes
+under this one fixed schedule, and put \(V_q(t)=\mathbb E(D_q-t)_+\).
+The original-label comparison (PH3) and the full moment identities give
+\[
+ b_q\le\frac{V_q(t_q)}{s_q},\qquad
+ \mathbb E D_{\mathrm{new}}=\mathbb E D_q(1+1/s_q),\qquad
+ J_{\mathrm{new}}=J_q\left(1+\frac{3q-1}{s_q(q-1)}\right).
+ \tag{AD2}
+\]
+Here \(J_q=\mathbb E D_q^2\) also bounds every complete-layout
+second moment under the same actual law. Thus, starting with
+\(\lambda=53/135\), each certified step updates
+\(\lambda_{\mathrm{new}}=\lambda-V_q(t_q)/s_q\).
+One final conditioning bounds the supported parameter by
+\[
+ \Gamma_{\mathrm{supported}}\le
+ 1+\frac{J_{\mathrm{new}}-1}{\lambda_{\mathrm{new}}}
+ =1+\frac{(J_q-1)s_q+J_q(3q-1)/(q-1)}
+              {\lambda s_q-V_q(q-1-s_q)}.
+ \tag{AD3}
+\]
+Only positive denominators are admissible. Every subsequent auxiliary
+distribution includes the previously chosen factor \(1+K_q\);
+charges and moments from different schedules are never combined.
+
+For finding a schedule, minimizing this one-step potential is a useful
+finite search. Since \(D_q\) is integer-valued, \(V_q\) is affine
+between integer thresholds, making (AD3) fractional-linear on each such
+interval. A zero denominator approaches infinite cost. On the remaining
+interval \(0<s<1\), write
+\(V_q(q-1-s)=A+Bs\), where \(A\ge0\) and \(B\ge0\).
+Feasibility forces \(\lambda>B\), and differentiating (AD3) gives
+a negative numerator \(-(J_q-1)A-J_q(3q-1)(\lambda-B)/(q-1)\).
+Thus \(s=1\) dominates that interval; integer thresholds suffice for
+the local search. This asserts no global schedule optimality.
+BBMST Section 6, Lemma 6.2 and equation (25) already use sequential
+potential minimization; (AD3) uses the full stop-loss profile in place
+of their scalar recurrence. The proof below needs only the admissibility
+and exact replay of the selected schedule.
+
+**Exact stopping certificate.** The fixed schedule has 1388 steps, one
+for every prime from 19 through 11593. Its largest threshold is 3072.
+The existing [verifier](../docs/reports/erdos7-odd-covering/verify_star_block_obstruction.py)
+recomputes `adaptive_head_stoploss` in the adjacent
+[certificate](../docs/reports/erdos7-odd-covering/star_block_obstruction_certificate.json).
+It propagates the full first and second moments separately
+and retains all product probabilities needed in
+\[
+ V_q(t)=\mathbb E D_q-t+
+       \sum_{1\le d<t}(t-d)\Pr(D_q=d).
+\]
+All displayed data coefficients are nonnegative. Upward rounding on
+the grid \(10^{-18}\) therefore gives upper bounds for the charges and
+moments; discarded larger product states cannot return below a later
+threshold, since every factor is at least one. The resulting bounds are
+\[
+ \begin{aligned}
+ C&\le956616008688320979/10^{18}<1,\\
+ J&\le2341844006153474338859/10^{18},\\
+ \Gamma_{\mathrm{supported}}
+ &\le\frac{2340887390144786017880}{43383991311679021}
+ <53958
+ <\frac{26988288270685431527657582636743677951}{5\cdot10^{32}}
+ <k(\log k+\log\log k-3)^2,\qquad k=1395.
+ \end{aligned}
+ \tag{AD4}
+\]
+The global index is \(\pi(11593)=1395\), including 2 and all absent
+primes. The rational stopping lower bound exceeds 53976 and is produced
+by the existing positive-series logarithm bounds. Positive actual
+survivor mass and (AD4) satisfy BBMST Theorem 6.1. After the one
+conditioning, set \(i_0=k\), \(\mu_{i_0}=1\) and
+\(\kappa=\Gamma_{\mathrm{supported}}\); (T1)--(T2) supply its
+moment hypothesis for every later standard uniform-base kernel schedule.
+No second division by the prefix survivor probability is needed.
+The continuation and finite CRT handle all remaining tail primes. No bound on tail support,
+exponents or graph structure is introduced. This proves the arbitrary
+\(3^a5^b7^c\) row from prime 19. It remains an ordinary mathematical
+proof with an exact arithmetic certificate, not an end-to-end Lean proof.
+An independent implementation using target-state divisor convolution
+reproduces every charge and the full retained-state digest; independent
+trial division and positive-series logarithm bounds also give
+\(k=1395\) and stopping threshold greater than 53976.
 
 ### Homogeneous cylinder capacities and the extremal comb
 
@@ -623,6 +733,15 @@ records **homogeneous_comb_capacity** in its
 assignments and eight capacity profiles, including nonmonotone and zero
 caps, together with the binary-split laws at heights 1 through 6.
 The finite checks supplement the proofs and are not Lean kernel proofs.
+The general recursive comparison (HC1)--(HC3) is formalized by
+[`HomogeneousCombCapacity.comb_le_actual_prefix_flow`](../D5/S3/Arith/Congruence/HomogeneousCombCapacity.lean).
+Its Boolean obstacle predicate is on actual finite words; the per-depth
+count includes redundant forbidden descendants. It proves the comparison
+for arbitrary \(p\ge2\), heights and nonnegative capacity profiles,
+without assuming the deficit aggregation inequality. Its formal conclusion
+compares the explicit min/sum recursions; attainment by a supported leaf
+measure is the ordinary recursive construction above, not an additional
+conclusion of this Lean theorem.
 
 #### Sharp tail profiles of maximal cylinder caps
 
@@ -7228,7 +7347,7 @@ allowed by (RK1)--(RK5) when each original modulus has at most two tail
 primes for the full star or three-prime heads, or at most three for the
 finite 315/945 heads, at the respective stated cutoffs. The finite
 switch (RK6)--(RK8) already removes support restrictions above its cutoffs;
-(PH1)--(PH6) further removes every tail support and graph restriction for
+(PH1)--(PH6), sharpened by (AD1)--(AD4), further removes every tail support and graph restriction for
 these head classes at the stated prime gaps. The head exponents for the
 315/945 rows and the missing primes remain genuine hypotheses. The star
 rows retain quantitative bounds, while (US1)--(US12) exclude all star
@@ -7255,6 +7374,9 @@ finite restricted prefix trees, including its normalization and support.
 `SequentialKernelCylinder.selected_cylinder_bound` formalizes the arbitrary
 selected-coordinate cylinder bound for actual history-dependent Markov
 kernels, directly reusing Mathlib's prefix-preservation result.
+`HomogeneousCombCapacity.comb_le_actual_prefix_flow` formalizes the
+all-height comparison between the actual forbidden-prefix flow recursion
+and the extremal comb recursion, with arbitrary nonnegative capacities.
 No freeze or problem-resolution binding is supplied, and neither (P1) nor
 (G1) is a complete Lean theorem.
 
