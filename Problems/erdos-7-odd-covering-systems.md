@@ -30,6 +30,15 @@ A refutation requires a finite family satisfying exactly these conditions
 whose classes cover every integer. The page remained open when read on
 16 September 2026. The results below do not settle this unrestricted assertion.
 
+The complete star head defined below **cannot be completed by any odd tail**
+whose primes exceed 73, at any positive head heights and without restrictions
+on tail support or graph structure. This applies to the specified star residue
+assignment, including any subset of the odd head primes through 73 containing
+3. Its actual survivor law reaches the BBMST continuation at global prime
+index 309 with certified supported `Gamma<4331`; the rational stopping
+threshold is greater than 4732. The proof and exact certificate are given in
+(US1)--(US12). Arbitrary head assignments remain unresolved.
+
 ## Motivation
 
 The frozen module `D5/S3/Arith/Congruence/TwoOddPrimeUncoveredDensity` proves
@@ -350,13 +359,17 @@ refinement give `lcm > 11486474` for every hypothetical cover, independently
 of the external lcm theorem. This is a finite lower
 bound and does not control the unrestricted large-lcm branches.
 
-The block-saturation theorem below supplies such an input for restricted
-extensions. For every positive head height, a complete star head cannot be
-completed by tails whose prime interaction graph is a matching. More than
-one tenth of its broad-branch head points retain an uncovered tail lift.
-For unrestricted tails the theorem instead gives a necessary positive
-mixed-tail budget. It does not exclude arbitrary smooth heads or prove
-that this budget is small in a hypothetical full cover.
+For the specified complete star assignment, (US1)--(US12) now exclude
+**every** tail completion by primes above 73, at arbitrary positive head
+heights. The actual broad-branch law, conditional convex comparison and an
+exact positive-part calculation reach a supported prefix with `Gamma<4331`
+at prime 2039. The BBMST stopping threshold there is greater than 4732, so
+all later moduli are unrestricted. This resolves the star's noncoverage
+without asserting the false universal `Gamma_73` bound. Other head geometries
+remain open. The earlier graph and block-saturation estimates retain their
+quantitative survivor-mass and crossing-budget conclusions for subclasses;
+for example, matching tails leave more than one tenth of the broad-branch
+head points with an uncovered tail lift.
 
 For arbitrary `{3,5,7}` heads the same criterion also proves noncoverage
 when all other primes are at least 37 and their interaction graph has
@@ -367,22 +380,23 @@ allow arbitrary exponents and arbitrarily many primes in total.
 The stronger graph criteria also exclude arbitrary `{3,5,7}` heads with
 arbitrary forest tails from prime 17, `2`-degenerate tails from prime 19,
 and `5`-degenerate tails, including all planar graphs, from prime 23.
-Complete star heads cannot be completed by any `20`-degenerate tail graph
-above 73. These statements allow unbounded maximum degree, total prime
-support, exponents, feedback vertex number and treewidth. A full star
-completion must contain a nonempty 21-core in its actual tail graph.
+The `20`-degenerate star bound additionally gives an explicit saturated-head
+mass estimate above 73. These graph estimates allow unbounded maximum degree,
+total prime support, exponents, feedback vertex number and treewidth; the
+star theorem (US1)--(US12) now removes their graph restrictions entirely.
 For the finite heads supplied by the 5040 connection, the stronger
 supported-law bounds additionally exclude every planar tail from prime 17
 when the head divides 315, and from prime 19 when it divides 945.
-The original-modulus support criterion (RK1)--(RK5) removes all graph
-restrictions: full star heads admit at most two tail primes per modulus,
-as do arbitrary `{3,5,7}` heads with tails from 23; heads dividing 315 or
-945 admit at most three tail primes per modulus from 17 or 19 respectively.
-These conditions allow complete tail graphs of unbounded size.
-Moreover, (RK6)--(RK8) impose those support bounds only on moduli with
-largest prime at most 8192 (star, 315 and 945) or 32768 (arbitrary 357).
-Above those cutoffs, each original modulus may have arbitrarily many
-tail prime factors; the exact prefix seed enters the BBMST continuation.
+For the other heads, the original-modulus support criterion (RK1)--(RK5)
+removes all graph restrictions: arbitrary `{3,5,7}` heads permit at most
+two tail primes per modulus from 23, and heads dividing 315 or 945 permit
+at most three from 17 or 19 respectively. These conditions allow complete
+tail graphs of unbounded size. Moreover, (RK6)--(RK8) impose those support
+bounds only on moduli with largest prime at most 8192 for 315 and 945,
+or 32768 for arbitrary 357. Above those cutoffs, each original modulus may
+have arbitrarily many tail prime factors. Their small-prime support bounds
+remain unresolved; the star row is now superseded as a noncoverage result
+by (US1)--(US12).
 
 **H73 — false**, with its universal candidate statement retained from
 [the target preregistration](https://github.com/the-omega-institute/trureturing/issues/8167):
@@ -429,9 +443,10 @@ the star family does.
 ## Route
 
 The joint-load invariant retains actual residue intersections. Its transfer
-and the restricted noncoverage result are established below. The star-family
-refutation identifies why the proposed universal unrestricted head input
-cannot complete the argument.
+and the restricted noncoverage results are established below. The star-family
+refutation identifies why the proposed universal head input fails. The
+positive-part proof (US1)--(US12) nevertheless excludes all tail completions
+of that precise head assignment, using a later supported prefix seed.
 
 ### A complete star family refutes the unrestricted Gamma-73 bound
 
@@ -691,6 +706,313 @@ whose whole modulus does not. Their weighted capacity obeys
 The integer ordinary-cover case of the first bound is attributed to
 Znám (1975). These public results require a cover of the full period;
 they give no such inequalities for an isolated noncovering head.
+
+### Complete star heads cannot be completed by arbitrary odd tails
+
+**Theorem.** Let `P` be any subset of the odd primes at most 73 containing
+3, and let `H_p>=1` for every `p in P`. Put `Q=prod_(p in P) p^H_p` and
+use precisely the complete star forbidden assignment defined above on all
+nonunit divisors of `Q`. Consider any finite family of additional classes
+such that all moduli in the combined family are distinct and odd. Each
+additional modulus has head part dividing `Q`, has a nonunit tail part,
+and has all tail prime factors greater than 73. The combined family does not cover
+the integers. There is no restriction on the number of tail primes in
+one modulus, their exponents, the total number of primes, or the tail
+interaction graph. The heights `H_p` resolve the entire original family,
+including the head parts of classes whose largest prime occurs later.
+
+The proof uses the actual broad-branch survivor law, the conditional convex
+comparison in [Schroeder, Section 3](../Library/Arith/schroeder2026noncoverage.md),
+a finite exact positive-part calculation, and
+[BBMST, Theorem 6.1](../Library/Arith/balister2018covering.md).
+It is an ordinary mathematical proof with an exact numerical certificate.
+The unrestricted Erdős problem still allows arbitrary head assignments.
+
+#### One actual head law at every positive height
+
+Retain exactly the sets `C_3` and `D_p` in (2), and take
+
+\[
+ R_b=C_3\times\prod_{p\in P\setminus\{3\}}D_p,
+ \qquad \mu_{\rm head}=\operatorname{Unif}(R_b).
+ \tag{US1}
+\]
+
+This product law is supported on actual complete head survivors. In
+particular, every mixed-zero head class is already excluded by a pure
+class. The coordinate densities and resulting cylinder caps are
+
+\[
+ s_3=\frac{1-3^{-H_3}}2,\qquad
+ s_p=\frac{p-3+2p^{-H_p}}{p-1}\quad(p\ge5),\qquad
+ \mu_p\{x_p=b\bmod p^e\}\le\frac{p^{-e}}{s_p}.
+ \tag{US2}
+\]
+
+All these densities are positive. For `p>=5`, use the height-independent
+cap `c_p p^-e`, where `c_p=(p-1)/(p-3)`. The finite ternary cap needs a
+separate argument; replacing it pointwise by `2*3^-e` would be invalid.
+
+After applying conditional comparison and completing the divisor labels,
+the ternary auxiliary height `K_(3,H)` has tails
+
+\[
+ \Pr(K_{3,H}\ge e)=\frac{2\,3^{-e}}{1-3^{-H}}\quad(1\le e\le H),
+ \qquad \Pr(K_{3,H}>H)=0.
+\]
+
+Let `K_3` instead have tail `Pr(K_3>=e)=2*3^-e` for every `e>=1`.
+For an increasing convex function `phi` on the nonnegative integers, its
+increments `Delta_e=phi(e)-phi(e-1)` are nonnegative and nondecreasing.
+With `w_e=2*3^-e`, the tail-sum identity gives
+
+\[
+ \mathbb E\phi(K_{3,H})=\phi(0)+
+ \frac{\sum_{e=1}^H w_e\Delta_e}{\sum_{e=1}^H w_e}
+ \le\phi(0)+\sum_{e\ge1}w_e\Delta_e
+ =\mathbb E\phi(K_3).                                 \tag{US3}
+\]
+
+Here `sum_(e>=1) w_e=1`, and the truncated weighted average uses only
+the smallest increments. Both heights have mean 1. For any fixed
+`z>=1`, both functions `phi(k)=h(z(1+k)-1)` and
+`phi(k)=h(z(1+k))` are increasing convex whenever `h` is. This is the
+specific convex-order replacement used below, after auxiliary independence
+has been established. For other head primes, the finite auxiliary heights
+are directly stochastically bounded by independent `K_p` with tails
+`Pr(K_p>=e)=c_p p^-e`. Adding omitted head primes as independent factors
+`1+K_p>=1` only increases the completed loads.
+
+#### Normalized tail kernels preserve the original labels
+
+Process tail primes in increasing order, with `delta=2/5` through the
+finite stopping prime. Each prime-power coordinate has the full height
+appearing anywhere in the original family. First let `U_q` be uniform on
+the actual survivors of all pure `q`-power classes. Distinct moduli and
+`sum_(e>=1) q^-e=1/(q-1)` show that this is a probability, with
+
+\[
+ U_q\{y=b\bmod q^e\}\le\frac{q-1}{(q-2)q^e}.
+\]
+
+Assign every other class with a nontrivial tail part to its largest tail
+prime `q`. Given the entire earlier history, let `B_q` be the actual
+union of its active `q`-cylinders, and put `alpha_q=U_q(B_q)`. The BBMST
+kernel relative to `U_q` has densities
+
+\[
+ \frac{1}{1-\min(\alpha_q,\delta)}\quad\text{off }B_q,
+ \qquad
+ \frac{(\alpha_q-\delta)_+}{\alpha_q(1-\delta)}
+       \quad\text{on }B_q,                            \tag{US4}
+\]
+
+with the latter defined to be zero when `alpha_q=0`. Each row integrates
+to one and is bounded by `1/(1-delta)`, including a completely forbidden
+fibre. Thus future kernels preserve every prefix marginal. The final
+probability of this assigned mixed union is exactly
+`E(alpha_q-delta)_+/(1-delta)`, and every pure-tail class has probability
+zero. There is no conditioning on survival during these steps. The
+conditional cylinder caps at each earlier tail prime `p` are consequently
+`c_p p^-e`, where
+
+\[
+ c_3=2,\qquad c_p=\frac{p-1}{p-3}\ (5\le p\le73),
+ \qquad c_p=\frac{p-1}{(p-2)(1-\delta)}\ (p>73).
+ \tag{US5}
+\]
+
+The value `c_3=2` is only the auxiliary value after (US3). The actual
+head law always retains its finite-height cap from (US2). Head coordinates
+are initially independent, and all the stated tail caps hold conditional
+on the entire earlier history under the same normalized law.
+
+Write each original modulus assigned to `q` as `d q^e`, with `d>1` an
+old cofactor, retaining its actual old residue as part of that original
+label. Set `w_e=(q-1)/q^e`. The uniform-pure-survivor bound gives
+
+\[
+ \alpha_q\le\frac{R_q}{q-2},\qquad
+ R_q=\sum_{\text{original labels }d q^e}
+        w_e\,\mathbf1_{\text{actual old cylinder}}.     \tag{US6}
+\]
+
+At fixed `d` and `e` there is at most one label because the original
+moduli are distinct. Different original moduli can have the same projected
+cofactor `d`; no distinctness of such projections is asserted.
+
+Schroeder's Section 3 proposition **Conditional comparison**, source label
+`prop:comparison`, applies to any finite family of weighted coordinate
+rectangles. If their coordinate events `A_(label,p)` have deterministic
+caps conditional on the entire past, it bounds the expectation of every
+nonnegative increasing convex function of their load by the corresponding
+load formed from independent uniforms, one common uniform per coordinate.
+The sets and residues may depend on the whole modulus label. Its proof
+replaces coordinates in reverse order by increasing supermodular
+rearrangement. It does not require the actual events to be nested or the
+actual coordinates to be independent.
+
+Apply it to (US6) with `h(u)=(u-(q-2)delta)_+`. In the compared load,
+`d=prod p^a_p` is active exactly when `a_p<=K_p` for every old prime.
+For each fixed cofactor, `sum_e w_e<=1`. Completing all nonunit cofactor
+labels therefore bounds this load by `D_q-1`, where
+
+\[
+ D_q=\prod_{3\le p<q\atop p\ \text{prime}}(1+K_p).
+\]
+
+First complete within the actual finite heights, then apply (US3) and
+extend the other auxiliary heights. Monotone convergence permits this
+nonnegative completion; the moments displayed below are finite. The
+subtraction of 1 excludes the unit cofactor, whose classes were already
+removed as pure powers. Hence the actual mixed-union probability is at most
+
+\[
+ b_q=\frac{\mathbb E\bigl(D_q-1-(q-2)\delta\bigr)_+}
+              {(q-2)(1-\delta)}.                      \tag{US7}
+\]
+
+This is the positive-part estimate in the proof of Schroeder's Section 8
+**Unrestricted second-moment charge**, before its quadratic relaxation,
+with the head caps supplied by (US1)--(US3). No restriction on a modulus's
+tail support was used.
+
+#### A simultaneous complete-layout moment under the same law
+
+For any complete test layout on the enlarged prefix modulus through `B`,
+apply the same conditional comparison with `h(u)=u^2`, keeping each test
+modulus and its own residue as an individual label. The completed load is
+bounded by `D=prod_(3<=p<=B)(1+K_p)`. Formula (US3) applies here with
+`phi(k)=(z(1+k))^2`. Consequently every complete layout has second moment
+at most
+
+\[
+ J_B=\mathbb E D^2
+   =\prod_{3\le p\le B\atop p\ \text{prime}}
+       \left(1+c_p\frac{3p-1}{(p-1)^2}\right).          \tag{US8}
+\]
+
+Indeed, the tail formula gives
+`E(1+K_p)^2=1+sum_(e>=1)(2e+1)c_p p^-e` and the displayed geometric sum.
+The head product through 73 is exactly the existing `K_0<177` in (BS6).
+Auxiliary independence factors `J_B`; no tensorization assertion about
+actual-layout `Gamma` is needed.
+
+Put `charge_B=sum_(73<q<=B) b_q`. The actual law constructed by (US4) is
+already supported on head survivors and pure-tail survivors. The union
+bound and preservation of assigned-event probabilities show that its
+event `E` of avoiding every prefix class has mass
+`lambda>=1-charge_B`. When `charge_B<1`, condition this law **once** on
+`E`. For every complete layout, its load `L` includes the unit divisor,
+so `L^2>=1` everywhere. Thus the resulting law is supported on actual
+prefix survivors and simultaneously satisfies
+
+\[
+ \Gamma\le1+\frac{J_B-1}{\lambda}
+          \le G_B:=1+\frac{J_B-1}{1-\operatorname{charge}_B}.
+ \tag{US9}
+\]
+
+The event bound and `J_B` belong to this same preconditioning law; they
+are not combined from separately optimized measures.
+
+#### Exact positive-part certificate and the BBMST stop
+
+Take `B=2048`, whose last prime is 2039 and whose global prime index,
+counting 2, is `k=309`. Absent primes can be included as unused coordinates;
+this does not change actual noncoverage and only enlarges the nonnegative
+auxiliary bounds. There are 288 processed tail primes between 73 and `B`.
+The [existing exact verifier](../docs/reports/erdos7-odd-covering/verify_star_block_obstruction.py)
+recomputes the entry `unrestricted_star_stoploss` in its
+[certificate](../docs/reports/erdos7-odd-covering/star_block_obstruction_certificate.json).
+
+Here is its directed calculation. Use scale `S=10^18` and store the
+probabilities of all integer product states `1<=d<=819`. The multiplier
+`f=1+K_p` has atom probabilities
+
+\[
+ a_1=1-\frac{c_p}{p},\qquad
+ a_f=\frac{c_p(p-1)}{p^f}\quad(f\ge2).
+\]
+
+Starting with `W_1=S` and all other `W_d=0`, round every `a_f` upward to
+`A_f/S`, and update
+
+\[
+ W'_d=\left\lceil\frac{\sum_{f\mid d}W_{d/f}A_f}{S}\right\rceil.
+\]
+
+Induction gives `W_d/S>=Pr(D=d)`: every coefficient is nonnegative.
+Multipliers greater than 819 cannot enter a retained state because all
+multipliers are at least 1. Their moments are not discarded. Separately
+propagate upper bounds for `E D` and `E D^2` by multiplying, respectively,
+by the exact positive factors
+`1+c_p/(p-1)` and `1+c_p(3p-1)/(p-1)^2`, rounding each result upward on
+the same grid. The independent prime-list check uses trial division.
+
+Before processing `q=p`, put `T=1+(p-2)delta=(2p+1)/5`. The exact identity
+
+\[
+ \mathbb E(D-T)_+=\mathbb E D-T+
+        \sum_{d\le T}(T-d)\Pr(D=d)                    \tag{US10}
+\]
+
+has nonnegative coefficients on the approximated mean and low-state
+probabilities. If `M/S` is the stored mean bound, then rounding
+
+\[
+ \frac{5M-(2p+1)S+
+       \sum_{d\le\lfloor T\rfloor}(2p+1-5d)W_d}{3(p-2)}
+\]
+
+upward gives an upper bound for `S b_p`. The largest queried state is
+815 at `p=2039`, within the 819 retained states. All 288 step charges,
+the final moments and the final low-state digest are recomputed; the
+digest is not a mathematical input. Exact arithmetic yields
+
+\[
+ \operatorname{charge}_B\le
+ \frac{197210774016889569}{500000000000000000}<1,\qquad
+ J_B\le\frac{2622709946291465704821}{1000000000000000000},
+\]
+\[
+ G_B\le\frac{2622315524743431925683}{605578451966220862}
+       <4331<4732<\frac{10350367}{2187}.                \tag{US11}
+\]
+
+For the stopping threshold, the first two positive `atanh` terms give
+`log 2>=56/81`. Since `k=309>=256`, this implies
+`log k>=448/81>4` and `log log k>=log 4>=112/81`. Therefore
+
+\[
+ k(\log k+\log\log k-3)^2
+ \ge k\left(\frac{317}{81}\right)^2
+ =\frac{10350367}{2187}>G_B.                           \tag{US12}
+\]
+
+The exact margin between the final rational threshold and the certified
+`G_B` is `532955172528371903287633/1324400074450125025194>0`.
+
+Restart the joint-load transfer (T1)--(T6) from the normalized actual
+survivor law in (US9). Its initial budget is at most `G_B`, with positive
+survivor mass, and (US12) is precisely the sufficient stopping inequality
+of BBMST Theorem 6.1. That theorem's recurrence continues with the standard
+uniform-base kernels for all later primes; the earlier pure-survivor base
+is not assumed for this continuation. Its prime index is the full global
+index `309`, including absent primes and 2. If the family ends before
+the stop, its already positive prefix-survivor mass suffices. Otherwise
+the BBMST continuation retains positive survivor mass through every
+remaining prime. Finite CRT then produces an integer avoiding the whole
+original family, proving the theorem.
+
+The conditional comparison and BBMST continuation are published ordinary
+proofs; the changed head input, finite-height convex-order argument,
+same-law conditioning and exact finite charge are the deductions here.
+The audited upstream Lean theorem still assumes at most three prime factors
+per modulus and does not certify this extension. The local Lean result
+in (DG2) proves the selected-coordinate cylinder step, not this entire
+unrestricted-tail star theorem. The graph and bounded-support star bounds
+below remain quantitative refinements for their respective subclasses.
 
 ### Block saturation and the actual crossing budget
 
@@ -1429,6 +1751,23 @@ repeat. Unqueried intermediate coordinates integrate out without another
 factor. No independence of the sequentially chosen coordinates, and no
 conditioning on complete survival, is used.
 
+The selected-coordinate passage in (DG2) now has a Lean proof in
+[SequentialKernelCylinder.selected_cylinder_bound](../D5/S3/Arith/Congruence/SequentialKernelCylinder.lean).
+For arbitrary measurable alphabets, let `κ_n` be a Markov kernel from the
+complete history through `n` to coordinate `n+1`. Fix `a<=b` and a selected
+set `S` contained in `{a+1,...,b}`. If, at every complete history, each
+selected coordinate event `E_i` has conditional kernel probability at most
+`c_i`, then its joint probability under Mathlib's actual partial trajectory
+kernel, conditioned on any fixed history through `a`, is at most
+`prod_(i in S) c_i`. No independence, joint-cylinder estimate or
+prefix-preservation premise is assumed. Induction removes the last
+coordinate; selected coordinates use their one-step bound and unselected
+coordinates use Mathlib's existing Markov prefix-preservation theorem.
+This proves the probability-theoretic passage from the local caps to the
+joint selected-cylinder bound. Instantiating the capped residue kernels,
+retaining original modulus labels in the second-moment expansion, and the
+prime-tail estimates remain separate formalization obligations.
+
 **Only the actual earlier neighbours enter the moment bound.** Put
 `s_v=sum_(e=1..H_v) v^(-e)` and `h_p=sum_(j=1..H_p)(2j+1)p^(-j)`.
 Bound `alpha_v` by its raw uniform-fibre cylinder load and expand its
@@ -1648,8 +1987,9 @@ six total factors in one modulus, while the arbitrary-star row permits
 more. BBMST's square-free-head theorem covers the subcase where all primes
 through 73 have exponent at most one, not arbitrary head heights. No exact
 dominating statement was found in the searched sources; no literature
-priority is asserted. Arbitrary tail support and arbitrary head geometry
-remain unresolved.
+priority is asserted. The complete-star case now has unrestricted tail
+support by (US1)--(US12); arbitrary tail support for the other displayed
+heads and arbitrary head geometry remain unresolved.
 
 #### The support restriction is needed only below a finite largest prime
 
@@ -6247,7 +6587,14 @@ checked on macOS/Python 3.14; other platforms and Python 3.8 were not tested.
 ## Triage
 
 `wall`: user-selected third-tier core research. The unrestricted target remains
-open. The results include exact obstacles to earlier proof routes, a direct
+open. For the precise complete-star head assignment, arbitrary positive
+head heights and completely unrestricted tails above 73 are excluded by
+(US1)--(US12). The proof uses the actual broad-branch law, the published
+conditional convex comparison, an exact positive-part certificate through
+prime 2039 and a supported `Gamma<4331` seed for BBMST continuation.
+It remains an ordinary mathematical proof with exact numerical premises,
+not a complete Lean theorem. Other head assignments remain unresolved.
+The results also include exact obstacles to earlier proof routes, a direct
 joint-load transfer into the BBMST continuation, and a quantitative reduction
 of the arbitrary-height sufficient condition to a finite exponent cap. A
 uniform four-prime head bound additionally proves the restricted noncoverage
@@ -6273,11 +6620,13 @@ three-prime heads. Its selective parent moment bound allows unbounded
 feedback vertex number and treewidth. Arbitrary graph structure is also
 allowed by (RK1)--(RK5) when each original modulus has at most two tail
 primes for the full star or three-prime heads, or at most three for the
-finite 315/945 heads, at the respective stated cutoffs. Unrestricted
-original-modulus support remains open. The finite switch (RK6)--(RK8)
-removes every support restriction above largest-prime cutoff 8192 for
-star, 315 and 945 heads, or 32768 for arbitrary three-prime heads.
-Only the indicated small-prime support restrictions remain.
+finite 315/945 heads, at the respective stated cutoffs. For these non-star
+heads, unrestricted original-modulus support remains open. The finite
+switch (RK6)--(RK8) removes every support restriction above largest-prime
+cutoff 8192 for 315 and 945 heads, or 32768 for arbitrary three-prime heads.
+Only their indicated small-prime support restrictions remain. The star
+rows retain quantitative bounds, while (US1)--(US12) exclude all star
+completions without those restrictions.
 The finite supported-law bridge (FC4)--(FC5) sharpens the planar cutoff
 to 17 for heads dividing 315 and to 19 for heads dividing 945, the two odd
 parts in the frozen 5040 fibre.
@@ -6297,6 +6646,9 @@ with individual layer bounds retaining the shared zero layer.
 `RestrictedSpineConstantPotential.restricted_spine_constant_potential`
 formalizes the explicit constant-potential probability construction on arbitrary
 finite restricted prefix trees, including its normalization and support.
+`SequentialKernelCylinder.selected_cylinder_bound` formalizes the arbitrary
+selected-coordinate cylinder bound for actual history-dependent Markov
+kernels, directly reusing Mathlib's prefix-preservation result.
 No freeze or problem-resolution binding is supplied, and neither (P1) nor
 (G1) is a complete Lean theorem.
 
@@ -6330,6 +6682,13 @@ establish literature priority or an unrestricted proof or covering counterexampl
 The block-saturation criterion, its sparse-graph consequences for arbitrary
 three-prime heads, and its all-positive-height star consequences also have
 ordinary proofs and exact constant certificates, not complete Lean proofs.
+The unrestricted-tail complete-star theorem (US1)--(US12) has the ordinary
+actual-law, convex-comparison and stopping proof above and an exact directed
+finite certificate. It does not extend the audited upstream Lean theorem
+beyond its `hThree` hypothesis. The local selected-cylinder theorem proves
+only the passage in (DG2); the changed star law, finite-height convex order,
+original-label completion, positive-part computation and BBMST application
+have not been combined into a Lean proof of the complete-star theorem.
 The independent finite lcm exclusion through `11486474` likewise consists
 of an ordinary CRT product-law proof and exact integer enumeration; no
 local Lean formalization or duplicate declaration is claimed.

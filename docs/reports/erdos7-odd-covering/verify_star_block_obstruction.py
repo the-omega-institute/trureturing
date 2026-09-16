@@ -506,6 +506,89 @@ def finite_support_switch_bounds():
             "scope": "Exact finite premises for BBMST Theorem 6.1; arbitrary later support, exponents, and graph."}
 
 
+def stoploss_ceiling(a, b):
+    require(a >= 0 and b > 0, 'nonnegative upward division')
+    return (a + b - 1) // b
+
+def stoploss_atom_bounds(p, c, cap, scale):
+    # Multiplier f=1+K. Infinite-law probabilities:
+    # f=1: 1-c/p; f>=2: c*(p-1)/p^f.
+    cn, cd = c.numerator, c.denominator
+    require(c > 0 and c <= p, 'height law exists')
+    atoms = [0] * (cap + 1)
+    atoms[1] = stoploss_ceiling(scale * (cd*p-cn), cd*p)
+    numerator = scale * cn * (p-1)
+    denominator = cd*p*p
+    for f in range(2, cap+1):
+        if denominator >= numerator:
+            atoms[f:] = [1] * (cap+1-f)
+            break
+        atoms[f] = stoploss_ceiling(numerator, denominator)
+        denominator *= p
+    return atoms
+
+def unrestricted_star_stoploss():
+    import hashlib
+    bound = 2048
+    scale = 10**18
+    delta = F(2, 5)
+    cap = (2*bound+1)//5
+    primes = primes_to(bound)
+    weights = [0]*(cap+1)
+    weights[1] = scale
+    mean = second = scale
+    charge = 0
+    rows = []
+    for p in primes[1:]:
+        if p <= 73:
+            c = F(2) if p == 3 else F(p-1, p-3)
+        else:
+            # D precedes the q=p step. T=1+(p-2)delta=(2p+1)/5.
+            # E(D-T)+ = E D - T + E(T-D)+.
+            # Stored probabilities and E D are upper bounds, and the
+            # coefficients in the final expectation are nonnegative.
+            cutoff = (2*p+1)//5
+            numerator = (5*mean-(2*p+1)*scale
+                         + sum((2*p+1-5*d)*weights[d]
+                               for d in range(1, cutoff+1)))
+            require(numerator >= 0, 'nonnegative upper stop-loss numerator')
+            step = stoploss_ceiling(numerator, 3*(p-2))
+            charge += step
+            rows.append({'prime': p, 'charge_scaled_upper': step,
+                         'cumulative_scaled_upper': charge})
+            c = F(p-1, p-2)/(1-delta)
+        atoms = stoploss_atom_bounds(p, c, cap, scale)
+        raw = [0]*(cap+1)
+        for f in range(1, cap+1):
+            af = atoms[f]
+            for d in range(1, cap//f+1):
+                raw[d*f] += weights[d]*af
+        weights = [stoploss_ceiling(w, scale) for w in raw]
+        factor1 = 1+c/F(p-1)
+        factor2 = 1+c*F(3*p-1, (p-1)**2)
+        mean = stoploss_ceiling(mean*factor1.numerator, factor1.denominator)
+        second = stoploss_ceiling(second*factor2.numerator, factor2.denominator)
+    require(charge < scale, 'positive actual survivor mass')
+    gamma = 1+F(second-scale, scale-charge)
+    k = len(primes)
+    # log2 >= 2(1/3+(1/3)^3/3)=56/81. Since k>=256,
+    # log k>=448/81>4, log log k>=log4>=112/81.
+    # Hence log k+log log k-3 >=317/81>0.
+    require(k >= 256 and F(448,81)>4, 'rational logarithm premise')
+    stopping = k*F(317,81)**2
+    require(gamma < stopping, 'strict BBMST stopping certificate')
+    result = {'prime_cutoff': bound, 'last_prime': primes[-1], 'global_prime_index': k,
+              'delta': str(delta), 'scale': scale, 'retained_product_states': cap,
+              'charge_upper': str(F(charge, scale)),
+              'mean_upper': str(F(mean, scale)), 'second_moment_upper': str(F(second, scale)),
+              'supported_Gamma_upper': str(gamma), 'stopping_lower': str(stopping),
+              'stopping_margin': str(stopping-gamma), 'steps': rows, 'scope': 'Finite directed certificate for the unrestricted-tail complete-star theorem; ordinary convex comparison and BBMST continuation are separate mathematical inputs.',
+              'final_low_state_digest': hashlib.sha256(
+                  json.dumps(weights,separators=(',',':')).encode()).hexdigest()}
+    return result
+
+
+
 def certificate():
     all_primes = primes_to(4000)
     require(tuple(p for p in all_primes if 3 <= p <= 73) == HEAD_PRIMES,
@@ -851,6 +934,7 @@ def certificate():
         "rank_two_tail": rank_two_tail_bounds(),
         "rank_three_tail": rank_three_tail_bounds(),
         "finite_support_switch": finite_support_switch_bounds(),
+        "unrestricted_star_stoploss": unrestricted_star_stoploss(),
         "local_kernel_crt_regression": local_kernel_crt_regression(),
         "binary_path_regression": binary_path_regression(),
         "unrestricted_energy_boundary": unrestricted_energy_boundary(),
@@ -912,6 +996,8 @@ def main():
                       "feedback_vertex_loss_bounds": {row["head"]: row["loss_upper"] for row in data["feedback_vertex"]},
                       "local_parent_capped_kernel_loss_bounds": {row["head_and_graph"]: row["loss_upper"] for row in data["local_parent_capped_kernel"]},
                       "rank_two_tail_loss_bounds": {row["head"]: row["loss_upper"] for row in data["rank_two_tail"]["rows"]},
+                      "unrestricted_star_supported_Gamma_upper": data["unrestricted_star_stoploss"]["supported_Gamma_upper"],
+                      "unrestricted_star_stopping_lower": data["unrestricted_star_stoploss"]["stopping_lower"],
                       "finite_support_switch_seed_bounds": {row["head"]: row["strict_seed_ceiling"] for row in data["finite_support_switch"]["rows"]},
                       "rank_three_tail_loss_bounds": {row["head"]: row["loss_upper"] for row in data["rank_three_tail"]["rows"]},
                       "finite_head_supported_Gamma_bounds": {row["period_bound"]: row["Gamma_bound"] for row in data["finite_head_supported_laws"]},

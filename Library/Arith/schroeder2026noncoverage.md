@@ -61,3 +61,84 @@ is an original repository experiment that binds selected formulas to this
 exact archive and calculates two finite
 counterexamples to proposed extensions. Substring checks are evidence binding
 only; the program neither elaborates Lean nor verifies the author's theorem.
+
+## Conditional comparison and the unrestricted positive-part bound
+
+The same pinned archive contains
+`publication/three_factors/paper/main.tex`, SHA-256
+`291020863f5fbb4f2d98aa0a1d5ac63349bd8c565d4ab07422aee83d23825451`.
+Section 3, **A conditional convex
+comparison**, states Proposition **Conditional comparison** with source label
+`prop:comparison`. Its hypotheses do not bound the number of coordinates
+in one label. Precisely, let `X=(X_1,...,X_d)` have any law on a finite
+product, let `c` range over finitely many labels, and let `A_(c,i)` depend
+only on coordinate `i`. Suppose deterministic `r_(c,i) in [0,1]` satisfy
+
+\[
+ \Pr(X_i\in A_{c,i}\mid X_1,\ldots,X_{i-1})\le r_{c,i}
+ \quad\text{almost surely}.
+\]
+
+For `w_c>=0` and nonnegative increasing convex `h`, the proposition gives
+
+\[
+ \mathbb E h\!\left(\sum_c w_c\prod_i
+                  \mathbf1_{A_{c,i}}(X_i)\right)
+ \le
+ \mathbb E h\!\left(\sum_c w_c\prod_i
+                  \mathbf1_{\{U_i\le r_{c,i}\}}\right),
+\]
+
+where the `U_i` are independent uniforms on `[0,1]`. The same `U_i` is
+used for every label in coordinate `i`. The actual sets for different
+labels need not be nested, and each residue can depend on the entire
+modulus label. The preceding Lemma **Nested marginals**, `lem:nested`,
+compares an increasing supermodular function of a random subset with the
+nested subset having the prescribed upper marginal probabilities. The
+proposition applies it to the last coordinate conditional on the whole
+past, then repeats backwards. Independence is introduced only for the
+auxiliary uniforms. Its final paragraph permits subsequent countable
+nonnegative completion by monotone convergence when the upper expectation
+is finite.
+
+Section 8, **Unrestricted moduli after a fixed largest prime**,
+`sec:extension`, defines
+
+\[
+ D_q=\prod_{3\le p<q}(1+K_p),\qquad
+ S(x)=\prod_{3\le p\le x}
+       \left(1+C_p\frac{3p-1}{(p-1)^2}\right),
+\]
+
+with prime products and the auxiliary height tails from the paper's fixed
+schedule. In the proof of Lemma **Unrestricted second-moment charge**,
+`lem:unrestricted-charge`, it applies `prop:comparison` to the original
+labels and completes the nonempty old cofactor types. There are `D_q-1`
+completed types, each with total weight at most one. Before any quadratic
+relaxation, the proof explicitly bounds the assigned mixed-union probability
+by
+
+\[
+ \frac{\mathbb E(D_q-1-t_q)_+}{d_q-t_q},\qquad
+ d_q=q-2,\quad t_q=d_q\delta_q.
+\]
+
+It then uses `(u-t)_+<=u^2/(4t)` and its choice `delta_q=1/2` to obtain
+`E D_q^2/(q-2)^2`. The preceding positive-part expression retains more
+information. The proof also derives
+`E(1+K_p)^2=1+C_p(3p-1)/(p-1)^2`. Both the cofactor completion and this
+moment identity permit arbitrary support per original modulus. The
+coordinate heights still resolve the entire original family, including
+classes ending after the cutoff. None of these observations removes the
+three-prime hypothesis from the audited Lean theorem quoted above.
+
+The [complete-star extension](../../Problems/erdos-7-odd-covering-systems.md)
+uses this ordinary conditional comparison with a different, actual star
+head law and `delta=2/5` through prime 2039. Its finite-height ternary
+convex-order step, original-label completion, exact positive-part sum and
+same-law survivor conditioning are stated in (US1)--(US12) there. They
+supply a supported `Gamma<4331` seed for BBMST continuation and exclude
+arbitrary tails above 73 for that specific head assignment. This is a
+new application of the paper's ordinary propositions, not a claim that
+the upstream Lean development formalizes the changed head law or the
+unrestricted-tail star theorem.
