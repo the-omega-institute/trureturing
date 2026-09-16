@@ -65,6 +65,46 @@ public sealed class InformationTemplateDebtStoreTests
         Assert.Empty(InformationTemplateDebtStore.Load(Snapshot(), new(Seed, false), Snapshot()));
 
     [Theory]
+    [InlineData("plain")]
+    [InlineData("missing")]
+    [InlineData("malformed")]
+    [InlineData("symlink")]
+    public void debt_snapshot_filemap_fragments_are_snapshot_bound(string change)
+    {
+        const string manifest = "schema_version = 2\ninclude = [\"FILEMAP.inputs.toml\"]\n";
+        const string fragment = "schema_version = 2\nfiles = [ { pattern = \"Registration.lean\", "
+            + "runtime_disposition = \"committed-source\" } ]\n";
+        var files = new List<(string Path, string Text)>
+        {
+            ("Meta/FILEMAP.toml", manifest), ("Registration.lean", Source), ("Original.lean", Source),
+        };
+        if (change != "missing")
+            files.Add(("Meta/FILEMAP.inputs.toml", change switch
+            {
+                "malformed" => "schema_version = 2\nfiles = []\n",
+                "symlink" => fragment.Replace(" } ]", ", symlink = { target = \"Original.lean\", kind = \"file\" } } ]",
+                    StringComparison.Ordinal),
+                _ => fragment,
+            }));
+        var inputs = Snapshot(files.ToArray());
+        ImmutableDictionary<InformationOccurrenceKey, InformationTemplateDebtRow> Load() =>
+            InformationTemplateDebtStore.Load(Snapshot((RowPath, Row)), new(Seed, false), inputs);
+        if (change == "plain")
+        {
+            Assert.Equal(Row, Encoding.UTF8.GetString(
+                InformationTemplateDebtStore.WriteRow(Assert.Single(Load()).Value).AsSpan()));
+            return;
+        }
+        var error = Assert.ThrowsAny<FormatException>(() => Load());
+        Assert.Contains(change switch
+        {
+            "missing" => "included file is unavailable in this snapshot",
+            "malformed" => "files must contain at least one entry",
+            _ => "DTR-DebtSchema: unavailable, changed or noncanonical input Registration.lean",
+        }, error.Message, StringComparison.Ordinal);
+    }
+
+    [Theory]
     [InlineData("version")]
     [InlineData("duplicate")]
     [InlineData("unknown")]

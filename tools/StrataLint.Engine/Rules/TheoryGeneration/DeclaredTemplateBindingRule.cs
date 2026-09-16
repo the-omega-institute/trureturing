@@ -132,17 +132,25 @@ internal static class DeclaredTemplateBindingRule
             || path.StartsWith(InformationTemplateDebtStore.Root, StringComparison.Ordinal)
                 && path != InformationTemplateDebtStore.ActivationPath).ToArray();
         if (content.Length == 0) return;
-        if (!baseline.TryGetFile(AdmissionPlanePolicy.FileMapPath, out var oldMap)
-            || !candidate.TryGetFile(AdmissionPlanePolicy.FileMapPath, out var newMap))
+        if (!baseline.TryGetFile(AdmissionPlanePolicy.FileMapPath, out _)
+            || !candidate.TryGetFile(AdmissionPlanePolicy.FileMapPath, out _))
             throw new FormatException("DTR-Routing: protected/candidate FILEMAP unavailable");
-        var baseDelta = AdmissionPlanePolicy.Evaluate(oldMap.RawBytes.AsSpan(), changed.ToArray());
-        var headDelta = AdmissionPlanePolicy.Evaluate(newMap.RawBytes.AsSpan(), changed.ToArray());
+        static RawRepositorySnapshot PolicySnapshot(RepositorySnapshot snapshot) =>
+            RawRepositorySnapshot.Create(snapshot.Files.Values
+                .Where(file => FileMapDocuments.IsPolicyPath(file.Path.Value))
+                .Select(file => new RawRepositoryEntry(file.Path.Value, file.RawBytes)));
+        var oldPolicy = PolicySnapshot(baseline);
+        var newPolicy = PolicySnapshot(candidate);
+        var delta = RawChangeSet.Create(changed);
+        var baseDelta = AdmissionPlanePolicy.Evaluate(oldPolicy, oldPolicy, delta);
+        var headDelta = AdmissionPlanePolicy.Evaluate(newPolicy, newPolicy, delta);
         if (!baseDelta.IsAdmissible || !headDelta.IsAdmissible
             || baseDelta.Classification != AdmissionPlaneClassification.ContentOnly
             || headDelta.Classification != baseDelta.Classification)
             throw new FormatException("DTR-Routing: mixed delta or base/candidate partition differs");
-        var before = AdmissionPlanePolicy.Evaluate(oldMap.RawBytes.AsSpan(), content);
-        var after = AdmissionPlanePolicy.Evaluate(newMap.RawBytes.AsSpan(), content);
+        var contentDelta = RawChangeSet.Create(content);
+        var before = AdmissionPlanePolicy.Evaluate(oldPolicy, oldPolicy, contentDelta);
+        var after = AdmissionPlanePolicy.Evaluate(newPolicy, newPolicy, contentDelta);
         if (!before.IsAdmissible || !after.IsAdmissible
             || before.Classification != AdmissionPlaneClassification.ContentOnly
             || after.Classification != before.Classification)

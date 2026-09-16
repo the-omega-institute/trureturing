@@ -41,7 +41,10 @@ internal static class InformationTemplateDebtStore
     {
         private readonly ImmutableArray<FileMapSymlink> links =
             snapshot.TryGetFile(AdmissionPlanePolicy.FileMapPath, out var manifest)
-                ? FileMapSymlinkPolicy.Parse(manifest.RawBytes.AsSpan(), AdmissionPlanePolicy.FileMapPath)
+                ? FileMapSymlinkPolicy.Parse(manifest.RawBytes.AsSpan(), AdmissionPlanePolicy.FileMapPath,
+                    path => snapshot.TryGetFile(path, out var included)
+                        ? included.RawBytes.ToArray()
+                        : throw new KeyNotFoundException(path))
                 : [];
         private readonly ConcurrentDictionary<string, string> hashes = new(StringComparer.Ordinal);
 
