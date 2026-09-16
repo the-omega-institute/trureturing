@@ -6,9 +6,10 @@ fractions. The arbitrary-height block theorem and cylinder estimates
 remain ordinary mathematical proofs; this is not Lean certification.
 The default run reads and checks the fixed adjacent JSON certificate.
 """
+from collections import Counter
 from fractions import Fraction as F
 from itertools import combinations, product as cartesian_product
-from math import isqrt, prod
+from math import gcd, isqrt, prod
 from pathlib import Path
 import argparse
 import json
@@ -876,6 +877,166 @@ def head_mixed_mass_improvement():
 
 
 
+def cm1_actual_head_sharpness():
+    """Actual CRT families make the mixed-357 pure-product bound sharp."""
+    rows = []
+    head_cases = {}
+    for height, five_height in cartesian_product((3, 4, 5), (1, 2, 3)):
+        ternary, quinary = 3**height, 5**five_height
+        period = ternary*quinary
+        pure_three = [(3, 0), (9, 4)] + [
+            (3**a, 3**(a-1)-8) for a in range(3, height+1)]
+        pure_five = [(5**b, 5**(b-1)-1) for b in range(1, five_height+1)]
+        classes = pure_three + pure_five
+        for b in range(1, five_height+1):
+            first, second = 2*5**(b-1)-1, 3*5**(b-1)-1
+            mixed = [(3, 2, first), (9, 2, second)] + [
+                (3**a, 2*3**(a-1)-8, first) for a in range(3, height+1)]
+            for modulus, residue, five_residue in mixed:
+                joint = residue + modulus*(
+                    (five_residue-residue)*pow(modulus, -1, 5**b) % 5**b)
+                require(joint % modulus == residue and joint % 5**b == five_residue,
+                        'actual CM2 mixed residue satisfies both CRT conditions')
+                classes.append((modulus*5**b, joint))
+        expected_moduli = {3**a*5**b for a in range(height+1)
+                           for b in range(five_height+1) if a or b}
+        require({modulus for modulus, residue in classes} == expected_moduli
+                and len(classes) == len(expected_moduli),
+                'CM2 construction has one class per nonunit divisor')
+        pure_x = [value for value in range(ternary)
+                  if all(value % modulus != residue for modulus, residue in pure_three)]
+        pure_y = [value for value in range(quinary)
+                  if all(value % modulus != residue for modulus, residue in pure_five)]
+        survivors = [value for value in range(period)
+                     if all(value % modulus != residue for modulus, residue in classes)]
+        a_sum = sum((F(1, 3**a) for a in range(3, height+1)), F(0))
+        r_sum = sum((F(1, 5**b) for b in range(1, five_height+1)), F(0))
+        x, z = F(5, 9)-a_sum, 1-r_sum
+        mass = x-r_sum
+        require(F(len(pure_x), ternary) == x and F(len(pure_y), quinary) == z,
+                'actual CM2 pure survivor densities')
+        require(F(len(survivors), period) == mass, 'actual CM2 complete density')
+        cell_order = (1, 7, 2, 5, 8)
+        cells = [F(sum(value % 9 == cell for value in survivors), period)
+                 for cell in cell_order]
+        require(cells == [z/9-a_sum, z/9, (1-3*r_sum)/9,
+                          (1-2*r_sum)/9, (1-2*r_sum)/9],
+                'all five actual CM2 cell masses')
+        first_max, second_max = (3-7*r_sum)/9, z/9
+        raw_load = F(0)
+        layout = []
+        for a in range(height+1):
+            for b in range(five_height+1):
+                if not (a or b):
+                    continue
+                modulus = 3**a*5**b
+                counts = Counter(value % modulus for value in survivors)
+                actual = F(max(counts.values()), period)
+                if b == 0:
+                    expected = first_max if a == 1 else second_max if a == 2 else z/3**a
+                else:
+                    expected = x/5**b if a == 0 else F(1, modulus)
+                require(actual == expected, 'actual CM2 maximum for every divisor cylinder')
+                three_residue = (0 if a == 0 else 2 if a == 1 else
+                                 7 if a == 2 else 3**(a-1)-2)
+                five_residue = 0 if b == 0 else 4*5**(b-1)-1
+                residue = three_residue if b == 0 else three_residue + 3**a*(
+                    (five_residue-three_residue)*pow(3**a, -1, 5**b) % 5**b)
+                color = ((1 if a <= 2 else 2) if b == 0 else
+                         3 if a == 0 else 4 if a <= 2 else 5)
+                require(F(counts[residue], period) == expected,
+                        'five-color layout realizes each actual cylinder maximum')
+                layout.append((modulus, residue, color))
+                raw_load += actual
+        for left, right in combinations(layout, 2):
+            if left[2] == right[2]:
+                require((left[1]-right[1]) % gcd(left[0], right[0]) != 0,
+                        'old cylinders of the same color are disjoint')
+        require(raw_load == (4+r_sum)/9+(1-r_sum)*a_sum,
+                'complete actual CM2 cylinder sum')
+        quotient = (mass-raw_load/5)/(x*z)
+        require(quotient > F(53, 135), 'finite CM2 input above its limiting minimum')
+        rows.append({'ternary_height': height, 'quinary_height': five_height,
+                     'period': period, 'original_classes': len(classes),
+                     'survivors': len(survivors), 'x': str(x), 'z': str(z),
+                     'cell_order': list(cell_order), 'cell_masses': list(map(str, cells)),
+                     'survivor_density': str(mass), 'raw_cylinder_sum': str(raw_load),
+                     'CM2_expression': str(quotient)})
+        head_cases[height, five_height] = (classes, layout, len(pure_x), len(pure_y),
+                                          len(survivors), x, z, mass, raw_load)
+    full_rows = []
+    for height, five_height, seven_height in cartesian_product((3, 4), (1, 2), (1, 2)):
+        (head_classes, layout, pure_x_count, pure_y_count, head_count,
+         x, z, mass, raw_load) = head_cases[height, five_height]
+        seven_period = 7**seven_height
+        head_period = 3**height*5**five_height
+        period = head_period*seven_period
+        pure_seven = [(7**e, 7**(e-1)-1) for e in range(1, seven_height+1)]
+        classes = head_classes + pure_seven
+        mixed_seven = []
+        for modulus, residue, color in layout:
+            for e in range(1, seven_height+1):
+                seven_residue = (color+1)*7**(e-1)-1
+                joint = residue + modulus*(
+                    (seven_residue-residue)*pow(modulus, -1, 7**e) % 7**e)
+                require(joint % modulus == residue and joint % 7**e == seven_residue,
+                        'actual colored prime-7 CRT class')
+                mixed_seven.append((modulus*7**e, joint))
+        classes += mixed_seven
+        expected_moduli = {3**a*5**b*7**e for a in range(height+1)
+                           for b in range(five_height+1) for e in range(seven_height+1)
+                           if a or b or e}
+        require({modulus for modulus, residue in classes} == expected_moduli
+                and len(classes) == len(expected_moduli),
+                'one actual class per nonunit 357 divisor')
+        for left, right in combinations(mixed_seven, 2):
+            require((left[1]-right[1]) % gcd(left[0], right[0]) != 0,
+                    'all colored prime-7 mixed classes are pairwise disjoint')
+        pure_z = [value for value in range(seven_period)
+                  if all(value % modulus != residue for modulus, residue in pure_seven)]
+        survivor_count = sum(all(value % modulus != residue for modulus, residue in classes)
+                             for value in range(period))
+        seven_sum = sum((F(1, 7**e) for e in range(1, seven_height+1)), F(0))
+        seven_density = 1-seven_sum
+        require(F(len(pure_z), seven_period) == seven_density,
+                'actual pure-7 survivor density')
+        actual_deleted = F(head_count*len(pure_z)-survivor_count, period)
+        require(actual_deleted == raw_load*seven_sum,
+                'final prime-7 union bound is an exact equality')
+        survival = F(survivor_count, pure_x_count*pure_y_count*len(pure_z))
+        ambient_survival = F(survivor_count, period)
+        formula = (mass-raw_load*seven_sum/seven_density)/(x*z)
+        require(survival == formula > F(53, 135), 'actual pure-product survivor probability')
+        require(ambient_survival > F(53, 432), 'actual finite ambient survivor density')
+        full_rows.append({'ternary_height': height, 'quinary_height': five_height,
+                          'septenary_height': seven_height, 'period': period,
+                          'original_classes': len(classes), 'survivors': survivor_count,
+                          'prime7_mixed_classes': len(mixed_seven),
+                          'prime7_deleted_ambient_density': str(actual_deleted),
+                          'ambient_uncovered_density': str(ambient_survival),
+                          'pure_product_survival': str(survival),
+                          'pure_product_mixed_mass': str(1-survival)})
+    a_sum, r_sum = F(1, 18), F(1, 4)
+    x, z = F(5, 9)-a_sum, 1-r_sum
+    mass = x-r_sum
+    raw_load = (4+r_sum)/9+(1-r_sum)*a_sum
+    require((mass, raw_load, (mass-raw_load/5)/(x*z)) ==
+            (F(1, 4), F(37, 72), F(53, 135)), 'exact limiting CM2 input values')
+    require(F(1, 6)/(1-F(1, 6)) == F(1, 5), 'limiting pure-7 normalized cylinder sum')
+    ambient_limit = mass*F(5, 6)-raw_load*F(1, 6)
+    require(ambient_limit == F(53, 135)*F(1, 2)*F(3, 4)*F(5, 6) == F(53, 432)
+            and ambient_limit > F(5, 42), 'sharp uniform density and prior-density comparison')
+    return {'actual_35_residue_cases': len(rows),
+            'actual_cylinder_maxima_checked': sum(row['original_classes'] for row in rows),
+            'limit_survivor_density': str(mass), 'limit_raw_cylinder_sum': str(raw_load),
+            'old_cylinder_colors': 5, 'actual_357_residue_cases': len(full_rows),
+            'limit_pure_product_survival': str((mass-raw_load/5)/(x*z)),
+            'limit_pure_product_mixed_mass': str(1-(mass-raw_load/5)/(x*z)),
+            'infimum_ambient_uncovered_density': str(ambient_limit),
+            'head_cases': rows, 'full_head_cases': full_rows,
+            'scope': 'Actual 357 families approach mixed mass 82/135 under their pure-survivor product law and ambient uncovered density 53/432. Every finite prime-7 union bound is exact; arbitrary-height sharpness is an ordinary proof.'}
+
+
 def comb_stoploss_dual_transport():
     """Exact primal/dual witnesses for complete cylinder-cap tail sums."""
     rows = []
@@ -1350,6 +1511,7 @@ def certificate():
         "unrestricted_star_stoploss": unrestricted_star_stoploss(),
         "pure_head_unrestricted_stoploss": pure_head_unrestricted_stoploss(),
         "head_mixed_mass_improvement": head_mass,
+        "cm1_actual_head_sharpness": cm1_actual_head_sharpness(),
         "adaptive_head_stoploss": adaptive_head_stoploss(head_mass),
         "homogeneous_comb_capacity": homogeneous_comb_capacity(),
         "comb_stoploss_dual_transport": comb_stoploss_dual_transport(),

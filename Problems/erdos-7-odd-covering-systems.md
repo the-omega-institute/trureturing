@@ -4369,6 +4369,153 @@ records the exact vertex minimum and both missing-class branches under
 **head_mixed_mass_improvement** in its
 [certificate](../docs/reports/erdos7-odd-covering/star_block_obstruction_certificate.json).
 
+**Sharpness of (CM1) for actual pure-survivor product laws.** The constant
+\(82/135\) is the supremum over actual finite \(\{3,5,7\}\)-families under
+the prescribed law \(P_0\). The following construction realizes every
+prime-7 union bound as an equality and approaches that supremum. This is
+an ordinary mathematical result; the finite residue checks below are not
+an end-to-end Lean proof.
+
+Fix \(H\ge3\) and \(K,L\ge1\). First assign one class to every nonunit
+divisor of \(3^H5^K\). The pure ternary classes are
+\[
+ 0\pmod3,\qquad4\pmod9,\qquad
+ 3^{a-1}-8\pmod{3^a}\quad(3\le a\le H),
+\]
+and the pure quinary class at depth \(b\) is
+\(5^{b-1}-1\pmod{5^b}\). For each \(1\le b\le K\), choose the mixed
+classes by these CRT coordinates:
+
+| Modulus | Ternary residue | Quinary residue |
+|---|---:|---:|
+| \(3\cdot5^b\) | \(2\pmod3\) | \(2\cdot5^{b-1}-1\pmod{5^b}\) |
+| \(9\cdot5^b\) | \(2\pmod9\) | \(3\cdot5^{b-1}-1\pmod{5^b}\) |
+| \(3^a5^b,\ 3\le a\le H\) | \(2\cdot3^{a-1}-8\pmod{3^a}\) | \(2\cdot5^{b-1}-1\pmod{5^b}\) |
+
+Put
+\[
+ A=\sum_{a=3}^H3^{-a}=\frac{1-3^{-(H-2)}}{18},\qquad
+ r=\sum_{b=1}^K5^{-b}=\frac{1-5^{-K}}4,\qquad
+ x=\frac59-A,\quad z=1-r.
+\]
+Inside the cell \(1\pmod9\), the higher pure ternary classes and the
+higher mixed ternary coordinates are the disjoint suffix exits
+\(2^k0\) and \(2^k1\), respectively, in least-significant-digit order.
+The pure, first mixed, and second mixed quinary coordinates are likewise
+the mutually disjoint exits \(4^k0,4^k1,4^k2\). Thus \(x,z\) are exactly
+the pure survivor densities. The complete pair-survivor set \(S\) has
+the following ambient masses in cells \((1,7,2,5,8)\pmod9\):
+\[
+ \left(\frac z9-A,\ \frac z9,\ \frac{1-3r}9,
+             \frac{1-2r}9,\ \frac{1-2r}9\right),\qquad
+ s=\frac{|S|}{3^H5^K}=x-r.                            \tag{CM3}
+\]
+The largest root and cell masses are
+\(N_1=(3-7r)/9\) and \(N_2=z/9\). Indeed, the long root exceeds the
+short root by \((1-5r)/9+A\ge1/108\); the clean cell \(7\pmod9\)
+is the largest cell.
+
+Write \(C_{a,b}\) for the largest ambient mass of \(S\) in a cylinder
+modulo \(3^a5^b\). Every maximum is exactly
+\[
+ \begin{aligned}
+ C_{1,0}&=N_1,& C_{2,0}&=N_2,&
+ C_{a,0}&=z3^{-a}&& (a\ge3),\\
+ C_{0,b}&=x5^{-b}&& (b\ge1),&
+ C_{a,b}&=3^{-a}5^{-b}&& (a,b\ge1).
+ \end{aligned}                                      \tag{CM4}
+\]
+For pure ternary depths at least two, use cylinders in the clean cell
+\(7\pmod9\). For pure quinary depths use the clean exits \(4^k3\),
+which avoid all three earlier quinary exit families. Their product with
+the long ternary root, or with the clean short cell, supplies full mixed
+cylinders. These choices may differ between divisors, as the definition
+of \(R_{35}\) permits; no common cylinder centre is asserted. Since
+\(\sum_{a=1}^H3^{-a}=4/9+A=1-x\), (CM4) gives
+\[
+ T_{H,K}:=sR_{35}
+   =N_1+N_2+zA+xr+(1-x)r
+   =\frac{4+r}{9}+(1-r)A.                           \tag{CM5}
+\]
+In particular, \(s\to1/4\) and \(T_{H,K}\to37/72\).
+
+To attain the subsequent prime-7 deletion bound, choose a maximizing
+old cylinder for every \(d=3^a5^b>1\). Its ternary coordinate, when
+present, is
+\[
+ g_1=2\pmod3,\qquad g_2=7\pmod9,\qquad
+ g_a=3^{a-1}-2\pmod{3^a}\quad(a\ge3),
+\]
+and its quinary coordinate is \(f_b=4\cdot5^{b-1}-1\pmod{5^b}\).
+The higher \(g_a\) are pairwise disjoint exits inside \(7\pmod9\);
+the \(f_b\) are pairwise disjoint clean quinary exits. Partition these
+old cylinders into five colours:
+
+| Exponents of \(d\) | Colour |
+|---|---:|
+| \(b=0,\ a=1,2\) | 1 |
+| \(b=0,\ a\ge3\) | 2 |
+| \(a=0,\ b\ge1\) | 3 |
+| \(a=1,2,\ b\ge1\) | 4 |
+| \(a\ge3,\ b\ge1\) | 5 |
+
+Within each colour the old cylinders are pairwise disjoint. Assign
+the pure class \(7^{e-1}-1\pmod{7^e}\) for \(1\le e\le L\).
+For each old divisor \(d>1\) of colour \(j\), assign to \(d7^e\)
+the chosen old cylinder and the septenary coordinate
+\[
+ (j+1)7^{e-1}-1\pmod{7^e}.                           \tag{CM6}
+\]
+These are the suffix exits \(6^k j\), while the pure exclusions are
+\(6^k0\). Distinct pairs \((j,e)\) have disjoint septenary cylinders;
+for equal \((j,e)\), the old cylinders are disjoint. Consequently all
+mixed classes ending at 7 are pairwise disjoint and avoid the pure
+septenary exclusions. Each \(d7^e\) is a new original modulus, so its
+old residue is allowed to differ from the residue assigned to \(d\).
+The resulting family contains exactly one class for every nonunit
+divisor of \(3^H5^K7^L\).
+
+Let \(r_7=\sum_{e=1}^L7^{-e}=(1-7^{-L})/6\) and \(z_7=1-r_7\).
+By disjointness, the mixed prime-7 classes remove exactly ambient mass
+\(r_7T_{H,K}\) from \(S\) times the pure-7 survivors. Therefore the
+complete actual survivor probability under \(P_0\) is exactly
+\[
+ \lambda_{H,K,L}
+ =\frac{s z_7-r_7T_{H,K}}{xz z_7}
+ =\frac{s-T_{H,K}r_7/z_7}{xz}
+ \longrightarrow\frac{53}{135}.                    \tag{CM7}
+\]
+Together with (CM1), this proves that the actual mixed-head mass has
+supremum \(82/135\). Thus imposing actual residue compatibility on
+(CM2), or requiring overlap among the final prime-7 classes, cannot
+uniformly reduce this constant for the prescribed pure-survivor product
+law. Other choices of the head law are outside this sharpness statement.
+
+**Exact ambient uncovered-density infimum.** Every finite distinct family
+supported on \(\{3,5,7\}\) leaves ordinary uniform density strictly
+greater than \(53/432\). Indeed, the product of its three actual pure
+survivor densities is strictly greater than
+\((1/2)(3/4)(5/6)=5/16\), because each finite geometric exclusion sum is
+strictly below its infinite sum. Multiplying by (CM1)'s conditional
+survivor bound \(53/135\) proves the claim. For the constructed families,
+the exact ambient survivor density is
+\[
+ s z_7-r_7T_{H,K}
+ \longrightarrow\frac14\frac56-\frac16\frac{37}{72}
+ =\frac{53}{432}.                                   \tag{CM8}
+\]
+Thus \(53/432\) is the exact infimum over all such finite families.
+The earlier pair recurrence \(\lambda\ge(4/7)\theta_{35}\ge8/21\)
+implies only the smaller ambient bound \(5/42\).
+
+The existing verifier records **cm1_actual_head_sharpness** through its
+canonical certificate writer. It enumerates nine pair-head families,
+checks all 126 divisor-cylinder maxima and the disjoint colour classes,
+then enumerates eight complete three-prime families with
+\(H=3,4\), \(K,L=1,2\). Direct CRT residue checks confirm the exact
+prime-7 deletion and (CM7). The all-height construction and its limiting
+sharpness are proved above.
+
 **Coupled densities of the three prime-pair subsystems.** Let \(\sigma_A\)
 be the ambient density avoiding the original classes supported on \(A\),
 and put \(z_p=\sigma_{\{p\}}\). These are subsets of the same fixed family.

@@ -10430,6 +10430,360 @@
     },
     "scope": "Exact P12 parameter extrema plus actual CRT regression; the arbitrary-height density inequality is an ordinary proof."
   },
+  "cm1_actual_head_sharpness": {
+    "actual_35_residue_cases": 9,
+    "actual_cylinder_maxima_checked": 126,
+    "limit_survivor_density": "1/4",
+    "limit_raw_cylinder_sum": "37/72",
+    "old_cylinder_colors": 5,
+    "actual_357_residue_cases": 8,
+    "limit_pure_product_survival": "53/135",
+    "limit_pure_product_mixed_mass": "82/135",
+    "infimum_ambient_uncovered_density": "53/432",
+    "head_cases": [
+      {
+        "ternary_height": 3,
+        "quinary_height": 1,
+        "period": 135,
+        "original_classes": 7,
+        "survivors": 43,
+        "x": "14/27",
+        "z": "4/5",
+        "cell_order": [
+          1,
+          7,
+          2,
+          5,
+          8
+        ],
+        "cell_masses": [
+          "7/135",
+          "4/45",
+          "2/45",
+          "1/15",
+          "1/15"
+        ],
+        "survivor_density": "43/135",
+        "raw_cylinder_sum": "67/135",
+        "CM2_expression": "37/70"
+      },
+      {
+        "ternary_height": 3,
+        "quinary_height": 2,
+        "period": 675,
+        "original_classes": 11,
+        "survivors": 188,
+        "x": "14/27",
+        "z": "19/25",
+        "cell_order": [
+          1,
+          7,
+          2,
+          5,
+          8
+        ],
+        "cell_masses": [
+          "32/675",
+          "19/225",
+          "7/225",
+          "13/225",
+          "13/225"
+        ],
+        "survivor_density": "188/675",
+        "raw_cylinder_sum": "337/675",
+        "CM2_expression": "603/1330"
+      },
+      {
+        "ternary_height": 3,
+        "quinary_height": 3,
+        "period": 3375,
+        "original_classes": 15,
+        "survivors": 913,
+        "x": "14/27",
+        "z": "94/125",
+        "cell_order": [
+          1,
+          7,
+          2,
+          5,
+          8
+        ],
+        "cell_masses": [
+          "157/3375",
+          "94/1125",
+          "32/1125",
+          "7/125",
+          "7/125"
+        ],
+        "survivor_density": "913/3375",
+        "raw_cylinder_sum": "1687/3375",
+        "CM2_expression": "1439/3290"
+      },
+      {
+        "ternary_height": 4,
+        "quinary_height": 1,
+        "period": 405,
+        "original_classes": 9,
+        "survivors": 124,
+        "x": "41/81",
+        "z": "4/5",
+        "cell_order": [
+          1,
+          7,
+          2,
+          5,
+          8
+        ],
+        "cell_masses": [
+          "16/405",
+          "4/45",
+          "2/45",
+          "1/15",
+          "1/15"
+        ],
+        "survivor_density": "124/405",
+        "raw_cylinder_sum": "41/81",
+        "CM2_expression": "83/164"
+      },
+      {
+        "ternary_height": 4,
+        "quinary_height": 2,
+        "period": 2025,
+        "original_classes": 14,
+        "survivors": 539,
+        "x": "41/81",
+        "z": "19/25",
+        "cell_order": [
+          1,
+          7,
+          2,
+          5,
+          8
+        ],
+        "cell_masses": [
+          "71/2025",
+          "19/225",
+          "7/225",
+          "13/225",
+          "13/225"
+        ],
+        "survivor_density": "539/2025",
+        "raw_cylinder_sum": "206/405",
+        "CM2_expression": "333/779"
+      },
+      {
+        "ternary_height": 4,
+        "quinary_height": 3,
+        "period": 10125,
+        "original_classes": 19,
+        "survivors": 2614,
+        "x": "41/81",
+        "z": "94/125",
+        "cell_order": [
+          1,
+          7,
+          2,
+          5,
+          8
+        ],
+        "cell_masses": [
+          "346/10125",
+          "94/1125",
+          "32/1125",
+          "7/125",
+          "7/125"
+        ],
+        "survivor_density": "2614/10125",
+        "raw_cylinder_sum": "1031/2025",
+        "CM2_expression": "1583/3854"
+      },
+      {
+        "ternary_height": 5,
+        "quinary_height": 1,
+        "period": 1215,
+        "original_classes": 11,
+        "survivors": 367,
+        "x": "122/243",
+        "z": "4/5",
+        "cell_order": [
+          1,
+          7,
+          2,
+          5,
+          8
+        ],
+        "cell_masses": [
+          "43/1215",
+          "4/45",
+          "2/45",
+          "1/15",
+          "1/15"
+        ],
+        "survivor_density": "367/1215",
+        "raw_cylinder_sum": "619/1215",
+        "CM2_expression": "152/305"
+      },
+      {
+        "ternary_height": 5,
+        "quinary_height": 2,
+        "period": 6075,
+        "original_classes": 17,
+        "survivors": 1592,
+        "x": "122/243",
+        "z": "19/25",
+        "cell_order": [
+          1,
+          7,
+          2,
+          5,
+          8
+        ],
+        "cell_masses": [
+          "188/6075",
+          "19/225",
+          "7/225",
+          "13/225",
+          "13/225"
+        ],
+        "survivor_density": "1592/6075",
+        "raw_cylinder_sum": "3109/6075",
+        "CM2_expression": "4851/11590"
+      },
+      {
+        "ternary_height": 5,
+        "quinary_height": 3,
+        "period": 30375,
+        "original_classes": 23,
+        "survivors": 7717,
+        "x": "122/243",
+        "z": "94/125",
+        "cell_order": [
+          1,
+          7,
+          2,
+          5,
+          8
+        ],
+        "cell_masses": [
+          "913/30375",
+          "94/1125",
+          "32/1125",
+          "7/125",
+          "7/125"
+        ],
+        "survivor_density": "7717/30375",
+        "raw_cylinder_sum": "15559/30375",
+        "CM2_expression": "11513/28670"
+      }
+    ],
+    "full_head_cases": [
+      {
+        "ternary_height": 3,
+        "quinary_height": 1,
+        "septenary_height": 1,
+        "period": 945,
+        "original_classes": 15,
+        "survivors": 191,
+        "prime7_mixed_classes": 7,
+        "prime7_deleted_ambient_density": "67/945",
+        "ambient_uncovered_density": "191/945",
+        "pure_product_survival": "191/336",
+        "pure_product_mixed_mass": "145/336"
+      },
+      {
+        "ternary_height": 3,
+        "quinary_height": 1,
+        "septenary_height": 2,
+        "period": 6615,
+        "original_classes": 23,
+        "survivors": 1227,
+        "prime7_mixed_classes": 14,
+        "prime7_deleted_ambient_density": "536/6615",
+        "ambient_uncovered_density": "409/2205",
+        "pure_product_survival": "1227/2296",
+        "pure_product_mixed_mass": "1069/2296"
+      },
+      {
+        "ternary_height": 3,
+        "quinary_height": 2,
+        "septenary_height": 1,
+        "period": 4725,
+        "original_classes": 23,
+        "survivors": 791,
+        "prime7_mixed_classes": 11,
+        "prime7_deleted_ambient_density": "337/4725",
+        "ambient_uncovered_density": "113/675",
+        "pure_product_survival": "113/228",
+        "pure_product_mixed_mass": "115/228"
+      },
+      {
+        "ternary_height": 3,
+        "quinary_height": 2,
+        "septenary_height": 2,
+        "period": 33075,
+        "original_classes": 35,
+        "survivors": 5012,
+        "prime7_mixed_classes": 22,
+        "prime7_deleted_ambient_density": "2696/33075",
+        "ambient_uncovered_density": "716/4725",
+        "pure_product_survival": "358/779",
+        "pure_product_mixed_mass": "421/779"
+      },
+      {
+        "ternary_height": 4,
+        "quinary_height": 1,
+        "septenary_height": 1,
+        "period": 2835,
+        "original_classes": 19,
+        "survivors": 539,
+        "prime7_mixed_classes": 9,
+        "prime7_deleted_ambient_density": "41/567",
+        "ambient_uncovered_density": "77/405",
+        "pure_product_survival": "539/984",
+        "pure_product_mixed_mass": "445/984"
+      },
+      {
+        "ternary_height": 4,
+        "quinary_height": 1,
+        "septenary_height": 2,
+        "period": 19845,
+        "original_classes": 29,
+        "survivors": 3444,
+        "prime7_mixed_classes": 18,
+        "prime7_deleted_ambient_density": "328/3969",
+        "ambient_uncovered_density": "164/945",
+        "pure_product_survival": "21/41",
+        "pure_product_mixed_mass": "20/41"
+      },
+      {
+        "ternary_height": 4,
+        "quinary_height": 2,
+        "septenary_height": 1,
+        "period": 14175,
+        "original_classes": 29,
+        "survivors": 2204,
+        "prime7_mixed_classes": 14,
+        "prime7_deleted_ambient_density": "206/2835",
+        "ambient_uncovered_density": "2204/14175",
+        "pure_product_survival": "58/123",
+        "pure_product_mixed_mass": "65/123"
+      },
+      {
+        "ternary_height": 4,
+        "quinary_height": 2,
+        "septenary_height": 2,
+        "period": 99225,
+        "original_classes": 44,
+        "survivors": 13859,
+        "prime7_mixed_classes": 28,
+        "prime7_deleted_ambient_density": "1648/19845",
+        "ambient_uncovered_density": "13859/99225",
+        "pure_product_survival": "13859/31939",
+        "pure_product_mixed_mass": "18080/31939"
+      }
+    ],
+    "scope": "Actual 357 families approach mixed mass 82/135 under their pure-survivor product law and ambient uncovered density 53/432. Every finite prime-7 union bound is exact; arbitrary-height sharpness is an ordinary proof."
+  },
   "adaptive_head_stoploss": {
     "head": "arbitrary_357_head",
     "head_period_bound": null,
