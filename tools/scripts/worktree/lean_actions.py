@@ -18,7 +18,7 @@ import time
 
 from lean_cache import binary_platform, partition_path, resolved_mathlib
 from lean_cache_release import cache_guard
-from cache_material import files, sha, snapshot_files
+from cache_material import files, sha, snapshot_files, validate_manifest
 
 LAYERS = ("dependency", "project")
 # Execution evidence is opt-in; native engineering/current owners produce it.
@@ -277,7 +277,7 @@ def validate_judge_registration(root, layers):
         return project_registry(root)
 
 
-def validate_cache_directory(directory, expected):
+def validate_cache_directory(directory, expected, *, small_files_first=False):
     """Validate a complete cache data directory before publishing it.
 
     ``files(..., expected=...)`` validates the declared bytes and modes but
@@ -289,9 +289,9 @@ def validate_cache_directory(directory, expected):
     """
     if directory.is_symlink() or not directory.is_dir():
         raise ValueError("cache data is not a private directory")
-    inventory = files(directory, expected=expected)
-    declared = {item["path"] for item in inventory}
-    actual = set()
+    validate_manifest(expected)
+    declared = {item["path"]: item["mode"] for item in expected}
+    actual = {}
     for path in directory.rglob("*"):
         relative = path.relative_to(directory).as_posix()
         if path.is_symlink():
@@ -300,17 +300,22 @@ def validate_cache_directory(directory, expected):
             continue
         if not path.is_file():
             raise ValueError("cache data member is not a regular file: " + relative)
-        actual.add(relative)
-    if actual != declared:
-        extra = sorted(actual - declared)
-        missing = sorted(declared - actual)
+        metadata = path.stat()
+        if relative in declared and metadata.st_mode & 0o777 != declared[relative]:
+            raise ValueError("cache material integrity mismatch: " + relative)
+        actual[relative] = metadata.st_size
+    if actual.keys() != declared.keys():
+        extra = sorted(actual.keys() - declared.keys())
+        missing = sorted(declared.keys() - actual.keys())
         detail = []
         if extra:
             detail.append("extra=" + ",".join(extra[:3]))
         if missing:
             detail.append("missing=" + ",".join(missing[:3]))
         raise ValueError("cache data members differ from manifest (" + ";".join(detail) + ")")
-    return inventory
+    if small_files_first:
+        expected = sorted(expected, key=lambda item: (actual[item["path"]], item["path"]))
+    return files(directory, expected=expected)
 
 
 def move_validated_cache_data(cached, staged, expected):
@@ -396,26 +401,29 @@ def stage_snapshot(root, keys, layer, staged, registry=None, *, current=None):
 def unchanged_layer(root, spec, layer, partition):
     """Check whether a restored layer already contains the exact current material.
 
-    The manifest is only a transport hint.  Every declared file is re-hashed
-    against the target before skipping a new snapshot; malformed or stale
-    manifests simply fall through to a normal snapshot.
+    Only a seed successfully restored in this execution may suppress a save.
+    Check shape and modes first, then compare small files before large ones so
+    changed provenance avoids hashing all large materials before a new snapshot.
+    Every declared file must match; malformed, stale or rejected seeds fall
+    through to a new snapshot.
     """
     manifest_path = root / spec["path"] / "manifest.json"
+    restored_path = root / spec["path"] / "restored.json"
     try:
-        manifest = json.loads(manifest_path.read_text())
+        if manifest_path.is_symlink() or restored_path.is_symlink():
+            return False
+        manifest_bytes = manifest_path.read_bytes()
+        manifest = json.loads(manifest_bytes)
+        restored = json.loads(restored_path.read_bytes())
         if (not isinstance(manifest, dict) or manifest.get("schema") != "lean-actions-seed-v1"
                 or manifest.get("partition") != partition
-                or manifest.get("layer") != layer):
-            return False
-        declared = manifest.get("files")
-        if layer == "dependency" and any(".git" in pathlib.PurePosixPath(item.get("path", "")).parts
-                                         for item in declared if isinstance(item, dict)):
-            # The current dependency snapshot policy deliberately excludes
-            # nested package VCS metadata; an older seed must be rewritten once.
+                or manifest.get("layer") != layer
+                or restored != {"schema": "lean-actions-restored-v1", "snapshot_key": spec["key"],
+                                "manifest_sha256": hashlib.sha256(manifest_bytes).hexdigest()}):
             return False
         target = root / spec["target"]
-        actual = validate_cache_directory(target, declared)
-        return actual == sorted(declared, key=lambda item: item["path"])
+        validate_cache_directory(target, manifest.get("files"), small_files_first=True)
+        return True
     except (OSError, ValueError, TypeError, KeyError, json.JSONDecodeError):
         return False
 
@@ -537,14 +545,18 @@ def restore(root, keys, matched, layers=LAYERS, registry=None):
     project_seeded = False
     for layer in layers:
         try:
-            spec, key = keys[layer], matched[layer]
+            spec = keys[layer]
+            cached = root / spec["path"]
+            restored_path = cached / "restored.json"
+            restored_path.unlink(missing_ok=True)
+            key = matched[layer]
             if not key:
                 receipt(layer, "miss", reason="Actions supplied no cache")
                 continue
             if not re.fullmatch(re.escape(spec["restore_prefix"]) + r"[0-9]+-[0-9]+", key):
                 raise ValueError("Actions seed is outside the selected partition")
-            cached = root / spec["path"]
-            manifest = json.loads((cached / "manifest.json").read_text())
+            manifest_bytes = (cached / "manifest.json").read_bytes()
+            manifest = json.loads(manifest_bytes)
             if (not isinstance(manifest, dict) or manifest.get("schema") != "lean-actions-seed-v1" or manifest.get("partition") != keys["partition"]
                     or manifest.get("layer") != layer or manifest.get("key") != key):
                 raise ValueError("Actions seed identity or material integrity mismatch")
@@ -583,6 +595,10 @@ def restore(root, keys, matched, layers=LAYERS, registry=None):
                             if direct and staged.exists() and not (cached / "data").exists():
                                 staged.rename(cached / "data")
                             raise
+                if stream_copy:
+                    restored_path.write_text(json.dumps({"schema": "lean-actions-restored-v1",
+                        "snapshot_key": spec["key"],
+                        "manifest_sha256": hashlib.sha256(manifest_bytes).hexdigest()}) + "\n")
             project_seeded |= layer == "project"
             receipt(layer, "restored", key=key, partition=keys["partition"])
         except (OSError, ValueError, TypeError, KeyError, subprocess.CalledProcessError) as error:
