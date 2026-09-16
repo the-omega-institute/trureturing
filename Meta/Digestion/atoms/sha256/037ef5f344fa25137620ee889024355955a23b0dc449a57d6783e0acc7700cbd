@@ -1,0 +1,37 @@
+**证明。** $\Gamma$ 是紧 Hausdorff 空间 $K^3$ 的闭子空间，因此紧。它向前两个坐标的投影是 $K^2$ 的紧闭子集，包含稠密集 $Z[\mathbb N]\times Z[\mathbb N]$，故投影为整个 $K^2$。这给出每个纤维的非空性；纤维在 $K$ 中闭，因而紧。
+
+取 $\phi=(1+\sqrt5)/2$、$\alpha=\phi^{-1}$，并令
+$$
+\theta(x)=\left[\sum_{j\ge0}(-1)^{j+1}\alpha^{j+2}x_j\right]\in\mathbb T=\mathbb R/\mathbb Z.
+$$
+由《情境时空算术：Zeckendorf》第 371.2、372.4 条，$\theta$ 连续，且
+$$
+\theta(Z(n))=[n\phi],\qquad
+\theta^{-1}(\{[n\phi]\})=\{Z(n)\}\quad(n\in\mathbb N),
+$$
+$$
+\theta(o)=0,\qquad
+\theta(u)=\theta(v)=[-\phi],\qquad
+\theta^{-1}(\{[-\phi]\})=\{u,v\}.
+$$
+这些是同一圆周映射在自然相位及接缝相位处的准确纤维。([raw.githubusercontent.com](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md))
+
+条件 $\theta(z)=\theta(x)+\theta(y)$ 在 $K^3$ 中定义闭集，且包含原始加法图，所以
+$$
+(x,y,z)\in\Gamma\quad\Longrightarrow\quad
+\theta(z)=\theta(x)+\theta(y).
+$$
+在输入 $(Z(n),Z(m))$ 处，输出因而属于自然相位 $[(n+m)\phi]$ 的单点纤维；原始图又包含 $Z(n+m)$，故得到第一个纤维等式。
+
+在输入 $(u,o)$ 处，相位条件给 $\Gamma(u,o)\subseteq\{u,v\}$。另一方面，
+$$
+a_k+b_{k+1}=a_{k+1}
+$$
+使原始图中的三元组 $(Z(a_k),Z(b_{k+1}),Z(a_{k+1}))$ 收敛到 $(u,o,u)$。定理 19.2 的对角展开又使
+$$
+(Z(a_k),Z(b_k),Z(a_k+b_k))\longrightarrow(u,o,v).
+$$
+因此两个输出都属于该闭包纤维，得到准确等式 $\Gamma(u,o)=\{u,v\}$。
+
+任意选择 $s$ 都因核心纤维的单点性而满足 $s(Z(n),Z(m))=Z(n+m)$。若它分别连续，$d_0\circ s$ 就违反定理 19.4。证毕。
+

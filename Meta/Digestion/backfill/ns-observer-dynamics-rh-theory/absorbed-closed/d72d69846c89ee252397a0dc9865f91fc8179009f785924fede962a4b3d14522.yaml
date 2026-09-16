@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:d72d69846c89ee252397a0dc9865f91fc8179009f785924fede962a4b3d14522
+  normalized_sha256: sha256:d72d69846c89ee252397a0dc9865f91fc8179009f785924fede962a4b3d14522
+cas_ref: sha256:d72d69846c89ee252397a0dc9865f91fc8179009f785924fede962a4b3d14522
+coverage_gids:
+  - gid: D5/S3/Analytic/SparseEndpointTailModulus.sparse_endpoint_tail_modulus
+    target_statement_id: sha256:240425dcb32aa7885044aa4e7d9490a967b357c5bf04059f64762d2b9ccd4204
+receipts:
+  unresolved_subitems: []

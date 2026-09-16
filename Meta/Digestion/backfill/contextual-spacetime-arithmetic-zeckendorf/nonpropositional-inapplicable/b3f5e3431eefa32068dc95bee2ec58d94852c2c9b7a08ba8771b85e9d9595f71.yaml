@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b3f5e3431eefa32068dc95bee2ec58d94852c2c9b7a08ba8771b85e9d9595f71
+  normalized_sha256: sha256:b3f5e3431eefa32068dc95bee2ec58d94852c2c9b7a08ba8771b85e9d9595f71
+cas_ref: sha256:b3f5e3431eefa32068dc95bee2ec58d94852c2c9b7a08ba8771b85e9d9595f71
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本叶仅限定所引用静态与动态任务的适用条件，属于引用和使用范围说明，没有待证明命题。
+    previous_atom_id: db6993d27d5e937943d2fe6f92808290dabc686aac84293f9f421da20a3d431f
+    next_atom_id: 3f9948815454b6234de127d1813b045a188ab4f922dbef2b6ca9ff8e2b08cf7f

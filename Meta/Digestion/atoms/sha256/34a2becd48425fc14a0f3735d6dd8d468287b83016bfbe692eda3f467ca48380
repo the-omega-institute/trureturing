@@ -1,0 +1,38 @@
+**定义 15.0（覆盖、纤维分离与三种辅助量）。** 记 $\mathbb N_0=\{0,1,2,\ldots\}$，$[N]=\{1,\ldots,N\}$，其中 $[0]=\varnothing$，并给每个 $[N]$ 离散拓扑。设 $X,B$ 为 Hausdorff 空间，$B\ne\varnothing$，$d\ge1$ 为固定整数。称连续满射 $q:X\to B$ 为固定 $d$ 页覆盖，若每个 $b\in B$ 都有开邻域 $U$，使
+$$
+q^{-1}(U)=\bigsqcup_{i=1}^{d}V_i,
+\qquad
+q|_{V_i}:V_i\longrightarrow U
+$$
+是同胚，且各 $V_i$ 在 $X$ 中开。特别地，每条纤维恰有 $d$ 个点。本节不预设 $X$ 或 $B$ 连通。
+
+对映射 $r:X\to Y$，称 $r$ 分离 $q$ 的纤维，若
+$$
+q(x)=q(y)\ \land\ r(x)=r(y)\quad\Longrightarrow\quad x=y.
+$$
+这等价于联合映射
+$$
+J_r=(q,r):X\longrightarrow B\times Y
+$$
+单射。这里对联合观察 $J_r$ 应用定理 2.2，目标取 $\operatorname{id}_X$；要求恢复的是点本身，而不是只恢复某个较粗目标。覆盖在 $B$ 上的平凡化，是满足 $\operatorname{pr}_B\circ H=q$ 的同胚 $H:X\to B\times[d]$。连续截面是满足 $q\circ s=\operatorname{id}_B$ 的连续映射 $s:B\to X$。
+
+定义
+$$
+\lambda_{\mathrm{set}}(q)
+=
+\min\{N\in\mathbb N_0:\exists r:X\to[N],\ J_r\text{ 单射}\},
+$$
+$$
+\lambda_{\mathrm{disc}}(q)
+=
+\min\{N\in\mathbb N_0:\exists\text{ 连续 }r:X\to[N],\ J_r\text{ 单射}\},
+$$
+$$
+\mu_{\mathbb R}(q)
+=
+\min\{m\in\mathbb N_0:\exists\text{ 连续 }r:X\to\mathbb R^m,\ J_r\text{ 单射}\}.
+$$
+候选集合为空时，相应值约定为 $\infty$；$\mathbb R^0$ 是单点空间。第一项不要求标签连续，第二项要求离散标签连续，第三项最小化固定商映射下连续欧氏辅助读数的坐标数。
+
+覆盖的局部页定义参考：Allen Hatcher，*Algebraic Topology*，§1.3，第 56 页，[原书](https://pi.math.cornell.edu/~hatcher/AT/AT.pdf)。
+

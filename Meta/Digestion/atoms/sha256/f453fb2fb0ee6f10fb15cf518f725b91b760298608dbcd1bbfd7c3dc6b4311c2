@@ -1,0 +1,40 @@
+**证明。** 首先，
+$$
+E_m+E_n=E_{m+n}\in E\qquad(m,n\ge1),
+$$
+所以 $E$ 对相位加法封闭。这并不使其补集封闭，也不阻止与补集相加后离开 $E$。例如 $[-\phi/2]\notin E$，但它与自身之和为 $E_1$；又有 $E_1+[\phi]=0\notin E$。第一个非归属断言若不成立，便有 $(2m-1)\phi\in2\mathbb Z$，与 $\phi$ 无理矛盾；零不属于 $E$ 也由无理性得到。
+
+假设18.1立即给出每个 $\Gamma(x,y)$ 非空，而且二元分类对 $x,y$ 对称，所以 $\Gamma$ 交换。关键是对所有输入均成立的符号传播等式
+$$
+\bigcup_{w\in\Gamma(x,y)}\mathcal S(w)
+=
+\mathcal S(x)\cup\mathcal S(y).
+$$
+为完整证明此式，分两种情况。若 $H(x)+H(y)\in E$，分类给出的输出恰为右侧所列符号对应的分裂点，而每个这种输出的符号集合是相应单点，取并即得等式。若 $H(x)+H(y)\notin E$，输出是非分裂相位的唯一点，故左侧为 $\Sigma$。此时 $H(x),H(y)$ 不可能都属于 $E$，否则由 $E+E\subseteq E$ 得到矛盾。因此至少一个输入的符号集合为 $\Sigma$，右侧也为 $\Sigma$。两种情况穷尽了所有中间相位，包括由非分裂输入进入 $E$ 及由混合输入离开 $E$ 的情况。
+
+现在比较两个括号方式。每个 $w\in\Gamma(x,y)$ 均满足 $H(w)=H(x)+H(y)$，每个 $w\in\Gamma(y,z)$ 均满足 $H(w)=H(y)+H(z)$。若 $\sigma\notin E$，两边的每个末次运算都给同一个单点纤维 $H^{-1}(\{\sigma\})$；中间纤维非空，所以两边的并都恰为此纤维。
+
+若 $\sigma\in E$，左边按末次运算的分类等于
+$$
+\left\{z_\sigma^s:
+ s\in\left(\bigcup_{w\in\Gamma(x,y)}\mathcal S(w)\right)\cup\mathcal S(z)
+\right\}
+=
+\{z_\sigma^s:s\in U\}.
+$$
+右边同样等于
+$$
+\left\{z_\sigma^s:
+ s\in\mathcal S(x)\cup\left(\bigcup_{w\in\Gamma(y,z)}\mathcal S(w)\right)
+\right\}
+=
+\{z_\sigma^s:s\in U\}.
+$$
+这里对两个中间和分别应用了已经覆盖 $E$ 内外全部情况的传播等式，没有要求二者具有相同的归属类型。这证明结合律及完整三输入分类。由于 $U$ 为单点当且仅当三个输入符号集合是同一个单点，关于唯一分支的断言也成立。
+
+最后，$H(0_K)=0\notin E$，故 $\mathcal S(0_K)=\Sigma$。分类使 $x\in\Gamma(0_K,x)$ 对每个 $x$ 成立，所以 $0_K$ 是弱左单位。反之，若 $e$ 是弱左单位，将 $x=0_K$ 代入，得到 $0_K\in\Gamma(e,0_K)$。相位等式迫使 $H(e)=0$，再由零相位的单点纤维得到 $e=0_K$。然而
+$$
+\Gamma(0_K,u)=\{u,v\}\ne\{u\}.
+$$
+因此这个唯一可能的严格左单位并不严格，严格左单位不存在；交换性给出全部右单位结论。证毕。
+
