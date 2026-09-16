@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 
 namespace StrataLint.Engine;
 
@@ -148,6 +149,78 @@ internal static class InformationTemplateEvidence
         "tools/lean-inspector/LeanInformationAudit/ReadoutProvenance.lean",
         "tools/lean-inspector/LeanInformationAudit/Syntax.lean"];
 
+    // Lean 4.33 Module.header: module? prelude? (public? meta? import all? name)*.
+    // Header whitespace is not declaration indentation. Read only this prefix;
+    // declaration syntax, quoted strings and body commands cannot add imports.
+    private static IEnumerable<string> SourceImports(RepositoryFile file)
+    {
+        var source = file.Text;
+        var index = 0;
+        var token = NextToken();
+        if (token == "module") token = NextToken();
+        if (token == "prelude") token = NextToken();
+        while (true)
+        {
+            if (token == "public") token = NextToken();
+            if (token == "meta") token = NextToken();
+            if (token != "import") yield break;
+            token = NextToken();
+            if (token == "all") token = NextToken();
+            if (token is null) throw new FormatException("DTR-Evidence: missing import name in " + file.Path.Value);
+            // Source identifiers may quote an otherwise plain component;
+            // Name.toString removes that unnecessary quoting in producer paths.
+            var name = Regex.Replace(token, "«([^»]*)»", match =>
+            {
+                var part = match.Groups[1].Value;
+                if (part.Length > 0 && !part.Contains('.') && !char.IsAsciiDigit(part[0]))
+                {
+                    try { return InformationTemplateJson.Name(part); }
+                    catch (FormatException) { }
+                }
+                return match.Value;
+            }, RegexOptions.CultureInvariant);
+            yield return InformationTemplateJson.Name(name);
+            token = NextToken();
+        }
+
+        bool At(string value) => source.AsSpan(index).StartsWith(value, StringComparison.Ordinal);
+
+        string? NextToken()
+        {
+            while (index < source.Length)
+            {
+                if (char.IsWhiteSpace(source[index]) || source[index] == '\uFEFF') { index++; continue; }
+                if (At("--"))
+                {
+                    while (index < source.Length && source[index] != '\n') index++;
+                    continue;
+                }
+                if (!At("/-")) break;
+                index += 2;
+                var depth = 1;
+                while (index < source.Length && depth > 0)
+                {
+                    if (At("/-")) { depth++; index += 2; }
+                    else if (At("-/")) { depth--; index += 2; }
+                    else index++;
+                }
+                if (depth != 0) throw new FormatException("DTR-Evidence: unterminated import comment");
+            }
+            if (index == source.Length) return null;
+            var start = index;
+            var quoted = false;
+            while (index < source.Length)
+            {
+                if (!quoted && (char.IsWhiteSpace(source[index]) || At("/-") || At("--"))) break;
+                if (source[index] == '«') quoted = true;
+                else if (source[index] == '»') quoted = false;
+                index++;
+            }
+            if (quoted) throw new FormatException("DTR-Evidence: unterminated import identifier");
+            return source[start..index];
+        }
+    }
+
     private static HashSet<string> RequiredInputs(RepositorySnapshot snapshot, string source)
     {
         var required = new HashSet<string>(StringComparer.Ordinal);
@@ -158,7 +231,7 @@ internal static class InformationTemplateEvidence
             if (!snapshot.TryGetFile(path, out var file))
                 throw new FormatException("DTR-Evidence: missing required producer input " + path);
             if (!path.EndsWith(".lean", StringComparison.Ordinal)) continue;
-            foreach (var module in LeanSourceCatalog.ParseFileImports(file))
+            foreach (var module in SourceImports(file))
             {
                 var imported = module.Replace('.', '/') + ".lean";
                 if (module.StartsWith("LeanInformationAudit.", StringComparison.Ordinal))

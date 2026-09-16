@@ -145,6 +145,41 @@ public sealed class DeclaredTemplateReviewTests
             "[FAIL] required_judge_inputs_are_independent_of_supplied_hashes: omitted " + omitted);
     }
 
+    public static IEnumerable<object[]> ImportHeaders()
+    {
+        string[] headers = [
+            "module\npublic import LeanInformationAudit.ExtraPolicy\n",
+            "module\nmeta import LeanInformationAudit.ExtraPolicy\n",
+            "module\npublic meta import LeanInformationAudit.ExtraPolicy\n",
+            "module\nimport all LeanInformationAudit.ExtraPolicy\n",
+            "  import LeanInformationAudit.ExtraPolicy\n",
+            "import Init import LeanInformationAudit.ExtraPolicy\n",
+            "module\npublic /- outer /- nested -/ comment -/ meta\nimport LeanInformationAudit.ExtraPolicy\n",
+            "import «LeanInformationAudit».«ExtraPolicy»\n",
+        ];
+        foreach (var header in headers)
+            foreach (var omitted in new[] { false, true }) yield return [header, omitted];
+    }
+
+    [Theory]
+    [MemberData(nameof(ImportHeaders))]
+    public void required_judge_closure_reads_lean_import_headers(string header, bool omitted)
+    {
+        const string dependency = "tools/lean-inspector/LeanInformationAudit/ExtraPolicy.lean";
+        var before = Files();
+        before[Judge] = header;
+        var after = new Dictionary<string, string>(before);
+        if (omitted) after[dependency] += "-- omitted source changed\n";
+        var report = Report(after, omit: omitted ? dependency : null);
+        var diagnostics = Dispatch(Context(before, after, report, [InformationTemplateDebtStore.ActivationPath]));
+        var blocks = diagnostics.Where(d => d.AdmissionEffect == AdmissionEffect.Block).ToArray();
+        if (!omitted) Assert.Empty(blocks);
+        else Assert.True(blocks.Any(d => d.Message.Contains("DTR-Evidence", StringComparison.Ordinal)
+                && d.Message.Contains("omitted", StringComparison.Ordinal)
+                && d.Message.Contains(dependency, StringComparison.Ordinal)),
+            "[FAIL] required_judge_closure_reads_lean_import_headers: " + header);
+    }
+
     [Fact]
     public void empty_seed_can_activate_after_protected_inventory_reconciliation()
     {
