@@ -104,6 +104,17 @@ formula at least `101816531/2603049`, above `3849/106`. This is a lower
 bound for that formula alone, not for actual test moments or arbitrary
 77-point probabilities.
 
+Grouping original deletions by their single extra prime coordinate
+strengthens that survival denominator without assuming independence
+between overlapping original classes. Combined with the common-layout
+square, (SH15)--(SH18) give a supported `Gamma<35.637451` at arbitrary
+3/5/7 heights for the explicit77-point low geometry. The full replay
+rebuilds its original classes and exact numerator and denominator,
+including all270 depth observations and the complete geometric
+remainder. This improves `3849/106` on that geometry. Extending this
+improved moment bound to the other low configurations, and obtaining
+a general tail continuation, remain open.
+
 For families using only the primes 3, 5 and 7, (CM1)--(CM8) determine the
 exact infimum of uniform uncovered density: \(53/432\). Every finite
 family has strictly greater uncovered density, and an explicit family

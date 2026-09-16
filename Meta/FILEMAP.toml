@@ -692,6 +692,15 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # One actual low geometry, rational law and exact joint bounds at arbitrary 3/5/7 heights.
+pattern = "docs/reports/erdos7-odd-covering/saturated_joint_head_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]] # Exact prime sums and block budgets for star and three-prime head noncoverage.
 pattern = "docs/reports/erdos7-odd-covering/star_block_obstruction_certificate.json"
 kind = "data"
@@ -928,6 +937,15 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 [[files]] # Reconstructs saturated-label moment kernels and exact arbitrary-height transfer constants.
 pattern = "docs/reports/erdos7-odd-covering/verify_saturated_height.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Rebuilds complete weighted layouts, grouped deletions and geometric remainders from actual classes.
+pattern = "docs/reports/erdos7-odd-covering/verify_saturated_joint_head.py"
 kind = "program"
 admission_plane = "content"
 produced_by = "none"

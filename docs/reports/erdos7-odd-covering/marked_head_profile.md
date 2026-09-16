@@ -4209,3 +4209,156 @@ deletion vector, all saturated coefficients, all 26 constraints,
 and the rational dual inequality. Run it with `python3 -I -O`.
 The standalone certificate proves (SH14); it makes no claim about
 attainment, the optimal joint-layout formula, or unrestricted #7.
+
+### Grouping deletions by their single extra prime coordinate
+
+The union bound for the survival denominator can also preserve
+joint geometry. For p in {3,5,7}, choose E_p contained in D_{p}
+with |E_p|<=p-1, and let A_p range over complete low test loads
+with exactly one cylinder for each d in E_p. Put alpha_p=1/(p-1).
+Define
+
+    U_E(mu)=max_(A_3,A_5,A_7)
+       E_mu[1-product_p(1-alpha_p A_p)],
+    rho_d=gamma_d-sum_(p:d in E_p)alpha_p>=0,
+    R_E(mu)=sum_d rho_d m_d(mu)+U_E(mu).
+
+For the actual higher deletion event F from (SH5),
+
+    lambda(F)>=1-R_E(mu).                               (SH15)
+
+In particular this bound applies to a changed low probability;
+it uses no ambient uniform-density assumption.
+
+To prove it, group precisely the original labels (J,e,d) with
+J={p} and d in E_p. Conditional on the low point x, the three
+groups' hit events depend on disjoint additional prime coordinates
+and are independent. Writing their probabilities as u_p(x), the
+probability that at least one group hits equals
+1-product_p(1-u_p(x)). Within a group the union
+bound gives
+
+    u_p(x)<=sum_(e>=1)p^-e A_(p,e)(x),
+
+where each A_(p,e) is one complete E_p layout. Complete absent
+labels arbitrarily. Dividing the coefficients by alpha_p writes
+this upper bound as alpha_p times a convex combination of complete
+layouts. At finite heights the remaining coefficient can likewise
+be filled by any layout, only increasing the bound. Its value is
+between zero and alpha_p |E_p|<=1.
+
+The function 1-product_p(1-u_p) is nondecreasing in each coordinate
+on this cube. After substituting the upper bounds, it is affine in
+each of the three layout averages with the other two fixed.
+Successively maximizing over their convex hulls therefore gives
+the finite vertex maximum U_E. This operation chooses complete
+layouts independent of x. The remaining original labels are
+bounded by their separate cylinder masses. Removing exactly the
+chosen singleton-J contributions from gamma_d gives rho_d>=0
+by the subset expansion in (SH2), and proves (SH15).
+
+Every integrand defining U_E is nonnegative and fixed before mu
+is chosen. Thus R_E is a nonnegative sum of maxima of linear
+functions of mu. It is no larger than the preceding R_high:
+the pointwise union polynomial is at most sum_p alpha_p A_p,
+whose separate maxima sum to the removed cylinder terms.
+Consequently any square bound U_B from (SH13) gives, when R_E<1,
+
+    Gamma_nu<=1+(U_B(mu)-1)/(1-R_E(mu)),                 (SH16)
+
+on the same actual conditioned law. This is another finite convex
+epigraph and linear fractional optimization, with a stronger
+denominator as well as the joint numerator.
+
+For marked heads there is a compact evaluator with
+
+    E_3 contained in {9,45},
+    E_5 contained in {5,15,45},
+    E_7={7c:c dividing45}.
+
+These choices meet the required size bounds. Write a=A_3/2 and
+b=A_5/4; both are functions only of the old45 point. For normalized
+per-digit weights w_x and fibre sizes r_x, the globally surviving
+seven digit gives
+
+    U_E=max_(A_3,A_5) [sum_x r_x w_x(a_x+b_x-a_x b_x)
+      +(1/6)sum_(c dividing45) max_(t mod c)
+          sum_(x=t mod c)w_x(1-a_x)(1-b_x)].             (SH17)
+
+The last factors are nonnegative. For every cofactor c, assigning
+its seven part to the globally surviving digit dominates any
+other digit pointwise for that weighted mass. The six choices
+then maximize independently. This centering concerns the low
+test calculation defining U_E; it does not center the original
+higher forbidden classes. Choosing only E_3={9}, E_5={5} already
+retains the full seven group. Using both larger sets preserves
+the same proof and cannot worsen the bound: the increase of the
+union polynomial is at most the sum of the added alpha-weighted
+loads, whose cylinder maxima were removed from the separate sum.
+
+### A certified common-law improvement at unrestricted 3/5/7 heights
+
+Let Omega be the 77-point survivor set of the eleven classes in
+(SH14). For every finite distinct odd family using only 3,5,7,
+whose complete low315 survivors contain Omega, all higher original
+exponents and residues may be arbitrary. There is one probability
+nu supported on its actual full survivors with
+
+    Gamma(nu)<=2512626164927510733601/70505216618162484375
+              <35.637451<3849/106.                      (SH18)
+
+Here Gamma is the supremum of the second moment over complete
+tests with one class for each original-period divisor, including
+one. Padding low coordinates to 315 and completing test labels
+only adds nonnegative contributions. The low geometry remains
+a hypothesis; (SH18) is not a new bound for every three-prime
+family or for unrestricted odd prime support.
+
+Give each surviving seven digit over the ordered old45 points in
+(SH14) the following integer weight, divided by 99999992:
+
+    (1120062,1267867,1115811,1440615,
+     1305700,1120062,1802478,1115811,
+     1668294,1440615,1120062,1449636,
+     1818198,1115811,1253063,1440615).
+
+The r-weighted sum is exactly 99999992. Extend this low law
+uniformly in the additional prime coordinates and condition
+on all actual higher forbidden classes. Use (SH17) with
+E_3={9,45}, E_5={5,15,45}, and the complete six-label E_7.
+Exact maximization gives
+
+    U_E=1777961435/4799999616,
+    sum_d rho_d m_d=74007725/799999936,
+    lambda(F)>=2577991831/4799999616>0.
+
+For the same low law, take the auxiliary box
+0<=Z_3<=8, 0<=Z_5<=5, 0<=Z_7<=4. The common-layout formula
+(SH12), independently evaluated in the positive form (SH13), gives
+
+    E_lambda L^2<=1286697806403687124613/65637332249013000000.
+
+Substitution in (SH16) proves (SH18). Its exact saving over
+3849/106 is 5036205280991264597669/7473552961525223343750.
+No original high class is centered, and the numerator and
+denominator belong to the same lifted and conditioned probability.
+
+`verify_saturated_joint_head.py` replays the adjacent
+`saturated_joint_head_certificate.json` using NumPy and exact
+integer arithmetic. It reconstructs the actual315 survivors
+and all 4480 active old45 layouts directly from the original
+classes. Empty old cylinders are dominated by nonempty ones
+for the nondecreasing costs used here. The 270 depth maxima
+therefore examine all 5,419,008,000 ordered square-layout pairs;
+the grouped deletion calculation examines all 35,840 pairs
+of the two low layout families. Every maximizing value is
+also checked with Python integers. The largest certified
+integer range is 5,074,124,123,068, below 2^63. Geometric tails,
+conditioning and the strict comparison use exact fractions.
+
+Run `python3 -I -O docs/reports/erdos7-odd-covering/verify_saturated_joint_head.py`.
+This requires no solver, saved layout cache, or scratch experiment
+files. An independent standard-library calculation also checks
+the complete grouped denominator. The all-height theorem uses
+the ordinary arguments (SH10)--(SH17); this is not an end-to-end
+Lean result or an optimality claim for the selected weights.
