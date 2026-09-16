@@ -49,7 +49,11 @@ internal sealed class KurkovReversedQBellRowPolynomialDocument : IScribeDocument
                     + "OEIS row. A Pascal expansion of the R-prefix sums supplies the "
                     + "binomial convolution used by Wagner's recurrence.",
                 DescribeRole.Theorem,
-                AssessedProvenance.FromRepo(Source)))));
+                AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create(
+                        "oeis-a126347-kurkov-reversed-qbell-row-polynomial"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(
         string name,

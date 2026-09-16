@@ -38,6 +38,10 @@ $$\forall n \in \mathbb{N}, \operatorname{R}\left(n, n\right) = \operatorname{re
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/KurkovReversedQBellRowPolynomial.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a126347-kurkov-reversed-qbell-row-polynomial` (proved) by `D5/S1/Words/KurkovReversedQBellRowPolynomial.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a126347-kurkov-reversed-qbell-row-polynomial","declaration_gid":"D5/S1/Words/KurkovReversedQBellRowPolynomial.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna; Carl G. Wagner; Jianping Pan; Tianyi Yu; Mikhail Kurkov (2025). *OEIS A126347 q-Bell coefficient triangle and Kurkov's reversed-row conjecture*. URL: <https://oeis.org/A126347>.
