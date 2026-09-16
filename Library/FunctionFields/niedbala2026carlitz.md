@@ -52,3 +52,30 @@ Earlier primary sources for the criterion are:
 Function-field Carlitz-Wieferich primes are distinct from integer
 Wall-Sun-Sun primes. The characteristic-nineteen elimination certificate
 has no asserted implication of integer WSS existence.
+
+## Unified owner and the all-characteristic continuation
+
+All CF1-CF5 proofs now live under the existing owner
+`Problems/wall-sun-sun-golden-unit-lift.md`, followed by CX1-CX6. The former
+separate Carlitz problem file was removed only after its complete mathematics
+was retained there. This Library note remains a source record, not a second
+open-problem entry. The existing CarlitzFiveOrbit Lean/Scribe pair is unchanged.
+
+The source's Proposition 5.2 reports finite prime-field computations, with
+its degree-five row covering p=3,7,11,13,17,19,23,29,31,37. It does not give
+the uniform all-odd-characteristic classification developed in CX. The new
+integer five-orbit certificate restricts odd characteristic to5,19,263 and
+519555805809266011. Additional exact certificates and constructions give
+extension classes s=3 modulo5 for263 and s=4 modulo5 for the large prime.
+Together with CF this excludes degree-five nonconforming examples over every
+odd prime field. These new mathematical conclusions are not attributed to
+the source author, and do not answer the source's prime-field question in
+higher degrees.
+
+The companion paper remains listed as in preparation in the checked v2.
+Exact searches for Carlitz-Wieferich together with263, the large characteristic,
+the companion title and degree-five completeness did not locate the new
+families in the checked primary sources. The known characteristic19 result
+and its already delivered completeness proof are not counted again. Neither
+absence from indexed search nor an unpublished companion's unknown contents
+establishes worldwide priority. External acceptance remains unconfirmed.
