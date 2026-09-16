@@ -15,11 +15,13 @@ run_meta do
   unless snapshot.selected.size == expected.size &&
       expected.all (fun name => snapshot.selected.any (·.occurrence.key.theoremName == name)) do
     throwError "setup: export inventory differs from the five independent occurrences"
-  for moduleName in #[`LeanInformationAudit.Tests.RegistrationGates.DeclaredBindings,
-      `LeanInformationAudit.Tests.RegistrationGates.DeclaredStructural] do
-    let registered := snapshot.originals.filter (·.occurrence.key.registrationModule == moduleName)
-      |>.map (·.occurrence.key)
-    let wire ← moduleJson snapshot moduleName registered
+  let modules := #[`LeanInformationAudit.Tests.RegistrationGates.DeclaredBindings,
+      `LeanInformationAudit.Tests.RegistrationGates.DeclaredStructural].map fun moduleName =>
+    (moduleName, snapshot.originals.filter (·.occurrence.key.registrationModule == moduleName)
+      |>.map (·.occurrence.key))
+  let wires ← reportJson modules
+  unless wires.size == modules.size do throwError "setup: export lost a module"
+  for ((_, registered), wire) in modules.zip wires do
     let .ok rows := wire.getObjValAs? (Array Json) "records"
       | throwError "setup: missing record wire"
     unless rows.size == registered.size do throwError "setup: export partition lost a row"
