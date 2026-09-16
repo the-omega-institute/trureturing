@@ -1,0 +1,6 @@
+**定理 367.2。** 对总行与全部代数特征有双射
+$$
+\mathbb T^\omega\longleftrightarrow\mathcal H,
+\qquad \theta\longmapsto\chi_\theta,
+\qquad h\longmapsto(h(\varepsilon_n))_{n\in\omega}.
+$$

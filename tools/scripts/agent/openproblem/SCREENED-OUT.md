@@ -183,3 +183,164 @@ rather than claim to have performed it.
 （`is wrong` / `are wrong` / `is false` / `counterexample` / `disprov` / `proved by` / `Proof:` /
 `no longer a conjecture` / `settled` 等），命中即剔除。R32 用该口径把 308 条压到 **239 条仍活**。
 这一步很便宜，而漏掉它的代价是一整条 lane 的探针与预登记。
+
+## R33(2026-09-16):作者轴与形状轴各挖一批,四条判掉,其中两条是自己造成的
+
+本轮从两条轴取候选:作者轴(Amarnath Murthy / Benoit Cloitre / Vladeta Jovovic / Zak Seidov 的
+2001–2009 条目,每人 4 页)与形状轴(`"Conjecture" "if and only if"`、`"conjecture that these are the
+only"`、`"Conjecture:" "is prime if and only if"`、`"Conjecture" "are the only" divisible`、
+`"Conjecture:" "divides"`,每条 3 页)。合计 85 条经形状与结算标记过滤后仍活,25 条仓内已有命中。
+
+### 仓内已解决
+
+- **A069208**(`%C` Werner Schulte, Jan 23 2025:multiplicative `f` 的 powerful-除数和(1)乘性、
+  (2)等于 `A112526·f` 的逆 Möbius 变换)。**本仓已证**:
+  `D5/S0/Carrier/ArithmeticFunctions/PowerfulDivisorTransform.lean`,提交 `f553846c7b`。
+  在派任何席之前由 §3.1 的检索挡下。判据提醒:按 A 号 grep 会漏,这条是按内容(`Powerful`)grep 才命中的。
+
+### 文献已结算(证明行就在猜想行下面,是本轮最贵的教训)
+
+- **A000680**(`%C` Werner Schulte, Oct 05 2025:`(2n+1) | (2n)!/2^n + 2^n ⟺ 2n+1` 素数)。
+  **下一行**即 `%C The conjecture is true (see Fried link). - _Sela Fried_, Nov 24 2025`,并附
+  `%H` 的 PDF 与 `arXiv:2607.24832`(pp. 2-4)。判据成立(实测 `1 ≤ n ≤ 400` 零例外),但「此前未被文献
+  判定」不成立,故不满足 §3.2「开放问题结算依据」。预登记 issue #8173 已关并勘误。
+- **A006472**(`%C` Werner Schulte, Oct 04 2020:`n | 2·a(n-1) + 4 ⟺ n` 素数,`a(n)=n!(n-1)!/2^(n-1)`)。
+  **下一行**即 `%C For a proof of the above conjecture see Himane. ... - _Peter Bala_, Nov 06 2024`。
+  判据成立(实测 `2 ≤ n ≤ 500` 零例外,`a(1..6) = 1,1,3,18,180,2700` 与 `%S` 一致),同样不满足准入。
+  预登记 issue #8189 已关并勘误。
+
+### 读法歧义而判掉
+
+- **A062368**(`%C` R. J. Mathar, Aug 09 2012:`this is the third inverse Mobius transform of the
+  sequence 4^A001221(n)`)。**陈述为真**,本轮符号复算:`(4^ω * 1 * 1 * 1)(p^e) = (e+1)(e+2)/2 +
+  4·Σ_{i=0}^{e-1}(i+1)(i+2)/2 = (e+1)(e+2)(4e+3)/6`,与 `%N` 的 `a(p^e)` 逐字相同,并在
+  `n = 2,4,8` 上数值核对(7 / 22 / 50)。不取的理由是条目自身的结算状态不可读:2026-07-10 Ridouane
+  Oudra 加入 `%F a(n) = Sum_{d|n} 4^omega(d)*tau_3(n/d)`——这与 Mathar 的猜想是同一句话,却写成
+  `%F` 断言、不带 conjecture 限定、也不带证明引用。同 A181741,一行的读法决定它是否仍开放。
+
+### 看过但不取的(留作后续,附理由)
+
+- **A057032**(`%C` Mikhail Kurkov, Mar 10 2022:`a(n) - 1 is prime if and only if a(n) = n + 1`)。
+  姊妹条目 **A057063** 的对应判据已由 Ilya I. Bogdanov 在 MathOverflow 证出(条目内 `%C` 注明),
+  但 A057032 用的是**前向**循环置换且固定 `s(1)..s(n-1)`,与 A057063 的反向置换加固定 `s(1)..s(n)`
+  不同,仍标 Conjecture。不取的理由是成本:序列由「对 1,2,3,… 依次施加 P(2),P(3),P(4),… 取极限」定义,
+  形式化要先构造 PS(n)、证其逐点稳定、再定义极限,不是小时级靶。
+- **A156253**(`%F` Jon Maiga, Dec 09 2021:`a(n) = (a(a(n-1)) mod 2) + a(n-2) + 1`)。Kolakoski 邻域;
+  条目 `%H` 已挂 Jon Maiga 2025 的 PDF《A Recurrence Related to the Kolakoski Sequence》,且 2023 年
+  另有一条同形 `%F` 以断言形式写入。结算状态与 A062368 同属不可读。
+- **A105801**(`%C` Giovanni Resta, Nov 17 2010:`for every k > 0 there is an index m such that all the
+  a(n) with n > m have the same residue mod 3^k`)。Fibonacci-Collatz 混合动力;`k ≤ 2` 已由条目内
+  「`n >= 10` 时 `a(n) ≡ 7 (mod 9)`」覆盖,更高的 `k` 依赖奇偶轨道的长期行为。
+- **A321084**、**A015126**、**A069051**、**A211384**:分别归结为「该族无 base-2 Fermat 伪素数」、
+  Carmichael 全序数猜想邻域、Wieferich 邻域、贪心整除递推的无界分类,均非第一档。
+
+### 结算藏在条目自己链接的论文里(最贵的一条)
+
+- **A181666**(`%C` Ralf Stephan, Nov 18 2010:`Also, terms of A023758 divisible by 3, divided by 3
+  (conjectured)`)。**该条目 `%H` 链接的论文已经证出它**:Andreas M. Hinz、Paul K. Stockmeyer,
+  *Precious Metal Sequences and Sierpinski-Type Graphs*,J. Integer Seq. 25 (2022), Article 22.4.8。
+  取 PDF 转文本后的逐行读数:
+    - 第 233 行 `ℓ_{2ν−1} = (1/3)(2^{2ν} − 1)`,即 `(4^ν − 1)/3` —— A181666 `%N` 的奇部形状;
+    - 第 975 行指认 `2^n − 2^{n−ν}` 族「apart from the offset」就是 A023758;
+    - 第 1515 行对**偶** ν 取 `(1/3)·2^{n−ν}M_ν = (1/3)(2^n − 2^{n−ν})`;
+    - 第 1528 行(式 33)`B̂ = {2^i·ℓ_{2j+1} | i, j ∈ ℕ₀}`;
+    - 第 1566–1569 行 `b̂(…) = (1/3)(2^N − 2^{N−2ρ}) = 2^{N−2ρ}ℓ_{2ρ−1}`,并直书
+      「(This sequence b̂ is A181666.)」
+  合起来即:A023758 的项被 3 整除当且仅当其 1-游程长为偶,除以 3 后所得集合恰为 A181666——正是待结算
+  的那句 `%C`。该 lane 已走到冻结与三轮九席评审,由架构席以 10/10 判出,PR #8184 与预登记 #8143 关闭。
+  **这条比前两条贵得多:前两条在预登记阶段就能看见,这条要读一篇 840 KB 的论文正文。**
+
+## 本轮的方法学教训(比 R32 更贵的同一个病)
+
+R32 已经记过「形状过滤只看含 `Conjecture` 的行会漏掉别处的结算行」,并且仓内早有
+`tools/scripts/agent/openproblem/oeis-conjecture-scan.py` 执行这条——它的 `SETTLED` 正则涵盖
+`Proof\s*:`、`a proof`、`the proof`、`is true`、`proved`、`follows from`、`theorem of`、
+`counterexample found`。本轮 A000680 与 A006472 两条仍然栽进去,**原因是绕过了这个器、改用手写核对,
+而手写核对只 grep 了猜想句**。
+
+代价:两份完整预登记 issue、两棵 lane 工作树、两个探针席;更糟的是 A000680 的预登记被另一台驱动机接走
+并合入 dev(`cec4774a0a`,带 `scribe-open-problem-resolution-v1` 标记),一条本不该计数的结算进了 KPI,
+而误导它的正文出自本会话。
+
+**修法(是器不是人):候选进预登记之前必须跑扫描器,把它的 `status` 与 `settlement_lines` 原样贴进 issue;
+手写核对不能替代它。** 其次,「无证明行」是一句全称否定,写它之前要枚举过全集——这里的全集是该条目的
+全部 `%C`/`%H`/`%D` 行,不是含 `Conjecture` 的那一行。结算行最常见的位置恰恰是猜想行的**下一行**,
+因为提出者与证明者在同一处对话;读到猜想句就停手是最容易漏的姿势。
+
+### 第三种藏法及其修法
+
+前两条的结算写在条目文本里,`oeis-conjecture-scan.py` 的 `SETTLED` 正则能看见;**A181666 的结算不在
+条目文本里,而在条目 `%H` 链接的论文正文里**,任何扫描条目文本的器都看不见。
+
+本仓的 `Library/Arith/stephan2010a181666.md` 曾由 orchestrator 写下「the Hinz--Stockmeyer paper on
+Sierpinski-type graphs do not treat this identity」——**写这句时没有读过那篇论文**,只看了 5 KB 的
+摘要页,而正文 PDF 是 840 KB。摘要页的「Concerned with sequences … A023758 … A181666 …」列表恰恰说明
+作者知道这两个序列,是**更该读全文**的信号,不是可以跳过的理由。
+
+修法是把「全集」写清楚:一句「该陈述未被文献判定」的全称否定,其全集是
+**该条目的全部 `%C`/`%H`/`%D` 行,加上每一篇 `%H` 论文的全文**。操作上:
+
+    curl -s "https://oeis.org/search?fmt=text&q=id:<A号>" | grep -E '^%[CHD]'   # 枚举链接
+    curl -sL <每个 %H 论文 URL 的 pdf> -o p.pdf && pdftotext p.pdf p.txt        # 取全文
+    grep -n -F <A号> p.txt; grep -n <定义式/集合形状> p.txt                      # 按数学内容查,不只按 A 号
+
+`%H` 为空才是「无链接论文」,当场用上面第一条命令验;例如 A079278 只有 `%D`、A249759 两者皆无。
+
+## R34(2026-09-16):erdosproblems.com 的状态徽章,与 #647 的有限搜索
+
+用户的常设目标里有一句「找一些老的, erdos 上的问题试试」。此前一次尝试按题面形状盲筛 1217 条得 0;
+本轮改为先量该站点自己的状态词表,结论对今后的选题直接有用。
+
+### 两段取样(逐题取页,解析状态徽章)
+
+| 状态 | #1–60 | #600–660 |
+| --- | ---: | ---: |
+| `OPEN` | 25 | 27 |
+| `PROVED` | 18 | 17 |
+| `DISPROVED` | 11 | 7 |
+| `SOLVED` | 3 | 7 |
+| `VERIFIABLE` | 1 | 1 |
+| `DECIDABLE` | 1 | 0 |
+| `FALSIFIABLE` | 1 | 2 |
+
+两段互相印证:约一半已判定,约 43% 是 `OPEN`,约 5% 带可有限判定的徽章。取两段不同区间是因为低编号题受关注更多,单窗口不能外推(§3.5 同形纪律)。
+
+**两条对选题直接有用的事实:**
+
+1. **该题库正被系统性 Lean 形式化。** 已判定的条目里多数徽章写作 `PROVED (LEAN)` / `DISPROVED (LEAN)` /
+   `SOLVED (LEAN)`,并附「the proof verified in Lean」。按 §3.1 先库后证,盲扫这张表的重复风险很高;
+   任何候选进管线前必须先看它自己的徽章。
+2. **站点自带第二档筛子。** `VERIFIABLE`(Open, but could be proved with a finite example)、
+   `FALSIFIABLE`(Open, but could be disproved with a finite counterexample)、
+   `DECIDABLE`(Resolved up to a finite check)三个徽章,明说哪些问题能被有限计算触及——这正是
+   §3.6 第二档的定义。而 `OPEN` 的条目一律附「This is open, and cannot be resolved with a finite
+   computation」,即明确的第三档。**按徽章筛,不要按题面形状筛。**
+
+### #647 — 有限搜索,已搜到 10^8,无命中,**不构成结算**
+
+Erdős–Selfridge,`VERIFIABLE`,£25(折合 $44):设 τ 为除数个数函数,**是否存在 n > 24 使
+`max_{m<n}(m + τ(m)) ≤ n + 2`?**
+
+判据可由一次线性筛完成,不必对每个 n 重算窗口:`M(n) = max_{m<n}(m + τ(m))` 是前缀最大值,
+筛出 τ 后 `numpy.maximum.accumulate` 一遍即可。
+
+```
+$ python3 erd647.py 100000000
+N = 100000000
+tau sanity: tau[1..12] = [1, 2, 2, 3, 2, 4, 2, 4, 3, 4, 2, 6]
+n=24 check: M(23) = 26  n+2 = 26  -> True
+hits n>24: []  count: 0
+EXIT=0
+```
+
+**阳性对照是这次读数的关键**:`n = 24` 是已知的唯一例子,它在同一判据下为真,所以那个 `count: 0` 是
+「搜过了没有」而不是「判据写错了恒为假」。τ 的前十二项也与定义相符。
+
+**为什么这不是进展**:§3.6 ③ 规定有限证书只有排除此前未排除的情形才可称部分进展。该题页未记录前人的
+搜索上界,故本轮无法断言 10^8 超出了已知范围;按 §2.9 记为「已测 10^8 无命中,前人上界未知」,不写成
+推进。此外 §3.3 明禁普通正向有限实例取得用途准入——即便搜到一个 n,其交付形态也须按反驳侧组织
+(它反驳的是「不存在这样的 n」),不能作为 `certified-instance` 的正向实例入库。
+
+Erdős 本人在 [Er79] 说「it is extremely doubtful」存在无穷多个这样的 n,并指出更强的形式需要
+Schinzel 假设 H。把界继续往上推(分段筛可达 10^10 量级)不改变这个判断,故本轮不继续投入,
+按 §2.7 预算包络换靶。

@@ -1,0 +1,18 @@
+### 16.1 定义：单侧稀疏矩比较
+
+设 $d\geq1$，$x_i\in[0,1]$、$u_i\geq0$（$1\leq i\leq d$），并令 $\rho$ 为 $[0,1]$ 上总质量不超过 $\tau$ 的有限正测度。设 $\nu$ 为支撑于 $(-\infty,b]$ 的有限正测度，且本节所用矩有限。定义
+
+\[
+\mu=\sum_{i=1}^d u_i\delta_{x_i}+\rho,\qquad
+m_k(\sigma)=\int t^k\,\sigma(dt).
+\]
+
+假设 $b\geq0$，存在指标 $i_*$ 使 $x_*>b$、$u_{i_*}\geq\eta>0$，其中 $x_*=x_{i_*}$；并且
+
+\[
+|m_k(\mu)-m_k(\nu)|\leq\varepsilon\quad(0\leq k\leq2d-1),\qquad\varepsilon\geq0.
+\tag{16.1}
+\]
+
+节点可以重合，权重可以为零，不要求概率归一化。$\rho$ 是遗漏的正质量，不要求它只位于高能或低能一侧。
+

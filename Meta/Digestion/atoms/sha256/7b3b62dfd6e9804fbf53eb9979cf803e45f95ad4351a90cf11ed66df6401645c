@@ -1,0 +1,10 @@
+**Theorem.** For every integer a and M>=1,
+
+$$
+\boxed{[a]_M\in C(M)\quad\Longleftrightarrow\quad
+\forall p\text{ prime},\ p^2\mid M\Longrightarrow
+(p\nmid a\ \lor\ p^2\mid a).}\tag{LFO1}
+$$
+
+In particular every unit residue class belongs to C(M), and every residue class does so when M is squarefree.
+

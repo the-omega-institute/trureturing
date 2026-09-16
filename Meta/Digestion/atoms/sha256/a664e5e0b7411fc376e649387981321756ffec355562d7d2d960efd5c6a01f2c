@@ -1,0 +1,39 @@
+### U.1. Definitions and classical arithmetic inputs
+
+Let F_0=0, F_1=1 and F_(n+2)=F_(n+1)+F_n. Let phi be the original golden unit with phi^2=phi+1, and L_n=trace(phi^n). For a positive integer M, define
+
+\[
+\operatorname{core}(M)=\prod_{r\ \mathrm{prime},\ v_r(M)\ \mathrm{odd}}r,
+\qquad s(n)=\operatorname{core}(F_n)\quad(n\ge1).
+\]
+
+The core is the unique positive squarefree d such that M=d*u^2 for a positive integer u. It is distinct from the radical, which retains every prime divisor. Write omega(M) for the number of distinct prime divisors, and Omega(M) for their number counted with multiplicity.
+
+**Classical square-class theorem.** For positive indices, the only nonsingleton square classes of Fibonacci numbers have index sets `{1,2,12}` and `{3,6}`. Thus `s(m)=s(n)` at distinct indices only in one of those two sets. In particular F_n is a square only at n=1,2,12, and distinct positive odd indices always have different cores.
+
+This is the square-class classification in P. Ribenboim, *Square classes of Fibonacci and Lucas numbers*, Portugaliae Mathematica 46(2) (1989), 159-175. An explicit statement by the same author is *FFF: (Favorite Fibonacci Flowers)*, Fibonacci Quarterly 43(1) (2005), 3-14, section 3.4, printed page 8: https://www.fq.math.ca/Papers1/43-1/paper43-1-1.pdf . The classification is an external classical theorem throughout this appendix.
+
+**Classical valuation theorem.** If r is an odd prime, d,k are positive integers, and r divides F_d, then
+
+\[
+v_r(F_{dk})=v_r(F_d)+v_r(k).\tag{U.1}
+\]
+
+Also `v_5(F_t)=v_5(t)`. For r=2,
+
+\[
+v_2(F_t)=
+\begin{cases}
+0,&3\nmid t,\\
+1,&t\equiv3\pmod6,\\
+v_2(t)+2,&6\mid t.
+\end{cases}\tag{U.2}
+\]
+
+These are Lengyel's formulas as recorded in L. A. Medina and E. Rowland, *p-regularity of the p-adic valuation of the Fibonacci sequence*, Fibonacci Quarterly 53 (2015), 265-271, Theorem 1.4, https://arxiv.org/abs/0910.2907 . Formula U.1 follows by applying the rank-based formula twice and subtracting the same initial valuation. It does not require that initial valuation to be one. The rank alpha(r) is the least positive d with r dividing F_d; the same source, Theorem 1.2, gives
+
+\[
+\alpha(r)\mid r-\left(\frac5r\right),\qquad r\ne2,5.
+\tag{U.3}
+\]
+

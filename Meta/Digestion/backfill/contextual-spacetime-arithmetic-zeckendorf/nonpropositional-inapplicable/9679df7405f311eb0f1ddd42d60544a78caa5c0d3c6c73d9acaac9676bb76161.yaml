@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9679df7405f311eb0f1ddd42d60544a78caa5c0d3c6c73d9acaac9676bb76161
+  normalized_sha256: sha256:9679df7405f311eb0f1ddd42d60544a78caa5c0d3c6c73d9acaac9676bb76161
+cas_ref: sha256:9679df7405f311eb0f1ddd42d60544a78caa5c0d3c6c73d9acaac9676bb76161
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 实现集合为空时 Set.image_empty 给成本像为空，空域全称量化和存在量化直接规范化，分别得到下界空真与上界和取到无见证，仓内无冻结 GID。
+    previous_atom_id: 525922d3d40f63034b54523f99c2459433d61bef1a59da429ce26f8c3e337d5a
+    next_atom_id: c8b0adb727c994bb54b005b3df103d03ddbc3eb42aa260357b7027d67dab241c

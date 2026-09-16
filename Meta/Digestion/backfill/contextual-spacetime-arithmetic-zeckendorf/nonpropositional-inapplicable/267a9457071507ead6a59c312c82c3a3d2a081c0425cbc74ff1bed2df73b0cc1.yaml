@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:267a9457071507ead6a59c312c82c3a3d2a081c0425cbc74ff1bed2df73b0cc1
+  normalized_sha256: sha256:267a9457071507ead6a59c312c82c3a3d2a081c0425cbc74ff1bed2df73b0cc1
+cas_ref: sha256:267a9457071507ead6a59c312c82c3a3d2a081c0425cbc74ff1bed2df73b0cc1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本子句说明 Profinite.exists_locallyConstant 的实际适用域，探针保留余滤图、真实极限锥及局部常值函数后直接应用该声明，没有将结论推广到任意连续实值函数，仓内无冻结 GID。
+    previous_atom_id: 828eba09cf97b9a5e5064a5f136e3315ec049abf108195e37112639c0c35b8f1
+    next_atom_id: 8a55134837b0ed08923fc86620f32f57c8aa8c6f249c10c6e5433de857e1f235

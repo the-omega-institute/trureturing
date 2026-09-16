@@ -1,0 +1,69 @@
+### IP.11 All finite-precision periods and the full 5-adic closure
+
+Put $s_\ell=v_5(\ell^4-1)\ge1$. Then RP9 becomes
+
+$$
+v_5(B_{\ell,k+t}-B_{\ell,k})=
+\begin{cases}
+1,&t\text{ odd},\\
+1+s_\ell+v_5(t),&t\text{ even}.
+\end{cases}                                      \tag{RP10}
+$$
+
+**Proof.** For odd t, ell^(2t)=-1 modulo five. For even t=2u,
+$v_5((ell^4)^u-1)=s_ell+v_5(u)$. To prove this last elementary lifting
+formula, write ell^4=1+5^s z with five not dividing z. An exponent
+coprime to five preserves the initial valuation by the geometric sum;
+raising a number congruent to one modulo five to the fifth power raises
+its difference-from-one valuation exactly by one, by binomial
+expansion. Iterate and use v_5(2)=0.
+
+**Theorem RP11.** The least positive period of the sequence
+$k\mapsto B_{\ell,k}\pmod{5^r}$, from k=0 onward, is
+
+$$
+\boxed{
+T_\ell(1)=1,\qquad
+T_\ell(r)=2\cdot5^{\max(0,r-1-s_\ell)}\quad(r\ge2).
+}\tag{RP11}
+$$
+
+There is no smaller eventual period either.
+
+**Proof.** RP10 is independent of k. A difference t is a period if and
+only if its displayed valuation is at least r. For r>=2 it must be even,
+and then v_5(t)>=max(0,r-1-s_ell). The smallest positive such integer
+is the formula in RP11. The same necessary condition holds even when
+the congruences are only required after an arbitrary initial index.
+
+**Theorem RP12.** In $\mathbb Z_5$, the closure of the block values is
+exactly the disjoint union
+
+$$
+\boxed{
+\overline{\{B_{\ell,k}:k\ge0\}}=
+\bigl(F_\ell+5^{s_\ell+1}\mathbb Z_5\bigr)
+\ \cup\
+\bigl(B_{\ell,1}+5^{s_\ell+1}\mathbb Z_5\bigr).
+}\tag{RP12}
+$$
+
+The limiting fraction of residue classes occupied by the block values
+modulo 5^r is $2/5^{s_\ell+1}$.
+
+**Proof.** RP10 puts every even-indexed value in the first ball and
+every odd-indexed value in the second. The balls are disjoint because
+the difference between their centers has valuation one. For r>s_ell+1,
+RP10 also shows that the first $5^{r-s_ell-1}$ values in either parity
+subsequence are pairwise distinct modulo 5^r. There are exactly that
+many residue classes in the relevant ball, so all its classes are hit.
+This proves density in each ball at every precision, hence the closure
+identity. Counting both balls gives the limiting fraction. This density belongs to the block sequence at the fixed prime five;
+it is not the Fibonacci density $\delta(p)$ of Appendix FD.
+
+For example $s_7=2$, because 7^4-1=2400. Hence the least block period
+at modulus 125 is still two, and the closure has density 2/125.
+However $h_7=v_7(F_8)=1$, so seven is not a WSS prime. The period plateau
+here measures the Fermat valuation of the BASE seven at the PRIME five.
+It must not be relabelled as a Fibonacci-Wieferich exception at seven.
+

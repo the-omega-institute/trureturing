@@ -1,0 +1,10 @@
+**Proof.** Keep D,y,L and the residue of x from the preceding proof. Put A=Dy^3. Select the first positive x_j=x+jL with x_j>=sqrt(T/A). For sufficiently large T this choice has x_j<sqrt(T/A)+L. Thus
+
+$$
+T\le Ax_j^2<T+2L\sqrt{AT}+AL^2.
+$$
+
+For T>=1 the last two terms are bounded by C sqrt(T), with C=2L sqrt(A)+AL^2. All congruence and exponent conditions remain unchanged. The constants depend on the fixed residue data; no estimate uniform in a growing modulus is asserted.
+
+Squarefull numbers in arithmetic progressions have an extensive classical literature, including M. Munsch, I. E. Shparlinski and K. H. Yau, *Smooth squarefree and squarefull integers in arithmetic progressions*, Mathematika 66 (2020), 56-70, DOI 10.1112/mtk.12012, https://arxiv.org/abs/1810.02573 . The claims here use the explicit elementary construction rather than an unproved distribution assumption.
+

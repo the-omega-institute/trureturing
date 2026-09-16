@@ -1,0 +1,14 @@
+定义
+$$
+K_{\rm infdig}=\{x:\omega\to\{0,1\}:\forall j\in\omega,\ x_jx_{j+1}=0\},\qquad
+z_{\rm infdig}(n)=\operatorname{pad}(\zeta(n)),
+$$
+$$
+d_K(x,y)=\sum_{j\ge0}2^{-j-1}|x_j-y_j|,\qquad
+F_{\rm infdig}(x)=\sum_{j\ge0}(-1)^{j+1}\alpha^{j+2}x_j,
+$$
+$$
+\pi:\mathbb R\to\mathbb T=\mathbb R/\mathbb Z,\quad \pi(t)=[t],\qquad
+H_{\rm infdig}=\pi\circ F_{\rm infdig},\qquad \gamma(n)=[n\phi].
+$$
+二元数字取离散拓扑，$K_{\rm infdig}$ 取乘积的子空间拓扑，$\mathbb T$ 取通常圆周拓扑。

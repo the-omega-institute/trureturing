@@ -1,0 +1,2 @@
+**Theorem.** Every such sound rule accepts F_ell whenever ell is prime, ell>=7, and 2ell-1>P(M). A finite collection of residue-only rules can be combined at their least-common-multiple modulus and has the same eventual acceptance property. In particular, on prime indices ell in [Y,2Y] with Y>=7, probes supported only on value primes below 2Y-1 reject no index.
+
