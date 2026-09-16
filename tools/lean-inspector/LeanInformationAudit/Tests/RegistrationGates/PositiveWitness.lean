@@ -47,7 +47,7 @@ run_cmd Elab.Command.liftTermElabM do
       `LeanInformationAudit.RegistrationGates.TypeClassification.allowlisted,
       `LeanInformationAudit.RegistrationGates.StatementStep.recognized] do
     let some (_, info) := env.constants.toList.find? (fun (name, _) =>
-      privateToUserName? name == some userName)
+      (privateToUserName? name).getD name == userName)
       | throwError "[FAIL] SuccessRequiresWitness: missing {userName}"
     Meta.forallTelescope info.type fun fields _ => do
       unless fields.size == 1 && (← Meta.inferType fields[0]!) ==

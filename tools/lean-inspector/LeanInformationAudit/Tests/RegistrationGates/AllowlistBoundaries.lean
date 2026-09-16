@@ -305,17 +305,22 @@ run_cmd Elab.Command.liftCoreM do
 -- Native inference internals are not traversed: the owner permits bounded inference.
 run_cmd do
   let env := (← getEnv).setExporting false
-  let some index := env.getModuleIdx? `LeanInformationAudit.ReadoutProvenance
-    | throwError "[FAIL] NoSemanticNormalization: missing classifier module"
+  let modules := env.header.moduleNames.filter fun name =>
+    name == `LeanInformationAudit.ReadoutProvenance ||
+      name.toString.startsWith "LeanInformationAudit.ReadoutProvenance."
+  if modules.isEmpty then throwError "[FAIL] NoSemanticNormalization: missing classifier module"
   let forbidden := #[`Lean.Meta.isDefEq, `Lean.Meta.whnf,
     `Lean.Meta.unfoldDefinition?, `Lean.MVarId.cases]
   let mut found := false
-  for name in env.header.moduleData[index]!.constNames do
-    let some info := env.find? name | continue
-    let some value := info.value? (allowOpaque := true) | continue
-    for dependency in value.getUsedConstants do
-      if forbidden.contains dependency then
-        found := true
-        logError m!"[FAIL] NoSemanticNormalization: {name} references {dependency}"
+  for moduleName in modules do
+    let some index := env.getModuleIdx? moduleName
+      | throwError "[FAIL] NoSemanticNormalization: missing classifier module"
+    for name in env.header.moduleData[index]!.constNames do
+      let some info := env.find? name | continue
+      let some value := info.value? (allowOpaque := true) | continue
+      for dependency in value.getUsedConstants do
+        if forbidden.contains dependency then
+          found := true
+          logError m!"[FAIL] NoSemanticNormalization: {name} references {dependency}"
   unless found do logInfo "[PASS] NoSemanticNormalization"
 end AllowlistBoundaries

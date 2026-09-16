@@ -163,8 +163,8 @@ public sealed class InformationTemplateDebtWriterTests
         {
             var root = temporary.FullName;
             Directory.CreateDirectory(Path.Combine(root, ".git"));
-            var first = InformationTemplateDebtStore.Root + "a.json";
-            var second = InformationTemplateDebtStore.Root + "b.json";
+            var first = InformationTemplateDebtStore.RowsRoot + new string('a', 64) + ".json";
+            var second = InformationTemplateDebtStore.RowsRoot + new string('b', 64) + ".json";
             var original = ImmutableArray.Create<byte>(1, 2, 3);
             var before = new Dictionary<string, ImmutableArray<byte>> { [first] = original };
             Directory.CreateDirectory(Path.GetDirectoryName(Path.Combine(root, first))!);

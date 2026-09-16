@@ -2,7 +2,7 @@
   "fixture_version": 1,
   "purpose": "Strict loader/path/immutable-input fixture; statement/inventory reader is an explicit synthetic test double. No Lean acceptance is claimed. First-lane real elaboration control is separately required.",
   "proposed_repository_fixture_path": "tools/tests/StrataLint.Tests/Fixtures/InformationTemplateDebt/fixture-occurrence-a.json",
-  "virtual_production_path": "Golden/InformationTemplateDebt/1a49292654bc35592997b07d5fab4dbc7527947ec8c534fefdf5a4ff34d07daa.json",
+  "virtual_production_path": "Golden/InformationTemplateDebt/rows/1a49292654bc35592997b07d5fab4dbc7527947ec8c534fefdf5a4ff34d07daa.json",
   "immutable_base": {
     "commit_oid": "d37c6134f47ae7f6faa9bf5d5cd0532b59c4d475",
     "commit_body_utf8": "tree bd7d9bb6c609c163a7c431ba2d1659b1a975db04\nauthor Fixture <fixture@example.invalid> 0 +0000\ncommitter Fixture <fixture@example.invalid> 0 +0000\n\nImmutable synthetic loader fixture\n",

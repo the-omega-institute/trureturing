@@ -217,11 +217,10 @@ internal static class FileMapPolicy
                 static path => path,
                 path => File.ReadAllText(Absolute(repositoryRoot, path)),
                 StringComparer.Ordinal);
-        var availableVerifiers = DataVerifierImplementations
-            .Where(pair => File.Exists(Absolute(repositoryRoot, pair.Value))
-                && manifest.Match(pair.Value) is [{ Kind: FileMapKind.Program }])
-            .Select(static pair => pair.Key)
-            .ToHashSet(StringComparer.Ordinal);
+        var availableVerifiers = AvailableDataVerifiers(manifest,
+            DataVerifierImplementations.Values
+                .Where(path => File.Exists(Absolute(repositoryRoot, path)))
+                .ToHashSet(StringComparer.Ordinal));
         var registry = RegistryLoader.Load(
             File.ReadAllBytes(Absolute(repositoryRoot, "Meta/registry.yaml")),
             File.ReadAllBytes(Absolute(repositoryRoot, "Meta/domains.yaml")));
@@ -568,12 +567,8 @@ internal static class FileMapPolicy
             && item.ArtifactId == "none" && item.RuntimeDisposition == "committed-source"
             && item.ConsumedBy.SequenceEqual(new[] { "DeclaredTemplateBindingRule", "InformationTemplateDebtStore" })
             && item.VerifiedBy.SequenceEqual(new[] { "DeclaredTemplateBindingRule", "InformationTemplateDebtStore" });
-        var prefix = InformationTemplateDebtStore.Root + "*";
         return OwnedData(entry, FileMapAdmissionPlane.Content)
-            && entry.Pattern.StartsWith(prefix, StringComparison.Ordinal)
-            && entry.Pattern.Length == prefix.Length + 6
-            && "0123456789abcdef".Contains(entry.Pattern[prefix.Length])
-            && entry.Pattern.EndsWith(".json", StringComparison.Ordinal)
+            && entry.Pattern == InformationTemplateDebtStore.RowsRoot + "*.json"
             && trackedPaths.Contains(InformationTemplateDebtStore.ActivationPath)
             && manifest.Match(InformationTemplateDebtStore.ActivationPath) is [var authority]
             && authority.Pattern == InformationTemplateDebtStore.ActivationPath
@@ -601,6 +596,14 @@ internal static class FileMapPolicy
                 "non-run-local FILEMAP pattern matches no tracked repository path"))
             .ToArray();
     }
+
+    internal static IReadOnlySet<string> AvailableDataVerifiers(
+        FileMapManifest manifest, IReadOnlySet<string> existingPaths) =>
+        DataVerifierImplementations
+            .Where(pair => existingPaths.Contains(pair.Value)
+                && manifest.Match(pair.Value) is [{ Kind: FileMapKind.Program }])
+            .Select(static pair => pair.Key)
+            .ToHashSet(StringComparer.Ordinal);
 
     internal static IReadOnlyList<FileMapFinding> InspectDataVerifiers(
         FileMapManifest manifest,

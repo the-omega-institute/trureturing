@@ -5,14 +5,14 @@ namespace StrataLint.Tests;
 
 public sealed class InformationTemplateRoutingTests
 {
-    private const string DebtPath = "Golden/InformationTemplateDebt/" +
+    private const string DebtPath = "Golden/InformationTemplateDebt/rows/" +
         "1a49292654bc35592997b07d5fab4dbc7527947ec8c534fefdf5a4ff34d07daa.json";
     private const string ContentPath = "D5/Fixture/Binding.lean";
     private const string JudgePath = "tools/lean-inspector/LeanInformationAudit/Registry.lean";
 
     private static RepositorySnapshot Tree(string debtPlane = "content", string sourcePlane = "content") =>
         Snapshot((AdmissionPlanePolicy.FileMapPath, "schema_version = 2\n" + string.Concat(
-            new[] { ("Golden/InformationTemplateDebt/*.json", debtPlane),
+            new[] { ("Golden/InformationTemplateDebt/rows/*.json", debtPlane),
                 ("D5/**", sourcePlane), ("tools/**", "judge"), ("Meta/**", "judge") }
                 .Select(pair => $"""
 

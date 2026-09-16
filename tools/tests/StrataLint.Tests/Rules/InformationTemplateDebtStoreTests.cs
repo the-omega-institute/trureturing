@@ -8,7 +8,7 @@ public sealed class InformationTemplateDebtStoreTests
 {
     internal const string Seed = "d37c6134f47ae7f6faa9bf5d5cd0532b59c4d475";
     internal const string Source = "import LeanInformationAudit.Syntax\n-- Fixture.Registration: loader fixture occurrence A\n";
-    internal const string RowPath = "Golden/InformationTemplateDebt/1a49292654bc35592997b07d5fab4dbc7527947ec8c534fefdf5a4ff34d07daa.json";
+    internal const string RowPath = "Golden/InformationTemplateDebt/rows/1a49292654bc35592997b07d5fab4dbc7527947ec8c534fefdf5a4ff34d07daa.json";
     // Independent design fixture bytes, including the specified final LF.
     internal const string Row = """
         {"base_content_inputs":[{"path":"Registration.lean","sha256":"8b1a59ca0701832dce71a44850507e702d9e3399af64d43523d4d50da818189a"}],"base_registration_source_sha256":"8b1a59ca0701832dce71a44850507e702d9e3399af64d43523d4d50da818189a","base_statement_identity":"c7601acced7b5f6af7aa33f628dea763c75550049f2fe0b83a7e489eb2c6c151","key":{"catalog":"canonical","object_arena":"Fixture.arena","registration_module":"Fixture.Registration","root":"Fixture.Root","theorem":"Fixture.theorem_a"},"reason":"undeclared","schema_version":1,"seed_base":"d37c6134f47ae7f6faa9bf5d5cd0532b59c4d475"}
@@ -21,6 +21,15 @@ public sealed class InformationTemplateDebtStoreTests
     internal static InformationTemplateDebtRow Read(string row = Row, string path = RowPath, string seed = Seed) =>
         InformationTemplateDebtStore.ReadRow(path, Encoding.UTF8.GetBytes(row), seed,
             Snapshot(("Registration.lean", Source)));
+
+    [Theory]
+    [InlineData("Golden/InformationTemplateDebt/activation.json", true)]
+    [InlineData(RowPath, true)]
+    [InlineData("Golden/InformationTemplateDebt/rows/activation.json", false)]
+    [InlineData("Golden/InformationTemplateDebt/rows/abc.json", false)]
+    [InlineData("Golden/InformationTemplateDebt/activation.json/extra", false)]
+    public void debt_paths_have_one_canonical_layout(string path, bool accepted) =>
+        Assert.Equal(accepted, InformationTemplateDebtStore.IsCanonicalPath(path));
 
     [Fact]
     public void debt_fixture_roundtrip_accepted()

@@ -166,6 +166,7 @@ internal static partial class RepositoryPathPolicy
             || value.StartsWith(DigestionOpaquePathPolicy.TheoryRootPath, StringComparison.Ordinal)
             || value.StartsWith(SpecRootPath, StringComparison.Ordinal)
             || IsGoldenProjectionData(value)
+            || InformationTemplateDebtStore.IsCanonicalPath(value)
             || IsCanonicalFutureCoordinate(value))
         {
             return null;

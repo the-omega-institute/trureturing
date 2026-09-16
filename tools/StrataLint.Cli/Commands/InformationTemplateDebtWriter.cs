@@ -127,10 +127,30 @@ internal static class InformationTemplateDebtWriter
             FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None);
         var directory = Path.Combine(root, InformationTemplateDebtStore.Root);
         RequireRegularDirectoryPath(root, directory);
-        var actualPaths = Directory.Exists(directory) ? Directory.GetFileSystemEntries(directory) : [];
-        if (actualPaths.Any(path => (File.GetAttributes(path) & (FileAttributes.ReparsePoint | FileAttributes.Directory)) != 0)
-            || !actualPaths.Select(path => Path.GetRelativePath(root, path).Replace('\\', '/')).ToHashSet(StringComparer.Ordinal)
-                .SetEquals(before.Keys)
+        var rowsDirectory = Path.Combine(root, InformationTemplateDebtStore.RowsRoot);
+        RequireRegularDirectoryPath(root, rowsDirectory);
+        var entries = Directory.Exists(directory) ? Directory.GetFileSystemEntries(directory) : [];
+        var actualPaths = new List<string>();
+        foreach (var path in entries)
+        {
+            var attributes = File.GetAttributes(path);
+            if ((attributes & FileAttributes.ReparsePoint) != 0)
+                throw new IOException("DTR-DebtSchema: debt link before write");
+            if ((attributes & FileAttributes.Directory) != 0)
+            {
+                if (Path.GetFullPath(path) != Path.TrimEndingDirectorySeparator(Path.GetFullPath(rowsDirectory)))
+                    throw new IOException("DTR-DebtSchema: unexpected debt directory");
+                foreach (var row in Directory.GetFileSystemEntries(path))
+                {
+                    if ((File.GetAttributes(row) & (FileAttributes.ReparsePoint | FileAttributes.Directory)) != 0)
+                        throw new IOException("DTR-DebtSchema: nonregular debt row");
+                    actualPaths.Add(row);
+                }
+            }
+            else actualPaths.Add(path);
+        }
+        if (!actualPaths.Select(path => Path.GetRelativePath(root, path).Replace('\\', '/'))
+                .ToHashSet(StringComparer.Ordinal).SetEquals(before.Keys)
             || before.Any(pair => !File.ReadAllBytes(Path.Combine(root, pair.Key)).AsSpan().SequenceEqual(pair.Value.AsSpan())))
             throw new IOException("DTR-DebtSchema: debt changed before write");
         requireInputsUnchanged();
@@ -141,12 +161,10 @@ internal static class InformationTemplateDebtWriter
             {
                 if (before.TryGetValue(path, out var old) && after.TryGetValue(path, out var next)
                     && old.AsSpan().SequenceEqual(next.AsSpan())) continue;
-                if (!path.StartsWith(InformationTemplateDebtStore.Root, StringComparison.Ordinal)
-                    || !RepoPath.TryCreate(path, out _)
-                    || path[InformationTemplateDebtStore.Root.Length..].Contains('/'))
+                if (!InformationTemplateDebtStore.IsCanonicalPath(path) || !RepoPath.TryCreate(path, out _))
                     throw new FormatException("DTR-DebtSchema: invalid writer path");
                 var target = Path.Combine(root, path);
-                RequireRegularDirectoryPath(root, directory);
+                RequireRegularDirectoryPath(root, Path.GetDirectoryName(target)!);
                 touched.Add(path);
                 if (after.TryGetValue(path, out var bytes))
                 {

@@ -24,6 +24,13 @@ internal static class InformationTemplateDebtStore
 {
     public const string Root = "Golden/InformationTemplateDebt/";
     public const string ActivationPath = Root + "activation.json";
+    public const string RowsRoot = Root + "rows/";
+
+    public static bool IsCanonicalPath(string path) => path == ActivationPath
+        || path.StartsWith(RowsRoot, StringComparison.Ordinal)
+        && path.EndsWith(".json", StringComparison.Ordinal)
+        && path.Length == RowsRoot.Length + 64 + 5
+        && path[RowsRoot.Length..^5].All(c => c is >= '0' and <= '9' or >= 'a' and <= 'f');
 
     // RepositorySnapshot and its files are immutable. Share only their parsed
     // link policy and byte digests; every wire record is still checked below.
@@ -53,7 +60,7 @@ internal static class InformationTemplateDebtStore
         var bytes = new byte[domain.Length + json.Length];
         domain.CopyTo(bytes, 0);
         json.AsSpan().CopyTo(bytes.AsSpan(domain.Length));
-        return Root + InformationTemplateJson.Sha256(bytes) + ".json";
+        return RowsRoot + InformationTemplateJson.Sha256(bytes) + ".json";
     }
 
     public static InformationTemplateDebtRow ReadRow(

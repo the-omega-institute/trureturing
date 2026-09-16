@@ -62,7 +62,7 @@ def specification(label, original):
         description='Re-enter erased proof implementations after checking the occurrence boundary.'
     elif kind=='normalization-api':
         TARGET='LeanInformationAudit.Tests.RegistrationGates.AllowlistBoundaries'
-        needle='private def compareCanonical (a b : Expr) : WalkM Bool := do'
+        needle='def compareCanonical (a b : Expr) : WalkM Bool := do'
         replacement=needle+'\n  let _ ← Meta.isDefEq (mkConst ``True) (mkConst ``True)'
         predicted=['NoSemanticNormalization']
         description='Call explicit definitional equality on the actual admission path; the API control must reject even a cheap comparison.'
@@ -221,7 +221,7 @@ def specification(label, original):
         description='Treat an explicit nominal field type alias as an ordinary concrete shape without following its body. The six opaque carrier-slot fixtures must be admitted incorrectly; ordinary and proof aliases stay admitted.'
     elif kind=='nested-default-apart':
         TARGET='LeanInformationAudit.Tests.RegistrationGates.NestedStatementIdentity'
-        needle='private def checkedStatementType (env : Environment) (type : Expr) :\n    WalkM (Option ProvenanceAdmissionWitness) := do'
+        needle='def checkedStatementType (env : Environment) (type : Expr) :\n    WalkM (Option ProvenanceAdmissionWitness) := do'
         replacement=needle+'\n  return some (witness .statementRigidApart type)'
         predicted=['QuantifiedComputedIdentity','QuantifiedAliasIdentity','ConjoinedComputedIdentity','DisjoinedComputedIdentity','ExistentialComputedIdentity']
         description='Default-admit every observed proposition at the checkedStatementType witness exit, bypassing positive statement distinction.'

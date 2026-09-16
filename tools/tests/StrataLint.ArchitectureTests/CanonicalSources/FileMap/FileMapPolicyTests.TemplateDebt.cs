@@ -9,21 +9,18 @@ public sealed partial class FileMapPolicyTests
     [Fact]
     public void EmptyDebtPartitionsRemainRegisteredWithTheirActivationAuthority()
     {
-        foreach (var suffix in "0123456789abcdef")
-        {
-            var manifest = DebtManifest("Golden/InformationTemplateDebt/*" + suffix + ".json");
-            Assert.True(FileMapPolicy.InspectPatternPopulation(manifest,
-                [InformationTemplateDebtStore.ActivationPath]).Count == 0,
-                "[FAIL] declared_debt_empty_partition_reserved");
-        }
+        var manifest = DebtManifest("Golden/InformationTemplateDebt/rows/*.json");
+        Assert.True(FileMapPolicy.InspectPatternPopulation(manifest,
+            [InformationTemplateDebtStore.ActivationPath]).Count == 0,
+            "[FAIL] declared_debt_empty_partition_reserved");
     }
 
     [Theory]
     [InlineData("Golden/InformationTemplateDebt/*00.json", "InformationTemplateDebtWriter", true)]
     [InlineData("Golden/InformationTemplateDebt/*g.json", "InformationTemplateDebtWriter", true)]
     [InlineData("Golden/OtherDebt/*0.json", "InformationTemplateDebtWriter", true)]
-    [InlineData("Golden/InformationTemplateDebt/*0.json", "OtherWriter", true)]
-    [InlineData("Golden/InformationTemplateDebt/*0.json", "InformationTemplateDebtWriter", false)]
+    [InlineData("Golden/InformationTemplateDebt/rows/*.json", "OtherWriter", true)]
+    [InlineData("Golden/InformationTemplateDebt/rows/*.json", "InformationTemplateDebtWriter", false)]
     public void EmptyDebtReservationRequiresExactPartitionAndAuthority(string pattern, string producer, bool authority)
     {
         var manifest = DebtManifest(pattern, producer);
@@ -33,13 +30,21 @@ public sealed partial class FileMapPolicyTests
             "[FAIL] declared_debt_reservation_boundary");
     }
 
-    [Fact]
-    public void DebtVerifiersResolveToTheirProductionImplementations()
+    [Theory]
+    [InlineData("InformationTemplateDebtStore", "tools/StrataLint.Engine/RepositoryIo/InformationTemplateDebtStore.cs")]
+    [InlineData("DeclaredTemplateBindingRule", "tools/StrataLint.Engine/Rules/TheoryGeneration/DeclaredTemplateBindingRule.cs")]
+    public void DebtVerifiersResolveToTheirProductionImplementations(string verifier, string source)
     {
-        var findings = FileMapPolicy.InspectRepository(RepositoryLayout.FindRoot());
-        Assert.True(!findings.Any(f => f.Path.StartsWith("Golden/InformationTemplateDebt/", StringComparison.Ordinal)
-            && f.Code.StartsWith("FILEMAP-DATA-VERIFIER", StringComparison.Ordinal)),
-            "[FAIL] declared_debt_verifiers_registered");
+        var program = new FileMapEntry(source, FileMapKind.Program, FileMapAdmissionPlane.Judge,
+            "none", ["compiler"], ["compiler"], false, "none", null, "committed-source", null, null);
+        var debt = DebtManifest("Golden/InformationTemplateDebt/rows/*.json");
+        var manifest = new FileMapManifest(debt.ResidencePolicy, debt.Entries.Add(program));
+        Assert.Contains(verifier, FileMapPolicy.AvailableDataVerifiers(manifest,
+            new HashSet<string>(StringComparer.Ordinal) { source }));
+        Assert.DoesNotContain(verifier, FileMapPolicy.AvailableDataVerifiers(manifest,
+            new HashSet<string>(StringComparer.Ordinal)));
+        Assert.DoesNotContain(verifier, FileMapPolicy.AvailableDataVerifiers(debt,
+            new HashSet<string>(StringComparer.Ordinal) { source }));
     }
 
     private static FileMapManifest DebtManifest(string pattern, string producer = "InformationTemplateDebtWriter")

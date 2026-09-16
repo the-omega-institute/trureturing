@@ -13,6 +13,24 @@ MANIFEST = HERE / 'CleanReturnInventory.json'
 SOURCE = HERE / '../../ReadoutProvenance.lean'
 
 
+def source_closure(path=SOURCE):
+    """Read the classifier's split implementation in import dependency order."""
+    visited, pieces = set(), []
+
+    def visit(current):
+        current = current.resolve()
+        if current in visited:
+            return
+        visited.add(current)
+        text = current.read_text()
+        for name in re.findall(r'^import (LeanInformationAudit\.ReadoutProvenance\.\S+)$', text, re.M):
+            visit(HERE / '../../..' / (name.replace('.', '/') + '.lean'))
+        pieces.append(text)
+
+    visit(path)
+    return '\n'.join(pieces)
+
+
 def scan(source):
     bodies, markers = {}, {}
     function = None
@@ -90,7 +108,7 @@ def default_admit_mutation(source, entry):
 
 def main():
     manifest = json.loads(MANIFEST.read_text())
-    source = Path(sys.argv[1]).read_text() if len(sys.argv) > 1 else SOURCE.read_text()
+    source = Path(sys.argv[1]).read_text() if len(sys.argv) > 1 else source_closure()
     failures = check(source, manifest)
     if failures:
         for name in failures:
