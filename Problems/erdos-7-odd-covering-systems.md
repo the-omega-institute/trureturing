@@ -374,6 +374,11 @@ completion must contain a nonempty 21-core in its actual tail graph.
 For the finite heads supplied by the 5040 connection, the stronger
 supported-law bounds additionally exclude every planar tail from prime 17
 when the head divides 315, and from prime 19 when it divides 945.
+The original-modulus support criterion (RK1)--(RK5) removes all graph
+restrictions: full star heads admit at most two tail primes per modulus,
+as do arbitrary `{3,5,7}` heads with tails from 23; heads dividing 315 or
+945 admit at most three tail primes per modulus from 17 or 19 respectively.
+These conditions allow complete tail graphs of unbounded size.
 
 **H73 — false**, with its universal candidate statement retained from
 [the target preregistration](https://github.com/the-omega-institute/trureturing/issues/8167):
@@ -1508,9 +1513,139 @@ The capped kernel itself is reused from (T4) and
 [BBMST](../Library/Arith/balister2018covering.md); the new point is retaining
 only the actual earlier-neighbour coordinates in (DG2)--(DG5). The forest
 and feedback-vertex arguments do not imply this bound when treewidth or
-feedback vertex number is unbounded. Arbitrary tail graphs remain open:
-(DG5)'s weighted predecessor products still need control without a fixed
-degeneracy hypothesis.
+feedback vertex number is unbounded. For unrestricted tail support, (DG5)'s weighted predecessor products
+still need control without a fixed degeneracy hypothesis. The next
+criterion instead bounds the support of each original modulus.
+
+#### Bounded tail support permits arbitrary co-occurrence graphs
+
+A restriction on each **original modulus**, rather than the degree of its
+co-occurrence graph, gives a different noncoverage theorem. Suppose the
+actual head survivors support a law with `Gamma<=G`, all tail primes are
+at least `q0`, and each original modulus contains at most `s` distinct tail
+primes. Its head part may be any divisor of the head period. All prime
+exponents and the total number of primes are unrestricted. The following
+strict bounds exclude coverage:
+
+| Head | Tail primes | Maximum tail primes per original modulus | Threshold `delta` | Saturated-head mass upper bound |
+|---|---|---:|---:|---:|
+| Complete star through 73 | `q>73` | 2 | `2/5` | `<0.861` |
+| Arbitrary `{3,5,7}` head | `q>=23` | 2 | `3/8` | `<0.947` |
+| Head period divides 315 | `q>=17` | 3 | `3/10` | `<0.981` |
+| Head period divides 945 | `q>=19` | 3 | `7/20` | `<0.989` |
+
+There is **no graph restriction**: complete graphs with arbitrarily many
+vertices are allowed. In particular, a covering completion of the full
+star head must contain an original modulus with at least three tail prime
+factors. For either finite-head row, a covering completion must contain a
+modulus with at least four tail prime factors. These conclusions apply to
+the named heads and cutoffs, not to an arbitrary odd covering family.
+
+Order tail primes increasingly and use exactly the kernels, latest-prime
+assignment and prefix-marginal preservation from (DG1)--(DG4). Put
+
+\[
+ a_p=\frac1{p-1},\qquad b_p=a_p+2a_p^2,\qquad
+ K=\frac1{1-\delta},\qquad r=s-1,
+\]
+\[
+ B_r(v)=\sum_{i,j=0}^r[x^iy^j]
+       \prod_{q_0\le p<v}\bigl(1+Ka_p(x+y)+Kb_pxy\bigr),
+ \quad\text{with the product over primes}.             \tag{RK1}
+\]
+
+For the two preceding exponent tuples in a squared load, a prime occurring
+only on the left or only on the right contributes `K sum_(e>=1) p^-e=Ka_p`.
+A prime occurring on both sides contributes
+`K sum_(e,f>=1) p^-max(e,f)=Kb_p`: exactly `2j-1` positive exponent pairs
+have maximum `j`. Its cap is `K`, not `K^2`, because the two cylinders
+intersect in one cylinder. Each exponent tuple has at most `r` positive
+entries, which is precisely the coefficient truncation in (RK1).
+
+Distinct original moduli give at most one class per full tuple including
+the head divisor. For each pair of tail tuples, complete the two partial
+head layouts and apply Cauchy--Schwarz to their cross moment, giving `G`.
+Thus (DG2) and the nonnegative exponent-pair expansion prove
+
+\[
+ \mathbb E\alpha_v^2\le Ga_v^2B_r(v),\qquad
+ \mu(\text{saturated heads})
+ \le\frac{G}{4\delta(1-\delta)}
+             \sum_{v\ge q_0\atop v\text{ prime}}a_v^2B_r(v).\tag{RK2}
+\]
+
+Completing the preceding prime set and all exponent ranges only enlarges
+this nonnegative upper bound. No projected-modulus distinctness is used.
+For `r=1`, writing `A_v=sum_(q0<=p<v) a_p` and
+`C_v=sum_(q0<=p<v) a_p^2`, the coefficient sum is exactly
+
+\[
+ B_1(v)=1+K(3A_v+2C_v)+K^2(A_v^2-C_v).                 \tag{RK3}
+\]
+
+The first two rows follow by a rational sum through `N=2^20` and an
+all-integer dyadic remainder. Let `A_N,C_N` bound the corresponding prefix
+sums. In block `(N2^j,N2^(j+1)]`, their bounds are `A_N+j+1` and
+`C_N+2/N`, and the sum of `a_v^2` is at most `1/(N2^j)`.
+Dropping the negative term in (RK3) yields the explicit tail bound
+
+\[
+ \frac1N\left[2+K(6A_N+12+4C_N+8/N)
+                  +K^2(2A_N^2+8A_N+12)\right].       \tag{RK3a}
+\]
+
+For the finite sum, compute `A_v^2-C_v` as the nonnegative polynomial
+`2 sum_(p<q<v) a_p a_q`, so rounding the individual `a_p` upward preserves
+every inequality. The certificate retains the prime count, rounding
+scale, finite sum and exact infinite-tail bound.
+
+For the two `r=2` rows, a `3 by 3` positive coefficient recurrence computes
+(RK1) through `N=2^20`; every arithmetic rounding is upward to the grid
+`10^-12`. Let `A_N` and `B_N` be the certified upper bounds for the finite
+sums of `a_p` and `b_p`. In the block `(N2^j,N2^(j+1)]`, even summing over
+all integers gives
+
+\[
+ \sum a_v^2\le\frac1{N2^j},\qquad
+ \sum_{q_0\le p<v}a_p\le A_N+j+1,\qquad
+ \sum_{q_0\le p<v}b_p\le B_N+j+1+\frac2{N-1}.          \tag{RK4}
+\]
+
+The first inequality uses at most `N2^j` terms, each at most
+`(N2^j)^-2`. Each earlier dyadic block adds at most one to the `a` sum;
+the additional square sum is at most `1/(N-1)` by integral comparison.
+Coefficientwise domination of the product in (RK1) by
+`exp(A(x+y)+Bxy)` gives
+
+\[
+ B_2(v)\le E_2(A,B):=
+       (1+A+A^2/2)^2+B(1+A)^2+B^2/2,                 \tag{RK5}
+\]
+
+where in block `j` one takes
+`A=K(A_N+j+1)` and `B=K(B_N+j+1+2/(N-1))`.
+Consequently the infinite remainder is at most
+`N^-1 sum_(j>=0) 2^-j E_2(A,B)`. This is an exact degree-four polynomial
+sum: `sum_(j>=0) j^k/2^j` equals `2,2,6,26,150` for `k=0,1,2,3,4`.
+The resulting loss bounds are `0.9805125417500644...` and
+`0.9883284628019068...`. The verifier checks the moment recurrence and
+independently compares finite coefficient truncations with direct
+exponent-tuple pair enumeration. The arbitrary-prime argument remains
+an ordinary proof; the exact computation certifies its numerical premises.
+
+This uses the actual-label pair-moment framework of
+[BBMST](../Library/Arith/balister2018covering.md), Theorem 3.2 and Lemma 3.6,
+and its charge criterion in Theorem 3.1. The additional deductions here
+are the supported-head estimates and explicit support-restricted tail
+bounds. [Schroeder's three-prime theorem](../Library/Arith/schroeder2026noncoverage.md)
+restricts the total distinct prime factors of each modulus. It does not
+directly cover these head-plus-tail hypotheses: the finite-head rows allow
+six total factors in one modulus, while the arbitrary-star row permits
+more. BBMST's square-free-head theorem covers the subcase where all primes
+through 73 have exponent at most one, not arbitrary head heights. No exact
+dominating statement was found in the searched sources; no literature
+priority is asserted. Arbitrary tail support and arbitrary head geometry
+remain unresolved.
 
 #### Why scalar deletion and unrestricted message energy do not suffice
 
@@ -6014,7 +6149,11 @@ The local-parent capped-kernel criterion extends this to arbitrary
 `20`-degenerate tails above 73 for full star heads, and to forests from 17,
 `2`-degenerate graphs from 19 and planar graphs from 23 for arbitrary
 three-prime heads. Its selective parent moment bound allows unbounded
-feedback vertex number and treewidth; arbitrary tail graphs remain open.
+feedback vertex number and treewidth. Arbitrary graph structure is also
+allowed by (RK1)--(RK5) when each original modulus has at most two tail
+primes for the full star or three-prime heads, or at most three for the
+finite 315/945 heads, at the respective stated cutoffs. Unrestricted
+original-modulus support remains open.
 The finite supported-law bridge (FC4)--(FC5) sharpens the planar cutoff
 to 17 for heads dividing 315 and to 19 for heads dividing 945, the two odd
 parts in the frozen 5040 fibre.
