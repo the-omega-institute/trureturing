@@ -14618,3 +14618,643 @@ Associativity on the full operator carrier follows from actual function composit
 [^rro37_tame]: Eli Glasner and Michael Megrelishvili, *Todorčević’s trichotomy and a hierarchy in the class of tame dynamical systems*, arXiv:2011.04376v4, §0.1, Corollary 8.3, Example 9.3(2), and §10. These passages discuss tame enveloping compacta, the Sturmian split-circle ideal, its two idempotents, and its fixed-sign groups. The Rosenthal representation used in Theorem 37.8 is constructed directly. [Primary text](https://arxiv.org/html/2011.04376v4).
 
 ## 追加锚（本行以下为增补区）
+## 38. 增补·共同输入的线性联合闭图、有限符号证书与可数多尺度逼近
+
+**假设 38.0（相位、分裂点及单侧收敛前提）。** 沿用[第16节定义16.0、16.3、定理16.4及其证明，以及第18节假设18.1](https://raw.githubusercontent.com/the-omega-institute/trureturing/48b8fc89309eb665163095a8a9602798f11179b4/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)中的对象与结论。取
+$$
+\mathbb N_0=\{0,1,2,\ldots\},\qquad
+\phi=\frac{1+\sqrt5}{2},\qquad
+\alpha=\phi^{-1},\qquad
+\mathbb T=\mathbb R/\mathbb Z,
+$$
+$$
+K=\{x\in\{0,1\}^{\mathbb N_0}:\forall j\in\mathbb N_0,\ x_jx_{j+1}=0\},\qquad
+\gamma(n)=[n\phi],\qquad
+E_m=[-m\phi],\qquad E=\{E_m:m\ge1\}.
+$$
+这里 $K$ 取数字乘积拓扑，$Z(n)$ 为低位到高位排列、补零后的有限规范字。空间 $K$ 紧致可度量，$Z[\mathbb N_0]$ 稠密；连续满射 $H:K\to\mathbb T$ 满足 $H\circ Z=\gamma$。相位不在 $E$ 时纤维为单点；相位 $\beta\in E$ 时纤维为两个不同的定向点 $z_\beta^+,z_\beta^-$。特别，
+$$
+H^{-1}(\{0\})=\{0_K\},\qquad
+u=z_{E_1}^+=(10)^\omega,\qquad
+v=z_{E_1}^-=(01)^\omega,
+$$
+$$
+z_{E_2}^+=0v,\qquad z_{E_2}^-=10v.
+$$
+这些符号中的有限字与无限尾均按低位到高位连接；正负号完全采用定义16.3的方向。
+
+采用定理16.4证明中的以下准确收敛规则。若 $H(w)=\beta\notin E$，则
+$$
+\gamma(n_k)\longrightarrow\beta
+\quad\Longrightarrow\quad Z(n_k)\longrightarrow w.
+$$
+若 $\beta\in E$，
+$$
+\gamma(n_k)=\beta+[\varepsilon_k],\qquad
+0<|\varepsilon_k|<\tfrac12,\qquad \varepsilon_k\longrightarrow0,
+$$
+则对 $s\in\{-1,+1\}$，
+$$
+Z(n_k)\longrightarrow z_\beta^s
+\quad\Longleftrightarrow\quad
+s\varepsilon_k>0\text{ 最终成立}.
+$$
+实相位纤维、端点及方向的前置分类见[固定相位文本的定理371.2、372.2—372.4](https://raw.githubusercontent.com/the-omega-institute/trureturing/c4ef9baf3444a8e1992f6859eecc64e5faa6e0cb/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md)。
+
+另沿用
+$$
+\Gamma=\overline{\{(Z(a),Z(b),Z(a+b)):a,b\in\mathbb N_0\}}.
+$$
+记分裂点的符号为 $s(z_\beta^\pm)=\pm1$，并置
+$$
+\mathcal S(w)=
+\begin{cases}
+\{s(w)\},&H(w)\in E,\\
+\{-1,+1\},&H(w)\notin E.
+\end{cases}
+$$
+采用定理16.4的分类：输出相位不在 $E$ 时 $\Gamma(w,w')$ 是该相位的唯一纤维点；输出相位 $\theta=H(w)+H(w')$ 在 $E$ 时，
+$$
+\Gamma(w,w')=\{z_\theta^s:s\in\mathcal S(w)\cup\mathcal S(w')\}.
+$$
+
+**定义 38.1（有限联合闭图与带位置标记的符号矩阵）。** 令 $d,r\in\mathbb N_0$，$A\in\mathbb N_0^{r\times d}$，其第 $j$ 行记为 $a_j$。定义
+$$
+\mathcal G_A=
+\overline{\left\{
+\bigl((Z(n_i))_{i=1}^d,(Z(a_j\cdot n))_{j=1}^r\bigr):
+n\in\mathbb N_0^d
+\right\}}^{K^d\times K^r}.
+$$
+所有输出均使用同一个自然数向量 $n$。约定零维直积为单点，空和为零。
+
+给定 $(x,y)\in K^d\times K^r$，置
+$$
+I_x=\{i:H(x_i)\in E\},\qquad
+J_y=\{j:H(y_j)\in E\}.
+$$
+符号矩阵 $B=B(A;x,y)$ 的行由带位置标记的不交并
+$$
+(\{\mathrm{in}\}\times I_x)\sqcup(\{\mathrm{out}\}\times J_y)
+$$
+索引，并定义为
+$$
+B_{\mathrm{in},i}=s(x_i)e_i^{\mathsf T},\qquad
+B_{\mathrm{out},j}=s(y_j)a_j.
+$$
+这里 $e_i$ 是第 $i$ 个标准基向量。不同位置的行不因系数相同而被识别。记行数为 $m$。符号 $B\xi>0$ 始终表示每一行的值都严格为正，而不是向量偏序中的非零非负条件；当 $m=0$ 时它为空的合取。非分裂坐标不增加符号约束，方向 $\xi\in\mathbb R^d$ 不受非负性限制。
+
+**定理 38.2（有限联合闭图的准确相位—严格锥判据）。** 在假设38.0下，对定义38.1中的全部 $d,r,A,x,y$，
+$$
+(x,y)\in\mathcal G_A
+\quad\Longleftrightarrow\quad
+\left[
+H(y_j)=\sum_{i=1}^d A_{ji}H(x_i)\quad(1\le j\le r)
+\right]
+\quad\land\quad
+\left[\exists\xi\in\mathbb R^d,\ B(A;x,y)\xi>0\right].
+$$
+右侧成立时，可以用一列实际自然数向量同时逼近全部输入和全部输出；当 $d>0$ 时，还可要求其第 $k$ 项的每个输入整数都不小于 $k$。所用单侧收敛前提是[定理16.4证明中的定向逼近等价](https://raw.githubusercontent.com/the-omega-institute/trureturing/48b8fc89309eb665163095a8a9602798f11179b4/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)。
+
+**证明。** 先记录两个轨道事实。若 $\gamma(n)=E_h$，其中 $n\ge0,h\ge1$，则 $(n+h)\phi$ 为整数，与 $\phi$ 无理矛盾。因此
+$$
+\gamma[\mathbb N_0]\cap E=\varnothing.
+$$
+又因 $H$ 连续满射且 $Z[\mathbb N_0]$ 稠密，每个非空圆周开集的非空开原像都遇到 $Z[\mathbb N_0]$，故自然相位轨道稠密。对任意 $M\in\mathbb N_0$，
+$$
+\{\gamma(n):n\ge M\}=\gamma(M)+\gamma[\mathbb N_0]
+$$
+也稠密。于是有限多个输入可以分别从任意给定的非空开弧中选取自然相位，且同时满足任意预定的自然数下界；这里各输入的轨道指标彼此独立。
+
+若 $d=0$，实际向量只有空向量，每个输出恒为 $Z(0)=0_K$。右侧相位恒等式同样迫使所有输出等于 $0_K$，因而没有分裂行，零维方向满足空约束。这证明该情形，包括 $r=0$。以下设 $d>0$。
+
+先证必要性。有限乘积 $K^{d+r}$ 可度量，因此闭包中的点有同一列实际见证 $n^{(k)}\in\mathbb N_0^d$，满足
+$$
+Z(n_i^{(k)})\longrightarrow x_i,\qquad
+Z(a_j\cdot n^{(k)})\longrightarrow y_j.
+$$
+连续性与自然数上的相位加法给出所有相位恒等式。记 $\beta_i=H(x_i)$。对充分大的 $k$，取趋于零的唯一局部实偏移
+$$
+\gamma(n_i^{(k)})=\beta_i+[\varepsilon_i^{(k)}],
+\qquad |\varepsilon_i^{(k)}|<\tfrac12.
+$$
+对每个输出，由相位恒等式，
+$$
+\gamma(a_j\cdot n^{(k)})
+=H(y_j)+[a_j\cdot\varepsilon^{(k)}].
+$$
+因为行数有限且各行系数固定，可把 $k$ 同时取得足够大，使
+$$
+|a_j\cdot\varepsilon^{(k)}|<\tfrac12
+\quad\text{对所有 }j.
+$$
+此时输出的局部实偏移准确等于 $a_j\cdot\varepsilon^{(k)}$，不是另行选择的偏移，也不附加任意整数。这里先在圆周上使用恒等式，再将趋零的偏移和放进同一个局部区间，已经处理了模一代表跨越接缝的情形。
+
+每个分裂输入的单侧收敛规则给
+$$
+s(x_i)\varepsilon_i^{(k)}>0
+$$
+最终成立。每个分裂输出的同一规则给
+$$
+s(y_j)a_j\cdot\varepsilon^{(k)}>0
+$$
+最终成立。实际输出是非负整数的规范字，故其相位不在 $E$；因此分裂输出的这些局部偏移不能等于零。只有有限多个约束，遂有一个共同的充分大指标 $k$，使
+$$
+B\varepsilon^{(k)}>0.
+$$
+取 $\xi=\varepsilon^{(k)}$ 即得所需方向。此处选取的是同一个实际见证的误差向量，而不是各门分别选取误差，更不是假设归一化误差存在极限。若没有约束，则直接取零方向。
+
+再证充分性。设所有相位恒等式成立，并取 $B\xi>0$。当 $m>0$ 时，置
+$$
+\mu=\min_{\ell=1,\ldots,m}(B\xi)_\ell>0,\qquad
+C=\max\left(\{1\}\cup\left\{\sum_{i=1}^d|B_{\ell i}|:\ell=1,\ldots,m\right\}\right),
+$$
+$$
+\eta=\min\{1,\mu/(2C)\}>0.
+$$
+若 $\|w-\xi\|_\infty<\eta$，则逐行有
+$$
+(Bw)_\ell
+\ge (B\xi)_\ell-\sum_i|B_{\ell i}|\,\|w-\xi\|_\infty
+>\mu/2.
+$$
+当 $m=0$ 时，改取 $\xi=0,\eta=1$；以下不再需要 $\mu$，所有符号断言均为空条件。
+
+置
+$$
+L=\max\left(\{1\}\cup\left\{\sum_iA_{ji}:1\le j\le r\right\}\right),\qquad
+M=\max\{1,\|\xi\|_\infty+\eta\},
+$$
+$$
+t_k=\frac1{8(k+1)LM}\qquad(k\ge1).
+$$
+对每个 $i$ 使用非空开区间
+$$
+I_{i,k}=\bigl(t_k(\xi_i-\eta),\,t_k(\xi_i+\eta)\bigr).
+$$
+轨道尾部稠密，故可以分别选择 $n_i^{(k)}\ge k$，使
+$$
+\gamma(n_i^{(k)})\in\beta_i+[I_{i,k}].
+$$
+取对应的 $\varepsilon_i^{(k)}\in I_{i,k}$。这些区间位于 $(-1/2,1/2)$ 内，因而这些偏移就是唯一的局部偏移。令 $w^{(k)}=\varepsilon^{(k)}/t_k$，则
+$$
+\|w^{(k)}-\xi\|_\infty<\eta,\qquad
+|\varepsilon_i^{(k)}|<t_kM,
+$$
+$$
+|a_j\cdot\varepsilon^{(k)}|
+\le\left(\sum_iA_{ji}\right)\|\varepsilon^{(k)}\|_\infty
+<\frac1{8(k+1)}<\tfrac12.
+$$
+全部输入偏移与全部输出偏移都趋于零。若 $m>0$，还逐行有共同的严格余量
+$$
+(B\varepsilon^{(k)})_\ell>t_k\mu/2>0.
+$$
+因此分裂输入和输出全具有所要求的方向；非分裂坐标则只需其相位收敛。
+
+最后，对这一组实际输入，全部实际输出同时满足
+$$
+\gamma(a_j\cdot n^{(k)})
+=\sum_iA_{ji}\bigl(\beta_i+[\varepsilon_i^{(k)}]\bigr)
+=H(y_j)+[a_j\cdot\varepsilon^{(k)}].
+$$
+非负整数系数保证 $a_j\cdot n^{(k)}\in\mathbb N_0$。分别应用假设38.0的单点纤维规则和单侧规则，得到
+$$
+Z(n_i^{(k)})\longrightarrow x_i,\qquad
+Z(a_j\cdot n^{(k)})\longrightarrow y_j
+$$
+对所有输入与输出同时成立。没有为输出另行选择轨道指标。这证明充分性及所声明的自然数下界。证毕。
+
+**定理 38.3（空约束、零行、重复行、核心与同一输入复用）。** 定理38.2具有以下全部边界结论。没有分裂约束时，相位恒等式本身就是充分必要条件。若 $r=0$，则 $\mathcal G_A=K^d$；若 $d=0$，则全部输出必须为 $0_K$；若 $d=r=0$，闭图是唯一的空元组。零行对应的输出必须为 $0_K$。相同的两行对应的输出必须相等。恒等行 $a_j=e_i^{\mathsf T}$ 对应的输出必须等于输入 $x_i$。
+
+对单个倍乘行 $a_j=q e_i^{\mathsf T}$，其中 $q\ge1$，若 $x_i=z_{E_h}^s$，则其输出只能为 $z_{E_{qh}}^s$。若输入相位不分裂而倍乘后的相位分裂，则在只请求这个倍乘输出时，两种输出方向都可实现。若所有输入均为有限核心点，则
+$$
+\{y:(Z(n_1),\ldots,Z(n_d),y)\in\mathcal G_A\}
+=\left\{\bigl(Z((An)_j)\bigr)_{j=1}^r\right\}.
+$$
+
+**证明。** 空约束按定义由任意方向满足，直接应用定理38.2。若 $r=0$，相位条件为空，对每个分裂输入取 $\xi_i=s(x_i)$，对其余输入取 $\xi_i=0$，即满足所有输入约束，所以得到整个 $K^d$。零维输入及双零维情形已在定理38.2证明中直接处理。
+
+零行的相位等式为 $H(y_j)=0$，由零相位单点纤维知 $y_j=0_K$；实际输出也恒为这个点。若两行相同，则输出相位相同。非分裂相位的输出自动相等；分裂相位若选不同点，其两个符号行恰为 $a_j$ 与 $-a_j$，不可能同时严格为正。因此输出也必须相等。这与实际图上的两个输出始终相等一致；重复记录相同的目标点只重复同一个约束，不增加限制。
+
+恒等行与对应输入相位相同。在分裂情形，若输入与输出方向不同，符号约束包含某行及其相反行；若相位不分裂，单点纤维已经迫使相等。因此该输出只能是 $x_i$。这也说明输入坐标和输出坐标之间的重复不能被当作互相独立的近似。
+
+对倍乘行，$qE_h=E_{qh}$，输入要求 $s\xi_i>0$。输出若取符号 $t$，则要求 $tq\xi_i>0$，与前式相容当且仅当 $t=s$。若输入相位不分裂且输出相位分裂，则没有输入符号约束；指定输出符号 $t$ 后取 $\xi_i=t$，其他输入坐标按各自分裂符号取值，就实现这一个输出。因此同一变量出现 $q$ 次时，所使用的是同一个误差的 $q$ 倍，而非 $q$ 个自由误差。不同自由输入即使具有相同的极限点，也仍对应不同的矩阵列，不由极限点相等额外产生误差相等条件。
+
+最后，若 $x_i=Z(n_i)$，相位恒等式给
+$$
+H(y_j)=\gamma\left(\sum_iA_{ji}n_i\right)\notin E.
+$$
+这个相位的唯一纤维点是 $Z((An)_j)$，故输出被唯一确定；常值输入序列已经实现它。部分输入位于有限核心时则仅按非分裂坐标处理，并不强迫逼近它的自然数序列最终恒定，也不强迫其局部偏移为零。以上论证还覆盖 $n_i=0$、零行与空输出的交叉情形。证毕。
+
+**定理 38.4（严格择一、整系数证书及支撑界）。** 设 $B\in\mathbb R^{m\times d}$，两个维数均允许为零。以下两者恰有一个成立：
+$$
+\exists\xi\in\mathbb R^d,\quad B\xi>0;
+$$
+$$
+\exists\lambda\in\mathbb R^m,\quad
+\lambda\ge0,\quad \sum_{\ell=1}^m\lambda_\ell=1,\quad B^{\mathsf T}\lambda=0.
+$$
+第二式等价于存在 $\lambda\ge0,\lambda\ne0$ 且 $B^{\mathsf T}\lambda=0$。第一式等价于存在不受符号限制的 $\xi$ 满足 $B\xi\ge\mathbf1$。
+
+若 $B$ 为有理矩阵，第二种情形总有有理证书。每个包含极小的非零非负证书支撑 $S$ 都满足
+$$
+|S|\le\operatorname{rank}_{\mathbb R}(B)+1\le d+1;
+$$
+在该支撑上归一化到系数和为一后，证书唯一且为有理向量。清除分母得到同支撑的非零非负整数证书。当 $B$ 为整数矩阵时，第一种情形又等价于
+$$
+\exists z\in\mathbb Z^d,\qquad Bz\ge\mathbf1.
+$$
+因此，在相位恒等式成立的前提下，
+$$
+(x,y)\notin\mathcal G_A
+\quad\Longleftrightarrow\quad
+\exists c\in\mathbb N_0^m\setminus\{0\},\qquad B(A;x,y)^{\mathsf T}c=0.
+$$
+右侧可要求支撑大小至多为 $\operatorname{rank}_{\mathbb R}(B)+1$。这里不对证书系数大小作额外断言。
+
+所用成熟择一形式为 Dvorak–Kolmogorov，[《Duality theory in linear optimization and its extensions: formally verified》，第1节定理1.1、1.2](https://arxiv.org/html/2409.08119v3#S1)，对应固定声明 [equality_farkas、inequality_farkas](https://github.com/the-omega-institute/trureturing/blob/48b8fc89309eb665163095a8a9602798f11179b4/D5/S3/Analytic/Convexity/FarkasAlternative.lean#L700-L783)。有理权重的反证条件与 [RationalFarkas 的 Certificate 及 infeasible_of_certificate](https://github.com/the-omega-institute/trureturing/blob/48b8fc89309eb665163095a8a9602798f11179b4/D5/S0/Certificates/RationalFarkas.lean#L22-L114)相同；证书存在性另由以下论证给出。
+
+**证明。** 当 $m>0$ 且 $B\xi>0$，有限最小值
+$$
+\mu=\min_\ell(B\xi)_\ell
+$$
+严格为正，故 $B(\xi/\mu)\ge\mathbf1$。反向显然。当 $m=0$，这两种可行性均为空约束，而系数和为一的空向量不存在。因此该边界完全符合断言。
+
+为在 $m>0$ 时应用非负变量版本的 Farkas 择一定理，必须先处理原变量不受符号限制这一点。写
+$$
+\xi=p-q,\qquad p,q\ge0.
+$$
+每个实向量都有这种分解，例如逐坐标取正负部分。于是
+$$
+\exists\xi\in\mathbb R^d,\quad B\xi\ge\mathbf1
+\quad\Longleftrightarrow\quad
+\exists p,q\in\mathbb R^d,\quad p,q\ge0,\quad
+\begin{pmatrix}-B&B\end{pmatrix}
+\binom pq\le-\mathbf1.
+$$
+对
+$$
+C=\begin{pmatrix}-B&B\end{pmatrix},\qquad b=-\mathbf1
+$$
+应用所引不等式 Farkas 定理。它的另一个且互斥的分支是
+$$
+\lambda\ge0,\qquad C^{\mathsf T}\lambda\ge0,\qquad
+b\cdot\lambda<0.
+$$
+两个列块分别要求 $-B^{\mathsf T}\lambda\ge0$ 与 $B^{\mathsf T}\lambda\ge0$，合起来恰为 $B^{\mathsf T}\lambda=0$；最后一个条件恰为 $\sum_\ell\lambda_\ell>0$。除以这个正和，便得到归一化证书。这一应用也允许 $d=0$，因为其非负原变量集合可以为空。
+
+两分支不能同时成立还可直接核对：若 $B\xi>0$ 且 $\lambda\ge0,\lambda\ne0$，则
+$$
+0=(B^{\mathsf T}\lambda)\cdot\xi
+=\sum_\ell\lambda_\ell(B\xi)_\ell>0,
+$$
+矛盾。最后一步使用至少一个权重严格为正。正和归一化及反向去掉归一化，证明两种证书表述等价。
+
+以下证明有理性与支撑界，不从证书健全性推出存在性。设 $B$ 的各行为 $b_\ell\in\mathbb Q^d$，并且实归一化证书存在。有限的行集合保证所有证书支撑中存在包含极小者。任取这样的支撑 $S$，并取其归一化系数 $\lambda_\ell>0$，$\ell\in S$。考虑有理增广列
+$$
+\widetilde b_\ell=\binom{b_\ell^{\mathsf T}}1\in\mathbb Q^{d+1}.
+$$
+这些列在实数域上线性无关。否则，存在不全为零的实数 $h_\ell$，满足
+$$
+\sum_{\ell\in S}h_\ell b_\ell=0,\qquad
+\sum_{\ell\in S}h_\ell=0.
+$$
+因此 $h$ 同时具有正分量与负分量。置
+$$
+t=\min_{h_\ell>0}\frac{\lambda_\ell}{h_\ell}>0,\qquad
+\lambda'_\ell=\lambda_\ell-th_\ell\quad(\ell\in S),
+$$
+并在 $S$ 外补零。对于正的 $h_\ell$，这些新系数非负且至少一个为零；对于非正的 $h_\ell$，新系数仍为正。两条等式保证系数和仍为一且仍有
+$$
+\sum_\ell\lambda'_\ell b_\ell=0.
+$$
+这给出支撑严格包含于 $S$ 的证书，矛盾。
+
+故增广列满列秩。它们位于
+$$
+\operatorname{span}_{\mathbb R}\{b_1,\ldots,b_m\}\times\mathbb R
+$$
+中，所以 $|S|\le\operatorname{rank}_{\mathbb R}(B)+1$。这已经证明所需界。
+
+令 $s=|S|$。从这些线性无关的增广列中选出一个非零的 $s$ 阶子式，即选取 $s$ 个坐标行得到可逆的有理方阵 $M$。归一化证书的等式为
+$$
+\sum_{\ell\in S}\lambda_\ell\widetilde b_\ell
+=\binom{0_d}1.
+$$
+限制到所选坐标行，得到 $M\lambda_S=q$，其中 $q$ 为有理向量。于是
+$$
+\lambda_S=M^{-1}q
+=\frac{\operatorname{adj}(M)q}{\det M}\in\mathbb Q^s.
+$$
+这是原实证书的同一个向量，不是可能破坏严格正性的近似。增广列线性无关也保证归一化解唯一。取所有分母的一个正公倍数即可得到非负整数证书，且不改变其支撑。
+
+再设整数矩阵 $B$ 的严格系统在实数上可行。若 $m=0$，取 $z=0$。若 $m>0$，在一个实可行点附近，有限多个严格线性不等式共同保留正余量；具体可用定理38.2中的行范数估计得到一个仍全可行的开盒。逐坐标有理数稠密，故盒内有 $q\in\mathbb Q^d$，满足 $Bq>0$。清除 $q$ 的分母，得到 $z\in\mathbb Z^d$ 且 $Bz>0$。由于 $Bz$ 的每个分量都是整数，它们均不小于一。反向由 $\mathbb Z^d\subseteq\mathbb R^d$ 立即成立。
+
+最后，对整数证书 $c$，将有理不等式系统写为 $(-B)\xi\le-\mathbf1$，则
+$$
+c_\ell\ge0,\qquad
+\sum_\ell c_\ell(-B_{\ell i})=0,\qquad
+\sum_\ell c_\ell(-1)=-\sum_\ell c_\ell<0.
+$$
+这正是所引有理反证条件；同一个加权求和论证也排除实数解。结合定理38.2即得联合闭图的证书判据。若相位恒等式不成立，不归属已经由相位排除，不要求另有符号证书。证毕。
+
+**定义 38.5（二元加法图的实际联合关系与逐门关系）。** 一个有限无常量二元加法图具有 $d$ 个独立自然输入，后继门按一个有限次序排列；每个门取两个较早的输入或门输出之和。允许一个父结点占据两个端口，也允许不同的门计算相同的线性形式。所有输入及所有门输出均被记录。
+
+令输入结点的系数向量为 $e_i$，每个后继结点的系数向量为两个父结点系数向量之和。将全部门输出的系数向量列为 $A$ 的各行，得到一个非负整数矩阵。该图的实际联合闭关系记为 $\mathcal J=\mathcal G_A$。逐门关系 $\mathcal L$ 则由所有满足
+$$
+(w_p,w_q,w_t)\in\Gamma
+$$
+的结点赋值组成，其中 $p,q$ 是门 $t$ 的两个父结点。这里同一个结点在所有出现位置都只有一个 $K$ 值；但逐门属于闭图的自然数逼近见证没有被预先要求相同。
+
+**定理 38.6（逐门合法不蕴含共同可逼近）。** 对定义38.5中的每个图，$\mathcal J\subseteq\mathcal L$，且这个包含可以严格。以下两个无常量有向无环图均给出严格包含。
+
+第一例有四个独立输入，其极限为 $(u,u,v,v)$，依次请求四个输出形式
+$$
+a+c,\qquad a+d,\qquad b+c,\qquad b+d
+$$
+及其极限
+$$
+(0v,\,10v,\,10v,\,0v).
+$$
+每个门都属于 $\Gamma$，但整个元组不属于实际联合闭图。
+
+第二例有两个独立输入，极限为 $(u,v)$，三个门为
+$$
+p=x+y,\qquad q=x+x,\qquad r=q+y,
+$$
+并请求
+$$
+p\longrightarrow0v,\qquad q\longrightarrow0v,\qquad r\longrightarrow00v.
+$$
+这里
+$$
+z_{E_3}^+=010v,\qquad z_{E_3}^-=00v.
+$$
+三个门仍分别合法，但整个元组不属于实际联合闭图。此例的三个输出形式彼此不同。即使只记录 $x+y$ 的正分支和 $2x+y$ 的负分支，这两个不同输出就已构成一个包含极小的不相容输出族，输入极限仍固定为 $(u,v)$。
+
+这些严格包含不否定[第18节命题18.2的集合值结合律](https://raw.githubusercontent.com/the-omega-institute/trureturing/48b8fc89309eb665163095a8a9602798f11179b4/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)。
+
+**证明。** 每个门的三坐标投影连续，而 $\Gamma$ 闭，故 $\mathcal L$ 是有限多个闭集的交。实际自然数图上的每个门都执行真实加法，所以实际联合像包含于 $\mathcal L$；取闭包得到 $\mathcal J\subseteq\mathcal L$。
+
+第一例的矩阵为
+$$
+A_\square=
+\begin{pmatrix}
+1&0&1&0\\
+1&0&0&1\\
+0&1&1&0\\
+0&1&0&1
+\end{pmatrix}.
+$$
+四个输出相位都为 $E_2$。由 $\Gamma(u,v)=\{0v,10v\}$，所指定的每一个门均合法。若存在共同实际逼近，定理38.2必要性给出同一个误差向量 $(\varepsilon_a,\varepsilon_b,\varepsilon_c,\varepsilon_d)$，使
+$$
+\varepsilon_a+\varepsilon_c>0,\qquad
+\varepsilon_a+\varepsilon_d<0,\qquad
+\varepsilon_b+\varepsilon_c<0,\qquad
+\varepsilon_b+\varepsilon_d>0.
+$$
+第一式与第四式相加，和严格为正；第二式与第三式相加，和严格为负；两边却都是
+$$
+\varepsilon_a+\varepsilon_b+\varepsilon_c+\varepsilon_d.
+$$
+矛盾。等价的整数证书是：给四个带符号的输出行各权重一，给所有输入行权重零，因为
+$$
+(1,0,1,0)-(1,0,0,1)-(0,1,1,0)+(0,1,0,1)=0.
+$$
+
+为准确确定第二例的字，使用定义16.3中的 $c_*=-\alpha^3$ 与 $f_0(t)=-\alpha t$。由 $\alpha^2+\alpha=1$，
+$$
+f_0(c_*)=\alpha^4=5-3\phi,\qquad [f_0(c_*)]=E_3.
+$$
+前缀 $w=0$ 的长度为奇数，故该定义的定向规则给
+$$
+z_{E_3}^+=w10v=010v,\qquad
+z_{E_3}^-=w0v=00v.
+$$
+于是第二例的三个局部门分别满足
+$$
+0v\in\Gamma(u,v),\qquad
+0v\in\Gamma(u,u),\qquad
+00v\in\Gamma(0v,v).
+$$
+最后一个门的两个输入符号分别为正与负，输出相位为 $E_3$，所以负分支确实被允许。
+
+但其矩阵为
+$$
+A_\triangle=
+\begin{pmatrix}
+1&1\\
+2&0\\
+2&1
+\end{pmatrix},
+$$
+按两个输入、再按三个输出的顺序，其符号矩阵为
+$$
+B_\triangle=
+\begin{pmatrix}
+1&0\\
+0&-1\\
+1&1\\
+2&0\\
+-2&-1
+\end{pmatrix}.
+$$
+非负整数权重
+$$
+c=(1,0,1,0,1)^{\mathsf T}
+$$
+满足 $B_\triangle^{\mathsf T}c=0$。直接说，就是
+$$
+\varepsilon_x>0,\qquad
+\varepsilon_x+\varepsilon_y>0
+\quad\Longrightarrow\quad
+2\varepsilon_x+\varepsilon_y>0,
+$$
+与最后一个输出要求的负偏移矛盾。中间输出 $2x$ 的符号约束在此已经由输入 $x$ 的正号蕴含。
+
+只保留两个输出 $x+y$ 与 $2x+y$ 时，上述矛盾仍成立。分别只要求其中一个输出，则方向 $(2,-1)$ 实现前者的正分支，方向 $(1,-3)$ 实现后者的负分支；两者都符合固定输入的正、负符号。各自的相位恒等式均成立，故定理38.2将这两个方向分别提升为真实自然数逼近。删去任一输出后的剩余族因而可行，证明所说的包含极小性，而非宣称三门在所有互异输出形式的图中具有最少门数。
+
+最后，用同一批显式字可直接看到结合律没有受到反驳：
+$$
+\Gamma(\Gamma(u,u),v)
+=\Gamma(u,\Gamma(u,v))
+=\{010v,00v\}.
+$$
+左式中 $\Gamma(u,u)=\{0v\}$，再与负号输入 $v$ 运算得到两个分支。右式中 $\Gamma(u,v)=\{0v,10v\}$；与正号输入 $u$ 运算后也得到相同的两个分支。若在右括号方式中取得最终负分支，中间值可以取 $10v$，但不能被额外固定为 $0v$。实际方向 $(1,-3)$ 同样实现最终的 $2x+y$ 负分支，却使 $x+y$ 取负分支。集合值复合只要求存在适当的中间值；第二例还要求另一个复用输入的输出同时取指定值。两种量词条件不同，前者的结合律不推出后者的共同逼近。证毕。
+
+**定理 38.7（允许重复形式时的准确最少门数）。** 在定义38.5的无常量图类中，零门或一门总有 $\mathcal J=\mathcal L$，而两个门已经可以有严格包含。因此，在允许不同门重复计算同一形式的这个图类中，反例的最少门数恰为二。一个输入、两个重复倍乘门即足够。这个最少门数结论不包含要求全部输出形式互异的附加条件。
+
+**证明。** 零门时两关系都是整个输入空间。只有一个门且两个父输入位置不同时，属于 $\Gamma$ 的定义提供该输入对及其实际和的一列共同自然数见证；其余输入独立选取趋向各自目标的自然数序列，与这列见证合并即得到整个图的实际逼近。
+
+若唯一的门重复使用同一个输入 $x_i$，则输出形式为 $2n_i$。设 $\beta=H(x_i)$。当 $\beta\in E$ 时，$2\beta\in E$，而 $\Gamma(x_i,x_i)$ 只允许与输入相同的方向；取这个方向的实误差即满足定理38.2。若 $\beta\notin E$ 而 $2\beta\in E$，$\Gamma(x_i,x_i)$ 允许两个方向，对任一指定输出方向 $s$ 取 $\xi_i=s$ 即可。若 $2\beta\notin E$，输出相位的纤维为单点；此时 $\beta$ 也不在 $E$，可取 $\xi_i=0$。其余输入方向按自己的分裂符号独立选择。定理38.2遂在所有情形给出共同逼近，证明一门时相等。
+
+为构造两门反例，置
+$$
+\beta=[-\phi/2].
+$$
+若 $\beta=E_h$，则 $(2h-1)\phi$ 为偶整数，与 $\phi$ 无理矛盾，故 $\beta\notin E$。令 $w$ 为 $H^{-1}(\{\beta\})$ 的唯一点。由于 $2\beta=E_1$，
+$$
+\Gamma(w,w)=\{u,v\}.
+$$
+取一个独立输入趋向 $w$，两个门都计算该输入与自身之和，却分别请求输出趋向 $u$ 与 $v$。两门各自合法；实际两个输出对每个自然输入都完全相等，故不可能分别收敛到不同的 $u,v$。其矩阵两行都是 $(2)$，符号行则是 $(2)$ 与 $(-2)$，权重 $(1,1)$ 也是直接证书。既已排除零门和一门，最少门数恰为二。该证明没有把允许重行的极小值移用于互异输出形式的子类。证毕。
+
+**定义 38.8（可数输出的联合闭图）。** 固定有限 $d\in\mathbb N_0$，令 $J$ 为至多可数集合，并给定每个 $j\in J$ 的非负整数行向量 $a_j\in\mathbb N_0^d$。允许这些行的系数无统一上界。定义
+$$
+\mathcal G_J=
+\overline{\left\{
+\bigl((Z(n_i))_{i=1}^d,(Z(a_j\cdot n))_{j\in J}\bigr):
+n\in\mathbb N_0^d
+\right\}}^{K^d\times K^J}.
+$$
+闭包取乘积拓扑。对有限 $F\subseteq J$，令 $A_F$ 为这些行组成的有限矩阵，$p_F$ 为保留所有输入和 $F$ 中输出的投影；$B_F=B(A_F;x,y_F)$ 始终包含全部分裂输入约束。
+
+**定理 38.9（可数联合闭图的有限子系统判据与共同对角序列）。** 对定义38.8的全部数据，
+$$
+\mathcal G_J
+=\bigcap_{\substack{F\subseteq J\\F\text{ 有限}}}
+p_F^{-1}(\mathcal G_{A_F}).
+$$
+因此 $(x,y)\in\mathcal G_J$ 当且仅当所有输出的相位恒等式成立，并且
+$$
+\forall F\subseteq J\text{ 有限}\quad
+\exists\xi_F\in\mathbb R^d,\qquad B_F\xi_F>0.
+$$
+成立时有一列共同的实际自然数输入向量，使所有固定输入坐标和所有固定输出坐标收敛到指定值。
+
+若相位恒等式全部成立，但该元组不在 $\mathcal G_J$，则已有一个有限子系统拥有非零非负整数证书，且证书支撑至多涉及 $d+1$ 个带位置标记的输入或输出符号行。一个严格实方向同时满足全部无限约束是充分条件，但一般不是必要条件。
+
+**证明。** 若一个元组属于 $\mathcal G_J$，任意有限投影的每个邻域，其原像都是原元组的邻域；该原像遇到实际联合像，因此投影元组属于对应有限联合闭图。这证明一个包含方向。
+
+反之，设全部有限投影均属于相应闭图。取该元组的任意基本乘积邻域。它只限制有限多个输出坐标，并限制输入空间中的一个开邻域；将涉及的输出指标并成有限集 $F$，不受限制的输入坐标赋以整个 $K$，即可把该邻域写成某个有限乘积邻域的逆像。有限闭图归属保证这个有限邻域遇到某一个实际输入向量及其全部 $F$ 输出。用同一输入向量计算所有剩余输出，便得到原邻域中的实际联合像点。因此原元组属于闭包。
+
+对每个有限 $F$ 应用定理38.2，就得到相位与有限严格可行性的等价。每个单独输出也包含在某个有限 $F$ 中，所以这些有限相位条件准确合成为全部相位条件。
+
+为给出一列共同见证，取有限集递增列 $F_k$，其并为 $J$；有限或空的 $J$ 允许 $F_k$ 最终恒定。由 $p_{F_k}(x,y)\in\mathcal G_{A_{F_k}}$，可以选择一个 $n^{(k)}\in\mathbb N_0^d$，使所有输入和 $F_k$ 中所有输出的前 $k$ 位分别与目标相同。这里所指定的是一个非空的开闭柱邻域，故闭包归属确实提供同一个实际见证。于是每个输入的任意固定前缀最终正确；对每个固定输出 $j$，一旦 $j\in F_k$，其任意固定前缀也最终正确。因此全部固定坐标同时按乘积拓扑收敛。零维输入时所有见证都是同一个空向量，论证不变。
+
+若相位条件全成立而不归属，刚证明的交式给出一个不归属的有限投影。定理38.4为其符号系统给出支撑至多为
+$$
+\operatorname{rank}_{\mathbb R}(B_F)+1\le d+1
+$$
+的整数证书。反向，任一这样的有限证书排除该有限投影，也排除整体归属。
+
+最后，一个实方向满足全部约束时，它当然满足每个有限子系统，所以充分。以下定理38.10给出不必要性的实际自然数反例，而不交换
+$$
+\forall F\ \exists\xi_F
+\quad\text{与}\quad
+\exists\xi\ \forall F
+$$
+这两个量词。证毕。
+
+**定理 38.10（没有统一严格方向的共同自然数逼近及必需的相对尺度分离）。** 取两个输入极限 $(u,v)$，并对每个 $n\ge1$ 请求输出形式
+$$
+a_n=(n,1)
+$$
+的极限
+$$
+y_n=z_{E_{n+1}}^-.
+$$
+该整个可数元组属于 $\mathcal G_{\mathbb N_{\ge1}}$。每个有限符号子系统可行，却不存在一个实方向同时严格满足全部输入和输出符号约束。
+
+更准确地，存在共同实际自然数序列 $P_k,Q_k\ge k$，其局部相位偏移满足
+$$
+\gamma(P_k)=E_1+[\varepsilon_k],\qquad
+\gamma(Q_k)=E_1+[\delta_k],
+$$
+$$
+t_k=\frac1{8(k+1)},\qquad
+|\varepsilon_k-t_k^2|<t_k^3,\qquad
+|\delta_k+t_k|<t_k^2,
+$$
+并且
+$$
+Z(P_k)\longrightarrow u,\qquad
+Z(Q_k)\longrightarrow v,\qquad
+Z(nP_k+Q_k)\longrightarrow z_{E_{n+1}}^-
+\quad\text{对每个固定 }n\ge1.
+$$
+对任意实现同一可数元组的实际共同序列，取其趋零局部偏移 $\varepsilon_k,\delta_k$，必有
+$$
+\varepsilon_k>0,\qquad\delta_k<0
+\quad\text{最终成立},\qquad
+\frac{\varepsilon_k}{-\delta_k}\longrightarrow0.
+$$
+因此本例中相对尺度分离不仅是一种构造选择，也是所有共同逼近必须满足的条件；并不要求偏移恰为二次与一次幂。
+
+**证明。** 全部相位恒等式成立，因为
+$$
+nH(u)+H(v)=(n+1)E_1=E_{n+1}.
+$$
+输入符号要求方向的第一分量为正、第二分量为负。若有限输出集非空，令其最大指标为 $N$；取
+$$
+\xi_N=(1,-N-1).
+$$
+则对所有被请求的 $n\le N$，
+$$
+n(\xi_N)_1+(\xi_N)_2=n-N-1\le-1<0,
+$$
+所以这个有限系统严格可行。空输出集取 $(1,-1)$ 即可。
+
+若存在统一实方向 $(a,b)$，则 $a>0$ 且 $na+b<0$ 对每个正整数 $n$ 成立。由实数的阿基米德性质，选择整数 $n>-b/a$，便有 $na+b>0$，矛盾。这里缺少的正是统一严格方向，而不是有限子系统的相容性。
+
+下面直接构造实际共同序列。对 $k\ge1$，置
+$$
+I_k=(t_k^2-t_k^3,\ t_k^2+t_k^3),\qquad
+J_k=(-t_k-t_k^2,\ -t_k+t_k^2).
+$$
+两区间非空，分别严格位于正半轴与负半轴，并且都包含于 $(-1/2,1/2)$。由定理38.2证明中已经给出的轨道尾部稠密性，集合
+$$
+\{h\in\mathbb N_0:h\ge k,\ \gamma(h)\in E_1+[I_k]\},
+$$
+$$
+\{h\in\mathbb N_0:h\ge k,\ \gamma(h)\in E_1+[J_k]\}
+$$
+均非空。分别取它们的最小元为 $P_k,Q_k$，并取唯一局部偏移
+$$
+\varepsilon_k\in I_k,\qquad\delta_k\in J_k.
+$$
+这给出显示的两条误差估计，尤其
+$$
+\varepsilon_k>0,\qquad\delta_k<0,\qquad
+\frac{\varepsilon_k}{t_k^2}\longrightarrow1,\qquad
+\frac{\delta_k}{-t_k}\longrightarrow1.
+$$
+单侧规则立即给出两个输入的目标极限。
+
+对 $1\le n\le k$，因 $\varepsilon_k>0$，
+$$
+n\varepsilon_k+\delta_k>-t_k-t_k^2.
+$$
+另一方面，$t_k<1$ 给 $\varepsilon_k<2t_k^2$，所以
+$$
+n\varepsilon_k+\delta_k
+<2nt_k^2-t_k+t_k^2
+\le2(k+1)t_k^2-t_k
+=-\frac34t_k<0.
+$$
+故前 $k$ 个输出的全部局部偏移同时位于
+$$
+(-t_k-t_k^2,\,-3t_k/4)\subset(-1/2,0).
+$$
+由于使用的是同一对实际自然数，
+$$
+\gamma(nP_k+Q_k)
+=E_{n+1}+[n\varepsilon_k+\delta_k].
+$$
+对每个固定 $n$，当 $k\ge n$ 时，该和已是输出的准确局部实偏移，始终为负并趋于零。因此假设38.0给
+$$
+Z(nP_k+Q_k)\longrightarrow z_{E_{n+1}}^-.
+$$
+每个 $nP_k+Q_k$ 都是非负整数。这不是对各输出分别选自然数，而是同一对 $P_k,Q_k$ 的全部实际线性输出。乘积收敛只要求每个固定坐标最终满足所需条件；这里在第 $k$ 步同时控制了前 $k$ 个输出。
+
+最后，设任意共同实际序列实现同一个元组。输入的单侧收敛迫使 $\varepsilon_k>0,\delta_k<0$ 最终成立。对每个固定正整数 $n$，输出相位的准确局部偏移最终等于 $n\varepsilon_k+\delta_k$，而指定输出的负方向迫使
+$$
+n\varepsilon_k+\delta_k<0
+$$
+最终成立。因此对每个固定 $n$，最终有
+$$
+0<\frac{\varepsilon_k}{-\delta_k}<\frac1n.
+$$
+给定任意实数 $\eta>0$，先取 $n$ 使 $1/n<\eta$，再取满足这一个固定输出条件的充分大指标，即得该比值最终小于 $\eta$。故比值趋于零，证明必需的相对尺度分离。所有构造及量词均在通常实数与自然数序列内完成。证毕。
+
+## 追加锚（本行以下为增补区）
