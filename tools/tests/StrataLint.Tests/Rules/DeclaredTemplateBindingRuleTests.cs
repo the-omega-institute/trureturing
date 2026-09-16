@@ -163,6 +163,33 @@ public sealed class DeclaredTemplateBindingRuleTests
     }
 
     [Fact]
+    public void imported_theorem_first_freeze_requires_discharge()
+    {
+        const string target = "D5/S0/Carrier/Target.lean";
+        const string pin = "Golden/Frozen/state/" + target + ".json";
+        var input = new InformationTemplateContentInput(target,
+            InformationTemplateJson.Sha256(Encoding.UTF8.GetBytes(Source)));
+        var row = Debt with { ContentInputs = Debt.ContentInputs.Add(input) };
+        var rows = ImmutableDictionary<InformationOccurrenceKey, InformationTemplateDebtRow>.Empty.Add(A, row);
+        var occurrence = Occurrence(A, InformationTemplateBindingState.Undeclared) with { ContentInputs = row.ContentInputs };
+        var universe = Universe(occurrence);
+        var activation = Encoding.UTF8.GetString(InformationTemplateDebtStore.WriteActivation(Active).AsSpan());
+        var baseline = Snapshot(("Registration.lean", Source), (target, Source),
+            (InformationTemplateDebtStore.ActivationPath, activation));
+        var candidate = Snapshot(("Registration.lean", Source), (target, Source), (pin, "{}"),
+            (InformationTemplateDebtStore.ActivationPath, activation));
+        var invoked = new HashSet<InformationOccurrenceKey>();
+        var findings = DeclaredTemplateBindingRule.Evaluate(Active, baseline, candidate, rows, rows,
+            universe, universe, new HashSet<string> { pin }, key => invoked.Add(key));
+        Assert.True(findings.Any(f => f.Code == "DTR-Touched") && invoked.SetEquals([A]),
+            "[FAIL] imported_theorem_first_freeze_requires_discharge: DTR-Touched and selected occurrence required");
+        var validated = Universe(occurrence with { State = InformationTemplateBindingState.DeclaredValidated,
+            EvidenceRef = new string('a', 64), BindingSourcePath = "Registration.lean" });
+        Assert.Empty(DeclaredTemplateBindingRule.Evaluate(Active, baseline, candidate, rows, Empty,
+            universe, validated, new HashSet<string> { pin }));
+    }
+
+    [Fact]
     public void declared_template_mechanism_deletion_rejected()
     {
         var universe = Universe(Occurrence(A));

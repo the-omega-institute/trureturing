@@ -7,6 +7,11 @@ open D5.S3.ConceptDynamics.InformationEscape
 theorem target : (137 : Nat) = 137 := rfl
 theorem identityTarget : ∀ x : Bool, x = x.not.not := fun x => (Bool.not_not x).symm
 theorem independent : True := True.intro
+def discardTarget (_ : (137 : Nat) = 137) : Arena := Arena.ofFintype Bool
+def discardClean (_ : True) : Arena := Arena.ofFintype Bool
+def nestedTarget := Option (Arena.State (discardTarget target))
+def nestedClean := Option (Arena.State (discardClean independent))
+def closedDecision (_ : Bool) : Bool := decide ((0 : Nat) < 24)
 def identity (x : Bool) : Bool := x
 def keep {p : Prop} (_ : p) (x : Bool) : Bool := x
 def hidden (x : Bool) : Bool := let h := identityTarget; keep h x
@@ -35,6 +40,16 @@ private def check (label : String) (argument : Expr) (expected : Option String)
 -- TemplateBinding.validate and P1. Every case restores the environment so
 -- syntax-summary memoization cannot make the next oracle self-referential.
 run_meta do
+  let .defnInfo bad ← getConstInfo ``nestedTarget | throwError "setup"
+  let .defnInfo clean ← getConstInfo ``nestedClean | throwError "setup"
+  check "raw_carrier_target_proof_rejected" bad.value
+    (some "forbidden_dependency:dtr.argument_audit")
+  check "raw_carrier_clean_twin_accepted" clean.value none
+  let decisionResult ← RegistrationGates.templateArgumentsCurrent ``target #[mkConst ``closedDecision] 524288
+  let rejected := match decisionResult with
+    | .error s => s.startsWith "unclassified_form:E"
+    | _ => false
+  logInfo m!"[{if rejected then "PASS" else "FAIL"}] argument_closed_decision_grammar_rejected result={repr decisionResult}"
   check "independent_data_argument_accepted" (mkConst ``identity) none
   check "independent_proof_and_dictionary_accepted" (mkConst ``independent) none
   check "object_projection_accepted"

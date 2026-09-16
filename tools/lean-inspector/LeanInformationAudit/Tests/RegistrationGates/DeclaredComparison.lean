@@ -69,6 +69,24 @@ def unregisteredDescriptor : PrimitiveRealization (cutSignature Bool Bool) :=
 def aliasDescriptor : PrimitiveRealization (cutSignature Bool Bool) :=
   @definitionAlias Bool Bool instDecidableEqBool (fun x : Bool => x)
 
+def unusedCarrier (ignored : Type) (f : Bool → Bool) :
+    PrimitiveRealization (cutSignature Bool Bool) := cutRealization f
+register_information_template unusedCarrier
+
+def discardProof (_ : ∀ x : Bool, x = x.not.not) : Arena := Arena.ofFintype Bool
+def discardIndependent (_ : True) : Arena := Arena.ofFintype Bool
+
+def rawCarrierBad : PrimitiveRealization (cutSignature Bool Bool) :=
+  unusedCarrier (Option (Arena.State (discardProof DeclaredBindings.validated))) (fun x => x)
+def rawCarrierProdBad : PrimitiveRealization (cutSignature Bool Bool) :=
+  unusedCarrier (Bool × Arena.State (discardProof DeclaredBindings.validated)) (fun x => x)
+def rawCarrierClean : PrimitiveRealization (cutSignature Bool Bool) :=
+  unusedCarrier (Option (Arena.State (discardIndependent True.intro))) (fun x => x)
+def decisionArgument : PrimitiveRealization (cutSignature Bool Bool) :=
+  cutRealization (fun _ : Bool => decide ((0 : Nat) < 24))
+def decisionBody (ignored : Bool) : PrimitiveRealization (cutSignature Bool Bool) :=
+  cutRealization (fun _ : Bool => decide ((0 : Nat) < 24))
+
 private def bodyOf (name : Name) : MetaM Expr := do
   let .defnInfo info ← getConstInfo name | throwError "setup: missing fixture definition"
   return info.value
@@ -98,6 +116,20 @@ run_meta do
   let some event := (TemplateBinding.inventory env).find?
       (·.key.theoremName == `LeanInformationAudit.Tests.DeclaredBindings.validated)
     | throwError "setup: missing independently registered occurrence"
+  for (name, expected) in #[(``rawCarrierBad, "forbidden_dependency"),
+      (``rawCarrierProdBad, "forbidden_dependency"), (``rawCarrierClean, "validated"),
+      (``decisionArgument, "unclassified_form")] do
+    let descriptor ← bodyOf name
+    let record ← TemplateBinding.assess { event with realizationName := name }
+      (some { key := event.key, arena := event.arena, descriptor := some descriptor,
+        owner := env.header.mainModule })
+    let ok := match record.result with
+      | .declaredValidated _ => expected == "validated"
+      | .declaredUnresolved diagnostic =>
+        (diagnostic.splitOn s!"reason={expected} rule=").length == 2
+      | _ => false
+    logInfo m!"[{if ok then "PASS" else "FAIL"}] declared_raw_argument_{name.getString!}"
+    if let .declaredUnresolved diagnostic := record.result then logInfo diagnostic
   let direct ← bodyOf ``directApplication
   observe event ``directApplication direct "identical_full_application_accepted"
   observe event ``directApplication (← bodyOf ``lexicalApplication)
