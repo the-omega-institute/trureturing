@@ -4,7 +4,7 @@
    mirror-E: none(waiver:symbolic-proof-no-numeric-artifact)
    anchors: [mathlib/module/Mathlib.Data.Nat.Totient, mathlib/module/Mathlib.Logic.Equiv.Fin.Basic]
    utility: none
-   digest: Schulte's gcd row sum equals n squared convolved with totient squared. -/
+   digest: OEIS A347293's gcd row sum equals n squared convolved with totient squared. -/
 
 import Mathlib.Data.Nat.Totient
 import Mathlib.Logic.Equiv.Fin.Basic

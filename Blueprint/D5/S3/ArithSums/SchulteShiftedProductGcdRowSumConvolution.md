@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Schulte's shifted-product gcd row sum equals a divisor convolution of squares and squared totients.
+The row sum of the OEIS A347293 shifted-product gcd triangle equals a divisor convolution of squares and squared totients.
 
 **Definition 1.1 (The shifted-product gcd row sum).**
 

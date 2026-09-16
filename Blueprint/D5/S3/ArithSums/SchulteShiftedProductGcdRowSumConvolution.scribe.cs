@@ -13,7 +13,7 @@ internal sealed class SchulteShiftedProductGcdRowSumConvolutionDocument
         LibraryNoteRef.Create("D5/L/ArithSums/schulte2022a347293");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Schulte's shifted-product gcd row sum equals a divisor convolution of squares and squared totients.",
+        "The row sum of the OEIS A347293 shifted-product gcd triangle equals a divisor convolution of squares and squared totients.",
         H("OEIS A347293 row-sum convolution"),
         Blocks(
             Node(
