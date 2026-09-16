@@ -325,14 +325,15 @@ public sealed class DeclaredTemplateReviewTests
         Assert.True(Directory.Exists(rowsDir), "[FAIL] nonempty_seed_publication_required: no row directory");
         Assert.Equal(expected.Keys.Order(StringComparer.Ordinal), Directory.GetFiles(rowsDir)
             .Select(path => Path.GetRelativePath(repository.Path, path).Replace('\\', '/')).Order(StringComparer.Ordinal));
+        var initializedRows = expected.Keys.ToDictionary(path => path,
+            path => File.ReadAllBytes(Path.Combine(repository.Path, path)), StringComparer.Ordinal);
         foreach (var (path, bytes) in expected)
-        {
-            Assert.True(File.ReadAllText(Path.Combine(repository.Path, path)) == bytes,
+            Assert.True(initializedRows[path].AsSpan().SequenceEqual(Encoding.UTF8.GetBytes(bytes)),
                 "[FAIL] nonempty_seed_exact_bytes: " + path);
-            files[path] = bytes;
-        }
         files[InformationTemplateDebtStore.ActivationPath] = Text(InformationTemplateDebtStore.WriteActivation(new(seed, true)));
         WriteFiles(files);
+        foreach (var (path, bytes) in initializedRows)
+            File.WriteAllBytes(Path.Combine(repository.Path, path), bytes);
         Git("add", "."); Git("commit", "-m", "activated seeded debt");
         var baseline = Git("rev-parse", "HEAD");
         var baseReport = WriteReport("base", files);
