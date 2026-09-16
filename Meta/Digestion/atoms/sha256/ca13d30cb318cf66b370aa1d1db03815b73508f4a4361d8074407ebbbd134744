@@ -1,0 +1,47 @@
+**证明。** 先分别证明左、右零切片仅依赖相位。非分裂相位的输出纤维只有一个点，所以两个零切片均为 $\delta_{k_\theta}$。对分裂相位 $\theta$，置 $w_\theta=k_{\theta+\tau}$。任取 $H(x)=\theta$，在两个不同有序三元组上使用结合律及定理23.4，得到
+$$
+\delta_{0_K}*\delta_x
+=(\delta_t*\delta_t)*\delta_x
+=\delta_t*(\delta_t*\delta_x)
+=P_{t,w_\theta},
+$$
+$$
+\delta_x*\delta_{0_K}
+=\delta_x*(\delta_t*\delta_t)
+=(\delta_x*\delta_t)*\delta_t
+=P_{w_\theta,t}.
+$$
+右端均与该纤维内的输入分支无关。于是左、右零切片分别定义为 $L_\theta,R_\theta$，暂不假设二者相等。它们均支撑于相位 $\theta$。
+
+对三元组 $(0_K,x,0_K)$ 使用结合律。左括号给出
+$$
+L_\theta*\delta_{0_K}
+=\sum_{u\in\operatorname{supp}L_\theta}L_\theta(u)R_\theta
+=R_\theta,
+$$
+右括号给出
+$$
+\delta_{0_K}*R_\theta
+=\sum_{v\in\operatorname{supp}R_\theta}R_\theta(v)L_\theta
+=L_\theta.
+$$
+故 $L_\theta=R_\theta$，记为 $\pi_\theta$。满射性保证这族分布在全部相位上定义且唯一；零相位的单点纤维给 $\pi_0=\delta_{0_K}$。
+
+固定 $\theta$，由满射性取 $H(x)=\theta$。若 $H(y)=\rho$，则
+$$
+\pi_\theta*\delta_y
+=(\delta_{0_K}*\delta_x)*\delta_y
+=\delta_{0_K}*P_{x,y}
+=\sum_u P_{x,y}(u)\pi_{\theta+\rho}
+=\pi_{\theta+\rho}.
+$$
+这里每个中间点 $u$ 都具有相位 $\theta+\rho$。同理，
+$$
+\delta_x*\pi_\rho
+=\delta_x*(\delta_y*\delta_{0_K})
+=P_{x,y}*\delta_{0_K}
+=\sum_u P_{x,y}(u)\pi_{\theta+\rho}
+=\pi_{\theta+\rho}.
+$$
+最后，$\pi_\rho$ 的每个支撑点具有相位 $\rho$，故再对第一式作有限平均，得到 $\pi_\theta*\pi_\rho=\pi_{\theta+\rho}$。全程没有使用 $0_K$ 是单位元。证毕。
+
