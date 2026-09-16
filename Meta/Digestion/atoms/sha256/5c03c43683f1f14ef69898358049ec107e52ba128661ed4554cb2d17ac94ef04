@@ -1,0 +1,14 @@
+**theorem 44.10 (Reconstruction and the failed round-trip closure identity).** Define the reconstruction graph
+$$
+\mathscr M=\{(Z(b),Z(q),Z(r),Z(bq+r)):b,q,r\in\mathbb N_0\}
+$$
+and its successful inverse domain
+$$
+\mathscr G=\{(Z(b),Z(q),Z(r)):b\ge1,\ q\ge0,\ 0\le r<b\}.
+$$
+Then $\overline{\mathscr M}=K^4$ and $\overline{\mathscr G}=K^3$. On actual inputs in $\mathscr G$, reconstruction followed by division by the same divisor returns the original quotient and remainder. The closure of this actual round-trip graph is exactly
+$$
+\{(z,y,w,y,w):z,y,w\in K\}\subset K^5.
+$$
+In contrast, replacing reconstruction and division separately by their graph closures and then composing them with the same completed divisor yields all of $K^5$, even after imposing $\overline{\mathscr G}$. Thus graph closure does not preserve this arithmetic inverse identity.
+

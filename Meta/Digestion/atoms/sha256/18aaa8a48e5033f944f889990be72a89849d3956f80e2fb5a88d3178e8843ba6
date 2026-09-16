@@ -1,0 +1,31 @@
+**theorem 44.11 (An empty division diagram and the common-witness criterion).** In variables $(a,b,q,r,d,s)\in\mathbb N_0^6$, consider the two local success constraints
+$$
+A_1:\quad b\ge1,\quad a=bq+r,\quad 0\le r<b,
+$$
+$$
+A_2:\quad r\ge1,\quad d=rs+b,\quad 0\le b<r.
+$$
+Regard each $A_i$ as a subset of the common six-variable domain. Each encoded local relation is dense in $K^6$, but $A_1\cap A_2=\varnothing$. For every $L\ge0$, writing $\Pi_L=\pi_L^{\times6}$, one therefore has
+$$
+\Pi_L\bigl(Z^{\times6}[A_1\cap A_2]\bigr)=\varnothing
+\quad\text{while}\quad
+\Pi_L\bigl(Z^{\times6}[A_1]\bigr)
+\cap
+\Pi_L\bigl(Z^{\times6}[A_2]\bigr)
+=D_L^6.
+$$
+
+More generally, for any finite family of constraints $A_1,\ldots,A_m\subseteq\mathbb N_0^d$ and any $x\in K^d$,
+$$
+x\in\overline{Z^{\times d}\left[\bigcap_{j=1}^m A_j\right]}
+$$
+holds if and only if
+$$
+\forall L\ge0\ \exists n\in\mathbb N_0^d:
+\quad
+\pi_L(Z(n_i))=\pi_L(x_i)\ \text{for every }i,
+\quad
+n\in A_j\ \text{for every }j.
+$$
+The same numerical tuple must satisfy every local constraint.
+
