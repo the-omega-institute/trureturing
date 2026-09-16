@@ -127,6 +127,16 @@ use the same law and include the entire geometric tail. The specified
 75-point geometry remains a hypothesis; no unrestricted tail or global
 low-configuration bound follows from this instance.
 
+The [complete actual-carrier classification](../docs/reports/erdos7-odd-covering/marked_head_profile.md#complete-low315-carrier-classification-for-actual-digit-bounds)
+identifies the finite domain needed to extend those digit-sensitive bounds.
+On the six canonical old45 shapes, the 161375 deletion vectors lift to
+965595 digit-union carriers and 170569 orbits under common CRT root
+symmetries. The sufficient carrier data is the multiset of nonempty
+per-digit deletion masks, with multiplicities; a concrete pair has the
+same deletion vector but inequivalent carriers. The standalone exact
+classifier rebuilds every state and orbit. This establishes the domain
+and its allowed identifications, not a moment bound on all its members.
+
 On that same77-point law, the [convex extension](../docs/reports/erdos7-odd-covering/marked_head_profile.md#convex-costs-on-the-same-arbitrary-height-probability)
 (SH19)--(SH25) adds simultaneous mean `<4.948866` and eight hinge
 bounds, including threshold-six `<0.808228`, with arbitrary original

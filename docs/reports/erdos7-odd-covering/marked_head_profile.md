@@ -5179,3 +5179,86 @@ Its difference below3849/106 is the positive rational
     8638883751805796885407/309605276085626746181250.
 
 `verify_point_geometry.py` reads `point_geometry_certificate.json`, reconstructs the actual carrier, checks all weights and arithmetic bounds, recomputes both integer geometry maxima at every one of270depths, recomputes all actual cylinder caps and the grouped union maximum, and performs the geometric-tail and final comparisons with exact rational arithmetic. The largest common bound on intermediate square sums is213444001494108, below2^63. The verifier needs Python3 and NumPy; it imports no optimizer or scratch module. This is a finite computational certificate combined with the ordinary all-height proof above, not a Lean kernel verification.
+
+### Complete low315 carrier classification for actual digit bounds
+
+Fix one of the six existing canonical old45 survivor sets S. The fixed old forbidden classes are modulo3,9,5,15,45. The pure7 forbidden digit is normalized to0. The five mixed labels are7d with d=(3,5,9,15,45), with one class per original modulus. Missing or low-redundant labels may be represented by a class on digit0. This note classifies their low surviving carriers. It does not evaluate the new moment bound on all carriers, prove a universal numerical target, or replace the existing justification for reducing old45 families to these six shapes.
+
+#### Labelled digits:203 patterns, with the pure digit distinguished
+
+Fix the five old residue choices a_d modulo d. Each mixed label chooses a digit t_d∈Z/7Z independently by CRT. Include the distinguished pure label with t_0=0. Two such assignments are equivalent under one common permutation of the six nonzero7digits if and only if the six labelled objects {0,3,5,9,15,45} have the same equality partition by their digit.
+
+The forward direction preserves equality and the zero block. Conversely, map the nonzero digits attached to corresponding blocks to one another, then extend the resulting partial bijection to the unused nonzero digits. Since there are only five mixed labels, no partition needs more than six total blocks. Every partition of six labelled objects is realizable. Therefore the exact labelled digit-orbit count is Bell(6)=203, not203 entire carrier cases on S.
+
+The numbers of patterns with k=1,…,6 total blocks are1,31,90,65,15,1. A pattern with k blocks has6!/(7−k)! concrete digit assignments when t_0=0. Their sum is7^5=16807. The classifier independently normalizes all16807 tuples and recovers precisely the203 restricted-growth strings.
+
+If all mixed digits are required nonzero, the pure label is a singleton and the count becomes Bell(5)=52. The existing code uses52 partitions together with the option that each old cylinder is empty. Moving every label whose digit is0 into that empty-cylinder option gives the same low carrier. Conversely, an empty-cylinder label can be placed at digit0 with any old residue. Thus the current52-partition construction covers all actual low carriers, including pure-digit coincidences. It does not preserve the full description of redundant original labels, which is unnecessary when the only required input is their complement.
+
+Before taking effects on S, the five old residue choices number3·5·9·15·45=91125. Hence a direct labelled enumeration at one fixed S has91125·203=18498375 digit orbits. Many have identical carrier effects. Replacing old residues by their distinct masks on S gives12960 old-mask choices for each17point shape and12240 for each16point shape. The resulting203-pattern products over six shapes contain15346800 entries; the equivalent52-plus-empty enumeration contains3931200 entries. These are labelled enumeration counts, not distinct carrier counts.
+
+#### Exact carrier state and what the deletion vector forgets
+
+For each surviving digit y∈{1,…,6}, let
+
+    U_y = union of (S∩{x≡a_d mod d}) over labels whose t_d=y.
+
+The carrier is exactly Ω={(x,y): x∈S\U_y, y∈{1,…,6}}. Represent it by the sorted multiset of its nonempty masks U_y; repeated masks retain their multiplicity. The number of omitted empty masks is6 minus the multiset length. At most five masks are nonempty, so there is a globally unused nonzero digit.
+
+Two carriers on the same fixed S are equivalent under one common7digit permutation fixing0 if and only if their mask multisets are equal. One direction is immediate. For the other, match equal nonempty masks with their multiplicities and match the remaining empty masks; these matches define a single permutation of the six digits. This is a statement about carriers; different original labelled forbidden families may have the same carrier and need not be equivalent as labelled families.
+
+The existing deletion vector is only
+
+    b(x)=#{y:x∈U_y},    r(x)=6−b(x).
+
+It forgets which old points are deleted together at a common digit. Its161375 states are therefore insufficient as the input to an arbitrary75point weighting or to an oracle retaining actual digit positions. The richer state above preserves exactly the information these methods need. It can be realized by assigning the sorted masks to digits1,…,k and treating the remaining digits as empty-deletion columns.
+
+Completeness has a small successive-label recursion. Start with the empty multiset. For each of the five original labels, choose any of its old-cylinder masks, including the empty one. An empty mask leaves the state unchanged. A nonempty mask either occupies a fresh digit, appending that mask, or uses an existing digit, replacing one U by U∪C. Sort the resulting multiset and deduplicate. The inductive alternatives cover exactly every assignment of the labels seen so far. Since there are only five labels and six available nonzero digits, a fresh digit always exists when needed. The resulting states agree in count and projected b digest with the existing two-enumeration certificate.
+
+#### Allowed common CRT coordinate maps
+
+A7digit permutation must be common to every old point x. Independent permutations in separate old45 fibres generally send a single cylinder modulo7d to a union of cylinders and are not allowed in this equivalence.
+
+Every common permutation of the7roots fixing0 extends to every finite7power by permuting the first digit and leaving all later digits unchanged. It sends every prefix cylinder to a prefix cylinder of the same depth and preserves uniform suffix measure. Likewise, any old ternary rooted-tree permutation preserving the mod3 and mod9 cylinder families, and any common permutation of the five5roots, extends to arbitrary finite additional heights. Their coordinatewise CRT product preserves every original modulus label and sends its residue class to another single class of that same modulus. No primality label, projected cofactor label, or original high exponent is merged.
+
+For the six normalized old carriers, the surviving mod9 rows are (1,7) in the short ternary root and (2,5,8) in the long root. The surviving mod5 columns are(1,2,3,4). Candidate old coordinate maps form
+
+    S_{ {1,7} } × S_{ {2,5,8} } × S_{ {1,2,3,4} },
+
+of size2!·3!·4!=288. Keep exactly those maps preserving S. They preserve each old cofactor-cylinder family d∈{3,5,9,15,45}; the classifier checks this for every map. The short and long roots cannot be interchanged in a map preserving S, because they have different numbers of surviving mod9 rows. The excluded root0 and deleted child4 carry no old points; the listed maps extend to the full rooted tree by fixing them. Thus these maps are allowed global coordinate changes, not arbitrary permutations of S.
+
+Act with each such old map on every mask U_y, then sort the masks. The combined old-coordinate and common7digit quotient is complete for this stated group. Transport an actual law along the corresponding bijection of Ω, and extend the coordinate map to the additional physical digits. Every cylinder cap, all selected original deletion blocks, complete test-family moment, and resulting actual conditional law is transported coherently. Consequently one exact feasible certificate on each carrier orbit would suffice for this finite classification, provided its analytic all-height estimates are valid. Reusing a law after a coordinate map means pushing forward every point weight and every actual event together.
+
+#### Measured classification
+
+`verify_seven_digit_classification.py` regenerates the mask states by the successive-label recursion, verifies the exact existing b-set hashes, checks each old map preserves all five cylinder families, and enumerates the combined orbits. It performs no LP or moment sweep. The result file is `seven_digit_classification_certificate.json`. The only external input is the canonical adjacent `actual_deletion_profile_certificate.json`; the classifier reads its six old geometries, checks their exact original classes and complements, and binds the used input fields by SHA-256. It imports no other program, optimizer, or policy cache.
+
+| Old45 shape | b vectors | Digit-union carriers | Old maps | Carrier orbits | b orbits |
+|---|---:|---:|---:|---:|---:|
+| root1, same root / other column |27679|165141|12|31833|5281|
+| root1, other root / same column |28939|168517|24|15451|2829|
+| root1, other root / other column |28735|168695|8|40281|7082|
+| root2, same root / other column |25813|157010|8|36152|6063|
+| root2, other root / same column |25238|152235|36|12692|2268|
+| root2, other root / other column |24971|153997|12|34160|5718|
+| Total |161375|965595| |170569|29241|
+
+Some b vectors have 37 distinct digit-union states even before old-coordinate symmetries. The old-coordinate quotient leaves170569 exact carrier cases; it is the relevant complete finite domain for applying the new actual-point geometry language.
+
+A concrete loss-of-information witness on the first17point shape is retained in the result: the same b has union multiset(66576,103278) and union multiset(8,65828,104018), where bit i refers to the listed ith old point. These use respectively two and three nonempty digit masks. No common digit permutation or old-coordinate bijection can change that number, so the carriers are inequivalent even under the combined allowed group, despite having exactly the same b.
+
+#### What a complete next step would require
+
+Use a carrier representative, not one arbitrary realization of b. Expand its masks to the actual315points, choose and certify a law on that actual support, and evaluate the pure7 bound, fixed-low digit-partition bound, all caps, actual grouped deletion bound, and full geometric tail on that one law. Coordinate symmetries then transport the certificate to its orbit. Existing bounds that depend only on b can settle all richer states above a certified b without reevaluation; unresolved b states must retain the mask multiset before using the new digit-sensitive bounds.
+
+The present result certifies the finite coverage and equivalence statement and the measured state counts. It does not show that all 170569 carrier orbits meet 3849/106.
+
+
+#### Reproduction and verification boundary
+
+Place the new classifier and result certificate beside the existing canonical `actual_deletion_profile_certificate.json`, then run:
+
+```sh
+python3 -I -O verify_seven_digit_classification.py
+```
+
+Alternatively pass the canonical input path through `--source-certificate` and the result path through `--check`. The program uses only the Python standard library, with unbounded integer arithmetic and explicit guards unaffected by optimization. It checks raw types on all consumed integer geometry fields, pins the six canonical shapes and their original old classes, reconstructs all carrier states, checks the old maps form a group preserving every cofactor-cylinder family, checks disjoint orbit coverage, and compares the complete deterministic result. It records hashes of all reconstructed state sets and orbit-representative sets without storing the large sets. It also verifies the displayed two-carrier witness and the exact203 digit-orbit sizes against all16807 digit tuples. The results are finite arithmetic certificates with the ordinary equivalence and all-height transport proofs above; no Lean kernel verification or universal numerical moment bound is claimed.

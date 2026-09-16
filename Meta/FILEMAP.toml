@@ -746,6 +746,15 @@ consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
+[[files]] # Exact complete actual315 carrier and common CRT symmetry classification.
+pattern = "docs/reports/erdos7-odd-covering/seven_digit_classification_certificate.json"
+kind = "data"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["SnapshotDecoder"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
 [[files]] # Exact prime sums and block budgets for star and three-prime head noncoverage.
 pattern = "docs/reports/erdos7-odd-covering/star_block_obstruction_certificate.json"
 kind = "data"
@@ -1036,6 +1045,15 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 [[files]] # Replays exact whole convex costs and all tails for the same-law two-prime consumer.
 pattern = "docs/reports/erdos7-odd-covering/verify_saturated_whole_cost.py"
+kind = "program"
+admission_plane = "content"
+produced_by = "none"
+consumed_by = ["agent"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+[[files]] # Reconstructs every actual315 carrier, its root-symmetry orbit and a deletion-vector collision.
+pattern = "docs/reports/erdos7-odd-covering/verify_seven_digit_classification.py"
 kind = "program"
 admission_plane = "content"
 produced_by = "none"
