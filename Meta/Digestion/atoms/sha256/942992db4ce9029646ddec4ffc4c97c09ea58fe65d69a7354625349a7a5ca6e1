@@ -1,0 +1,12 @@
+**theorem 32.14 (Borel charges and all-subset charges are different dual constructions).** The canonical spaces are
+$$
+ba(\mathcal B)=B_b(K)^*,\qquad
+ba(K,\operatorname{Pow}(K))=\ell^\infty(K)^*
+=\ell^1(K_{\mathrm d})^{**}.
+$$
+Restriction of charges defines a contractive surjection
+$$
+\operatorname{res}:ba(K,\operatorname{Pow}(K))\longrightarrow ba(\mathcal B),
+$$
+but it is not injective. Every probability charge on $\mathcal B$ has a probability-charge extension to $\operatorname{Pow}(K)$. None of these statements identifies the two displayed dual constructions with one another.
+
