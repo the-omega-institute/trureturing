@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:718d4de1e712d2544a1faf66632f586291d528504a714de91d661aeeb78b05d0
+  normalized_sha256: sha256:718d4de1e712d2544a1faf66632f586291d528504a714de91d661aeeb78b05d0
+cas_ref: sha256:718d4de1e712d2544a1faf66632f586291d528504a714de91d661aeeb78b05d0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 任意映射的差集逆像恒等式直接由 Set.preimage_sdiff 给出，探针没有单射或满射假设，仓内无冻结 GID 可用。
+    previous_atom_id: 213104c4aab9ce12498f0122c116820dc1bb60a76e406c58ea026bb10e2747ce
+    next_atom_id: 0be0a7b4ada1a4cee2cddb006e2cf224f6bfa5577057c8544ad02aa74b2dc771
