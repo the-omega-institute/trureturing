@@ -537,7 +537,7 @@ lambda Jz gives ES2. If t^3=0, then t^4=0 and
 (1-5t^2)^(-1)=1+5t^2; expansion yields ES3. These are identities in
 rings with zero divisors as well as in fields.
 
-At R=Z/p^m, p>5, fix a norm-c point z. ES1 gives a bijection
+At R=Z/p^m, p>5 and 1<=h<=m, fix a norm-c point z. ES1 gives a bijection
 
 $$p^hR\ \longleftrightarrow\
 \{w:Q(w)=c,\ w=z\pmod{p^h}\},\qquad h\ge1. \tag{ES4}$$
