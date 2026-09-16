@@ -1,0 +1,6 @@
+**theorem 32.17 (A free-ultrafilter membership function is not Borel).** For a free ultrafilter $\mathcal U$ on $\mathbb N$, the subset
+$$
+\mathscr U=\{\omega\in\{0,1\}^{\mathbb N}:\{n:\omega_n=1\}\in\mathcal U\}
+$$
+of Cantor space is not Borel. In fact it does not have the Baire property.
+

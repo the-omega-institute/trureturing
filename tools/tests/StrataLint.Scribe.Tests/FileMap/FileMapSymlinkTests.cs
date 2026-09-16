@@ -19,6 +19,28 @@ public sealed class FileMapSymlinkTests
             Assert.Single(FileMapSymlinkPolicy.Parse(tableBytes, "table.toml")));
     }
 
+    [Fact]
+    public void InlineFileArrayDrivesBothSymlinkConsumers()
+    {
+        var tableBytes = Encoding.UTF8.GetBytes(Manifest(".codex/skills", "../skills", "directory"));
+        var inlineBytes = Encoding.UTF8.GetBytes("""
+            schema_version = 2
+            files = [{ pattern = ".codex/skills", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["agent"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source", symlink = { target = "../skills", kind = "directory" } }]
+            [residence_policy]
+            case_id = "RESIDENCE-EPOCH"
+            desired = "data-must-live-outside-tools"
+            known_violation_count = 0
+            status = "closed"
+            """ + "\n");
+
+        Assert.Equal(
+            Assert.Single(FileMapLoader.Parse(tableBytes, "table.toml").Entries).Symlink,
+            Assert.Single(FileMapLoader.Parse(inlineBytes, "inline.toml").Entries).Symlink);
+        Assert.Equal(
+            Assert.Single(FileMapSymlinkPolicy.Parse(tableBytes, "table.toml")),
+            Assert.Single(FileMapSymlinkPolicy.Parse(inlineBytes, "inline.toml")));
+    }
+
     [Theory]
     [InlineData("AGENTS.md", "CLAUDE.md", "file", "CLAUDE.md")]
     [InlineData(".codex/skills", "../skills", "directory", "skills")]

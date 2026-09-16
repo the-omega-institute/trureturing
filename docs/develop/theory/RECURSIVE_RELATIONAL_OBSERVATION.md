@@ -8424,3 +8424,4271 @@ Finally, the point-mass input map from digit $K$ to coefficient $B$ is not norm-
 [^rro27-topology]: Daniel V. Tausk, *Weak\** topology for the space of finite measures on a topological space*, notes dated 17 January 2024, Definition 3.1, p. 5; Proposition 4.1 and its proof, p. 8; Corollary C.6 and §C.1, p. 55. These distinguish the continuous-test topology from the Banach weak topology and establish continuity of the Dirac embedding in the former topology. [Mathematical text](https://www.ime.usp.br/~tausk/texts/WeakTopologyMeasures.pdf).
 
 ## 追加锚（本行以下为增补区）
+## 28. All Radon measures, signed Borel convolution, and the boundary of uniqueness
+
+**Assumption 28.0 (Fixed carrier and exact finite multiplication).** Retain Definition 25.0 and the exact-fiber and exact-graph hypotheses of Assumption 25.1. Give $K$ its original compact digit topology, and give $\mathbb T=\mathbb R/\mathbb Z$ its original compact group topology. Fix
+$$
+t\in(\mathbb R\setminus\{-1,1\})\sqcup\{\infty\},
+$$
+where $\infty$ is a separate formal parameter. Use the finite multiplication of Definition 25.8 and theorem 25.9. In particular, its rows $P^{(t)}_{x,y}$ are finite real signed measures, have mass one, are supported in the exact fiber $\Gamma(x,y)$, and satisfy
+$$
+P^{(t)}_{Z(a),Z(b)}=\delta_{Z(a+b)}.
+$$
+Write
+$$
+S=\{x_m^+,x_m^-:m\ge1\},\qquad K^\circ=K\setminus S,\qquad \mathbb T^\circ=\mathbb T\setminus E,
+$$
+$$
+v_m=\delta_{x_m^+}-\delta_{x_m^-},\qquad
+\pi_{E_m}=p_m\delta_{x_m^+}+(1-p_m)\delta_{x_m^-},\qquad
+\pi_\theta=\delta_{k_\theta}\quad(\theta\notin E).
+$$
+The quantities $p_m,c_{m,n},\pi_\theta$ have the values belonging to this fixed parameter. All conclusions below are conditional on these exact carrier and graph hypotheses.
+
+**definition 28.1 (Measure spaces and bounded residual coordinates).** For a compact metric space $X$, let $M(X)$ be the real vector space of all finite real signed regular Borel measures, with
+$$
+\|\mu\|_{\mathrm{TV}}=|\mu|(X),\qquad \varepsilon_X(\mu)=\mu(X).
+$$
+There is no factor of one half in this norm. A Borel map $f:X\to Y$ has pushforward
+$$
+(f_\#\mu)(D)=\mu(f^{-1}(D)).
+$$
+We use the classical compact Riesz representation identification $M(X)=C(X)^*$; in particular, $M(X)$ is complete. Its weak-star topology is $\sigma(M(X),C(X))$, not the Banach weak topology $\sigma(M(X),M(X)^*)$. These conventions are those of [Daniel V. Tausk, *Weak\* topology for the space of finite measures on a topological space*, §2, Definition 3.1, Corollary C.6 and §C.1](https://www.ime.usp.br/~tausk/texts/WeakTopologyMeasures.pdf).
+
+Define
+$$
+\rho_t=\begin{cases}
+|t|,&t\ne\infty,\ |t|<1,\\
+|t|^{-1},&t\ne\infty,\ |t|>1,\\
+0,&t=\infty,
+\end{cases}
+\qquad C_t=\frac{1+\rho_t}{1-\rho_t},
+$$
+$$
+d'_m=\begin{cases}
+1-t^m,&t\ne\infty,\ |t|<1,\\
+t^{-m}-1,&t\ne\infty,\ |t|>1,\\
+-1,&t=\infty.
+\end{cases}
+$$
+For each positive integer $m$, define the Borel scalar function
+$$
+r_m(x)=d'_m\bigl((1-p_m)\mathbf1_{\{x_m^+\}}(x)-p_m\mathbf1_{\{x_m^-\}}(x)\bigr).
+$$
+Thus each $r_m$ is supported on its specified two-point fiber.
+
+**theorem 28.2 (Uniform numerical bounds and actual maximizing rows).** For all positive integers $m,n$,
+$$
+1-\rho_t\le |d'_m|\le1+\rho_t,\qquad
+c_{m,n}=\frac{d'_m d'_n}{d'_{m+n}}.
+$$
+The residual functions are explicitly
+$$
+r_m(x)=\begin{cases}
+\mathbf1_{\{x_m^+\}}(x)+t^m\mathbf1_{\{x_m^-\}}(x),&|t|<1,\\
+t^{-m}\mathbf1_{\{x_m^+\}}(x)+\mathbf1_{\{x_m^-\}}(x),&|t|>1,\\
+\mathbf1_{\{x_m^-\}}(x),&t=\infty.
+\end{cases}
+$$
+The finite-parameter cases in this display exclude the formal parameter. Consequently,
+$$
+\sum_{m\ge1}|r_m(x)|\le1\qquad(x\in K).
+$$
+Furthermore,
+$$
+\sup_{\theta\in\mathbb T}\|\pi_\theta\|_{\mathrm{TV}}\le C_t,
+\qquad
+\max_{x,y\in K}\|P^{(t)}_{x,y}\|_{\mathrm{TV}}=C_t.
+$$
+The maximum is attained at $(0_K,x_1^+)$ for finite $t\ge0$, at $(x_1^+,x_1^-)$ for finite $t<0$, and at $(0_K,0_K)$ for $t=\infty$.
+
+**Proof.** If $|t|<1$, direct substitution gives
+$$
+d'_m(1-p_m)=1,\qquad -d'_mp_m=t^m.
+$$
+If $|t|>1$, it gives
+$$
+d'_m(1-p_m)=t^{-m},\qquad -d'_mp_m=1.
+$$
+For the formal parameter these two quantities are zero and one. This proves the formulas for $r_m$. Since the split fibers are pairwise disjoint and the displayed coefficients have absolute value at most one, the sum bound follows.
+
+For $|t|<1$, the coboundary identity follows by substituting $d'_m=1-t^m$. For $|t|>1$, one has $d'_m=t^{-m}(1-t^m)$, and the character factors cancel in the quotient. For $\infty$, the quotient is $-1$. In both finite cases, $|d'_m|$ is of the form $|1-s^m|$ with $|s|=\rho_t<1$, so
+$$
+1-\rho_t\le1-\rho_t^m\le|1-s^m|\le1+\rho_t^m\le1+\rho_t.
+$$
+The formal case has absolute value one.
+
+At a split phase, for finite $t$,
+$$
+\|\pi_{E_m}\|_{\mathrm{TV}}=\frac{1+|t|^m}{|1-t^m|}.
+$$
+For $|t|<1$, the reverse triangle inequality bounds this by $(1+\rho_t^m)/(1-\rho_t^m)\le C_t$. For $|t|>1$, divide numerator and denominator by $|t|^m$ and apply the same argument to $t^{-1}$. All other phase slices are Dirac measures. The formal parameter also gives only Dirac slices.
+
+Rows with at least one non-split input are phase slices, and equal-sign split inputs give Dirac measures. For the remaining mixed row, theorem 25.9 gives
+$$
+M_{m,n}(t):=\|P^{(t)}_{x_m^+,x_n^-}\|_{\mathrm{TV}}
+=\frac{|t|^n|t^m-1|+|t^n-1|}{|t^{m+n}-1|}.
+$$
+The other mixed type has norm $M_{n,m}(t)$. When $r=|t|<1$, triangle and reverse triangle inequalities give the sign-independent estimate
+$$
+M_{m,n}(t)
+\le\frac{1+2r^n+r^{m+n}}{1-r^{m+n}}
+\le\frac{1+2r+r^2}{1-r^2}
+=\frac{1+r}{1-r}=C_t.
+$$
+This includes $t=0$. When $|t|>1$, multiplication by $|t|^{m+n}$ in the formula at $t^{-1}$ gives
+$$
+M_{m,n}(t)=M_{n,m}(t^{-1}),
+$$
+which reduces the estimate to the preceding case. Formal-parameter mixed rows are Dirac measures. This proves the bound for every row without a positivity assumption.
+
+For finite $t\ge0$,
+$$
+\|P^{(t)}_{0_K,x_1^+}\|_{\mathrm{TV}}
+=\frac{1+t}{|1-t|}=C_t.
+$$
+For finite $t<0$, the actual first mixed row simplifies to
+$$
+P^{(t)}_{x_1^+,x_1^-}
+=\frac{t}{t+1}\delta_{x_2^+}+\frac1{t+1}\delta_{x_2^-},
+$$
+whose norm is $(1+|t|)/|t+1|=C_t$. The denominator is nonzero by the parameter restriction. Finally, $P^{(\infty)}_{0_K,0_K}=\delta_{0_K}$. These are actual input pairs, proving attainment. QED.
+
+**theorem 28.3 (The inverse away from the split phases is a homeomorphism).** The restricted map
+$$
+H|_{K^\circ}:K^\circ\longrightarrow\mathbb T^\circ
+$$
+is a homeomorphism for the subspace topologies, and hence a Borel isomorphism. In particular,
+$$
+s(\theta)=\begin{cases}
+k_\theta,&\theta\notin E,\\
+x_m^-,&\theta=E_m
+\end{cases}
+$$
+defines a Borel section $s:\mathbb T\to K$ with $H\circ s=\operatorname{id}_{\mathbb T}$.
+
+**Proof.** The no-adjacent-ones condition defines a closed subset of the compact product $\{0,1\}^{\mathbb N}$, so $K$ is compact and metrizable. The series defining $F$ converges uniformly, because the absolute values of its terms are bounded by a summable geometric sequence. Each partial sum is continuous. Thus $F$, and consequently $H$, is continuous.
+
+The exact-fiber assumption makes the restriction a continuous bijection. To prove continuity of its inverse, fix $\theta\in\mathbb T^\circ$ and an open neighborhood $U\subseteq K$ of $k_\theta$. The set $H(K\setminus U)$ is compact and therefore closed in $\mathbb T$. It does not contain $\theta$, since $H^{-1}(\{\theta\})=\{k_\theta\}$. Hence
+$$
+W=\mathbb T\setminus H(K\setminus U)
+$$
+is an open neighborhood of $\theta$, and $k_\eta\in U$ for every $\eta\in W\cap\mathbb T^\circ$. This proves the inverse continuity; it does not require $K^\circ$ to be compact.
+
+Both $E$ and $S$ are countable Borel sets. For a Borel set $D\subseteq K$, the inverse image of $D$ under $s$ is the union of the Borel subset of $\mathbb T^\circ$ obtained from the inverse homeomorphism and a subset of the countable set $E$. It is therefore Borel in $\mathbb T$. The section identity follows from the fiber definitions. Choosing the other branch at any subset of the split phases also gives a Borel section, although the displayed choice will remain fixed. QED.
+
+**theorem 28.4 (Setwise integration of uniformly bounded signed kernels).** Let $X,Y$ be compact metric spaces. Suppose that $Q_y\in M(X)$ for every $y\in Y$, that
+$$
+y\longmapsto Q_y(D),\qquad y\longmapsto |Q_y|(D)
+$$
+are Borel for every Borel $D\subseteq X$, and that $\sup_y\|Q_y\|_{\mathrm{TV}}\le B<\infty$. For $\eta\in M(Y)$ define
+$$
+I_Q\eta(D)=\int_Y Q_y(D)\,d\eta(y).
+$$
+Then $I_Q\eta$ is a finite signed regular Borel measure, depends linearly on $\eta$, and satisfies
+$$
+|I_Q\eta|(D)\le\int_Y|Q_y|(D)\,d|\eta|(y),\qquad
+\|I_Q\eta\|_{\mathrm{TV}}\le B\|\eta\|_{\mathrm{TV}}.
+$$
+For every bounded real Borel function $f$ on $X$, the function
+$$
+Qf(y)=\int_X f\,dQ_y
+$$
+is Borel and bounded, and
+$$
+\int_X f\,d(I_Q\eta)=\int_Y Qf\,d\eta.
+$$
+All these integrals are scalar signed-measure integrals.
+
+For finite signed measures $\mu\in M(X)$ and $\eta\in M(Y)$, their signed product measure is intrinsic and satisfies
+$$
+|\mu\otimes\eta|=|\mu|\otimes|\eta|.
+$$
+Every bounded Borel function on $X\times Y$ satisfies signed Fubini, with either integration order. The same assertion holds for finitely many factors.
+
+The setwise measurability and measurable Jordan-part conditions are the signed-kernel conditions appearing in [Riccardo Passeggeri, *On the extension and kernels of signed bimeasures and their role in stochastic integration*, Theorem 3.4(d)–(e′)](https://arxiv.org/html/2009.10657v2). The positive-measure Fubini theorem used below is [Stephan Tornier, *Haar Measures*, Theorem 1.11](https://arxiv.org/html/2006.10956v1).
+
+**Proof.** Each defining integrand is bounded by $B$, so it is integrable against every finite signed $\eta$. If $D_j$ are pairwise disjoint Borel sets, then
+$$
+Q_y\Bigl(\bigcup_{j=1}^N D_j\Bigr)\longrightarrow
+Q_y\Bigl(\bigcup_{j\ge1}D_j\Bigr),
+$$
+and all the expressions on the left have absolute value at most $B$. Dominated convergence against $|\eta|$ proves countable additivity of $I_Q\eta$.
+
+The set function
+$$
+R(D)=\int_Y|Q_y|(D)\,d|\eta|(y)
+$$
+is a finite positive Borel measure by monotone convergence, with $R(X)\le B\|\eta\|_{\mathrm{TV}}$. For every finite Borel partition $D=\bigsqcup_i D_i$,
+$$
+\sum_i|I_Q\eta(D_i)|
+\le\int_Y\sum_i|Q_y(D_i)|\,d|\eta|(y)
+\le R(D).
+$$
+Taking the supremum over these partitions proves the variation domination and norm bound.
+
+For completeness, every finite positive Borel measure on a compact metric space is regular. An open set is an increasing union of compact subsets, obtained from positive distance to its closed complement. The class of Borel sets admitting inner compact and outer open approximations is closed under complements. It is closed under countable unions: choose outer open approximations with summable errors; for inner approximation, first retain finitely many members of the union up to a small measure error and then take a finite union of their compact approximations. Thus this class contains the Borel sigma-algebra. Apply this argument to the positive and negative parts of $I_Q\eta$. This also shows why a merely Borel section in theorem 28.3 still produces regular measures here. The standard regularity statement is also [Tausk, Lemma 3.4 and Corollary 3.5](https://www.ime.usp.br/~tausk/texts/WeakTopologyMeasures.pdf).
+
+For a simple Borel function $f$, measurability of $Qf$ and the integration identity follow by finite linearity. Every bounded real Borel function has uniformly convergent simple approximations $f_j$. Since
+$$
+|Q(f_j-f)(y)|\le B\|f_j-f\|_\infty,
+$$
+the functions $Qf_j$ converge uniformly to $Qf$. Passing to the limit on both sides proves the assertion for every bounded Borel $f$. Linearity and independence of any representation of $\eta$ as a difference of positive measures follow from the intrinsic scalar signed integral.
+
+For the product assertion, the four products of the Jordan parts define a finite signed measure whose value on a measurable rectangle is $\mu(A)\eta(B)$. Finite signed measures on the product sigma-algebra are determined by rectangles, by the pi-lambda theorem applied to their difference. Consequently any other positive-minus-positive decompositions produce the same measure, and this construction is bilinear.
+
+Alternatively, write
+$$
+\mu=h_\mu|\mu|,\qquad \eta=h_\eta|\eta|,
+$$
+where the measurable signs have absolute value one almost everywhere with respect to the corresponding variation measures. The product measure has density $h_\mu(x)h_\eta(y)$ with respect to $|\mu|\otimes|\eta|$. This proves the variation identity. A bounded Borel function is absolutely integrable against that positive product, so positive-measure Fubini applied with these sign densities proves signed Fubini. Compact metric spaces have countable bases, hence their product Borel sigma-algebra is their Borel product sigma-algebra. Repeating the argument proves the finite-factor version. QED.
+
+**theorem 28.5 (The Borel affine lift, including signed atom corrections).** For every Borel $D\subseteq K$, both
+$$
+\theta\longmapsto\pi_\theta(D),\qquad
+\theta\longmapsto|\pi_\theta|(D)
+$$
+are Borel. The formulas
+$$
+L_t\nu(D)=\int_{\mathbb T}\pi_\theta(D)\,d\nu(\theta),\qquad \nu\in M(\mathbb T),
+$$
+define a bounded linear map $L_t:M(\mathbb T)\to M(K)$ satisfying
+$$
+\|L_t\nu\|_{\mathrm{TV}}\le C_t\|\nu\|_{\mathrm{TV}},\qquad
+H_\#L_t\nu=\nu.
+$$
+With the section of theorem 28.3, there is the actual total-variation-convergent formula
+$$
+L_t\nu=s_\#\nu+\sum_{m\ge1}p_m\nu(\{E_m\})v_m.
+$$
+In particular,
+$$
+(L_t\nu)(\{x_m^+\})=p_m\nu(\{E_m\}),\qquad
+(L_t\nu)(\{x_m^-\})=(1-p_m)\nu(\{E_m\}).
+$$
+No positivity of $p_m$ is required.
+
+**Proof.** For every Borel $D$,
+$$
+\pi_\theta(D)=\mathbf1_D(s(\theta))
++\sum_{m\ge1}\mathbf1_{\{E_m\}}(\theta)p_m v_m(D).
+$$
+At each phase the sum has at most one nonzero term, so this is a Borel function. The variation evaluation is
+$$
+|\pi_\theta|(D)=\begin{cases}
+\mathbf1_D(k_\theta),&\theta\notin E,\\
+|p_m|\mathbf1_D(x_m^+)+|1-p_m|\mathbf1_D(x_m^-),&\theta=E_m.
+\end{cases}
+$$
+It is Borel for the same reason. Theorem 28.2 and theorem 28.4 therefore construct $L_t$ with the asserted bound and regularity.
+
+For any finite signed measure, finite partitions give
+$$
+\sum_{m\ge1}|\nu(\{E_m\})|\le\|\nu\|_{\mathrm{TV}}.
+$$
+Also $|p_m|\le C_t$ by theorem 28.2. Thus
+$$
+\sum_{m\ge1}\|p_m\nu(\{E_m\})v_m\|_{\mathrm{TV}}
+\le2C_t\|\nu\|_{\mathrm{TV}}<\infty.
+$$
+The displayed correction series converges in $M(K)$. Absolute scalar domination permits integration of the preceding Borel formula term by term and proves that its sum is exactly $L_t\nu$. Since $s$ chooses the negative branch, evaluating the series on the two singleton sets gives the claimed atom formulas.
+
+Finally, every $\pi_\theta$ has mass one and is supported on $H^{-1}(\{\theta\})$. Hence for every Borel $B\subseteq\mathbb T$,
+$$
+\pi_\theta(H^{-1}(B))=\mathbf1_B(\theta).
+$$
+Integrating proves $H_\#L_t\nu=\nu$. The construction uses setwise integration, not a total-variation Bochner integral. QED.
+
+**definition 28.6 (The original-circle measure algebra and the residual algebra).** On $M(\mathbb T)$ use the ordinary signed measure convolution
+$$
+(\nu*_{\mathbb T}\xi)(B)
+=\int_{\mathbb T}\int_{\mathbb T}\mathbf1_B(\theta+\eta)\,d\xi(\eta)\,d\nu(\theta).
+$$
+This is convolution of Borel measures on the original compact circle. It is not convolution on $\ell^1(\mathbb T_{\mathrm d})$. The usual measure-algebra convention is recalled in [Matthew Daws, *Characterising weakly almost periodic functionals on the measure algebra*, §2](https://arxiv.org/html/0904.0436v2).
+
+Let
+$$
+\mathcal S=\ell^1(\mathbb N_{>0}),\qquad
+\mathcal C=M(\mathbb T)\oplus_1\mathcal S,
+$$
+with standard sequence vectors $e_m$ and
+$$
+(g*_+h)_k=\sum_{\substack{m,n\ge1\\m+n=k}}g_mh_n,
+$$
+$$
+(\nu,g)\diamond(\xi,h)=(\nu*_{\mathbb T}\xi,g*_+h),\qquad
+\|(\nu,g)\|_\oplus=\|\nu\|_{\mathrm{TV}}+\|g\|_1.
+$$
+Cross products between the two summands are zero. In particular, $e_1*_+e_1=e_2$, and the first sequence coordinate of every residual product is zero.
+
+**theorem 28.7 (The integrated point kernel on all measures, with its sharp norm).** For every Borel $D\subseteq K$, the maps
+$$
+(x,y)\longmapsto P^{(t)}_{x,y}(D),\qquad
+(x,y)\longmapsto|P^{(t)}_{x,y}|(D)
+$$
+are Borel on $K^2$. The exact pointwise formula is
+$$
+P^{(t)}_{x,y}
+=\pi_{H(x)+H(y)}
++\sum_{m,n\ge1}\frac{r_m(x)r_n(y)}{d'_{m+n}}v_{m+n}.
+$$
+At each input pair the sum has at most one nonzero term.
+
+For all $\mu,\eta\in M(K)$, the formula
+$$
+(\mu\star_t\eta)(D)
+=\int_K\int_K P^{(t)}_{x,y}(D)\,d\eta(y)\,d\mu(x)
+$$
+defines a bounded bilinear commutative operation on $M(K)$. Its outputs are finite signed regular Borel measures, and
+$$
+|\mu\star_t\eta|(D)
+\le\int_{K^2}|P^{(t)}_{x,y}|(D)\,d(|\mu|\otimes|\eta|)(x,y),
+$$
+$$
+\|\mu\star_t\eta\|_{\mathrm{TV}}
+\le C_t\|\mu\|_{\mathrm{TV}}\|\eta\|_{\mathrm{TV}},\qquad
+\|\star_t\|_{\mathrm{bil}}=C_t.
+$$
+It satisfies
+$$
+\varepsilon_K(\mu\star_t\eta)=\varepsilon_K(\mu)\varepsilon_K(\eta),
+$$
+$$
+H_\#(\mu\star_t\eta)=(H_\#\mu)*_{\mathbb T}(H_\#\eta).
+$$
+It is the unique operation satisfying the displayed setwise kernel-integration law for every pair of measures and every Borel set. This assertion is not uniqueness from agreement on Dirac measures.
+
+The operation takes every pair of positive measures to a positive measure exactly when $t\in\{0,\infty\}$.
+
+**Proof.** The finite inverse basis formulas give, pointwise,
+$$
+\delta_x=\pi_{H(x)}+\sum_{m\ge1}\frac{r_m(x)}{d'_m}v_m,
+$$
+with at most one nonzero summand. Multiplying these two finite expressions, using the zero cross products and the coboundary identity of theorem 28.2, proves the displayed row formula.
+
+The base term is Borel in every set evaluation by theorem 28.5 and continuity of addition and $H$. Every scalar summand in the correction is Borel, so the pointwise finite countable sum is Borel. In particular, ordinary nonexceptional output phases use their singleton measure, exceptional phases use the specified signed slice, and the remaining corrections occur only on the countable Borel set $S\times S$.
+
+For variation measurability, outside $S\times S$ the row is exactly $\pi_{H(x)+H(y)}$, whose variation evaluations are Borel. On $S\times S$, its variation evaluation is obtained by replacing values at countably many Borel singleton input pairs by the variations of their actual finite rows. Such a replacement preserves Borel measurability. Thus both kernel hypotheses of theorem 28.4 hold, with bound $C_t$.
+
+Apply that theorem to the signed product measure $\mu\otimes\eta$ on $K^2$. It gives countable additivity, variation domination, finite total variation and regularity. Signed Fubini gives both displayed iterated-integral interpretations. It also proves independence from choices of positive-minus-positive decompositions. Bilinearity follows from intrinsic signed integration and bilinearity of the signed product measure. The symmetry of the finite rows, followed by signed Fubini, gives commutativity.
+
+The variation estimate proves the bilinear upper bound. Each attaining pair from theorem 28.2 consists of two norm-one Dirac measures, and their product is its actual row. Therefore the bilinear norm is exactly $C_t$.
+
+Every row has mass one, so integration with $D=K$ proves the mass identity. Every row is supported in the phase fiber of $H(x)+H(y)$ and has mass one; consequently
+$$
+P^{(t)}_{x,y}(H^{-1}(B))=\mathbf1_B(H(x)+H(y)).
+$$
+Integrating, and using the pushforward integration formula in each variable, proves the phase-convolution identity for every Borel $B$. Equality on all Borel sets also proves uniqueness under the stated integration contract.
+
+Finally, a real signed measure of mass one and total variation one is positive: its Jordan decomposition has negative mass zero. When $t\in\{0,\infty\}$, theorem 28.2 therefore makes every row positive, and integration against positive input measures preserves positivity. At every other parameter, $C_t>1$ and an attaining row has mass one but variation greater than one, so it is not positive. Its two positive Dirac inputs disprove positivity of the operation. QED.
+
+**theorem 28.8 (The full phase kernel and the bounded coordinate isomorphism).** The phase pushforward has precisely the kernel
+$$
+\ker H_\#
+=\left\{\sum_{m\ge1}b_mv_m:(b_m)_{m\ge1}\in\ell^1(\mathbb N_{>0})\right\}.
+$$
+Every such series converges in total variation, and
+$$
+\left\|\sum_{m\ge1}b_mv_m\right\|_{\mathrm{TV}}=2\sum_{m\ge1}|b_m|.
+$$
+For $\mu\in M(K)$, define
+$$
+R_t\mu=(g_m)_{m\ge1},\qquad
+g_m=\int_K r_m\,d\mu
+=d'_m\bigl((1-p_m)\mu(\{x_m^+\})-p_m\mu(\{x_m^-\})\bigr),
+$$
+$$
+\Phi_t\mu=(H_\#\mu,R_t\mu).
+$$
+Then $\Phi_t:M(K)\to\mathcal C$ is a bounded linear bijection with inverse
+$$
+\Psi_t(\nu,g)=L_t\nu+\sum_{m\ge1}\frac{g_m}{d'_m}v_m.
+$$
+The bounds are
+$$
+\|\Phi_t\mu\|_\oplus\le2\|\mu\|_{\mathrm{TV}},
+$$
+$$
+\|\Psi_t(\nu,g)\|_{\mathrm{TV}}
+\le C_t\|\nu\|_{\mathrm{TV}}+\frac{2}{1-\rho_t}\|g\|_1
+\le\frac{2}{1-\rho_t}\|(\nu,g)\|_\oplus.
+$$
+In particular,
+$$
+\frac{1-\rho_t}{2}\|\mu\|_{\mathrm{TV}}
+\le\|\Phi_t\mu\|_\oplus\le2\|\mu\|_{\mathrm{TV}}.
+$$
+
+**Proof.** Suppose first that $H_\#\mu=0$. If $D\subseteq K^\circ$ is Borel, theorem 28.3 implies that $H(D)$ is Borel in $\mathbb T^\circ$, hence in $\mathbb T$. Uniqueness of these fibers gives $H^{-1}(H(D))=D$, and therefore
+$$
+\mu(D)=(H_\#\mu)(H(D))=0.
+$$
+Thus the restriction of $\mu$ to $K^\circ$ is zero as a signed measure, and $\mu$ is concentrated on $S$. On each split fiber,
+$$
+\mu(\{x_m^+\})+\mu(\{x_m^-\})=(H_\#\mu)(\{E_m\})=0.
+$$
+Set $b_m=\mu(\{x_m^+\})$. Countability of $S$ and finite variation now give
+$$
+\mu=\sum_{m\ge1}b_mv_m,\qquad 2\sum_{m\ge1}|b_m|=\|\mu\|_{\mathrm{TV}}.
+$$
+Conversely, every such absolutely convergent series has zero phase pushforward, since $H_\#v_m=0$ and pushforward is a contraction. This proves the kernel description using the Borel inverse, not density of atomic measures.
+
+For arbitrary $\mu$, the simplified formulas in theorem 28.2 give
+$$
+\sum_{m\ge1}|g_m|
+\le\sum_{m\ge1}\bigl(|\mu(\{x_m^+\})|+|\mu(\{x_m^-\})|\bigr)
+=|\mu|(S)\le\|\mu\|_{\mathrm{TV}}.
+$$
+Also $\|H_\#\mu\|_{\mathrm{TV}}\le\|\mu\|_{\mathrm{TV}}$, by the variation inequality for pushforward, or directly by taking preimages of finite partitions. Thus $\Phi_t$ is well-defined and has the forward bound.
+
+The lower bound on $|d'_m|$ proves absolute total-variation convergence of the inverse series and yields its stated estimate. On the phase lift, theorem 28.5 gives
+$$
+R_tL_t\nu=0.
+$$
+Indeed, each coordinate equals $d'_m((1-p_m)p_m-p_m(1-p_m))\nu(\{E_m\})=0$. Furthermore,
+$$
+H_\#(v_m/d'_m)=0,\qquad R_t(v_m/d'_m)=e_m.
+$$
+Boundedness of these maps permits passage through the absolutely convergent inverse series, proving $\Phi_t\Psi_t=\operatorname{id}_{\mathcal C}$.
+
+For the other composition, put $\nu=H_\#\mu$. The measure $\mu-L_t\nu$ has zero phase pushforward and hence is a split-difference series by the first part of the proof. Its positive-branch coefficient is
+$$
+\mu(\{x_m^+\})-p_m\nu(\{E_m\})
+=(1-p_m)\mu(\{x_m^+\})-p_m\mu(\{x_m^-\})
+=\frac{g_m}{d'_m}.
+$$
+Thus $\Psi_t\Phi_t\mu=\mu$. Applying the inverse bound to $\Phi_t\mu$ proves the norm equivalence. QED.
+
+**theorem 28.9 (Multiplicativity on all measures and associativity).** The coordinate bijection is an algebra isomorphism:
+$$
+\Phi_t(\mu\star_t\eta)=\Phi_t\mu\diamond\Phi_t\eta
+\qquad(\mu,\eta\in M(K)).
+$$
+Consequently $\star_t$ is associative on all of $M(K)$, and
+$$
+(M(K),\star_t)\cong M(\mathbb T)\oplus\ell^1(\mathbb N_{>0})
+$$
+as real algebras with bounded maps in both directions. The norm
+$$
+N_t(\mu)=\|H_\#\mu\|_{\mathrm{TV}}+\|R_t\mu\|_1
+$$
+is complete, equivalent to total variation, and submultiplicative. The alternative norm $C_t\|\mu\|_{\mathrm{TV}}$ is also complete and submultiplicative. The unscaled total variation norm is submultiplicative exactly for $t\in\{0,\infty\}$.
+
+Writing $g=R_t\mu$ and $h=R_t\eta$, the full product formula is
+$$
+\mu\star_t\eta
+=L_t\bigl((H_\#\mu)*_{\mathbb T}(H_\#\eta)\bigr)
++\sum_{k\ge1}\frac{(g*_+h)_k}{d'_k}v_k.
+$$
+In particular, $L_tM(\mathbb T)$ and $\ker H_\#$ are closed ideals whose cross products vanish.
+
+**Proof.** First, circle convolution is a contractive associative commutative product on $M(\mathbb T)$. Contractivity follows by pushforward under addition from
+$$
+|\nu\otimes\xi|=|\nu|\otimes|\xi|.
+$$
+For a bounded Borel test function and three input measures, both bracketings of circle convolution are the integral of $f(\theta+\eta+\zeta)$ against the same signed product measure. Its absolute integral is bounded by the product of the three variation norms times $\|f\|_\infty$. Theorem 28.4 therefore justifies all changes of integration order and proves associativity; symmetry proves commutativity. Absolute summation proves the analogous assertions and norm bound for $*_+$. Hence $\diamond$ is associative, commutative and submultiplicative for $\|\cdot\|_\oplus$, and $\mathcal C$ is complete.
+
+The first coordinate of the desired multiplicativity is theorem 28.7. For a fixed positive integer $k$, the point-kernel formula and the identities used in theorem 28.8 give the exact scalar identity
+$$
+(R_tP^{(t)}_{x,y})_k
+=\sum_{\substack{m,n\ge1\\m+n=k}}r_m(x)r_n(y).
+$$
+The left side is a fixed finite linear combination of two singleton evaluations of the output measure. Consequently the defining setwise integration law permits this coordinate to pass through the integral. The sum on the right is finite. Signed Fubini and the product-function identity now give
+$$
+\begin{aligned}
+(R_t(\mu\star_t\eta))_k
+&=\int_{K^2}(R_tP^{(t)}_{x,y})_k\,d(\mu\otimes\eta)(x,y)\\
+&=\sum_{m+n=k}\left(\int_Kr_m\,d\mu\right)\left(\int_Kr_n\,d\eta\right)\\
+&=(g*_+h)_k.
+\end{aligned}
+$$
+This proves every residual coordinate for arbitrary signed measures, including non-atomic inputs. No approximation by atomic measures has been used.
+
+Since $\Phi_t$ is injective and $\diamond$ is associative, both bracketings of any triple product in $M(K)$ have the same image under $\Phi_t$ and are equal. Applying $\Psi_t$ to the coordinate product proves the full product formula. Its series converges absolutely because
+$$
+\sum_{k\ge1}\left\|\frac{(g*_+h)_k}{d'_k}v_k\right\|_{\mathrm{TV}}
+\le\frac{2}{1-\rho_t}\|g*_+h\|_1
+\le\frac{2}{1-\rho_t}\|g\|_1\|h\|_1.
+$$
+The norm $N_t$ is the pullback of the complete submultiplicative direct-sum norm. Its equivalence to total variation is theorem 28.8. The sharp bilinear bound gives
+$$
+C_t\|\mu\star_t\eta\|_{\mathrm{TV}}
+\le(C_t\|\mu\|_{\mathrm{TV}})(C_t\|\eta\|_{\mathrm{TV}}).
+$$
+When $C_t>1$, an attaining pair of unit-norm Dirac measures disproves submultiplicativity of the unscaled norm. When $C_t=1$, that norm is submultiplicative by theorem 28.7. Finally, the two coordinate summands are closed ideals with zero cross products, and their inverse images are exactly the two asserted ideals. QED.
+
+**theorem 28.10 (Atomic and non-atomic signed parts are linear projections).** Let $X$ be a compact metric space. Every $\mu\in M(X)$ has a unique decomposition
+$$
+\mu=\mu_{\mathrm{at}}+\mu_{\mathrm{na}},\qquad
+\mu_{\mathrm{at}}=\sum_{x\in X}\mu(\{x\})\delta_x,
+$$
+where the sum has at most countably many nonzero terms and converges in total variation, while $\mu_{\mathrm{na}}$ is non-atomic. Here non-atomic means that its variation measure has no atoms, not that it is absolutely continuous with respect to Haar measure. The two parts are mutually singular in variation and satisfy
+$$
+\|\mu\|_{\mathrm{TV}}=\|\mu_{\mathrm{at}}\|_{\mathrm{TV}}+\|\mu_{\mathrm{na}}\|_{\mathrm{TV}}.
+$$
+Both assignments are bounded linear projections of norm at most one. Their ranges $M_{\mathrm{at}}(X)$ and $M_{\mathrm{na}}(X)$ are closed.
+
+On the circle, $M_{\mathrm{at}}(\mathbb T)$ is a convolution subalgebra, $M_{\mathrm{na}}(\mathbb T)$ is a convolution ideal, and
+$$
+(\nu*_{\mathbb T}\xi)_{\mathrm{at}}
+=\nu_{\mathrm{at}}*_{\mathbb T}\xi_{\mathrm{at}}.
+$$
+In particular,
+$$
+a:M(\mathbb T)\to\mathbb R,\qquad a(\nu)=\nu_{\mathrm{na}}(\mathbb T)
+$$
+is a bounded linear functional with $|a(\nu)|\le\|\nu\|_{\mathrm{TV}}$, and vanishes on every atomic measure. It is not asserted to be multiplicative. This classical measure-algebra decomposition is recalled in [Daws, §3, the paragraph immediately preceding Lemma 3.7](https://arxiv.org/html/0904.0436v2).
+
+**Proof.** For every positive integer $j$, there are only finitely many points with $|\mu(\{x\})|\ge1/j$, since any finite collection of them contributes its absolute masses to a variation bound. Thus
+$$
+A_\mu=\{x:\mu(\{x\})\ne0\}
+$$
+is countable and
+$$
+\sum_{x\in A_\mu}|\mu(\{x\})|\le\|\mu\|_{\mathrm{TV}}.
+$$
+The atomic series is therefore a measure in $M(X)$ and equals the restriction of $\mu$ to $A_\mu$. Its difference from $\mu$ is the restriction to $X\setminus A_\mu$. Since $|\mu|(\{x\})=|\mu(\{x\})|$, the latter restriction has zero variation on every singleton. The two restrictions are mutually singular, which proves the norm identity.
+
+On a compact metric space, a finite positive Borel measure with no singleton atoms has no atoms at all. Indeed, construct refining finite Borel partitions whose mesh tends to zero. If a Borel set were an atom of positive mass, in each partition exactly one cell would contain its full mass. These cells can be selected nested. Continuity from above then gives full positive mass to their intersection with the atom, while the vanishing mesh makes that intersection contain at most one point. This would be a singleton atom. Apply this argument to the variation of the non-atomic restriction.
+
+Linearity of the atomic part does not require the sets $A_\mu$ to be fixed as $\mu$ varies. For two measures, work on the countable union of their atomic sets. At every point, singleton evaluation is linear; the corresponding absolutely convergent atomic series is therefore linear as well. The non-atomic part is the difference from the identity and is consequently linear. The norm identity proves contractivity. Uniqueness follows because the non-atomic part has zero singleton masses and an atomic measure is determined by its singleton masses. The projection identities and closed ranges follow.
+
+On $\mathbb T$, the convolution of two atomic measures is the absolutely convergent series of products of their atom coefficients at summed phases, so it remains atomic. If $\nu$ is non-atomic and $\xi$ is arbitrary, signed Fubini gives, for each $\theta$,
+$$
+(\nu*_{\mathbb T}\xi)(\{\theta\})
+=\int_{\mathbb T}\nu(\{\theta-\eta\})\,d\xi(\eta)=0.
+$$
+Thus this convolution is non-atomic. Commutativity handles the other order. Expanding the two atomic/non-atomic decompositions proves the atomic-part convolution identity. Finally, $a$ is the composition of the non-atomic projection and the mass functional, both contractive linear maps. QED.
+
+**theorem 28.11 (The Haar lift and the proper atomic completion).** Let $\lambda$ be normalized Haar measure on the original circle. Its existence as a regular probability measure follows from the classical Haar theorem; see [Tornier, Definition 2.1, Theorem 2.2 and Proposition 2.9](https://arxiv.org/html/2006.10956v1). Then
+$$
+\mathfrak m=L_t\lambda=s_\#\lambda
+$$
+is a non-atomic probability measure on $K$, independent of $t$ and independent of the branch choices at the split phases. It satisfies
+$$
+H_\#\mathfrak m=\lambda,\qquad R_t\mathfrak m=0,\qquad
+\mathfrak m\star_t\mathfrak m=\mathfrak m.
+$$
+The atomic measures form a closed proper subalgebra
+$$
+M_{\mathrm{at}}(K)\cong\ell^1(K_{\mathrm d})\subsetneq M(K),
+$$
+with the isometric atomic embedding and the multiplication of Section 27. Under $\Phi_t$, this entire atomic subalgebra corresponds to
+$$
+\mathcal C_{\mathrm{at}}=M_{\mathrm{at}}(\mathbb T)\oplus\mathcal S.
+$$
+For every atomic signed measure $\alpha$ on $K$, the exact individual distance is
+$$
+\|\mathfrak m-\alpha\|_{\mathrm{TV}}=1+\|\alpha\|_{\mathrm{TV}}.
+$$
+Consequently,
+$$
+\operatorname{dist}_{\mathrm{TV}}(\mathfrak m,M_{\mathrm{at}}(K))=1.
+$$
+The distance to each atomic probability measure is two. Thus the distance one is a distance to the atomic signed subspace, not the distance to every member of that subspace.
+
+**Proof.** Translation invariance makes all singleton Haar masses equal. For any positive integer $N$, selecting $N$ distinct points bounds this common mass by $1/N$, so it is zero. Hence $\lambda$ is non-atomic by theorem 28.10, and $\lambda(E)=0$. The atom-correction formula of theorem 28.5 reduces to $L_t\lambda=s_\#\lambda$. This is a probability measure. For $x\in K$,
+$$
+\mathfrak m(\{x\})=\lambda(s^{-1}(\{x\}))\le\lambda(\{H(x)\})=0,
+$$
+so it is non-atomic. Changing the section only on $E$ does not change its pushforward of $\lambda$, and the formula has no remaining parameter dependence.
+
+The lift and residual identities have already been proved. Translation invariance also gives, for every Borel $B$,
+$$
+(\lambda*_{\mathbb T}\lambda)(B)
+=\int_{\mathbb T}\lambda(B-\theta)\,d\lambda(\theta)=\lambda(B).
+$$
+The coordinate product then proves the idempotent identity for $\mathfrak m$.
+
+Theorem 28.10 identifies atomic measures isometrically with absolutely summable point coefficients and proves their closedness. For atomic inputs, their signed product measure is itself an absolutely summable atomic measure on $K^2$. Thus the setwise integral in theorem 28.7 is the total-variation-convergent series
+$$
+\sum_{x,y}\mu(\{x\})\eta(\{y\})P^{(t)}_{x,y},
+$$
+whose sum of term norms is at most $C_t\|\mu\|_{\mathrm{TV}}\|\eta\|_{\mathrm{TV}}$. It remains atomic and is exactly the discrete convolution extension. If $\mu$ is atomic, its phase pushforward is atomic. Conversely, if $\nu$ is atomic, $L_t\nu$ is atomic by its defining slices and absolute convergence, and the residual inverse series is atomic. This proves the assertion about $\mathcal C_{\mathrm{at}}$.
+
+For the distance formula, choose a countable Borel set supporting the variation of $\alpha$. The non-atomic measure $\mathfrak m$ assigns that set mass zero. Therefore $\mathfrak m$ and $|\alpha|$ are mutually singular and
+$$
+|\mathfrak m-\alpha|=\mathfrak m+|\alpha|.
+$$
+Taking total mass proves the individual formula; its infimum is one, attained at the zero atomic measure. Atomic probabilities have norm one, giving distance two.
+
+Finite atomic measures are dense in $M_{\mathrm{at}}(K)$ by truncation of absolutely convergent series, and their closure in $M(K)$ is precisely this closed proper subspace. Hence the total-variation completion of the finite coefficient space is still $\ell^1(K_{\mathrm d})$. Passing to all of $M(K)$ enlarges the permitted measures; it is not that completion. The same conclusion holds for the equivalent norms in theorem 28.9. QED.
+
+**theorem 28.12 (Setwise Borel measurability does not give norm-Borel measurability).** The maps
+$$
+x\longmapsto\delta_x\in M(K),\qquad
+\theta\longmapsto\pi_\theta\in M(K)
+$$
+are not Borel maps when the target is given its total variation norm topology. Nevertheless, their Borel-set evaluations are Borel. Moreover, the map $\theta\mapsto\pi_\theta$ is not strongly measurable for normalized Haar measure in the total variation norm, and $L_t\lambda$ cannot be interpreted as its total-variation Bochner integral.
+
+**Proof.** Distinct Dirac measures have total variation distance two. Also, for $\theta\ne\eta$, contraction of phase pushforward gives
+$$
+\|\pi_\theta-\pi_\eta\|_{\mathrm{TV}}
+\ge\|\delta_\theta-\delta_\eta\|_{\mathrm{TV}}=2.
+$$
+For any subset $A\subseteq\mathbb T$, the norm-open set
+$$
+O_A=\bigcup_{\theta\in A}B_{\mathrm{TV}}(\pi_\theta,1)
+$$
+has inverse image exactly $A$ under the phase-slice map. The circle has non-Borel subsets, so this map cannot be norm-Borel. The same argument applies to the Dirac map on $K$. Indeed, $K$ has cardinality continuum because it maps onto the circle and is a subspace of $\{0,1\}^{\mathbb N}$; its Borel sigma-algebra has cardinality at most continuum, whereas its power set is larger. The scalar set evaluations were proved Borel in theorem 28.5, and are immediate for Dirac measures.
+
+A strongly measurable Banach-valued function is, outside a null set, contained in the closure of the countable union of the ranges of its simple approximations, hence in a norm-separable set. A norm-separable set contains at most countably many members of a family whose distinct elements are separated by distance at least two. Thus strong measurability of $\theta\mapsto\pi_\theta$ would force a full Haar-measure set of phases to be countable. This contradicts non-atomicity of $\lambda$. Since Bochner integrability requires strong measurability, the proposed Bochner interpretation is impossible. The setwise construction of $L_t\lambda$ is unaffected. QED.
+
+**theorem 28.13 (Explicit nonuniqueness despite agreement on the entire atomic algebra).** For each $\tau\in\mathbb R$, define
+$$
+U_\tau(\nu,g)=(\nu,g+\tau a(\nu)e_1)
+\qquad((\nu,g)\in\mathcal C),
+$$
+where $a$ is the bounded linear functional of theorem 28.10. Then $U_\tau$ is a bounded linear isomorphism with inverse $U_{-\tau}$ and
+$$
+\|U_\tau\|\le1+|\tau|,\qquad \|U_\tau^{-1}\|\le1+|\tau|.
+$$
+Define the transported product
+$$
+z\diamond_\tau w
+=U_\tau^{-1}\bigl(U_\tau z\diamond U_\tau w\bigr).
+$$
+This is a bounded associative commutative bilinear product. It agrees with $\diamond$ on the whole subalgebra $\mathcal C_{\mathrm{at}}$, has the same first-coordinate convolution, and preserves the first-coordinate mass character.
+
+The corresponding products on $M(K)$,
+$$
+\mu\star_{t,\tau}\eta
+=\Psi_t\bigl(\Phi_t\mu\diamond_\tau\Phi_t\eta\bigr),
+$$
+are bounded associative commutative extensions of the entire atomic algebra. They preserve mass and the usual phase convolution, and satisfy the same point rows
+$$
+\delta_x\star_{t,\tau}\delta_y=P^{(t)}_{x,y}
+\qquad(x,y\in K).
+$$
+Nevertheless they are pairwise distinct as $\tau$ varies. For $z=(\lambda,0)$,
+$$
+z\diamond_\tau z=(\lambda,\tau^2e_2-\tau e_1),
+$$
+and therefore
+$$
+\mathfrak m\star_{t,\tau}\mathfrak m
+=\mathfrak m-\frac{\tau}{d'_1}v_1+\frac{\tau^2}{d'_2}v_2.
+$$
+For every nonzero $\tau$, this product fails the setwise integration contract of theorem 28.7 and is not a positive operation.
+
+**Proof.** Linearity of $a$ proves linearity of $U_\tau$. Since $U_\tau$ does not change the first coordinate, applying $U_{-\tau}$ subtracts exactly the same correction and proves the inverse formula. The bound follows from
+$$
+\|U_\tau(\nu,g)\|_\oplus
+\le\|\nu\|_{\mathrm{TV}}+\|g\|_1+|\tau|\,|a(\nu)|
+\le(1+|\tau|)\|(\nu,g)\|_\oplus.
+$$
+The inverse has the identical bound.
+
+Transport through a linear isomorphism preserves bilinearity, associativity and commutativity. Explicitly, applying $U_\tau$ to either bracketing of a triple product gives the corresponding bracketing of $U_\tau z\diamond U_\tau w\diamond U_\tau u$. Also,
+$$
+\|z\diamond_\tau w\|_\oplus
+\le(1+|\tau|)^3\|z\|_\oplus\|w\|_\oplus.
+$$
+Thus the transported product is bounded. Its complete submultiplicative norm can be taken to be $\|U_\tau z\|_\oplus$.
+
+For $z=(\nu,g)$ and $w=(\xi,h)$, direct expansion gives
+$$
+\begin{aligned}
+z\diamond_\tau w
+=\bigl(\nu*_{\mathbb T}\xi,\;&g*_+h
++\tau a(\nu)(e_1*_+h)
++\tau a(\xi)(g*_+e_1)\\
+&+\tau^2a(\nu)a(\xi)e_2
+-\tau a(\nu*_{\mathbb T}\xi)e_1\bigr).
+\end{aligned}
+$$
+Only linearity of $a$ is used; no multiplicativity assumption about it is needed. This formula proves directly that the first coordinate remains the ordinary circle convolution. Since its mass is the product of the two input masses, the mass character is preserved.
+
+For every member of $\mathcal C_{\mathrm{at}}$, its first coordinate is atomic and hence has $a$ equal to zero. Thus $U_\tau$ is the identity on this whole subspace. The product of two such elements remains in $\mathcal C_{\mathrm{at}}$, because atomic circle measures form a convolution subalgebra. The inverse shear is therefore also the identity on their product, proving agreement on the full atomic subalgebra, not merely on finite sums or Dirac pairs.
+
+The bounded coordinate isomorphisms transport these properties to $M(K)$. For example, an explicit sufficient total variation bound is
+$$
+\|\mu\star_{t,\tau}\eta\|_{\mathrm{TV}}
+\le\frac{8(1+|\tau|)^3}{1-\rho_t}
+\|\mu\|_{\mathrm{TV}}\|\eta\|_{\mathrm{TV}}.
+$$
+No sharpness is claimed for this estimate. Every Dirac measure belongs to the atomic subalgebra, giving the stated identical point rows.
+
+Finally, $a(\lambda)=1$ and $\lambda*_{\mathbb T}\lambda=\lambda$. Hence
+$$
+U_\tau z=(\lambda,\tau e_1),\qquad
+U_\tau z\diamond U_\tau z=(\lambda,\tau^2e_2).
+$$
+Applying the inverse shear gives the asserted Haar test. Its first residual coefficient is $-\tau$, so distinct real parameters give distinct products, including parameters with opposite signs.
+
+The original setwise integral of the same rows against $\mathfrak m\otimes\mathfrak m$ is $\mathfrak m$, by theorem 28.11. In contrast, for $\tau\ne0$,
+$$
+(\mathfrak m\star_{t,\tau}\mathfrak m)(\{x_1^+\})=-\frac{\tau}{d'_1}\ne0,
+$$
+whereas $\mathfrak m(\{x_1^+\})=0$. Thus the sheared product fails that integration law on an actual Borel set. Moreover, the masses at $x_1^+$ and $x_1^-$ are nonzero opposites, because $\mathfrak m$ has no atoms and the second split fiber is disjoint from the first. One is negative. Therefore two positive input probabilities can have a nonpositive output. These sheared extensions are not probability-kernel integrations, even when their common point rows are probability measures. QED.
+
+**theorem 28.14 (The global joint weak-star obstruction remains).** No globally jointly continuous product
+$$
+M(K)\times M(K)\longrightarrow M(K)
+$$
+for the topology $\sigma(M(K),C(K))$ on each measure space can agree with the prescribed point rows. In particular, neither the integrated product nor any sheared extension can have this global joint weak-star continuity. This concerns weak-star continuity, not total variation boundedness or the Banach weak topology.
+
+**Proof.** The Dirac map from the original compact $K$ into $M(K)$ is weak-star continuous, because
+$$
+\int_K f\,d\delta_x=f(x)\qquad(f\in C(K)).
+$$
+This standard observation is [Tausk, Proposition 4.1 and its proof](https://www.ime.usp.br/~tausk/texts/WeakTopologyMeasures.pdf). A globally jointly weak-star continuous product agreeing on Diracs would therefore make
+$$
+(x,y)\longmapsto P^{(t)}_{x,y}
+$$
+continuous on $K^2$.
+
+The exact graph hypothesis gives
+$$
+\Gamma(0_K,x_1^+)=\{x_1^+,x_1^-\}.
+$$
+For each sign $s\in\{+,-\}$, membership of $(0_K,x_1^+,x_1^s)$ in the closure defining $\Gamma$ supplies a sequence of genuine natural-number input pairs with
+$$
+Z(a_j^s)\longrightarrow0_K,\qquad
+Z(b_j^s)\longrightarrow x_1^+,\qquad
+Z(a_j^s+b_j^s)\longrightarrow x_1^s.
+$$
+These are simultaneous approximations of the input pair and its actual finite sum. Finite-core consistency gives
+$$
+P^{(t)}_{Z(a_j^s),Z(b_j^s)}=\delta_{Z(a_j^s+b_j^s)}.
+$$
+Consequently the two output sequences have weak-star limits $\delta_{x_1^+}$ and $\delta_{x_1^-}$. They are distinct: a digit coordinate at which the two points differ is a continuous function separating the limits. Interleaving the input sequences still gives convergence to $(0_K,x_1^+)$, but the corresponding continuous-test integrals have two different subsequential limits. The point-row map is therefore discontinuous there, independently of the parameter and independently of whether its value at that pair is itself a Dirac measure. This contradicts the proposed global joint continuity. QED.
+
+## 追加锚（本行以下为增补区）
+## 29. 原数字拓扑下的弱星拓扑中心与参数无关无原子理想
+
+**定义 29.0（原载体、实测度与核记号）。** 沿用第25节的原数字载体及相位映射
+$$
+K=\{x\in\{0,1\}^{\mathbb N}:x_jx_{j+1}=0\text{ 对所有 }j\},\qquad d_K(x,y)=\sum_{j\ge0}2^{-j-1}|x_j-y_j|,
+$$
+$$
+\phi=\frac{1+\sqrt5}{2},\qquad \alpha=\phi^{-1},\qquad H(x)=\left[\sum_{j\ge0}(-1)^{j+1}\alpha^{j+2}x_j\right]\in\mathbb T=\mathbb R/\mathbb Z.
+$$
+记
+$$
+E_m=[-m\phi],\qquad E=\{E_m:m\ge1\},\qquad S=H^{-1}(E),\qquad \mathcal O_+=\{[n\phi]:n\ge0\}.
+$$
+分裂纤维的定向点仍为 $x_m^+,x_m^-$，非分裂纤维的唯一点记为 $k_\theta$。记 $M(K)$ 为全部有限实有符号正则 Borel 测度，$C(K)$ 为实连续函数空间，并置
+$$
+\|\mu\|_{\mathrm{TV}}=|\mu|(K),\qquad \langle\mu,f\rangle=\int_K f\,d\mu,\qquad M_c(K)=\{\mu\in M(K):\mu(\{x\})=0\text{ 对每个 }x\in K\}.
+$$
+这里的无原子条件约束每个单点质量，不是仅要求总质量为零。圆周上的 $M(\mathbb T)$ 与 $M_c(\mathbb T)$ 同样定义。对 Borel 映射 $R$，推前定义为 $R_\#\mu(D)=\mu(R^{-1}(D))$。由 Riesz 表示定理，$M(K)=C(K)^*$，本文的弱星拓扑严格指
+$$
+\sigma(M(K),C(K)),
+$$
+而不是 $\sigma(M(K),M(K)^*)$ 或总变差范数拓扑。[^rro29-riesz]
+
+取
+$$
+\Lambda=(\mathbb R\setminus\{-1,1\})\sqcup\{\infty\},\qquad P_t=P^{(t)},\qquad v_m=\delta_{x_m^+}-\delta_{x_m^-},
+$$
+其中 $P^{(t)}$ 是定义25.8的固定点核，$\infty$ 是独立的形式参数。$\pi_\theta,p_m,c_{m,n}$ 均使用该参数在第25节中的值。行界记为
+$$
+C_t=\frac{1+|t|}{\bigl|1-|t|\bigr|}\quad(t\ne\infty),\qquad C_\infty=1.
+$$
+
+**假设 29.1（精确几何与全测度逐集合积分契约）。** 采用假设25.1的精确相位纤维及精确闭图公式、假设26.1的任意提升严格单侧收敛，以及定理25.6—25.9的有限核恒等式和定理27.2的统一行界。特别，$K$ 紧致，$H$ 连续满射，
+$$
+H^{-1}(\{E_m\})=\{x_m^+,x_m^-\},\qquad H^{-1}(\{\theta\})=\{k_\theta\}\quad(\theta\notin E),\qquad H^{-1}(\{[n\phi]\})=\{Z(n)\}\quad(n\ge0).
+$$
+闭集 $\Gamma\subseteq K^3$ 是实际有限加法图的闭包，每行满足
+$$
+P_t(a,x)(K)=1,\qquad \operatorname{supp}P_t(a,x)\subseteq\Gamma(a,x)\subseteq H^{-1}(\{H(a)+H(x)\}),\qquad \|P_t(a,x)\|_{\mathrm{TV}}\le C_t.
+$$
+若 $\theta\notin E$，则相位 $\theta$ 的纤维为单点；若 $\epsilon_n>0$ 趋于零，且任意所选提升满足 $H(y_n)=E_j+[s\epsilon_n]$，其中 $s\in\{+1,-1\}$ 固定，则 $y_n\to x_j^s$。
+
+对每个所讨论的参数 $t$，另假定给定有界双线性运算
+$$
+\star_t:M(K)\times M(K)\longrightarrow M(K),
+$$
+并满足以下逐集合契约：对每个 Borel 集 $D\subseteq K$，函数 $(a,x)\mapsto P_t(a,x)(D)$ 在 $K^2$ 上联合 Borel 可测，且
+$$
+(\mu\star_t\nu)(D)=\int_K\left(\int_K P_t(a,x)(D)\,d\mu(a)\right)d\nu(x).
+$$
+各行均为有限实有符号测度，且具有上述统一总变差界。本节关于全测度乘法的结论均以这一契约为前提。这里的有界有符号核及其积分算子采用通常的逐集合可测定义。[^rro29-kernel]
+
+**定理 29.2（直接有符号积分恒等式与结合交换律）。** 对任意有界 Borel 实函数 $f$，定义
+$$
+P_{t,f}(a,x)=\int_K f(z)\,dP_t(a,x)(z).
+$$
+该函数联合 Borel 可测，并且
+$$
+|P_{t,f}(a,x)|\le C_t\|f\|_\infty,
+$$
+$$
+\langle\mu\star_t\nu,f\rangle=\int_K\int_K P_{t,f}(a,x)\,d\mu(a)\,d\nu(x).
+$$
+这些积分可交换顺序。运算满足
+$$
+\|\mu\star_t\nu\|_{\mathrm{TV}}\le C_t\|\mu\|_{\mathrm{TV}}\|\nu\|_{\mathrm{TV}},\qquad (\mu\star_t\nu)(K)=\mu(K)\nu(K),
+$$
+且在全部 $M(K)$ 上结合、交换。
+
+**证明。** 对简单 Borel 函数，$P_{t,f}$ 的可测性及测试积分公式直接来自逐集合契约和线性。任意有界 Borel 实函数均可由简单 Borel 函数一致逼近。行界给出
+$$
+\sup_{a,x}|P_{t,f}(a,x)-P_{t,g}(a,x)|\le C_t\|f-g\|_\infty,
+$$
+故一致极限仍可测，并给出所述界。测试积分公式的左边可用输出测度的有限总变差取一致极限，右边则由上述界取一致极限，因此公式对全部有界 Borel $f$ 成立。
+
+对任意输入测度，实际绝对可积界为
+$$
+\int_K\int_K|P_{t,f}(a,x)|\,d|\mu|(a)\,d|\nu|(x)\le C_t\|f\|_\infty\|\mu\|_{\mathrm{TV}}\|\nu\|_{\mathrm{TV}}<\infty.
+$$
+将每个有符号输入写成其两个有限正 Jordan 部分，对所得四个正乘积测度应用 Fubini 定理，便可交换两个积分。此处使用联合 Borel 可测性、有限性及明确的绝对可积界，不仅使用两个迭代积分各自存在。相同的 Jordan 分解也把下文的有符号支配收敛化为对有限正变差测度的通常支配收敛。[^rro29-integration]
+
+对 $\|f\|_\infty\le1$ 的连续函数取上确界，并使用 Riesz 等距表示，即得乘法范数估计。取 $f=1$，由每行质量为一得到质量恒等式。取两个点质量，逐集合契约给
+$$
+\delta_a\star_t\delta_x=P_t(a,x).
+$$
+因此第25节的每条有限线性组合恒等式，对这些有限测度同样成立。
+
+第25节的点核交换律由其实际基乘法推出：相位基按圆周加法相乘，混合项为零，而 $c_{m,n}=c_{n,m}$。故 $P_t(a,x)=P_t(x,a)$。结合上面已经合法的有符号 Fubini，得到 $\mu\star_t\nu=\nu\star_t\mu$。
+
+为证明全测度结合律，固定有界 Borel $f$，置
+$$
+A_f(a,b,c)=\int_K P_{t,f}(u,c)\,dP_t(a,b)(u),\qquad B_f(a,b,c)=\int_K P_{t,f}(a,v)\,dP_t(b,c)(v).
+$$
+有限点核的结合律给出每个有序三元组上的实际等式 $A_f(a,b,c)=B_f(a,b,c)$。二者均为 Borel 函数：带参数核积分的可测性先对函数 $\mathbf1_D(u)\mathbf1_F(c)$ 由逐集合可测性成立，再对有界单调极限使用每行有限变差的支配收敛；函数单调类定理遂覆盖全部有界联合 Borel 被积函数。并且
+$$
+|A_f(a,b,c)|,\ |B_f(a,b,c)|\le C_t^2\|f\|_\infty.
+$$
+两次应用已证的测试积分公式，并对有限 Jordan 部分应用 Fubini，得到
+$$
+\langle(\mu\star_t\nu)\star_t\omega,f\rangle=\iiint A_f(a,b,c)\,d\mu(a)\,d\nu(b)\,d\omega(c),
+$$
+$$
+\langle\mu\star_t(\nu\star_t\omega),f\rangle=\iiint B_f(a,b,c)\,d\mu(a)\,d\nu(b)\,d\omega(c).
+$$
+每次展开的绝对积分不超过
+$$
+C_t^2\|f\|_\infty\|\mu\|_{\mathrm{TV}}\|\nu\|_{\mathrm{TV}}\|\omega\|_{\mathrm{TV}}.
+$$
+逐点等式 $A_f=B_f$ 因而给出两种括号的积分相等。对指标函数取值即得测度相等。这一证明直接积分点核恒等式，没有使用原子测度在全测度空间中的总变差稠密性。证毕。
+
+**定义 29.3（指定乘法的弱星拓扑中心）。** 对 $\mu\in M(K)$，定义
+$$
+L_\mu^{(t)}\nu=\mu\star_t\nu,\qquad \mathcal T_\mu^{(t)}f(x)=\int_K P_{t,f}(a,x)\,d\mu(a).
+$$
+令
+$$
+Z_{\mathrm{top}}(\star_t)=\{\mu\in M(K):L_\mu^{(t)}\text{ 在全部 }M(K)\text{ 上弱星连续}\}.
+$$
+这里弱星连续是相对于定义29.0的同一个拓扑，在定义域和陪域上均取 $\sigma(M(K),C(K))$。该定义采用左乘算子的全域弱星连续性这一通常的拓扑中心含义；不预先假设整个乘法具有任何一侧的全域弱星连续性。[^rro29-center]
+
+**定理 29.4（精确的前伴随判据）。** 对固定 $\mu$，以下条件等价：$\mu\in Z_{\mathrm{top}}(\star_t)$；对每个 $f\in C(K)$，实际有界 Borel 函数 $\mathcal T_\mu^{(t)}f$ 属于 $C(K)$。条件成立时，
+$$
+\mathcal T_\mu^{(t)}:C(K)\longrightarrow C(K)
+$$
+是有界线性算子，且
+$$
+\|\mathcal T_\mu^{(t)}\|\le C_t\|\mu\|_{\mathrm{TV}},\qquad L_\mu^{(t)}=(\mathcal T_\mu^{(t)})^*.
+$$
+
+**证明。** 对任意 $g\in C(K)$，$\langle\delta_x,g\rangle=g(x)$，故 $x\mapsto\delta_x$ 从 $K$ 到弱星测度空间连续。若 $L_\mu^{(t)}$ 弱星连续，则
+$$
+x\longmapsto\langle L_\mu^{(t)}\delta_x,f\rangle=\mathcal T_\mu^{(t)}f(x)
+$$
+是连续映射的复合，得到必要性。
+
+反之，假定每个实际函数 $\mathcal T_\mu^{(t)}f$ 连续。积分线性及定理29.2的界表明它们组成所述有界线性算子。对任意 $\nu\in M(K)$，直接有符号积分给
+$$
+\langle L_\mu^{(t)}\nu,f\rangle=\int_K\mathcal T_\mu^{(t)}f(x)\,d\nu(x)=\langle\nu,\mathcal T_\mu^{(t)}f\rangle.
+$$
+因此它正是前伴随。若任意网 $\nu_i\to\nu$ 弱星收敛，对每个固定 $f\in C(K)$，右边按弱星收敛定义趋于 $\langle\nu,\mathcal T_\mu^{(t)}f\rangle$，所以 $L_\mu^{(t)}\nu_i\to L_\mu^{(t)}\nu$ 弱星收敛。这里不对输入网另加范数有界假设。判据约束全部连续测试在全部 $K$ 上的连续性，不是只检查若干输入处的点行连续性。证毕。
+
+**定理 29.5（无原子测度的充分性）。** 对每个参数及每个 $\mu\in M_c(K)$，
+$$
+\mu\in Z_{\mathrm{top}}(\star_t),\qquad \|\mathcal T_\mu^{(t)}\|\le\|\mu\|_{\mathrm{TV}}.
+$$
+
+**证明。** 对实有符号测度，单点上的变差满足 $|\mu|(\{a\})=|\mu(\{a\})|$。因此无原子 $\mu$ 的变差对每个可数集合为零。
+
+固定极限输入 $x$，考虑
+$$
+N_x=H^{-1}\bigl(E\cup(E-H(x))\bigr),\qquad E-H(x)=\{E_r-H(x):r\ge1\}.
+$$
+集合 $E$ 与 $E-H(x)$ 都可数，而每个 $H$ 纤维至多含两个点，所以 $N_x$ 可数，并且 $|\mu|(N_x)=0$。这同时涵盖固定分裂集与该输入所对应的平移分裂集。
+
+设 $x_n\to x$，固定 $a\notin N_x$。此时 $H(a)+H(x)\notin E$，精确闭图给 $\Gamma(a,x)=\{w\}$。对任意 $w$ 的开邻域 $U$，最终有 $\Gamma(a,x_n)\subseteq U$。否则可取子列及 $w_n\in\Gamma(a,x_n)\setminus U$；由紧致性再取 $w_n$ 的收敛子列，闭图性使其极限属于 $\Gamma(a,x)$，同时属于闭集 $K\setminus U$，矛盾。
+
+固定 $f\in C(K)$。利用行质量一、行支撑及统一总变差界，得到
+$$
+|P_{t,f}(a,x_n)-f(w)|\le C_t\sup_{z\in\Gamma(a,x_n)}|f(z)-f(w)|\longrightarrow0.
+$$
+且 $P_{t,f}(a,x)=f(w)$。所以被积函数对 $|\mu|$ 几乎处处收敛，差值由可积常数 $2C_t\|f\|_\infty$ 支配。对 $|\mu|$ 使用支配收敛，再用 Jordan 分解，得到
+$$
+\mathcal T_\mu^{(t)}f(x_n)\longrightarrow\mathcal T_\mu^{(t)}f(x).
+$$
+由于 $K$ 为度量空间，这证明实际函数连续。定理29.4给出弱星连续性。
+
+对每个固定 $x$，在 $N_x$ 外的实际行是点质量，故还有
+$$
+|\mathcal T_\mu^{(t)}f(x)|\le\|f\|_\infty|\mu|(K).
+$$
+取上确界即得改进的算子范数界。证明只得到连续测试积分的收敛，并未把不同点质量误认为在总变差范数中相近。证毕。
+
+**定理 29.6（Borel 截面与无原子相位提升）。** 对 $s\in\{+1,-1\}$，定义实际截面 $s_s:\mathbb T\to K$：当 $\theta\notin E$ 时，$s_s(\theta)=k_\theta$；当 $\theta=E_m$ 时，$s_s(\theta)=x_m^s$。这两个截面均为 Borel 映射，并满足 $H\circ s_s=\operatorname{id}_{\mathbb T}$。推前限制
+$$
+H_\#:M_c(K)\longrightarrow M_c(\mathbb T)
+$$
+是等距线性双射，其逆为任一 $(s_s)_\#$。特别，对 $\eta\in M_c(\mathbb T)$，两个截面给出同一个提升。
+
+**证明。** 若 $F\subseteq K$ 闭，则 $H(F)$ 紧而闭，且
+$$
+s_s^{-1}(F)=\bigl(H(F)\setminus E\bigr)\cup\{E_m:x_m^s\in F\}.
+$$
+右边是 Borel 集，所以 $s_s$ 为 Borel 映射。截面恒等式由定义逐相位成立。
+
+为说明这些 Borel 推前仍属于所指定的正则测度空间，先核对紧度量空间上有限 Borel 测度的正则性。对有限正 Borel 测度 $\xi$，闭集 $F$ 可由开集 $\{x:d(x,F)<1/n\}$ 从外逼近；由有限测度的向下连续性，外误差趋于零。开集 $U$ 可由闭集 $\{x:d(x,X\setminus U)\ge1/n\}$ 从内逼近；$U=X$ 时直接取 $X$。允许任意小紧内逼近及开外逼近误差的 Borel 集族对补集封闭。它也对可数并封闭：外逼近选可求和误差，内逼近先用有限性截取有限个集合使遗漏质量任意小，再取这些集合的有限个紧内逼近之并。该集族包含闭集，故包含全部 Borel 集。对有限有符号测度的两个 Jordan 部分分别应用，即得所需正则性。
+
+任意 Borel 推前均满足
+$$
+\|R_\#\xi\|_{\mathrm{TV}}\le\|\xi\|_{\mathrm{TV}},
+$$
+因为任意有限 Borel 分割的原像仍是可测分割。若 $\eta\in M_c(\mathbb T)$，则 $s_s^{-1}(\{x\})$ 至多为单点，故 $(s_s)_\#\eta$ 无原子。反之，若 $\mu\in M_c(K)$，每个 $H$ 纤维至多为二点，故 $H_\#\mu$ 无原子。
+
+截面恒等式给 $H_\#(s_s)_\#\eta=\eta$。另一方面，$s_s\circ H$ 与 $\operatorname{id}_K$ 只可能在可数集 $S$ 上不同，而 $|\mu|(S)=0$，所以对每个 Borel $D$，其两个原像的对称差为 $|\mu|$ 零集。因此
+$$
+(s_s)_\#H_\#\mu=\mu.
+$$
+这证明互逆关系及截面选择无关性。对互逆映射分别使用推前范数不增，便得
+$$
+\|H_\#\mu\|_{\mathrm{TV}}=\|\mu\|_{\mathrm{TV}},\qquad \|(s_s)_\#\eta\|_{\mathrm{TV}}=\|\eta\|_{\mathrm{TV}}.
+$$
+整个逆构造使用了实际 Borel 截面，而不是集合基数比较。证毕。
+
+**定理 29.7（共同闭理想、通常圆周卷积与 Haar 提升）。** 在原圆周上，以
+$$
+(\eta*_{\mathbb T}\beta)(B)=\int_{\mathbb T}\int_{\mathbb T}\mathbf1_B(\lambda+\rho)\,d\eta(\lambda)\,d\beta(\rho)
+$$
+表示通常的有限有符号测度卷积。对任意 $\mu,\nu\in M(K)$，
+$$
+H_\#(\mu\star_t\nu)=(H_\#\mu)*_{\mathbb T}(H_\#\nu).
+$$
+若两个输入至少一个属于 $M_c(K)$，则对任一截面 $s_s$，都有更强的实际测度等式
+$$
+\mu\star_t\nu=(s_s)_\#\bigl((H_\#\mu)*_{\mathbb T}(H_\#\nu)\bigr)\in M_c(K),
+$$
+$$
+\|\mu\star_t\nu\|_{\mathrm{TV}}\le\|\mu\|_{\mathrm{TV}}\|\nu\|_{\mathrm{TV}}.
+$$
+因此只要所比较的运算均满足假设29.1，这个乘积就与参数无关。$M_c(K)$ 是所有这些代数共同的非零、真、总变差闭双侧理想，且
+$$
+H_\#:(M_c(K),\star_t)\longrightarrow(M_c(\mathbb T),*_{\mathbb T})
+$$
+是等距实代数同构。通常测度代数中的连续测度理想采用的正是这种无单点原子的含义。[^rro29-ideal]
+
+此外，若 $\mu\in M_c(K)$、$f\in C(K)$，则
+$$
+\mathcal T_\mu^{(t)}f=g_{\mu,f}\circ H,\qquad g_{\mu,f}(\theta)=\int_{\mathbb T}f(s_s(\lambda+\theta))\,d(H_\#\mu)(\lambda),\qquad g_{\mu,f}\in C(\mathbb T).
+$$
+令 $m_{\mathbb T}$ 为圆周上的归一化 Haar 测度，定义
+$$
+\lambda_K=(s_s)_\#m_{\mathbb T}.
+$$
+该定义与符号选择无关，且对每个 $\mu\in M(K)$，
+$$
+\lambda_K\star_t\mu=\mu\star_t\lambda_K=\mu(K)\lambda_K.
+$$
+
+**证明。** 圆周加法连续，因此上述通常卷积是有限有符号乘积测度在加法映射下的推前；有限 Jordan 分解及定理29.6证明中的正则性论证保证它是有限正则测度。其总变差不超过 $\|\eta\|_{\mathrm{TV}}\|\beta\|_{\mathrm{TV}}$。
+
+对 Borel $B\subseteq\mathbb T$，点核的相位支撑及行质量给
+$$
+P_t(a,x)(H^{-1}(B))=\mathbf1_B(H(a)+H(x)).
+$$
+直接代入逐集合积分契约，再用推前的积分公式，即得对任意两个全测度成立的相位乘法恒等式。
+
+现设 $\mu\in M_c(K)$。固定第二输入 $x$，除去定理29.5中的可数集 $N_x$ 后，和相位非分裂，故实际行准确等于
+$$
+P_t(a,x)=\delta_{s_s(H(a)+H(x))}.
+$$
+两个逐集合被积函数在 $N_x$ 上可能不同，但该集对 $|\mu|$ 为零。所以对每个 Borel $D\subseteq K$，
+$$
+\int_K P_t(a,x)(D)\,d\mu(a)=\int_K\mathbf1_D(s_s(H(a)+H(x)))\,d\mu(a).
+$$
+右边的联合被积函数是 Borel 且有界。对 $x$ 积分，并应用有限有符号 Fubini 及两次推前公式，得到所述提升公式。
+
+若 $\eta\in M_c(\mathbb T)$、$\beta\in M(\mathbb T)$，则对每个 $\theta\in\mathbb T$，直接有符号积分给
+$$
+(\eta*_{\mathbb T}\beta)(\{\theta\})=\int_{\mathbb T}\eta(\{\theta-\rho\})\,d\beta(\rho)=0.
+$$
+因此圆周卷积无原子。定理29.6表明其提升也无原子，并且两个截面产生同一个实际测度。所得公式不含参数，给出参数独立性。范数不等式由圆周卷积范数界及提升等距性得到。若第二输入无原子，则利用定理29.2已经由积分证明的交换律，得到同样结论。
+
+每个单点评价 $\mu\mapsto\mu(\{x\})$ 都是总变差有界线性泛函，所以
+$$
+M_c(K)=\bigcap_{x\in K}\ker\bigl(\mu\mapsto\mu(\{x\})\bigr)
+$$
+是闭线性子空间。刚证明的乘积性质使其成为双侧理想。定理29.6的等距双射与相位乘法恒等式给出等距代数同构；在该理想上，总变差范数本身具有常数一的次乘性。
+
+取第二输入为 $\delta_x$，提升公式给出所述 $g_{\mu,f}$ 的逐点表达。它表明 $\mathcal T_\mu^{(t)}f$ 在每个 $H$ 纤维上恒定，而该函数由定理29.5连续。连续满射 $H$ 从紧空间到 Hausdorff 空间，因而是闭商映射。具体地，对闭集 $F\subseteq\mathbb R$，
+$$
+g_{\mu,f}^{-1}(F)=H\bigl((\mathcal T_\mu^{(t)}f)^{-1}(F)\bigr)
+$$
+为闭集，故 $g_{\mu,f}$ 连续。此结论不把截面本身称为连续映射。
+
+归一化圆周 Haar 测度可取为 $[0,1)$ 上 Lebesgue 测度的商推前，因而无原子且质量为一。定理29.6保证其无原子提升唯一。圆周平移不变性及有符号积分给
+$$
+(m_{\mathbb T}*_{\mathbb T}\beta)(B)=\int_{\mathbb T}m_{\mathbb T}(B-\rho)\,d\beta(\rho)=m_{\mathbb T}(B)\beta(\mathbb T).
+$$
+对 $\beta=H_\#\mu$ 应用提升公式，得到 Haar 提升恒等式。$\lambda_K(K)=1$，所以共同理想非零；任一点质量不属于它，所以它是真理想。证毕。
+
+**定理 29.8（全部有符号原子分解与连续柱集检测）。** 任意 $\mu\in M(K)$ 唯一分解为
+$$
+\mu=\mu_c+\mu_a,\qquad \mu_c\in M_c(K),\qquad \mu_a=\sum_{a\in A_\mu}\mu(\{a\})\delta_a,
+$$
+其中
+$$
+A_\mu=\{a\in K:\mu(\{a\})\ne0\}
+$$
+至多可数，级数在总变差范数中绝对收敛，并且
+$$
+\|\mu\|_{\mathrm{TV}}=\|\mu_c\|_{\mathrm{TV}}+\|\mu_a\|_{\mathrm{TV}},\qquad \|\mu_a\|_{\mathrm{TV}}=\sum_{a\in A_\mu}|\mu(\{a\})|.
+$$
+任意非零绝对可和原子测度 $\zeta$，都可由某个有限数字柱集的连续指示函数检测，即存在柱集 $U\subseteq K$ 使
+$$
+\mathbf1_U\in C(K),\qquad \langle\zeta,\mathbf1_U\rangle\ne0.
+$$
+特别，对任意绝对可和实序列 $(q_r)_{r\ge1}$，
+$$
+\left\|\sum_{r\ge1}q_rv_r\right\|_{\mathrm{TV}}=2\sum_{r\ge1}|q_r|,
+$$
+该和是正则有符号测度，且它对全部连续测试为零当且仅当每个 $q_r=0$。
+
+**证明。** 对每个正整数 $j$，集合 $\{a:|\mu(\{a\})|\ge1/j\}$ 有限，否则有限子集上的变差可以任意大。因此 $A_\mu$ 可数。单点分割给
+$$
+\sum_{a\in A_\mu}|\mu(\{a\})|\le|\mu|(K).
+$$
+由有符号测度的可数可加性及该绝对可和性，$\mu_a$ 正是 $\mu$ 在可数 Borel 集 $A_\mu$ 上的限制，$\mu_c$ 则是其在补集上的限制。逐点检查得 $\mu_c(\{a\})=0$。两个限制的变差集中于互不相交的 Borel 集，故范数相加。唯一性由每个单点质量唯一确定全部原子系数而得。
+
+一般地，若不同点 $z_i$ 的实系数满足 $\sum_i|d_i|<\infty$，则
+$$
+\zeta(D)=\sum_{z_i\in D}d_i
+$$
+可数可加，其正负系数部分集中于不交可数集，故
+$$
+|\zeta|(D)=\sum_{z_i\in D}|d_i|.
+$$
+这也直接证明总变差绝对收敛。正则性还可不依赖一般正则性定理而核对：对 Borel $D$，从 $D$ 内的原子选有限子集，使遗漏质量任意小，得到紧内逼近；从全部原子选有限集 $F$ 使尾质量任意小，则开集 $K\setminus(F\setminus D)$ 包含 $D$，并给出同样小的外误差。
+
+若 $\zeta\ne0$，选 $z$ 使 $d_z\ne0$，再选包含 $z$ 的有限原子集 $F$，使
+$$
+\sum_{y\notin F}|d_y|<|d_z|/2.
+$$
+每个 $F\setminus\{z\}$ 中的点与 $z$ 在某个有限位不同。取足够长的 $z$ 的前缀，其柱集 $U$ 包含 $z$ 而排除 $F\setminus\{z\}$。柱集在数字拓扑中既开又闭，所以 $\mathbf1_U$ 连续，且
+$$
+\left|\int_K\mathbf1_U\,d\zeta\right|\ge|d_z|-\sum_{y\notin F}|d_y|>|d_z|/2>0.
+$$
+因此无限原子的正负尾项也不能使所有连续测试同时看不见这个非零测度。
+
+不同 $E_r$ 互异，每对 $x_r^+,x_r^-$ 中两点不同，故不同 $v_r$ 的有限二点支撑两两不交。将上述变差公式用于这些实际原子，就得到最后的准确范数公式及检测结论。这里比较的是各原子的实际系数，不要求无限原子集合的拓扑闭包彼此分离。
+
+最后，若 $\eta\in M_c(K)$ 而 $\zeta$ 为可数原子测度，$|\eta|$ 对 $\zeta$ 的可数原子集为零，故
+$$
+\|\eta-\zeta\|_{\mathrm{TV}}=\|\eta\|_{\mathrm{TV}}+\|\zeta\|_{\mathrm{TV}}.
+$$
+因此非零无原子测度不可能由原子测度在总变差范数中逼近。证毕。
+
+**定理 29.9（完整原子测度的两个单侧极限与精确跳跃）。** 设 $\sigma\in M(K)$ 为任意可数原子测度，并记
+$$
+\beta=H_\#\sigma,\qquad b_\lambda=\beta(\{\lambda\}),\qquad \sum_\lambda|b_\lambda|\le\|\sigma\|_{\mathrm{TV}}.
+$$
+对每个 $\theta\in\mathbb T$，存在两条非分裂输入序列 $y_n^+,y_n^-$，其相位分别从严格正侧、负侧趋于 $\theta$，使
+$$
+\sigma\star_t\delta_{y_n^s}\longrightarrow R_\theta^s:=\sum_\lambda b_\lambda\delta_{s_s(\lambda+\theta)}\quad\text{于 }\sigma(M(K),C(K)),\qquad s\in\{+1,-1\}.
+$$
+若 $\theta\notin E$，两条输入序列均趋于 $k_\theta$；若 $\theta=E_j$，则分别趋于 $x_j^+$、$x_j^-$。两个极限测度及其差都是正则有符号测度，且
+$$
+\|R_\theta^s\|_{\mathrm{TV}}\le\|\beta\|_{\mathrm{TV}},\qquad J_\theta:=R_\theta^+-R_\theta^-=\sum_{r\ge1}b_{E_r-\theta}v_r,
+$$
+$$
+\|J_\theta\|_{\mathrm{TV}}=2\sum_{r\ge1}|b_{E_r-\theta}|\le2\|\beta\|_{\mathrm{TV}}.
+$$
+
+**证明。** 令 $A=\{a:\sigma(\{a\})\ne0\}$，这是实际原子集合，不是其可能更大的拓扑闭包。集合
+$$
+F_\sigma=E\cup\bigcup_{a\in A}(E-H(a))
+$$
+可数。对每个 $n\ge1$ 和每个符号 $s$，可选
+$$
+0<\epsilon_n^s<\min(1/4,1/n),\qquad \theta_n^s=\theta+[s\epsilon_n^s]\notin F_\sigma,
+$$
+因为非空圆周开弧不可能由可数集合耗尽。定义 $y_n^s=k_{\theta_n^s}$。若 $\theta$ 非分裂，紧致性及唯一纤维保证任意这些提升趋于 $k_\theta$：任何子列聚点都必须落在该唯一纤维。若 $\theta=E_j$，假设29.1的严格单侧任意提升结论给出对应的定向极限。
+
+对每个实际原子 $a$，$H(a)+\theta_n^s\notin E$，所以实际核行准确为
+$$
+P_t(a,y_n^s)=\delta_{k_{H(a)+\theta_n^s}}.
+$$
+在逐集合积分中对可数原子求和，并按相位 regroup，得到
+$$
+\sigma\star_t\delta_{y_n^s}=\sum_\lambda b_\lambda\delta_{k_{\lambda+\theta_n^s}}.
+$$
+重排合法，因为原始系数的绝对和不超过 $\|\sigma\|_{\mathrm{TV}}$。特别，同一相位上的正负分支在此处以它们的完整相位质量相加，不能遗漏这种抵消。
+
+对每个固定 $\lambda$，相位 $\lambda+\theta_n^s$ 以同一严格符号趋于 $\lambda+\theta$。若极限相位非分裂，其唯一提升给出收敛；若它是 $E_r$，严格单侧提升给出收敛至 $x_r^s$。因此对任意 $f\in C(K)$，
+$$
+f(k_{\lambda+\theta_n^s})\longrightarrow f(s_s(\lambda+\theta)).
+$$
+各项由 $\|f\|_\infty|b_\lambda|$ 支配，而该系数族绝对可和。对级数使用支配收敛，得到声明的全部连续测试极限。定理29.8保证这些绝对可和原子和是实际正则测度。
+
+两个截面只在 $E$ 上不同，所以极限差仅保留 $\lambda+\theta=E_r$ 的项，准确地给出 $J_\theta$。指标 $r$ 对应互异相位 $E_r-\theta$，故系数绝对和不超过 $\|\beta\|_{\mathrm{TV}}$；再用定理29.8的二点差分变差公式，得到准确范数。所有极限均为连续测试意义的弱星极限，不声称总变差收敛。证毕。
+
+**定理 29.10（任意实有符号原子的排除与拓扑中心完全分类）。** 在假设29.1下，对每个 $t\in\Lambda$，
+$$
+Z_{\mathrm{top}}(\star_t)=M_c(K).
+$$
+更具体地，若 $\mu$ 的原子部分非零，则存在有限数字柱集 $U$、点 $x\in K$ 及序列 $x_n\to x$，使
+$$
+\mathcal T_\mu^{(t)}\mathbf1_U(x_n)\not\longrightarrow\mathcal T_\mu^{(t)}\mathbf1_U(x).
+$$
+结论包括总质量为零、相位推前原子部分为零以及同一分裂纤维正负质量抵消的情形，也包括参数 $0$ 与形式参数 $\infty$。
+
+**证明。** 无原子的充分性已经由定理29.5证明。拓扑中心是线性子空间，因为定理29.4中的连续函数条件对线性组合封闭。若 $\mu$ 属于拓扑中心，作定理29.8的分解 $\mu=\mu_c+\sigma$，其中 $\sigma=\mu_a$。由于 $\mu_c$ 已在中心中，$\sigma$ 也在中心中。因此必要性归结为证明：中心中的可数原子测度只能为零。
+
+先对 $\sigma$ 使用定理29.9，记其完整相位质量为 $b_\lambda$。若 $\theta\notin E$，两条输入序列均趋于同一点 $k_\theta$。弱星连续性使它们的输出极限相同，故 $J_\theta=0$。由于 $J_\theta$ 是总变差绝对可和的正则原子测度，定理29.8给出
+$$
+b_{E_r-\theta}=0\qquad(r\ge1,\ \theta\notin E).
+$$
+现固定 $\lambda\notin\mathcal O_+$，取 $\theta=E_1-\lambda$。这个 $\theta$ 不属于 $E$：否则 $\theta=E_j$ 会推出
+$$
+\lambda=E_1-E_j=[(j-1)\phi]\in\mathcal O_+,
+$$
+矛盾。上式取 $r=1$ 得 $b_\lambda=0$。所以完整相位原子质量只能留在非负整数旋转轨道 $\mathcal O_+$ 上。
+
+由于 $\phi$ 无理，$E\cap\mathcal O_+=\varnothing$，故每个分裂纤维的完整相位质量已经为零。非分裂纤维只有一个点，且 $[n\phi]$ 的唯一点为 $Z(n)$。因此 $\sigma$ 必有准确展开
+$$
+\sigma=\sum_{n\ge0}b_n\delta_{Z(n)}+\sum_{m\ge1}a_mv_m,
+$$
+$$
+b_n=\sigma(\{Z(n)\}),\qquad a_m=\sigma(\{x_m^+\})=-\sigma(\{x_m^-\}),\qquad \|\sigma\|_{\mathrm{TV}}=\sum_{n\ge0}|b_n|+2\sum_{m\ge1}|a_m|.
+$$
+第一项保留全部尚未排除的相位原子，第二项保留相位推前完全看不见的分支差分；两者不能混同。
+
+固定 $j\ge1$。定理29.9在输入相位 $E_j$ 给出
+$$
+R_{E_j}^s=\sum_{n=0}^{j-1}b_n\delta_{x_{j-n}^s}+\sum_{n\ge j}b_n\delta_{Z(n-j)},
+$$
+因为 $[n\phi]+E_j=E_{j-n}$ 当 $n<j$，而当 $n\ge j$ 时该相位为 $[(n-j)\phi]$。置
+$$
+Q_j=\sum_{n=0}^{j-1}b_n\pi_{E_{j-n}}+\sum_{n\ge j}b_n\delta_{Z(n-j)},\qquad W_j=\sum_{m\ge1}a_mc_{m,j}v_{m+j}.
+$$
+这两个和都是总变差绝对收敛的实际测度。对 $Q_j$，使用 $\|\pi_\theta\|_{\mathrm{TV}}\le C_t$。对 $W_j$，有限差分恒等式及定理29.2给
+$$
+2|c_{m,j}|=\|v_m\star_t v_j\|_{\mathrm{TV}}\le C_t\|v_m\|_{\mathrm{TV}}\|v_j\|_{\mathrm{TV}}=4C_t,
+$$
+所以 $\sum_m|a_mc_{m,j}|<\infty$。
+
+实际两个分支行必须由第25节的有限核恒等式逐项积分计算，而不是由单侧极限指定。具体地，$\delta_{Z(n)}=\pi_{[n\phi]}$，混合相位差分乘积为零，且
+$$
+\delta_{x_j^+}=\pi_{E_j}+(1-p_j)v_j,\qquad \delta_{x_j^-}=\pi_{E_j}-p_jv_j.
+$$
+因此直接对上述绝对可和原子系数积分，得到
+$$
+\sigma\star_t\delta_{x_j^+}=Q_j+(1-p_j)W_j,\qquad \sigma\star_t\delta_{x_j^-}=Q_j-p_jW_j.
+$$
+逐项积分的绝对收敛由统一行界与 $\sum_n|b_n|+2\sum_m|a_m|<\infty$ 保证。这特别给出不含任何 $p_j$ 分母的准确差值
+$$
+\sigma\star_t\delta_{x_j^+}-\sigma\star_t\delta_{x_j^-}=W_j.
+$$
+
+由于 $\sigma$ 在中心中，分别趋于 $x_j^+$ 与 $x_j^-$ 的单侧输入序列必须趋于各自的实际输出行。相减得到
+$$
+\sum_{m\ge1}a_mc_{m,j}v_{m+j}=\sum_{n=0}^{j-1}b_nv_{j-n}.
+$$
+左边的原子对指标严格大于 $j$，右边的指标介于一与 $j$。不同指标的二点支撑不交；即使无限原子集的闭包有共同聚点，也不会改变单点质量。定理29.8因此给出准确的缺陷范数
+$$
+\left\|W_j-\sum_{n=0}^{j-1}b_nv_{j-n}\right\|_{\mathrm{TV}}=2\sum_{m\ge1}|a_mc_{m,j}|+2\sum_{n=0}^{j-1}|b_n|.
+$$
+中心条件使该范数为零。取 $j=1$，由于每个 $c_{m,1}\ne0$，得到全部 $a_m=0$，同时得到 $b_0=0$。再对任意 $n\ge0$ 取 $j=n+1$，得到 $b_n=0$。因此 $\sigma=0$，必要性成立。
+
+这里 $c_{m,j}\ne0$ 对所有允许的有限实参数由定理25.7给出；参数 $0$ 时 $c_{m,j}=1$，形式参数 $\infty$ 时 $c_{m,j}=-1$。整个排除过程没有除以 $p_j$ 或 $1-p_j$，也没有要求任何原子系数或核系数为正。
+
+最后核对声明的实际连续测试见证，而不只给出形式系数矛盾。给定非零原子测度 $\sigma$，若某个非零 $b_\lambda$ 位于 $\mathcal O_+$ 外，取上述 $\theta=E_1-\lambda$，则 $J_\theta$ 在 $v_1$ 上的系数非零。定理29.8给出连续柱集指示函数 $f$ 使 $\langle J_\theta,f\rangle\ne0$。两条输入序列趋于同一 $k_\theta$，而其标量输出极限不同，故至少一条不趋于实际行在该点的测试值。
+
+若全部完整相位质量均在 $\mathcal O_+$ 上，则 $\sigma$ 具有上面的 $b_n,a_m$ 展开。若某个 $a_m\ne0$，取 $j=1$；否则选 $b_n\ne0$ 并取 $j=n+1$。准确缺陷范数表明
+$$
+D_j:=W_j-(R_{E_j}^+-R_{E_j}^-)\ne0.
+$$
+再用定理29.8选连续柱集指示函数 $f$ 检测 $D_j$。两个实际行与两个对应单侧极限不可能同时在该测试上相等，因为两种差值的差正是 $\langle D_j,f\rangle\ne0$。所以至少一个定向分裂输入处有标量不连续。
+
+对于原始测度 $\mu=\mu_c+\sigma$，定理29.5保证 $\mathcal T_{\mu_c}^{(t)}f$ 连续；把它加回不会消除上述实际行与其单侧极限之间的非零差。于是同一个连续柱集测试也检测 $\mu$ 的不连续性。这覆盖了所有可数有符号抵消情形。证毕。
+
+**定理 29.11（任意柱集中的无原子逼近与弱星稠密性）。** 每个非空有限数字柱集都支持一个无原子概率测度。对任意 $\mu\in M(K)$，存在 $\mu_N\in M_c(K)$，使
+$$
+\|\mu_N\|_{\mathrm{TV}}\le\|\mu\|_{\mathrm{TV}},\qquad \mu_N(K)=\mu(K),\qquad \mu_N\longrightarrow\mu\text{ 于 }\sigma(M(K),C(K)).
+$$
+因此该共同拓扑中心虽然是总变差闭真理想，却在全测度空间中弱星稠密。
+
+**证明。** 固定长度为 $N$ 的合法前缀 $w$，记其非空柱集为 $C_w$。对 $u\in[0,1)$，定义二进制数字
+$$
+\epsilon_r(u)=\lfloor2^{r+1}u\rfloor-2\lfloor2^ru\rfloor\in\{0,1\}\qquad(r\ge0).
+$$
+构造 $q_w(u)\in K$：前 $N$ 位取 $w$，第 $N$ 位取零，并令
+$$
+q_w(u)_{N+1+2r}=\epsilon_r(u),\qquad q_w(u)_{N+2+2r}=0\qquad(r\ge0).
+$$
+前缀与自由尾部之间有一个零，尾部任意两个自由位之间也有零，所以所有输出均合法并属于 $C_w$。每个坐标是 Borel 函数，柱集生成数字 Borel 结构，故 $q_w$ 为 Borel 映射。令 $\xi_w$ 为 $[0,1)$ 上 Lebesgue 概率测度在 $q_w$ 下的推前。它是有限正则概率测度，并集中于 $C_w$。
+
+对任意固定点 $z\in K$，条件 $q_w(u)=z$ 会指定前 $r$ 个二进制数字，因此其原像至多包含在一个长度为 $2^{-r}$ 的半开二进制区间内，或为空。于是
+$$
+\xi_w(\{z\})\le2^{-r}\qquad(r\ge1),
+$$
+从而 $\xi_w(\{z\})=0$。这证明每个实际柱集内都有所需无原子概率测度。
+
+令 $\mathcal W_N$ 为长度 $N$ 的全部合法前缀，定义
+$$
+\mu_N=\sum_{w\in\mathcal W_N}\mu(C_w)\xi_w.
+$$
+这是有限个无原子测度的实线性组合，所以仍无原子。柱集构成有限 Borel 分割，故
+$$
+\|\mu_N\|_{\mathrm{TV}}\le\sum_{w\in\mathcal W_N}|\mu(C_w)|\le\|\mu\|_{\mathrm{TV}},\qquad \mu_N(K)=\sum_w\mu(C_w)=\mu(K).
+$$
+对 $f\in C(K)$，令
+$$
+\omega_f(r)=\sup\{|f(x)-f(y)|:d_K(x,y)\le r\}.
+$$
+紧致性使 $f$ 一致连续，所以 $\omega_f(r)\to0$ 当 $r\downarrow0$。每个 $C_w$ 的直径至多为 $2^{-N}$，于是
+$$
+\begin{aligned}
+|\langle\mu_N-\mu,f\rangle|&=\left|\sum_w\int_{C_w}\left(\int_{C_w}f(y)\,d\xi_w(y)-f(x)\right)d\mu(x)\right|\\
+&\le\omega_f(2^{-N})\sum_w|\mu|(C_w)\\
+&=\omega_f(2^{-N})\|\mu\|_{\mathrm{TV}}\longrightarrow0.
+\end{aligned}
+$$
+因此对全部连续测试弱星收敛。总变差闭性和真性来自定理29.7，拓扑中心识别来自定理29.10。此稠密性不把非中心元素的左乘算子变成弱星连续算子；定理29.10仍为每个非零原子部分提供实际连续测试障碍。证毕。
+
+[^rro29-riesz]: Martin Herdegen, Gechun Liang and Osian Shelley, *Vague and weak convergence of signed measures*, arXiv:2205.13207v2，§1.1，Definition 1.1 与 Theorem 1.2(a)。这里引用连续测试收敛、有限有符号 Radon 测度及 Riesz 等距表示。[正文](https://arxiv.org/html/2205.13207v2)。
+
+[^rro29-kernel]: Vassili N. Kolokoltsov, *Stochastic monotonicity and duality of kth order with application to put-call symmetry of powered options*, arXiv:1405.3894v1，§2.2，特别有界有符号核的定义、积分算子与测度对偶公式及 Proposition 2.1 的 Fubini 计算。[正文](https://arxiv.org/html/1405.3894v1)。
+
+[^rro29-integration]: Terence Tao, *245B, notes 0: A quick review of measure and integration theory*，2009年1月1日，Theorem 3(4)—(5) 与 Theorem 4，分别给出支配收敛、绝对可和级数积分与 Fubini–Tonelli 的可测性及绝对可积条件；*245B, notes 1: Signed measures and the Radon-Nikodym-Lebesgue theorem*，2009年1月4日，Hahn 分解、Exercises 5—8 的 Jordan 分解和总变差。本节对有符号测度的使用均明确化为有限正 Jordan 部分或变差测度。[积分正文](https://terrytao.wordpress.com/2009/01/01/245b-notes-0-a-quick-review-of-measure-and-integration-theory/)，[有符号测度正文](https://terrytao.wordpress.com/2009/01/04/245b-notes-1-signed-measures-and-the-radon-nikodym-lebesgue-theorem/)。
+
+[^rro29-center]: Stefano Ferri, Matthias Neufang and Jan Pachl, *Minimal sets determining the topological centre of the algebra LUC(G)\**, arXiv:1310.7931v2，§1，Definition 1.1；这里仅采用左乘在指定弱星拓扑中全域连续的拓扑中心定义，不移用其关于其他代数的中心分类。[正文](https://arxiv.org/html/1310.7931v2)。
+
+[^rro29-ideal]: Tetsuhiro Shimizu, *L-ideals of Measure Algebras*, Proceedings of the Japan Academy 48 (1972), 172–176，§1，特别第172—173页关于通常卷积测度代数及连续测度理想的记号。本节圆周上的无原子理想性质由逐单点卷积积分另行证明。[正文](https://www.jstage.jst.go.jp/article/pjab1945/48/3/48_3_172/_pdf/-char/ja)。
+
+## 追加锚（本行以下为增补区）
+## 30. 正性与全测度相位律的延拓唯一性
+
+**假设 30.0（固定载体、测度与全测度相位契约）。** 沿用定义25.0及假设25.1的原始紧数字空间 $K$、原始圆周群 $\mathbb T$、连续满射 $H:K\to\mathbb T$、分裂相位集 $E=\{E_m:m\ge1\}$、分裂点集 $S=H^{-1}(E)=\{x_m^+,x_m^-:m\ge1\}$ 及准确闭图 $\Gamma$。特别，$E$ 中的纤维恰有两个点，其他纤维恰有一个点。本节全部关于这些对象的结论均以该精确纤维与闭图契约为前提。
+
+对紧度量空间 $X$，$M(X)$ 表示全部有限实有符号正则 Borel 测度，$M_+(X)$ 表示其正锥，并记
+$$
+\varepsilon_X(\mu)=\mu(X),\qquad
+\|\mu\|_{\mathrm{TV}}=|\mu|(X).
+$$
+全变差不含二分之一因子。采用定理28.10的典范分解
+$$
+\mu=\mu_{\mathrm{at}}+\mu_{\mathrm{na}},
+$$
+其中非原子性指全变差测度无原子，不指相对于 Haar 测度绝对连续。Jordan 分解、全变差及测度范数的约定参见 Daniel V. Tausk，*Weak\* topology for the space of finite measures on a topological space*，[§2，PDF第2—3页](https://www.ime.usp.br/~tausk/texts/WeakTopologyMeasures.pdf)。
+
+固定定理28.3的 Borel 截面
+$$
+s(\theta)=
+\begin{cases}
+k_\theta,&\theta\notin E,\\
+x_m^-,&\theta=E_m,
+\end{cases}
+\qquad H\circ s=\operatorname{id}_{\mathbb T}.
+$$
+圆周卷积始终是定义28.6在原始圆周上定义的测度卷积。
+
+称一个实双线性映射 $B:M(K)\times M(K)\to M(K)$ 满足正性与全测度相位契约，若
+$$
+\mu,\nu\in M_+(K)\ \Longrightarrow\ B(\mu,\nu)\in M_+(K)
+$$
+且
+$$
+\forall\mu,\nu\in M_+(K),\qquad
+H_\#B(\mu,\nu)=(H_\#\mu)*_{\mathbb T}(H_\#\nu).
+$$
+后一等式是对每个 Borel 相位集合的测度相等，量词覆盖全部有限正测度；它不是仅对 Dirac 输入的要求。此定义不预设有界性、连续性、交换律、结合律或核积分表示。
+
+记
+$$
+P^{(0)}=P^{-1},\qquad P^{(\infty)}=P^{+1},
+$$
+其中右端为定义23.8的两个固定符号概率核，等同关系由定理25.12给出；$\infty$ 始终是形式参数。相应的逐集合积分运算 $\star_0,\star_\infty$ 取定理28.7的构造。
+
+**定理 30.1（可数有限分裂下的正提升判据）。** 设 $X,Y$ 为非空紧度量空间，$h:X\to Y$ 连续且满射，$D\subseteq Y$ 可数，每个纤维有限，且 $Y\setminus D$ 上的纤维为单点。置
+$$
+X_0=X\setminus h^{-1}(D),\qquad Y_0=Y\setminus D,\qquad
+D_*=\{y\in D:|h^{-1}(\{y\})|\ge2\}.
+$$
+则 $h|_{X_0}:X_0\to Y_0$ 是同胚，并存在 Borel 截面 $q:Y\to X$。
+
+对每个 $\eta\in M_+(Y)$，全部正提升 $\rho\in M_+(X)$、$h_\#\rho=\eta$ 恰为
+$$
+\rho=q_\#(\eta|_{Y_0})
++\sum_{y\in D}\ \sum_{x\in h^{-1}(\{y\})} a_{y,x}\delta_x,
+\qquad
+a_{y,x}\ge0,\qquad
+\sum_{x\in h^{-1}(\{y\})}a_{y,x}=\eta(\{y\}).
+$$
+该级数在全变差中绝对收敛。正提升唯一当且仅当 $\eta(D_*)=0$。特别，$\eta(D)=0$ 时唯一正提升为 $q_\#\eta$，与分裂纤维上的截面选择无关。此外，
+$$
+\ker h_\#\cap M_+(X)=\{0\}.
+$$
+
+**证明。** 纤维条件先给限制映射为连续双射。若 $y\in Y_0$ 的唯一原像为 $x$，且 $U\subseteq X$ 是包含 $x$ 的开集，则
+$$
+W=Y\setminus h(X\setminus U)
+$$
+为包含 $y$ 的开集：被除去的集合紧，且不能包含 $y$。对 $y'\in W\cap Y_0$，其唯一原像必在 $U$ 中。这证明逆映射连续，与定理28.3的论证相同，不要求 $X_0$ 紧。
+
+集合 $D$ 及 $h^{-1}(D)$ 均为可数 Borel 集。在 $Y_0$ 上取上述逆映射，在每个 $y\in D$ 上选取一个纤维点，得到截面 $q$。对任意 Borel 集 $A\subseteq X$，$q^{-1}(A)\cap Y_0$ 在 $Y_0$ 中为 Borel 集，因而在 $Y$ 中为 Borel 集；剩余部分是 $D$ 的一个子集，也为 Borel 集。因此 $q$ 是 Borel 映射。
+
+若 $A\subseteq X_0$ 是 Borel 集，同胚性保证 $h(A)$ 为 $Y_0$ 中、进而为 $Y$ 中的 Borel 集，且
+$$
+h^{-1}(h(A))=A.
+$$
+所以任何正提升均满足
+$$
+\rho(A)=\eta(h(A))
+=\bigl(q_\#(\eta|_{Y_0})\bigr)(A).
+$$
+这确定了它在 $X_0$ 上的限制。其余部分集中在可数集合 $h^{-1}(D)$ 上，故只能是所列点质量级数；在每个纤维上读取推前等式，恰给所列系数和条件。所有系数的和为 $\eta(D)<\infty$，因此级数全变差绝对收敛。
+
+反之，任何满足这些条件的系数都给出有限正 Borel 测度。第一项的推前是 $\eta|_{Y_0}$，级数的推前是 $\eta|_D$，所以总推前为 $\eta$。上述推前、限制及级数所得测度均正则：紧度量空间上的有限 Borel 测度正则，定理28.4已经证明此事实；亦参见 Tausk，[引理3.4、推论3.5](https://www.ime.usp.br/~tausk/texts/WeakTopologyMeasures.pdf)。这里没有用集合双射代替可测性或正则性的证明。
+
+若 $\eta(D_*)=0$，每个多点纤维的允许系数全为零，单点纤维的唯一系数又已固定，故提升唯一。若 $\eta(D_*)>0$，可数性保证存在 $y\in D_*$ 满足 $\eta(\{y\})>0$。将此质量分别全部放在该纤维的两个不同点上，并保持其他系数相同，得到两个不同正提升。这证明充要条件及其特别情形。
+
+最后，$\rho\ge0$ 且 $h_\#\rho=0$ 时，
+$$
+\rho(X)=(h_\#\rho)(Y)=0,
+$$
+故 $\rho=0$。这只是正锥与推前核的交为零，并不表示两个任意正测度的相同推前总能决定它们相等；两者之差未必正，多点纤维上的上述自由度正是区别。证毕。
+
+**定理 30.2（正性与质量给出的自动全变差压缩）。** 设 $X$ 为非空紧度量空间，$B:M(X)^2\to M(X)$ 实双线性、保持正测度对的正性，并对全部正输入满足
+$$
+\varepsilon_X(B(\mu,\nu))=\varepsilon_X(\mu)\varepsilon_X(\nu).
+$$
+则对任意实有符号输入都有测度不等式及范数估计
+$$
+|B(\mu,\nu)|\le B(|\mu|,|\nu|),\qquad
+\|B(\mu,\nu)\|_{\mathrm{TV}}
+\le\|\mu\|_{\mathrm{TV}}\|\nu\|_{\mathrm{TV}}.
+$$
+质量恒等式也对全部实有符号输入成立，并且
+$$
+\|B\|_{\mathrm{bil}}=1.
+$$
+特别，假设30.0的全测度相位契约蕴含这里的质量前提。
+
+正算子的自动连续性具有经典的一般理论，参见 Wolfgang Arendt、Robin Nittka，*Equivalent complete norms and positivity*，*Archiv der Mathematik* 92 (2009), 414–427，[定理2.8及例2.3(a)，作者公开全文](https://www.researchgate.net/publication/226200984_Equivalent_complete_norms_and_positivity)。正多线性映射的模支配也见 Geraldo Botelho、Vinícius C. C. Miranda，*Compact positive multilinear operators on Banach lattices*，[§1的正多线性映射定义之后](https://arxiv.org/html/2509.04652v1)。本结论中的精确常数由以下质量计算直接得到。
+
+**证明。** 对任意 $\mu,\nu$ 取 Jordan 分解，定义两个正测度
+$$
+U=B(\mu^+,\nu^+)+B(\mu^-,\nu^-),\qquad
+V=B(\mu^+,\nu^-)+B(\mu^-,\nu^+).
+$$
+仅由双线性即有
+$$
+B(\mu,\nu)=U-V,\qquad B(|\mu|,|\nu|)=U+V.
+$$
+对任意 Borel 集 $A$ 的有限 Borel 分割 $A=\bigsqcup_i A_i$，
+$$
+\sum_i |(U-V)(A_i)|
+\le\sum_i\bigl(U(A_i)+V(A_i)\bigr)=U(A)+V(A).
+$$
+取分割上确界得到 $|U-V|(A)\le U(A)+V(A)$，故得测度支配。再用质量前提于两个正测度 $|\mu|,|\nu|$，得到
+$$
+\|B(\mu,\nu)\|_{\mathrm{TV}}
+\le B(|\mu|,|\nu|)(X)
+=|\mu|(X)|\nu|(X).
+$$
+这没有先使用 $B$ 的任何连续性。对四个 Jordan 项分别读取质量，则得到全部有符号输入的质量恒等式。
+
+正概率输入的输出是质量一的正测度，因而范数恰为一。由于 $X$ 非空，Dirac 概率存在；它们使双线性范数下界达到一，而已证估计给上界一。因此 $\|B\|_{\mathrm{bil}}=1$。
+
+对满足假设30.0契约的 $B$，在相位等式上读取整个圆周的质量，得到
+$$
+B(\mu,\nu)(K)
+=\bigl((H_\#\mu)*_{\mathbb T}(H_\#\nu)\bigr)(\mathbb T)
+=\mu(K)\nu(K)
+$$
+对全部正输入成立。最后，$H_\#$ 线性、圆周卷积双线性，所以同样的四项 Jordan 展开还证明：相位契约对全部正输入成立，等价于它对全部实有符号输入成立。这里使用的是相位契约对四对 Jordan 正部的适用性，而不是从 Dirac 对推出全测度相位律。证毕。
+
+**定理 30.3（含非原子因子的乘积完全由相位强制）。** 对原始 $H:K\to\mathbb T$，正测度 $\mu$ 非原子当且仅当 $H_\#\mu$ 非原子。设 $B$ 满足假设30.0的正性与全测度相位契约。若 $\mu,\nu\in M_+(K)$ 且至少一个非原子，则
+$$
+B(\mu,\nu)
+=s_\#\bigl((H_\#\mu)*_{\mathbb T}(H_\#\nu)\bigr),
+$$
+其输出非原子，且在 $S$ 上质量为零。
+
+同一等式对全部实有符号 $\mu,\nu$ 仍成立，只要至少一个输入的全变差非原子；此时输出的全变差在 $S$ 上为零，且输出非原子。
+
+**证明。** 先处理正测度。对任意 $\theta\in\mathbb T$，纤维有限给出
+$$
+(H_\#\mu)(\{\theta\})
+=\sum_{x\in H^{-1}(\{\theta\})}\mu(\{x\}).
+$$
+故 $\mu$ 无单点原子时，其推前也无单点原子。反之，
+$$
+0\le\mu(\{x\})\le(H_\#\mu)(\{H(x)\})
+$$
+给出逆向蕴含。在紧度量空间上，无单点原子等价于非原子性，所需论证已包含在定理28.10的有限网格分割证明中。
+
+若 $\alpha,\beta$ 为圆周上的正测度，且 $\alpha$ 非原子，则对每个 $\theta$，由定理28.4的 Fubini 定理，
+$$
+(\alpha*_{\mathbb T}\beta)(\{\theta\})
+=\int_{\mathbb T}\alpha(\{\theta-\eta\})\,d\beta(\eta)=0.
+$$
+因此该卷积非原子；另一因子的情形由圆周卷积的交换律得到，不需要 $B$ 交换。这个非原子卷积理想是经典测度代数分解的一部分，参见 Matthew Daws，*Characterising weakly almost periodic functionals on the measure algebra*，[§3，引理3.7紧前的原子／非原子分解段落](https://arxiv.org/html/0904.0436v2)；其实有符号形式已在定理28.10证明。
+
+令
+$$
+\omega=(H_\#\mu)*_{\mathbb T}(H_\#\nu).
+$$
+在本定理的正输入情形，$\omega$ 正且非原子，所以 $\omega(E)=0$。全测度相位律与输出正性给出
+$$
+B(\mu,\nu)\ge0,\qquad H_\#B(\mu,\nu)=\omega.
+$$
+定理30.1在 $D=E$ 时给出唯一正提升 $s_\#\omega$，因而得到所列等式。它在 $S$ 上的质量为 $\omega(E)=0$；对每个 $x$，又有
+$$
+(s_\#\omega)(\{x\})
+=\omega(s^{-1}(\{x\}))
+\le\omega(\{H(x)\})=0.
+$$
+所以输出非原子。
+
+现在令 $\mu$ 为实有符号非原子测度，$\nu$ 为任意实有符号测度。由于
+$$
+0\le\mu^\pm\le|\mu|,
+$$
+两个 Jordan 部分 $\mu^\pm$ 均非原子。分别对四对正输入 $(\mu^\pm,\nu^\pm)$ 应用刚证结论，再按照双线性符号相加。Borel 推前 $s_\#$ 的线性及圆周卷积的双线性给出同一公式。每个正输出均在 $S$ 上为零且非原子；其有限有符号和也无单点质量，因而非原子，其全变差也在 $S$ 上为零。非原子因子位于第二槽时，同样在该槽取 Jordan 分解并应用正输入结论。
+
+因此本证明从未将“有符号推前为零”误当成“原测度为零”。若允许任意有符号输出，$v_m=\delta_{x_m^+}-\delta_{x_m^-}$ 的推前确实为零；这里先在四个正输出上排除所有分裂质量，再取有限有符号和，故没有留下可由正负抵消掩盖的分裂残差。证毕。
+
+**定理 30.4（正相位提升由点行唯一决定的显式公式）。** 设 $B:M(K)^2\to M(K)$ 满足假设30.0的正性与全测度相位契约，记其实际点行为
+$$
+Q_{x,y}=B(\delta_x,\delta_y).
+$$
+对任意 $\mu,\nu\in M(K)$，置
+$$
+\Omega_{\mu,\nu}
+=(H_\#\mu)*_{\mathbb T}(H_\#\nu)
+-(H_\#\mu_{\mathrm{at}})*_{\mathbb T}(H_\#\nu_{\mathrm{at}}).
+$$
+则 $\Omega_{\mu,\nu}$ 非原子，并且
+$$
+B(\mu,\nu)
+=\sum_{x,y\in K}\mu(\{x\})\nu(\{y\})Q_{x,y}
++s_\#\Omega_{\mu,\nu}.
+$$
+级数只涉及两个输入实际原子集的乘积，在全变差中绝对收敛，且
+$$
+\sum_{x,y}
+\bigl\|\mu(\{x\})\nu(\{y\})Q_{x,y}\bigr\|_{\mathrm{TV}}
+=\|\mu_{\mathrm{at}}\|_{\mathrm{TV}}\,
+ \|\nu_{\mathrm{at}}\|_{\mathrm{TV}}.
+$$
+因此，两个满足正性及全测度相位契约的实双线性运算，若在所有 Dirac 对上相同，则在整个 $M(K)^2$ 上相同。此结论不要求交换律、结合律或点行的联合 Borel 可测性。
+
+**证明。** 定理30.2保证 $B$ 自动双线性压缩。每个 $Q_{x,y}$ 为正测度，质量一，所以
+$$
+\|Q_{x,y}\|_{\mathrm{TV}}=1.
+$$
+相位律还给
+$$
+H_\#Q_{x,y}=\delta_{H(x)+H(y)}.
+$$
+由正性，$Q_{x,y}$ 集中在对应有限相位纤维上，因而也是有限原子测度。
+
+由定理28.10，$\mu,\nu$ 的实际原子集至多可数，且
+$$
+\mu_{\mathrm{at}}=\sum_x\mu(\{x\})\delta_x,\qquad
+\nu_{\mathrm{at}}=\sum_y\nu(\{y\})\delta_y
+$$
+均在全变差中绝对收敛。结合点行范数一，立即得到双重级数的所列绝对范数和，故该级数在完备空间 $M(K)$ 中收敛。
+
+为证明其和确实是 $B(\mu_{\mathrm{at}},\nu_{\mathrm{at}})$，取两个原子级数的有限截断 $a_n,b_n$。双线性压缩给
+$$
+\begin{aligned}
+&\|B(\mu_{\mathrm{at}},\nu_{\mathrm{at}})-B(a_n,b_n)\|_{\mathrm{TV}}\\
+&\quad\le
+\|\mu_{\mathrm{at}}-a_n\|_{\mathrm{TV}}\|\nu_{\mathrm{at}}\|_{\mathrm{TV}}
++\|a_n\|_{\mathrm{TV}}\|\nu_{\mathrm{at}}-b_n\|_{\mathrm{TV}}
+\longrightarrow0.
+\end{aligned}
+$$
+有限双线性展开给出 $B(a_n,b_n)$ 的对应有限双重和，故原子乘积正是所列级数。这仅使用有限原子测度在 $M_{\mathrm{at}}(K)$ 内的稠密性；定理28.11已经区分它与整个 $M(K)$ 的全变差拓扑，后者没有所需的原子稠密性。
+
+非原子有符号测度的 Jordan 部分非原子，所以定理30.3也保证其相位推前非原子。原子测度的相位推前则仍原子。展开两种输入的典范分解，得到
+$$
+\begin{aligned}
+\Omega_{\mu,\nu}
+={}&(H_\#\mu_{\mathrm{na}})*_{\mathbb T}(H_\#\nu_{\mathrm{at}})\\
+&+(H_\#\mu_{\mathrm{at}})*_{\mathbb T}(H_\#\nu_{\mathrm{na}})\\
+&+(H_\#\mu_{\mathrm{na}})*_{\mathbb T}(H_\#\nu_{\mathrm{na}}).
+\end{aligned}
+$$
+每一项均非原子，由定理28.10的非原子卷积理想性质得出 $\Omega_{\mu,\nu}$ 非原子。对 $B$ 的相应三个混合项分别应用定理30.3，再用 $s_\#$ 线性，其和恰为 $s_\#\Omega_{\mu,\nu}$。加上已经确定的原子乘积，即得全部有符号输入的公式。
+
+公式中的第一项保留 $K$ 上每个实际原子的系数，而不是仅保留其相位总质量。因此，同一分裂纤维内输入系数的正负抵消不会遗漏原子残差；这些残差的乘积已经由点行级数确定。其余三项则已经在定理30.3的正输入阶段排除了分裂残差。于是相同点行使两运算的公式逐项相同，证明唯一性。证毕。
+
+**定理 30.5（两个正核在全部实有符号测度上的唯一延拓）。** 固定 $t\in\{0,\infty\}$。实双线性运算 $B:M(K)^2\to M(K)$ 满足正性、全测度相位律及
+$$
+B(\delta_x,\delta_y)=P^{(t)}_{x,y}\qquad(x,y\in K)
+$$
+当且仅当
+$$
+B(\mu,\nu)=\mu\star_t\nu\qquad(\mu,\nu\in M(K)).
+$$
+特别，以上三个条件自动强制全部 Borel 集上的积分公式
+$$
+B(\mu,\nu)(A)
+=\int_K\int_KP^{(t)}_{x,y}(A)\,d\nu(y)\,d\mu(x)
+\qquad
+(\mu,\nu\in M(K),\ A\subseteq K\text{ Borel}).
+$$
+该积分表示是结论而非前提。此运算自动交换、在全部测度上结合，且双线性全变差范数为一。
+
+**证明。** 定理28.7已经用 Borel 点行和逐集合有符号积分构造 $\star_t$，证明其值为有限实有符号正则 Borel 测度，并证明它在两个端点参数保持正性、满足全部测度的相位律且具有指定点行。因此 $\star_t$ 本身满足本定理的三个条件。
+
+反过来，任意满足这些条件的 $B$ 与 $\star_t$ 均适用定理30.4，且点行完全相同，所以在全部实有符号输入上相同。将定理28.7的积分公式代入此相等，得到所列逐集合公式；没有对未知 $B$ 预设积分性或连续性。交换律由定理28.7、全部测度上的结合律由定理28.9传递而来，范数一也可直接由定理30.2得到。证毕。
+
+**定理 30.6（仅假设 Dirac 三元组结合的全部正运算分类）。** 设 $B:M(K)^2\to M(K)$ 实双线性。下列条件合在一起，等价于 $B$ 恰为 $\star_0$ 或 $\star_\infty$：$B$ 保持正测度对的正性；它满足假设30.0的全测度相位律；对全部 $x,y\in K$ 有准确闭图的支撑包含条件
+$$
+\operatorname{supp} B(\delta_x,\delta_y)\subseteq\Gamma(x,y);
+$$
+并且仅要求下列有序 Dirac 三元组结合律：
+$$
+B\bigl(B(\delta_x,\delta_y),\delta_z\bigr)
+=B\bigl(\delta_x,B(\delta_y,\delta_z)\bigr)
+\qquad(x,y,z\in K).
+$$
+这里支撑条件是包含于准确的 $\Gamma$，不是支撑等于 $\Gamma$。无需另行假设全部测度的结合律、交换律、有界性或积分表示。
+
+若把支撑包含条件加强为
+$$
+\operatorname{supp}B(\delta_x,\delta_y)=\Gamma(x,y)
+\qquad(x,y\in K),
+$$
+则不存在满足其余条件的运算。
+
+**证明。** 记 $Q_{x,y}=B(\delta_x,\delta_y)$。正性与相位律给出
+$$
+Q_{x,y}\ge0,\qquad Q_{x,y}(K)=1,\qquad
+Q_{x,y}\bigl(K\setminus H^{-1}(\{H(x)+H(y)\})\bigr)=0.
+$$
+该相位纤维至多两点。因此 $Q_{x,y}$ 是有限概率分布，其拓扑支撑恰为纤维内具有严格正质量的点集；支撑包含假设恰使它成为定义23.2的可容许概率核。
+
+因为每个中间行有限，双线性本身就给
+$$
+B(Q_{x,y},\delta_z)
+=\sum_{u\in\operatorname{supp}Q_{x,y}}
+Q_{x,y}(\{u\})Q_{u,z},
+$$
+$$
+B(\delta_x,Q_{y,z})
+=\sum_{v\in\operatorname{supp}Q_{y,z}}
+Q_{y,z}(\{v\})Q_{x,v}.
+$$
+故所假设的 Dirac 三元组结合律正是定义23.2的有限核结合律，没有在此处使用无限级数或全空间稠密性。定理23.9遂给出唯一全局符号，迫使 $Q=P^{-1}$ 或 $Q=P^{+1}$。由定理25.12，它们分别是 $P^{(0)}$ 和 $P^{(\infty)}$。再应用定理30.5，便得 $B=\star_0$ 或 $B=\star_\infty$。
+
+反向，定理28.7、28.9保证这两个运算保持正性、满足全测度相位律且在全部测度上结合；其点行由定理25.9满足准确支撑包含条件，故当然满足所列较弱的三元组要求。两者在 $(\delta_{0_K},\delta_{x_1^+})$ 处分别给出 $\delta_{x_1^-}$ 与 $\delta_{x_1^+}$，所以确有两个不同解。
+
+最后，假设25.1给
+$$
+\Gamma(0_K,x_1^+)=\{x_1^+,x_1^-\},
+$$
+而两个分类解在该输入对处都只有单点支撑。因此全支撑等式排除两者，故无解。
+
+本证明中，Dirac 三元组首先只决定有限概率核的结合性；从这些点行到任意测度的唯一性则另外使用定理30.4的正性、全测度相位律及典范测度分解。它不是关于任意实双线性运算都由 Dirac 值决定的断言。证毕。
+
+**定理 30.7（删去全测度相位律后的正结合反例）。** 即使保留正性、质量乘法律、双线性范数一、全部测度上的交换律及结合律，并要求在整个原子子代数上与 $\star_t$ 相同，也不能省略定理30.5中的全测度相位律。
+
+准确地，固定任一 $t\in\{0,\infty\}$，取定理28.11的非原子 Haar 概率提升 $\mathfrak m=s_\#\lambda$，并定义
+$$
+\widehat B_t(\mu,\nu)
+=\mu_{\mathrm{at}}\star_t\nu_{\mathrm{at}}
++\Bigl(\varepsilon_K(\mu)\varepsilon_K(\nu)
+-\varepsilon_K(\mu_{\mathrm{at}})
+ \varepsilon_K(\nu_{\mathrm{at}})\Bigr)\mathfrak m.
+$$
+则 $\widehat B_t$ 具有上述所有保留性质，因而有全部指定点行及其准确闭图支撑，却不满足全测度相位律，也不等于 $\star_t$。
+
+**证明。** 定理28.10保证原子投影线性，故该公式实双线性；各项均为有限实有符号正则 Borel 测度，所以运算良定义。
+
+若 $\mu,\nu\ge0$，其原子与非原子部分均正。记四部分的质量为
+$$
+a_0=\varepsilon_K(\mu_{\mathrm{at}}),\quad
+u_0=\varepsilon_K(\mu_{\mathrm{na}}),\quad
+b_0=\varepsilon_K(\nu_{\mathrm{at}}),\quad
+v_0=\varepsilon_K(\nu_{\mathrm{na}}).
+$$
+$\mathfrak m$ 的系数为
+$$
+(a_0+u_0)(b_0+v_0)-a_0b_0=a_0v_0+u_0b_0+u_0v_0\ge0.
+$$
+第一项也是正测度，故 $\widehat B_t$ 保持正性。对任意有符号输入，第一项的质量为 $\varepsilon_K(\mu_{\mathrm{at}})\varepsilon_K(\nu_{\mathrm{at}})$，故直接读取整个空间的质量得到
+$$
+\varepsilon_K(\widehat B_t(\mu,\nu))
+=\varepsilon_K(\mu)\varepsilon_K(\nu).
+$$
+因此定理30.2适用，给出双线性范数恰为一。交换律由公式及 $\star_t$ 的交换律直接得到。
+
+定理28.11保证两个原子测度的 $\star_t$ 乘积仍原子，而 $\mathfrak m$ 非原子。因此
+$$
+\bigl(\widehat B_t(\mu,\nu)\bigr)_{\mathrm{at}}
+=\mu_{\mathrm{at}}\star_t\nu_{\mathrm{at}}.
+$$
+为检查全部有符号输入的结合律，记
+$$
+a=\mu_{\mathrm{at}},\quad b=\nu_{\mathrm{at}},\quad c=\xi_{\mathrm{at}},
+\qquad
+M=\varepsilon_K(\mu),\quad N=\varepsilon_K(\nu),\quad
+R=\varepsilon_K(\xi).
+$$
+刚证的原子部分及质量公式使左括号准确等于
+$$
+(a\star_t b)\star_t c
++\Bigl(MNR-\varepsilon_K(a)\varepsilon_K(b)
+                  \varepsilon_K(c)\Bigr)\mathfrak m,
+$$
+右括号准确等于
+$$
+a\star_t(b\star_t c)
++\Bigl(MNR-\varepsilon_K(a)\varepsilon_K(b)
+                  \varepsilon_K(c)\Bigr)\mathfrak m.
+$$
+原子子代数的结合律使两式相等。这证明全部测度上的结合律，而不只是 Dirac 三元组的结合律。
+
+若 $\mu,\nu$ 均原子，$\mathfrak m$ 的系数为零，所以 $\widehat B_t(\mu,\nu)=\mu\star_t\nu$。于是整个原子子代数、所有 Dirac 点行及其闭图支撑均被保留。
+
+最后给出全测度相位律的实际失败输入。令
+$$
+J=\{[r]\in\mathbb T:0\le r<1/2\},\qquad
+\sigma=2\lambda|_J,\qquad n=s_\#\sigma.
+$$
+$J$ 是闭半圆去掉一个端点所得的 Borel 集，且 $J$ 与其半周平移不交并覆盖圆周。Haar 平移不变性给 $\lambda(J)=1/2$，所以 $\sigma$ 是非原子概率，并且
+$$
+\sigma(J)=1\ne\tfrac12=\lambda(J).
+$$
+Borel 截面推前使 $n$ 为正则概率且 $H_\#n=\sigma$；由定理30.3的正测度非原子判据，$n$ 非原子。因此公式给
+$$
+\widehat B_t(\delta_{0_K},n)=\mathfrak m,
+$$
+但
+$$
+H_\#\widehat B_t(\delta_{0_K},n)=\lambda
+\ne\sigma
+=\delta_0*_{\mathbb T}\sigma
+=(H_\#\delta_{0_K})*_{\mathbb T}(H_\#n).
+$$
+这在两个具体正概率输入处违反全测度相位契约。定理30.3则给 $\delta_{0_K}\star_t n=s_\#\sigma=n$，所以两运算确实不同。由此，正性、全变差有界性乃至完整结合律和全部原子乘法，都不能代替被省略的全测度相位要求。证毕。
+
+## 追加锚（本行以下为增补区）
+## 31. 复乘法观察的完全分类、测度重建与可逆性边界
+
+**假设 31.0（原载体、完整闭图与全测度乘法）。** 沿用定义25.0及假设25.1的固定定向。具体地，令
+$$
+\phi=\frac{1+\sqrt5}{2},\qquad \alpha=\phi^{-1},\qquad K=\{x\in\{0,1\}^{\mathbb N}:x_jx_{j+1}=0\},\qquad \mathbb T=\mathbb R/\mathbb Z,
+$$
+$$
+d_K(x,y)=\sum_{j\ge0}2^{-j-1}|x_j-y_j|,\qquad H(x)=\left[\sum_{j\ge0}(-1)^{j+1}\alpha^{j+2}x_j\right].
+$$
+这里始终使用原数字拓扑及原圆周群拓扑。令 $E_m=[-m\phi]$、$E=\{E_m:m\ge1\}$。采用准确纤维等式
+$$
+H^{-1}(\{E_m\})=\{x_m^+,x_m^-\},\qquad H^{-1}(\{\theta\})=\{k_\theta\}\quad(\theta\notin E),\qquad H^{-1}(\{[n\phi]\})=\{Z(n)\}\quad(n\ge0).
+$$
+映射 $H$ 连续且满射。符号集 $\mathcal S(x)$ 在 $x_m^+$、$x_m^-$ 处分别为 $\{+1\}$、$\{-1\}$，在其他点处为 $\{-1,+1\}$。完整加法闭图为
+$$
+\Gamma=\overline{\{(Z(a),Z(b),Z(a+b)):a,b\in\mathbb N\}}^{\,K^3},
+$$
+并采用准确输入纤维公式
+$$
+\Gamma(x,y)=\begin{cases}\{k_\sigma\},&\sigma=H(x)+H(y)\notin E,\\ \{x_r^s:s\in\mathcal S(x)\cup\mathcal S(y)\},&\sigma=H(x)+H(y)=E_r.\end{cases}
+$$
+固定 $t\in(\mathbb R\setminus\{-1,1\})\sqcup\{\infty\}$，其中 $\infty$ 是形式参数。使用定理25.9的点核 $P^{(t)}_{x,y}$，以及定理28.7—28.9在全部有限实有符号正则 Borel 测度上给出的乘法
+$$
+(\mu\star_t\eta)(D)=\int_K\int_KP^{(t)}_{x,y}(D)\,d\eta(y)\,d\mu(x)
+$$
+和实际有界代数同构
+$$
+\Phi_t^{\mathbb R}\mu=(H_\#\mu,R_t\mu),\qquad \Psi_t^{\mathbb R}(\nu,g)=L_t\nu+\sum_{m\ge1}\frac{g_m}{d'_m}v_m.
+$$
+这里 $v_m=\delta_{x_m^+}-\delta_{x_m^-}$。所采用的是逐 Borel 集积分等式和全测度同构，而不只是点质量乘法一致性。本节结论均在这些前提下成立。数学依据为假设25.1、定理25.9、定理28.2—28.9。
+
+**定义 31.1（复测度、复化与序列代数）。** 对紧致度量空间 $X$，记 $M_{\mathbb C}(X)$ 为有限复正则 Borel 测度空间，采用
+$$
+\|\mu\|_{\mathrm{TV}}=|\mu|(X),\qquad \langle f,\mu\rangle=\int_Xf\,d\mu.
+$$
+每个复测度唯一写成 $\mu=\mu_1+i\mu_2$，其中 $\mu_1,\mu_2\in M(X)$。定义实乘法的复双线性延拓为
+$$
+(\mu_1+i\mu_2)\star_t(\eta_1+i\eta_2)=\mu_1\star_t\eta_1-\mu_2\star_t\eta_2+i(\mu_1\star_t\eta_2+\mu_2\star_t\eta_1).
+$$
+同样复线性延拓 $L_t,R_t,\Phi_t^{\mathbb R},\Psi_t^{\mathbb R}$，以下仍记为 $L_t,R_t,\Phi_t,\Psi_t$。保留
+$$
+p_m=\frac{t^m}{t^m-1}\quad(t\ne\infty),\qquad p_m=1\quad(t=\infty),
+$$
+$$
+\rho_t=\begin{cases}|t|,&|t|<1,\\ |t|^{-1},&|t|>1,\\0,&t=\infty,\end{cases}\qquad C_t=\frac{1+\rho_t}{1-\rho_t},\qquad d'_m=\begin{cases}1-t^m,&|t|<1,\\t^{-m}-1,&|t|>1,\\-1,&t=\infty.\end{cases}
+$$
+有限参数分支不包括形式参数。令
+$$
+r_m=d'_m\bigl((1-p_m)\mathbf1_{\{x_m^+\}}-p_m\mathbf1_{\{x_m^-\}}\bigr),\qquad (R_t\mu)_m=\int_Kr_m\,d\mu,\qquad u_m=\frac{v_m}{d'_m}.
+$$
+置
+$$
+\mathcal M=M_{\mathbb C}(\mathbb T),\qquad \mathcal S_+=\ell^1(\mathbb N_{>0},\mathbb C),\qquad \mathcal S_0=\ell^1(\mathbb N_0,\mathbb C).
+$$
+$\mathcal M$ 使用原圆周测度卷积；两个序列空间使用指数相加的卷积。其标准向量记为 $e_m$，并把 $\mathcal S_+$ 识别为 $\mathcal S_0$ 中常数项为零的闭理想。直和 $\mathcal M\oplus_1\mathcal S_+$ 的乘法为
+$$
+(\nu,g)(\xi,h)=(\nu*\xi,g*h),\qquad \|(\nu,g)\|_\oplus=\|\nu\|_{\mathrm{TV}}+\|g\|_1.
+$$
+交叉乘积为零。
+
+**定理 31.2（全复测度接口与准确范数）。** 定义31.1的复化在全部 $M_{\mathbb C}(K)$ 上良定义、交换且结合，并仍满足逐集积分公式。其准确总变差乘法常数为
+$$
+\|\mu\star_t\eta\|_{\mathrm{TV}}\le C_t\|\mu\|_{\mathrm{TV}}\|\eta\|_{\mathrm{TV}},\qquad \|\star_t\|_{\mathrm{bil}}=C_t.
+$$
+映射
+$$
+\Phi_t\mu=(H_\#\mu,R_t\mu)
+$$
+是复代数同构，逆为
+$$
+\Psi_t(\nu,g)=L_t\nu+\sum_{m\ge1}g_mu_m.
+$$
+它满足
+$$
+\|\Phi_t\mu\|_\oplus\le2\|\mu\|_{\mathrm{TV}},\qquad \|\Psi_t(\nu,g)\|_{\mathrm{TV}}\le C_t\|\nu\|_{\mathrm{TV}}+\frac{2}{1-\rho_t}\|g\|_1,
+$$
+$$
+\frac{1-\rho_t}{2}\|\mu\|_{\mathrm{TV}}\le N_t(\mu):=\|H_\#\mu\|_{\mathrm{TV}}+\|R_t\mu\|_1\le2\|\mu\|_{\mathrm{TV}}.
+$$
+范数 $N_t$ 完备且次乘法；$C_t\|\cdot\|_{\mathrm{TV}}$ 也是完备次乘法范数。原总变差范数次乘法当且仅当 $t\in\{0,\infty\}$。以下以 $A_t$ 表示配备 $N_t$ 的这个复 Banach 代数。
+
+**证明。** 实部与虚部分解唯一，所以所给公式是唯一的复双线性延拓。展开两个复输入的实部和虚部，并使用假设31.0的实逐集公式，立即得到复逐集公式；每个输出是四个有限实正则测度的复线性组合。
+
+为取得准确常数，而非仅由四项展开得到较大常数，写 $\mu=a|\mu|$、$\eta=b|\eta|$，其中相应密度几乎处处模长为一。复乘积测度因而具有密度 $a(x)b(y)$，且其变差为 $|\mu|\otimes|\eta|$。对任意有限 Borel 分割 $D=\bigsqcup_jD_j$，有
+$$
+\sum_j|(\mu\star_t\eta)(D_j)|\le\int_{K^2}\sum_j|P^{(t)}_{x,y}(D_j)|\,d(|\mu|\otimes|\eta|)\le C_t\|\mu\|_{\mathrm{TV}}\|\eta\|_{\mathrm{TV}}.
+$$
+取分割上确界得到所述上界。定理28.2的实点质量最大化输入仍属于复测度空间，因此下界同为 $C_t$。
+
+同一分割估计应用于相位切片，给出 $\|L_t\nu\|_{\mathrm{TV}}\le C_t\|\nu\|_{\mathrm{TV}}$。推前仍为压缩映射。由定理28.2的实际 Borel 函数恒等式，
+$$
+\sum_{m\ge1}|r_m(x)|\le1,
+$$
+故
+$$
+\sum_{m\ge1}\left|\int_Kr_m\,d\mu\right|\le\int_K\sum_{m\ge1}|r_m|\,d|\mu|\le\|\mu\|_{\mathrm{TV}}.
+$$
+这证明正向界。又 $|d'_m|\ge1-\rho_t$，所以逆映射中的级数在总变差中绝对收敛，并满足所述逆向界。
+
+实映射的两个逆恒等式对实部、虚部分别成立，故复映射仍互逆。实全测度上的乘法相容恒等式两边都是复化后的双线性表达式，展开实部、虚部便得复全测度上的相容性。这一步使用的是全实测度恒等式，不使用有限原子测度的总变差稠密性。
+
+复测度空间完备：总变差 Cauchy 序列的实部、虚部分别在实测度空间中 Cauchy，而
+$$
+\|\operatorname{Re}\mu\|_{\mathrm{TV}},\ \|\operatorname{Im}\mu\|_{\mathrm{TV}}\le\|\mu\|_{\mathrm{TV}}\le\|\operatorname{Re}\mu\|_{\mathrm{TV}}+\|\operatorname{Im}\mu\|_{\mathrm{TV}}
+$$
+使两个实极限组成复总变差极限。复序列空间的完备性由逐坐标极限和绝对和估计得到。复圆周卷积通过加法推前复乘积测度，故为压缩乘法；复 Fubini 将两种三重乘积都写成同一个三重积分，证明结合性。序列卷积的相应结论由绝对求和得到。因此直和代数完备、交换、结合且次乘法，其拉回范数正是 $N_t$。
+
+准确乘法估计又给出 $C_t\|\mu\star_t\eta\|_{\mathrm{TV}}\le(C_t\|\mu\|_{\mathrm{TV}})(C_t\|\eta\|_{\mathrm{TV}})$。当 $C_t>1$ 时，已有最大化点质量对排除未缩放总变差范数的次乘法性；当 $C_t=1$ 时，上界直接证明次乘法性。参数定义给出 $C_t=1$ 恰当且仅当 $t\in\{0,\infty\}$。证毕。
+
+**定义 31.3（单位化、字符与两种弱星拓扑）。** 定义
+$$
+A_t^{\#}=\mathbb C\oplus A_t,
+$$
+$$
+(\lambda,\mu)(\kappa,\eta)=(\lambda\kappa,\lambda\eta+\kappa\mu+\mu\star_t\eta),\qquad \|(\lambda,\mu)\|_{\#}=|\lambda|+N_t(\mu).
+$$
+其单位记为 $1^{\#}=(1,0)$，原代数嵌入为 $\mu\mapsto(0,\mu)$。记 $e=\delta_{0_K}\in A_t$；$e$ 与 $1^{\#}$ 是不同对象。
+
+对复 Banach 代数 $B$，$\Delta(B)$ 表示非零、连续、复线性且满足 $\chi(ab)=\chi(a)\chi(b)$ 的泛函集合，赋予逐元素收敛的字符拓扑，即 $\sigma(B^*,B)$ 的子空间拓扑。对有单位的 $B$，定义
+$$
+\sigma_B(b)=\{w\in\mathbb C:w1_B-b\text{ 不可逆}\}.
+$$
+对本节非单位代数，约定 $\sigma_{A_t}(\mu)=\sigma_{A_t^{\#}}(0,\mu)$。
+
+原测度弱星拓扑另记为
+$$
+\tau_K=\sigma(M_{\mathbb C}(K),C(K,\mathbb C)),
+$$
+其连续测试是 $\mu\mapsto\int_Kf\,d\mu$，$f\in C(K,\mathbb C)$。它不是字符空间上逐测度收敛的拓扑，也不是总变差 Banach 弱拓扑。令 $\overline{\mathbb D}=\{z\in\mathbb C:|z|\le1\}$。
+
+**定理 31.4（单位化的实际直积模型）。** $A_t$ 没有左单位或右单位。$A_t^{\#}$ 是单位范数为一的交换复 Banach 代数，并且
+$$
+\Theta_t:A_t^{\#}\longrightarrow\mathcal M\times\mathcal S_0,\qquad \Theta_t(\lambda,\mu)=(\nu+\lambda\delta_0,\lambda e_0+g),\quad (\nu,g)=\Phi_t\mu,
+$$
+是有界有界逆的单位复代数同构。这里 $\delta_0$ 是原圆周上的零点质量。目标直积采用范数
+$$
+\|(\xi,h)\|_{\max}=\max\{\|\xi\|_{\mathrm{TV}},\|h\|_1\}.
+$$
+其逆为
+$$
+\Theta_t^{-1}(\xi,h)=\left(h_0,\Psi_t(\xi-h_0\delta_0,h-h_0e_0)\right),
+$$
+其中第二个序列参数取其正指标部分，并且
+$$
+\|\Theta_t a\|_{\max}\le\|a\|_{\#},\qquad \|\Theta_t^{-1}(\xi,h)\|_{\#}\le3\|(\xi,h)\|_{\max}.
+$$
+
+**证明。** 因为 $\Phi_tu_1=(0,e_1)$，而任意两个正指标序列的卷积在第一坐标均为零，所以任意 $a\in A_t$ 都不满足 $a\star_tu_1=u_1$，也不满足 $u_1\star_ta=u_1$。这排除两侧单位。
+
+单位化范数的完备性由直和完备性得到；次乘法性由
+$$
+|\lambda\kappa|+N_t(\lambda\eta+\kappa\mu+\mu\star_t\eta)\le(|\lambda|+N_t(\mu))(|\kappa|+N_t(\eta))
+$$
+得到。乘法公式直接给出单位 $1^{\#}$，其范数为一。
+
+把两个输入的 $\Theta_t$ 像相乘，其第一坐标为
+$$
+\nu*\xi+\lambda\xi+\kappa\nu+\lambda\kappa\delta_0,
+$$
+第二坐标为
+$$
+g*h+\lambda h+\kappa g+\lambda\kappa e_0.
+$$
+这正是单位化乘积的像。所列逆公式逐坐标恢复输入，因而证明双射及乘法相容；单位被送至 $(\delta_0,e_0)$。
+
+正向范数界来自三角不等式。逆向计算使用 $\|h-h_0e_0\|_1=\|h\|_1-|h_0|$，得到
+$$
+\|\Theta_t^{-1}(\xi,h)\|_{\#}=|h_0|+\|\xi-h_0\delta_0\|_{\mathrm{TV}}+\|h-h_0e_0\|_1\le\|\xi\|_{\mathrm{TV}}+\|h\|_1+|h_0|.
+$$
+于是得到常数三。目标两个因子分别具有范数为一的单位，最大范数使其直积单位也具有范数一。证毕。
+
+**定理 31.5（自动连续性与经典谱接口）。** 在任意完备次乘法范数的复 Banach 代数 $B$ 上，每个非零复线性乘法泛函自动连续，并满足 $|\chi(b)|\le\|b\|$。若 $B$ 另有范数为一的单位，则 $\chi(1_B)=1$，且
+$$
+\sigma_B(b)=\{\chi(b):\chi\in\Delta(B)\}.
+$$
+此时 $\Delta(B)$ 在字符拓扑下紧致。这里的谱等式是经典交换复 Banach 代数定理；谱等式及紧致性部分假设 $B$ 交换且非零。[^rro31-spectrum]
+
+**证明。** 先考虑任意非零复线性乘法泛函，不预设连续性。它在通常单位化上的延拓
+$$
+\chi^{\#}(\lambda,b)=\lambda+\chi(b)
+$$
+是单位代数同态。若 $c=\chi(b)$ 满足 $|c|>\|b\|$，则
+$$
+(c1^{\#}-b)^{-1}=c^{-1}\sum_{j\ge0}(b/c)^j
+$$
+在单位化范数中收敛。但 $\chi^{\#}(c1^{\#}-b)=0$，与单位代数同态把可逆元素送为非零标量矛盾。因此 $|\chi(b)|\le\|b\|$。这一论证只要求复线性和乘法性，不要求事先连续。
+
+若原代数有单位，选择 $b$ 使 $\chi(b)\ne0$，从 $\chi(1_B)\chi(b)=\chi(b)$ 得 $\chi(1_B)=1$。故任一字符值属于谱，否则应用字符于逆元恒等式即得矛盾。
+
+反之，若 $w1_B-b$ 不可逆，则其生成的理想为真理想，并包含于某个极大理想 $J$。这个极大理想闭：若其闭包含有单位，则某个 $j\in J$ 满足 $\|1_B-j\|<1$，Neumann 级数使 $j$ 可逆，矛盾；故闭包仍为真理想，由极大性等于 $J$。商 $B/J$ 因而是完备复 Banach 除代数。经典 Gelfand–Mazur 定理将它识别为复标量域；商映射组成的字符满足 $\chi(b)=w$。这证明谱等式。所用最大理想—Gelfand–Mazur 接口正是引文中的经典接口。
+
+最后，字符均属于对偶单位球。在逐元素收敛下，方程 $\chi(1_B)=1$ 和 $\chi(ab)=\chi(a)\chi(b)$ 定义闭集。因此 Banach–Alaoglu 定理给出字符空间的紧致性。证毕。
+
+**定理 31.6（解析 Wiener 代数及其零常数项理想）。** 对 $h\in\mathcal S_0$ 定义
+$$
+\mathscr G_h(z)=\sum_{m\ge0}h_mz^m\qquad(z\in\overline{\mathbb D}).
+$$
+该级数在闭圆盘上一致绝对收敛，在开圆盘内全纯，并将序列卷积变为函数逐点乘法。由系数绝对和赋范所得的函数代数是经典解析 Wiener 代数。[^rro31-wiener]
+
+$\mathcal S_0$ 的全部字符恰为
+$$
+\operatorname{ev}_z(h)=\mathscr G_h(z),\qquad z\in\overline{\mathbb D},
+$$
+而 $\mathcal S_+$ 的全部非零字符恰为这些求值在 $0<|z|\le1$ 时的限制。其在 $\mathcal S_+$ 上的范数准确为 $|z|$；$z=0$ 的限制是零泛函。并且
+$$
+\sigma_{\mathcal S_0}(h)=\mathscr G_h(\overline{\mathbb D}).
+$$
+
+**证明。** 闭圆盘上的一致绝对收敛由 $\sum_m|h_m|<\infty$ 得到。在任意半径 $r<1$ 的圆盘上，导数级数由 $\sup_m mr^{m-1}<\infty$ 控制，故可逐项求导。绝对收敛允许按总指数重组双重级数，所以 $\mathscr G_{h*k}=\mathscr G_h\mathscr G_k$。系数唯一性也可直接从任意 $0<r\le1$ 的公式读出：
+$$
+h_m=\frac{1}{2\pi r^m}\int_0^{2\pi}\mathscr G_h(re^{i\theta})e^{-im\theta}\,d\theta.
+$$
+逐项积分由一致收敛保证，指数函数的积分给出所列系数。
+
+设 $\chi$ 是 $\mathcal S_0$ 的字符。令 $z=\chi(e_1)$。定理31.5给出 $|z|\le1$，且 $\chi(e_0)=1$、$\chi(e_m)=z^m$。有限截断在绝对和范数中收敛，因此连续性给出 $\chi(h)=\sum_mh_mz^m$。反之，每个闭圆盘求值都是范数为一的非零乘法泛函。
+
+对 $\mathcal S_+$ 上的字符，仍有 $\chi(e_m)=\chi(e_1)^m$，自动有界性及有限截断给出同一公式。若 $\chi(e_1)=0$，它在所有有限截断上为零，从而恒为零，矛盾。因此必须 $z\ne0$。反向的非零性由 $e_1$ 检测。又
+$$
+\left|\sum_{m\ge1}g_mz^m\right|\le|z|\|g\|_1,
+$$
+而 $e_1$ 达到等号，故限制范数为 $|z|$。最后，$\mathcal S_0$ 完备、交换、复线性、次乘法且具有范数一的单位 $e_0$，所以定理31.5与已证明的字符分类给出谱公式。证毕。
+
+**定理 31.7（全部乘法观察及原测度公式）。** $A_t$ 的全部非零复线性乘法泛函恰为以下互不相交的两类：
+$$
+\mathcal P_\chi(\mu)=\chi(H_\#\mu),\qquad \chi\in\Delta(\mathcal M),
+$$
+$$
+\mathcal E_z(\mu)=\mathscr G_{R_t\mu}(z),\qquad 0<|z|\le1.
+$$
+无需另加连续性假设。对 $a_m^\pm=\mu(\{x_m^\pm\})$，第二类准确为
+$$
+\mathcal E_z(\mu)=\begin{cases}\displaystyle\sum_{m\ge1}z^m(a_m^++t^ma_m^-),&|t|<1,\\ \displaystyle\sum_{m\ge1}z^m(t^{-m}a_m^++a_m^-),&|t|>1,\\ \displaystyle\sum_{m\ge1}z^ma_m^-,&t=\infty.\end{cases}
+$$
+等价地，它是实际 Borel 读数
+$$
+\mathcal E_z(\mu)=\int_Kq_{t,z}\,d\mu,\qquad q_{t,z}(x)=\sum_{m\ge1}z^mr_m(x).
+$$
+在每个 $x$ 处，最后一个和至多有一项非零。两类泛函在 $N_t$ 范数下及原总变差范数下的算子范数分别准确为
+$$
+\|\mathcal P_\chi\|=1,\qquad \|\mathcal E_z\|=|z|.
+$$
+
+**证明。** 通过 $\Phi_t$，把任意字符写成 $\ell(\nu,g)=a(\nu)+b(g)$。若两个限制都非零，可选择 $\nu,g$ 使 $a(\nu)b(g)\ne0$；但 $(\nu,0)(0,g)=0$，乘法性将给出 $a(\nu)b(g)=0$，矛盾。因此恰有一个限制非零。第一种情形正是 $\Delta(\mathcal M)$，第二种由定理31.6分类。反向的乘法性来自各自坐标的乘法性，非零性来自坐标满射。这也证明不存在两类的非平凡混合。
+
+定理28.2中 $r_m$ 的显式系数公式在复积分中不变，代入即得原测度公式。其绝对收敛由
+$$
+\sum_{m\ge1}(|a_m^+|+|a_m^-|)\le\|\mu\|_{\mathrm{TV}}
+$$
+保证。由于 $\sum_m|z^mr_m(x)|\le|z|$，支配收敛证明级数读数与 Borel 积分相等。
+
+相位字符在 $\mathcal M$ 上具有范数一，且推前为总变差压缩，所以 $|\mathcal P_\chi(\mu)|\le\|\mu\|_{\mathrm{TV}}$；同样它不超过 $N_t(\mu)$。元素 $e$ 在这两个范数下均为一，且 $\mathcal P_\chi(e)=1$，故两种算子范数都为一。
+
+剩余读数的两种上界分别由 $\|R_t\mu\|_1\le\|\mu\|_{\mathrm{TV}}$ 和定义 $N_t$ 得到。因为 $N_t(u_1)=1$ 且 $\mathcal E_z(u_1)=z$，其 $N_t$ 算子范数为 $|z|$。在 $|t|<1$ 时取 $\delta_{x_1^+}$，在 $|t|>1$ 或 $t=\infty$ 时取 $\delta_{x_1^-}$，它们的总变差为一，剩余读数均为 $z$。因此总变差算子范数也准确为 $|z|$。证毕。
+
+**定理 31.8（字符拓扑及零点的准确地位）。** 在字符拓扑下，存在自然同胚
+$$
+\Delta(A_t)\cong\Delta(\mathcal M)\sqcup(\overline{\mathbb D}\setminus\{0\}).
+$$
+两部分各自开闭。若把零泛函也加入 $A_t^*$，则
+$$
+\Delta(A_t)\cup\{0\}\cong\Delta(\mathcal M)\sqcup\overline{\mathbb D}.
+$$
+特别，当 $z\to0$ 时，$\mathcal E_z\to0$ 甚至在算子范数中成立；它不收敛到任何非零相位字符。零点不是 $A_t$ 的剩余字符。
+
+**证明。** 相位字符的拓扑嵌入由复合 $H_\#$ 给出；其逆通过在所有 $L_t\nu$ 上求值给出，所以两向都为逐元素连续。剩余参数到泛函的映射连续，因为对每个固定 $\mu$，级数 $\mathscr G_{R_t\mu}$ 在闭圆盘上一致收敛，因而连续。逆参数映射是 $\ell\mapsto\ell(u_1)$，所以也是连续的。此论证包括把 $z=0$ 送为零泛函的情形。
+
+对相位字符有 $\mathcal P_\chi(e)=1$，对剩余字符及零泛函有 $\mathcal E_z(e)=0$。对 $e$ 的求值因此将两部分分成开闭集合，并使上述两块同胚组成整体同胚。定理31.7又给出 $\|\mathcal E_z\|=|z|$，证明算子范数收敛。零泛函不满足字符的非零条件，且对 $e$ 的求值排除任何相位字符作为该极限。证毕。
+
+**定理 31.9（原测度弱星连续乘法观察的完全分类）。** 定义
+$$
+\mathcal F_n(\mu)=\int_K\exp(2\pi i nH(x))\,d\mu(x),\qquad n\in\mathbb Z.
+$$
+这里 $\exp(2\pi i n[\theta])=\exp(2\pi i n\theta)$。$\Delta(A_t)$ 中对 $\tau_K$ 连续的元素恰为 $\{\mathcal F_n:n\in\mathbb Z\}$，且整数参数唯一。特别，没有非零剩余字符对 $\tau_K$ 连续。连续函数分解所用的逼近定理是复 Stone–Weierstrass 定理。[^rro31-sw]
+
+**证明。** 先说明连续预伴随的必要性。若复线性泛函 $\ell$ 对 $\tau_K$ 连续，则存在有限多个 $f_1,\ldots,f_N\in C(K,\mathbb C)$，使共同核
+$$
+\bigcap_{j=1}^N\ker\left(\mu\mapsto\int_Kf_j\,d\mu\right)
+$$
+包含于 $\ker\ell$。否则在一个共同核向量上任意放大将违反零点连续性。因此 $\ell$ 通过这些测试组成的有限维映射之像分解，并可把该像上的线性泛函延拓到 $\mathbb C^N$。于是某个 $f=\sum_jc_jf_j\in C(K,\mathbb C)$ 满足
+$$
+\ell(\mu)=\int_Kf\,d\mu\qquad\text{对全部 }\mu.
+$$
+反向由 $\tau_K$ 的定义成立。
+
+若 $\ell=\mathcal E_z$，则其连续预伴随必须满足 $f(x)=\mathcal E_z(\delta_x)=q_{t,z}(x)$。每个有限字 $Z(n)$ 的相位非分裂，所以这些点上的值都是零。截断任意合法无限字并补零，仍是有限合法 Zeckendorf 字，故 $Z(\mathbb N)$ 稠密于 $K$。连续性迫使 $f=0$；然而定理31.7中某个第一纤维点的读数为 $z\ne0$，矛盾。这也给出实际不连续序列：取该点的有限字截断，Dirac 测度弱星收敛，而读数从恒零变为 $z$。
+
+现在设 $\ell=\mathcal P_\chi$ 弱星连续，连续预伴随为 $f$。对点质量求值得
+$$
+f(x)=\chi(\delta_{H(x)}),
+$$
+故 $f$ 在每个完整相位纤维上常值。连续满射 $H$ 从紧致空间到 Hausdorff 空间，因而是商映射；于是存在唯一 $h\in C(\mathbb T,\mathbb C)$ 满足 $f=h\circ H$。
+
+必须同时确定字符在全部圆周测度上的作用。对任意 $\nu\in\mathcal M$，使用实际右逆而非原子稠密性，得到
+$$
+\chi(\nu)=\ell(L_t\nu)=\int_Kh\circ H\,d(L_t\nu)=\int_{\mathbb T}h\,d\nu.
+$$
+最后一步只使用 $H_\#L_t\nu=\nu$，不要求 $L_t$ 弱星连续。乘法性在圆周 Dirac 测度上给出
+$$
+h(\theta+\eta)=h(\theta)h(\eta),\qquad h(0)=1.
+$$
+所以 $h$ 处处非零。其连续像有界，若某个 $|h(\theta)|>1$，正整数次幂即无界；若小于一，则逆元素的值大于一。因此 $|h|=1$。
+
+为准确分类这样的 $h$，注意三角多项式代数包含常数、对共轭封闭，且函数 $\theta\mapsto e^{2\pi i\theta}$ 分离圆周点。复 Stone–Weierstrass 定理使它在 $C(\mathbb T,\mathbb C)$ 中一致稠密。若对所有整数 $n$ 都有
+$$
+a_n:=\int_{\mathbb T}h(\theta)e^{-2\pi i n\theta}\,d\lambda_{\mathbb T}(\theta)=0,
+$$
+其中 $\lambda_{\mathbb T}$ 是归一化 Haar 测度，则由一致逼近 $\overline h$ 得 $\int|h|^2\,d\lambda_{\mathbb T}=0$，与 $|h|=1$ 矛盾。因此某个 $a_n\ne0$。平移不变性及乘法性给出
+$$
+a_n=\int_{\mathbb T}h(\theta+\eta)e^{-2\pi i n(\theta+\eta)}\,d\lambda_{\mathbb T}(\theta)=h(\eta)e^{-2\pi i n\eta}a_n.
+$$
+故 $h(\eta)=e^{2\pi i n\eta}$，从而 $\ell=\mathcal F_n$。
+
+反之，函数 $x\mapsto e^{2\pi i nH(x)}$ 连续，故其积分给出实际连续预伴随。复 Fubini 和相位卷积恒等式给出 $\mathcal F_n(\mu\star_t\eta)=\mathcal F_n(\mu)\mathcal F_n(\eta)$，而 $\mathcal F_n(e)=1$。整数参数唯一，因为不同整数给出不同圆周指数函数，且 $H$ 满射。证毕。
+
+**定理 31.10（连续 Dirac 限制仍不足以确定字符）。** 存在显式字符
+$$
+\mathfrak a(\nu)=\sum_{\theta\in\mathbb T}\nu(\{\theta\}),\qquad \nu\in\mathcal M,
+$$
+其中只对至多可数个非零原子质量求绝对收敛和。它满足
+$$
+\mathfrak a(\delta_\theta)=1\quad\text{对所有 }\theta,\qquad \mathfrak a(\lambda_{\mathbb T})=0.
+$$
+因此 $\mathcal P_{\mathfrak a}$ 与 $\mathcal F_0$ 在整个原子子代数上一致，且 Dirac 限制都是连续常数一，但它们是不同泛函，前者不对 $\tau_K$ 连续。在原测度上，
+$$
+\mathcal P_{\mathfrak a}(\mu)=\sum_{x\in K}\mu(\{x\}).
+$$
+
+**证明。** 定理28.10的原子投影逐实部、虚部复化；也可直接用绝对收敛级数 $\nu_{\mathrm{at}}=\sum_\theta\nu(\{\theta\})\delta_\theta$ 定义。非原子复测度与任意有限复测度的卷积没有单点质量，因为复 Fubini 给出
+$$
+(\nu_{\mathrm{na}}*\xi)(\{\theta\})=\int_{\mathbb T}\nu_{\mathrm{na}}(\{\theta-\eta\})\,d\xi(\eta)=0.
+$$
+原子测度的卷积仍为原子测度，所以
+$$
+(\nu*\xi)_{\mathrm{at}}=\nu_{\mathrm{at}}*\xi_{\mathrm{at}}.
+$$
+取总质量便得 $\mathfrak a(\nu*\xi)=\mathfrak a(\nu)\mathfrak a(\xi)$；且 $|\mathfrak a(\nu)|\le\|\nu\|_{\mathrm{TV}}$、$\mathfrak a(\delta_0)=1$，故它是字符。
+
+有限相位纤维的质量等于其各单点质量之和。非原子原测度推前后仍没有单点质量，而原子部分的总质量在推前下不变。这证明原测度上的公式。Haar 测度没有原子，因此两个字符在 $L_t\lambda_{\mathbb T}$ 上分别取零和一。
+
+若 $\mathcal P_{\mathfrak a}$ 有连续预伴随 $f$，则在每个 Dirac 测度上求值将给出 $f(x)=1$，从而它在所有测度上都应等于总质量。Haar 提升已经排除这一结论。因此它不弱星连续。证毕。
+
+**定理 31.11（整个测度的精确重建）。** 全部相位 Fourier 读数和全部非零剩余求值共同分离 $M_{\mathbb C}(K)$。更准确地，
+$$
+\bigcap_{n\in\mathbb Z}\ker\mathcal F_n=\ker H_\#=\left\{\sum_{m\ge1}b_mv_m:(b_m)\in\ell^1(\mathbb N_{>0},\mathbb C)\right\},
+$$
+$$
+\bigcap_{0<|z|\le1}\ker\mathcal E_z=\ker R_t=L_t\mathcal M,
+$$
+而这两个核的交为零。固定任意非零序列 $z_j\to0$，仅保留 $\mathcal E_{z_j}$ 已经足以与全部 $\mathcal F_n$ 共同分离测度。
+
+若 $\nu=H_\#\mu$、$g=R_t\mu$，则 $\nu$ 由 $\mathcal F_n(\mu)$ 唯一确定，且对任意 $0<r\le1$，
+$$
+g_m=\frac{1}{2\pi r^m}\int_0^{2\pi}\mathcal E_{re^{i\theta}}(\mu)e^{-im\theta}\,d\theta.
+$$
+原测度随后由
+$$
+\mu=L_t\nu+\sum_{m\ge1}\frac{g_m}{d'_m}v_m
+$$
+唯一恢复，级数在总变差中绝对收敛。[^rro31-sw]
+
+**证明。** 若一个圆周复测度的全部整数 Fourier 系数为零，则它在每个三角多项式上的积分为零。定理31.9中已经检查的 Stone–Weierstrass 条件使三角多项式一致稠密，故该测度在每个连续函数上的积分都为零。实部、虚部分别应用 Riesz 唯一性，得到该测度为零。因此 Fourier 系数唯一确定 $\nu$，并给出第一个核等式；其余核描述由定理31.2的实际坐标逆映射得到。
+
+剩余系数积分公式来自定理31.6的逐项积分公式。故全部剩余求值唯一确定 $g$，得到第二个核等式及全测度恢复式。两个坐标共同为零时，$\Phi_t$ 的单射性给出原测度为零。
+
+对于趋零的可数采样，设 $g\ne0$，并令 $m$ 为其第一个非零系数。对 $0<|z|\le1$，
+$$
+\frac{\mathscr G_g(z)}{z^m}=g_m+\sum_{k>m}g_kz^{k-m},\qquad \left|\sum_{k>m}g_kz^{k-m}\right|\le|z|\sum_{k>m}|g_k|.
+$$
+所以左边在 $z\to0$ 时趋于非零数 $g_m$，不可能在所有充分大的 $z_j$ 上为零。这证明采样求值也分离 $\mathcal S_+$。应用于两个测度的差即可。
+
+这里 Fourier 系数单独重建的是圆周测度 $\nu$；在原空间上，它们的共同核正是显示的非零剩余理想。证毕。
+
+**定理 31.12（单位化字符、完整谱及逆元）。** 若 $a=(\lambda,\mu)\in A_t^{\#}$，且 $\Phi_t\mu=(\nu,g)$，则 $A_t^{\#}$ 的全部字符准确为
+$$
+\mathcal P_\chi^{\#}(a)=\lambda+\chi(\nu),\qquad \chi\in\Delta(\mathcal M),
+$$
+$$
+\mathcal E_z^{\#}(a)=\lambda+\mathscr G_g(z),\qquad z\in\overline{\mathbb D}.
+$$
+特别 $\mathcal E_0^{\#}(\lambda,\mu)=\lambda$ 是非零单位化字符，其在 $A_t$ 上的限制才是零泛函。字符空间同胚于 $\Delta(\mathcal M)\sqcup\overline{\mathbb D}$。完整谱为
+$$
+\sigma_{A_t^{\#}}(\lambda,\mu)=\bigl(\lambda+\sigma_{\mathcal M}(\nu)\bigr)\cup\{\lambda+\mathscr G_g(z):|z|\le1\}.
+$$
+因此 $a$ 可逆当且仅当
+$$
+\nu+\lambda\delta_0\text{ 在 }\mathcal M\text{ 中可逆},\qquad \lambda+\mathscr G_g(z)\ne0\quad\text{对每个 }|z|\le1.
+$$
+这些条件特别要求 $\lambda\ne0$。当它们成立时，令 $\xi=\nu+\lambda\delta_0$、$h=\lambda e_0+g$，则
+$$
+a^{-1}=\left(\lambda^{-1},\Psi_t\left(\xi^{-1}-\lambda^{-1}\delta_0,h^{-1}-\lambda^{-1}e_0\right)\right).
+$$
+这里 $h^{-1}$ 在 $\mathcal S_0$ 中取逆，第二个剩余参数的常数项为零。[^rro31-spectrum][^rro31-wiener]
+
+**证明。** 对单位化字符限制到 $A_t$，或者得到零泛函，此时原字符必为标量投影；或者得到定理31.7的一个字符，此时单位性迫使延拓为 $\lambda+\chi(\mu)$。这给出显示的全部字符。其拓扑描述也可通过 $\Theta_t$：两个直积幂等元将两部分分开，分别恢复 $\Delta(\mathcal M)$ 和闭圆盘的求值拓扑。
+
+直积中的一个元素可逆当且仅当两个坐标都可逆，因为任何逆元恒等式都逐坐标成立，反向把两个逆元配成一对即可。因此 $\Theta_t$ 给出
+$$
+\sigma_{A_t^{\#}}(a)=\sigma_{\mathcal M}(\nu+\lambda\delta_0)\cup\sigma_{\mathcal S_0}(\lambda e_0+g).
+$$
+第一项由谱定义等于 $\lambda+\sigma_{\mathcal M}(\nu)$；第二项由定理31.6等于显示的闭圆盘像。这里 $\mathcal M$ 和 $\mathcal S_0$ 都已具有完备复次乘法范数、交换乘法和范数为一的单位，故经典谱接口的全部假设均已满足。谱公式及可逆条件随之成立。
+
+在 $z=0$ 处的第二条件给出 $\lambda\ne0$。若 $h^{-1}=k$，卷积的常数项恒等式给出 $\lambda k_0=1$，所以 $k_0=\lambda^{-1}$。将直积逆元 $(\xi^{-1},h^{-1})$ 代入定理31.4的逆映射，就得到所列实际逆元公式。证毕。
+
+**定理 31.13（完全显式的剩余圆盘谱）。** 元素 $u_1=v_1/d'_1$ 满足
+$$
+\mathcal P_\chi(u_1)=0\quad\text{对全部 }\chi\in\Delta(\mathcal M),\qquad \sigma_{A_t}(u_1)=\overline{\mathbb D}.
+$$
+特别，全部相位字符不能区分 $0$ 与 $u_1$，但二者的谱分别为 $\{0\}$ 和闭单位圆盘。单位化元素
+$$
+c=1^{\#}-2u_1
+$$
+与 $1^{\#}$ 具有相同的全部相位字符值一，却不可逆。
+
+**证明。** $\Phi_tu_1=(0,e_1)$，所以所有相位字符都为零。下面直接验证圆盘谱，不依赖 Wiener–Pitt 存在性。当 $|w|>1$ 时，$w1^{\#}-u_1$ 的直积像是 $(w\delta_0,we_0-e_1)$，其逆为
+$$
+\left(w^{-1}\delta_0,\sum_{m\ge0}w^{-m-1}e_m\right).
+$$
+第二坐标绝对可和，直接卷积给出单位。当 $|w|\le1$ 时，第二坐标上的求值 $\operatorname{ev}_w$ 将 $we_0-e_1$ 送为零，所以该坐标不可逆。这证明完整闭圆盘谱。
+
+最后，$\Theta_t c=(\delta_0,e_0-2e_1)$。第一坐标的所有字符值均为一，而第二坐标在 $z=1/2$ 处的求值为零，故 $c$ 不可逆。单位 $1^{\#}$ 当然可逆。证毕。
+
+**定理 31.14（经典 Wiener–Pitt–Šreĭder 现象的准确传递）。** 存在正圆周概率测度 $\beta$，使
+$$
+\widehat\beta(n):=\int_{\mathbb T}e^{2\pi i n\theta}\,d\beta(\theta)\in[-1,1]\quad(n\in\mathbb Z),\qquad \sigma_{\mathcal M}(\beta)=\overline{\mathbb D}.
+$$
+此存在性采用经典 Šreĭder 测度定理，准确出处为 Nikolski §3.1.1，印刷页1962。[^rro31-wp] 对任一这样的 $\beta$，令
+$$
+a_\beta=L_t\beta\in A_t,\qquad b_\beta=1^{\#}+a_\beta-(1+i/2)e\in A_t^{\#}.
+$$
+则
+$$
+\sigma_{A_t}(a_\beta)=\overline{\mathbb D},\qquad \mathcal F_n(a_\beta)=\widehat\beta(n)\in\mathbb R,\qquad \mathcal E_z(a_\beta)=0,
+$$
+$$
+\sigma_{A_t^{\#}}(b_\beta)=(\overline{\mathbb D}-i/2)\cup\{1\}.
+$$
+特别 $b_\beta$ 不可逆，尽管其全部普通单位化读数满足
+$$
+\left|1+\mathcal F_n\bigl(a_\beta-(1+i/2)e\bigr)\right|=|\widehat\beta(n)-i/2|\ge\frac12,
+$$
+$$
+\mathcal E_z^{\#}(b_\beta)=1\qquad(z\in\overline{\mathbb D}).
+$$
+整数 Fourier 字符在 $\Delta(\mathcal M)$ 中不稠密；把它们连同全部剩余字符使用，也仍不穷尽 $A_t$ 的完整字符谱。
+
+**证明。** 原圆周是非离散局部紧交换群。所引经典定理因此提供一个正测度，其总变差为一、群 Fourier 值位于 $[-1,1]$，而完整 Gelfand 值域为闭单位圆盘。定理31.5把完整 Gelfand 值域识别为测度代数谱；正性及总变差一说明它是概率测度。Fourier 指数的正负约定只重排整数指标，不改变这些性质。
+
+由实际坐标恒等式，$\Phi_ta_\beta=(\beta,0)$。定理31.12立即给出 $a_\beta$ 的谱及所有显示的读数。再由 $\Phi_te=(\delta_0,0)$，得到
+$$
+\Theta_t b_\beta=(\beta-(i/2)\delta_0,e_0).
+$$
+第一坐标谱为闭单位圆盘平移 $-i/2$，第二坐标谱为 $\{1\}$。由于 $i/2\in\sigma_{\mathcal M}(\beta)$，第一坐标的平移谱包含零，故 $b_\beta$ 不可逆。普通 Fourier 值均为实数减去 $i/2$，其模长至少为 $1/2$；剩余坐标恒为单位，故全部剩余求值均为一。
+
+最后，定理31.5提供 $\chi_*\in\Delta(\mathcal M)$，使 $\chi_*(\beta)=i/2$。非空字符开集
+$$
+\{\chi\in\Delta(\mathcal M):|\chi(\beta)-i/2|<1/4\}
+$$
+不含任何整数 Fourier 字符，因为后者在 $\beta$ 上都取实值。因此这些 Fourier 字符不稠密。把 $\chi_*$ 拉回 $A_t$，它在 $a_\beta$ 上取 $i/2$；普通 Fourier 及剩余读数在该元素上却都取实值。这也直接给出完整模型字符谱中一个普通读数无法达到的非空开集。证毕。
+
+**定理 31.15（重建表示不是谱保持表示）。** 令 $\mathscr X_t$ 为下列单位化字符组成的集合：
+$$
+\mathcal F_n^{\#}(\lambda,\mu)=\lambda+\mathcal F_n(\mu)\quad(n\in\mathbb Z),\qquad \mathcal E_z^{\#}\quad(z\in\overline{\mathbb D}).
+$$
+定义普通观察表示
+$$
+\mathcal O_t:A_t^{\#}\longrightarrow\ell^\infty(\mathscr X_t),\qquad \mathcal O_t(a)(\omega)=\omega(a).
+$$
+它是有界、单射、保单位的复代数同态。若 $a=(\lambda,\mu)$、$\Phi_t\mu=(\nu,g)$，则
+$$
+\sigma_{\ell^\infty(\mathscr X_t)}(\mathcal O_t(a))=\lambda+\left(\overline{\{\widehat\nu(n):n\in\mathbb Z\}}\cup\mathscr G_g(\overline{\mathbb D})\right),
+$$
+而原单位化谱为定理31.12的较大集合。因此对这个元素保持谱，准确等价于
+$$
+\sigma_{\mathcal M}(\nu)\subseteq\overline{\{\widehat\nu(n):n\in\mathbb Z\}}\cup\mathscr G_g(\overline{\mathbb D}).
+$$
+特别，$\mathcal O_t$ 并非对所有元素保持谱，其像也不逆封闭：存在 $a$ 使 $\mathcal O_t(a)$ 在目标代数中可逆，而 $a$ 在原单位化中不可逆。
+
+**证明。** 每个 $\omega\in\mathscr X_t$ 都是单位化字符，因此逐点的线性、乘法性及保单位性质成立。定理31.5给出 $|\omega(a)|\le\|a\|_{\#}$，所以表示有界。若 $\mathcal O_t(\lambda,\mu)=0$，先在 $\mathcal E_0^{\#}$ 上求值得 $\lambda=0$；随后全部 Fourier 及剩余读数为零，定理31.11给出 $\mu=0$。所以表示单射。
+
+对任意集合 $X$ 和 $f\in\ell^\infty(X)$，函数 $w-f$ 可逆当且仅当 $\inf_{x\in X}|w-f(x)|>0$。充分性由有界逐点倒数给出；必要性来自任一有界逆函数必须满足 $(w-f(x))h(x)=1$。因此
+$$
+\sigma_{\ell^\infty(X)}(f)=\overline{f(X)}.
+$$
+应用于 $\mathcal O_t(a)$，其 Fourier 部分的值域闭包是 $\lambda+\overline{\{\widehat\nu(n)\}}$；剩余部分是连续函数在紧闭圆盘上的像 $\lambda+\mathscr G_g(\overline{\mathbb D})$，已经闭。有限并取闭包给出所述谱公式。与定理31.12比较，并使用 Fourier 字符值必属于 $\sigma_{\mathcal M}(\nu)$，即得准确等价条件。
+
+取定理31.14的 $a=b_\beta$。它的全部 $\mathscr X_t$ 读数模长至少为 $1/2$，因此 $\mathcal O_t(b_\beta)$ 在目标代数中具有有界逐点逆；但 $b_\beta$ 在原代数中不可逆。若这个目标逆属于 $\mathcal O_t(A_t^{\#})$，写成 $\mathcal O_t(c)$，则单射性会把 $\mathcal O_t(b_\beta c)=1$ 提升为 $b_\beta c=1^{\#}$，矛盾。因此像不逆封闭，表示也不保持谱。
+
+表示的单射性同时说明：完整精确读数唯一确定元素，因而也唯一确定其谱和可逆性。上面的反例所排除的是用读数值域或逐点非零条件直接替代原代数谱与可逆性，而不是排除从完整数据所确定的元素进行进一步分析。证毕。
+
+[^rro31-spectrum]: Mathlib contributors，复 Banach 代数的最大理想—字符及谱定理，固定版本 `db584cd6d46c92f209a44c0f1c829460d327499d`：[GelfandDuality，ComplexBanachAlgebra 部分，特别 Ideal.toCharacterSpace、WeakDual.CharacterSpace.exists_apply_eq_zero、WeakDual.CharacterSpace.mem_spectrum_iff_exists](https://raw.githubusercontent.com/leanprover-community/mathlib4/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/CStarAlgebra/GelfandDuality.lean)；自动连续性与字符同态接口见同版本 [Spectrum，AlgHom.toContinuousLinearMap 及 WeakDual.CharacterSpace.equivAlgHom](https://raw.githubusercontent.com/leanprover-community/mathlib4/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/Normed/Algebra/Spectrum.lean)。这里只用一般复 Banach 代数定理，不附加或假借 C*-代数结论。
+
+[^rro31-wiener]: J. Esterle、E. Strouse、F. Zouakia，Closed ideals of the algebra of absolutely convergent Taylor series，Bulletin of the American Mathematical Society 31 (1994)，39—43，§1首段，[正文](https://arxiv.org/pdf/math/9407215)。解析 Wiener 代数采用 Taylor 系数绝对和范数。闭圆盘极大理想空间的经典陈述亦见 Raymond Mortini、Amol Sasane，Some algebraic properties of the Wiener–Laplace algebra，Journal of Applied Analysis 16 (2010)，§1，第2页关于 $W^+(\mathbb D)$ 的段落，[正文](https://personal.lse.ac.uk/sasane/JAA_MS.pdf)。
+
+[^rro31-sw]: 复 Stone–Weierstrass 定理：紧致空间上的保常数、共轭封闭且分离点的复函数子代数一致稠密。对应数学条目见 Mathlib contributors，固定版本 `db584cd6d46c92f209a44c0f1c829460d327499d`，ContinuousMap.starSubalgebra_topologicalClosure_eq_top_of_separatesPoints，[数学文本](https://raw.githubusercontent.com/leanprover-community/mathlib4/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Topology/ContinuousMap/StoneWeierstrass.lean)。
+
+[^rro31-wp]: Nikolai Nikolski，In search of the invisible spectrum，Annales de l'Institut Fourier 49(6) (1999)，1925—1998，§3.1.1，印刷页1962，[正文](https://www.numdam.org/item/10.5802/aif.1743.pdf)。该处明确陈述非离散局部紧交换群上正 Šreĭder 测度的存在性、实 Fourier 值及闭单位圆盘完整谱；§0.1，页1926—1927，说明统一远离零的 Fourier 值不充分保证可逆性。圆周测度代数中的相同经典现象亦见 Przemysław Ohrysko、Michał Wojciechowski，On the relationships between Fourier–Stieltjes coefficients and spectra of measures，arXiv:1305.3324v2，§1，第1—2页，[正文](https://arxiv.org/pdf/1305.3324)。
+
+## 追加锚（本行以下为增补区）
+## 32. Bounded-Borel observation, uniqueness, and order-sensitive compact completions
+
+**Assumption 32.0 (Original carrier and exact multiplication).** Work in classical mathematics, including the ultrafilter lemma and the Hahn–Banach theorem. Retain the original compact digit topology and the original compact circle topology. Thus
+$$
+\mathbb N=\{0,1,2,\ldots\},\qquad \phi=\frac{1+\sqrt5}{2},\qquad \alpha=\phi^{-1},
+$$
+$$
+K=\{x\in\{0,1\}^{\mathbb N}:x_jx_{j+1}=0\text{ for every }j\},\qquad
+H(x)=\left[\sum_{j\ge0}(-1)^{j+1}\alpha^{j+2}x_j\right]\in\mathbb T=\mathbb R/\mathbb Z.
+$$
+Use the finite Zeckendorf map $Z$ of Definition 25.0, with $0_K=Z(0)$. Assume precisely the exact fibers of Assumption 25.1:
+$$
+E_m=[-m\phi],\qquad E=\{E_m:m\ge1\},\qquad
+H^{-1}(\{E_m\})=\{x_m^+,x_m^-\},\qquad x_m^+\ne x_m^-,
+$$
+$$
+H^{-1}(\{\theta\})=\{k_\theta\}\quad(\theta\notin E),\qquad
+H^{-1}(\{[n\phi]\})=\{Z(n)\}\quad(n\in\mathbb N).
+$$
+The signs remain the fixed phase-side signs of Definition 25.0. Put $\mathcal S(x_m^+)=\{+1\}$, $\mathcal S(x_m^-)=\{-1\}$, and $\mathcal S(x)=\{-1,+1\}$ on every nonsplit fiber. Assume the full graph identity, not merely phase compatibility:
+$$
+\Gamma=\overline{\{(Z(a),Z(b),Z(a+b)):a,b\in\mathbb N\}}^{\,K^3},
+$$
+$$
+\Gamma(x,y)=
+\begin{cases}
+\{k_\sigma\},&\sigma=H(x)+H(y)\notin E,\\
+\{x_r^s:s\in\mathcal S(x)\cup\mathcal S(y)\},&\sigma=E_r.
+\end{cases}
+$$
+Fix $t\in(\mathbb R\setminus\{-1,1\})\sqcup\{\infty\}$, where $\infty$ is a separate symbol. Let $P^{(t)}$ be the actual finite signed rows of Definition 25.8 and Theorem 25.9, and let $\star_t$ be their setwise integrated product on $M(K)$ from Theorems 28.7–28.9. In particular, these rows are symmetric and associative, have mass one, are supported in the displayed exact graph, and satisfy
+$$
+P^{(t)}_{Z(a),Z(b)}=\delta_{Z(a+b)},\qquad
+\sup_{x,y}\|P^{(t)}_{x,y}\|_{\mathrm{TV}}=C_t<\infty.
+$$
+Here $C_t=(1+\rho_t)/(1-\rho_t)$, with $\rho_t=|t|$ for finite $|t|<1$, $\rho_t=|t|^{-1}$ for finite $|t|>1$, and $\rho_\infty=0$. For every Borel $D\subseteq K$, both row evaluations $P^{(t)}_{x,y}(D)$ and $|P^{(t)}_{x,y}|(D)$ are jointly Borel, as proved in Theorem 28.7. All subsequent carrier-specific assertions retain these assumptions. Measures in $M(K)$ are finite real signed regular Borel measures; total variation has no factor of one half.
+
+**Definition 32.1 (The actual observation topologies).** Write $\mathcal B=\mathcal B(K)$ and
+$$
+B_b(K)=\{f:K\to\mathbb R:f\text{ is Borel and bounded}\},\qquad
+\|f\|_\infty=\sup_{x\in K}|f(x)|,
+$$
+$$
+\langle\mu,f\rangle=\int_K f\,d\mu,\qquad
+\tau_B=\sigma(M(K),B_b(K)).
+$$
+Functions here are literal functions, not equivalence classes modulo a measure's null sets. The topology $\tau_B$ is generated by all seminorms $\mu\mapsto|\langle\mu,f\rangle|$ with $f\in B_b(K)$. Let $\mathcal E$ be the linear span of Borel indicators, equivalently the finite-valued Borel functions, and put
+$$
+\tau_{\mathrm{ev}}=\sigma(M(K),\mathcal E),\qquad
+\tau_C=\sigma(M(K),C(K)),\qquad
+\tau_w=\sigma(M(K),M(K)^*).
+$$
+Here $M(K)^*$ is the Banach dual for total variation. Eventwise convergence means convergence of $\mu_i(D)$ on every $D\in\mathcal B$; it is exactly convergence for $\tau_{\mathrm{ev}}$. Denote Radon probabilities by $\mathcal P(K)$.
+
+**theorem 32.2 (Bounded nets and the signed-net distinction).** The space $B_b(K)$ is Banach, and its simple Borel functions are uniformly dense. Every $\tau_B$-convergent net is eventwise convergent. Conversely, if a net $(\mu_i)$ is eventually bounded in total variation and $\mu_i(D)\to\mu(D)$ for every Borel $D$, then $\mu_i\to\mu$ for $\tau_B$. Consequently $\tau_B$ and $\tau_{\mathrm{ev}}$ induce the same topology on every fixed total-variation ball and on $\mathcal P(K)$. They also have the same convergent nets on the positive cone, without a separately imposed bound.
+
+For arbitrary signed nets the two topologies differ. In fact, there is a net of two-point signed measures converging eventwise to zero but not even converging to zero for $\tau_C$.
+
+**Proof.** A uniformly Cauchy sequence of bounded functions has a bounded uniform limit. A pointwise limit of a sequence of real Borel functions is Borel, so $B_b(K)$ is complete. Partitioning a bounded real range into finitely many intervals of length at most $\epsilon$ gives a finite-valued Borel approximation with uniform error at most $\epsilon$.
+
+Indicators belong to $B_b(K)$, which proves the first implication. For the converse suppose $\|\mu_i\|_{\mathrm{TV}}\le R$ on one common tail. Given $f\in B_b(K)$, choose a simple Borel $s$ with $\|f-s\|_\infty<\delta$. On that tail,
+$$
+|\langle\mu_i-\mu,f\rangle|
+\le |\langle\mu_i-\mu,s\rangle|
+ +(R+\|\mu\|_{\mathrm{TV}})\delta.
+$$
+The first term tends to zero by finite linearity. Making $\delta$ arbitrarily small proves the claim. The same inequality gives equality of the relative topologies on a fixed ball: each bounded-Borel test can be controlled there by finitely many event evaluations. For probabilities the bound is one. For positive measures, eventwise convergence on $K$ gives an eventual bound on $\mu_i(K)=\|\mu_i\|_{\mathrm{TV}}$. The probability-space equivalence is classical; see Ma, Definitions 2.8–2.11 and Theorem 2.13.[^rro32-setwise]
+
+For the counterexample define the continuous function
+$$
+h(x)=\sum_{j\ge0}3^{-j-1}x_j.
+$$
+Its range is infinite, since the points with a single digit one give the distinct values $3^{-j-1}$. Direct the finite families $\mathcal F\subseteq\mathcal B$ by inclusion. The atoms of the finite Boolean algebra generated by $\mathcal F$ form a finite Borel partition. Some atom contains two points $u_{\mathcal F},v_{\mathcal F}$ with different $h$-values; otherwise $h$ would have finite range. Choose such points and set
+$$
+\zeta_{\mathcal F}
+=\frac{\delta_{u_{\mathcal F}}-\delta_{v_{\mathcal F}}}
+ {h(u_{\mathcal F})-h(v_{\mathcal F})}.
+$$
+For a fixed Borel $D$, every $\mathcal F$ containing $D$ satisfies $\zeta_{\mathcal F}(D)=0$, because the two selected points lie in the same partition atom. Thus the net is eventwise null. Nevertheless
+$$
+\langle\zeta_{\mathcal F},h\rangle=1
+$$
+at every index. It is not $\tau_C$-null and hence not $\tau_B$-null.
+
+There is no hidden uniformly bounded tail. Given a starting family and $\epsilon>0$, adjoin a finite partition of the range of $h$ into intervals of length at most $\epsilon$, pulled back to $K$. Every subsequent selected pair then satisfies $|h(u)-h(v)|\le\epsilon$, so
+$$
+\|\zeta_{\mathcal F}\|_{\mathrm{TV}}
+=\frac{2}{|h(u_{\mathcal F})-h(v_{\mathcal F})|}\ge\frac2\epsilon.
+$$
+This proves precisely why the bounded-net implication cannot be applied to this signed net. No assertion that arbitrary convergent nets must have a norm-bounded tail is needed. QED.
+
+**theorem 32.3 (Actual bounded-Borel preadjoints).** Every signed kernel $Q_y\in M(X)$ satisfying the hypotheses of Theorem 28.4 has the bounded linear observation operator
+$$
+Q^\flat:B_b(X)\to B_b(Y),\qquad
+Q^\flat f(y)=\int_X f\,dQ_y,
+$$
+with $\|Q^\flat f\|_\infty\le B\|f\|_\infty$. Its integrated operator satisfies
+$$
+\langle I_Q\eta,f\rangle=\langle\eta,Q^\flat f\rangle
+$$
+and is continuous for the corresponding bounded-Borel observation topologies. This is a preadjoint for the indicated dual pairing, not an assertion that $M(X)=B_b(X)^*$.
+
+For the actual product of Assumption 32.0, put
+$$
+k_f(x,y)=\int_K f\,dP^{(t)}_{x,y}.
+$$
+For every $f\in B_b(K)$ this is jointly Borel and bounded by $C_t\|f\|_\infty$. For $\eta\in M(K)$ the actual preadjoint is
+$$
+T_\eta f(x)=\int_K k_f(x,y)\,d\eta(y),\qquad
+\|T_\eta f\|_\infty\le C_t\|\eta\|_{\mathrm{TV}}\|f\|_\infty,
+$$
+and
+$$
+\langle\mu\star_t\eta,f\rangle
+=\langle\mu,T_\eta f\rangle
+=\langle\eta,T_\mu f\rangle.
+$$
+Thus $\star_t$ is separately $\tau_B$-continuous for every allowed parameter.
+
+**Proof.** For simple $f$, measurability of $Q^\flat f$ follows from the set evaluations of the kernel. Uniform simple approximation and the row-variation bound show that $Q^\flat f$ is a uniform limit of Borel functions, with the displayed bound. The integration identity is first finite linearity for simple functions and then uniform approximation on both sides. This proves the first assertion and its continuity directly from the defining seminorms. The measurable signed-row and Jordan-part hypotheses are the ones recorded in Passeggeri, Theorem 3.4(d)–(e′); the present bounded operator conclusion follows from this argument and Theorem 28.4.[^rro32-kernels]
+
+Apply the same simple-approximation argument to parameter space $K^2$ and the rows $P^{(t)}_{x,y}$. This proves joint Borel measurability and boundedness of $k_f$.
+
+We spell out the remaining parameter integration. For a finite positive Borel measure $\eta$, the collection of Borel sets $A\subseteq K^2$ for which $x\mapsto\eta(A_x)$ is Borel contains rectangles. It is closed under complements and countable disjoint unions, by finiteness and countable additivity. The pi-lambda theorem therefore gives every member of $\mathcal B\otimes\mathcal B$. This is the Borel sigma-algebra of $K^2$, since $K$ is second countable. Simple approximation then proves Borel measurability of $x\mapsto\int g(x,y)\,d\eta(y)$ for every bounded jointly Borel $g$. Applying this to the two Jordan parts proves the signed version. These are the parameter-integration and Fubini facts of Hunter, Theorems 5.15 and 5.18.[^rro32-fubini]
+
+It follows that $T_\eta f\in B_b(K)$, with the asserted bound. Theorem 28.4 and the actual setwise integration law yield the first pairing identity. Signed Fubini and symmetry of the rows give the second. For fixed $\eta$, each output test is therefore a single bounded-Borel input test. This proves separate continuity; measurability alone has not been substituted for continuity. QED.
+
+**theorem 32.4 (Finite-partition density is a net statement).** For every $\mu\in M(K)$ there is a net of finite atomic measures $\mu_{\mathcal P}$ such that
+$$
+\mu_{\mathcal P}\longrightarrow\mu\quad\text{for }\tau_B,\qquad
+\|\mu_{\mathcal P}\|_{\mathrm{TV}}\le\|\mu\|_{\mathrm{TV}},\qquad
+\mu_{\mathcal P}(K)=\mu(K).
+$$
+If $\mu$ is positive or is a probability, every approximant can have the same property. No sequence of finite atomic signed measures can converge eventwise to a nonatomic probability. In particular, finite atomic probabilities are $\tau_B$-dense but not sequentially dense in $\mathcal P(K)$.
+
+**Proof.** Direct all finite Borel partitions of $K$ into nonempty cells by refinement. Choose one point $x_A\in A$ for each cell of each partition and define
+$$
+\mu_{\mathcal P}=\sum_{A\in\mathcal P}\mu(A)\delta_{x_A}.
+$$
+The mass identity, positivity assertions, and variation bound follow immediately from finite additivity and the definition of variation. For every bounded Borel $f$,
+$$
+|\langle\mu_{\mathcal P}-\mu,f\rangle|
+\le \sum_{A\in\mathcal P}\int_A|f(x_A)-f(x)|\,d|\mu|(x)
+\le \|\mu\|_{\mathrm{TV}}\max_{A\in\mathcal P}\operatorname{osc}_A(f),
+$$
+where $\operatorname{osc}_A(f)=\sup_{x,y\in A}|f(x)-f(y)|$. For any finite family of tests and any $\epsilon>0$, partition their bounded ranges into intervals of length at most $\epsilon$ and take the common Borel refinement. Every finer partition has oscillation at most $\epsilon$ for all those tests. This proves convergence of the displayed net.
+
+For a sequence $(\alpha_n)$ of finite atomic measures, let $D$ be the countable union of their finite supports. It is Borel. Then $\alpha_n(K\setminus D)=0$ for every $n$, whereas a nonatomic probability $\mu$ has $\mu(K\setminus D)=1$. Eventwise convergence is impossible. The same argument works for a sequence of countably atomic measures, using countable sets on which their variations are concentrated.
+
+The nonatomic Haar lift $\mathfrak m$ of Theorem 28.11 supplies such a probability on this actual $K$. Its variation distance from a finite atomic signed $\alpha$ is
+$$
+\|\mathfrak m-\alpha\|_{\mathrm{TV}}=1+\|\alpha\|_{\mathrm{TV}},
+$$
+because $\mathfrak m$ and $|\alpha|$ are concentrated on disjoint measurable parts. Thus the preceding density is not total-variation density. Also, allowing atoms at all points of $K$ is essential: probabilities concentrated on the countable set $Z(\mathbb N)$ cannot approximate $\mathfrak m$ under the event test $Z(\mathbb N)$. QED.
+
+**theorem 32.5 (Uniqueness restored, with the topology comparisons kept distinct).** The product $\star_t$ is the unique separately $\tau_B$-continuous bilinear map $M(K)\times M(K)\to M(K)$ having the prescribed rows $P^{(t)}_{x,y}$ for every $x,y\in K$. No variation bound on a competing map is required. Consequently the nontrivial sheared products of Theorem 28.13 are not separately $\tau_B$-continuous.
+
+The proved topology comparisons are
+$$
+\tau_C\subsetneq\tau_B\subsetneq\tau_w\subseteq\tau_{\mathrm{TV}}.
+$$
+On all signed measures, $\tau_C$ and $\tau_{\mathrm{ev}}$ are incomparable. These statements do not identify either topology with total variation.
+
+**Proof.** Let $B_1,B_2$ be two maps as in the statement. Bilinearity and equality on all point pairs give equality on pairs of finite atomic measures. Fix a finite atomic first argument and approximate an arbitrary second argument by the net of Theorem 32.4. Continuity in the second argument gives equality there. Now fix that arbitrary second argument and approximate an arbitrary first argument by finite atomic measures. Continuity in the first argument gives equality everywhere. The target is Hausdorff because Borel indicators separate measures. Existence is Theorem 32.3. The sheared products are distinct from $\star_t$ while having the same rows, by the explicit Haar test in Theorem 28.13, so uniqueness excludes their separate $\tau_B$-continuity.
+
+The inclusions follow from
+$$
+C(K)\subseteq B_b(K)\longrightarrow M(K)^*,\qquad
+f\longmapsto\bigl(\mu\mapsto\langle\mu,f\rangle\bigr),
+$$
+where the last map is isometric: the upper bound is the variation inequality and the lower bound follows by testing Dirac measures. Every Banach-dual functional is norm continuous.
+
+Let $z_j\in K$ have a single digit one at position $j$. Then $z_j\to0_K$ in the digit topology, hence $\delta_{z_j}\to\delta_{0_K}$ for $\tau_C$. Their values on $\{0_K\}$ are all zero, so there is no $\tau_B$ or eventwise convergence to $\delta_{0_K}$. This proves the first strict inclusion and one direction of incomparability. The signed net in Theorem 32.2 proves the other direction of incomparability.
+
+By Theorem 28.10,
+$$
+a_K(\mu)=\mu_{\mathrm{na}}(K)
+$$
+is a bounded linear functional on $M(K)$, vanishing on all atomic measures and taking value one at $\mathfrak m$. The finite atomic net approaching $\mathfrak m$ in Theorem 32.4 therefore does not converge weakly in the Banach sense. This proves $\tau_B\subsetneq\tau_w$. It also explains why the density argument cannot be silently repeated with the Banach weak topology. Indeed, every bounded bilinear product is separately Banach-weak continuous: composing a bounded linear slice with any bounded linear functional remains a bounded linear functional. The nonunique shears satisfy this Banach-weak slice-continuity requirement, but not the bounded-Borel continuity requirement just proved decisive. QED.
+
+**Definition 32.6 (Charges on a specified sigma-algebra).** Write $\operatorname{Pow}(X)=\{A:A\subseteq X\}$ for the full power set, keeping $\mathcal P(K)$ for Radon probabilities. For a nonempty measurable space $(X,\Sigma)$, let $ba(X,\Sigma)$ be the real vector space of finitely additive functions $q:\Sigma\to\mathbb R$ with $q(\varnothing)=0$ and finite variation norm
+$$
+\|q\|_{ba}=\sup_{\mathcal P}\sum_{A\in\mathcal P}|q(A)|,
+$$
+where $\mathcal P$ ranges over finite measurable partitions of $X$. A probability charge is a positive member with $q(X)=1$. Write $B_b(X,\Sigma)$ for the bounded real $\Sigma$-measurable functions. On the actual carrier abbreviate
+$$
+ba(\mathcal B)=ba(K,\mathcal B(K)),\qquad
+\mathcal Q_B(K)=\{q\in ba(\mathcal B):q\ge0,\ q(K)=1\}.
+$$
+Finite additivity is part of this definition; countable additivity is not.
+
+**theorem 32.7 (The actual bounded-Borel dual).** Integration gives an isometric identification
+$$
+B_b(X,\Sigma)^*=ba(X,\Sigma).
+$$
+Under this identification, positivity and probability normalization agree on the two sides. For compact metric $K$, the canonical embedding
+$$
+J:M(K)\longrightarrow B_b(K)^*,\qquad J\mu(f)=\int_K f\,d\mu,
+$$
+is isometric, and its image consists exactly of the countably additive members of $ba(\mathcal B)$. The topology induced on this image by $\sigma(B_b(K)^*,B_b(K))$ is exactly $\tau_B$.
+
+**Proof.** Given $q\in ba(X,\Sigma)$ and a simple function $s=\sum_{A\in\mathcal P}a_A\mathbf1_A$, define
+$$
+I_q(s)=\sum_{A\in\mathcal P}a_Aq(A).
+$$
+A common refinement of any two representing partitions, followed by finite additivity, proves independence of representation. Moreover
+$$
+|I_q(s)|\le\|s\|_\infty\sum_{A\in\mathcal P}|q(A)|
+\le\|s\|_\infty\|q\|_{ba}.
+$$
+Uniform density of simple functions therefore extends $I_q$ uniquely to a bounded linear functional on $B_b(X,\Sigma)$. For every finite partition choose $a_A$ to be the sign of $q(A)$, with sign zero at zero. The resulting simple function has norm at most one and gives
+$$
+I_q(s)=\sum_{A\in\mathcal P}|q(A)|.
+$$
+Taking the supremum proves $\|I_q\|=\|q\|_{ba}$.
+
+Conversely, for $L\in B_b(X,\Sigma)^*$ put $q(A)=L(\mathbf1_A)$. Finite additivity follows from the indicator identity for disjoint sets. Using the same sign function on a partition gives
+$$
+\sum_{A\in\mathcal P}|q(A)|\le\|L\|.
+$$
+Thus $q$ has bounded variation. The functional $I_q$ agrees with $L$ on simple functions and hence everywhere. The constructions are inverse isometries. A positive charge has a nonnegative integral on nonnegative simple functions and then on all bounded nonnegative functions by uniform approximation. Conversely, positivity of the functional implies positivity on indicators. For a positive functional, $|I_q(f)|\le q(X)\|f\|_\infty$, and equality at the constant one gives $\|q\|_{ba}=q(X)$. This proves the assertions about states. The duality and its simple-function construction are also given in Müller, Theorems 3 and 6.[^rro32-ba]
+
+For $\mu\in M(K)$, its charge norm is its total variation by the finite-partition definition of variation. Conversely a countably additive bounded-variation Borel charge is a finite signed Borel measure. Its positive and negative parts are finite Borel measures and are regular on compact metric $K$, by the regularity argument in Theorem 28.4. It therefore belongs to $M(K)$. Finally, restricting the weak-star tests $L\mapsto L(f)$ to $J(M(K))$ gives precisely the tests defining $\tau_B$. QED.
+
+**theorem 32.8 (Compact charge completion and exact finite-event marginals).** In the dual of Theorem 32.7,
+$$
+\overline{J(\mathcal P(K))}^{\,\sigma(B_b(K)^*,B_b(K))}
+=\mathcal Q_B(K).
+$$
+The right side is compact and Hausdorff for this weak-star topology. Finite atomic probabilities already have this closure. More precisely, every probability charge has finite atomic probabilities that reproduce any specified finite family of event values exactly and converge to it on all bounded Borel tests as a net.
+
+For any measurable space $(X,\Sigma)$, every signed $q\in ba(X,\Sigma)$ likewise has a weak-star convergent net of finite atomic charges with norms at most $\|q\|_{ba}$. This latter statement refers to charge duality, not to total-variation approximation of Radon measures.
+
+**Proof.** Probability charges are exactly those dual functionals satisfying
+$$
+L(1)=1,\qquad L(f)\ge0\quad(f\in B_b(K),\ f\ge0).
+$$
+These conditions are weak-star closed, and each such functional has norm one. The closed dual unit ball is weak-star compact by the classical Banach–Alaoglu theorem; its hypotheses apply because $B_b(K)$ is a normed space. Thus $\mathcal Q_B(K)$ is compact. Weak-star separation by all test functions makes it Hausdorff. Banach–Alaoglu in this form is recalled in Tausk, Section 6.[^rro32-alaoglu]
+
+For the density assertion, let $q\in ba(X,\Sigma)$. Direct finite measurable partitions into nonempty cells by refinement, choose $x_A\in A$, and put
+$$
+q_{\mathcal P}=\sum_{A\in\mathcal P}q(A)\delta_{x_A}.
+$$
+Then $\|q_{\mathcal P}\|_{ba}\le\|q\|_{ba}$ and $q_{\mathcal P}(X)=q(X)$. Positivity is preserved. If $D$ is a union of cells, then $q_{\mathcal P}(D)=q(D)$ exactly. In particular, a partition generated by finitely many specified events reproduces all their values.
+
+For $f\in B_b(X,\Sigma)$, define the simple function $s_{\mathcal P,f}$ to equal $f(x_A)$ on $A$. Then
+$$
+q_{\mathcal P}(f)=q(s_{\mathcal P,f}),\qquad
+|q_{\mathcal P}(f)-q(f)|
+\le\|q\|_{ba}\|s_{\mathcal P,f}-f\|_\infty
+\le\|q\|_{ba}\max_{A\in\mathcal P}\operatorname{osc}_A(f).
+$$
+A common range partition for finitely many bounded measurable tests makes all these oscillations arbitrarily small, uniformly over subsequent refinements. Hence $q_{\mathcal P}\to q$ weak-star. On compact metric $K$ the finite atomic probabilities are Radon, proving density in $\mathcal Q_B(K)$. Conversely all Radon probabilities lie in this weak-star closed state space, so their closure cannot be larger. The compactness theorem used here is classical; the displayed finite-partition construction establishes the stated density for the specified Borel observation space. QED.
+
+**theorem 32.9 (Descending events, an ultrafilter limit, and loss of Radon compactness).** A positive probability charge $q$ is countably additive if and only if
+$$
+D_n\downarrow\varnothing\quad\Longrightarrow\quad q(D_n)\longrightarrow0.
+$$
+There is a weak-star limit of Dirac probabilities in $\mathcal Q_B(K)$ which fails this condition. Consequently $\mathcal P(K)$ is not compact for $\tau_B$, although it is compact for $\tau_C$.
+
+**Proof.** Countable additivity implies continuity from above for a finite positive measure. Conversely, let $(A_n)_{n\ge0}$ be pairwise disjoint measurable sets and $A=\bigcup_{n\ge0}A_n$. The sets
+$$
+D_N=A\setminus\bigcup_{n<N}A_n
+$$
+decrease to the empty set. Finite additivity and the assumed descending-event continuity give
+$$
+q(A)=\sum_{n<N}q(A_n)+q(D_N)\longrightarrow\sum_{n\ge0}q(A_n).
+$$
+Thus $q$ is countably additive.
+
+Choose a free ultrafilter $\mathcal U$ on $\mathbb N$: it is an upward-closed family of sets, closed under finite intersections, containing no empty or finite set, and containing exactly one of each set and its complement. Such an ultrafilter exists by extending the cofinite filter with the ultrafilter lemma. For a bounded real sequence $u$, define $\lim_{\mathcal U}u_n$ to be the unique real $l$ satisfying
+$$
+\{n:|u_n-l|<\epsilon\}\in\mathcal U\qquad(\epsilon>0).
+$$
+Existence follows by applying compactness to the closures of the sets of values indexed by members of $\mathcal U$ inside a fixed compact interval. They have the finite intersection property. If a point of their intersection failed the displayed neighborhood condition, the complementary index set would belong to the ultrafilter and its value closure would exclude that point. Uniqueness follows because disjoint neighborhoods of two proposed limits cannot both have preimages in an ultrafilter. Intersecting the good index sets for two convergent bounded sequences proves additivity and scalar homogeneity. Order is preserved, and the constant one has limit one. Thus ultrafilter limit is a positive norm-one linear functional on $\ell^\infty(\mathbb N)$.
+
+Take distinct points $y_n=Z(n)$; their distinctness also follows from the distinct phases $[n\phi]$. Define
+$$
+Q_{\mathcal U}(f)=\lim_{\mathcal U} f(y_n)\qquad(f\in B_b(K)).
+$$
+This is a probability charge, and for a Borel set $D$,
+$$
+Q_{\mathcal U}(D)=
+\begin{cases}
+1,&\{n:y_n\in D\}\in\mathcal U,\\
+0,&\{n:y_n\in D\}\notin\mathcal U.
+\end{cases}
+$$
+The countable sets $S_N=\{y_n:n\ge N\}$ are Borel, decrease to the empty set, and satisfy $Q_{\mathcal U}(S_N)=1$. Thus this charge is not countably additive. Equivalently, it assigns mass one to $S_0$ and zero to each of its singleton subsets, which no Radon probability can do.
+
+It is an actual weak-star limit of a net of Dirac measures. Direct $\mathcal U$ by reverse inclusion and choose $n(A)\in A$ for every $A\in\mathcal U$. For each bounded Borel $f$ and each $\epsilon>0$, its good index set belongs to $\mathcal U$, and every sufficiently late $A$ is contained in that set. Consequently
+$$
+\delta_{y_{n(A)}}\longrightarrow Q_{\mathcal U}
+\quad\text{in }\sigma(B_b(K)^*,B_b(K)).
+$$
+If $\mathcal P(K)$ were $\tau_B$-compact, its image under $J$ would be compact in a Hausdorff space and hence closed. The preceding limit contradicts closedness. In contrast, Riesz representation identifies $\mathcal P(K)$ with the positive norm-one functionals on $C(K)$, a weak-star closed subset of its compact dual unit ball. It is therefore $\tau_C$-compact.
+
+The finite-constraint assertion has a precise scope. For finitely many Borel events, the ultrafilter chooses their membership or nonmembership patterns with a nonempty common index set. A single $y_n$ in that set reproduces all the corresponding values of $Q_{\mathcal U}$ exactly. More generally Theorem 32.8 puts finite atomic probabilities in every weak-star neighborhood specified by finitely many tests and positive tolerances. These consistencies do not impose descending-event continuity.
+
+This does not say that arbitrary exact finite constraints are always realizable by Radon measures, or that no finite constraint can force countable additivity. For example the bounded Borel function
+$$
+b(y_n)=\frac1{n+1},\qquad b(x)=1\quad(x\notin S_0)
+$$
+is strictly positive everywhere but has $Q_{\mathcal U}(b)=0$. Every countably additive probability has positive integral of $b$: the increasing union of the sets $\{b\ge1/j\}$ is $K$, so one of them has positive measure. Thus this one exact function value is not a Radon probability value. Conversely the event constraint $q(\{x\})=1$ forces a positive probability charge to be $\delta_x$. The closure theorem concerns finite observation neighborhoods and exact finite event marginals, not these different exact-constraint assertions. QED.
+
+**Definition 32.10 (The two orders on the countable natural core).** Give $\mathbb N$ its power-set sigma-algebra and write
+$$
+ba(\mathbb N)=ba(\mathbb N,\operatorname{Pow}(\mathbb N))
+=\ell^\infty(\mathbb N)^*.
+$$
+For $u,v\in\ell^1(\mathbb N)$ let
+$$
+(u*v)(k)=\sum_{m+n=k}u_m v_n.
+$$
+For $p,q\in ba(\mathbb N)$ and $f\in\ell^\infty(\mathbb N)$ define two orders by
+$$
+(p\mathbin{\square}q)(f)
+=p\bigl(m\mapsto q(n\mapsto f(m+n))\bigr),
+$$
+$$
+(p\mathbin{\lozenge}q)(f)
+=q\bigl(n\mapsto p(m\mapsto f(m+n))\bigr).
+$$
+These formulas specify which functional is applied first: the inner one is applied first. Every bounded function on $\mathbb N$ is measurable, so the displayed outer functions belong to $\ell^\infty(\mathbb N)$ without an additional invariance hypothesis. These are respectively the first and second Arens orders for this convolution algebra, with the order convention of Hennefeld, Definitions 1.1–1.2.[^rro32-arens]
+
+**theorem 32.11 (Bounded associative extensions and their actual continuity sides).** Both products of Definition 32.10 are bounded bilinear associative products of bilinear norm one. They preserve positivity, have unit $\delta_0$, and satisfy
+$$
+\|p\mathbin{\square}q\|\le\|p\|\|q\|,\qquad
+\|p\mathbin{\lozenge}q\|\le\|p\|\|q\|,
+$$
+$$
+(p\mathbin{\square}q)(1)=(p\mathbin{\lozenge}q)(1)=p(1)q(1),\qquad
+p\mathbin{\lozenge}q=q\mathbin{\square}p.
+$$
+They extend convolution on $\ell^1(\mathbb N)$ and agree whenever at least one factor is in $\ell^1(\mathbb N)$. For fixed $q$, the map $p\mapsto p\mathbin{\square}q$ is weak-star continuous. For fixed $p$, the map $q\mapsto p\mathbin{\lozenge}q$ is weak-star continuous. Here and below the weak-star topology is $\sigma(ba(\mathbb N),\ell^\infty(\mathbb N))$.
+
+If finite atomic nets $u_i\to p$ and $v_j\to q$ weak-star, their two iterated limits exist and are
+$$
+p\mathbin{\square}q
+=\mathop{\mathrm{w}^{*}\!\text{-}\!\lim}_i\,
+\mathop{\mathrm{w}^{*}\!\text{-}\!\lim}_j(u_i*v_j),
+$$
+$$
+p\mathbin{\lozenge}q
+=\mathop{\mathrm{w}^{*}\!\text{-}\!\lim}_j\,
+\mathop{\mathrm{w}^{*}\!\text{-}\!\lim}_i(u_i*v_j).
+$$
+Such approximating nets exist for every signed pair by Theorem 32.8. No interchange of the two limits is asserted.
+
+**Proof.** First, $\ell^1(\mathbb N)^*=\ell^\infty(\mathbb N)$: a bounded functional is determined by its values on the vectors $\delta_n$, these values form a bounded sequence, and absolute convergence represents its action on any $\ell^1$ element. Conversely every bounded sequence defines such a functional with the same norm. Together with Theorem 32.7 this identifies $ba(\mathbb N)$ with the bidual of $\ell^1(\mathbb N)$.
+
+For the first order, the inner function satisfies
+$$
+\sup_m|q(n\mapsto f(m+n))|\le\|q\|\|f\|_\infty.
+$$
+Applying $p$ proves boundedness and the norm estimate; linearity at each stage proves bilinearity. The proof for the other order is identical. Dirac factors show the bilinear norms are exactly one. If $p,q$ are positive and $f\ge0$, both inner and outer evaluations are nonnegative, proving positivity. The constant-one calculation proves multiplicativity of mass, and substitution of $\delta_0$ proves both unit identities. Renaming the two variables and using $m+n=n+m$ proves the opposite-product identity $p\mathbin{\lozenge}q=q\mathbin{\square}p$.
+
+For associativity of the first order, evaluating $((p\mathbin{\square}q)\mathbin{\square}r)$ at $f$ gives
+$$
+p\bigl(i\mapsto q(j\mapsto r(k\mapsto f((i+j)+k)))\bigr).
+$$
+Evaluating $p\mathbin{\square}(q\mathbin{\square}r)$ gives the same expression with $f(i+(j+k))$. These functions are equal by associativity of natural addition. All functions on which a functional is applied are bounded, and no evaluation orders have been exchanged. This proves associativity. The second order is the opposite of an associative product, so it is associative as well.
+
+For $u\in\ell^1(\mathbb N)$ the series
+$$
+\sum_m u_m(n\mapsto f(m+n))
+$$
+converges uniformly in $n$, since its uniform tail is bounded by $\|f\|_\infty$ times the corresponding $\ell^1$ tail of $u$. A bounded functional may therefore pass through this series. This proves agreement of the two orders when the first factor is $u$; the opposite-product identity gives agreement when the second factor is in $\ell^1$. When both are in $\ell^1$, the absolutely convergent double series is the usual convolution pairing. Absolute summation also gives $\|u*v\|_1\le\|u\|_1\|v\|_1$.
+
+For a fixed $q$ and a fixed test $f$, the outer function $m\mapsto q(n\mapsto f(m+n))$ is a single member of $\ell^\infty$. This proves weak-star continuity in $p$ of the first order. The second continuity assertion is proved from its displayed formula in the same way. These are the exact continuity sides and base-factor agreement in Hennefeld, Lemmas 1.4–1.5.[^rro32-arens]
+
+For fixed finite $u_i$, agreement of the orders and their stated continuity give $u_i*v_j\to u_i\mathbin{\square}q$ as $j$ varies. Then first-variable continuity gives $u_i\mathbin{\square}q\to p\mathbin{\square}q$. For the reverse iteration, first let $i$ vary with finite $v_j$ fixed, obtaining $p\mathbin{\lozenge}v_j$, and then let $j$ vary using second-variable continuity. This proves both iterated formulas, the special case here of Hennefeld, Lemma 2.2.[^rro32-arens] QED.
+
+**theorem 32.12 (Ultrafilter products and an exact arithmetic double limit).** The zero-one probability charges on $\operatorname{Pow}(\mathbb N)$ form the usual ultrafilter space $\beta\mathbb N$, compact for its inherited weak-star topology, with the principal ultrafilters dense. Both products in Definition 32.10 preserve this space. For the first order the exact event formula is
+$$
+A\in p\mathbin{\square}q
+\quad\Longleftrightarrow\quad
+\{m:\{n:m+n\in A\}\in q\}\in p,
+$$
+where an ultrafilter is identified with its probability charge. This is the classical ultrafilter semigroup order described by Hindman and Strauss, Section 1.[^rro32-ultrafilters]
+
+Choose any free ultrafilters $\mathcal U,\mathcal V$ on $\mathbb N$ and put
+$$
+a_i=2^{2i},\qquad b_j=2^{2j+1},\qquad
+D=\{a_i+b_j:i<j\},\qquad f=\mathbf1_D,
+$$
+$$
+p(u)=\lim_{\mathcal U}u(a_i),\qquad
+q(u)=\lim_{\mathcal V}u(b_j).
+$$
+Then $p,q$ are ultrafilter probability charges and
+$$
+(p\mathbin{\square}q)(f)=1,\qquad
+(p\mathbin{\lozenge}q)(f)=0,\qquad
+(q\mathbin{\square}p)(f)=0,\qquad
+(q\mathbin{\lozenge}p)(f)=1.
+$$
+In particular both extended products are noncommutative, the two orders differ, and
+$$
+\|p\mathbin{\square}q-p\mathbin{\lozenge}q\|=2.
+$$
+The first product is not everywhere continuous in its second variable, and the second is not everywhere continuous in its first variable, even on ultrafilter probabilities.
+
+**Proof.** A zero-one probability charge determines an ultrafilter by declaring $A$ to belong when its value is one. Upward closure follows from positivity. If two sets have value one, their intersection has value one, by finite additivity and positivity applied to their complements. Exactly one of $A,A^c$ has value one. Conversely the ultrafilter-limit construction in Theorem 32.9, without the freeness requirement, produces the zero-one charge associated to any ultrafilter.
+
+Probability functionals on $\ell^\infty(\mathbb N)$ form a weak-star closed subset of its dual unit ball, by positivity and normalization, and hence a compact space by Banach–Alaoglu. Inside that space, the conditions $p(A)\in\{0,1\}$ for all $A\subseteq\mathbb N$ are closed. Thus the ultrafilter space is compact. The sets
+$$
+\widehat A=\{p:p(A)=1\}
+$$
+are clopen. They generate the relative weak-star topology: indicator tests generate the same topology as all bounded tests on the norm-one state space by uniform simple approximation. Finite intersections of consistent membership conditions contain a principal ultrafilter, by choosing an integer in the corresponding intersection of sets. Hence principals are dense. This is the clopen-set description of $\beta\mathbb N$ used in the cited ultrafilter semigroup construction.[^rro32-ultrafilters]
+
+For an indicator test, the inner evaluation under $q$ is the indicator of the set of $m$ appearing in the displayed event formula. Its outer evaluation under $p$ is therefore zero or one, and the formula follows. Positivity and normalization were proved in Theorem 32.11, so the product is again an ultrafilter probability. The opposite-product identity proves preservation for the second order as well.
+
+We verify the finite arithmetic encoding without a limiting assumption. Every $a_i+b_j$ has precisely two nonzero binary digits, one in even position $2i$ and one in odd position $2j+1$. There is no carry, because these positions are different. Finite binary expansions with coefficients zero or one are unique: if two such expansions differ, their largest differing position contributes a power of two larger than the sum of all lower powers, so their numerical values cannot agree. Thus
+$$
+a_i+b_j=a_{i'}+b_{j'}\quad\Longrightarrow\quad i=i',\ j=j'.
+$$
+It follows exactly, not only eventually, that
+$$
+f(a_i+b_j)=\mathbf1_{\{i<j\}}.
+$$
+For fixed $i$, the set of $j$ with $i<j$ is cofinite, so its $\mathcal V$-limit is one. For fixed $j$, the set of $i$ with $i<j$ is finite, so its $\mathcal U$-limit is zero. Consequently
+$$
+\lim_{\mathcal U,i}\lim_{\mathcal V,j}f(a_i+b_j)=1,\qquad
+\lim_{\mathcal V,j}\lim_{\mathcal U,i}f(a_i+b_j)=0.
+$$
+These are precisely the first two product evaluations. The other two follow from the opposite-product identity. Positivity makes both output charges norm-one probabilities. Their difference evaluated at $2f-1$, a function of norm one, is two; the triangle inequality gives the reverse upper bound of two. This proves the exact norm separation.
+
+To show the missing continuity sides fail, take a net of principal charges $q_\beta=\delta_{b_{j(\beta)}}\to q$ using the reverse-inclusion construction for $\mathcal V$. For every fixed $j$,
+$$
+(p\mathbin{\square}\delta_{b_j})(f)
+=\lim_{\mathcal U,i}\mathbf1_{\{i<j\}}=0,
+$$
+but $(p\mathbin{\square}q)(f)=1$. Thus second-variable continuity of the first product fails at this fixed $p$ and limit $q$. Similarly, for a principal net $p_\alpha=\delta_{a_{i(\alpha)}}\to p$,
+$$
+(\delta_{a_i}\mathbin{\lozenge}q)(f)
+=\lim_{\mathcal V,j}\mathbf1_{\{i<j\}}=1
+$$
+for every $i$, whereas $(p\mathbin{\lozenge}q)(f)=0$. This disproves the other missing continuity side.
+
+At every finite pair the identity $a_i+b_j=b_j+a_i$ still holds, and the finite convolution products of the two Diracs are equal in either order. Noncommutativity here concerns the extended products of limit charges and their different evaluation orders; it does not concern finite natural addition. QED.
+
+**theorem 32.13 (Transport to the actual Zeckendorf core and the compact-extension obstruction).** Put $C=Z(\mathbb N)$. There is an isometric weak-star topological embedding
+$$
+\iota:ba(\mathbb N)\longrightarrow ba(\mathcal B),\qquad
+\iota(p)(D)=p(\{n:Z(n)\in D\}),
+$$
+with pairing
+$$
+\iota(p)(f)=p(f\circ Z).
+$$
+Its image is the weak-star closed subspace of charges concentrated on $C$, where concentration means
+$$
+q(D)=q(D\cap C)\qquad(D\in\mathcal B).
+$$
+For positive probabilities this condition is equivalent to $q(C)=1$. For signed charges the full displayed condition is intended, not merely $q(K\setminus C)=0$.
+
+The two products transport to this subspace by
+$$
+\iota(p)\mathbin{\square_Z}\iota(q)=\iota(p\mathbin{\square}q),\qquad
+\iota(p)\mathbin{\lozenge_Z}\iota(q)=\iota(p\mathbin{\lozenge}q).
+$$
+They extend the actual $\star_t$ product on all countably additive measures concentrated on $C$, for every $t$. For $D$ in Theorem 32.12, the countable Borel set $D_K=Z(D)$ supplies the exact finite witnesses
+$$
+\mathbf1_{D_K}(Z(a_i+b_j))=\mathbf1_{\{i<j\}}.
+$$
+Thus the same opposite values zero and one, and the same norm separation two, occur on the actual Zeckendorf core.
+
+There is no separately weak-star continuous map
+$$
+B:\mathcal Q_B(K)\times\mathcal Q_B(K)\longrightarrow ba(\mathcal B)
+$$
+that agrees with the natural-core point rows on every pair $(\delta_{Z(a)},\delta_{Z(b)})$. This impossibility does not require bilinearity or positivity of $B$.
+
+**Proof.** The set $C$ and all its subsets are countable and therefore Borel in $K$. The map $Z$ is injective, by its prescribed distinct phases. For every $u\in\ell^\infty(\mathbb N)$ the function
+$$
+\widetilde u(Z(n))=u(n),\qquad \widetilde u(x)=0\quad(x\notin C)
+$$
+is bounded Borel and has the same norm as $u$. Consequently restriction $f\mapsto f\circ Z$ maps $B_b(K)$ onto $\ell^\infty(\mathbb N)$ and has this isometric right inverse. Its adjoint is the displayed isometric embedding $\iota$. Since every bounded sequence is a restriction of a Borel test, the embedding is topological for the indicated weak-star topologies.
+
+Every charge in the image is concentrated on $C$. Conversely, if $q$ has the stated concentration property, define $p(u)=q(\widetilde u)$. This is a bounded functional on $\ell^\infty$. The concentration property, first for simple functions and then by uniform approximation, says that $q$ annihilates every Borel function vanishing on $C$. It follows that $q(f)=p(f\circ Z)$, so $q=\iota(p)$. This also identifies the image as the annihilator of
+$$
+\{f\in B_b(K):f|_C=0\},
+$$
+which is weak-star closed. For positive probability charges, $q(C)=1$ makes every subset of $K\setminus C$ have zero mass by positivity, proving the stated equivalence.
+
+The countably additive charges on $\mathbb N$ are exactly the absolutely summable singleton coefficients. Indeed, bounded variation gives $\sum_n|p(\{n\})|\le\|p\|$, and countable additivity determines each event value as the sum of its singleton values. Conversely an absolutely summable sequence defines a countably additive charge. Hence the countably additive part of the embedded subspace is precisely the measures
+$$
+\sum_{n\ge0}u_n\delta_{Z(n)},\qquad u\in\ell^1(\mathbb N).
+$$
+For two such measures, the setwise kernel integral is the absolutely convergent sum of their point rows. Each row is exactly $\delta_{Z(m+n)}$, by Assumption 32.0. Its coefficients are therefore the ordinary $\ell^1$ convolution coefficients. Theorem 32.11 proves agreement with both transported orders. This argument uses only the core rows, independently of $t$.
+
+The set $D_K$ is Borel, and injectivity of $Z$ together with the binary encoding in Theorem 32.12 gives the stated witness identity. The isometry and pairing for $\iota$ transport the product evaluations and exact norm difference.
+
+For the final assertion use the principal nets from Theorem 32.12 and put
+$$
+\xi_\alpha=\delta_{Z(a_{i(\alpha)})}\longrightarrow\iota(p),\qquad
+\eta_\beta=\delta_{Z(b_{j(\beta)})}\longrightarrow\iota(q).
+$$
+These are convergent nets in $\mathcal Q_B(K)$. Suppose such a separately continuous $B$ exists. For a fixed $i$, its actual finite-core values and second-variable continuity give
+$$
+B(\delta_{Z(a_i)},\iota(q))(\mathbf1_{D_K})=1.
+$$
+First-variable continuity along $\xi_\alpha$ then gives
+$$
+B(\iota(p),\iota(q))(\mathbf1_{D_K})=1.
+$$
+For a fixed $j$, first-variable continuity and the finite-core witness instead give
+$$
+B(\iota(p),\delta_{Z(b_j)})(\mathbf1_{D_K})=0.
+$$
+Second-variable continuity along $\eta_\beta$ now forces the same final value to be zero. This is a contradiction. There is no conflict with Theorem 32.3: its domain contains countably additive Radon measures, whereas the two new limit charges are not Radon measures. QED.
+
+**theorem 32.14 (Borel charges and all-subset charges are different dual constructions).** The canonical spaces are
+$$
+ba(\mathcal B)=B_b(K)^*,\qquad
+ba(K,\operatorname{Pow}(K))=\ell^\infty(K)^*
+=\ell^1(K_{\mathrm d})^{**}.
+$$
+Restriction of charges defines a contractive surjection
+$$
+\operatorname{res}:ba(K,\operatorname{Pow}(K))\longrightarrow ba(\mathcal B),
+$$
+but it is not injective. Every probability charge on $\mathcal B$ has a probability-charge extension to $\operatorname{Pow}(K)$. None of these statements identifies the two displayed dual constructions with one another.
+
+**Proof.** The first two dual identities are Theorem 32.7, since every bounded function is measurable for the power-set sigma-algebra. For any set $I$, each member of $\ell^1(I)$ has at most countably many nonzero coordinates and is the norm limit of its finite truncations. A bounded functional on $\ell^1(I)$ is therefore determined by the bounded family of its values on $\delta_i$, with the usual absolutely convergent pairing. This proves $\ell^1(I)^*=\ell^\infty(I)$ and the last displayed identity with $I=K$ treated discretely.
+
+The inclusion $B_b(K)\subseteq\ell^\infty(K)$ is closed, because uniform limits of Borel functions are Borel. It is proper. Indeed, $K$ has cardinality continuum, since it maps onto the circle and embeds in $\{0,1\}^{\mathbb N}$. Second countability gives at most continuum many Borel sets, whereas the power set of $K$ has larger cardinality. The indicator of a non-Borel subset belongs to $\ell^\infty(K)$ but not to $B_b(K)$.
+
+The adjoint of this inclusion is restriction. The Hahn–Banach theorem extends every bounded functional on $B_b(K)$ to $\ell^\infty(K)$ with unchanged norm, proving surjectivity. It also separates a point outside this proper closed subspace from the subspace: there is a nonzero bounded functional on $\ell^\infty(K)$ vanishing on $B_b(K)$. Thus restriction is not injective.
+
+Finally let $q$ be a probability functional on $B_b(K)$, and take a norm-preserving Hahn–Banach extension $\widetilde q$. It has norm one and $\widetilde q(1)=1$. For $0\le f\le1$,
+$$
+\widetilde q(f)=1-\widetilde q(1-f)\ge1-\|1-f\|_\infty\ge0.
+$$
+Scaling proves positivity on all bounded nonnegative functions. Hence the extension is a probability charge on the full power set. Surjectivity or the existence of such extensions supplies no canonical choice of extension and no automatic compatibility of products. QED.
+
+**Definition 32.15 (The exact full-carrier invariance requirement).** For the actual rows $P^{(t)}$ and $f\in B_b(K)$ retain $k_f(x,y)=P^{(t)}_{x,y}(f)$. For $q\in ba(\mathcal B)$ define the pointwise bounded function
+$$
+\mathscr R_q f(x)=q\bigl(y\mapsto k_f(x,y)\bigr).
+$$
+This is defined for each $x$, because the section in $y$ is Borel, and it satisfies
+$$
+\|\mathscr R_q f\|_\infty\le C_t\|q\|\|f\|_\infty.
+$$
+Define the invariance condition
+$$
+(\mathrm I_B^{(t)})\qquad
+\mathscr R_q f\in B_b(K)
+\quad\text{for every }q\in ba(\mathcal B),\ f\in B_b(K).
+$$
+This is an additional condition, not a consequence of joint Borel measurability and not an assumption imposed on the actual carrier. Symmetry of the rows makes the corresponding condition with the two input positions exchanged identical. Theorems 32.19–32.20 determine its status for the actual rows.
+
+**theorem 32.16 (Conditional full-carrier products, with the required closure explicit).** If $(\mathrm I_B^{(t)})$ holds, the formulas
+$$
+(p\mathbin{\square_t}q)(f)=p(\mathscr R_q f),\qquad
+(p\mathbin{\lozenge_t}q)(f)=q(\mathscr R_p f)
+$$
+define associative bounded bilinear products on $ba(\mathcal B)$ of bilinear norm $C_t$. They have multiplicative mass, are opposites of one another, and agree with $\star_t$ on $M(K)$. The first product is weak-star continuous in its first variable with the second fixed; the second is weak-star continuous in its second variable with the first fixed. They preserve positivity if and only if $t\in\{0,\infty\}$.
+
+Without the invariance condition, these formulas do not by themselves define products: a functional on $B_b(K)$ cannot be applied to an arbitrary bounded non-Borel outer function.
+
+**Proof.** The assumed invariance makes each outer evaluation meaningful. Its norm bound gives
+$$
+\|p\mathbin{\square_t}q\|\le C_t\|p\|\|q\|,
+$$
+and the other estimate is identical. Linearity in all evaluations proves bilinearity. The actual norm-attaining Dirac rows of Theorem 28.2 give the lower bound $C_t$, by the isometry of measures in Theorem 32.7, so the bilinear norms are sharp. For $f=1$ each row has value one, hence the mass of either product is $p(1)q(1)$. The two formulas and row symmetry show $p\mathbin{\lozenge_t}q=q\mathbin{\square_t}p$.
+
+We prove associativity while retaining the evaluation order. For a fixed $x$ and test $f$ put $g_x(w)=k_f(x,w)$, a bounded Borel function. The finite-row associativity of Assumption 32.0 gives, for every $y,z$,
+$$
+\sum_w P^{(t)}_{x,y}(\{w\})\,k_f(w,z)
+=\sum_w P^{(t)}_{y,z}(\{w\})\,k_f(x,w)
+=k_{g_x}(y,z).
+$$
+Each sum here is only over the finite support of the indicated row. Consequently, for fixed $x,y$, finite linearity of $r\in ba(\mathcal B)$ gives
+$$
+k_{\mathscr R_r f}(x,y)
+=r\bigl(z\mapsto k_{g_x}(y,z)\bigr).
+$$
+All sections being evaluated belong to $B_b(K)$; in particular $\mathscr R_r f$ is in that space by the invariance assumption. Applying $q$ in $y$ yields
+$$
+\mathscr R_q(\mathscr R_r f)(x)
+=(q\mathbin{\square_t}r)(g_x)
+=\mathscr R_{q\mathbin{\square_t}r}f(x).
+$$
+Therefore
+$$
+((p\mathbin{\square_t}q)\mathbin{\square_t}r)(f)
+=p\bigl(\mathscr R_q(\mathscr R_r f)\bigr)
+=p\bigl(\mathscr R_{q\mathbin{\square_t}r}f\bigr)
+=(p\mathbin{\square_t}(q\mathbin{\square_t}r))(f).
+$$
+This uses finite-row associativity and bounded functional evaluation, not a finitely additive Fubini theorem. The opposite product is then associative as well.
+
+For fixed $q$, the first product pairs each output test $f$ with the fixed input test $\mathscr R_qf\in B_b(K)$, proving the first continuity assertion. The other follows from the second formula. If $p,q$ are Radon measures, Theorem 32.3 and signed Fubini identify both formulas with the actual $\star_t$ product. If $t\in\{0,\infty\}$, every row is positive, so for $f\ge0$ positive inner and outer functionals give a nonnegative result. At any other parameter, a nonpositive actual row from Theorem 25.12 already disproves positivity using two positive Dirac inputs. QED.
+
+**theorem 32.17 (A free-ultrafilter membership function is not Borel).** For a free ultrafilter $\mathcal U$ on $\mathbb N$, the subset
+$$
+\mathscr U=\{\omega\in\{0,1\}^{\mathbb N}:\{n:\omega_n=1\}\in\mathcal U\}
+$$
+of Cantor space is not Borel. In fact it does not have the Baire property.
+
+**Proof.** Membership in a free ultrafilter is unchanged by adding or removing finitely many integers. Indeed, the complement of a finite set belongs to the ultrafilter; intersecting with it removes any finite set without changing membership, and the converse follows by upward closure. Hence $\mathscr U$ is invariant under flipping any finite set of coordinates.
+
+We first prove the relevant zero-one statement for the Baire property. A set $A$ has the Baire property when it differs from an open set by a meager set. If such an $A$ is nonmeager, it is comeager in some nonempty basic cylinder: choose a cylinder inside the nonempty open set witnessing the Baire property. Suppose also that $A$ is invariant under finite coordinate flips. Flipping its initial coordinates maps that cylinder to each cylinder of the same length and preserves $A$. Therefore $A$ is comeager in each of those finitely many cylinders, and hence in all Cantor space. Thus every finite-flip-invariant set with the Baire property is either meager or comeager.
+
+For completeness, Cantor space is a Baire space. Given countably many dense open sets and a nonempty cylinder, choose successively longer nonempty cylinders contained in the successive open sets and in the preceding cylinder. Require the lengths to tend to infinity. Cylinders are closed, and their unique common sequence lies in the starting cylinder and all the open sets. This proves the Baire assertion and rules out a nonempty open set being meager. The sets with the Baire property form a sigma-algebra containing the open sets: complements and countable unions preserve equality modulo meager sets, and a closed set differs from its interior by its nowhere dense boundary. Consequently every Borel set has the Baire property.
+
+The homeomorphism $c(\omega)_n=1-\omega_n$ takes $\mathscr U$ exactly onto its complement, because an ultrafilter contains exactly one of an index set and its complement. If $\mathscr U$ were meager, its complement would be meager as well, contradicting the Baire property of the whole space. If it were comeager, its complement would also be comeager; two such disjoint sets cannot exist in a nonempty Baire space. The zero-one statement excludes every possibility for a Baire-property $\mathscr U$. In particular $\mathscr U$ is not Borel. QED.
+
+**theorem 32.18 (A Cantor set separated from all natural phase translates).** Let
+$$
+G=\{[k\phi]:k\in\mathbb Z\}\subseteq\mathbb T.
+$$
+There is a compact set $A\subseteq\mathbb T$ and a homeomorphism $\kappa:\{0,1\}^{\mathbb N}\to A$ such that
+$$
+A\cap G=\varnothing,\qquad (A-A)\cap G=\{0\}.
+$$
+In particular the compact sets $A+[n\phi]$, $n\in\mathbb N$, are pairwise disjoint, and $A\subseteq\mathbb T\setminus E$.
+
+**Proof.** Enumerate the nonzero elements of $G$ as $g_1,g_2,\ldots$ and all elements of $G$ as $h_1,h_2,\ldots$. Construct closed nondegenerate arcs $I_s$ indexed by finite binary words $s$, beginning with a closed arc having nonempty interior. At level $n\ge1$ require: each child arc is contained in the interior of its parent; all level-$n$ arcs are pairwise disjoint and have diameter at most $2^{-n}$; every level-$n$ arc avoids $h_1,\ldots,h_n$; and
+$$
+(I_s+g_j)\cap I_t=\varnothing
+\quad\text{for all level-}n\text{ words }s,t\text{ and }1\le j\le n.
+$$
+The last requirement includes $s=t$.
+
+Here is the construction step. In the interior of each of the finitely many parent arcs choose two different centers. Choose the total finite list sequentially, excluding $h_1,\ldots,h_n$ and excluding the points whose difference from an already chosen center is one of $0,\pm g_1,\ldots,\pm g_n$. At each choice only finitely many points are forbidden in a nonempty open arc, so a choice remains. A center never equals its own translate by $g_j$, because $g_j\ne0$. Thus all the desired center inequalities, including the self-translate inequalities, hold. Shrink sufficiently small closed neighborhoods around the centers. There are only finitely many constraints, each separated by positive distance in the circle metric, so all can be preserved while placing the neighborhoods inside the parent interiors and imposing the diameter bound. This gives the next level.
+
+Set
+$$
+A=\bigcap_{n\ge1}\bigcup_{|s|=n}I_s.
+$$
+For every binary sequence, its nested arcs have a unique common point by compactness and vanishing diameters. Distinct sequences eventually enter disjoint arcs and give distinct points. Conversely every point of $A$ has a unique nested sequence of arcs. This defines a bijection $\kappa$ from Cantor space onto $A$. Agreement on a sufficiently long prefix places the images in an arc of arbitrarily small diameter, so the map is continuous. It is a homeomorphism, being a continuous bijection from a compact space to a Hausdorff space.
+
+For each $h_j$, all sufficiently late levels avoid it, so $A\cap G=\varnothing$. If $a,b\in A$ and $a-b=g_j\ne0$, choose a level $n\ge j$. The arcs containing $a$ and $b$ would violate the required translate disjointness. Thus no nonzero element of $G$ belongs to $A-A$, while zero does because $A$ is nonempty.
+
+Finally, $a+[n\phi]=b+[m\phi]$ with $n\ne m$ would give the forbidden nonzero difference $a-b=[(m-n)\phi]\in G$, nonzero by irrationality of $\phi$. Hence the translates are disjoint. The exceptional set $E$ is contained in $G$, so $A$ avoids $E$. QED.
+
+**theorem 32.19 (Failure of Borel invariance for every actual parameter).** For every allowed $t$, condition $(\mathrm I_B^{(t)})$ is false. More precisely, there is a single Borel set $D_0\subseteq\mathbb T$, a bounded Borel test
+$$
+f=\mathbf1_{D_0}\circ H,
+$$
+and a single probability charge $q$ concentrated on the actual natural core $Z(\mathbb N)$, independent of $t$, such that $\mathscr R_qf$ is not Borel on $K$. This failure occurs although $k_f$ is jointly Borel and every actual row is finite with uniformly bounded variation.
+
+**Proof.** Choose $A,\kappa$ as in Theorem 32.18 and a free ultrafilter $\mathcal U$. Write $\theta_n=[n\phi]$ and define compact subsets of $A$ by
+$$
+A_n^1=\kappa(\{\omega:\omega_n=1\}).
+$$
+Set
+$$
+D_0=\bigcup_{n\ge0}(A_n^1+\theta_n).
+$$
+This is a countable union of compact sets, hence a Borel set in the original circle. The pairwise disjointness of the full translates $A+\theta_n$ proves the exact identity
+$$
+\mathbf1_{D_0}(\kappa(\omega)+\theta_n)=\omega_n
+\qquad(\omega\in\{0,1\}^{\mathbb N},\ n\in\mathbb N).
+$$
+Indeed, a point of $A+\theta_n$ cannot lie in any differently indexed translate, and inside its own translate membership in $A_n^1+\theta_n$ is precisely the digit condition at index $n$.
+
+Let $p_{\mathcal U}(u)=\lim_{\mathcal U}u(n)$ on $\ell^\infty(\mathbb N)$ and put $q=\iota(p_{\mathcal U})$. Thus
+$$
+q(g)=\lim_{\mathcal U}g(Z(n))\qquad(g\in B_b(K)).
+$$
+This is the non-countably-additive probability charge from Theorems 32.9 and 32.13. The function $f=\mathbf1_{D_0}\circ H$ is bounded Borel, because $H$ is continuous.
+
+Every row has mass one and is supported in the phase fiber of $H(x)+H(y)$. Consequently $f$ is constant on that support, and even for signed rows its integral is
+$$
+k_f(x,y)=\mathbf1_{D_0}(H(x)+H(y)).
+$$
+This identity is independent of $t$. It gives
+$$
+\mathscr R_qf(x)
+=\lim_{\mathcal U,n}\mathbf1_{D_0}(H(x)+[n\phi]).
+$$
+Since $A$ avoids $E$, Theorem 28.3 makes the map
+$$
+j:\{0,1\}^{\mathbb N}\longrightarrow K,\qquad
+j(\omega)=k_{\kappa(\omega)}
+$$
+continuous: it is the composition of $\kappa$ with the continuous inverse of $H$ on the nonsplit fibers. On this continuous copy of Cantor space the outer function has the exact restriction
+$$
+(\mathscr R_qf)(j(\omega))
+=\lim_{\mathcal U,n}\omega_n
+=\mathbf1_{\mathscr U}(\omega),
+$$
+where $\mathscr U$ is the non-Borel set of Theorem 32.17. If $\mathscr R_qf$ were Borel on $K$, its composition with continuous $j$ would be Borel, a contradiction. All ingredients of this test and charge are independent of the parameter, so the failure holds simultaneously for every $t$. QED.
+
+**theorem 32.20 (All-subset Arens products exist but do not descend to Borel charges).** On
+$$
+ba(K,\operatorname{Pow}(K))=\ell^1(K_{\mathrm d})^{**}
+$$
+the finite rows of Assumption 32.0 do define both iterated products
+$$
+(\widetilde p\mathbin{\square_t^{\mathrm{all}}}\widetilde q)(f)
+=\widetilde p\bigl(x\mapsto\widetilde q(y\mapsto P^{(t)}_{x,y}(f))\bigr),
+$$
+$$
+(\widetilde p\mathbin{\lozenge_t^{\mathrm{all}}}\widetilde q)(f)
+=\widetilde q\bigl(y\mapsto\widetilde p(x\mapsto P^{(t)}_{x,y}(f))\bigr),
+\qquad f\in\ell^\infty(K).
+$$
+They are associative bounded bilinear products of norm $C_t$, extending the finite-row product and its $\ell^1(K_{\mathrm d})$ extension. They have the corresponding one-sided weak-star continuities. Neither product descends through $\operatorname{res}$ to a product on $ba(\mathcal B)$.
+
+Thus the countable-core Arens theorem is valid, and the all-subset Arens theorem is valid, but neither supplies an unqualified full-Borel-carrier Arens product. In particular the actual Radon product's separate bounded-Borel continuity and uniqueness do not extend to its compact probability-charge closure.
+
+**Proof.** For any bounded function $f$ on the underlying set $K$, integration against a finite row means a finite sum and is defined without any measurability condition. It satisfies
+$$
+|P^{(t)}_{x,y}(f)|\le C_t\|f\|_\infty.
+$$
+Applying a bounded functional in one variable therefore produces a bounded function in the other, and every such function belongs to $\ell^\infty(K)$. The invariance condition required in Theorem 32.16 is consequently automatic when $B_b(K)$ is replaced by $\ell^\infty(K)$. The finite-row associativity proof in that theorem applies to bounded functions on this underlying set: it used finite sums, row associativity, and invariant bounded-function evaluation, not countable additivity. It proves associativity and the norm upper bounds. The same norm-attaining Dirac rows give norm $C_t$, and the same fixed-test argument proves the stated continuity sides.
+
+For $u,v\in\ell^1(K_{\mathrm d})$, the series
+$$
+\sum_{x,y\in K}u_xv_yP^{(t)}_{x,y}
+$$
+converges absolutely in the atomic $\ell^1$ norm, because the sum of term norms is at most $C_t\|u\|_1\|v\|_1$. This gives a bounded extension of the finite multiplication. Finite vectors are norm dense, so its associativity follows by taking norm limits of the finite associative identities. Pairing with any bounded function and using absolute convergence identifies it with either displayed iterated product. Equivalently one may scale the norm by $C_t$ to obtain a Banach algebra before taking its Arens extensions. These arguments establish existence on all-subset charges, not on the Borel quotient.
+
+To prove failure of descent, take the Borel test $f$ and Borel probability charge $q$ from Theorem 32.19, and write
+$$
+g=\mathscr R_qf\in\ell^\infty(K)\setminus B_b(K).
+$$
+Extend $q$ to a bounded functional $\widetilde q$ on $\ell^\infty(K)$ by Hahn–Banach. Each section $y\mapsto P^{(t)}_{x,y}(f)$ is Borel, so the extension agrees with $q$ on that section. Hence
+$$
+\widetilde q\bigl(y\mapsto P^{(t)}_{x,y}(f)\bigr)=g(x)
+\qquad(x\in K).
+$$
+This identity is independent of the chosen extension.
+
+Because $B_b(K)$ is a closed subspace and $g$ is outside it, the distance $d=\operatorname{dist}(g,B_b(K))$ is positive. On the direct sum $B_b(K)+\mathbb Rg$, define $L_0(b+ag)=a$. It is well-defined and bounded, since
+$$
+\|b+ag\|_\infty\ge |a|d.
+$$
+Hahn–Banach extends it to $L\in\ell^\infty(K)^*$ with
+$$
+L|_{B_b(K)}=0,\qquad L(g)=1.
+$$
+Consequently $\operatorname{res}(L)=0$, but the first all-subset product satisfies
+$$
+\bigl[\operatorname{res}(L\mathbin{\square_t^{\mathrm{all}}}\widetilde q)\bigr](f)
+=L(g)=1.
+$$
+Replacing $L$ by the zero all-subset functional leaves its restriction unchanged but changes this output restriction. Thus the product of two restrictions cannot be determined from the restrictions alone. The opposite-product identity gives
+$$
+\widetilde q\mathbin{\lozenge_t^{\mathrm{all}}}L
+=L\mathbin{\square_t^{\mathrm{all}}}\widetilde q,
+$$
+so the second product fails to descend as well.
+
+The impossibility of a separately weak-star continuous product on the compact Borel probability-charge closure is already the stronger, purely natural-core obstruction of Theorem 32.13. The present argument separately identifies the measurability defect in the canonical full-carrier iterated formulas. It does not assert nonexistence of every conceivable algebraic operation on $ba(\mathcal B)$ with other requirements; it proves the specific failure of these formulas and of quotient descent. QED.
+
+[^rro32-setwise]: Liangang Ma, *Topological description of the Borel probability space*, arXiv:2101.09702v2, Definitions 2.8–2.11, Theorem 2.13 and its proof in Section 3, [full text](https://arxiv.org/html/2101.09702v2). The cited equivalence concerns probabilities. The signed-net qualification and counterexample here are established in Theorem 32.2.
+
+[^rro32-kernels]: Riccardo Passeggeri, *On the extension and kernels of signed bimeasures and their role in stochastic integration*, arXiv:2009.10657v2, Theorem 3.4(d)–(e′), [full text](https://arxiv.org/html/2009.10657v2). The cited clauses specify signed kernels and measurability of their set evaluations and Jordan parts. The bounded-Borel preadjoint used here is proved in Theorem 32.3 from the explicit bounded signed-kernel hypotheses of Theorem 28.4.
+
+[^rro32-fubini]: John K. Hunter, *Measure Theory* (2011), Theorems 5.15 and 5.18, printed pages 60–61, [author's text](https://www.math.ucdavis.edu/~hunter/measure_theory/measure_notes.pdf). Here the measures are finite, the tests are bounded, and the positive product of the variation measures makes the integrability hypotheses automatic; signed integrals are obtained through Jordan decomposition as in Theorem 28.4.
+
+[^rro32-ba]: Johannes Müller, *Weak compactness of probability measures* (7 February 2019), Theorems 3 and 6, printed pages 3–4, [author's notes](https://muellerjohannes.github.io/files/measures-scr-style.pdf). These are the simple-function integral and the isometric duality between bounded measurable functions and bounded-variation finitely additive measures. Theorem 32.7 gives the full construction used here.
+
+[^rro32-alaoglu]: Daniel V. Tausk, *Weak∗ topology for the space of finite measures on a topological space*, Section 6, opening paragraph, printed page 21, [author's text](https://www.ime.usp.br/~tausk/texts/WeakTopologyMeasures.pdf). The invoked statement is Banach–Alaoglu for a normed space and its dual closed unit ball. The Radon representation convention is the one fixed in Definition 28.1.
+
+[^rro32-arens]: Julien Hennefeld, *A note on the Arens products*, Pacific Journal of Mathematics 26 (1968), 115–119, Definitions 1.1–1.2, Lemmas 1.4–1.5 and 2.2, [published paper](https://msp.org/pjm/1968/26-1/pjm-v26-n1-p13-p.pdf). The cited passages give the two orders, their respective one-sided weak-star continuities, agreement with a base-algebra factor, and the two iterated weak-star limit formulas. The explicit convolution, associativity and arithmetic witnesses used here are proved in Theorems 32.11–32.13.
+
+[^rro32-ultrafilters]: Neil Hindman and Dona Strauss, *Some new results about the smallest ideal of βS*, New York Journal of Mathematics 25 (2019), 897–913, Section 1, printed pages 897–898, [published paper](https://nyjm.albany.edu/j/2019/25-38p.pdf). The cited construction identifies the compact ultrafilter space, its clopen event basis, its ordered extension of a discrete semigroup operation, and the corresponding membership formula. The finite binary witness and its Zeckendorf transport in this section are proved directly.
+
+## 追加锚（本行以下为增补区）
+## 33. 几何观察的临界测度、最优相位正则性与时间尺度变换
+
+**定义与前置假设 33.0（载体、两种首差距离及测度归一化）。** 令
+$$
+\mathbb N=\{0,1,2,\ldots\},\qquad
+\phi=\frac{1+\sqrt5}{2},\quad \alpha=\phi^{-1},\quad
+\beta=\alpha^2=1-\alpha,
+$$
+$$
+G_0=1,\qquad G_1=2,\qquad G_{L+2}=G_{L+1}+G_L,\qquad
+s=\frac{\log\phi}{\log2},\quad \kappa=\frac1s.
+$$
+取完整合法数字空间
+$$
+K=\{x\in\{0,1\}^{\mathbb N}:x_jx_{j+1}=0\text{ 对所有 }j\},
+$$
+并沿用第 20 条的算术后继 $T$、位置删除 $\sigma$、位置前缀 $q_L$、时间前缀 $v_t$、相位及时间编码
+$$
+F(x)=\sum_{j\ge0}(-1)^{j+1}\alpha^{j+2}x_j,\qquad
+H(x)=[F(x)],\qquad R(\theta)=\theta+[\phi],
+$$
+$$
+\Phi(x)=(f(T^n x))_{n\ge0},\qquad f(x)=x_0,\qquad
+\Phi:K\longrightarrow X_\beta.
+$$
+这里使用第 20.2、20.4–20.7 条已成立的精确柱相位区间、全部分裂纤维、等式 $\mathcal Q_L=\mathcal V_{G_L-1}$、时间前缀数 $t+1$，以及 $\Phi$ 为同胚且 $\Phi T=S\Phi$、$HT=RH$。特别地，$X_\beta$ 是 $K$ 的真闭子集；$\sigma$ 在整个 $K$ 上作用，$S$ 只在 $X_\beta$ 上作用。
+
+对不同的 $x,y\in K$ 及不同的 $a,b\in X_\beta$，定义
+$$
+j(x,y)=\min\{j:x_j\ne y_j\},\qquad d(x,y)=2^{-j(x,y)},
+$$
+$$
+n(a,b)=\min\{n:a_n\ne b_n\},\qquad \rho(a,b)=2^{-n(a,b)};
+$$
+相等点的距离均定义为零。圆周使用测地距离
+$$
+d_{\mathbb T}([u],[v])=\min_{k\in\mathbb Z}|u-v-k|,
+$$
+$m$ 表示总质量为一的圆周 Haar 测度。合法字 $p$ 的长度记为 $|p|$，其柱集为 $C_p=q_{|p|}^{-1}(\{p\})$，并约定 $C_{\varnothing}=K$。
+
+对任意度量空间 $(Y,e)$、$q>0$、$\delta>0$ 及任意 $A\subseteq Y$，采用不乘任何归一化系数的外测度定义
+$$
+\mathcal H^q_{e,\delta}(A)=
+\inf\left\{\sum_i(\operatorname{diam}_e A_i)^q:
+ A\subseteq\bigcup_i A_i,\ \operatorname{diam}_e A_i\le\delta\right\},
+\qquad
+\mathcal H^q_e(A)=\lim_{\delta\downarrow0}\mathcal H^q_{e,\delta}(A).
+$$
+覆盖至多可数，覆盖集不要求可测；空集和单点的正次幂直径贡献为零。Hausdorff 维数定义为使该测度为零的正指数之下确界。
+
+附引：本条的动力与分裂端点前置为[第 20.1–20.7 条](https://raw.githubusercontent.com/the-omega-institute/trureturing/3a015d0d429b5ef52dcf7f04f26fa9f2c28678f0/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)。
+
+**定理 33.1（真实柱直径与相容的非原子概率）。** 存在唯一 Borel 概率 $\nu$ 满足 $\nu(K)=1$ 及
+$$
+\nu(C_p)=
+\begin{cases}
+\alpha^L,&L=|p|\ge1,\ p_{L-1}=0,\\
+\alpha^{L+1},&L=|p|\ge1,\ p_{L-1}=1.
+\end{cases}
+$$
+它具有满支撑且无原子。全部非空柱集满足精确等式
+$$
+\operatorname{diam}_d K=1,\qquad
+\operatorname{diam}_d C_p=
+\begin{cases}
+2^{-L},&p_{L-1}=0,\\
+2^{-(L+1)},&p_{L-1}=1,
+\end{cases}
+\qquad
+\nu(C_p)=(\operatorname{diam}_d C_p)^s.
+$$
+
+**证明。** 末位为零时，所有延伸共享前 $L$ 位，而延伸 $p0^\infty$ 与 $p10^\infty$ 恰在第 $L$ 位不同，故柱直径为 $2^{-L}$。末位为一时，第 $L$ 位强制为零，因此 $C_p=C_{p0}$；在强制零之后选择零或一，得到首差为 $L+1$ 的两个延伸，故直径为 $2^{-(L+1)}$。空前缀的直径由 $0^\infty$ 与 $10^\infty$ 达到。
+
+记上述候选柱质量为 $w(p)$。根层满足 $w(0)+w(1)=\alpha+\alpha^2=1$。若 $p$ 以零结尾，则
+$$
+w(p0)+w(p1)=\alpha^{L+1}+\alpha^{L+2}=\alpha^L=w(p).
+$$
+若 $p$ 以一结尾，则唯一子柱是 $C_{p0}=C_p$，两者质量同为 $\alpha^{L+1}$。因此逐层相容。
+
+每个开闭集都是有限个同深度柱集的不交并；在这样的表示上求和定义 $w$，相容性保证定义不依赖深度或表示。若一列不交开闭集的并仍是开闭集 $B$，它们是紧集 $B$ 的开覆盖，故有有限子覆盖；不交性迫使其余成员为空。这证明 $w$ 是开闭代数上的有限预测度。该代数生成 Borel 集，有限测度扩张定理给出唯一 Borel 概率 $\nu$。
+
+每个非空柱质量严格为正，柱集又构成拓扑基，故支撑为 $K$。对每个 $x$，
+$$
+\nu(\{x\})\le\nu(C_{q_L(x)})\le\alpha^L\longrightarrow0,
+$$
+所以没有原子。最后 $2^{-s}=\alpha$，将真实柱直径代入即得质量与直径幂的等式。证毕。
+
+附引：有限预测度的扩张与唯一性见 Scott Sheffield，[18.175 Lecture 2，PDF 第 28 页的 Carathéodory 扩张定理](https://math.mit.edu/~sheffield/2016175/Lecture2.pdf#page=28)。
+
+**定理 33.2（任意集合的质量界、精确临界测度及 Ahlfors 界）。** 令 $\nu^*$ 为 $\nu$ 的外测度。对每个集合 $A\subseteq K$，
+$$
+\nu^*(A)\le(\operatorname{diam}_d A)^s.
+$$
+而且对所有 $\delta>0$ 都有更强的等式
+$$
+\mathcal H^s_{d,\delta}(A)=\mathcal H^s_d(A)=\nu^*(A).
+$$
+特别地，作为 Borel 测度，
+$$
+\mathcal H^s_d=\nu,\qquad \mathcal H^s_d(K)=1,\qquad
+\dim_{\mathrm H}(K,d)=s.
+$$
+对所有 $x\in K$ 和 $0<r\le1$，闭球满足
+$$
+\alpha^2r^s\le\nu(\overline B_d(x,r))\le r^s.
+$$
+这两个统一系数分别不能增大和减小。
+
+**证明。** 若 $A$ 为空或至多含一点，第一式由无原子性成立。否则在所有不同点对的首差下标中取最小值 $k$。所有点共享前 $k$ 位，并有两个点恰在第 $k$ 位不同，故 $\operatorname{diam}_d A=2^{-k}$。若 $k=0$，使用 $A\subseteq K$。若 $k\ge1$，共同前缀的末位必为零；否则第 $k$ 位被强制为零，不可能出现该处首差。因此 $A$ 包含于一个质量为 $\alpha^k$ 的柱集，得到
+$$
+\nu^*(A)\le\alpha^k=(2^{-k})^s.
+$$
+这证明的是所有集合的直径控制，而不只是球或可测集合的控制。
+
+任意允许的覆盖给出
+$$
+\nu^*(A)\le\sum_i\nu^*(A_i)
+\le\sum_i(\operatorname{diam}_d A_i)^s,
+$$
+所以 $\nu^*(A)\le\mathcal H^s_{d,\delta}(A)$。反向使用上一条预测度扩张的外测度公式
+$$
+\nu^*(A)=
+\inf\left\{\sum_i\nu(B_i):
+ A\subseteq\bigcup_i B_i,\ B_i\text{ 为开闭集}\right\}.
+$$
+固定 $\delta>0$ 和 $\varepsilon>0$，取右边总质量小于 $\nu^*(A)+\varepsilon$ 的开闭覆盖。将每个 $B_i$ 分成足够深的有限个柱集，使它们的直径均不超过 $\delta$。按定理 33.1，这些柱集的直径 $s$ 次幂之和恰为 $\nu(B_i)$。因此
+$$
+\mathcal H^s_{d,\delta}(A)\le\nu^*(A)+\varepsilon.
+$$
+令 $\varepsilon\downarrow0$ 得每个尺度上的等式，继而得到所述 Borel 测度等式。
+
+若 $0<q<s$，所有直径不超过 $\delta$ 的覆盖满足
+$$
+\sum_i(\operatorname{diam}_d A_i)^q
+\ge\delta^{q-s}\sum_i(\operatorname{diam}_d A_i)^s
+\ge\delta^{q-s}
+$$
+当它覆盖 $K$ 时；令 $\delta\downarrow0$ 得 $\mathcal H^q_d(K)=\infty$。若 $q>s$，长度 $L$ 的全部柱覆盖的 $q$ 次幂直径和不超过
+$$
+2^{-L(q-s)}\sum_{|p|=L}\nu(C_p)=2^{-L(q-s)}\longrightarrow0.
+$$
+因此所有 $q>s$ 的 Hausdorff 测度为零，维数恰为 $s$。
+
+对 $0<r<1$，置 $L=\lceil\log_2(1/r)\rceil$。闭球恰是 $C_{q_L(x)}$，且
+$$
+2^{-L}\le r<2^{-(L-1)},\qquad
+\alpha^{L+1}\le\nu(\overline B_d(x,r))\le\alpha^L.
+$$
+于是得到 $\alpha^2r^s\le\nu(\overline B_d(x,r))\le r^s$；$r=1$ 时闭球是 $K$。在以零结尾的深度 $L$ 柱上取 $r=2^{-L}$，上界等号成立。取 $x_0=1$ 并令 $r\uparrow1$、$r<1$，闭球质量恒为 $\alpha^2$，故质量与 $r^s$ 的比值趋于 $\alpha^2$，证明下界系数最优。
+
+原加权距离 $d_K$ 满足 $\tfrac12d\le d_K\le d$。对每个正指数，两个距离的覆盖代价只相差固定乘数，故零测度指数的集合相同，得到 $\dim_{\mathrm H}(K,d_K)=s$。本条临界测度的精确系数等式只对明确指定的距离 $d$ 成立，未将它移植为 $d_K$ 下的测度等式。证毕。
+
+附引：任意集合的直径幂质量分布界及所用归一化分别对应[Hausdorff 测度的质量界与直径幂定义](https://raw.githubusercontent.com/leanprover-community/mathlib4/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/MeasureTheory/Measure/Hausdorff.lean#L491-L500)；距离比较见 Zeckendorf 卷[第 477.3 条](https://raw.githubusercontent.com/the-omega-institute/trureturing/3a015d0d429b5ef52dcf7f04f26fa9f2c28678f0/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC_ZECKENDORF.md)。
+
+**定理 33.3（Haar 推前与相位映射的最优 Hölder 定律）。** 有
+$$
+H_*\nu=m,\qquad
+d_{\mathbb T}(H(x),H(y))\le d(x,y)^s\quad(x,y\in K).
+$$
+指数 $s$ 是最大的正 Hölder 指数；在该指数处，统一常数 $1$ 也是最小的。特别地，$H:(K,d)\to(\mathbb T,d_{\mathbb T})$ 不是 Lipschitz 映射。
+
+**证明。** 第 20.2 条的相位柱区间长度，在末位为零和一时分别为 $\alpha^L$ 和 $\alpha^{L+1}$，故恰为 $\nu(C_p)$。同深度的区间内部互不相交并覆盖圆周，重复只可能发生于端点。
+
+给定连续函数 $g:\mathbb T\to\mathbb R$，在每个深度 $L\ge1$ 的柱相位像中取 $\theta_p$。这些弧的长度至多为 $\alpha^L$，因此一致连续性给出
+$$
+\int_K g(H(x))\,d\nu(x)
+-\sum_{|p|=L}g(\theta_p)\nu(C_p)\longrightarrow0.
+$$
+圆周 Haar 测度赋予每条弧的质量等于其长度，且端点质量为零，同一个和式也趋于 $\int_{\mathbb T}g\,dm$。故两种测度对所有连续函数的积分相同。对闭集 $B$，连续函数 $g_n(\theta)=\max\{0,1-n\,d_{\mathbb T}(\theta,B)\}$ 收敛到其示性函数；有界收敛使两个测度在闭集上相同，再由闭集生成 Borel 集及有限测度唯一性得到 $H_*\nu=m$。空闭集另行显然成立。
+
+若 $x\ne y$ 且 $j(x,y)=k\ge1$，两点属于同一个深度 $k$ 的柱；其相位实区间长度至多为 $\alpha^k$，故
+$$
+d_{\mathbb T}(H(x),H(y))
+\le |F(x)-F(y)|\le\alpha^k=d(x,y)^s.
+$$
+若 $k=0$，圆周直径 $1/2\le1=d(x,y)^s$ 给出同一界。
+
+令 $u=(10)^\infty$、$v=(01)^\infty$。对每个 $k\ge2$ 取
+$$
+a_k=0^ku,\qquad b_k=0^kv.
+$$
+两点首差为 $k$；由 $F(u)=-\alpha$、$F(v)=\alpha^2$ 以及前置零的仿射缩放，
+$$
+d(a_k,b_k)=2^{-k},\qquad
+|F(a_k)-F(b_k)|=\alpha^k.
+$$
+由于 $\alpha^k<1/2$，此实差已经是圆周测地距离。于是指数 $s$ 处的比值恰为一。对任意 $\gamma>s$，相应比值为
+$$
+\frac{d_{\mathbb T}(H(a_k),H(b_k))}{d(a_k,b_k)^\gamma}
+=(2^\gamma\alpha)^k\longrightarrow\infty.
+$$
+故不存在更大指数的统一 Hölder 界。因为 $s<1$，Lipschitz 情形亦被排除。证毕。
+
+附引：柱实区间及其端点值使用[第 20.2 条](https://raw.githubusercontent.com/the-omega-institute/trureturing/3a015d0d429b5ef52dcf7f04f26fa9f2c28678f0/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)。
+
+**定理 33.4（覆盖维数与观察核的严格区分）。** 以有限开覆盖存在重数至多 $n+1$ 的有限开加细来定义紧空间的覆盖维数，则
+$$
+\dim_{\mathrm{top}}K=\dim_{\mathrm{top}}X_\beta=0,\qquad
+\dim_{\mathrm{top}}\mathbb T=1.
+$$
+同时 $H$ 是商映射，且
+$$
+\ker\Phi=\Delta_K\subsetneq\ker H,
+\qquad
+\Delta_K=\{(x,x):x\in K\}.
+$$
+因此本例中覆盖维数的增大与观察纤维的合并同时发生，而不是与观察核的细化同时发生。
+
+**证明。** $K$ 的任意有限开覆盖被某个共同深度的柱分割加细：先在每个点选包含于某一覆盖成员的柱，利用紧致性取有限子覆盖，再统一增加深度。柱分割的重数为一，故非空空间 $K$ 的覆盖维数为零。由同胚 $\Phi$，$X_\beta$ 的覆盖维数也为零。
+
+对圆周任意有限开覆盖取 Lebesgue 数 $\delta>0$，使直径小于 $\delta$ 的集合都包含于某一覆盖成员。选 $N\ge4$ 使 $3/(2N)<\delta$，以 $j/N$ 为中心、$3/(4N)$ 为半径取 $N$ 个开弧。它们覆盖圆周，每个直径小于 $\delta$，且任一点至多落入两个弧：一个长度为 $3/(2N)$ 的弧不可能容纳三个间隔为 $1/N$ 的中心。这给出重数至多二的开加细，故圆周覆盖维数至多为一。
+
+圆周是区间 $[0,1]$ 的连续像，因而连通。若其覆盖维数为零，取两个不同点 $a,b$，则由两个真开集 $\mathbb T\setminus\{a\}$、$\mathbb T\setminus\{b\}$ 组成的覆盖应有重数一的有限开加细。该加细是不交开分割；连通性迫使唯一非空成员为整个圆周，但整个圆周不包含于上述任何一个真开集，矛盾。因此维数恰为一。
+
+$H$ 是紧空间到 Hausdorff 空间的连续满射，闭集的像紧而闭，故为商映射。$\Phi$ 单射给出 $\ker\Phi=\Delta_K$；$u\ne v$ 而 $H(u)=H(v)$ 给出严格包含。核的这个包含方向正是点被合并的方向。证毕。
+
+附引：满射、同胚与接缝双点使用[第 20.2、20.7 条](https://raw.githubusercontent.com/the-omega-institute/trureturing/3a015d0d429b5ef52dcf7f04f26fa9f2c28678f0/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)；所需覆盖维数结论已在本条直接证明。
+
+**定理 33.5（两种距离的精确统一模量及全部首差区间）。** 对映射 $A:(Y,e)\to(Z,e')$ 定义
+$$
+\omega_A(r)=\sup\{e'(A(y),A(y')):e(y,y')\le r\}.
+$$
+置
+$$
+\ell(t)=\max\{L\ge0:G_L\le t+1\}\qquad(t\in\mathbb N).
+$$
+则
+$$
+\omega_\Phi(2^{-L})=2^{-(G_L-1)},\qquad
+\omega_{\Phi^{-1}}(2^{-t})=2^{-\ell(t)}.
+$$
+更精确地，若 $x\ne y$ 的位置首差为 $k$、时间首差为 $n=n(\Phi x,\Phi y)$，则
+$$
+G_k-1\le n\le G_{k+1}-2.
+$$
+对每个 $k\ge0$，这个整数区间内的每个 $n$ 都由实际分裂点对达到。对任意 $0<r\le1$，令 $N(r)=\lceil\log_2(1/r)\rceil$，则
+$$
+\omega_\Phi(r)=2^{-(G_{N(r)}-1)},\qquad
+\omega_{\Phi^{-1}}(r)=2^{-\ell(N(r))}.
+$$
+
+**证明。** 首差距离的闭球约定给出
+$$
+d(x,y)\le2^{-L}\iff q_L(x)=q_L(y),\qquad
+\rho(\Phi x,\Phi y)\le2^{-t}\iff v_t(x)=v_t(y).
+$$
+由第 20.6 条，位置前 $L$ 位相同必使时间前 $G_L-1$ 位相同。若位置首差恰为 $k$，位置前 $k+1$ 位不同，又由同一分割等式知时间前 $G_{k+1}-1$ 位不同。于是
+$$
+G_k-1\le n<G_{k+1}-1,
+$$
+即所述首差区间。此处 $k$ 是实际可分叉的位置；若其前一位为一，则该位强制为零，根本不能成为首差，因此未将强制位误作分叉位。
+
+第 20.2、20.4 条给出的实际分裂点满足：对 $m\ge2$，
+$$
+j(x_m^-,x_m^+)=k
+\iff G_k+1\le m\le G_{k+1},
+\qquad
+n(\Phi x_m^-,\Phi x_m^+)=m-2.
+$$
+故给定所述区间中的 $n$，取 $m=n+2$ 即达到它。$k=0$ 时区间只有 $n=0$，由 $m=2$ 达到；接缝的 $m=1$ 点对同样在位置和时间的第零位首差，没有额外的下标平移。
+
+对正向模量，分割等式给出上界；取 $m=G_L+1$，该点对的位置首差恰为 $L$、时间首差恰为 $G_L-1$，给出相同的下界。
+
+对逆向模量，$G_{\ell(t)}-1\le t$，所以时间前 $t$ 位相同必使位置前 $\ell(t)$ 位相同，得到上界 $2^{-\ell(t)}$。另一方面，
+$$
+G_{\ell(t)}\le t+1<G_{\ell(t)+1}.
+$$
+取 $m=t+2$ 的分裂点对，其时间首差为 $t$，位置首差为 $\ell(t)$，恰达到该上界。最后，所有非零输入距离都是二的非正整数次幂，输入距离不超过 $r$ 等价于不超过 $2^{-N(r)}$，证明一般半径公式。证毕。
+
+附引：精确分割与全部分裂点见[第 20.2、20.4、20.6 条](https://raw.githubusercontent.com/the-omega-institute/trureturing/3a015d0d429b5ef52dcf7f04f26fa9f2c28678f0/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)。
+
+**定理 33.6（任意正指数的正向 Hölder 性与锐利的逆对数模量）。** 对每个 $\gamma>0$，令
+$$
+C_\gamma=\sup_{k\ge0}2^{\gamma k-G_k+1}.
+$$
+则 $1\le C_\gamma<\infty$，并且
+$$
+\rho(\Phi x,\Phi y)\le C_\gamma d(x,y)^\gamma.
+$$
+但 $\Phi^{-1}$ 对任何正指数都不是 Hölder 映射。其逆模量满足
+$$
+\omega_{\Phi^{-1}}(r)\asymp
+\bigl(1+\log_2(1/r)\bigr)^{-\kappa}
+\qquad(r\downarrow0),
+\qquad \kappa=\frac{\log2}{\log\phi}.
+$$
+令 $c=\phi^2/\sqrt5$，则在精确二进尺度上还有
+$$
+\liminf_{t\to\infty}(t+1)^\kappa\omega_{\Phi^{-1}}(2^{-t})=c^\kappa,
+\qquad
+\limsup_{t\to\infty}(t+1)^\kappa\omega_{\Phi^{-1}}(2^{-t})=2c^\kappa.
+$$
+因此对数阶不能改成更快的幂，也不能把这两个极限压成同一个非零渐近系数。
+
+**证明。** 递推或第 20.9 条的闭式给出
+$$
+G_k=\frac{\phi^{k+2}-(-\phi^{-1})^{k+2}}{\sqrt5},
+\qquad G_k\ge\phi^k.
+$$
+指数增长支配 $\gamma k$，故定义 $C_\gamma$ 的序列趋于零，其上确界有限；$k=0$ 的项为一。由定理 33.5，位置首差为 $k$ 时，
+$$
+\rho(\Phi x,\Phi y)\le2^{-(G_k-1)}
+\le C_\gamma\,2^{-\gamma k}.
+$$
+相等点的情形显然，因此得到正向 Hölder 界。
+
+再次取 $m=G_L+1$ 的分裂点对。对任意 $\gamma>0$，
+$$
+\frac{d(x_m^-,x_m^+)}
+{\rho(\Phi x_m^-,\Phi x_m^+)^\gamma}
+=2^{-L+\gamma(G_L-1)}\longrightarrow\infty.
+$$
+所以任何有限统一常数都不能给出逆向正指数 Hölder 界。
+
+令 $L=\ell(t)$，则
+$$
+G_L-1\le t\le G_{L+1}-2,\qquad
+\omega_{\Phi^{-1}}(2^{-t})=2^{-L}.
+$$
+由 $\phi^L\le G_L\le\phi^{L+1}$ 得到适用于所有 $t\ge0$ 的界
+$$
+(t+1)^{-\kappa}
+\le\omega_{\Phi^{-1}}(2^{-t})
+\le4(t+1)^{-\kappa}.
+$$
+将 $t$ 换成 $N(r)$，且 $N(r)$ 与 $\log_2(1/r)$ 相差不足一，得到所述对数阶。
+
+为确定锐利振幅，在整个第 $L$ 个台阶上，
+$$
+\frac{G_L}{\phi^L}
+\le\frac{t+1}{\phi^L}
+\le\frac{G_{L+1}-1}{\phi^L},
+\qquad
+(t+1)^\kappa2^{-L}
+=\left(\frac{t+1}{\phi^L}\right)^\kappa.
+$$
+左、右端分别趋于 $c$ 和 $c\phi$。取实际台阶端点 $t=G_L-1$ 与 $t=G_{L+1}-2$，两界分别达到；这些模量值又分别由定理 33.5 的实际分裂点对达到。因此下极限为 $c^\kappa$，上极限为 $(c\phi)^\kappa=2c^\kappa$。这也证明：若把对数衰减指数增大为任意 $\kappa'>\kappa$，便不可能保留统一上界。证毕。
+
+附引：Fibonacci 闭式使用[第 20.9 条](https://raw.githubusercontent.com/the-omega-institute/trureturing/3a015d0d429b5ef52dcf7f04f26fa9f2c28678f0/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)；模量与振幅由本条结合实际端点证明，而不是由词数推断。
+
+**定理 33.7（时间首差尺度的零 Hausdorff 维数）。** 对每个 $q>0$，
+$$
+\mathcal H^q_\rho(X_\beta)=0,\qquad
+\dim_{\mathrm H}(X_\beta,\rho)=0.
+$$
+将时间距离拉回为
+$$
+\widehat d(x,y)=\rho(\Phi x,\Phi y),
+$$
+则 $\widehat d$ 与 $d$ 给出相同拓扑，但
+$$
+\dim_{\mathrm H}(K,\widehat d)=0
+< s=\dim_{\mathrm H}(K,d).
+$$
+这些等式不把完整合法位置空间 $(K,d)$ 识别为零维的时间度量空间。
+
+**证明。** 长度 $t$ 的时间前缀只有 $t+1$ 个。它们的柱集覆盖 $X_\beta$，每个 $\rho$ 直径至多为 $2^{-t}$，故总 $q$ 次幂直径代价至多为
+$$
+(t+1)2^{-qt}\longrightarrow0.
+$$
+覆盖直径趋于零；对每个固定允许尺度，亦可任意增大 $t$，因此所有正指数 Hausdorff 测度都为零。由定义，Hausdorff 维数为零。
+
+$\Phi$ 是同胚，故拉回距离给出原拓扑；它又按定义是从 $(K,\widehat d)$ 到 $(X_\beta,\rho)$ 的等距双射，所以二者 Hausdorff 测度及维数相同。与定理 33.2 比较即得严格不等式。这里的变化来自距离，而不是从载体中删除位置序列。证毕。
+
+附引：所需时间词数是[第 20.5、20.7 条](https://raw.githubusercontent.com/the-omega-institute/trureturing/3a015d0d429b5ef52dcf7f04f26fa9f2c28678f0/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)的既有结果。
+
+**定理 33.8（算术不变概率的唯一性与不变满测度同构）。** $\nu$ 是 $T$ 的唯一不变 Borel 概率，且是 Haar 测度在 $H$ 下的唯一概率提升。令
+$$
+\Omega=\{[n\phi]:n\in\mathbb Z\},\qquad
+\mathbb T_0=\mathbb T\setminus\Omega,\qquad
+K_0=H^{-1}(\mathbb T_0).
+$$
+则 $m(\mathbb T_0)=\nu(K_0)=1$，并有
+$$
+R(\mathbb T_0)=R^{-1}(\mathbb T_0)=\mathbb T_0,\qquad
+T^{-1}(K_0)=K_0,\qquad T(K_0)=K_0.
+$$
+限制映射
+$$
+H_0:(K_0,\nu|_{K_0},T|_{K_0})
+\longrightarrow(\mathbb T_0,m|_{\mathbb T_0},R|_{\mathbb T_0})
+$$
+是保持测度的双可测同构，且 $H_0$ 及其逆事实上连续。相应地，$\Phi_*\nu$ 是 $(X_\beta,S)$ 的唯一不变 Borel 概率。
+
+**证明。** 首先证明 Haar 提升唯一。若 $\eta$ 是 Borel 概率且 $H_*\eta=m$，则对每个正深度柱 $C_p$，第 20.2 条给出
+$$
+H^{-1}(H[C_p])\setminus C_p
+\subseteq H^{-1}(\partial_{\mathbb T}H[C_p]).
+$$
+右侧在 $\eta$ 下为零，因为相位边界是有限集且 $H_*\eta=m$。因此
+$$
+\eta(C_p)=m(H[C_p])=\nu(C_p).
+$$
+柱集生成 Borel 集，两个概率在所有柱上相同，故 $\eta=\nu$。定理 33.3 已给出这一提升的存在。
+
+任意 $R$ 不变概率 $\lambda$ 都无原子：同一旋转轨道上的单点质量相同，而无理性使该轨道无限，正原子质量会违反总质量有限。进一步，对任意连续 $g$，旋转不变性使
+$$
+\int g(\theta+[n\phi])\,d\lambda(\theta)=\int g(\theta)\,d\lambda(\theta).
+$$
+无理旋转的轨道稠密，一致连续性使此式对任意平移 $a\in\mathbb T$ 成立。再对 $a$ 按 $m$ 积分，利用 Fubini 定理及 Haar 平移不变性，
+$$
+\int g\,d\lambda
+=\int_{\mathbb T}\int_{\mathbb T}g(\theta+a)\,d\lambda(\theta)\,dm(a)
+=\int g\,dm.
+$$
+故 $\lambda=m$。
+
+若 $\mu$ 是 $T$ 不变概率，由 $HT=RH$，$H_*\mu$ 是 $R$ 不变概率，因此等于 $m$，唯一提升迫使 $\mu=\nu$。这里也明确得到
+$$
+\mu(H^{-1}(\Omega))=m(\Omega)=0,
+$$
+所以全部分裂纤维及其所需轨道饱和集都不能携带不变概率的正质量。反过来，$H_*(T_*\nu)=R_*m=m$，唯一提升给出 $T_*\nu=\nu$，证明存在性与唯一性。
+
+$\Omega$ 可数且在 $R$ 的正、反向下不变，故 $\mathbb T_0$ 是不变满测度 Borel 集。全部非单点相位纤维都位于
+$$
+E=\{[-m\phi]:m\ge1\}\subseteq\Omega,
+$$
+所以 $H_0$ 双射。$HT=RH$ 立即给出 $T^{-1}(K_0)=K_0$。对任意 $x\in K_0$，$R^{-1}H(x)$ 在 $\mathbb T_0$ 中有唯一提升 $y$，并且 $H(Ty)=H(x)$；该纤维单点，故 $Ty=x$，证明 $T(K_0)=K_0$ 以及限制后继的可逆性。
+
+设 $J=H_0^{-1}$。对每个正深度柱，其相位弧内部记为 $J_p$。边界均已从 $\mathbb T_0$ 删除，因而
+$$
+J^{-1}(C_p\cap K_0)=J_p\cap\mathbb T_0.
+$$
+右侧在 $\mathbb T_0$ 中开，柱集在 $K_0$ 中构成基，故 $J$ 连续。$H_0$ 的连续性继承自 $H$，于是双方均可测。推前恒等式及其双射性证明它保持测度，半共轭恒等式给出所述同构。
+
+仅删除 $H^{-1}(E)$ 不足以得到上述正、反向不变的同构：接缝双点 $u,v$ 都被 $T$ 送到相位为零的 $Z(0)$，而 $0\notin E$。删除整个双向轨道 $\Omega$ 才同时排除这一进入点及其全部轨道。最后，利用同胚共轭 $\Phi T=S\Phi$，任意 $S$ 不变概率经 $\Phi^{-1}$ 推前成为 $T$ 不变概率，故必为 $\Phi_*\nu$。证毕。
+
+附引：全部纤维、接缝合并及算术半共轭使用[第 20.1、20.2、20.4、20.7 条](https://raw.githubusercontent.com/the-omega-institute/trureturing/3a015d0d429b5ef52dcf7f04f26fa9f2c28678f0/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md)；唯一提升和满测度同构在本条直接构造。
+
+**定理 33.9（几何概率的初始律与位置平稳概率的密度）。** 按状态 $0,1$ 排列，令
+$$
+p=(\alpha,\alpha^2),\qquad
+P=\begin{pmatrix}\alpha&\alpha^2\\1&0\end{pmatrix},\qquad
+\pi=\left(\frac1{1+\alpha^2},\frac{\alpha^2}{1+\alpha^2}\right).
+$$
+几何概率 $\nu$ 是初始律为 $p$、转移矩阵为 $P$ 的单侧 Markov 概率。以 $\pi$ 为初始律、以同一个 $P$ 为转移矩阵的概率 $\mu_{\mathrm{st}}$ 是 $\sigma$ 不变的，并且
+$$
+\frac{d\mu_{\mathrm{st}}}{d\nu}(x)=
+\begin{cases}
+\displaystyle\frac1{\alpha(1+\alpha^2)},&x_0=0,\\[4pt]
+\displaystyle\frac1{1+\alpha^2},&x_0=1.
+\end{cases}
+$$
+因此二者相互绝对连续但不相等，而且
+$$
+\sigma_*\nu\ne\nu,\qquad T_*\mu_{\mathrm{st}}\ne\mu_{\mathrm{st}}.
+$$
+
+**证明。** 初始柱质量为 $\nu(C_0)=\alpha$、$\nu(C_1)=\alpha^2$。以零结尾的任意正质量前缀，其两个子柱与父柱的质量比为 $\alpha,\alpha^2$；以一结尾时唯一下一位为零，条件概率为一。因此所有有限历史的下一位条件律只依赖末状态，且等于 $P$ 的相应行。这证明 Markov 表示。
+
+$P$ 的各行和为一，且 $\pi P=\pi$。有限柱公式
+$$
+\mu_{\mathrm{st}}(C_u)
+=\pi_{u_0}\prod_{j=0}^{L-2}P_{u_ju_{j+1}}\qquad(L=|u|\ge1)
+$$
+相容，按定理 33.1 的扩张论证定义唯一概率。对于任意柱，对所有可能的前置状态求和，并用 $\pi P=\pi$，得到
+$$
+\mu_{\mathrm{st}}(\sigma^{-1}C_u)=\mu_{\mathrm{st}}(C_u).
+$$
+故该概率在 $\sigma$ 下不变。
+
+$\nu$ 的对应柱公式只把初始 $\pi$ 换成 $p$，所以两个柱质量的比值为 $\pi_{u_0}/p_{u_0}$。令 $D(x)$ 为声明中的正函数，则 $D\nu$ 与 $\mu_{\mathrm{st}}$ 在所有柱上的质量相同，因此是同一 Borel 概率，证明密度公式。密度有严格正的上下界，故相互绝对连续。但
+$$
+\nu(C_1)=\alpha^2\ne\frac{\alpha^2}{1+\alpha^2}
+=\mu_{\mathrm{st}}(C_1),
+$$
+所以它们不相等。另外，
+$$
+\nu(\sigma^{-1}C_1)=\nu(C_{01})=\alpha^3\ne\alpha^2,
+$$
+故 $\nu$ 不是位置平稳概率。由于 $T$ 的不变概率唯一且为 $\nu$，不同的 $\mu_{\mathrm{st}}$ 不可能在 $T$ 下不变。证毕。
+
+附引：初始律与平稳化密度的经典结构见 W. Parry，[Intrinsic Markov chains，Theorems 4–5，印刷页 61](https://scispace.com/pdf/intrinsic-markov-chains-4eajvwuaan.pdf#page=7)；本条的初始律和密度由柱公式直接确定。
+
+**定理 33.10（位置最大熵概率的完整不等式与唯一等号情形）。** 对任意 $\sigma$ 不变 Borel 概率 $\mu$，
+$$
+h_\mu(\sigma)\le\log\phi,
+$$
+并且
+$$
+h_\mu(\sigma)=\log\phi
+\quad\Longleftrightarrow\quad
+\mu=\mu_{\mathrm{st}}.
+$$
+因此，结合第 20.9 条既有的 $h_{\mathrm{top}}(\sigma)=\log\phi$，$\mu_{\mathrm{st}}$ 是完整位置移位的唯一最大熵概率，而临界 Hausdorff 概率是与它不同的 $\nu$。
+
+**证明。** 全部熵使用自然对数及约定 $0\log0=0$。有限分割 $\mathcal A$ 的熵记为
+$$
+\mathsf H_\mu(\mathcal A)
+=-\sum_{A\in\mathcal A}\mu(A)\log\mu(A),
+$$
+$h_\mu(\sigma)$ 定义为所有有限 Borel 分割的迭代熵率之上确界。置 $X_j(x)=x_j$。
+
+先说明位置坐标确实计算全部测度熵。有限柱代数生成 Borel 集。可在 $\mu$ 测度下由该代数逼近的 Borel 集构成一个 $\sigma$ 代数：补集与有限并的逼近直接成立；可数并先以有限部分逼近，再用有限测度的下连续性控制余项。因此每个有限 Borel 分割 $\mathcal A$ 都能以只依赖有限前缀的标签预测，且错误概率 $e$ 任意小：分别用柱代数中的集合逼近各原子，输出包含该点的第一个逼近集合的标签，无匹配时输出固定标签；错误集合包含于各对称差之并。若 $\mathcal A$ 有 $r$ 个原子，加入预测是否错误的二元变量给出
+$$
+\mathsf H_\mu(\mathcal A\mid\mathcal Q_L)
+\le -e\log e-(1-e)\log(1-e)+e\log r.
+$$
+当无错误时真实标签已确定；错误时至多有 $r$ 个可能标签，这证明该界。因此条件熵随 $L\to\infty$ 趋于零。
+
+链式法则、增加条件不增熵及不变性给出
+$$
+\mathsf H_\mu\left(\bigvee_{j=0}^{n-1}\sigma^{-j}\mathcal A\right)
+\le
+\mathsf H_\mu(\mathcal Q_{n+L-1})
++n\,\mathsf H_\mu(\mathcal A\mid\mathcal Q_L).
+$$
+这里使用位置窗口的精确恒等式
+$$
+\bigvee_{j=0}^{n-1}\sigma^{-j}\mathcal Q_L=\mathcal Q_{n+L-1}.
+$$
+除以 $n$，先令 $n\to\infty$，再令 $L\to\infty$，并对 $\mathcal A$ 取上确界；反向使用分割 $\mathcal Q_1$，得到
+$$
+h_\mu(\sigma)=
+\lim_{n\to\infty}\frac1n
+\mathsf H_\mu(X_0,\ldots,X_{n-1}).
+$$
+极限存在，因为不变性与链式法则使块熵次可加。这同时给出了此处所需的单侧生成分割论证。
+
+现在取允许转移矩阵及正向量
+$$
+A=\begin{pmatrix}1&1\\1&0\end{pmatrix},\qquad
+v_0=1,\quad v_1=\alpha.
+$$
+直接计算 $Av=\phi v$，且在所有允许边上
+$$
+P_{ij}=\frac{A_{ij}v_j}{\phi v_i},\qquad
+-\log P_{ij}=\log\phi+\log v_i-\log v_j.
+$$
+对长度 $n\ge1$ 且 $\mu(C_u)>0$ 的历史 $u$，令 $q^u$ 为下一位的条件分布。它仅支持于从末状态 $u_{n-1}$ 出发的允许边。定义
+$$
+D(q^u\Vert P_{u_{n-1},\cdot})
+=\sum_{j:q^u_j>0}q^u_j
+\log\frac{q^u_j}{P_{u_{n-1},j}}.
+$$
+这是非负的，且等号当且仅当两行概率完全相等。确实，由 $\log z\le z-1$，
+$$
+\sum_{j:q_j>0}q_j\log\frac{P_j}{q_j}
+\le\sum_{j:q_j>0}P_j-1\le0.
+$$
+若等号成立，所有正质量位置都满足 $P_j=q_j$，且不存在被 $q$ 遗漏的正 $P_j$；反之显然。上述相对熵非负性也证明混合分布的熵不小于分量熵的平均，因而证明前面使用的增加条件不增熵。
+
+令
+$$
+h_n=\mathsf H_\mu(X_n\mid X_0,\ldots,X_{n-1}).
+$$
+相对熵恒等式及相邻坐标具有相同边缘分布给出
+$$
+h_n=\log\phi-
+\sum_{\substack{|u|=n\\\mu(C_u)>0}}
+\mu(C_u)\,
+D(q^u\Vert P_{u_{n-1},\cdot})
+\le\log\phi.
+$$
+其中势差 $\log v_{X_{n-1}}-\log v_{X_n}$ 的期望为零，正是使用 $\sigma$ 不变性的地方。进一步，
+$$
+h_{n+1}
+\le\mathsf H_\mu(X_{n+1}\mid X_1,\ldots,X_n)
+=h_n,
+$$
+故 $h_n$ 单调下降。由块熵链式法则，
+$$
+\mathsf H_\mu(X_0,\ldots,X_{n-1})
+=\mathsf H_\mu(X_0)+\sum_{j=1}^{n-1}h_j,
+$$
+所以 $h_\mu(\sigma)=\lim_{n\to\infty}h_n\le\log\phi$。
+
+若等号成立，单调性与每个 $h_n\le\log\phi$ 迫使所有 $h_n=\log\phi$。每个正质量历史的相对熵因此都为零，故该历史后的条件转移恰为 $P$。于是 $\mu$ 是转移矩阵为 $P$ 的 Markov 概率。其初始边缘 $a=(a_0,a_1)$ 因不变性满足 $aP=a$，即
+$$
+a_1=\alpha^2a_0,\qquad a_0+a_1=1,
+$$
+从而 $a=\pi$。所有柱质量均等于 $\mu_{\mathrm{st}}$，故 $\mu=\mu_{\mathrm{st}}$。这个论证未预先要求 $\mu$ 满支撑。
+
+反之，在 $\mu_{\mathrm{st}}$ 下，每个正质量历史后的条件分布都是 $P$，上述所有相对熵为零，因而 $h_n=\log\phi$ 对每个 $n\ge1$ 成立，得到 $h_{\mu_{\mathrm{st}}}(\sigma)=\log\phi$。定理 33.9 已证明 $\nu\ne\mu_{\mathrm{st}}$ 且 $\nu$ 不在位置移位下不变，所以不能将临界 Hausdorff 概率与位置最大熵概率混同。证毕。
+
+附引：单侧生成分割定理见 B. Solomyak，[Ergodic Theory—Lecture 6 Summary，Theorem 1.6(i)，第 3 页](https://u.math.biu.ac.il/~solomyb/GRAD/15/ET/Lec6.pdf#page=3)；经典最大熵唯一性见 W. Parry，[Intrinsic Markov chains，§4，Theorem 10，印刷页 65–66](https://scispace.com/pdf/intrinsic-markov-chains-4eajvwuaan.pdf#page=11)。此处对所有位置不变概率的不等式及等号情形已直接证明。
+
+## 追加锚（本行以下为增补区）
+## 34. Convolution powers, exact finite-observation escape, and Haar limits
+
+**Assumption 34.0 (The exact compact carrier, oriented fibers, and multiplication graph).** Put
+$$
+\phi=\frac{1+\sqrt5}{2},\qquad \alpha=\phi^{-1},\qquad
+G_0=1,\quad G_1=2,\quad G_{j+2}=G_{j+1}+G_j,
+$$
+$$
+K=\{x\in\{0,1\}^{\mathbb N}:x_jx_{j+1}=0\text{ for all }j\},\qquad
+H(x)=\left[\sum_{j\ge0}(-1)^{j+1}\alpha^{j+2}x_j\right]\in\mathbb T=\mathbb R/\mathbb Z.
+$$
+The topology on $K$ is its original compact digit topology. Write $Z(a)$ for the finite Zeckendorf expansion of $a\in\mathbb N$, padded by zeros, and put
+$$
+E_m=[-m\phi],\qquad E=\{E_m:m\ge1\},\qquad
+S^\pm=\{x_m^\pm:m\ge1\},\qquad S=S^+\cup S^-.
+$$
+Retain the following exact premises from Sections 20 and 25. The continuous map $H$ is onto, its fibers are
+$$
+H^{-1}(\{E_m\})=\{x_m^+,x_m^-\},\qquad
+H^{-1}(\{\theta\})=\{k_\theta\}\quad(\theta\notin E),
+$$
+$$
+H^{-1}(\{[a\phi]\})=\{Z(a)\}\quad(a\in\mathbb N),
+$$
+and $x_m^-,x_m^+$ have the fixed negative-side and positive-side phase orientation. In particular,
+$$
+x_1^-=(01)^\infty,\qquad x_1^+=(10)^\infty.
+$$
+For
+$$
+\Gamma=\overline{\{(Z(a),Z(b),Z(a+b)):a,b\in\mathbb N\}}^{\,K^3},
+$$
+define
+$$
+\mathcal S(x)=
+\begin{cases}
+\{+1\},&x\in S^+,\\
+\{-1\},&x\in S^-,\\
+\{-1,+1\},&x\notin S.
+\end{cases}
+$$
+The graph premise is the full equality
+$$
+\Gamma(x,y)=
+\begin{cases}
+\{k_{H(x)+H(y)}\},&H(x)+H(y)\notin E,\\
+\{x_r^s:s\in\mathcal S(x)\cup\mathcal S(y)\},&H(x)+H(y)=E_r.
+\end{cases}
+$$
+It is not replaced by phase compatibility alone.
+
+Let $q_L(x)=(x_0,\ldots,x_{L-1})$, and let $C_p$ denote a nonempty length-$L$ cylinder. For $L\ge1$, retain the precise conclusion of Theorem 20.2: the $G_L$ cylinder images are consecutive closed circle arcs with disjoint interiors $J_p$, their boundary set is
+$$
+B_L=\{E_1,\ldots,E_{G_L}\},
+$$
+and
+$$
+H^{-1}(J_p)\subseteq C_p\subseteq H^{-1}(\overline{J_p}),\qquad
+q_L(x_m^+)\ne q_L(x_m^-)\ \Longleftrightarrow\ m\le G_L.
+$$
+At every boundary the positive-side lift belongs to the following arc and the negative-side lift to the preceding arc, in the positive circle orientation. The lengths are
+$$
+\lambda(J_p)=
+\begin{cases}
+\alpha^L,&p_{L-1}=0,\\
+\alpha^{L+1},&p_{L-1}=1,
+\end{cases}
+$$
+where $\lambda$ is normalized circle Haar measure. At depth zero there is a single cylinder and no phase boundary. All conclusions below are conditional on these premises and use the multiplication specified next.[^rro34-input]
+
+**Definition 34.1 (The actual all-measure algebra and positive powers).** Fix
+$$
+t\in\Lambda=(\mathbb R\setminus\{-1,1\})\sqcup\{\infty\},
+$$
+with $\infty$ a separate formal parameter. Use the setwise integrated multiplication $\star_t$ of Theorem 28.7 on the real signed regular Borel measures $M(K)$, not an arbitrary extension agreeing only on atomic measures. Thus
+$$
+(\mu\star_t\eta)(D)=\int_{K^2}P^{(t)}_{x,y}(D)\,d(\mu\otimes\eta)(x,y)
+$$
+for every Borel $D\subseteq K$. Total variation is $\|\mu\|_{\mathrm{TV}}=|\mu|(K)$, without a factor of one half.
+
+For $m\ge1$, put
+$$
+p_m(t)=
+\begin{cases}
+\dfrac{t^m}{t^m-1},&t\ne\infty,\\
+1,&t=\infty,
+\end{cases}
+\qquad
+v_m=\delta_{x_m^+}-\delta_{x_m^-},
+$$
+$$
+\rho_t=
+\begin{cases}
+|t|,&t\ne\infty,\ |t|<1,\\
+|t|^{-1},&t\ne\infty,\ |t|>1,\\
+0,&t=\infty,
+\end{cases}
+\qquad C_t=\frac{1+\rho_t}{1-\rho_t},
+$$
+$$
+d'_m=
+\begin{cases}
+1-t^m,&t\ne\infty,\ |t|<1,\\
+t^{-m}-1,&t\ne\infty,\ |t|>1,\\
+-1,&t=\infty.
+\end{cases}
+$$
+Write
+$$
+\pi^{(t)}_{E_m}=p_m(t)\delta_{x_m^+}+(1-p_m(t))\delta_{x_m^-},\qquad
+\pi^{(t)}_\theta=\delta_{k_\theta}\quad(\theta\notin E),
+$$
+and retain the lift $L_t\nu=\int\pi^{(t)}_\theta\,d\nu(\theta)$ in the setwise sense of Theorem 28.5. The residual coordinate is
+$$
+(R_t\mu)_m=d'_m\bigl((1-p_m(t))\mu(\{x_m^+\})-p_m(t)\mu(\{x_m^-\})\bigr).
+$$
+The imported coordinate isomorphism of Theorems 28.8–28.9 is
+$$
+\Phi_t\mu=(H_\#\mu,R_t\mu),\qquad
+\Phi_t(\mu\star_t\eta)=\bigl(H_\#\mu*_{\mathbb T}H_\#\eta,\ R_t\mu*_+R_t\eta\bigr),
+$$
+with inverse
+$$
+\Psi_t(\nu,g)=L_t\nu+\sum_{m\ge1}\frac{g_m}{d'_m}v_m.
+$$
+Here $*_\mathbb T$ is convolution on the original compact circle and $*_+$ is convolution on $\ell^1(\mathbb N_{>0})$. The inverse series converges in total variation. In particular,
+$$
+\|R_t\mu\|_1\le\|\mu\|_{\mathrm{TV}},\qquad
+\|L_t\nu\|_{\mathrm{TV}}\le C_t\|\nu\|_{\mathrm{TV}},\qquad
+\sup_{x,y}\|P^{(t)}_{x,y}\|_{\mathrm{TV}}=C_t.
+$$
+The measure
+$$
+\mathfrak m=L_t\lambda
+$$
+is the already constructed non-atomic probability of Theorem 28.11, independent of $t$.
+
+For a probability $\mu\in M(K)$, define only positive powers,
+$$
+\mu_t^{(1)}=\mu,\qquad \mu_t^{(n+1)}=\mu_t^{(n)}\star_t\mu\quad(n\ge1),
+$$
+and write
+$$
+\nu=H_\#\mu,\qquad g=R_t\mu,\qquad
+\nu^{(n)}=\nu^{*_{\mathbb T}n},\qquad g^{(n)}=g^{*_+n},
+$$
+$$
+D_{t,n}=\mu_t^{(n)}-L_t\nu^{(n)},\qquad
+\overline\mu_{t,N}=\frac1N\sum_{n=1}^N\mu_t^{(n)},\qquad
+\overline\nu_N=\frac1N\sum_{n=1}^N\nu^{(n)}.
+$$
+Weak-star convergence always means testing against $C(K)$ or $C(\mathbb T)$, as appropriate. Setwise convergence means convergence on every fixed Borel set.
+
+For $f\in C(K)$, define its cylinder oscillation by
+$$
+\omega_L(f)=\sup\{|f(x)-f(y)|:q_L(x)=q_L(y)\}.
+$$
+Compactness and the digit topology give $\omega_L(f)\to0$: otherwise pairs agreeing at arbitrarily large depths would have convergent subsequences with the same limit but a fixed positive difference of function values.
+
+**theorem 34.2 (Exact powers and an n-independent total-variation bound).** For every probability $\mu$, every admissible $t$, and every $n\ge1$,
+$$
+\Phi_t\mu_t^{(n)}=(\nu^{(n)},g^{(n)}),\qquad
+\mu_t^{(n)}=L_t\nu^{(n)}+\sum_{k\ge n}\frac{g^{(n)}_k}{d'_k}v_k,
+$$
+$$
+\mu_t^{(n)}(K)=1,\qquad
+\|g^{(n)}\|_1\le\|g\|_1^n\le1,
+$$
+$$
+\|D_{t,n}\|_{\mathrm{TV}}
+=2\sum_{k\ge n}\frac{|g^{(n)}_k|}{|d'_k|}
+\le\frac{2\|g\|_1^n}{1-\rho_t^n}.
+$$
+Moreover,
+$$
+\boxed{\ \|\mu_t^{(n)}\|_{\mathrm{TV}}\le C_t\quad(n\ge1).\ }
+$$
+In fact, for arbitrary signed $\eta_1,\ldots,\eta_n\in M(K)$,
+$$
+\|\eta_1\star_t\cdots\star_t\eta_n\|_{\mathrm{TV}}
+\le C_t\prod_{j=1}^n\|\eta_j\|_{\mathrm{TV}}.
+$$
+For $n=1$ the product means the single measure. No zero-fold product is specified.
+
+**Proof.** Multiplicativity of $\Phi_t$ proves the coordinate formula by induction. A sum of $n$ strictly positive residual indices is at least $n$, so $g^{(n)}_k=0$ for $k<n$. Absolute convolution gives $\|g^{(n)}\|_1\le\|g\|_1^n$. Since $\mu$ is a probability, Theorem 28.8 gives $\|g\|_1\le1$. The phase component is a probability, and the residual component has mass zero, proving the mass identity.
+
+For $k\ge n$, the explicit denominators satisfy
+$$
+1-\rho_t^n\le |d'_k|\le1+\rho_t^n.
+$$
+The supports of the $v_k$ are pairwise disjoint and each $v_k$ has variation two. This proves both the exact variation formula and its estimate. Already these facts give a uniform bound by combining the residual estimate with $\|L_t\nu^{(n)}\|\le C_t$; the stronger displayed bound follows from the actual point products.
+
+Let
+$$
+Q^{(n)}_{x_1,\ldots,x_n}=\delta_{x_1}\star_t\cdots\star_t\delta_{x_n}.
+$$
+If at least one input is nonsplit, its residual coordinate is zero. The coordinate product therefore gives
+$$
+Q^{(n)}_{x_1,\ldots,x_n}=\pi^{(t)}_{H(x_1)+\cdots+H(x_n)},
+$$
+whose variation is at most $C_t$. If all inputs are split and have the same sign, the exact same-sign law of Theorem 25.9 gives a Dirac measure at the split point whose index is the sum of the input indices. If both signs occur, let $A$ be the sum of the positive-input indices and $B$ the sum of the negative-input indices. Associativity, commutativity, and that same-sign law give
+$$
+Q^{(n)}_{x_1,\ldots,x_n}=P^{(t)}_{x_A^+,x_B^-}.
+$$
+Both $A,B$ are positive, so this row also has variation at most $C_t$. These cases exhaust all point tuples.
+
+For completeness, the setwise integration of these rows is legitimate. If $r_m$ denotes the bounded Borel coordinate function from Definition 28.1, their explicit formula is
+$$
+Q^{(n)}_{x_1,\ldots,x_n}
+=\pi^{(t)}_{\sum_jH(x_j)}
++\sum_{m_1,\ldots,m_n\ge1}
+\frac{\prod_{j=1}^n r_{m_j}(x_j)}{d'_{m_1+\cdots+m_n}}v_{m_1+\cdots+m_n}.
+$$
+At each tuple at most one correction term is nonzero. Set evaluations are Borel. Variation evaluations agree with those of the base slice off the countable set $S^n$, and are Borel on that countable set as well. The signed-kernel integration theorem 28.4 thus applies with bound $C_t$.
+
+Integrating against $\eta_1\otimes\cdots\otimes\eta_n$ gives a measure of variation at most $C_t\prod_j\|\eta_j\|$. Its phase coordinate is the convolution of the phase measures. For each fixed residual output index, the sum over compositions of that index into $n$ positive indices is finite, so signed Fubini gives the convolution of the residual coordinates. Injectivity of $\Phi_t$ identifies this integral with the algebraic product. This proves the stronger multilinear estimate and hence the probability-power bound.
+
+The estimates do not require positive outputs. For example, put $\theta=E_1+[1/2]$. Irrationality of $\phi$ implies $\theta\notin E$, whereas $2\theta=E_2$. Thus
+$$
+\delta_{k_\theta}\star_t\delta_{k_\theta}=\pi^{(t)}_{E_2}.
+$$
+For every finite admissible $t\ne0$, the coefficient $t^2/(t^2-1)$ lies outside $[0,1]$, so this square of a probability is signed.
+
+Finally, a global identity would have a residual coordinate $h$ satisfying $h*_+e_1=e_1$. The first coordinate of the left side is zero and that of the right side is one. Hence the all-measure algebra has no global identity. $\square$
+
+**theorem 34.3 (Exact finite-prefix disappearance and the boundary-incidence test).** Fix $L\ge1$ and put $M=G_L$. For $1\le m\le M$, write
+$$
+w_{m,L}=\delta_{q_L(x_m^+)}-\delta_{q_L(x_m^-)}.
+$$
+Then
+$$
+(q_L)_\#D_{t,n}
+=\sum_{m=1}^{M}b_m^{(n)}w_{m,L},\qquad
+b_m^{(n)}=\frac{g_m^{(n)}}{d'_m}.
+$$
+The exact vanishing test is
+$$
+(q_L)_\#D_{t,n}=0
+\quad\Longleftrightarrow\quad
+b_1^{(n)}=\cdots=b_M^{(n)}.
+$$
+In particular, for $n\ge2$ this is equivalent to $g_m^{(n)}=0$ for every $m\le M$. If $g\ne0$ and
+$$
+a=\min\{m\ge1:g_m\ne0\},
+$$
+then, for every $n\ge2$,
+$$
+(q_L)_\#D_{t,n}=0\quad\Longleftrightarrow\quad na>G_L.
+$$
+If $g=0$, the residual is identically zero at every time.
+
+Uniformly over all probability inputs, the exact disappearance threshold is
+$$
+\boxed{\ n>G_L.\ }
+$$
+At depth zero the residual is invisible for every $n\ge1$.
+
+The Cesaro residual satisfies
+$$
+\left\|(q_L)_\#\bigl(\overline\mu_{t,N}-L_t\overline\nu_N\bigr)\right\|_{\mathrm{TV}}
+\le\frac{2C_t\min\{N,G_L\}}{N}.
+$$
+
+**Proof.** Theorem 20.2 makes $(q_L)_\#v_m$ zero precisely for $m>M$, proving the finite formula. Arrange the boundary indices in their circular order as $r_1,\ldots,r_M$, with indices interpreted cyclically. Let the cylinder associated with the arc from $E_{r_i}$ to $E_{r_{i+1}}$ be $C_i$. The fixed side convention implies that the coefficient of $C_i$ in $\sum_m b_mw_{m,L}$ is
+$$
+b_{r_i}-b_{r_{i+1}}.
+$$
+Consequently the resulting histogram is zero exactly when all boundary coefficients are equal. This also explains why individual nonzero boundary terms can cancel at time one: the complete boundary cycle has the relation $\sum_{m=1}^M w_{m,L}=0$.
+
+For $n\ge2$, the first residual coordinate is zero, so $b_1^{(n)}=0$. Equality of all the boundary coefficients therefore means that they all vanish. If $a$ is the first nonzero coordinate of $g$, then
+$$
+g_k^{(n)}=0\quad(k<na),\qquad g_{na}^{(n)}=g_a^n\ne0.
+$$
+Indeed, every participating index is at least $a$, and equality of their sum to $na$ forces all of them to equal $a$. This proves the input-dependent equivalence.
+
+The universal upper bound follows directly from the support restriction $m\ge n$. To prove sharpness with actual probabilities, choose the sign
+$$
+\sigma_t=
+\begin{cases}
++,&t\ne\infty,\ |t|<1,\\
+-,&t\ne\infty,\ |t|>1\text{ or }t=\infty.
+\end{cases}
+$$
+For $\mu=\delta_{x_1^{\sigma_t}}$, the explicit residual functions of Theorem 28.2 give $R_t\mu=e_1$. The exact same-sign law gives
+$$
+\mu_t^{(n)}=\delta_{x_n^{\sigma_t}},\qquad D_{t,n}=\frac1{d'_n}v_n.
+$$
+Thus every $1\le n\le G_L$ is detected at depth $L$. In particular, at the claimed endpoint,
+$$
+\left\|(q_L)_\#D_{t,G_L}\right\|_{\mathrm{TV}}=\frac2{|d'_{G_L}|}>0.
+$$
+At depth zero every residual has mass zero and hence has zero pushforward.
+
+For the Cesaro estimate, terms with $n>G_L$ vanish after pushforward. Each remaining term has variation at most $2C_t$, because both $\mu_t^{(n)}$ and $L_t\nu^{(n)}$ have variation at most $C_t$. Pushforward is contractive, and averaging proves the bound. $\square$
+
+**theorem 34.4 (Disappearance relative to the own lift is not parameter independence).** Let $s,t\in\Lambda$, use the same probability input $\mu$, and let $n>G_L$ with $L\ge1$. Then
+$$
+(q_L)_\#\bigl(\mu_t^{(n)}-\mu_s^{(n)}\bigr)
+=\sum_{m=1}^{G_L}\bigl(p_m(t)-p_m(s)\bigr)\nu^{(n)}(\{E_m\})w_{m,L}.
+$$
+In particular, absence of mass at the finitely many phases in $B_L$ implies equality of the two prefix laws. The universal cutoff alone does not imply that equality.
+
+For every prescribed $L\ge1$, every $n>G_L$, and every two distinct parameters, there is a probability input for which the two depth-$L$ laws at time $n$ differ. There is also a single fixed probability input satisfying the strict Fourier-modulus condition whose depth-one laws for $t=0$ and $t=\infty$ differ at every time $n\ge7$.
+
+**Proof.** Theorem 34.3 removes each residual relative to its own lift. The signed atom-correction formula of Theorem 28.5 gives
+$$
+(L_t-L_s)\xi=\sum_{m\ge1}\bigl(p_m(t)-p_m(s)\bigr)\xi(\{E_m\})v_m
+$$
+for every circle measure $\xi$. This series converges in total variation. Pushforward discards exactly the terms with $m>G_L$, proving the formula.
+
+For the first counterexample put $\theta=[-\phi/n]$. If $\theta=E_m$, then $(m-1/n)\phi$ is an integer. Since $n\ge2$, its rational coefficient is nonzero, contradicting irrationality of $\phi$. Thus $\theta\notin E$. For $\mu=\delta_{k_\theta}$, all residual coordinates are zero, and
+$$
+\mu_t^{(n)}=\pi^{(t)}_{E_1},\qquad
+\mu_s^{(n)}=\pi^{(s)}_{E_1}.
+$$
+The coefficient $p_1$ distinguishes the parameters by Theorem 25.10, and $q_L$ separates the two lifts of $E_1$. Hence the two prefix laws differ. Notice that in this example every residual is already zero: the entire difference belongs to the phase lifts.
+
+For a fixed-input example take
+$$
+\theta=[-\phi/2],\qquad
+\mu=\frac12\bigl(\delta_{Z(0)}+\delta_{k_\theta}\bigr).
+$$
+Both support points are nonsplit, so $R_t\mu=0$ for every parameter. The binomial expansion on the circle gives
+$$
+\nu^{(n)}=2^{-n}\sum_{j=0}^n\binom nj\delta_{j\theta}.
+$$
+Irrationality shows that $j\theta=E_m$ exactly when $j=2m$. At depth one,
+$$
+w_{1,1}=\delta_1-\delta_0,\qquad w_{2,1}=\delta_0-\delta_1,
+$$
+by the explicit oriented fibers in Theorem 20.2. Since the endpoint lifts have $p_m(\infty)-p_m(0)=1$, the difference of the probabilities of digit one is
+$$
+\bigl((q_1)_\#\mu_\infty^{(n)}-(q_1)_\#\mu_0^{(n)}\bigr)(\{1\})
+=2^{-n}\left(\binom n2-\binom n4\right).
+$$
+Binomial coefficients beyond $n$ are interpreted as zero. For $n\ge7$,
+$$
+\frac{\binom n4}{\binom n2}=\frac{(n-2)(n-3)}{12}>1,
+$$
+so the difference is nonzero. Nevertheless, for every nonzero integer $k$, the two unit complex numbers $1$ and $e^{2\pi i k\theta}$ are distinct. Their average has modulus less than one. This input therefore satisfies the ordinary convergence criterion proved in Theorem 34.7. $\square$
+
+**theorem 34.5 (Weak-star escape and the exact residual norm dichotomy).** For every probability input and every fixed admissible parameter,
+$$
+D_{t,n}\longrightarrow0\quad\text{in }\sigma(M(K),C(K)).
+$$
+More precisely, with
+$$
+\Delta_n(f)=\sup_{m\ge n}|f(x_m^+)-f(x_m^-)|,
+$$
+one has
+$$
+\left|\int_K f\,dD_{t,n}\right|
+\le\frac{\Delta_n(f)}{1-\rho_t^n}\|R_t\mu\|_1^n,\qquad
+\Delta_n(f)\longrightarrow0.
+$$
+Let $S^{\sigma_t}$ be the sign class selected in the proof of Theorem 34.3. Then
+$$
+\|R_t\mu\|_1=1\quad\Longleftrightarrow\quad\mu(S^{\sigma_t})=1.
+$$
+Consequently there is the dichotomy
+$$
+\|D_{t,n}\|_{\mathrm{TV}}\longrightarrow
+\begin{cases}
+0,&\mu(S^{\sigma_t})<1,\\
+2,&\mu(S^{\sigma_t})=1.
+\end{cases}
+$$
+In the first case the bound in Theorem 34.2 gives geometric decay with base $\|R_t\mu\|_1<1$.
+
+**Proof.** For $n>G_L$, every pair entering the supremum defining $\Delta_n(f)$ has the same length-$L$ prefix. Hence $\Delta_n(f)\le\omega_L(f)$, which proves its convergence to zero. Testing the absolutely convergent residual series and applying the denominator bound gives the asserted inequality. Its right side tends to zero, because the residual norm is at most one. This also proves weak-star convergence of the Cesaro residual averages by ordinary scalar averaging.
+
+On the selected sign class, the nonzero residual scalar is exactly one. On the opposite sign class its absolute value is at most $\rho_t$, and it vanishes outside $S$. Therefore, if $b=\mu(S^{\sigma_t})$,
+$$
+\|R_t\mu\|_1\le b+\rho_t(1-b).
+$$
+This is strictly less than one when $b<1$. If $b=1$, then
+$$
+g_m=\mu(\{x_m^{\sigma_t}\})\ge0,\qquad\sum_m g_m=1,
+$$
+so the residual norm equals one. This proves the equivalence.
+
+When that norm is less than one, Theorem 34.2 proves total-variation decay. In the other case every $g^{(n)}$ is a probability distribution on the positive integers, supported in indices at least $n$. The exact variation formula then gives
+$$
+\frac2{1+\rho_t^n}\le\|D_{t,n}\|_{\mathrm{TV}}\le\frac2{1-\rho_t^n}.
+$$
+Both bounds tend to two. This persistent norm concerns the difference from the own phase lift; it is compatible with vanishing against every fixed continuous readout. $\square$
+
+**theorem 34.6 (Continuity at an exceptional-set-null phase target).** Suppose $\xi_j,\xi$ are circle probabilities,
+$$
+\xi_j\longrightarrow\xi\quad\text{weak-star},\qquad \xi(E)=0.
+$$
+For every fixed admissible $t$,
+$$
+L_t\xi_j\longrightarrow L_t\xi=s_\#\xi\quad\text{weak-star in }M(K),
+$$
+where $s$ is the Borel section of Theorem 28.3. The measures $L_t\xi_j$ may be signed, but have variation at most $C_t$.
+
+There is a second assertion requiring positivity rather than a chosen lift: if $\eta_j$ are arbitrary probabilities on $K$ with $H_\#\eta_j\to\xi$ and $\xi(E)=0$, then
+$$
+\eta_j\longrightarrow s_\#\xi\quad\text{weak-star}.
+$$
+In particular, $s_\#\xi$ is the unique positive lift of such a phase probability. The condition $\xi(E)=0$ is weaker than non-atomicity.
+
+**Proof.** For real $f\in C(K)$ define
+$$
+h_{t,f}(\theta)=\int_K f\,d\pi^{(t)}_\theta.
+$$
+This is a bounded Borel function with $\|h_{t,f}\|_\infty\le C_t\|f\|_\infty$, by the setwise kernel results of Section 28. It is continuous at every $\theta_0\notin E$, including with respect to approaches through exceptional phases. Indeed, choose a neighborhood $U$ of the unique point $k_{\theta_0}$ on which $|f-f(k_{\theta_0})|<\varepsilon/C_t$. The compact set $H(K\setminus U)$ does not contain $\theta_0$. For all phases sufficiently close to $\theta_0$, the entire fiber therefore lies in $U$. Since every slice has mass one and variation at most $C_t$,
+$$
+|h_{t,f}(\theta)-f(k_{\theta_0})|<\varepsilon.
+$$
+Thus its discontinuities are contained in $E$.
+
+Apply the positive-measure bounded-Borel testing criterion to the probabilities $\xi_j$, the target $\xi$, and the function $h_{t,f}$. It gives
+$$
+\int_K f\,dL_t\xi_j=\int_{\mathbb T}h_{t,f}\,d\xi_j
+\longrightarrow\int_{\mathbb T}h_{t,f}\,d\xi=\int_K f\,dL_t\xi.
+$$
+This is Proposition 4.9(g) of Tausk, applied on the circle before lifting.[^rro34-port] It is not an application of positive Portmanteau inequalities to the signed measures $L_t\xi_j$. The atom-correction formula gives $L_t\xi=s_\#\xi$ because $\xi(E)=0$. No assertion that $\xi_j(E)\to0$ has been used.
+
+For the second assertion put $\zeta_j=H_\#\eta_j$. Positivity and the exact cylinder inclusions give
+$$
+\zeta_j(J_p)\le\eta_j(C_p)\le\zeta_j(\overline{J_p}).
+$$
+The two endpoints belong to $E$ and have zero $\xi$-mass. The continuity-set part of the same theorem therefore makes both outside quantities converge to $\xi(J_p)$. The middle quantity converges to this value, which is also $(s_\#\xi)(C_p)$. Finite linear combinations of cylinder indicators approximate every continuous function uniformly: choose one function value in each depth-$L$ cylinder and use $\omega_L(f)\to0$. All measures here are probabilities, so these approximations pass to their integrals uniformly in $j$. This proves weak-star convergence. Applying it to a constant sequence of positive lifts proves uniqueness. $\square$
+
+**theorem 34.7 (Necessary and sufficient ordinary and Cesaro Haar criteria).** For a circle measure use the Fourier convention
+$$
+\chi_k(\theta)=e^{2\pi i k\theta},\qquad
+\widehat\nu(k)=\int_{\mathbb T}\chi_k\,d\nu\quad(k\in\mathbb Z).
+$$
+Complex testing means testing the real and imaginary parts. Let $\mu$ be any fixed probability on $K$ and $\nu=H_\#\mu$. For every admissible $t$,
+$$
+\boxed{\ \mu_t^{(n)}\longrightarrow\mathfrak m\text{ weak-star}
+\quad\Longleftrightarrow\quad
+|\widehat\nu(k)|<1\text{ for every }k\ne0.\ }
+$$
+Likewise,
+$$
+\boxed{\ \overline\mu_{t,N}\longrightarrow\mathfrak m\text{ weak-star}
+\quad\Longleftrightarrow\quad
+\widehat\nu(k)\ne1\text{ for every }k\ne0.\ }
+$$
+These criteria and the limiting measure are independent of $t$, although the finite-time laws need not be.
+
+For $k\ne0$, failure of the strict-modulus condition means that the support of $\nu$ lies in one level set of $\chi_k$, equivalently a coset of $\ker\chi_k$. Failure of the Cesaro condition means that its support lies in $\ker\chi_k$ itself.
+
+**Proof.** Circle convolution and signed Fubini give
+$$
+\widehat{\nu^{(n)}}(k)=\widehat\nu(k)^n.
+$$
+Positivity gives $|\widehat\nu(k)|\le1$. Haar invariance gives $\widehat\lambda(0)=1$ and $\widehat\lambda(k)=0$ for $k\ne0$: translating by a phase on which $\chi_k$ is not one multiplies the integral by that nonunit character value.
+
+Integer characters have dense complex linear span in $C(\mathbb T,\mathbb C)$.[^rro34-fourier] Hence convergence of their integrals for circle probabilities implies weak-star convergence. Explicitly, if a trigonometric polynomial $P$ approximates a continuous $f$ within $\varepsilon$, the difference between the two measure integrals of $f-P$ has absolute value at most $2\varepsilon$. Convergence on the finitely many characters of $P$ then gives convergence on $f$.
+
+It follows that $\nu^{(n)}\to\lambda$ exactly when $\widehat\nu(k)^n\to0$ for all $k\ne0$, which is exactly the strict-modulus condition. This is the classical compact-Abelian criterion, here used only for the circle component.[^rro34-power]
+
+For the averages put
+$$
+A_N(z)=\frac1N\sum_{n=1}^N z^n.
+$$
+For $|z|\le1$,
+$$
+A_N(1)=1,\qquad
+A_N(z)=\frac{z(1-z^N)}{N(1-z)}\quad(z\ne1),
+$$
+$$
+|A_N(z)|\le\min\left\{1,\frac2{N|1-z|}\right\}\quad(z\ne1).
+$$
+Thus $A_N(z)\to0$ exactly when $z\ne1$. Applying the same finite-polynomial approximation proves
+$$
+\overline\nu_N\to\lambda\quad\Longleftrightarrow\quad
+\widehat\nu(k)\ne1\quad(k\ne0).
+$$
+The averaging convention begins at one, as in the classical compact-group Cesaro theorem.[^rro34-cesaro]
+
+For sufficiency on $K$, Theorem 34.6 applies because $\lambda(E)=0$. It gives convergence of $L_t\nu^{(n)}$, or of $L_t\overline\nu_N$, to $\mathfrak m$. Theorem 34.5 removes the residual, or its Cesaro average. The uniform bound $\|\mu_t^{(n)}\|\le C_t$ ensures that these are genuine bounded signed-measure limits. For necessity, continuous pushforward by $H$ sends the proposed limit to $\lambda$ and the powers or averages to their stated circle counterparts. The already proved circle necessities apply.
+
+Finally, if $z=\int\chi_k\,d\nu$, then
+$$
+\int|\chi_k-z|^2\,d\nu=1-|z|^2.
+$$
+When $|z|=1$, this forces $\chi_k=z$ almost everywhere, hence on the support by continuity. The converse is immediate. The equality $z=1$ forces precisely the level set $\chi_k=1$. These prove the two support descriptions. $\square$
+
+**theorem 34.8 (Natural finite-support walks and all endpoint laws).** Let $D\subseteq\mathbb N$ be finite and nonempty, let $a_d>0$ for $d\in D$, and suppose $\sum_{d\in D}a_d=1$. Put
+$$
+\mu=\sum_{d\in D}a_d\delta_{Z(d)}.
+$$
+For every $t\in\Lambda$ and every $n\ge1$,
+$$
+\mu_t^{(n)}
+=\sum_{s\in nD}\left(\sum_{\substack{d_1,\ldots,d_n\in D\\d_1+\cdots+d_n=s}}
+\prod_{j=1}^n a_{d_j}\right)\delta_{Z(s)},
+$$
+where $nD$ is the set of sums of $n$ members of $D$. This is a probability, its support is exactly $Z(nD)$, and it is independent of the parameter. Furthermore,
+$$
+R_t\mu=0,\qquad \mu_t^{(n)}=L_t\nu^{(n)},\qquad
+\mu_t^{(n)}(\{x_m^\pm\})=0\quad(m\ge1).
+$$
+Ordinary convergence to $\mathfrak m$ holds exactly when $D$ has at least two elements. Cesaro convergence holds exactly when $D$ contains a positive integer.
+
+In particular, the deterministic step $\delta_{Z(1)}$ has powers $\delta_{Z(n)}$, which do not converge to $\mathfrak m$, while
+$$
+\frac1N\sum_{n=1}^N\delta_{Z(n)}\longrightarrow\mathfrak m.
+$$
+The lazy step
+$$
+\mu_{\mathrm{lazy}}=\frac12\bigl(\delta_{Z(0)}+\delta_{Z(1)}\bigr)
+$$
+has the ordinary limit
+$$
+\mu_{\mathrm{lazy},t}^{(n)}
+=2^{-n}\sum_{j=0}^n\binom nj\delta_{Z(j)}
+\longrightarrow\mathfrak m.
+$$
+Its two extreme coefficients, at $Z(0)$ and $Z(n)$, are both $2^{-n}$. Whenever ordinary convergence holds, the exact limiting cylinder probabilities are
+$$
+\mu_t^{(n)}(C_p)\longrightarrow\mathfrak m(C_p)=
+\begin{cases}
+\alpha^L,&L\ge1,\ p_{L-1}=0,\\
+\alpha^{L+1},&L\ge1,\ p_{L-1}=1,\\
+1,&L=0.
+\end{cases}
+$$
+The analogous statement holds for Cesaro averages under their criterion.
+
+**Proof.** The formula follows by induction from the exact natural addition law $P^{(t)}_{Z(a),Z(b)}=\delta_{Z(a+b)}$ and finite multilinearity. Every coefficient corresponding to an attainable sum is positive; summing all coefficients gives $(\sum_d a_d)^n=1$. This proves both the exact support and total mass, without appealing to positivity of the full kernel at a signed parameter.
+
+Natural phases avoid $E$: equality $[s\phi]=[-m\phi]$ would make $(s+m)\phi$ an integer. Thus all displayed output points are nonsplit, no split singleton has mass, and the input residual is zero. The coordinate formula gives equality with the own phase lift at every time.
+
+For $k\ne0$,
+$$
+\widehat\nu(k)=\sum_{d\in D}a_d e^{2\pi i k d\phi}.
+$$
+Two distinct $d$ give distinct character values, since $k(d-d')\phi$ cannot be an integer. The equality case proved in Theorem 34.7 shows that the modulus is strictly less than one exactly when at least two support points occur. If there is only one support point, the modulus is one. Similarly, a coefficient can equal one only if every support value is one. The presence of a positive $d$ excludes this for every $k\ne0$; if $D=\{0\}$, all coefficients equal one. The two classifications now follow from Theorem 34.7.
+
+For the lazy step,
+$$
+\left|\widehat\nu(k)\right|=
+\left|\frac{1+e^{2\pi i k\phi}}2\right|
+=|\cos(\pi k\phi)|<1\quad(k\ne0),
+$$
+and counting the choices of the unit step proves the binomial formula and its extreme coefficients. For the deterministic unit step all coefficients have modulus one but none with $k\ne0$ equals one, proving the stated distinction.
+
+Finally, cylinder indicators are continuous on $K$, so the weak-star limits give the cylinder laws. The lift of Haar assigns zero mass to every split point, and its mass on $C_p$ is therefore the Haar length of $J_p$. The exact lengths in Assumption 34.0 give the displayed values. $\square$
+
+**theorem 34.9 (Atomic walks do not converge setwise or in total variation).** Every sequence or Cesaro sequence from Theorem 34.8 that converges weak-star to $\mathfrak m$ nevertheless fails to converge to it setwise and satisfies, at every finite time,
+$$
+\|\mu_t^{(n)}-\mathfrak m\|_{\mathrm{TV}}=2,\qquad
+\|\overline\mu_{t,N}-\mathfrak m\|_{\mathrm{TV}}=2.
+$$
+For the fixed lazy step, define bounded operators on $M(K)$ by
+$$
+P_t\eta=\eta\star_t\mu_{\mathrm{lazy}},\qquad
+\Pi\eta=\eta(K)\mathfrak m.
+$$
+For all $n,N\ge1$,
+$$
+\|P_t^n-\Pi\|_{\mathrm{TV}\to\mathrm{TV}}\ge2,\qquad
+\left\|\frac1N\sum_{n=1}^N P_t^n-\Pi\right\|_{\mathrm{TV}\to\mathrm{TV}}\ge2.
+$$
+Both inequalities are equalities at $t=0$ and $t=\infty$.
+
+There is also no convergence rate uniform over all natural two-point step probabilities, even for a single fixed continuous readout.
+
+**Proof.** The fixed countable Borel set $A=Z(\mathbb N)$ carries every natural finite-time law and every finite Cesaro average. Thus all these measures assign $A$ mass one. The measure $\mathfrak m$ is non-atomic and assigns it mass zero. This one fixed set disproves setwise convergence. Mutual singularity gives
+$$
+|\mu_t^{(n)}-\mathfrak m|=\mu_t^{(n)}+\mathfrak m,
+$$
+and the same identity holds for the averages. Their variation distances are therefore exactly two, as in the atomic-distance identity of Theorem 28.11.
+
+Associativity gives $P_t^n\eta=\eta\star_t\mu_{\mathrm{lazy},t}^{(n)}$. Although $\delta_{Z(0)}$ is not a global algebra identity, the exact natural addition law does give
+$$
+P_t^n\delta_{Z(0)}=\mu_{\mathrm{lazy},t}^{(n)}.
+$$
+This norm-one input and the preceding distance calculation prove both operator lower bounds. At the two positive parameters, the operators $P_t^n$ and their averages are contractions on total variation, because they integrate probability kernels; $\Pi$ is also a contraction. The triangle inequality supplies the matching upper bound two.
+
+For the final assertion take
+$$
+\mu_\varepsilon=(1-\varepsilon)\delta_{Z(0)}+\varepsilon\delta_{Z(1)},\qquad 0<\varepsilon<1,
+$$
+and $f(x)=\operatorname{Re}\chi_1(H(x))$. Every such step satisfies the strict-modulus criterion, while $\int f\,d\mathfrak m=0$ and $f(Z(0))=1$. For each fixed $n$, its binomial law assigns $Z(0)$ mass $(1-\varepsilon)^n\to1$ as $\varepsilon\downarrow0$. Since $|f|\le1$,
+$$
+\sup_{0<\varepsilon<1}\left|\int f\,d\mu_{\varepsilon,t}^{(n)}-\int f\,d\mathfrak m\right|=1.
+$$
+Hence no bound tending to zero can hold uniformly over this class of step laws for this readout. $\square$
+
+**theorem 34.10 (Pure residual powers and a positive full-carrier walk).** For $m\ge1$ define the signed mass-zero element
+$$
+u_m=\frac{v_m}{d'_m}.
+$$
+Then
+$$
+u_m^{\star_t n}=\frac{v_{mn}}{d'_{mn}},\qquad
+\|u_m^{\star_t n}\|_{\mathrm{TV}}=\frac2{|d'_{mn}|}\longrightarrow2,
+$$
+while $u_m^{\star_t n}\to0$ weak-star. It does not converge setwise to zero. Moreover, for the complete submultiplicative norm
+$$
+N_t(\eta)=\|H_\#\eta\|_{\mathrm{TV}}+\|R_t\eta\|_1,
+$$
+one has
+$$
+N_t(u_m^{\star_t n})=1,\qquad
+\lim_{n\to\infty}N_t(u_m^{\star_t n})^{1/n}=1.
+$$
+Thus this weak-star-null power sequence is not an instance of quasinilpotence.
+
+For either fixed sign $\sigma\in\{+,-\}$, the probability
+$$
+\zeta^\sigma=\frac12\bigl(\delta_{x_1^\sigma}+\delta_{x_2^\sigma}\bigr)
+$$
+has, for every parameter, the same powers
+$$
+(\zeta^\sigma)_t^{(n)}=2^{-n}\sum_{j=0}^n\binom nj\delta_{x_{n+j}^\sigma}.
+$$
+These converge weak-star to $\mathfrak m$, remain supported on $S^\sigma$, fail to converge setwise, and have total-variation distance two from $\mathfrak m$. If $\sigma=\sigma_t$, their differences from their own phase lifts have variation tending to two; for the opposite sign those differences tend to zero in variation.
+
+**Proof.** The coordinate of $u_m$ is $(0,e_m)$, so positive powers have coordinate $(0,e_{mn})$. The inverse formula proves the power identity and exact norms. Since $|d'_{mn}|\to1$, their total variation tends to two. Every fixed prefix annihilates the pair once $mn>G_L$, and the uniform variation bound extends this vanishing from cylinder functions to all continuous functions. Thus the powers are weak-star null.
+
+On the fixed Borel set $S^+$ their values are $1/d'_{mn}$, tending to one when $|t|<1$ and to negative one when $|t|>1$ or $t=\infty$. This disproves setwise convergence to zero. The exact value of $N_t$ follows from the coordinate $(0,e_{mn})$; its norm-power radius is one rather than zero. The element has mass zero and is not a probability or an identity.
+
+The same-sign multiplication law makes each ordered tuple of indices one and two yield the point with their summed index. Counting tuples gives the binomial formula for $\zeta^\sigma$. Its phase Fourier coefficient is
+$$
+\frac{e^{-2\pi i k\phi}+e^{-4\pi i k\phi}}2,
+$$
+whose modulus is $|\cos(\pi k\phi)|<1$ for $k\ne0$. Theorem 34.7 gives the weak-star limit. The countable set $S^\sigma$ has mass one under every finite-time law and zero under $\mathfrak m$, proving both stronger-topology failures. The last assertions are the two cases of Theorem 34.5. $\square$
+
+**theorem 34.11 (Positive endpoint dynamics, arbitrary starting laws, and switching).** Fix a probability step $\mu$ and put $\nu=H_\#\mu$. Let $\eta_0$ be any probability on $K$, choose any sequence
+$$
+\boldsymbol\tau=(\tau_1,\tau_2,\ldots)\in\{0,\infty\}^{\mathbb N_{>0}},
+$$
+and define recursively
+$$
+\eta_n=\eta_{n-1}\star_{\tau_n}\mu\quad(n\ge1).
+$$
+These are probabilities and
+$$
+H_\#\eta_n=(H_\#\eta_0)*_{\mathbb T}\nu^{(n)}.
+$$
+If $|\widehat\nu(k)|<1$ for every $k\ne0$, then $\eta_n\to\mathfrak m$. More strongly, for each fixed $f\in C(K)$,
+$$
+\lim_{n\to\infty}\sup_{\eta_0,\boldsymbol\tau}
+\left|\int f\,d\eta_n-\int f\,d\mathfrak m\right|=0,
+$$
+where the supremum is over initial probabilities and endpoint sequences.
+
+If $\widehat\nu(k)\ne1$ for every $k\ne0$, the analogous statement holds for the averages $N^{-1}\sum_{n=1}^N\eta_n$. Each criterion is also necessary for its conclusion to hold for every initial probability. It need not be necessary for convergence from a particular initial law, such as $\mathfrak m$ itself.
+
+The displayed uniformity concerns each fixed continuous readout, not the supremum over its unit ball. The varying-parameter recursion is not asserted to be a power in a single algebra.
+
+**Proof.** Theorem 25.12 and the integrated positivity theorem 28.7 show inductively that each $\eta_n$ is a probability. Phase compatibility at each step proves the stated phase identity without requiring a common multiplication parameter.
+
+Put $\xi=H_\#\eta_0$. For a trigonometric polynomial $P=\sum_k a_k\chi_k$,
+$$
+\left|\int P\,d(\xi*_{\mathbb T}\nu^{(n)}-\lambda)\right|
+\le\sum_{k\ne0}|a_k|\,|\widehat\nu(k)|^n,
+$$
+because $|\widehat\xi(k)|\le1$. Under the ordinary criterion this tends to zero independently of $\xi$. Uniform approximation by trigonometric polynomials therefore proves uniform convergence on every fixed continuous circle function. For the averages the same proof replaces $\widehat\nu(k)^n$ by $A_N(\widehat\nu(k))$.
+
+To transfer this uniformity to $K$, fix a cylinder $C_p$. Its probabilities lie between the phase probabilities of $J_p$ and $\overline{J_p}$. Given $\varepsilon>0$, choose continuous circle functions $a,b$ with
+$$
+a\le\mathbf1_{J_p}\le\mathbf1_{\overline{J_p}}\le b,\qquad
+\int(b-a)\,d\lambda<\varepsilon.
+$$
+Such functions are obtained by linearly smoothing the two endpoints inside arbitrarily short arcs. Uniform phase convergence on $a,b$ then implies uniform convergence of $\eta_n(C_p)$ to $\lambda(J_p)$. The same argument applies to the positive averages. There are finitely many cylinders at a fixed depth. Approximating $f$ by a function constant on these cylinders, with error at most $\omega_L(f)$, proves the displayed uniform assertion.
+
+For necessity take $\eta_0=\delta_{Z(0)}$. Its phase is $\delta_0$, so the phases of the resulting laws are exactly $\nu^{(n)}$, independently of all endpoint choices. The circle necessities in Theorem 34.7 apply. Conversely, starting at $\mathfrak m$ gives the constant sequence $\mathfrak m$ for every step probability: its coordinate is $(\lambda,0)$, and $\lambda*_{\mathbb T}\nu=\lambda$. Thus necessity must not be claimed for each particular starting law.
+
+The classical fixed-readout uniformity on the circle is consistent with Kawada–Ito Theorem 9; the cylinder squeeze is the additional full-carrier argument here.[^rro34-uniform] The operator-norm obstruction in Theorem 34.9 shows why the quantifier on the readout cannot be strengthened to its entire unit ball. $\square$
+
+**theorem 34.12 (Exceptional atomic targets and the necessity of positivity in the stronger transfer).** A phase probability charging $E$ need not determine a parameter-independent limiting probability on $K$. In actual endpoint dynamics, even a constant phase sequence can coexist with two different full-carrier limits or with no full-carrier limit.
+
+Furthermore, for signed measures, even the constant Haar phase does not by itself force the Haar lift.
+
+**Proof.** Fix $m\ge1$, start at $\eta_0=\delta_{x_m^+}$, and use the zero step $\mu=\delta_{Z(0)}$. The exact zero-slice law gives, for either split input sign,
+$$
+\delta_{x_m^\pm}\star_0\delta_{Z(0)}=\delta_{x_m^-},\qquad
+\delta_{x_m^\pm}\star_\infty\delta_{Z(0)}=\delta_{x_m^+}.
+$$
+Thus the constant zero-parameter dynamics have limit $\delta_{x_m^-}$ and the constant infinity-parameter dynamics have limit $\delta_{x_m^+}$. Their phase laws are identically $\delta_{E_m}$. Alternating the parameters alternates these two output measures after every step. A digit coordinate separating $x_m^+$ and $x_m^-$ is continuous, so that sequence has no weak-star limit. This example violates the Fourier criteria, since the step phase is $\delta_0$.
+
+More generally, the existing positive lifts of a phase probability $\xi$ include the two Borel-section lifts choosing respectively the negative and positive branches on $E$. Their difference is
+$$
+\sum_{m\ge1}\xi(\{E_m\})v_m.
+$$
+The series converges in total variation, and disjointness of the split fibers shows it is nonzero exactly when $\xi(E)>0$. This is the precise positive uniqueness obstruction excluded in Theorem 34.6.
+
+For the signed assertion take the constant sequence $\eta_j=\mathfrak m+v_1$. It has mass one, bounded variation, and phase $H_\#\eta_j=\lambda$, but is not equal to $\mathfrak m$. A continuous digit readout separating the first split pair detects the difference. Thus the signed power theorem needs its proved residual escape; positivity alone supplies the stronger arbitrary-lift transfer only in its stated positive domain. $\square$
+
+**theorem 34.13 (A finite-depth trigonometric estimate with explicit approximation errors).** Let $\mu$ be a probability, fix $t$, and take a real $f\in C(K)$. Write $F=\|f\|_\infty$. Fix $L\ge1$ and choose one point in each length-$L$ cylinder to define a cylinder-constant function $f_L$ satisfying
+$$
+\|f-f_L\|_\infty\le\omega_L(f),\qquad \|f_L\|_\infty\le F.
+$$
+Choose $\delta>0$ smaller than one quarter of the smallest gap between consecutive members of $B_L$, and put
+$$
+w(\theta)=\max\left\{0,\min\left\{1,2-\frac{\operatorname{dist}(\theta,B_L)}\delta\right\}\right\},\qquad
+A=(C_t+1)F.
+$$
+There is a real continuous circle function $a$ with $\|a\|_\infty\le F$ such that, for
+$$
+h(\theta)=\int_K f_L\,d\pi^{(t)}_\theta,
+$$
+one has
+$$
+|h-a|\le A w,\qquad \int w\,d\lambda\le4G_L\delta.
+$$
+For any $\varepsilon>0$, choose trigonometric polynomials
+$$
+P=\sum_{|k|\le J}a_k\chi_k,\qquad
+W=\sum_{|k|\le J}b_k\chi_k
+$$
+with $\|P-a\|_\infty\le\varepsilon$ and $\|W-w\|_\infty\le\varepsilon$, enlarging $J$ and adding zero coefficients when necessary. Then every $n>G_L$ satisfies
+$$
+\begin{aligned}
+\left|\int f\,d\mu_t^{(n)}-\int f\,d\mathfrak m\right|
+\le{}&(C_t+1)\omega_L(f)+2(1+A)\varepsilon+8A G_L\delta\\
+&+\sum_{0<|k|\le J}\bigl(|a_k|+A|b_k|\bigr)|\widehat\nu(k)|^n.
+\end{aligned}
+$$
+This estimate is valid without assuming the Fourier criterion. For the natural lazy step its final factors are exactly $|\cos(\pi k\phi)|^n$.
+
+**Proof.** Off $B_L$, all points of a phase fiber belong to the same length-$L$ cylinder, even when the fiber itself is split at an index greater than $G_L$. Since each slice has mass one, $h$ there is simply the corresponding value of $f_L$. Thus it is constant on each complementary open arc and is independent of $t$ off the finite boundary set.
+
+On the complement of the radius-$\delta$ neighborhoods of the boundary points, set $a=h$. Across each such neighborhood interpolate linearly between its two endpoint values in the positive circle coordinate. The neighborhoods are disjoint by the choice of $\delta$. This produces a continuous real function bounded by $F$. Outside those neighborhoods $h-a=0$. Inside them $|h|\le C_tF$ and $|a|\le F$, while $w=1$. Hence $|h-a|\le Aw$. The support of $w$ is contained in the union of $G_L$ circle balls of radius $2\delta$, each of Haar length at most $4\delta$, proving the integral bound.
+
+The required polynomials exist by continuous circle Fourier density.[^rro34-fourier] Put $\eta=\nu^{(n)}$. Both $\eta$ and $\lambda$ are probabilities. Character multiplication gives
+$$
+\left|\int P\,d(\eta-\lambda)\right|
+\le\sum_{0<|k|\le J}|a_k|\,|\widehat\nu(k)|^n,
+$$
+$$
+\left|\int W\,d(\eta-\lambda)\right|
+\le\sum_{0<|k|\le J}|b_k|\,|\widehat\nu(k)|^n.
+$$
+Uniform approximation therefore yields
+$$
+\eta(w)\le\lambda(w)+2\varepsilon+
+\sum_{0<|k|\le J}|b_k|\,|\widehat\nu(k)|^n.
+$$
+Together with $|h-a|\le Aw$, this gives
+$$
+\begin{aligned}
+\left|\int h\,d(\eta-\lambda)\right|
+\le{}&2(1+A)\varepsilon+2A\lambda(w)\\
+&+\sum_{0<|k|\le J}\bigl(|a_k|+A|b_k|\bigr)|\widehat\nu(k)|^n.
+\end{aligned}
+$$
+For $n>G_L$, Theorem 34.3 gives
+$$
+\int f_L\,d\mu_t^{(n)}=\int h\,d\eta,
+\qquad
+\int f_L\,d\mathfrak m=\int h\,d\lambda.
+$$
+Replacing $f_L$ by $f$ costs at most $(C_t+1)\omega_L(f)$, by Theorem 34.2 and the unit mass of $\mathfrak m$. Inserting the bound for $\lambda(w)$ proves the estimate. The lazy-step substitution follows from Theorem 34.8. Its finitely many coefficients and approximation parameters remain explicit; no bound uniform over step laws or over all Fourier indices follows from this formula. $\square$
+
+[^rro34-input]: *RECURSIVE_RELATIONAL_OBSERVATION*, fixed revision `da6db9e70387e95fc513039a96bf8e90a9af83de`, Theorem 20.2, Assumption 25.1, Theorems 25.9–25.12, and Theorems 28.2–28.11. These supply the exact oriented fibers and cylinders, the classified finite rows, the actual integrated multiplication, its bounded coordinate isomorphism, and the Haar lift. [Fixed mathematical text](https://github.com/the-omega-institute/trureturing/blob/da6db9e70387e95fc513039a96bf8e90a9af83de/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION.md).
+
+[^rro34-fourier]: Mathlib contributors, *Fourier analysis on the additive circle*, fixed revision `db584cd6d46c92f209a44c0f1c829460d327499d`, `AddCircle.fourierSubalgebra_closure_eq_top` and `AddCircle.span_fourier_closure_eq_top`, lines 239–248. The mathematical statement is density in continuous complex circle functions. [Fixed source](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/Fourier/AddCircle.lean#L239-L248).
+
+[^rro34-port]: Daniel V. Tausk, *Weak* topology for the space of finite measures on a topological space*, January 17, 2024, Proposition 4.9(a),(f),(g), pp. 11–12, and Example 4.10, pp. 12–13. The bounded-Borel testing and continuity-set equivalences used here have positive incoming measures; the example explains the signed-measure boundary. [Text](https://www.ime.usp.br/~tausk/texts/WeakTopologyMeasures.pdf).
+
+[^rro34-power]: Jean-Pierre Conze and Michael Lin, *Almost everywhere convergence of convolution powers on compact Abelian groups*, Annales de l'Institut Henri Poincare, Probabilites et Statistiques **49** (2013), 550–568, Proposition 2.1, p. 551. Its equivalence concerns strict character modulus, continuous group readouts, and support in cosets of proper closed subgroups. [Article](https://www.numdam.org/article/AIHPB_2013__49_2_550_0.pdf).
+
+[^rro34-cesaro]: Yukiyosi Kawada and Kiyosi Ito, *On the Probability Distribution on a Compact Group. I*, Proceedings of the Physico-Mathematical Society of Japan, third series, **22** (1940), 977–998, Theorem 7, p. 987, with proof on p. 991. The average in the theorem is over powers one through $n$. [Original article](https://www.jstage.jst.go.jp/article/ppmsj1919/22/12/22_12_977/_pdf/-char/en).
+
+[^rro34-uniform]: Kawada and Ito, the same article, Theorem 9, pp. 992–993, especially formulas (50)–(51). The uniformity is over starting group elements for each fixed continuous function, not over a norm unit ball of functions. [Original article](https://www.jstage.jst.go.jp/article/ppmsj1919/22/12/22_12_977/_pdf/-char/en).
+
+## 追加锚（本行以下为增补区）

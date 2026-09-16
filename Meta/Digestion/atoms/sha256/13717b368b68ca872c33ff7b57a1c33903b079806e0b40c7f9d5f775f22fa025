@@ -1,0 +1,20 @@
+**证明。** 每个 $\omega\in\mathscr X_t$ 都是单位化字符，因此逐点的线性、乘法性及保单位性质成立。定理31.5给出 $|\omega(a)|\le\|a\|_{\#}$，所以表示有界。若 $\mathcal O_t(\lambda,\mu)=0$，先在 $\mathcal E_0^{\#}$ 上求值得 $\lambda=0$；随后全部 Fourier 及剩余读数为零，定理31.11给出 $\mu=0$。所以表示单射。
+
+对任意集合 $X$ 和 $f\in\ell^\infty(X)$，函数 $w-f$ 可逆当且仅当 $\inf_{x\in X}|w-f(x)|>0$。充分性由有界逐点倒数给出；必要性来自任一有界逆函数必须满足 $(w-f(x))h(x)=1$。因此
+$$
+\sigma_{\ell^\infty(X)}(f)=\overline{f(X)}.
+$$
+应用于 $\mathcal O_t(a)$，其 Fourier 部分的值域闭包是 $\lambda+\overline{\{\widehat\nu(n)\}}$；剩余部分是连续函数在紧闭圆盘上的像 $\lambda+\mathscr G_g(\overline{\mathbb D})$，已经闭。有限并取闭包给出所述谱公式。与定理31.12比较，并使用 Fourier 字符值必属于 $\sigma_{\mathcal M}(\nu)$，即得准确等价条件。
+
+取定理31.14的 $a=b_\beta$。它的全部 $\mathscr X_t$ 读数模长至少为 $1/2$，因此 $\mathcal O_t(b_\beta)$ 在目标代数中具有有界逐点逆；但 $b_\beta$ 在原代数中不可逆。若这个目标逆属于 $\mathcal O_t(A_t^{\#})$，写成 $\mathcal O_t(c)$，则单射性会把 $\mathcal O_t(b_\beta c)=1$ 提升为 $b_\beta c=1^{\#}$，矛盾。因此像不逆封闭，表示也不保持谱。
+
+表示的单射性同时说明：完整精确读数唯一确定元素，因而也唯一确定其谱和可逆性。上面的反例所排除的是用读数值域或逐点非零条件直接替代原代数谱与可逆性，而不是排除从完整数据所确定的元素进行进一步分析。证毕。
+
+[^rro31-spectrum]: Mathlib contributors，复 Banach 代数的最大理想—字符及谱定理，固定版本 `db584cd6d46c92f209a44c0f1c829460d327499d`：[GelfandDuality，ComplexBanachAlgebra 部分，特别 Ideal.toCharacterSpace、WeakDual.CharacterSpace.exists_apply_eq_zero、WeakDual.CharacterSpace.mem_spectrum_iff_exists](https://raw.githubusercontent.com/leanprover-community/mathlib4/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/CStarAlgebra/GelfandDuality.lean)；自动连续性与字符同态接口见同版本 [Spectrum，AlgHom.toContinuousLinearMap 及 WeakDual.CharacterSpace.equivAlgHom](https://raw.githubusercontent.com/leanprover-community/mathlib4/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Analysis/Normed/Algebra/Spectrum.lean)。这里只用一般复 Banach 代数定理，不附加或假借 C*-代数结论。
+
+[^rro31-wiener]: J. Esterle、E. Strouse、F. Zouakia，Closed ideals of the algebra of absolutely convergent Taylor series，Bulletin of the American Mathematical Society 31 (1994)，39—43，§1首段，[正文](https://arxiv.org/pdf/math/9407215)。解析 Wiener 代数采用 Taylor 系数绝对和范数。闭圆盘极大理想空间的经典陈述亦见 Raymond Mortini、Amol Sasane，Some algebraic properties of the Wiener–Laplace algebra，Journal of Applied Analysis 16 (2010)，§1，第2页关于 $W^+(\mathbb D)$ 的段落，[正文](https://personal.lse.ac.uk/sasane/JAA_MS.pdf)。
+
+[^rro31-sw]: 复 Stone–Weierstrass 定理：紧致空间上的保常数、共轭封闭且分离点的复函数子代数一致稠密。对应数学条目见 Mathlib contributors，固定版本 `db584cd6d46c92f209a44c0f1c829460d327499d`，ContinuousMap.starSubalgebra_topologicalClosure_eq_top_of_separatesPoints，[数学文本](https://raw.githubusercontent.com/leanprover-community/mathlib4/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Topology/ContinuousMap/StoneWeierstrass.lean)。
+
+[^rro31-wp]: Nikolai Nikolski，In search of the invisible spectrum，Annales de l'Institut Fourier 49(6) (1999)，1925—1998，§3.1.1，印刷页1962，[正文](https://www.numdam.org/item/10.5802/aif.1743.pdf)。该处明确陈述非离散局部紧交换群上正 Šreĭder 测度的存在性、实 Fourier 值及闭单位圆盘完整谱；§0.1，页1926—1927，说明统一远离零的 Fourier 值不充分保证可逆性。圆周测度代数中的相同经典现象亦见 Przemysław Ohrysko、Michał Wojciechowski，On the relationships between Fourier–Stieltjes coefficients and spectra of measures，arXiv:1305.3324v2，§1，第1—2页，[正文](https://arxiv.org/pdf/1305.3324)。
+

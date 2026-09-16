@@ -1,0 +1,37 @@
+**theorem 28.8 (The full phase kernel and the bounded coordinate isomorphism).** The phase pushforward has precisely the kernel
+$$
+\ker H_\#
+=\left\{\sum_{m\ge1}b_mv_m:(b_m)_{m\ge1}\in\ell^1(\mathbb N_{>0})\right\}.
+$$
+Every such series converges in total variation, and
+$$
+\left\|\sum_{m\ge1}b_mv_m\right\|_{\mathrm{TV}}=2\sum_{m\ge1}|b_m|.
+$$
+For $\mu\in M(K)$, define
+$$
+R_t\mu=(g_m)_{m\ge1},\qquad
+g_m=\int_K r_m\,d\mu
+=d'_m\bigl((1-p_m)\mu(\{x_m^+\})-p_m\mu(\{x_m^-\})\bigr),
+$$
+$$
+\Phi_t\mu=(H_\#\mu,R_t\mu).
+$$
+Then $\Phi_t:M(K)\to\mathcal C$ is a bounded linear bijection with inverse
+$$
+\Psi_t(\nu,g)=L_t\nu+\sum_{m\ge1}\frac{g_m}{d'_m}v_m.
+$$
+The bounds are
+$$
+\|\Phi_t\mu\|_\oplus\le2\|\mu\|_{\mathrm{TV}},
+$$
+$$
+\|\Psi_t(\nu,g)\|_{\mathrm{TV}}
+\le C_t\|\nu\|_{\mathrm{TV}}+\frac{2}{1-\rho_t}\|g\|_1
+\le\frac{2}{1-\rho_t}\|(\nu,g)\|_\oplus.
+$$
+In particular,
+$$
+\frac{1-\rho_t}{2}\|\mu\|_{\mathrm{TV}}
+\le\|\Phi_t\mu\|_\oplus\le2\|\mu\|_{\mathrm{TV}}.
+$$
+
